@@ -1,0 +1,11 @@
+static const char* ParticleFragmentShader = STRINGIFY(
+
+uniform sampler2D Sampler;
+
+varying highp vec4 ColorOut;
+
+void main(void) {
+    gl_FragColor = texture2D(Sampler, gl_PointCoord).a * ColorOut;
+}
+
+);

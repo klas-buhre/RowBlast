@@ -1,0 +1,42 @@
+{
+    "speed": 0.0,
+    "moves": 30,
+    "twoStars": 25,
+    "threeStars": 15,
+    "color": "pink",
+    "pieces": [
+        "LongI",
+        "I",
+        "L",
+        "B",
+        "D",
+        "Triangle",
+        "BigTriangle",
+        "Bomb",
+        "RowBomb"
+    ],
+    "clearGrid": [
+        "         ",
+        "         ",
+        "         ",
+        "         ",
+        "         ",
+        "         ",
+        "         ",
+        "         ",
+        "         ",
+        "         ",
+        "         ",
+        "         ",
+        "         ",
+        "         ",
+        "  d      ",
+        " dG      ",
+        "dGG      ",
+        "OOOOOOO O",
+        "GGGb     ",
+        "GGGGb   G",
+        "GGGGGb  G",
+        "GGGGGGG G"
+    ]
+}

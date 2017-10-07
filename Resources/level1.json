@@ -1,0 +1,37 @@
+{
+    "speed": 0.5,
+    "moves": 5,
+    "twoStars": 4,
+    "threeStars": 3,
+    "color": "pink",
+    "pieces": [
+        "LongI",
+        "I",
+        "ShortI",
+        "L",
+        "B",
+        "D",
+        "Seven",
+        "MirroredSeven"
+    ],
+    "clearGrid": [
+        "       ",
+        "       ",
+        "       ",
+        "       ",
+        "       ",
+        "       ",
+        "       ",
+        "       ",
+        "       ",
+        "       ",
+        "       ",
+        "       ",
+        "       ",
+        "       ",
+        "OOOOOO ",
+        "GGGGGG ",
+        "GGG G G",
+        "GGGGG G"
+    ]
+}

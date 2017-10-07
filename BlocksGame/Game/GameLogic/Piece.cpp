@@ -1,0 +1,453 @@
+#include "Piece.hpp"
+
+#include <algorithm>
+#include <assert.h>
+
+using namespace BlocksGame;
+
+namespace {
+    Fill RotateCellFillClockwise90Deg(Fill fill) {
+        switch (fill) {
+            case Fill::Empty:
+            case Fill::Full:
+                return fill;
+            case Fill::LowerRightHalf:
+                return Fill::LowerLeftHalf;
+            case Fill::LowerLeftHalf:
+                return Fill::UpperLeftHalf;
+            case Fill::UpperLeftHalf:
+                return Fill::UpperRightHalf;
+            case Fill::UpperRightHalf:
+                return Fill::LowerRightHalf;
+        }
+    }
+    
+    Welds RotateWeldsClockwise90Deg(const Welds& welds) {
+        Welds rotatedWelds;
+        
+        if (welds.mUp) {
+            rotatedWelds.mRight = true;
+        }
+
+        if (welds.mUpRight) {
+            rotatedWelds.mDownRight = true;
+        }
+        
+        if (welds.mRight) {
+            rotatedWelds.mDown = true;
+        }
+
+        if (welds.mDownRight) {
+            rotatedWelds.mDownLeft = true;
+        }
+
+        if (welds.mDown) {
+            rotatedWelds.mLeft = true;
+        }
+
+        if (welds.mDownLeft) {
+            rotatedWelds.mUpLeft = true;
+        }
+
+        if (welds.mLeft) {
+            rotatedWelds.mUp = true;
+        }
+
+        if (welds.mUpLeft) {
+            rotatedWelds.mUpRight = true;
+        }
+
+        return rotatedWelds;
+    }
+}
+
+Piece::Piece() {}
+
+const CellGrid& Piece::GetGrid(Rotation rotation) const {
+    return mGrids[static_cast<int>(rotation)];
+}
+
+const ClickGrid& Piece::GetClickGrid(Rotation rotation) const {
+    return mClickGrids[static_cast<int>(rotation)];
+}
+
+const Pht::IVec2& Piece::GetRightOverhangCheckPosition(Rotation rotation) const {
+    return mRightOverhangCheckPositions[static_cast<int>(rotation)];
+}
+
+const Pht::IVec2& Piece::GetLeftOverhangCheckPosition(Rotation rotation) const {
+    return mLeftOverhangCheckPositions[static_cast<int>(rotation)];
+}
+
+const Pht::Optional<Pht::IVec2>& Piece::GetRightExtremityCheckPosition(Rotation rotation) const {
+    return mRightExtremityCheckPositions[static_cast<int>(rotation)];
+}
+
+const Pht::Optional<Pht::IVec2>& Piece::GetLeftExtremityCheckPosition(Rotation rotation) const {
+    return mLeftExtremityCheckPositions[static_cast<int>(rotation)];
+}
+
+Pht::Vec2 Piece::GetCenterPosition(Rotation rotation) const {
+    return GetButtonCenterPosition(rotation) / 2.0f;
+}
+
+const Pht::Vec2& Piece::GetButtonCenterPosition(Rotation rotation) const {
+    return mButtonCenterPositions[static_cast<int>(rotation)];
+}
+
+const Pht::Vec2& Piece::GetButtonSize(Rotation rotation) const {
+    return mButtonSizes[static_cast<int>(rotation)];
+}
+
+bool Piece::CanRotateAroundZ() const {
+    return true;
+}
+
+bool Piece::IsBomb() const {
+    return false;
+}
+
+bool Piece::IsRowBomb() const {
+    return false;
+}
+
+int Piece::GetNumEmptyTopRows() const {
+    return 0;
+}
+
+const Pht::RenderableObject& Piece::GetFirstRenderable() const {
+    assert(mRenderables.size() >= 1);
+    return *mRenderables.front();
+}
+
+const Pht::RenderableObject* Piece::GetGhostPieceRenderable() const {
+    return mGhostPieceRenderable.get();
+}
+
+const Pht::RenderableObject* Piece::GetFilledGhostPieceRenderable() const {
+    return mFilledGhostPieceRenderable.get();
+}
+
+const Pht::RenderableObject* Piece::GetPressedGhostPieceRenderable() const {
+    return mPressedGhostPieceRenderable.get();
+}
+
+void Piece::InitGrids(const RenderableGrid& renderableGrid,
+                      const FillGrid& fillGrid,
+                      const ClickGrid& clickGrid,
+                      std::unique_ptr<Pht::RenderableObject> weldRenderable,
+                      bool isIndivisible) {
+    mGridNumRows = static_cast<int>(renderableGrid.size());
+    mGridNumColumns = static_cast<int>(renderableGrid.front().size());
+    assert(mGridNumRows == fillGrid.size() && mGridNumColumns == fillGrid.front().size());
+    
+    mClickGridNumRows = static_cast<int>(clickGrid.size());
+    mClickGridNumColumns = static_cast<int>(clickGrid.front().size());
+    assert(mClickGridNumRows == 2 * mGridNumRows && mClickGridNumColumns == 2 * mGridNumColumns);
+    
+    mWeldRenderable = std::move(weldRenderable);
+    
+    InitCellGrids(renderableGrid, fillGrid, isIndivisible);
+    InitClickGrids(clickGrid);
+    
+    mRightOverhangCheckPositions.resize(4);
+    mLeftOverhangCheckPositions.resize(4);
+    AddOverhangCheckPositions(Rotation::Deg0);
+    AddOverhangCheckPositions(Rotation::Deg90);
+    AddOverhangCheckPositions(Rotation::Deg180);
+    AddOverhangCheckPositions(Rotation::Deg270);
+    
+    mRightExtremityCheckPositions.resize(4);
+    mLeftExtremityCheckPositions.resize(4);
+    AddExtremityCheckPositions(Rotation::Deg0);
+    AddExtremityCheckPositions(Rotation::Deg90);
+    AddExtremityCheckPositions(Rotation::Deg180);
+    AddExtremityCheckPositions(Rotation::Deg270);
+    
+    mButtonCenterPositions.resize(4);
+    mButtonSizes.resize(4);
+    AddButtonPositionAndSize(Rotation::Deg0);
+    AddButtonPositionAndSize(Rotation::Deg90);
+    AddButtonPositionAndSize(Rotation::Deg180);
+    AddButtonPositionAndSize(Rotation::Deg270);
+}
+
+void Piece::InitCellGrids(const Piece::RenderableGrid& renderableGrid,
+                          const Piece::FillGrid& fillGrid,
+                          bool isIndivisible) {
+    auto reversedRenderableGrid {renderableGrid};
+    std::reverse(reversedRenderableGrid.begin(), reversedRenderableGrid.end());
+    
+    auto reversedFillGrid {fillGrid};
+    std::reverse(reversedFillGrid.begin(), reversedFillGrid.end());
+    
+    auto deg0Grid {InitCellGrid(reversedRenderableGrid, reversedFillGrid, isIndivisible)};
+    mGrids.push_back(deg0Grid);
+    
+    auto deg90Grid {RotateGridClockwise90Deg(deg0Grid, Rotation::Deg90)};
+    mGrids.push_back(deg90Grid);
+    
+    auto deg180Grid {RotateGridClockwise90Deg(deg90Grid, Rotation::Deg180)};
+    mGrids.push_back(deg180Grid);
+    
+    auto deg270Grid {RotateGridClockwise90Deg(deg180Grid, Rotation::Deg270)};
+    mGrids.push_back(deg270Grid);
+}
+
+CellGrid Piece::InitCellGrid(const Piece::RenderableGrid& renderableGrid,
+                             const Piece::FillGrid& fillGrid,
+                             bool isIndivisible) {
+    CellGrid result {static_cast<std::size_t>(mGridNumRows)};
+    for (auto& row: result) {
+        row.resize(mGridNumColumns);
+    }
+    
+    for (auto row {0}; row < mGridNumRows; row++) {
+        for (auto column {0}; column < mGridNumColumns; column++) {
+            auto& subCell {result[row][column].mFirstSubCell};
+            subCell.mFill = fillGrid[row][column];
+            subCell.mWelds = MakeWelds(row, column, renderableGrid);
+            subCell.mRenderableObject = renderableGrid[row][column];
+            subCell.mWeldRenderableObject = mWeldRenderable.get();
+            subCell.mFlashingBlockAnimation.mIsActive = true;
+            subCell.mIsPartOfIndivisiblePiece = isIndivisible;
+        }
+    }
+    
+    return result;
+}
+
+CellGrid Piece::RotateGridClockwise90Deg(const CellGrid& grid, Rotation newRotation) {
+    auto result {grid};
+    
+    for (auto row {0}; row < mGridNumRows; row++) {
+        for (auto column {0}; column < mGridNumColumns; column++) {
+            auto& resultCell {result[mGridNumColumns - 1 - column][row]};
+            resultCell = grid[row][column];
+            auto& subCell {resultCell.mFirstSubCell};
+            subCell.mRotation = newRotation;
+            subCell.mFill = RotateCellFillClockwise90Deg(subCell.mFill);
+            subCell.mWelds = RotateWeldsClockwise90Deg(subCell.mWelds);
+        }
+    }
+    
+    return result;
+}
+
+void Piece::InitClickGrids(const ClickGrid& clickGrid) {
+    auto deg0Grid {clickGrid};
+    std::reverse(deg0Grid.begin(), deg0Grid.end());
+    
+    mClickGrids.push_back(deg0Grid);
+    
+    auto deg90Grid {RotateClickGridClockwise90Deg(deg0Grid, Rotation::Deg90)};
+    mClickGrids.push_back(deg90Grid);
+    
+    auto deg180Grid {RotateClickGridClockwise90Deg(deg90Grid, Rotation::Deg180)};
+    mClickGrids.push_back(deg180Grid);
+    
+    auto deg270Grid {RotateClickGridClockwise90Deg(deg180Grid, Rotation::Deg270)};
+    mClickGrids.push_back(deg270Grid);
+}
+
+ClickGrid Piece::RotateClickGridClockwise90Deg(const ClickGrid& grid, Rotation newRotation) {
+    auto result {grid};
+    
+    for (auto row {0}; row < mClickGridNumRows; row++) {
+        for (auto column {0}; column < mClickGridNumColumns; column++) {
+            auto& resultCell {result[mClickGridNumColumns - 1 - column][row]};
+            resultCell = grid[row][column];
+        }
+    }
+    
+    return result;
+}
+
+void Piece::SetPreviewCellSize(float previewCellSize) {
+    mPreviewCellSize = previewCellSize;
+}
+
+void Piece::SetNumRotations(int numRotations) {
+    mNumRotations = numRotations;
+}
+
+void Piece::AddRenderable(std::unique_ptr<Pht::RenderableObject> renderable) {
+    mRenderables.push_back(std::move(renderable));
+}
+
+void Piece::SetGhostPieceRenderable(std::unique_ptr<Pht::RenderableObject> renderable) {
+    mGhostPieceRenderable = std::move(renderable);
+}
+
+void Piece::SetFilledGhostPieceRenderable(std::unique_ptr<Pht::RenderableObject> renderable) {
+    mFilledGhostPieceRenderable = std::move(renderable);
+}
+
+void Piece::SetPressedGhostPieceRenderable(std::unique_ptr<Pht::RenderableObject> renderable) {
+    mPressedGhostPieceRenderable = std::move(renderable);
+}
+
+Welds Piece::MakeWelds(int row, int column, const Piece::RenderableGrid& renderableGrid) {
+    Welds welds;
+    
+    if (IsBlock(row + 1, column, renderableGrid)) {
+        welds.mUp = true;
+    }
+
+    if (IsBlock(row + 1, column + 1, renderableGrid) &&
+        !IsBlock(row + 1, column, renderableGrid) && !IsBlock(row, column + 1, renderableGrid)) {
+        welds.mUpRight = true;
+    }
+
+    if (IsBlock(row, column + 1, renderableGrid)) {
+        welds.mRight = true;
+    }
+
+    if (IsBlock(row - 1, column + 1, renderableGrid) &&
+        !IsBlock(row, column + 1, renderableGrid) && !IsBlock(row - 1, column, renderableGrid)) {
+        welds.mDownRight = true;
+    }
+
+    if (IsBlock(row - 1, column, renderableGrid)) {
+        welds.mDown = true;
+    }
+
+    if (IsBlock(row - 1, column - 1, renderableGrid) &&
+        !IsBlock(row - 1, column, renderableGrid) && !IsBlock(row, column - 1, renderableGrid)) {
+        welds.mDownLeft = true;
+    }
+    
+    if (IsBlock(row, column - 1, renderableGrid)) {
+        welds.mLeft = true;
+    }
+
+    if (IsBlock(row + 1, column - 1, renderableGrid) &&
+        !IsBlock(row + 1, column, renderableGrid) && !IsBlock(row, column - 1, renderableGrid)) {
+        welds.mUpLeft = true;
+    }
+
+    return welds;
+}
+
+bool Piece::IsBlock(int row, int column, const Piece::RenderableGrid& renderableGrid) {
+    if (row < 0 || row >= mGridNumRows || column < 0 || column >= mGridNumColumns) {
+        return false;
+    }
+    
+    return renderableGrid[row][column] != nullptr;
+}
+
+void Piece::CalculateMinMax(int& yMax, int& xMin, int& xMax, const CellGrid& grid) const {
+    yMax = 0;
+    xMin = mGridNumColumns - 1;
+    xMax = 0;
+    
+    for (auto row {0}; row < mGridNumRows; ++row) {
+        for (auto column {0}; column < mGridNumColumns; ++column) {
+            if (!grid[row][column].IsEmpty()) {
+                if (row > yMax) {
+                    yMax = row;
+                }
+                
+                if (column > xMax) {
+                    xMax = column;
+                }
+                
+                if (column < xMin) {
+                    xMin = column;
+                }
+            }
+        }
+    }
+}
+
+void Piece::AddOverhangCheckPositions(Rotation rotation) {
+    const auto& grid {GetGrid(rotation)};
+    auto yMax {0};
+    auto xMin {0};
+    auto xMax {0};
+    
+    CalculateMinMax(yMax, xMin, xMax, grid);
+    
+    auto index {static_cast<int>(rotation)};
+    
+    mRightOverhangCheckPositions[index] = Pht::IVec2 {xMax + 1, yMax};
+    mLeftOverhangCheckPositions[index] = Pht::IVec2 {xMin - 1, yMax};
+}
+
+void Piece::AddExtremityCheckPositions(Rotation rotation) {
+    const auto& grid {GetGrid(rotation)};
+    auto yMax {0};
+    auto xMin {0};
+    auto xMax {0};
+    
+    CalculateMinMax(yMax, xMin, xMax, grid);
+    
+    Pht::Optional<Pht::IVec2> rightExtremityCheckPosition;
+    
+    if (grid[yMax][xMax].IsEmpty()) {
+        for (auto row {yMax - 1}; row >= 0; --row) {
+            if (!grid[row][xMax].IsEmpty()) {
+                rightExtremityCheckPosition = Pht::IVec2 {xMax + 1, row};
+                break;
+            }
+        }
+    }
+    
+    Pht::Optional<Pht::IVec2> leftExtremityCheckPosition;
+    
+    if (grid[yMax][xMin].IsEmpty()) {
+        for (auto row {yMax - 1}; row >= 0; --row) {
+            if (!grid[row][xMin].IsEmpty()) {
+                leftExtremityCheckPosition = Pht::IVec2 {xMin - 1, row};
+                break;
+            }
+        }
+    }
+    
+    auto index {static_cast<int>(rotation)};
+    
+    mRightExtremityCheckPositions[index] = rightExtremityCheckPosition;
+    mLeftExtremityCheckPositions[index] = leftExtremityCheckPosition;
+}
+
+void Piece::AddButtonPositionAndSize(Rotation rotation) {
+    const auto& grid {GetClickGrid(rotation)};
+    auto yMin {mClickGridNumRows - 1};
+    auto yMax {0};
+    auto xMin {mClickGridNumColumns - 1};
+    auto xMax {0};
+    
+    for (auto row {0}; row < mClickGridNumRows; ++row) {
+        for (auto column {0}; column < mClickGridNumColumns; ++column) {
+            if (grid[row][column] > 0) {
+                if (row < yMin) {
+                    yMin = row;
+                }
+
+                if (row > yMax) {
+                    yMax = row;
+                }
+                
+                if (column < xMin) {
+                    xMin = column;
+                }
+
+                if (column > xMax) {
+                    xMax = column;
+                }
+            }
+        }
+    }
+    
+    auto index {static_cast<int>(rotation)};
+    Pht::Vec2 buttonSize {static_cast<float>(xMax - xMin + 1), static_cast<float>(yMax - yMin + 1)};
+    
+    Pht::Vec2 centerPosition {
+        static_cast<float>(xMin) + buttonSize.x / 2.0f,
+        static_cast<float>(yMin) + buttonSize.y / 2.0f
+    };
+    
+    mButtonSizes[index] = buttonSize;
+    mButtonCenterPositions[index] = centerPosition;
+}

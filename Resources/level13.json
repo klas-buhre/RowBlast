@@ -1,0 +1,42 @@
+{
+    "speed": 0.0,
+    "moves": 50,
+    "twoStars": 40,
+    "threeStars": 25,
+    "color": "green",
+    "pieces": [
+        "SmallTriangle",
+        "Triangle",
+        "BigTriangle",
+        "Diamond",
+        "Pyramid",
+        "Bomb",
+        "RowBomb"
+    ],
+    "clearGrid": [
+        "         ",
+        "         ",
+        "         ",
+        "         ",
+        "         ",
+        "         ",
+        "         ",
+        "         ",
+        "         ",
+        "         ",
+        "         ",
+        "         ",
+        "         ",
+        "b        ",
+        "Gb  db  d",
+        "GGbdGGbdG",
+        "GGGGpqGGG",
+        "GGGp  qGG",
+        "GGGb  dGG",
+        "GGGGbdGGG",
+        "GGGGGGGGb",
+        "b       d",
+        "Gb  db dG",
+        "GGbdGGGGG"
+    ]
+}
