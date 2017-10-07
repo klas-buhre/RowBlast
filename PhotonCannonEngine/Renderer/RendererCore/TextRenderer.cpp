@@ -33,9 +33,9 @@ void TextRenderer::RenderText(const std::string& text,
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     
-	glEnableVertexAttribArray(attributes.mTextCoords);
-	glBindBuffer(GL_ARRAY_BUFFER, mVbo);
-	glVertexAttribPointer(attributes.mTextCoords, 4, GL_FLOAT, GL_FALSE, 0, 0);
+    glEnableVertexAttribArray(attributes.mTextCoords);
+    glBindBuffer(GL_ARRAY_BUFFER, mVbo);
+    glVertexAttribPointer(attributes.mTextCoords, 4, GL_FLOAT, GL_FALSE, 0, 0);
 
     for (auto c: text) {
         auto& glyph {properties.mFont.GetGlyph(c)};

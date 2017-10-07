@@ -18,6 +18,7 @@ Backlog:
     -Try 1334×750 resolution for iPhone7.
     -Try models with less bevel for the preview. The triangles with less bevel could be tried for
      field also.
+    -MenuButtons can start a shrink animation when pressed down.
     -Camera shake when clearing 5 rows.
     -Try adding welds to the level blocks.
     -Recreate the star particle. Possibly by buying a textures for particle systems in unity assets
