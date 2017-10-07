@@ -66,7 +66,6 @@ Backlog:
 Ongoing tasks:
     -Trickier pieces.
     -More long levels with not too many moves.
-    -GitHub account.
     -Office.
     -Fix upper part of sky env map texture.
  
