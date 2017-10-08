@@ -116,11 +116,11 @@ void GameScene::UpdateCameraPosition() {
 }
 
 void GameScene::CreateBackground() {
-    Pht::Material backgroundMaterial {"sky.jpg"};
+    Pht::Material backgroundMaterial {"sky_blurred.jpg"};
     
     mBackground = std::make_unique<Pht::SceneObject>(
         mEngine.CreateRenderableObject(Pht::QuadMesh {150.0f, 150.0f}, backgroundMaterial));
-    mBackground->Translate({0.0f, 0.0f, -35.0f});
+    mBackground->Translate({0.0f, -5.0f, -42.0f});
 }
 
 void GameScene::CreateFieldQuad(const Level& level) {

@@ -67,7 +67,6 @@ Ongoing tasks:
     -Trickier pieces.
     -More long levels with not too many moves.
     -Office.
-    -Fix upper part of sky env map texture.
  
 Ideas:
     -The pause button could lead to a widget that has an undo button, a boosters button and a game
