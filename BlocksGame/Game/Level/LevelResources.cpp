@@ -31,6 +31,7 @@
 #include "ZPiece.hpp"
 #include "MirroredZPiece.hpp"
 #include "TPiece.hpp"
+#include "PlusPiece.hpp"
 #include "Bomb.hpp"
 #include "RowBomb.hpp"
 
@@ -57,6 +58,7 @@ void LevelResources::CreatePieceTypes(Pht::IEngine& engine, const GameScene& sce
     mPieceTypes["Z"] = std::make_unique<ZPiece>(engine, scene);
     mPieceTypes["MirroredZ"] = std::make_unique<MirroredZPiece>(engine, scene);
     mPieceTypes["T"] = std::make_unique<TPiece>(engine, scene);
+    mPieceTypes["Plus"] = std::make_unique<PlusPiece>(engine, scene);
     mPieceTypes["SmallTriangle"] = std::make_unique<SmallTrianglePiece>(engine, scene);
     mPieceTypes["Triangle"] = std::make_unique<TrianglePiece>(engine, scene);
     mPieceTypes["BigTriangle"] = std::make_unique<BigTrianglePiece>(engine, scene);

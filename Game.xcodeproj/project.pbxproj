@@ -194,6 +194,8 @@
 		6260A7061F87E5BF001F6DCD /* TriangleMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6260A6FC1F87E08F001F6DCD /* TriangleMesh.cpp */; };
 		6260A7081F8912D6001F6DCD /* level21.json in Resources */ = {isa = PBXBuildFile; fileRef = 6260A7071F8912D2001F6DCD /* level21.json */; };
 		6260A70B1F89196C001F6DCD /* TPiece.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6260A7091F89196C001F6DCD /* TPiece.cpp */; };
+		6260A70E1F8A22E4001F6DCD /* PlusPiece.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6260A70C1F8A22E4001F6DCD /* PlusPiece.cpp */; };
+		6260A7101F8A265F001F6DCD /* level22.json in Resources */ = {isa = PBXBuildFile; fileRef = 6260A70F1F8A265A001F6DCD /* level22.json */; };
 		626C4D8C1EEC107E000D4DF6 /* settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 626C4D8B1EEC107E000D4DF6 /* settings.png */; };
 		626C4D9E1EEC19DF000D4DF6 /* MapController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 626C4D8F1EEC19DF000D4DF6 /* MapController.cpp */; };
 		626C4D9F1EEC19DF000D4DF6 /* MapHud.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 626C4D911EEC19DF000D4DF6 /* MapHud.cpp */; };
@@ -668,6 +670,9 @@
 		6260A7071F8912D2001F6DCD /* level21.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = level21.json; sourceTree = "<group>"; };
 		6260A7091F89196C001F6DCD /* TPiece.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TPiece.cpp; sourceTree = "<group>"; };
 		6260A70A1F89196C001F6DCD /* TPiece.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TPiece.hpp; sourceTree = "<group>"; };
+		6260A70C1F8A22E4001F6DCD /* PlusPiece.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PlusPiece.cpp; sourceTree = "<group>"; };
+		6260A70D1F8A22E4001F6DCD /* PlusPiece.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PlusPiece.hpp; sourceTree = "<group>"; };
+		6260A70F1F8A265A001F6DCD /* level22.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = level22.json; sourceTree = "<group>"; };
 		626C4D8B1EEC107E000D4DF6 /* settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings.png; sourceTree = "<group>"; };
 		626C4D8F1EEC19DF000D4DF6 /* MapController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MapController.cpp; sourceTree = "<group>"; };
 		626C4D901EEC19DF000D4DF6 /* MapController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MapController.hpp; sourceTree = "<group>"; };
@@ -793,6 +798,7 @@
 				6260A6DA1F853CBA001F6DCD /* level19.json */,
 				6260A6E21F8695AF001F6DCD /* level20.json */,
 				6260A7071F8912D2001F6DCD /* level21.json */,
+				6260A70F1F8A265A001F6DCD /* level22.json */,
 				624332861EBF188400485D2E /* map.json */,
 				626C4D8B1EEC107E000D4DF6 /* settings.png */,
 				62129A3B1E87F01600BF8377 /* sky_2.jpg */,
@@ -1460,6 +1466,8 @@
 				624447771EDDD2C40080ECE8 /* MirroredSevenPiece.hpp */,
 				6260A6E71F86A0AA001F6DCD /* MirroredZPiece.cpp */,
 				6260A6E81F86A0AA001F6DCD /* MirroredZPiece.hpp */,
+				6260A70C1F8A22E4001F6DCD /* PlusPiece.cpp */,
+				6260A70D1F8A22E4001F6DCD /* PlusPiece.hpp */,
 				622F7F311F234E3D00E965AF /* PyramidPiece.cpp */,
 				622F7F321F234E3D00E965AF /* PyramidPiece.hpp */,
 				6244477A1EDDD2C40080ECE8 /* RowBomb.cpp */,
@@ -1698,6 +1706,7 @@
 				623B32F11F17AC12000C64A1 /* Text.frag in Resources */,
 				623B32FA1F17AC12000C64A1 /* VertexLighting.vert in Resources */,
 				6260A6E31F8695B4001F6DCD /* level20.json in Resources */,
+				6260A7101F8A265F001F6DCD /* level22.json in Resources */,
 				621729201E912AAC00C4F31B /* star.obj in Resources */,
 				623B32F21F17AC12000C64A1 /* Text.vert in Resources */,
 				6280AF7A1F2E09B200FFAF9B /* level14.json in Resources */,
@@ -1768,6 +1777,7 @@
 				623B32DD1F17AC12000C64A1 /* ImageIOS.mm in Sources */,
 				623B33061F17AC12000C64A1 /* FileStorage.cpp in Sources */,
 				620A98311EE2F50A00AD6C61 /* LevelCompletedDialogController.cpp in Sources */,
+				6260A70E1F8A22E4001F6DCD /* PlusPiece.cpp in Sources */,
 				6260A6FF1F87E5A2001F6DCD /* CylinderMesh.cpp in Sources */,
 				623B31D31F17A325000C64A1 /* BlueprintSlotsFilledAnimation.cpp in Sources */,
 				623B32D91F17AC11000C64A1 /* AppDelegate.mm in Sources */,
