@@ -12,7 +12,6 @@ Backlog:
     -For bombs there could be a transparent quad showing the blast radius in swipe mode. In click
      mode the blast radius could be shown when touching a move alternative.
     -There should be no fade in/out when going from for example game menu to settings menu.
-    -Since the field should not be clipped the next pieces background can be more white.
     -The SlidingMenuAnimation could slide in from the side instead.
     -Add heading to the green dialogs.
     -Try 1334×750 resolution for iPhone7.
@@ -64,6 +63,7 @@ Backlog:
     -Credit the icon creator: <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
   
 Ongoing tasks:
+    -Texture cache.
     -Trickier pieces.
     -More long levels with not too many moves.
     -Office.

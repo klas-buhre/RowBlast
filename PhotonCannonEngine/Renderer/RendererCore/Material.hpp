@@ -1,8 +1,7 @@
 #ifndef Material_hpp
 #define Material_hpp
 
-#include <string>
-#include <OpenGLES/ES3/gl.h>
+#include "TextureCache.hpp"
 
 namespace Pht {
     struct Color {
@@ -15,15 +14,6 @@ namespace Pht {
         }
     };
     
-    struct CubeMapTextures {
-        std::string mPositiveX;
-        std::string mNegativeX;
-        std::string mPositiveY;
-        std::string mNegativeY;
-        std::string mPositiveZ;
-        std::string mNegativeZ;
-    };
-    
     enum class ShaderType {
         PixelLighting,
         VertexLighting,
@@ -34,17 +24,10 @@ namespace Pht {
         Particle
     };
     
-    enum class GenerateMipmap {
-        Yes,
-        No
-    };
-    
     enum class Blend {
         Yes,
         No
     };
-    
-    class IImage;
 
     class Material {
     public:

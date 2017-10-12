@@ -197,6 +197,7 @@
 		6260A7101F8A265F001F6DCD /* level22.json in Resources */ = {isa = PBXBuildFile; fileRef = 6260A70F1F8A265A001F6DCD /* level22.json */; };
 		6260A7161F8A5E51001F6DCD /* sky_blurred.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6260A7151F8A5E4C001F6DCD /* sky_blurred.jpg */; };
 		6260A71C1F8A6FA0001F6DCD /* sky_upside_down_patched_mirrored.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6260A71B1F8A6F5C001F6DCD /* sky_upside_down_patched_mirrored.jpg */; };
+		6260A71F1F8FB8A8001F6DCD /* TextureCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6260A71D1F8FB8A8001F6DCD /* TextureCache.cpp */; };
 		626C4D8C1EEC107E000D4DF6 /* settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 626C4D8B1EEC107E000D4DF6 /* settings.png */; };
 		626C4D9E1EEC19DF000D4DF6 /* MapController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 626C4D8F1EEC19DF000D4DF6 /* MapController.cpp */; };
 		626C4D9F1EEC19DF000D4DF6 /* MapHud.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 626C4D911EEC19DF000D4DF6 /* MapHud.cpp */; };
@@ -675,6 +676,8 @@
 		6260A70F1F8A265A001F6DCD /* level22.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = level22.json; sourceTree = "<group>"; };
 		6260A7151F8A5E4C001F6DCD /* sky_blurred.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sky_blurred.jpg; sourceTree = "<group>"; };
 		6260A71B1F8A6F5C001F6DCD /* sky_upside_down_patched_mirrored.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sky_upside_down_patched_mirrored.jpg; sourceTree = "<group>"; };
+		6260A71D1F8FB8A8001F6DCD /* TextureCache.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TextureCache.cpp; sourceTree = "<group>"; };
+		6260A71E1F8FB8A8001F6DCD /* TextureCache.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TextureCache.hpp; sourceTree = "<group>"; };
 		626C4D8B1EEC107E000D4DF6 /* settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings.png; sourceTree = "<group>"; };
 		626C4D8F1EEC19DF000D4DF6 /* MapController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MapController.cpp; sourceTree = "<group>"; };
 		626C4D901EEC19DF000D4DF6 /* MapController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MapController.hpp; sourceTree = "<group>"; };
@@ -955,6 +958,8 @@
 				623B32111F17AC11000C64A1 /* ShaderProgram.hpp */,
 				623B32121F17AC11000C64A1 /* TextRenderer.cpp */,
 				623B32131F17AC11000C64A1 /* TextRenderer.hpp */,
+				6260A71D1F8FB8A8001F6DCD /* TextureCache.cpp */,
+				6260A71E1F8FB8A8001F6DCD /* TextureCache.hpp */,
 				623B32141F17AC11000C64A1 /* VertexBuffer.cpp */,
 				623B32151F17AC11000C64A1 /* VertexBuffer.hpp */,
 			);
@@ -1818,6 +1823,7 @@
 				6260A70B1F89196C001F6DCD /* TPiece.cpp in Sources */,
 				623B32D41F17AC11000C64A1 /* Font.cpp in Sources */,
 				623B32E01F17AC12000C64A1 /* MathUtils.cpp in Sources */,
+				6260A71F1F8FB8A8001F6DCD /* TextureCache.cpp in Sources */,
 				624693A01EFD1637004AF2A1 /* ProgressManager.cpp in Sources */,
 				623C16D31F51A7D600305752 /* ValidMovesSearch.cpp in Sources */,
 				624447CE1EDDD2C40080ECE8 /* TrianglePiece.cpp in Sources */,
