@@ -10,18 +10,107 @@
 using namespace Pht;
 
 namespace {
-    struct TwoDTexture: public Texture {
+    struct TwoDTexture {
         std::string mFilename;
         GenerateMipmap mGenerateMipmap;
     };
 
-    struct CubeTexture: public Texture {
-        CubeMapTextures mFilenames;
-    };
-    
     static std::mutex mutex;
-    static std::vector<std::weak_ptr<TwoDTexture>> twoDTextures;
-    static std::vector<std::weak_ptr<CubeTexture>> cubeDTextures;
+    static std::vector<std::pair<TwoDTexture, std::weak_ptr<Texture>>> twoDTextures;
+    static std::vector<std::pair<EnvMapTextureFilenames, std::weak_ptr<Texture>>> envMapTextures;
+    
+    GLenum ToGlTextureFormat(ImageFormat format) {
+        switch (format) {
+            case ImageFormat::Gray:
+                return GL_LUMINANCE;
+            case ImageFormat::GrayAlpha:
+                return GL_LUMINANCE_ALPHA;
+            case ImageFormat::Rgb:
+                return GL_RGB;
+            case ImageFormat::Rgba:
+                return GL_RGBA;
+        }
+    }
+    
+    GLenum ToGlType(int numBits, GLenum format) {
+        switch (numBits) {
+            case 8:
+                return GL_UNSIGNED_BYTE;
+            case 4:
+                if (format == GL_RGBA) {
+                    return GL_UNSIGNED_SHORT_4_4_4_4;
+                } else {
+                    assert(!"Unsupported format.");
+                }
+                break;
+            default:
+                assert(!"Unsupported format.");
+        }
+    }
+    
+    void GlTexImage(GLenum target, const IImage& image) {
+        auto format {ToGlTextureFormat(image.GetFormat())};
+        auto type {ToGlType(image.GetBitsPerComponent(), format)};
+        auto* data {image.GetImageData()};
+        auto size {image.GetSize()};
+        glTexImage2D(target, 0, format, size.x, size.y, 0, format, type, data);
+    }
+    
+    void GlTexImage(GLenum target, const std::string& filename) {
+        auto image {Pht::LoadImage(filename)};
+        GlTexImage(target, *image);
+    }
+    
+    std::shared_ptr<Texture> CreateTexture(const IImage& image, GenerateMipmap generateMipmap) {
+        auto texture {std::make_shared<Texture>()};
+        
+        glBindTexture(GL_TEXTURE_2D, texture->GetHandle());
+        
+        if (generateMipmap == GenerateMipmap::Yes) {
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        } else {
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+        }
+
+        GlTexImage(GL_TEXTURE_2D, image);
+        
+        if (generateMipmap == GenerateMipmap::Yes) {
+            glGenerateMipmap(GL_TEXTURE_2D);
+        }
+        
+        return texture;
+    }
+    
+    std::shared_ptr<Texture> CreateEnvMapTexture(const EnvMapTextureFilenames& filenames) {
+        auto texture {std::make_shared<Texture>()};
+        
+        glBindTexture(GL_TEXTURE_CUBE_MAP, texture->GetHandle());
+        
+        GlTexImage(GL_TEXTURE_CUBE_MAP_POSITIVE_X, filenames.mPositiveX);
+        GlTexImage(GL_TEXTURE_CUBE_MAP_NEGATIVE_X, filenames.mNegativeX);
+        GlTexImage(GL_TEXTURE_CUBE_MAP_POSITIVE_Y, filenames.mPositiveY);
+        GlTexImage(GL_TEXTURE_CUBE_MAP_NEGATIVE_Y, filenames.mNegativeY);
+        GlTexImage(GL_TEXTURE_CUBE_MAP_POSITIVE_Z, filenames.mPositiveZ);
+        GlTexImage(GL_TEXTURE_CUBE_MAP_NEGATIVE_Z, filenames.mNegativeZ);
+        
+        glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+        glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glGenerateMipmap(GL_TEXTURE_CUBE_MAP);
+        
+        return texture;
+    }
+}
+
+bool EnvMapTextureFilenames::operator==(const EnvMapTextureFilenames& other) const {
+    return mPositiveX == other.mPositiveX && mNegativeX == other.mNegativeX &&
+           mPositiveY == other.mPositiveY && mNegativeY == other.mNegativeY &&
+           mPositiveZ == other.mPositiveZ && mNegativeZ == other.mNegativeZ;
+}
+
+Texture::Texture() {
+    glGenTextures(1, &mHandle);
 }
 
 Texture::~Texture() {
@@ -36,19 +125,51 @@ std::shared_ptr<Texture> TextureCache::GetTexture(const std::string& textureName
         std::remove_if(
             std::begin(twoDTextures),
             std::end(twoDTextures),
-            [] (const auto& texture) { return texture.lock() == std::shared_ptr<TwoDTexture>(); }),
+            [] (const auto& entry) { return entry.second.lock() == std::shared_ptr<Texture>(); }),
         std::end(twoDTextures));
     
-    for (const auto& texturePtr: twoDTextures) {
-        if (auto texture {texturePtr.lock()}) {
-            if (textureName == texture->mFilename && generateMipmap == texture->mGenerateMipmap) {
+    for (const auto& entry: twoDTextures) {
+        if (auto texture {entry.second.lock()}) {
+            auto& key {entry.first};
+            
+            if (textureName == key.mFilename && generateMipmap == key.mGenerateMipmap) {
                 return texture;
             }
         }
     }
     
     auto image {Pht::LoadImage(textureName)};
-    // auto textureHandle {InitTexture(*image, generateMipmap)};
+    auto texture {CreateTexture(*image, generateMipmap)};
+    twoDTextures.push_back(std::make_pair(TwoDTexture{textureName, generateMipmap}, texture));
+    return texture;
+}
+
+std::shared_ptr<Texture> TextureCache::GetTexture(const EnvMapTextureFilenames& filenames) {
+    std::lock_guard<std::mutex> guard(mutex);
     
-    return nullptr;
+    envMapTextures.erase(
+        std::remove_if(
+            std::begin(envMapTextures),
+            std::end(envMapTextures),
+            [] (const auto& entry) { return entry.second.lock() == std::shared_ptr<Texture>(); }),
+        std::end(envMapTextures));
+    
+    for (const auto& entry: envMapTextures) {
+        if (auto texture {entry.second.lock()}) {
+            auto& key {entry.first};
+            
+            if (filenames == key) {
+                return texture;
+            }
+        }
+    }
+
+    auto texture {CreateEnvMapTexture(filenames)};
+    envMapTextures.push_back(std::make_pair(filenames, texture));
+    return texture;
+}
+
+std::shared_ptr<Texture> TextureCache::InitTexture(const IImage& image,
+                                                   GenerateMipmap generateMipmap) {
+    return CreateTexture(image, generateMipmap);
 }

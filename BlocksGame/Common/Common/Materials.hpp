@@ -52,14 +52,14 @@ namespace BlocksGame {
         }
         
     private:
-        void CreateGoldMaterial(const Pht::CubeMapTextures& cubeMapTextures);
-        void CreateBlueMaterial(const Pht::CubeMapTextures& cubeMapTextures);
-        void CreateRedMaterial(const Pht::CubeMapTextures& cubeMapTextures);
-        void CreateGreenMaterial(const Pht::CubeMapTextures& cubeMapTextures);
-        void CreateGrayMaterial(const Pht::CubeMapTextures& cubeMapTextures);
-        void CreateDarkGrayMaterial(const Pht::CubeMapTextures& cubeMapTextures);
-        void CreateLightGrayMaterial(const Pht::CubeMapTextures& cubeMapTextures);
-        void CreateYellowMaterial(const Pht::CubeMapTextures& cubeMapTextures);
+        void CreateGoldMaterial(const Pht::EnvMapTextureFilenames& envMapTextures);
+        void CreateBlueMaterial(const Pht::EnvMapTextureFilenames& envMapTextures);
+        void CreateRedMaterial(const Pht::EnvMapTextureFilenames& envMapTextures);
+        void CreateGreenMaterial(const Pht::EnvMapTextureFilenames& envMapTextures);
+        void CreateGrayMaterial(const Pht::EnvMapTextureFilenames& envMapTextures);
+        void CreateDarkGrayMaterial(const Pht::EnvMapTextureFilenames& envMapTextures);
+        void CreateLightGrayMaterial(const Pht::EnvMapTextureFilenames& envMapTextures);
+        void CreateYellowMaterial(const Pht::EnvMapTextureFilenames& envMapTextures);
         void CreateSkyMaterial();
         
         std::unique_ptr<Pht::Material> mGoldMaterial;

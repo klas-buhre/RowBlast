@@ -4,7 +4,7 @@ using namespace BlocksGame;
 
 Materials::Materials(Pht::IEngine& engine) {
     std::string envMapTexture {"sky_upside_down.jpg"};
-    Pht::CubeMapTextures cubeMapTextures {
+    Pht::EnvMapTextureFilenames envMapTextures {
         envMapTexture,
         envMapTexture,
         envMapTexture,
@@ -13,24 +13,24 @@ Materials::Materials(Pht::IEngine& engine) {
         envMapTexture
     };
 
-    CreateGoldMaterial(cubeMapTextures);
-    CreateBlueMaterial(cubeMapTextures);
-    CreateRedMaterial(cubeMapTextures);
-    CreateGreenMaterial(cubeMapTextures);
-    CreateGrayMaterial(cubeMapTextures);
-    CreateDarkGrayMaterial(cubeMapTextures);
-    CreateLightGrayMaterial(cubeMapTextures);
-    CreateYellowMaterial(cubeMapTextures);
+    CreateGoldMaterial(envMapTextures);
+    CreateBlueMaterial(envMapTextures);
+    CreateRedMaterial(envMapTextures);
+    CreateGreenMaterial(envMapTextures);
+    CreateGrayMaterial(envMapTextures);
+    CreateDarkGrayMaterial(envMapTextures);
+    CreateLightGrayMaterial(envMapTextures);
+    CreateYellowMaterial(envMapTextures);
     CreateSkyMaterial();
 }
 
-void Materials::CreateGoldMaterial(const Pht::CubeMapTextures& cubeMapTextures) {
+void Materials::CreateGoldMaterial(const Pht::EnvMapTextureFilenames& envMapTextures) {
     Pht::Color ambient {1.0f, 0.5f, 0.0f};
     Pht::Color diffuse {1.0f, 0.5f, 0.0f};
     Pht::Color specular {1.0f, 1.0f, 1.0f};
     auto shininess {20.0f};
     auto reflectivity {0.95f};
-    mGoldMaterial = std::make_unique<Pht::Material>(cubeMapTextures,
+    mGoldMaterial = std::make_unique<Pht::Material>(envMapTextures,
                                                     ambient,
                                                     diffuse,
                                                     specular,
@@ -38,13 +38,13 @@ void Materials::CreateGoldMaterial(const Pht::CubeMapTextures& cubeMapTextures) 
                                                     reflectivity);
 }
 
-void Materials::CreateBlueMaterial(const Pht::CubeMapTextures& cubeMapTextures) {
+void Materials::CreateBlueMaterial(const Pht::EnvMapTextureFilenames& envMapTextures) {
     Pht::Color ambient {0.0f, 0.5f, 1.0f};
     Pht::Color diffuse {0.0f, 0.5f, 1.0f};
     Pht::Color specular {1.0f, 1.0f, 1.0f};
     auto shininess {20.0f};
     auto reflectivity {1.0f};
-    mBlueMaterial = std::make_unique<Pht::Material>(cubeMapTextures,
+    mBlueMaterial = std::make_unique<Pht::Material>(envMapTextures,
                                                     ambient,
                                                     diffuse,
                                                     specular,
@@ -52,13 +52,13 @@ void Materials::CreateBlueMaterial(const Pht::CubeMapTextures& cubeMapTextures) 
                                                     reflectivity);
 }
 
-void Materials::CreateRedMaterial(const Pht::CubeMapTextures& cubeMapTextures) {
+void Materials::CreateRedMaterial(const Pht::EnvMapTextureFilenames& envMapTextures) {
     Pht::Color ambient {1.0f, 0.2f, 0.2f};
     Pht::Color diffuse {1.0f, 0.2f, 0.2f};
     Pht::Color specular {1.0f, 1.0f, 1.0f};
     auto shininess {20.0f};
     auto reflectivity {0.9f};
-    mRedMaterial = std::make_unique<Pht::Material>(cubeMapTextures,
+    mRedMaterial = std::make_unique<Pht::Material>(envMapTextures,
                                                    ambient,
                                                    diffuse,
                                                    specular,
@@ -66,13 +66,13 @@ void Materials::CreateRedMaterial(const Pht::CubeMapTextures& cubeMapTextures) {
                                                    reflectivity);
 }
 
-void Materials::CreateGreenMaterial(const Pht::CubeMapTextures& cubeMapTextures) {
+void Materials::CreateGreenMaterial(const Pht::EnvMapTextureFilenames& envMapTextures) {
     Pht::Color ambient {0.1f, 0.60f, 0.1f};
     Pht::Color diffuse {0.1f, 0.60f, 0.1f};
     Pht::Color specular {1.0f, 1.0f, 1.0f};
     auto shininess {20.0f};
     auto reflectivity {0.95f};
-    mGreenMaterial = std::make_unique<Pht::Material>(cubeMapTextures,
+    mGreenMaterial = std::make_unique<Pht::Material>(envMapTextures,
                                                      ambient,
                                                      diffuse,
                                                      specular,
@@ -80,13 +80,13 @@ void Materials::CreateGreenMaterial(const Pht::CubeMapTextures& cubeMapTextures)
                                                      reflectivity);
 }
 
-void Materials::CreateGrayMaterial(const Pht::CubeMapTextures& cubeMapTextures) {
+void Materials::CreateGrayMaterial(const Pht::EnvMapTextureFilenames& envMapTextures) {
     Pht::Color ambient {0.5f, 0.5f, 0.45f};
     Pht::Color diffuse {0.5f, 0.5f, 0.45f};
     Pht::Color specular {1.0f, 1.0f, 1.0f};
     auto shininess {30.0f};
     auto reflectivity {1.0f};
-    mGrayMaterial = std::make_unique<Pht::Material>(cubeMapTextures,
+    mGrayMaterial = std::make_unique<Pht::Material>(envMapTextures,
                                                     ambient,
                                                     diffuse,
                                                     specular,
@@ -94,13 +94,13 @@ void Materials::CreateGrayMaterial(const Pht::CubeMapTextures& cubeMapTextures) 
                                                     reflectivity);
 }
 
-void Materials::CreateDarkGrayMaterial(const Pht::CubeMapTextures& cubeMapTextures) {
+void Materials::CreateDarkGrayMaterial(const Pht::EnvMapTextureFilenames& envMapTextures) {
     Pht::Color ambient {0.4f, 0.4f, 0.4f};
     Pht::Color diffuse {0.4f, 0.4f, 0.4f};
     Pht::Color specular {1.0f, 1.0f, 1.0f};
     auto shininess {20.0f};
     auto reflectivity {1.0f};
-    mDarkGrayMaterial = std::make_unique<Pht::Material>(cubeMapTextures,
+    mDarkGrayMaterial = std::make_unique<Pht::Material>(envMapTextures,
                                                         ambient,
                                                         diffuse,
                                                         specular,
@@ -108,13 +108,13 @@ void Materials::CreateDarkGrayMaterial(const Pht::CubeMapTextures& cubeMapTextur
                                                         reflectivity);
 }
 
-void Materials::CreateLightGrayMaterial(const Pht::CubeMapTextures& cubeMapTextures) {
+void Materials::CreateLightGrayMaterial(const Pht::EnvMapTextureFilenames& envMapTextures) {
     Pht::Color ambient {0.55f, 0.55f, 0.55f};
     Pht::Color diffuse {0.55f, 0.55f, 0.55f};
     Pht::Color specular {1.0f, 1.0f, 1.0f};
     auto shininess {20.0f};
     auto reflectivity {1.0f};
-    mLightGrayMaterial = std::make_unique<Pht::Material>(cubeMapTextures,
+    mLightGrayMaterial = std::make_unique<Pht::Material>(envMapTextures,
                                                          ambient,
                                                          diffuse,
                                                          specular,
@@ -122,13 +122,13 @@ void Materials::CreateLightGrayMaterial(const Pht::CubeMapTextures& cubeMapTextu
                                                          reflectivity);
 }
 
-void Materials::CreateYellowMaterial(const Pht::CubeMapTextures& cubeMapTextures) {
+void Materials::CreateYellowMaterial(const Pht::EnvMapTextureFilenames& envMapTextures) {
     Pht::Color ambient {0.96f, 0.62f, 0.0f};
     Pht::Color diffuse {0.96f, 0.62f, 0.0f};
     Pht::Color specular {1.0f, 1.0f, 1.0f};
     auto shininess {20.0f};
     auto reflectivity {0.95f};
-    mYellowMaterial = std::make_unique<Pht::Material>(cubeMapTextures,
+    mYellowMaterial = std::make_unique<Pht::Material>(envMapTextures,
                                                       ambient,
                                                       diffuse,
                                                       specular,

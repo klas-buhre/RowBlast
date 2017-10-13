@@ -39,7 +39,7 @@ namespace Pht {
                  float diffuse,
                  float specular,
                  float shininess);
-        Material(const CubeMapTextures& cubeMapTextures,
+        Material(const EnvMapTextureFilenames& envMapTextureFilenames,
                  const Color& ambient,
                  const Color& diffuse, 
                  const Color& specular, 
@@ -52,6 +52,7 @@ namespace Pht {
         explicit Material(const Color& color);
         
         Blend GetBlend() const;
+        GLuint GetTexture() const;
 
         const Color& GetAmbient() const {
             return mAmbient;
@@ -104,23 +105,16 @@ namespace Pht {
         void SetShaderType(ShaderType shaderType) {
             mShaderType = shaderType;
         }
-        
-        GLuint GetTexture() const {
-            return mTexture;
-        }
 
     private:
-        void InitTexture(const IImage& image, GenerateMipmap generateMipmap);
-        void InitCubeTexures(const CubeMapTextures& filenames);
-        
         Color mAmbient;
         Color mDiffuse;
         Color mSpecular;
         float mShininess {0.0f};
         float mReflectivity {0.0f};
         float mOpacity {1.0f};
-        GLuint mTexture {0};
         ShaderType mShaderType {ShaderType::VertexLighting};
+        std::shared_ptr<Texture> mTexture;
         Blend mBlend {Blend::No};
     };
 }

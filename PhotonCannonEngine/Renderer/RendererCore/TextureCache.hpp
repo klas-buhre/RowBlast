@@ -14,17 +14,20 @@ namespace Pht {
     
     class Texture {
     public:
-        virtual ~Texture();
+        Texture();
+        ~Texture();
         
         GLuint GetHandle() const {
             return mHandle;
         }
         
-    protected:
+    private:
         GLuint mHandle {0};
     };
     
-    struct CubeMapTextures {
+    struct EnvMapTextureFilenames {
+        bool operator==(const EnvMapTextureFilenames& other) const;
+        
         std::string mPositiveX;
         std::string mNegativeX;
         std::string mPositiveY;
@@ -38,7 +41,7 @@ namespace Pht {
     namespace TextureCache {
         std::shared_ptr<Texture> GetTexture(const std::string& textureName,
                                             GenerateMipmap generateMipmap);
-        std::shared_ptr<Texture> GetTexture(const CubeMapTextures& filenames);
+        std::shared_ptr<Texture> GetTexture(const EnvMapTextureFilenames& filenames);
         std::shared_ptr<Texture> InitTexture(const IImage& image, GenerateMipmap generateMipmap);
     }
 }
