@@ -140,7 +140,7 @@ void ParticleSystem::WritePoints() {
         }
     }
     
-    mRenderableObject->UploadPoints(*mVertexBuffer);
+    mRenderableObject->UploadPoints(*mVertexBuffer, BufferUsage::DynamicDraw);
 }
 
 void ParticleSystem::WriteTriangles() {
@@ -150,7 +150,7 @@ void ParticleSystem::WriteTriangles() {
         }
     }
     
-    mRenderableObject->UploadTriangles(*mVertexBuffer);
+    mRenderableObject->UploadTriangles(*mVertexBuffer, BufferUsage::DynamicDraw);
 }
 
 void ParticleSystem::WriteParticleTriangles(const Particle& particle) {

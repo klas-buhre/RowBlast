@@ -6,6 +6,17 @@
 
 using namespace Pht;
 
+namespace {
+    GLenum ToGlBufferUsage(BufferUsage bufferUsage) {
+        switch (bufferUsage) {
+            case BufferUsage::StaticDraw:
+                return GL_STATIC_DRAW;
+            case BufferUsage::DynamicDraw:
+                return GL_DYNAMIC_DRAW;
+        }
+    }
+}
+
 RenderableObject::RenderableObject(const Material& material, const VertexBuffer& vertexBuffer) :
     mMaterial {material},
     mIndexCount {vertexBuffer.GetIndexBufferSize()} {
@@ -13,7 +24,7 @@ RenderableObject::RenderableObject(const Material& material, const VertexBuffer&
     glGenBuffers(1, &mVertexBufferId);
     glGenBuffers(1, &mIndexBufferId);
 
-    UploadTriangles(vertexBuffer);
+    UploadTriangles(vertexBuffer, BufferUsage::StaticDraw);
 }
 
 RenderableObject::RenderableObject(const Material& material, RenderMode renderMode) :
@@ -32,30 +43,32 @@ RenderableObject::~RenderableObject() {
     glDeleteBuffers(1, &mIndexBufferId);
 }
 
-void RenderableObject::UploadTriangles(const VertexBuffer& vertexBuffer) {
+void RenderableObject::UploadTriangles(const VertexBuffer& vertexBuffer, BufferUsage bufferUsage) {
     assert(mRenderMode == RenderMode::Triangles);
+    
+    auto glBufferUsage {ToGlBufferUsage(bufferUsage)};
     
     glBindBuffer(GL_ARRAY_BUFFER, mVertexBufferId);
     glBufferData(GL_ARRAY_BUFFER,
                  vertexBuffer.GetVertexBufferSize() * sizeof(float),
                  vertexBuffer.GetVertexBuffer(),
-                 GL_STATIC_DRAW);
+                 glBufferUsage);
     
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mIndexBufferId);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER,
                  vertexBuffer.GetIndexBufferSize() * sizeof(GLushort),
                  vertexBuffer.GetIndexBuffer(),
-                 GL_STATIC_DRAW);
+                 glBufferUsage);
 }
 
-void RenderableObject::UploadPoints(const VertexBuffer& vertexBuffer) {
+void RenderableObject::UploadPoints(const VertexBuffer& vertexBuffer, BufferUsage bufferUsage) {
     assert(mRenderMode == RenderMode::Points);
     
     glBindBuffer(GL_ARRAY_BUFFER, mVertexBufferId);
     glBufferData(GL_ARRAY_BUFFER,
                  vertexBuffer.GetVertexBufferSize() * sizeof(float),
                  vertexBuffer.GetVertexBuffer(),
-                 GL_DYNAMIC_DRAW);
+                 ToGlBufferUsage(bufferUsage));
     
     mPointCount = vertexBuffer.GetNumVerticesWritten();
 }

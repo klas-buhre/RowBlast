@@ -13,14 +13,19 @@ namespace Pht {
         Triangles
     };
     
+    enum class BufferUsage {
+        StaticDraw,
+        DynamicDraw
+    };
+    
     class RenderableObject {
     public:
         RenderableObject(const Material& material, const VertexBuffer& vertexBuffer);
         RenderableObject(const Material& material, RenderMode renderMode);
         ~RenderableObject();
         
-        void UploadTriangles(const VertexBuffer& vertexBuffer);
-        void UploadPoints(const VertexBuffer& vertexBuffer);
+        void UploadTriangles(const VertexBuffer& vertexBuffer, BufferUsage bufferUsage);
+        void UploadPoints(const VertexBuffer& vertexBuffer, BufferUsage bufferUsage);
         
         RenderMode GetRenderMode() const {
             return mRenderMode;
