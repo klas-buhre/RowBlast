@@ -29,8 +29,10 @@ NextLevelParticleEffect::NextLevelParticleEffect(Pht::IEngine& engine) {
         .mShrinkDuration = 1.2f
     };
     
-    mParticleEffect.mParticleSystem =
-        std::make_unique<Pht::ParticleSystem>(engine, particleSettings, particleEmitterSettings);
+    mParticleEffect.mParticleSystem = std::make_unique<Pht::ParticleSystem>(engine,
+                                                                            particleSettings,
+                                                                            particleEmitterSettings,
+                                                                            Pht::RenderMode::Points);
 }
 
 void NextLevelParticleEffect::StartEffect(const Pht::Vec3& position) {

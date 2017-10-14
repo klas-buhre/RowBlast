@@ -9,12 +9,14 @@
 #include "../Shaders/TexturedLighting.frag"
 #include "../Shaders/Textured.vert"
 #include "../Shaders/Textured.frag"
-#include "../Shaders/CubeMap.vert"
-#include "../Shaders/CubeMap.frag"
+#include "../Shaders/EnvMap.vert"
+#include "../Shaders/EnvMap.frag"
 #include "../Shaders/VertexColor.vert"
 #include "../Shaders/VertexColor.frag"
 #include "../Shaders/Particle.vert"
 #include "../Shaders/Particle.frag"
+#include "../Shaders/PointParticle.vert"
+#include "../Shaders/PointParticle.frag"
 
 #include "RenderableObject.hpp"
 #include "Material.hpp"
@@ -49,10 +51,10 @@ namespace {
         glUniform1f(uniforms.mOpacity, material.GetOpacity());
         
         switch (shaderType) {
-            case ShaderType::CubeMap:
+            case ShaderType::EnvMap:
                 glBindTexture(GL_TEXTURE_CUBE_MAP, material.GetTexture());
                 break;
-            case ShaderType::Particle:
+            case ShaderType::PointParticle:
                 glBindTexture(GL_TEXTURE_2D, material.GetTexture());
                 glDisable(GL_DEPTH_TEST);
                 break;
@@ -60,7 +62,7 @@ namespace {
                 break;
         }
         
-        if (shaderType == ShaderType::Particle) {
+        if (shaderType == ShaderType::PointParticle) {
             glEnable(GL_BLEND);
             glBlendFunc(GL_SRC_ALPHA, GL_ONE);
         } else if (material.GetBlend() == Blend::Yes) {
@@ -171,9 +173,10 @@ Renderer::Renderer(bool createRenderBuffers) :
     mVertexLightingShader   {{.mNormals = true}},
     mTexturedLightingShader {{.mNormals = true, .mTextureCoords = true}},
     mTexturedShader         {{.mTextureCoords = true}},
-    mCubeMapShader          {{.mNormals = true}},
+    mEnvMapShader           {{.mNormals = true}},
     mVertexColorShader      {{.mColors = true}},
-    mParticleShader         {{.mColors = true, .mPointSizes = true}} {
+    mParticleShader         {{.mTextureCoords = true, .mColors = true}},
+    mPointParticleShader    {{.mColors = true, .mPointSizes = true}} {
     
     if (createRenderBuffers) {
         glGenRenderbuffers(1, &mColorRenderbuffer);
@@ -260,9 +263,10 @@ void Renderer::InitShaders() {
     mVertexLightingShader.Build(VertexLightingVertexShader, VertexLightingFragmentShader);
     mTexturedLightingShader.Build(TexturedLightingVertexShader, TexturedLightingFragmentShader);
     mTexturedShader.Build(TexturedVertexShader, TexturedFragmentShader);
-    mCubeMapShader.Build(CubeMapVertexShader, CubeMapFragmentShader);
+    mEnvMapShader.Build(EnvMapVertexShader, EnvMapFragmentShader);
     mVertexColorShader.Build(VertexColorVertexShader, VertexColorFragmentShader);
     mParticleShader.Build(ParticleVertexShader, ParticleFragmentShader);
+    mPointParticleShader.Build(PointParticleVertexShader, PointParticleFragmentShader);
     
     SetupProjectionInShaders();
 }
@@ -274,9 +278,10 @@ void Renderer::SetupProjectionInShaders() {
     mVertexLightingShader.SetProjection(projectionMatrix);
     mTexturedLightingShader.SetProjection(projectionMatrix);
     mTexturedShader.SetProjection(projectionMatrix);
-    mCubeMapShader.SetProjection(projectionMatrix);
+    mEnvMapShader.SetProjection(projectionMatrix);
     mVertexColorShader.SetProjection(projectionMatrix);
     mParticleShader.SetProjection(projectionMatrix);
+    mPointParticleShader.SetProjection(projectionMatrix);
 }
 
 void Renderer::ClearBuffers() {
@@ -305,8 +310,9 @@ void Renderer::SetLightPositionInShaders() {
     mVertexLightingShader.SetLightPosition(normalizedLightPosition);
     mTexturedLightingShader.SetLightPosition(normalizedLightPosition);
     mTexturedShader.SetLightPosition(normalizedLightPosition);
-    mCubeMapShader.SetLightPosition(normalizedLightPosition);
+    mEnvMapShader.SetLightPosition(normalizedLightPosition);
     mParticleShader.SetLightPosition(normalizedLightPosition);
+    mPointParticleShader.SetLightPosition(normalizedLightPosition);
 }
 
 void Renderer::SetClearColorBuffer(bool clearColorBuffer) {
@@ -378,7 +384,7 @@ void Renderer::Render(const RenderableObject& object, const Mat4& modelTransform
     
     DisableVertexAttributes(shaderProgram);
     
-    if (shaderType == ShaderType::Particle) {
+    if (shaderType == ShaderType::PointParticle) {
         SetDepthTest(true);
     }
 }
@@ -412,12 +418,14 @@ ShaderProgram& Renderer::GetShaderProgram(ShaderType shaderType) {
             return mTexturedLightingShader; 
         case ShaderType::Textured:
             return mTexturedShader;
-        case ShaderType::CubeMap:
-            return mCubeMapShader;
+        case ShaderType::EnvMap:
+            return mEnvMapShader;
         case ShaderType::VertexColor:
             return mVertexColorShader;
         case ShaderType::Particle:
             return mParticleShader;
+        case ShaderType::PointParticle:
+            return mPointParticleShader;
     }
 }
 

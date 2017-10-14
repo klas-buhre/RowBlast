@@ -1,4 +1,4 @@
-static const char* CubeMapVertexShader = STRINGIFY(
+static const char* EnvMapVertexShader = STRINGIFY(
 
 attribute vec4 Position;
 attribute vec3 Normal;

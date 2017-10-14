@@ -21,7 +21,7 @@ VertexBuffer::VertexBuffer(int vertexCount, int indexCount, VertexFlags flags) :
     
     mVertexBuffer.resize(vertexCount * mFloatsPerVertex);
     mVertexBufferPtr = &mVertexBuffer[0];
-    mTriangleIndices.reserve(indexCount);
+    mTriangleIndices.resize(indexCount);
 }
 
 void VertexBuffer::BeginFace() {
@@ -31,6 +31,7 @@ void VertexBuffer::BeginFace() {
 void VertexBuffer::Reset() {
     mVertexBufferPtr = &mVertexBuffer[0];
     mVerticesWritten = 0;
+    mIndicesWritten = 0;
     BeginFace();
 }
 
@@ -47,7 +48,23 @@ void VertexBuffer::Write(const Vec3& vertex, const Vec3& normal, const Vec2& tex
         mVertexBufferPtr = textureCoord.Write(mVertexBufferPtr);
     }
     
-    mVerticesWritten++;
+    ++mVerticesWritten;
+}
+
+void VertexBuffer::Write(const Vec3& vertex, const Vec2& textureCoord, const Vec4& color) {
+    ResizeIfNeeded();
+
+    mVertexBufferPtr = vertex.Write(mVertexBufferPtr);
+
+    if (mFlags.mTextureCoords) {
+        mVertexBufferPtr = textureCoord.Write(mVertexBufferPtr);
+    }
+
+    if (mFlags.mColors) {
+        mVertexBufferPtr = color.Write(mVertexBufferPtr);
+    }
+
+    ++mVerticesWritten;
 }
 
 void VertexBuffer::Write(const Vec3& vertex, const Vec4& color, float pointSize) {
@@ -64,11 +81,16 @@ void VertexBuffer::Write(const Vec3& vertex, const Vec4& color, float pointSize)
         ++mVertexBufferPtr;
     }
     
-    mVerticesWritten++;
+    ++mVerticesWritten;
 }
 
 void VertexBuffer::AddIndex(unsigned short index) {
-    mTriangleIndices.push_back(mFaceBeginVertex + index);
+    if (mIndicesWritten >= mTriangleIndices.size()) {
+        mTriangleIndices.resize(mTriangleIndices.size() * 2);
+    }
+    
+    mTriangleIndices[mIndicesWritten] = mFaceBeginVertex + index;
+    ++mIndicesWritten;
 }
 
 const float* VertexBuffer::GetVertexBuffer() const {
@@ -84,7 +106,7 @@ int VertexBuffer::GetVertexBufferSize() const {
 }
 
 int VertexBuffer::GetIndexBufferSize() const {
-    return static_cast<int>(mTriangleIndices.size());
+    return mIndicesWritten;
 }
 
 void VertexBuffer::ResizeIfNeeded() {

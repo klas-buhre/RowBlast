@@ -19,9 +19,10 @@ namespace Pht {
         VertexLighting,
         TexturedLighting,
         Textured,
-        CubeMap,
+        EnvMap,
         VertexColor,
-        Particle
+        Particle,
+        PointParticle
     };
     
     enum class Blend {

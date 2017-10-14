@@ -19,6 +19,7 @@ namespace Pht {
         void BeginFace();
         void Reset();
         void Write(const Vec3& vertex, const Vec3& normal, const Vec2& textureCoord);
+        void Write(const Vec3& vertex, const Vec2& textureCoord, const Vec4& color);
         void Write(const Vec3& vertex, const Vec4& color, float pointSize = 0);
         void AddIndex(unsigned short index);
         const float* GetVertexBuffer() const;
@@ -40,6 +41,7 @@ namespace Pht {
         std::vector<unsigned short> mTriangleIndices;
         unsigned short mFaceBeginVertex {0};
         unsigned short mVerticesWritten {0};
+        unsigned short mIndicesWritten {0};
     };
 }
 

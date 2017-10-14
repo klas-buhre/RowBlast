@@ -16,7 +16,8 @@ namespace Pht {
     public:
         ParticleSystem(IEngine& engine,
                        const ParticleSettings& particleSettings,
-                       const EmitterSettings& emitterSettings);
+                       const EmitterSettings& emitterSettings,
+                       RenderMode renderMode);
         
         void Start();
         bool Update();
@@ -32,11 +33,15 @@ namespace Pht {
         
     private:
         void WriteVertexBuffer();
+        void WritePoints();
+        void WriteTriangles();
+        void WriteParticleTriangles(const Particle& particle);
         
-        std::vector<Particle> mParticles;
-        VertexBuffer mVertexBuffer;
         IEngine& mEngine;
         ParticleEmitter mEmitter;
+        RenderMode mRenderMode {RenderMode::Triangles};
+        std::vector<Particle> mParticles;
+        std::unique_ptr<VertexBuffer> mVertexBuffer;
         std::unique_ptr<RenderableObject> mRenderableObject;
         bool mIsActive {false};
     };

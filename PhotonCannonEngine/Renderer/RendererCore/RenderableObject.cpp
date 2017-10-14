@@ -10,33 +10,42 @@ RenderableObject::RenderableObject(const Material& material, const VertexBuffer&
     mMaterial {material},
     mIndexCount {vertexBuffer.GetIndexBufferSize()} {
     
-    // Create the VBO for the vertices, normals and texture coords.
     glGenBuffers(1, &mVertexBufferId);
+    glGenBuffers(1, &mIndexBufferId);
+
+    UploadTriangles(vertexBuffer);
+}
+
+RenderableObject::RenderableObject(const Material& material, RenderMode renderMode) :
+    mRenderMode {renderMode},
+    mMaterial {material} {
+    
+    glGenBuffers(1, &mVertexBufferId);
+    
+    if (renderMode == RenderMode::Triangles) {
+        glGenBuffers(1, &mIndexBufferId);
+    }
+}
+
+RenderableObject::~RenderableObject() {
+    glDeleteBuffers(1, &mVertexBufferId);
+    glDeleteBuffers(1, &mIndexBufferId);
+}
+
+void RenderableObject::UploadTriangles(const VertexBuffer& vertexBuffer) {
+    assert(mRenderMode == RenderMode::Triangles);
+    
     glBindBuffer(GL_ARRAY_BUFFER, mVertexBufferId);
     glBufferData(GL_ARRAY_BUFFER,
                  vertexBuffer.GetVertexBufferSize() * sizeof(float),
                  vertexBuffer.GetVertexBuffer(),
                  GL_STATIC_DRAW);
     
-    // Create the VBO for the indices.
-    glGenBuffers(1, &mIndexBufferId);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mIndexBufferId);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER,
                  vertexBuffer.GetIndexBufferSize() * sizeof(GLushort),
                  vertexBuffer.GetIndexBuffer(),
                  GL_STATIC_DRAW);
-}
-
-RenderableObject::RenderableObject(const Material& material) :
-    mRenderMode {RenderMode::Points},
-    mMaterial {material} {
-    
-    glGenBuffers(1, &mVertexBufferId);
-}
-
-RenderableObject::~RenderableObject() {
-    glDeleteBuffers(1, &mVertexBufferId);
-    glDeleteBuffers(1, &mIndexBufferId);
 }
 
 void RenderableObject::UploadPoints(const VertexBuffer& vertexBuffer) {

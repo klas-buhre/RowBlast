@@ -72,10 +72,10 @@
 		623B32E81F17AC12000C64A1 /* ShaderProgram.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623B32101F17AC11000C64A1 /* ShaderProgram.cpp */; };
 		623B32E91F17AC12000C64A1 /* TextRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623B32121F17AC11000C64A1 /* TextRenderer.cpp */; };
 		623B32EA1F17AC12000C64A1 /* VertexBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623B32141F17AC11000C64A1 /* VertexBuffer.cpp */; };
-		623B32EB1F17AC12000C64A1 /* CubeMap.frag in Resources */ = {isa = PBXBuildFile; fileRef = 623B32171F17AC11000C64A1 /* CubeMap.frag */; };
-		623B32EC1F17AC12000C64A1 /* CubeMap.vert in Resources */ = {isa = PBXBuildFile; fileRef = 623B32181F17AC11000C64A1 /* CubeMap.vert */; };
-		623B32ED1F17AC12000C64A1 /* Particle.frag in Resources */ = {isa = PBXBuildFile; fileRef = 623B32191F17AC11000C64A1 /* Particle.frag */; };
-		623B32EE1F17AC12000C64A1 /* Particle.vert in Resources */ = {isa = PBXBuildFile; fileRef = 623B321A1F17AC11000C64A1 /* Particle.vert */; };
+		623B32EB1F17AC12000C64A1 /* EnvMap.frag in Resources */ = {isa = PBXBuildFile; fileRef = 623B32171F17AC11000C64A1 /* EnvMap.frag */; };
+		623B32EC1F17AC12000C64A1 /* EnvMap.vert in Resources */ = {isa = PBXBuildFile; fileRef = 623B32181F17AC11000C64A1 /* EnvMap.vert */; };
+		623B32ED1F17AC12000C64A1 /* PointParticle.frag in Resources */ = {isa = PBXBuildFile; fileRef = 623B32191F17AC11000C64A1 /* PointParticle.frag */; };
+		623B32EE1F17AC12000C64A1 /* PointParticle.vert in Resources */ = {isa = PBXBuildFile; fileRef = 623B321A1F17AC11000C64A1 /* PointParticle.vert */; };
 		623B32EF1F17AC12000C64A1 /* PixelLighting.frag in Resources */ = {isa = PBXBuildFile; fileRef = 623B321B1F17AC11000C64A1 /* PixelLighting.frag */; };
 		623B32F01F17AC12000C64A1 /* PixelLighting.vert in Resources */ = {isa = PBXBuildFile; fileRef = 623B321C1F17AC11000C64A1 /* PixelLighting.vert */; };
 		623B32F11F17AC12000C64A1 /* Text.frag in Resources */ = {isa = PBXBuildFile; fileRef = 623B321D1F17AC11000C64A1 /* Text.frag */; };
@@ -198,6 +198,8 @@
 		6260A7161F8A5E51001F6DCD /* sky_blurred.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6260A7151F8A5E4C001F6DCD /* sky_blurred.jpg */; };
 		6260A71C1F8A6FA0001F6DCD /* sky_upside_down_patched_mirrored.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6260A71B1F8A6F5C001F6DCD /* sky_upside_down_patched_mirrored.jpg */; };
 		6260A71F1F8FB8A8001F6DCD /* TextureCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6260A71D1F8FB8A8001F6DCD /* TextureCache.cpp */; };
+		6260A7221F92445F001F6DCD /* Particle.vert in Resources */ = {isa = PBXBuildFile; fileRef = 6260A7201F92445E001F6DCD /* Particle.vert */; };
+		6260A7231F92445F001F6DCD /* Particle.frag in Resources */ = {isa = PBXBuildFile; fileRef = 6260A7211F92445F001F6DCD /* Particle.frag */; };
 		626C4D8C1EEC107E000D4DF6 /* settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 626C4D8B1EEC107E000D4DF6 /* settings.png */; };
 		626C4D9E1EEC19DF000D4DF6 /* MapController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 626C4D8F1EEC19DF000D4DF6 /* MapController.cpp */; };
 		626C4D9F1EEC19DF000D4DF6 /* MapHud.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 626C4D911EEC19DF000D4DF6 /* MapHud.cpp */; };
@@ -327,10 +329,10 @@
 		623B32131F17AC11000C64A1 /* TextRenderer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = TextRenderer.hpp; sourceTree = "<group>"; };
 		623B32141F17AC11000C64A1 /* VertexBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VertexBuffer.cpp; sourceTree = "<group>"; };
 		623B32151F17AC11000C64A1 /* VertexBuffer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = VertexBuffer.hpp; sourceTree = "<group>"; };
-		623B32171F17AC11000C64A1 /* CubeMap.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = CubeMap.frag; sourceTree = "<group>"; };
-		623B32181F17AC11000C64A1 /* CubeMap.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = CubeMap.vert; sourceTree = "<group>"; };
-		623B32191F17AC11000C64A1 /* Particle.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Particle.frag; sourceTree = "<group>"; };
-		623B321A1F17AC11000C64A1 /* Particle.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Particle.vert; sourceTree = "<group>"; };
+		623B32171F17AC11000C64A1 /* EnvMap.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = EnvMap.frag; sourceTree = "<group>"; };
+		623B32181F17AC11000C64A1 /* EnvMap.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = EnvMap.vert; sourceTree = "<group>"; };
+		623B32191F17AC11000C64A1 /* PointParticle.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = PointParticle.frag; sourceTree = "<group>"; };
+		623B321A1F17AC11000C64A1 /* PointParticle.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = PointParticle.vert; sourceTree = "<group>"; };
 		623B321B1F17AC11000C64A1 /* PixelLighting.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = PixelLighting.frag; sourceTree = "<group>"; };
 		623B321C1F17AC11000C64A1 /* PixelLighting.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = PixelLighting.vert; sourceTree = "<group>"; };
 		623B321D1F17AC11000C64A1 /* Text.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Text.frag; sourceTree = "<group>"; };
@@ -678,6 +680,8 @@
 		6260A71B1F8A6F5C001F6DCD /* sky_upside_down_patched_mirrored.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sky_upside_down_patched_mirrored.jpg; sourceTree = "<group>"; };
 		6260A71D1F8FB8A8001F6DCD /* TextureCache.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TextureCache.cpp; sourceTree = "<group>"; };
 		6260A71E1F8FB8A8001F6DCD /* TextureCache.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TextureCache.hpp; sourceTree = "<group>"; };
+		6260A7201F92445E001F6DCD /* Particle.vert */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = Particle.vert; sourceTree = "<group>"; };
+		6260A7211F92445F001F6DCD /* Particle.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = Particle.frag; sourceTree = "<group>"; };
 		626C4D8B1EEC107E000D4DF6 /* settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings.png; sourceTree = "<group>"; };
 		626C4D8F1EEC19DF000D4DF6 /* MapController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MapController.cpp; sourceTree = "<group>"; };
 		626C4D901EEC19DF000D4DF6 /* MapController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MapController.hpp; sourceTree = "<group>"; };
@@ -969,12 +973,14 @@
 		623B32161F17AC11000C64A1 /* Shaders */ = {
 			isa = PBXGroup;
 			children = (
-				623B32171F17AC11000C64A1 /* CubeMap.frag */,
-				623B32181F17AC11000C64A1 /* CubeMap.vert */,
-				623B32191F17AC11000C64A1 /* Particle.frag */,
-				623B321A1F17AC11000C64A1 /* Particle.vert */,
+				623B32171F17AC11000C64A1 /* EnvMap.frag */,
+				623B32181F17AC11000C64A1 /* EnvMap.vert */,
+				6260A7211F92445F001F6DCD /* Particle.frag */,
+				6260A7201F92445E001F6DCD /* Particle.vert */,
 				623B321B1F17AC11000C64A1 /* PixelLighting.frag */,
 				623B321C1F17AC11000C64A1 /* PixelLighting.vert */,
+				623B32191F17AC11000C64A1 /* PointParticle.frag */,
+				623B321A1F17AC11000C64A1 /* PointParticle.vert */,
 				623B321D1F17AC11000C64A1 /* Text.frag */,
 				623B321E1F17AC11000C64A1 /* Text.vert */,
 				623B321F1F17AC11000C64A1 /* Textured.frag */,
@@ -1681,7 +1687,7 @@
 				6280AF781F2CE18F00FFAF9B /* level13.json in Resources */,
 				621A4E771E50B60C00D53AFD /* star_particle.png in Resources */,
 				62129A3E1E88137300BF8377 /* ethnocentric_rg_it.ttf in Resources */,
-				623B32EB1F17AC12000C64A1 /* CubeMap.frag in Resources */,
+				623B32EB1F17AC12000C64A1 /* EnvMap.frag in Resources */,
 				620A982B1EE2BFC100AD6C61 /* Bomb.wav in Resources */,
 				620A98271EE2A9D100AD6C61 /* Blip.wav in Resources */,
 				623518BF1F3631A30027346B /* triangle_428_r180.obj in Resources */,
@@ -1699,16 +1705,17 @@
 				623518B71F3619C50027346B /* cube_428.obj in Resources */,
 				621A4E781E50B60C00D53AFD /* theboldfont.ttf in Resources */,
 				621A4E731E50B60C00D53AFD /* sky.jpg in Resources */,
-				623B32EE1F17AC12000C64A1 /* Particle.vert in Resources */,
+				623B32EE1F17AC12000C64A1 /* PointParticle.vert in Resources */,
 				621A4E721E50B60C00D53AFD /* Icon.png in Resources */,
 				6260A7161F8A5E51001F6DCD /* sky_blurred.jpg in Resources */,
 				6217ACC81F13B461001B1B3F /* level7.json in Resources */,
-				623B32ED1F17AC12000C64A1 /* Particle.frag in Resources */,
+				623B32ED1F17AC12000C64A1 /* PointParticle.frag in Resources */,
 				623B32F41F17AC12000C64A1 /* Textured.vert in Resources */,
-				623B32EC1F17AC12000C64A1 /* CubeMap.vert in Resources */,
+				623B32EC1F17AC12000C64A1 /* EnvMap.vert in Resources */,
 				622F7F271F220D9900E965AF /* level10.json in Resources */,
 				623C16CC1F475A8E00305752 /* level17.json in Resources */,
 				621A4E761E50B60C00D53AFD /* smiley.jpg in Resources */,
+				6260A7231F92445F001F6DCD /* Particle.frag in Resources */,
 				6260A7081F8912D6001F6DCD /* level21.json in Resources */,
 				621A4E741E50B60C00D53AFD /* sky_upside_down.jpg in Resources */,
 				62129A3C1E87F01600BF8377 /* sky_2.jpg in Resources */,
@@ -1719,6 +1726,7 @@
 				621729201E912AAC00C4F31B /* star.obj in Resources */,
 				623B32F21F17AC12000C64A1 /* Text.vert in Resources */,
 				6280AF7A1F2E09B200FFAF9B /* level14.json in Resources */,
+				6260A7221F92445F001F6DCD /* Particle.vert in Resources */,
 				623518C11F3633DC0027346B /* triangle_428_r270.obj in Resources */,
 				623B32F91F17AC12000C64A1 /* VertexLighting.frag in Resources */,
 				6280AF7C1F2E223700FFAF9B /* level15.json in Resources */,

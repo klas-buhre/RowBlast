@@ -1,4 +1,4 @@
-static const char* CubeMapFragmentShader = STRINGIFY(
+static const char* EnvMapFragmentShader = STRINGIFY(
 
 uniform samplerCube Sampler;
 uniform mediump float Opacity;

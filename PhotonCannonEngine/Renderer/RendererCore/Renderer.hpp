@@ -74,9 +74,10 @@ namespace Pht {
         ShaderProgram mVertexLightingShader;
         ShaderProgram mTexturedLightingShader;
         ShaderProgram mTexturedShader;
-        ShaderProgram mCubeMapShader;
+        ShaderProgram mEnvMapShader;
         ShaderProgram mVertexColorShader;
         ShaderProgram mParticleShader;
+        ShaderProgram mPointParticleShader;
         std::unique_ptr<TextRenderer> mTextRenderer;
     };
 }

@@ -43,20 +43,35 @@ namespace {
 
 ParticleSystem::ParticleSystem(IEngine& engine,
                                const ParticleSettings& particleSettings,
-                               const EmitterSettings& emitterSettings) :
-    mVertexBuffer {
-        CalculateNumParticles(emitterSettings, particleSettings),
-        0,
-        {.mColors = true, .mPointSizes = true}
-    },
+                               const EmitterSettings& emitterSettings,
+                               RenderMode renderMode) :
     mEngine {engine},
-    mEmitter {engine, particleSettings, emitterSettings} {
+    mEmitter {engine, particleSettings, emitterSettings},
+    mRenderMode {renderMode} {
     
-    mParticles.resize(CalculateNumParticles(emitterSettings, particleSettings));
+    auto numParticles {CalculateNumParticles(emitterSettings, particleSettings)};
+    mParticles.resize(numParticles);
     
     Material material {particleSettings.mTextureFilename};
-    material.SetShaderType(ShaderType::Particle);
-    mRenderableObject = std::make_unique<RenderableObject>(material);
+    
+    switch (renderMode) {
+        case RenderMode::Points: {
+            VertexFlags vertexFlags {.mColors = true, .mPointSizes = true};
+            mVertexBuffer = std::make_unique<VertexBuffer>(numParticles, 0, vertexFlags);
+            material.SetShaderType(ShaderType::PointParticle);
+            mRenderableObject = std::make_unique<RenderableObject>(material, RenderMode::Points);
+            break;
+        }
+        case RenderMode::Triangles: {
+            VertexFlags vertexFlags {.mTextureCoords = true, .mColors = true};
+            mVertexBuffer = std::make_unique<VertexBuffer>(numParticles * 4,
+                                                           numParticles * 6,
+                                                           vertexFlags);
+            material.SetShaderType(ShaderType::Particle);
+            mRenderableObject = std::make_unique<RenderableObject>(material, RenderMode::Triangles);
+            break;
+        }
+    }
 }
 
 void ParticleSystem::Start() {
@@ -106,13 +121,52 @@ const RenderableObject* ParticleSystem::GetRenderableObject() const {
 }
 
 void ParticleSystem::WriteVertexBuffer() {
-    mVertexBuffer.Reset();
+    mVertexBuffer->Reset();
     
+    switch (mRenderMode) {
+        case RenderMode::Points:
+            WritePoints();
+            break;
+        case RenderMode::Triangles:
+            WriteTriangles();
+            break;
+    }
+}
+
+void ParticleSystem::WritePoints() {
     for (auto& particle: mParticles) {
         if (particle.mIsActive) {
-            mVertexBuffer.Write(particle.mPosition, particle.mColor, particle.mSize);
+            mVertexBuffer->Write(particle.mPosition, particle.mColor, particle.mSize);
         }
     }
     
-    mRenderableObject->UploadPoints(mVertexBuffer);
+    mRenderableObject->UploadPoints(*mVertexBuffer);
+}
+
+void ParticleSystem::WriteTriangles() {
+    for (auto& particle: mParticles) {
+        if (particle.mIsActive) {
+            WriteParticleTriangles(particle);
+        }
+    }
+    
+    mRenderableObject->UploadTriangles(*mVertexBuffer);
+}
+
+void ParticleSystem::WriteParticleTriangles(const Particle& particle) {
+//    auto& color {particle.mColor};
+
+    mVertexBuffer->BeginFace();
+/*
+    mVertexBuffer->Write(const Vec3& vertex, const Vec2& textureCoord, color);
+    mVertexBuffer->Write(mVertices.mV1.mVertex, mVertices.mV1.mColor);
+    mVertexBuffer->Write(mVertices.mV2.mVertex, mVertices.mV2.mColor);
+    mVertexBuffer->Write(mVertices.mV3.mVertex, mVertices.mV3.mColor);
+*/
+    mVertexBuffer->AddIndex(0);
+    mVertexBuffer->AddIndex(1);
+    mVertexBuffer->AddIndex(2);
+    mVertexBuffer->AddIndex(2);
+    mVertexBuffer->AddIndex(3);
+    mVertexBuffer->AddIndex(0);
 }

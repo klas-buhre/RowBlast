@@ -37,7 +37,8 @@ PieceDropParticleEffect::PieceDropParticleEffect(Pht::IEngine& engine, const Gam
     for (auto& effect: mParticleEffects) {
         effect.mParticleSystem = std::make_unique<Pht::ParticleSystem>(engine,
                                                                        particleSettings,
-                                                                       particleEmitterSettings);
+                                                                       particleEmitterSettings,
+                                                                       Pht::RenderMode::Points);
     }
 }
 

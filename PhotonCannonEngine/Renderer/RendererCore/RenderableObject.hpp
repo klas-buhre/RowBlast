@@ -16,9 +16,10 @@ namespace Pht {
     class RenderableObject {
     public:
         RenderableObject(const Material& material, const VertexBuffer& vertexBuffer);
-        RenderableObject(const Material& material);
+        RenderableObject(const Material& material, RenderMode renderMode);
         ~RenderableObject();
         
+        void UploadTriangles(const VertexBuffer& vertexBuffer);
         void UploadPoints(const VertexBuffer& vertexBuffer);
         
         RenderMode GetRenderMode() const {

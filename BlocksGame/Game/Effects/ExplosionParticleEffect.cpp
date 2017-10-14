@@ -53,8 +53,10 @@ void ExplosionParticleEffect::InitInnerEffect(Pht::IEngine& engine) {
         .mShrinkDuration = 0.3f
     };
     
-    mInnerParticleEffect.mParticleSystem =
-        std::make_unique<Pht::ParticleSystem>(engine, particleSettings, particleEmitterSettings);
+    mInnerParticleEffect.mParticleSystem = std::make_unique<Pht::ParticleSystem>(engine,
+                                                                                 particleSettings,
+                                                                                 particleEmitterSettings,
+                                                                                 Pht::RenderMode::Points);
 }
 
 void ExplosionParticleEffect::InitOuterEffect(Pht::IEngine& engine) {
@@ -79,8 +81,10 @@ void ExplosionParticleEffect::InitOuterEffect(Pht::IEngine& engine) {
         .mShrinkDuration = 0.3f
     };
     
-    mOuterParticleEffect.mParticleSystem =
-        std::make_unique<Pht::ParticleSystem>(engine, particleSettings, particleEmitterSettings);
+    mOuterParticleEffect.mParticleSystem = std::make_unique<Pht::ParticleSystem>(engine,
+                                                                                 particleSettings,
+                                                                                 particleEmitterSettings,
+                                                                                 Pht::RenderMode::Points);
 }
 
 void ExplosionParticleEffect::StartExplosion(const Pht::Vec2& position) {

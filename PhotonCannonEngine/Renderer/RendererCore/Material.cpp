@@ -40,7 +40,7 @@ Material::Material(const EnvMapTextureFilenames& envMapTextures,
     mSpecular {specular},
     mShininess {shininess},
     mReflectivity {reflectivity},
-    mShaderType {ShaderType::CubeMap},
+    mShaderType {ShaderType::EnvMap},
     mTexture {TextureCache::GetTexture(envMapTextures)} {}
 
 Material::Material(const Color& ambient, 

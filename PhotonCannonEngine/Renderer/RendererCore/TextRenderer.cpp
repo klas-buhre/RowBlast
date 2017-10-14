@@ -59,7 +59,7 @@ void TextRenderer::RenderText(const std::string& text,
 
         glBindTexture(GL_TEXTURE_2D, glyph.mTexture);
         
-        // Should use glBufferSubData here but it leads to very poor performance for some reasons.
+        // Should use glBufferSubData here but it leads to very poor performance for some reason.
         glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_DYNAMIC_DRAW);
         glDrawArrays(GL_TRIANGLES, 0, 6);
         
