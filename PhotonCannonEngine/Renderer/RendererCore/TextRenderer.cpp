@@ -14,6 +14,8 @@ TextRenderer::TextRenderer(const IVec2& screenSize) :
     mTextShader {{}} {
     
     glGenBuffers(1, &mVbo);
+    glBindBuffer(GL_ARRAY_BUFFER, mVbo);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * 6 * 4, nullptr, GL_DYNAMIC_DRAW);
     
     mTextShader.Build(TextVertexShader, TextFragmentShader);
     mTextShader.SetProjection(mProjection);
@@ -56,6 +58,8 @@ void TextRenderer::RenderText(const std::string& text,
         };
 
         glBindTexture(GL_TEXTURE_2D, glyph.mTexture);
+        
+        // Should use glBufferSubData here but it leads to very poor performance for some reasons.
         glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_DYNAMIC_DRAW);
         glDrawArrays(GL_TRIANGLES, 0, 6);
         

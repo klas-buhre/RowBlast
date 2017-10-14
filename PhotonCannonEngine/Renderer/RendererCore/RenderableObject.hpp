@@ -15,10 +15,7 @@ namespace Pht {
     
     class RenderableObject {
     public:
-        RenderableObject(const Material& material,
-                         GLuint vertexBufferId,
-                         GLuint indexBufferId,
-                         int indexCount);
+        RenderableObject(const Material& material, const VertexBuffer& vertexBuffer);
         RenderableObject(const Material& material);
         ~RenderableObject();
         

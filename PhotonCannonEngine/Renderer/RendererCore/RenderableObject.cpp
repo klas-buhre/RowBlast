@@ -6,14 +6,26 @@
 
 using namespace Pht;
 
-RenderableObject::RenderableObject(const Material& material,
-                                   GLuint vertexBufferId,
-                                   GLuint indexBufferId,
-                                   int indexCount) :
+RenderableObject::RenderableObject(const Material& material, const VertexBuffer& vertexBuffer) :
     mMaterial {material},
-    mVertexBufferId {vertexBufferId},
-    mIndexBufferId {indexBufferId},
-    mIndexCount {indexCount} {}
+    mIndexCount {vertexBuffer.GetIndexBufferSize()} {
+    
+    // Create the VBO for the vertices, normals and texture coords.
+    glGenBuffers(1, &mVertexBufferId);
+    glBindBuffer(GL_ARRAY_BUFFER, mVertexBufferId);
+    glBufferData(GL_ARRAY_BUFFER,
+                 vertexBuffer.GetVertexBufferSize() * sizeof(float),
+                 vertexBuffer.GetVertexBuffer(),
+                 GL_STATIC_DRAW);
+    
+    // Create the VBO for the indices.
+    glGenBuffers(1, &mIndexBufferId);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mIndexBufferId);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER,
+                 vertexBuffer.GetIndexBufferSize() * sizeof(GLushort),
+                 vertexBuffer.GetIndexBuffer(),
+                 GL_STATIC_DRAW);
+}
 
 RenderableObject::RenderableObject(const Material& material) :
     mRenderMode {RenderMode::Points},

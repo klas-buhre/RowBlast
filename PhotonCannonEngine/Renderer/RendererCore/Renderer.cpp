@@ -345,28 +345,7 @@ std::unique_ptr<RenderableObject> Renderer::CreateRenderableObject(const IMesh& 
     auto shaderProgram {GetShaderProgram(material.GetShaderType())};
     VertexBuffer vertexBuffer {mesh.GetVertices(shaderProgram.GetVertexFlags())};
     
-    // Create the VBO for the vertices, normals and texture coords.
-    GLuint vertexBufferId {0};
-    glGenBuffers(1, &vertexBufferId);
-    glBindBuffer(GL_ARRAY_BUFFER, vertexBufferId);
-    glBufferData(GL_ARRAY_BUFFER,
-                 vertexBuffer.GetVertexBufferSize() * sizeof(float),
-                 vertexBuffer.GetVertexBuffer(),
-                 GL_STATIC_DRAW);
-    
-    // Create the VBO for the indices.
-    GLuint indexBufferId {0};
-    glGenBuffers(1, &indexBufferId);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBufferId);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER,
-                 vertexBuffer.GetIndexBufferSize() * sizeof(GLushort),
-                 vertexBuffer.GetIndexBuffer(),
-                 GL_STATIC_DRAW);
-    
-    return std::make_unique<RenderableObject>(material,
-                                              vertexBufferId,
-                                              indexBufferId,
-                                              vertexBuffer.GetIndexBufferSize());
+    return std::make_unique<RenderableObject>(material, vertexBuffer);
 }
 
 void Renderer::Render(const RenderableObject& object, const Mat4& modelTransform) {
