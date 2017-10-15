@@ -171,15 +171,11 @@ void ParticleSystem::WriteTriangles() {
 void ParticleSystem::WriteParticleTriangles(const Particle& particle) {
     auto& color {particle.mColor};
     auto halfSize {particle.mSize / 2.0f};
-    auto left {-halfSize};
-    auto right {halfSize};
-    auto down {-halfSize};
-    auto up {halfSize};
     
-    Vec3 v1 {left, down, 0.0f};
-    Vec3 v2 {right, down, 0.0f};
-    Vec3 v3 {right, up, 0.0f};
-    Vec3 v4 {left, up, 0.0f};
+    Vec3 v1 {-halfSize, -halfSize, 0.0f};
+    Vec3 v2 {halfSize, -halfSize, 0.0f};
+    Vec3 v3 {halfSize, halfSize, 0.0f};
+    Vec3 v4 {-halfSize, halfSize, 0.0f};
     
     if (particle.mZAngle != 0.0f) {
         auto thetaRadians {ToRadians(particle.mZAngle)};
