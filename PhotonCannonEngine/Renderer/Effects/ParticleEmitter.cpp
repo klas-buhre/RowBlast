@@ -94,12 +94,34 @@ void ParticleEmitter::EmitParticle(Particle& particle) {
     
     particle.mPosition = position;
     particle.mColor = color;
-    particle.mSize = mParticleSettings.mSize +
-                     (NormalizedRand() - 0.5f) * mParticleSettings.mSizeRandomPart;
-    particle.mOriginalSize = particle.mSize;
+    
+    if (mParticleSettings.mSize.HasValue()) {
+        assert(mParticleSettings.mSizeRandomPart.HasValue());
+        particle.mFullSize = mParticleSettings.mSize.GetValue() +
+                            (NormalizedRand() - 0.5f) * mParticleSettings.mSizeRandomPart.GetValue();
+        particle.mSize = 0.0f;
+    } else {
+        assert(mParticleSettings.mPointSize.HasValue());
+        assert(mParticleSettings.mPointSizeRandomPart.HasValue());
+        particle.mFullSize = mParticleSettings.mPointSize.GetValue() +
+                            (NormalizedRand() - 0.5f) * mParticleSettings.mPointSizeRandomPart.GetValue();
+        particle.mSize = 0.0f;
+    }
+    
     particle.mAge = 0.0f;
     particle.mTimeToLive = mParticleSettings.mTimeToLive +
                            (NormalizedRand() - 0.5f) * mParticleSettings.mTimeToLiveRandomPart;
+    
+    if (mParticleSettings.mZAngularVelocity > 0.0f ||
+        mParticleSettings.mZAngularVelocityRandomPart > 0.0f) {
+        particle.mZAngle = NormalizedRand() * 360.0f;
+        particle.mZAngularVelocity = mParticleSettings.mZAngularVelocity +
+                                     (NormalizedRand() - 0.5f) * mParticleSettings.mZAngularVelocityRandomPart;
+    } else {
+        particle.mZAngle = 0.0f;
+        particle.mZAngularVelocity = 0.0f;
+    }
+
     particle.mIsActive = true;
     
     mTimeSinceLastSpawn = 0.0f;

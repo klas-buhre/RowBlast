@@ -17,6 +17,7 @@ PieceDropParticleEffect::PieceDropParticleEffect(Pht::IEngine& engine, const Gam
         .mPosition = Pht::Vec3{0.0f, 1.0f, 0.0f},
         .mSize = Pht::Vec3{1.0f, 3.0f, 1.0f},
         .mTimeToLive = 0.0f,
+        // .mBurst = 10
         .mBurst = 20
     };
     
@@ -29,8 +30,10 @@ PieceDropParticleEffect::PieceDropParticleEffect(Pht::IEngine& engine, const Gam
         .mTimeToLive = 0.7f,
         .mTimeToLiveRandomPart = 0.4f,
         .mFadeOutDuration = 0.4f,
-        .mSize = engine.GetRenderer().GetAdjustedNumPixels(20),
-        .mSizeRandomPart = engine.GetRenderer().GetAdjustedNumPixels(10),
+        // .mSize = 0.7f,
+        // .mSizeRandomPart = 0.3f,
+        .mPointSize = engine.GetRenderer().GetAdjustedNumPixels(20),
+        .mPointSizeRandomPart = engine.GetRenderer().GetAdjustedNumPixels(10),
         .mShrinkDuration = 0.4f
     };
     

@@ -18,8 +18,7 @@ namespace {
 }
 
 RenderableObject::RenderableObject(const Material& material, const VertexBuffer& vertexBuffer) :
-    mMaterial {material},
-    mIndexCount {vertexBuffer.GetIndexBufferSize()} {
+    mMaterial {material} {
     
     glGenBuffers(1, &mVertexBufferId);
     glGenBuffers(1, &mIndexBufferId);
@@ -59,6 +58,8 @@ void RenderableObject::UploadTriangles(const VertexBuffer& vertexBuffer, BufferU
                  vertexBuffer.GetIndexBufferSize() * sizeof(GLushort),
                  vertexBuffer.GetIndexBuffer(),
                  glBufferUsage);
+    
+    mIndexCount = vertexBuffer.GetIndexBufferSize();
 }
 
 void RenderableObject::UploadPoints(const VertexBuffer& vertexBuffer, BufferUsage bufferUsage) {

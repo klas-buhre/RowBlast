@@ -1,10 +1,15 @@
 #include "ParticleSystem.hpp"
 
 #include "IEngine.hpp"
+#include "MathUtils.hpp"
 
 using namespace Pht;
 
 namespace {
+    Vec3 RotateZ(const Vec3 v, float sinTheta, float cosTheta) {
+        return {v.x * cosTheta - v.y * sinTheta, v.x * sinTheta + v.y * cosTheta, 0.0f};
+    }
+    
     bool UpdateParticle(Particle& particle, float dt, const ParticleSettings& particleSettings) {
         particle.mAge += dt;
         
@@ -15,18 +20,28 @@ namespace {
         
         particle.mVelocity += particleSettings.mAcceleration * dt;
         particle.mPosition += particle.mVelocity * dt;
+        particle.mZAngle += particle.mZAngularVelocity * dt;
         
-        if (particle.mAge > particle.mTimeToLive - particleSettings.mFadeOutDuration) {
-            particle.mColor.w -= dt / particleSettings.mFadeOutDuration;
-            if (particle.mColor.w < 0.0f) {
-                particle.mColor.w = 0.0f;
+        if (particle.mAge < particleSettings.mGrowDuration) {
+            particle.mSize += particle.mFullSize * dt / particleSettings.mGrowDuration;
+            
+            if (particle.mSize > particle.mFullSize) {
+                particle.mSize = particle.mFullSize;
             }
-        }
-        
-        if (particle.mAge > particle.mTimeToLive - particleSettings.mShrinkDuration) {
-            particle.mSize -= particle.mOriginalSize * dt / particleSettings.mShrinkDuration;
+        } else if (particle.mAge > particle.mTimeToLive - particleSettings.mShrinkDuration) {
+            particle.mSize -= particle.mFullSize * dt / particleSettings.mShrinkDuration;
             if (particle.mSize < 0.0f) {
                 particle.mSize = 0.0f;
+            }
+        } else {
+            particle.mSize = particle.mFullSize;
+        }
+
+        if (particle.mAge > particle.mTimeToLive - particleSettings.mFadeOutDuration) {
+            particle.mColor.w -= dt / particleSettings.mFadeOutDuration;
+            
+            if (particle.mColor.w < 0.0f) {
+                particle.mColor.w = 0.0f;
             }
         }
 
@@ -154,15 +169,38 @@ void ParticleSystem::WriteTriangles() {
 }
 
 void ParticleSystem::WriteParticleTriangles(const Particle& particle) {
-//    auto& color {particle.mColor};
+    auto& color {particle.mColor};
+    auto halfSize {particle.mSize / 2.0f};
+    auto left {-halfSize};
+    auto right {halfSize};
+    auto down {-halfSize};
+    auto up {halfSize};
+    
+    Vec3 v1 {left, down, 0.0f};
+    Vec3 v2 {right, down, 0.0f};
+    Vec3 v3 {right, up, 0.0f};
+    Vec3 v4 {left, up, 0.0f};
+    
+    if (particle.mZAngle != 0.0f) {
+        auto thetaRadians {ToRadians(particle.mZAngle)};
+        auto sinTheta {std::sin(thetaRadians)};
+        auto cosTheta {std::cos(thetaRadians)};
+        
+        v1 = RotateZ(v1, sinTheta, cosTheta);
+        v2 = RotateZ(v2, sinTheta, cosTheta);
+        v3 = RotateZ(v3, sinTheta, cosTheta);
+        v4 = RotateZ(v4, sinTheta, cosTheta);
+    }
 
+    auto& position {particle.mPosition};
+    
     mVertexBuffer->BeginFace();
-/*
-    mVertexBuffer->Write(const Vec3& vertex, const Vec2& textureCoord, color);
-    mVertexBuffer->Write(mVertices.mV1.mVertex, mVertices.mV1.mColor);
-    mVertexBuffer->Write(mVertices.mV2.mVertex, mVertices.mV2.mColor);
-    mVertexBuffer->Write(mVertices.mV3.mVertex, mVertices.mV3.mColor);
-*/
+
+    mVertexBuffer->Write(v1 + position, Vec2 {0.0f, 1.0f}, color);
+    mVertexBuffer->Write(v2 + position, Vec2 {1.0f, 1.0f}, color);
+    mVertexBuffer->Write(v3 + position, Vec2 {1.0f, 0.0f}, color);
+    mVertexBuffer->Write(v4 + position, Vec2 {0.0f, 0.0f}, color);
+    
     mVertexBuffer->AddIndex(0);
     mVertexBuffer->AddIndex(1);
     mVertexBuffer->AddIndex(2);

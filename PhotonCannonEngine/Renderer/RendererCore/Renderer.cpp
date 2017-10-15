@@ -33,6 +33,41 @@ namespace {
     const auto defaultScreenHeight {1136};
     const Mat4 identityMatrix;
     
+    bool IsParticleShader(ShaderType shaderType) {
+        switch (shaderType) {
+            case ShaderType::Particle:
+            case ShaderType::PointParticle:
+                return true;
+            default:
+                return false;
+        }
+    }
+    
+    void BindSpecialTextures(ShaderType shaderType, const Material& material) {
+        switch (shaderType) {
+            case ShaderType::EnvMap:
+                glBindTexture(GL_TEXTURE_CUBE_MAP, material.GetTexture());
+                break;
+            case ShaderType::PointParticle:
+                glBindTexture(GL_TEXTURE_2D, material.GetTexture());
+                break;
+            default:
+                break;
+        }
+    }
+    
+    void SetupBlend(bool isParticleShader, const Material& material) {
+        if (isParticleShader) {
+            glEnable(GL_BLEND);
+            glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+        } else if (material.GetBlend() == Blend::Yes) {
+            glEnable(GL_BLEND);
+            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        } else {
+            glDisable(GL_BLEND);
+        }
+    }
+    
     void SetMaterialProperties(const ShaderProgram::UniformHandles& uniforms,
                                const Material& material,
                                ShaderType shaderType,
@@ -50,26 +85,12 @@ namespace {
         glUniform1f(uniforms.mReflectivity, material.GetReflectivity());
         glUniform1f(uniforms.mOpacity, material.GetOpacity());
         
-        switch (shaderType) {
-            case ShaderType::EnvMap:
-                glBindTexture(GL_TEXTURE_CUBE_MAP, material.GetTexture());
-                break;
-            case ShaderType::PointParticle:
-                glBindTexture(GL_TEXTURE_2D, material.GetTexture());
-                glDisable(GL_DEPTH_TEST);
-                break;
-            default:
-                break;
-        }
+        BindSpecialTextures(shaderType, material);
+        auto isParticleShader {IsParticleShader(shaderType)};
+        SetupBlend(isParticleShader, material);
         
-        if (shaderType == ShaderType::PointParticle) {
-            glEnable(GL_BLEND);
-            glBlendFunc(GL_SRC_ALPHA, GL_ONE);
-        } else if (material.GetBlend() == Blend::Yes) {
-            glEnable(GL_BLEND);
-            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-        } else {
-            glDisable(GL_BLEND);
+        if (isParticleShader) {
+            glDisable(GL_DEPTH_TEST);
         }
     }
 

@@ -28,8 +28,8 @@ RowExplosionParticleEffect::RowExplosionParticleEffect(Pht::IEngine& engine,
         .mTimeToLive = 0.4f,
         .mTimeToLiveRandomPart = 0.2f,
         .mFadeOutDuration = 0.0f,
-        .mSize = engine.GetRenderer().GetAdjustedNumPixels(100),
-        .mSizeRandomPart = engine.GetRenderer().GetAdjustedNumPixels(100),
+        .mPointSize = engine.GetRenderer().GetAdjustedNumPixels(100),
+        .mPointSizeRandomPart = engine.GetRenderer().GetAdjustedNumPixels(100),
         .mShrinkDuration = 0.3f
     };
 

@@ -12,7 +12,7 @@ NextLevelParticleEffect::NextLevelParticleEffect(Pht::IEngine& engine) {
         .mPosition = {0.0f, 0.7f, 0.0f},
         .mSize = {1.7f, 0.85f, 1.7f},
         .mTimeToLive = std::numeric_limits<float>::infinity(),
-        .mFrequency = 10.0f
+        .mFrequency = 5.0f
     };
     
     Pht::ParticleSettings particleSettings {
@@ -24,15 +24,16 @@ NextLevelParticleEffect::NextLevelParticleEffect(Pht::IEngine& engine) {
         .mTimeToLive = 2.0f,
         .mTimeToLiveRandomPart = 0.4f,
         .mFadeOutDuration = 1.2f,
-        .mSize = engine.GetRenderer().GetAdjustedNumPixels(30),
-        .mSizeRandomPart = engine.GetRenderer().GetAdjustedNumPixels(10),
+        .mZAngularVelocityRandomPart = 200.0f,
+        .mSize = 1.0f,
+        .mSizeRandomPart = 0.5f,
         .mShrinkDuration = 1.2f
     };
     
     mParticleEffect.mParticleSystem = std::make_unique<Pht::ParticleSystem>(engine,
                                                                             particleSettings,
                                                                             particleEmitterSettings,
-                                                                            Pht::RenderMode::Points);
+                                                                            Pht::RenderMode::Triangles);
 }
 
 void NextLevelParticleEffect::StartEffect(const Pht::Vec3& position) {

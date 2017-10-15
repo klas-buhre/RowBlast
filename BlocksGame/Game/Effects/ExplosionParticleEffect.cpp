@@ -48,15 +48,15 @@ void ExplosionParticleEffect::InitInnerEffect(Pht::IEngine& engine) {
         .mTimeToLive = 0.5f,
         .mTimeToLiveRandomPart = 0.0f,
         .mFadeOutDuration = 0.0f,
-        .mSize = engine.GetRenderer().GetAdjustedNumPixels(420),
-        .mSizeRandomPart = 0,
+        .mSize = 9.0f,
+        .mSizeRandomPart = 0.0f,
         .mShrinkDuration = 0.3f
     };
     
     mInnerParticleEffect.mParticleSystem = std::make_unique<Pht::ParticleSystem>(engine,
                                                                                  particleSettings,
                                                                                  particleEmitterSettings,
-                                                                                 Pht::RenderMode::Points);
+                                                                                 Pht::RenderMode::Triangles);
 }
 
 void ExplosionParticleEffect::InitOuterEffect(Pht::IEngine& engine) {
@@ -76,8 +76,8 @@ void ExplosionParticleEffect::InitOuterEffect(Pht::IEngine& engine) {
         .mTimeToLive = 0.4f,
         .mTimeToLiveRandomPart = 0.2f,
         .mFadeOutDuration = 0.0f,
-        .mSize = engine.GetRenderer().GetAdjustedNumPixels(60),
-        .mSizeRandomPart = engine.GetRenderer().GetAdjustedNumPixels(60),
+        .mPointSize = engine.GetRenderer().GetAdjustedNumPixels(60),
+        .mPointSizeRandomPart = engine.GetRenderer().GetAdjustedNumPixels(60),
         .mShrinkDuration = 0.3f
     };
     

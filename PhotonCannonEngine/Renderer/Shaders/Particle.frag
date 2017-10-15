@@ -3,7 +3,6 @@ static const char* ParticleFragmentShader = STRINGIFY(
 varying mediump vec2 TextureCoordOut;
 varying highp vec4 ColorOut;
 
-uniform mediump float Opacity;
 uniform sampler2D Sampler;
 
 void main(void) {

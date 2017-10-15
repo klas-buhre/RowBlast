@@ -5,6 +5,7 @@
 #include <functional>
 
 #include "Vector.hpp"
+#include "Optional.hpp"
 
 namespace Pht {
     struct EmitterSettings {
@@ -26,8 +27,13 @@ namespace Pht {
         float mTimeToLive {2.0f};
         float mTimeToLiveRandomPart {0.5f};
         float mFadeOutDuration {1.0f};
-        int mSize {28};            // In pixels.
-        int mSizeRandomPart {10};  // In pixels.
+        float mZAngularVelocity {0.0f};
+        float mZAngularVelocityRandomPart {0.0f};
+        Optional<float> mSize;
+        Optional<float> mSizeRandomPart;
+        Optional<int> mPointSize;            // In pixels.
+        Optional<int> mPointSizeRandomPart;  // In pixels.
+        float mGrowDuration {0.1f};
         float mShrinkDuration {1.0f};
     };
     
@@ -36,7 +42,9 @@ namespace Pht {
         Vec3 mVelocity;
         Vec4 mColor;
         float mSize;
-        float mOriginalSize;
+        float mFullSize;
+        float mZAngle;
+        float mZAngularVelocity;
         float mAge;
         float mTimeToLive;
         bool mIsActive {false};
