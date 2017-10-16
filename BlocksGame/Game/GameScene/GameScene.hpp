@@ -98,7 +98,7 @@ namespace BlocksGame {
         const ScrollController& mScrollController;
         const CommonResources& mCommonResources;
         Pht::Vec3 mLightDirection;
-        Pht::Vec3 mFieldPosition;
+        const Pht::Vec3 mFieldPosition;
         const float mCellSize {1.25f};
         const float mGhostPieceZ {-0.2f};
         const float mBlueprintAnimationZ {-0.6f};

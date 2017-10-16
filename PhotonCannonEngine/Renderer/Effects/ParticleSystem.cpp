@@ -30,6 +30,7 @@ namespace {
             }
         } else if (particle.mAge > particle.mTimeToLive - particleSettings.mShrinkDuration) {
             particle.mSize -= particle.mFullSize * dt / particleSettings.mShrinkDuration;
+            
             if (particle.mSize < 0.0f) {
                 particle.mSize = 0.0f;
             }
