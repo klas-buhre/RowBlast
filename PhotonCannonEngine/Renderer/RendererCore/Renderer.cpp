@@ -405,7 +405,7 @@ void Renderer::Render(const RenderableObject& object, const Mat4& modelTransform
     
     DisableVertexAttributes(shaderProgram);
     
-    if (shaderType == ShaderType::PointParticle) {
+    if (IsParticleShader(shaderType)) {
         SetDepthTest(true);
     }
 }
