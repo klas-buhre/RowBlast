@@ -15,10 +15,9 @@ PieceDropParticleEffect::PieceDropParticleEffect(Pht::IEngine& engine, const Gam
     
     Pht::EmitterSettings particleEmitterSettings {
         .mPosition = Pht::Vec3{0.0f, 1.0f, 0.0f},
-        .mSize = Pht::Vec3{1.0f, 3.0f, 1.0f},
+        .mSize = Pht::Vec3{scene.GetCellSize(), 2.0f, 1.0f},
         .mTimeToLive = 0.0f,
-        // .mBurst = 10
-        .mBurst = 20
+        .mBurst = 5
     };
     
     Pht::ParticleSettings particleSettings {
@@ -30,10 +29,9 @@ PieceDropParticleEffect::PieceDropParticleEffect(Pht::IEngine& engine, const Gam
         .mTimeToLive = 0.7f,
         .mTimeToLiveRandomPart = 0.4f,
         .mFadeOutDuration = 0.4f,
-        .mSize = 0.7f,
-        .mSizeRandomPart = 0.3f,
-        // .mPointSize = engine.GetRenderer().GetAdjustedNumPixels(20),
-        // .mPointSizeRandomPart = engine.GetRenderer().GetAdjustedNumPixels(10),
+        .mZAngularVelocityRandomPart = 350.0f,
+        .mSize = 1.0f,
+        .mSizeRandomPart = 1.0f,
         .mShrinkDuration = 0.4f
     };
     
@@ -54,7 +52,7 @@ void PieceDropParticleEffect::StartEffect(const FallingPiece& fallingPiece) {
     auto pieceWorldPos {fieldLowerLeft + fallingPiece.GetRenderablePosition() * cellSize};
     auto& pieceGrid {pieceType.GetGrid(fallingPiece.GetRotation())};
     auto cellZPos {mScene.GetFieldPosition().z};
-    auto colorBrighten {0.6f};
+    auto colorBrighten {0.8f};
     
     auto& materialColor {pieceType.GetFirstRenderable().GetMaterial().GetAmbient()};
     Pht::Vec4 color {

@@ -9,8 +9,6 @@ Backlog:
      convenient to go back to the state before the move and not the initial state.
     -Mega bomb?
   -Rendering:
-    -For bombs there could be a transparent quad showing the blast radius in swipe mode. In click
-     mode the blast radius could be shown when touching a move alternative.
     -There should be no fade in/out when going from for example game menu to settings menu.
     -The SlidingMenuAnimation could slide in from the side instead.
     -Add heading to the green dialogs.
@@ -22,11 +20,6 @@ Backlog:
     -Try adding welds to the level blocks.
     -Recreate the star particle. Possibly by buying a textures for particle systems in unity assets
      store. Look at: https://www.assetstore.unity3d.com/en/#!/content/26701
-    -The particle system could also support triangles instead of only points so that the particles
-     can be rotated around the z-axis. The triangles don't have to be rotated towards the camera so 
-     that it is easy to implement (although then it will only work when the camera is at the right 
-     angle which is ok for the game). The points rendering could still be used in 3D scenes.
-    -The piece drop particle effect should have bigger, fewer, rotating stars.
     -One or two stars in level cleared dialog could be placed more in the middle.
     -There could be a particle effect behind the stars in the level cleared dialog. Could be done
      if ParticleEffect inherits from SceneObject. Stars could also rotate in around the y axis for
@@ -63,8 +56,9 @@ Backlog:
     -Credit the icon creator: <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
   
 Ongoing tasks:
-    -Better particle system.
-    -Office.
+    -For bombs there could be a transparent quad showing the blast radius in swipe mode. In click
+     mode the blast radius could be shown when touching a move alternative.
+
  
 Ideas:
     -The pause button could lead to a widget that has an undo button, a boosters button and a game

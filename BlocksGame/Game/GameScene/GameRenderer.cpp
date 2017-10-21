@@ -467,7 +467,7 @@ void GameRenderer::RenderClickableGhostPieces(const FallingPiece& fallingPiece,
 const Pht::RenderableObject* GameRenderer::GetGhostPieceRenderable(const Piece& pieceType) const {
     if (auto* ghostPieceRenderable {pieceType.GetGhostPieceRenderable()}) {
         if (mScene.AreGhostPiecesFilled()) {
-            return pieceType.GetFilledGhostPieceRenderable();
+            //return pieceType.GetFilledGhostPieceRenderable();
         }
         
         return ghostPieceRenderable;
