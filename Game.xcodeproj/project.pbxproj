@@ -175,6 +175,7 @@
 		625089031EA0F451004320BB /* level3.json in Resources */ = {isa = PBXBuildFile; fileRef = 625089021EA0F451004320BB /* level3.json */; };
 		6254C16C1EED356800BBCAD2 /* SettingsMenuController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6254C16A1EED356800BBCAD2 /* SettingsMenuController.cpp */; };
 		6254C16F1EED39E300BBCAD2 /* CommonViewControllers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6254C16D1EED39E300BBCAD2 /* CommonViewControllers.cpp */; };
+		625C330F1F9B8C7C00E531FC /* BlastRadiusAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 625C330D1F9B8C7C00E531FC /* BlastRadiusAnimation.cpp */; };
 		6260A6D91F8539C9001F6DCD /* FPiece.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6260A6D71F8539C9001F6DCD /* FPiece.cpp */; };
 		6260A6DB1F853F10001F6DCD /* level19.json in Resources */ = {isa = PBXBuildFile; fileRef = 6260A6DA1F853CBA001F6DCD /* level19.json */; };
 		6260A6DE1F85451E001F6DCD /* MirroredFPiece.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6260A6DC1F85451E001F6DCD /* MirroredFPiece.cpp */; };
@@ -639,6 +640,8 @@
 		6254C16B1EED356800BBCAD2 /* SettingsMenuController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SettingsMenuController.hpp; sourceTree = "<group>"; };
 		6254C16D1EED39E300BBCAD2 /* CommonViewControllers.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CommonViewControllers.cpp; sourceTree = "<group>"; };
 		6254C16E1EED39E300BBCAD2 /* CommonViewControllers.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CommonViewControllers.hpp; sourceTree = "<group>"; };
+		625C330D1F9B8C7C00E531FC /* BlastRadiusAnimation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = BlastRadiusAnimation.cpp; sourceTree = "<group>"; };
+		625C330E1F9B8C7C00E531FC /* BlastRadiusAnimation.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = BlastRadiusAnimation.hpp; sourceTree = "<group>"; };
 		6260A6D71F8539C9001F6DCD /* FPiece.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FPiece.cpp; sourceTree = "<group>"; };
 		6260A6D81F8539C9001F6DCD /* FPiece.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = FPiece.hpp; sourceTree = "<group>"; };
 		6260A6DA1F853CBA001F6DCD /* level19.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = level19.json; sourceTree = "<group>"; };
@@ -1322,6 +1325,8 @@
 		624447291EDDD2C40080ECE8 /* Animations */ = {
 			isa = PBXGroup;
 			children = (
+				625C330D1F9B8C7C00E531FC /* BlastRadiusAnimation.cpp */,
+				625C330E1F9B8C7C00E531FC /* BlastRadiusAnimation.hpp */,
 				623B31D11F17A325000C64A1 /* BlueprintSlotsFilledAnimation.cpp */,
 				623B31D21F17A325000C64A1 /* BlueprintSlotsFilledAnimation.hpp */,
 				620A98341EE43DD200AD6C61 /* ClearLastBlocksAnimation.cpp */,
@@ -1838,6 +1843,7 @@
 				624F89461EF521880020C832 /* UserData.cpp in Sources */,
 				624447A21EDDD2C40080ECE8 /* MenuQuad.cpp in Sources */,
 				623B32E61F17AC12000C64A1 /* RenderableObject.cpp in Sources */,
+				625C330F1F9B8C7C00E531FC /* BlastRadiusAnimation.cpp in Sources */,
 				6260A6FE1F87E59E001F6DCD /* BoxMesh.cpp in Sources */,
 				624447A11EDDD2C40080ECE8 /* MenuButton.cpp in Sources */,
 				6247CFD91EFFE25900B9919E /* NoLivesDialogView.cpp in Sources */,

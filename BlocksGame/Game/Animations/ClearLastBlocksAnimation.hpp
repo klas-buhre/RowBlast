@@ -22,9 +22,9 @@ namespace BlocksGame {
         void UpdateInBeforeClearState(float dt);
         void UpdateInOngoingState(float dt);
         
-        State mState {State::Inactive};
         Field& mField;
         FlyingBlocksAnimation& mFlyingBlocksAnimation;
+        State mState {State::Inactive};
         float mElapsedTime {0.0f};
     };
 }

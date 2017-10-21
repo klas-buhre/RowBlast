@@ -27,6 +27,7 @@ namespace BlocksGame {
     class GameHudController;
     class IInputHandler;
     class GameScene;
+    class BlastRadiusAnimation;
     
     class GameLogic: public IGameLogic {
     public:
@@ -46,6 +47,7 @@ namespace BlocksGame {
                   RowExplosionParticleEffect& rowExplosionParticleEffect,
                   FlyingBlocksAnimation& flyingBlocksAnimation,
                   PieceDropParticleEffect& pieceDropParticleEffect,
+                  BlastRadiusAnimation& blastRadiusAnimation,
                   GameHudController& gameHudController,
                   const Settings& settings);
         
@@ -157,6 +159,7 @@ namespace BlocksGame {
         RowExplosionParticleEffect& mRowExplosionParticleEffect;
         FlyingBlocksAnimation& mFlyingBlocksAnimation;
         PieceDropParticleEffect& mPieceDropParticleEffect;
+        BlastRadiusAnimation& mBlastRadiusAnimation;
         GameHudController& mGameHudController;
         const Settings& mSettings;
         Controls mPreviousControlType;

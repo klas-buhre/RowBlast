@@ -1,6 +1,6 @@
 #include "ClearLastBlocksAnimation.hpp"
 
-// Game includes:
+// Game includes.
 #include "FlyingBlocksAnimation.hpp"
 #include "Field.hpp"
 

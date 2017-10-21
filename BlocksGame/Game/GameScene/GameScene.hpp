@@ -51,6 +51,10 @@ namespace BlocksGame {
             return mCellSize;
         }
 
+        float GetBlastRadiusAnimationZ() const {
+            return mBlastRadiusAnimationZ;
+        }
+
         float GetGhostPieceZ() const {
             return mGhostPieceZ;
         }
@@ -83,10 +87,6 @@ namespace BlocksGame {
             return mGhostPieceOpacity;
         }
         
-        bool AreGhostPiecesFilled() const {
-            return mAreGhostPiecesFilled;
-        }
-
     private:
         void UpdateCameraPosition();
         void CreateBackground();
@@ -100,6 +100,7 @@ namespace BlocksGame {
         Pht::Vec3 mLightDirection;
         const Pht::Vec3 mFieldPosition;
         const float mCellSize {1.25f};
+        const float mBlastRadiusAnimationZ {mCellSize / 2.0f + 0.1f};
         const float mGhostPieceZ {-0.2f};
         const float mBlueprintAnimationZ {-0.6f};
         const float mBlueprintZ {-0.7f};
@@ -112,7 +113,6 @@ namespace BlocksGame {
         std::unique_ptr<Pht::SceneObject> mLowerFieldClipQuad;
         FloatingCubes mFloatingCubes;
         const float mGhostPieceOpacity {0.5f};
-        bool mAreGhostPiecesFilled {true};
     };
 }
 

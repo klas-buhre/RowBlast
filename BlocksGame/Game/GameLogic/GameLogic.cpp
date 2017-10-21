@@ -18,6 +18,7 @@
 #include "RowExplosionParticleEffect.hpp"
 #include "FlyingBlocksAnimation.hpp"
 #include "PieceDropParticleEffect.hpp"
+#include "BlastRadiusAnimation.hpp"
 #include "GameHudController.hpp"
 #include "CommonResources.hpp"
 
@@ -50,6 +51,7 @@ GameLogic::GameLogic(Pht::IEngine& engine,
                      RowExplosionParticleEffect& rowExplosionParticleEffect,
                      FlyingBlocksAnimation& flyingBlocksAnimation,
                      PieceDropParticleEffect& pieceDropParticleEffect,
+                     BlastRadiusAnimation& blastRadiusAnimation,
                      GameHudController& gameHudController,
                      const Settings& settings) :
     mEngine {engine},
@@ -59,6 +61,7 @@ GameLogic::GameLogic(Pht::IEngine& engine,
     mRowExplosionParticleEffect {rowExplosionParticleEffect},
     mFlyingBlocksAnimation {flyingBlocksAnimation},
     mPieceDropParticleEffect {pieceDropParticleEffect},
+    mBlastRadiusAnimation {blastRadiusAnimation},
     mGameHudController {gameHudController},
     mSettings {settings},
     mPreviousControlType {mSettings.mControlType},
@@ -150,6 +153,17 @@ GameLogic::Result GameLogic::InitFallingPiece() {
     if (mGhostPieceRow > mFallingPiece->GetPosition().y) {
         RemoveFallingPiece();
         return Result::GameOver;
+    }
+    
+    if (mCurrentMove.mPieceType->IsBomb() && !mCurrentMove.mPieceType->IsRowBomb()) {
+        mBlastRadiusAnimation.Start();
+        
+        Pht::Vec2 blastRadiusAnimationPos {
+            mFallingPiece->GetRenderablePosition().x + 1.0f,
+            static_cast<float>(mGhostPieceRow) + 1.0f
+        };
+        
+        mBlastRadiusAnimation.SetPosition(blastRadiusAnimationPos);
     }
     
     if (mSettings.mControlType == Controls::Click) {

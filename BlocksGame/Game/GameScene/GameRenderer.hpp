@@ -25,6 +25,7 @@ namespace BlocksGame {
     class FlyingBlocksAnimation;
     class SlidingTextAnimation;
     class PieceDropParticleEffect;
+    class BlastRadiusAnimation;
     class SubCell;
     class BlueprintCell;
     class Piece;
@@ -40,6 +41,7 @@ namespace BlocksGame {
                      const FlyingBlocksAnimation& flyingBlocksAnimation,
                      const SlidingTextAnimation& slidingTextAnimation,
                      const PieceDropParticleEffect& pieceDropParticleEffect,
+                     const BlastRadiusAnimation& blastRadiusAnimation,
                      const GameScene& scene,
                      const ScrollController& scrollController,
                      const GameHud& hud,
@@ -67,10 +69,10 @@ namespace BlocksGame {
                               const Pht::Vec3& ghostPieceCenterLocalCoords);
         void RenderClickableGhostPieces(const FallingPiece& fallingPiece,
                                         const Pht::Vec3& ghostPieceCenterLocalCoords);
-        const Pht::RenderableObject* GetGhostPieceRenderable(const Piece& pieceType) const;
         void RenderGhostPiece(const Pht::RenderableObject& ghostPieceRenderable,
                               const Pht::Vec3& position,
                               Rotation rotation);
+        void RenderBlastRadiusAnimation();
         void RenderExplosion();
         void RenderRowExplosion();
         void RenderFlyingBlocks();
@@ -97,6 +99,7 @@ namespace BlocksGame {
         const FlyingBlocksAnimation& mFlyingBlocksAnimation;
         const SlidingTextAnimation& mSlidingTextAnimation;
         const PieceDropParticleEffect& mPieceDropParticleEffect;
+        const BlastRadiusAnimation& mBlastRadiusAnimation;
         const GameScene& mScene;
         const ScrollController& mScrollController;
         const GameHud& mHud;

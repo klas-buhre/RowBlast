@@ -75,15 +75,6 @@ void GameScene::Reset(const Level& level) {
     UpdateCameraPosition();
     
     mFloatingCubes.Reset();
-    
-    switch (level.GetObjective()) {
-        case Level::Objective::Clear:
-            mAreGhostPiecesFilled = true;
-            break;
-        case Level::Objective::Build:
-            mAreGhostPiecesFilled = false;
-            break;
-    }
 }
 
 void GameScene::Update() {

@@ -43,12 +43,14 @@ Backlog:
     -Maybe the bombs could have constant particle effects as if it is about to explode. And they
      could be be of different shapes other than spheres.
   -Map:
+    -Map can be a Pht::Scene.
     -Can have clouds in the map.
     -More 3D feel.
     -Load multiple maps.
   -Tutorial:
   -Purchases:
   -Back end:
+  -Levels:
   -Sound:
     -Buy sounds and music.
   -Make ready for release:

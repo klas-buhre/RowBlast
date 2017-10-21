@@ -337,11 +337,16 @@ void ClickInputHandler::HandleTouch(const Pht::TouchEvent& touchEvent) {
         auto& move {mMoveAlternativeSet.At(i)};
         
         switch (move.mButton->GetButton().OnTouch(touchEvent, identityMatrix)) {
+            case Pht::Button::Result::Down:
+            case Pht::Button::Result::UpOutside:
+            case Pht::Button::Result::MoveOutside:
+            case Pht::Button::Result::MoveInside:
+                return;
             case Pht::Button::Result::UpInside:
                 mGameLogic.StartFallingPieceAnimation(*move.mLastMovement);
                 mState = State::Inactive;
                 return;
-            default:
+            case Pht::Button::Result::None:
                 break;
         }
     }

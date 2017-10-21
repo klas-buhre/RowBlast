@@ -20,6 +20,7 @@
 #include "FlashingBlocksAnimation.hpp"
 #include "SlidingTextAnimation.hpp"
 #include "PieceDropParticleEffect.hpp"
+#include "BlastRadiusAnimation.hpp"
 #include "SettingsMenuController.hpp"
 #include "NoLivesDialogController.hpp"
 
@@ -47,6 +48,7 @@ GameRenderer::GameRenderer(Pht::IRenderer& engineRenderer,
                            const FlyingBlocksAnimation& flyingBlocksAnimation,
                            const SlidingTextAnimation& slidingTextAnimation,
                            const PieceDropParticleEffect& pieceDropParticleEffect,
+                           const BlastRadiusAnimation& blastRadiusAnimation,
                            const GameScene& scene,
                            const ScrollController& scrollController,
                            const GameHud& hud,
@@ -59,6 +61,7 @@ GameRenderer::GameRenderer(Pht::IRenderer& engineRenderer,
     mFlyingBlocksAnimation {flyingBlocksAnimation},
     mSlidingTextAnimation {slidingTextAnimation},
     mPieceDropParticleEffect {pieceDropParticleEffect},
+    mBlastRadiusAnimation {blastRadiusAnimation},
     mScene {scene},
     mScrollController {scrollController},
     mHud {hud},
@@ -77,6 +80,7 @@ void GameRenderer::RenderFrame() {
     RenderFieldBlocks();
     RenderFallingPiece();
     RenderGhostPieces();
+    RenderBlastRadiusAnimation();
     RenderExplosion();
     RenderRowExplosion();
     RenderFlyingBlocks();
@@ -401,7 +405,7 @@ void GameRenderer::RenderGhostPiece(const FallingPiece& fallingPiece,
     auto cellSize {mScene.GetCellSize()};
     auto& fieldLowerLeft {mScene.GetFieldLoweLeft()};
     auto& pieceType {fallingPiece.GetPieceType()};
-    auto* ghostPieceRenderable {GetGhostPieceRenderable(pieceType)};
+    auto* ghostPieceRenderable {pieceType.GetGhostPieceRenderable()};
     
     Pht::Vec3 ghostPieceWorldPos {
         fieldLowerLeft.x + fallingPiece.GetRenderablePosition().x * cellSize,
@@ -431,7 +435,7 @@ void GameRenderer::RenderClickableGhostPieces(const FallingPiece& fallingPiece,
     auto ghostPieceZ {mScene.GetGhostPieceZ()};
     auto& fieldLowerLeft {mScene.GetFieldLoweLeft()};
     auto& pieceType {fallingPiece.GetPieceType()};
-    auto* ghostPieceRenderable {GetGhostPieceRenderable(pieceType)};
+    auto* ghostPieceRenderable {pieceType.GetGhostPieceRenderable()};
     
     for (auto i {0}; i < moveAlternatives->Size(); ++i) {
         auto& move {moveAlternatives->At(i)};
@@ -464,24 +468,18 @@ void GameRenderer::RenderClickableGhostPieces(const FallingPiece& fallingPiece,
     }
 }
 
-const Pht::RenderableObject* GameRenderer::GetGhostPieceRenderable(const Piece& pieceType) const {
-    if (auto* ghostPieceRenderable {pieceType.GetGhostPieceRenderable()}) {
-        if (mScene.AreGhostPiecesFilled()) {
-            //return pieceType.GetFilledGhostPieceRenderable();
-        }
-        
-        return ghostPieceRenderable;
-    }
-    
-    return nullptr;
-}
-
 void GameRenderer::RenderGhostPiece(const Pht::RenderableObject& ghostPieceRenderable,
                                     const Pht::Vec3& position,
                                     Rotation rotation) {
     auto& rotationMatrix {rotationMatrices[static_cast<int>(rotation)]};
     auto matrix {rotationMatrix * Pht::Mat4::Translate(position.x, position.y, position.z)};
     mEngineRenderer.Render(ghostPieceRenderable, matrix);
+}
+
+void GameRenderer::RenderBlastRadiusAnimation() {
+    if (auto* sceneObject {mBlastRadiusAnimation.GetSceneObject()}) {
+        RenderUtils::RenderSceneObject(mEngineRenderer, *sceneObject);
+    }
 }
 
 void GameRenderer::RenderExplosion() {

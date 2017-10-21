@@ -20,6 +20,7 @@
 #include "GameViewControllers.hpp"
 #include "ClearLastBlocksAnimation.hpp"
 #include "SlidingTextAnimation.hpp"
+#include "BlastRadiusAnimation.hpp"
 
 namespace Pht {
     class IEngine;
@@ -129,6 +130,7 @@ namespace BlocksGame {
         ExplosionParticleEffect mExplosionParticleEffect;
         RowExplosionParticleEffect mRowExplosionParticleEffect;
         PieceDropParticleEffect mPieceDropParticleEffect;
+        BlastRadiusAnimation mBlastRadiusAnimation;
         FlyingBlocksAnimation mFlyingBlocksAnimation;
         ClearLastBlocksAnimation mClearLastBlocksAnimation;
         GameLogic mGameLogic;

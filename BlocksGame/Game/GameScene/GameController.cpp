@@ -45,6 +45,7 @@ GameController::GameController(Pht::IEngine& engine,
     mExplosionParticleEffect {engine, mScene},
     mRowExplosionParticleEffect {engine, mScene},
     mPieceDropParticleEffect {engine, mScene},
+    mBlastRadiusAnimation {engine, mScene},
     mFlyingBlocksAnimation {mScene},
     mClearLastBlocksAnimation {mField, mFlyingBlocksAnimation},
     mGameLogic {
@@ -56,6 +57,7 @@ GameController::GameController(Pht::IEngine& engine,
         mRowExplosionParticleEffect,
         mFlyingBlocksAnimation,
         mPieceDropParticleEffect,
+        mBlastRadiusAnimation,
         mGameViewControllers.GetGameHudController(),
         settings
     },
@@ -71,6 +73,7 @@ GameController::GameController(Pht::IEngine& engine,
         mFlyingBlocksAnimation,
         mSlidingTextAnimation,
         mPieceDropParticleEffect,
+        mBlastRadiusAnimation,
         mScene,
         mScrollController,
         mHud,
@@ -140,6 +143,7 @@ GameController::Command GameController::UpdateGame() {
     
     mFlashingBlocksAnimation.Update(dt);
     mPieceDropParticleEffect.Update();
+    mBlastRadiusAnimation.Update(dt);
     mFlyingBlocksAnimation.Update(dt);
     mHud.Update();
     mScene.Update();
