@@ -14,9 +14,8 @@ using namespace BlocksGame;
 
 namespace {
     const auto fieldQuadZ {-1.0f};
-    const auto lowerClipQuadHeightInCells {2.15f};
+    const auto lowerClipAreaHeightInCells {2.15f};
     const auto fieldPadding {0.1f};
-    const auto clipQuadPadding {2.0f};
 
     const std::vector<Volume> floatingCubePaths {
         Volume {
@@ -70,8 +69,9 @@ void GameScene::Reset(const Level& level) {
         mFieldPosition.y - mFieldHeight / 2.0f
     };
     
+    mScissorBoxSize = Pht::Vec2 {mFieldWidth + fieldPadding, 19.0f * mCellSize};
+    
     CreateFieldQuad(level);
-    CreateFieldClipQuads();
     UpdateCameraPosition();
     
     mFloatingCubes.Reset();
@@ -90,7 +90,7 @@ void GameScene::UpdateCameraPosition() {
     
     auto cameraYPosition {
         mFieldLoweLeft.y + mScrollController.GetLowestVisibleRow() * mCellSize +
-        renderer.GetOrthographicFrustumSize().y / 2.0f - mCellSize * lowerClipQuadHeightInCells
+        renderer.GetOrthographicFrustumSize().y / 2.0f - mCellSize * lowerClipAreaHeightInCells
     };
 
     Pht::Vec3 cameraPosition {0.0f, cameraYPosition, 20.5f};
@@ -98,12 +98,11 @@ void GameScene::UpdateCameraPosition() {
     Pht::Vec3 up {0.0f, 1.0f, 0.0f};
     renderer.LookAt(cameraPosition, target, up);
     
-    mLowerFieldClipQuad->ResetMatrix();
-    mLowerFieldClipQuad->Translate({
-        mFieldPosition.x,
-        cameraYPosition - renderer.GetOrthographicFrustumSize().y / 2.0f + mLowerClipQuadHeight / 2.0f,
-        mFieldPosition.z + mCellSize
-    });
+    mScissorBoxLowerLeft = Pht::Vec2 {
+        mFieldPosition.x - (mFieldWidth + fieldPadding) / 2.0f,
+        cameraYPosition - renderer.GetOrthographicFrustumSize().y / 2.0f +
+        lowerClipAreaHeightInCells * mCellSize
+    };
 }
 
 void GameScene::CreateBackground() {
@@ -145,17 +144,6 @@ Pht::QuadMesh::Vertices GameScene::CreateFieldVertices(const Level& level) {
                 {{-width / 2.0f, height / 2.0f, 0.0f}, {0.9f, 0.2f, 0.4f, 1.0f}},
             };
     }
-}
-
-void GameScene::CreateFieldClipQuads() {
-    Pht::Material clipQuadMaterial {Pht::Color {}};
-    clipQuadMaterial.SetOpacity(0.0f);
-
-    mLowerClipQuadHeight = lowerClipQuadHeightInCells * mCellSize;
-    mLowerFieldClipQuad = std::make_unique<Pht::SceneObject>(
-        mEngine.CreateRenderableObject(
-            Pht::QuadMesh {mFieldWidth + clipQuadPadding, mLowerClipQuadHeight},
-            clipQuadMaterial));
 }
 
 const Pht::Material& GameScene::GetGoldMaterial() const {

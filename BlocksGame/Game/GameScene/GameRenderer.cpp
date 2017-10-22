@@ -69,11 +69,15 @@ GameRenderer::GameRenderer(Pht::IRenderer& engineRenderer,
 
 void GameRenderer::RenderFrame() {
     mEngineRenderer.SetProjectionMode(Pht::ProjectionMode::Perspective);
+    
     RenderUtils::RenderSceneObject(mEngineRenderer, mScene.GetBackground());
     RenderUtils::RenderFloatingCubes(mEngineRenderer, mScene.GetFloatingCubes());
 
     mEngineRenderer.SetProjectionMode(Pht::ProjectionMode::Orthographic);
-    RenderField();
+    mEngineRenderer.SetScissorBox(mScene.GetScissorBoxLowerLeft(), mScene.GetScissorBoxSize());
+    mEngineRenderer.SetScissorTest(true);
+    
+    RenderUtils::RenderSceneObject(mEngineRenderer, mScene.GetFieldQuad());
     RenderFieldBlueprintSlots();
     RenderFieldBlueprintSlotsAnimation();
     RenderPieceDropParticles();
@@ -81,17 +85,15 @@ void GameRenderer::RenderFrame() {
     RenderFallingPiece();
     RenderGhostPieces();
     RenderBlastRadiusAnimation();
+    
+    mEngineRenderer.SetScissorTest(false);
+    
     RenderExplosion();
     RenderRowExplosion();
     RenderFlyingBlocks();
-    RenderSlidingText();    
+    RenderSlidingText();
     RenderHud();
     RenderGameViews();
-}
-
-void GameRenderer::RenderField() {
-    RenderUtils::RenderSceneObject(mEngineRenderer, mScene.GetLowerFieldClipQuad());
-    RenderUtils::RenderSceneObject(mEngineRenderer, mScene.GetFieldQuad());
 }
 
 void GameRenderer::RenderFieldBlueprintSlots() {

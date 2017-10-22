@@ -338,11 +338,19 @@ void ClickInputHandler::HandleTouch(const Pht::TouchEvent& touchEvent) {
         
         switch (move.mButton->GetButton().OnTouch(touchEvent, identityMatrix)) {
             case Pht::Button::Result::Down:
+            case Pht::Button::Result::MoveInside:
+                if (mPieceType->IsBomb()) {
+                    mGameLogic.StartBlastRadiusAnimation(move.mPosition);
+                }
+                return;
             case Pht::Button::Result::UpOutside:
             case Pht::Button::Result::MoveOutside:
-            case Pht::Button::Result::MoveInside:
+                if (mPieceType->IsBomb()) {
+                    mGameLogic.StopBlastRadiusAnimation();
+                }
                 return;
             case Pht::Button::Result::UpInside:
+                mGameLogic.StopBlastRadiusAnimation();
                 mGameLogic.StartFallingPieceAnimation(*move.mLastMovement);
                 mState = State::Inactive;
                 return;

@@ -15,7 +15,6 @@ namespace BlocksGame {
     public:
         RowBomb(Pht::IEngine& engine, const GameScene& scene);
         
-        bool IsBomb() const override;
         bool IsRowBomb() const override;
         bool CanRotateAroundZ() const override;
         int GetNumEmptyTopRows() const override;

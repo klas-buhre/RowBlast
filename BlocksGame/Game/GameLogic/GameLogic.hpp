@@ -58,6 +58,8 @@ namespace BlocksGame {
         void SwitchPiece() override;
         void SetFallingPieceXPosWithCollisionDetection(float fallingPieceNewX) override;
         int GetGhostPieceRow() const override;
+        void StartBlastRadiusAnimation(const Pht::IVec2& position) override;
+        void StopBlastRadiusAnimation() override;
         
         void Reset(const Level& level);
         Result Update(bool shouldUpdateLogic);
@@ -114,6 +116,8 @@ namespace BlocksGame {
         void CalculatePieceType();
         bool IsLevelCompleted();
         void ManageMoveHistory();
+        void StartBlastRadiusAnimationAtGhostPiece();
+        void SetBlastRadiusAnimationPositionAtGhostPiece();
         void RemoveFallingPiece();
         void NextMove();
         void UpdateLevelProgress();

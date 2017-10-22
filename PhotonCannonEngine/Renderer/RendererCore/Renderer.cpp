@@ -1,5 +1,7 @@
 #include "Renderer.hpp"
 
+#include <assert.h>
+
 #define STRINGIFY(A)  #A
 #include "../Shaders/PixelLighting.vert"
 #include "../Shaders/PixelLighting.frag"
@@ -365,6 +367,46 @@ void Renderer::SetHudCameraPosition(const Vec3& cameraPosition) {
 void Renderer::LookAt(const Vec3& cameraPosition, const Vec3& target, const Vec3& up) {
     mCamera.LookAt(cameraPosition, target, up);
     SetLightPositionInShaders();
+}
+
+void Renderer::SetScissorBox(const Vec2& lowerLeft, const Vec2& size) {
+    assert(mHudMode || mProjectionMode == ProjectionMode::Orthographic);
+
+    Vec4 localOrigin {0.0f, 0.0f, 0.0f, 1.0f};
+    auto modelView {Mat4::Translate(lowerLeft.x, lowerLeft.y, 0.0f) * GetViewMatrix()};
+    auto normProjPos {GetProjectionMatrix() * modelView.Transposed() * localOrigin};
+    
+    auto& frustumSize {mHudMode ? GetHudFrustumSize() : GetOrthographicFrustumSize()};
+    
+    Pht::Vec2 lowerLeftProjected {
+        normProjPos.x * frustumSize.x / 2.0f,
+        normProjPos.y * frustumSize.y / 2.0f
+    };
+
+    auto pixelX {
+        mRenderBufferSize.x / 2.0f + mRenderBufferSize.x * lowerLeftProjected.x / frustumSize.x
+    };
+    
+    auto pixelY {
+        mRenderBufferSize.y / 2.0f + mRenderBufferSize.y * lowerLeftProjected.y / frustumSize.y
+    };
+    
+    IVec2 lowerLeftInPixels {static_cast<int>(pixelX), static_cast<int>(pixelY)};
+    
+    IVec2 sizeInPixels {
+        static_cast<int>(mRenderBufferSize.x * size.x / frustumSize.x),
+        static_cast<int>(mRenderBufferSize.y * size.y / frustumSize.y)
+    };
+    
+    glScissor(lowerLeftInPixels.x, lowerLeftInPixels.y, sizeInPixels.x, sizeInPixels.y);
+}
+
+void Renderer::SetScissorTest(bool scissorTest) {
+    if (scissorTest) {
+        glEnable(GL_SCISSOR_TEST);
+    } else {
+        glDisable(GL_SCISSOR_TEST);
+    }
 }
 
 std::unique_ptr<RenderableObject> Renderer::CreateRenderableObject(const IMesh& mesh,

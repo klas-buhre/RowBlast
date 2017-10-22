@@ -44,10 +44,6 @@ RowBomb::RowBomb(Pht::IEngine& engine, const GameScene& scene) {
     SetNumRotations(1);
 }
 
-bool RowBomb::IsBomb() const {
-    return true;
-}
-
 bool RowBomb::IsRowBomb() const {
     return true;
 }

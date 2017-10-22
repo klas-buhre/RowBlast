@@ -89,6 +89,7 @@ void GameController::StartLevel(int levelIndex) {
     mGameLogic.Reset(*mLevel);
     mGameViewControllers.SetActiveController(GameViewControllers::None);
     mHud.Reset(*mLevel);
+    mBlastRadiusAnimation.Stop();
     
     mState = GameState::LevelIntro;
     mLevelIntroState = LevelIntroState::Overview;

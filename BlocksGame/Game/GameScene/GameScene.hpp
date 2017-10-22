@@ -71,12 +71,16 @@ namespace BlocksGame {
             return mFieldLoweLeft;
         }
         
+        const Pht::Vec2& GetScissorBoxLowerLeft() const {
+            return mScissorBoxLowerLeft;
+        }
+
+        const Pht::Vec2& GetScissorBoxSize() const {
+            return mScissorBoxSize;
+        }
+
         const Pht::SceneObject& GetFieldQuad() const {
             return *mFieldQuad;
-        }
-        
-        const Pht::SceneObject& GetLowerFieldClipQuad() const {
-            return *mLowerFieldClipQuad;
         }
         
         const Pht::SceneObject& GetBackground() const {
@@ -92,7 +96,6 @@ namespace BlocksGame {
         void CreateBackground();
         void CreateFieldQuad(const Level& level);
         Pht::QuadMesh::Vertices CreateFieldVertices(const Level& level);
-        void CreateFieldClipQuads();
         
         Pht::IEngine& mEngine;
         const ScrollController& mScrollController;
@@ -106,11 +109,11 @@ namespace BlocksGame {
         const float mBlueprintZ {-0.7f};
         float mFieldWidth {0.0f};
         float mFieldHeight {0.0f};
-        float mLowerClipQuadHeight {0.0f};
         Pht::Vec2 mFieldLoweLeft;
+        Pht::Vec2 mScissorBoxLowerLeft;
+        Pht::Vec2 mScissorBoxSize;
         std::unique_ptr<Pht::SceneObject> mBackground;
         std::unique_ptr<Pht::SceneObject> mFieldQuad;
-        std::unique_ptr<Pht::SceneObject> mLowerFieldClipQuad;
         FloatingCubes mFloatingCubes;
         const float mGhostPieceOpacity {0.5f};
     };

@@ -36,7 +36,7 @@ BlastRadiusAnimation::BlastRadiusAnimation(Pht::IEngine& engine, const GameScene
     
     auto rasterizer {std::make_unique<Pht::OfflineRasterizer>(coordinateSystemSize, imageSize)};
         
-    const Pht::Vec4 edgeColor {1.0f, 1.0f, 1.0f, 0.82f};
+    const Pht::Vec4 edgeColor {1.0f, 1.0f, 1.0f, 0.5f};
     
     Pht::Vec2 lowerLeft1 {0.0f, 0.0f};
     Pht::Vec2 upperRight1 {squareSide, edgeWidth};

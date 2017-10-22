@@ -28,6 +28,8 @@ namespace Pht {
         virtual void SetProjectionMode(ProjectionMode projectionMode) = 0;
         virtual void SetHudCameraPosition(const Vec3& cameraPosition) = 0;
         virtual void LookAt(const Vec3& cameraPosition, const Vec3& target, const Vec3& up) = 0;
+        virtual void SetScissorBox(const Vec2& lowerLeft, const Vec2& size) = 0;
+        virtual void SetScissorTest(bool scissorTest) = 0;
         virtual void Render(const RenderableObject& object, const Mat4& transform) = 0;
         virtual void RenderText(const std::string& text,
                                 const Vec2& position,

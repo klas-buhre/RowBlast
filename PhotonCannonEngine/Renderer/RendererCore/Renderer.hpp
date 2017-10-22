@@ -23,6 +23,8 @@ namespace Pht {
         void SetProjectionMode(ProjectionMode projectionMode) override;
         void SetHudCameraPosition(const Vec3& cameraPosition) override;
         void LookAt(const Vec3& cameraPosition, const Vec3& target, const Vec3& up) override;
+        void SetScissorBox(const Vec2& lowerLeft, const Vec2& size) override;
+        void SetScissorTest(bool scissorTest) override;
         void Render(const RenderableObject& object, const Mat4& modelTransform) override;
         void RenderText(const std::string& text,
                         const Vec2& position,

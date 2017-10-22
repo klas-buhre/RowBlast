@@ -24,6 +24,10 @@ namespace BlocksGame {
         void Update(float dt);
         const Pht::SceneObject* GetSceneObject() const;
         
+        bool IsActive() const {
+            return mState == State::Active;
+        }
+        
     private:
         enum class State {
             Active,

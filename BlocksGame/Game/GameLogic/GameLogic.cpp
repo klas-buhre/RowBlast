@@ -41,6 +41,10 @@ namespace {
             pieceType.GetGridNumColumns()
         };
     }
+    
+    bool IsBomb(const Piece& pieceType) {
+        return pieceType.IsBomb() || pieceType.IsRowBomb();
+    }
 }
 
 GameLogic::GameLogic(Pht::IEngine& engine,
@@ -134,6 +138,10 @@ GameLogic::Result GameLogic::Update(bool shouldUpdateLogic) {
 GameLogic::Result GameLogic::InitFallingPiece() {
     assert(mFallingPieceInitReason != FallingPieceInitReason::None);
     
+    if (mBlastRadiusAnimation.IsActive()) {
+        mBlastRadiusAnimation.Stop();
+    }
+    
     UpdateLevelProgress();
     
     if (IsLevelCompleted()) {
@@ -155,15 +163,8 @@ GameLogic::Result GameLogic::InitFallingPiece() {
         return Result::GameOver;
     }
     
-    if (mCurrentMove.mPieceType->IsBomb() && !mCurrentMove.mPieceType->IsRowBomb()) {
-        mBlastRadiusAnimation.Start();
-        
-        Pht::Vec2 blastRadiusAnimationPos {
-            mFallingPiece->GetRenderablePosition().x + 1.0f,
-            static_cast<float>(mGhostPieceRow) + 1.0f
-        };
-        
-        mBlastRadiusAnimation.SetPosition(blastRadiusAnimationPos);
+    if (mCurrentMove.mPieceType->IsBomb() && mSettings.mControlType == Controls::Gesture) {
+        StartBlastRadiusAnimationAtGhostPiece();
     }
     
     if (mSettings.mControlType == Controls::Click) {
@@ -298,9 +299,18 @@ void GameLogic::HandleControlTypeChange() {
         return;
     }
     
-    if (mSettings.mControlType != mPreviousControlType && mSettings.mControlType == Controls::Click) {
-        mClickInputHandler.CalculateMoves(*mFallingPiece);
-        mClickInputHandler.CreateNewMoveAlternativeSet();
+    if (mSettings.mControlType != mPreviousControlType) {
+        switch (mSettings.mControlType) {
+            case Controls::Click:
+                mClickInputHandler.CalculateMoves(*mFallingPiece);
+                mClickInputHandler.CreateNewMoveAlternativeSet();
+                break;
+            case Controls::Gesture:
+                if (mCurrentMove.mPieceType->IsBomb()) {
+                    StartBlastRadiusAnimationAtGhostPiece();
+                }
+                break;
+        }
     }
     
     mPreviousControlType = mSettings.mControlType;
@@ -400,7 +410,7 @@ void GameLogic::LandFallingPiece(bool startParticleEffect) {
         mPieceDropParticleEffect.StartEffect(*mFallingPiece);
     }
     
-    if (mFallingPiece->GetPieceType().IsBomb()) {
+    if (IsBomb(mFallingPiece->GetPieceType())) {
         DetonateBomb();
     } else {
         mField.LandFallingPiece(*mFallingPiece);
@@ -440,6 +450,10 @@ void GameLogic::DetonateBomb() {
 
         if (removedSubCells.Size() > 0) {
             mFlyingBlocksAnimation.AddBlocks(removedSubCells, intDetonationPos);
+        }
+        
+        if (mBlastRadiusAnimation.IsActive()) {
+            mBlastRadiusAnimation.Stop();
         }
     }
     
@@ -543,7 +557,7 @@ void GameLogic::RotatePieceOrDetonateBomb() {
     
     auto& pieceType {mFallingPiece->GetPieceType()};
     
-    if (pieceType.IsBomb()) {
+    if (IsBomb(pieceType)) {
         DetonateBomb();
         NextMove();
     } else if (pieceType.CanRotateAroundZ()) {
@@ -571,10 +585,43 @@ void GameLogic::SetFallingPieceXPosWithCollisionDetection(float fallingPieceNewX
     }
 
     mGhostPieceRow = mField.DetectCollisionDown(pieceBlocks, mFallingPiece->GetIntPosition());
+    
+    if (mBlastRadiusAnimation.IsActive()) {
+        SetBlastRadiusAnimationPositionAtGhostPiece();
+    }
 }
 
 int GameLogic::GetGhostPieceRow() const {
     return mGhostPieceRow;
+}
+
+void GameLogic::StartBlastRadiusAnimationAtGhostPiece() {
+    mBlastRadiusAnimation.Start();
+    SetBlastRadiusAnimationPositionAtGhostPiece();
+}
+
+void GameLogic::SetBlastRadiusAnimationPositionAtGhostPiece() {
+    Pht::Vec2 blastRadiusAnimationPos {
+        mFallingPiece->GetRenderablePosition().x + 1.0f,
+        static_cast<float>(mGhostPieceRow) + 1.0f
+    };
+
+    mBlastRadiusAnimation.SetPosition(blastRadiusAnimationPos);
+}
+
+void GameLogic::StartBlastRadiusAnimation(const Pht::IVec2& position) {
+    mBlastRadiusAnimation.Start();
+    
+    Pht::Vec2 blastRadiusAnimationPos {
+        static_cast<float>(position.x) + 1.0f,
+        static_cast<float>(position.y) + 1.0f
+    };
+
+    mBlastRadiusAnimation.SetPosition(blastRadiusAnimationPos);
+}
+
+void GameLogic::StopBlastRadiusAnimation() {
+    mBlastRadiusAnimation.Stop();
 }
 
 GameLogic::Result GameLogic::HandleInput() {
