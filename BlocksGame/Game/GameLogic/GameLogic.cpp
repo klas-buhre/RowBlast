@@ -302,6 +302,9 @@ void GameLogic::HandleControlTypeChange() {
     if (mSettings.mControlType != mPreviousControlType) {
         switch (mSettings.mControlType) {
             case Controls::Click:
+                if (mCurrentMove.mPieceType->IsBomb()) {
+                    mBlastRadiusAnimation.Stop();
+                }
                 mClickInputHandler.CalculateMoves(*mFallingPiece);
                 mClickInputHandler.CreateNewMoveAlternativeSet();
                 break;

@@ -13,12 +13,75 @@
 
 using namespace BlocksGame;
 
+namespace {
+    void DrawEdge(Pht::OfflineRasterizer& rasterizer, float squareSide, float cellSize) {
+        const auto edgeLength {cellSize * 1.1f};
+        const auto edgeWidth {0.09f};
+        const Pht::Vec4 edgeColor {1.0f, 1.0f, 1.0f, 0.82f};
+        
+        Pht::Vec2 lowerLeft1 {squareSide - edgeLength, 0.0f};
+        Pht::Vec2 upperRight1 {squareSide, edgeWidth};
+        rasterizer.DrawRectangle(upperRight1, lowerLeft1, edgeColor);
+
+        Pht::Vec2 lowerLeft2 {squareSide - edgeWidth, 0.0f};
+        Pht::Vec2 upperRight2 {squareSide, edgeLength};
+        rasterizer.DrawRectangle(upperRight2, lowerLeft2, edgeColor);
+
+        Pht::Vec2 lowerLeft3 {squareSide - edgeWidth, squareSide - edgeLength};
+        Pht::Vec2 upperRight3 {squareSide, squareSide};
+        rasterizer.DrawRectangle(upperRight3, lowerLeft3, edgeColor);
+
+        Pht::Vec2 lowerLeft4 {squareSide - edgeLength, squareSide - edgeWidth};
+        Pht::Vec2 upperRight4 {squareSide, squareSide};
+        rasterizer.DrawRectangle(upperRight4, lowerLeft4, edgeColor);
+
+        Pht::Vec2 lowerLeft5 {0.0f, squareSide - edgeWidth};
+        Pht::Vec2 upperRight5 {edgeLength, squareSide};
+        rasterizer.DrawRectangle(upperRight5, lowerLeft5, edgeColor);
+
+        Pht::Vec2 lowerLeft6 {0.0f, squareSide - edgeLength};
+        Pht::Vec2 upperRight6 {edgeWidth, squareSide};
+        rasterizer.DrawRectangle(upperRight6, lowerLeft6, edgeColor);
+
+        Pht::Vec2 lowerLeft7 {0.0f, 0.0f};
+        Pht::Vec2 upperRight7 {edgeWidth, edgeLength};
+        rasterizer.DrawRectangle(upperRight7, lowerLeft7, edgeColor);
+
+        Pht::Vec2 lowerLeft8 {0.0f, 0.0f};
+        Pht::Vec2 upperRight8 {edgeLength, edgeWidth};
+        rasterizer.DrawRectangle(upperRight8, lowerLeft8, edgeColor);
+    }
+    
+    void DrawStripes(Pht::OfflineRasterizer& rasterizer, float squareSide) {
+        const Pht::Vec4 fillColor {1.0f, 1.0f, 1.0f, 0.12f};
+        const auto numStripes {3.5f};
+        const auto stripeStep {squareSide / numStripes};
+        const auto stripeWidth {(stripeStep / 2.0f) / std::sqrt(2.0f)};
+        
+        for (auto pos {0.0f}; pos < squareSide; pos += stripeStep) {
+            Pht::Vec2 trapezoidLowerLeft {0.0f, squareSide - pos};
+            Pht::Vec2 trapezoidUpperRight {pos, squareSide};
+            rasterizer.DrawTiltedTrapezoid315(trapezoidUpperRight,
+                                              trapezoidLowerLeft,
+                                              stripeWidth,
+                                              fillColor);
+        }
+
+        for (auto pos {0.0f}; pos < squareSide; pos += stripeStep) {
+            Pht::Vec2 trapezoidLowerLeft {pos, 0.0f};
+            Pht::Vec2 trapezoidUpperRight {squareSide, squareSide - pos};
+            rasterizer.DrawTiltedTrapezoid45(trapezoidUpperRight,
+                                             trapezoidLowerLeft,
+                                             stripeWidth,
+                                             fillColor);
+        }
+    }
+}
+
 BlastRadiusAnimation::BlastRadiusAnimation(Pht::IEngine& engine, const GameScene& scene) :
     mScene {scene} {
     
     auto cellSize {scene.GetCellSize()};
-    const auto edgeWidth {0.1f};
-    const auto edgeLength {cellSize * 1.5f};
     auto squareSide {cellSize * 5.0f};
     Pht::Vec2 coordinateSystemSize {squareSide, squareSide};
     auto& renderer {engine.GetRenderer()};
@@ -35,24 +98,9 @@ BlastRadiusAnimation::BlastRadiusAnimation(Pht::IEngine& engine, const GameScene
     };
     
     auto rasterizer {std::make_unique<Pht::OfflineRasterizer>(coordinateSystemSize, imageSize)};
-        
-    const Pht::Vec4 edgeColor {1.0f, 1.0f, 1.0f, 0.5f};
     
-    Pht::Vec2 lowerLeft1 {0.0f, 0.0f};
-    Pht::Vec2 upperRight1 {squareSide, edgeWidth};
-    rasterizer->DrawRectangle(upperRight1, lowerLeft1, edgeColor);
-
-    Pht::Vec2 lowerLeft2 {squareSide - edgeWidth, 0.0f};
-    Pht::Vec2 upperRight2 {squareSide, squareSide};
-    rasterizer->DrawRectangle(upperRight2, lowerLeft2, edgeColor);
-
-    Pht::Vec2 lowerLeft3 {0.0f, squareSide - edgeWidth};
-    Pht::Vec2 upperRight3 {squareSide, squareSide};
-    rasterizer->DrawRectangle(upperRight3, lowerLeft3, edgeColor);
-
-    Pht::Vec2 lowerLeft4 {0.0f, 0.0f};
-    Pht::Vec2 upperRight4 {edgeWidth, squareSide};
-    rasterizer->DrawRectangle(upperRight4, lowerLeft4, edgeColor);
+    DrawEdge(*rasterizer, squareSide, cellSize);
+    DrawStripes(*rasterizer, squareSide);
 
     auto image {rasterizer->ProduceImage()};
     

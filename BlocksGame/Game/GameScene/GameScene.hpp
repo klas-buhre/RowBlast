@@ -59,6 +59,10 @@ namespace BlocksGame {
             return mGhostPieceZ;
         }
         
+        float GetPressedGhostPieceZ() const {
+            return mPressedGhostPieceZ;
+        }
+        
         float GetBlueprintAnimationZ() const {
             return mBlueprintAnimationZ;
         }
@@ -105,6 +109,7 @@ namespace BlocksGame {
         const float mCellSize {1.25f};
         const float mBlastRadiusAnimationZ {mCellSize / 2.0f + 0.1f};
         const float mGhostPieceZ {-0.2f};
+        const float mPressedGhostPieceZ {mCellSize / 2.0f + 0.2f};
         const float mBlueprintAnimationZ {-0.6f};
         const float mBlueprintZ {-0.7f};
         float mFieldWidth {0.0f};

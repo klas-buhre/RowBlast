@@ -420,8 +420,10 @@ void GameRenderer::RenderGhostPiece(const FallingPiece& fallingPiece,
                          ghostPieceWorldPos + ghostPieceCenterLocalCoords,
                          fallingPiece.GetRotation());
     } else {
+        Pht::Vec3 position {ghostPieceWorldPos};
+        position.z = mScene.GetPressedGhostPieceZ();
         auto& pieceGrid {fallingPiece.GetPieceType().GetGrid(fallingPiece.GetRotation())};
-        RenderPieceBlocks(pieceGrid, ghostPieceWorldPos, mScene.GetGhostPieceOpacity());
+        RenderPieceBlocks(pieceGrid, position, mScene.GetGhostPieceOpacity());
     }
 }
 
@@ -462,7 +464,9 @@ void GameRenderer::RenderClickableGhostPieces(const FallingPiece& fallingPiece,
             }
         } else {
             if (isMoveButtonDown) {
-                RenderPieceBlocks(pieceGrid, ghostPieceWorldPos, 1.0f);
+                Pht::Vec3 position {ghostPieceWorldPos};
+                position.z = mScene.GetPressedGhostPieceZ();
+                RenderPieceBlocks(pieceGrid, position, 1.0f);
             } else {
                 RenderPieceBlocks(pieceGrid, ghostPieceWorldPos, mScene.GetGhostPieceOpacity());
             }
