@@ -37,6 +37,7 @@ namespace BlocksGame {
         const GameScene& mScene;
         State mState {State::Inactive};
         std::unique_ptr<Pht::SceneObject> mSceneObject;
+        float mTime {0.0f};
     };
 }
 

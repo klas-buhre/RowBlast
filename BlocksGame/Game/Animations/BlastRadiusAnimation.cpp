@@ -17,7 +17,7 @@ namespace {
     void DrawEdge(Pht::OfflineRasterizer& rasterizer, float squareSide, float cellSize) {
         const auto edgeLength {cellSize * 1.1f};
         const auto edgeWidth {0.09f};
-        const Pht::Vec4 edgeColor {1.0f, 1.0f, 1.0f, 0.82f};
+        const Pht::Vec4 edgeColor {1.0f, 1.0f, 1.0f, 1.0f};
         
         Pht::Vec2 lowerLeft1 {squareSide - edgeLength, 0.0f};
         Pht::Vec2 upperRight1 {squareSide, edgeWidth};
@@ -53,7 +53,7 @@ namespace {
     }
     
     void DrawStripes(Pht::OfflineRasterizer& rasterizer, float squareSide) {
-        const Pht::Vec4 fillColor {1.0f, 1.0f, 1.0f, 0.12f};
+        const Pht::Vec4 fillColor {1.0f, 1.0f, 1.0f, 0.15f};
         const auto numStripes {3.5f};
         const auto stripeStep {squareSide / numStripes};
         const auto stripeWidth {(stripeStep / 2.0f) / std::sqrt(2.0f)};
@@ -120,6 +120,7 @@ void BlastRadiusAnimation::Start() {
 
 void BlastRadiusAnimation::Stop() {
     mState = State::Inactive;
+    mTime = 0.0f;
 }
 
 void BlastRadiusAnimation::SetPosition(const Pht::Vec2& position) {
@@ -140,6 +141,17 @@ void BlastRadiusAnimation::Update(float dt) {
     if (mState == State::Inactive) {
         return;
     }
+    
+    mTime += dt;
+    const auto opacityCurveAmplitude {0.2f};
+    const auto frequency {0.7f};
+    
+    auto opacity {
+        1.0f - opacityCurveAmplitude + opacityCurveAmplitude * std::sin(2.0f * 3.1415f * frequency * mTime)
+    };
+    
+    auto& material {mSceneObject->GetRenderable().GetMaterial()};
+    material.SetOpacity(opacity);
 }
 
 const Pht::SceneObject* BlastRadiusAnimation::GetSceneObject() const {
