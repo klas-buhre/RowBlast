@@ -1,6 +1,7 @@
 /*
 Backlog:
   -Gameplay:
+    -Maybe add extra visible row of level blocks (6 insted of 5).
     -Maybe a sensitivity setting. Tetris Blitz has lower sensibility on iPad but not on iPhone.
     -When playing a level with clear objective the game could scroll up if there is no room to spawn
      the falling piece. If we are at the top of the level then it is game over.
@@ -9,17 +10,18 @@ Backlog:
      convenient to go back to the state before the move and not the initial state.
     -Mega bomb?
   -Rendering:
-    -There should be no fade in/out when going from for example game menu to settings menu.
-    -The SlidingMenuAnimation could slide in from the side instead.
-    -Add heading to the green dialogs.
-    -Try 1334×750 resolution for iPhone7.
-    -Try models with less bevel for the preview. The triangles with less bevel could be tried for
-     field also.
+    -Pink pause button made by the offline rasterizer.
     -MenuButtons can start a shrink animation when pressed down.
-    -Camera shake when clearing 5 rows.
-    -Try adding welds to the level blocks.
+    -There should be no ugly dark spots in the env map texture.
     -Recreate the star particle. Possibly by buying a textures for particle systems in unity assets
      store. Look at: https://www.assetstore.unity3d.com/en/#!/content/26701
+    -Could have a set of floating cube configurations for the game scene that always looks good.
+    -Maybe the bombs could have constant particle effects as if it is about to explode. And they
+     could be be of different shapes other than spheres.
+    -Add heading to the green dialogs.
+    -Try 1334×750 resolution for iPhone7.
+    -Camera shake when clearing 5 rows.
+    -Try adding welds to the level blocks.
     -One or two stars in level cleared dialog could be placed more in the middle.
     -There could be a particle effect behind the stars in the level cleared dialog. Could be done
      if ParticleEffect inherits from SceneObject. Stars could also rotate in around the y axis for
@@ -38,10 +40,8 @@ Backlog:
     -The floating cubes could have materials with the unpatched version of the sky.
     -The angle of the rotating cubes in the title scene and game scene could be configurable/
      deterministic so that the ugly edges in the env mapping is never seen.
-    -Could have a set of floating cube configurations for the game scene that always looks good.
-    -The cube map textures could be reused for the different materials to reduce memory usage.
-    -Maybe the bombs could have constant particle effects as if it is about to explode. And they
-     could be be of different shapes other than spheres.
+     -Try models with less bevel for the preview. The triangles with less bevel could be tried for
+     field also.
   -Map:
     -Map can be a Pht::Scene.
     -Can have clouds in the map.
@@ -58,7 +58,7 @@ Backlog:
     -Credit the icon creator: <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
   
 Ongoing tasks:
-
+    -The SlidingMenuAnimation could slide in from the side instead.
  
 Ideas:
     -The pause button could lead to a widget that has an undo button, a boosters button and a game

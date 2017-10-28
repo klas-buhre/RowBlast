@@ -173,7 +173,8 @@ MapController::Command MapController::HandleLevelClick(int level) {
     if (mUserData.GetLifeManager().GetNumLives() == 0) {
         mState = State::NoLivesDialog;
         mMapViewControllers.SetActiveController(MapViewControllers::NoLivesDialog);
-        mMapViewControllers.GetNoLivesDialogController().Reset(true);
+        mMapViewControllers.GetNoLivesDialogController().Reset(SlidingMenuAnimation::UpdateFade::Yes,
+                                                               true);
         return Command::None;
     }
     
@@ -236,6 +237,6 @@ void MapController::UpdateCamera() {
 
 void MapController::GoToSettingsMenuState() {
     mMapViewControllers.SetActiveController(MapViewControllers::SettingsMenu);
-    mMapViewControllers.GetSettingsMenuController().Reset();
+    mMapViewControllers.GetSettingsMenuController().Reset(SlidingMenuAnimation::UpdateFade::Yes);
     mState = State::SettingsMenu;
 }

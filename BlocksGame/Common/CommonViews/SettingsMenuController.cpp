@@ -18,8 +18,9 @@ SettingsMenuController::SettingsMenuController(Pht::IEngine& engine,
     mView {engine, commonResources},
     mSlidingMenuAnimation {engine, mView, 0.6f} {}
 
-void SettingsMenuController::Reset() {
-    mSlidingMenuAnimation.Reset();
+void SettingsMenuController::Reset(SlidingMenuAnimation::UpdateFade updateFade) {
+    mUpdateFade = updateFade;
+    mSlidingMenuAnimation.Reset(updateFade);
 }
 
 SettingsMenuController::Result SettingsMenuController::Update() {
@@ -73,7 +74,7 @@ SettingsMenuController::Result SettingsMenuController::OnTouch(const Pht::TouchE
 
     if (mView.GetBackButton().IsClicked(touchEvent)) {
         mDeferredResult = Result::GoBack;
-        mSlidingMenuAnimation.StartSlideOut();
+        mSlidingMenuAnimation.StartSlideOut(mUpdateFade);
     }
     
     return Result::None;

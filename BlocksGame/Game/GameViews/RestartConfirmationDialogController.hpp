@@ -12,6 +12,7 @@ namespace Pht {
 
 namespace BlocksGame {
     class CommonResources;
+    class UserData;
     
     class RestartConfirmationDialogController {
     public:
@@ -22,7 +23,8 @@ namespace BlocksGame {
         };
         
         RestartConfirmationDialogController(Pht::IEngine& engine,
-                                            const CommonResources& commonResources);
+                                            const CommonResources& commonResources,
+                                            const UserData& userData);
         
         void Reset();
         Result Update();
@@ -40,6 +42,7 @@ namespace BlocksGame {
         Result OnTouch(const Pht::TouchEvent& touchEvent);
         
         Pht::IInput& mInput;
+        const UserData& mUserData;
         RestartConfirmationDialogView mView;
         SlidingMenuAnimation mSlidingMenuAnimation;
         Result mDeferredResult {Result::None};

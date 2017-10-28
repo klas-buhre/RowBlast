@@ -5,17 +5,21 @@
 
 // Game includes.
 #include "InputUtil.hpp"
+#include "UserData.hpp"
 
 using namespace BlocksGame;
 
 RestartConfirmationDialogController::
-RestartConfirmationDialogController(Pht::IEngine& engine, const CommonResources& commonResources) :
+RestartConfirmationDialogController(Pht::IEngine& engine,
+                                    const CommonResources& commonResources,
+                                    const UserData& userData) :
     mInput {engine.GetInput()},
+    mUserData {userData},
     mView {engine, commonResources},
     mSlidingMenuAnimation {engine, mView, 0.6f} {}
 
 void RestartConfirmationDialogController::Reset() {
-    mSlidingMenuAnimation.Reset();
+    mSlidingMenuAnimation.Reset(SlidingMenuAnimation::UpdateFade::No);
 }
 
 RestartConfirmationDialogController::Result RestartConfirmationDialogController::Update() {
@@ -43,12 +47,17 @@ RestartConfirmationDialogController::Result RestartConfirmationDialogController:
 RestartConfirmationDialogController::Result
 RestartConfirmationDialogController::OnTouch(const Pht::TouchEvent& touchEvent) {
     if (mView.GetYesButton().IsClicked(touchEvent)) {
-        return Result::RestartGame;
+        if (mUserData.GetLifeManager().GetNumLives() == 0) {
+            mDeferredResult = Result::RestartGame;
+            mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::Yes);
+        } else {
+            return Result::RestartGame;
+        }
     }
 
     if (mView.GetNoButton().IsClicked(touchEvent)) {
         mDeferredResult = Result::DoNotRestartGame;
-        mSlidingMenuAnimation.StartSlideOut();
+        mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::No);
         return Result::None;
     }
     

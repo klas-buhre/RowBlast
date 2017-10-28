@@ -14,7 +14,7 @@ GameViewControllers::GameViewControllers(Pht::IEngine& engine,
     mGameOverDialogController {engine, commonResources, userData},
     mNoMovesDialogController {engine, commonResources},
     mLevelCompletedDialogController {engine, commonResources},
-    mRestartConfirmationDialogController {engine, commonResources},
+    mRestartConfirmationDialogController {engine, commonResources, userData},
     mMapConfirmationDialogController {engine, commonResources},
     mSettingsMenuController {commonViewControllers.GetSettingsMenuController()},
     mNoLivesDialogController {commonViewControllers.GetNoLivesDialogController()} {}

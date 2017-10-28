@@ -25,7 +25,7 @@ namespace BlocksGame {
                                const CommonResources& commonResources,
                                Settings& settings);
         
-        void Reset();
+        void Reset(SlidingMenuAnimation::UpdateFade updateFade);
         Result Update();
         
         const Pht::GuiView& GetView() const {
@@ -45,6 +45,7 @@ namespace BlocksGame {
         SettingsMenuView mView;
         SlidingMenuAnimation mSlidingMenuAnimation;
         Result mDeferredResult {Result::None};
+        SlidingMenuAnimation::UpdateFade mUpdateFade {SlidingMenuAnimation::UpdateFade::Yes};
     };
 }
 

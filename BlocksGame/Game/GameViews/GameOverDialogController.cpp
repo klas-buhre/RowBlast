@@ -18,7 +18,7 @@ GameOverDialogController::GameOverDialogController(Pht::IEngine& engine,
     mSlidingMenuAnimation {engine, mView, 0.6f} {}
 
 void GameOverDialogController::Reset() {
-    mSlidingMenuAnimation.Reset();
+    mSlidingMenuAnimation.Reset(SlidingMenuAnimation::UpdateFade::Yes);
 }
 
 GameOverDialogController::Result GameOverDialogController::Update() {
@@ -52,7 +52,7 @@ GameOverDialogController::OnTouch(const Pht::TouchEvent& touchEvent) {
     if (mView.GetRetryButton().IsClicked(touchEvent)) {
         if (mUserData.GetLifeManager().GetNumLives() == 0) {
             mDeferredResult = Result::Retry;
-            mSlidingMenuAnimation.StartSlideOut();
+            mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::Yes);
             return Result::None;
         }
         

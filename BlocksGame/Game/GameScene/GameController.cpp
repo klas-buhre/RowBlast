@@ -157,7 +157,7 @@ void GameController::ChangeGameState(GameLogic::Result gameLogicResult) {
     switch (gameLogicResult) {
         case GameLogic::Result::Pause:
             mState = GameState::Paused;
-            GoToPausedStateGameMenu();
+            GoToPausedStateGameMenu(SlidingMenuAnimation::UpdateFade::Yes);
             break;
         case GameLogic::Result::OutOfMoves:
             mState = GameState::OutOfMoves;
@@ -233,7 +233,7 @@ void GameController::UpdateSettingsMenu() {
         case SettingsMenuController::Result::None:
             break;
         case SettingsMenuController::Result::GoBack:
-            GoToPausedStateGameMenu();
+            GoToPausedStateGameMenu(SlidingMenuAnimation::UpdateFade::No);
             break;
     }
 }
@@ -277,7 +277,7 @@ GameController::Command GameController::UpdateRestartConfirmationDialog() {
             break;
         }
         case RestartConfirmationDialogController::Result::DoNotRestartGame:
-            GoToPausedStateGameMenu();
+            GoToPausedStateGameMenu(SlidingMenuAnimation::UpdateFade::No);
             break;
     }
     
@@ -296,7 +296,7 @@ GameController::Command GameController::UpdateMapConfirmationDialog() {
             break;
         }
         case MapConfirmationDialogController::Result::DoNotGoToMap:
-            GoToPausedStateGameMenu();
+            GoToPausedStateGameMenu(SlidingMenuAnimation::UpdateFade::No);
             break;
     }
     
@@ -487,7 +487,8 @@ void GameController::GoToPlayingState() {
 void GameController::GoToPausedStateNoLivesDialog() {
     mPausedState = PausedState::NoLivesDialog;
     mGameViewControllers.SetActiveController(GameViewControllers::NoLivesDialog);
-    mGameViewControllers.GetNoLivesDialogController().Reset(false);
+    mGameViewControllers.GetNoLivesDialogController().Reset(SlidingMenuAnimation::UpdateFade::Yes,
+                                                            true);
 }
 
 void GameController::GoToPausedStateRestartConfirmationDialog() {
@@ -505,14 +506,14 @@ void GameController::GoToPausedStateMapConfirmationDialog() {
 void GameController::GoToPausedStateSettingsMenu() {
     mPausedState = PausedState::SettingsMenu;
     mGameViewControllers.SetActiveController(GameViewControllers::SettingsMenu);
-    mGameViewControllers.GetSettingsMenuController().Reset();
+    mGameViewControllers.GetSettingsMenuController().Reset(SlidingMenuAnimation::UpdateFade::No);
 }
 
-void GameController::GoToPausedStateGameMenu() {
+void GameController::GoToPausedStateGameMenu(SlidingMenuAnimation::UpdateFade updateFade) {
     mPausedState = PausedState::GameMenu;
     mGameViewControllers.SetActiveController(GameViewControllers::GameMenu);
     auto isUndoMovePossible {mShouldUpdateGameLogic && mGameLogic.IsUndoMovePossible()};
-    mGameViewControllers.GetGameMenuController().Reset(isUndoMovePossible);
+    mGameViewControllers.GetGameMenuController().Reset(updateFade, isUndoMovePossible);
 }
 
 void GameController::GoToLevelCompletedStateLevelCompletedDialog() {
@@ -542,5 +543,6 @@ void GameController::GoToGameOverStateGameOverDialog() {
 void GameController::GoToGameOverStateNoLivesDialog() {
     mGameOverState = GameOverState::NoLivesDialog;
     mGameViewControllers.SetActiveController(GameViewControllers::NoLivesDialog);
-    mGameViewControllers.GetNoLivesDialogController().Reset(false);
+    mGameViewControllers.GetNoLivesDialogController().Reset(SlidingMenuAnimation::UpdateFade::Yes,
+                                                            false);
 }

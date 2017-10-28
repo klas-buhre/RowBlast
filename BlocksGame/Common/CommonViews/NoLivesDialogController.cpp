@@ -17,8 +17,9 @@ NoLivesDialogController::NoLivesDialogController(Pht::IEngine& engine,
     mView {engine, commonResources, userData},
     mSlidingMenuAnimation {engine, mView, 0.6f} {}
 
-void NoLivesDialogController::Reset(bool shouldSlideOut) {
-    mSlidingMenuAnimation.Reset();
+void NoLivesDialogController::Reset(SlidingMenuAnimation::UpdateFade updateFade,
+                                    bool shouldSlideOut) {
+    mSlidingMenuAnimation.Reset(updateFade);
     mShouldSlideOut = shouldSlideOut;
 }
 
@@ -34,7 +35,7 @@ NoLivesDialogController::Result NoLivesDialogController::Update() {
             mView.Update();
             if (mUserData.GetLifeManager().GetNumLives() > 0) {
                 mDeferredResult = Result::Close;
-                mSlidingMenuAnimation.StartSlideOut();
+                mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::Yes);
             }
             return HandleInput();
         case SlidingMenuAnimation::State::Done:
@@ -53,7 +54,7 @@ NoLivesDialogController::Result NoLivesDialogController::OnTouch(const Pht::Touc
     if (mView.GetCloseButton().IsClicked(touchEvent)) {
         if (mShouldSlideOut) {
             mDeferredResult = Result::Close;
-            mSlidingMenuAnimation.StartSlideOut();
+            mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::Yes);
             return Result::None;
         }
         
@@ -63,7 +64,7 @@ NoLivesDialogController::Result NoLivesDialogController::OnTouch(const Pht::Touc
     if (mView.GetRefillLivesButton().IsClicked(touchEvent)) {
         if (mShouldSlideOut) {
             mDeferredResult = Result::RefillLives;
-            mSlidingMenuAnimation.StartSlideOut();
+            mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::Yes);
             return Result::None;
         }
         

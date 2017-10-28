@@ -74,7 +74,7 @@ namespace BlocksGame {
         void GoToPausedStateRestartConfirmationDialog();
         void GoToPausedStateMapConfirmationDialog();
         void GoToPausedStateSettingsMenu();
-        void GoToPausedStateGameMenu();
+        void GoToPausedStateGameMenu(SlidingMenuAnimation::UpdateFade updateFade);
         void GoToLevelCompletedStateLevelCompletedDialog();
         void GoToGameOverStateGameOverDialog();
         void GoToGameOverStateNoLivesDialog();

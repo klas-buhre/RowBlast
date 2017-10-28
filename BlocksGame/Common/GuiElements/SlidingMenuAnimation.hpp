@@ -21,11 +21,16 @@ namespace BlocksGame {
             Done
         };
         
+        enum class UpdateFade {
+            Yes,
+            No
+        };
+        
         SlidingMenuAnimation(Pht::IEngine& engine, Pht::GuiView& view, float fade);
         
-        void Reset();
+        void Reset(UpdateFade updateFade);
         void StartSlideIn();
-        void StartSlideOut();
+        void StartSlideOut(UpdateFade updateFade);
         State Update();
                 
         const Pht::FadeEffect& GetFadeEffect() const {
@@ -39,6 +44,7 @@ namespace BlocksGame {
         Pht::IEngine& mEngine;
         Pht::GuiView& mView;
         State mState {State::Idle};
+        UpdateFade mUpdateFade {UpdateFade::Yes};
         float mElapsedTime {0.0f};
         Pht::Vec2 mVelocity;
         Pht::Vec2 mAcceleration;

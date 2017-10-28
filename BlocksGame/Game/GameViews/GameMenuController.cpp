@@ -15,8 +15,9 @@ GameMenuController::GameMenuController(Pht::IEngine& engine,
     mView {engine, commonResources},
     mSlidingMenuAnimation {engine, mView, 0.6f} {}
 
-void GameMenuController::Reset(bool isUndoMovePossible) {
-    mSlidingMenuAnimation.Reset();
+void GameMenuController::Reset(SlidingMenuAnimation::UpdateFade updateFade,
+                               bool isUndoMovePossible) {
+    mSlidingMenuAnimation.Reset(updateFade);
     
     if (isUndoMovePossible) {
         mView.EnableUndoButton();
@@ -50,33 +51,33 @@ GameMenuController::Result GameMenuController::HandleInput() {
 GameMenuController::Result GameMenuController::OnTouch(const Pht::TouchEvent& touchEvent) {
     if (mView.GetResumeButton().IsClicked(touchEvent)) {
         mDeferredResult = Result::ResumeGame;
-        mSlidingMenuAnimation.StartSlideOut();
+        mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::Yes);
         return Result::None;
     }
 
     if (mView.IsUndoButtonEnabled()) {
         if (mView.GetUndoButton().IsClicked(touchEvent)) {
             mDeferredResult = Result::ResumeGame;
-            mSlidingMenuAnimation.StartSlideOut();
+            mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::Yes);
             return Result::UndoMove;
         }
     }
     
     if (mView.GetRestartButton().IsClicked(touchEvent)) {
         mDeferredResult = Result::RestartGame;
-        mSlidingMenuAnimation.StartSlideOut();
+        mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::No);
         return Result::None;
     }
 
     if (mView.GetSettingsButton().IsClicked(touchEvent)) {
         mDeferredResult = Result::GoToSettingsMenu;
-        mSlidingMenuAnimation.StartSlideOut();
+        mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::No);
         return Result::None;
     }
 
     if (mView.GetMapButton().IsClicked(touchEvent)) {
         mDeferredResult = Result::BackToMap;
-        mSlidingMenuAnimation.StartSlideOut();
+        mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::No);
         return Result::None;
     }
     

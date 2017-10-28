@@ -15,7 +15,7 @@ MapConfirmationDialogController(Pht::IEngine& engine, const CommonResources& com
     mSlidingMenuAnimation {engine, mView, 0.6f} {}
 
 void MapConfirmationDialogController::Reset() {
-    mSlidingMenuAnimation.Reset();
+    mSlidingMenuAnimation.Reset(SlidingMenuAnimation::UpdateFade::No);
 }
 
 MapConfirmationDialogController::Result MapConfirmationDialogController::Update() {
@@ -48,7 +48,7 @@ MapConfirmationDialogController::OnTouch(const Pht::TouchEvent& touchEvent) {
 
     if (mView.GetNoButton().IsClicked(touchEvent)) {
         mDeferredResult = Result::DoNotGoToMap;
-        mSlidingMenuAnimation.StartSlideOut();
+        mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::No);
         return Result::None;
     }
     

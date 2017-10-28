@@ -654,6 +654,8 @@ void GameRenderer::RenderPieceDropParticles() {
 }
 
 void GameRenderer::RenderGameViews() {
+    auto& gameMenuController {mGameViewControllers.GetGameMenuController()};
+    
     switch (mGameViewControllers.GetActiveController()) {
         case GameViewControllers::None:
             break;
@@ -661,7 +663,6 @@ void GameRenderer::RenderGameViews() {
             mEngineRenderer.RenderGuiView(mGameViewControllers.GetGameHudController().GetView());
             break;
         case GameViewControllers::GameMenu: {
-            auto& gameMenuController {mGameViewControllers.GetGameMenuController()};
             gameMenuController.GetFadeEffect().Render();
             mEngineRenderer.RenderGuiView(gameMenuController.GetView());
             break;
@@ -683,7 +684,7 @@ void GameRenderer::RenderGameViews() {
             break;
         case GameViewControllers::SettingsMenu: {
             auto& settingsMenuController {mGameViewControllers.GetSettingsMenuController()};
-            settingsMenuController.GetFadeEffect().Render();
+            gameMenuController.GetFadeEffect().Render();
             mEngineRenderer.RenderGuiView(settingsMenuController.GetView());
             break;
         }
@@ -697,7 +698,7 @@ void GameRenderer::RenderGameViews() {
             auto& restartConfirmationDialogController {
                 mGameViewControllers.GetRestartConfirmationDialogController()
             };
-            restartConfirmationDialogController.GetFadeEffect().Render();
+            gameMenuController.GetFadeEffect().Render();
             mEngineRenderer.RenderGuiView(restartConfirmationDialogController.GetView());
             break;
         }
@@ -705,7 +706,7 @@ void GameRenderer::RenderGameViews() {
             auto& mapConfirmationDialogController {
                 mGameViewControllers.GetMapConfirmationDialogController()
             };
-            mapConfirmationDialogController.GetFadeEffect().Render();
+            gameMenuController.GetFadeEffect().Render();
             mEngineRenderer.RenderGuiView(mapConfirmationDialogController.GetView());
             break;
     }
