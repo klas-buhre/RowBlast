@@ -15,16 +15,24 @@ namespace {
 SlidingMenuAnimation::SlidingMenuAnimation(Pht::IEngine& engine, Pht::GuiView& view, float fade) :
     mEngine {engine},
     mView {view},
-    mFadeEffect {engine, slideTime, fade} {
-    
-    auto& frustumSize {engine.GetRenderer().GetHudFrustumSize()};
-    mSlideInStartPosition = {0.0f, -frustumSize.y / 2.0f - view.GetSize().y / 2.0f};
-    mSlideOutFinalPosition = {0.0f, frustumSize.y / 2.0f + view.GetSize().y / 2.0f};
-}
+    mFadeEffect {engine, slideTime, fade} {}
 
-void SlidingMenuAnimation::Reset(UpdateFade updateFade) {
+void SlidingMenuAnimation::Reset(UpdateFade updateFade, SlideDirection slideInDirection) {
     mState = State::Idle;
     mUpdateFade = updateFade;
+    mSlideInDirection = slideInDirection;
+    
+    auto& frustumSize {mEngine.GetRenderer().GetHudFrustumSize()};
+    
+    switch (mSlideInDirection) {
+        case SlideDirection::Up:
+            mSlideInStartPosition = {0.0f, -frustumSize.y / 2.0f - mView.GetSize().y / 2.0f};
+            break;
+        case SlideDirection::Down:
+            mSlideInStartPosition = {0.0f, frustumSize.y / 2.0f + mView.GetSize().y / 2.0f};
+            break;
+    }
+    
     mView.SetPosition(mSlideInStartPosition);
     
     if (mUpdateFade == UpdateFade::Yes) {
@@ -47,7 +55,19 @@ void SlidingMenuAnimation::StartSlideIn() {
     mElapsedTime = 0.0f;
 }
 
-void SlidingMenuAnimation::StartSlideOut(UpdateFade updateFade) {
+void SlidingMenuAnimation::StartSlideOut(UpdateFade updateFade, SlideDirection slideOutDirection) {
+    mSlideOutDirection = slideOutDirection;
+    auto& frustumSize {mEngine.GetRenderer().GetHudFrustumSize()};
+    
+    switch (mSlideOutDirection) {
+        case SlideDirection::Up:
+            mSlideOutFinalPosition = {0.0f, frustumSize.y / 2.0f + mView.GetSize().y / 2.0f};
+            break;
+        case SlideDirection::Down:
+            mSlideOutFinalPosition = {0.0f, -frustumSize.y / 2.0f - mView.GetSize().y / 2.0f};
+            break;
+    }
+
     auto distance = mSlideOutFinalPosition - centerPosition;
     auto finalVelocity {distance * 2.0f / slideTime};
     mVelocity = {0.0f, 0.0f};
@@ -89,7 +109,7 @@ void SlidingMenuAnimation::UpdateInSlidingInState() {
         mFadeEffect.Update();
     }
     
-    if (position.y >= 0.0f || mElapsedTime > slideTime) {
+    if (HasCompletelySlidIn(position)) {
         position.y = 0.0f;
         
         if (mUpdateFade == UpdateFade::Yes) {
@@ -104,6 +124,27 @@ void SlidingMenuAnimation::UpdateInSlidingInState() {
     mView.SetPosition(position);
 }
 
+bool SlidingMenuAnimation::HasCompletelySlidIn(const Pht::Vec2& position) {
+    if (mElapsedTime > slideTime) {
+        return true;
+    }
+    
+    switch (mSlideInDirection) {
+        case SlideDirection::Up:
+            if (position.y >= 0.0f) {
+                return true;
+            }
+            break;
+        case SlideDirection::Down:
+            if (position.y <= 0.0f) {
+                return true;
+            }
+            break;
+    }
+    
+    return false;
+}
+
 void SlidingMenuAnimation::UpdateInSlidingOutState() {
     auto dt {mEngine.GetLastFrameSeconds()};
     auto position {mView.GetPosition()};
@@ -115,7 +156,7 @@ void SlidingMenuAnimation::UpdateInSlidingOutState() {
         mFadeEffect.Update();
     }
     
-    if (position.y >= mSlideOutFinalPosition.y || mElapsedTime > slideTime) {
+    if (HasCompletelySlidOut(position)) {
         position.y = mSlideOutFinalPosition.y;
         
         if (mUpdateFade == UpdateFade::Yes) {
@@ -128,4 +169,25 @@ void SlidingMenuAnimation::UpdateInSlidingOutState() {
     }
     
     mView.SetPosition(position);
+}
+
+bool SlidingMenuAnimation::HasCompletelySlidOut(const Pht::Vec2& position) {
+    if (mElapsedTime > slideTime) {
+        return true;
+    }
+    
+    switch (mSlideOutDirection) {
+        case SlideDirection::Up:
+            if (position.y >= mSlideOutFinalPosition.y) {
+                return true;
+            }
+            break;
+        case SlideDirection::Down:
+            if (position.y <= mSlideOutFinalPosition.y) {
+                return true;
+            }
+            break;
+    }
+    
+    return false;
 }

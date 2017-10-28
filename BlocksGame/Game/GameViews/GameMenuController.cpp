@@ -17,7 +17,13 @@ GameMenuController::GameMenuController(Pht::IEngine& engine,
 
 void GameMenuController::Reset(SlidingMenuAnimation::UpdateFade updateFade,
                                bool isUndoMovePossible) {
-    mSlidingMenuAnimation.Reset(updateFade);
+    auto slideInDirection {
+        updateFade == SlidingMenuAnimation::UpdateFade::Yes ?
+            SlidingMenuAnimation::SlideDirection::Up :
+            SlidingMenuAnimation::SlideDirection::Down
+    };
+    
+    mSlidingMenuAnimation.Reset(updateFade, slideInDirection);
     
     if (isUndoMovePossible) {
         mView.EnableUndoButton();
@@ -65,19 +71,22 @@ GameMenuController::Result GameMenuController::OnTouch(const Pht::TouchEvent& to
     
     if (mView.GetRestartButton().IsClicked(touchEvent)) {
         mDeferredResult = Result::RestartGame;
-        mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::No);
+        mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::No,
+                                            SlidingMenuAnimation::SlideDirection::Up);
         return Result::None;
     }
 
     if (mView.GetSettingsButton().IsClicked(touchEvent)) {
         mDeferredResult = Result::GoToSettingsMenu;
-        mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::No);
+        mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::No,
+                                            SlidingMenuAnimation::SlideDirection::Up);
         return Result::None;
     }
 
     if (mView.GetMapButton().IsClicked(touchEvent)) {
         mDeferredResult = Result::BackToMap;
-        mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::No);
+        mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::No,
+                                            SlidingMenuAnimation::SlideDirection::Up);
         return Result::None;
     }
     
