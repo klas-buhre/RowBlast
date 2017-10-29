@@ -46,7 +46,7 @@ GameMenuView::GameMenuView(Pht::IEngine& engine, const CommonResources& commonRe
     MenuButton::Style buttonStyle;
     buttonStyle.mColor = buttonColor;
     buttonStyle.mSelectedColor = Pht::Color {0.6f, 0.94f, 1.0f};
-    buttonStyle.mSelectedScale = 0.93f;
+    buttonStyle.mSelectedScale = 0.925f;
     buttonStyle.mOpacity = 0.76f;
     buttonStyle.mIsRounded = false;
 

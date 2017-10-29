@@ -55,6 +55,7 @@ RestartConfirmationDialogView::RestartConfirmationDialogView(Pht::IEngine& engin
     MenuButton::Style buttonStyle;
     buttonStyle.mColor = Pht::Color {0.4f, 0.74f, 1.0f};
     buttonStyle.mSelectedColor = Pht::Color {0.6f, 0.94f, 1.0f};
+    buttonStyle.mSelectedScale = 0.925f;
     buttonStyle.mOpacity = 0.76f;
     buttonStyle.mIsRounded = false;
     

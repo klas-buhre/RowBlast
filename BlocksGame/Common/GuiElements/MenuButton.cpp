@@ -21,8 +21,8 @@ MenuButton::MenuButton(Pht::IEngine& engine,
                        const Pht::Vec2& inputSize,
                        const Style& style) :
     mView {view},
-    mPosition {position},
-    mAudio {engine.GetAudio()} {
+    mAudio {engine.GetAudio()},
+    mPosition {position} {
     
     Pht::Material material {style.mColor};
     material.SetOpacity(style.mOpacity);
@@ -43,6 +43,11 @@ MenuButton::MenuButton(Pht::IEngine& engine,
             sceneObject->Scale(style.mSelectedScale);
             sceneObject->Translate(position);
             sceneObject->GetRenderable().GetMaterial().SetAmbient(style.mSelectedColor);
+            if (mText) {
+                mText->mProperties.mScale = style.mSelectedScale;
+                Pht::Vec2 textLocalPosition {mTextLocalPosition * style.mSelectedScale};
+                mText->mPosition = textLocalPosition + Pht::Vec2 {mPosition.x, mPosition.y};
+            }
         }
     }};
     
@@ -54,6 +59,10 @@ MenuButton::MenuButton(Pht::IEngine& engine,
             sceneObject->ResetMatrix();
             sceneObject->Translate(position);
             sceneObject->GetRenderable().GetMaterial().SetAmbient(style.mColor);
+            if (mText) {
+                mText->mProperties.mScale = 1.0f;
+                mText->mPosition = mTextLocalPosition + Pht::Vec2 {mPosition.x, mPosition.y};
+            }
         }
     }};
     
@@ -75,6 +84,8 @@ MenuButton::MenuButton(Pht::IEngine& engine,
 }
 
 void MenuButton::SetText(std::unique_ptr<Pht::Text> text) {
+    mText = text.get();
+    mTextLocalPosition = text->mPosition;
     text->mPosition += Pht::Vec2 {mPosition.x, mPosition.y};
     mView.AddText(std::move(text));
 }

@@ -102,6 +102,9 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine, const CommonResources& 
     mSoundOffText = soundOffText.get();
     mSoundOffText->mIsVisible = false;
     mSoundButton->SetText(std::move(soundOffText));
+
+    MenuButton::Style backButtonStyle {buttonStyle};
+    backButtonStyle.mSelectedScale = 0.925f;
     
     Pht::Vec2 backButtonSize {11.0f, 1.72f};
     Pht::Vec2 backButtonInputSize {236.0f, 43.0f};
@@ -111,7 +114,7 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine, const CommonResources& 
                                                Pht::Vec3 {0.0f, -3.9f, -0.5f},
                                                backButtonSize,
                                                backButtonInputSize,
-                                               buttonStyle);
+                                               backButtonStyle);
     mBackButton->SetText(
         std::make_unique<Pht::Text>(Pht::Vec2 {-1.0f, -0.23f}, "BACK", textProperties));
 }

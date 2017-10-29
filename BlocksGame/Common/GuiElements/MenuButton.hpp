@@ -47,10 +47,12 @@ namespace BlocksGame {
         void AddSceneObject(std::unique_ptr<Pht::SceneObject> sceneObject);
         
         Pht::GuiView& mView;
+        Pht::IAudio& mAudio;
         Pht::Vec3 mPosition;
         std::unique_ptr<Pht::Button> mButton;
         std::vector<Pht::SceneObject*> mSceneObjects;
-        Pht::IAudio& mAudio;
+        Pht::Text* mText {nullptr};
+        Pht::Vec2 mTextLocalPosition;
     };
 }
 
