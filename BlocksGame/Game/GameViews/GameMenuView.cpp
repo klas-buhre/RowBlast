@@ -15,9 +15,9 @@ namespace {
     const Pht::Color buttonColor {0.4f, 0.74f, 1.0f};
 }
 
-GameMenuView::GameMenuView(Pht::IEngine& engine, const CommonResources& commonResources) :
-    mButtonTextProperties {commonResources.GetHussarFontSize27()},
-    mPausedTextProperties {commonResources.GetHussarFontSize30()} {
+GameMenuView::GameMenuView(Pht::IEngine& engine, const CommonResources& commonResources) {
+    Pht::TextProperties buttonTextProperties {commonResources.GetHussarFontSize27()};
+    Pht::TextProperties pausedTextProperties {commonResources.GetHussarFontSize30()};
     
     auto frustumWidth {engine.GetRenderer().GetHudFrustumSize().x};
     Pht::Vec2 size {frustumWidth, 19.0f};
@@ -37,7 +37,7 @@ GameMenuView::GameMenuView(Pht::IEngine& engine, const CommonResources& commonRe
     AddSceneObject(std::move(lineSceneObject));
     
     auto pausedText {
-        std::make_unique<Pht::Text>(Pht::Vec2 {-1.71f, 7.4f}, "PAUSED", mPausedTextProperties)
+        std::make_unique<Pht::Text>(Pht::Vec2 {-1.71f, 7.4f}, "PAUSED", pausedTextProperties)
     };
     AddText(std::move(pausedText));
 
@@ -46,6 +46,7 @@ GameMenuView::GameMenuView(Pht::IEngine& engine, const CommonResources& commonRe
     MenuButton::Style buttonStyle;
     buttonStyle.mColor = buttonColor;
     buttonStyle.mSelectedColor = Pht::Color {0.6f, 0.94f, 1.0f};
+    buttonStyle.mSelectedScale = 0.93f;
     buttonStyle.mOpacity = 0.76f;
     buttonStyle.mIsRounded = false;
 
@@ -56,7 +57,7 @@ GameMenuView::GameMenuView(Pht::IEngine& engine, const CommonResources& commonRe
                                                  buttonInputSize,
                                                  buttonStyle);
     mResumeButton->SetText(
-        std::make_unique<Pht::Text>(Pht::Vec2 {-1.4f, -0.23f}, "RESUME", mButtonTextProperties));
+        std::make_unique<Pht::Text>(Pht::Vec2 {-1.4f, -0.23f}, "RESUME", buttonTextProperties));
 
     mUndoButton = std::make_unique<MenuButton>(engine,
                                                *this,
@@ -65,7 +66,7 @@ GameMenuView::GameMenuView(Pht::IEngine& engine, const CommonResources& commonRe
                                                buttonInputSize,
                                                buttonStyle);
     mUndoButton->SetText(
-        std::make_unique<Pht::Text>(Pht::Vec2 {-2.1f, -0.23f}, "UNDO MOVE", mButtonTextProperties));
+        std::make_unique<Pht::Text>(Pht::Vec2 {-2.1f, -0.23f}, "UNDO MOVE", buttonTextProperties));
     
     mRestartButton = std::make_unique<MenuButton>(engine,
                                                   *this,
@@ -74,7 +75,7 @@ GameMenuView::GameMenuView(Pht::IEngine& engine, const CommonResources& commonRe
                                                   buttonInputSize,
                                                   buttonStyle);
     mRestartButton->SetText(
-        std::make_unique<Pht::Text>(Pht::Vec2 {-1.5f, -0.23f}, "RESTART", mButtonTextProperties));
+        std::make_unique<Pht::Text>(Pht::Vec2 {-1.5f, -0.23f}, "RESTART", buttonTextProperties));
 
     mSettingsButton = std::make_unique<MenuButton>(engine,
                                                    *this,
@@ -83,7 +84,7 @@ GameMenuView::GameMenuView(Pht::IEngine& engine, const CommonResources& commonRe
                                                    buttonInputSize,
                                                    buttonStyle);
     mSettingsButton->SetText(
-        std::make_unique<Pht::Text>(Pht::Vec2 {-1.6f, -0.23f}, "SETTINGS", mButtonTextProperties));
+        std::make_unique<Pht::Text>(Pht::Vec2 {-1.6f, -0.23f}, "SETTINGS", buttonTextProperties));
 
     mMapButton = std::make_unique<MenuButton>(engine,
                                               *this,
@@ -92,7 +93,7 @@ GameMenuView::GameMenuView(Pht::IEngine& engine, const CommonResources& commonRe
                                               buttonInputSize,
                                               buttonStyle);
     mMapButton->SetText(
-        std::make_unique<Pht::Text>(Pht::Vec2 {-0.8f, -0.23f}, "MAP", mButtonTextProperties));
+        std::make_unique<Pht::Text>(Pht::Vec2 {-0.8f, -0.23f}, "MAP", buttonTextProperties));
 }
 
 void GameMenuView::EnableUndoButton() {

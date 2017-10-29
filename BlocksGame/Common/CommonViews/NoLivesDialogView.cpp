@@ -19,9 +19,9 @@ namespace {
 NoLivesDialogView::NoLivesDialogView(Pht::IEngine& engine,
                                      const CommonResources& commonResources,
                                      const UserData& userData) :
-    mUserData {userData},
-    mTextProperties {commonResources.GetHussarFontSize27()} {
-
+    mUserData {userData} {
+    
+    Pht::TextProperties textProperties {commonResources.GetHussarFontSize27()};
     Pht::Vec2 size {engine.GetRenderer().GetHudFrustumSize().x, 9.0f};
     SetSize(size);
     SetPosition({0.0f, 0.0f});
@@ -33,7 +33,7 @@ NoLivesDialogView::NoLivesDialogView(Pht::IEngine& engine,
     Pht::Vec3 closeButtonPosition {GetSize().x / 2.0f - 1.0f, GetSize().y / 2.0f - 1.0f, -0.5f};
     mCloseButton = std::make_unique<CloseButton>(engine, *this, closeButtonPosition);
     mCloseButton->SetText(
-        std::make_unique<Pht::Text>(Pht::Vec2 {-0.23f, -0.23f}, "X", mTextProperties));
+        std::make_unique<Pht::Text>(Pht::Vec2 {-0.23f, -0.23f}, "X", textProperties));
       
     Pht::Vec2 buttonSize {6.5f, 2.1f};
     Pht::Vec2 buttonInputSize {180.0f, 47.0f};
@@ -48,28 +48,28 @@ NoLivesDialogView::NoLivesDialogView(Pht::IEngine& engine,
                                                       buttonInputSize,
                                                       buttonStyle);
     mRefillLivesButton->SetText(
-        std::make_unique<Pht::Text>(Pht::Vec2 {-2.0f, -0.23f}, "REFILL LIVES", mTextProperties));
+        std::make_unique<Pht::Text>(Pht::Vec2 {-2.0f, -0.23f}, "REFILL LIVES", textProperties));
     
     auto textLine1 {
-        std::make_unique<Pht::Text>(Pht::Vec2 {-2.4f, 2.5f}, "No more lives!", mTextProperties)
+        std::make_unique<Pht::Text>(Pht::Vec2 {-2.4f, 2.5f}, "No more lives!", textProperties)
     };
     
     AddText(std::move(textLine1));
 
     auto textLine2 {
-        std::make_unique<Pht::Text>(Pht::Vec2 {-3.0f, 1.0f}, "Refill lives for $1", mTextProperties)
+        std::make_unique<Pht::Text>(Pht::Vec2 {-3.0f, 1.0f}, "Refill lives for $1", textProperties)
     };
     
     AddText(std::move(textLine2));
     
     auto textLine3 {
-        std::make_unique<Pht::Text>(Pht::Vec2 {-4.0f, 0.0f}, "Time to next life:", mTextProperties)
+        std::make_unique<Pht::Text>(Pht::Vec2 {-4.0f, 0.0f}, "Time to next life:", textProperties)
     };
     
     AddText(std::move(textLine3));
     
     auto countdownText {
-        std::make_unique<Pht::Text>(Pht::Vec2 {1.9f, 0.0f}, "00:00", mTextProperties)
+        std::make_unique<Pht::Text>(Pht::Vec2 {1.9f, 0.0f}, "00:00", textProperties)
     };
     
     mCountdownText = countdownText.get();

@@ -53,8 +53,6 @@ namespace BlocksGame {
         std::unique_ptr<MenuButton> mRestartButton;
         std::unique_ptr<MenuButton> mSettingsButton;
         std::unique_ptr<MenuButton> mMapButton;
-        Pht::TextProperties mButtonTextProperties;
-        Pht::TextProperties mPausedTextProperties;
         bool mIsUndoButtonEnabled {true};
     };
 }

@@ -11,9 +11,8 @@
 using namespace BlocksGame;
 
 GameOverDialogView::GameOverDialogView(Pht::IEngine& engine,
-                                       const CommonResources& commonResources) :
-    mTextProperties {commonResources.GetHussarFontSize27()} {
-
+                                       const CommonResources& commonResources) {
+    Pht::TextProperties textProperties {commonResources.GetHussarFontSize27()};
     Pht::Vec2 size {engine.GetRenderer().GetHudFrustumSize().x, 7.0f};
     SetSize(size);
     SetPosition({0.0f, 0.0f});
@@ -25,7 +24,7 @@ GameOverDialogView::GameOverDialogView(Pht::IEngine& engine,
     Pht::Vec3 closeButtonPosition {GetSize().x / 2.0f - 1.0f, GetSize().y / 2.0f - 1.0f, -0.5f};
     mCloseButton = std::make_unique<CloseButton>(engine, *this, closeButtonPosition);
     mCloseButton->SetText(
-        std::make_unique<Pht::Text>(Pht::Vec2 {-0.23f, -0.23f}, "X", mTextProperties));
+        std::make_unique<Pht::Text>(Pht::Vec2 {-0.23f, -0.23f}, "X", textProperties));
         
     Pht::Vec2 buttonSize {6.5f, 2.1f};
     Pht::Vec2 buttonInputSize {180.0f, 47.0f};
@@ -40,10 +39,10 @@ GameOverDialogView::GameOverDialogView(Pht::IEngine& engine,
                                                 buttonInputSize,
                                                 buttonStyle);
     mRetryButton->SetText(
-        std::make_unique<Pht::Text>(Pht::Vec2 {-1.05f, -0.23f}, "RETRY", mTextProperties));
+        std::make_unique<Pht::Text>(Pht::Vec2 {-1.05f, -0.23f}, "RETRY", textProperties));
     
     auto textLine {
-        std::make_unique<Pht::Text>(Pht::Vec2 {-2.0f, 1.5f}, "Game Over!", mTextProperties)
+        std::make_unique<Pht::Text>(Pht::Vec2 {-2.0f, 1.5f}, "Game Over!", textProperties)
     };
     
     AddText(std::move(textLine));

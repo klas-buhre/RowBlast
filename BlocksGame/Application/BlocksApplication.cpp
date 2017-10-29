@@ -11,7 +11,6 @@ Backlog:
     -Mega bomb?
   -Rendering:
     -Pink pause button made by the offline rasterizer.
-    -MenuButtons can start a shrink animation when pressed down.
     -There should be no ugly dark spots in the env map texture.
     -Recreate the star particle. Possibly by buying a textures for particle systems in unity assets
      store. Look at: https://www.assetstore.unity3d.com/en/#!/content/26701
@@ -40,7 +39,7 @@ Backlog:
     -The floating cubes could have materials with the unpatched version of the sky.
     -The angle of the rotating cubes in the title scene and game scene could be configurable/
      deterministic so that the ugly edges in the env mapping is never seen.
-     -Try models with less bevel for the preview. The triangles with less bevel could be tried for
+    -Try models with less bevel for the preview. The triangles with less bevel could be tried for
      field also.
   -Map:
     -Map can be a Pht::Scene.
@@ -58,7 +57,7 @@ Backlog:
     -Credit the icon creator: <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
   
 Ongoing tasks:
-    -The SlidingMenuAnimation could slide in from the side instead.
+    -MenuButtons can start a shrink animation when pressed down.
  
 Ideas:
     -The pause button could lead to a widget that has an undo button, a boosters button and a game

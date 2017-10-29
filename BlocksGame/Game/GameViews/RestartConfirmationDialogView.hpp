@@ -31,8 +31,6 @@ namespace BlocksGame {
     private:
         std::unique_ptr<MenuButton> mYesButton;
         std::unique_ptr<MenuButton> mNoButton;
-        Pht::TextProperties mTextProperties;
-        Pht::TextProperties mRestartTextProperties;
     };
 }
 

@@ -43,7 +43,7 @@ namespace Pht {
         
         Vec2 mPosition;
         std::string mText;
-        const TextProperties& mProperties;
+        TextProperties mProperties;
         bool mIsVisible {true};
     };
 }

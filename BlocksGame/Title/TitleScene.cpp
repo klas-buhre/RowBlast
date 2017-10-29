@@ -44,19 +44,13 @@ TitleScene::TitleScene(Pht::IEngine& engine, const CommonResources& commonResour
     mEngine {engine},
     mFloatingCubes {floatingCubePaths, engine, commonResources, 7.7f},
     mFont {"ethnocentric_rg_it.ttf", engine.GetRenderer().GetAdjustedNumPixels(100)},
-    mTitleTextProperties {
-        mFont,
-        1.0f,
-        Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f}
-    },
-    mTitleText {{-6.5f, 5.0f}, "BLOCKS", mTitleTextProperties},
+    mTitleText {{-6.5f, 5.0f}, "BLOCKS", {mFont, 1.0f, Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f}}},
     mTapFont {"HussarBoldWeb.otf", engine.GetRenderer().GetAdjustedNumPixels(35)},
-    mTapTextProperties {
+    mTapText {{-3.7f, -6.0f}, "Tap to continue...", {
         mTapFont,
         1.0f,
         Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f}
-    },
-    mTapText {{-3.7f, -6.0f}, "Tap to continue...", mTapTextProperties} {
+    }} {
 
     CreateBackground(commonResources.GetMaterials().GetSkyMaterial());
 }

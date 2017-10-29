@@ -24,9 +24,9 @@ namespace {
 
 LevelCompletedDialogView::LevelCompletedDialogView(Pht::IEngine& engine,
                                                    const CommonResources& commonResources) :
-    mEngine {engine},
-    mTextProperties {commonResources.GetHussarFontSize27()} {
+    mEngine {engine} {
     
+    Pht::TextProperties textProperties {commonResources.GetHussarFontSize27()};
     LoadStar(commonResources);
 
     Pht::Vec2 size {engine.GetRenderer().GetHudFrustumSize().x, 11.0f};
@@ -36,7 +36,7 @@ LevelCompletedDialogView::LevelCompletedDialogView(Pht::IEngine& engine,
     Pht::Vec3 closeButtonPosition {GetSize().x / 2.0f - 1.0f, GetSize().y / 2.0f - 1.0f, -0.5f};
     mCloseButton = std::make_unique<CloseButton>(engine, *this, closeButtonPosition);
     mCloseButton->SetText(
-        std::make_unique<Pht::Text>(Pht::Vec2 {-0.23f, -0.23f}, "X", mTextProperties));
+        std::make_unique<Pht::Text>(Pht::Vec2 {-0.23f, -0.23f}, "X", textProperties));
 
     Pht::Vec2 buttonSize {6.5f, 2.1f};
     Pht::Vec2 buttonInputSize {180.0f, 47.0f};
@@ -51,10 +51,10 @@ LevelCompletedDialogView::LevelCompletedDialogView(Pht::IEngine& engine,
                                                buttonInputSize,
                                                buttonStyle);
     mNextButton->SetText(
-        std::make_unique<Pht::Text>(Pht::Vec2 {-0.9f, -0.23f}, "NEXT", mTextProperties));
+        std::make_unique<Pht::Text>(Pht::Vec2 {-0.9f, -0.23f}, "NEXT", textProperties));
     
     auto levelClearedText {
-        std::make_unique<Pht::Text>(Pht::Vec2 {-2.3f, -1.5f}, "Level cleared!", mTextProperties)
+        std::make_unique<Pht::Text>(Pht::Vec2 {-2.3f, -1.5f}, "Level cleared!", textProperties)
     };
     
     AddText(std::move(levelClearedText));

@@ -157,7 +157,6 @@ namespace BlocksGame {
         Pht::Vec2 mSelectablePiecesPosition;
         PiecePositions mPieceRelativePositions;
         Pht::Font mFont;
-        Pht::TextProperties mTextProperties;
         Pht::Text mProgressText;
         Pht::Text mMovesText;
         Pht::Text mNextText;

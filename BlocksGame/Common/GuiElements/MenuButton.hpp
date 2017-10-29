@@ -24,6 +24,7 @@ namespace BlocksGame {
         struct Style {
             Pht::Color mColor;
             Pht::Color mSelectedColor;
+            float mSelectedScale {1.0f};
             bool mIsRounded {true};
             float mOpacity {0.8f};
         };

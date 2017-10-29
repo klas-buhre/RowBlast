@@ -51,15 +51,7 @@ MapScene::MapScene(Pht::IEngine& engine,
     mEngine {engine},
     mUserData {userData},
     mNextLevelParticleEffect {engine},
-    mFont {"ethnocentric_rg_it.ttf", engine.GetRenderer().GetAdjustedNumPixels(35)},
-    mTextProperties {
-        mFont,
-        1.0f,
-        Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f},
-        Pht::TextShadow::Yes,
-        Pht::Vec2{0.05f, 0.05f},
-        Pht::Vec4{0.4f, 0.4f, 0.4f, 0.5f}
-    } {
+    mFont {"ethnocentric_rg_it.ttf", engine.GetRenderer().GetAdjustedNumPixels(35)} {
 
     CreateBackground(commonResources.GetMaterials().GetSkyMaterial());
     CreateFloatingCubes(commonResources);
@@ -174,7 +166,16 @@ void MapScene::CreatePins(const CommonResources& commonResources) {
 }
 
 void MapScene::CreatePin(int level, const Pht::Vec3& position) {
-    Pht::Text text {{}, std::to_string(level), mTextProperties};
+    Pht::TextProperties textProperties {
+        mFont,
+        1.0f,
+        Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f},
+        Pht::TextShadow::Yes,
+        Pht::Vec2{0.05f, 0.05f},
+        Pht::Vec4{0.4f, 0.4f, 0.4f, 0.5f}
+    };
+    
+    Pht::Text text {{}, std::to_string(level), textProperties};
     auto pin {std::make_unique<MapPin>(mGrayPinRenderable, position, level, text, mEngine)};
     
     if (mPreviousPin) {

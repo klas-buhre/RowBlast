@@ -52,8 +52,6 @@ namespace BlocksGame {
         std::unique_ptr<MenuButton> mControlsButton;
         std::unique_ptr<MenuButton> mSoundButton;
         std::unique_ptr<MenuButton> mBackButton;
-        Pht::TextProperties mTextProperties;
-        Pht::TextProperties mSettingsTextProperties;
         Pht::Text* mControlsClickText {nullptr};
         Pht::Text* mControlsSwipeText {nullptr};
         Pht::Text* mSoundOnText {nullptr};

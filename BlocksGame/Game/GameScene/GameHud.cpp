@@ -33,26 +33,25 @@ GameHud::GameHud(Pht::IEngine& engine,
     mNextPiecesPosition {-2.3f, -12.3f},
     mSelectablePiecesPosition {3.1f, -12.3f},
     mFont {"HussarBoldWeb.otf", engine.GetRenderer().GetAdjustedNumPixels(22)},
-    mTextProperties {mFont, 1.0f, Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f}},
     mProgressText {
         {mProgressPosition.x + 1.1f, mProgressPosition.y},
         "    ",  // Warning! Must be four spaces to fit digits.
-        mTextProperties
+        {mFont, 1.0f, Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f}}
     },
     mMovesText {
         {mMovesPosition.x + 1.1f, mMovesPosition.y},
         "   ",   // Warning! Must be three spaces to fit digits.
-        mTextProperties
+        {mFont, 1.0f, Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f}}
     },
     mNextText {
         {mNextPiecesPosition.x - 0.1f, mNextPiecesPosition.y + 1.22f},
         "NEXT",
-        mTextProperties
+        {mFont, 1.0f, Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f}}
     },
     mSwitchText {
         {mSelectablePiecesPosition.x - 0.55f, mSelectablePiecesPosition.y + 1.22f},
         "SWITCH",
-        mTextProperties
+        {mFont, 1.0f, Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f}}
     },
     mLPieceRelativePosition {0.12f, 0.2f},
     mGrayBlockRelativePosition {0.19f, 0.2f},

@@ -44,10 +44,8 @@ namespace BlocksGame {
         std::unique_ptr<Pht::SceneObject> mBackground;
         FloatingCubes mFloatingCubes;
         Pht::Font mFont;
-        Pht::TextProperties mTitleTextProperties;
         Pht::Text mTitleText;
         Pht::Font mTapFont;
-        Pht::TextProperties mTapTextProperties;
         Pht::Text mTapText;
     };
 }

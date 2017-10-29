@@ -71,7 +71,6 @@ namespace BlocksGame {
         std::shared_ptr<Pht::RenderableObject> mGrayConnectionRenderable;
         MapPin* mPreviousPin {nullptr};
         Pht::Font mFont;
-        Pht::TextProperties mTextProperties;
     };
 }
 

@@ -11,9 +11,9 @@
 
 using namespace BlocksGame;
 
-SettingsMenuView::SettingsMenuView(Pht::IEngine& engine, const CommonResources& commonResources) :
-    mTextProperties {commonResources.GetHussarFontSize27()},
-    mSettingsTextProperties {commonResources.GetHussarFontSize30()} {
+SettingsMenuView::SettingsMenuView(Pht::IEngine& engine, const CommonResources& commonResources) {
+    Pht::TextProperties textProperties {commonResources.GetHussarFontSize27()};
+    Pht::TextProperties settingsTextProperties {commonResources.GetHussarFontSize30()};
     
     Pht::Vec2 size {engine.GetRenderer().GetHudFrustumSize().x, 12.6f};
     
@@ -32,7 +32,7 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine, const CommonResources& 
     lineSceneObject->Translate({0.0f, 3.3f, 0.0f});
     AddSceneObject(std::move(lineSceneObject));
     
-    AddText(std::make_unique<Pht::Text>(Pht::Vec2 {-2.0f, 4.3f}, "SETTINGS", mSettingsTextProperties));
+    AddText(std::make_unique<Pht::Text>(Pht::Vec2 {-2.0f, 4.3f}, "SETTINGS", settingsTextProperties));
     
     Pht::Material barMaterial {Pht::Color{0.4f, 0.74f, 1.0f}};
     barMaterial.SetOpacity(0.24f);
@@ -42,7 +42,7 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine, const CommonResources& 
     controlsBarSceneObject->Translate({-2.0f, 1.3f, -0.5f});
     AddSceneObject(std::move(controlsBarSceneObject));
     
-    AddText(std::make_unique<Pht::Text>(Pht::Vec2 {-4.65f, 1.07f}, "CONTROLS", mTextProperties));
+    AddText(std::make_unique<Pht::Text>(Pht::Vec2 {-4.65f, 1.07f}, "CONTROLS", textProperties));
     
     Pht::Vec2 buttonSize {4.0f, 1.72f};
     Pht::Vec2 buttonInputSize {86.0f, 43.0f};
@@ -60,14 +60,14 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine, const CommonResources& 
                                                   buttonInputSize,
                                                   buttonStyle);
     auto controlsClickText {
-        std::make_unique<Pht::Text>(Pht::Vec2 {-1.05f, -0.23f}, "CLICK", mTextProperties)
+        std::make_unique<Pht::Text>(Pht::Vec2 {-1.05f, -0.23f}, "CLICK", textProperties)
     };
         
     mControlsClickText = controlsClickText.get();
     mControlsButton->SetText(std::move(controlsClickText));
     
     auto controlsSwipeText {
-        std::make_unique<Pht::Text>(Pht::Vec2 {-1.05f, -0.23f}, "SWIPE", mTextProperties)
+        std::make_unique<Pht::Text>(Pht::Vec2 {-1.05f, -0.23f}, "SWIPE", textProperties)
     };
 
     mControlsSwipeText = controlsSwipeText.get();
@@ -79,7 +79,7 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine, const CommonResources& 
     soundBarSceneObject->Translate({-2.0f, -1.3f, -0.5f});
     AddSceneObject(std::move(soundBarSceneObject));
         
-    AddText(std::make_unique<Pht::Text>(Pht::Vec2 {-4.65f, -1.53f}, "SOUND", mTextProperties));
+    AddText(std::make_unique<Pht::Text>(Pht::Vec2 {-4.65f, -1.53f}, "SOUND", textProperties));
     
     Pht::Vec3 soundButtonPosition {3.5f, -1.3f, -0.5f};
     mSoundButton = std::make_unique<MenuButton>(engine,
@@ -89,14 +89,14 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine, const CommonResources& 
                                                 buttonInputSize,
                                                 buttonStyle);
     auto soundOnText {
-        std::make_unique<Pht::Text>(Pht::Vec2 {-0.6f, -0.23f}, "ON", mTextProperties)
+        std::make_unique<Pht::Text>(Pht::Vec2 {-0.6f, -0.23f}, "ON", textProperties)
     };
     
     mSoundOnText = soundOnText.get();
     mSoundButton->SetText(std::move(soundOnText));
     
     auto soundOffText {
-        std::make_unique<Pht::Text>(Pht::Vec2 {-0.7f, -0.23f}, "OFF", mTextProperties)
+        std::make_unique<Pht::Text>(Pht::Vec2 {-0.7f, -0.23f}, "OFF", textProperties)
     };
 
     mSoundOffText = soundOffText.get();
@@ -113,5 +113,5 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine, const CommonResources& 
                                                backButtonInputSize,
                                                buttonStyle);
     mBackButton->SetText(
-        std::make_unique<Pht::Text>(Pht::Vec2 {-1.0f, -0.23f}, "BACK", mTextProperties));
+        std::make_unique<Pht::Text>(Pht::Vec2 {-1.0f, -0.23f}, "BACK", textProperties));
 }

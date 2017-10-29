@@ -12,9 +12,9 @@
 using namespace BlocksGame;
 
 RestartConfirmationDialogView::RestartConfirmationDialogView(Pht::IEngine& engine,
-                                                             const CommonResources& commonResources) :
-    mTextProperties {commonResources.GetHussarFontSize27()},
-    mRestartTextProperties {commonResources.GetHussarFontSize30()} {
+                                                             const CommonResources& commonResources) {
+    Pht::TextProperties textProperties {commonResources.GetHussarFontSize27()};
+    Pht::TextProperties restartTextProperties {commonResources.GetHussarFontSize30()};
     
     auto frustumWidth {engine.GetRenderer().GetHudFrustumSize().x};
     Pht::Vec2 size {frustumWidth, 11.5f};
@@ -27,7 +27,7 @@ RestartConfirmationDialogView::RestartConfirmationDialogView(Pht::IEngine& engin
     AddSceneObject(std::move(quad));
     
     auto restartText {
-        std::make_unique<Pht::Text>(Pht::Vec2 {-1.85f, 4.0f}, "RESTART", mRestartTextProperties)
+        std::make_unique<Pht::Text>(Pht::Vec2 {-1.85f, 4.0f}, "RESTART", restartTextProperties)
     };
     AddText(std::move(restartText));
     
@@ -39,13 +39,13 @@ RestartConfirmationDialogView::RestartConfirmationDialogView(Pht::IEngine& engin
     AddSceneObject(std::move(lineSceneObject));
     
     auto textLine1 {
-        std::make_unique<Pht::Text>(Pht::Vec2 {-5.4f, 1.5f}, "Are you sure you want to restart", mTextProperties)
+        std::make_unique<Pht::Text>(Pht::Vec2 {-5.4f, 1.5f}, "Are you sure you want to restart", textProperties)
     };
     
     AddText(std::move(textLine1));
 
     auto textLine2 {
-        std::make_unique<Pht::Text>(Pht::Vec2 {-1.65f, 0.5f}, "the level?", mTextProperties)
+        std::make_unique<Pht::Text>(Pht::Vec2 {-1.65f, 0.5f}, "the level?", textProperties)
     };
     
     AddText(std::move(textLine2));
@@ -65,7 +65,7 @@ RestartConfirmationDialogView::RestartConfirmationDialogView(Pht::IEngine& engin
                                               buttonInputSize,
                                               buttonStyle);
     mYesButton->SetText(
-        std::make_unique<Pht::Text>(Pht::Vec2 {-0.6f, -0.23f}, "YES", mTextProperties));
+        std::make_unique<Pht::Text>(Pht::Vec2 {-0.6f, -0.23f}, "YES", textProperties));
     
     mNoButton = std::make_unique<MenuButton>(engine,
                                              *this,
@@ -74,5 +74,5 @@ RestartConfirmationDialogView::RestartConfirmationDialogView(Pht::IEngine& engin
                                              buttonInputSize,
                                              buttonStyle);
     mNoButton->SetText(
-        std::make_unique<Pht::Text>(Pht::Vec2 {-0.5f, -0.23f}, "NO", mTextProperties));
+        std::make_unique<Pht::Text>(Pht::Vec2 {-0.5f, -0.23f}, "NO", textProperties));
 }

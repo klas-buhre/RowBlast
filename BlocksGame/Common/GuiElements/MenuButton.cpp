@@ -38,6 +38,10 @@ MenuButton::MenuButton(Pht::IEngine& engine,
     
     auto selectFunction {[this, style] () {
         for (auto sceneObject: mSceneObjects) {
+            auto position {sceneObject->GetPosition()};
+            sceneObject->ResetMatrix();
+            sceneObject->Scale(style.mSelectedScale);
+            sceneObject->Translate(position);
             sceneObject->GetRenderable().GetMaterial().SetAmbient(style.mSelectedColor);
         }
     }};
@@ -46,6 +50,9 @@ MenuButton::MenuButton(Pht::IEngine& engine,
     
     auto deselectFunction {[this, style] () {
         for (auto sceneObject: mSceneObjects) {
+            auto position {sceneObject->GetPosition()};
+            sceneObject->ResetMatrix();
+            sceneObject->Translate(position);
             sceneObject->GetRenderable().GetMaterial().SetAmbient(style.mColor);
         }
     }};

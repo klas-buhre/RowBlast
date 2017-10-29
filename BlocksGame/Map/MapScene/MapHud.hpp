@@ -48,7 +48,6 @@ namespace BlocksGame {
         
         const UserData& mUserData;
         Pht::Font mFont;
-        Pht::TextProperties mTextProperties;
         Pht::Text mLivesText;
         std::unique_ptr<GradientRectangle> mLivesRectangle;
         Pht::Text mNewLifeCountdownText;

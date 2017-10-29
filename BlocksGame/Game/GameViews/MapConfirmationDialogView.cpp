@@ -12,9 +12,9 @@
 using namespace BlocksGame;
 
 MapConfirmationDialogView::MapConfirmationDialogView(Pht::IEngine& engine,
-                                                     const CommonResources& commonResources) :
-    mTextProperties {commonResources.GetHussarFontSize27()},
-    mGotToMapTextProperties {commonResources.GetHussarFontSize30()} {
+                                                     const CommonResources& commonResources) {
+    Pht::TextProperties textProperties {commonResources.GetHussarFontSize27()};
+    Pht::TextProperties goToMapTextProperties {commonResources.GetHussarFontSize30()};
     
     auto frustumWidth {engine.GetRenderer().GetHudFrustumSize().x};
     Pht::Vec2 size {frustumWidth, 11.5f};
@@ -27,7 +27,7 @@ MapConfirmationDialogView::MapConfirmationDialogView(Pht::IEngine& engine,
     AddSceneObject(std::move(quad));
     
     auto restartText {
-        std::make_unique<Pht::Text>(Pht::Vec2 {-1.0f, 4.0f}, "MAP", mGotToMapTextProperties)
+        std::make_unique<Pht::Text>(Pht::Vec2 {-1.0f, 4.0f}, "MAP", goToMapTextProperties)
     };
     AddText(std::move(restartText));
     
@@ -39,13 +39,13 @@ MapConfirmationDialogView::MapConfirmationDialogView(Pht::IEngine& engine,
     AddSceneObject(std::move(lineSceneObject));
     
     auto textLine1 {
-        std::make_unique<Pht::Text>(Pht::Vec2 {-5.6f, 1.5f}, "Are you sure you want to go back", mTextProperties)
+        std::make_unique<Pht::Text>(Pht::Vec2 {-5.6f, 1.5f}, "Are you sure you want to go back", textProperties)
     };
     
     AddText(std::move(textLine1));
 
     auto textLine2 {
-        std::make_unique<Pht::Text>(Pht::Vec2 {-1.8f, 0.5f}, "to the map?", mTextProperties)
+        std::make_unique<Pht::Text>(Pht::Vec2 {-1.8f, 0.5f}, "to the map?", textProperties)
     };
     
     AddText(std::move(textLine2));
@@ -65,7 +65,7 @@ MapConfirmationDialogView::MapConfirmationDialogView(Pht::IEngine& engine,
                                               buttonInputSize,
                                               buttonStyle);
     mYesButton->SetText(
-        std::make_unique<Pht::Text>(Pht::Vec2 {-0.6f, -0.23f}, "YES", mTextProperties));
+        std::make_unique<Pht::Text>(Pht::Vec2 {-0.6f, -0.23f}, "YES", textProperties));
     
     mNoButton = std::make_unique<MenuButton>(engine,
                                              *this,
@@ -74,5 +74,5 @@ MapConfirmationDialogView::MapConfirmationDialogView(Pht::IEngine& engine,
                                              buttonInputSize,
                                              buttonStyle);
     mNoButton->SetText(
-        std::make_unique<Pht::Text>(Pht::Vec2 {-0.5f, -0.23f}, "NO", mTextProperties));
+        std::make_unique<Pht::Text>(Pht::Vec2 {-0.5f, -0.23f}, "NO", textProperties));
 }

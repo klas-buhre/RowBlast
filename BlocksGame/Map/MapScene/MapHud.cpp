@@ -22,16 +22,16 @@ namespace {
 MapHud::MapHud(Pht::IEngine& engine, const UserData& userData) :
     mUserData {userData},
     mFont {"HussarBoldWeb.otf", engine.GetRenderer().GetAdjustedNumPixels(22)},
-    mTextProperties {mFont, 1.0f, Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f}},
     mLivesText {
         {-engine.GetRenderer().GetHudFrustumSize().x / 2.0f + livesTextDistFromBorder, 12.65f},
         "LIVES",
-        mTextProperties
+        {mFont, 1.0f, Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f}}
     },
     mNewLifeCountdownText {
         {-engine.GetRenderer().GetHudFrustumSize().x / 2.0f + countdownTextDistFromBorder, 12.0f},
         "00:00",
-        mTextProperties} {
+        {mFont, 1.0f, Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f}}
+    } {
 
     mLivesText.mText += "   "; // Warning! Must be three spaces to fit digits.
     

@@ -39,7 +39,6 @@ namespace BlocksGame {
         const UserData& mUserData;
         std::unique_ptr<CloseButton> mCloseButton;
         std::unique_ptr<MenuButton> mRefillLivesButton;
-        Pht::TextProperties mTextProperties;
         std::chrono::seconds mSecondsUntilNewLife;
         Pht::Text* mCountdownText {nullptr};
     };

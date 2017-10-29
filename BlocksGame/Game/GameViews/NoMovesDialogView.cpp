@@ -10,9 +10,8 @@
 
 using namespace BlocksGame;
 
-NoMovesDialogView::NoMovesDialogView(Pht::IEngine& engine, const CommonResources& commonResources) :
-    mTextProperties {commonResources.GetHussarFontSize27()} {
-
+NoMovesDialogView::NoMovesDialogView(Pht::IEngine& engine, const CommonResources& commonResources) {
+    Pht::TextProperties textProperties {commonResources.GetHussarFontSize27()};
     Pht::Vec2 size {engine.GetRenderer().GetHudFrustumSize().x, 8.0f};
     SetSize(size);
     SetPosition({0.0f, 0.0f});
@@ -24,7 +23,7 @@ NoMovesDialogView::NoMovesDialogView(Pht::IEngine& engine, const CommonResources
     Pht::Vec3 closeButtonPosition {GetSize().x / 2.0f - 1.0f, GetSize().y / 2.0f - 1.0f, -0.5f};
     mCloseButton = std::make_unique<CloseButton>(engine, *this, closeButtonPosition);
     mCloseButton->SetText(
-        std::make_unique<Pht::Text>(Pht::Vec2 {-0.23f, -0.23f}, "X", mTextProperties));
+        std::make_unique<Pht::Text>(Pht::Vec2 {-0.23f, -0.23f}, "X", textProperties));
 
     Pht::Vec2 buttonSize {6.5f, 2.1f};
     Pht::Vec2 buttonInputSize {180.0f, 47.0f};
@@ -39,16 +38,16 @@ NoMovesDialogView::NoMovesDialogView(Pht::IEngine& engine, const CommonResources
                                                  buttonInputSize,
                                                  buttonStyle);
     mPlayOnButton->SetText(
-        std::make_unique<Pht::Text>(Pht::Vec2 {-1.5f, -0.23f}, "PLAY ON", mTextProperties));
+        std::make_unique<Pht::Text>(Pht::Vec2 {-1.5f, -0.23f}, "PLAY ON", textProperties));
     
     auto textLine1 {
-        std::make_unique<Pht::Text>(Pht::Vec2 {-2.0f, 1.5f}, "Out of moves!", mTextProperties)
+        std::make_unique<Pht::Text>(Pht::Vec2 {-2.0f, 1.5f}, "Out of moves!", textProperties)
     };
     
     AddText(std::move(textLine1));
 
     auto textLine2 {
-        std::make_unique<Pht::Text>(Pht::Vec2 {-4.0f, 0.5f}, "Get 5 more moves for $1", mTextProperties)
+        std::make_unique<Pht::Text>(Pht::Vec2 {-4.0f, 0.5f}, "Get 5 more moves for $1", textProperties)
     };
     
     AddText(std::move(textLine2));

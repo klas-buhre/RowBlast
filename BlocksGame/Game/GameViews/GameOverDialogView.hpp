@@ -32,7 +32,6 @@ namespace BlocksGame {
     private:
         std::unique_ptr<CloseButton> mCloseButton;
         std::unique_ptr<MenuButton> mRetryButton;
-        Pht::TextProperties mTextProperties;
     };
 }
 
