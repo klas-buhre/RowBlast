@@ -197,7 +197,6 @@
 		6260A70E1F8A22E4001F6DCD /* PlusPiece.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6260A70C1F8A22E4001F6DCD /* PlusPiece.cpp */; };
 		6260A7101F8A265F001F6DCD /* level22.json in Resources */ = {isa = PBXBuildFile; fileRef = 6260A70F1F8A265A001F6DCD /* level22.json */; };
 		6260A7161F8A5E51001F6DCD /* sky_blurred.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6260A7151F8A5E4C001F6DCD /* sky_blurred.jpg */; };
-		6260A71C1F8A6FA0001F6DCD /* sky_upside_down_patched_mirrored.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6260A71B1F8A6F5C001F6DCD /* sky_upside_down_patched_mirrored.jpg */; };
 		6260A71F1F8FB8A8001F6DCD /* TextureCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6260A71D1F8FB8A8001F6DCD /* TextureCache.cpp */; };
 		6260A7221F92445F001F6DCD /* Particle.vert in Resources */ = {isa = PBXBuildFile; fileRef = 6260A7201F92445E001F6DCD /* Particle.vert */; };
 		6260A7231F92445F001F6DCD /* Particle.frag in Resources */ = {isa = PBXBuildFile; fileRef = 6260A7211F92445F001F6DCD /* Particle.frag */; };
@@ -223,6 +222,7 @@
 		628A22571F6D359100D97BF8 /* OfflineRasterizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 628A22551F6D359100D97BF8 /* OfflineRasterizer.cpp */; };
 		628A225A1F6E704900D97BF8 /* GhostPieceProducer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 628A22581F6E704900D97BF8 /* GhostPieceProducer.cpp */; };
 		628A225C1F742E7A00D97BF8 /* level18.json in Resources */ = {isa = PBXBuildFile; fileRef = 628A225B1F742E7A00D97BF8 /* level18.json */; };
+		629C82FF1FA62CE100F61817 /* sky_upside_down_patched_mirrored.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 629C82FE1FA62CDE00F61817 /* sky_upside_down_patched_mirrored.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -680,7 +680,6 @@
 		6260A70D1F8A22E4001F6DCD /* PlusPiece.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PlusPiece.hpp; sourceTree = "<group>"; };
 		6260A70F1F8A265A001F6DCD /* level22.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = level22.json; sourceTree = "<group>"; };
 		6260A7151F8A5E4C001F6DCD /* sky_blurred.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sky_blurred.jpg; sourceTree = "<group>"; };
-		6260A71B1F8A6F5C001F6DCD /* sky_upside_down_patched_mirrored.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sky_upside_down_patched_mirrored.jpg; sourceTree = "<group>"; };
 		6260A71D1F8FB8A8001F6DCD /* TextureCache.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TextureCache.cpp; sourceTree = "<group>"; };
 		6260A71E1F8FB8A8001F6DCD /* TextureCache.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TextureCache.hpp; sourceTree = "<group>"; };
 		6260A7201F92445E001F6DCD /* Particle.vert */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = Particle.vert; sourceTree = "<group>"; };
@@ -720,6 +719,7 @@
 		628A22581F6E704900D97BF8 /* GhostPieceProducer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GhostPieceProducer.cpp; sourceTree = "<group>"; };
 		628A22591F6E704900D97BF8 /* GhostPieceProducer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GhostPieceProducer.hpp; sourceTree = "<group>"; };
 		628A225B1F742E7A00D97BF8 /* level18.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level18.json; sourceTree = "<group>"; };
+		629C82FE1FA62CDE00F61817 /* sky_upside_down_patched_mirrored.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sky_upside_down_patched_mirrored.jpg; sourceTree = "<group>"; };
 		62CCDDD21F8129720088A38D /* IGameHudEventListener.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = IGameHudEventListener.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -815,7 +815,7 @@
 				626C4D8B1EEC107E000D4DF6 /* settings.png */,
 				62129A3B1E87F01600BF8377 /* sky_2.jpg */,
 				6260A7151F8A5E4C001F6DCD /* sky_blurred.jpg */,
-				6260A71B1F8A6F5C001F6DCD /* sky_upside_down_patched_mirrored.jpg */,
+				629C82FE1FA62CDE00F61817 /* sky_upside_down_patched_mirrored.jpg */,
 				621A4E6A1E50B60C00D53AFD /* sky_upside_down.jpg */,
 				621A4E691E50B60C00D53AFD /* sky.jpg */,
 				621A4E6C1E50B60C00D53AFD /* smiley.jpg */,
@@ -1696,6 +1696,7 @@
 				620A982B1EE2BFC100AD6C61 /* Bomb.wav in Resources */,
 				620A98271EE2A9D100AD6C61 /* Blip.wav in Resources */,
 				623518BF1F3631A30027346B /* triangle_428_r180.obj in Resources */,
+				629C82FF1FA62CE100F61817 /* sky_upside_down_patched_mirrored.jpg in Resources */,
 				623FFF6C1EB4881100C83B3A /* level4.json in Resources */,
 				626D411C1F29F0BF00C55770 /* star_1428.obj in Resources */,
 				625089011EA0CE23004320BB /* level1.json in Resources */,
@@ -1703,7 +1704,6 @@
 				623B32F51F17AC12000C64A1 /* TexturedLighting.frag in Resources */,
 				623518BB1F3624D50027346B /* triangle_428.obj in Resources */,
 				6280AF741F2CC1C900FFAF9B /* level11.json in Resources */,
-				6260A71C1F8A6FA0001F6DCD /* sky_upside_down_patched_mirrored.jpg in Resources */,
 				624332871EBF188400485D2E /* map.json in Resources */,
 				621A4E711E50B60C00D53AFD /* cube_554.obj in Resources */,
 				623B32EF1F17AC12000C64A1 /* PixelLighting.frag in Resources */,

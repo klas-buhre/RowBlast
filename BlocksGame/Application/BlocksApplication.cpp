@@ -10,8 +10,9 @@ Backlog:
      convenient to go back to the state before the move and not the initial state.
     -Mega bomb?
   -Rendering:
+    -Preview materials with less reflectivity.
+    -Slightly less blur in background?
     -Pink pause button made by the offline rasterizer.
-    -There should be no ugly dark spots in the env map texture.
     -Recreate the star particle. Possibly by buying a textures for particle systems in unity assets
      store. Look at: https://www.assetstore.unity3d.com/en/#!/content/26701
     -Could have a set of floating cube configurations for the game scene that always looks good.
@@ -39,6 +40,7 @@ Backlog:
     -The floating cubes could have materials with the unpatched version of the sky.
     -The angle of the rotating cubes in the title scene and game scene could be configurable/
      deterministic so that the ugly edges in the env mapping is never seen.
+    -MenuButtons can start a shrink animation when pressed down.
     -Try models with less bevel for the preview. The triangles with less bevel could be tried for
      field also.
   -Map:
@@ -57,7 +59,7 @@ Backlog:
     -Credit the icon creator: <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
   
 Ongoing tasks:
-    -MenuButtons can start a shrink animation when pressed down.
+
  
 Ideas:
     -The pause button could lead to a widget that has an undo button, a boosters button and a game
