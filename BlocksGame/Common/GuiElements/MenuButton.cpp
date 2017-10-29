@@ -36,24 +36,24 @@ MenuButton::MenuButton(Pht::IEngine& engine,
     
     AddSceneObject(std::move(sceneObject));
     
-    auto selectFunction {[this, style] () {
+    auto onDownFunction {[this, style] () {
         for (auto sceneObject: mSceneObjects) {
             auto position {sceneObject->GetPosition()};
             sceneObject->ResetMatrix();
-            sceneObject->Scale(style.mSelectedScale);
+            sceneObject->Scale(style.mPressedScale);
             sceneObject->Translate(position);
             sceneObject->GetRenderable().GetMaterial().SetAmbient(style.mSelectedColor);
             if (mText) {
-                mText->mProperties.mScale = style.mSelectedScale;
-                Pht::Vec2 textLocalPosition {mTextLocalPosition * style.mSelectedScale};
+                mText->mProperties.mScale = style.mPressedScale;
+                Pht::Vec2 textLocalPosition {mTextLocalPosition * style.mPressedScale};
                 mText->mPosition = textLocalPosition + Pht::Vec2 {mPosition.x, mPosition.y};
             }
         }
     }};
     
-    mButton->SetOnDown(selectFunction);
+    mButton->SetOnDown(onDownFunction);
     
-    auto deselectFunction {[this, style] () {
+    auto onUpFunction {[this, style] () {
         for (auto sceneObject: mSceneObjects) {
             auto position {sceneObject->GetPosition()};
             sceneObject->ResetMatrix();
@@ -66,9 +66,9 @@ MenuButton::MenuButton(Pht::IEngine& engine,
         }
     }};
     
-    mButton->SetOnUpInside(deselectFunction);
-    mButton->SetOnUpOutside(deselectFunction);
-    mButton->SetOnMoveOutside(deselectFunction);
+    mButton->SetOnUpInside(onUpFunction);
+    mButton->SetOnUpOutside(onUpFunction);
+    mButton->SetOnMoveOutside(onUpFunction);
     
     if (style.mIsRounded) {
         auto leftCircle {engine.CreateRenderableObject(Pht::SphereMesh {size.y / 2.0f}, material)};

@@ -104,7 +104,7 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine, const CommonResources& 
     mSoundButton->SetText(std::move(soundOffText));
 
     MenuButton::Style backButtonStyle {buttonStyle};
-    backButtonStyle.mSelectedScale = 0.925f;
+    backButtonStyle.mPressedScale = 0.925f;
     
     Pht::Vec2 backButtonSize {11.0f, 1.72f};
     Pht::Vec2 backButtonInputSize {236.0f, 43.0f};
