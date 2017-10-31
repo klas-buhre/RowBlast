@@ -641,7 +641,13 @@ void GameRenderer::RenderScaledTiltedPiece(const Pht::Vec2& position,
                     scale * Pht::Mat4::Translate(cellXPos, cellYPos, 0.0f) * baseTransform
                 };
                 
+                auto& material {renderable->GetMaterial()};
+                auto reflectivity {material.GetReflectivity()};
+                material.SetReflectivity(0.85f);
+                
                 mEngineRenderer.Render(*renderable, cellMatrix);
+                
+                material.SetReflectivity(reflectivity);
             }
         }
     }

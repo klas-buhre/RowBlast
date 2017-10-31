@@ -91,6 +91,10 @@ namespace Pht {
             return mReflectivity;
         }
         
+        void SetReflectivity(float reflectivity) {
+            mReflectivity = reflectivity;
+        }
+        
         float GetOpacity() const {
             return mOpacity;
         }

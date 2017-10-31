@@ -10,7 +10,7 @@
 using namespace BlocksGame;
 
 namespace {
-    const auto numVisibleLevelRows {5};
+    const auto numVisibleLevelRows {6};
     const auto scrollTime {0.8f};
     const auto deaccelerationStartTime {0.4f};
     const auto waitTimeClearObjective {1.0f};

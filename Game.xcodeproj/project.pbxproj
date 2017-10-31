@@ -223,6 +223,7 @@
 		628A225A1F6E704900D97BF8 /* GhostPieceProducer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 628A22581F6E704900D97BF8 /* GhostPieceProducer.cpp */; };
 		628A225C1F742E7A00D97BF8 /* level18.json in Resources */ = {isa = PBXBuildFile; fileRef = 628A225B1F742E7A00D97BF8 /* level18.json */; };
 		629C82FF1FA62CE100F61817 /* sky_upside_down_patched_mirrored.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 629C82FE1FA62CDE00F61817 /* sky_upside_down_patched_mirrored.jpg */; };
+		629C83011FA8E18300F61817 /* level23.json in Resources */ = {isa = PBXBuildFile; fileRef = 629C83001FA8E17800F61817 /* level23.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -720,6 +721,7 @@
 		628A22591F6E704900D97BF8 /* GhostPieceProducer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GhostPieceProducer.hpp; sourceTree = "<group>"; };
 		628A225B1F742E7A00D97BF8 /* level18.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level18.json; sourceTree = "<group>"; };
 		629C82FE1FA62CDE00F61817 /* sky_upside_down_patched_mirrored.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sky_upside_down_patched_mirrored.jpg; sourceTree = "<group>"; };
+		629C83001FA8E17800F61817 /* level23.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = level23.json; sourceTree = "<group>"; };
 		62CCDDD21F8129720088A38D /* IGameHudEventListener.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = IGameHudEventListener.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -811,6 +813,7 @@
 				6260A6E21F8695AF001F6DCD /* level20.json */,
 				6260A7071F8912D2001F6DCD /* level21.json */,
 				6260A70F1F8A265A001F6DCD /* level22.json */,
+				629C83001FA8E17800F61817 /* level23.json */,
 				624332861EBF188400485D2E /* map.json */,
 				626C4D8B1EEC107E000D4DF6 /* settings.png */,
 				62129A3B1E87F01600BF8377 /* sky_2.jpg */,
@@ -1705,6 +1708,7 @@
 				623518BB1F3624D50027346B /* triangle_428.obj in Resources */,
 				6280AF741F2CC1C900FFAF9B /* level11.json in Resources */,
 				624332871EBF188400485D2E /* map.json in Resources */,
+				629C83011FA8E18300F61817 /* level23.json in Resources */,
 				621A4E711E50B60C00D53AFD /* cube_554.obj in Resources */,
 				623B32EF1F17AC12000C64A1 /* PixelLighting.frag in Resources */,
 				623518B71F3619C50027346B /* cube_428.obj in Resources */,

@@ -93,8 +93,8 @@ BlastRadiusAnimation::BlastRadiusAnimation(Pht::IEngine& engine, const GameScene
     auto yScaleFactor {static_cast<float>(renderBufferSize.y) / static_cast<float>(frustumSize.y)};
     
     Pht::IVec2 imageSize {
-        static_cast<int>(squareSide * xScaleFactor) * 2,
-        static_cast<int>(squareSide * yScaleFactor) * 2
+        static_cast<int>(squareSide * xScaleFactor),
+        static_cast<int>(squareSide * yScaleFactor)
     };
     
     auto rasterizer {std::make_unique<Pht::OfflineRasterizer>(coordinateSystemSize, imageSize)};
@@ -104,7 +104,7 @@ BlastRadiusAnimation::BlastRadiusAnimation(Pht::IEngine& engine, const GameScene
 
     auto image {rasterizer->ProduceImage()};
     
-    Pht::Material imageMaterial {*image, Pht::GenerateMipmap::Yes};
+    Pht::Material imageMaterial {*image, Pht::GenerateMipmap::No};
     imageMaterial.SetBlend(Pht::Blend::Yes);
     
     std::shared_ptr<Pht::RenderableObject> renderableObject {
