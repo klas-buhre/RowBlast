@@ -112,7 +112,6 @@ namespace BlocksGame {
         std::vector<std::unique_ptr<Pht::RenderableObject>> mRenderables;
         std::unique_ptr<Pht::RenderableObject> mWeldRenderable;
         std::unique_ptr<Pht::RenderableObject> mGhostPieceRenderable;
-        std::unique_ptr<Pht::RenderableObject> mFilledGhostPieceRenderable;
         std::unique_ptr<Pht::RenderableObject> mPressedGhostPieceRenderable;
         float mPreviewCellSize {1.0f};
         std::vector<Pht::IVec2> mRightOverhangCheckPositions;

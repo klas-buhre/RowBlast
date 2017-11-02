@@ -1,8 +1,7 @@
 /*
 Backlog:
   -Gameplay:
-    -Maybe add extra visible row of level blocks (6 insted of 5).
-    -Maybe a sensitivity setting. Tetris Blitz has lower sensibility on iPad but not on iPhone.
+    -Maybe a sensitivity setting. Tetris Blitz has lower sensitility on iPad but not on iPhone.
     -When playing a level with clear objective the game could scroll up if there is no room to spawn
      the falling piece. If we are at the top of the level then it is game over.
     -Undo to the previous move initial state or the the previous move last state before move? Should 

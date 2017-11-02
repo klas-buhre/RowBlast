@@ -124,10 +124,6 @@ const Pht::RenderableObject* Piece::GetGhostPieceRenderable() const {
     return mGhostPieceRenderable.get();
 }
 
-const Pht::RenderableObject* Piece::GetFilledGhostPieceRenderable() const {
-    return mFilledGhostPieceRenderable.get();
-}
-
 const Pht::RenderableObject* Piece::GetPressedGhostPieceRenderable() const {
     return mPressedGhostPieceRenderable.get();
 }
@@ -277,10 +273,6 @@ void Piece::AddRenderable(std::unique_ptr<Pht::RenderableObject> renderable) {
 
 void Piece::SetGhostPieceRenderable(std::unique_ptr<Pht::RenderableObject> renderable) {
     mGhostPieceRenderable = std::move(renderable);
-}
-
-void Piece::SetFilledGhostPieceRenderable(std::unique_ptr<Pht::RenderableObject> renderable) {
-    mFilledGhostPieceRenderable = std::move(renderable);
 }
 
 void Piece::SetPressedGhostPieceRenderable(std::unique_ptr<Pht::RenderableObject> renderable) {

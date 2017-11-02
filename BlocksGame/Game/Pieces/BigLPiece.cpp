@@ -69,10 +69,6 @@ BigLPiece::BigLPiece(Pht::IEngine& engine, const GameScene& scene) {
     SetGhostPieceRenderable(ghostPieceProducer.ProduceRenderable());
     
     ghostPieceProducer.Clear();
-    ghostPieceProducer.DrawBorder(border, FillGhostPiece::Yes);
-    SetFilledGhostPieceRenderable(ghostPieceProducer.ProduceRenderable());
-    
-    ghostPieceProducer.Clear();
     ghostPieceProducer.SetBrightBorderAndFill();
     ghostPieceProducer.DrawBorder(border, FillGhostPiece::Yes);
     SetPressedGhostPieceRenderable(ghostPieceProducer.ProduceRenderable());
