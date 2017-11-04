@@ -1,6 +1,7 @@
 /*
 Backlog:
   -Gameplay:
+    -Fix all bugs.
     -Maybe a sensitivity setting. Tetris Blitz has lower sensitility on iPad but not on iPhone.
     -When playing a level with clear objective the game could scroll up if there is no room to spawn
      the falling piece. If we are at the top of the level then it is game over.
@@ -11,7 +12,6 @@ Backlog:
   -Rendering:
     -Preview materials with less reflectivity.
     -Slightly less blur in background?
-    -Pink pause button made by the offline rasterizer.
     -Maybe less reflectivity in all materials?
     -Recreate the star particle. Possibly by buying a textures for particle systems in unity assets
      store. Look at: https://www.assetstore.unity3d.com/en/#!/content/26701
@@ -34,11 +34,12 @@ Backlog:
      The title text can also have that gradient.
     -Could have a rotating particle/flare in the sliding text animation.
     -The switching of pieces in the selectable pieces HUD could be animated.
-    -Could have particles in the FlyingBlocksAnimation.
+    -Could have particles in the FlyingBlocksAnimation in the points from which the blocks gets
+     tossed.
     -The blocks in FlyingBlocksAnimation should bounce off each other instead of passing right 
      through.
-    -The floating cubes could have materials with the unpatched version of the sky.
-    -The angle of the rotating cubes in the title scene and game scene could be configurable/
+    -The floating cubes could have materials with bought envmap textures without boundries. Or,
+     The angle of the rotating cubes in the title scene and game scene could be configurable/
      deterministic so that the ugly edges in the env mapping is never seen.
     -MenuButtons can start a shrink animation when pressed down.
     -Try models with less bevel for the preview. The triangles with less bevel could be tried for
