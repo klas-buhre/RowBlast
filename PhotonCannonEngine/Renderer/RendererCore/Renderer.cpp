@@ -32,9 +32,33 @@
 using namespace Pht;
 
 namespace {
-    const auto defaultScreenHeight {1136};
+    const static auto defaultScreenHeight {1136};
     const Mat4 identityMatrix;
+   
+    struct FrustumSettings {
+        float mHeight;
+        float mZNearClip;
+        float mZFarClip;
+    };
     
+    const static FrustumSettings perspectiveFrustumSettings {
+        .mHeight = 7.1f,
+        .mZNearClip = 5.0f,
+        .mZFarClip = 750.0f
+    };
+
+    const static FrustumSettings orthographicFrustumSettings {
+        .mHeight = 24.317f,
+        .mZNearClip = -1.0f,
+        .mZFarClip = 75.0f
+    };
+
+    const static FrustumSettings hudFrustumSettings {
+        .mHeight = 26.625f,
+        .mZNearClip = -1.0f,
+        .mZFarClip = 75.0f
+    };
+
     bool IsParticleShader(ShaderType shaderType) {
         switch (shaderType) {
             case ShaderType::Particle:
@@ -251,32 +275,36 @@ void Renderer::InitOpenGl(bool createRenderBuffers) {
 }
 
 void Renderer::InitCamera() {
-    auto frustumHeight {7.1f};
-    auto zNear {5.0f};
-    auto zFar {750.0f};
+    mCamera = Camera {
+        mRenderBufferSize,
+        perspectiveFrustumSettings.mHeight,
+        perspectiveFrustumSettings.mZNearClip,
+        perspectiveFrustumSettings.mZFarClip
+    };
     
-    mCamera = Camera {mRenderBufferSize, frustumHeight, zNear, zFar};
     Vec3 cameraPosition {0.0f, 0.0f, 0.0f};
     Vec3 target {0.0f, 0.0f, -10.0f};
     Vec3 up {0.0f, 1.0f, 0.0f};
     mCamera.LookAt(cameraPosition, target, up);
     
-    mOrthographicFrustumSize.y = 24.317f;
+    mOrthographicFrustumSize.y = orthographicFrustumSettings.mHeight;
     mOrthographicFrustumSize.x = mOrthographicFrustumSize.y * mRenderBufferSize.x / mRenderBufferSize.y;
-    mCamera.SetOrthographicProjection(mRenderBufferSize, mOrthographicFrustumSize.y, -1.0f, 75.0f);
+    mCamera.SetOrthographicProjection(mRenderBufferSize,
+                                      mOrthographicFrustumSize.y,
+                                      orthographicFrustumSettings.mZNearClip,
+                                      orthographicFrustumSettings.mZFarClip);
 }
 
 void Renderer::InitHudFrustum() {
     mHudCameraPosition = Vec3 {0.0f, 0.0f, 0.0f};
-    auto frustumHeight {26.625f};
-    float frustumWidth {frustumHeight * mRenderBufferSize.x / mRenderBufferSize.y};
+    float frustumWidth {hudFrustumSettings.mHeight * mRenderBufferSize.x / mRenderBufferSize.y};
     mHudFrustum.mProjection = Mat4::OrthographicProjection(-frustumWidth / 2.0f,
                                                            frustumWidth / 2.0f,
-                                                           -frustumHeight / 2.0f,
-                                                           frustumHeight / 2.0f,
-                                                           -1.0f,
-                                                           75.0f);
-    mHudFrustum.mSize = {frustumWidth, frustumHeight};
+                                                           -hudFrustumSettings.mHeight / 2.0f,
+                                                           hudFrustumSettings.mHeight / 2.0f,
+                                                           hudFrustumSettings.mZNearClip,
+                                                           hudFrustumSettings.mZFarClip);
+    mHudFrustum.mSize = {frustumWidth, hudFrustumSettings.mHeight};
 }
 
 void Renderer::InitShaders() {
