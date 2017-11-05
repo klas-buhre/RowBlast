@@ -1,6 +1,6 @@
 #include "ObjMesh.hpp"
 
-#include "ObjLoader.hpp"
+#include "ObjMeshLoader.hpp"
 
 using namespace Pht;
 
@@ -9,5 +9,5 @@ ObjMesh::ObjMesh(const std::string& filename, float scale) :
     mScale {scale} {}
         
 VertexBuffer ObjMesh::GetVertices(VertexFlags flags) const {
-    return ObjLoader::Load(mFilename, flags, mScale);
+    return ObjMeshLoader::Load(mFilename, flags, mScale);
 }

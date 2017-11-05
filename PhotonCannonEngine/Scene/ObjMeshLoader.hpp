@@ -1,10 +1,10 @@
-#ifndef ObjLoader_hpp
-#define ObjLoader_hpp
+#ifndef ObjMeshLoader_hpp
+#define ObjMeshLoader_hpp
 
 #include "VertexBuffer.hpp"
 
 namespace Pht {
-    namespace ObjLoader {
+    namespace ObjMeshLoader {
         VertexBuffer Load(const std::string& filename, VertexFlags flags, float scale);
     }
 }

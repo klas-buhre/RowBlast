@@ -12,6 +12,8 @@
 		288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
 		4D27E4840F9AD71900447247 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D27E4830F9AD71900447247 /* OpenGLES.framework */; };
 		4D27E4B50F9AD7D600447247 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D27E4B40F9AD7D600447247 /* QuartzCore.framework */; };
+		6208C8661FAF210A0059BE51 /* SceneObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6208C8641FAF205A0059BE51 /* SceneObject.cpp */; };
+		6208C8671FAF210D0059BE51 /* ObjMeshLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6208C8621FAF205A0059BE51 /* ObjMeshLoader.cpp */; };
 		620A981D1EE2A3B400AD6C61 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 620A981C1EE2A3B400AD6C61 /* AVFoundation.framework */; };
 		620A98271EE2A9D100AD6C61 /* Blip.wav in Resources */ = {isa = PBXBuildFile; fileRef = 620A98261EE2A9D100AD6C61 /* Blip.wav */; };
 		620A98291EE2B5C000AD6C61 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 620A98281EE2B5C000AD6C61 /* CoreMedia.framework */; };
@@ -92,8 +94,6 @@
 		623B33051F17AC12000C64A1 /* libfreetype.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 623B329D1F17AC11000C64A1 /* libfreetype.a */; };
 		623B33061F17AC12000C64A1 /* FileStorage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623B32C61F17AC11000C64A1 /* FileStorage.cpp */; };
 		623B33071F17AC12000C64A1 /* JsonUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623B32CA1F17AC11000C64A1 /* JsonUtil.cpp */; };
-		623B33081F17AC12000C64A1 /* ObjLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623B32CC1F17AC11000C64A1 /* ObjLoader.cpp */; };
-		623B33091F17AC12000C64A1 /* SceneObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623B32CE1F17AC11000C64A1 /* SceneObject.cpp */; };
 		623B33181F1F6203000C64A1 /* RestartConfirmationDialogView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623B33161F1F6203000C64A1 /* RestartConfirmationDialogView.cpp */; };
 		623B331B1F1F6539000C64A1 /* RestartConfirmationDialogController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623B33191F1F6539000C64A1 /* RestartConfirmationDialogController.cpp */; };
 		623C16BE1F404C5700305752 /* MapConfirmationDialogView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623C16BC1F404C5700305752 /* MapConfirmationDialogView.cpp */; };
@@ -233,6 +233,10 @@
 		288765FC0DF74451002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		4D27E4830F9AD71900447247 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		4D27E4B40F9AD7D600447247 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		6208C8621FAF205A0059BE51 /* ObjMeshLoader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ObjMeshLoader.cpp; sourceTree = "<group>"; };
+		6208C8631FAF205A0059BE51 /* ObjMeshLoader.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ObjMeshLoader.hpp; sourceTree = "<group>"; };
+		6208C8641FAF205A0059BE51 /* SceneObject.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SceneObject.cpp; sourceTree = "<group>"; };
+		6208C8651FAF205A0059BE51 /* SceneObject.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SceneObject.hpp; sourceTree = "<group>"; };
 		620A981C1EE2A3B400AD6C61 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		620A98261EE2A9D100AD6C61 /* Blip.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Blip.wav; sourceTree = "<group>"; };
 		620A98281EE2B5C000AD6C61 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
@@ -479,10 +483,6 @@
 		623B32C91F17AC11000C64A1 /* IImage.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = IImage.hpp; sourceTree = "<group>"; };
 		623B32CA1F17AC11000C64A1 /* JsonUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JsonUtil.cpp; sourceTree = "<group>"; };
 		623B32CB1F17AC11000C64A1 /* JsonUtil.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = JsonUtil.hpp; sourceTree = "<group>"; };
-		623B32CC1F17AC11000C64A1 /* ObjLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjLoader.cpp; sourceTree = "<group>"; };
-		623B32CD1F17AC11000C64A1 /* ObjLoader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ObjLoader.hpp; sourceTree = "<group>"; };
-		623B32CE1F17AC11000C64A1 /* SceneObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SceneObject.cpp; sourceTree = "<group>"; };
-		623B32CF1F17AC11000C64A1 /* SceneObject.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SceneObject.hpp; sourceTree = "<group>"; };
 		623B32D01F17AC11000C64A1 /* StaticVector.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = StaticVector.hpp; sourceTree = "<group>"; };
 		623B33161F1F6203000C64A1 /* RestartConfirmationDialogView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RestartConfirmationDialogView.cpp; sourceTree = "<group>"; };
 		623B33171F1F6203000C64A1 /* RestartConfirmationDialogView.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = RestartConfirmationDialogView.hpp; sourceTree = "<group>"; };
@@ -781,6 +781,17 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		6208C8611FAF205A0059BE51 /* Scene */ = {
+			isa = PBXGroup;
+			children = (
+				6208C8621FAF205A0059BE51 /* ObjMeshLoader.cpp */,
+				6208C8631FAF205A0059BE51 /* ObjMeshLoader.hpp */,
+				6208C8641FAF205A0059BE51 /* SceneObject.cpp */,
+				6208C8651FAF205A0059BE51 /* SceneObject.hpp */,
+			);
+			path = Scene;
+			sourceTree = "<group>";
+		};
 		621A4E641E50B60C00D53AFD /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -846,6 +857,7 @@
 				623B31F91F17AC11000C64A1 /* Math */,
 				6260A6EA1F87E08F001F6DCD /* Mesh */,
 				623B31FE1F17AC11000C64A1 /* Renderer */,
+				6208C8611FAF205A0059BE51 /* Scene */,
 				623B323B1F17AC11000C64A1 /* ThirdParty */,
 				623B32C51F17AC11000C64A1 /* Utils */,
 			);
@@ -1231,13 +1243,9 @@
 				623B32C91F17AC11000C64A1 /* IImage.hpp */,
 				623B32CA1F17AC11000C64A1 /* JsonUtil.cpp */,
 				623B32CB1F17AC11000C64A1 /* JsonUtil.hpp */,
-				623B32CC1F17AC11000C64A1 /* ObjLoader.cpp */,
-				623B32CD1F17AC11000C64A1 /* ObjLoader.hpp */,
 				628A22551F6D359100D97BF8 /* OfflineRasterizer.cpp */,
 				628A22561F6D359100D97BF8 /* OfflineRasterizer.hpp */,
 				623C16D51F6045B600305752 /* Optional.hpp */,
-				623B32CE1F17AC11000C64A1 /* SceneObject.cpp */,
-				623B32CF1F17AC11000C64A1 /* SceneObject.hpp */,
 				623B32D01F17AC11000C64A1 /* StaticVector.hpp */,
 			);
 			path = Utils;
@@ -1768,6 +1776,7 @@
 				623B32E21F17AC12000C64A1 /* ParticleEmitter.cpp in Sources */,
 				626C4DA21EEC19DF000D4DF6 /* MapScene.cpp in Sources */,
 				628A225A1F6E704900D97BF8 /* GhostPieceProducer.cpp in Sources */,
+				6208C8661FAF210A0059BE51 /* SceneObject.cpp in Sources */,
 				624EAFC21EE559A9009F81BC /* SlidingTextAnimation.cpp in Sources */,
 				624447D61EDDD2C40080ECE8 /* TitleScene.cpp in Sources */,
 				624447A91EDDD2C40080ECE8 /* RowExplosionParticleEffect.cpp in Sources */,
@@ -1778,7 +1787,6 @@
 				624447AC1EDDD2C40080ECE8 /* FallingPiece.cpp in Sources */,
 				6260A6E91F86A0AA001F6DCD /* MirroredZPiece.cpp in Sources */,
 				624447CD1EDDD2C40080ECE8 /* SpherePiece.cpp in Sources */,
-				623B33091F17AC12000C64A1 /* SceneObject.cpp in Sources */,
 				624447A01EDDD2C40080ECE8 /* CloseButton.cpp in Sources */,
 				624447B31EDDD2C40080ECE8 /* GameRenderer.cpp in Sources */,
 				624447C11EDDD2C40080ECE8 /* BPiece.cpp in Sources */,
@@ -1853,7 +1861,6 @@
 				6247CFD91EFFE25900B9919E /* NoLivesDialogView.cpp in Sources */,
 				624447CC1EDDD2C40080ECE8 /* ShortIPiece.cpp in Sources */,
 				623B32D31F17AC11000C64A1 /* Button.cpp in Sources */,
-				623B33081F17AC12000C64A1 /* ObjLoader.cpp in Sources */,
 				623C16C81F46151E00305752 /* Piece.cpp in Sources */,
 				6260A7011F87E5B2001F6DCD /* ParametricSurface.cpp in Sources */,
 				623B32E11F17AC12000C64A1 /* FadeEffect.cpp in Sources */,
@@ -1873,6 +1880,7 @@
 				6254C16F1EED39E300BBCAD2 /* CommonViewControllers.cpp in Sources */,
 				624447C21EDDD2C40080ECE8 /* DPiece.cpp in Sources */,
 				623B331B1F1F6539000C64A1 /* RestartConfirmationDialogController.cpp in Sources */,
+				6208C8671FAF210D0059BE51 /* ObjMeshLoader.cpp in Sources */,
 				624447AB1EDDD2C40080ECE8 /* CollisionDetection.cpp in Sources */,
 				624447BC1EDDD2C40080ECE8 /* Level.cpp in Sources */,
 				624447AF1EDDD2C40080ECE8 /* NextPieceGenerator.cpp in Sources */,

@@ -1,5 +1,8 @@
 /*
 Backlog:
+  -Engine:
+    -Read about component-based architecture.
+    -Scene
   -Gameplay:
     -Fix all bugs.
     -Maybe a sensitivity setting. Tetris Blitz has lower sensitility on iPad but not on iPhone.

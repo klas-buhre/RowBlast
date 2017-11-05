@@ -1,4 +1,4 @@
-#include "ObjLoader.hpp"
+#include "ObjMeshLoader.hpp"
 
 #include <fstream>
 #include <vector>
@@ -230,7 +230,7 @@ namespace {
     }
 }
 
-VertexBuffer ObjLoader::Load(const std::string& filename, VertexFlags flags, float scale) {
+VertexBuffer ObjMeshLoader::Load(const std::string& filename, VertexFlags flags, float scale) {
     assert(flags.mNormals && !flags.mTextureCoords);
 
     auto fullPath {FileSystem::GetResourceDirectory() + "/" + filename};
