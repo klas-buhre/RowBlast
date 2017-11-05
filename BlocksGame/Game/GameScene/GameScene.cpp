@@ -51,7 +51,7 @@ GameScene::GameScene(Pht::IEngine& engine,
     mEngine {engine},
     mScrollController {scrollController},
     mCommonResources {commonResources},
-    mLightDirection {1.0f, 1.0f, 0.82f},
+    mLightDirection {1.0f, 1.0f, 0.725f},
     mFieldPosition {0.0f, 0.0f, 0.0f},
     mFloatingCubes {floatingCubePaths, engine, commonResources, 7.7f} {
 

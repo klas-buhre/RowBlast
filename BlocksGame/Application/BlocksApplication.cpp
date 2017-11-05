@@ -13,9 +13,8 @@ Backlog:
      convenient to go back to the state before the move and not the initial state.
     -Mega bomb?
   -Rendering:
-    -Preview materials with less reflectivity.
+    -Fix preview pieces uggly patches.
     -Slightly less blur in background?
-    -Maybe less reflectivity in all materials?
     -Recreate the star particle. Possibly by buying a textures for particle systems in unity assets
      store. Look at: https://www.assetstore.unity3d.com/en/#!/content/26701
     -Could have a set of floating cube configurations for the game scene that always looks good.
