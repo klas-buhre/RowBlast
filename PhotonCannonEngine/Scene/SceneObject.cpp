@@ -48,3 +48,23 @@ RenderableObject& SceneObject::GetRenderable() {
     assert(mRenderable);
     return *mRenderable;
 }
+
+void SceneObject::AddChild(std::unique_ptr<SceneObject> child) {
+    mChildren.push_back(std::move(child));
+}
+
+SceneObject* SceneObject::Find(uint32_t name) {
+    if (name == mName) {
+        return this;
+    }
+    
+    for (auto& child: mChildren) {
+        auto* foundChild {child->Find(name)};
+        
+        if (foundChild) {
+            return foundChild;
+        }
+    }
+    
+    return nullptr;
+}

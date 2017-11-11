@@ -213,6 +213,7 @@
 		626C4DAD1EEC2AF4000D4DF6 /* MapViewControllers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 626C4DAB1EEC2AF4000D4DF6 /* MapViewControllers.cpp */; };
 		626C4DB11EEC488C000D4DF6 /* SettingsMenuView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 626C4DAF1EEC488C000D4DF6 /* SettingsMenuView.cpp */; };
 		626D411C1F29F0BF00C55770 /* star_1428.obj in Resources */ = {isa = PBXBuildFile; fileRef = 626D411B1F29F0BF00C55770 /* star_1428.obj */; };
+		6270DC1C1FB70AA200FB457D /* Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6270DC1A1FB70AA200FB457D /* Scene.cpp */; };
 		627625891EA2618D00321DD6 /* level2.json in Resources */ = {isa = PBXBuildFile; fileRef = 627625881EA2618D00321DD6 /* level2.json */; };
 		6280AF741F2CC1C900FFAF9B /* level11.json in Resources */ = {isa = PBXBuildFile; fileRef = 6280AF731F2CC1C900FFAF9B /* level11.json */; };
 		6280AF761F2CC49500FFAF9B /* level12.json in Resources */ = {isa = PBXBuildFile; fileRef = 6280AF751F2CC49500FFAF9B /* level12.json */; };
@@ -709,6 +710,9 @@
 		626C4DAF1EEC488C000D4DF6 /* SettingsMenuView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SettingsMenuView.cpp; sourceTree = "<group>"; };
 		626C4DB01EEC488C000D4DF6 /* SettingsMenuView.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SettingsMenuView.hpp; sourceTree = "<group>"; };
 		626D411B1F29F0BF00C55770 /* star_1428.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = star_1428.obj; sourceTree = "<group>"; };
+		6270DC1A1FB70AA200FB457D /* Scene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Scene.cpp; sourceTree = "<group>"; };
+		6270DC1B1FB70AA200FB457D /* Scene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Scene.hpp; sourceTree = "<group>"; };
+		6270DC1D1FB71CC200FB457D /* Fnv1Hash.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; path = Fnv1Hash.hpp; sourceTree = "<group>"; };
 		627625881EA2618D00321DD6 /* level2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level2.json; sourceTree = "<group>"; };
 		6280AF731F2CC1C900FFAF9B /* level11.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level11.json; sourceTree = "<group>"; };
 		6280AF751F2CC49500FFAF9B /* level12.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level12.json; sourceTree = "<group>"; };
@@ -786,6 +790,8 @@
 			children = (
 				6208C8621FAF205A0059BE51 /* ObjMeshLoader.cpp */,
 				6208C8631FAF205A0059BE51 /* ObjMeshLoader.hpp */,
+				6270DC1A1FB70AA200FB457D /* Scene.cpp */,
+				6270DC1B1FB70AA200FB457D /* Scene.hpp */,
 				6208C8641FAF205A0059BE51 /* SceneObject.cpp */,
 				6208C8651FAF205A0059BE51 /* SceneObject.hpp */,
 			);
@@ -1240,6 +1246,7 @@
 				623B32C61F17AC11000C64A1 /* FileStorage.cpp */,
 				623B32C71F17AC11000C64A1 /* FileStorage.hpp */,
 				623B32C81F17AC11000C64A1 /* FileSystem.hpp */,
+				6270DC1D1FB71CC200FB457D /* Fnv1Hash.hpp */,
 				623B32C91F17AC11000C64A1 /* IImage.hpp */,
 				623B32CA1F17AC11000C64A1 /* JsonUtil.cpp */,
 				623B32CB1F17AC11000C64A1 /* JsonUtil.hpp */,
@@ -1829,6 +1836,7 @@
 				624447D51EDDD2C40080ECE8 /* TitleController.cpp in Sources */,
 				624447BF1EDDD2C40080ECE8 /* BigTrianglePiece.cpp in Sources */,
 				626C4D9F1EEC19DF000D4DF6 /* MapHud.cpp in Sources */,
+				6270DC1C1FB70AA200FB457D /* Scene.cpp in Sources */,
 				623C16D01F51A75B00305752 /* ClickInputHandler.cpp in Sources */,
 				623B32D11F17AC11000C64A1 /* Audio.cpp in Sources */,
 				624447C01EDDD2C40080ECE8 /* Bomb.cpp in Sources */,

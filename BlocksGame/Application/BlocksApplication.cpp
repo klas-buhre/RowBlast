@@ -1,7 +1,11 @@
 /*
 Backlog:
   -Engine:
-    -Read about component-based architecture.
+    -The RenderableObject could be composed of a Material and shared_ptr to Vbo. Then there can be a
+     VboCache in RenderCore. So many RenderableObjects could share a single Vbo. This means that it
+     will be possible to have one RenderableObject per SceneObject (don't remove the shared_ptr to
+     RenderableObject in SceneObject) so that the Material for a particular SceneObject can be
+     modified without affecting the other SceneObjects.
   -Gameplay:
     -Fix all bugs.
     -Maybe a sensitivity setting. Tetris Blitz has lower sensitility on iPad but not on iPhone.

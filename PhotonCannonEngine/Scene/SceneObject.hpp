@@ -1,6 +1,8 @@
 #ifndef SceneObject_hpp
 #define SceneObject_hpp
 
+#include <vector>
+
 #include "Matrix.hpp"
 #include "RenderableObject.hpp"
 
@@ -18,6 +20,12 @@ namespace Pht {
         void ResetMatrix();
         const RenderableObject& GetRenderable() const;
         RenderableObject& GetRenderable();
+        void AddChild(std::unique_ptr<SceneObject> child);
+        SceneObject* Find(uint32_t name);
+        
+        void SetName(uint32_t name) {
+            mName = name;
+        }
         
         const Vec3& GetPosition() {
             return mPosition;
@@ -43,12 +51,18 @@ namespace Pht {
             mIsInFront = isInFront;
         }
         
+        const std::vector<std::unique_ptr<SceneObject>>& GetChildren() const {
+            return mChildren;
+        }
+        
     private:
         Vec3 mPosition {0.0f, 0.0f, 0.0f};
         Mat4 mMatrix;
         bool mIsVisible {true};
         bool mIsInFront {false};
         std::shared_ptr<RenderableObject> mRenderable;
+        std::vector<std::unique_ptr<SceneObject>> mChildren;
+        uint32_t mName {0};
     };
 }
 
