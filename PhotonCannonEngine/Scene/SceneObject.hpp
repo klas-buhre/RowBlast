@@ -5,10 +5,14 @@
 
 #include "Matrix.hpp"
 #include "RenderableObject.hpp"
+#include "ISceneObjectComponent.hpp"
 
 namespace Pht {
     class SceneObject {
     public:
+        using Name = uint32_t;
+        
+        SceneObject(Name name);
         SceneObject(std::shared_ptr<RenderableObject> renderable);
         
         void SetRenderable(std::shared_ptr<RenderableObject> renderable);
@@ -21,9 +25,43 @@ namespace Pht {
         const RenderableObject& GetRenderable() const;
         RenderableObject& GetRenderable();
         void AddChild(std::unique_ptr<SceneObject> child);
-        SceneObject* Find(uint32_t name);
+        SceneObject* Find(Name name);
         
-        void SetName(uint32_t name) {
+        template<typename T>
+        void SetComponent(std::unique_ptr<T> component) {
+            static_assert(std::is_base_of<ISceneObjectComponent, T>::value, "T must be a component");
+            for (auto& entry: mComponents) {
+                if (entry.first == T::id) {
+                    entry.second = std::move(component);
+                    return;
+                }
+            }
+            mComponents.emplace_back(T::id, std::move(component));
+        }
+        
+        template<typename T>
+        T* GetComponent() {
+            static_assert(std::is_base_of<ISceneObjectComponent, T>::value, "T must be a component");
+            for (const auto& entry: mComponents) {
+                if (entry.first == T::id) {
+                    return static_cast<T*>(entry.second.get());
+                }
+            }
+            return nullptr;
+        }
+
+        template<typename T>
+        const T* GetComponent() const {
+            static_assert(std::is_base_of<ISceneObjectComponent, T>::value, "T must be a component");
+            for (const auto& entry: mComponents) {
+                if (entry.first == T::id) {
+                    return static_cast<const T*>(entry.second.get());
+                }
+            }
+            return nullptr;
+        }
+
+        void SetName(Name name) {
             mName = name;
         }
         
@@ -62,7 +100,8 @@ namespace Pht {
         bool mIsInFront {false};
         std::shared_ptr<RenderableObject> mRenderable;
         std::vector<std::unique_ptr<SceneObject>> mChildren;
-        uint32_t mName {0};
+        Name mName {0};
+        std::vector<std::pair<ComponentId, std::unique_ptr<ISceneObjectComponent>>> mComponents;
     };
 }
 

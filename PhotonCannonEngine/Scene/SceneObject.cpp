@@ -4,6 +4,9 @@
 
 using namespace Pht;
 
+SceneObject::SceneObject(Name name) :
+    mName {name} {}
+
 SceneObject::SceneObject(std::shared_ptr<RenderableObject> renderable) :
     mRenderable {renderable} {
 }
@@ -53,7 +56,7 @@ void SceneObject::AddChild(std::unique_ptr<SceneObject> child) {
     mChildren.push_back(std::move(child));
 }
 
-SceneObject* SceneObject::Find(uint32_t name) {
+SceneObject* SceneObject::Find(Name name) {
     if (name == mName) {
         return this;
     }

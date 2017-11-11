@@ -15,7 +15,10 @@ namespace Pht {
         
         SceneObject& GetRoot();
         const SceneObject& GetRoot() const;
-        
+        void SetCamera(std::unique_ptr<SceneObject> camera);
+        SceneObject& GetCamera();
+        const SceneObject& GetCamera() const;
+
         void SetLightDirection(const Pht::Vec3& lightDirection) {
             mLightDirection = lightDirection;
         }
@@ -27,6 +30,7 @@ namespace Pht {
     private:
         std::unique_ptr<SceneObject> mRoot;
         Vec3 mLightDirection {1.0f, 1.0f, 1.0f};
+        std::unique_ptr<SceneObject> mCamera;
     };
 }
 

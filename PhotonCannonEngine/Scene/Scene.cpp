@@ -3,6 +3,7 @@
 #include <assert.h>
 
 #include "SceneObject.hpp"
+#include "CameraComponent.hpp"
 
 using namespace Pht;
 
@@ -19,4 +20,20 @@ SceneObject& Scene::GetRoot() {
 const SceneObject& Scene::GetRoot() const {
     assert(mRoot);
     return *mRoot;
+}
+
+void Scene::SetCamera(std::unique_ptr<SceneObject> camera) {
+    assert(camera);
+    assert(camera->GetComponent<CameraComponent>());
+    mCamera = std::move(camera);
+}
+
+SceneObject& Scene::GetCamera() {
+    assert(mCamera);
+    return *mCamera;
+}
+
+const SceneObject& Scene::GetCamera() const {
+    assert(mCamera);
+    return *mCamera;
 }
