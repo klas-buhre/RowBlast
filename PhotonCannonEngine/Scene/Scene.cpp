@@ -4,11 +4,12 @@
 
 #include "SceneObject.hpp"
 #include "CameraComponent.hpp"
+#include "Fnv1Hash.hpp"
 
 using namespace Pht;
 
 Scene::Scene() :
-    mRoot {std::make_unique<SceneObject>(nullptr)} {}
+    mRoot {std::make_unique<SceneObject>(Hash::Fnv1a("root"))} {}
 
 Scene::~Scene() {}
 

@@ -216,14 +216,16 @@ namespace {
 }
 
 Renderer::Renderer(bool createRenderBuffers) :
-    mPixelLightingShader    {{.mNormals = true}},
-    mVertexLightingShader   {{.mNormals = true}},
-    mTexturedLightingShader {{.mNormals = true, .mTextureCoords = true}},
-    mTexturedShader         {{.mTextureCoords = true}},
-    mEnvMapShader           {{.mNormals = true}},
-    mVertexColorShader      {{.mColors = true}},
-    mParticleShader         {{.mTextureCoords = true, .mColors = true}},
-    mPointParticleShader    {{.mColors = true, .mPointSizes = true}} {
+    mShaders {
+        {ShaderType::PixelLighting,    {{.mNormals = true}}},
+        {ShaderType::VertexLighting,   {{.mNormals = true}}},
+        {ShaderType::TexturedLighting, {{.mNormals = true, .mTextureCoords = true}}},
+        {ShaderType::Textured,         {{.mTextureCoords = true}}},
+        {ShaderType::EnvMap,           {{.mNormals = true}}},
+        {ShaderType::VertexColor,      {{.mColors = true}}},
+        {ShaderType::Particle,         {{.mTextureCoords = true, .mColors = true}}},
+        {ShaderType::PointParticle,    {{.mColors = true, .mPointSizes = true}}}
+    } {
     
     if (createRenderBuffers) {
         glGenRenderbuffers(1, &mColorRenderbuffer);
@@ -310,14 +312,14 @@ void Renderer::InitHudFrustum() {
 void Renderer::InitShaders() {
     
     // Build shaders.
-    mPixelLightingShader.Build(PixelLightingVertexShader, PixelLightingFragmentShader);
-    mVertexLightingShader.Build(VertexLightingVertexShader, VertexLightingFragmentShader);
-    mTexturedLightingShader.Build(TexturedLightingVertexShader, TexturedLightingFragmentShader);
-    mTexturedShader.Build(TexturedVertexShader, TexturedFragmentShader);
-    mEnvMapShader.Build(EnvMapVertexShader, EnvMapFragmentShader);
-    mVertexColorShader.Build(VertexColorVertexShader, VertexColorFragmentShader);
-    mParticleShader.Build(ParticleVertexShader, ParticleFragmentShader);
-    mPointParticleShader.Build(PointParticleVertexShader, PointParticleFragmentShader);
+    mShaders[ShaderType::PixelLighting].Build(PixelLightingVertexShader, PixelLightingFragmentShader);
+    mShaders[ShaderType::VertexLighting].Build(VertexLightingVertexShader, VertexLightingFragmentShader);
+    mShaders[ShaderType::TexturedLighting].Build(TexturedLightingVertexShader, TexturedLightingFragmentShader);
+    mShaders[ShaderType::Textured].Build(TexturedVertexShader, TexturedFragmentShader);
+    mShaders[ShaderType::EnvMap].Build(EnvMapVertexShader, EnvMapFragmentShader);
+    mShaders[ShaderType::VertexColor].Build(VertexColorVertexShader, VertexColorFragmentShader);
+    mShaders[ShaderType::Particle].Build(ParticleVertexShader, ParticleFragmentShader);
+    mShaders[ShaderType::PointParticle].Build(PointParticleVertexShader, PointParticleFragmentShader);
     
     SetupProjectionInShaders();
 }
@@ -325,14 +327,9 @@ void Renderer::InitShaders() {
 void Renderer::SetupProjectionInShaders() {
     auto& projectionMatrix {GetProjectionMatrix()};
     
-    mPixelLightingShader.SetProjection(projectionMatrix);
-    mVertexLightingShader.SetProjection(projectionMatrix);
-    mTexturedLightingShader.SetProjection(projectionMatrix);
-    mTexturedShader.SetProjection(projectionMatrix);
-    mEnvMapShader.SetProjection(projectionMatrix);
-    mVertexColorShader.SetProjection(projectionMatrix);
-    mParticleShader.SetProjection(projectionMatrix);
-    mPointParticleShader.SetProjection(projectionMatrix);
+    for (auto& shader: mShaders) {
+        shader.second.SetProjection(projectionMatrix);
+    }
 }
 
 void Renderer::ClearBuffers() {
@@ -357,13 +354,9 @@ void Renderer::SetLightPositionInShaders() {
     Vec3 lightPosCamSpaceVec3 {lightPosCamSpace.x, lightPosCamSpace.y, lightPosCamSpace.z};
     auto normalizedLightPosition {lightPosCamSpaceVec3.Normalized()};
     
-    mPixelLightingShader.SetLightPosition(normalizedLightPosition);
-    mVertexLightingShader.SetLightPosition(normalizedLightPosition);
-    mTexturedLightingShader.SetLightPosition(normalizedLightPosition);
-    mTexturedShader.SetLightPosition(normalizedLightPosition);
-    mEnvMapShader.SetLightPosition(normalizedLightPosition);
-    mParticleShader.SetLightPosition(normalizedLightPosition);
-    mPointParticleShader.SetLightPosition(normalizedLightPosition);
+    for (auto& shader: mShaders) {
+        shader.second.SetLightPosition(normalizedLightPosition);
+    }
 }
 
 void Renderer::SetClearColorBuffer(bool clearColorBuffer) {
@@ -500,24 +493,9 @@ void Renderer::SetTransforms(const Mat4& modelTransform,
 }
 
 ShaderProgram& Renderer::GetShaderProgram(ShaderType shaderType) {
-    switch (shaderType) {
-        case ShaderType::PixelLighting:
-            return mPixelLightingShader;
-        case ShaderType::VertexLighting:
-            return mVertexLightingShader;
-        case ShaderType::TexturedLighting:
-            return mTexturedLightingShader; 
-        case ShaderType::Textured:
-            return mTexturedShader;
-        case ShaderType::EnvMap:
-            return mEnvMapShader;
-        case ShaderType::VertexColor:
-            return mVertexColorShader;
-        case ShaderType::Particle:
-            return mParticleShader;
-        case ShaderType::PointParticle:
-            return mPointParticleShader;
-    }
+    auto shader {mShaders.find(shaderType)};
+    assert(shader != std::end(mShaders));
+    return shader->second;
 }
 
 const Vec3& Renderer::GetCameraPosition() const {

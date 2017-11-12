@@ -6,6 +6,8 @@ Backlog:
      will be possible to have one RenderableObject per SceneObject (don't remove the shared_ptr to
      RenderableObject in SceneObject) so that the Material for a particular SceneObject can be
      modified without affecting the other SceneObjects.
+    -Add a LightComponent with direction and intensity. The shaders need to be updated? Or is it
+     enough to change the material uniforms?
   -Gameplay:
     -Fix all bugs.
     -Maybe a sensitivity setting. Tetris Blitz has lower sensitility on iPad but not on iPhone.
@@ -64,7 +66,9 @@ Backlog:
     -Credit the icon creator: <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
   
 Ongoing tasks:
-    -Pht::Scene
+    -Render Pht::Scene.
+    -Make ParticleSystem into a component.
+    -How to load/switch scene?
  
 Ideas:
     -The pause button could lead to a widget that has an undo button, a boosters button and a game

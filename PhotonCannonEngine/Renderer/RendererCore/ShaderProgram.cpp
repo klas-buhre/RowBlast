@@ -45,6 +45,8 @@ namespace {
     }
 }
 
+ShaderProgram::ShaderProgram() {}
+
 ShaderProgram::ShaderProgram(VertexFlags vertexFlags) :
     mVertexFlags {vertexFlags} {}
 

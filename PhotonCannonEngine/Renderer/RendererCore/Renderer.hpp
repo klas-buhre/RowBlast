@@ -1,8 +1,10 @@
 #ifndef Renderer_hpp
 #define Renderer_hpp
 
-#include <OpenGLES/ES3/gl.h>
 #include <memory>
+#include <unordered_map>
+
+#include <OpenGLES/ES3/gl.h>
 
 #include "IEngine.hpp"
 #include "IRenderer.hpp"
@@ -72,14 +74,7 @@ namespace Pht {
         HudFrustum mHudFrustum;
         Vec2 mOrthographicFrustumSize;
         IVec2 mRenderBufferSize;
-        ShaderProgram mPixelLightingShader;
-        ShaderProgram mVertexLightingShader;
-        ShaderProgram mTexturedLightingShader;
-        ShaderProgram mTexturedShader;
-        ShaderProgram mEnvMapShader;
-        ShaderProgram mVertexColorShader;
-        ShaderProgram mParticleShader;
-        ShaderProgram mPointParticleShader;
+        std::unordered_map<ShaderType, ShaderProgram> mShaders;
         std::unique_ptr<TextRenderer> mTextRenderer;
     };
 }
