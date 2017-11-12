@@ -10,7 +10,10 @@ using namespace Pht;
 
 Scene::Scene() :
     mRoot {std::make_unique<SceneObject>(Hash::Fnv1a("root"))},
-    mRenderQueue {*mRoot} {}
+    mRenderQueue {*mRoot} {
+    
+    mRoot->SetIsVisible(false);
+}
 
 Scene::~Scene() {}
 

@@ -11,15 +11,6 @@
 
 using namespace BlocksGame;
 
-void RenderUtils::RenderSceneObject(Pht::IRenderer& renderer,
-                                    const Pht::SceneObject& sceneObject) {
-    auto* renderable {sceneObject.GetRenderable()};
-    
-    if (renderable) {
-        renderer.Render(*renderable, sceneObject.GetMatrix());
-    }
-}
-
 void RenderUtils::RenderParticleEffect(Pht::IRenderer& renderer,
                                        const Pht::ParticleEffect& effect) {
     auto* renderable {effect.mParticleSystem->GetRenderableObject()};
@@ -48,7 +39,7 @@ void RenderUtils::RenderFloatingCubes(Pht::IRenderer& renderer,
 
 void RenderUtils::RenderGradientRectangle(Pht::IRenderer& renderer,
                                           const GradientRectangle& rectangle) {
-    RenderSceneObject(renderer, rectangle.GetMidQuad());
-    RenderSceneObject(renderer, rectangle.GetLeftQuad());
-    RenderSceneObject(renderer, rectangle.GetRightQuad());
+    renderer.RenderSceneObject(rectangle.GetMidQuad());
+    renderer.RenderSceneObject(rectangle.GetLeftQuad());
+    renderer.RenderSceneObject(rectangle.GetRightQuad());
 }

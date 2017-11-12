@@ -28,6 +28,8 @@ namespace Pht {
         void SetScissorBox(const Vec2& lowerLeft, const Vec2& size) override;
         void SetScissorTest(bool scissorTest) override;
         void Render(const RenderableObject& object, const Mat4& modelTransform) override;
+        void RenderSceneObject(const SceneObject& sceneObject) override;
+        void RenderScene(const Scene& scene) override;
         void RenderText(const std::string& text,
                         const Vec2& position,
                         const TextProperties& properties) override;

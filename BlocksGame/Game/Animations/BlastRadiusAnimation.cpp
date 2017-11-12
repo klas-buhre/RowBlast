@@ -133,7 +133,7 @@ void BlastRadiusAnimation::SetPosition(const Pht::Vec2& position) {
         mScene.GetBlastRadiusAnimationZ()
     };
     
-    mSceneObject->ResetMatrix();
+    mSceneObject->ResetTransform();
     mSceneObject->Translate(translation);
 }
 

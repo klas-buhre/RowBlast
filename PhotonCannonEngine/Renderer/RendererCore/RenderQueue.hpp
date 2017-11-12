@@ -22,8 +22,8 @@ namespace Pht {
         };
         
         // For range-based for loops.
-        const Entry* cbegin() const;
-        const Entry* cend() const;
+        Entry* begin();
+        Entry* end();
         
     private:
         void AddSceneObjects(const SceneObject& rootSceneObject);

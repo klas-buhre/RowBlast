@@ -8,6 +8,7 @@ Backlog:
      modified without affecting the other SceneObjects.
     -Add a LightComponent with direction and intensity. The shaders need to be updated? Or is it
      enough to change the material uniforms?
+    -Maybe introduce a Transform class for the SceneObject instead of the matrix?
   -Gameplay:
     -Fix all bugs.
     -Maybe a sensitivity setting. Tetris Blitz has lower sensitility on iPad but not on iPhone.
@@ -66,7 +67,6 @@ Backlog:
     -Credit the icon creator: <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
   
 Ongoing tasks:
-    -Render Pht::Scene.
     -Make ParticleSystem into a component.
     -How to load/switch scene? Remember to call RenderQueue::Allocate() when loading a scene.
  

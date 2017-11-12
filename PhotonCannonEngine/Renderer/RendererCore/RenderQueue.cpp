@@ -63,10 +63,10 @@ void RenderQueue::CalculateDistances(const Mat4& viewMatrix) {
     }
 }
 
-const RenderQueue::Entry* RenderQueue::cbegin() const {
+RenderQueue::Entry* RenderQueue::begin() {
     return &mQueue[0];
 }
 
-const RenderQueue::Entry* RenderQueue::cend() const {
+RenderQueue::Entry* RenderQueue::end() {
     return &mQueue[mSize];
 }

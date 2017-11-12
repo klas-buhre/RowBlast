@@ -15,7 +15,6 @@ namespace BlocksGame {
     class GradientRectangle;
 
     namespace RenderUtils {
-        void RenderSceneObject(Pht::IRenderer& renderer, const Pht::SceneObject& sceneObject);
         void RenderParticleEffect(Pht::IRenderer& renderer, const Pht::ParticleEffect& effect);
         void RenderText(Pht::IRenderer& renderer, const Pht::Text& text);
         void RenderFloatingCubes(Pht::IRenderer& renderer, const std::vector<FloatingCube>& cubes);

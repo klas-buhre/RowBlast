@@ -28,6 +28,9 @@
 #include "Font.hpp"
 #include "GuiView.hpp"
 #include "SceneObject.hpp"
+#include "Scene.hpp"
+#include "CameraComponent.hpp"
+#include "TextComponent.hpp"
 
 using namespace Pht;
 
@@ -581,7 +584,7 @@ void Renderer::RenderGuiView(const GuiView& view) {
         auto* renerable {sceneObject->GetRenderable()};
         
         if (renerable && sceneObject->IsVisible()) {
-            Render(*renerable, sceneObject->GetMatrix() * view.GetMatrix());
+            Render(*renerable, sceneObject->GetTransform() * view.GetMatrix());
         }
     }
 
@@ -593,4 +596,48 @@ void Renderer::RenderGuiView(const GuiView& view) {
     
     SetDepthTest(true);
     SetHudMode(false);
+}
+
+void Renderer::RenderSceneObject(const SceneObject& sceneObject) {
+    auto* renderable {sceneObject.GetRenderable()};
+    
+    if (renderable && sceneObject.IsVisible()) {
+        Render(*renderable, sceneObject.GetTransform());
+    }
+    
+    for (auto& child: sceneObject.GetChildren()) {
+        RenderSceneObject(*child);
+    }
+}
+
+void Renderer::RenderScene(const Scene& scene) {
+    // Setup camera.
+    auto& camera {scene.GetCamera()};
+    auto* cameraComponent {camera.GetComponent<CameraComponent>()};
+    assert(cameraComponent);
+    LookAt(camera.GetPosition(), cameraComponent->GetTarget(), cameraComponent->GetUp());
+    
+    // Setup the lighting.
+    SetLightPosition(scene.GetLightDirection());
+    
+    // Build the render queue.
+    auto& renderQueue {scene.GetRenderQueue()};
+    renderQueue.Build(GetViewMatrix());
+    
+    for (auto& renderEntry: renderQueue) {
+        auto* sceneObject {renderEntry.mSceneObject};
+        auto* renderable {sceneObject->GetRenderable()};
+        
+        if (renderable) {
+            Render(*renderable, sceneObject->GetTransform());
+        }
+        
+        auto* textComponent {sceneObject->GetComponent<TextComponent>()};
+        
+        if (textComponent) {
+            auto& sceneObjectPosition {sceneObject->GetPosition()};
+            Vec2 textPosition {sceneObjectPosition.x, sceneObjectPosition.y};
+            RenderText(textComponent->GetText(), textPosition, textComponent->GetProperties());
+        }
+    }
 }

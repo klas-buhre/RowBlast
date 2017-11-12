@@ -39,7 +39,7 @@ MenuButton::MenuButton(Pht::IEngine& engine,
     auto onDownFunction {[this, style] () {
         for (auto sceneObject: mSceneObjects) {
             auto position {sceneObject->GetPosition()};
-            sceneObject->ResetMatrix();
+            sceneObject->ResetTransform();
             sceneObject->Scale(style.mPressedScale);
             sceneObject->Translate(position);
             sceneObject->GetRenderable()->GetMaterial().SetAmbient(style.mSelectedColor);
@@ -56,7 +56,7 @@ MenuButton::MenuButton(Pht::IEngine& engine,
     auto onUpFunction {[this, style] () {
         for (auto sceneObject: mSceneObjects) {
             auto position {sceneObject->GetPosition()};
-            sceneObject->ResetMatrix();
+            sceneObject->ResetTransform();
             sceneObject->Translate(position);
             sceneObject->GetRenderable()->GetMaterial().SetAmbient(style.mColor);
             if (mText) {

@@ -27,7 +27,7 @@ MapSceneRenderer::MapSceneRenderer(Pht::IRenderer& engineRenderer,
 
 void MapSceneRenderer::RenderFrame() {
     mEngineRenderer.SetProjectionMode(Pht::ProjectionMode::Perspective);
-    RenderUtils::RenderSceneObject(mEngineRenderer, mScene.GetBackground());
+    mEngineRenderer.RenderSceneObject(mScene.GetBackground());
     RenderUtils::RenderFloatingCubes(mEngineRenderer, mScene.GetFloatingCubes());
     
     mEngineRenderer.SetProjectionMode(Pht::ProjectionMode::Orthographic);
@@ -40,7 +40,7 @@ void MapSceneRenderer::RenderFrame() {
 
 void MapSceneRenderer::RenderPins() {
     for (auto& connection: mScene.GetConnections()) {
-        RenderUtils::RenderSceneObject(mEngineRenderer, *connection);
+        mEngineRenderer.RenderSceneObject(*connection);
     }
     
     for (auto& pin: mScene.GetPins()) {
@@ -63,19 +63,19 @@ void MapSceneRenderer::RenderPin(MapPin& pin) {
         material.SetDiffuse(diffuse + MapPin::selectedColorAdd);
         material.SetSpecular(specular + MapPin::selectedColorAdd);
 
-        RenderUtils::RenderSceneObject(mEngineRenderer, sceneObject);
+        mEngineRenderer.RenderSceneObject(sceneObject);
         
         material.SetAmbient(ambient);
         material.SetDiffuse(diffuse);
         material.SetSpecular(specular);
     } else {
-        RenderUtils::RenderSceneObject(mEngineRenderer, sceneObject);
+        mEngineRenderer.RenderSceneObject(sceneObject);
     }
     
     RenderUtils::RenderText(mEngineRenderer, pin.GetText());
 
     for (auto& star: pin.GetStars()) {
-        RenderUtils::RenderSceneObject(mEngineRenderer, *star);
+        mEngineRenderer.RenderSceneObject(*star);
     }
 }
 

@@ -15,7 +15,7 @@ TitleSceneRenderer::TitleSceneRenderer(Pht::IRenderer& engineRenderer, const Tit
 
 void TitleSceneRenderer::RenderFrame() {
     mEngineRenderer.SetProjectionMode(Pht::ProjectionMode::Perspective);
-    RenderUtils::RenderSceneObject(mEngineRenderer, mScene.GetBackground());
+    mEngineRenderer.RenderSceneObject(mScene.GetBackground());
     RenderUtils::RenderFloatingCubes(mEngineRenderer, mScene.GetFloatingCubes());
     RenderUtils::RenderText(mEngineRenderer, mScene.GetTitleText());
     RenderUtils::RenderText(mEngineRenderer, mScene.GetTapText());

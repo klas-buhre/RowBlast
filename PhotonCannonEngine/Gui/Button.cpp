@@ -149,7 +149,7 @@ Button::Result Button::OnTouchEnd(const Vec2& touchLocation, const Mat4& transfo
 
 bool Button::Hit(const Vec2& touch, const Mat4& transform) {
     auto& renderer {mEngine.GetRenderer()};
-    auto modelView {(mSceneObject.GetMatrix() * transform) * renderer.GetViewMatrix()};
+    auto modelView {(mSceneObject.GetTransform() * transform) * renderer.GetViewMatrix()};
     auto normProjPos {renderer.GetProjectionMatrix() * modelView.Transposed() * modelSpaceOrigin};
     
     auto& screenInputSize {mEngine.GetInput().GetScreenInputSize()};

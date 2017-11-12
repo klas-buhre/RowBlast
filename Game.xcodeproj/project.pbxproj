@@ -64,9 +64,6 @@
 		623B32DE1F17AC12000C64A1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 623B31F71F17AC11000C64A1 /* main.m */; };
 		623B32DF1F17AC12000C64A1 /* SoundIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 623B31F81F17AC11000C64A1 /* SoundIOS.mm */; };
 		623B32E01F17AC12000C64A1 /* MathUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623B31FA1F17AC11000C64A1 /* MathUtils.cpp */; };
-		623B32E11F17AC12000C64A1 /* FadeEffect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623B32001F17AC11000C64A1 /* FadeEffect.cpp */; };
-		623B32E21F17AC12000C64A1 /* ParticleEmitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623B32021F17AC11000C64A1 /* ParticleEmitter.cpp */; };
-		623B32E31F17AC12000C64A1 /* ParticleSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623B32041F17AC11000C64A1 /* ParticleSystem.cpp */; };
 		623B32E41F17AC12000C64A1 /* Camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623B32071F17AC11000C64A1 /* Camera.cpp */; };
 		623B32E51F17AC12000C64A1 /* Material.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623B320A1F17AC11000C64A1 /* Material.cpp */; };
 		623B32E61F17AC12000C64A1 /* RenderableObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623B320C1F17AC11000C64A1 /* RenderableObject.cpp */; };
@@ -217,6 +214,9 @@
 		6270DC231FB7554200FB457D /* TextComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6270DC211FB7554200FB457D /* TextComponent.cpp */; };
 		6270DC261FB7622500FB457D /* CameraComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6270DC241FB7622500FB457D /* CameraComponent.cpp */; };
 		6270DC291FB85CA800FB457D /* RenderQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6270DC271FB85CA800FB457D /* RenderQueue.cpp */; };
+		6270DC311FB8CCF000FB457D /* FadeEffect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6270DC2B1FB8CCF000FB457D /* FadeEffect.cpp */; };
+		6270DC321FB8CCF000FB457D /* ParticleEmitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6270DC2D1FB8CCF000FB457D /* ParticleEmitter.cpp */; };
+		6270DC331FB8CCF000FB457D /* ParticleSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6270DC2F1FB8CCF000FB457D /* ParticleSystem.cpp */; };
 		627625891EA2618D00321DD6 /* level2.json in Resources */ = {isa = PBXBuildFile; fileRef = 627625881EA2618D00321DD6 /* level2.json */; };
 		6280AF741F2CC1C900FFAF9B /* level11.json in Resources */ = {isa = PBXBuildFile; fileRef = 6280AF731F2CC1C900FFAF9B /* level11.json */; };
 		6280AF761F2CC49500FFAF9B /* level12.json in Resources */ = {isa = PBXBuildFile; fileRef = 6280AF751F2CC49500FFAF9B /* level12.json */; };
@@ -318,12 +318,6 @@
 		623B31FB1F17AC11000C64A1 /* MathUtils.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MathUtils.hpp; sourceTree = "<group>"; };
 		623B31FC1F17AC11000C64A1 /* Matrix.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Matrix.hpp; sourceTree = "<group>"; };
 		623B31FD1F17AC11000C64A1 /* Vector.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Vector.hpp; sourceTree = "<group>"; };
-		623B32001F17AC11000C64A1 /* FadeEffect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FadeEffect.cpp; sourceTree = "<group>"; };
-		623B32011F17AC11000C64A1 /* FadeEffect.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FadeEffect.hpp; sourceTree = "<group>"; };
-		623B32021F17AC11000C64A1 /* ParticleEmitter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ParticleEmitter.cpp; sourceTree = "<group>"; };
-		623B32031F17AC11000C64A1 /* ParticleEmitter.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ParticleEmitter.hpp; sourceTree = "<group>"; };
-		623B32041F17AC11000C64A1 /* ParticleSystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ParticleSystem.cpp; sourceTree = "<group>"; };
-		623B32051F17AC11000C64A1 /* ParticleSystem.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ParticleSystem.hpp; sourceTree = "<group>"; };
 		623B32071F17AC11000C64A1 /* Camera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Camera.cpp; sourceTree = "<group>"; };
 		623B32081F17AC11000C64A1 /* Camera.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Camera.hpp; sourceTree = "<group>"; };
 		623B32091F17AC11000C64A1 /* IRenderer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = IRenderer.hpp; sourceTree = "<group>"; };
@@ -723,6 +717,12 @@
 		6270DC251FB7622500FB457D /* CameraComponent.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CameraComponent.hpp; sourceTree = "<group>"; };
 		6270DC271FB85CA800FB457D /* RenderQueue.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = RenderQueue.cpp; sourceTree = "<group>"; };
 		6270DC281FB85CA800FB457D /* RenderQueue.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = RenderQueue.hpp; sourceTree = "<group>"; };
+		6270DC2B1FB8CCF000FB457D /* FadeEffect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FadeEffect.cpp; sourceTree = "<group>"; };
+		6270DC2C1FB8CCF000FB457D /* FadeEffect.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FadeEffect.hpp; sourceTree = "<group>"; };
+		6270DC2D1FB8CCF000FB457D /* ParticleEmitter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ParticleEmitter.cpp; sourceTree = "<group>"; };
+		6270DC2E1FB8CCF000FB457D /* ParticleEmitter.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ParticleEmitter.hpp; sourceTree = "<group>"; };
+		6270DC2F1FB8CCF000FB457D /* ParticleSystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ParticleSystem.cpp; sourceTree = "<group>"; };
+		6270DC301FB8CCF000FB457D /* ParticleSystem.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ParticleSystem.hpp; sourceTree = "<group>"; };
 		627625881EA2618D00321DD6 /* level2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level2.json; sourceTree = "<group>"; };
 		6280AF731F2CC1C900FFAF9B /* level11.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level11.json; sourceTree = "<group>"; };
 		6280AF751F2CC49500FFAF9B /* level12.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level12.json; sourceTree = "<group>"; };
@@ -871,6 +871,7 @@
 			isa = PBXGroup;
 			children = (
 				623B31D51F17AC11000C64A1 /* Audio */,
+				6270DC2A1FB8CCF000FB457D /* Effects */,
 				623B31DA1F17AC11000C64A1 /* Engine */,
 				623B31DF1F17AC11000C64A1 /* Gui */,
 				623B31E61F17AC11000C64A1 /* Input */,
@@ -965,24 +966,10 @@
 		623B31FE1F17AC11000C64A1 /* Renderer */ = {
 			isa = PBXGroup;
 			children = (
-				623B31FF1F17AC11000C64A1 /* Effects */,
 				623B32061F17AC11000C64A1 /* RendererCore */,
 				623B32161F17AC11000C64A1 /* Shaders */,
 			);
 			path = Renderer;
-			sourceTree = "<group>";
-		};
-		623B31FF1F17AC11000C64A1 /* Effects */ = {
-			isa = PBXGroup;
-			children = (
-				623B32001F17AC11000C64A1 /* FadeEffect.cpp */,
-				623B32011F17AC11000C64A1 /* FadeEffect.hpp */,
-				623B32021F17AC11000C64A1 /* ParticleEmitter.cpp */,
-				623B32031F17AC11000C64A1 /* ParticleEmitter.hpp */,
-				623B32041F17AC11000C64A1 /* ParticleSystem.cpp */,
-				623B32051F17AC11000C64A1 /* ParticleSystem.hpp */,
-			);
-			path = Effects;
 			sourceTree = "<group>";
 		};
 		623B32061F17AC11000C64A1 /* RendererCore */ = {
@@ -1656,6 +1643,19 @@
 			path = CommonViews;
 			sourceTree = "<group>";
 		};
+		6270DC2A1FB8CCF000FB457D /* Effects */ = {
+			isa = PBXGroup;
+			children = (
+				6270DC2B1FB8CCF000FB457D /* FadeEffect.cpp */,
+				6270DC2C1FB8CCF000FB457D /* FadeEffect.hpp */,
+				6270DC2D1FB8CCF000FB457D /* ParticleEmitter.cpp */,
+				6270DC2E1FB8CCF000FB457D /* ParticleEmitter.hpp */,
+				6270DC2F1FB8CCF000FB457D /* ParticleSystem.cpp */,
+				6270DC301FB8CCF000FB457D /* ParticleSystem.hpp */,
+			);
+			path = Effects;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1797,7 +1797,6 @@
 				624447A41EDDD2C40080ECE8 /* CollapsingFieldAnimation.cpp in Sources */,
 				6260A7051F87E5BC001F6DCD /* TorusMesh.cpp in Sources */,
 				624F89491EF6661D0020C832 /* LifeManager.cpp in Sources */,
-				623B32E21F17AC12000C64A1 /* ParticleEmitter.cpp in Sources */,
 				626C4DA21EEC19DF000D4DF6 /* MapScene.cpp in Sources */,
 				628A225A1F6E704900D97BF8 /* GhostPieceProducer.cpp in Sources */,
 				6208C8661FAF210A0059BE51 /* SceneObject.cpp in Sources */,
@@ -1822,12 +1821,12 @@
 				626C4D9E1EEC19DF000D4DF6 /* MapController.cpp in Sources */,
 				624447B81EDDD2C40080ECE8 /* NoMovesDialogController.cpp in Sources */,
 				6260A7061F87E5BF001F6DCD /* TriangleMesh.cpp in Sources */,
+				6270DC321FB8CCF000FB457D /* ParticleEmitter.cpp in Sources */,
 				6247CFD11EFFB11800B9919E /* GameOverDialogView.cpp in Sources */,
 				624447AE1EDDD2C40080ECE8 /* GameLogic.cpp in Sources */,
 				623B33181F1F6203000C64A1 /* RestartConfirmationDialogView.cpp in Sources */,
 				6260A7041F87E5BA001F6DCD /* SphereMesh.cpp in Sources */,
 				6260A7021F87E5B4001F6DCD /* QuadMesh.cpp in Sources */,
-				623B32E31F17AC12000C64A1 /* ParticleSystem.cpp in Sources */,
 				6260A7031F87E5B7001F6DCD /* MeshUtils.cpp in Sources */,
 				6244479C1EDDD2C40080ECE8 /* FloatingCubes.cpp in Sources */,
 				620A98361EE43DD200AD6C61 /* ClearLastBlocksAnimation.cpp in Sources */,
@@ -1872,6 +1871,7 @@
 				624447C91EDDD2C40080ECE8 /* RowBomb.cpp in Sources */,
 				6260A70B1F89196C001F6DCD /* TPiece.cpp in Sources */,
 				623B32D41F17AC11000C64A1 /* Font.cpp in Sources */,
+				6270DC311FB8CCF000FB457D /* FadeEffect.cpp in Sources */,
 				623B32E01F17AC12000C64A1 /* MathUtils.cpp in Sources */,
 				6260A71F1F8FB8A8001F6DCD /* TextureCache.cpp in Sources */,
 				624693A01EFD1637004AF2A1 /* ProgressManager.cpp in Sources */,
@@ -1889,13 +1889,13 @@
 				623B32D31F17AC11000C64A1 /* Button.cpp in Sources */,
 				623C16C81F46151E00305752 /* Piece.cpp in Sources */,
 				6260A7011F87E5B2001F6DCD /* ParametricSurface.cpp in Sources */,
-				623B32E11F17AC12000C64A1 /* FadeEffect.cpp in Sources */,
 				623B32DA1F17AC11000C64A1 /* FileSystemIOS.mm in Sources */,
 				626C4DAD1EEC2AF4000D4DF6 /* MapViewControllers.cpp in Sources */,
 				6260A6DE1F85451E001F6DCD /* MirroredFPiece.cpp in Sources */,
 				624447A61EDDD2C40080ECE8 /* FlyingBlocksAnimation.cpp in Sources */,
 				6217ACCD1F161B2B001B1B3F /* MiddleIPiece.cpp in Sources */,
 				626C4DA01EEC19DF000D4DF6 /* MapLoader.cpp in Sources */,
+				6270DC331FB8CCF000FB457D /* ParticleSystem.cpp in Sources */,
 				6254C16C1EED356800BBCAD2 /* SettingsMenuController.cpp in Sources */,
 				624447B01EDDD2C40080ECE8 /* ScrollController.cpp in Sources */,
 				628A22571F6D359100D97BF8 /* OfflineRasterizer.cpp in Sources */,

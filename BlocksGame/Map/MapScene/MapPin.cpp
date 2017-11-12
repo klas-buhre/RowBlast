@@ -45,7 +45,7 @@ void MapPin::Update() {
         adjustedTextOffset.x -= 0.17f;
     }
     
-    auto modelView {mSceneObject.GetMatrix() * mRenderer.GetViewMatrix()};
+    auto modelView {mSceneObject.GetTransform() * mRenderer.GetViewMatrix()};
     auto normProjPos {mRenderer.GetProjectionMatrix() * modelView.Transposed() * adjustedTextOffset};
     
     auto& hudSize {mRenderer.GetHudFrustumSize()};

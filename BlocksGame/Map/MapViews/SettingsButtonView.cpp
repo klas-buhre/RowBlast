@@ -40,10 +40,10 @@ SettingsButtonView::SettingsButtonView(Pht::IEngine& engine) {
     
     auto selectFunction {[&] () {
         circleMaterialCapture.SetAmbient(circleClickedColor);
-        circleSceneObjectCapture.ResetMatrix();
+        circleSceneObjectCapture.ResetTransform();
         circleSceneObjectCapture.Scale(1.35f);
         circleSceneObjectCapture.Translate(circlePosition);
-        gearIconCapture.ResetMatrix();
+        gearIconCapture.ResetTransform();
         gearIconCapture.Scale(1.35f);
     }};
     
@@ -51,9 +51,9 @@ SettingsButtonView::SettingsButtonView(Pht::IEngine& engine) {
     
     auto deselectFunction {[&] () {
         circleMaterialCapture.SetAmbient(circleColor);
-        circleSceneObjectCapture.ResetMatrix();
+        circleSceneObjectCapture.ResetTransform();
         circleSceneObjectCapture.Translate(circlePosition);
-        gearIconCapture.ResetMatrix();
+        gearIconCapture.ResetTransform();
     }};
     
     mButton->SetOnUpInside(deselectFunction);

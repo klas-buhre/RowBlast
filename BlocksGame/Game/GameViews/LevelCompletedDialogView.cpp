@@ -74,7 +74,7 @@ void LevelCompletedDialogView::Update() {
     auto speed {12.0f};
     
     for (auto* star: mStars) {
-        star->ResetMatrix();
+        star->ResetTransform();
         star->RotateX(-90.0f);
         star->RotateZ(mStarAngle);
         star->Translate(starOffsets[starIndex]);

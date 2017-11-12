@@ -12,8 +12,8 @@ namespace Pht {
     public:
         using Name = uint32_t;
         
-        SceneObject(Name name);
-        SceneObject(std::shared_ptr<RenderableObject> renderable);
+        explicit SceneObject(Name name);
+        explicit SceneObject(std::shared_ptr<RenderableObject> renderable);
         
         void SetRenderable(std::shared_ptr<RenderableObject> renderable);
         void Translate(const Vec3& translation);
@@ -21,7 +21,7 @@ namespace Pht {
         void RotateY(float degrees);
         void RotateZ(float degrees);
         void Scale(float scale);
-        void ResetMatrix();
+        void ResetTransform();
         void AddChild(std::unique_ptr<SceneObject> child);
         SceneObject* Find(Name name);
         
@@ -75,8 +75,8 @@ namespace Pht {
             return mPosition;
         }
         
-        const Mat4& GetMatrix() const {
-            return mMatrix;
+        const Mat4& GetTransform() const {
+            return mTransform;
         }
         
         bool IsVisible() const {
@@ -101,7 +101,7 @@ namespace Pht {
         
     private:
         Vec3 mPosition {0.0f, 0.0f, 0.0f};
-        Mat4 mMatrix;
+        Mat4 mTransform;
         bool mIsVisible {true};
         bool mIsInFront {false};
         std::shared_ptr<RenderableObject> mRenderable;

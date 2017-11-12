@@ -70,14 +70,14 @@ GameRenderer::GameRenderer(Pht::IRenderer& engineRenderer,
 void GameRenderer::RenderFrame() {
     mEngineRenderer.SetProjectionMode(Pht::ProjectionMode::Perspective);
     
-    RenderUtils::RenderSceneObject(mEngineRenderer, mScene.GetBackground());
+    mEngineRenderer.RenderSceneObject(mScene.GetBackground());
     RenderUtils::RenderFloatingCubes(mEngineRenderer, mScene.GetFloatingCubes());
 
     mEngineRenderer.SetProjectionMode(Pht::ProjectionMode::Orthographic);
     mEngineRenderer.SetScissorBox(mScene.GetScissorBoxLowerLeft(), mScene.GetScissorBoxSize());
     mEngineRenderer.SetScissorTest(true);
     
-    RenderUtils::RenderSceneObject(mEngineRenderer, mScene.GetFieldQuad());
+    mEngineRenderer.RenderSceneObject(mScene.GetFieldQuad());
     RenderFieldBlueprintSlots();
     RenderFieldBlueprintSlotsAnimation();
     RenderPieceDropParticles();
@@ -484,7 +484,7 @@ void GameRenderer::RenderGhostPiece(const Pht::RenderableObject& ghostPieceRende
 
 void GameRenderer::RenderBlastRadiusAnimation() {
     if (auto* sceneObject {mBlastRadiusAnimation.GetSceneObject()}) {
-        RenderUtils::RenderSceneObject(mEngineRenderer, *sceneObject);
+        mEngineRenderer.RenderSceneObject(*sceneObject);
     }
 }
 
