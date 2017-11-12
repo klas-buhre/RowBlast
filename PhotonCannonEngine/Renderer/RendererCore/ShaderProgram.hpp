@@ -36,7 +36,6 @@ namespace Pht {
             GLint mPointSize {0};
         };
         
-        ShaderProgram();
         ShaderProgram(VertexFlags vertexFlags);
         
         void Build(const char* vertexShaderSource, const char* fragmentShaderSource);

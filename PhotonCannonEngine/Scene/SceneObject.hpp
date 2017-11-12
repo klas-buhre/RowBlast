@@ -22,8 +22,6 @@ namespace Pht {
         void RotateZ(float degrees);
         void Scale(float scale);
         void ResetMatrix();
-        const RenderableObject& GetRenderable() const;
-        RenderableObject& GetRenderable();
         void AddChild(std::unique_ptr<SceneObject> child);
         SceneObject* Find(Name name);
         
@@ -65,7 +63,15 @@ namespace Pht {
             mName = name;
         }
         
-        const Vec3& GetPosition() {
+        const RenderableObject* GetRenderable() const {
+            return mRenderable.get();
+        }
+        
+        RenderableObject* GetRenderable() {
+            return mRenderable.get();
+        }
+        
+        const Vec3& GetPosition() const {
             return mPosition;
         }
         

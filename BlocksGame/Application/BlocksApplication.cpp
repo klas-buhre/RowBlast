@@ -68,7 +68,7 @@ Backlog:
 Ongoing tasks:
     -Render Pht::Scene.
     -Make ParticleSystem into a component.
-    -How to load/switch scene?
+    -How to load/switch scene? Remember to call RenderQueue::Allocate() when loading a scene.
  
 Ideas:
     -The pause button could lead to a widget that has an undo button, a boosters button and a game

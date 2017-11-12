@@ -52,8 +52,8 @@ void MapSceneRenderer::RenderPin(MapPin& pin) {
     auto& sceneObject {pin.GetSceneObject()};
     
     if (pin.IsSelected()) {
-        auto& renderable {sceneObject.GetRenderable()};
-        auto& material {renderable.GetMaterial()};
+        auto* renderable {sceneObject.GetRenderable()};
+        auto& material {renderable->GetMaterial()};
         
         auto ambient {material.GetAmbient()};
         auto diffuse {material.GetDiffuse()};

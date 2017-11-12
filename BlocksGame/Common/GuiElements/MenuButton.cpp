@@ -42,7 +42,7 @@ MenuButton::MenuButton(Pht::IEngine& engine,
             sceneObject->ResetMatrix();
             sceneObject->Scale(style.mPressedScale);
             sceneObject->Translate(position);
-            sceneObject->GetRenderable().GetMaterial().SetAmbient(style.mSelectedColor);
+            sceneObject->GetRenderable()->GetMaterial().SetAmbient(style.mSelectedColor);
             if (mText) {
                 mText->mProperties.mScale = style.mPressedScale;
                 Pht::Vec2 textLocalPosition {mTextLocalPosition * style.mPressedScale};
@@ -58,7 +58,7 @@ MenuButton::MenuButton(Pht::IEngine& engine,
             auto position {sceneObject->GetPosition()};
             sceneObject->ResetMatrix();
             sceneObject->Translate(position);
-            sceneObject->GetRenderable().GetMaterial().SetAmbient(style.mColor);
+            sceneObject->GetRenderable()->GetMaterial().SetAmbient(style.mColor);
             if (mText) {
                 mText->mProperties.mScale = 1.0f;
                 mText->mPosition = mTextLocalPosition + Pht::Vec2 {mPosition.x, mPosition.y};

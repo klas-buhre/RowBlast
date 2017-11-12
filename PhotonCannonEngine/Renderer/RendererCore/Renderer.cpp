@@ -312,14 +312,14 @@ void Renderer::InitHudFrustum() {
 void Renderer::InitShaders() {
     
     // Build shaders.
-    mShaders[ShaderType::PixelLighting].Build(PixelLightingVertexShader, PixelLightingFragmentShader);
-    mShaders[ShaderType::VertexLighting].Build(VertexLightingVertexShader, VertexLightingFragmentShader);
-    mShaders[ShaderType::TexturedLighting].Build(TexturedLightingVertexShader, TexturedLightingFragmentShader);
-    mShaders[ShaderType::Textured].Build(TexturedVertexShader, TexturedFragmentShader);
-    mShaders[ShaderType::EnvMap].Build(EnvMapVertexShader, EnvMapFragmentShader);
-    mShaders[ShaderType::VertexColor].Build(VertexColorVertexShader, VertexColorFragmentShader);
-    mShaders[ShaderType::Particle].Build(ParticleVertexShader, ParticleFragmentShader);
-    mShaders[ShaderType::PointParticle].Build(PointParticleVertexShader, PointParticleFragmentShader);
+    GetShaderProgram(ShaderType::PixelLighting).Build(PixelLightingVertexShader, PixelLightingFragmentShader);
+    GetShaderProgram(ShaderType::VertexLighting).Build(VertexLightingVertexShader, VertexLightingFragmentShader);
+    GetShaderProgram(ShaderType::TexturedLighting).Build(TexturedLightingVertexShader, TexturedLightingFragmentShader);
+    GetShaderProgram(ShaderType::Textured).Build(TexturedVertexShader, TexturedFragmentShader);
+    GetShaderProgram(ShaderType::EnvMap).Build(EnvMapVertexShader, EnvMapFragmentShader);
+    GetShaderProgram(ShaderType::VertexColor).Build(VertexColorVertexShader, VertexColorFragmentShader);
+    GetShaderProgram(ShaderType::Particle).Build(ParticleVertexShader, ParticleFragmentShader);
+    GetShaderProgram(ShaderType::PointParticle).Build(PointParticleVertexShader, PointParticleFragmentShader);
     
     SetupProjectionInShaders();
 }
@@ -349,8 +349,8 @@ void Renderer::SetLightPosition(const Vec3& lightPositionWorldSpace) {
 void Renderer::SetLightPositionInShaders() {
     // The view matrix is made for pre-multiplication so it needs to be transposed in order to
     // post-multiplicate with light position.
-    auto transposedViewMatrx {GetViewMatrix().Transposed()};
-    auto lightPosCamSpace {transposedViewMatrx * Vec4{mLightPositionWorldSpace, 0.0f}};
+    auto transposedViewMatrix {GetViewMatrix().Transposed()};
+    auto lightPosCamSpace {transposedViewMatrix * Vec4{mLightPositionWorldSpace, 0.0f}};
     Vec3 lightPosCamSpaceVec3 {lightPosCamSpace.x, lightPosCamSpace.y, lightPosCamSpace.z};
     auto normalizedLightPosition {lightPosCamSpaceVec3.Normalized()};
     
@@ -578,8 +578,10 @@ void Renderer::RenderGuiView(const GuiView& view) {
     SetDepthTest(view.GetDepthTest());
     
     for (auto& sceneObject: view.GetSceneObjects()) {
-        if (sceneObject->IsVisible()) {
-            Render(sceneObject->GetRenderable(), sceneObject->GetMatrix() * view.GetMatrix());
+        auto* renerable {sceneObject->GetRenderable()};
+        
+        if (renerable && sceneObject->IsVisible()) {
+            Render(*renerable, sceneObject->GetMatrix() * view.GetMatrix());
         }
     }
 

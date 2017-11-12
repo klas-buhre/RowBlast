@@ -40,13 +40,13 @@ CloseButton::CloseButton(Pht::IEngine& engine,
     mView.AddSceneObject(std::move(sceneObject));
     
     auto selectFunction {[this] () {
-        mSceneObject->GetRenderable().GetMaterial().SetAmbient(selectedColor);
+        mSceneObject->GetRenderable()->GetMaterial().SetAmbient(selectedColor);
     }};
     
     mButton->SetOnDown(selectFunction);
     
     auto deselectFunction {[this] () {
-        mSceneObject->GetRenderable().GetMaterial().SetAmbient(color);
+        mSceneObject->GetRenderable()->GetMaterial().SetAmbient(color);
     }};
     
     mButton->SetOnUpInside(deselectFunction);

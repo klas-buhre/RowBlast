@@ -13,7 +13,11 @@ using namespace BlocksGame;
 
 void RenderUtils::RenderSceneObject(Pht::IRenderer& renderer,
                                     const Pht::SceneObject& sceneObject) {
-    renderer.Render(sceneObject.GetRenderable(), sceneObject.GetMatrix());
+    auto* renderable {sceneObject.GetRenderable()};
+    
+    if (renderable) {
+        renderer.Render(*renderable, sceneObject.GetMatrix());
+    }
 }
 
 void RenderUtils::RenderParticleEffect(Pht::IRenderer& renderer,

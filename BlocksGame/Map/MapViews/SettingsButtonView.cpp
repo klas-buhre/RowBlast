@@ -26,7 +26,7 @@ SettingsButtonView::SettingsButtonView(Pht::IEngine& engine) {
     auto circle {engine.CreateRenderableObject(Pht::SphereMesh {1.0f}, circleMaterial)};
     auto circleSceneObject {std::make_unique<Pht::SceneObject>(std::move(circle))};
     circleSceneObject->Translate(circlePosition);
-    auto& circleMaterialCapture {circleSceneObject->GetRenderable().GetMaterial()};
+    auto& circleMaterialCapture {circleSceneObject->GetRenderable()->GetMaterial()};
     auto& circleSceneObjectCapture {*circleSceneObject};
     
     Pht::Vec2 buttonSize {60.0f, 60.0f};

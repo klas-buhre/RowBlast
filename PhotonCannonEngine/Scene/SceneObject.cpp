@@ -42,16 +42,6 @@ void SceneObject::ResetMatrix() {
     mPosition = {0.0f, 0.0f, 0.0f};
 }
 
-const RenderableObject& SceneObject::GetRenderable() const {
-    assert(mRenderable);
-    return *mRenderable;
-}
-
-RenderableObject& SceneObject::GetRenderable() {
-    assert(mRenderable);
-    return *mRenderable;
-}
-
 void SceneObject::AddChild(std::unique_ptr<SceneObject> child) {
     mChildren.push_back(std::move(child));
 }

@@ -150,7 +150,7 @@ void BlastRadiusAnimation::Update(float dt) {
         1.0f - opacityCurveAmplitude + opacityCurveAmplitude * std::sin(2.0f * 3.1415f * frequency * mTime)
     };
     
-    auto& material {mSceneObject->GetRenderable().GetMaterial()};
+    auto& material {mSceneObject->GetRenderable()->GetMaterial()};
     material.SetOpacity(opacity);
 }
 
