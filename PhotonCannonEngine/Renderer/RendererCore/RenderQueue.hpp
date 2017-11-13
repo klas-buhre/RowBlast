@@ -22,9 +22,14 @@ namespace Pht {
         };
         
         // For range-based for loops.
-        Entry* begin();
-        Entry* end();
-        
+        Entry* begin() {
+            return &mQueue[0];
+        }
+
+        Entry* end() {
+            return &mQueue[mSize];
+        }
+
     private:
         void AddSceneObjects(const SceneObject& rootSceneObject);
         void CalculateDistances(const Mat4& viewMatrix);

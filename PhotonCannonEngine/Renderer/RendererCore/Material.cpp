@@ -66,3 +66,27 @@ Blend Material::GetBlend() const {
 GLuint Material::GetTexture() const {
     return mTexture->GetHandle();
 }
+
+void Material::SetOpacity(float opacity) {
+    mOpacity = opacity;
+    
+    if (mOpacity != 1.0f) {
+        mDepthState.mDepthWrite = false;
+    }
+}
+
+void Material::SetShaderType(ShaderType shaderType) {
+    mShaderType = shaderType;
+    
+    if (mShaderType == ShaderType::VertexColor) {
+        mDepthState.mDepthWrite = false;
+    }
+}
+
+void Material::SetBlend(Blend blend) {
+    mBlend = blend;
+    
+    if (mBlend == Blend::Yes) {
+        mDepthState.mDepthWrite = false;
+    }
+}

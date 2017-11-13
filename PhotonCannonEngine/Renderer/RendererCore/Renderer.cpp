@@ -379,6 +379,14 @@ void Renderer::SetDepthTest(bool depthTest) {
     }
 }
 
+void Renderer::SetDepthWrite(bool depthWrite) {
+    if (depthWrite) {
+        glDepthMask(GL_TRUE);
+    } else {
+        glDepthMask(GL_FALSE);
+    }
+}
+
 void Renderer::SetProjectionMode(ProjectionMode projectionMode) {
     mProjectionMode = projectionMode;
     SetupProjectionInShaders();
@@ -612,10 +620,10 @@ void Renderer::RenderSceneObject(const SceneObject& sceneObject) {
 
 void Renderer::RenderScene(const Scene& scene) {
     // Setup camera.
-    auto& camera {scene.GetCamera()};
-    auto* cameraComponent {camera.GetComponent<CameraComponent>()};
+    auto& sceneCamera {scene.GetCamera()};
+    auto* cameraComponent {sceneCamera.GetComponent<CameraComponent>()};
     assert(cameraComponent);
-    LookAt(camera.GetPosition(), cameraComponent->GetTarget(), cameraComponent->GetUp());
+    mCamera.LookAt(sceneCamera.GetPosition(), cameraComponent->GetTarget(), cameraComponent->GetUp());
     
     // Setup the lighting.
     SetLightPosition(scene.GetLightDirection());
@@ -624,11 +632,31 @@ void Renderer::RenderScene(const Scene& scene) {
     auto& renderQueue {scene.GetRenderQueue()};
     renderQueue.Build(GetViewMatrix());
     
+    // Start by rendering the opaque objects and enable depth write for those.
+    SetDepthWrite(true);
+    
+    RenderQueue::Entry* previousEntry {nullptr};
+    
     for (auto& renderEntry: renderQueue) {
         auto* sceneObject {renderEntry.mSceneObject};
         auto* renderable {sceneObject->GetRenderable()};
         
         if (renderable) {
+            if (!renderable->GetMaterial().GetDepthState().mDepthWrite) {
+                if (previousEntry == nullptr) {
+                    // Start rendering the transparent objects.
+                    SetDepthWrite(false);
+                } else {
+                    auto* previousRenderable {previousEntry->mSceneObject->GetRenderable()};
+                    
+                    if (previousRenderable &&
+                        previousRenderable->GetMaterial().GetDepthState().mDepthWrite) {
+                        // Transition into rendering the transparent objects.
+                        SetDepthWrite(false);
+                    }
+                }
+            }
+
             Render(*renderable, sceneObject->GetTransform());
         }
         
@@ -639,5 +667,9 @@ void Renderer::RenderScene(const Scene& scene) {
             Vec2 textPosition {sceneObjectPosition.x, sceneObjectPosition.y};
             RenderText(textComponent->GetText(), textPosition, textComponent->GetProperties());
         }
+        
+        previousEntry = &renderEntry;
     }
+    
+    SetDepthWrite(true);
 }

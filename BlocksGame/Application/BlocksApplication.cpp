@@ -67,6 +67,9 @@ Backlog:
     -Credit the icon creator: <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
   
 Ongoing tasks:
+    -Depth write partition in render queue compare function.
+    -Add option to distance function to be either world z or camera z.
+    -Render depth writing objects back to front or front to back?
     -Make ParticleSystem into a component.
     -How to load/switch scene? Remember to call RenderQueue::Allocate() when loading a scene.
  

@@ -62,11 +62,3 @@ void RenderQueue::CalculateDistances(const Mat4& viewMatrix) {
         renderEntry.mCameraSpaceZ = sceneObjectPosCamSpace.z;
     }
 }
-
-RenderQueue::Entry* RenderQueue::begin() {
-    return &mQueue[0];
-}
-
-RenderQueue::Entry* RenderQueue::end() {
-    return &mQueue[mSize];
-}

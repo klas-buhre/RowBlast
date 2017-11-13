@@ -27,6 +27,7 @@ namespace Pht {
         virtual void SetClearColorBuffer(bool clearColorBuffer) = 0;
         virtual void SetHudMode(bool hudMode) = 0;
         virtual void SetDepthTest(bool depthTest) = 0;
+        virtual void SetDepthWrite(bool depthWrite) = 0;
         virtual void SetProjectionMode(ProjectionMode projectionMode) = 0;
         virtual void SetHudCameraPosition(const Vec3& cameraPosition) = 0;
         virtual void LookAt(const Vec3& cameraPosition, const Vec3& target, const Vec3& up) = 0;

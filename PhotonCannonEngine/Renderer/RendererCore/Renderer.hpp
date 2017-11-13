@@ -22,6 +22,7 @@ namespace Pht {
         void SetClearColorBuffer(bool clearColorBuffer) override;
         void SetHudMode(bool hudMode) override;
         void SetDepthTest(bool depthTest) override;
+        void SetDepthWrite(bool depthWrite) override;
         void SetProjectionMode(ProjectionMode projectionMode) override;
         void SetHudCameraPosition(const Vec3& cameraPosition) override;
         void LookAt(const Vec3& cameraPosition, const Vec3& target, const Vec3& up) override;

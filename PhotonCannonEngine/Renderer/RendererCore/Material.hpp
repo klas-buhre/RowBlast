@@ -29,6 +29,11 @@ namespace Pht {
         Yes,
         No
     };
+    
+    struct DepthState {
+        bool mDepthTest {true};
+        bool mDepthWrite {true};
+    };
 
     class Material {
     public:
@@ -54,6 +59,9 @@ namespace Pht {
         
         Blend GetBlend() const;
         GLuint GetTexture() const;
+        void SetOpacity(float opacity);
+        void SetShaderType(ShaderType shaderType);
+        void SetBlend(Blend blend);
 
         const Color& GetAmbient() const {
             return mAmbient;
@@ -78,10 +86,6 @@ namespace Pht {
         void SetSpecular(const Color& specular) {
             mSpecular = specular;
         }
-
-        void SetBlend(Blend blend) {
-            mBlend = blend;
-        }
         
         float GetShininess() const {
             return mShininess;
@@ -99,16 +103,16 @@ namespace Pht {
             return mOpacity;
         }
         
-        void SetOpacity(float opacity) {
-            mOpacity = opacity;
-        }
-        
         ShaderType GetShaderType() const {
             return mShaderType;
         }
         
-        void SetShaderType(ShaderType shaderType) {
-            mShaderType = shaderType;
+        DepthState& GetDepthState() {
+            return mDepthState;
+        }
+
+        const DepthState& GetDepthState() const {
+            return mDepthState;
         }
 
     private:
@@ -121,6 +125,7 @@ namespace Pht {
         ShaderType mShaderType {ShaderType::VertexLighting};
         std::shared_ptr<Texture> mTexture;
         Blend mBlend {Blend::No};
+        DepthState mDepthState;
     };
 }
 
