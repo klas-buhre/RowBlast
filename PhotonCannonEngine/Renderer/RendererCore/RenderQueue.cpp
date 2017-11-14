@@ -18,8 +18,31 @@ namespace {
         return numObjects;
     }
     
+    bool IsDepthWrite(const SceneObject& sceneObject) {
+        if (auto renderable {sceneObject.GetRenderable()}) {
+            return renderable->GetMaterial().GetDepthState().mDepthWrite;
+        }
+        
+        return false;
+    }
+    
     bool CompareEntries(const RenderQueue::Entry& a, const RenderQueue::Entry& b) {
-        return a.mCameraSpaceZ > b.mCameraSpaceZ;
+        if (a.mDepthWrite != b.mDepthWrite) {
+            if (a.mDepthWrite) {
+                // Render depth writing objects first.
+                return true;
+            }
+            
+            return false;
+        }
+        
+        if (a.mDepthWrite && b.mDepthWrite) {
+            // Both objects write depth so sort front to back.
+            return a.mDistance < b.mDistance;
+        }
+        
+        // Both objects do not write depth sort back to front.
+        return a.mDistance > b.mDistance;
     }
 }
 
@@ -39,14 +62,14 @@ void RenderQueue::Build(const Mat4& viewMatrix) {
     std::sort(&mQueue[0], &mQueue[mSize], CompareEntries);
 }
 
-void RenderQueue::AddSceneObjects(const SceneObject& rootSceneObject) {
-    if (rootSceneObject.IsVisible()) {
-        mQueue[mSize] = Entry {0.0f, &rootSceneObject};
+void RenderQueue::AddSceneObjects(const SceneObject& parentSceneObject) {
+    if (parentSceneObject.IsVisible()) {
+        mQueue[mSize] = Entry {0.0f, IsDepthWrite(parentSceneObject), &parentSceneObject};
         ++mSize;
         assert(mSize < mQueue.size());
     }
     
-    for (auto& child: rootSceneObject.GetChildren()) {
+    for (auto& child: parentSceneObject.GetChildren()) {
         AddSceneObjects(*child);
     }
 }
@@ -57,8 +80,16 @@ void RenderQueue::CalculateDistances(const Mat4& viewMatrix) {
     for (auto i {0}; i < mSize; ++i) {
         auto& renderEntry {mQueue[i]};
         auto& sceneObjectPosition {renderEntry.mSceneObject->GetPosition()};
-        auto sceneObjectPosCamSpace {transposedViewMatrix * Vec4{sceneObjectPosition, 0.0f}};
         
-        renderEntry.mCameraSpaceZ = sceneObjectPosCamSpace.z;
+        switch (mDistanceFunction) {
+            case DistanceFunction::CameraSpaceZ: {
+                auto sceneObjectPosCamSpace {transposedViewMatrix * Vec4{sceneObjectPosition, 0.0f}};
+                renderEntry.mDistance = sceneObjectPosCamSpace.z;
+                break;
+            }
+            case DistanceFunction::WorldSpaceZ:
+                renderEntry.mDistance = -sceneObjectPosition.z;
+                break;
+        }
     }
 }

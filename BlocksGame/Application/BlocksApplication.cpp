@@ -30,10 +30,9 @@ Backlog:
     -Camera shake when clearing 5 rows.
     -Try adding welds to the level blocks.
     -One or two stars in level cleared dialog could be placed more in the middle.
-    -There could be a particle effect behind the stars in the level cleared dialog. Could be done
-     if ParticleEffect inherits from SceneObject. Stars could also rotate in around the y axis for
-     about a second and then only rotate around the z axis. During this short animation the stars
-     could be scaled up as well.
+    -There could be a particle effect behind the stars in the level cleared dialog. Stars could also
+     rotate in around the y axis for about a second and then only rotate around the z axis. During
+     this short animation the stars could be scaled up as well.
     -The sliding text could slide in from the left and right; one row from the right and the other
      row from the left like in Stellar. The font could be similar to ethnocentric and have a 
      gradient effect like this in the text shader:
@@ -67,9 +66,6 @@ Backlog:
     -Credit the icon creator: <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
   
 Ongoing tasks:
-    -Depth write partition in render queue compare function.
-    -Add option to distance function to be either world z or camera z.
-    -Render depth writing objects back to front or front to back?
     -Make ParticleSystem into a component.
     -How to load/switch scene? Remember to call RenderQueue::Allocate() when loading a scene.
  

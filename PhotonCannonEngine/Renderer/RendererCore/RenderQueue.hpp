@@ -9,6 +9,11 @@
 namespace Pht {
     class SceneObject;
     
+    enum class DistanceFunction {
+        CameraSpaceZ,
+        WorldSpaceZ
+    };
+    
     class RenderQueue {
     public:
         RenderQueue(const SceneObject& rootSceneObject);
@@ -17,7 +22,8 @@ namespace Pht {
         void Build(const Mat4& viewMatrix);
         
         struct Entry {
-            float mCameraSpaceZ;
+            float mDistance;
+            bool mDepthWrite;
             const SceneObject* mSceneObject;
         };
         
@@ -29,14 +35,19 @@ namespace Pht {
         Entry* end() {
             return &mQueue[mSize];
         }
+        
+        void SetDistanceFunction(DistanceFunction distanceFunction) {
+            mDistanceFunction = distanceFunction;
+        }
 
     private:
-        void AddSceneObjects(const SceneObject& rootSceneObject);
+        void AddSceneObjects(const SceneObject& parentSceneObject);
         void CalculateDistances(const Mat4& viewMatrix);
         
         const SceneObject& mRootSceneObject;
         std::vector<Entry> mQueue;
         int mSize {0};
+        DistanceFunction mDistanceFunction {DistanceFunction::CameraSpaceZ};
     };
 }
 

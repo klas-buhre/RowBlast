@@ -19,6 +19,7 @@ namespace Pht {
         void SetCamera(std::unique_ptr<SceneObject> camera);
         SceneObject& GetCamera();
         const SceneObject& GetCamera() const;
+        void SetDistanceFunction(DistanceFunction distanceFunction);
 
         void SetLightDirection(const Pht::Vec3& lightDirection) {
             mLightDirection = lightDirection;

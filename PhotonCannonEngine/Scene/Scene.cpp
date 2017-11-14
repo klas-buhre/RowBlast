@@ -42,3 +42,7 @@ const SceneObject& Scene::GetCamera() const {
     assert(mCamera);
     return *mCamera;
 }
+
+void Scene::SetDistanceFunction(DistanceFunction distanceFunction) {
+    mRenderQueue.SetDistanceFunction(distanceFunction);
+}

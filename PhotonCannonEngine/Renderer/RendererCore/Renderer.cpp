@@ -638,25 +638,17 @@ void Renderer::RenderScene(const Scene& scene) {
     RenderQueue::Entry* previousEntry {nullptr};
     
     for (auto& renderEntry: renderQueue) {
+        if (!renderEntry.mDepthWrite) {
+            if (previousEntry == nullptr || previousEntry->mDepthWrite) {
+                // Transition into rendering the transparent objects.
+                SetDepthWrite(false);
+            }
+        }
+        
         auto* sceneObject {renderEntry.mSceneObject};
         auto* renderable {sceneObject->GetRenderable()};
         
         if (renderable) {
-            if (!renderable->GetMaterial().GetDepthState().mDepthWrite) {
-                if (previousEntry == nullptr) {
-                    // Start rendering the transparent objects.
-                    SetDepthWrite(false);
-                } else {
-                    auto* previousRenderable {previousEntry->mSceneObject->GetRenderable()};
-                    
-                    if (previousRenderable &&
-                        previousRenderable->GetMaterial().GetDepthState().mDepthWrite) {
-                        // Transition into rendering the transparent objects.
-                        SetDepthWrite(false);
-                    }
-                }
-            }
-
             Render(*renderable, sceneObject->GetTransform());
         }
         
