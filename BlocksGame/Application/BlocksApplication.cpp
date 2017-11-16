@@ -67,7 +67,11 @@ Backlog:
   
 Ongoing tasks:
     -Make ParticleSystem into a component.
+        -When the ParticleSystem changes to inactive, it sets the SceneObject to not visible so that
+         the Renderer does not try to render it. ParticleSystems should be rendered by either
+         Renderer::RenderSceneObject or Renderer::RenderScene. Remove RenderUtils::RenderParticleEffect.
     -How to load/switch scene? Remember to call RenderQueue::Allocate() when loading a scene.
+        -Add SceneManager with methods SetScene and CreateRenderableObject.
  
 Ideas:
     -The pause button could lead to a widget that has an undo button, a boosters button and a game

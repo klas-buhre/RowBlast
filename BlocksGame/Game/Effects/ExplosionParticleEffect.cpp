@@ -105,10 +105,11 @@ void ExplosionParticleEffect::StartExplosion(const Pht::Vec2& position) {
 }
 
 ExplosionParticleEffect::State ExplosionParticleEffect::Update() {
-    auto outerStatus {mOuterParticleEffect.mParticleSystem->Update()};
-    auto innerStatus {mInnerParticleEffect.mParticleSystem->Update()};
+    mOuterParticleEffect.mParticleSystem->Update();
+    mInnerParticleEffect.mParticleSystem->Update();
     
-    if (outerStatus || innerStatus) {
+    if (mOuterParticleEffect.mParticleSystem->IsActive() ||
+        mInnerParticleEffect.mParticleSystem->IsActive()) {
         return State::Ongoing;
     }
     

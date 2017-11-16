@@ -106,8 +106,8 @@ namespace Pht {
         bool mIsInFront {false};
         std::shared_ptr<RenderableObject> mRenderable;
         std::vector<std::unique_ptr<SceneObject>> mChildren;
-        Name mName {0};
         std::vector<std::pair<ComponentId, std::unique_ptr<ISceneObjectComponent>>> mComponents;
+        Name mName {0};
     };
 }
 

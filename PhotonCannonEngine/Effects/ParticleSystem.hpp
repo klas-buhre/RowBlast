@@ -8,19 +8,24 @@
 #include "Matrix.hpp"
 #include "ParticleEmitter.hpp"
 #include "RenderableObject.hpp"
+#include "ISceneObjectComponent.hpp"
+#include "Fnv1Hash.hpp"
 
 namespace Pht {
     class IEngine;
     
-    class ParticleSystem {
+    class ParticleSystem: public ISceneObjectComponent {
     public:
+        static constexpr ComponentId id {Hash::Fnv1a("ParticleSystem")};
+        
         ParticleSystem(IEngine& engine,
                        const ParticleSettings& particleSettings,
                        const EmitterSettings& emitterSettings,
                        RenderMode renderMode);
         
+        void Update() override;
+        
         void Start();
-        bool Update();
         const RenderableObject* GetRenderableObject() const;
         
         bool IsActive() const {

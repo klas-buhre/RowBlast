@@ -54,7 +54,9 @@ void RowExplosionParticleEffect::StartExplosion(const Pht::Vec2& position) {
 }
 
 RowExplosionParticleEffect::State RowExplosionParticleEffect::Update() {
-    if (mParticleEffect.mParticleSystem->Update()) {
+    mParticleEffect.mParticleSystem->Update();
+    
+    if (mParticleEffect.mParticleSystem->IsActive()) {
         return State::Ongoing;
     }
     

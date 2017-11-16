@@ -6,7 +6,6 @@
 
 namespace Pht {
     class IRenderer;
-    class SceneObject;
     class ParticleEffect;
     class Text;
 }

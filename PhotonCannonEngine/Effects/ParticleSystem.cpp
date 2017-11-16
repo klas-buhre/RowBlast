@@ -99,9 +99,9 @@ void ParticleSystem::Start() {
     }
 }
 
-bool ParticleSystem::Update() {
+void ParticleSystem::Update() {
     if (!mIsActive) {
-        return false;
+        return;
     }
 
     mEmitter.Update(mParticles);
@@ -124,8 +124,6 @@ bool ParticleSystem::Update() {
     } else {
         WriteVertexBuffer();
     }
-    
-    return mIsActive;
 }
 
 const RenderableObject* ParticleSystem::GetRenderableObject() const {
