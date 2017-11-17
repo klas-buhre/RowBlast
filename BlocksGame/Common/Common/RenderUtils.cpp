@@ -4,7 +4,7 @@
 #include "IRenderer.hpp"
 #include "SceneObject.hpp"
 #include "Font.hpp"
-#include "ParticleSystem.hpp"
+#include "ParticleEffect.hpp"
 
 // Game includes.
 #include "GradientRectangle.hpp"
@@ -12,7 +12,7 @@
 using namespace BlocksGame;
 
 void RenderUtils::RenderParticleEffect(Pht::IRenderer& renderer,
-                                       const Pht::ParticleEffect& effect) {
+                                       const Pht::ParticleEffect_& effect) {
     auto* renderable {effect.mParticleSystem->GetRenderableObject()};
     
     if (renderable) {

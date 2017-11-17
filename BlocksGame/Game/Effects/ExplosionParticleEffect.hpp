@@ -2,7 +2,7 @@
 #define ExplosionParticleEffect_hpp
 
 // Engine includes.
-#include "ParticleSystem.hpp"
+#include "ParticleEffect.hpp"
 #include "Vector.hpp"
 
 namespace Pht {
@@ -24,11 +24,11 @@ namespace BlocksGame {
         void StartExplosion(const Pht::Vec2& position);
         State Update();
         
-        const Pht::ParticleEffect& GetOuterEffect() const {
+        const Pht::ParticleEffect_& GetOuterEffect() const {
             return mOuterParticleEffect;
         }
 
-        const Pht::ParticleEffect& GetInnerEffect() const {
+        const Pht::ParticleEffect_& GetInnerEffect() const {
             return mInnerParticleEffect;
         }
         
@@ -37,8 +37,8 @@ namespace BlocksGame {
         void InitOuterEffect(Pht::IEngine& engine);
         
         const GameScene& mScene;
-        Pht::ParticleEffect mOuterParticleEffect;
-        Pht::ParticleEffect mInnerParticleEffect;
+        Pht::ParticleEffect_ mOuterParticleEffect;
+        Pht::ParticleEffect_ mInnerParticleEffect;
     };
 }
 

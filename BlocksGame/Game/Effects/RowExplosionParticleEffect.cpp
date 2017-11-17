@@ -33,7 +33,7 @@ RowExplosionParticleEffect::RowExplosionParticleEffect(Pht::IEngine& engine,
         .mShrinkDuration = 0.3f
     };
 
-    mParticleEffect.mParticleSystem = std::make_unique<Pht::ParticleSystem>(engine,
+    mParticleEffect.mParticleSystem = std::make_unique<Pht::ParticleEffect>(engine,
                                                                             particleSettings,
                                                                             particleEmitterSettings,
                                                                             Pht::RenderMode::Points);

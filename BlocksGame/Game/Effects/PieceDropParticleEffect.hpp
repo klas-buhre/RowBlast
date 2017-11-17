@@ -4,7 +4,7 @@
 #include <array>
 
 // Engine includes.
-#include "ParticleSystem.hpp"
+#include "ParticleEffect.hpp"
 #include "Vector.hpp"
 
 // Game includes.
@@ -18,7 +18,7 @@ namespace BlocksGame {
     class GameScene;
     class FallingPiece;
     
-    using PieceDropParticleEffects = std::array<Pht::ParticleEffect, Field::maxNumColumns>;
+    using PieceDropParticleEffects = std::array<Pht::ParticleEffect_, Field::maxNumColumns>;
     
     class PieceDropParticleEffect {
     public:

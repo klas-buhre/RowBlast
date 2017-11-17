@@ -106,7 +106,7 @@ const std::vector<FloatingCube>& MapScene::GetFloatingCubes() const {
     return mFloatingCubes->GetCubes();
 }
 
-const Pht::ParticleEffect& MapScene::GetNextLevelParticleEffect() const {
+const Pht::ParticleEffect_& MapScene::GetNextLevelParticleEffect() const {
     return mNextLevelParticleEffect.GetEffect();
 }
 

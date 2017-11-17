@@ -2,7 +2,7 @@
 #define RowExplosionParticleEffect_hpp
 
 // Engine includes.
-#include "ParticleSystem.hpp"
+#include "ParticleEffect.hpp"
 #include "Vector.hpp"
 
 namespace Pht {
@@ -24,13 +24,13 @@ namespace BlocksGame {
         void StartExplosion(const Pht::Vec2& position);
         State Update();
         
-        const Pht::ParticleEffect& GetEffect() const {
+        const Pht::ParticleEffect_& GetEffect() const {
             return mParticleEffect;
         }
         
     private:
         const GameScene& mScene;
-        Pht::ParticleEffect mParticleEffect;
+        Pht::ParticleEffect_ mParticleEffect;
     };
 }
 

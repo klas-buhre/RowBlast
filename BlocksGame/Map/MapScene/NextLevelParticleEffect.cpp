@@ -30,7 +30,7 @@ NextLevelParticleEffect::NextLevelParticleEffect(Pht::IEngine& engine) {
         .mShrinkDuration = 1.2f
     };
     
-    mParticleEffect.mParticleSystem = std::make_unique<Pht::ParticleSystem>(engine,
+    mParticleEffect.mParticleSystem = std::make_unique<Pht::ParticleEffect>(engine,
                                                                             particleSettings,
                                                                             particleEmitterSettings,
                                                                             Pht::RenderMode::Triangles);

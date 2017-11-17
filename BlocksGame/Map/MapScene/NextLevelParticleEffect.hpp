@@ -2,7 +2,7 @@
 #define NextLevelParticleEffect_hpp
 
 // Engine includes.
-#include "ParticleSystem.hpp"
+#include "ParticleEffect.hpp"
 #include "Vector.hpp"
 
 namespace Pht {
@@ -19,12 +19,12 @@ namespace BlocksGame {
         void StartEffect(const Pht::Vec3& position);
         void Update();
         
-        const Pht::ParticleEffect& GetEffect() const {
+        const Pht::ParticleEffect_& GetEffect() const {
             return mParticleEffect;
         }
         
     private:
-        Pht::ParticleEffect mParticleEffect;
+        Pht::ParticleEffect_ mParticleEffect;
     };
 }
 
