@@ -4,6 +4,8 @@
 #include "IEngine.hpp"
 #include "IRenderer.hpp"
 #include "MathUtils.hpp"
+#include "ParticleEffect.hpp"
+#include "IParticleSystem.hpp"
 
 // Game includes.
 #include "GameScene.hpp"
@@ -29,11 +31,11 @@ namespace {
 ExplosionParticleEffect::ExplosionParticleEffect(Pht::IEngine& engine, const GameScene& scene) :
     mScene {scene} {
 
-    InitInnerEffect();
+    InitInnerEffect(engine);
     InitOuterEffect(engine);
 }
 
-void ExplosionParticleEffect::InitInnerEffect() {
+void ExplosionParticleEffect::InitInnerEffect(Pht::IEngine& engine) {
     Pht::EmitterSettings particleEmitterSettings {
         .mPosition = Pht::Vec3{0.0f, 0.0f, 0.0f},
         .mSize = Pht::Vec3{0.0f, 0.0f, 0.0f},
@@ -53,9 +55,10 @@ void ExplosionParticleEffect::InitInnerEffect() {
         .mShrinkDuration = 0.3f
     };
     
-    mInnerParticleEffect.mParticleSystem = std::make_unique<Pht::ParticleEffect>(particleSettings,
-                                                                                 particleEmitterSettings,
-                                                                                 Pht::RenderMode::Triangles);
+    auto& particleSystem {engine.GetParticleSystem()};
+    mInnerParticleEffect = particleSystem.CreateParticleEffectSceneObject(particleSettings,
+                                                                          particleEmitterSettings,
+                                                                          Pht::RenderMode::Triangles);
 }
 
 void ExplosionParticleEffect::InitOuterEffect(Pht::IEngine& engine) {
@@ -80,34 +83,39 @@ void ExplosionParticleEffect::InitOuterEffect(Pht::IEngine& engine) {
         .mShrinkDuration = 0.3f
     };
     
-    mOuterParticleEffect.mParticleSystem = std::make_unique<Pht::ParticleEffect>(particleSettings,
-                                                                                 particleEmitterSettings,
-                                                                                 Pht::RenderMode::Points);
+    auto& particleSystem {engine.GetParticleSystem()};
+    mOuterParticleEffect = particleSystem.CreateParticleEffectSceneObject(particleSettings,
+                                                                          particleEmitterSettings,
+                                                                          Pht::RenderMode::Points);
 }
 
 void ExplosionParticleEffect::StartExplosion(const Pht::Vec2& position) {
     auto cellSize {mScene.GetCellSize()};
     auto& fieldLowerLeft {mScene.GetFieldLoweLeft()};
 
-    auto translation {
-        Pht::Mat4::Translate(position.x * cellSize + cellSize / 2.0f + fieldLowerLeft.x,
-                             position.y * cellSize + cellSize / 2.0f + fieldLowerLeft.y,
-                             mScene.GetFieldPosition().z)
+    Pht::Vec3 translation {
+        position.x * cellSize + cellSize / 2.0f + fieldLowerLeft.x,
+        position.y * cellSize + cellSize / 2.0f + fieldLowerLeft.y,
+        mScene.GetFieldPosition().z
     };
     
-    mInnerParticleEffect.mParticleSystem->Start();
-    mInnerParticleEffect.mTransform = translation;
+    mInnerParticleEffect->GetComponent<Pht::ParticleEffect>()->Start();
+    mInnerParticleEffect->ResetTransform();
+    mInnerParticleEffect->Translate(translation);
     
-    mOuterParticleEffect.mParticleSystem->Start();
-    mOuterParticleEffect.mTransform = translation;
+    mOuterParticleEffect->GetComponent<Pht::ParticleEffect>()->Start();
+    mOuterParticleEffect->ResetTransform();
+    mOuterParticleEffect->Translate(translation);
 }
 
 ExplosionParticleEffect::State ExplosionParticleEffect::Update(float dt) {
-    mOuterParticleEffect.mParticleSystem->Update(dt);
-    mInnerParticleEffect.mParticleSystem->Update(dt);
+    auto* outerEffect {mOuterParticleEffect->GetComponent<Pht::ParticleEffect>()};
+    outerEffect->Update(dt);
     
-    if (mOuterParticleEffect.mParticleSystem->IsActive() ||
-        mInnerParticleEffect.mParticleSystem->IsActive()) {
+    auto* innerEffect {mInnerParticleEffect->GetComponent<Pht::ParticleEffect>()};
+    innerEffect->Update(dt);
+    
+    if (outerEffect->IsActive() || innerEffect->IsActive()) {
         return State::Ongoing;
     }
     

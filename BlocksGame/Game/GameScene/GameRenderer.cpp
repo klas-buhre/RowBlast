@@ -489,12 +489,12 @@ void GameRenderer::RenderBlastRadiusAnimation() {
 }
 
 void GameRenderer::RenderExplosion() {
-    RenderUtils::RenderParticleEffect(mEngineRenderer, mExplosionParticleEffect.GetInnerEffect());
-    RenderUtils::RenderParticleEffect(mEngineRenderer, mExplosionParticleEffect.GetOuterEffect());
+    mEngineRenderer.RenderSceneObject(mExplosionParticleEffect.GetInnerEffect());
+    mEngineRenderer.RenderSceneObject(mExplosionParticleEffect.GetOuterEffect());
 }
 
 void GameRenderer::RenderRowExplosion() {
-    RenderUtils::RenderParticleEffect(mEngineRenderer, mRowExplosionParticleEffect.GetEffect());
+    mEngineRenderer.RenderSceneObject(mRowExplosionParticleEffect.GetSceneObject());
 }
 
 void GameRenderer::RenderFlyingBlocks() {
@@ -649,7 +649,7 @@ void GameRenderer::RenderScaledTiltedPiece(const Pht::Vec2& position,
 
 void GameRenderer::RenderPieceDropParticles() {
     for (const auto& effect: mPieceDropParticleEffect.GetEffects()) {
-        RenderUtils::RenderParticleEffect(mEngineRenderer, effect);
+        mEngineRenderer.RenderSceneObject(*effect);
     }
 }
 

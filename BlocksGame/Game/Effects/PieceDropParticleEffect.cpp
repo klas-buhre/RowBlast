@@ -3,10 +3,14 @@
 // Game includes.
 #include "GameScene.hpp"
 #include "FallingPiece.hpp"
+#include "IEngine.hpp"
+#include "SceneObject.hpp"
+#include "ParticleSystem.hpp"
+#include "ParticleEffect.hpp"
 
 using namespace BlocksGame;
 
-PieceDropParticleEffect::PieceDropParticleEffect(const GameScene& scene) :
+PieceDropParticleEffect::PieceDropParticleEffect(Pht::IEngine& engine, const GameScene& scene) :
     mScene {scene} {
     
     Pht::EmitterSettings particleEmitterSettings {
@@ -31,10 +35,12 @@ PieceDropParticleEffect::PieceDropParticleEffect(const GameScene& scene) :
         .mShrinkDuration = 0.4f
     };
     
+    auto& particleSystem {engine.GetParticleSystem()};
+    
     for (auto& effect: mParticleEffects) {
-        effect.mParticleSystem = std::make_unique<Pht::ParticleEffect>(particleSettings,
-                                                                       particleEmitterSettings,
-                                                                       Pht::RenderMode::Triangles);
+        effect = particleSystem.CreateParticleEffectSceneObject(particleSettings,
+                                                                particleEmitterSettings,
+                                                                Pht::RenderMode::Triangles);
     }
 }
 
@@ -74,15 +80,16 @@ void PieceDropParticleEffect::StartEffect(const FallingPiece& fallingPiece) {
 }
 
 void PieceDropParticleEffect::StartEffect(const Pht::Vec3& scenePosition, const Pht::Vec4& color) {
-    for (auto& effect: mParticleEffects) {
-        if (!effect.mParticleSystem->IsActive()) {
-            auto& particleSettings {effect.mParticleSystem->GetEmitter().GetParticleSettings()};
+    for (auto& effectSceneObject: mParticleEffects) {
+        auto* effect {effectSceneObject->GetComponent<Pht::ParticleEffect>()};
+        
+        if (!effect->IsActive()) {
+            auto& particleSettings {effect->GetEmitter().GetParticleSettings()};
             particleSettings.mColor = color;
             
-            effect.mParticleSystem->Start();
-            effect.mTransform = Pht::Mat4::Translate(scenePosition.x,
-                                                     scenePosition.y,
-                                                     scenePosition.z);
+            effect->Start();
+            effectSceneObject->ResetTransform();
+            effectSceneObject->Translate(scenePosition);
             break;
         }
     }
@@ -90,6 +97,6 @@ void PieceDropParticleEffect::StartEffect(const Pht::Vec3& scenePosition, const 
 
 void PieceDropParticleEffect::Update(float dt) {
     for (auto& effect: mParticleEffects) {
-        effect.mParticleSystem->Update(dt);
+        effect->GetComponent<Pht::ParticleEffect>()->Update(dt);
     }
 }

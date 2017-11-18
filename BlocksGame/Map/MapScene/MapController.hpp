@@ -44,6 +44,7 @@ namespace BlocksGame {
                       UserData& userData);
     
         void Reset();
+        void Stop();
         Command Update();
     
     private:

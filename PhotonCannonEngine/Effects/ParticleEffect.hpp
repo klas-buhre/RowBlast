@@ -5,24 +5,28 @@
 #include <memory>
 
 #include "VertexBuffer.hpp"
-#include "Matrix.hpp"
 #include "ParticleEmitter.hpp"
 #include "RenderableObject.hpp"
 #include "ISceneObjectComponent.hpp"
 
 namespace Pht {
+    class SceneObject;
+    class IParticleSystem;
+    
     class ParticleEffect: public ISceneObjectComponent {
     public:
         static const ComponentId id;
         
-        ParticleEffect(const ParticleSettings& particleSettings,
+        ParticleEffect(SceneObject& sceneObject,
+                       IParticleSystem& particleSystem,
+                       const ParticleSettings& particleSettings,
                        const EmitterSettings& emitterSettings,
                        RenderMode renderMode);
         ~ParticleEffect();
         
         void Update(float dt);
         void Start();
-        const RenderableObject* GetRenderableObject() const;
+        void Stop();
         
         bool IsActive() const {
             return mIsActive;
@@ -38,17 +42,14 @@ namespace Pht {
         void WriteTriangles();
         void WriteParticleTriangles(const Particle& particle);
         
+        SceneObject& mSceneObject;
+        IParticleSystem& mParticleSystem;
         ParticleEmitter mEmitter;
         RenderMode mRenderMode {RenderMode::Triangles};
         std::vector<Particle> mParticles;
         std::unique_ptr<VertexBuffer> mVertexBuffer;
-        std::unique_ptr<RenderableObject> mRenderableObject;
+        std::shared_ptr<RenderableObject> mRenderableObject;
         bool mIsActive {false};
-    };
-    
-    struct ParticleEffect_ {
-        Mat4 mTransform;
-        std::unique_ptr<ParticleEffect> mParticleSystem;
     };
 }
 

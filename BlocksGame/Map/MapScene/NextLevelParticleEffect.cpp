@@ -4,10 +4,14 @@
 #include "IEngine.hpp"
 #include "IRenderer.hpp"
 #include "MathUtils.hpp"
+#include "SceneObject.hpp"
+#include "ParticleEffect.hpp"
+#include "ParticleSystem.hpp"
 
 using namespace BlocksGame;
 
-NextLevelParticleEffect::NextLevelParticleEffect() {
+NextLevelParticleEffect::NextLevelParticleEffect(Pht::IEngine& engine) :
+    mEngine {engine} {
     Pht::EmitterSettings particleEmitterSettings {
         .mPosition = {0.0f, 0.7f, 0.0f},
         .mSize = {1.7f, 0.85f, 1.7f},
@@ -30,16 +34,19 @@ NextLevelParticleEffect::NextLevelParticleEffect() {
         .mShrinkDuration = 1.2f
     };
     
-    mParticleEffect.mParticleSystem = std::make_unique<Pht::ParticleEffect>(particleSettings,
-                                                                            particleEmitterSettings,
-                                                                            Pht::RenderMode::Triangles);
+    auto& particleSystem {engine.GetParticleSystem()};
+    mScenObject = particleSystem.CreateParticleEffectSceneObject(particleSettings,
+                                                                 particleEmitterSettings,
+                                                                 Pht::RenderMode::Triangles);
+    particleSystem.AddParticleEffect(*mScenObject->GetComponent<Pht::ParticleEffect>());
 }
 
 void NextLevelParticleEffect::StartEffect(const Pht::Vec3& position) {
-    mParticleEffect.mTransform = Pht::Mat4::Translate(position.x, position.y, position.z);
-    mParticleEffect.mParticleSystem->Start();
+    mScenObject->ResetTransform();
+    mScenObject->Translate(position);
+    mScenObject->GetComponent<Pht::ParticleEffect>()->Start();
 }
 
-void NextLevelParticleEffect::Update(float dt) {
-    mParticleEffect.mParticleSystem->Update(dt);
+void NextLevelParticleEffect::Stop() {
+    mScenObject->GetComponent<Pht::ParticleEffect>()->Stop();
 }

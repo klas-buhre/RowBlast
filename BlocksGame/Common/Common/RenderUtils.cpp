@@ -4,21 +4,11 @@
 #include "IRenderer.hpp"
 #include "SceneObject.hpp"
 #include "Font.hpp"
-#include "ParticleEffect.hpp"
 
 // Game includes.
 #include "GradientRectangle.hpp"
 
 using namespace BlocksGame;
-
-void RenderUtils::RenderParticleEffect(Pht::IRenderer& renderer,
-                                       const Pht::ParticleEffect_& effect) {
-    auto* renderable {effect.mParticleSystem->GetRenderableObject()};
-    
-    if (renderable) {
-        renderer.Render(*renderable, effect.mTransform);
-    }
-}
 
 void RenderUtils::RenderText(Pht::IRenderer& renderer, const Pht::Text& text) {
     renderer.RenderText(text.mText, text.mPosition, text.mProperties);

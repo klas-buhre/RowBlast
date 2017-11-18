@@ -33,7 +33,7 @@ void Engine::Update(float frameSeconds) {
         mLastFrameSeconds = maxFrameTimeSeconds;
     }
 
-    mRenderer.ClearBuffers();    
+    mRenderer.ClearBuffers();
     mApplication->Update();
     mParticleSystem.Update(mLastFrameSeconds);
 }

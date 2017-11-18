@@ -4,6 +4,8 @@
 #include "IEngine.hpp"
 #include "IRenderer.hpp"
 #include "MathUtils.hpp"
+#include "ParticleEffect.hpp"
+#include "IParticleSystem.hpp"
 
 // Game includes.
 #include "GameScene.hpp"
@@ -32,30 +34,33 @@ RowExplosionParticleEffect::RowExplosionParticleEffect(Pht::IEngine& engine,
         .mPointSizeRandomPart = engine.GetRenderer().GetAdjustedNumPixels(100),
         .mShrinkDuration = 0.3f
     };
-
-    mParticleEffect.mParticleSystem = std::make_unique<Pht::ParticleEffect>(particleSettings,
-                                                                            particleEmitterSettings,
-                                                                            Pht::RenderMode::Points);
+    
+    auto& particleSystem {engine.GetParticleSystem()};
+    mScenObject = particleSystem.CreateParticleEffectSceneObject(particleSettings,
+                                                                 particleEmitterSettings,
+                                                                 Pht::RenderMode::Points);
 }
 
 void RowExplosionParticleEffect::StartExplosion(const Pht::Vec2& position) {
     auto cellSize {mScene.GetCellSize()};
     auto& fieldLowerLeft {mScene.GetFieldLoweLeft()};
 
-    auto translation {
-        Pht::Mat4::Translate(position.x * cellSize + cellSize / 2.0f + fieldLowerLeft.x,
-                             position.y * cellSize + cellSize / 2.0f + fieldLowerLeft.y,
-                             mScene.GetFieldPosition().z)
+    Pht::Vec3 translation {
+        position.x * cellSize + cellSize / 2.0f + fieldLowerLeft.x,
+        position.y * cellSize + cellSize / 2.0f + fieldLowerLeft.y,
+        mScene.GetFieldPosition().z
     };
     
-    mParticleEffect.mParticleSystem->Start();
-    mParticleEffect.mTransform = translation;
+    mScenObject->ResetTransform();
+    mScenObject->Translate(translation);
+    mScenObject->GetComponent<Pht::ParticleEffect>()->Start();
 }
 
 RowExplosionParticleEffect::State RowExplosionParticleEffect::Update(float dt) {
-    mParticleEffect.mParticleSystem->Update(dt);
+    auto* effect {mScenObject->GetComponent<Pht::ParticleEffect>()};
+    effect->Update(dt);
     
-    if (mParticleEffect.mParticleSystem->IsActive()) {
+    if (effect->IsActive()) {
         return State::Ongoing;
     }
     

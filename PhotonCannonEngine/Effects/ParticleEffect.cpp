@@ -3,6 +3,7 @@
 #include "MathUtils.hpp"
 #include "Fnv1Hash.hpp"
 #include "IParticleSystem.hpp"
+#include "SceneObject.hpp"
 
 using namespace Pht;
 
@@ -60,9 +61,13 @@ namespace {
 
 const ComponentId ParticleEffect::id {Hash::Fnv1a("ParticleEffect")};
 
-ParticleEffect::ParticleEffect(const ParticleSettings& particleSettings,
+ParticleEffect::ParticleEffect(SceneObject& sceneObject,
+                               IParticleSystem& particleSystem,
+                               const ParticleSettings& particleSettings,
                                const EmitterSettings& emitterSettings,
                                RenderMode renderMode) :
+    mSceneObject {sceneObject},
+    mParticleSystem {particleSystem},
     mEmitter {particleSettings, emitterSettings},
     mRenderMode {renderMode} {
     
@@ -76,7 +81,7 @@ ParticleEffect::ParticleEffect(const ParticleSettings& particleSettings,
             VertexFlags vertexFlags {.mColors = true, .mPointSizes = true};
             mVertexBuffer = std::make_unique<VertexBuffer>(numParticles, 0, vertexFlags);
             material.SetShaderType(ShaderType::PointParticle);
-            mRenderableObject = std::make_unique<RenderableObject>(material, RenderMode::Points);
+            mRenderableObject = std::make_shared<RenderableObject>(material, RenderMode::Points);
             break;
         }
         case RenderMode::Triangles: {
@@ -85,15 +90,17 @@ ParticleEffect::ParticleEffect(const ParticleSettings& particleSettings,
                                                            numParticles * 6,
                                                            vertexFlags);
             material.SetShaderType(ShaderType::Particle);
-            mRenderableObject = std::make_unique<RenderableObject>(material, RenderMode::Triangles);
+            mRenderableObject = std::make_shared<RenderableObject>(material, RenderMode::Triangles);
             break;
         }
     }
+    
+    sceneObject.SetRenderable(mRenderableObject);
+    mSceneObject.SetIsVisible(false);
 }
 
 ParticleEffect::~ParticleEffect() {
-    // TODO:: uncomment:
-    // mParticleSystem.RemoveParticleEffect(*this);
+    mParticleSystem.RemoveParticleEffect(*this);
 }
 
 void ParticleEffect::Start() {
@@ -103,6 +110,13 @@ void ParticleEffect::Start() {
     for (auto& particle: mParticles) {
         particle.mIsActive = false;
     }
+    
+    mSceneObject.SetIsVisible(true);
+}
+
+void ParticleEffect::Stop() {
+    mIsActive = false;
+    mSceneObject.SetIsVisible(false);
 }
 
 void ParticleEffect::Update(float dt) {
@@ -125,18 +139,10 @@ void ParticleEffect::Update(float dt) {
     }
     
     if (!anyActiveParticles) {
-        mIsActive = false;
+        Stop();
     } else {
         WriteVertexBuffer();
     }
-}
-
-const RenderableObject* ParticleEffect::GetRenderableObject() const {
-    if (mIsActive) {
-        return mRenderableObject.get();
-    }
-    
-    return nullptr;
 }
 
 void ParticleEffect::WriteVertexBuffer() {

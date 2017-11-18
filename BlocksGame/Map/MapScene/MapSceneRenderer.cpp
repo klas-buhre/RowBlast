@@ -32,7 +32,7 @@ void MapSceneRenderer::RenderFrame() {
     
     mEngineRenderer.SetProjectionMode(Pht::ProjectionMode::Orthographic);
     RenderPins();
-    RenderUtils::RenderParticleEffect(mEngineRenderer, mScene.GetNextLevelParticleEffect());
+    mEngineRenderer.RenderSceneObject(mScene.GetNextLevelParticleEffect());
     
     RenderHud();
     RenderViews();

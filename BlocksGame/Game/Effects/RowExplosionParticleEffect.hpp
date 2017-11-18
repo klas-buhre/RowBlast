@@ -1,12 +1,14 @@
 #ifndef RowExplosionParticleEffect_hpp
 #define RowExplosionParticleEffect_hpp
 
+#include <memory>
+
 // Engine includes.
-#include "ParticleEffect.hpp"
 #include "Vector.hpp"
 
 namespace Pht {
     class IEngine;
+    class SceneObject;
 }
 
 namespace BlocksGame {
@@ -24,13 +26,13 @@ namespace BlocksGame {
         void StartExplosion(const Pht::Vec2& position);
         State Update(float dt);
         
-        const Pht::ParticleEffect_& GetEffect() const {
-            return mParticleEffect;
+        const Pht::SceneObject& GetSceneObject() const {
+            return *mScenObject;
         }
         
     private:
         const GameScene& mScene;
-        Pht::ParticleEffect_ mParticleEffect;
+        std::unique_ptr<Pht::SceneObject> mScenObject;
     };
 }
 

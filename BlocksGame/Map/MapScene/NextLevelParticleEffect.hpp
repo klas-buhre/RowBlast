@@ -1,26 +1,33 @@
 #ifndef NextLevelParticleEffect_hpp
 #define NextLevelParticleEffect_hpp
 
+#include <memory>
+
 // Engine includes.
-#include "ParticleEffect.hpp"
 #include "Vector.hpp"
+
+namespace Pht {
+    class IEngine;
+    class SceneObject;
+}
 
 namespace BlocksGame {
     class GameScene;
     
     class NextLevelParticleEffect {
     public:
-        NextLevelParticleEffect();
+        NextLevelParticleEffect(Pht::IEngine& engine);
         
         void StartEffect(const Pht::Vec3& position);
-        void Update(float dt);
+        void Stop();
         
-        const Pht::ParticleEffect_& GetEffect() const {
-            return mParticleEffect;
+        const Pht::SceneObject& GetSceneObject() const {
+            return *mScenObject;
         }
         
     private:
-        Pht::ParticleEffect_ mParticleEffect;
+        Pht::IEngine& mEngine;
+        std::unique_ptr<Pht::SceneObject> mScenObject;
     };
 }
 

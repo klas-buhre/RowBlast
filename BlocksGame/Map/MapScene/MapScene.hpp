@@ -24,10 +24,11 @@ namespace BlocksGame {
         MapScene(Pht::IEngine& engine, const CommonResources& commonResources, UserData& userData);
         
         void Reset();
+        void Stop();
         void Update();
         void SetCameraPosition(Pht::Vec3 position);
         const std::vector<FloatingCube>& GetFloatingCubes() const;
-        const Pht::ParticleEffect_& GetNextLevelParticleEffect() const;
+        const Pht::SceneObject& GetNextLevelParticleEffect() const;
         
         const Pht::Vec3& GetCameraPosition() const {
             return mCameraPosition;

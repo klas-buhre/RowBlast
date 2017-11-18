@@ -1,12 +1,14 @@
 #ifndef ExplosionParticleEffect_hpp
 #define ExplosionParticleEffect_hpp
 
+#include <memory>
+
 // Engine includes.
-#include "ParticleEffect.hpp"
 #include "Vector.hpp"
 
 namespace Pht {
     class IEngine;
+    class SceneObject;
 }
 
 namespace BlocksGame {
@@ -24,21 +26,21 @@ namespace BlocksGame {
         void StartExplosion(const Pht::Vec2& position);
         State Update(float dt);
         
-        const Pht::ParticleEffect_& GetOuterEffect() const {
-            return mOuterParticleEffect;
+        const Pht::SceneObject& GetOuterEffect() const {
+            return *mOuterParticleEffect;
         }
 
-        const Pht::ParticleEffect_& GetInnerEffect() const {
-            return mInnerParticleEffect;
+        const Pht::SceneObject& GetInnerEffect() const {
+            return *mInnerParticleEffect;
         }
         
     private:
-        void InitInnerEffect();
+        void InitInnerEffect(Pht::IEngine& engine);
         void InitOuterEffect(Pht::IEngine& engine);
         
         const GameScene& mScene;
-        Pht::ParticleEffect_ mOuterParticleEffect;
-        Pht::ParticleEffect_ mInnerParticleEffect;
+        std::unique_ptr<Pht::SceneObject> mOuterParticleEffect;
+        std::unique_ptr<Pht::SceneObject> mInnerParticleEffect;
     };
 }
 

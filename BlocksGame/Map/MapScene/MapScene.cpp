@@ -50,6 +50,7 @@ MapScene::MapScene(Pht::IEngine& engine,
                    UserData& userData) :
     mEngine {engine},
     mUserData {userData},
+    mNextLevelParticleEffect {engine},
     mFont {"ethnocentric_rg_it.ttf", engine.GetRenderer().GetAdjustedNumPixels(35)} {
 
     CreateBackground(commonResources.GetMaterials().GetSkyMaterial());
@@ -66,9 +67,12 @@ void MapScene::Reset() {
     SetCameraAtCurrentLevel();
 }
 
+void MapScene::Stop() {
+    mNextLevelParticleEffect.Stop();
+}
+
 void MapScene::Update() {
     mFloatingCubes->Update();
-    mNextLevelParticleEffect.Update(mEngine.GetLastFrameSeconds());
     
     for (auto& pin: mPins) {
         pin->Update();
@@ -105,8 +109,8 @@ const std::vector<FloatingCube>& MapScene::GetFloatingCubes() const {
     return mFloatingCubes->GetCubes();
 }
 
-const Pht::ParticleEffect_& MapScene::GetNextLevelParticleEffect() const {
-    return mNextLevelParticleEffect.GetEffect();
+const Pht::SceneObject& MapScene::GetNextLevelParticleEffect() const {
+    return mNextLevelParticleEffect.GetSceneObject();
 }
 
 void MapScene::CreateBackground(const Pht::Material& backgroundMaterial) {

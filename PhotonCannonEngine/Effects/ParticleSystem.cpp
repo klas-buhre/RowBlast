@@ -8,10 +8,10 @@
 using namespace Pht;
 
 void ParticleSystem::AddParticleEffect(ParticleEffect& effect) {
-    assert(std::find(std::begin(mParticleEffects), std::end(mParticleEffects), &effect) ==
-           std::end(mParticleEffects));
-    
-    mParticleEffects.push_back(&effect);
+    if (std::find(std::begin(mParticleEffects), std::end(mParticleEffects), &effect) ==
+        std::end(mParticleEffects)) {
+        mParticleEffects.push_back(&effect);
+    }
 }
 
 void ParticleSystem::RemoveParticleEffect(ParticleEffect& effect) {
@@ -27,11 +27,14 @@ ParticleSystem::CreateParticleEffectSceneObject(const ParticleSettings& particle
     auto sceneObject {std::make_unique<SceneObject>()};
     
     auto particleEffect {
-        std::make_unique<ParticleEffect>(particleSettings, emitterSettings, renderMode)
+        std::make_unique<ParticleEffect>(*sceneObject,
+                                         *this,
+                                         particleSettings,
+                                         emitterSettings,
+                                         renderMode)
     };
     
     sceneObject->SetComponent<ParticleEffect>(std::move(particleEffect));
-    
     return sceneObject;
 }
 
