@@ -1,14 +1,11 @@
 #include "ParticleEmitter.hpp"
 
-#include "IEngine.hpp"
 #include "MathUtils.hpp"
 
 using namespace Pht;
 
-ParticleEmitter::ParticleEmitter(IEngine& engine,
-                                 const ParticleSettings& particleSettings,
+ParticleEmitter::ParticleEmitter(const ParticleSettings& particleSettings,
                                  const EmitterSettings& emitterSettings) :
-    mEngine {engine},
     mParticleSettings {particleSettings},
     mEmitterSettings {emitterSettings} {}
 
@@ -17,7 +14,7 @@ void ParticleEmitter::Start() {
     mTimeSinceLastSpawn = 0.0f;
 }
 
-void ParticleEmitter::Update(std::vector<Particle>& particles) {
+void ParticleEmitter::Update(float dt, std::vector<Particle>& particles) {
     if (mAge == 0.0f) {
         if (mEmitterSettings.mBurst > 0) {
             EmitBurst(particles);
@@ -29,7 +26,6 @@ void ParticleEmitter::Update(std::vector<Particle>& particles) {
         }
     }
     
-    auto dt {mEngine.GetLastFrameSeconds()};
     mAge += dt;
     mTimeSinceLastSpawn += dt;
     

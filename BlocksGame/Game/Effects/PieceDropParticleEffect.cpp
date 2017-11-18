@@ -1,16 +1,12 @@
 #include "PieceDropParticleEffect.hpp"
 
-// Engine includes.
-#include "IEngine.hpp"
-#include "IRenderer.hpp"
-
 // Game includes.
 #include "GameScene.hpp"
 #include "FallingPiece.hpp"
 
 using namespace BlocksGame;
 
-PieceDropParticleEffect::PieceDropParticleEffect(Pht::IEngine& engine, const GameScene& scene) :
+PieceDropParticleEffect::PieceDropParticleEffect(const GameScene& scene) :
     mScene {scene} {
     
     Pht::EmitterSettings particleEmitterSettings {
@@ -36,8 +32,7 @@ PieceDropParticleEffect::PieceDropParticleEffect(Pht::IEngine& engine, const Gam
     };
     
     for (auto& effect: mParticleEffects) {
-        effect.mParticleSystem = std::make_unique<Pht::ParticleEffect>(engine,
-                                                                       particleSettings,
+        effect.mParticleSystem = std::make_unique<Pht::ParticleEffect>(particleSettings,
                                                                        particleEmitterSettings,
                                                                        Pht::RenderMode::Triangles);
     }
@@ -93,8 +88,8 @@ void PieceDropParticleEffect::StartEffect(const Pht::Vec3& scenePosition, const 
     }
 }
 
-void PieceDropParticleEffect::Update() {
+void PieceDropParticleEffect::Update(float dt) {
     for (auto& effect: mParticleEffects) {
-        effect.mParticleSystem->Update();
+        effect.mParticleSystem->Update(dt);
     }
 }

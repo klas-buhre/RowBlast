@@ -10,10 +10,6 @@
 // Game includes.
 #include "Field.hpp"
 
-namespace Pht {
-    class IEngine;
-}
-
 namespace BlocksGame {
     class GameScene;
     class FallingPiece;
@@ -22,10 +18,10 @@ namespace BlocksGame {
     
     class PieceDropParticleEffect {
     public:
-        PieceDropParticleEffect(Pht::IEngine& engine, const GameScene& scene);
+        PieceDropParticleEffect(const GameScene& scene);
         
         void StartEffect(const FallingPiece& fallingPiece);
-        void Update();
+        void Update(float dt);
         
         const PieceDropParticleEffects& GetEffects() const {
             return mParticleEffects;

@@ -29,11 +29,11 @@ namespace {
 ExplosionParticleEffect::ExplosionParticleEffect(Pht::IEngine& engine, const GameScene& scene) :
     mScene {scene} {
 
-    InitInnerEffect(engine);
+    InitInnerEffect();
     InitOuterEffect(engine);
 }
 
-void ExplosionParticleEffect::InitInnerEffect(Pht::IEngine& engine) {
+void ExplosionParticleEffect::InitInnerEffect() {
     Pht::EmitterSettings particleEmitterSettings {
         .mPosition = Pht::Vec3{0.0f, 0.0f, 0.0f},
         .mSize = Pht::Vec3{0.0f, 0.0f, 0.0f},
@@ -53,8 +53,7 @@ void ExplosionParticleEffect::InitInnerEffect(Pht::IEngine& engine) {
         .mShrinkDuration = 0.3f
     };
     
-    mInnerParticleEffect.mParticleSystem = std::make_unique<Pht::ParticleEffect>(engine,
-                                                                                 particleSettings,
+    mInnerParticleEffect.mParticleSystem = std::make_unique<Pht::ParticleEffect>(particleSettings,
                                                                                  particleEmitterSettings,
                                                                                  Pht::RenderMode::Triangles);
 }
@@ -81,8 +80,7 @@ void ExplosionParticleEffect::InitOuterEffect(Pht::IEngine& engine) {
         .mShrinkDuration = 0.3f
     };
     
-    mOuterParticleEffect.mParticleSystem = std::make_unique<Pht::ParticleEffect>(engine,
-                                                                                 particleSettings,
+    mOuterParticleEffect.mParticleSystem = std::make_unique<Pht::ParticleEffect>(particleSettings,
                                                                                  particleEmitterSettings,
                                                                                  Pht::RenderMode::Points);
 }
@@ -104,9 +102,9 @@ void ExplosionParticleEffect::StartExplosion(const Pht::Vec2& position) {
     mOuterParticleEffect.mTransform = translation;
 }
 
-ExplosionParticleEffect::State ExplosionParticleEffect::Update() {
-    mOuterParticleEffect.mParticleSystem->Update();
-    mInnerParticleEffect.mParticleSystem->Update();
+ExplosionParticleEffect::State ExplosionParticleEffect::Update(float dt) {
+    mOuterParticleEffect.mParticleSystem->Update(dt);
+    mInnerParticleEffect.mParticleSystem->Update(dt);
     
     if (mOuterParticleEffect.mParticleSystem->IsActive() ||
         mInnerParticleEffect.mParticleSystem->IsActive()) {

@@ -22,7 +22,7 @@ namespace BlocksGame {
         RowExplosionParticleEffect(Pht::IEngine& engine, const GameScene& scene);
         
         void StartExplosion(const Pht::Vec2& position);
-        State Update();
+        State Update(float dt);
         
         const Pht::ParticleEffect_& GetEffect() const {
             return mParticleEffect;

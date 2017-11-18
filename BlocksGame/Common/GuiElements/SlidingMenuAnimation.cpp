@@ -15,7 +15,7 @@ namespace {
 SlidingMenuAnimation::SlidingMenuAnimation(Pht::IEngine& engine, Pht::GuiView& view, float fade) :
     mEngine {engine},
     mView {view},
-    mFadeEffect {engine, slideTime, fade} {}
+    mFadeEffect {engine, engine.GetRenderer(), slideTime, fade} {}
 
 void SlidingMenuAnimation::Reset(UpdateFade updateFade, SlideDirection slideInDirection) {
     mState = State::Idle;
@@ -106,7 +106,7 @@ void SlidingMenuAnimation::UpdateInSlidingInState() {
     
     if (mUpdateFade == UpdateFade::Yes &&
         mFadeEffect.GetState() != Pht::FadeEffect::State::Transition) {
-        mFadeEffect.Update();
+        mFadeEffect.Update(dt);
     }
     
     if (HasCompletelySlidIn(position)) {
@@ -153,7 +153,7 @@ void SlidingMenuAnimation::UpdateInSlidingOutState() {
     mElapsedTime += dt;
     
     if (mUpdateFade == UpdateFade::Yes && mFadeEffect.GetState() != Pht::FadeEffect::State::Idle) {
-        mFadeEffect.Update();
+        mFadeEffect.Update(dt);
     }
     
     if (HasCompletelySlidOut(position)) {

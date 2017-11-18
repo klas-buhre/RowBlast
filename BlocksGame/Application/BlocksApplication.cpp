@@ -66,7 +66,6 @@ Backlog:
     -Credit the icon creator: <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
   
 Ongoing tasks:
-    -Remove the circlular dependency between Engine and Effects.
     -Make ParticleEffect into a component.
         -When the ParticleEffect changes to inactive, it sets the SceneObject to not visible so that
          the Renderer does not try to render it. ParticleEffects should be rendered by either
@@ -124,7 +123,7 @@ BlocksApplication::BlocksApplication(Pht::IEngine& engine) :
     mTitleController {engine, mCommonResources},
     mMapController {engine, mCommonResources, mCommonViewControllers, mUserData},
     mGameController {engine, mCommonResources, mCommonViewControllers, mUserData, mSettings},
-    mFadeEffect {engine, 0.2f, 1.0f} {
+    mFadeEffect {engine, engine.GetRenderer(), 0.2f, 1.0f} {
 
     engine.GetInput().SetUseGestureRecognizers(false);
 }
@@ -187,7 +186,7 @@ void BlocksApplication::UpdateGameScene() {
 }
 
 void BlocksApplication::HandleTransitions() {
-    if (mFadeEffect.UpdateAndRender() == Pht::FadeEffect::State::Transition) {
+    if (mFadeEffect.UpdateAndRender(mEngine.GetLastFrameSeconds()) == Pht::FadeEffect::State::Transition) {
         switch (mNextState) {
             case State::MapScene:
                 StartMap();

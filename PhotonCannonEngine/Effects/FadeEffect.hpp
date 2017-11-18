@@ -5,6 +5,7 @@
 
 namespace Pht {
     class IEngine;
+    class IRenderer;
     
     class FadeEffect {
     public:
@@ -15,12 +16,12 @@ namespace Pht {
             Idle
         };
         
-        FadeEffect(IEngine& engine, float duration, float midFade);
+        FadeEffect(IEngine& engine, IRenderer& renderer, float duration, float midFade);
         
         void Reset();
         void Start();
-        State Update();
-        State UpdateAndRender();
+        State Update(float dt);
+        State UpdateAndRender(float dt);
         void Render() const;
         bool IsFadingOut() const;
         
@@ -29,7 +30,7 @@ namespace Pht {
         }
         
     private:
-        IEngine& mEngine;
+        IRenderer& mRenderer;
         State mState {State::Idle};
         std::unique_ptr<RenderableObject> mQuad;
         float mFade {0.0f};

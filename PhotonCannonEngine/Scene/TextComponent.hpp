@@ -12,8 +12,6 @@ namespace Pht {
         
         TextComponent(const std::string& text, const TextProperties& properties);
         
-        void Update() override {}
-        
         const std::string& GetText() const {
             return mText;
         }

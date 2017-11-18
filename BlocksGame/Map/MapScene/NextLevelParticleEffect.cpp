@@ -7,7 +7,7 @@
 
 using namespace BlocksGame;
 
-NextLevelParticleEffect::NextLevelParticleEffect(Pht::IEngine& engine) {
+NextLevelParticleEffect::NextLevelParticleEffect() {
     Pht::EmitterSettings particleEmitterSettings {
         .mPosition = {0.0f, 0.7f, 0.0f},
         .mSize = {1.7f, 0.85f, 1.7f},
@@ -30,8 +30,7 @@ NextLevelParticleEffect::NextLevelParticleEffect(Pht::IEngine& engine) {
         .mShrinkDuration = 1.2f
     };
     
-    mParticleEffect.mParticleSystem = std::make_unique<Pht::ParticleEffect>(engine,
-                                                                            particleSettings,
+    mParticleEffect.mParticleSystem = std::make_unique<Pht::ParticleEffect>(particleSettings,
                                                                             particleEmitterSettings,
                                                                             Pht::RenderMode::Triangles);
 }
@@ -41,6 +40,6 @@ void NextLevelParticleEffect::StartEffect(const Pht::Vec3& position) {
     mParticleEffect.mParticleSystem->Start();
 }
 
-void NextLevelParticleEffect::Update() {
-    mParticleEffect.mParticleSystem->Update();
+void NextLevelParticleEffect::Update(float dt) {
+    mParticleEffect.mParticleSystem->Update(dt);
 }

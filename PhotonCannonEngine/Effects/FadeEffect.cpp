@@ -1,6 +1,6 @@
 #include "FadeEffect.hpp"
 
-#include "IEngine.hpp"
+#include "IEngine.hpp" // TODO: Remove!
 #include "Material.hpp"
 #include "QuadMesh.hpp"
 #include "IRenderer.hpp"
@@ -11,14 +11,14 @@ namespace {
     const Mat4 quadMatrix;
 }
 
-FadeEffect::FadeEffect(IEngine& engine, float duration, float midFade) :
-    mEngine {engine},
+FadeEffect::FadeEffect(IEngine& engine, IRenderer& renderer, float duration, float midFade) :
+    mRenderer {renderer},
     mMidFade {midFade},
     mFadeSpeed {midFade / duration} {
     
     Pht::Material quadMaterial;
     
-    auto& hudFrustumSize {engine.GetRenderer().GetHudFrustumSize()};
+    auto& hudFrustumSize {mRenderer.GetHudFrustumSize()};
     auto width {hudFrustumSize.x + 0.1f};
     auto height {hudFrustumSize.y + 0.1f};
     
@@ -44,10 +44,10 @@ void FadeEffect::Start() {
     mState = State::FadingOut;
 }
 
-FadeEffect::State FadeEffect::Update() {
+FadeEffect::State FadeEffect::Update(float dt) {
     switch (mState) {
         case State::FadingOut:
-            mFade += mFadeSpeed * mEngine.GetLastFrameSeconds();
+            mFade += mFadeSpeed * dt;
             if (mFade >= mMidFade) {
                 mFade = mMidFade;
                 mState = State::Transition;
@@ -57,7 +57,7 @@ FadeEffect::State FadeEffect::Update() {
             mState = State::FadingIn;
             break;
         case State::FadingIn:
-            mFade -= mFadeSpeed * mEngine.GetLastFrameSeconds();
+            mFade -= mFadeSpeed * dt;
             if (mFade <= 0.0f) {
                 mFade = 0.0f;
                 mState = State::Idle;
@@ -70,8 +70,8 @@ FadeEffect::State FadeEffect::Update() {
     return mState;
 }
 
-FadeEffect::State FadeEffect::UpdateAndRender() {
-    if (Update() == State::Idle) {
+FadeEffect::State FadeEffect::UpdateAndRender(float dt) {
+    if (Update(dt) == State::Idle) {
         return State::Idle;
     }
     
@@ -81,13 +81,12 @@ FadeEffect::State FadeEffect::UpdateAndRender() {
 }
 
 void FadeEffect::Render() const {
-    auto& renderer {mEngine.GetRenderer()};
-    renderer.SetHudMode(true);
-    renderer.SetDepthTest(false);
+    mRenderer.SetHudMode(true);
+    mRenderer.SetDepthTest(false);
     mQuad->GetMaterial().SetOpacity(mFade);
-    renderer.Render(*mQuad, quadMatrix);
-    renderer.SetDepthTest(true);
-    renderer.SetHudMode(false);
+    mRenderer.Render(*mQuad, quadMatrix);
+    mRenderer.SetDepthTest(true);
+    mRenderer.SetHudMode(false);
 }
 
 bool FadeEffect::IsFadingOut() const {

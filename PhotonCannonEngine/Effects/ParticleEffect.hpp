@@ -12,19 +12,15 @@
 #include "Fnv1Hash.hpp"
 
 namespace Pht {
-    class IEngine;
-    
     class ParticleEffect: public ISceneObjectComponent {
     public:
         static constexpr ComponentId id {Hash::Fnv1a("ParticleEffect")};
         
-        ParticleEffect(IEngine& engine,
-                       const ParticleSettings& particleSettings,
+        ParticleEffect(const ParticleSettings& particleSettings,
                        const EmitterSettings& emitterSettings,
                        RenderMode renderMode);
         
-        void Update() override;
-        
+        void Update(float dt);
         void Start();
         const RenderableObject* GetRenderableObject() const;
         
@@ -42,7 +38,6 @@ namespace Pht {
         void WriteTriangles();
         void WriteParticleTriangles(const Particle& particle);
         
-        IEngine& mEngine;
         ParticleEmitter mEmitter;
         RenderMode mRenderMode {RenderMode::Triangles};
         std::vector<Particle> mParticles;

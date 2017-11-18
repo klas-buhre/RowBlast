@@ -50,7 +50,6 @@ MapScene::MapScene(Pht::IEngine& engine,
                    UserData& userData) :
     mEngine {engine},
     mUserData {userData},
-    mNextLevelParticleEffect {engine},
     mFont {"ethnocentric_rg_it.ttf", engine.GetRenderer().GetAdjustedNumPixels(35)} {
 
     CreateBackground(commonResources.GetMaterials().GetSkyMaterial());
@@ -69,7 +68,7 @@ void MapScene::Reset() {
 
 void MapScene::Update() {
     mFloatingCubes->Update();
-    mNextLevelParticleEffect.Update();
+    mNextLevelParticleEffect.Update(mEngine.GetLastFrameSeconds());
     
     for (auto& pin: mPins) {
         pin->Update();

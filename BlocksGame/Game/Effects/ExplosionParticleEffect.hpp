@@ -22,7 +22,7 @@ namespace BlocksGame {
         ExplosionParticleEffect(Pht::IEngine& engine, const GameScene& scene);
         
         void StartExplosion(const Pht::Vec2& position);
-        State Update();
+        State Update(float dt);
         
         const Pht::ParticleEffect_& GetOuterEffect() const {
             return mOuterParticleEffect;
@@ -33,7 +33,7 @@ namespace BlocksGame {
         }
         
     private:
-        void InitInnerEffect(Pht::IEngine& engine);
+        void InitInnerEffect();
         void InitOuterEffect(Pht::IEngine& engine);
         
         const GameScene& mScene;

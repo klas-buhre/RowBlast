@@ -50,16 +50,13 @@ namespace Pht {
         bool mIsActive {false};
     };
     
-    class IEngine;
-    
     class ParticleEmitter {
     public:
-        ParticleEmitter(IEngine& engine,
-                        const ParticleSettings& particleSettings,
+        ParticleEmitter(const ParticleSettings& particleSettings,
                         const EmitterSettings& emitterSettings);
         
         void Start();
-        void Update(std::vector<Particle>& particles);
+        void Update(float dt, std::vector<Particle>& particles);
         
         ParticleSettings& GetParticleSettings() {
             return mParticleSettings;
@@ -70,7 +67,6 @@ namespace Pht {
         void EmitParticle(Particle& particle);
         void EmitBurst(std::vector<Particle>& particles);
     
-        IEngine& mEngine;
         ParticleSettings mParticleSettings;
         EmitterSettings mEmitterSettings;
         float mAge {0.0f};

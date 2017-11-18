@@ -5,19 +5,15 @@
 #include "ParticleEffect.hpp"
 #include "Vector.hpp"
 
-namespace Pht {
-    class IEngine;
-}
-
 namespace BlocksGame {
     class GameScene;
     
     class NextLevelParticleEffect {
     public:
-        NextLevelParticleEffect(Pht::IEngine& engine);
+        NextLevelParticleEffect();
         
         void StartEffect(const Pht::Vec3& position);
-        void Update();
+        void Update(float dt);
         
         const Pht::ParticleEffect_& GetEffect() const {
             return mParticleEffect;

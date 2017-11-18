@@ -9,8 +9,6 @@ namespace Pht {
     class ISceneObjectComponent {
     public:
         virtual ~ISceneObjectComponent() {}
-        
-        virtual void Update() = 0;
     };
 }
 

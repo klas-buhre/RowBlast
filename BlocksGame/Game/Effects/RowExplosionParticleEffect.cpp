@@ -33,8 +33,7 @@ RowExplosionParticleEffect::RowExplosionParticleEffect(Pht::IEngine& engine,
         .mShrinkDuration = 0.3f
     };
 
-    mParticleEffect.mParticleSystem = std::make_unique<Pht::ParticleEffect>(engine,
-                                                                            particleSettings,
+    mParticleEffect.mParticleSystem = std::make_unique<Pht::ParticleEffect>(particleSettings,
                                                                             particleEmitterSettings,
                                                                             Pht::RenderMode::Points);
 }
@@ -53,8 +52,8 @@ void RowExplosionParticleEffect::StartExplosion(const Pht::Vec2& position) {
     mParticleEffect.mTransform = translation;
 }
 
-RowExplosionParticleEffect::State RowExplosionParticleEffect::Update() {
-    mParticleEffect.mParticleSystem->Update();
+RowExplosionParticleEffect::State RowExplosionParticleEffect::Update(float dt) {
+    mParticleEffect.mParticleSystem->Update(dt);
     
     if (mParticleEffect.mParticleSystem->IsActive()) {
         return State::Ongoing;

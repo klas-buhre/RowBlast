@@ -10,8 +10,6 @@ namespace Pht {
     public:
         static constexpr ComponentId id {Hash::Fnv1a("CameraComponent")};
         
-        void Update() override {}
-        
         void SetTarget(const Vec3& target, const Vec3& up);
         
         const Vec3& GetTarget() const {

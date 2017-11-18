@@ -44,7 +44,7 @@ GameController::GameController(Pht::IEngine& engine,
     mScene {engine, mScrollController, commonResources},
     mExplosionParticleEffect {engine, mScene},
     mRowExplosionParticleEffect {engine, mScene},
-    mPieceDropParticleEffect {engine, mScene},
+    mPieceDropParticleEffect {mScene},
     mBlastRadiusAnimation {engine, mScene},
     mFlyingBlocksAnimation {mScene},
     mClearLastBlocksAnimation {mField, mFlyingBlocksAnimation},
@@ -123,8 +123,8 @@ GameController::Command GameController::UpdateGame() {
     auto scrollState {mScrollController.Update()};
     auto fieldAnimationState {mCollapsingFieldAnimation.Update(dt)};
     mBlueprintSlotsFilledAnimation.Update(dt);
-    auto explosionState {mExplosionParticleEffect.Update()};
-    auto rowExplosionState {mRowExplosionParticleEffect.Update()};
+    auto explosionState {mExplosionParticleEffect.Update(dt)};
+    auto rowExplosionState {mRowExplosionParticleEffect.Update(dt)};
     auto fallingPieceAnimationState {mFallingPieceAnimation.Update(dt)};
     
     if (mState == GameState::Playing) {
@@ -143,7 +143,7 @@ GameController::Command GameController::UpdateGame() {
     auto command {UpdateSubState()};
     
     mFlashingBlocksAnimation.Update(dt);
-    mPieceDropParticleEffect.Update();
+    mPieceDropParticleEffect.Update(dt);
     mBlastRadiusAnimation.Update(dt);
     mFlyingBlocksAnimation.Update(dt);
     mHud.Update();

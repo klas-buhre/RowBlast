@@ -140,7 +140,7 @@ std::shared_ptr<Texture> TextureCache::GetTexture(const std::string& textureName
     
     auto image {Pht::LoadImage(textureName)};
     auto texture {CreateTexture(*image, generateMipmap)};
-    twoDTextures.push_back(std::make_pair(TwoDTexture{textureName, generateMipmap}, texture));
+    twoDTextures.emplace_back(TwoDTexture{textureName, generateMipmap}, texture);
     return texture;
 }
 
@@ -165,7 +165,7 @@ std::shared_ptr<Texture> TextureCache::GetTexture(const EnvMapTextureFilenames& 
     }
 
     auto texture {CreateEnvMapTexture(filenames)};
-    envMapTextures.push_back(std::make_pair(filenames, texture));
+    envMapTextures.emplace_back(filenames, texture);
     return texture;
 }
 

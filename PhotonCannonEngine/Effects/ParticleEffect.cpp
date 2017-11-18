@@ -1,6 +1,5 @@
 #include "ParticleEffect.hpp"
 
-#include "IEngine.hpp"
 #include "MathUtils.hpp"
 
 using namespace Pht;
@@ -57,12 +56,10 @@ namespace {
     }
 }
 
-ParticleEffect::ParticleEffect(IEngine& engine,
-                               const ParticleSettings& particleSettings,
+ParticleEffect::ParticleEffect(const ParticleSettings& particleSettings,
                                const EmitterSettings& emitterSettings,
                                RenderMode renderMode) :
-    mEngine {engine},
-    mEmitter {engine, particleSettings, emitterSettings},
+    mEmitter {particleSettings, emitterSettings},
     mRenderMode {renderMode} {
     
     auto numParticles {CalculateNumParticles(emitterSettings, particleSettings)};
@@ -99,13 +96,12 @@ void ParticleEffect::Start() {
     }
 }
 
-void ParticleEffect::Update() {
+void ParticleEffect::Update(float dt) {
     if (!mIsActive) {
         return;
     }
 
-    mEmitter.Update(mParticles);
-    auto dt {mEngine.GetLastFrameSeconds()};
+    mEmitter.Update(dt, mParticles);
     auto anyActiveParticles {false};
     auto& particleSettings {mEmitter.GetParticleSettings()};
     
