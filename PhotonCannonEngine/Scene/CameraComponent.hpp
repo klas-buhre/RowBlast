@@ -3,12 +3,11 @@
 
 #include "ISceneObjectComponent.hpp"
 #include "Vector.hpp"
-#include "Fnv1Hash.hpp"
 
 namespace Pht {
     class CameraComponent: public ISceneObjectComponent {
     public:
-        static constexpr ComponentId id {Hash::Fnv1a("CameraComponent")};
+        static const ComponentId id;
         
         void SetTarget(const Vec3& target, const Vec3& up);
         

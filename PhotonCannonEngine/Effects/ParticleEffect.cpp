@@ -1,6 +1,8 @@
 #include "ParticleEffect.hpp"
 
 #include "MathUtils.hpp"
+#include "Fnv1Hash.hpp"
+#include "IParticleSystem.hpp"
 
 using namespace Pht;
 
@@ -56,6 +58,8 @@ namespace {
     }
 }
 
+const ComponentId ParticleEffect::id {Hash::Fnv1a("ParticleEffect")};
+
 ParticleEffect::ParticleEffect(const ParticleSettings& particleSettings,
                                const EmitterSettings& emitterSettings,
                                RenderMode renderMode) :
@@ -85,6 +89,11 @@ ParticleEffect::ParticleEffect(const ParticleSettings& particleSettings,
             break;
         }
     }
+}
+
+ParticleEffect::~ParticleEffect() {
+    // TODO:: uncomment:
+    // mParticleSystem.RemoveParticleEffect(*this);
 }
 
 void ParticleEffect::Start() {

@@ -12,6 +12,7 @@ namespace Pht {
     public:
         using Name = uint32_t;
         
+        SceneObject();
         explicit SceneObject(Name name);
         explicit SceneObject(std::shared_ptr<RenderableObject> renderable);
         

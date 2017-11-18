@@ -70,8 +70,7 @@ Ongoing tasks:
         -When the ParticleEffect changes to inactive, it sets the SceneObject to not visible so that
          the Renderer does not try to render it. ParticleEffects should be rendered by either
          Renderer::RenderSceneObject or Renderer::RenderScene. Remove RenderUtils::RenderParticleEffect.
-    -Add ParticleSystem that manages and updates some of the ParticleEffects (only the ones that are
-     added to it).
+        -ParticleEffect removes itself from the ParticleSystem in the destructor.
     -How to load/switch scene? Remember to call RenderQueue::Allocate() when loading a scene.
         -Add SceneManager with methods SetScene and CreateRenderableObject.
  

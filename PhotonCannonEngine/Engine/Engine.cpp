@@ -35,6 +35,7 @@ void Engine::Update(float frameSeconds) {
 
     mRenderer.ClearBuffers();    
     mApplication->Update();
+    mParticleSystem.Update(mLastFrameSeconds);
 }
 
 IRenderer& Engine::GetRenderer() {
@@ -47,6 +48,10 @@ IInput& Engine::GetInput() {
 
 IAudio& Engine::GetAudio() {
     return mAudio;
+}
+
+IParticleSystem& Engine::GetParticleSystem() {
+    return mParticleSystem;
 }
 
 float Engine::GetLastFrameSeconds() const {

@@ -9,16 +9,16 @@
 #include "ParticleEmitter.hpp"
 #include "RenderableObject.hpp"
 #include "ISceneObjectComponent.hpp"
-#include "Fnv1Hash.hpp"
 
 namespace Pht {
     class ParticleEffect: public ISceneObjectComponent {
     public:
-        static constexpr ComponentId id {Hash::Fnv1a("ParticleEffect")};
+        static const ComponentId id;
         
         ParticleEffect(const ParticleSettings& particleSettings,
                        const EmitterSettings& emitterSettings,
                        RenderMode renderMode);
+        ~ParticleEffect();
         
         void Update(float dt);
         void Start();

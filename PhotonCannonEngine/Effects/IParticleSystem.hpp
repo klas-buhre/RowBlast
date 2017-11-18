@@ -13,14 +13,14 @@ namespace Pht {
     
     class IParticleSystem {
     public:
-        virtual IParticleSystem() {}
+        virtual ~IParticleSystem() {}
 
         virtual void AddParticleEffect(ParticleEffect& effect) = 0;
         virtual void RemoveParticleEffect(ParticleEffect& effect) = 0;
-        virtual std::unique_ptr<Sceneobject>
+        virtual std::unique_ptr<SceneObject>
             CreateParticleEffectSceneObject(const ParticleSettings& particleSettings,
                                             const EmitterSettings& emitterSettings,
-                                            RenderMode renderMode);
+                                            RenderMode renderMode) = 0;
     };
 }
 

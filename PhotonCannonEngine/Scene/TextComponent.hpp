@@ -3,12 +3,11 @@
 
 #include "ISceneObjectComponent.hpp"
 #include "Font.hpp"
-#include "Fnv1Hash.hpp"
 
 namespace Pht {
     class TextComponent: public ISceneObjectComponent {
     public:
-        static constexpr ComponentId id {Hash::Fnv1a("TextComponent")};
+        static const ComponentId id;
         
         TextComponent(const std::string& text, const TextProperties& properties);
         

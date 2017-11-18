@@ -7,6 +7,7 @@
 #include "Renderer.hpp"
 #include "InputHandler.hpp"
 #include "Audio.hpp"
+#include "ParticleSystem.hpp"
 
 namespace Pht {
     class IApplication;
@@ -18,6 +19,7 @@ namespace Pht {
         IRenderer& GetRenderer() override;
         IInput& GetInput() override;
         IAudio& GetAudio() override;
+        IParticleSystem& GetParticleSystem() override;
         float GetLastFrameSeconds() const override;
         std::unique_ptr<RenderableObject> CreateRenderableObject(const IMesh& mesh,
                                                                  const Material& material) override;
@@ -33,6 +35,7 @@ namespace Pht {
         Renderer mRenderer;
         InputHandler mInputHandler;
         Audio mAudio;
+        ParticleSystem mParticleSystem;
         std::unique_ptr<IApplication> mApplication;
         float mLastFrameSeconds {0.0f};
     };

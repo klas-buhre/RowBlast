@@ -4,6 +4,8 @@
 
 using namespace Pht;
 
+SceneObject::SceneObject() {}
+
 SceneObject::SceneObject(Name name) :
     mName {name} {}
 
