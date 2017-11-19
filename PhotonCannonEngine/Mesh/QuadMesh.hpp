@@ -22,6 +22,7 @@ namespace Pht {
         QuadMesh(float xSize, float ySize, const Vec2& textureCount);
         QuadMesh(const Vertices& vertices);
         
+        Optional<std::string> GetName() const override;
         VertexBuffer GetVertices(VertexFlags flags) const override;
         
     private:

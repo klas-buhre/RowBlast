@@ -119,7 +119,7 @@ Texture::~Texture() {
 
 std::shared_ptr<Texture> TextureCache::GetTexture(const std::string& textureName,
                                                   GenerateMipmap generateMipmap) {
-    std::lock_guard<std::mutex> guard(mutex);
+    std::lock_guard<std::mutex> guard {mutex};
     
     twoDTextures.erase(
         std::remove_if(
@@ -145,7 +145,7 @@ std::shared_ptr<Texture> TextureCache::GetTexture(const std::string& textureName
 }
 
 std::shared_ptr<Texture> TextureCache::GetTexture(const EnvMapTextureFilenames& filenames) {
-    std::lock_guard<std::mutex> guard(mutex);
+    std::lock_guard<std::mutex> guard {mutex};
     
     envMapTextures.erase(
         std::remove_if(

@@ -17,6 +17,10 @@ TriangleMesh::TriangleMesh(float size, float depth, const TriangleTextureCounts&
     mDepth {depth},
     mTextureCounts {textureCounts} {}
 
+Optional<std::string> TriangleMesh::GetName() const {
+    return {};
+}
+
 VertexBuffer TriangleMesh::GetVertices(VertexFlags flags) const {
     VertexBuffer vertexBuffer {18, 24, flags};
     auto halfSize {mSize / 2.0f};

@@ -8,6 +8,7 @@ namespace Pht {
     public:
         ObjMesh(const std::string& filename, float scale = 1.0f);
         
+        Optional<std::string> GetName() const override;
         VertexBuffer GetVertices(VertexFlags flags) const override;
         
     private:

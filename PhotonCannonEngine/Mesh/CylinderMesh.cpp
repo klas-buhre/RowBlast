@@ -21,6 +21,10 @@ CylinderMesh::CylinderMesh(float radius,
     mHeight {height},
     mTextureCounts {textureCounts} {}
 
+Optional<std::string> CylinderMesh::GetName() const {
+    return {};
+}
+
 VertexBuffer CylinderMesh::GetVertices(VertexFlags flags) const {
     VertexBuffer vertexBuffer {discVertexCount * 2 + bodyVertexCount,
                                discIndexCount * 2 + bodyIndexCount,

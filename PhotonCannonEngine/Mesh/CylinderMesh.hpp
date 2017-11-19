@@ -14,6 +14,7 @@ namespace Pht {
         CylinderMesh(float radius, float height);
         CylinderMesh(float radius, float height, const CylinderTextureCounts& textureCounts);
         
+        Optional<std::string> GetName() const override;
         VertexBuffer GetVertices(VertexFlags flags) const override;
         
     private:

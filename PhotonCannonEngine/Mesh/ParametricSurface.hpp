@@ -7,6 +7,7 @@
 namespace Pht {
     class ParametricSurface: public IMesh {
     public:
+        Optional<std::string> GetName() const override;
         VertexBuffer GetVertices(VertexFlags flags) const override;
         
     protected:

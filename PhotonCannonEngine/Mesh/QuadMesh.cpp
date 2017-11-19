@@ -16,7 +16,11 @@ QuadMesh::QuadMesh(float xSize, float ySize, const Vec2& textureCount) :
 
 QuadMesh::QuadMesh(const Vertices& vertices) :
     mVertices {vertices} {}
-    
+
+Optional<std::string> QuadMesh::GetName() const {
+    return {};
+}
+
 VertexBuffer QuadMesh::GetVertices(VertexFlags flags) const {
     VertexBuffer vertexBuffer {4, 6, flags};
     

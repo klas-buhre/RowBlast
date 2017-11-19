@@ -1,11 +1,6 @@
 /*
 Backlog:
   -Engine:
-    -The RenderableObject could be composed of a Material and shared_ptr to Vbo. Then there can be a
-     VboCache in RenderCore. So many RenderableObjects could share a single Vbo. This means that it
-     will be possible to have one RenderableObject per SceneObject (don't remove the shared_ptr to
-     RenderableObject in SceneObject) so that the Material for a particular SceneObject can be
-     modified without affecting the other SceneObjects.
     -Add a LightComponent with direction and intensity. The shaders need to be updated? Or is it
      enough to change the material uniforms?
     -Maybe introduce a Transform class for the SceneObject instead of the matrix?
@@ -66,6 +61,11 @@ Backlog:
     -Credit the icon creator: <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
   
 Ongoing tasks:
+    -The RenderableObject could be composed of a Material and shared_ptr to Vbo. Then there can be a
+     VboCache in RenderCore. So many RenderableObjects could share a single Vbo. This means that it
+     will be possible to have one RenderableObject per SceneObject (don't remove the shared_ptr to
+     RenderableObject in SceneObject) so that the Material for a particular SceneObject can be
+     modified without affecting the other SceneObjects.
     -Remove CreateRenderableObject() in IEngine. Use CreateSceneObject or CreateRenderableObject in
      ISceneManager instead.
  

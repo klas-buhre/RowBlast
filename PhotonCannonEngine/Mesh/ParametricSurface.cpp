@@ -14,6 +14,10 @@ Vec2 ParametricSurface::ComputeDomain(float x, float y) const {
     return {x * mUpperBound.x / mSlices.x, y * mUpperBound.y / mSlices.y};
 }
 
+Optional<std::string> ParametricSurface::GetName() const {
+    return {};
+}
+
 VertexBuffer ParametricSurface::GetVertices(VertexFlags flags) const {
     auto vertexCount {mDivisions.x * mDivisions.y};
     auto triangleIndexCount {6 * mSlices.x * mSlices.y};

@@ -13,6 +13,10 @@ BoxMesh::BoxMesh(float xSize, float ySize, float zSize, const BoxTextureCounts& 
     mZSize {zSize},
     mTextureCounts {textureCounts} {}
 
+Optional<std::string> BoxMesh::GetName() const {
+    return {};
+}
+
 VertexBuffer BoxMesh::GetVertices(VertexFlags flags) const {
     VertexBuffer vertexBuffer {24, 36, flags};
     auto halfX {mXSize / 2.0f};

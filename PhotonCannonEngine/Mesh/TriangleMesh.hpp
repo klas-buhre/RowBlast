@@ -17,6 +17,7 @@ namespace Pht {
         TriangleMesh(float size, float depth, const Pht::Vec3& offset);
         TriangleMesh(float size, float depth, const TriangleTextureCounts& textureCounts);
         
+        Optional<std::string> GetName() const override;
         VertexBuffer GetVertices(VertexFlags flags) const override;
         
     private:
