@@ -6,6 +6,13 @@ using namespace Pht;
 
 const ComponentId TextComponent::id {Hash::Fnv1a("TextComponent")};
 
-TextComponent::TextComponent(const std::string& text, const TextProperties& properties) :
+TextComponent::TextComponent(SceneObject& sceneObject,
+                             const std::string& text,
+                             const TextProperties& properties) :
+    mSceneObject {sceneObject},
     mText {text},
     mProperties {properties} {}
+
+SceneObject& TextComponent::GetSceneObject() {
+    return mSceneObject;
+}

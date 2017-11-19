@@ -5,6 +5,7 @@ namespace Pht {
     class IRenderer;
     class IInput;
     class IAudio;
+    class ISceneManager;
     class RenderableObject;
     class IMesh;
     class Material;
@@ -17,6 +18,7 @@ namespace Pht {
         virtual IRenderer& GetRenderer() = 0;
         virtual IInput& GetInput() = 0;
         virtual IAudio& GetAudio() = 0;
+        virtual ISceneManager& GetSceneManager() = 0;
         virtual IParticleSystem& GetParticleSystem() = 0;
         virtual float GetLastFrameSeconds() const = 0;
         virtual std::unique_ptr<RenderableObject> CreateRenderableObject(const IMesh& mesh,

@@ -9,6 +9,10 @@ namespace Pht {
     public:
         static const ComponentId id;
         
+        CameraComponent(SceneObject& sceneObject);
+        
+        SceneObject& GetSceneObject() override;
+        
         void SetTarget(const Vec3& target, const Vec3& up);
         
         const Vec3& GetTarget() const {
@@ -20,6 +24,7 @@ namespace Pht {
         }
         
     private:
+        SceneObject& mSceneObject;
         Vec3 mTarget {0.0f, 0.0f, 0.0f};
         Vec3 mUp {0.0f, 1.0f, 0.0f};
     };

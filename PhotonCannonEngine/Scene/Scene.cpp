@@ -8,7 +8,8 @@
 
 using namespace Pht;
 
-Scene::Scene() :
+Scene::Scene(Name name) :
+    mName {name},
     mRoot {std::make_unique<SceneObject>(Hash::Fnv1a("root"))},
     mRenderQueue {*mRoot} {
     

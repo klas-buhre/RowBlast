@@ -11,7 +11,9 @@ namespace Pht {
     
     class Scene {
     public:
-        Scene();
+        using Name = uint32_t;
+        
+        Scene(Name name);
         ~Scene();
         
         SceneObject& GetRoot();
@@ -32,8 +34,13 @@ namespace Pht {
         RenderQueue& GetRenderQueue() const {
             return mRenderQueue;
         }
+        
+        Name GetName() const {
+            return mName;
+        }
 
     private:
+        Name mName {0};
         std::unique_ptr<SceneObject> mRoot;
         Vec3 mLightDirection {1.0f, 1.0f, 1.0f};
         std::unique_ptr<SceneObject> mCamera;

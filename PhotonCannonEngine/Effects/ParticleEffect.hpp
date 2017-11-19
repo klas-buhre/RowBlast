@@ -24,6 +24,8 @@ namespace Pht {
                        RenderMode renderMode);
         ~ParticleEffect();
         
+        SceneObject& GetSceneObject() override;
+        
         void Update(float dt);
         void Start();
         void Stop();

@@ -13,7 +13,8 @@ namespace {
 
 Engine::Engine(bool createRenderBuffers, const Vec2& screenInputSize) :
     mRenderer {createRenderBuffers},
-    mInputHandler {screenInputSize} {
+    mInputHandler {screenInputSize},
+    mSceneManager {mRenderer} {
     
     std::srand(static_cast<int>(std::time(0)));
 }
@@ -48,6 +49,10 @@ IInput& Engine::GetInput() {
 
 IAudio& Engine::GetAudio() {
     return mAudio;
+}
+
+ISceneManager& Engine::GetSceneManager() {
+    return mSceneManager;
 }
 
 IParticleSystem& Engine::GetParticleSystem() {

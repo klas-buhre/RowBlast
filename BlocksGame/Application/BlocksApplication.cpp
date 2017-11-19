@@ -66,8 +66,10 @@ Backlog:
     -Credit the icon creator: <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
   
 Ongoing tasks:
-    -How to load/switch scene? Remember to call RenderQueue::Allocate() when loading a scene.
-        -Add SceneManager with methods SetScene and CreateRenderableObject.
+    -How to load/switch scene?
+        -Remember to call RenderQueue::Allocate() when settting a scene.
+        -Add SceneManager with methods SetScene and CreateRenderableObject. And maybe create methods
+         for SceneObjects with CameraComponent, TextComponent or LightComponent.
  
 Ideas:
     -The pause button could lead to a widget that has an undo button, a boosters button and a game

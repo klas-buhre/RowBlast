@@ -218,6 +218,7 @@
 		6270DC321FB8CCF000FB457D /* ParticleEmitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6270DC2D1FB8CCF000FB457D /* ParticleEmitter.cpp */; };
 		6270DC331FB8CCF000FB457D /* ParticleEffect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6270DC2F1FB8CCF000FB457D /* ParticleEffect.cpp */; };
 		6270DC3C1FBF4C9400FB457D /* ParticleSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6270DC3A1FBF4C9400FB457D /* ParticleSystem.cpp */; };
+		6270DC421FC18CF700FB457D /* SceneManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6270DC401FC18CF700FB457D /* SceneManager.cpp */; };
 		627625891EA2618D00321DD6 /* level2.json in Resources */ = {isa = PBXBuildFile; fileRef = 627625881EA2618D00321DD6 /* level2.json */; };
 		6280AF741F2CC1C900FFAF9B /* level11.json in Resources */ = {isa = PBXBuildFile; fileRef = 6280AF731F2CC1C900FFAF9B /* level11.json */; };
 		6280AF761F2CC49500FFAF9B /* level12.json in Resources */ = {isa = PBXBuildFile; fileRef = 6280AF751F2CC49500FFAF9B /* level12.json */; };
@@ -727,6 +728,9 @@
 		6270DC381FBF3F0B00FB457D /* IParticleSystem.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = IParticleSystem.hpp; sourceTree = "<group>"; };
 		6270DC3A1FBF4C9400FB457D /* ParticleSystem.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ParticleSystem.cpp; sourceTree = "<group>"; };
 		6270DC3B1FBF4C9400FB457D /* ParticleSystem.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ParticleSystem.hpp; sourceTree = "<group>"; };
+		6270DC3E1FC18BF000FB457D /* ISceneManager.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ISceneManager.hpp; sourceTree = "<group>"; };
+		6270DC401FC18CF700FB457D /* SceneManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SceneManager.cpp; sourceTree = "<group>"; };
+		6270DC411FC18CF700FB457D /* SceneManager.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SceneManager.hpp; sourceTree = "<group>"; };
 		627625881EA2618D00321DD6 /* level2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level2.json; sourceTree = "<group>"; };
 		6280AF731F2CC1C900FFAF9B /* level11.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level11.json; sourceTree = "<group>"; };
 		6280AF751F2CC49500FFAF9B /* level12.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level12.json; sourceTree = "<group>"; };
@@ -804,11 +808,14 @@
 			children = (
 				6270DC241FB7622500FB457D /* CameraComponent.cpp */,
 				6270DC251FB7622500FB457D /* CameraComponent.hpp */,
+				6270DC3E1FC18BF000FB457D /* ISceneManager.hpp */,
 				6270DC1F1FB7441B00FB457D /* ISceneObjectComponent.hpp */,
 				6208C8621FAF205A0059BE51 /* ObjMeshLoader.cpp */,
 				6208C8631FAF205A0059BE51 /* ObjMeshLoader.hpp */,
 				6270DC1A1FB70AA200FB457D /* Scene.cpp */,
 				6270DC1B1FB70AA200FB457D /* Scene.hpp */,
+				6270DC401FC18CF700FB457D /* SceneManager.cpp */,
+				6270DC411FC18CF700FB457D /* SceneManager.hpp */,
 				6208C8641FAF205A0059BE51 /* SceneObject.cpp */,
 				6208C8651FAF205A0059BE51 /* SceneObject.hpp */,
 				6270DC211FB7554200FB457D /* TextComponent.cpp */,
@@ -1808,6 +1815,7 @@
 				628A225A1F6E704900D97BF8 /* GhostPieceProducer.cpp in Sources */,
 				6208C8661FAF210A0059BE51 /* SceneObject.cpp in Sources */,
 				624EAFC21EE559A9009F81BC /* SlidingTextAnimation.cpp in Sources */,
+				6270DC421FC18CF700FB457D /* SceneManager.cpp in Sources */,
 				624447D61EDDD2C40080ECE8 /* TitleScene.cpp in Sources */,
 				624447A91EDDD2C40080ECE8 /* RowExplosionParticleEffect.cpp in Sources */,
 				623B32D71F17AC11000C64A1 /* InputHandler.cpp in Sources */,

@@ -103,6 +103,10 @@ ParticleEffect::~ParticleEffect() {
     mParticleSystem.RemoveParticleEffect(*this);
 }
 
+SceneObject& ParticleEffect::GetSceneObject() {
+    return mSceneObject;
+}
+
 void ParticleEffect::Start() {
     mEmitter.Start();
     mIsActive = true;

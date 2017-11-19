@@ -9,7 +9,11 @@ namespace Pht {
     public:
         static const ComponentId id;
         
-        TextComponent(const std::string& text, const TextProperties& properties);
+        TextComponent(SceneObject& sceneObject,
+                      const std::string& text,
+                      const TextProperties& properties);
+        
+        SceneObject& GetSceneObject() override;
         
         const std::string& GetText() const {
             return mText;
@@ -20,6 +24,7 @@ namespace Pht {
         }
         
     private:
+        SceneObject& mSceneObject;
         std::string mText;
         TextProperties mProperties;
     };
