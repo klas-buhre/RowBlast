@@ -11,8 +11,11 @@ namespace Pht {
     
     class CylinderMesh: public IMesh {
     public:
-        CylinderMesh(float radius, float height);
-        CylinderMesh(float radius, float height, const CylinderTextureCounts& textureCounts);
+        CylinderMesh(float radius, float height, const Optional<std::string>& name = {});
+        CylinderMesh(float radius,
+                     float height,
+                     const CylinderTextureCounts& textureCounts,
+                     const Optional<std::string>& name = {});
         
         Optional<std::string> GetName() const override;
         VertexBuffer GetVertices(VertexFlags flags) const override;
@@ -26,6 +29,7 @@ namespace Pht {
         void GenerateBody(VertexBuffer& vertexBuffer) const;
         void GenerateDisc(VertexBuffer& vertexBuffer, DiscType discType) const;
         
+        Optional<std::string> mName;
         float mRadius;
         float mHeight;
         CylinderTextureCounts mTextureCounts;

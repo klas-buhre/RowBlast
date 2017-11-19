@@ -31,6 +31,7 @@
 #include "Scene.hpp"
 #include "CameraComponent.hpp"
 #include "TextComponent.hpp"
+#include "VboCache.hpp"
 
 using namespace Pht;
 
@@ -147,9 +148,9 @@ namespace {
     
     void EnableVertexAttributes(const ShaderProgram& shaderProgram,
                                 const Material& material,
-                                const RenderableObject& object) {
+                                GLuint vertexBufferId) {
         // Bind the vertex buffer.
-        glBindBuffer(GL_ARRAY_BUFFER, object.GetVertexBufferId());
+        glBindBuffer(GL_ARRAY_BUFFER, vertexBufferId);
 
         auto vertexFlags {shaderProgram.GetVertexFlags()};
         auto stride {CalculateStride(vertexFlags)};
@@ -444,9 +445,7 @@ void Renderer::SetScissorTest(bool scissorTest) {
 std::unique_ptr<RenderableObject> Renderer::CreateRenderableObject(const IMesh& mesh,
                                                                    const Material& material) {
     auto shaderProgram {GetShaderProgram(material.GetShaderType())};
-    VertexBuffer vertexBuffer {mesh.GetVertices(shaderProgram.GetVertexFlags())};
-    
-    return std::make_unique<RenderableObject>(material, vertexBuffer);
+    return std::make_unique<RenderableObject>(material, mesh, shaderProgram.GetVertexFlags());
 }
 
 void Renderer::Render(const RenderableObject& object, const Mat4& modelTransform) {
@@ -464,16 +463,18 @@ void Renderer::Render(const RenderableObject& object, const Mat4& modelTransform
     // Set the material properties used by the shaders.
     SetMaterialProperties(uniforms, material, shaderType, object);
 
+    auto& vbo {object.GetVbo()};
+    
     // Enable vertex attribute arrays.
-    EnableVertexAttributes(shaderProgram, material, object);
+    EnableVertexAttributes(shaderProgram, material, vbo.GetVertexBufferId());
 
     switch (object.GetRenderMode()) {
         case RenderMode::Triangles:
-            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, object.GetIndexBufferId());
-            glDrawElements(GL_TRIANGLES, object.GetIndexCount(), GL_UNSIGNED_SHORT, 0);
+            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo.GetIndexBufferId());
+            glDrawElements(GL_TRIANGLES, vbo.GetIndexCount(), GL_UNSIGNED_SHORT, 0);
             break;
         case RenderMode::Points:
-            glDrawArrays(GL_POINTS, 0, object.GetPointCount());
+            glDrawArrays(GL_POINTS, 0, vbo.GetPointCount());
             break;
     }
     

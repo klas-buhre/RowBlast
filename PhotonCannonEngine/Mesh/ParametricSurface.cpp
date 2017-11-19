@@ -4,7 +4,9 @@ using namespace Pht;
 
 ParametricSurface::ParametricSurface(const IVec2& divisions,
                                      const Vec2& upperBound,
-                                     const Vec2& textureCount) :
+                                     const Vec2& textureCount,
+                                     const Optional<std::string>& mName) :
+    mName {mName},
     mDivisions {divisions},
     mUpperBound {upperBound},
     mSlices {mDivisions - IVec2{1, 1}},
@@ -15,7 +17,7 @@ Vec2 ParametricSurface::ComputeDomain(float x, float y) const {
 }
 
 Optional<std::string> ParametricSurface::GetName() const {
-    return {};
+    return mName;
 }
 
 VertexBuffer ParametricSurface::GetVertices(VertexFlags flags) const {

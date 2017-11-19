@@ -7,13 +7,13 @@
 #include <OpenGLES/ES3/gl.h>
 
 namespace Pht {
+    enum class GenerateIndexBuffer {
+        Yes,
+        No
+    };
+    
     class Vbo {
     public:
-        enum class GenerateIndexBuffer {
-            Yes,
-            No
-        };
-        
         Vbo(GenerateIndexBuffer generateIndexBuffer);
         ~Vbo();
         

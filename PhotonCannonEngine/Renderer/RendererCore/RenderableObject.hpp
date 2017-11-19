@@ -1,12 +1,13 @@
 #ifndef RenderableObject_hpp
 #define RenderableObject_hpp
 
-#include <OpenGLES/ES3/gl.h>
-
 #include "Material.hpp"
 
 namespace Pht {
+    class Vbo;
     class VertexBuffer;
+    class IMesh;
+    class VertexFlags;
     
     enum class RenderMode {
         Points,
@@ -20,27 +21,16 @@ namespace Pht {
     
     class RenderableObject {
     public:
-        RenderableObject(const Material& material, const VertexBuffer& vertexBuffer);
+        RenderableObject(const Material& material, const IMesh& mesh, const VertexFlags& flags);
         RenderableObject(const Material& material, RenderMode renderMode);
         ~RenderableObject();
         
         void UploadTriangles(const VertexBuffer& vertexBuffer, BufferUsage bufferUsage);
         void UploadPoints(const VertexBuffer& vertexBuffer, BufferUsage bufferUsage);
-        
+        const Vbo& GetVbo() const;
+
         RenderMode GetRenderMode() const {
             return mRenderMode;
-        }
-        
-        GLuint GetVertexBufferId() const {
-            return mVertexBufferId;
-        }
-        
-        GLuint GetIndexBufferId() const {
-            return mIndexBufferId;
-        }
-        
-        int GetIndexCount() const {
-            return mIndexCount;
         }
 
         const Material& GetMaterial() const {
@@ -51,17 +41,12 @@ namespace Pht {
             return mMaterial;
         }
         
-        int GetPointCount() const {
-            return mPointCount;
-        }
-        
     private:
+        void CreateVboAndUploadData(const IMesh& mesh, const VertexFlags& flags);
+        
         RenderMode mRenderMode {RenderMode::Triangles};
         Material mMaterial;
-        GLuint mVertexBufferId {0};
-        GLuint mIndexBufferId {0};
-        int mIndexCount {0};
-        int mPointCount {0};
+        std::shared_ptr<Vbo> mVbo;
     };
 }
 

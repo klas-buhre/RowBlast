@@ -11,18 +11,20 @@ namespace {
     const auto discIndexCount {slices * 3};
 }
 
-CylinderMesh::CylinderMesh(float radius, float height) :
-    CylinderMesh {radius, height, CylinderTextureCounts{{1.0f, 1.0f}, {1.0f, 1.0f}}} {}
+CylinderMesh::CylinderMesh(float radius, float height, const Optional<std::string>& name) :
+    CylinderMesh {radius, height, CylinderTextureCounts{{1.0f, 1.0f}, {1.0f, 1.0f}}, name} {}
 
 CylinderMesh::CylinderMesh(float radius,
                            float height,
-                           const CylinderTextureCounts& textureCounts) :
+                           const CylinderTextureCounts& textureCounts,
+                           const Optional<std::string>& name) :
+    mName {name},
     mRadius {radius},
     mHeight {height},
     mTextureCounts {textureCounts} {}
 
 Optional<std::string> CylinderMesh::GetName() const {
-    return {};
+    return mName;
 }
 
 VertexBuffer CylinderMesh::GetVertices(VertexFlags flags) const {

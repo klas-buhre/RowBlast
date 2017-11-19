@@ -3,6 +3,8 @@
 #include <assert.h>
 
 #include "VertexBuffer.hpp"
+#include "IMesh.hpp"
+#include "VboCache.hpp"
 
 using namespace Pht;
 
@@ -15,31 +17,47 @@ namespace {
                 return GL_DYNAMIC_DRAW;
         }
     }
+    
+    std::shared_ptr<Vbo> CreateVbo(RenderMode renderMode) {
+        auto generateIndexBuffer {
+            renderMode == RenderMode::Triangles ? GenerateIndexBuffer::Yes : GenerateIndexBuffer::No
+        };
+    
+        return std::make_shared<Vbo>(generateIndexBuffer);
+    }
 }
 
-RenderableObject::RenderableObject(const Material& material, const VertexBuffer& vertexBuffer) :
+RenderableObject::RenderableObject(const Material& material,
+                                   const IMesh& mesh,
+                                   const VertexFlags& flags) :
     mMaterial {material} {
-    
-    glGenBuffers(1, &mVertexBufferId);
-    glGenBuffers(1, &mIndexBufferId);
 
-    UploadTriangles(vertexBuffer, BufferUsage::StaticDraw);
+    auto meshName {mesh.GetName()};
+    
+    if (meshName.HasValue()) {
+        mVbo = VboCache::Get(meshName.GetValue());
+        
+        if (mVbo == nullptr) {
+            CreateVboAndUploadData(mesh, flags);
+            VboCache::Add(meshName.GetValue(), mVbo);
+        }
+    } else {
+        CreateVboAndUploadData(mesh, flags);
+    }
 }
 
 RenderableObject::RenderableObject(const Material& material, RenderMode renderMode) :
     mRenderMode {renderMode},
-    mMaterial {material} {
-    
-    glGenBuffers(1, &mVertexBufferId);
-    
-    if (renderMode == RenderMode::Triangles) {
-        glGenBuffers(1, &mIndexBufferId);
-    }
-}
+    mMaterial {material},
+    mVbo {CreateVbo(renderMode)} {}
 
-RenderableObject::~RenderableObject() {
-    glDeleteBuffers(1, &mVertexBufferId);
-    glDeleteBuffers(1, &mIndexBufferId);
+RenderableObject::~RenderableObject() {}
+
+void RenderableObject::CreateVboAndUploadData(const IMesh& mesh, const VertexFlags& flags) {
+    mVbo = CreateVbo(mRenderMode);
+    
+    VertexBuffer vertexBuffer {mesh.GetVertices(flags)};
+    UploadTriangles(vertexBuffer, BufferUsage::StaticDraw);
 }
 
 void RenderableObject::UploadTriangles(const VertexBuffer& vertexBuffer, BufferUsage bufferUsage) {
@@ -47,29 +65,33 @@ void RenderableObject::UploadTriangles(const VertexBuffer& vertexBuffer, BufferU
     
     auto glBufferUsage {ToGlBufferUsage(bufferUsage)};
     
-    glBindBuffer(GL_ARRAY_BUFFER, mVertexBufferId);
+    glBindBuffer(GL_ARRAY_BUFFER, mVbo->mVertexBufferId);
     glBufferData(GL_ARRAY_BUFFER,
                  vertexBuffer.GetVertexBufferSize() * sizeof(float),
                  vertexBuffer.GetVertexBuffer(),
                  glBufferUsage);
     
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mIndexBufferId);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mVbo->mIndexBufferId);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER,
                  vertexBuffer.GetIndexBufferSize() * sizeof(GLushort),
                  vertexBuffer.GetIndexBuffer(),
                  glBufferUsage);
     
-    mIndexCount = vertexBuffer.GetIndexBufferSize();
+    mVbo->mIndexCount = vertexBuffer.GetIndexBufferSize();
 }
 
 void RenderableObject::UploadPoints(const VertexBuffer& vertexBuffer, BufferUsage bufferUsage) {
     assert(mRenderMode == RenderMode::Points);
     
-    glBindBuffer(GL_ARRAY_BUFFER, mVertexBufferId);
+    glBindBuffer(GL_ARRAY_BUFFER, mVbo->mVertexBufferId);
     glBufferData(GL_ARRAY_BUFFER,
                  vertexBuffer.GetVertexBufferSize() * sizeof(float),
                  vertexBuffer.GetVertexBuffer(),
                  ToGlBufferUsage(bufferUsage));
     
-    mPointCount = vertexBuffer.GetNumVerticesWritten();
+    mVbo->mPointCount = vertexBuffer.GetNumVerticesWritten();
+}
+
+const Vbo& RenderableObject::GetVbo() const {
+    return *mVbo;
 }

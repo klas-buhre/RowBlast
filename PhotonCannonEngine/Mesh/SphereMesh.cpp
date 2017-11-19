@@ -2,18 +2,21 @@
 
 using namespace Pht;
 
-SphereMesh::SphereMesh(float radius) :
-    SphereMesh {radius, Vec2{5, 8}} {}
+SphereMesh::SphereMesh(float radius, const Optional<std::string>& name) :
+    SphereMesh {radius, Vec2{5.0f, 8.0f}, name} {}
 
-SphereMesh::SphereMesh(float radius, const IVec2& divisions) :
-    ParametricSurface {divisions, Vec2{Pi, TwoPi}, Vec2{1.0f, 1.0f}},
+SphereMesh::SphereMesh(float radius, const IVec2& divisions, const Optional<std::string>& name) :
+    ParametricSurface {divisions, Vec2{Pi, TwoPi}, Vec2{1.0f, 1.0f}, name},
     mRadius {radius} {}
 
-SphereMesh::SphereMesh(float radius, const Vec2& textureCount) :
-    SphereMesh {radius, textureCount, Vec3{0.0f, 0.0f, 0.0f}} {}
+SphereMesh::SphereMesh(float radius, const Vec2& textureCount, const Optional<std::string>& name) :
+    SphereMesh {radius, textureCount, Vec3{0.0f, 0.0f, 0.0f}, name} {}
 
-SphereMesh::SphereMesh(float radius, const Vec2& textureCount, const Vec3& translation) :
-    ParametricSurface {IVec2{20, 20}, Vec2{Pi, TwoPi}, textureCount},
+SphereMesh::SphereMesh(float radius,
+                       const Vec2& textureCount,
+                       const Vec3& translation,
+                       const Optional<std::string>& name) :
+    ParametricSurface {IVec2{20, 20}, Vec2{Pi, TwoPi}, textureCount, name},
     mRadius {radius},
     mTranslation {translation} {}
 
