@@ -15,6 +15,8 @@ namespace Pht {
         Scene* GetScene() override;
         std::unique_ptr<RenderableObject> CreateRenderableObject(const IMesh& mesh,
                                                                  const Material& material) override;
+        std::unique_ptr<SceneObject> CreateSceneObject(const IMesh& mesh,
+                                                       const Material& material) override;
         std::unique_ptr<SceneObject> CreateCamera() override;
         std::unique_ptr<SceneObject> CreateText(const std::string& text,
                                                 const TextProperties& properties) override;

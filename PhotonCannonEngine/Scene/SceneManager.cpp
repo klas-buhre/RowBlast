@@ -28,6 +28,12 @@ std::unique_ptr<RenderableObject> SceneManager::CreateRenderableObject(const IMe
     return mRenderer.CreateRenderableObject(mesh, material);
 }
 
+std::unique_ptr<SceneObject> SceneManager::CreateSceneObject(const IMesh& mesh,
+                                                             const Material& material) {
+    auto renderableObject {mRenderer.CreateRenderableObject(mesh, material)};
+    return std::make_unique<Pht::SceneObject>(std::move(renderableObject));
+}
+
 std::unique_ptr<SceneObject> SceneManager::CreateCamera() {
     auto sceneObject {std::make_unique<SceneObject>()};
     auto cameraComponent {std::make_unique<CameraComponent>(*sceneObject)};

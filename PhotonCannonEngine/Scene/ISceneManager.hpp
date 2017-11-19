@@ -19,6 +19,8 @@ namespace Pht {
         virtual Scene* GetScene() = 0;
         virtual std::unique_ptr<RenderableObject> CreateRenderableObject(const IMesh& mesh,
                                                                          const Material& material) = 0;
+        virtual std::unique_ptr<SceneObject> CreateSceneObject(const IMesh& mesh,
+                                                               const Material& material) = 0;
         virtual std::unique_ptr<SceneObject> CreateCamera() = 0;
         virtual std::unique_ptr<SceneObject> CreateText(const std::string& text,
                                                         const TextProperties& properties) = 0;

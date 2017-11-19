@@ -11,6 +11,7 @@
 #include "SphereMesh.hpp"
 #include "ObjMesh.hpp"
 #include "MathUtils.hpp"
+#include "ISceneManager.hpp"
 
 // Game includes.
 #include "MapLoader.hpp"
@@ -114,8 +115,8 @@ const Pht::SceneObject& MapScene::GetNextLevelParticleEffect() const {
 }
 
 void MapScene::CreateBackground(const Pht::Material& backgroundMaterial) {
-    mBackground = std::make_unique<Pht::SceneObject>(
-        mEngine.CreateRenderableObject(Pht::QuadMesh {sceneSize.x, sceneSize.y}, backgroundMaterial));
+    mBackground = mEngine.GetSceneManager().CreateSceneObject(Pht::QuadMesh {sceneSize.x, sceneSize.y},
+                                                              backgroundMaterial);
     mBackground->Translate({0.0f, 0.0f, -5.0f});
 }
 
@@ -139,26 +140,28 @@ void MapScene::CreateFloatingCubes(const CommonResources& commonResources) {
 }
 
 void MapScene::LoadStar(const CommonResources& commonResources) {
-    mStarRenderable = mEngine.CreateRenderableObject(
+    mStarRenderable = mEngine.GetSceneManager().CreateRenderableObject(
         Pht::ObjMesh {"star.obj", 0.05f}, commonResources.GetMaterials().GetGoldMaterial());
 }
 
 void MapScene::CreatePins(const CommonResources& commonResources) {
+    auto& sceneManager {mEngine.GetSceneManager()};
+    
     mBluePinRenderable =
-        mEngine.CreateRenderableObject(Pht::SphereMesh {0.85f},
-                                       commonResources.GetMaterials().GetBlueMaterial());
+        sceneManager.CreateRenderableObject(Pht::SphereMesh {0.85f},
+                                            commonResources.GetMaterials().GetBlueMaterial());
     
     mBlueConnectionRenderable =
-        mEngine.CreateRenderableObject(Pht::CylinderMesh {0.3f, 4.0f},
-                                       commonResources.GetMaterials().GetBlueMaterial());
+        sceneManager.CreateRenderableObject(Pht::CylinderMesh {0.3f, 4.0f},
+                                            commonResources.GetMaterials().GetBlueMaterial());
     
     mGrayPinRenderable =
-        mEngine.CreateRenderableObject(Pht::SphereMesh {0.85f},
-                                       commonResources.GetMaterials().GetLightGrayMaterial());
+        sceneManager.CreateRenderableObject(Pht::SphereMesh {0.85f},
+                                            commonResources.GetMaterials().GetLightGrayMaterial());
     
     mGrayConnectionRenderable =
-        mEngine.CreateRenderableObject(Pht::CylinderMesh {0.3f, 4.0f},
-                                       commonResources.GetMaterials().GetLightGrayMaterial());
+        sceneManager.CreateRenderableObject(Pht::CylinderMesh {0.3f, 4.0f},
+                                            commonResources.GetMaterials().GetLightGrayMaterial());
 
     std::vector<MapLevel> levels;
     MapLoader::Load("map.json", levels);
