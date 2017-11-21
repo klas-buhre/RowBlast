@@ -59,7 +59,7 @@ GameScene::GameScene(Pht::IEngine& engine,
 }
 
 void GameScene::Reset(const Level& level) {
-    mEngine.GetRenderer().SetLightPosition(mLightDirection);
+    mEngine.GetRenderer().SetLightDirection(mLightDirection);
     
     mFieldWidth = mCellSize * level.GetNumColumns();
     mFieldHeight = mCellSize * level.GetNumRows();

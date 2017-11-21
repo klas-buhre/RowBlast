@@ -11,10 +11,16 @@ namespace Pht {
         
         CameraComponent(SceneObject& sceneObject);
         
-        SceneObject& GetSceneObject() override;
-        
         void SetTarget(const Vec3& target, const Vec3& up);
+
+        SceneObject& GetSceneObject() {
+            return mSceneObject;
+        }
         
+        const SceneObject& GetSceneObject() const {
+            return mSceneObject;
+        }
+
         const Vec3& GetTarget() const {
             return mTarget;
         }

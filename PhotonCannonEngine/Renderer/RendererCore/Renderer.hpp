@@ -18,7 +18,8 @@ namespace Pht {
     public:
         Renderer(bool createRenderBuffers);
         
-        void SetLightPosition(const Vec3& lightPositionWorldSpace) override;
+        void SetLightDirection(const Vec3& lightDirection) override;
+        void SetDirectionalLightIntensity(float intensity) override;
         void SetClearColorBuffer(bool clearColorBuffer) override;
         void SetHudMode(bool hudMode) override;
         void SetDepthTest(bool depthTest) override;
@@ -53,10 +54,14 @@ namespace Pht {
         void InitHudFrustum();
         void InitShaders();
         void SetupProjectionInShaders();
-        void SetLightPositionInShaders();
+        void SetLightDirectionInShaders();
         const Vec3& GetCameraPosition() const;
         void SetTransforms(const Mat4& modelTransform,
                            const ShaderProgram::UniformHandles& uniforms);
+        void SetMaterialProperties(const ShaderProgram::UniformHandles& uniforms,
+                                   const Material& material,
+                                   ShaderType shaderType,
+                                   const RenderableObject& object);
         ShaderProgram& GetShaderProgram(ShaderType shaderType);
         void RenderTextInternal(const std::string& text,
                                 const Vec2& position,
@@ -67,13 +72,18 @@ namespace Pht {
             Vec2 mSize;
         };
         
+        struct GlobalLight {
+            Vec3 mDirectionWorldSpace;
+            float mDirectionalIntensity {1.0f};
+        };
+        
         bool mClearColorBuffer {true};
         bool mHudMode {false};
         ProjectionMode mProjectionMode {ProjectionMode::Perspective};
         GLuint mColorRenderbuffer {0};
-        Vec3 mLightPositionWorldSpace;
-        Vec3 mHudCameraPosition;
+        GlobalLight mGlobalLight;
         Camera mCamera;
+        Vec3 mHudCameraPosition;
         HudFrustum mHudFrustum;
         Vec2 mOrthographicFrustumSize;
         IVec2 mRenderBufferSize;

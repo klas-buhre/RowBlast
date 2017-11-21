@@ -12,7 +12,3 @@ TextComponent::TextComponent(SceneObject& sceneObject,
     mSceneObject {sceneObject},
     mText {text},
     mProperties {properties} {}
-
-SceneObject& TextComponent::GetSceneObject() {
-    return mSceneObject;
-}

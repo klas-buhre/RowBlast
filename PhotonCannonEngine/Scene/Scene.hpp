@@ -8,6 +8,8 @@
 
 namespace Pht {
     class SceneObject;
+    class LightComponent;
+    class CameraComponent;
     
     class Scene {
     public:
@@ -18,18 +20,13 @@ namespace Pht {
         
         SceneObject& GetRoot();
         const SceneObject& GetRoot() const;
+        void SetLight(std::unique_ptr<SceneObject> light);
         void SetCamera(std::unique_ptr<SceneObject> camera);
-        SceneObject& GetCamera();
-        const SceneObject& GetCamera() const;
+        LightComponent& GetLight();
+        const LightComponent& GetLight() const;
+        CameraComponent& GetCamera();
+        const CameraComponent& GetCamera() const;
         void SetDistanceFunction(DistanceFunction distanceFunction);
-
-        void SetLightDirection(const Pht::Vec3& lightDirection) {
-            mLightDirection = lightDirection;
-        }
-        
-        const Vec3& GetLightDirection() const {
-            return mLightDirection;
-        }
         
         RenderQueue& GetRenderQueue() const {
             return mRenderQueue;
@@ -42,8 +39,8 @@ namespace Pht {
     private:
         Name mName {0};
         std::unique_ptr<SceneObject> mRoot;
-        Vec3 mLightDirection {1.0f, 1.0f, 1.0f};
-        std::unique_ptr<SceneObject> mCamera;
+        LightComponent* mLight {nullptr};
+        CameraComponent* mCamera {nullptr};
         mutable RenderQueue mRenderQueue;
     };
 }

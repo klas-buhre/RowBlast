@@ -24,8 +24,6 @@ namespace Pht {
                        RenderMode renderMode);
         ~ParticleEffect();
         
-        SceneObject& GetSceneObject() override;
-        
         void Update(float dt);
         void Start();
         void Stop();
@@ -36,6 +34,14 @@ namespace Pht {
         
         ParticleEmitter& GetEmitter() {
             return mEmitter;
+        }
+        
+        SceneObject& GetSceneObject() {
+            return mSceneObject;
+        }
+        
+        const SceneObject& GetSceneObject() const {
+            return mSceneObject;
         }
         
     private:

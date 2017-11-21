@@ -96,6 +96,10 @@ namespace Pht {
             mIsInFront = isInFront;
         }
         
+        void SetParent(SceneObject* parent) {
+            mParent = parent;
+        }
+        
         const std::vector<std::unique_ptr<SceneObject>>& GetChildren() const {
             return mChildren;
         }
@@ -106,6 +110,7 @@ namespace Pht {
         bool mIsVisible {true};
         bool mIsInFront {false};
         std::shared_ptr<RenderableObject> mRenderable;
+        SceneObject* mParent {nullptr};
         std::vector<std::unique_ptr<SceneObject>> mChildren;
         std::vector<std::pair<ComponentId, std::unique_ptr<ISceneObjectComponent>>> mComponents;
         Name mName {0};

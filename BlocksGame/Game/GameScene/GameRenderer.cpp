@@ -520,7 +520,7 @@ void GameRenderer::RenderFlyingBlocks() {
 
 void GameRenderer::RenderHud() {
     mEngineRenderer.SetHudMode(true);
-    mEngineRenderer.SetLightPosition(mHud.GetLightDirection());
+    mEngineRenderer.SetLightDirection(mHud.GetLightDirection());
 
     RenderUtils::RenderGradientRectangle(mEngineRenderer, mHud.GetProgressTextRectangle());
     RenderUtils::RenderText(mEngineRenderer, mHud.GetProgressText());
@@ -557,7 +557,7 @@ void GameRenderer::RenderHud() {
     RenderPreviewPiece(selectablePieces[0], selectablePiecesPosition + piecePositions[0]);
     RenderPreviewPiece(selectablePieces[1], selectablePiecesPosition + piecePositions[1]);
     
-    mEngineRenderer.SetLightPosition(mScene.GetLightDirection());
+    mEngineRenderer.SetLightDirection(mScene.GetLightDirection());
     mEngineRenderer.SetHudMode(false);
 }
 
@@ -717,9 +717,9 @@ void GameRenderer::RenderLevelCompletedView() {
     levelCompletedDialogController.GetFadeEffect().Render();
     
     auto& view {levelCompletedDialogController.GetView()};
-    mEngineRenderer.SetLightPosition({0.75f, 1.0f, 1.0f});
+    mEngineRenderer.SetLightDirection({0.75f, 1.0f, 1.0f});
     mEngineRenderer.RenderGuiView(view);
-    mEngineRenderer.SetLightPosition(mScene.GetLightDirection());
+    mEngineRenderer.SetLightDirection(mScene.GetLightDirection());
 }
 
 void GameRenderer::RenderSlidingText() {

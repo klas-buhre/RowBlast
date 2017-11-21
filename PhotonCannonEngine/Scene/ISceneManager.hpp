@@ -22,6 +22,7 @@ namespace Pht {
         virtual std::unique_ptr<SceneObject> CreateSceneObject(const IMesh& mesh,
                                                                const Material& material) = 0;
         virtual std::unique_ptr<SceneObject> CreateCamera() = 0;
+        virtual std::unique_ptr<SceneObject> CreateLight() = 0;
         virtual std::unique_ptr<SceneObject> CreateText(const std::string& text,
                                                         const TextProperties& properties) = 0;
     };

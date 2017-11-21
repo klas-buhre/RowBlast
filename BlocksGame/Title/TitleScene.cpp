@@ -57,7 +57,8 @@ TitleScene::TitleScene(Pht::IEngine& engine, const CommonResources& commonResour
     
 void TitleScene::Reset() {
     auto& renderer {mEngine.GetRenderer()};
-    renderer.SetLightPosition({1.0f, 1.0f, 1.0f});
+    renderer.SetLightDirection({1.0f, 1.0f, 1.0f});
+    renderer.SetDirectionalLightIntensity(1.0f);
     
     Pht::Vec3 cameraPosition {0.0f, 0.0f, 20.5f};
     Pht::Vec3 target {0.0f, 0.0f, 0.0f};

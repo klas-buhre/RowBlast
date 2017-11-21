@@ -13,7 +13,13 @@ namespace Pht {
                       const std::string& text,
                       const TextProperties& properties);
         
-        SceneObject& GetSceneObject() override;
+        SceneObject& GetSceneObject() {
+            return mSceneObject;
+        }
+        
+        const SceneObject& GetSceneObject() const {
+            return mSceneObject;
+        }
         
         const std::string& GetText() const {
             return mText;

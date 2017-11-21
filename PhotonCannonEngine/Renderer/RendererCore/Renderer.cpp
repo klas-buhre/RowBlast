@@ -30,6 +30,7 @@
 #include "SceneObject.hpp"
 #include "Scene.hpp"
 #include "CameraComponent.hpp"
+#include "LightComponent.hpp"
 #include "TextComponent.hpp"
 #include "VboCache.hpp"
 
@@ -95,32 +96,6 @@ namespace {
             glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         } else {
             glDisable(GL_BLEND);
-        }
-    }
-    
-    void SetMaterialProperties(const ShaderProgram::UniformHandles& uniforms,
-                               const Material& material,
-                               ShaderType shaderType,
-                               const RenderableObject& object) {
-        auto& ambient {material.GetAmbient()};
-        glUniform3f(uniforms.mAmbientMaterial, ambient.mRed, ambient.mGreen, ambient.mBlue);
-        
-        auto& diffuse {material.GetDiffuse()};
-        glUniform3f(uniforms.mDiffuseMaterial, diffuse.mRed, diffuse.mGreen, diffuse.mBlue);
-        
-        auto& specular {material.GetSpecular()};
-        glUniform3f(uniforms.mSpecularMaterial, specular.mRed, specular.mGreen, specular.mBlue);
-        
-        glUniform1f(uniforms.mShininess, material.GetShininess());
-        glUniform1f(uniforms.mReflectivity, material.GetReflectivity());
-        glUniform1f(uniforms.mOpacity, material.GetOpacity());
-        
-        BindSpecialTextures(shaderType, material);
-        auto isParticleShader {IsParticleShader(shaderType)};
-        SetupBlend(isParticleShader, material);
-        
-        if (isParticleShader) {
-            glDisable(GL_DEPTH_TEST);
         }
     }
 
@@ -345,16 +320,20 @@ void Renderer::ClearBuffers() {
     }
 }
 
-void Renderer::SetLightPosition(const Vec3& lightPositionWorldSpace) {
-    mLightPositionWorldSpace = lightPositionWorldSpace;
-    SetLightPositionInShaders();
+void Renderer::SetLightDirection(const Vec3& lightDirection) {
+    mGlobalLight.mDirectionWorldSpace = lightDirection;
+    SetLightDirectionInShaders();
 }
 
-void Renderer::SetLightPositionInShaders() {
+void Renderer::SetDirectionalLightIntensity(float intensity) {
+    mGlobalLight.mDirectionalIntensity = intensity;
+}
+
+void Renderer::SetLightDirectionInShaders() {
     // The view matrix is made for pre-multiplication so it needs to be transposed in order to
     // post-multiplicate with light position.
     auto transposedViewMatrix {GetViewMatrix().Transposed()};
-    auto lightPosCamSpace {transposedViewMatrix * Vec4{mLightPositionWorldSpace, 0.0f}};
+    auto lightPosCamSpace {transposedViewMatrix * Vec4{mGlobalLight.mDirectionWorldSpace, 0.0f}};
     Vec3 lightPosCamSpaceVec3 {lightPosCamSpace.x, lightPosCamSpace.y, lightPosCamSpace.z};
     auto normalizedLightPosition {lightPosCamSpaceVec3.Normalized()};
     
@@ -399,7 +378,7 @@ void Renderer::SetHudCameraPosition(const Vec3& cameraPosition) {
 
 void Renderer::LookAt(const Vec3& cameraPosition, const Vec3& target, const Vec3& up) {
     mCamera.LookAt(cameraPosition, target, up);
-    SetLightPositionInShaders();
+    SetLightDirectionInShaders();
 }
 
 void Renderer::SetScissorBox(const Vec2& lowerLeft, const Vec2& size) {
@@ -502,6 +481,39 @@ void Renderer::SetTransforms(const Mat4& modelTransform,
     
     // Set the camera position in world space.
     glUniform3fv(uniforms.mCameraPosition, 1, GetCameraPosition().Pointer());
+}
+
+void Renderer::SetMaterialProperties(const ShaderProgram::UniformHandles& uniforms,
+                                     const Material& material,
+                                     ShaderType shaderType,
+                                     const RenderableObject& object) {
+    auto& ambient {material.GetAmbient()};
+    glUniform3f(uniforms.mAmbientMaterial, ambient.mRed, ambient.mGreen, ambient.mBlue);
+    
+    auto intensity {mGlobalLight.mDirectionalIntensity};
+    auto& diffuse {material.GetDiffuse()};
+    glUniform3f(uniforms.mDiffuseMaterial,
+                diffuse.mRed * intensity,
+                diffuse.mGreen * intensity,
+                diffuse.mBlue * intensity);
+    
+    auto& specular {material.GetSpecular()};
+    glUniform3f(uniforms.mSpecularMaterial,
+                specular.mRed * intensity,
+                specular.mGreen * intensity,
+                specular.mBlue * intensity);
+    
+    glUniform1f(uniforms.mShininess, material.GetShininess());
+    glUniform1f(uniforms.mReflectivity, material.GetReflectivity());
+    glUniform1f(uniforms.mOpacity, material.GetOpacity());
+    
+    BindSpecialTextures(shaderType, material);
+    auto isParticleShader {IsParticleShader(shaderType)};
+    SetupBlend(isParticleShader, material);
+    
+    if (isParticleShader) {
+        glDisable(GL_DEPTH_TEST);
+    }
 }
 
 ShaderProgram& Renderer::GetShaderProgram(ShaderType shaderType) {
@@ -621,13 +633,13 @@ void Renderer::RenderSceneObject(const SceneObject& sceneObject) {
 
 void Renderer::RenderScene(const Scene& scene) {
     // Setup camera.
-    auto& sceneCamera {scene.GetCamera()};
-    auto* cameraComponent {sceneCamera.GetComponent<CameraComponent>()};
-    assert(cameraComponent);
-    mCamera.LookAt(sceneCamera.GetPosition(), cameraComponent->GetTarget(), cameraComponent->GetUp());
+    auto& camera {scene.GetCamera()};
+    mCamera.LookAt(camera.GetSceneObject().GetPosition(), camera.GetTarget(), camera.GetUp());
     
     // Setup the lighting.
-    SetLightPosition(scene.GetLightDirection());
+    auto& light {scene.GetLight()};
+    SetLightDirection(light.GetDirection());
+    SetDirectionalLightIntensity(light.GetDirectionalIntensity());
     
     // Build the render queue.
     auto& renderQueue {scene.GetRenderQueue()};

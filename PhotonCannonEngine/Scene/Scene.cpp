@@ -4,6 +4,7 @@
 
 #include "SceneObject.hpp"
 #include "CameraComponent.hpp"
+#include "LightComponent.hpp"
 #include "Fnv1Hash.hpp"
 
 using namespace Pht;
@@ -28,18 +29,40 @@ const SceneObject& Scene::GetRoot() const {
     return *mRoot;
 }
 
-void Scene::SetCamera(std::unique_ptr<SceneObject> camera) {
-    assert(camera);
-    assert(camera->GetComponent<CameraComponent>());
-    mCamera = std::move(camera);
+void Scene::SetLight(std::unique_ptr<SceneObject> light) {
+    assert(light);
+    
+    mLight = light->GetComponent<LightComponent>();
+    assert(mLight);
+
+    mRoot->AddChild(std::move(light));
 }
 
-SceneObject& Scene::GetCamera() {
+void Scene::SetCamera(std::unique_ptr<SceneObject> camera) {
+    assert(camera);
+    
+    mCamera = camera->GetComponent<CameraComponent>();
+    assert(mCamera);
+
+    mRoot->AddChild(std::move(camera));
+}
+
+LightComponent& Scene::GetLight() {
+    assert(mLight);
+    return *mLight;
+}
+
+const LightComponent& Scene::GetLight() const {
+    assert(mLight);
+    return *mLight;
+}
+
+CameraComponent& Scene::GetCamera() {
     assert(mCamera);
     return *mCamera;
 }
 
-const SceneObject& Scene::GetCamera() const {
+const CameraComponent& Scene::GetCamera() const {
     assert(mCamera);
     return *mCamera;
 }

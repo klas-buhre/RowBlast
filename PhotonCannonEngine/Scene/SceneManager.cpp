@@ -5,7 +5,9 @@
 #include "Renderer.hpp"
 #include "RenderableObject.hpp"
 #include "CameraComponent.hpp"
+#include "LightComponent.hpp"
 #include "TextComponent.hpp"
+#include "Fnv1Hash.hpp"
 
 using namespace Pht;
 
@@ -35,10 +37,20 @@ std::unique_ptr<SceneObject> SceneManager::CreateSceneObject(const IMesh& mesh,
 }
 
 std::unique_ptr<SceneObject> SceneManager::CreateCamera() {
-    auto sceneObject {std::make_unique<SceneObject>()};
+    auto sceneObject {std::make_unique<SceneObject>(Hash::Fnv1a("camera"))};
+    sceneObject->SetIsVisible(false);
     auto cameraComponent {std::make_unique<CameraComponent>(*sceneObject)};
     
     sceneObject->SetComponent<CameraComponent>(std::move(cameraComponent));
+    return sceneObject;
+}
+
+std::unique_ptr<SceneObject> SceneManager::CreateLight() {
+    auto sceneObject {std::make_unique<SceneObject>(Hash::Fnv1a("light"))};
+    sceneObject->SetIsVisible(false);
+    auto lightComponent {std::make_unique<LightComponent>(*sceneObject)};
+    
+    sceneObject->SetComponent<LightComponent>(std::move(lightComponent));
     return sceneObject;
 }
 

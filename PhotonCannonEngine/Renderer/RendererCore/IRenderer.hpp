@@ -23,7 +23,8 @@ namespace Pht {
     public:
         virtual ~IRenderer() {}
         
-        virtual void SetLightPosition(const Vec3& lightPositionWorldSpace) = 0;
+        virtual void SetLightDirection(const Vec3& lightDirection) = 0;
+        virtual void SetDirectionalLightIntensity(float intensity) = 0;
         virtual void SetClearColorBuffer(bool clearColorBuffer) = 0;
         virtual void SetHudMode(bool hudMode) = 0;
         virtual void SetDepthTest(bool depthTest) = 0;

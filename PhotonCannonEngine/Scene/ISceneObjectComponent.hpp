@@ -11,8 +11,6 @@ namespace Pht {
     class ISceneObjectComponent {
     public:
         virtual ~ISceneObjectComponent() {}
-        
-        virtual SceneObject& GetSceneObject() = 0;
     };
 }
 

@@ -1,9 +1,9 @@
 /*
 Backlog:
   -Engine:
-    -Add a LightComponent with direction and intensity. The shaders need to be updated? Or is it
-     enough to change the material uniforms?
-    -Maybe introduce a Transform class for the SceneObject instead of the matrix?
+    -Add a Transform class for the SceneObject. Also, the transform matrix should be multiplied with
+     the transform of the parent SceneObject (except the root node).
+ 
   -Gameplay:
     -Fix all bugs.
     -Maybe a sensitivity setting. Tetris Blitz has lower sensitility on iPad but not on iPhone.
