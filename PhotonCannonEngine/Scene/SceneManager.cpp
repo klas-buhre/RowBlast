@@ -4,9 +4,6 @@
 #include "SceneObject.hpp"
 #include "Renderer.hpp"
 #include "RenderableObject.hpp"
-#include "CameraComponent.hpp"
-#include "LightComponent.hpp"
-#include "TextComponent.hpp"
 #include "Fnv1Hash.hpp"
 
 using namespace Pht;
@@ -15,6 +12,10 @@ SceneManager::SceneManager(Renderer& renderer) :
     mRenderer {renderer} {}
 
 SceneManager::~SceneManager() {}
+
+std::unique_ptr<Scene> SceneManager::CreateScene(Scene::Name name) {
+    return std::make_unique<Scene>(*this, name);
+}
 
 void SceneManager::SetLoadedScene(std::unique_ptr<Scene> scene) {
     mScene = std::move(scene);
@@ -33,32 +34,5 @@ std::unique_ptr<RenderableObject> SceneManager::CreateRenderableObject(const IMe
 std::unique_ptr<SceneObject> SceneManager::CreateSceneObject(const IMesh& mesh,
                                                              const Material& material) {
     auto renderableObject {mRenderer.CreateRenderableObject(mesh, material)};
-    return std::make_unique<Pht::SceneObject>(std::move(renderableObject));
-}
-
-std::unique_ptr<SceneObject> SceneManager::CreateCamera() {
-    auto sceneObject {std::make_unique<SceneObject>(Hash::Fnv1a("camera"))};
-    sceneObject->SetIsVisible(false);
-    auto cameraComponent {std::make_unique<CameraComponent>(*sceneObject)};
-    
-    sceneObject->SetComponent<CameraComponent>(std::move(cameraComponent));
-    return sceneObject;
-}
-
-std::unique_ptr<SceneObject> SceneManager::CreateLight() {
-    auto sceneObject {std::make_unique<SceneObject>(Hash::Fnv1a("light"))};
-    sceneObject->SetIsVisible(false);
-    auto lightComponent {std::make_unique<LightComponent>(*sceneObject)};
-    
-    sceneObject->SetComponent<LightComponent>(std::move(lightComponent));
-    return sceneObject;
-}
-
-std::unique_ptr<SceneObject> SceneManager::CreateText(const std::string& text,
-                                                      const TextProperties& properties) {
-    auto sceneObject {std::make_unique<SceneObject>()};
-    auto textComponent {std::make_unique<TextComponent>(*sceneObject, text, properties)};
-    
-    sceneObject->SetComponent<TextComponent>(std::move(textComponent));
-    return sceneObject;
+    return std::make_unique<SceneObject>(std::move(renderableObject));
 }

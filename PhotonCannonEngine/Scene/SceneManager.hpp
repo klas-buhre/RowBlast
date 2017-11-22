@@ -11,16 +11,13 @@ namespace Pht {
         SceneManager(Renderer& renderer);
         ~SceneManager();
         
+        std::unique_ptr<Scene> CreateScene(Scene::Name name) override;
         void SetLoadedScene(std::unique_ptr<Scene> scene) override;
         Scene* GetScene() override;
         std::unique_ptr<RenderableObject> CreateRenderableObject(const IMesh& mesh,
                                                                  const Material& material) override;
         std::unique_ptr<SceneObject> CreateSceneObject(const IMesh& mesh,
                                                        const Material& material) override;
-        std::unique_ptr<SceneObject> CreateCamera() override;
-        std::unique_ptr<SceneObject> CreateLight() override;
-        std::unique_ptr<SceneObject> CreateText(const std::string& text,
-                                                const TextProperties& properties) override;
 
     private:
         Renderer& mRenderer;

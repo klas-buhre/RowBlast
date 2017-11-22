@@ -5,16 +5,21 @@
 #include "SceneObject.hpp"
 #include "CameraComponent.hpp"
 #include "LightComponent.hpp"
+#include "TextComponent.hpp"
 #include "Fnv1Hash.hpp"
+#include "ISceneManager.hpp"
 
 using namespace Pht;
 
-Scene::Scene(Name name) :
-    mName {name},
-    mRoot {std::make_unique<SceneObject>(Hash::Fnv1a("root"))},
-    mRenderQueue {*mRoot} {
+Scene::Scene(ISceneManager& sceneManager, Name name) :
+    mSceneManager {sceneManager},
+    mName {name} {
     
+    mSceneObjects.push_back(std::make_unique<SceneObject>(Hash::Fnv1a("root")));
+    mRoot = std::begin(mSceneObjects)->get();
     mRoot->SetIsVisible(false);
+
+    mRenderQueue = std::make_unique<RenderQueue>(*mRoot);
 }
 
 Scene::~Scene() {}
@@ -29,44 +34,53 @@ const SceneObject& Scene::GetRoot() const {
     return *mRoot;
 }
 
-void Scene::SetLight(std::unique_ptr<SceneObject> light) {
-    assert(light);
+LightComponent& Scene::CreateGlobalLight() {
+    auto sceneObject {std::make_unique<SceneObject>(Hash::Fnv1a("light"))};
+    sceneObject->SetIsVisible(false);
     
-    mLight = light->GetComponent<LightComponent>();
-    assert(mLight);
-
-    mRoot->AddChild(std::move(light));
-}
-
-void Scene::SetCamera(std::unique_ptr<SceneObject> camera) {
-    assert(camera);
+    auto lightComponent {std::make_unique<LightComponent>(*sceneObject)};
+    mGlobalLight = lightComponent.get();
+    sceneObject->SetComponent<LightComponent>(std::move(lightComponent));
     
-    mCamera = camera->GetComponent<CameraComponent>();
-    assert(mCamera);
-
-    mRoot->AddChild(std::move(camera));
+    AddSceneObject(std::move(sceneObject));
+    return *mGlobalLight;
 }
 
-LightComponent& Scene::GetLight() {
-    assert(mLight);
-    return *mLight;
-}
-
-const LightComponent& Scene::GetLight() const {
-    assert(mLight);
-    return *mLight;
-}
-
-CameraComponent& Scene::GetCamera() {
-    assert(mCamera);
+CameraComponent& Scene::CreateCamera() {
+    auto sceneObject {std::make_unique<SceneObject>(Hash::Fnv1a("camera"))};
+    sceneObject->SetIsVisible(false);
+    
+    auto cameraComponent {std::make_unique<CameraComponent>(*sceneObject)};
+    mCamera = cameraComponent.get();
+    sceneObject->SetComponent<CameraComponent>(std::move(cameraComponent));
+    
+    AddSceneObject(std::move(sceneObject));
     return *mCamera;
 }
 
-const CameraComponent& Scene::GetCamera() const {
-    assert(mCamera);
-    return *mCamera;
+SceneObject& Scene::CreateSceneObject(const IMesh& mesh, const Material& material) {
+    auto sceneObject {mSceneManager.CreateSceneObject(mesh, material)};
+    
+    auto& retVal {*sceneObject};
+    AddSceneObject(std::move(sceneObject));
+    return retVal;
+}
+
+TextComponent& Scene::CreateText(const std::string& text, const TextProperties& properties) {
+    auto sceneObject {std::make_unique<SceneObject>()};
+    
+    auto textComponent {std::make_unique<TextComponent>(*sceneObject, text, properties)};
+    
+    auto& retVal {*textComponent};
+    sceneObject->SetComponent<TextComponent>(std::move(textComponent));
+    AddSceneObject(std::move(sceneObject));
+    return retVal;
+}
+
+void Scene::AddSceneObject(std::unique_ptr<SceneObject> sceneObject) {
+    mSceneObjects.push_back(std::move(sceneObject));
 }
 
 void Scene::SetDistanceFunction(DistanceFunction distanceFunction) {
-    mRenderQueue.SetDistanceFunction(distanceFunction);
+    mRenderQueue->SetDistanceFunction(distanceFunction);
 }

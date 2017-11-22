@@ -2,6 +2,8 @@
 #define Scene_hpp
 
 #include <memory>
+#include <vector>
+#include <string>
 
 #include "Vector.hpp"
 #include "RenderQueue.hpp"
@@ -10,26 +12,46 @@ namespace Pht {
     class SceneObject;
     class LightComponent;
     class CameraComponent;
+    class TextComponent;
+    class TextProperties;
+    class ISceneManager;
+    class IMesh;
+    class Material;
     
     class Scene {
     public:
         using Name = uint32_t;
         
-        Scene(Name name);
+        Scene(ISceneManager& sceneManager, Name name);
         ~Scene();
         
         SceneObject& GetRoot();
         const SceneObject& GetRoot() const;
-        void SetLight(std::unique_ptr<SceneObject> light);
-        void SetCamera(std::unique_ptr<SceneObject> camera);
-        LightComponent& GetLight();
-        const LightComponent& GetLight() const;
-        CameraComponent& GetCamera();
-        const CameraComponent& GetCamera() const;
+        LightComponent& CreateGlobalLight();
+        CameraComponent& CreateCamera();
+        SceneObject& CreateSceneObject(const IMesh& mesh, const Material& material);
+        TextComponent& CreateText(const std::string& text, const TextProperties& properties);
+        void AddSceneObject(std::unique_ptr<SceneObject> sceneObject);
         void SetDistanceFunction(DistanceFunction distanceFunction);
         
+        LightComponent* GetGlobalLight() {
+            return mGlobalLight;
+        }
+        
+        const LightComponent* GetGlobalLight() const {
+            return mGlobalLight;
+        }
+        
+        CameraComponent* GetCamera() {
+            return mCamera;
+        }
+        
+        const CameraComponent* GetCamera() const {
+            return mCamera;
+        }
+        
         RenderQueue& GetRenderQueue() const {
-            return mRenderQueue;
+            return *mRenderQueue;
         }
         
         Name GetName() const {
@@ -37,11 +59,13 @@ namespace Pht {
         }
 
     private:
+        ISceneManager& mSceneManager;
         Name mName {0};
-        std::unique_ptr<SceneObject> mRoot;
-        LightComponent* mLight {nullptr};
+        std::vector<std::unique_ptr<SceneObject>> mSceneObjects;
+        SceneObject* mRoot {nullptr};
+        LightComponent* mGlobalLight {nullptr};
         CameraComponent* mCamera {nullptr};
-        mutable RenderQueue mRenderQueue;
+        std::unique_ptr<RenderQueue> mRenderQueue;
     };
 }
 

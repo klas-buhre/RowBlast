@@ -633,13 +633,15 @@ void Renderer::RenderSceneObject(const SceneObject& sceneObject) {
 
 void Renderer::RenderScene(const Scene& scene) {
     // Setup camera.
-    auto& camera {scene.GetCamera()};
-    mCamera.LookAt(camera.GetSceneObject().GetPosition(), camera.GetTarget(), camera.GetUp());
+    auto* camera {scene.GetCamera()};
+    assert(camera);
+    mCamera.LookAt(camera->GetSceneObject().GetPosition(), camera->GetTarget(), camera->GetUp());
     
     // Setup the lighting.
-    auto& light {scene.GetLight()};
-    SetLightDirection(light.GetDirection());
-    SetDirectionalLightIntensity(light.GetDirectionalIntensity());
+    auto* globalLight {scene.GetGlobalLight()};
+    assert(globalLight);
+    SetLightDirection(globalLight->GetDirection());
+    SetDirectionalLightIntensity(globalLight->GetDirectionalIntensity());
     
     // Build the render queue.
     auto& renderQueue {scene.GetRenderQueue()};

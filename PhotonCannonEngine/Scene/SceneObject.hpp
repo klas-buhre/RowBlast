@@ -23,7 +23,7 @@ namespace Pht {
         void RotateZ(float degrees);
         void Scale(float scale);
         void ResetTransform();
-        void AddChild(std::unique_ptr<SceneObject> child);
+        void AddChild(SceneObject& child);
         SceneObject* Find(Name name);
         
         template<typename T>
@@ -96,11 +96,7 @@ namespace Pht {
             mIsInFront = isInFront;
         }
         
-        void SetParent(SceneObject* parent) {
-            mParent = parent;
-        }
-        
-        const std::vector<std::unique_ptr<SceneObject>>& GetChildren() const {
+        const std::vector<SceneObject*>& GetChildren() const {
             return mChildren;
         }
         
@@ -110,8 +106,7 @@ namespace Pht {
         bool mIsVisible {true};
         bool mIsInFront {false};
         std::shared_ptr<RenderableObject> mRenderable;
-        SceneObject* mParent {nullptr};
-        std::vector<std::unique_ptr<SceneObject>> mChildren;
+        std::vector<SceneObject*> mChildren;
         std::vector<std::pair<ComponentId, std::unique_ptr<ISceneObjectComponent>>> mComponents;
         Name mName {0};
     };

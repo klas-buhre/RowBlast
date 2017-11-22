@@ -44,9 +44,8 @@ void SceneObject::ResetTransform() {
     mPosition = {0.0f, 0.0f, 0.0f};
 }
 
-void SceneObject::AddChild(std::unique_ptr<SceneObject> child) {
-    child->SetParent(this);
-    mChildren.push_back(std::move(child));
+void SceneObject::AddChild(SceneObject& child) {
+    mChildren.push_back(&child);
 }
 
 SceneObject* SceneObject::Find(Name name) {
