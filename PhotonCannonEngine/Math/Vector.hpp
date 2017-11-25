@@ -143,6 +143,12 @@ namespace Pht {
             y -= v.y;
             z -= v.z;
         }
+        
+        void operator*=(const Vector3& v) {
+            x *= v.x;
+            y *= v.y;
+            z *= v.z;
+        }
 
         void operator/=(T s) {
             x /= s;

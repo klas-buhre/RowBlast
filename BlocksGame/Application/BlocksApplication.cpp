@@ -1,9 +1,10 @@
 /*
 Backlog:
   -Engine:
-    -Add a Transform class for the SceneObject. Also, the transform matrix should be multiplied with
-     the transform of the parent SceneObject (except the root node).
- 
+    -Remove CreateRenderableObject() in IEngine. Use CreateSceneObject or CreateRenderableObject in
+     ISceneManager instead.
+    -Maybe load scenes from JSON files?
+    
   -Gameplay:
     -Fix all bugs.
     -Maybe a sensitivity setting. Tetris Blitz has lower sensitility on iPad but not on iPhone.
@@ -61,9 +62,26 @@ Backlog:
     -Credit the icon creator: <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
   
 Ongoing tasks:
-    -Remove CreateRenderableObject() in IEngine. Use CreateSceneObject or CreateRenderableObject in
-     ISceneManager instead.
- 
+
+In SceneObject::Update(bool parentMatrixChanged):
+Bool matrixWasChanged = false
+If mTransform updated or parentMatrixChanged
+   mMatrix = mTransform.ToMatrix
+   mTransform set to not dirty
+   matrixWasChanged = true
+   If mParent
+      mMatrix *= mParent->GetMatrix
+   End
+End
+For each child
+  child->Update(matrixWasUpdated)
+End
+
+SceneObject update has to be in SceneObject so that SceneObject::Translate can call update.
+Non-Scene-managed SceneObjects still call Translate and Rotate but scene managed ones get the transform.
+
+
+
 Ideas:
     -The pause button could lead to a widget that has an undo button, a boosters button and a game
      menu button.

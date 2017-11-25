@@ -19,7 +19,10 @@ void SceneObject::SetRenderable(std::shared_ptr<RenderableObject> renderable) {
 }
 
 void SceneObject::Translate(const Vec3& translation) {
-    mTransform *= Mat4::Translate(translation.x, translation.y, translation.z);
+    // mTransform *= Mat4::Translate(translation.x, translation.y, translation.z);
+    mTransform.w.x += translation.x;
+    mTransform.w.y += translation.y;
+    mTransform.w.z += translation.z;
     mPosition += translation;
 }
 

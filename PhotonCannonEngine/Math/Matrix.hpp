@@ -166,7 +166,7 @@ namespace Pht {
             m.w.x = 0; m.w.y = 0; m.w.z = 0; m.w.w = 1;
             return m;
         }
-        
+
         static Matrix4<T> RotateZ(T degrees) {
             T radians = degrees * 3.14159f / 180.0f;
             T s = std::sin(radians);
@@ -179,7 +179,7 @@ namespace Pht {
             m.w.x =  0; m.w.y = 0; m.w.z = 0; m.w.w = 1;
             return m;
         }
-        
+
         static Matrix4<T> RotateY(T degrees) {
             T radians = degrees * 3.14159f / 180.0f;
             T s = std::sin(radians);
