@@ -75,7 +75,7 @@ void LevelCompletedDialogView::Update() {
     
     for (auto* star: mStars) {
         star->ResetTransform();
-        star->RotateY(-90.0f);
+        star->RotateX(-90.0f);
         star->RotateZ(mStarAngle);
         star->Translate(starOffsets[starIndex]);
         

@@ -198,7 +198,7 @@ void MapScene::CreatePin(int level, const Pht::Vec3& position) {
         };
         
         auto connection {std::make_unique<Pht::SceneObject>(mGrayConnectionRenderable)};
-        connection->RotateZ(connectionAngle);
+        connection->RotateZ(-connectionAngle);
         connection->Translate(connectionPosition);
         mConnections.push_back(std::move(connection));
     }

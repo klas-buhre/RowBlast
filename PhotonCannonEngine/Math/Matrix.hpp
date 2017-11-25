@@ -173,10 +173,10 @@ namespace Pht {
             T c = std::cos(radians);
             
             Matrix4 m;
-            m.x.x =  c; m.x.y = s; m.x.z = 0; m.x.w = 0;
-            m.y.x = -s; m.y.y = c; m.y.z = 0; m.y.w = 0;
-            m.z.x =  0; m.z.y = 0; m.z.z = 1; m.z.w = 0;
-            m.w.x =  0; m.w.y = 0; m.w.z = 0; m.w.w = 1;
+            m.x.x = c; m.x.y = -s; m.x.z = 0; m.x.w = 0;
+            m.y.x = s; m.y.y =  c; m.y.z = 0; m.y.w = 0;
+            m.z.x = 0; m.z.y =  0; m.z.z = 1; m.z.w = 0;
+            m.w.x = 0; m.w.y =  0; m.w.z = 0; m.w.w = 1;
             return m;
         }
 

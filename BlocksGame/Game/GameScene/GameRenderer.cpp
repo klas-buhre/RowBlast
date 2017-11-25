@@ -348,7 +348,7 @@ void GameRenderer::RenderBlockWelds(const SubCell& subCell,
     
     if (welds.mUpLeft) {
         auto weldMatrix {
-            plus45RotationMatrix *
+            minus45RotationMatrix *
             Pht::Mat4::Translate(blockPos.x - cellSize / 2.0f, blockPos.y + cellSize / 2.0f, weldZ)
         };
         
@@ -366,7 +366,7 @@ void GameRenderer::RenderBlockWelds(const SubCell& subCell,
     
     if (welds.mUpRight) {
         auto weldMatrix {
-            minus45RotationMatrix *
+            plus45RotationMatrix *
             Pht::Mat4::Translate(blockPos.x + cellSize / 2.0f, blockPos.y + cellSize / 2.0f, weldZ)
         };
         
