@@ -6,6 +6,7 @@
 #include "Matrix.hpp"
 #include "RenderableObject.hpp"
 #include "ISceneObjectComponent.hpp"
+#include "Transform.hpp"
 
 namespace Pht {
     class SceneObject {
@@ -23,6 +24,7 @@ namespace Pht {
         void RotateZ(float degrees);
         void Scale(float scale);
         void ResetTransform();
+        void Update(bool parentMatrixChanged);
         void AddChild(SceneObject& child);
         SceneObject* Find(Name name);
         
@@ -63,6 +65,14 @@ namespace Pht {
         void SetName(Name name) {
             mName = name;
         }
+
+        const Transform& GetTransform() const {
+            return mTransform;
+        }
+
+        Transform& GetTransform() {
+            return mTransform;
+        }
         
         const RenderableObject* GetRenderable() const {
             return mRenderable.get();
@@ -101,11 +111,13 @@ namespace Pht {
         }
         
     private:
+        Transform mTransform;
         Vec3 mPosition {0.0f, 0.0f, 0.0f};
         Mat4 mMatrix;
         bool mIsVisible {true};
         bool mIsInFront {false};
         std::shared_ptr<RenderableObject> mRenderable;
+        SceneObject* mParent {nullptr};
         std::vector<SceneObject*> mChildren;
         std::vector<std::pair<ComponentId, std::unique_ptr<ISceneObjectComponent>>> mComponents;
         Name mName {0};

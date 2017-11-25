@@ -4,6 +4,7 @@
 
 #include "IApplication.hpp"
 #include "RenderableObject.hpp"
+#include "SceneObject.hpp"
 
 using namespace Pht;
 
@@ -36,6 +37,11 @@ void Engine::Update(float frameSeconds) {
 
     mRenderer.ClearBuffers();
     mApplication->Update();
+    
+    if (auto* scene {mSceneManager.GetScene()}) {
+        scene->GetRoot().Update(false);
+    }
+    
     mParticleSystem.Update(mLastFrameSeconds);
 }
 

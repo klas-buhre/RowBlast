@@ -47,7 +47,26 @@ void SceneObject::ResetTransform() {
     mPosition = {0.0f, 0.0f, 0.0f};
 }
 
+void SceneObject::Update(bool parentMatrixChanged) {
+    auto matrixWasChanged {false};
+    
+    if (mTransform.HasChanged() || parentMatrixChanged) {
+        mMatrix = mTransform.ToMatrix();
+        mTransform.SethasChanged(false);
+        matrixWasChanged = true;
+        
+        if (mParent) {
+            mMatrix *= mParent->GetMatrix();
+        }
+    }
+    
+    for (auto* child: mChildren) {
+        child->Update(matrixWasChanged);
+    }
+}
+
 void SceneObject::AddChild(SceneObject& child) {
+    child.mParent = this;
     mChildren.push_back(&child);
 }
 
