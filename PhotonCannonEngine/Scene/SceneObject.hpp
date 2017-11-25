@@ -76,8 +76,8 @@ namespace Pht {
             return mPosition;
         }
         
-        const Mat4& GetTransform() const {
-            return mTransform;
+        const Mat4& GetMatrix() const {
+            return mMatrix;
         }
         
         bool IsVisible() const {
@@ -102,7 +102,7 @@ namespace Pht {
         
     private:
         Vec3 mPosition {0.0f, 0.0f, 0.0f};
-        Mat4 mTransform;
+        Mat4 mMatrix;
         bool mIsVisible {true};
         bool mIsInFront {false};
         std::shared_ptr<RenderableObject> mRenderable;

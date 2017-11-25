@@ -20,30 +20,30 @@ void SceneObject::SetRenderable(std::shared_ptr<RenderableObject> renderable) {
 
 void SceneObject::Translate(const Vec3& translation) {
     // mTransform *= Mat4::Translate(translation.x, translation.y, translation.z);
-    mTransform.w.x += translation.x;
-    mTransform.w.y += translation.y;
-    mTransform.w.z += translation.z;
+    mMatrix.w.x += translation.x;
+    mMatrix.w.y += translation.y;
+    mMatrix.w.z += translation.z;
     mPosition += translation;
 }
 
 void SceneObject::RotateX(float degrees) {
-    mTransform *= Mat4::RotateX(degrees);
+    mMatrix *= Mat4::RotateX(degrees);
 }
 
 void SceneObject::RotateY(float degrees) {
-    mTransform *= Mat4::RotateY(degrees);
+    mMatrix *= Mat4::RotateY(degrees);
 }
 
 void SceneObject::RotateZ(float degrees) {
-    mTransform *= Mat4::RotateZ(degrees);
+    mMatrix *= Mat4::RotateZ(degrees);
 }
 
 void SceneObject::Scale(float scale) {
-    mTransform *= Mat4::Scale(scale);
+    mMatrix *= Mat4::Scale(scale);
 }
 
 void SceneObject::ResetTransform() {
-    mTransform = Mat4 {};
+    mMatrix = Mat4 {};
     mPosition = {0.0f, 0.0f, 0.0f};
 }
 

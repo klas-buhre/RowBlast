@@ -605,7 +605,7 @@ void Renderer::RenderGuiView(const GuiView& view) {
         auto* renerable {sceneObject->GetRenderable()};
         
         if (renerable && sceneObject->IsVisible()) {
-            Render(*renerable, sceneObject->GetTransform() * view.GetMatrix());
+            Render(*renerable, sceneObject->GetMatrix() * view.GetMatrix());
         }
     }
 
@@ -623,7 +623,7 @@ void Renderer::RenderSceneObject(const SceneObject& sceneObject) {
     auto* renderable {sceneObject.GetRenderable()};
     
     if (renderable && sceneObject.IsVisible()) {
-        Render(*renderable, sceneObject.GetTransform());
+        Render(*renderable, sceneObject.GetMatrix());
     }
     
     for (auto& child: sceneObject.GetChildren()) {
@@ -664,7 +664,7 @@ void Renderer::RenderScene(const Scene& scene) {
         auto* renderable {sceneObject->GetRenderable()};
         
         if (renderable) {
-            Render(*renderable, sceneObject->GetTransform());
+            Render(*renderable, sceneObject->GetMatrix());
         }
         
         auto* textComponent {sceneObject->GetComponent<TextComponent>()};
