@@ -18,33 +18,38 @@ void SceneObject::SetRenderable(std::shared_ptr<RenderableObject> renderable) {
     mRenderable = renderable;
 }
 
-void SceneObject::Translate(const Vec3& translation) {
-    // mTransform *= Mat4::Translate(translation.x, translation.y, translation.z);
-    mMatrix.w.x += translation.x;
-    mMatrix.w.y += translation.y;
-    mMatrix.w.z += translation.z;
-    mPosition += translation;
+void SceneObject::SetPosition(const Vec3& position) {
+    mTransform.SetPosition(position);
+    Update(false);
 }
 
-void SceneObject::RotateX(float degrees) {
-    mMatrix *= Mat4::RotateX(degrees);
+void SceneObject::SetRotationX(float degrees) {
+    auto rotation {mTransform.GetRotation()};
+    
+    rotation.x = degrees;
+    mTransform.SetRotation(rotation);
+    Update(false);
 }
 
-void SceneObject::RotateY(float degrees) {
-    mMatrix *= Mat4::RotateY(degrees);
+void SceneObject::SetRotationY(float degrees) {
+    auto rotation {mTransform.GetRotation()};
+    
+    rotation.y = degrees;
+    mTransform.SetRotation(rotation);
+    Update(false);
 }
 
-void SceneObject::RotateZ(float degrees) {
-    mMatrix *= Mat4::RotateZ(degrees);
+void SceneObject::SetRotationZ(float degrees) {
+    auto rotation {mTransform.GetRotation()};
+    
+    rotation.z = degrees;
+    mTransform.SetRotation(rotation);
+    Update(false);
 }
 
-void SceneObject::Scale(float scale) {
-    mMatrix *= Mat4::Scale(scale);
-}
-
-void SceneObject::ResetTransform() {
-    mMatrix = Mat4 {};
-    mPosition = {0.0f, 0.0f, 0.0f};
+void SceneObject::SetScale(float scale) {
+    mTransform.SetScale({scale, scale, scale});
+    Update(false);
 }
 
 void SceneObject::Update(bool parentMatrixChanged) {
@@ -52,7 +57,7 @@ void SceneObject::Update(bool parentMatrixChanged) {
     
     if (mTransform.HasChanged() || parentMatrixChanged) {
         mMatrix = mTransform.ToMatrix();
-        mTransform.SethasChanged(false);
+        mTransform.SetHasChanged(false);
         matrixWasChanged = true;
         
         if (mParent) {

@@ -14,7 +14,6 @@ using namespace BlocksGame;
 namespace {
     const Pht::Color circleColor {0.0f, 0.5f, 1.0f};
     const Pht::Color circleClickedColor {0.25f, 0.75f, 1.0f};
-    const Pht::Vec3 circlePosition {0.0f, 0.0f, -2.0f};
 }
 
 SettingsButtonView::SettingsButtonView(Pht::IEngine& engine) {
@@ -25,7 +24,7 @@ SettingsButtonView::SettingsButtonView(Pht::IEngine& engine) {
     circleMaterial.SetOpacity(0.8f);
     auto circle {engine.CreateRenderableObject(Pht::SphereMesh {1.0f}, circleMaterial)};
     auto circleSceneObject {std::make_unique<Pht::SceneObject>(std::move(circle))};
-    circleSceneObject->Translate(circlePosition);
+    circleSceneObject->SetPosition({0.0f, 0.0f, -2.0f});
     auto& circleMaterialCapture {circleSceneObject->GetRenderable()->GetMaterial()};
     auto& circleSceneObjectCapture {*circleSceneObject};
     
@@ -40,20 +39,16 @@ SettingsButtonView::SettingsButtonView(Pht::IEngine& engine) {
     
     auto selectFunction {[&] () {
         circleMaterialCapture.SetAmbient(circleClickedColor);
-        circleSceneObjectCapture.ResetTransform();
-        circleSceneObjectCapture.Scale(1.35f);
-        circleSceneObjectCapture.Translate(circlePosition);
-        gearIconCapture.ResetTransform();
-        gearIconCapture.Scale(1.35f);
+        circleSceneObjectCapture.SetScale(1.35f);
+        gearIconCapture.SetScale(1.35f);
     }};
     
     mButton->SetOnDown(selectFunction);
     
     auto deselectFunction {[&] () {
         circleMaterialCapture.SetAmbient(circleColor);
-        circleSceneObjectCapture.ResetTransform();
-        circleSceneObjectCapture.Translate(circlePosition);
-        gearIconCapture.ResetTransform();
+        circleSceneObjectCapture.SetScale(1.0f);
+        gearIconCapture.SetScale(1.0f);
     }};
     
     mButton->SetOnUpInside(deselectFunction);

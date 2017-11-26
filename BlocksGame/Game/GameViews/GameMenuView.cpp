@@ -26,14 +26,14 @@ GameMenuView::GameMenuView(Pht::IEngine& engine, const CommonResources& commonRe
     SetDepthTest(false);
     
     auto quad {MenuQuad::CreateGray(engine, size)};
-    quad->Translate({0.0f, 0.0f, -1.0f});
+    quad->SetPosition({0.0f, 0.0f, -1.0f});
     AddSceneObject(std::move(quad));
     
     Pht::Material lineMaterial {Pht::Color{1.0f, 1.0f, 1.0f}};
     lineMaterial.SetOpacity(0.4f);
     auto lineQuad {engine.CreateRenderableObject(Pht::QuadMesh {frustumWidth - 1.0f, 0.08f}, lineMaterial)};
     auto lineSceneObject {std::make_unique<Pht::SceneObject>(std::move(lineQuad))};
-    lineSceneObject->Translate({0.0f, 6.0f, 0.0f});
+    lineSceneObject->SetPosition({0.0f, 6.0f, 0.0f});
     AddSceneObject(std::move(lineSceneObject));
     
     auto pausedText {

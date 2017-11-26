@@ -42,8 +42,7 @@ NextLevelParticleEffect::NextLevelParticleEffect(Pht::IEngine& engine) :
 }
 
 void NextLevelParticleEffect::StartEffect(const Pht::Vec3& position) {
-    mScenObject->ResetTransform();
-    mScenObject->Translate(position);
+    mScenObject->SetPosition(position);
     mScenObject->GetComponent<Pht::ParticleEffect>()->Start();
 }
 

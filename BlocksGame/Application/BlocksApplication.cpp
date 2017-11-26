@@ -63,24 +63,6 @@ Backlog:
   
 Ongoing tasks:
 
-In SceneObject::Update(bool parentMatrixChanged):
-Bool matrixWasChanged = false
-If mTransform updated or parentMatrixChanged
-   mMatrix = mTransform.ToMatrix
-   mTransform set to not dirty
-   matrixWasChanged = true
-   If mParent
-      mMatrix *= mParent->GetMatrix
-   End
-End
-For each child
-  child->Update(matrixWasUpdated)
-End
-
-SceneObject update has to be in SceneObject so that SceneObject::Translate can call update.
-Non-Scene-managed SceneObjects still call Translate and Rotate but scene managed ones get the transform.
-
-
 
 Ideas:
     -The pause button could lead to a widget that has an undo button, a boosters button and a game

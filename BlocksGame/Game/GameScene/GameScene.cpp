@@ -110,7 +110,7 @@ void GameScene::CreateBackground() {
     
     mBackground = std::make_unique<Pht::SceneObject>(
         mEngine.CreateRenderableObject(Pht::QuadMesh {150.0f, 150.0f}, backgroundMaterial));
-    mBackground->Translate({0.0f, -5.0f, -42.0f});
+    mBackground->SetPosition({0.0f, -5.0f, -42.0f});
 }
 
 void GameScene::CreateFieldQuad(const Level& level) {
@@ -121,7 +121,7 @@ void GameScene::CreateFieldQuad(const Level& level) {
     
     mFieldQuad = std::make_unique<Pht::SceneObject>(
         mEngine.CreateRenderableObject(Pht::QuadMesh {vertices}, fieldMaterial));
-    mFieldQuad->Translate({mFieldPosition.x, mFieldPosition.y, mFieldPosition.z + fieldQuadZ});
+    mFieldQuad->SetPosition({mFieldPosition.x, mFieldPosition.y, mFieldPosition.z + fieldQuadZ});
 }
 
 Pht::QuadMesh::Vertices GameScene::CreateFieldVertices(const Level& level) {

@@ -17,7 +17,7 @@ NoMovesDialogView::NoMovesDialogView(Pht::IEngine& engine, const CommonResources
     SetPosition({0.0f, 0.0f});
     
     auto quad {MenuQuad::CreateGreen(engine, size)};
-    quad->Translate({0.0f, 0.0f, -1.0f});
+    quad->SetPosition({0.0f, 0.0f, -1.0f});
     AddSceneObject(std::move(quad));
     
     Pht::Vec3 closeButtonPosition {GetSize().x / 2.0f - 1.0f, GetSize().y / 2.0f - 1.0f, -0.5f};

@@ -79,7 +79,7 @@ void RenderQueue::CalculateDistances(const Mat4& viewMatrix) {
     
     for (auto i {0}; i < mSize; ++i) {
         auto& renderEntry {mQueue[i]};
-        auto& sceneObjectPosition {renderEntry.mSceneObject->GetPosition()};
+        auto& sceneObjectPosition {renderEntry.mSceneObject->GetTransform().GetPosition()};
         
         switch (mDistanceFunction) {
             case DistanceFunction::CameraSpaceZ: {

@@ -33,7 +33,7 @@ MapPin::MapPin(std::shared_ptr<Pht::RenderableObject> renderable,
     mLevel {level},
     mText {text} {
     
-    mSceneObject.Translate(position);
+    mSceneObject.SetPosition(position);
 }
 
 void MapPin::Update() {
@@ -65,8 +65,8 @@ void MapPin::SetNumStars(int numStars, std::shared_ptr<Pht::RenderableObject> st
     
     for (auto i {0}; i < numStars; ++i) {
         auto star {std::make_unique<Pht::SceneObject>(starRenderable)};
-        star->RotateX(-90.0f);
-        star->Translate(mPosition + starOffsets[i]);
+        star->SetRotationX(-90.0f);
+        star->SetPosition(mPosition + starOffsets[i]);
         mStars.push_back(std::move(star));
     }
 }

@@ -29,7 +29,7 @@ MenuButton::MenuButton(Pht::IEngine& engine,
     
     auto centerQuad {engine.CreateRenderableObject(Pht::QuadMesh {size.x, size.y}, material)};
     auto sceneObject {std::make_unique<Pht::SceneObject>(std::move(centerQuad))};
-    sceneObject->Translate(position);
+    sceneObject->SetPosition(position);
     sceneObject->SetIsInFront(true);
     
     mButton = std::make_unique<Pht::Button>(*sceneObject, inputSize, engine);
@@ -38,10 +38,7 @@ MenuButton::MenuButton(Pht::IEngine& engine,
     
     auto onDownFunction {[this, style] () {
         for (auto sceneObject: mSceneObjects) {
-            auto position {sceneObject->GetPosition()};
-            sceneObject->ResetTransform();
-            sceneObject->Scale(style.mPressedScale);
-            sceneObject->Translate(position);
+            sceneObject->SetScale(style.mPressedScale);
             sceneObject->GetRenderable()->GetMaterial().SetAmbient(style.mSelectedColor);
             if (mText) {
                 mText->mProperties.mScale = style.mPressedScale;
@@ -55,9 +52,7 @@ MenuButton::MenuButton(Pht::IEngine& engine,
     
     auto onUpFunction {[this, style] () {
         for (auto sceneObject: mSceneObjects) {
-            auto position {sceneObject->GetPosition()};
-            sceneObject->ResetTransform();
-            sceneObject->Translate(position);
+            sceneObject->SetScale(1.0f);
             sceneObject->GetRenderable()->GetMaterial().SetAmbient(style.mColor);
             if (mText) {
                 mText->mProperties.mScale = 1.0f;
@@ -73,12 +68,12 @@ MenuButton::MenuButton(Pht::IEngine& engine,
     if (style.mIsRounded) {
         auto leftCircle {engine.CreateRenderableObject(Pht::SphereMesh {size.y / 2.0f}, material)};
         auto leftSceneObject {std::make_unique<Pht::SceneObject>(std::move(leftCircle))};
-        leftSceneObject->Translate(position + Pht::Vec3 {-size.x / 2.0f, 0.0f, 0.0f});
+        leftSceneObject->SetPosition(position + Pht::Vec3 {-size.x / 2.0f, 0.0f, 0.0f});
         AddSceneObject(std::move(leftSceneObject));
         
         auto rightCircle {engine.CreateRenderableObject(Pht::SphereMesh {size.y / 2.0f}, material)};
         auto rightSceneObject {std::make_unique<Pht::SceneObject>(std::move(rightCircle))};
-        rightSceneObject->Translate(position + Pht::Vec3 {size.x / 2.0f, 0.0f, 0.0f});
+        rightSceneObject->SetPosition(position + Pht::Vec3 {size.x / 2.0f, 0.0f, 0.0f});
         AddSceneObject(std::move(rightSceneObject));
     }
 }

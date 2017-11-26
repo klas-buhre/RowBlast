@@ -117,7 +117,7 @@ const Pht::SceneObject& MapScene::GetNextLevelParticleEffect() const {
 void MapScene::CreateBackground(const Pht::Material& backgroundMaterial) {
     mBackground = mEngine.GetSceneManager().CreateSceneObject(Pht::QuadMesh {sceneSize.x, sceneSize.y},
                                                               backgroundMaterial);
-    mBackground->Translate({0.0f, 0.0f, -5.0f});
+    mBackground->SetPosition({0.0f, 0.0f, -5.0f});
 }
 
 void MapScene::CreateFloatingCubes(const CommonResources& commonResources) {
@@ -198,8 +198,8 @@ void MapScene::CreatePin(int level, const Pht::Vec3& position) {
         };
         
         auto connection {std::make_unique<Pht::SceneObject>(mGrayConnectionRenderable)};
-        connection->RotateZ(-connectionAngle);
-        connection->Translate(connectionPosition);
+        connection->SetRotationZ(-connectionAngle);
+        connection->SetPosition(connectionPosition);
         mConnections.push_back(std::move(connection));
     }
     

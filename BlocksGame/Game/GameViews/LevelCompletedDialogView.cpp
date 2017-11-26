@@ -74,10 +74,9 @@ void LevelCompletedDialogView::Update() {
     auto speed {12.0f};
     
     for (auto* star: mStars) {
-        star->ResetTransform();
-        star->RotateX(-90.0f);
-        star->RotateZ(mStarAngle);
-        star->Translate(starOffsets[starIndex]);
+        star->SetRotationX(-90.0f);
+        star->SetRotationZ(mStarAngle);
+        star->SetPosition(starOffsets[starIndex]);
         
         ++starIndex;
     }
@@ -96,8 +95,8 @@ void LevelCompletedDialogView::SetNumStars(int numStars) {
     
     for (auto i {0}; i < numStars; ++i) {
         auto star {std::make_unique<Pht::SceneObject>(mStarRenderable)};
-        star->RotateX(-90.0f);
-        star->Translate(starOffsets[i]);
+        star->SetRotationX(-90.0f);
+        star->SetPosition(starOffsets[i]);
         mStars.push_back(star.get());
         AddSceneObject(std::move(star));
     }

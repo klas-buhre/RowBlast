@@ -88,8 +88,7 @@ void PieceDropParticleEffect::StartEffect(const Pht::Vec3& scenePosition, const 
             particleSettings.mColor = color;
             
             effect->Start();
-            effectSceneObject->ResetTransform();
-            effectSceneObject->Translate(scenePosition);
+            effectSceneObject->SetPosition(scenePosition);
             break;
         }
     }

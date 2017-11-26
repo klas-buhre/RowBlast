@@ -93,19 +93,17 @@ void ExplosionParticleEffect::StartExplosion(const Pht::Vec2& position) {
     auto cellSize {mScene.GetCellSize()};
     auto& fieldLowerLeft {mScene.GetFieldLoweLeft()};
 
-    Pht::Vec3 translation {
+    Pht::Vec3 positionInScene {
         position.x * cellSize + cellSize / 2.0f + fieldLowerLeft.x,
         position.y * cellSize + cellSize / 2.0f + fieldLowerLeft.y,
         mScene.GetFieldPosition().z
     };
     
     mInnerParticleEffect->GetComponent<Pht::ParticleEffect>()->Start();
-    mInnerParticleEffect->ResetTransform();
-    mInnerParticleEffect->Translate(translation);
+    mInnerParticleEffect->SetPosition(positionInScene);
     
     mOuterParticleEffect->GetComponent<Pht::ParticleEffect>()->Start();
-    mOuterParticleEffect->ResetTransform();
-    mOuterParticleEffect->Translate(translation);
+    mOuterParticleEffect->SetPosition(positionInScene);
 }
 
 ExplosionParticleEffect::State ExplosionParticleEffect::Update(float dt) {

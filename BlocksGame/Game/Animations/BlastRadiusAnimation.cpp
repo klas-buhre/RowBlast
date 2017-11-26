@@ -127,14 +127,13 @@ void BlastRadiusAnimation::SetPosition(const Pht::Vec2& position) {
     auto cellSize {mScene.GetCellSize()};
     auto& fieldLowerLeft {mScene.GetFieldLoweLeft()};
 
-    Pht::Vec3 translation {
+    Pht::Vec3 positionInScene {
         position.x * cellSize + cellSize / 2.0f + fieldLowerLeft.x,
         position.y * cellSize + cellSize / 2.0f + fieldLowerLeft.y,
         mScene.GetBlastRadiusAnimationZ()
     };
     
-    mSceneObject->ResetTransform();
-    mSceneObject->Translate(translation);
+    mSceneObject->SetPosition(positionInScene);
 }
 
 void BlastRadiusAnimation::Update(float dt) {

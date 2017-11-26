@@ -32,7 +32,7 @@ CloseButton::CloseButton(Pht::IEngine& engine,
     
     auto circle {engine.CreateRenderableObject(Pht::SphereMesh {size / 2.0f}, material)};
     auto sceneObject {std::make_unique<Pht::SceneObject>(std::move(circle))};
-    sceneObject->Translate(position);
+    sceneObject->SetPosition(position);
     
     mButton = std::make_unique<Pht::Button>(*sceneObject, inputSize, engine);
     

@@ -22,14 +22,14 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine, const CommonResources& 
     SetDepthTest(false);
     
     auto quad {MenuQuad::CreateGray(engine, size)};
-    quad->Translate({0.0f, 0.0f, -1.0f});
+    quad->SetPosition({0.0f, 0.0f, -1.0f});
     AddSceneObject(std::move(quad));
     
     Pht::Material lineMaterial {Pht::Color{1.0f, 1.0f, 1.0f}};
     lineMaterial.SetOpacity(0.4f);
     auto lineQuad {engine.CreateRenderableObject(Pht::QuadMesh {size.x - 1.0f, 0.08f}, lineMaterial)};
     auto lineSceneObject {std::make_unique<Pht::SceneObject>(std::move(lineQuad))};
-    lineSceneObject->Translate({0.0f, 3.3f, 0.0f});
+    lineSceneObject->SetPosition({0.0f, 3.3f, 0.0f});
     AddSceneObject(std::move(lineSceneObject));
     
     AddText(std::make_unique<Pht::Text>(Pht::Vec2 {-2.0f, 4.3f}, "SETTINGS", settingsTextProperties));
@@ -39,7 +39,7 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine, const CommonResources& 
 
     auto controlsBarQuad {engine.CreateRenderableObject(Pht::QuadMesh {7.0f, 1.72f}, barMaterial)};
     auto controlsBarSceneObject {std::make_unique<Pht::SceneObject>(std::move(controlsBarQuad))};
-    controlsBarSceneObject->Translate({-2.0f, 1.3f, -0.5f});
+    controlsBarSceneObject->SetPosition({-2.0f, 1.3f, -0.5f});
     AddSceneObject(std::move(controlsBarSceneObject));
     
     AddText(std::make_unique<Pht::Text>(Pht::Vec2 {-4.65f, 1.07f}, "CONTROLS", textProperties));
@@ -76,7 +76,7 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine, const CommonResources& 
         
     auto soundBarQuad {engine.CreateRenderableObject(Pht::QuadMesh {7.0f, 1.72f}, barMaterial)};
     auto soundBarSceneObject {std::make_unique<Pht::SceneObject>(std::move(soundBarQuad))};
-    soundBarSceneObject->Translate({-2.0f, -1.3f, -0.5f});
+    soundBarSceneObject->SetPosition({-2.0f, -1.3f, -0.5f});
     AddSceneObject(std::move(soundBarSceneObject));
         
     AddText(std::make_unique<Pht::Text>(Pht::Vec2 {-4.65f, -1.53f}, "SOUND", textProperties));

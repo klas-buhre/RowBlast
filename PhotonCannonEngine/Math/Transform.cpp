@@ -47,9 +47,9 @@ Mat4 Transform::ToMatrix() {
         result *= Mat4::RotateZ(mRotation.z);
     }
 
-    result.x.x = mScale.x;
-    result.y.y = mScale.y;
-    result.z.z = mScale.z;
+    result.x.x *= mScale.x;
+    result.y.y *= mScale.y;
+    result.z.z *= mScale.z;
     
     result.w.x = mPosition.x;
     result.w.y = mPosition.y;

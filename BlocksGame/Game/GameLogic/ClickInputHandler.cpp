@@ -28,8 +28,7 @@ MoveButton::MoveButton(Pht::IEngine& engine) :
     mButton {mSceneObject, Pht::Vec2{0.0f, 0.0f}, engine} {}
 
 void MoveButton::SetPosition(const Pht::Vec3& position) {
-    mSceneObject.ResetTransform();
-    mSceneObject.Translate(position);
+    mSceneObject.SetPosition(position);
 }
 
 void MoveButton::SetSize(const Pht::Vec2& size) {

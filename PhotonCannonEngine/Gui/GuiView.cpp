@@ -27,7 +27,7 @@ void GuiView::AddSceneObject(std::unique_ptr<SceneObject> sceneObject) {
                           return true;
                       }
                   } else {
-                      return a->GetPosition().z < b->GetPosition().z;
+                      return a->GetTransform().GetPosition().z < b->GetTransform().GetPosition().z;
                   }
               }
     );

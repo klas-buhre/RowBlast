@@ -19,7 +19,7 @@ namespace Pht {
             return mHasChanged;
         }
    
-        void SethasChanged(bool hasChanged) {
+        void SetHasChanged(bool hasChanged) {
             mHasChanged = hasChanged;
         }
         

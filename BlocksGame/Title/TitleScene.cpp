@@ -79,5 +79,5 @@ const std::vector<FloatingCube>& TitleScene::GetFloatingCubes() const {
 void TitleScene::CreateBackground(const Pht::Material& backgroundMaterial) {
     mBackground = std::make_unique<Pht::SceneObject>(
         mEngine.CreateRenderableObject(Pht::QuadMesh {100.0f, 100.0f}, backgroundMaterial));
-    mBackground->Translate({-20.0f, 0.0f, -35.0f});
+    mBackground->SetPosition({-20.0f, 0.0f, -35.0f});
 }

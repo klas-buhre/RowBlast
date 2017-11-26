@@ -27,7 +27,7 @@ GradientRectangle::GradientRectangle(Pht::IEngine& engine,
                            lowerColors.mMid,
                            material,
                            engine));
-    mMidQuad->Translate({position.x, position.y, position.z});
+    mMidQuad->SetPosition({position.x, position.y, position.z});
     
     mLeftQuad = std::make_unique<Pht::SceneObject>(
         CreateGradientQuad({leftQuadWidth, size.y},
@@ -38,7 +38,7 @@ GradientRectangle::GradientRectangle(Pht::IEngine& engine,
                            lowerColors.mMid,
                            material,
                            engine));
-    mLeftQuad->Translate({position.x - size.x / 2.0f + leftQuadWidth / 2.0f, position.y, position.z});
+    mLeftQuad->SetPosition({position.x - size.x / 2.0f + leftQuadWidth / 2.0f, position.y, position.z});
 
     mRightQuad = std::make_unique<Pht::SceneObject>(
         CreateGradientQuad({rightQuadWidth, size.y},
@@ -49,7 +49,7 @@ GradientRectangle::GradientRectangle(Pht::IEngine& engine,
                            lowerColors.mRight,
                            material,
                            engine));
-    mRightQuad->Translate({position.x + size.x / 2.0f - rightQuadWidth / 2.0f, position.y, position.z});
+    mRightQuad->SetPosition({position.x + size.x / 2.0f - rightQuadWidth / 2.0f, position.y, position.z});
 }
 
 std::unique_ptr<Pht::RenderableObject>

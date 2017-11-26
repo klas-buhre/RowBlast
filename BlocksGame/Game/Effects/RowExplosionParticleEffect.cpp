@@ -45,14 +45,13 @@ void RowExplosionParticleEffect::StartExplosion(const Pht::Vec2& position) {
     auto cellSize {mScene.GetCellSize()};
     auto& fieldLowerLeft {mScene.GetFieldLoweLeft()};
 
-    Pht::Vec3 translation {
+    Pht::Vec3 positionInScene {
         position.x * cellSize + cellSize / 2.0f + fieldLowerLeft.x,
         position.y * cellSize + cellSize / 2.0f + fieldLowerLeft.y,
         mScene.GetFieldPosition().z
     };
     
-    mScenObject->ResetTransform();
-    mScenObject->Translate(translation);
+    mScenObject->SetPosition(positionInScene);
     mScenObject->GetComponent<Pht::ParticleEffect>()->Start();
 }
 
