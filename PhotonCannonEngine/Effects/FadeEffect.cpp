@@ -70,16 +70,6 @@ FadeEffect::State FadeEffect::Update(float dt) {
     return mState;
 }
 
-FadeEffect::State FadeEffect::UpdateAndRender(float dt) {
-    if (Update(dt) == State::Idle) {
-        return State::Idle;
-    }
-    
-    Render();
-    
-    return mState;
-}
-
 void FadeEffect::Render() const {
     mRenderer.SetHudMode(true);
     mRenderer.SetDepthTest(false);

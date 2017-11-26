@@ -63,9 +63,12 @@ MapController::Command MapController::Update() {
 
     mHud.Update();
     mScene.Update();
-    mRenderer.RenderFrame();
     
     return command;
+}
+
+void MapController::RenderScene() {
+    mRenderer.RenderFrame();
 }
 
 MapController::Command MapController::UpdateMap() {

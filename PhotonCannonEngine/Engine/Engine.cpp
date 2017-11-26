@@ -25,7 +25,7 @@ void Engine::Initialize(bool createRenderBuffers) {
 
     // Create and init the application.
     mApplication = CreateApplication(*this);
-    mApplication->Initialize();
+    mApplication->OnInitialize();
 }
 
 void Engine::Update(float frameSeconds) {
@@ -35,14 +35,16 @@ void Engine::Update(float frameSeconds) {
         mLastFrameSeconds = maxFrameTimeSeconds;
     }
 
-    mRenderer.ClearBuffers();
-    mApplication->Update();
+    mApplication->OnUpdate();
     
     if (auto* scene {mSceneManager.GetScene()}) {
         scene->GetRoot().Update(false);
     }
     
     mParticleSystem.Update(mLastFrameSeconds);
+    
+    mRenderer.ClearBuffers();
+    mApplication->OnRender();
 }
 
 IRenderer& Engine::GetRenderer() {

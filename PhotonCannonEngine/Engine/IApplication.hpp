@@ -8,8 +8,9 @@ namespace Pht {
     public:
         virtual ~IApplication() {}
         
-        virtual void Initialize() = 0;
-        virtual void Update() = 0;
+        virtual void OnInitialize() = 0;
+        virtual void OnUpdate() = 0;
+        virtual void OnRender() = 0;
     };
     
     class IEngine;

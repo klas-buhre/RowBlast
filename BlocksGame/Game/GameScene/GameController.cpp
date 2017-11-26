@@ -117,6 +117,10 @@ GameController::Command GameController::Update() {
     return command;
 }
 
+void GameController::RenderScene() {
+    mRenderer.RenderFrame();
+}
+
 GameController::Command GameController::UpdateGame() {
     auto dt {mEngine.GetLastFrameSeconds()};
     
@@ -148,7 +152,6 @@ GameController::Command GameController::UpdateGame() {
     mFlyingBlocksAnimation.Update(dt);
     mHud.Update();
     mScene.Update();
-    mRenderer.RenderFrame();
     
     return command;
 }
@@ -201,7 +204,6 @@ GameController::Command GameController::UpdateInPausedState() {
     }
     
     mUserData.Update();
-    mRenderer.RenderFrame();
     
     return command;
 }

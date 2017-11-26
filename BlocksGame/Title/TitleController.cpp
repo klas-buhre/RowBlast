@@ -26,7 +26,10 @@ TitleController::Command TitleController::Update() {
     }
     
     mScene.Update();
-    mRenderer.RenderFrame();
     
     return command;
+}
+
+void TitleController::RenderScene() {
+    mRenderer.RenderFrame();
 }

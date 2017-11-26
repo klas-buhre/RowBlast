@@ -112,16 +112,16 @@ BlocksApplication::BlocksApplication(Pht::IEngine& engine) :
     mTitleController {engine, mCommonResources},
     mMapController {engine, mCommonResources, mCommonViewControllers, mUserData},
     mGameController {engine, mCommonResources, mCommonViewControllers, mUserData, mSettings},
-    mFadeEffect {engine, engine.GetRenderer(), 0.2f, 1.0f} {
+    mFadeEffect {engine, engine.GetRenderer(), 0.22f, 1.0f} {
 
     engine.GetInput().SetUseGestureRecognizers(false);
 }
 
-void BlocksApplication::Initialize() {
+void BlocksApplication::OnInitialize() {
     mTitleController.Reset();
 }
 
-void BlocksApplication::Update() {
+void BlocksApplication::OnUpdate() {
     std::cout << "******* FPS: " << 1.0f / mEngine.GetLastFrameSeconds() << std::endl;
     
     if (mState != State::GameScene) {
@@ -130,6 +130,24 @@ void BlocksApplication::Update() {
     
     UpdateScene();
     HandleTransitions();
+}
+
+void BlocksApplication::OnRender() {
+    switch (mState) {
+        case State::TitleScene:
+            mTitleController.RenderScene();
+            break;
+        case State::MapScene:
+            mMapController.RenderScene();
+            break;
+        case State::GameScene:
+            mGameController.RenderScene();
+            break;
+    }
+    
+    if (mFadeEffect.GetState() != Pht::FadeEffect::State::Idle) {
+        mFadeEffect.Render();
+    }
 }
 
 void BlocksApplication::UpdateScene() {
@@ -175,7 +193,7 @@ void BlocksApplication::UpdateGameScene() {
 }
 
 void BlocksApplication::HandleTransitions() {
-    if (mFadeEffect.UpdateAndRender(mEngine.GetLastFrameSeconds()) == Pht::FadeEffect::State::Transition) {
+    if (mFadeEffect.Update(mEngine.GetLastFrameSeconds()) == Pht::FadeEffect::State::Transition) {
         switch (mNextState) {
             case State::MapScene:
                 StartMap();

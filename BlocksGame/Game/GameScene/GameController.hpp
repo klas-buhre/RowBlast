@@ -50,6 +50,7 @@ namespace BlocksGame {
     
         void StartLevel(int levelIndex);
         Command Update();
+        void RenderScene();
     
     private:
         Command UpdateGame();

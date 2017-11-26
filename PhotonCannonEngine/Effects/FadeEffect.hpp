@@ -21,7 +21,6 @@ namespace Pht {
         void Reset();
         void Start();
         State Update(float dt);
-        State UpdateAndRender(float dt);
         void Render() const;
         bool IsFadingOut() const;
         

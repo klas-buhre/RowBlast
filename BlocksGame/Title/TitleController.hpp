@@ -23,6 +23,7 @@ namespace BlocksGame {
     
         void Reset();
         Command Update();
+        void RenderScene();
     
     private:
         Pht::IEngine& mEngine;

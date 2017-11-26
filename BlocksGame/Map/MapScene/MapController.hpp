@@ -46,6 +46,7 @@ namespace BlocksGame {
         void Reset();
         void Stop();
         Command Update();
+        void RenderScene();
     
     private:
         Command UpdateMap();
