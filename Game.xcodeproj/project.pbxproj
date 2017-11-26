@@ -222,6 +222,7 @@
 		6270DC481FC1DE7000FB457D /* VboCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6270DC461FC1DE7000FB457D /* VboCache.cpp */; };
 		6270DC4B1FC48BE200FB457D /* LightComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6270DC491FC48BE200FB457D /* LightComponent.cpp */; };
 		6270DC4E1FC96E8B00FB457D /* Transform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6270DC4C1FC96E8B00FB457D /* Transform.cpp */; };
+		6270DC511FCAFDD400FB457D /* FloatingCubesNew.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6270DC4F1FCAFDD400FB457D /* FloatingCubesNew.cpp */; };
 		627625891EA2618D00321DD6 /* level2.json in Resources */ = {isa = PBXBuildFile; fileRef = 627625881EA2618D00321DD6 /* level2.json */; };
 		6280AF741F2CC1C900FFAF9B /* level11.json in Resources */ = {isa = PBXBuildFile; fileRef = 6280AF731F2CC1C900FFAF9B /* level11.json */; };
 		6280AF761F2CC49500FFAF9B /* level12.json in Resources */ = {isa = PBXBuildFile; fileRef = 6280AF751F2CC49500FFAF9B /* level12.json */; };
@@ -740,6 +741,8 @@
 		6270DC4A1FC48BE200FB457D /* LightComponent.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = LightComponent.hpp; sourceTree = "<group>"; };
 		6270DC4C1FC96E8B00FB457D /* Transform.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Transform.cpp; sourceTree = "<group>"; };
 		6270DC4D1FC96E8B00FB457D /* Transform.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Transform.hpp; sourceTree = "<group>"; };
+		6270DC4F1FCAFDD400FB457D /* FloatingCubesNew.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FloatingCubesNew.cpp; sourceTree = "<group>"; };
+		6270DC501FCAFDD400FB457D /* FloatingCubesNew.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = FloatingCubesNew.hpp; sourceTree = "<group>"; };
 		627625881EA2618D00321DD6 /* level2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level2.json; sourceTree = "<group>"; };
 		6280AF731F2CC1C900FFAF9B /* level11.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level11.json; sourceTree = "<group>"; };
 		6280AF751F2CC49500FFAF9B /* level12.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level12.json; sourceTree = "<group>"; };
@@ -1325,6 +1328,8 @@
 				624447151EDDD2C40080ECE8 /* CommonResources.hpp */,
 				624447161EDDD2C40080ECE8 /* FloatingCubes.cpp */,
 				624447171EDDD2C40080ECE8 /* FloatingCubes.hpp */,
+				6270DC4F1FCAFDD400FB457D /* FloatingCubesNew.cpp */,
+				6270DC501FCAFDD400FB457D /* FloatingCubesNew.hpp */,
 				624447181EDDD2C40080ECE8 /* GradientRectangle.cpp */,
 				624447191EDDD2C40080ECE8 /* GradientRectangle.hpp */,
 				6244471A1EDDD2C40080ECE8 /* Materials.cpp */,
@@ -1937,6 +1942,7 @@
 				623B33071F17AC12000C64A1 /* JsonUtil.cpp in Sources */,
 				623B32DC1F17AC12000C64A1 /* GLKViewExtension.mm in Sources */,
 				6270DC4E1FC96E8B00FB457D /* Transform.cpp in Sources */,
+				6270DC511FCAFDD400FB457D /* FloatingCubesNew.cpp in Sources */,
 				623B32E81F17AC12000C64A1 /* ShaderProgram.cpp in Sources */,
 				626C4DA71EEC20B8000D4DF6 /* SettingsButtonView.cpp in Sources */,
 				6254C16F1EED39E300BBCAD2 /* CommonViewControllers.cpp in Sources */,

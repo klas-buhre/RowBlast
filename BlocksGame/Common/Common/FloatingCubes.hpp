@@ -13,7 +13,6 @@ namespace Pht {
 }
 
 namespace BlocksGame {
-    class Field;
     class CommonResources;
     
     struct FloatingCube {

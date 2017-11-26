@@ -13,7 +13,7 @@ namespace Pht {
             mData[mSize++] = element;
         }
 
-        // Wrning! The destructor on the erased element is not called. Only store POD types.
+        // Warning! The destructor on the erased element is not called. Only store store POD types.
         void Erase(int index) {
             --mSize;
             assert(mSize >= 0);
@@ -74,6 +74,15 @@ namespace Pht {
         
         T* GetData() {
             return mData;
+        }
+        
+        // For range-based for loops.
+        T* begin() {
+            return &mData[0];
+        }
+
+        T* end() {
+            return &mData[mSize];
         }
         
     private:

@@ -2,7 +2,6 @@
 
 // Engine includes.
 #include "IEngine.hpp"
-#include "IRenderer.hpp"
 #include "ObjMesh.hpp"
 #include "MathUtils.hpp"
 
