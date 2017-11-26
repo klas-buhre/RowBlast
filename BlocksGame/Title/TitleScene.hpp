@@ -23,7 +23,7 @@ namespace BlocksGame {
         
         void Reset();
         void Update();
-        const std::vector<FloatingCube>& GetFloatingCubes() const;
+        const Pht::SceneObject& GetFloatingCubes() const;
         
         const Pht::SceneObject& GetBackground() const {
             return *mBackground;

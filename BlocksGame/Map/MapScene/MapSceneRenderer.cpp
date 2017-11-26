@@ -28,7 +28,7 @@ MapSceneRenderer::MapSceneRenderer(Pht::IRenderer& engineRenderer,
 void MapSceneRenderer::RenderFrame() {
     mEngineRenderer.SetProjectionMode(Pht::ProjectionMode::Perspective);
     mEngineRenderer.RenderSceneObject(mScene.GetBackground());
-    RenderUtils::RenderFloatingCubes(mEngineRenderer, mScene.GetFloatingCubes());
+    mEngineRenderer.RenderSceneObject(mScene.GetFloatingCubes());
     
     mEngineRenderer.SetProjectionMode(Pht::ProjectionMode::Orthographic);
     RenderPins();

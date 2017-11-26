@@ -71,7 +71,7 @@ void GameRenderer::RenderFrame() {
     mEngineRenderer.SetProjectionMode(Pht::ProjectionMode::Perspective);
     
     mEngineRenderer.RenderSceneObject(mScene.GetBackground());
-    RenderUtils::RenderFloatingCubes(mEngineRenderer, mScene.GetFloatingCubes());
+    mEngineRenderer.RenderSceneObject(mScene.GetFloatingCubes());
 
     mEngineRenderer.SetProjectionMode(Pht::ProjectionMode::Orthographic);
     mEngineRenderer.SetScissorBox(mScene.GetScissorBoxLowerLeft(), mScene.GetScissorBoxSize());

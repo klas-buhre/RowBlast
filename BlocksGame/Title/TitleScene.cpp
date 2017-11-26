@@ -42,7 +42,7 @@ namespace {
 
 TitleScene::TitleScene(Pht::IEngine& engine, const CommonResources& commonResources) :
     mEngine {engine},
-    mFloatingCubes {floatingCubePaths, engine, commonResources, 7.7f},
+    mFloatingCubes {engine, nullptr, floatingCubePaths, commonResources, 7.7f},
     mFont {"ethnocentric_rg_it.ttf", engine.GetRenderer().GetAdjustedNumPixels(100)},
     mTitleText {{-6.5f, 5.0f}, "BLOCKS", {mFont, 1.0f, Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f}}},
     mTapFont {"HussarBoldWeb.otf", engine.GetRenderer().GetAdjustedNumPixels(35)},
@@ -72,8 +72,8 @@ void TitleScene::Update() {
     mFloatingCubes.Update();
 }
 
-const std::vector<FloatingCube>& TitleScene::GetFloatingCubes() const {
-    return mFloatingCubes.GetCubes();
+const Pht::SceneObject& TitleScene::GetFloatingCubes() const {
+    return mFloatingCubes.GetSceneObject();
 }
 
 void TitleScene::CreateBackground(const Pht::Material& backgroundMaterial) {

@@ -106,7 +106,6 @@
 		624332871EBF188400485D2E /* map.json in Resources */ = {isa = PBXBuildFile; fileRef = 624332861EBF188400485D2E /* map.json */; };
 		6244479A1EDDD2C40080ECE8 /* BlocksApplication.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 624447101EDDD2C40080ECE8 /* BlocksApplication.cpp */; };
 		6244479B1EDDD2C40080ECE8 /* CommonResources.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 624447141EDDD2C40080ECE8 /* CommonResources.cpp */; };
-		6244479C1EDDD2C40080ECE8 /* FloatingCubes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 624447161EDDD2C40080ECE8 /* FloatingCubes.cpp */; };
 		6244479D1EDDD2C40080ECE8 /* GradientRectangle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 624447181EDDD2C40080ECE8 /* GradientRectangle.cpp */; };
 		6244479E1EDDD2C40080ECE8 /* Materials.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6244471A1EDDD2C40080ECE8 /* Materials.cpp */; };
 		6244479F1EDDD2C40080ECE8 /* RenderUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6244471C1EDDD2C40080ECE8 /* RenderUtils.cpp */; };
@@ -222,7 +221,7 @@
 		6270DC481FC1DE7000FB457D /* VboCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6270DC461FC1DE7000FB457D /* VboCache.cpp */; };
 		6270DC4B1FC48BE200FB457D /* LightComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6270DC491FC48BE200FB457D /* LightComponent.cpp */; };
 		6270DC4E1FC96E8B00FB457D /* Transform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6270DC4C1FC96E8B00FB457D /* Transform.cpp */; };
-		6270DC511FCAFDD400FB457D /* FloatingCubesNew.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6270DC4F1FCAFDD400FB457D /* FloatingCubesNew.cpp */; };
+		6270DC511FCAFDD400FB457D /* FloatingCubes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6270DC4F1FCAFDD400FB457D /* FloatingCubes.cpp */; };
 		627625891EA2618D00321DD6 /* level2.json in Resources */ = {isa = PBXBuildFile; fileRef = 627625881EA2618D00321DD6 /* level2.json */; };
 		6280AF741F2CC1C900FFAF9B /* level11.json in Resources */ = {isa = PBXBuildFile; fileRef = 6280AF731F2CC1C900FFAF9B /* level11.json */; };
 		6280AF761F2CC49500FFAF9B /* level12.json in Resources */ = {isa = PBXBuildFile; fileRef = 6280AF751F2CC49500FFAF9B /* level12.json */; };
@@ -516,8 +515,6 @@
 		624447111EDDD2C40080ECE8 /* BlocksApplication.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = BlocksApplication.hpp; sourceTree = "<group>"; };
 		624447141EDDD2C40080ECE8 /* CommonResources.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CommonResources.cpp; sourceTree = "<group>"; };
 		624447151EDDD2C40080ECE8 /* CommonResources.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CommonResources.hpp; sourceTree = "<group>"; };
-		624447161EDDD2C40080ECE8 /* FloatingCubes.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FloatingCubes.cpp; sourceTree = "<group>"; };
-		624447171EDDD2C40080ECE8 /* FloatingCubes.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FloatingCubes.hpp; sourceTree = "<group>"; };
 		624447181EDDD2C40080ECE8 /* GradientRectangle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GradientRectangle.cpp; sourceTree = "<group>"; };
 		624447191EDDD2C40080ECE8 /* GradientRectangle.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GradientRectangle.hpp; sourceTree = "<group>"; };
 		6244471A1EDDD2C40080ECE8 /* Materials.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Materials.cpp; sourceTree = "<group>"; };
@@ -741,8 +738,8 @@
 		6270DC4A1FC48BE200FB457D /* LightComponent.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = LightComponent.hpp; sourceTree = "<group>"; };
 		6270DC4C1FC96E8B00FB457D /* Transform.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Transform.cpp; sourceTree = "<group>"; };
 		6270DC4D1FC96E8B00FB457D /* Transform.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Transform.hpp; sourceTree = "<group>"; };
-		6270DC4F1FCAFDD400FB457D /* FloatingCubesNew.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FloatingCubesNew.cpp; sourceTree = "<group>"; };
-		6270DC501FCAFDD400FB457D /* FloatingCubesNew.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = FloatingCubesNew.hpp; sourceTree = "<group>"; };
+		6270DC4F1FCAFDD400FB457D /* FloatingCubes.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FloatingCubes.cpp; sourceTree = "<group>"; };
+		6270DC501FCAFDD400FB457D /* FloatingCubes.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = FloatingCubes.hpp; sourceTree = "<group>"; };
 		627625881EA2618D00321DD6 /* level2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level2.json; sourceTree = "<group>"; };
 		6280AF731F2CC1C900FFAF9B /* level11.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level11.json; sourceTree = "<group>"; };
 		6280AF751F2CC49500FFAF9B /* level12.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level12.json; sourceTree = "<group>"; };
@@ -1326,10 +1323,8 @@
 			children = (
 				624447141EDDD2C40080ECE8 /* CommonResources.cpp */,
 				624447151EDDD2C40080ECE8 /* CommonResources.hpp */,
-				624447161EDDD2C40080ECE8 /* FloatingCubes.cpp */,
-				624447171EDDD2C40080ECE8 /* FloatingCubes.hpp */,
-				6270DC4F1FCAFDD400FB457D /* FloatingCubesNew.cpp */,
-				6270DC501FCAFDD400FB457D /* FloatingCubesNew.hpp */,
+				6270DC4F1FCAFDD400FB457D /* FloatingCubes.cpp */,
+				6270DC501FCAFDD400FB457D /* FloatingCubes.hpp */,
 				624447181EDDD2C40080ECE8 /* GradientRectangle.cpp */,
 				624447191EDDD2C40080ECE8 /* GradientRectangle.hpp */,
 				6244471A1EDDD2C40080ECE8 /* Materials.cpp */,
@@ -1863,7 +1858,6 @@
 				6260A7041F87E5BA001F6DCD /* SphereMesh.cpp in Sources */,
 				6260A7021F87E5B4001F6DCD /* QuadMesh.cpp in Sources */,
 				6260A7031F87E5B7001F6DCD /* MeshUtils.cpp in Sources */,
-				6244479C1EDDD2C40080ECE8 /* FloatingCubes.cpp in Sources */,
 				620A98361EE43DD200AD6C61 /* ClearLastBlocksAnimation.cpp in Sources */,
 				623B32D21F17AC11000C64A1 /* Engine.cpp in Sources */,
 				623B32DD1F17AC12000C64A1 /* ImageIOS.mm in Sources */,
@@ -1942,7 +1936,7 @@
 				623B33071F17AC12000C64A1 /* JsonUtil.cpp in Sources */,
 				623B32DC1F17AC12000C64A1 /* GLKViewExtension.mm in Sources */,
 				6270DC4E1FC96E8B00FB457D /* Transform.cpp in Sources */,
-				6270DC511FCAFDD400FB457D /* FloatingCubesNew.cpp in Sources */,
+				6270DC511FCAFDD400FB457D /* FloatingCubes.cpp in Sources */,
 				623B32E81F17AC12000C64A1 /* ShaderProgram.cpp in Sources */,
 				626C4DA71EEC20B8000D4DF6 /* SettingsButtonView.cpp in Sources */,
 				6254C16F1EED39E300BBCAD2 /* CommonViewControllers.cpp in Sources */,

@@ -2,33 +2,49 @@
 
 // Engine includes.
 #include "IEngine.hpp"
+#include "ISceneManager.hpp"
 #include "ObjMesh.hpp"
 #include "MathUtils.hpp"
+#include "SceneObject.hpp"
 
 // Game includes.
 #include "CommonResources.hpp"
 
 using namespace BlocksGame;
 
-FloatingCubes::FloatingCubes(const std::vector<Volume>& volumes,
-                             Pht::IEngine& engine,
+FloatingCubes::FloatingCubes(Pht::IEngine& engine,
+                             Pht::Scene* scene,
+                             const std::vector<Volume>& volumes,
                              const CommonResources& commonResources,
                              float scale) :
     mEngine {engine},
+    mScene {scene},
     mVolumes {volumes} {
     
     mCubes.resize(mVolumes.size());
     
-    Pht::ObjMesh triangle {"triangle_428_085.obj", scale};
-    Pht::ObjMesh cube {"cube_554.obj", scale};
+    Pht::ObjMesh triangleMesh {"triangle_428_085.obj", scale};
+    Pht::ObjMesh cubeMesh {"cube_554.obj", scale};
     auto& materials {commonResources.GetMaterials()};
+    auto& sceneManager {engine.GetSceneManager()};
     
     mCubeRenderables = {
-        engine.CreateRenderableObject(cube, materials.GetGoldMaterial()),
-        engine.CreateRenderableObject(cube, materials.GetBlueMaterial()),
-        engine.CreateRenderableObject(triangle, materials.GetRedMaterial()),
-        engine.CreateRenderableObject(cube, materials.GetGreenMaterial())
+        sceneManager.CreateRenderableObject(cubeMesh, materials.GetGoldMaterial()),
+        sceneManager.CreateRenderableObject(cubeMesh, materials.GetBlueMaterial()),
+        sceneManager.CreateRenderableObject(triangleMesh, materials.GetRedMaterial()),
+        sceneManager.CreateRenderableObject(cubeMesh, materials.GetGreenMaterial())
     };
+    
+    mSceneObject = std::make_unique<Pht::SceneObject>();
+    
+    if (mScene) {
+        mScene->GetRoot().AddChild(*mSceneObject);
+    }
+    
+    for (auto& cube: mCubes) {
+        cube.mSceneObject = std::make_unique<Pht::SceneObject>();
+        mSceneObject->AddChild(*cube.mSceneObject);
+    }
 }
 
 void FloatingCubes::Reset() {
@@ -47,7 +63,7 @@ void FloatingCubes::Reset() {
             0.0f
         };
         
-        Pht::Vec3 orientation {
+        Pht::Vec3 rotation {
             Pht::NormalizedRand() * 360.0f,
             Pht::NormalizedRand() * 360.0f,
             Pht::NormalizedRand() * 360.0f,
@@ -59,15 +75,15 @@ void FloatingCubes::Reset() {
             (Pht::NormalizedRand() - 0.5f) * 20.0f
         };
         
-        FloatingCube cube {
-            position,
-            velocity,
-            orientation,
-            angularVelocity,
-            mCubeRenderables[std::rand() % numRenderables].get()
-        };
+        auto& cube {mCubes[i]};
+        cube.mVelocity = velocity;
+        cube.mAngularVelocity = angularVelocity;
         
-        mCubes[i] = cube;
+        cube.mSceneObject->SetRenderable(mCubeRenderables[std::rand() % numRenderables]);
+        
+        auto& transform {cube.mSceneObject->GetTransform()};
+        transform.SetPosition(position);
+        transform.SetRotation(rotation);
     }
 }
 
@@ -76,13 +92,14 @@ void FloatingCubes::Update() {
 
     for (auto i {0}; i < mCubes.size(); ++i) {
         auto& cube {mCubes[i]};
-        cube.mPosition += cube.mVelocity * dt;
-        cube.mOrientation += cube.mAngularVelocity * dt;
+        auto& transform {cube.mSceneObject->GetTransform()};
+        transform.Translate(cube.mVelocity * dt);
+        transform.Rotate(cube.mAngularVelocity * dt);
         
         const auto& volume {mVolumes[i]};
         auto rightLimit {volume.mPosition.x + volume.mSize.x / 2.0f};
         auto leftLimit {volume.mPosition.x - volume.mSize.x / 2.0f};
-        auto& position {cube.mPosition};
+        auto& position {transform.GetPosition()};
         
         if (position.x > rightLimit && cube.mVelocity.x > 0.0f) {
             cube.mVelocity.x = -cube.mVelocity.x;
@@ -91,5 +108,9 @@ void FloatingCubes::Update() {
         if (position.x < leftLimit && cube.mVelocity.x < 0.0f) {
             cube.mVelocity.x = -cube.mVelocity.x;
         }
+    }
+    
+    if (mScene == nullptr) {
+        mSceneObject->Update(false);
     }
 }

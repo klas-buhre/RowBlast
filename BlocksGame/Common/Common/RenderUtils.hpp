@@ -14,7 +14,6 @@ namespace BlocksGame {
 
     namespace RenderUtils {
         void RenderText(Pht::IRenderer& renderer, const Pht::Text& text);
-        void RenderFloatingCubes(Pht::IRenderer& renderer, const std::vector<FloatingCube>& cubes);
         void RenderGradientRectangle(Pht::IRenderer& renderer, const GradientRectangle& rectangle);
     }
 }

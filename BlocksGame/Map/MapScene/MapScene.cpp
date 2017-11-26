@@ -106,8 +106,8 @@ void MapScene::SetCameraPosition(Pht::Vec3 position) {
     mEngine.GetRenderer().LookAt(position, target, up);
 }
 
-const std::vector<FloatingCube>& MapScene::GetFloatingCubes() const {
-    return mFloatingCubes->GetCubes();
+const Pht::SceneObject& MapScene::GetFloatingCubes() const {
+    return mFloatingCubes->GetSceneObject();
 }
 
 const Pht::SceneObject& MapScene::GetNextLevelParticleEffect() const {
@@ -136,9 +136,13 @@ void MapScene::CreateFloatingCubes(const CommonResources& commonResources) {
         floatingCubePaths.push_back(volume);
     }
     
-    mFloatingCubes = std::make_unique<FloatingCubes>(floatingCubePaths, mEngine, commonResources, 1.5f);
+    mFloatingCubes = std::make_unique<FloatingCubes>(mEngine,
+                                                     nullptr,
+                                                     floatingCubePaths,
+                                                     commonResources,
+                                                     1.5f);
 }
-
+        
 void MapScene::LoadStar(const CommonResources& commonResources) {
     mStarRenderable = mEngine.GetSceneManager().CreateRenderableObject(
         Pht::ObjMesh {"star.obj", 0.05f}, commonResources.GetMaterials().GetGoldMaterial());

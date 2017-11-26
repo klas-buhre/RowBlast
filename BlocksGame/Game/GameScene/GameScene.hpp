@@ -37,7 +37,7 @@ namespace BlocksGame {
         const Pht::Material& GetDarkGrayMaterial() const;
         const Pht::Material& GetLightGrayMaterial() const;
         const Pht::Material& GetYellowMaterial() const;
-        const std::vector<FloatingCube>& GetFloatingCubes() const;
+        const Pht::SceneObject& GetFloatingCubes() const;
         
         const Pht::Vec3& GetLightDirection() const {
             return mLightDirection;

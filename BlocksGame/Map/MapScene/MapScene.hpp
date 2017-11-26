@@ -27,7 +27,7 @@ namespace BlocksGame {
         void Stop();
         void Update();
         void SetCameraPosition(Pht::Vec3 position);
-        const std::vector<FloatingCube>& GetFloatingCubes() const;
+        const Pht::SceneObject& GetFloatingCubes() const;
         const Pht::SceneObject& GetNextLevelParticleEffect() const;
         
         const Pht::Vec3& GetCameraPosition() const {
