@@ -45,7 +45,7 @@ void MapSceneRenderer::RenderPins() {
     
     for (auto& pin: mScene.GetPins()) {
         RenderPin(*pin);
-    }    
+    }
 }
 
 void MapSceneRenderer::RenderPin(MapPin& pin) {
