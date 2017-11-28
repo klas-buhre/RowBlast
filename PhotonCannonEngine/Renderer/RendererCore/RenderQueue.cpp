@@ -8,6 +8,8 @@
 using namespace Pht;
 
 namespace {
+    const Vec4 modelSpaceOrigin {0.0f, 0.0f, 0.0f, 1.0f};
+
     int CalcNumSceneObjects(const SceneObject& sceneObject) {
         auto numObjects {1};
         
@@ -79,17 +81,18 @@ void RenderQueue::CalculateDistances(const Mat4& viewMatrix) {
     
     for (auto i {0}; i < mSize; ++i) {
         auto& renderEntry {mQueue[i]};
-        auto& sceneObjectPosition {renderEntry.mSceneObject->GetTransform().GetPosition()};
+        auto sceneObjectPos {renderEntry.mSceneObject->GetWorldSpacePosition()};
         
         switch (mDistanceFunction) {
             case DistanceFunction::CameraSpaceZ: {
-                auto sceneObjectPosCamSpace {transposedViewMatrix * Vec4{sceneObjectPosition, 0.0f}};
-                renderEntry.mDistance = sceneObjectPosCamSpace.z;
+                auto sceneObjectPosCamSpace {transposedViewMatrix * Vec4{sceneObjectPos, 1.0f}};
+                renderEntry.mDistance = -sceneObjectPosCamSpace.z;
                 break;
             }
-            case DistanceFunction::WorldSpaceZ:
-                renderEntry.mDistance = -sceneObjectPosition.z;
+            case DistanceFunction::WorldSpaceZ: {
+                renderEntry.mDistance = -sceneObjectPos.z;
                 break;
+            }
         }
     }
 }

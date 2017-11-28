@@ -23,7 +23,7 @@ namespace BlocksGame {
     public:
         BlocksApplication(Pht::IEngine& engine);
     
-        void OnInitialize() override;
+        void OnInitialize() override {}
         void OnUpdate() override;
         void OnRender() override;
         

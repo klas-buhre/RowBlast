@@ -37,7 +37,7 @@ void Engine::Update(float frameSeconds) {
 
     mApplication->OnUpdate();
     
-    if (auto* scene {mSceneManager.GetScene()}) {
+    if (auto* scene {mSceneManager.GetActiveScene()}) {
         scene->GetRoot().Update(false);
     }
     

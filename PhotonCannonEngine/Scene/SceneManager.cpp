@@ -19,10 +19,13 @@ std::unique_ptr<Scene> SceneManager::CreateScene(Scene::Name name) {
 
 void SceneManager::SetLoadedScene(std::unique_ptr<Scene> scene) {
     mScene = std::move(scene);
-    mScene->GetRenderQueue().Allocate();
+    
+    if (mScene) {
+        mScene->GetRenderQueue().Allocate();
+    }
 }
 
-Scene* SceneManager::GetScene() {
+Scene* SceneManager::GetActiveScene() {
     return mScene.get();
 }
 

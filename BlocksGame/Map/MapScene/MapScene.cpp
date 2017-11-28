@@ -61,6 +61,7 @@ MapScene::MapScene(Pht::IEngine& engine,
 }
 
 void MapScene::Reset() {
+    mEngine.GetSceneManager().SetLoadedScene(nullptr);
     mEngine.GetRenderer().SetLightDirection({1.0f, 1.0f, 1.0f});
     mFloatingCubes->Reset();
     ReflectProgressInPinsAndConnections();

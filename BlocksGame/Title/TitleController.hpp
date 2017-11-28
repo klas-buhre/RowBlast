@@ -2,7 +2,6 @@
 #define TitleController_hpp
 
 // Game includes.
-#include "TitleSceneRenderer.hpp"
 #include "TitleScene.hpp"
 
 namespace Pht {
@@ -21,14 +20,12 @@ namespace BlocksGame {
         
         TitleController(Pht::IEngine& engine, const CommonResources& commonResources);
     
-        void Reset();
         Command Update();
         void RenderScene();
     
     private:
         Pht::IEngine& mEngine;
         TitleScene mScene;
-        TitleSceneRenderer mRenderer;
     };
 }
 

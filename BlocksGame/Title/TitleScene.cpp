@@ -3,8 +3,14 @@
 // Engine includes.
 #include "IEngine.hpp"
 #include "IRenderer.hpp"
+#include "ISceneManager.hpp"
+#include "SceneObject.hpp"
 #include "Material.hpp"
 #include "QuadMesh.hpp"
+#include "Fnv1Hash.hpp"
+#include "LightComponent.hpp"
+#include "CameraComponent.hpp"
+#include "TextComponent.hpp"
 
 // Game includes.
 #include "CommonResources.hpp"
@@ -41,43 +47,54 @@ namespace {
 }
 
 TitleScene::TitleScene(Pht::IEngine& engine, const CommonResources& commonResources) :
-    mEngine {engine},
-    mFloatingCubes {engine, nullptr, floatingCubePaths, commonResources, 7.7f},
     mFont {"ethnocentric_rg_it.ttf", engine.GetRenderer().GetAdjustedNumPixels(100)},
-    mTitleText {{-6.5f, 5.0f}, "BLOCKS", {mFont, 1.0f, Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f}}},
-    mTapFont {"HussarBoldWeb.otf", engine.GetRenderer().GetAdjustedNumPixels(35)},
-    mTapText {{-3.7f, -6.0f}, "Tap to continue...", {
-        mTapFont,
-        1.0f,
-        Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f}
-    }} {
+    mTapFont {"HussarBoldWeb.otf", engine.GetRenderer().GetAdjustedNumPixels(35)} {
+    
+    auto& sceneManager {engine.GetSceneManager()};
+    auto scene {sceneManager.CreateScene(Pht::Hash::Fnv1a("TitleScene"))};
+    
+    auto& light {scene->CreateGlobalLight()};
+    light.SetDirection({1.0f, 1.0f, 1.0f});
+    light.SetDirectionalIntensity(1.0f);
+    scene->GetRoot().AddChild(light.GetSceneObject());
 
-    CreateBackground(commonResources.GetMaterials().GetSkyMaterial());
-}
-    
-void TitleScene::Reset() {
-    auto& renderer {mEngine.GetRenderer()};
-    renderer.SetLightDirection({1.0f, 1.0f, 1.0f});
-    renderer.SetDirectionalLightIntensity(1.0f);
-    
+    auto& camera {scene->CreateCamera()};
     Pht::Vec3 cameraPosition {0.0f, 0.0f, 20.5f};
     Pht::Vec3 target {0.0f, 0.0f, 0.0f};
     Pht::Vec3 up {0.0f, 1.0f, 0.0f};
-    renderer.LookAt(cameraPosition, target, up);
+    camera.GetSceneObject().GetTransform().SetPosition(cameraPosition);
+    camera.SetTarget(target, up);
+    scene->GetRoot().AddChild(camera.GetSceneObject());
     
-    mFloatingCubes.Reset();
+    auto& background {
+        scene->CreateSceneObject(Pht::QuadMesh {100.0f, 100.0f},
+                                 commonResources.GetMaterials().GetSkyMaterial())
+    };
+    background.GetTransform().SetPosition({-20.0f, 0.0f, -35.0f});
+    scene->GetRoot().AddChild(background);
+    
+    mFloatingCubes = std::make_unique<FloatingCubes>(engine,
+                                                     scene.get(),
+                                                     floatingCubePaths,
+                                                     commonResources,
+                                                     7.7f);
+    mFloatingCubes->Reset();
+    
+    auto& titleText {scene->CreateText("BLOCKS", {mFont, 1.0f, Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f}})};
+    titleText.GetSceneObject().GetTransform().SetPosition({-6.5f, 5.0f, 0.0f});
+    scene->GetRoot().AddChild(titleText.GetSceneObject());
+
+    auto& tapText {
+        scene->CreateText("Tap to continue...", {mTapFont, 1.0f, Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f}})
+    };
+    tapText.GetSceneObject().GetTransform().SetPosition({-3.7f, -6.0f, 0.0f});
+    scene->GetRoot().AddChild(tapText.GetSceneObject());
+    
+    scene->SetDistanceFunction(Pht::DistanceFunction::WorldSpaceZ);
+    
+    sceneManager.SetLoadedScene(std::move(scene));
 }
 
 void TitleScene::Update() {
-    mFloatingCubes.Update();
-}
-
-const Pht::SceneObject& TitleScene::GetFloatingCubes() const {
-    return mFloatingCubes.GetSceneObject();
-}
-
-void TitleScene::CreateBackground(const Pht::Material& backgroundMaterial) {
-    mBackground = std::make_unique<Pht::SceneObject>(
-        mEngine.CreateRenderableObject(Pht::QuadMesh {100.0f, 100.0f}, backgroundMaterial));
-    mBackground->SetPosition({-20.0f, 0.0f, -35.0f});
+    mFloatingCubes->Update();
 }

@@ -23,6 +23,7 @@ namespace Pht {
         void SetRotationY(float degrees);
         void SetRotationZ(float degrees);
         void SetScale(float scale);
+        Vec3 GetWorldSpacePosition() const;
         void Update(bool parentMatrixChanged);
         void AddChild(SceneObject& child);
         SceneObject* Find(Name name);

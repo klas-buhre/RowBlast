@@ -635,7 +635,7 @@ void Renderer::RenderScene(const Scene& scene) {
     // Setup camera.
     auto* camera {scene.GetCamera()};
     assert(camera);
-    mCamera.LookAt(camera->GetSceneObject().GetTransform().GetPosition(),
+    mCamera.LookAt(camera->GetSceneObject().GetWorldSpacePosition(),
                    camera->GetTarget(),
                    camera->GetUp());
     
@@ -672,7 +672,7 @@ void Renderer::RenderScene(const Scene& scene) {
         auto* textComponent {sceneObject->GetComponent<TextComponent>()};
         
         if (textComponent) {
-            auto& sceneObjectPosition {sceneObject->GetTransform().GetPosition()};
+            auto sceneObjectPosition {sceneObject->GetWorldSpacePosition()};
             Vec2 textPosition {sceneObjectPosition.x, sceneObjectPosition.y};
             RenderText(textComponent->GetText(), textPosition, textComponent->GetProperties());
         }

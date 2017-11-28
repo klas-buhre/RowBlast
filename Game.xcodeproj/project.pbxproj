@@ -127,8 +127,6 @@
 		624447CD1EDDD2C40080ECE8 /* SpherePiece.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 624447821EDDD2C40080ECE8 /* SpherePiece.cpp */; };
 		624447CE1EDDD2C40080ECE8 /* TrianglePiece.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 624447841EDDD2C40080ECE8 /* TrianglePiece.cpp */; };
 		624447D51EDDD2C40080ECE8 /* TitleController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 624447941EDDD2C40080ECE8 /* TitleController.cpp */; };
-		624447D61EDDD2C40080ECE8 /* TitleScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 624447961EDDD2C40080ECE8 /* TitleScene.cpp */; };
-		624447D71EDDD2C40080ECE8 /* TitleSceneRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 624447981EDDD2C40080ECE8 /* TitleSceneRenderer.cpp */; };
 		624693A01EFD1637004AF2A1 /* ProgressManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6246939E1EFD1637004AF2A1 /* ProgressManager.cpp */; };
 		6247CFD11EFFB11800B9919E /* GameOverDialogView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6247CFCF1EFFB11800B9919E /* GameOverDialogView.cpp */; };
 		6247CFD41EFFB22200B9919E /* GameOverDialogController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6247CFD21EFFB22200B9919E /* GameOverDialogController.cpp */; };
@@ -230,6 +228,7 @@
 		6270DCAE1FCB248E00FB457D /* sky_upside_down_patched_mirrored.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6270DCA61FCB248E00FB457D /* sky_upside_down_patched_mirrored.jpg */; };
 		6270DCAF1FCB248E00FB457D /* smiley.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6270DCA71FCB248E00FB457D /* smiley.jpg */; };
 		6270DCB01FCB248E00FB457D /* star_particle.png in Resources */ = {isa = PBXBuildFile; fileRef = 6270DCA81FCB248E00FB457D /* star_particle.png */; };
+		6270DCB31FCDA99100FB457D /* TitleScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6270DCB11FCDA99100FB457D /* TitleScene.cpp */; };
 		628A22571F6D359100D97BF8 /* OfflineRasterizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 628A22551F6D359100D97BF8 /* OfflineRasterizer.cpp */; };
 		628A225A1F6E704900D97BF8 /* GhostPieceProducer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 628A22581F6E704900D97BF8 /* GhostPieceProducer.cpp */; };
 /* End PBXBuildFile section */
@@ -583,10 +582,6 @@
 		624447851EDDD2C40080ECE8 /* TrianglePiece.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = TrianglePiece.hpp; sourceTree = "<group>"; };
 		624447941EDDD2C40080ECE8 /* TitleController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TitleController.cpp; sourceTree = "<group>"; };
 		624447951EDDD2C40080ECE8 /* TitleController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = TitleController.hpp; sourceTree = "<group>"; };
-		624447961EDDD2C40080ECE8 /* TitleScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TitleScene.cpp; sourceTree = "<group>"; };
-		624447971EDDD2C40080ECE8 /* TitleScene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = TitleScene.hpp; sourceTree = "<group>"; };
-		624447981EDDD2C40080ECE8 /* TitleSceneRenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TitleSceneRenderer.cpp; sourceTree = "<group>"; };
-		624447991EDDD2C40080ECE8 /* TitleSceneRenderer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = TitleSceneRenderer.hpp; sourceTree = "<group>"; };
 		6246939E1EFD1637004AF2A1 /* ProgressManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ProgressManager.cpp; sourceTree = "<group>"; };
 		6246939F1EFD1637004AF2A1 /* ProgressManager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ProgressManager.hpp; sourceTree = "<group>"; };
 		6247CFCF1EFFB11800B9919E /* GameOverDialogView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameOverDialogView.cpp; sourceTree = "<group>"; };
@@ -747,6 +742,8 @@
 		6270DCA61FCB248E00FB457D /* sky_upside_down_patched_mirrored.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sky_upside_down_patched_mirrored.jpg; sourceTree = "<group>"; };
 		6270DCA71FCB248E00FB457D /* smiley.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = smiley.jpg; sourceTree = "<group>"; };
 		6270DCA81FCB248E00FB457D /* star_particle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star_particle.png; sourceTree = "<group>"; };
+		6270DCB11FCDA99100FB457D /* TitleScene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TitleScene.cpp; sourceTree = "<group>"; };
+		6270DCB21FCDA99100FB457D /* TitleScene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TitleScene.hpp; sourceTree = "<group>"; };
 		628A22551F6D359100D97BF8 /* OfflineRasterizer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OfflineRasterizer.cpp; sourceTree = "<group>"; };
 		628A22561F6D359100D97BF8 /* OfflineRasterizer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = OfflineRasterizer.hpp; sourceTree = "<group>"; };
 		628A22581F6E704900D97BF8 /* GhostPieceProducer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GhostPieceProducer.cpp; sourceTree = "<group>"; };
@@ -1517,10 +1514,8 @@
 			children = (
 				624447941EDDD2C40080ECE8 /* TitleController.cpp */,
 				624447951EDDD2C40080ECE8 /* TitleController.hpp */,
-				624447961EDDD2C40080ECE8 /* TitleScene.cpp */,
-				624447971EDDD2C40080ECE8 /* TitleScene.hpp */,
-				624447981EDDD2C40080ECE8 /* TitleSceneRenderer.cpp */,
-				624447991EDDD2C40080ECE8 /* TitleSceneRenderer.hpp */,
+				6270DCB11FCDA99100FB457D /* TitleScene.cpp */,
+				6270DCB21FCDA99100FB457D /* TitleScene.hpp */,
 			);
 			path = Title;
 			sourceTree = "<group>";
@@ -1853,7 +1848,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				623B32D51F17AC11000C64A1 /* GuiView.cpp in Sources */,
-				624447D71EDDD2C40080ECE8 /* TitleSceneRenderer.cpp in Sources */,
 				6244479E1EDDD2C40080ECE8 /* Materials.cpp in Sources */,
 				623C16BE1F404C5700305752 /* MapConfirmationDialogView.cpp in Sources */,
 				6260A7001F87E5A5001F6DCD /* ObjMesh.cpp in Sources */,
@@ -1867,7 +1861,6 @@
 				6208C8661FAF210A0059BE51 /* SceneObject.cpp in Sources */,
 				624EAFC21EE559A9009F81BC /* SlidingTextAnimation.cpp in Sources */,
 				6270DC421FC18CF700FB457D /* SceneManager.cpp in Sources */,
-				624447D61EDDD2C40080ECE8 /* TitleScene.cpp in Sources */,
 				624447A91EDDD2C40080ECE8 /* RowExplosionParticleEffect.cpp in Sources */,
 				623B32D71F17AC11000C64A1 /* InputHandler.cpp in Sources */,
 				624447AD1EDDD2C40080ECE8 /* Field.cpp in Sources */,
@@ -1992,6 +1985,7 @@
 				626C4DA11EEC19DF000D4DF6 /* MapPin.cpp in Sources */,
 				626C4DAA1EEC2506000D4DF6 /* SettingsButtonController.cpp in Sources */,
 				624447A81EDDD2C40080ECE8 /* PieceDropParticleEffect.cpp in Sources */,
+				6270DCB31FCDA99100FB457D /* TitleScene.cpp in Sources */,
 				6260A6E11F869379001F6DCD /* BigLPiece.cpp in Sources */,
 				624447C71EDDD2C40080ECE8 /* MirroredSevenPiece.cpp in Sources */,
 				623C16C51F45F7C000305752 /* GestureInputHandler.cpp in Sources */,

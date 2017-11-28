@@ -5,7 +5,6 @@
 #include "ISceneManager.hpp"
 #include "ObjMesh.hpp"
 #include "MathUtils.hpp"
-#include "SceneObject.hpp"
 
 // Game includes.
 #include "CommonResources.hpp"
@@ -99,7 +98,7 @@ void FloatingCubes::Update() {
         const auto& volume {mVolumes[i]};
         auto rightLimit {volume.mPosition.x + volume.mSize.x / 2.0f};
         auto leftLimit {volume.mPosition.x - volume.mSize.x / 2.0f};
-        auto& position {transform.GetPosition()};
+        auto position {cube.mSceneObject->GetWorldSpacePosition()};
         
         if (position.x > rightLimit && cube.mVelocity.x > 0.0f) {
             cube.mVelocity.x = -cube.mVelocity.x;

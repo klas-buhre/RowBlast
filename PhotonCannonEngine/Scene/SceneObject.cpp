@@ -52,6 +52,11 @@ void SceneObject::SetScale(float scale) {
     Update(false);
 }
 
+Vec3 SceneObject::GetWorldSpacePosition() const {
+    auto& w {mMatrix.w};
+    return {w.x, w.y, w.z};
+}
+
 void SceneObject::Update(bool parentMatrixChanged) {
     auto matrixWasChanged {false};
     

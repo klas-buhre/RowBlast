@@ -17,7 +17,7 @@ namespace Pht {
         
         virtual std::unique_ptr<Scene> CreateScene(Scene::Name name) = 0;
         virtual void SetLoadedScene(std::unique_ptr<Scene> scene) = 0;
-        virtual Scene* GetScene() = 0;
+        virtual Scene* GetActiveScene() = 0;
         virtual std::unique_ptr<RenderableObject> CreateRenderableObject(const IMesh& mesh,
                                                                          const Material& material) = 0;
         virtual std::unique_ptr<SceneObject> CreateSceneObject(const IMesh& mesh,

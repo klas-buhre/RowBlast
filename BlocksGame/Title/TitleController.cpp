@@ -6,17 +6,14 @@
 #include "IEngine.hpp"
 #include "IInput.hpp"
 #include "InputEvent.hpp"
+#include "ISceneManager.hpp"
+#include "IRenderer.hpp"
 
 using namespace BlocksGame;
 
 TitleController::TitleController(Pht::IEngine& engine, const CommonResources& commonResources) :
     mEngine {engine},
-    mScene {engine, commonResources},
-    mRenderer {engine.GetRenderer(), mScene} {}
-
-void TitleController::Reset() {
-    mScene.Reset();
-}
+    mScene {engine, commonResources} {}
 
 TitleController::Command TitleController::Update() {
     auto command {Command::None};
@@ -31,5 +28,6 @@ TitleController::Command TitleController::Update() {
 }
 
 void TitleController::RenderScene() {
-    mRenderer.RenderFrame();
+    auto* scene {mEngine.GetSceneManager().GetActiveScene()};
+    mEngine.GetRenderer().RenderScene(*scene);
 }

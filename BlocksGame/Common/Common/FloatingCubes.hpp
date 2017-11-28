@@ -7,6 +7,7 @@
 // Engine includes.
 #include "Vector.hpp"
 #include "RenderableObject.hpp"
+#include "SceneObject.hpp"
 
 namespace Pht {
     class IEngine;
