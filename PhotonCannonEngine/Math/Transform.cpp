@@ -48,9 +48,17 @@ Mat4 Transform::ToMatrix() {
     }
 
     result.x.x *= mScale.x;
+    result.x.y *= mScale.x;
+    result.x.z *= mScale.x;
+
+    result.y.x *= mScale.y;
     result.y.y *= mScale.y;
-    result.z.z *= mScale.z;
+    result.y.z *= mScale.y;
     
+    result.z.x *= mScale.z;
+    result.z.y *= mScale.z;
+    result.z.z *= mScale.z;
+
     result.w.x = mPosition.x;
     result.w.y = mPosition.y;
     result.w.z = mPosition.z;
