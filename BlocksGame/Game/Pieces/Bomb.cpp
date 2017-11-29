@@ -4,6 +4,7 @@
 #include "Material.hpp"
 #include "SphereMesh.hpp"
 #include "IEngine.hpp"
+#include "ISceneManager.hpp"
 
 // Game includes.
 #include "GameScene.hpp"
@@ -13,7 +14,10 @@ using namespace BlocksGame;
 Bomb::Bomb(Pht::IEngine& engine, const GameScene& scene) {
     auto cellSize {scene.GetCellSize()};
     auto& material {scene.GetDarkGrayMaterial()};
-    auto spherePieceUPtr {engine.CreateRenderableObject(Pht::SphereMesh {cellSize / 2.0f}, material)};
+    auto& sceneManager {engine.GetSceneManager()};
+    auto spherePieceUPtr {
+        sceneManager.CreateRenderableObject(Pht::SphereMesh {cellSize / 2.0f}, material)
+    };
 
     auto spherePiece {spherePieceUPtr.get()};
     AddRenderable(std::move(spherePieceUPtr));

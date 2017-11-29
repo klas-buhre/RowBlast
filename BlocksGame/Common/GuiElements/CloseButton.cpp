@@ -7,6 +7,7 @@
 #include "GuiView.hpp"
 #include "Font.hpp"
 #include "IAudio.hpp"
+#include "ISceneManager.hpp"
 
 // Game includes.
 #include "CommonResources.hpp"
@@ -30,8 +31,8 @@ CloseButton::CloseButton(Pht::IEngine& engine,
     Pht::Material material {color};
     material.SetOpacity(0.8f);
     
-    auto circle {engine.CreateRenderableObject(Pht::SphereMesh {size / 2.0f}, material)};
-    auto sceneObject {std::make_unique<Pht::SceneObject>(std::move(circle))};
+    auto& sceneManager {engine.GetSceneManager()};
+    auto sceneObject {sceneManager.CreateSceneObject(Pht::SphereMesh {size / 2.0f}, material)};
     sceneObject->SetPosition(position);
     
     mButton = std::make_unique<Pht::Button>(*sceneObject, inputSize, engine);

@@ -7,6 +7,7 @@
 #include "IEngine.hpp"
 #include "IRenderer.hpp"
 #include "ObjMesh.hpp"
+#include "ISceneManager.hpp"
 
 // Game includes.
 #include "CommonResources.hpp"
@@ -61,7 +62,8 @@ LevelCompletedDialogView::LevelCompletedDialogView(Pht::IEngine& engine,
 }
 
 void LevelCompletedDialogView::LoadStar(const CommonResources& commonResources) {
-    mStarRenderable = mEngine.CreateRenderableObject(
+    auto& sceneManager {mEngine.GetSceneManager()};
+    mStarRenderable = sceneManager.CreateRenderableObject(
         Pht::ObjMesh {"star_1428.obj", 0.26f}, commonResources.GetMaterials().GetGoldMaterial());
 }
 

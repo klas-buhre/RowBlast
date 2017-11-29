@@ -7,6 +7,7 @@
 #include "QuadMesh.hpp"
 #include "IImage.hpp"
 #include "RenderableObject.hpp"
+#include "ISceneManager.hpp"
 
 using namespace BlocksGame;
 
@@ -467,6 +468,8 @@ std::unique_ptr<Pht::RenderableObject> GhostPieceProducer::ProduceRenderable() c
     Pht::Material imageMaterial {*image, Pht::GenerateMipmap::Yes};
     imageMaterial.SetBlend(Pht::Blend::Yes);
     
-    return mEngine.CreateRenderableObject(Pht::QuadMesh {mCoordinateSystemSize.x, mCoordinateSystemSize.y},
-                                          imageMaterial);
+    auto& sceneManager {mEngine.GetSceneManager()};
+    return sceneManager.CreateRenderableObject(Pht::QuadMesh {mCoordinateSystemSize.x,
+                                                              mCoordinateSystemSize.y},
+                                               imageMaterial);
 }

@@ -5,6 +5,7 @@
 #include "TriangleMesh.hpp"
 #include "IEngine.hpp"
 #include "ObjMesh.hpp"
+#include "ISceneManager.hpp"
 
 // Game includes.
 #include "GameScene.hpp"
@@ -15,13 +16,16 @@ using namespace BlocksGame;
 SmallTrianglePiece::SmallTrianglePiece(Pht::IEngine& engine, const GameScene& scene) {
     auto cellSize {scene.GetCellSize()};
     auto& material {scene.GetRedMaterial()};
+    auto& sceneManager {engine.GetSceneManager()};
     
 #ifdef HIGH_DETAIL
     auto halfSubPieceUPtr {
-        engine.CreateRenderableObject(Pht::ObjMesh {"triangle_428.obj", cellSize}, material)
+        sceneManager.CreateRenderableObject(Pht::ObjMesh {"triangle_428.obj", cellSize}, material)
     };
 #else
-    auto halfSubPieceUPtr {engine.CreateRenderableObject(Pht::TriangleMesh {cellSize, cellSize}, material)};
+    auto halfSubPieceUPtr {
+        sceneManager.CreateRenderableObject(Pht::TriangleMesh {cellSize, cellSize}, material)
+    };
 #endif
     
     auto halfSubPiece {halfSubPieceUPtr.get()};

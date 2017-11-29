@@ -6,6 +6,7 @@
 #include "ObjMesh.hpp"
 #include "IEngine.hpp"
 #include "QuadMesh.hpp"
+#include "ISceneManager.hpp"
 
 // Game includes.
 #include "GameScene.hpp"
@@ -16,11 +17,16 @@ using namespace BlocksGame;
 DPiece::DPiece(Pht::IEngine& engine, const GameScene& scene) {
     auto cellSize {scene.GetCellSize()};
     auto& material {scene.GetRedMaterial()};
+    auto& sceneManager {engine.GetSceneManager()};
 
 #ifdef HIGH_DETAIL
-    auto subPieceUPtr {engine.CreateRenderableObject(Pht::ObjMesh {"cube_428.obj", cellSize}, material)};
+    auto subPieceUPtr {
+        sceneManager.CreateRenderableObject(Pht::ObjMesh {"cube_428.obj", cellSize}, material)
+    };
 #else
-    auto subPieceUPtr {engine.CreateRenderableObject(Pht::BoxMesh {0.95, 0.95, 0.95}, material)};
+    auto subPieceUPtr {
+        sceneManager.CreateRenderableObject(Pht::BoxMesh {0.95, 0.95, 0.95}, material)
+    };
 #endif
 
     auto subPiece {subPieceUPtr.get()};
@@ -47,7 +53,7 @@ DPiece::DPiece(Pht::IEngine& engine, const GameScene& scene) {
         {0, 0, 0, 0, 0, 0}
     };
     
-    auto weldRenderable {engine.CreateRenderableObject(Pht::QuadMesh {0.19f, 0.85f}, material)};
+    auto weldRenderable {sceneManager.CreateRenderableObject(Pht::QuadMesh {0.19f, 0.85f}, material)};
 
     InitGrids(renderableGrid, fillGrid, clickGrid, std::move(weldRenderable));
     SetPreviewCellSize(0.6f);

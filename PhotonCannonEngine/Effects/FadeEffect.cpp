@@ -1,6 +1,6 @@
 #include "FadeEffect.hpp"
 
-#include "IEngine.hpp" // TODO: Remove!
+#include "ISceneManager.hpp"
 #include "Material.hpp"
 #include "QuadMesh.hpp"
 #include "IRenderer.hpp"
@@ -11,7 +11,10 @@ namespace {
     const Mat4 quadMatrix;
 }
 
-FadeEffect::FadeEffect(IEngine& engine, IRenderer& renderer, float duration, float midFade) :
+FadeEffect::FadeEffect(ISceneManager& sceneManager,
+                       IRenderer& renderer,
+                       float duration,
+                       float midFade) :
     mRenderer {renderer},
     mMidFade {midFade},
     mFadeSpeed {midFade / duration} {
@@ -31,7 +34,7 @@ FadeEffect::FadeEffect(IEngine& engine, IRenderer& renderer, float duration, flo
         {{-width / 2.0f, height / 2.0f, 0.0f}, color},
     };
     
-    mQuad = engine.CreateRenderableObject(Pht::QuadMesh {vertices}, quadMaterial);
+    mQuad = sceneManager.CreateRenderableObject(Pht::QuadMesh {vertices}, quadMaterial);
 }
 
 void FadeEffect::Reset() {

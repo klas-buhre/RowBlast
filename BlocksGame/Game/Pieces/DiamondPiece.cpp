@@ -5,6 +5,7 @@
 #include "ObjMesh.hpp"
 #include "IEngine.hpp"
 #include "QuadMesh.hpp"
+#include "ISceneManager.hpp"
 
 // Game includes.
 #include "GameScene.hpp"
@@ -15,27 +16,28 @@ using namespace BlocksGame;
 DiamondPiece::DiamondPiece(Pht::IEngine& engine, const GameScene& scene) {
     auto cellSize {scene.GetCellSize()};
     auto& material {scene.GetGreenMaterial()};
+    auto& sceneManager {engine.GetSceneManager()};
     
     auto halfSubPieceUPtr {
-        engine.CreateRenderableObject(Pht::ObjMesh {"triangle_428.obj", cellSize}, material)
+        sceneManager.CreateRenderableObject(Pht::ObjMesh {"triangle_428.obj", cellSize}, material)
     };
     auto halfSubPiece {halfSubPieceUPtr.get()};
     AddRenderable(std::move(halfSubPieceUPtr));
 
     auto halfSubPiece90UPtr {
-        engine.CreateRenderableObject(Pht::ObjMesh {"triangle_428_r90.obj", cellSize}, material)
+        sceneManager.CreateRenderableObject(Pht::ObjMesh {"triangle_428_r90.obj", cellSize}, material)
     };
     auto halfSubPiece90 {halfSubPiece90UPtr.get()};
     AddRenderable(std::move(halfSubPiece90UPtr));
 
     auto halfSubPiece180UPtr {
-        engine.CreateRenderableObject(Pht::ObjMesh {"triangle_428_r180.obj", cellSize}, material)
+        sceneManager.CreateRenderableObject(Pht::ObjMesh {"triangle_428_r180.obj", cellSize}, material)
     };
     auto halfSubPiece180 {halfSubPiece180UPtr.get()};
     AddRenderable(std::move(halfSubPiece180UPtr));
 
     auto halfSubPiece270UPtr {
-        engine.CreateRenderableObject(Pht::ObjMesh {"triangle_428_r270.obj", cellSize}, material)
+        sceneManager.CreateRenderableObject(Pht::ObjMesh {"triangle_428_r270.obj", cellSize}, material)
     };
     auto halfSubPiece270 {halfSubPiece270UPtr.get()};
     AddRenderable(std::move(halfSubPiece270UPtr));
@@ -57,7 +59,7 @@ DiamondPiece::DiamondPiece(Pht::IEngine& engine, const GameScene& scene) {
         {1, 1, 1, 1}
     };
     
-    auto weldRenderable {engine.CreateRenderableObject(Pht::QuadMesh {0.19f, 0.85f}, material)};
+    auto weldRenderable {sceneManager.CreateRenderableObject(Pht::QuadMesh {0.19f, 0.85f}, material)};
 
     InitGrids(renderableGrid, fillGrid, clickGrid, std::move(weldRenderable));
     SetPreviewCellSize(0.6f);

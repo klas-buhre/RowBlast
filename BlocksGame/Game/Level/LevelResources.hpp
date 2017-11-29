@@ -8,6 +8,7 @@
 
 namespace Pht {
     class IEngine;
+    class ISceneManager;
 }
 
 namespace BlocksGame {
@@ -47,7 +48,7 @@ namespace BlocksGame {
         
     private:
         void CreatePieceTypes(Pht::IEngine& engine, const GameScene& scene);
-        void CreateCellRenderables(Pht::IEngine& engine, const GameScene& scene);
+        void CreateCellRenderables(Pht::ISceneManager& sceneManager, const GameScene& scene);
         void CreateBlueprintRenderables(Pht::IEngine& engine, const GameScene& scene);
         
         PieceTypes mPieceTypes;

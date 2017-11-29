@@ -70,8 +70,3 @@ IParticleSystem& Engine::GetParticleSystem() {
 float Engine::GetLastFrameSeconds() const {
     return mLastFrameSeconds;
 }
-
-std::unique_ptr<RenderableObject> Engine::CreateRenderableObject(const IMesh& mesh,
-                                                                 const Material& material) {
-    return mRenderer.CreateRenderableObject(mesh, material);
-}

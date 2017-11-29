@@ -9,6 +9,7 @@
 #include "Font.hpp"
 #include "OfflineRasterizer.hpp"
 #include "IImage.hpp"
+#include "ISceneManager.hpp"
 
 using namespace BlocksGame;
 
@@ -35,13 +36,10 @@ namespace {
         
         Pht::Material imageMaterial {*image, Pht::GenerateMipmap::Yes};
         imageMaterial.SetBlend(Pht::Blend::Yes);
-    
-        auto circle {
-            engine.CreateRenderableObject(Pht::QuadMesh {coordinateSystemSize.x, coordinateSystemSize.y},
-                                          imageMaterial)
-        };
         
-        return std::make_unique<Pht::SceneObject>(std::move(circle));
+        auto& sceneManager {engine.GetSceneManager()};
+        return sceneManager.CreateSceneObject(Pht::QuadMesh {coordinateSystemSize.x, coordinateSystemSize.y},
+                                              imageMaterial);
     }
 }
 

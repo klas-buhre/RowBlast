@@ -7,6 +7,7 @@
 #include "Material.hpp"
 #include "OfflineRasterizer.hpp"
 #include "IImage.hpp"
+#include "ISceneManager.hpp"
 
 // Game includes.
 #include "GameScene.hpp"
@@ -107,11 +108,9 @@ BlastRadiusAnimation::BlastRadiusAnimation(Pht::IEngine& engine, const GameScene
     Pht::Material imageMaterial {*image, Pht::GenerateMipmap::No};
     imageMaterial.SetBlend(Pht::Blend::Yes);
     
-    std::shared_ptr<Pht::RenderableObject> renderableObject {
-        engine.CreateRenderableObject(Pht::QuadMesh {squareSide, squareSide}, imageMaterial)
-    };
-    
-    mSceneObject = std::make_unique<Pht::SceneObject>(renderableObject);
+    auto& sceneManager {engine.GetSceneManager()};
+    mSceneObject = sceneManager.CreateSceneObject(Pht::QuadMesh {squareSide, squareSide},
+                                                  imageMaterial);
 }
 
 void BlastRadiusAnimation::Start() {

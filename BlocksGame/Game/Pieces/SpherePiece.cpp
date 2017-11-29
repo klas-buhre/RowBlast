@@ -5,6 +5,7 @@
 #include "SphereMesh.hpp"
 #include "IEngine.hpp"
 #include "BoxMesh.hpp"
+#include "ISceneManager.hpp"
 
 // Game includes.
 #include "GameScene.hpp"
@@ -13,10 +14,11 @@ using namespace BlocksGame;
 
 SpherePiece::SpherePiece(Pht::IEngine& engine, const GameScene& scene) {
     auto cellSize {scene.GetCellSize()};
+    auto& sceneManager {engine.GetSceneManager()};
     Pht::Material material {"smiley.jpg", 0.45f, 0.75f, 1.0f, 50};
     
     auto spherePieceUPtr {
-        engine.CreateRenderableObject(
+        sceneManager.CreateRenderableObject(
             Pht::SphereMesh {
                 cellSize,
                 Pht::Vec2{1.0f, 2.0f},

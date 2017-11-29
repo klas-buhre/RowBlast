@@ -1,8 +1,7 @@
 /*
 Backlog:
   -Engine:
-    -Remove CreateRenderableObject() in IEngine. Use CreateSceneObject or CreateRenderableObject in
-     ISceneManager instead.
+    -RenderLayer/RenderPass.
     -Maybe load scenes from JSON files?
     
   -Gameplay:
@@ -112,7 +111,7 @@ BlocksApplication::BlocksApplication(Pht::IEngine& engine) :
     mTitleController {engine, mCommonResources},
     mMapController {engine, mCommonResources, mCommonViewControllers, mUserData},
     mGameController {engine, mCommonResources, mCommonViewControllers, mUserData, mSettings},
-    mFadeEffect {engine, engine.GetRenderer(), 0.22f, 1.0f} {
+    mFadeEffect {engine.GetSceneManager(), engine.GetRenderer(), 0.22f, 1.0f} {
 
     engine.GetInput().SetUseGestureRecognizers(false);
 }

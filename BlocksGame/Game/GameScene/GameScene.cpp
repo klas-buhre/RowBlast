@@ -4,6 +4,7 @@
 #include "IEngine.hpp"
 #include "IRenderer.hpp"
 #include "Material.hpp"
+#include "ISceneManager.hpp"
 
 // Game includes.
 #include "Level.hpp"
@@ -108,8 +109,8 @@ void GameScene::UpdateCameraPosition() {
 void GameScene::CreateBackground() {
     Pht::Material backgroundMaterial {"sky_blurred.jpg"};
     
-    mBackground = std::make_unique<Pht::SceneObject>(
-        mEngine.CreateRenderableObject(Pht::QuadMesh {150.0f, 150.0f}, backgroundMaterial));
+    auto& sceneManager {mEngine.GetSceneManager()};
+    mBackground = sceneManager.CreateSceneObject(Pht::QuadMesh {150.0f, 150.0f}, backgroundMaterial);
     mBackground->SetPosition({0.0f, -5.0f, -42.0f});
 }
 
@@ -118,9 +119,9 @@ void GameScene::CreateFieldQuad(const Level& level) {
     fieldMaterial.SetOpacity(0.8f);
 
     auto vertices {CreateFieldVertices(level)};
-    
-    mFieldQuad = std::make_unique<Pht::SceneObject>(
-        mEngine.CreateRenderableObject(Pht::QuadMesh {vertices}, fieldMaterial));
+
+    auto& sceneManager {mEngine.GetSceneManager()};
+    mFieldQuad = sceneManager.CreateSceneObject(Pht::QuadMesh {vertices}, fieldMaterial);
     mFieldQuad->SetPosition({mFieldPosition.x, mFieldPosition.y, mFieldPosition.z + fieldQuadZ});
 }
 

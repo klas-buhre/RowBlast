@@ -4,6 +4,7 @@
 #include "IEngine.hpp"
 #include "IRenderer.hpp"
 #include "QuadMesh.hpp"
+#include "ISceneManager.hpp"
 
 // Game includes.
 #include "CommonResources.hpp"
@@ -33,8 +34,10 @@ RestartConfirmationDialogView::RestartConfirmationDialogView(Pht::IEngine& engin
     
     Pht::Material lineMaterial {Pht::Color{1.0f, 1.0f, 1.0f}};
     lineMaterial.SetOpacity(0.4f);
-    auto lineQuad {engine.CreateRenderableObject(Pht::QuadMesh {frustumWidth - 1.0f, 0.08f}, lineMaterial)};
-    auto lineSceneObject {std::make_unique<Pht::SceneObject>(std::move(lineQuad))};
+    auto& sceneManager {engine.GetSceneManager()};
+    auto lineSceneObject {
+        sceneManager.CreateSceneObject(Pht::QuadMesh {frustumWidth - 1.0f, 0.08f}, lineMaterial)
+    };
     lineSceneObject->SetPosition({0.0f, 3.0f, 0.0f});
     AddSceneObject(std::move(lineSceneObject));
     

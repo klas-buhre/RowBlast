@@ -7,6 +7,7 @@
 #include "ObjMesh.hpp"
 #include "IEngine.hpp"
 #include "QuadMesh.hpp"
+#include "ISceneManager.hpp"
 
 // Game includes.
 #include "GameScene.hpp"
@@ -17,13 +18,16 @@ using namespace BlocksGame;
 BigTrianglePiece::BigTrianglePiece(Pht::IEngine& engine, const GameScene& scene) {
     auto cellSize {scene.GetCellSize()};
     auto& material {scene.GetBlueMaterial()};
+    auto& sceneManager {engine.GetSceneManager()};
     
 #ifdef HIGH_DETAIL
     auto halfSubPieceUPtr {
-        engine.CreateRenderableObject(Pht::ObjMesh {"triangle_428.obj", cellSize}, material)
+        sceneManager.CreateRenderableObject(Pht::ObjMesh {"triangle_428.obj", cellSize}, material)
     };
 #else
-    auto halfSubPieceUPtr {engine.CreateRenderableObject(Pht::TriangleMesh {cellSize, cellSize}, material)};
+    auto halfSubPieceUPtr {
+        sceneManager.CreateRenderableObject(Pht::TriangleMesh {cellSize, cellSize}, material)
+    };
 #endif
 
     auto halfSubPiece {halfSubPieceUPtr.get()};
@@ -31,10 +35,12 @@ BigTrianglePiece::BigTrianglePiece(Pht::IEngine& engine, const GameScene& scene)
 
 #ifdef HIGH_DETAIL
     auto fullSubPieceUPtr {
-        engine.CreateRenderableObject(Pht::ObjMesh {"cube_428.obj", cellSize}, material)
+        sceneManager.CreateRenderableObject(Pht::ObjMesh {"cube_428.obj", cellSize}, material)
     };
 #else
-    auto fullSubPieceUPtr {engine.CreateRenderableObject(Pht::BoxMesh {0.95, 0.95, 0.95}, material)};
+    auto fullSubPieceUPtr {
+        sceneManager.CreateRenderableObject(Pht::BoxMesh {0.95, 0.95, 0.95}, material)
+    };
 #endif
 
     auto fullSubPiece {fullSubPieceUPtr.get()};
@@ -61,7 +67,7 @@ BigTrianglePiece::BigTrianglePiece(Pht::IEngine& engine, const GameScene& scene)
         {1, 1, 1, 1, 1, 1}
     };
     
-    auto weldRenderable {engine.CreateRenderableObject(Pht::QuadMesh {0.19f, 0.85f}, material)};
+    auto weldRenderable {sceneManager.CreateRenderableObject(Pht::QuadMesh {0.19f, 0.85f}, material)};
 
     InitGrids(renderableGrid, fillGrid, clickGrid, std::move(weldRenderable));
     SetPreviewCellSize(0.6f);

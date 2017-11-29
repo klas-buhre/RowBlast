@@ -4,7 +4,7 @@
 #include "RenderableObject.hpp"
 
 namespace Pht {
-    class IEngine;
+    class ISceneManager;
     class IRenderer;
     
     class FadeEffect {
@@ -16,7 +16,7 @@ namespace Pht {
             Idle
         };
         
-        FadeEffect(IEngine& engine, IRenderer& renderer, float duration, float midFade);
+        FadeEffect(ISceneManager& sceneManager, IRenderer& renderer, float duration, float midFade);
         
         void Reset();
         void Start();

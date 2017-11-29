@@ -8,6 +8,7 @@
 #include "IRenderer.hpp"
 #include "SceneObject.hpp"
 #include "Font.hpp"
+#include "ISceneManager.hpp"
 
 using namespace BlocksGame;
 
@@ -22,8 +23,10 @@ SettingsButtonView::SettingsButtonView(Pht::IEngine& engine) {
     
     Pht::Material circleMaterial {circleColor};
     circleMaterial.SetOpacity(0.8f);
-    auto circle {engine.CreateRenderableObject(Pht::SphereMesh {1.0f}, circleMaterial)};
-    auto circleSceneObject {std::make_unique<Pht::SceneObject>(std::move(circle))};
+    
+    auto& sceneManger {engine.GetSceneManager()};
+    
+    auto circleSceneObject {sceneManger.CreateSceneObject(Pht::SphereMesh {1.0f}, circleMaterial)};
     circleSceneObject->SetPosition({0.0f, 0.0f, -2.0f});
     auto& circleMaterialCapture {circleSceneObject->GetRenderable()->GetMaterial()};
     auto& circleSceneObjectCapture {*circleSceneObject};
@@ -33,8 +36,7 @@ SettingsButtonView::SettingsButtonView(Pht::IEngine& engine) {
     
     Pht::Material gearIconMaterial {"settings.png"};
     gearIconMaterial.SetBlend(Pht::Blend::Yes);
-    auto gearIcon {std::make_unique<Pht::SceneObject>(
-        engine.CreateRenderableObject(Pht::QuadMesh {1.4f, 1.4f}, gearIconMaterial))};
+    auto gearIcon {sceneManger.CreateSceneObject(Pht::QuadMesh {1.4f, 1.4f}, gearIconMaterial)};
     auto& gearIconCapture {*gearIcon};
     
     auto selectFunction {[&] () {

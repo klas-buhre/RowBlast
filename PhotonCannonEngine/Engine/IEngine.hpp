@@ -6,9 +6,6 @@ namespace Pht {
     class IInput;
     class IAudio;
     class ISceneManager;
-    class RenderableObject;
-    class IMesh;
-    class Material;
     class IParticleSystem;
 
     class IEngine {
@@ -21,8 +18,6 @@ namespace Pht {
         virtual ISceneManager& GetSceneManager() = 0;
         virtual IParticleSystem& GetParticleSystem() = 0;
         virtual float GetLastFrameSeconds() const = 0;
-        virtual std::unique_ptr<RenderableObject> CreateRenderableObject(const IMesh& mesh,
-                                                                         const Material& material) = 0;
     };
 }
 

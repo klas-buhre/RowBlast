@@ -8,6 +8,7 @@
 #include "Material.hpp"
 #include "OfflineRasterizer.hpp"
 #include "IImage.hpp"
+#include "ISceneManager.hpp"
 
 // Game includes.
 #include "GameScene.hpp"
@@ -39,7 +40,7 @@ using namespace BlocksGame;
 
 LevelResources::LevelResources(Pht::IEngine& engine, const GameScene& scene) {
     CreatePieceTypes(engine, scene);
-    CreateCellRenderables(engine, scene);
+    CreateCellRenderables(engine.GetSceneManager(), scene);
     CreateBlueprintRenderables(engine, scene);
 }
 
@@ -69,25 +70,26 @@ void LevelResources::CreatePieceTypes(Pht::IEngine& engine, const GameScene& sce
     mPieceTypes["Sphere"] = std::make_unique<SpherePiece>(engine, scene);
 }
 
-void LevelResources::CreateCellRenderables(Pht::IEngine& engine, const GameScene& scene) {
+void LevelResources::CreateCellRenderables(Pht::ISceneManager& sceneManager,
+                                           const GameScene& scene) {
     auto cellSize {scene.GetCellSize()};
     
-    mGrayCube = engine.CreateRenderableObject(
+    mGrayCube = sceneManager.CreateRenderableObject(
         Pht::ObjMesh {"cube_428.obj", cellSize},
         scene.GetGrayMaterial()
     );
     
-    mGoldCube = engine.CreateRenderableObject(
+    mGoldCube = sceneManager.CreateRenderableObject(
         Pht::ObjMesh {"cube_428.obj", cellSize},
         scene.GetGoldMaterial()
     );
 
-    mGrayTriangle = engine.CreateRenderableObject(
+    mGrayTriangle = sceneManager.CreateRenderableObject(
         Pht::ObjMesh {"triangle_428.obj", cellSize},
         scene.GetGrayMaterial()
     );
     
-    mGoldTriangle = engine.CreateRenderableObject(
+    mGoldTriangle = sceneManager.CreateRenderableObject(
         Pht::ObjMesh {"triangle_428.obj", cellSize},
         scene.GetGoldMaterial()
     );
@@ -141,14 +143,15 @@ void LevelResources::CreateBlueprintRenderables(Pht::IEngine& engine, const Game
     
     Pht::Material imageMaterial {*image, Pht::GenerateMipmap::Yes};
     imageMaterial.SetBlend(Pht::Blend::Yes);
-    
-    mBlueprintSquare = engine.CreateRenderableObject(Pht::QuadMesh {squareSide, squareSide}, imageMaterial);
+    auto& sceneManager {engine.GetSceneManager()};
+    mBlueprintSquare = sceneManager.CreateRenderableObject(Pht::QuadMesh {squareSide, squareSide},
+                                                           imageMaterial);
     mBlueprintSquareRenderables.mSlot = mBlueprintSquare.get();
     
     Pht::Material animationMaterial {Pht::Color {1.0f, 1.0f, 1.0f}};
     animationMaterial.SetOpacity(BlueprintSlotFillAnimation::mInitialOpacity);
 
-    mBlueprintSquareAnimation = engine.CreateRenderableObject(
+    mBlueprintSquareAnimation = sceneManager.CreateRenderableObject(
         Pht::QuadMesh {cellSize, cellSize},
         animationMaterial
     );

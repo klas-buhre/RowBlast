@@ -23,8 +23,6 @@ namespace Pht {
         ISceneManager& GetSceneManager() override;
         IParticleSystem& GetParticleSystem() override;
         float GetLastFrameSeconds() const override;
-        std::unique_ptr<RenderableObject> CreateRenderableObject(const IMesh& mesh,
-                                                                 const Material& material) override;
         
         void Initialize(bool createRenderBuffers);
         void Update(float frameSeconds);

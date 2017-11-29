@@ -4,6 +4,7 @@
 #include "IEngine.hpp"
 #include "Material.hpp"
 #include "QuadMesh.hpp"
+#include "ISceneManager.hpp"
 
 using namespace BlocksGame;
 
@@ -67,6 +68,7 @@ GradientRectangle::CreateGradientQuad(const Pht::Vec2& size,
         {{size.x / 2.0f + tilt, size.y / 2.0f, 0.0f}, rightUpperColor},
         {{-size.x / 2.0f + tilt, size.y / 2.0f, 0.0f}, leftUpperColor},
     };
-
-    return engine.CreateRenderableObject(Pht::QuadMesh {vertices}, material);
+    
+    auto& sceneManager {engine.GetSceneManager()};
+    return sceneManager.CreateRenderableObject(Pht::QuadMesh {vertices}, material);
 }

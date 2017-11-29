@@ -4,6 +4,7 @@
 #include "IEngine.hpp"
 #include "IRenderer.hpp"
 #include "QuadMesh.hpp"
+#include "ISceneManager.hpp"
 
 // Game includes.
 #include "CommonResources.hpp"
@@ -27,8 +28,10 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine, const CommonResources& 
     
     Pht::Material lineMaterial {Pht::Color{1.0f, 1.0f, 1.0f}};
     lineMaterial.SetOpacity(0.4f);
-    auto lineQuad {engine.CreateRenderableObject(Pht::QuadMesh {size.x - 1.0f, 0.08f}, lineMaterial)};
-    auto lineSceneObject {std::make_unique<Pht::SceneObject>(std::move(lineQuad))};
+    auto& sceneManager {engine.GetSceneManager()};
+    auto lineSceneObject {
+        sceneManager.CreateSceneObject(Pht::QuadMesh {size.x - 1.0f, 0.08f}, lineMaterial)
+    };
     lineSceneObject->SetPosition({0.0f, 3.3f, 0.0f});
     AddSceneObject(std::move(lineSceneObject));
     
@@ -36,9 +39,9 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine, const CommonResources& 
     
     Pht::Material barMaterial {Pht::Color{0.4f, 0.74f, 1.0f}};
     barMaterial.SetOpacity(0.24f);
-
-    auto controlsBarQuad {engine.CreateRenderableObject(Pht::QuadMesh {7.0f, 1.72f}, barMaterial)};
-    auto controlsBarSceneObject {std::make_unique<Pht::SceneObject>(std::move(controlsBarQuad))};
+    auto controlsBarSceneObject {
+        sceneManager.CreateSceneObject(Pht::QuadMesh {7.0f, 1.72f}, barMaterial)
+    };
     controlsBarSceneObject->SetPosition({-2.0f, 1.3f, -0.5f});
     AddSceneObject(std::move(controlsBarSceneObject));
     
@@ -73,9 +76,10 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine, const CommonResources& 
     mControlsSwipeText = controlsSwipeText.get();
     mControlsSwipeText->mIsVisible = false;
     mControlsButton->SetText(std::move(controlsSwipeText));
-        
-    auto soundBarQuad {engine.CreateRenderableObject(Pht::QuadMesh {7.0f, 1.72f}, barMaterial)};
-    auto soundBarSceneObject {std::make_unique<Pht::SceneObject>(std::move(soundBarQuad))};
+
+    auto soundBarSceneObject {
+        sceneManager.CreateSceneObject(Pht::QuadMesh {7.0f, 1.72f}, barMaterial)
+    };
     soundBarSceneObject->SetPosition({-2.0f, -1.3f, -0.5f});
     AddSceneObject(std::move(soundBarSceneObject));
         

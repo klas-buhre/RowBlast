@@ -4,6 +4,7 @@
 #include "IEngine.hpp"
 #include "Material.hpp"
 #include "QuadMesh.hpp"
+#include "ISceneManager.hpp"
 
 using namespace BlocksGame;
 
@@ -18,8 +19,7 @@ std::unique_ptr<Pht::SceneObject> MenuQuad::CreateGray(Pht::IEngine& engine,
         {{-size.x / 2.0f, size.y / 2.0f, 0.0f}, {0.53f, 0.53f, 0.27, 0.8f}},
     };
 
-    return std::make_unique<Pht::SceneObject>(
-        engine.CreateRenderableObject(Pht::QuadMesh {vertices}, quadMaterial));
+    return engine.GetSceneManager().CreateSceneObject(Pht::QuadMesh {vertices}, quadMaterial);
 }
 
 std::unique_ptr<Pht::SceneObject> MenuQuad::CreateGreen(Pht::IEngine& engine,
@@ -32,6 +32,5 @@ std::unique_ptr<Pht::SceneObject> MenuQuad::CreateGreen(Pht::IEngine& engine,
         {{-size.x / 2.0f, size.y / 2.0f, 0.0f}, {0.27, 0.27, 0.6f, 0.8f}},
     };
 
-    return std::make_unique<Pht::SceneObject>(
-        engine.CreateRenderableObject(Pht::QuadMesh {vertices}, quadMaterial));
+    return engine.GetSceneManager().CreateSceneObject(Pht::QuadMesh {vertices}, quadMaterial);
 }

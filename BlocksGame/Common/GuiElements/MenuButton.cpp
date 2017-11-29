@@ -8,6 +8,7 @@
 #include "SphereMesh.hpp"
 #include "GuiView.hpp"
 #include "Font.hpp"
+#include "ISceneManager.hpp"
 
 // Game includes.
 #include "CommonResources.hpp"
@@ -27,8 +28,9 @@ MenuButton::MenuButton(Pht::IEngine& engine,
     Pht::Material material {style.mColor};
     material.SetOpacity(style.mOpacity);
     
-    auto centerQuad {engine.CreateRenderableObject(Pht::QuadMesh {size.x, size.y}, material)};
-    auto sceneObject {std::make_unique<Pht::SceneObject>(std::move(centerQuad))};
+    auto& sceneManager {engine.GetSceneManager()};
+    
+    auto sceneObject {sceneManager.CreateSceneObject(Pht::QuadMesh {size.x, size.y}, material)};
     sceneObject->SetPosition(position);
     sceneObject->SetIsInFront(true);
     
@@ -66,13 +68,15 @@ MenuButton::MenuButton(Pht::IEngine& engine,
     mButton->SetOnMoveOutside(onUpFunction);
     
     if (style.mIsRounded) {
-        auto leftCircle {engine.CreateRenderableObject(Pht::SphereMesh {size.y / 2.0f}, material)};
-        auto leftSceneObject {std::make_unique<Pht::SceneObject>(std::move(leftCircle))};
+        auto leftSceneObject {
+            sceneManager.CreateSceneObject(Pht::SphereMesh {size.y / 2.0f}, material)
+        };
         leftSceneObject->SetPosition(position + Pht::Vec3 {-size.x / 2.0f, 0.0f, 0.0f});
         AddSceneObject(std::move(leftSceneObject));
         
-        auto rightCircle {engine.CreateRenderableObject(Pht::SphereMesh {size.y / 2.0f}, material)};
-        auto rightSceneObject {std::make_unique<Pht::SceneObject>(std::move(rightCircle))};
+        auto rightSceneObject {
+            sceneManager.CreateSceneObject(Pht::SphereMesh {size.y / 2.0f}, material)
+        };
         rightSceneObject->SetPosition(position + Pht::Vec3 {size.x / 2.0f, 0.0f, 0.0f});
         AddSceneObject(std::move(rightSceneObject));
     }

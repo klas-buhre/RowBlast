@@ -15,7 +15,7 @@ namespace {
 SlidingMenuAnimation::SlidingMenuAnimation(Pht::IEngine& engine, Pht::GuiView& view, float fade) :
     mEngine {engine},
     mView {view},
-    mFadeEffect {engine, engine.GetRenderer(), slideTime, fade} {}
+    mFadeEffect {engine.GetSceneManager(), engine.GetRenderer(), slideTime, fade} {}
 
 void SlidingMenuAnimation::Reset(UpdateFade updateFade, SlideDirection slideInDirection) {
     mState = State::Idle;
