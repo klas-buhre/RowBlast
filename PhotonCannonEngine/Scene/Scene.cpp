@@ -17,7 +17,6 @@ Scene::Scene(ISceneManager& sceneManager, Name name) :
     
     mSceneObjects.push_back(std::make_unique<SceneObject>(Hash::Fnv1a("root")));
     mRoot = std::begin(mSceneObjects)->get();
-    mRoot->SetIsVisible(false);
 
     mRenderQueue = std::make_unique<RenderQueue>(*mRoot);
 }
