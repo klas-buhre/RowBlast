@@ -27,6 +27,7 @@ namespace BlocksGame {
     public:
         FloatingCubes(Pht::IEngine& engine,
                       Pht::Scene* scene,
+                      int layerIndex,
                       const std::vector<Volume>& volumes,
                       const CommonResources& commonResources,
                       float scale);

@@ -18,6 +18,11 @@
 using namespace BlocksGame;
 
 namespace {
+    enum class Layer {
+        Background = 0,
+        Text
+    };
+    
     const std::vector<Volume> floatingCubePaths {
         Volume {
             .mPosition = {-3.0f, -3.0f, -8.0f},
@@ -51,7 +56,12 @@ TitleScene::TitleScene(Pht::IEngine& engine, const CommonResources& commonResour
     mTapFont {"HussarBoldWeb.otf", engine.GetRenderer().GetAdjustedNumPixels(35)} {
     
     auto& sceneManager {engine.GetSceneManager()};
-    auto scene {sceneManager.CreateScene(Pht::Hash::Fnv1a("TitleScene"))};
+    auto scene {sceneManager.CreateScene(Pht::Hash::Fnv1a("titleScene"))};
+    
+    scene->AddRenderPass(Pht::RenderPass {static_cast<int>(Layer::Background)});
+    Pht::RenderPass textRenderPass {static_cast<int>(Layer::Text)};
+    textRenderPass.SetHudMode(true);
+    scene->AddRenderPass(textRenderPass);
     
     auto& light {scene->CreateGlobalLight()};
     light.SetDirection({1.0f, 1.0f, 1.0f});
@@ -71,10 +81,12 @@ TitleScene::TitleScene(Pht::IEngine& engine, const CommonResources& commonResour
                                  commonResources.GetMaterials().GetSkyMaterial())
     };
     background.GetTransform().SetPosition({-20.0f, 0.0f, -35.0f});
+    background.SetLayer(static_cast<int>(Layer::Background));
     scene->GetRoot().AddChild(background);
     
     mFloatingCubes = std::make_unique<FloatingCubes>(engine,
                                                      scene.get(),
+                                                     static_cast<int>(Layer::Background),
                                                      floatingCubePaths,
                                                      commonResources,
                                                      7.7f);
@@ -82,12 +94,14 @@ TitleScene::TitleScene(Pht::IEngine& engine, const CommonResources& commonResour
     
     auto& titleText {scene->CreateText("BLOCKS", {mFont, 1.0f, Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f}})};
     titleText.GetSceneObject().GetTransform().SetPosition({-6.5f, 5.0f, 0.0f});
+    titleText.GetSceneObject().SetLayer(static_cast<int>(Layer::Text));
     scene->GetRoot().AddChild(titleText.GetSceneObject());
 
     auto& tapText {
         scene->CreateText("Tap to continue...", {mTapFont, 1.0f, Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f}})
     };
     tapText.GetSceneObject().GetTransform().SetPosition({-3.7f, -6.0f, 0.0f});
+    tapText.GetSceneObject().SetLayer(static_cast<int>(Layer::Text));
     scene->GetRoot().AddChild(tapText.GetSceneObject());
     
     scene->SetDistanceFunction(Pht::DistanceFunction::WorldSpaceZ);

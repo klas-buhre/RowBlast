@@ -27,6 +27,7 @@ namespace Pht {
         void Update(bool parentMatrixChanged);
         void AddChild(SceneObject& child);
         SceneObject* Find(Name name);
+        void SetLayer(int layerIndex);
         
         template<typename T>
         void SetComponent(std::unique_ptr<T> component) {
@@ -106,16 +107,21 @@ namespace Pht {
             return mChildren;
         }
         
+        int GetLayerMask() const {
+            return mLayerMask;
+        }
+        
     private:
+        Name mName {0};
         Transform mTransform;
         Mat4 mMatrix;
+        int mLayerMask {0};
         bool mIsVisible {true};
         bool mIsInFront {false};
         std::shared_ptr<RenderableObject> mRenderable;
         SceneObject* mParent {nullptr};
         std::vector<SceneObject*> mChildren;
         std::vector<std::pair<ComponentId, std::unique_ptr<ISceneObjectComponent>>> mComponents;
-        Name mName {0};
     };
 }
 

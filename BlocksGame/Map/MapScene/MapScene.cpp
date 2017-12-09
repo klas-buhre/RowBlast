@@ -139,6 +139,7 @@ void MapScene::CreateFloatingCubes(const CommonResources& commonResources) {
     
     mFloatingCubes = std::make_unique<FloatingCubes>(mEngine,
                                                      nullptr,
+                                                     0,
                                                      floatingCubePaths,
                                                      commonResources,
                                                      1.5f);

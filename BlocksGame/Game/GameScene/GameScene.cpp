@@ -54,7 +54,7 @@ GameScene::GameScene(Pht::IEngine& engine,
     mCommonResources {commonResources},
     mLightDirection {1.0f, 1.0f, 0.74f},
     mFieldPosition {0.0f, 0.0f, 0.0f},
-    mFloatingCubes {engine, nullptr, floatingCubePaths, commonResources, 7.7f} {
+    mFloatingCubes {engine, nullptr, 0, floatingCubePaths, commonResources, 7.7f} {
 
     CreateBackground();
 }

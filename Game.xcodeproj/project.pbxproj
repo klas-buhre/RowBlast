@@ -158,6 +158,7 @@
 		6260A71F1F8FB8A8001F6DCD /* TextureCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6260A71D1F8FB8A8001F6DCD /* TextureCache.cpp */; };
 		6260A7221F92445F001F6DCD /* Particle.vert in Resources */ = {isa = PBXBuildFile; fileRef = 6260A7201F92445E001F6DCD /* Particle.vert */; };
 		6260A7231F92445F001F6DCD /* Particle.frag in Resources */ = {isa = PBXBuildFile; fileRef = 6260A7211F92445F001F6DCD /* Particle.frag */; };
+		6264DD821FDC1A03009DA7FB /* RenderPass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6264DD801FDC1A03009DA7FB /* RenderPass.cpp */; };
 		626C4D9E1EEC19DF000D4DF6 /* MapController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 626C4D8F1EEC19DF000D4DF6 /* MapController.cpp */; };
 		626C4D9F1EEC19DF000D4DF6 /* MapHud.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 626C4D911EEC19DF000D4DF6 /* MapHud.cpp */; };
 		626C4DA01EEC19DF000D4DF6 /* MapLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 626C4D931EEC19DF000D4DF6 /* MapLoader.cpp */; };
@@ -646,6 +647,8 @@
 		6260A71E1F8FB8A8001F6DCD /* TextureCache.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TextureCache.hpp; sourceTree = "<group>"; };
 		6260A7201F92445E001F6DCD /* Particle.vert */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = Particle.vert; sourceTree = "<group>"; };
 		6260A7211F92445F001F6DCD /* Particle.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = Particle.frag; sourceTree = "<group>"; };
+		6264DD801FDC1A03009DA7FB /* RenderPass.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = RenderPass.cpp; sourceTree = "<group>"; };
+		6264DD811FDC1A03009DA7FB /* RenderPass.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = RenderPass.hpp; sourceTree = "<group>"; };
 		626C4D8F1EEC19DF000D4DF6 /* MapController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MapController.cpp; sourceTree = "<group>"; };
 		626C4D901EEC19DF000D4DF6 /* MapController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MapController.hpp; sourceTree = "<group>"; };
 		626C4D911EEC19DF000D4DF6 /* MapHud.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MapHud.cpp; sourceTree = "<group>"; };
@@ -968,6 +971,8 @@
 				623B320D1F17AC11000C64A1 /* RenderableObject.hpp */,
 				623B320E1F17AC11000C64A1 /* Renderer.cpp */,
 				623B320F1F17AC11000C64A1 /* Renderer.hpp */,
+				6264DD801FDC1A03009DA7FB /* RenderPass.cpp */,
+				6264DD811FDC1A03009DA7FB /* RenderPass.hpp */,
 				6270DC271FB85CA800FB457D /* RenderQueue.cpp */,
 				6270DC281FB85CA800FB457D /* RenderQueue.hpp */,
 				623B32101F17AC11000C64A1 /* ShaderProgram.cpp */,
@@ -1889,6 +1894,7 @@
 				624447AA1EDDD2C40080ECE8 /* Cell.cpp in Sources */,
 				624447B61EDDD2C40080ECE8 /* GameMenuView.cpp in Sources */,
 				624447A51EDDD2C40080ECE8 /* FlashingBlocksAnimation.cpp in Sources */,
+				6264DD821FDC1A03009DA7FB /* RenderPass.cpp in Sources */,
 				626C4D9E1EEC19DF000D4DF6 /* MapController.cpp in Sources */,
 				624447B81EDDD2C40080ECE8 /* NoMovesDialogController.cpp in Sources */,
 				6260A7061F87E5BF001F6DCD /* TriangleMesh.cpp in Sources */,

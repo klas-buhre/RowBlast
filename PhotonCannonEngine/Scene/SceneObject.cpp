@@ -95,3 +95,7 @@ SceneObject* SceneObject::Find(Name name) {
     
     return nullptr;
 }
+
+void SceneObject::SetLayer(int layerIndex) {
+    mLayerMask = (1 << layerIndex);
+}

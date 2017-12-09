@@ -13,6 +13,7 @@ using namespace BlocksGame;
 
 FloatingCubes::FloatingCubes(Pht::IEngine& engine,
                              Pht::Scene* scene,
+                             int layerIndex,
                              const std::vector<Volume>& volumes,
                              const CommonResources& commonResources,
                              float scale) :
@@ -35,6 +36,7 @@ FloatingCubes::FloatingCubes(Pht::IEngine& engine,
     };
     
     mSceneObject = std::make_unique<Pht::SceneObject>();
+    mSceneObject->SetLayer(layerIndex);
     
     if (mScene) {
         mScene->GetRoot().AddChild(*mSceneObject);

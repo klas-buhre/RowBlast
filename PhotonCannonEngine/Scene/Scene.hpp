@@ -6,6 +6,7 @@
 #include <string>
 
 #include "Vector.hpp"
+#include "RenderPass.hpp"
 
 namespace Pht {
     class SceneObject;
@@ -36,6 +37,7 @@ namespace Pht {
         SceneObject& CreateSceneObject(const IMesh& mesh, const Material& material);
         TextComponent& CreateText(const std::string& text, const TextProperties& properties);
         void AddSceneObject(std::unique_ptr<SceneObject> sceneObject);
+        void AddRenderPass(const RenderPass& renderPass);
         
         LightComponent* GetGlobalLight() {
             return mGlobalLight;
@@ -64,6 +66,10 @@ namespace Pht {
         DistanceFunction GetDistanceFunction() const {
             return mDistanceFunction;
         }
+        
+        const std::vector<RenderPass>& GetRenderPasses() const {
+            return mRenderPasses;
+        }
 
     private:
         ISceneManager& mSceneManager;
@@ -73,6 +79,7 @@ namespace Pht {
         LightComponent* mGlobalLight {nullptr};
         CameraComponent* mCamera {nullptr};
         DistanceFunction mDistanceFunction {DistanceFunction::CameraSpaceZ};
+        std::vector<RenderPass> mRenderPasses;
     };
 }
 

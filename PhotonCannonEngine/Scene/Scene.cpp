@@ -77,3 +77,7 @@ TextComponent& Scene::CreateText(const std::string& text, const TextProperties& 
 void Scene::AddSceneObject(std::unique_ptr<SceneObject> sceneObject) {
     mSceneObjects.push_back(std::move(sceneObject));
 }
+
+void Scene::AddRenderPass(const RenderPass& renderPass) {
+    mRenderPasses.push_back(renderPass);
+}
