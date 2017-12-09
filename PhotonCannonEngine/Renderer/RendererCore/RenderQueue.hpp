@@ -5,21 +5,15 @@
 
 #include "Vector.hpp"
 #include "Matrix.hpp"
+#include "Scene.hpp"
 
 namespace Pht {
     class SceneObject;
     
-    enum class DistanceFunction {
-        CameraSpaceZ,
-        WorldSpaceZ
-    };
-    
     class RenderQueue {
     public:
-        RenderQueue(const SceneObject& rootSceneObject);
-        
-        void Allocate();
-        void Build(const Mat4& viewMatrix);
+        void Init(const SceneObject& rootSceneObject);
+        void Build(const Mat4& viewMatrix, DistanceFunction distanceFunction);
         
         struct Entry {
             float mDistance;
@@ -35,19 +29,14 @@ namespace Pht {
         Entry* end() {
             return &mQueue[mSize];
         }
-        
-        void SetDistanceFunction(DistanceFunction distanceFunction) {
-            mDistanceFunction = distanceFunction;
-        }
 
     private:
         void AddSceneObjects(const SceneObject& parentSceneObject);
-        void CalculateDistances(const Mat4& viewMatrix);
+        void CalculateDistances(const Mat4& viewMatrix, DistanceFunction distanceFunction);
         
-        const SceneObject& mRootSceneObject;
+        const SceneObject* mRootSceneObject;
         std::vector<Entry> mQueue;
         int mSize {0};
-        DistanceFunction mDistanceFunction {DistanceFunction::CameraSpaceZ};
     };
 }
 

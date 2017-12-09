@@ -32,7 +32,7 @@
     };
     
     mEngine = new Pht::Engine(false, screenInputSize);
-    mEngine->Initialize(false);
+    mEngine->Init(false);
     
     GLKViewExtension* glkViewExtension = (GLKViewExtension*)self.view;
     [glkViewExtension setEngine: mEngine];

@@ -17,8 +17,6 @@ Scene::Scene(ISceneManager& sceneManager, Name name) :
     
     mSceneObjects.push_back(std::make_unique<SceneObject>(Hash::Fnv1a("root")));
     mRoot = std::begin(mSceneObjects)->get();
-
-    mRenderQueue = std::make_unique<RenderQueue>(*mRoot);
 }
 
 Scene::~Scene() {}
@@ -78,8 +76,4 @@ TextComponent& Scene::CreateText(const std::string& text, const TextProperties& 
 
 void Scene::AddSceneObject(std::unique_ptr<SceneObject> sceneObject) {
     mSceneObjects.push_back(std::move(sceneObject));
-}
-
-void Scene::SetDistanceFunction(DistanceFunction distanceFunction) {
-    mRenderQueue->SetDistanceFunction(distanceFunction);
 }

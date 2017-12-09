@@ -212,7 +212,7 @@ Renderer::Renderer(bool createRenderBuffers) :
     }
 }
 
-void Renderer::Initialize(bool createRenderBuffers) {
+void Renderer::Init(bool createRenderBuffers) {
     InitOpenGl(createRenderBuffers);
     InitCamera();
     InitHudFrustum();
@@ -311,6 +311,10 @@ void Renderer::SetupProjectionInShaders() {
     }
 }
 
+void Renderer::InitRenderQueue(const Scene& scene) {
+    mRenderQueue.Init(scene.GetRoot());
+}
+
 void Renderer::ClearBuffers() {
     if (mClearColorBuffer) {
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
@@ -390,7 +394,7 @@ void Renderer::SetScissorBox(const Vec2& lowerLeft, const Vec2& size) {
     
     auto& frustumSize {mHudMode ? GetHudFrustumSize() : GetOrthographicFrustumSize()};
     
-    Pht::Vec2 lowerLeftProjected {
+    Vec2 lowerLeftProjected {
         normProjPos.x * frustumSize.x / 2.0f,
         normProjPos.y * frustumSize.y / 2.0f
     };
@@ -646,15 +650,14 @@ void Renderer::RenderScene(const Scene& scene) {
     SetDirectionalLightIntensity(globalLight->GetDirectionalIntensity());
     
     // Build the render queue.
-    auto& renderQueue {scene.GetRenderQueue()};
-    renderQueue.Build(GetViewMatrix());
+    mRenderQueue.Build(GetViewMatrix(), scene.GetDistanceFunction());
     
     // Start by rendering the opaque objects and enable depth write for those.
     SetDepthWrite(true);
     
     RenderQueue::Entry* previousEntry {nullptr};
     
-    for (auto& renderEntry: renderQueue) {
+    for (auto& renderEntry: mRenderQueue) {
         if (!renderEntry.mDepthWrite) {
             if (previousEntry == nullptr || previousEntry->mDepthWrite) {
                 // Transition into rendering the transparent objects.
@@ -663,15 +666,12 @@ void Renderer::RenderScene(const Scene& scene) {
         }
         
         auto* sceneObject {renderEntry.mSceneObject};
-        auto* renderable {sceneObject->GetRenderable()};
         
-        if (renderable) {
+        if (auto* renderable {sceneObject->GetRenderable()}) {
             Render(*renderable, sceneObject->GetMatrix());
         }
         
-        auto* textComponent {sceneObject->GetComponent<TextComponent>()};
-        
-        if (textComponent) {
+        if (auto* textComponent {sceneObject->GetComponent<TextComponent>()}) {
             auto sceneObjectPosition {sceneObject->GetWorldSpacePosition()};
             Vec2 textPosition {sceneObjectPosition.x, sceneObjectPosition.y};
             RenderText(textComponent->GetText(), textPosition, textComponent->GetProperties());

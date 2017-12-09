@@ -20,8 +20,8 @@ Engine::Engine(bool createRenderBuffers, const Vec2& screenInputSize) :
     std::srand(static_cast<int>(std::time(0)));
 }
 
-void Engine::Initialize(bool createRenderBuffers) {
-    mRenderer.Initialize(createRenderBuffers);
+void Engine::Init(bool createRenderBuffers) {
+    mRenderer.Init(createRenderBuffers);
 
     // Create and init the application.
     mApplication = CreateApplication(*this);

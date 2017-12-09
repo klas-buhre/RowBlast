@@ -21,7 +21,7 @@ void SceneManager::SetLoadedScene(std::unique_ptr<Scene> scene) {
     mScene = std::move(scene);
     
     if (mScene) {
-        mScene->GetRenderQueue().Allocate();
+        mRenderer.InitRenderQueue(*mScene);
     }
 }
 

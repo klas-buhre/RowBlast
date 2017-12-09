@@ -48,19 +48,18 @@ namespace {
     }
 }
 
-RenderQueue::RenderQueue(const SceneObject& rootSceneObject) :
-    mRootSceneObject {rootSceneObject} {}
-
-void RenderQueue::Allocate() {
-    auto numSceneObjects {CalcNumSceneObjects(mRootSceneObject)};
+void RenderQueue::Init(const SceneObject& rootSceneObject) {
+    mRootSceneObject = &rootSceneObject;
+    auto numSceneObjects {CalcNumSceneObjects(rootSceneObject)};
     mQueue.resize(numSceneObjects);
 }
 
-void RenderQueue::Build(const Mat4& viewMatrix) {
+void RenderQueue::Build(const Mat4& viewMatrix, DistanceFunction distanceFunction) {
     mSize = 0;
     
-    AddSceneObjects(mRootSceneObject);
-    CalculateDistances(viewMatrix);
+    assert(mRootSceneObject);
+    AddSceneObjects(*mRootSceneObject);
+    CalculateDistances(viewMatrix, distanceFunction);
     std::sort(&mQueue[0], &mQueue[mSize], CompareEntries);
 }
 
@@ -76,14 +75,14 @@ void RenderQueue::AddSceneObjects(const SceneObject& parentSceneObject) {
     }
 }
 
-void RenderQueue::CalculateDistances(const Mat4& viewMatrix) {
+void RenderQueue::CalculateDistances(const Mat4& viewMatrix, DistanceFunction distanceFunction) {
     auto transposedViewMatrix {viewMatrix.Transposed()};
     
     for (auto i {0}; i < mSize; ++i) {
         auto& renderEntry {mQueue[i]};
         auto sceneObjectPos {renderEntry.mSceneObject->GetWorldSpacePosition()};
         
-        switch (mDistanceFunction) {
+        switch (distanceFunction) {
             case DistanceFunction::CameraSpaceZ: {
                 auto sceneObjectPosCamSpace {transposedViewMatrix * Vec4{sceneObjectPos, 1.0f}};
                 renderEntry.mDistance = -sceneObjectPosCamSpace.z;

@@ -12,6 +12,7 @@
 #include "Camera.hpp"
 #include "Material.hpp"
 #include "TextRenderer.hpp"
+#include "RenderQueue.hpp"
 
 namespace Pht {
     class Renderer: public IRenderer {
@@ -45,7 +46,8 @@ namespace Pht {
         const Vec2& GetOrthographicFrustumSize() const override;
         const IVec2& GetRenderBufferSize() const override;
 
-        void Initialize(bool createRenderBuffers);
+        void Init(bool createRenderBuffers);
+        void InitRenderQueue(const Scene& scene);
         void ClearBuffers();
         
     private:
@@ -87,6 +89,7 @@ namespace Pht {
         HudFrustum mHudFrustum;
         Vec2 mOrthographicFrustumSize;
         IVec2 mRenderBufferSize;
+        RenderQueue mRenderQueue;
         std::unordered_map<ShaderType, ShaderProgram> mShaders;
         std::unique_ptr<TextRenderer> mTextRenderer;
     };

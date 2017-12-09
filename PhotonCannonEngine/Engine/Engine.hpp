@@ -24,7 +24,7 @@ namespace Pht {
         IParticleSystem& GetParticleSystem() override;
         float GetLastFrameSeconds() const override;
         
-        void Initialize(bool createRenderBuffers);
+        void Init(bool createRenderBuffers);
         void Update(float frameSeconds);
 
         InputHandler& GetInputHandler() {

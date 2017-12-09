@@ -6,7 +6,6 @@
 #include <string>
 
 #include "Vector.hpp"
-#include "RenderQueue.hpp"
 
 namespace Pht {
     class SceneObject;
@@ -17,6 +16,11 @@ namespace Pht {
     class ISceneManager;
     class IMesh;
     class Material;
+    
+    enum class DistanceFunction {
+        CameraSpaceZ,
+        WorldSpaceZ
+    };
     
     class Scene {
     public:
@@ -32,7 +36,6 @@ namespace Pht {
         SceneObject& CreateSceneObject(const IMesh& mesh, const Material& material);
         TextComponent& CreateText(const std::string& text, const TextProperties& properties);
         void AddSceneObject(std::unique_ptr<SceneObject> sceneObject);
-        void SetDistanceFunction(DistanceFunction distanceFunction);
         
         LightComponent* GetGlobalLight() {
             return mGlobalLight;
@@ -50,12 +53,16 @@ namespace Pht {
             return mCamera;
         }
         
-        RenderQueue& GetRenderQueue() const {
-            return *mRenderQueue;
-        }
-        
         Name GetName() const {
             return mName;
+        }
+
+        void SetDistanceFunction(DistanceFunction distanceFunction) {
+            mDistanceFunction = distanceFunction;
+        }
+        
+        DistanceFunction GetDistanceFunction() const {
+            return mDistanceFunction;
         }
 
     private:
@@ -65,7 +72,7 @@ namespace Pht {
         SceneObject* mRoot {nullptr};
         LightComponent* mGlobalLight {nullptr};
         CameraComponent* mCamera {nullptr};
-        std::unique_ptr<RenderQueue> mRenderQueue;
+        DistanceFunction mDistanceFunction {DistanceFunction::CameraSpaceZ};
     };
 }
 
