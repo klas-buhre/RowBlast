@@ -20,7 +20,7 @@ using namespace BlocksGame;
 namespace {
     enum class Layer {
         Background = 0,
-        Text
+        Text = 1
     };
     
     const std::vector<Volume> floatingCubePaths {

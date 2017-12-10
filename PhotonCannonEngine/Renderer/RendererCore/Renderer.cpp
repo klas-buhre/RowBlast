@@ -643,14 +643,44 @@ void Renderer::RenderScene(const Scene& scene) {
                    camera->GetTarget(),
                    camera->GetUp());
     
-    // Setup the lighting.
-    auto* globalLight {scene.GetGlobalLight()};
-    assert(globalLight);
-    SetLightDirection(globalLight->GetDirection());
-    SetDirectionalLightIntensity(globalLight->GetDirectionalIntensity());
+    const LightComponent* previousLight {nullptr};
+    
+    for (auto& renderPass: scene.GetRenderPasses()) {
+        // Setup the lighting.
+        auto* lightOverride {renderPass.GetLight()};
+        auto* light {lightOverride ? lightOverride : scene.GetGlobalLight()};
+        assert(light);
+        
+        if (light != previousLight) {
+            SetLightDirection(light->GetDirection());
+            SetDirectionalLightIntensity(light->GetDirectionalIntensity());
+            previousLight = light;
+        }
+        
+        // Render the pass.
+        Render(renderPass, scene.GetDistanceFunction());
+    }
+}
+
+void Renderer::Render(const RenderPass& renderPass, DistanceFunction distanceFunction) {
+    auto isHudMode {renderPass.IsHudMode()};
+    auto projectionMode {renderPass.GetProjectionMode()};
+    
+    if (isHudMode != mHudMode || projectionMode != mProjectionMode) {
+        mHudMode = isHudMode;
+        SetProjectionMode(projectionMode);
+    }
+    
+    auto& scissorBox {renderPass.GetScissorBox()};
+    
+    if (scissorBox.HasValue()) {
+        auto& scissorBoxValue {scissorBox.GetValue()};
+        SetScissorBox(scissorBoxValue.mLowerLeft, scissorBoxValue.mSize);
+        SetScissorTest(true);
+    }
     
     // Build the render queue.
-    mRenderQueue.Build(GetViewMatrix(), scene.GetDistanceFunction());
+    mRenderQueue.Build(GetViewMatrix(), distanceFunction, renderPass.GetLayerMask());
     
     // Start by rendering the opaque objects and enable depth write for those.
     SetDepthWrite(true);
@@ -681,4 +711,8 @@ void Renderer::RenderScene(const Scene& scene) {
     }
     
     SetDepthWrite(true);
+    
+    if (scissorBox.HasValue()) {
+        SetScissorTest(false);
+    }
 }

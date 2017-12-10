@@ -62,7 +62,7 @@ GameHud::GameHud(Pht::IEngine& engine,
         Pht::Vec2{1.15f, 0.12f}
     };
     
-    engine.GetRenderer().SetHudCameraPosition({0.0f, 0.0f, 20.5f});
+    engine.GetRenderer().SetHudCameraPosition({0.0f, 0.0f, 15.5f});
 
     mProgressTextRectangle = CreateTextRectangle(Pht::Vec3 {mProgressPosition.x + 0.9f,
                                                             mProgressPosition.y + 0.2f,

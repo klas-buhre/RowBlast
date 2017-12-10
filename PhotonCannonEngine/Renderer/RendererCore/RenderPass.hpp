@@ -43,7 +43,7 @@ namespace Pht {
             return mLight;
         }
         
-        const Optional<ScissorBox> GetScissorBox() const {
+        const Optional<ScissorBox>& GetScissorBox() const {
             return mScissorBox;
         }
         

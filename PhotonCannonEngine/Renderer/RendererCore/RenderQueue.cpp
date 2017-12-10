@@ -20,7 +20,7 @@ namespace {
         return numObjects;
     }
     
-    bool IsDepthWrite(const SceneObject& sceneObject) {
+    bool IsDepthWriting(const SceneObject& sceneObject) {
         if (auto renderable {sceneObject.GetRenderable()}) {
             return renderable->GetMaterial().GetDepthState().mDepthWrite;
         }
@@ -54,24 +54,43 @@ void RenderQueue::Init(const SceneObject& rootSceneObject) {
     mQueue.resize(numSceneObjects);
 }
 
-void RenderQueue::Build(const Mat4& viewMatrix, DistanceFunction distanceFunction) {
+void RenderQueue::Build(const Mat4& viewMatrix, DistanceFunction distanceFunction, int layerMask) {
     mSize = 0;
     
     assert(mRootSceneObject);
-    AddSceneObjects(*mRootSceneObject);
+    AddSceneObject(*mRootSceneObject, layerMask, false);
     CalculateDistances(viewMatrix, distanceFunction);
     std::sort(&mQueue[0], &mQueue[mSize], CompareEntries);
 }
 
-void RenderQueue::AddSceneObjects(const SceneObject& parentSceneObject) {
-    if (parentSceneObject.IsVisible()) {
-        mQueue[mSize] = Entry {0.0f, IsDepthWrite(parentSceneObject), &parentSceneObject};
+void RenderQueue::AddSceneObject(const SceneObject& sceneObject,
+                                 int layerMask,
+                                 bool ancestorMatchedLayerMask) {
+    if (!sceneObject.IsVisible()) {
+        return;
+    }
+    
+    auto thisObjectOrAncestorMatchedLayerMask {ancestorMatchedLayerMask};
+    auto sceneObjectLayerMask {sceneObject.GetLayerMask()};
+    
+    if (!ancestorMatchedLayerMask) {
+        if (sceneObjectLayerMask & layerMask) {
+            thisObjectOrAncestorMatchedLayerMask = true;
+        }
+    }
+    
+    if (sceneObjectLayerMask && !thisObjectOrAncestorMatchedLayerMask) {
+        return;
+    }
+    
+    if (thisObjectOrAncestorMatchedLayerMask) {
+        mQueue[mSize] = Entry {0.0f, IsDepthWriting(sceneObject), &sceneObject};
         ++mSize;
         assert(mSize < mQueue.size());
     }
     
-    for (auto& child: parentSceneObject.GetChildren()) {
-        AddSceneObjects(*child);
+    for (auto& child: sceneObject.GetChildren()) {
+        AddSceneObject(*child, layerMask, thisObjectOrAncestorMatchedLayerMask);
     }
 }
 

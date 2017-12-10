@@ -68,6 +68,7 @@ namespace Pht {
         void RenderTextInternal(const std::string& text,
                                 const Vec2& position,
                                 const TextProperties& properties);
+        void Render(const RenderPass& renderPass, DistanceFunction distanceFunction);
         
         struct HudFrustum {
             Mat4 mProjection;

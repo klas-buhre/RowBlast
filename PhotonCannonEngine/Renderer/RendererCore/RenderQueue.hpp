@@ -13,7 +13,7 @@ namespace Pht {
     class RenderQueue {
     public:
         void Init(const SceneObject& rootSceneObject);
-        void Build(const Mat4& viewMatrix, DistanceFunction distanceFunction);
+        void Build(const Mat4& viewMatrix, DistanceFunction distanceFunction, int layerMask);
         
         struct Entry {
             float mDistance;
@@ -31,7 +31,9 @@ namespace Pht {
         }
 
     private:
-        void AddSceneObjects(const SceneObject& parentSceneObject);
+        void AddSceneObject(const SceneObject& sceneObject,
+                            int layerMask,
+                            bool ancestorMatchedLayerMask);
         void CalculateDistances(const Mat4& viewMatrix, DistanceFunction distanceFunction);
         
         const SceneObject* mRootSceneObject;
