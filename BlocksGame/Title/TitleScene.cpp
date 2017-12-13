@@ -84,6 +84,14 @@ TitleScene::TitleScene(Pht::IEngine& engine, const CommonResources& commonResour
     background.SetLayer(static_cast<int>(Layer::Background));
     scene->GetRoot().AddChild(background);
     
+    // Pht::Material cloudMaterial {"cloud_A.png"};
+    Pht::Material cloudMaterial("cloud_A.png", 0.7f, 0.3f, 0.0f, 0.0f);
+    cloudMaterial.SetBlend(Pht::Blend::Yes);
+    auto& cloud {scene->CreateSceneObject(Pht::QuadMesh {40.0f, 40.0f}, cloudMaterial)};
+    cloud.GetTransform().SetPosition({0.0f, 10.0f, -10.0f});
+    cloud.SetLayer(static_cast<int>(Layer::Background));
+    scene->GetRoot().AddChild(cloud);
+
     mFloatingCubes = std::make_unique<FloatingCubes>(engine,
                                                      scene.get(),
                                                      static_cast<int>(Layer::Background),

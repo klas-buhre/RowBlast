@@ -8,7 +8,8 @@ uniform mediump float Opacity;
 uniform sampler2D Sampler;
 
 void main(void) {
-    gl_FragColor = vec4(texture2D(Sampler, TextureCoordOut).xyz * DestinationColor + SpecularColor, Opacity);
+    mediump vec4 texel = texture2D(Sampler, TextureCoordOut);
+    gl_FragColor = vec4(texel.xyz * DestinationColor + SpecularColor, texel.w * Opacity);
 }
 
 );

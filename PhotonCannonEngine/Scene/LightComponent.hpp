@@ -9,7 +9,7 @@ namespace Pht {
     public:
         static const ComponentId id;
         
-        LightComponent(SceneObject& sceneObject);
+        explicit LightComponent(SceneObject& sceneObject);
         
         SceneObject& GetSceneObject() {
             return mSceneObject;

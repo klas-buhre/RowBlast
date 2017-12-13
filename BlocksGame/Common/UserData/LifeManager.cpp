@@ -32,7 +32,7 @@ void LifeManager::Update() {
         mState = State::CountingDown;
     }
     
-    auto now {std::chrono::system_clock::now()};
+    auto now {std::chrono::steady_clock::now()};
     
     if (now > mLifeLostTimePoint + lifeWaitDuration) {
         auto waitedDuration {
@@ -57,7 +57,7 @@ void LifeManager::Update() {
 
 void LifeManager::StartLevel() {
     if (mState == State::Idle) {
-        mLifeLostTimePoint = std::chrono::system_clock::now();
+        mLifeLostTimePoint = std::chrono::steady_clock::now();
         mState = State::StartedPlayingWithFullLives;
     }
     
@@ -80,7 +80,7 @@ void LifeManager::CompleteLevel() {
 
 void LifeManager::FailLevel() {
     if (mState == State::StartedPlayingWithFullLives) {
-        StartCountDown(std::chrono::system_clock::now());
+        StartCountDown(std::chrono::steady_clock::now());
     }
     
     SaveState();
@@ -101,7 +101,7 @@ std::chrono::seconds LifeManager::GetDurationUntilNewLife() const {
         return std::chrono::seconds {0};
     }
     
-    auto duration = mLifeLostTimePoint + lifeWaitDuration - std::chrono::system_clock::now();
+    auto duration {mLifeLostTimePoint + lifeWaitDuration - std::chrono::steady_clock::now()};
     return std::chrono::duration_cast<std::chrono::seconds>(duration);
 }
 
@@ -111,7 +111,7 @@ void LifeManager::IncreaseNumLives() {
     }
 }
 
-void LifeManager::StartCountDown(std::chrono::system_clock::time_point lifeLostTimePoint) {
+void LifeManager::StartCountDown(std::chrono::steady_clock::time_point lifeLostTimePoint) {
     mLifeLostTimePoint = lifeLostTimePoint;
     mState = State::CountingDown;
 }
@@ -149,7 +149,7 @@ bool LifeManager::LoadState() {
     mState = static_cast<State>(Pht::Json::ReadInt(document, stateMember));
     mNumLives = Pht::Json::ReadInt(document, numLivesMember);
     auto lifeLostTimePointInSeconds {Pht::Json::ReadUInt64(document, lifeLostTimePointMember)};
-    mLifeLostTimePoint = std::chrono::system_clock::time_point {
+    mLifeLostTimePoint = std::chrono::steady_clock::time_point {
         std::chrono::seconds(lifeLostTimePointInSeconds)
     };
     
