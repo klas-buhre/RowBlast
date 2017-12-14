@@ -148,35 +148,31 @@ Pht::QuadMesh::Vertices GameScene::CreateFieldVertices(const Level& level) {
 }
 
 const Pht::Material& GameScene::GetGoldMaterial() const {
-    return mCommonResources.GetMaterials().GetGoldMaterial();
+    return mCommonResources.GetMaterials().GetGoldFieldBlockMaterial();
 }
 
 const Pht::Material& GameScene::GetRedMaterial() const {
-    return mCommonResources.GetMaterials().GetRedMaterial();
+    return mCommonResources.GetMaterials().GetRedFieldBlockMaterial();
 }
 
 const Pht::Material& GameScene::GetBlueMaterial() const {
-    return mCommonResources.GetMaterials().GetBlueMaterial();
+    return mCommonResources.GetMaterials().GetBlueFieldBlockMaterial();
 }
 
 const Pht::Material& GameScene::GetGreenMaterial() const {
-    return mCommonResources.GetMaterials().GetGreenMaterial();
+    return mCommonResources.GetMaterials().GetGreenFieldBlockMaterial();
 }
 
 const Pht::Material& GameScene::GameScene::GetGrayMaterial() const {
-    return mCommonResources.GetMaterials().GetGrayMaterial();
+    return mCommonResources.GetMaterials().GetGrayFieldBlockMaterial();
 }
 
 const Pht::Material& GameScene::GameScene::GetDarkGrayMaterial() const {
-    return mCommonResources.GetMaterials().GetDarkGrayMaterial();
-}
-
-const Pht::Material& GameScene::GameScene::GetLightGrayMaterial() const {
-    return mCommonResources.GetMaterials().GetLightGrayMaterial();
+    return mCommonResources.GetMaterials().GetDarkGrayFieldBlockMaterial();
 }
 
 const Pht::Material& GameScene::GetYellowMaterial() const {
-    return mCommonResources.GetMaterials().GetYellowMaterial();
+    return mCommonResources.GetMaterials().GetYellowFieldBlockMaterial();
 }
 
 const Pht::SceneObject& GameScene::GetFloatingCubes() const {
