@@ -14,15 +14,20 @@ namespace Pht {
     
     class Texture {
     public:
-        Texture();
+        Texture(bool hasPremultipliedAlpha);
         ~Texture();
         
         GLuint GetHandle() const {
             return mHandle;
         }
+
+        bool HasPremultipliedAlpha() const {
+            return mHasPremultipliedAlpha;
+        }
         
     private:
         GLuint mHandle {0};
+        bool mHasPremultipliedAlpha {false};
     };
     
     struct EnvMapTextureFilenames {

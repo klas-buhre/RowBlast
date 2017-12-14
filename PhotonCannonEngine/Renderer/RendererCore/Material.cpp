@@ -63,8 +63,8 @@ Blend Material::GetBlend() const {
     return Blend::No;
 }
 
-GLuint Material::GetTexture() const {
-    return mTexture->GetHandle();
+const Texture* Material::GetTexture() const {
+    return mTexture.get();
 }
 
 void Material::SetOpacity(float opacity) {

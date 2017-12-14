@@ -84,14 +84,18 @@ TitleScene::TitleScene(Pht::IEngine& engine, const CommonResources& commonResour
     background.SetLayer(static_cast<int>(Layer::Background));
     scene->GetRoot().AddChild(background);
     
-    // Pht::Material cloudMaterial {"cloud_A.png"};
-    Pht::Material cloudMaterial("cloud_A.png", 0.7f, 0.3f, 0.0f, 0.0f);
+    Pht::Material cloudMaterial("cloud_A.png", 0.85f, 0.0f, 0.0f, 0.0f);
     cloudMaterial.SetBlend(Pht::Blend::Yes);
     auto& cloud {scene->CreateSceneObject(Pht::QuadMesh {40.0f, 40.0f}, cloudMaterial)};
     cloud.GetTransform().SetPosition({0.0f, 10.0f, -10.0f});
     cloud.SetLayer(static_cast<int>(Layer::Background));
     scene->GetRoot().AddChild(cloud);
 
+    auto& cloud2 {scene->CreateSceneObject(Pht::QuadMesh {40.0f, 40.0f}, cloudMaterial)};
+    cloud2.GetTransform().SetPosition({0.0f, 15.0f, -10.0f});
+    cloud2.SetLayer(static_cast<int>(Layer::Background));
+    scene->GetRoot().AddChild(cloud2);
+    
     mFloatingCubes = std::make_unique<FloatingCubes>(engine,
                                                      scene.get(),
                                                      static_cast<int>(Layer::Background),
@@ -101,16 +105,18 @@ TitleScene::TitleScene(Pht::IEngine& engine, const CommonResources& commonResour
     mFloatingCubes->Reset();
     
     auto& titleText {scene->CreateText("BLOCKS", {mFont, 1.0f, Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f}})};
-    titleText.GetSceneObject().GetTransform().SetPosition({-6.5f, 5.0f, 0.0f});
-    titleText.GetSceneObject().SetLayer(static_cast<int>(Layer::Text));
-    scene->GetRoot().AddChild(titleText.GetSceneObject());
+    auto& titleTextSceneObject {titleText.GetSceneObject()};
+    titleTextSceneObject.GetTransform().SetPosition({-6.5f, 5.0f, 0.0f});
+    titleTextSceneObject.SetLayer(static_cast<int>(Layer::Text));
+    scene->GetRoot().AddChild(titleTextSceneObject);
 
     auto& tapText {
         scene->CreateText("Tap to continue...", {mTapFont, 1.0f, Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f}})
     };
-    tapText.GetSceneObject().GetTransform().SetPosition({-3.7f, -6.0f, 0.0f});
-    tapText.GetSceneObject().SetLayer(static_cast<int>(Layer::Text));
-    scene->GetRoot().AddChild(tapText.GetSceneObject());
+    auto& tapTextSceneObject {tapText.GetSceneObject()};
+    tapTextSceneObject.GetTransform().SetPosition({-3.7f, -6.0f, 0.0f});
+    tapTextSceneObject.SetLayer(static_cast<int>(Layer::Text));
+    scene->GetRoot().AddChild(tapTextSceneObject);
     
     scene->SetDistanceFunction(Pht::DistanceFunction::WorldSpaceZ);
     

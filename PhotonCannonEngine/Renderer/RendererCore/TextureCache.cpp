@@ -62,7 +62,7 @@ namespace {
     }
     
     std::shared_ptr<Texture> CreateTexture(const IImage& image, GenerateMipmap generateMipmap) {
-        auto texture {std::make_shared<Texture>()};
+        auto texture {std::make_shared<Texture>(image.HasPremultipliedAlpha())};
         
         glBindTexture(GL_TEXTURE_2D, texture->GetHandle());
         
@@ -84,7 +84,7 @@ namespace {
     }
     
     std::shared_ptr<Texture> CreateEnvMapTexture(const EnvMapTextureFilenames& filenames) {
-        auto texture {std::make_shared<Texture>()};
+        auto texture {std::make_shared<Texture>(false)};
         
         glBindTexture(GL_TEXTURE_CUBE_MAP, texture->GetHandle());
         
@@ -109,7 +109,9 @@ bool EnvMapTextureFilenames::operator==(const EnvMapTextureFilenames& other) con
            mPositiveZ == other.mPositiveZ && mNegativeZ == other.mNegativeZ;
 }
 
-Texture::Texture() {
+Texture::Texture(bool hasPremultipliedAlpha) :
+    mHasPremultipliedAlpha {hasPremultipliedAlpha} {
+    
     glGenTextures(1, &mHandle);
 }
 

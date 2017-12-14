@@ -56,6 +56,10 @@ namespace {
             return mData.get();
         }
         
+        bool HasPremultipliedAlpha() const override {
+            return false;
+        }
+        
     private:
         IVec2 mSize;
         std::unique_ptr<unsigned char[]> mData;

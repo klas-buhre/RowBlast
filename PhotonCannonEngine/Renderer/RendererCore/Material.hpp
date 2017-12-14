@@ -58,7 +58,7 @@ namespace Pht {
         explicit Material(const Color& color);
         
         Blend GetBlend() const;
-        GLuint GetTexture() const;
+        const Texture* GetTexture() const;
         void SetOpacity(float opacity);
         void SetShaderType(ShaderType shaderType);
         void SetBlend(Blend blend);

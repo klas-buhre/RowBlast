@@ -60,7 +60,7 @@ Backlog:
   
 Ongoing tasks:
   -Make clouds.
-    -Try to revert the effect of the pre-multiplied alpha in ImangeIOS.mm if the file is a PNG.
+
 
 Ideas:
     -The pause button could lead to a widget that has an undo button, a boosters button and a game

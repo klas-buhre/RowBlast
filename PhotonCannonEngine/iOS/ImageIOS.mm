@@ -5,10 +5,26 @@
 
 #import <string>
 
+namespace {
+    bool StringEndsWith(const std::string& str, const std::string& with) {
+        auto pos {str.find_last_of(with)};
+        
+        if (pos == std::string::npos) {
+            return false;
+        }
+        
+        return pos == str.size() - 1;
+    }
+}
+
 class ImageIOS: public Pht::IImage {
 public:
     ImageIOS(const std::string& filename) {
-        LoadImage(filename);
+        LoadGenericImage(filename);
+        
+        if (StringEndsWith(filename, ".png")) {
+            mHasPremultipliedAlpha = true;
+        }
     }
     
     Pht::ImageFormat GetFormat() const override {
@@ -27,8 +43,12 @@ public:
         return (void*) [mImageData bytes];
     }
     
+    bool HasPremultipliedAlpha() const override {
+        return mHasPremultipliedAlpha;
+    }
+    
 private:
-    void LoadImage(const std::string& filename) {
+    void LoadGenericImage(const std::string& filename) {
         NSString* basePath = [NSString stringWithUTF8String:filename.c_str()];
         NSString* resourcePath = [[NSBundle mainBundle] resourcePath];
         NSString* fullPath = [resourcePath stringByAppendingPathComponent:basePath];
@@ -98,6 +118,7 @@ private:
     int mBitsPerComponent;
     Pht::IVec2 mSize;
     NSData* mImageData;
+    bool mHasPremultipliedAlpha {false};
 };
 
 std::unique_ptr<Pht::IImage> Pht::LoadImage(const std::string& filename) {

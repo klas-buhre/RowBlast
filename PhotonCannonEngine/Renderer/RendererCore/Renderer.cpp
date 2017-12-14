@@ -77,10 +77,10 @@ namespace {
     void BindSpecialTextures(ShaderType shaderType, const Material& material) {
         switch (shaderType) {
             case ShaderType::EnvMap:
-                glBindTexture(GL_TEXTURE_CUBE_MAP, material.GetTexture());
+                glBindTexture(GL_TEXTURE_CUBE_MAP, material.GetTexture()->GetHandle());
                 break;
             case ShaderType::PointParticle:
-                glBindTexture(GL_TEXTURE_2D, material.GetTexture());
+                glBindTexture(GL_TEXTURE_2D, material.GetTexture()->GetHandle());
                 break;
             default:
                 break;
@@ -93,7 +93,14 @@ namespace {
             glBlendFunc(GL_SRC_ALPHA, GL_ONE);
         } else if (material.GetBlend() == Blend::Yes) {
             glEnable(GL_BLEND);
-            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+            
+            auto* texture {material.GetTexture()};
+            
+            if (texture && texture->HasPremultipliedAlpha()) {
+                glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+            } else {
+                glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+            }
         } else {
             glDisable(GL_BLEND);
         }
@@ -156,7 +163,7 @@ namespace {
                                   GL_FALSE,
                                   stride,
                                   reinterpret_cast<const GLvoid*>(offset));
-            glBindTexture(GL_TEXTURE_2D, material.GetTexture());
+            glBindTexture(GL_TEXTURE_2D, material.GetTexture()->GetHandle());
             offset += sizeof(Vec2);
         }
 
