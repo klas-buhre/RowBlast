@@ -10,13 +10,13 @@
 using namespace Pht;
 
 namespace {
-    struct TwoDTexture {
+    struct TwoDTextureKey {
         std::string mFilename;
         GenerateMipmap mGenerateMipmap;
     };
 
     static std::mutex mutex;
-    static std::vector<std::pair<TwoDTexture, std::weak_ptr<Texture>>> twoDTextures;
+    static std::vector<std::pair<TwoDTextureKey, std::weak_ptr<Texture>>> twoDTextures;
     static std::vector<std::pair<EnvMapTextureFilenames, std::weak_ptr<Texture>>> envMapTextures;
     
     GLenum ToGlTextureFormat(ImageFormat format) {
@@ -142,7 +142,7 @@ std::shared_ptr<Texture> TextureCache::GetTexture(const std::string& textureName
     
     auto image {Pht::LoadImage(textureName)};
     auto texture {CreateTexture(*image, generateMipmap)};
-    twoDTextures.emplace_back(TwoDTexture{textureName, generateMipmap}, texture);
+    twoDTextures.emplace_back(TwoDTextureKey{textureName, generateMipmap}, texture);
     return texture;
 }
 

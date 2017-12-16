@@ -61,7 +61,7 @@ void ShaderProgram::Build(const char* vertexShaderSource, const char* fragmentSh
     
     // Extract the handles to uniforms.
     mUniforms.mProjection = glGetUniformLocation(mProgram, "Projection");
-    mUniforms.mModelview = glGetUniformLocation(mProgram, "Modelview");
+    mUniforms.mModelViewProjection = glGetUniformLocation(mProgram, "ModelViewProjection");
     mUniforms.mNormalMatrix = glGetUniformLocation(mProgram, "NormalMatrix");
     mUniforms.mLightPosition = glGetUniformLocation(mProgram, "LightPosition");
     mUniforms.mAmbientMaterial = glGetUniformLocation(mProgram, "AmbientMaterial");

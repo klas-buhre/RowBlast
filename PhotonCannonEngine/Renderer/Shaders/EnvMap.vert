@@ -3,8 +3,7 @@ static const char* EnvMapVertexShader = STRINGIFY(
 attribute vec4 Position;
 attribute vec3 Normal;
 
-uniform mat4 Projection;
-uniform mat4 Modelview;
+uniform mat4 ModelViewProjection;
 uniform mat4 Model;
 uniform mat3 Model3x3;
 uniform mat3 NormalMatrix;
@@ -20,7 +19,7 @@ varying vec3 SpecularColor;
 varying vec3 ReflectDir;
 
 void main(void) {
-    gl_Position = Projection * Modelview * Position;
+    gl_Position = ModelViewProjection * Position;
 
     // Vertex lighting calculations in camera space:
     vec3 N = normalize(NormalMatrix * Normal);

@@ -477,9 +477,9 @@ void Renderer::Render(const RenderableObject& object, const Mat4& modelTransform
 
 void Renderer::SetTransforms(const Mat4& modelTransform, 
                              const ShaderProgram::UniformHandles& uniforms) {
-    // Set up the modelview matrix.
-    Mat4 modelview {modelTransform * GetViewMatrix()};
-    glUniformMatrix4fv(uniforms.mModelview, 1, 0, modelview.Pointer());
+    auto modelview {modelTransform * GetViewMatrix()};
+    auto modelViewProjection {modelview * GetProjectionMatrix()};
+    glUniformMatrix4fv(uniforms.mModelViewProjection, 1, 0, modelViewProjection.Pointer());
 
     // Set the normal matrix in camera space. Modelview is orthogonal, so its Inverse-Transpose is
     // itself.

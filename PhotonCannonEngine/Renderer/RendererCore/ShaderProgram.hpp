@@ -10,8 +10,8 @@ namespace Pht {
     class ShaderProgram {
     public:
         struct UniformHandles {
-            GLint mModelview {0};
             GLint mProjection {0};
+            GLint mModelViewProjection {0};
             GLint mNormalMatrix {0};
             GLint mLightPosition {0};
             GLint mAmbientMaterial {0};

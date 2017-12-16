@@ -3,8 +3,7 @@ static const char* VertexLightingVertexShader = STRINGIFY(
 attribute vec4 Position;
 attribute vec3 Normal;
 
-uniform mat4 Projection;
-uniform mat4 Modelview;
+uniform mat4 ModelViewProjection;
 uniform mat3 NormalMatrix;
 uniform vec3 LightPosition;
 uniform vec3 AmbientMaterial;
@@ -28,7 +27,7 @@ void main(void) {
     vec3 color = AmbientMaterial + df * DiffuseMaterial + sf * SpecularMaterial;
     
     DestinationColor = vec4(color, Opacity);
-    gl_Position = Projection * Modelview * Position;
+    gl_Position = ModelViewProjection * Position;
 }
 
 );
