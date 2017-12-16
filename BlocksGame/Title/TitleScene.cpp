@@ -75,24 +75,29 @@ TitleScene::TitleScene(Pht::IEngine& engine, const CommonResources& commonResour
     camera.GetSceneObject().GetTransform().SetPosition(cameraPosition);
     camera.SetTarget(target, up);
     scene->GetRoot().AddChild(camera.GetSceneObject());
-    
-    auto& background {
-        scene->CreateSceneObject(Pht::QuadMesh {100.0f, 100.0f},
-                                 commonResources.GetMaterials().GetSkyMaterial())
+
+    auto width {1500.0f};
+    auto height {1050.0f};
+    Pht::QuadMesh::Vertices vertices {
+        {{-width / 2.0f, -height / 2.0f, 0.0f}, {0.46f, 0.71f, 1.0f, 1.0f}},
+        {{width / 2.0f, -height / 2.0f, 0.0f}, {0.46f, 0.71f, 1.0f, 1.0f}},
+        {{width / 2.0f, height / 2.0f, 0.0f}, {0.17f, 0.34f, 1.0f, 1.0f}},
+        {{-width / 2.0f, height / 2.0f, 0.0f}, {0.17f, 0.34f, 1.0f, 1.0f}},
     };
-    background.GetTransform().SetPosition({-20.0f, 0.0f, -35.0f});
+    auto& background {scene->CreateSceneObject(Pht::QuadMesh {vertices}, Pht::Material {})};
+    background.GetTransform().SetPosition({-20.0f, 0.0f, -700.0f});
     background.SetLayer(static_cast<int>(Layer::Background));
     scene->GetRoot().AddChild(background);
-    
-    Pht::Material cloudMaterial("cloud_A.png", 0.85f, 0.0f, 0.0f, 0.0f);
+
+    Pht::Material cloudMaterial("cloud_A.png", 0.9f, 0.0f, 0.0f, 0.0f);
     cloudMaterial.SetBlend(Pht::Blend::Yes);
     auto& cloud {scene->CreateSceneObject(Pht::QuadMesh {40.0f, 40.0f}, cloudMaterial)};
-    cloud.GetTransform().SetPosition({0.0f, 10.0f, -10.0f});
+    cloud.GetTransform().SetPosition({-10.0f, 0.0f, -10.0f});
     cloud.SetLayer(static_cast<int>(Layer::Background));
     scene->GetRoot().AddChild(cloud);
 
     auto& cloud2 {scene->CreateSceneObject(Pht::QuadMesh {40.0f, 40.0f}, cloudMaterial)};
-    cloud2.GetTransform().SetPosition({0.0f, 15.0f, -10.0f});
+    cloud2.GetTransform().SetPosition({30.0f, -50.0f, -100.0f});
     cloud2.SetLayer(static_cast<int>(Layer::Background));
     scene->GetRoot().AddChild(cloud2);
     
