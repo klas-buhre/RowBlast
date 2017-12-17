@@ -25,11 +25,11 @@ GameMenuView::GameMenuView(Pht::IEngine& engine, const CommonResources& commonRe
     SetSize(size);
     SetPosition({0.0f, 0.0f});
     SetDepthTest(false);
-    
+
     auto quad {MenuQuad::CreateGray(engine, size)};
     quad->SetPosition({0.0f, 0.0f, -1.0f});
     AddSceneObject(std::move(quad));
-    
+
     Pht::Material lineMaterial {Pht::Color{1.0f, 1.0f, 1.0f}};
     lineMaterial.SetOpacity(0.4f);
     auto& sceneManager {engine.GetSceneManager()};

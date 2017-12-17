@@ -57,7 +57,13 @@ CameraComponent& Scene::CreateCamera() {
 
 SceneObject& Scene::CreateSceneObject(const IMesh& mesh, const Material& material) {
     auto sceneObject {mSceneManager.CreateSceneObject(mesh, material)};
-    
+    auto& retVal {*sceneObject};
+    AddSceneObject(std::move(sceneObject));
+    return retVal;
+}
+
+SceneObject& Scene::CreateSceneObject() {
+    auto sceneObject {std::make_unique<SceneObject>()};
     auto& retVal {*sceneObject};
     AddSceneObject(std::move(sceneObject));
     return retVal;

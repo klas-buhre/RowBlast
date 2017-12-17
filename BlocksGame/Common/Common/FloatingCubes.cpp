@@ -14,7 +14,7 @@ using namespace BlocksGame;
 FloatingCubes::FloatingCubes(Pht::IEngine& engine,
                              Pht::Scene* scene,
                              int layerIndex,
-                             const std::vector<Volume>& volumes,
+                             const std::vector<CubePathVolume>& volumes,
                              const CommonResources& commonResources,
                              float scale) :
     mEngine {engine},
@@ -23,7 +23,6 @@ FloatingCubes::FloatingCubes(Pht::IEngine& engine,
     
     mCubes.resize(mVolumes.size());
     
-    Pht::ObjMesh triangleMesh {"triangle_428_085.obj", scale};
     Pht::ObjMesh cubeMesh {"cube_554.obj", scale};
     auto& materials {commonResources.GetMaterials()};
     auto& sceneManager {engine.GetSceneManager()};
@@ -31,7 +30,7 @@ FloatingCubes::FloatingCubes(Pht::IEngine& engine,
     mCubeRenderables = {
         sceneManager.CreateRenderableObject(cubeMesh, materials.GetGoldMaterial()),
         sceneManager.CreateRenderableObject(cubeMesh, materials.GetBlueMaterial()),
-        sceneManager.CreateRenderableObject(triangleMesh, materials.GetRedMaterial()),
+        sceneManager.CreateRenderableObject(cubeMesh, materials.GetRedMaterial()),
         sceneManager.CreateRenderableObject(cubeMesh, materials.GetGreenMaterial())
     };
     

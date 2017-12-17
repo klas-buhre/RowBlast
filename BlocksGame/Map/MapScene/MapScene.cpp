@@ -26,20 +26,20 @@ namespace {
     const auto cubePathYSize {0.5f};
     const auto numCubes {static_cast<int>(sceneSize.y / cubePathYSpacing)};
     
-    const std::vector<Volume> foregroundCubePaths {
-        Volume {
+    const std::vector<CubePathVolume> foregroundCubePaths {
+        CubePathVolume {
             .mPosition = {-22.0f, -16.5f, 10.0f},
             .mSize = {0.0f, 0.0f, 0.0f}
         },
-        Volume {
+        CubePathVolume {
             .mPosition = {-17.0f, -17.0f, 10.0f},
             .mSize = {0.0f, 0.0f, 0.0f}
         },
-        Volume {
+        CubePathVolume {
             .mPosition = {-12.0f, -17.5f, 10.0f},
             .mSize = {0.0f, 0.0f, 0.0f}
         },
-        Volume {
+        CubePathVolume {
             .mPosition = {-7.0f, -18.0f, 10.0f},
             .mSize = {0.0f, 0.0f, 0.0f}
         }
@@ -122,10 +122,10 @@ void MapScene::CreateBackground(const Pht::Material& backgroundMaterial) {
 }
 
 void MapScene::CreateFloatingCubes(const CommonResources& commonResources) {
-    std::vector<Volume> floatingCubePaths;
+    std::vector<CubePathVolume> floatingCubePaths;
     
     for (auto i {0}; i < numCubes; ++i) {
-        Volume volume {
+        CubePathVolume volume {
             .mPosition = {0.0f, sceneSize.y / 2.0f - i * cubePathYSpacing, -3.0f},
             .mSize = {sceneSize.x, cubePathYSize, 3.0f}
         };

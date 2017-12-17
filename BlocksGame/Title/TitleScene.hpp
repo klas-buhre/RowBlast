@@ -8,6 +8,7 @@
 
 // Game includes.
 #include "FloatingCubes.hpp"
+#include "Clouds.hpp"
 
 namespace Pht {
     class IEngine;
@@ -23,6 +24,7 @@ namespace BlocksGame {
         void Update();
         
     private:
+        std::unique_ptr<Clouds> mClouds;
         std::unique_ptr<FloatingCubes> mFloatingCubes;
         Pht::Font mFont;
         Pht::Font mTapFont;

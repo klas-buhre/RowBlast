@@ -22,30 +22,98 @@ namespace {
         Background = 0,
         Text = 1
     };
-    
-    const std::vector<Volume> floatingCubePaths {
-        Volume {
+
+    const std::vector<CloudPathVolume> cloudPaths {
+        CloudPathVolume {{0.0f, 0.0f, -10.0f}, {65.0f, 0.0f, 0.0f}},
+        CloudPathVolume {{0.0f, -50.0f, -50.0f}, {110.0f, 0.0f, 10.0f}, {50.0f, 50.0f}},
+        CloudPathVolume {{0.0f, -60.0f, -50.0f}, {110.0f, 0.0f, 10.0f}, {30.0f, 30.0f}},
+        CloudPathVolume {{0.0f, -30.0f, -50.0f}, {110.0f, 0.0f, 10.0f}, {50.0f, 50.0f}},
+        CloudPathVolume {{0.0f, 40.0f, -50.0f}, {110.0f, 0.0f, 10.0f}},
+        CloudPathVolume {{0.0f, -50.0f, -100.0f}, {140.0f, 20.0f, 20.0f}},
+        CloudPathVolume {{0.0f, -60.0f, -100.0f}, {140.0f, 20.0f, 20.0f}, {60.0f, 60.0f}},
+        CloudPathVolume {{0.0f, -30.0f, -100.0f}, {140.0f, 20.0f, 20.0f}},
+        CloudPathVolume {{0.0f, -10.0f, -150.0f}, {200.0f, 30.0f, 30.0f}, {70.0f, 70.0f}},
+        CloudPathVolume {{0.0f, -120.0f, -150.0f}, {200.0f, 30.0f, 30.0f}},
+        CloudPathVolume {{0.0f, 30.0f, -150.0f}, {200.0f, 30.0f, 30.0f}, {30.0f, 30.0f}},
+        CloudPathVolume {{0.0f, -10.0f, -200.0f}, {400.0f, 40.0f, 40.0f}},
+        CloudPathVolume {{0.0f, -120.0f, -200.0f}, {400.0f, 40.0f, 40.0f}},
+        CloudPathVolume {{0.0f, 30.0f, -200.0f}, {400.0f, 40.0f, 40.0f}, {70.0f, 70.0f}},
+        CloudPathVolume {{0.0f, -200.0f, -300.0f}, {600.0f, 50.0f, 50.0f}},
+        CloudPathVolume {{0.0f, 100.0f, -300.0f}, {600.0f, 50.0f, 50.0f}, {80.0f, 80.0f}},
+        CloudPathVolume {{0.0f, 150.0f, -300.0f}, {600.0f, 40.0f, 40.0f}},
+        CloudPathVolume {{0.0f, 200.0f, -400.0f}, {800.0f, 60.0f, 60.0f}},
+        CloudPathVolume {{0.0f, 300.0f, -400.0f}, {800.0f, 60.0f, 60.0f}, {20.0f, 20.0f}},
+        CloudPathVolume {{0.0f, -300.0f, -400.0f}, {800.0f, 60.0f, 60.0f}},
+        CloudPathVolume {{0.0f, 200.0f, -400.0f}, {800.0f, 60.0f, 60.0f}, {50.0f, 50.0f}},
+        CloudPathVolume {{0.0f, 400.0f, -500.0f}, {1000.0f, 80.0f, 80.0f}, {60.0f, 60.0f}},
+        CloudPathVolume {{0.0f, -400.0f, -500.0f}, {1000.0f, 80.0f, 80.0f}},
+        CloudPathVolume {{0.0f, 100.0f, -500.0f}, {1000.0f, 80.0f, 80.0f}},
+        CloudPathVolume {{0.0f, 300.0f, -500.0f}, {1000.0f, 80.0f, 80.0f}},
+        CloudPathVolume {{0.0f, -200.0f, -500.0f}, {1000.0f, 80.0f, 80.0f}},
+        CloudPathVolume {{0.0f, 350.0f, -500.0f}, {1000.0f, 80.0f, 80.0f}, {60.0f, 60.0f}},
+        CloudPathVolume {{0.0f, -100.0f, -500.0f}, {1000.0f, 80.0f, 80.0f}},
+        CloudPathVolume {{0.0f, 150.0f, -500.0f}, {1000.0f, 80.0f, 80.0f}},
+        CloudPathVolume {{0.0f, 400.0f, -500.0f}, {1000.0f, 80.0f, 80.0f}, {60.0f, 60.0f}},
+        CloudPathVolume {{0.0f, -200.0f, -500.0f}, {1000.0f, 80.0f, 80.0f}},
+        CloudPathVolume {{0.0f, 500.0f, -600.0f}, {1200.0f, 80.0f, 80.0f}, {60.0f, 60.0f}},
+        CloudPathVolume {{0.0f, -400.0f, -600.0f}, {1200.0f, 80.0f, 80.0f}},
+        CloudPathVolume {{0.0f, 100.0f, -600.0f}, {1200.0f, 80.0f, 80.0f}},
+        CloudPathVolume {{0.0f, 350.0f, -600.0f}, {1200.0f, 80.0f, 80.0f}},
+        CloudPathVolume {{0.0f, 200.0f, -600.0f}, {1200.0f, 80.0f, 80.0f}},
+        CloudPathVolume {{0.0f, 350.0f, -600.0f}, {1200.0f, 80.0f, 80.0f}, {60.0f, 60.0f}},
+        CloudPathVolume {{0.0f, -100.0f, -600.0f}, {1200.0f, 80.0f, 80.0f}},
+        CloudPathVolume {{0.0f, -150.0f, -600.0f}, {12000.0f, 80.0f, 80.0f}},
+        CloudPathVolume {{0.0f, -300.0f, -600.0f}, {1200.0f, 80.0f, 80.0f}, {60.0f, 60.0f}},
+        CloudPathVolume {{0.0f, -500.0f, -600.0f}, {1200.0f, 80.0f, 80.0f}},
+        CloudPathVolume {{0.0f, 100.0f, -600.0f}, {1200.0f, 80.0f, 80.0f}},
+        CloudPathVolume {{0.0f, 0.0f, -600.0f}, {12000.0f, 80.0f, 80.0f}},
+        CloudPathVolume {{0.0f, 300.0f, -600.0f}, {1200.0f, 80.0f, 80.0f}, {60.0f, 60.0f}},
+        CloudPathVolume {{0.0f, -500.0f, -600.0f}, {1200.0f, 80.0f, 80.0f}},
+        CloudPathVolume {{0.0f, 500.0f, -700.0f}, {1200.0f, 80.0f, 80.0f}, {60.0f, 60.0f}},
+        CloudPathVolume {{0.0f, -400.0f, -700.0f}, {1200.0f, 80.0f, 80.0f}},
+        CloudPathVolume {{0.0f, 100.0f, -700.0f}, {1200.0f, 80.0f, 80.0f}},
+        CloudPathVolume {{0.0f, 350.0f, -700.0f}, {1200.0f, 80.0f, 80.0f}},
+        CloudPathVolume {{0.0f, 200.0f, -700.0f}, {1200.0f, 80.0f, 80.0f}},
+        CloudPathVolume {{0.0f, 350.0f, -700.0f}, {1200.0f, 80.0f, 80.0f}, {60.0f, 60.0f}},
+        CloudPathVolume {{0.0f, -100.0f, -700.0f}, {1200.0f, 80.0f, 80.0f}},
+        CloudPathVolume {{0.0f, -150.0f, -700.0f}, {12000.0f, 80.0f, 80.0f}},
+        CloudPathVolume {{0.0f, -300.0f, -700.0f}, {1200.0f, 80.0f, 80.0f}, {60.0f, 60.0f}},
+        CloudPathVolume {{0.0f, -500.0f, -700.0f}, {1200.0f, 80.0f, 80.0f}},
+        CloudPathVolume {{0.0f, 100.0f, -700.0f}, {1200.0f, 80.0f, 80.0f}},
+        CloudPathVolume {{0.0f, 0.0f, -700.0f}, {12000.0f, 80.0f, 80.0f}},
+        CloudPathVolume {{0.0f, 300.0f, -700.0f}, {1200.0f, 80.0f, 80.0f}, {60.0f, 60.0f}},
+        CloudPathVolume {{0.0f, -500.0f, -700.0f}, {1200.0f, 80.0f, 80.0f}},
+        CloudPathVolume {{0.0f, -300.0f, -700.0f}, {1200.0f, 80.0f, 80.0f}, {60.0f, 60.0f}},
+        CloudPathVolume {{0.0f, -500.0f, -700.0f}, {1200.0f, 80.0f, 80.0f}},
+        CloudPathVolume {{0.0f, -600.0f, -700.0f}, {1200.0f, 80.0f, 80.0f}},
+        CloudPathVolume {{0.0f, 0.0f, -700.0f}, {12000.0f, 80.0f, 80.0f}},
+        CloudPathVolume {{0.0f, 300.0f, -700.0f}, {1200.0f, 80.0f, 80.0f}, {60.0f, 60.0f}},
+        CloudPathVolume {{0.0f, 400.0f, -700.0f}, {1200.0f, 80.0f, 80.0f}}
+    };
+
+    const std::vector<CubePathVolume> floatingCubePaths {
+        CubePathVolume {
             .mPosition = {-3.0f, -3.0f, -8.0f},
             .mSize = {0.0f, 0.0f, 0.0f}
         },
-        Volume {
+        CubePathVolume {
             .mPosition = {-8.0f, -13.0f, -5.0f},
             .mSize = {0.0f, 0.0f, 0.0f}
         },
-        Volume {
+        CubePathVolume {
             .mPosition = {-5.0f, 13.0f, -8.0f},
             .mSize = {0.0f, 0.0f, 0.0f}
         },
-        Volume {
+        CubePathVolume {
             .mPosition = {10.0f, 23.0f, -20.0f},
             .mSize = {0.0f, 0.0f, 0.0f}
         },
-        Volume {
+        CubePathVolume {
             .mPosition = {1.0f, -25.0f, -18.0f},
             .mSize = {0.0f, 0.0f, 0.0f}
         },
-        Volume {
-            .mPosition = {5.0f, 0.0f, -20.0f},
+        CubePathVolume {
+            .mPosition = {5.0f, 0.0f, -30.0f},
             .mSize = {0.0f, 0.0f, 0.0f}
         }
     };
@@ -79,8 +147,8 @@ TitleScene::TitleScene(Pht::IEngine& engine, const CommonResources& commonResour
     auto width {1500.0f};
     auto height {1050.0f};
     Pht::QuadMesh::Vertices vertices {
-        {{-width / 2.0f, -height / 2.0f, 0.0f}, {0.46f, 0.71f, 1.0f, 1.0f}},
-        {{width / 2.0f, -height / 2.0f, 0.0f}, {0.46f, 0.71f, 1.0f, 1.0f}},
+        {{-width / 2.0f, -height / 2.0f, 0.0f}, {0.55f, 0.76f, 1.0f, 1.0f}},
+        {{width / 2.0f, -height / 2.0f, 0.0f}, {0.55f, 0.76f, 1.0f, 1.0f}},
         {{width / 2.0f, height / 2.0f, 0.0f}, {0.17f, 0.34f, 1.0f, 1.0f}},
         {{-width / 2.0f, height / 2.0f, 0.0f}, {0.17f, 0.34f, 1.0f, 1.0f}},
     };
@@ -88,19 +156,13 @@ TitleScene::TitleScene(Pht::IEngine& engine, const CommonResources& commonResour
     background.GetTransform().SetPosition({-20.0f, 0.0f, -700.0f});
     background.SetLayer(static_cast<int>(Layer::Background));
     scene->GetRoot().AddChild(background);
-
-    Pht::Material cloudMaterial("cloud_A.png", 0.9f, 0.0f, 0.0f, 0.0f);
-    cloudMaterial.SetBlend(Pht::Blend::Yes);
-    auto& cloud {scene->CreateSceneObject(Pht::QuadMesh {40.0f, 40.0f}, cloudMaterial)};
-    cloud.GetTransform().SetPosition({-10.0f, 0.0f, -10.0f});
-    cloud.SetLayer(static_cast<int>(Layer::Background));
-    scene->GetRoot().AddChild(cloud);
-
-    auto& cloud2 {scene->CreateSceneObject(Pht::QuadMesh {40.0f, 40.0f}, cloudMaterial)};
-    cloud2.GetTransform().SetPosition({30.0f, -50.0f, -100.0f});
-    cloud2.SetLayer(static_cast<int>(Layer::Background));
-    scene->GetRoot().AddChild(cloud2);
     
+    mClouds = std::make_unique<Clouds>(engine,
+                                       *scene,
+                                       static_cast<int>(Layer::Background),
+                                       cloudPaths,
+                                       4.0f);
+
     mFloatingCubes = std::make_unique<FloatingCubes>(engine,
                                                      scene.get(),
                                                      static_cast<int>(Layer::Background),
@@ -129,5 +191,6 @@ TitleScene::TitleScene(Pht::IEngine& engine, const CommonResources& commonResour
 }
 
 void TitleScene::Update() {
+    mClouds->Update();
     mFloatingCubes->Update();
 }

@@ -12,13 +12,12 @@
 namespace Pht {
     class IEngine;
     class Scene;
-    class SceneObject;
 }
 
 namespace BlocksGame {
     class CommonResources;
 
-    struct Volume {
+    struct CubePathVolume {
         Pht::Vec3 mPosition;
         Pht::Vec3 mSize;
     };
@@ -28,7 +27,7 @@ namespace BlocksGame {
         FloatingCubes(Pht::IEngine& engine,
                       Pht::Scene* scene,
                       int layerIndex,
-                      const std::vector<Volume>& volumes,
+                      const std::vector<CubePathVolume>& volumes,
                       const CommonResources& commonResources,
                       float scale);
         
@@ -53,7 +52,7 @@ namespace BlocksGame {
         std::unique_ptr<Pht::SceneObject> mSceneObject;
         std::vector<FloatingCube> mCubes;
         std::array<std::shared_ptr<Pht::RenderableObject>, numRenderables> mCubeRenderables;
-        std::vector<Volume> mVolumes;
+        std::vector<CubePathVolume> mVolumes;
     };
 }
 

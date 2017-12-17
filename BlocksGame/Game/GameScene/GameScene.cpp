@@ -18,28 +18,28 @@ namespace {
     const auto lowerClipAreaHeightInCells {2.15f};
     const auto fieldPadding {0.1f};
 
-    const std::vector<Volume> floatingCubePaths {
-        Volume {
+    const std::vector<CubePathVolume> floatingCubePaths {
+        CubePathVolume {
             .mPosition = {0.0f, 0.0f, -10.0f},
             .mSize = {40.0f, 10.0f, 5.0f}
         },
-        Volume {
+        CubePathVolume {
             .mPosition = {0.0f, -15.0f, -10.0f},
             .mSize = {40.0f, 10.0f, 5.0f}
         },
-        Volume {
+        CubePathVolume {
             .mPosition = {0.0f, 15.0f, -10.0f},
             .mSize = {40.0f, 10.0f, 5.0f}
         },
-        Volume {
+        CubePathVolume {
             .mPosition = {0.0f, 25.0f, -20.0f},
             .mSize = {40.0f, 10.0f, 5.0f}
         },
-        Volume {
+        CubePathVolume {
             .mPosition = {0.0f, -25.0f, -20.0f},
             .mSize = {40.0f, 10.0f, 5.0f}
         },
-        Volume {
+        CubePathVolume {
             .mPosition = {0.0f, 0.0f, -20.0f},
             .mSize = {40.0f, 10.0f, 5.0f}
         }

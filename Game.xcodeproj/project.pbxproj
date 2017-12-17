@@ -237,6 +237,7 @@
 		62E335DC1FD2EF600069B6CF /* level24.json in Resources */ = {isa = PBXBuildFile; fileRef = 62E335DB1FD2EF600069B6CF /* level24.json */; };
 		62E335DE1FD2F31E0069B6CF /* level25.json in Resources */ = {isa = PBXBuildFile; fileRef = 62E335DD1FD2F31E0069B6CF /* level25.json */; };
 		62E335E01FD2F4EE0069B6CF /* level26.json in Resources */ = {isa = PBXBuildFile; fileRef = 62E335DF1FD2F4EE0069B6CF /* level26.json */; };
+		62F117251FE686F10087BF8F /* Clouds.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62F117231FE686F10087BF8F /* Clouds.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -762,6 +763,8 @@
 		62E335DB1FD2EF600069B6CF /* level24.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level24.json; sourceTree = "<group>"; };
 		62E335DD1FD2F31E0069B6CF /* level25.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level25.json; sourceTree = "<group>"; };
 		62E335DF1FD2F4EE0069B6CF /* level26.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level26.json; sourceTree = "<group>"; };
+		62F117231FE686F10087BF8F /* Clouds.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Clouds.cpp; sourceTree = "<group>"; };
+		62F117241FE686F10087BF8F /* Clouds.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Clouds.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1243,7 +1246,6 @@
 				623B32C61F17AC11000C64A1 /* FileStorage.cpp */,
 				623B32C71F17AC11000C64A1 /* FileStorage.hpp */,
 				623B32C81F17AC11000C64A1 /* FileSystem.hpp */,
-				6270DC1D1FB71CC200FB457D /* Fnv1Hash.hpp */,
 				623B32C91F17AC11000C64A1 /* IImage.hpp */,
 				623B32CA1F17AC11000C64A1 /* JsonUtil.cpp */,
 				623B32CB1F17AC11000C64A1 /* JsonUtil.hpp */,
@@ -1251,6 +1253,7 @@
 				628A22561F6D359100D97BF8 /* OfflineRasterizer.hpp */,
 				623C16D51F6045B600305752 /* Optional.hpp */,
 				623B32D01F17AC11000C64A1 /* StaticVector.hpp */,
+				6270DC1D1FB71CC200FB457D /* Fnv1Hash.hpp */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1290,6 +1293,8 @@
 		624447131EDDD2C40080ECE8 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				62F117231FE686F10087BF8F /* Clouds.cpp */,
+				62F117241FE686F10087BF8F /* Clouds.hpp */,
 				624447141EDDD2C40080ECE8 /* CommonResources.cpp */,
 				624447151EDDD2C40080ECE8 /* CommonResources.hpp */,
 				6270DC4F1FCAFDD400FB457D /* FloatingCubes.cpp */,
@@ -1928,6 +1933,7 @@
 				624447CA1EDDD2C40080ECE8 /* SevenPiece.cpp in Sources */,
 				624447C51EDDD2C40080ECE8 /* LongIPiece.cpp in Sources */,
 				624447A71EDDD2C40080ECE8 /* ExplosionParticleEffect.cpp in Sources */,
+				62F117251FE686F10087BF8F /* Clouds.cpp in Sources */,
 				623B32D81F17AC11000C64A1 /* SwipeGestureRecognizer.cpp in Sources */,
 				624447B11EDDD2C40080ECE8 /* GameController.cpp in Sources */,
 				6247CFDA1EFFE25900B9919E /* NoLivesDialogController.cpp in Sources */,
