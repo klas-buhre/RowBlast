@@ -60,6 +60,8 @@ Backlog:
   
 Ongoing tasks:
   -Make moving clouds.
+    -Different brightness for clouds.
+    -Different textures. Make 512x512 for the rest.
 
 
 Ideas:
