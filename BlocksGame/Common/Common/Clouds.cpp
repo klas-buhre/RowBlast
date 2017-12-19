@@ -13,6 +13,8 @@
 using namespace BlocksGame;
 
 namespace {
+    const auto averageCloudBrightness {0.9f};
+    
     int CalcNumClouds(const std::vector<CloudPathVolume>& volumes) {
         auto result {0};
         
@@ -42,6 +44,32 @@ namespace {
             Pht::NormalizedRand() * volume.mSize.z - volume.mSize.z / 2.0f + clusterPosition.z
         };
     }
+    
+    float CalcCloudBrightness(const Pht::Vec3& cloudPosition,
+                              const Pht::Vec3& clusterPosition,
+                              const Pht::Vec2& clusterSize,
+                              const CloudPathVolume& volume) {
+        auto localCloudPosition {cloudPosition - clusterPosition};
+        
+        if (localCloudPosition.x > clusterSize.x / 2.0f) {
+            localCloudPosition.x = clusterSize.x / 2.0f;
+        } else if (localCloudPosition.x < -clusterSize.x / 2.0f) {
+            localCloudPosition.x = -clusterSize.x / 2.0f;
+        }
+
+        if (localCloudPosition.y > clusterSize.y / 2.0f) {
+            localCloudPosition.y = clusterSize.y / 2.0f;
+        } else if (localCloudPosition.y < -clusterSize.y / 2.0f) {
+            localCloudPosition.y = -clusterSize.y / 2.0f;
+        }
+        
+        auto brightnessFactor {
+            (localCloudPosition.x + localCloudPosition.y + localCloudPosition.z) * 2.0f /
+            (clusterSize.x + clusterSize.y + volume.mSize.z)
+        };
+        
+        return averageCloudBrightness + brightnessFactor * 0.25f;
+    }
 }
 
 Clouds::Clouds(Pht::IEngine& engine,
@@ -58,9 +86,6 @@ Clouds::Clouds(Pht::IEngine& engine,
     auto& sceneObject {scene.CreateSceneObject()};
     sceneObject.SetLayer(layerIndex);
     scene.GetRoot().AddChild(sceneObject);
-    
-    Pht::Material cloudMaterial {"cloud_A.png", 0.9f, 0.0f, 0.0f, 0.0f};
-    cloudMaterial.SetBlend(Pht::Blend::Yes);
     
     auto seed {static_cast<unsigned>(std::chrono::system_clock::now().time_since_epoch().count())};
     std::default_random_engine randomGenerator {seed};
@@ -87,10 +112,7 @@ Clouds::Clouds(Pht::IEngine& engine,
                 volume.mCloudSize.x + cloudSizeRandPart,
                 volume.mCloudSize.y + cloudSizeRandPart
             };
-
-            auto& cloudSceneObject = scene.CreateSceneObject(Pht::QuadMesh {cloudSize.x, cloudSize.y},
-                                                             cloudMaterial);
-            sceneObject.AddChild(cloudSceneObject);
+            
             auto cloudPosition {
                 volume.mNumCloudsPerCluster.HasValue() ?
                     CalcCloudPosition(clusterPosition,
@@ -100,6 +122,19 @@ Clouds::Clouds(Pht::IEngine& engine,
                                       randomGenerator) :
                     CalcRandomPositionInVolume(volume)
             };
+            
+            auto cloudBrightness {
+                volume.mNumCloudsPerCluster.HasValue() ?
+                    CalcCloudBrightness(cloudPosition, clusterPosition, volume.mClusterSize, volume) :
+                    averageCloudBrightness
+            };
+            
+            Pht::Material cloudMaterial {"cloud_A.png", cloudBrightness, 0.0f, 0.0f, 0.0f};
+            cloudMaterial.SetBlend(Pht::Blend::Yes);
+
+            auto& cloudSceneObject = scene.CreateSceneObject(Pht::QuadMesh {cloudSize.x, cloudSize.y},
+                                                             cloudMaterial);
+            sceneObject.AddChild(cloudSceneObject);
             cloudSceneObject.GetTransform().SetPosition(cloudPosition);
             
             Pht::Vec3 cloudVelocity {

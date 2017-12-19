@@ -166,7 +166,7 @@ TitleScene::TitleScene(Pht::IEngine& engine, const CommonResources& commonResour
                                        static_cast<int>(Layer::Background),
                                        cloudPaths,
                                        hazeLayers,
-                                       2.0f);
+                                       4.0f);
 
     mFloatingCubes = std::make_unique<FloatingCubes>(engine,
                                                      scene.get(),
