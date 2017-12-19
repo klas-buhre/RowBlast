@@ -14,6 +14,16 @@ using namespace BlocksGame;
 
 namespace {
     const auto averageCloudBrightness {0.9f};
+    const auto maxCloudBrightness {0.95f};
+    
+    const std::vector<std::string> textureFilenames {
+        "cloud_A_512.png",
+        "cloud_B_512.png",
+        "cloud_C_512.png",
+        "cloud_D_512.png",
+        "cloud_E_512.png",
+        "cloud_F_512.png"
+    };
     
     int CalcNumClouds(const std::vector<CloudPathVolume>& volumes) {
         auto result {0};
@@ -68,7 +78,13 @@ namespace {
             (clusterSize.x + clusterSize.y + volume.mSize.z)
         };
         
-        return averageCloudBrightness + brightnessFactor * 0.25f;
+        auto brightness {averageCloudBrightness + brightnessFactor * 0.25f};
+        
+        if (brightness > maxCloudBrightness) {
+            brightness = maxCloudBrightness;
+        }
+        
+        return brightness;
     }
 }
 
@@ -129,7 +145,8 @@ Clouds::Clouds(Pht::IEngine& engine,
                     averageCloudBrightness
             };
             
-            Pht::Material cloudMaterial {"cloud_A.png", cloudBrightness, 0.0f, 0.0f, 0.0f};
+            auto& textureFilename {textureFilenames[std::rand() % textureFilenames.size()]};
+            Pht::Material cloudMaterial {textureFilename, cloudBrightness, 0.0f, 0.0f, 0.0f};
             cloudMaterial.SetBlend(Pht::Blend::Yes);
 
             auto& cloudSceneObject = scene.CreateSceneObject(Pht::QuadMesh {cloudSize.x, cloudSize.y},

@@ -231,9 +231,14 @@
 		6270DCB31FCDA99100FB457D /* TitleScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6270DCB11FCDA99100FB457D /* TitleScene.cpp */; };
 		628A22571F6D359100D97BF8 /* OfflineRasterizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 628A22551F6D359100D97BF8 /* OfflineRasterizer.cpp */; };
 		628A225A1F6E704900D97BF8 /* GhostPieceProducer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 628A22581F6E704900D97BF8 /* GhostPieceProducer.cpp */; };
-		62A8AAEC1FE178AD000EB01C /* cloud_A.png in Resources */ = {isa = PBXBuildFile; fileRef = 62A8AAEB1FE178AC000EB01C /* cloud_A.png */; };
 		62A8AAF71FE2DEA1000EB01C /* cloud_B_envmap.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62A8AAF61FE2DEA0000EB01C /* cloud_B_envmap.jpg */; };
 		62A8AAF91FE2E442000EB01C /* cloud_C_envmap.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62A8AAF81FE2E441000EB01C /* cloud_C_envmap.jpg */; };
+		62E222241FE9704900AE098B /* cloud_A_512.png in Resources */ = {isa = PBXBuildFile; fileRef = 62E222231FE9704800AE098B /* cloud_A_512.png */; };
+		62E222261FE971C300AE098B /* cloud_B_512.png in Resources */ = {isa = PBXBuildFile; fileRef = 62E222251FE971C300AE098B /* cloud_B_512.png */; };
+		62E222281FE9729A00AE098B /* cloud_C_512.png in Resources */ = {isa = PBXBuildFile; fileRef = 62E222271FE9729900AE098B /* cloud_C_512.png */; };
+		62E2222A1FE9737F00AE098B /* cloud_D_512.png in Resources */ = {isa = PBXBuildFile; fileRef = 62E222291FE9737F00AE098B /* cloud_D_512.png */; };
+		62E2222C1FE9748500AE098B /* cloud_E_512.png in Resources */ = {isa = PBXBuildFile; fileRef = 62E2222B1FE9748500AE098B /* cloud_E_512.png */; };
+		62E2222E1FE9754C00AE098B /* cloud_F_512.png in Resources */ = {isa = PBXBuildFile; fileRef = 62E2222D1FE9754B00AE098B /* cloud_F_512.png */; };
 		62E335DC1FD2EF600069B6CF /* level24.json in Resources */ = {isa = PBXBuildFile; fileRef = 62E335DB1FD2EF600069B6CF /* level24.json */; };
 		62E335DE1FD2F31E0069B6CF /* level25.json in Resources */ = {isa = PBXBuildFile; fileRef = 62E335DD1FD2F31E0069B6CF /* level25.json */; };
 		62E335E01FD2F4EE0069B6CF /* level26.json in Resources */ = {isa = PBXBuildFile; fileRef = 62E335DF1FD2F4EE0069B6CF /* level26.json */; };
@@ -756,10 +761,15 @@
 		628A22561F6D359100D97BF8 /* OfflineRasterizer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = OfflineRasterizer.hpp; sourceTree = "<group>"; };
 		628A22581F6E704900D97BF8 /* GhostPieceProducer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GhostPieceProducer.cpp; sourceTree = "<group>"; };
 		628A22591F6E704900D97BF8 /* GhostPieceProducer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GhostPieceProducer.hpp; sourceTree = "<group>"; };
-		62A8AAEB1FE178AC000EB01C /* cloud_A.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cloud_A.png; sourceTree = "<group>"; };
 		62A8AAF61FE2DEA0000EB01C /* cloud_B_envmap.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = cloud_B_envmap.jpg; sourceTree = "<group>"; };
 		62A8AAF81FE2E441000EB01C /* cloud_C_envmap.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = cloud_C_envmap.jpg; sourceTree = "<group>"; };
 		62CCDDD21F8129720088A38D /* IGameHudEventListener.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = IGameHudEventListener.hpp; sourceTree = "<group>"; };
+		62E222231FE9704800AE098B /* cloud_A_512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cloud_A_512.png; sourceTree = "<group>"; };
+		62E222251FE971C300AE098B /* cloud_B_512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cloud_B_512.png; sourceTree = "<group>"; };
+		62E222271FE9729900AE098B /* cloud_C_512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cloud_C_512.png; sourceTree = "<group>"; };
+		62E222291FE9737F00AE098B /* cloud_D_512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cloud_D_512.png; sourceTree = "<group>"; };
+		62E2222B1FE9748500AE098B /* cloud_E_512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cloud_E_512.png; sourceTree = "<group>"; };
+		62E2222D1FE9754B00AE098B /* cloud_F_512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cloud_F_512.png; sourceTree = "<group>"; };
 		62E335DB1FD2EF600069B6CF /* level24.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level24.json; sourceTree = "<group>"; };
 		62E335DD1FD2F31E0069B6CF /* level25.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level25.json; sourceTree = "<group>"; };
 		62E335DF1FD2F4EE0069B6CF /* level26.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level26.json; sourceTree = "<group>"; };
@@ -1728,9 +1738,14 @@
 		6270DCA01FCB248E00FB457D /* Textures */ = {
 			isa = PBXGroup;
 			children = (
-				62A8AAEB1FE178AC000EB01C /* cloud_A.png */,
+				62E222231FE9704800AE098B /* cloud_A_512.png */,
+				62E222251FE971C300AE098B /* cloud_B_512.png */,
 				62A8AAF61FE2DEA0000EB01C /* cloud_B_envmap.jpg */,
+				62E222271FE9729900AE098B /* cloud_C_512.png */,
 				62A8AAF81FE2E441000EB01C /* cloud_C_envmap.jpg */,
+				62E222291FE9737F00AE098B /* cloud_D_512.png */,
+				62E2222B1FE9748500AE098B /* cloud_E_512.png */,
+				62E2222D1FE9754B00AE098B /* cloud_F_512.png */,
 				6270DCA11FCB248E00FB457D /* settings.png */,
 				6270DCA31FCB248E00FB457D /* sky_2.jpg */,
 				6270DCA41FCB248E00FB457D /* sky_blurred.jpg */,
@@ -1820,9 +1835,9 @@
 				623B32F01F17AC12000C64A1 /* PixelLighting.vert in Resources */,
 				623B32F51F17AC12000C64A1 /* TexturedLighting.frag in Resources */,
 				623B32EF1F17AC12000C64A1 /* PixelLighting.frag in Resources */,
+				62E2222C1FE9748500AE098B /* cloud_E_512.png in Resources */,
 				6270DCB01FCB248E00FB457D /* star_particle.png in Resources */,
 				6270DC631FCB22AE00FB457D /* star.obj in Resources */,
-				62A8AAEC1FE178AD000EB01C /* cloud_A.png in Resources */,
 				6270DCAA1FCB248E00FB457D /* sky.jpg in Resources */,
 				6270DC8D1FCB23D800FB457D /* level14.json in Resources */,
 				623B32EE1F17AC12000C64A1 /* PointParticle.vert in Resources */,
@@ -1842,6 +1857,7 @@
 				6270DC641FCB22AE00FB457D /* star_1428.obj in Resources */,
 				6270DC9E1FCB23D800FB457D /* level9.json in Resources */,
 				6270DC561FCB212B00FB457D /* Bomb.wav in Resources */,
+				62E222241FE9704900AE098B /* cloud_A_512.png in Resources */,
 				6260A7231F92445F001F6DCD /* Particle.frag in Resources */,
 				623B32F11F17AC12000C64A1 /* Text.frag in Resources */,
 				6270DC8A1FCB23D800FB457D /* level11.json in Resources */,
@@ -1853,18 +1869,22 @@
 				623B32FA1F17AC12000C64A1 /* VertexLighting.vert in Resources */,
 				623B32F21F17AC12000C64A1 /* Text.vert in Resources */,
 				6260A7221F92445F001F6DCD /* Particle.vert in Resources */,
+				62E2222A1FE9737F00AE098B /* cloud_D_512.png in Resources */,
+				62E222261FE971C300AE098B /* cloud_B_512.png in Resources */,
 				623B32F91F17AC12000C64A1 /* VertexLighting.frag in Resources */,
 				6270DC671FCB22AE00FB457D /* triangle_428_r180.obj in Resources */,
 				6270DC551FCB212B00FB457D /* Blip.wav in Resources */,
 				6270DCAE1FCB248E00FB457D /* sky_upside_down_patched_mirrored.jpg in Resources */,
 				623B33041F17AC12000C64A1 /* build_freetype.sh in Resources */,
 				6270DC8F1FCB23D800FB457D /* level16.json in Resources */,
+				62E222281FE9729A00AE098B /* cloud_C_512.png in Resources */,
 				6270DC921FCB23D800FB457D /* level19.json in Resources */,
 				6270DC911FCB23D800FB457D /* level18.json in Resources */,
 				6270DC9C1FCB23D800FB457D /* level7.json in Resources */,
 				6270DCAD1FCB248E00FB457D /* sky_upside_down.jpg in Resources */,
 				6270DC941FCB23D800FB457D /* level20.json in Resources */,
 				6270DC8B1FCB23D800FB457D /* level12.json in Resources */,
+				62E2222E1FE9754C00AE098B /* cloud_F_512.png in Resources */,
 				6270DC8E1FCB23D800FB457D /* level15.json in Resources */,
 				6270DC961FCB23D800FB457D /* level22.json in Resources */,
 			);

@@ -44,8 +44,6 @@ Backlog:
     -Try models with less bevel for the preview. The triangles with less bevel could be tried for
      field also.
   -Map:
-    -Map can be a Pht::Scene.
-    -Can have clouds in the map.
     -More 3D feel.
     -Load multiple maps.
   -Tutorial:
@@ -59,10 +57,7 @@ Backlog:
     -Credit the icon creator: <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
   
 Ongoing tasks:
-  -Make moving clouds.
-    -Different brightness for clouds.
-    -Different textures. Make 512x512 for the rest.
-
+    -Map can be a Pht::Scene.
 
 Ideas:
     -The pause button could lead to a widget that has an undo button, a boosters button and a game
