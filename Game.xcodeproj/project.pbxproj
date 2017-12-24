@@ -21,6 +21,13 @@
 		620A98361EE43DD200AD6C61 /* ClearLastBlocksAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 620A98341EE43DD200AD6C61 /* ClearLastBlocksAnimation.cpp */; };
 		6217ACCD1F161B2B001B1B3F /* MiddleIPiece.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6217ACCB1F161B2B001B1B3F /* MiddleIPiece.cpp */; };
 		621A4E721E50B60C00D53AFD /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 621A4E681E50B60C00D53AFD /* Icon.png */; };
+		621D60921FEFB62000052107 /* Materials.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 621D60891FEFB62000052107 /* Materials.cpp */; };
+		621D60931FEFB62000052107 /* Clouds.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 621D608D1FEFB62000052107 /* Clouds.cpp */; };
+		621D60941FEFB62000052107 /* FloatingCubes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 621D608E1FEFB62000052107 /* FloatingCubes.cpp */; };
+		621D60951FEFB62000052107 /* GradientRectangle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 621D60901FEFB62000052107 /* GradientRectangle.cpp */; };
+		621D60961FEFB62000052107 /* CommonResources.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 621D60911FEFB62000052107 /* CommonResources.cpp */; };
+		621D609D1FEFB62A00052107 /* RenderUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 621D60991FEFB62A00052107 /* RenderUtils.cpp */; };
+		621D609E1FEFB62A00052107 /* StringUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 621D609A1FEFB62A00052107 /* StringUtils.cpp */; };
 		622F7F2A1F223DFB00E965AF /* DiamondPiece.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 622F7F281F223DFB00E965AF /* DiamondPiece.cpp */; };
 		622F7F331F234E3D00E965AF /* PyramidPiece.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 622F7F311F234E3D00E965AF /* PyramidPiece.cpp */; };
 		622F7F361F23C29600E965AF /* SmallTrianglePiece.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 622F7F341F23C29600E965AF /* SmallTrianglePiece.cpp */; };
@@ -79,10 +86,6 @@
 		623C16D91F63E34B00305752 /* FallingPieceAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623C16D71F63E34A00305752 /* FallingPieceAnimation.cpp */; };
 		62411A971E61E62800035D2A /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62411A961E61E62800035D2A /* GLKit.framework */; };
 		6244479A1EDDD2C40080ECE8 /* BlocksApplication.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 624447101EDDD2C40080ECE8 /* BlocksApplication.cpp */; };
-		6244479B1EDDD2C40080ECE8 /* CommonResources.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 624447141EDDD2C40080ECE8 /* CommonResources.cpp */; };
-		6244479D1EDDD2C40080ECE8 /* GradientRectangle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 624447181EDDD2C40080ECE8 /* GradientRectangle.cpp */; };
-		6244479E1EDDD2C40080ECE8 /* Materials.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6244471A1EDDD2C40080ECE8 /* Materials.cpp */; };
-		6244479F1EDDD2C40080ECE8 /* RenderUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6244471C1EDDD2C40080ECE8 /* RenderUtils.cpp */; };
 		624447A01EDDD2C40080ECE8 /* CloseButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6244471F1EDDD2C40080ECE8 /* CloseButton.cpp */; };
 		624447A11EDDD2C40080ECE8 /* MenuButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 624447221EDDD2C40080ECE8 /* MenuButton.cpp */; };
 		624447A21EDDD2C40080ECE8 /* MenuQuad.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 624447241EDDD2C40080ECE8 /* MenuQuad.cpp */; };
@@ -135,7 +138,6 @@
 		624EAFC21EE559A9009F81BC /* SlidingTextAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 624EAFC01EE559A9009F81BC /* SlidingTextAnimation.cpp */; };
 		624F89461EF521880020C832 /* UserData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 624F89441EF521880020C832 /* UserData.cpp */; };
 		624F89491EF6661D0020C832 /* LifeManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 624F89471EF6661D0020C832 /* LifeManager.cpp */; };
-		624F89521EF6AF320020C832 /* StringUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 624F89501EF6AF320020C832 /* StringUtils.cpp */; };
 		6254C16C1EED356800BBCAD2 /* SettingsMenuController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6254C16A1EED356800BBCAD2 /* SettingsMenuController.cpp */; };
 		6254C16F1EED39E300BBCAD2 /* CommonViewControllers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6254C16D1EED39E300BBCAD2 /* CommonViewControllers.cpp */; };
 		625C330F1F9B8C7C00E531FC /* BlastRadiusAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 625C330D1F9B8C7C00E531FC /* BlastRadiusAnimation.cpp */; };
@@ -183,7 +185,6 @@
 		6270DC481FC1DE7000FB457D /* VboCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6270DC461FC1DE7000FB457D /* VboCache.cpp */; };
 		6270DC4B1FC48BE200FB457D /* LightComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6270DC491FC48BE200FB457D /* LightComponent.cpp */; };
 		6270DC4E1FC96E8B00FB457D /* Transform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6270DC4C1FC96E8B00FB457D /* Transform.cpp */; };
-		6270DC511FCAFDD400FB457D /* FloatingCubes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6270DC4F1FCAFDD400FB457D /* FloatingCubes.cpp */; };
 		6270DC551FCB212B00FB457D /* Blip.wav in Resources */ = {isa = PBXBuildFile; fileRef = 6270DC531FCB212B00FB457D /* Blip.wav */; };
 		6270DC561FCB212B00FB457D /* Bomb.wav in Resources */ = {isa = PBXBuildFile; fileRef = 6270DC541FCB212B00FB457D /* Bomb.wav */; };
 		6270DC611FCB22AE00FB457D /* cube_428.obj in Resources */ = {isa = PBXBuildFile; fileRef = 6270DC581FCB22AE00FB457D /* cube_428.obj */; };
@@ -242,7 +243,6 @@
 		62E335DC1FD2EF600069B6CF /* level24.json in Resources */ = {isa = PBXBuildFile; fileRef = 62E335DB1FD2EF600069B6CF /* level24.json */; };
 		62E335DE1FD2F31E0069B6CF /* level25.json in Resources */ = {isa = PBXBuildFile; fileRef = 62E335DD1FD2F31E0069B6CF /* level25.json */; };
 		62E335E01FD2F4EE0069B6CF /* level26.json in Resources */ = {isa = PBXBuildFile; fileRef = 62E335DF1FD2F4EE0069B6CF /* level26.json */; };
-		62F117251FE686F10087BF8F /* Clouds.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62F117231FE686F10087BF8F /* Clouds.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -267,6 +267,21 @@
 		6217ACCB1F161B2B001B1B3F /* MiddleIPiece.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MiddleIPiece.cpp; sourceTree = "<group>"; };
 		6217ACCC1F161B2B001B1B3F /* MiddleIPiece.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MiddleIPiece.hpp; sourceTree = "<group>"; };
 		621A4E681E50B60C00D53AFD /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		621D60881FEFB62000052107 /* FloatingCubes.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FloatingCubes.hpp; sourceTree = "<group>"; };
+		621D60891FEFB62000052107 /* Materials.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Materials.cpp; sourceTree = "<group>"; };
+		621D608A1FEFB62000052107 /* GradientRectangle.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GradientRectangle.hpp; sourceTree = "<group>"; };
+		621D608B1FEFB62000052107 /* CommonResources.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CommonResources.hpp; sourceTree = "<group>"; };
+		621D608C1FEFB62000052107 /* Clouds.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Clouds.hpp; sourceTree = "<group>"; };
+		621D608D1FEFB62000052107 /* Clouds.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Clouds.cpp; sourceTree = "<group>"; };
+		621D608E1FEFB62000052107 /* FloatingCubes.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FloatingCubes.cpp; sourceTree = "<group>"; };
+		621D608F1FEFB62000052107 /* Materials.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Materials.hpp; sourceTree = "<group>"; };
+		621D60901FEFB62000052107 /* GradientRectangle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GradientRectangle.cpp; sourceTree = "<group>"; };
+		621D60911FEFB62000052107 /* CommonResources.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CommonResources.cpp; sourceTree = "<group>"; };
+		621D60981FEFB62A00052107 /* Settings.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Settings.hpp; sourceTree = "<group>"; };
+		621D60991FEFB62A00052107 /* RenderUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RenderUtils.cpp; sourceTree = "<group>"; };
+		621D609A1FEFB62A00052107 /* StringUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StringUtils.cpp; sourceTree = "<group>"; };
+		621D609B1FEFB62A00052107 /* RenderUtils.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = RenderUtils.hpp; sourceTree = "<group>"; };
+		621D609C1FEFB62A00052107 /* StringUtils.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = StringUtils.hpp; sourceTree = "<group>"; };
 		622F7F281F223DFB00E965AF /* DiamondPiece.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DiamondPiece.cpp; sourceTree = "<group>"; };
 		622F7F291F223DFB00E965AF /* DiamondPiece.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = DiamondPiece.hpp; sourceTree = "<group>"; };
 		622F7F311F234E3D00E965AF /* PyramidPiece.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PyramidPiece.cpp; sourceTree = "<group>"; };
@@ -493,18 +508,9 @@
 		623C16D51F6045B600305752 /* Optional.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Optional.hpp; sourceTree = "<group>"; };
 		623C16D71F63E34A00305752 /* FallingPieceAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FallingPieceAnimation.cpp; sourceTree = "<group>"; };
 		623C16D81F63E34B00305752 /* FallingPieceAnimation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FallingPieceAnimation.hpp; sourceTree = "<group>"; };
-		623C16DB1F654BDB00305752 /* Settings.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Settings.hpp; sourceTree = "<group>"; };
 		62411A961E61E62800035D2A /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		624447101EDDD2C40080ECE8 /* BlocksApplication.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BlocksApplication.cpp; sourceTree = "<group>"; };
 		624447111EDDD2C40080ECE8 /* BlocksApplication.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = BlocksApplication.hpp; sourceTree = "<group>"; };
-		624447141EDDD2C40080ECE8 /* CommonResources.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CommonResources.cpp; sourceTree = "<group>"; };
-		624447151EDDD2C40080ECE8 /* CommonResources.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CommonResources.hpp; sourceTree = "<group>"; };
-		624447181EDDD2C40080ECE8 /* GradientRectangle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GradientRectangle.cpp; sourceTree = "<group>"; };
-		624447191EDDD2C40080ECE8 /* GradientRectangle.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GradientRectangle.hpp; sourceTree = "<group>"; };
-		6244471A1EDDD2C40080ECE8 /* Materials.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Materials.cpp; sourceTree = "<group>"; };
-		6244471B1EDDD2C40080ECE8 /* Materials.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Materials.hpp; sourceTree = "<group>"; };
-		6244471C1EDDD2C40080ECE8 /* RenderUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RenderUtils.cpp; sourceTree = "<group>"; };
-		6244471D1EDDD2C40080ECE8 /* RenderUtils.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = RenderUtils.hpp; sourceTree = "<group>"; };
 		6244471F1EDDD2C40080ECE8 /* CloseButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CloseButton.cpp; sourceTree = "<group>"; };
 		624447201EDDD2C40080ECE8 /* CloseButton.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CloseButton.hpp; sourceTree = "<group>"; };
 		624447211EDDD2C40080ECE8 /* InputUtil.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = InputUtil.hpp; sourceTree = "<group>"; };
@@ -610,8 +616,6 @@
 		624F89451EF521880020C832 /* UserData.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = UserData.hpp; sourceTree = "<group>"; };
 		624F89471EF6661D0020C832 /* LifeManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LifeManager.cpp; sourceTree = "<group>"; };
 		624F89481EF6661D0020C832 /* LifeManager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LifeManager.hpp; sourceTree = "<group>"; };
-		624F89501EF6AF320020C832 /* StringUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StringUtils.cpp; sourceTree = "<group>"; };
-		624F89511EF6AF320020C832 /* StringUtils.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = StringUtils.hpp; sourceTree = "<group>"; };
 		6254C16A1EED356800BBCAD2 /* SettingsMenuController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SettingsMenuController.cpp; sourceTree = "<group>"; };
 		6254C16B1EED356800BBCAD2 /* SettingsMenuController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SettingsMenuController.hpp; sourceTree = "<group>"; };
 		6254C16D1EED39E300BBCAD2 /* CommonViewControllers.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CommonViewControllers.cpp; sourceTree = "<group>"; };
@@ -709,8 +713,6 @@
 		6270DC4A1FC48BE200FB457D /* LightComponent.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = LightComponent.hpp; sourceTree = "<group>"; };
 		6270DC4C1FC96E8B00FB457D /* Transform.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Transform.cpp; sourceTree = "<group>"; };
 		6270DC4D1FC96E8B00FB457D /* Transform.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Transform.hpp; sourceTree = "<group>"; };
-		6270DC4F1FCAFDD400FB457D /* FloatingCubes.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FloatingCubes.cpp; sourceTree = "<group>"; };
-		6270DC501FCAFDD400FB457D /* FloatingCubes.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = FloatingCubes.hpp; sourceTree = "<group>"; };
 		6270DC531FCB212B00FB457D /* Blip.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Blip.wav; sourceTree = "<group>"; };
 		6270DC541FCB212B00FB457D /* Bomb.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Bomb.wav; sourceTree = "<group>"; };
 		6270DC581FCB22AE00FB457D /* cube_428.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cube_428.obj; sourceTree = "<group>"; };
@@ -773,8 +775,6 @@
 		62E335DB1FD2EF600069B6CF /* level24.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level24.json; sourceTree = "<group>"; };
 		62E335DD1FD2F31E0069B6CF /* level25.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level25.json; sourceTree = "<group>"; };
 		62E335DF1FD2F4EE0069B6CF /* level26.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level26.json; sourceTree = "<group>"; };
-		62F117231FE686F10087BF8F /* Clouds.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Clouds.cpp; sourceTree = "<group>"; };
-		62F117241FE686F10087BF8F /* Clouds.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Clouds.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -867,6 +867,35 @@
 				621A4E681E50B60C00D53AFD /* Icon.png */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		621D60871FEFB62000052107 /* CommonResources */ = {
+			isa = PBXGroup;
+			children = (
+				621D60881FEFB62000052107 /* FloatingCubes.hpp */,
+				621D60891FEFB62000052107 /* Materials.cpp */,
+				621D608A1FEFB62000052107 /* GradientRectangle.hpp */,
+				621D608B1FEFB62000052107 /* CommonResources.hpp */,
+				621D608C1FEFB62000052107 /* Clouds.hpp */,
+				621D608D1FEFB62000052107 /* Clouds.cpp */,
+				621D608E1FEFB62000052107 /* FloatingCubes.cpp */,
+				621D608F1FEFB62000052107 /* Materials.hpp */,
+				621D60901FEFB62000052107 /* GradientRectangle.cpp */,
+				621D60911FEFB62000052107 /* CommonResources.cpp */,
+			);
+			path = CommonResources;
+			sourceTree = "<group>";
+		};
+		621D60971FEFB62A00052107 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				621D60981FEFB62A00052107 /* Settings.hpp */,
+				621D60991FEFB62A00052107 /* RenderUtils.cpp */,
+				621D609A1FEFB62A00052107 /* StringUtils.cpp */,
+				621D609B1FEFB62A00052107 /* RenderUtils.hpp */,
+				621D609C1FEFB62A00052107 /* StringUtils.hpp */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 		623B31D41F17AC11000C64A1 /* PhotonCannonEngine */ = {
@@ -1292,32 +1321,11 @@
 		624447121EDDD2C40080ECE8 /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				624447131EDDD2C40080ECE8 /* Common */,
+				621D60871FEFB62000052107 /* CommonResources */,
 				626C4DAE1EEC44F9000D4DF6 /* CommonViews */,
 				6244471E1EDDD2C40080ECE8 /* GuiElements */,
 				624F89431EF521230020C832 /* UserData */,
-			);
-			path = Common;
-			sourceTree = "<group>";
-		};
-		624447131EDDD2C40080ECE8 /* Common */ = {
-			isa = PBXGroup;
-			children = (
-				62F117231FE686F10087BF8F /* Clouds.cpp */,
-				62F117241FE686F10087BF8F /* Clouds.hpp */,
-				624447141EDDD2C40080ECE8 /* CommonResources.cpp */,
-				624447151EDDD2C40080ECE8 /* CommonResources.hpp */,
-				6270DC4F1FCAFDD400FB457D /* FloatingCubes.cpp */,
-				6270DC501FCAFDD400FB457D /* FloatingCubes.hpp */,
-				624447181EDDD2C40080ECE8 /* GradientRectangle.cpp */,
-				624447191EDDD2C40080ECE8 /* GradientRectangle.hpp */,
-				6244471A1EDDD2C40080ECE8 /* Materials.cpp */,
-				6244471B1EDDD2C40080ECE8 /* Materials.hpp */,
-				6244471C1EDDD2C40080ECE8 /* RenderUtils.cpp */,
-				6244471D1EDDD2C40080ECE8 /* RenderUtils.hpp */,
-				623C16DB1F654BDB00305752 /* Settings.hpp */,
-				624F89501EF6AF320020C832 /* StringUtils.cpp */,
-				624F89511EF6AF320020C832 /* StringUtils.hpp */,
+				621D60971FEFB62A00052107 /* Utils */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -1898,10 +1906,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				623B32D51F17AC11000C64A1 /* GuiView.cpp in Sources */,
-				6244479E1EDDD2C40080ECE8 /* Materials.cpp in Sources */,
 				623C16BE1F404C5700305752 /* MapConfirmationDialogView.cpp in Sources */,
 				6260A7001F87E5A5001F6DCD /* ObjMesh.cpp in Sources */,
 				624447B21EDDD2C40080ECE8 /* GameHud.cpp in Sources */,
+				621D609E1FEFB62A00052107 /* StringUtils.cpp in Sources */,
 				623B32E91F17AC12000C64A1 /* TextRenderer.cpp in Sources */,
 				624447A41EDDD2C40080ECE8 /* CollapsingFieldAnimation.cpp in Sources */,
 				6260A7051F87E5BC001F6DCD /* TorusMesh.cpp in Sources */,
@@ -1914,7 +1922,6 @@
 				624447A91EDDD2C40080ECE8 /* RowExplosionParticleEffect.cpp in Sources */,
 				623B32D71F17AC11000C64A1 /* InputHandler.cpp in Sources */,
 				624447AD1EDDD2C40080ECE8 /* Field.cpp in Sources */,
-				6244479F1EDDD2C40080ECE8 /* RenderUtils.cpp in Sources */,
 				6260A6E61F869943001F6DCD /* ZPiece.cpp in Sources */,
 				624447AC1EDDD2C40080ECE8 /* FallingPiece.cpp in Sources */,
 				6260A6E91F86A0AA001F6DCD /* MirroredZPiece.cpp in Sources */,
@@ -1948,20 +1955,21 @@
 				623B31D31F17A325000C64A1 /* BlueprintSlotsFilledAnimation.cpp in Sources */,
 				623B32D91F17AC11000C64A1 /* AppDelegate.mm in Sources */,
 				624447B41EDDD2C40080ECE8 /* GameScene.cpp in Sources */,
+				621D60951FEFB62000052107 /* GradientRectangle.cpp in Sources */,
 				6260A6D91F8539C9001F6DCD /* FPiece.cpp in Sources */,
 				622F7F2A1F223DFB00E965AF /* DiamondPiece.cpp in Sources */,
 				624447CA1EDDD2C40080ECE8 /* SevenPiece.cpp in Sources */,
 				624447C51EDDD2C40080ECE8 /* LongIPiece.cpp in Sources */,
 				624447A71EDDD2C40080ECE8 /* ExplosionParticleEffect.cpp in Sources */,
-				62F117251FE686F10087BF8F /* Clouds.cpp in Sources */,
 				623B32D81F17AC11000C64A1 /* SwipeGestureRecognizer.cpp in Sources */,
 				624447B11EDDD2C40080ECE8 /* GameController.cpp in Sources */,
+				621D60961FEFB62000052107 /* CommonResources.cpp in Sources */,
 				6247CFDA1EFFE25900B9919E /* NoLivesDialogController.cpp in Sources */,
 				6270DC3C1FBF4C9400FB457D /* ParticleSystem.cpp in Sources */,
 				623B32D61F17AC11000C64A1 /* InputEvent.cpp in Sources */,
-				624F89521EF6AF320020C832 /* StringUtils.cpp in Sources */,
 				624447D51EDDD2C40080ECE8 /* TitleController.cpp in Sources */,
 				624447BF1EDDD2C40080ECE8 /* BigTrianglePiece.cpp in Sources */,
+				621D60921FEFB62000052107 /* Materials.cpp in Sources */,
 				626C4D9F1EEC19DF000D4DF6 /* MapHud.cpp in Sources */,
 				6270DC1C1FB70AA200FB457D /* Scene.cpp in Sources */,
 				623C16D01F51A75B00305752 /* ClickInputHandler.cpp in Sources */,
@@ -1969,7 +1977,6 @@
 				624447C01EDDD2C40080ECE8 /* Bomb.cpp in Sources */,
 				6270DC451FC1D1E700FB457D /* VertexBuffer.cpp in Sources */,
 				622F7F331F234E3D00E965AF /* PyramidPiece.cpp in Sources */,
-				6244479B1EDDD2C40080ECE8 /* CommonResources.cpp in Sources */,
 				624447BD1EDDD2C40080ECE8 /* LevelLoader.cpp in Sources */,
 				624447BB1EDDD2C40080ECE8 /* GameHudView.cpp in Sources */,
 				622F7F361F23C29600E965AF /* SmallTrianglePiece.cpp in Sources */,
@@ -1978,7 +1985,6 @@
 				624447B71EDDD2C40080ECE8 /* GameViewControllers.cpp in Sources */,
 				620A982E1EE2F2A900AD6C61 /* LevelCompletedDialogView.cpp in Sources */,
 				623B32DE1F17AC12000C64A1 /* main.m in Sources */,
-				6244479D1EDDD2C40080ECE8 /* GradientRectangle.cpp in Sources */,
 				623B32DF1F17AC12000C64A1 /* SoundIOS.mm in Sources */,
 				624447C91EDDD2C40080ECE8 /* RowBomb.cpp in Sources */,
 				6260A70B1F89196C001F6DCD /* TPiece.cpp in Sources */,
@@ -1989,6 +1995,7 @@
 				624693A01EFD1637004AF2A1 /* ProgressManager.cpp in Sources */,
 				6270DC231FB7554200FB457D /* TextComponent.cpp in Sources */,
 				623C16D31F51A7D600305752 /* ValidMovesSearch.cpp in Sources */,
+				621D60941FEFB62000052107 /* FloatingCubes.cpp in Sources */,
 				624447CE1EDDD2C40080ECE8 /* TrianglePiece.cpp in Sources */,
 				624F89461EF521880020C832 /* UserData.cpp in Sources */,
 				624447A21EDDD2C40080ECE8 /* MenuQuad.cpp in Sources */,
@@ -2017,8 +2024,8 @@
 				623B33071F17AC12000C64A1 /* JsonUtil.cpp in Sources */,
 				623B32DC1F17AC12000C64A1 /* GLKViewExtension.mm in Sources */,
 				6270DC4E1FC96E8B00FB457D /* Transform.cpp in Sources */,
-				6270DC511FCAFDD400FB457D /* FloatingCubes.cpp in Sources */,
 				623B32E81F17AC12000C64A1 /* ShaderProgram.cpp in Sources */,
+				621D609D1FEFB62A00052107 /* RenderUtils.cpp in Sources */,
 				626C4DA71EEC20B8000D4DF6 /* SettingsButtonView.cpp in Sources */,
 				6254C16F1EED39E300BBCAD2 /* CommonViewControllers.cpp in Sources */,
 				624447C21EDDD2C40080ECE8 /* DPiece.cpp in Sources */,
@@ -2026,6 +2033,7 @@
 				6208C8671FAF210D0059BE51 /* ObjMeshLoader.cpp in Sources */,
 				624447AB1EDDD2C40080ECE8 /* CollisionDetection.cpp in Sources */,
 				624447BC1EDDD2C40080ECE8 /* Level.cpp in Sources */,
+				621D60931FEFB62000052107 /* Clouds.cpp in Sources */,
 				624447AF1EDDD2C40080ECE8 /* NextPieceGenerator.cpp in Sources */,
 				626C4DA31EEC19DF000D4DF6 /* MapSceneRenderer.cpp in Sources */,
 				626C4DA41EEC19DF000D4DF6 /* NextLevelParticleEffect.cpp in Sources */,

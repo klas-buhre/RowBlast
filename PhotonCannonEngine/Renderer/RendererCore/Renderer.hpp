@@ -37,8 +37,6 @@ namespace Pht {
                         const Vec2& position,
                         const TextProperties& properties) override;
         void RenderGuiView(const GuiView& view) override;
-        std::unique_ptr<RenderableObject> CreateRenderableObject(const IMesh& mesh,
-                                                                 const Material& material);
         int GetAdjustedNumPixels(int numPixels) const override;
         const Mat4& GetViewMatrix() const override;
         const Mat4& GetProjectionMatrix() const override;
@@ -48,6 +46,8 @@ namespace Pht {
 
         void Init(bool createRenderBuffers);
         void InitRenderQueue(const Scene& scene);
+        std::unique_ptr<RenderableObject> CreateRenderableObject(const IMesh& mesh,
+                                                                 const Material& material);
         void ClearBuffers();
         
     private:

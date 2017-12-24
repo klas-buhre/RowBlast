@@ -1,7 +1,9 @@
 /*
 Backlog:
   -Engine:
-    -Maybe load scenes from JSON files?
+    -Physics.
+    -Purchases.
+    -HTTP.
     
   -Gameplay:
     -Fix all bugs.
@@ -15,12 +17,11 @@ Backlog:
   -Rendering:
     -Recreate the star particle. Possibly by buying a textures for particle systems in unity assets
      store. Look at: https://www.assetstore.unity3d.com/en/#!/content/26701
-    -Could have a set of floating cube configurations for the game scene that always looks good.
     -Maybe the bombs could have constant particle effects as if it is about to explode. And they
      could be be of different shapes other than spheres.
     -Add heading to the green dialogs.
     -Try 1334×750 resolution for iPhone7.
-    -Camera shake when clearing 5 rows.
+    -Camera shake when clearing 5 rows or using a bomb.
     -Try adding welds to the level blocks.
     -One or two stars in level cleared dialog could be placed more in the middle.
     -There could be a particle effect behind the stars in the level cleared dialog. Stars could also
@@ -45,7 +46,6 @@ Backlog:
      field also.
   -Map:
     -More 3D feel.
-    -Load multiple maps.
   -Tutorial:
   -Purchases:
   -Back end:
@@ -53,7 +53,6 @@ Backlog:
   -Sound:
     -Buy sounds and music.
   -Make ready for release:
-    -Remove text from bottom right part of map texture.
     -Credit the icon creator: <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
   
 Ongoing tasks:
