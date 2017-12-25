@@ -10,8 +10,7 @@
 
 using namespace BlocksGame;
 
-NextLevelParticleEffect::NextLevelParticleEffect(Pht::IEngine& engine) :
-    mEngine {engine} {
+NextLevelParticleEffect::NextLevelParticleEffect(Pht::IEngine& engine) {
     Pht::EmitterSettings particleEmitterSettings {
         .mPosition = {0.0f, 0.7f, 0.0f},
         .mSize = {1.7f, 0.85f, 1.7f},

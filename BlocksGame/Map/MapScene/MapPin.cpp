@@ -47,7 +47,6 @@ void MapPin::Update() {
     
     auto modelView {mSceneObject.GetMatrix() * mRenderer.GetViewMatrix()};
     auto normProjPos {mRenderer.GetProjectionMatrix() * modelView.Transposed() * adjustedTextOffset};
-    
     auto& hudSize {mRenderer.GetHudFrustumSize()};
     
     Pht::Vec2 textPosition {

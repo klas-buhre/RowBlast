@@ -26,7 +26,6 @@ namespace BlocksGame {
         }
         
     private:
-        Pht::IEngine& mEngine;
         std::unique_ptr<Pht::SceneObject> mScenObject;
     };
 }
