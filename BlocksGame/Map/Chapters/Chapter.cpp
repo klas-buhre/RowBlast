@@ -10,7 +10,7 @@ Chapter::Chapter(const std::vector<MapLevel>& levels, const std::vector<CubePath
     mLevels {levels},
     mCubePaths {cubePaths} {}
 
-Chapter GetChapter(int chapterIndex) {
+Chapter BlocksGame::GetChapter(int chapterIndex) {
     switch (chapterIndex) {
         case 1:
             return GetChapter1();

@@ -29,8 +29,6 @@
 		621D609D1FEFB62A00052107 /* RenderUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 621D60991FEFB62A00052107 /* RenderUtils.cpp */; };
 		621D609E1FEFB62A00052107 /* StringUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 621D609A1FEFB62A00052107 /* StringUtils.cpp */; };
 		621D60A11FF10FC200052107 /* MapSceneNew.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 621D609F1FF10FC200052107 /* MapSceneNew.cpp */; };
-		621D60A41FF139D600052107 /* Chapter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 621D60A21FF139D600052107 /* Chapter.cpp */; };
-		621D60A71FF141DE00052107 /* Chapter1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 621D60A51FF141DE00052107 /* Chapter1.cpp */; };
 		622F7F2A1F223DFB00E965AF /* DiamondPiece.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 622F7F281F223DFB00E965AF /* DiamondPiece.cpp */; };
 		622F7F331F234E3D00E965AF /* PyramidPiece.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 622F7F311F234E3D00E965AF /* PyramidPiece.cpp */; };
 		622F7F361F23C29600E965AF /* SmallTrianglePiece.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 622F7F341F23C29600E965AF /* SmallTrianglePiece.cpp */; };
@@ -233,6 +231,8 @@
 		6270DCAE1FCB248E00FB457D /* sky_upside_down_patched_mirrored.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6270DCA61FCB248E00FB457D /* sky_upside_down_patched_mirrored.jpg */; };
 		6270DCB01FCB248E00FB457D /* star_particle.png in Resources */ = {isa = PBXBuildFile; fileRef = 6270DCA81FCB248E00FB457D /* star_particle.png */; };
 		6270DCB31FCDA99100FB457D /* TitleScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6270DCB11FCDA99100FB457D /* TitleScene.cpp */; };
+		6286F9AE1FF26BD2004DEF90 /* Chapter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6286F9AC1FF26BD1004DEF90 /* Chapter.cpp */; };
+		6286F9AF1FF26BD2004DEF90 /* Chapter1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6286F9AD1FF26BD1004DEF90 /* Chapter1.cpp */; };
 		628A22571F6D359100D97BF8 /* OfflineRasterizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 628A22551F6D359100D97BF8 /* OfflineRasterizer.cpp */; };
 		628A225A1F6E704900D97BF8 /* GhostPieceProducer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 628A22581F6E704900D97BF8 /* GhostPieceProducer.cpp */; };
 		62A8AAF71FE2DEA1000EB01C /* cloud_B_envmap.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62A8AAF61FE2DEA0000EB01C /* cloud_B_envmap.jpg */; };
@@ -287,10 +287,6 @@
 		621D609C1FEFB62A00052107 /* StringUtils.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = StringUtils.hpp; sourceTree = "<group>"; };
 		621D609F1FF10FC200052107 /* MapSceneNew.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MapSceneNew.cpp; sourceTree = "<group>"; };
 		621D60A01FF10FC200052107 /* MapSceneNew.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MapSceneNew.hpp; sourceTree = "<group>"; };
-		621D60A21FF139D600052107 /* Chapter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Chapter.cpp; sourceTree = "<group>"; };
-		621D60A31FF139D600052107 /* Chapter.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Chapter.hpp; sourceTree = "<group>"; };
-		621D60A51FF141DE00052107 /* Chapter1.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Chapter1.cpp; sourceTree = "<group>"; };
-		621D60A61FF141DE00052107 /* Chapter1.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Chapter1.hpp; sourceTree = "<group>"; };
 		622F7F281F223DFB00E965AF /* DiamondPiece.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DiamondPiece.cpp; sourceTree = "<group>"; };
 		622F7F291F223DFB00E965AF /* DiamondPiece.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = DiamondPiece.hpp; sourceTree = "<group>"; };
 		622F7F311F234E3D00E965AF /* PyramidPiece.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PyramidPiece.cpp; sourceTree = "<group>"; };
@@ -768,6 +764,10 @@
 		6270DCA81FCB248E00FB457D /* star_particle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star_particle.png; sourceTree = "<group>"; };
 		6270DCB11FCDA99100FB457D /* TitleScene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TitleScene.cpp; sourceTree = "<group>"; };
 		6270DCB21FCDA99100FB457D /* TitleScene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TitleScene.hpp; sourceTree = "<group>"; };
+		6286F9AA1FF26BD1004DEF90 /* Chapter.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Chapter.hpp; sourceTree = "<group>"; };
+		6286F9AB1FF26BD1004DEF90 /* Chapter1.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Chapter1.hpp; sourceTree = "<group>"; };
+		6286F9AC1FF26BD1004DEF90 /* Chapter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Chapter.cpp; sourceTree = "<group>"; };
+		6286F9AD1FF26BD1004DEF90 /* Chapter1.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Chapter1.cpp; sourceTree = "<group>"; };
 		628A22551F6D359100D97BF8 /* OfflineRasterizer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OfflineRasterizer.cpp; sourceTree = "<group>"; };
 		628A22561F6D359100D97BF8 /* OfflineRasterizer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = OfflineRasterizer.hpp; sourceTree = "<group>"; };
 		628A22581F6E704900D97BF8 /* GhostPieceProducer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GhostPieceProducer.cpp; sourceTree = "<group>"; };
@@ -1611,6 +1611,7 @@
 		626C4D8D1EEC19DF000D4DF6 /* Map */ = {
 			isa = PBXGroup;
 			children = (
+				6286F9A91FF26BD1004DEF90 /* Chapters */,
 				626C4D8E1EEC19DF000D4DF6 /* MapScene */,
 				626C4D9D1EEC19DF000D4DF6 /* MapViews */,
 			);
@@ -1620,10 +1621,6 @@
 		626C4D8E1EEC19DF000D4DF6 /* MapScene */ = {
 			isa = PBXGroup;
 			children = (
-				621D60A51FF141DE00052107 /* Chapter1.cpp */,
-				621D60A61FF141DE00052107 /* Chapter1.hpp */,
-				621D60A21FF139D600052107 /* Chapter.cpp */,
-				621D60A31FF139D600052107 /* Chapter.hpp */,
 				626C4D8F1EEC19DF000D4DF6 /* MapController.cpp */,
 				626C4D901EEC19DF000D4DF6 /* MapController.hpp */,
 				626C4D911EEC19DF000D4DF6 /* MapHud.cpp */,
@@ -1778,6 +1775,17 @@
 				6270DCA81FCB248E00FB457D /* star_particle.png */,
 			);
 			path = Textures;
+			sourceTree = "<group>";
+		};
+		6286F9A91FF26BD1004DEF90 /* Chapters */ = {
+			isa = PBXGroup;
+			children = (
+				6286F9AC1FF26BD1004DEF90 /* Chapter.cpp */,
+				6286F9AA1FF26BD1004DEF90 /* Chapter.hpp */,
+				6286F9AD1FF26BD1004DEF90 /* Chapter1.cpp */,
+				6286F9AB1FF26BD1004DEF90 /* Chapter1.hpp */,
+			);
+			path = Chapters;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1979,7 +1987,7 @@
 				624447A71EDDD2C40080ECE8 /* ExplosionParticleEffect.cpp in Sources */,
 				623B32D81F17AC11000C64A1 /* SwipeGestureRecognizer.cpp in Sources */,
 				624447B11EDDD2C40080ECE8 /* GameController.cpp in Sources */,
-				621D60A71FF141DE00052107 /* Chapter1.cpp in Sources */,
+				6286F9AF1FF26BD2004DEF90 /* Chapter1.cpp in Sources */,
 				621D60961FEFB62000052107 /* CommonResources.cpp in Sources */,
 				6247CFDA1EFFE25900B9919E /* NoLivesDialogController.cpp in Sources */,
 				6270DC3C1FBF4C9400FB457D /* ParticleSystem.cpp in Sources */,
@@ -2016,7 +2024,7 @@
 				624447CE1EDDD2C40080ECE8 /* TrianglePiece.cpp in Sources */,
 				624F89461EF521880020C832 /* UserData.cpp in Sources */,
 				624447A21EDDD2C40080ECE8 /* MenuQuad.cpp in Sources */,
-				621D60A41FF139D600052107 /* Chapter.cpp in Sources */,
+				6286F9AE1FF26BD2004DEF90 /* Chapter.cpp in Sources */,
 				623B32E61F17AC12000C64A1 /* RenderableObject.cpp in Sources */,
 				625C330F1F9B8C7C00E531FC /* BlastRadiusAnimation.cpp in Sources */,
 				6260A6FE1F87E59E001F6DCD /* BoxMesh.cpp in Sources */,

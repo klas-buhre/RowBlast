@@ -9,7 +9,7 @@ namespace Pht {
     public:
         static const ComponentId id;
         
-        CameraComponent(SceneObject& sceneObject);
+        explicit CameraComponent(SceneObject& sceneObject);
         
         void SetTarget(const Vec3& target, const Vec3& up);
 

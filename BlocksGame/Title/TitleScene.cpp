@@ -150,7 +150,6 @@ TitleScene::TitleScene(Pht::IEngine& engine, const CommonResources& commonResour
     
     auto& light {scene->CreateGlobalLight()};
     light.SetDirection({1.0f, 1.0f, 1.0f});
-    light.SetDirectionalIntensity(1.0f);
     scene->GetRoot().AddChild(light.GetSceneObject());
 
     auto& camera {scene->CreateCamera()};
@@ -166,7 +165,7 @@ TitleScene::TitleScene(Pht::IEngine& engine, const CommonResources& commonResour
                                        static_cast<int>(Layer::Background),
                                        cloudPaths,
                                        hazeLayers,
-                                       4.0f);
+                                       3.0f);
 
     mFloatingCubes = std::make_unique<FloatingCubes>(engine,
                                                      scene.get(),

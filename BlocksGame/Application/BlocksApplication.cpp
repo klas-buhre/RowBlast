@@ -7,6 +7,7 @@ Backlog:
     -Analytics.
     
   -Gameplay:
+    -Maybe all neighbouring blocks with the same color should be connected with welds?
     -Fix all bugs.
     -Maybe a sensitivity setting. Tetris Blitz has lower sensitility on iPad but not on iPhone.
     -When playing a level with clear objective the game could scroll up if there is no room to spawn

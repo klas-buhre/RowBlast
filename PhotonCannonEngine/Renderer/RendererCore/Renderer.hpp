@@ -78,6 +78,7 @@ namespace Pht {
         struct GlobalLight {
             Vec3 mDirectionWorldSpace;
             float mDirectionalIntensity {1.0f};
+            float mAmbientIntensity {1.0f};
         };
         
         bool mClearColorBuffer {true};

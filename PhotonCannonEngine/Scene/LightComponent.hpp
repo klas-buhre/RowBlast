@@ -35,10 +35,19 @@ namespace Pht {
             return mDirectionalIntensity;
         }
 
+        void SetAmbientIntensity(float intesity) {
+            mAmbientIntensity = intesity;
+        }
+
+        float GetAmbientIntensity() const {
+            return mAmbientIntensity;
+        }
+
     private:
         SceneObject& mSceneObject;
         Vec3 mDirection {1.0f, 1.0f, 1.0f};
         float mDirectionalIntensity {1.0f};
+        float mAmbientIntensity {1.0f};
     };
 }
 

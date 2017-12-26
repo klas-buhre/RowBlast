@@ -498,21 +498,25 @@ void Renderer::SetMaterialProperties(const ShaderProgram::UniformHandles& unifor
                                      const Material& material,
                                      ShaderType shaderType,
                                      const RenderableObject& object) {
+    auto ambientlIntensity {mGlobalLight.mAmbientIntensity};
     auto& ambient {material.GetAmbient()};
-    glUniform3f(uniforms.mAmbientMaterial, ambient.mRed, ambient.mGreen, ambient.mBlue);
+    glUniform3f(uniforms.mAmbientMaterial,
+                ambient.mRed * ambientlIntensity,
+                ambient.mGreen * ambientlIntensity,
+                ambient.mBlue * ambientlIntensity);
     
-    auto intensity {mGlobalLight.mDirectionalIntensity};
+    auto directionalIntensity {mGlobalLight.mDirectionalIntensity};
     auto& diffuse {material.GetDiffuse()};
     glUniform3f(uniforms.mDiffuseMaterial,
-                diffuse.mRed * intensity,
-                diffuse.mGreen * intensity,
-                diffuse.mBlue * intensity);
+                diffuse.mRed * directionalIntensity,
+                diffuse.mGreen * directionalIntensity,
+                diffuse.mBlue * directionalIntensity);
     
     auto& specular {material.GetSpecular()};
     glUniform3f(uniforms.mSpecularMaterial,
-                specular.mRed * intensity,
-                specular.mGreen * intensity,
-                specular.mBlue * intensity);
+                specular.mRed * directionalIntensity,
+                specular.mGreen * directionalIntensity,
+                specular.mBlue * directionalIntensity);
     
     glUniform1f(uniforms.mShininess, material.GetShininess());
     glUniform1f(uniforms.mReflectivity, material.GetReflectivity());
@@ -660,7 +664,8 @@ void Renderer::RenderScene(const Scene& scene) {
         
         if (light != previousLight) {
             SetLightDirection(light->GetDirection());
-            SetDirectionalLightIntensity(light->GetDirectionalIntensity());
+            mGlobalLight.mDirectionalIntensity = light->GetDirectionalIntensity();
+            mGlobalLight.mAmbientIntensity = light->GetAmbientIntensity();
             previousLight = light;
         }
         
