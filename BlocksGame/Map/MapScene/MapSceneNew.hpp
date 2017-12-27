@@ -6,26 +6,27 @@
 // Engine includes.
 #include "Font.hpp"
 
+// Game includes.
+#include "Clouds.hpp"
+#include "FloatingCubes.hpp"
+#include "NextLevelParticleEffect.hpp"
+#include "MapPinNew.hpp"
+
 namespace Pht {
     class IEngine;
     class Scene;
     class CameraComponent;
-    class RenderableObject;
+    class SceneObject;
 }
 
 namespace BlocksGame {
     class CommonResources;
     class UserData;
     class Chapter;
-    class Clouds;
-    class NextLevelParticleEffect;
-    class FloatingCubes;
-    class MapPin;
 
     class MapSceneNew {
     public:
         MapSceneNew(Pht::IEngine& engine, const CommonResources& commonResources, UserData& userData);
-        ~MapSceneNew() = default;
         
         void Reset();
         void Update();
@@ -33,7 +34,8 @@ namespace BlocksGame {
         
     private:
         void CreateScene(const Chapter& chapter);
-        void CreatePin(int level, const Pht::Vec3& position);
+        void CreatePins(const Chapter& chapter);
+        void CreatePin(Pht::SceneObject& pinContainerObject, int level, const Pht::Vec3& position);
         void SetCameraAtCurrentLevel();
         
         Pht::IEngine& mEngine;
@@ -45,8 +47,8 @@ namespace BlocksGame {
         std::unique_ptr<NextLevelParticleEffect> mNextLevelParticleEffect;
         std::unique_ptr<Clouds> mClouds;
         std::unique_ptr<FloatingCubes> mFloatingCubes;
-        std::vector<std::unique_ptr<MapPin>> mPins;
-        MapPin* mPreviousPin {nullptr};
+        std::vector<std::unique_ptr<MapPinNew>> mPins;
+        MapPinNew* mPreviousPin {nullptr};
         std::shared_ptr<Pht::RenderableObject> mStarRenderable;
         Pht::Font mFont;
     };

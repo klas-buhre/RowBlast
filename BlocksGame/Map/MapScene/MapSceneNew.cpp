@@ -5,7 +5,6 @@
 #include "IRenderer.hpp"
 #include "Material.hpp"
 #include "CylinderMesh.hpp"
-#include "SphereMesh.hpp"
 #include "ObjMesh.hpp"
 #include "MathUtils.hpp"
 #include "ISceneManager.hpp"
@@ -17,10 +16,6 @@
 #include "CommonResources.hpp"
 #include "UserData.hpp"
 #include "Chapter.hpp"
-#include "Clouds.hpp"
-#include "FloatingCubes.hpp"
-#include "NextLevelParticleEffect.hpp"
-#include "MapPin.hpp"
 
 using namespace BlocksGame;
 
@@ -135,6 +130,7 @@ void MapSceneNew::Reset() {
 void MapSceneNew::CreateScene(const Chapter& chapter) {
     auto& sceneManager {mEngine.GetSceneManager()};
     auto scene {sceneManager.CreateScene(Pht::Hash::Fnv1a("mapScene"))};
+    mScene = scene.get();
     
     scene->AddRenderPass(Pht::RenderPass {static_cast<int>(Layer::Map)});
     Pht::RenderPass hudRenderPass {static_cast<int>(Layer::Hud)};
@@ -147,7 +143,6 @@ void MapSceneNew::CreateScene(const Chapter& chapter) {
 
     mCamera = &scene->CreateCamera();
     scene->GetRoot().AddChild(mCamera->GetSceneObject());
-    
     SetCameraAtCurrentLevel();
     
     mClouds = std::make_unique<Clouds>(mEngine,
@@ -157,17 +152,70 @@ void MapSceneNew::CreateScene(const Chapter& chapter) {
                                        hazeLayers,
                                        2.0f);
 
-    for (auto& level: chapter.mLevels) {
-        CreatePin(level.mLevelIndex, level.mPosition);
-    }
-
+    CreatePins(chapter);
+    
     scene->SetDistanceFunction(Pht::DistanceFunction::WorldSpaceZ);
-    mScene = scene.get();
     sceneManager.SetLoadedScene(std::move(scene));
 }
 
-void MapSceneNew::CreatePin(int level, const Pht::Vec3& position) {
+void MapSceneNew::CreatePins(const Chapter& chapter) {
+    auto& pinContainerObject {mScene->CreateSceneObject()};
+    pinContainerObject.SetLayer(static_cast<int>(Layer::Map));
+    mScene->GetRoot().AddChild(pinContainerObject);
+    
+    mPreviousPin = nullptr;
+    
+    for (auto& level: chapter.mLevels) {
+        CreatePin(pinContainerObject, level.mLevelIndex, level.mPosition);
+    }
+}
 
+void MapSceneNew::CreatePin(Pht::SceneObject& pinContainerObject,
+                            int level,
+                            const Pht::Vec3& position) {
+    auto& progressManager {mUserData.GetProgressManager()};
+    auto isClickable {level < progressManager.GetProgress()};
+    
+    if (mPreviousPin) {
+        const auto& connectionMaterial {
+            isClickable ? mCommonResources.GetMaterials().GetBlueMaterial() :
+            mCommonResources.GetMaterials().GetLightGrayMaterial()
+        };
+        
+        auto pinPositionDiff {position - mPreviousPin->GetPosition()};
+        
+        auto connectionAngle {
+            Pht::ToDegrees(std::atan(pinPositionDiff.y / pinPositionDiff.x)) + 90.0f
+        };
+        
+        Pht::Vec3 connectionPosition {
+            mPreviousPin->GetPosition().x + pinPositionDiff.x / 2.0f,
+            mPreviousPin->GetPosition().y + pinPositionDiff.y / 2.0f,
+            mPreviousPin->GetPosition().z + pinPositionDiff.z / 2.0f,
+        };
+        
+        Pht::CylinderMesh connectionMesh {0.3f, 4.0f, std::string{"mapConnection"}};
+        auto& connection {mScene->CreateSceneObject(connectionMesh, connectionMaterial)};
+        auto& transform {connection.GetTransform()};
+        transform.SetRotation({0.0f, 0.0f, -connectionAngle});
+        transform.SetPosition(connectionPosition);
+        pinContainerObject.AddChild(connection);
+    }
+    
+    auto pin {
+        std::make_unique<MapPinNew>(mEngine,
+                                    mCommonResources,
+                                    *mScene,
+                                    pinContainerObject,
+                                    mStarRenderable,
+                                    position,
+                                    level,
+                                    progressManager.GetNumStars(level + 1),
+                                    isClickable)
+    };
+    
+    mPreviousPin = pin.get();
+    mPins.push_back(std::move(pin));
 }
 
 void MapSceneNew::SetCameraPosition(float xPosition) {
