@@ -95,6 +95,7 @@ void RenderQueue::AddSceneObject(const SceneObject& sceneObject,
 }
 
 void RenderQueue::CalculateDistances(const Mat4& viewMatrix, DistanceFunction distanceFunction) {
+    // Since the matrix is row-major it has to be transposed in order to multiply with the vector.
     auto transposedViewMatrix {viewMatrix.Transposed()};
     
     for (auto i {0}; i < mSize; ++i) {

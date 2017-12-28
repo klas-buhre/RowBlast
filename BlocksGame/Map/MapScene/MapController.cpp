@@ -143,7 +143,7 @@ MapController::Command MapController::HandleInput() {
 MapController::Command MapController::HandleTouch(const Pht::TouchEvent& touch) {
     UpdateTouchingState(touch);
     
-    mEngine.GetRenderer().SetProjectionMode(Pht::ProjectionMode::Orthographic);
+    mEngine.GetRenderer().SetProjectionMode(Pht::ProjectionMode::Perspective);
 
     auto& pins {mScene.GetPins()};
     

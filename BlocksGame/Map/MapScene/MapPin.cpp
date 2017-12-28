@@ -37,7 +37,7 @@ MapPin::MapPin(std::shared_ptr<Pht::RenderableObject> renderable,
 }
 
 void MapPin::Update() {
-    mRenderer.SetProjectionMode(Pht::ProjectionMode::Orthographic);
+    mRenderer.SetProjectionMode(Pht::ProjectionMode::Perspective);
     
     auto adjustedTextOffset {textOffset};
     
@@ -46,14 +46,18 @@ void MapPin::Update() {
     }
     
     auto modelView {mSceneObject.GetMatrix() * mRenderer.GetViewMatrix()};
-    auto normProjPos {mRenderer.GetProjectionMatrix() * modelView.Transposed() * adjustedTextOffset};
-    auto& hudSize {mRenderer.GetHudFrustumSize()};
+    auto modelViewProjection {modelView * mRenderer.GetProjectionMatrix()};
     
+    // Since the matrix is row-major it has to be transposed in order to multiply with the vector.
+    auto clipSpacePos {modelViewProjection.Transposed() * adjustedTextOffset};
+    auto normProjPos {clipSpacePos / clipSpacePos.w};
+    auto& hudSize {mRenderer.GetHudFrustumSize()};
+
     Pht::Vec2 textPosition {
         normProjPos.x * hudSize.x / 2.0f,
         normProjPos.y * hudSize.y / 2.0f
     };
-    
+
     mText.mPosition = textPosition;
 }
 

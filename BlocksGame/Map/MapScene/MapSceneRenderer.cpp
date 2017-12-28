@@ -30,7 +30,7 @@ void MapSceneRenderer::RenderFrame() {
     mEngineRenderer.RenderSceneObject(mScene.GetBackground());
     mEngineRenderer.RenderSceneObject(mScene.GetFloatingCubes());
     
-    mEngineRenderer.SetProjectionMode(Pht::ProjectionMode::Orthographic);
+    //mEngineRenderer.SetProjectionMode(Pht::ProjectionMode::Orthographic);
     RenderPins();
     mEngineRenderer.RenderSceneObject(mScene.GetNextLevelParticleEffect());
     

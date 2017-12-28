@@ -341,8 +341,7 @@ void Renderer::SetDirectionalLightIntensity(float intensity) {
 }
 
 void Renderer::SetLightDirectionInShaders() {
-    // The view matrix is made for pre-multiplication so it needs to be transposed in order to
-    // post-multiplicate with light position.
+    // Since the matrix is row-major it has to be transposed in order to multiply with the vector.
     auto transposedViewMatrix {GetViewMatrix().Transposed()};
     auto lightPosCamSpace {transposedViewMatrix * Vec4{mGlobalLight.mDirectionWorldSpace, 0.0f}};
     Vec3 lightPosCamSpaceVec3 {lightPosCamSpace.x, lightPosCamSpace.y, lightPosCamSpace.z};
@@ -394,10 +393,14 @@ void Renderer::LookAt(const Vec3& cameraPosition, const Vec3& target, const Vec3
 
 void Renderer::SetScissorBox(const Vec2& lowerLeft, const Vec2& size) {
     assert(mHudMode || mProjectionMode == ProjectionMode::Orthographic);
-
+    
     Vec4 localOrigin {0.0f, 0.0f, 0.0f, 1.0f};
     auto modelView {Mat4::Translate(lowerLeft.x, lowerLeft.y, 0.0f) * GetViewMatrix()};
-    auto normProjPos {GetProjectionMatrix() * modelView.Transposed() * localOrigin};
+    auto modelViewProjection {modelView * GetProjectionMatrix()};
+    
+    // Since the matrix is row-major it has to be transposed in order to multiply with the vector.
+    auto clipSpacePos {modelViewProjection.Transposed() * localOrigin};
+    auto normProjPos {clipSpacePos / clipSpacePos.w};
     
     auto& frustumSize {mHudMode ? GetHudFrustumSize() : GetOrthographicFrustumSize()};
     
