@@ -16,6 +16,7 @@
 #include "CommonResources.hpp"
 #include "UserData.hpp"
 #include "Chapter.hpp"
+#include "NextLevelParticleEffectNew.hpp"
 
 using namespace BlocksGame;
 
@@ -152,7 +153,18 @@ void MapSceneNew::CreateScene(const Chapter& chapter) {
                                        hazeLayers,
                                        2.0f);
 
+    mFloatingCubes = std::make_unique<FloatingCubes>(mEngine,
+                                                     scene.get(),
+                                                     static_cast<int>(Layer::Map),
+                                                     chapter.mCubePaths,
+                                                     mCommonResources,
+                                                     1.5f);
+    
     CreatePins(chapter);
+    
+    auto* pin {mPins[mUserData.GetProgressManager().GetProgress() - 1].get()};
+    auto& pinPosition {pin->GetPosition()};
+    CreateNextLevelParticleEffect(mEngine, *scene, pinPosition, static_cast<int>(Layer::Map));
     
     scene->SetDistanceFunction(Pht::DistanceFunction::WorldSpaceZ);
     sceneManager.SetLoadedScene(std::move(scene));
@@ -216,6 +228,11 @@ void MapSceneNew::CreatePin(Pht::SceneObject& pinContainerObject,
     
     mPreviousPin = pin.get();
     mPins.push_back(std::move(pin));
+}
+
+void MapSceneNew::Update() {
+    mClouds->Update();
+    mFloatingCubes->Update();
 }
 
 void MapSceneNew::SetCameraPosition(float xPosition) {
