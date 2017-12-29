@@ -57,7 +57,7 @@ MapPinNew::MapPinNew(Pht::IEngine& engine,
         star.SetRenderable(starRenderable);
         
         auto& transform {star.GetTransform()};
-        transform.SetRotation({-90.0f, 0.0f, 0.0f});
+        transform.SetRotation({90.0f, 0.0f, 0.0f});
         transform.SetPosition(starOffsets[i]);
         
         mSceneObject->AddChild(star);

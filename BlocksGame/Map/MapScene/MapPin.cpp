@@ -68,7 +68,7 @@ void MapPin::SetNumStars(int numStars, std::shared_ptr<Pht::RenderableObject> st
     
     for (auto i {0}; i < numStars; ++i) {
         auto star {std::make_unique<Pht::SceneObject>(starRenderable)};
-        star->SetRotationX(-90.0f);
+        star->SetRotationX(90.0f);
         star->SetPosition(mPosition + starOffsets[i]);
         mStars.push_back(std::move(star));
     }

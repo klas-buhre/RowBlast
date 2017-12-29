@@ -480,6 +480,10 @@ void Renderer::Render(const RenderableObject& object, const Mat4& modelTransform
 
 void Renderer::SetTransforms(const Mat4& modelTransform, 
                              const ShaderProgram::UniformHandles& uniforms) {
+    // Note: the matrix in the matrix lib is row-major while OpenGL expects column-major. However,
+    // it works since all transforms are created in row-major order while OpenGL reads the matrix in
+    // column-major order which transposes it. Transposing the matrix is required in order to
+    // multiply with a vector: M * v.
     auto modelview {modelTransform * GetViewMatrix()};
     auto modelViewProjection {modelview * GetProjectionMatrix()};
     glUniformMatrix4fv(uniforms.mModelViewProjection, 1, 0, modelViewProjection.Pointer());

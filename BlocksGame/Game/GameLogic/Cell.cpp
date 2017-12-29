@@ -9,11 +9,11 @@ float BlocksGame::RotationToDeg(Rotation rotation) {
         case Rotation::Deg0:
             return 0.0f;
         case Rotation::Deg90:
-            return 90.0f;
+            return -90.0f;
         case Rotation::Deg180:
-            return 180.0f;
+            return -180.0f;
         case Rotation::Deg270:
-            return 270.0f;
+            return -270.0f;
     }
 }
 

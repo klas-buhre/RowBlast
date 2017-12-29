@@ -1,6 +1,7 @@
 #pragma once
 #include "Vector.hpp"
 
+// The matrices are in row-major order.
 namespace Pht {
     template <typename T>
     struct Matrix2 {
@@ -173,10 +174,10 @@ namespace Pht {
             T c = std::cos(radians);
             
             Matrix4 m;
-            m.x.x = c; m.x.y = -s; m.x.z = 0; m.x.w = 0;
-            m.y.x = s; m.y.y =  c; m.y.z = 0; m.y.w = 0;
-            m.z.x = 0; m.z.y =  0; m.z.z = 1; m.z.w = 0;
-            m.w.x = 0; m.w.y =  0; m.w.z = 0; m.w.w = 1;
+            m.x.x =  c; m.x.y = s; m.x.z = 0; m.x.w = 0;
+            m.y.x = -s; m.y.y = c; m.y.z = 0; m.y.w = 0;
+            m.z.x =  0; m.z.y = 0; m.z.z = 1; m.z.w = 0;
+            m.w.x =  0; m.w.y = 0; m.w.z = 0; m.w.w = 1;
             return m;
         }
 
@@ -186,10 +187,10 @@ namespace Pht {
             T c = std::cos(radians);
             
             Matrix4 m;
-            m.x.x =  c; m.x.y = 0; m.x.z = s; m.x.w = 0;
-            m.y.x =  0; m.y.y = 1; m.y.z = 0; m.y.w = 0;
-            m.z.x = -s; m.z.y = 0; m.z.z = c; m.z.w = 0;
-            m.w.x =  0; m.w.y = 0; m.w.z = 0; m.w.w = 1;
+            m.x.x = c; m.x.y = 0; m.x.z = -s; m.x.w = 0;
+            m.y.x = 0; m.y.y = 1; m.y.z =  0; m.y.w = 0;
+            m.z.x = s; m.z.y = 0; m.z.z =  c; m.z.w = 0;
+            m.w.x = 0; m.w.y = 0; m.w.z =  0; m.w.w = 1;
             return m;
         }
         
@@ -199,10 +200,10 @@ namespace Pht {
             T c = std::cos(radians);
             
             Matrix4 m;
-            m.x.x =  1; m.x.y = 0; m.x.z = 0; m.x.w = 0;
-            m.y.x =  0; m.y.y = c; m.y.z =-s; m.y.w = 0;
-            m.z.x =  0; m.z.y = s; m.z.z = c; m.z.w = 0;
-            m.w.x =  0; m.w.y = 0; m.w.z = 0; m.w.w = 1;
+            m.x.x =  1; m.x.y =  0; m.x.z = 0; m.x.w = 0;
+            m.y.x =  0; m.y.y =  c; m.y.z = s; m.y.w = 0;
+            m.z.x =  0; m.z.y = -s; m.z.z = c; m.z.w = 0;
+            m.w.x =  0; m.w.y =  0; m.w.z = 0; m.w.w = 1;
             return m;
         }
         

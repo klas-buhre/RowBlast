@@ -194,7 +194,7 @@ void MapScene::CreatePin(int level, const Pht::Vec3& position) {
         auto pinPositionDiff {position - mPreviousPin->GetPosition()};
         
         auto connectionAngle {
-            Pht::ToDegrees(std::atan(pinPositionDiff.y / pinPositionDiff.x)) + 90.0f
+            -Pht::ToDegrees(std::atan(pinPositionDiff.y / pinPositionDiff.x)) + 90.0f
         };
         
         Pht::Vec3 connectionPosition {

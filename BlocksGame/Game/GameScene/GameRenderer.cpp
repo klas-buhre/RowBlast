@@ -36,7 +36,7 @@ namespace {
     
     const auto plus45RotationMatrix {Pht::Mat4::RotateZ(45.0f)};
     const auto minus45RotationMatrix {Pht::Mat4::RotateZ(-45.0f)};
-    const auto previewRotationMatrix {Pht::Mat4::RotateX(30.0f) * Pht::Mat4::RotateY(30.0f)};
+    const auto previewRotationMatrix {Pht::Mat4::RotateX(-30.0f) * Pht::Mat4::RotateY(-30.0f)};
     const auto dz {0.05f};
 }
 
@@ -348,7 +348,7 @@ void GameRenderer::RenderBlockWelds(const SubCell& subCell,
     
     if (welds.mUpLeft) {
         auto weldMatrix {
-            minus45RotationMatrix *
+            plus45RotationMatrix *
             Pht::Mat4::Translate(blockPos.x - cellSize / 2.0f, blockPos.y + cellSize / 2.0f, weldZ)
         };
         
@@ -366,7 +366,7 @@ void GameRenderer::RenderBlockWelds(const SubCell& subCell,
     
     if (welds.mUpRight) {
         auto weldMatrix {
-            plus45RotationMatrix *
+            minus45RotationMatrix *
             Pht::Mat4::Translate(blockPos.x + cellSize / 2.0f, blockPos.y + cellSize / 2.0f, weldZ)
         };
         
