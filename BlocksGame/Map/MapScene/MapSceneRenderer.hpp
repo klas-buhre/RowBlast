@@ -2,20 +2,17 @@
 #define MapSceneRenderer_hpp
 
 namespace Pht {
-    class IRenderer;
+    class IEngine;
 }
 
 namespace BlocksGame {
-    class MapScene;
-    class MapPin;
     class MapHud;
     class MapViewControllers;
     class UserData;
     
     class MapSceneRenderer {
     public:
-        MapSceneRenderer(Pht::IRenderer& engineRenderer,
-                         const MapScene& scene,
+        MapSceneRenderer(Pht::IEngine& engine,
                          const MapHud& hud,
                          const MapViewControllers& mapViewControllers,
                          const UserData& userData);
@@ -23,13 +20,10 @@ namespace BlocksGame {
         void RenderFrame();
         
     private:
-        void RenderPins();
-        void RenderPin(MapPin& pin);
         void RenderHud();
         void RenderViews();
         
-        Pht::IRenderer& mEngineRenderer;
-        const MapScene& mScene;
+        Pht::IEngine& mEngine;
         const MapHud& mHud;
         const MapViewControllers& mMapViewControllers;
         const UserData& mUserData;

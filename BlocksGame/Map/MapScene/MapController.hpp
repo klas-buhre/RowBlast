@@ -3,7 +3,7 @@
 
 // Game includes.
 #include "MapSceneRenderer.hpp"
-#include "MapScene.hpp"
+#include "MapSceneNew.hpp"
 #include "MapHud.hpp"
 #include "MapViewControllers.hpp"
 
@@ -70,13 +70,13 @@ namespace BlocksGame {
         Pht::IEngine& mEngine;
         UserData& mUserData;
         State mState {State::Map};
-        MapScene mScene;
+        MapSceneNew mScene;
         MapHud mHud;
         MapViewControllers mMapViewControllers;
         MapSceneRenderer mRenderer;
-        Pht::Vec3 mCameraPositionAtPanBegin {0.0f, 0.0f, 0.0f};
+        float mCameraXPositionAtPanBegin {0.0f};
         Pht::Vec2 mTouchLocationAtPanBegin {0.0f, 0.0f};
-        Pht::Vec3 mCameraVelocity {0.0f, 0.0f, 0.0f};
+        float mCameraXVelocity {0.0f};
         bool mIsTouching {false};
     };
 }

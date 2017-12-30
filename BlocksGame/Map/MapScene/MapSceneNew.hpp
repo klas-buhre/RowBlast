@@ -48,7 +48,7 @@ namespace BlocksGame {
         const CommonResources& mCommonResources;
         Pht::Scene* mScene {nullptr};
         Pht::CameraComponent* mCamera {nullptr};
-        float mMapSizeX {0.0f};
+        float mMapSizeX {55.0f};
         std::unique_ptr<Clouds> mClouds;
         std::unique_ptr<FloatingCubes> mFloatingCubes;
         std::vector<std::unique_ptr<MapPinNew>> mPins;

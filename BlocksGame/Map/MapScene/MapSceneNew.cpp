@@ -148,7 +148,6 @@ void MapSceneNew::CreateScene(const Chapter& chapter) {
 
     mCamera = &scene->CreateCamera();
     scene->GetRoot().AddChild(mCamera->GetSceneObject());
-    SetCameraAtCurrentLevel();
     
     mClouds = std::make_unique<Clouds>(mEngine,
                                        *scene,
@@ -165,6 +164,7 @@ void MapSceneNew::CreateScene(const Chapter& chapter) {
                                                      1.5f);
     
     CreatePins(chapter);
+    SetCameraAtCurrentLevel();
     
     auto* pin {mPins[mUserData.GetProgressManager().GetProgress() - 1].get()};
     auto& pinPosition {pin->GetPosition()};
@@ -180,6 +180,7 @@ void MapSceneNew::CreatePins(const Chapter& chapter) {
     mScene->GetRoot().AddChild(pinContainerObject);
     
     mPreviousPin = nullptr;
+    mPins.clear();
     
     for (auto& level: chapter.mLevels) {
         CreatePin(pinContainerObject, level.mLevelIndex, level.mPosition);
@@ -249,10 +250,10 @@ void MapSceneNew::SetCameraXPosition(float xPosition) {
         xPosition = halfMapWidth;
     }
     
-    Pht::Vec3 position {xPosition, -9.0f, 20.0f};
+    Pht::Vec3 position {xPosition, -12.0f, 20.0f};
     mCamera->GetSceneObject().GetTransform().SetPosition(position);
     
-    Pht::Vec3 target {xPosition, 0.0f, 0.0f};
+    Pht::Vec3 target {position.x, position.y, 0.0f};
     Pht::Vec3 up {0.0f, 1.0f, 0.0f};
     mCamera->SetTarget(target, up);
 }
