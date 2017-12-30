@@ -9,7 +9,6 @@
 // Game includes.
 #include "Clouds.hpp"
 #include "FloatingCubes.hpp"
-#include "NextLevelParticleEffect.hpp"
 #include "MapPinNew.hpp"
 
 namespace Pht {
@@ -44,7 +43,6 @@ namespace BlocksGame {
         Pht::Scene* mScene {nullptr};
         Pht::CameraComponent* mCamera {nullptr};
         float mMapSizeX {0.0f};
-        std::unique_ptr<NextLevelParticleEffect> mNextLevelParticleEffect;
         std::unique_ptr<Clouds> mClouds;
         std::unique_ptr<FloatingCubes> mFloatingCubes;
         std::vector<std::unique_ptr<MapPinNew>> mPins;

@@ -69,6 +69,7 @@ namespace Pht {
                                 const Vec2& position,
                                 const TextProperties& properties);
         void Render(const RenderPass& renderPass, DistanceFunction distanceFunction);
+        Vec2 CalculateTextHudPosition(const TextComponent& textComponent);
         
         struct HudFrustum {
             Mat4 mProjection;

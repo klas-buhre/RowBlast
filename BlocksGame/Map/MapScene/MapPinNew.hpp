@@ -14,6 +14,7 @@ namespace Pht {
     class RenderableObject;
     class Button;
     class Material;
+    class Font;
 }
 
 namespace BlocksGame {
@@ -23,6 +24,7 @@ namespace BlocksGame {
     public:
         MapPinNew(Pht::IEngine& engine,
                   const CommonResources& commonResources,
+                  const Pht::Font& font,
                   Pht::Scene& scene,
                   Pht::SceneObject& containerObject,
                   std::shared_ptr<Pht::RenderableObject> starRenderable,

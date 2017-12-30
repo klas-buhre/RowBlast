@@ -9,6 +9,7 @@
 #include "SceneObject.hpp"
 #include "RenderableObject.hpp"
 #include "SphereMesh.hpp"
+#include "TextComponent.hpp"
 
 // Game includes.
 #include "CommonResources.hpp"
@@ -18,6 +19,7 @@ using namespace BlocksGame;
 namespace {
     const Pht::Vec2 buttonSize {40.0f, 40.0f};
     const Pht::Color selectedColorAdd {0.3f, 0.3f, 0.3f};
+    const Pht::Vec3 textOffset {-0.33f, -0.2f, 0.0f};
     
     const std::array<Pht::Vec3, 3> starOffsets {
         Pht::Vec3{-0.75f, 1.0f, 1.0f},
@@ -28,6 +30,7 @@ namespace {
 
 MapPinNew::MapPinNew(Pht::IEngine& engine,
                      const CommonResources& commonResources,
+                     const Pht::Font& font,
                      Pht::Scene& scene,
                      Pht::SceneObject& containerObject,
                      std::shared_ptr<Pht::RenderableObject> starRenderable,
@@ -64,6 +67,26 @@ MapPinNew::MapPinNew(Pht::IEngine& engine,
     }
     
     mButton = std::make_unique<Pht::Button>(*mSceneObject, buttonSize, engine);
+    
+    Pht::TextProperties textProperties {
+        font,
+        1.0f,
+        Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f},
+        Pht::TextShadow::Yes,
+        Pht::Vec2{0.05f, 0.05f},
+        Pht::Vec4{0.4f, 0.4f, 0.4f, 0.5f}
+    };
+    
+    auto& text {scene.CreateText(std::to_string(level), textProperties)};
+    auto adjustedTextOffset {textOffset};
+    
+    if (mLevel > 9) {
+        adjustedTextOffset.x -= 0.17f;
+    }
+    
+    auto& textSceneObject {text.GetSceneObject()};
+    textSceneObject.GetTransform().SetPosition(adjustedTextOffset);
+    mSceneObject->AddChild(textSceneObject);
 }
 
 void MapPinNew::SetIsSelected(bool isSelected) {

@@ -39,7 +39,8 @@ using namespace Pht;
 namespace {
     const static auto defaultScreenHeight {1136};
     const Mat4 identityMatrix;
-   
+    const Vec4 modelSpaceOrigin {0.0f, 0.0f, 0.0f, 1.0f};
+    
     struct FrustumSettings {
         float mHeight;
         float mZNearClip;
@@ -721,8 +722,7 @@ void Renderer::Render(const RenderPass& renderPass, DistanceFunction distanceFun
         }
         
         if (auto* textComponent {sceneObject->GetComponent<TextComponent>()}) {
-            auto sceneObjectPosition {sceneObject->GetWorldSpacePosition()};
-            Vec2 textPosition {sceneObjectPosition.x, sceneObjectPosition.y};
+            auto textPosition {CalculateTextHudPosition(*textComponent)};
             RenderText(textComponent->GetText(), textPosition, textComponent->GetProperties());
         }
         
@@ -734,4 +734,23 @@ void Renderer::Render(const RenderPass& renderPass, DistanceFunction distanceFun
     if (scissorBox.HasValue()) {
         SetScissorTest(false);
     }
+}
+
+Vec2 Renderer::CalculateTextHudPosition(const TextComponent& textComponent) {
+    auto& sceneObject {textComponent.GetSceneObject()};
+    
+    if (mHudMode) {
+        auto sceneObjectPosition {sceneObject.GetWorldSpacePosition()};
+        return Vec2 {sceneObjectPosition.x, sceneObjectPosition.y};
+    }
+
+    auto modelView {sceneObject.GetMatrix() * GetViewMatrix()};
+    auto modelViewProjection {modelView * GetProjectionMatrix()};
+    
+    // Since the matrix is row-major it has to be transposed in order to multiply with the vector.
+    auto clipSpacePos {modelViewProjection.Transposed() * modelSpaceOrigin};
+    auto normProjPos {clipSpacePos / clipSpacePos.w};
+    auto& hudSize {GetHudFrustumSize()};
+
+    return Pht::Vec2 {normProjPos.x * hudSize.x / 2.0f, normProjPos.y * hudSize.y / 2.0f};
 }

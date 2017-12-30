@@ -217,6 +217,7 @@ void MapSceneNew::CreatePin(Pht::SceneObject& pinContainerObject,
     auto pin {
         std::make_unique<MapPinNew>(mEngine,
                                     mCommonResources,
+                                    mFont,
                                     *mScene,
                                     pinContainerObject,
                                     mStarRenderable,
