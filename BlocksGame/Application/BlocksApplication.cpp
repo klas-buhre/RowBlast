@@ -217,6 +217,6 @@ void BlocksApplication::StartMap() {
 
 void BlocksApplication::StartGame() {
     mState = State::GameScene;
-    mMapController.Stop();
+    mMapController.UnloadScene();
     mGameController.StartLevel(mLevelToStart);
 }

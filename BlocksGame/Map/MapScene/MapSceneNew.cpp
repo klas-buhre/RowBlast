@@ -128,6 +128,10 @@ void MapSceneNew::Reset() {
     CreateScene(GetChapter(1));
 }
 
+void MapSceneNew::Unload() {
+    mEngine.GetSceneManager().SetLoadedScene(nullptr);
+}
+
 void MapSceneNew::CreateScene(const Chapter& chapter) {
     auto& sceneManager {mEngine.GetSceneManager()};
     auto scene {sceneManager.CreateScene(Pht::Hash::Fnv1a("mapScene"))};
@@ -236,7 +240,7 @@ void MapSceneNew::Update() {
     mFloatingCubes->Update();
 }
 
-void MapSceneNew::SetCameraPosition(float xPosition) {
+void MapSceneNew::SetCameraXPosition(float xPosition) {
     auto halfMapWidth {mMapSizeX / 2.0f};
     
     if (xPosition < -halfMapWidth) {
@@ -245,7 +249,7 @@ void MapSceneNew::SetCameraPosition(float xPosition) {
         xPosition = halfMapWidth;
     }
     
-    Pht::Vec3 position {xPosition, 0.0f, 20.0f};
+    Pht::Vec3 position {xPosition, -9.0f, 20.0f};
     mCamera->GetSceneObject().GetTransform().SetPosition(position);
     
     Pht::Vec3 target {xPosition, 0.0f, 0.0f};
@@ -255,5 +259,9 @@ void MapSceneNew::SetCameraPosition(float xPosition) {
 
 void MapSceneNew::SetCameraAtCurrentLevel() {
     auto* pin {mPins[mUserData.GetProgressManager().GetCurrentLevel() - 1].get()};
-    SetCameraPosition(pin->GetPosition().x);
+    SetCameraXPosition(pin->GetPosition().x);
+}
+
+float MapSceneNew::GetCameraXPosition() const {
+    return mCamera->GetSceneObject().GetTransform().GetPosition().x;
 }

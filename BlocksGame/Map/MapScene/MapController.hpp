@@ -44,7 +44,7 @@ namespace BlocksGame {
                       UserData& userData);
     
         void Reset();
-        void Stop();
+        void UnloadScene();
         Command Update();
         void RenderScene();
     

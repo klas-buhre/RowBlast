@@ -28,8 +28,14 @@ namespace BlocksGame {
         MapSceneNew(Pht::IEngine& engine, const CommonResources& commonResources, UserData& userData);
         
         void Reset();
+        void Unload();
         void Update();
-        void SetCameraPosition(float xPosition);
+        void SetCameraXPosition(float xPosition);
+        float GetCameraXPosition() const;
+        
+        const std::vector<std::unique_ptr<MapPinNew>>& GetPins() const {
+            return mPins;
+        }
         
     private:
         void CreateScene(const Chapter& chapter);

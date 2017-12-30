@@ -42,7 +42,7 @@ void MapController::Reset() {
     mScene.Reset();
 }
 
-void MapController::Stop() {
+void MapController::UnloadScene() {
     mScene.Stop();
 }
 
