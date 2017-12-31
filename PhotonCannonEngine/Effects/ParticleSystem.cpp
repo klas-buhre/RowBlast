@@ -1,7 +1,5 @@
 #include "ParticleSystem.hpp"
 
-#include <assert.h>
-
 #include "ParticleEffect.hpp"
 #include "SceneObject.hpp"
 

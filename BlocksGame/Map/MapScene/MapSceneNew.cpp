@@ -162,6 +162,7 @@ void MapSceneNew::CreateScene(const Chapter& chapter) {
                                                      chapter.mCubePaths,
                                                      mCommonResources,
                                                      1.5f);
+    mFloatingCubes->Reset();
     
     CreatePins(chapter);
     SetCameraAtCurrentLevel();
