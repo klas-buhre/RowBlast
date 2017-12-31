@@ -154,7 +154,7 @@ void MapSceneNew::CreateScene(const Chapter& chapter) {
                                        static_cast<int>(Layer::Map),
                                        cloudPaths,
                                        hazeLayers,
-                                       2.0f);
+                                       1.5f);
 
     mFloatingCubes = std::make_unique<FloatingCubes>(mEngine,
                                                      scene.get(),

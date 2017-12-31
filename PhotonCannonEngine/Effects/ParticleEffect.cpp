@@ -75,6 +75,7 @@ ParticleEffect::ParticleEffect(SceneObject& sceneObject,
     mParticles.resize(numParticles);
     
     Material material {particleSettings.mTextureFilename};
+    material.SetBlend(Blend::Yes);
     
     switch (renderMode) {
         case RenderMode::Points: {

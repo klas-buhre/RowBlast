@@ -259,7 +259,7 @@ void Renderer::InitOpenGl(bool createRenderBuffers) {
         glViewport(0, 0, mRenderBufferSize.x, mRenderBufferSize.y);
     }
     
-    glEnable(GL_DEPTH_TEST);
+    SetDepthTest(true);
     glEnable(GL_CULL_FACE);
 }
 
@@ -535,7 +535,7 @@ void Renderer::SetMaterialProperties(const ShaderProgram::UniformHandles& unifor
     SetupBlend(isParticleShader, material);
     
     if (isParticleShader) {
-        glDisable(GL_DEPTH_TEST);
+        SetDepthTest(false);
     }
 }
 
