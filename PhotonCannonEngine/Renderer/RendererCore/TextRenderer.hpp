@@ -14,6 +14,7 @@ namespace Pht {
     class TextRenderer {
     public:
         TextRenderer(const IVec2& screenSize);
+        ~TextRenderer();
         
         void RenderText(const std::string& text, Vec2 position, const TextProperties& properties);
         

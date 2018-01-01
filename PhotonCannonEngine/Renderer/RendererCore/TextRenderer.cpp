@@ -21,6 +21,10 @@ TextRenderer::TextRenderer(const IVec2& screenSize) :
     mTextShader.SetProjection(mProjection);
 }
 
+TextRenderer::~TextRenderer() {
+    glDeleteBuffers(1, &mVbo);
+}
+
 void TextRenderer::RenderText(const std::string& text,
                               Vec2 position,
                               const TextProperties& properties) {

@@ -10,6 +10,7 @@
 #include "Clouds.hpp"
 #include "FloatingCubes.hpp"
 #include "MapPinNew.hpp"
+#include "MapHudNew.hpp"
 
 namespace Pht {
     class IEngine;
@@ -55,6 +56,8 @@ namespace BlocksGame {
         MapPinNew* mPreviousPin {nullptr};
         std::shared_ptr<Pht::RenderableObject> mStarRenderable;
         Pht::Font mFont;
+        Pht::Font mHudFont;
+        std::unique_ptr<MapHudNew> mHud;
     };
 }
 

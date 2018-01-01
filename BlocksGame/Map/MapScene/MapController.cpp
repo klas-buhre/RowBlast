@@ -34,9 +34,8 @@ MapController::MapController(Pht::IEngine& engine,
     mEngine {engine},
     mUserData {userData},
     mScene {engine, commonResources, userData},
-    mHud {engine, userData},
     mMapViewControllers {engine, commonViewControllers},
-    mRenderer {engine, mHud, mMapViewControllers, userData} {}
+    mRenderer {engine, mMapViewControllers} {}
 
 void MapController::Reset() {
     mScene.Reset();
@@ -61,7 +60,6 @@ MapController::Command MapController::Update() {
             break;
     }
 
-    mHud.Update();
     mScene.Update();
     
     return command;

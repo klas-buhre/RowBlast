@@ -16,35 +16,15 @@
 using namespace BlocksGame;
 
 MapSceneRenderer::MapSceneRenderer(Pht::IEngine& engine,
-                                   const MapHud& hud,
-                                   const MapViewControllers& mapViewControllers,
-                                   const UserData& userData) :
+                                   const MapViewControllers& mapViewControllers) :
     mEngine {engine},
-    mHud {hud},
-    mMapViewControllers {mapViewControllers},
-    mUserData {userData} {}
+    mMapViewControllers {mapViewControllers} {}
 
 void MapSceneRenderer::RenderFrame() {
     auto* scene {mEngine.GetSceneManager().GetActiveScene()};
     mEngine.GetRenderer().RenderScene(*scene);
     
-    RenderHud();
     RenderViews();
-}
-
-void MapSceneRenderer::RenderHud() {
-    auto& engineRenderer {mEngine.GetRenderer()};
-    engineRenderer.SetHudMode(true);
-    
-    RenderUtils::RenderGradientRectangle(engineRenderer, mHud.GetLivesRectangle());
-    RenderUtils::RenderText(engineRenderer, mHud.GetLivesText());
-    
-    if (!mUserData.GetLifeManager().HasFullNumLives()) {
-        RenderUtils::RenderGradientRectangle(engineRenderer, mHud.GettNewLifeCountdownRectangle());
-        RenderUtils::RenderText(engineRenderer, mHud.GetNewLifeCountdownText());
-    }
-    
-    engineRenderer.SetHudMode(false);
 }
 
 void MapSceneRenderer::RenderViews() {

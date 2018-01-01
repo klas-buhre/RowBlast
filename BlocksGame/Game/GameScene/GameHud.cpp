@@ -119,13 +119,13 @@ std::unique_ptr<GradientRectangle> GameHud::CreatePiecesRectangle(const Pht::Vec
     float leftQuadWidth {0.4f};
     float rightQuadWidth {0.4f};
     
-    GradientRectangle::Colors upperColors {
+    GradientRectangleColors upperColors {
         .mLeft = {0.9f, 0.9f, 1.0f, 0.0f},
         .mMid = {isBright ? 0.95f : 0.85f, isBright ? 0.6f : 0.4f, 0.95f, 0.93f}, // .mMid = {0.85f, 0.7f, 0.95f, 0.93f},
         .mRight = {0.9f, 0.9f, 1.0f, 0.0f}
     };
 
-    GradientRectangle::Colors lowerColors {
+    GradientRectangleColors lowerColors {
         .mLeft = {0.9f, 0.9f, 1.0f, 0.0f},
         .mMid = {0.9f, 0.9f, 1.0f, 0.0f},
         .mRight = {0.9f, 0.9f, 1.0f, 0.0f}
@@ -147,13 +147,13 @@ std::unique_ptr<GradientRectangle> GameHud::CreateSmallPiecesRectangle(const Pht
     float leftQuadWidth {0.3f};
     float rightQuadWidth {0.3f};
     
-    GradientRectangle::Colors upperColors {
+    GradientRectangleColors upperColors {
         .mLeft = {0.9f, 0.9f, 1.0f, 0.0f},
         .mMid = {0.85f, 0.75f, 0.95f, 0.9f},
         .mRight = {0.9f, 0.9f, 1.0f, 0.0f}
     };
 
-    GradientRectangle::Colors lowerColors {
+    GradientRectangleColors lowerColors {
         .mLeft = {0.9f, 0.9f, 1.0f, 0.0f},
         .mMid = {0.9f, 0.9f, 1.0f, 0.0f},
         .mRight = {0.9f, 0.9f, 1.0f, 0.0f}
@@ -176,7 +176,7 @@ std::unique_ptr<GradientRectangle> GameHud::CreateTextRectangle(const Pht::Vec3&
     float leftQuadWidth {1.0f};
     float rightQuadWidth {1.0f};
     
-    GradientRectangle::Colors colors {
+    GradientRectangleColors colors {
         .mLeft = {0.6f, 0.3f, 0.75f, 0.0f},
         .mMid = {isBright ? 0.7f : 0.6f, isBright ? 0.5f : 0.3f, isBright ? 0.85f : 0.75f, 0.8f},
         .mRight = {0.6f, 0.3f, 0.75f, 0.0f}

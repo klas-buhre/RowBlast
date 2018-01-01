@@ -235,6 +235,7 @@
 		6286F9AF1FF26BD2004DEF90 /* Chapter1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6286F9AD1FF26BD1004DEF90 /* Chapter1.cpp */; };
 		6286F9B21FF3BE5E004DEF90 /* MapPinNew.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6286F9B01FF3BE5E004DEF90 /* MapPinNew.cpp */; };
 		6286F9B51FF6B273004DEF90 /* NextLevelParticleEffectNew.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6286F9B31FF6B273004DEF90 /* NextLevelParticleEffectNew.cpp */; };
+		6286F9BB1FFA4B6A004DEF90 /* MapHudNew.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6286F9B91FFA4B6A004DEF90 /* MapHudNew.cpp */; };
 		628A22571F6D359100D97BF8 /* OfflineRasterizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 628A22551F6D359100D97BF8 /* OfflineRasterizer.cpp */; };
 		628A225A1F6E704900D97BF8 /* GhostPieceProducer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 628A22581F6E704900D97BF8 /* GhostPieceProducer.cpp */; };
 		62A8AAF71FE2DEA1000EB01C /* cloud_B_envmap.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62A8AAF61FE2DEA0000EB01C /* cloud_B_envmap.jpg */; };
@@ -774,6 +775,8 @@
 		6286F9B11FF3BE5E004DEF90 /* MapPinNew.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MapPinNew.hpp; sourceTree = "<group>"; };
 		6286F9B31FF6B273004DEF90 /* NextLevelParticleEffectNew.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NextLevelParticleEffectNew.cpp; sourceTree = "<group>"; };
 		6286F9B41FF6B273004DEF90 /* NextLevelParticleEffectNew.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = NextLevelParticleEffectNew.hpp; sourceTree = "<group>"; };
+		6286F9B91FFA4B6A004DEF90 /* MapHudNew.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MapHudNew.cpp; sourceTree = "<group>"; };
+		6286F9BA1FFA4B6A004DEF90 /* MapHudNew.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MapHudNew.hpp; sourceTree = "<group>"; };
 		628A22551F6D359100D97BF8 /* OfflineRasterizer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OfflineRasterizer.cpp; sourceTree = "<group>"; };
 		628A22561F6D359100D97BF8 /* OfflineRasterizer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = OfflineRasterizer.hpp; sourceTree = "<group>"; };
 		628A22581F6E704900D97BF8 /* GhostPieceProducer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GhostPieceProducer.cpp; sourceTree = "<group>"; };
@@ -1631,6 +1634,8 @@
 				626C4D901EEC19DF000D4DF6 /* MapController.hpp */,
 				626C4D911EEC19DF000D4DF6 /* MapHud.cpp */,
 				626C4D921EEC19DF000D4DF6 /* MapHud.hpp */,
+				6286F9B91FFA4B6A004DEF90 /* MapHudNew.cpp */,
+				6286F9BA1FFA4B6A004DEF90 /* MapHudNew.hpp */,
 				626C4D931EEC19DF000D4DF6 /* MapLoader.cpp */,
 				626C4D941EEC19DF000D4DF6 /* MapLoader.hpp */,
 				626C4D951EEC19DF000D4DF6 /* MapPin.cpp */,
@@ -2025,6 +2030,7 @@
 				624447C91EDDD2C40080ECE8 /* RowBomb.cpp in Sources */,
 				6260A70B1F89196C001F6DCD /* TPiece.cpp in Sources */,
 				623B32D41F17AC11000C64A1 /* Font.cpp in Sources */,
+				6286F9BB1FFA4B6A004DEF90 /* MapHudNew.cpp in Sources */,
 				6270DC311FB8CCF000FB457D /* FadeEffect.cpp in Sources */,
 				623B32E01F17AC12000C64A1 /* MathUtils.cpp in Sources */,
 				6260A71F1F8FB8A8001F6DCD /* TextureCache.cpp in Sources */,

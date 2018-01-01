@@ -118,11 +118,12 @@ MapSceneNew::MapSceneNew(Pht::IEngine& engine,
     mEngine {engine},
     mUserData {userData},
     mCommonResources {commonResources},
-    mFont {"ethnocentric_rg_it.ttf", engine.GetRenderer().GetAdjustedNumPixels(35)},
     mStarRenderable {
         engine.GetSceneManager().CreateRenderableObject(Pht::ObjMesh {"star.obj", 0.05f},
                                                         commonResources.GetMaterials().GetGoldMaterial())
-    } {}
+    },
+    mFont {"ethnocentric_rg_it.ttf", engine.GetRenderer().GetAdjustedNumPixels(35)},
+    mHudFont {"HussarBoldWeb.otf", engine.GetRenderer().GetAdjustedNumPixels(22)} {}
 
 void MapSceneNew::Reset() {
     CreateScene(GetChapter(1));
@@ -171,7 +172,13 @@ void MapSceneNew::CreateScene(const Chapter& chapter) {
     auto& pinPosition {pin->GetPosition()};
     CreateNextLevelParticleEffect(mEngine, *scene, pinPosition, static_cast<int>(Layer::Map));
     
-    scene->SetDistanceFunction(Pht::DistanceFunction::WorldSpaceZ);
+    mHud = std::make_unique<MapHudNew>(mEngine,
+                                       mUserData,
+                                       mHudFont,
+                                       *scene,
+                                       static_cast<int>(Layer::Hud));
+    
+    scene->SetDistanceFunction(Pht::DistanceFunction::WorldSpaceNegativeZ);
     sceneManager.SetLoadedScene(std::move(scene));
 }
 
@@ -192,7 +199,7 @@ void MapSceneNew::CreatePin(Pht::SceneObject& pinContainerObject,
                             int level,
                             const Pht::Vec3& position) {
     auto& progressManager {mUserData.GetProgressManager()};
-    auto isClickable {level < progressManager.GetProgress()};
+    auto isClickable {level <= progressManager.GetProgress()};
     
     if (mPreviousPin) {
         const auto& connectionMaterial {
@@ -229,7 +236,7 @@ void MapSceneNew::CreatePin(Pht::SceneObject& pinContainerObject,
                                     mStarRenderable,
                                     position,
                                     level,
-                                    progressManager.GetNumStars(level + 1),
+                                    progressManager.GetNumStars(level),
                                     isClickable)
     };
     
@@ -240,6 +247,7 @@ void MapSceneNew::CreatePin(Pht::SceneObject& pinContainerObject,
 void MapSceneNew::Update() {
     mClouds->Update();
     mFloatingCubes->Update();
+    mHud->Update();
 }
 
 void MapSceneNew::SetCameraXPosition(float xPosition) {

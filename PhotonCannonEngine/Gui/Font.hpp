@@ -10,6 +10,7 @@ namespace Pht {
     class Font {
     public:
         Font(const std::string& filename, int size);
+        ~Font();
         
         struct Glyph {
             GLuint mTexture {0};

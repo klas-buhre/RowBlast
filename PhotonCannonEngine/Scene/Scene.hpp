@@ -20,7 +20,8 @@ namespace Pht {
     
     enum class DistanceFunction {
         CameraSpaceZ,
-        WorldSpaceZ
+        WorldSpaceZ,
+        WorldSpaceNegativeZ
     };
     
     class Scene {

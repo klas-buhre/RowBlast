@@ -25,6 +25,10 @@ namespace Pht {
             return mText;
         }
         
+        std::string& GetText() {
+            return mText;
+        }
+
         const TextProperties& GetProperties() const {
             return mProperties;
         }

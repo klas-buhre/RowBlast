@@ -4,7 +4,6 @@
 // Game includes.
 #include "MapSceneRenderer.hpp"
 #include "MapSceneNew.hpp"
-#include "MapHud.hpp"
 #include "MapViewControllers.hpp"
 
 namespace Pht {
@@ -71,7 +70,6 @@ namespace BlocksGame {
         UserData& mUserData;
         State mState {State::Map};
         MapSceneNew mScene;
-        MapHud mHud;
         MapViewControllers mMapViewControllers;
         MapSceneRenderer mRenderer;
         float mCameraXPositionAtPanBegin {0.0f};

@@ -189,7 +189,7 @@ TitleScene::TitleScene(Pht::IEngine& engine, const CommonResources& commonResour
     tapTextSceneObject.SetLayer(static_cast<int>(Layer::Text));
     scene->GetRoot().AddChild(tapTextSceneObject);
     
-    scene->SetDistanceFunction(Pht::DistanceFunction::WorldSpaceZ);
+    scene->SetDistanceFunction(Pht::DistanceFunction::WorldSpaceNegativeZ);
     
     sceneManager.SetLoadedScene(std::move(scene));
 }

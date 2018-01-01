@@ -108,7 +108,10 @@ void RenderQueue::CalculateDistances(const Mat4& viewMatrix, DistanceFunction di
                 renderEntry.mDistance = -sceneObjectPosCamSpace.z;
                 break;
             }
-            case DistanceFunction::WorldSpaceZ: {
+            case DistanceFunction::WorldSpaceZ:
+                renderEntry.mDistance = sceneObjectPos.z;
+                break;
+            case DistanceFunction::WorldSpaceNegativeZ: {
                 renderEntry.mDistance = -sceneObjectPos.z;
                 break;
             }

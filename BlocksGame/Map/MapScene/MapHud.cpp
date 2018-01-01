@@ -50,7 +50,7 @@ void MapHud::CreateLivesRectangle(Pht::IEngine& engine) {
     float leftQuadWidth {1.0f};
     float rightQuadWidth {1.0f};
     
-    GradientRectangle::Colors colors {
+    GradientRectangleColors colors {
         .mLeft = {0.6f, 0.3f, 0.75f, 0.0f},
         .mMid = {0.6f, 0.3f, 0.75f, 0.8f},
         .mRight = {0.6f, 0.3f, 0.75f, 0.0f}
@@ -77,7 +77,7 @@ void MapHud::CreateCountdownRectangle(Pht::IEngine& engine) {
     float leftQuadWidth {1.0f};
     float rightQuadWidth {1.0f};
     
-    GradientRectangle::Colors colors {
+    GradientRectangleColors colors {
         .mLeft = {0.6f, 0.3f, 0.75f, 0.0f},
         .mMid = {0.6f, 0.3f, 0.75f, 0.8f},
         .mRight = {0.6f, 0.3f, 0.75f, 0.0f}

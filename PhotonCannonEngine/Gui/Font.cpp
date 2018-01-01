@@ -79,6 +79,12 @@ Font::Font(const std::string& filename, int size) {
     glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
 }
 
+Font::~Font() {
+    for (auto& glyph: mGlyphs) {
+        glDeleteTextures(1, &glyph.mTexture);
+    }
+}
+
 const Font::Glyph& Font::GetGlyph(char character) const {
     assert(character >= firstPrintableCharacter && character <= lastPrintableCharacter);
     return mGlyphs[character - firstPrintableCharacter];
