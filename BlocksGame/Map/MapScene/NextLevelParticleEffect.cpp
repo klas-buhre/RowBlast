@@ -1,4 +1,4 @@
-#include "NextLevelParticleEffectNew.hpp"
+#include "NextLevelParticleEffect.hpp"
 
 #include <assert.h>
 

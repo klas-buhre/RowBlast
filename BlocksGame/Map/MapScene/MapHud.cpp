@@ -1,4 +1,4 @@
-#include "MapHudNew.hpp"
+#include "MapHud.hpp"
 
 // Engine includes.
 #include "IEngine.hpp"
@@ -21,11 +21,11 @@ namespace {
     constexpr auto countdownNumChars {5};
 }
 
-MapHudNew::MapHudNew(Pht::IEngine& engine,
-                     const UserData& userData,
-                     const Pht::Font& font,
-                     Pht::Scene& scene,
-                     int hudLayer) :
+MapHud::MapHud(Pht::IEngine& engine,
+               const UserData& userData,
+               const Pht::Font& font,
+               Pht::Scene& scene,
+               int hudLayer) :
     mUserData {userData} {
     
     auto& hudObject {scene.CreateSceneObject()};
@@ -60,9 +60,9 @@ MapHudNew::MapHudNew(Pht::IEngine& engine,
     CreateCountdownRectangle(engine, scene, hudObject);
 }
 
-void MapHudNew::CreateLivesRectangle(Pht::IEngine& engine,
-                                     Pht::Scene& scene,
-                                     Pht::SceneObject& parentObject) {
+void MapHud::CreateLivesRectangle(Pht::IEngine& engine,
+                                  Pht::Scene& scene,
+                                  Pht::SceneObject& parentObject) {
     Pht::Vec3 position {
         -engine.GetRenderer().GetHudFrustumSize().x / 2.0f + livesRectangleDistFromBorder,
         12.87f,
@@ -90,9 +90,9 @@ void MapHudNew::CreateLivesRectangle(Pht::IEngine& engine,
                             colors);
 }
 
-void MapHudNew::CreateCountdownRectangle(Pht::IEngine& engine,
-                                         Pht::Scene& scene,
-                                         Pht::SceneObject& parentObject) {
+void MapHud::CreateCountdownRectangle(Pht::IEngine& engine,
+                                      Pht::Scene& scene,
+                                      Pht::SceneObject& parentObject) {
     Pht::Vec3 position {
         -engine.GetRenderer().GetHudFrustumSize().x / 2.0f + livesRectangleDistFromBorder,
         12.22f,
@@ -120,7 +120,7 @@ void MapHudNew::CreateCountdownRectangle(Pht::IEngine& engine,
                                                           colors);
 }
 
-void MapHudNew::Update() {
+void MapHud::Update() {
     UpdateLivesText();
     UpdateCountdown();
     
@@ -133,7 +133,7 @@ void MapHudNew::Update() {
     }
 }
 
-void MapHudNew::UpdateLivesText() {
+void MapHud::UpdateLivesText() {
     auto lives {mUserData.GetLifeManager().GetNumLives()};
     
     if (lives != mNumLives) {
@@ -152,7 +152,7 @@ void MapHudNew::UpdateLivesText() {
     }
 }
 
-void MapHudNew::UpdateCountdown() {
+void MapHud::UpdateCountdown() {
     auto secondsUntilNewLife {mUserData.GetLifeManager().GetDurationUntilNewLife()};
     
     if (secondsUntilNewLife != mSecondsUntilNewLife) {

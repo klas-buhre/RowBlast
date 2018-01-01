@@ -1,5 +1,5 @@
-#ifndef MapSceneNew_hpp
-#define MapSceneNew_hpp
+#ifndef MapScene_hpp
+#define MapScene_hpp
 
 #include <memory>
 
@@ -9,8 +9,8 @@
 // Game includes.
 #include "Clouds.hpp"
 #include "FloatingCubes.hpp"
-#include "MapPinNew.hpp"
-#include "MapHudNew.hpp"
+#include "MapPin.hpp"
+#include "MapHud.hpp"
 
 namespace Pht {
     class IEngine;
@@ -24,9 +24,9 @@ namespace BlocksGame {
     class UserData;
     class Chapter;
 
-    class MapSceneNew {
+    class MapScene {
     public:
-        MapSceneNew(Pht::IEngine& engine, const CommonResources& commonResources, UserData& userData);
+        MapScene(Pht::IEngine& engine, const CommonResources& commonResources, UserData& userData);
         
         void Reset();
         void Unload();
@@ -34,7 +34,7 @@ namespace BlocksGame {
         void SetCameraXPosition(float xPosition);
         float GetCameraXPosition() const;
         
-        const std::vector<std::unique_ptr<MapPinNew>>& GetPins() const {
+        const std::vector<std::unique_ptr<MapPin>>& GetPins() const {
             return mPins;
         }
         
@@ -52,12 +52,12 @@ namespace BlocksGame {
         float mMapSizeX {55.0f};
         std::unique_ptr<Clouds> mClouds;
         std::unique_ptr<FloatingCubes> mFloatingCubes;
-        std::vector<std::unique_ptr<MapPinNew>> mPins;
-        MapPinNew* mPreviousPin {nullptr};
+        std::vector<std::unique_ptr<MapPin>> mPins;
+        MapPin* mPreviousPin {nullptr};
         std::shared_ptr<Pht::RenderableObject> mStarRenderable;
         Pht::Font mFont;
         Pht::Font mHudFont;
-        std::unique_ptr<MapHudNew> mHud;
+        std::unique_ptr<MapHud> mHud;
     };
 }
 

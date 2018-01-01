@@ -1,4 +1,4 @@
-#include "MapSceneNew.hpp"
+#include "MapScene.hpp"
 
 // Engine includes.
 #include "IEngine.hpp"
@@ -16,7 +16,7 @@
 #include "CommonResources.hpp"
 #include "UserData.hpp"
 #include "Chapter.hpp"
-#include "NextLevelParticleEffectNew.hpp"
+#include "NextLevelParticleEffect.hpp"
 
 using namespace BlocksGame;
 
@@ -112,9 +112,9 @@ namespace {
     };
 }
 
-MapSceneNew::MapSceneNew(Pht::IEngine& engine,
-                         const CommonResources& commonResources,
-                         UserData& userData) :
+MapScene::MapScene(Pht::IEngine& engine,
+                   const CommonResources& commonResources,
+                   UserData& userData) :
     mEngine {engine},
     mUserData {userData},
     mCommonResources {commonResources},
@@ -125,15 +125,15 @@ MapSceneNew::MapSceneNew(Pht::IEngine& engine,
     mFont {"ethnocentric_rg_it.ttf", engine.GetRenderer().GetAdjustedNumPixels(35)},
     mHudFont {"HussarBoldWeb.otf", engine.GetRenderer().GetAdjustedNumPixels(22)} {}
 
-void MapSceneNew::Reset() {
+void MapScene::Reset() {
     CreateScene(GetChapter(1));
 }
 
-void MapSceneNew::Unload() {
+void MapScene::Unload() {
     mEngine.GetSceneManager().SetLoadedScene(nullptr);
 }
 
-void MapSceneNew::CreateScene(const Chapter& chapter) {
+void MapScene::CreateScene(const Chapter& chapter) {
     auto& sceneManager {mEngine.GetSceneManager()};
     auto scene {sceneManager.CreateScene(Pht::Hash::Fnv1a("mapScene"))};
     mScene = scene.get();
@@ -172,17 +172,17 @@ void MapSceneNew::CreateScene(const Chapter& chapter) {
     auto& pinPosition {pin->GetPosition()};
     CreateNextLevelParticleEffect(mEngine, *scene, pinPosition, static_cast<int>(Layer::Map));
     
-    mHud = std::make_unique<MapHudNew>(mEngine,
-                                       mUserData,
-                                       mHudFont,
-                                       *scene,
-                                       static_cast<int>(Layer::Hud));
+    mHud = std::make_unique<MapHud>(mEngine,
+                                    mUserData,
+                                    mHudFont,
+                                    *scene,
+                                    static_cast<int>(Layer::Hud));
     
     scene->SetDistanceFunction(Pht::DistanceFunction::WorldSpaceNegativeZ);
     sceneManager.SetLoadedScene(std::move(scene));
 }
 
-void MapSceneNew::CreatePins(const Chapter& chapter) {
+void MapScene::CreatePins(const Chapter& chapter) {
     auto& pinContainerObject {mScene->CreateSceneObject()};
     pinContainerObject.SetLayer(static_cast<int>(Layer::Map));
     mScene->GetRoot().AddChild(pinContainerObject);
@@ -195,7 +195,7 @@ void MapSceneNew::CreatePins(const Chapter& chapter) {
     }
 }
 
-void MapSceneNew::CreatePin(Pht::SceneObject& pinContainerObject,
+void MapScene::CreatePin(Pht::SceneObject& pinContainerObject,
                             int level,
                             const Pht::Vec3& position) {
     auto& progressManager {mUserData.GetProgressManager()};
@@ -228,29 +228,29 @@ void MapSceneNew::CreatePin(Pht::SceneObject& pinContainerObject,
     }
     
     auto pin {
-        std::make_unique<MapPinNew>(mEngine,
-                                    mCommonResources,
-                                    mFont,
-                                    *mScene,
-                                    pinContainerObject,
-                                    mStarRenderable,
-                                    position,
-                                    level,
-                                    progressManager.GetNumStars(level),
-                                    isClickable)
+        std::make_unique<MapPin>(mEngine,
+                                 mCommonResources,
+                                 mFont,
+                                 *mScene,
+                                 pinContainerObject,
+                                 mStarRenderable,
+                                 position,
+                                 level,
+                                 progressManager.GetNumStars(level),
+                                 isClickable)
     };
     
     mPreviousPin = pin.get();
     mPins.push_back(std::move(pin));
 }
 
-void MapSceneNew::Update() {
+void MapScene::Update() {
     mClouds->Update();
     mFloatingCubes->Update();
     mHud->Update();
 }
 
-void MapSceneNew::SetCameraXPosition(float xPosition) {
+void MapScene::SetCameraXPosition(float xPosition) {
     auto halfMapWidth {mMapSizeX / 2.0f};
     
     if (xPosition < -halfMapWidth) {
@@ -267,11 +267,11 @@ void MapSceneNew::SetCameraXPosition(float xPosition) {
     mCamera->SetTarget(target, up);
 }
 
-void MapSceneNew::SetCameraAtCurrentLevel() {
+void MapScene::SetCameraAtCurrentLevel() {
     auto* pin {mPins[mUserData.GetProgressManager().GetCurrentLevel() - 1].get()};
     SetCameraXPosition(pin->GetPosition().x);
 }
 
-float MapSceneNew::GetCameraXPosition() const {
+float MapScene::GetCameraXPosition() const {
     return mCamera->GetSceneObject().GetTransform().GetPosition().x;
 }

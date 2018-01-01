@@ -1,5 +1,5 @@
-#ifndef MapPinNew_hpp
-#define MapPinNew_hpp
+#ifndef MapPin_hpp
+#define MapPin_hpp
 
 #include <memory>
 
@@ -20,18 +20,18 @@ namespace Pht {
 namespace BlocksGame {
     class CommonResources;
     
-    class MapPinNew {
+    class MapPin {
     public:
-        MapPinNew(Pht::IEngine& engine,
-                  const CommonResources& commonResources,
-                  const Pht::Font& font,
-                  Pht::Scene& scene,
-                  Pht::SceneObject& containerObject,
-                  std::shared_ptr<Pht::RenderableObject> starRenderable,
-                  const Pht::Vec3& position,
-                  int level,
-                  int numStars,
-                  bool isClickable);
+        MapPin(Pht::IEngine& engine,
+               const CommonResources& commonResources,
+               const Pht::Font& font,
+               Pht::Scene& scene,
+               Pht::SceneObject& containerObject,
+               std::shared_ptr<Pht::RenderableObject> starRenderable,
+               const Pht::Vec3& position,
+               int level,
+               int numStars,
+               bool isClickable);
 
         void SetIsSelected(bool isSelected);
         const Pht::Vec3& GetPosition() const;

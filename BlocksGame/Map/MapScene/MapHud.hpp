@@ -1,5 +1,5 @@
-#ifndef MapHudNew_hpp
-#define MapHudNew_hpp
+#ifndef MapHud_hpp
+#define MapHud_hpp
 
 #include <chrono>
 
@@ -14,13 +14,13 @@ namespace Pht {
 namespace BlocksGame {
     class UserData;
     
-    class MapHudNew {
+    class MapHud {
     public:
-        MapHudNew(Pht::IEngine& engine,
-                  const UserData& userData,
-                  const Pht::Font& font,
-                  Pht::Scene& scene,
-                  int hudLayer);
+        MapHud(Pht::IEngine& engine,
+               const UserData& userData,
+               const Pht::Font& font,
+               Pht::Scene& scene,
+               int hudLayer);
         
         void Update();
         

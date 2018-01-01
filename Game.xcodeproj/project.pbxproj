@@ -28,7 +28,7 @@
 		621D60961FEFB62000052107 /* CommonResources.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 621D60911FEFB62000052107 /* CommonResources.cpp */; };
 		621D609D1FEFB62A00052107 /* RenderUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 621D60991FEFB62A00052107 /* RenderUtils.cpp */; };
 		621D609E1FEFB62A00052107 /* StringUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 621D609A1FEFB62A00052107 /* StringUtils.cpp */; };
-		621D60A11FF10FC200052107 /* MapSceneNew.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 621D609F1FF10FC200052107 /* MapSceneNew.cpp */; };
+		621D60A11FF10FC200052107 /* MapScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 621D609F1FF10FC200052107 /* MapScene.cpp */; };
 		622F7F2A1F223DFB00E965AF /* DiamondPiece.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 622F7F281F223DFB00E965AF /* DiamondPiece.cpp */; };
 		622F7F331F234E3D00E965AF /* PyramidPiece.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 622F7F311F234E3D00E965AF /* PyramidPiece.cpp */; };
 		622F7F361F23C29600E965AF /* SmallTrianglePiece.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 622F7F341F23C29600E965AF /* SmallTrianglePiece.cpp */; };
@@ -227,9 +227,9 @@
 		6270DCB31FCDA99100FB457D /* TitleScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6270DCB11FCDA99100FB457D /* TitleScene.cpp */; };
 		6286F9AE1FF26BD2004DEF90 /* Chapter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6286F9AC1FF26BD1004DEF90 /* Chapter.cpp */; };
 		6286F9AF1FF26BD2004DEF90 /* Chapter1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6286F9AD1FF26BD1004DEF90 /* Chapter1.cpp */; };
-		6286F9B21FF3BE5E004DEF90 /* MapPinNew.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6286F9B01FF3BE5E004DEF90 /* MapPinNew.cpp */; };
-		6286F9B51FF6B273004DEF90 /* NextLevelParticleEffectNew.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6286F9B31FF6B273004DEF90 /* NextLevelParticleEffectNew.cpp */; };
-		6286F9BB1FFA4B6A004DEF90 /* MapHudNew.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6286F9B91FFA4B6A004DEF90 /* MapHudNew.cpp */; };
+		6286F9B21FF3BE5E004DEF90 /* MapPin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6286F9B01FF3BE5E004DEF90 /* MapPin.cpp */; };
+		6286F9B51FF6B273004DEF90 /* NextLevelParticleEffect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6286F9B31FF6B273004DEF90 /* NextLevelParticleEffect.cpp */; };
+		6286F9BB1FFA4B6A004DEF90 /* MapHud.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6286F9B91FFA4B6A004DEF90 /* MapHud.cpp */; };
 		628A22571F6D359100D97BF8 /* OfflineRasterizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 628A22551F6D359100D97BF8 /* OfflineRasterizer.cpp */; };
 		628A225A1F6E704900D97BF8 /* GhostPieceProducer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 628A22581F6E704900D97BF8 /* GhostPieceProducer.cpp */; };
 		62A8AAF71FE2DEA1000EB01C /* cloud_B_envmap.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62A8AAF61FE2DEA0000EB01C /* cloud_B_envmap.jpg */; };
@@ -282,8 +282,8 @@
 		621D609A1FEFB62A00052107 /* StringUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StringUtils.cpp; sourceTree = "<group>"; };
 		621D609B1FEFB62A00052107 /* RenderUtils.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = RenderUtils.hpp; sourceTree = "<group>"; };
 		621D609C1FEFB62A00052107 /* StringUtils.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = StringUtils.hpp; sourceTree = "<group>"; };
-		621D609F1FF10FC200052107 /* MapSceneNew.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MapSceneNew.cpp; sourceTree = "<group>"; };
-		621D60A01FF10FC200052107 /* MapSceneNew.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MapSceneNew.hpp; sourceTree = "<group>"; };
+		621D609F1FF10FC200052107 /* MapScene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MapScene.cpp; sourceTree = "<group>"; };
+		621D60A01FF10FC200052107 /* MapScene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MapScene.hpp; sourceTree = "<group>"; };
 		622F7F281F223DFB00E965AF /* DiamondPiece.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DiamondPiece.cpp; sourceTree = "<group>"; };
 		622F7F291F223DFB00E965AF /* DiamondPiece.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = DiamondPiece.hpp; sourceTree = "<group>"; };
 		622F7F311F234E3D00E965AF /* PyramidPiece.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PyramidPiece.cpp; sourceTree = "<group>"; };
@@ -754,12 +754,12 @@
 		6286F9AB1FF26BD1004DEF90 /* Chapter1.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Chapter1.hpp; sourceTree = "<group>"; };
 		6286F9AC1FF26BD1004DEF90 /* Chapter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Chapter.cpp; sourceTree = "<group>"; };
 		6286F9AD1FF26BD1004DEF90 /* Chapter1.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Chapter1.cpp; sourceTree = "<group>"; };
-		6286F9B01FF3BE5E004DEF90 /* MapPinNew.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MapPinNew.cpp; sourceTree = "<group>"; };
-		6286F9B11FF3BE5E004DEF90 /* MapPinNew.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MapPinNew.hpp; sourceTree = "<group>"; };
-		6286F9B31FF6B273004DEF90 /* NextLevelParticleEffectNew.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NextLevelParticleEffectNew.cpp; sourceTree = "<group>"; };
-		6286F9B41FF6B273004DEF90 /* NextLevelParticleEffectNew.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = NextLevelParticleEffectNew.hpp; sourceTree = "<group>"; };
-		6286F9B91FFA4B6A004DEF90 /* MapHudNew.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MapHudNew.cpp; sourceTree = "<group>"; };
-		6286F9BA1FFA4B6A004DEF90 /* MapHudNew.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MapHudNew.hpp; sourceTree = "<group>"; };
+		6286F9B01FF3BE5E004DEF90 /* MapPin.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MapPin.cpp; sourceTree = "<group>"; };
+		6286F9B11FF3BE5E004DEF90 /* MapPin.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MapPin.hpp; sourceTree = "<group>"; };
+		6286F9B31FF6B273004DEF90 /* NextLevelParticleEffect.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NextLevelParticleEffect.cpp; sourceTree = "<group>"; };
+		6286F9B41FF6B273004DEF90 /* NextLevelParticleEffect.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = NextLevelParticleEffect.hpp; sourceTree = "<group>"; };
+		6286F9B91FFA4B6A004DEF90 /* MapHud.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MapHud.cpp; sourceTree = "<group>"; };
+		6286F9BA1FFA4B6A004DEF90 /* MapHud.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MapHud.hpp; sourceTree = "<group>"; };
 		628A22551F6D359100D97BF8 /* OfflineRasterizer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OfflineRasterizer.cpp; sourceTree = "<group>"; };
 		628A22561F6D359100D97BF8 /* OfflineRasterizer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = OfflineRasterizer.hpp; sourceTree = "<group>"; };
 		628A22581F6E704900D97BF8 /* GhostPieceProducer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GhostPieceProducer.cpp; sourceTree = "<group>"; };
@@ -1615,16 +1615,16 @@
 			children = (
 				626C4D8F1EEC19DF000D4DF6 /* MapController.cpp */,
 				626C4D901EEC19DF000D4DF6 /* MapController.hpp */,
-				6286F9B91FFA4B6A004DEF90 /* MapHudNew.cpp */,
-				6286F9BA1FFA4B6A004DEF90 /* MapHudNew.hpp */,
-				6286F9B01FF3BE5E004DEF90 /* MapPinNew.cpp */,
-				6286F9B11FF3BE5E004DEF90 /* MapPinNew.hpp */,
-				621D609F1FF10FC200052107 /* MapSceneNew.cpp */,
-				621D60A01FF10FC200052107 /* MapSceneNew.hpp */,
+				6286F9B91FFA4B6A004DEF90 /* MapHud.cpp */,
+				6286F9BA1FFA4B6A004DEF90 /* MapHud.hpp */,
+				6286F9B01FF3BE5E004DEF90 /* MapPin.cpp */,
+				6286F9B11FF3BE5E004DEF90 /* MapPin.hpp */,
+				621D609F1FF10FC200052107 /* MapScene.cpp */,
+				621D60A01FF10FC200052107 /* MapScene.hpp */,
 				626C4D991EEC19DF000D4DF6 /* MapSceneRenderer.cpp */,
 				626C4D9A1EEC19DF000D4DF6 /* MapSceneRenderer.hpp */,
-				6286F9B31FF6B273004DEF90 /* NextLevelParticleEffectNew.cpp */,
-				6286F9B41FF6B273004DEF90 /* NextLevelParticleEffectNew.hpp */,
+				6286F9B31FF6B273004DEF90 /* NextLevelParticleEffect.cpp */,
+				6286F9B41FF6B273004DEF90 /* NextLevelParticleEffect.hpp */,
 			);
 			path = MapScene;
 			sourceTree = "<group>";
@@ -1951,7 +1951,7 @@
 				624447AE1EDDD2C40080ECE8 /* GameLogic.cpp in Sources */,
 				623B33181F1F6203000C64A1 /* RestartConfirmationDialogView.cpp in Sources */,
 				6260A7041F87E5BA001F6DCD /* SphereMesh.cpp in Sources */,
-				621D60A11FF10FC200052107 /* MapSceneNew.cpp in Sources */,
+				621D60A11FF10FC200052107 /* MapScene.cpp in Sources */,
 				6260A7021F87E5B4001F6DCD /* QuadMesh.cpp in Sources */,
 				6260A7031F87E5B7001F6DCD /* MeshUtils.cpp in Sources */,
 				620A98361EE43DD200AD6C61 /* ClearLastBlocksAnimation.cpp in Sources */,
@@ -1993,13 +1993,13 @@
 				623C16C11F404E0000305752 /* MapConfirmationDialogController.cpp in Sources */,
 				624447B71EDDD2C40080ECE8 /* GameViewControllers.cpp in Sources */,
 				620A982E1EE2F2A900AD6C61 /* LevelCompletedDialogView.cpp in Sources */,
-				6286F9B51FF6B273004DEF90 /* NextLevelParticleEffectNew.cpp in Sources */,
+				6286F9B51FF6B273004DEF90 /* NextLevelParticleEffect.cpp in Sources */,
 				623B32DE1F17AC12000C64A1 /* main.m in Sources */,
 				623B32DF1F17AC12000C64A1 /* SoundIOS.mm in Sources */,
 				624447C91EDDD2C40080ECE8 /* RowBomb.cpp in Sources */,
 				6260A70B1F89196C001F6DCD /* TPiece.cpp in Sources */,
 				623B32D41F17AC11000C64A1 /* Font.cpp in Sources */,
-				6286F9BB1FFA4B6A004DEF90 /* MapHudNew.cpp in Sources */,
+				6286F9BB1FFA4B6A004DEF90 /* MapHud.cpp in Sources */,
 				6270DC311FB8CCF000FB457D /* FadeEffect.cpp in Sources */,
 				623B32E01F17AC12000C64A1 /* MathUtils.cpp in Sources */,
 				6260A71F1F8FB8A8001F6DCD /* TextureCache.cpp in Sources */,
@@ -2032,7 +2032,7 @@
 				624447B01EDDD2C40080ECE8 /* ScrollController.cpp in Sources */,
 				628A22571F6D359100D97BF8 /* OfflineRasterizer.cpp in Sources */,
 				6270DC261FB7622500FB457D /* CameraComponent.cpp in Sources */,
-				6286F9B21FF3BE5E004DEF90 /* MapPinNew.cpp in Sources */,
+				6286F9B21FF3BE5E004DEF90 /* MapPin.cpp in Sources */,
 				623B33071F17AC12000C64A1 /* JsonUtil.cpp in Sources */,
 				623B32DC1F17AC12000C64A1 /* GLKViewExtension.mm in Sources */,
 				6270DC4E1FC96E8B00FB457D /* Transform.cpp in Sources */,

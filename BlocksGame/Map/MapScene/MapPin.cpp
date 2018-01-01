@@ -1,4 +1,4 @@
-#include "MapPinNew.hpp"
+#include "MapPin.hpp"
 
 #include <array>
 #include <assert.h>
@@ -28,16 +28,16 @@ namespace {
     };
 }
 
-MapPinNew::MapPinNew(Pht::IEngine& engine,
-                     const CommonResources& commonResources,
-                     const Pht::Font& font,
-                     Pht::Scene& scene,
-                     Pht::SceneObject& containerObject,
-                     std::shared_ptr<Pht::RenderableObject> starRenderable,
-                     const Pht::Vec3& position,
-                     int level,
-                     int numStars,
-                     bool isClickable) :
+MapPin::MapPin(Pht::IEngine& engine,
+               const CommonResources& commonResources,
+               const Pht::Font& font,
+               Pht::Scene& scene,
+               Pht::SceneObject& containerObject,
+               std::shared_ptr<Pht::RenderableObject> starRenderable,
+               const Pht::Vec3& position,
+               int level,
+               int numStars,
+               bool isClickable) :
     mBlueMaterial {commonResources.GetMaterials().GetBlueMaterial()},
     mLevel {level},
     mIsClickable {isClickable} {
@@ -89,7 +89,7 @@ MapPinNew::MapPinNew(Pht::IEngine& engine,
     mSceneObject->AddChild(textSceneObject);
 }
 
-void MapPinNew::SetIsSelected(bool isSelected) {
+void MapPin::SetIsSelected(bool isSelected) {
     auto& material {mSceneObject->GetRenderable()->GetMaterial()};
     const auto& ambient {mBlueMaterial.GetAmbient()};
     const auto& diffuse {mBlueMaterial.GetDiffuse()};
@@ -106,6 +106,6 @@ void MapPinNew::SetIsSelected(bool isSelected) {
     }
 }
 
-const Pht::Vec3& MapPinNew::GetPosition() const {
+const Pht::Vec3& MapPin::GetPosition() const {
     return mSceneObject->GetTransform().GetPosition();
 }
