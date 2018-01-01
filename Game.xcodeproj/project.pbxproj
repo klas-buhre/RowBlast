@@ -163,12 +163,7 @@
 		6260A7231F92445F001F6DCD /* Particle.frag in Resources */ = {isa = PBXBuildFile; fileRef = 6260A7211F92445F001F6DCD /* Particle.frag */; };
 		6264DD821FDC1A03009DA7FB /* RenderPass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6264DD801FDC1A03009DA7FB /* RenderPass.cpp */; };
 		626C4D9E1EEC19DF000D4DF6 /* MapController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 626C4D8F1EEC19DF000D4DF6 /* MapController.cpp */; };
-		626C4D9F1EEC19DF000D4DF6 /* MapHud.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 626C4D911EEC19DF000D4DF6 /* MapHud.cpp */; };
-		626C4DA01EEC19DF000D4DF6 /* MapLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 626C4D931EEC19DF000D4DF6 /* MapLoader.cpp */; };
-		626C4DA11EEC19DF000D4DF6 /* MapPin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 626C4D951EEC19DF000D4DF6 /* MapPin.cpp */; };
-		626C4DA21EEC19DF000D4DF6 /* MapScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 626C4D971EEC19DF000D4DF6 /* MapScene.cpp */; };
 		626C4DA31EEC19DF000D4DF6 /* MapSceneRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 626C4D991EEC19DF000D4DF6 /* MapSceneRenderer.cpp */; };
-		626C4DA41EEC19DF000D4DF6 /* NextLevelParticleEffect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 626C4D9B1EEC19DF000D4DF6 /* NextLevelParticleEffect.cpp */; };
 		626C4DA71EEC20B8000D4DF6 /* SettingsButtonView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 626C4DA51EEC20B8000D4DF6 /* SettingsButtonView.cpp */; };
 		626C4DAA1EEC2506000D4DF6 /* SettingsButtonController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 626C4DA81EEC2506000D4DF6 /* SettingsButtonController.cpp */; };
 		626C4DAD1EEC2AF4000D4DF6 /* MapViewControllers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 626C4DAB1EEC2AF4000D4DF6 /* MapViewControllers.cpp */; };
@@ -222,7 +217,6 @@
 		6270DC9C1FCB23D800FB457D /* level7.json in Resources */ = {isa = PBXBuildFile; fileRef = 6270DC841FCB23D800FB457D /* level7.json */; };
 		6270DC9D1FCB23D800FB457D /* level8.json in Resources */ = {isa = PBXBuildFile; fileRef = 6270DC851FCB23D800FB457D /* level8.json */; };
 		6270DC9E1FCB23D800FB457D /* level9.json in Resources */ = {isa = PBXBuildFile; fileRef = 6270DC861FCB23D800FB457D /* level9.json */; };
-		6270DC9F1FCB23D800FB457D /* map.json in Resources */ = {isa = PBXBuildFile; fileRef = 6270DC871FCB23D800FB457D /* map.json */; };
 		6270DCA91FCB248E00FB457D /* settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 6270DCA11FCB248E00FB457D /* settings.png */; };
 		6270DCAA1FCB248E00FB457D /* sky.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6270DCA21FCB248E00FB457D /* sky.jpg */; };
 		6270DCAB1FCB248E00FB457D /* sky_2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6270DCA31FCB248E00FB457D /* sky_2.jpg */; };
@@ -671,18 +665,8 @@
 		6264DD811FDC1A03009DA7FB /* RenderPass.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = RenderPass.hpp; sourceTree = "<group>"; };
 		626C4D8F1EEC19DF000D4DF6 /* MapController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MapController.cpp; sourceTree = "<group>"; };
 		626C4D901EEC19DF000D4DF6 /* MapController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MapController.hpp; sourceTree = "<group>"; };
-		626C4D911EEC19DF000D4DF6 /* MapHud.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MapHud.cpp; sourceTree = "<group>"; };
-		626C4D921EEC19DF000D4DF6 /* MapHud.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MapHud.hpp; sourceTree = "<group>"; };
-		626C4D931EEC19DF000D4DF6 /* MapLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MapLoader.cpp; sourceTree = "<group>"; };
-		626C4D941EEC19DF000D4DF6 /* MapLoader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MapLoader.hpp; sourceTree = "<group>"; };
-		626C4D951EEC19DF000D4DF6 /* MapPin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MapPin.cpp; sourceTree = "<group>"; };
-		626C4D961EEC19DF000D4DF6 /* MapPin.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MapPin.hpp; sourceTree = "<group>"; };
-		626C4D971EEC19DF000D4DF6 /* MapScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MapScene.cpp; sourceTree = "<group>"; };
-		626C4D981EEC19DF000D4DF6 /* MapScene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MapScene.hpp; sourceTree = "<group>"; };
 		626C4D991EEC19DF000D4DF6 /* MapSceneRenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MapSceneRenderer.cpp; sourceTree = "<group>"; };
 		626C4D9A1EEC19DF000D4DF6 /* MapSceneRenderer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MapSceneRenderer.hpp; sourceTree = "<group>"; };
-		626C4D9B1EEC19DF000D4DF6 /* NextLevelParticleEffect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NextLevelParticleEffect.cpp; sourceTree = "<group>"; };
-		626C4D9C1EEC19DF000D4DF6 /* NextLevelParticleEffect.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = NextLevelParticleEffect.hpp; sourceTree = "<group>"; };
 		626C4DA51EEC20B8000D4DF6 /* SettingsButtonView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SettingsButtonView.cpp; sourceTree = "<group>"; };
 		626C4DA61EEC20B8000D4DF6 /* SettingsButtonView.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SettingsButtonView.hpp; sourceTree = "<group>"; };
 		626C4DA81EEC2506000D4DF6 /* SettingsButtonController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SettingsButtonController.cpp; sourceTree = "<group>"; };
@@ -757,7 +741,6 @@
 		6270DC841FCB23D800FB457D /* level7.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level7.json; sourceTree = "<group>"; };
 		6270DC851FCB23D800FB457D /* level8.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level8.json; sourceTree = "<group>"; };
 		6270DC861FCB23D800FB457D /* level9.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level9.json; sourceTree = "<group>"; };
-		6270DC871FCB23D800FB457D /* map.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = map.json; sourceTree = "<group>"; };
 		6270DCA11FCB248E00FB457D /* settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings.png; sourceTree = "<group>"; };
 		6270DCA21FCB248E00FB457D /* sky.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sky.jpg; sourceTree = "<group>"; };
 		6270DCA31FCB248E00FB457D /* sky_2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sky_2.jpg; sourceTree = "<group>"; };
@@ -1632,24 +1615,14 @@
 			children = (
 				626C4D8F1EEC19DF000D4DF6 /* MapController.cpp */,
 				626C4D901EEC19DF000D4DF6 /* MapController.hpp */,
-				626C4D911EEC19DF000D4DF6 /* MapHud.cpp */,
-				626C4D921EEC19DF000D4DF6 /* MapHud.hpp */,
 				6286F9B91FFA4B6A004DEF90 /* MapHudNew.cpp */,
 				6286F9BA1FFA4B6A004DEF90 /* MapHudNew.hpp */,
-				626C4D931EEC19DF000D4DF6 /* MapLoader.cpp */,
-				626C4D941EEC19DF000D4DF6 /* MapLoader.hpp */,
-				626C4D951EEC19DF000D4DF6 /* MapPin.cpp */,
-				626C4D961EEC19DF000D4DF6 /* MapPin.hpp */,
 				6286F9B01FF3BE5E004DEF90 /* MapPinNew.cpp */,
 				6286F9B11FF3BE5E004DEF90 /* MapPinNew.hpp */,
-				626C4D971EEC19DF000D4DF6 /* MapScene.cpp */,
-				626C4D981EEC19DF000D4DF6 /* MapScene.hpp */,
 				621D609F1FF10FC200052107 /* MapSceneNew.cpp */,
 				621D60A01FF10FC200052107 /* MapSceneNew.hpp */,
 				626C4D991EEC19DF000D4DF6 /* MapSceneRenderer.cpp */,
 				626C4D9A1EEC19DF000D4DF6 /* MapSceneRenderer.hpp */,
-				626C4D9B1EEC19DF000D4DF6 /* NextLevelParticleEffect.cpp */,
-				626C4D9C1EEC19DF000D4DF6 /* NextLevelParticleEffect.hpp */,
 				6286F9B31FF6B273004DEF90 /* NextLevelParticleEffectNew.cpp */,
 				6286F9B41FF6B273004DEF90 /* NextLevelParticleEffectNew.hpp */,
 			);
@@ -1765,7 +1738,6 @@
 				62E335DB1FD2EF600069B6CF /* level24.json */,
 				62E335DD1FD2F31E0069B6CF /* level25.json */,
 				62E335DF1FD2F4EE0069B6CF /* level26.json */,
-				6270DC871FCB23D800FB457D /* map.json */,
 			);
 			path = Levels;
 			sourceTree = "<group>";
@@ -1865,7 +1837,6 @@
 				6270DC6E1FCB231B00FB457D /* HussarBoldWeb.otf in Resources */,
 				623B32F71F17AC12000C64A1 /* VertexColor.frag in Resources */,
 				6270DC661FCB22AE00FB457D /* triangle_428_085.obj in Resources */,
-				6270DC9F1FCB23D800FB457D /* map.json in Resources */,
 				6270DC991FCB23D800FB457D /* level4.json in Resources */,
 				62E335DE1FD2F31E0069B6CF /* level25.json in Resources */,
 				62E335DC1FD2EF600069B6CF /* level24.json in Resources */,
@@ -1952,7 +1923,6 @@
 				624447A41EDDD2C40080ECE8 /* CollapsingFieldAnimation.cpp in Sources */,
 				6260A7051F87E5BC001F6DCD /* TorusMesh.cpp in Sources */,
 				624F89491EF6661D0020C832 /* LifeManager.cpp in Sources */,
-				626C4DA21EEC19DF000D4DF6 /* MapScene.cpp in Sources */,
 				628A225A1F6E704900D97BF8 /* GhostPieceProducer.cpp in Sources */,
 				6208C8661FAF210A0059BE51 /* SceneObject.cpp in Sources */,
 				624EAFC21EE559A9009F81BC /* SlidingTextAnimation.cpp in Sources */,
@@ -2010,7 +1980,6 @@
 				624447D51EDDD2C40080ECE8 /* TitleController.cpp in Sources */,
 				624447BF1EDDD2C40080ECE8 /* BigTrianglePiece.cpp in Sources */,
 				621D60921FEFB62000052107 /* Materials.cpp in Sources */,
-				626C4D9F1EEC19DF000D4DF6 /* MapHud.cpp in Sources */,
 				6270DC1C1FB70AA200FB457D /* Scene.cpp in Sources */,
 				623C16D01F51A75B00305752 /* ClickInputHandler.cpp in Sources */,
 				623B32D11F17AC11000C64A1 /* Audio.cpp in Sources */,
@@ -2058,7 +2027,6 @@
 				6260A6DE1F85451E001F6DCD /* MirroredFPiece.cpp in Sources */,
 				624447A61EDDD2C40080ECE8 /* FlyingBlocksAnimation.cpp in Sources */,
 				6217ACCD1F161B2B001B1B3F /* MiddleIPiece.cpp in Sources */,
-				626C4DA01EEC19DF000D4DF6 /* MapLoader.cpp in Sources */,
 				6270DC331FB8CCF000FB457D /* ParticleEffect.cpp in Sources */,
 				6254C16C1EED356800BBCAD2 /* SettingsMenuController.cpp in Sources */,
 				624447B01EDDD2C40080ECE8 /* ScrollController.cpp in Sources */,
@@ -2080,13 +2048,11 @@
 				621D60931FEFB62000052107 /* Clouds.cpp in Sources */,
 				624447AF1EDDD2C40080ECE8 /* NextPieceGenerator.cpp in Sources */,
 				626C4DA31EEC19DF000D4DF6 /* MapSceneRenderer.cpp in Sources */,
-				626C4DA41EEC19DF000D4DF6 /* NextLevelParticleEffect.cpp in Sources */,
 				6244479A1EDDD2C40080ECE8 /* BlocksApplication.cpp in Sources */,
 				624447C61EDDD2C40080ECE8 /* LPiece.cpp in Sources */,
 				624447B91EDDD2C40080ECE8 /* NoMovesDialogView.cpp in Sources */,
 				624447B51EDDD2C40080ECE8 /* GameMenuController.cpp in Sources */,
 				624447BA1EDDD2C40080ECE8 /* GameHudController.cpp in Sources */,
-				626C4DA11EEC19DF000D4DF6 /* MapPin.cpp in Sources */,
 				626C4DAA1EEC2506000D4DF6 /* SettingsButtonController.cpp in Sources */,
 				624447A81EDDD2C40080ECE8 /* PieceDropParticleEffect.cpp in Sources */,
 				6270DCB31FCDA99100FB457D /* TitleScene.cpp in Sources */,

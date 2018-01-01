@@ -6,7 +6,6 @@
 #include "IRenderer.hpp"
 
 // Game includes.
-#include "MapHud.hpp"
 #include "MapViewControllers.hpp"
 #include "SettingsMenuController.hpp"
 #include "NoLivesDialogController.hpp"
