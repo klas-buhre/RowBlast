@@ -19,12 +19,12 @@ using namespace BlocksGame;
 namespace {
     const Pht::Vec2 buttonSize {40.0f, 40.0f};
     const Pht::Color selectedColorAdd {0.3f, 0.3f, 0.3f};
-    const Pht::Vec3 textOffset {-0.33f, -0.2f, 0.0f};
+    const Pht::Vec3 textOffset {-0.33f, -0.2f, 0.4f};
     
     const std::array<Pht::Vec3, 3> starOffsets {
-        Pht::Vec3{-0.75f, 1.0f, 1.0f},
-        Pht::Vec3{0.0f, 1.2f, 1.0f},
-        Pht::Vec3{0.75f, 1.0f, 1.0f}
+        Pht::Vec3{-0.75f, 0.9f, 0.5f},
+        Pht::Vec3{0.0f, 1.1f, 0.5f},
+        Pht::Vec3{0.75f, 0.9f, 0.5f}
     };
 }
 

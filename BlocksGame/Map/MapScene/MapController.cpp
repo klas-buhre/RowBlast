@@ -14,8 +14,9 @@
 using namespace BlocksGame;
 
 namespace {
-    auto cameraDeaccelerationFactor {0.9f};
-    Pht::Mat4 identityMatrix;
+    const auto cameraDeaccelerationFactor {0.88f};
+    const auto cameraCutoffVelocity {0.2f};
+    const Pht::Mat4 identityMatrix;
 }
 
 MapController::Command::Command(Kind kind, int level) :
@@ -204,13 +205,8 @@ void MapController::Pan(const Pht::TouchEvent& touch) {
             StartPan(touch);
             break;
         case Pht::TouchState::Ongoing: {
-            auto scaleFactor {
-                mEngine.GetRenderer().GetOrthographicFrustumSize().y /
-                mEngine.GetInput().GetScreenInputSize().y
-            };
-            
             auto translation = touch.mLocation - mTouchLocationAtPanBegin;
-            auto newCameraXPosition {mCameraXPositionAtPanBegin - translation.x * scaleFactor};
+            auto newCameraXPosition {mCameraXPositionAtPanBegin - translation.x * 0.026f};
             
             mCameraXVelocity = (newCameraXPosition - mScene.GetCameraXPosition()) /
                                mEngine.GetLastFrameSeconds();
@@ -229,6 +225,10 @@ void MapController::StartPan(const Pht::TouchEvent& touch) {
 }
 
 void MapController::UpdateCamera() {
+    if (std::fabs(mCameraXVelocity) < cameraCutoffVelocity) {
+        mCameraXVelocity = 0.0f;
+    }
+
     auto cameraXPosition {mScene.GetCameraXPosition()};
     cameraXPosition += mCameraXVelocity * mEngine.GetLastFrameSeconds();
     mScene.SetCameraXPosition(cameraXPosition);

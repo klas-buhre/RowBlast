@@ -21,6 +21,8 @@
 using namespace BlocksGame;
 
 namespace {
+    const auto halfMapWidth {22.0f};
+    
     enum class Layer {
         Map = 0,
         Hud = 1
@@ -29,36 +31,36 @@ namespace {
     const std::vector<CloudPathVolume> cloudPaths {
         CloudPathVolume {
             .mPosition = {0.0f, 0.0f, -10.0f},
-            .mSize = {75.0f, 0.0f, 0.0f},
+            .mSize = {120.0f, 0.0f, 0.0f},
         },
         CloudPathVolume {
             .mPosition = {0.0f, -50.0f, -50.0f},
-            .mSize = {140.0f, 0.0f, 10.0f},
+            .mSize = {170.0f, 0.0f, 10.0f},
             .mCloudSize = {50.0f, 50.0f},
             .mNumClouds = 3,
             .mNumCloudsPerCluster = 3
         },
         CloudPathVolume {
             .mPosition = {0.0f, -60.0f, -50.0f},
-            .mSize = {150.0f, 0.0f, 10.0f},
+            .mSize = {170.0f, 0.0f, 10.0f},
             .mCloudSize = {30.0f, 30.0f},
             .mNumClouds = 3,
             .mNumCloudsPerCluster = 3
         },
         CloudPathVolume {
             .mPosition = {0.0f, -30.0f, -50.0f},
-            .mSize = {150.0f, 0.0f, 10.0f},
+            .mSize = {170.0f, 0.0f, 10.0f},
             .mCloudSize = {50.0f, 50.0f},
             .mNumClouds = 3,
             .mNumCloudsPerCluster = 3
         },
         CloudPathVolume {
             .mPosition = {0.0f, 40.0f, -50.0f},
-            .mSize = {150.0f, 0.0f, 10.0f}
+            .mSize = {170.0f, 0.0f, 10.0f}
         },
         CloudPathVolume {
             .mPosition = {0.0f, 0.0f, -100.0f},
-            .mSize = {210.0f, 180.0f, 20.0f},
+            .mSize = {250.0f, 180.0f, 20.0f},
             .mCloudSize = {60.0f, 60.0f},
             .mCloudSizeRandPart = 60.0f,
             .mNumClouds = 10,
@@ -66,7 +68,7 @@ namespace {
         },
         CloudPathVolume {
             .mPosition = {0.0f, 0.0f, -200.0f},
-            .mSize = {380.0f, 320.0f, 20.0f},
+            .mSize = {400.0f, 320.0f, 20.0f},
             .mCloudSize = {50.0f, 50.0f},
             .mCloudSizeRandPart = 65.0f,
             .mNumClouds = 16,
@@ -74,7 +76,7 @@ namespace {
         },
         CloudPathVolume {
             .mPosition = {0.0f, 0.0f, -300.0f},
-            .mSize = {500.0f, 400.0f, 20.0f},
+            .mSize = {510.0f, 400.0f, 20.0f},
             .mCloudSize = {50.0f, 50.0f},
             .mCloudSizeRandPart = 50.0f,
             .mNumClouds = 16,
@@ -82,7 +84,7 @@ namespace {
         },
         CloudPathVolume {
             .mPosition = {0.0f, 0.0f, -400.0f},
-            .mSize = {500.0f, 400.0f, 20.0f},
+            .mSize = {510.0f, 400.0f, 20.0f},
             .mCloudSize = {50.0f, 50.0f},
             .mCloudSizeRandPart = 50.0f,
             .mNumClouds = 16,
@@ -122,7 +124,7 @@ MapScene::MapScene(Pht::IEngine& engine,
         engine.GetSceneManager().CreateRenderableObject(Pht::ObjMesh {"star.obj", 0.05f},
                                                         commonResources.GetMaterials().GetGoldMaterial())
     },
-    mFont {"ethnocentric_rg_it.ttf", engine.GetRenderer().GetAdjustedNumPixels(35)},
+    mFont {"ethnocentric_rg_it.ttf", engine.GetRenderer().GetAdjustedNumPixels(40)},
     mHudFont {"HussarBoldWeb.otf", engine.GetRenderer().GetAdjustedNumPixels(22)} {}
 
 void MapScene::Reset() {
@@ -209,10 +211,14 @@ void MapScene::CreatePin(Pht::SceneObject& pinContainerObject,
         
         auto pinPositionDiff {position - mPreviousPin->GetPosition()};
         
-        auto connectionAngle {
-            -Pht::ToDegrees(std::atan(pinPositionDiff.y / pinPositionDiff.x)) + 90.0f
+        auto connectionZAngle {
+            Pht::ToDegrees(std::atan(pinPositionDiff.y / pinPositionDiff.x)) - 90.0f
         };
-        
+
+        auto connectionXAngle {
+            Pht::ToDegrees(std::atan(pinPositionDiff.z / pinPositionDiff.x))
+        };
+
         Pht::Vec3 connectionPosition {
             mPreviousPin->GetPosition().x + pinPositionDiff.x / 2.0f,
             mPreviousPin->GetPosition().y + pinPositionDiff.y / 2.0f,
@@ -222,7 +228,7 @@ void MapScene::CreatePin(Pht::SceneObject& pinContainerObject,
         Pht::CylinderMesh connectionMesh {0.3f, 4.0f, std::string{"mapConnection"}};
         auto& connection {mScene->CreateSceneObject(connectionMesh, connectionMaterial)};
         auto& transform {connection.GetTransform()};
-        transform.SetRotation({0.0f, 0.0f, -connectionAngle});
+        transform.SetRotation({connectionXAngle, 0.0f, connectionZAngle});
         transform.SetPosition(connectionPosition);
         pinContainerObject.AddChild(connection);
     }
@@ -251,15 +257,13 @@ void MapScene::Update() {
 }
 
 void MapScene::SetCameraXPosition(float xPosition) {
-    auto halfMapWidth {mMapSizeX / 2.0f};
-    
     if (xPosition < -halfMapWidth) {
         xPosition = -halfMapWidth;
     } else if (xPosition > halfMapWidth) {
         xPosition = halfMapWidth;
     }
     
-    Pht::Vec3 position {xPosition, -12.0f, 20.0f};
+    Pht::Vec3 position {xPosition, 0.0f, 20.0f};
     mCamera->GetSceneObject().GetTransform().SetPosition(position);
     
     Pht::Vec3 target {position.x, position.y, 0.0f};

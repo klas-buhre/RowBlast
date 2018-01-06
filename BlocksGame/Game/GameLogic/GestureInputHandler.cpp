@@ -27,10 +27,12 @@ void GestureInputHandler::Reset(const Level& level) {
 }
 
 void GestureInputHandler::HandleTouch(const Pht::TouchEvent& touchEvent) {
+#ifdef DEBUG
     std::cout << "touch: state=" << static_cast<int>(touchEvent.mState)
               << " trans: " << touchEvent.mTranslation.x << ", " << touchEvent.mTranslation.y
               << " vel: " << touchEvent.mVelocity.x << ", " << touchEvent.mVelocity.y << std::endl;
-    
+#endif
+
     switch (touchEvent.mState) {
         case Pht::TouchState::Begin:
             HandleTouchBegin();
@@ -71,8 +73,10 @@ void GestureInputHandler::HandleTouch(const Pht::TouchEvent& touchEvent) {
     if (mFallingPiece.IsBeingDraggedDown()) {
         MaybeExitBeingDraggedDownState();
     }
-    
+
+#ifdef DEBUG
     std::cout << "x=" << mFallingPiece.GetPosition().x << std::endl;
+#endif
 }
 
 void GestureInputHandler::HandleTouchBegin() {
@@ -156,8 +160,10 @@ void GestureInputHandler::HandleDraggingDown(const Pht::TouchEvent& touchEvent) 
         mFallingPiece.GetPreviousYStep()
     };
     
+#ifdef DEBUG
     std::cout << "CalculateFallingPieceY: diff=" << diff << std::endl;
-    
+#endif
+
     if (diff < 0.0f) {
         return;
     }
@@ -181,9 +187,11 @@ void GestureInputHandler::HandleDraggingSideways(const Pht::TouchEvent& touchEve
     switch (mDiffState) {
         case DiffState::Accumulating:
             mAccumulatedDiff += diff;
-            
+
+#ifdef DEBUG
             std::cout << "mAccumulatedDiff=" << mAccumulatedDiff << std::endl;
-            
+#endif
+
             if (std::fabs(mAccumulatedDiff) > halfColumn) {
                 float fallingPieceNewX {mFallingPiece.GetPosition().x + mAccumulatedDiff};
                 
@@ -197,8 +205,10 @@ void GestureInputHandler::HandleDraggingSideways(const Pht::TouchEvent& touchEve
                 mDiffState = DiffState::Diffing;
                 mTouchTriggeredDiffingState = true;
                 mAccumulatedDiff = 0.0f;
-                
+
+#ifdef DEBUG
                 std::cout << "Going to Diffing state" << std::endl;
+#endif
             }
             break;
         case DiffState::Diffing:
@@ -254,8 +264,10 @@ void GestureInputHandler::ExitBeingDraggedDownState() {
         return;
     }
     
+#ifdef DEBUG
     std::cout << "Exit dragged down state." << std::endl;
-    
+#endif
+
     mFallingPiece.GoToFallingState(mLevel->GetSpeed());
     mDragDownContainedUpMovement = false;
 }

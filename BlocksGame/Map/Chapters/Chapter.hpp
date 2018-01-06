@@ -10,13 +10,13 @@
 #include "FloatingCubes.hpp"
 
 namespace BlocksGame {
+    struct MapLevel {
+        int mLevelIndex;
+        Pht::Vec3 mPosition;
+    };
+
     class Chapter {
     public:
-        struct MapLevel {
-            int mLevelIndex;
-            Pht::Vec3 mPosition;
-        };
-        
         Chapter(const std::vector<MapLevel>& levels, const std::vector<CubePathVolume>& cubePaths);
         
         const std::vector<MapLevel>& mLevels;
