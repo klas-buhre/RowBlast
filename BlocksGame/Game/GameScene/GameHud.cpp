@@ -14,8 +14,8 @@
 using namespace BlocksGame;
 
 namespace {
-    const Pht::Vec3 lightDirectionA {0.5f, 1.0f, 1.0f};
-    const Pht::Vec3 lightDirectionB {-0.15f, 1.0f, 1.0f};
+    const Pht::Vec3 lightDirectionA {0.6f, 1.0f, 1.0f};
+    const Pht::Vec3 lightDirectionB {0.4f, 1.0f, 1.0f};
     const auto lightAnimationDuration {5.0f};
 }
 

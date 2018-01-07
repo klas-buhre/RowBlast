@@ -17,7 +17,7 @@
 using namespace BlocksGame;
 
 namespace {
-    const Pht::Vec2 buttonSize {40.0f, 40.0f};
+    const Pht::Vec2 buttonSize {62.0f, 62.0f};
     const Pht::Color selectedColorAdd {0.3f, 0.3f, 0.3f};
     const Pht::Vec3 textOffset {-0.33f, -0.2f, 0.4f};
     
@@ -80,7 +80,9 @@ MapPin::MapPin(Pht::IEngine& engine,
     auto& text {scene.CreateText(std::to_string(level), textProperties)};
     auto adjustedTextOffset {textOffset};
     
-    if (mLevel > 9) {
+    if (mLevel > 19) {
+        adjustedTextOffset.x -= 0.21f;
+    } else if (mLevel > 9) {
         adjustedTextOffset.x -= 0.17f;
     }
     

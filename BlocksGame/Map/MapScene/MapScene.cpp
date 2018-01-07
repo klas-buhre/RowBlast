@@ -124,7 +124,7 @@ MapScene::MapScene(Pht::IEngine& engine,
         engine.GetSceneManager().CreateRenderableObject(Pht::ObjMesh {"star.obj", 0.05f},
                                                         commonResources.GetMaterials().GetGoldMaterial())
     },
-    mFont {"ethnocentric_rg_it.ttf", engine.GetRenderer().GetAdjustedNumPixels(40)},
+    mFont {"ethnocentric_rg_it.ttf", engine.GetRenderer().GetAdjustedNumPixels(46)},
     mHudFont {"HussarBoldWeb.otf", engine.GetRenderer().GetAdjustedNumPixels(22)} {}
 
 void MapScene::Reset() {
