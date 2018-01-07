@@ -163,11 +163,11 @@ GameLogic::Result GameLogic::InitFallingPiece() {
         return Result::GameOver;
     }
     
-    if (mCurrentMove.mPieceType->IsBomb() && mSettings.mControlType == Controls::Gesture) {
+    if (mCurrentMove.mPieceType->IsBomb() && mSettings.mControlType == ControlType::Gesture) {
         StartBlastRadiusAnimationAtGhostPiece();
     }
     
-    if (mSettings.mControlType == Controls::Click) {
+    if (mSettings.mControlType == ControlType::Click) {
         std::cout << "Calculating moves" << std::endl;
         
         mClickInputHandler.CalculateMoves(*mFallingPiece);
@@ -301,14 +301,14 @@ void GameLogic::HandleControlTypeChange() {
     
     if (mSettings.mControlType != mPreviousControlType) {
         switch (mSettings.mControlType) {
-            case Controls::Click:
+            case ControlType::Click:
                 if (mCurrentMove.mPieceType->IsBomb()) {
                     mBlastRadiusAnimation.Stop();
                 }
                 mClickInputHandler.CalculateMoves(*mFallingPiece);
                 mClickInputHandler.CreateNewMoveAlternativeSet();
                 break;
-            case Controls::Gesture:
+            case ControlType::Gesture:
                 if (mCurrentMove.mPieceType->IsBomb()) {
                     StartBlastRadiusAnimationAtGhostPiece();
                 }
@@ -371,7 +371,7 @@ void GameLogic::UpdateFallingPieceYpos() {
                 mFallingPiece->GoToLandingState(mGhostPieceRow);
             } else {
                 mFallingPiece->SetY(newYPosition);
-                if (mSettings.mControlType == Controls::Click) {
+                if (mSettings.mControlType == ControlType::Click) {
                     if (mFallingPiece->GetPreviousIntY() != static_cast<int>(newYPosition)) {
                         mClickInputHandler.UpdateMoves(*mFallingPiece);
                     }
@@ -674,10 +674,10 @@ void GameLogic::ForwardTouchToInputHandler(const Pht::TouchEvent& touchEvent) {
     }
     
     switch (mSettings.mControlType) {
-        case Controls::Click:
+        case ControlType::Click:
             mClickInputHandler.HandleTouch(touchEvent);
             break;
-        case Controls::Gesture:
+        case ControlType::Gesture:
             mGestureInputHandler.HandleTouch(touchEvent);
             break;
     }

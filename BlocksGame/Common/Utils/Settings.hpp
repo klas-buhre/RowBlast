@@ -2,13 +2,13 @@
 #define Settings_hpp
 
 namespace BlocksGame {
-    enum class Controls {
+    enum class ControlType {
         Click,
         Gesture
     };
     
     struct Settings {
-        Controls mControlType {Controls::Click};
+        ControlType mControlType {ControlType::Click};
     };
 }
 

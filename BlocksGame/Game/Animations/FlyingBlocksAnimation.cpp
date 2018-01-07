@@ -21,8 +21,7 @@ FlyingBlocksAnimation::FlyingBlocksAnimation(const GameScene& scene) :
     mScene {scene} {}
 
 void FlyingBlocksAnimation::AddBlockRows(const Field::RemovedSubCells& subCells) {
-    for (auto i {0}; i < subCells.Size(); ++i) {
-        auto& removedSubCell {subCells.At(i)};
+    for (auto& removedSubCell: subCells) {
 
         Pht::Vec3 explosiveForceDirecton {
             Pht::NormalizedRand() - 0.5f,
@@ -52,9 +51,7 @@ void FlyingBlocksAnimation::AddBlockRows(const Field::RemovedSubCells& subCells)
 
 void FlyingBlocksAnimation::AddBlocks(const Field::RemovedSubCells& subCells,
                                       const Pht::IVec2& detonationPos) {
-    for (auto i {0}; i < subCells.Size(); ++i) {
-        auto& removedSubCell {subCells.At(i)};
-        
+    for (auto& removedSubCell: subCells) {
         auto dx {static_cast<float>(removedSubCell.mPosition.x - detonationPos.x)};
         auto dy {static_cast<float>(removedSubCell.mPosition.y - detonationPos.y)};
         

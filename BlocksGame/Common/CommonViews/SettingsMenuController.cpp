@@ -47,12 +47,12 @@ SettingsMenuController::Result SettingsMenuController::HandleInput() {
 
 SettingsMenuController::Result SettingsMenuController::OnTouch(const Pht::TouchEvent& touchEvent) {
     if (mView.GetControlsButton().IsClicked(touchEvent)) {
-        if (mSettings.mControlType == Controls::Click) {
-            mSettings.mControlType = Controls::Gesture;
+        if (mSettings.mControlType == ControlType::Click) {
+            mSettings.mControlType = ControlType::Gesture;
             mView.GetControlsClickText().mIsVisible = false;
             mView.GetControlsSwipeText().mIsVisible = true;
         } else {
-            mSettings.mControlType = Controls::Click;
+            mSettings.mControlType = ControlType::Click;
             mView.GetControlsClickText().mIsVisible = true;
             mView.GetControlsSwipeText().mIsVisible = false;
         }

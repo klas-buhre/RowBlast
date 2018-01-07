@@ -77,6 +77,14 @@ namespace Pht {
         }
         
         // For range-based for loops.
+        const T* begin() const {
+            return &mData[0];
+        }
+
+        const T* end() const {
+            return &mData[mSize];
+        }
+
         T* begin() {
             return &mData[0];
         }
@@ -84,7 +92,7 @@ namespace Pht {
         T* end() {
             return &mData[mSize];
         }
-        
+
     private:
         int mSize {0};
         T mData[Capacity];

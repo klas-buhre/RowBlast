@@ -92,7 +92,7 @@ namespace BlocksGame {
         }
         
         bool IsUsingClickControls() const {
-            return mPreviousControlType == Controls::Click;
+            return mPreviousControlType == ControlType::Click;
         }
         
         const ClickInputHandler& GetClickInputHandler() const {
@@ -166,7 +166,7 @@ namespace BlocksGame {
         BlastRadiusAnimation& mBlastRadiusAnimation;
         GameHudController& mGameHudController;
         const Settings& mSettings;
-        Controls mPreviousControlType;
+        ControlType mPreviousControlType;
         CascadeState mCascadeState {CascadeState::NotCascading};
         float mCascadeWaitTime {0.0f};
         FallingPieceAnimation mFallingPieceAnimation;
