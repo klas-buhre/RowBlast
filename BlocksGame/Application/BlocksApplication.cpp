@@ -1,6 +1,7 @@
 /*
 Backlog:
   -Engine:
+    -Make SceneObject::mRenderable a raw pointer.
     -Physics.
     -Purchases.
     -Net/HTTP.
@@ -61,6 +62,10 @@ Backlog:
   
 Ongoing tasks:
     -GameScene should be a Pht::Scene.
+    -Make SceneObject::mRenderable a raw pointer.
+        IScenManager::CreateSceneObject() should take a SceneResources that takes ownership of the
+        RenderableObject (but not of the SceneObject. It is easier to just return a
+        unique_ptr<SceneObject> for now).
 
 Ideas:
     -The pause button could lead to a widget that has an undo button, a boosters button and a game

@@ -7,6 +7,7 @@
 
 #include "Vector.hpp"
 #include "RenderPass.hpp"
+#include "SceneResources.hpp"
 
 namespace Pht {
     class SceneObject;
@@ -76,7 +77,7 @@ namespace Pht {
     private:
         ISceneManager& mSceneManager;
         Name mName {0};
-        std::vector<std::unique_ptr<SceneObject>> mSceneObjects;
+        SceneResources mResources;
         SceneObject* mRoot {nullptr};
         LightComponent* mGlobalLight {nullptr};
         CameraComponent* mCamera {nullptr};

@@ -24,7 +24,6 @@ namespace {
 }
 
 MoveButton::MoveButton(Pht::IEngine& engine) :
-    mSceneObject {nullptr},
     mButton {mSceneObject, Pht::Vec2{0.0f, 0.0f}, engine} {}
 
 void MoveButton::SetPosition(const Pht::Vec3& position) {

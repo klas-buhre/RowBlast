@@ -232,6 +232,7 @@
 		6286F9BB1FFA4B6A004DEF90 /* MapHud.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6286F9B91FFA4B6A004DEF90 /* MapHud.cpp */; };
 		628A22571F6D359100D97BF8 /* OfflineRasterizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 628A22551F6D359100D97BF8 /* OfflineRasterizer.cpp */; };
 		628A225A1F6E704900D97BF8 /* GhostPieceProducer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 628A22581F6E704900D97BF8 /* GhostPieceProducer.cpp */; };
+		62944C4A20052B9900814D36 /* SceneResources.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62944C4820052B9900814D36 /* SceneResources.cpp */; };
 		62A8AAF71FE2DEA1000EB01C /* cloud_B_envmap.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62A8AAF61FE2DEA0000EB01C /* cloud_B_envmap.jpg */; };
 		62A8AAF91FE2E442000EB01C /* cloud_C_envmap.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62A8AAF81FE2E441000EB01C /* cloud_C_envmap.jpg */; };
 		62E222241FE9704900AE098B /* cloud_A_512.png in Resources */ = {isa = PBXBuildFile; fileRef = 62E222231FE9704800AE098B /* cloud_A_512.png */; };
@@ -764,6 +765,8 @@
 		628A22561F6D359100D97BF8 /* OfflineRasterizer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = OfflineRasterizer.hpp; sourceTree = "<group>"; };
 		628A22581F6E704900D97BF8 /* GhostPieceProducer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GhostPieceProducer.cpp; sourceTree = "<group>"; };
 		628A22591F6E704900D97BF8 /* GhostPieceProducer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GhostPieceProducer.hpp; sourceTree = "<group>"; };
+		62944C4820052B9900814D36 /* SceneResources.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SceneResources.cpp; sourceTree = "<group>"; };
+		62944C4920052B9900814D36 /* SceneResources.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SceneResources.hpp; sourceTree = "<group>"; };
 		62A8AAF61FE2DEA0000EB01C /* cloud_B_envmap.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = cloud_B_envmap.jpg; sourceTree = "<group>"; };
 		62A8AAF81FE2E441000EB01C /* cloud_C_envmap.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = cloud_C_envmap.jpg; sourceTree = "<group>"; };
 		62CCDDD21F8129720088A38D /* IGameHudEventListener.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = IGameHudEventListener.hpp; sourceTree = "<group>"; };
@@ -851,6 +854,8 @@
 				6270DC411FC18CF700FB457D /* SceneManager.hpp */,
 				6208C8641FAF205A0059BE51 /* SceneObject.cpp */,
 				6208C8651FAF205A0059BE51 /* SceneObject.hpp */,
+				62944C4820052B9900814D36 /* SceneResources.cpp */,
+				62944C4920052B9900814D36 /* SceneResources.hpp */,
 				6270DC211FB7554200FB457D /* TextComponent.cpp */,
 				6270DC221FB7554200FB457D /* TextComponent.hpp */,
 			);
@@ -1954,6 +1959,7 @@
 				621D60A11FF10FC200052107 /* MapScene.cpp in Sources */,
 				6260A7021F87E5B4001F6DCD /* QuadMesh.cpp in Sources */,
 				6260A7031F87E5B7001F6DCD /* MeshUtils.cpp in Sources */,
+				62944C4A20052B9900814D36 /* SceneResources.cpp in Sources */,
 				620A98361EE43DD200AD6C61 /* ClearLastBlocksAnimation.cpp in Sources */,
 				623B32D21F17AC11000C64A1 /* Engine.cpp in Sources */,
 				623B32DD1F17AC12000C64A1 /* ImageIOS.mm in Sources */,
