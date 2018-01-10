@@ -53,7 +53,7 @@ namespace BlocksGame {
         std::unique_ptr<FloatingCubes> mFloatingCubes;
         std::vector<std::unique_ptr<MapPin>> mPins;
         MapPin* mPreviousPin {nullptr};
-        std::shared_ptr<Pht::RenderableObject> mStarRenderable;
+        std::unique_ptr<Pht::RenderableObject> mStarRenderable;
         Pht::Font mFont;
         Pht::Font mHudFont;
         std::unique_ptr<MapHud> mHud;

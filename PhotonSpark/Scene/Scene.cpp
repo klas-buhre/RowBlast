@@ -57,7 +57,7 @@ CameraComponent& Scene::CreateCamera() {
 }
 
 SceneObject& Scene::CreateSceneObject(const IMesh& mesh, const Material& material) {
-    auto sceneObject {mSceneManager.CreateSceneObject(mesh, material)};
+    auto sceneObject {mSceneManager.CreateSceneObject(mesh, material, mResources)};
     auto& retVal {*sceneObject};
     mResources.AddSceneObject(std::move(sceneObject));
     return retVal;

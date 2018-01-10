@@ -23,7 +23,7 @@ MapConfirmationDialogView::MapConfirmationDialogView(Pht::IEngine& engine,
     SetPosition({0.0f, 0.0f});
     SetDepthTest(false);
     
-    auto quad {MenuQuad::CreateGray(engine, size)};
+    auto quad {MenuQuad::CreateGray(engine, GetSceneResources(), size)};
     quad->SetPosition({0.0f, 0.0f, -1.0f});
     AddSceneObject(std::move(quad));
     
@@ -36,7 +36,8 @@ MapConfirmationDialogView::MapConfirmationDialogView(Pht::IEngine& engine,
     lineMaterial.SetOpacity(0.4f);
     auto lineSceneObject {
         engine.GetSceneManager().CreateSceneObject(Pht::QuadMesh {frustumWidth - 1.0f, 0.08f},
-                                                   lineMaterial)
+                                                   lineMaterial,
+                                                   GetSceneResources())
     };
     lineSceneObject->SetPosition({0.0f, 3.0f, 0.0f});
     AddSceneObject(std::move(lineSceneObject));

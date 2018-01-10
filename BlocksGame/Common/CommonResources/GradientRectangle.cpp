@@ -91,6 +91,7 @@ Pht::SceneObject& BlocksGame::CreateGradientRectangle(Pht::Scene& scene,
 }
 
 GradientRectangle::GradientRectangle(Pht::IEngine& engine,
+                                     Pht::SceneResources& sceneResources,
                                      const Pht::Vec3& position,
                                      const Pht::Vec2& size,
                                      float tilt,
@@ -101,7 +102,7 @@ GradientRectangle::GradientRectangle(Pht::IEngine& engine,
     Pht::Material material;
     float midQuadWidth {size.x - leftQuadWidth - rightQuadWidth};
     
-    mMidQuad = std::make_unique<Pht::SceneObject>(
+    mMidQuad =
         CreateGradientQuad({midQuadWidth, size.y},
                            tilt,
                            upperColors.mMid,
@@ -109,10 +110,11 @@ GradientRectangle::GradientRectangle(Pht::IEngine& engine,
                            lowerColors.mMid,
                            lowerColors.mMid,
                            material,
-                           engine));
+                           engine,
+                           sceneResources);
     mMidQuad->SetPosition({position.x, position.y, position.z});
     
-    mLeftQuad = std::make_unique<Pht::SceneObject>(
+    mLeftQuad =
         CreateGradientQuad({leftQuadWidth, size.y},
                            tilt,
                            upperColors.mLeft,
@@ -120,10 +122,11 @@ GradientRectangle::GradientRectangle(Pht::IEngine& engine,
                            lowerColors.mLeft,
                            lowerColors.mMid,
                            material,
-                           engine));
+                           engine,
+                           sceneResources);
     mLeftQuad->SetPosition({position.x - size.x / 2.0f + leftQuadWidth / 2.0f, position.y, position.z});
 
-    mRightQuad = std::make_unique<Pht::SceneObject>(
+    mRightQuad =
         CreateGradientQuad({rightQuadWidth, size.y},
                            tilt,
                            upperColors.mMid,
@@ -131,11 +134,12 @@ GradientRectangle::GradientRectangle(Pht::IEngine& engine,
                            lowerColors.mMid,
                            lowerColors.mRight,
                            material,
-                           engine));
+                           engine,
+                           sceneResources);
     mRightQuad->SetPosition({position.x + size.x / 2.0f - rightQuadWidth / 2.0f, position.y, position.z});
 }
 
-std::unique_ptr<Pht::RenderableObject>
+std::unique_ptr<Pht::SceneObject>
 GradientRectangle::CreateGradientQuad(const Pht::Vec2& size,
                                       float tilt,
                                       const Pht::Vec4& leftUpperColor,
@@ -143,7 +147,8 @@ GradientRectangle::CreateGradientQuad(const Pht::Vec2& size,
                                       const Pht::Vec4& leftLowerColor,
                                       const Pht::Vec4& rightLowerColor,
                                       const Pht::Material& material,
-                                      Pht::IEngine& engine) {
+                                      Pht::IEngine& engine,
+                                      Pht::SceneResources& sceneResources) {
     Pht::QuadMesh::Vertices vertices {
         {{-size.x / 2.0f, -size.y / 2.0f, 0.0f}, leftLowerColor},
         {{size.x / 2.0f, -size.y / 2.0f, 0.0f}, rightLowerColor},
@@ -152,5 +157,5 @@ GradientRectangle::CreateGradientQuad(const Pht::Vec2& size,
     };
     
     auto& sceneManager {engine.GetSceneManager()};
-    return sceneManager.CreateRenderableObject(Pht::QuadMesh {vertices}, material);
+    return sceneManager.CreateSceneObject(Pht::QuadMesh {vertices}, material, sceneResources);
 }

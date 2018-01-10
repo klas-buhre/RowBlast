@@ -82,7 +82,7 @@ ParticleEffect::ParticleEffect(SceneObject& sceneObject,
             VertexFlags vertexFlags {.mColors = true, .mPointSizes = true};
             mVertexBuffer = std::make_unique<VertexBuffer>(numParticles, 0, vertexFlags);
             material.SetShaderType(ShaderType::PointParticle);
-            mRenderableObject = std::make_shared<RenderableObject>(material, RenderMode::Points);
+            mRenderableObject = std::make_unique<RenderableObject>(material, RenderMode::Points);
             break;
         }
         case RenderMode::Triangles: {
@@ -91,12 +91,12 @@ ParticleEffect::ParticleEffect(SceneObject& sceneObject,
                                                            numParticles * 6,
                                                            vertexFlags);
             material.SetShaderType(ShaderType::Particle);
-            mRenderableObject = std::make_shared<RenderableObject>(material, RenderMode::Triangles);
+            mRenderableObject = std::make_unique<RenderableObject>(material, RenderMode::Triangles);
             break;
         }
     }
     
-    sceneObject.SetRenderable(mRenderableObject);
+    sceneObject.SetRenderable(mRenderableObject.get());
     mSceneObject.SetIsVisible(false);
 }
 

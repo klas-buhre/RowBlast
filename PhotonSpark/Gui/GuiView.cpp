@@ -33,13 +33,6 @@ void GuiView::AddSceneObject(std::unique_ptr<SceneObject> sceneObject) {
     );
 }
 
-void GuiView::RemoveSceneObject(SceneObject* sceneObject) {
-    mSceneObjects.erase(std::remove_if(std::begin(mSceneObjects),
-                                       std::end(mSceneObjects),
-                                       [&] (auto& existing) { return existing.get() == sceneObject;}),
-                        std::end(mSceneObjects));
-}
-
 void GuiView::AddText(std::unique_ptr<Text> text) {
     mTexts.push_back(std::move(text));
 }

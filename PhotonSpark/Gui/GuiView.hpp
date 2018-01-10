@@ -8,6 +8,7 @@
 #include "Matrix.hpp"
 #include "Font.hpp"
 #include "SceneObject.hpp"
+#include "SceneResources.hpp"
 
 namespace Pht {
     class GuiView {
@@ -16,7 +17,6 @@ namespace Pht {
         
         void SetPosition(const Vec2& position);
         void AddSceneObject(std::unique_ptr<SceneObject> sceneObject);
-        void RemoveSceneObject(SceneObject* sceneObject);
         void AddText(std::unique_ptr<Text> text);
         
         void SetSize(const Vec2& size) {
@@ -51,11 +51,16 @@ namespace Pht {
             return mDepthTest;
         }
         
+        SceneResources& GetSceneResources() {
+            return mSceneResources;
+        }
+        
     private:
         Vec2 mSize {0.0f, 0.0f};
         Vec2 mPosition {0.0f, 0.0f};
         Mat4 mMatrix;
         bool mDepthTest {true};
+        SceneResources mSceneResources;
         std::vector<std::unique_ptr<SceneObject>> mSceneObjects;
         std::vector<std::unique_ptr<Text>> mTexts;
     };

@@ -7,6 +7,7 @@
 #include "Vector.hpp"
 #include "SceneObject.hpp"
 #include "QuadMesh.hpp"
+#include "SceneResources.hpp"
 
 // Game includes.
 #include "FloatingCubes.hpp"
@@ -100,7 +101,6 @@ namespace BlocksGame {
         void CreateBackground();
         void CreateFieldQuad(const Level& level);
         Pht::QuadMesh::Vertices CreateFieldVertices(const Level& level);
-        
         Pht::IEngine& mEngine;
         const ScrollController& mScrollController;
         const CommonResources& mCommonResources;
@@ -117,6 +117,7 @@ namespace BlocksGame {
         Pht::Vec2 mFieldLoweLeft;
         Pht::Vec2 mScissorBoxLowerLeft;
         Pht::Vec2 mScissorBoxSize;
+        std::unique_ptr<Pht::SceneResources> mSceneResources;
         std::unique_ptr<Pht::SceneObject> mBackground;
         std::unique_ptr<Pht::SceneObject> mFieldQuad;
         FloatingCubes mFloatingCubes;

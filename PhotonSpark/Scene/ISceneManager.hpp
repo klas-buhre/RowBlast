@@ -10,6 +10,7 @@ namespace Pht {
     class IMesh;
     class Material;
     class SceneObject;
+    class SceneResources;
 
     class ISceneManager {
     public:
@@ -21,7 +22,8 @@ namespace Pht {
         virtual std::unique_ptr<RenderableObject> CreateRenderableObject(const IMesh& mesh,
                                                                          const Material& material) = 0;
         virtual std::unique_ptr<SceneObject> CreateSceneObject(const IMesh& mesh,
-                                                               const Material& material) = 0;
+                                                               const Material& material,
+                                                               SceneResources& sceneResources) = 0;
     };
 }
 

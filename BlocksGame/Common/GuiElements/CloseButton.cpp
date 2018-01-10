@@ -32,7 +32,11 @@ CloseButton::CloseButton(Pht::IEngine& engine,
     material.SetOpacity(0.8f);
     
     auto& sceneManager {engine.GetSceneManager()};
-    auto sceneObject {sceneManager.CreateSceneObject(Pht::SphereMesh {size / 2.0f}, material)};
+    auto sceneObject {
+        sceneManager.CreateSceneObject(Pht::SphereMesh {size / 2.0f},
+                                       material,
+                                       view.GetSceneResources())
+    };
     sceneObject->SetPosition(position);
     
     mButton = std::make_unique<Pht::Button>(*sceneObject, inputSize, engine);

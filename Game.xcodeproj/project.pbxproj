@@ -1371,27 +1371,27 @@
 		62944C6320053A2D00814D36 /* RendererCore */ = {
 			isa = PBXGroup;
 			children = (
-				62944C6420053A2D00814D36 /* VboCache.cpp */,
-				62944C6520053A2D00814D36 /* TextRenderer.hpp */,
-				62944C6620053A2D00814D36 /* Material.hpp */,
-				62944C6720053A2D00814D36 /* RenderQueue.hpp */,
-				62944C6820053A2D00814D36 /* Renderer.hpp */,
-				62944C6920053A2D00814D36 /* TextureCache.cpp */,
 				62944C6A20053A2D00814D36 /* Camera.cpp */,
-				62944C6B20053A2D00814D36 /* RenderableObject.cpp */,
-				62944C6C20053A2D00814D36 /* RenderPass.cpp */,
-				62944C6D20053A2D00814D36 /* ShaderProgram.hpp */,
-				62944C6E20053A2D00814D36 /* RenderableObject.hpp */,
-				62944C6F20053A2D00814D36 /* RenderPass.hpp */,
-				62944C7020053A2D00814D36 /* ShaderProgram.cpp */,
-				62944C7120053A2D00814D36 /* VboCache.hpp */,
-				62944C7220053A2D00814D36 /* TextRenderer.cpp */,
+				62944C7820053A2D00814D36 /* Camera.hpp */,
 				62944C7320053A2D00814D36 /* IRenderer.hpp */,
 				62944C7420053A2D00814D36 /* Material.cpp */,
-				62944C7520053A2D00814D36 /* RenderQueue.cpp */,
+				62944C6620053A2D00814D36 /* Material.hpp */,
+				62944C6B20053A2D00814D36 /* RenderableObject.cpp */,
+				62944C6E20053A2D00814D36 /* RenderableObject.hpp */,
 				62944C7620053A2D00814D36 /* Renderer.cpp */,
+				62944C6820053A2D00814D36 /* Renderer.hpp */,
+				62944C6C20053A2D00814D36 /* RenderPass.cpp */,
+				62944C6F20053A2D00814D36 /* RenderPass.hpp */,
+				62944C7520053A2D00814D36 /* RenderQueue.cpp */,
+				62944C6720053A2D00814D36 /* RenderQueue.hpp */,
+				62944C7020053A2D00814D36 /* ShaderProgram.cpp */,
+				62944C6D20053A2D00814D36 /* ShaderProgram.hpp */,
+				62944C7220053A2D00814D36 /* TextRenderer.cpp */,
+				62944C6520053A2D00814D36 /* TextRenderer.hpp */,
+				62944C6920053A2D00814D36 /* TextureCache.cpp */,
 				62944C7720053A2D00814D36 /* TextureCache.hpp */,
-				62944C7820053A2D00814D36 /* Camera.hpp */,
+				62944C6420053A2D00814D36 /* VboCache.cpp */,
+				62944C7120053A2D00814D36 /* VboCache.hpp */,
 			);
 			path = RendererCore;
 			sourceTree = "<group>";
@@ -1399,24 +1399,24 @@
 		62944C7920053A2D00814D36 /* Shaders */ = {
 			isa = PBXGroup;
 			children = (
-				62944C7A20053A2D00814D36 /* PixelLighting.vert */,
-				62944C7B20053A2D00814D36 /* Textured.frag */,
-				62944C7C20053A2D00814D36 /* VertexLighting.vert */,
-				62944C7D20053A2D00814D36 /* TexturedLighting.vert */,
-				62944C7E20053A2D00814D36 /* PointParticle.vert */,
-				62944C7F20053A2D00814D36 /* Particle.frag */,
-				62944C8020053A2D00814D36 /* VertexColor.frag */,
 				62944C8120053A2D00814D36 /* EnvMap.frag */,
-				62944C8220053A2D00814D36 /* Text.vert */,
-				62944C8320053A2D00814D36 /* Particle.vert */,
-				62944C8420053A2D00814D36 /* PointParticle.frag */,
-				62944C8520053A2D00814D36 /* TexturedLighting.frag */,
-				62944C8620053A2D00814D36 /* VertexLighting.frag */,
-				62944C8720053A2D00814D36 /* PixelLighting.frag */,
-				62944C8820053A2D00814D36 /* Textured.vert */,
-				62944C8920053A2D00814D36 /* Text.frag */,
-				62944C8A20053A2D00814D36 /* VertexColor.vert */,
 				62944C8B20053A2D00814D36 /* EnvMap.vert */,
+				62944C7F20053A2D00814D36 /* Particle.frag */,
+				62944C8320053A2D00814D36 /* Particle.vert */,
+				62944C8720053A2D00814D36 /* PixelLighting.frag */,
+				62944C7A20053A2D00814D36 /* PixelLighting.vert */,
+				62944C8420053A2D00814D36 /* PointParticle.frag */,
+				62944C7E20053A2D00814D36 /* PointParticle.vert */,
+				62944C8920053A2D00814D36 /* Text.frag */,
+				62944C8220053A2D00814D36 /* Text.vert */,
+				62944C7B20053A2D00814D36 /* Textured.frag */,
+				62944C8820053A2D00814D36 /* Textured.vert */,
+				62944C8520053A2D00814D36 /* TexturedLighting.frag */,
+				62944C7D20053A2D00814D36 /* TexturedLighting.vert */,
+				62944C8020053A2D00814D36 /* VertexColor.frag */,
+				62944C8A20053A2D00814D36 /* VertexColor.vert */,
+				62944C8620053A2D00814D36 /* VertexLighting.frag */,
+				62944C7C20053A2D00814D36 /* VertexLighting.vert */,
 			);
 			path = Shaders;
 			sourceTree = "<group>";
@@ -1497,12 +1497,12 @@
 		62944CB720053A2D00814D36 /* Gui */ = {
 			isa = PBXGroup;
 			children = (
-				62944CB820053A2D00814D36 /* GuiView.hpp */,
 				62944CB920053A2D00814D36 /* Button.cpp */,
+				62944CBD20053A2D00814D36 /* Button.hpp */,
 				62944CBA20053A2D00814D36 /* Font.cpp */,
 				62944CBB20053A2D00814D36 /* Font.hpp */,
 				62944CBC20053A2D00814D36 /* GuiView.cpp */,
-				62944CBD20053A2D00814D36 /* Button.hpp */,
+				62944CB820053A2D00814D36 /* GuiView.hpp */,
 			);
 			path = Gui;
 			sourceTree = "<group>";
@@ -1510,23 +1510,23 @@
 		62944CBE20053A2D00814D36 /* Scene */ = {
 			isa = PBXGroup;
 			children = (
-				62944CBF20053A2D00814D36 /* Scene.cpp */,
-				62944CC020053A2D00814D36 /* TextComponent.cpp */,
-				62944CC120053A2D00814D36 /* ObjMeshLoader.hpp */,
-				62944CC220053A2D00814D36 /* ISceneManager.hpp */,
-				62944CC320053A2D00814D36 /* LightComponent.hpp */,
-				62944CC420053A2D00814D36 /* SceneResources.cpp */,
-				62944CC520053A2D00814D36 /* CameraComponent.hpp */,
-				62944CC620053A2D00814D36 /* SceneObject.hpp */,
-				62944CC720053A2D00814D36 /* SceneManager.hpp */,
-				62944CC820053A2D00814D36 /* ObjMeshLoader.cpp */,
-				62944CC920053A2D00814D36 /* LightComponent.cpp */,
-				62944CCA20053A2D00814D36 /* SceneResources.hpp */,
 				62944CCB20053A2D00814D36 /* CameraComponent.cpp */,
-				62944CCC20053A2D00814D36 /* SceneObject.cpp */,
-				62944CCD20053A2D00814D36 /* SceneManager.cpp */,
-				62944CCE20053A2D00814D36 /* Scene.hpp */,
+				62944CC520053A2D00814D36 /* CameraComponent.hpp */,
+				62944CC220053A2D00814D36 /* ISceneManager.hpp */,
 				62944CCF20053A2D00814D36 /* ISceneObjectComponent.hpp */,
+				62944CC920053A2D00814D36 /* LightComponent.cpp */,
+				62944CC320053A2D00814D36 /* LightComponent.hpp */,
+				62944CC820053A2D00814D36 /* ObjMeshLoader.cpp */,
+				62944CC120053A2D00814D36 /* ObjMeshLoader.hpp */,
+				62944CBF20053A2D00814D36 /* Scene.cpp */,
+				62944CCE20053A2D00814D36 /* Scene.hpp */,
+				62944CCD20053A2D00814D36 /* SceneManager.cpp */,
+				62944CC720053A2D00814D36 /* SceneManager.hpp */,
+				62944CCC20053A2D00814D36 /* SceneObject.cpp */,
+				62944CC620053A2D00814D36 /* SceneObject.hpp */,
+				62944CC420053A2D00814D36 /* SceneResources.cpp */,
+				62944CCA20053A2D00814D36 /* SceneResources.hpp */,
+				62944CC020053A2D00814D36 /* TextComponent.cpp */,
 				62944CD020053A2D00814D36 /* TextComponent.hpp */,
 			);
 			path = Scene;

@@ -11,6 +11,7 @@ namespace Pht {
     class IEngine;
     class Scene;
     class Material;
+    class SceneResources;
 }
 
 namespace BlocksGame {
@@ -33,6 +34,7 @@ namespace BlocksGame {
     class GradientRectangle {
     public:
         GradientRectangle(Pht::IEngine& engine,
+                          Pht::SceneResources& sceneResources,
                           const Pht::Vec3& position,
                           const Pht::Vec2& size,
                           float tilt,
@@ -54,14 +56,15 @@ namespace BlocksGame {
         }
         
     private:
-        std::unique_ptr<Pht::RenderableObject> CreateGradientQuad(const Pht::Vec2& size,
-                                                                  float tilt,
-                                                                  const Pht::Vec4& leftUpperColor,
-                                                                  const Pht::Vec4& rightUpperColor,
-                                                                  const Pht::Vec4& leftLowerColor,
-                                                                  const Pht::Vec4& rightLowerColor,
-                                                                  const Pht::Material& material,
-                                                                  Pht::IEngine& engine);
+        std::unique_ptr<Pht::SceneObject> CreateGradientQuad(const Pht::Vec2& size,
+                                                             float tilt,
+                                                             const Pht::Vec4& leftUpperColor,
+                                                             const Pht::Vec4& rightUpperColor,
+                                                             const Pht::Vec4& leftLowerColor,
+                                                             const Pht::Vec4& rightLowerColor,
+                                                             const Pht::Material& material,
+                                                             Pht::IEngine& engine,
+                                                             Pht::SceneResources& sceneResources);
 
         std::unique_ptr<Pht::SceneObject> mMidQuad;
         std::unique_ptr<Pht::SceneObject> mLeftQuad;

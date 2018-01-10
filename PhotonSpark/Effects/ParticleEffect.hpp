@@ -56,7 +56,7 @@ namespace Pht {
         RenderMode mRenderMode {RenderMode::Triangles};
         std::vector<Particle> mParticles;
         std::unique_ptr<VertexBuffer> mVertexBuffer;
-        std::shared_ptr<RenderableObject> mRenderableObject;
+        std::unique_ptr<RenderableObject> mRenderableObject;
         bool mIsActive {false};
     };
 }

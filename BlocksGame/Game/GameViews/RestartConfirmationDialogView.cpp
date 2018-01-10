@@ -23,7 +23,7 @@ RestartConfirmationDialogView::RestartConfirmationDialogView(Pht::IEngine& engin
     SetPosition({0.0f, 0.0f});
     SetDepthTest(false);
     
-    auto quad {MenuQuad::CreateGray(engine, size)};
+    auto quad {MenuQuad::CreateGray(engine, GetSceneResources(), size)};
     quad->SetPosition({0.0f, 0.0f, -1.0f});
     AddSceneObject(std::move(quad));
     
@@ -36,7 +36,9 @@ RestartConfirmationDialogView::RestartConfirmationDialogView(Pht::IEngine& engin
     lineMaterial.SetOpacity(0.4f);
     auto& sceneManager {engine.GetSceneManager()};
     auto lineSceneObject {
-        sceneManager.CreateSceneObject(Pht::QuadMesh {frustumWidth - 1.0f, 0.08f}, lineMaterial)
+        sceneManager.CreateSceneObject(Pht::QuadMesh {frustumWidth - 1.0f, 0.08f},
+                                       lineMaterial,
+                                       GetSceneResources())
     };
     lineSceneObject->SetPosition({0.0f, 3.0f, 0.0f});
     AddSceneObject(std::move(lineSceneObject));

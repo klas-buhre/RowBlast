@@ -22,7 +22,7 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine, const CommonResources& 
     SetPosition({0.0f, 0.0f});
     SetDepthTest(false);
     
-    auto quad {MenuQuad::CreateGray(engine, size)};
+    auto quad {MenuQuad::CreateGray(engine, GetSceneResources(), size)};
     quad->SetPosition({0.0f, 0.0f, -1.0f});
     AddSceneObject(std::move(quad));
     
@@ -30,7 +30,9 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine, const CommonResources& 
     lineMaterial.SetOpacity(0.4f);
     auto& sceneManager {engine.GetSceneManager()};
     auto lineSceneObject {
-        sceneManager.CreateSceneObject(Pht::QuadMesh {size.x - 1.0f, 0.08f}, lineMaterial)
+        sceneManager.CreateSceneObject(Pht::QuadMesh {size.x - 1.0f, 0.08f},
+                                       lineMaterial,
+                                       GetSceneResources())
     };
     lineSceneObject->SetPosition({0.0f, 3.3f, 0.0f});
     AddSceneObject(std::move(lineSceneObject));
@@ -40,7 +42,7 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine, const CommonResources& 
     Pht::Material barMaterial {Pht::Color{0.4f, 0.74f, 1.0f}};
     barMaterial.SetOpacity(0.24f);
     auto controlsBarSceneObject {
-        sceneManager.CreateSceneObject(Pht::QuadMesh {7.0f, 1.72f}, barMaterial)
+        sceneManager.CreateSceneObject(Pht::QuadMesh {7.0f, 1.72f}, barMaterial, GetSceneResources())
     };
     controlsBarSceneObject->SetPosition({-2.0f, 1.3f, -0.5f});
     AddSceneObject(std::move(controlsBarSceneObject));
@@ -78,7 +80,7 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine, const CommonResources& 
     mControlsButton->SetText(std::move(controlsSwipeText));
 
     auto soundBarSceneObject {
-        sceneManager.CreateSceneObject(Pht::QuadMesh {7.0f, 1.72f}, barMaterial)
+        sceneManager.CreateSceneObject(Pht::QuadMesh {7.0f, 1.72f}, barMaterial, GetSceneResources())
     };
     soundBarSceneObject->SetPosition({-2.0f, -1.3f, -0.5f});
     AddSceneObject(std::move(soundBarSceneObject));

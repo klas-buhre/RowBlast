@@ -15,9 +15,9 @@ namespace Pht {
         
         SceneObject();
         explicit SceneObject(Name name);
-        explicit SceneObject(std::shared_ptr<RenderableObject> renderable);
+        explicit SceneObject(RenderableObject* renderable);
         
-        void SetRenderable(std::shared_ptr<RenderableObject> renderable);
+        void SetRenderable(RenderableObject* renderable);
         void SetPosition(const Vec3& position);
         void SetRotationX(float degrees);
         void SetRotationY(float degrees);
@@ -76,11 +76,11 @@ namespace Pht {
         }
         
         const RenderableObject* GetRenderable() const {
-            return mRenderable.get();
+            return mRenderable;
         }
         
         RenderableObject* GetRenderable() {
-            return mRenderable.get();
+            return mRenderable;
         }
         
         const Mat4& GetMatrix() const {
@@ -118,7 +118,7 @@ namespace Pht {
         int mLayerMask {0};
         bool mIsVisible {true};
         bool mIsInFront {false};
-        std::shared_ptr<RenderableObject> mRenderable;
+        RenderableObject* mRenderable {nullptr};
         SceneObject* mParent {nullptr};
         std::vector<SceneObject*> mChildren;
         std::vector<std::pair<ComponentId, std::unique_ptr<ISceneObjectComponent>>> mComponents;

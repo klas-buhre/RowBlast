@@ -132,6 +132,7 @@ std::unique_ptr<GradientRectangle> GameHud::CreatePiecesRectangle(const Pht::Vec
     };
     
     return std::make_unique<GradientRectangle>(mEngine,
+                                               mSceneResources,
                                                position,
                                                size,
                                                tilt,
@@ -160,6 +161,7 @@ std::unique_ptr<GradientRectangle> GameHud::CreateSmallPiecesRectangle(const Pht
     };
     
     return std::make_unique<GradientRectangle>(mEngine,
+                                               mSceneResources,
                                                position,
                                                size,
                                                tilt,
@@ -183,6 +185,7 @@ std::unique_ptr<GradientRectangle> GameHud::CreateTextRectangle(const Pht::Vec3&
     };
     
     return std::make_unique<GradientRectangle>(mEngine,
+                                               mSceneResources,
                                                position,
                                                size,
                                                0.0f,

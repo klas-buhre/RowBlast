@@ -30,7 +30,11 @@ MenuButton::MenuButton(Pht::IEngine& engine,
     
     auto& sceneManager {engine.GetSceneManager()};
     
-    auto sceneObject {sceneManager.CreateSceneObject(Pht::QuadMesh {size.x, size.y}, material)};
+    auto sceneObject {
+        sceneManager.CreateSceneObject(Pht::QuadMesh {size.x, size.y},
+                                       material,
+                                       view.GetSceneResources())
+    };
     sceneObject->SetPosition(position);
     sceneObject->SetIsInFront(true);
     
@@ -69,13 +73,17 @@ MenuButton::MenuButton(Pht::IEngine& engine,
     
     if (style.mIsRounded) {
         auto leftSceneObject {
-            sceneManager.CreateSceneObject(Pht::SphereMesh {size.y / 2.0f}, material)
+            sceneManager.CreateSceneObject(Pht::SphereMesh {size.y / 2.0f},
+                                           material,
+                                           view.GetSceneResources())
         };
         leftSceneObject->SetPosition(position + Pht::Vec3 {-size.x / 2.0f, 0.0f, 0.0f});
         AddSceneObject(std::move(leftSceneObject));
         
         auto rightSceneObject {
-            sceneManager.CreateSceneObject(Pht::SphereMesh {size.y / 2.0f}, material)
+            sceneManager.CreateSceneObject(Pht::SphereMesh {size.y / 2.0f},
+                                           material,
+                                           view.GetSceneResources())
         };
         rightSceneObject->SetPosition(position + Pht::Vec3 {size.x / 2.0f, 0.0f, 0.0f});
         AddSceneObject(std::move(rightSceneObject));

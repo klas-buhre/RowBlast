@@ -59,6 +59,14 @@ LevelCompletedDialogView::LevelCompletedDialogView(Pht::IEngine& engine,
     };
     
     AddText(std::move(levelClearedText));
+    
+    for (auto i {0}; i < 3; ++i) {
+        auto star {std::make_unique<Pht::SceneObject>(mStarRenderable.get())};
+        star->SetRotationX(-90.0f);
+        star->SetPosition(starOffsets[i]);
+        mStars.push_back(star.get());
+        AddSceneObject(std::move(star));
+    }
 }
 
 void LevelCompletedDialogView::LoadStar(const CommonResources& commonResources) {
@@ -90,16 +98,10 @@ void LevelCompletedDialogView::SetNumStars(int numStars) {
     assert(numStars <= 3);
     
     for (auto* star: mStars) {
-        RemoveSceneObject(star);
+        star->SetIsVisible(false);
     }
     
-    mStars.clear();
-    
     for (auto i {0}; i < numStars; ++i) {
-        auto star {std::make_unique<Pht::SceneObject>(mStarRenderable)};
-        star->SetRotationX(-90.0f);
-        star->SetPosition(starOffsets[i]);
-        mStars.push_back(star.get());
-        AddSceneObject(std::move(star));
+        mStars[i]->SetIsVisible(true);
     }
 }

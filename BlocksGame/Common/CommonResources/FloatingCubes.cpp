@@ -79,7 +79,7 @@ void FloatingCubes::Reset() {
         cube.mVelocity = velocity;
         cube.mAngularVelocity = angularVelocity;
         
-        cube.mSceneObject->SetRenderable(mCubeRenderables[std::rand() % numRenderables]);
+        cube.mSceneObject->SetRenderable(mCubeRenderables[std::rand() % numRenderables].get());
         
         auto& transform {cube.mSceneObject->GetTransform()};
         transform.SetPosition(position);

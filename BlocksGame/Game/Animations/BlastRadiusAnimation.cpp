@@ -110,7 +110,8 @@ BlastRadiusAnimation::BlastRadiusAnimation(Pht::IEngine& engine, const GameScene
     
     auto& sceneManager {engine.GetSceneManager()};
     mSceneObject = sceneManager.CreateSceneObject(Pht::QuadMesh {squareSide, squareSide},
-                                                  imageMaterial);
+                                                  imageMaterial,
+                                                  mSceneResources);
 }
 
 void BlastRadiusAnimation::Start() {

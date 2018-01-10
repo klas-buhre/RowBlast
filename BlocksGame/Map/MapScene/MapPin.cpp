@@ -33,7 +33,7 @@ MapPin::MapPin(Pht::IEngine& engine,
                const Pht::Font& font,
                Pht::Scene& scene,
                Pht::SceneObject& containerObject,
-               std::shared_ptr<Pht::RenderableObject> starRenderable,
+               Pht::RenderableObject& starRenderable,
                const Pht::Vec3& position,
                int level,
                int numStars,
@@ -57,7 +57,7 @@ MapPin::MapPin(Pht::IEngine& engine,
     
     for (auto i {0}; i < numStars; ++i) {
         auto& star {scene.CreateSceneObject()};
-        star.SetRenderable(starRenderable);
+        star.SetRenderable(&starRenderable);
         
         auto& transform {star.GetTransform()};
         transform.SetRotation({90.0f, 0.0f, 0.0f});

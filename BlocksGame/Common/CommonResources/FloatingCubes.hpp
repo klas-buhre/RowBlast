@@ -51,7 +51,7 @@ namespace BlocksGame {
         Pht::Scene* mScene {nullptr};
         std::unique_ptr<Pht::SceneObject> mSceneObject;
         std::vector<FloatingCube> mCubes;
-        std::array<std::shared_ptr<Pht::RenderableObject>, numRenderables> mCubeRenderables;
+        std::array<std::unique_ptr<Pht::RenderableObject>, numRenderables> mCubeRenderables;
         std::vector<CubePathVolume> mVolumes;
     };
 }

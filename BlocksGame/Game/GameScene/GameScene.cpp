@@ -54,12 +54,13 @@ GameScene::GameScene(Pht::IEngine& engine,
     mCommonResources {commonResources},
     mLightDirection {1.0f, 1.0f, 0.74f},
     mFieldPosition {0.0f, 0.0f, 0.0f},
-    mFloatingCubes {engine, nullptr, 0, floatingCubePaths, commonResources, 7.7f} {
-
-    CreateBackground();
-}
+    mFloatingCubes {engine, nullptr, 0, floatingCubePaths, commonResources, 7.7f} {}
 
 void GameScene::Reset(const Level& level) {
+    mSceneResources = std::make_unique<Pht::SceneResources>();
+    
+    CreateBackground();
+    
     mEngine.GetRenderer().SetLightDirection(mLightDirection);
     
     mFieldWidth = mCellSize * level.GetNumColumns();
@@ -110,7 +111,9 @@ void GameScene::CreateBackground() {
     Pht::Material backgroundMaterial {"sky_blurred.jpg"};
     
     auto& sceneManager {mEngine.GetSceneManager()};
-    mBackground = sceneManager.CreateSceneObject(Pht::QuadMesh {150.0f, 150.0f}, backgroundMaterial);
+    mBackground = sceneManager.CreateSceneObject(Pht::QuadMesh {150.0f, 150.0f},
+                                                 backgroundMaterial,
+                                                 *mSceneResources);
     mBackground->SetPosition({0.0f, -5.0f, -42.0f});
 }
 
@@ -121,7 +124,9 @@ void GameScene::CreateFieldQuad(const Level& level) {
     auto vertices {CreateFieldVertices(level)};
 
     auto& sceneManager {mEngine.GetSceneManager()};
-    mFieldQuad = sceneManager.CreateSceneObject(Pht::QuadMesh {vertices}, fieldMaterial);
+    mFieldQuad = sceneManager.CreateSceneObject(Pht::QuadMesh {vertices},
+                                                fieldMaterial,
+                                                *mSceneResources);
     mFieldQuad->SetPosition({mFieldPosition.x, mFieldPosition.y, mFieldPosition.z + fieldQuadZ});
 }
 

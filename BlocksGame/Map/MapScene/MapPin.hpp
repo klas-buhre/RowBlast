@@ -27,7 +27,7 @@ namespace BlocksGame {
                const Pht::Font& font,
                Pht::Scene& scene,
                Pht::SceneObject& containerObject,
-               std::shared_ptr<Pht::RenderableObject> starRenderable,
+               Pht::RenderableObject& starRenderable,
                const Pht::Vec3& position,
                int level,
                int numStars,

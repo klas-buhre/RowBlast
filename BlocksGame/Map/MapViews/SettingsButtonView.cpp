@@ -26,7 +26,11 @@ SettingsButtonView::SettingsButtonView(Pht::IEngine& engine) {
     
     auto& sceneManger {engine.GetSceneManager()};
     
-    auto circleSceneObject {sceneManger.CreateSceneObject(Pht::SphereMesh {1.0f}, circleMaterial)};
+    auto circleSceneObject {
+        sceneManger.CreateSceneObject(Pht::SphereMesh {1.0f},
+                                      circleMaterial,
+                                      GetSceneResources())
+    };
     circleSceneObject->SetPosition({0.0f, 0.0f, -2.0f});
     auto& circleMaterialCapture {circleSceneObject->GetRenderable()->GetMaterial()};
     auto& circleSceneObjectCapture {*circleSceneObject};
@@ -36,7 +40,11 @@ SettingsButtonView::SettingsButtonView(Pht::IEngine& engine) {
     
     Pht::Material gearIconMaterial {"settings.png"};
     gearIconMaterial.SetBlend(Pht::Blend::Yes);
-    auto gearIcon {sceneManger.CreateSceneObject(Pht::QuadMesh {1.4f, 1.4f}, gearIconMaterial)};
+    auto gearIcon {
+        sceneManger.CreateSceneObject(Pht::QuadMesh {1.4f, 1.4f},
+                                      gearIconMaterial,
+                                      GetSceneResources())
+    };
     auto& gearIconCapture {*gearIcon};
     
     auto selectFunction {[&] () {

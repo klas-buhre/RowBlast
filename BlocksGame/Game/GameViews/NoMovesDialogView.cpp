@@ -16,7 +16,7 @@ NoMovesDialogView::NoMovesDialogView(Pht::IEngine& engine, const CommonResources
     SetSize(size);
     SetPosition({0.0f, 0.0f});
     
-    auto quad {MenuQuad::CreateGreen(engine, size)};
+    auto quad {MenuQuad::CreateGreen(engine, GetSceneResources(), size)};
     quad->SetPosition({0.0f, 0.0f, -1.0f});
     AddSceneObject(std::move(quad));
     

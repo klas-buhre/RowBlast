@@ -9,12 +9,17 @@
 
 namespace Pht {
     class IEngine;
+    class SceneResources;
 }
 
 namespace BlocksGame {
     namespace MenuQuad {
-        std::unique_ptr<Pht::SceneObject> CreateGray(Pht::IEngine& engine, const Pht::Vec2& size);
-        std::unique_ptr<Pht::SceneObject> CreateGreen(Pht::IEngine& engine, const Pht::Vec2& size);
+        std::unique_ptr<Pht::SceneObject> CreateGray(Pht::IEngine& engine,
+                                                     Pht::SceneResources& sceneResources,
+                                                     const Pht::Vec2& size);
+        std::unique_ptr<Pht::SceneObject> CreateGreen(Pht::IEngine& engine,
+                                                      Pht::SceneResources& sceneResources,
+                                                      const Pht::Vec2& size);
     }
 }
 

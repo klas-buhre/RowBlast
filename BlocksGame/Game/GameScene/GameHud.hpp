@@ -7,6 +7,7 @@
 // Engine includes.
 #include "Vector.hpp"
 #include "Font.hpp"
+#include "SceneResources.hpp"
 
 // Game includes.
 #include "GradientRectangle.hpp"
@@ -150,6 +151,7 @@ namespace BlocksGame {
         const Piece& mLPiece;
         const Pht::RenderableObject& mGrayBlock;
         const Pht::RenderableObject& mBlueprintSlot;
+        Pht::SceneResources mSceneResources;
         Level::Objective mLevelObjective {Level::Objective::Clear};
         Pht::Vec2 mProgressPosition;
         Pht::Vec2 mMovesPosition;

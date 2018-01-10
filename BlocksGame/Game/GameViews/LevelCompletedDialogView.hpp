@@ -45,7 +45,7 @@ namespace BlocksGame {
         Pht::IEngine& mEngine;
         std::unique_ptr<CloseButton> mCloseButton;
         std::unique_ptr<MenuButton> mNextButton;
-        std::shared_ptr<Pht::RenderableObject> mStarRenderable;
+        std::unique_ptr<Pht::RenderableObject> mStarRenderable;
         std::vector<Pht::SceneObject*> mStars;
         float mStarAngle {0.0f};
     };

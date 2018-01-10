@@ -18,7 +18,8 @@ namespace {
                                                                    Pht::IEngine& engine,
                                                                    const Pht::Vec2& coordinateSystemSize,
                                                                    float circleRadius,
-                                                                   const Pht::Vec4& fillColor) {
+                                                                   const Pht::Vec4& fillColor,
+                                                                   Pht::SceneResources& resources) {
         Pht::Vec4 borderColor {1.0f, 1.0f, 1.0f, 0.95f};
         rasterizer.DrawCircle({circleRadius, circleRadius}, circleRadius - 0.05f, 0.05f, borderColor);
         
@@ -39,7 +40,8 @@ namespace {
         
         auto& sceneManager {engine.GetSceneManager()};
         return sceneManager.CreateSceneObject(Pht::QuadMesh {coordinateSystemSize.x, coordinateSystemSize.y},
-                                              imageMaterial);
+                                              imageMaterial,
+                                              resources);
     }
 }
 
@@ -68,7 +70,8 @@ GameHudView::GameHudView(Pht::IEngine& engine) {
                                                              engine,
                                                              coordinateSystemSize,
                                                              circleRadius,
-                                                             fillColor)};
+                                                             fillColor,
+                                                             GetSceneResources())};
     auto& buttonQuadSceneObjectCapture {*buttonQuadSceneObject};
     
     rasterizer->ClearBuffer();
@@ -78,7 +81,8 @@ GameHudView::GameHudView(Pht::IEngine& engine) {
                                                                     engine,
                                                                     coordinateSystemSize,
                                                                     circleRadius,
-                                                                    pressedFillColor)};
+                                                                    pressedFillColor,
+                                                                    GetSceneResources())};
     pressedButtonQuadSceneObject->SetScale(1.35f);
     pressedButtonQuadSceneObject->SetIsVisible(false);
     auto& pressedButtonQuadSceneObjectCapture {*pressedButtonQuadSceneObject};

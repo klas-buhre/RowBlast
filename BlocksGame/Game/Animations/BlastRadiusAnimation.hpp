@@ -6,6 +6,7 @@
 // Engine includes.
 #include "Vector.hpp"
 #include "SceneObject.hpp"
+#include "SceneResources.hpp"
 
 namespace Pht {
     class IEngine;
@@ -38,6 +39,7 @@ namespace BlocksGame {
         State mState {State::Inactive};
         std::unique_ptr<Pht::SceneObject> mSceneObject;
         float mTime {0.0f};
+        Pht::SceneResources mSceneResources;
     };
 }
 

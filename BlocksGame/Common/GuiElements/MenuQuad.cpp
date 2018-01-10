@@ -9,6 +9,7 @@
 using namespace BlocksGame;
 
 std::unique_ptr<Pht::SceneObject> MenuQuad::CreateGray(Pht::IEngine& engine,
+                                                       Pht::SceneResources& sceneResources,
                                                        const Pht::Vec2& size) {
     Pht::Material quadMaterial;
 
@@ -19,10 +20,13 @@ std::unique_ptr<Pht::SceneObject> MenuQuad::CreateGray(Pht::IEngine& engine,
         {{-size.x / 2.0f, size.y / 2.0f, 0.0f}, {0.53f, 0.53f, 0.27, 0.8f}},
     };
 
-    return engine.GetSceneManager().CreateSceneObject(Pht::QuadMesh {vertices}, quadMaterial);
+    return engine.GetSceneManager().CreateSceneObject(Pht::QuadMesh {vertices},
+                                                      quadMaterial,
+                                                      sceneResources);
 }
 
 std::unique_ptr<Pht::SceneObject> MenuQuad::CreateGreen(Pht::IEngine& engine,
+                                                        Pht::SceneResources& sceneResources,
                                                         const Pht::Vec2& size) {
     Pht::Material quadMaterial;
     Pht::QuadMesh::Vertices vertices {
@@ -32,5 +36,7 @@ std::unique_ptr<Pht::SceneObject> MenuQuad::CreateGreen(Pht::IEngine& engine,
         {{-size.x / 2.0f, size.y / 2.0f, 0.0f}, {0.27, 0.27, 0.6f, 0.8f}},
     };
 
-    return engine.GetSceneManager().CreateSceneObject(Pht::QuadMesh {vertices}, quadMaterial);
+    return engine.GetSceneManager().CreateSceneObject(Pht::QuadMesh {vertices},
+                                                      quadMaterial,
+                                                      sceneResources);
 }

@@ -9,11 +9,11 @@ SceneObject::SceneObject() {}
 SceneObject::SceneObject(Name name) :
     mName {name} {}
 
-SceneObject::SceneObject(std::shared_ptr<RenderableObject> renderable) :
+SceneObject::SceneObject(RenderableObject* renderable) :
     mRenderable {renderable} {
 }
 
-void SceneObject::SetRenderable(std::shared_ptr<RenderableObject> renderable) {
+void SceneObject::SetRenderable(RenderableObject* renderable) {
     assert(renderable);
     mRenderable = renderable;
 }

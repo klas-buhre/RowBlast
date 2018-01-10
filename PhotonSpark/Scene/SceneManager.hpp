@@ -17,7 +17,8 @@ namespace Pht {
         std::unique_ptr<RenderableObject> CreateRenderableObject(const IMesh& mesh,
                                                                  const Material& material) override;
         std::unique_ptr<SceneObject> CreateSceneObject(const IMesh& mesh,
-                                                       const Material& material) override;
+                                                       const Material& material,
+                                                       SceneResources& sceneResources) override;
 
     private:
         Renderer& mRenderer;
