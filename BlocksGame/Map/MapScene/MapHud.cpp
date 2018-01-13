@@ -154,7 +154,7 @@ void MapHud::UpdateLivesText() {
 
 void MapHud::UpdateCountdown() {
     auto secondsUntilNewLife {mUserData.GetLifeManager().GetDurationUntilNewLife()};
-    
+
     if (secondsUntilNewLife != mSecondsUntilNewLife) {
         StaticStringBuffer countdownBuffer;
         StringUtils::FormatToMinutesAndSeconds(countdownBuffer, secondsUntilNewLife);

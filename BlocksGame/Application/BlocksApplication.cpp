@@ -1,7 +1,6 @@
 /*
 Backlog:
   -Engine:
-    -Make SceneObject::mRenderable a raw pointer.
     -Physics.
     -Purchases.
     -Net/HTTP.
@@ -43,14 +42,9 @@ Backlog:
      tossed.
     -The blocks in FlyingBlocksAnimation should bounce off each other instead of passing right 
      through.
-    -The floating cubes could have materials with bought envmap textures without boundries. Or,
-     The angle of the rotating cubes in the title scene and game scene could be configurable/
-     deterministic so that the ugly edges in the env mapping is never seen.
     -MenuButtons can start a shrink animation when pressed down.
     -Try models with less bevel for the preview. The triangles with less bevel could be tried for
      field also.
-  -Map:
-    -More 3D feel.
   -Tutorial:
   -Purchases:
   -Back end:
@@ -62,16 +56,54 @@ Backlog:
   
 Ongoing tasks:
     -GameScene should be a Pht::Scene.
-    -Make SceneObject::mRenderable a raw pointer.
-        IScenManager::CreateSceneObject() should take a SceneResources that takes ownership of the
-        RenderableObject (but not of the SceneObject. It is easier to just return a
-        unique_ptr<SceneObject> for now).
 
 Ideas:
     -The pause button could lead to a widget that has an undo button, a boosters button and a game
      menu button.
- 
 
+Time Estimation in days:
+    -Convert GameScene into a Pht::Scene.
+        Cost: 10
+    -Let each GuiView be a Pht::Scene that can be merged into the current scene.
+        Cost: 5
+    -Finalize gameplay.
+        Cost: 10
+    -Fix all gameplay bugs.
+        Cost: 7
+    -Better particle effects for bombs and row bombs.
+        Cost: 10
+    -Bombs should have bomb meshes.
+        Cost: 5
+    -Camera shake.
+        Cost: 3
+    -Switch piece HUD animation.
+        Cost: 3
+    -Use new GUI/Menu textures.
+        Cost: 3
+    -Animations/effects when clearing a level.
+        Cost: 7
+    -Improving sliding text animation.
+        Cost: 3
+    -Tutorial.
+        Cost: 10
+    -Levels.
+        Cost: 10
+    -Purchases.
+        Cost: 15
+    -Sounds/music.
+        Cost: 5
+    -Net/HTTP.
+        Cost: 10
+    -Analytics.
+        Cost: 5
+    -Login/sign up account.
+        Cost: 10
+    -Back end.
+    -Physics.
+        Cost: 15
+
+        Total: 146
+ 
 Create rounded cube in Blender:
 Scale cube so that size is 1.0. Select the wrench to the right.
 Then, Add Modifier > Bevel > turn up width > turn up segments.

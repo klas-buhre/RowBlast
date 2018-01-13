@@ -15,11 +15,7 @@ namespace {
                                 const Movement* previousMovement) {
         auto& position {piece.mPosition};
         
-        Pht::Vec2 floatPosition {
-            static_cast<float>(position.x),
-            static_cast<float>(position.y)
-        };
-        
+        Pht::Vec2 floatPosition {static_cast<float>(position.x), static_cast<float>(position.y)};
         Movement movement {floatPosition, piece.mRotation, previousMovement};
         validMoves.mMovements.PushBack(movement);
         return &validMoves.mMovements.Back();
@@ -99,9 +95,7 @@ void ValidMovesSearch::FindValidMoves(ValidMoves& validMoves, MovingPiece piece)
             continue;
         }
         
-        auto* rotationMovement {
-            AddMovement(validMoves, piece, nullptr)
-        };
+        auto* rotationMovement {AddMovement(validMoves, piece, nullptr)};
         
         SearchDown(validMoves,
                    piece,
@@ -246,9 +240,7 @@ void ValidMovesSearch::FindValidMoves(ValidMoves& validMoves,
             continue;
         }
         
-        auto* rotationMovement {
-            AddMovement(validMoves, piece, previousMovement)
-        };
+        auto* rotationMovement {AddMovement(validMoves, piece, previousMovement)};
         
         switch (searchDirection) {
             case SearchDirection::Left:
@@ -278,9 +270,7 @@ void ValidMovesSearch::SearchLeft(ValidMoves& validMoves,
     for (auto x {xBegin}; x >= xEnd; --x) {
         piece.mPosition.x = x;
 
-        auto* newPositionMovement {
-            AddMovement(validMoves, piece, previousMovement)
-        };
+        auto* newPositionMovement {AddMovement(validMoves, piece, previousMovement)};
         
         SearchDown(validMoves, piece, newPositionMovement, allowRecursion, positionAdjustment);
     }
@@ -301,9 +291,7 @@ void ValidMovesSearch::SearchRight(ValidMoves& validMoves,
     for (auto x {xBegin}; x <= xEnd; ++x) {
         piece.mPosition.x = x;
 
-        auto* newPositionMovement {
-            AddMovement(validMoves, piece, previousMovement)
-        };
+        auto* newPositionMovement {AddMovement(validMoves, piece, previousMovement)};
         
         SearchDown(validMoves, piece, newPositionMovement, allowRecursion, positionAdjustment);
     }
