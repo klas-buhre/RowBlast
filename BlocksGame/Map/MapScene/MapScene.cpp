@@ -24,8 +24,8 @@ namespace {
     const auto halfMapWidth {22.0f};
     
     enum class Layer {
-        Map = 0,
-        Hud = 1
+        Map,
+        Hud
     };
 
     const std::vector<CloudPathVolume> cloudPaths {
@@ -160,12 +160,11 @@ void MapScene::CreateScene(const Chapter& chapter) {
                                        1.5f);
 
     mFloatingCubes = std::make_unique<FloatingCubes>(mEngine,
-                                                     scene.get(),
+                                                     *scene,
                                                      static_cast<int>(Layer::Map),
                                                      chapter.mCubePaths,
                                                      mCommonResources,
                                                      1.5f);
-    mFloatingCubes->Reset();
     
     CreatePins(chapter);
     SetCameraAtCurrentLevel();

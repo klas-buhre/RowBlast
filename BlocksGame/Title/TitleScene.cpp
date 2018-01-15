@@ -19,8 +19,8 @@ using namespace BlocksGame;
 
 namespace {
     enum class Layer {
-        Background = 0,
-        Text = 1
+        Background,
+        Text
     };
 
     const std::vector<CloudPathVolume> cloudPaths {
@@ -168,12 +168,11 @@ TitleScene::TitleScene(Pht::IEngine& engine, const CommonResources& commonResour
                                        3.0f);
 
     mFloatingCubes = std::make_unique<FloatingCubes>(engine,
-                                                     scene.get(),
+                                                     *scene,
                                                      static_cast<int>(Layer::Background),
                                                      floatingCubePaths,
                                                      commonResources,
                                                      7.7f);
-    mFloatingCubes->Reset();
     
     auto& titleText {scene->CreateText("BLOCKS", {mFont, 1.0f, Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f}})};
     auto& titleTextSceneObject {titleText.GetSceneObject()};

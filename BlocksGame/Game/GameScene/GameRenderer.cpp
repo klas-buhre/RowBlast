@@ -3,7 +3,9 @@
 #include <array>
 
 // Engine includes.
+#include "IEngine.hpp"
 #include "IRenderer.hpp"
+#include "ISceneManager.hpp"
 
 // Game includes.
 #include "RenderUtils.hpp"
@@ -40,7 +42,7 @@ namespace {
     const auto dz {0.05f};
 }
 
-GameRenderer::GameRenderer(Pht::IRenderer& engineRenderer,
+GameRenderer::GameRenderer(Pht::IEngine& engine,
                            const Field& field, 
                            const GameLogic& gameLogic,
                            const ExplosionParticleEffect& explosionParticleEffect,
@@ -53,7 +55,8 @@ GameRenderer::GameRenderer(Pht::IRenderer& engineRenderer,
                            const ScrollController& scrollController,
                            const GameHud& hud,
                            const GameViewControllers& gameViewControllers) :
-    mEngineRenderer {engineRenderer},
+    mEngine {engine},
+    mEngineRenderer {engine.GetRenderer()},
     mField {field},
     mGameLogic {gameLogic},
     mExplosionParticleEffect {explosionParticleEffect},
@@ -68,16 +71,13 @@ GameRenderer::GameRenderer(Pht::IRenderer& engineRenderer,
     mGameViewControllers {gameViewControllers} {}
 
 void GameRenderer::RenderFrame() {
-    mEngineRenderer.SetProjectionMode(Pht::ProjectionMode::Perspective);
-    
-    mEngineRenderer.RenderSceneObject(mScene.GetBackground());
-    mEngineRenderer.RenderSceneObject(mScene.GetFloatingCubes());
+    auto* scene {mEngine.GetSceneManager().GetActiveScene()};
+    mEngine.GetRenderer().RenderScene(*scene);
 
     mEngineRenderer.SetProjectionMode(Pht::ProjectionMode::Orthographic);
     mEngineRenderer.SetScissorBox(mScene.GetScissorBoxLowerLeft(), mScene.GetScissorBoxSize());
     mEngineRenderer.SetScissorTest(true);
     
-    mEngineRenderer.RenderSceneObject(mScene.GetFieldQuad());
     RenderFieldBlueprintSlots();
     RenderFieldBlueprintSlotsAnimation();
     RenderPieceDropParticles();

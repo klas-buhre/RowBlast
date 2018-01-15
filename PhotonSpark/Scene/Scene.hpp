@@ -41,6 +41,7 @@ namespace Pht {
         TextComponent& CreateText(const std::string& text, const TextProperties& properties);
         void AddSceneObject(std::unique_ptr<SceneObject> sceneObject);
         void AddRenderPass(const RenderPass& renderPass);
+        RenderPass* GetRenderPass(int layerIndex);
         
         LightComponent* GetGlobalLight() {
             return mGlobalLight;

@@ -88,3 +88,13 @@ void Scene::AddSceneObject(std::unique_ptr<SceneObject> sceneObject) {
 void Scene::AddRenderPass(const RenderPass& renderPass) {
     mRenderPasses.push_back(renderPass);
 }
+
+RenderPass* Scene::GetRenderPass(int layerIndex) {
+    for (auto& renderPass: mRenderPasses) {
+        if (renderPass.GetLayerMask() & (1 << layerIndex)) {
+            return &renderPass;
+        }
+    }
+    
+    return nullptr;
+}

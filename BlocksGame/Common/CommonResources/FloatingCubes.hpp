@@ -25,20 +25,17 @@ namespace BlocksGame {
     class FloatingCubes {
     public:
         FloatingCubes(Pht::IEngine& engine,
-                      Pht::Scene* scene,
+                      Pht::Scene& scene,
                       int layerIndex,
                       const std::vector<CubePathVolume>& volumes,
                       const CommonResources& commonResources,
                       float scale);
         
-        void Reset();
         void Update();
         
-        const Pht::SceneObject& GetSceneObject() const {
-            return *mSceneObject;
-        }
-        
     private:
+        void InitCubes();
+        
         static constexpr int numRenderables {4};
 
         struct FloatingCube {
@@ -48,7 +45,6 @@ namespace BlocksGame {
         };
 
         Pht::IEngine& mEngine;
-        Pht::Scene* mScene {nullptr};
         std::unique_ptr<Pht::SceneObject> mSceneObject;
         std::vector<FloatingCube> mCubes;
         std::array<std::unique_ptr<Pht::RenderableObject>, numRenderables> mCubeRenderables;

@@ -65,7 +65,7 @@ GameController::GameController(Pht::IEngine& engine,
     mLevelResources {engine, mScene},
     mHud {engine, mGameLogic, mLevelResources, mGameViewControllers.GetGameHudController()},
     mRenderer {
-        engine.GetRenderer(),
+        engine,
         mField,
         mGameLogic,
         mExplosionParticleEffect,

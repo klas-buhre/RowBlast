@@ -12,13 +12,12 @@
 using namespace BlocksGame;
 
 FloatingCubes::FloatingCubes(Pht::IEngine& engine,
-                             Pht::Scene* scene,
+                             Pht::Scene& scene,
                              int layerIndex,
                              const std::vector<CubePathVolume>& volumes,
                              const CommonResources& commonResources,
                              float scale) :
     mEngine {engine},
-    mScene {scene},
     mVolumes {volumes} {
     
     mCubes.resize(mVolumes.size());
@@ -37,17 +36,17 @@ FloatingCubes::FloatingCubes(Pht::IEngine& engine,
     mSceneObject = std::make_unique<Pht::SceneObject>();
     mSceneObject->SetLayer(layerIndex);
     
-    if (mScene) {
-        mScene->GetRoot().AddChild(*mSceneObject);
-    }
+    scene.GetRoot().AddChild(*mSceneObject);
     
     for (auto& cube: mCubes) {
         cube.mSceneObject = std::make_unique<Pht::SceneObject>();
         mSceneObject->AddChild(*cube.mSceneObject);
     }
+    
+    InitCubes();
 }
 
-void FloatingCubes::Reset() {
+void FloatingCubes::InitCubes() {
     for (auto i {0}; i < mCubes.size(); ++i) {
         const auto& volume {mVolumes[i]};
     
@@ -108,9 +107,5 @@ void FloatingCubes::Update() {
         if (position.x < leftLimit && cube.mVelocity.x < 0.0f) {
             cube.mVelocity.x = -cube.mVelocity.x;
         }
-    }
-    
-    if (mScene == nullptr) {
-        mSceneObject->Update(false);
     }
 }

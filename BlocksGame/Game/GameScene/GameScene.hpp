@@ -5,9 +5,7 @@
 
 // Engine includes.
 #include "Vector.hpp"
-#include "SceneObject.hpp"
 #include "QuadMesh.hpp"
-#include "SceneResources.hpp"
 
 // Game includes.
 #include "FloatingCubes.hpp"
@@ -15,6 +13,8 @@
 
 namespace Pht {
     class IEngine;
+    class Scene;
+    class CameraComponent;
 }
 
 namespace BlocksGame {
@@ -38,7 +38,6 @@ namespace BlocksGame {
         const Pht::Material& GetDarkGrayMaterial() const;
         const Pht::Material& GetLightGrayMaterial() const;
         const Pht::Material& GetYellowMaterial() const;
-        const Pht::SceneObject& GetFloatingCubes() const;
         
         const Pht::Vec3& GetLightDirection() const {
             return mLightDirection;
@@ -83,27 +82,23 @@ namespace BlocksGame {
         const Pht::Vec2& GetScissorBoxSize() const {
             return mScissorBoxSize;
         }
-
-        const Pht::SceneObject& GetFieldQuad() const {
-            return *mFieldQuad;
-        }
-        
-        const Pht::SceneObject& GetBackground() const {
-            return *mBackground;
-        }
        
         float GetGhostPieceOpacity() const {
             return mGhostPieceOpacity;
         }
         
     private:
-        void UpdateCameraPosition();
+        void UpdateCameraPositionAndScissorBox();
         void CreateBackground();
         void CreateFieldQuad(const Level& level);
         Pht::QuadMesh::Vertices CreateFieldVertices(const Level& level);
+        
         Pht::IEngine& mEngine;
         const ScrollController& mScrollController;
         const CommonResources& mCommonResources;
+        Pht::Scene* mScene {nullptr};
+        Pht::CameraComponent* mCamera {nullptr};
+        std::unique_ptr<FloatingCubes> mFloatingCubes;
         Pht::Vec3 mLightDirection;
         const Pht::Vec3 mFieldPosition;
         const float mCellSize {1.25f};
@@ -117,10 +112,6 @@ namespace BlocksGame {
         Pht::Vec2 mFieldLoweLeft;
         Pht::Vec2 mScissorBoxLowerLeft;
         Pht::Vec2 mScissorBoxSize;
-        std::unique_ptr<Pht::SceneResources> mSceneResources;
-        std::unique_ptr<Pht::SceneObject> mBackground;
-        std::unique_ptr<Pht::SceneObject> mFieldQuad;
-        FloatingCubes mFloatingCubes;
         const float mGhostPieceOpacity {0.5f};
     };
 }

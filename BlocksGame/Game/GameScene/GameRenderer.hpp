@@ -8,6 +8,7 @@
 #include "Cell.hpp"
 
 namespace Pht {
+    class IEngine;
     class IRenderer;
     class ParticleEffect;
     class SceneObject;
@@ -33,7 +34,7 @@ namespace BlocksGame {
 
     class GameRenderer {
     public:
-        GameRenderer(Pht::IRenderer& engineRenderer,
+        GameRenderer(Pht::IEngine& engine,
                      const Field& field,
                      const GameLogic& gameLogic,
                      const ExplosionParticleEffect& explosionParticleEffect,
@@ -90,6 +91,7 @@ namespace BlocksGame {
         void RenderLevelCompletedView();
         void RenderSlidingText();
         
+        Pht::IEngine& mEngine;
         Pht::IRenderer& mEngineRenderer;
         const Field& mField;
         const GameLogic& mGameLogic;

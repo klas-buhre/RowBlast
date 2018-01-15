@@ -5,6 +5,9 @@
 #include "IRenderer.hpp"
 #include "Material.hpp"
 #include "ISceneManager.hpp"
+#include "Fnv1Hash.hpp"
+#include "LightComponent.hpp"
+#include "CameraComponent.hpp"
 
 // Game includes.
 #include "Level.hpp"
@@ -17,6 +20,11 @@ namespace {
     const auto fieldQuadZ {-1.0f};
     const auto lowerClipAreaHeightInCells {2.15f};
     const auto fieldPadding {0.1f};
+    
+    enum class Layer {
+        Background,
+        Field
+    };
 
     const std::vector<CubePathVolume> floatingCubePaths {
         CubePathVolume {
@@ -53,15 +61,34 @@ GameScene::GameScene(Pht::IEngine& engine,
     mScrollController {scrollController},
     mCommonResources {commonResources},
     mLightDirection {1.0f, 1.0f, 0.74f},
-    mFieldPosition {0.0f, 0.0f, 0.0f},
-    mFloatingCubes {engine, nullptr, 0, floatingCubePaths, commonResources, 7.7f} {}
+    mFieldPosition {0.0f, 0.0f, 0.0f} {}
 
 void GameScene::Reset(const Level& level) {
-    mSceneResources = std::make_unique<Pht::SceneResources>();
+    auto& sceneManager {mEngine.GetSceneManager()};
+    auto scene {sceneManager.CreateScene(Pht::Hash::Fnv1a("gameScene"))};
+    mScene = scene.get();
     
+    scene->AddRenderPass(Pht::RenderPass {static_cast<int>(Layer::Background)});
+    
+    Pht::RenderPass fieldRenderPass {static_cast<int>(Layer::Field)};
+    fieldRenderPass.SetProjectionMode(Pht::ProjectionMode::Orthographic);
+    scene->AddRenderPass(fieldRenderPass);
+
+    auto& light {scene->CreateGlobalLight()};
+    light.SetDirection(mLightDirection);
+    scene->GetRoot().AddChild(light.GetSceneObject());
+    
+    mCamera = &scene->CreateCamera();
+    scene->GetRoot().AddChild(mCamera->GetSceneObject());
+
     CreateBackground();
     
-    mEngine.GetRenderer().SetLightDirection(mLightDirection);
+    mFloatingCubes = std::make_unique<FloatingCubes>(mEngine,
+                                                     *mScene,
+                                                     static_cast<int>(Layer::Background),
+                                                     floatingCubePaths,
+                                                     mCommonResources,
+                                                     7.7f);
     
     mFieldWidth = mCellSize * level.GetNumColumns();
     mFieldHeight = mCellSize * level.GetNumRows();
@@ -74,20 +101,21 @@ void GameScene::Reset(const Level& level) {
     mScissorBoxSize = Pht::Vec2 {mFieldWidth + fieldPadding, 19.0f * mCellSize};
     
     CreateFieldQuad(level);
-    UpdateCameraPosition();
+    UpdateCameraPositionAndScissorBox();
     
-    mFloatingCubes.Reset();
+    scene->SetDistanceFunction(Pht::DistanceFunction::WorldSpaceNegativeZ);
+    sceneManager.SetLoadedScene(std::move(scene));
 }
 
 void GameScene::Update() {
-    mFloatingCubes.Update();
+    mFloatingCubes->Update();
     
     if (mScrollController.IsScrolling()) {
-        UpdateCameraPosition();
+        UpdateCameraPositionAndScissorBox();
     }
 }
-
-void GameScene::UpdateCameraPosition() {
+    
+void GameScene::UpdateCameraPositionAndScissorBox() {
     auto& renderer {mEngine.GetRenderer()};
     
     auto cameraYPosition {
@@ -96,25 +124,31 @@ void GameScene::UpdateCameraPosition() {
     };
 
     Pht::Vec3 cameraPosition {0.0f, cameraYPosition, 20.5f};
+    mCamera->GetSceneObject().GetTransform().SetPosition(cameraPosition);
+    
     Pht::Vec3 target {0.0f, cameraYPosition, 0.0f};
     Pht::Vec3 up {0.0f, 1.0f, 0.0f};
-    renderer.LookAt(cameraPosition, target, up);
+    mCamera->SetTarget(target, up);
     
     mScissorBoxLowerLeft = Pht::Vec2 {
         mFieldPosition.x - (mFieldWidth + fieldPadding) / 2.0f,
         cameraYPosition - renderer.GetOrthographicFrustumSize().y / 2.0f +
         lowerClipAreaHeightInCells * mCellSize
     };
+    
+    auto* fieldRenderPass {mScene->GetRenderPass(static_cast<int>(Layer::Field))};
+    assert(fieldRenderPass);
+    
+    Pht::ScissorBox scissorBox {mScissorBoxLowerLeft, mScissorBoxSize};
+    fieldRenderPass->SetScissorBox(scissorBox);
 }
 
 void GameScene::CreateBackground() {
     Pht::Material backgroundMaterial {"sky_blurred.jpg"};
-    
-    auto& sceneManager {mEngine.GetSceneManager()};
-    mBackground = sceneManager.CreateSceneObject(Pht::QuadMesh {150.0f, 150.0f},
-                                                 backgroundMaterial,
-                                                 *mSceneResources);
-    mBackground->SetPosition({0.0f, -5.0f, -42.0f});
+    auto& background {mScene->CreateSceneObject(Pht::QuadMesh {150.0f, 150.0f}, backgroundMaterial)};
+    background.GetTransform().SetPosition({0.0f, -5.0f, -42.0f});
+    background.SetLayer(static_cast<int>(Layer::Background));
+    mScene->GetRoot().AddChild(background);
 }
 
 void GameScene::CreateFieldQuad(const Level& level) {
@@ -122,12 +156,11 @@ void GameScene::CreateFieldQuad(const Level& level) {
     fieldMaterial.SetOpacity(0.8f);
 
     auto vertices {CreateFieldVertices(level)};
-
-    auto& sceneManager {mEngine.GetSceneManager()};
-    mFieldQuad = sceneManager.CreateSceneObject(Pht::QuadMesh {vertices},
-                                                fieldMaterial,
-                                                *mSceneResources);
-    mFieldQuad->SetPosition({mFieldPosition.x, mFieldPosition.y, mFieldPosition.z + fieldQuadZ});
+    auto& fieldQuad {mScene->CreateSceneObject(Pht::QuadMesh {vertices}, fieldMaterial)};
+    Pht::Vec3 quadPosition {mFieldPosition.x, mFieldPosition.y, mFieldPosition.z + fieldQuadZ};
+    fieldQuad.GetTransform().SetPosition(quadPosition);
+    fieldQuad.SetLayer(static_cast<int>(Layer::Field));
+    mScene->GetRoot().AddChild(fieldQuad);
 }
 
 Pht::QuadMesh::Vertices GameScene::CreateFieldVertices(const Level& level) {
@@ -178,8 +211,4 @@ const Pht::Material& GameScene::GameScene::GetDarkGrayMaterial() const {
 
 const Pht::Material& GameScene::GetYellowMaterial() const {
     return mCommonResources.GetMaterials().GetYellowFieldBlockMaterial();
-}
-
-const Pht::SceneObject& GameScene::GetFloatingCubes() const {
-    return mFloatingCubes.GetSceneObject();
 }
