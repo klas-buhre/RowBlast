@@ -71,6 +71,8 @@ GameRenderer::GameRenderer(Pht::IEngine& engine,
     mGameViewControllers {gameViewControllers} {}
 
 void GameRenderer::RenderFrame() {
+    RenderBlueprintSlots();
+    
     auto* scene {mEngine.GetSceneManager().GetActiveScene()};
     mEngine.GetRenderer().RenderScene(*scene);
 
@@ -78,7 +80,6 @@ void GameRenderer::RenderFrame() {
     mEngineRenderer.SetScissorBox(mScene.GetScissorBoxLowerLeft(), mScene.GetScissorBoxSize());
     mEngineRenderer.SetScissorTest(true);
     
-    // RenderFieldBlueprintSlots();
     RenderFieldBlueprintSlotsAnimation();
     RenderPieceDropParticles();
     RenderFieldBlocks();
@@ -96,7 +97,7 @@ void GameRenderer::RenderFrame() {
     RenderGameViews();
 }
 
-void GameRenderer::RenderFieldBlueprintSlots() {
+void GameRenderer::RenderBlueprintSlots() {
     auto* blueprintGrid {mField.GetBlueprintGrid()};
     
     if (blueprintGrid == nullptr) {
@@ -106,34 +107,21 @@ void GameRenderer::RenderFieldBlueprintSlots() {
     auto lowestVisibleRow {static_cast<int>(mScrollController.GetLowestVisibleRow())};
     auto pastHighestVisibleRow {lowestVisibleRow + mField.GetNumRowsInOneScreen()};
     
-    for (auto row {lowestVisibleRow}; row < pastHighestVisibleRow; row++) {
+    for (auto row {0}; row < pastHighestVisibleRow; row++) {
         for (auto column {0}; column < mField.GetNumColumns(); column++) {
             auto& blueprintCell {(*blueprintGrid)[row][column]};
             
-            if (blueprintCell.mFill == Fill::Empty || blueprintCell.mAnimation.mIsActive) {
+            if (blueprintCell.mSceneObject == nullptr) {
                 continue;
             }
             
-            RenderFieldBlueprintSlot(blueprintCell, row, column);
+            if (row < lowestVisibleRow || blueprintCell.mAnimation.mIsActive) {
+                blueprintCell.mSceneObject->SetIsVisible(false);
+            } else {
+                blueprintCell.mSceneObject->SetIsVisible(true);
+            }
         }
     }
-}
-
-void GameRenderer::RenderFieldBlueprintSlot(const BlueprintCell& blueprintCell,
-                                            int row,
-                                            int column) {
-    auto cellSize {mScene.GetCellSize()};
-    auto fieldLowerLeft {mScene.GetFieldLoweLeft()};
-    auto cellXPos {column * cellSize + cellSize / 2.0f + fieldLowerLeft.x};
-    auto cellYPos {row * cellSize + cellSize / 2.0f + fieldLowerLeft.y};
-    auto& rotationMatrix {rotationMatrices[static_cast<int>(blueprintCell.mRotation)]};
-
-    auto matrix {
-        rotationMatrix *
-        Pht::Mat4::Translate(cellXPos, cellYPos, mScene.GetBlueprintZ())
-    };
-    
-    mEngineRenderer.Render(*blueprintCell.mRenderables.mSlot, matrix);
 }
 
 void GameRenderer::RenderFieldBlueprintSlotsAnimation() {
@@ -166,14 +154,13 @@ void GameRenderer::RenderFieldBlueprintSlotAnimation(const BlueprintCell& bluepr
     auto cellYPos {row * cellSize + cellSize / 2.0f + fieldLowerLeft.y};
     
     auto& animation {blueprintCell.mAnimation};
-    auto& rotationMatrix {rotationMatrices[static_cast<int>(blueprintCell.mRotation)]};
     
     auto& material {blueprintCell.mRenderables.mAnimation->GetMaterial()};
     auto opacity {material.GetOpacity()};
     material.SetOpacity(animation.mOpacity);
     
     auto matrix {
-        rotationMatrix * Pht::Mat4::Scale(animation.mScale) *
+        Pht::Mat4::Scale(animation.mScale) *
         Pht::Mat4::Translate(cellXPos, cellYPos, mScene.GetBlueprintAnimationZ())
     };
     

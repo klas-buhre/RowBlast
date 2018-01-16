@@ -109,7 +109,6 @@ namespace BlocksGame {
         Fill mFill {Fill::Empty};
         Pht::SceneObject* mSceneObject {nullptr};
         BlueprintSlotRenderables mRenderables;
-        Rotation mRotation {Rotation::Deg0};
         BlueprintSlotFillAnimation mAnimation;
     };
     

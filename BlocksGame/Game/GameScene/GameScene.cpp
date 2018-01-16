@@ -24,6 +24,7 @@ namespace {
     
     enum class Layer {
         Background,
+        FieldQuad,
         Field
     };
 
@@ -70,7 +71,11 @@ void GameScene::Reset(const Level& level, const LevelResources& levelResources) 
     mScene = scene.get();
     
     scene->AddRenderPass(Pht::RenderPass {static_cast<int>(Layer::Background)});
-    
+
+    Pht::RenderPass fieldQuadRenderPass {static_cast<int>(Layer::FieldQuad)};
+    fieldQuadRenderPass.SetProjectionMode(Pht::ProjectionMode::Orthographic);
+    scene->AddRenderPass(fieldQuadRenderPass);
+
     Pht::RenderPass fieldRenderPass {static_cast<int>(Layer::Field)};
     fieldRenderPass.SetProjectionMode(Pht::ProjectionMode::Orthographic);
     scene->AddRenderPass(fieldRenderPass);
@@ -130,7 +135,7 @@ void GameScene::CreateFieldQuad(const Level& level) {
     auto& fieldQuad {mScene->CreateSceneObject(Pht::QuadMesh {vertices}, fieldMaterial)};
     Pht::Vec3 quadPosition {mFieldPosition.x, mFieldPosition.y, mFieldPosition.z + fieldQuadZ};
     fieldQuad.GetTransform().SetPosition(quadPosition);
-    fieldQuad.SetLayer(static_cast<int>(Layer::Field));
+    fieldQuad.SetLayer(static_cast<int>(Layer::FieldQuad));
     mScene->GetRoot().AddChild(fieldQuad);
 }
 
@@ -223,10 +228,14 @@ void GameScene::UpdateCameraPositionAndScissorBox() {
         lowerClipAreaHeightInCells * mCellSize
     };
     
+    Pht::ScissorBox scissorBox {mScissorBoxLowerLeft, mScissorBoxSize};
+
+    auto* fieldQuadRenderPass {mScene->GetRenderPass(static_cast<int>(Layer::FieldQuad))};
+    assert(fieldQuadRenderPass);
+    fieldQuadRenderPass->SetScissorBox(scissorBox);
+
     auto* fieldRenderPass {mScene->GetRenderPass(static_cast<int>(Layer::Field))};
     assert(fieldRenderPass);
-    
-    Pht::ScissorBox scissorBox {mScissorBoxLowerLeft, mScissorBoxSize};
     fieldRenderPass->SetScissorBox(scissorBox);
 }
 

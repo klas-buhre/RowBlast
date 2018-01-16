@@ -143,6 +143,7 @@ void LevelResources::CreateBlueprintRenderables(Pht::IEngine& engine, const Game
     
     Pht::Material imageMaterial {*image, Pht::GenerateMipmap::Yes};
     imageMaterial.SetBlend(Pht::Blend::Yes);
+    imageMaterial.GetDepthState().mDepthWrite = true;
     auto& sceneManager {engine.GetSceneManager()};
     mBlueprintSquare = sceneManager.CreateRenderableObject(Pht::QuadMesh {squareSide, squareSide},
                                                            imageMaterial);

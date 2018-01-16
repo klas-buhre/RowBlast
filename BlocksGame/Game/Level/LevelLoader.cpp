@@ -166,8 +166,7 @@ namespace {
     BlueprintCell CreateBlueprintCell(char c, const LevelResources& levelResources) {
         BlueprintCell cell {
             .mFill = CellFill(c),
-            .mRenderables = levelResources.GetBlueprintSquareRenderables(),
-            .mRotation = CellRotation(c)
+            .mRenderables = levelResources.GetBlueprintSquareRenderables()
         };
         
         return cell;
