@@ -42,10 +42,6 @@ void MapController::Reset() {
     mScene.Reset();
 }
 
-void MapController::UnloadScene() {
-    mScene.Unload();
-}
-
 MapController::Command MapController::Update() {
     auto command {Command{Command::None}};
     

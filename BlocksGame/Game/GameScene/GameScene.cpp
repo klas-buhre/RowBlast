@@ -13,6 +13,7 @@
 #include "Level.hpp"
 #include "ScrollController.hpp"
 #include "CommonResources.hpp"
+#include "LevelResources.hpp"
 
 using namespace BlocksGame;
 
@@ -63,7 +64,7 @@ GameScene::GameScene(Pht::IEngine& engine,
     mLightDirection {1.0f, 1.0f, 0.74f},
     mFieldPosition {0.0f, 0.0f, 0.0f} {}
 
-void GameScene::Reset(const Level& level) {
+void GameScene::Reset(const Level& level, const LevelResources& levelResources) {
     auto& sceneManager {mEngine.GetSceneManager()};
     auto scene {sceneManager.CreateScene(Pht::Hash::Fnv1a("gameScene"))};
     mScene = scene.get();
@@ -90,6 +91,28 @@ void GameScene::Reset(const Level& level) {
                                                      mCommonResources,
                                                      7.7f);
     
+    InitFieldDimensions(level);
+    CreateFieldQuad(level);
+    CreateFieldContainer();
+    CreateBlueprintSlots(level, levelResources);
+    
+    mScissorBoxSize = Pht::Vec2 {mFieldWidth + fieldPadding, 19.0f * mCellSize};
+    
+    UpdateCameraPositionAndScissorBox();
+    
+    scene->SetDistanceFunction(Pht::DistanceFunction::WorldSpaceNegativeZ);
+    sceneManager.SetLoadedScene(std::move(scene));
+}
+
+void GameScene::CreateBackground() {
+    Pht::Material backgroundMaterial {"sky_blurred.jpg"};
+    auto& background {mScene->CreateSceneObject(Pht::QuadMesh {150.0f, 150.0f}, backgroundMaterial)};
+    background.GetTransform().SetPosition({0.0f, -5.0f, -42.0f});
+    background.SetLayer(static_cast<int>(Layer::Background));
+    mScene->GetRoot().AddChild(background);
+}
+
+void GameScene::InitFieldDimensions(const Level& level) {
     mFieldWidth = mCellSize * level.GetNumColumns();
     mFieldHeight = mCellSize * level.GetNumRows();
     
@@ -97,14 +120,78 @@ void GameScene::Reset(const Level& level) {
         mFieldPosition.x - mFieldWidth / 2.0f,
         mFieldPosition.y - mFieldHeight / 2.0f
     };
+}
+
+void GameScene::CreateFieldQuad(const Level& level) {
+    Pht::Material fieldMaterial;
+    fieldMaterial.SetOpacity(0.8f);
+
+    auto vertices {CreateFieldVertices(level)};
+    auto& fieldQuad {mScene->CreateSceneObject(Pht::QuadMesh {vertices}, fieldMaterial)};
+    Pht::Vec3 quadPosition {mFieldPosition.x, mFieldPosition.y, mFieldPosition.z + fieldQuadZ};
+    fieldQuad.GetTransform().SetPosition(quadPosition);
+    fieldQuad.SetLayer(static_cast<int>(Layer::Field));
+    mScene->GetRoot().AddChild(fieldQuad);
+}
+
+void GameScene::CreateFieldContainer() {
+    mFieldContainer = &mScene->CreateSceneObject();
+    mFieldContainer->GetTransform().SetPosition({mFieldLoweLeft.x, mFieldLoweLeft.y, 0.0f});
+    mFieldContainer->SetLayer(static_cast<int>(Layer::Field));
+    mScene->GetRoot().AddChild(*mFieldContainer);
+}
+
+Pht::QuadMesh::Vertices GameScene::CreateFieldVertices(const Level& level) {
+    auto width {mFieldWidth + fieldPadding};
+    auto height {mFieldHeight + fieldPadding};
     
-    mScissorBoxSize = Pht::Vec2 {mFieldWidth + fieldPadding, 19.0f * mCellSize};
+    switch (level.GetColor()) {
+        case Level::Color::Pink:
+            return {
+                {{-width / 2.0f, -height / 2.0f, 0.0f}, {0.2f, 0.2f, 0.75f, 1.0f}},
+                {{width / 2.0f, -height / 2.0f, 0.0f}, {0.75f, 0.2f, 0.4f, 1.0f}},
+                {{width / 2.0f, height / 2.0f, 0.0f}, {0.2f, 0.2f, 0.9f, 1.0f}},
+                {{-width / 2.0f, height / 2.0f, 0.0f}, {0.9f, 0.2f, 0.4f, 1.0f}},
+            };
+        case Level::Color::Green:
+            return {
+                {{-width / 2.0f, -height / 2.0f, 0.0f}, {0.2f, 0.2f, 0.6f, 1.0f}},
+                {{width / 2.0f, -height / 2.0f, 0.0f}, {0.2f, 0.2f, 0.6f, 1.0f}},
+                {{width / 2.0f, height / 2.0f, 0.0f}, {0.2f, 0.7f, 0.4f, 1.0f}},
+                {{-width / 2.0f, height / 2.0f, 0.0f}, {0.9f, 0.2f, 0.4f, 1.0f}},
+            };
+    }
+}
+
+void GameScene::CreateBlueprintSlots(const Level& level, const LevelResources& levelResources) {
+    auto* blueprintGrid {level.GetBlueprintGrid()};
     
-    CreateFieldQuad(level);
-    UpdateCameraPositionAndScissorBox();
+    if (blueprintGrid == nullptr) {
+        return;
+    }
     
-    scene->SetDistanceFunction(Pht::DistanceFunction::WorldSpaceNegativeZ);
-    sceneManager.SetLoadedScene(std::move(scene));
+    auto& blueprintSlotsContainer {mScene->CreateSceneObject()};
+    mFieldContainer->AddChild(blueprintSlotsContainer);
+
+    for (auto row {0}; row < level.GetNumRows(); ++row) {
+        for (auto column {0}; column < level.GetNumColumns(); ++column) {
+            auto& blueprintCell {(*blueprintGrid)[row][column]};
+            
+            if (blueprintCell.mFill != Fill::Empty) {
+                auto& blueprintSlot {mScene->CreateSceneObject()};
+                blueprintSlot.SetRenderable(levelResources.GetBlueprintSquareRenderables().mSlot);
+                
+                Pht::Vec3 blueprintSlotPosition {
+                    column * mCellSize + mCellSize / 2.0f,
+                    row * mCellSize + mCellSize / 2.0f,
+                    mBlueprintZ
+                };
+                
+                blueprintSlot.GetTransform().SetPosition(blueprintSlotPosition);
+                blueprintSlotsContainer.AddChild(blueprintSlot);
+            }
+        }
+    }
 }
 
 void GameScene::Update() {
@@ -141,48 +228,6 @@ void GameScene::UpdateCameraPositionAndScissorBox() {
     
     Pht::ScissorBox scissorBox {mScissorBoxLowerLeft, mScissorBoxSize};
     fieldRenderPass->SetScissorBox(scissorBox);
-}
-
-void GameScene::CreateBackground() {
-    Pht::Material backgroundMaterial {"sky_blurred.jpg"};
-    auto& background {mScene->CreateSceneObject(Pht::QuadMesh {150.0f, 150.0f}, backgroundMaterial)};
-    background.GetTransform().SetPosition({0.0f, -5.0f, -42.0f});
-    background.SetLayer(static_cast<int>(Layer::Background));
-    mScene->GetRoot().AddChild(background);
-}
-
-void GameScene::CreateFieldQuad(const Level& level) {
-    Pht::Material fieldMaterial;
-    fieldMaterial.SetOpacity(0.8f);
-
-    auto vertices {CreateFieldVertices(level)};
-    auto& fieldQuad {mScene->CreateSceneObject(Pht::QuadMesh {vertices}, fieldMaterial)};
-    Pht::Vec3 quadPosition {mFieldPosition.x, mFieldPosition.y, mFieldPosition.z + fieldQuadZ};
-    fieldQuad.GetTransform().SetPosition(quadPosition);
-    fieldQuad.SetLayer(static_cast<int>(Layer::Field));
-    mScene->GetRoot().AddChild(fieldQuad);
-}
-
-Pht::QuadMesh::Vertices GameScene::CreateFieldVertices(const Level& level) {
-    auto width {mFieldWidth + fieldPadding};
-    auto height {mFieldHeight + fieldPadding};
-    
-    switch (level.GetColor()) {
-        case Level::Color::Pink:
-            return {
-                {{-width / 2.0f, -height / 2.0f, 0.0f}, {0.2f, 0.2f, 0.75f, 1.0f}},
-                {{width / 2.0f, -height / 2.0f, 0.0f}, {0.75f, 0.2f, 0.4f, 1.0f}},
-                {{width / 2.0f, height / 2.0f, 0.0f}, {0.2f, 0.2f, 0.9f, 1.0f}},
-                {{-width / 2.0f, height / 2.0f, 0.0f}, {0.9f, 0.2f, 0.4f, 1.0f}},
-            };
-        case Level::Color::Green:
-            return {
-                {{-width / 2.0f, -height / 2.0f, 0.0f}, {0.2f, 0.2f, 0.6f, 1.0f}},
-                {{width / 2.0f, -height / 2.0f, 0.0f}, {0.2f, 0.2f, 0.6f, 1.0f}},
-                {{width / 2.0f, height / 2.0f, 0.0f}, {0.2f, 0.7f, 0.4f, 1.0f}},
-                {{-width / 2.0f, height / 2.0f, 0.0f}, {0.9f, 0.2f, 0.4f, 1.0f}},
-            };
-    }
 }
 
 const Pht::Material& GameScene::GetGoldMaterial() const {

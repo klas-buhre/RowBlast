@@ -85,7 +85,7 @@ void GameController::StartLevel(int levelIndex) {
 
     mField.Reset(*mLevel);
     mScrollController.Reset(mLevel->GetObjective());
-    mScene.Reset(*mLevel);
+    mScene.Reset(*mLevel, mLevelResources);
     mGameLogic.Reset(*mLevel);
     mGameViewControllers.SetActiveController(GameViewControllers::None);
     mHud.Reset(*mLevel);

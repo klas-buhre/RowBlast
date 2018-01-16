@@ -8,6 +8,7 @@
 #include "Material.hpp"
 
 namespace Pht {
+    class SceneObject;
     class RenderableObject;
 }
 
@@ -106,6 +107,7 @@ namespace BlocksGame {
     
     struct BlueprintCell {
         Fill mFill {Fill::Empty};
+        Pht::SceneObject* mSceneObject {nullptr};
         BlueprintSlotRenderables mRenderables;
         Rotation mRotation {Rotation::Deg0};
         BlueprintSlotFillAnimation mAnimation;

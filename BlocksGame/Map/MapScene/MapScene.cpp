@@ -131,10 +131,6 @@ void MapScene::Reset() {
     CreateScene(GetChapter(1));
 }
 
-void MapScene::Unload() {
-    mEngine.GetSceneManager().SetLoadedScene(nullptr);
-}
-
 void MapScene::CreateScene(const Chapter& chapter) {
     auto& sceneManager {mEngine.GetSceneManager()};
     auto scene {sceneManager.CreateScene(Pht::Hash::Fnv1a("mapScene"))};

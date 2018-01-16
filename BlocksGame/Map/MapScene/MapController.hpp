@@ -43,7 +43,6 @@ namespace BlocksGame {
                       UserData& userData);
     
         void Reset();
-        void UnloadScene();
         Command Update();
         void RenderScene();
     

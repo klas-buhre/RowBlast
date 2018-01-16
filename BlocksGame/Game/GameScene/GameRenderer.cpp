@@ -78,7 +78,7 @@ void GameRenderer::RenderFrame() {
     mEngineRenderer.SetScissorBox(mScene.GetScissorBoxLowerLeft(), mScene.GetScissorBoxSize());
     mEngineRenderer.SetScissorTest(true);
     
-    RenderFieldBlueprintSlots();
+    // RenderFieldBlueprintSlots();
     RenderFieldBlueprintSlotsAnimation();
     RenderPieceDropParticles();
     RenderFieldBlocks();

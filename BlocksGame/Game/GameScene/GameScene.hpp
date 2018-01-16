@@ -21,6 +21,7 @@ namespace BlocksGame {
     class Level;
     class ScrollController;
     class CommonResources;
+    class LevelResources;
     
     class GameScene {
     public:
@@ -28,7 +29,7 @@ namespace BlocksGame {
                   const ScrollController& scrollController,
                   const CommonResources& commonResources);
         
-        void Reset(const Level& level);
+        void Reset(const Level& level, const LevelResources& levelResources);
         void Update();
         const Pht::Material& GetGoldMaterial() const;
         const Pht::Material& GetRedMaterial() const;
@@ -90,8 +91,11 @@ namespace BlocksGame {
     private:
         void UpdateCameraPositionAndScissorBox();
         void CreateBackground();
+        void InitFieldDimensions(const Level& level);
         void CreateFieldQuad(const Level& level);
+        void CreateFieldContainer();
         Pht::QuadMesh::Vertices CreateFieldVertices(const Level& level);
+        void CreateBlueprintSlots(const Level& level, const LevelResources& levelResources);
         
         Pht::IEngine& mEngine;
         const ScrollController& mScrollController;
@@ -99,6 +103,7 @@ namespace BlocksGame {
         Pht::Scene* mScene {nullptr};
         Pht::CameraComponent* mCamera {nullptr};
         std::unique_ptr<FloatingCubes> mFloatingCubes;
+        Pht::SceneObject* mFieldContainer {nullptr};
         Pht::Vec3 mLightDirection;
         const Pht::Vec3 mFieldPosition;
         const float mCellSize {1.25f};
