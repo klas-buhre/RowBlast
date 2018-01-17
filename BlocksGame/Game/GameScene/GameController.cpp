@@ -72,7 +72,6 @@ GameController::GameController(Pht::IEngine& engine,
         mRowExplosionParticleEffect,
         mFlyingBlocksAnimation,
         mSlidingTextAnimation,
-        mPieceDropParticleEffect,
         mBlastRadiusAnimation,
         mScene,
         mScrollController,
@@ -90,6 +89,7 @@ void GameController::StartLevel(int levelIndex) {
     mGameViewControllers.SetActiveController(GameViewControllers::None);
     mHud.Reset(*mLevel);
     mBlueprintSlotsFilledAnimation.Reset();
+    mPieceDropParticleEffect.Reset();
     mBlastRadiusAnimation.Stop();
     
     mState = GameState::LevelIntro;

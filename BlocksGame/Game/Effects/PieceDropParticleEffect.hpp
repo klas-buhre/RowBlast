@@ -19,24 +19,20 @@ namespace BlocksGame {
     class GameScene;
     class FallingPiece;
     
-    using PieceDropParticleEffects = std::array<std::unique_ptr<Pht::SceneObject>, Field::maxNumColumns>;
-    
     class PieceDropParticleEffect {
     public:
-        PieceDropParticleEffect(Pht::IEngine& engine, const GameScene& scene);
+        PieceDropParticleEffect(Pht::IEngine& engine, GameScene& scene);
         
+        void Reset();
         void StartEffect(const FallingPiece& fallingPiece);
         void Update(float dt);
-        
-        const PieceDropParticleEffects& GetEffects() const {
-            return mParticleEffects;
-        }
         
     private:
         void StartEffect(const Pht::Vec3& scenePosition, const Pht::Vec4& color);
         
-        const GameScene& mScene;
-        PieceDropParticleEffects mParticleEffects;
+        GameScene& mScene;
+        std::unique_ptr<Pht::SceneObject> mContainerSceneObject;
+        std::array<std::unique_ptr<Pht::SceneObject>, Field::maxNumColumns> mParticleEffects;
     };
 }
 

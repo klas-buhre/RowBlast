@@ -10,8 +10,9 @@
 
 using namespace BlocksGame;
 
-PieceDropParticleEffect::PieceDropParticleEffect(Pht::IEngine& engine, const GameScene& scene) :
-    mScene {scene} {
+PieceDropParticleEffect::PieceDropParticleEffect(Pht::IEngine& engine, GameScene& scene) :
+    mScene {scene},
+    mContainerSceneObject {std::make_unique<Pht::SceneObject>()} {
     
     Pht::EmitterSettings particleEmitterSettings {
         .mPosition = Pht::Vec3{0.0f, 1.0f, 0.0f},
@@ -41,7 +42,12 @@ PieceDropParticleEffect::PieceDropParticleEffect(Pht::IEngine& engine, const Gam
         effect = particleSystem.CreateParticleEffectSceneObject(particleSettings,
                                                                 particleEmitterSettings,
                                                                 Pht::RenderMode::Triangles);
+        mContainerSceneObject->AddChild(*effect);
     }
+}
+
+void PieceDropParticleEffect::Reset() {
+    mScene.GetPieceDropEffectsContainer().AddChild(*mContainerSceneObject);
 }
 
 void PieceDropParticleEffect::StartEffect(const FallingPiece& fallingPiece) {
@@ -49,8 +55,7 @@ void PieceDropParticleEffect::StartEffect(const FallingPiece& fallingPiece) {
     auto pieceNumRows {pieceType.GetGridNumRows()};
     auto pieceNumColumns {pieceType.GetGridNumColumns()};
     auto cellSize {mScene.GetCellSize()};
-    auto fieldLowerLeft {mScene.GetFieldLoweLeft()};
-    auto pieceWorldPos {fieldLowerLeft + fallingPiece.GetRenderablePosition() * cellSize};
+    auto pieceFieldPos {fallingPiece.GetRenderablePosition() * cellSize};
     auto& pieceGrid {pieceType.GetGrid(fallingPiece.GetRotation())};
     auto cellZPos {mScene.GetFieldPosition().z};
     auto colorBrighten {0.8f};
@@ -66,20 +71,20 @@ void PieceDropParticleEffect::StartEffect(const FallingPiece& fallingPiece) {
     for (auto column {0}; column < pieceNumColumns; ++column) {
         for (auto row {pieceNumRows - 1}; row >= 0; --row) {
             if (!pieceGrid[row][column].IsEmpty()) {
-                Pht::Vec3 scenePosition {
-                    column * cellSize + cellSize / 2.0f + pieceWorldPos.x,
-                    row * cellSize + cellSize + pieceWorldPos.y,
+                Pht::Vec3 fieldPosition {
+                    column * cellSize + cellSize / 2.0f + pieceFieldPos.x,
+                    row * cellSize + cellSize + pieceFieldPos.y,
                     cellZPos
                 };
                 
-                StartEffect(scenePosition, color);
+                StartEffect(fieldPosition, color);
                 break;
             }
         }
     }
 }
 
-void PieceDropParticleEffect::StartEffect(const Pht::Vec3& scenePosition, const Pht::Vec4& color) {
+void PieceDropParticleEffect::StartEffect(const Pht::Vec3& fieldPosition, const Pht::Vec4& color) {
     for (auto& effectSceneObject: mParticleEffects) {
         auto* effect {effectSceneObject->GetComponent<Pht::ParticleEffect>()};
         
@@ -88,7 +93,7 @@ void PieceDropParticleEffect::StartEffect(const Pht::Vec3& scenePosition, const 
             particleSettings.mColor = color;
             
             effect->Start();
-            effectSceneObject->SetPosition(scenePosition);
+            effectSceneObject->SetPosition(fieldPosition);
             break;
         }
     }

@@ -21,7 +21,6 @@
 #include "FlyingBlocksAnimation.hpp"
 #include "FlashingBlocksAnimation.hpp"
 #include "SlidingTextAnimation.hpp"
-#include "PieceDropParticleEffect.hpp"
 #include "BlastRadiusAnimation.hpp"
 #include "SettingsMenuController.hpp"
 #include "NoLivesDialogController.hpp"
@@ -49,7 +48,6 @@ GameRenderer::GameRenderer(Pht::IEngine& engine,
                            const RowExplosionParticleEffect& rowExplosionParticleEffect,
                            const FlyingBlocksAnimation& flyingBlocksAnimation,
                            const SlidingTextAnimation& slidingTextAnimation,
-                           const PieceDropParticleEffect& pieceDropParticleEffect,
                            const BlastRadiusAnimation& blastRadiusAnimation,
                            const GameScene& scene,
                            const ScrollController& scrollController,
@@ -63,7 +61,6 @@ GameRenderer::GameRenderer(Pht::IEngine& engine,
     mRowExplosionParticleEffect {rowExplosionParticleEffect},
     mFlyingBlocksAnimation {flyingBlocksAnimation},
     mSlidingTextAnimation {slidingTextAnimation},
-    mPieceDropParticleEffect {pieceDropParticleEffect},
     mBlastRadiusAnimation {blastRadiusAnimation},
     mScene {scene},
     mScrollController {scrollController},
@@ -80,7 +77,6 @@ void GameRenderer::RenderFrame() {
     mEngineRenderer.SetScissorBox(mScene.GetScissorBoxLowerLeft(), mScene.GetScissorBoxSize());
     mEngineRenderer.SetScissorTest(true);
     
-    RenderPieceDropParticles();
     RenderFieldBlocks();
     RenderFallingPiece();
     RenderGhostPieces();
@@ -585,12 +581,6 @@ void GameRenderer::RenderScaledTiltedPiece(const Pht::Vec2& position,
                 mEngineRenderer.Render(*renderable, cellMatrix);
             }
         }
-    }
-}
-
-void GameRenderer::RenderPieceDropParticles() {
-    for (const auto& effect: mPieceDropParticleEffect.GetEffects()) {
-        mEngineRenderer.RenderSceneObject(*effect);
     }
 }
 

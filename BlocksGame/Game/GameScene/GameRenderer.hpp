@@ -25,7 +25,6 @@ namespace BlocksGame {
     class RowExplosionParticleEffect;
     class FlyingBlocksAnimation;
     class SlidingTextAnimation;
-    class PieceDropParticleEffect;
     class BlastRadiusAnimation;
     class SubCell;
     class BlueprintCell;
@@ -41,7 +40,6 @@ namespace BlocksGame {
                      const RowExplosionParticleEffect& rowExplosionParticleEffect,
                      const FlyingBlocksAnimation& flyingBlocksAnimation,
                      const SlidingTextAnimation& slidingTextAnimation,
-                     const PieceDropParticleEffect& pieceDropParticleEffect,
                      const BlastRadiusAnimation& blastRadiusAnimation,
                      const GameScene& scene,
                      const ScrollController& scrollController,
@@ -81,7 +79,6 @@ namespace BlocksGame {
                                      int pieceNumRows,
                                      int pieceNumColumns,
                                      const CellGrid& pieceGrid);
-        void RenderPieceDropParticles();
         void RenderGameViews();
         void RenderLevelCompletedView();
         void RenderSlidingText();
@@ -94,7 +91,6 @@ namespace BlocksGame {
         const RowExplosionParticleEffect& mRowExplosionParticleEffect;
         const FlyingBlocksAnimation& mFlyingBlocksAnimation;
         const SlidingTextAnimation& mSlidingTextAnimation;
-        const PieceDropParticleEffect& mPieceDropParticleEffect;
         const BlastRadiusAnimation& mBlastRadiusAnimation;
         const GameScene& mScene;
         const ScrollController& mScrollController;
