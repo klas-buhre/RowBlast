@@ -25,7 +25,8 @@ namespace {
     enum class Layer {
         Background,
         FieldQuad,
-        Field
+        FieldBlueprintSlots,
+        FieldPieceDropEffects
     };
 
     const std::vector<CubePathVolume> floatingCubePaths {
@@ -76,9 +77,13 @@ void GameScene::Reset(const Level& level, const LevelResources& levelResources) 
     fieldQuadRenderPass.SetProjectionMode(Pht::ProjectionMode::Orthographic);
     scene->AddRenderPass(fieldQuadRenderPass);
 
-    Pht::RenderPass fieldRenderPass {static_cast<int>(Layer::Field)};
-    fieldRenderPass.SetProjectionMode(Pht::ProjectionMode::Orthographic);
-    scene->AddRenderPass(fieldRenderPass);
+    Pht::RenderPass blueprintSlotsRenderPass {static_cast<int>(Layer::FieldBlueprintSlots)};
+    blueprintSlotsRenderPass.SetProjectionMode(Pht::ProjectionMode::Orthographic);
+    scene->AddRenderPass(blueprintSlotsRenderPass);
+    
+    Pht::RenderPass pieceDropEffectsRenderPass {static_cast<int>(Layer::FieldPieceDropEffects)};
+    pieceDropEffectsRenderPass.SetProjectionMode(Pht::ProjectionMode::Orthographic);
+    scene->AddRenderPass(pieceDropEffectsRenderPass);
 
     auto& light {scene->CreateGlobalLight()};
     light.SetDirection(mLightDirection);
@@ -100,6 +105,7 @@ void GameScene::Reset(const Level& level, const LevelResources& levelResources) 
     CreateFieldQuad(level);
     CreateFieldContainer();
     CreateBlueprintSlots(level, levelResources);
+    CreatePieceDropEffectsContainer();
     
     mScissorBoxSize = Pht::Vec2 {mFieldWidth + fieldPadding, 19.0f * mCellSize};
     
@@ -142,7 +148,6 @@ void GameScene::CreateFieldQuad(const Level& level) {
 void GameScene::CreateFieldContainer() {
     mFieldContainer = &mScene->CreateSceneObject();
     mFieldContainer->GetTransform().SetPosition({mFieldLoweLeft.x, mFieldLoweLeft.y, 0.0f});
-    mFieldContainer->SetLayer(static_cast<int>(Layer::Field));
     mScene->GetRoot().AddChild(*mFieldContainer);
 }
 
@@ -176,6 +181,7 @@ void GameScene::CreateBlueprintSlots(const Level& level, const LevelResources& l
     }
     
     auto& blueprintSlotsContainer {mScene->CreateSceneObject()};
+    blueprintSlotsContainer.SetLayer(static_cast<int>(Layer::FieldBlueprintSlots));
     mFieldContainer->AddChild(blueprintSlotsContainer);
 
     for (auto row {0}; row < level.GetNumRows(); ++row) {
@@ -197,6 +203,12 @@ void GameScene::CreateBlueprintSlots(const Level& level, const LevelResources& l
             }
         }
     }
+}
+
+void GameScene::CreatePieceDropEffectsContainer() {
+    mPieceDropEffectsContainer = &mScene->CreateSceneObject();
+    mPieceDropEffectsContainer->SetLayer(static_cast<int>(Layer::FieldPieceDropEffects));
+    mFieldContainer->AddChild(*mPieceDropEffectsContainer);
 }
 
 void GameScene::Update() {
@@ -229,14 +241,17 @@ void GameScene::UpdateCameraPositionAndScissorBox() {
     };
     
     Pht::ScissorBox scissorBox {mScissorBoxLowerLeft, mScissorBoxSize};
+    
+    SetScissorBox(scissorBox, static_cast<int>(Layer::FieldQuad));
+    SetScissorBox(scissorBox, static_cast<int>(Layer::FieldBlueprintSlots));
+    SetScissorBox(scissorBox, static_cast<int>(Layer::FieldPieceDropEffects));
+}
 
-    auto* fieldQuadRenderPass {mScene->GetRenderPass(static_cast<int>(Layer::FieldQuad))};
-    assert(fieldQuadRenderPass);
-    fieldQuadRenderPass->SetScissorBox(scissorBox);
-
-    auto* fieldRenderPass {mScene->GetRenderPass(static_cast<int>(Layer::Field))};
-    assert(fieldRenderPass);
-    fieldRenderPass->SetScissorBox(scissorBox);
+void GameScene::SetScissorBox(const Pht::ScissorBox& scissorBox, int layer) {
+    auto* renderPass {mScene->GetRenderPass(layer)};
+    assert(renderPass);
+    
+    renderPass->SetScissorBox(scissorBox);
 }
 
 const Pht::Material& GameScene::GetGoldMaterial() const {

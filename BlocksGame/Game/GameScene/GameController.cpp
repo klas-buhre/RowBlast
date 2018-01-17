@@ -38,7 +38,6 @@ GameController::GameController(Pht::IEngine& engine,
     mField {},
     mCollapsingFieldAnimation {mField},
     mFlashingBlocksAnimation {mField},
-    mBlueprintSlotsFilledAnimation {mField},
     mSlidingTextAnimation {engine},
     mScrollController {engine, mField},
     mScene {engine, mScrollController, commonResources},
@@ -63,6 +62,7 @@ GameController::GameController(Pht::IEngine& engine,
     },
     mFallingPieceAnimation {mGameLogic.GetFallingPieceAnimation()},
     mLevelResources {engine, mScene},
+    mBlueprintSlotsFilledAnimation {mField, mScene, mLevelResources},
     mHud {engine, mGameLogic, mLevelResources, mGameViewControllers.GetGameHudController()},
     mRenderer {
         engine,
@@ -89,6 +89,7 @@ void GameController::StartLevel(int levelIndex) {
     mGameLogic.Reset(*mLevel);
     mGameViewControllers.SetActiveController(GameViewControllers::None);
     mHud.Reset(*mLevel);
+    mBlueprintSlotsFilledAnimation.Reset();
     mBlastRadiusAnimation.Stop();
     
     mState = GameState::LevelIntro;

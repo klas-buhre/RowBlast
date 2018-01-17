@@ -124,7 +124,6 @@ namespace BlocksGame {
         Field mField;
         CollapsingFieldAnimation mCollapsingFieldAnimation;
         FlashingBlocksAnimation mFlashingBlocksAnimation;
-        BlueprintSlotsFilledAnimation mBlueprintSlotsFilledAnimation;
         SlidingTextAnimation mSlidingTextAnimation;
         ScrollController mScrollController;
         GameScene mScene;
@@ -137,6 +136,7 @@ namespace BlocksGame {
         GameLogic mGameLogic;
         FallingPieceAnimation& mFallingPieceAnimation;
         LevelResources mLevelResources;
+        BlueprintSlotsFilledAnimation mBlueprintSlotsFilledAnimation;
         GameHud mHud;
         GameRenderer mRenderer;
         std::unique_ptr<Level> mLevel;

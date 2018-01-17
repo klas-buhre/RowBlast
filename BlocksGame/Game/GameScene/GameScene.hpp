@@ -15,6 +15,7 @@ namespace Pht {
     class IEngine;
     class Scene;
     class CameraComponent;
+    class ScissorBox;
 }
 
 namespace BlocksGame {
@@ -39,6 +40,11 @@ namespace BlocksGame {
         const Pht::Material& GetDarkGrayMaterial() const;
         const Pht::Material& GetLightGrayMaterial() const;
         const Pht::Material& GetYellowMaterial() const;
+        
+        Pht::SceneObject& GetPieceDropEffectsContainer() {
+            assert(mPieceDropEffectsContainer);
+            return *mPieceDropEffectsContainer;
+        }
         
         const Pht::Vec3& GetLightDirection() const {
             return mLightDirection;
@@ -96,6 +102,8 @@ namespace BlocksGame {
         void CreateFieldContainer();
         Pht::QuadMesh::Vertices CreateFieldVertices(const Level& level);
         void CreateBlueprintSlots(const Level& level, const LevelResources& levelResources);
+        void CreatePieceDropEffectsContainer();
+        void SetScissorBox(const Pht::ScissorBox& scissorBox, int layer);
         
         Pht::IEngine& mEngine;
         const ScrollController& mScrollController;
@@ -104,6 +112,7 @@ namespace BlocksGame {
         Pht::CameraComponent* mCamera {nullptr};
         std::unique_ptr<FloatingCubes> mFloatingCubes;
         Pht::SceneObject* mFieldContainer {nullptr};
+        Pht::SceneObject* mPieceDropEffectsContainer {nullptr};
         Pht::Vec3 mLightDirection;
         const Pht::Vec3 mFieldPosition;
         const float mCellSize {1.25f};

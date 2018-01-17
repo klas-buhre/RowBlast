@@ -101,6 +101,7 @@ namespace BlocksGame {
         float mElapsedTime {0.0f};
         float mScale {1.0f};
         float mOpacity {mInitialOpacity};
+        Pht::SceneObject* mSceneObject {nullptr};
         
         static const float mInitialOpacity;
     };
@@ -108,7 +109,6 @@ namespace BlocksGame {
     struct BlueprintCell {
         Fill mFill {Fill::Empty};
         Pht::SceneObject* mSceneObject {nullptr};
-        BlueprintSlotRenderables mRenderables;
         BlueprintSlotFillAnimation mAnimation;
     };
     

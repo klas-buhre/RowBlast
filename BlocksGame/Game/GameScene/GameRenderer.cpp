@@ -80,7 +80,6 @@ void GameRenderer::RenderFrame() {
     mEngineRenderer.SetScissorBox(mScene.GetScissorBoxLowerLeft(), mScene.GetScissorBoxSize());
     mEngineRenderer.SetScissorTest(true);
     
-    RenderFieldBlueprintSlotsAnimation();
     RenderPieceDropParticles();
     RenderFieldBlocks();
     RenderFallingPiece();
@@ -122,51 +121,6 @@ void GameRenderer::RenderBlueprintSlots() {
             }
         }
     }
-}
-
-void GameRenderer::RenderFieldBlueprintSlotsAnimation() {
-    auto* blueprintGrid {mField.GetBlueprintGrid()};
-    
-    if (blueprintGrid == nullptr) {
-        return;
-    }
-    
-    auto lowestVisibleRow {static_cast<int>(mScrollController.GetLowestVisibleRow())};
-    auto pastHighestVisibleRow {lowestVisibleRow + mField.GetNumRowsInOneScreen()};
-    
-    for (auto row {lowestVisibleRow}; row < pastHighestVisibleRow; row++) {
-        for (auto column {0}; column < mField.GetNumColumns(); column++) {
-            auto& blueprintCell {(*blueprintGrid)[row][column]};
-            
-            if (blueprintCell.mAnimation.mIsActive) {
-                RenderFieldBlueprintSlotAnimation(blueprintCell, row, column);
-            }
-        }
-    }
-}
-
-void GameRenderer::RenderFieldBlueprintSlotAnimation(const BlueprintCell& blueprintCell,
-                                                     int row,
-                                                     int column) {
-    auto cellSize {mScene.GetCellSize()};
-    auto fieldLowerLeft {mScene.GetFieldLoweLeft()};
-    auto cellXPos {column * cellSize + cellSize / 2.0f + fieldLowerLeft.x};
-    auto cellYPos {row * cellSize + cellSize / 2.0f + fieldLowerLeft.y};
-    
-    auto& animation {blueprintCell.mAnimation};
-    
-    auto& material {blueprintCell.mRenderables.mAnimation->GetMaterial()};
-    auto opacity {material.GetOpacity()};
-    material.SetOpacity(animation.mOpacity);
-    
-    auto matrix {
-        Pht::Mat4::Scale(animation.mScale) *
-        Pht::Mat4::Translate(cellXPos, cellYPos, mScene.GetBlueprintAnimationZ())
-    };
-    
-    mEngineRenderer.Render(*blueprintCell.mRenderables.mAnimation, matrix);
-    
-    material.SetOpacity(opacity);
 }
 
 void GameRenderer::RenderFieldBlocks() {

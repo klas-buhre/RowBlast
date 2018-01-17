@@ -52,10 +52,6 @@ namespace BlocksGame {
         
     private:
         void RenderBlueprintSlots();
-        void RenderFieldBlueprintSlotsAnimation();
-        void RenderFieldBlueprintSlotAnimation(const BlueprintCell& blueprintCell,
-                                               int row,
-                                               int column);
         void RenderFieldBlocks();
         void RenderFieldBlock(const SubCell& subCell);
         void RenderFallingPiece();

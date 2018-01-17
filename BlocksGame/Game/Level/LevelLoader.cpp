@@ -163,17 +163,7 @@ namespace {
         return cellGrid;
     }
     
-    BlueprintCell CreateBlueprintCell(char c, const LevelResources& levelResources) {
-        BlueprintCell cell {
-            .mFill = CellFill(c),
-            .mRenderables = levelResources.GetBlueprintSquareRenderables()
-        };
-        
-        return cell;
-    }
-    
-    std::unique_ptr<BlueprintCellGrid> ReadBlueprintGrid(const rapidjson::Document& document,
-                                                         const LevelResources& levelResources) {
+    std::unique_ptr<BlueprintCellGrid> ReadBlueprintGrid(const rapidjson::Document& document) {
         if (!document.HasMember("blueprintGrid")) {
             return nullptr;
         }
@@ -199,7 +189,7 @@ namespace {
             std::vector<BlueprintCell> cellRow(numColumns);
             
             for (auto columnIndex {0}; columnIndex < numColumns; ++columnIndex) {
-                cellRow[columnIndex] = CreateBlueprintCell(str[columnIndex], levelResources);
+                cellRow[columnIndex] = BlueprintCell {.mFill = CellFill(str[columnIndex])};
             }
             
             (*blueprintGrid)[rowIndex] = cellRow;
@@ -224,7 +214,7 @@ std::unique_ptr<Level> LevelLoader::Load(int levelIndex, const LevelResources& l
     auto color {ReadColor(document)};
     auto levelPieces {ReadPieceTypes(document, levelResources.GetPieceTypes())};    
     auto clearGrid {ReadClearGrid(document, levelResources)};
-    auto blueprintGrid {ReadBlueprintGrid(document, levelResources)};
+    auto blueprintGrid {ReadBlueprintGrid(document)};
     
     assert(clearGrid || blueprintGrid);
     assert(!(clearGrid && blueprintGrid));
