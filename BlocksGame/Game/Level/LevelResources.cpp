@@ -20,7 +20,6 @@
 #include "LongIPiece.hpp"
 #include "MiddleIPiece.hpp"
 #include "ShortIPiece.hpp"
-#include "SpherePiece.hpp"
 #include "LPiece.hpp"
 #include "BPiece.hpp"
 #include "DPiece.hpp"
@@ -67,7 +66,6 @@ void LevelResources::CreatePieceTypes(Pht::IEngine& engine, const GameScene& sce
     mPieceTypes["Pyramid"] = std::make_unique<PyramidPiece>(engine, scene);
     mPieceTypes["Bomb"] = std::make_unique<Bomb>(engine, scene);
     mPieceTypes["RowBomb"] = std::make_unique<RowBomb>(engine, scene);
-    mPieceTypes["Sphere"] = std::make_unique<SpherePiece>(engine, scene);
 }
 
 void LevelResources::CreateCellRenderables(Pht::ISceneManager& sceneManager,

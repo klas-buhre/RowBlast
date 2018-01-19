@@ -84,7 +84,6 @@
 		624447C91EDDD2C40080ECE8 /* RowBomb.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6244477A1EDDD2C40080ECE8 /* RowBomb.cpp */; };
 		624447CA1EDDD2C40080ECE8 /* SevenPiece.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6244477C1EDDD2C40080ECE8 /* SevenPiece.cpp */; };
 		624447CC1EDDD2C40080ECE8 /* ShortIPiece.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 624447801EDDD2C40080ECE8 /* ShortIPiece.cpp */; };
-		624447CD1EDDD2C40080ECE8 /* SpherePiece.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 624447821EDDD2C40080ECE8 /* SpherePiece.cpp */; };
 		624447CE1EDDD2C40080ECE8 /* TrianglePiece.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 624447841EDDD2C40080ECE8 /* TrianglePiece.cpp */; };
 		624447D51EDDD2C40080ECE8 /* TitleController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 624447941EDDD2C40080ECE8 /* TitleController.cpp */; };
 		624693A01EFD1637004AF2A1 /* ProgressManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6246939E1EFD1637004AF2A1 /* ProgressManager.cpp */; };
@@ -395,8 +394,6 @@
 		6244477D1EDDD2C40080ECE8 /* SevenPiece.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SevenPiece.hpp; sourceTree = "<group>"; };
 		624447801EDDD2C40080ECE8 /* ShortIPiece.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ShortIPiece.cpp; sourceTree = "<group>"; };
 		624447811EDDD2C40080ECE8 /* ShortIPiece.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ShortIPiece.hpp; sourceTree = "<group>"; };
-		624447821EDDD2C40080ECE8 /* SpherePiece.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SpherePiece.cpp; sourceTree = "<group>"; };
-		624447831EDDD2C40080ECE8 /* SpherePiece.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SpherePiece.hpp; sourceTree = "<group>"; };
 		624447841EDDD2C40080ECE8 /* TrianglePiece.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TrianglePiece.cpp; sourceTree = "<group>"; };
 		624447851EDDD2C40080ECE8 /* TrianglePiece.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = TrianglePiece.hpp; sourceTree = "<group>"; };
 		624447941EDDD2C40080ECE8 /* TitleController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TitleController.cpp; sourceTree = "<group>"; };
@@ -1117,8 +1114,6 @@
 				624447811EDDD2C40080ECE8 /* ShortIPiece.hpp */,
 				622F7F341F23C29600E965AF /* SmallTrianglePiece.cpp */,
 				622F7F351F23C29600E965AF /* SmallTrianglePiece.hpp */,
-				624447821EDDD2C40080ECE8 /* SpherePiece.cpp */,
-				624447831EDDD2C40080ECE8 /* SpherePiece.hpp */,
 				6260A7091F89196C001F6DCD /* TPiece.cpp */,
 				6260A70A1F89196C001F6DCD /* TPiece.hpp */,
 				624447841EDDD2C40080ECE8 /* TrianglePiece.cpp */,
@@ -1936,7 +1931,6 @@
 				6260A6E61F869943001F6DCD /* ZPiece.cpp in Sources */,
 				624447AC1EDDD2C40080ECE8 /* FallingPiece.cpp in Sources */,
 				6260A6E91F86A0AA001F6DCD /* MirroredZPiece.cpp in Sources */,
-				624447CD1EDDD2C40080ECE8 /* SpherePiece.cpp in Sources */,
 				62944D7B20053A2D00814D36 /* Material.cpp in Sources */,
 				62944DA720053A2D00814D36 /* LightComponent.cpp in Sources */,
 				624447A01EDDD2C40080ECE8 /* CloseButton.cpp in Sources */,

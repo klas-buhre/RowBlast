@@ -16,6 +16,11 @@ namespace BlocksGame {
     
     using PieceTypes = std::map<std::string, std::unique_ptr<const Piece>>;
     
+    struct BlueprintSlotRenderables {
+        Pht::RenderableObject* mSlot {nullptr};
+        Pht::RenderableObject* mAnimation {nullptr};
+    };
+    
     class LevelResources {
     public:
         LevelResources(Pht::IEngine& engine, const GameScene& scene);

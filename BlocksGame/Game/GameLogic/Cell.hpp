@@ -91,11 +91,6 @@ namespace BlocksGame {
     
     using CellGrid = std::vector<std::vector<Cell>>;
     
-    struct BlueprintSlotRenderables {
-        Pht::RenderableObject* mSlot {nullptr};
-        Pht::RenderableObject* mAnimation {nullptr};
-    };
-    
     struct BlueprintSlotFillAnimation {
         bool mIsActive {false};
         float mElapsedTime {0.0f};

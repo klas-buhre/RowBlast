@@ -103,7 +103,33 @@ Time Estimation in days:
         Cost: 15
 
         Total: 146
- 
+
+GameScene refactoring:
+    Open questions:
+        -How to handle field blocks/subCells?
+            Non-empty cells can have a pointer to a scene object. Add a color property to SubCell.
+            Init the scene object during level load, piece landing and undo move (but not when
+            pulling down loose pieces). Can have a BlockManager that manages all unused block
+            scene objects, that the Field can call. The renderable objects should be gotten from the
+            PieceResources and LevelResources based on fill and color. This mean that the *Piece
+            classes should not create their own renderables (Except the bomb pieces).
+        -How to handle flashing blocks?
+            Each piece block type can have three versions of its renderable object: normal, flashing,
+            blueprint flashing. When a block is flashing, the renderable of the scene object is
+            changed to the flashing renderable object.
+        -How to handle welds?
+            The welds can be scene object children of the block scene object.
+        -How to handle collapsing field animation?
+            Just set the block scene objects positions in
+            CollapsingFieldAnimation::UpdateInActiveState().
+        -How to handle undo move?
+            Just rebuild the block scene objects by scanning the field.
+        -How to handle the falling piece?
+            Each piece type can have its own scene object with blocks as children. The piece scene
+            object could be constructed by a PieceSceneObjectBuilder based on fillGrid and color.
+            Bomb pieces can override that scene object with their own since they have special
+            renderable objects that cannot be inferred from fill and color.
+
 Create rounded cube in Blender:
 Scale cube so that size is 1.0. Select the wrench to the right.
 Then, Add Modifier > Bevel > turn up width > turn up segments.
