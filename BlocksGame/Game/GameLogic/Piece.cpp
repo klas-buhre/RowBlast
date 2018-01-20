@@ -59,6 +59,23 @@ namespace {
 
         return rotatedWelds;
     }
+    
+    BlockRenderable ToBlockRenderable(Fill fill) {
+        switch (fill) {
+            case Fill::Empty:
+                return BlockRenderable::None;
+            case Fill::LowerRightHalf:
+                return BlockRenderable::LowerRightHalf;
+            case Fill::UpperRightHalf:
+                return BlockRenderable::UpperRightHalf;
+            case Fill::UpperLeftHalf:
+                return BlockRenderable::UpperLeftHalf;
+            case Fill::LowerLeftHalf:
+                return BlockRenderable::LowerLeftHalf;
+            case Fill::Full:
+                return BlockRenderable::Full;
+        }
+    }
 }
 
 Piece::Piece() {}
@@ -131,11 +148,12 @@ const Pht::RenderableObject* Piece::GetPressedGhostPieceRenderable() const {
 void Piece::InitGrids(const RenderableGrid& renderableGrid,
                       const FillGrid& fillGrid,
                       const ClickGrid& clickGrid,
+                      BlockColor blockColor,
                       std::unique_ptr<Pht::RenderableObject> weldRenderable,
                       bool isIndivisible) {
-    mGridNumRows = static_cast<int>(renderableGrid.size());
-    mGridNumColumns = static_cast<int>(renderableGrid.front().size());
-    assert(mGridNumRows == fillGrid.size() && mGridNumColumns == fillGrid.front().size());
+    mGridNumRows = static_cast<int>(fillGrid.size());
+    mGridNumColumns = static_cast<int>(fillGrid.front().size());
+    assert(mGridNumRows == renderableGrid.size() && mGridNumColumns == renderableGrid.front().size());
     
     mClickGridNumRows = static_cast<int>(clickGrid.size());
     mClickGridNumColumns = static_cast<int>(clickGrid.front().size());
@@ -143,7 +161,7 @@ void Piece::InitGrids(const RenderableGrid& renderableGrid,
     
     mWeldRenderable = std::move(weldRenderable);
     
-    InitCellGrids(renderableGrid, fillGrid, isIndivisible);
+    InitCellGrids(renderableGrid, fillGrid, blockColor, isIndivisible);
     InitClickGrids(clickGrid);
     
     mRightOverhangCheckPositions.resize(4);
@@ -170,6 +188,7 @@ void Piece::InitGrids(const RenderableGrid& renderableGrid,
 
 void Piece::InitCellGrids(const Piece::RenderableGrid& renderableGrid,
                           const Piece::FillGrid& fillGrid,
+                          BlockColor blockColor,
                           bool isIndivisible) {
     auto reversedRenderableGrid {renderableGrid};
     std::reverse(reversedRenderableGrid.begin(), reversedRenderableGrid.end());
@@ -177,7 +196,9 @@ void Piece::InitCellGrids(const Piece::RenderableGrid& renderableGrid,
     auto reversedFillGrid {fillGrid};
     std::reverse(reversedFillGrid.begin(), reversedFillGrid.end());
     
-    auto deg0Grid {InitCellGrid(reversedRenderableGrid, reversedFillGrid, isIndivisible)};
+    auto deg0Grid {
+        InitCellGrid(reversedRenderableGrid, reversedFillGrid, blockColor, isIndivisible)
+    };
     mGrids.push_back(deg0Grid);
     
     auto deg90Grid {RotateGridClockwise90Deg(deg0Grid, Rotation::Deg90)};
@@ -192,6 +213,7 @@ void Piece::InitCellGrids(const Piece::RenderableGrid& renderableGrid,
 
 CellGrid Piece::InitCellGrid(const Piece::RenderableGrid& renderableGrid,
                              const Piece::FillGrid& fillGrid,
+                             BlockColor blockColor,
                              bool isIndivisible) {
     CellGrid result {static_cast<std::size_t>(mGridNumRows)};
     for (auto& row: result) {
@@ -202,9 +224,11 @@ CellGrid Piece::InitCellGrid(const Piece::RenderableGrid& renderableGrid,
         for (auto column {0}; column < mGridNumColumns; column++) {
             auto& subCell {result[row][column].mFirstSubCell};
             subCell.mFill = fillGrid[row][column];
-            subCell.mWelds = MakeWelds(row, column, renderableGrid);
+            subCell.mWelds = MakeWelds(row, column, fillGrid);
             subCell.mRenderableObject = renderableGrid[row][column];
             subCell.mWeldRenderableObject = mWeldRenderable.get();
+            subCell.mBlockRenderable = ToBlockRenderable(subCell.mFill);
+            subCell.mColor = blockColor;
             subCell.mFlashingBlockAnimation.mIsActive = true;
             subCell.mIsPartOfIndivisiblePiece = isIndivisible;
         }
@@ -279,54 +303,54 @@ void Piece::SetPressedGhostPieceRenderable(std::unique_ptr<Pht::RenderableObject
     mPressedGhostPieceRenderable = std::move(renderable);
 }
 
-Welds Piece::MakeWelds(int row, int column, const Piece::RenderableGrid& renderableGrid) {
+Welds Piece::MakeWelds(int row, int column, const Piece::FillGrid& fillGrid) {
     Welds welds;
     
-    if (IsBlock(row + 1, column, renderableGrid)) {
+    if (IsBlock(row + 1, column, fillGrid)) {
         welds.mUp = true;
     }
 
-    if (IsBlock(row + 1, column + 1, renderableGrid) &&
-        !IsBlock(row + 1, column, renderableGrid) && !IsBlock(row, column + 1, renderableGrid)) {
+    if (IsBlock(row + 1, column + 1, fillGrid) &&
+        !IsBlock(row + 1, column, fillGrid) && !IsBlock(row, column + 1, fillGrid)) {
         welds.mUpRight = true;
     }
 
-    if (IsBlock(row, column + 1, renderableGrid)) {
+    if (IsBlock(row, column + 1, fillGrid)) {
         welds.mRight = true;
     }
 
-    if (IsBlock(row - 1, column + 1, renderableGrid) &&
-        !IsBlock(row, column + 1, renderableGrid) && !IsBlock(row - 1, column, renderableGrid)) {
+    if (IsBlock(row - 1, column + 1, fillGrid) &&
+        !IsBlock(row, column + 1, fillGrid) && !IsBlock(row - 1, column, fillGrid)) {
         welds.mDownRight = true;
     }
 
-    if (IsBlock(row - 1, column, renderableGrid)) {
+    if (IsBlock(row - 1, column, fillGrid)) {
         welds.mDown = true;
     }
 
-    if (IsBlock(row - 1, column - 1, renderableGrid) &&
-        !IsBlock(row - 1, column, renderableGrid) && !IsBlock(row, column - 1, renderableGrid)) {
+    if (IsBlock(row - 1, column - 1, fillGrid) &&
+        !IsBlock(row - 1, column, fillGrid) && !IsBlock(row, column - 1, fillGrid)) {
         welds.mDownLeft = true;
     }
     
-    if (IsBlock(row, column - 1, renderableGrid)) {
+    if (IsBlock(row, column - 1, fillGrid)) {
         welds.mLeft = true;
     }
 
-    if (IsBlock(row + 1, column - 1, renderableGrid) &&
-        !IsBlock(row + 1, column, renderableGrid) && !IsBlock(row, column - 1, renderableGrid)) {
+    if (IsBlock(row + 1, column - 1, fillGrid) &&
+        !IsBlock(row + 1, column, fillGrid) && !IsBlock(row, column - 1, fillGrid)) {
         welds.mUpLeft = true;
     }
 
     return welds;
 }
 
-bool Piece::IsBlock(int row, int column, const Piece::RenderableGrid& renderableGrid) {
+bool Piece::IsBlock(int row, int column, const Piece::FillGrid& fillGrid) {
     if (row < 0 || row >= mGridNumRows || column < 0 || column >= mGridNumColumns) {
         return false;
     }
     
-    return renderableGrid[row][column] != nullptr;
+    return fillGrid[row][column] != Fill::Empty;
 }
 
 void Piece::CalculateMinMax(int& yMax, int& xMin, int& xMax, const CellGrid& grid) const {

@@ -2,6 +2,10 @@
 
 using namespace BlocksGame;
 
+const int Quantities::numBlockRenderables {5};
+const int Quantities::numBlockColors {4};
+const int Quantities::numBlockBrightness {3};
+
 const float BlueprintSlotFillAnimation::mInitialOpacity {0.6f};
  
 float BlocksGame::RotationToDeg(Rotation rotation) {

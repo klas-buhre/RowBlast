@@ -76,6 +76,7 @@ namespace BlocksGame {
         void InitGrids(const RenderableGrid& renderableGrid,
                        const FillGrid& fillGrid,
                        const ClickGrid& clickGrid,
+                       BlockColor blockColor,
                        std::unique_ptr<Pht::RenderableObject> weldRenderable,
                        bool isIndivisible = false);
         void SetPreviewCellSize(float previewCellSize);
@@ -88,13 +89,15 @@ namespace BlocksGame {
     private:
         void InitCellGrids(const Piece::RenderableGrid& renderableGrid,
                            const Piece::FillGrid& fillGrid,
+                           BlockColor blockColor,
                            bool isIndivisible);
         CellGrid InitCellGrid(const Piece::RenderableGrid& renderableGrid,
                               const Piece::FillGrid& fillGrid,
+                              BlockColor blockColor,
                               bool isIndivisible);
         CellGrid RotateGridClockwise90Deg(const CellGrid& grid, Rotation newRotation);
-        Welds MakeWelds(int row, int column, const Piece::RenderableGrid& renderableGrid);
-        bool IsBlock(int row, int column, const Piece::RenderableGrid& renderableGrid);
+        Welds MakeWelds(int row, int column, const Piece::FillGrid& fillGrid);
+        bool IsBlock(int row, int column, const Piece::FillGrid& fillGrid);
         void CalculateMinMax(int& yMax, int& xMin, int& xMax, const CellGrid& grid) const;
         void AddOverhangCheckPositions(Rotation rotation);
         void AddExtremityCheckPositions(Rotation rotation);

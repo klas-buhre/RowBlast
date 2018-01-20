@@ -52,7 +52,7 @@ SmallTrianglePiece::SmallTrianglePiece(Pht::IEngine& engine, const GameScene& sc
         {0, 0, 0, 0, 0, 0}
     };
 
-    InitGrids(renderableGrid, fillGrid, clickGrid, nullptr);
+    InitGrids(renderableGrid, fillGrid, clickGrid, BlockColor::Red, nullptr);
     SetPreviewCellSize(0.8f);
     
     GhostPieceBorder border {

@@ -154,6 +154,7 @@
 		6270DCAE1FCB248E00FB457D /* sky_upside_down_patched_mirrored.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6270DCA61FCB248E00FB457D /* sky_upside_down_patched_mirrored.jpg */; };
 		6270DCB01FCB248E00FB457D /* star_particle.png in Resources */ = {isa = PBXBuildFile; fileRef = 6270DCA81FCB248E00FB457D /* star_particle.png */; };
 		6270DCB31FCDA99100FB457D /* TitleScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6270DCB11FCDA99100FB457D /* TitleScene.cpp */; };
+		628065EA201399AE00F86754 /* PieceResources.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 628065E8201399AE00F86754 /* PieceResources.cpp */; };
 		6286F9AE1FF26BD2004DEF90 /* Chapter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6286F9AC1FF26BD1004DEF90 /* Chapter.cpp */; };
 		6286F9AF1FF26BD2004DEF90 /* Chapter1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6286F9AD1FF26BD1004DEF90 /* Chapter1.cpp */; };
 		6286F9B21FF3BE5E004DEF90 /* MapPin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6286F9B01FF3BE5E004DEF90 /* MapPin.cpp */; };
@@ -491,6 +492,8 @@
 		6270DCA81FCB248E00FB457D /* star_particle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star_particle.png; sourceTree = "<group>"; };
 		6270DCB11FCDA99100FB457D /* TitleScene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TitleScene.cpp; sourceTree = "<group>"; };
 		6270DCB21FCDA99100FB457D /* TitleScene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TitleScene.hpp; sourceTree = "<group>"; };
+		628065E8201399AE00F86754 /* PieceResources.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PieceResources.cpp; sourceTree = "<group>"; };
+		628065E9201399AE00F86754 /* PieceResources.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PieceResources.hpp; sourceTree = "<group>"; };
 		6286F9AA1FF26BD1004DEF90 /* Chapter.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Chapter.hpp; sourceTree = "<group>"; };
 		6286F9AB1FF26BD1004DEF90 /* Chapter1.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Chapter1.hpp; sourceTree = "<group>"; };
 		6286F9AC1FF26BD1004DEF90 /* Chapter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Chapter.cpp; sourceTree = "<group>"; };
@@ -1016,6 +1019,8 @@
 				6244474C1EDDD2C40080ECE8 /* GameRenderer.hpp */,
 				6244474D1EDDD2C40080ECE8 /* GameScene.cpp */,
 				6244474E1EDDD2C40080ECE8 /* GameScene.hpp */,
+				628065E8201399AE00F86754 /* PieceResources.cpp */,
+				628065E9201399AE00F86754 /* PieceResources.hpp */,
 			);
 			path = GameScene;
 			sourceTree = "<group>";
@@ -1989,6 +1994,7 @@
 				620A982E1EE2F2A900AD6C61 /* LevelCompletedDialogView.cpp in Sources */,
 				62944D7420053A2D00814D36 /* VboCache.cpp in Sources */,
 				62944DA320053A2D00814D36 /* Scene.cpp in Sources */,
+				628065EA201399AE00F86754 /* PieceResources.cpp in Sources */,
 				6286F9B51FF6B273004DEF90 /* NextLevelParticleEffect.cpp in Sources */,
 				624447C91EDDD2C40080ECE8 /* RowBomb.cpp in Sources */,
 				6260A70B1F89196C001F6DCD /* TPiece.cpp in Sources */,

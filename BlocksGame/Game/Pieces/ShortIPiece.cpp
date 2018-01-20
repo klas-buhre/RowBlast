@@ -59,7 +59,7 @@ ShortIPiece::ShortIPiece(Pht::IEngine& engine, const GameScene& scene) {
     
     auto weldRenderable {sceneManager.CreateRenderableObject(Pht::QuadMesh {0.19f, 0.85f}, material)};
     
-    InitGrids(renderableGrid, fillGrid, clickGrid, std::move(weldRenderable));
+    InitGrids(renderableGrid, fillGrid, clickGrid, BlockColor::Green, std::move(weldRenderable));
     SetPreviewCellSize(0.6f);
     SetNumRotations(2);
     

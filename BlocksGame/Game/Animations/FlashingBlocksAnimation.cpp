@@ -8,9 +8,10 @@ using namespace BlocksGame;
 namespace {
     const auto shortFlashDuration {0.22f};
     const auto longFlashDuration {0.30f};
-    const Pht::Color colorAdd {0.23f, 0.23f, 0.23f};
-    const Pht::Color brightColorAdd {0.53f, 0.53f, 0.53f};
 }
+
+const Pht::Color FlashingBlocksAnimation::colorAdd {0.23f, 0.23f, 0.23f};
+const Pht::Color FlashingBlocksAnimation::brightColorAdd {0.53f, 0.53f, 0.53f};
 
 FlashingBlocksAnimation::FlashingBlocksAnimation(Field& field) :
     mField {field} {}

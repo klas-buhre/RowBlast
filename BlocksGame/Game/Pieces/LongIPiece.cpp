@@ -63,7 +63,7 @@ LongIPiece::LongIPiece(Pht::IEngine& engine, const GameScene& scene) {
     
     auto weldRenderable {sceneManager.CreateRenderableObject(Pht::QuadMesh {0.19f, 0.85f}, material)};
 
-    InitGrids(renderableGrid, fillGrid, clickGrid, std::move(weldRenderable));
+    InitGrids(renderableGrid, fillGrid, clickGrid, BlockColor::Yellow, std::move(weldRenderable));
     SetPreviewCellSize(0.4f);
     SetNumRotations(2);
     

@@ -106,7 +106,7 @@ Time Estimation in days:
         Total: 146
 
 GameScene refactoring:
-    Open questions:
+    Alternative 1:
         -How to handle field blocks/subCells?
             Non-empty subCells can have a pointer to a scene object. Add a color property to SubCell.
             Init/acquire the scene object during level load, piece landing and undo move (but not
@@ -134,6 +134,33 @@ GameScene refactoring:
         -How to handle undo move?
             First, give back all scene objects to FieldBlocks and then just re-init the block scene
             objects by scanning the field.
+        -How to handle the falling piece?
+            Each piece type can have its own scene object with blocks as children. The piece scene
+            object could be constructed by a PieceSceneObjectBuilder based on fillGrid and color.
+            The SubCell::mRenderableKind is calculated from fillGrid by the Piece base class.
+            Bomb pieces can override that scene object with their own since they have special
+            renderable objects that cannot be inferred from fill and color.
+
+    Alternative 2:
+        -How to handle field blocks/subCells?
+            SubCells have mRenderableKind and color properties but no scene object property.
+            The GameRenderer maintains a pool of scene objects and init available block & weld scene
+            objects by scanning the Field if the Field is dirty. The Field becomes dirty during a
+            frame when changed. The renderable objects should be gotten from the PieceResources and
+            LevelResources based on mRenderableKind and color. This mean that the *Piece classes
+            should not create their own renderable objects (Except the bomb pieces).
+        -How to handle flashing blocks?
+            Each piece block type can have three versions of its renderable object: normal, flashing,
+            blueprint flashing. When a block is flashing, the renderable of the scene object is
+            changed to the flashing renderable object. It is possible for the GameRenderer
+            to ask the PieceResources to lookup the flashing renderables thanks to the
+            SubCell::mRenderableKind enum.
+        -How to handle welds?
+            Handled in the first bullet. The weld scene objects are not child objects.
+        -How to handle collapsing field animation?
+            Handled in the first bullet.
+        -How to handle undo move?
+            Handled in the first bullet.
         -How to handle the falling piece?
             Each piece type can have its own scene object with blocks as children. The piece scene
             object could be constructed by a PieceSceneObjectBuilder based on fillGrid and color.

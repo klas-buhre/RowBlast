@@ -5,11 +5,11 @@
 
 // Engine includes.
 #include "Vector.hpp"
-#include "Material.hpp"
+#include "Material.hpp" // TODO: remove
 
 namespace Pht {
     class SceneObject;
-    class RenderableObject;
+    class RenderableObject; // TODO: remove
 }
 
 namespace BlocksGame {
@@ -27,6 +27,23 @@ namespace BlocksGame {
         Deg90,
         Deg180,
         Deg270
+    };
+    
+    enum class BlockRenderable {
+        LowerRightHalf,
+        UpperRightHalf,
+        UpperLeftHalf,
+        LowerLeftHalf,
+        Full,
+        None
+    };
+    
+    enum class BlockColor {
+        Red,
+        Green,
+        Blue,
+        Yellow,
+        None
     };
 
     float RotationToDeg(Rotation rotation);
@@ -48,10 +65,23 @@ namespace BlocksGame {
         bool mUpLeft {false};
     };
     
+    enum class BlockBrightness {
+        Normal,
+        Flashing,
+        BlueprintFillFlashing
+    };
+    
+    namespace Quantities {
+        extern const int numBlockRenderables;
+        extern const int numBlockColors;
+        extern const int numBlockBrightness;
+    };
+    
     struct FlashingBlockAnimation {
         bool mIsActive {false};
         float mElapsedTime {0.0f};
-        Pht::Color mColorAdd;
+        BlockBrightness mBrightness {BlockBrightness::Normal};
+        Pht::Color mColorAdd; // TODO: remove
     };
 
     struct SubCell {
@@ -67,10 +97,12 @@ namespace BlocksGame {
         Welds mWelds;
         int mPieceId {0};
         Pht::Vec2 mPosition {0.0f, 0.0f};
-        Pht::RenderableObject* mRenderableObject {nullptr};
-        Pht::RenderableObject* mWeldRenderableObject {nullptr};
-        FlashingBlockAnimation mFlashingBlockAnimation;
+        Pht::RenderableObject* mRenderableObject {nullptr}; // TODO: remove
+        Pht::RenderableObject* mWeldRenderableObject {nullptr}; // TODO: remove
+        BlockRenderable mBlockRenderable {BlockRenderable::None};
+        BlockColor mColor {BlockColor::None};
         Rotation mRotation {Rotation::Deg0};
+        FlashingBlockAnimation mFlashingBlockAnimation;
         bool mIsLevel {false};
         bool mIsPartOfIndivisiblePiece {false};
         bool mIsFound {false};

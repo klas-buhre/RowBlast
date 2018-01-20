@@ -43,7 +43,7 @@ Bomb::Bomb(Pht::IEngine& engine, const GameScene& scene) {
         {0, 0, 0, 0, 0, 0}
     };
 
-    InitGrids(renderableGrid, fillGrid, clickGrid, nullptr);
+    InitGrids(renderableGrid, fillGrid, clickGrid, BlockColor::None, nullptr);
     SetPreviewCellSize(0.8f);
     SetNumRotations(1);
 }
