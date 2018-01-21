@@ -15,19 +15,19 @@
 using namespace BlocksGame;
 
 namespace {
-    std::string ToMeshName(BlockRenderable blockRenderable) {
-        switch (blockRenderable) {
-            case BlockRenderable::LowerRightHalf:
+    std::string ToMeshName(BlockRenderableKind blockRenderableKind) {
+        switch (blockRenderableKind) {
+            case BlockRenderableKind::LowerRightHalf:
                 return "triangle_428.obj";
-            case BlockRenderable::UpperRightHalf:
+            case BlockRenderableKind::UpperRightHalf:
                 return "triangle_428_r270.obj";
-            case BlockRenderable::UpperLeftHalf:
+            case BlockRenderableKind::UpperLeftHalf:
                 return "triangle_428_r180.obj";
-            case BlockRenderable::LowerLeftHalf:
+            case BlockRenderableKind::LowerLeftHalf:
                 return "triangle_428_r90.obj";
-            case BlockRenderable::Full:
+            case BlockRenderableKind::Full:
                 return "cube_428.obj";
-            case BlockRenderable::None:
+            case BlockRenderableKind::None:
                 assert(!"Not a mesh");
                 break;
         }
@@ -80,13 +80,13 @@ PieceResources::PieceResources(Pht::IEngine& engine, const GameScene& scene) {
     CreateWelds(sceneManager, scene);
 }
 
-Pht::RenderableObject& PieceResources::GetBlockRenderableObject(BlockRenderable blockRenderable,
+Pht::RenderableObject& PieceResources::GetBlockRenderableObject(BlockRenderableKind blockRenderable,
                                                                 BlockColor color,
                                                                 BlockBrightness brightness) {
     return *(mBlocks[CalcBlockIndex(blockRenderable, color, brightness)]);
 }
 
-int PieceResources::CalcBlockIndex(BlockRenderable blockRenderable,
+int PieceResources::CalcBlockIndex(BlockRenderableKind blockRenderable,
                                    BlockColor color,
                                    BlockBrightness brightness) {
     auto blockRenderableIndex {static_cast<int>(blockRenderable)};
@@ -140,13 +140,13 @@ void PieceResources::CreateBlocks(Pht::ISceneManager& sceneManager, const GameSc
             for (auto brightnessIndex {0};
                  brightnessIndex < Quantities::numBlockBrightness;
                  ++brightnessIndex) {
-                auto blockRenderable {static_cast<BlockRenderable>(blockRenderableIndex)};
+                auto blockRenderableKind {static_cast<BlockRenderableKind>(blockRenderableIndex)};
                 auto color {static_cast<BlockColor>(colorIndex)};
                 auto brightness {static_cast<BlockBrightness>(brightnessIndex)};
                 
-                auto meshName {ToMeshName(blockRenderable)};
+                auto meshName {ToMeshName(blockRenderableKind)};
                 auto material {ToMaterial(color, brightness, scene)};
-                auto blockIndex {CalcBlockIndex(blockRenderable, color, brightness)};
+                auto blockIndex {CalcBlockIndex(blockRenderableKind, color, brightness)};
                 
                 auto renderableObject {
                     sceneManager.CreateRenderableObject(Pht::ObjMesh {meshName, cellSize}, material)

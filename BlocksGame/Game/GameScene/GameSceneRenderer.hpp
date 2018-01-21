@@ -1,5 +1,5 @@
-#ifndef GameRenderer_hpp
-#define GameRenderer_hpp
+#ifndef GameSceneRenderer_hpp
+#define GameSceneRenderer_hpp
 
 // Engine includes.
 #include "Vector.hpp"
@@ -31,20 +31,20 @@ namespace BlocksGame {
     class Piece;
     class FallingPiece;
 
-    class GameRenderer {
+    class GameSceneRenderer {
     public:
-        GameRenderer(Pht::IEngine& engine,
-                     const Field& field,
-                     const GameLogic& gameLogic,
-                     const ExplosionParticleEffect& explosionParticleEffect,
-                     const RowExplosionParticleEffect& rowExplosionParticleEffect,
-                     const FlyingBlocksAnimation& flyingBlocksAnimation,
-                     const SlidingTextAnimation& slidingTextAnimation,
-                     const BlastRadiusAnimation& blastRadiusAnimation,
-                     const GameScene& scene,
-                     const ScrollController& scrollController,
-                     const GameHud& hud,
-                     const GameViewControllers& gameViewControllers);
+        GameSceneRenderer(Pht::IEngine& engine,
+                          const Field& field,
+                          const GameLogic& gameLogic,
+                          const ExplosionParticleEffect& explosionParticleEffect,
+                          const RowExplosionParticleEffect& rowExplosionParticleEffect,
+                          const FlyingBlocksAnimation& flyingBlocksAnimation,
+                          const SlidingTextAnimation& slidingTextAnimation,
+                          const BlastRadiusAnimation& blastRadiusAnimation,
+                          const GameScene& scene,
+                          const ScrollController& scrollController,
+                          const GameHud& hud,
+                          const GameViewControllers& gameViewControllers);
         
         void RenderFrame();
         

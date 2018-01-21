@@ -190,7 +190,7 @@ void GameScene::CreateBlueprintSlots(const Level& level, const LevelResources& l
             
             if (blueprintCell.mFill != Fill::Empty) {
                 auto& blueprintSlot {mScene->CreateSceneObject()};
-                blueprintSlot.SetRenderable(levelResources.GetBlueprintSquareRenderables().mSlot);
+                blueprintSlot.SetRenderable(&levelResources.GetBlueprintSlotRenderable());
                 
                 Pht::Vec3 blueprintSlotPosition {
                     column * mCellSize + mCellSize / 2.0f,

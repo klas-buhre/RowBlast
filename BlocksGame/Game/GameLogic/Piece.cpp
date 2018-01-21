@@ -60,20 +60,20 @@ namespace {
         return rotatedWelds;
     }
     
-    BlockRenderable ToBlockRenderable(Fill fill) {
+    BlockRenderableKind ToBlockRenderableKind(Fill fill) {
         switch (fill) {
             case Fill::Empty:
-                return BlockRenderable::None;
+                return BlockRenderableKind::None;
             case Fill::LowerRightHalf:
-                return BlockRenderable::LowerRightHalf;
+                return BlockRenderableKind::LowerRightHalf;
             case Fill::UpperRightHalf:
-                return BlockRenderable::UpperRightHalf;
+                return BlockRenderableKind::UpperRightHalf;
             case Fill::UpperLeftHalf:
-                return BlockRenderable::UpperLeftHalf;
+                return BlockRenderableKind::UpperLeftHalf;
             case Fill::LowerLeftHalf:
-                return BlockRenderable::LowerLeftHalf;
+                return BlockRenderableKind::LowerLeftHalf;
             case Fill::Full:
-                return BlockRenderable::Full;
+                return BlockRenderableKind::Full;
         }
     }
 }
@@ -227,7 +227,7 @@ CellGrid Piece::InitCellGrid(const Piece::RenderableGrid& renderableGrid,
             subCell.mWelds = MakeWelds(row, column, fillGrid);
             subCell.mRenderableObject = renderableGrid[row][column];
             subCell.mWeldRenderableObject = mWeldRenderable.get();
-            subCell.mBlockRenderable = ToBlockRenderable(subCell.mFill);
+            subCell.mBlockRenderableKind = ToBlockRenderableKind(subCell.mFill);
             subCell.mColor = blockColor;
             subCell.mFlashingBlockAnimation.mIsActive = true;
             subCell.mIsPartOfIndivisiblePiece = isIndivisible;

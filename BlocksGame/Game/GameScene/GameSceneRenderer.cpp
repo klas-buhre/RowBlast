@@ -1,4 +1,4 @@
-#include "GameRenderer.hpp"
+#include "GameSceneRenderer.hpp"
 
 #include <array>
 
@@ -41,18 +41,18 @@ namespace {
     const auto dz {0.05f};
 }
 
-GameRenderer::GameRenderer(Pht::IEngine& engine,
-                           const Field& field, 
-                           const GameLogic& gameLogic,
-                           const ExplosionParticleEffect& explosionParticleEffect,
-                           const RowExplosionParticleEffect& rowExplosionParticleEffect,
-                           const FlyingBlocksAnimation& flyingBlocksAnimation,
-                           const SlidingTextAnimation& slidingTextAnimation,
-                           const BlastRadiusAnimation& blastRadiusAnimation,
-                           const GameScene& scene,
-                           const ScrollController& scrollController,
-                           const GameHud& hud,
-                           const GameViewControllers& gameViewControllers) :
+GameSceneRenderer::GameSceneRenderer(Pht::IEngine& engine,
+                                     const Field& field,
+                                     const GameLogic& gameLogic,
+                                     const ExplosionParticleEffect& explosionParticleEffect,
+                                     const RowExplosionParticleEffect& rowExplosionParticleEffect,
+                                     const FlyingBlocksAnimation& flyingBlocksAnimation,
+                                     const SlidingTextAnimation& slidingTextAnimation,
+                                     const BlastRadiusAnimation& blastRadiusAnimation,
+                                     const GameScene& scene,
+                                     const ScrollController& scrollController,
+                                     const GameHud& hud,
+                                     const GameViewControllers& gameViewControllers) :
     mEngine {engine},
     mEngineRenderer {engine.GetRenderer()},
     mField {field},
@@ -67,7 +67,7 @@ GameRenderer::GameRenderer(Pht::IEngine& engine,
     mHud {hud},
     mGameViewControllers {gameViewControllers} {}
 
-void GameRenderer::RenderFrame() {
+void GameSceneRenderer::RenderFrame() {
     RenderBlueprintSlots();
     
     auto* scene {mEngine.GetSceneManager().GetActiveScene()};
@@ -92,7 +92,7 @@ void GameRenderer::RenderFrame() {
     RenderGameViews();
 }
 
-void GameRenderer::RenderBlueprintSlots() {
+void GameSceneRenderer::RenderBlueprintSlots() {
     auto* blueprintGrid {mField.GetBlueprintGrid()};
     
     if (blueprintGrid == nullptr) {
@@ -119,7 +119,7 @@ void GameRenderer::RenderBlueprintSlots() {
     }
 }
 
-void GameRenderer::RenderFieldBlocks() {
+void GameSceneRenderer::RenderFieldBlocks() {
     int lowestVisibleRow {
         mScrollController.IsScrollingDownInClearMode() || mGameLogic.IsCascading() ?
             mField.GetLowestVisibleRow() - 1 :
@@ -141,7 +141,7 @@ void GameRenderer::RenderFieldBlocks() {
     }
 }
 
-void GameRenderer::RenderFieldBlock(const SubCell& subCell) {
+void GameSceneRenderer::RenderFieldBlock(const SubCell& subCell) {
     auto* renderableObject {subCell.mRenderableObject};
     
     if (renderableObject == nullptr) {
@@ -207,7 +207,7 @@ void GameRenderer::RenderFieldBlock(const SubCell& subCell) {
     }
 }
 
-void GameRenderer::RenderFallingPiece() {
+void GameSceneRenderer::RenderFallingPiece() {
     auto* fallingPiece {mGameLogic.GetFallingPiece()};
     
     if (fallingPiece == nullptr) {
@@ -226,9 +226,9 @@ void GameRenderer::RenderFallingPiece() {
     RenderPieceBlocks(pieceGrid, pieceWorldPos3, 1.0f);
 }
 
-void GameRenderer::RenderPieceBlocks(const CellGrid& pieceBlocks,
-                                     const Pht::Vec3& pieceWorldPos,
-                                     float opacity) {
+void GameSceneRenderer::RenderPieceBlocks(const CellGrid& pieceBlocks,
+                                          const Pht::Vec3& pieceWorldPos,
+                                          float opacity) {
     auto* fallingPiece {mGameLogic.GetFallingPiece()};
     assert(fallingPiece);
     
@@ -277,9 +277,9 @@ void GameRenderer::RenderPieceBlocks(const CellGrid& pieceBlocks,
     }
 }
 
-void GameRenderer::RenderBlockWelds(const SubCell& subCell,
-                                    const Pht::Vec3& blockPos,
-                                    float cellSize) {
+void GameSceneRenderer::RenderBlockWelds(const SubCell& subCell,
+                                         const Pht::Vec3& blockPos,
+                                         float cellSize) {
     auto& welds {subCell.mWelds};
     auto weldZ {blockPos.z + cellSize / 2.0f};
     
@@ -316,7 +316,7 @@ void GameRenderer::RenderBlockWelds(const SubCell& subCell,
     }
 }
 
-void GameRenderer::RenderGhostPieces() {
+void GameSceneRenderer::RenderGhostPieces() {
     auto* fallingPiece {mGameLogic.GetFallingPiece()};
     
     if (fallingPiece == nullptr) {
@@ -339,8 +339,8 @@ void GameRenderer::RenderGhostPieces() {
     }
 }
 
-void GameRenderer::RenderGhostPiece(const FallingPiece& fallingPiece,
-                                    const Pht::Vec3& ghostPieceCenterLocalCoords) {
+void GameSceneRenderer::RenderGhostPiece(const FallingPiece& fallingPiece,
+                                         const Pht::Vec3& ghostPieceCenterLocalCoords) {
     auto cellSize {mScene.GetCellSize()};
     auto& fieldLowerLeft {mScene.GetFieldLoweLeft()};
     auto& pieceType {fallingPiece.GetPieceType()};
@@ -364,8 +364,8 @@ void GameRenderer::RenderGhostPiece(const FallingPiece& fallingPiece,
     }
 }
 
-void GameRenderer::RenderClickableGhostPieces(const FallingPiece& fallingPiece,
-                                              const Pht::Vec3& ghostPieceCenterLocalCoords) {
+void GameSceneRenderer::RenderClickableGhostPieces(const FallingPiece& fallingPiece,
+                                                   const Pht::Vec3& ghostPieceCenterLocalCoords) {
     auto* moveAlternatives {mGameLogic.GetClickInputHandler().GetMoveAlternativeSet()};
     
     if (moveAlternatives == nullptr) {
@@ -411,30 +411,30 @@ void GameRenderer::RenderClickableGhostPieces(const FallingPiece& fallingPiece,
     }
 }
 
-void GameRenderer::RenderGhostPiece(const Pht::RenderableObject& ghostPieceRenderable,
-                                    const Pht::Vec3& position,
-                                    Rotation rotation) {
+void GameSceneRenderer::RenderGhostPiece(const Pht::RenderableObject& ghostPieceRenderable,
+                                         const Pht::Vec3& position,
+                                         Rotation rotation) {
     auto& rotationMatrix {rotationMatrices[static_cast<int>(rotation)]};
     auto matrix {rotationMatrix * Pht::Mat4::Translate(position.x, position.y, position.z)};
     mEngineRenderer.Render(ghostPieceRenderable, matrix);
 }
 
-void GameRenderer::RenderBlastRadiusAnimation() {
+void GameSceneRenderer::RenderBlastRadiusAnimation() {
     if (auto* sceneObject {mBlastRadiusAnimation.GetSceneObject()}) {
         mEngineRenderer.RenderSceneObject(*sceneObject);
     }
 }
 
-void GameRenderer::RenderExplosion() {
+void GameSceneRenderer::RenderExplosion() {
     mEngineRenderer.RenderSceneObject(mExplosionParticleEffect.GetInnerEffect());
     mEngineRenderer.RenderSceneObject(mExplosionParticleEffect.GetOuterEffect());
 }
 
-void GameRenderer::RenderRowExplosion() {
+void GameSceneRenderer::RenderRowExplosion() {
     mEngineRenderer.RenderSceneObject(mRowExplosionParticleEffect.GetSceneObject());
 }
 
-void GameRenderer::RenderFlyingBlocks() {
+void GameSceneRenderer::RenderFlyingBlocks() {
     auto& bodies {mFlyingBlocksAnimation.GetRigidBodies()};
 
     for (auto i {0}; i < bodies.Size(); ++i) {
@@ -455,7 +455,7 @@ void GameRenderer::RenderFlyingBlocks() {
     }
 }
 
-void GameRenderer::RenderHud() {
+void GameSceneRenderer::RenderHud() {
     mEngineRenderer.SetHudMode(true);
     mEngineRenderer.SetLightDirection(mHud.GetLightDirection());
 
@@ -498,7 +498,7 @@ void GameRenderer::RenderHud() {
     mEngineRenderer.SetHudMode(false);
 }
 
-void GameRenderer::RenderTiltedGrayBlockInHud(const Pht::RenderableObject& grayBlock) {
+void GameSceneRenderer::RenderTiltedGrayBlockInHud(const Pht::RenderableObject& grayBlock) {
     auto position {mHud.GetProgressPosition() + mHud.GetGrayBlockRelativePosition()};
     
     auto baseTransform {
@@ -512,7 +512,7 @@ void GameRenderer::RenderTiltedGrayBlockInHud(const Pht::RenderableObject& grayB
     mEngineRenderer.Render(grayBlock, blockMatrix);
 }
 
-void GameRenderer::RenderTiltedBlueprintSlotInHud() {
+void GameSceneRenderer::RenderTiltedBlueprintSlotInHud() {
     auto position {mHud.GetProgressPosition() + mHud.GetBlueprintSlotRelativePosition()};
     
     auto baseTransform {
@@ -526,7 +526,7 @@ void GameRenderer::RenderTiltedBlueprintSlotInHud() {
     mEngineRenderer.Render(*mHud.GetBlueprintSlot(), blockMatrix);
 }
 
-void GameRenderer::RenderTiltedLPieceInHud() {
+void GameSceneRenderer::RenderTiltedLPieceInHud() {
     auto& lPiece {mHud.GetLPiece()};
 
     RenderScaledTiltedPiece(mHud.GetMovesPosition() + mHud.GetLPieceRelativePosition(),
@@ -536,7 +536,7 @@ void GameRenderer::RenderTiltedLPieceInHud() {
                             lPiece.GetGrid(Rotation::Deg0));
 }
 
-void GameRenderer::RenderPreviewPiece(const Piece* piece, const Pht::Vec2& position) {
+void GameSceneRenderer::RenderPreviewPiece(const Piece* piece, const Pht::Vec2& position) {
     if (piece == nullptr) {
         return;
     }
@@ -548,11 +548,11 @@ void GameRenderer::RenderPreviewPiece(const Piece* piece, const Pht::Vec2& posit
                             piece->GetGrid(Rotation::Deg0));
 }
 
-void GameRenderer::RenderScaledTiltedPiece(const Pht::Vec2& position,
-                                           float cellSize,
-                                           int pieceNumRows,
-                                           int pieceNumColumns,
-                                           const CellGrid& pieceGrid) {
+void GameSceneRenderer::RenderScaledTiltedPiece(const Pht::Vec2& position,
+                                                float cellSize,
+                                                int pieceNumRows,
+                                                int pieceNumColumns,
+                                                const CellGrid& pieceGrid) {
     Pht::Vec3 lowerLeft {
         position.x - pieceNumColumns * cellSize / 2.0f,
         position.y - pieceNumRows * cellSize / 2.0f,
@@ -584,7 +584,7 @@ void GameRenderer::RenderScaledTiltedPiece(const Pht::Vec2& position,
     }
 }
 
-void GameRenderer::RenderGameViews() {
+void GameSceneRenderer::RenderGameViews() {
     auto& gameMenuController {mGameViewControllers.GetGameMenuController()};
     
     switch (mGameViewControllers.GetActiveController()) {
@@ -643,7 +643,7 @@ void GameRenderer::RenderGameViews() {
     }
 }
 
-void GameRenderer::RenderLevelCompletedView() {
+void GameSceneRenderer::RenderLevelCompletedView() {
     auto& levelCompletedDialogController {mGameViewControllers.GetLevelCompletedDialogController()};
     levelCompletedDialogController.GetFadeEffect().Render();
     
@@ -653,7 +653,7 @@ void GameRenderer::RenderLevelCompletedView() {
     mEngineRenderer.SetLightDirection(mScene.GetLightDirection());
 }
 
-void GameRenderer::RenderSlidingText() {
+void GameSceneRenderer::RenderSlidingText() {
     if (mSlidingTextAnimation.GetState() == SlidingTextAnimation::State::Inactive) {
         return;
     }

@@ -26,11 +26,11 @@ BlueprintSlotsFilledAnimation::BlueprintSlotsFilledAnimation(Field& field,
     mContainerSceneObject = containerSceneObject.get();
     mSceneResources.AddSceneObject(std::move(containerSceneObject));
     
-    auto* animationRenderable {levelResources.GetBlueprintSquareRenderables().mAnimation};
+    auto& animationRenderable {levelResources.GetBlueprintSlotAnimationRenderable()};
     
     for (auto i {0}; i < numSceneObjects; ++i) {
         auto sceneObject {std::make_unique<Pht::SceneObject>()};
-        auto renderable {std::make_unique<Pht::RenderableObject>(*animationRenderable)};
+        auto renderable {std::make_unique<Pht::RenderableObject>(animationRenderable)};
         
         sceneObject->SetRenderable(renderable.get());
         mContainerSceneObject->AddChild(*sceneObject);

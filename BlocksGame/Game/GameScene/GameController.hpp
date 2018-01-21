@@ -4,7 +4,7 @@
 // Game includes.
 #include "Field.hpp"
 #include "GameLogic.hpp"
-#include "GameRenderer.hpp"
+#include "GameSceneRenderer.hpp"
 #include "GameScene.hpp"
 #include "ScrollController.hpp"
 #include "FlyingBlocksAnimation.hpp"
@@ -140,7 +140,7 @@ namespace BlocksGame {
         LevelResources mLevelResources;
         BlueprintSlotsFilledAnimation mBlueprintSlotsFilledAnimation;
         GameHud mHud;
-        GameRenderer mRenderer;
+        GameSceneRenderer mRenderer;
         std::unique_ptr<Level> mLevel;
         bool mShouldUpdateGameLogic {false};
     };

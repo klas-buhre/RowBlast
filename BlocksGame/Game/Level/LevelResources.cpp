@@ -77,19 +77,9 @@ void LevelResources::CreateCellRenderables(Pht::ISceneManager& sceneManager,
         scene.GetGrayMaterial()
     );
     
-    mGoldCube = sceneManager.CreateRenderableObject(
-        Pht::ObjMesh {"cube_428.obj", cellSize},
-        scene.GetGoldMaterial()
-    );
-
     mGrayTriangle = sceneManager.CreateRenderableObject(
         Pht::ObjMesh {"triangle_428.obj", cellSize},
         scene.GetGrayMaterial()
-    );
-    
-    mGoldTriangle = sceneManager.CreateRenderableObject(
-        Pht::ObjMesh {"triangle_428.obj", cellSize},
-        scene.GetGoldMaterial()
     );
 }
 
@@ -145,7 +135,6 @@ void LevelResources::CreateBlueprintRenderables(Pht::IEngine& engine, const Game
     auto& sceneManager {engine.GetSceneManager()};
     mBlueprintSquare = sceneManager.CreateRenderableObject(Pht::QuadMesh {squareSide, squareSide},
                                                            imageMaterial);
-    mBlueprintSquareRenderables.mSlot = mBlueprintSquare.get();
     
     Pht::Material animationMaterial {Pht::Color {1.0f, 1.0f, 1.0f}};
     animationMaterial.SetOpacity(BlueprintSlotFillAnimation::mInitialOpacity);
@@ -154,8 +143,21 @@ void LevelResources::CreateBlueprintRenderables(Pht::IEngine& engine, const Game
         Pht::QuadMesh {cellSize, cellSize},
         animationMaterial
     );
-    
-    mBlueprintSquareRenderables.mAnimation = mBlueprintSquareAnimation.get();
+}
+
+Pht::RenderableObject& LevelResources::GetLevelBlockRenderable(BlockRenderableKind renderableKind) const {
+    switch (renderableKind) {
+        case BlockRenderableKind::LowerRightHalf:
+        case BlockRenderableKind::UpperRightHalf:
+        case BlockRenderableKind::UpperLeftHalf:
+        case BlockRenderableKind::LowerLeftHalf:
+            return *mGrayTriangle;
+        case BlockRenderableKind::Full:
+            return *mGrayCube;
+        case BlockRenderableKind::None:
+            assert(!"Not a mesh");
+            break;
+    }
 }
 
 const Piece& LevelResources::GetLPiece() const {

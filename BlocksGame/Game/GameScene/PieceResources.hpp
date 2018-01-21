@@ -22,14 +22,14 @@ namespace BlocksGame {
     public:
         PieceResources(Pht::IEngine& engine, const GameScene& scene);
         
-        Pht::RenderableObject& GetBlockRenderableObject(BlockRenderable blockRenderable,
+        Pht::RenderableObject& GetBlockRenderableObject(BlockRenderableKind blockRenderableKind,
                                                         BlockColor color,
                                                         BlockBrightness brightness);
         Pht::RenderableObject& GetWeldRenderableObject(BlockColor color,
                                                        BlockBrightness brightness);
 
     private:
-        int CalcBlockIndex(BlockRenderable blockRenderable,
+        int CalcBlockIndex(BlockRenderableKind blockRenderableKind,
                            BlockColor color,
                            BlockBrightness brightness);
         int CalcWeldIndex(BlockColor color, BlockBrightness brightness);

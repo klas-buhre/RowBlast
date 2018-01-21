@@ -69,19 +69,12 @@ namespace {
             case ' ':
                 return nullptr;
             case 'G':
-                return &levelResources.GetGrayCube();
-            case 'O':
-                return &levelResources.GetGoldCube();
+                return &levelResources.GetLevelBlockRenderable(BlockRenderableKind::Full);
             case 'd':
             case 'b':
             case 'p':
             case 'q':
-                return &levelResources.GetGrayTriangle();
-            case 'D':
-            case 'B':
-            case 'P':
-            case 'Q':
-                return &levelResources.GetGoldTriangle();
+                return &levelResources.GetLevelBlockRenderable(BlockRenderableKind::LowerLeftHalf);
             default:
                 assert(!"Unknown cell type");
         }

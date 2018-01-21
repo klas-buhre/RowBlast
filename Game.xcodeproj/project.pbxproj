@@ -62,7 +62,7 @@
 		624447B01EDDD2C40080ECE8 /* ScrollController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 624447441EDDD2C40080ECE8 /* ScrollController.cpp */; };
 		624447B11EDDD2C40080ECE8 /* GameController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 624447471EDDD2C40080ECE8 /* GameController.cpp */; };
 		624447B21EDDD2C40080ECE8 /* GameHud.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 624447491EDDD2C40080ECE8 /* GameHud.cpp */; };
-		624447B31EDDD2C40080ECE8 /* GameRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6244474B1EDDD2C40080ECE8 /* GameRenderer.cpp */; };
+		624447B31EDDD2C40080ECE8 /* GameSceneRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6244474B1EDDD2C40080ECE8 /* GameSceneRenderer.cpp */; };
 		624447B41EDDD2C40080ECE8 /* GameScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6244474D1EDDD2C40080ECE8 /* GameScene.cpp */; };
 		624447B51EDDD2C40080ECE8 /* GameMenuController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 624447501EDDD2C40080ECE8 /* GameMenuController.cpp */; };
 		624447B61EDDD2C40080ECE8 /* GameMenuView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 624447521EDDD2C40080ECE8 /* GameMenuView.cpp */; };
@@ -155,6 +155,7 @@
 		6270DCB01FCB248E00FB457D /* star_particle.png in Resources */ = {isa = PBXBuildFile; fileRef = 6270DCA81FCB248E00FB457D /* star_particle.png */; };
 		6270DCB31FCDA99100FB457D /* TitleScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6270DCB11FCDA99100FB457D /* TitleScene.cpp */; };
 		628065EA201399AE00F86754 /* PieceResources.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 628065E8201399AE00F86754 /* PieceResources.cpp */; };
+		628065ED2014F7A700F86754 /* FieldBlockSceneObjects.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 628065EB2014F7A700F86754 /* FieldBlockSceneObjects.cpp */; };
 		6286F9AE1FF26BD2004DEF90 /* Chapter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6286F9AC1FF26BD1004DEF90 /* Chapter.cpp */; };
 		6286F9AF1FF26BD2004DEF90 /* Chapter1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6286F9AD1FF26BD1004DEF90 /* Chapter1.cpp */; };
 		6286F9B21FF3BE5E004DEF90 /* MapPin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6286F9B01FF3BE5E004DEF90 /* MapPin.cpp */; };
@@ -351,8 +352,8 @@
 		624447481EDDD2C40080ECE8 /* GameController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameController.hpp; sourceTree = "<group>"; };
 		624447491EDDD2C40080ECE8 /* GameHud.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameHud.cpp; sourceTree = "<group>"; };
 		6244474A1EDDD2C40080ECE8 /* GameHud.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameHud.hpp; sourceTree = "<group>"; };
-		6244474B1EDDD2C40080ECE8 /* GameRenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameRenderer.cpp; sourceTree = "<group>"; };
-		6244474C1EDDD2C40080ECE8 /* GameRenderer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameRenderer.hpp; sourceTree = "<group>"; };
+		6244474B1EDDD2C40080ECE8 /* GameSceneRenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameSceneRenderer.cpp; sourceTree = "<group>"; };
+		6244474C1EDDD2C40080ECE8 /* GameSceneRenderer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameSceneRenderer.hpp; sourceTree = "<group>"; };
 		6244474D1EDDD2C40080ECE8 /* GameScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameScene.cpp; sourceTree = "<group>"; };
 		6244474E1EDDD2C40080ECE8 /* GameScene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameScene.hpp; sourceTree = "<group>"; };
 		624447501EDDD2C40080ECE8 /* GameMenuController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameMenuController.cpp; sourceTree = "<group>"; };
@@ -494,6 +495,8 @@
 		6270DCB21FCDA99100FB457D /* TitleScene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TitleScene.hpp; sourceTree = "<group>"; };
 		628065E8201399AE00F86754 /* PieceResources.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PieceResources.cpp; sourceTree = "<group>"; };
 		628065E9201399AE00F86754 /* PieceResources.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PieceResources.hpp; sourceTree = "<group>"; };
+		628065EB2014F7A700F86754 /* FieldBlockSceneObjects.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FieldBlockSceneObjects.cpp; sourceTree = "<group>"; };
+		628065EC2014F7A700F86754 /* FieldBlockSceneObjects.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = FieldBlockSceneObjects.hpp; sourceTree = "<group>"; };
 		6286F9AA1FF26BD1004DEF90 /* Chapter.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Chapter.hpp; sourceTree = "<group>"; };
 		6286F9AB1FF26BD1004DEF90 /* Chapter1.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Chapter1.hpp; sourceTree = "<group>"; };
 		6286F9AC1FF26BD1004DEF90 /* Chapter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Chapter.cpp; sourceTree = "<group>"; };
@@ -1011,14 +1014,16 @@
 		624447461EDDD2C40080ECE8 /* GameScene */ = {
 			isa = PBXGroup;
 			children = (
+				628065EB2014F7A700F86754 /* FieldBlockSceneObjects.cpp */,
+				628065EC2014F7A700F86754 /* FieldBlockSceneObjects.hpp */,
 				624447471EDDD2C40080ECE8 /* GameController.cpp */,
 				624447481EDDD2C40080ECE8 /* GameController.hpp */,
 				624447491EDDD2C40080ECE8 /* GameHud.cpp */,
 				6244474A1EDDD2C40080ECE8 /* GameHud.hpp */,
-				6244474B1EDDD2C40080ECE8 /* GameRenderer.cpp */,
-				6244474C1EDDD2C40080ECE8 /* GameRenderer.hpp */,
 				6244474D1EDDD2C40080ECE8 /* GameScene.cpp */,
 				6244474E1EDDD2C40080ECE8 /* GameScene.hpp */,
+				6244474B1EDDD2C40080ECE8 /* GameSceneRenderer.cpp */,
+				6244474C1EDDD2C40080ECE8 /* GameSceneRenderer.hpp */,
 				628065E8201399AE00F86754 /* PieceResources.cpp */,
 				628065E9201399AE00F86754 /* PieceResources.hpp */,
 			);
@@ -1927,6 +1932,7 @@
 				62944D9520053A2D00814D36 /* OfflineRasterizer.cpp in Sources */,
 				62944D7A20053A2D00814D36 /* TextRenderer.cpp in Sources */,
 				624F89491EF6661D0020C832 /* LifeManager.cpp in Sources */,
+				628065ED2014F7A700F86754 /* FieldBlockSceneObjects.cpp in Sources */,
 				628A225A1F6E704900D97BF8 /* GhostPieceProducer.cpp in Sources */,
 				624EAFC21EE559A9009F81BC /* SlidingTextAnimation.cpp in Sources */,
 				62944D9B20053A2D00814D36 /* FileSystemIOS.mm in Sources */,
@@ -1939,7 +1945,7 @@
 				62944D7B20053A2D00814D36 /* Material.cpp in Sources */,
 				62944DA720053A2D00814D36 /* LightComponent.cpp in Sources */,
 				624447A01EDDD2C40080ECE8 /* CloseButton.cpp in Sources */,
-				624447B31EDDD2C40080ECE8 /* GameRenderer.cpp in Sources */,
+				624447B31EDDD2C40080ECE8 /* GameSceneRenderer.cpp in Sources */,
 				624447C11EDDD2C40080ECE8 /* BPiece.cpp in Sources */,
 				624447AA1EDDD2C40080ECE8 /* Cell.cpp in Sources */,
 				62944D9F20053A2D00814D36 /* Audio.cpp in Sources */,

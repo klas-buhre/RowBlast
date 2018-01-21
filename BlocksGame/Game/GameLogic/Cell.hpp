@@ -29,7 +29,7 @@ namespace BlocksGame {
         Deg270
     };
     
-    enum class BlockRenderable {
+    enum class BlockRenderableKind {
         LowerRightHalf,
         UpperRightHalf,
         UpperLeftHalf,
@@ -99,7 +99,7 @@ namespace BlocksGame {
         Pht::Vec2 mPosition {0.0f, 0.0f};
         Pht::RenderableObject* mRenderableObject {nullptr}; // TODO: remove
         Pht::RenderableObject* mWeldRenderableObject {nullptr}; // TODO: remove
-        BlockRenderable mBlockRenderable {BlockRenderable::None};
+        BlockRenderableKind mBlockRenderableKind {BlockRenderableKind::None};
         BlockColor mColor {BlockColor::None};
         Rotation mRotation {Rotation::Deg0};
         FlashingBlockAnimation mFlashingBlockAnimation;
