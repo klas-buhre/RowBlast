@@ -17,6 +17,7 @@
 #include "PieceDropParticleEffect.hpp"
 #include "LevelResources.hpp"
 #include "Level.hpp"
+#include "PieceResources.hpp"
 #include "GameViewControllers.hpp"
 #include "ClearLastBlocksAnimation.hpp"
 #include "SlidingTextAnimation.hpp"
@@ -135,6 +136,7 @@ namespace BlocksGame {
         ClearLastBlocksAnimation mClearLastBlocksAnimation;
         GameLogic mGameLogic;
         FallingPieceAnimation& mFallingPieceAnimation;
+        PieceResources mPieceResources;
         LevelResources mLevelResources;
         BlueprintSlotsFilledAnimation mBlueprintSlotsFilledAnimation;
         GameHud mHud;

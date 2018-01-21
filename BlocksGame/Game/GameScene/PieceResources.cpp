@@ -3,6 +3,7 @@
 #include <assert.h>
 
 // Engine includes.
+#include "IEngine.hpp"
 #include "ISceneManager.hpp"
 #include "Material.hpp"
 #include "ObjMesh.hpp"
@@ -72,7 +73,9 @@ namespace {
     }
 }
 
-PieceResources::PieceResources(Pht::ISceneManager& sceneManager, const GameScene& scene) {
+PieceResources::PieceResources(Pht::IEngine& engine, const GameScene& scene) {
+    auto& sceneManager {engine.GetSceneManager()};
+    
     CreateBlocks(sceneManager, scene);
     CreateWelds(sceneManager, scene);
 }
@@ -80,6 +83,12 @@ PieceResources::PieceResources(Pht::ISceneManager& sceneManager, const GameScene
 Pht::RenderableObject& PieceResources::GetBlockRenderableObject(BlockRenderable blockRenderable,
                                                                 BlockColor color,
                                                                 BlockBrightness brightness) {
+    return *(mBlocks[CalcBlockIndex(blockRenderable, color, brightness)]);
+}
+
+int PieceResources::CalcBlockIndex(BlockRenderable blockRenderable,
+                                   BlockColor color,
+                                   BlockBrightness brightness) {
     auto blockRenderableIndex {static_cast<int>(blockRenderable)};
     auto colorIndex {static_cast<int>(color)};
     auto brightnessIndex {static_cast<int>(brightness)};
@@ -87,33 +96,40 @@ Pht::RenderableObject& PieceResources::GetBlockRenderableObject(BlockRenderable 
     assert(blockRenderableIndex >= 0 && blockRenderableIndex < Quantities::numBlockRenderables &&
            colorIndex >= 0 && colorIndex < Quantities::numBlockColors &&
            brightnessIndex >= 0 && brightnessIndex < Quantities::numBlockBrightness);
+
+    auto index {
+        brightnessIndex * Quantities::numBlockRenderables * Quantities::numBlockColors +
+        colorIndex * Quantities::numBlockRenderables + blockRenderableIndex
+    };
     
-    return *(mBlocks[blockRenderableIndex][colorIndex][brightnessIndex]);
+    assert(index < mBlocks.size());
+    return index;
 }
 
 Pht::RenderableObject& PieceResources::GetWeldRenderableObject(BlockColor color,
                                                                BlockBrightness brightness) {
+    return *(mWelds[CalcWeldIndex(color, brightness)]);
+}
+
+int PieceResources::CalcWeldIndex(BlockColor color, BlockBrightness brightness) {
     auto colorIndex {static_cast<int>(color)};
     auto brightnessIndex {static_cast<int>(brightness)};
     
     assert(colorIndex >= 0 && colorIndex < Quantities::numBlockColors &&
            brightnessIndex >= 0 && brightnessIndex < Quantities::numBlockBrightness);
 
-    return *(mWelds[colorIndex][brightnessIndex]);
+    auto index {brightnessIndex * Quantities::numBlockColors + colorIndex};
+    
+    assert(index < mWelds.size());
+    return index;
 }
 
 void PieceResources::CreateBlocks(Pht::ISceneManager& sceneManager, const GameScene& scene) {
-    mBlocks.resize(Quantities::numBlockRenderables);
+    auto numBlocks {
+        Quantities::numBlockRenderables * Quantities::numBlockColors * Quantities::numBlockBrightness
+    };
     
-    for (auto blockRenderableIndex {0};
-         blockRenderableIndex < Quantities::numBlockRenderables;
-         ++blockRenderableIndex) {
-        mBlocks[blockRenderableIndex].resize(Quantities::numBlockColors);
-        
-        for (auto colorIndex {0}; colorIndex < Quantities::numBlockColors; ++colorIndex) {
-            mBlocks[blockRenderableIndex][colorIndex].resize(Quantities::numBlockBrightness);
-        }
-    }
+    mBlocks.resize(numBlocks);
     
     auto cellSize {scene.GetCellSize()};
     
@@ -124,21 +140,42 @@ void PieceResources::CreateBlocks(Pht::ISceneManager& sceneManager, const GameSc
             for (auto brightnessIndex {0};
                  brightnessIndex < Quantities::numBlockBrightness;
                  ++brightnessIndex) {
-                auto meshName {ToMeshName(static_cast<BlockRenderable>(blockRenderableIndex))};
+                auto blockRenderable {static_cast<BlockRenderable>(blockRenderableIndex)};
+                auto color {static_cast<BlockColor>(colorIndex)};
+                auto brightness {static_cast<BlockBrightness>(brightnessIndex)};
                 
-                auto material {
-                    ToMaterial(static_cast<BlockColor>(colorIndex),
-                               static_cast<BlockBrightness>(brightnessIndex),
-                               scene)
+                auto meshName {ToMeshName(blockRenderable)};
+                auto material {ToMaterial(color, brightness, scene)};
+                auto blockIndex {CalcBlockIndex(blockRenderable, color, brightness)};
+                
+                auto renderableObject {
+                    sceneManager.CreateRenderableObject(Pht::ObjMesh {meshName, cellSize}, material)
                 };
                 
-                mBlocks[blockRenderableIndex][colorIndex][brightnessIndex] =
-                    sceneManager.CreateRenderableObject(Pht::ObjMesh {meshName, cellSize}, material);
+                mBlocks[blockIndex] = std::move(renderableObject);
             }
         }
     }
 }
 
 void PieceResources::CreateWelds(Pht::ISceneManager& sceneManager, const GameScene& scene) {
-
+    mWelds.resize(Quantities::numBlockColors * Quantities::numBlockBrightness);
+    
+    for (auto colorIndex {0}; colorIndex < Quantities::numBlockColors; ++colorIndex) {
+        for (auto brightnessIndex {0};
+             brightnessIndex < Quantities::numBlockBrightness;
+             ++brightnessIndex) {
+            auto color {static_cast<BlockColor>(colorIndex)};
+            auto brightness {static_cast<BlockBrightness>(brightnessIndex)};
+            
+            auto material {ToMaterial(color, brightness, scene)};
+            auto weldIndex {CalcWeldIndex(color, brightness)};
+            
+            auto renderableObject {
+                sceneManager.CreateRenderableObject(Pht::QuadMesh {0.19f, 0.85f}, material)
+            };
+            
+            mWelds[weldIndex] = std::move(renderableObject);
+        }
+    }
 }

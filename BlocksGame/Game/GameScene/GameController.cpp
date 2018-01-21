@@ -61,6 +61,7 @@ GameController::GameController(Pht::IEngine& engine,
         settings
     },
     mFallingPieceAnimation {mGameLogic.GetFallingPieceAnimation()},
+    mPieceResources {engine, mScene},
     mLevelResources {engine, mScene},
     mBlueprintSlotsFilledAnimation {mField, mScene, mLevelResources},
     mHud {engine, mGameLogic, mLevelResources, mGameViewControllers.GetGameHudController()},

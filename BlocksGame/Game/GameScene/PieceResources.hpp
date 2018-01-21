@@ -11,6 +11,7 @@
 #include "Cell.hpp"
 
 namespace Pht {
+    class IEngine;
     class ISceneManager;
 }
 
@@ -19,7 +20,7 @@ namespace BlocksGame {
     
     class PieceResources {
     public:
-        PieceResources(Pht::ISceneManager& sceneManager, const GameScene& scene);
+        PieceResources(Pht::IEngine& engine, const GameScene& scene);
         
         Pht::RenderableObject& GetBlockRenderableObject(BlockRenderable blockRenderable,
                                                         BlockColor color,
@@ -28,11 +29,15 @@ namespace BlocksGame {
                                                        BlockBrightness brightness);
 
     private:
+        int CalcBlockIndex(BlockRenderable blockRenderable,
+                           BlockColor color,
+                           BlockBrightness brightness);
+        int CalcWeldIndex(BlockColor color, BlockBrightness brightness);
         void CreateBlocks(Pht::ISceneManager& sceneManager, const GameScene& scene);
         void CreateWelds(Pht::ISceneManager& sceneManager, const GameScene& scene);
         
-        std::vector<std::vector<std::vector<std::unique_ptr<Pht::RenderableObject>>>> mBlocks;
-        std::vector<std::vector<std::unique_ptr<Pht::RenderableObject>>> mWelds;
+        std::vector<std::unique_ptr<Pht::RenderableObject>> mBlocks;
+        std::vector<std::unique_ptr<Pht::RenderableObject>> mWelds;
     };
 }
 
