@@ -55,6 +55,8 @@ namespace BlocksGame {
         
         void Reset(const Level& level);
         void RestorePreviousState();
+        void OnNewFrame();
+        void SetChanged();
         const Cell& GetCell(int row, int column) const;
         Cell& GetCell(int row, int column);        
         int DetectCollisionDown(const PieceBlocks& pieceBlocks, const Pht::IVec2& position) const;
@@ -132,6 +134,10 @@ namespace BlocksGame {
             return mBlueprintGrid.get();
         }
         
+        bool HasChanged() const {
+            return mHasChanged;
+        }
+        
     private:
         void SaveState();
         void CopyGridNoAlloc(CellGrid& to, const CellGrid& from);
@@ -178,6 +184,7 @@ namespace BlocksGame {
         int mNumRows {0};
         int mLowestVisibleRow {0};
         CellGrid mPieceBlockGrid;
+        bool mHasChanged {false};
     };
 }
 

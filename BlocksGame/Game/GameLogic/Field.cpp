@@ -164,9 +164,19 @@ void Field::Reset(const Level& level) {
     }
     
     mPreviousGrid = mGrid;
+    SetChanged();
+}
+
+void Field::OnNewFrame() {
+    mHasChanged = false;
+}
+
+void Field::SetChanged() {
+    mHasChanged = true;
 }
 
 void Field::RestorePreviousState() {
+    SetChanged();
     CopyGridNoAlloc(mGrid, mPreviousGrid);
 }
 
@@ -753,6 +763,7 @@ CollisionPoints Field::GetOccupiedArea(const PieceBlocks& pieceBlocks,
 }
 
 void Field::LandFallingPiece(const FallingPiece& fallingPiece) {
+    SetChanged();
     SaveState();
     
     auto pieceBlocks {CreatePieceBlocks(fallingPiece)};
@@ -802,6 +813,8 @@ void Field::LandPieceBlocks(const PieceBlocks& pieceBlocks,
 }
 
 void Field::PullDownLoosePieces() {
+    SetChanged();
+    
     for (auto row {mLowestVisibleRow}; row < mNumRows; ++row) {
         for (auto column {0}; column < mNumColumns; ++column) {
             PullDownPiece(row, column, ScanDirection::Right);
@@ -952,6 +965,8 @@ void Field::ClearPieceBlockGrid() {
 }
 
 Field::RemovedSubCells Field::RemoveFilledRows() {
+    SetChanged();
+    
     RemovedSubCells removedSubCells;
     auto pastHighestVisibleRow {mLowestVisibleRow + GetNumRowsInOneScreen()};
     
@@ -1017,6 +1032,7 @@ void Field::BreakCellLeftWelds(int row, int column) {
 }
 
 Field::RemovedSubCells Field::RemoveRow(int rowIndex) {
+    SetChanged();
     SaveState();
     
     RemovedSubCells removedSubCells;
@@ -1027,6 +1043,7 @@ Field::RemovedSubCells Field::RemoveRow(int rowIndex) {
 
 Field::RemovedSubCells Field::RemoveAreaOfSubCells(const Pht::IVec2& areaPos,
                                                    const Pht::IVec2& areaSize) {
+    SetChanged();
     SaveState();
     
     RemovedSubCells removedSubCells;
@@ -1065,6 +1082,7 @@ Field::RemovedSubCells Field::RemoveAreaOfSubCells(const Pht::IVec2& areaPos,
 }
 
 Field::RemovedSubCells Field::RemoveAllNonEmptySubCells() {
+    SetChanged();
     RemovedSubCells removedSubCells;
 
     for (auto row {0}; row < mNumRows; ++row) {

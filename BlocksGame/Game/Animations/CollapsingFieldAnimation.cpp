@@ -81,6 +81,8 @@ void CollapsingFieldAnimation::UpdateInActiveState(float dt) {
         }
     }
     
+    mField.SetChanged();
+    
     if (!anyMovingCells) {
         mState = State::Inactive;
     }

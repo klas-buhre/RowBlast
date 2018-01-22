@@ -67,6 +67,7 @@ GameController::GameController(Pht::IEngine& engine,
     mHud {engine, mGameLogic, mLevelResources, mGameViewControllers.GetGameHudController()},
     mRenderer {
         engine,
+        mScene,
         mField,
         mGameLogic,
         mExplosionParticleEffect,
@@ -74,7 +75,6 @@ GameController::GameController(Pht::IEngine& engine,
         mFlyingBlocksAnimation,
         mSlidingTextAnimation,
         mBlastRadiusAnimation,
-        mScene,
         mScrollController,
         mHud,
         mGameViewControllers
@@ -102,6 +102,8 @@ void GameController::StartLevel(int levelIndex) {
 
 GameController::Command GameController::Update() {
     auto command {Command::None};
+    
+    mField.OnNewFrame();
     
     switch (mState) {
         case GameState::LevelIntro:

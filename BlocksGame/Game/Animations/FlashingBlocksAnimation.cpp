@@ -41,15 +41,18 @@ void FlashingBlocksAnimation::AnimateFlashingBlock(SubCell& subCell,
         return;
     }
     
+    mField.SetChanged();
     flashingBlockAnimation.mElapsedTime += dt;
     
     auto flashDuration {0.0f};
     
     if (IsBlockAccordingToBlueprint(subCell, row, column)) {
         flashDuration = longFlashDuration;
+        flashingBlockAnimation.mBrightness = BlockBrightness::BlueprintFillFlashing;
         flashingBlockAnimation.mColorAdd = brightColorAdd;
     } else {
         flashDuration = shortFlashDuration;
+        flashingBlockAnimation.mBrightness = BlockBrightness::Flashing;
         flashingBlockAnimation.mColorAdd = colorAdd;
     }
     

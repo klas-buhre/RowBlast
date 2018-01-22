@@ -26,7 +26,8 @@ namespace {
         Background,
         FieldQuad,
         FieldBlueprintSlots,
-        FieldPieceDropEffects
+        FieldPieceDropEffects,
+        FieldBlocksAndFallingPiece
     };
 
     const std::vector<CubePathVolume> floatingCubePaths {
@@ -71,41 +72,17 @@ void GameScene::Reset(const Level& level, const LevelResources& levelResources) 
     auto scene {sceneManager.CreateScene(Pht::Hash::Fnv1a("gameScene"))};
     mScene = scene.get();
     
-    scene->AddRenderPass(Pht::RenderPass {static_cast<int>(Layer::Background)});
-
-    Pht::RenderPass fieldQuadRenderPass {static_cast<int>(Layer::FieldQuad)};
-    fieldQuadRenderPass.SetProjectionMode(Pht::ProjectionMode::Orthographic);
-    scene->AddRenderPass(fieldQuadRenderPass);
-
-    Pht::RenderPass blueprintSlotsRenderPass {static_cast<int>(Layer::FieldBlueprintSlots)};
-    blueprintSlotsRenderPass.SetProjectionMode(Pht::ProjectionMode::Orthographic);
-    scene->AddRenderPass(blueprintSlotsRenderPass);
-    
-    Pht::RenderPass pieceDropEffectsRenderPass {static_cast<int>(Layer::FieldPieceDropEffects)};
-    pieceDropEffectsRenderPass.SetProjectionMode(Pht::ProjectionMode::Orthographic);
-    scene->AddRenderPass(pieceDropEffectsRenderPass);
-
-    auto& light {scene->CreateGlobalLight()};
-    light.SetDirection(mLightDirection);
-    scene->GetRoot().AddChild(light.GetSceneObject());
-    
-    mCamera = &scene->CreateCamera();
-    scene->GetRoot().AddChild(mCamera->GetSceneObject());
-
-    CreateBackground();
-    
-    mFloatingCubes = std::make_unique<FloatingCubes>(mEngine,
-                                                     *mScene,
-                                                     static_cast<int>(Layer::Background),
-                                                     floatingCubePaths,
-                                                     mCommonResources,
-                                                     7.7f);
-    
+    CreateRenderPasses();
+    CreateLightAndCamera();
     InitFieldDimensions(level);
+    
+    CreateBackground();
+    CreateFloatingCubes();
     CreateFieldQuad(level);
     CreateFieldContainer();
     CreateBlueprintSlots(level, levelResources);
     CreatePieceDropEffectsContainer();
+    CreateFieldBlocks(level);
     
     mScissorBoxSize = Pht::Vec2 {mFieldWidth + fieldPadding, 19.0f * mCellSize};
     
@@ -115,12 +92,50 @@ void GameScene::Reset(const Level& level, const LevelResources& levelResources) 
     sceneManager.SetLoadedScene(std::move(scene));
 }
 
+void GameScene::CreateRenderPasses() {
+    mScene->AddRenderPass(Pht::RenderPass {static_cast<int>(Layer::Background)});
+
+    Pht::RenderPass fieldQuadRenderPass {static_cast<int>(Layer::FieldQuad)};
+    fieldQuadRenderPass.SetProjectionMode(Pht::ProjectionMode::Orthographic);
+    mScene->AddRenderPass(fieldQuadRenderPass);
+
+    Pht::RenderPass blueprintSlotsRenderPass {static_cast<int>(Layer::FieldBlueprintSlots)};
+    blueprintSlotsRenderPass.SetProjectionMode(Pht::ProjectionMode::Orthographic);
+    mScene->AddRenderPass(blueprintSlotsRenderPass);
+    
+    Pht::RenderPass pieceDropEffectsRenderPass {static_cast<int>(Layer::FieldPieceDropEffects)};
+    pieceDropEffectsRenderPass.SetProjectionMode(Pht::ProjectionMode::Orthographic);
+    mScene->AddRenderPass(pieceDropEffectsRenderPass);
+
+    Pht::RenderPass fieldBlocksRenderPass {static_cast<int>(Layer::FieldBlocksAndFallingPiece)};
+    fieldBlocksRenderPass.SetProjectionMode(Pht::ProjectionMode::Orthographic);
+    mScene->AddRenderPass(fieldBlocksRenderPass);
+}
+
+void GameScene::CreateLightAndCamera() {
+    auto& light {mScene->CreateGlobalLight()};
+    light.SetDirection(mLightDirection);
+    mScene->GetRoot().AddChild(light.GetSceneObject());
+    
+    mCamera = &mScene->CreateCamera();
+    mScene->GetRoot().AddChild(mCamera->GetSceneObject());
+}
+
 void GameScene::CreateBackground() {
     Pht::Material backgroundMaterial {"sky_blurred.jpg"};
     auto& background {mScene->CreateSceneObject(Pht::QuadMesh {150.0f, 150.0f}, backgroundMaterial)};
     background.GetTransform().SetPosition({0.0f, -5.0f, -42.0f});
     background.SetLayer(static_cast<int>(Layer::Background));
     mScene->GetRoot().AddChild(background);
+}
+
+void GameScene::CreateFloatingCubes() {
+    mFloatingCubes = std::make_unique<FloatingCubes>(mEngine,
+                                                     *mScene,
+                                                     static_cast<int>(Layer::Background),
+                                                     floatingCubePaths,
+                                                     mCommonResources,
+                                                     7.7f);
 }
 
 void GameScene::InitFieldDimensions(const Level& level) {
@@ -211,6 +226,14 @@ void GameScene::CreatePieceDropEffectsContainer() {
     mFieldContainer->AddChild(*mPieceDropEffectsContainer);
 }
 
+void GameScene::CreateFieldBlocks(const Level& level) {
+    mFieldBlocksContainer = &mScene->CreateSceneObject();
+    mFieldBlocksContainer->SetLayer(static_cast<int>(Layer::FieldBlocksAndFallingPiece));
+    mFieldContainer->AddChild(*mFieldBlocksContainer);
+    
+    mFieldBlocks = std::make_unique<FieldBlockSceneObjects>(*mFieldBlocksContainer, level);
+}
+
 void GameScene::Update() {
     mFloatingCubes->Update();
     
@@ -245,6 +268,7 @@ void GameScene::UpdateCameraPositionAndScissorBox() {
     SetScissorBox(scissorBox, static_cast<int>(Layer::FieldQuad));
     SetScissorBox(scissorBox, static_cast<int>(Layer::FieldBlueprintSlots));
     SetScissorBox(scissorBox, static_cast<int>(Layer::FieldPieceDropEffects));
+    SetScissorBox(scissorBox, static_cast<int>(Layer::FieldBlocksAndFallingPiece));
 }
 
 void GameScene::SetScissorBox(const Pht::ScissorBox& scissorBox, int layer) {

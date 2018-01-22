@@ -34,6 +34,7 @@ namespace BlocksGame {
     class GameSceneRenderer {
     public:
         GameSceneRenderer(Pht::IEngine& engine,
+                          GameScene& scene,
                           const Field& field,
                           const GameLogic& gameLogic,
                           const ExplosionParticleEffect& explosionParticleEffect,
@@ -41,7 +42,6 @@ namespace BlocksGame {
                           const FlyingBlocksAnimation& flyingBlocksAnimation,
                           const SlidingTextAnimation& slidingTextAnimation,
                           const BlastRadiusAnimation& blastRadiusAnimation,
-                          const GameScene& scene,
                           const ScrollController& scrollController,
                           const GameHud& hud,
                           const GameViewControllers& gameViewControllers);
@@ -85,6 +85,7 @@ namespace BlocksGame {
         
         Pht::IEngine& mEngine;
         Pht::IRenderer& mEngineRenderer;
+        GameScene& mScene;
         const Field& mField;
         const GameLogic& mGameLogic;
         const ExplosionParticleEffect& mExplosionParticleEffect;
@@ -92,7 +93,6 @@ namespace BlocksGame {
         const FlyingBlocksAnimation& mFlyingBlocksAnimation;
         const SlidingTextAnimation& mSlidingTextAnimation;
         const BlastRadiusAnimation& mBlastRadiusAnimation;
-        const GameScene& mScene;
         const ScrollController& mScrollController;
         const GameHud& mHud;
         const GameViewControllers& mGameViewControllers;
