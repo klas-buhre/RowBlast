@@ -82,13 +82,13 @@ PieceResources::PieceResources(Pht::IEngine& engine, const GameScene& scene) {
 
 Pht::RenderableObject& PieceResources::GetBlockRenderableObject(BlockRenderableKind blockRenderable,
                                                                 BlockColor color,
-                                                                BlockBrightness brightness) {
+                                                                BlockBrightness brightness) const {
     return *(mBlocks[CalcBlockIndex(blockRenderable, color, brightness)]);
 }
 
 int PieceResources::CalcBlockIndex(BlockRenderableKind blockRenderable,
                                    BlockColor color,
-                                   BlockBrightness brightness) {
+                                   BlockBrightness brightness) const {
     auto blockRenderableIndex {static_cast<int>(blockRenderable)};
     auto colorIndex {static_cast<int>(color)};
     auto brightnessIndex {static_cast<int>(brightness)};
@@ -107,11 +107,11 @@ int PieceResources::CalcBlockIndex(BlockRenderableKind blockRenderable,
 }
 
 Pht::RenderableObject& PieceResources::GetWeldRenderableObject(BlockColor color,
-                                                               BlockBrightness brightness) {
+                                                               BlockBrightness brightness) const {
     return *(mWelds[CalcWeldIndex(color, brightness)]);
 }
 
-int PieceResources::CalcWeldIndex(BlockColor color, BlockBrightness brightness) {
+int PieceResources::CalcWeldIndex(BlockColor color, BlockBrightness brightness) const {
     auto colorIndex {static_cast<int>(color)};
     auto brightnessIndex {static_cast<int>(brightness)};
     

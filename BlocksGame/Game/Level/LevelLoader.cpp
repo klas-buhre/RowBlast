@@ -107,6 +107,7 @@ namespace {
         
         cell.mFirstSubCell.mPosition = Pht::Vec2 {static_cast<float>(column), static_cast<float>(row)};
         cell.mFirstSubCell.mFill = CellFill(c);
+        cell.mFirstSubCell.mBlockRenderableKind = ToBlockRenderableKind(cell.mFirstSubCell.mFill);
         cell.mFirstSubCell.mRenderableObject = CellRenderable(c, levelResources);
         cell.mFirstSubCell.mRotation = CellRotation(c);
         

@@ -27,9 +27,10 @@ namespace BlocksGame {
     class SlidingTextAnimation;
     class BlastRadiusAnimation;
     class SubCell;
-    class BlueprintCell;
     class Piece;
     class FallingPiece;
+    class PieceResources;
+    class LevelResources;
 
     class GameSceneRenderer {
     public:
@@ -44,14 +45,23 @@ namespace BlocksGame {
                           const BlastRadiusAnimation& blastRadiusAnimation,
                           const ScrollController& scrollController,
                           const GameHud& hud,
-                          const GameViewControllers& gameViewControllers);
+                          const GameViewControllers& gameViewControllers,
+                          const PieceResources& pieceResources,
+                          const LevelResources& levelResources);
         
         void RenderFrame();
+        void Render();
         
     private:
         void RenderBlueprintSlots();
         void RenderFieldBlocks();
         void RenderFieldBlock(const SubCell& subCell);
+        void RenderFieldBlockWelds(const SubCell& subCell,
+                                   const Pht::Vec3& blockPos,
+                                   Pht::RenderableObject& weldRenderalbeObject);
+        void RenderFieldBlockWeld(const Pht::Vec3& weldPosition,
+                                  float rotation,
+                                  Pht::RenderableObject& weldRenderalbeObject);
         void RenderFallingPiece();
         void RenderPieceBlocks(const CellGrid& pieceBlocks,
                                const Pht::Vec3& pieceWorldPos,
@@ -96,6 +106,8 @@ namespace BlocksGame {
         const ScrollController& mScrollController;
         const GameHud& mHud;
         const GameViewControllers& mGameViewControllers;
+        const PieceResources& mPieceResources;
+        const LevelResources& mLevelResources;
     };
 }
 

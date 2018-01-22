@@ -59,23 +59,6 @@ namespace {
 
         return rotatedWelds;
     }
-    
-    BlockRenderableKind ToBlockRenderableKind(Fill fill) {
-        switch (fill) {
-            case Fill::Empty:
-                return BlockRenderableKind::None;
-            case Fill::LowerRightHalf:
-                return BlockRenderableKind::LowerRightHalf;
-            case Fill::UpperRightHalf:
-                return BlockRenderableKind::UpperRightHalf;
-            case Fill::UpperLeftHalf:
-                return BlockRenderableKind::UpperLeftHalf;
-            case Fill::LowerLeftHalf:
-                return BlockRenderableKind::LowerLeftHalf;
-            case Fill::Full:
-                return BlockRenderableKind::Full;
-        }
-    }
 }
 
 Piece::Piece() {}

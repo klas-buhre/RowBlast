@@ -24,6 +24,8 @@
 #include "BlastRadiusAnimation.hpp"
 #include "SettingsMenuController.hpp"
 #include "NoLivesDialogController.hpp"
+#include "PieceResources.hpp"
+#include "LevelResources.hpp"
 
 using namespace BlocksGame;
 
@@ -52,7 +54,9 @@ GameSceneRenderer::GameSceneRenderer(Pht::IEngine& engine,
                                      const BlastRadiusAnimation& blastRadiusAnimation,
                                      const ScrollController& scrollController,
                                      const GameHud& hud,
-                                     const GameViewControllers& gameViewControllers) :
+                                     const GameViewControllers& gameViewControllers,
+                                     const PieceResources& pieceResources,
+                                     const LevelResources& levelResources) :
     mEngine {engine},
     mEngineRenderer {engine.GetRenderer()},
     mScene {scene},
@@ -65,11 +69,16 @@ GameSceneRenderer::GameSceneRenderer(Pht::IEngine& engine,
     mBlastRadiusAnimation {blastRadiusAnimation},
     mScrollController {scrollController},
     mHud {hud},
-    mGameViewControllers {gameViewControllers} {}
+    mGameViewControllers {gameViewControllers},
+    mPieceResources {pieceResources},
+    mLevelResources {levelResources} {}
 
 void GameSceneRenderer::RenderFrame() {
     RenderBlueprintSlots();
-    
+    RenderFieldBlocks();
+}
+
+void GameSceneRenderer::Render() {
     auto* scene {mEngine.GetSceneManager().GetActiveScene()};
     mEngine.GetRenderer().RenderScene(*scene);
 
@@ -77,7 +86,6 @@ void GameSceneRenderer::RenderFrame() {
     mEngineRenderer.SetScissorBox(mScene.GetScissorBoxLowerLeft(), mScene.GetScissorBoxSize());
     mEngineRenderer.SetScissorTest(true);
     
-    RenderFieldBlocks();
     RenderFallingPiece();
     RenderGhostPieces();
     RenderBlastRadiusAnimation();
@@ -120,6 +128,12 @@ void GameSceneRenderer::RenderBlueprintSlots() {
 }
 
 void GameSceneRenderer::RenderFieldBlocks() {
+    if (!mField.HasChanged() && !mScrollController.IsScrolling()) {
+        return;
+    }
+    
+    mScene.GetFieldBlocks().ReclaimAll();
+
     int lowestVisibleRow {
         mScrollController.IsScrollingDownInClearMode() || mGameLogic.IsCascading() ?
             mField.GetLowestVisibleRow() - 1 :
@@ -142,69 +156,89 @@ void GameSceneRenderer::RenderFieldBlocks() {
 }
 
 void GameSceneRenderer::RenderFieldBlock(const SubCell& subCell) {
-    auto* renderableObject {subCell.mRenderableObject};
+    auto renderableKind {subCell.mBlockRenderableKind};
     
-    if (renderableObject == nullptr) {
+    if (renderableKind == BlockRenderableKind::None) {
         return;
     }
     
-    auto& rotationMatrix {rotationMatrices[static_cast<int>(subCell.mRotation)]};
-    auto cellSize {mScene.GetCellSize()};
-    auto fieldLowerLeft {mScene.GetFieldLoweLeft()};
+    auto& sceneObject {mScene.GetFieldBlocks().AccuireSceneObject()};
+    const auto cellSize {mScene.GetCellSize()};
     
-    Pht::Vec3 blockPos {
-        subCell.mPosition.x * cellSize + cellSize / 2.0f + fieldLowerLeft.x,
-        subCell.mPosition.y * cellSize + cellSize / 2.0f + fieldLowerLeft.y,
+    Pht::Vec3 blockPosition {
+        subCell.mPosition.x * cellSize + cellSize / 2.0f,
+        subCell.mPosition.y * cellSize + cellSize / 2.0f,
         mScene.GetFieldPosition().z
     };
+
+    auto& transform {sceneObject.GetTransform()};
+    transform.SetPosition(blockPosition);
     
-    auto blockMatrix {
-        rotationMatrix * Pht::Mat4::Translate(blockPos.x, blockPos.y, blockPos.z)
-    };
-    
-    if (subCell.mFlashingBlockAnimation.mIsActive) {
-        auto& blockMaterial {renderableObject->GetMaterial()};
-        auto blockAmbient {blockMaterial.GetAmbient()};
-        auto blockDiffuse {blockMaterial.GetDiffuse()};
-        auto blockSpecular {blockMaterial.GetSpecular()};
-
-        auto& flashingBlockAdd {subCell.mFlashingBlockAnimation.mColorAdd};
-        blockMaterial.SetAmbient(blockAmbient + flashingBlockAdd);
-        blockMaterial.SetDiffuse(blockDiffuse + flashingBlockAdd);
-        blockMaterial.SetSpecular(blockSpecular + flashingBlockAdd);
-        
-        Pht::Material* weldMaterial {nullptr};
-        Pht::Color weldAmbient {0.0f};
-        Pht::Color weldDiffuse {0.0f};
-        Pht::Color weldSpecular {0.0f};
-        
-        if (subCell.mWeldRenderableObject) {
-            weldMaterial = &subCell.mWeldRenderableObject->GetMaterial();
-            weldAmbient = weldMaterial->GetAmbient();
-            weldDiffuse = weldMaterial->GetDiffuse();
-            weldSpecular = weldMaterial->GetSpecular();
-            
-            weldMaterial->SetAmbient(weldAmbient + flashingBlockAdd);
-            weldMaterial->SetDiffuse(weldDiffuse + flashingBlockAdd);
-            weldMaterial->SetSpecular(weldSpecular + flashingBlockAdd);
-        }
-
-        mEngineRenderer.Render(*renderableObject, blockMatrix);
-        RenderBlockWelds(subCell, blockPos, cellSize);
-
-        if (weldMaterial) {
-            weldMaterial->SetAmbient(weldAmbient);
-            weldMaterial->SetDiffuse(weldDiffuse);
-            weldMaterial->SetSpecular(weldSpecular);
-        }
-        
-        blockMaterial.SetAmbient(blockAmbient);
-        blockMaterial.SetDiffuse(blockDiffuse);
-        blockMaterial.SetSpecular(blockSpecular);
+    if (renderableKind != BlockRenderableKind::Full) {
+        Pht::Vec3 blockRotation {0.0f, 0.0f, RotationToDeg(subCell.mRotation)};
+        transform.SetRotation(blockRotation);
     } else {
-        mEngineRenderer.Render(*renderableObject, blockMatrix);
-        RenderBlockWelds(subCell, blockPos, cellSize);
+        transform.SetRotation({0.0f, 0.0f, 0.0f});
     }
+
+    if (subCell.mIsLevel) {
+        sceneObject.SetRenderable(&mLevelResources.GetLevelBlockRenderable(renderableKind));
+    } else {
+        auto color {subCell.mColor};
+        auto brightness {subCell.mFlashingBlockAnimation.mBrightness};
+
+        auto* renderableObject {
+            &mPieceResources.GetBlockRenderableObject(renderableKind, color, brightness)
+        };
+        
+        assert(renderableObject);
+        sceneObject.SetRenderable(renderableObject);
+
+        auto& weldRenderable {mPieceResources.GetWeldRenderableObject(color, brightness)};
+        RenderFieldBlockWelds(subCell, blockPosition, weldRenderable);
+    }
+}
+
+void GameSceneRenderer::RenderFieldBlockWelds(const SubCell& subCell,
+                                              const Pht::Vec3& blockPos,
+                                              Pht::RenderableObject& weldRenderalbeObject) {
+    auto& welds {subCell.mWelds};
+    const auto cellSize {mScene.GetCellSize()};
+    auto weldZ {blockPos.z + cellSize / 2.0f};
+    
+    if (welds.mUpLeft) {
+        RenderFieldBlockWeld({blockPos.x - cellSize / 2.0f, blockPos.y + cellSize / 2.0f, weldZ},
+                             45.0f,
+                             weldRenderalbeObject);
+    }
+    
+    if (welds.mUp) {
+        RenderFieldBlockWeld({blockPos.x, blockPos.y + cellSize / 2.0f, weldZ},
+                             -90.0f,
+                             weldRenderalbeObject);
+    }
+    
+    if (welds.mUpRight) {
+        RenderFieldBlockWeld({blockPos.x + cellSize / 2.0f, blockPos.y + cellSize / 2.0f, weldZ},
+                             -45.0f,
+                             weldRenderalbeObject);
+    }
+
+    if (welds.mRight) {
+        RenderFieldBlockWeld({blockPos.x + cellSize / 2.0f, blockPos.y, weldZ},
+                             0.0f,
+                             weldRenderalbeObject);
+    }
+}
+
+void GameSceneRenderer::RenderFieldBlockWeld(const Pht::Vec3& weldPosition,
+                                             float rotation,
+                                             Pht::RenderableObject& weldRenderalbeObject) {
+    auto& sceneObject {mScene.GetFieldBlocks().AccuireSceneObject()};
+    auto& transform {sceneObject.GetTransform()};
+    transform.SetRotation({0.0f, 0.0f, rotation});
+    transform.SetPosition(weldPosition);
+    sceneObject.SetRenderable(&weldRenderalbeObject);
 }
 
 void GameSceneRenderer::RenderFallingPiece() {

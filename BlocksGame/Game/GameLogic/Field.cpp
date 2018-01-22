@@ -167,7 +167,7 @@ void Field::Reset(const Level& level) {
     SetChanged();
 }
 
-void Field::OnNewFrame() {
+void Field::OnEndOfFrame() {
     mHasChanged = false;
 }
 

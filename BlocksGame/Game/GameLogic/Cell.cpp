@@ -7,7 +7,24 @@ const int Quantities::numBlockColors {4};
 const int Quantities::numBlockBrightness {3};
 
 const float BlueprintSlotFillAnimation::mInitialOpacity {0.6f};
- 
+
+BlockRenderableKind BlocksGame::ToBlockRenderableKind(Fill fill) {
+    switch (fill) {
+        case Fill::Empty:
+            return BlockRenderableKind::None;
+        case Fill::LowerRightHalf:
+            return BlockRenderableKind::LowerRightHalf;
+        case Fill::UpperRightHalf:
+            return BlockRenderableKind::UpperRightHalf;
+        case Fill::UpperLeftHalf:
+            return BlockRenderableKind::UpperLeftHalf;
+        case Fill::LowerLeftHalf:
+            return BlockRenderableKind::LowerLeftHalf;
+        case Fill::Full:
+            return BlockRenderableKind::Full;
+    }
+}
+
 float BlocksGame::RotationToDeg(Rotation rotation) {
     switch (rotation) {
         case Rotation::Deg0:

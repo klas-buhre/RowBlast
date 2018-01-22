@@ -77,7 +77,9 @@ GameController::GameController(Pht::IEngine& engine,
         mBlastRadiusAnimation,
         mScrollController,
         mHud,
-        mGameViewControllers
+        mGameViewControllers,
+        mPieceResources,
+        mLevelResources
     } {}
 
 void GameController::StartLevel(int levelIndex) {
@@ -103,8 +105,6 @@ void GameController::StartLevel(int levelIndex) {
 GameController::Command GameController::Update() {
     auto command {Command::None};
     
-    mField.OnNewFrame();
-    
     switch (mState) {
         case GameState::LevelIntro:
         case GameState::Playing:
@@ -118,11 +118,14 @@ GameController::Command GameController::Update() {
             break;
     }
     
+    mRenderer.RenderFrame();
+    mField.OnEndOfFrame();
+    
     return command;
 }
 
 void GameController::RenderScene() {
-    mRenderer.RenderFrame();
+    mRenderer.Render();
 }
 
 GameController::Command GameController::UpdateGame() {

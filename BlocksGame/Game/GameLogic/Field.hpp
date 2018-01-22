@@ -55,7 +55,7 @@ namespace BlocksGame {
         
         void Reset(const Level& level);
         void RestorePreviousState();
-        void OnNewFrame();
+        void OnEndOfFrame();
         void SetChanged();
         const Cell& GetCell(int row, int column) const;
         Cell& GetCell(int row, int column);        

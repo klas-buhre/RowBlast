@@ -41,6 +41,7 @@ Pht::SceneObject& FieldBlockSceneObjects::AccuireSceneObject() {
     assert(mNextAvailableIndex < mSceneObjects.size());
     
     auto& sceneObject {*mSceneObjects[mNextAvailableIndex]};
+    sceneObject.SetIsVisible(true);
     ++mNextAvailableIndex;
     return sceneObject;
 }

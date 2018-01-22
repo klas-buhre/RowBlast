@@ -24,15 +24,15 @@ namespace BlocksGame {
         
         Pht::RenderableObject& GetBlockRenderableObject(BlockRenderableKind blockRenderableKind,
                                                         BlockColor color,
-                                                        BlockBrightness brightness);
+                                                        BlockBrightness brightness) const;
         Pht::RenderableObject& GetWeldRenderableObject(BlockColor color,
-                                                       BlockBrightness brightness);
+                                                       BlockBrightness brightness) const;
 
     private:
         int CalcBlockIndex(BlockRenderableKind blockRenderableKind,
                            BlockColor color,
-                           BlockBrightness brightness);
-        int CalcWeldIndex(BlockColor color, BlockBrightness brightness);
+                           BlockBrightness brightness) const ;
+        int CalcWeldIndex(BlockColor color, BlockBrightness brightness) const;
         void CreateBlocks(Pht::ISceneManager& sceneManager, const GameScene& scene);
         void CreateWelds(Pht::ISceneManager& sceneManager, const GameScene& scene);
         

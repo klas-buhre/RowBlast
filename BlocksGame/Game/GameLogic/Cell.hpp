@@ -38,6 +38,8 @@ namespace BlocksGame {
         None
     };
     
+    BlockRenderableKind ToBlockRenderableKind(Fill fill);
+    
     enum class BlockColor {
         Red,
         Green,
