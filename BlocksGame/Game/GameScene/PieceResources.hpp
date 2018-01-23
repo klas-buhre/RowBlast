@@ -28,6 +28,22 @@ namespace BlocksGame {
         Pht::RenderableObject& GetWeldRenderableObject(BlockColor color,
                                                        BlockBrightness brightness) const;
 
+        Pht::RenderableObject& GetBombRenderableObject() const {
+            return *mBomb;
+        }
+
+        Pht::RenderableObject& GetTransparentBombRenderableObject() const {
+            return *mTransparentBomb;
+        }
+
+        Pht::RenderableObject& GetRowBombRenderableObject() const {
+            return *mRowBomb;
+        }
+
+        Pht::RenderableObject& GetTransparentRowBombRenderableObject() const {
+            return *mTransparentRowBomb;
+        }
+
     private:
         int CalcBlockIndex(BlockRenderableKind blockRenderableKind,
                            BlockColor color,
@@ -35,9 +51,14 @@ namespace BlocksGame {
         int CalcWeldIndex(BlockColor color, BlockBrightness brightness) const;
         void CreateBlocks(Pht::ISceneManager& sceneManager, const GameScene& scene);
         void CreateWelds(Pht::ISceneManager& sceneManager, const GameScene& scene);
+        void CreateBombs(Pht::ISceneManager& sceneManager, const GameScene& scene);
         
         std::vector<std::unique_ptr<Pht::RenderableObject>> mBlocks;
         std::vector<std::unique_ptr<Pht::RenderableObject>> mWelds;
+        std::unique_ptr<Pht::RenderableObject> mBomb;
+        std::unique_ptr<Pht::RenderableObject> mTransparentBomb;
+        std::unique_ptr<Pht::RenderableObject> mRowBomb;
+        std::unique_ptr<Pht::RenderableObject> mTransparentRowBomb;
     };
 }
 

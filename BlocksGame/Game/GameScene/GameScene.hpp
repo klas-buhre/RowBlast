@@ -10,7 +10,7 @@
 // Game includes.
 #include "FloatingCubes.hpp"
 #include "ScrollController.hpp"
-#include "FieldBlockSceneObjects.hpp"
+#include "SceneObjectPool.hpp"
 
 namespace Pht {
     class IEngine;
@@ -47,11 +47,16 @@ namespace BlocksGame {
             return *mPieceDropEffectsContainer;
         }
         
-        FieldBlockSceneObjects& GetFieldBlocks() {
+        SceneObjectPool& GetFieldBlocks() {
             assert(mFieldBlocks);
             return *mFieldBlocks;
         }
-        
+
+        SceneObjectPool& GetPieceBlocks() {
+            assert(mPieceBlocks);
+            return *mPieceBlocks;
+        }
+
         const Pht::Vec3& GetLightDirection() const {
             return mLightDirection;
         }
@@ -113,6 +118,7 @@ namespace BlocksGame {
         void CreateBlueprintSlots(const Level& level, const LevelResources& levelResources);
         void CreatePieceDropEffectsContainer();
         void CreateFieldBlocks(const Level& level);
+        void CreatePieceBlocks(const Level& level);
         void SetScissorBox(const Pht::ScissorBox& scissorBox, int layer);
         
         Pht::IEngine& mEngine;
@@ -121,7 +127,8 @@ namespace BlocksGame {
         Pht::Scene* mScene {nullptr};
         Pht::CameraComponent* mCamera {nullptr};
         std::unique_ptr<FloatingCubes> mFloatingCubes;
-        std::unique_ptr<FieldBlockSceneObjects> mFieldBlocks;
+        std::unique_ptr<SceneObjectPool> mFieldBlocks;
+        std::unique_ptr<SceneObjectPool> mPieceBlocks;
         Pht::SceneObject* mFieldContainer {nullptr};
         Pht::SceneObject* mPieceDropEffectsContainer {nullptr};
         Pht::SceneObject* mFieldBlocksContainer {nullptr};

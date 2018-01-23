@@ -31,6 +31,7 @@ namespace BlocksGame {
     class FallingPiece;
     class PieceResources;
     class LevelResources;
+    class SceneObjectPool;
 
     class GameSceneRenderer {
     public:
@@ -56,17 +57,21 @@ namespace BlocksGame {
         void RenderBlueprintSlots();
         void RenderFieldBlocks();
         void RenderFieldBlock(const SubCell& subCell);
-        void RenderFieldBlockWelds(const SubCell& subCell,
-                                   const Pht::Vec3& blockPos,
-                                   Pht::RenderableObject& weldRenderalbeObject);
-        void RenderFieldBlockWeld(const Pht::Vec3& weldPosition,
-                                  float rotation,
-                                  Pht::RenderableObject& weldRenderalbeObject);
+        void RenderBlockWelds(const SubCell& subCell,
+                              const Pht::Vec3& blockPos,
+                              Pht::RenderableObject& weldRenderalbeObject,
+                              SceneObjectPool& pool);
+        void RenderBlockWeld(const Pht::Vec3& weldPosition,
+                             float rotation,
+                             Pht::RenderableObject& weldRenderalbeObject,
+                             SceneObjectPool& pool);
         void RenderFallingPiece();
+        void RenderPieceBlocks(const CellGrid& pieceBlocks,
+                               const Pht::Vec3& pieceFieldPos,
+                               bool isTransparent);
         void RenderPieceBlocks(const CellGrid& pieceBlocks,
                                const Pht::Vec3& pieceWorldPos,
                                float opacity);
-        void RenderBlockWelds(const SubCell& subCell, const Pht::Vec3& blockPos, float cellSize);
         void RenderGhostPieces();
         void RenderGhostPiece(const FallingPiece& fallingPiece,
                               const Pht::Vec3& ghostPieceCenterLocalCoords);

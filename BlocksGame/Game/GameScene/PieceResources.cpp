@@ -7,6 +7,7 @@
 #include "ISceneManager.hpp"
 #include "Material.hpp"
 #include "ObjMesh.hpp"
+#include "SphereMesh.hpp"
 
 // Game includes.
 #include "GameScene.hpp"
@@ -78,6 +79,7 @@ PieceResources::PieceResources(Pht::IEngine& engine, const GameScene& scene) {
     
     CreateBlocks(sceneManager, scene);
     CreateWelds(sceneManager, scene);
+    CreateBombs(sceneManager, scene);
 }
 
 Pht::RenderableObject& PieceResources::GetBlockRenderableObject(BlockRenderableKind blockRenderable,
@@ -178,4 +180,21 @@ void PieceResources::CreateWelds(Pht::ISceneManager& sceneManager, const GameSce
             mWelds[weldIndex] = std::move(renderableObject);
         }
     }
+}
+
+void PieceResources::CreateBombs(Pht::ISceneManager& sceneManager, const GameScene& scene) {
+    const auto cellSize {scene.GetCellSize()};
+    auto darkGrayMaterial {scene.GetDarkGrayMaterial()};
+    mBomb = sceneManager.CreateRenderableObject(Pht::SphereMesh {cellSize / 2.0f},
+                                                darkGrayMaterial);
+    
+    darkGrayMaterial.SetOpacity(scene.GetGhostPieceOpacity());
+    mTransparentBomb = sceneManager.CreateRenderableObject(Pht::SphereMesh {cellSize / 2.0f},
+                                                           darkGrayMaterial);
+    auto redMaterial {scene.GetRedMaterial()};
+    mRowBomb = sceneManager.CreateRenderableObject(Pht::SphereMesh {cellSize / 2.0f}, redMaterial);
+    
+    redMaterial.SetOpacity(scene.GetGhostPieceOpacity());
+    mTransparentRowBomb = sceneManager.CreateRenderableObject(Pht::SphereMesh {cellSize / 2.0f},
+                                                              redMaterial);
 }

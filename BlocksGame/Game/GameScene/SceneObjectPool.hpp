@@ -1,5 +1,5 @@
-#ifndef FieldBlockSceneObjects_hpp
-#define FieldBlockSceneObjects_hpp
+#ifndef SceneObjectPool_hpp
+#define SceneObjectPool_hpp
 
 #include <memory>
 #include <vector>
@@ -10,9 +10,16 @@
 namespace BlocksGame {
     class Level;
     
-    class FieldBlockSceneObjects {
+    enum class SceneObjectPoolKind {
+        FieldBlocks,
+        PieceBlocks
+    };
+    
+    class SceneObjectPool {
     public:
-        FieldBlockSceneObjects(Pht::SceneObject& parentSceneObject, const Level& level);
+        SceneObjectPool(SceneObjectPoolKind poolKind,
+                        Pht::SceneObject& parentSceneObject,
+                        const Level& level);
         
         void ReclaimAll();
         Pht::SceneObject& AccuireSceneObject();

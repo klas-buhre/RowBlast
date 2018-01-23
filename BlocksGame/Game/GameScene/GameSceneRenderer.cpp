@@ -76,6 +76,7 @@ GameSceneRenderer::GameSceneRenderer(Pht::IEngine& engine,
 void GameSceneRenderer::RenderFrame() {
     RenderBlueprintSlots();
     RenderFieldBlocks();
+    RenderFallingPiece();
 }
 
 void GameSceneRenderer::Render() {
@@ -86,7 +87,6 @@ void GameSceneRenderer::Render() {
     mEngineRenderer.SetScissorBox(mScene.GetScissorBoxLowerLeft(), mScene.GetScissorBoxSize());
     mEngineRenderer.SetScissorTest(true);
     
-    RenderFallingPiece();
     RenderGhostPieces();
     RenderBlastRadiusAnimation();
     
@@ -168,7 +168,7 @@ void GameSceneRenderer::RenderFieldBlock(const SubCell& subCell) {
     Pht::Vec3 blockPosition {
         subCell.mPosition.x * cellSize + cellSize / 2.0f,
         subCell.mPosition.y * cellSize + cellSize / 2.0f,
-        mScene.GetFieldPosition().z
+        0.0f
     };
 
     auto& transform {sceneObject.GetTransform()};
@@ -195,46 +195,52 @@ void GameSceneRenderer::RenderFieldBlock(const SubCell& subCell) {
         sceneObject.SetRenderable(renderableObject);
 
         auto& weldRenderable {mPieceResources.GetWeldRenderableObject(color, brightness)};
-        RenderFieldBlockWelds(subCell, blockPosition, weldRenderable);
+        RenderBlockWelds(subCell, blockPosition, weldRenderable, mScene.GetFieldBlocks());
     }
 }
 
-void GameSceneRenderer::RenderFieldBlockWelds(const SubCell& subCell,
-                                              const Pht::Vec3& blockPos,
-                                              Pht::RenderableObject& weldRenderalbeObject) {
+void GameSceneRenderer::RenderBlockWelds(const SubCell& subCell,
+                                         const Pht::Vec3& blockPos,
+                                         Pht::RenderableObject& weldRenderalbeObject,
+                                         SceneObjectPool& pool) {
     auto& welds {subCell.mWelds};
     const auto cellSize {mScene.GetCellSize()};
     auto weldZ {blockPos.z + cellSize / 2.0f};
     
     if (welds.mUpLeft) {
-        RenderFieldBlockWeld({blockPos.x - cellSize / 2.0f, blockPos.y + cellSize / 2.0f, weldZ},
-                             45.0f,
-                             weldRenderalbeObject);
+        RenderBlockWeld({blockPos.x - cellSize / 2.0f, blockPos.y + cellSize / 2.0f, weldZ},
+                        45.0f,
+                        weldRenderalbeObject,
+                        pool);
     }
     
     if (welds.mUp) {
-        RenderFieldBlockWeld({blockPos.x, blockPos.y + cellSize / 2.0f, weldZ},
-                             -90.0f,
-                             weldRenderalbeObject);
+        RenderBlockWeld({blockPos.x, blockPos.y + cellSize / 2.0f, weldZ},
+                        -90.0f,
+                        weldRenderalbeObject,
+                        pool);
     }
     
     if (welds.mUpRight) {
-        RenderFieldBlockWeld({blockPos.x + cellSize / 2.0f, blockPos.y + cellSize / 2.0f, weldZ},
-                             -45.0f,
-                             weldRenderalbeObject);
+        RenderBlockWeld({blockPos.x + cellSize / 2.0f, blockPos.y + cellSize / 2.0f, weldZ},
+                        -45.0f,
+                        weldRenderalbeObject,
+                        pool);
     }
 
     if (welds.mRight) {
-        RenderFieldBlockWeld({blockPos.x + cellSize / 2.0f, blockPos.y, weldZ},
-                             0.0f,
-                             weldRenderalbeObject);
+        RenderBlockWeld({blockPos.x + cellSize / 2.0f, blockPos.y, weldZ},
+                        0.0f,
+                        weldRenderalbeObject,
+                        pool);
     }
 }
 
-void GameSceneRenderer::RenderFieldBlockWeld(const Pht::Vec3& weldPosition,
-                                             float rotation,
-                                             Pht::RenderableObject& weldRenderalbeObject) {
-    auto& sceneObject {mScene.GetFieldBlocks().AccuireSceneObject()};
+void GameSceneRenderer::RenderBlockWeld(const Pht::Vec3& weldPosition,
+                                        float rotation,
+                                        Pht::RenderableObject& weldRenderalbeObject,
+                                        SceneObjectPool& pool) {
+    auto& sceneObject {pool.AccuireSceneObject()};
     auto& transform {sceneObject.GetTransform()};
     transform.SetRotation({0.0f, 0.0f, rotation});
     transform.SetPosition(weldPosition);
@@ -242,6 +248,8 @@ void GameSceneRenderer::RenderFieldBlockWeld(const Pht::Vec3& weldPosition,
 }
 
 void GameSceneRenderer::RenderFallingPiece() {
+    mScene.GetPieceBlocks().ReclaimAll();
+    
     auto* fallingPiece {mGameLogic.GetFallingPiece()};
     
     if (fallingPiece == nullptr) {
@@ -253,11 +261,81 @@ void GameSceneRenderer::RenderFallingPiece() {
                                             fallingPiece->GetRenderablePosition()
     };
     
-    auto pieceWorldPos2 {mScene.GetFieldLoweLeft() + pieceGridPos * mScene.GetCellSize()};
-    Pht::Vec3 pieceWorldPos3 {pieceWorldPos2.x, pieceWorldPos2.y, mScene.GetFieldPosition().z};
+    const auto cellSize {mScene.GetCellSize()};
+    Pht::Vec3 pieceFieldPos {pieceGridPos.x * cellSize, pieceGridPos.y * cellSize, 0.0f};
     auto& pieceGrid {fallingPiece->GetPieceType().GetGrid(fallingPiece->GetRotation())};
     
-    RenderPieceBlocks(pieceGrid, pieceWorldPos3, 1.0f);
+    RenderPieceBlocks(pieceGrid, pieceFieldPos, false);
+}
+
+void GameSceneRenderer::RenderPieceBlocks(const CellGrid& pieceBlocks,
+                                          const Pht::Vec3& pieceFieldPos,
+                                          bool isTransparent) {
+    auto* fallingPiece {mGameLogic.GetFallingPiece()};
+    assert(fallingPiece);
+    
+    auto& pieceType {fallingPiece->GetPieceType()};
+    auto pieceNumRows {pieceType.GetGridNumRows()};
+    auto pieceNumColumns {pieceType.GetGridNumColumns()};
+    const auto cellSize {mScene.GetCellSize()};
+    auto isBomb {pieceType.IsBomb()};
+    auto isRowBomb {pieceType.IsRowBomb()};
+    
+    for (auto row {0}; row < pieceNumRows; row++) {
+        for (auto column {0}; column < pieceNumColumns; column++) {
+            auto& subCell {pieceBlocks[row][column].mFirstSubCell};
+            auto renderableKind {subCell.mBlockRenderableKind};
+            
+            if (renderableKind == BlockRenderableKind::None) {
+                continue;
+            }
+            
+            auto& sceneObject {mScene.GetPieceBlocks().AccuireSceneObject()};
+            
+            Pht::Vec3 blockPosition {
+                column * cellSize + cellSize / 2.0f + pieceFieldPos.x,
+                row * cellSize + cellSize / 2.0f + pieceFieldPos.y,
+                pieceFieldPos.z
+            };
+
+            auto& transform {sceneObject.GetTransform()};
+            transform.SetPosition(blockPosition);
+
+            if (renderableKind != BlockRenderableKind::Full) {
+                Pht::Vec3 blockRotation {0.0f, 0.0f, RotationToDeg(subCell.mRotation)};
+                transform.SetRotation(blockRotation);
+            } else {
+                transform.SetRotation({0.0f, 0.0f, 0.0f});
+            }
+            
+            if (isBomb) {
+                if (isTransparent) {
+                    sceneObject.SetRenderable(&mPieceResources.GetTransparentBombRenderableObject());
+                } else {
+                    sceneObject.SetRenderable(&mPieceResources.GetBombRenderableObject());
+                }
+            } else if (isRowBomb) {
+                if (isTransparent) {
+                    sceneObject.SetRenderable(&mPieceResources.GetTransparentRowBombRenderableObject());
+                } else {
+                    sceneObject.SetRenderable(&mPieceResources.GetRowBombRenderableObject());
+                }
+            } else {
+                auto color {subCell.mColor};
+                auto brightness {BlockBrightness::Normal};
+
+                auto* blockRenderableObject {
+                    &mPieceResources.GetBlockRenderableObject(renderableKind, color, brightness)
+                };
+                
+                assert(blockRenderableObject);
+                sceneObject.SetRenderable(blockRenderableObject);
+
+                auto& weldRenderable {mPieceResources.GetWeldRenderableObject(color, brightness)};
+                RenderBlockWelds(subCell, blockPosition, weldRenderable, mScene.GetPieceBlocks());
+            }
+        }
+    }
 }
 
 void GameSceneRenderer::RenderPieceBlocks(const CellGrid& pieceBlocks,
@@ -298,7 +376,6 @@ void GameSceneRenderer::RenderPieceBlocks(const CellGrid& pieceBlocks,
                     weldMaterial->SetOpacity(opacity);
                 }
                 
-                RenderBlockWelds(subCell, Pht::Vec3 {blockXPos, blockYPos, pieceWorldPos.z}, cellSize);
                 mEngineRenderer.Render(*renderableObject, blockMatrix);
                 
                 if (weldMaterial) {
@@ -308,45 +385,6 @@ void GameSceneRenderer::RenderPieceBlocks(const CellGrid& pieceBlocks,
                 blockMaterial.SetOpacity(blockOpacity);
             }
         }
-    }
-}
-
-void GameSceneRenderer::RenderBlockWelds(const SubCell& subCell,
-                                         const Pht::Vec3& blockPos,
-                                         float cellSize) {
-    auto& welds {subCell.mWelds};
-    auto weldZ {blockPos.z + cellSize / 2.0f};
-    
-    if (welds.mUpLeft) {
-        auto weldMatrix {
-            plus45RotationMatrix *
-            Pht::Mat4::Translate(blockPos.x - cellSize / 2.0f, blockPos.y + cellSize / 2.0f, weldZ)
-        };
-        
-        mEngineRenderer.Render(*subCell.mWeldRenderableObject, weldMatrix);
-    }
-    
-    if (welds.mUp) {
-        auto weldMatrix {
-            rotationMatrices[static_cast<int>(Rotation::Deg90)] *
-            Pht::Mat4::Translate(blockPos.x, blockPos.y + cellSize / 2.0f, weldZ)
-        };
-        
-        mEngineRenderer.Render(*subCell.mWeldRenderableObject, weldMatrix);
-    }
-    
-    if (welds.mUpRight) {
-        auto weldMatrix {
-            minus45RotationMatrix *
-            Pht::Mat4::Translate(blockPos.x + cellSize / 2.0f, blockPos.y + cellSize / 2.0f, weldZ)
-        };
-        
-        mEngineRenderer.Render(*subCell.mWeldRenderableObject, weldMatrix);
-    }
-
-    if (welds.mRight) {
-        auto weldMatrix {Pht::Mat4::Translate(blockPos.x + cellSize / 2.0f, blockPos.y, weldZ)};
-        mEngineRenderer.Render(*subCell.mWeldRenderableObject, weldMatrix);
     }
 }
 
