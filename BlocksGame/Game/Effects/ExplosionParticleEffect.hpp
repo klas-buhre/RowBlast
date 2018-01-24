@@ -21,24 +21,17 @@ namespace BlocksGame {
             Inactive
         };
         
-        ExplosionParticleEffect(Pht::IEngine& engine, const GameScene& scene);
+        ExplosionParticleEffect(Pht::IEngine& engine, GameScene& scene);
         
+        void Reset();
         void StartExplosion(const Pht::Vec2& position);
         State Update(float dt);
-        
-        const Pht::SceneObject& GetOuterEffect() const {
-            return *mOuterParticleEffect;
-        }
-
-        const Pht::SceneObject& GetInnerEffect() const {
-            return *mInnerParticleEffect;
-        }
         
     private:
         void InitInnerEffect(Pht::IEngine& engine);
         void InitOuterEffect(Pht::IEngine& engine);
         
-        const GameScene& mScene;
+        GameScene& mScene;
         std::unique_ptr<Pht::SceneObject> mOuterParticleEffect;
         std::unique_ptr<Pht::SceneObject> mInnerParticleEffect;
     };

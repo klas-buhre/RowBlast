@@ -28,7 +28,7 @@ namespace {
     }
 }
 
-ExplosionParticleEffect::ExplosionParticleEffect(Pht::IEngine& engine, const GameScene& scene) :
+ExplosionParticleEffect::ExplosionParticleEffect(Pht::IEngine& engine, GameScene& scene) :
     mScene {scene} {
 
     InitInnerEffect(engine);
@@ -89,21 +89,26 @@ void ExplosionParticleEffect::InitOuterEffect(Pht::IEngine& engine) {
                                                                           Pht::RenderMode::Points);
 }
 
-void ExplosionParticleEffect::StartExplosion(const Pht::Vec2& position) {
-    auto cellSize {mScene.GetCellSize()};
-    auto& fieldLowerLeft {mScene.GetFieldLoweLeft()};
+void ExplosionParticleEffect::Reset() {
+    auto& effectsContainer {mScene.GetEffectsContainer()};
+    effectsContainer.AddChild(*mInnerParticleEffect);
+    effectsContainer.AddChild(*mOuterParticleEffect);
+}
 
-    Pht::Vec3 positionInScene {
-        position.x * cellSize + cellSize / 2.0f + fieldLowerLeft.x,
-        position.y * cellSize + cellSize / 2.0f + fieldLowerLeft.y,
+void ExplosionParticleEffect::StartExplosion(const Pht::Vec2& position) {
+    const auto cellSize {mScene.GetCellSize()};
+
+    Pht::Vec3 positionInField {
+        position.x * cellSize + cellSize / 2.0f,
+        position.y * cellSize + cellSize / 2.0f,
         mScene.GetFieldPosition().z
     };
     
     mInnerParticleEffect->GetComponent<Pht::ParticleEffect>()->Start();
-    mInnerParticleEffect->SetPosition(positionInScene);
+    mInnerParticleEffect->SetPosition(positionInField);
     
     mOuterParticleEffect->GetComponent<Pht::ParticleEffect>()->Start();
-    mOuterParticleEffect->SetPosition(positionInScene);
+    mOuterParticleEffect->SetPosition(positionInField);
 }
 
 ExplosionParticleEffect::State ExplosionParticleEffect::Update(float dt) {

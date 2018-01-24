@@ -51,7 +51,12 @@ namespace BlocksGame {
             assert(mFieldBlocksContainer);
             return *mFieldBlocksContainer;
         }
-        
+
+        Pht::SceneObject& GetEffectsContainer() {
+            assert(mEffectsContainer);
+            return *mEffectsContainer;
+        }
+
         SceneObjectPool& GetFieldBlocks() {
             assert(mFieldBlocks);
             return *mFieldBlocks;
@@ -129,6 +134,7 @@ namespace BlocksGame {
         void CreatePieceDropEffectsContainer();
         void CreateFieldBlocksContainer();
         void CreateSceneObjectPools(const Level& level);
+        void CreateEffectsContainer();
         void SetScissorBox(const Pht::ScissorBox& scissorBox, int layer);
         
         Pht::IEngine& mEngine;
@@ -143,6 +149,7 @@ namespace BlocksGame {
         Pht::SceneObject* mFieldContainer {nullptr};
         Pht::SceneObject* mPieceDropEffectsContainer {nullptr};
         Pht::SceneObject* mFieldBlocksContainer {nullptr};
+        Pht::SceneObject* mEffectsContainer {nullptr};
         Pht::Vec3 mLightDirection;
         const Pht::Vec3 mFieldPosition;
         const float mCellSize {1.25f};

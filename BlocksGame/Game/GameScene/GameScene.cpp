@@ -27,7 +27,8 @@ namespace {
         FieldQuad,
         FieldBlueprintSlots,
         FieldPieceDropEffects,
-        FieldBlocksAndFallingPiece
+        FieldBlocksAndFallingPiece,
+        Effects
     };
 
     const std::vector<CubePathVolume> floatingCubePaths {
@@ -84,6 +85,7 @@ void GameScene::Reset(const Level& level, const LevelResources& levelResources) 
     CreatePieceDropEffectsContainer();
     CreateFieldBlocksContainer();
     CreateSceneObjectPools(level);
+    CreateEffectsContainer();
     
     mScissorBoxSize = Pht::Vec2 {mFieldWidth + fieldPadding, 19.0f * mCellSize};
     
@@ -111,6 +113,10 @@ void GameScene::CreateRenderPasses() {
     Pht::RenderPass fieldBlocksRenderPass {static_cast<int>(Layer::FieldBlocksAndFallingPiece)};
     fieldBlocksRenderPass.SetProjectionMode(Pht::ProjectionMode::Orthographic);
     mScene->AddRenderPass(fieldBlocksRenderPass);
+
+    Pht::RenderPass effectsRenderPass {static_cast<int>(Layer::Effects)};
+    effectsRenderPass.SetProjectionMode(Pht::ProjectionMode::Orthographic);
+    mScene->AddRenderPass(effectsRenderPass);
 }
 
 void GameScene::CreateLightAndCamera() {
@@ -245,6 +251,12 @@ void GameScene::CreateSceneObjectPools(const Level& level) {
                                                      level);
 }
 
+void GameScene::CreateEffectsContainer() {
+    mEffectsContainer = &mScene->CreateSceneObject();
+    mEffectsContainer->SetLayer(static_cast<int>(Layer::Effects));
+    mFieldContainer->AddChild(*mEffectsContainer);
+}
+
 void GameScene::Update() {
     mFloatingCubes->Update();
     
@@ -252,7 +264,7 @@ void GameScene::Update() {
         UpdateCameraPositionAndScissorBox();
     }
 }
-    
+
 void GameScene::UpdateCameraPositionAndScissorBox() {
     auto& renderer {mEngine.GetRenderer()};
     

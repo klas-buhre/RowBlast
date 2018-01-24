@@ -16,8 +16,6 @@
 #include "GameScene.hpp"
 #include "GameHud.hpp"
 #include "GameViewControllers.hpp"
-#include "ExplosionParticleEffect.hpp"
-#include "RowExplosionParticleEffect.hpp"
 #include "FlyingBlocksAnimation.hpp"
 #include "FlashingBlocksAnimation.hpp"
 #include "SlidingTextAnimation.hpp"
@@ -29,15 +27,6 @@
 using namespace BlocksGame;
 
 namespace {
-    const std::array<Pht::Mat4, 4> rotationMatrices = {
-        Pht::Mat4::RotateZ(RotationToDeg(Rotation::Deg0)),
-        Pht::Mat4::RotateZ(RotationToDeg(Rotation::Deg90)),
-        Pht::Mat4::RotateZ(RotationToDeg(Rotation::Deg180)),
-        Pht::Mat4::RotateZ(RotationToDeg(Rotation::Deg270))
-    };
-    
-    const auto plus45RotationMatrix {Pht::Mat4::RotateZ(45.0f)};
-    const auto minus45RotationMatrix {Pht::Mat4::RotateZ(-45.0f)};
     const auto previewRotationMatrix {Pht::Mat4::RotateX(-30.0f) * Pht::Mat4::RotateY(-30.0f)};
     const auto dz {0.05f};
 }
@@ -46,8 +35,6 @@ GameSceneRenderer::GameSceneRenderer(Pht::IEngine& engine,
                                      GameScene& scene,
                                      const Field& field,
                                      const GameLogic& gameLogic,
-                                     const ExplosionParticleEffect& explosionParticleEffect,
-                                     const RowExplosionParticleEffect& rowExplosionParticleEffect,
                                      const FlyingBlocksAnimation& flyingBlocksAnimation,
                                      const SlidingTextAnimation& slidingTextAnimation,
                                      const ScrollController& scrollController,
@@ -60,8 +47,6 @@ GameSceneRenderer::GameSceneRenderer(Pht::IEngine& engine,
     mScene {scene},
     mField {field},
     mGameLogic {gameLogic},
-    mExplosionParticleEffect {explosionParticleEffect},
-    mRowExplosionParticleEffect {rowExplosionParticleEffect},
     mFlyingBlocksAnimation {flyingBlocksAnimation},
     mSlidingTextAnimation {slidingTextAnimation},
     mScrollController {scrollController},
@@ -83,8 +68,6 @@ void GameSceneRenderer::Render() {
 
     mEngineRenderer.SetProjectionMode(Pht::ProjectionMode::Orthographic);
     
-    RenderExplosion();
-    RenderRowExplosion();
     RenderFlyingBlocks();
     RenderSlidingText();
     RenderHud();
@@ -439,15 +422,6 @@ void GameSceneRenderer::RenderClickableGhostPieces(const FallingPiece& fallingPi
             }
         }
     }
-}
-
-void GameSceneRenderer::RenderExplosion() {
-    mEngineRenderer.RenderSceneObject(mExplosionParticleEffect.GetInnerEffect());
-    mEngineRenderer.RenderSceneObject(mExplosionParticleEffect.GetOuterEffect());
-}
-
-void GameSceneRenderer::RenderRowExplosion() {
-    mEngineRenderer.RenderSceneObject(mRowExplosionParticleEffect.GetSceneObject());
 }
 
 void GameSceneRenderer::RenderFlyingBlocks() {

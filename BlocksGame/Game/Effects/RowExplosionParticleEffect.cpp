@@ -12,8 +12,7 @@
 
 using namespace BlocksGame;
 
-RowExplosionParticleEffect::RowExplosionParticleEffect(Pht::IEngine& engine,
-                                                       const GameScene& scene) :
+RowExplosionParticleEffect::RowExplosionParticleEffect(Pht::IEngine& engine, GameScene& scene) :
     mScene {scene} {
 
     Pht::EmitterSettings particleEmitterSettings {
@@ -41,17 +40,20 @@ RowExplosionParticleEffect::RowExplosionParticleEffect(Pht::IEngine& engine,
                                                                  Pht::RenderMode::Points);
 }
 
-void RowExplosionParticleEffect::StartExplosion(const Pht::Vec2& position) {
-    auto cellSize {mScene.GetCellSize()};
-    auto& fieldLowerLeft {mScene.GetFieldLoweLeft()};
+void RowExplosionParticleEffect::Reset() {
+    mScene.GetEffectsContainer().AddChild(*mScenObject);
+}
 
-    Pht::Vec3 positionInScene {
-        position.x * cellSize + cellSize / 2.0f + fieldLowerLeft.x,
-        position.y * cellSize + cellSize / 2.0f + fieldLowerLeft.y,
+void RowExplosionParticleEffect::StartExplosion(const Pht::Vec2& position) {
+    const auto cellSize {mScene.GetCellSize()};
+
+    Pht::Vec3 positionInField {
+        position.x * cellSize + cellSize / 2.0f,
+        position.y * cellSize + cellSize / 2.0f,
         mScene.GetFieldPosition().z
     };
     
-    mScenObject->SetPosition(positionInScene);
+    mScenObject->SetPosition(positionInField);
     mScenObject->GetComponent<Pht::ParticleEffect>()->Start();
 }
 

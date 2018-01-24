@@ -21,8 +21,6 @@ namespace BlocksGame {
     class ScrollController;
     class GameHud;
     class GameViewControllers;
-    class ExplosionParticleEffect;
-    class RowExplosionParticleEffect;
     class FlyingBlocksAnimation;
     class SlidingTextAnimation;
     class SubCell;
@@ -38,8 +36,6 @@ namespace BlocksGame {
                           GameScene& scene,
                           const Field& field,
                           const GameLogic& gameLogic,
-                          const ExplosionParticleEffect& explosionParticleEffect,
-                          const RowExplosionParticleEffect& rowExplosionParticleEffect,
                           const FlyingBlocksAnimation& flyingBlocksAnimation,
                           const SlidingTextAnimation& slidingTextAnimation,
                           const ScrollController& scrollController,
@@ -74,8 +70,6 @@ namespace BlocksGame {
                               const Pht::Vec3& position,
                               Rotation rotation);
         void RenderClickableGhostPieces(const FallingPiece& fallingPiece);
-        void RenderExplosion();
-        void RenderRowExplosion();
         void RenderFlyingBlocks();
         void RenderHud();
         void RenderTiltedGrayBlockInHud(const Pht::RenderableObject& grayBlock);
@@ -96,8 +90,6 @@ namespace BlocksGame {
         GameScene& mScene;
         const Field& mField;
         const GameLogic& mGameLogic;
-        const ExplosionParticleEffect& mExplosionParticleEffect;
-        const RowExplosionParticleEffect& mRowExplosionParticleEffect;
         const FlyingBlocksAnimation& mFlyingBlocksAnimation;
         const SlidingTextAnimation& mSlidingTextAnimation;
         const ScrollController& mScrollController;

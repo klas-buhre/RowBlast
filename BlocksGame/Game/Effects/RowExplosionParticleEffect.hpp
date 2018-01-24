@@ -21,17 +21,14 @@ namespace BlocksGame {
             Inactive
         };
         
-        RowExplosionParticleEffect(Pht::IEngine& engine, const GameScene& scene);
+        RowExplosionParticleEffect(Pht::IEngine& engine, GameScene& scene);
         
+        void Reset();
         void StartExplosion(const Pht::Vec2& position);
         State Update(float dt);
         
-        const Pht::SceneObject& GetSceneObject() const {
-            return *mScenObject;
-        }
-        
     private:
-        const GameScene& mScene;
+        GameScene& mScene;
         std::unique_ptr<Pht::SceneObject> mScenObject;
     };
 }
