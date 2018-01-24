@@ -6,6 +6,7 @@
 #include "Level.hpp"
 #include "Field.hpp"
 #include "Piece.hpp"
+#include "ClickInputHandler.hpp"
 
 using namespace BlocksGame;
 
@@ -19,6 +20,8 @@ namespace {
             }
             case SceneObjectPoolKind::PieceBlocks:
                 return 3 * Piece::maxRows * Piece::maxColumns - Piece::maxRows - Piece::maxColumns;
+            case SceneObjectPoolKind::GhostPieces:
+                return ClickInputHandler::maxNumVisibleMoves;
         }
     }
 }

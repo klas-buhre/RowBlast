@@ -12,7 +12,8 @@ namespace BlocksGame {
     
     enum class SceneObjectPoolKind {
         FieldBlocks,
-        PieceBlocks
+        PieceBlocks,
+        GhostPieces
     };
     
     class SceneObjectPool {

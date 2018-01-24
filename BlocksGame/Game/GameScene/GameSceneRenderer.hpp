@@ -68,18 +68,14 @@ namespace BlocksGame {
         void RenderFallingPiece();
         void RenderPieceBlocks(const CellGrid& pieceBlocks,
                                const Pht::Vec3& pieceFieldPos,
-                               bool isTransparent);
-        void RenderPieceBlocks(const CellGrid& pieceBlocks,
-                               const Pht::Vec3& pieceWorldPos,
-                               float opacity);
+                               bool isTransparent,
+                               SceneObjectPool& pool);
         void RenderGhostPieces();
-        void RenderGhostPiece(const FallingPiece& fallingPiece,
-                              const Pht::Vec3& ghostPieceCenterLocalCoords);
-        void RenderClickableGhostPieces(const FallingPiece& fallingPiece,
-                                        const Pht::Vec3& ghostPieceCenterLocalCoords);
-        void RenderGhostPiece(const Pht::RenderableObject& ghostPieceRenderable,
+        void RenderGhostPieceForGestureControls(const FallingPiece& fallingPiece);
+        void RenderGhostPiece(Pht::RenderableObject& ghostPieceRenderable,
                               const Pht::Vec3& position,
                               Rotation rotation);
+        void RenderClickableGhostPieces(const FallingPiece& fallingPiece);
         void RenderBlastRadiusAnimation();
         void RenderExplosion();
         void RenderRowExplosion();

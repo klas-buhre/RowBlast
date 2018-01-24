@@ -120,11 +120,11 @@ const Pht::RenderableObject& Piece::GetFirstRenderable() const {
     return *mRenderables.front();
 }
 
-const Pht::RenderableObject* Piece::GetGhostPieceRenderable() const {
+Pht::RenderableObject* Piece::GetGhostPieceRenderable() const {
     return mGhostPieceRenderable.get();
 }
 
-const Pht::RenderableObject* Piece::GetPressedGhostPieceRenderable() const {
+Pht::RenderableObject* Piece::GetPressedGhostPieceRenderable() const {
     return mPressedGhostPieceRenderable.get();
 }
 

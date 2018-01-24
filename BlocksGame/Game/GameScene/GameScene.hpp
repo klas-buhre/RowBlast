@@ -57,6 +57,11 @@ namespace BlocksGame {
             return *mPieceBlocks;
         }
 
+        SceneObjectPool& GetGhostPieces() {
+            assert(mGhostPieces);
+            return *mGhostPieces;
+        }
+
         const Pht::Vec3& GetLightDirection() const {
             return mLightDirection;
         }
@@ -117,8 +122,8 @@ namespace BlocksGame {
         Pht::QuadMesh::Vertices CreateFieldVertices(const Level& level);
         void CreateBlueprintSlots(const Level& level, const LevelResources& levelResources);
         void CreatePieceDropEffectsContainer();
-        void CreateFieldBlocks(const Level& level);
-        void CreatePieceBlocks(const Level& level);
+        void CreateFieldBlocksContainer();
+        void CreateSceneObjectPools(const Level& level);
         void SetScissorBox(const Pht::ScissorBox& scissorBox, int layer);
         
         Pht::IEngine& mEngine;
@@ -129,6 +134,7 @@ namespace BlocksGame {
         std::unique_ptr<FloatingCubes> mFloatingCubes;
         std::unique_ptr<SceneObjectPool> mFieldBlocks;
         std::unique_ptr<SceneObjectPool> mPieceBlocks;
+        std::unique_ptr<SceneObjectPool> mGhostPieces;
         Pht::SceneObject* mFieldContainer {nullptr};
         Pht::SceneObject* mPieceDropEffectsContainer {nullptr};
         Pht::SceneObject* mFieldBlocksContainer {nullptr};

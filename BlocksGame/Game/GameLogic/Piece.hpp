@@ -32,9 +32,8 @@ namespace BlocksGame {
         const Pht::Vec2& GetButtonCenterPosition(Rotation rotation) const;
         const Pht::Vec2& GetButtonSize(Rotation rotation) const;
         const Pht::RenderableObject& GetFirstRenderable() const;
-        const Pht::RenderableObject* GetGhostPieceRenderable() const;
-        const Pht::RenderableObject* GetFilledGhostPieceRenderable() const;
-        const Pht::RenderableObject* GetPressedGhostPieceRenderable() const;
+        Pht::RenderableObject* GetGhostPieceRenderable() const;
+        Pht::RenderableObject* GetPressedGhostPieceRenderable() const;
         
         virtual bool CanRotateAroundZ() const;
         virtual bool IsBomb() const;

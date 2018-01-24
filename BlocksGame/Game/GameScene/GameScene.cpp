@@ -82,8 +82,8 @@ void GameScene::Reset(const Level& level, const LevelResources& levelResources) 
     CreateFieldContainer();
     CreateBlueprintSlots(level, levelResources);
     CreatePieceDropEffectsContainer();
-    CreateFieldBlocks(level);
-    CreatePieceBlocks(level);
+    CreateFieldBlocksContainer();
+    CreateSceneObjectPools(level);
     
     mScissorBoxSize = Pht::Vec2 {mFieldWidth + fieldPadding, 19.0f * mCellSize};
     
@@ -227,18 +227,20 @@ void GameScene::CreatePieceDropEffectsContainer() {
     mFieldContainer->AddChild(*mPieceDropEffectsContainer);
 }
 
-void GameScene::CreateFieldBlocks(const Level& level) {
+void GameScene::CreateFieldBlocksContainer() {
     mFieldBlocksContainer = &mScene->CreateSceneObject();
     mFieldBlocksContainer->SetLayer(static_cast<int>(Layer::FieldBlocksAndFallingPiece));
     mFieldContainer->AddChild(*mFieldBlocksContainer);
-    
+}
+
+void GameScene::CreateSceneObjectPools(const Level& level) {
     mFieldBlocks = std::make_unique<SceneObjectPool>(SceneObjectPoolKind::FieldBlocks,
                                                      *mFieldBlocksContainer,
                                                      level);
-}
-
-void GameScene::CreatePieceBlocks(const Level& level) {
     mPieceBlocks = std::make_unique<SceneObjectPool>(SceneObjectPoolKind::PieceBlocks,
+                                                     *mFieldBlocksContainer,
+                                                     level);
+    mGhostPieces = std::make_unique<SceneObjectPool>(SceneObjectPoolKind::GhostPieces,
                                                      *mFieldBlocksContainer,
                                                      level);
 }
