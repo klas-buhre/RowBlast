@@ -79,7 +79,7 @@ namespace {
     }
 }
 
-BlastRadiusAnimation::BlastRadiusAnimation(Pht::IEngine& engine, const GameScene& scene) :
+BlastRadiusAnimation::BlastRadiusAnimation(Pht::IEngine& engine, GameScene& scene) :
     mScene {scene} {
     
     auto cellSize {scene.GetCellSize()};
@@ -114,26 +114,32 @@ BlastRadiusAnimation::BlastRadiusAnimation(Pht::IEngine& engine, const GameScene
                                                   mSceneResources);
 }
 
+void BlastRadiusAnimation::Reset() {
+    mScene.GetFieldBlocksContainer().AddChild(*mSceneObject);
+    Stop();
+}
+
 void BlastRadiusAnimation::Start() {
     mState = State::Active;
+    mSceneObject->SetIsVisible(true);
 }
 
 void BlastRadiusAnimation::Stop() {
     mState = State::Inactive;
     mTime = 0.0f;
+    mSceneObject->SetIsVisible(false);
 }
 
 void BlastRadiusAnimation::SetPosition(const Pht::Vec2& position) {
-    auto cellSize {mScene.GetCellSize()};
-    auto& fieldLowerLeft {mScene.GetFieldLoweLeft()};
+    const auto cellSize {mScene.GetCellSize()};
 
-    Pht::Vec3 positionInScene {
-        position.x * cellSize + cellSize / 2.0f + fieldLowerLeft.x,
-        position.y * cellSize + cellSize / 2.0f + fieldLowerLeft.y,
+    Pht::Vec3 positionInField {
+        position.x * cellSize + cellSize / 2.0f,
+        position.y * cellSize + cellSize / 2.0f,
         mScene.GetBlastRadiusAnimationZ()
     };
     
-    mSceneObject->SetPosition(positionInScene);
+    mSceneObject->GetTransform().SetPosition(positionInField);
 }
 
 void BlastRadiusAnimation::Update(float dt) {
@@ -151,13 +157,4 @@ void BlastRadiusAnimation::Update(float dt) {
     
     auto& material {mSceneObject->GetRenderable()->GetMaterial()};
     material.SetOpacity(opacity);
-}
-
-const Pht::SceneObject* BlastRadiusAnimation::GetSceneObject() const {
-    switch (mState) {
-        case State::Active:
-            return mSceneObject.get();
-        case State::Inactive:
-            return nullptr;
-    }
 }

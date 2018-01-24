@@ -17,13 +17,13 @@ namespace BlocksGame {
     
     class BlastRadiusAnimation {
     public:
-        BlastRadiusAnimation(Pht::IEngine& engine, const GameScene& scene);
+        BlastRadiusAnimation(Pht::IEngine& engine, GameScene& scene);
     
+        void Reset();
         void Start();
         void Stop();
         void SetPosition(const Pht::Vec2& position);
         void Update(float dt);
-        const Pht::SceneObject* GetSceneObject() const;
         
         bool IsActive() const {
             return mState == State::Active;
@@ -35,7 +35,7 @@ namespace BlocksGame {
             Inactive
         };
         
-        const GameScene& mScene;
+        GameScene& mScene;
         State mState {State::Inactive};
         std::unique_ptr<Pht::SceneObject> mSceneObject;
         float mTime {0.0f};

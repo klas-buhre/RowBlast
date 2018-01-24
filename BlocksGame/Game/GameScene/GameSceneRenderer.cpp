@@ -21,7 +21,6 @@
 #include "FlyingBlocksAnimation.hpp"
 #include "FlashingBlocksAnimation.hpp"
 #include "SlidingTextAnimation.hpp"
-#include "BlastRadiusAnimation.hpp"
 #include "SettingsMenuController.hpp"
 #include "NoLivesDialogController.hpp"
 #include "PieceResources.hpp"
@@ -51,7 +50,6 @@ GameSceneRenderer::GameSceneRenderer(Pht::IEngine& engine,
                                      const RowExplosionParticleEffect& rowExplosionParticleEffect,
                                      const FlyingBlocksAnimation& flyingBlocksAnimation,
                                      const SlidingTextAnimation& slidingTextAnimation,
-                                     const BlastRadiusAnimation& blastRadiusAnimation,
                                      const ScrollController& scrollController,
                                      const GameHud& hud,
                                      const GameViewControllers& gameViewControllers,
@@ -66,7 +64,6 @@ GameSceneRenderer::GameSceneRenderer(Pht::IEngine& engine,
     mRowExplosionParticleEffect {rowExplosionParticleEffect},
     mFlyingBlocksAnimation {flyingBlocksAnimation},
     mSlidingTextAnimation {slidingTextAnimation},
-    mBlastRadiusAnimation {blastRadiusAnimation},
     mScrollController {scrollController},
     mHud {hud},
     mGameViewControllers {gameViewControllers},
@@ -85,12 +82,6 @@ void GameSceneRenderer::Render() {
     mEngine.GetRenderer().RenderScene(*scene);
 
     mEngineRenderer.SetProjectionMode(Pht::ProjectionMode::Orthographic);
-    mEngineRenderer.SetScissorBox(mScene.GetScissorBoxLowerLeft(), mScene.GetScissorBoxSize());
-    mEngineRenderer.SetScissorTest(true);
-    
-    RenderBlastRadiusAnimation();
-    
-    mEngineRenderer.SetScissorTest(false);
     
     RenderExplosion();
     RenderRowExplosion();
@@ -447,12 +438,6 @@ void GameSceneRenderer::RenderClickableGhostPieces(const FallingPiece& fallingPi
                 RenderPieceBlocks(pieceGrid, ghostPieceFieldPos, isTransparent, pool);
             }
         }
-    }
-}
-
-void GameSceneRenderer::RenderBlastRadiusAnimation() {
-    if (auto* sceneObject {mBlastRadiusAnimation.GetSceneObject()}) {
-        mEngineRenderer.RenderSceneObject(*sceneObject);
     }
 }
 

@@ -46,6 +46,11 @@ namespace BlocksGame {
             assert(mPieceDropEffectsContainer);
             return *mPieceDropEffectsContainer;
         }
+
+        Pht::SceneObject& GetFieldBlocksContainer() {
+            assert(mFieldBlocksContainer);
+            return *mFieldBlocksContainer;
+        }
         
         SceneObjectPool& GetFieldBlocks() {
             assert(mFieldBlocks);
