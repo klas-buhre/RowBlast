@@ -19,7 +19,9 @@ namespace BlocksGame {
     struct RemovedSubCell {
         Pht::IVec2 mPosition;
         Rotation mRotation;
-        const Pht::RenderableObject* mRenderable {nullptr};
+        BlockRenderableKind mRenderableKind {BlockRenderableKind::None};
+        BlockColor mColor;
+        bool mIsLevel {false};
     };
     
     enum class IsCollision {

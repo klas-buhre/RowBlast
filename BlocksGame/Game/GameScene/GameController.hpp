@@ -132,12 +132,12 @@ namespace BlocksGame {
         RowExplosionParticleEffect mRowExplosionParticleEffect;
         PieceDropParticleEffect mPieceDropParticleEffect;
         BlastRadiusAnimation mBlastRadiusAnimation;
-        FlyingBlocksAnimation mFlyingBlocksAnimation;
         ClearLastBlocksAnimation mClearLastBlocksAnimation;
         GameLogic mGameLogic;
         FallingPieceAnimation& mFallingPieceAnimation;
         PieceResources mPieceResources;
         LevelResources mLevelResources;
+        FlyingBlocksAnimation mFlyingBlocksAnimation;
         BlueprintSlotsFilledAnimation mBlueprintSlotsFilledAnimation;
         GameHud mHud;
         GameSceneRenderer mRenderer;

@@ -1,51 +1,61 @@
 #ifndef FlyingBlocksAnimation_hpp
 #define FlyingBlocksAnimation_hpp
 
+#include <vector>
+#include <memory>
+
 // Engine includes.
 #include "Vector.hpp"
 #include "StaticVector.hpp"
+#include "SceneObject.hpp"
 
 // Game includes.
 #include "Field.hpp"
 
 namespace Pht {
     class IEngine;
-    class RenderableObject;
 }
 
 namespace BlocksGame {
     class GameScene;
+    class LevelResources;
+    class PieceResources;
 
     class FlyingBlocksAnimation {
     public:
-        struct RigidBody {
-            Pht::Vec3 mPosition;
+        struct FlyingBlock {
             Pht::Vec3 mVelocity;
-            Pht::Vec3 mOrientation;
             Pht::Vec3 mAngularVelocity;
-            float mMass {0.0f};
-            const Pht::RenderableObject* mRenderable {nullptr};
+            Pht::SceneObject* mSceneObject {nullptr};
         };
 
-        using RigidBodies = Pht::StaticVector<RigidBody, Field::maxNumRows * Field::maxNumColumns>;
-
-        explicit FlyingBlocksAnimation(const GameScene& scene);
+        FlyingBlocksAnimation(GameScene& scene,
+                              const LevelResources& levelResources,
+                              const PieceResources& pieceResources);
         
+        void Reset();
         void Update(float dt);
         void AddBlockRows(const Field::RemovedSubCells& subCells);
         void AddBlocks(const Field::RemovedSubCells& subCells, const Pht::IVec2& detonationPos);
 
-        const RigidBodies& GetRigidBodies() const {
-            return mBodies;
-        }
-            
     private:
         Pht::Vec3 CalculateBlockInitialPosition(const RemovedSubCell& subCell);
+        Pht::RenderableObject& GetBlockRenderableObject(const RemovedSubCell& subCell);
+        Pht::SceneObject& AccuireSceneObject();
+        void ReleaseSceneObject(Pht::SceneObject& sceneObject);
         
-        const GameScene& mScene;
-        RigidBodies mBodies;
+        static constexpr int maxNumBlockSceneObjects {Field::maxNumRows * Field::maxNumColumns};
+        
+        using FlyingBlocks = Pht::StaticVector<FlyingBlock, maxNumBlockSceneObjects>;
+        using FreeSceneObjects = Pht::StaticVector<Pht::SceneObject*, maxNumBlockSceneObjects>;
+        
+        GameScene& mScene;
+        const LevelResources& mLevelResources;
+        const PieceResources& mPieceResources;
+        FlyingBlocks mFlyingBlocks;
+        std::vector<std::unique_ptr<Pht::SceneObject>> mSceneObjects;
+        FreeSceneObjects mFreeSceneObjects;
     };
 }
 
 #endif
-

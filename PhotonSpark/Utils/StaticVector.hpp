@@ -12,6 +12,11 @@ namespace Pht {
             assert(mSize + 1 <= Capacity);
             mData[mSize++] = element;
         }
+        
+        void PopBack() {
+            --mSize;
+            assert(mSize >= 0);
+        }
 
         // Warning! The destructor on the erased element is not called. Only store store POD types.
         void Erase(int index) {

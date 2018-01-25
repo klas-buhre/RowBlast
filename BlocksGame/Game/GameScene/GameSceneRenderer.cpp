@@ -1,7 +1,5 @@
 #include "GameSceneRenderer.hpp"
 
-#include <array>
-
 // Engine includes.
 #include "IEngine.hpp"
 #include "IRenderer.hpp"
@@ -16,7 +14,6 @@
 #include "GameScene.hpp"
 #include "GameHud.hpp"
 #include "GameViewControllers.hpp"
-#include "FlyingBlocksAnimation.hpp"
 #include "FlashingBlocksAnimation.hpp"
 #include "SlidingTextAnimation.hpp"
 #include "SettingsMenuController.hpp"
@@ -35,7 +32,6 @@ GameSceneRenderer::GameSceneRenderer(Pht::IEngine& engine,
                                      GameScene& scene,
                                      const Field& field,
                                      const GameLogic& gameLogic,
-                                     const FlyingBlocksAnimation& flyingBlocksAnimation,
                                      const SlidingTextAnimation& slidingTextAnimation,
                                      const ScrollController& scrollController,
                                      const GameHud& hud,
@@ -47,7 +43,6 @@ GameSceneRenderer::GameSceneRenderer(Pht::IEngine& engine,
     mScene {scene},
     mField {field},
     mGameLogic {gameLogic},
-    mFlyingBlocksAnimation {flyingBlocksAnimation},
     mSlidingTextAnimation {slidingTextAnimation},
     mScrollController {scrollController},
     mHud {hud},
@@ -68,7 +63,6 @@ void GameSceneRenderer::Render() {
 
     mEngineRenderer.SetProjectionMode(Pht::ProjectionMode::Orthographic);
     
-    RenderFlyingBlocks();
     RenderSlidingText();
     RenderHud();
     RenderGameViews();
@@ -421,27 +415,6 @@ void GameSceneRenderer::RenderClickableGhostPieces(const FallingPiece& fallingPi
                 RenderPieceBlocks(pieceGrid, ghostPieceFieldPos, isTransparent, pool);
             }
         }
-    }
-}
-
-void GameSceneRenderer::RenderFlyingBlocks() {
-    auto& bodies {mFlyingBlocksAnimation.GetRigidBodies()};
-
-    for (auto i {0}; i < bodies.Size(); ++i) {
-        auto& body {bodies.At(i)};
-        
-        auto rotationMatrix {
-            Pht::Mat4::RotateX(body.mOrientation.x) *
-            Pht::Mat4::RotateY(body.mOrientation.y) *
-            Pht::Mat4::RotateZ(body.mOrientation.z)
-        };
-        
-        auto matrix {
-            rotationMatrix *
-            Pht::Mat4::Translate(body.mPosition.x, body.mPosition.y, body.mPosition.z)
-        };
-        
-        mEngineRenderer.Render(*body.mRenderable, matrix);
     }
 }
 

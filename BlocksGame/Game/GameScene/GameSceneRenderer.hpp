@@ -21,7 +21,6 @@ namespace BlocksGame {
     class ScrollController;
     class GameHud;
     class GameViewControllers;
-    class FlyingBlocksAnimation;
     class SlidingTextAnimation;
     class SubCell;
     class Piece;
@@ -36,7 +35,6 @@ namespace BlocksGame {
                           GameScene& scene,
                           const Field& field,
                           const GameLogic& gameLogic,
-                          const FlyingBlocksAnimation& flyingBlocksAnimation,
                           const SlidingTextAnimation& slidingTextAnimation,
                           const ScrollController& scrollController,
                           const GameHud& hud,
@@ -90,7 +88,6 @@ namespace BlocksGame {
         GameScene& mScene;
         const Field& mField;
         const GameLogic& mGameLogic;
-        const FlyingBlocksAnimation& mFlyingBlocksAnimation;
         const SlidingTextAnimation& mSlidingTextAnimation;
         const ScrollController& mScrollController;
         const GameHud& mHud;

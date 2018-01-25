@@ -1146,7 +1146,9 @@ void Field::SaveSubCellAndCancelFill(Field::RemovedSubCells& removedSubCells,
                 static_cast<int>(position.y)
             },
             .mRotation = subCell.mRotation,
-            .mRenderable = subCell.mRenderableObject
+            .mRenderableKind = subCell.mBlockRenderableKind,
+            .mColor = subCell.mColor,
+            .mIsLevel = subCell.mIsLevel
         };
         
         removedSubCells.PushBack(removedSubCell);

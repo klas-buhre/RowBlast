@@ -28,7 +28,8 @@ namespace {
         FieldBlueprintSlots,
         FieldPieceDropEffects,
         FieldBlocksAndFallingPiece,
-        Effects
+        Effects,
+        FlyingBlocks
     };
 
     const std::vector<CubePathVolume> floatingCubePaths {
@@ -86,8 +87,7 @@ void GameScene::Reset(const Level& level, const LevelResources& levelResources) 
     CreateFieldBlocksContainer();
     CreateSceneObjectPools(level);
     CreateEffectsContainer();
-    
-    mScissorBoxSize = Pht::Vec2 {mFieldWidth + fieldPadding, 19.0f * mCellSize};
+    CreateFlyingBlocksContainer();
     
     UpdateCameraPositionAndScissorBox();
     
@@ -117,6 +117,10 @@ void GameScene::CreateRenderPasses() {
     Pht::RenderPass effectsRenderPass {static_cast<int>(Layer::Effects)};
     effectsRenderPass.SetProjectionMode(Pht::ProjectionMode::Orthographic);
     mScene->AddRenderPass(effectsRenderPass);
+    
+    Pht::RenderPass flyingBlocksRenderPass {static_cast<int>(Layer::FlyingBlocks)};
+    flyingBlocksRenderPass.SetProjectionMode(Pht::ProjectionMode::Orthographic);
+    mScene->AddRenderPass(flyingBlocksRenderPass);
 }
 
 void GameScene::CreateLightAndCamera() {
@@ -257,6 +261,12 @@ void GameScene::CreateEffectsContainer() {
     mFieldContainer->AddChild(*mEffectsContainer);
 }
 
+void GameScene::CreateFlyingBlocksContainer() {
+    mFlyingBlocksContainer = &mScene->CreateSceneObject();
+    mFlyingBlocksContainer->SetLayer(static_cast<int>(Layer::FlyingBlocks));
+    mScene->GetRoot().AddChild(*mFlyingBlocksContainer);
+}
+
 void GameScene::Update() {
     mFloatingCubes->Update();
     
@@ -280,13 +290,14 @@ void GameScene::UpdateCameraPositionAndScissorBox() {
     Pht::Vec3 up {0.0f, 1.0f, 0.0f};
     mCamera->SetTarget(target, up);
     
-    mScissorBoxLowerLeft = Pht::Vec2 {
+    Pht::Vec2 scissorBoxLowerLeft {
         mFieldPosition.x - (mFieldWidth + fieldPadding) / 2.0f,
         cameraYPosition - renderer.GetOrthographicFrustumSize().y / 2.0f +
         lowerClipAreaHeightInCells * mCellSize
     };
     
-    Pht::ScissorBox scissorBox {mScissorBoxLowerLeft, mScissorBoxSize};
+    Pht::Vec2 scissorBoxSize {mFieldWidth + fieldPadding, 19.0f * mCellSize};
+    Pht::ScissorBox scissorBox {scissorBoxLowerLeft, scissorBoxSize};
     
     SetScissorBox(scissorBox, static_cast<int>(Layer::FieldQuad));
     SetScissorBox(scissorBox, static_cast<int>(Layer::FieldBlueprintSlots));

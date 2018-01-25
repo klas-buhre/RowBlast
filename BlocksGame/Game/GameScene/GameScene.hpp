@@ -57,6 +57,11 @@ namespace BlocksGame {
             return *mEffectsContainer;
         }
 
+        Pht::SceneObject& GetFlyingBlocksContainer() {
+            assert(mFlyingBlocksContainer);
+            return *mFlyingBlocksContainer;
+        }
+
         SceneObjectPool& GetFieldBlocks() {
             assert(mFieldBlocks);
             return *mFieldBlocks;
@@ -100,22 +105,10 @@ namespace BlocksGame {
             return mBlueprintAnimationZ;
         }
 
-        float GetBlueprintZ() const {
-            return mBlueprintZ;
-        }
-        
         const Pht::Vec2& GetFieldLoweLeft() const {
             return mFieldLoweLeft;
         }
         
-        const Pht::Vec2& GetScissorBoxLowerLeft() const {
-            return mScissorBoxLowerLeft;
-        }
-
-        const Pht::Vec2& GetScissorBoxSize() const {
-            return mScissorBoxSize;
-        }
-       
         float GetGhostPieceOpacity() const {
             return mGhostPieceOpacity;
         }
@@ -135,6 +128,7 @@ namespace BlocksGame {
         void CreateFieldBlocksContainer();
         void CreateSceneObjectPools(const Level& level);
         void CreateEffectsContainer();
+        void CreateFlyingBlocksContainer();
         void SetScissorBox(const Pht::ScissorBox& scissorBox, int layer);
         
         Pht::IEngine& mEngine;
@@ -150,6 +144,7 @@ namespace BlocksGame {
         Pht::SceneObject* mPieceDropEffectsContainer {nullptr};
         Pht::SceneObject* mFieldBlocksContainer {nullptr};
         Pht::SceneObject* mEffectsContainer {nullptr};
+        Pht::SceneObject* mFlyingBlocksContainer {nullptr};
         Pht::Vec3 mLightDirection;
         const Pht::Vec3 mFieldPosition;
         const float mCellSize {1.25f};
@@ -161,8 +156,6 @@ namespace BlocksGame {
         float mFieldWidth {0.0f};
         float mFieldHeight {0.0f};
         Pht::Vec2 mFieldLoweLeft;
-        Pht::Vec2 mScissorBoxLowerLeft;
-        Pht::Vec2 mScissorBoxSize;
         const float mGhostPieceOpacity {0.5f};
     };
 }
