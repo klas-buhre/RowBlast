@@ -27,7 +27,7 @@ namespace BlocksGame {
         
         GameMenuController(Pht::IEngine& engine, const CommonResources& commonResources);
         
-        void Reset(SlidingMenuAnimation::UpdateFade updateFade, bool isUndoMovePossible);
+        void Init(SlidingMenuAnimation::UpdateFade updateFade, bool isUndoMovePossible);
         Result Update();
         
         const Pht::GuiView& GetView() const {

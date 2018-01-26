@@ -55,7 +55,7 @@ namespace BlocksGame {
     public:
         Field();
         
-        void Reset(const Level& level);
+        void Init(const Level& level);
         void RestorePreviousState();
         void OnEndOfFrame();
         void SetChanged();

@@ -31,7 +31,7 @@ namespace BlocksGame {
                   const ScrollController& scrollController,
                   const CommonResources& commonResources);
         
-        void Reset(const Level& level, const LevelResources& levelResources);
+        void Init(const Level& level, const LevelResources& levelResources);
         void Update();
         const Pht::Material& GetGoldMaterial() const;
         const Pht::Material& GetRedMaterial() const;
@@ -129,6 +129,7 @@ namespace BlocksGame {
         void CreateSceneObjectPools(const Level& level);
         void CreateEffectsContainer();
         void CreateFlyingBlocksContainer();
+        void CreateHudContainer();
         void SetScissorBox(const Pht::ScissorBox& scissorBox, int layer);
         
         Pht::IEngine& mEngine;
@@ -145,6 +146,7 @@ namespace BlocksGame {
         Pht::SceneObject* mFieldBlocksContainer {nullptr};
         Pht::SceneObject* mEffectsContainer {nullptr};
         Pht::SceneObject* mFlyingBlocksContainer {nullptr};
+        Pht::SceneObject* mHudContainer {nullptr};
         Pht::Vec3 mLightDirection;
         const Pht::Vec3 mFieldPosition;
         const float mCellSize {1.25f};

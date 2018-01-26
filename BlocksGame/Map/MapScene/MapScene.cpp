@@ -127,7 +127,7 @@ MapScene::MapScene(Pht::IEngine& engine,
     mFont {"ethnocentric_rg_it.ttf", engine.GetRenderer().GetAdjustedNumPixels(46)},
     mHudFont {"HussarBoldWeb.otf", engine.GetRenderer().GetAdjustedNumPixels(22)} {}
 
-void MapScene::Reset() {
+void MapScene::Init() {
     CreateScene(GetChapter(1));
 }
 

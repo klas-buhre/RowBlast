@@ -23,7 +23,7 @@ ScrollController::ScrollController(Pht::IEngine& engine, Field& field) :
     mEngine {engine},
     mField {field} {}
 
-void ScrollController::Reset(Level::Objective levelObjective) {
+void ScrollController::Init(Level::Objective levelObjective) {
     mLevelObjective = levelObjective;
     mState = State::BeforeLevelOverviewScroll;
     mWaitedTime = 0.0f;

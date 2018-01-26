@@ -15,15 +15,15 @@ GameMenuController::GameMenuController(Pht::IEngine& engine,
     mView {engine, commonResources},
     mSlidingMenuAnimation {engine, mView, 0.6f} {}
 
-void GameMenuController::Reset(SlidingMenuAnimation::UpdateFade updateFade,
-                               bool isUndoMovePossible) {
+void GameMenuController::Init(SlidingMenuAnimation::UpdateFade updateFade,
+                              bool isUndoMovePossible) {
     auto slideInDirection {
         updateFade == SlidingMenuAnimation::UpdateFade::Yes ?
             SlidingMenuAnimation::SlideDirection::Up :
             SlidingMenuAnimation::SlideDirection::Down
     };
     
-    mSlidingMenuAnimation.Reset(updateFade, slideInDirection);
+    mSlidingMenuAnimation.Init(updateFade, slideInDirection);
     
     if (isUndoMovePossible) {
         mView.EnableUndoButton();

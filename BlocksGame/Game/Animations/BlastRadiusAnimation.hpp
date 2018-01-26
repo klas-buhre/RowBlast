@@ -19,7 +19,7 @@ namespace BlocksGame {
     public:
         BlastRadiusAnimation(Pht::IEngine& engine, GameScene& scene);
     
-        void Reset();
+        void Init();
         void Start();
         void Stop();
         void SetPosition(const Pht::Vec2& position);

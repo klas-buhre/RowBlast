@@ -29,7 +29,7 @@ namespace BlocksGame {
         
         ScrollController(Pht::IEngine& engine, Field& field);
         
-        void Reset(Level::Objective levelObjective);
+        void Init(Level::Objective levelObjective);
         State Update();
         int CalculatePreferredLowestVisibleRow() const;
         bool IsScrolling() const;

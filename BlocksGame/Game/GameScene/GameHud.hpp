@@ -34,7 +34,7 @@ namespace BlocksGame {
         void OnSwitchButtonDown() override;
         void OnSwitchButtonUp() override;
         
-        void Reset(const Level& level);
+        void Init(const Level& level);
         void Update();
         const Pht::RenderableObject* GetGrayBlock() const;
         const Pht::RenderableObject* GetBlueprintSlot() const;

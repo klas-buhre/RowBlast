@@ -18,9 +18,9 @@ SettingsMenuController::SettingsMenuController(Pht::IEngine& engine,
     mView {engine, commonResources},
     mSlidingMenuAnimation {engine, mView, 0.6f} {}
 
-void SettingsMenuController::Reset(SlidingMenuAnimation::UpdateFade updateFade) {
+void SettingsMenuController::Init(SlidingMenuAnimation::UpdateFade updateFade) {
     mUpdateFade = updateFade;
-    mSlidingMenuAnimation.Reset(updateFade);
+    mSlidingMenuAnimation.Init(updateFade);
 }
 
 SettingsMenuController::Result SettingsMenuController::Update() {

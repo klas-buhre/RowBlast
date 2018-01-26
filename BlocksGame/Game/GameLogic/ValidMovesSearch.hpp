@@ -72,7 +72,7 @@ namespace BlocksGame {
     public:
         explicit ValidMovesSearch(Field& field);
         
-        void Reset();
+        void Init();
         void FindValidMoves(ValidMoves& validMoves, MovingPiece piece);
         
     private:

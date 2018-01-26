@@ -22,7 +22,7 @@ GestureInputHandler::GestureInputHandler(IGameLogic& gameLogic, FallingPiece& fa
     mSwipeUpRecognizer {Pht::SwipeDirection::Up, inputUnitsPerColumn},
     mSwipeDownRecognizer {Pht::SwipeDirection::Down, inputUnitsPerColumn} {}
 
-void GestureInputHandler::Reset(const Level& level) {
+void GestureInputHandler::Init(const Level& level) {
     mLevel = &level;
 }
 

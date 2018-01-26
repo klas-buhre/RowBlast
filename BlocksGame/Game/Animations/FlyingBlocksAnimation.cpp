@@ -33,7 +33,7 @@ FlyingBlocksAnimation::FlyingBlocksAnimation(GameScene& scene,
     }
 }
 
-void FlyingBlocksAnimation::Reset() {
+void FlyingBlocksAnimation::Init() {
     mFlyingBlocks.Clear();
     mFreeSceneObjects.Clear();
     

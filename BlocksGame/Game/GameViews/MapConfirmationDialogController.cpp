@@ -14,8 +14,8 @@ MapConfirmationDialogController(Pht::IEngine& engine, const CommonResources& com
     mView {engine, commonResources},
     mSlidingMenuAnimation {engine, mView, 0.6f} {}
 
-void MapConfirmationDialogController::Reset() {
-    mSlidingMenuAnimation.Reset(SlidingMenuAnimation::UpdateFade::No);
+void MapConfirmationDialogController::Init() {
+    mSlidingMenuAnimation.Init(SlidingMenuAnimation::UpdateFade::No);
 }
 
 MapConfirmationDialogController::Result MapConfirmationDialogController::Update() {

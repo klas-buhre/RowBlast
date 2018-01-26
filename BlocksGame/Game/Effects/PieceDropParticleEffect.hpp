@@ -23,7 +23,7 @@ namespace BlocksGame {
     public:
         PieceDropParticleEffect(Pht::IEngine& engine, GameScene& scene);
         
-        void Reset();
+        void Init();
         void StartEffect(const FallingPiece& fallingPiece);
         void Update(float dt);
         

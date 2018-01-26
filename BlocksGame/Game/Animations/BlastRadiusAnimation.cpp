@@ -114,7 +114,7 @@ BlastRadiusAnimation::BlastRadiusAnimation(Pht::IEngine& engine, GameScene& scen
                                                   mSceneResources);
 }
 
-void BlastRadiusAnimation::Reset() {
+void BlastRadiusAnimation::Init() {
     mScene.GetFieldBlocksContainer().AddChild(*mSceneObject);
     Stop();
 }

@@ -74,10 +74,10 @@ GameLogic::GameLogic(Pht::IEngine& engine,
     mClickInputHandler {engine, field, gameScene, *this},
     mFallingPiece {&mFallingPieceStorage} {}
 
-void GameLogic::Reset(const Level& level) {
+void GameLogic::Init(const Level& level) {
     mLevel = &level;
-    mGestureInputHandler.Reset(level);
-    mClickInputHandler.Reset(level);
+    mGestureInputHandler.Init(level);
+    mClickInputHandler.Init(level);
     
     if (mLevel->GetSpeed() > 0.0f) {
         mLandingNoMovementDuration = landingNoMovementDurationFalling;
@@ -98,7 +98,7 @@ void GameLogic::Reset(const Level& level) {
     
     mCurrentMove = MoveData {};
     auto& nextPieceGenerator {mCurrentMove.mNextPieceGenerator};
-    nextPieceGenerator.Reset(mLevel->GetPieceTypes());
+    nextPieceGenerator.Init(mLevel->GetPieceTypes());
     mCurrentMove.mSelectablePieces[1] = &nextPieceGenerator.GetNext();
     mCurrentMove.mSelectablePieces[0] = &nextPieceGenerator.GetNext();
     mCurrentMoveInitialState = mCurrentMove;
@@ -151,7 +151,7 @@ GameLogic::Result GameLogic::InitFallingPiece() {
     mFallingPiece = &mFallingPieceStorage;
     CalculatePieceType();
     auto initPosition {CalculateFallingPieceInitPos()};
-    mFallingPiece->Reset(*mCurrentMove.mPieceType, initPosition, mLevel->GetSpeed());
+    mFallingPiece->Init(*mCurrentMove.mPieceType, initPosition, mLevel->GetSpeed());
     
     ManageMoveHistory();
     

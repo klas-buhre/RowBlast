@@ -28,7 +28,7 @@ namespace BlocksGame {
     public:
         MapScene(Pht::IEngine& engine, const CommonResources& commonResources, UserData& userData);
         
-        void Reset();
+        void Init();
         void Update();
         void SetCameraXPosition(float xPosition);
         float GetCameraXPosition() const;

@@ -21,6 +21,13 @@ namespace BlocksGame {
             Inactive
         };
         
+        enum class Message {
+            ClearBlocks,
+            BlocksCleared,
+            FillSlots,
+            SlotsFilled
+        };
+        
         struct TextLine {
             Pht::Vec2 mPosition;
             const std::string mText;
@@ -33,7 +40,8 @@ namespace BlocksGame {
         
         explicit SlidingTextAnimation(Pht::IEngine& engine);
         
-        void Start(const Text& text);
+        
+        void Start(Message message);
         State Update();
         
         State GetState() const {
@@ -51,12 +59,7 @@ namespace BlocksGame {
         const Pht::TextProperties& GetTextProperties() const {
             return mTextProperties;
         }
-        
-        static const Text mClearBlocks;
-        static const Text mBlocksCleared;
-        static const Text mFillSlots;
-        static const Text mSlotsFilled;
-        
+                
     private:
         void StartSlideOut();
         void UpdateInSlidingInState();

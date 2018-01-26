@@ -141,7 +141,7 @@ Field::Field() {
     }
 }
 
-void Field::Reset(const Level& level) {
+void Field::Init(const Level& level) {
     mBlueprintGrid = nullptr;
     mNumColumns = level.GetNumColumns();
     mNumRows = level.GetNumRows();

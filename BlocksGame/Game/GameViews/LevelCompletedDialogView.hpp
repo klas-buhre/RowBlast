@@ -23,7 +23,7 @@ namespace BlocksGame {
     public:
         LevelCompletedDialogView(Pht::IEngine& engine, const CommonResources& commonResources);
         
-        void Reset();
+        void Init();
         void Update();
         void SetNumStars(int numStars);
         

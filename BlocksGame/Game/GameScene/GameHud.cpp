@@ -203,7 +203,7 @@ void GameHud::OnSwitchButtonUp() {
     mIsSwitchButtonDown = false;
 }
 
-void GameHud::Reset(const Level& level) {
+void GameHud::Init(const Level& level) {
     mLevelObjective = level.GetObjective();
 }
 

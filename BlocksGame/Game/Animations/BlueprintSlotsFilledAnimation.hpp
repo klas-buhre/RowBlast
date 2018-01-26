@@ -22,7 +22,7 @@ namespace BlocksGame {
                                       GameScene& scene,
                                       const LevelResources& levelResources);
     
-        void Reset();
+        void Init();
         void Update(float dt);
         
     private:

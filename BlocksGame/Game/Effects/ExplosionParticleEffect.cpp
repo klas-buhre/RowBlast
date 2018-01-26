@@ -89,7 +89,7 @@ void ExplosionParticleEffect::InitOuterEffect(Pht::IEngine& engine) {
                                                                           Pht::RenderMode::Points);
 }
 
-void ExplosionParticleEffect::Reset() {
+void ExplosionParticleEffect::Init() {
     auto& effectsContainer {mScene.GetEffectsContainer()};
     effectsContainer.AddChild(*mInnerParticleEffect);
     effectsContainer.AddChild(*mOuterParticleEffect);

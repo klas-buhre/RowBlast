@@ -43,7 +43,7 @@ namespace BlocksGame {
                           const GameScene& gameScene,
                           IGameLogic& gameLogic);
         
-        void Reset(const Level& level);
+        void Init(const Level& level);
         void CalculateMoves(const FallingPiece& fallingPiece);
         void UpdateMoves(const FallingPiece& fallingPiece);
         void CreateNewMoveAlternativeSet();

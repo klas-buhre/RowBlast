@@ -15,7 +15,7 @@ namespace BlocksGame {
     
     class NextPieceGenerator {
     public:
-        void Reset(const std::vector<const Piece*>& pieceTypes);
+        void Init(const std::vector<const Piece*>& pieceTypes);
         const Piece& GetNext();
         
         const TwoPieces& GetNext2Pieces() const {

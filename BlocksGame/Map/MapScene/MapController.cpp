@@ -38,8 +38,8 @@ MapController::MapController(Pht::IEngine& engine,
     mMapViewControllers {engine, commonViewControllers},
     mRenderer {engine, mMapViewControllers} {}
 
-void MapController::Reset() {
-    mScene.Reset();
+void MapController::Init() {
+    mScene.Init();
 }
 
 MapController::Command MapController::Update() {
@@ -175,8 +175,8 @@ MapController::Command MapController::HandleLevelClick(int level) {
     if (mUserData.GetLifeManager().GetNumLives() == 0) {
         mState = State::NoLivesDialog;
         mMapViewControllers.SetActiveController(MapViewControllers::NoLivesDialog);
-        mMapViewControllers.GetNoLivesDialogController().Reset(SlidingMenuAnimation::UpdateFade::Yes,
-                                                               true);
+        mMapViewControllers.GetNoLivesDialogController().Init(SlidingMenuAnimation::UpdateFade::Yes,
+                                                              true);
         return Command::None;
     }
     
@@ -233,6 +233,6 @@ void MapController::UpdateCamera() {
 
 void MapController::GoToSettingsMenuState() {
     mMapViewControllers.SetActiveController(MapViewControllers::SettingsMenu);
-    mMapViewControllers.GetSettingsMenuController().Reset(SlidingMenuAnimation::UpdateFade::Yes);
+    mMapViewControllers.GetSettingsMenuController().Init(SlidingMenuAnimation::UpdateFade::Yes);
     mState = State::SettingsMenu;
 }

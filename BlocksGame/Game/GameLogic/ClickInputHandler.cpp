@@ -50,11 +50,11 @@ ClickInputHandler::ClickInputHandler(Pht::IEngine& engine,
     }
 }
 
-void ClickInputHandler::Reset(const Level& level) {
+void ClickInputHandler::Init(const Level& level) {
     mLevel = &level;
     mState = State::Inactive;
     
-    mValidMovesSearch.Reset();
+    mValidMovesSearch.Init();
     
     mNumClickGridRows = mField.GetNumRows() * 2 + 2;
     mNumClickGridColumns = mField.GetNumColumns() * 2 + 2;

@@ -55,7 +55,7 @@ void ValidMoves::Clear() {
 ValidMovesSearch::ValidMovesSearch(Field& field) :
     mField {field} {}
 
-void ValidMovesSearch::Reset() {
+void ValidMovesSearch::Init() {
     auto numRows {mField.GetNumRows()};
     auto numColumns {mField.GetNumColumns()};
     

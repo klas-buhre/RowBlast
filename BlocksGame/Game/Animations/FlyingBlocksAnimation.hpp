@@ -33,7 +33,7 @@ namespace BlocksGame {
                               const LevelResources& levelResources,
                               const PieceResources& pieceResources);
         
-        void Reset();
+        void Init();
         void Update(float dt);
         void AddBlockRows(const Field::RemovedSubCells& subCells);
         void AddBlocks(const Field::RemovedSubCells& subCells, const Pht::IVec2& detonationPos);

@@ -23,7 +23,7 @@ namespace BlocksGame {
         
         RowExplosionParticleEffect(Pht::IEngine& engine, GameScene& scene);
         
-        void Reset();
+        void Init();
         void StartExplosion(const Pht::Vec2& position);
         State Update(float dt);
         

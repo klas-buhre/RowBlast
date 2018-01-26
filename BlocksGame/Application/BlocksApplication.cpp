@@ -315,7 +315,7 @@ void BlocksApplication::BeginFadeToGame(int level) {
 
 void BlocksApplication::StartMap() {
     mState = State::MapScene;
-    mMapController.Reset();
+    mMapController.Init();
 }
 
 void BlocksApplication::StartGame() {

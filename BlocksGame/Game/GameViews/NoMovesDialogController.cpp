@@ -14,8 +14,8 @@ NoMovesDialogController::NoMovesDialogController(Pht::IEngine& engine,
     mView {engine, commonResources},
     mSlidingMenuAnimation {engine, mView, 0.6f} {}
 
-void NoMovesDialogController::Reset() {
-    mSlidingMenuAnimation.Reset(SlidingMenuAnimation::UpdateFade::Yes);
+void NoMovesDialogController::Init() {
+    mSlidingMenuAnimation.Init(SlidingMenuAnimation::UpdateFade::Yes);
 }
 
 NoMovesDialogController::Result NoMovesDialogController::Update() {

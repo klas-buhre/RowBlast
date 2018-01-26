@@ -25,7 +25,7 @@ namespace BlocksGame {
         LevelCompletedDialogController(Pht::IEngine& engine,
                                        const CommonResources& commonResources);
         
-        void Reset();
+        void Init();
         Result Update();
         
         const LevelCompletedDialogView& GetView() const {

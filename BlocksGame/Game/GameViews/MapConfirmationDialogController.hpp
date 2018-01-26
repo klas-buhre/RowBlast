@@ -24,7 +24,7 @@ namespace BlocksGame {
         MapConfirmationDialogController(Pht::IEngine& engine,
                                         const CommonResources& commonResources);
         
-        void Reset();
+        void Init();
         Result Update();
         
         const Pht::GuiView& GetView() const {

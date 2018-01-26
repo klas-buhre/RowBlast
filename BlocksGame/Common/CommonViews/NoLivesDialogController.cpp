@@ -17,9 +17,9 @@ NoLivesDialogController::NoLivesDialogController(Pht::IEngine& engine,
     mView {engine, commonResources, userData},
     mSlidingMenuAnimation {engine, mView, 0.6f} {}
 
-void NoLivesDialogController::Reset(SlidingMenuAnimation::UpdateFade updateFade,
-                                    bool shouldSlideOut) {
-    mSlidingMenuAnimation.Reset(updateFade);
+void NoLivesDialogController::Init(SlidingMenuAnimation::UpdateFade updateFade,
+                                   bool shouldSlideOut) {
+    mSlidingMenuAnimation.Init(updateFade);
     mShouldSlideOut = shouldSlideOut;
 }
 

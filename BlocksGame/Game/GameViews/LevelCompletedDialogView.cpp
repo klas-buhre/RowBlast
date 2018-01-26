@@ -75,7 +75,7 @@ void LevelCompletedDialogView::LoadStar(const CommonResources& commonResources) 
         Pht::ObjMesh {"star_1428.obj", 0.26f}, commonResources.GetMaterials().GetGoldMaterial());
 }
 
-void LevelCompletedDialogView::Reset() {
+void LevelCompletedDialogView::Init() {
     mStarAngle = 0.0f;
 }
 

@@ -4,7 +4,7 @@
 
 using namespace BlocksGame;
 
-void NextPieceGenerator::Reset(const std::vector<const Piece*>& pieceTypes) {
+void NextPieceGenerator::Init(const std::vector<const Piece*>& pieceTypes) {
     mPieceTypes = &pieceTypes;
     
     GenerateSequence();

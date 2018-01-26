@@ -17,8 +17,8 @@ GameOverDialogController::GameOverDialogController(Pht::IEngine& engine,
     mView {engine, commonResources},
     mSlidingMenuAnimation {engine, mView, 0.6f} {}
 
-void GameOverDialogController::Reset() {
-    mSlidingMenuAnimation.Reset(SlidingMenuAnimation::UpdateFade::Yes);
+void GameOverDialogController::Init() {
+    mSlidingMenuAnimation.Init(SlidingMenuAnimation::UpdateFade::Yes);
 }
 
 GameOverDialogController::Result GameOverDialogController::Update() {

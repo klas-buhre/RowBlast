@@ -42,7 +42,7 @@ namespace BlocksGame {
                       CommonViewControllers& commonViewControllers,
                       UserData& userData);
     
-        void Reset();
+        void Init();
         Command Update();
         void RenderScene();
     

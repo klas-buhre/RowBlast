@@ -41,7 +41,7 @@ BlueprintSlotsFilledAnimation::BlueprintSlotsFilledAnimation(Field& field,
     }
 }
 
-void BlueprintSlotsFilledAnimation::Reset() {
+void BlueprintSlotsFilledAnimation::Init() {
     mNextAvailableSceneObject = 0;
     
     mScene.GetPieceDropEffectsContainer().AddChild(*mContainerSceneObject);

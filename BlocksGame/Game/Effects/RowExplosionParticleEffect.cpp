@@ -40,7 +40,7 @@ RowExplosionParticleEffect::RowExplosionParticleEffect(Pht::IEngine& engine, Gam
                                                                  Pht::RenderMode::Points);
 }
 
-void RowExplosionParticleEffect::Reset() {
+void RowExplosionParticleEffect::Init() {
     mScene.GetEffectsContainer().AddChild(*mScenObject);
 }
 

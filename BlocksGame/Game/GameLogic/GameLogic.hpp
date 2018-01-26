@@ -61,7 +61,7 @@ namespace BlocksGame {
         void StartBlastRadiusAnimation(const Pht::IVec2& position) override;
         void StopBlastRadiusAnimation() override;
         
-        void Reset(const Level& level);
+        void Init(const Level& level);
         Result Update(bool shouldUpdateLogic);
         bool IsUndoMovePossible() const;
         void UndoMove();

@@ -46,7 +46,7 @@ PieceDropParticleEffect::PieceDropParticleEffect(Pht::IEngine& engine, GameScene
     }
 }
 
-void PieceDropParticleEffect::Reset() {
+void PieceDropParticleEffect::Init() {
     mScene.GetPieceDropEffectsContainer().AddChild(*mContainerSceneObject);
 }
 

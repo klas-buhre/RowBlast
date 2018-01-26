@@ -14,39 +14,38 @@ namespace {
     const Pht::Vec2 centerPosition {0.0f, 0.0f};
     constexpr auto textHeight {3.0f};
     constexpr auto alpha {0.88f};
+
+    const std::vector<SlidingTextAnimation::Text> texts {
+        {
+            2.7f,
+            {
+                {Pht::Vec2{-3.1f, 1.0f}, "Clear all"},
+                {Pht::Vec2{-4.0f, -1.0f}, "gray blocks!"}
+            }
+        },
+        {
+            2.7f,
+            {
+                {Pht::Vec2{-4.0f, 1.0f}, "You cleared"},
+                {Pht::Vec2{-3.55f, -1.0f}, "all blocks!"}
+            }
+        },
+        {
+           2.7f,
+            {
+                {Pht::Vec2{-2.5f, 1.0f}, "Fill all"},
+                {Pht::Vec2{-3.5f, -1.0f}, "gray slots!"}
+            }
+        },
+        {
+            2.7f,
+            {
+                {Pht::Vec2{-3.3f, 1.0f}, "You filled"},
+                {Pht::Vec2{-3.05f, -1.0f}, "all slots!"}
+            }
+        }
+    };
 }
-
-const SlidingTextAnimation::Text SlidingTextAnimation::mClearBlocks {
-    2.7f,
-    {
-        {Pht::Vec2{-3.1f, 1.0f}, "Clear all"},
-        {Pht::Vec2{-4.0f, -1.0f}, "gray blocks!"}
-    }
-};
-
-const SlidingTextAnimation::Text SlidingTextAnimation::mBlocksCleared {
-    2.7f,
-    {
-        {Pht::Vec2{-4.0f, 1.0f}, "You cleared"},
-        {Pht::Vec2{-3.55f, -1.0f}, "all blocks!"}
-    }
-};
-
-const SlidingTextAnimation::Text SlidingTextAnimation::mFillSlots {
-    2.7f,
-    {
-        {Pht::Vec2{-2.5f, 1.0f}, "Fill all"},
-        {Pht::Vec2{-3.5f, -1.0f}, "gray slots!"}
-    }
-};
-
-const SlidingTextAnimation::Text SlidingTextAnimation::mSlotsFilled {
-    2.7f,
-    {
-        {Pht::Vec2{-3.3f, 1.0f}, "You filled"},
-        {Pht::Vec2{-3.05f, -1.0f}, "all slots!"}
-    }
-};
 
 SlidingTextAnimation::SlidingTextAnimation(Pht::IEngine& engine) :
     mEngine {engine},
@@ -58,9 +57,9 @@ SlidingTextAnimation::SlidingTextAnimation(Pht::IEngine& engine) :
     mSlideOutFinalPosition = {0.0f, frustumSize.y / 4.0f + textHeight / 2.0f};
 }
 
-void SlidingTextAnimation::Start(const Text& text) {
+void SlidingTextAnimation::Start(Message message) {
     mState = State::SlidingIn;
-    mText = &text;
+    mText = &texts[static_cast<int>(message)];
 
     auto distance = centerPosition - mSlideInStartPosition;
     mVelocity = distance * 2.0f / slideTime;

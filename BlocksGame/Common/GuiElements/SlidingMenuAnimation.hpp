@@ -33,7 +33,7 @@ namespace BlocksGame {
         
         SlidingMenuAnimation(Pht::IEngine& engine, Pht::GuiView& view, float fade);
         
-        void Reset(UpdateFade updateFade, SlideDirection slideInDirection = SlideDirection::Up);
+        void Init(UpdateFade updateFade, SlideDirection slideInDirection = SlideDirection::Up);
         void StartSlideIn();
         void StartSlideOut(UpdateFade updateFade,
                            SlideDirection slideOutDirection = SlideDirection::Down);

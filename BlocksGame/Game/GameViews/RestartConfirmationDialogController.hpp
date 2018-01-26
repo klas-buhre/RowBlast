@@ -26,7 +26,7 @@ namespace BlocksGame {
                                             const CommonResources& commonResources,
                                             const UserData& userData);
         
-        void Reset();
+        void Init();
         Result Update();
         
         const Pht::GuiView& GetView() const {

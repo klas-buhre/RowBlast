@@ -13,7 +13,7 @@ namespace BlocksGame {
     public:
         GestureInputHandler(IGameLogic& gameLogic, FallingPiece& fallingPiece);
         
-        void Reset(const Level& level);
+        void Init(const Level& level);
         void HandleTouch(const Pht::TouchEvent& touchEvent);
         
     private:

@@ -29,7 +29,8 @@ namespace {
         FieldPieceDropEffects,
         FieldBlocksAndFallingPiece,
         Effects,
-        FlyingBlocks
+        FlyingBlocks,
+        Hud
     };
 
     const std::vector<CubePathVolume> floatingCubePaths {
@@ -69,7 +70,7 @@ GameScene::GameScene(Pht::IEngine& engine,
     mLightDirection {1.0f, 1.0f, 0.74f},
     mFieldPosition {0.0f, 0.0f, 0.0f} {}
 
-void GameScene::Reset(const Level& level, const LevelResources& levelResources) {
+void GameScene::Init(const Level& level, const LevelResources& levelResources) {
     auto& sceneManager {mEngine.GetSceneManager()};
     auto scene {sceneManager.CreateScene(Pht::Hash::Fnv1a("gameScene"))};
     mScene = scene.get();
@@ -88,6 +89,7 @@ void GameScene::Reset(const Level& level, const LevelResources& levelResources) 
     CreateSceneObjectPools(level);
     CreateEffectsContainer();
     CreateFlyingBlocksContainer();
+    CreateHudContainer();
     
     UpdateCameraPositionAndScissorBox();
     
@@ -121,6 +123,11 @@ void GameScene::CreateRenderPasses() {
     Pht::RenderPass flyingBlocksRenderPass {static_cast<int>(Layer::FlyingBlocks)};
     flyingBlocksRenderPass.SetProjectionMode(Pht::ProjectionMode::Orthographic);
     mScene->AddRenderPass(flyingBlocksRenderPass);
+
+    Pht::RenderPass hudRenderPass {static_cast<int>(Layer::Hud)};
+    hudRenderPass.SetProjectionMode(Pht::ProjectionMode::Orthographic);
+    hudRenderPass.SetHudMode(true);
+    mScene->AddRenderPass(hudRenderPass);
 }
 
 void GameScene::CreateLightAndCamera() {
@@ -265,6 +272,12 @@ void GameScene::CreateFlyingBlocksContainer() {
     mFlyingBlocksContainer = &mScene->CreateSceneObject();
     mFlyingBlocksContainer->SetLayer(static_cast<int>(Layer::FlyingBlocks));
     mScene->GetRoot().AddChild(*mFlyingBlocksContainer);
+}
+
+void GameScene::CreateHudContainer() {
+    mHudContainer = &mScene->CreateSceneObject();
+    mHudContainer->SetLayer(static_cast<int>(Layer::Hud));
+    mScene->GetRoot().AddChild(*mHudContainer);
 }
 
 void GameScene::Update() {
