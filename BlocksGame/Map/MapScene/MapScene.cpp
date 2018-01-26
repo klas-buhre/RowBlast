@@ -124,8 +124,7 @@ MapScene::MapScene(Pht::IEngine& engine,
         engine.GetSceneManager().CreateRenderableObject(Pht::ObjMesh {"star.obj", 0.05f},
                                                         commonResources.GetMaterials().GetGoldMaterial())
     },
-    mFont {"ethnocentric_rg_it.ttf", engine.GetRenderer().GetAdjustedNumPixels(46)},
-    mHudFont {"HussarBoldWeb.otf", engine.GetRenderer().GetAdjustedNumPixels(22)} {}
+    mFont {"ethnocentric_rg_it.ttf", engine.GetRenderer().GetAdjustedNumPixels(46)} {}
 
 void MapScene::Init() {
     CreateScene(GetChapter(1));
@@ -171,7 +170,7 @@ void MapScene::CreateScene(const Chapter& chapter) {
     
     mHud = std::make_unique<MapHud>(mEngine,
                                     mUserData,
-                                    mHudFont,
+                                    mCommonResources.GetHussarFontSize22(),
                                     *scene,
                                     static_cast<int>(Layer::Hud));
     

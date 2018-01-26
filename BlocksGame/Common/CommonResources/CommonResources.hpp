@@ -19,6 +19,10 @@ namespace BlocksGame {
             return mMaterials;
         }
 
+        const Pht::Font& GetHussarFontSize22() const {
+            return mHussarFontSize22;
+        }
+
         const Pht::Font& GetHussarFontSize27() const {
             return mHussarFontSize27;
         }
@@ -34,6 +38,7 @@ namespace BlocksGame {
         void AddSounds(Pht::IAudio& audio);
         
         Materials mMaterials;
+        Pht::Font mHussarFontSize22;
         Pht::Font mHussarFontSize27;
         Pht::Font mHussarFontSize30;
     };

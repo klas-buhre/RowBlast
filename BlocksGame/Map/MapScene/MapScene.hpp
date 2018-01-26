@@ -54,7 +54,6 @@ namespace BlocksGame {
         MapPin* mPreviousPin {nullptr};
         std::unique_ptr<Pht::RenderableObject> mStarRenderable;
         Pht::Font mFont;
-        Pht::Font mHudFont;
         std::unique_ptr<MapHud> mHud;
     };
 }

@@ -6,8 +6,8 @@
 
 // Engine includes.
 #include "Vector.hpp"
-#include "Font.hpp"
 #include "SceneResources.hpp"
+#include "Font.hpp"
 
 // Game includes.
 #include "GradientRectangle.hpp"
@@ -29,7 +29,8 @@ namespace BlocksGame {
         GameHud(Pht::IEngine& engine,
                 const GameLogic& gameLogic,
                 const LevelResources& levelResources,
-                GameHudController& gameHudController);
+                GameHudController& gameHudController,
+                const Pht::Font& font);
         
         void OnSwitchButtonDown() override;
         void OnSwitchButtonUp() override;
@@ -158,7 +159,6 @@ namespace BlocksGame {
         Pht::Vec2 mNextPiecesPosition;
         Pht::Vec2 mSelectablePiecesPosition;
         PiecePositions mPieceRelativePositions;
-        Pht::Font mFont;
         Pht::Text mProgressText;
         Pht::Text mMovesText;
         Pht::Text mNextText;

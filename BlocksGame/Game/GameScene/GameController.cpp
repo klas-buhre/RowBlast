@@ -8,6 +8,7 @@
 #include "SettingsMenuController.hpp"
 #include "NoLivesDialogController.hpp"
 #include "UserData.hpp"
+#include "CommonResources.hpp"
 
 using namespace BlocksGame;
 
@@ -64,7 +65,13 @@ GameController::GameController(Pht::IEngine& engine,
     mLevelResources {engine, mScene},
     mFlyingBlocksAnimation {mScene, mLevelResources, mPieceResources},
     mBlueprintSlotsFilledAnimation {mField, mScene, mLevelResources},
-    mHud {engine, mGameLogic, mLevelResources, mGameViewControllers.GetGameHudController()},
+    mHud {
+        engine,
+        mGameLogic,
+        mLevelResources,
+        mGameViewControllers.GetGameHudController(),
+        commonResources.GetHussarFontSize22()
+    },
     mRenderer {
         engine,
         mScene,

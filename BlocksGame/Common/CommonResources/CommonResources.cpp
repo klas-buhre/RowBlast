@@ -12,6 +12,7 @@ const std::string CommonResources::mBombSound {"Bomb.wav"};
 
 CommonResources::CommonResources(Pht::IEngine& engine) :
     mMaterials {engine},
+    mHussarFontSize22 {"HussarBoldWeb.otf", engine.GetRenderer().GetAdjustedNumPixels(22)},
     mHussarFontSize27 {"HussarBoldWeb.otf", engine.GetRenderer().GetAdjustedNumPixels(27)},
     mHussarFontSize30 {"HussarBoldWeb.otf", engine.GetRenderer().GetAdjustedNumPixels(35)} {
     
