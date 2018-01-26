@@ -2,16 +2,20 @@
 #define SlidingTextAnimation_hpp
 
 #include <vector>
+#include <memory>
 
 // Engine includes.
 #include "Font.hpp"
 #include "Vector.hpp"
+#include "SceneObject.hpp"
 
 namespace Pht {
     class IEngine;
 }
 
 namespace BlocksGame {
+    class GameScene;
+    
     class SlidingTextAnimation {
     public:
         enum class State {
@@ -28,55 +32,43 @@ namespace BlocksGame {
             SlotsFilled
         };
         
+        SlidingTextAnimation(Pht::IEngine& engine, GameScene& scene);
+        
+        void Init();
+        void Start(Message message);
+        State Update();
+        
+    private:
         struct TextLine {
             Pht::Vec2 mPosition;
             const std::string mText;
         };
-        
+
         struct Text {
             float mDisplayTime {1.0f};
-            std::vector<TextLine> mTextLines;
+            std::unique_ptr<Pht::SceneObject> mSceneObject;
+            std::vector<std::unique_ptr<Pht::SceneObject>> mTextLines;
         };
         
-        explicit SlidingTextAnimation(Pht::IEngine& engine);
-        
-        
-        void Start(Message message);
-        State Update();
-        
-        State GetState() const {
-            return mState;
-        }
-        
-        const Text* GetText() const {
-            return mText;
-        }
-        
-        const Pht::Vec2& GetPosition() const {
-            return mPosition;
-        }
-        
-        const Pht::TextProperties& GetTextProperties() const {
-            return mTextProperties;
-        }
-                
-    private:
+        void CreateText(float displayTime, const std::vector<TextLine>& textLines);
+        void SetAlpha(float newAlhpa);
         void StartSlideOut();
         void UpdateInSlidingInState();
         void UpdateInDisplayingTextState();
         void UpdateInSlidingOutState();
     
         Pht::IEngine& mEngine;
+        GameScene& mScene;
         Pht::Font mFont;
-        Pht::TextProperties mTextProperties;
         State mState {State::Inactive};
         float mElapsedTime {0.0f};
         const Text* mText {nullptr};
-        Pht::Vec2 mPosition;
-        Pht::Vec2 mVelocity;
-        Pht::Vec2 mAcceleration;
-        Pht::Vec2 mSlideInStartPosition;
-        Pht::Vec2 mSlideOutFinalPosition;
+        std::unique_ptr<Pht::SceneObject> mContainerSceneObject;
+        std::vector<Text> mTexts;
+        Pht::Vec3 mVelocity;
+        Pht::Vec3 mAcceleration;
+        Pht::Vec3 mSlideInStartPosition;
+        Pht::Vec3 mSlideOutFinalPosition;
     };
 }
 

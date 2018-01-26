@@ -125,13 +125,13 @@ namespace BlocksGame {
         Field mField;
         CollapsingFieldAnimation mCollapsingFieldAnimation;
         FlashingBlocksAnimation mFlashingBlocksAnimation;
-        SlidingTextAnimation mSlidingTextAnimation;
         ScrollController mScrollController;
         GameScene mScene;
         ExplosionParticleEffect mExplosionParticleEffect;
         RowExplosionParticleEffect mRowExplosionParticleEffect;
         PieceDropParticleEffect mPieceDropParticleEffect;
         BlastRadiusAnimation mBlastRadiusAnimation;
+        SlidingTextAnimation mSlidingTextAnimation;
         ClearLastBlocksAnimation mClearLastBlocksAnimation;
         GameLogic mGameLogic;
         FallingPieceAnimation& mFallingPieceAnimation;

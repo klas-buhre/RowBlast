@@ -15,7 +15,6 @@
 #include "GameHud.hpp"
 #include "GameViewControllers.hpp"
 #include "FlashingBlocksAnimation.hpp"
-#include "SlidingTextAnimation.hpp"
 #include "SettingsMenuController.hpp"
 #include "NoLivesDialogController.hpp"
 #include "PieceResources.hpp"
@@ -32,7 +31,6 @@ GameSceneRenderer::GameSceneRenderer(Pht::IEngine& engine,
                                      GameScene& scene,
                                      const Field& field,
                                      const GameLogic& gameLogic,
-                                     const SlidingTextAnimation& slidingTextAnimation,
                                      const ScrollController& scrollController,
                                      const GameHud& hud,
                                      const GameViewControllers& gameViewControllers,
@@ -43,7 +41,6 @@ GameSceneRenderer::GameSceneRenderer(Pht::IEngine& engine,
     mScene {scene},
     mField {field},
     mGameLogic {gameLogic},
-    mSlidingTextAnimation {slidingTextAnimation},
     mScrollController {scrollController},
     mHud {hud},
     mGameViewControllers {gameViewControllers},
@@ -63,7 +60,6 @@ void GameSceneRenderer::Render() {
 
     mEngineRenderer.SetProjectionMode(Pht::ProjectionMode::Orthographic);
     
-    RenderSlidingText();
     RenderHud();
     RenderGameViews();
 }
@@ -614,22 +610,4 @@ void GameSceneRenderer::RenderLevelCompletedView() {
     mEngineRenderer.SetLightDirection({0.75f, 1.0f, 1.0f});
     mEngineRenderer.RenderGuiView(view);
     mEngineRenderer.SetLightDirection(mScene.GetLightDirection());
-}
-
-void GameSceneRenderer::RenderSlidingText() {
-    if (mSlidingTextAnimation.GetState() == SlidingTextAnimation::State::Inactive) {
-        return;
-    }
-    
-    auto* text {mSlidingTextAnimation.GetText()};
-    
-    if (text == nullptr) {
-        return;
-    }
-    
-    for (const auto& line: text->mTextLines) {
-        mEngineRenderer.RenderText(line.mText,
-                                   line.mPosition + mSlidingTextAnimation.GetPosition(),
-                                   mSlidingTextAnimation.GetTextProperties());
-    }
 }

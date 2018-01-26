@@ -38,13 +38,13 @@ GameController::GameController(Pht::IEngine& engine,
     mField {},
     mCollapsingFieldAnimation {mField},
     mFlashingBlocksAnimation {mField},
-    mSlidingTextAnimation {engine},
     mScrollController {engine, mField},
     mScene {engine, mScrollController, commonResources},
     mExplosionParticleEffect {engine, mScene},
     mRowExplosionParticleEffect {engine, mScene},
     mPieceDropParticleEffect {engine, mScene},
     mBlastRadiusAnimation {engine, mScene},
+    mSlidingTextAnimation {engine, mScene},
     mClearLastBlocksAnimation {mField, mFlyingBlocksAnimation},
     mGameLogic {
         engine,
@@ -70,7 +70,6 @@ GameController::GameController(Pht::IEngine& engine,
         mScene,
         mField,
         mGameLogic,
-        mSlidingTextAnimation,
         mScrollController,
         mHud,
         mGameViewControllers,
@@ -93,6 +92,7 @@ void GameController::StartLevel(int levelIndex) {
     mExplosionParticleEffect.Init();
     mRowExplosionParticleEffect.Init();
     mFlyingBlocksAnimation.Init();
+    mSlidingTextAnimation.Init();
     
     mState = GameState::LevelIntro;
     mLevelIntroState = LevelIntroState::Overview;

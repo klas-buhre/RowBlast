@@ -62,6 +62,11 @@ namespace BlocksGame {
             return *mFlyingBlocksContainer;
         }
 
+        Pht::SceneObject& GetHudContainer() {
+            assert(mHudContainer);
+            return *mHudContainer;
+        }
+
         SceneObjectPool& GetFieldBlocks() {
             assert(mFieldBlocks);
             return *mFieldBlocks;

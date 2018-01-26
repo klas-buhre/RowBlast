@@ -21,7 +21,6 @@ namespace BlocksGame {
     class ScrollController;
     class GameHud;
     class GameViewControllers;
-    class SlidingTextAnimation;
     class SubCell;
     class Piece;
     class FallingPiece;
@@ -35,7 +34,6 @@ namespace BlocksGame {
                           GameScene& scene,
                           const Field& field,
                           const GameLogic& gameLogic,
-                          const SlidingTextAnimation& slidingTextAnimation,
                           const ScrollController& scrollController,
                           const GameHud& hud,
                           const GameViewControllers& gameViewControllers,
@@ -81,14 +79,12 @@ namespace BlocksGame {
                                      const CellGrid& pieceGrid);
         void RenderGameViews();
         void RenderLevelCompletedView();
-        void RenderSlidingText();
         
         Pht::IEngine& mEngine;
         Pht::IRenderer& mEngineRenderer;
         GameScene& mScene;
         const Field& mField;
         const GameLogic& mGameLogic;
-        const SlidingTextAnimation& mSlidingTextAnimation;
         const ScrollController& mScrollController;
         const GameHud& mHud;
         const GameViewControllers& mGameViewControllers;

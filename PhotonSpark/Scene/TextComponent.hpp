@@ -33,6 +33,10 @@ namespace Pht {
             return mProperties;
         }
         
+        TextProperties& GetProperties() {
+            return mProperties;
+        }
+        
     private:
         SceneObject& mSceneObject;
         std::string mText;
