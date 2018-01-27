@@ -6,6 +6,7 @@
 
 namespace Pht {
     class LightComponent;
+    class CameraComponent;
     
     struct ScissorBox {
         Vec2 mLowerLeft;
@@ -34,7 +35,15 @@ namespace Pht {
         bool IsHudMode() const {
             return mIsHudMode;
         }
-        
+
+        void SetCamera(const CameraComponent* camera) {
+            mCamera = camera;
+        }
+
+        const CameraComponent* GetCamera() const {
+            return mCamera;
+        }
+
         void SetLight(const LightComponent* light) {
             mLight = light;
         }
@@ -54,6 +63,7 @@ namespace Pht {
     private:
         ProjectionMode mProjectionMode {ProjectionMode::Perspective};
         bool mIsHudMode {false};
+        const CameraComponent* mCamera {nullptr};
         const LightComponent* mLight {nullptr};
         Optional<ScissorBox> mScissorBox;
         int mLayerMask {0};

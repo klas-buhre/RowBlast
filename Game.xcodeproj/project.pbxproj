@@ -96,6 +96,7 @@
 		624F89491EF6661D0020C832 /* LifeManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 624F89471EF6661D0020C832 /* LifeManager.cpp */; };
 		6254C16C1EED356800BBCAD2 /* SettingsMenuController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6254C16A1EED356800BBCAD2 /* SettingsMenuController.cpp */; };
 		6254C16F1EED39E300BBCAD2 /* CommonViewControllers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6254C16D1EED39E300BBCAD2 /* CommonViewControllers.cpp */; };
+		6255510A201C93EA008A8BD3 /* GameHudNew.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62555108201C93EA008A8BD3 /* GameHudNew.cpp */; };
 		625C330F1F9B8C7C00E531FC /* BlastRadiusAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 625C330D1F9B8C7C00E531FC /* BlastRadiusAnimation.cpp */; };
 		6260A6D91F8539C9001F6DCD /* FPiece.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6260A6D71F8539C9001F6DCD /* FPiece.cpp */; };
 		6260A6DE1F85451E001F6DCD /* MirroredFPiece.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6260A6DC1F85451E001F6DCD /* MirroredFPiece.cpp */; };
@@ -420,6 +421,8 @@
 		6254C16B1EED356800BBCAD2 /* SettingsMenuController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SettingsMenuController.hpp; sourceTree = "<group>"; };
 		6254C16D1EED39E300BBCAD2 /* CommonViewControllers.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CommonViewControllers.cpp; sourceTree = "<group>"; };
 		6254C16E1EED39E300BBCAD2 /* CommonViewControllers.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CommonViewControllers.hpp; sourceTree = "<group>"; };
+		62555108201C93EA008A8BD3 /* GameHudNew.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameHudNew.cpp; sourceTree = "<group>"; };
+		62555109201C93EA008A8BD3 /* GameHudNew.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = GameHudNew.hpp; sourceTree = "<group>"; };
 		625C330D1F9B8C7C00E531FC /* BlastRadiusAnimation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = BlastRadiusAnimation.cpp; sourceTree = "<group>"; };
 		625C330E1F9B8C7C00E531FC /* BlastRadiusAnimation.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = BlastRadiusAnimation.hpp; sourceTree = "<group>"; };
 		6260A6D71F8539C9001F6DCD /* FPiece.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FPiece.cpp; sourceTree = "<group>"; };
@@ -1018,6 +1021,8 @@
 				624447481EDDD2C40080ECE8 /* GameController.hpp */,
 				624447491EDDD2C40080ECE8 /* GameHud.cpp */,
 				6244474A1EDDD2C40080ECE8 /* GameHud.hpp */,
+				62555108201C93EA008A8BD3 /* GameHudNew.cpp */,
+				62555109201C93EA008A8BD3 /* GameHudNew.hpp */,
 				6244474D1EDDD2C40080ECE8 /* GameScene.cpp */,
 				6244474E1EDDD2C40080ECE8 /* GameScene.hpp */,
 				6244474B1EDDD2C40080ECE8 /* GameSceneRenderer.cpp */,
@@ -2029,6 +2034,7 @@
 				6254C16C1EED356800BBCAD2 /* SettingsMenuController.cpp in Sources */,
 				624447B01EDDD2C40080ECE8 /* ScrollController.cpp in Sources */,
 				62944D6C20053A2D00814D36 /* MeshUtils.cpp in Sources */,
+				6255510A201C93EA008A8BD3 /* GameHudNew.cpp in Sources */,
 				62944DAA20053A2D00814D36 /* SceneManager.cpp in Sources */,
 				62944D6E20053A2D00814D36 /* CylinderMesh.cpp in Sources */,
 				6286F9B21FF3BE5E004DEF90 /* MapPin.cpp in Sources */,

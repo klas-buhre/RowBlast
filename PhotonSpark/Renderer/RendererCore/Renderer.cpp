@@ -655,16 +655,27 @@ void Renderer::RenderSceneObject(const SceneObject& sceneObject) {
 }
 
 void Renderer::RenderScene(const Scene& scene) {
-    // Setup camera.
-    auto* camera {scene.GetCamera()};
-    assert(camera);
-    mCamera.LookAt(camera->GetSceneObject().GetWorldSpacePosition(),
-                   camera->GetTarget(),
-                   camera->GetUp());
-    
+    const CameraComponent* previousCamera {nullptr};
     const LightComponent* previousLight {nullptr};
     
     for (auto& renderPass: scene.GetRenderPasses()) {
+        // Setup camera.
+        auto* cameraOverride {renderPass.GetCamera()};
+        auto* camera {cameraOverride ? cameraOverride : scene.GetCamera()};
+        assert(camera);
+        
+        if (camera != previousCamera) {
+            auto cameraPositionWorldSpace {camera->GetSceneObject().GetWorldSpacePosition()};
+            
+            if (renderPass.IsHudMode()) {
+                mHudCameraPosition = cameraPositionWorldSpace;
+            } else {
+                mCamera.LookAt(cameraPositionWorldSpace, camera->GetTarget(), camera->GetUp());
+            }
+            
+            previousCamera = camera;
+        }
+
         // Setup the lighting.
         auto* lightOverride {renderPass.GetLight()};
         auto* light {lightOverride ? lightOverride : scene.GetGlobalLight()};
