@@ -40,7 +40,12 @@ GameController::GameController(Pht::IEngine& engine,
     mCollapsingFieldAnimation {mField},
     mFlashingBlocksAnimation {mField},
     mScrollController {engine, mField},
-    mScene {engine, mScrollController, commonResources},
+    mScene {
+        engine,
+        mScrollController,
+        commonResources,
+        mGameViewControllers.GetGameHudController()
+    },
     mExplosionParticleEffect {engine, mScene},
     mRowExplosionParticleEffect {engine, mScene},
     mPieceDropParticleEffect {engine, mScene},
@@ -89,7 +94,7 @@ void GameController::StartLevel(int levelIndex) {
 
     mField.Init(*mLevel);
     mScrollController.Init(mLevel->GetObjective());
-    mScene.Init(*mLevel, mLevelResources);
+    mScene.Init(*mLevel, mLevelResources, mPieceResources, mGameLogic);
     mGameLogic.Init(*mLevel);
     mGameViewControllers.SetActiveController(GameViewControllers::None);
     mHud.Init(*mLevel);

@@ -11,6 +11,7 @@
 #include "FloatingCubes.hpp"
 #include "ScrollController.hpp"
 #include "SceneObjectPool.hpp"
+#include "GameHudNew.hpp"
 
 namespace Pht {
     class IEngine;
@@ -24,14 +25,21 @@ namespace BlocksGame {
     class ScrollController;
     class CommonResources;
     class LevelResources;
+    class PieceResources;
+    class GameLogic;
+    class GameHudController;
     
     class GameScene {
     public:
         GameScene(Pht::IEngine& engine,
                   const ScrollController& scrollController,
-                  const CommonResources& commonResources);
+                  const CommonResources& commonResources,
+                  GameHudController& gameHudController);
         
-        void Init(const Level& level, const LevelResources& levelResources);
+        void Init(const Level& level,
+                  const LevelResources& levelResources,
+                  const PieceResources& pieceResources,
+                  const GameLogic& gameLogic);
         void Update();
         const Pht::Material& GetGoldMaterial() const;
         const Pht::Material& GetRedMaterial() const;
@@ -134,12 +142,16 @@ namespace BlocksGame {
         void CreateSceneObjectPools(const Level& level);
         void CreateEffectsContainer();
         void CreateFlyingBlocksContainer();
-        void CreateHudContainer();
+        void CreateHud(const GameLogic& gameLogic,
+                       const LevelResources& levelResources,
+                       const PieceResources& pieceResources,
+                       const Level& level);
         void SetScissorBox(const Pht::ScissorBox& scissorBox, int layer);
         
         Pht::IEngine& mEngine;
         const ScrollController& mScrollController;
         const CommonResources& mCommonResources;
+        GameHudController& mGameHudController;
         Pht::Scene* mScene {nullptr};
         Pht::CameraComponent* mCamera {nullptr};
         std::unique_ptr<FloatingCubes> mFloatingCubes;
@@ -164,6 +176,7 @@ namespace BlocksGame {
         float mFieldHeight {0.0f};
         Pht::Vec2 mFieldLoweLeft;
         const float mGhostPieceOpacity {0.5f};
+        std::unique_ptr<GameHudNew> mHud;
     };
 }
 

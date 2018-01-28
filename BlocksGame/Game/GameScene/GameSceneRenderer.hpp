@@ -68,9 +68,6 @@ namespace BlocksGame {
         void RenderClickableGhostPieces(const FallingPiece& fallingPiece);
         void RenderFlyingBlocks();
         void RenderHud();
-        void RenderTiltedGrayBlockInHud(const Pht::RenderableObject& grayBlock);
-        void RenderTiltedBlueprintSlotInHud();
-        void RenderTiltedLPieceInHud();
         void RenderPreviewPiece(const Piece* piece, const Pht::Vec2& position);
         void RenderScaledTiltedPiece(const Pht::Vec2& position,
                                      float cellSize,

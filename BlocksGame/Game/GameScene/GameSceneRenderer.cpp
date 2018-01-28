@@ -418,20 +418,6 @@ void GameSceneRenderer::RenderHud() {
     mEngineRenderer.SetHudMode(true);
     mEngineRenderer.SetLightDirection(mHud.GetLightDirection());
 
-    RenderUtils::RenderGradientRectangle(mEngineRenderer, mHud.GetProgressTextRectangle());
-    RenderUtils::RenderText(mEngineRenderer, mHud.GetProgressText());
-    if (auto* grayBlock {mHud.GetGrayBlock()}) {
-        RenderUtils::RenderGradientRectangle(mEngineRenderer, mHud.GetProgressPiecesRectangle());
-        RenderTiltedGrayBlockInHud(*grayBlock);
-    } else {
-        RenderTiltedBlueprintSlotInHud();
-    }
-
-    RenderUtils::RenderGradientRectangle(mEngineRenderer, mHud.GetMovesTextRectangle());
-    RenderUtils::RenderGradientRectangle(mEngineRenderer, mHud.GetMovesPiecesRectangle());
-    RenderUtils::RenderText(mEngineRenderer, mHud.GetMovesText());
-    RenderTiltedLPieceInHud();
-
     RenderUtils::RenderGradientRectangle(mEngineRenderer, mHud.GetNextPiecesRectangle());
     RenderUtils::RenderGradientRectangle(mEngineRenderer, mHud.GetNextTextRectangle());
     RenderUtils::RenderText(mEngineRenderer, mHud.GetNextText());
@@ -455,44 +441,6 @@ void GameSceneRenderer::RenderHud() {
     
     mEngineRenderer.SetLightDirection(mScene.GetLightDirection());
     mEngineRenderer.SetHudMode(false);
-}
-
-void GameSceneRenderer::RenderTiltedGrayBlockInHud(const Pht::RenderableObject& grayBlock) {
-    auto position {mHud.GetProgressPosition() + mHud.GetGrayBlockRelativePosition()};
-    
-    auto baseTransform {
-        previewRotationMatrix *
-        Pht::Mat4::Translate(position.x, position.y, -1.0f)
-    };
-    
-    auto scale {Pht::Mat4::Scale(mHud.GetGrayBlockSize() / mScene.GetCellSize())};
-    auto blockMatrix {scale * baseTransform};
-
-    mEngineRenderer.Render(grayBlock, blockMatrix);
-}
-
-void GameSceneRenderer::RenderTiltedBlueprintSlotInHud() {
-    auto position {mHud.GetProgressPosition() + mHud.GetBlueprintSlotRelativePosition()};
-    
-    auto baseTransform {
-        previewRotationMatrix *
-        Pht::Mat4::Translate(position.x, position.y, -1.0f)
-    };
-    
-    auto scale {Pht::Mat4::Scale(mHud.GetBlueprintSlotSize() / mScene.GetCellSize())};
-    auto blockMatrix {scale * baseTransform};
-
-    mEngineRenderer.Render(*mHud.GetBlueprintSlot(), blockMatrix);
-}
-
-void GameSceneRenderer::RenderTiltedLPieceInHud() {
-    auto& lPiece {mHud.GetLPiece()};
-
-    RenderScaledTiltedPiece(mHud.GetMovesPosition() + mHud.GetLPieceRelativePosition(),
-                            mHud.GetLPieceCellSize(),
-                            lPiece.GetGridNumRows(),
-                            lPiece.GetGridNumColumns(),
-                            lPiece.GetGrid(Rotation::Deg0));
 }
 
 void GameSceneRenderer::RenderPreviewPiece(const Piece* piece, const Pht::Vec2& position) {

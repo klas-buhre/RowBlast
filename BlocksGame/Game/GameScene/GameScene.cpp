@@ -63,14 +63,19 @@ namespace {
         
 GameScene::GameScene(Pht::IEngine& engine,
                      const ScrollController& scrollController,
-                     const CommonResources& commonResources) :
+                     const CommonResources& commonResources,
+                     GameHudController& gameHudController) :
     mEngine {engine},
     mScrollController {scrollController},
     mCommonResources {commonResources},
+    mGameHudController {gameHudController},
     mLightDirection {1.0f, 1.0f, 0.74f},
     mFieldPosition {0.0f, 0.0f, 0.0f} {}
 
-void GameScene::Init(const Level& level, const LevelResources& levelResources) {
+void GameScene::Init(const Level& level,
+                     const LevelResources& levelResources,
+                     const PieceResources& pieceResources,
+                     const GameLogic& gameLogic) {
     auto& sceneManager {mEngine.GetSceneManager()};
     auto scene {sceneManager.CreateScene(Pht::Hash::Fnv1a("gameScene"))};
     mScene = scene.get();
@@ -89,7 +94,7 @@ void GameScene::Init(const Level& level, const LevelResources& levelResources) {
     CreateSceneObjectPools(level);
     CreateEffectsContainer();
     CreateFlyingBlocksContainer();
-    CreateHudContainer();
+    CreateHud(gameLogic, levelResources, pieceResources, level);
     
     UpdateCameraPositionAndScissorBox();
     
@@ -125,7 +130,6 @@ void GameScene::CreateRenderPasses() {
     mScene->AddRenderPass(flyingBlocksRenderPass);
 
     Pht::RenderPass hudRenderPass {static_cast<int>(Layer::Hud)};
-    hudRenderPass.SetProjectionMode(Pht::ProjectionMode::Orthographic);
     hudRenderPass.SetHudMode(true);
     mScene->AddRenderPass(hudRenderPass);
 }
@@ -274,14 +278,29 @@ void GameScene::CreateFlyingBlocksContainer() {
     mScene->GetRoot().AddChild(*mFlyingBlocksContainer);
 }
 
-void GameScene::CreateHudContainer() {
+void GameScene::CreateHud(const GameLogic& gameLogic,
+                          const LevelResources& levelResources,
+                          const PieceResources& pieceResources,
+                          const Level& level) {
     mHudContainer = &mScene->CreateSceneObject();
     mHudContainer->SetLayer(static_cast<int>(Layer::Hud));
     mScene->GetRoot().AddChild(*mHudContainer);
+    
+    mHud = std::make_unique<GameHudNew>(mEngine,
+                                        gameLogic,
+                                        levelResources,
+                                        pieceResources,
+                                        mGameHudController,
+                                        mCommonResources.GetHussarFontSize22(),
+                                        *mScene,
+                                        *mHudContainer,
+                                        static_cast<int>(Layer::Hud),
+                                        level);
 }
 
 void GameScene::Update() {
     mFloatingCubes->Update();
+    mHud->Update();
     
     if (mScrollController.IsScrolling()) {
         UpdateCameraPositionAndScissorBox();
