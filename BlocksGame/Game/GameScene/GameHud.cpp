@@ -109,7 +109,7 @@ GameHud::GameHud(Pht::IEngine& engine,
     mSwitchTextRectangle = CreateTextRectangle(switchTextRectanglePosition, 4.8f, false);
     mSwitchTextRectangleBright = CreateTextRectangle(switchTextRectanglePosition, 4.8f, true);
         
-    gameHudController.SetHudEventListener(*this);
+    // gameHudController.SetHudEventListener(*this);
 }
 
 std::unique_ptr<GradientRectangle> GameHud::CreatePiecesRectangle(const Pht::Vec3& position,

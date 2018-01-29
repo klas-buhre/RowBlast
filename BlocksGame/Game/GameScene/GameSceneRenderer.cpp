@@ -60,7 +60,7 @@ void GameSceneRenderer::Render() {
 
     mEngineRenderer.SetProjectionMode(Pht::ProjectionMode::Orthographic);
     
-    RenderHud();
+    // RenderHud();
     RenderGameViews();
 }
 
@@ -413,36 +413,36 @@ void GameSceneRenderer::RenderClickableGhostPieces(const FallingPiece& fallingPi
         }
     }
 }
-
+/*
 void GameSceneRenderer::RenderHud() {
     mEngineRenderer.SetHudMode(true);
     mEngineRenderer.SetLightDirection(mHud.GetLightDirection());
 
-    RenderUtils::RenderGradientRectangle(mEngineRenderer, mHud.GetNextPiecesRectangle());
-    RenderUtils::RenderGradientRectangle(mEngineRenderer, mHud.GetNextTextRectangle());
-    RenderUtils::RenderText(mEngineRenderer, mHud.GetNextText());
+    // RenderUtils::RenderGradientRectangle(mEngineRenderer, mHud.GetNextPiecesRectangle());
+    // RenderUtils::RenderGradientRectangle(mEngineRenderer, mHud.GetNextTextRectangle());
+    // RenderUtils::RenderText(mEngineRenderer, mHud.GetNextText());
 
-    RenderUtils::RenderGradientRectangle(mEngineRenderer, mHud.GetSelectablePiecesRectangle());
-    RenderUtils::RenderGradientRectangle(mEngineRenderer, mHud.GetSwitchTextRectangle());
-    RenderUtils::RenderText(mEngineRenderer, mHud.GetSwitchText());
+    // RenderUtils::RenderGradientRectangle(mEngineRenderer, mHud.GetSelectablePiecesRectangle());
+    // RenderUtils::RenderGradientRectangle(mEngineRenderer, mHud.GetSwitchTextRectangle());
+    // RenderUtils::RenderText(mEngineRenderer, mHud.GetSwitchText());
     
     auto& piecePositions {mHud.GetPieceRelativePositions()};
     auto& nextPiecesPosition {mHud.GetNextPiecesPosition()};
     auto& nextPieces {mGameLogic.GetNextPieceGenerator().GetNext2Pieces()};
     
-    RenderPreviewPiece(nextPieces[0], nextPiecesPosition + piecePositions[0]);
-    RenderPreviewPiece(nextPieces[1], nextPiecesPosition + piecePositions[1]);
+    // RenderPreviewPiece(nextPieces[0], nextPiecesPosition + piecePositions[0]);
+    // RenderPreviewPiece(nextPieces[1], nextPiecesPosition + piecePositions[1]);
 
     auto& selectablePiecesPosition {mHud.GetSelectablePiecesPosition()};
     auto& selectablePieces {mGameLogic.GetSelectablePieces()};
     
-    RenderPreviewPiece(selectablePieces[0], selectablePiecesPosition + piecePositions[0]);
-    RenderPreviewPiece(selectablePieces[1], selectablePiecesPosition + piecePositions[1]);
+    // RenderPreviewPiece(selectablePieces[0], selectablePiecesPosition + piecePositions[0]);
+    // RenderPreviewPiece(selectablePieces[1], selectablePiecesPosition + piecePositions[1]);
     
     mEngineRenderer.SetLightDirection(mScene.GetLightDirection());
     mEngineRenderer.SetHudMode(false);
 }
-
+*/
 void GameSceneRenderer::RenderPreviewPiece(const Piece* piece, const Pht::Vec2& position) {
     if (piece == nullptr) {
         return;

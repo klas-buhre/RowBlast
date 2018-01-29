@@ -69,7 +69,7 @@ namespace BlocksGame {
         
         static constexpr int maxRows {5};
         static constexpr int maxColumns {5};
-        static constexpr int numPieceTypes {16};
+        static constexpr int numPieceTypes {22};
 
     protected:
         void InitGrids(const RenderableGrid& renderableGrid,

@@ -143,6 +143,7 @@ namespace BlocksGame {
         std::unique_ptr<GradientRectangle> CreateTextRectangle(const Pht::Vec3& position,
                                                                float length,
                                                                bool isBright);
+        
         void UpdateLightAnimation();
         void UpdateProgress();
         void UpdateMovesLeft();

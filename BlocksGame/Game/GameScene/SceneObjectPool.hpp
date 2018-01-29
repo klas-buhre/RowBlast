@@ -13,7 +13,8 @@ namespace BlocksGame {
     enum class SceneObjectPoolKind {
         FieldBlocks,
         PieceBlocks,
-        GhostPieces
+        GhostPieces,
+        PreviewPieceBlocks
     };
     
     class SceneObjectPool {
@@ -24,6 +25,10 @@ namespace BlocksGame {
         
         void ReclaimAll();
         Pht::SceneObject& AccuireSceneObject();
+        
+        Pht::SceneObject& GetContainerSceneObject() {
+            return *mContainerSceneObject;
+        }
         
     private:
         std::unique_ptr<Pht::SceneObject> mContainerSceneObject;

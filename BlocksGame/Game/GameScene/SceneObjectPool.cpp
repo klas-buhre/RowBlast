@@ -22,6 +22,8 @@ namespace {
                 return 3 * Piece::maxRows * Piece::maxColumns - Piece::maxRows - Piece::maxColumns;
             case SceneObjectPoolKind::GhostPieces:
                 return ClickInputHandler::maxNumVisibleMoves;
+            case SceneObjectPoolKind::PreviewPieceBlocks:
+                return Piece::maxRows * Piece::maxColumns;
         }
     }
 }

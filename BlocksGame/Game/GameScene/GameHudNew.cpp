@@ -14,6 +14,7 @@
 #include "GameLogic.hpp"
 #include "LevelResources.hpp"
 #include "PieceResources.hpp"
+#include "GameHudController.hpp"
 
 using namespace BlocksGame;
 
@@ -21,6 +22,12 @@ namespace {
     const Pht::Vec3 lightDirectionA {0.6f, 1.0f, 1.0f};
     const Pht::Vec3 lightDirectionB {0.4f, 1.0f, 1.0f};
     const auto lightAnimationDuration {5.0f};
+    const auto cellSize {1.25f};
+    
+    const std::array<Pht::Vec3, 2> pieceRelativePositions = {
+        Pht::Vec3{-0.85f, 0.12f, 0.0f},
+        Pht::Vec3{1.15f, 0.12f, 0.0f}
+    };
 }
 
 GameHudNew::GameHudNew(Pht::IEngine& engine,
@@ -35,13 +42,18 @@ GameHudNew::GameHudNew(Pht::IEngine& engine,
                 const Level& level) :
     mEngine {engine},
     mGameLogic {gameLogic},
+    mPieceResources {pieceResources},
     mLevelObjective {level.GetObjective()} {
+    
+    gameHudController.SetHudEventListener(*this);
 
     CreateLightAndCamera(scene, parentObject, hudLayer);
     
     Pht::TextProperties textProperties {font, 1.0f, Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f}};
     CreateProgressObject(scene, parentObject, textProperties, levelResources);
-    CreateMovesObject(scene, parentObject, textProperties, pieceResources);
+    CreateMovesObject(scene, parentObject, textProperties);
+    CreateNextPiecesObject(scene, parentObject, textProperties, level);
+    CreateSelectablePiecesObject(scene, parentObject, textProperties, level);
 }
 
 void GameHudNew::CreateLightAndCamera(Pht::Scene& scene,
@@ -127,8 +139,7 @@ void GameHudNew::CreateBlueprintSlot(Pht::Scene& scene,
 
 void GameHudNew::CreateMovesObject(Pht::Scene& scene,
                                    Pht::SceneObject& parentObject,
-                                   const Pht::TextProperties& textProperties,
-                                   const PieceResources& pieceResources) {
+                                   const Pht::TextProperties& textProperties) {
     auto& movesContainer {scene.CreateSceneObject()};
     movesContainer.GetTransform().SetPosition({3.1f, 12.6f, 0.0f});
     parentObject.AddChild(movesContainer);
@@ -142,12 +153,10 @@ void GameHudNew::CreateMovesObject(Pht::Scene& scene,
     movesContainer.AddChild(movesTextSceneobject);
     
     CreateSmallPiecesRectangle({0.15f, 0.1f, -2.0f}, scene, movesContainer);
-    CreateLPiece(scene, movesContainer, pieceResources);
+    CreateLPiece(scene, movesContainer);
 }
 
-void GameHudNew::CreateLPiece(Pht::Scene& scene,
-                              Pht::SceneObject& movesContainer,
-                              const PieceResources& pieceResources) {
+void GameHudNew::CreateLPiece(Pht::Scene& scene, Pht::SceneObject& movesContainer) {
     auto& lPiece {scene.CreateSceneObject()};
     movesContainer.AddChild(lPiece);
     
@@ -158,9 +167,9 @@ void GameHudNew::CreateLPiece(Pht::Scene& scene,
     baseTransform.SetScale({scale, scale, scale});
     
     auto& greenBlockRenderable {
-        pieceResources.GetBlockRenderableObject(BlockRenderableKind::Full,
-                                                BlockColor::Green,
-                                                BlockBrightness::Normal)
+        mPieceResources.GetBlockRenderableObject(BlockRenderableKind::Full,
+                                                 BlockColor::Green,
+                                                 BlockBrightness::Normal)
     };
     
     auto halfCellSize {0.625f};
@@ -177,6 +186,60 @@ void GameHudNew::CreateGreenBlock(const Pht::Vec3& position,
     block.GetTransform().SetPosition(position);
     block.SetRenderable(&blockRenderable);
     lPiece.AddChild(block);
+}
+
+void GameHudNew::CreateNextPiecesObject(Pht::Scene& scene,
+                                        Pht::SceneObject& parentObject,
+                                        const Pht::TextProperties& textProperties,
+                                        const Level& level) {
+    auto& nextPiecesContainer {scene.CreateSceneObject()};
+    nextPiecesContainer.GetTransform().SetPosition({-2.3f, -12.3f, 0.0f});
+    parentObject.AddChild(nextPiecesContainer);
+    
+    CreatePiecesRectangle({0.15f, 0.0f, -2.0f}, false, scene, nextPiecesContainer);
+    CreateTextRectangle({0.55f, 1.42f, 0.0f}, 4.8f, false, scene, nextPiecesContainer);
+    
+    auto& text {scene.CreateText("NEXT", textProperties)};
+    auto& textSceneObject {text.GetSceneObject()};
+    textSceneObject.SetPosition({-0.1f, 1.22f, 0.0f});
+    nextPiecesContainer.AddChild(textSceneObject);
+    
+    CreateTwoPreviewPieces(mNextPieces, nextPiecesContainer, level);
+}
+
+void GameHudNew::CreateSelectablePiecesObject(Pht::Scene& scene,
+                                              Pht::SceneObject& parentObject,
+                                              const Pht::TextProperties& textProperties,
+                                              const Level& level) {
+    auto& selectablePiecesContainer {scene.CreateSceneObject()};
+    selectablePiecesContainer.GetTransform().SetPosition({3.1f, -12.3f, 0.0f});
+    parentObject.AddChild(selectablePiecesContainer);
+    
+    mSelectablePiecesRectangle = &CreatePiecesRectangle({0.15f, 0.0f, -2.0f},
+                                                        false,
+                                                        scene,
+                                                        selectablePiecesContainer);
+    mSwitchTextRectangle = &CreateTextRectangle({0.55f, 1.42f, 0.0f}, 4.8f,
+                                                false,
+                                                scene,
+                                                selectablePiecesContainer);
+    mBrightSelectablePiecesRectangle = &CreatePiecesRectangle({0.15f, 0.0f, -2.0f},
+                                                              true,
+                                                              scene,
+                                                              selectablePiecesContainer);
+    mBrightSwitchTextRectangle = &CreateTextRectangle({0.55f, 1.42f, 0.0f}, 4.8f,
+                                                      true,
+                                                      scene,
+                                                      selectablePiecesContainer);
+    mBrightSelectablePiecesRectangle->SetIsVisible(false);
+    mBrightSwitchTextRectangle->SetIsVisible(false);
+
+    auto& text {scene.CreateText("SWITCH", textProperties)};
+    auto& textSceneObject {text.GetSceneObject()};
+    textSceneObject.SetPosition({-0.55f, 1.22f, 0.0f});
+    selectablePiecesContainer.AddChild(textSceneObject);
+    
+    CreateTwoPreviewPieces(mSelectablePieces, selectablePiecesContainer, level);
 }
 
 void GameHudNew::CreateSmallPiecesRectangle(const Pht::Vec3& position,
@@ -210,11 +273,11 @@ void GameHudNew::CreateSmallPiecesRectangle(const Pht::Vec3& position,
                             lowerColors);
 }
 
-void GameHudNew::CreateTextRectangle(const Pht::Vec3& position,
-                                     float length,
-                                     bool isBright,
-                                     Pht::Scene& scene,
-                                     Pht::SceneObject& parentObject) {
+Pht::SceneObject& GameHudNew::CreateTextRectangle(const Pht::Vec3& position,
+                                                  float length,
+                                                  bool isBright,
+                                                  Pht::Scene& scene,
+                                                  Pht::SceneObject& parentObject) {
     Pht::Vec2 size {length, 0.7f};
     float leftQuadWidth {1.0f};
     float rightQuadWidth {1.0f};
@@ -225,29 +288,82 @@ void GameHudNew::CreateTextRectangle(const Pht::Vec3& position,
         .mRight = {0.6f, 0.3f, 0.75f, 0.0f}
     };
 
-    CreateGradientRectangle(scene,
-                            parentObject,
-                            position,
-                            size,
-                            0.0f,
-                            leftQuadWidth,
-                            rightQuadWidth,
-                            colors,
-                            colors);
+    return CreateGradientRectangle(scene,
+                                   parentObject,
+                                   position,
+                                   size,
+                                   0.0f,
+                                   leftQuadWidth,
+                                   rightQuadWidth,
+                                   colors,
+                                   colors);
+}
+
+Pht::SceneObject& GameHudNew::CreatePiecesRectangle(const Pht::Vec3& position,
+                                                    bool isBright,
+                                                    Pht::Scene& scene,
+                                                    Pht::SceneObject& parentObject) {
+    Pht::Vec2 size {4.8f, 2.2f};
+    auto tilt {0.50f};
+    float leftQuadWidth {0.4f};
+    float rightQuadWidth {0.4f};
+    
+    GradientRectangleColors upperColors {
+        .mLeft = {0.9f, 0.9f, 1.0f, 0.0f},
+        .mMid = {isBright ? 0.95f : 0.85f, isBright ? 0.6f : 0.4f, 0.95f, 0.93f}, // .mMid = {0.85f, 0.7f, 0.95f, 0.93f},
+        .mRight = {0.9f, 0.9f, 1.0f, 0.0f}
+    };
+
+    GradientRectangleColors lowerColors {
+        .mLeft = {0.9f, 0.9f, 1.0f, 0.0f},
+        .mMid = {0.9f, 0.9f, 1.0f, 0.0f},
+        .mRight = {0.9f, 0.9f, 1.0f, 0.0f}
+    };
+    
+    return CreateGradientRectangle(scene,
+                                   parentObject,
+                                   position,
+                                   size,
+                                   tilt,
+                                   leftQuadWidth,
+                                   rightQuadWidth,
+                                   upperColors,
+                                   lowerColors);
+}
+
+void GameHudNew::CreateTwoPreviewPieces(TwoPreviewPieces& previewPieces,
+                                        Pht::SceneObject& parentObject,
+                                        const Level& level) {
+    for (auto i {0}; i < previewPieces.size(); ++i) {
+        auto& piece {previewPieces[i]};
+        piece.mSceneObjects = std::make_unique<SceneObjectPool>(SceneObjectPoolKind::PreviewPieceBlocks,
+                                                                parentObject,
+                                                                level);
+        auto& transform {piece.mSceneObjects->GetContainerSceneObject().GetTransform()};
+        transform.SetPosition(pieceRelativePositions[i]);
+        transform.SetRotation({-30.0f, -30.0f, 0.0f});
+    }
 }
 
 void GameHudNew::OnSwitchButtonDown() {
-
+    mBrightSelectablePiecesRectangle->SetIsVisible(true);
+    mBrightSwitchTextRectangle->SetIsVisible(true);
+    mSelectablePiecesRectangle->SetIsVisible(false);
+    mSwitchTextRectangle->SetIsVisible(false);
 }
 
 void GameHudNew::OnSwitchButtonUp() {
-
+    mBrightSelectablePiecesRectangle->SetIsVisible(false);
+    mBrightSwitchTextRectangle->SetIsVisible(false);
+    mSelectablePiecesRectangle->SetIsVisible(true);
+    mSwitchTextRectangle->SetIsVisible(true);
 }
 
 void GameHudNew::Update() {
     UpdateLightAnimation();
     UpdateProgress();
     UpdateMovesLeft();
+    UpdatePreviewPieces();
 }
 
 void GameHudNew::UpdateLightAnimation() {
@@ -304,5 +420,67 @@ void GameHudNew::UpdateMovesLeft() {
         text[2] = buffer[2];
         
         mMovesLeft = movesLeft;
+    }
+}
+
+void GameHudNew::UpdatePreviewPieces() {
+    auto& next2Pieces {mGameLogic.GetNextPieceGenerator().GetNext2Pieces()};
+    UpdatePreviewPiece(mNextPieces[0], next2Pieces[0]);
+    UpdatePreviewPiece(mNextPieces[1], next2Pieces[1]);
+    
+    auto& selectablePieces {mGameLogic.GetSelectablePieces()};
+    UpdatePreviewPiece(mSelectablePieces[0], selectablePieces[0]);
+    UpdatePreviewPiece(mSelectablePieces[1], selectablePieces[1]);
+}
+
+void GameHudNew::UpdatePreviewPiece(PreviewPiece& previewPiece, const Piece* currentPieceType) {
+    if (previewPiece.mPieceType == currentPieceType) {
+        return;
+    }
+    
+    previewPiece.mPieceType = currentPieceType;
+    
+    auto& containerObject {previewPiece.mSceneObjects->GetContainerSceneObject()};
+    auto& baseTransform {containerObject.GetTransform()};
+    auto scale {currentPieceType->GetPreviewCellSize() / cellSize};
+    baseTransform.SetScale({scale, scale, scale});
+    
+    previewPiece.mSceneObjects->ReclaimAll();
+    
+    auto pieceNumRows {currentPieceType->GetGridNumRows()};
+    auto pieceNumColumns {currentPieceType->GetGridNumColumns()};
+    auto& grid {currentPieceType->GetGrid(Rotation::Deg0)};
+    
+    Pht::Vec3 lowerLeft {
+        -static_cast<float>(pieceNumColumns) * cellSize / 2.0f + cellSize / 2.0f,
+        -static_cast<float>(pieceNumRows) * cellSize / 2.0f + cellSize / 2.0f,
+        -scale
+    };
+    
+    for (auto row {0}; row < pieceNumRows; row++) {
+        for (auto column {0}; column < pieceNumColumns; column++) {
+            auto& subCell {grid[row][column].mFirstSubCell};
+            auto renderableKind {subCell.mBlockRenderableKind};
+ 
+            if (renderableKind != BlockRenderableKind::None) {
+                auto& blockSceneObject {previewPiece.mSceneObjects->AccuireSceneObject()};
+                
+                auto& blockRenderable {
+                    mPieceResources.GetBlockRenderableObject(renderableKind,
+                                                             subCell.mColor,
+                                                             BlockBrightness::Normal)
+                };
+                
+                blockSceneObject.SetRenderable(&blockRenderable);
+                
+                Pht::Vec3 position {
+                    static_cast<float>(column) * cellSize,
+                    static_cast<float>(row) * cellSize,
+                    0.0f
+                };
+
+                blockSceneObject.GetTransform().SetPosition(lowerLeft + position);
+            }
+        }
     }
 }
