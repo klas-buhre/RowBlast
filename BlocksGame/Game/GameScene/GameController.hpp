@@ -13,7 +13,6 @@
 #include "BlueprintSlotsFilledAnimation.hpp"
 #include "ExplosionParticleEffect.hpp"
 #include "RowExplosionParticleEffect.hpp"
-#include "GameHud.hpp"
 #include "PieceDropParticleEffect.hpp"
 #include "LevelResources.hpp"
 #include "Level.hpp"
@@ -139,7 +138,6 @@ namespace BlocksGame {
         LevelResources mLevelResources;
         FlyingBlocksAnimation mFlyingBlocksAnimation;
         BlueprintSlotsFilledAnimation mBlueprintSlotsFilledAnimation;
-        GameHud mHud;
         GameSceneRenderer mRenderer;
         std::unique_ptr<Level> mLevel;
         bool mShouldUpdateGameLogic {false};

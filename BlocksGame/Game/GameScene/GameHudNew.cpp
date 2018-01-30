@@ -23,10 +23,10 @@ namespace {
     const Pht::Vec3 lightDirectionB {0.4f, 1.0f, 1.0f};
     const auto lightAnimationDuration {5.0f};
     const auto cellSize {1.25f};
-    
+
     const std::array<Pht::Vec3, 2> pieceRelativePositions = {
-        Pht::Vec3{-0.85f, 0.12f, 0.0f},
-        Pht::Vec3{1.15f, 0.12f, 0.0f}
+        Pht::Vec3{-0.73f, 0.01f, -1.0f},
+        Pht::Vec3{1.27f, 0.01f, -1.0f}
     };
 }
 
@@ -454,7 +454,7 @@ void GameHudNew::UpdatePreviewPiece(PreviewPiece& previewPiece, const Piece* cur
     Pht::Vec3 lowerLeft {
         -static_cast<float>(pieceNumColumns) * cellSize / 2.0f + cellSize / 2.0f,
         -static_cast<float>(pieceNumRows) * cellSize / 2.0f + cellSize / 2.0f,
-        -scale
+        0.0f
     };
     
     for (auto row {0}; row < pieceNumRows; row++) {

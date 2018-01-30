@@ -70,20 +70,12 @@ GameController::GameController(Pht::IEngine& engine,
     mLevelResources {engine, mScene},
     mFlyingBlocksAnimation {mScene, mLevelResources, mPieceResources},
     mBlueprintSlotsFilledAnimation {mField, mScene, mLevelResources},
-    mHud {
-        engine,
-        mGameLogic,
-        mLevelResources,
-        mGameViewControllers.GetGameHudController(),
-        commonResources.GetHussarFontSize22()
-    },
     mRenderer {
         engine,
         mScene,
         mField,
         mGameLogic,
         mScrollController,
-        mHud,
         mGameViewControllers,
         mPieceResources,
         mLevelResources
@@ -97,7 +89,6 @@ void GameController::StartLevel(int levelIndex) {
     mScene.Init(*mLevel, mLevelResources, mPieceResources, mGameLogic);
     mGameLogic.Init(*mLevel);
     mGameViewControllers.SetActiveController(GameViewControllers::None);
-    mHud.Init(*mLevel);
     mBlueprintSlotsFilledAnimation.Init();
     mPieceDropParticleEffect.Init();
     mBlastRadiusAnimation.Init();
@@ -168,7 +159,6 @@ GameController::Command GameController::UpdateGame() {
     mPieceDropParticleEffect.Update(dt);
     mBlastRadiusAnimation.Update(dt);
     mFlyingBlocksAnimation.Update(dt);
-    mHud.Update();
     mScene.Update();
     
     return command;

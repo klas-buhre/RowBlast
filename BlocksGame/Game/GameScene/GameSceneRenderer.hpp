@@ -19,7 +19,6 @@ namespace BlocksGame {
     class GameLogic;
     class GameScene;
     class ScrollController;
-    class GameHud;
     class GameViewControllers;
     class SubCell;
     class Piece;
@@ -35,7 +34,6 @@ namespace BlocksGame {
                           const Field& field,
                           const GameLogic& gameLogic,
                           const ScrollController& scrollController,
-                          const GameHud& hud,
                           const GameViewControllers& gameViewControllers,
                           const PieceResources& pieceResources,
                           const LevelResources& levelResources);
@@ -67,13 +65,6 @@ namespace BlocksGame {
                               Rotation rotation);
         void RenderClickableGhostPieces(const FallingPiece& fallingPiece);
         void RenderFlyingBlocks();
-        void RenderHud();
-        void RenderPreviewPiece(const Piece* piece, const Pht::Vec2& position);
-        void RenderScaledTiltedPiece(const Pht::Vec2& position,
-                                     float cellSize,
-                                     int pieceNumRows,
-                                     int pieceNumColumns,
-                                     const CellGrid& pieceGrid);
         void RenderGameViews();
         void RenderLevelCompletedView();
         
@@ -83,7 +74,6 @@ namespace BlocksGame {
         const Field& mField;
         const GameLogic& mGameLogic;
         const ScrollController& mScrollController;
-        const GameHud& mHud;
         const GameViewControllers& mGameViewControllers;
         const PieceResources& mPieceResources;
         const LevelResources& mLevelResources;

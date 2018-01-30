@@ -12,7 +12,6 @@
 #include "Piece.hpp"
 #include "FallingPiece.hpp"
 #include "GameScene.hpp"
-#include "GameHud.hpp"
 #include "GameViewControllers.hpp"
 #include "FlashingBlocksAnimation.hpp"
 #include "SettingsMenuController.hpp"
@@ -32,7 +31,6 @@ GameSceneRenderer::GameSceneRenderer(Pht::IEngine& engine,
                                      const Field& field,
                                      const GameLogic& gameLogic,
                                      const ScrollController& scrollController,
-                                     const GameHud& hud,
                                      const GameViewControllers& gameViewControllers,
                                      const PieceResources& pieceResources,
                                      const LevelResources& levelResources) :
@@ -42,7 +40,6 @@ GameSceneRenderer::GameSceneRenderer(Pht::IEngine& engine,
     mField {field},
     mGameLogic {gameLogic},
     mScrollController {scrollController},
-    mHud {hud},
     mGameViewControllers {gameViewControllers},
     mPieceResources {pieceResources},
     mLevelResources {levelResources} {}
@@ -60,7 +57,6 @@ void GameSceneRenderer::Render() {
 
     mEngineRenderer.SetProjectionMode(Pht::ProjectionMode::Orthographic);
     
-    // RenderHud();
     RenderGameViews();
 }
 
@@ -409,83 +405,6 @@ void GameSceneRenderer::RenderClickableGhostPieces(const FallingPiece& fallingPi
             } else {
                 auto isTransparent {true};
                 RenderPieceBlocks(pieceGrid, ghostPieceFieldPos, isTransparent, pool);
-            }
-        }
-    }
-}
-/*
-void GameSceneRenderer::RenderHud() {
-    mEngineRenderer.SetHudMode(true);
-    mEngineRenderer.SetLightDirection(mHud.GetLightDirection());
-
-    // RenderUtils::RenderGradientRectangle(mEngineRenderer, mHud.GetNextPiecesRectangle());
-    // RenderUtils::RenderGradientRectangle(mEngineRenderer, mHud.GetNextTextRectangle());
-    // RenderUtils::RenderText(mEngineRenderer, mHud.GetNextText());
-
-    // RenderUtils::RenderGradientRectangle(mEngineRenderer, mHud.GetSelectablePiecesRectangle());
-    // RenderUtils::RenderGradientRectangle(mEngineRenderer, mHud.GetSwitchTextRectangle());
-    // RenderUtils::RenderText(mEngineRenderer, mHud.GetSwitchText());
-    
-    auto& piecePositions {mHud.GetPieceRelativePositions()};
-    auto& nextPiecesPosition {mHud.GetNextPiecesPosition()};
-    auto& nextPieces {mGameLogic.GetNextPieceGenerator().GetNext2Pieces()};
-    
-    // RenderPreviewPiece(nextPieces[0], nextPiecesPosition + piecePositions[0]);
-    // RenderPreviewPiece(nextPieces[1], nextPiecesPosition + piecePositions[1]);
-
-    auto& selectablePiecesPosition {mHud.GetSelectablePiecesPosition()};
-    auto& selectablePieces {mGameLogic.GetSelectablePieces()};
-    
-    // RenderPreviewPiece(selectablePieces[0], selectablePiecesPosition + piecePositions[0]);
-    // RenderPreviewPiece(selectablePieces[1], selectablePiecesPosition + piecePositions[1]);
-    
-    mEngineRenderer.SetLightDirection(mScene.GetLightDirection());
-    mEngineRenderer.SetHudMode(false);
-}
-*/
-void GameSceneRenderer::RenderPreviewPiece(const Piece* piece, const Pht::Vec2& position) {
-    if (piece == nullptr) {
-        return;
-    }
-    
-    RenderScaledTiltedPiece(position,
-                            piece->GetPreviewCellSize(),
-                            piece->GetGridNumRows(),
-                            piece->GetGridNumColumns(),
-                            piece->GetGrid(Rotation::Deg0));
-}
-
-void GameSceneRenderer::RenderScaledTiltedPiece(const Pht::Vec2& position,
-                                                float cellSize,
-                                                int pieceNumRows,
-                                                int pieceNumColumns,
-                                                const CellGrid& pieceGrid) {
-    Pht::Vec3 lowerLeft {
-        position.x - pieceNumColumns * cellSize / 2.0f,
-        position.y - pieceNumRows * cellSize / 2.0f,
-        -1.0f
-    };
-    
-    auto baseTransform {
-        previewRotationMatrix *
-        Pht::Mat4::Translate(lowerLeft.x, lowerLeft.y, lowerLeft.z)
-    };
-    
-    auto scale {Pht::Mat4::Scale(cellSize / mScene.GetCellSize())};
-    
-    for (auto row {0}; row < pieceNumRows; row++) {
-        for (auto column {0}; column < pieceNumColumns; column++) {
-            auto renderable {pieceGrid[row][column].mFirstSubCell.mRenderableObject};
-            
-            if (renderable) {
-                auto cellXPos {column * cellSize + cellSize / 2.0f};
-                auto cellYPos {row * cellSize + cellSize / 2.0f};
-                
-                auto cellMatrix {
-                    scale * Pht::Mat4::Translate(cellXPos, cellYPos, 0.0f) * baseTransform
-                };
-                
-                mEngineRenderer.Render(*renderable, cellMatrix);
             }
         }
     }

@@ -61,7 +61,6 @@
 		624447AF1EDDD2C40080ECE8 /* NextPieceGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 624447421EDDD2C40080ECE8 /* NextPieceGenerator.cpp */; };
 		624447B01EDDD2C40080ECE8 /* ScrollController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 624447441EDDD2C40080ECE8 /* ScrollController.cpp */; };
 		624447B11EDDD2C40080ECE8 /* GameController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 624447471EDDD2C40080ECE8 /* GameController.cpp */; };
-		624447B21EDDD2C40080ECE8 /* GameHud.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 624447491EDDD2C40080ECE8 /* GameHud.cpp */; };
 		624447B31EDDD2C40080ECE8 /* GameSceneRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6244474B1EDDD2C40080ECE8 /* GameSceneRenderer.cpp */; };
 		624447B41EDDD2C40080ECE8 /* GameScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6244474D1EDDD2C40080ECE8 /* GameScene.cpp */; };
 		624447B51EDDD2C40080ECE8 /* GameMenuController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 624447501EDDD2C40080ECE8 /* GameMenuController.cpp */; };
@@ -351,8 +350,6 @@
 		624447451EDDD2C40080ECE8 /* ScrollController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ScrollController.hpp; sourceTree = "<group>"; };
 		624447471EDDD2C40080ECE8 /* GameController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameController.cpp; sourceTree = "<group>"; };
 		624447481EDDD2C40080ECE8 /* GameController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameController.hpp; sourceTree = "<group>"; };
-		624447491EDDD2C40080ECE8 /* GameHud.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameHud.cpp; sourceTree = "<group>"; };
-		6244474A1EDDD2C40080ECE8 /* GameHud.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameHud.hpp; sourceTree = "<group>"; };
 		6244474B1EDDD2C40080ECE8 /* GameSceneRenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameSceneRenderer.cpp; sourceTree = "<group>"; };
 		6244474C1EDDD2C40080ECE8 /* GameSceneRenderer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameSceneRenderer.hpp; sourceTree = "<group>"; };
 		6244474D1EDDD2C40080ECE8 /* GameScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameScene.cpp; sourceTree = "<group>"; };
@@ -1019,8 +1016,6 @@
 			children = (
 				624447471EDDD2C40080ECE8 /* GameController.cpp */,
 				624447481EDDD2C40080ECE8 /* GameController.hpp */,
-				624447491EDDD2C40080ECE8 /* GameHud.cpp */,
-				6244474A1EDDD2C40080ECE8 /* GameHud.hpp */,
 				62555108201C93EA008A8BD3 /* GameHudNew.cpp */,
 				62555109201C93EA008A8BD3 /* GameHudNew.hpp */,
 				6244474D1EDDD2C40080ECE8 /* GameScene.cpp */,
@@ -1925,7 +1920,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				623C16BE1F404C5700305752 /* MapConfirmationDialogView.cpp in Sources */,
-				624447B21EDDD2C40080ECE8 /* GameHud.cpp in Sources */,
 				62944D7520053A2D00814D36 /* TextureCache.cpp in Sources */,
 				621D609E1FEFB62A00052107 /* StringUtils.cpp in Sources */,
 				624447A41EDDD2C40080ECE8 /* CollapsingFieldAnimation.cpp in Sources */,
