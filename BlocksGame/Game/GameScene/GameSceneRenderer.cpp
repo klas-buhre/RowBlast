@@ -6,7 +6,6 @@
 #include "ISceneManager.hpp"
 
 // Game includes.
-#include "RenderUtils.hpp"
 #include "Field.hpp"
 #include "GameLogic.hpp"
 #include "Piece.hpp"

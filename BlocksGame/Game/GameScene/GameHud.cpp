@@ -1,4 +1,4 @@
-#include "GameHudNew.hpp"
+#include "GameHud.hpp"
 
 // Engine includes.
 #include "IEngine.hpp"
@@ -30,16 +30,16 @@ namespace {
     };
 }
 
-GameHudNew::GameHudNew(Pht::IEngine& engine,
-                const GameLogic& gameLogic,
-                const LevelResources& levelResources,
-                const PieceResources& pieceResources,
-                GameHudController& gameHudController,
-                const Pht::Font& font,
-                Pht::Scene& scene,
-                Pht::SceneObject& parentObject,
-                int hudLayer,
-                const Level& level) :
+GameHud::GameHud(Pht::IEngine& engine,
+                 const GameLogic& gameLogic,
+                 const LevelResources& levelResources,
+                 const PieceResources& pieceResources,
+                 GameHudController& gameHudController,
+                 const Pht::Font& font,
+                 Pht::Scene& scene,
+                 Pht::SceneObject& parentObject,
+                 int hudLayer,
+                 const Level& level) :
     mEngine {engine},
     mGameLogic {gameLogic},
     mPieceResources {pieceResources},
@@ -56,9 +56,9 @@ GameHudNew::GameHudNew(Pht::IEngine& engine,
     CreateSelectablePiecesObject(scene, parentObject, textProperties, level);
 }
 
-void GameHudNew::CreateLightAndCamera(Pht::Scene& scene,
-                                      Pht::SceneObject& parentObject,
-                                      int hudLayer) {
+void GameHud::CreateLightAndCamera(Pht::Scene& scene,
+                                   Pht::SceneObject& parentObject,
+                                   int hudLayer) {
     auto& lightSceneObject {scene.CreateSceneObject()};
     lightSceneObject.SetIsVisible(false);
     auto lightComponent {std::make_unique<Pht::LightComponent>(lightSceneObject)};
@@ -80,10 +80,10 @@ void GameHudNew::CreateLightAndCamera(Pht::Scene& scene,
     hudRenderPass->SetCamera(camera);
 }
 
-void GameHudNew::CreateProgressObject(Pht::Scene& scene,
-                                      Pht::SceneObject& parentObject,
-                                      const Pht::TextProperties& textProperties,
-                                      const LevelResources& levelResources) {
+void GameHud::CreateProgressObject(Pht::Scene& scene,
+                                   Pht::SceneObject& parentObject,
+                                   const Pht::TextProperties& textProperties,
+                                   const LevelResources& levelResources) {
     auto& progressContainer {scene.CreateSceneObject()};
     progressContainer.GetTransform().SetPosition({-4.1f, 12.6f, 0.0f});
     parentObject.AddChild(progressContainer);
@@ -107,9 +107,9 @@ void GameHudNew::CreateProgressObject(Pht::Scene& scene,
     }
 }
 
-void GameHudNew::CreateGrayBlock(Pht::Scene& scene,
-                                 Pht::SceneObject& progressContainer,
-                                 const LevelResources& levelResources) {
+void GameHud::CreateGrayBlock(Pht::Scene& scene,
+                              Pht::SceneObject& progressContainer,
+                              const LevelResources& levelResources) {
     auto& grayBlock {scene.CreateSceneObject()};
     grayBlock.SetRenderable(&levelResources.GetLevelBlockRenderable(BlockRenderableKind::Full));
     
@@ -122,9 +122,9 @@ void GameHudNew::CreateGrayBlock(Pht::Scene& scene,
     progressContainer.AddChild(grayBlock);
 }
 
-void GameHudNew::CreateBlueprintSlot(Pht::Scene& scene,
-                                     Pht::SceneObject& progressContainer,
-                                     const LevelResources& levelResources) {
+void GameHud::CreateBlueprintSlot(Pht::Scene& scene,
+                                  Pht::SceneObject& progressContainer,
+                                  const LevelResources& levelResources) {
     auto& blueprintSlot {scene.CreateSceneObject()};
     blueprintSlot.SetRenderable(&levelResources.GetBlueprintSlotRenderable());
     
@@ -137,9 +137,9 @@ void GameHudNew::CreateBlueprintSlot(Pht::Scene& scene,
     progressContainer.AddChild(blueprintSlot);
 }
 
-void GameHudNew::CreateMovesObject(Pht::Scene& scene,
-                                   Pht::SceneObject& parentObject,
-                                   const Pht::TextProperties& textProperties) {
+void GameHud::CreateMovesObject(Pht::Scene& scene,
+                                Pht::SceneObject& parentObject,
+                                const Pht::TextProperties& textProperties) {
     auto& movesContainer {scene.CreateSceneObject()};
     movesContainer.GetTransform().SetPosition({3.1f, 12.6f, 0.0f});
     parentObject.AddChild(movesContainer);
@@ -156,7 +156,7 @@ void GameHudNew::CreateMovesObject(Pht::Scene& scene,
     CreateLPiece(scene, movesContainer);
 }
 
-void GameHudNew::CreateLPiece(Pht::Scene& scene, Pht::SceneObject& movesContainer) {
+void GameHud::CreateLPiece(Pht::Scene& scene, Pht::SceneObject& movesContainer) {
     auto& lPiece {scene.CreateSceneObject()};
     movesContainer.AddChild(lPiece);
     
@@ -178,20 +178,20 @@ void GameHudNew::CreateLPiece(Pht::Scene& scene, Pht::SceneObject& movesContaine
     CreateGreenBlock({halfCellSize, halfCellSize, -scale}, greenBlockRenderable, scene, lPiece);
 }
 
-void GameHudNew::CreateGreenBlock(const Pht::Vec3& position,
-                                  Pht::RenderableObject& blockRenderable,
-                                  Pht::Scene& scene,
-                                  Pht::SceneObject& lPiece) {
+void GameHud::CreateGreenBlock(const Pht::Vec3& position,
+                               Pht::RenderableObject& blockRenderable,
+                               Pht::Scene& scene,
+                               Pht::SceneObject& lPiece) {
     auto& block {scene.CreateSceneObject()};
     block.GetTransform().SetPosition(position);
     block.SetRenderable(&blockRenderable);
     lPiece.AddChild(block);
 }
 
-void GameHudNew::CreateNextPiecesObject(Pht::Scene& scene,
-                                        Pht::SceneObject& parentObject,
-                                        const Pht::TextProperties& textProperties,
-                                        const Level& level) {
+void GameHud::CreateNextPiecesObject(Pht::Scene& scene,
+                                     Pht::SceneObject& parentObject,
+                                     const Pht::TextProperties& textProperties,
+                                     const Level& level) {
     auto& nextPiecesContainer {scene.CreateSceneObject()};
     nextPiecesContainer.GetTransform().SetPosition({-2.3f, -12.3f, 0.0f});
     parentObject.AddChild(nextPiecesContainer);
@@ -207,10 +207,10 @@ void GameHudNew::CreateNextPiecesObject(Pht::Scene& scene,
     CreateTwoPreviewPieces(mNextPieces, nextPiecesContainer, level);
 }
 
-void GameHudNew::CreateSelectablePiecesObject(Pht::Scene& scene,
-                                              Pht::SceneObject& parentObject,
-                                              const Pht::TextProperties& textProperties,
-                                              const Level& level) {
+void GameHud::CreateSelectablePiecesObject(Pht::Scene& scene,
+                                           Pht::SceneObject& parentObject,
+                                           const Pht::TextProperties& textProperties,
+                                           const Level& level) {
     auto& selectablePiecesContainer {scene.CreateSceneObject()};
     selectablePiecesContainer.GetTransform().SetPosition({3.1f, -12.3f, 0.0f});
     parentObject.AddChild(selectablePiecesContainer);
@@ -242,9 +242,9 @@ void GameHudNew::CreateSelectablePiecesObject(Pht::Scene& scene,
     CreateTwoPreviewPieces(mSelectablePieces, selectablePiecesContainer, level);
 }
 
-void GameHudNew::CreateSmallPiecesRectangle(const Pht::Vec3& position,
-                                            Pht::Scene& scene,
-                                            Pht::SceneObject& parentObject) {
+void GameHud::CreateSmallPiecesRectangle(const Pht::Vec3& position,
+                                         Pht::Scene& scene,
+                                         Pht::SceneObject& parentObject) {
     Pht::Vec2 size {1.8f, 1.3f};
     auto tilt {0.23f};
     float leftQuadWidth {0.3f};
@@ -273,11 +273,11 @@ void GameHudNew::CreateSmallPiecesRectangle(const Pht::Vec3& position,
                             lowerColors);
 }
 
-Pht::SceneObject& GameHudNew::CreateTextRectangle(const Pht::Vec3& position,
-                                                  float length,
-                                                  bool isBright,
-                                                  Pht::Scene& scene,
-                                                  Pht::SceneObject& parentObject) {
+Pht::SceneObject& GameHud::CreateTextRectangle(const Pht::Vec3& position,
+                                               float length,
+                                               bool isBright,
+                                               Pht::Scene& scene,
+                                               Pht::SceneObject& parentObject) {
     Pht::Vec2 size {length, 0.7f};
     float leftQuadWidth {1.0f};
     float rightQuadWidth {1.0f};
@@ -299,10 +299,10 @@ Pht::SceneObject& GameHudNew::CreateTextRectangle(const Pht::Vec3& position,
                                    colors);
 }
 
-Pht::SceneObject& GameHudNew::CreatePiecesRectangle(const Pht::Vec3& position,
-                                                    bool isBright,
-                                                    Pht::Scene& scene,
-                                                    Pht::SceneObject& parentObject) {
+Pht::SceneObject& GameHud::CreatePiecesRectangle(const Pht::Vec3& position,
+                                                 bool isBright,
+                                                 Pht::Scene& scene,
+                                                 Pht::SceneObject& parentObject) {
     Pht::Vec2 size {4.8f, 2.2f};
     auto tilt {0.50f};
     float leftQuadWidth {0.4f};
@@ -331,9 +331,9 @@ Pht::SceneObject& GameHudNew::CreatePiecesRectangle(const Pht::Vec3& position,
                                    lowerColors);
 }
 
-void GameHudNew::CreateTwoPreviewPieces(TwoPreviewPieces& previewPieces,
-                                        Pht::SceneObject& parentObject,
-                                        const Level& level) {
+void GameHud::CreateTwoPreviewPieces(TwoPreviewPieces& previewPieces,
+                                     Pht::SceneObject& parentObject,
+                                     const Level& level) {
     for (auto i {0}; i < previewPieces.size(); ++i) {
         auto& piece {previewPieces[i]};
         piece.mSceneObjects = std::make_unique<SceneObjectPool>(SceneObjectPoolKind::PreviewPieceBlocks,
@@ -345,28 +345,28 @@ void GameHudNew::CreateTwoPreviewPieces(TwoPreviewPieces& previewPieces,
     }
 }
 
-void GameHudNew::OnSwitchButtonDown() {
+void GameHud::OnSwitchButtonDown() {
     mBrightSelectablePiecesRectangle->SetIsVisible(true);
     mBrightSwitchTextRectangle->SetIsVisible(true);
     mSelectablePiecesRectangle->SetIsVisible(false);
     mSwitchTextRectangle->SetIsVisible(false);
 }
 
-void GameHudNew::OnSwitchButtonUp() {
+void GameHud::OnSwitchButtonUp() {
     mBrightSelectablePiecesRectangle->SetIsVisible(false);
     mBrightSwitchTextRectangle->SetIsVisible(false);
     mSelectablePiecesRectangle->SetIsVisible(true);
     mSwitchTextRectangle->SetIsVisible(true);
 }
 
-void GameHudNew::Update() {
+void GameHud::Update() {
     UpdateLightAnimation();
     UpdateProgress();
     UpdateMovesLeft();
     UpdatePreviewPieces();
 }
 
-void GameHudNew::UpdateLightAnimation() {
+void GameHud::UpdateLightAnimation() {
     mLightAnimationTime += mEngine.GetLastFrameSeconds();
     
     if (mLightAnimationTime > lightAnimationDuration) {
@@ -377,7 +377,7 @@ void GameHudNew::UpdateLightAnimation() {
     mLight->SetDirection(lightDirectionA.Lerp(t, lightDirectionB));
 }
 
-void GameHudNew::UpdateProgress() {
+void GameHud::UpdateProgress() {
     auto progress {
         mLevelObjective == Level::Objective::Clear ? mGameLogic.GetNumLevelBlocksLeft() :
                                                      mGameLogic.GetNumEmptyBlueprintSlotsLeft()
@@ -402,7 +402,7 @@ void GameHudNew::UpdateProgress() {
     }
 }
 
-void GameHudNew::UpdateMovesLeft() {
+void GameHud::UpdateMovesLeft() {
     auto movesLeft {mGameLogic.GetMovesLeft()};
     
     if (movesLeft != mMovesLeft) {
@@ -423,7 +423,7 @@ void GameHudNew::UpdateMovesLeft() {
     }
 }
 
-void GameHudNew::UpdatePreviewPieces() {
+void GameHud::UpdatePreviewPieces() {
     auto& next2Pieces {mGameLogic.GetNextPieceGenerator().GetNext2Pieces()};
     UpdatePreviewPiece(mNextPieces[0], next2Pieces[0]);
     UpdatePreviewPiece(mNextPieces[1], next2Pieces[1]);
@@ -433,7 +433,7 @@ void GameHudNew::UpdatePreviewPieces() {
     UpdatePreviewPiece(mSelectablePieces[1], selectablePieces[1]);
 }
 
-void GameHudNew::UpdatePreviewPiece(PreviewPiece& previewPiece, const Piece* currentPieceType) {
+void GameHud::UpdatePreviewPiece(PreviewPiece& previewPiece, const Piece* currentPieceType) {
     if (previewPiece.mPieceType == currentPieceType) {
         return;
     }
@@ -451,6 +451,9 @@ void GameHudNew::UpdatePreviewPiece(PreviewPiece& previewPiece, const Piece* cur
     auto pieceNumColumns {currentPieceType->GetGridNumColumns()};
     auto& grid {currentPieceType->GetGrid(Rotation::Deg0)};
     
+    auto isBomb {currentPieceType->IsBomb()};
+    auto isRowBomb {currentPieceType->IsRowBomb()};
+    
     Pht::Vec3 lowerLeft {
         -static_cast<float>(pieceNumColumns) * cellSize / 2.0f + cellSize / 2.0f,
         -static_cast<float>(pieceNumRows) * cellSize / 2.0f + cellSize / 2.0f,
@@ -465,13 +468,19 @@ void GameHudNew::UpdatePreviewPiece(PreviewPiece& previewPiece, const Piece* cur
             if (renderableKind != BlockRenderableKind::None) {
                 auto& blockSceneObject {previewPiece.mSceneObjects->AccuireSceneObject()};
                 
-                auto& blockRenderable {
-                    mPieceResources.GetBlockRenderableObject(renderableKind,
-                                                             subCell.mColor,
-                                                             BlockBrightness::Normal)
-                };
-                
-                blockSceneObject.SetRenderable(&blockRenderable);
+                if (isBomb) {
+                    blockSceneObject.SetRenderable(&mPieceResources.GetBombRenderableObject());
+                } else if (isRowBomb) {
+                    blockSceneObject.SetRenderable(&mPieceResources.GetRowBombRenderableObject());
+                } else {
+                    auto& blockRenderable {
+                        mPieceResources.GetBlockRenderableObject(renderableKind,
+                                                                 subCell.mColor,
+                                                                 BlockBrightness::Normal)
+                    };
+                    
+                    blockSceneObject.SetRenderable(&blockRenderable);
+                }
                 
                 Pht::Vec3 position {
                     static_cast<float>(column) * cellSize,

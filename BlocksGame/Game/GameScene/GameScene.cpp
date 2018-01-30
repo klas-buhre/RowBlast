@@ -33,6 +33,7 @@ namespace {
         Hud
     };
 
+#if 0
     const std::vector<CubePathVolume> floatingCubePaths {
         CubePathVolume {
             .mPosition = {0.0f, 0.0f, -10.0f},
@@ -59,6 +60,35 @@ namespace {
             .mSize = {40.0f, 10.0f, 5.0f}
         }
     };
+#endif
+
+    const std::vector<CubePathVolume> floatingCubePaths {
+        CubePathVolume {
+            .mPosition = {-10.0f, 15.0f, -10.0f},
+            .mSize = {0.0f, 0.0f, 0.0f}
+        },
+        CubePathVolume {
+            .mPosition = {12.0f, 22.0f, -20.0f},
+            .mSize = {0.0f, 0.0f, 0.0f}
+        },
+        CubePathVolume {
+            .mPosition = {-10.0f, 0.0f, -10.0f},
+            .mSize = {0.0f, 0.0f, 0.0f}
+        },
+        CubePathVolume {
+            .mPosition = {13.0f, 0.0f, -20.0f},
+            .mSize = {0.0f, 0.0f, 0.0f}
+        },
+        CubePathVolume {
+            .mPosition = {-7.0f, -20.0f, -10.0f},
+            .mSize = {0.0f, 0.0f, 0.0f}
+        },
+        CubePathVolume {
+            .mPosition = {5.0f, -30.0f, -20.0f},
+            .mSize = {0.0f, 0.0f, 0.0f}
+        },
+    };
+
 }
         
 GameScene::GameScene(Pht::IEngine& engine,
@@ -286,16 +316,16 @@ void GameScene::CreateHud(const GameLogic& gameLogic,
     mHudContainer->SetLayer(static_cast<int>(Layer::Hud));
     mScene->GetRoot().AddChild(*mHudContainer);
     
-    mHud = std::make_unique<GameHudNew>(mEngine,
-                                        gameLogic,
-                                        levelResources,
-                                        pieceResources,
-                                        mGameHudController,
-                                        mCommonResources.GetHussarFontSize22(),
-                                        *mScene,
-                                        *mHudContainer,
-                                        static_cast<int>(Layer::Hud),
-                                        level);
+    mHud = std::make_unique<GameHud>(mEngine,
+                                     gameLogic,
+                                     levelResources,
+                                     pieceResources,
+                                     mGameHudController,
+                                     mCommonResources.GetHussarFontSize22(),
+                                     *mScene,
+                                     *mHudContainer,
+                                     static_cast<int>(Layer::Hud),
+                                     level);
 }
 
 void GameScene::Update() {

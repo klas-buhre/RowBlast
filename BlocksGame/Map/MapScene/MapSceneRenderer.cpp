@@ -10,7 +10,6 @@
 #include "SettingsMenuController.hpp"
 #include "NoLivesDialogController.hpp"
 #include "UserData.hpp"
-#include "RenderUtils.hpp"
 
 using namespace BlocksGame;
 

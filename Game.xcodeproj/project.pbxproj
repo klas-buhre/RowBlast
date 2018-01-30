@@ -24,7 +24,6 @@
 		621D60941FEFB62000052107 /* FloatingCubes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 621D608E1FEFB62000052107 /* FloatingCubes.cpp */; };
 		621D60951FEFB62000052107 /* GradientRectangle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 621D60901FEFB62000052107 /* GradientRectangle.cpp */; };
 		621D60961FEFB62000052107 /* CommonResources.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 621D60911FEFB62000052107 /* CommonResources.cpp */; };
-		621D609D1FEFB62A00052107 /* RenderUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 621D60991FEFB62A00052107 /* RenderUtils.cpp */; };
 		621D609E1FEFB62A00052107 /* StringUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 621D609A1FEFB62A00052107 /* StringUtils.cpp */; };
 		621D60A11FF10FC200052107 /* MapScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 621D609F1FF10FC200052107 /* MapScene.cpp */; };
 		622F7F2A1F223DFB00E965AF /* DiamondPiece.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 622F7F281F223DFB00E965AF /* DiamondPiece.cpp */; };
@@ -95,7 +94,7 @@
 		624F89491EF6661D0020C832 /* LifeManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 624F89471EF6661D0020C832 /* LifeManager.cpp */; };
 		6254C16C1EED356800BBCAD2 /* SettingsMenuController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6254C16A1EED356800BBCAD2 /* SettingsMenuController.cpp */; };
 		6254C16F1EED39E300BBCAD2 /* CommonViewControllers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6254C16D1EED39E300BBCAD2 /* CommonViewControllers.cpp */; };
-		6255510A201C93EA008A8BD3 /* GameHudNew.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62555108201C93EA008A8BD3 /* GameHudNew.cpp */; };
+		6255510A201C93EA008A8BD3 /* GameHud.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62555108201C93EA008A8BD3 /* GameHud.cpp */; };
 		625C330F1F9B8C7C00E531FC /* BlastRadiusAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 625C330D1F9B8C7C00E531FC /* BlastRadiusAnimation.cpp */; };
 		6260A6D91F8539C9001F6DCD /* FPiece.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6260A6D71F8539C9001F6DCD /* FPiece.cpp */; };
 		6260A6DE1F85451E001F6DCD /* MirroredFPiece.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6260A6DC1F85451E001F6DCD /* MirroredFPiece.cpp */; };
@@ -276,9 +275,7 @@
 		621D60901FEFB62000052107 /* GradientRectangle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GradientRectangle.cpp; sourceTree = "<group>"; };
 		621D60911FEFB62000052107 /* CommonResources.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CommonResources.cpp; sourceTree = "<group>"; };
 		621D60981FEFB62A00052107 /* Settings.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Settings.hpp; sourceTree = "<group>"; };
-		621D60991FEFB62A00052107 /* RenderUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RenderUtils.cpp; sourceTree = "<group>"; };
 		621D609A1FEFB62A00052107 /* StringUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StringUtils.cpp; sourceTree = "<group>"; };
-		621D609B1FEFB62A00052107 /* RenderUtils.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = RenderUtils.hpp; sourceTree = "<group>"; };
 		621D609C1FEFB62A00052107 /* StringUtils.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = StringUtils.hpp; sourceTree = "<group>"; };
 		621D609F1FF10FC200052107 /* MapScene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MapScene.cpp; sourceTree = "<group>"; };
 		621D60A01FF10FC200052107 /* MapScene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MapScene.hpp; sourceTree = "<group>"; };
@@ -418,8 +415,8 @@
 		6254C16B1EED356800BBCAD2 /* SettingsMenuController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SettingsMenuController.hpp; sourceTree = "<group>"; };
 		6254C16D1EED39E300BBCAD2 /* CommonViewControllers.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CommonViewControllers.cpp; sourceTree = "<group>"; };
 		6254C16E1EED39E300BBCAD2 /* CommonViewControllers.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CommonViewControllers.hpp; sourceTree = "<group>"; };
-		62555108201C93EA008A8BD3 /* GameHudNew.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameHudNew.cpp; sourceTree = "<group>"; };
-		62555109201C93EA008A8BD3 /* GameHudNew.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = GameHudNew.hpp; sourceTree = "<group>"; };
+		62555108201C93EA008A8BD3 /* GameHud.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameHud.cpp; sourceTree = "<group>"; };
+		62555109201C93EA008A8BD3 /* GameHud.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = GameHud.hpp; sourceTree = "<group>"; };
 		625C330D1F9B8C7C00E531FC /* BlastRadiusAnimation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = BlastRadiusAnimation.cpp; sourceTree = "<group>"; };
 		625C330E1F9B8C7C00E531FC /* BlastRadiusAnimation.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = BlastRadiusAnimation.hpp; sourceTree = "<group>"; };
 		6260A6D71F8539C9001F6DCD /* FPiece.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FPiece.cpp; sourceTree = "<group>"; };
@@ -874,9 +871,7 @@
 			isa = PBXGroup;
 			children = (
 				621D60981FEFB62A00052107 /* Settings.hpp */,
-				621D60991FEFB62A00052107 /* RenderUtils.cpp */,
 				621D609A1FEFB62A00052107 /* StringUtils.cpp */,
-				621D609B1FEFB62A00052107 /* RenderUtils.hpp */,
 				621D609C1FEFB62A00052107 /* StringUtils.hpp */,
 			);
 			path = Utils;
@@ -1016,8 +1011,8 @@
 			children = (
 				624447471EDDD2C40080ECE8 /* GameController.cpp */,
 				624447481EDDD2C40080ECE8 /* GameController.hpp */,
-				62555108201C93EA008A8BD3 /* GameHudNew.cpp */,
-				62555109201C93EA008A8BD3 /* GameHudNew.hpp */,
+				62555108201C93EA008A8BD3 /* GameHud.cpp */,
+				62555109201C93EA008A8BD3 /* GameHud.hpp */,
 				6244474D1EDDD2C40080ECE8 /* GameScene.cpp */,
 				6244474E1EDDD2C40080ECE8 /* GameScene.hpp */,
 				6244474B1EDDD2C40080ECE8 /* GameSceneRenderer.cpp */,
@@ -2028,11 +2023,10 @@
 				6254C16C1EED356800BBCAD2 /* SettingsMenuController.cpp in Sources */,
 				624447B01EDDD2C40080ECE8 /* ScrollController.cpp in Sources */,
 				62944D6C20053A2D00814D36 /* MeshUtils.cpp in Sources */,
-				6255510A201C93EA008A8BD3 /* GameHudNew.cpp in Sources */,
+				6255510A201C93EA008A8BD3 /* GameHud.cpp in Sources */,
 				62944DAA20053A2D00814D36 /* SceneManager.cpp in Sources */,
 				62944D6E20053A2D00814D36 /* CylinderMesh.cpp in Sources */,
 				6286F9B21FF3BE5E004DEF90 /* MapPin.cpp in Sources */,
-				621D609D1FEFB62A00052107 /* RenderUtils.cpp in Sources */,
 				626C4DA71EEC20B8000D4DF6 /* SettingsButtonView.cpp in Sources */,
 				62944D7320053A2D00814D36 /* TorusMesh.cpp in Sources */,
 				62944DAE20053A2D00814D36 /* ParticleEmitter.cpp in Sources */,

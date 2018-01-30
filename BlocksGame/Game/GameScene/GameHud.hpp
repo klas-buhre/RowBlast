@@ -1,5 +1,5 @@
-#ifndef GameHudNew_hpp
-#define GameHudNew_hpp
+#ifndef GameHud_hpp
+#define GameHud_hpp
 
 #include <memory>
 #include <array>
@@ -25,9 +25,9 @@ namespace BlocksGame {
     class PieceResources;
     class GameHudController;
     
-    class GameHudNew: public IGameHudEventListener {
+    class GameHud: public IGameHudEventListener {
     public:
-        GameHudNew(Pht::IEngine& engine,
+        GameHud(Pht::IEngine& engine,
                 const GameLogic& gameLogic,
                 const LevelResources& levelResources,
                 const PieceResources& pieceResources,

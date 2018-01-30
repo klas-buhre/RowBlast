@@ -11,7 +11,7 @@
 #include "FloatingCubes.hpp"
 #include "ScrollController.hpp"
 #include "SceneObjectPool.hpp"
-#include "GameHudNew.hpp"
+#include "GameHud.hpp"
 
 namespace Pht {
     class IEngine;
@@ -176,7 +176,7 @@ namespace BlocksGame {
         float mFieldHeight {0.0f};
         Pht::Vec2 mFieldLoweLeft;
         const float mGhostPieceOpacity {0.5f};
-        std::unique_ptr<GameHudNew> mHud;
+        std::unique_ptr<GameHud> mHud;
     };
 }
 
