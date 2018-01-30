@@ -115,11 +115,6 @@ int Piece::GetNumEmptyTopRows() const {
     return 0;
 }
 
-const Pht::RenderableObject& Piece::GetFirstRenderable() const {
-    assert(mRenderables.size() >= 1);
-    return *mRenderables.front();
-}
-
 Pht::RenderableObject* Piece::GetGhostPieceRenderable() const {
     return mGhostPieceRenderable.get();
 }
@@ -128,23 +123,19 @@ Pht::RenderableObject* Piece::GetPressedGhostPieceRenderable() const {
     return mPressedGhostPieceRenderable.get();
 }
 
-void Piece::InitGrids(const RenderableGrid& renderableGrid,
-                      const FillGrid& fillGrid,
+void Piece::InitGrids(const FillGrid& fillGrid,
                       const ClickGrid& clickGrid,
                       BlockColor blockColor,
-                      std::unique_ptr<Pht::RenderableObject> weldRenderable,
                       bool isIndivisible) {
     mGridNumRows = static_cast<int>(fillGrid.size());
     mGridNumColumns = static_cast<int>(fillGrid.front().size());
-    assert(mGridNumRows == renderableGrid.size() && mGridNumColumns == renderableGrid.front().size());
+    assert(mGridNumRows == mGridNumColumns);
     
     mClickGridNumRows = static_cast<int>(clickGrid.size());
     mClickGridNumColumns = static_cast<int>(clickGrid.front().size());
     assert(mClickGridNumRows == 2 * mGridNumRows && mClickGridNumColumns == 2 * mGridNumColumns);
     
-    mWeldRenderable = std::move(weldRenderable);
-    
-    InitCellGrids(renderableGrid, fillGrid, blockColor, isIndivisible);
+    InitCellGrids(fillGrid, blockColor, isIndivisible);
     InitClickGrids(clickGrid);
     
     mRightOverhangCheckPositions.resize(4);
@@ -169,18 +160,14 @@ void Piece::InitGrids(const RenderableGrid& renderableGrid,
     AddButtonPositionAndSize(Rotation::Deg270);
 }
 
-void Piece::InitCellGrids(const Piece::RenderableGrid& renderableGrid,
-                          const Piece::FillGrid& fillGrid,
+void Piece::InitCellGrids(const Piece::FillGrid& fillGrid,
                           BlockColor blockColor,
                           bool isIndivisible) {
-    auto reversedRenderableGrid {renderableGrid};
-    std::reverse(reversedRenderableGrid.begin(), reversedRenderableGrid.end());
-    
     auto reversedFillGrid {fillGrid};
     std::reverse(reversedFillGrid.begin(), reversedFillGrid.end());
     
     auto deg0Grid {
-        InitCellGrid(reversedRenderableGrid, reversedFillGrid, blockColor, isIndivisible)
+        InitCellGrid(reversedFillGrid, blockColor, isIndivisible)
     };
     mGrids.push_back(deg0Grid);
     
@@ -194,8 +181,7 @@ void Piece::InitCellGrids(const Piece::RenderableGrid& renderableGrid,
     mGrids.push_back(deg270Grid);
 }
 
-CellGrid Piece::InitCellGrid(const Piece::RenderableGrid& renderableGrid,
-                             const Piece::FillGrid& fillGrid,
+CellGrid Piece::InitCellGrid(const Piece::FillGrid& fillGrid,
                              BlockColor blockColor,
                              bool isIndivisible) {
     CellGrid result {static_cast<std::size_t>(mGridNumRows)};
@@ -208,8 +194,6 @@ CellGrid Piece::InitCellGrid(const Piece::RenderableGrid& renderableGrid,
             auto& subCell {result[row][column].mFirstSubCell};
             subCell.mFill = fillGrid[row][column];
             subCell.mWelds = MakeWelds(row, column, fillGrid);
-            subCell.mRenderableObject = renderableGrid[row][column];
-            subCell.mWeldRenderableObject = mWeldRenderable.get();
             subCell.mBlockRenderableKind = ToBlockRenderableKind(subCell.mFill);
             subCell.mColor = blockColor;
             subCell.mFlashingBlockAnimation.mIsActive = true;
@@ -272,10 +256,6 @@ void Piece::SetPreviewCellSize(float previewCellSize) {
 
 void Piece::SetNumRotations(int numRotations) {
     mNumRotations = numRotations;
-}
-
-void Piece::AddRenderable(std::unique_ptr<Pht::RenderableObject> renderable) {
-    mRenderables.push_back(std::move(renderable));
 }
 
 void Piece::SetGhostPieceRenderable(std::unique_ptr<Pht::RenderableObject> renderable) {

@@ -1,12 +1,7 @@
 #include "FPiece.hpp"
 
 // Engine includes.
-#include "Material.hpp"
-#include "BoxMesh.hpp"
-#include "ObjMesh.hpp"
 #include "IEngine.hpp"
-#include "QuadMesh.hpp"
-#include "ISceneManager.hpp"
 
 // Game includes.
 #include "GameScene.hpp"
@@ -15,30 +10,6 @@
 using namespace BlocksGame;
 
 FPiece::FPiece(Pht::IEngine& engine, const GameScene& scene) {
-    auto cellSize {scene.GetCellSize()};
-    auto& material {scene.GetRedMaterial()};
-    auto& sceneManager {engine.GetSceneManager()};
-
-#ifdef HIGH_DETAIL
-    auto subPieceUPtr {
-        sceneManager.CreateRenderableObject(Pht::ObjMesh {"cube_428.obj", cellSize}, material)
-    };
-#else
-    auto subPieceUPtr {
-        sceneManager.CreateRenderableObject(Pht::BoxMesh {0.95, 0.95, 0.95}, material)
-    };
-#endif
-
-    auto subPiece {subPieceUPtr.get()};
-    AddRenderable(std::move(subPieceUPtr));
-
-    RenderableGrid renderableGrid = {
-        {nullptr,  nullptr,  nullptr,  nullptr},
-        {nullptr,  subPiece, nullptr,  nullptr},
-        {subPiece, subPiece, subPiece, subPiece},
-        {nullptr,  nullptr,  nullptr,  nullptr}
-    };
-
     FillGrid fillGrid = {
         {Fill::Empty, Fill::Empty, Fill::Empty, Fill::Empty},
         {Fill::Empty, Fill::Full,  Fill::Empty, Fill::Empty},
@@ -56,10 +27,8 @@ FPiece::FPiece(Pht::IEngine& engine, const GameScene& scene) {
         {0, 0, 0, 0, 0, 0, 0, 0},
         {0, 0, 0, 0, 0, 0, 0, 0}
     };
-
-    auto weldRenderable {sceneManager.CreateRenderableObject(Pht::QuadMesh {0.19f, 0.85f}, material)};
     
-    InitGrids(renderableGrid, fillGrid, clickGrid, BlockColor::Red, std::move(weldRenderable));
+    InitGrids(fillGrid, clickGrid, BlockColor::Red);
     SetPreviewCellSize(0.47f);
     
     GhostPieceBorder border {
@@ -76,6 +45,7 @@ FPiece::FPiece(Pht::IEngine& engine, const GameScene& scene) {
         {{0, 1}, BorderSegmentKind::Left},
     };
     
+    auto cellSize {scene.GetCellSize()};
     GhostPieceProducer ghostPieceProducer {engine, cellSize, Pht::IVec2{4, 4}};
     
     ghostPieceProducer.DrawBorder(border, FillGhostPiece::No);

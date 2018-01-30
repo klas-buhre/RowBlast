@@ -1,11 +1,7 @@
 #include "SmallTrianglePiece.hpp"
 
 // Engine includes.
-#include "Material.hpp"
-#include "TriangleMesh.hpp"
 #include "IEngine.hpp"
-#include "ObjMesh.hpp"
-#include "ISceneManager.hpp"
 
 // Game includes.
 #include "GameScene.hpp"
@@ -14,29 +10,6 @@
 using namespace BlocksGame;
 
 SmallTrianglePiece::SmallTrianglePiece(Pht::IEngine& engine, const GameScene& scene) {
-    auto cellSize {scene.GetCellSize()};
-    auto& material {scene.GetRedMaterial()};
-    auto& sceneManager {engine.GetSceneManager()};
-    
-#ifdef HIGH_DETAIL
-    auto halfSubPieceUPtr {
-        sceneManager.CreateRenderableObject(Pht::ObjMesh {"triangle_428.obj", cellSize}, material)
-    };
-#else
-    auto halfSubPieceUPtr {
-        sceneManager.CreateRenderableObject(Pht::TriangleMesh {cellSize, cellSize}, material)
-    };
-#endif
-    
-    auto halfSubPiece {halfSubPieceUPtr.get()};
-    AddRenderable(std::move(halfSubPieceUPtr));
-    
-    RenderableGrid renderableGrid = {
-        {nullptr, nullptr,      nullptr},
-        {nullptr, halfSubPiece, nullptr},
-        {nullptr, nullptr,      nullptr}
-    };
-
     FillGrid fillGrid = {
         {Fill::Empty, Fill::Empty,          Fill::Empty},
         {Fill::Empty, Fill::LowerRightHalf, Fill::Empty},
@@ -52,7 +25,7 @@ SmallTrianglePiece::SmallTrianglePiece(Pht::IEngine& engine, const GameScene& sc
         {0, 0, 0, 0, 0, 0}
     };
 
-    InitGrids(renderableGrid, fillGrid, clickGrid, BlockColor::Red, nullptr);
+    InitGrids(fillGrid, clickGrid, BlockColor::Red);
     SetPreviewCellSize(0.8f);
     
     GhostPieceBorder border {
@@ -62,6 +35,7 @@ SmallTrianglePiece::SmallTrianglePiece(Pht::IEngine& engine, const GameScene& sc
         {{0, 0}, BorderSegmentKind::UpperLeftTiltForTriangle},
     };
     
+    auto cellSize {scene.GetCellSize()};
     GhostPieceProducer ghostPieceProducer {engine, cellSize, Pht::IVec2{1, 1}};
     
     ghostPieceProducer.DrawBorder(border, FillGhostPiece::No);

@@ -337,10 +337,6 @@ void Renderer::SetLightDirection(const Vec3& lightDirection) {
     SetLightDirectionInShaders();
 }
 
-void Renderer::SetDirectionalLightIntensity(float intensity) {
-    mGlobalLight.mDirectionalIntensity = intensity;
-}
-
 void Renderer::SetLightDirectionInShaders() {
     // Since the matrix is row-major it has to be transposed in order to multiply with the vector.
     auto transposedViewMatrix {GetViewMatrix().Transposed()};
@@ -381,15 +377,6 @@ void Renderer::SetDepthWrite(bool depthWrite) {
 void Renderer::SetProjectionMode(ProjectionMode projectionMode) {
     mProjectionMode = projectionMode;
     SetupProjectionInShaders();
-}
-
-void Renderer::SetHudCameraPosition(const Vec3& cameraPosition) {
-    mHudCameraPosition = cameraPosition;
-}
-
-void Renderer::LookAt(const Vec3& cameraPosition, const Vec3& target, const Vec3& up) {
-    mCamera.LookAt(cameraPosition, target, up);
-    SetLightDirectionInShaders();
 }
 
 void Renderer::SetScissorBox(const Vec2& lowerLeft, const Vec2& size) {
@@ -597,16 +584,16 @@ void Renderer::RenderText(const std::string& text,
         TextProperties shadowProperties {properties};
         shadowProperties.mColor = properties.mShadowColor;
         
-        RenderTextInternal(text, position, shadowProperties);
-        RenderTextInternal(text, position + properties.mOffset * properties.mScale, properties);
+        RenderTextImpl(text, position, shadowProperties);
+        RenderTextImpl(text, position + properties.mOffset * properties.mScale, properties);
     } else {
-        RenderTextInternal(text, position, properties);
+        RenderTextImpl(text, position, properties);
     }
 }
 
-void Renderer::RenderTextInternal(const std::string& text,
-                                  const Vec2& position,
-                                  const TextProperties& properties) {
+void Renderer::RenderTextImpl(const std::string& text,
+                              const Vec2& position,
+                              const TextProperties& properties) {
     auto pixelX {
         mRenderBufferSize.x / 2.0f + mRenderBufferSize.x * position.x / mHudFrustum.mSize.x
     };
@@ -642,18 +629,6 @@ void Renderer::RenderGuiView(const GuiView& view) {
     SetHudMode(false);
 }
 
-void Renderer::RenderSceneObject(const SceneObject& sceneObject) {
-    auto* renderable {sceneObject.GetRenderable()};
-    
-    if (renderable && sceneObject.IsVisible()) {
-        Render(*renderable, sceneObject.GetMatrix());
-    }
-    
-    for (auto& child: sceneObject.GetChildren()) {
-        RenderSceneObject(*child);
-    }
-}
-
 void Renderer::RenderScene(const Scene& scene) {
     const CameraComponent* previousCamera {nullptr};
     const LightComponent* previousLight {nullptr};
@@ -673,6 +648,7 @@ void Renderer::RenderScene(const Scene& scene) {
                 mCamera.LookAt(cameraPositionWorldSpace, camera->GetTarget(), camera->GetUp());
             }
             
+            SetLightDirectionInShaders();
             previousCamera = camera;
         }
 

@@ -58,15 +58,7 @@ void PieceDropParticleEffect::StartEffect(const FallingPiece& fallingPiece) {
     auto pieceFieldPos {fallingPiece.GetRenderablePosition() * cellSize};
     auto& pieceGrid {pieceType.GetGrid(fallingPiece.GetRotation())};
     auto cellZPos {mScene.GetFieldPosition().z};
-    auto colorBrighten {0.8f};
-    
-    auto& materialColor {pieceType.GetFirstRenderable().GetMaterial().GetAmbient()};
-    Pht::Vec4 color {
-        materialColor.mRed + colorBrighten,
-        materialColor.mGreen + colorBrighten,
-        materialColor.mBlue + colorBrighten,
-        1.0f
-    };
+    Pht::Vec4 color {1.0f, 1.0f, 1.0f, 1.0f};
     
     for (auto column {0}; column < pieceNumColumns; ++column) {
         for (auto row {pieceNumRows - 1}; row >= 0; --row) {

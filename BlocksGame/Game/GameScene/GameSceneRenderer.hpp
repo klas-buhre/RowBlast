@@ -12,6 +12,7 @@ namespace Pht {
     class IRenderer;
     class ParticleEffect;
     class SceneObject;
+    class RenderableObject;
 }
 
 namespace BlocksGame {

@@ -4,6 +4,7 @@
 #include "IEngine.hpp"
 #include "IRenderer.hpp"
 #include "ISceneManager.hpp"
+#include "RenderableObject.hpp"
 
 // Game includes.
 #include "Field.hpp"
@@ -53,8 +54,6 @@ void GameSceneRenderer::RenderFrame() {
 void GameSceneRenderer::Render() {
     auto* scene {mEngine.GetSceneManager().GetActiveScene()};
     mEngine.GetRenderer().RenderScene(*scene);
-
-    mEngineRenderer.SetProjectionMode(Pht::ProjectionMode::Orthographic);
     
     RenderGameViews();
 }

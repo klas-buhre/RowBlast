@@ -1,33 +1,8 @@
 #include "Bomb.hpp"
 
-// Engine includes.
-#include "Material.hpp"
-#include "SphereMesh.hpp"
-#include "IEngine.hpp"
-#include "ISceneManager.hpp"
-
-// Game includes.
-#include "GameScene.hpp"
-
 using namespace BlocksGame;
 
-Bomb::Bomb(Pht::IEngine& engine, const GameScene& scene) {
-    auto cellSize {scene.GetCellSize()};
-    auto& material {scene.GetDarkGrayMaterial()};
-    auto& sceneManager {engine.GetSceneManager()};
-    auto spherePieceUPtr {
-        sceneManager.CreateRenderableObject(Pht::SphereMesh {cellSize / 2.0f}, material)
-    };
-
-    auto spherePiece {spherePieceUPtr.get()};
-    AddRenderable(std::move(spherePieceUPtr));
-
-    RenderableGrid renderableGrid = {
-        {nullptr, nullptr,     nullptr},
-        {nullptr, spherePiece, nullptr},
-        {nullptr, nullptr,     nullptr}
-    };
-
+Bomb::Bomb() {
     FillGrid fillGrid = {
         {Fill::Empty, Fill::Empty, Fill::Empty},
         {Fill::Empty, Fill::Full,  Fill::Empty},
@@ -43,7 +18,7 @@ Bomb::Bomb(Pht::IEngine& engine, const GameScene& scene) {
         {0, 0, 0, 0, 0, 0}
     };
 
-    InitGrids(renderableGrid, fillGrid, clickGrid, BlockColor::None, nullptr);
+    InitGrids(fillGrid, clickGrid, BlockColor::None);
     SetPreviewCellSize(0.8f);
     SetNumRotations(1);
 }

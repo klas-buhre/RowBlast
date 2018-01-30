@@ -64,8 +64,8 @@ void LevelResources::CreatePieceTypes(Pht::IEngine& engine, const GameScene& sce
     mPieceTypes["BigTriangle"] = std::make_unique<BigTrianglePiece>(engine, scene);
     mPieceTypes["Diamond"] = std::make_unique<DiamondPiece>(engine, scene);
     mPieceTypes["Pyramid"] = std::make_unique<PyramidPiece>(engine, scene);
-    mPieceTypes["Bomb"] = std::make_unique<Bomb>(engine, scene);
-    mPieceTypes["RowBomb"] = std::make_unique<RowBomb>(engine, scene);
+    mPieceTypes["Bomb"] = std::make_unique<Bomb>();
+    mPieceTypes["RowBomb"] = std::make_unique<RowBomb>();
 }
 
 void LevelResources::CreateCellRenderables(Pht::ISceneManager& sceneManager,

@@ -1139,7 +1139,7 @@ void Field::SaveSubCellAndCancelFill(Field::RemovedSubCells& removedSubCells,
                                      const SubCell& subCell) {
     auto position {subCell.mPosition};
     
-    if (subCell.mRenderableObject) {
+    if (subCell.mBlockRenderableKind != BlockRenderableKind::None) {
         RemovedSubCell removedSubCell {
             .mPosition = Pht::IVec2{
                 static_cast<int>(position.x),

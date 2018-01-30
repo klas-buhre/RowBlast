@@ -64,22 +64,6 @@ namespace {
         }
     }
     
-    Pht::RenderableObject* CellRenderable(char c, const LevelResources& levelResources) {
-        switch (c) {
-            case ' ':
-                return nullptr;
-            case 'G':
-                return &levelResources.GetLevelBlockRenderable(BlockRenderableKind::Full);
-            case 'd':
-            case 'b':
-            case 'p':
-            case 'q':
-                return &levelResources.GetLevelBlockRenderable(BlockRenderableKind::LowerLeftHalf);
-            default:
-                assert(!"Unknown cell type");
-        }
-    }
-    
     Rotation CellRotation(char c) {
         switch (c) {
             case ' ':
@@ -102,13 +86,12 @@ namespace {
         }
     }
     
-    Cell CreateCell(char c, int column, int row, const LevelResources& levelResources) {
+    Cell CreateCell(char c, int column, int row) {
         Cell cell;
         
         cell.mFirstSubCell.mPosition = Pht::Vec2 {static_cast<float>(column), static_cast<float>(row)};
         cell.mFirstSubCell.mFill = CellFill(c);
         cell.mFirstSubCell.mBlockRenderableKind = ToBlockRenderableKind(cell.mFirstSubCell.mFill);
-        cell.mFirstSubCell.mRenderableObject = CellRenderable(c, levelResources);
         cell.mFirstSubCell.mRotation = CellRotation(c);
         
         if (!cell.mFirstSubCell.IsEmpty()) {
@@ -118,8 +101,7 @@ namespace {
         return cell;
     }
     
-    std::unique_ptr<CellGrid> ReadClearGrid(const rapidjson::Document& document,
-                                            const LevelResources& levelResources) {
+    std::unique_ptr<CellGrid> ReadClearGrid(const rapidjson::Document& document) {
         if (!document.HasMember("clearGrid")) {
             return nullptr;
         }
@@ -145,10 +127,7 @@ namespace {
             std::vector<Cell> cellRow(numColumns);
             
             for (auto columnIndex {0}; columnIndex < numColumns; ++columnIndex) {
-                cellRow[columnIndex] = CreateCell(str[columnIndex],
-                                                  columnIndex,
-                                                  rowIndex,
-                                                  levelResources);
+                cellRow[columnIndex] = CreateCell(str[columnIndex], columnIndex, rowIndex);
             }
             
             (*cellGrid)[rowIndex] = cellRow;
@@ -207,7 +186,7 @@ std::unique_ptr<Level> LevelLoader::Load(int levelIndex, const LevelResources& l
     
     auto color {ReadColor(document)};
     auto levelPieces {ReadPieceTypes(document, levelResources.GetPieceTypes())};    
-    auto clearGrid {ReadClearGrid(document, levelResources)};
+    auto clearGrid {ReadClearGrid(document)};
     auto blueprintGrid {ReadBlueprintGrid(document)};
     
     assert(clearGrid || blueprintGrid);

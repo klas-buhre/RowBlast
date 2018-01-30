@@ -5,11 +5,9 @@
 
 // Engine includes.
 #include "Vector.hpp"
-#include "Material.hpp" // TODO: remove
 
 namespace Pht {
     class SceneObject;
-    class RenderableObject; // TODO: remove
 }
 
 namespace BlocksGame {
@@ -83,7 +81,6 @@ namespace BlocksGame {
         bool mIsActive {false};
         float mElapsedTime {0.0f};
         BlockBrightness mBrightness {BlockBrightness::Normal};
-        Pht::Color mColorAdd; // TODO: remove
     };
 
     struct SubCell {
@@ -99,8 +96,6 @@ namespace BlocksGame {
         Welds mWelds;
         int mPieceId {0};
         Pht::Vec2 mPosition {0.0f, 0.0f};
-        Pht::RenderableObject* mRenderableObject {nullptr}; // TODO: remove
-        Pht::RenderableObject* mWeldRenderableObject {nullptr}; // TODO: remove
         BlockRenderableKind mBlockRenderableKind {BlockRenderableKind::None};
         BlockColor mColor {BlockColor::None};
         Rotation mRotation {Rotation::Deg0};

@@ -5,9 +5,9 @@
 #include <vector>
 
 // Engine includes.
-#include "RenderableObject.hpp"
 #include "Vector.hpp"
 #include "Optional.hpp"
+#include "RenderableObject.hpp"
 
 // Game includes.
 #include "Cell.hpp"
@@ -31,7 +31,6 @@ namespace BlocksGame {
         Pht::Vec2 GetCenterPosition(Rotation rotation) const;
         const Pht::Vec2& GetButtonCenterPosition(Rotation rotation) const;
         const Pht::Vec2& GetButtonSize(Rotation rotation) const;
-        const Pht::RenderableObject& GetFirstRenderable() const;
         Pht::RenderableObject* GetGhostPieceRenderable() const;
         Pht::RenderableObject* GetPressedGhostPieceRenderable() const;
         
@@ -65,33 +64,26 @@ namespace BlocksGame {
         }
         
         using FillGrid = std::vector<std::vector<Fill>>;
-        using RenderableGrid = std::vector<std::vector<Pht::RenderableObject*>>;
         
         static constexpr int maxRows {5};
         static constexpr int maxColumns {5};
         static constexpr int numPieceTypes {22};
 
     protected:
-        void InitGrids(const RenderableGrid& renderableGrid,
-                       const FillGrid& fillGrid,
+        void InitGrids(const FillGrid& fillGrid,
                        const ClickGrid& clickGrid,
                        BlockColor blockColor,
-                       std::unique_ptr<Pht::RenderableObject> weldRenderable,
                        bool isIndivisible = false);
         void SetPreviewCellSize(float previewCellSize);
         void SetNumRotations(int numRotations);
-        void AddRenderable(std::unique_ptr<Pht::RenderableObject> renderable);
         void SetGhostPieceRenderable(std::unique_ptr<Pht::RenderableObject> renderable);
-        void SetFilledGhostPieceRenderable(std::unique_ptr<Pht::RenderableObject> renderable);
         void SetPressedGhostPieceRenderable(std::unique_ptr<Pht::RenderableObject> renderable);
         
     private:
-        void InitCellGrids(const Piece::RenderableGrid& renderableGrid,
-                           const Piece::FillGrid& fillGrid,
+        void InitCellGrids(const Piece::FillGrid& fillGrid,
                            BlockColor blockColor,
                            bool isIndivisible);
-        CellGrid InitCellGrid(const Piece::RenderableGrid& renderableGrid,
-                              const Piece::FillGrid& fillGrid,
+        CellGrid InitCellGrid(const Piece::FillGrid& fillGrid,
                               BlockColor blockColor,
                               bool isIndivisible);
         CellGrid RotateGridClockwise90Deg(const CellGrid& grid, Rotation newRotation);
@@ -111,8 +103,6 @@ namespace BlocksGame {
         int mClickGridNumColumns {0};
         std::vector<ClickGrid> mClickGrids;
         int mNumRotations {4};
-        std::vector<std::unique_ptr<Pht::RenderableObject>> mRenderables;
-        std::unique_ptr<Pht::RenderableObject> mWeldRenderable;
         std::unique_ptr<Pht::RenderableObject> mGhostPieceRenderable;
         std::unique_ptr<Pht::RenderableObject> mPressedGhostPieceRenderable;
         float mPreviewCellSize {1.0f};

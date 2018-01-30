@@ -49,11 +49,9 @@ void FlashingBlocksAnimation::AnimateFlashingBlock(SubCell& subCell,
     if (IsBlockAccordingToBlueprint(subCell, row, column)) {
         flashDuration = longFlashDuration;
         flashingBlockAnimation.mBrightness = BlockBrightness::BlueprintFillFlashing;
-        flashingBlockAnimation.mColorAdd = brightColorAdd;
     } else {
         flashDuration = shortFlashDuration;
         flashingBlockAnimation.mBrightness = BlockBrightness::Flashing;
-        flashingBlockAnimation.mColorAdd = colorAdd;
     }
     
     if (flashingBlockAnimation.mElapsedTime >= flashDuration) {

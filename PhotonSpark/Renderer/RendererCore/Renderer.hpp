@@ -20,22 +20,12 @@ namespace Pht {
         Renderer(bool createRenderBuffers);
         
         void SetLightDirection(const Vec3& lightDirection) override;
-        void SetDirectionalLightIntensity(float intensity) override;
         void SetClearColorBuffer(bool clearColorBuffer) override;
         void SetHudMode(bool hudMode) override;
         void SetDepthTest(bool depthTest) override;
-        void SetDepthWrite(bool depthWrite) override;
         void SetProjectionMode(ProjectionMode projectionMode) override;
-        void SetHudCameraPosition(const Vec3& cameraPosition) override;
-        void LookAt(const Vec3& cameraPosition, const Vec3& target, const Vec3& up) override;
-        void SetScissorBox(const Vec2& lowerLeft, const Vec2& size) override;
-        void SetScissorTest(bool scissorTest) override;
         void Render(const RenderableObject& object, const Mat4& modelTransform) override;
-        void RenderSceneObject(const SceneObject& sceneObject) override;
         void RenderScene(const Scene& scene) override;
-        void RenderText(const std::string& text,
-                        const Vec2& position,
-                        const TextProperties& properties) override;
         void RenderGuiView(const GuiView& view) override;
         int GetAdjustedNumPixels(int numPixels) const override;
         const Mat4& GetViewMatrix() const override;
@@ -55,6 +45,9 @@ namespace Pht {
         void InitCamera();
         void InitHudFrustum();
         void InitShaders();
+        void SetDepthWrite(bool depthWrite);
+        void SetScissorBox(const Vec2& lowerLeft, const Vec2& size);
+        void SetScissorTest(bool scissorTest);
         void SetupProjectionInShaders();
         void SetLightDirectionInShaders();
         const Vec3& GetCameraPosition() const;
@@ -65,9 +58,12 @@ namespace Pht {
                                    ShaderType shaderType,
                                    const RenderableObject& object);
         ShaderProgram& GetShaderProgram(ShaderType shaderType);
-        void RenderTextInternal(const std::string& text,
-                                const Vec2& position,
-                                const TextProperties& properties);
+        void RenderText(const std::string& text,
+                        const Vec2& position,
+                        const TextProperties& properties);
+        void RenderTextImpl(const std::string& text,
+                            const Vec2& position,
+                            const TextProperties& properties);
         void Render(const RenderPass& renderPass, DistanceFunction distanceFunction);
         Vec2 CalculateTextHudPosition(const TextComponent& textComponent);
         

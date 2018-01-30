@@ -4,16 +4,10 @@
 // Game includes.
 #include "Piece.hpp"
 
-namespace Pht {
-    class IEngine;
-}
-
 namespace BlocksGame {
-    class GameScene;
-    
     class RowBomb: public Piece {
     public:
-        RowBomb(Pht::IEngine& engine, const GameScene& scene);
+        RowBomb();
         
         bool IsRowBomb() const override;
         bool CanRotateAroundZ() const override;

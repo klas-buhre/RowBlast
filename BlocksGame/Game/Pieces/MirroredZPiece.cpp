@@ -1,12 +1,7 @@
 #include "MirroredZPiece.hpp"
 
 // Engine includes.
-#include "Material.hpp"
-#include "BoxMesh.hpp"
-#include "ObjMesh.hpp"
 #include "IEngine.hpp"
-#include "QuadMesh.hpp"
-#include "ISceneManager.hpp"
 
 // Game includes.
 #include "GameScene.hpp"
@@ -15,29 +10,6 @@
 using namespace BlocksGame;
 
 MirroredZPiece::MirroredZPiece(Pht::IEngine& engine, const GameScene& scene) {
-    auto cellSize {scene.GetCellSize()};
-    auto& material {scene.GetGreenMaterial()};
-    auto& sceneManager {engine.GetSceneManager()};
-
-#ifdef HIGH_DETAIL
-    auto subPieceUPtr {
-        sceneManager.CreateRenderableObject(Pht::ObjMesh {"cube_428.obj", cellSize}, material)
-    };
-#else
-    auto subPieceUPtr {
-        sceneManager.CreateRenderableObject(Pht::BoxMesh {0.95, 0.95, 0.95}, material)
-    };
-#endif
-
-    auto subPiece {subPieceUPtr.get()};
-    AddRenderable(std::move(subPieceUPtr));
-
-    RenderableGrid renderableGrid = {
-        {nullptr,  subPiece, subPiece},
-        {nullptr,  subPiece, nullptr},
-        {subPiece, subPiece, nullptr}
-    };
-
     FillGrid fillGrid = {
         {Fill::Empty, Fill::Full, Fill::Full},
         {Fill::Empty, Fill::Full, Fill::Empty},
@@ -52,10 +24,8 @@ MirroredZPiece::MirroredZPiece(Pht::IEngine& engine, const GameScene& scene) {
         {1, 1, 1, 1, 1, 1},
         {1, 1, 1, 1, 1, 1}
     };
-    
-    auto weldRenderable {sceneManager.CreateRenderableObject(Pht::QuadMesh {0.19f, 0.85f}, material)};
 
-    InitGrids(renderableGrid, fillGrid, clickGrid, BlockColor::Green, std::move(weldRenderable));
+    InitGrids(fillGrid, clickGrid, BlockColor::Green);
     SetPreviewCellSize(0.53f);
     SetNumRotations(2);
     
@@ -73,6 +43,7 @@ MirroredZPiece::MirroredZPiece(Pht::IEngine& engine, const GameScene& scene) {
         {{0, 0}, BorderSegmentKind::Left}
     };
     
+    auto cellSize {scene.GetCellSize()};
     GhostPieceProducer ghostPieceProducer {engine, cellSize, Pht::IVec2{3, 3}};
     
     ghostPieceProducer.DrawBorder(border, FillGhostPiece::No);

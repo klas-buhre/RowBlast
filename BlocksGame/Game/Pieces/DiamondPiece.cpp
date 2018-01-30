@@ -1,11 +1,7 @@
 #include "DiamondPiece.hpp"
 
 // Engine includes.
-#include "Material.hpp"
-#include "ObjMesh.hpp"
 #include "IEngine.hpp"
-#include "QuadMesh.hpp"
-#include "ISceneManager.hpp"
 
 // Game includes.
 #include "GameScene.hpp"
@@ -14,39 +10,6 @@
 using namespace BlocksGame;
 
 DiamondPiece::DiamondPiece(Pht::IEngine& engine, const GameScene& scene) {
-    auto cellSize {scene.GetCellSize()};
-    auto& material {scene.GetGreenMaterial()};
-    auto& sceneManager {engine.GetSceneManager()};
-    
-    auto halfSubPieceUPtr {
-        sceneManager.CreateRenderableObject(Pht::ObjMesh {"triangle_428.obj", cellSize}, material)
-    };
-    auto halfSubPiece {halfSubPieceUPtr.get()};
-    AddRenderable(std::move(halfSubPieceUPtr));
-
-    auto halfSubPiece90UPtr {
-        sceneManager.CreateRenderableObject(Pht::ObjMesh {"triangle_428_r90.obj", cellSize}, material)
-    };
-    auto halfSubPiece90 {halfSubPiece90UPtr.get()};
-    AddRenderable(std::move(halfSubPiece90UPtr));
-
-    auto halfSubPiece180UPtr {
-        sceneManager.CreateRenderableObject(Pht::ObjMesh {"triangle_428_r180.obj", cellSize}, material)
-    };
-    auto halfSubPiece180 {halfSubPiece180UPtr.get()};
-    AddRenderable(std::move(halfSubPiece180UPtr));
-
-    auto halfSubPiece270UPtr {
-        sceneManager.CreateRenderableObject(Pht::ObjMesh {"triangle_428_r270.obj", cellSize}, material)
-    };
-    auto halfSubPiece270 {halfSubPiece270UPtr.get()};
-    AddRenderable(std::move(halfSubPiece270UPtr));
-
-    RenderableGrid renderableGrid = {
-        {halfSubPiece,    halfSubPiece90},
-        {halfSubPiece270, halfSubPiece180},
-    };
-
     FillGrid fillGrid = {
         {Fill::LowerRightHalf, Fill::LowerLeftHalf},
         {Fill::UpperRightHalf, Fill::UpperLeftHalf}
@@ -58,10 +21,8 @@ DiamondPiece::DiamondPiece(Pht::IEngine& engine, const GameScene& scene) {
         {1, 1, 1, 1},
         {1, 1, 1, 1}
     };
-    
-    auto weldRenderable {sceneManager.CreateRenderableObject(Pht::QuadMesh {0.19f, 0.85f}, material)};
 
-    InitGrids(renderableGrid, fillGrid, clickGrid, BlockColor::Green, std::move(weldRenderable));
+    InitGrids(fillGrid, clickGrid, BlockColor::Green);
     SetPreviewCellSize(0.6f);
     SetNumRotations(1);
     
@@ -73,6 +34,7 @@ DiamondPiece::DiamondPiece(Pht::IEngine& engine, const GameScene& scene) {
         {{1, 0}, BorderSegmentKind::LowerLeftTiltForDiamond},
     };
     
+    auto cellSize {scene.GetCellSize()};
     GhostPieceProducer ghostPieceProducer {engine, cellSize, Pht::IVec2{2, 2}};
     
     ghostPieceProducer.DrawBorder(border, FillGhostPiece::No);
