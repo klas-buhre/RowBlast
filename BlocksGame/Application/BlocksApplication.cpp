@@ -65,6 +65,7 @@ Ideas:
 Time Estimation in days:
     -Convert GameScene into a Pht::Scene.
         Cost: 10
+        Done
     -Let each GuiView be a Pht::Scene that can be merged into the current scene.
         Cost: 5
     -Finalize gameplay.

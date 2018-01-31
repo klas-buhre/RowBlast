@@ -84,11 +84,10 @@ namespace {
             .mSize = {0.0f, 0.0f, 0.0f}
         },
         CubePathVolume {
-            .mPosition = {5.0f, -30.0f, -20.0f},
+            .mPosition = {10.0f, -30.0f, -20.0f},
             .mSize = {0.0f, 0.0f, 0.0f}
         },
     };
-
 }
         
 GameScene::GameScene(Pht::IEngine& engine,

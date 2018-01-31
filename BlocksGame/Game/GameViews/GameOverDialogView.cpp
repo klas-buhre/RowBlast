@@ -11,7 +11,9 @@
 using namespace BlocksGame;
 
 GameOverDialogView::GameOverDialogView(Pht::IEngine& engine,
-                                       const CommonResources& commonResources) {
+                                       const CommonResources& commonResources) :
+    Pht::GuiView {false} {
+    
     Pht::TextProperties textProperties {commonResources.GetHussarFontSize27()};
     Pht::Vec2 size {engine.GetRenderer().GetHudFrustumSize().x, 7.0f};
     SetSize(size);

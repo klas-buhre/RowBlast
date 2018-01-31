@@ -17,7 +17,9 @@ namespace {
     const Pht::Color circleClickedColor {0.25f, 0.75f, 1.0f};
 }
 
-SettingsButtonView::SettingsButtonView(Pht::IEngine& engine) {
+SettingsButtonView::SettingsButtonView(Pht::IEngine& engine) :
+    Pht::GuiView {false} {
+    
     auto hudFrustumSize {engine.GetRenderer().GetHudFrustumSize()};
     SetPosition({-hudFrustumSize.x / 2.0f + 1.5f, -hudFrustumSize.y / 2.0f + 1.5f});
     

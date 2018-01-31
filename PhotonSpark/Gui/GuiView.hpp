@@ -13,6 +13,7 @@
 namespace Pht {
     class GuiView {
     public:
+        GuiView(bool depthTest);
         virtual ~GuiView();
         
         void SetPosition(const Vec2& position);
@@ -41,10 +42,6 @@ namespace Pht {
         
         const std::vector<std::unique_ptr<Text>>& GetTexts() const {
             return mTexts;
-        }
-        
-        void SetDepthTest(bool depthTest) {
-            mDepthTest = depthTest;
         }
         
         bool GetDepthTest() const {

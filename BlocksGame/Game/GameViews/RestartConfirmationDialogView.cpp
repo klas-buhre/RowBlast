@@ -13,7 +13,9 @@
 using namespace BlocksGame;
 
 RestartConfirmationDialogView::RestartConfirmationDialogView(Pht::IEngine& engine,
-                                                             const CommonResources& commonResources) {
+                                                             const CommonResources& commonResources) :
+    Pht::GuiView {false} {
+    
     Pht::TextProperties textProperties {commonResources.GetHussarFontSize27()};
     Pht::TextProperties restartTextProperties {commonResources.GetHussarFontSize30()};
     
@@ -21,7 +23,6 @@ RestartConfirmationDialogView::RestartConfirmationDialogView(Pht::IEngine& engin
     Pht::Vec2 size {frustumWidth, 11.5f};
     SetSize(size);
     SetPosition({0.0f, 0.0f});
-    SetDepthTest(false);
     
     auto quad {MenuQuad::CreateGray(engine, GetSceneResources(), size)};
     quad->SetPosition({0.0f, 0.0f, -1.0f});

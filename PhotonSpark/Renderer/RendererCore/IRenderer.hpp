@@ -22,9 +22,8 @@ namespace Pht {
         virtual void SetLightDirection(const Vec3& lightDirection) = 0;
         virtual void SetClearColorBuffer(bool clearColorBuffer) = 0;
         virtual void SetHudMode(bool hudMode) = 0;
-        virtual void SetDepthTest(bool depthTest) = 0;
         virtual void SetProjectionMode(ProjectionMode projectionMode) = 0;
-        virtual void Render(const RenderableObject& object, const Mat4& transform) = 0;
+        virtual void RenderObject(const RenderableObject& object, const Mat4& transform) = 0;
         virtual void RenderScene(const Scene& scene) = 0;
         virtual void RenderGuiView(const GuiView& view) = 0;
         virtual int GetAdjustedNumPixels(int numPixels) const = 0;

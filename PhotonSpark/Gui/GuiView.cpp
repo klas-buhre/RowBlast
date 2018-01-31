@@ -8,6 +8,21 @@
 
 using namespace Pht;
 
+namespace {
+    void DisableDepthTest(Pht::SceneObject& sceneObject) {
+        for (auto& child: sceneObject.GetChildren()) {
+            DisableDepthTest(*child);
+        }
+        
+        if (auto* renderableObject {sceneObject.GetRenderable()}) {
+            renderableObject->GetMaterial().GetDepthState().mDepthTest = false;
+        }
+    }
+}
+
+GuiView::GuiView(bool depthTest) :
+    mDepthTest {depthTest} {}
+    
 GuiView::~GuiView() {}
 
 void GuiView::SetPosition(const Vec2& position) {
@@ -16,6 +31,10 @@ void GuiView::SetPosition(const Vec2& position) {
 }
 
 void GuiView::AddSceneObject(std::unique_ptr<SceneObject> sceneObject) {
+    if (mDepthTest == false) {
+        DisableDepthTest(*sceneObject);
+    }
+
     mSceneObjects.push_back(std::move(sceneObject));
     std::sort(std::begin(mSceneObjects),
               std::end(mSceneObjects),

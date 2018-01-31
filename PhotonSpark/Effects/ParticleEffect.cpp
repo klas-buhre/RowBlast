@@ -76,6 +76,7 @@ ParticleEffect::ParticleEffect(SceneObject& sceneObject,
     
     Material material {particleSettings.mTextureFilename};
     material.SetBlend(Blend::Yes);
+    material.GetDepthState().mDepthTest = false;
     
     switch (renderMode) {
         case RenderMode::Points: {

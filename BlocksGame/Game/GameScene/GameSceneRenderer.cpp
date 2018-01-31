@@ -22,7 +22,6 @@
 using namespace BlocksGame;
 
 namespace {
-    const auto previewRotationMatrix {Pht::Mat4::RotateX(-30.0f) * Pht::Mat4::RotateY(-30.0f)};
     const auto dz {0.05f};
 }
 

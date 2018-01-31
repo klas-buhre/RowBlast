@@ -22,9 +22,8 @@ namespace Pht {
         void SetLightDirection(const Vec3& lightDirection) override;
         void SetClearColorBuffer(bool clearColorBuffer) override;
         void SetHudMode(bool hudMode) override;
-        void SetDepthTest(bool depthTest) override;
         void SetProjectionMode(ProjectionMode projectionMode) override;
-        void Render(const RenderableObject& object, const Mat4& modelTransform) override;
+        void RenderObject(const RenderableObject& object, const Mat4& modelTransform) override;
         void RenderScene(const Scene& scene) override;
         void RenderGuiView(const GuiView& view) override;
         int GetAdjustedNumPixels(int numPixels) const override;
@@ -45,6 +44,7 @@ namespace Pht {
         void InitCamera();
         void InitHudFrustum();
         void InitShaders();
+        void SetDepthTest(bool depthTest);
         void SetDepthWrite(bool depthWrite);
         void SetScissorBox(const Vec2& lowerLeft, const Vec2& size);
         void SetScissorTest(bool scissorTest);
@@ -78,8 +78,6 @@ namespace Pht {
             float mAmbientIntensity {1.0f};
         };
         
-        bool mClearColorBuffer {true};
-        bool mHudMode {false};
         ProjectionMode mProjectionMode {ProjectionMode::Perspective};
         GLuint mColorRenderbuffer {0};
         GlobalLight mGlobalLight;
@@ -91,6 +89,8 @@ namespace Pht {
         RenderQueue mRenderQueue;
         std::unordered_map<ShaderType, ShaderProgram> mShaders;
         std::unique_ptr<TextRenderer> mTextRenderer;
+        bool mClearColorBuffer {true};
+        bool mHudMode {false};
     };
 }
 

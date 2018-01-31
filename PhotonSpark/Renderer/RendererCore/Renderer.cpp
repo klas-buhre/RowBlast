@@ -429,7 +429,7 @@ std::unique_ptr<RenderableObject> Renderer::CreateRenderableObject(const IMesh& 
     return std::make_unique<RenderableObject>(material, mesh, shaderProgram.GetVertexFlags());
 }
 
-void Renderer::Render(const RenderableObject& object, const Mat4& modelTransform) {
+void Renderer::RenderObject(const RenderableObject& object, const Mat4& modelTransform) {
     auto& material {object.GetMaterial()};
     auto shaderType {material.GetShaderType()};
     
@@ -460,10 +460,6 @@ void Renderer::Render(const RenderableObject& object, const Mat4& modelTransform
     }
     
     DisableVertexAttributes(shaderProgram);
-    
-    if (IsParticleShader(shaderType)) {
-        SetDepthTest(true);
-    }
 }
 
 void Renderer::SetTransforms(const Mat4& modelTransform, 
@@ -518,12 +514,8 @@ void Renderer::SetMaterialProperties(const ShaderProgram::UniformHandles& unifor
     glUniform1f(uniforms.mOpacity, material.GetOpacity());
     
     BindSpecialTextures(shaderType, material);
-    auto isParticleShader {IsParticleShader(shaderType)};
-    SetupBlend(isParticleShader, material);
-    
-    if (isParticleShader) {
-        SetDepthTest(false);
-    }
+    SetupBlend(IsParticleShader(shaderType), material);
+    SetDepthTest(material.GetDepthState().mDepthTest);
 }
 
 ShaderProgram& Renderer::GetShaderProgram(ShaderType shaderType) {
@@ -609,13 +601,12 @@ void Renderer::RenderTextImpl(const std::string& text,
 
 void Renderer::RenderGuiView(const GuiView& view) {
     SetHudMode(true);
-    SetDepthTest(view.GetDepthTest());
     
     for (auto& sceneObject: view.GetSceneObjects()) {
         auto* renerable {sceneObject->GetRenderable()};
         
         if (renerable && sceneObject->IsVisible()) {
-            Render(*renerable, sceneObject->GetMatrix() * view.GetMatrix());
+            RenderObject(*renerable, sceneObject->GetMatrix() * view.GetMatrix());
         }
     }
 
@@ -625,7 +616,6 @@ void Renderer::RenderGuiView(const GuiView& view) {
         }
     }
     
-    SetDepthTest(true);
     SetHudMode(false);
 }
 
@@ -707,7 +697,7 @@ void Renderer::Render(const RenderPass& renderPass, DistanceFunction distanceFun
         auto* sceneObject {renderEntry.mSceneObject};
         
         if (auto* renderable {sceneObject->GetRenderable()}) {
-            Render(*renderable, sceneObject->GetMatrix());
+            RenderObject(*renderable, sceneObject->GetMatrix());
         }
         
         if (auto* textComponent {sceneObject->GetComponent<TextComponent>()}) {

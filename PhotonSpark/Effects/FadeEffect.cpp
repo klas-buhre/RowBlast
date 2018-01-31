@@ -20,6 +20,7 @@ FadeEffect::FadeEffect(ISceneManager& sceneManager,
     mFadeSpeed {midFade / duration} {
     
     Pht::Material quadMaterial;
+    quadMaterial.GetDepthState().mDepthTest = false;
     
     auto& hudFrustumSize {mRenderer.GetHudFrustumSize()};
     auto width {hudFrustumSize.x + 0.1f};
@@ -75,10 +76,8 @@ FadeEffect::State FadeEffect::Update(float dt) {
 
 void FadeEffect::Render() const {
     mRenderer.SetHudMode(true);
-    mRenderer.SetDepthTest(false);
     mQuad->GetMaterial().SetOpacity(mFade);
-    mRenderer.Render(*mQuad, quadMatrix);
-    mRenderer.SetDepthTest(true);
+    mRenderer.RenderObject(*mQuad, quadMatrix);
     mRenderer.SetHudMode(false);
 }
 

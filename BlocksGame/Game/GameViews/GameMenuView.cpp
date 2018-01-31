@@ -16,7 +16,9 @@ namespace {
     const Pht::Color buttonColor {0.4f, 0.74f, 1.0f};
 }
 
-GameMenuView::GameMenuView(Pht::IEngine& engine, const CommonResources& commonResources) {
+GameMenuView::GameMenuView(Pht::IEngine& engine, const CommonResources& commonResources)
+    : Pht::GuiView {false} {
+    
     Pht::TextProperties buttonTextProperties {commonResources.GetHussarFontSize27()};
     Pht::TextProperties pausedTextProperties {commonResources.GetHussarFontSize30()};
     
@@ -24,7 +26,6 @@ GameMenuView::GameMenuView(Pht::IEngine& engine, const CommonResources& commonRe
     Pht::Vec2 size {frustumWidth, 19.0f};
     SetSize(size);
     SetPosition({0.0f, 0.0f});
-    SetDepthTest(false);
 
     auto quad {MenuQuad::CreateGray(engine, GetSceneResources(), size)};
     quad->SetPosition({0.0f, 0.0f, -1.0f});

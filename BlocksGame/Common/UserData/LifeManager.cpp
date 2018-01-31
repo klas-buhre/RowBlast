@@ -152,6 +152,6 @@ bool LifeManager::LoadState() {
     mLifeLostTimePoint = std::chrono::steady_clock::time_point {
         std::chrono::seconds(lifeLostTimePointInSeconds)
     };
-    
+
     return true;
 }

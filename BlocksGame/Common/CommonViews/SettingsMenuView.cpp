@@ -12,7 +12,9 @@
 
 using namespace BlocksGame;
 
-SettingsMenuView::SettingsMenuView(Pht::IEngine& engine, const CommonResources& commonResources) {
+SettingsMenuView::SettingsMenuView(Pht::IEngine& engine, const CommonResources& commonResources) :
+    Pht::GuiView {false} {
+    
     Pht::TextProperties textProperties {commonResources.GetHussarFontSize27()};
     Pht::TextProperties settingsTextProperties {commonResources.GetHussarFontSize30()};
     
@@ -20,7 +22,6 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine, const CommonResources& 
     
     SetSize(size);
     SetPosition({0.0f, 0.0f});
-    SetDepthTest(false);
     
     auto quad {MenuQuad::CreateGray(engine, GetSceneResources(), size)};
     quad->SetPosition({0.0f, 0.0f, -1.0f});

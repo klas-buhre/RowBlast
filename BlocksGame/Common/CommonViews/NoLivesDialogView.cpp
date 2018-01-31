@@ -19,6 +19,7 @@ namespace {
 NoLivesDialogView::NoLivesDialogView(Pht::IEngine& engine,
                                      const CommonResources& commonResources,
                                      const UserData& userData) :
+    Pht::GuiView {false},
     mUserData {userData} {
     
     Pht::TextProperties textProperties {commonResources.GetHussarFontSize27()};

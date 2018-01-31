@@ -10,7 +10,9 @@
 
 using namespace BlocksGame;
 
-NoMovesDialogView::NoMovesDialogView(Pht::IEngine& engine, const CommonResources& commonResources) {
+NoMovesDialogView::NoMovesDialogView(Pht::IEngine& engine, const CommonResources& commonResources) :
+    Pht::GuiView {false} {
+    
     Pht::TextProperties textProperties {commonResources.GetHussarFontSize27()};
     Pht::Vec2 size {engine.GetRenderer().GetHudFrustumSize().x, 8.0f};
     SetSize(size);
