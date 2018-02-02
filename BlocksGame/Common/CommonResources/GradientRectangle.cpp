@@ -1,11 +1,10 @@
 #include "GradientRectangle.hpp"
 
 // Engine includes.
-#include "IEngine.hpp"
 #include "Scene.hpp"
 #include "Material.hpp"
 #include "QuadMesh.hpp"
-#include "ISceneManager.hpp"
+#include "SceneObject.hpp"
 
 using namespace BlocksGame;
 

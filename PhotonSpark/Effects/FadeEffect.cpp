@@ -7,10 +7,6 @@
 
 using namespace Pht;
 
-namespace {
-    const Mat4 quadMatrix;
-}
-
 FadeEffect::FadeEffect(ISceneManager& sceneManager,
                        IRenderer& renderer,
                        float duration,
@@ -36,6 +32,8 @@ FadeEffect::FadeEffect(ISceneManager& sceneManager,
     };
     
     mQuad = sceneManager.CreateRenderableObject(Pht::QuadMesh {vertices}, quadMaterial);
+    mSceneObject = std::make_unique<SceneObject>(mQuad.get());
+    mQuad->GetMaterial().SetOpacity(mFade);
 }
 
 void FadeEffect::Reset() {
@@ -56,6 +54,7 @@ FadeEffect::State FadeEffect::Update(float dt) {
                 mFade = mMidFade;
                 mState = State::Transition;
             }
+            mQuad->GetMaterial().SetOpacity(mFade);
             break;
         case State::Transition:
             mState = State::FadingIn;
@@ -66,6 +65,7 @@ FadeEffect::State FadeEffect::Update(float dt) {
                 mFade = 0.0f;
                 mState = State::Idle;
             }
+            mQuad->GetMaterial().SetOpacity(mFade);
             break;
         case State::Idle:
             break;
@@ -76,8 +76,7 @@ FadeEffect::State FadeEffect::Update(float dt) {
 
 void FadeEffect::Render() const {
     mRenderer.SetHudMode(true);
-    mQuad->GetMaterial().SetOpacity(mFade);
-    mRenderer.RenderObject(*mQuad, quadMatrix);
+    mRenderer.RenderObject(*mQuad, mSceneObject->GetMatrix());
     mRenderer.SetHudMode(false);
 }
 

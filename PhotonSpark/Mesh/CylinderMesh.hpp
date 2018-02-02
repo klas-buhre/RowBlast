@@ -11,9 +11,13 @@ namespace Pht {
     
     class CylinderMesh: public IMesh {
     public:
-        CylinderMesh(float radius, float height, const Optional<std::string>& name = {});
         CylinderMesh(float radius,
                      float height,
+                     bool createDiscs,
+                     const Optional<std::string>& name = {});
+        CylinderMesh(float radius,
+                     float height,
+                     bool createDiscs,
                      const CylinderTextureCounts& textureCounts,
                      const Optional<std::string>& name = {});
         
@@ -32,6 +36,7 @@ namespace Pht {
         Optional<std::string> mName;
         float mRadius;
         float mHeight;
+        bool mCreateDiscs {true};
         CylinderTextureCounts mTextureCounts;
     };
 }

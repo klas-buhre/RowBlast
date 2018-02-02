@@ -18,6 +18,7 @@
 		620A98311EE2F50A00AD6C61 /* LevelCompletedDialogController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 620A982F1EE2F50A00AD6C61 /* LevelCompletedDialogController.cpp */; };
 		620A98361EE43DD200AD6C61 /* ClearLastBlocksAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 620A98341EE43DD200AD6C61 /* ClearLastBlocksAnimation.cpp */; };
 		6217ACCD1F161B2B001B1B3F /* MiddleIPiece.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6217ACCB1F161B2B001B1B3F /* MiddleIPiece.cpp */; };
+		6217C02D2024DEE10023A6BA /* RoundedCylinder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6217C02B2024DEE10023A6BA /* RoundedCylinder.cpp */; };
 		621A4E721E50B60C00D53AFD /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 621A4E681E50B60C00D53AFD /* Icon.png */; };
 		621D60921FEFB62000052107 /* Materials.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 621D60891FEFB62000052107 /* Materials.cpp */; };
 		621D60931FEFB62000052107 /* Clouds.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 621D608D1FEFB62000052107 /* Clouds.cpp */; };
@@ -263,6 +264,8 @@
 		620A98351EE43DD200AD6C61 /* ClearLastBlocksAnimation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ClearLastBlocksAnimation.hpp; sourceTree = "<group>"; };
 		6217ACCB1F161B2B001B1B3F /* MiddleIPiece.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MiddleIPiece.cpp; sourceTree = "<group>"; };
 		6217ACCC1F161B2B001B1B3F /* MiddleIPiece.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MiddleIPiece.hpp; sourceTree = "<group>"; };
+		6217C02B2024DEE10023A6BA /* RoundedCylinder.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = RoundedCylinder.cpp; sourceTree = "<group>"; };
+		6217C02C2024DEE10023A6BA /* RoundedCylinder.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = RoundedCylinder.hpp; sourceTree = "<group>"; };
 		621A4E681E50B60C00D53AFD /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		621D60881FEFB62000052107 /* FloatingCubes.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FloatingCubes.hpp; sourceTree = "<group>"; };
 		621D60891FEFB62000052107 /* Materials.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Materials.cpp; sourceTree = "<group>"; };
@@ -863,6 +866,8 @@
 				621D608A1FEFB62000052107 /* GradientRectangle.hpp */,
 				621D60891FEFB62000052107 /* Materials.cpp */,
 				621D608F1FEFB62000052107 /* Materials.hpp */,
+				6217C02B2024DEE10023A6BA /* RoundedCylinder.cpp */,
+				6217C02C2024DEE10023A6BA /* RoundedCylinder.hpp */,
 			);
 			path = CommonResources;
 			sourceTree = "<group>";
@@ -1995,6 +2000,7 @@
 				6260A70B1F89196C001F6DCD /* TPiece.cpp in Sources */,
 				62944D9E20053A2D00814D36 /* GLKViewControllerExtension.mm in Sources */,
 				62944D9120053A2D00814D36 /* InputEvent.cpp in Sources */,
+				6217C02D2024DEE10023A6BA /* RoundedCylinder.cpp in Sources */,
 				6286F9BB1FFA4B6A004DEF90 /* MapHud.cpp in Sources */,
 				624693A01EFD1637004AF2A1 /* ProgressManager.cpp in Sources */,
 				623C16D31F51A7D600305752 /* ValidMovesSearch.cpp in Sources */,

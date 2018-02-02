@@ -23,9 +23,7 @@ NoMovesDialogView::NoMovesDialogView(Pht::IEngine& engine, const CommonResources
     AddSceneObject(std::move(quad));
     
     Pht::Vec3 closeButtonPosition {GetSize().x / 2.0f - 1.0f, GetSize().y / 2.0f - 1.0f, -0.5f};
-    mCloseButton = std::make_unique<CloseButton>(engine, *this, closeButtonPosition);
-    mCloseButton->SetText(
-        std::make_unique<Pht::Text>(Pht::Vec2 {-0.23f, -0.23f}, "X", textProperties));
+    mCloseButton = std::make_unique<CloseButton>(engine, *this, closeButtonPosition, textProperties);
 
     Pht::Vec2 buttonSize {6.5f, 2.1f};
     Pht::Vec2 buttonInputSize {180.0f, 47.0f};

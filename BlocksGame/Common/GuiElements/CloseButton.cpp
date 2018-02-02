@@ -23,7 +23,8 @@ namespace {
 
 CloseButton::CloseButton(Pht::IEngine& engine,
                          Pht::GuiView& view,
-                         const Pht::Vec3& position) :
+                         const Pht::Vec3& position,
+                         const Pht::TextProperties& textProperties) :
     mView {view},
     mPosition {position},
     mAudio {engine.GetAudio()} {
@@ -57,11 +58,8 @@ CloseButton::CloseButton(Pht::IEngine& engine,
     mButton->SetOnUpInside(deselectFunction);
     mButton->SetOnUpOutside(deselectFunction);
     mButton->SetOnMoveOutside(deselectFunction);
-}
-
-void CloseButton::SetText(std::unique_ptr<Pht::Text> text) {
-    text->mPosition += Pht::Vec2 {mPosition.x, mPosition.y};
-    mView.AddText(std::move(text));
+    
+    mView.CreateText(position + Pht::Vec3 {-0.23f, -0.23f, -0.1f}, "X", textProperties);
 }
 
 bool CloseButton::IsClicked(const Pht::TouchEvent& event) const {

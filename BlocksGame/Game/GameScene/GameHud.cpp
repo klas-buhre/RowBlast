@@ -49,6 +49,7 @@ GameHud::GameHud(Pht::IEngine& engine,
 
     CreateLightAndCamera(scene, parentObject, hudLayer);
     
+    // CreateTube(scene, parentObject, {-1.0f, -12.3f, -4.0f}, Pht::Vec2 {7.0f, 2.5f}, TubeKind::Glass);
     Pht::TextProperties textProperties {font, 1.0f, Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f}};
     CreateProgressObject(scene, parentObject, textProperties, levelResources);
     CreateMovesObject(scene, parentObject, textProperties);
@@ -196,6 +197,7 @@ void GameHud::CreateNextPiecesObject(Pht::Scene& scene,
     nextPiecesContainer.GetTransform().SetPosition({-2.3f, -12.3f, 0.0f});
     parentObject.AddChild(nextPiecesContainer);
     
+    // CreateTube(scene, nextPiecesContainer, {0.3f, 0.1f, -4.0f}, Pht::Vec2 {3.3f, 2.2f}, TubeKind::Glass);
     CreatePiecesRectangle({0.15f, 0.0f, -2.0f}, false, scene, nextPiecesContainer);
     CreateTextRectangle({0.55f, 1.42f, 0.0f}, 4.8f, false, scene, nextPiecesContainer);
     

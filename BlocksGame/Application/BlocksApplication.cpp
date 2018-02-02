@@ -19,6 +19,9 @@ Backlog:
      convenient to go back to the state before the move and not the initial state.
     -Mega bomb?
   -Rendering:
+    -Could have the rounded cylinder i some places in the HUDs.
+    -GUI: the buttons in the views could be yellow with black text and triangular edges like in
+     Mario Kart 8. There could also be a reflection animation in the button.
     -Recreate the star particle. Possibly by buying a textures for particle systems in unity assets
      store. Look at: https://www.assetstore.unity3d.com/en/#!/content/26701
     -Maybe the bombs could have constant particle effects as if it is about to explode. And they
@@ -55,7 +58,11 @@ Backlog:
     -Credit the icon creator: <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
   
 Ongoing tasks:
-    -GameScene should be a Pht::Scene.
+    -The hud coordinate system seems to use inverted z values. The z near clip plane is supposed to
+     be -1.0 but lesser values than that is still projected and more than 1.0 is clipped. Also,
+     materials with shader type VertexColor should not be depth writing. Disabling depth writing
+     for for those materials lead to wrong rendering because non-depth writing objects are sorted
+     back to front (which is how it should be, not as it is now front to back).
 
 Ideas:
     -The pause button could lead to a widget that has an undo button, a boosters button and a game
@@ -66,7 +73,7 @@ Time Estimation in days:
     -Convert GameScene into a Pht::Scene.
         Cost: 10
         Done
-    -Let each GuiView be a Pht::Scene that can be merged into the current scene.
+    -Let each GuiView be a subscene that can be merged into the current scene.
         Cost: 5
     -Finalize gameplay.
         Cost: 10

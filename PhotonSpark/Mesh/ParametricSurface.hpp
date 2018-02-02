@@ -10,6 +10,10 @@ namespace Pht {
         Optional<std::string> GetName() const override;
         VertexBuffer GetVertices(VertexFlags flags) const override;
         
+        void SetUpperBound(const Vec2& upperBound) {
+            mUpperBound = upperBound;
+        }
+        
     protected:
         ParametricSurface(const IVec2& divisions,
                           const Vec2& upperBound,

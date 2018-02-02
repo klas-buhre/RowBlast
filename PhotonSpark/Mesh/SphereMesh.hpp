@@ -6,7 +6,7 @@
 namespace Pht {
     class SphereMesh: public ParametricSurface {
     public:
-        SphereMesh(float radius, const Optional<std::string>& name = {});
+        explicit SphereMesh(float radius, const Optional<std::string>& name = {});
         SphereMesh(float radius, const IVec2& divisions, const Optional<std::string>& name = {});
         SphereMesh(float radius, const Vec2& textureCount, const Optional<std::string>& name = {});
         SphereMesh(float radius,

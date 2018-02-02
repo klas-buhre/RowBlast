@@ -2,6 +2,7 @@
 #define FadeEffect_hpp
 
 #include "RenderableObject.hpp"
+#include "SceneObject.hpp"
 
 namespace Pht {
     class ISceneManager;
@@ -28,9 +29,14 @@ namespace Pht {
             return mState;
         }
         
+        SceneObject& GetSceneObject() {
+            return *mSceneObject;
+        }
+        
     private:
         IRenderer& mRenderer;
         State mState {State::Idle};
+        std::unique_ptr<SceneObject> mSceneObject;
         std::unique_ptr<RenderableObject> mQuad;
         float mFade {0.0f};
         float mMidFade {0.0f};

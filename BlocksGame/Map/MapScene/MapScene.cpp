@@ -219,7 +219,7 @@ void MapScene::CreatePin(Pht::SceneObject& pinContainerObject,
             mPreviousPin->GetPosition().z + pinPositionDiff.z / 2.0f,
         };
         
-        Pht::CylinderMesh connectionMesh {0.3f, 4.0f, std::string{"mapConnection"}};
+        Pht::CylinderMesh connectionMesh {0.3f, 4.0f, false, std::string{"mapConnection"}};
         auto& connection {mScene->CreateSceneObject(connectionMesh, connectionMaterial)};
         auto& transform {connection.GetTransform()};
         transform.SetRotation({connectionXAngle, 0.0f, connectionZAngle});

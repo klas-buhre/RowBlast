@@ -1,17 +1,12 @@
 #ifndef GradientRectangle_hpp
 #define GradientRectangle_hpp
 
-#include <memory>
-
 // Engine includes.
 #include "Vector.hpp"
-#include "SceneObject.hpp"
 
 namespace Pht {
-    class IEngine;
     class Scene;
-    class Material;
-    class SceneResources;
+    class SceneObject;
 }
 
 namespace BlocksGame {

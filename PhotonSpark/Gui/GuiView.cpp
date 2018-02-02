@@ -3,6 +3,7 @@
 #include <algorithm>
 
 #include "SceneObject.hpp"
+#include "TextComponent.hpp"
 #include "Button.hpp"
 #include "Font.hpp"
 
@@ -50,6 +51,19 @@ void GuiView::AddSceneObject(std::unique_ptr<SceneObject> sceneObject) {
                   }
               }
     );
+}
+
+TextComponent& GuiView::CreateText(const Vec3& position,
+                                   const std::string& text,
+                                   const TextProperties& properties) {
+    auto sceneObject {std::make_unique<SceneObject>()};
+    auto textComponent {std::make_unique<TextComponent>(*sceneObject, text, properties)};
+    
+    auto& retVal {*textComponent};
+    sceneObject->SetComponent<TextComponent>(std::move(textComponent));
+    sceneObject->SetPosition(position);
+    AddSceneObject(std::move(sceneObject));
+    return retVal;
 }
 
 void GuiView::AddText(std::unique_ptr<Text> text) {

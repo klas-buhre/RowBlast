@@ -11,6 +11,8 @@
 #include "SceneResources.hpp"
 
 namespace Pht {
+    class TextComponent;
+    
     class GuiView {
     public:
         GuiView(bool depthTest);
@@ -19,6 +21,9 @@ namespace Pht {
         void SetPosition(const Vec2& position);
         void AddSceneObject(std::unique_ptr<SceneObject> sceneObject);
         void AddText(std::unique_ptr<Text> text);
+        TextComponent& CreateText(const Vec3& position,
+                                  const std::string& text,
+                                  const TextProperties& properties);
         
         void SetSize(const Vec2& size) {
             mSize = size;

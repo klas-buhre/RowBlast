@@ -11,16 +11,26 @@ namespace {
     const auto discIndexCount {slices * 3};
 }
 
-CylinderMesh::CylinderMesh(float radius, float height, const Optional<std::string>& name) :
-    CylinderMesh {radius, height, CylinderTextureCounts{{1.0f, 1.0f}, {1.0f, 1.0f}}, name} {}
+CylinderMesh::CylinderMesh(float radius,
+                           float height,
+                           bool createDiscs,
+                           const Optional<std::string>& name) :
+    CylinderMesh {
+        radius,
+        height,
+        createDiscs,
+        CylinderTextureCounts{{1.0f, 1.0f}, {1.0f, 1.0f}},
+        name} {}
 
 CylinderMesh::CylinderMesh(float radius,
                            float height,
+                           bool createDiscs,
                            const CylinderTextureCounts& textureCounts,
                            const Optional<std::string>& name) :
     mName {name},
     mRadius {radius},
     mHeight {height},
+    mCreateDiscs {createDiscs},
     mTextureCounts {textureCounts} {}
 
 Optional<std::string> CylinderMesh::GetName() const {
@@ -33,8 +43,11 @@ VertexBuffer CylinderMesh::GetVertices(VertexFlags flags) const {
                                flags};
     
     GenerateBody(vertexBuffer);
-    GenerateDisc(vertexBuffer, DiscType::Upper);
-    GenerateDisc(vertexBuffer, DiscType::Lower);
+    
+    if (mCreateDiscs) {
+        GenerateDisc(vertexBuffer, DiscType::Upper);
+        GenerateDisc(vertexBuffer, DiscType::Lower);
+    }
     
     return vertexBuffer;
 }

@@ -11,7 +11,7 @@ namespace Pht {
     class IEngine;
     class GuiView;
     class TouchEvent;
-    class Text;
+    class TextProperties;
     class SceneObject;
     class IAudio;
 }
@@ -21,9 +21,9 @@ namespace BlocksGame {
     public:
         CloseButton(Pht::IEngine& engine,
                     Pht::GuiView& view,
-                    const Pht::Vec3& position);
+                    const Pht::Vec3& position,
+                    const Pht::TextProperties& textProperties);
         
-        void SetText(std::unique_ptr<Pht::Text> text);
         bool IsClicked(const Pht::TouchEvent& event) const;
         
     private:
