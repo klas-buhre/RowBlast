@@ -13,9 +13,7 @@
 
 using namespace BlocksGame;
 
-SettingsMenuView::SettingsMenuView(Pht::IEngine& engine, const CommonResources& commonResources) :
-    Pht::GuiView {false} {
-    
+SettingsMenuView::SettingsMenuView(Pht::IEngine& engine, const CommonResources& commonResources) {
     Pht::TextProperties textProperties {commonResources.GetHussarFontSize27()};
     Pht::TextProperties settingsTextProperties {commonResources.GetHussarFontSize30()};
     

@@ -254,8 +254,8 @@ void GameHud::CreateSmallPiecesRectangle(const Pht::Vec3& position,
                                          Pht::SceneObject& parentObject) {
     Pht::Vec2 size {1.8f, 1.3f};
     auto tilt {0.23f};
-    float leftQuadWidth {0.3f};
-    float rightQuadWidth {0.3f};
+    auto leftQuadWidth {0.3f};
+    auto rightQuadWidth {0.3f};
  
     GradientRectangleColors upperColors {
         .mLeft = {0.9f, 0.9f, 1.0f, 0.0f},
@@ -286,8 +286,8 @@ Pht::SceneObject& GameHud::CreateTextRectangle(const Pht::Vec3& position,
                                                Pht::Scene& scene,
                                                Pht::SceneObject& parentObject) {
     Pht::Vec2 size {length, 0.7f};
-    float leftQuadWidth {1.0f};
-    float rightQuadWidth {1.0f};
+    auto leftQuadWidth {1.0f};
+    auto rightQuadWidth {1.0f};
     
     GradientRectangleColors colors {
         .mLeft = {0.6f, 0.3f, 0.75f, 0.0f},
@@ -312,8 +312,8 @@ Pht::SceneObject& GameHud::CreatePiecesRectangle(const Pht::Vec3& position,
                                                  Pht::SceneObject& parentObject) {
     Pht::Vec2 size {4.8f, 2.2f};
     auto tilt {0.50f};
-    float leftQuadWidth {0.4f};
-    float rightQuadWidth {0.4f};
+    auto leftQuadWidth {0.4f};
+    auto rightQuadWidth {0.4f};
     
     GradientRectangleColors upperColors {
         .mLeft = {0.9f, 0.9f, 1.0f, 0.0f},

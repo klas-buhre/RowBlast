@@ -17,9 +17,7 @@ namespace {
     const Pht::Color buttonColor {0.4f, 0.74f, 1.0f};
 }
 
-GameMenuView::GameMenuView(Pht::IEngine& engine, const CommonResources& commonResources)
-    : Pht::GuiView {false} {
-    
+GameMenuView::GameMenuView(Pht::IEngine& engine, const CommonResources& commonResources) {
     Pht::TextProperties buttonTextProperties {commonResources.GetHussarFontSize27()};
     Pht::TextProperties pausedTextProperties {commonResources.GetHussarFontSize30()};
     

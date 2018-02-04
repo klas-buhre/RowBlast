@@ -359,10 +359,14 @@ void Renderer::SetHudMode(bool hudMode) {
 }
 
 void Renderer::SetDepthTest(bool depthTest) {
-    if (depthTest) {
-        glEnable(GL_DEPTH_TEST);
-    } else {
+    if (!mIsDepthTestAllowed) {
         glDisable(GL_DEPTH_TEST);
+    } else {
+        if (depthTest) {
+            glEnable(GL_DEPTH_TEST);
+        } else {
+            glDisable(GL_DEPTH_TEST);
+        }
     }
 }
 
@@ -675,6 +679,8 @@ void Renderer::Render(const RenderPass& renderPass, DistanceFunction distanceFun
         SetScissorBox(scissorBoxValue.mLowerLeft, scissorBoxValue.mSize);
         SetScissorTest(true);
     }
+    
+    mIsDepthTestAllowed = renderPass.IsDepthTestAllowed();
     
     // Build the render queue.
     mRenderQueue.Build(GetViewMatrix(), distanceFunction, renderPass.GetLayerMask());

@@ -59,7 +59,15 @@ namespace Pht {
         int GetLayerMask() const {
             return mLayerMask;
         }
+
+        void SetIsDepthTestAllowed(bool isDepthTestAllowed) {
+            mIsDepthTestAllowed = isDepthTestAllowed;
+        }
         
+        bool IsDepthTestAllowed() const {
+            return mIsDepthTestAllowed;
+        }
+
     private:
         ProjectionMode mProjectionMode {ProjectionMode::Perspective};
         bool mIsHudMode {false};
@@ -67,6 +75,7 @@ namespace Pht {
         const LightComponent* mLight {nullptr};
         Optional<ScissorBox> mScissorBox;
         int mLayerMask {0};
+        bool mIsDepthTestAllowed {true};
     };
 }
 

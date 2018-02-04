@@ -15,7 +15,6 @@ namespace Pht {
     
     class GuiView {
     public:
-        GuiView(bool depthTest);
         virtual ~GuiView();
         
         void SetPosition(const Vec2& position);
@@ -49,10 +48,6 @@ namespace Pht {
             return mTexts;
         }
         
-        bool GetDepthTest() const {
-            return mDepthTest;
-        }
-        
         SceneResources& GetSceneResources() {
             return mSceneResources;
         }
@@ -61,7 +56,6 @@ namespace Pht {
         Vec2 mSize {0.0f, 0.0f};
         Vec2 mPosition {0.0f, 0.0f};
         Mat4 mMatrix;
-        bool mDepthTest {true};
         SceneResources mSceneResources;
         std::vector<std::unique_ptr<SceneObject>> mSceneObjects;
         std::vector<std::unique_ptr<Text>> mTexts;

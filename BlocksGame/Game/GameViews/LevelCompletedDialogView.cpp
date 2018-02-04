@@ -26,7 +26,6 @@ namespace {
 
 LevelCompletedDialogView::LevelCompletedDialogView(Pht::IEngine& engine,
                                                    const CommonResources& commonResources) :
-    Pht::GuiView {false},
     mEngine {engine} {
     
     Pht::TextProperties textProperties {commonResources.GetHussarFontSize27()};

@@ -91,6 +91,7 @@ namespace Pht {
         std::unique_ptr<TextRenderer> mTextRenderer;
         bool mClearColorBuffer {true};
         bool mHudMode {false};
+        bool mIsDepthTestAllowed {true};
     };
 }
 

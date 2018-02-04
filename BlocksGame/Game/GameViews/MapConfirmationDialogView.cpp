@@ -14,9 +14,7 @@
 using namespace BlocksGame;
 
 MapConfirmationDialogView::MapConfirmationDialogView(Pht::IEngine& engine,
-                                                     const CommonResources& commonResources) :
-    Pht::GuiView {false} {
-    
+                                                     const CommonResources& commonResources) {
     Pht::TextProperties textProperties {commonResources.GetHussarFontSize27()};
     Pht::TextProperties goToMapTextProperties {commonResources.GetHussarFontSize30()};
     

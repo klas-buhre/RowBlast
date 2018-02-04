@@ -46,9 +46,7 @@ namespace {
     }
 }
 
-GameHudView::GameHudView(Pht::IEngine& engine) :
-    Pht::GuiView {false} {
-    
+GameHudView::GameHudView(Pht::IEngine& engine) {
     SetPosition({-5.2f, -11.85f});
     
     const auto circleRadius {0.85f};

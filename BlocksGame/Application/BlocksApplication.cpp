@@ -58,11 +58,6 @@ Backlog:
     -Credit the icon creator: <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
   
 Ongoing tasks:
-    -The hud coordinate system seems to use inverted z values. The z near clip plane is supposed to
-     be -1.0 but lesser values than that is still projected and more than 1.0 is clipped. Also,
-     materials with shader type VertexColor should not be depth writing. Disabling depth writing
-     for for those materials lead to wrong rendering because non-depth writing objects are sorted
-     back to front (which is how it should be, not as it is now front to back).
 
 Ideas:
     -The pause button could lead to a widget that has an undo button, a boosters button and a game
