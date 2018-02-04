@@ -9,6 +9,7 @@
 #include "MenuQuad.hpp"
 #include "UserData.hpp"
 #include "StringUtils.hpp"
+#include "UiLayer.hpp"
 
 using namespace BlocksGame;
 
@@ -28,10 +29,14 @@ NoLivesDialogView::NoLivesDialogView(Pht::IEngine& engine,
     SetPosition({0.0f, 0.0f});
     
     auto quad {MenuQuad::CreateGreen(engine, GetSceneResources(), size)};
-    quad->SetPosition({0.0f, 0.0f, -1.0f});
+    quad->SetPosition({0.0f, 0.0f, UiLayer::background});
     AddSceneObject(std::move(quad));
     
-    Pht::Vec3 closeButtonPosition {GetSize().x / 2.0f - 1.0f, GetSize().y / 2.0f - 1.0f, -0.5f};
+    Pht::Vec3 closeButtonPosition {
+        GetSize().x / 2.0f - 1.0f,
+        GetSize().y / 2.0f - 1.0f,
+        UiLayer::textRectangle
+    };
     mCloseButton = std::make_unique<CloseButton>(engine, *this, closeButtonPosition, textProperties);
       
     Pht::Vec2 buttonSize {6.5f, 2.1f};
@@ -42,7 +47,7 @@ NoLivesDialogView::NoLivesDialogView(Pht::IEngine& engine,
 
     mRefillLivesButton = std::make_unique<MenuButton>(engine,
                                                       *this,
-                                                      Pht::Vec3 {0.0f, -2.0f, -0.5f},
+                                                      Pht::Vec3 {0.0f, -2.0f, UiLayer::textRectangle},
                                                       buttonSize,
                                                       buttonInputSize,
                                                       buttonStyle);

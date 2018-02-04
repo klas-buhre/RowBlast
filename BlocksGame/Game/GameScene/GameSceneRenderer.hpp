@@ -10,8 +10,6 @@
 namespace Pht {
     class IEngine;
     class IRenderer;
-    class ParticleEffect;
-    class SceneObject;
     class RenderableObject;
 }
 
@@ -22,7 +20,6 @@ namespace BlocksGame {
     class ScrollController;
     class GameViewControllers;
     class SubCell;
-    class Piece;
     class FallingPiece;
     class PieceResources;
     class LevelResources;

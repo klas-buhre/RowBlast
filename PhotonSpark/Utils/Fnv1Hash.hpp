@@ -4,8 +4,8 @@
 namespace Pht {
     namespace Hash {
         namespace Detail {
-            constexpr static uint32_t defaultOffsetBasis {0x811C9DC5};
-            constexpr static uint32_t prime {0x01000193};
+            constexpr uint32_t defaultOffsetBasis {0x811C9DC5};
+            constexpr uint32_t prime {0x01000193};
         }
         
         // This should generate a compile-time FNV1a hash if called with a constexpr string.

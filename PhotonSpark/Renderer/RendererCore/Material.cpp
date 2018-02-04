@@ -7,7 +7,10 @@
 using namespace Pht;
 
 Material::Material() :
-    mShaderType {ShaderType::VertexColor} {}
+    mShaderType {ShaderType::VertexColor} {
+
+    mDepthState.mDepthWrite = false;
+}
 
 Material::Material(const std::string& textureName) :
     mShaderType {ShaderType::Textured},

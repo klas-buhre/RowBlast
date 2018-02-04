@@ -9,6 +9,7 @@
 // Game includes.
 #include "CommonResources.hpp"
 #include "MenuQuad.hpp"
+#include "UiLayer.hpp"
 
 using namespace BlocksGame;
 
@@ -28,7 +29,7 @@ GameMenuView::GameMenuView(Pht::IEngine& engine, const CommonResources& commonRe
     SetPosition({0.0f, 0.0f});
 
     auto quad {MenuQuad::CreateGray(engine, GetSceneResources(), size)};
-    quad->SetPosition({0.0f, 0.0f, -1.0f});
+    quad->SetPosition({0.0f, 0.0f, UiLayer::background});
     AddSceneObject(std::move(quad));
 
     Pht::Material lineMaterial {Pht::Color{1.0f, 1.0f, 1.0f}};
@@ -39,7 +40,7 @@ GameMenuView::GameMenuView(Pht::IEngine& engine, const CommonResources& commonRe
                                        lineMaterial,
                                        GetSceneResources())
     };
-    lineSceneObject->SetPosition({0.0f, 6.0f, 0.0f});
+    lineSceneObject->SetPosition({0.0f, 6.0f, UiLayer::textRectangle});
     AddSceneObject(std::move(lineSceneObject));
     
     auto pausedText {
@@ -58,7 +59,7 @@ GameMenuView::GameMenuView(Pht::IEngine& engine, const CommonResources& commonRe
 
     mResumeButton = std::make_unique<MenuButton>(engine,
                                                  *this,
-                                                 Pht::Vec3 {0.0f, 3.6f, -0.5f},
+                                                 Pht::Vec3 {0.0f, 3.6f, UiLayer::textRectangle},
                                                  buttonSize,
                                                  buttonInputSize,
                                                  buttonStyle);
@@ -67,7 +68,7 @@ GameMenuView::GameMenuView(Pht::IEngine& engine, const CommonResources& commonRe
 
     mUndoButton = std::make_unique<MenuButton>(engine,
                                                *this,
-                                               Pht::Vec3 {0.0f, 1.3f, -0.5f},
+                                               Pht::Vec3 {0.0f, 1.3f, UiLayer::textRectangle},
                                                buttonSize,
                                                buttonInputSize,
                                                buttonStyle);
@@ -76,7 +77,7 @@ GameMenuView::GameMenuView(Pht::IEngine& engine, const CommonResources& commonRe
     
     mRestartButton = std::make_unique<MenuButton>(engine,
                                                   *this,
-                                                  Pht::Vec3 {0.0f, -1.0f, -0.5f},
+                                                  Pht::Vec3 {0.0f, -1.0f, UiLayer::textRectangle},
                                                   buttonSize,
                                                   buttonInputSize,
                                                   buttonStyle);
@@ -85,7 +86,7 @@ GameMenuView::GameMenuView(Pht::IEngine& engine, const CommonResources& commonRe
 
     mSettingsButton = std::make_unique<MenuButton>(engine,
                                                    *this,
-                                                   Pht::Vec3 {0.0f, -3.3f, -0.5f},
+                                                   Pht::Vec3 {0.0f, -3.3f, UiLayer::textRectangle},
                                                    buttonSize,
                                                    buttonInputSize,
                                                    buttonStyle);
@@ -94,7 +95,7 @@ GameMenuView::GameMenuView(Pht::IEngine& engine, const CommonResources& commonRe
 
     mMapButton = std::make_unique<MenuButton>(engine,
                                               *this,
-                                              Pht::Vec3 {0.0f, -5.6f, -0.5f},
+                                              Pht::Vec3 {0.0f, -5.6f, UiLayer::textRectangle},
                                               buttonSize,
                                               buttonInputSize,
                                               buttonStyle);

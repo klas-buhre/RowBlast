@@ -315,7 +315,6 @@
 		624447111EDDD2C40080ECE8 /* BlocksApplication.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = BlocksApplication.hpp; sourceTree = "<group>"; };
 		6244471F1EDDD2C40080ECE8 /* CloseButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CloseButton.cpp; sourceTree = "<group>"; };
 		624447201EDDD2C40080ECE8 /* CloseButton.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CloseButton.hpp; sourceTree = "<group>"; };
-		624447211EDDD2C40080ECE8 /* InputUtil.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = InputUtil.hpp; sourceTree = "<group>"; };
 		624447221EDDD2C40080ECE8 /* MenuButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MenuButton.cpp; sourceTree = "<group>"; };
 		624447231EDDD2C40080ECE8 /* MenuButton.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MenuButton.hpp; sourceTree = "<group>"; };
 		624447241EDDD2C40080ECE8 /* MenuQuad.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MenuQuad.cpp; sourceTree = "<group>"; };
@@ -493,6 +492,8 @@
 		6270DCA81FCB248E00FB457D /* star_particle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star_particle.png; sourceTree = "<group>"; };
 		6270DCB11FCDA99100FB457D /* TitleScene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TitleScene.cpp; sourceTree = "<group>"; };
 		6270DCB21FCDA99100FB457D /* TitleScene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TitleScene.hpp; sourceTree = "<group>"; };
+		6273A91A20275CFB00BF542A /* UiLayer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = UiLayer.hpp; sourceTree = "<group>"; };
+		6273A91C2027663400BF542A /* InputUtil.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = InputUtil.hpp; sourceTree = "<group>"; };
 		628065E8201399AE00F86754 /* PieceResources.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PieceResources.cpp; sourceTree = "<group>"; };
 		628065E9201399AE00F86754 /* PieceResources.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PieceResources.hpp; sourceTree = "<group>"; };
 		628065EB2014F7A700F86754 /* SceneObjectPool.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SceneObjectPool.cpp; sourceTree = "<group>"; };
@@ -875,6 +876,7 @@
 		621D60971FEFB62A00052107 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				6273A91C2027663400BF542A /* InputUtil.hpp */,
 				621D60981FEFB62A00052107 /* Settings.hpp */,
 				621D609A1FEFB62A00052107 /* StringUtils.cpp */,
 				621D609C1FEFB62A00052107 /* StringUtils.hpp */,
@@ -920,13 +922,13 @@
 			children = (
 				6244471F1EDDD2C40080ECE8 /* CloseButton.cpp */,
 				624447201EDDD2C40080ECE8 /* CloseButton.hpp */,
-				624447211EDDD2C40080ECE8 /* InputUtil.hpp */,
 				624447221EDDD2C40080ECE8 /* MenuButton.cpp */,
 				624447231EDDD2C40080ECE8 /* MenuButton.hpp */,
 				624447241EDDD2C40080ECE8 /* MenuQuad.cpp */,
 				624447251EDDD2C40080ECE8 /* MenuQuad.hpp */,
 				624447261EDDD2C40080ECE8 /* SlidingMenuAnimation.cpp */,
 				624447271EDDD2C40080ECE8 /* SlidingMenuAnimation.hpp */,
+				6273A91A20275CFB00BF542A /* UiLayer.hpp */,
 			);
 			path = GuiElements;
 			sourceTree = "<group>";

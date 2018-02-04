@@ -14,13 +14,14 @@
 
 // Game includes.
 #include "CommonResources.hpp"
+#include "UiLayer.hpp"
 
 using namespace BlocksGame;
 
 namespace {
     enum class Layer {
         Background,
-        Text
+        Ui
     };
 
     const std::vector<CloudPathVolume> cloudPaths {
@@ -144,9 +145,9 @@ TitleScene::TitleScene(Pht::IEngine& engine, const CommonResources& commonResour
     auto scene {sceneManager.CreateScene(Pht::Hash::Fnv1a("titleScene"))};
     
     scene->AddRenderPass(Pht::RenderPass {static_cast<int>(Layer::Background)});
-    Pht::RenderPass textRenderPass {static_cast<int>(Layer::Text)};
-    textRenderPass.SetHudMode(true);
-    scene->AddRenderPass(textRenderPass);
+    Pht::RenderPass uiRenderPass {static_cast<int>(Layer::Ui)};
+    uiRenderPass.SetHudMode(true);
+    scene->AddRenderPass(uiRenderPass);
     
     auto& light {scene->CreateGlobalLight()};
     light.SetDirection({1.0f, 1.0f, 1.0f});
@@ -176,16 +177,16 @@ TitleScene::TitleScene(Pht::IEngine& engine, const CommonResources& commonResour
     
     auto& titleText {scene->CreateText("BLOCKS", {mFont, 1.0f, Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f}})};
     auto& titleTextSceneObject {titleText.GetSceneObject()};
-    titleTextSceneObject.GetTransform().SetPosition({-6.5f, 6.0f, 0.0f});
-    titleTextSceneObject.SetLayer(static_cast<int>(Layer::Text));
+    titleTextSceneObject.GetTransform().SetPosition({-6.5f, 6.0f, UiLayer::text});
+    titleTextSceneObject.SetLayer(static_cast<int>(Layer::Ui));
     scene->GetRoot().AddChild(titleTextSceneObject);
 
     auto& tapText {
         scene->CreateText("Tap to continue...", {mTapFont, 1.0f, Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f}})
     };
     auto& tapTextSceneObject {tapText.GetSceneObject()};
-    tapTextSceneObject.GetTransform().SetPosition({-3.7f, -6.0f, 0.0f});
-    tapTextSceneObject.SetLayer(static_cast<int>(Layer::Text));
+    tapTextSceneObject.GetTransform().SetPosition({-3.7f, -6.0f, UiLayer::text});
+    tapTextSceneObject.SetLayer(static_cast<int>(Layer::Ui));
     scene->GetRoot().AddChild(tapTextSceneObject);
     
     scene->SetDistanceFunction(Pht::DistanceFunction::WorldSpaceNegativeZ);

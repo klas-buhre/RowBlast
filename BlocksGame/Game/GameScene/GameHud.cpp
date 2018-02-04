@@ -15,6 +15,7 @@
 #include "LevelResources.hpp"
 #include "PieceResources.hpp"
 #include "GameHudController.hpp"
+#include "UiLayer.hpp"
 
 using namespace BlocksGame;
 
@@ -25,8 +26,8 @@ namespace {
     const auto cellSize {1.25f};
 
     const std::array<Pht::Vec3, 2> pieceRelativePositions = {
-        Pht::Vec3{-0.73f, 0.01f, -1.0f},
-        Pht::Vec3{1.27f, 0.01f, -1.0f}
+        Pht::Vec3{-0.73f, 0.01f, UiLayer::block},
+        Pht::Vec3{1.27f, 0.01f, UiLayer::block}
     };
 }
 
@@ -49,7 +50,6 @@ GameHud::GameHud(Pht::IEngine& engine,
 
     CreateLightAndCamera(scene, parentObject, hudLayer);
     
-    // CreateTube(scene, parentObject, {-1.0f, -12.3f, -4.0f}, Pht::Vec2 {7.0f, 2.5f}, TubeKind::Glass);
     Pht::TextProperties textProperties {font, 1.0f, Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f}};
     CreateProgressObject(scene, parentObject, textProperties, levelResources);
     CreateMovesObject(scene, parentObject, textProperties);
@@ -86,20 +86,23 @@ void GameHud::CreateProgressObject(Pht::Scene& scene,
                                    const Pht::TextProperties& textProperties,
                                    const LevelResources& levelResources) {
     auto& progressContainer {scene.CreateSceneObject()};
-    progressContainer.GetTransform().SetPosition({-4.1f, 12.6f, 0.0f});
+    progressContainer.GetTransform().SetPosition({-4.1f, 12.6f, UiLayer::root});
     parentObject.AddChild(progressContainer);
     
-    CreateTextRectangle({0.9f, 0.2f, -3.0f}, 4.4f, false, scene, progressContainer);
+    Pht::Vec3 textRectanglePosition {0.9f, 0.2f, UiLayer::lowerTextRectangle};
+    CreateTextRectangle(textRectanglePosition, 4.4f, false, scene, progressContainer);
     
     std::string text {"    "};  // Warning! Must be four spaces to fit digits.
     mProgressText = &scene.CreateText(text, textProperties);
     auto& progressTextSceneobject {mProgressText->GetSceneObject()};
-    progressTextSceneobject.GetTransform().SetPosition({1.1f, 0.0f, 0.0f});
+    progressTextSceneobject.GetTransform().SetPosition({1.1f, 0.0f, UiLayer::text});
     progressContainer.AddChild(progressTextSceneobject);
     
     switch (mLevelObjective) {
         case Level::Objective::Clear:
-            CreateSmallPiecesRectangle({0.15f, 0.1f, -2.0f}, scene, progressContainer);
+            CreateSmallPiecesRectangle({0.15f, 0.1f, UiLayer::piecesRectangle},
+                                       scene,
+                                       progressContainer);
             CreateGrayBlock(scene, progressContainer, levelResources);
             break;
         case Level::Objective::Build:
@@ -115,7 +118,7 @@ void GameHud::CreateGrayBlock(Pht::Scene& scene,
     grayBlock.SetRenderable(&levelResources.GetLevelBlockRenderable(BlockRenderableKind::Full));
     
     auto& transform {grayBlock.GetTransform()};
-    transform.SetPosition({0.19f, 0.2f, -1.0f});
+    transform.SetPosition({0.19f, 0.2f, UiLayer::block});
     transform.SetRotation({-30.0f, -30.0f, 0.0f});
     auto scale {0.505f};
     transform.SetScale({scale, scale, scale});
@@ -130,7 +133,7 @@ void GameHud::CreateBlueprintSlot(Pht::Scene& scene,
     blueprintSlot.SetRenderable(&levelResources.GetBlueprintSlotRenderable());
     
     auto& transform {blueprintSlot.GetTransform()};
-    transform.SetPosition({0.55f, 0.2f, -1.0f});
+    transform.SetPosition({0.55f, 0.2f, UiLayer::block});
     transform.SetRotation({-30.0f, -30.0f, 0.0f});
     auto scale {0.56f};
     transform.SetScale({scale, scale, scale});
@@ -142,18 +145,19 @@ void GameHud::CreateMovesObject(Pht::Scene& scene,
                                 Pht::SceneObject& parentObject,
                                 const Pht::TextProperties& textProperties) {
     auto& movesContainer {scene.CreateSceneObject()};
-    movesContainer.GetTransform().SetPosition({3.1f, 12.6f, 0.0f});
+    movesContainer.GetTransform().SetPosition({3.1f, 12.6f, UiLayer::root});
     parentObject.AddChild(movesContainer);
     
-    CreateTextRectangle({0.9f, 0.2f, -3.0f}, 4.4f, false, scene, movesContainer);
+    Pht::Vec3 textRectanglePosition {0.9f, 0.2f, UiLayer::lowerTextRectangle};
+    CreateTextRectangle(textRectanglePosition, 4.4f, false, scene, movesContainer);
     
     std::string text {"   "};   // Warning! Must be three spaces to fit digits.
     mMovesText = &scene.CreateText(text, textProperties);
     auto& movesTextSceneobject {mMovesText->GetSceneObject()};
-    movesTextSceneobject.GetTransform().SetPosition({1.1f, 0.0f, 0.0f});
+    movesTextSceneobject.GetTransform().SetPosition({1.1f, 0.0f, UiLayer::text});
     movesContainer.AddChild(movesTextSceneobject);
     
-    CreateSmallPiecesRectangle({0.15f, 0.1f, -2.0f}, scene, movesContainer);
+    CreateSmallPiecesRectangle({0.15f, 0.1f, UiLayer::piecesRectangle}, scene, movesContainer);
     CreateLPiece(scene, movesContainer);
 }
 
@@ -162,7 +166,7 @@ void GameHud::CreateLPiece(Pht::Scene& scene, Pht::SceneObject& movesContainer) 
     movesContainer.AddChild(lPiece);
     
     auto& baseTransform {lPiece.GetTransform()};
-    baseTransform.SetPosition({0.12f, 0.2f, 0.0f});
+    baseTransform.SetPosition({0.12f, 0.2f, UiLayer::root});
     baseTransform.SetRotation({-30.0f, -30.0f, 0.0f});
     auto scale {0.32f};
     baseTransform.SetScale({scale, scale, scale});
@@ -194,16 +198,17 @@ void GameHud::CreateNextPiecesObject(Pht::Scene& scene,
                                      const Pht::TextProperties& textProperties,
                                      const Level& level) {
     auto& nextPiecesContainer {scene.CreateSceneObject()};
-    nextPiecesContainer.GetTransform().SetPosition({-2.3f, -12.3f, 0.0f});
+    nextPiecesContainer.GetTransform().SetPosition({-2.3f, -12.3f, UiLayer::root});
     parentObject.AddChild(nextPiecesContainer);
     
-    // CreateTube(scene, nextPiecesContainer, {0.3f, 0.1f, -4.0f}, Pht::Vec2 {3.3f, 2.2f}, TubeKind::Glass);
-    CreatePiecesRectangle({0.15f, 0.0f, -2.0f}, false, scene, nextPiecesContainer);
-    CreateTextRectangle({0.55f, 1.42f, 0.0f}, 4.8f, false, scene, nextPiecesContainer);
+    CreatePiecesRectangle({0.15f, 0.0f, UiLayer::piecesRectangle}, false, scene, nextPiecesContainer);
+    
+    Pht::Vec3 textRectanglePosition {0.55f, 1.42f, UiLayer::textRectangle};
+    CreateTextRectangle(textRectanglePosition, 4.8f, false, scene, nextPiecesContainer);
     
     auto& text {scene.CreateText("NEXT", textProperties)};
     auto& textSceneObject {text.GetSceneObject()};
-    textSceneObject.SetPosition({-0.1f, 1.22f, 0.0f});
+    textSceneObject.SetPosition({-0.1f, 1.22f, UiLayer::text});
     nextPiecesContainer.AddChild(textSceneObject);
     
     CreateTwoPreviewPieces(mNextPieces, nextPiecesContainer, level);
@@ -214,22 +219,22 @@ void GameHud::CreateSelectablePiecesObject(Pht::Scene& scene,
                                            const Pht::TextProperties& textProperties,
                                            const Level& level) {
     auto& selectablePiecesContainer {scene.CreateSceneObject()};
-    selectablePiecesContainer.GetTransform().SetPosition({3.1f, -12.3f, 0.0f});
+    selectablePiecesContainer.GetTransform().SetPosition({3.1f, -12.3f, UiLayer::root});
     parentObject.AddChild(selectablePiecesContainer);
     
-    mSelectablePiecesRectangle = &CreatePiecesRectangle({0.15f, 0.0f, -2.0f},
+    mSelectablePiecesRectangle = &CreatePiecesRectangle({0.15f, 0.0f, UiLayer::piecesRectangle},
                                                         false,
                                                         scene,
                                                         selectablePiecesContainer);
-    mSwitchTextRectangle = &CreateTextRectangle({0.55f, 1.42f, 0.0f}, 4.8f,
+    mSwitchTextRectangle = &CreateTextRectangle({0.55f, 1.42f, UiLayer::textRectangle}, 4.8f,
                                                 false,
                                                 scene,
                                                 selectablePiecesContainer);
-    mBrightSelectablePiecesRectangle = &CreatePiecesRectangle({0.15f, 0.0f, -2.0f},
+    mBrightSelectablePiecesRectangle = &CreatePiecesRectangle({0.15f, 0.0f, UiLayer::piecesRectangle},
                                                               true,
                                                               scene,
                                                               selectablePiecesContainer);
-    mBrightSwitchTextRectangle = &CreateTextRectangle({0.55f, 1.42f, 0.0f}, 4.8f,
+    mBrightSwitchTextRectangle = &CreateTextRectangle({0.55f, 1.42f, UiLayer::textRectangle}, 4.8f,
                                                       true,
                                                       scene,
                                                       selectablePiecesContainer);
@@ -238,7 +243,7 @@ void GameHud::CreateSelectablePiecesObject(Pht::Scene& scene,
 
     auto& text {scene.CreateText("SWITCH", textProperties)};
     auto& textSceneObject {text.GetSceneObject()};
-    textSceneObject.SetPosition({-0.55f, 1.22f, 0.0f});
+    textSceneObject.SetPosition({-0.55f, 1.22f, UiLayer::text});
     selectablePiecesContainer.AddChild(textSceneObject);
     
     CreateTwoPreviewPieces(mSelectablePieces, selectablePiecesContainer, level);

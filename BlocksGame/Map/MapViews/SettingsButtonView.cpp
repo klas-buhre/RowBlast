@@ -9,6 +9,7 @@
 #include "SceneObject.hpp"
 #include "Font.hpp"
 #include "ISceneManager.hpp"
+#include "UiLayer.hpp"
 
 using namespace BlocksGame;
 
@@ -33,7 +34,7 @@ SettingsButtonView::SettingsButtonView(Pht::IEngine& engine) :
                                       circleMaterial,
                                       GetSceneResources())
     };
-    circleSceneObject->SetPosition({0.0f, 0.0f, -2.0f});
+    circleSceneObject->SetPosition({0.0f, 0.0f, UiLayer::background});
     auto& circleMaterialCapture {circleSceneObject->GetRenderable()->GetMaterial()};
     auto& circleSceneObjectCapture {*circleSceneObject};
     

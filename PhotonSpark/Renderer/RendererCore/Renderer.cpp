@@ -677,9 +677,7 @@ void Renderer::Render(const RenderPass& renderPass, DistanceFunction distanceFun
     }
     
     // Build the render queue.
-    mRenderQueue.Build(GetViewMatrix(),
-                       mHudMode ? DistanceFunction::WorldSpaceZ : distanceFunction,
-                       renderPass.GetLayerMask());
+    mRenderQueue.Build(GetViewMatrix(), distanceFunction, renderPass.GetLayerMask());
     
     // Start by rendering the opaque objects and enable depth write for those.
     SetDepthWrite(true);

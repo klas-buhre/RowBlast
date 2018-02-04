@@ -9,6 +9,7 @@
 // Game includes.
 #include "CommonResources.hpp"
 #include "MenuQuad.hpp"
+#include "UiLayer.hpp"
 
 using namespace BlocksGame;
 
@@ -25,7 +26,7 @@ MapConfirmationDialogView::MapConfirmationDialogView(Pht::IEngine& engine,
     SetPosition({0.0f, 0.0f});
     
     auto quad {MenuQuad::CreateGray(engine, GetSceneResources(), size)};
-    quad->SetPosition({0.0f, 0.0f, -1.0f});
+    quad->SetPosition({0.0f, 0.0f, UiLayer::background});
     AddSceneObject(std::move(quad));
     
     auto restartText {
@@ -40,7 +41,7 @@ MapConfirmationDialogView::MapConfirmationDialogView(Pht::IEngine& engine,
                                                    lineMaterial,
                                                    GetSceneResources())
     };
-    lineSceneObject->SetPosition({0.0f, 3.0f, 0.0f});
+    lineSceneObject->SetPosition({0.0f, 3.0f, UiLayer::textRectangle});
     AddSceneObject(std::move(lineSceneObject));
     
     auto textLine1 {
@@ -66,7 +67,7 @@ MapConfirmationDialogView::MapConfirmationDialogView(Pht::IEngine& engine,
     
     mYesButton = std::make_unique<MenuButton>(engine,
                                               *this,
-                                              Pht::Vec3 {0.0f, -1.4f, -0.5f},
+                                              Pht::Vec3 {0.0f, -1.4f, UiLayer::textRectangle},
                                               buttonSize,
                                               buttonInputSize,
                                               buttonStyle);
@@ -75,7 +76,7 @@ MapConfirmationDialogView::MapConfirmationDialogView(Pht::IEngine& engine,
     
     mNoButton = std::make_unique<MenuButton>(engine,
                                              *this,
-                                             Pht::Vec3 {0.0f, -3.7f, -0.5f},
+                                             Pht::Vec3 {0.0f, -3.7f, UiLayer::textRectangle},
                                              buttonSize,
                                              buttonInputSize,
                                              buttonStyle);

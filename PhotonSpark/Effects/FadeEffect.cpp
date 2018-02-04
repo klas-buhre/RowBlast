@@ -39,6 +39,7 @@ FadeEffect::FadeEffect(ISceneManager& sceneManager,
 void FadeEffect::Reset() {
     mFade = 0.0f;
     mState = State::Idle;
+    mQuad->GetMaterial().SetOpacity(mFade);
 }
 
 void FadeEffect::Start() {

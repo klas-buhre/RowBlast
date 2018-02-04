@@ -9,6 +9,7 @@
 // Game includes.
 #include "CommonResources.hpp"
 #include "MenuQuad.hpp"
+#include "UiLayer.hpp"
 
 using namespace BlocksGame;
 
@@ -24,7 +25,7 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine, const CommonResources& 
     SetPosition({0.0f, 0.0f});
     
     auto quad {MenuQuad::CreateGray(engine, GetSceneResources(), size)};
-    quad->SetPosition({0.0f, 0.0f, -1.0f});
+    quad->SetPosition({0.0f, 0.0f, UiLayer::background});
     AddSceneObject(std::move(quad));
     
     Pht::Material lineMaterial {Pht::Color{1.0f, 1.0f, 1.0f}};
@@ -35,7 +36,7 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine, const CommonResources& 
                                        lineMaterial,
                                        GetSceneResources())
     };
-    lineSceneObject->SetPosition({0.0f, 3.3f, 0.0f});
+    lineSceneObject->SetPosition({0.0f, 3.3f, UiLayer::textRectangle});
     AddSceneObject(std::move(lineSceneObject));
     
     AddText(std::make_unique<Pht::Text>(Pht::Vec2 {-2.0f, 4.3f}, "SETTINGS", settingsTextProperties));
@@ -45,7 +46,7 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine, const CommonResources& 
     auto controlsBarSceneObject {
         sceneManager.CreateSceneObject(Pht::QuadMesh {7.0f, 1.72f}, barMaterial, GetSceneResources())
     };
-    controlsBarSceneObject->SetPosition({-2.0f, 1.3f, -0.5f});
+    controlsBarSceneObject->SetPosition({-2.0f, 1.3f, UiLayer::textRectangle});
     AddSceneObject(std::move(controlsBarSceneObject));
     
     AddText(std::make_unique<Pht::Text>(Pht::Vec2 {-4.65f, 1.07f}, "CONTROLS", textProperties));
@@ -58,7 +59,7 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine, const CommonResources& 
     buttonStyle.mOpacity = 0.76f;
     buttonStyle.mIsRounded = false;
     
-    Pht::Vec3 controlsButtonPosition {3.5f, 1.3f, -0.5f};
+    Pht::Vec3 controlsButtonPosition {3.5f, 1.3f, UiLayer::textRectangle};
     mControlsButton = std::make_unique<MenuButton>(engine,
                                                   *this,
                                                   controlsButtonPosition,
@@ -88,7 +89,7 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine, const CommonResources& 
         
     AddText(std::make_unique<Pht::Text>(Pht::Vec2 {-4.65f, -1.53f}, "SOUND", textProperties));
     
-    Pht::Vec3 soundButtonPosition {3.5f, -1.3f, -0.5f};
+    Pht::Vec3 soundButtonPosition {3.5f, -1.3f, UiLayer::textRectangle};
     mSoundButton = std::make_unique<MenuButton>(engine,
                                                 *this,
                                                 soundButtonPosition,
@@ -118,7 +119,7 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine, const CommonResources& 
     
     mBackButton = std::make_unique<MenuButton>(engine,
                                                *this,
-                                               Pht::Vec3 {0.0f, -3.9f, -0.5f},
+                                               Pht::Vec3 {0.0f, -3.9f, UiLayer::textRectangle},
                                                backButtonSize,
                                                backButtonInputSize,
                                                backButtonStyle);

@@ -10,6 +10,7 @@
 #include "OfflineRasterizer.hpp"
 #include "IImage.hpp"
 #include "ISceneManager.hpp"
+#include "UiLayer.hpp"
 
 using namespace BlocksGame;
 
@@ -68,26 +69,26 @@ GameHudView::GameHudView(Pht::IEngine& engine) :
     auto rasterizer {std::make_unique<Pht::OfflineRasterizer>(coordinateSystemSize, imageSize)};
     
     Pht::Vec4 fillColor {0.75f, 0.35f, 0.85f, 0.63f};
-    auto buttonQuadSceneObject {CreatePauseButtonSceneObject(*rasterizer,
-                                                             engine,
-                                                             coordinateSystemSize,
-                                                             circleRadius,
-                                                             fillColor,
-                                                             GetSceneResources())};
-    auto& buttonQuadSceneObjectCapture {*buttonQuadSceneObject};
+    auto pauseButtonSceneObject {CreatePauseButtonSceneObject(*rasterizer,
+                                                              engine,
+                                                              coordinateSystemSize,
+                                                              circleRadius,
+                                                              fillColor,
+                                                              GetSceneResources())};
+    auto& pauseButtonSceneObjectCapture {*pauseButtonSceneObject};
     
     rasterizer->ClearBuffer();
     
     Pht::Vec4 pressedFillColor {0.95f, 0.6f, 0.95f, 0.63f};
-    auto pressedButtonQuadSceneObject {CreatePauseButtonSceneObject(*rasterizer,
-                                                                    engine,
-                                                                    coordinateSystemSize,
-                                                                    circleRadius,
-                                                                    pressedFillColor,
-                                                                    GetSceneResources())};
-    pressedButtonQuadSceneObject->SetScale(1.35f);
-    pressedButtonQuadSceneObject->SetIsVisible(false);
-    auto& pressedButtonQuadSceneObjectCapture {*pressedButtonQuadSceneObject};
+    auto pressedPauseButtonSceneObject {CreatePauseButtonSceneObject(*rasterizer,
+                                                                     engine,
+                                                                     coordinateSystemSize,
+                                                                     circleRadius,
+                                                                     pressedFillColor,
+                                                                     GetSceneResources())};
+    pressedPauseButtonSceneObject->SetScale(1.35f);
+    pressedPauseButtonSceneObject->SetIsVisible(false);
+    auto& pressedPauseButtonSceneObjectCapture {*pressedPauseButtonSceneObject};
 
     auto buttonSceneObject {std::make_unique<Pht::SceneObject>(nullptr)};
     
@@ -97,27 +98,27 @@ GameHudView::GameHudView(Pht::IEngine& engine) :
     AddSceneObject(std::move(buttonSceneObject));
     
     auto pausePressedFunction {[&] () {
-        buttonQuadSceneObjectCapture.SetIsVisible(false);
-        pressedButtonQuadSceneObjectCapture.SetIsVisible(true);
+        pauseButtonSceneObjectCapture.SetIsVisible(false);
+        pressedPauseButtonSceneObjectCapture.SetIsVisible(true);
     }};
     
     mPauseButton->SetOnDown(pausePressedFunction);
     
     auto pauseUnpressedFunction {[&] () {
-        buttonQuadSceneObjectCapture.SetIsVisible(true);
-        pressedButtonQuadSceneObjectCapture.SetIsVisible(false);
+        pauseButtonSceneObjectCapture.SetIsVisible(true);
+        pressedPauseButtonSceneObjectCapture.SetIsVisible(false);
     }};
     
     mPauseButton->SetOnUpInside(pauseUnpressedFunction);
     mPauseButton->SetOnUpOutside(pauseUnpressedFunction);
     mPauseButton->SetOnMoveOutside(pauseUnpressedFunction);
     
-    AddSceneObject(std::move(buttonQuadSceneObject));
-    AddSceneObject(std::move(pressedButtonQuadSceneObject));
+    AddSceneObject(std::move(pauseButtonSceneObject));
+    AddSceneObject(std::move(pressedPauseButtonSceneObject));
     
     auto switchButtonSceneObject {std::make_unique<Pht::SceneObject>(nullptr)};
     switchButtonSceneObject->SetIsVisible(false);
-    switchButtonSceneObject->SetPosition({8.65f, 0.0f, 0.0f});
+    switchButtonSceneObject->SetPosition({8.65f, 0.0f, UiLayer::root});
     
     Pht::Vec2 switchButtonSize {110.0f, 60.0f};
     mSwitchButton = std::make_unique<Pht::Button>(*switchButtonSceneObject, switchButtonSize, engine);

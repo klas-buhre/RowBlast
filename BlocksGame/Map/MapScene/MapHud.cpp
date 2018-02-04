@@ -11,6 +11,7 @@
 #include "UserData.hpp"
 #include "StringUtils.hpp"
 #include "GradientRectangle.hpp"
+#include "UiLayer.hpp"
 
 using namespace BlocksGame;
 
@@ -40,7 +41,7 @@ MapHud::MapHud(Pht::IEngine& engine,
     Pht::Vec3 livesTextPosition {
         -engine.GetRenderer().GetHudFrustumSize().x / 2.0f + livesTextDistFromBorder,
         12.65f,
-        1.0f
+        UiLayer::text
     };
     
     mLivesText->GetSceneObject().GetTransform().SetPosition(livesTextPosition);
@@ -49,7 +50,7 @@ MapHud::MapHud(Pht::IEngine& engine,
     Pht::Vec3 newLifeCountdownTextPosition {
         -engine.GetRenderer().GetHudFrustumSize().x / 2.0f + countdownTextDistFromBorder,
         12.0f,
-        1.0f
+        UiLayer::text
     };
     
     mNewLifeCountdownText = &scene.CreateText("00:00", textProperties);
@@ -66,7 +67,7 @@ void MapHud::CreateLivesRectangle(Pht::IEngine& engine,
     Pht::Vec3 position {
         -engine.GetRenderer().GetHudFrustumSize().x / 2.0f + livesRectangleDistFromBorder,
         12.87f,
-        0.0f
+        UiLayer::textRectangle
     };
     
     Pht::Vec2 size {4.0f, 0.7f};
@@ -96,7 +97,7 @@ void MapHud::CreateCountdownRectangle(Pht::IEngine& engine,
     Pht::Vec3 position {
         -engine.GetRenderer().GetHudFrustumSize().x / 2.0f + livesRectangleDistFromBorder,
         12.22f,
-        0.0f
+        UiLayer::textRectangle
     };
     
     Pht::Vec2 size {4.0f, 0.7f};

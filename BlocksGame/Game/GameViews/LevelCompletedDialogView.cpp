@@ -12,14 +12,15 @@
 // Game includes.
 #include "CommonResources.hpp"
 #include "MenuQuad.hpp"
+#include "UiLayer.hpp"
 
 using namespace BlocksGame;
 
 namespace {
     std::array<Pht::Vec3, 3> starOffsets {
-        Pht::Vec3{-3.8f, 1.8f, -1.0f},
-        Pht::Vec3{0.0f, 2.3f, -1.0f},
-        Pht::Vec3{3.8f, 1.8f, -1.0f}
+        Pht::Vec3{-3.8f, 1.8f, UiLayer::textRectangle},
+        Pht::Vec3{0.0f, 2.3f, UiLayer::textRectangle},
+        Pht::Vec3{3.8f, 1.8f, UiLayer::textRectangle}
     };
 }
 
@@ -35,7 +36,11 @@ LevelCompletedDialogView::LevelCompletedDialogView(Pht::IEngine& engine,
     SetSize(size);
     SetPosition({0.0f, 0.0f});
     
-    Pht::Vec3 closeButtonPosition {GetSize().x / 2.0f - 1.0f, GetSize().y / 2.0f - 1.0f, -0.5f};
+    Pht::Vec3 closeButtonPosition {
+        GetSize().x / 2.0f - 1.0f,
+        GetSize().y / 2.0f - 1.0f,
+        UiLayer::textRectangle
+    };
     mCloseButton = std::make_unique<CloseButton>(engine, *this, closeButtonPosition, textProperties);
 
     Pht::Vec2 buttonSize {6.5f, 2.1f};
@@ -46,7 +51,7 @@ LevelCompletedDialogView::LevelCompletedDialogView(Pht::IEngine& engine,
     
     mNextButton = std::make_unique<MenuButton>(engine,
                                                *this,
-                                               Pht::Vec3 {0.0f, -3.5f, -0.5f},
+                                               Pht::Vec3 {0.0f, -3.5f, UiLayer::textRectangle},
                                                buttonSize,
                                                buttonInputSize,
                                                buttonStyle);
