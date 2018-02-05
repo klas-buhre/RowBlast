@@ -154,6 +154,7 @@
 		6270DCAE1FCB248E00FB457D /* sky_upside_down_patched_mirrored.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6270DCA61FCB248E00FB457D /* sky_upside_down_patched_mirrored.jpg */; };
 		6270DCB01FCB248E00FB457D /* star_particle.png in Resources */ = {isa = PBXBuildFile; fileRef = 6270DCA81FCB248E00FB457D /* star_particle.png */; };
 		6270DCB31FCDA99100FB457D /* TitleScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6270DCB11FCDA99100FB457D /* TitleScene.cpp */; };
+		6273A91F20289F6900BF542A /* GuiViewManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6273A91D20289F6900BF542A /* GuiViewManager.cpp */; };
 		628065EA201399AE00F86754 /* PieceResources.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 628065E8201399AE00F86754 /* PieceResources.cpp */; };
 		628065ED2014F7A700F86754 /* SceneObjectPool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 628065EB2014F7A700F86754 /* SceneObjectPool.cpp */; };
 		6286F9AE1FF26BD2004DEF90 /* Chapter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6286F9AC1FF26BD1004DEF90 /* Chapter.cpp */; };
@@ -494,6 +495,8 @@
 		6270DCB21FCDA99100FB457D /* TitleScene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TitleScene.hpp; sourceTree = "<group>"; };
 		6273A91A20275CFB00BF542A /* UiLayer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = UiLayer.hpp; sourceTree = "<group>"; };
 		6273A91C2027663400BF542A /* InputUtil.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = InputUtil.hpp; sourceTree = "<group>"; };
+		6273A91D20289F6900BF542A /* GuiViewManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GuiViewManager.cpp; sourceTree = "<group>"; };
+		6273A91E20289F6900BF542A /* GuiViewManager.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = GuiViewManager.hpp; sourceTree = "<group>"; };
 		628065E8201399AE00F86754 /* PieceResources.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PieceResources.cpp; sourceTree = "<group>"; };
 		628065E9201399AE00F86754 /* PieceResources.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PieceResources.hpp; sourceTree = "<group>"; };
 		628065EB2014F7A700F86754 /* SceneObjectPool.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SceneObjectPool.cpp; sourceTree = "<group>"; };
@@ -922,6 +925,8 @@
 			children = (
 				6244471F1EDDD2C40080ECE8 /* CloseButton.cpp */,
 				624447201EDDD2C40080ECE8 /* CloseButton.hpp */,
+				6273A91D20289F6900BF542A /* GuiViewManager.cpp */,
+				6273A91E20289F6900BF542A /* GuiViewManager.hpp */,
 				624447221EDDD2C40080ECE8 /* MenuButton.cpp */,
 				624447231EDDD2C40080ECE8 /* MenuButton.hpp */,
 				624447241EDDD2C40080ECE8 /* MenuQuad.cpp */,
@@ -2018,6 +2023,7 @@
 				62944D7620053A2D00814D36 /* Camera.cpp in Sources */,
 				625C330F1F9B8C7C00E531FC /* BlastRadiusAnimation.cpp in Sources */,
 				624447A11EDDD2C40080ECE8 /* MenuButton.cpp in Sources */,
+				6273A91F20289F6900BF542A /* GuiViewManager.cpp in Sources */,
 				6247CFD91EFFE25900B9919E /* NoLivesDialogView.cpp in Sources */,
 				624447CC1EDDD2C40080ECE8 /* ShortIPiece.cpp in Sources */,
 				623C16C81F46151E00305752 /* Piece.cpp in Sources */,

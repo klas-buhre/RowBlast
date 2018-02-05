@@ -34,13 +34,13 @@ void MapSceneRenderer::RenderViews() {
             break;
         case MapViewControllers::NoLivesDialog: {
             auto& noLivesDialogController {mMapViewControllers.GetNoLivesDialogController()};
-            noLivesDialogController.GetFadeEffect().Render();
+            // noLivesDialogController.GetFadeEffect().Render();
             engineRenderer.RenderGuiView(noLivesDialogController.GetView());
             break;
         }
         case MapViewControllers::SettingsMenu: {
             auto& settingsMenuController {mMapViewControllers.GetSettingsMenuController()};
-            settingsMenuController.GetFadeEffect().Render();
+            // settingsMenuController.GetFadeEffect().Render();
             engineRenderer.RenderGuiView(settingsMenuController.GetView());
             break;
         }

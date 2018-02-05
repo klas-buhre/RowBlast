@@ -2,6 +2,7 @@
 #define MapScene_hpp
 
 #include <memory>
+#include <assert.h>
 
 // Engine includes.
 #include "Font.hpp"
@@ -37,6 +38,11 @@ namespace BlocksGame {
             return mPins;
         }
         
+        Pht::SceneObject& GetUiViewsContainer() {
+            assert(mUiViewsContainer);
+            return *mUiViewsContainer;
+        }
+        
     private:
         void CreateScene(const Chapter& chapter);
         void CreatePins(const Chapter& chapter);
@@ -55,6 +61,7 @@ namespace BlocksGame {
         std::unique_ptr<Pht::RenderableObject> mStarRenderable;
         Pht::Font mFont;
         std::unique_ptr<MapHud> mHud;
+        Pht::SceneObject* mUiViewsContainer {nullptr};
     };
 }
 

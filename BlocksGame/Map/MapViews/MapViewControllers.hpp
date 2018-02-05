@@ -3,6 +3,7 @@
 
 // Game includes.
 #include "SettingsButtonController.hpp"
+#include "GuiViewManager.hpp"
 
 namespace Pht {
     class IEngine;
@@ -12,6 +13,7 @@ namespace BlocksGame {
     class SettingsMenuController;
     class NoLivesDialogController;
     class CommonViewControllers;
+    class MapScene;
     
     class MapViewControllers {
     public:
@@ -21,14 +23,15 @@ namespace BlocksGame {
             SettingsMenu
         };
         
-        MapViewControllers(Pht::IEngine& engine, CommonViewControllers& commonViewControllers);
-        
+        MapViewControllers(Pht::IEngine& engine,
+                           MapScene& scene,
+                           CommonViewControllers& commonViewControllers);
+
+        void Init();
+        void SetActiveController(Controller controller);
+
         Controller GetActiveController() const {
             return mActiveController;
-        }
-        
-        void SetActiveController(Controller controller) {
-            mActiveController = controller;
         }
 
         const SettingsButtonController& GetSettingsButtonController() const {
@@ -56,7 +59,9 @@ namespace BlocksGame {
         }
         
     private:
+        MapScene& mScene;
         Controller mActiveController {SettingsButton};
+        GuiViewManager mViewManager;
         SettingsButtonController mSettingsButtonController;
         NoLivesDialogController& mNoLivesDialogController;
         SettingsMenuController& mSettingsMenuController;

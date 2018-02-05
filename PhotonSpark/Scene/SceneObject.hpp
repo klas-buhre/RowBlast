@@ -95,12 +95,12 @@ namespace Pht {
             mIsVisible = isVisible;
         }
 
-        bool IsInFront() const {
-            return mIsInFront;
+        bool IsStatic() const {
+            return mIsStatic;
         }
         
-        void SetIsInFront(bool isInFront) {
-            mIsInFront = isInFront;
+        void SetIsStatic(bool isStatic) {
+            mIsStatic = isStatic;
         }
         
         const std::vector<SceneObject*>& GetChildren() const {
@@ -116,12 +116,12 @@ namespace Pht {
         Transform mTransform;
         Mat4 mMatrix;
         int mLayerMask {0};
-        bool mIsVisible {true};
-        bool mIsInFront {false};
         RenderableObject* mRenderable {nullptr};
         SceneObject* mParent {nullptr};
         std::vector<SceneObject*> mChildren;
         std::vector<std::pair<ComponentId, std::unique_ptr<ISceneObjectComponent>>> mComponents;
+        bool mIsVisible {true};
+        bool mIsStatic {false};
     };
 }
 

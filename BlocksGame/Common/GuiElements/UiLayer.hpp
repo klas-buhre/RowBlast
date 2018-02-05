@@ -10,6 +10,7 @@ namespace BlocksGame {
         constexpr float background {-2.0f};
         constexpr float piecesRectangle {-2.0f};
         constexpr float lowerTextRectangle {-3.0f};
+        constexpr float backgroundFade {-3.5f};
     }
 }
 

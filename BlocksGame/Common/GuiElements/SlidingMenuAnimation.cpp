@@ -4,6 +4,7 @@
 #include "IEngine.hpp"
 #include "IRenderer.hpp"
 #include "GuiView.hpp"
+#include "UiLayer.hpp"
 
 using namespace BlocksGame;
 
@@ -15,7 +16,16 @@ namespace {
 SlidingMenuAnimation::SlidingMenuAnimation(Pht::IEngine& engine, Pht::GuiView& view, float fade) :
     mEngine {engine},
     mView {view},
-    mFadeEffect {engine.GetSceneManager(), engine.GetRenderer(), slideTime, fade} {}
+    mFadeEffect {
+        engine.GetSceneManager(),
+        engine.GetRenderer(),
+        slideTime,
+        fade,
+        UiLayer::backgroundFade
+    } {
+
+    mView.GetRoot().AddChild(mFadeEffect.GetSceneObject());
+}
 
 void SlidingMenuAnimation::Init(UpdateFade updateFade, SlideDirection slideInDirection) {
     mState = State::Idle;

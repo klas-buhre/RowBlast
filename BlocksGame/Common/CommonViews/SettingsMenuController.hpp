@@ -32,6 +32,10 @@ namespace BlocksGame {
             return mView;
         }
         
+        Pht::GuiView& GetView() {
+            return mView;
+        }
+        
         const Pht::FadeEffect& GetFadeEffect() const {
             return mSlidingMenuAnimation.GetFadeEffect();
         }

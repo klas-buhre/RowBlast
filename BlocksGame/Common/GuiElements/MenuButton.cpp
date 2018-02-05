@@ -36,7 +36,6 @@ MenuButton::MenuButton(Pht::IEngine& engine,
                                        view.GetSceneResources())
     };
     sceneObject->SetPosition(position);
-    sceneObject->SetIsInFront(true);
     
     mButton = std::make_unique<Pht::Button>(*sceneObject, inputSize, engine);
     

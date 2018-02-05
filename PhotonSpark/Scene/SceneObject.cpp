@@ -71,7 +71,9 @@ void SceneObject::Update(bool parentMatrixChanged) {
     }
     
     for (auto* child: mChildren) {
-        child->Update(matrixWasChanged);
+        if (!child->mIsStatic) {
+            child->Update(matrixWasChanged);
+        }
     }
 }
 

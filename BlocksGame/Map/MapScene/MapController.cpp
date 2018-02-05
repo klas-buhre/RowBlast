@@ -35,11 +35,12 @@ MapController::MapController(Pht::IEngine& engine,
     mEngine {engine},
     mUserData {userData},
     mScene {engine, commonResources, userData},
-    mMapViewControllers {engine, commonViewControllers},
+    mMapViewControllers {engine, mScene, commonViewControllers},
     mRenderer {engine, mMapViewControllers} {}
 
 void MapController::Init() {
     mScene.Init();
+    mMapViewControllers.Init();
 }
 
 MapController::Command MapController::Update() {

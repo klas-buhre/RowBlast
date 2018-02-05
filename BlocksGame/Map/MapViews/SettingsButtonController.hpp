@@ -26,7 +26,11 @@ namespace BlocksGame {
         const Pht::GuiView& GetView() const {
             return mView;
         }
-    
+
+        Pht::GuiView& GetView() {
+            return mView;
+        }
+
     private:
         SettingsButtonView mView;
         Pht::IAudio& mAudio;

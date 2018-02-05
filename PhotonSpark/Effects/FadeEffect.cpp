@@ -10,7 +10,8 @@ using namespace Pht;
 FadeEffect::FadeEffect(ISceneManager& sceneManager,
                        IRenderer& renderer,
                        float duration,
-                       float midFade) :
+                       float midFade,
+                       float zPosition) :
     mRenderer {renderer},
     mMidFade {midFade},
     mFadeSpeed {midFade / duration} {
@@ -33,6 +34,7 @@ FadeEffect::FadeEffect(ISceneManager& sceneManager,
     
     mQuad = sceneManager.CreateRenderableObject(Pht::QuadMesh {vertices}, quadMaterial);
     mSceneObject = std::make_unique<SceneObject>(mQuad.get());
+    mSceneObject->GetTransform().SetPosition({0.0f, 0.0f, zPosition});
     mQuad->GetMaterial().SetOpacity(mFade);
 }
 

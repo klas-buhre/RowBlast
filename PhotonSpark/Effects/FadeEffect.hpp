@@ -17,7 +17,11 @@ namespace Pht {
             Idle
         };
         
-        FadeEffect(ISceneManager& sceneManager, IRenderer& renderer, float duration, float midFade);
+        FadeEffect(ISceneManager& sceneManager,
+                   IRenderer& renderer,
+                   float duration,
+                   float midFade,
+                   float zPosition);
         
         void Reset();
         void Start();

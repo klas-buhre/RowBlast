@@ -31,7 +31,7 @@ namespace {
         Effects,
         FlyingBlocks,
         Hud,
-        Ui
+        UiViews
     };
 
 #if 0
@@ -163,10 +163,10 @@ void GameScene::CreateRenderPasses() {
     hudRenderPass.SetHudMode(true);
     mScene->AddRenderPass(hudRenderPass);
     
-    Pht::RenderPass uiRenderPass {static_cast<int>(Layer::Ui)};
-    uiRenderPass.SetHudMode(true);
-    uiRenderPass.SetIsDepthTestAllowed(false);
-    mScene->AddRenderPass(uiRenderPass);
+    Pht::RenderPass uiViewsRenderPass {static_cast<int>(Layer::UiViews)};
+    uiViewsRenderPass.SetHudMode(true);
+    uiViewsRenderPass.SetIsDepthTestAllowed(false);
+    mScene->AddRenderPass(uiViewsRenderPass);
 }
 
 void GameScene::CreateLightAndCamera() {

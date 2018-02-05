@@ -151,7 +151,7 @@ BlocksApplication::BlocksApplication(Pht::IEngine& engine) :
     mTitleController {engine, mCommonResources},
     mMapController {engine, mCommonResources, mCommonViewControllers, mUserData},
     mGameController {engine, mCommonResources, mCommonViewControllers, mUserData, mSettings},
-    mFadeEffect {engine.GetSceneManager(), engine.GetRenderer(), 0.22f, 1.0f} {
+    mFadeEffect {engine.GetSceneManager(), engine.GetRenderer(), 0.22f, 1.0f, 0.0f} {
 
     engine.GetInput().SetUseGestureRecognizers(false);
 }

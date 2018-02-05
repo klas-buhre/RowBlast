@@ -25,7 +25,8 @@ namespace {
     
     enum class Layer {
         Map,
-        Hud
+        Hud,
+        UiViews
     };
 
     const std::vector<CloudPathVolume> cloudPaths {
@@ -140,6 +141,11 @@ void MapScene::CreateScene(const Chapter& chapter) {
     hudRenderPass.SetHudMode(true);
     scene->AddRenderPass(hudRenderPass);
     
+    Pht::RenderPass uiViewsRenderPass {static_cast<int>(Layer::UiViews)};
+    uiViewsRenderPass.SetHudMode(true);
+    uiViewsRenderPass.SetIsDepthTestAllowed(false);
+    mScene->AddRenderPass(uiViewsRenderPass);
+    
     auto& light {scene->CreateGlobalLight()};
     light.SetDirection({1.0f, 1.0f, 1.0f});
     scene->GetRoot().AddChild(light.GetSceneObject());
@@ -173,6 +179,10 @@ void MapScene::CreateScene(const Chapter& chapter) {
                                     mCommonResources.GetHussarFontSize22(),
                                     *scene,
                                     static_cast<int>(Layer::Hud));
+    
+    mUiViewsContainer = &scene->CreateSceneObject();
+    mUiViewsContainer->SetLayer(static_cast<int>(Layer::UiViews));
+    scene->GetRoot().AddChild(*mUiViewsContainer);
     
     scene->SetDistanceFunction(Pht::DistanceFunction::WorldSpaceNegativeZ);
     sceneManager.SetLoadedScene(std::move(scene));
