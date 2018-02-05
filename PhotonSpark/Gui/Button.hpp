@@ -25,8 +25,8 @@ namespace Pht {
         Button(SceneObject& sceneObject, const Vec2& size, IEngine& engine);
         virtual ~Button() {}
 
-        bool IsClicked(const TouchEvent& event, const Mat4& guiViewTransform);
-        Result OnTouch(const TouchEvent& event, const Mat4& guiViewTransform);
+        bool IsClicked(const TouchEvent& event, const Mat4& guiViewTransform); // TODO: remove guiViewTransform
+        Result OnTouch(const TouchEvent& event, const Mat4& guiViewTransform); // TODO: remove guiViewTransform
         bool StateIsDownOrMovedOutside() const;
         bool IsDown() const;
         

@@ -149,7 +149,7 @@ Button::Result Button::OnTouchEnd(const Vec2& touchLocation, const Mat4& transfo
 
 bool Button::Hit(const Vec2& touch, const Mat4& transform) {
     auto& renderer {mEngine.GetRenderer()};
-    auto modelView {(mSceneObject.GetMatrix() * transform) * renderer.GetViewMatrix()};
+    auto modelView {(mSceneObject.GetMatrix() /* * transform*/) * renderer.GetViewMatrix()};
     auto modelViewProjection {modelView * renderer.GetProjectionMatrix()};
     
     // Since the matrix is row-major it has to be transposed in order to multiply with the vector.

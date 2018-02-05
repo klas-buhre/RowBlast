@@ -12,7 +12,7 @@ MapConfirmationDialogController::
 MapConfirmationDialogController(Pht::IEngine& engine, const CommonResources& commonResources) :
     mInput {engine.GetInput()},
     mView {engine, commonResources},
-    mSlidingMenuAnimation {engine, mView, 0.6f} {}
+    mSlidingMenuAnimation {engine, mView} {}
 
 void MapConfirmationDialogController::Init() {
     mSlidingMenuAnimation.Init(SlidingMenuAnimation::UpdateFade::No);

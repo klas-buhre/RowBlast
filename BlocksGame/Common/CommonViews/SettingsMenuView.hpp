@@ -32,19 +32,19 @@ namespace BlocksGame {
             return *mBackButton;
         }
 
-        Pht::Text& GetControlsClickText() {
+        Pht::SceneObject& GetControlsClickText() {
             return *mControlsClickText;
         }
 
-        Pht::Text& GetControlsSwipeText() {
+        Pht::SceneObject& GetControlsSwipeText() {
             return *mControlsSwipeText;
         }
         
-        Pht::Text& GetSoundOnText() {
+        Pht::SceneObject& GetSoundOnText() {
             return *mSoundOnText;
         }
 
-        Pht::Text& GetSoundOffText() {
+        Pht::SceneObject& GetSoundOffText() {
             return *mSoundOffText;
         }
         
@@ -52,10 +52,10 @@ namespace BlocksGame {
         std::unique_ptr<MenuButton> mControlsButton;
         std::unique_ptr<MenuButton> mSoundButton;
         std::unique_ptr<MenuButton> mBackButton;
-        Pht::Text* mControlsClickText {nullptr};
-        Pht::Text* mControlsSwipeText {nullptr};
-        Pht::Text* mSoundOnText {nullptr};
-        Pht::Text* mSoundOffText {nullptr};
+        Pht::SceneObject* mControlsClickText {nullptr};
+        Pht::SceneObject* mControlsSwipeText {nullptr};
+        Pht::SceneObject* mSoundOnText {nullptr};
+        Pht::SceneObject* mSoundOffText {nullptr};
     };
 }
 

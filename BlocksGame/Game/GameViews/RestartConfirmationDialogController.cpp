@@ -16,7 +16,7 @@ RestartConfirmationDialogController(Pht::IEngine& engine,
     mInput {engine.GetInput()},
     mUserData {userData},
     mView {engine, commonResources},
-    mSlidingMenuAnimation {engine, mView, 0.6f} {}
+    mSlidingMenuAnimation {engine, mView} {}
 
 void RestartConfirmationDialogController::Init() {
     mSlidingMenuAnimation.Init(SlidingMenuAnimation::UpdateFade::No);

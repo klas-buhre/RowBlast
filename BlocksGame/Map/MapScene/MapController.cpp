@@ -10,6 +10,7 @@
 #include "SettingsMenuController.hpp"
 #include "NoLivesDialogController.hpp"
 #include "UserData.hpp"
+#include "ISceneManager.hpp"
 
 using namespace BlocksGame;
 
@@ -35,8 +36,7 @@ MapController::MapController(Pht::IEngine& engine,
     mEngine {engine},
     mUserData {userData},
     mScene {engine, commonResources, userData},
-    mMapViewControllers {engine, mScene, commonViewControllers},
-    mRenderer {engine, mMapViewControllers} {}
+    mMapViewControllers {engine, mScene, commonViewControllers} {}
 
 void MapController::Init() {
     mScene.Init();
@@ -64,7 +64,8 @@ MapController::Command MapController::Update() {
 }
 
 void MapController::RenderScene() {
-    mRenderer.RenderFrame();
+    auto* scene {mEngine.GetSceneManager().GetActiveScene()};
+    mEngine.GetRenderer().RenderScene(*scene);
 }
 
 MapController::Command MapController::UpdateMap() {

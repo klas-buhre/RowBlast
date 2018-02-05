@@ -5,6 +5,7 @@
 #include "IRenderer.hpp"
 #include "ISceneManager.hpp"
 #include "RenderableObject.hpp"
+#include "FadeEffect.hpp" // TODO: remove
 
 // Game includes.
 #include "Field.hpp"
@@ -54,7 +55,7 @@ void GameSceneRenderer::Render() {
     auto* scene {mEngine.GetSceneManager().GetActiveScene()};
     mEngine.GetRenderer().RenderScene(*scene);
     
-    RenderGameViews();
+    // RenderGameViews();
 }
 
 void GameSceneRenderer::RenderBlueprintSlots() {
@@ -407,6 +408,7 @@ void GameSceneRenderer::RenderClickableGhostPieces(const FallingPiece& fallingPi
     }
 }
 
+/*
 void GameSceneRenderer::RenderGameViews() {
     auto& gameMenuController {mGameViewControllers.GetGameMenuController()};
     
@@ -475,3 +477,4 @@ void GameSceneRenderer::RenderLevelCompletedView() {
     mEngineRenderer.RenderGuiView(view);
     mEngineRenderer.SetLightDirection(mScene.GetLightDirection());
 }
+*/

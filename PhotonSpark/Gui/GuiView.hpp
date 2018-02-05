@@ -1,6 +1,7 @@
 #ifndef GuiView_hpp
 #define GuiView_hpp
 
+/*
 #include <vector>
 #include <memory>
 
@@ -67,8 +68,8 @@ namespace Pht {
         Pht::SceneObject mRoot;
     };
 }
+*/
 
-/*
 #include <memory>
 
 #include "Vector.hpp"
@@ -93,6 +94,7 @@ namespace Pht {
                                   const TextProperties& properties);
         Vec2 GetPosition() const;
         const Mat4& GetMatrix() const; // TODO: remove
+        void AddText(std::unique_ptr<Text> text); // TODO: remove
         
         void SetSize(const Vec2& size) {
             mSize = size;
@@ -114,7 +116,8 @@ namespace Pht {
         Vec2 mSize {0.0f, 0.0f};
         std::unique_ptr<Pht::SceneObject> mRoot;
         SceneResources mSceneResources;
+        std::vector<std::unique_ptr<Text>> mTexts; // TODO: remove
     };
 }
-*/
+
 #endif

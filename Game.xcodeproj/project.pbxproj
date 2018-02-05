@@ -105,7 +105,6 @@
 		6260A70B1F89196C001F6DCD /* TPiece.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6260A7091F89196C001F6DCD /* TPiece.cpp */; };
 		6260A70E1F8A22E4001F6DCD /* PlusPiece.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6260A70C1F8A22E4001F6DCD /* PlusPiece.cpp */; };
 		626C4D9E1EEC19DF000D4DF6 /* MapController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 626C4D8F1EEC19DF000D4DF6 /* MapController.cpp */; };
-		626C4DA31EEC19DF000D4DF6 /* MapSceneRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 626C4D991EEC19DF000D4DF6 /* MapSceneRenderer.cpp */; };
 		626C4DA71EEC20B8000D4DF6 /* SettingsButtonView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 626C4DA51EEC20B8000D4DF6 /* SettingsButtonView.cpp */; };
 		626C4DAA1EEC2506000D4DF6 /* SettingsButtonController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 626C4DA81EEC2506000D4DF6 /* SettingsButtonController.cpp */; };
 		626C4DAD1EEC2AF4000D4DF6 /* MapViewControllers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 626C4DAB1EEC2AF4000D4DF6 /* MapViewControllers.cpp */; };
@@ -438,8 +437,6 @@
 		6260A70D1F8A22E4001F6DCD /* PlusPiece.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PlusPiece.hpp; sourceTree = "<group>"; };
 		626C4D8F1EEC19DF000D4DF6 /* MapController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MapController.cpp; sourceTree = "<group>"; };
 		626C4D901EEC19DF000D4DF6 /* MapController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MapController.hpp; sourceTree = "<group>"; };
-		626C4D991EEC19DF000D4DF6 /* MapSceneRenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MapSceneRenderer.cpp; sourceTree = "<group>"; };
-		626C4D9A1EEC19DF000D4DF6 /* MapSceneRenderer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MapSceneRenderer.hpp; sourceTree = "<group>"; };
 		626C4DA51EEC20B8000D4DF6 /* SettingsButtonView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SettingsButtonView.cpp; sourceTree = "<group>"; };
 		626C4DA61EEC20B8000D4DF6 /* SettingsButtonView.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SettingsButtonView.hpp; sourceTree = "<group>"; };
 		626C4DA81EEC2506000D4DF6 /* SettingsButtonController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SettingsButtonController.cpp; sourceTree = "<group>"; };
@@ -1186,8 +1183,6 @@
 				6286F9B11FF3BE5E004DEF90 /* MapPin.hpp */,
 				621D609F1FF10FC200052107 /* MapScene.cpp */,
 				621D60A01FF10FC200052107 /* MapScene.hpp */,
-				626C4D991EEC19DF000D4DF6 /* MapSceneRenderer.cpp */,
-				626C4D9A1EEC19DF000D4DF6 /* MapSceneRenderer.hpp */,
 				6286F9B31FF6B273004DEF90 /* NextLevelParticleEffect.cpp */,
 				6286F9B41FF6B273004DEF90 /* NextLevelParticleEffect.hpp */,
 			);
@@ -2054,7 +2049,6 @@
 				624447BC1EDDD2C40080ECE8 /* Level.cpp in Sources */,
 				621D60931FEFB62000052107 /* Clouds.cpp in Sources */,
 				624447AF1EDDD2C40080ECE8 /* NextPieceGenerator.cpp in Sources */,
-				626C4DA31EEC19DF000D4DF6 /* MapSceneRenderer.cpp in Sources */,
 				6244479A1EDDD2C40080ECE8 /* BlocksApplication.cpp in Sources */,
 				62944D7D20053A2D00814D36 /* Renderer.cpp in Sources */,
 				624447C61EDDD2C40080ECE8 /* LPiece.cpp in Sources */,

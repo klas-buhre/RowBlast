@@ -16,6 +16,8 @@ namespace Pht {
     class TouchEvent;
     class Text;
     class SceneObject;
+    class TextComponent;
+    class TextProperties;
 }
 
 namespace BlocksGame {
@@ -36,11 +38,14 @@ namespace BlocksGame {
                    const Pht::Vec2& inputSize,
                    const Style& style);
         
-        void SetText(std::unique_ptr<Pht::Text> text);
+        Pht::TextComponent& CreateText(const Pht::Vec3& position,
+                                       const std::string& text,
+                                       const Pht::TextProperties& properties);
+        void SetText(std::unique_ptr<Pht::Text> text); // TODO: remove
         bool IsClicked(const Pht::TouchEvent& event) const;
         
-        std::vector<Pht::SceneObject*>& GetSceneObjects() {
-            return mSceneObjects;
+        Pht::SceneObject& GetSceneObject() {
+            return *mSceneObjects.front();
         }
         
     private:
@@ -51,8 +56,8 @@ namespace BlocksGame {
         Pht::Vec3 mPosition;
         std::unique_ptr<Pht::Button> mButton;
         std::vector<Pht::SceneObject*> mSceneObjects;
-        Pht::Text* mText {nullptr};
-        Pht::Vec2 mTextLocalPosition;
+        Pht::Text* mText {nullptr}; // TODO: remove
+        Pht::Vec2 mTextLocalPosition; // TODO: remove
     };
 }
 

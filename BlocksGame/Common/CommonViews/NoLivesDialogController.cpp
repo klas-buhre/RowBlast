@@ -15,12 +15,16 @@ NoLivesDialogController::NoLivesDialogController(Pht::IEngine& engine,
     mInput {engine.GetInput()},
     mUserData {userData},
     mView {engine, commonResources, userData},
-    mSlidingMenuAnimation {engine, mView, 0.6f} {}
+    mSlidingMenuAnimation {engine, mView} {}
 
 void NoLivesDialogController::Init(SlidingMenuAnimation::UpdateFade updateFade,
                                    bool shouldSlideOut) {
     mSlidingMenuAnimation.Init(updateFade);
     mShouldSlideOut = shouldSlideOut;
+}
+
+void NoLivesDialogController::SetFadeEffect(Pht::FadeEffect& fadeEffect) {
+    mSlidingMenuAnimation.SetFadeEffect(fadeEffect);
 }
 
 NoLivesDialogController::Result NoLivesDialogController::Update() {

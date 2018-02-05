@@ -13,7 +13,7 @@ GameMenuController::GameMenuController(Pht::IEngine& engine,
                                        const CommonResources& commonResources) :
     mInput {engine.GetInput()},
     mView {engine, commonResources},
-    mSlidingMenuAnimation {engine, mView, 0.6f} {}
+    mSlidingMenuAnimation {engine, mView} {}
 
 void GameMenuController::Init(SlidingMenuAnimation::UpdateFade updateFade,
                               bool isUndoMovePossible) {

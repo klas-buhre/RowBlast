@@ -13,7 +13,7 @@ LevelCompletedDialogController::LevelCompletedDialogController(Pht::IEngine& eng
                                                                const CommonResources& commonResources) :
     mInput {engine.GetInput()},
     mView {engine, commonResources},
-    mSlidingMenuAnimation {engine, mView, 0.6f} {}
+    mSlidingMenuAnimation {engine, mView} {}
 
 void LevelCompletedDialogController::Init() {
     mSlidingMenuAnimation.Init(SlidingMenuAnimation::UpdateFade::Yes);

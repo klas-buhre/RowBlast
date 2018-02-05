@@ -9,6 +9,7 @@
 #include "GuiView.hpp"
 #include "Font.hpp"
 #include "ISceneManager.hpp"
+#include "TextComponent.hpp"
 
 // Game includes.
 #include "CommonResources.hpp"
@@ -42,9 +43,13 @@ MenuButton::MenuButton(Pht::IEngine& engine,
     AddSceneObject(std::move(sceneObject));
     
     auto onDownFunction {[this, style] () {
-        for (auto sceneObject: mSceneObjects) {
+        for (auto* sceneObject: mSceneObjects) {
             sceneObject->SetScale(style.mPressedScale);
-            sceneObject->GetRenderable()->GetMaterial().SetAmbient(style.mSelectedColor);
+            
+            if (auto* renderable {sceneObject->GetRenderable()}) {
+                renderable->GetMaterial().SetAmbient(style.mSelectedColor);
+            }
+            
             if (mText) {
                 mText->mProperties.mScale = style.mPressedScale;
                 Pht::Vec2 textLocalPosition {mTextLocalPosition * style.mPressedScale};
@@ -58,7 +63,11 @@ MenuButton::MenuButton(Pht::IEngine& engine,
     auto onUpFunction {[this, style] () {
         for (auto sceneObject: mSceneObjects) {
             sceneObject->SetScale(1.0f);
-            sceneObject->GetRenderable()->GetMaterial().SetAmbient(style.mColor);
+            
+            if (auto* renderable {sceneObject->GetRenderable()}) {
+                renderable->GetMaterial().SetAmbient(style.mColor);
+            }
+            
             if (mText) {
                 mText->mProperties.mScale = 1.0f;
                 mText->mPosition = mTextLocalPosition + Pht::Vec2 {mPosition.x, mPosition.y};
@@ -87,6 +96,22 @@ MenuButton::MenuButton(Pht::IEngine& engine,
         rightSceneObject->SetPosition(position + Pht::Vec3 {size.x / 2.0f, 0.0f, 0.0f});
         AddSceneObject(std::move(rightSceneObject));
     }
+}
+
+Pht::TextComponent& MenuButton::CreateText(const Pht::Vec3& position,
+                                           const std::string& text,
+                                           const Pht::TextProperties& properties) {
+    auto sceneObject {std::make_unique<Pht::SceneObject>()};
+    auto textComponent {std::make_unique<Pht::TextComponent>(*sceneObject, text, properties)};
+    
+    auto& retVal {*textComponent};
+    sceneObject->SetComponent<Pht::TextComponent>(std::move(textComponent));
+    sceneObject->GetTransform().SetPosition(position);
+    mSceneObjects.front()->AddChild(*sceneObject);
+    
+    mSceneObjects.push_back(sceneObject.get());
+    mView.GetSceneResources().AddSceneObject(std::move(sceneObject));
+    return retVal;
 }
 
 void MenuButton::SetText(std::unique_ptr<Pht::Text> text) {

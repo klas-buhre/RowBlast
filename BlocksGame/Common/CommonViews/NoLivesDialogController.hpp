@@ -8,6 +8,7 @@
 namespace Pht {
     class IInput;
     class TouchEvent;
+    class FadeEffect;
 }
 
 namespace BlocksGame {
@@ -28,19 +29,12 @@ namespace BlocksGame {
         
         void Init(SlidingMenuAnimation::UpdateFade updateFade, bool shouldSlideOut);
         Result Update();
-        
-        const Pht::GuiView& GetView() const {
-            return mView;
-        }
+        void SetFadeEffect(Pht::FadeEffect& fadeEffect);
         
         Pht::GuiView& GetView() {
             return mView;
         }
         
-        const Pht::FadeEffect& GetFadeEffect() const {
-            return mSlidingMenuAnimation.GetFadeEffect();
-        }
-    
     private:
         Result HandleInput();
         Result OnTouch(const Pht::TouchEvent& touchEvent);

@@ -605,7 +605,7 @@ void Renderer::RenderTextImpl(const std::string& text,
 
 void Renderer::RenderGuiView(const GuiView& view) {
     SetHudMode(true);
-    
+    /*
     for (auto& sceneObject: view.GetSceneObjects()) {
         auto* renerable {sceneObject->GetRenderable()};
         
@@ -619,7 +619,7 @@ void Renderer::RenderGuiView(const GuiView& view) {
             RenderText(text->mText, view.GetPosition() + text->mPosition, text->mProperties);
         }
     }
-    
+    */
     SetHudMode(false);
 }
 

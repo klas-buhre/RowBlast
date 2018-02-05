@@ -5,6 +5,7 @@
 #include "IRenderer.hpp"
 #include "QuadMesh.hpp"
 #include "ISceneManager.hpp"
+#include "TextComponent.hpp"
 
 // Game includes.
 #include "CommonResources.hpp"
@@ -23,7 +24,7 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine, const CommonResources& 
     SetPosition({0.0f, 0.0f});
     
     auto quad {MenuQuad::CreateGray(engine, GetSceneResources(), size)};
-    quad->SetPosition({0.0f, 0.0f, UiLayer::background});
+    quad->GetTransform().SetPosition({0.0f, 0.0f, UiLayer::background});
     AddSceneObject(std::move(quad));
     
     Pht::Material lineMaterial {Pht::Color{1.0f, 1.0f, 1.0f}};
@@ -34,20 +35,20 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine, const CommonResources& 
                                        lineMaterial,
                                        GetSceneResources())
     };
-    lineSceneObject->SetPosition({0.0f, 3.3f, UiLayer::textRectangle});
+    lineSceneObject->GetTransform().SetPosition({0.0f, 3.3f, UiLayer::textRectangle});
     AddSceneObject(std::move(lineSceneObject));
     
-    AddText(std::make_unique<Pht::Text>(Pht::Vec2 {-2.0f, 4.3f}, "SETTINGS", settingsTextProperties));
+    CreateText({-2.0f, 4.3f, UiLayer::text}, "SETTINGS", settingsTextProperties);
     
     Pht::Material barMaterial {Pht::Color{0.4f, 0.74f, 1.0f}};
     barMaterial.SetOpacity(0.24f);
     auto controlsBarSceneObject {
         sceneManager.CreateSceneObject(Pht::QuadMesh {7.0f, 1.72f}, barMaterial, GetSceneResources())
     };
-    controlsBarSceneObject->SetPosition({-2.0f, 1.3f, UiLayer::textRectangle});
+    controlsBarSceneObject->GetTransform().SetPosition({-2.0f, 1.3f, UiLayer::textRectangle});
     AddSceneObject(std::move(controlsBarSceneObject));
     
-    AddText(std::make_unique<Pht::Text>(Pht::Vec2 {-4.65f, 1.07f}, "CONTROLS", textProperties));
+    CreateText({-4.65f, 1.07f, UiLayer::text}, "CONTROLS", textProperties);
     
     Pht::Vec2 buttonSize {4.0f, 1.72f};
     Pht::Vec2 buttonInputSize {86.0f, 43.0f};
@@ -59,33 +60,26 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine, const CommonResources& 
     
     Pht::Vec3 controlsButtonPosition {3.5f, 1.3f, UiLayer::textRectangle};
     mControlsButton = std::make_unique<MenuButton>(engine,
-                                                  *this,
-                                                  controlsButtonPosition,
-                                                  buttonSize,
-                                                  buttonInputSize,
-                                                  buttonStyle);
-    auto controlsClickText {
-        std::make_unique<Pht::Text>(Pht::Vec2 {-1.05f, -0.23f}, "CLICK", textProperties)
-    };
-        
-    mControlsClickText = controlsClickText.get();
-    mControlsButton->SetText(std::move(controlsClickText));
-    
-    auto controlsSwipeText {
-        std::make_unique<Pht::Text>(Pht::Vec2 {-1.05f, -0.23f}, "SWIPE", textProperties)
-    };
-
-    mControlsSwipeText = controlsSwipeText.get();
-    mControlsSwipeText->mIsVisible = false;
-    mControlsButton->SetText(std::move(controlsSwipeText));
+                                                   *this,
+                                                   controlsButtonPosition,
+                                                   buttonSize,
+                                                   buttonInputSize,
+                                                   buttonStyle);
+    mControlsClickText = &(mControlsButton->CreateText({-1.05f, -0.23f, UiLayer::buttonText},
+                                                       "CLICK",
+                                                       textProperties).GetSceneObject());
+    mControlsSwipeText = &(mControlsButton->CreateText({-1.05f, -0.23f, UiLayer::buttonText},
+                                                       "SWIPE",
+                                                       textProperties).GetSceneObject());
+    mControlsSwipeText->SetIsVisible(false);
 
     auto soundBarSceneObject {
         sceneManager.CreateSceneObject(Pht::QuadMesh {7.0f, 1.72f}, barMaterial, GetSceneResources())
     };
-    soundBarSceneObject->SetPosition({-2.0f, -1.3f, -0.5f});
+    soundBarSceneObject->GetTransform().SetPosition({-2.0f, -1.3f, UiLayer::textRectangle});
     AddSceneObject(std::move(soundBarSceneObject));
         
-    AddText(std::make_unique<Pht::Text>(Pht::Vec2 {-4.65f, -1.53f}, "SOUND", textProperties));
+    CreateText({-4.65f, -1.53f, UiLayer::text}, "SOUND", textProperties);
     
     Pht::Vec3 soundButtonPosition {3.5f, -1.3f, UiLayer::textRectangle};
     mSoundButton = std::make_unique<MenuButton>(engine,
@@ -94,20 +88,13 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine, const CommonResources& 
                                                 buttonSize,
                                                 buttonInputSize,
                                                 buttonStyle);
-    auto soundOnText {
-        std::make_unique<Pht::Text>(Pht::Vec2 {-0.6f, -0.23f}, "ON", textProperties)
-    };
-    
-    mSoundOnText = soundOnText.get();
-    mSoundButton->SetText(std::move(soundOnText));
-    
-    auto soundOffText {
-        std::make_unique<Pht::Text>(Pht::Vec2 {-0.7f, -0.23f}, "OFF", textProperties)
-    };
-
-    mSoundOffText = soundOffText.get();
-    mSoundOffText->mIsVisible = false;
-    mSoundButton->SetText(std::move(soundOffText));
+    mSoundOnText = &(mSoundButton->CreateText({-0.6f, -0.23f, UiLayer::buttonText},
+                                              "ON",
+                                              textProperties).GetSceneObject());
+    mSoundOffText = &(mSoundButton->CreateText({-0.7f, -0.23f, UiLayer::buttonText},
+                                               "OFF",
+                                               textProperties).GetSceneObject());
+    mSoundOffText->SetIsVisible(false);
 
     MenuButton::Style backButtonStyle {buttonStyle};
     backButtonStyle.mPressedScale = 0.925f;
@@ -121,6 +108,5 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine, const CommonResources& 
                                                backButtonSize,
                                                backButtonInputSize,
                                                backButtonStyle);
-    mBackButton->SetText(
-        std::make_unique<Pht::Text>(Pht::Vec2 {-1.0f, -0.23f}, "BACK", textProperties));
+    mBackButton->CreateText({-1.0f, -0.23f, UiLayer::buttonText}, "BACK", textProperties);
 }

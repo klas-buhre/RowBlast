@@ -12,7 +12,7 @@ NoMovesDialogController::NoMovesDialogController(Pht::IEngine& engine,
                                                  const CommonResources& commonResources) :
     mInput {engine.GetInput()},
     mView {engine, commonResources},
-    mSlidingMenuAnimation {engine, mView, 0.6f} {}
+    mSlidingMenuAnimation {engine, mView} {}
 
 void NoMovesDialogController::Init() {
     mSlidingMenuAnimation.Init(SlidingMenuAnimation::UpdateFade::Yes);

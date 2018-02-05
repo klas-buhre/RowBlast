@@ -29,14 +29,6 @@ namespace BlocksGame {
         
         void Init(SlidingMenuAnimation::UpdateFade updateFade, bool isUndoMovePossible);
         Result Update();
-        
-        const Pht::GuiView& GetView() const {
-            return mView;
-        }
-        
-        const Pht::FadeEffect& GetFadeEffect() const {
-            return mSlidingMenuAnimation.GetFadeEffect();
-        }
     
     private:
         Result HandleInput();

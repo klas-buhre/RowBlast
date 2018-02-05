@@ -1,6 +1,9 @@
 #ifndef MapViewControllers_hpp
 #define MapViewControllers_hpp
 
+// Engine includes.
+#include "FadeEffect.hpp"
+
 // Game includes.
 #include "SettingsButtonController.hpp"
 #include "GuiViewManager.hpp"
@@ -29,29 +32,13 @@ namespace BlocksGame {
 
         void Init();
         void SetActiveController(Controller controller);
-
-        Controller GetActiveController() const {
-            return mActiveController;
-        }
-
-        const SettingsButtonController& GetSettingsButtonController() const {
-            return mSettingsButtonController;
-        }
-        
+    
         SettingsButtonController& GetSettingsButtonController() {
             return mSettingsButtonController;
         }
         
-        const NoLivesDialogController& GetNoLivesDialogController() const {
-            return mNoLivesDialogController;
-        }
-        
         NoLivesDialogController& GetNoLivesDialogController() {
             return mNoLivesDialogController;
-        }
-        
-        const SettingsMenuController& GetSettingsMenuController() const {
-            return mSettingsMenuController;
         }
         
         SettingsMenuController& GetSettingsMenuController() {
@@ -61,6 +48,7 @@ namespace BlocksGame {
     private:
         MapScene& mScene;
         Controller mActiveController {SettingsButton};
+        Pht::FadeEffect mFadeEffect;
         GuiViewManager mViewManager;
         SettingsButtonController mSettingsButtonController;
         NoLivesDialogController& mNoLivesDialogController;

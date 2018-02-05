@@ -47,73 +47,37 @@ namespace BlocksGame {
         void SetActiveController(Controller controller) {
             mActiveController = controller;
         }
-
-        const GameHudController& GetGameHudController() const {
-            return mGameHudController;
-        }
         
         GameHudController& GetGameHudController() {
             return mGameHudController;
         }
 
-        const GameMenuController& GetGameMenuController() const {
-            return mGameMenuController;
-        }
-        
         GameMenuController& GetGameMenuController() {
             return mGameMenuController;
-        }
-        
-        const GameOverDialogController& GetGameOverDialogController() const {
-            return mGameOverDialogController;
         }
         
         GameOverDialogController& GetGameOverDialogController() {
             return mGameOverDialogController;
         }
         
-        const NoMovesDialogController& GetNoMovesDialogController() const {
-            return mNoMovesDialogController;
-        }
-        
         NoMovesDialogController& GetNoMovesDialogController() {
             return mNoMovesDialogController;
         }
 
-        const LevelCompletedDialogController& GetLevelCompletedDialogController() const {
-            return mLevelCompletedDialogController;
-        }
-        
         LevelCompletedDialogController& GetLevelCompletedDialogController() {
             return mLevelCompletedDialogController;
-        }
-        
-        const RestartConfirmationDialogController& GetRestartConfirmationDialogController() const {
-            return mRestartConfirmationDialogController;
         }
         
         RestartConfirmationDialogController& GetRestartConfirmationDialogController() {
             return mRestartConfirmationDialogController;
         }
 
-        const MapConfirmationDialogController& GetMapConfirmationDialogController() const {
-            return mMapConfirmationDialogController;
-        }
-        
         MapConfirmationDialogController& GetMapConfirmationDialogController() {
             return mMapConfirmationDialogController;
         }
         
-        const SettingsMenuController& GetSettingsMenuController() const {
-            return mSettingsMenuController;
-        }
-        
         SettingsMenuController& GetSettingsMenuController() {
             return mSettingsMenuController;
-        }
-
-        const NoLivesDialogController& GetNoLivesDialogController() const {
-            return mNoLivesDialogController;
         }
         
         NoLivesDialogController& GetNoLivesDialogController() {

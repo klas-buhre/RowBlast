@@ -103,18 +103,12 @@ GameMenuView::GameMenuView(Pht::IEngine& engine, const CommonResources& commonRe
 
 void GameMenuView::EnableUndoButton() {
     mIsUndoButtonEnabled = true;
-
-    for (auto sceneObject: mUndoButton->GetSceneObjects()) {
-        sceneObject->GetRenderable()->GetMaterial().SetAmbient(buttonColor);
-    }
+    mUndoButton->GetSceneObject().GetRenderable()->GetMaterial().SetAmbient(buttonColor);
 }
 
 void GameMenuView::DisableUndoButton() {
     mIsUndoButtonEnabled = false;
     
     Pht::Color greyColor {0.65f, 0.65f, 0.65f};
-    
-    for (auto sceneObject: mUndoButton->GetSceneObjects()) {
-        sceneObject->GetRenderable()->GetMaterial().SetAmbient(greyColor);
-    }
+    mUndoButton->GetSceneObject().GetRenderable()->GetMaterial().SetAmbient(greyColor);
 }

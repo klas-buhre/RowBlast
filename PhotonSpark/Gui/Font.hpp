@@ -39,7 +39,7 @@ namespace Pht {
         Vec4 mShadowColor {0.0f, 0.0f, 0.0f, 1.0f};
     };
     
-    struct Text {
+    struct Text { // TODO: remove
         Text(const Vec2& position, const std::string& text, const TextProperties& properties);
         
         Vec2 mPosition;

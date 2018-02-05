@@ -2,12 +2,12 @@
 #define SlidingMenuAnimation_hpp
 
 // Engine includes.
-#include "FadeEffect.hpp"
 #include "Vector.hpp"
 
 namespace Pht {
     class IEngine;
     class GuiView;
+    class FadeEffect;
 }
 
 namespace BlocksGame {
@@ -31,7 +31,7 @@ namespace BlocksGame {
             Down
         };
         
-        SlidingMenuAnimation(Pht::IEngine& engine, Pht::GuiView& view, float fade);
+        SlidingMenuAnimation(Pht::IEngine& engine, Pht::GuiView& view);
         
         void Init(UpdateFade updateFade, SlideDirection slideInDirection = SlideDirection::Up);
         void StartSlideIn();
@@ -39,8 +39,8 @@ namespace BlocksGame {
                            SlideDirection slideOutDirection = SlideDirection::Down);
         State Update();
 
-        const Pht::FadeEffect& GetFadeEffect() const {
-            return mFadeEffect;
+        void SetFadeEffect(Pht::FadeEffect& fadeEffect) {
+            mFadeEffect = &fadeEffect;
         }
         
     private:
@@ -60,7 +60,7 @@ namespace BlocksGame {
         Pht::Vec2 mAcceleration;
         Pht::Vec2 mSlideInStartPosition;
         Pht::Vec2 mSlideOutFinalPosition;
-        Pht::FadeEffect mFadeEffect;
+        Pht::FadeEffect* mFadeEffect {nullptr};
     };
 }
 

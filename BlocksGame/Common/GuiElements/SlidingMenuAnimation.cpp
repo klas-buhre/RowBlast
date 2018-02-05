@@ -5,6 +5,7 @@
 #include "IRenderer.hpp"
 #include "GuiView.hpp"
 #include "UiLayer.hpp"
+#include "FadeEffect.hpp"
 
 using namespace BlocksGame;
 
@@ -13,19 +14,9 @@ namespace {
     const Pht::Vec2 centerPosition {0.0f, 0.0f};
 }
 
-SlidingMenuAnimation::SlidingMenuAnimation(Pht::IEngine& engine, Pht::GuiView& view, float fade) :
+SlidingMenuAnimation::SlidingMenuAnimation(Pht::IEngine& engine, Pht::GuiView& view) :
     mEngine {engine},
-    mView {view},
-    mFadeEffect {
-        engine.GetSceneManager(),
-        engine.GetRenderer(),
-        slideTime,
-        fade,
-        UiLayer::backgroundFade
-    } {
-
-    mView.GetRoot().AddChild(mFadeEffect.GetSceneObject());
-}
+    mView {view} {}
 
 void SlidingMenuAnimation::Init(UpdateFade updateFade, SlideDirection slideInDirection) {
     mState = State::Idle;
@@ -46,7 +37,7 @@ void SlidingMenuAnimation::Init(UpdateFade updateFade, SlideDirection slideInDir
     mView.SetPosition(mSlideInStartPosition);
     
     if (mUpdateFade == UpdateFade::Yes) {
-        mFadeEffect.Reset();
+        mFadeEffect->Reset();
     }
 }
 
@@ -58,7 +49,7 @@ void SlidingMenuAnimation::StartSlideIn() {
     mView.SetPosition(mSlideInStartPosition);
     
     if (mUpdateFade == UpdateFade::Yes) {
-        mFadeEffect.Start();
+        mFadeEffect->Start();
     }
     
     mState = State::SlidingIn;
@@ -115,15 +106,15 @@ void SlidingMenuAnimation::UpdateInSlidingInState() {
     mElapsedTime += dt;
     
     if (mUpdateFade == UpdateFade::Yes &&
-        mFadeEffect.GetState() != Pht::FadeEffect::State::Transition) {
-        mFadeEffect.Update(dt);
+        mFadeEffect->GetState() != Pht::FadeEffect::State::Transition) {
+        mFadeEffect->Update(dt);
     }
     
     if (HasCompletelySlidIn(position)) {
         position.y = 0.0f;
         
         if (mUpdateFade == UpdateFade::Yes) {
-            if (mFadeEffect.GetState() == Pht::FadeEffect::State::Transition) {
+            if (mFadeEffect->GetState() == Pht::FadeEffect::State::Transition) {
                 mState = State::ShowingMenu;
             }
         } else {
@@ -162,15 +153,15 @@ void SlidingMenuAnimation::UpdateInSlidingOutState() {
     mVelocity += mAcceleration * dt;
     mElapsedTime += dt;
     
-    if (mUpdateFade == UpdateFade::Yes && mFadeEffect.GetState() != Pht::FadeEffect::State::Idle) {
-        mFadeEffect.Update(dt);
+    if (mUpdateFade == UpdateFade::Yes && mFadeEffect->GetState() != Pht::FadeEffect::State::Idle) {
+        mFadeEffect->Update(dt);
     }
     
     if (HasCompletelySlidOut(position)) {
         position.y = mSlideOutFinalPosition.y;
         
         if (mUpdateFade == UpdateFade::Yes) {
-            if (mFadeEffect.GetState() == Pht::FadeEffect::State::Idle) {
+            if (mFadeEffect->GetState() == Pht::FadeEffect::State::Idle) {
                 mState = State::Done;
             }
         } else {

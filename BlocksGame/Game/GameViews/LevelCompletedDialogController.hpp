@@ -27,17 +27,9 @@ namespace BlocksGame {
         
         void Init();
         Result Update();
-        
-        const LevelCompletedDialogView& GetView() const {
-            return mView;
-        }
 
         LevelCompletedDialogView& GetView() {
             return mView;
-        }
-        
-        const Pht::FadeEffect& GetFadeEffect() const {
-            return mSlidingMenuAnimation.GetFadeEffect();
         }
     
     private:

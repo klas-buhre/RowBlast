@@ -3,6 +3,7 @@
 
 namespace BlocksGame {
     namespace UiLayer {
+        constexpr float buttonText {1.0f};
         constexpr float root {0.0f};
         constexpr float text {0.0f};
         constexpr float textRectangle {-1.0f};

@@ -1,5 +1,6 @@
 #include "GuiView.hpp"
 
+/*
 #include <algorithm>
 
 #include "SceneObject.hpp"
@@ -42,7 +43,7 @@ TextComponent& GuiView::CreateText(const Vec3& position,
 void GuiView::AddText(std::unique_ptr<Text> text) {
     mTexts.push_back(std::move(text));
 }
-/*
+*/
 
 #include "TextComponent.hpp"
 
@@ -78,7 +79,7 @@ TextComponent& GuiView::CreateText(const Vec3& position,
     
     auto& retVal {*textComponent};
     sceneObject->SetComponent<TextComponent>(std::move(textComponent));
-    sceneObject->SetPosition(position);
+    sceneObject->GetTransform().SetPosition(position);
     AddSceneObject(std::move(sceneObject));
     return retVal;
 }
@@ -91,4 +92,7 @@ Vec2 GuiView::GetPosition() const {
 const Mat4& GuiView::GetMatrix() const {
     return mRoot->GetMatrix();
 }
-*/
+
+void GuiView::AddText(std::unique_ptr<Text> text) {
+    mTexts.push_back(std::move(text));
+}

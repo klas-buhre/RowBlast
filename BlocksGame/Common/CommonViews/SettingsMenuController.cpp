@@ -16,11 +16,15 @@ SettingsMenuController::SettingsMenuController(Pht::IEngine& engine,
     mEngine {engine},
     mSettings {settings},
     mView {engine, commonResources},
-    mSlidingMenuAnimation {engine, mView, 0.6f} {}
+    mSlidingMenuAnimation {engine, mView} {}
 
 void SettingsMenuController::Init(SlidingMenuAnimation::UpdateFade updateFade) {
     mUpdateFade = updateFade;
     mSlidingMenuAnimation.Init(updateFade);
+}
+
+void SettingsMenuController::SetFadeEffect(Pht::FadeEffect& fadeEffect) {
+    mSlidingMenuAnimation.SetFadeEffect(fadeEffect);
 }
 
 SettingsMenuController::Result SettingsMenuController::Update() {
@@ -49,12 +53,12 @@ SettingsMenuController::Result SettingsMenuController::OnTouch(const Pht::TouchE
     if (mView.GetControlsButton().IsClicked(touchEvent)) {
         if (mSettings.mControlType == ControlType::Click) {
             mSettings.mControlType = ControlType::Gesture;
-            mView.GetControlsClickText().mIsVisible = false;
-            mView.GetControlsSwipeText().mIsVisible = true;
+            mView.GetControlsClickText().SetIsVisible(false);
+            mView.GetControlsSwipeText().SetIsVisible(true);
         } else {
             mSettings.mControlType = ControlType::Click;
-            mView.GetControlsClickText().mIsVisible = true;
-            mView.GetControlsSwipeText().mIsVisible = false;
+            mView.GetControlsClickText().SetIsVisible(true);
+            mView.GetControlsSwipeText().SetIsVisible(false);
         }
     }
 
@@ -63,12 +67,12 @@ SettingsMenuController::Result SettingsMenuController::OnTouch(const Pht::TouchE
         
         if (audio.IsSoundEnabled()) {
             audio.DisableSound();
-            mView.GetSoundOnText().mIsVisible = false;
-            mView.GetSoundOffText().mIsVisible = true;
+            mView.GetSoundOnText().SetIsVisible(false);
+            mView.GetSoundOffText().SetIsVisible(true);
         } else {
             audio.EnableSound();
-            mView.GetSoundOnText().mIsVisible = true;
-            mView.GetSoundOffText().mIsVisible = false;
+            mView.GetSoundOnText().SetIsVisible(true);
+            mView.GetSoundOffText().SetIsVisible(false);
         }
     }
 

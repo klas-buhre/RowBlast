@@ -2,7 +2,6 @@
 #define MapController_hpp
 
 // Game includes.
-#include "MapSceneRenderer.hpp"
 #include "MapScene.hpp"
 #include "MapViewControllers.hpp"
 
@@ -70,7 +69,6 @@ namespace BlocksGame {
         State mState {State::Map};
         MapScene mScene;
         MapViewControllers mMapViewControllers;
-        MapSceneRenderer mRenderer;
         float mCameraXPositionAtPanBegin {0.0f};
         Pht::Vec2 mTouchLocationAtPanBegin {0.0f, 0.0f};
         float mCameraXVelocity {0.0f};
