@@ -158,8 +158,6 @@ BlocksApplication::BlocksApplication(Pht::IEngine& engine) :
 }
 
 void BlocksApplication::OnUpdate() {
-    std::cout << "******* FPS: " << 1.0f / mEngine.GetLastFrameSeconds() << std::endl;
-    
     if (mState != State::GameScene) {
         mUserData.Update();
     }

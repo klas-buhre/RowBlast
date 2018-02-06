@@ -11,6 +11,7 @@
 
 // Game includes.
 #include "CommonResources.hpp"
+#include "UiLayer.hpp"
 
 using namespace BlocksGame;
 
@@ -59,7 +60,9 @@ CloseButton::CloseButton(Pht::IEngine& engine,
     mButton->SetOnUpOutside(deselectFunction);
     mButton->SetOnMoveOutside(deselectFunction);
     
-    mView.CreateText(position + Pht::Vec3 {-0.23f, -0.23f, -0.1f}, "X", textProperties);
+    mView.CreateText(position + Pht::Vec3 {-0.23f, -0.23f, UiLayer::text},
+                     "X",
+                     textProperties);
 }
 
 bool CloseButton::IsClicked(const Pht::TouchEvent& event) const {

@@ -15,6 +15,10 @@ GameMenuController::GameMenuController(Pht::IEngine& engine,
     mView {engine, commonResources},
     mSlidingMenuAnimation {engine, mView} {}
 
+void GameMenuController::SetFadeEffect(Pht::FadeEffect& fadeEffect) {
+    mSlidingMenuAnimation.SetFadeEffect(fadeEffect);
+}
+
 void GameMenuController::Init(SlidingMenuAnimation::UpdateFade updateFade,
                               bool isUndoMovePossible) {
     auto slideInDirection {

@@ -23,10 +23,6 @@ namespace BlocksGame {
         
         Result OnTouch(const Pht::TouchEvent& event);
         
-        const Pht::GuiView& GetView() const {
-            return mView;
-        }
-
         Pht::GuiView& GetView() {
             return mView;
         }

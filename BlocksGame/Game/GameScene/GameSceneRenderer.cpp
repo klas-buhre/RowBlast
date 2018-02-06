@@ -1,11 +1,7 @@
 #include "GameSceneRenderer.hpp"
 
 // Engine includes.
-#include "IEngine.hpp"
-#include "IRenderer.hpp"
-#include "ISceneManager.hpp"
 #include "RenderableObject.hpp"
-#include "FadeEffect.hpp" // TODO: remove
 
 // Game includes.
 #include "Field.hpp"
@@ -13,10 +9,6 @@
 #include "Piece.hpp"
 #include "FallingPiece.hpp"
 #include "GameScene.hpp"
-#include "GameViewControllers.hpp"
-#include "FlashingBlocksAnimation.hpp"
-#include "SettingsMenuController.hpp"
-#include "NoLivesDialogController.hpp"
 #include "PieceResources.hpp"
 #include "LevelResources.hpp"
 
@@ -26,36 +18,24 @@ namespace {
     const auto dz {0.05f};
 }
 
-GameSceneRenderer::GameSceneRenderer(Pht::IEngine& engine,
-                                     GameScene& scene,
+GameSceneRenderer::GameSceneRenderer(GameScene& scene,
                                      const Field& field,
                                      const GameLogic& gameLogic,
                                      const ScrollController& scrollController,
-                                     const GameViewControllers& gameViewControllers,
                                      const PieceResources& pieceResources,
                                      const LevelResources& levelResources) :
-    mEngine {engine},
-    mEngineRenderer {engine.GetRenderer()},
     mScene {scene},
     mField {field},
     mGameLogic {gameLogic},
     mScrollController {scrollController},
-    mGameViewControllers {gameViewControllers},
     mPieceResources {pieceResources},
     mLevelResources {levelResources} {}
 
-void GameSceneRenderer::RenderFrame() {
+void GameSceneRenderer::Render() {
     RenderBlueprintSlots();
     RenderFieldBlocks();
     RenderFallingPiece();
     RenderGhostPieces();
-}
-
-void GameSceneRenderer::Render() {
-    auto* scene {mEngine.GetSceneManager().GetActiveScene()};
-    mEngine.GetRenderer().RenderScene(*scene);
-    
-    // RenderGameViews();
 }
 
 void GameSceneRenderer::RenderBlueprintSlots() {
@@ -407,74 +387,3 @@ void GameSceneRenderer::RenderClickableGhostPieces(const FallingPiece& fallingPi
         }
     }
 }
-
-/*
-void GameSceneRenderer::RenderGameViews() {
-    auto& gameMenuController {mGameViewControllers.GetGameMenuController()};
-    
-    switch (mGameViewControllers.GetActiveController()) {
-        case GameViewControllers::None:
-            break;
-        case GameViewControllers::GameHud:
-            mEngineRenderer.RenderGuiView(mGameViewControllers.GetGameHudController().GetView());
-            break;
-        case GameViewControllers::GameMenu: {
-            gameMenuController.GetFadeEffect().Render();
-            mEngineRenderer.RenderGuiView(gameMenuController.GetView());
-            break;
-        }
-        case GameViewControllers::NoMovesDialog: {
-            auto& noMovesDialogController {mGameViewControllers.GetNoMovesDialogController()};
-            noMovesDialogController.GetFadeEffect().Render();
-            mEngineRenderer.RenderGuiView(noMovesDialogController.GetView());
-            break;
-        }
-        case GameViewControllers::GameOverDialog: {
-            auto& gameOverDialogController {mGameViewControllers.GetGameOverDialogController()};
-            gameOverDialogController.GetFadeEffect().Render();
-            mEngineRenderer.RenderGuiView(gameOverDialogController.GetView());
-            break;
-        }
-        case GameViewControllers::LevelCompletedDialog:
-            RenderLevelCompletedView();
-            break;
-        case GameViewControllers::SettingsMenu: {
-            auto& settingsMenuController {mGameViewControllers.GetSettingsMenuController()};
-            gameMenuController.GetFadeEffect().Render();
-            mEngineRenderer.RenderGuiView(settingsMenuController.GetView());
-            break;
-        }
-        case GameViewControllers::NoLivesDialog: {
-            auto& noLivesDialogController {mGameViewControllers.GetNoLivesDialogController()};
-            noLivesDialogController.GetFadeEffect().Render();
-            mEngineRenderer.RenderGuiView(noLivesDialogController.GetView());
-            break;
-        }
-        case GameViewControllers::RestartConfirmationDialog: {
-            auto& restartConfirmationDialogController {
-                mGameViewControllers.GetRestartConfirmationDialogController()
-            };
-            gameMenuController.GetFadeEffect().Render();
-            mEngineRenderer.RenderGuiView(restartConfirmationDialogController.GetView());
-            break;
-        }
-        case GameViewControllers::MapConfirmationDialog:
-            auto& mapConfirmationDialogController {
-                mGameViewControllers.GetMapConfirmationDialogController()
-            };
-            gameMenuController.GetFadeEffect().Render();
-            mEngineRenderer.RenderGuiView(mapConfirmationDialogController.GetView());
-            break;
-    }
-}
-
-void GameSceneRenderer::RenderLevelCompletedView() {
-    auto& levelCompletedDialogController {mGameViewControllers.GetLevelCompletedDialogController()};
-    levelCompletedDialogController.GetFadeEffect().Render();
-    
-    auto& view {levelCompletedDialogController.GetView()};
-    mEngineRenderer.SetLightDirection({0.75f, 1.0f, 1.0f});
-    mEngineRenderer.RenderGuiView(view);
-    mEngineRenderer.SetLightDirection(mScene.GetLightDirection());
-}
-*/

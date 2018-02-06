@@ -2,6 +2,8 @@
 
 // Engine includes.
 #include "IEngine.hpp"
+#include "IRenderer.hpp"
+#include "ISceneManager.hpp"
 
 // Game includes.
 #include "LevelLoader.hpp"
@@ -70,16 +72,7 @@ GameController::GameController(Pht::IEngine& engine,
     mLevelResources {engine, mScene},
     mFlyingBlocksAnimation {mScene, mLevelResources, mPieceResources},
     mBlueprintSlotsFilledAnimation {mField, mScene, mLevelResources},
-    mRenderer {
-        engine,
-        mScene,
-        mField,
-        mGameLogic,
-        mScrollController,
-        mGameViewControllers,
-        mPieceResources,
-        mLevelResources
-    } {}
+    mRenderer {mScene, mField, mGameLogic, mScrollController, mPieceResources, mLevelResources} {}
 
 void GameController::StartLevel(int levelIndex) {
     mLevel = LevelLoader::Load(levelIndex, mLevelResources);
@@ -96,6 +89,7 @@ void GameController::StartLevel(int levelIndex) {
     mRowExplosionParticleEffect.Init();
     mFlyingBlocksAnimation.Init();
     mSlidingTextAnimation.Init();
+    mGameViewControllers.Init(mScene);
     
     mState = GameState::LevelIntro;
     mLevelIntroState = LevelIntroState::Overview;
@@ -120,14 +114,15 @@ GameController::Command GameController::Update() {
             break;
     }
     
-    mRenderer.RenderFrame();
+    mRenderer.Render();
     mField.OnEndOfFrame();
     
     return command;
 }
 
 void GameController::RenderScene() {
-    mRenderer.Render();
+    auto* scene {mEngine.GetSceneManager().GetActiveScene()};
+    mEngine.GetRenderer().RenderScene(*scene);
 }
 
 GameController::Command GameController::UpdateGame() {

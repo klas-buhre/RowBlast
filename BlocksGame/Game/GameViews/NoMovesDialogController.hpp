@@ -24,8 +24,13 @@ namespace BlocksGame {
         NoMovesDialogController(Pht::IEngine& engine, const CommonResources& commonResources);
         
         void Init();
+        void SetFadeEffect(Pht::FadeEffect& fadeEffect);
         Result Update();
-    
+
+        Pht::GuiView& GetView() {
+            return mView;
+        }
+
     private:
         Result HandleInput();
         Result OnTouch(const Pht::TouchEvent& touchEvent);

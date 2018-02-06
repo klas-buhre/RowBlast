@@ -27,7 +27,12 @@ namespace BlocksGame {
                                  const UserData& userData);
         
         void Init();
+        void SetFadeEffect(Pht::FadeEffect& fadeEffect);
         Result Update();
+        
+        Pht::GuiView& GetView() {
+            return mView;
+        }
     
     private:
         Result HandleInput();

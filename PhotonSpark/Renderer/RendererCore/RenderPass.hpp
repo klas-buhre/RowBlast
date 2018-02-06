@@ -7,7 +7,12 @@
 namespace Pht {
     class LightComponent;
     class CameraComponent;
-    
+
+    enum class RenderOrder {
+        Optimized,
+        BackToFront
+    };
+
     struct ScissorBox {
         Vec2 mLowerLeft;
         Vec2 mSize;
@@ -28,6 +33,14 @@ namespace Pht {
             return mProjectionMode;
         }
         
+        void SetRenderOrder(RenderOrder renderOrder) {
+            mRenderOrder = renderOrder;
+        }
+
+        RenderOrder GetRenderOrder() const {
+            return mRenderOrder;
+        }
+
         void SetHudMode(bool isHudMode) {
             mIsHudMode = isHudMode;
         }
@@ -70,6 +83,7 @@ namespace Pht {
 
     private:
         ProjectionMode mProjectionMode {ProjectionMode::Perspective};
+        RenderOrder mRenderOrder {RenderOrder::Optimized};
         bool mIsHudMode {false};
         const CameraComponent* mCamera {nullptr};
         const LightComponent* mLight {nullptr};

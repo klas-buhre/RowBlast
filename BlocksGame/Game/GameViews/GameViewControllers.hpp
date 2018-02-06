@@ -1,6 +1,11 @@
 #ifndef GameViewControllers_hpp
 #define GameViewControllers_hpp
 
+// Engine includes.
+#include "FadeEffect.hpp"
+
+// Game includes.
+#include "GuiViewManager.hpp"
 #include "GameHudController.hpp"
 #include "GameMenuController.hpp"
 #include "GameOverDialogController.hpp"
@@ -19,11 +24,11 @@ namespace BlocksGame {
     class CommonViewControllers;
     class SettingsMenuController;
     class NoLivesDialogController;
+    class GameScene;
     
     class GameViewControllers {
     public:
         enum Controller {
-            None,
             GameHud,
             GameMenu,
             GameOverDialog,
@@ -32,7 +37,8 @@ namespace BlocksGame {
             SettingsMenu,
             NoLivesDialog,
             RestartConfirmationDialog,
-            MapConfirmationDialog
+            MapConfirmationDialog,
+            None
         };
         
         GameViewControllers(Pht::IEngine& engine,
@@ -40,13 +46,8 @@ namespace BlocksGame {
                             const UserData& userData,
                             CommonViewControllers& commonViewControllers);
         
-        Controller GetActiveController() const {
-            return mActiveController;
-        }
-        
-        void SetActiveController(Controller controller) {
-            mActiveController = controller;
-        }
+        void Init(GameScene& scene);
+        void SetActiveController(Controller controller);
         
         GameHudController& GetGameHudController() {
             return mGameHudController;
@@ -85,7 +86,8 @@ namespace BlocksGame {
         }
         
     private:
-        Controller mActiveController {None};
+        Pht::FadeEffect mFadeEffect;
+        GuiViewManager mViewManager;
         GameHudController mGameHudController;
         GameMenuController mGameMenuController;
         GameOverDialogController mGameOverDialogController;

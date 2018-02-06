@@ -3,6 +3,7 @@
 // Engine includes.
 #include "IEngine.hpp"
 #include "IRenderer.hpp"
+#include "TextComponent.hpp"
 
 // Game includes.
 #include "CommonResources.hpp"
@@ -28,7 +29,7 @@ NoLivesDialogView::NoLivesDialogView(Pht::IEngine& engine,
     SetPosition({0.0f, 0.0f});
     
     auto quad {MenuQuad::CreateGreen(engine, GetSceneResources(), size)};
-    quad->SetPosition({0.0f, 0.0f, UiLayer::background});
+    quad->GetTransform().SetPosition({0.0f, 0.0f, UiLayer::background});
     AddSceneObject(std::move(quad));
     
     Pht::Vec3 closeButtonPosition {
@@ -50,34 +51,12 @@ NoLivesDialogView::NoLivesDialogView(Pht::IEngine& engine,
                                                       buttonSize,
                                                       buttonInputSize,
                                                       buttonStyle);
-    mRefillLivesButton->SetText(
-        std::make_unique<Pht::Text>(Pht::Vec2 {-2.0f, -0.23f}, "REFILL LIVES", textProperties));
+    mRefillLivesButton->CreateText({-2.0f, -0.23f, UiLayer::buttonText}, "REFILL LIVES", textProperties);
     
-    auto textLine1 {
-        std::make_unique<Pht::Text>(Pht::Vec2 {-2.4f, 2.5f}, "No more lives!", textProperties)
-    };
-    
-    AddText(std::move(textLine1));
-
-    auto textLine2 {
-        std::make_unique<Pht::Text>(Pht::Vec2 {-3.0f, 1.0f}, "Refill lives for $1", textProperties)
-    };
-    
-    AddText(std::move(textLine2));
-    
-    auto textLine3 {
-        std::make_unique<Pht::Text>(Pht::Vec2 {-4.0f, 0.0f}, "Time to next life:", textProperties)
-    };
-    
-    AddText(std::move(textLine3));
-    
-    auto countdownText {
-        std::make_unique<Pht::Text>(Pht::Vec2 {1.9f, 0.0f}, "00:00", textProperties)
-    };
-    
-    mCountdownText = countdownText.get();
-    
-    AddText(std::move(countdownText));
+    CreateText({-2.4f, 2.5f, UiLayer::text}, "No more lives!", textProperties);
+    CreateText({-3.0f, 1.0f, UiLayer::text}, "Refill lives for $1", textProperties);
+    CreateText({-4.0f, 0.0f, UiLayer::text}, "Time to next life:", textProperties);
+    mCountdownText = &CreateText({1.9f, 0.0f, UiLayer::text}, "00:00", textProperties);
 }
 
 void NoLivesDialogView::Update() {
@@ -90,7 +69,7 @@ void NoLivesDialogView::Update() {
         auto numChars {std::strlen(countdownBuffer.data())};
         assert(numChars == countdownNumChars);
         
-        auto& text {mCountdownText->mText};
+        auto& text {mCountdownText->GetText()};
         auto textLength {text.size()};
         assert(textLength == countdownNumChars);
         

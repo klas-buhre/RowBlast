@@ -13,7 +13,8 @@ namespace BlocksGame {
     public:
         void Init(Pht::SceneObject& parentObject);
         void AddView(Pht::GuiView& view);
-        void SetActiveView(int viewIndex);
+        void ActivateView(int viewIndex);
+        void DeactivateAllViews();
         
     private:
         std::vector<Pht::GuiView*> mViews;

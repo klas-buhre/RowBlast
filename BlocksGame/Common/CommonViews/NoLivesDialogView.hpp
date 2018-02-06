@@ -40,7 +40,7 @@ namespace BlocksGame {
         std::unique_ptr<CloseButton> mCloseButton;
         std::unique_ptr<MenuButton> mRefillLivesButton;
         std::chrono::seconds mSecondsUntilNewLife;
-        Pht::Text* mCountdownText {nullptr};
+        Pht::TextComponent* mCountdownText {nullptr};
     };
 }
 

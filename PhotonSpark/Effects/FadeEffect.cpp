@@ -4,6 +4,7 @@
 #include "Material.hpp"
 #include "QuadMesh.hpp"
 #include "IRenderer.hpp"
+#include "Fnv1Hash.hpp"
 
 using namespace Pht;
 
@@ -34,19 +35,23 @@ FadeEffect::FadeEffect(ISceneManager& sceneManager,
     
     mQuad = sceneManager.CreateRenderableObject(Pht::QuadMesh {vertices}, quadMaterial);
     mSceneObject = std::make_unique<SceneObject>(mQuad.get());
+    mSceneObject->SetName(Hash::Fnv1a("fadeEffect"));
     mSceneObject->GetTransform().SetPosition({0.0f, 0.0f, zPosition});
     mQuad->GetMaterial().SetOpacity(mFade);
+    mSceneObject->SetIsVisible(false);
 }
 
 void FadeEffect::Reset() {
     mFade = 0.0f;
     mState = State::Idle;
     mQuad->GetMaterial().SetOpacity(mFade);
+    mSceneObject->SetIsVisible(false);
 }
 
 void FadeEffect::Start() {
     mFade = 0.0f;
     mState = State::FadingOut;
+    mSceneObject->SetIsVisible(true);
 }
 
 FadeEffect::State FadeEffect::Update(float dt) {
@@ -67,6 +72,7 @@ FadeEffect::State FadeEffect::Update(float dt) {
             if (mFade <= 0.0f) {
                 mFade = 0.0f;
                 mState = State::Idle;
+                mSceneObject->SetIsVisible(false);
             }
             mQuad->GetMaterial().SetOpacity(mFade);
             break;

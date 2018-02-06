@@ -29,7 +29,7 @@ namespace BlocksGame {
             mGameHudEventListener = &gameHudEventListener;
         }
         
-        const Pht::GuiView& GetView() const {
+        Pht::GuiView& GetView() {
             return mView;
         }
     

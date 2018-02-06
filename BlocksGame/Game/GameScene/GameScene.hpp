@@ -75,6 +75,11 @@ namespace BlocksGame {
             return *mHudContainer;
         }
 
+        Pht::SceneObject& GetUiViewsContainer() {
+            assert(mUiViewsContainer);
+            return *mUiViewsContainer;
+        }
+
         SceneObjectPool& GetFieldBlocks() {
             assert(mFieldBlocks);
             return *mFieldBlocks;
@@ -146,6 +151,7 @@ namespace BlocksGame {
                        const LevelResources& levelResources,
                        const PieceResources& pieceResources,
                        const Level& level);
+        void CreateUiViewsContainer();
         void SetScissorBox(const Pht::ScissorBox& scissorBox, int layer);
         
         Pht::IEngine& mEngine;
@@ -164,6 +170,7 @@ namespace BlocksGame {
         Pht::SceneObject* mEffectsContainer {nullptr};
         Pht::SceneObject* mFlyingBlocksContainer {nullptr};
         Pht::SceneObject* mHudContainer {nullptr};
+        Pht::SceneObject* mUiViewsContainer {nullptr};
         Pht::Vec3 mLightDirection;
         const Pht::Vec3 mFieldPosition;
         const float mCellSize {1.25f};

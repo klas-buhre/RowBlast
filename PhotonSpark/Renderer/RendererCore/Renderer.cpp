@@ -683,19 +683,28 @@ void Renderer::Render(const RenderPass& renderPass, DistanceFunction distanceFun
     mIsDepthTestAllowed = renderPass.IsDepthTestAllowed();
     
     // Build the render queue.
-    mRenderQueue.Build(GetViewMatrix(), distanceFunction, renderPass.GetLayerMask());
+    mRenderQueue.Build(GetViewMatrix(),
+                       renderPass.GetRenderOrder(),
+                       distanceFunction,
+                       renderPass.GetLayerMask());
     
-    // Start by rendering the opaque objects and enable depth write for those.
-    SetDepthWrite(true);
+    if (renderPass.GetRenderOrder() == RenderOrder::Optimized) {
+        // Start by rendering the opaque objects and enable depth write for those.
+        SetDepthWrite(true);
+    }
     
     RenderQueue::Entry* previousEntry {nullptr};
     
     for (auto& renderEntry: mRenderQueue) {
-        if (!renderEntry.mDepthWrite) {
-            if (previousEntry == nullptr || previousEntry->mDepthWrite) {
-                // Transition into rendering the transparent objects.
-                SetDepthWrite(false);
+        if (renderPass.GetRenderOrder() == RenderOrder::Optimized) {
+            if (!renderEntry.mDepthWrite) {
+                if (previousEntry == nullptr || previousEntry->mDepthWrite) {
+                    // Transition into rendering the transparent objects.
+                    SetDepthWrite(false);
+                }
             }
+        } else {
+            SetDepthWrite(renderEntry.mDepthWrite);
         }
         
         auto* sceneObject {renderEntry.mSceneObject};

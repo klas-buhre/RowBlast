@@ -125,6 +125,7 @@ void GameScene::Init(const Level& level,
     CreateEffectsContainer();
     CreateFlyingBlocksContainer();
     CreateHud(gameLogic, levelResources, pieceResources, level);
+    CreateUiViewsContainer();
     
     UpdateCameraPositionAndScissorBox();
     
@@ -166,6 +167,7 @@ void GameScene::CreateRenderPasses() {
     Pht::RenderPass uiViewsRenderPass {static_cast<int>(Layer::UiViews)};
     uiViewsRenderPass.SetHudMode(true);
     uiViewsRenderPass.SetIsDepthTestAllowed(false);
+    uiViewsRenderPass.SetRenderOrder(Pht::RenderOrder::BackToFront);
     mScene->AddRenderPass(uiViewsRenderPass);
 }
 
@@ -331,6 +333,24 @@ void GameScene::CreateHud(const GameLogic& gameLogic,
                                      *mHudContainer,
                                      static_cast<int>(Layer::Hud),
                                      level);
+}
+
+void GameScene::CreateUiViewsContainer() {
+    mUiViewsContainer = &mScene->CreateSceneObject();
+    mUiViewsContainer->SetLayer(static_cast<int>(Layer::UiViews));
+    mScene->GetRoot().AddChild(*mUiViewsContainer);
+    
+    auto& uiLightSceneObject {mScene->CreateSceneObject()};
+    uiLightSceneObject.SetIsVisible(false);
+    auto lightComponent {std::make_unique<Pht::LightComponent>(uiLightSceneObject)};
+    lightComponent->SetDirection({0.75f, 1.0f, 1.0f});
+    
+    auto* uiRenderPass {mScene->GetRenderPass(static_cast<int>(Layer::UiViews))};
+    assert(uiRenderPass);
+    uiRenderPass->SetLight(lightComponent.get());
+    
+    uiLightSceneObject.SetComponent<Pht::LightComponent>(std::move(lightComponent));
+    mUiViewsContainer->AddChild(uiLightSceneObject);
 }
 
 void GameScene::Update() {

@@ -6,6 +6,7 @@
 #include "Vector.hpp"
 #include "Matrix.hpp"
 #include "Scene.hpp"
+#include "RenderPass.hpp"
 
 namespace Pht {
     class SceneObject;
@@ -13,7 +14,10 @@ namespace Pht {
     class RenderQueue {
     public:
         void Init(const SceneObject& rootSceneObject);
-        void Build(const Mat4& viewMatrix, DistanceFunction distanceFunction, int layerMask);
+        void Build(const Mat4& viewMatrix,
+                   RenderOrder renderOrder,
+                   DistanceFunction distanceFunction,
+                   int layerMask);
         
         struct Entry {
             float mDistance;

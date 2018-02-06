@@ -8,8 +8,6 @@
 #include "Cell.hpp"
 
 namespace Pht {
-    class IEngine;
-    class IRenderer;
     class RenderableObject;
 }
 
@@ -18,7 +16,6 @@ namespace BlocksGame {
     class GameLogic;
     class GameScene;
     class ScrollController;
-    class GameViewControllers;
     class SubCell;
     class FallingPiece;
     class PieceResources;
@@ -27,16 +24,13 @@ namespace BlocksGame {
 
     class GameSceneRenderer {
     public:
-        GameSceneRenderer(Pht::IEngine& engine,
-                          GameScene& scene,
+        GameSceneRenderer(GameScene& scene,
                           const Field& field,
                           const GameLogic& gameLogic,
                           const ScrollController& scrollController,
-                          const GameViewControllers& gameViewControllers,
                           const PieceResources& pieceResources,
                           const LevelResources& levelResources);
         
-        void RenderFrame();
         void Render();
         
     private:
@@ -63,16 +57,11 @@ namespace BlocksGame {
                               Rotation rotation);
         void RenderClickableGhostPieces(const FallingPiece& fallingPiece);
         void RenderFlyingBlocks();
-        void RenderGameViews();
-        void RenderLevelCompletedView();
         
-        Pht::IEngine& mEngine;
-        Pht::IRenderer& mEngineRenderer;
         GameScene& mScene;
         const Field& mField;
         const GameLogic& mGameLogic;
         const ScrollController& mScrollController;
-        const GameViewControllers& mGameViewControllers;
         const PieceResources& mPieceResources;
         const LevelResources& mLevelResources;
     };

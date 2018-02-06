@@ -33,12 +33,14 @@ MapViewControllers::MapViewControllers(Pht::IEngine& engine,
     mViewManager.AddView(mSettingsButtonController.GetView());
     mViewManager.AddView(mNoLivesDialogController.GetView());
     mViewManager.AddView(mSettingsMenuController.GetView());
-    
-    mNoLivesDialogController.SetFadeEffect(mFadeEffect);
-    mSettingsMenuController.SetFadeEffect(mFadeEffect);
 }
 
 void MapViewControllers::Init() {
+    mFadeEffect.Reset();
+
+    mNoLivesDialogController.SetFadeEffect(mFadeEffect);
+    mSettingsMenuController.SetFadeEffect(mFadeEffect);
+
     auto& uiViewContainer {mScene.GetUiViewsContainer()};
     uiViewContainer.AddChild(mFadeEffect.GetSceneObject());
     
@@ -47,6 +49,5 @@ void MapViewControllers::Init() {
 }
 
 void MapViewControllers::SetActiveController(Controller controller) {
-    mActiveController = controller;
-    mViewManager.SetActiveView(static_cast<int>(controller));
+    mViewManager.ActivateView(static_cast<int>(controller));
 }

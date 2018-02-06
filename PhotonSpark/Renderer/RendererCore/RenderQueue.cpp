@@ -28,7 +28,7 @@ namespace {
         return false;
     }
     
-    bool CompareEntries(const RenderQueue::Entry& a, const RenderQueue::Entry& b) {
+    bool CompareEntriesOptimizedRendering(const RenderQueue::Entry& a, const RenderQueue::Entry& b) {
         if (a.mDepthWrite != b.mDepthWrite) {
             if (a.mDepthWrite) {
                 // Render depth writing objects first.
@@ -46,6 +46,10 @@ namespace {
         // Both objects do not write depth sort back to front.
         return a.mDistance > b.mDistance;
     }
+
+    bool CompareEntriesBackToFront(const RenderQueue::Entry& a, const RenderQueue::Entry& b) {
+        return a.mDistance > b.mDistance;
+    }
 }
 
 void RenderQueue::Init(const SceneObject& rootSceneObject) {
@@ -54,13 +58,24 @@ void RenderQueue::Init(const SceneObject& rootSceneObject) {
     mQueue.resize(numSceneObjects);
 }
 
-void RenderQueue::Build(const Mat4& viewMatrix, DistanceFunction distanceFunction, int layerMask) {
+void RenderQueue::Build(const Mat4& viewMatrix,
+                        RenderOrder renderOrder,
+                        DistanceFunction distanceFunction,
+                        int layerMask) {
     mSize = 0;
     
     assert(mRootSceneObject);
     AddSceneObject(*mRootSceneObject, layerMask, false);
     CalculateDistances(viewMatrix, distanceFunction);
-    std::sort(&mQueue[0], &mQueue[mSize], CompareEntries);
+    
+    switch (renderOrder) {
+        case RenderOrder::Optimized:
+            std::sort(&mQueue[0], &mQueue[mSize], CompareEntriesOptimizedRendering);
+            break;
+        case RenderOrder::BackToFront:
+            std::sort(&mQueue[0], &mQueue[mSize], CompareEntriesBackToFront);
+            break;
+    }
 }
 
 void RenderQueue::AddSceneObject(const SceneObject& sceneObject,

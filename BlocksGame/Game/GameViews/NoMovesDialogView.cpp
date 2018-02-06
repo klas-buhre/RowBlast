@@ -18,7 +18,7 @@ NoMovesDialogView::NoMovesDialogView(Pht::IEngine& engine, const CommonResources
     SetPosition({0.0f, 0.0f});
     
     auto quad {MenuQuad::CreateGreen(engine, GetSceneResources(), size)};
-    quad->SetPosition({0.0f, 0.0f, UiLayer::background});
+    quad->GetTransform().SetPosition({0.0f, 0.0f, UiLayer::background});
     AddSceneObject(std::move(quad));
     
     Pht::Vec3 closeButtonPosition {
@@ -40,18 +40,8 @@ NoMovesDialogView::NoMovesDialogView(Pht::IEngine& engine, const CommonResources
                                                  buttonSize,
                                                  buttonInputSize,
                                                  buttonStyle);
-    mPlayOnButton->SetText(
-        std::make_unique<Pht::Text>(Pht::Vec2 {-1.5f, -0.23f}, "PLAY ON", textProperties));
+    mPlayOnButton->CreateText({-1.5f, -0.23f, UiLayer::buttonText}, "PLAY ON", textProperties);
     
-    auto textLine1 {
-        std::make_unique<Pht::Text>(Pht::Vec2 {-2.0f, 1.5f}, "Out of moves!", textProperties)
-    };
-    
-    AddText(std::move(textLine1));
-
-    auto textLine2 {
-        std::make_unique<Pht::Text>(Pht::Vec2 {-4.0f, 0.5f}, "Get 5 more moves for $1", textProperties)
-    };
-    
-    AddText(std::move(textLine2));
+    CreateText({-2.0f, 1.5f, UiLayer::text}, "Out of moves!", textProperties);
+    CreateText({-4.0f, 0.5f, UiLayer::text}, "Get 5 more moves for $1", textProperties);
 }

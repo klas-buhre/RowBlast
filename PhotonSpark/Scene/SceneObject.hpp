@@ -18,11 +18,11 @@ namespace Pht {
         explicit SceneObject(RenderableObject* renderable);
         
         void SetRenderable(RenderableObject* renderable);
-        void SetPosition(const Vec3& position);
-        void SetRotationX(float degrees);
-        void SetRotationY(float degrees);
-        void SetRotationZ(float degrees);
-        void SetScale(float scale);
+        void SetPosition(const Vec3& position); // TODO: remove
+        void SetRotationX(float degrees); // TODO: remove
+        void SetRotationY(float degrees); // TODO: remove
+        void SetRotationZ(float degrees); // TODO: remove
+        void SetScale(float scale); // TODO: remove
         Vec3 GetWorldSpacePosition() const;
         void Update(bool parentMatrixChanged);
         void AddChild(SceneObject& child);

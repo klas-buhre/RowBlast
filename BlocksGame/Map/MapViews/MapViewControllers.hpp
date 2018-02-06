@@ -47,7 +47,6 @@ namespace BlocksGame {
         
     private:
         MapScene& mScene;
-        Controller mActiveController {SettingsButton};
         Pht::FadeEffect mFadeEffect;
         GuiViewManager mViewManager;
         SettingsButtonController mSettingsButtonController;

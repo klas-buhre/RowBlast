@@ -19,7 +19,7 @@ GameOverDialogView::GameOverDialogView(Pht::IEngine& engine,
     SetPosition({0.0f, 0.0f});
     
     auto quad {MenuQuad::CreateGreen(engine, GetSceneResources(), size)};
-    quad->SetPosition({0.0f, 0.0f, UiLayer::background});
+    quad->GetTransform().SetPosition({0.0f, 0.0f, UiLayer::background});
     AddSceneObject(std::move(quad));
     
     Pht::Vec3 closeButtonPosition {
@@ -41,12 +41,7 @@ GameOverDialogView::GameOverDialogView(Pht::IEngine& engine,
                                                 buttonSize,
                                                 buttonInputSize,
                                                 buttonStyle);
-    mRetryButton->SetText(
-        std::make_unique<Pht::Text>(Pht::Vec2 {-1.05f, -0.23f}, "RETRY", textProperties));
+    mRetryButton->CreateText({-1.05f, -0.23f, UiLayer::buttonText}, "RETRY", textProperties);
     
-    auto textLine {
-        std::make_unique<Pht::Text>(Pht::Vec2 {-2.0f, 1.5f}, "Game Over!", textProperties)
-    };
-    
-    AddText(std::move(textLine));
+    CreateText({-2.0f, 1.5f, UiLayer::text}, "Game Over!", textProperties);
 }

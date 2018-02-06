@@ -35,10 +35,6 @@ namespace BlocksGame {
             return *mNextButton;
         }
         
-        const std::vector<Pht::SceneObject*>& GetStars() const {
-            return mStars;
-        }
-        
     private:
         void LoadStar(const CommonResources& commonResources);
         

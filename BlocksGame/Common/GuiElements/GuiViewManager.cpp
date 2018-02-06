@@ -19,11 +19,15 @@ void GuiViewManager::AddView(Pht::GuiView& view) {
     mViews.push_back(&view);
 }
 
-void GuiViewManager::SetActiveView(int viewIndex) {
-    for (auto* view: mViews) {
-        view->SetIsActive(false);
-    }
+void GuiViewManager::ActivateView(int viewIndex) {
+    DeactivateAllViews();
     
     assert(viewIndex < mViews.size());
     mViews[viewIndex]->SetIsActive(true);
+}
+
+void GuiViewManager::DeactivateAllViews() {
+    for (auto* view: mViews) {
+        view->SetIsActive(false);
+    }
 }

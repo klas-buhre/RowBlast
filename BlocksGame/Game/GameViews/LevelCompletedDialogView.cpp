@@ -18,9 +18,9 @@ using namespace BlocksGame;
 
 namespace {
     std::array<Pht::Vec3, 3> starOffsets {
-        Pht::Vec3{-3.8f, 1.8f, UiLayer::textRectangle},
-        Pht::Vec3{0.0f, 2.3f, UiLayer::textRectangle},
-        Pht::Vec3{3.8f, 1.8f, UiLayer::textRectangle}
+        Pht::Vec3{-3.8f, 1.8f, UiLayer::block},
+        Pht::Vec3{0.0f, 2.3f, UiLayer::block},
+        Pht::Vec3{3.8f, 1.8f, UiLayer::block}
     };
 }
 
@@ -54,19 +54,15 @@ LevelCompletedDialogView::LevelCompletedDialogView(Pht::IEngine& engine,
                                                buttonSize,
                                                buttonInputSize,
                                                buttonStyle);
-    mNextButton->SetText(
-        std::make_unique<Pht::Text>(Pht::Vec2 {-0.9f, -0.23f}, "NEXT", textProperties));
+    mNextButton->CreateText({-0.9f, -0.23f, UiLayer::buttonText}, "NEXT", textProperties);
     
-    auto levelClearedText {
-        std::make_unique<Pht::Text>(Pht::Vec2 {-2.3f, -1.5f}, "Level cleared!", textProperties)
-    };
-    
-    AddText(std::move(levelClearedText));
+    CreateText({-2.3f, -1.5f, UiLayer::text}, "Level cleared!", textProperties);
     
     for (auto i {0}; i < 3; ++i) {
         auto star {std::make_unique<Pht::SceneObject>(mStarRenderable.get())};
-        star->SetRotationX(-90.0f);
-        star->SetPosition(starOffsets[i]);
+        auto& transform {star->GetTransform()};
+        transform.SetRotation({90.0f, 0.0f, 0.0f});
+        transform.SetPosition(starOffsets[i]);
         mStars.push_back(star.get());
         AddSceneObject(std::move(star));
     }
@@ -87,9 +83,8 @@ void LevelCompletedDialogView::Update() {
     auto speed {12.0f};
     
     for (auto* star: mStars) {
-        star->SetRotationX(90.0f);
-        star->SetRotationZ(mStarAngle);
-        star->SetPosition(starOffsets[starIndex]);
+        auto& transform {star->GetTransform()};
+        transform.SetRotation({90.0f, 0.0f, mStarAngle});
         
         ++starIndex;
     }

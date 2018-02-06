@@ -26,8 +26,9 @@ namespace BlocksGame {
                                        const CommonResources& commonResources);
         
         void Init();
+        void SetFadeEffect(Pht::FadeEffect& fadeEffect);
         Result Update();
-
+        
         LevelCompletedDialogView& GetView() {
             return mView;
         }
