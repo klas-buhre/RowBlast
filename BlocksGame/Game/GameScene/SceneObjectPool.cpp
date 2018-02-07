@@ -49,6 +49,7 @@ void SceneObjectPool::ReclaimAll() {
 
     for (auto& sceneObject: mSceneObjects) {
         sceneObject->SetIsVisible(false);
+        sceneObject->SetIsStatic(true);
     }
 }
 
@@ -57,6 +58,7 @@ Pht::SceneObject& SceneObjectPool::AccuireSceneObject() {
     
     auto& sceneObject {*mSceneObjects[mNextAvailableIndex]};
     sceneObject.SetIsVisible(true);
+    sceneObject.SetIsStatic(false);
     ++mNextAvailableIndex;
     return sceneObject;
 }

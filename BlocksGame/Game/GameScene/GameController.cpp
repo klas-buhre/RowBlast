@@ -2,8 +2,6 @@
 
 // Engine includes.
 #include "IEngine.hpp"
-#include "IRenderer.hpp"
-#include "ISceneManager.hpp"
 
 // Game includes.
 #include "LevelLoader.hpp"
@@ -118,11 +116,6 @@ GameController::Command GameController::Update() {
     mField.OnEndOfFrame();
     
     return command;
-}
-
-void GameController::RenderScene() {
-    auto* scene {mEngine.GetSceneManager().GetActiveScene()};
-    mEngine.GetRenderer().RenderScene(*scene);
 }
 
 GameController::Command GameController::UpdateGame() {

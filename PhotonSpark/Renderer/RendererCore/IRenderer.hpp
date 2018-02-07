@@ -22,7 +22,6 @@ namespace Pht {
         virtual void SetClearColorBuffer(bool clearColorBuffer) = 0;
         virtual void SetHudMode(bool hudMode) = 0;
         virtual void SetProjectionMode(ProjectionMode projectionMode) = 0;
-        virtual void RenderScene(const Scene& scene) = 0; // TODO: remove
         virtual int GetAdjustedNumPixels(int numPixels) const = 0;
         virtual const Vec2& GetHudFrustumSize() const = 0;
         virtual const Vec2& GetOrthographicFrustumSize() const = 0;

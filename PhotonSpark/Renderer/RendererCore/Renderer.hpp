@@ -22,7 +22,6 @@ namespace Pht {
         void SetClearColorBuffer(bool clearColorBuffer) override;
         void SetHudMode(bool hudMode) override;
         void SetProjectionMode(ProjectionMode projectionMode) override;
-        void RenderScene(const Scene& scene) override;
         int GetAdjustedNumPixels(int numPixels) const override;
         const Mat4& GetViewMatrix() const override;
         const Mat4& GetProjectionMatrix() const override;
@@ -35,6 +34,7 @@ namespace Pht {
         std::unique_ptr<RenderableObject> CreateRenderableObject(const IMesh& mesh,
                                                                  const Material& material);
         void ClearBuffers();
+        void RenderScene(const Scene& scene);
         
     private:
         void InitOpenGl(bool createRenderBuffers);

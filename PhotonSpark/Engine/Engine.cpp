@@ -36,15 +36,18 @@ void Engine::Update(float frameSeconds) {
     }
 
     mApplication->OnUpdate();
+    auto* scene {mSceneManager.GetActiveScene()};
     
-    if (auto* scene {mSceneManager.GetActiveScene()}) {
+    if (scene) {
         scene->GetRoot().Update(false);
     }
     
     mParticleSystem.Update(mLastFrameSeconds);
     
-    mRenderer.ClearBuffers();
-    mApplication->OnRender();
+    if (scene) {
+        mRenderer.ClearBuffers();
+        mRenderer.RenderScene(*scene);
+    }
 }
 
 IRenderer& Engine::GetRenderer() {

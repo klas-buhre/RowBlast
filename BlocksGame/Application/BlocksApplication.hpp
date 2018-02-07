@@ -25,7 +25,6 @@ namespace BlocksGame {
     
         void OnInitialize() override {}
         void OnUpdate() override;
-        void OnRender() override;
         
     private:
         void UpdateScene();

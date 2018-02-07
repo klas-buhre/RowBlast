@@ -43,6 +43,7 @@ void FlyingBlocksAnimation::Init() {
         mFreeSceneObjects.PushBack(sceneObject.get());
         containerObject.AddChild(*sceneObject);
         sceneObject->SetIsVisible(false);
+        sceneObject->SetIsStatic(true);
     }
 }
 
@@ -165,10 +166,12 @@ Pht::SceneObject& FlyingBlocksAnimation::AccuireSceneObject() {
     auto* sceneObject {mFreeSceneObjects.Back()};
     mFreeSceneObjects.PopBack();
     sceneObject->SetIsVisible(true);
+    sceneObject->SetIsStatic(false);
     return *sceneObject;
 }
 
 void FlyingBlocksAnimation::ReleaseSceneObject(Pht::SceneObject& sceneObject) {
     sceneObject.SetIsVisible(false);
+    sceneObject.SetIsStatic(true);
     mFreeSceneObjects.PushBack(&sceneObject);
 }

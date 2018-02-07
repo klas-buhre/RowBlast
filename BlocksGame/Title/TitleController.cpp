@@ -6,8 +6,6 @@
 #include "IEngine.hpp"
 #include "IInput.hpp"
 #include "InputEvent.hpp"
-#include "ISceneManager.hpp"
-#include "IRenderer.hpp"
 
 using namespace BlocksGame;
 
@@ -25,9 +23,4 @@ TitleController::Command TitleController::Update() {
     mScene.Update();
     
     return command;
-}
-
-void TitleController::RenderScene() {
-    auto* scene {mEngine.GetSceneManager().GetActiveScene()};
-    mEngine.GetRenderer().RenderScene(*scene);
 }

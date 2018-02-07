@@ -58,8 +58,8 @@ Backlog:
     -Credit the icon creator: <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
   
 Ongoing tasks:
-    Remove all "TODO: remove".
-    
+
+ 
 Ideas:
     -The pause button could lead to a widget that has an undo button, a boosters button and a game
      menu button.
@@ -71,6 +71,7 @@ Time Estimation in days:
         Done
     -Let each GuiView be a subscene that can be merged into the current scene.
         Cost: 5
+        Done
     -Finalize gameplay.
         Cost: 10
     -Fix all gameplay bugs.
@@ -171,20 +172,6 @@ void BlocksApplication::OnUpdate() {
     
     UpdateScene();
     HandleTransitions();
-}
-
-void BlocksApplication::OnRender() {
-    switch (mState) {
-        case State::TitleScene:
-            mTitleController.RenderScene();
-            break;
-        case State::MapScene:
-            mMapController.RenderScene();
-            break;
-        case State::GameScene:
-            mGameController.RenderScene();
-            break;
-    }
 }
 
 void BlocksApplication::UpdateScene() {

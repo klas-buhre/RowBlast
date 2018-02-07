@@ -125,12 +125,11 @@ void GameSceneRenderer::RenderFieldBlock(const SubCell& subCell) {
         auto color {subCell.mColor};
         auto brightness {subCell.mFlashingBlockAnimation.mBrightness};
 
-        auto* renderableObject {
-            &mPieceResources.GetBlockRenderableObject(renderableKind, color, brightness)
+        auto& renderableObject {
+            mPieceResources.GetBlockRenderableObject(renderableKind, color, brightness)
         };
         
-        assert(renderableObject);
-        sceneObject.SetRenderable(renderableObject);
+        sceneObject.SetRenderable(&renderableObject);
 
         auto& weldRenderable {mPieceResources.GetWeldRenderableObject(color, brightness)};
         RenderBlockWelds(subCell, blockPosition, weldRenderable, mScene.GetFieldBlocks());
@@ -263,12 +262,11 @@ void GameSceneRenderer::RenderPieceBlocks(const CellGrid& pieceBlocks,
                 auto color {subCell.mColor};
                 auto brightness {BlockBrightness::Normal};
 
-                auto* blockRenderableObject {
-                    &mPieceResources.GetBlockRenderableObject(renderableKind, color, brightness)
+                auto& blockRenderableObject {
+                    mPieceResources.GetBlockRenderableObject(renderableKind, color, brightness)
                 };
                 
-                assert(blockRenderableObject);
-                sceneObject.SetRenderable(blockRenderableObject);
+                sceneObject.SetRenderable(&blockRenderableObject);
 
                 auto& weldRenderable {mPieceResources.GetWeldRenderableObject(color, brightness)};
                 RenderBlockWelds(subCell, blockPosition, weldRenderable, pool);

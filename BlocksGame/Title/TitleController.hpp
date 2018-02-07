@@ -21,7 +21,6 @@ namespace BlocksGame {
         TitleController(Pht::IEngine& engine, const CommonResources& commonResources);
     
         Command Update();
-        void RenderScene();
     
     private:
         Pht::IEngine& mEngine;
