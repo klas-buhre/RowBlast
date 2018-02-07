@@ -85,7 +85,7 @@ void PieceDropParticleEffect::StartEffect(const Pht::Vec3& fieldPosition, const 
             particleSettings.mColor = color;
             
             effect->Start();
-            effectSceneObject->SetPosition(fieldPosition);
+            effectSceneObject->GetTransform().SetPosition(fieldPosition);
             break;
         }
     }

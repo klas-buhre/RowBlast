@@ -9,6 +9,7 @@ namespace Pht {
     public:
         void SetPosition(const Vec3& position);
         void SetScale(const Vec3& scale);
+        void SetScale(float scale);
         void SetRotation(const Vec3& rotation);
         void Translate(const Vec3& translation);
         void Scale(const Vec3& scale);

@@ -7,7 +7,6 @@
 #include "QuadMesh.hpp"
 #include "SphereMesh.hpp"
 #include "GuiView.hpp"
-#include "Font.hpp"
 #include "ISceneManager.hpp"
 #include "TextComponent.hpp"
 
@@ -36,7 +35,7 @@ MenuButton::MenuButton(Pht::IEngine& engine,
                                        material,
                                        view.GetSceneResources())
     };
-    sceneObject->SetPosition(position);
+    sceneObject->GetTransform().SetPosition(position);
     
     mButton = std::make_unique<Pht::Button>(*sceneObject, inputSize, engine);
     
@@ -44,7 +43,7 @@ MenuButton::MenuButton(Pht::IEngine& engine,
     
     auto onDownFunction {[this, style] () {
         for (auto* sceneObject: mSceneObjects) {
-            sceneObject->SetScale(style.mPressedScale);
+            sceneObject->GetTransform().SetScale(style.mPressedScale);
             
             if (auto* renderable {sceneObject->GetRenderable()}) {
                 renderable->GetMaterial().SetAmbient(style.mSelectedColor);
@@ -53,12 +52,6 @@ MenuButton::MenuButton(Pht::IEngine& engine,
             if (auto* textComponent {sceneObject->GetComponent<Pht::TextComponent>()}) {
                 textComponent->GetProperties().mScale = style.mPressedScale;
             }
-            
-            if (mText) {
-                mText->mProperties.mScale = style.mPressedScale;
-                Pht::Vec2 textLocalPosition {mTextLocalPosition * style.mPressedScale};
-                mText->mPosition = textLocalPosition + Pht::Vec2 {mPosition.x, mPosition.y};
-            }
         }
     }};
     
@@ -66,7 +59,7 @@ MenuButton::MenuButton(Pht::IEngine& engine,
     
     auto onUpFunction {[this, style] () {
         for (auto sceneObject: mSceneObjects) {
-            sceneObject->SetScale(1.0f);
+            sceneObject->GetTransform().SetScale(1.0f);
             
             if (auto* renderable {sceneObject->GetRenderable()}) {
                 renderable->GetMaterial().SetAmbient(style.mColor);
@@ -74,11 +67,6 @@ MenuButton::MenuButton(Pht::IEngine& engine,
 
             if (auto* textComponent {sceneObject->GetComponent<Pht::TextComponent>()}) {
                 textComponent->GetProperties().mScale = 1.0f;
-            }
-
-            if (mText) {
-                mText->mProperties.mScale = 1.0f;
-                mText->mPosition = mTextLocalPosition + Pht::Vec2 {mPosition.x, mPosition.y};
             }
         }
     }};
@@ -93,7 +81,7 @@ MenuButton::MenuButton(Pht::IEngine& engine,
                                            material,
                                            view.GetSceneResources())
         };
-        leftSceneObject->SetPosition(position + Pht::Vec3 {-size.x / 2.0f, 0.0f, 0.0f});
+        leftSceneObject->GetTransform().SetPosition(position + Pht::Vec3 {-size.x / 2.0f, 0.0f, 0.0f});
         AddSceneObject(std::move(leftSceneObject));
         
         auto rightSceneObject {
@@ -101,7 +89,7 @@ MenuButton::MenuButton(Pht::IEngine& engine,
                                            material,
                                            view.GetSceneResources())
         };
-        rightSceneObject->SetPosition(position + Pht::Vec3 {size.x / 2.0f, 0.0f, 0.0f});
+        rightSceneObject->GetTransform().SetPosition(position + Pht::Vec3 {size.x / 2.0f, 0.0f, 0.0f});
         AddSceneObject(std::move(rightSceneObject));
     }
 }
@@ -122,15 +110,8 @@ Pht::TextComponent& MenuButton::CreateText(const Pht::Vec3& position,
     return retVal;
 }
 
-void MenuButton::SetText(std::unique_ptr<Pht::Text> text) {
-    mText = text.get();
-    mTextLocalPosition = text->mPosition;
-    text->mPosition += Pht::Vec2 {mPosition.x, mPosition.y};
-    mView.AddText(std::move(text));
-}
-
 bool MenuButton::IsClicked(const Pht::TouchEvent& event) const {
-    auto isClicked {mButton->IsClicked(event, mView.GetMatrix())};
+    auto isClicked {mButton->IsClicked(event)};
     
     if (isClicked) {
         mAudio.PlaySound(CommonResources::mBlipSound);

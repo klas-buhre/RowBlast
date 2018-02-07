@@ -603,26 +603,6 @@ void Renderer::RenderTextImpl(const std::string& text,
     mTextRenderer->RenderText(text, pixelPosition, properties);
 }
 
-void Renderer::RenderGuiView(const GuiView& view) {
-    SetHudMode(true);
-    /*
-    for (auto& sceneObject: view.GetSceneObjects()) {
-        auto* renerable {sceneObject->GetRenderable()};
-        
-        if (renerable && sceneObject->IsVisible()) {
-            RenderObject(*renerable, sceneObject->GetMatrix() * view.GetMatrix());
-        }
-    }
-
-    for (auto& text: view.GetTexts()) {
-        if (text->mIsVisible) {
-            RenderText(text->mText, view.GetPosition() + text->mPosition, text->mProperties);
-        }
-    }
-    */
-    SetHudMode(false);
-}
-
 void Renderer::RenderScene(const Scene& scene) {
     const CameraComponent* previousCamera {nullptr};
     const LightComponent* previousLight {nullptr};

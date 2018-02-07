@@ -15,7 +15,6 @@
 using namespace BlocksGame;
 
 namespace {
-    Pht::Mat4 identityMatrix;
     const float inputUnitsPerColumn {26.5f * 1.25f}; // {26.5f * 10.0f / Field::numColumns};
     
     bool CompareMoves(const Move* a, const Move* b) {
@@ -27,7 +26,8 @@ MoveButton::MoveButton(Pht::IEngine& engine) :
     mButton {mSceneObject, Pht::Vec2{0.0f, 0.0f}, engine} {}
 
 void MoveButton::SetPosition(const Pht::Vec3& position) {
-    mSceneObject.SetPosition(position);
+    mSceneObject.GetTransform().SetPosition(position);
+    mSceneObject.Update(false);
 }
 
 void MoveButton::SetSize(const Pht::Vec2& size) {
@@ -334,7 +334,7 @@ void ClickInputHandler::HandleTouch(const Pht::TouchEvent& touchEvent) {
     for (auto i {0}; i < mMoveAlternativeSet.Size(); ++i) {
         auto& move {mMoveAlternativeSet.At(i)};
         
-        switch (move.mButton->GetButton().OnTouch(touchEvent, identityMatrix)) {
+        switch (move.mButton->GetButton().OnTouch(touchEvent)) {
             case Pht::Button::Result::Down:
             case Pht::Button::Result::MoveInside:
                 if (mPieceType->IsBomb()) {

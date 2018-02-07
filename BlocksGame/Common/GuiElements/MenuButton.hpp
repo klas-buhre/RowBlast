@@ -41,7 +41,6 @@ namespace BlocksGame {
         Pht::TextComponent& CreateText(const Pht::Vec3& position,
                                        const std::string& text,
                                        const Pht::TextProperties& properties);
-        void SetText(std::unique_ptr<Pht::Text> text); // TODO: remove
         bool IsClicked(const Pht::TouchEvent& event) const;
         
         Pht::SceneObject& GetSceneObject() {
@@ -56,8 +55,6 @@ namespace BlocksGame {
         Pht::Vec3 mPosition;
         std::unique_ptr<Pht::Button> mButton;
         std::vector<Pht::SceneObject*> mSceneObjects;
-        Pht::Text* mText {nullptr}; // TODO: remove
-        Pht::Vec2 mTextLocalPosition; // TODO: remove
     };
 }
 

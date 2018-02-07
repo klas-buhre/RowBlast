@@ -26,7 +26,6 @@ CloseButton::CloseButton(Pht::IEngine& engine,
                          Pht::GuiView& view,
                          const Pht::Vec3& position,
                          const Pht::TextProperties& textProperties) :
-    mView {view},
     mPosition {position},
     mAudio {engine.GetAudio()} {
 
@@ -39,12 +38,12 @@ CloseButton::CloseButton(Pht::IEngine& engine,
                                        material,
                                        view.GetSceneResources())
     };
-    sceneObject->SetPosition(position);
+    sceneObject->GetTransform().SetPosition(position);
     
     mButton = std::make_unique<Pht::Button>(*sceneObject, inputSize, engine);
     
     mSceneObject = sceneObject.get();
-    mView.AddSceneObject(std::move(sceneObject));
+    view.AddSceneObject(std::move(sceneObject));
     
     auto selectFunction {[this] () {
         mSceneObject->GetRenderable()->GetMaterial().SetAmbient(selectedColor);
@@ -60,13 +59,13 @@ CloseButton::CloseButton(Pht::IEngine& engine,
     mButton->SetOnUpOutside(deselectFunction);
     mButton->SetOnMoveOutside(deselectFunction);
     
-    mView.CreateText(position + Pht::Vec3 {-0.23f, -0.23f, UiLayer::text},
-                     "X",
-                     textProperties);
+    view.CreateText(position + Pht::Vec3 {-0.23f, -0.23f, UiLayer::text},
+                    "X",
+                    textProperties);
 }
 
 bool CloseButton::IsClicked(const Pht::TouchEvent& event) const {
-    auto isClicked {mButton->IsClicked(event, mView.GetMatrix())};
+    auto isClicked {mButton->IsClicked(event)};
     
     if (isClicked) {
         mAudio.PlaySound(CommonResources::mBlipSound);

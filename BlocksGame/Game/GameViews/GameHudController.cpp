@@ -28,7 +28,7 @@ GameHudController::Result GameHudController::OnTouch(const Pht::TouchEvent& even
         return Result::ClickedSwitch;
     }
 
-    if (pauseButton.IsClicked(event, mView.GetMatrix())) {
+    if (pauseButton.IsClicked(event)) {
         mEngine.GetAudio().PlaySound(CommonResources::mBlipSound);
         return Result::ClickedPause;
     }
@@ -45,7 +45,7 @@ bool GameHudController::IsSwitchButtonClicked(const Pht::TouchEvent& event) cons
     auto& renderer {mEngine.GetRenderer()};
     renderer.SetHudMode(true);
 
-    switch (mView.GetSwitchButton().OnTouch(event, mView.GetMatrix())) {
+    switch (mView.GetSwitchButton().OnTouch(event)) {
         case Pht::Button::Result::Down:
             if (mGameHudEventListener) {
                 mGameHudEventListener->OnSwitchButtonDown();

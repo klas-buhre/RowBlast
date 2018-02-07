@@ -105,10 +105,10 @@ void ExplosionParticleEffect::StartExplosion(const Pht::Vec2& position) {
     };
     
     mInnerParticleEffect->GetComponent<Pht::ParticleEffect>()->Start();
-    mInnerParticleEffect->SetPosition(positionInField);
+    mInnerParticleEffect->GetTransform().SetPosition(positionInField);
     
     mOuterParticleEffect->GetComponent<Pht::ParticleEffect>()->Start();
-    mOuterParticleEffect->SetPosition(positionInField);
+    mOuterParticleEffect->GetTransform().SetPosition(positionInField);
 }
 
 ExplosionParticleEffect::State ExplosionParticleEffect::Update(float dt) {

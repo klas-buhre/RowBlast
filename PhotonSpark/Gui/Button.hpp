@@ -4,7 +4,6 @@
 #include <functional>
 
 #include "Vector.hpp"
-#include "Matrix.hpp"
 
 namespace Pht {
     class TouchEvent;
@@ -25,8 +24,8 @@ namespace Pht {
         Button(SceneObject& sceneObject, const Vec2& size, IEngine& engine);
         virtual ~Button() {}
 
-        bool IsClicked(const TouchEvent& event, const Mat4& guiViewTransform); // TODO: remove guiViewTransform
-        Result OnTouch(const TouchEvent& event, const Mat4& guiViewTransform); // TODO: remove guiViewTransform
+        bool IsClicked(const TouchEvent& event);
+        Result OnTouch(const TouchEvent& event);
         bool StateIsDownOrMovedOutside() const;
         bool IsDown() const;
         
@@ -51,10 +50,10 @@ namespace Pht {
         }
         
     private:
-        Result OnTouchBegin(const Vec2& touchLocation, const Mat4& transform);
-        Result OnTouchMove(const Vec2& touchLocation, const Mat4& transform);
-        Result OnTouchEnd(const Vec2& touchLocation, const Mat4& transform);
-        bool Hit(const Vec2& touchLocation, const Mat4& transform);
+        Result OnTouchBegin(const Vec2& touchLocation);
+        Result OnTouchMove(const Vec2& touchLocation);
+        Result OnTouchEnd(const Vec2& touchLocation);
+        bool Hit(const Vec2& touchLocation);
 
         enum class State {
             Up,

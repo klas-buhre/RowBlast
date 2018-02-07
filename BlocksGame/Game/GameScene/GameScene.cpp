@@ -14,6 +14,7 @@
 #include "ScrollController.hpp"
 #include "CommonResources.hpp"
 #include "LevelResources.hpp"
+#include "UiLayer.hpp"
 
 using namespace BlocksGame;
 
@@ -31,7 +32,8 @@ namespace {
         Effects,
         FlyingBlocks,
         Hud,
-        UiViews
+        UiViews,
+        SceneSwitchFadeEffect = GlobalLayer::sceneSwitchFadeEffect
     };
 
 #if 0
@@ -169,6 +171,10 @@ void GameScene::CreateRenderPasses() {
     uiViewsRenderPass.SetIsDepthTestAllowed(false);
     uiViewsRenderPass.SetRenderOrder(Pht::RenderOrder::BackToFront);
     mScene->AddRenderPass(uiViewsRenderPass);
+    
+    Pht::RenderPass fadeEffectRenderPass {static_cast<int>(Layer::SceneSwitchFadeEffect)};
+    fadeEffectRenderPass.SetHudMode(true);
+    mScene->AddRenderPass(fadeEffectRenderPass);
 }
 
 void GameScene::CreateLightAndCamera() {

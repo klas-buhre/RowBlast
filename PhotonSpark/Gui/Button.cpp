@@ -5,6 +5,7 @@
 #include "IInput.hpp"
 #include "InputEvent.hpp"
 #include "SceneObject.hpp"
+#include "Matrix.hpp"
 
 using namespace Pht;
 
@@ -17,12 +18,12 @@ Button::Button(SceneObject& sceneObject, const Vec2& size, IEngine& engine) :
     mSceneObject {sceneObject},
     mSize {size} {}
 
-bool Button::IsClicked(const TouchEvent& event, const Mat4& guiViewTransform) {
+bool Button::IsClicked(const TouchEvent& event) {
     auto result {false};
     auto& renderer {mEngine.GetRenderer()};
     renderer.SetHudMode(true);
     
-    switch (OnTouch(event, guiViewTransform)) {
+    switch (OnTouch(event)) {
         case Result::Down:
             if (mOnDown) {
                 mOnDown();
@@ -67,16 +68,16 @@ bool Button::IsDown() const {
     return mState == State::Down;
 }
 
-Button::Result Button::OnTouch(const TouchEvent& event, const Mat4& guiViewTransform) {
+Button::Result Button::OnTouch(const TouchEvent& event) {
     auto& touchLocation {event.mLocation};
     
     switch (event.mState) {
         case TouchState::Begin:
-            return OnTouchBegin(touchLocation, guiViewTransform);
+            return OnTouchBegin(touchLocation);
         case TouchState::Ongoing:
-            return OnTouchMove(touchLocation, guiViewTransform);
+            return OnTouchMove(touchLocation);
         case TouchState::End:
-            return OnTouchEnd(touchLocation, guiViewTransform);
+            return OnTouchEnd(touchLocation);
         case TouchState::Other:
             break;
     }
@@ -84,10 +85,10 @@ Button::Result Button::OnTouch(const TouchEvent& event, const Mat4& guiViewTrans
     return Result::None;
 }
 
-Button::Result Button::OnTouchBegin(const Vec2& touchLocation, const Mat4& transform) {
+Button::Result Button::OnTouchBegin(const Vec2& touchLocation) {
     switch (mState) {
         case State::Up:
-            if (Hit(touchLocation, transform)) {
+            if (Hit(touchLocation)) {
                 mState = State::Down;
                 return Result::Down;
             }
@@ -100,12 +101,12 @@ Button::Result Button::OnTouchBegin(const Vec2& touchLocation, const Mat4& trans
     return Result::None;
 }
 
-Button::Result Button::OnTouchMove(const Vec2& touchLocation, const Mat4& transform) {
+Button::Result Button::OnTouchMove(const Vec2& touchLocation) {
     switch (mState) {
         case State::Up:
             return Result::None;
         case State::Down:
-            if (Hit(touchLocation, transform)) {
+            if (Hit(touchLocation)) {
                 return Result::MoveInside;
             } else {
                 mState = State::MovedOutside;
@@ -113,7 +114,7 @@ Button::Result Button::OnTouchMove(const Vec2& touchLocation, const Mat4& transf
             }
             break;
         case State::MovedOutside:
-            if (Hit(touchLocation, transform)) {
+            if (Hit(touchLocation)) {
                 mState = State::Down;
                 return Result::Down;
             }
@@ -123,21 +124,21 @@ Button::Result Button::OnTouchMove(const Vec2& touchLocation, const Mat4& transf
     return Result::None;
 }
 
-Button::Result Button::OnTouchEnd(const Vec2& touchLocation, const Mat4& transform) {
+Button::Result Button::OnTouchEnd(const Vec2& touchLocation) {
     auto result {Result::None};
 
     switch (mState) {
         case State::Up:
             break;
         case State::MovedOutside:
-            if (Hit(touchLocation, transform)) {
+            if (Hit(touchLocation)) {
                 result = Result::UpInside;
             } else {
                 result = Result::UpOutside;
             }
             break;
         case State::Down:
-            if (Hit(touchLocation, transform)) {
+            if (Hit(touchLocation)) {
                 result = Result::UpInside;
             }
             break;
@@ -147,9 +148,9 @@ Button::Result Button::OnTouchEnd(const Vec2& touchLocation, const Mat4& transfo
     return result;
 }
 
-bool Button::Hit(const Vec2& touch, const Mat4& transform) {
+bool Button::Hit(const Vec2& touch) {
     auto& renderer {mEngine.GetRenderer()};
-    auto modelView {(mSceneObject.GetMatrix() /* * transform*/) * renderer.GetViewMatrix()};
+    auto modelView {mSceneObject.GetMatrix() * renderer.GetViewMatrix()};
     auto modelViewProjection {modelView * renderer.GetProjectionMatrix()};
     
     // Since the matrix is row-major it has to be transposed in order to multiply with the vector.

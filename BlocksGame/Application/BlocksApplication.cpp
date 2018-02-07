@@ -136,6 +136,10 @@ Put the build_freetype.sh script in freetype root dir then execute it.
 // Engine includes.
 #include "IEngine.hpp"
 #include "IInput.hpp"
+#include "ISceneManager.hpp"
+
+// Game includes.
+#include "UiLayer.hpp"
 
 using namespace BlocksGame;
 
@@ -155,6 +159,9 @@ BlocksApplication::BlocksApplication(Pht::IEngine& engine) :
     mFadeEffect {engine.GetSceneManager(), engine.GetRenderer(), 0.22f, 1.0f, 0.0f} {
 
     engine.GetInput().SetUseGestureRecognizers(false);
+    
+    mFadeEffect.GetSceneObject().SetLayer(GlobalLayer::sceneSwitchFadeEffect);
+    InsertFadeEffectInActiveScene();
 }
 
 void BlocksApplication::OnUpdate() {
@@ -177,10 +184,6 @@ void BlocksApplication::OnRender() {
         case State::GameScene:
             mGameController.RenderScene();
             break;
-    }
-    
-    if (mFadeEffect.GetState() != Pht::FadeEffect::State::Idle) {
-        mFadeEffect.Render();
     }
 }
 
@@ -238,7 +241,14 @@ void BlocksApplication::HandleTransitions() {
             default:
                 break;
         }
+        
+        InsertFadeEffectInActiveScene();
     }
+}
+
+void BlocksApplication::InsertFadeEffectInActiveScene() {
+    auto* scene {mEngine.GetSceneManager().GetActiveScene()};
+    scene->GetRoot().AddChild(mFadeEffect.GetSceneObject());
 }
 
 void BlocksApplication::BeginFadeToMap() {

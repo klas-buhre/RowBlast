@@ -43,11 +43,3 @@ Vec2 GuiView::GetPosition() const {
     auto& position {mRoot->GetTransform().GetPosition()};
     return {position.x, position.y};
 }
-
-const Mat4& GuiView::GetMatrix() const {
-    return mRoot->GetMatrix();
-}
-
-void GuiView::AddText(std::unique_ptr<Text> text) {
-    mTexts.push_back(std::move(text));
-}

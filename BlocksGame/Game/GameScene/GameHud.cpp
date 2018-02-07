@@ -120,8 +120,7 @@ void GameHud::CreateGrayBlock(Pht::Scene& scene,
     auto& transform {grayBlock.GetTransform()};
     transform.SetPosition({0.19f, 0.2f, UiLayer::block});
     transform.SetRotation({-30.0f, -30.0f, 0.0f});
-    auto scale {0.505f};
-    transform.SetScale({scale, scale, scale});
+    transform.SetScale(0.505f);
     
     progressContainer.AddChild(grayBlock);
 }
@@ -135,8 +134,7 @@ void GameHud::CreateBlueprintSlot(Pht::Scene& scene,
     auto& transform {blueprintSlot.GetTransform()};
     transform.SetPosition({0.55f, 0.2f, UiLayer::block});
     transform.SetRotation({-30.0f, -30.0f, 0.0f});
-    auto scale {0.56f};
-    transform.SetScale({scale, scale, scale});
+    transform.SetScale(0.56f);
     
     progressContainer.AddChild(blueprintSlot);
 }
@@ -169,7 +167,7 @@ void GameHud::CreateLPiece(Pht::Scene& scene, Pht::SceneObject& movesContainer) 
     baseTransform.SetPosition({0.12f, 0.2f, UiLayer::root});
     baseTransform.SetRotation({-30.0f, -30.0f, 0.0f});
     auto scale {0.32f};
-    baseTransform.SetScale({scale, scale, scale});
+    baseTransform.SetScale(scale);
     
     auto& greenBlockRenderable {
         mPieceResources.GetBlockRenderableObject(BlockRenderableKind::Full,
@@ -208,7 +206,7 @@ void GameHud::CreateNextPiecesObject(Pht::Scene& scene,
     
     auto& text {scene.CreateText("NEXT", textProperties)};
     auto& textSceneObject {text.GetSceneObject()};
-    textSceneObject.SetPosition({-0.1f, 1.22f, UiLayer::text});
+    textSceneObject.GetTransform().SetPosition({-0.1f, 1.22f, UiLayer::text});
     nextPiecesContainer.AddChild(textSceneObject);
     
     CreateTwoPreviewPieces(mNextPieces, nextPiecesContainer, level);
@@ -243,7 +241,7 @@ void GameHud::CreateSelectablePiecesObject(Pht::Scene& scene,
 
     auto& text {scene.CreateText("SWITCH", textProperties)};
     auto& textSceneObject {text.GetSceneObject()};
-    textSceneObject.SetPosition({-0.55f, 1.22f, UiLayer::text});
+    textSceneObject.GetTransform().SetPosition({-0.55f, 1.22f, UiLayer::text});
     selectablePiecesContainer.AddChild(textSceneObject);
     
     CreateTwoPreviewPieces(mSelectablePieces, selectablePiecesContainer, level);

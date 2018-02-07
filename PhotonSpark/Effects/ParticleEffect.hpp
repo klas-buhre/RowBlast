@@ -39,11 +39,11 @@ namespace Pht {
         SceneObject& GetSceneObject() {
             return mSceneObject;
         }
-        
+
         const SceneObject& GetSceneObject() const {
             return mSceneObject;
         }
-        
+
     private:
         void WriteVertexBuffer();
         void WritePoints();

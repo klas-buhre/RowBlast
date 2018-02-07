@@ -19,13 +19,10 @@ namespace Pht {
     public:
         Renderer(bool createRenderBuffers);
         
-        void SetLightDirection(const Vec3& lightDirection) override;
         void SetClearColorBuffer(bool clearColorBuffer) override;
         void SetHudMode(bool hudMode) override;
         void SetProjectionMode(ProjectionMode projectionMode) override;
-        void RenderObject(const RenderableObject& object, const Mat4& modelTransform) override;
         void RenderScene(const Scene& scene) override;
-        void RenderGuiView(const GuiView& view) override;
         int GetAdjustedNumPixels(int numPixels) const override;
         const Mat4& GetViewMatrix() const override;
         const Mat4& GetProjectionMatrix() const override;
@@ -49,8 +46,10 @@ namespace Pht {
         void SetScissorBox(const Vec2& lowerLeft, const Vec2& size);
         void SetScissorTest(bool scissorTest);
         void SetupProjectionInShaders();
+        void SetLightDirection(const Vec3& lightDirection);
         void SetLightDirectionInShaders();
         const Vec3& GetCameraPosition() const;
+        void RenderObject(const RenderableObject& object, const Mat4& modelTransform);
         void SetTransforms(const Mat4& modelTransform,
                            const ShaderProgram::UniformHandles& uniforms);
         void SetMaterialProperties(const ShaderProgram::UniformHandles& uniforms,

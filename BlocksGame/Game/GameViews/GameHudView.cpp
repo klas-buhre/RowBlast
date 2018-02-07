@@ -84,7 +84,7 @@ GameHudView::GameHudView(Pht::IEngine& engine) {
                                                                      circleRadius,
                                                                      pressedFillColor,
                                                                      GetSceneResources())};
-    pressedPauseButtonSceneObject->SetScale(1.35f);
+    pressedPauseButtonSceneObject->GetTransform().SetScale(1.35f);
     pressedPauseButtonSceneObject->SetIsVisible(false);
     auto& pressedPauseButtonSceneObjectCapture {*pressedPauseButtonSceneObject};
 
@@ -116,7 +116,7 @@ GameHudView::GameHudView(Pht::IEngine& engine) {
     
     auto switchButtonSceneObject {std::make_unique<Pht::SceneObject>(nullptr)};
     switchButtonSceneObject->SetIsVisible(false);
-    switchButtonSceneObject->SetPosition({8.65f, 0.0f, UiLayer::root});
+    switchButtonSceneObject->GetTransform().SetPosition({8.65f, 0.0f, UiLayer::root});
     
     Pht::Vec2 switchButtonSize {110.0f, 60.0f};
     mSwitchButton = std::make_unique<Pht::Button>(*switchButtonSceneObject, switchButtonSize, engine);

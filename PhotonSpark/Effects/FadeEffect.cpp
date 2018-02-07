@@ -83,12 +83,6 @@ FadeEffect::State FadeEffect::Update(float dt) {
     return mState;
 }
 
-void FadeEffect::Render() const {
-    mRenderer.SetHudMode(true);
-    mRenderer.RenderObject(*mQuad, mSceneObject->GetMatrix());
-    mRenderer.SetHudMode(false);
-}
-
 bool FadeEffect::IsFadingOut() const {
     return mState == State::FadingOut;
 }

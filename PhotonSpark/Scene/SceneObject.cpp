@@ -18,40 +18,6 @@ void SceneObject::SetRenderable(RenderableObject* renderable) {
     mRenderable = renderable;
 }
 
-void SceneObject::SetPosition(const Vec3& position) {
-    mTransform.SetPosition(position);
-    Update(false);
-}
-
-void SceneObject::SetRotationX(float degrees) {
-    auto rotation {mTransform.GetRotation()};
-    
-    rotation.x = degrees;
-    mTransform.SetRotation(rotation);
-    Update(false);
-}
-
-void SceneObject::SetRotationY(float degrees) {
-    auto rotation {mTransform.GetRotation()};
-    
-    rotation.y = degrees;
-    mTransform.SetRotation(rotation);
-    Update(false);
-}
-
-void SceneObject::SetRotationZ(float degrees) {
-    auto rotation {mTransform.GetRotation()};
-    
-    rotation.z = degrees;
-    mTransform.SetRotation(rotation);
-    Update(false);
-}
-
-void SceneObject::SetScale(float scale) {
-    mTransform.SetScale({scale, scale, scale});
-    Update(false);
-}
-
 Vec3 SceneObject::GetWorldSpacePosition() const {
     auto& w {mMatrix.w};
     return {w.x, w.y, w.z};

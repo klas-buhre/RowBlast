@@ -18,7 +18,7 @@ SettingsButtonController::Result SettingsButtonController::OnTouch(const Pht::To
     auto& button {mView.GetButton()};
     auto touchStartedOverButton {button.StateIsDownOrMovedOutside()};
 
-    if (button.IsClicked(event, mView.GetMatrix())) {
+    if (button.IsClicked(event)) {
         mAudio.PlaySound(CommonResources::mBlipSound);
         return Result::ClickedSettings;
     }

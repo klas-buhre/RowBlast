@@ -12,6 +12,11 @@ void Transform::SetScale(const Vec3& scale) {
     mHasChanged = true;
 }
 
+void Transform::SetScale(float scale) {
+    mScale = Vec3 {scale, scale, scale};
+    mHasChanged = true;
+}
+
 void Transform::SetRotation(const Vec3& rotation) {
     mRotation = rotation;
     mHasChanged = true;

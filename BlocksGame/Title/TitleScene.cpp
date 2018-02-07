@@ -21,7 +21,8 @@ using namespace BlocksGame;
 namespace {
     enum class Layer {
         Background,
-        Ui
+        Ui,
+        SceneSwitchFadeEffect = GlobalLayer::sceneSwitchFadeEffect
     };
 
     const std::vector<CloudPathVolume> cloudPaths {
@@ -145,10 +146,15 @@ TitleScene::TitleScene(Pht::IEngine& engine, const CommonResources& commonResour
     auto scene {sceneManager.CreateScene(Pht::Hash::Fnv1a("titleScene"))};
     
     scene->AddRenderPass(Pht::RenderPass {static_cast<int>(Layer::Background)});
+    
     Pht::RenderPass uiRenderPass {static_cast<int>(Layer::Ui)};
     uiRenderPass.SetHudMode(true);
     scene->AddRenderPass(uiRenderPass);
     
+    Pht::RenderPass fadeEffectRenderPass {static_cast<int>(Layer::SceneSwitchFadeEffect)};
+    fadeEffectRenderPass.SetHudMode(true);
+    scene->AddRenderPass(fadeEffectRenderPass);
+
     auto& light {scene->CreateGlobalLight()};
     light.SetDirection({1.0f, 1.0f, 1.0f});
     scene->GetRoot().AddChild(light.GetSceneObject());

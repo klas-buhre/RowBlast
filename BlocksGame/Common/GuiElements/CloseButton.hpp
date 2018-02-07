@@ -27,7 +27,6 @@ namespace BlocksGame {
         bool IsClicked(const Pht::TouchEvent& event) const;
         
     private:
-        Pht::GuiView& mView;
         Pht::Vec3 mPosition;
         std::unique_ptr<Pht::Button> mButton;
         Pht::SceneObject* mSceneObject;

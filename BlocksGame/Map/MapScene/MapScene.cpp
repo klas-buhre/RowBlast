@@ -17,6 +17,7 @@
 #include "UserData.hpp"
 #include "Chapter.hpp"
 #include "NextLevelParticleEffect.hpp"
+#include "UiLayer.hpp"
 
 using namespace BlocksGame;
 
@@ -26,7 +27,8 @@ namespace {
     enum class Layer {
         Map,
         Hud,
-        UiViews
+        UiViews,
+        SceneSwitchFadeEffect = GlobalLayer::sceneSwitchFadeEffect
     };
 
     const std::vector<CloudPathVolume> cloudPaths {
@@ -145,7 +147,11 @@ void MapScene::CreateScene(const Chapter& chapter) {
     uiViewsRenderPass.SetHudMode(true);
     uiViewsRenderPass.SetIsDepthTestAllowed(false);
     mScene->AddRenderPass(uiViewsRenderPass);
-    
+
+    Pht::RenderPass fadeEffectRenderPass {static_cast<int>(Layer::SceneSwitchFadeEffect)};
+    fadeEffectRenderPass.SetHudMode(true);
+    scene->AddRenderPass(fadeEffectRenderPass);
+
     auto& light {scene->CreateGlobalLight()};
     light.SetDirection({1.0f, 1.0f, 1.0f});
     scene->GetRoot().AddChild(light.GetSceneObject());

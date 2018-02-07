@@ -19,13 +19,10 @@ namespace Pht {
     public:
         virtual ~IRenderer() {}
         
-        virtual void SetLightDirection(const Vec3& lightDirection) = 0; // TODO: remove
         virtual void SetClearColorBuffer(bool clearColorBuffer) = 0;
         virtual void SetHudMode(bool hudMode) = 0;
         virtual void SetProjectionMode(ProjectionMode projectionMode) = 0;
-        virtual void RenderObject(const RenderableObject& object, const Mat4& transform) = 0; // TODO: remove
         virtual void RenderScene(const Scene& scene) = 0; // TODO: remove
-        virtual void RenderGuiView(const GuiView& view) = 0; // TODO: remove
         virtual int GetAdjustedNumPixels(int numPixels) const = 0;
         virtual const Vec2& GetHudFrustumSize() const = 0;
         virtual const Vec2& GetOrthographicFrustumSize() const = 0;

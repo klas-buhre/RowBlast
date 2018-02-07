@@ -89,8 +89,3 @@ const Font::Glyph& Font::GetGlyph(char character) const {
     assert(character >= firstPrintableCharacter && character <= lastPrintableCharacter);
     return mGlyphs[character - firstPrintableCharacter];
 }
-
-Text::Text(const Vec2& position, const std::string& text, const TextProperties& properties) :
-    mPosition {position},
-    mText {text},
-    mProperties {properties} {}

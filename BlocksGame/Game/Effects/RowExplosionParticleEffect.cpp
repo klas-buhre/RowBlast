@@ -53,7 +53,7 @@ void RowExplosionParticleEffect::StartExplosion(const Pht::Vec2& position) {
         mScene.GetFieldPosition().z
     };
     
-    mScenObject->SetPosition(positionInField);
+    mScenObject->GetTransform().SetPosition(positionInField);
     mScenObject->GetComponent<Pht::ParticleEffect>()->Start();
 }
 

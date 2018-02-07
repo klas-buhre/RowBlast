@@ -21,18 +21,10 @@ namespace BlocksGame {
                               const UserData& userData,
                               Settings& settings);
         
-        const SettingsMenuController& GetSettingsMenuController() const {
-            return mSettingsMenuController;
-        }
-        
         SettingsMenuController& GetSettingsMenuController() {
             return mSettingsMenuController;
         }
 
-        const NoLivesDialogController& GetNoLivesDialogController() const {
-            return mNoLivesDialogController;
-        }
-        
         NoLivesDialogController& GetNoLivesDialogController() {
             return mNoLivesDialogController;
         }

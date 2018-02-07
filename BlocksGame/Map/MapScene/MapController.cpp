@@ -17,7 +17,6 @@ using namespace BlocksGame;
 namespace {
     const auto cameraDeaccelerationFactor {0.88f};
     const auto cameraCutoffVelocity {0.2f};
-    const Pht::Mat4 identityMatrix;
 }
 
 MapController::Command::Command(Kind kind, int level) :
@@ -149,7 +148,7 @@ MapController::Command MapController::HandleTouch(const Pht::TouchEvent& touch) 
             continue;
         }
         
-        switch (pin->GetButton().OnTouch(touch, identityMatrix)) {
+        switch (pin->GetButton().OnTouch(touch)) {
             case Pht::Button::Result::Down:
                 pin->SetIsSelected(true);
                 return Command::None;

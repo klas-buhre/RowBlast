@@ -31,6 +31,7 @@ namespace BlocksGame {
         void UpdateScene();
         void UpdateGameScene();
         void HandleTransitions();
+        void InsertFadeEffectInActiveScene();
         void BeginFadeToMap();
         void BeginFadeToGame(int level);
         void StartMap();

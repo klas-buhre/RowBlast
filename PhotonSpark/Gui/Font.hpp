@@ -38,15 +38,6 @@ namespace Pht {
         Pht::Vec2 mOffset {0.0f, 0.0f};
         Vec4 mShadowColor {0.0f, 0.0f, 0.0f, 1.0f};
     };
-    
-    struct Text { // TODO: remove
-        Text(const Vec2& position, const std::string& text, const TextProperties& properties);
-        
-        Vec2 mPosition;
-        std::string mText;
-        TextProperties mProperties;
-        bool mIsVisible {true};
-    };
 }
 
 #endif
