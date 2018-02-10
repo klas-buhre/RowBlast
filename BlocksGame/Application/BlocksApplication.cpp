@@ -7,7 +7,6 @@ Backlog:
     -Analytics.
     
   -Gameplay:
-    -Maybe all neighbouring blocks with the same color should be connected with welds?
     -Maybe blocks in the visible part of the field could disappear on some levels. For each move a
      random block disappears.
     -Fix all bugs.
@@ -19,6 +18,7 @@ Backlog:
      convenient to go back to the state before the move and not the initial state.
     -Mega bomb?
   -Rendering:
+    -FloatingCubes could contain floating L-pieces as well. Rename to FloatingBlocks.
     -Could have the rounded cylinder i some places in the HUDs.
     -GUI: the buttons in the views could be yellow with black text and triangular edges like in
      Mario Kart 8. There could also be a reflection animation in the button.
@@ -26,7 +26,6 @@ Backlog:
      store. Look at: https://www.assetstore.unity3d.com/en/#!/content/26701
     -Maybe the bombs could have constant particle effects as if it is about to explode. And they
      could be be of different shapes other than spheres.
-    -Add heading to the green dialogs.
     -Try 1334×750 resolution for iPhone7.
     -Camera shake when clearing 5 rows or using a bomb.
     -Try adding welds to the level blocks.
@@ -58,8 +57,12 @@ Backlog:
     -Credit the icon creator: <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
   
 Ongoing tasks:
+    -Maybe all neighbouring blocks with the same color should be connected/merged with welds.
+      -How to handle a redundant sideways weld when there is a second weld path between the blocks?
+      -How to handle merged triangles?
+      -Pull down merged pieces.
+      -Weld animation.
 
- 
 Ideas:
     -The pause button could lead to a widget that has an undo button, a boosters button and a game
      menu button.

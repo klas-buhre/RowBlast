@@ -273,6 +273,7 @@ Pht::Vec2 GameLogic::CalculateFallingPieceInitPos() {
 void GameLogic::HandleCascading() {
     switch (mCascadeState) {
         case CascadeState::Cascading:
+            mField.MakeWelds();
             if (mField.AnyFilledRows()) {
                 mCascadeWaitTime = 0.0f;
                 mCascadeState = CascadeState::WaitingToClearLine;

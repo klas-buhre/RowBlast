@@ -81,6 +81,7 @@ namespace BlocksGame {
                              const Pht::IVec2& position,
                              bool updateCellPosition,
                              bool startBlueprintCellAnimation);
+        void MakeWelds();
         void PullDownLoosePieces();
         int GetNumRowsInOneScreen() const;
         bool AnyFilledRows() const;
@@ -152,6 +153,11 @@ namespace BlocksGame {
         Pht::IVec2 ScanUntilNoCollision(const PieceBlocks& pieceBlocks,
                                         Pht::IVec2 position,
                                         const Pht::IVec2& step) const;
+        void MakeWelds(SubCell& subCell, const Pht::IVec2& position);
+        bool ShouldBeUpWeld(const SubCell& subCell, const Pht::IVec2& position) const;
+        bool ShouldBeRightWeld(const SubCell& subCell, const Pht::IVec2& position) const;
+        bool ShouldBeDownWeld(const SubCell& subCell, const Pht::IVec2& position) const;
+        bool ShouldBeLeftWeld(const SubCell& subCell, const Pht::IVec2& position) const;
         void PullDownPiece(int row, int column, ScanDirection scanDirection);
         void PullDownPiece(const SubCell& subCell,
                            const Pht::IVec2& position,
@@ -171,6 +177,10 @@ namespace BlocksGame {
         void BreakCellUpWelds(int row, int column);
         void BreakCellRightWelds(int row, int column);
         void BreakCellLeftWelds(int row, int column);
+        void BreakLowerLeftWeld(int row, int column);
+        void BreakUpperLeftWeld(int row, int column);
+        void BreakUpperRightWeld(int row, int column);
+        void BreakLowerRightWeld(int row, int column);
         void RemoveWholePiece(int pieceId, Field::RemovedSubCells& removedSubCells);
         void RemoveMatchingSubCell(int pieceId,
                                    Field::RemovedSubCells& removedSubCells,

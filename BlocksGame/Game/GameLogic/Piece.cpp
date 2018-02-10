@@ -269,6 +269,10 @@ void Piece::SetPressedGhostPieceRenderable(std::unique_ptr<Pht::RenderableObject
 Welds Piece::MakeWelds(int row, int column, const Piece::FillGrid& fillGrid) {
     Welds welds;
     
+    if (!IsBlock(row, column, fillGrid)) {
+        return welds;
+    }
+    
     if (IsBlock(row + 1, column, fillGrid)) {
         welds.mUp = true;
     }

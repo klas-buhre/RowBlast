@@ -41,7 +41,51 @@ namespace {
                 return 1.0f;
         }
     }
-    
+
+    bool FillsLowerCellSide(const SubCell& subCell) {
+        switch (subCell.mFill) {
+            case Fill::Full:
+            case Fill::LowerLeftHalf:
+            case Fill::LowerRightHalf:
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    bool FillsUpperCellSide(const SubCell& subCell) {
+        switch (subCell.mFill) {
+            case Fill::Full:
+            case Fill::UpperLeftHalf:
+            case Fill::UpperRightHalf:
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    bool FillsRightCellSide(const SubCell& subCell) {
+        switch (subCell.mFill) {
+            case Fill::Full:
+            case Fill::UpperRightHalf:
+            case Fill::LowerRightHalf:
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    bool FillsLeftCellSide(const SubCell& subCell) {
+        switch (subCell.mFill) {
+            case Fill::Full:
+            case Fill::UpperLeftHalf:
+            case Fill::LowerLeftHalf:
+                return true;
+            default:
+                return false;
+        }
+    }
+
     void BreakDownWelds(Welds& welds) {
         welds.mDownRight = false;
         welds.mDown = false;
@@ -768,6 +812,7 @@ void Field::LandFallingPiece(const FallingPiece& fallingPiece) {
     
     auto pieceBlocks {CreatePieceBlocks(fallingPiece)};
     LandPieceBlocks(pieceBlocks, fallingPiece.GetId(), fallingPiece.GetIntPosition(), true, true);
+    MakeWelds();
 }
 
 void Field::LandPieceBlocks(const PieceBlocks& pieceBlocks,
@@ -810,6 +855,148 @@ void Field::LandPieceBlocks(const PieceBlocks& pieceBlocks,
             }
         }
     }
+}
+
+void Field::MakeWelds() {
+    for (auto row {mLowestVisibleRow}; row < mNumRows; ++row) {
+        for (auto column {0}; column < mNumColumns; ++column) {
+            auto& cell {mGrid[row][column]};
+            Pht::IVec2 position {column, row};
+            
+            MakeWelds(cell.mFirstSubCell, position);
+            MakeWelds(cell.mSecondSubCell, position);
+        }
+    }
+}
+
+void Field::MakeWelds(SubCell& subCell, const Pht::IVec2& position) {
+    if (subCell.IsEmpty() || subCell.mIsLevel) {
+        return;
+    }
+
+    if (ShouldBeUpWeld(subCell, position)) {
+        subCell.mWelds.mUp = true;
+    }
+
+    if (ShouldBeRightWeld(subCell, position)) {
+        subCell.mWelds.mRight = true;
+    }
+    
+    if (ShouldBeDownWeld(subCell, position)) {
+        subCell.mWelds.mDown = true;
+    }
+    
+    if (ShouldBeLeftWeld(subCell, position)) {
+        subCell.mWelds.mLeft = true;
+    }
+}
+
+bool Field::ShouldBeUpWeld(const SubCell& subCell, const Pht::IVec2& position) const {
+    if (!FillsUpperCellSide(subCell)) {
+        return false;
+    }
+    
+    auto upperRow {position.y + 1};
+    
+    if (upperRow >= mNumRows) {
+        return false;
+    }
+    
+    auto& upperCell {mGrid[upperRow][position.x]};
+    auto& firstUpperSubCell {upperCell.mFirstSubCell};
+    auto& secondUpperSubCell {upperCell.mSecondSubCell};
+    auto color {subCell.mColor};
+    
+    if (firstUpperSubCell.mColor == color && FillsLowerCellSide(firstUpperSubCell)) {
+        return true;
+    }
+    
+    if (secondUpperSubCell.mColor == color && FillsLowerCellSide(secondUpperSubCell)) {
+        return true;
+    }
+    
+    return false;
+}
+
+bool Field::ShouldBeRightWeld(const SubCell& subCell, const Pht::IVec2& position) const {
+    if (!FillsRightCellSide(subCell)) {
+        return false;
+    }
+    
+    auto rightColumn {position.x + 1};
+    
+    if (rightColumn >= mNumColumns) {
+        return false;
+    }
+    
+    auto& cellToTheRight {mGrid[position.y][rightColumn]};
+    auto& firstRightSubCell {cellToTheRight.mFirstSubCell};
+    auto& secondRightSubCell {cellToTheRight.mSecondSubCell};
+    auto color {subCell.mColor};
+
+    if (firstRightSubCell.mColor == color && FillsLeftCellSide(firstRightSubCell)) {
+        return true;
+    }
+    
+    if (secondRightSubCell.mColor == color && FillsLeftCellSide(secondRightSubCell)) {
+        return true;
+    }
+    
+    return false;
+}
+
+bool Field::ShouldBeDownWeld(const SubCell& subCell, const Pht::IVec2& position) const {
+    if (!FillsLowerCellSide(subCell)) {
+        return false;
+    }
+    
+    auto lowerRow {position.y - 1};
+    
+    if (lowerRow < 0) {
+        return false;
+    }
+    
+    auto& lowerCell {mGrid[lowerRow][position.x]};
+    auto& firstLowerSubCell {lowerCell.mFirstSubCell};
+    auto& secondLowerSubCell {lowerCell.mSecondSubCell};
+    auto color {subCell.mColor};
+
+    if (firstLowerSubCell.mColor == color && FillsUpperCellSide(firstLowerSubCell)) {
+        return true;
+    }
+    
+    if (secondLowerSubCell.mColor == color && FillsUpperCellSide(secondLowerSubCell)) {
+        return true;
+    }
+    
+    return false;
+}
+
+bool Field::ShouldBeLeftWeld(const SubCell& subCell, const Pht::IVec2& position) const {
+    if (!FillsLeftCellSide(subCell)) {
+        return false;
+    }
+    
+    auto leftColumn {position.x - 1};
+    
+    if (leftColumn < 0) {
+        return false;
+    }
+    
+    auto& cellToTheLeft {mGrid[position.y][leftColumn]};
+    auto& firstLeftSubCell {cellToTheLeft.mFirstSubCell};
+    auto& secondLeftSubCell {cellToTheLeft.mSecondSubCell};
+    auto color {subCell.mColor};
+    
+    if (firstLeftSubCell.mColor == color && FillsRightCellSide(firstLeftSubCell)) {
+        return true;
+    }
+    
+    if (secondLeftSubCell.mColor == color && FillsRightCellSide(secondLeftSubCell)) {
+        return true;
+    }
+    
+    return false;
 }
 
 void Field::PullDownLoosePieces() {
@@ -1031,6 +1218,38 @@ void Field::BreakCellLeftWelds(int row, int column) {
     }
 }
 
+void Field::BreakLowerLeftWeld(int row, int column) {
+    if (column < mNumColumns && row < mNumRows) {
+        auto& cell {mGrid[row][column]};
+        cell.mFirstSubCell.mWelds.mDownLeft = false;
+        cell.mSecondSubCell.mWelds.mDownLeft = false;
+    }
+}
+
+void Field::BreakUpperLeftWeld(int row, int column) {
+    if (column < mNumColumns && row >= 0) {
+        auto& cell {mGrid[row][column]};
+        cell.mFirstSubCell.mWelds.mUpLeft = false;
+        cell.mSecondSubCell.mWelds.mUpLeft = false;
+    }
+}
+
+void Field::BreakUpperRightWeld(int row, int column) {
+    if (column >= 0 && row >= 0) {
+        auto& cell {mGrid[row][column]};
+        cell.mFirstSubCell.mWelds.mUpRight = false;
+        cell.mSecondSubCell.mWelds.mUpRight = false;
+    }
+}
+
+void Field::BreakLowerRightWeld(int row, int column) {
+    if (column >= 0 && row < mNumRows) {
+        auto& cell {mGrid[row][column]};
+        cell.mFirstSubCell.mWelds.mDownRight = false;
+        cell.mSecondSubCell.mWelds.mDownRight = false;
+    }
+}
+
 Field::RemovedSubCells Field::RemoveRow(int rowIndex) {
     SetChanged();
     SaveState();
@@ -1077,6 +1296,11 @@ Field::RemovedSubCells Field::RemoveAreaOfSubCells(const Pht::IVec2& areaPos,
             cell = Cell {};
         }
     }
+    
+    BreakLowerLeftWeld(areaPos.y + areaSize.y, areaPos.x + areaSize.x);
+    BreakUpperLeftWeld(areaPos.y - 1, areaPos.x + areaSize.x);
+    BreakUpperRightWeld(areaPos.y - 1, areaPos.x - 1);
+    BreakLowerRightWeld(areaPos.y + areaSize.y, areaPos.x - 1);
     
     return removedSubCells;
 }
