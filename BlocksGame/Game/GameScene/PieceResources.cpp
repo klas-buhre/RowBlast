@@ -78,7 +78,8 @@ PieceResources::PieceResources(Pht::IEngine& engine, const GameScene& scene) {
     auto& sceneManager {engine.GetSceneManager()};
     
     CreateBlocks(sceneManager, scene);
-    CreateWelds(sceneManager, scene);
+    CreateWelds(sceneManager, scene, false);
+    CreateWelds(sceneManager, scene, true);
     CreateBombs(sceneManager, scene);
 }
 
@@ -111,6 +112,12 @@ int PieceResources::CalcBlockIndex(BlockRenderableKind blockRenderable,
 Pht::RenderableObject& PieceResources::GetWeldRenderableObject(BlockColor color,
                                                                BlockBrightness brightness) const {
     return *(mWelds[CalcWeldIndex(color, brightness)]);
+}
+
+Pht::RenderableObject&
+PieceResources::GetDiagonalWeldRenderableObject(BlockColor color,
+                                                BlockBrightness brightness) const {
+    return *(mDiagonalWelds[CalcWeldIndex(color, brightness)]);
 }
 
 int PieceResources::CalcWeldIndex(BlockColor color, BlockBrightness brightness) const {
@@ -160,8 +167,16 @@ void PieceResources::CreateBlocks(Pht::ISceneManager& sceneManager, const GameSc
     }
 }
 
-void PieceResources::CreateWelds(Pht::ISceneManager& sceneManager, const GameScene& scene) {
-    mWelds.resize(Quantities::numBlockColors * Quantities::numBlockBrightness);
+void PieceResources::CreateWelds(Pht::ISceneManager& sceneManager,
+                                 const GameScene& scene,
+                                 bool isDiagonal) {
+    auto numWelds {Quantities::numBlockColors * Quantities::numBlockBrightness};
+    
+    if (isDiagonal) {
+        mDiagonalWelds.resize(numWelds);
+    } else {
+        mWelds.resize(numWelds);
+    }
     
     for (auto colorIndex {0}; colorIndex < Quantities::numBlockColors; ++colorIndex) {
         for (auto brightnessIndex {0};
@@ -173,11 +188,19 @@ void PieceResources::CreateWelds(Pht::ISceneManager& sceneManager, const GameSce
             auto material {ToMaterial(color, brightness, scene)};
             auto weldIndex {CalcWeldIndex(color, brightness)};
             
-            auto renderableObject {
-                sceneManager.CreateRenderableObject(Pht::QuadMesh {0.19f, 0.85f}, material)
-            };
-            
-            mWelds[weldIndex] = std::move(renderableObject);
+            if (isDiagonal) {
+                auto renderableObject {
+                    sceneManager.CreateRenderableObject(Pht::QuadMesh {0.19f, 1.2f}, material)
+                };
+                
+                mDiagonalWelds[weldIndex] = std::move(renderableObject);
+            } else {
+                auto renderableObject {
+                    sceneManager.CreateRenderableObject(Pht::QuadMesh {0.19f, 0.85f}, material)
+                };
+                
+                mWelds[weldIndex] = std::move(renderableObject);
+            }
         }
     }
 }

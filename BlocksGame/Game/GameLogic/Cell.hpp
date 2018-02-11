@@ -63,6 +63,7 @@ namespace BlocksGame {
         bool mDownLeft {false};
         bool mLeft {false};
         bool mUpLeft {false};
+        bool mDiagonal {false};
     };
     
     enum class BlockBrightness {

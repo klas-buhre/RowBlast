@@ -27,6 +27,8 @@ namespace BlocksGame {
                                                         BlockBrightness brightness) const;
         Pht::RenderableObject& GetWeldRenderableObject(BlockColor color,
                                                        BlockBrightness brightness) const;
+        Pht::RenderableObject& GetDiagonalWeldRenderableObject(BlockColor color,
+                                                               BlockBrightness brightness) const;
 
         Pht::RenderableObject& GetBombRenderableObject() const {
             return *mBomb;
@@ -50,11 +52,12 @@ namespace BlocksGame {
                            BlockBrightness brightness) const ;
         int CalcWeldIndex(BlockColor color, BlockBrightness brightness) const;
         void CreateBlocks(Pht::ISceneManager& sceneManager, const GameScene& scene);
-        void CreateWelds(Pht::ISceneManager& sceneManager, const GameScene& scene);
+        void CreateWelds(Pht::ISceneManager& sceneManager, const GameScene& scene, bool isDiagonal);
         void CreateBombs(Pht::ISceneManager& sceneManager, const GameScene& scene);
         
         std::vector<std::unique_ptr<Pht::RenderableObject>> mBlocks;
         std::vector<std::unique_ptr<Pht::RenderableObject>> mWelds;
+        std::vector<std::unique_ptr<Pht::RenderableObject>> mDiagonalWelds;
         std::unique_ptr<Pht::RenderableObject> mBomb;
         std::unique_ptr<Pht::RenderableObject> mTransparentBomb;
         std::unique_ptr<Pht::RenderableObject> mRowBomb;

@@ -863,6 +863,7 @@ void Field::ManageWelds() {
             auto& cell {mGrid[row][column]};
             Pht::IVec2 position {column, row};
             
+            MakeDiagonalWeld(cell);
             MakeWelds(cell.mFirstSubCell, position);
             MakeWelds(cell.mSecondSubCell, position);
         }
@@ -875,6 +876,17 @@ void Field::ManageWelds() {
             
             BreakRedundantWelds(cell.mFirstSubCell, position);
         }
+    }
+}
+
+void Field::MakeDiagonalWeld(Cell& cell) {
+    auto& firstSubCell {cell.mFirstSubCell};
+    auto& secondSubCell {cell.mSecondSubCell};
+    
+    if (!firstSubCell.IsEmpty() && !secondSubCell.IsEmpty() &&
+        firstSubCell.mColor == secondSubCell.mColor) {
+        firstSubCell.mWelds.mDiagonal = true;
+        secondSubCell.mWelds.mDiagonal = true;
     }
 }
 

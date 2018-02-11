@@ -58,9 +58,12 @@ Backlog:
   
 Ongoing tasks:
     -Maybe all neighbouring blocks with the same color should be connected/merged with welds.
-      -Merged triangles should have welds.
       -Pull down merged pieces.
+      -Problem: whether a weld that is being formed flashes or not depends on the weld direction
+       (see GameSceneRenderer). Instead, a weld that is being formed should flash with the
+       brightness between normal and flashing brightness.
       -Weld animation.
+      -Maybe two merged triangles should be changed into a cube after the weld animation.
 
 Ideas:
     -The pause button could lead to a widget that has an undo button, a boosters button and a game

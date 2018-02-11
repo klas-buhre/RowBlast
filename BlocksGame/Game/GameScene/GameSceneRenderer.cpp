@@ -87,13 +87,13 @@ void GameSceneRenderer::RenderFieldBlocks() {
     for (auto row {lowestVisibleRow}; row < pastHighestVisibleRow; row++) {
         for (auto column {0}; column < mField.GetNumColumns(); column++) {
             auto& cell {mField.GetCell(row, column)};
-            RenderFieldBlock(cell.mFirstSubCell);
-            RenderFieldBlock(cell.mSecondSubCell);
+            RenderFieldBlock(cell.mFirstSubCell, false);
+            RenderFieldBlock(cell.mSecondSubCell, true);
         }
     }
 }
 
-void GameSceneRenderer::RenderFieldBlock(const SubCell& subCell) {
+void GameSceneRenderer::RenderFieldBlock(const SubCell& subCell, bool isSecondSubCell) {
     auto renderableKind {subCell.mBlockRenderableKind};
     
     if (renderableKind == BlockRenderableKind::None) {
@@ -132,14 +132,19 @@ void GameSceneRenderer::RenderFieldBlock(const SubCell& subCell) {
         sceneObject.SetRenderable(&renderableObject);
 
         auto& weldRenderable {mPieceResources.GetWeldRenderableObject(color, brightness)};
-        RenderBlockWelds(subCell, blockPosition, weldRenderable, mScene.GetFieldBlocks());
+        RenderBlockWelds(subCell,
+                         blockPosition,
+                         weldRenderable,
+                         mScene.GetFieldBlocks(),
+                         isSecondSubCell);
     }
 }
 
 void GameSceneRenderer::RenderBlockWelds(const SubCell& subCell,
                                          const Pht::Vec3& blockPos,
                                          Pht::RenderableObject& weldRenderalbeObject,
-                                         SceneObjectPool& pool) {
+                                         SceneObjectPool& pool,
+                                         bool isSecondSubCell) {
     auto& welds {subCell.mWelds};
     const auto cellSize {mScene.GetCellSize()};
     auto weldZ {blockPos.z + cellSize / 2.0f};
@@ -170,6 +175,34 @@ void GameSceneRenderer::RenderBlockWelds(const SubCell& subCell,
                         0.0f,
                         weldRenderalbeObject,
                         pool);
+    }
+    
+    if (welds.mDiagonal && isSecondSubCell) {
+        auto color {subCell.mColor};
+        auto brightness {subCell.mFlashingBlockAnimation.mBrightness};
+        
+        auto& diagonalWeldRenderable {
+            mPieceResources.GetDiagonalWeldRenderableObject(color, brightness)
+        };
+        
+        switch (subCell.mFill) {
+            case Fill::LowerRightHalf:
+            case Fill::UpperLeftHalf:
+                RenderBlockWeld({blockPos.x, blockPos.y, weldZ},
+                                -45.0f,
+                                diagonalWeldRenderable,
+                                pool);
+                break;
+            case Fill::LowerLeftHalf:
+            case Fill::UpperRightHalf:
+                RenderBlockWeld({blockPos.x, blockPos.y, weldZ},
+                                45.0f,
+                                diagonalWeldRenderable,
+                                pool);
+                break;
+            default:
+                break;
+        }
     }
 }
 
@@ -269,7 +302,7 @@ void GameSceneRenderer::RenderPieceBlocks(const CellGrid& pieceBlocks,
                 sceneObject.SetRenderable(&blockRenderableObject);
 
                 auto& weldRenderable {mPieceResources.GetWeldRenderableObject(color, brightness)};
-                RenderBlockWelds(subCell, blockPosition, weldRenderable, pool);
+                RenderBlockWelds(subCell, blockPosition, weldRenderable, pool, false);
             }
         }
     }

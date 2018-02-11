@@ -36,11 +36,12 @@ namespace BlocksGame {
     private:
         void RenderBlueprintSlots();
         void RenderFieldBlocks();
-        void RenderFieldBlock(const SubCell& subCell);
+        void RenderFieldBlock(const SubCell& subCell, bool isSecondSubCell);
         void RenderBlockWelds(const SubCell& subCell,
                               const Pht::Vec3& blockPos,
                               Pht::RenderableObject& weldRenderalbeObject,
-                              SceneObjectPool& pool);
+                              SceneObjectPool& pool,
+                              bool isSecondSubCell);
         void RenderBlockWeld(const Pht::Vec3& weldPosition,
                              float rotation,
                              Pht::RenderableObject& weldRenderalbeObject,

@@ -153,6 +153,7 @@ namespace BlocksGame {
         Pht::IVec2 ScanUntilNoCollision(const PieceBlocks& pieceBlocks,
                                         Pht::IVec2 position,
                                         const Pht::IVec2& step) const;
+        void MakeDiagonalWeld(Cell& cell);
         void MakeWelds(SubCell& subCell, const Pht::IVec2& position);
         bool ShouldBeUpWeld(const SubCell& subCell, const Pht::IVec2& position) const;
         bool ShouldBeRightWeld(const SubCell& subCell, const Pht::IVec2& position) const;
