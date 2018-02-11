@@ -58,8 +58,7 @@ Backlog:
   
 Ongoing tasks:
     -Maybe all neighbouring blocks with the same color should be connected/merged with welds.
-      -How to handle a redundant sideways weld when there is a second weld path between the blocks?
-      -How to handle merged triangles?
+      -Merged triangles should have welds.
       -Pull down merged pieces.
       -Weld animation.
 

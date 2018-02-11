@@ -812,7 +812,7 @@ void Field::LandFallingPiece(const FallingPiece& fallingPiece) {
     
     auto pieceBlocks {CreatePieceBlocks(fallingPiece)};
     LandPieceBlocks(pieceBlocks, fallingPiece.GetId(), fallingPiece.GetIntPosition(), true, true);
-    MakeWelds();
+    ManageWelds();
 }
 
 void Field::LandPieceBlocks(const PieceBlocks& pieceBlocks,
@@ -857,7 +857,7 @@ void Field::LandPieceBlocks(const PieceBlocks& pieceBlocks,
     }
 }
 
-void Field::MakeWelds() {
+void Field::ManageWelds() {
     for (auto row {mLowestVisibleRow}; row < mNumRows; ++row) {
         for (auto column {0}; column < mNumColumns; ++column) {
             auto& cell {mGrid[row][column]};
@@ -865,6 +865,15 @@ void Field::MakeWelds() {
             
             MakeWelds(cell.mFirstSubCell, position);
             MakeWelds(cell.mSecondSubCell, position);
+        }
+    }
+    
+    for (auto row {mLowestVisibleRow}; row < mNumRows; ++row) {
+        for (auto column {0}; column < mNumColumns; ++column) {
+            auto& cell {mGrid[row][column]};
+            Pht::IVec2 position {column, row};
+            
+            BreakRedundantWelds(cell.mFirstSubCell, position);
         }
     }
 }
@@ -996,6 +1005,110 @@ bool Field::ShouldBeLeftWeld(const SubCell& subCell, const Pht::IVec2& position)
         return true;
     }
     
+    return false;
+}
+
+void Field::BreakRedundantWelds(SubCell& subCell, const Pht::IVec2& position) {
+    if (subCell.IsEmpty() || subCell.mIsLevel) {
+        return;
+    }
+
+    auto& welds {subCell.mWelds};
+    
+    if (welds.mUpRight && UpRightWeldWouldBeRedundant(subCell, position)) {
+        welds.mUpRight = false;
+    }
+    
+    if (welds.mDownRight && DownRightWeldWouldBeRedundant(subCell, position)) {
+        welds.mDownRight = false;
+    }
+
+    if (welds.mDownLeft && DownLeftWeldWouldBeRedundant(subCell, position)) {
+        welds.mDownLeft = false;
+    }
+
+    if (welds.mUpLeft && UpLeftWeldWouldBeRedundant(subCell, position)) {
+        welds.mUpLeft = false;
+    }
+}
+
+bool Field::UpRightWeldWouldBeRedundant(const SubCell& subCell, const Pht::IVec2& position) const {
+    if (subCell.mWelds.mUp) {
+        auto& upperSubCell {mGrid[position.y + 1][position.x].mFirstSubCell};
+        
+        if (upperSubCell.mWelds.mRight) {
+            return true;
+        }
+    }
+
+    if (subCell.mWelds.mRight) {
+        auto& subCellToTheRight {mGrid[position.y][position.x + 1].mFirstSubCell};
+        
+        if (subCellToTheRight.mWelds.mUp) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+bool Field::DownRightWeldWouldBeRedundant(const SubCell& subCell, const Pht::IVec2& position) const {
+    if (subCell.mWelds.mDown) {
+        auto& lowerSubCell {mGrid[position.y - 1][position.x].mFirstSubCell};
+        
+        if (lowerSubCell.mWelds.mRight) {
+            return true;
+        }
+    }
+
+    if (subCell.mWelds.mRight) {
+        auto& subCellToTheRight {mGrid[position.y][position.x + 1].mFirstSubCell};
+        
+        if (subCellToTheRight.mWelds.mDown) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+bool Field::DownLeftWeldWouldBeRedundant(const SubCell& subCell, const Pht::IVec2& position) const {
+    if (subCell.mWelds.mDown) {
+        auto& lowerSubCell {mGrid[position.y - 1][position.x].mFirstSubCell};
+        
+        if (lowerSubCell.mWelds.mLeft) {
+            return true;
+        }
+    }
+
+    if (subCell.mWelds.mLeft) {
+        auto& subCellToTheLeft {mGrid[position.y][position.x - 1].mFirstSubCell};
+        
+        if (subCellToTheLeft.mWelds.mDown) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+bool Field::UpLeftWeldWouldBeRedundant(const SubCell& subCell, const Pht::IVec2& position) const {
+    if (subCell.mWelds.mUp) {
+        auto& upperSubCell {mGrid[position.y + 1][position.x].mFirstSubCell};
+        
+        if (upperSubCell.mWelds.mLeft) {
+            return true;
+        }
+    }
+
+    if (subCell.mWelds.mLeft) {
+        auto& subCellToTheLeft {mGrid[position.y][position.x - 1].mFirstSubCell};
+        
+        if (subCellToTheLeft.mWelds.mUp) {
+            return true;
+        }
+    }
+
     return false;
 }
 

@@ -81,7 +81,7 @@ namespace BlocksGame {
                              const Pht::IVec2& position,
                              bool updateCellPosition,
                              bool startBlueprintCellAnimation);
-        void MakeWelds();
+        void ManageWelds();
         void PullDownLoosePieces();
         int GetNumRowsInOneScreen() const;
         bool AnyFilledRows() const;
@@ -158,6 +158,11 @@ namespace BlocksGame {
         bool ShouldBeRightWeld(const SubCell& subCell, const Pht::IVec2& position) const;
         bool ShouldBeDownWeld(const SubCell& subCell, const Pht::IVec2& position) const;
         bool ShouldBeLeftWeld(const SubCell& subCell, const Pht::IVec2& position) const;
+        void BreakRedundantWelds(SubCell& subCell, const Pht::IVec2& position);
+        bool UpRightWeldWouldBeRedundant(const SubCell& subCell, const Pht::IVec2& position) const;
+        bool DownRightWeldWouldBeRedundant(const SubCell& subCell, const Pht::IVec2& position) const;
+        bool DownLeftWeldWouldBeRedundant(const SubCell& subCell, const Pht::IVec2& position) const;
+        bool UpLeftWeldWouldBeRedundant(const SubCell& subCell, const Pht::IVec2& position) const;
         void PullDownPiece(int row, int column, ScanDirection scanDirection);
         void PullDownPiece(const SubCell& subCell,
                            const Pht::IVec2& position,
