@@ -138,6 +138,7 @@ namespace BlocksGame {
         
         Field& mField;
         SearchGrid mSearchGrid;
+        mutable Field::CollisionResult mCollisionResult;
     };
 }
 

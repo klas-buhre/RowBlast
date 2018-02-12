@@ -486,7 +486,7 @@ void GameLogic::RotateFallingPiece() {
     
     auto position {mFallingPiece->GetIntPosition()};
     
-    CollisionResult collisionResult;
+    Field::CollisionResult collisionResult;
     mField.CheckCollision(collisionResult, pieceBlocks, position, Pht::IVec2{0, 0}, false);
 
     if (collisionResult.mIsCollision == IsCollision::Yes) {

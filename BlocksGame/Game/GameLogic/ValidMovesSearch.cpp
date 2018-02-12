@@ -165,12 +165,11 @@ void ValidMovesSearch::AdjustPosition(MovingPiece& piece) {
     const auto& position {piece.mPosition};
     auto pieceBlocks {CreatePieceBlocks(piece)};
     
-    CollisionResult collisionResult;
-    mField.CheckCollision(collisionResult, pieceBlocks, position, Pht::IVec2{0, 0}, false);
+    mField.CheckCollision(mCollisionResult, pieceBlocks, position, Pht::IVec2{0, 0}, false);
     
-    if (collisionResult.mIsCollision == IsCollision::Yes) {
+    if (mCollisionResult.mIsCollision == IsCollision::Yes) {
         auto collisionDirection {
-            CollisionDetection::CalculateCollisionDirection(collisionResult.mCollisionPoints,
+            CollisionDetection::CalculateCollisionDirection(mCollisionResult.mCollisionPoints,
                                                             pieceBlocks,
                                                             piece.mRotation,
                                                             position,
@@ -444,10 +443,9 @@ bool ValidMovesSearch::IsCollision(const MovingPiece& piece) const {
     const auto& position {piece.mPosition};
     auto pieceBlocks {CreatePieceBlocks(piece)};
     
-    CollisionResult collisionResult;
-    mField.CheckCollision(collisionResult, pieceBlocks, position, Pht::IVec2{0, 0}, false);
+    mField.CheckCollision(mCollisionResult, pieceBlocks, position, Pht::IVec2{0, 0}, false);
     
-    return collisionResult.mIsCollision == IsCollision::Yes;
+    return mCollisionResult.mIsCollision == IsCollision::Yes;
 }
 
 int ValidMovesSearch::DetectCollisionLeft(const MovingPiece& piece) const {

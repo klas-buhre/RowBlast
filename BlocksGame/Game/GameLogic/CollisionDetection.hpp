@@ -21,7 +21,7 @@ namespace BlocksGame {
     };
     
     namespace CollisionDetection {
-        Direction CalculateCollisionDirection(const CollisionPoints& collisionPoints,
+        Direction CalculateCollisionDirection(const Field::CollisionPoints& collisionPoints,
                                               const PieceBlocks& pieceBlocks,
                                               Rotation pieceRotation,
                                               const Pht::IVec2& position,

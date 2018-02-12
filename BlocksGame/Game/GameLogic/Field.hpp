@@ -29,14 +29,6 @@ namespace BlocksGame {
         NextWillBe,
         No
     };
-
-    using CollisionPoints = Pht::StaticVector<Pht::IVec2, Piece::maxRows * Piece::maxColumns>;
-    using PieceBlockCoords = Pht::StaticVector<Pht::IVec2, Piece::maxRows * Piece::maxColumns>;
-
-    struct CollisionResult {
-        IsCollision mIsCollision {IsCollision::No};
-        CollisionPoints mCollisionPoints;
-    };
     
     struct PieceBlocks {
         const CellGrid& mGrid;
@@ -53,6 +45,22 @@ namespace BlocksGame {
     
     class Field {
     public:
+        static constexpr int maxNumColumns {9};
+        static constexpr int maxNumRows {18};
+        
+        struct PieceBlockCoord {
+            Pht::IVec2 mPosition;
+            bool mIsFirstSubCell {true};
+        };
+
+        using PieceBlockCoords = Pht::StaticVector<PieceBlockCoord, maxNumColumns * maxNumRows * 2>;
+        using CollisionPoints = Pht::StaticVector<Pht::IVec2, maxNumColumns * maxNumRows>;
+
+        struct CollisionResult {
+            IsCollision mIsCollision {IsCollision::No};
+            CollisionPoints mCollisionPoints;
+        };
+    
         Field();
         
         void Init(const Level& level);
@@ -95,9 +103,6 @@ namespace BlocksGame {
         float GetBurriedHolesAreaInVisibleRows() const;
         float GetWellsAreaInVisibleRows() const;
         int GetNumTransitionsInVisibleRows() const;
-
-        static constexpr int maxNumColumns {9};
-        static constexpr int maxNumRows {18};
         
         using RemovedSubCells = Pht::StaticVector<RemovedSubCell, maxNumColumns * maxNumRows>;
         
@@ -169,15 +174,13 @@ namespace BlocksGame {
                            const Pht::IVec2& position,
                            ScanDirection scanDirection);
         PieceBlocks ExtractPieceBlocks(Pht::IVec2& piecePosition,
-                                       const SubCell& subCell,
+                                       BlockColor color,
                                        const Pht::IVec2& scanPosition,
                                        ScanDirection scanDirection);
-        void FindPieceBlocks(PieceBlockCoords& pieceBlockCoords,
-                             int pieceId,
-                             const Pht::IVec2& position);
-        SubCell& GetSubCell(const Pht::IVec2& position, int pieceId);
+        void FindPieceBlocks(BlockColor color, const Pht::IVec2& position);
         void ResetAllCellsTriedScanDirection();
         void ClearPieceBlockGrid();
+        void LandPulledDownPieceBlocks(const PieceBlocks& pieceBlocks, const Pht::IVec2& position);
         void RemoveRowImpl(int rowIndex, Field::RemovedSubCells& removedSubCells);
         void BreakCellDownWelds(int row, int column);
         void BreakCellUpWelds(int row, int column);
@@ -201,8 +204,10 @@ namespace BlocksGame {
         int mNumColumns {0};
         int mNumRows {0};
         int mLowestVisibleRow {0};
-        CellGrid mPieceBlockGrid;
         bool mHasChanged {false};
+        CellGrid mPieceBlockGrid;
+        mutable CollisionResult mCollisionResult;
+        PieceBlockCoords mPieceBlockCoords;
     };
 }
 

@@ -6,7 +6,7 @@
 using namespace BlocksGame;
 
 namespace {
-    Pht::Vec2 CalculateCenter(const CollisionPoints& collisionPoints) {
+    Pht::Vec2 CalculateCenter(const Field::CollisionPoints& collisionPoints) {
         Pht::Vec2 center {0.0f, 0.0f};
         
         for (auto i {0}; i < collisionPoints.Size(); ++i) {
@@ -119,11 +119,12 @@ namespace {
     }
 }
 
-Direction CollisionDetection::CalculateCollisionDirection(const CollisionPoints& collisionPoints,
-                                                          const PieceBlocks& pieceBlocks,
-                                                          Rotation pieceRotation,
-                                                          const Pht::IVec2& position,
-                                                          const Field& field) {
+Direction
+CollisionDetection::CalculateCollisionDirection(const Field::CollisionPoints& collisionPoints,
+                                                const PieceBlocks& pieceBlocks,
+                                                Rotation pieceRotation,
+                                                const Pht::IVec2& position,
+                                                const Field& field) {
     auto collisionCenter {CalculateCenter(collisionPoints)};
     
     Pht::Vec2 pieceCenter {

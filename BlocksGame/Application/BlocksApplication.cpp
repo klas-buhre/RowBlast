@@ -18,6 +18,9 @@ Backlog:
      convenient to go back to the state before the move and not the initial state.
     -Mega bomb?
   -Rendering:
+    -It seems to be possible to create objects with different bevel for different edges and faces in
+     Blender. See https://www.youtube.com/watch?v=wIT7OAMy_3M . Try creating blocks with less bevel
+     on the edges that have a weld.
     -FloatingCubes could contain floating L-pieces as well. Rename to FloatingBlocks.
     -Could have the rounded cylinder i some places in the HUDs.
     -GUI: the buttons in the views could be yellow with black text and triangular edges like in
@@ -45,8 +48,6 @@ Backlog:
     -The blocks in FlyingBlocksAnimation should bounce off each other instead of passing right 
      through.
     -MenuButtons can start a shrink animation when pressed down.
-    -Try models with less bevel for the preview. The triangles with less bevel could be tried for
-     field also.
   -Tutorial:
   -Purchases:
   -Back end:
@@ -58,12 +59,13 @@ Backlog:
   
 Ongoing tasks:
     -Maybe all neighbouring blocks with the same color should be connected/merged with welds.
-      -Pull down merged pieces.
-      -Problem: whether a weld that is being formed flashes or not depends on the weld direction
-       (see GameSceneRenderer). Instead, a weld that is being formed should flash with the
-       brightness between normal and flashing brightness.
-      -Weld animation.
-      -Maybe two merged triangles should be changed into a cube after the weld animation.
+      -Try new type of blocks.
+      -If keeping old blocks:
+        -Problem: whether a weld that is being formed flashes or not depends on the weld direction
+         (see GameSceneRenderer). Instead, a weld that is being formed should flash with the
+         brightness between normal and flashing brightness.
+        -Weld animation.
+        -Maybe two merged triangles should be changed into a cube after the weld animation.
 
 Ideas:
     -The pause button could lead to a widget that has an undo button, a boosters button and a game

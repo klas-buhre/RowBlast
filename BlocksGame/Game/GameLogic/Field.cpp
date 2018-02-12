@@ -13,6 +13,7 @@ using namespace BlocksGame;
 namespace {
     const auto maxNumScanTries {Field::maxNumRows};
     const auto maxNumRowsInOneScreen {19};
+    const SubCell fullSubCell {Fill::Full};
 
     bool RowIsFull(const std::vector<Cell>& row) {
         for (auto& cell: row) {
@@ -120,11 +121,11 @@ namespace {
         };
     }
     
-    int XMin(const PieceBlockCoords& pieceBlockCoords) {
+    int XMin(const Field::PieceBlockCoords& pieceBlockCoords) {
         auto xMin {Field::maxNumColumns - 1};
         
         for (auto i {0}; i < pieceBlockCoords.Size(); ++i) {
-            auto x {pieceBlockCoords.At(i).x};
+            auto x {pieceBlockCoords.At(i).mPosition.x};
             
             if (x < xMin) {
                 xMin = x;
@@ -134,11 +135,11 @@ namespace {
         return xMin;
     }
     
-    int XMax(const PieceBlockCoords& pieceBlockCoords) {
+    int XMax(const Field::PieceBlockCoords& pieceBlockCoords) {
         auto xMax {0};
         
         for (auto i {0}; i < pieceBlockCoords.Size(); ++i) {
-            auto x {pieceBlockCoords.At(i).x};
+            auto x {pieceBlockCoords.At(i).mPosition.x};
             
             if (x > xMax) {
                 xMax = x;
@@ -148,11 +149,11 @@ namespace {
         return xMax;
     }
 
-    int YMin(const PieceBlockCoords& pieceBlockCoords) {
+    int YMin(const Field::PieceBlockCoords& pieceBlockCoords) {
         auto yMin {10000};
         
         for (auto i {0}; i < pieceBlockCoords.Size(); ++i) {
-            auto y {pieceBlockCoords.At(i).y};
+            auto y {pieceBlockCoords.At(i).mPosition.y};
             
             if (y < yMin) {
                 yMin = y;
@@ -162,11 +163,11 @@ namespace {
         return yMin;
     }
     
-    int YMax(const PieceBlockCoords& pieceBlockCoords) {
+    int YMax(const Field::PieceBlockCoords& pieceBlockCoords) {
         auto yMax {0};
         
         for (auto i {0}; i < pieceBlockCoords.Size(); ++i) {
-            auto y {pieceBlockCoords.At(i).y};
+            auto y {pieceBlockCoords.At(i).mPosition.y};
             
             if (y > yMax) {
                 yMax = y;
@@ -178,9 +179,9 @@ namespace {
 }
 
 Field::Field() {
-    std::vector<Cell> emptyRow(Piece::maxColumns);
+    std::vector<Cell> emptyRow(maxNumColumns);
     
-    for (auto i {0}; i < Piece::maxRows; ++i) {
+    for (auto i {0}; i < maxNumRows; ++i) {
         mPieceBlockGrid.push_back(emptyRow);
     }
 }
@@ -644,20 +645,19 @@ Pht::IVec2 Field::ScanUntilCollision(const PieceBlocks& pieceBlocks,
                                      Pht::IVec2 position,
                                      const Pht::IVec2& step) const {
     auto isScanStart {true};
-    CollisionResult collisionResult;
     
     for (;;) {
-        CheckCollision(collisionResult, pieceBlocks, position, step, isScanStart);
+        CheckCollision(mCollisionResult, pieceBlocks, position, step, isScanStart);
         
         if (isScanStart) {
             isScanStart = false;
         }
         
-        if (collisionResult.mIsCollision == IsCollision::Yes) {
+        if (mCollisionResult.mIsCollision == IsCollision::Yes) {
             return position;
         }
         
-        if (collisionResult.mIsCollision == IsCollision::NextWillBe) {
+        if (mCollisionResult.mIsCollision == IsCollision::NextWillBe) {
             position += step;
             return position;
         }
@@ -673,13 +673,21 @@ void Field::CheckCollision(CollisionResult& result,
                            const Pht::IVec2& position,
                            const Pht::IVec2& scanDirection,
                            bool isScanStart) const {
+    result.mIsCollision = IsCollision::No;
+    result.mCollisionPoints.Clear();
+    
     auto pieceNumRows {pieceBlocks.mNumRows};
     auto pieceNumColumns {pieceBlocks.mNumColumns};
     auto& pieceGrid {pieceBlocks.mGrid};
 
     for (auto pieceRow {0}; pieceRow < pieceNumRows; ++pieceRow) {
         for (auto pieceColumn {0}; pieceColumn < pieceNumColumns; ++pieceColumn) {
-            auto& pieceSubCell {pieceGrid[pieceRow][pieceColumn].mFirstSubCell};
+            auto& pieceCell {pieceGrid[pieceRow][pieceColumn]};
+            
+            auto& pieceSubCell {
+                pieceCell.mSecondSubCell.IsEmpty() ? pieceCell.mFirstSubCell : fullSubCell
+            };
+            
             if (pieceSubCell.IsEmpty()) {
                 continue;
             }
@@ -757,10 +765,9 @@ Pht::IVec2 Field::ScanUntilNoCollision(const PieceBlocks& pieceBlocks,
     auto isScanStart {true};
     
     for (;;) {
-        CollisionResult collisionResult;
-        CheckCollision(collisionResult, pieceBlocks, position, step, isScanStart);
+        CheckCollision(mCollisionResult, pieceBlocks, position, step, isScanStart);
         
-        if (collisionResult.mIsCollision != IsCollision::Yes) {
+        if (mCollisionResult.mIsCollision != IsCollision::Yes) {
             break;
         }
         
@@ -778,8 +785,8 @@ Pht::IVec2 Field::ScanUntilNoCollision(const PieceBlocks& pieceBlocks,
     return position;
 }
 
-CollisionPoints Field::GetOccupiedArea(const PieceBlocks& pieceBlocks,
-                                       const Pht::IVec2& position) const {
+Field::CollisionPoints Field::GetOccupiedArea(const PieceBlocks& pieceBlocks,
+                                              const Pht::IVec2& position) const {
     CollisionPoints collisions;
     auto pieceNumRows {pieceBlocks.mNumRows};
     auto pieceNumColumns {pieceBlocks.mNumColumns};
@@ -1155,106 +1162,119 @@ void Field::PullDownPiece(const SubCell& subCell,
         return;
     }
     
-    auto pieceId {subCell.mPieceId};
     Pht::IVec2 piecePosition {0, 0};
-    auto pieceBlocks {ExtractPieceBlocks(piecePosition, subCell, scanPosition, scanDirection)};
+    auto pieceBlocks {
+        ExtractPieceBlocks(piecePosition, subCell.mColor, scanPosition, scanDirection)
+    };
 
     Pht::IVec2 step {0, -1};
     auto collisionPosition {ScanUntilCollision(pieceBlocks, piecePosition, step)};
     
     if (collisionPosition.y + 1 >= mLowestVisibleRow) {
-        LandPieceBlocks(pieceBlocks, pieceId, collisionPosition + Pht::IVec2 {0, 1}, false, false);
+        LandPulledDownPieceBlocks(pieceBlocks, collisionPosition + Pht::IVec2 {0, 1});
     } else {
-        LandPieceBlocks(pieceBlocks, pieceId, piecePosition, false, false);
+        LandPulledDownPieceBlocks(pieceBlocks, piecePosition);
     }
 }
 
 PieceBlocks Field::ExtractPieceBlocks(Pht::IVec2& piecePosition,
-                                      const SubCell& subCell,
+                                      BlockColor color,
                                       const Pht::IVec2& scanPosition,
                                       ScanDirection scanDirection) {
-    PieceBlockCoords pieceBlockCoords;
-    auto pieceId {subCell.mPieceId};
+    mPieceBlockCoords.Clear();
+    FindPieceBlocks(color, scanPosition);
     
-    FindPieceBlocks(pieceBlockCoords, pieceId, scanPosition);
-    
-    piecePosition.x = XMin(pieceBlockCoords);
-    piecePosition.y = YMin(pieceBlockCoords);
+    piecePosition.x = XMin(mPieceBlockCoords);
+    piecePosition.y = YMin(mPieceBlockCoords);
 
     ClearPieceBlockGrid();
     
-    for (auto i {0}; i < pieceBlockCoords.Size(); ++i) {
-        auto& coord {pieceBlockCoords.At(i)};
-        auto pieceRow {coord.y - piecePosition.y};
-        auto pieceColumn {coord.x - piecePosition.x};
-        auto& subCell {GetSubCell(coord, pieceId)};
-        subCell.mIsFound = false;
-        subCell.mTriedScanDirection = scanDirection;
+    for (auto i {0}; i < mPieceBlockCoords.Size(); ++i) {
+        auto& coord {mPieceBlockCoords.At(i)};
+        auto& position {coord.mPosition};
+        auto pieceRow {position.y - piecePosition.y};
+        auto pieceColumn {position.x - piecePosition.x};
         
-        mPieceBlockGrid[pieceRow][pieceColumn].mFirstSubCell = subCell;
-        subCell = SubCell {};
+        auto& cell {mGrid[position.y][position.x]};
+        auto& fieldSubCell {coord.mIsFirstSubCell ? cell.mFirstSubCell : cell.mSecondSubCell};
+        
+        fieldSubCell.mIsFound = false;
+        fieldSubCell.mTriedScanDirection = scanDirection;
+        
+        auto& pieceBlockCell {mPieceBlockGrid[pieceRow][pieceColumn]};
+        
+        if (pieceBlockCell.mFirstSubCell.IsEmpty()) {
+            pieceBlockCell.mFirstSubCell = fieldSubCell;
+        } else {
+            pieceBlockCell.mSecondSubCell = fieldSubCell;
+        }
+        
+        fieldSubCell = SubCell {};
     }
 
     return PieceBlocks {
         mPieceBlockGrid,
-        YMax(pieceBlockCoords) - piecePosition.y + 1,
-        XMax(pieceBlockCoords) - piecePosition.x + 1
+        YMax(mPieceBlockCoords) - piecePosition.y + 1,
+        XMax(mPieceBlockCoords) - piecePosition.x + 1
     };
 }
 
-void Field::FindPieceBlocks(PieceBlockCoords& pieceBlockCoords,
-                            int pieceId,
-                            const Pht::IVec2& position) {
-    auto& subCell {GetSubCell(position, pieceId)};
+void Field::FindPieceBlocks(BlockColor color, const Pht::IVec2& position) {
+    auto& cell {mGrid[position.y][position.x]};
+    auto& firstSubCell {cell.mFirstSubCell};
+    auto& secondSubCell {cell.mSecondSubCell};
+    SubCell* subCell {nullptr};
+    auto isFirstSubCell {true};
     
-    if (subCell.mIsFound) {
+    if (firstSubCell.mColor == color && !firstSubCell.mIsFound) {
+        subCell = &firstSubCell;
+    } else if (secondSubCell.mColor == color && !secondSubCell.mIsFound) {
+        subCell = &secondSubCell;
+        isFirstSubCell = false;
+    } else {
         return;
     }
     
-    pieceBlockCoords.PushBack(position);
-    subCell.mIsFound = true;
-    auto& welds {subCell.mWelds};
+    PieceBlockCoord coord {position, isFirstSubCell};
+    mPieceBlockCoords.PushBack(coord);
+    
+    subCell->mIsFound = true;
+    auto& welds {subCell->mWelds};
+    
+    if (welds.mDiagonal) {
+        FindPieceBlocks(color, position);
+    }
     
     if (welds.mUp) {
-        FindPieceBlocks(pieceBlockCoords, pieceId, position + Pht::IVec2 {0, 1});
+        FindPieceBlocks(color, position + Pht::IVec2 {0, 1});
     }
 
     if (welds.mUpRight) {
-        FindPieceBlocks(pieceBlockCoords, pieceId, position + Pht::IVec2 {1, 1});
+        FindPieceBlocks(color, position + Pht::IVec2 {1, 1});
     }
     
     if (welds.mRight) {
-        FindPieceBlocks(pieceBlockCoords, pieceId, position + Pht::IVec2 {1, 0});
+        FindPieceBlocks(color, position + Pht::IVec2 {1, 0});
     }
     
     if (welds.mDownRight) {
-        FindPieceBlocks(pieceBlockCoords, pieceId, position + Pht::IVec2 {1, -1});
+        FindPieceBlocks(color, position + Pht::IVec2 {1, -1});
     }
 
     if (welds.mDown) {
-        FindPieceBlocks(pieceBlockCoords, pieceId, position + Pht::IVec2 {0, -1});
+        FindPieceBlocks(color, position + Pht::IVec2 {0, -1});
     }
 
     if (welds.mDownLeft) {
-        FindPieceBlocks(pieceBlockCoords, pieceId, position + Pht::IVec2 {-1, -1});
+        FindPieceBlocks(color, position + Pht::IVec2 {-1, -1});
     }
 
     if (welds.mLeft) {
-        FindPieceBlocks(pieceBlockCoords, pieceId, position + Pht::IVec2 {-1, 0});
+        FindPieceBlocks(color, position + Pht::IVec2 {-1, 0});
     }
 
     if (welds.mUpLeft) {
-        FindPieceBlocks(pieceBlockCoords, pieceId, position + Pht::IVec2 {-1, 1});
-    }
-}
-
-SubCell& Field::GetSubCell(const Pht::IVec2& position, int pieceId) {
-    auto& cell {mGrid[position.y][position.x]};
-    
-    if (cell.mFirstSubCell.mPieceId == pieceId) {
-        return cell.mFirstSubCell;
-    } else {
-        return cell.mSecondSubCell;
+        FindPieceBlocks(color, position + Pht::IVec2 {-1, 1});
     }
 }
 
@@ -1269,9 +1289,36 @@ void Field::ResetAllCellsTriedScanDirection() {
 }
 
 void Field::ClearPieceBlockGrid() {
-    for (auto row {0}; row < Piece::maxRows; ++row) {
-        for (auto column {0}; column < Piece::maxColumns; ++column) {
+    for (auto row {0}; row < maxNumRows; ++row) {
+        for (auto column {0}; column < maxNumColumns; ++column) {
             mPieceBlockGrid[row][column] = Cell {};
+        }
+    }
+}
+
+void Field::LandPulledDownPieceBlocks(const PieceBlocks& pieceBlocks, const Pht::IVec2& position) {
+    for (auto pieceRow {0}; pieceRow < pieceBlocks.mNumRows; ++pieceRow) {
+        for (auto pieceColumn {0}; pieceColumn < pieceBlocks.mNumColumns; ++pieceColumn) {
+            auto& pieceCell {pieceBlocks.mGrid[pieceRow][pieceColumn]};
+            
+            if (pieceCell.IsEmpty()) {
+                continue;
+            }
+            
+            auto row {position.y + pieceRow};
+            auto column {position.x + pieceColumn};
+            auto& fieldCell {mGrid[row][column]};
+            
+            if (pieceCell.mSecondSubCell.IsEmpty()) {
+                auto& fieldSubCell {
+                    fieldCell.mFirstSubCell.IsEmpty() ?
+                    fieldCell.mFirstSubCell : fieldCell.mSecondSubCell
+                };
+                
+                fieldSubCell = pieceCell.mFirstSubCell;
+            } else {
+                fieldCell = pieceCell;
+            }
         }
     }
 }
