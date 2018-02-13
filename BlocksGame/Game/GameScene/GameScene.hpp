@@ -94,10 +94,6 @@ namespace BlocksGame {
             assert(mGhostPieces);
             return *mGhostPieces;
         }
-
-        const Pht::Vec3& GetLightDirection() const {
-            return mLightDirection;
-        }
         
         const Pht::Vec3& GetFieldPosition() const {
             return mFieldPosition;
@@ -171,7 +167,6 @@ namespace BlocksGame {
         Pht::SceneObject* mFlyingBlocksContainer {nullptr};
         Pht::SceneObject* mHudContainer {nullptr};
         Pht::SceneObject* mUiViewsContainer {nullptr};
-        Pht::Vec3 mLightDirection;
         const Pht::Vec3 mFieldPosition;
         const float mCellSize {1.25f};
         const float mBlastRadiusAnimationZ {mCellSize / 2.0f + 0.1f};

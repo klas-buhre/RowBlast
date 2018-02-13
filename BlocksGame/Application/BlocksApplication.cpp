@@ -117,6 +117,11 @@ Time Estimation in days:
 
         Total: 146
 
+Light settings in game scene:
+new = {0.57f, 1.0f, 0.6f}
+original = {1.0f, 1.0f, 0.74f}
+
+
 Create rounded cube in Blender:
 Scale cube so that size is 1.0. Select the wrench to the right.
 Then, Add Modifier > Bevel > turn up width > turn up segments.

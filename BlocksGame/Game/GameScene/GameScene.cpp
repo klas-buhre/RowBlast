@@ -101,7 +101,6 @@ GameScene::GameScene(Pht::IEngine& engine,
     mScrollController {scrollController},
     mCommonResources {commonResources},
     mGameHudController {gameHudController},
-    mLightDirection {1.0f, 1.0f, 0.74f},
     mFieldPosition {0.0f, 0.0f, 0.0f} {}
 
 void GameScene::Init(const Level& level,
@@ -179,7 +178,7 @@ void GameScene::CreateRenderPasses() {
 
 void GameScene::CreateLightAndCamera() {
     auto& light {mScene->CreateGlobalLight()};
-    light.SetDirection(mLightDirection);
+    light.SetDirection({0.57f, 1.0f, 0.6f});
     mScene->GetRoot().AddChild(light.GetSceneObject());
     
     mCamera = &mScene->CreateCamera();
