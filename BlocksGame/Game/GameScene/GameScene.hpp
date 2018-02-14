@@ -132,6 +132,7 @@ namespace BlocksGame {
         void CreateRenderPasses();
         void CreateLightAndCamera();
         void CreateBackground();
+        void CreateBackgroundLayerLight();
         void CreateFloatingCubes();
         void InitFieldDimensions(const Level& level);
         void CreateFieldQuad(const Level& level);
@@ -149,6 +150,7 @@ namespace BlocksGame {
                        const Level& level);
         void CreateUiViewsContainer();
         void SetScissorBox(const Pht::ScissorBox& scissorBox, int layer);
+        void UpdateLightAnimation();
         
         Pht::IEngine& mEngine;
         const ScrollController& mScrollController;
@@ -156,6 +158,8 @@ namespace BlocksGame {
         GameHudController& mGameHudController;
         Pht::Scene* mScene {nullptr};
         Pht::CameraComponent* mCamera {nullptr};
+        Pht::LightComponent* mLight {nullptr};
+        float mLightAnimationTime {0.0f};
         std::unique_ptr<FloatingCubes> mFloatingCubes;
         std::unique_ptr<SceneObjectPool> mFieldBlocks;
         std::unique_ptr<SceneObjectPool> mPieceBlocks;

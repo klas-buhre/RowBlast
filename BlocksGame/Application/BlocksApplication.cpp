@@ -59,6 +59,8 @@ Backlog:
   
 Ongoing tasks:
     -Maybe all neighbouring blocks with the same color should be connected/merged with welds.
+      -Balance piece colors so that for example long I piece and short I piece don't have the same
+       color.
       -Try new type of blocks.
       -If keeping old blocks:
         -Problem: whether a weld that is being formed flashes or not depends on the weld direction

@@ -22,6 +22,9 @@ namespace {
     const auto fieldQuadZ {-1.0f};
     const auto lowerClipAreaHeightInCells {2.15f};
     const auto fieldPadding {0.1f};
+    const auto lightAnimationDuration {5.0f};
+    const Pht::Vec3 lightDirectionA {0.57f, 1.0f, 0.6f};
+    const Pht::Vec3 lightDirectionB {1.0f, 1.0f, 0.74f};
     
     enum class Layer {
         Background,
@@ -116,6 +119,7 @@ void GameScene::Init(const Level& level,
     InitFieldDimensions(level);
     
     CreateBackground();
+    CreateBackgroundLayerLight();
     CreateFloatingCubes();
     CreateFieldQuad(level);
     CreateFieldContainer();
@@ -177,9 +181,8 @@ void GameScene::CreateRenderPasses() {
 }
 
 void GameScene::CreateLightAndCamera() {
-    auto& light {mScene->CreateGlobalLight()};
-    light.SetDirection({0.57f, 1.0f, 0.6f});
-    mScene->GetRoot().AddChild(light.GetSceneObject());
+    mLight = &mScene->CreateGlobalLight();
+    mScene->GetRoot().AddChild(mLight->GetSceneObject());
     
     mCamera = &mScene->CreateCamera();
     mScene->GetRoot().AddChild(mCamera->GetSceneObject());
@@ -191,6 +194,20 @@ void GameScene::CreateBackground() {
     background.GetTransform().SetPosition({0.0f, -5.0f, -42.0f});
     background.SetLayer(static_cast<int>(Layer::Background));
     mScene->GetRoot().AddChild(background);
+}
+
+void GameScene::CreateBackgroundLayerLight() {
+    auto& lightSceneObject {mScene->CreateSceneObject()};
+    lightSceneObject.SetIsVisible(false);
+    auto lightComponent {std::make_unique<Pht::LightComponent>(lightSceneObject)};
+    lightComponent->SetDirection(lightDirectionB);
+    
+    auto* backgroundRenderPass {mScene->GetRenderPass(static_cast<int>(Layer::Background))};
+    assert(backgroundRenderPass);
+    backgroundRenderPass->SetLight(lightComponent.get());
+    
+    lightSceneObject.SetComponent<Pht::LightComponent>(std::move(lightComponent));
+    mScene->GetRoot().AddChild(lightSceneObject);
 }
 
 void GameScene::CreateFloatingCubes() {
@@ -361,6 +378,7 @@ void GameScene::CreateUiViewsContainer() {
 void GameScene::Update() {
     mFloatingCubes->Update();
     mHud->Update();
+    UpdateLightAnimation();
     
     if (mScrollController.IsScrolling()) {
         UpdateCameraPositionAndScissorBox();
@@ -402,6 +420,17 @@ void GameScene::SetScissorBox(const Pht::ScissorBox& scissorBox, int layer) {
     assert(renderPass);
     
     renderPass->SetScissorBox(scissorBox);
+}
+
+void GameScene::UpdateLightAnimation() {
+    mLightAnimationTime += mEngine.GetLastFrameSeconds();
+    
+    if (mLightAnimationTime > lightAnimationDuration) {
+        mLightAnimationTime = 0.0f;
+    }
+    
+    auto t {(cos(mLightAnimationTime * 2.0f * 3.1415f / lightAnimationDuration) + 1.0f) / 2.0f};
+    mLight->SetDirection(lightDirectionA.Lerp(t, lightDirectionB));
 }
 
 const Pht::Material& GameScene::GetGoldMaterial() const {
