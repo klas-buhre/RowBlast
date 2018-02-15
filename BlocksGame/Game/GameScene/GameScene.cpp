@@ -40,56 +40,56 @@ namespace {
     };
 
 #if 0
-    const std::vector<CubePathVolume> floatingCubePaths {
-        CubePathVolume {
+    const std::vector<BlockPathVolume> floatingBlockPaths {
+        BlockPathVolume {
             .mPosition = {0.0f, 0.0f, -10.0f},
             .mSize = {40.0f, 10.0f, 5.0f}
         },
-        CubePathVolume {
+        BlockPathVolume {
             .mPosition = {0.0f, -15.0f, -10.0f},
             .mSize = {40.0f, 10.0f, 5.0f}
         },
-        CubePathVolume {
+        BlockPathVolume {
             .mPosition = {0.0f, 15.0f, -10.0f},
             .mSize = {40.0f, 10.0f, 5.0f}
         },
-        CubePathVolume {
+        BlockPathVolume {
             .mPosition = {0.0f, 25.0f, -20.0f},
             .mSize = {40.0f, 10.0f, 5.0f}
         },
-        CubePathVolume {
+        BlockPathVolume {
             .mPosition = {0.0f, -25.0f, -20.0f},
             .mSize = {40.0f, 10.0f, 5.0f}
         },
-        CubePathVolume {
+        BlockPathVolume {
             .mPosition = {0.0f, 0.0f, -20.0f},
             .mSize = {40.0f, 10.0f, 5.0f}
         }
     };
 #endif
 
-    const std::vector<CubePathVolume> floatingCubePaths {
-        CubePathVolume {
+    const std::vector<BlockPathVolume> floatingBlockPaths {
+        BlockPathVolume {
             .mPosition = {-10.0f, 15.0f, -10.0f},
             .mSize = {0.0f, 0.0f, 0.0f}
         },
-        CubePathVolume {
+        BlockPathVolume {
             .mPosition = {12.0f, 22.0f, -20.0f},
             .mSize = {0.0f, 0.0f, 0.0f}
         },
-        CubePathVolume {
+        BlockPathVolume {
             .mPosition = {-10.0f, 0.0f, -10.0f},
             .mSize = {0.0f, 0.0f, 0.0f}
         },
-        CubePathVolume {
+        BlockPathVolume {
             .mPosition = {13.0f, 0.0f, -20.0f},
             .mSize = {0.0f, 0.0f, 0.0f}
         },
-        CubePathVolume {
+        BlockPathVolume {
             .mPosition = {-7.0f, -20.0f, -10.0f},
             .mSize = {0.0f, 0.0f, 0.0f}
         },
-        CubePathVolume {
+        BlockPathVolume {
             .mPosition = {10.0f, -30.0f, -20.0f},
             .mSize = {0.0f, 0.0f, 0.0f}
         },
@@ -211,12 +211,12 @@ void GameScene::CreateBackgroundLayerLight() {
 }
 
 void GameScene::CreateFloatingCubes() {
-    mFloatingCubes = std::make_unique<FloatingCubes>(mEngine,
-                                                     *mScene,
-                                                     static_cast<int>(Layer::Background),
-                                                     floatingCubePaths,
-                                                     mCommonResources,
-                                                     7.7f);
+    mFloatingBlocks = std::make_unique<FloatingBlocks>(mEngine,
+                                                       *mScene,
+                                                       static_cast<int>(Layer::Background),
+                                                       floatingBlockPaths,
+                                                       mCommonResources,
+                                                       7.7f);
 }
 
 void GameScene::InitFieldDimensions(const Level& level) {
@@ -376,7 +376,7 @@ void GameScene::CreateUiViewsContainer() {
 }
 
 void GameScene::Update() {
-    mFloatingCubes->Update();
+    mFloatingBlocks->Update();
     mHud->Update();
     UpdateLightAnimation();
     

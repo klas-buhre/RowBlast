@@ -6,9 +6,9 @@
 
 using namespace BlocksGame;
 
-Chapter::Chapter(const std::vector<MapLevel>& levels, const std::vector<CubePathVolume>& cubePaths) :
+Chapter::Chapter(const std::vector<MapLevel>& levels, const std::vector<BlockPathVolume>& blockPaths) :
     mLevels {levels},
-    mCubePaths {cubePaths} {}
+    mBlockPaths {blockPaths} {}
 
 Chapter BlocksGame::GetChapter(int chapterIndex) {
     switch (chapterIndex) {

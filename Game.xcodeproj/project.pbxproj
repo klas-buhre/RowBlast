@@ -22,7 +22,7 @@
 		621A4E721E50B60C00D53AFD /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 621A4E681E50B60C00D53AFD /* Icon.png */; };
 		621D60921FEFB62000052107 /* Materials.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 621D60891FEFB62000052107 /* Materials.cpp */; };
 		621D60931FEFB62000052107 /* Clouds.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 621D608D1FEFB62000052107 /* Clouds.cpp */; };
-		621D60941FEFB62000052107 /* FloatingCubes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 621D608E1FEFB62000052107 /* FloatingCubes.cpp */; };
+		621D60941FEFB62000052107 /* FloatingBlocks.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 621D608E1FEFB62000052107 /* FloatingBlocks.cpp */; };
 		621D60951FEFB62000052107 /* GradientRectangle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 621D60901FEFB62000052107 /* GradientRectangle.cpp */; };
 		621D60961FEFB62000052107 /* CommonResources.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 621D60911FEFB62000052107 /* CommonResources.cpp */; };
 		621D609E1FEFB62A00052107 /* StringUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 621D609A1FEFB62A00052107 /* StringUtils.cpp */; };
@@ -267,13 +267,13 @@
 		6217C02B2024DEE10023A6BA /* RoundedCylinder.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = RoundedCylinder.cpp; sourceTree = "<group>"; };
 		6217C02C2024DEE10023A6BA /* RoundedCylinder.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = RoundedCylinder.hpp; sourceTree = "<group>"; };
 		621A4E681E50B60C00D53AFD /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
-		621D60881FEFB62000052107 /* FloatingCubes.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FloatingCubes.hpp; sourceTree = "<group>"; };
+		621D60881FEFB62000052107 /* FloatingBlocks.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FloatingBlocks.hpp; sourceTree = "<group>"; };
 		621D60891FEFB62000052107 /* Materials.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Materials.cpp; sourceTree = "<group>"; };
 		621D608A1FEFB62000052107 /* GradientRectangle.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GradientRectangle.hpp; sourceTree = "<group>"; };
 		621D608B1FEFB62000052107 /* CommonResources.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CommonResources.hpp; sourceTree = "<group>"; };
 		621D608C1FEFB62000052107 /* Clouds.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Clouds.hpp; sourceTree = "<group>"; };
 		621D608D1FEFB62000052107 /* Clouds.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Clouds.cpp; sourceTree = "<group>"; };
-		621D608E1FEFB62000052107 /* FloatingCubes.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FloatingCubes.cpp; sourceTree = "<group>"; };
+		621D608E1FEFB62000052107 /* FloatingBlocks.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FloatingBlocks.cpp; sourceTree = "<group>"; };
 		621D608F1FEFB62000052107 /* Materials.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Materials.hpp; sourceTree = "<group>"; };
 		621D60901FEFB62000052107 /* GradientRectangle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GradientRectangle.cpp; sourceTree = "<group>"; };
 		621D60911FEFB62000052107 /* CommonResources.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CommonResources.cpp; sourceTree = "<group>"; };
@@ -861,8 +861,8 @@
 				621D608C1FEFB62000052107 /* Clouds.hpp */,
 				621D60911FEFB62000052107 /* CommonResources.cpp */,
 				621D608B1FEFB62000052107 /* CommonResources.hpp */,
-				621D608E1FEFB62000052107 /* FloatingCubes.cpp */,
-				621D60881FEFB62000052107 /* FloatingCubes.hpp */,
+				621D608E1FEFB62000052107 /* FloatingBlocks.cpp */,
+				621D60881FEFB62000052107 /* FloatingBlocks.hpp */,
 				621D60901FEFB62000052107 /* GradientRectangle.cpp */,
 				621D608A1FEFB62000052107 /* GradientRectangle.hpp */,
 				621D60891FEFB62000052107 /* Materials.cpp */,
@@ -2008,7 +2008,7 @@
 				623C16D31F51A7D600305752 /* ValidMovesSearch.cpp in Sources */,
 				62944D9220053A2D00814D36 /* SwipeGestureRecognizer.cpp in Sources */,
 				62944D9320053A2D00814D36 /* JsonUtil.cpp in Sources */,
-				621D60941FEFB62000052107 /* FloatingCubes.cpp in Sources */,
+				621D60941FEFB62000052107 /* FloatingBlocks.cpp in Sources */,
 				624447CE1EDDD2C40080ECE8 /* TrianglePiece.cpp in Sources */,
 				62944D7020053A2D00814D36 /* SphereMesh.cpp in Sources */,
 				624F89461EF521880020C832 /* UserData.cpp in Sources */,

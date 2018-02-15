@@ -8,7 +8,7 @@
 #include "QuadMesh.hpp"
 
 // Game includes.
-#include "FloatingCubes.hpp"
+#include "FloatingBlocks.hpp"
 #include "ScrollController.hpp"
 #include "SceneObjectPool.hpp"
 #include "GameHud.hpp"
@@ -160,7 +160,7 @@ namespace BlocksGame {
         Pht::CameraComponent* mCamera {nullptr};
         Pht::LightComponent* mLight {nullptr};
         float mLightAnimationTime {0.0f};
-        std::unique_ptr<FloatingCubes> mFloatingCubes;
+        std::unique_ptr<FloatingBlocks> mFloatingBlocks;
         std::unique_ptr<SceneObjectPool> mFieldBlocks;
         std::unique_ptr<SceneObjectPool> mPieceBlocks;
         std::unique_ptr<SceneObjectPool> mGhostPieces;

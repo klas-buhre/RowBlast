@@ -1,4 +1,4 @@
-#include "FloatingCubes.hpp"
+#include "FloatingBlocks.hpp"
 
 // Engine includes.
 #include "IEngine.hpp"
@@ -11,22 +11,22 @@
 
 using namespace BlocksGame;
 
-FloatingCubes::FloatingCubes(Pht::IEngine& engine,
-                             Pht::Scene& scene,
-                             int layerIndex,
-                             const std::vector<CubePathVolume>& volumes,
-                             const CommonResources& commonResources,
-                             float scale) :
+FloatingBlocks::FloatingBlocks(Pht::IEngine& engine,
+                               Pht::Scene& scene,
+                               int layerIndex,
+                               const std::vector<BlockPathVolume>& volumes,
+                               const CommonResources& commonResources,
+                               float scale) :
     mEngine {engine},
     mVolumes {volumes} {
     
-    mCubes.resize(mVolumes.size());
+    mBlocks.resize(mVolumes.size());
     
     Pht::ObjMesh cubeMesh {"cube_554.obj", scale};
     auto& materials {commonResources.GetMaterials()};
     auto& sceneManager {engine.GetSceneManager()};
     
-    mCubeRenderables = {
+    mBlockRenderables = {
         sceneManager.CreateRenderableObject(cubeMesh, materials.GetGoldMaterial()),
         sceneManager.CreateRenderableObject(cubeMesh, materials.GetBlueMaterial()),
         sceneManager.CreateRenderableObject(cubeMesh, materials.GetRedMaterial()),
@@ -38,16 +38,16 @@ FloatingCubes::FloatingCubes(Pht::IEngine& engine,
     
     scene.GetRoot().AddChild(*mSceneObject);
     
-    for (auto& cube: mCubes) {
-        cube.mSceneObject = std::make_unique<Pht::SceneObject>();
-        mSceneObject->AddChild(*cube.mSceneObject);
+    for (auto& block: mBlocks) {
+        block.mSceneObject = std::make_unique<Pht::SceneObject>();
+        mSceneObject->AddChild(*block.mSceneObject);
     }
     
     InitCubes();
 }
 
-void FloatingCubes::InitCubes() {
-    for (auto i {0}; i < mCubes.size(); ++i) {
+void FloatingBlocks::InitCubes() {
+    for (auto i {0}; i < mBlocks.size(); ++i) {
         const auto& volume {mVolumes[i]};
     
         Pht::Vec3 position {
@@ -74,38 +74,38 @@ void FloatingCubes::InitCubes() {
             (Pht::NormalizedRand() - 0.5f) * 20.0f
         };
         
-        auto& cube {mCubes[i]};
-        cube.mVelocity = velocity;
-        cube.mAngularVelocity = angularVelocity;
+        auto& block {mBlocks[i]};
+        block.mVelocity = velocity;
+        block.mAngularVelocity = angularVelocity;
         
-        cube.mSceneObject->SetRenderable(mCubeRenderables[std::rand() % numRenderables].get());
+        block.mSceneObject->SetRenderable(mBlockRenderables[std::rand() % numRenderables].get());
         
-        auto& transform {cube.mSceneObject->GetTransform()};
+        auto& transform {block.mSceneObject->GetTransform()};
         transform.SetPosition(position);
         transform.SetRotation(rotation);
     }
 }
 
-void FloatingCubes::Update() {
+void FloatingBlocks::Update() {
     auto dt {mEngine.GetLastFrameSeconds()};
 
-    for (auto i {0}; i < mCubes.size(); ++i) {
-        auto& cube {mCubes[i]};
-        auto& transform {cube.mSceneObject->GetTransform()};
-        transform.Translate(cube.mVelocity * dt);
-        transform.Rotate(cube.mAngularVelocity * dt);
+    for (auto i {0}; i < mBlocks.size(); ++i) {
+        auto& block {mBlocks[i]};
+        auto& transform {block.mSceneObject->GetTransform()};
+        transform.Translate(block.mVelocity * dt);
+        transform.Rotate(block.mAngularVelocity * dt);
         
         const auto& volume {mVolumes[i]};
         auto rightLimit {volume.mPosition.x + volume.mSize.x / 2.0f};
         auto leftLimit {volume.mPosition.x - volume.mSize.x / 2.0f};
-        auto position {cube.mSceneObject->GetWorldSpacePosition()};
+        auto position {block.mSceneObject->GetWorldSpacePosition()};
         
-        if (position.x > rightLimit && cube.mVelocity.x > 0.0f) {
-            cube.mVelocity.x = -cube.mVelocity.x;
+        if (position.x > rightLimit && block.mVelocity.x > 0.0f) {
+            block.mVelocity.x = -block.mVelocity.x;
         }
         
-        if (position.x < leftLimit && cube.mVelocity.x < 0.0f) {
-            cube.mVelocity.x = -cube.mVelocity.x;
+        if (position.x < leftLimit && block.mVelocity.x < 0.0f) {
+            block.mVelocity.x = -block.mVelocity.x;
         }
     }
 }

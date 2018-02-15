@@ -7,7 +7,7 @@
 #include "Vector.hpp"
 
 // Game includes.
-#include "FloatingCubes.hpp"
+#include "FloatingBlocks.hpp"
 
 namespace BlocksGame {
     struct MapLevel {
@@ -17,10 +17,10 @@ namespace BlocksGame {
 
     class Chapter {
     public:
-        Chapter(const std::vector<MapLevel>& levels, const std::vector<CubePathVolume>& cubePaths);
+        Chapter(const std::vector<MapLevel>& levels, const std::vector<BlockPathVolume>& blockPaths);
         
         const std::vector<MapLevel>& mLevels;
-        const std::vector<CubePathVolume>& mCubePaths;
+        const std::vector<BlockPathVolume>& mBlockPaths;
     };
     
     Chapter GetChapter(int chapterIndex);

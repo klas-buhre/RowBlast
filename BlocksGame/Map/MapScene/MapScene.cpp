@@ -166,12 +166,12 @@ void MapScene::CreateScene(const Chapter& chapter) {
                                        hazeLayers,
                                        1.5f);
 
-    mFloatingCubes = std::make_unique<FloatingCubes>(mEngine,
-                                                     *scene,
-                                                     static_cast<int>(Layer::Map),
-                                                     chapter.mCubePaths,
-                                                     mCommonResources,
-                                                     1.5f);
+    mFloatingBlocks = std::make_unique<FloatingBlocks>(mEngine,
+                                                       *scene,
+                                                       static_cast<int>(Layer::Map),
+                                                       chapter.mBlockPaths,
+                                                       mCommonResources,
+                                                       1.5f);
     
     CreatePins(chapter);
     SetCameraAtCurrentLevel();
@@ -262,7 +262,7 @@ void MapScene::CreatePin(Pht::SceneObject& pinContainerObject,
 
 void MapScene::Update() {
     mClouds->Update();
-    mFloatingCubes->Update();
+    mFloatingBlocks->Update();
     mHud->Update();
 }
 

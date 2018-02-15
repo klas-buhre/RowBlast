@@ -9,7 +9,7 @@
 
 // Game includes.
 #include "Clouds.hpp"
-#include "FloatingCubes.hpp"
+#include "FloatingBlocks.hpp"
 #include "MapPin.hpp"
 #include "MapHud.hpp"
 
@@ -55,7 +55,7 @@ namespace BlocksGame {
         Pht::Scene* mScene {nullptr};
         Pht::CameraComponent* mCamera {nullptr};
         std::unique_ptr<Clouds> mClouds;
-        std::unique_ptr<FloatingCubes> mFloatingCubes;
+        std::unique_ptr<FloatingBlocks> mFloatingBlocks;
         std::vector<std::unique_ptr<MapPin>> mPins;
         MapPin* mPreviousPin {nullptr};
         std::unique_ptr<Pht::RenderableObject> mStarRenderable;

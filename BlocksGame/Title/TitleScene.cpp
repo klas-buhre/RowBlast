@@ -110,28 +110,28 @@ namespace {
         }
     };
     
-    const std::vector<CubePathVolume> floatingCubePaths {
-        CubePathVolume {
+    const std::vector<BlockPathVolume> floatingBlockPaths {
+        BlockPathVolume {
             .mPosition = {-3.0f, -3.0f, -8.0f},
             .mSize = {0.0f, 0.0f, 0.0f}
         },
-        CubePathVolume {
+        BlockPathVolume {
             .mPosition = {-8.0f, -13.0f, -5.0f},
             .mSize = {0.0f, 0.0f, 0.0f}
         },
-        CubePathVolume {
+        BlockPathVolume {
             .mPosition = {-5.0f, 13.0f, -8.0f},
             .mSize = {0.0f, 0.0f, 0.0f}
         },
-        CubePathVolume {
+        BlockPathVolume {
             .mPosition = {10.0f, 23.0f, -20.0f},
             .mSize = {0.0f, 0.0f, 0.0f}
         },
-        CubePathVolume {
+        BlockPathVolume {
             .mPosition = {1.0f, -25.0f, -18.0f},
             .mSize = {0.0f, 0.0f, 0.0f}
         },
-        CubePathVolume {
+        BlockPathVolume {
             .mPosition = {5.0f, 0.0f, -30.0f},
             .mSize = {0.0f, 0.0f, 0.0f}
         }
@@ -174,12 +174,12 @@ TitleScene::TitleScene(Pht::IEngine& engine, const CommonResources& commonResour
                                        hazeLayers,
                                        3.0f);
 
-    mFloatingCubes = std::make_unique<FloatingCubes>(engine,
-                                                     *scene,
-                                                     static_cast<int>(Layer::Background),
-                                                     floatingCubePaths,
-                                                     commonResources,
-                                                     7.7f);
+    mFloatingBlocks = std::make_unique<FloatingBlocks>(engine,
+                                                       *scene,
+                                                       static_cast<int>(Layer::Background),
+                                                       floatingBlockPaths,
+                                                       commonResources,
+                                                       7.7f);
     
     auto& titleText {scene->CreateText("BLOCKS", {mFont, 1.0f, Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f}})};
     auto& titleTextSceneObject {titleText.GetSceneObject()};
@@ -202,5 +202,5 @@ TitleScene::TitleScene(Pht::IEngine& engine, const CommonResources& commonResour
 
 void TitleScene::Update() {
     mClouds->Update();
-    mFloatingCubes->Update();
+    mFloatingBlocks->Update();
 }

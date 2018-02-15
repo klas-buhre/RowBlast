@@ -27,7 +27,7 @@ namespace Pht {
         std::unordered_map<std::string, std::unique_ptr<ISound>> mSounds;
         std::unordered_map<std::string, std::unique_ptr<ISound>> mTracks;
         ISound* mActiveTrack {nullptr};
-        bool mIsSoundEnabled {true};
+        bool mIsSoundEnabled {false};
         bool mIsMusicEnabled {true};
     };
 }

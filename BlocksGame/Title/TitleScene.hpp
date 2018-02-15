@@ -7,7 +7,7 @@
 #include "Font.hpp"
 
 // Game includes.
-#include "FloatingCubes.hpp"
+#include "FloatingBlocks.hpp"
 #include "Clouds.hpp"
 
 namespace Pht {
@@ -25,7 +25,7 @@ namespace BlocksGame {
         
     private:
         std::unique_ptr<Clouds> mClouds;
-        std::unique_ptr<FloatingCubes> mFloatingCubes;
+        std::unique_ptr<FloatingBlocks> mFloatingBlocks;
         Pht::Font mFont;
         Pht::Font mTapFont;
     };
