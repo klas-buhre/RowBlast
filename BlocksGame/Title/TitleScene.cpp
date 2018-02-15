@@ -113,7 +113,8 @@ namespace {
     const std::vector<BlockPathVolume> floatingBlockPaths {
         BlockPathVolume {
             .mPosition = {-3.0f, -3.0f, -8.0f},
-            .mSize = {0.0f, 0.0f, 0.0f}
+            .mSize = {0.0f, 0.0f, 0.0f},
+            .mIsLPiece = true
         },
         BlockPathVolume {
             .mPosition = {-8.0f, -13.0f, -5.0f},
@@ -121,11 +122,13 @@ namespace {
         },
         BlockPathVolume {
             .mPosition = {-5.0f, 13.0f, -8.0f},
-            .mSize = {0.0f, 0.0f, 0.0f}
+            .mSize = {0.0f, 0.0f, 0.0f},
+            .mIsLPiece = true
         },
         BlockPathVolume {
             .mPosition = {10.0f, 23.0f, -20.0f},
-            .mSize = {0.0f, 0.0f, 0.0f}
+            .mSize = {0.0f, 0.0f, 0.0f},
+            .mIsLPiece = true
         },
         BlockPathVolume {
             .mPosition = {1.0f, -25.0f, -18.0f},
@@ -179,7 +182,8 @@ TitleScene::TitleScene(Pht::IEngine& engine, const CommonResources& commonResour
                                                        static_cast<int>(Layer::Background),
                                                        floatingBlockPaths,
                                                        commonResources,
-                                                       7.7f);
+                                                       7.7f,
+                                                       20.0f);
     
     auto& titleText {scene->CreateText("BLOCKS", {mFont, 1.0f, Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f}})};
     auto& titleTextSceneObject {titleText.GetSceneObject()};

@@ -4,6 +4,7 @@
 #include "IEngine.hpp"
 #include "ISceneManager.hpp"
 #include "ObjMesh.hpp"
+#include "SceneObject.hpp"
 #include "MathUtils.hpp"
 
 // Game includes.
@@ -11,12 +12,30 @@
 
 using namespace BlocksGame;
 
+namespace {
+    void CreateSmallBlock(const Pht::Vec3& position,
+                          float scale,
+                          Pht::RenderableObject& renderable,
+                          Pht::Scene& scene,
+                          Pht::SceneObject& parent) {
+        auto& sceneObject {scene.CreateSceneObject()};
+        sceneObject.SetRenderable(&renderable);
+        
+        auto& transform {sceneObject.GetTransform()};
+        transform.SetScale(scale);
+        transform.SetPosition(position);
+        
+        parent.AddChild(sceneObject);
+    }
+}
+
 FloatingBlocks::FloatingBlocks(Pht::IEngine& engine,
                                Pht::Scene& scene,
                                int layerIndex,
                                const std::vector<BlockPathVolume>& volumes,
                                const CommonResources& commonResources,
-                               float scale) :
+                               float scale,
+                               float angularVelocity) :
     mEngine {engine},
     mVolumes {volumes} {
     
@@ -33,20 +52,19 @@ FloatingBlocks::FloatingBlocks(Pht::IEngine& engine,
         sceneManager.CreateRenderableObject(cubeMesh, materials.GetGreenMaterial())
     };
     
-    mSceneObject = std::make_unique<Pht::SceneObject>();
-    mSceneObject->SetLayer(layerIndex);
-    
-    scene.GetRoot().AddChild(*mSceneObject);
+    auto& sceneObject {scene.CreateSceneObject()};
+    sceneObject.SetLayer(layerIndex);
+    scene.GetRoot().AddChild(sceneObject);
     
     for (auto& block: mBlocks) {
-        block.mSceneObject = std::make_unique<Pht::SceneObject>();
-        mSceneObject->AddChild(*block.mSceneObject);
+        block.mSceneObject = &scene.CreateSceneObject();
+        sceneObject.AddChild(*block.mSceneObject);
     }
     
-    InitCubes();
+    InitBlocks(scene, scale, angularVelocity);
 }
 
-void FloatingBlocks::InitCubes() {
+void FloatingBlocks::InitBlocks(Pht::Scene& scene, float scale, float angularVelocity) {
     for (auto i {0}; i < mBlocks.size(); ++i) {
         const auto& volume {mVolumes[i]};
     
@@ -68,17 +86,39 @@ void FloatingBlocks::InitCubes() {
             Pht::NormalizedRand() * 360.0f,
         };
         
-        Pht::Vec3 angularVelocity {
-            (Pht::NormalizedRand() - 0.5f) * 20.0f,
-            (Pht::NormalizedRand() - 0.5f) * 20.0f,
-            (Pht::NormalizedRand() - 0.5f) * 20.0f
+        Pht::Vec3 blockAngularVelocity {
+            (Pht::NormalizedRand() - 0.5f) * angularVelocity,
+            (Pht::NormalizedRand() - 0.5f) * angularVelocity,
+            (Pht::NormalizedRand() - 0.5f) * angularVelocity
         };
         
         auto& block {mBlocks[i]};
         block.mVelocity = velocity;
-        block.mAngularVelocity = angularVelocity;
+        block.mAngularVelocity = blockAngularVelocity;
         
-        block.mSceneObject->SetRenderable(mBlockRenderables[std::rand() % numRenderables].get());
+        auto* renderable {mBlockRenderables[std::rand() % numRenderables].get()};
+        
+        if (volume.mIsLPiece) {
+            auto smallBlockSize {scale / 1.7f};
+            auto smallBlockScale {smallBlockSize / scale};
+            CreateSmallBlock({-smallBlockSize / 2.0f, smallBlockSize / 2.0f, 0.0f},
+                             smallBlockScale,
+                             *renderable,
+                             scene,
+                             *block.mSceneObject);
+            CreateSmallBlock({smallBlockSize / 2.0f, smallBlockSize / 2.0f, 0.0f},
+                             smallBlockScale,
+                             *renderable,
+                             scene,
+                             *block.mSceneObject);
+            CreateSmallBlock({smallBlockSize / 2.0f, -smallBlockSize / 2.0f, 0.0f},
+                             smallBlockScale,
+                             *renderable,
+                             scene,
+                             *block.mSceneObject);
+        } else {
+            block.mSceneObject->SetRenderable(renderable);
+        }
         
         auto& transform {block.mSceneObject->GetTransform()};
         transform.SetPosition(position);

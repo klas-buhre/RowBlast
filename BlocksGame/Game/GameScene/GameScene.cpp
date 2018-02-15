@@ -71,7 +71,8 @@ namespace {
     const std::vector<BlockPathVolume> floatingBlockPaths {
         BlockPathVolume {
             .mPosition = {-10.0f, 15.0f, -10.0f},
-            .mSize = {0.0f, 0.0f, 0.0f}
+            .mSize = {0.0f, 0.0f, 0.0f},
+            .mIsLPiece = true
         },
         BlockPathVolume {
             .mPosition = {12.0f, 22.0f, -20.0f},
@@ -83,7 +84,8 @@ namespace {
         },
         BlockPathVolume {
             .mPosition = {13.0f, 0.0f, -20.0f},
-            .mSize = {0.0f, 0.0f, 0.0f}
+            .mSize = {0.0f, 0.0f, 0.0f},
+            .mIsLPiece = true
         },
         BlockPathVolume {
             .mPosition = {-7.0f, -20.0f, -10.0f},
@@ -216,7 +218,8 @@ void GameScene::CreateFloatingCubes() {
                                                        static_cast<int>(Layer::Background),
                                                        floatingBlockPaths,
                                                        mCommonResources,
-                                                       7.7f);
+                                                       7.7f,
+                                                       8.0f);
 }
 
 void GameScene::InitFieldDimensions(const Level& level) {

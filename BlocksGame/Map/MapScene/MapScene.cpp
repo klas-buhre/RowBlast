@@ -171,7 +171,8 @@ void MapScene::CreateScene(const Chapter& chapter) {
                                                        static_cast<int>(Layer::Map),
                                                        chapter.mBlockPaths,
                                                        mCommonResources,
-                                                       1.5f);
+                                                       1.5f,
+                                                       20.0f);
     
     CreatePins(chapter);
     SetCameraAtCurrentLevel();

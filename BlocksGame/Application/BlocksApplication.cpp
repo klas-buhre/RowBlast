@@ -21,7 +21,6 @@ Backlog:
     -It seems to be possible to create objects with different bevel for different edges and faces in
      Blender. See https://www.youtube.com/watch?v=wIT7OAMy_3M . Try creating blocks with less bevel
      on the edges that have a weld.
-    -FloatingCubes could contain floating L-pieces as well. Rename to FloatingBlocks.
     -Could have the rounded cylinder i some places in the HUDs.
     -GUI: the buttons in the views could be yellow with black text and triangular edges like in
      Mario Kart 8. There could also be a reflection animation in the button.
