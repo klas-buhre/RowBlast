@@ -25,7 +25,7 @@ MiddleIPiece::MiddleIPiece(Pht::IEngine& engine, const GameScene& scene) {
         {0, 0, 0, 0, 0, 0}
     };
     
-    InitGrids(fillGrid, clickGrid, BlockColor::Yellow);
+    InitGrids(fillGrid, clickGrid, BlockColor::Green);
     SetPreviewCellSize(0.6f);
     SetNumRotations(2);
     

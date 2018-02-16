@@ -22,7 +22,7 @@ LPiece::LPiece(Pht::IEngine& engine, const GameScene& scene) {
         {1, 1, 1, 1}
     };
 
-    InitGrids(fillGrid, clickGrid, BlockColor::Green);
+    InitGrids(fillGrid, clickGrid, BlockColor::Yellow);
     SetPreviewCellSize(0.6f);
     
     GhostPieceBorder border {

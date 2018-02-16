@@ -28,7 +28,7 @@ ShortIPiece::ShortIPiece(Pht::IEngine& engine, const GameScene& scene) {
         {0, 0, 0, 0, 0, 0, 0, 0}
     };
     
-    InitGrids(fillGrid, clickGrid, BlockColor::Green);
+    InitGrids(fillGrid, clickGrid, BlockColor::Blue);
     SetPreviewCellSize(0.6f);
     SetNumRotations(2);
     

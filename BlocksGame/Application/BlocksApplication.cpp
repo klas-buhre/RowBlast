@@ -57,8 +57,6 @@ Backlog:
     -Credit the icon creator: <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
   
 Ongoing tasks:
-      -Balance piece colors so that for example long I piece and short I piece don't have the same
-       color.
       -Try new type of blocks.
       -If keeping old blocks:
         -Problem: whether a weld that is being formed flashes or not depends on the weld direction
@@ -83,13 +81,13 @@ Time Estimation in days:
         Cost: 10
     -Fix all gameplay bugs.
         Cost: 7
+    -Switch piece HUD animation.
+        Cost: 3
     -Better particle effects for bombs and row bombs.
         Cost: 10
     -Bombs should have bomb meshes.
         Cost: 5
     -Camera shake.
-        Cost: 3
-    -Switch piece HUD animation.
         Cost: 3
     -Use new GUI/Menu textures.
         Cost: 3
@@ -122,6 +120,126 @@ new = {0.57f, 1.0f, 0.6f}
 original = {1.0f, 1.0f, 0.74f}
 
 
+Comomon piece type sets:
+    Easy:               RGBY:
+        "LongI",           Y
+        "I",             G
+        "L",               Y
+        "B",              B
+        "D",            R
+        "Seven",          B
+        "MirroredSeven"  G
+    Triangles:          RGBY:
+        "LongI",           Y
+        "I",             G
+        "L",               Y
+        "B",              B
+        "D",            R
+        "Triangle",     R
+        "BigTriangle",    B
+        "Bomb",
+        "RowBomb"
+    Only triangles:     RGBY:
+        "SmallTriangle",R
+        "Triangle",     R
+        "BigTriangle",    B
+        "Diamond",       G
+        "Pyramid",         Y
+        "Bomb",
+        "RowBomb"
+    Medium:             RGBY:
+        "LongI",           Y
+        "I",             G
+        "L",               Y
+        "B",              B
+        "D",            R
+        "Seven",          B
+        "MirroredSeven", G
+        "F",            R
+        "MirroredF"       B
+    Medium, a variant:  RGBY:
+        "LongI",           Y
+        "I",             G
+        "L",               Y
+        "B",              B
+        "D",            R
+        "Seven",          B
+        "MirroredSeven", G
+        "Z",               Y
+        "MirroredZ"      G
+    Hard:               RGBY:
+        "LongI",           Y
+        "I",             G
+        "L",               Y
+        "B",              B
+        "D",            R
+        "F",            R
+        "MirroredF",      B
+        "BigL",          G
+        "Z",               Y
+        "MirroredZ"      G
+    Hard, variant:      RGBY:
+        "LongI",           Y
+        "ShortI",         B
+        "L",               Y
+        "B",              B
+        "D",            R
+        "F",            R
+        "MirroredF",      B
+        "BigL",          G
+        "Z",               Y
+        "MirroredZ"      G
+    Hard, variant:      RGBY:
+        "LongI",           Y
+        "I",             G
+        "B",              B
+        "D",            R
+        "F",            R
+        "MirroredF",      B
+        "BigL",          G
+        "Z",               Y
+        "MirroredZ"      G
+        "T",              B
+    Really hard:        RGBY:
+        "LongI",           Y
+        "I",             G
+        "L",               Y
+        "B",              B
+        "D",            R
+        "F",            R
+        "MirroredF",      B
+        "BigL",          G
+        "Z",               Y
+        "MirroredZ"      G
+        "Plus"            B
+    All pieces:         RGBY:
+        "LongI",           Y
+        "I",             G
+        "L",               Y
+        "B",              B
+        "D",            R
+        "Seven",          B
+        "MirroredSeven"  G
+        "Triangle",     R
+        "BigTriangle",    B
+        "SmallTriangle",R
+        "Diamond",       G
+        "Pyramid",         Y
+        "F",            R
+        "MirroredF",      B
+        "BigL",          G
+        "Z",               Y
+        "MirroredZ"      G
+        "T",              B
+        "Plus"            B
+
+        Color:    NumbBlocks:
+        Red             12.5
+        Green           18.0
+        Blue            27.5
+        Yellow          15.0
+ 
+ 
 Create rounded cube in Blender:
 Scale cube so that size is 1.0. Select the wrench to the right.
 Then, Add Modifier > Bevel > turn up width > turn up segments.

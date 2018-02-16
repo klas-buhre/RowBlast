@@ -25,7 +25,7 @@ ZPiece::ZPiece(Pht::IEngine& engine, const GameScene& scene) {
         {1, 1, 1, 1, 1, 1}
     };
 
-    InitGrids(fillGrid, clickGrid, BlockColor::Blue);
+    InitGrids(fillGrid, clickGrid, BlockColor::Yellow);
     SetPreviewCellSize(0.53f);
     SetNumRotations(2);
     
