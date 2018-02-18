@@ -221,11 +221,16 @@ Renderer::Renderer(bool createRenderBuffers) :
 }
 
 void Renderer::Init(bool createRenderBuffers) {
+    std::cout << "Renderer: Initializing..." << std::endl;
+    
     InitOpenGl(createRenderBuffers);
     InitCamera();
     InitHudFrustum();
     InitShaders();
     mTextRenderer = std::make_unique<TextRenderer>(mRenderBufferSize);
+    
+    std::cout << "Renderer: Using " << mRenderBufferSize.x << "x" << mRenderBufferSize.y
+              << " resolution." << std::endl;
 }
 
 void Renderer::InitOpenGl(bool createRenderBuffers) {

@@ -28,7 +28,6 @@ Backlog:
      store. Look at: https://www.assetstore.unity3d.com/en/#!/content/26701
     -Maybe the bombs could have constant particle effects as if it is about to explode. And they
      could be be of different shapes other than spheres.
-    -Try 1334×750 resolution for iPhone7.
     -Camera shake when clearing 5 rows or using a bomb.
     -Try adding welds to the level blocks.
     -One or two stars in level cleared dialog could be placed more in the middle.
@@ -54,9 +53,11 @@ Backlog:
   -Sound:
     -Buy sounds and music.
   -Make ready for release:
+    -Make icons and launch screens for all supported device resulutions.
     -Credit the icon creator: <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
   
 Ongoing tasks:
+      -Maybe try dark launch screen and fade in slowly.
       -Try new type of blocks.
       -If keeping old blocks:
         -Problem: whether a weld that is being formed flashes or not depends on the weld direction

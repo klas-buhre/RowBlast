@@ -30,7 +30,6 @@
 		622F7F2A1F223DFB00E965AF /* DiamondPiece.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 622F7F281F223DFB00E965AF /* DiamondPiece.cpp */; };
 		622F7F331F234E3D00E965AF /* PyramidPiece.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 622F7F311F234E3D00E965AF /* PyramidPiece.cpp */; };
 		622F7F361F23C29600E965AF /* SmallTrianglePiece.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 622F7F341F23C29600E965AF /* SmallTrianglePiece.cpp */; };
-		623518C51F3721DA0027346B /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 623518C41F3721DA0027346B /* Default-568h@2x.png */; };
 		623B31D31F17A325000C64A1 /* BlueprintSlotsFilledAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623B31D11F17A325000C64A1 /* BlueprintSlotsFilledAnimation.cpp */; };
 		623B33181F1F6203000C64A1 /* RestartConfirmationDialogView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623B33161F1F6203000C64A1 /* RestartConfirmationDialogView.cpp */; };
 		623B331B1F1F6539000C64A1 /* RestartConfirmationDialogController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623B33191F1F6539000C64A1 /* RestartConfirmationDialogController.cpp */; };
@@ -155,6 +154,7 @@
 		6270DCB31FCDA99100FB457D /* TitleScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6270DCB11FCDA99100FB457D /* TitleScene.cpp */; };
 		6273A91F20289F6900BF542A /* GuiViewManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6273A91D20289F6900BF542A /* GuiViewManager.cpp */; };
 		6278590620375DBF00494A4D /* level27.json in Resources */ = {isa = PBXBuildFile; fileRef = 6278590520375DBF00494A4D /* level27.json */; };
+		62785919203A096500494A4D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 62785918203A096500494A4D /* Images.xcassets */; };
 		628065EA201399AE00F86754 /* PieceResources.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 628065E8201399AE00F86754 /* PieceResources.cpp */; };
 		628065ED2014F7A700F86754 /* SceneObjectPool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 628065EB2014F7A700F86754 /* SceneObjectPool.cpp */; };
 		6286F9AE1FF26BD2004DEF90 /* Chapter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6286F9AC1FF26BD1004DEF90 /* Chapter.cpp */; };
@@ -289,7 +289,6 @@
 		622F7F321F234E3D00E965AF /* PyramidPiece.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PyramidPiece.hpp; sourceTree = "<group>"; };
 		622F7F341F23C29600E965AF /* SmallTrianglePiece.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SmallTrianglePiece.cpp; sourceTree = "<group>"; };
 		622F7F351F23C29600E965AF /* SmallTrianglePiece.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SmallTrianglePiece.hpp; sourceTree = "<group>"; };
-		623518C41F3721DA0027346B /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		623B31D11F17A325000C64A1 /* BlueprintSlotsFilledAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BlueprintSlotsFilledAnimation.cpp; sourceTree = "<group>"; };
 		623B31D21F17A325000C64A1 /* BlueprintSlotsFilledAnimation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = BlueprintSlotsFilledAnimation.hpp; sourceTree = "<group>"; };
 		623B33161F1F6203000C64A1 /* RestartConfirmationDialogView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RestartConfirmationDialogView.cpp; sourceTree = "<group>"; };
@@ -496,6 +495,7 @@
 		6273A91D20289F6900BF542A /* GuiViewManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GuiViewManager.cpp; sourceTree = "<group>"; };
 		6273A91E20289F6900BF542A /* GuiViewManager.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = GuiViewManager.hpp; sourceTree = "<group>"; };
 		6278590520375DBF00494A4D /* level27.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level27.json; sourceTree = "<group>"; };
+		62785918203A096500494A4D /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		628065E8201399AE00F86754 /* PieceResources.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PieceResources.cpp; sourceTree = "<group>"; };
 		628065E9201399AE00F86754 /* PieceResources.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PieceResources.hpp; sourceTree = "<group>"; };
 		628065EB2014F7A700F86754 /* SceneObjectPool.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SceneObjectPool.cpp; sourceTree = "<group>"; };
@@ -818,7 +818,6 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
-				623518C41F3721DA0027346B /* Default-568h@2x.png */,
 				62944C4B20053A2D00814D36 /* PhotonSpark */,
 				6244470E1EDDD2C40080ECE8 /* BlocksGame */,
 				621A4E641E50B60C00D53AFD /* Resources */,
@@ -846,6 +845,7 @@
 		621A4E641E50B60C00D53AFD /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				62785918203A096500494A4D /* Images.xcassets */,
 				6270DCA01FCB248E00FB457D /* Textures */,
 				6270DC6F1FCB23D800FB457D /* Levels */,
 				6270DC6A1FCB231B00FB457D /* Fonts */,
@@ -1840,7 +1840,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				62944D8720053A2D00814D36 /* Particle.vert in Resources */,
-				623518C51F3721DA0027346B /* Default-568h@2x.png in Resources */,
 				6270DC9D1FCB23D800FB457D /* level8.json in Resources */,
 				6270DC6E1FCB231B00FB457D /* HussarBoldWeb.otf in Resources */,
 				6270DC661FCB22AE00FB457D /* triangle_428_085.obj in Resources */,
@@ -1893,6 +1892,7 @@
 				6270DC611FCB22AE00FB457D /* cube_428.obj in Resources */,
 				6270DC891FCB23D800FB457D /* level10.json in Resources */,
 				6270DC681FCB22AE00FB457D /* triangle_428_r270.obj in Resources */,
+				62785919203A096500494A4D /* Images.xcassets in Resources */,
 				6270DC621FCB22AE00FB457D /* cube_554.obj in Resources */,
 				6270DCAC1FCB248E00FB457D /* sky_blurred.jpg in Resources */,
 				62E2222A1FE9737F00AE098B /* cloud_D_512.png in Resources */,
@@ -2089,6 +2089,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -2117,6 +2119,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
