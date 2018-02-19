@@ -1,0 +1,38 @@
+{
+    "speed": 0.0,
+    "moves": 16,
+    "twoStars": 15,
+    "threeStars": 10,
+    "color": "pink",
+    "pieces": [
+        "SmallTriangle",
+        "Triangle",
+        "BigTriangle"
+    ],
+    "clearGrid": [
+        "         ",
+        "         ",
+        "         ",
+        "         ",
+        "         ",
+        "         ",
+        "         ",
+        "         ",
+        "         ",
+        "         ",
+        "         ",
+        "         ",
+        "         ",
+        "         ",
+        "GGGGGGG  ",
+        "GGGGGGG  ",
+        "GGGGG   G",
+        "  GGG   G",
+        "  GGG   G",
+        "GGG  GGGG",
+        "GGG  GGGG",
+        "   GGG   ",
+        "   GGG   ",
+        "   GGG   "
+    ]
+}

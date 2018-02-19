@@ -155,6 +155,7 @@
 		6273A91F20289F6900BF542A /* GuiViewManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6273A91D20289F6900BF542A /* GuiViewManager.cpp */; };
 		6278590620375DBF00494A4D /* level27.json in Resources */ = {isa = PBXBuildFile; fileRef = 6278590520375DBF00494A4D /* level27.json */; };
 		6278591C203AFB7C00494A4D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6278591B203AFB7C00494A4D /* Images.xcassets */; };
+		6278591E203B309A00494A4D /* level28.json in Resources */ = {isa = PBXBuildFile; fileRef = 6278591D203B309900494A4D /* level28.json */; };
 		628065EA201399AE00F86754 /* PieceResources.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 628065E8201399AE00F86754 /* PieceResources.cpp */; };
 		628065ED2014F7A700F86754 /* SceneObjectPool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 628065EB2014F7A700F86754 /* SceneObjectPool.cpp */; };
 		6286F9AE1FF26BD2004DEF90 /* Chapter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6286F9AC1FF26BD1004DEF90 /* Chapter.cpp */; };
@@ -496,6 +497,7 @@
 		6273A91E20289F6900BF542A /* GuiViewManager.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = GuiViewManager.hpp; sourceTree = "<group>"; };
 		6278590520375DBF00494A4D /* level27.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level27.json; sourceTree = "<group>"; };
 		6278591B203AFB7C00494A4D /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		6278591D203B309900494A4D /* level28.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level28.json; sourceTree = "<group>"; };
 		628065E8201399AE00F86754 /* PieceResources.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PieceResources.cpp; sourceTree = "<group>"; };
 		628065E9201399AE00F86754 /* PieceResources.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PieceResources.hpp; sourceTree = "<group>"; };
 		628065EB2014F7A700F86754 /* SceneObjectPool.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SceneObjectPool.cpp; sourceTree = "<group>"; };
@@ -1285,6 +1287,7 @@
 				62E335DD1FD2F31E0069B6CF /* level25.json */,
 				62E335DF1FD2F4EE0069B6CF /* level26.json */,
 				6278590520375DBF00494A4D /* level27.json */,
+				6278591D203B309900494A4D /* level28.json */,
 			);
 			path = Levels;
 			sourceTree = "<group>";
@@ -1882,6 +1885,7 @@
 				6270DC931FCB23D800FB457D /* level2.json in Resources */,
 				6270DC9A1FCB23D800FB457D /* level5.json in Resources */,
 				6270DC6D1FCB231B00FB457D /* ethnocentric_rg_it.ttf in Resources */,
+				6278591E203B309A00494A4D /* level28.json in Resources */,
 				6270DC971FCB23D800FB457D /* level23.json in Resources */,
 				6278590620375DBF00494A4D /* level27.json in Resources */,
 				62944D8A20053A2D00814D36 /* VertexLighting.frag in Resources */,
