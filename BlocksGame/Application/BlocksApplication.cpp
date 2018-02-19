@@ -57,7 +57,6 @@ Backlog:
     -Credit the icon creator: <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
   
 Ongoing tasks:
-      -Maybe try dark launch screen and fade in slowly.
       -Try new type of blocks.
       -If keeping old blocks:
         -Problem: whether a weld that is being formed flashes or not depends on the weld direction
@@ -96,6 +95,8 @@ Time Estimation in days:
         Cost: 7
     -Improving sliding text animation.
         Cost: 3
+    -Support for iPhone X screen.
+        Cost: 10
     -Tutorial.
         Cost: 10
     -Levels.
@@ -114,7 +115,7 @@ Time Estimation in days:
     -Physics.
         Cost: 15
 
-        Total: 146
+        Total: 156
 
 Light settings in game scene:
 new = {0.57f, 1.0f, 0.6f}
@@ -275,6 +276,11 @@ Put the build_freetype.sh script in freetype root dir then execute it.
 
 using namespace BlocksGame;
 
+namespace {
+    constexpr auto fadeDuration {0.22f};
+    constexpr auto titleFadeInDuration {1.0f};
+}
+
 std::unique_ptr<Pht::IApplication> CreateApplication(Pht::IEngine& engine) {
     return std::make_unique<BlocksApplication>(engine);
 }
@@ -288,12 +294,13 @@ BlocksApplication::BlocksApplication(Pht::IEngine& engine) :
     mTitleController {engine, mCommonResources},
     mMapController {engine, mCommonResources, mCommonViewControllers, mUserData},
     mGameController {engine, mCommonResources, mCommonViewControllers, mUserData, mSettings},
-    mFadeEffect {engine.GetSceneManager(), engine.GetRenderer(), 0.22f, 1.0f, 0.0f} {
+    mFadeEffect {engine.GetSceneManager(), engine.GetRenderer(), titleFadeInDuration, 1.0f, 0.0f} {
 
     engine.GetInput().SetUseGestureRecognizers(false);
     
     mFadeEffect.GetSceneObject().SetLayer(GlobalLayer::sceneSwitchFadeEffect);
     InsertFadeEffectInActiveScene();
+    mFadeEffect.StartInMidFade();
 }
 
 void BlocksApplication::OnUpdate() {
@@ -310,6 +317,7 @@ void BlocksApplication::UpdateScene() {
         case State::TitleScene: {
             auto command {mTitleController.Update()};
             if (!mFadeEffect.IsFadingOut() && command == TitleController::Command::GoToMap) {
+                mFadeEffect.SetDuration(fadeDuration);
                 BeginFadeToMap();
             }
             break;

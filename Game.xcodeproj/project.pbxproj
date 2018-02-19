@@ -154,7 +154,7 @@
 		6270DCB31FCDA99100FB457D /* TitleScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6270DCB11FCDA99100FB457D /* TitleScene.cpp */; };
 		6273A91F20289F6900BF542A /* GuiViewManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6273A91D20289F6900BF542A /* GuiViewManager.cpp */; };
 		6278590620375DBF00494A4D /* level27.json in Resources */ = {isa = PBXBuildFile; fileRef = 6278590520375DBF00494A4D /* level27.json */; };
-		62785919203A096500494A4D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 62785918203A096500494A4D /* Images.xcassets */; };
+		6278591C203AFB7C00494A4D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6278591B203AFB7C00494A4D /* Images.xcassets */; };
 		628065EA201399AE00F86754 /* PieceResources.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 628065E8201399AE00F86754 /* PieceResources.cpp */; };
 		628065ED2014F7A700F86754 /* SceneObjectPool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 628065EB2014F7A700F86754 /* SceneObjectPool.cpp */; };
 		6286F9AE1FF26BD2004DEF90 /* Chapter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6286F9AC1FF26BD1004DEF90 /* Chapter.cpp */; };
@@ -495,7 +495,7 @@
 		6273A91D20289F6900BF542A /* GuiViewManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GuiViewManager.cpp; sourceTree = "<group>"; };
 		6273A91E20289F6900BF542A /* GuiViewManager.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = GuiViewManager.hpp; sourceTree = "<group>"; };
 		6278590520375DBF00494A4D /* level27.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level27.json; sourceTree = "<group>"; };
-		62785918203A096500494A4D /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		6278591B203AFB7C00494A4D /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		628065E8201399AE00F86754 /* PieceResources.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PieceResources.cpp; sourceTree = "<group>"; };
 		628065E9201399AE00F86754 /* PieceResources.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PieceResources.hpp; sourceTree = "<group>"; };
 		628065EB2014F7A700F86754 /* SceneObjectPool.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SceneObjectPool.cpp; sourceTree = "<group>"; };
@@ -845,13 +845,13 @@
 		621A4E641E50B60C00D53AFD /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				62785918203A096500494A4D /* Images.xcassets */,
-				6270DCA01FCB248E00FB457D /* Textures */,
-				6270DC6F1FCB23D800FB457D /* Levels */,
 				6270DC6A1FCB231B00FB457D /* Fonts */,
+				621A4E681E50B60C00D53AFD /* Icon.png */,
+				6278591A203AFB7C00494A4D /* LaunchScreens */,
+				6270DC6F1FCB23D800FB457D /* Levels */,
 				6270DC571FCB22AE00FB457D /* Models */,
 				6270DC521FCB212B00FB457D /* Sounds */,
-				621A4E681E50B60C00D53AFD /* Icon.png */,
+				6270DCA01FCB248E00FB457D /* Textures */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -1309,6 +1309,14 @@
 				6270DCA81FCB248E00FB457D /* star_particle.png */,
 			);
 			path = Textures;
+			sourceTree = "<group>";
+		};
+		6278591A203AFB7C00494A4D /* LaunchScreens */ = {
+			isa = PBXGroup;
+			children = (
+				6278591B203AFB7C00494A4D /* Images.xcassets */,
+			);
+			path = LaunchScreens;
 			sourceTree = "<group>";
 		};
 		6286F9A91FF26BD1004DEF90 /* Chapters */ = {
@@ -1892,7 +1900,7 @@
 				6270DC611FCB22AE00FB457D /* cube_428.obj in Resources */,
 				6270DC891FCB23D800FB457D /* level10.json in Resources */,
 				6270DC681FCB22AE00FB457D /* triangle_428_r270.obj in Resources */,
-				62785919203A096500494A4D /* Images.xcassets in Resources */,
+				6278591C203AFB7C00494A4D /* Images.xcassets in Resources */,
 				6270DC621FCB22AE00FB457D /* cube_554.obj in Resources */,
 				6270DCAC1FCB248E00FB457D /* sky_blurred.jpg in Resources */,
 				62E2222A1FE9737F00AE098B /* cloud_D_512.png in Resources */,

@@ -25,8 +25,10 @@ namespace Pht {
         
         void Reset();
         void Start();
+        void StartInMidFade();
         State Update(float dt);
         bool IsFadingOut() const;
+        void SetDuration(float duration);
         
         State GetState() const {
             return mState;

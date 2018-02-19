@@ -49,8 +49,13 @@ void FadeEffect::Reset() {
 }
 
 void FadeEffect::Start() {
-    mFade = 0.0f;
     mState = State::FadingOut;
+    mSceneObject->SetIsVisible(true);
+}
+
+void FadeEffect::StartInMidFade() {
+    mFade = mMidFade;
+    mState = State::FadingIn;
     mSceneObject->SetIsVisible(true);
 }
 
@@ -85,4 +90,8 @@ FadeEffect::State FadeEffect::Update(float dt) {
 
 bool FadeEffect::IsFadingOut() const {
     return mState == State::FadingOut;
+}
+
+void FadeEffect::SetDuration(float duration) {
+    mFadeSpeed = mMidFade / duration;
 }
