@@ -57,12 +57,17 @@ namespace BlocksGame {
     struct WeldAnimation {
         enum class State {
             WeldAppearing,
+            WeldAppearingAndSemiFlashing,
             WeldDisappearing,
             Inactive
         };
         
         bool IsActive() const {
             return mState != State::Inactive;
+        }
+        
+        bool IsSemiFlashing() const {
+            return mState == State::WeldAppearingAndSemiFlashing;
         }
         
         State mState {State::Inactive};
@@ -93,13 +98,15 @@ namespace BlocksGame {
     enum class BlockBrightness {
         Normal,
         Flashing,
-        BlueprintFillFlashing
+        BlueprintFillFlashing,
+        SemiFlashing
     };
     
     namespace Quantities {
         extern const int numBlockRenderables;
         extern const int numBlockColors;
         extern const int numBlockBrightness;
+        extern const int numWeldBrightness;
     };
     
     struct FlashingBlockAnimation {

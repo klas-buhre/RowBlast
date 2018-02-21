@@ -1,6 +1,9 @@
 #ifndef WeldsAnimation_hpp
 #define WeldsAnimation_hpp
 
+// Engine includes.
+#include "Vector.hpp"
+
 namespace BlocksGame {
     class Field;
     class SubCell;
@@ -16,10 +19,12 @@ namespace BlocksGame {
         static void StartWeldDisappearingAnimation(WeldAnimation& animation);
         
     private:
-        void AnimateBlockWelds(SubCell& subCell, float dt);
-        void AnimateWeld(WeldAnimation& animation, float dt);
+        void AnimateBlockWelds(SubCell& subCell, const Pht::IVec2& position, float dt);
+        void AnimateUpWeld(SubCell& subCell, const Pht::IVec2& position, float dt);
+        void AnimateRightWeld(SubCell& subCell, const Pht::IVec2& position, float dt);
         void AnimateWeldAppearing(WeldAnimation& animation, float dt);
         void AnimateWeldDisappearing(WeldAnimation& animation, float dt);
+        void AnimateWeld(WeldAnimation& animation, bool cellIsFlashing, float dt);
         
         Field& mField;
     };

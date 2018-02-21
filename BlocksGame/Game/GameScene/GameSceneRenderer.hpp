@@ -39,14 +39,15 @@ namespace BlocksGame {
         void RenderFieldBlock(const SubCell& subCell, bool isSecondSubCell);
         void RenderBlockWelds(const SubCell& subCell,
                               const Pht::Vec3& blockPos,
-                              Pht::RenderableObject& weldRenderalbeObject,
                               SceneObjectPool& pool,
                               bool isSecondSubCell);
         void RenderBlockWeld(const Pht::Vec3& weldPosition,
                              float rotation,
                              float scale,
-                             Pht::RenderableObject& weldRenderalbeObject,
+                             Pht::RenderableObject& weldRenderableObject,
                              SceneObjectPool& pool);
+        Pht::RenderableObject& GetWeldRenderable(const SubCell& subCell,
+                                                 const WeldAnimation& weldAnimation);
         void RenderFallingPiece();
         void RenderPieceBlocks(const CellGrid& pieceBlocks,
                                const Pht::Vec3& pieceFieldPos,

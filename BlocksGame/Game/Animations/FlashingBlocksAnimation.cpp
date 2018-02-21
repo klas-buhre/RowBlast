@@ -11,6 +11,7 @@ namespace {
 
 const Pht::Color FlashingBlocksAnimation::colorAdd {0.23f, 0.23f, 0.23f};
 const Pht::Color FlashingBlocksAnimation::brightColorAdd {0.53f, 0.53f, 0.53f};
+const Pht::Color FlashingBlocksAnimation::semiFlashingColorAdd {0.115f, 0.115f, 0.115f};
 
 FlashingBlocksAnimation::FlashingBlocksAnimation(Field& field) :
     mField {field} {}

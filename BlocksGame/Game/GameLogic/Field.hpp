@@ -126,6 +126,14 @@ namespace BlocksGame {
             return mGrid[row][column];
         }
         
+        const Cell& GetCell(const Pht::IVec2& position) const {
+            return GetCell(position.y, position.x);
+        }
+
+        Cell& GetCell(const Pht::IVec2& position) {
+            return GetCell(position.y, position.x);
+        }
+
         int GetNumColumns() const {
             return mNumColumns;
         }

@@ -21,32 +21,71 @@ void WeldsAnimation::Update(float dt) {
                 continue;
             }
             
-            AnimateBlockWelds(cell.mFirstSubCell, dt);
-            AnimateBlockWelds(cell.mSecondSubCell, dt);
+            Pht::IVec2 position {column, row};
+            
+            AnimateBlockWelds(cell.mFirstSubCell, position, dt);
+            AnimateBlockWelds(cell.mSecondSubCell, position, dt);
+            
+            auto& diagonalAnimation {cell.mSecondSubCell.mWelds.mAnimations.mDiagonal};
+            
+            if (diagonalAnimation.IsActive()) {
+                auto cellIsFlashing {
+                    cell.mFirstSubCell.mFlashingBlockAnimation.mIsActive ||
+                    cell.mSecondSubCell.mFlashingBlockAnimation.mIsActive
+                };
+                
+                AnimateWeld(diagonalAnimation, cellIsFlashing, dt);
+            }
         }
     }
 }
 
-void WeldsAnimation::AnimateBlockWelds(SubCell& subCell, float dt) {
+void WeldsAnimation::AnimateBlockWelds(SubCell& subCell, const Pht::IVec2& position, float dt) {
     auto& animations {subCell.mWelds.mAnimations};
     
-    AnimateWeld(animations.mUp, dt);
-    AnimateWeld(animations.mRight, dt);
-    AnimateWeld(animations.mUpRight, dt);
-    AnimateWeld(animations.mUpLeft, dt);
-    AnimateWeld(animations.mDiagonal, dt);
+    if (animations.mUp.IsActive()) {
+        AnimateUpWeld(subCell, position, dt);
+    }
+    
+    if (animations.mRight.IsActive()) {
+        AnimateRightWeld(subCell, position, dt);
+    }
+    
+    AnimateWeld(animations.mUpRight, false, dt);
+    AnimateWeld(animations.mUpLeft, false, dt);
 }
 
-void WeldsAnimation::AnimateWeld(WeldAnimation& animation, float dt) {
-    switch (animation.mState) {
-        case WeldAnimation::State::Inactive:
-            return;
-        case WeldAnimation::State::WeldAppearing:
-            AnimateWeldAppearing(animation, dt);
-            break;
-        case WeldAnimation::State::WeldDisappearing:
-            AnimateWeldDisappearing(animation, dt);
-            break;
+void WeldsAnimation::AnimateUpWeld(SubCell& subCell, const Pht::IVec2& position, float dt) {
+    auto subCellIsFlashing {subCell.mFlashingBlockAnimation.mIsActive};
+    
+    if (position.y + 1 < mField.GetNumRows()) {
+        auto& upperCell {mField.GetCell(position + Pht::IVec2{0, 1})};
+
+        auto upperCellIsFlashing {
+            upperCell.mFirstSubCell.mFlashingBlockAnimation.mIsActive ||
+            upperCell.mSecondSubCell.mFlashingBlockAnimation.mIsActive
+        };
+        
+        AnimateWeld(subCell.mWelds.mAnimations.mUp, subCellIsFlashing || upperCellIsFlashing, dt);
+    } else {
+        AnimateWeld(subCell.mWelds.mAnimations.mUp, subCellIsFlashing, dt);
+    }
+}
+
+void WeldsAnimation::AnimateRightWeld(SubCell& subCell, const Pht::IVec2& position, float dt) {
+    auto subCellIsFlashing {subCell.mFlashingBlockAnimation.mIsActive};
+    
+    if (position.x + 1 < mField.GetNumColumns()) {
+        auto& cellToTheRight {mField.GetCell(position + Pht::IVec2{1, 0})};
+        
+        auto cellToTheRightIsFlashing {
+            cellToTheRight.mFirstSubCell.mFlashingBlockAnimation.mIsActive ||
+            cellToTheRight.mSecondSubCell.mFlashingBlockAnimation.mIsActive
+        };
+        
+        AnimateWeld(subCell.mWelds.mAnimations.mRight, subCellIsFlashing || cellToTheRightIsFlashing, dt);
+    } else {
+        AnimateWeld(subCell.mWelds.mAnimations.mRight, subCellIsFlashing, dt);
     }
 }
 
@@ -70,6 +109,28 @@ void WeldsAnimation::AnimateWeldDisappearing(WeldAnimation& animation, float dt)
     }
 
     mField.SetChanged();
+}
+
+void WeldsAnimation::AnimateWeld(WeldAnimation& animation, bool cellIsFlashing, float dt) {
+    switch (animation.mState) {
+        case WeldAnimation::State::WeldAppearing:
+            if (cellIsFlashing) {
+                animation.mState = WeldAnimation::State::WeldAppearingAndSemiFlashing;
+            }
+            AnimateWeldAppearing(animation, dt);
+            break;
+        case WeldAnimation::State::WeldAppearingAndSemiFlashing:
+            if (!cellIsFlashing) {
+                animation.mState = WeldAnimation::State::WeldAppearing;
+            }
+            AnimateWeldAppearing(animation, dt);
+            break;
+        case WeldAnimation::State::WeldDisappearing:
+            AnimateWeldDisappearing(animation, dt);
+            break;
+        case WeldAnimation::State::Inactive:
+            break;
+    }
 }
 
 void WeldsAnimation::StartWeldAppearingAnimation(WeldAnimation& animation) {

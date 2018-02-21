@@ -18,6 +18,7 @@ namespace BlocksGame {
         
         static const Pht::Color colorAdd;
         static const Pht::Color brightColorAdd;
+        static const Pht::Color semiFlashingColorAdd;
         
     private:
         void AnimateFlashingBlock(SubCell& subCell, int row, int column, float dt);

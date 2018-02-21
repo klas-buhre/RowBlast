@@ -68,6 +68,9 @@ namespace {
             case BlockBrightness::BlueprintFillFlashing:
                 AddColorToMaterial(material, FlashingBlocksAnimation::brightColorAdd);
                 break;
+            case BlockBrightness::SemiFlashing:
+                AddColorToMaterial(material, FlashingBlocksAnimation::semiFlashingColorAdd);
+                break;
         }
         
         return material;
@@ -125,7 +128,7 @@ int PieceResources::CalcWeldIndex(BlockColor color, BlockBrightness brightness) 
     auto brightnessIndex {static_cast<int>(brightness)};
     
     assert(colorIndex >= 0 && colorIndex < Quantities::numBlockColors &&
-           brightnessIndex >= 0 && brightnessIndex < Quantities::numBlockBrightness);
+           brightnessIndex >= 0 && brightnessIndex < Quantities::numWeldBrightness);
 
     auto index {brightnessIndex * Quantities::numBlockColors + colorIndex};
     
@@ -170,7 +173,7 @@ void PieceResources::CreateBlocks(Pht::ISceneManager& sceneManager, const GameSc
 void PieceResources::CreateWelds(Pht::ISceneManager& sceneManager,
                                  const GameScene& scene,
                                  bool isDiagonal) {
-    auto numWelds {Quantities::numBlockColors * Quantities::numBlockBrightness};
+    auto numWelds {Quantities::numBlockColors * Quantities::numWeldBrightness};
     
     if (isDiagonal) {
         mDiagonalWelds.resize(numWelds);
@@ -180,7 +183,7 @@ void PieceResources::CreateWelds(Pht::ISceneManager& sceneManager,
     
     for (auto colorIndex {0}; colorIndex < Quantities::numBlockColors; ++colorIndex) {
         for (auto brightnessIndex {0};
-             brightnessIndex < Quantities::numBlockBrightness;
+             brightnessIndex < Quantities::numWeldBrightness;
              ++brightnessIndex) {
             auto color {static_cast<BlockColor>(colorIndex)};
             auto brightness {static_cast<BlockBrightness>(brightnessIndex)};

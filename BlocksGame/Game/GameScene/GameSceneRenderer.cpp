@@ -130,19 +130,13 @@ void GameSceneRenderer::RenderFieldBlock(const SubCell& subCell, bool isSecondSu
         };
         
         sceneObject.SetRenderable(&renderableObject);
-
-        auto& weldRenderable {mPieceResources.GetWeldRenderableObject(color, brightness)};
-        RenderBlockWelds(subCell,
-                         blockPosition,
-                         weldRenderable,
-                         mScene.GetFieldBlocks(),
-                         isSecondSubCell);
+        
+        RenderBlockWelds(subCell, blockPosition, mScene.GetFieldBlocks(), isSecondSubCell);
     }
 }
 
 void GameSceneRenderer::RenderBlockWelds(const SubCell& subCell,
                                          const Pht::Vec3& blockPos,
-                                         Pht::RenderableObject& weldRenderalbeObject,
                                          SceneObjectPool& pool,
                                          bool isSecondSubCell) {
     auto& welds {subCell.mWelds};
@@ -154,7 +148,7 @@ void GameSceneRenderer::RenderBlockWelds(const SubCell& subCell,
         RenderBlockWeld({blockPos.x - cellSize / 2.0f, blockPos.y + cellSize / 2.0f, weldZ},
                         45.0f,
                         weldAnimations.mUpLeft.mScale,
-                        weldRenderalbeObject,
+                        GetWeldRenderable(subCell, weldAnimations.mUpLeft),
                         pool);
     }
     
@@ -162,7 +156,7 @@ void GameSceneRenderer::RenderBlockWelds(const SubCell& subCell,
         RenderBlockWeld({blockPos.x, blockPos.y + cellSize / 2.0f, weldZ},
                         -90.0f,
                         weldAnimations.mUp.mScale,
-                        weldRenderalbeObject,
+                        GetWeldRenderable(subCell, weldAnimations.mUp),
                         pool);
     }
     
@@ -170,7 +164,7 @@ void GameSceneRenderer::RenderBlockWelds(const SubCell& subCell,
         RenderBlockWeld({blockPos.x + cellSize / 2.0f, blockPos.y + cellSize / 2.0f, weldZ},
                         -45.0f,
                         weldAnimations.mUpRight.mScale,
-                        weldRenderalbeObject,
+                        GetWeldRenderable(subCell, weldAnimations.mUpRight),
                         pool);
     }
 
@@ -178,13 +172,17 @@ void GameSceneRenderer::RenderBlockWelds(const SubCell& subCell,
         RenderBlockWeld({blockPos.x + cellSize / 2.0f, blockPos.y, weldZ},
                         0.0f,
                         weldAnimations.mRight.mScale,
-                        weldRenderalbeObject,
+                        GetWeldRenderable(subCell, weldAnimations.mRight),
                         pool);
     }
     
     if (welds.mDiagonal && isSecondSubCell) {
+        auto& diagonalAnimation {weldAnimations.mDiagonal};
         auto color {subCell.mColor};
-        auto brightness {subCell.mFlashingBlockAnimation.mBrightness};
+        auto brightness {
+            diagonalAnimation.IsSemiFlashing() ?
+            BlockBrightness::SemiFlashing : subCell.mFlashingBlockAnimation.mBrightness
+        };
         
         auto& diagonalWeldRenderable {
             mPieceResources.GetDiagonalWeldRenderableObject(color, brightness)
@@ -218,14 +216,26 @@ void GameSceneRenderer::RenderBlockWelds(const SubCell& subCell,
 void GameSceneRenderer::RenderBlockWeld(const Pht::Vec3& weldPosition,
                                         float rotation,
                                         float scale,
-                                        Pht::RenderableObject& weldRenderalbeObject,
+                                        Pht::RenderableObject& weldRenderableObject,
                                         SceneObjectPool& pool) {
     auto& sceneObject {pool.AccuireSceneObject()};
     auto& transform {sceneObject.GetTransform()};
     transform.SetRotation({0.0f, 0.0f, rotation});
     transform.SetScale({scale, 1.0f, 1.0f});
     transform.SetPosition(weldPosition);
-    sceneObject.SetRenderable(&weldRenderalbeObject);
+    sceneObject.SetRenderable(&weldRenderableObject);
+}
+
+Pht::RenderableObject& GameSceneRenderer::GetWeldRenderable(const SubCell& subCell,
+                                                            const WeldAnimation& weldAnimation) {
+    auto color {subCell.mColor};
+    
+    auto brightness {
+        weldAnimation.IsSemiFlashing() ?
+        BlockBrightness::SemiFlashing : subCell.mFlashingBlockAnimation.mBrightness
+    };
+    
+    return mPieceResources.GetWeldRenderableObject(color, brightness);
 }
 
 void GameSceneRenderer::RenderFallingPiece() {
@@ -312,8 +322,7 @@ void GameSceneRenderer::RenderPieceBlocks(const CellGrid& pieceBlocks,
                 
                 sceneObject.SetRenderable(&blockRenderableObject);
 
-                auto& weldRenderable {mPieceResources.GetWeldRenderableObject(color, brightness)};
-                RenderBlockWelds(subCell, blockPosition, weldRenderable, pool, false);
+                RenderBlockWelds(subCell, blockPosition, pool, false);
             }
         }
     }
