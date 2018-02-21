@@ -10,6 +10,7 @@
 #include "FlyingBlocksAnimation.hpp"
 #include "CollapsingFieldAnimation.hpp"
 #include "FlashingBlocksAnimation.hpp"
+#include "WeldsAnimation.hpp"
 #include "BlueprintSlotsFilledAnimation.hpp"
 #include "ExplosionParticleEffect.hpp"
 #include "RowExplosionParticleEffect.hpp"
@@ -123,6 +124,7 @@ namespace BlocksGame {
         Field mField;
         CollapsingFieldAnimation mCollapsingFieldAnimation;
         FlashingBlocksAnimation mFlashingBlocksAnimation;
+        WeldsAnimation mWeldsAnimation;
         ScrollController mScrollController;
         GameScene mScene;
         ExplosionParticleEffect mExplosionParticleEffect;

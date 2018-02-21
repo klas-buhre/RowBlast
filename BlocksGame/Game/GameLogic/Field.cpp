@@ -7,6 +7,7 @@
 #include "FallingPiece.hpp"
 #include "Level.hpp"
 #include "CollisionDetection.hpp"
+#include "WeldsAnimation.hpp"
 
 using namespace BlocksGame;
 
@@ -97,12 +98,21 @@ namespace {
         welds.mUpRight = false;
         welds.mUp = false;
         welds.mUpLeft = false;
+        
+        auto& animations {welds.mAnimations};
+        animations.mUp = WeldAnimation {};
+        animations.mUpRight = WeldAnimation {};
+        animations.mUpLeft = WeldAnimation {};
     }
     
     void BreakRightWelds(Welds& welds) {
         welds.mUpRight = false;
         welds.mRight = false;
         welds.mDownRight = false;
+        
+        auto& animations {welds.mAnimations};
+        animations.mUpRight = WeldAnimation {};
+        animations.mRight = WeldAnimation {};
     }
     
     void BreakLeftWelds(Welds& welds) {
@@ -613,16 +623,6 @@ int Field::GetNumTransitionsInRows() const {
     return numTransitions;
 }
 
-const Cell& Field::GetCell(int row, int column) const {
-    assert(row >= 0 && column >= 0 && row < mNumRows && column < mNumColumns);
-    return mGrid[row][column];
-}
-
-Cell& Field::GetCell(int row, int column) {
-    assert(row >= 0 && column >= 0 && row < mNumRows && column < mNumColumns);
-    return mGrid[row][column];
-}
-
 int Field::DetectCollisionDown(const PieceBlocks& pieceBlocks, const Pht::IVec2& position) const {
     Pht::IVec2 step {0, -1};
     auto collisionPosition {ScanUntilCollision(pieceBlocks, position, step)};
@@ -891,9 +891,11 @@ void Field::MakeDiagonalWeld(Cell& cell) {
     auto& secondSubCell {cell.mSecondSubCell};
     
     if (!firstSubCell.IsEmpty() && !secondSubCell.IsEmpty() &&
-        firstSubCell.mColor == secondSubCell.mColor) {
+        firstSubCell.mColor == secondSubCell.mColor && !firstSubCell.mWelds.mDiagonal &&
+        !secondSubCell.mWelds.mDiagonal) {
         firstSubCell.mWelds.mDiagonal = true;
         secondSubCell.mWelds.mDiagonal = true;
+        WeldsAnimation::StartWeldAppearingAnimation(secondSubCell.mWelds.mAnimations.mDiagonal);
     }
 }
 
@@ -901,21 +903,25 @@ void Field::MakeWelds(SubCell& subCell, const Pht::IVec2& position) {
     if (subCell.IsEmpty() || subCell.mIsLevel) {
         return;
     }
+    
+    auto& welds {subCell.mWelds};
 
-    if (ShouldBeUpWeld(subCell, position)) {
-        subCell.mWelds.mUp = true;
+    if (!welds.mUp && ShouldBeUpWeld(subCell, position)) {
+        welds.mUp = true;
+        WeldsAnimation::StartWeldAppearingAnimation(welds.mAnimations.mUp);
     }
 
-    if (ShouldBeRightWeld(subCell, position)) {
-        subCell.mWelds.mRight = true;
+    if (!welds.mRight && ShouldBeRightWeld(subCell, position)) {
+        welds.mRight = true;
+        WeldsAnimation::StartWeldAppearingAnimation(welds.mAnimations.mRight);
     }
     
-    if (ShouldBeDownWeld(subCell, position)) {
-        subCell.mWelds.mDown = true;
+    if (!welds.mDown && ShouldBeDownWeld(subCell, position)) {
+        welds.mDown = true;
     }
     
-    if (ShouldBeLeftWeld(subCell, position)) {
-        subCell.mWelds.mLeft = true;
+    if (!welds.mLeft && ShouldBeLeftWeld(subCell, position)) {
+        welds.mLeft = true;
     }
 }
 
@@ -1036,6 +1042,7 @@ void Field::BreakRedundantWelds(SubCell& subCell, const Pht::IVec2& position) {
     
     if (welds.mUpRight && UpRightWeldWouldBeRedundant(subCell, position)) {
         welds.mUpRight = false;
+        WeldsAnimation::StartWeldDisappearingAnimation(welds.mAnimations.mUpRight);
     }
     
     if (welds.mDownRight && DownRightWeldWouldBeRedundant(subCell, position)) {
@@ -1048,6 +1055,7 @@ void Field::BreakRedundantWelds(SubCell& subCell, const Pht::IVec2& position) {
 
     if (welds.mUpLeft && UpLeftWeldWouldBeRedundant(subCell, position)) {
         welds.mUpLeft = false;
+        WeldsAnimation::StartWeldDisappearingAnimation(welds.mAnimations.mUpLeft);
     }
 }
 

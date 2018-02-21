@@ -67,8 +67,6 @@ namespace BlocksGame {
         void RestorePreviousState();
         void OnEndOfFrame();
         void SetChanged();
-        const Cell& GetCell(int row, int column) const;
-        Cell& GetCell(int row, int column);        
         int DetectCollisionDown(const PieceBlocks& pieceBlocks, const Pht::IVec2& position) const;
         int DetectCollisionRight(const PieceBlocks& pieceBlocks, const Pht::IVec2& position) const;
         int DetectCollisionLeft(const PieceBlocks& pieceBlocks, const Pht::IVec2& position) const;
@@ -117,6 +115,16 @@ namespace BlocksGame {
                          int pieceNumColumns);
         FilledRowsResult MarkFilledRowsAndCountPieceCellsInFilledRows(int pieceId);
         void UnmarkFilledRows(const FilledRowIndices& filledRowIndices);
+        
+        const Cell& GetCell(int row, int column) const {
+            assert(row >= 0 && column >= 0 && row < mNumRows && column < mNumColumns);
+            return mGrid[row][column];
+        }
+
+        Cell& GetCell(int row, int column) {
+            assert(row >= 0 && column >= 0 && row < mNumRows && column < mNumColumns);
+            return mGrid[row][column];
+        }
         
         int GetNumColumns() const {
             return mNumColumns;

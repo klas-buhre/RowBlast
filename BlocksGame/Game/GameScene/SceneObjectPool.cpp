@@ -59,6 +59,7 @@ Pht::SceneObject& SceneObjectPool::AccuireSceneObject() {
     auto& sceneObject {*mSceneObjects[mNextAvailableIndex]};
     sceneObject.SetIsVisible(true);
     sceneObject.SetIsStatic(false);
+    sceneObject.GetTransform().Reset();
     ++mNextAvailableIndex;
     return sceneObject;
 }

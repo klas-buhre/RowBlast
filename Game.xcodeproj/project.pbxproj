@@ -40,6 +40,7 @@
 		623C16D01F51A75B00305752 /* ClickInputHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623C16CE1F51A75B00305752 /* ClickInputHandler.cpp */; };
 		623C16D31F51A7D600305752 /* ValidMovesSearch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623C16D11F51A7D600305752 /* ValidMovesSearch.cpp */; };
 		623C16D91F63E34B00305752 /* FallingPieceAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623C16D71F63E34A00305752 /* FallingPieceAnimation.cpp */; };
+		623DDBCE203C70520008A4D6 /* WeldsAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623DDBCC203C70520008A4D6 /* WeldsAnimation.cpp */; };
 		62411A971E61E62800035D2A /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62411A961E61E62800035D2A /* GLKit.framework */; };
 		6244479A1EDDD2C40080ECE8 /* BlocksApplication.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 624447101EDDD2C40080ECE8 /* BlocksApplication.cpp */; };
 		624447A01EDDD2C40080ECE8 /* CloseButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6244471F1EDDD2C40080ECE8 /* CloseButton.cpp */; };
@@ -311,6 +312,8 @@
 		623C16D21F51A7D600305752 /* ValidMovesSearch.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ValidMovesSearch.hpp; sourceTree = "<group>"; };
 		623C16D71F63E34A00305752 /* FallingPieceAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FallingPieceAnimation.cpp; sourceTree = "<group>"; };
 		623C16D81F63E34B00305752 /* FallingPieceAnimation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FallingPieceAnimation.hpp; sourceTree = "<group>"; };
+		623DDBCC203C70520008A4D6 /* WeldsAnimation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = WeldsAnimation.cpp; sourceTree = "<group>"; };
+		623DDBCD203C70520008A4D6 /* WeldsAnimation.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = WeldsAnimation.hpp; sourceTree = "<group>"; };
 		62411A961E61E62800035D2A /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		624447101EDDD2C40080ECE8 /* BlocksApplication.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BlocksApplication.cpp; sourceTree = "<group>"; };
 		624447111EDDD2C40080ECE8 /* BlocksApplication.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = BlocksApplication.hpp; sourceTree = "<group>"; };
@@ -972,6 +975,8 @@
 				6244472F1EDDD2C40080ECE8 /* FlyingBlocksAnimation.hpp */,
 				624EAFC01EE559A9009F81BC /* SlidingTextAnimation.cpp */,
 				624EAFC11EE559A9009F81BC /* SlidingTextAnimation.hpp */,
+				623DDBCC203C70520008A4D6 /* WeldsAnimation.cpp */,
+				623DDBCD203C70520008A4D6 /* WeldsAnimation.hpp */,
 			);
 			path = Animations;
 			sourceTree = "<group>";
@@ -2069,6 +2074,7 @@
 				62944D7D20053A2D00814D36 /* Renderer.cpp in Sources */,
 				624447C61EDDD2C40080ECE8 /* LPiece.cpp in Sources */,
 				62944DA420053A2D00814D36 /* TextComponent.cpp in Sources */,
+				623DDBCE203C70520008A4D6 /* WeldsAnimation.cpp in Sources */,
 				624447B91EDDD2C40080ECE8 /* NoMovesDialogView.cpp in Sources */,
 				62944DA220053A2D00814D36 /* GuiView.cpp in Sources */,
 				624447B51EDDD2C40080ECE8 /* GameMenuController.cpp in Sources */,

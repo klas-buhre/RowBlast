@@ -18,9 +18,6 @@ Backlog:
      convenient to go back to the state before the move and not the initial state.
     -Mega bomb?
   -Rendering:
-    -It seems to be possible to create objects with different bevel for different edges and faces in
-     Blender. See https://www.youtube.com/watch?v=wIT7OAMy_3M . Try creating blocks with less bevel
-     on the edges that have a weld.
     -Could have the rounded cylinder i some places in the HUDs.
     -GUI: the buttons in the views could be yellow with black text and triangular edges like in
      Mario Kart 8. There could also be a reflection animation in the button.
@@ -57,13 +54,11 @@ Backlog:
     -Credit the icon creator: <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
   
 Ongoing tasks:
-      -Try new type of blocks.
-      -If keeping old blocks:
-        -Problem: whether a weld that is being formed flashes or not depends on the weld direction
-         (see GameSceneRenderer). Instead, a weld that is being formed should flash with the
-         brightness between normal and flashing brightness.
-        -Weld animation.
-        -Maybe two merged triangles should be changed into a cube after the weld animation.
+    -Problem: whether a weld that is being formed flashes or not depends on the weld direction
+     (see GameSceneRenderer). Instead, a weld that is being formed should flash with the
+     brightness between normal and flashing brightness. Or, the weld forms after the flash animation.
+    -Maybe two merged triangles should be changed into a cube after the weld animation.
+    -Fix triangle block mesh by starting with the triangle with quads before bevel.
 
 Ideas:
     -The pause button could lead to a widget that has an undo button, a boosters button and a game

@@ -39,6 +39,7 @@ GameController::GameController(Pht::IEngine& engine,
     mField {},
     mCollapsingFieldAnimation {mField},
     mFlashingBlocksAnimation {mField},
+    mWeldsAnimation {mField},
     mScrollController {engine, mField},
     mScene {
         engine,
@@ -144,6 +145,7 @@ GameController::Command GameController::UpdateGame() {
     auto command {UpdateSubState()};
     
     mFlashingBlocksAnimation.Update(dt);
+    mWeldsAnimation.Update(dt);
     mPieceDropParticleEffect.Update(dt);
     mBlastRadiusAnimation.Update(dt);
     mFlyingBlocksAnimation.Update(dt);

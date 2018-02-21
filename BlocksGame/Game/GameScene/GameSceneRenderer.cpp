@@ -146,33 +146,38 @@ void GameSceneRenderer::RenderBlockWelds(const SubCell& subCell,
                                          SceneObjectPool& pool,
                                          bool isSecondSubCell) {
     auto& welds {subCell.mWelds};
+    auto& weldAnimations {welds.mAnimations};
     const auto cellSize {mScene.GetCellSize()};
     auto weldZ {blockPos.z + cellSize / 2.0f};
     
-    if (welds.mUpLeft) {
+    if (welds.mUpLeft || weldAnimations.mUpLeft.IsActive()) {
         RenderBlockWeld({blockPos.x - cellSize / 2.0f, blockPos.y + cellSize / 2.0f, weldZ},
                         45.0f,
+                        weldAnimations.mUpLeft.mScale,
                         weldRenderalbeObject,
                         pool);
     }
     
-    if (welds.mUp) {
+    if (welds.mUp || weldAnimations.mUp.IsActive()) {
         RenderBlockWeld({blockPos.x, blockPos.y + cellSize / 2.0f, weldZ},
                         -90.0f,
+                        weldAnimations.mUp.mScale,
                         weldRenderalbeObject,
                         pool);
     }
     
-    if (welds.mUpRight) {
+    if (welds.mUpRight || weldAnimations.mUpRight.IsActive()) {
         RenderBlockWeld({blockPos.x + cellSize / 2.0f, blockPos.y + cellSize / 2.0f, weldZ},
                         -45.0f,
+                        weldAnimations.mUpRight.mScale,
                         weldRenderalbeObject,
                         pool);
     }
 
-    if (welds.mRight) {
+    if (welds.mRight || weldAnimations.mRight.IsActive()) {
         RenderBlockWeld({blockPos.x + cellSize / 2.0f, blockPos.y, weldZ},
                         0.0f,
+                        weldAnimations.mRight.mScale,
                         weldRenderalbeObject,
                         pool);
     }
@@ -185,11 +190,14 @@ void GameSceneRenderer::RenderBlockWelds(const SubCell& subCell,
             mPieceResources.GetDiagonalWeldRenderableObject(color, brightness)
         };
         
+        auto weldScale {weldAnimations.mDiagonal.mScale};
+        
         switch (subCell.mFill) {
             case Fill::LowerRightHalf:
             case Fill::UpperLeftHalf:
                 RenderBlockWeld({blockPos.x, blockPos.y, weldZ},
                                 -45.0f,
+                                weldScale,
                                 diagonalWeldRenderable,
                                 pool);
                 break;
@@ -197,6 +205,7 @@ void GameSceneRenderer::RenderBlockWelds(const SubCell& subCell,
             case Fill::UpperRightHalf:
                 RenderBlockWeld({blockPos.x, blockPos.y, weldZ},
                                 45.0f,
+                                weldScale,
                                 diagonalWeldRenderable,
                                 pool);
                 break;
@@ -208,11 +217,13 @@ void GameSceneRenderer::RenderBlockWelds(const SubCell& subCell,
 
 void GameSceneRenderer::RenderBlockWeld(const Pht::Vec3& weldPosition,
                                         float rotation,
+                                        float scale,
                                         Pht::RenderableObject& weldRenderalbeObject,
                                         SceneObjectPool& pool) {
     auto& sceneObject {pool.AccuireSceneObject()};
     auto& transform {sceneObject.GetTransform()};
     transform.SetRotation({0.0f, 0.0f, rotation});
+    transform.SetScale({scale, 1.0f, 1.0f});
     transform.SetPosition(weldPosition);
     sceneObject.SetRenderable(&weldRenderalbeObject);
 }

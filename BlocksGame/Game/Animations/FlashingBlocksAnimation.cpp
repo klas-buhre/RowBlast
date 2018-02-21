@@ -6,8 +6,7 @@
 using namespace BlocksGame;
 
 namespace {
-    const auto shortFlashDuration {0.22f};
-    const auto longFlashDuration {0.30f};
+    const auto flashDuration {0.22f};
 }
 
 const Pht::Color FlashingBlocksAnimation::colorAdd {0.23f, 0.23f, 0.23f};
@@ -44,13 +43,9 @@ void FlashingBlocksAnimation::AnimateFlashingBlock(SubCell& subCell,
     mField.SetChanged();
     flashingBlockAnimation.mElapsedTime += dt;
     
-    auto flashDuration {0.0f};
-    
     if (IsBlockAccordingToBlueprint(subCell, row, column)) {
-        flashDuration = longFlashDuration;
         flashingBlockAnimation.mBrightness = BlockBrightness::BlueprintFillFlashing;
     } else {
-        flashDuration = shortFlashDuration;
         flashingBlockAnimation.mBrightness = BlockBrightness::Flashing;
     }
     

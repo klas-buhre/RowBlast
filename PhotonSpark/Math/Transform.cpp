@@ -2,6 +2,13 @@
 
 using namespace Pht;
 
+void Transform::Reset() {
+    mPosition = {0.0f, 0.0f, 0.0f};
+    mScale = {1.0f, 1.0f, 1.0f};
+    mRotation = {0.0f, 0.0f, 0.0f};
+    mHasChanged = true;
+}
+
 void Transform::SetPosition(const Vec3& position) {
     mPosition = position;
     mHasChanged = true;

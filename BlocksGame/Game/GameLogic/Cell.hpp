@@ -54,6 +54,29 @@ namespace BlocksGame {
         Left
     };
     
+    struct WeldAnimation {
+        enum class State {
+            WeldAppearing,
+            WeldDisappearing,
+            Inactive
+        };
+        
+        bool IsActive() const {
+            return mState != State::Inactive;
+        }
+        
+        State mState {State::Inactive};
+        float mScale {1.0f};
+    };
+    
+    struct WeldAnimations {
+        WeldAnimation mUp;
+        WeldAnimation mRight;
+        WeldAnimation mUpRight;
+        WeldAnimation mUpLeft;
+        WeldAnimation mDiagonal;
+    };
+    
     struct Welds {
         bool mUp {false};
         bool mUpRight {false};
@@ -64,6 +87,7 @@ namespace BlocksGame {
         bool mLeft {false};
         bool mUpLeft {false};
         bool mDiagonal {false};
+        WeldAnimations mAnimations;
     };
     
     enum class BlockBrightness {

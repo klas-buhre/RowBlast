@@ -7,6 +7,7 @@
 namespace Pht {
     class Transform {
     public:
+        void Reset();
         void SetPosition(const Vec3& position);
         void SetScale(const Vec3& scale);
         void SetScale(float scale);

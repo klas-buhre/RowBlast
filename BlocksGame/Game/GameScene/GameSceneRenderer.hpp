@@ -44,6 +44,7 @@ namespace BlocksGame {
                               bool isSecondSubCell);
         void RenderBlockWeld(const Pht::Vec3& weldPosition,
                              float rotation,
+                             float scale,
                              Pht::RenderableObject& weldRenderalbeObject,
                              SceneObjectPool& pool);
         void RenderFallingPiece();
