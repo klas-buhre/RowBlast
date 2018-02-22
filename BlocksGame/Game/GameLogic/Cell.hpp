@@ -58,6 +58,7 @@ namespace BlocksGame {
         enum class State {
             WeldAppearing,
             WeldAppearingAndSemiFlashing,
+            WeldAtFullScale,
             WeldDisappearing,
             Inactive
         };

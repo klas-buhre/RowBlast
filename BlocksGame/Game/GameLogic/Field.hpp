@@ -88,6 +88,7 @@ namespace BlocksGame {
                              bool updateCellPosition,
                              bool startBlueprintCellAnimation);
         void ManageWelds();
+        void MergeTriangleBlocksIntoCube(const Pht::IVec2& position);
         void PullDownLoosePieces();
         int GetNumRowsInOneScreen() const;
         bool AnyFilledRows() const;

@@ -1139,6 +1139,71 @@ bool Field::UpLeftWeldWouldBeRedundant(const SubCell& subCell, const Pht::IVec2&
     return false;
 }
 
+void Field::MergeTriangleBlocksIntoCube(const Pht::IVec2& position) {
+    auto& cell {GetCell(position)};
+    auto& firstSubCell {cell.mFirstSubCell};
+    
+    firstSubCell.mFill = Fill::Full;
+    firstSubCell.mBlockRenderableKind = BlockRenderableKind::Full;
+    
+    auto& firstSubCellWelds {firstSubCell.mWelds};
+    auto& secondSubCellWelds {cell.mSecondSubCell.mWelds};
+    firstSubCellWelds.mDiagonal = false;
+    
+    if (secondSubCellWelds.mRight) {
+        firstSubCellWelds.mRight = true;
+    }
+
+    if (secondSubCellWelds.mDownRight) {
+        firstSubCellWelds.mDownRight = true;
+    }
+
+    if (secondSubCellWelds.mDown) {
+        firstSubCellWelds.mDown = true;
+    }
+
+    if (secondSubCellWelds.mDownLeft) {
+        firstSubCellWelds.mDownLeft = true;
+    }
+
+    if (secondSubCellWelds.mLeft) {
+        firstSubCellWelds.mLeft = true;
+    }
+
+    if (secondSubCellWelds.mUpLeft) {
+        firstSubCellWelds.mUpLeft = true;
+    }
+
+    if (secondSubCellWelds.mUp) {
+        firstSubCellWelds.mUp = true;
+    }
+
+    if (secondSubCellWelds.mUpRight) {
+        firstSubCellWelds.mUpRight = true;
+    }
+    
+    auto& firstSubCellWeldAnimations {firstSubCellWelds.mAnimations};
+    auto& secondSubCellWeldAnimations {secondSubCellWelds.mAnimations};
+
+    if (secondSubCellWeldAnimations.mUpLeft.IsActive()) {
+        firstSubCellWeldAnimations.mUpLeft = secondSubCellWeldAnimations.mUpLeft;
+    }
+
+    if (secondSubCellWeldAnimations.mUp.IsActive()) {
+        firstSubCellWeldAnimations.mUp = secondSubCellWeldAnimations.mUp;
+    }
+
+    if (secondSubCellWeldAnimations.mUpRight.IsActive()) {
+        firstSubCellWeldAnimations.mUpRight = secondSubCellWeldAnimations.mUpRight;
+    }
+
+    if (secondSubCellWeldAnimations.mRight.IsActive()) {
+        firstSubCellWeldAnimations.mRight = secondSubCellWeldAnimations.mRight;
+    }
+
+    cell.mSecondSubCell = SubCell {};
+}
+
 void Field::PullDownLoosePieces() {
     SetChanged();
     

@@ -29,12 +29,18 @@ void WeldsAnimation::Update(float dt) {
             auto& diagonalAnimation {cell.mSecondSubCell.mWelds.mAnimations.mDiagonal};
             
             if (diagonalAnimation.IsActive()) {
-                auto cellIsFlashing {
-                    cell.mFirstSubCell.mFlashingBlockAnimation.mIsActive ||
-                    cell.mSecondSubCell.mFlashingBlockAnimation.mIsActive
-                };
-                
-                AnimateWeld(diagonalAnimation, cellIsFlashing, dt);
+                if (diagonalAnimation.mState == WeldAnimation::State::WeldAtFullScale) {
+                    diagonalAnimation.mState = WeldAnimation::State::Inactive;
+                    mField.MergeTriangleBlocksIntoCube(position);
+                    mField.SetChanged();
+                } else {
+                    auto cellIsFlashing {
+                        cell.mFirstSubCell.mFlashingBlockAnimation.mIsActive ||
+                        cell.mSecondSubCell.mFlashingBlockAnimation.mIsActive
+                    };
+                    
+                    AnimateWeld(diagonalAnimation, cellIsFlashing, dt);
+                }
             }
         }
     }
@@ -94,7 +100,7 @@ void WeldsAnimation::AnimateWeldAppearing(WeldAnimation& animation, float dt) {
     
     if (animation.mScale > 1.0f) {
         animation.mScale = 1.0f;
-        animation.mState = WeldAnimation::State::Inactive;
+        animation.mState = WeldAnimation::State::WeldAtFullScale;
     }
 
     mField.SetChanged();
@@ -124,6 +130,9 @@ void WeldsAnimation::AnimateWeld(WeldAnimation& animation, bool cellIsFlashing, 
                 animation.mState = WeldAnimation::State::WeldAppearing;
             }
             AnimateWeldAppearing(animation, dt);
+            break;
+        case WeldAnimation::State::WeldAtFullScale:
+            animation.mState = WeldAnimation::State::Inactive;
             break;
         case WeldAnimation::State::WeldDisappearing:
             AnimateWeldDisappearing(animation, dt);
