@@ -55,7 +55,7 @@ Backlog:
   
 Ongoing tasks:
     -Maybe two merged triangles should be changed into a cube after the weld animation.
-    -Fix triangle block mesh by starting with the triangle with quads before bevel.
+    -Try 3 new weld types: normal, aslope and diagonal.
 
 Ideas:
     -The pause button could lead to a widget that has an undo button, a boosters button and a game
@@ -108,10 +108,6 @@ Time Estimation in days:
         Cost: 15
 
         Total: 156
-
-Light settings in game scene:
-new = {0.57f, 1.0f, 0.6f}
-original = {1.0f, 1.0f, 0.74f}
 
 
 Comomon piece type sets:
@@ -237,6 +233,14 @@ Comomon piece type sets:
 Create rounded cube in Blender:
 Scale cube so that size is 1.0. Select the wrench to the right.
 Then, Add Modifier > Bevel > turn up width > turn up segments.
+
+triangle_320:
+bevel width: 0.135
+segments: 5
+profile 0.5
+Export settings:
+    Forward: Y Forward
+    Up: Z Up
 
 triangle_428:
 bevel width: 0.085

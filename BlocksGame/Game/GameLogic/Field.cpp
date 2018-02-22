@@ -865,7 +865,13 @@ void Field::LandPieceBlocks(const PieceBlocks& pieceBlocks,
 }
 
 void Field::ManageWelds() {
-    for (auto row {mLowestVisibleRow}; row < mNumRows; ++row) {
+    auto lowestVisibleRow {mLowestVisibleRow - 1};
+    
+    if (lowestVisibleRow < 0) {
+        lowestVisibleRow = 0;
+    }
+    
+    for (auto row {lowestVisibleRow}; row < mNumRows; ++row) {
         for (auto column {0}; column < mNumColumns; ++column) {
             auto& cell {mGrid[row][column]};
             Pht::IVec2 position {column, row};
@@ -876,7 +882,7 @@ void Field::ManageWelds() {
         }
     }
     
-    for (auto row {mLowestVisibleRow}; row < mNumRows; ++row) {
+    for (auto row {lowestVisibleRow}; row < mNumRows; ++row) {
         for (auto column {0}; column < mNumColumns; ++column) {
             auto& cell {mGrid[row][column]};
             Pht::IVec2 position {column, row};

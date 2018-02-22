@@ -78,7 +78,7 @@ void LevelResources::CreateCellRenderables(Pht::ISceneManager& sceneManager,
     );
     
     mGrayTriangle = sceneManager.CreateRenderableObject(
-        Pht::ObjMesh {"triangle_428.obj", cellSize},
+        Pht::ObjMesh {"triangle_320.obj", cellSize},
         scene.GetGrayMaterial()
     );
 }

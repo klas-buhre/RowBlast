@@ -115,11 +115,6 @@
 		6270DC621FCB22AE00FB457D /* cube_554.obj in Resources */ = {isa = PBXBuildFile; fileRef = 6270DC591FCB22AE00FB457D /* cube_554.obj */; };
 		6270DC631FCB22AE00FB457D /* star.obj in Resources */ = {isa = PBXBuildFile; fileRef = 6270DC5A1FCB22AE00FB457D /* star.obj */; };
 		6270DC641FCB22AE00FB457D /* star_1428.obj in Resources */ = {isa = PBXBuildFile; fileRef = 6270DC5B1FCB22AE00FB457D /* star_1428.obj */; };
-		6270DC651FCB22AE00FB457D /* triangle_428.obj in Resources */ = {isa = PBXBuildFile; fileRef = 6270DC5C1FCB22AE00FB457D /* triangle_428.obj */; };
-		6270DC661FCB22AE00FB457D /* triangle_428_085.obj in Resources */ = {isa = PBXBuildFile; fileRef = 6270DC5D1FCB22AE00FB457D /* triangle_428_085.obj */; };
-		6270DC671FCB22AE00FB457D /* triangle_428_r180.obj in Resources */ = {isa = PBXBuildFile; fileRef = 6270DC5E1FCB22AE00FB457D /* triangle_428_r180.obj */; };
-		6270DC681FCB22AE00FB457D /* triangle_428_r270.obj in Resources */ = {isa = PBXBuildFile; fileRef = 6270DC5F1FCB22AE00FB457D /* triangle_428_r270.obj */; };
-		6270DC691FCB22AE00FB457D /* triangle_428_r90.obj in Resources */ = {isa = PBXBuildFile; fileRef = 6270DC601FCB22AE00FB457D /* triangle_428_r90.obj */; };
 		6270DC6D1FCB231B00FB457D /* ethnocentric_rg_it.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6270DC6B1FCB231B00FB457D /* ethnocentric_rg_it.ttf */; };
 		6270DC6E1FCB231B00FB457D /* HussarBoldWeb.otf in Resources */ = {isa = PBXBuildFile; fileRef = 6270DC6C1FCB231B00FB457D /* HussarBoldWeb.otf */; };
 		6270DC881FCB23D800FB457D /* level1.json in Resources */ = {isa = PBXBuildFile; fileRef = 6270DC701FCB23D800FB457D /* level1.json */; };
@@ -154,6 +149,10 @@
 		6270DCB01FCB248E00FB457D /* star_particle.png in Resources */ = {isa = PBXBuildFile; fileRef = 6270DCA81FCB248E00FB457D /* star_particle.png */; };
 		6270DCB31FCDA99100FB457D /* TitleScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6270DCB11FCDA99100FB457D /* TitleScene.cpp */; };
 		6273A91F20289F6900BF542A /* GuiViewManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6273A91D20289F6900BF542A /* GuiViewManager.cpp */; };
+		6276B700203F20150075C468 /* triangle_320.obj in Resources */ = {isa = PBXBuildFile; fileRef = 6276B6FF203F20150075C468 /* triangle_320.obj */; };
+		6276B702203F25AD0075C468 /* triangle_320_r270.obj in Resources */ = {isa = PBXBuildFile; fileRef = 6276B701203F25AC0075C468 /* triangle_320_r270.obj */; };
+		6276B704203F26730075C468 /* triangle_320_r180.obj in Resources */ = {isa = PBXBuildFile; fileRef = 6276B703203F26730075C468 /* triangle_320_r180.obj */; };
+		6276B706203F26E90075C468 /* triangle_320_r90.obj in Resources */ = {isa = PBXBuildFile; fileRef = 6276B705203F26E90075C468 /* triangle_320_r90.obj */; };
 		6278590620375DBF00494A4D /* level27.json in Resources */ = {isa = PBXBuildFile; fileRef = 6278590520375DBF00494A4D /* level27.json */; };
 		6278591C203AFB7C00494A4D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6278591B203AFB7C00494A4D /* Images.xcassets */; };
 		6278591E203B309A00494A4D /* level28.json in Resources */ = {isa = PBXBuildFile; fileRef = 6278591D203B309900494A4D /* level28.json */; };
@@ -455,11 +454,6 @@
 		6270DC591FCB22AE00FB457D /* cube_554.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cube_554.obj; sourceTree = "<group>"; };
 		6270DC5A1FCB22AE00FB457D /* star.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = star.obj; sourceTree = "<group>"; };
 		6270DC5B1FCB22AE00FB457D /* star_1428.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = star_1428.obj; sourceTree = "<group>"; };
-		6270DC5C1FCB22AE00FB457D /* triangle_428.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = triangle_428.obj; sourceTree = "<group>"; };
-		6270DC5D1FCB22AE00FB457D /* triangle_428_085.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = triangle_428_085.obj; sourceTree = "<group>"; };
-		6270DC5E1FCB22AE00FB457D /* triangle_428_r180.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = triangle_428_r180.obj; sourceTree = "<group>"; };
-		6270DC5F1FCB22AE00FB457D /* triangle_428_r270.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = triangle_428_r270.obj; sourceTree = "<group>"; };
-		6270DC601FCB22AE00FB457D /* triangle_428_r90.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = triangle_428_r90.obj; sourceTree = "<group>"; };
 		6270DC6B1FCB231B00FB457D /* ethnocentric_rg_it.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ethnocentric_rg_it.ttf; sourceTree = "<group>"; };
 		6270DC6C1FCB231B00FB457D /* HussarBoldWeb.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = HussarBoldWeb.otf; sourceTree = "<group>"; };
 		6270DC701FCB23D800FB457D /* level1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level1.json; sourceTree = "<group>"; };
@@ -498,6 +492,10 @@
 		6273A91C2027663400BF542A /* InputUtil.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = InputUtil.hpp; sourceTree = "<group>"; };
 		6273A91D20289F6900BF542A /* GuiViewManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GuiViewManager.cpp; sourceTree = "<group>"; };
 		6273A91E20289F6900BF542A /* GuiViewManager.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = GuiViewManager.hpp; sourceTree = "<group>"; };
+		6276B6FF203F20150075C468 /* triangle_320.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = triangle_320.obj; sourceTree = "<group>"; };
+		6276B701203F25AC0075C468 /* triangle_320_r270.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = triangle_320_r270.obj; sourceTree = "<group>"; };
+		6276B703203F26730075C468 /* triangle_320_r180.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = triangle_320_r180.obj; sourceTree = "<group>"; };
+		6276B705203F26E90075C468 /* triangle_320_r90.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = triangle_320_r90.obj; sourceTree = "<group>"; };
 		6278590520375DBF00494A4D /* level27.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level27.json; sourceTree = "<group>"; };
 		6278591B203AFB7C00494A4D /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		6278591D203B309900494A4D /* level28.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level28.json; sourceTree = "<group>"; };
@@ -1240,15 +1238,14 @@
 		6270DC571FCB22AE00FB457D /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				6276B705203F26E90075C468 /* triangle_320_r90.obj */,
+				6276B703203F26730075C468 /* triangle_320_r180.obj */,
+				6276B701203F25AC0075C468 /* triangle_320_r270.obj */,
+				6276B6FF203F20150075C468 /* triangle_320.obj */,
 				6270DC581FCB22AE00FB457D /* cube_428.obj */,
 				6270DC591FCB22AE00FB457D /* cube_554.obj */,
 				6270DC5A1FCB22AE00FB457D /* star.obj */,
 				6270DC5B1FCB22AE00FB457D /* star_1428.obj */,
-				6270DC5C1FCB22AE00FB457D /* triangle_428.obj */,
-				6270DC5D1FCB22AE00FB457D /* triangle_428_085.obj */,
-				6270DC5E1FCB22AE00FB457D /* triangle_428_r180.obj */,
-				6270DC5F1FCB22AE00FB457D /* triangle_428_r270.obj */,
-				6270DC601FCB22AE00FB457D /* triangle_428_r90.obj */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1858,7 +1855,6 @@
 				62944D8720053A2D00814D36 /* Particle.vert in Resources */,
 				6270DC9D1FCB23D800FB457D /* level8.json in Resources */,
 				6270DC6E1FCB231B00FB457D /* HussarBoldWeb.otf in Resources */,
-				6270DC661FCB22AE00FB457D /* triangle_428_085.obj in Resources */,
 				6270DC991FCB23D800FB457D /* level4.json in Resources */,
 				62E335DE1FD2F31E0069B6CF /* level25.json in Resources */,
 				62944D8F20053A2D00814D36 /* EnvMap.vert in Resources */,
@@ -1871,12 +1867,11 @@
 				62A8AAF91FE2E442000EB01C /* cloud_C_envmap.jpg in Resources */,
 				6270DC9B1FCB23D800FB457D /* level6.json in Resources */,
 				62944D8120053A2D00814D36 /* TexturedLighting.vert in Resources */,
-				6270DC691FCB22AE00FB457D /* triangle_428_r90.obj in Resources */,
 				62944DB020053A2D00814D36 /* build_freetype.sh in Resources */,
 				6270DC901FCB23D800FB457D /* level17.json in Resources */,
 				6270DC8C1FCB23D800FB457D /* level13.json in Resources */,
-				6270DC651FCB22AE00FB457D /* triangle_428.obj in Resources */,
 				62E2222C1FE9748500AE098B /* cloud_E_512.png in Resources */,
+				6276B700203F20150075C468 /* triangle_320.obj in Resources */,
 				6270DCB01FCB248E00FB457D /* star_particle.png in Resources */,
 				6270DC631FCB22AE00FB457D /* star.obj in Resources */,
 				62944D8620053A2D00814D36 /* Text.vert in Resources */,
@@ -1904,17 +1899,17 @@
 				62944D8420053A2D00814D36 /* VertexColor.frag in Resources */,
 				62E222241FE9704900AE098B /* cloud_A_512.png in Resources */,
 				62944D7F20053A2D00814D36 /* Textured.frag in Resources */,
+				6276B704203F26730075C468 /* triangle_320_r180.obj in Resources */,
+				6276B706203F26E90075C468 /* triangle_320_r90.obj in Resources */,
 				6270DC8A1FCB23D800FB457D /* level11.json in Resources */,
 				62944D8020053A2D00814D36 /* VertexLighting.vert in Resources */,
 				6270DC611FCB22AE00FB457D /* cube_428.obj in Resources */,
 				6270DC891FCB23D800FB457D /* level10.json in Resources */,
-				6270DC681FCB22AE00FB457D /* triangle_428_r270.obj in Resources */,
 				6278591C203AFB7C00494A4D /* Images.xcassets in Resources */,
 				6270DC621FCB22AE00FB457D /* cube_554.obj in Resources */,
 				6270DCAC1FCB248E00FB457D /* sky_blurred.jpg in Resources */,
 				62E2222A1FE9737F00AE098B /* cloud_D_512.png in Resources */,
 				62E222261FE971C300AE098B /* cloud_B_512.png in Resources */,
-				6270DC671FCB22AE00FB457D /* triangle_428_r180.obj in Resources */,
 				62944D8320053A2D00814D36 /* Particle.frag in Resources */,
 				6270DC551FCB212B00FB457D /* Blip.wav in Resources */,
 				6270DCAE1FCB248E00FB457D /* sky_upside_down_patched_mirrored.jpg in Resources */,
@@ -1926,6 +1921,7 @@
 				6270DC9C1FCB23D800FB457D /* level7.json in Resources */,
 				6270DCAD1FCB248E00FB457D /* sky_upside_down.jpg in Resources */,
 				6270DC941FCB23D800FB457D /* level20.json in Resources */,
+				6276B702203F25AD0075C468 /* triangle_320_r270.obj in Resources */,
 				62944D8C20053A2D00814D36 /* Textured.vert in Resources */,
 				6270DC8B1FCB23D800FB457D /* level12.json in Resources */,
 				62944D7E20053A2D00814D36 /* PixelLighting.vert in Resources */,

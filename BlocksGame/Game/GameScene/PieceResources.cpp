@@ -19,13 +19,13 @@ namespace {
     std::string ToMeshName(BlockRenderableKind blockRenderableKind) {
         switch (blockRenderableKind) {
             case BlockRenderableKind::LowerRightHalf:
-                return "triangle_428.obj";
+                return "triangle_320.obj";
             case BlockRenderableKind::UpperRightHalf:
-                return "triangle_428_r270.obj";
+                return "triangle_320_r270.obj";
             case BlockRenderableKind::UpperLeftHalf:
-                return "triangle_428_r180.obj";
+                return "triangle_320_r180.obj";
             case BlockRenderableKind::LowerLeftHalf:
-                return "triangle_428_r90.obj";
+                return "triangle_320_r90.obj";
             case BlockRenderableKind::Full:
                 return "cube_428.obj";
             case BlockRenderableKind::None:
