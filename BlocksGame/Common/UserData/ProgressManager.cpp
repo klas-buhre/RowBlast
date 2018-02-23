@@ -35,6 +35,7 @@ int ProgressManager::CalculateNumStars(int movesUsed, const StarLimits& starLimi
 
 void ProgressManager::StartLevel(int levelIndex) {
     mCurrentLevel = levelIndex;
+    SaveState();
 }
 
 void ProgressManager::CompleteLevel(int levelIndex, int numStars) {

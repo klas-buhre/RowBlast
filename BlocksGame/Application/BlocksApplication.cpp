@@ -54,8 +54,7 @@ Backlog:
     -Credit the icon creator: <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
   
 Ongoing tasks:
-    -Maybe two merged triangles should be changed into a cube after the weld animation.
-    -Try 3 new weld types: normal, aslope and diagonal.
+
 
 Ideas:
     -The pause button could lead to a widget that has an undo button, a boosters button and a game
@@ -71,6 +70,7 @@ Time Estimation in days:
         Done
     -Finalize gameplay.
         Cost: 10
+        Done
     -Fix all gameplay bugs.
         Cost: 7
     -Switch piece HUD animation.
@@ -241,12 +241,6 @@ profile 0.5
 Export settings:
     Forward: Y Forward
     Up: Z Up
-
-triangle_428:
-bevel width: 0.085
-segments: 5
-profile 0.5
-Rotated 90 degrees and forward: z direction in export settings.
 
 cube_428:
 bevel width: 0.135

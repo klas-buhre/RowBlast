@@ -193,15 +193,15 @@ void PieceResources::CreateWelds(Pht::ISceneManager& sceneManager,
             
             if (isDiagonal) {
                 auto renderableObject {
-                    sceneManager.CreateRenderableObject(Pht::QuadMesh {0.19f, 1.2f}, material)
+                    sceneManager.CreateRenderableObject(Pht::ObjMesh {"weld_76.obj", 0.95f}, material)
                 };
-                
+
                 mDiagonalWelds[weldIndex] = std::move(renderableObject);
             } else {
                 auto renderableObject {
-                    sceneManager.CreateRenderableObject(Pht::QuadMesh {0.19f, 0.85f}, material)
+                    sceneManager.CreateRenderableObject(Pht::QuadMesh {0.17f, 0.85f}, material)
                 };
-                
+
                 mWelds[weldIndex] = std::move(renderableObject);
             }
         }

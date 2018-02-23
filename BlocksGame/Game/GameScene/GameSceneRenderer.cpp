@@ -175,7 +175,7 @@ void GameSceneRenderer::RenderBlockWelds(const SubCell& subCell,
                         GetWeldRenderable(subCell, weldAnimations.mRight),
                         pool);
     }
-    
+
     if (welds.mDiagonal && isSecondSubCell) {
         auto& diagonalAnimation {weldAnimations.mDiagonal};
         auto color {subCell.mColor};

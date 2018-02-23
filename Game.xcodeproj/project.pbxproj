@@ -153,6 +153,7 @@
 		6276B702203F25AD0075C468 /* triangle_320_r270.obj in Resources */ = {isa = PBXBuildFile; fileRef = 6276B701203F25AC0075C468 /* triangle_320_r270.obj */; };
 		6276B704203F26730075C468 /* triangle_320_r180.obj in Resources */ = {isa = PBXBuildFile; fileRef = 6276B703203F26730075C468 /* triangle_320_r180.obj */; };
 		6276B706203F26E90075C468 /* triangle_320_r90.obj in Resources */ = {isa = PBXBuildFile; fileRef = 6276B705203F26E90075C468 /* triangle_320_r90.obj */; };
+		6276B7102040297E0075C468 /* weld_76.obj in Resources */ = {isa = PBXBuildFile; fileRef = 6276B70F2040297D0075C468 /* weld_76.obj */; };
 		6278590620375DBF00494A4D /* level27.json in Resources */ = {isa = PBXBuildFile; fileRef = 6278590520375DBF00494A4D /* level27.json */; };
 		6278591C203AFB7C00494A4D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6278591B203AFB7C00494A4D /* Images.xcassets */; };
 		6278591E203B309A00494A4D /* level28.json in Resources */ = {isa = PBXBuildFile; fileRef = 6278591D203B309900494A4D /* level28.json */; };
@@ -496,6 +497,7 @@
 		6276B701203F25AC0075C468 /* triangle_320_r270.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = triangle_320_r270.obj; sourceTree = "<group>"; };
 		6276B703203F26730075C468 /* triangle_320_r180.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = triangle_320_r180.obj; sourceTree = "<group>"; };
 		6276B705203F26E90075C468 /* triangle_320_r90.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = triangle_320_r90.obj; sourceTree = "<group>"; };
+		6276B70F2040297D0075C468 /* weld_76.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = weld_76.obj; sourceTree = "<group>"; };
 		6278590520375DBF00494A4D /* level27.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level27.json; sourceTree = "<group>"; };
 		6278591B203AFB7C00494A4D /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		6278591D203B309900494A4D /* level28.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level28.json; sourceTree = "<group>"; };
@@ -1238,6 +1240,7 @@
 		6270DC571FCB22AE00FB457D /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				6276B70F2040297D0075C468 /* weld_76.obj */,
 				6276B705203F26E90075C468 /* triangle_320_r90.obj */,
 				6276B703203F26730075C468 /* triangle_320_r180.obj */,
 				6276B701203F25AC0075C468 /* triangle_320_r270.obj */,
@@ -1894,6 +1897,7 @@
 				62944D8520053A2D00814D36 /* EnvMap.frag in Resources */,
 				6270DC641FCB22AE00FB457D /* star_1428.obj in Resources */,
 				6270DC9E1FCB23D800FB457D /* level9.json in Resources */,
+				6276B7102040297E0075C468 /* weld_76.obj in Resources */,
 				62944D8920053A2D00814D36 /* TexturedLighting.frag in Resources */,
 				6270DC561FCB212B00FB457D /* Bomb.wav in Resources */,
 				62944D8420053A2D00814D36 /* VertexColor.frag in Resources */,
