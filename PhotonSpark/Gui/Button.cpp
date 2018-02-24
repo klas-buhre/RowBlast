@@ -130,16 +130,12 @@ Button::Result Button::OnTouchEnd(const Vec2& touchLocation) {
     switch (mState) {
         case State::Up:
             break;
+        case State::Down:
         case State::MovedOutside:
             if (Hit(touchLocation)) {
                 result = Result::UpInside;
             } else {
                 result = Result::UpOutside;
-            }
-            break;
-        case State::Down:
-            if (Hit(touchLocation)) {
-                result = Result::UpInside;
             }
             break;
     }

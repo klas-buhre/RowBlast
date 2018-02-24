@@ -9,7 +9,6 @@ Backlog:
   -Gameplay:
     -Maybe blocks in the visible part of the field could disappear on some levels. For each move a
      random block disappears.
-    -Fix all bugs.
     -Maybe a sensitivity setting. Tetris Blitz has lower sensitility on iPad but not on iPhone.
     -When playing a level with clear objective the game could scroll up if there is no room to spawn
      the falling piece. If we are at the top of the level then it is game over.
@@ -54,7 +53,18 @@ Backlog:
     -Credit the icon creator: <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
   
 Ongoing tasks:
-
+    -Fix all bugs.
+        -Button bugs.
+          -One bug is that InputUtil::HandleInput() gets touch events from IInput as long as there
+           there are more events. This leads to that a button can get in to down state after the
+           button has been clicked in the current fram, which leaves the button in down state but
+           the view controller goes into sliding out state (from the first click) with the button
+           still in down state. Reproduce by double clicking the back button in settings menu in
+           while running on the simulator.
+          -Input events should not be added to the input queue in the engine during for example
+           menu sliding.
+          -Clickable ghost pieces can end up in pressed state?
+        -AI valid moves search bugs.
 
 Ideas:
     -The pause button could lead to a widget that has an undo button, a boosters button and a game
@@ -71,7 +81,7 @@ Time Estimation in days:
     -Finalize gameplay.
         Cost: 10
         Done
-    -Fix all gameplay bugs.
+    -Fix all bugs.
         Cost: 7
     -Switch piece HUD animation.
         Cost: 3

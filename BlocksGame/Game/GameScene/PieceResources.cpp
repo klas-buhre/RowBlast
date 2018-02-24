@@ -16,6 +16,8 @@
 using namespace BlocksGame;
 
 namespace {
+    constexpr auto numWeldRenderables {3};
+    
     std::string ToMeshName(BlockRenderableKind blockRenderableKind) {
         switch (blockRenderableKind) {
             case BlockRenderableKind::LowerRightHalf:
@@ -75,14 +77,34 @@ namespace {
         
         return material;
     }
+    
+    std::unique_ptr<Pht::RenderableObject>
+    ToWeldRenderableObject(WeldRenderableKind weldRenderableKind,
+                           const Pht::Material& material,
+                           Pht::ISceneManager& sceneManager) {
+        switch (weldRenderableKind) {
+            case WeldRenderableKind::Normal:
+                return sceneManager.CreateRenderableObject(Pht::QuadMesh {0.17f,
+                                                                          0.85f,
+                                                                          std::string{"normalWeld"}},
+                                                           material);
+            case WeldRenderableKind::Aslope:
+                return sceneManager.CreateRenderableObject(Pht::QuadMesh {0.19f,
+                                                                          0.85f,
+                                                                          std::string{"aslopeWeld"}},
+                                                           material);
+            case WeldRenderableKind::Diagonal:
+                return sceneManager.CreateRenderableObject(Pht::ObjMesh {"weld_76.obj", 0.95f},
+                                                           material);
+        }
+    }
 }
 
 PieceResources::PieceResources(Pht::IEngine& engine, const GameScene& scene) {
     auto& sceneManager {engine.GetSceneManager()};
     
     CreateBlocks(sceneManager, scene);
-    CreateWelds(sceneManager, scene, false);
-    CreateWelds(sceneManager, scene, true);
+    CreateWelds(sceneManager, scene);
     CreateBombs(sceneManager, scene);
 }
 
@@ -112,25 +134,27 @@ int PieceResources::CalcBlockIndex(BlockRenderableKind blockRenderable,
     return index;
 }
 
-Pht::RenderableObject& PieceResources::GetWeldRenderableObject(BlockColor color,
+Pht::RenderableObject& PieceResources::GetWeldRenderableObject(WeldRenderableKind weldRenderable,
+                                                               BlockColor color,
                                                                BlockBrightness brightness) const {
-    return *(mWelds[CalcWeldIndex(color, brightness)]);
+    return *(mWelds[CalcWeldIndex(weldRenderable, color, brightness)]);
 }
 
-Pht::RenderableObject&
-PieceResources::GetDiagonalWeldRenderableObject(BlockColor color,
-                                                BlockBrightness brightness) const {
-    return *(mDiagonalWelds[CalcWeldIndex(color, brightness)]);
-}
-
-int PieceResources::CalcWeldIndex(BlockColor color, BlockBrightness brightness) const {
+int PieceResources::CalcWeldIndex(WeldRenderableKind weldRenderable,
+                                  BlockColor color,
+                                  BlockBrightness brightness) const {
+    auto weldRenderableIndex {static_cast<int>(weldRenderable)};
     auto colorIndex {static_cast<int>(color)};
     auto brightnessIndex {static_cast<int>(brightness)};
     
-    assert(colorIndex >= 0 && colorIndex < Quantities::numBlockColors &&
+    assert(weldRenderableIndex >= 0 && weldRenderableIndex < numWeldRenderables &&
+           colorIndex >= 0 && colorIndex < Quantities::numBlockColors &&
            brightnessIndex >= 0 && brightnessIndex < Quantities::numWeldBrightness);
 
-    auto index {brightnessIndex * Quantities::numBlockColors + colorIndex};
+    auto index {
+        brightnessIndex * numWeldRenderables * Quantities::numBlockColors +
+        colorIndex * numWeldRenderables + weldRenderableIndex
+    };
     
     assert(index < mWelds.size());
     return index;
@@ -170,39 +194,26 @@ void PieceResources::CreateBlocks(Pht::ISceneManager& sceneManager, const GameSc
     }
 }
 
-void PieceResources::CreateWelds(Pht::ISceneManager& sceneManager,
-                                 const GameScene& scene,
-                                 bool isDiagonal) {
-    auto numWelds {Quantities::numBlockColors * Quantities::numWeldBrightness};
+void PieceResources::CreateWelds(Pht::ISceneManager& sceneManager, const GameScene& scene) {
+    auto numWelds {numWeldRenderables * Quantities::numBlockColors * Quantities::numWeldBrightness};
+    mWelds.resize(numWelds);
     
-    if (isDiagonal) {
-        mDiagonalWelds.resize(numWelds);
-    } else {
-        mWelds.resize(numWelds);
-    }
-    
-    for (auto colorIndex {0}; colorIndex < Quantities::numBlockColors; ++colorIndex) {
-        for (auto brightnessIndex {0};
-             brightnessIndex < Quantities::numWeldBrightness;
-             ++brightnessIndex) {
-            auto color {static_cast<BlockColor>(colorIndex)};
-            auto brightness {static_cast<BlockBrightness>(brightnessIndex)};
-            
-            auto material {ToMaterial(color, brightness, scene)};
-            auto weldIndex {CalcWeldIndex(color, brightness)};
-            
-            if (isDiagonal) {
-                auto renderableObject {
-                    sceneManager.CreateRenderableObject(Pht::ObjMesh {"weld_76.obj", 0.95f}, material)
-                };
-
-                mDiagonalWelds[weldIndex] = std::move(renderableObject);
-            } else {
-                auto renderableObject {
-                    sceneManager.CreateRenderableObject(Pht::QuadMesh {0.17f, 0.85f}, material)
-                };
-
-                mWelds[weldIndex] = std::move(renderableObject);
+    for (auto weldRenderableIndex {0};
+         weldRenderableIndex < numWeldRenderables;
+         ++weldRenderableIndex) {
+        for (auto colorIndex {0}; colorIndex < Quantities::numBlockColors; ++colorIndex) {
+            for (auto brightnessIndex {0};
+                 brightnessIndex < Quantities::numWeldBrightness;
+                 ++brightnessIndex) {
+                auto weldRenderableKind {static_cast<WeldRenderableKind>(weldRenderableIndex)};
+                auto color {static_cast<BlockColor>(colorIndex)};
+                auto brightness {static_cast<BlockBrightness>(brightnessIndex)};
+                
+                auto material {ToMaterial(color, brightness, scene)};
+                auto weldIndex {CalcWeldIndex(weldRenderableKind, color, brightness)};
+                mWelds[weldIndex] = ToWeldRenderableObject(weldRenderableKind,
+                                                           material,
+                                                           sceneManager);
             }
         }
     }

@@ -6,15 +6,20 @@
 
 using namespace Pht;
 
-QuadMesh::QuadMesh(float xSize, float ySize) :
-    QuadMesh {xSize, ySize, Vec2{1.0f, 1.0f}} {}
+QuadMesh::QuadMesh(float xSize, float ySize, const Optional<std::string>& name) :
+    QuadMesh {xSize, ySize, Vec2{1.0f, 1.0f}, name} {}
 
-QuadMesh::QuadMesh(float xSize, float ySize, const Vec2& textureCount) :
+QuadMesh::QuadMesh(float xSize,
+                   float ySize,
+                   const Vec2& textureCount,
+                   const Optional<std::string>& name) :
+    mName {name},
     mXSize {xSize},
     mYSize {ySize},
     mTextureCount {textureCount} {}
 
-QuadMesh::QuadMesh(const Vertices& vertices) :
+QuadMesh::QuadMesh(const Vertices& vertices, const Optional<std::string>& name) :
+    mName {name},
     mVertices {vertices} {}
 
 Optional<std::string> QuadMesh::GetName() const {

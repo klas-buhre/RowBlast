@@ -18,14 +18,18 @@ namespace Pht {
             Vertex mV3;
         };
         
-        QuadMesh(float xSize, float ySize);
-        QuadMesh(float xSize, float ySize, const Vec2& textureCount);
-        QuadMesh(const Vertices& vertices);
+        QuadMesh(float xSize, float ySize, const Optional<std::string>& name = {});
+        QuadMesh(float xSize,
+                 float ySize,
+                 const Vec2& textureCount,
+                 const Optional<std::string>& name = {});
+        QuadMesh(const Vertices& vertices, const Optional<std::string>& name = {});
         
         Optional<std::string> GetName() const override;
         VertexBuffer GetVertices(VertexFlags flags) const override;
         
     private:
+        Optional<std::string> mName;
         float mXSize {0.0f};
         float mYSize {0.0f};
         Vertices mVertices;

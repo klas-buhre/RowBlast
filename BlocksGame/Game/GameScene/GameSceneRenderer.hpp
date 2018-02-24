@@ -6,6 +6,7 @@
 
 // Game includes.
 #include "Cell.hpp"
+#include "PieceResources.hpp"
 
 namespace Pht {
     class RenderableObject;
@@ -46,7 +47,8 @@ namespace BlocksGame {
                              float scale,
                              Pht::RenderableObject& weldRenderableObject,
                              SceneObjectPool& pool);
-        Pht::RenderableObject& GetWeldRenderable(const SubCell& subCell,
+        Pht::RenderableObject& GetWeldRenderable(WeldRenderableKind renderableKind,
+                                                 const SubCell& subCell,
                                                  const WeldAnimation& weldAnimation);
         void RenderFallingPiece();
         void RenderPieceBlocks(const CellGrid& pieceBlocks,
