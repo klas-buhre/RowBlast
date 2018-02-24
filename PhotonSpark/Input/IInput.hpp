@@ -11,6 +11,8 @@ namespace Pht {
         virtual ~IInput() {}
         
         virtual void SetUseGestureRecognizers(bool useGestureRecognizers) = 0;
+        virtual void EnableInput() = 0;
+        virtual void DisableInput() = 0;
         virtual bool HasEvents() const = 0;
         virtual const InputEvent& GetNextEvent() const = 0;
         virtual void PopNextEvent() = 0;

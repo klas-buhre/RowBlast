@@ -54,16 +54,7 @@ Backlog:
   
 Ongoing tasks:
     -Fix all bugs.
-        -Button bugs.
-          -One bug is that InputUtil::HandleInput() gets touch events from IInput as long as there
-           there are more events. This leads to that a button can get in to down state after the
-           button has been clicked in the current fram, which leaves the button in down state but
-           the view controller goes into sliding out state (from the first click) with the button
-           still in down state. Reproduce by double clicking the back button in settings menu in
-           while running on the simulator.
-          -Input events should not be added to the input queue in the engine during for example
-           menu sliding.
-          -Clickable ghost pieces can end up in pressed state?
+        -Touch input at lower screen edge.
         -AI valid moves search bugs.
 
 Ideas:

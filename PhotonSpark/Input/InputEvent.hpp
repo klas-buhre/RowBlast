@@ -36,6 +36,7 @@ namespace Pht {
     
     class InputEvent {
     public:
+        InputEvent();
         explicit InputEvent(const TouchEvent& event);
         explicit InputEvent(const TapGestureEvent& event);
         explicit InputEvent(const PanGestureEvent& event);

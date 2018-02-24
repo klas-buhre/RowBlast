@@ -2,6 +2,7 @@
 
 // Engine includes.
 #include "IEngine.hpp"
+#include "IInput.hpp"
 
 // Game includes.
 #include "LevelLoader.hpp"
@@ -481,6 +482,7 @@ void GameController::StartLevelCompletedAnimation() {
 
 void GameController::GoToPlayingState() {
     mState = GameState::Playing;
+    mEngine.GetInput().EnableInput();
     mGameViewControllers.SetActiveController(GameViewControllers::GameHud);
 }
 

@@ -18,39 +18,55 @@ InputHandler::InputHandler(const Vec2& nativeScreenInputSize) :
     mScreenInputSize.x = nativeWhRatio * defaultScreenInputSize.x / defaultWhRatio;
     mScreenInputSize.y = defaultScreenInputSize.y;
     
-    mEventQueue.reserve(eventQueueMaxSize);
+    mEventQueue.resize(eventQueueMaxSize);
 }
 
 void InputHandler::SetUseGestureRecognizers(bool useGestureRecognizers) {
     mUseGestureRecognizers = useGestureRecognizers;
 }
 
-void InputHandler::PushToQueue(InputEvent& event) {
-    ProcessInputEvent(event);
+void InputHandler::EnableInput() {
+    mQueueReadIndex = 0;
+    mQueueWriteIndex = 0;
+    mIsInputEnabled = true;
+}
 
-    if (mEventQueue.size() < eventQueueMaxSize) {
-        mEventQueue.push_back(event);
-    } else {
-        mEventQueue[mQueueWriteIndex % eventQueueMaxSize] = event;
+void InputHandler::DisableInput() {
+    mQueueReadIndex = 0;
+    mQueueWriteIndex = 0;
+    mIsInputEnabled = false;
+}
+
+void InputHandler::PushToQueue(InputEvent& event) {
+    if (!mIsInputEnabled) {
+        return;
     }
+    
+    ProcessInputEvent(event);
+    mEventQueue[mQueueWriteIndex % eventQueueMaxSize] = event;
     
     ++mQueueWriteIndex;
     assert(mQueueWriteIndex - mQueueReadIndex <= eventQueueMaxSize);
 }
 
 bool InputHandler::HasEvents() const {
-    return mQueueReadIndex != mQueueWriteIndex;
+    return mIsInputEnabled && (mQueueReadIndex != mQueueWriteIndex);
 }
 
 const InputEvent& InputHandler::GetNextEvent() const {
+    assert(mIsInputEnabled);
     return mEventQueue[mQueueReadIndex % eventQueueMaxSize];
 }
 
 void InputHandler::PopNextEvent() {
-    ++mQueueReadIndex;
+    if (mIsInputEnabled) {
+        ++mQueueReadIndex;
+    }
 }
 
 bool InputHandler::ConsumeWholeTouch() {
+    assert(mIsInputEnabled);
+    
     auto gotTouch {false};
     
     while (HasEvents()) {

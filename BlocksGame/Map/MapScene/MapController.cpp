@@ -116,7 +116,7 @@ MapController::Command MapController::HandleInput() {
                         break;
                     case SettingsButtonController::Result::TouchStartedOverButton:
                         break;
-                }            
+                }
                 break;
             }
             default:

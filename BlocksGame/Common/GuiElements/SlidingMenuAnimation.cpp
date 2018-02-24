@@ -3,6 +3,7 @@
 // Engine includes.
 #include "IEngine.hpp"
 #include "IRenderer.hpp"
+#include "IInput.hpp"
 #include "GuiView.hpp"
 #include "UiLayer.hpp"
 #include "FadeEffect.hpp"
@@ -39,6 +40,8 @@ void SlidingMenuAnimation::Init(UpdateFade updateFade, SlideDirection slideInDir
     if (mUpdateFade == UpdateFade::Yes) {
         mFadeEffect->Reset();
     }
+    
+    mEngine.GetInput().DisableInput();
 }
 
 void SlidingMenuAnimation::StartSlideIn() {
@@ -79,6 +82,8 @@ void SlidingMenuAnimation::StartSlideOut(UpdateFade updateFade, SlideDirection s
     mUpdateFade = updateFade;
     mState = State::SlidingOut;
     mElapsedTime = 0.0f;
+    
+    mEngine.GetInput().DisableInput();
 }
 
 SlidingMenuAnimation::State SlidingMenuAnimation::Update() {
@@ -115,10 +120,10 @@ void SlidingMenuAnimation::UpdateInSlidingInState() {
         
         if (mUpdateFade == UpdateFade::Yes) {
             if (mFadeEffect->GetState() == Pht::FadeEffect::State::Transition) {
-                mState = State::ShowingMenu;
+                GoToShowingMenuState();
             }
         } else {
-            mState = State::ShowingMenu;
+            GoToShowingMenuState();
         }
     }
     
@@ -146,6 +151,11 @@ bool SlidingMenuAnimation::HasCompletelySlidIn(const Pht::Vec2& position) {
     return false;
 }
 
+void SlidingMenuAnimation::GoToShowingMenuState() {
+    mState = State::ShowingMenu;
+    mEngine.GetInput().EnableInput();
+}
+
 void SlidingMenuAnimation::UpdateInSlidingOutState() {
     auto dt {mEngine.GetLastFrameSeconds()};
     auto position {mView.GetPosition()};
@@ -162,10 +172,10 @@ void SlidingMenuAnimation::UpdateInSlidingOutState() {
         
         if (mUpdateFade == UpdateFade::Yes) {
             if (mFadeEffect->GetState() == Pht::FadeEffect::State::Idle) {
-                mState = State::Done;
+                GoToDoneState();
             }
         } else {
-            mState = State::Done;
+            GoToDoneState();
         }
     }
     
@@ -191,4 +201,9 @@ bool SlidingMenuAnimation::HasCompletelySlidOut(const Pht::Vec2& position) {
     }
     
     return false;
+}
+
+void SlidingMenuAnimation::GoToDoneState() {
+    mState = State::Done;
+    mEngine.GetInput().EnableInput();
 }

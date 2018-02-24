@@ -13,6 +13,8 @@ namespace Pht {
         InputHandler(const Vec2& nativeScreenInputSize);
         
         void SetUseGestureRecognizers(bool useGestureRecognizers) override;
+        void EnableInput() override;
+        void DisableInput() override;
         bool HasEvents() const override;
         const InputEvent& GetNextEvent() const override;
         void PopNextEvent() override;
@@ -30,6 +32,7 @@ namespace Pht {
         void ProcessTouchEvent(TouchEvent& event);
         Vec2 NativeToStandardCoordinates(const Vec2& nativeLocation);
     
+        bool mIsInputEnabled {true};
         bool mUseGestureRecognizers {true};
         std::vector<InputEvent> mEventQueue;
         int mQueueReadIndex {0};

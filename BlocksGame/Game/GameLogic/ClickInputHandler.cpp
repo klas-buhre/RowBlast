@@ -329,6 +329,10 @@ const ClickInputHandler::MoveAlternativeSet* ClickInputHandler::GetMoveAlternati
 }
 
 void ClickInputHandler::HandleTouch(const Pht::TouchEvent& touchEvent) {
+    if (mState == State::Inactive) {
+        return;
+    }
+    
     mEngine.GetRenderer().SetProjectionMode(Pht::ProjectionMode::Orthographic);
     
     for (auto i {0}; i < mMoveAlternativeSet.Size(); ++i) {

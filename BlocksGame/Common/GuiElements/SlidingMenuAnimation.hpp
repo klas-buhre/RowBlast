@@ -46,8 +46,10 @@ namespace BlocksGame {
     private:
         void UpdateInSlidingInState();
         bool HasCompletelySlidIn(const Pht::Vec2& position);
+        void GoToShowingMenuState();
         void UpdateInSlidingOutState();
         bool HasCompletelySlidOut(const Pht::Vec2& position);
+        void GoToDoneState();
     
         Pht::IEngine& mEngine;
         Pht::GuiView& mView;

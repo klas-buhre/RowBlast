@@ -550,6 +550,8 @@ void GameLogic::RotatateAndAdjustPosition(Rotation newRotation,
 }
 
 void GameLogic::SwitchPiece() {
+    std::cout << "switch" << std::endl;
+    
     mFallingPieceInitType = mCurrentMove.mSelectablePieces[1];
     mCurrentMove.mSelectablePieces[1] = mCurrentMove.mSelectablePieces[0];
     mCurrentMove.mSelectablePieces[0] = &mFallingPiece->GetPieceType();

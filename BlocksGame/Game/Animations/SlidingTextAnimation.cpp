@@ -122,6 +122,8 @@ void SlidingTextAnimation::UpdateInSlidingInState() {
         mState = State::DisplayingText;
         mElapsedTime = 0.0f;
         SetAlpha(alpha);
+        
+        mEngine.GetInput().EnableInput();
     }
 }
 

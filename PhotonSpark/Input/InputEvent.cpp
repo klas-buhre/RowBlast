@@ -4,6 +4,9 @@
 
 using namespace Pht;
 
+InputEvent::InputEvent() :
+    mKind {InputKind::Touch} {}
+
 InputEvent::InputEvent(const TouchEvent& event) :
     mKind {InputKind::Touch},
     mTouch {event} {}
