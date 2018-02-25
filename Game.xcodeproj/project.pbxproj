@@ -93,6 +93,7 @@
 		624EAFC21EE559A9009F81BC /* SlidingTextAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 624EAFC01EE559A9009F81BC /* SlidingTextAnimation.cpp */; };
 		624F89461EF521880020C832 /* UserData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 624F89441EF521880020C832 /* UserData.cpp */; };
 		624F89491EF6661D0020C832 /* LifeManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 624F89471EF6661D0020C832 /* LifeManager.cpp */; };
+		6251E26B2043168000584E28 /* FieldAnalyzer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6251E2692043168000584E28 /* FieldAnalyzer.cpp */; };
 		6254C16C1EED356800BBCAD2 /* SettingsMenuController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6254C16A1EED356800BBCAD2 /* SettingsMenuController.cpp */; };
 		6254C16F1EED39E300BBCAD2 /* CommonViewControllers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6254C16D1EED39E300BBCAD2 /* CommonViewControllers.cpp */; };
 		6255510A201C93EA008A8BD3 /* GameHud.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62555108201C93EA008A8BD3 /* GameHud.cpp */; };
@@ -417,6 +418,8 @@
 		624F89451EF521880020C832 /* UserData.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = UserData.hpp; sourceTree = "<group>"; };
 		624F89471EF6661D0020C832 /* LifeManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LifeManager.cpp; sourceTree = "<group>"; };
 		624F89481EF6661D0020C832 /* LifeManager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LifeManager.hpp; sourceTree = "<group>"; };
+		6251E2692043168000584E28 /* FieldAnalyzer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FieldAnalyzer.cpp; sourceTree = "<group>"; };
+		6251E26A2043168000584E28 /* FieldAnalyzer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = FieldAnalyzer.hpp; sourceTree = "<group>"; };
 		6254C16A1EED356800BBCAD2 /* SettingsMenuController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SettingsMenuController.cpp; sourceTree = "<group>"; };
 		6254C16B1EED356800BBCAD2 /* SettingsMenuController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SettingsMenuController.hpp; sourceTree = "<group>"; };
 		6254C16D1EED39E300BBCAD2 /* CommonViewControllers.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CommonViewControllers.cpp; sourceTree = "<group>"; };
@@ -1007,6 +1010,8 @@
 				6244473D1EDDD2C40080ECE8 /* FallingPiece.hpp */,
 				6244473E1EDDD2C40080ECE8 /* Field.cpp */,
 				6244473F1EDDD2C40080ECE8 /* Field.hpp */,
+				6251E2692043168000584E28 /* FieldAnalyzer.cpp */,
+				6251E26A2043168000584E28 /* FieldAnalyzer.hpp */,
 				624447401EDDD2C40080ECE8 /* GameLogic.cpp */,
 				624447411EDDD2C40080ECE8 /* GameLogic.hpp */,
 				623C16C31F45F7C000305752 /* GestureInputHandler.cpp */,
@@ -2034,6 +2039,7 @@
 				62944D7020053A2D00814D36 /* SphereMesh.cpp in Sources */,
 				624F89461EF521880020C832 /* UserData.cpp in Sources */,
 				624447A21EDDD2C40080ECE8 /* MenuQuad.cpp in Sources */,
+				6251E26B2043168000584E28 /* FieldAnalyzer.cpp in Sources */,
 				6286F9AE1FF26BD2004DEF90 /* Chapter.cpp in Sources */,
 				62944DA120053A2D00814D36 /* Font.cpp in Sources */,
 				62944D7620053A2D00814D36 /* Camera.cpp in Sources */,

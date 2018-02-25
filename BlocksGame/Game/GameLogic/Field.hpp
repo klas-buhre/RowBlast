@@ -96,12 +96,6 @@ namespace BlocksGame {
         int CalculateNumEmptyBlueprintSlots() const;
         int CalculateHighestLevelBlock() const;
         int AccordingToBlueprintHeight() const;
-        int GetNumCellsAccordingToBlueprintInVisibleRows() const;
-        float GetBuildHolesAreaInVisibleRows() const;
-        float GetBuildWellsAreaInVisibleRows() const;
-        float GetBurriedHolesAreaInVisibleRows() const;
-        float GetWellsAreaInVisibleRows() const;
-        int GetNumTransitionsInVisibleRows() const;
         
         using RemovedSubCells = Pht::StaticVector<RemovedSubCell, maxNumColumns * maxNumRows>;
         
@@ -164,11 +158,11 @@ namespace BlocksGame {
         }
         
     private:
+        friend class FieldAnalyzer;
+        
         void SaveState();
         void CopyGridNoAlloc(CellGrid& to, const CellGrid& from);
         bool IsCellAccordingToBlueprint(int row, int column) const;
-        int GetNumTransitionsInColumns() const;
-        int GetNumTransitionsInRows() const;
         Pht::IVec2 ScanUntilCollision(const PieceBlocks& pieceBlocks,
                                       Pht::IVec2 position,
                                       const Pht::IVec2& step) const;

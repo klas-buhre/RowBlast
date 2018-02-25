@@ -351,8 +351,6 @@ void GameHud::CreateTwoPreviewPieces(TwoPreviewPieces& previewPieces,
 }
 
 void GameHud::OnSwitchButtonDown() {
-    std::cout << "OnSwitchButtonDown" << std::endl;
-    
     mBrightSelectablePiecesRectangle->SetIsVisible(true);
     mBrightSwitchTextRectangle->SetIsVisible(true);
     mSelectablePiecesRectangle->SetIsVisible(false);
@@ -360,8 +358,6 @@ void GameHud::OnSwitchButtonDown() {
 }
 
 void GameHud::OnSwitchButtonUp() {
-    std::cout << "OnSwitchButtonUp" << std::endl;
-    
     mBrightSelectablePiecesRectangle->SetIsVisible(false);
     mBrightSwitchTextRectangle->SetIsVisible(false);
     mSelectablePiecesRectangle->SetIsVisible(true);

@@ -117,6 +117,11 @@ namespace BlocksGame {
     };
 
     struct SubCell {
+        bool FillsLowerCellSide() const;
+        bool FillsUpperCellSide() const;
+        bool FillsRightCellSide() const;
+        bool FillsLeftCellSide() const;
+
         bool IsFull() const {
             return mFill == Fill::Full;
         }

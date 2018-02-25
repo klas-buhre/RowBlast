@@ -44,50 +44,6 @@ namespace {
         }
     }
 
-    bool FillsLowerCellSide(const SubCell& subCell) {
-        switch (subCell.mFill) {
-            case Fill::Full:
-            case Fill::LowerLeftHalf:
-            case Fill::LowerRightHalf:
-                return true;
-            default:
-                return false;
-        }
-    }
-
-    bool FillsUpperCellSide(const SubCell& subCell) {
-        switch (subCell.mFill) {
-            case Fill::Full:
-            case Fill::UpperLeftHalf:
-            case Fill::UpperRightHalf:
-                return true;
-            default:
-                return false;
-        }
-    }
-
-    bool FillsRightCellSide(const SubCell& subCell) {
-        switch (subCell.mFill) {
-            case Fill::Full:
-            case Fill::UpperRightHalf:
-            case Fill::LowerRightHalf:
-                return true;
-            default:
-                return false;
-        }
-    }
-
-    bool FillsLeftCellSide(const SubCell& subCell) {
-        switch (subCell.mFill) {
-            case Fill::Full:
-            case Fill::UpperLeftHalf:
-            case Fill::LowerLeftHalf:
-                return true;
-            default:
-                return false;
-        }
-    }
-
     void BreakDownWelds(Welds& welds) {
         welds.mDownRight = false;
         welds.mDown = false;
@@ -325,123 +281,6 @@ int Field::AccordingToBlueprintHeight() const {
     return mNumRows;
 }
 
-int Field::GetNumCellsAccordingToBlueprintInVisibleRows() const {
-    assert(mBlueprintGrid);
-    
-    auto result {0};
-    auto pastHighestVisibleRow {mLowestVisibleRow + GetNumRowsInOneScreen()};
-    
-    for (auto row {mLowestVisibleRow}; row < pastHighestVisibleRow; ++row) {
-        for (auto column {0}; column < mNumColumns; ++column) {
-            if (mGrid[row][column].mIsInFilledRow) {
-                continue;
-            }
-            
-            if (IsCellAccordingToBlueprint(row, column)) {
-                ++result;
-            }
-        }
-    }
-
-    return result;
-}
-
-float Field::GetBuildHolesAreaInVisibleRows() const {
-    assert(mBlueprintGrid);
-    
-    auto area {0.0f};
-    
-    for (auto column {0}; column < mNumColumns; ++column) {
-        auto aboveIsFilled {false};
-        
-        for (auto row {mLowestVisibleRow + GetNumRowsInOneScreen() - 1};
-             row >= mLowestVisibleRow;
-             --row) {
-            auto& cell {mGrid[row][column]};
-            
-            if (cell.mIsInFilledRow) {
-                continue;
-            }
-            
-            auto thisCellShouldBeFilled {(*mBlueprintGrid)[row][column].mFill != Fill::Empty};
-            
-            if (cell.IsEmpty()) {
-                if (aboveIsFilled && thisCellShouldBeFilled) {
-                    area += 1.0f;
-                }
-                
-                continue;
-            }
-            
-            if (cell.IsFull()) {
-                aboveIsFilled = true;
-                continue;
-            }
-            
-            auto cellFill {
-                cell.mSecondSubCell.IsEmpty() ? cell.mFirstSubCell.mFill : cell.mSecondSubCell.mFill
-            };
-            
-            switch (cellFill) {
-                case Fill::UpperLeftHalf:
-                case Fill::UpperRightHalf:
-                    if (thisCellShouldBeFilled) {
-                        area += 1.0f;
-                    }
-                    break;
-                case Fill::LowerLeftHalf:
-                case Fill::LowerRightHalf:
-                    if (aboveIsFilled && thisCellShouldBeFilled) {
-                        area += 1.0f;
-                    }
-                    break;
-                case Fill::Empty:
-                case Fill::Full:
-                    break;
-            }
-            
-            aboveIsFilled = true;
-        }
-    }
-    
-    return area;
-}
-
-float Field::GetBuildWellsAreaInVisibleRows() const {
-    assert(mBlueprintGrid);
-    
-    auto area {0.0f};
-    auto pastHighestVisibleRow {mLowestVisibleRow + GetNumRowsInOneScreen()};
-    
-    for (auto column {0}; column < mNumColumns; ++column) {
-        auto leftColumnIndex {column - 1};
-        auto rightColumnIndex {column + 1};
-        
-        for (auto row {mLowestVisibleRow}; row < pastHighestVisibleRow; ++row) {
-            auto& cell {mGrid[row][column]};
-            auto thisCellShouldBeFilled {(*mBlueprintGrid)[row][column].mFill != Fill::Empty};
-            
-            if (!thisCellShouldBeFilled || !cell.IsEmpty() || cell.mIsInFilledRow) {
-                continue;
-            }
-            
-            auto leftIsEmpty {
-                leftColumnIndex >= 0 ? mGrid[row][leftColumnIndex].IsEmpty() : false
-            };
-            
-            auto rightIsEmpty {
-                rightColumnIndex < mNumColumns ? mGrid[row][rightColumnIndex].IsEmpty() : false
-            };
-            
-            if (!leftIsEmpty && !rightIsEmpty) {
-                area += 1.0f;
-            }
-        }
-    }
-    
-    return area;
-}
-
 bool Field::IsCellAccordingToBlueprint(int row, int column) const {
     auto& cell {mGrid[row][column]};
     auto blueprintFill {(*mBlueprintGrid)[row][column].mFill};
@@ -465,162 +304,6 @@ bool Field::IsCellAccordingToBlueprint(int row, int column) const {
     }
     
     return true;
-}
-
-float Field::GetBurriedHolesAreaInVisibleRows() const {
-    auto area {0.0f};
-    
-    for (auto column {0}; column < mNumColumns; ++column) {
-        auto aboveIsFilled {false};
-        
-        for (auto row {mLowestVisibleRow + GetNumRowsInOneScreen() - 1};
-             row >= mLowestVisibleRow;
-             --row) {
-            auto& cell {mGrid[row][column]};
-            
-            if (cell.mIsInFilledRow) {
-                continue;
-            }
-            
-            if (cell.IsEmpty()) {
-                if (aboveIsFilled) {
-                    area += 1.0f;
-                }
-                
-                continue;
-            }
-            
-            if (cell.IsFull()) {
-                aboveIsFilled = true;
-                continue;
-            }
-            
-            auto fill {
-                cell.mSecondSubCell.IsEmpty() ? cell.mFirstSubCell.mFill : cell.mSecondSubCell.mFill
-            };
-            
-            switch (fill) {
-                case Fill::UpperLeftHalf:
-                case Fill::UpperRightHalf:
-                    area += 1.0f;
-                    break;
-                case Fill::LowerLeftHalf:
-                case Fill::LowerRightHalf:
-                    if (aboveIsFilled) {
-                        area += 1.0f;
-                    }
-                    break;
-                case Fill::Empty:
-                case Fill::Full:
-                    break;
-            }
-            
-            aboveIsFilled = true;
-        }
-    }
-    
-    return area;
-}
-
-float Field::GetWellsAreaInVisibleRows() const {
-    auto area {0.0f};
-    auto pastHighestVisibleRow {mLowestVisibleRow + GetNumRowsInOneScreen()};
-    
-    for (auto column {0}; column < mNumColumns; ++column) {
-        auto leftColumnIndex {column - 1};
-        auto rightColumnIndex {column + 1};
-        
-        for (auto row {mLowestVisibleRow}; row < pastHighestVisibleRow; ++row) {
-            auto& cell {mGrid[row][column]};
-            
-            if (!cell.IsEmpty() || cell.mIsInFilledRow) {
-                continue;
-            }
-            
-            auto leftIsEmpty {
-                leftColumnIndex >= 0 ? mGrid[row][leftColumnIndex].IsEmpty() : false
-            };
-            
-            auto rightIsEmpty {
-                rightColumnIndex < mNumColumns ? mGrid[row][rightColumnIndex].IsEmpty() : false
-            };
-            
-            if (!leftIsEmpty && !rightIsEmpty) {
-                area += 1.0f;
-            }
-        }
-    }
-    
-    return area;
-}
-
-int Field::GetNumTransitionsInVisibleRows() const {
-    return GetNumTransitionsInColumns() + GetNumTransitionsInRows();
-}
-
-int Field::GetNumTransitionsInColumns() const {
-    auto numTransitions {0};
-    auto pastHighestVisibleRow {mLowestVisibleRow + GetNumRowsInOneScreen()};
-    
-    for (auto column {0}; column < mNumColumns; ++column) {
-        for (auto row {mLowestVisibleRow}; row < pastHighestVisibleRow - 1; ++row) {
-            // TODO: Exclude cells with mIsInFilledRow==true.
-            auto thisCellIsEmpty {mGrid[row][column].IsEmpty()};
-            auto nextCellIsEmpty {mGrid[row + 1][column].IsEmpty()};
-            
-            if (thisCellIsEmpty != nextCellIsEmpty) {
-                ++numTransitions;
-            }
-        }
-        
-        auto bottomCellIsEmpty {mGrid[mLowestVisibleRow][column].IsEmpty()};
-        
-        if (bottomCellIsEmpty) {
-            ++numTransitions;
-        }
-        
-        auto topCellIsEmpty {mGrid[pastHighestVisibleRow - 1][column].IsEmpty()};
-        
-        if (topCellIsEmpty) {
-            ++numTransitions;
-        }
-    }
-    
-    return numTransitions;
-}
-
-int Field::GetNumTransitionsInRows() const {
-    auto numTransitions {0};
-    auto pastHighestVisibleRow {mLowestVisibleRow + GetNumRowsInOneScreen()};
-    
-    for (auto row {mLowestVisibleRow}; row < pastHighestVisibleRow; ++row) {
-        if (mGrid[row][0].mIsInFilledRow) {
-            continue;
-        }
-        
-        for (auto column {0}; column < mNumColumns - 1; ++column) {
-            auto thisCellIsEmpty {mGrid[row][column].IsEmpty()};
-            auto nextCellIsEmpty {mGrid[row][column + 1].IsEmpty()};
-            
-            if (thisCellIsEmpty != nextCellIsEmpty) {
-                ++numTransitions;
-            }
-        }
-        
-        auto leftCellIsEmpty {mGrid[row][0].IsEmpty()};
-        
-        if (leftCellIsEmpty) {
-            ++numTransitions;
-        }
-        
-        auto rightCellIsEmpty {mGrid[row][mNumColumns - 1].IsEmpty()};
-        
-        if (rightCellIsEmpty) {
-            ++numTransitions;
-        }
-    }
-    
-    return numTransitions;
 }
 
 int Field::DetectCollisionDown(const PieceBlocks& pieceBlocks, const Pht::IVec2& position) const {
@@ -932,7 +615,7 @@ void Field::MakeWelds(SubCell& subCell, const Pht::IVec2& position) {
 }
 
 bool Field::ShouldBeUpWeld(const SubCell& subCell, const Pht::IVec2& position) const {
-    if (!FillsUpperCellSide(subCell)) {
+    if (!subCell.FillsUpperCellSide()) {
         return false;
     }
     
@@ -947,11 +630,11 @@ bool Field::ShouldBeUpWeld(const SubCell& subCell, const Pht::IVec2& position) c
     auto& secondUpperSubCell {upperCell.mSecondSubCell};
     auto color {subCell.mColor};
     
-    if (firstUpperSubCell.mColor == color && FillsLowerCellSide(firstUpperSubCell)) {
+    if (firstUpperSubCell.mColor == color && firstUpperSubCell.FillsLowerCellSide()) {
         return true;
     }
     
-    if (secondUpperSubCell.mColor == color && FillsLowerCellSide(secondUpperSubCell)) {
+    if (secondUpperSubCell.mColor == color && secondUpperSubCell.FillsLowerCellSide()) {
         return true;
     }
     
@@ -959,7 +642,7 @@ bool Field::ShouldBeUpWeld(const SubCell& subCell, const Pht::IVec2& position) c
 }
 
 bool Field::ShouldBeRightWeld(const SubCell& subCell, const Pht::IVec2& position) const {
-    if (!FillsRightCellSide(subCell)) {
+    if (!subCell.FillsRightCellSide()) {
         return false;
     }
     
@@ -974,11 +657,11 @@ bool Field::ShouldBeRightWeld(const SubCell& subCell, const Pht::IVec2& position
     auto& secondRightSubCell {cellToTheRight.mSecondSubCell};
     auto color {subCell.mColor};
 
-    if (firstRightSubCell.mColor == color && FillsLeftCellSide(firstRightSubCell)) {
+    if (firstRightSubCell.mColor == color && firstRightSubCell.FillsLeftCellSide()) {
         return true;
     }
     
-    if (secondRightSubCell.mColor == color && FillsLeftCellSide(secondRightSubCell)) {
+    if (secondRightSubCell.mColor == color && secondRightSubCell.FillsLeftCellSide()) {
         return true;
     }
     
@@ -986,7 +669,7 @@ bool Field::ShouldBeRightWeld(const SubCell& subCell, const Pht::IVec2& position
 }
 
 bool Field::ShouldBeDownWeld(const SubCell& subCell, const Pht::IVec2& position) const {
-    if (!FillsLowerCellSide(subCell)) {
+    if (!subCell.FillsLowerCellSide()) {
         return false;
     }
     
@@ -1001,11 +684,11 @@ bool Field::ShouldBeDownWeld(const SubCell& subCell, const Pht::IVec2& position)
     auto& secondLowerSubCell {lowerCell.mSecondSubCell};
     auto color {subCell.mColor};
 
-    if (firstLowerSubCell.mColor == color && FillsUpperCellSide(firstLowerSubCell)) {
+    if (firstLowerSubCell.mColor == color && firstLowerSubCell.FillsUpperCellSide()) {
         return true;
     }
     
-    if (secondLowerSubCell.mColor == color && FillsUpperCellSide(secondLowerSubCell)) {
+    if (secondLowerSubCell.mColor == color && secondLowerSubCell.FillsUpperCellSide()) {
         return true;
     }
     
@@ -1013,7 +696,7 @@ bool Field::ShouldBeDownWeld(const SubCell& subCell, const Pht::IVec2& position)
 }
 
 bool Field::ShouldBeLeftWeld(const SubCell& subCell, const Pht::IVec2& position) const {
-    if (!FillsLeftCellSide(subCell)) {
+    if (!subCell.FillsLeftCellSide()) {
         return false;
     }
     
@@ -1028,11 +711,11 @@ bool Field::ShouldBeLeftWeld(const SubCell& subCell, const Pht::IVec2& position)
     auto& secondLeftSubCell {cellToTheLeft.mSecondSubCell};
     auto color {subCell.mColor};
     
-    if (firstLeftSubCell.mColor == color && FillsRightCellSide(firstLeftSubCell)) {
+    if (firstLeftSubCell.mColor == color && firstLeftSubCell.FillsRightCellSide()) {
         return true;
     }
     
-    if (secondLeftSubCell.mColor == color && FillsRightCellSide(secondLeftSubCell)) {
+    if (secondLeftSubCell.mColor == color && secondLeftSubCell.FillsRightCellSide()) {
         return true;
     }
     

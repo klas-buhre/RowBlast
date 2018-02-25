@@ -8,6 +8,7 @@
 
 // Game includes.
 #include "ValidMovesSearch.hpp"
+#include "FieldAnalyzer.hpp"
 
 namespace BlocksGame {
     class Field;
@@ -73,6 +74,7 @@ namespace BlocksGame {
         
         Pht::IEngine& mEngine;
         Field& mField;
+        FieldAnalyzer mFieldAnalyzer;
         const GameScene& mGameScene;
         IGameLogic& mGameLogic;
         State mState {State::Inactive};

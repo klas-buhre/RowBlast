@@ -40,6 +40,7 @@ ClickInputHandler::ClickInputHandler(Pht::IEngine& engine,
                                      IGameLogic& gameLogic) :
     mEngine {engine},
     mField {field},
+    mFieldAnalyzer {field},
     mGameScene {gameScene},
     mGameLogic {gameLogic},
     mValidMovesSearch {field},
@@ -125,9 +126,9 @@ void ClickInputHandler::EvaluateMoveForClearObjective(Move& move, int pieceId) {
         filledRowsMetric = static_cast<float>(numFilledRows) * filledRowsResult.mPieceCellsInFilledRows;
     }
     
-    auto burriedHolesArea {mField.GetBurriedHolesAreaInVisibleRows()};
-    auto wellsArea {mField.GetWellsAreaInVisibleRows()};
-    auto numTransitions {static_cast<float>(mField.GetNumTransitionsInVisibleRows())};
+    auto burriedHolesArea {mFieldAnalyzer.GetBurriedHolesAreaInVisibleRows()};
+    auto wellsArea {mFieldAnalyzer.GetWellsAreaInVisibleRows()};
+    auto numTransitions {static_cast<float>(mFieldAnalyzer.GetNumTransitionsInVisibleRows())};
     
     move.mScore = -landingHeight
                   + filledRowsMetric
@@ -145,11 +146,11 @@ void ClickInputHandler::EvaluateMoveForBuildObjective(Move& move) {
     };
     
     auto numCellsAccordingToBlueprint {
-        static_cast<float>(mField.GetNumCellsAccordingToBlueprintInVisibleRows())
+        static_cast<float>(mFieldAnalyzer.GetNumCellsAccordingToBlueprintInVisibleRows())
     };
 
-    auto buildHolesArea {mField.GetBuildHolesAreaInVisibleRows()};
-    auto buildWellsArea {mField.GetBuildWellsAreaInVisibleRows()};
+    auto buildHolesArea {mFieldAnalyzer.GetBuildHolesAreaInVisibleRows()};
+    auto buildWellsArea {mFieldAnalyzer.GetBuildWellsAreaInVisibleRows()};
     
     move.mScore = -landingHeight
                   + 2.0f * numCellsAccordingToBlueprint

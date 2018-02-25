@@ -39,6 +39,50 @@ float BlocksGame::RotationToDeg(Rotation rotation) {
     }
 }
 
+bool SubCell::FillsLowerCellSide() const {
+    switch (mFill) {
+        case Fill::Full:
+        case Fill::LowerLeftHalf:
+        case Fill::LowerRightHalf:
+            return true;
+        default:
+            return false;
+    }
+}
+
+bool SubCell::FillsUpperCellSide() const {
+    switch (mFill) {
+        case Fill::Full:
+        case Fill::UpperLeftHalf:
+        case Fill::UpperRightHalf:
+            return true;
+        default:
+            return false;
+    }
+}
+
+bool SubCell::FillsRightCellSide() const {
+    switch (mFill) {
+        case Fill::Full:
+        case Fill::UpperRightHalf:
+        case Fill::LowerRightHalf:
+            return true;
+        default:
+            return false;
+    }
+}
+
+bool SubCell::FillsLeftCellSide() const {
+    switch (mFill) {
+        case Fill::Full:
+        case Fill::UpperLeftHalf:
+        case Fill::LowerLeftHalf:
+            return true;
+        default:
+            return false;
+    }
+}
+
 bool Cell::IsFull() const {
     switch (mFirstSubCell.mFill) {
         case Fill::Empty:
