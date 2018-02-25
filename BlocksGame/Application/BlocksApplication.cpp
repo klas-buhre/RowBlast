@@ -17,6 +17,7 @@ Backlog:
      convenient to go back to the state before the move and not the initial state.
     -Mega bomb?
   -Rendering:
+    -Try ghost pieces with very faint fill?
     -Could have the rounded cylinder i some places in the HUDs.
     -GUI: the buttons in the views could be yellow with black text and triangular edges like in
      Mario Kart 8. There could also be a reflection animation in the button.
@@ -54,8 +55,8 @@ Backlog:
   
 Ongoing tasks:
     -Fix all bugs.
-        -Touch input at lower screen edge.
         -AI valid moves search bugs.
+    -Move AI into its own folder under GameLogic.
 
 Ideas:
     -The pause button could lead to a widget that has an undo button, a boosters button and a game

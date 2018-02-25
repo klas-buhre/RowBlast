@@ -54,6 +54,14 @@
     mTimestamp = CACurrentMediaTime();
 }
 
+- (BOOL) prefersStatusBarHidden {
+    return YES;
+}
+
+- (UIRectEdge) preferredScreenEdgesDeferringSystemGestures {
+    return UIRectEdgeAll;
+}
+
 - (void) glkView:(GLKView*)view drawInRect:(CGRect)rect {
     if (!mEngine) {
         [self initEngine];
