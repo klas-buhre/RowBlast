@@ -6,7 +6,7 @@ namespace BlocksGame {
     
     class FieldAnalyzer {
     public:
-        FieldAnalyzer(const Field& field);
+        explicit FieldAnalyzer(const Field& field);
         
         float GetBurriedHolesAreaInVisibleRows() const;
         float GetWellsAreaInVisibleRows() const;

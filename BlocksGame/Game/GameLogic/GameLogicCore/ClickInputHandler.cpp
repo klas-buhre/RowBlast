@@ -16,10 +16,6 @@ using namespace BlocksGame;
 
 namespace {
     const float inputUnitsPerColumn {26.5f * 1.25f}; // {26.5f * 10.0f / Field::numColumns};
-    
-    bool CompareMoves(const Move* a, const Move* b) {
-        return a->mScore > b->mScore;
-    }
 }
 
 MoveButton::MoveButton(Pht::IEngine& engine) :
@@ -40,10 +36,9 @@ ClickInputHandler::ClickInputHandler(Pht::IEngine& engine,
                                      IGameLogic& gameLogic) :
     mEngine {engine},
     mField {field},
-    mFieldAnalyzer {field},
+    mAi {field},
     mGameScene {gameScene},
     mGameLogic {gameLogic},
-    mValidMovesSearch {field},
     mSwipeUpRecognizer {Pht::SwipeDirection::Up, inputUnitsPerColumn} {
 
     for (auto i {0}; i < maxNumVisibleMoves; ++i) {
@@ -52,10 +47,9 @@ ClickInputHandler::ClickInputHandler(Pht::IEngine& engine,
 }
 
 void ClickInputHandler::Init(const Level& level) {
-    mLevel = &level;
     mState = State::Inactive;
     
-    mValidMovesSearch.Init();
+    mAi.Init(level);
     
     mNumClickGridRows = mField.GetNumRows() * 2 + 2;
     mNumClickGridColumns = mField.GetNumColumns() * 2 + 2;
@@ -71,129 +65,24 @@ void ClickInputHandler::Init(const Level& level) {
 }
 
 void ClickInputHandler::CalculateMoves(const FallingPiece& fallingPiece) {
-    mValidMoves.Clear();
     mPieceType = &fallingPiece.GetPieceType();
-    
-    MovingPiece piece {
-        fallingPiece.GetIntPosition(),
-        fallingPiece.GetRotation(),
-        fallingPiece.GetPieceType()
-    };
-    
-    mValidMovesSearch.FindValidMoves(mValidMoves, piece);
-    EvaluateMoves(fallingPiece.GetId());
-    SortMoves();
-}
-
-void ClickInputHandler::EvaluateMoves(int pieceId) {
-    auto pieceNumRows {mPieceType->GetGridNumRows()};
-    auto pieceNumcolumns {mPieceType->GetGridNumColumns()};
-    auto& moves {mValidMoves.mMoves};
-    auto numMoves {moves.Size()};
-    
-    for (auto i {0}; i < numMoves; ++i) {
-        auto& move {moves.At(i)};
-        PieceBlocks pieceBlocks {mPieceType->GetGrid(move.mRotation), pieceNumRows, pieceNumcolumns};
-        
-        mField.LandPieceBlocks(pieceBlocks, pieceId, move.mPosition, false, false);
-        EvaluateMove(move, pieceId);
-        mField.RemovePiece(pieceId, move.mPosition, pieceNumRows, pieceNumcolumns);
-    }
-}
-
-void ClickInputHandler::EvaluateMove(Move& move, int pieceId) {
-    switch (mLevel->GetObjective()) {
-        case Level::Objective::Clear:
-            EvaluateMoveForClearObjective(move, pieceId);
-            break;
-        case Level::Objective::Build:
-            EvaluateMoveForBuildObjective(move);
-            break;
-    }
-}
-
-void ClickInputHandler::EvaluateMoveForClearObjective(Move& move, int pieceId) {
-    auto landingHeight {
-        static_cast<float>(move.mPosition.y - mField.GetLowestVisibleRow()) +
-        mPieceType->GetCenterPosition(move.mRotation).y
-    };
-
-    auto filledRowsMetric {0.0f};
-    auto filledRowsResult {mField.MarkFilledRowsAndCountPieceCellsInFilledRows(pieceId)};
-    auto numFilledRows {filledRowsResult.mFilledRowIndices.Size()};
-    
-    if (numFilledRows > 0) {
-        filledRowsMetric = static_cast<float>(numFilledRows) * filledRowsResult.mPieceCellsInFilledRows;
-    }
-    
-    auto burriedHolesArea {mFieldAnalyzer.GetBurriedHolesAreaInVisibleRows()};
-    auto wellsArea {mFieldAnalyzer.GetWellsAreaInVisibleRows()};
-    auto numTransitions {static_cast<float>(mFieldAnalyzer.GetNumTransitionsInVisibleRows())};
-    
-    move.mScore = -landingHeight
-                  + filledRowsMetric
-                  - 4.0f * burriedHolesArea
-                  - wellsArea
-                  - numTransitions;
-    
-    mField.UnmarkFilledRows(filledRowsResult.mFilledRowIndices);
-}
-
-void ClickInputHandler::EvaluateMoveForBuildObjective(Move& move) {
-    auto landingHeight {
-        static_cast<float>(move.mPosition.y - mField.GetLowestVisibleRow()) +
-        mPieceType->GetCenterPosition(move.mRotation).y
-    };
-    
-    auto numCellsAccordingToBlueprint {
-        static_cast<float>(mFieldAnalyzer.GetNumCellsAccordingToBlueprintInVisibleRows())
-    };
-
-    auto buildHolesArea {mFieldAnalyzer.GetBuildHolesAreaInVisibleRows()};
-    auto buildWellsArea {mFieldAnalyzer.GetBuildWellsAreaInVisibleRows()};
-    
-    move.mScore = -landingHeight
-                  + 2.0f * numCellsAccordingToBlueprint
-                  - 4.0f * buildHolesArea
-                  - 0.25f * buildWellsArea;
-}
-
-void ClickInputHandler::SortMoves() {
-    mSortedMoves.Clear();
-    
-    auto& moves {mValidMoves.mMoves};
-    auto numMoves {moves.Size()};
-    
-    for (auto i {0}; i < numMoves; ++i) {
-        mSortedMoves.PushBack(&moves.At(i));
-    }
-
-    mSortedMoves.Sort(CompareMoves);
+    mSortedMoves = &mAi.CalculateMoves(fallingPiece);
 }
 
 void ClickInputHandler::UpdateMoves(const FallingPiece& fallingPiece) {
-    mUpdatedValidMoves.Clear();
+    assert(mSortedMoves);
     
-    MovingPiece piece {
-        fallingPiece.GetIntPosition(),
-        fallingPiece.GetRotation(),
-        fallingPiece.GetPieceType()
-    };
+    auto& updatedMoves {mAi.FindValidMoves(fallingPiece)};
+    auto& previousMoves {*mSortedMoves};
     
-    mValidMovesSearch.FindValidMoves(mUpdatedValidMoves, piece);
-    
-    auto& previousMoves {mValidMoves.mMoves};
-    
-    for (auto i {0}; i < previousMoves.Size(); ++i) {
-        auto& move {previousMoves.At(i)};
-        
-        if (mUpdatedValidMoves.mMoves.Find(move) == nullptr) {
-            move.mIsReachable = false;
+    for (auto* move: previousMoves) {
+        if (updatedMoves.mMoves.Find(*move) == nullptr) {
+            move->mIsReachable = false;
         }
     }
     
     for (auto i {0}; i < mMoveAlternativeSet.Size();) {
-        if (mUpdatedValidMoves.mMoves.Find(mMoveAlternativeSet.At(i)) == nullptr) {
+        if (updatedMoves.mMoves.Find(mMoveAlternativeSet.At(i)) == nullptr) {
             mMoveAlternativeSet.Erase(i);
         } else {
             ++i;
@@ -202,15 +91,15 @@ void ClickInputHandler::UpdateMoves(const FallingPiece& fallingPiece) {
 }
 
 void ClickInputHandler::CreateNewMoveAlternativeSet() {
+    assert(mSortedMoves);
+
     mMoveAlternativeSet.Clear();
     ClearClickGrid();
     PopulateMoveAlternativeSet();
     
     if (mMoveAlternativeSet.IsEmpty()) {
-        auto& moves {mValidMoves.mMoves};
-        
-        for (auto i {0}; i < moves.Size(); ++i) {
-            moves.At(i).mHasBeenPresented = false;
+        for (auto* move: *mSortedMoves) {
+            move->mHasBeenPresented = false;
         }
         
         PopulateMoveAlternativeSet();
@@ -228,8 +117,10 @@ void ClickInputHandler::ClearClickGrid() {
 }
 
 void ClickInputHandler::PopulateMoveAlternativeSet() {
-    for (auto i {0}; i < mSortedMoves.Size(); ++i) {
-        auto* move {mSortedMoves.At(i)};
+    assert(mSortedMoves);
+
+    for (auto i {0}; i < mSortedMoves->Size(); ++i) {
+        auto* move {mSortedMoves->At(i)};
         
         if (!move->mHasBeenPresented && move->mIsReachable && IsRoomForMove(*move) &&
             mMoveAlternativeSet.Size() < maxNumVisibleMoves) {
@@ -244,6 +135,8 @@ void ClickInputHandler::PopulateMoveAlternativeSet() {
 }
 
 bool ClickInputHandler::IsRoomForMove(const Move& move) const {
+    assert(mPieceType);
+
     auto pieceNumRows {mPieceType->GetClickGridNumRows()};
     auto pieceNumColumns {mPieceType->GetClickGridNumColumns()};
     const auto& pieceClickGrid {mPieceType->GetClickGrid(move.mRotation)};
@@ -270,6 +163,8 @@ bool ClickInputHandler::IsRoomForMove(const Move& move) const {
 }
 
 void ClickInputHandler::InsertMoveInClickGrid(const Move& move) {
+    assert(mPieceType);
+
     auto pieceNumRows {mPieceType->GetClickGridNumRows()};
     auto pieceNumColumns {mPieceType->GetClickGridNumColumns()};
     const auto& pieceClickGrid {mPieceType->GetClickGrid(move.mRotation)};
@@ -292,6 +187,8 @@ void ClickInputHandler::InsertMoveInClickGrid(const Move& move) {
 }
 
 void ClickInputHandler::SetupButton(MoveButton& moveButton, Move& move) {
+    assert(mPieceType);
+    
     move.mButton = &moveButton;
     
     auto cellSize {mGameScene.GetCellSize()};
@@ -330,6 +227,8 @@ const ClickInputHandler::MoveAlternativeSet* ClickInputHandler::GetMoveAlternati
 }
 
 void ClickInputHandler::HandleTouch(const Pht::TouchEvent& touchEvent) {
+    assert(mPieceType);
+    
     if (mState == State::Inactive) {
         return;
     }

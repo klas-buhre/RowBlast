@@ -7,8 +7,7 @@
 #include "SwipeGestureRecognizer.hpp"
 
 // Game includes.
-#include "ValidMovesSearch.hpp"
-#include "FieldAnalyzer.hpp"
+#include "Ai.hpp"
 
 namespace BlocksGame {
     class Field;
@@ -52,11 +51,6 @@ namespace BlocksGame {
         const MoveAlternativeSet* GetMoveAlternativeSet() const;
         
     private:
-        void EvaluateMoves(int pieceId);
-        void EvaluateMove(Move& move, int pieceId);
-        void EvaluateMoveForClearObjective(Move& move, int pieceId);
-        void EvaluateMoveForBuildObjective(Move& move);
-        void SortMoves();
         void ClearClickGrid();
         void PopulateMoveAlternativeSet();
         bool IsRoomForMove(const Move& move) const;
@@ -70,19 +64,13 @@ namespace BlocksGame {
             Inactive
         };
         
-        using MovePtrs = Pht::StaticVector<Move*, Field::maxNumColumns * Field::maxNumRows * 4>;
-        
         Pht::IEngine& mEngine;
         Field& mField;
-        FieldAnalyzer mFieldAnalyzer;
+        Ai mAi;
         const GameScene& mGameScene;
         IGameLogic& mGameLogic;
         State mState {State::Inactive};
-        const Level* mLevel {nullptr};
-        ValidMovesSearch mValidMovesSearch;
-        ValidMoves mValidMoves;
-        ValidMoves mUpdatedValidMoves;
-        MovePtrs mSortedMoves;
+        Ai::MovePtrs* mSortedMoves {nullptr};
         MoveAlternativeSet mMoveAlternativeSet;
         std::vector<std::unique_ptr<MoveButton>> mMoveButtons;
         ClickGrid mClickGrid;
