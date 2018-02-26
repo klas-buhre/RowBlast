@@ -40,6 +40,14 @@ namespace {
             pieceType.GetGridNumColumns()
         };
     }
+    
+    bool CellFillsRightSide(const Cell& cell) {
+        return cell.mFirstSubCell.FillsRightCellSide() || cell.mSecondSubCell.FillsRightCellSide();
+    }
+    
+    bool CellFillsLeftSide(const Cell& cell) {
+        return cell.mFirstSubCell.FillsLeftCellSide() || cell.mSecondSubCell.FillsLeftCellSide();
+    }
 }
 
 Movement::Movement(const Pht::Vec2& position, Rotation rotation, const Movement* previous) :
@@ -130,30 +138,67 @@ void ValidMovesSearch::InitSearchGrid() {
             
             cellSearchData.mUnderOverhangTip = false;
             
-            auto fieldCellIsEmpty {mField.GetCell(row, column).IsEmpty()};
-            auto fieldCellIsNotFull {!mField.GetCell(row, column).IsFull()};
+            auto& fieldCell {mField.GetCell(row, column)};
             
             switch (overhangScanState) {
                 case OverhangScanState::FreeSpace:
-                    if (!fieldCellIsEmpty) {
+                    if (!fieldCell.IsEmpty()) {
+                        auto& firstSubCell {fieldCell.mFirstSubCell};
+                        auto& secondSubCell {fieldCell.mSecondSubCell};
+                        auto leftColumn {column - 1};
+                        auto rightColumn {column + 1};
+                        
+                        if (firstSubCell.mFill == Fill::UpperRightHalf && secondSubCell.IsEmpty() &&
+                            leftColumn >= 0 && mField.GetCell(row, leftColumn).IsEmpty()) {
+                            cellSearchData.mUnderOverhangTip = true;
+                        }
+
+                        if (secondSubCell.mFill == Fill::UpperRightHalf && firstSubCell.IsEmpty() &&
+                            leftColumn >= 0 && mField.GetCell(row, leftColumn).IsEmpty()) {
+                            cellSearchData.mUnderOverhangTip = true;
+                        }
+
+                        if (firstSubCell.mFill == Fill::UpperLeftHalf && secondSubCell.IsEmpty() &&
+                            rightColumn < mField.GetNumColumns() &&
+                            mField.GetCell(row, rightColumn).IsEmpty()) {
+                            cellSearchData.mUnderOverhangTip = true;
+                        }
+                        
+                        if (secondSubCell.mFill == Fill::UpperLeftHalf && firstSubCell.IsEmpty() &&
+                            rightColumn < mField.GetNumColumns() &&
+                            mField.GetCell(row, rightColumn).IsEmpty()) {
+                            cellSearchData.mUnderOverhangTip = true;
+                        }
+                        
                         overhangScanState = OverhangScanState::OccupiedSpace;
                     }
                     break;
                 case OverhangScanState::OccupiedSpace:
-                    if (fieldCellIsNotFull) {
-                        if (column - 1 >= 0) {
-                            if (mField.GetCell(row + 1, column - 1).IsEmpty()) {
+                    if (!fieldCell.IsFull()) {
+                        auto rowAbove {row + 1};
+                        
+                        if (rowAbove < mField.GetNumRows()) {
+                            auto leftColumn {column - 1};
+                            
+                            if (leftColumn >= 0 && mField.GetCell(rowAbove, leftColumn).IsEmpty() &&
+                                !CellFillsLeftSide(fieldCell) &&
+                                !CellFillsRightSide(mField.GetCell(row, leftColumn))) {
                                 cellSearchData.mUnderOverhangTip = true;
                             }
-                        }
-                        
-                        if (column + 1 < mField.GetNumColumns()) {
-                            if (mField.GetCell(row + 1, column + 1).IsEmpty()) {
+                            
+                            auto rightColumn {column + 1};
+                            
+                            if (rightColumn < mField.GetNumColumns() &&
+                                mField.GetCell(rowAbove, rightColumn).IsEmpty() &&
+                                !CellFillsRightSide(fieldCell) &&
+                                !CellFillsLeftSide(mField.GetCell(row, rightColumn))) {
                                 cellSearchData.mUnderOverhangTip = true;
                             }
+                            
+                            if (fieldCell.IsEmpty()) {
+                                overhangScanState = OverhangScanState::FreeSpace;
+                            }
                         }
-                        
-                        overhangScanState = OverhangScanState::FreeSpace;
                     }
                     break;
             }

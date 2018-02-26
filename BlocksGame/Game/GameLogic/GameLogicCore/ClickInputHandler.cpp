@@ -36,9 +36,9 @@ ClickInputHandler::ClickInputHandler(Pht::IEngine& engine,
                                      IGameLogic& gameLogic) :
     mEngine {engine},
     mField {field},
-    mAi {field},
     mGameScene {gameScene},
     mGameLogic {gameLogic},
+    mAi {field},
     mSwipeUpRecognizer {Pht::SwipeDirection::Up, inputUnitsPerColumn} {
 
     for (auto i {0}; i < maxNumVisibleMoves; ++i) {
@@ -66,14 +66,14 @@ void ClickInputHandler::Init(const Level& level) {
 
 void ClickInputHandler::CalculateMoves(const FallingPiece& fallingPiece) {
     mPieceType = &fallingPiece.GetPieceType();
-    mSortedMoves = &mAi.CalculateMoves(fallingPiece);
+    mAllValidMoves = &mAi.CalculateMoves(fallingPiece);
 }
 
 void ClickInputHandler::UpdateMoves(const FallingPiece& fallingPiece) {
-    assert(mSortedMoves);
+    assert(mAllValidMoves);
     
     auto& updatedMoves {mAi.FindValidMoves(fallingPiece)};
-    auto& previousMoves {*mSortedMoves};
+    auto& previousMoves {*mAllValidMoves};
     
     for (auto* move: previousMoves) {
         if (updatedMoves.mMoves.Find(*move) == nullptr) {
@@ -81,28 +81,28 @@ void ClickInputHandler::UpdateMoves(const FallingPiece& fallingPiece) {
         }
     }
     
-    for (auto i {0}; i < mMoveAlternativeSet.Size();) {
-        if (updatedMoves.mMoves.Find(mMoveAlternativeSet.At(i)) == nullptr) {
-            mMoveAlternativeSet.Erase(i);
+    for (auto i {0}; i < mVisibleMoves.Size();) {
+        if (updatedMoves.mMoves.Find(mVisibleMoves.At(i)) == nullptr) {
+            mVisibleMoves.Erase(i);
         } else {
             ++i;
         }
     }
 }
 
-void ClickInputHandler::CreateNewMoveAlternativeSet() {
-    assert(mSortedMoves);
+void ClickInputHandler::CreateNewSetOfVisibleMoves() {
+    assert(mAllValidMoves);
 
-    mMoveAlternativeSet.Clear();
+    mVisibleMoves.Clear();
     ClearClickGrid();
-    PopulateMoveAlternativeSet();
+    PopulateSetOfVisibleMoves();
     
-    if (mMoveAlternativeSet.IsEmpty()) {
-        for (auto* move: *mSortedMoves) {
+    if (mVisibleMoves.IsEmpty()) {
+        for (auto* move: *mAllValidMoves) {
             move->mHasBeenPresented = false;
         }
         
-        PopulateMoveAlternativeSet();
+        PopulateSetOfVisibleMoves();
     }
     
     mState = State::PresentingMoves;
@@ -116,19 +116,19 @@ void ClickInputHandler::ClearClickGrid() {
     }
 }
 
-void ClickInputHandler::PopulateMoveAlternativeSet() {
-    assert(mSortedMoves);
+void ClickInputHandler::PopulateSetOfVisibleMoves() {
+    assert(mAllValidMoves);
 
-    for (auto i {0}; i < mSortedMoves->Size(); ++i) {
-        auto* move {mSortedMoves->At(i)};
+    for (auto i {0}; i < mAllValidMoves->Size(); ++i) {
+        auto* move {mAllValidMoves->At(i)};
         
         if (!move->mHasBeenPresented && move->mIsReachable && IsRoomForMove(*move) &&
-            mMoveAlternativeSet.Size() < maxNumVisibleMoves) {
+            mVisibleMoves.Size() < maxNumVisibleMoves) {
             
             move->mHasBeenPresented = true;
             
-            SetupButton(*mMoveButtons[mMoveAlternativeSet.Size()], *move);
-            mMoveAlternativeSet.PushBack(*move);
+            SetupButton(*mMoveButtons[mVisibleMoves.Size()], *move);
+            mVisibleMoves.PushBack(*move);
             InsertMoveInClickGrid(*move);
         }
     }
@@ -217,10 +217,10 @@ void ClickInputHandler::SetupButton(MoveButton& moveButton, Move& move) {
     moveButton.SetPosition(buttonPosition3d);
 }
 
-const ClickInputHandler::MoveAlternativeSet* ClickInputHandler::GetMoveAlternativeSet() const {
+const ClickInputHandler::VisibleMoves* ClickInputHandler::GetVisibleMoves() const {
     switch (mState) {
         case State::PresentingMoves:
-            return &mMoveAlternativeSet;
+            return &mVisibleMoves;
         case State::Inactive:
             return nullptr;
     }
@@ -235,8 +235,8 @@ void ClickInputHandler::HandleTouch(const Pht::TouchEvent& touchEvent) {
     
     mEngine.GetRenderer().SetProjectionMode(Pht::ProjectionMode::Orthographic);
     
-    for (auto i {0}; i < mMoveAlternativeSet.Size(); ++i) {
-        auto& move {mMoveAlternativeSet.At(i)};
+    for (auto i {0}; i < mVisibleMoves.Size(); ++i) {
+        auto& move {mVisibleMoves.At(i)};
         
         switch (move.mButton->GetButton().OnTouch(touchEvent)) {
             case Pht::Button::Result::Down:
@@ -269,7 +269,7 @@ void ClickInputHandler::HandleTouch(const Pht::TouchEvent& touchEvent) {
             if (mTouchContainsSwipeUp) {
                 mGameLogic.SwitchPiece();
             } else {
-                CreateNewMoveAlternativeSet();
+                CreateNewSetOfVisibleMoves();
             }
             return;
         case Pht::TouchState::Other:

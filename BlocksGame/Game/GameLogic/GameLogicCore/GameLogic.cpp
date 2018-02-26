@@ -171,7 +171,7 @@ GameLogic::Result GameLogic::InitFallingPiece() {
         std::cout << "Calculating moves" << std::endl;
         
         mClickInputHandler.CalculateMoves(*mFallingPiece);
-        mClickInputHandler.CreateNewMoveAlternativeSet();
+        mClickInputHandler.CreateNewSetOfVisibleMoves();
     }
     
     if (mMovesLeft == 0) {
@@ -307,7 +307,7 @@ void GameLogic::HandleControlTypeChange() {
                     mBlastRadiusAnimation.Stop();
                 }
                 mClickInputHandler.CalculateMoves(*mFallingPiece);
-                mClickInputHandler.CreateNewMoveAlternativeSet();
+                mClickInputHandler.CreateNewSetOfVisibleMoves();
                 break;
             case ControlType::Gesture:
                 if (mCurrentMove.mPieceType->IsBomb()) {

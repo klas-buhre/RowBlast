@@ -386,7 +386,7 @@ void GameSceneRenderer::RenderGhostPiece(Pht::RenderableObject& ghostPieceRender
 }
 
 void GameSceneRenderer::RenderClickableGhostPieces(const FallingPiece& fallingPiece) {
-    auto* moveAlternatives {mGameLogic.GetClickInputHandler().GetMoveAlternativeSet()};
+    auto* moveAlternatives {mGameLogic.GetClickInputHandler().GetVisibleMoves()};
     
     if (moveAlternatives == nullptr) {
         return;

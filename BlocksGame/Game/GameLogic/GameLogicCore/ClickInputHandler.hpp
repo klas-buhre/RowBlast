@@ -36,7 +36,7 @@ namespace BlocksGame {
     public:
         static constexpr int maxNumVisibleMoves {20};
     
-        using MoveAlternativeSet = Pht::StaticVector<Move, ClickInputHandler::maxNumVisibleMoves>;
+        using VisibleMoves = Pht::StaticVector<Move, ClickInputHandler::maxNumVisibleMoves>;
         
         ClickInputHandler(Pht::IEngine& engine,
                           Field& field,
@@ -46,13 +46,13 @@ namespace BlocksGame {
         void Init(const Level& level);
         void CalculateMoves(const FallingPiece& fallingPiece);
         void UpdateMoves(const FallingPiece& fallingPiece);
-        void CreateNewMoveAlternativeSet();
+        void CreateNewSetOfVisibleMoves();
         void HandleTouch(const Pht::TouchEvent& touchEvent);
-        const MoveAlternativeSet* GetMoveAlternativeSet() const;
+        const VisibleMoves* GetVisibleMoves() const;
         
     private:
         void ClearClickGrid();
-        void PopulateMoveAlternativeSet();
+        void PopulateSetOfVisibleMoves();
         bool IsRoomForMove(const Move& move) const;
         void InsertMoveInClickGrid(const Move& move);
         void SetupButton(MoveButton& moveButton, Move& move);
@@ -66,12 +66,12 @@ namespace BlocksGame {
         
         Pht::IEngine& mEngine;
         Field& mField;
-        Ai mAi;
         const GameScene& mGameScene;
         IGameLogic& mGameLogic;
+        Ai mAi;
         State mState {State::Inactive};
-        Ai::MovePtrs* mSortedMoves {nullptr};
-        MoveAlternativeSet mMoveAlternativeSet;
+        Ai::MovePtrs* mAllValidMoves {nullptr};
+        VisibleMoves mVisibleMoves;
         std::vector<std::unique_ptr<MoveButton>> mMoveButtons;
         ClickGrid mClickGrid;
         int mNumClickGridRows {0};
