@@ -253,7 +253,16 @@ void ValidMovesSearch::AdjustPosition(MovingPiece& piece) {
             default:
                 break;
         }
-    }    
+    }
+}
+
+bool ValidMovesSearch::IsCollision(const MovingPiece& piece) {
+    const auto& position {piece.mPosition};
+    auto pieceBlocks {CreatePieceBlocks(piece)};
+    
+    mField.CheckCollision(mCollisionResult, pieceBlocks, position, Pht::IVec2{0, 0}, false);
+    
+    return mCollisionResult.mIsCollision == IsCollision::Yes;
 }
 
 void ValidMovesSearch::FindValidMoves(ValidMoves& validMoves,
@@ -269,6 +278,11 @@ void ValidMovesSearch::FindValidMoves(ValidMoves& validMoves,
         case SearchDirection::Right:
             ++piece.mPosition.x;
             break;
+    }
+    
+    if (positionAdjustment == PositionAdjustment::No && IsCollision(piece)) {
+        MarkAsVisited(piece);
+        return;
     }
     
     auto numRotations {piece.mPieceType.GetNumRotations()};

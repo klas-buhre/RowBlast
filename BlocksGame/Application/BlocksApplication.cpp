@@ -55,9 +55,8 @@ Backlog:
   
 Ongoing tasks:
     -Fix AI valid moves search bugs.
-      -Finds illegal move.
-        -For example mid-sized triangle.
       -Can't find move bug.
+        -The pyramid case.
 
 Ideas:
     -The pause button could lead to a widget that has an undo button, a boosters button and a game
