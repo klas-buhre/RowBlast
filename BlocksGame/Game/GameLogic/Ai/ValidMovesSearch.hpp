@@ -93,7 +93,6 @@ namespace BlocksGame {
 
         void InitSearchGrid();
         void AdjustPosition(MovingPiece& piece);
-        bool IsCollision(const MovingPiece& piece);
         bool CalculateFieldCellIsNotFilled(int row, int column) const;
         void FindValidMoves(ValidMoves& validMoves,
                             MovingPiece piece,

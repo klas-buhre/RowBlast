@@ -256,15 +256,6 @@ void ValidMovesSearch::AdjustPosition(MovingPiece& piece) {
     }
 }
 
-bool ValidMovesSearch::IsCollision(const MovingPiece& piece) {
-    const auto& position {piece.mPosition};
-    auto pieceBlocks {CreatePieceBlocks(piece)};
-    
-    mField.CheckCollision(mCollisionResult, pieceBlocks, position, Pht::IVec2{0, 0}, false);
-    
-    return mCollisionResult.mIsCollision == IsCollision::Yes;
-}
-
 void ValidMovesSearch::FindValidMoves(ValidMoves& validMoves,
                                       MovingPiece piece,
                                       SearchDirection searchDirection,

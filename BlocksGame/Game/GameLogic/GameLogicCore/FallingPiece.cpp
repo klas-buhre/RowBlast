@@ -72,7 +72,10 @@ void FallingPiece::GoToLandingState(int yPosition) {
 }
 
 Pht::IVec2 FallingPiece::GetIntPosition() const {
-    return Pht::IVec2 {static_cast<int>(std::floor(mPosition.x)), static_cast<int>(mPosition.y)};
+    return Pht::IVec2 {
+        static_cast<int>(std::floor(mPosition.x)),
+        static_cast<int>(std::floor(mPosition.y))
+    };
 }
 
 Pht::Vec2 FallingPiece::GetRenderablePosition() const {

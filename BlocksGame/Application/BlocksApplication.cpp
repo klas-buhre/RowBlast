@@ -17,6 +17,8 @@ Backlog:
      convenient to go back to the state before the move and not the initial state.
     -Mega bomb?
   -Rendering:
+    -Maybe increase field quad opacity to 0.9?
+    -Maybe make the field quad as bright at the bottom as the top?
     -Try ghost pieces with very faint fill?
     -Could have the rounded cylinder i some places in the HUDs.
     -GUI: the buttons in the views could be yellow with black text and triangular edges like in
@@ -58,6 +60,52 @@ Ongoing tasks:
       -Can't find move bug.
         -The pyramid case.
 
+
+Search(SearchMovement searchMovement, MovingPiece piece, int collisionRow)
+    detectCollisionDown = true
+ 
+    switch searchMovement
+        case SearchMovement.Down
+            piece.mPosition.y++
+            detectCollisionDown = false
+        case SearchMovement.Right
+            piece.mPosition.x++
+        case SearchMovement.Left
+            piece.mPosition.x--
+        case SearchMovement.RotateClockwise
+            piece.mRotation = (piece.mRotation + 1) % 4)
+        case SearchMovement.RotateAntiClockwise
+            newRotation = piece.mRotation - 1
+            if newRotation < 0
+                newRotation += 4
+            end
+            piece.mRotation = newRotation
+    end
+ 
+    if IsCollision(piece) or IsVisited(piece)
+        return
+    end
+ 
+    MarkAsVisited(piece)
+ 
+    if detectCollisionDown
+        collisionRow = DetectCollisionDown(piece)
+    end
+ 
+    if collisionRow == piece.y
+        SaveMove(piece)
+    end
+ 
+    Search(SearchMovement.Down, piece, collisionRow)
+    Search(SearchMovement.Right, piece, collisionRow)
+    Search(SearchMovement.Left, piece, collisionRow)
+    Search(SearchMovement.RotateClockwise, piece, collisionRow)
+    Search(SearchMovement.RotateAntiClockwise, piece, collisionRow)
+end
+
+
+
+
 Ideas:
     -The pause button could lead to a widget that has an undo button, a boosters button and a game
      menu button.
@@ -81,16 +129,14 @@ Time Estimation in days:
         Cost: 10
     -Bombs should have bomb meshes.
         Cost: 5
-    -Camera shake.
-        Cost: 3
     -Use new GUI/Menu textures.
         Cost: 3
+    -Support for iPhone X screen.
+        Cost: 10
     -Animations/effects when clearing a level.
         Cost: 7
     -Improving sliding text animation.
         Cost: 3
-    -Support for iPhone X screen.
-        Cost: 10
     -Tutorial.
         Cost: 10
     -Levels/Chapters.
@@ -108,6 +154,8 @@ Time Estimation in days:
     -Back end.
     -Physics.
         Cost: 15
+    -Camera shake.
+        Cost: 3
 
         Total: 156
 
