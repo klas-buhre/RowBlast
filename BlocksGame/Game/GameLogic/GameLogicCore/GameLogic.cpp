@@ -471,12 +471,9 @@ void GameLogic::PullDownLoosePieces() {
     mCascadeState = CascadeState::Cascading;
 }
 
-void GameLogic::RotateFallingPiece() {
+void GameLogic::RotateFallingPiece(const Pht::TouchEvent& touchEvent) {
     auto& pieceType {mFallingPiece->GetPieceType()};
-
-    auto newRotation {
-        static_cast<Rotation>((static_cast<int>(mFallingPiece->GetRotation()) + 1) % 4)
-    };
+    auto newRotation {CalculateNewRotation(touchEvent)};
     
     PieceBlocks pieceBlocks {
         pieceType.GetGrid(newRotation),
@@ -505,6 +502,23 @@ void GameLogic::RotateFallingPiece() {
 
     mGhostPieceRow = mField.DetectCollisionDown(CreatePieceBlocks(*mFallingPiece),
                                                 mFallingPiece->GetIntPosition());
+}
+
+Rotation GameLogic::CalculateNewRotation(const Pht::TouchEvent& touchEvent) {
+    auto numRotations {mFallingPiece->GetPieceType().GetNumRotations()};
+    auto rotationInt {static_cast<int>(mFallingPiece->GetRotation())};
+    
+    if (touchEvent.mLocation.x >= mEngine.GetInput().GetScreenInputSize().x / 2.0f) {
+        return static_cast<Rotation>((rotationInt + 1) % numRotations);
+    }
+    
+    auto newRotation {rotationInt - 1};
+    
+    if (newRotation < 0) {
+        newRotation += numRotations;
+    }
+    
+    return static_cast<Rotation>(newRotation);
 }
 
 void GameLogic::RotatateAndAdjustPosition(Rotation newRotation,
@@ -556,7 +570,7 @@ void GameLogic::SwitchPiece() {
     mFallingPieceInitReason = FallingPieceInitReason::Switch;
 }
 
-void GameLogic::RotatePieceOrDetonateBomb() {
+void GameLogic::RotatePieceOrDetonateBomb(const Pht::TouchEvent& touchEvent) {
     std::cout << "tap" << std::endl;
     
     auto& pieceType {mFallingPiece->GetPieceType()};
@@ -565,7 +579,7 @@ void GameLogic::RotatePieceOrDetonateBomb() {
         DetonateBomb();
         NextMove();
     } else if (pieceType.CanRotateAroundZ()) {
-        RotateFallingPiece();
+        RotateFallingPiece(touchEvent);
     }
 }
 

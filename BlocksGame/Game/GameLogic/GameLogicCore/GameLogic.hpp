@@ -54,7 +54,7 @@ namespace BlocksGame {
         void DropFallingPiece() override;
         void StartFallingPieceAnimation(const Movement& lastMovement) override;
         void OnFallingPieceAnimationFinished(bool startParticleEffect) override;
-        void RotatePieceOrDetonateBomb() override;
+        void RotatePieceOrDetonateBomb(const Pht::TouchEvent& touchEvent) override;
         void SwitchPiece() override;
         void SetFallingPieceXPosWithCollisionDetection(float fallingPieceNewX) override;
         int GetGhostPieceRow() const override;
@@ -128,7 +128,8 @@ namespace BlocksGame {
         void LandFallingPiece(bool startParticleEffect);
         void DetonateBomb();
         void PullDownLoosePieces();
-        void RotateFallingPiece();
+        void RotateFallingPiece(const Pht::TouchEvent& touchEvent);
+        Rotation CalculateNewRotation(const Pht::TouchEvent& touchEvent);
         void RotatateAndAdjustPosition(Rotation newRotation,
                                        const PieceBlocks& pieceBlocks,
                                        const Pht::IVec2& position,

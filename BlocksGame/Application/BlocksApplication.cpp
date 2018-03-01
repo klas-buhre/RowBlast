@@ -82,7 +82,7 @@ struct CellSearchData
 end
 
 struct MovingPiece
-    RotateClockWise()
+    RotateClockwise()
         mRotation = (mRotation + 1) % 4
     end
  

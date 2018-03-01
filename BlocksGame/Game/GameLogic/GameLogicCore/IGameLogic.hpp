@@ -4,6 +4,10 @@
 // Engine includes.
 #include "Vector.hpp"
 
+namespace Pht {
+    class TouchEvent;
+}
+
 namespace BlocksGame {
     class Movement;
     
@@ -14,7 +18,7 @@ namespace BlocksGame {
         virtual void DropFallingPiece() = 0;
         virtual void StartFallingPieceAnimation(const Movement& lastMovement) = 0;
         virtual void OnFallingPieceAnimationFinished(bool startParticleEffect) = 0;
-        virtual void RotatePieceOrDetonateBomb() = 0;
+        virtual void RotatePieceOrDetonateBomb(const Pht::TouchEvent& touchEvent) = 0;
         virtual void SwitchPiece() = 0;
         virtual void SetFallingPieceXPosWithCollisionDetection(float fallingPieceNewX) = 0;
         virtual int GetGhostPieceRow() const = 0;

@@ -44,7 +44,7 @@ void GestureInputHandler::HandleTouch(const Pht::TouchEvent& touchEvent) {
             }
             ExitBeingDraggedDownState();
             if (TouchIsTap()) {
-                mGameLogic.RotatePieceOrDetonateBomb();
+                mGameLogic.RotatePieceOrDetonateBomb(touchEvent);
                 return;
             }
             if (TouchIsSwipeUp()) {

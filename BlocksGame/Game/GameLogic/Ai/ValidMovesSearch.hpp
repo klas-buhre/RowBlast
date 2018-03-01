@@ -56,6 +56,9 @@ namespace BlocksGame {
     using Movements = Pht::StaticVector<Movement, Field::maxNumColumns * Field::maxNumRows * 4>;
     
     struct MovingPiece {
+        void RotateClockwise();
+        void RotateAntiClockwise();
+        
         Pht::IVec2 mPosition;
         Rotation mRotation;
         const Piece& mPieceType;
@@ -100,6 +103,12 @@ namespace BlocksGame {
                             const Movement* previousMovement,
                             AllowRecursion allowRecursion,
                             PositionAdjustment positionAdjustment);
+        bool FindValidMovesForRotation(ValidMoves& validMoves,
+                                       MovingPiece piece,
+                                       SearchDirection searchDirection,
+                                       const Movement* previousMovement,
+                                       AllowRecursion allowRecursion,
+                                       PositionAdjustment positionAdjustment);
         void SearchLeft(ValidMoves& validMoves,
                         MovingPiece piece,
                         const Movement* previousMovement,
@@ -128,9 +137,18 @@ namespace BlocksGame {
         int DetectCollisionRight(const MovingPiece& piece) const;
         int DetectCollisionDown(const MovingPiece& piece) const;
  
+        static constexpr int collisionNotCalculated {-1};
+        
+        struct SearchDataForOneRotation {
+            Move* mFoundMove {nullptr};
+            bool mIsVisited {false};
+            int mCollisionColumnLeft {collisionNotCalculated};
+            int mCollisionColumnRight {collisionNotCalculated};
+            int mCollisionRow {collisionNotCalculated};
+        };
+ 
         struct CellSearchData {
-            Move* mFoundMoves[4];
-            bool mIsVisited[4];
+            SearchDataForOneRotation mData[4];
             bool mUnderOverhangTip {false};
         };
         

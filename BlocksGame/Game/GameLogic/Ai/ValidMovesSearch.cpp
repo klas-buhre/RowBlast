@@ -55,6 +55,21 @@ Movement::Movement(const Pht::Vec2& position, Rotation rotation, const Movement*
     mRotation {rotation},
     mPrevious {previous} {}
 
+void MovingPiece::RotateClockwise() {
+    auto numRotations {mPieceType.GetNumRotations()};
+    mRotation = static_cast<Rotation>((static_cast<int>(mRotation) + 1) % numRotations);
+}
+
+void MovingPiece::RotateAntiClockwise() {
+    auto newRotation {static_cast<int>(mRotation) - 1};
+    
+    if (newRotation < 0) {
+        newRotation += mPieceType.GetNumRotations();
+    }
+    
+    mRotation = static_cast<Rotation>(newRotation);
+}
+
 void ValidMoves::Clear() {
     mMoves.Clear();
     mMovements.Clear();
@@ -96,7 +111,8 @@ void ValidMovesSearch::FindValidMoves(ValidMoves& validMoves, MovingPiece piece)
     auto numRotations {piece.mPieceType.GetNumRotations()};
     
     for (auto rotation {0}; rotation < numRotations; ++rotation) {
-        piece.mRotation = static_cast<Rotation>(rotation);
+        // TODO: Try anti-clockwise also?
+        piece.RotateClockwise();
         AdjustPosition(piece);
         
         if (IsCollision(piece)) {
@@ -124,18 +140,12 @@ void ValidMovesSearch::InitSearchGrid() {
         
         for (auto row {mField.GetNumRows() - 1}; row >= 0; --row) {
             auto& cellSearchData {mSearchGrid[row][column]};
-            auto& visitedArray {cellSearchData.mIsVisited};
+            auto& searchDataForRotations {cellSearchData.mData};
             
-            for (auto& isVisited: visitedArray) {
-                isVisited = false;
+            for (auto& searchData: searchDataForRotations) {
+                searchData = SearchDataForOneRotation {};
             }
-            
-            auto& foundMovesArray {cellSearchData.mFoundMoves};
-            
-            for (auto& foundMove: foundMovesArray) {
-                foundMove = nullptr;
-            }
-            
+
             cellSearchData.mUnderOverhangTip = false;
             
             auto& fieldCell {mField.GetCell(row, column)};
@@ -271,37 +281,67 @@ void ValidMovesSearch::FindValidMoves(ValidMoves& validMoves,
             break;
     }
     
-    if (positionAdjustment == PositionAdjustment::No && IsCollision(piece)) {
-        MarkAsVisited(piece);
-        return;
-    }
-    
     auto numRotations {piece.mPieceType.GetNumRotations()};
+    auto rotationAtEntry {piece.mRotation};
     
     for (auto rotation {0}; rotation < numRotations; ++rotation) {
-        piece.mRotation = static_cast<Rotation>(rotation);
+        piece.RotateClockwise();
         
-        if (positionAdjustment == PositionAdjustment::Yes) {
-            AdjustPosition(piece);
+        if (!FindValidMovesForRotation(validMoves,
+                                       piece,
+                                       searchDirection,
+                                       previousMovement,
+                                       allowRecursion,
+                                       positionAdjustment)) {
+            break;
         }
-        
-        if (IsVisited(piece)) {
-            continue;
-        }
-        
-        auto* rotationMovement {AddMovement(validMoves, piece, previousMovement)};
-        
-        switch (searchDirection) {
-            case SearchDirection::Left:
-                SearchLeft(validMoves, piece, rotationMovement, allowRecursion, positionAdjustment);
-                break;
-            case SearchDirection::Right:
-                SearchRight(validMoves, piece, rotationMovement, allowRecursion, positionAdjustment);
-                break;
-        }
-        
-        MarkAsVisited(piece);
     }
+    
+    piece.mRotation = rotationAtEntry;
+    
+    for (auto rotation {0}; rotation < numRotations; ++rotation) {
+        piece.RotateAntiClockwise();
+        
+        if (!FindValidMovesForRotation(validMoves,
+                                       piece,
+                                       searchDirection,
+                                       previousMovement,
+                                       allowRecursion,
+                                       positionAdjustment)) {
+            break;
+        }
+    }
+}
+
+bool ValidMovesSearch::FindValidMovesForRotation(ValidMoves& validMoves,
+                                                 MovingPiece piece,
+                                                 SearchDirection searchDirection,
+                                                 const Movement* previousMovement,
+                                                 AllowRecursion allowRecursion,
+                                                 PositionAdjustment positionAdjustment) {
+    if (positionAdjustment == PositionAdjustment::Yes) {
+        AdjustPosition(piece);
+    } else if (IsCollision(piece)) {
+        return false;
+    }
+
+    if (IsVisited(piece)) {
+        return true;
+    }
+
+    auto* rotationMovement {AddMovement(validMoves, piece, previousMovement)};
+
+    switch (searchDirection) {
+        case SearchDirection::Left:
+            SearchLeft(validMoves, piece, rotationMovement, allowRecursion, positionAdjustment);
+            break;
+        case SearchDirection::Right:
+            SearchRight(validMoves, piece, rotationMovement, allowRecursion, positionAdjustment);
+            break;
+    }
+
+    MarkAsVisited(piece);
+    return true;
 }
 
 void ValidMovesSearch::SearchLeft(ValidMoves& validMoves,
@@ -462,22 +502,22 @@ void ValidMovesSearch::SaveMove(ValidMoves& validMoves,
 
 bool ValidMovesSearch::IsVisited(const MovingPiece& piece) const {
     auto gridPosition {CalculateSearchGridPosition(piece)};
-    return mSearchGrid[gridPosition.y][gridPosition.x].mIsVisited[static_cast<int>(piece.mRotation)];
+    return mSearchGrid[gridPosition.y][gridPosition.x].mData[static_cast<int>(piece.mRotation)].mIsVisited;
 }
 
 void ValidMovesSearch::MarkAsVisited(const MovingPiece& piece) {
     auto gridPosition {CalculateSearchGridPosition(piece)};
-    mSearchGrid[gridPosition.y][gridPosition.x].mIsVisited[static_cast<int>(piece.mRotation)] = true;
+    mSearchGrid[gridPosition.y][gridPosition.x].mData[static_cast<int>(piece.mRotation)].mIsVisited = true;
 }
 
 Move* ValidMovesSearch::GetFoundMove(const MovingPiece& piece) const {
     auto gridPosition {CalculateSearchGridPosition(piece)};
-    return mSearchGrid[gridPosition.y][gridPosition.x].mFoundMoves[static_cast<int>(piece.mRotation)];
+    return mSearchGrid[gridPosition.y][gridPosition.x].mData[static_cast<int>(piece.mRotation)].mFoundMove;
 }
 
 void ValidMovesSearch::SetFoundMove(const MovingPiece& piece, Move& move) {
     auto gridPosition {CalculateSearchGridPosition(piece)};
-    mSearchGrid[gridPosition.y][gridPosition.x].mFoundMoves[static_cast<int>(piece.mRotation)] = &move;
+    mSearchGrid[gridPosition.y][gridPosition.x].mData[static_cast<int>(piece.mRotation)].mFoundMove = &move;
 }
 
 Pht::IVec2 ValidMovesSearch::CalculateSearchGridPosition(const MovingPiece& piece) const {
