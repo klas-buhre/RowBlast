@@ -60,48 +60,194 @@ Ongoing tasks:
       -Can't find move bug.
         -The pyramid case.
 
+WIP:
 
-Search(SearchMovement searchMovement, MovingPiece piece, int collisionRow)
-    detectCollisionDown = true
  
-    switch searchMovement
-        case SearchMovement.Down
-            piece.mPosition.y++
-            detectCollisionDown = false
-        case SearchMovement.Right
-            piece.mPosition.x++
-        case SearchMovement.Left
-            piece.mPosition.x--
-        case SearchMovement.RotateClockwise
-            piece.mRotation = (piece.mRotation + 1) % 4)
-        case SearchMovement.RotateAntiClockwise
-            newRotation = piece.mRotation - 1
-            if newRotation < 0
-                newRotation += 4
-            end
-            piece.mRotation = newRotation
+  Using this algorithm alone may be expensive and cause strange FallingPieceAnimation. Try to
+  combine it with the current algorithm. Also, consider how to handle Movements.
+
+
+int collisionNotCalculated = -1
+
+struct SearchData
+    Move* mFoundMove = null
+    bool mIsVisited = false
+    int mCollisionColumnLeft = collisionNotCalculated
+    int mCollisionColumnRight = collisionNotCalculated
+    int mCollisionRow = collisionNotCalculated
+end
+
+struct CellSearchData
+    SearchData mData[4]
+end
+
+struct MovingPiece
+    RotateClockWise()
+        mRotation = (mRotation + 1) % 4
     end
  
-    if IsCollision(piece) or IsVisited(piece)
+    RotateAntiClockwise()
+        newRotation = mRotation - 1
+        if newRotation < 0
+            newRotation += 4
+        end
+        mRotation = newRotation
+    end
+end
+
+enum SearchCollisionResult
+    Collision,
+    FoundMove,
+    NoCollision
+end
+
+Search(MovingPiece piece, SearchMovement searchMovement)
+    if !MovePieceAndCheckEdges(piece, searchMovement)
         return
     end
  
-    MarkAsVisited(piece)
+    if IsLocationVisited(piece)
+        return
+    end
+
+    MarkLocationAsVisited(piece)
  
-    if detectCollisionDown
-        collisionRow = DetectCollisionDown(piece)
+    switch HandleCollision(piece, searchMovement)
+        case SearchCollisionResult.Collision
+            return
+        case SearchCollisionResult.FoundMove
+            SaveMove(piece)
+            break
+        case NoCollision
+            break
     end
  
-    if collisionRow == piece.y
-        SaveMove(piece)
-    end
- 
-    Search(SearchMovement.Down, piece, collisionRow)
-    Search(SearchMovement.Right, piece, collisionRow)
-    Search(SearchMovement.Left, piece, collisionRow)
-    Search(SearchMovement.RotateClockwise, piece, collisionRow)
-    Search(SearchMovement.RotateAntiClockwise, piece, collisionRow)
+    Search(piece, SearchMovement.Down)
+    Search(piece, SearchMovement.Right)
+    Search(piece, SearchMovement.Left)
+    Search(piece, SearchMovement.RotateClockwise)
+    Search(piece, SearchMovement.RotateAntiClockwise)
 end
+
+bool MovePieceAndCheckEdges(MovingPiece& piece, SearchMovement searchMovement)
+    switch searchMovement
+        case SearchMovement.Down
+            piece.mPosition.y--
+            if piece.mPosition.y < 0
+                return false
+            end
+            break
+        case SearchMovement.Right
+            piece.mPosition.x++
+            if piece.mPosition.x >= mField.GetNumColumns()
+                return false
+            end
+            break
+        case SearchMovement.Left
+            piece.mPosition.x--
+            if piece.mPosition.x < 0
+                return false
+            end
+            break
+        case SearchMovement.RotateClockwise
+            piece.RotateClockwise()
+            break
+        case SearchMovement.RotateAntiClockwise
+            piece.RotateAntiClockwise()
+            break
+    end
+ 
+    return true
+end
+
+SearchCollisionResult HandleCollision(MovingPiece piece, SearchMovement searchMovement)
+    switch searchMovement
+        case SearchMovement.Down
+            MovingPiece piecePreviousState = piece
+            piecePreviousState.mPosition.y++
+            collisionRow = HandleCollisionDown(piecePreviousState)
+            if collisionRow == piece.mPosition.y
+                return SearchCollisionResult.FoundMove
+            else if collisionRow == piecePreviousState.mPosition.y
+                return SearchCollisionResult.Collision
+            end
+            break
+        case SearchMovement.Right
+            MovingPiece piecePreviousState = piece
+            piecePreviousState.mPosition.x--
+            if HandleCollisionRight(piecePreviousState) == piecePreviousState.mPosition.x
+                return SearchCollisionResult.Collision
+            end
+            if HandleCollisionDown(piece) == piece.mPosition.y
+                return SearchCollisionResult.FoundMove
+            end
+            break
+        case SearchMovement.Left
+            MovingPiece piecePreviousState = piece
+            piecePreviousState.mPosition.x++
+            if HandleCollisionLeft(piecePreviousState) == piecePreviousState.mPosition.x
+                return SearchCollisionResult.Collision
+            end
+            if HandleCollisionDown(piece) == piece.mPosition.y
+                return SearchCollisionResult.FoundMove
+            end
+            break
+        case SearchMovement.RotateClockwise
+        case SearchMovement.RotateAntiClockwise
+            if IsCollision(piece)
+                return SearchCollisionResult.Collision
+            end
+            if HandleCollisionDown(piece) == piece.mPosition.y
+                return SearchCollisionResult.FoundMove
+            end
+            break
+    end
+ 
+    return SearchCollisionResult.NoCollision
+end
+
+int HandleCollisionDown(const MovingPiece& piece)
+    auto& cellSearchData = mSearchGrid[piece.mPosition.y][piece.mPosition.x].mData[piece.mRotation]
+ 
+    if cellSearchData.mCollisionRow == collisionNotCalculated
+        collisionRow = DetectCollisionDown(piece)
+ 
+        for row = piece.mPosition.y; row >= collisionRow; --row
+            mSearchGrid[row][piece.mPosition.x].mData[piece.mRotation].mCollisionRow = collisionRow
+        end
+    end
+
+    return cellSearchData.mCollisionRow
+end
+
+int HandleCollisionRight(const MovingPiece& piece)
+    auto& cellSearchData = mSearchGrid[piece.mPosition.y][piece.mPosition.x].mData[piece.mRotation]
+ 
+    if cellSearchData.mCollisionColumnRight == collisionNotCalculated
+        collisionColumn = DetectCollisionRight(piece)
+ 
+        for column = piece.mPosition.x; column <= collisionColumn; ++column
+            mSearchGrid[piece.mPosition.y][column].mData[piece.mRotation].mCollisionColumnRight = collisionColumn
+        end
+    end
+
+    return cellSearchData.mCollisionColumnRight
+end
+
+int HandleCollisionLeft(const MovingPiece& piece)
+    auto& cellSearchData = mSearchGrid[piece.mPosition.y][piece.mPosition.x].mData[piece.mRotation]
+ 
+    if cellSearchData.mCollisionColumnLeft == collisionNotCalculated
+        collisionColumn = DetectCollisionLeft(piece)
+ 
+        for column = piece.mPosition.x; column >= collisionColumn; --column
+            mSearchGrid[piece.mPosition.y][column].mData[piece.mRotation].mCollisionColumnLeft = collisionColumn
+        end
+    end
+
+    return cellSearchData.mCollisionColumnLeft
+end
+
 
 
 
