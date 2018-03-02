@@ -53,7 +53,7 @@ namespace BlocksGame {
     };
     
     using Moves = Pht::StaticVector<Move, Field::maxNumColumns * Field::maxNumRows * 4>;
-    using Movements = Pht::StaticVector<Movement, Field::maxNumColumns * Field::maxNumRows * 4>;
+    using Movements = Pht::StaticVector<Movement, Field::maxNumColumns * Field::maxNumRows * 4 * 2>;
     
     struct MovingPiece {
         void RotateClockwise();
@@ -93,6 +93,23 @@ namespace BlocksGame {
             Yes,
             No
         };
+        
+        static constexpr int collisionNotCalculated {-1};
+        
+        struct SearchDataForOneRotation {
+            Move* mFoundMove {nullptr};
+            bool mIsVisited {false};
+            int mCollisionColumnLeft {collisionNotCalculated};
+            int mCollisionColumnRight {collisionNotCalculated};
+            int mCollisionRow {collisionNotCalculated};
+        };
+ 
+        struct CellSearchData {
+            SearchDataForOneRotation mData[4];
+            bool mUnderOverhangTip {false};
+        };
+        
+        using SearchGrid = std::vector<std::vector<CellSearchData>>;
 
         void InitSearchGrid();
         void AdjustPosition(MovingPiece& piece);
@@ -128,31 +145,20 @@ namespace BlocksGame {
         void SaveMove(ValidMoves& validMoves,
                       const MovingPiece& piece,
                       const Movement* previousMovement);
-        bool IsVisited(const MovingPiece& piece) const;
-        void MarkAsVisited(const MovingPiece& piece);
-        Pht::IVec2 CalculateSearchGridPosition(const MovingPiece& piece) const;
+        bool IsLocationVisited(const MovingPiece& piece) const;
+        void MarkLocationAsVisited(const MovingPiece& piece);
+        SearchDataForOneRotation& GetSearchDataForOneRotation(const MovingPiece& piece);
+        SearchDataForOneRotation& GetSearchDataForOneRotation(const Pht::IVec2& position,
+                                                              Rotation rotation);
+        Pht::IVec2 CalculateSearchGridPosition(const Pht::IVec2& position) const;
         Move* GetFoundMove(const MovingPiece& piece) const;
         void SetFoundMove(const MovingPiece& piece, Move& move);
+        int HandleCollisionLeft(const MovingPiece& piece);
+        int HandleCollisionRight(const MovingPiece& piece);
+        int HandleCollisionDown(const MovingPiece& piece);
         int DetectCollisionLeft(const MovingPiece& piece) const;
         int DetectCollisionRight(const MovingPiece& piece) const;
         int DetectCollisionDown(const MovingPiece& piece) const;
- 
-        static constexpr int collisionNotCalculated {-1};
-        
-        struct SearchDataForOneRotation {
-            Move* mFoundMove {nullptr};
-            bool mIsVisited {false};
-            int mCollisionColumnLeft {collisionNotCalculated};
-            int mCollisionColumnRight {collisionNotCalculated};
-            int mCollisionRow {collisionNotCalculated};
-        };
- 
-        struct CellSearchData {
-            SearchDataForOneRotation mData[4];
-            bool mUnderOverhangTip {false};
-        };
-        
-        using SearchGrid = std::vector<std::vector<CellSearchData>>;
         
         Field& mField;
         SearchGrid mSearchGrid;
