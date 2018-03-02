@@ -30,7 +30,6 @@ ShortIPiece::ShortIPiece(Pht::IEngine& engine, const GameScene& scene) {
     
     InitGrids(fillGrid, clickGrid, BlockColor::Blue);
     SetPreviewCellSize(0.6f);
-    SetNumRotations(2);
     
     GhostPieceBorder border {
         {{0, 1}, BorderSegmentKind::Start},

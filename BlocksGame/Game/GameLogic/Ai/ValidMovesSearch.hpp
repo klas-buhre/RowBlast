@@ -94,6 +94,21 @@ namespace BlocksGame {
             No
         };
         
+        enum class SearchMovement {
+            Start,
+            Down,
+            Right,
+            Left,
+            RotateClockwise,
+            RotateAntiClockwise
+        };
+        
+        enum class SearchCollisionResult {
+            Collision,
+            FoundMove,
+            NoCollision
+        };
+        
         static constexpr int collisionNotCalculated {-1};
         
         struct SearchDataForOneRotation {
@@ -112,6 +127,8 @@ namespace BlocksGame {
         using SearchGrid = std::vector<std::vector<CellSearchData>>;
 
         void InitSearchGrid();
+        void ResetVisitedLocations();
+        void FindMostValidMoves(ValidMoves& validMoves, MovingPiece piece);
         void AdjustPosition(MovingPiece& piece);
         bool CalculateFieldCellIsNotFilled(int row, int column) const;
         void FindValidMoves(ValidMoves& validMoves,
@@ -145,6 +162,18 @@ namespace BlocksGame {
         void SaveMove(ValidMoves& validMoves,
                       const MovingPiece& piece,
                       const Movement* previousMovement);
+        void FindAllValidMoves(ValidMoves& validMoves, MovingPiece piece);
+        void Search(ValidMoves& validMoves,
+                    MovingPiece piece,
+                    const Movement* previousMovement,
+                    SearchMovement searchMovement);
+        void Search(MovingPiece piece, SearchMovement searchMovement);
+        bool MovePieceAndCheckEdges(MovingPiece& piece, SearchMovement searchMovement);
+        SearchCollisionResult HandleCollision(const MovingPiece& piece,
+                                              SearchMovement searchMovement);
+        void SaveMoveIfNotFoundBefore(ValidMoves& validMoves,
+                                      const MovingPiece& piece,
+                                      const Movement* previousMovement);
         bool IsLocationVisited(const MovingPiece& piece) const;
         void MarkLocationAsVisited(const MovingPiece& piece);
         SearchDataForOneRotation& GetSearchDataForOneRotation(const MovingPiece& piece);

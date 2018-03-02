@@ -94,51 +94,24 @@ void ValidMovesSearch::Init() {
 
 void ValidMovesSearch::FindValidMoves(ValidMoves& validMoves, MovingPiece piece) {
     InitSearchGrid();
-    
-    FindValidMoves(validMoves,
-                   piece,
-                   SearchDirection::Left,
-                   nullptr,
-                   AllowRecursion::Yes,
-                   PositionAdjustment::Yes);
-    FindValidMoves(validMoves,
-                   piece,
-                   SearchDirection::Right,
-                   nullptr,
-                   AllowRecursion::Yes,
-                   PositionAdjustment::Yes);
-    
-    auto numRotations {piece.mPieceType.GetNumRotations()};
-    
-    for (auto rotation {0}; rotation < numRotations; ++rotation) {
-        // TODO: Try anti-clockwise also?
-        piece.RotateClockwise();
-        AdjustPosition(piece);
-        
-        if (IsCollision(piece)) {
-            continue;
-        }
-        
-        auto* rotationMovement {AddMovement(validMoves, piece, nullptr)};
-        
-        SearchDown(validMoves,
-                   piece,
-                   rotationMovement,
-                   AllowRecursion::Yes,
-                   PositionAdjustment::No);
-    }
+    FindMostValidMoves(validMoves, piece);
+    ResetVisitedLocations();
+    FindAllValidMoves(validMoves, piece);
 }
 
 void ValidMovesSearch::InitSearchGrid() {
+    auto numRows {mField.GetNumRows()};
+    auto numColumns {mField.GetNumColumns()};
+
     enum class OverhangScanState {
         FreeSpace,
         OccupiedSpace
     };
     
-    for (auto column {0}; column < mField.GetNumColumns(); ++column) {
+    for (auto column {0}; column < numColumns; ++column) {
         auto overhangScanState {OverhangScanState::FreeSpace};
         
-        for (auto row {mField.GetNumRows() - 1}; row >= 0; --row) {
+        for (auto row {numRows - 1}; row >= 0; --row) {
             auto& cellSearchData {mSearchGrid[row][column]};
             auto& searchDataForRotations {cellSearchData.mData};
             
@@ -169,13 +142,13 @@ void ValidMovesSearch::InitSearchGrid() {
                         }
 
                         if (firstSubCell.mFill == Fill::UpperLeftHalf && secondSubCell.IsEmpty() &&
-                            rightColumn < mField.GetNumColumns() &&
+                            rightColumn < numColumns &&
                             mField.GetCell(row, rightColumn).IsEmpty()) {
                             cellSearchData.mUnderOverhangTip = true;
                         }
                         
                         if (secondSubCell.mFill == Fill::UpperLeftHalf && firstSubCell.IsEmpty() &&
-                            rightColumn < mField.GetNumColumns() &&
+                            rightColumn < numColumns &&
                             mField.GetCell(row, rightColumn).IsEmpty()) {
                             cellSearchData.mUnderOverhangTip = true;
                         }
@@ -187,7 +160,7 @@ void ValidMovesSearch::InitSearchGrid() {
                     if (!fieldCell.IsFull()) {
                         auto rowAbove {row + 1};
                         
-                        if (rowAbove < mField.GetNumRows()) {
+                        if (rowAbove < numRows) {
                             auto leftColumn {column - 1};
                             
                             if (leftColumn >= 0 && mField.GetCell(rowAbove, leftColumn).IsEmpty() &&
@@ -198,7 +171,7 @@ void ValidMovesSearch::InitSearchGrid() {
                             
                             auto rightColumn {column + 1};
                             
-                            if (rightColumn < mField.GetNumColumns() &&
+                            if (rightColumn < numColumns &&
                                 mField.GetCell(rowAbove, rightColumn).IsEmpty() &&
                                 !CellFillsRightSide(fieldCell) &&
                                 !CellFillsLeftSide(mField.GetCell(row, rightColumn))) {
@@ -211,6 +184,21 @@ void ValidMovesSearch::InitSearchGrid() {
                         }
                     }
                     break;
+            }
+        }
+    }
+}
+
+void ValidMovesSearch::ResetVisitedLocations() {
+    auto numRows {mField.GetNumRows()};
+    auto numColumns {mField.GetNumColumns()};
+
+    for (auto row {0}; row < numRows; ++row) {
+        for (auto column {0}; column < numColumns; ++column) {
+            auto& searchDataForRotations {mSearchGrid[row][column].mData};
+            
+            for (auto& searchData: searchDataForRotations) {
+                searchData.mIsVisited = false;
             }
         }
     }
@@ -263,6 +251,41 @@ void ValidMovesSearch::AdjustPosition(MovingPiece& piece) {
             default:
                 break;
         }
+    }
+}
+
+void ValidMovesSearch::FindMostValidMoves(ValidMoves& validMoves, MovingPiece piece) {
+    FindValidMoves(validMoves,
+                   piece,
+                   SearchDirection::Left,
+                   nullptr,
+                   AllowRecursion::Yes,
+                   PositionAdjustment::Yes);
+    FindValidMoves(validMoves,
+                   piece,
+                   SearchDirection::Right,
+                   nullptr,
+                   AllowRecursion::Yes,
+                   PositionAdjustment::Yes);
+    
+    auto numRotations {piece.mPieceType.GetNumRotations()};
+    
+    for (auto rotation {0}; rotation < numRotations; ++rotation) {
+        // TODO: Try anti-clockwise also?
+        piece.RotateClockwise();
+        AdjustPosition(piece);
+        
+        if (IsCollision(piece)) {
+            continue;
+        }
+        
+        auto* rotationMovement {AddMovement(validMoves, piece, nullptr)};
+        
+        SearchDown(validMoves,
+                   piece,
+                   rotationMovement,
+                   AllowRecursion::Yes,
+                   PositionAdjustment::No);
     }
 }
 
@@ -498,6 +521,140 @@ void ValidMovesSearch::SaveMove(ValidMoves& validMoves,
         validMoves.mMoves.PushBack(move);
         SetFoundMove(piece, validMoves.mMoves.Back());
     }
+}
+
+void ValidMovesSearch::FindAllValidMoves(ValidMoves& validMoves, MovingPiece piece) {
+    auto* rootMovement {AddMovement(validMoves, piece, nullptr)};
+    Search(validMoves, piece, rootMovement, SearchMovement::Start);
+}
+
+void ValidMovesSearch::Search(ValidMoves& validMoves,
+                              MovingPiece piece,
+                              const Movement* previousMovement,
+                              SearchMovement searchMovement) {
+    if (!MovePieceAndCheckEdges(piece, searchMovement)) {
+        return;
+    }
+    
+    if (IsLocationVisited(piece)) {
+        return;
+    }
+    
+    MarkLocationAsVisited(piece);
+    
+    switch (HandleCollision(piece, searchMovement)) {
+        case SearchCollisionResult::Collision:
+            return;
+        case SearchCollisionResult::FoundMove:
+            SaveMoveIfNotFoundBefore(validMoves, piece, previousMovement);
+            break;
+        case SearchCollisionResult::NoCollision:
+            break;
+    }
+    
+    Search(validMoves, piece, previousMovement, SearchMovement::Down);
+    Search(validMoves, piece, previousMovement, SearchMovement::Right);
+    Search(validMoves, piece, previousMovement, SearchMovement::Left);
+    Search(validMoves, piece, previousMovement, SearchMovement::RotateClockwise);
+    Search(validMoves, piece, previousMovement, SearchMovement::RotateAntiClockwise);
+}
+
+bool ValidMovesSearch::MovePieceAndCheckEdges(MovingPiece& piece, SearchMovement searchMovement) {
+    switch (searchMovement) {
+        case SearchMovement::Down:
+            piece.mPosition.y--;
+            if (piece.mPosition.y < 0) {
+                return false;
+            }
+            break;
+        case SearchMovement::Right:
+            piece.mPosition.x++;
+            if (piece.mPosition.x >= mField.GetNumColumns()) {
+                return false;
+            }
+            break;
+        case SearchMovement::Left:
+            piece.mPosition.x--;
+            if (piece.mPosition.x < 0) {
+                return false;
+            }
+            break;
+        case SearchMovement::RotateClockwise:
+            piece.RotateClockwise();
+            break;
+        case SearchMovement::RotateAntiClockwise:
+            piece.RotateAntiClockwise();
+            break;
+        case SearchMovement::Start:
+            break;
+    }
+    
+    return true;
+}
+
+ValidMovesSearch::SearchCollisionResult
+ValidMovesSearch::HandleCollision(const MovingPiece& piece, SearchMovement searchMovement) {
+    switch (searchMovement) {
+        case SearchMovement::Down: {
+            auto piecePreviousState {piece};
+            piecePreviousState.mPosition.y++;
+            auto collisionRow {HandleCollisionDown(piecePreviousState)};
+            if (collisionRow == piece.mPosition.y) {
+                return SearchCollisionResult::FoundMove;
+            } else if (collisionRow == piecePreviousState.mPosition.y) {
+                return SearchCollisionResult::Collision;
+            }
+            break;
+        }
+        case SearchMovement::Right: {
+            auto piecePreviousState {piece};
+            piecePreviousState.mPosition.x--;
+            if (HandleCollisionRight(piecePreviousState) == piecePreviousState.mPosition.x) {
+                return SearchCollisionResult::Collision;
+            }
+            if (HandleCollisionDown(piece) == piece.mPosition.y) {
+                return SearchCollisionResult::FoundMove;
+            }
+            break;
+        }
+        case SearchMovement::Left: {
+            auto piecePreviousState {piece};
+            piecePreviousState.mPosition.x++;
+            if (HandleCollisionLeft(piecePreviousState) == piecePreviousState.mPosition.x) {
+                return SearchCollisionResult::Collision;
+            }
+            if (HandleCollisionDown(piece) == piece.mPosition.y) {
+                return SearchCollisionResult::FoundMove;
+            }
+            break;
+        }
+        case SearchMovement::RotateClockwise:
+        case SearchMovement::RotateAntiClockwise:
+        case SearchMovement::Start:
+            if (IsCollision(piece)) {
+                return SearchCollisionResult::Collision;
+            }
+            if (HandleCollisionDown(piece) == piece.mPosition.y) {
+                return SearchCollisionResult::FoundMove;
+            }
+            break;
+    }
+    
+    return SearchCollisionResult::NoCollision;
+}
+
+void ValidMovesSearch::SaveMoveIfNotFoundBefore(ValidMoves& validMoves,
+                                                const MovingPiece& piece,
+                                                const Movement* previousMovement) {
+    if (GetFoundMove(piece)) {
+        return;
+    }
+    
+    auto* lastMovement {AddMovement(validMoves, piece, previousMovement)};
+    Move move {piece.mPosition, piece.mRotation, lastMovement};
+
+    validMoves.mMoves.PushBack(move);
+    SetFoundMove(piece, validMoves.mMoves.Back());
 }
 
 bool ValidMovesSearch::IsLocationVisited(const MovingPiece& piece) const {

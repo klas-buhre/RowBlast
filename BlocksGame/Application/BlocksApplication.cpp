@@ -61,10 +61,11 @@ Ongoing tasks:
         -The pyramid case.
 
 WIP:
-
- 
-  Using this algorithm alone may be expensive and cause strange FallingPieceAnimation. Try to
-  combine it with the current algorithm. Also, consider how to handle Movements.
+  -Fix the bug that the search ends if piece position is negative (ShortIPiece-bug). How to handle
+   detection if the piece goes outside the field?
+  -Discard moves that look like duplicates for the ShortIPiece after the num rotations is changed
+   to 4.
+  -Consider how to handle Movements.
 
 
 int collisionNotCalculated = -1
