@@ -19,6 +19,12 @@ namespace BlocksGame {
     
     class Piece {
     public:
+        struct Dimensions {
+            int mXmin {0};
+            int mXmax {0};
+            int mYmin {0};
+        };
+
         Piece();
         virtual ~Piece() {}
         
@@ -28,6 +34,7 @@ namespace BlocksGame {
         const Pht::IVec2& GetLeftOverhangCheckPosition(Rotation rotation) const;
         const Pht::Optional<Pht::IVec2>& GetRightExtremityCheckPosition(Rotation rotation) const;
         const Pht::Optional<Pht::IVec2>& GetLeftExtremityCheckPosition(Rotation rotation) const;
+        const Dimensions& GetDimensions(Rotation rotation) const;
         Pht::Vec2 GetCenterPosition(Rotation rotation) const;
         const Pht::Vec2& GetButtonCenterPosition(Rotation rotation) const;
         const Pht::Vec2& GetButtonSize(Rotation rotation) const;
@@ -92,6 +99,7 @@ namespace BlocksGame {
         void CalculateMinMax(int& yMax, int& xMin, int& xMax, const CellGrid& grid) const;
         void AddOverhangCheckPositions(Rotation rotation);
         void AddExtremityCheckPositions(Rotation rotation);
+        void AddDimensions(Rotation rotation);
         void InitClickGrids(const ClickGrid& clickGrid);
         ClickGrid RotateClickGridClockwise90Deg(const ClickGrid& grid, Rotation newRotation);
         void AddButtonPositionAndSize(Rotation rotation);
@@ -110,6 +118,7 @@ namespace BlocksGame {
         std::vector<Pht::IVec2> mLeftOverhangCheckPositions;
         std::vector<Pht::Optional<Pht::IVec2>> mRightExtremityCheckPositions;
         std::vector<Pht::Optional<Pht::IVec2>> mLeftExtremityCheckPositions;
+        std::vector<Dimensions> mDimensions;
         std::vector<Pht::Vec2> mButtonCenterPositions;
         std::vector<Pht::Vec2> mButtonSizes;
     };

@@ -561,24 +561,30 @@ void ValidMovesSearch::Search(ValidMoves& validMoves,
 
 bool ValidMovesSearch::MovePieceAndCheckEdges(MovingPiece& piece, SearchMovement searchMovement) {
     switch (searchMovement) {
-        case SearchMovement::Down:
+        case SearchMovement::Down: {
             piece.mPosition.y--;
-            if (piece.mPosition.y < 0) {
+            auto& pieceDimensions {piece.mPieceType.GetDimensions(piece.mRotation)};
+            if (piece.mPosition.y + pieceDimensions.mYmin < mField.GetLowestVisibleRow()) {
                 return false;
             }
             break;
-        case SearchMovement::Right:
+        }
+        case SearchMovement::Right: {
             piece.mPosition.x++;
-            if (piece.mPosition.x >= mField.GetNumColumns()) {
+            auto& pieceDimensions {piece.mPieceType.GetDimensions(piece.mRotation)};
+            if (piece.mPosition.x + pieceDimensions.mXmax >= mField.GetNumColumns()) {
                 return false;
             }
             break;
-        case SearchMovement::Left:
+        }
+        case SearchMovement::Left: {
             piece.mPosition.x--;
-            if (piece.mPosition.x < 0) {
+            auto& pieceDimensions {piece.mPieceType.GetDimensions(piece.mRotation)};
+            if (piece.mPosition.x + pieceDimensions.mXmin < 0) {
                 return false;
             }
             break;
+        }
         case SearchMovement::RotateClockwise:
             piece.RotateClockwise();
             break;

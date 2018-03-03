@@ -87,6 +87,10 @@ const Pht::Optional<Pht::IVec2>& Piece::GetLeftExtremityCheckPosition(Rotation r
     return mLeftExtremityCheckPositions[static_cast<int>(rotation)];
 }
 
+const Piece::Dimensions& Piece::GetDimensions(Rotation rotation) const {
+    return mDimensions[static_cast<int>(rotation)];
+}
+
 Pht::Vec2 Piece::GetCenterPosition(Rotation rotation) const {
     return GetButtonCenterPosition(rotation) / 2.0f;
 }
@@ -151,7 +155,13 @@ void Piece::InitGrids(const FillGrid& fillGrid,
     AddExtremityCheckPositions(Rotation::Deg90);
     AddExtremityCheckPositions(Rotation::Deg180);
     AddExtremityCheckPositions(Rotation::Deg270);
-    
+
+    mDimensions.resize(4);
+    AddDimensions(Rotation::Deg0);
+    AddDimensions(Rotation::Deg90);
+    AddDimensions(Rotation::Deg180);
+    AddDimensions(Rotation::Deg270);
+
     mButtonCenterPositions.resize(4);
     mButtonSizes.resize(4);
     AddButtonPositionAndSize(Rotation::Deg0);
@@ -392,6 +402,36 @@ void Piece::AddExtremityCheckPositions(Rotation rotation) {
     
     mRightExtremityCheckPositions[index] = rightExtremityCheckPosition;
     mLeftExtremityCheckPositions[index] = leftExtremityCheckPosition;
+}
+
+void Piece::AddDimensions(Rotation rotation) {
+    const auto& grid {GetGrid(rotation)};
+    
+    Dimensions dimensions {
+        .mXmin = mGridNumColumns - 1,
+        .mXmax = 0,
+        .mYmin = mGridNumRows - 1,
+    };
+    
+    for (auto row {0}; row < mGridNumRows; ++row) {
+        for (auto column {0}; column < mGridNumColumns; ++column) {
+            if (!grid[row][column].IsEmpty()) {
+                if (row < dimensions.mYmin) {
+                    dimensions.mYmin = row;
+                }
+                
+                if (column > dimensions.mXmax) {
+                    dimensions.mXmax = column;
+                }
+                
+                if (column < dimensions.mXmin) {
+                    dimensions.mXmin = column;
+                }
+            }
+        }
+    }
+    
+    mDimensions[static_cast<int>(rotation)] = dimensions;
 }
 
 void Piece::AddButtonPositionAndSize(Rotation rotation) {
