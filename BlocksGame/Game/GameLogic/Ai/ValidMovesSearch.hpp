@@ -95,6 +95,7 @@ namespace BlocksGame {
         };
         
         enum class SearchMovement {
+            None,
             Start,
             Down,
             Right,
@@ -166,6 +167,7 @@ namespace BlocksGame {
         void Search(ValidMoves& validMoves,
                     MovingPiece piece,
                     const Movement* previousMovement,
+                    SearchMovement previousSearchMovement,
                     SearchMovement searchMovement);
         void Search(MovingPiece piece, SearchMovement searchMovement);
         bool MovePieceAndCheckEdges(MovingPiece& piece, SearchMovement searchMovement);

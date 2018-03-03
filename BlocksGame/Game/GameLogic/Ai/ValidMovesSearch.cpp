@@ -528,24 +528,22 @@ void ValidMovesSearch::SaveMove(ValidMoves& validMoves,
 }
 
 void ValidMovesSearch::FindAllValidMoves(ValidMoves& validMoves, MovingPiece piece) {
-    auto* rootMovement {AddMovement(validMoves, piece, nullptr)};
-    Search(validMoves, piece, rootMovement, SearchMovement::Start);
+    Search(validMoves, piece, nullptr, SearchMovement::None, SearchMovement::Start);
 }
 
 void ValidMovesSearch::Search(ValidMoves& validMoves,
                               MovingPiece piece,
                               const Movement* previousMovement,
+                              SearchMovement previousSearchMovement,
                               SearchMovement searchMovement) {
     if (!MovePieceAndCheckEdges(piece, searchMovement)) {
         return;
     }
-    
+
     if (IsLocationVisited(piece)) {
         return;
     }
-    
-    MarkLocationAsVisited(piece);
-    
+
     switch (HandleCollision(piece, searchMovement)) {
         case SearchCollisionResult::Collision:
             return;
@@ -556,11 +554,18 @@ void ValidMovesSearch::Search(ValidMoves& validMoves,
             break;
     }
     
-    Search(validMoves, piece, previousMovement, SearchMovement::Down);
-    Search(validMoves, piece, previousMovement, SearchMovement::Right);
-    Search(validMoves, piece, previousMovement, SearchMovement::Left);
-    Search(validMoves, piece, previousMovement, SearchMovement::RotateClockwise);
-    Search(validMoves, piece, previousMovement, SearchMovement::RotateAntiClockwise);
+    MarkLocationAsVisited(piece);
+    
+    auto* movement {
+        searchMovement != previousSearchMovement ?
+        AddMovement(validMoves, piece, previousMovement) : previousMovement
+    };
+    
+    Search(validMoves, piece, movement, searchMovement, SearchMovement::Down);
+    Search(validMoves, piece, movement, searchMovement, SearchMovement::Right);
+    Search(validMoves, piece, movement, searchMovement, SearchMovement::Left);
+    Search(validMoves, piece, movement, searchMovement, SearchMovement::RotateClockwise);
+    Search(validMoves, piece, movement, searchMovement, SearchMovement::RotateAntiClockwise);
 }
 
 bool ValidMovesSearch::MovePieceAndCheckEdges(MovingPiece& piece, SearchMovement searchMovement) {
@@ -596,6 +601,9 @@ bool ValidMovesSearch::MovePieceAndCheckEdges(MovingPiece& piece, SearchMovement
             piece.RotateAntiClockwise();
             break;
         case SearchMovement::Start:
+            break;
+        case SearchMovement::None:
+            assert(!"Illegal movement");
             break;
     }
     
@@ -647,6 +655,9 @@ ValidMovesSearch::HandleCollision(const MovingPiece& piece, SearchMovement searc
             if (HandleCollisionDown(piece) == piece.mPosition.y) {
                 return SearchCollisionResult::FoundMove;
             }
+            break;
+        case SearchMovement::None:
+            assert(!"Illegal movement");
             break;
     }
     
