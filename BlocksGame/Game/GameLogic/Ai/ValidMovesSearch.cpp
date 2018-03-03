@@ -506,6 +506,10 @@ void ValidMovesSearch::SearchDown(ValidMoves& validMoves,
 void ValidMovesSearch::SaveMove(ValidMoves& validMoves,
                                 const MovingPiece& piece,
                                 const Movement* previousMovement) {
+    if (IsDuplicateMoveFoundAtDifferentLocation(piece)) {
+        return;
+    }
+    
     if (auto* foundMove {GetFoundMove(piece)}) {
         auto foundMoveNumMovements {CalcNumMovements(*foundMove->mLastMovement)};
         auto thisMoveNumMovements {CalcNumMovements(*previousMovement) + 1};
@@ -652,7 +656,7 @@ ValidMovesSearch::HandleCollision(const MovingPiece& piece, SearchMovement searc
 void ValidMovesSearch::SaveMoveIfNotFoundBefore(ValidMoves& validMoves,
                                                 const MovingPiece& piece,
                                                 const Movement* previousMovement) {
-    if (GetFoundMove(piece)) {
+    if (GetFoundMove(piece) || IsDuplicateMoveFoundAtDifferentLocation(piece)) {
         return;
     }
     
@@ -661,6 +665,25 @@ void ValidMovesSearch::SaveMoveIfNotFoundBefore(ValidMoves& validMoves,
 
     validMoves.mMoves.PushBack(move);
     SetFoundMove(piece, validMoves.mMoves.Back());
+}
+
+bool ValidMovesSearch::IsDuplicateMoveFoundAtDifferentLocation(const MovingPiece& piece) const {
+    auto& duplicateMoveCheck {piece.mPieceType.GetDuplicateMoveCheck(piece.mRotation)};
+    
+    if (duplicateMoveCheck.HasValue()) {
+        auto& duplicateMoveCheckValue {duplicateMoveCheck.GetValue()};
+        auto checkPosition {piece.mPosition + duplicateMoveCheckValue.mRelativePosition};
+        
+        auto& searchData {
+            GetSearchDataForOneRotation(checkPosition, duplicateMoveCheckValue.mRotation)
+        };
+        
+        if (searchData.mFoundMove) {
+            return true;
+        }
+    }
+    
+    return false;
 }
 
 bool ValidMovesSearch::IsLocationVisited(const MovingPiece& piece) const {
@@ -691,6 +714,12 @@ ValidMovesSearch::GetSearchDataForOneRotation(const MovingPiece& piece) {
 
 ValidMovesSearch::SearchDataForOneRotation&
 ValidMovesSearch::GetSearchDataForOneRotation(const Pht::IVec2& position, Rotation rotation) {
+    auto gridPosition {CalculateSearchGridPosition(position)};
+    return mSearchGrid[gridPosition.y][gridPosition.x].mData[static_cast<int>(rotation)];
+}
+
+const ValidMovesSearch::SearchDataForOneRotation&
+ValidMovesSearch::GetSearchDataForOneRotation(const Pht::IVec2& position, Rotation rotation) const {
     auto gridPosition {CalculateSearchGridPosition(position)};
     return mSearchGrid[gridPosition.y][gridPosition.x].mData[static_cast<int>(rotation)];
 }

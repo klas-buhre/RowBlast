@@ -24,6 +24,11 @@ namespace BlocksGame {
             int mXmax {0};
             int mYmin {0};
         };
+        
+        struct DuplicateMoveCheck {
+            Pht::IVec2 mRelativePosition;
+            Rotation mRotation;
+        };
 
         Piece();
         virtual ~Piece() {}
@@ -35,6 +40,7 @@ namespace BlocksGame {
         const Pht::Optional<Pht::IVec2>& GetRightExtremityCheckPosition(Rotation rotation) const;
         const Pht::Optional<Pht::IVec2>& GetLeftExtremityCheckPosition(Rotation rotation) const;
         const Dimensions& GetDimensions(Rotation rotation) const;
+        const Pht::Optional<DuplicateMoveCheck>& GetDuplicateMoveCheck(Rotation rotation) const;
         Pht::Vec2 GetCenterPosition(Rotation rotation) const;
         const Pht::Vec2& GetButtonCenterPosition(Rotation rotation) const;
         const Pht::Vec2& GetButtonSize(Rotation rotation) const;
@@ -83,6 +89,7 @@ namespace BlocksGame {
                        bool isIndivisible = false);
         void SetPreviewCellSize(float previewCellSize);
         void SetNumRotations(int numRotations);
+        void SetDuplicateMoveCheck(Rotation rotation, const DuplicateMoveCheck& duplicateMoveCheck);
         void SetGhostPieceRenderable(std::unique_ptr<Pht::RenderableObject> renderable);
         void SetPressedGhostPieceRenderable(std::unique_ptr<Pht::RenderableObject> renderable);
         
@@ -119,6 +126,7 @@ namespace BlocksGame {
         std::vector<Pht::Optional<Pht::IVec2>> mRightExtremityCheckPositions;
         std::vector<Pht::Optional<Pht::IVec2>> mLeftExtremityCheckPositions;
         std::vector<Dimensions> mDimensions;
+        std::vector<Pht::Optional<DuplicateMoveCheck>> mDuplicateMoveChecks;
         std::vector<Pht::Vec2> mButtonCenterPositions;
         std::vector<Pht::Vec2> mButtonSizes;
     };

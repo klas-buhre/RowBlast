@@ -174,11 +174,14 @@ namespace BlocksGame {
         void SaveMoveIfNotFoundBefore(ValidMoves& validMoves,
                                       const MovingPiece& piece,
                                       const Movement* previousMovement);
+        bool IsDuplicateMoveFoundAtDifferentLocation(const MovingPiece& piece) const;
         bool IsLocationVisited(const MovingPiece& piece) const;
         void MarkLocationAsVisited(const MovingPiece& piece);
         SearchDataForOneRotation& GetSearchDataForOneRotation(const MovingPiece& piece);
         SearchDataForOneRotation& GetSearchDataForOneRotation(const Pht::IVec2& position,
                                                               Rotation rotation);
+        const SearchDataForOneRotation& GetSearchDataForOneRotation(const Pht::IVec2& position,
+                                                                    Rotation rotation) const;
         Pht::IVec2 CalculateSearchGridPosition(const Pht::IVec2& position) const;
         Move* GetFoundMove(const MovingPiece& piece) const;
         void SetFoundMove(const MovingPiece& piece, Move& move);

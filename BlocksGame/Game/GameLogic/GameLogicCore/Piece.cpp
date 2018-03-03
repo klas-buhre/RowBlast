@@ -61,7 +61,9 @@ namespace {
     }
 }
 
-Piece::Piece() {}
+Piece::Piece() {
+    mDuplicateMoveChecks.resize(4);
+}
 
 const CellGrid& Piece::GetGrid(Rotation rotation) const {
     return mGrids[static_cast<int>(rotation)];
@@ -89,6 +91,10 @@ const Pht::Optional<Pht::IVec2>& Piece::GetLeftExtremityCheckPosition(Rotation r
 
 const Piece::Dimensions& Piece::GetDimensions(Rotation rotation) const {
     return mDimensions[static_cast<int>(rotation)];
+}
+
+const Pht::Optional<Piece::DuplicateMoveCheck>& Piece::GetDuplicateMoveCheck(Rotation rotation) const {
+    return mDuplicateMoveChecks[static_cast<int>(rotation)];
 }
 
 Pht::Vec2 Piece::GetCenterPosition(Rotation rotation) const {
@@ -266,6 +272,10 @@ void Piece::SetPreviewCellSize(float previewCellSize) {
 
 void Piece::SetNumRotations(int numRotations) {
     mNumRotations = numRotations;
+}
+
+void Piece::SetDuplicateMoveCheck(Rotation rotation, const DuplicateMoveCheck& duplicateMoveCheck) {
+    mDuplicateMoveChecks[static_cast<int>(rotation)] = duplicateMoveCheck;
 }
 
 void Piece::SetGhostPieceRenderable(std::unique_ptr<Pht::RenderableObject> renderable) {
