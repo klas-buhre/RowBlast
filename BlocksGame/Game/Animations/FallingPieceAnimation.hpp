@@ -22,6 +22,7 @@ namespace BlocksGame {
         
         FallingPieceAnimation(IGameLogic& gameLogic, FallingPiece& fallingPiece);
     
+        void Init();
         void Start(const Movement& lastMovement);
         State Update(float dt);
         

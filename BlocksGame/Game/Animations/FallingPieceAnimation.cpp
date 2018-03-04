@@ -16,6 +16,10 @@ FallingPieceAnimation::FallingPieceAnimation(IGameLogic& gameLogic, FallingPiece
     mGameLogic {gameLogic},
     mFallingPiece {fallingPiece} {}
 
+void FallingPieceAnimation::Init() {
+    mState = State::Inactive;
+}
+
 void FallingPieceAnimation::Start(const Movement& lastMovement) {
     mMovements.Clear();
     mMovementIndex = 0;

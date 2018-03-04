@@ -555,12 +555,9 @@ void ValidMovesSearch::Search(ValidMoves& validMoves,
     }
     
     MarkLocationAsVisited(piece);
-    
-    auto* movement {
-        searchMovement != previousSearchMovement ?
-        AddMovement(validMoves, piece, previousMovement) : previousMovement
-    };
-    
+
+    auto* movement {AddMovement(validMoves, piece, previousMovement)};
+
     Search(validMoves, piece, movement, searchMovement, SearchMovement::Down);
     Search(validMoves, piece, movement, searchMovement, SearchMovement::Right);
     Search(validMoves, piece, movement, searchMovement, SearchMovement::Left);

@@ -88,6 +88,7 @@ void GameController::StartLevel(int levelIndex) {
     mExplosionParticleEffect.Init();
     mRowExplosionParticleEffect.Init();
     mFlyingBlocksAnimation.Init();
+    mFallingPieceAnimation.Init();
     mSlidingTextAnimation.Init();
     mGameViewControllers.Init(mScene);
     
