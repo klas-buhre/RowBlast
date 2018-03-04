@@ -95,7 +95,6 @@ namespace BlocksGame {
         };
         
         enum class SearchMovement {
-            None,
             Start,
             Down,
             Right,
@@ -122,6 +121,7 @@ namespace BlocksGame {
  
         struct CellSearchData {
             SearchDataForOneRotation mData[4];
+            const Movement* mFirstMovementAtLocation {nullptr};
             bool mUnderOverhangTip {false};
         };
         
@@ -129,7 +129,7 @@ namespace BlocksGame {
 
         void InitSearchGrid();
         void ResetVisitedLocations();
-        void FindMostValidMoves(ValidMoves& validMoves, MovingPiece piece);
+        void FindMostValidMovesWithHumanLikeSearch(ValidMoves& validMoves, MovingPiece piece);
         void AdjustPosition(MovingPiece& piece);
         bool CalculateFieldCellIsNotFilled(int row, int column) const;
         void FindValidMoves(ValidMoves& validMoves,
@@ -163,11 +163,10 @@ namespace BlocksGame {
         void SaveMove(ValidMoves& validMoves,
                       const MovingPiece& piece,
                       const Movement* previousMovement);
-        void FindAllValidMoves(ValidMoves& validMoves, MovingPiece piece);
+        void FindAllRemainingValidMoves(ValidMoves& validMoves, MovingPiece piece);
         void Search(ValidMoves& validMoves,
                     MovingPiece piece,
                     const Movement* previousMovement,
-                    SearchMovement previousSearchMovement,
                     SearchMovement searchMovement);
         void Search(MovingPiece piece, SearchMovement searchMovement);
         bool MovePieceAndCheckEdges(MovingPiece& piece, SearchMovement searchMovement);
@@ -177,6 +176,9 @@ namespace BlocksGame {
                                       const MovingPiece& piece,
                                       const Movement* previousMovement);
         bool IsDuplicateMoveFoundAtDifferentLocation(const MovingPiece& piece) const;
+        const Movement* AddMovementAndRemoveDetour(ValidMoves& validMoves,
+                                                   const MovingPiece& piece,
+                                                   const Movement* previousMovement);
         bool IsLocationVisited(const MovingPiece& piece) const;
         void MarkLocationAsVisited(const MovingPiece& piece);
         SearchDataForOneRotation& GetSearchDataForOneRotation(const MovingPiece& piece);

@@ -94,9 +94,9 @@ void ValidMovesSearch::Init() {
 
 void ValidMovesSearch::FindValidMoves(ValidMoves& validMoves, MovingPiece piece) {
     InitSearchGrid();
-    FindMostValidMoves(validMoves, piece);
+    FindMostValidMovesWithHumanLikeSearch(validMoves, piece);
     ResetVisitedLocations();
-    FindAllValidMoves(validMoves, piece);
+    FindAllRemainingValidMoves(validMoves, piece);
 }
 
 void ValidMovesSearch::InitSearchGrid() {
@@ -119,6 +119,7 @@ void ValidMovesSearch::InitSearchGrid() {
                 searchData = SearchDataForOneRotation {};
             }
 
+            cellSearchData.mFirstMovementAtLocation = nullptr;
             cellSearchData.mUnderOverhangTip = false;
             
             auto& fieldCell {mField.GetCell(row, column)};
@@ -254,7 +255,8 @@ void ValidMovesSearch::AdjustPosition(MovingPiece& piece) {
     }
 }
 
-void ValidMovesSearch::FindMostValidMoves(ValidMoves& validMoves, MovingPiece piece) {
+void ValidMovesSearch::FindMostValidMovesWithHumanLikeSearch(ValidMoves& validMoves,
+                                                             MovingPiece piece) {
     FindValidMoves(validMoves,
                    piece,
                    SearchDirection::Left,
@@ -308,8 +310,6 @@ void ValidMovesSearch::FindValidMoves(ValidMoves& validMoves,
     auto rotationAtEntry {piece.mRotation};
     
     for (auto rotation {0}; rotation < numRotations; ++rotation) {
-        piece.RotateClockwise();
-        
         if (!FindValidMovesForRotation(validMoves,
                                        piece,
                                        searchDirection,
@@ -318,13 +318,13 @@ void ValidMovesSearch::FindValidMoves(ValidMoves& validMoves,
                                        positionAdjustment)) {
             break;
         }
+        
+        piece.RotateClockwise();
     }
     
     piece.mRotation = rotationAtEntry;
     
     for (auto rotation {0}; rotation < numRotations; ++rotation) {
-        piece.RotateAntiClockwise();
-        
         if (!FindValidMovesForRotation(validMoves,
                                        piece,
                                        searchDirection,
@@ -333,6 +333,8 @@ void ValidMovesSearch::FindValidMoves(ValidMoves& validMoves,
                                        positionAdjustment)) {
             break;
         }
+
+        piece.RotateAntiClockwise();
     }
 }
 
@@ -527,14 +529,13 @@ void ValidMovesSearch::SaveMove(ValidMoves& validMoves,
     }
 }
 
-void ValidMovesSearch::FindAllValidMoves(ValidMoves& validMoves, MovingPiece piece) {
-    Search(validMoves, piece, nullptr, SearchMovement::None, SearchMovement::Start);
+void ValidMovesSearch::FindAllRemainingValidMoves(ValidMoves& validMoves, MovingPiece piece) {
+    Search(validMoves, piece, nullptr, SearchMovement::Start);
 }
 
 void ValidMovesSearch::Search(ValidMoves& validMoves,
                               MovingPiece piece,
                               const Movement* previousMovement,
-                              SearchMovement previousSearchMovement,
                               SearchMovement searchMovement) {
     if (!MovePieceAndCheckEdges(piece, searchMovement)) {
         return;
@@ -556,13 +557,13 @@ void ValidMovesSearch::Search(ValidMoves& validMoves,
     
     MarkLocationAsVisited(piece);
 
-    auto* movement {AddMovement(validMoves, piece, previousMovement)};
+    auto* movement {AddMovementAndRemoveDetour(validMoves, piece, previousMovement)};
 
-    Search(validMoves, piece, movement, searchMovement, SearchMovement::Down);
-    Search(validMoves, piece, movement, searchMovement, SearchMovement::Right);
-    Search(validMoves, piece, movement, searchMovement, SearchMovement::Left);
-    Search(validMoves, piece, movement, searchMovement, SearchMovement::RotateClockwise);
-    Search(validMoves, piece, movement, searchMovement, SearchMovement::RotateAntiClockwise);
+    Search(validMoves, piece, movement, SearchMovement::Down);
+    Search(validMoves, piece, movement, SearchMovement::Right);
+    Search(validMoves, piece, movement, SearchMovement::Left);
+    Search(validMoves, piece, movement, SearchMovement::RotateClockwise);
+    Search(validMoves, piece, movement, SearchMovement::RotateAntiClockwise);
 }
 
 bool ValidMovesSearch::MovePieceAndCheckEdges(MovingPiece& piece, SearchMovement searchMovement) {
@@ -598,9 +599,6 @@ bool ValidMovesSearch::MovePieceAndCheckEdges(MovingPiece& piece, SearchMovement
             piece.RotateAntiClockwise();
             break;
         case SearchMovement::Start:
-            break;
-        case SearchMovement::None:
-            assert(!"Illegal movement");
             break;
     }
     
@@ -653,9 +651,6 @@ ValidMovesSearch::HandleCollision(const MovingPiece& piece, SearchMovement searc
                 return SearchCollisionResult::FoundMove;
             }
             break;
-        case SearchMovement::None:
-            assert(!"Illegal movement");
-            break;
     }
     
     return SearchCollisionResult::NoCollision;
@@ -692,6 +687,21 @@ bool ValidMovesSearch::IsDuplicateMoveFoundAtDifferentLocation(const MovingPiece
     }
     
     return false;
+}
+
+const Movement* ValidMovesSearch::AddMovementAndRemoveDetour(ValidMoves& validMoves,
+                                                             const MovingPiece& piece,
+                                                             const Movement* previousMovement) {
+    auto gridPosition {CalculateSearchGridPosition(piece.mPosition)};
+    auto& cellSearchData {mSearchGrid[gridPosition.y][gridPosition.x]};
+    
+    if (cellSearchData.mFirstMovementAtLocation) {
+        return AddMovement(validMoves, piece, cellSearchData.mFirstMovementAtLocation);
+    }
+    
+    auto* movement {AddMovement(validMoves, piece, previousMovement)};
+    cellSearchData.mFirstMovementAtLocation = movement;
+    return movement;
 }
 
 bool ValidMovesSearch::IsLocationVisited(const MovingPiece& piece) const {
