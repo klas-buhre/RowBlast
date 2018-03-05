@@ -382,17 +382,20 @@ void BlocksApplication::InsertFadeEffectInActiveScene() {
 void BlocksApplication::BeginFadeToMap() {
     mFadeEffect.Start();
     mNextState = State::MapScene;
+    mEngine.GetInput().DisableInput();
 }
 
 void BlocksApplication::BeginFadeToGame(int level) {
     mLevelToStart = level;
     mFadeEffect.Start();
     mNextState = State::GameScene;
+    mEngine.GetInput().DisableInput();
 }
 
 void BlocksApplication::StartMap() {
     mState = State::MapScene;
     mMapController.Init();
+    mEngine.GetInput().EnableInput();
 }
 
 void BlocksApplication::StartGame() {

@@ -65,9 +65,11 @@ void InputHandler::PopNextEvent() {
 }
 
 bool InputHandler::ConsumeWholeTouch() {
-    assert(mIsInputEnabled);
-    
     auto gotTouch {false};
+
+    if (!mIsInputEnabled) {
+        return gotTouch;
+    }
     
     while (HasEvents()) {
         auto& event {GetNextEvent()};
