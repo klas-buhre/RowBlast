@@ -22,11 +22,15 @@ Backlog:
     -Maybe make the field quad as bright at the bottom as the top?
     -Try ghost pieces with very faint fill?
     -The cloud background in the game scene can be a bit zoomed out.
+    -Maybe the blocks could be compressed a bit when landing after falling to avoid discontinuous
+     derivative.
     -Could have the rounded cylinder i some places in the HUDs.
     -GUI: the buttons in the views could be yellow with black text and triangular edges like in
      Mario Kart 8. There could also be a reflection animation in the button.
     -Recreate the star particle. Possibly by buying a textures for particle systems in unity assets
      store. Look at: https://www.assetstore.unity3d.com/en/#!/content/26701
+    -The PieceDropParticleEffect should be less noticeable.
+    -Maybe add a time duration for each rotation in the FallingPieceAnimation.
     -Maybe the bombs could have constant particle effects as if it is about to explode. And they
      could be be of different shapes other than spheres.
     -Camera shake when clearing 5 rows or using a bomb.
@@ -58,7 +62,6 @@ Backlog:
     -Credit the icon creator: <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
   
 Ongoing tasks:
-    -Fix problem in FallingPieceAnimation when it goes back and forth.
 
 
 Ideas:

@@ -52,17 +52,17 @@ void FallingPieceAnimation::Animate(float dt) {
         return;
     }
     
-    const auto* nextMovement {mMovements.At(mMovementIndex)};
+    const auto* movement {mMovements.At(mMovementIndex)};
     const auto& position {mFallingPiece.GetPosition()};
-    auto targetPosition {nextMovement->GetPosition() + halfColumn};
+    auto targetPosition {movement->GetPosition() + halfColumn};
     auto positionChange {speed * dt};
     
     if (position.y > targetPosition.y) {
         Pht::Vec2 newPosition {position.x, position.y - positionChange};
         
         if (newPosition.y < targetPosition.y) {
-            mFallingPiece.SetY(targetPosition.y);
             auto dtConsumed {(position.y - targetPosition.y) / speed};
+            mFallingPiece.SetY(targetPosition.y);
             NextMovement();
             Animate(dt - dtConsumed);
         } else {
@@ -72,8 +72,8 @@ void FallingPieceAnimation::Animate(float dt) {
         Pht::Vec2 newPosition {position.x - positionChange, position.y};
         
         if (newPosition.x < targetPosition.x) {
-            mFallingPiece.SetX(targetPosition.x);
             auto dtConsumed {(position.x - targetPosition.x) / speed};
+            mFallingPiece.SetX(targetPosition.x);
             NextMovement();
             Animate(dt - dtConsumed);
         } else {
@@ -83,8 +83,8 @@ void FallingPieceAnimation::Animate(float dt) {
         Pht::Vec2 newPosition {position.x + positionChange, position.y};
         
         if (newPosition.x > targetPosition.x) {
-            mFallingPiece.SetX(targetPosition.x);
             auto dtConsumed {(targetPosition.x - position.x) / speed};
+            mFallingPiece.SetX(targetPosition.x);
             NextMovement();
             Animate(dt - dtConsumed);
         } else {
@@ -111,10 +111,10 @@ void FallingPieceAnimation::LandFallingPiece() {
     mFallingPiece.SetY(landingPosition.y);
     
     auto secondToLastMovementIndex {mMovements.Size() - 2};
-    assert(secondToLastMovementIndex >= 0);
 
     auto startParticleEffect {
-        mMovements.At(secondToLastMovementIndex)->GetPosition().y > landingPosition.y
+        secondToLastMovementIndex >= 0 ?
+        mMovements.At(secondToLastMovementIndex)->GetPosition().y > landingPosition.y : false
     };
     
     mGameLogic.OnFallingPieceAnimationFinished(startParticleEffect);
