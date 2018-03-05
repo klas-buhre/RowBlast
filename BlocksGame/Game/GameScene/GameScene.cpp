@@ -192,8 +192,9 @@ void GameScene::CreateLightAndCamera() {
 
 void GameScene::CreateBackground() {
     Pht::Material backgroundMaterial {"sky_blurred.jpg"};
-    auto& background {mScene->CreateSceneObject(Pht::QuadMesh {150.0f, 150.0f}, backgroundMaterial)};
-    background.GetTransform().SetPosition({0.0f, -5.0f, -42.0f});
+    auto& background {mScene->CreateSceneObject(Pht::QuadMesh {300.0f, 300.0f}, backgroundMaterial)};
+    background.GetTransform().SetPosition({0.0f, 0.0f, -115.0f});
+    
     background.SetLayer(static_cast<int>(Layer::Background));
     mScene->GetRoot().AddChild(background);
 }

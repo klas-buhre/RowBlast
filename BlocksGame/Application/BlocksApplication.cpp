@@ -18,10 +18,6 @@ Backlog:
      convenient to go back to the state before the move and not the initial state.
     -Mega bomb?
   -Rendering:
-    -Maybe increase field quad opacity to 0.9?
-    -Maybe make the field quad as bright at the bottom as the top?
-    -Try ghost pieces with very faint fill?
-    -The cloud background in the game scene can be a bit zoomed out.
     -Maybe the blocks could be compressed a bit when landing after falling to avoid discontinuous
      derivative.
     -Could have the rounded cylinder i some places in the HUDs.
@@ -52,6 +48,10 @@ Backlog:
      through.
     -MenuButtons can start a shrink animation when pressed down.
   -Tutorial:
+    -Make the tutorial as short as possible. Don't give all the rules of the game at once. Instead,
+     let the user figure it out by playing. For example, introduce changing the visible moves in the
+     second or third level. Let the first level introduce the rule of clearing lines and selecting
+     moves and switching pieces.
   -Purchases:
   -Back end:
   -Levels:
@@ -62,7 +62,10 @@ Backlog:
     -Credit the icon creator: <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
   
 Ongoing tasks:
-
+    -Fix the button bug where views don't slide out.
+    -Maybe increase field quad opacity to 0.9?
+    -Maybe make the field quad as bright at the bottom as the top?
+    -Try ghost pieces with very faint fill?
 
 Ideas:
     -The pause button could lead to a widget that has an undo button, a boosters button and a game
@@ -81,6 +84,7 @@ Time Estimation in days:
         Done
     -Fix all bugs.
         Cost: 7
+        Done
     -Switch piece HUD animation.
         Cost: 3
     -Better particle effects for bombs and row bombs.
