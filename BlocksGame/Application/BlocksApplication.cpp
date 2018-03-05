@@ -62,8 +62,7 @@ Backlog:
     -Credit the icon creator: <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
   
 Ongoing tasks:
-    -Fix the button bug where views don't slide out.
-    -Maybe increase field quad opacity to 0.9?
+    -Maybe increase field quad opacity to 0.85?
     -Maybe make the field quad as bright at the bottom as the top?
     -Try ghost pieces with very faint fill?
 
