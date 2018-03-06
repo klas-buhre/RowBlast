@@ -34,7 +34,6 @@
 		623C16D91F63E34B00305752 /* FallingPieceAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623C16D71F63E34A00305752 /* FallingPieceAnimation.cpp */; };
 		623DDBCE203C70520008A4D6 /* WeldsAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623DDBCC203C70520008A4D6 /* WeldsAnimation.cpp */; };
 		623FB822204C18030066652E /* ShortIPiece.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623FB7F6204C18030066652E /* ShortIPiece.cpp */; };
-		623FB823204C18030066652E /* GhostPieceProducer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623FB7F7204C18030066652E /* GhostPieceProducer.cpp */; };
 		623FB824204C18030066652E /* MirroredSevenPiece.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623FB7F8204C18030066652E /* MirroredSevenPiece.cpp */; };
 		623FB825204C18030066652E /* BPiece.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623FB7FC204C18030066652E /* BPiece.cpp */; };
 		623FB826204C18030066652E /* DPiece.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623FB800204C18030066652E /* DPiece.cpp */; };
@@ -56,6 +55,7 @@
 		623FB836204C18030066652E /* LPiece.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623FB81F204C18030066652E /* LPiece.cpp */; };
 		623FB837204C18030066652E /* DiamondPiece.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623FB820204C18030066652E /* DiamondPiece.cpp */; };
 		623FB838204C18030066652E /* MirroredZPiece.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623FB821204C18030066652E /* MirroredZPiece.cpp */; };
+		623FB83B204EF10A0066652E /* GhostPieceProducer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623FB839204EF10A0066652E /* GhostPieceProducer.cpp */; };
 		62411A971E61E62800035D2A /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62411A961E61E62800035D2A /* GLKit.framework */; };
 		6244479A1EDDD2C40080ECE8 /* BlocksApplication.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 624447101EDDD2C40080ECE8 /* BlocksApplication.cpp */; };
 		624447A01EDDD2C40080ECE8 /* CloseButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6244471F1EDDD2C40080ECE8 /* CloseButton.cpp */; };
@@ -302,7 +302,6 @@
 		623FB7F4204C18030066652E /* BigTrianglePiece.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = BigTrianglePiece.hpp; sourceTree = "<group>"; };
 		623FB7F5204C18030066652E /* Bomb.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Bomb.hpp; sourceTree = "<group>"; };
 		623FB7F6204C18030066652E /* ShortIPiece.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ShortIPiece.cpp; sourceTree = "<group>"; };
-		623FB7F7204C18030066652E /* GhostPieceProducer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GhostPieceProducer.cpp; sourceTree = "<group>"; };
 		623FB7F8204C18030066652E /* MirroredSevenPiece.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MirroredSevenPiece.cpp; sourceTree = "<group>"; };
 		623FB7F9204C18030066652E /* LongIPiece.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LongIPiece.hpp; sourceTree = "<group>"; };
 		623FB7FA204C18030066652E /* FPiece.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FPiece.hpp; sourceTree = "<group>"; };
@@ -336,7 +335,6 @@
 		623FB816204C18030066652E /* ShortIPiece.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ShortIPiece.hpp; sourceTree = "<group>"; };
 		623FB817204C18030066652E /* BigTrianglePiece.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BigTrianglePiece.cpp; sourceTree = "<group>"; };
 		623FB818204C18030066652E /* Bomb.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Bomb.cpp; sourceTree = "<group>"; };
-		623FB819204C18030066652E /* GhostPieceProducer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GhostPieceProducer.hpp; sourceTree = "<group>"; };
 		623FB81A204C18030066652E /* MirroredSevenPiece.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MirroredSevenPiece.hpp; sourceTree = "<group>"; };
 		623FB81B204C18030066652E /* FPiece.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FPiece.cpp; sourceTree = "<group>"; };
 		623FB81C204C18030066652E /* LongIPiece.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LongIPiece.cpp; sourceTree = "<group>"; };
@@ -345,6 +343,8 @@
 		623FB81F204C18030066652E /* LPiece.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LPiece.cpp; sourceTree = "<group>"; };
 		623FB820204C18030066652E /* DiamondPiece.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DiamondPiece.cpp; sourceTree = "<group>"; };
 		623FB821204C18030066652E /* MirroredZPiece.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MirroredZPiece.cpp; sourceTree = "<group>"; };
+		623FB839204EF10A0066652E /* GhostPieceProducer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GhostPieceProducer.cpp; sourceTree = "<group>"; };
+		623FB83A204EF10A0066652E /* GhostPieceProducer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GhostPieceProducer.hpp; sourceTree = "<group>"; };
 		62411A961E61E62800035D2A /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		624447101EDDD2C40080ECE8 /* BlocksApplication.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BlocksApplication.cpp; sourceTree = "<group>"; };
 		624447111EDDD2C40080ECE8 /* BlocksApplication.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = BlocksApplication.hpp; sourceTree = "<group>"; };
@@ -914,8 +914,6 @@
 				623FB80B204C18030066652E /* DPiece.hpp */,
 				623FB81B204C18030066652E /* FPiece.cpp */,
 				623FB7FA204C18030066652E /* FPiece.hpp */,
-				623FB7F7204C18030066652E /* GhostPieceProducer.cpp */,
-				623FB819204C18030066652E /* GhostPieceProducer.hpp */,
 				623FB81C204C18030066652E /* LongIPiece.cpp */,
 				623FB7F9204C18030066652E /* LongIPiece.hpp */,
 				623FB81F204C18030066652E /* LPiece.cpp */,
@@ -1063,6 +1061,8 @@
 				6244474E1EDDD2C40080ECE8 /* GameScene.hpp */,
 				6244474B1EDDD2C40080ECE8 /* GameSceneRenderer.cpp */,
 				6244474C1EDDD2C40080ECE8 /* GameSceneRenderer.hpp */,
+				623FB839204EF10A0066652E /* GhostPieceProducer.cpp */,
+				623FB83A204EF10A0066652E /* GhostPieceProducer.hpp */,
 				628065E8201399AE00F86754 /* PieceResources.cpp */,
 				628065E9201399AE00F86754 /* PieceResources.hpp */,
 				628065EB2014F7A700F86754 /* SceneObjectPool.cpp */,
@@ -2001,6 +2001,7 @@
 				6247CFD11EFFB11800B9919E /* GameOverDialogView.cpp in Sources */,
 				62944D6D20053A2D00814D36 /* ParametricSurface.cpp in Sources */,
 				62944DA620053A2D00814D36 /* ObjMeshLoader.cpp in Sources */,
+				623FB83B204EF10A0066652E /* GhostPieceProducer.cpp in Sources */,
 				62944D7120053A2D00814D36 /* ObjMesh.cpp in Sources */,
 				62944DA820053A2D00814D36 /* CameraComponent.cpp in Sources */,
 				62944DAC20053A2D00814D36 /* ParticleSystem.cpp in Sources */,
@@ -2010,7 +2011,6 @@
 				620A98311EE2F50A00AD6C61 /* LevelCompletedDialogController.cpp in Sources */,
 				623B31D31F17A325000C64A1 /* BlueprintSlotsFilledAnimation.cpp in Sources */,
 				623FB832204C18030066652E /* Bomb.cpp in Sources */,
-				623FB823204C18030066652E /* GhostPieceProducer.cpp in Sources */,
 				62944D6B20053A2D00814D36 /* VertexBuffer.cpp in Sources */,
 				624447B41EDDD2C40080ECE8 /* GameScene.cpp in Sources */,
 				621D60951FEFB62000052107 /* GradientRectangle.cpp in Sources */,

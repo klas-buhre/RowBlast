@@ -47,8 +47,12 @@ LongIPiece::LongIPiece(Pht::IEngine& engine, const GameScene& scene) {
     GhostPieceProducer ghostPieceProducer {engine, cellSize, Pht::IVec2{5, 1}};
     
     ghostPieceProducer.DrawBorder(border, FillGhostPiece::Yes);
-    SetGhostPieceRenderable(ghostPieceProducer.ProduceRenderable());
+    SetFilledGhostPieceRenderable(ghostPieceProducer.ProduceRenderable());
     
+    ghostPieceProducer.Clear();
+    ghostPieceProducer.DrawBorder(border, FillGhostPiece::No);
+    SetGhostPieceRenderable(ghostPieceProducer.ProduceRenderable());
+
     ghostPieceProducer.Clear();
     ghostPieceProducer.SetBrightBorderAndFill();
     ghostPieceProducer.DrawBorder(border, FillGhostPiece::Yes);

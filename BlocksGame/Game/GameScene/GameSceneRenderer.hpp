@@ -22,6 +22,7 @@ namespace BlocksGame {
     class PieceResources;
     class LevelResources;
     class SceneObjectPool;
+    class Piece;
 
     class GameSceneRenderer {
     public:
@@ -60,8 +61,8 @@ namespace BlocksGame {
         void RenderGhostPiece(Pht::RenderableObject& ghostPieceRenderable,
                               const Pht::Vec3& position,
                               Rotation rotation);
+        Pht::RenderableObject* GetGhostPieceRenderable(const Piece& pieceType) const;
         void RenderClickableGhostPieces(const FallingPiece& fallingPiece);
-        void RenderFlyingBlocks();
         
         GameScene& mScene;
         const Field& mField;
