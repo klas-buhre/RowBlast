@@ -16,7 +16,7 @@ namespace {
     const auto borderOffset {0.04f};
     const Pht::Vec4 borderColor {1.0f, 1.0f, 1.0f, 0.82f};
     const Pht::Vec4 brightBorderColor {1.0f, 1.0f, 1.0f, 1.0f};
-    const Pht::Vec4 fillColor {1.0f, 1.0f, 1.0f, 0.1f};
+    const Pht::Vec4 fillColor {1.0f, 1.0f, 1.0f, 0.075f};
     const Pht::Vec4 brightFillColor {1.0f, 1.0f, 1.0f, 0.42f};
 }
 
