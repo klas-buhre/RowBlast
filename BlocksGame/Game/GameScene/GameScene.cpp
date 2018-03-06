@@ -235,7 +235,7 @@ void GameScene::InitFieldDimensions(const Level& level) {
 
 void GameScene::CreateFieldQuad(const Level& level) {
     Pht::Material fieldMaterial;
-    fieldMaterial.SetOpacity(0.8f);
+    fieldMaterial.SetOpacity(0.85f);
 
     auto vertices {CreateFieldVertices(level)};
     auto& fieldQuad {mScene->CreateSceneObject(Pht::QuadMesh {vertices}, fieldMaterial)};
@@ -258,17 +258,17 @@ Pht::QuadMesh::Vertices GameScene::CreateFieldVertices(const Level& level) {
     switch (level.GetColor()) {
         case Level::Color::Pink:
             return {
-                {{-width / 2.0f, -height / 2.0f, 0.0f}, {0.2f, 0.2f, 0.75f, 1.0f}},
-                {{width / 2.0f, -height / 2.0f, 0.0f}, {0.75f, 0.2f, 0.4f, 1.0f}},
-                {{width / 2.0f, height / 2.0f, 0.0f}, {0.2f, 0.2f, 0.9f, 1.0f}},
-                {{-width / 2.0f, height / 2.0f, 0.0f}, {0.9f, 0.2f, 0.4f, 1.0f}},
+                {{-width / 2.0f, -height / 2.0f, 0.0f}, {0.225f, 0.225f, 0.925f, 1.0f}},
+                {{width / 2.0f, -height / 2.0f, 0.0f}, {0.85f, 0.225f, 0.425f, 1.0f}},
+                {{width / 2.0f, height / 2.0f, 0.0f}, {0.225f, 0.225f, 0.925f, 1.0f}},
+                {{-width / 2.0f, height / 2.0f, 0.0f}, {0.9f, 0.225f, 0.425f, 1.0f}},
             };
         case Level::Color::Green:
             return {
-                {{-width / 2.0f, -height / 2.0f, 0.0f}, {0.2f, 0.2f, 0.6f, 1.0f}},
-                {{width / 2.0f, -height / 2.0f, 0.0f}, {0.2f, 0.2f, 0.6f, 1.0f}},
-                {{width / 2.0f, height / 2.0f, 0.0f}, {0.2f, 0.7f, 0.4f, 1.0f}},
-                {{-width / 2.0f, height / 2.0f, 0.0f}, {0.9f, 0.2f, 0.4f, 1.0f}},
+                {{-width / 2.0f, -height / 2.0f, 0.0f}, {0.225f, 0.225f, 0.8f, 1.0f}},
+                {{width / 2.0f, -height / 2.0f, 0.0f}, {0.225f, 0.225f, 0.8f, 1.0f}},
+                {{width / 2.0f, height / 2.0f, 0.0f}, {0.225f, 0.7f, 0.425f, 1.0f}},
+                {{-width / 2.0f, height / 2.0f, 0.0f}, {0.9f, 0.225f, 0.425f, 1.0f}},
             };
     }
 }
