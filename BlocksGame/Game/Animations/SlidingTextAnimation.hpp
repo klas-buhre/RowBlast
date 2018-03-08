@@ -65,8 +65,6 @@ namespace BlocksGame {
         const Text* mText {nullptr};
         std::unique_ptr<Pht::SceneObject> mContainerSceneObject;
         std::vector<Text> mTexts;
-        Pht::Vec3 mVelocity;
-        Pht::Vec3 mAcceleration;
         Pht::Vec3 mSlideInStartPosition;
         Pht::Vec3 mSlideOutFinalPosition;
     };

@@ -7,6 +7,7 @@
 #include "IRenderer.hpp"
 #include "IInput.hpp"
 #include "TextComponent.hpp"
+#include "MathUtils.hpp"
 
 // Game includes.
 #include "GameScene.hpp"
@@ -18,6 +19,27 @@ namespace {
     const Pht::Vec3 centerPosition {0.0f, 0.0f, 0.0f};
     constexpr auto textHeight {3.0f};
     constexpr auto alpha {0.88f};
+    
+    Pht::StaticVector<Pht::Vec2, 20> slidePoints {
+        {0.0f, 0.0f},
+        {0.1f, 0.005f},
+        {0.2f, 0.01f},
+        {0.3f, 0.02f},
+        {0.35f, 0.035f},
+        {0.4f, 0.05f},
+        {0.45f, 0.065f},
+        {0.5f, 0.08f},
+        {0.55f, 0.115f},
+        {0.6f, 0.15f},
+        {0.65f, 0.225f},
+        {0.7f, 0.3f},
+        {0.75f, 0.41f},
+        {0.8f, 0.52f},
+        {0.85f, 0.62f},
+        {0.9f, 0.7f},
+        {0.95f, 0.87f},
+        {1.0f, 1.0f},
+    };
 }
 
 SlidingTextAnimation::SlidingTextAnimation(Pht::IEngine& engine, GameScene& scene) :
@@ -75,10 +97,6 @@ void SlidingTextAnimation::Start(Message message) {
     mText = &mTexts[static_cast<int>(message)];
     mText->mSceneObject->SetIsVisible(true);
 
-    auto distance = centerPosition - mSlideInStartPosition;
-    mVelocity = distance * 2.0f / slideTime;
-    mAcceleration = -mVelocity / slideTime;
-    mText->mSceneObject->GetTransform().SetPosition(mSlideInStartPosition);
     mElapsedTime = 0.0f;
     SetAlpha(0.0f);
 }
@@ -111,13 +129,18 @@ SlidingTextAnimation::State SlidingTextAnimation::Update() {
 void SlidingTextAnimation::UpdateInSlidingInState() {
     auto dt {mEngine.GetLastFrameSeconds()};
     auto& transform {mText->mSceneObject->GetTransform()};
-    transform.Translate(mVelocity * dt);
-    mVelocity += mAcceleration * dt;
+    auto position {transform.GetPosition()};
+    auto distance = centerPosition.y - mSlideInStartPosition.y;
+    auto normalizedTime {(slideTime - mElapsedTime) / slideTime};
+    
+    position.y = centerPosition.y - distance * Pht::Lerp(normalizedTime, slidePoints);
     mElapsedTime += dt;
+    
+    transform.SetPosition(position);
     
     SetAlpha(alpha * mElapsedTime / slideTime);
     
-    if (transform.GetPosition().y >= 0.0f || mElapsedTime > slideTime) {
+    if (position.y >= 0.0f || mElapsedTime > slideTime) {
         transform.SetPosition({0.0f, 0.0f, 0.0f});
         mState = State::DisplayingText;
         mElapsedTime = 0.0f;
@@ -137,20 +160,20 @@ void SlidingTextAnimation::UpdateInDisplayingTextState() {
 
 void SlidingTextAnimation::StartSlideOut() {
     mState = State::SlidingOut;
-    
-    auto distance = mSlideOutFinalPosition - centerPosition;
-    auto finalVelocity {distance * 2.0f / slideTime};
-    mVelocity = {0.0f, 0.0f, 0.0f};
-    mAcceleration = finalVelocity / slideTime;
     mElapsedTime = 0.0f;
 }
 
 void SlidingTextAnimation::UpdateInSlidingOutState() {
     auto dt {mEngine.GetLastFrameSeconds()};
     auto& transform {mText->mSceneObject->GetTransform()};
-    transform.Translate(mVelocity * dt);
-    mVelocity += mAcceleration * dt;
+    auto position {transform.GetPosition()};
+    auto distance = mSlideOutFinalPosition.y - centerPosition.y;
+    auto normalizedTime {mElapsedTime / slideTime};
+
+    position.y = centerPosition.y + distance * normalizedTime * normalizedTime * normalizedTime;
     mElapsedTime += dt;
+    
+    transform.SetPosition(position);
     
     SetAlpha(alpha * (slideTime - mElapsedTime) / slideTime);
     
