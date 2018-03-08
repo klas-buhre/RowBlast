@@ -2,12 +2,21 @@
 #define StaticVector_hpp
 
 #include <algorithm>
+#include <initializer_list>
 #include <assert.h>
 
 namespace Pht {
     template<typename T, int Capacity>
     class StaticVector {
     public:
+        StaticVector() {}
+        
+        StaticVector(const std::initializer_list<T>& values) {
+            for (auto& value: values) {
+                PushBack(value);
+            }
+        }
+        
         void PushBack(const T& element) {
             assert(mSize + 1 <= Capacity);
             mData[mSize++] = element;
@@ -55,6 +64,14 @@ namespace Pht {
         const T& At(int index) const {
             assert(index >= 0 && index < mSize);
             return mData[index];
+        }
+
+        T& Front() {
+            return At(0);
+        }
+        
+        const T& Front() const {
+            return At(0);
         }
 
         T& Back() {

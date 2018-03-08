@@ -58,8 +58,6 @@ namespace BlocksGame {
         SlideDirection mSlideOutDirection {SlideDirection::Down};
         UpdateFade mUpdateFade {UpdateFade::Yes};
         float mElapsedTime {0.0f};
-        Pht::Vec2 mVelocity;
-        Pht::Vec2 mAcceleration;
         Pht::Vec2 mSlideInStartPosition;
         Pht::Vec2 mSlideOutFinalPosition;
         Pht::FadeEffect* mFadeEffect {nullptr};
