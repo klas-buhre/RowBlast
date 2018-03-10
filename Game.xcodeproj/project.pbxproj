@@ -17,6 +17,7 @@
 		620A982E1EE2F2A900AD6C61 /* LevelCompletedDialogView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 620A982C1EE2F2A900AD6C61 /* LevelCompletedDialogView.cpp */; };
 		620A98311EE2F50A00AD6C61 /* LevelCompletedDialogController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 620A982F1EE2F50A00AD6C61 /* LevelCompletedDialogController.cpp */; };
 		620A98361EE43DD200AD6C61 /* ClearLastBlocksAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 620A98341EE43DD200AD6C61 /* ClearLastBlocksAnimation.cpp */; };
+		6214129B20518E3600A6D503 /* PreviewPiecesAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6214129920518E3600A6D503 /* PreviewPiecesAnimation.cpp */; };
 		6217C02D2024DEE10023A6BA /* RoundedCylinder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6217C02B2024DEE10023A6BA /* RoundedCylinder.cpp */; };
 		621A4E721E50B60C00D53AFD /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 621A4E681E50B60C00D53AFD /* Icon.png */; };
 		621D60921FEFB62000052107 /* Materials.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 621D60891FEFB62000052107 /* Materials.cpp */; };
@@ -267,6 +268,8 @@
 		620A98301EE2F50A00AD6C61 /* LevelCompletedDialogController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LevelCompletedDialogController.hpp; sourceTree = "<group>"; };
 		620A98341EE43DD200AD6C61 /* ClearLastBlocksAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ClearLastBlocksAnimation.cpp; sourceTree = "<group>"; };
 		620A98351EE43DD200AD6C61 /* ClearLastBlocksAnimation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ClearLastBlocksAnimation.hpp; sourceTree = "<group>"; };
+		6214129920518E3600A6D503 /* PreviewPiecesAnimation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PreviewPiecesAnimation.cpp; sourceTree = "<group>"; };
+		6214129A20518E3600A6D503 /* PreviewPiecesAnimation.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PreviewPiecesAnimation.hpp; sourceTree = "<group>"; };
 		6217C02B2024DEE10023A6BA /* RoundedCylinder.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = RoundedCylinder.cpp; sourceTree = "<group>"; };
 		6217C02C2024DEE10023A6BA /* RoundedCylinder.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = RoundedCylinder.hpp; sourceTree = "<group>"; };
 		621A4E681E50B60C00D53AFD /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
@@ -1029,6 +1032,8 @@
 				6244472D1EDDD2C40080ECE8 /* FlashingBlocksAnimation.hpp */,
 				6244472E1EDDD2C40080ECE8 /* FlyingBlocksAnimation.cpp */,
 				6244472F1EDDD2C40080ECE8 /* FlyingBlocksAnimation.hpp */,
+				6214129920518E3600A6D503 /* PreviewPiecesAnimation.cpp */,
+				6214129A20518E3600A6D503 /* PreviewPiecesAnimation.hpp */,
 				624EAFC01EE559A9009F81BC /* SlidingTextAnimation.cpp */,
 				624EAFC11EE559A9009F81BC /* SlidingTextAnimation.hpp */,
 				623DDBCC203C70520008A4D6 /* WeldsAnimation.cpp */,
@@ -2092,6 +2097,7 @@
 				623B331B1F1F6539000C64A1 /* RestartConfirmationDialogController.cpp in Sources */,
 				62944D6F20053A2D00814D36 /* BoxMesh.cpp in Sources */,
 				624447BC1EDDD2C40080ECE8 /* Level.cpp in Sources */,
+				6214129B20518E3600A6D503 /* PreviewPiecesAnimation.cpp in Sources */,
 				621D60931FEFB62000052107 /* Clouds.cpp in Sources */,
 				623FB835204C18030066652E /* RowBomb.cpp in Sources */,
 				6244479A1EDDD2C40080ECE8 /* BlocksApplication.cpp in Sources */,

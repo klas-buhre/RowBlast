@@ -41,7 +41,6 @@ Backlog:
      gl_FragColor = vec4(TextureCoordOut.y, 1.0, 1.0, texture2D(Sampler, TextureCoordOut).a) * TextColor;
      The title text can also have that gradient.
     -Could have a rotating particle/flare in the sliding text animation.
-    -The switching of pieces in the selectable pieces HUD could be animated.
     -Could have particles in the FlyingBlocksAnimation in the points from which the blocks gets
      tossed.
     -The blocks in FlyingBlocksAnimation should bounce off each other instead of passing right 
@@ -62,7 +61,67 @@ Backlog:
     -Credit the icon creator: <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
   
 Ongoing tasks:
+    -Preview piece animation.
+      -Use case to handle:
+          -Game start
+            -Compare GameHud TwoPieces with GameLogic TwoPieces and update the last two slots in
+             HUD and inactivate the first slot.
+          -Switch
+            -If the animation flag in GameLogic is set then
+               if first slot in Hud is deactivate
+                 update the first two slots to first two slots in GameLogic
+               else
+                 slot 3 = slot 2
+                 update the first two slots to first two slots in GameLogic
+               end
+          -Next piece after landing
+            -Same as switch
+          -Undo move
+            -Same as game start.
+      -Use the world space position of the nextPiecesContainer and the selectablePiecesContainer to
+       figure out how far the third slot should move to the right in the NextPieceAnimation.
+ 
+     Game start:
+            slot:  1   2   3
+            Logic: B   A
+            HUD:   -   B   A
 
+     Normal switch or right after sliding text animation:
+        Before switch:
+            slot:  1   2   3
+            Logic: B   A
+            HUD:   -   B   A
+ 
+        During switch animation:
+            slot:  1   2   3
+            Logic: C   B
+            HUD:   C   B   A
+
+        After switch animation:
+            slot:  1   2   3
+            Logic: C   B
+            HUD:   -   C   B
+
+     Second switch before animation finished:
+        Before switch 1:
+            slot:  1   2   3
+            Logic: B   A
+            HUD:   -   B   A
+ 
+        During switch 1 animation:
+            slot:  1   2   3
+            Logic: C   B
+            HUD:   C   B   A
+
+        During switch 2 animation:
+            slot:  1   2   3
+            Logic: D   C
+            HUD:   D   C   B
+
+        After switch 2 animation:
+            slot:  1   2   3
+            Logic: D   C
+            HUD:   -   D   C
 
 
 Ideas:
@@ -83,7 +142,7 @@ Time Estimation in days:
     -Fix all bugs.
         Cost: 7
         Done
-    -Switch piece HUD animation.
+    -Preview piece animation.
         Cost: 3
     -Better particle effects for bombs and row bombs.
         Cost: 10

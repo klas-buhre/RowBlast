@@ -8,6 +8,7 @@
 #include "IGameHudEventListener.hpp"
 #include "Level.hpp"
 #include "SceneObjectPool.hpp"
+#include "NextPieceGenerator.hpp"
 
 namespace Pht {
     class IEngine;
@@ -25,6 +26,14 @@ namespace BlocksGame {
     class PieceResources;
     class GameHudController;
     
+    struct PreviewPiece {
+        std::unique_ptr<SceneObjectPool> mSceneObjects;
+        float mScale {0.0f};
+    };
+
+    using ThreePreviewPieces = std::array<PreviewPiece, 3>;
+    using PreviewPieceRelativePositions = std::array<Pht::Vec3, 4>;
+    
     class GameHud: public IGameHudEventListener {
     public:
         GameHud(Pht::IEngine& engine,
@@ -40,17 +49,24 @@ namespace BlocksGame {
         
         void OnSwitchButtonDown() override;
         void OnSwitchButtonUp() override;
-
+        
+        void OnSwitchPieceAnimationFinished();
+        void OnNextPieceAnimationFinished();
         void Update();
         
-    private:
-        struct PreviewPiece {
-            const Piece* mPieceType {nullptr};
-            std::unique_ptr<SceneObjectPool> mSceneObjects;
-        };
+        ThreePreviewPieces& GetNextPreviewPieces() {
+            return mNextPreviewPieces;
+        }
         
-        using TwoPreviewPieces = std::array<PreviewPiece, 2>;
-
+        ThreePreviewPieces& GetSelectablePreviewPieces() {
+            return mSelectablePreviewPieces;
+        }
+        
+        const PreviewPieceRelativePositions& GetPreviewPieceRelativePositions() const {
+            return mPreviewPieceRelativePositions;
+        }
+        
+    private:
         void CreateLightAndCamera(Pht::Scene& scene, Pht::SceneObject& parentObject, int hudLayer);
         void CreateProgressObject(Pht::Scene& scene,
                                   Pht::SceneObject& parentObject,
@@ -90,14 +106,20 @@ namespace BlocksGame {
                                                 bool isBright,
                                                 Pht::Scene& scene,
                                                 Pht::SceneObject& parentObject);
-        void CreateTwoPreviewPieces(TwoPreviewPieces& previewPieces,
-                                    Pht::SceneObject& parentObject,
-                                    const Level& level);
+        void CreateThreePreviewPieces(ThreePreviewPieces& previewPieces,
+                                      Pht::SceneObject& parentObject,
+                                      const Level& level);
         void UpdateLightAnimation();
         void UpdateProgress();
         void UpdateMovesLeft();
         void UpdatePreviewPieces();
-        void UpdatePreviewPiece(PreviewPiece& previewPiece, const Piece* currentPiece);
+        void UpdatePreviewPieceGroup(ThreePreviewPieces& previewPieces,
+                                     const TwoPieces& pieces,
+                                     const TwoPieces& piecesPreviousFrame,
+                                     bool shouldStartPreviewPieceAnimation);
+        void UpdatePreviewPiece(PreviewPiece& previewPiece,
+                                const Piece* pieceType,
+                                const Pht::Vec3& position);
         
         Pht::IEngine& mEngine;
         const GameLogic& mGameLogic;
@@ -113,8 +135,11 @@ namespace BlocksGame {
         Pht::SceneObject* mBrightSwitchTextRectangle {nullptr};
         Pht::SceneObject* mSelectablePiecesRectangle {nullptr};
         Pht::SceneObject* mBrightSelectablePiecesRectangle {nullptr};
-        TwoPreviewPieces mNextPieces;
-        TwoPreviewPieces mSelectablePieces;
+        ThreePreviewPieces mNextPreviewPieces;
+        ThreePreviewPieces mSelectablePreviewPieces;
+        TwoPieces mNext2PiecesPreviousFrame;
+        TwoPieces mSelectablePiecesPreviousFrame;
+        const PreviewPieceRelativePositions mPreviewPieceRelativePositions;
     };
 }
 

@@ -49,7 +49,12 @@ namespace BlocksGame {
         const Pht::Material& GetDarkGrayMaterial() const;
         const Pht::Material& GetLightGrayMaterial() const;
         const Pht::Material& GetYellowMaterial() const;
-        
+
+        GameHud& GetHud() {
+            assert(mHud);
+            return *mHud;
+        }
+
         Pht::SceneObject& GetPieceDropEffectsContainer() {
             assert(mPieceDropEffectsContainer);
             return *mPieceDropEffectsContainer;

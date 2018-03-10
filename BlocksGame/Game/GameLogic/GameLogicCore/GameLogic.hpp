@@ -29,6 +29,12 @@ namespace BlocksGame {
     class GameScene;
     class BlastRadiusAnimation;
     
+    enum class PreviewPieceAnimationToStart {
+        NextPieceAndSwitch,
+        SwitchPiece,
+        None
+    };
+    
     class GameLogic: public IGameLogic {
     public:
         enum class Result {
@@ -87,6 +93,14 @@ namespace BlocksGame {
             return mCurrentMove.mSelectablePieces;
         }
         
+        PreviewPieceAnimationToStart GetPreviewPieceAnimationToStart() const {
+            return mPreviewPieceAnimationToStart;
+        }
+
+        void ResetPreviewPieceAnimationToStart() {
+            mPreviewPieceAnimationToStart = PreviewPieceAnimationToStart::None;
+        }
+
         int GetMovesLeft() const {
             return mMovesLeft;
         }
@@ -113,7 +127,7 @@ namespace BlocksGame {
         
     private:
         Result InitFallingPiece();
-        void CalculatePieceType();
+        void SetPieceType();
         bool IsLevelCompleted();
         void ManageMoveHistory();
         void StartBlastRadiusAnimationAtGhostPiece();
@@ -180,6 +194,7 @@ namespace BlocksGame {
         MoveData mCurrentMove;
         MoveData mCurrentMoveInitialState;
         MoveData mPreviousMoveInitialState;
+        PreviewPieceAnimationToStart mPreviewPieceAnimationToStart {PreviewPieceAnimationToStart::None};
         const Level* mLevel {nullptr};
         IInputHandler* mInputHandler {nullptr};
         float mLandingNoMovementDuration {0.0f};

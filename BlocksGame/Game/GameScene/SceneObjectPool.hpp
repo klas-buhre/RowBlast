@@ -25,6 +25,8 @@ namespace BlocksGame {
         
         void ReclaimAll();
         Pht::SceneObject& AccuireSceneObject();
+        void SetIsActive(bool isActive);
+        bool IsActive() const;
         
         Pht::SceneObject& GetContainerSceneObject() {
             return *mContainerSceneObject;

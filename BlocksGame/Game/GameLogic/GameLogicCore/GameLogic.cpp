@@ -104,6 +104,8 @@ void GameLogic::Init(const Level& level) {
     mCurrentMoveInitialState = mCurrentMove;
     mPreviousMoveInitialState = mCurrentMoveInitialState;
     
+    mPreviewPieceAnimationToStart = PreviewPieceAnimationToStart::None;
+    
     mFallingPieceStorage.ResetBetweenGames();
     
     UpdateLevelProgress();
@@ -149,7 +151,7 @@ GameLogic::Result GameLogic::InitFallingPiece() {
     }
     
     mFallingPiece = &mFallingPieceStorage;
-    CalculatePieceType();
+    SetPieceType();
     auto initPosition {CalculateFallingPieceInitPos()};
     mFallingPiece->Init(*mCurrentMove.mPieceType, initPosition, mLevel->GetSpeed());
     
@@ -181,7 +183,7 @@ GameLogic::Result GameLogic::InitFallingPiece() {
     return Result::None;
 }
 
-void GameLogic::CalculatePieceType() {
+void GameLogic::SetPieceType() {
     if (mFallingPieceInitType) {
         mCurrentMove.mPieceType = mFallingPieceInitType;
         mFallingPieceInitType = nullptr;
@@ -189,6 +191,7 @@ void GameLogic::CalculatePieceType() {
         mCurrentMove.mPieceType = mCurrentMove.mSelectablePieces[1];
         mCurrentMove.mSelectablePieces[1] = mCurrentMove.mSelectablePieces[0];
         mCurrentMove.mSelectablePieces[0] = &mCurrentMove.mNextPieceGenerator.GetNext();
+        mPreviewPieceAnimationToStart = PreviewPieceAnimationToStart::NextPieceAndSwitch;
     }
 }
 
@@ -568,6 +571,7 @@ void GameLogic::SwitchPiece() {
     mCurrentMove.mSelectablePieces[1] = mCurrentMove.mSelectablePieces[0];
     mCurrentMove.mSelectablePieces[0] = &mFallingPiece->GetPieceType();
     mFallingPieceInitReason = FallingPieceInitReason::Switch;
+    mPreviewPieceAnimationToStart = PreviewPieceAnimationToStart::SwitchPiece;
 }
 
 void GameLogic::RotatePieceOrDetonateBomb(const Pht::TouchEvent& touchEvent) {

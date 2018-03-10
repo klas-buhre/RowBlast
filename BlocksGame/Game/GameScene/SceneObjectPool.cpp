@@ -63,3 +63,17 @@ Pht::SceneObject& SceneObjectPool::AccuireSceneObject() {
     ++mNextAvailableIndex;
     return sceneObject;
 }
+
+void SceneObjectPool::SetIsActive(bool isActive) {
+    if (isActive) {
+        mContainerSceneObject->SetIsVisible(true);
+        mContainerSceneObject->SetIsStatic(false);
+    } else {
+        mContainerSceneObject->SetIsVisible(false);
+        mContainerSceneObject->SetIsStatic(true);
+    }
+}
+
+bool SceneObjectPool::IsActive() const {
+    return mContainerSceneObject->IsVisible();
+}

@@ -70,6 +70,7 @@ GameController::GameController(Pht::IEngine& engine,
     mFallingPieceAnimation {mGameLogic.GetFallingPieceAnimation()},
     mPieceResources {engine, mScene},
     mLevelResources {engine, mScene},
+    mPreviewPiecesAnimation {mScene, mGameLogic},
     mFlyingBlocksAnimation {mScene, mLevelResources, mPieceResources},
     mBlueprintSlotsFilledAnimation {mField, mScene, mLevelResources},
     mRenderer {mScene, mField, mGameLogic, mScrollController, mPieceResources, mLevelResources} {}
@@ -152,6 +153,7 @@ GameController::Command GameController::UpdateGame() {
     mBlastRadiusAnimation.Update(dt);
     mFlyingBlocksAnimation.Update(dt);
     mScene.Update();
+    mPreviewPiecesAnimation.Update(dt);
     
     return command;
 }
