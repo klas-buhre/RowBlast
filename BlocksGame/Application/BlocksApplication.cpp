@@ -61,25 +61,8 @@ Backlog:
     -Credit the icon creator: <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
   
 Ongoing tasks:
-    -Preview piece animation.
-      -Use case to handle:
-          -Game start
-            -Compare GameHud TwoPieces with GameLogic TwoPieces and update the last two slots in
-             HUD and inactivate the first slot.
-          -Switch
-            -If the animation flag in GameLogic is set then
-               if first slot in Hud is deactivate
-                 update the first two slots to first two slots in GameLogic
-               else
-                 slot 3 = slot 2
-                 update the first two slots to first two slots in GameLogic
-               end
-          -Next piece after landing
-            -Same as switch
-          -Undo move
-            -Same as game start.
-      -Use the world space position of the nextPiecesContainer and the selectablePiecesContainer to
-       figure out how far the third slot should move to the right in the NextPieceAnimation.
+    -Fix problems in NextPieceAnimation when switching/landing before the animation is finished.
+     Just call Hud::On*AnimationFinished() when starting an animation before the old is finished?
  
      Game start:
             slot:  1   2   3
@@ -143,7 +126,9 @@ Time Estimation in days:
         Cost: 7
         Done
     -Preview piece animation.
-        Cost: 3
+        Cost: 5
+    -Block compression.
+        Cost: 5
     -Better particle effects for bombs and row bombs.
         Cost: 10
     -Bombs should have bomb meshes.
@@ -176,7 +161,7 @@ Time Estimation in days:
     -Camera shake.
         Cost: 3
 
-        Total: 156
+        Total: 164
 
 
 Comomon piece type sets:

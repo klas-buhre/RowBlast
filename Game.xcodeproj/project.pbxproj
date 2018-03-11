@@ -88,6 +88,7 @@
 		6247CFD41EFFB22200B9919E /* GameOverDialogController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6247CFD21EFFB22200B9919E /* GameOverDialogController.cpp */; };
 		6247CFD91EFFE25900B9919E /* NoLivesDialogView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6247CFD51EFFE25900B9919E /* NoLivesDialogView.cpp */; };
 		6247CFDA1EFFE25900B9919E /* NoLivesDialogController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6247CFD61EFFE25900B9919E /* NoLivesDialogController.cpp */; };
+		6247D08B20553641003A0223 /* PreviewPieceGroupAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6247D08920553641003A0223 /* PreviewPieceGroupAnimation.cpp */; };
 		624EAFC21EE559A9009F81BC /* SlidingTextAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 624EAFC01EE559A9009F81BC /* SlidingTextAnimation.cpp */; };
 		624F89461EF521880020C832 /* UserData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 624F89441EF521880020C832 /* UserData.cpp */; };
 		624F89491EF6661D0020C832 /* LifeManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 624F89471EF6661D0020C832 /* LifeManager.cpp */; };
@@ -409,6 +410,8 @@
 		6247CFD61EFFE25900B9919E /* NoLivesDialogController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NoLivesDialogController.cpp; sourceTree = "<group>"; };
 		6247CFD71EFFE25900B9919E /* NoLivesDialogView.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = NoLivesDialogView.hpp; sourceTree = "<group>"; };
 		6247CFD81EFFE25900B9919E /* NoLivesDialogController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = NoLivesDialogController.hpp; sourceTree = "<group>"; };
+		6247D08920553641003A0223 /* PreviewPieceGroupAnimation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PreviewPieceGroupAnimation.cpp; sourceTree = "<group>"; };
+		6247D08A20553641003A0223 /* PreviewPieceGroupAnimation.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PreviewPieceGroupAnimation.hpp; sourceTree = "<group>"; };
 		624EAFC01EE559A9009F81BC /* SlidingTextAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SlidingTextAnimation.cpp; sourceTree = "<group>"; };
 		624EAFC11EE559A9009F81BC /* SlidingTextAnimation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SlidingTextAnimation.hpp; sourceTree = "<group>"; };
 		624F89441EF521880020C832 /* UserData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UserData.cpp; sourceTree = "<group>"; };
@@ -1032,6 +1035,8 @@
 				6244472D1EDDD2C40080ECE8 /* FlashingBlocksAnimation.hpp */,
 				6244472E1EDDD2C40080ECE8 /* FlyingBlocksAnimation.cpp */,
 				6244472F1EDDD2C40080ECE8 /* FlyingBlocksAnimation.hpp */,
+				6247D08920553641003A0223 /* PreviewPieceGroupAnimation.cpp */,
+				6247D08A20553641003A0223 /* PreviewPieceGroupAnimation.hpp */,
 				6214129920518E3600A6D503 /* PreviewPiecesAnimation.cpp */,
 				6214129A20518E3600A6D503 /* PreviewPiecesAnimation.hpp */,
 				624EAFC01EE559A9009F81BC /* SlidingTextAnimation.cpp */,
@@ -2012,6 +2017,7 @@
 				62944DAC20053A2D00814D36 /* ParticleSystem.cpp in Sources */,
 				623B33181F1F6203000C64A1 /* RestartConfirmationDialogView.cpp in Sources */,
 				621D60A11FF10FC200052107 /* MapScene.cpp in Sources */,
+				6247D08B20553641003A0223 /* PreviewPieceGroupAnimation.cpp in Sources */,
 				620A98361EE43DD200AD6C61 /* ClearLastBlocksAnimation.cpp in Sources */,
 				620A98311EE2F50A00AD6C61 /* LevelCompletedDialogController.cpp in Sources */,
 				623B31D31F17A325000C64A1 /* BlueprintSlotsFilledAnimation.cpp in Sources */,

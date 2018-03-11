@@ -41,10 +41,10 @@ GameHud::GameHud(Pht::IEngine& engine,
     mPieceResources {pieceResources},
     mLevelObjective {level.GetObjective()},
     mPreviewPieceRelativePositions {
-        Pht::Vec3{-2.73f, 0.01f, UiLayer::block},
+        Pht::Vec3{-2.03f, 0.01f, UiLayer::block},
         Pht::Vec3{-0.73f, 0.01f, UiLayer::block},
         Pht::Vec3{1.27f, 0.01f, UiLayer::block},
-        Pht::Vec3{3.27f, 0.01f, UiLayer::block}
+        Pht::Vec3{2.57f, 0.01f, UiLayer::block}
     } {
     
     mNext2PiecesPreviousFrame.fill(nullptr);
@@ -200,6 +200,7 @@ void GameHud::CreateNextPiecesObject(Pht::Scene& scene,
                                      const Pht::TextProperties& textProperties,
                                      const Level& level) {
     auto& nextPiecesContainer {scene.CreateSceneObject()};
+    mNextPiecesContainer = &nextPiecesContainer;
     nextPiecesContainer.GetTransform().SetPosition({-2.3f, -12.3f, UiLayer::root});
     parentObject.AddChild(nextPiecesContainer);
     
@@ -221,6 +222,7 @@ void GameHud::CreateSelectablePiecesObject(Pht::Scene& scene,
                                            const Pht::TextProperties& textProperties,
                                            const Level& level) {
     auto& selectablePiecesContainer {scene.CreateSceneObject()};
+    mSelectablePiecesContainer = &selectablePiecesContainer;
     selectablePiecesContainer.GetTransform().SetPosition({3.1f, -12.3f, UiLayer::root});
     parentObject.AddChild(selectablePiecesContainer);
     
@@ -452,11 +454,13 @@ void GameHud::UpdatePreviewPieces() {
     UpdatePreviewPieceGroup(mNextPreviewPieces,
                             next2Pieces,
                             mNext2PiecesPreviousFrame,
-                            shouldStartNextPieceAndSwitchAnimation);
+                            shouldStartNextPieceAndSwitchAnimation,
+                            false);
     UpdatePreviewPieceGroup(mSelectablePreviewPieces,
                             selectablePieces,
                             mSelectablePiecesPreviousFrame,
-                            shouldStartSwitchPieceAnimation);
+                            shouldStartSwitchPieceAnimation,
+                            shouldStartNextPieceAndSwitchAnimation);
     
     mNext2PiecesPreviousFrame = next2Pieces;
     mSelectablePiecesPreviousFrame = selectablePieces;
@@ -465,7 +469,8 @@ void GameHud::UpdatePreviewPieces() {
 void GameHud::UpdatePreviewPieceGroup(ThreePreviewPieces& previewPieces,
                                       const TwoPieces& pieces,
                                       const TwoPieces& piecesPreviousFrame,
-                                      bool shouldStartPreviewPieceAnimation) {
+                                      bool shouldStartPreviewPieceAnimation,
+                                      bool shouldDeactivateSlotZero) {
     if (shouldStartPreviewPieceAnimation) {
         if (previewPieces[0].mSceneObjects->IsActive()) {
             UpdatePreviewPiece(previewPieces[2],
@@ -473,7 +478,12 @@ void GameHud::UpdatePreviewPieceGroup(ThreePreviewPieces& previewPieces,
                                mPreviewPieceRelativePositions[2]);
         }
         
-        UpdatePreviewPiece(previewPieces[0], pieces[0], mPreviewPieceRelativePositions[0]);
+        if (shouldDeactivateSlotZero) {
+            UpdatePreviewPiece(previewPieces[0], nullptr, mPreviewPieceRelativePositions[0]);
+        } else {
+            UpdatePreviewPiece(previewPieces[0], pieces[0], mPreviewPieceRelativePositions[0]);
+        }
+        
         UpdatePreviewPiece(previewPieces[1], pieces[1], mPreviewPieceRelativePositions[1]);
     } else if (pieces != piecesPreviousFrame) {
         UpdatePreviewPiece(previewPieces[0], nullptr, mPreviewPieceRelativePositions[0]);

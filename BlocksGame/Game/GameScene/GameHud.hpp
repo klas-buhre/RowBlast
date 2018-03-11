@@ -66,6 +66,16 @@ namespace BlocksGame {
             return mPreviewPieceRelativePositions;
         }
         
+        const Pht::SceneObject& GetNextPiecesContainer() const {
+            assert(mNextPiecesContainer);
+            return *mNextPiecesContainer;
+        }
+        
+        const Pht::SceneObject& GetSelectablePiecesContainer() const {
+            assert(mSelectablePiecesContainer);
+            return *mSelectablePiecesContainer;
+        }
+        
     private:
         void CreateLightAndCamera(Pht::Scene& scene, Pht::SceneObject& parentObject, int hudLayer);
         void CreateProgressObject(Pht::Scene& scene,
@@ -116,7 +126,8 @@ namespace BlocksGame {
         void UpdatePreviewPieceGroup(ThreePreviewPieces& previewPieces,
                                      const TwoPieces& pieces,
                                      const TwoPieces& piecesPreviousFrame,
-                                     bool shouldStartPreviewPieceAnimation);
+                                     bool shouldStartPreviewPieceAnimation,
+                                     bool shouldDeactivateSlotZero);
         void UpdatePreviewPiece(PreviewPiece& previewPiece,
                                 const Piece* pieceType,
                                 const Pht::Vec3& position);
@@ -135,6 +146,8 @@ namespace BlocksGame {
         Pht::SceneObject* mBrightSwitchTextRectangle {nullptr};
         Pht::SceneObject* mSelectablePiecesRectangle {nullptr};
         Pht::SceneObject* mBrightSelectablePiecesRectangle {nullptr};
+        Pht::SceneObject* mNextPiecesContainer {nullptr};
+        Pht::SceneObject* mSelectablePiecesContainer {nullptr};
         ThreePreviewPieces mNextPreviewPieces;
         ThreePreviewPieces mSelectablePreviewPieces;
         TwoPieces mNext2PiecesPreviousFrame;
