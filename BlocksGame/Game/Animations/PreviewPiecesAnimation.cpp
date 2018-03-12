@@ -14,6 +14,11 @@ PreviewPiecesAnimation::PreviewPiecesAnimation(GameScene& scene, GameLogic& game
     mScene {scene},
     mGameLogic {gameLogic} {}
 
+void PreviewPiecesAnimation::Init() {
+    mState = State::Inactive;
+    mElapsedTime = 0.0f;
+}
+
 void PreviewPiecesAnimation::Update(float dt) {
     switch (mGameLogic.GetPreviewPieceAnimationToStart()) {
         case PreviewPieceAnimationToStart::NextPieceAndSwitch:
@@ -117,6 +122,10 @@ float PreviewPiecesAnimation::UpdateTime(float dt) {
 }
 
 void PreviewPiecesAnimation::GoToSwitchingPieceState() {
+    if (mState == State::NextPieceAndSwitch) {
+        mScene.GetHud().OnNextPieceAnimationFinished();
+    }
+    
     mState = State::SwitchingPiece;
     mElapsedTime = 0.0f;
 }

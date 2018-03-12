@@ -12,6 +12,7 @@ namespace BlocksGame {
     public:
         PreviewPiecesAnimation(GameScene& scene, GameLogic& gameLogic);
         
+        void Init();
         void Update(float dt);
         
     private:

@@ -61,51 +61,9 @@ Backlog:
     -Credit the icon creator: <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
   
 Ongoing tasks:
-    -Fix problems in NextPieceAnimation when switching/landing before the animation is finished.
-     Just call Hud::On*AnimationFinished() when starting an animation before the old is finished?
- 
-     Game start:
-            slot:  1   2   3
-            Logic: B   A
-            HUD:   -   B   A
-
-     Normal switch or right after sliding text animation:
-        Before switch:
-            slot:  1   2   3
-            Logic: B   A
-            HUD:   -   B   A
- 
-        During switch animation:
-            slot:  1   2   3
-            Logic: C   B
-            HUD:   C   B   A
-
-        After switch animation:
-            slot:  1   2   3
-            Logic: C   B
-            HUD:   -   C   B
-
-     Second switch before animation finished:
-        Before switch 1:
-            slot:  1   2   3
-            Logic: B   A
-            HUD:   -   B   A
- 
-        During switch 1 animation:
-            slot:  1   2   3
-            Logic: C   B
-            HUD:   C   B   A
-
-        During switch 2 animation:
-            slot:  1   2   3
-            Logic: D   C
-            HUD:   D   C   B
-
-        After switch 2 animation:
-            slot:  1   2   3
-            Logic: D   C
-            HUD:   -   D   C
-
+    -Maybe the blocks could be compressed a bit when landing after falling to avoid discontinuous
+     derivative.
+     
 
 Ideas:
     -The pause button could lead to a widget that has an undo button, a boosters button and a game
@@ -127,6 +85,7 @@ Time Estimation in days:
         Done
     -Preview piece animation.
         Cost: 5
+        Done
     -Block compression.
         Cost: 5
     -Better particle effects for bombs and row bombs.
