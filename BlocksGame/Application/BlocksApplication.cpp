@@ -18,8 +18,7 @@ Backlog:
      convenient to go back to the state before the move and not the initial state.
     -Mega bomb?
   -Rendering:
-    -Maybe the blocks could be compressed a bit when landing after falling to avoid discontinuous
-     derivative.
+    -Slightly lighter blue in the field quad?
     -Could have the rounded cylinder i some places in the HUDs.
     -GUI: the buttons in the views could be yellow with black text and triangular edges like in
      Mario Kart 8. There could also be a reflection animation in the button.
@@ -61,9 +60,190 @@ Backlog:
     -Credit the icon creator: <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
   
 Ongoing tasks:
-    -Maybe the blocks could be compressed a bit when landing after falling to avoid discontinuous
-     derivative.
-     
+  -Avoid discontinuous derivative after pulling down loose pieces:
+    -Thoughts:
+        -Options:
+          -Maybe the blocks could be compressed a bit.
+          -Maybe the blocks could bounce.
+        -Try small bounce for pulled down pieces and a very small compress. Maybe no need to change the
+         y scale, could just let the pulled down block pass into the lower blocks with about 10% ? That
+         would only look good if the z value of the pulled down block (except the tilted welds) was
+         moved back.
+        -Should level blocks bounce if they fall down on other field blocks?
+          -It may look better if they do, so yes.
+          -If they bounce an algorithm need to find level blocks that hit (and all connected blocks)
+           other field blocks.
+        -Level blocks that do not fall down on other field blocks (floating blocks) should not bounce.
+        -Non-level blocks that sit on top of level blocks that fall but not bouncing. Should those non-
+         level blocks bounce?
+          -They should not.
+    -Decided:
+        -Try small bounce for pulled down pieces and a very fall through (start with the
+         bounce since compression requires knowing which blocks to compress and the solving the
+         problem of the tilted weld).
+        -All falling blocks should bounce except level blocks (and the blocks sitting on top of
+         those level blocks) that do not fall down on other field blocks.
+    -Questions:
+        -How to detect which blocks should bounce?
+        -How to do the bounce? Dampened springs?
+    -Algorithm for detecting which non-level blocks should bounce (algorithm #1):
+        During pull down of loose pieces:
+            if piecePosition.y > collisionPosition.y + 1 || // Piece blocks will fall through empty space.
+               AnyBlocksShouldBounce(mCollisionResult.mCollisionPoints + piecePosition) // Some of the blocks holding up the piece should bounce, so the piece must bounce.
+                SetShouldBounce(pieceBlocks)
+            end
+        During
+    -Algorithm for detecting which level blocks should bounce:
+       -Run it before the pulling down of loose pieces (algorithm #1) since algorithm #1 depends on
+        this algorithm, so maybe during RemoveRowImpl (should not be needed after
+        RemoveAreaOfSubCells).
+        During RemoveRowImpl(rowIndex):
+            for each column
+                upperBlock = mGrid[rowIndex + 1][column]
+                if !mGrid[rowIndex - 1][column].isEmpty
+                    SetShouldBounceInLevelBlock(upperBlock)
+                end
+            end
+ 
+        SetShouldBounceInLevelBlock(block)
+            if !block.isLevel || block.isEmpty
+                return
+            end
+            block.mShouldBounce = true
+            SetShouldBounceInLevelBlock(left)
+            SetShouldBounceInLevelBlock(right)
+            SetShouldBounceInLevelBlock(up)
+            SetShouldBounceInLevelBlock(down)
+        end
+ 
+----------------------------------------------------------------------------------------------------
+1:
+Both B and Y should bounce because they fall and land.
+
+1.1:
+    7  YY
+    6 BBY
+    5 BBB  YY
+    4 GGGGGYG
+    3     G
+    2     G
+    1 GGGGG
+
+1.2:
+    7
+    6  YY
+    5 BBY
+    4 BBB  YY
+    3     G
+    2     G
+    1 GGGGG
+
+1.3:
+    7
+    6
+    5
+    4  YY
+    3 BBY G
+    2 BBB G
+    1 GGGGGYY
+ 
+----------------------------------------------------------------------------------------------------
+2:
+Row 4->2 level blocks should bounce because they fall and land and both B and Y should bounce
+too because they sit on top of those level blocks.
+
+2.1:
+    7  YY
+    6 BBY
+    5 BBB
+    4 GGGGG B
+    3 GGGGGBG
+    2 GGGGGBG
+    1 GGGGG G
+
+2.2:
+    7
+    6
+    5  YY
+    4 BBY
+    3 BBB
+    2 GGGGG B
+    1 GGGGG G
+
+----------------------------------------------------------------------------------------------------
+3:
+Both B and Y should not bounce because they sit on top of row 4 of level backs that don't fall and
+land because thay are floating.
+
+3.1:
+    7  YY
+    6 BBY
+    5 BBB
+    4 GGGGG
+    3
+    2 GGGGGRG
+    1 GGG
+
+3.2:
+    7
+    6  YY
+    5 BBY
+    4 BBB
+    3 GGGGG
+    2
+    1 GGG  R
+
+----------------------------------------------------------------------------------------------------
+4:
+Both B and Y should probably bounce even though they sit partly on top of the floating level block.
+The other level blocks in row 4 and 3 should bounce since they fall and land and because of that B
+and Y need to bounce, otherwise the level blocks would bounce up through B.
+
+4.1:
+    7  YY
+    6 BBY
+    5 BBB
+    4 G GGG
+    3   G
+    2 GGGGGRG
+    1 GGG
+
+4.2:
+    7
+    6  YY
+    5 BBY
+    4 BBB
+    3 G GGG
+    2   G
+    1 GGG  R
+
+----------------------------------------------------------------------------------------------------
+5: A problem in this scenario could be that it could be tricky to calc the collision between row 3
+and row 7 if row 3 have not finished bouncing when row 7 lands on it.
+
+5.1:
+    9    B      9    b
+    8 GGBB      8 bbbb
+    7 GGBB      7 bbbb
+    6 GGGGGYG   6
+    5 GGGGGYG   5
+    4 GGGGGYG   4
+    3 GGGG Y    3 bbbb
+    2 GGGGGYG   2
+    1 GGGG  G   1 GGGG bG
+
+5.2:
+    9
+    8
+    7
+    6
+    5    B
+    4 GGBB
+    3 GGBB
+    2 GGGG
+    1 GGGG YG
+
+----------------------------------------------------------------------------------------------------
 
 Ideas:
     -The pause button could lead to a widget that has an undo button, a boosters button and a game
@@ -86,7 +266,7 @@ Time Estimation in days:
     -Preview piece animation.
         Cost: 5
         Done
-    -Block compression.
+    -Block compression and/or bounce.
         Cost: 5
     -Better particle effects for bombs and row bombs.
         Cost: 10
