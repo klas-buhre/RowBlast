@@ -78,44 +78,115 @@ Ongoing tasks:
          level blocks bounce?
           -They should not.
     -Decided:
-        -Try small bounce for pulled down pieces and a very fall through (start with the
-         bounce since compression requires knowing which blocks to compress and the solving the
+        -Try small bounce for pulled down pieces and a very small fall through (start with the
+         bounce since compression requires knowing which blocks to compress and solving the
          problem of the tilted weld).
         -All falling blocks should bounce except level blocks (and the blocks sitting on top of
          those level blocks) that do not fall down on other field blocks.
     -Questions:
         -How to detect which blocks should bounce?
         -How to do the bounce? Dampened springs?
-    -Algorithm for detecting which non-level blocks should bounce (algorithm #1):
-        During pull down of loose pieces:
-            if piecePosition.y > collisionPosition.y + 1 || // Piece blocks will fall through empty space.
-               AnyBlocksShouldBounce(mCollisionResult.mCollisionPoints + piecePosition) // Some of the blocks holding up the piece should bounce, so the piece must bounce.
-                SetShouldBounce(pieceBlocks)
-            end
-        During
-    -Algorithm for detecting which level blocks should bounce:
-       -Run it before the pulling down of loose pieces (algorithm #1) since algorithm #1 depends on
+    -Algorithm for detecting which blocks should bounce based on removed rows (algorithm #1):
+       -Run it before the pulling down of loose pieces since algorithm #2 depends on
         this algorithm, so maybe during RemoveRowImpl (should not be needed after
         RemoveAreaOfSubCells).
-        During RemoveRowImpl(rowIndex):
+        RemoveRowImpl(rowIndex):
+            DetectBlocksThatShouldBounce(rowIndex)
+            Remove row...
+        end
+ 
+        DetectBlocksThatShouldBounce(removedRowIndex)
             for each column
-                upperBlock = mGrid[rowIndex + 1][column]
-                if !mGrid[rowIndex - 1][column].isEmpty
-                    SetShouldBounceInLevelBlock(upperBlock)
+                upperBlock = mGrid[removedRowIndex + 1][column]
+                if rowIndex - 1 < mLowestVisibleRow || !mGrid[removedRowIndex - 1][column].isEmpty
+                    if !upperBlock.isEmpty
+                        if upperBlock.isLevel
+                            SetShouldBounceLevelBlock(removedRowIndex + 1, upperBlock)
+                        else
+                            firstSubCell = upperBlock.mFirstSubCell
+                            SetShouldBouncePiece(removedRowIndex + 1, firstSubCell.mColor, firstSubCell)
+                            secondSubCell = upperBlock.mSecondSubCell
+                            SetShouldBouncePiece(removedRowIndex + 1, secondSubCell.mColor, secondSubCell)
+                        end
+                    end
                 end
             end
+        end
  
-        SetShouldBounceInLevelBlock(block)
-            if !block.isLevel || block.isEmpty
+        SetShouldBounceLevelBlock(lowestSearchRow, block)
+            if IsOutsideField(block) ||
+               block.mShouldBounce ||
+               block.y < lowestSearchRow ||
+               !block.isLevel ||
+               block.isEmpty
                 return
             end
             block.mShouldBounce = true
-            SetShouldBounceInLevelBlock(left)
-            SetShouldBounceInLevelBlock(right)
-            SetShouldBounceInLevelBlock(up)
-            SetShouldBounceInLevelBlock(down)
+            SetShouldBounceLevelBlock(lowestSearchRow, left)
+            SetShouldBounceLevelBlock(lowestSearchRow, right)
+            SetShouldBounceLevelBlock(lowestSearchRow, up)
+            SetShouldBounceLevelBlock(lowestSearchRow, down)
         end
  
+        SetShouldBouncePiece(lowestSearchRow, block, color)
+            // The checking of colors and sub cells should work more or less as Field::FindPieceBlocks
+            if block.mShouldBounce || block.y < lowestSearchRow
+                return
+            end
+            block.mShouldBounce = true
+            if block.welds.up
+                SetShouldBouncePiece(lowestSearchRow, upperBlock, color)
+            end
+            if block.welds.upRight
+                SetShouldBouncePiece(lowestSearchRow, upperRightBlock, color)
+            end
+            if block.welds.left
+                SetShouldBouncePiece(lowestSearchRow, leftBlock, color)
+            end
+            ...
+        end
+ 
+    -Algorithm for detecting which non-level blocks should bounce (algorithm #2):
+        During pull down of loose pieces:
+            if ShouldPieceBounce(piecePosition, mCollisionResult, piece)
+                SetShouldBounce(pieceBlocks)
+            end
+ 
+        ShouldPieceBounce(piecePosition, collisionResult, piece)
+            if piecPositio.y > collisionPosition.y + 1
+                // Piece blocks will fall through empty space.
+                return true
+            end
+            // If some of the blocks holding up the piece should bounce, then the piece must bounce.
+            switch collisionResult.mIsCollison
+                case Collision
+                    return AnyBlocksShouldBounce(collisionResult.mCollisionPoints + piecePosition))
+                case NextWillBe
+                    return AnyBlocksShouldBounce(collisionResult.mNextCollisionPoints + piecePosition))
+                    break
+                case NoCollision
+                    assert
+                    break
+            end
+            assert
+            return false
+        end
+ 
+        Field::CheckCollision()
+            result.mNextCollisionPoints.Clear();
+            ...
+            if (firstSubCellIntersects == Intersection::NextWillBe ||
+                secondSubCellIntersects == Intersection::NextWillBe) {
+                result.mNextCollisionPoints.PushBack(Pht::IVec2{pieceColumn, pieceRow});
+            }
+            ...
+            if (result.mCollisionPoints.Size() > 0) {
+                result.mIsCollision = IsCollision::Yes;
+            } else if (result.mNextmCollisionPoints.Size() > 0) {
+                result.mIsCollision = IsCollision::NextWillBe;
+            }
+        end
+
 ----------------------------------------------------------------------------------------------------
 1:
 Both B and Y should bounce because they fall and land.
@@ -191,7 +262,7 @@ land because thay are floating.
     4 BBB
     3 GGGGG
     2
-    1 GGG  R
+    1 GGG
 
 ----------------------------------------------------------------------------------------------------
 4:
@@ -242,6 +313,26 @@ and row 7 if row 3 have not finished bouncing when row 7 lands on it.
     3 GGBB
     2 GGGG
     1 GGGG YG
+
+----------------------------------------------------------------------------------------------------
+6:
+B should bounce because row 2 and 3 are removed. Y should bounce beacause it sits on top of B.
+
+6.1:
+    6  YY
+    5 BBY
+    4 BBB
+    3 GGGGGBG
+    2 GGGGGBG
+    1 GGGGG G
+
+6.2:
+    6
+    5
+    4  YY
+    3 BBY
+    2 BBB
+    1 GGGGG G
 
 ----------------------------------------------------------------------------------------------------
 
