@@ -106,7 +106,8 @@ void GameSceneRenderer::RenderFieldBlock(const SubCell& subCell, bool isSecondSu
     Pht::Vec3 blockPosition {
         subCell.mPosition.x * cellSize + cellSize / 2.0f,
         subCell.mPosition.y * cellSize + cellSize / 2.0f,
-        0.0f
+        subCell.mFallingBlockAnimation.mState == FallingBlockAnimation::State::Bouncing ?
+        mScene.GetBouncingBlockZ() : 0.0f
     };
 
     auto& transform {sceneObject.GetTransform()};

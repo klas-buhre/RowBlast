@@ -123,6 +123,10 @@ namespace BlocksGame {
         float GetBlueprintAnimationZ() const {
             return mBlueprintAnimationZ;
         }
+        
+        float GetBouncingBlockZ() const {
+            return mBouncingBlockZ;
+        }
 
         const Pht::Vec2& GetFieldLoweLeft() const {
             return mFieldLoweLeft;
@@ -183,6 +187,7 @@ namespace BlocksGame {
         const float mPressedGhostPieceZ {mCellSize / 2.0f + 0.2f};
         const float mBlueprintAnimationZ {-0.6f};
         const float mBlueprintZ {-0.7f};
+        const float mBouncingBlockZ {-0.2f};
         float mFieldWidth {0.0f};
         float mFieldHeight {0.0f};
         Pht::Vec2 mFieldLoweLeft;

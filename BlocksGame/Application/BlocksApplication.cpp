@@ -7,6 +7,9 @@ Backlog:
     -Analytics.
     
   -Gameplay:
+    -Prevent the crossed tilted welds from happening seven and mirrored seven (in both
+     GestureInputHandler and ClickInputHandler) so that those pieces can be pulled down. Or, allow
+     it and solve it when pulling down loose pieces?
     -Maybe init falling piece after SwitchPiece() in the same frame instead of the next.
     -Maybe blocks in the visible part of the field could disappear on some levels. For each move a
      random block disappears.
@@ -61,6 +64,8 @@ Backlog:
   
 Ongoing tasks:
   -Avoid discontinuous derivative after pulling down loose pieces:
+    -Try the damped harmonic oscillator with one bounce.
+    -Try decreasing the time step when in bouncing state.
     -Thoughts:
         -Options:
           -Maybe the blocks could be compressed a bit.

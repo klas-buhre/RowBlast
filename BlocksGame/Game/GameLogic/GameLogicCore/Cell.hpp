@@ -115,6 +115,17 @@ namespace BlocksGame {
         float mElapsedTime {0.0f};
         BlockBrightness mBrightness {BlockBrightness::Normal};
     };
+    
+    struct FallingBlockAnimation {
+        enum class State {
+            Falling,
+            Bouncing,
+            Inactive
+        };
+        
+        float mVelocity {0.0f};
+        State mState {State::Inactive};
+    };
 
     struct SubCell {
         bool FillsLowerCellSide() const;
@@ -137,6 +148,7 @@ namespace BlocksGame {
         BlockRenderableKind mBlockRenderableKind {BlockRenderableKind::None};
         BlockColor mColor {BlockColor::None};
         Rotation mRotation {Rotation::Deg0};
+        FallingBlockAnimation mFallingBlockAnimation;
         FlashingBlockAnimation mFlashingBlockAnimation;
         bool mIsLevel {false};
         bool mIsPartOfIndivisiblePiece {false};

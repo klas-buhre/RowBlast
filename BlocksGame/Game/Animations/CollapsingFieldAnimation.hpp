@@ -20,12 +20,10 @@ namespace BlocksGame {
         void UpdateInWaitingState(float dt);
         void UpdateInActiveState(float dt);
         void UpdateInInactiveState();
-        void GoToActiveState();
         void GoToWaitingState();
         
         Field& mField;
         State mState {State::Inactive};
-        float mVelocity {0.0f};
         float mWaitedTime {0.0f};
     };
 }

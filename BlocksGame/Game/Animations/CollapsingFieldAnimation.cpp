@@ -8,6 +8,80 @@ using namespace BlocksGame;
 namespace {
     const auto gravitationalAcceleration {-35.0f};
     const auto waitTime {0.15f};
+
+    void UpdateBlockInBouncingState(SubCell& subCell, int row, float dt) {
+        auto springBoundry {static_cast<float>(row)};
+        auto& blockPosition {subCell.mPosition};
+        auto& animation {subCell.mFallingBlockAnimation};
+        auto springDisplacement {springBoundry - blockPosition.y};
+        auto acceleration {2000.0f * springDisplacement + gravitationalAcceleration};
+        
+        animation.mVelocity += acceleration * dt;
+        blockPosition.y += animation.mVelocity * dt;
+        
+        if (blockPosition.y > row) {
+            blockPosition.y = row;
+            animation = FallingBlockAnimation {};
+        }
+    }
+
+    void UpdateBlockInFallingState(SubCell& subCell, int row, float dt) {
+        auto& blockPosition {subCell.mPosition};
+        auto& animation {subCell.mFallingBlockAnimation};
+        
+        animation.mVelocity += gravitationalAcceleration * dt;
+        blockPosition.y += animation.mVelocity * dt;
+    
+        if (blockPosition.y < row) {
+            animation.mState = FallingBlockAnimation::State::Bouncing;
+        }
+    }
+
+    /*
+    void UpdateBlockInFallingState(SubCell& subCell, int row, float dt) {
+        auto& blockPosition {subCell.mPosition};
+        auto& animation {subCell.mFallingBlockAnimation};
+        auto newVelocity {gravitationalAcceleration * dt + animation.mVelocity};
+        auto dy {newVelocity * dt};
+        auto newYPosition {blockPosition.y + dy};
+        
+        if (newYPosition < row) {
+            animation.mState = FallingBlockAnimation::State::Bouncing;
+            
+            auto springBoundry {static_cast<float>(row)};
+            auto frameTimeNotTouchingSpring {dt * (blockPosition.y - springBoundry) / dy};
+            animation.mVelocity += gravitationalAcceleration * frameTimeNotTouchingSpring;
+            
+            auto frameTimeTouchingSpring {dt * (springBoundry - newYPosition) / dy};
+            UpdateBlockInBouncingState(subCell, row, frameTimeTouchingSpring);
+            
+            blockPosition.y = row;
+        } else {
+            animation.mVelocity = newVelocity;
+            blockPosition.y = newYPosition;
+        }
+    }
+    */
+    
+    FallingBlockAnimation::State UpdateBlock(SubCell& subCell, int row, float dt) {
+        // dt = 0.001f;
+
+        switch (subCell.mFallingBlockAnimation.mState) {
+            case FallingBlockAnimation::State::Falling:
+                UpdateBlockInFallingState(subCell, row, dt);
+                break;
+            case FallingBlockAnimation::State::Bouncing:
+                UpdateBlockInBouncingState(subCell, row, dt);
+                break;
+            case FallingBlockAnimation::State::Inactive:
+                if (subCell.mPosition.y > row) {
+                    subCell.mFallingBlockAnimation.mState = FallingBlockAnimation::State::Falling;
+                }
+                break;
+        }
+        
+        return subCell.mFallingBlockAnimation.mState;
+    }
 }
 
 CollapsingFieldAnimation::CollapsingFieldAnimation(Field& field) :
@@ -33,18 +107,11 @@ void CollapsingFieldAnimation::UpdateInWaitingState(float dt) {
     mWaitedTime += dt;
 
     if (mWaitedTime > waitTime) {
-        GoToActiveState();
+        mState = State::Active;
     }
 }
 
-void CollapsingFieldAnimation::GoToActiveState() {
-    mVelocity = 0.0f;
-    mState = State::Active;
-}
-
 void CollapsingFieldAnimation::UpdateInActiveState(float dt) {
-    mVelocity += gravitationalAcceleration * dt;
-    auto velocity {mVelocity * dt};
     auto anyMovingCells {false};
     
     for (auto row {0}; row < mField.GetNumRows(); ++row) {
@@ -55,28 +122,9 @@ void CollapsingFieldAnimation::UpdateInActiveState(float dt) {
                 continue;
             }
             
-            auto& firstSubCellPosition {cell.mFirstSubCell.mPosition};
-            
-            if (firstSubCellPosition.y > row) {
-                firstSubCellPosition.y += velocity;
-                
-                if (firstSubCellPosition.y < row) {
-                    firstSubCellPosition.y = row;
-                } else {
-                    anyMovingCells = true;
-                }
-            }
-            
-            auto& secondSubCellPosition {cell.mSecondSubCell.mPosition};
-            
-            if (secondSubCellPosition.y > row) {
-                secondSubCellPosition.y += velocity;
-                
-                if (secondSubCellPosition.y < row) {
-                    secondSubCellPosition.y = row;
-                } else {
-                    anyMovingCells = true;
-                }
+            if (UpdateBlock(cell.mFirstSubCell, row, dt) != FallingBlockAnimation::State::Inactive ||
+                UpdateBlock(cell.mSecondSubCell, row, dt) != FallingBlockAnimation::State::Inactive) {
+                anyMovingCells = true;
             }
         }
     }
