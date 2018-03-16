@@ -6,8 +6,9 @@
 using namespace BlocksGame;
 
 namespace {
-    const auto gravitationalAcceleration {-35.0f};
-    const auto waitTime {0.15f};
+    constexpr auto gravitationalAcceleration {-35.0f};
+    constexpr auto waitTime {0.15f};
+    constexpr auto fixedTimeStep {0.005f};
 
     void UpdateBlockInBouncingState(SubCell& subCell, int row, float dt) {
         auto springBoundry {static_cast<float>(row)};
@@ -62,10 +63,8 @@ namespace {
         }
     }
     */
-    
-    FallingBlockAnimation::State UpdateBlock(SubCell& subCell, int row, float dt) {
-        // dt = 0.001f;
 
+    FallingBlockAnimation::State UpdateBlockFixedTimeStep(SubCell& subCell, int row, float dt) {
         switch (subCell.mFallingBlockAnimation.mState) {
             case FallingBlockAnimation::State::Falling:
                 UpdateBlockInFallingState(subCell, row, dt);
@@ -81,6 +80,29 @@ namespace {
         }
         
         return subCell.mFallingBlockAnimation.mState;
+    }
+
+    FallingBlockAnimation::State UpdateBlock(SubCell& subCell, int row, float frameDuration) {
+        if (frameDuration <= fixedTimeStep) {
+            return UpdateBlockFixedTimeStep(subCell, row, frameDuration);
+        }
+        
+        FallingBlockAnimation::State blockAnimationstate {FallingBlockAnimation::State::Inactive};
+        auto frameTimeLeft {frameDuration};
+        
+        for (;;) {
+            auto timeStep {frameTimeLeft > fixedTimeStep ? fixedTimeStep : frameTimeLeft};
+            
+            blockAnimationstate = UpdateBlockFixedTimeStep(subCell, row, timeStep);
+            frameTimeLeft -= fixedTimeStep;
+            
+            if (frameTimeLeft <= 0.0f ||
+                blockAnimationstate == FallingBlockAnimation::State::Inactive) {
+                break;
+            }
+        }
+        
+        return blockAnimationstate;
     }
 }
 
