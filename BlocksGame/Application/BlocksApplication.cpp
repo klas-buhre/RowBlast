@@ -64,8 +64,11 @@ Backlog:
   
 Ongoing tasks:
   -Avoid discontinuous derivative after pulling down loose pieces:
-    -Try the damped harmonic oscillator with one bounce.
-    -Try decreasing the time step when in bouncing state.
+    -Tune the following parameters:
+        gravitationalAcceleration {-35.0f};
+        springCoefficient {2000.0f};
+        dampingCoefficient {40.0f};
+        waitTime {0.15f};
     -Thoughts:
         -Options:
           -Maybe the blocks could be compressed a bit.

@@ -7,38 +7,66 @@ using namespace BlocksGame;
 
 namespace {
     constexpr auto gravitationalAcceleration {-35.0f};
+    constexpr auto springCoefficient {2000.0f};
+    constexpr auto dampingCoefficient {40.0f};
     constexpr auto waitTime {0.15f};
-    constexpr auto fixedTimeStep {0.005f};
-
-    void UpdateBlockInBouncingState(SubCell& subCell, int row, float dt) {
+    constexpr auto fixedTimeStep {0.002f};
+    
+    void UpdateBlockWhileTouchingSpring(SubCell& subCell, int row, float dt) {
         auto springBoundry {static_cast<float>(row)};
         auto& blockPosition {subCell.mPosition};
         auto& animation {subCell.mFallingBlockAnimation};
         auto springDisplacement {springBoundry - blockPosition.y};
-        auto acceleration {2000.0f * springDisplacement + gravitationalAcceleration};
+        
+        auto acceleration {
+            springCoefficient * springDisplacement + gravitationalAcceleration -
+            dampingCoefficient * animation.mVelocity
+        };
         
         animation.mVelocity += acceleration * dt;
         blockPosition.y += animation.mVelocity * dt;
-        
-        if (blockPosition.y > row) {
-            blockPosition.y = row;
-            animation = FallingBlockAnimation {};
-        }
     }
 
-    void UpdateBlockInFallingState(SubCell& subCell, int row, float dt) {
+    void UpdateBlockInBouncingStateFixedTimeStep(SubCell& subCell, int row, float dt) {
+        auto springBoundry {static_cast<float>(row)};
         auto& blockPosition {subCell.mPosition};
-        auto& animation {subCell.mFallingBlockAnimation};
+
+        if (blockPosition.y <= springBoundry) {
+            UpdateBlockWhileTouchingSpring(subCell, row, dt);
+        } else {
+            auto& animation {subCell.mFallingBlockAnimation};
+            
+            animation.mVelocity += gravitationalAcceleration * dt;
+            blockPosition.y += animation.mVelocity * dt;
         
-        animation.mVelocity += gravitationalAcceleration * dt;
-        blockPosition.y += animation.mVelocity * dt;
+            if (blockPosition.y < row) {
+                blockPosition.y = row;
+                animation = FallingBlockAnimation {};
+            }
+        }
+    }
     
-        if (blockPosition.y < row) {
-            animation.mState = FallingBlockAnimation::State::Bouncing;
+    void UpdateBlockInBouncingState(SubCell& subCell, int row, float frameDuration) {
+        if (frameDuration <= fixedTimeStep) {
+            UpdateBlockInBouncingStateFixedTimeStep(subCell, row, frameDuration);
+            return;
+        }
+        
+        auto frameTimeLeft {frameDuration};
+        
+        for (;;) {
+            auto timeStep {frameTimeLeft > fixedTimeStep ? fixedTimeStep : frameTimeLeft};
+            
+            UpdateBlockInBouncingStateFixedTimeStep(subCell, row, timeStep);
+            frameTimeLeft -= fixedTimeStep;
+            
+            if (frameTimeLeft <= 0.0f ||
+                subCell.mFallingBlockAnimation.mState == FallingBlockAnimation::State::Inactive) {
+                break;
+            }
         }
     }
 
-    /*
     void UpdateBlockInFallingState(SubCell& subCell, int row, float dt) {
         auto& blockPosition {subCell.mPosition};
         auto& animation {subCell.mFallingBlockAnimation};
@@ -50,21 +78,19 @@ namespace {
             animation.mState = FallingBlockAnimation::State::Bouncing;
             
             auto springBoundry {static_cast<float>(row)};
-            auto frameTimeNotTouchingSpring {dt * (blockPosition.y - springBoundry) / dy};
+            auto frameTimeNotTouchingSpring {dt * (blockPosition.y - springBoundry) / -dy};
             animation.mVelocity += gravitationalAcceleration * frameTimeNotTouchingSpring;
             
-            auto frameTimeTouchingSpring {dt * (springBoundry - newYPosition) / dy};
-            UpdateBlockInBouncingState(subCell, row, frameTimeTouchingSpring);
-            
+            auto frameTimeTouchingSpring {dt * (springBoundry - newYPosition) / -dy};
             blockPosition.y = row;
+            UpdateBlockInBouncingState(subCell, row, frameTimeTouchingSpring);
         } else {
             animation.mVelocity = newVelocity;
             blockPosition.y = newYPosition;
         }
     }
-    */
 
-    FallingBlockAnimation::State UpdateBlockFixedTimeStep(SubCell& subCell, int row, float dt) {
+    FallingBlockAnimation::State UpdateBlock(SubCell& subCell, int row, float dt) {
         switch (subCell.mFallingBlockAnimation.mState) {
             case FallingBlockAnimation::State::Falling:
                 UpdateBlockInFallingState(subCell, row, dt);
@@ -80,29 +106,6 @@ namespace {
         }
         
         return subCell.mFallingBlockAnimation.mState;
-    }
-
-    FallingBlockAnimation::State UpdateBlock(SubCell& subCell, int row, float frameDuration) {
-        if (frameDuration <= fixedTimeStep) {
-            return UpdateBlockFixedTimeStep(subCell, row, frameDuration);
-        }
-        
-        FallingBlockAnimation::State blockAnimationstate {FallingBlockAnimation::State::Inactive};
-        auto frameTimeLeft {frameDuration};
-        
-        for (;;) {
-            auto timeStep {frameTimeLeft > fixedTimeStep ? fixedTimeStep : frameTimeLeft};
-            
-            blockAnimationstate = UpdateBlockFixedTimeStep(subCell, row, timeStep);
-            frameTimeLeft -= fixedTimeStep;
-            
-            if (frameTimeLeft <= 0.0f ||
-                blockAnimationstate == FallingBlockAnimation::State::Inactive) {
-                break;
-            }
-        }
-        
-        return blockAnimationstate;
     }
 }
 
