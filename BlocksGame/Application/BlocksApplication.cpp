@@ -22,6 +22,7 @@ Backlog:
     -Mega bomb?
   -Rendering:
     -Slightly lighter blue in the field quad?
+    -Could try reducing scroll speed in map scene using a spring.
     -Could have the rounded cylinder i some places in the HUDs.
     -GUI: the buttons in the views could be yellow with black text and triangular edges like in
      Mario Kart 8. There could also be a reflection animation in the button.
@@ -63,6 +64,7 @@ Backlog:
     -Credit the icon creator: <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
   
 Ongoing tasks:
+  -Slightly lighter blue in the field quad?
   -Avoid discontinuous derivative after pulling down loose pieces:
     -Tune the following parameters:
         gravitationalAcceleration {-35.0f};
@@ -93,7 +95,7 @@ Ongoing tasks:
          those level blocks) that do not fall down on other field blocks.
     -Questions:
         -How to detect which blocks should bounce?
-        -How to do the bounce? Dampened springs?
+        -How to do the bounce? Damped springs?
     -Algorithm for detecting which blocks should bounce based on removed rows (algorithm #1):
        -Run it before the pulling down of loose pieces since algorithm #2 depends on
         this algorithm, so maybe during RemoveRowImpl (should not be needed after
@@ -377,6 +379,8 @@ Time Estimation in days:
         Cost: 10
     -Animations/effects when clearing a level.
         Cost: 7
+    -Moving the next level particle effect to the next level after clearing a level.
+        Cost: 2
     -Improving sliding text animation.
         Cost: 3
     -Tutorial.
@@ -399,7 +403,7 @@ Time Estimation in days:
     -Camera shake.
         Cost: 3
 
-        Total: 164
+        Total: 166
 
 
 Comomon piece type sets:

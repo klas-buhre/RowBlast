@@ -10,7 +10,8 @@ namespace {
     constexpr auto springCoefficient {2000.0f};
     constexpr auto dampingCoefficient {40.0f};
     constexpr auto waitTime {0.15f};
-    constexpr auto fixedTimeStep {0.002f};
+    constexpr auto fallingStateFixedTimeStep {0.016f};
+    constexpr auto bouncingStateFixedTimeStep {0.002f};
     
     void UpdateBlockWhileTouchingSpring(SubCell& subCell, int row, float dt) {
         auto springBoundry {static_cast<float>(row)};
@@ -23,8 +24,17 @@ namespace {
             dampingCoefficient * animation.mVelocity
         };
         
+        auto previousVelocity {animation.mVelocity};
+        
         animation.mVelocity += acceleration * dt;
         blockPosition.y += animation.mVelocity * dt;
+        
+        if (previousVelocity >= 0.0f && animation.mVelocity <= 0.0f &&
+            blockPosition.y <= springBoundry) {
+            
+            blockPosition.y = row;
+            animation = FallingBlockAnimation {};
+        }
     }
 
     void UpdateBlockInBouncingStateFixedTimeStep(SubCell& subCell, int row, float dt) {
@@ -47,7 +57,7 @@ namespace {
     }
     
     void UpdateBlockInBouncingState(SubCell& subCell, int row, float frameDuration) {
-        if (frameDuration <= fixedTimeStep) {
+        if (frameDuration <= bouncingStateFixedTimeStep) {
             UpdateBlockInBouncingStateFixedTimeStep(subCell, row, frameDuration);
             return;
         }
@@ -55,10 +65,13 @@ namespace {
         auto frameTimeLeft {frameDuration};
         
         for (;;) {
-            auto timeStep {frameTimeLeft > fixedTimeStep ? fixedTimeStep : frameTimeLeft};
+            auto timeStep {
+                frameTimeLeft > bouncingStateFixedTimeStep ? bouncingStateFixedTimeStep :
+                frameTimeLeft
+            };
             
             UpdateBlockInBouncingStateFixedTimeStep(subCell, row, timeStep);
-            frameTimeLeft -= fixedTimeStep;
+            frameTimeLeft -= bouncingStateFixedTimeStep;
             
             if (frameTimeLeft <= 0.0f ||
                 subCell.mFallingBlockAnimation.mState == FallingBlockAnimation::State::Inactive) {
@@ -67,7 +80,7 @@ namespace {
         }
     }
 
-    void UpdateBlockInFallingState(SubCell& subCell, int row, float dt) {
+    void UpdateBlockInFallingStateFixedTimeStep(SubCell& subCell, int row, float dt) {
         auto& blockPosition {subCell.mPosition};
         auto& animation {subCell.mFallingBlockAnimation};
         auto newVelocity {gravitationalAcceleration * dt + animation.mVelocity};
@@ -87,6 +100,33 @@ namespace {
         } else {
             animation.mVelocity = newVelocity;
             blockPosition.y = newYPosition;
+        }
+    }
+
+    void UpdateBlockInFallingState(SubCell& subCell, int row, float frameDuration) {
+        if (frameDuration <= fallingStateFixedTimeStep) {
+            UpdateBlockInFallingStateFixedTimeStep(subCell, row, frameDuration);
+            return;
+        }
+        
+        auto frameTimeLeft {frameDuration};
+        
+        for (;;) {
+            auto timeStep {
+                frameTimeLeft > fallingStateFixedTimeStep ? fallingStateFixedTimeStep :
+                frameTimeLeft
+            };
+            
+            UpdateBlockInFallingStateFixedTimeStep(subCell, row, timeStep);
+            frameTimeLeft -= fallingStateFixedTimeStep;
+            
+            if (frameTimeLeft <= 0.0f ||
+                subCell.mFallingBlockAnimation.mState == FallingBlockAnimation::State::Inactive) {
+                break;
+            } else if (subCell.mFallingBlockAnimation.mState == FallingBlockAnimation::State::Bouncing) {
+                UpdateBlockInBouncingState(subCell, row, frameTimeLeft);
+                break;
+            }
         }
     }
 
