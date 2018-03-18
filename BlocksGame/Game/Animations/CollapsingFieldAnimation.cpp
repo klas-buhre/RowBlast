@@ -6,10 +6,10 @@
 using namespace BlocksGame;
 
 namespace {
-    constexpr auto gravitationalAcceleration {-35.0f};
-    constexpr auto springCoefficient {2000.0f};
-    constexpr auto dampingCoefficient {40.0f};
-    constexpr auto waitTime {0.15f};
+    constexpr auto gravitationalAcceleration {-50.0f};
+    constexpr auto springCoefficient {5000.0f};
+    constexpr auto dampingCoefficient {55.75f};
+    constexpr auto waitTime {0.18f};
     constexpr auto fallingStateFixedTimeStep {0.016f};
     constexpr auto bouncingStateFixedTimeStep {0.002f};
     

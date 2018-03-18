@@ -21,7 +21,6 @@ Backlog:
      convenient to go back to the state before the move and not the initial state.
     -Mega bomb?
   -Rendering:
-    -Slightly lighter blue in the field quad?
     -Could try reducing scroll speed in map scene using a spring.
     -Could have the rounded cylinder i some places in the HUDs.
     -GUI: the buttons in the views could be yellow with black text and triangular edges like in
@@ -64,13 +63,9 @@ Backlog:
     -Credit the icon creator: <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
   
 Ongoing tasks:
-  -Slightly lighter blue in the field quad?
+  -GameLogic could be updated when some blocks are in bouncing state and no blocks are in falling
+   state. WeldsAnimation should check the block bouncing state before updating the weld animation.
   -Avoid discontinuous derivative after pulling down loose pieces:
-    -Tune the following parameters:
-        gravitationalAcceleration {-35.0f};
-        springCoefficient {2000.0f};
-        dampingCoefficient {40.0f};
-        waitTime {0.15f};
     -Thoughts:
         -Options:
           -Maybe the blocks could be compressed a bit.
