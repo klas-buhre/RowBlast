@@ -88,15 +88,20 @@ namespace {
         auto newYPosition {blockPosition.y + dy};
         
         if (newYPosition < row) {
-            animation.mState = FallingBlockAnimation::State::Bouncing;
-            
-            auto springBoundry {static_cast<float>(row)};
-            auto frameTimeNotTouchingSpring {dt * (blockPosition.y - springBoundry) / -dy};
-            animation.mVelocity += gravitationalAcceleration * frameTimeNotTouchingSpring;
-            
-            auto frameTimeTouchingSpring {dt * (springBoundry - newYPosition) / -dy};
-            blockPosition.y = row;
-            UpdateBlockInBouncingState(subCell, row, frameTimeTouchingSpring);
+            if (animation.mShouldBounce) {
+                animation.mState = FallingBlockAnimation::State::Bouncing;
+                
+                auto springBoundry {static_cast<float>(row)};
+                auto frameTimeNotTouchingSpring {dt * (blockPosition.y - springBoundry) / -dy};
+                animation.mVelocity += gravitationalAcceleration * frameTimeNotTouchingSpring;
+                
+                auto frameTimeTouchingSpring {dt * (springBoundry - newYPosition) / -dy};
+                blockPosition.y = row;
+                UpdateBlockInBouncingState(subCell, row, frameTimeTouchingSpring);
+            } else {
+                blockPosition.y = row;
+                animation = FallingBlockAnimation {};
+            }
         } else {
             animation.mVelocity = newVelocity;
             blockPosition.y = newYPosition;

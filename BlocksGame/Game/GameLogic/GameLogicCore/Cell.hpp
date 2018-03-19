@@ -125,6 +125,7 @@ namespace BlocksGame {
         
         float mVelocity {0.0f};
         State mState {State::Inactive};
+        bool mShouldBounce {true};
     };
 
     struct SubCell {

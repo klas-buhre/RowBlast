@@ -63,8 +63,6 @@ Backlog:
     -Credit the icon creator: <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
   
 Ongoing tasks:
-  -GameLogic could be updated when some blocks are in bouncing state and no blocks are in falling
-   state. WeldsAnimation should check the block bouncing state before updating the weld animation.
   -Avoid discontinuous derivative after pulling down loose pieces:
     -Thoughts:
         -Options:
@@ -91,6 +89,13 @@ Ongoing tasks:
     -Questions:
         -How to detect which blocks should bounce?
         -How to do the bounce? Damped springs?
+    -PROBLEM:
+        CalculateLowestVisibleRowFilledRowsRemoved() is wrong. It does not know if the rows to be
+        cleared contains level cells or not. Also, the design of calculating the future lowest
+        visible row is a bit complex and fragile. Instead, try to completely remove the bounce
+        detection during row removal and run all logic while pulling down loose pieces. Could detect
+        which blocks will fall based on their y-coordinate: if the y-coordinate is larger than to
+        row then they will fall.
     -Algorithm for detecting which blocks should bounce based on removed rows (algorithm #1):
        -Run it before the pulling down of loose pieces since algorithm #2 depends on
         this algorithm, so maybe during RemoveRowImpl (should not be needed after
@@ -362,7 +367,7 @@ Time Estimation in days:
     -Preview piece animation.
         Cost: 5
         Done
-    -Block compression and/or bounce.
+    -Block bounce.
         Cost: 5
     -Better particle effects for bombs and row bombs.
         Cost: 10
