@@ -7,6 +7,23 @@ using namespace BlocksGame;
 
 namespace {
     constexpr auto scaleSpeed {3.2f};
+    
+    bool IsSubCellOrNeighbourBouncing(const SubCell& subCell, const Cell& neighbour) {
+        auto subCellIsBouncing {
+            subCell.mFallingBlockAnimation.mState == FallingBlockAnimation::State::Bouncing
+        };
+
+        auto neighbourIsBouncing {
+            neighbour.mFirstSubCell.mFallingBlockAnimation.mState == FallingBlockAnimation::State::Bouncing ||
+            neighbour.mSecondSubCell.mFallingBlockAnimation.mState == FallingBlockAnimation::State::Bouncing
+        };
+
+        return subCellIsBouncing || neighbourIsBouncing;
+    }
+    
+    bool IsSubCellBouncing(const SubCell& subCell) {
+        return subCell.mFallingBlockAnimation.mState == FallingBlockAnimation::State::Bouncing;
+    }
 }
 
 WeldsAnimation::WeldsAnimation(Field& field) :
@@ -28,7 +45,9 @@ void WeldsAnimation::Update(float dt) {
             
             auto& diagonalAnimation {cell.mSecondSubCell.mWelds.mAnimations.mDiagonal};
             
-            if (diagonalAnimation.IsActive()) {
+            if (diagonalAnimation.IsActive() && !IsSubCellBouncing(cell.mFirstSubCell) &&
+                !IsSubCellBouncing(cell.mSecondSubCell)) {
+                
                 if (diagonalAnimation.mState == WeldAnimation::State::WeldAtFullScale) {
                     diagonalAnimation.mState = WeldAnimation::State::Inactive;
                     mField.MergeTriangleBlocksIntoCube(position);
@@ -39,7 +58,7 @@ void WeldsAnimation::Update(float dt) {
                         cell.mSecondSubCell.mFlashingBlockAnimation.mIsActive
                     };
                     
-                    AnimateWeld(diagonalAnimation, cellIsFlashing, dt);
+                    AnimateWeld(diagonalAnimation, cellIsFlashing, false, dt);
                 }
             }
         }
@@ -57,8 +76,25 @@ void WeldsAnimation::AnimateBlockWelds(SubCell& subCell, const Pht::IVec2& posit
         AnimateRightWeld(subCell, position, dt);
     }
     
-    AnimateWeld(animations.mUpRight, false, dt);
-    AnimateWeld(animations.mUpLeft, false, dt);
+    auto isThisOrUpRightBouncing {false};
+    auto isThisOrUpLeftBouncing {false};
+    
+    if (position.y + 1 < mField.GetNumRows() && position.x + 1 < mField.GetNumColumns()) {
+        auto& upperRightCell {mField.GetCell(position + Pht::IVec2{1, 1})};
+        isThisOrUpRightBouncing = IsSubCellOrNeighbourBouncing(subCell, upperRightCell);
+    } else {
+        isThisOrUpRightBouncing = IsSubCellBouncing(subCell);
+    }
+
+    if (position.y + 1 < mField.GetNumRows() && position.x - 1 >= 0) {
+        auto& upperLeftCell {mField.GetCell(position + Pht::IVec2{-1, 1})};
+        isThisOrUpLeftBouncing = IsSubCellOrNeighbourBouncing(subCell, upperLeftCell);
+    } else {
+        isThisOrUpLeftBouncing = IsSubCellBouncing(subCell);
+    }
+    
+    AnimateWeld(animations.mUpRight, false, isThisOrUpRightBouncing, dt);
+    AnimateWeld(animations.mUpLeft, false, isThisOrUpLeftBouncing, dt);
 }
 
 void WeldsAnimation::AnimateUpWeld(SubCell& subCell, const Pht::IVec2& position, float dt) {
@@ -72,9 +108,15 @@ void WeldsAnimation::AnimateUpWeld(SubCell& subCell, const Pht::IVec2& position,
             upperCell.mSecondSubCell.mFlashingBlockAnimation.mIsActive
         };
         
-        AnimateWeld(subCell.mWelds.mAnimations.mUp, subCellIsFlashing || upperCellIsFlashing, dt);
+        AnimateWeld(subCell.mWelds.mAnimations.mUp,
+                    subCellIsFlashing || upperCellIsFlashing,
+                    IsSubCellOrNeighbourBouncing(subCell, upperCell),
+                    dt);
     } else {
-        AnimateWeld(subCell.mWelds.mAnimations.mUp, subCellIsFlashing, dt);
+        AnimateWeld(subCell.mWelds.mAnimations.mUp,
+                    subCellIsFlashing,
+                    IsSubCellBouncing(subCell),
+                    dt);
     }
 }
 
@@ -89,9 +131,15 @@ void WeldsAnimation::AnimateRightWeld(SubCell& subCell, const Pht::IVec2& positi
             cellToTheRight.mSecondSubCell.mFlashingBlockAnimation.mIsActive
         };
         
-        AnimateWeld(subCell.mWelds.mAnimations.mRight, subCellIsFlashing || cellToTheRightIsFlashing, dt);
+        AnimateWeld(subCell.mWelds.mAnimations.mRight,
+                    subCellIsFlashing || cellToTheRightIsFlashing,
+                    IsSubCellOrNeighbourBouncing(subCell, cellToTheRight),
+                    dt);
     } else {
-        AnimateWeld(subCell.mWelds.mAnimations.mRight, subCellIsFlashing, dt);
+        AnimateWeld(subCell.mWelds.mAnimations.mRight,
+                    subCellIsFlashing,
+                    IsSubCellBouncing(subCell),
+                    dt);
     }
 }
 
@@ -117,7 +165,14 @@ void WeldsAnimation::AnimateWeldDisappearing(WeldAnimation& animation, float dt)
     mField.SetChanged();
 }
 
-void WeldsAnimation::AnimateWeld(WeldAnimation& animation, bool cellIsFlashing, float dt) {
+void WeldsAnimation::AnimateWeld(WeldAnimation& animation,
+                                 bool cellIsFlashing,
+                                 bool anyBouncing,
+                                 float dt) {
+    if (anyBouncing) {
+        return;
+    }
+    
     switch (animation.mState) {
         case WeldAnimation::State::WeldAppearing:
             if (cellIsFlashing) {

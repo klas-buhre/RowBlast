@@ -158,6 +158,7 @@ CollapsingFieldAnimation::State CollapsingFieldAnimation::Update(float dt) {
             UpdateInWaitingState(dt);
             break;
         case State::Active:
+        case State::BlocksBouncing:
             UpdateInActiveState(dt);
             break;
         case State::Inactive:
@@ -177,7 +178,8 @@ void CollapsingFieldAnimation::UpdateInWaitingState(float dt) {
 }
 
 void CollapsingFieldAnimation::UpdateInActiveState(float dt) {
-    auto anyMovingCells {false};
+    auto anyFallingBlocks {false};
+    auto anyBouncingBlocks {false};
     
     for (auto row {0}; row < mField.GetNumRows(); ++row) {
         for (auto column {0}; column < mField.GetNumColumns(); ++column) {
@@ -187,16 +189,37 @@ void CollapsingFieldAnimation::UpdateInActiveState(float dt) {
                 continue;
             }
             
-            if (UpdateBlock(cell.mFirstSubCell, row, dt) != FallingBlockAnimation::State::Inactive ||
-                UpdateBlock(cell.mSecondSubCell, row, dt) != FallingBlockAnimation::State::Inactive) {
-                anyMovingCells = true;
+            switch (UpdateBlock(cell.mFirstSubCell, row, dt)) {
+                case FallingBlockAnimation::State::Falling:
+                    anyFallingBlocks = true;
+                    break;
+                case FallingBlockAnimation::State::Bouncing:
+                    anyBouncingBlocks = true;
+                    break;
+                case FallingBlockAnimation::State::Inactive:
+                    break;
+            }
+
+            switch (UpdateBlock(cell.mSecondSubCell, row, dt)) {
+                case FallingBlockAnimation::State::Falling:
+                    anyFallingBlocks = true;
+                    break;
+                case FallingBlockAnimation::State::Bouncing:
+                    anyBouncingBlocks = true;
+                    break;
+                case FallingBlockAnimation::State::Inactive:
+                    break;
             }
         }
     }
     
     mField.SetChanged();
     
-    if (!anyMovingCells) {
+    if (anyFallingBlocks) {
+        mState = State::Active;
+    } else if (anyBouncingBlocks) {
+        mState = State::BlocksBouncing;
+    } else {
         mState = State::Inactive;
     }
 }

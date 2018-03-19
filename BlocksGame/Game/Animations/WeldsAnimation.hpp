@@ -24,7 +24,7 @@ namespace BlocksGame {
         void AnimateRightWeld(SubCell& subCell, const Pht::IVec2& position, float dt);
         void AnimateWeldAppearing(WeldAnimation& animation, float dt);
         void AnimateWeldDisappearing(WeldAnimation& animation, float dt);
-        void AnimateWeld(WeldAnimation& animation, bool cellIsFlashing, float dt);
+        void AnimateWeld(WeldAnimation& animation, bool cellIsFlashing, bool anyBouncing, float dt);
         
         Field& mField;
     };

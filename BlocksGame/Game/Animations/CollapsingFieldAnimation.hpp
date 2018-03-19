@@ -9,6 +9,7 @@ namespace BlocksGame {
         enum class State {
             Waiting,
             Active,
+            BlocksBouncing,
             Inactive
         };
         

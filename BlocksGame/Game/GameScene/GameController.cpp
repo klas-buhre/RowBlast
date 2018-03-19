@@ -19,7 +19,8 @@ namespace {
                                ExplosionParticleEffect::State explosionAnimationState,
                                RowExplosionParticleEffect::State rowExplosionAnimationState,
                                ScrollController::State scrollState) {
-        return fieldAnimationState == CollapsingFieldAnimation::State::Inactive &&
+        return (fieldAnimationState == CollapsingFieldAnimation::State::Inactive ||
+                fieldAnimationState == CollapsingFieldAnimation::State::BlocksBouncing) &&
                fallingPieceAnimationState == FallingPieceAnimation::State::Inactive &&
                explosionAnimationState == ExplosionParticleEffect::State::Inactive &&
                rowExplosionAnimationState == RowExplosionParticleEffect::State::Inactive &&
