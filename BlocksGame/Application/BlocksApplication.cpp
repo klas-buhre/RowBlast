@@ -94,12 +94,102 @@ Ongoing tasks:
         cleared contains level cells or not. Also, the design of calculating the future lowest
         visible row is a bit complex and fragile. Instead, try to completely remove the bounce
         detection during row removal and run all logic while pulling down loose pieces. Could detect
-        which blocks will fall based on their y-coordinate: if the y-coordinate is larger than to
+        which blocks will fall based on their y-coordinate: if the y-coordinate is larger than the
         row then they will fall.
+    -Solution:
+        Default is that all blocks should bounce except the floating level blocks.
+        Before rows are removed, cell positions are set to their row index and shouldBounce flag set
+        to true.
+        New method Field::DetectBlocksThatShouldNotBounce() called by GameLogic::PullDownLoosePieces:
+        DetectBlocksThatShouldNotBounce()
+            for each cell in visible rows from the top to down
+                if cell.mIsLevel && cell.mShouldBounce && cell.mTriedScanDirection == ScanDirection::None && cell.y > row
+                    if IsBlockStructureFloating(gridPosition) == IsFloating::Yes
+                        SetShouldNotBounce(gridPosition)
+                    end
+                    SetScanned(gridPosition)
+                end
+            end
+            ResetFoundFlagInVisibleRows()
+            ResetAllCellsTriedScanDirection()
+        end
+ 
+        IsBlockStructureFloating(gridPosition)
+            if IsOutsideVisibleField(gridPosition)
+                return IsFloating::Unknown
+            end
+            cell = grid[gridPosition.y][gridPosition.x]
+            if !cell.mIsLevel || !cell.mShouldBounce || cell.mIsFound || cell.mTriedScanDirection != ScanDirection::None
+                return IsFloating::Unknown
+            end
+            cell.mIsFound = true
+            if gridPosition.y == mLowestVisibleRow
+                return IsFloating::No
+            end
+            if gridPosition.y - 1 >= mLowestVisibleRow
+                lowerCell = grid[gridPosition.y - 1][gridPosition.x]
+                if !lowerCell.IsEmpty && cell.positon.y - lowerCell.position.y >= 2.0f
+                    return IsFloating::No
+                end
+            end
+            if IsBlockStructureFloating(left) == IsFloating::No
+                return IsFloating::No
+            end
+            if IsBlockStructureFloating(right) == IsFloating::No
+                return IsFloating::No
+            end
+            if IsBlockStructureFloating(up) == IsFloating::No
+                return IsFloating::No
+            end
+            if IsBlockStructureFloating(down) == IsFloating::No
+                return IsFloating::No
+            end
+            return IsFloating::Yes
+        end
+ 
+        SetShouldNotBounce(gridPosition)
+            if IsOutsideVisibleField(gridPosition)
+                return
+            end
+            cell = grid[gridPosition.y][gridPosition.x]
+            if !cell.mIsLevel || !cell.mShouldBounce || cell.mTriedScanDirection != ScanDirection::None
+                return
+            end
+            cell.mShouldBounce = false
+            SetShouldNotBounce(left)
+            SetShouldNotBounce(right)
+            SetShouldNotBounce(up)
+            SetShouldNotBounce(down)
+        end
+ 
+        SetScanned(gridPosition)
+            if IsOutsideVisibleField(gridPosition)
+                return
+            end
+            cell = grid[gridPosition.y][gridPosition.x]
+            if !cell.mIsLevel || cell.mTriedScanDirection != ScanDirection::None
+                return
+            end
+            cell.mTriedScanDirection = ScanDirection::Right
+            SetScanned(left)
+            SetScanned(right)
+            SetScanned(up)
+ 
+            if gridPosition.y - 1 >= mLowestVisibleRow
+                lowerCell = grid[gridPosition.y - 1][gridPosition.x]
+                if !lowerCell.IsEmpty && cell.positon.y - lowerCell.position.y >= 2.0f
+                    return
+                end
+            end
+
+            SetScanned(down)
+        end
+
     -Algorithm for detecting which blocks should bounce based on removed rows (algorithm #1):
        -Run it before the pulling down of loose pieces since algorithm #2 depends on
         this algorithm, so maybe during RemoveRowImpl (should not be needed after
-        RemoveAreaOfSubCells).
+        RemoveAreaOfSubCells). Can also detect which blocks will hit the row below by checking if
+        block.y - lowerBock.y >= 2.0.
         RemoveRowImpl(rowIndex):
             DetectBlocksThatShouldBounce(rowIndex)
             Remove row...
