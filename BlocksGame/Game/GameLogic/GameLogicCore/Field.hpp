@@ -90,6 +90,7 @@ namespace BlocksGame {
         void ManageWelds();
         void MergeTriangleBlocksIntoCube(const Pht::IVec2& position);
         void PullDownLoosePieces();
+        void DetectBlocksThatShouldNotBounce();
         int GetNumRowsInOneScreen() const;
         bool AnyFilledRows() const;
         int CalculateNumLevelBlocks() const;
@@ -160,6 +161,12 @@ namespace BlocksGame {
     private:
         friend class FieldAnalyzer;
         
+        enum class IsFloating {
+            Yes,
+            No,
+            Unknown
+        };
+        
         void SaveState();
         void CopyGridNoAlloc(CellGrid& to, const CellGrid& from);
         bool IsCellAccordingToBlueprint(int row, int column) const;
@@ -192,6 +199,12 @@ namespace BlocksGame {
         void ResetAllCellsTriedScanDirection();
         void ClearPieceBlockGrid();
         void LandPulledDownPieceBlocks(const PieceBlocks& pieceBlocks, const Pht::IVec2& position);
+        IsFloating IsBlockStructureFloating(const Pht::IVec2& gridPosition);
+        bool IsOutsideVisibleField(const Pht::IVec2& gridPosition);
+        void SetShouldNotBounce(const Pht::IVec2& gridPosition);
+        void SetIsScanned(const Pht::IVec2& gridPosition);
+        void ResetAllCellsFoundFlag();
+        void SetBlocksYPositionAndBounceFlag();
         void RemoveRowImpl(int rowIndex, Field::RemovedSubCells& removedSubCells);
         void BreakCellDownWelds(int row, int column);
         void BreakCellUpWelds(int row, int column);

@@ -470,6 +470,7 @@ void GameLogic::DetonateBomb() {
 void GameLogic::PullDownLoosePieces() {
     mField.SetLowestVisibleRow(mScrollController.CalculatePreferredLowestVisibleRow());
     mField.PullDownLoosePieces();
+    mField.DetectBlocksThatShouldNotBounce();
     
     mCascadeState = CascadeState::Cascading;
 }

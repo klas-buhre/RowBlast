@@ -1085,7 +1085,178 @@ void Field::LandPulledDownPieceBlocks(const PieceBlocks& pieceBlocks, const Pht:
     }
 }
 
+void Field::DetectBlocksThatShouldNotBounce() {
+    for (auto row {mNumRows - 1}; row >= mLowestVisibleRow; --row) {
+        for (auto column {0}; column < mNumColumns; ++column) {
+            auto& subCell {mGrid[row][column].mFirstSubCell};
+            
+            if (subCell.mIsLevel && subCell.mFallingBlockAnimation.mShouldBounce &&
+                subCell.mTriedScanDirection == ScanDirection::None && subCell.mPosition.y > row) {
+                
+                Pht::IVec2 gridPosition {column, row};
+                
+                if (IsBlockStructureFloating(gridPosition) == IsFloating::Yes) {
+                    SetShouldNotBounce(gridPosition);
+                }
+                
+                SetIsScanned(gridPosition);
+            }
+        }
+    }
+    
+    ResetAllCellsFoundFlag();
+    ResetAllCellsTriedScanDirection();
+}
+
+Field::IsFloating Field::IsBlockStructureFloating(const Pht::IVec2& gridPosition) {
+    if (IsOutsideVisibleField(gridPosition)) {
+        return IsFloating::Unknown;
+    }
+    
+    auto& subCell {mGrid[gridPosition.y][gridPosition.x].mFirstSubCell};
+    
+    if (!subCell.mIsLevel || !subCell.mFallingBlockAnimation.mShouldBounce || subCell.mIsFound ||
+        subCell.mTriedScanDirection != ScanDirection::None) {
+        
+        return IsFloating::Unknown;
+    }
+    
+    subCell.mIsFound = true;
+    
+    if (gridPosition.y == mLowestVisibleRow) {
+        return IsFloating::No;
+    }
+    
+    if (gridPosition.y - 1 >= mLowestVisibleRow) {
+        auto& lowerCell {mGrid[gridPosition.y - 1][gridPosition.x]};
+        
+        if (!lowerCell.IsEmpty()) {
+            auto& firstLowerSubCell {lowerCell.mFirstSubCell};
+            
+            if (subCell.mPosition.y - firstLowerSubCell.mPosition.y >= 2.0f) {
+                return IsFloating::No;
+            }
+            
+            if (!firstLowerSubCell.IsEmpty() && !firstLowerSubCell.mIsLevel) {
+                return IsFloating::No;
+            }
+            
+            auto& secondLowerSubCell {lowerCell.mSecondSubCell};
+            
+            if (!secondLowerSubCell.IsEmpty() && !secondLowerSubCell.mIsLevel) {
+                return IsFloating::No;
+            }
+        }
+    }
+    
+    if (IsBlockStructureFloating(gridPosition + Pht::IVec2 {0, -1}) == IsFloating::No) {
+        return IsFloating::No;
+    }
+    
+    if (IsBlockStructureFloating(gridPosition + Pht::IVec2 {1, 0}) == IsFloating::No) {
+        return IsFloating::No;
+    }
+
+    if (IsBlockStructureFloating(gridPosition + Pht::IVec2 {0, 1}) == IsFloating::No) {
+        return IsFloating::No;
+    }
+
+    if (IsBlockStructureFloating(gridPosition + Pht::IVec2 {-1, 0}) == IsFloating::No) {
+        return IsFloating::No;
+    }
+
+    return IsFloating::Yes;
+}
+
+bool Field::IsOutsideVisibleField(const Pht::IVec2& gridPosition) {
+    if (gridPosition.y < mLowestVisibleRow || gridPosition.y >= mNumRows || gridPosition.x < 0 ||
+        gridPosition.x >= mNumColumns) {
+        
+        return true;
+    }
+    
+    return false;
+}
+
+void Field::SetShouldNotBounce(const Pht::IVec2& gridPosition) {
+    if (IsOutsideVisibleField(gridPosition)) {
+        return;
+    }
+    
+    auto& subCell {mGrid[gridPosition.y][gridPosition.x].mFirstSubCell};
+    
+    if (!subCell.mIsLevel || !subCell.mFallingBlockAnimation.mShouldBounce ||
+        subCell.mTriedScanDirection != ScanDirection::None) {
+        
+        return;
+    }
+    
+    subCell.mFallingBlockAnimation.mShouldBounce = false;
+    
+    SetShouldNotBounce(gridPosition + Pht::IVec2 {0, 1});
+    SetShouldNotBounce(gridPosition + Pht::IVec2 {1, 0});
+    SetShouldNotBounce(gridPosition + Pht::IVec2 {0, -1});
+    SetShouldNotBounce(gridPosition + Pht::IVec2 {-1, 0});
+}
+
+void Field::SetIsScanned(const Pht::IVec2& gridPosition) {
+    if (IsOutsideVisibleField(gridPosition)) {
+        return;
+    }
+    
+    auto& subCell {mGrid[gridPosition.y][gridPosition.x].mFirstSubCell};
+    
+    if (!subCell.mIsLevel || subCell.mTriedScanDirection != ScanDirection::None) {
+        return;
+    }
+    
+    subCell.mTriedScanDirection = ScanDirection::Right;
+    
+    SetIsScanned(gridPosition + Pht::IVec2 {-1, 0});
+    SetIsScanned(gridPosition + Pht::IVec2 {0, 1});
+    SetIsScanned(gridPosition + Pht::IVec2 {1, 0});
+    
+    if (gridPosition.y - 1 >= mLowestVisibleRow) {
+        auto& lowerCell {mGrid[gridPosition.y - 1][gridPosition.x]};
+        
+        if (!lowerCell.IsEmpty() &&
+            subCell.mPosition.y - lowerCell.mFirstSubCell.mPosition.y >= 2.0f) {
+            
+            return;
+        }
+    }
+
+    SetIsScanned(gridPosition + Pht::IVec2 {0, -1});
+}
+
+void Field::ResetAllCellsFoundFlag() {
+    for (auto row {0}; row < mNumRows; ++row) {
+        for (auto column {0}; column < mNumColumns; ++column) {
+            auto& cell {mGrid[row][column]};
+            cell.mFirstSubCell.mIsFound = false;
+            cell.mSecondSubCell.mIsFound = false;
+        }
+    }
+}
+
+void Field::SetBlocksYPositionAndBounceFlag() {
+    for (auto row {mLowestVisibleRow}; row < mNumRows; ++row) {
+        for (auto column {0}; column < mNumColumns; ++column) {
+            auto& cell {mGrid[row][column]};
+            
+            auto& firstSubCell {cell.mFirstSubCell};
+            firstSubCell.mPosition.y = row;
+            firstSubCell.mFallingBlockAnimation.mShouldBounce = true;
+
+            auto& secondSubCell {cell.mSecondSubCell};
+            secondSubCell.mPosition.y = row;
+            secondSubCell.mFallingBlockAnimation.mShouldBounce = true;
+        }
+    }
+}
+
 Field::RemovedSubCells Field::RemoveFilledRows() {
+    SetBlocksYPositionAndBounceFlag();
     SetChanged();
     
     RemovedSubCells removedSubCells;
@@ -1185,6 +1356,7 @@ void Field::BreakLowerRightWeld(int row, int column) {
 }
 
 Field::RemovedSubCells Field::RemoveRow(int rowIndex) {
+    SetBlocksYPositionAndBounceFlag();
     SetChanged();
     SaveState();
     
@@ -1196,6 +1368,7 @@ Field::RemovedSubCells Field::RemoveRow(int rowIndex) {
 
 Field::RemovedSubCells Field::RemoveAreaOfSubCells(const Pht::IVec2& areaPos,
                                                    const Pht::IVec2& areaSize) {
+    SetBlocksYPositionAndBounceFlag();
     SetChanged();
     SaveState();
     
