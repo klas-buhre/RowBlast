@@ -7,6 +7,9 @@ Backlog:
     -Analytics.
     
   -Gameplay:
+    -Maybe some bombs and row bombs can be part of the level and detonated if landed on. Then there
+     could be some cascading scenarios like landing on a row bomb that triggers a bomb on the same
+     row on the other side of the field.
     -Prevent the crossed tilted welds from happening seven and mirrored seven (in both
      GestureInputHandler and ClickInputHandler) so that those pieces can be pulled down. Or, allow
      it and solve it when pulling down loose pieces?
