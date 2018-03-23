@@ -27,6 +27,8 @@
 		621D60961FEFB62000052107 /* CommonResources.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 621D60911FEFB62000052107 /* CommonResources.cpp */; };
 		621D609E1FEFB62A00052107 /* StringUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 621D609A1FEFB62A00052107 /* StringUtils.cpp */; };
 		621D60A11FF10FC200052107 /* MapScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 621D609F1FF10FC200052107 /* MapScene.cpp */; };
+		62318C3A20651F79008332CB /* particle_sprite_twinkle_blurred.png in Resources */ = {isa = PBXBuildFile; fileRef = 62318C3920651F79008332CB /* particle_sprite_twinkle_blurred.png */; };
+		62318C3E20655100008332CB /* particle_sprite_point_blurred.png in Resources */ = {isa = PBXBuildFile; fileRef = 62318C3D206550FF008332CB /* particle_sprite_point_blurred.png */; };
 		623B31D31F17A325000C64A1 /* BlueprintSlotsFilledAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623B31D11F17A325000C64A1 /* BlueprintSlotsFilledAnimation.cpp */; };
 		623B33181F1F6203000C64A1 /* RestartConfirmationDialogView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623B33161F1F6203000C64A1 /* RestartConfirmationDialogView.cpp */; };
 		623B331B1F1F6539000C64A1 /* RestartConfirmationDialogController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623B33191F1F6539000C64A1 /* RestartConfirmationDialogController.cpp */; };
@@ -289,6 +291,8 @@
 		621D609C1FEFB62A00052107 /* StringUtils.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = StringUtils.hpp; sourceTree = "<group>"; };
 		621D609F1FF10FC200052107 /* MapScene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MapScene.cpp; sourceTree = "<group>"; };
 		621D60A01FF10FC200052107 /* MapScene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MapScene.hpp; sourceTree = "<group>"; };
+		62318C3920651F79008332CB /* particle_sprite_twinkle_blurred.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = particle_sprite_twinkle_blurred.png; sourceTree = "<group>"; };
+		62318C3D206550FF008332CB /* particle_sprite_point_blurred.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = particle_sprite_point_blurred.png; sourceTree = "<group>"; };
 		623B31D11F17A325000C64A1 /* BlueprintSlotsFilledAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BlueprintSlotsFilledAnimation.cpp; sourceTree = "<group>"; };
 		623B31D21F17A325000C64A1 /* BlueprintSlotsFilledAnimation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = BlueprintSlotsFilledAnimation.hpp; sourceTree = "<group>"; };
 		623B33161F1F6203000C64A1 /* RestartConfirmationDialogView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RestartConfirmationDialogView.cpp; sourceTree = "<group>"; };
@@ -1336,6 +1340,8 @@
 		6270DCA01FCB248E00FB457D /* Textures */ = {
 			isa = PBXGroup;
 			children = (
+				62318C3D206550FF008332CB /* particle_sprite_point_blurred.png */,
+				62318C3920651F79008332CB /* particle_sprite_twinkle_blurred.png */,
 				62E222231FE9704800AE098B /* cloud_A_512.png */,
 				62E222251FE971C300AE098B /* cloud_B_512.png */,
 				62A8AAF61FE2DEA0000EB01C /* cloud_B_envmap.jpg */,
@@ -1899,6 +1905,7 @@
 				62944D8F20053A2D00814D36 /* EnvMap.vert in Resources */,
 				62E335DC1FD2EF600069B6CF /* level24.json in Resources */,
 				62944D8220053A2D00814D36 /* PointParticle.vert in Resources */,
+				62318C3A20651F79008332CB /* particle_sprite_twinkle_blurred.png in Resources */,
 				6270DC951FCB23D800FB457D /* level21.json in Resources */,
 				62A8AAF71FE2DEA1000EB01C /* cloud_B_envmap.jpg in Resources */,
 				62944D8E20053A2D00814D36 /* VertexColor.vert in Resources */,
@@ -1933,6 +1940,7 @@
 				62944D8520053A2D00814D36 /* EnvMap.frag in Resources */,
 				6270DC641FCB22AE00FB457D /* star_1428.obj in Resources */,
 				6270DC9E1FCB23D800FB457D /* level9.json in Resources */,
+				62318C3E20655100008332CB /* particle_sprite_point_blurred.png in Resources */,
 				6276B7102040297E0075C468 /* weld_76.obj in Resources */,
 				62944D8920053A2D00814D36 /* TexturedLighting.frag in Resources */,
 				6270DC561FCB212B00FB457D /* Bomb.wav in Resources */,

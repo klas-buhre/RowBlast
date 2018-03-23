@@ -28,7 +28,7 @@ namespace BlocksGame {
         void Update(float dt);
         
     private:
-        void StartEffect(const Pht::Vec3& scenePosition, const Pht::Vec4& color);
+        void StartEffect(const Pht::Vec3& scenePosition);
         
         GameScene& mScene;
         std::unique_ptr<Pht::SceneObject> mContainerSceneObject;

@@ -7,6 +7,9 @@ Backlog:
     -Analytics.
     
   -Gameplay:
+    -Speed up gameplay by updating GameLogic already when falling blocks are close to enter the
+     bouncing state? If cascading, wait until all bocks have entered bouncing state before claring
+     new rows.
     -Maybe some bombs and row bombs can be part of the level and detonated if landed on. Then there
      could be some cascading scenarios like landing on a row bomb that triggers a bomb on the same
      row on the other side of the field.
@@ -28,9 +31,6 @@ Backlog:
     -Could have the rounded cylinder i some places in the HUDs.
     -GUI: the buttons in the views could be yellow with black text and triangular edges like in
      Mario Kart 8. There could also be a reflection animation in the button.
-    -Recreate the star particle. Possibly by buying a textures for particle systems in unity assets
-     store. Look at: https://www.assetstore.unity3d.com/en/#!/content/26701
-    -The PieceDropParticleEffect should be less noticeable.
     -Maybe add a time duration for each rotation in the FallingPieceAnimation.
     -Maybe the bombs could have constant particle effects as if it is about to explode. And they
      could be be of different shapes other than spheres.
@@ -66,6 +66,7 @@ Backlog:
     -Credit the icon creator: <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
   
 Ongoing tasks:
+    -Better particle effects for bombs and row bombs.
 
 
 Ideas:

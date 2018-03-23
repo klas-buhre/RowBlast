@@ -24,14 +24,14 @@ PieceDropParticleEffect::PieceDropParticleEffect(Pht::IEngine& engine, GameScene
     Pht::ParticleSettings particleSettings {
         .mVelocity = Pht::Vec3{0.0f, 1.0f, 0.0f},
         .mVelocityRandomPart = Pht::Vec3{0.0f, 1.0f, 0.0f},
-        .mColor = Pht::Vec4{0.5f, 0.5f, 1.0f, 1.0f},
+        .mColor = Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f},
         .mColorRandomPart = Pht::Vec4{0.1f, 0.1f, 0.1f, 0.0f},
-        .mTextureFilename = "star_particle.png",
+        .mTextureFilename = "particle_sprite_twinkle_blurred.png",
         .mTimeToLive = 0.7f,
         .mTimeToLiveRandomPart = 0.4f,
-        .mFadeOutDuration = 0.4f,
-        .mZAngularVelocityRandomPart = 350.0f,
-        .mSize = 1.0f,
+        .mFadeOutDuration = 0.0f,
+        .mZAngularVelocityRandomPart = 400.0f,
+        .mSize = 2.0f,
         .mSizeRandomPart = 1.0f,
         .mShrinkDuration = 0.4f
     };
@@ -58,7 +58,6 @@ void PieceDropParticleEffect::StartEffect(const FallingPiece& fallingPiece) {
     auto pieceFieldPos {fallingPiece.GetRenderablePosition() * cellSize};
     auto& pieceGrid {pieceType.GetGrid(fallingPiece.GetRotation())};
     auto cellZPos {mScene.GetFieldPosition().z};
-    Pht::Vec4 color {1.0f, 1.0f, 1.0f, 1.0f};
     
     for (auto column {0}; column < pieceNumColumns; ++column) {
         for (auto row {pieceNumRows - 1}; row >= 0; --row) {
@@ -69,21 +68,18 @@ void PieceDropParticleEffect::StartEffect(const FallingPiece& fallingPiece) {
                     cellZPos
                 };
                 
-                StartEffect(fieldPosition, color);
+                StartEffect(fieldPosition);
                 break;
             }
         }
     }
 }
 
-void PieceDropParticleEffect::StartEffect(const Pht::Vec3& fieldPosition, const Pht::Vec4& color) {
+void PieceDropParticleEffect::StartEffect(const Pht::Vec3& fieldPosition) {
     for (auto& effectSceneObject: mParticleEffects) {
         auto* effect {effectSceneObject->GetComponent<Pht::ParticleEffect>()};
         
         if (!effect->IsActive()) {
-            auto& particleSettings {effect->GetEmitter().GetParticleSettings()};
-            particleSettings.mColor = color;
-            
             effect->Start();
             effectSceneObject->GetTransform().SetPosition(fieldPosition);
             break;
