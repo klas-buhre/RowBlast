@@ -18,7 +18,7 @@ PieceDropParticleEffect::PieceDropParticleEffect(Pht::IEngine& engine, GameScene
         .mPosition = Pht::Vec3{0.0f, 1.0f, 0.0f},
         .mSize = Pht::Vec3{scene.GetCellSize(), 2.0f, 1.0f},
         .mTimeToLive = 0.0f,
-        .mBurst = 5
+        .mBurst = 3
     };
     
     Pht::ParticleSettings particleSettings {
@@ -31,8 +31,8 @@ PieceDropParticleEffect::PieceDropParticleEffect(Pht::IEngine& engine, GameScene
         .mTimeToLiveRandomPart = 0.4f,
         .mFadeOutDuration = 0.0f,
         .mZAngularVelocityRandomPart = 400.0f,
-        .mSize = 2.0f,
-        .mSizeRandomPart = 1.0f,
+        .mSize = 2.42f,
+        .mSizeRandomPart = 0.0f,
         .mShrinkDuration = 0.4f
     };
     
