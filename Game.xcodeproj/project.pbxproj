@@ -29,6 +29,10 @@
 		621D60A11FF10FC200052107 /* MapScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 621D609F1FF10FC200052107 /* MapScene.cpp */; };
 		62318C3A20651F79008332CB /* particle_sprite_twinkle_blurred.png in Resources */ = {isa = PBXBuildFile; fileRef = 62318C3920651F79008332CB /* particle_sprite_twinkle_blurred.png */; };
 		62318C3E20655100008332CB /* particle_sprite_point_blurred.png in Resources */ = {isa = PBXBuildFile; fileRef = 62318C3D206550FF008332CB /* particle_sprite_point_blurred.png */; };
+		62318C422066B84A008332CB /* particle_sprite_halo.png in Resources */ = {isa = PBXBuildFile; fileRef = 62318C412066B849008332CB /* particle_sprite_halo.png */; };
+		62318C492067F0A4008332CB /* ParticleNoAlphaTexture.frag in Resources */ = {isa = PBXBuildFile; fileRef = 62318C472067F0A4008332CB /* ParticleNoAlphaTexture.frag */; };
+		62318C4A2067F0A4008332CB /* ParticleNoAlphaTexture.vert in Resources */ = {isa = PBXBuildFile; fileRef = 62318C482067F0A4008332CB /* ParticleNoAlphaTexture.vert */; };
+		62318C4C2067F669008332CB /* flare24.png in Resources */ = {isa = PBXBuildFile; fileRef = 62318C4B2067F668008332CB /* flare24.png */; };
 		623B31D31F17A325000C64A1 /* BlueprintSlotsFilledAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623B31D11F17A325000C64A1 /* BlueprintSlotsFilledAnimation.cpp */; };
 		623B33181F1F6203000C64A1 /* RestartConfirmationDialogView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623B33161F1F6203000C64A1 /* RestartConfirmationDialogView.cpp */; };
 		623B331B1F1F6539000C64A1 /* RestartConfirmationDialogController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623B33191F1F6539000C64A1 /* RestartConfirmationDialogController.cpp */; };
@@ -293,6 +297,10 @@
 		621D60A01FF10FC200052107 /* MapScene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MapScene.hpp; sourceTree = "<group>"; };
 		62318C3920651F79008332CB /* particle_sprite_twinkle_blurred.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = particle_sprite_twinkle_blurred.png; sourceTree = "<group>"; };
 		62318C3D206550FF008332CB /* particle_sprite_point_blurred.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = particle_sprite_point_blurred.png; sourceTree = "<group>"; };
+		62318C412066B849008332CB /* particle_sprite_halo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = particle_sprite_halo.png; sourceTree = "<group>"; };
+		62318C472067F0A4008332CB /* ParticleNoAlphaTexture.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ParticleNoAlphaTexture.frag; sourceTree = "<group>"; };
+		62318C482067F0A4008332CB /* ParticleNoAlphaTexture.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ParticleNoAlphaTexture.vert; sourceTree = "<group>"; };
+		62318C4B2067F668008332CB /* flare24.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = flare24.png; sourceTree = "<group>"; };
 		623B31D11F17A325000C64A1 /* BlueprintSlotsFilledAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BlueprintSlotsFilledAnimation.cpp; sourceTree = "<group>"; };
 		623B31D21F17A325000C64A1 /* BlueprintSlotsFilledAnimation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = BlueprintSlotsFilledAnimation.hpp; sourceTree = "<group>"; };
 		623B33161F1F6203000C64A1 /* RestartConfirmationDialogView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RestartConfirmationDialogView.cpp; sourceTree = "<group>"; };
@@ -1340,6 +1348,8 @@
 		6270DCA01FCB248E00FB457D /* Textures */ = {
 			isa = PBXGroup;
 			children = (
+				62318C4B2067F668008332CB /* flare24.png */,
+				62318C412066B849008332CB /* particle_sprite_halo.png */,
 				62318C3D206550FF008332CB /* particle_sprite_point_blurred.png */,
 				62318C3920651F79008332CB /* particle_sprite_twinkle_blurred.png */,
 				62E222231FE9704800AE098B /* cloud_A_512.png */,
@@ -1471,6 +1481,8 @@
 				62944C8B20053A2D00814D36 /* EnvMap.vert */,
 				62944C7F20053A2D00814D36 /* Particle.frag */,
 				62944C8320053A2D00814D36 /* Particle.vert */,
+				62318C472067F0A4008332CB /* ParticleNoAlphaTexture.frag */,
+				62318C482067F0A4008332CB /* ParticleNoAlphaTexture.vert */,
 				62944C8720053A2D00814D36 /* PixelLighting.frag */,
 				62944C7A20053A2D00814D36 /* PixelLighting.vert */,
 				62944C8420053A2D00814D36 /* PointParticle.frag */,
@@ -1899,6 +1911,7 @@
 			files = (
 				62944D8720053A2D00814D36 /* Particle.vert in Resources */,
 				6270DC9D1FCB23D800FB457D /* level8.json in Resources */,
+				62318C4C2067F669008332CB /* flare24.png in Resources */,
 				6270DC6E1FCB231B00FB457D /* HussarBoldWeb.otf in Resources */,
 				6270DC991FCB23D800FB457D /* level4.json in Resources */,
 				62E335DE1FD2F31E0069B6CF /* level25.json in Resources */,
@@ -1909,6 +1922,7 @@
 				6270DC951FCB23D800FB457D /* level21.json in Resources */,
 				62A8AAF71FE2DEA1000EB01C /* cloud_B_envmap.jpg in Resources */,
 				62944D8E20053A2D00814D36 /* VertexColor.vert in Resources */,
+				62318C492067F0A4008332CB /* ParticleNoAlphaTexture.frag in Resources */,
 				62944D8820053A2D00814D36 /* PointParticle.frag in Resources */,
 				62A8AAF91FE2E442000EB01C /* cloud_C_envmap.jpg in Resources */,
 				6270DC9B1FCB23D800FB457D /* level6.json in Resources */,
@@ -1941,6 +1955,7 @@
 				6270DC641FCB22AE00FB457D /* star_1428.obj in Resources */,
 				6270DC9E1FCB23D800FB457D /* level9.json in Resources */,
 				62318C3E20655100008332CB /* particle_sprite_point_blurred.png in Resources */,
+				62318C422066B84A008332CB /* particle_sprite_halo.png in Resources */,
 				6276B7102040297E0075C468 /* weld_76.obj in Resources */,
 				62944D8920053A2D00814D36 /* TexturedLighting.frag in Resources */,
 				6270DC561FCB212B00FB457D /* Bomb.wav in Resources */,
@@ -1963,6 +1978,7 @@
 				6270DCAE1FCB248E00FB457D /* sky_upside_down_patched_mirrored.jpg in Resources */,
 				6270DC8F1FCB23D800FB457D /* level16.json in Resources */,
 				62E222281FE9729A00AE098B /* cloud_C_512.png in Resources */,
+				62318C4A2067F0A4008332CB /* ParticleNoAlphaTexture.vert in Resources */,
 				62944D8D20053A2D00814D36 /* Text.frag in Resources */,
 				6270DC921FCB23D800FB457D /* level19.json in Resources */,
 				6270DC911FCB23D800FB457D /* level18.json in Resources */,

@@ -130,8 +130,8 @@ GameController::Command GameController::UpdateGame() {
     auto scrollState {mScrollController.Update()};
     auto fieldAnimationState {mCollapsingFieldAnimation.Update(dt)};
     mBlueprintSlotsFilledAnimation.Update(dt);
-    auto explosionState {mExplosionParticleEffect.Update(dt)};
-    auto rowExplosionState {mRowExplosionParticleEffect.Update(dt)};
+    auto explosionState {mExplosionParticleEffect.GetState()};
+    auto rowExplosionState {mRowExplosionParticleEffect.GetState()};
     auto fallingPieceAnimationState {mFallingPieceAnimation.Update(dt)};
     
     if (mState == GameState::Playing) {
@@ -153,6 +153,8 @@ GameController::Command GameController::UpdateGame() {
     mWeldsAnimation.Update(dt);
     mPieceDropParticleEffect.Update(dt);
     mBlastRadiusAnimation.Update(dt);
+    mExplosionParticleEffect.Update(dt);
+    mRowExplosionParticleEffect.Update(dt);
     mFlyingBlocksAnimation.Update(dt);
     mScene.Update();
     mPreviewPiecesAnimation.Update(dt);

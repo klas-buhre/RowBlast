@@ -31,8 +31,10 @@ namespace Pht {
         float mZAngularVelocityRandomPart {0.0f};
         Optional<float> mSize;
         Optional<float> mSizeRandomPart;
+        Optional<float> mInitialSize;
         Optional<int> mPointSize;            // In pixels.
         Optional<int> mPointSizeRandomPart;  // In pixels.
+        Optional<int> mInitialPointSize;     // In pixels.
         float mGrowDuration {0.1f};
         float mShrinkDuration {1.0f};
     };

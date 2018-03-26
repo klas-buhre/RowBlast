@@ -31,6 +31,9 @@ Backlog:
     -Could have the rounded cylinder i some places in the HUDs.
     -GUI: the buttons in the views could be yellow with black text and triangular edges like in
      Mario Kart 8. There could also be a reflection animation in the button.
+    -Maybe the merging of two triangles into a cube could be done by letting the two triangles fade
+     into the cube. Render the triangles and the cube at the same time, vary the opacity for the
+     triangels from 1 to 0 and from 0 to 1 for the cube.
     -Maybe add a time duration for each rotation in the FallingPieceAnimation.
     -Maybe the bombs could have constant particle effects as if it is about to explode. And they
      could be be of different shapes other than spheres.

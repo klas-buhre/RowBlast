@@ -17,6 +17,8 @@
 #include "../Shaders/VertexColor.frag"
 #include "../Shaders/Particle.vert"
 #include "../Shaders/Particle.frag"
+#include "../Shaders/ParticleNoAlphaTexture.vert"
+#include "../Shaders/ParticleNoAlphaTexture.frag"
 #include "../Shaders/PointParticle.vert"
 #include "../Shaders/PointParticle.frag"
 
@@ -68,6 +70,7 @@ namespace {
     bool IsParticleShader(ShaderType shaderType) {
         switch (shaderType) {
             case ShaderType::Particle:
+            case ShaderType::ParticleNoAlphaTexture:
             case ShaderType::PointParticle:
                 return true;
             default:
@@ -204,14 +207,15 @@ namespace {
 
 Renderer::Renderer(bool createRenderBuffers) :
     mShaders {
-        {ShaderType::PixelLighting,    {{.mNormals = true}}},
-        {ShaderType::VertexLighting,   {{.mNormals = true}}},
-        {ShaderType::TexturedLighting, {{.mNormals = true, .mTextureCoords = true}}},
-        {ShaderType::Textured,         {{.mTextureCoords = true}}},
-        {ShaderType::EnvMap,           {{.mNormals = true}}},
-        {ShaderType::VertexColor,      {{.mColors = true}}},
-        {ShaderType::Particle,         {{.mTextureCoords = true, .mColors = true}}},
-        {ShaderType::PointParticle,    {{.mColors = true, .mPointSizes = true}}}
+        {ShaderType::PixelLighting,          {{.mNormals = true}}},
+        {ShaderType::VertexLighting,         {{.mNormals = true}}},
+        {ShaderType::TexturedLighting,       {{.mNormals = true, .mTextureCoords = true}}},
+        {ShaderType::Textured,               {{.mTextureCoords = true}}},
+        {ShaderType::EnvMap,                 {{.mNormals = true}}},
+        {ShaderType::VertexColor,            {{.mColors = true}}},
+        {ShaderType::Particle,               {{.mTextureCoords = true, .mColors = true}}},
+        {ShaderType::ParticleNoAlphaTexture, {{.mTextureCoords = true, .mColors = true}}},
+        {ShaderType::PointParticle,          {{.mColors = true, .mPointSizes = true}}}
     } {
     
     if (createRenderBuffers) {
@@ -311,6 +315,7 @@ void Renderer::InitShaders() {
     GetShaderProgram(ShaderType::EnvMap).Build(EnvMapVertexShader, EnvMapFragmentShader);
     GetShaderProgram(ShaderType::VertexColor).Build(VertexColorVertexShader, VertexColorFragmentShader);
     GetShaderProgram(ShaderType::Particle).Build(ParticleVertexShader, ParticleFragmentShader);
+    GetShaderProgram(ShaderType::ParticleNoAlphaTexture).Build(ParticleNoAlphaTextureVertexShader, ParticleNoAlphaTextureFragmentShader);
     GetShaderProgram(ShaderType::PointParticle).Build(PointParticleVertexShader, PointParticleFragmentShader);
     
     SetupProjectionInShaders();

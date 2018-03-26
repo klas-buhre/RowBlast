@@ -25,7 +25,8 @@ namespace BlocksGame {
         
         void Init();
         void StartExplosion(const Pht::Vec2& position);
-        State Update(float dt);
+        void Update(float dt);
+        State GetState() const;
         
     private:
         void InitInnerEffect(Pht::IEngine& engine);

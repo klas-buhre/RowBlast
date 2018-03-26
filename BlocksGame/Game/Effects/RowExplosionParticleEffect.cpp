@@ -57,11 +57,12 @@ void RowExplosionParticleEffect::StartExplosion(const Pht::Vec2& position) {
     mScenObject->GetComponent<Pht::ParticleEffect>()->Start();
 }
 
-RowExplosionParticleEffect::State RowExplosionParticleEffect::Update(float dt) {
-    auto* effect {mScenObject->GetComponent<Pht::ParticleEffect>()};
-    effect->Update(dt);
-    
-    if (effect->IsActive()) {
+void RowExplosionParticleEffect::Update(float dt) {
+    mScenObject->GetComponent<Pht::ParticleEffect>()->Update(dt);
+}
+
+RowExplosionParticleEffect::State RowExplosionParticleEffect::GetState() const {
+    if (mScenObject->GetComponent<Pht::ParticleEffect>()->IsActive()) {
         return State::Ongoing;
     }
     

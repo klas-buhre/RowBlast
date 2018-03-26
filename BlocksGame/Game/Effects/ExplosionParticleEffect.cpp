@@ -46,7 +46,34 @@ void ExplosionParticleEffect::InitInnerEffect(Pht::IEngine& engine) {
     Pht::ParticleSettings particleSettings {
         .mColor = Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f},
         .mColorRandomPart = Pht::Vec4{0.0f, 0.0f, 0.0f, 0.0f},
-        .mTextureFilename = "star_particle.png",
+        .mTextureFilename = "flare24.png",
+        .mTimeToLive = 0.25f,
+        .mTimeToLiveRandomPart = 0.0f,
+        .mFadeOutDuration = 0.15f,
+        .mSize = 20.0f,
+        .mSizeRandomPart = 0.0f,
+        .mGrowDuration = 0.0f,
+        .mShrinkDuration = 0.0f
+    };
+/*
+    Pht::ParticleSettings particleSettings {
+        .mColor = Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f},
+        .mColorRandomPart = Pht::Vec4{0.0f, 0.0f, 0.0f, 0.0f},
+        .mTextureFilename = "particle_sprite_point_blurred.png",
+        .mTimeToLive = 0.25f,
+        .mTimeToLiveRandomPart = 0.0f,
+        .mFadeOutDuration = 0.15f,
+        .mSize = 50.0f,
+        .mSizeRandomPart = 0.0f,
+        .mGrowDuration = 0.05f,
+        .mShrinkDuration = 0.0f
+    };
+*/
+/*
+    Pht::ParticleSettings particleSettings {
+        .mColor = Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f},
+        .mColorRandomPart = Pht::Vec4{0.0f, 0.0f, 0.0f, 0.0f},
+        .mTextureFilename = "particle_sprite_point_blurred.png",
         .mTimeToLive = 0.5f,
         .mTimeToLiveRandomPart = 0.0f,
         .mFadeOutDuration = 0.0f,
@@ -54,14 +81,16 @@ void ExplosionParticleEffect::InitInnerEffect(Pht::IEngine& engine) {
         .mSizeRandomPart = 0.0f,
         .mShrinkDuration = 0.3f
     };
-    
+*/
     auto& particleSystem {engine.GetParticleSystem()};
     mInnerParticleEffect = particleSystem.CreateParticleEffectSceneObject(particleSettings,
                                                                           particleEmitterSettings,
                                                                           Pht::RenderMode::Triangles);
+    mInnerParticleEffect->GetRenderable()->GetMaterial().SetShaderType(Pht::ShaderType::ParticleNoAlphaTexture);
 }
 
 void ExplosionParticleEffect::InitOuterEffect(Pht::IEngine& engine) {
+/*
     Pht::EmitterSettings particleEmitterSettings {
         .mPosition = Pht::Vec3{0.0f, 0.0f, 0.0f},
         .mSize = Pht::Vec3{0.0f, 0.0f, 0.0f},
@@ -74,7 +103,7 @@ void ExplosionParticleEffect::InitOuterEffect(Pht::IEngine& engine) {
         .mAcceleration = Pht::Vec3{0.0f, -10.0f, 0.0f},
         .mColor = Pht::Vec4{1.0f, 0.6f, 0.2f, 1.0f},
         .mColorRandomPart = Pht::Vec4{0.0f, 0.0f, 0.0f, 0.0f},
-        .mTextureFilename = "star_particle.png",
+        .mTextureFilename = "particle_sprite_twinkle_blurred.png",
         .mTimeToLive = 0.4f,
         .mTimeToLiveRandomPart = 0.2f,
         .mFadeOutDuration = 0.0f,
@@ -82,41 +111,70 @@ void ExplosionParticleEffect::InitOuterEffect(Pht::IEngine& engine) {
         .mPointSizeRandomPart = engine.GetRenderer().GetAdjustedNumPixels(60),
         .mShrinkDuration = 0.3f
     };
-    
+*/
+    Pht::EmitterSettings particleEmitterSettings {
+        .mPosition = Pht::Vec3{0.0f, 0.0f, 0.0f},
+        .mSize = Pht::Vec3{0.0f, 0.0f, 0.0f},
+        .mTimeToLive = 0.0f,
+        .mBurst = 1
+    };
+
+    Pht::ParticleSettings particleSettings {
+        .mColor = Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f},
+        .mColorRandomPart = Pht::Vec4{0.0f, 0.0f, 0.0f, 0.0f},
+        .mTextureFilename = "particle_sprite_halo.png",
+        .mTimeToLive = 0.35f,
+        .mTimeToLiveRandomPart = 0.0f,
+        .mFadeOutDuration = 0.35f,
+        .mSize = 14.5f,
+        .mSizeRandomPart = 0.0f,
+        .mInitialSize = 2.0f,
+        .mGrowDuration = 0.35f,
+        .mShrinkDuration = 0.0f
+    };
+
     auto& particleSystem {engine.GetParticleSystem()};
     mOuterParticleEffect = particleSystem.CreateParticleEffectSceneObject(particleSettings,
                                                                           particleEmitterSettings,
-                                                                          Pht::RenderMode::Points);
+                                                                          Pht::RenderMode::Triangles);
 }
 
 void ExplosionParticleEffect::Init() {
-    auto& effectsContainer {mScene.GetEffectsContainer()};
-    effectsContainer.AddChild(*mInnerParticleEffect);
-    effectsContainer.AddChild(*mOuterParticleEffect);
+    mScene.GetFlyingBlocksContainer().AddChild(*mInnerParticleEffect);
+    mScene.GetEffectsContainer().AddChild(*mOuterParticleEffect);
 }
 
 void ExplosionParticleEffect::StartExplosion(const Pht::Vec2& position) {
     const auto cellSize {mScene.GetCellSize()};
+    auto& fieldLowerLeft {mScene.GetFieldLoweLeft()};
+
+    Pht::Vec3 positionInScene {
+        position.x * cellSize + cellSize / 2.0f + fieldLowerLeft.x,
+        position.y * cellSize + cellSize / 2.0f + fieldLowerLeft.y,
+        mScene.GetFieldPosition().z + 10.0f
+    };
+    
+    mInnerParticleEffect->GetComponent<Pht::ParticleEffect>()->Start();
+    mInnerParticleEffect->GetTransform().SetPosition(positionInScene);
 
     Pht::Vec3 positionInField {
         position.x * cellSize + cellSize / 2.0f,
         position.y * cellSize + cellSize / 2.0f,
         mScene.GetFieldPosition().z
     };
-    
-    mInnerParticleEffect->GetComponent<Pht::ParticleEffect>()->Start();
-    mInnerParticleEffect->GetTransform().SetPosition(positionInField);
-    
+
     mOuterParticleEffect->GetComponent<Pht::ParticleEffect>()->Start();
     mOuterParticleEffect->GetTransform().SetPosition(positionInField);
 }
 
-ExplosionParticleEffect::State ExplosionParticleEffect::Update(float dt) {
+void ExplosionParticleEffect::Update(float dt) {
+    mOuterParticleEffect->GetComponent<Pht::ParticleEffect>()->Update(dt);
+    mInnerParticleEffect->GetComponent<Pht::ParticleEffect>()->Update(dt);
+}
+
+ExplosionParticleEffect::State ExplosionParticleEffect::GetState() const {
     auto* outerEffect {mOuterParticleEffect->GetComponent<Pht::ParticleEffect>()};
-    outerEffect->Update(dt);
-    
     auto* innerEffect {mInnerParticleEffect->GetComponent<Pht::ParticleEffect>()};
-    innerEffect->Update(dt);
     
     if (outerEffect->IsActive() || innerEffect->IsActive()) {
         return State::Ongoing;

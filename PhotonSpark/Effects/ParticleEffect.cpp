@@ -25,7 +25,15 @@ namespace {
         particle.mZAngle += particle.mZAngularVelocity * dt;
         
         if (particle.mAge < particleSettings.mGrowDuration) {
-            particle.mSize += particle.mFullSize * dt / particleSettings.mGrowDuration;
+            if (particleSettings.mInitialSize.HasValue()) {
+                particle.mSize += (particle.mFullSize - particleSettings.mInitialSize.GetValue()) *
+                                  dt / particleSettings.mGrowDuration;
+            } else if (particleSettings.mInitialPointSize.HasValue()) {
+                particle.mSize += (particle.mFullSize - particleSettings.mInitialPointSize.GetValue()) *
+                                  dt / particleSettings.mGrowDuration;
+            } else {
+                particle.mSize += particle.mFullSize * dt / particleSettings.mGrowDuration;
+            }
             
             if (particle.mSize > particle.mFullSize) {
                 particle.mSize = particle.mFullSize;

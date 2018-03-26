@@ -95,13 +95,23 @@ void ParticleEmitter::EmitParticle(Particle& particle) {
         assert(mParticleSettings.mSizeRandomPart.HasValue());
         particle.mFullSize = mParticleSettings.mSize.GetValue() +
                             (NormalizedRand() - 0.5f) * mParticleSettings.mSizeRandomPart.GetValue();
-        particle.mSize = 0.0f;
+        
+        if (mParticleSettings.mInitialSize.HasValue()) {
+            particle.mSize = mParticleSettings.mInitialSize.GetValue();
+        } else {
+            particle.mSize = 0.0f;
+        }
     } else {
         assert(mParticleSettings.mPointSize.HasValue());
         assert(mParticleSettings.mPointSizeRandomPart.HasValue());
         particle.mFullSize = mParticleSettings.mPointSize.GetValue() +
                             (NormalizedRand() - 0.5f) * mParticleSettings.mPointSizeRandomPart.GetValue();
-        particle.mSize = 0.0f;
+
+        if (mParticleSettings.mInitialPointSize.HasValue()) {
+            particle.mSize = mParticleSettings.mInitialPointSize.GetValue();
+        } else {
+            particle.mSize = 0.0f;
+        }
     }
     
     particle.mAge = 0.0f;
@@ -124,6 +134,8 @@ void ParticleEmitter::EmitParticle(Particle& particle) {
 }
 
 void ParticleEmitter::EmitBurst(std::vector<Particle>& particles) {
+    assert(mEmitterSettings.mBurst <= particles.size());
+    
     for (auto i {0}; i < mEmitterSettings.mBurst; ++i) {
         auto& particle {particles[i]};
         EmitParticle(particle);
