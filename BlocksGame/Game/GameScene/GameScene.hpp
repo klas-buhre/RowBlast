@@ -49,6 +49,11 @@ namespace BlocksGame {
         const Pht::Material& GetDarkGrayMaterial() const;
         const Pht::Material& GetLightGrayMaterial() const;
         const Pht::Material& GetYellowMaterial() const;
+        
+        const Pht::CameraComponent& GetCamera() const {
+            assert(mCamera);
+            return *mCamera;
+        }
 
         GameHud& GetHud() {
             assert(mHud);

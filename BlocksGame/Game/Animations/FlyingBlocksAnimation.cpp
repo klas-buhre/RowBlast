@@ -3,6 +3,7 @@
 // Engine includes.
 #include "IEngine.hpp"
 #include "MathUtils.hpp"
+#include "CameraComponent.hpp"
 
 // Game includes.
 #include "GameScene.hpp"
@@ -14,8 +15,9 @@ using namespace BlocksGame;
 namespace {
     const auto subCellMass {1.0f};
     const auto rowExplosionForceMagnitude {12.0f};
-    const auto explosiveForceMagnitude {15.0f};
+    const auto explosiveForceMagnitude {30.0f};
     const Pht::Vec3 gravitationalAcceleration {0.0f, -60.0f, 0.0f};
+    const Pht::Vec3 explosionGravitationalAcceleration {0.0f, -40.0f, 0.0f};
     const auto eraseLimit {-27.0f};
 }
 
@@ -105,6 +107,7 @@ void FlyingBlocksAnimation::AddBlocks(const Field::RemovedSubCells& subCells,
         transform.SetRotation({0.0f, 0.0f, RotationToDeg(removedSubCell.mRotation)});
     
         FlyingBlock flyingBlock {
+            .mAppliedForce = FlyingBlock::AppliedForce::Explosion,
             .mVelocity = force / subCellMass,
             .mAngularVelocity = Pht::Vec3 {
                 angularVelocity * Pht::NormalizedRand() - angularVelocity / 2.0f,
@@ -123,11 +126,28 @@ void FlyingBlocksAnimation::Update(float dt) {
 
     while (i < mFlyingBlocks.Size()) {
         auto& flyingBlock {mFlyingBlocks.At(i)};
-        flyingBlock.mVelocity += gravitationalAcceleration * dt;
+        
+        switch (flyingBlock.mAppliedForce) {
+            case FlyingBlock::AppliedForce::ClearedLine:
+            case FlyingBlock::AppliedForce::RowExplosion:
+                flyingBlock.mVelocity += gravitationalAcceleration * dt;
+                break;
+            case FlyingBlock::AppliedForce::Explosion:
+                flyingBlock.mVelocity += explosionGravitationalAcceleration * dt;
+                break;
+        }
         
         auto& transform {flyingBlock.mSceneObject->GetTransform()};
         transform.Translate(flyingBlock.mVelocity * dt);
         transform.Rotate(flyingBlock.mAngularVelocity * dt);
+        
+        auto position {transform.GetPosition()};
+        auto& cameraPosition {mScene.GetCamera().GetSceneObject().GetTransform().GetPosition()};
+        
+        if (position.z > cameraPosition.z - 1.0f) {
+            position.z = cameraPosition.z - 1.0f;
+            transform.SetPosition(position);
+        }
 
         if (transform.GetPosition().y < eraseLimit) {
             ReleaseSceneObject(*flyingBlock.mSceneObject);

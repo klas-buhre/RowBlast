@@ -24,6 +24,13 @@ namespace BlocksGame {
     class FlyingBlocksAnimation {
     public:
         struct FlyingBlock {
+            enum class AppliedForce {
+                ClearedLine,
+                Explosion,
+                RowExplosion
+            };
+            
+            AppliedForce mAppliedForce {AppliedForce::ClearedLine};
             Pht::Vec3 mVelocity;
             Pht::Vec3 mAngularVelocity;
             Pht::SceneObject* mSceneObject {nullptr};

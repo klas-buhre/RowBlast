@@ -30,10 +30,10 @@ namespace BlocksGame {
         
     private:
         void InitInnerEffect(Pht::IEngine& engine);
-        void InitOuterEffect(Pht::IEngine& engine);
+        void InitShockWave(Pht::IEngine& engine);
         
         GameScene& mScene;
-        std::unique_ptr<Pht::SceneObject> mOuterParticleEffect;
+        std::unique_ptr<Pht::SceneObject> mShockWave;
         std::unique_ptr<Pht::SceneObject> mInnerParticleEffect;
     };
 }

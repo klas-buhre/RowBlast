@@ -32,7 +32,7 @@ ExplosionParticleEffect::ExplosionParticleEffect(Pht::IEngine& engine, GameScene
     mScene {scene} {
 
     InitInnerEffect(engine);
-    InitOuterEffect(engine);
+    InitShockWave(engine);
 }
 
 void ExplosionParticleEffect::InitInnerEffect(Pht::IEngine& engine) {
@@ -50,38 +50,12 @@ void ExplosionParticleEffect::InitInnerEffect(Pht::IEngine& engine) {
         .mTimeToLive = 0.25f,
         .mTimeToLiveRandomPart = 0.0f,
         .mFadeOutDuration = 0.15f,
-        .mSize = 20.0f,
+        .mSize = 22.0f,
         .mSizeRandomPart = 0.0f,
         .mGrowDuration = 0.0f,
         .mShrinkDuration = 0.0f
     };
-/*
-    Pht::ParticleSettings particleSettings {
-        .mColor = Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f},
-        .mColorRandomPart = Pht::Vec4{0.0f, 0.0f, 0.0f, 0.0f},
-        .mTextureFilename = "particle_sprite_point_blurred.png",
-        .mTimeToLive = 0.25f,
-        .mTimeToLiveRandomPart = 0.0f,
-        .mFadeOutDuration = 0.15f,
-        .mSize = 50.0f,
-        .mSizeRandomPart = 0.0f,
-        .mGrowDuration = 0.05f,
-        .mShrinkDuration = 0.0f
-    };
-*/
-/*
-    Pht::ParticleSettings particleSettings {
-        .mColor = Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f},
-        .mColorRandomPart = Pht::Vec4{0.0f, 0.0f, 0.0f, 0.0f},
-        .mTextureFilename = "particle_sprite_point_blurred.png",
-        .mTimeToLive = 0.5f,
-        .mTimeToLiveRandomPart = 0.0f,
-        .mFadeOutDuration = 0.0f,
-        .mSize = 9.0f,
-        .mSizeRandomPart = 0.0f,
-        .mShrinkDuration = 0.3f
-    };
-*/
+    
     auto& particleSystem {engine.GetParticleSystem()};
     mInnerParticleEffect = particleSystem.CreateParticleEffectSceneObject(particleSettings,
                                                                           particleEmitterSettings,
@@ -89,7 +63,7 @@ void ExplosionParticleEffect::InitInnerEffect(Pht::IEngine& engine) {
     mInnerParticleEffect->GetRenderable()->GetMaterial().SetShaderType(Pht::ShaderType::ParticleNoAlphaTexture);
 }
 
-void ExplosionParticleEffect::InitOuterEffect(Pht::IEngine& engine) {
+void ExplosionParticleEffect::InitShockWave(Pht::IEngine& engine) {
 /*
     Pht::EmitterSettings particleEmitterSettings {
         .mPosition = Pht::Vec3{0.0f, 0.0f, 0.0f},
@@ -126,7 +100,7 @@ void ExplosionParticleEffect::InitOuterEffect(Pht::IEngine& engine) {
         .mTimeToLive = 0.35f,
         .mTimeToLiveRandomPart = 0.0f,
         .mFadeOutDuration = 0.35f,
-        .mSize = 14.5f,
+        .mSize = 13.5f,
         .mSizeRandomPart = 0.0f,
         .mInitialSize = 2.0f,
         .mGrowDuration = 0.35f,
@@ -134,14 +108,14 @@ void ExplosionParticleEffect::InitOuterEffect(Pht::IEngine& engine) {
     };
 
     auto& particleSystem {engine.GetParticleSystem()};
-    mOuterParticleEffect = particleSystem.CreateParticleEffectSceneObject(particleSettings,
-                                                                          particleEmitterSettings,
-                                                                          Pht::RenderMode::Triangles);
+    mShockWave = particleSystem.CreateParticleEffectSceneObject(particleSettings,
+                                                                particleEmitterSettings,
+                                                                Pht::RenderMode::Triangles);
 }
 
 void ExplosionParticleEffect::Init() {
     mScene.GetFlyingBlocksContainer().AddChild(*mInnerParticleEffect);
-    mScene.GetEffectsContainer().AddChild(*mOuterParticleEffect);
+    mScene.GetEffectsContainer().AddChild(*mShockWave);
 }
 
 void ExplosionParticleEffect::StartExplosion(const Pht::Vec2& position) {
@@ -163,20 +137,20 @@ void ExplosionParticleEffect::StartExplosion(const Pht::Vec2& position) {
         mScene.GetFieldPosition().z
     };
 
-    mOuterParticleEffect->GetComponent<Pht::ParticleEffect>()->Start();
-    mOuterParticleEffect->GetTransform().SetPosition(positionInField);
+    mShockWave->GetComponent<Pht::ParticleEffect>()->Start();
+    mShockWave->GetTransform().SetPosition(positionInField);
 }
 
 void ExplosionParticleEffect::Update(float dt) {
-    mOuterParticleEffect->GetComponent<Pht::ParticleEffect>()->Update(dt);
+    mShockWave->GetComponent<Pht::ParticleEffect>()->Update(dt);
     mInnerParticleEffect->GetComponent<Pht::ParticleEffect>()->Update(dt);
 }
 
 ExplosionParticleEffect::State ExplosionParticleEffect::GetState() const {
-    auto* outerEffect {mOuterParticleEffect->GetComponent<Pht::ParticleEffect>()};
+    auto* shockWave {mShockWave->GetComponent<Pht::ParticleEffect>()};
     auto* innerEffect {mInnerParticleEffect->GetComponent<Pht::ParticleEffect>()};
     
-    if (outerEffect->IsActive() || innerEffect->IsActive()) {
+    if (shockWave->IsActive() || innerEffect->IsActive()) {
         return State::Ongoing;
     }
     
