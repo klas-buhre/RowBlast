@@ -16,14 +16,13 @@ SettingsButtonController::SettingsButtonController(Pht::IEngine& engine) :
 
 SettingsButtonController::Result SettingsButtonController::OnTouch(const Pht::TouchEvent& event) {
     auto& button {mView.GetButton()};
-    auto touchStartedOverButton {button.StateIsDownOrMovedOutside()};
 
     if (button.IsClicked(event)) {
         mAudio.PlaySound(CommonResources::mBlipSound);
         return Result::ClickedSettings;
     }
     
-    if (touchStartedOverButton) {
+    if (button.StateIsDownOrMovedOutside()) {
         return Result::TouchStartedOverButton;
     }
     

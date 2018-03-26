@@ -20,10 +20,6 @@ GameHudController::Result GameHudController::OnTouch(const Pht::TouchEvent& even
     auto& pauseButton {mView.GetPauseButton()};
     auto& switchButton {mView.GetSwitchButton()};
     
-    auto touchStartedOverButton {
-        pauseButton.StateIsDownOrMovedOutside() || switchButton.StateIsDownOrMovedOutside()
-    };
-
     if (IsSwitchButtonClicked(event)) {
         return Result::ClickedSwitch;
     }
@@ -33,7 +29,7 @@ GameHudController::Result GameHudController::OnTouch(const Pht::TouchEvent& even
         return Result::ClickedPause;
     }
     
-    if (touchStartedOverButton) {
+    if (pauseButton.StateIsDownOrMovedOutside() || switchButton.StateIsDownOrMovedOutside()) {
         return Result::TouchStartedOverButton;
     }
     
