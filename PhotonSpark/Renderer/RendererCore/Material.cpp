@@ -32,6 +32,22 @@ Material::Material(const std::string& textureName,
     mShaderType {ShaderType::TexturedLighting},
     mTexture {TextureCache::GetTexture(textureName, GenerateMipmap::Yes)} {}
 
+Material::Material(const std::string& textureName,
+                   const std::string& emissionTextureName,
+                   float ambient,
+                   float diffuse,
+                   float specular,
+                   float emissive,
+                   float shininess) :
+    mAmbient {Color{ambient, ambient, ambient}},
+    mDiffuse {Color{diffuse, diffuse, diffuse}},
+    mSpecular {Color{specular, specular, specular}},
+    mEmissive {Color{emissive, emissive, emissive}},
+    mShininess {shininess},
+    mShaderType {ShaderType::TexturedEmissiveLighting},
+    mTexture {TextureCache::GetTexture(textureName, GenerateMipmap::Yes)},
+    mEmissionTexture {TextureCache::GetTexture(emissionTextureName, GenerateMipmap::Yes)} {}
+
 Material::Material(const EnvMapTextureFilenames& envMapTextures,
                    const Color& ambient,
                    const Color& diffuse,
@@ -68,6 +84,10 @@ Blend Material::GetBlend() const {
 
 const Texture* Material::GetTexture() const {
     return mTexture.get();
+}
+
+const Texture* Material::GetEmissionTexture() const {
+    return mEmissionTexture.get();
 }
 
 void Material::SetOpacity(float opacity) {

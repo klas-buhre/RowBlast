@@ -18,6 +18,7 @@ namespace Pht {
         PixelLighting,
         VertexLighting,
         TexturedLighting,
+        TexturedEmissiveLighting,
         Textured,
         EnvMap,
         VertexColor,
@@ -46,6 +47,13 @@ namespace Pht {
                  float diffuse,
                  float specular,
                  float shininess);
+        Material(const std::string& textureName,
+                 const std::string& emissionTextureName,
+                 float ambient,
+                 float diffuse,
+                 float specular,
+                 float emissive,
+                 float shininess);
         Material(const EnvMapTextureFilenames& envMapTextureFilenames,
                  const Color& ambient,
                  const Color& diffuse, 
@@ -60,6 +68,7 @@ namespace Pht {
         
         Blend GetBlend() const;
         const Texture* GetTexture() const;
+        const Texture* GetEmissionTexture() const;
         void SetOpacity(float opacity);
         void SetShaderType(ShaderType shaderType);
         void SetBlend(Blend blend);
@@ -87,7 +96,15 @@ namespace Pht {
         void SetSpecular(const Color& specular) {
             mSpecular = specular;
         }
+
+        const Color& GetEmissive() const {
+            return mEmissive;
+        }
         
+        void SetEmissive(const Color& emissive) {
+            mEmissive = emissive;
+        }
+
         float GetShininess() const {
             return mShininess;
         }
@@ -120,11 +137,13 @@ namespace Pht {
         Color mAmbient;
         Color mDiffuse;
         Color mSpecular;
+        Color mEmissive;
         float mShininess {0.0f};
         float mReflectivity {0.0f};
         float mOpacity {1.0f};
         ShaderType mShaderType {ShaderType::VertexLighting};
         std::shared_ptr<Texture> mTexture;
+        std::shared_ptr<Texture> mEmissionTexture;
         Blend mBlend {Blend::No};
         DepthState mDepthState;
     };

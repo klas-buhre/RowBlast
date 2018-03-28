@@ -17,11 +17,13 @@ namespace Pht {
             GLint mAmbientMaterial {0};
             GLint mDiffuseMaterial {0};
             GLint mSpecularMaterial {0};
+            GLint mEmissiveMaterial {0};
             GLint mShininess {0};
             GLint mReflectivity {0};
             GLint mOpacity {0};
             GLint mTextColor {0};
             GLint mSampler {0};
+            GLint mEmissionSampler {0};
             GLint mModel {0};
             GLint mModel3x3 {0};
             GLint mCameraPosition {0};

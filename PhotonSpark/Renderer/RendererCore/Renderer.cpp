@@ -9,6 +9,8 @@
 #include "../Shaders/VertexLighting.frag"
 #include "../Shaders/TexturedLighting.vert"
 #include "../Shaders/TexturedLighting.frag"
+#include "../Shaders/TexturedEmissiveLighting.vert"
+#include "../Shaders/TexturedEmissiveLighting.frag"
 #include "../Shaders/Textured.vert"
 #include "../Shaders/Textured.frag"
 #include "../Shaders/EnvMap.vert"
@@ -77,7 +79,7 @@ namespace {
                 return false;
         }
     }
-    
+
     void BindSpecialTextures(ShaderType shaderType, const Material& material) {
         switch (shaderType) {
             case ShaderType::EnvMap:
@@ -85,6 +87,10 @@ namespace {
                 break;
             case ShaderType::PointParticle:
                 glBindTexture(GL_TEXTURE_2D, material.GetTexture()->GetHandle());
+                break;
+            case ShaderType::TexturedEmissiveLighting:
+                glActiveTexture(GL_TEXTURE1);
+                glBindTexture(GL_TEXTURE_2D, material.GetEmissionTexture()->GetHandle());
                 break;
             default:
                 break;
@@ -167,7 +173,10 @@ namespace {
                                   GL_FALSE,
                                   stride,
                                   reinterpret_cast<const GLvoid*>(offset));
+            
+            glActiveTexture(GL_TEXTURE0);
             glBindTexture(GL_TEXTURE_2D, material.GetTexture()->GetHandle());
+            
             offset += sizeof(Vec2);
         }
 
@@ -207,15 +216,16 @@ namespace {
 
 Renderer::Renderer(bool createRenderBuffers) :
     mShaders {
-        {ShaderType::PixelLighting,          {{.mNormals = true}}},
-        {ShaderType::VertexLighting,         {{.mNormals = true}}},
-        {ShaderType::TexturedLighting,       {{.mNormals = true, .mTextureCoords = true}}},
-        {ShaderType::Textured,               {{.mTextureCoords = true}}},
-        {ShaderType::EnvMap,                 {{.mNormals = true}}},
-        {ShaderType::VertexColor,            {{.mColors = true}}},
-        {ShaderType::Particle,               {{.mTextureCoords = true, .mColors = true}}},
-        {ShaderType::ParticleNoAlphaTexture, {{.mTextureCoords = true, .mColors = true}}},
-        {ShaderType::PointParticle,          {{.mColors = true, .mPointSizes = true}}}
+        {ShaderType::PixelLighting,            {{.mNormals = true}}},
+        {ShaderType::VertexLighting,           {{.mNormals = true}}},
+        {ShaderType::TexturedLighting,         {{.mNormals = true, .mTextureCoords = true}}},
+        {ShaderType::TexturedEmissiveLighting, {{.mNormals = true, .mTextureCoords = true}}},
+        {ShaderType::Textured,                 {{.mTextureCoords = true}}},
+        {ShaderType::EnvMap,                   {{.mNormals = true}}},
+        {ShaderType::VertexColor,              {{.mColors = true}}},
+        {ShaderType::Particle,                 {{.mTextureCoords = true, .mColors = true}}},
+        {ShaderType::ParticleNoAlphaTexture,   {{.mTextureCoords = true, .mColors = true}}},
+        {ShaderType::PointParticle,            {{.mColors = true, .mPointSizes = true}}}
     } {
     
     if (createRenderBuffers) {
@@ -311,6 +321,7 @@ void Renderer::InitShaders() {
     GetShaderProgram(ShaderType::PixelLighting).Build(PixelLightingVertexShader, PixelLightingFragmentShader);
     GetShaderProgram(ShaderType::VertexLighting).Build(VertexLightingVertexShader, VertexLightingFragmentShader);
     GetShaderProgram(ShaderType::TexturedLighting).Build(TexturedLightingVertexShader, TexturedLightingFragmentShader);
+    GetShaderProgram(ShaderType::TexturedEmissiveLighting).Build(TexturedEmissiveLightingVertexShader, TexturedEmissiveLightingFragmentShader);
     GetShaderProgram(ShaderType::Textured).Build(TexturedVertexShader, TexturedFragmentShader);
     GetShaderProgram(ShaderType::EnvMap).Build(EnvMapVertexShader, EnvMapFragmentShader);
     GetShaderProgram(ShaderType::VertexColor).Build(VertexColorVertexShader, VertexColorFragmentShader);
@@ -522,10 +533,16 @@ void Renderer::SetMaterialProperties(const ShaderProgram::UniformHandles& unifor
                 specular.mRed * directionalIntensity,
                 specular.mGreen * directionalIntensity,
                 specular.mBlue * directionalIntensity);
-    
+
+    auto& emissive {material.GetEmissive()};
+    glUniform3f(uniforms.mEmissiveMaterial, emissive.mRed, emissive.mGreen, emissive.mBlue);
+
     glUniform1f(uniforms.mShininess, material.GetShininess());
     glUniform1f(uniforms.mReflectivity, material.GetReflectivity());
     glUniform1f(uniforms.mOpacity, material.GetOpacity());
+    
+    glUniform1i(uniforms.mSampler, 0);
+    glUniform1i(uniforms.mEmissionSampler, 1);
     
     BindSpecialTextures(shaderType, material);
     SetupBlend(IsParticleShader(shaderType), material);
