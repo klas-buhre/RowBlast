@@ -11,8 +11,8 @@ uniform sampler2D EmissionSampler;
 
 void main(void) {
     mediump vec4 texel = texture2D(Sampler, TextureCoordOut);
-    mediump vec4 emissiveValue = texture2D(EmissionSampler, TextureCoordOut);
-    gl_FragColor = vec4(texel.xyz * DestinationColor + SpecularColor + emissiveValue.xyz * EmissiveMaterial, texel.w * Opacity);
+    mediump vec4 emissiveTexel = texture2D(EmissionSampler, TextureCoordOut);
+    gl_FragColor = vec4(texel.xyz * DestinationColor + SpecularColor + emissiveTexel.xyz * EmissiveMaterial, texel.w * Opacity);
 }
 
 );

@@ -13,6 +13,7 @@ Backlog:
     -Maybe some bombs and row bombs can be part of the level and detonated if landed on. Then there
      could be some cascading scenarios like landing on a row bomb that triggers a bomb on the same
      row on the other side of the field.
+    -Scroll sideways in some levels?
     -Prevent the crossed tilted welds from happening seven and mirrored seven (in both
      GestureInputHandler and ClickInputHandler) so that those pieces can be pulled down. Or, allow
      it and solve it when pulling down loose pieces?
@@ -27,6 +28,8 @@ Backlog:
      convenient to go back to the state before the move and not the initial state.
     -Mega bomb?
   -Rendering:
+    -The blast radius animation should fade in and start at at slightly smaller scale and then scale
+     into the right size.
     -Could try reducing scroll speed in map scene using a spring.
     -Could have the rounded cylinder i some places in the HUDs.
     -GUI: the buttons in the views could be yellow with black text and triangular edges like in
@@ -37,7 +40,7 @@ Backlog:
     -Maybe add a time duration for each rotation in the FallingPieceAnimation.
     -Maybe the bombs could have constant particle effects as if it is about to explode. And they
      could be be of different shapes other than spheres.
-    -Camera shake when clearing 5 rows or using a bomb.
+    -Camera shake when clearing 3 or more rows or using a bomb.
     -Try adding welds to the level blocks.
     -One or two stars in level cleared dialog could be placed more in the middle.
     -There could be a particle effect behind the stars in the level cleared dialog. Stars could also
@@ -70,9 +73,15 @@ Backlog:
   
 Ongoing tasks:
     -Bombs should have bomb meshes.
-        -Bom mesh.
+        -Add BombsAnimation.
+            -Rotate bomb with red dot towards the camera in FallingPiece postion, move alternative
+             position and preview position.
+            -Rotate the the row bomb around the x axis in the FallingPiecePosition, rotate it a tiny
+             bit around the x back and forth, and rotate it like the bomb in preview position.
+            -Animate the bomb materials emission.
+        -Tune the bomb materials brightness.
     -Better particle effects for bombs and row bombs.
-
+        -Laser.
 
 Ideas:
     -The pause button could lead to a widget that has an undo button, a boosters button and a game
@@ -102,6 +111,10 @@ Time Estimation in days:
         Cost: 10
     -Bombs should have bomb meshes.
         Cost: 5
+    -Try bombs part of level.
+        Cost: 5
+    -Camera shake.
+        Cost: 3
     -Use new GUI/Menu textures.
         Cost: 3
     -Support for iPhone X screen.
@@ -129,10 +142,8 @@ Time Estimation in days:
     -Back end.
     -Physics.
         Cost: 15
-    -Camera shake.
-        Cost: 3
 
-        Total: 166
+        Total: 171
 
 
 Comomon piece type sets:

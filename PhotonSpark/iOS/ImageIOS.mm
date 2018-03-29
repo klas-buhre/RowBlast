@@ -7,13 +7,13 @@
 
 namespace {
     bool StringEndsWith(const std::string& str, const std::string& with) {
-        auto pos {str.find_last_of(with)};
+        auto pos {str.find(with)};
         
         if (pos == std::string::npos) {
             return false;
         }
         
-        return pos == str.size() - 1;
+        return pos == str.size() - with.size();
     }
 }
 

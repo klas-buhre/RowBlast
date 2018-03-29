@@ -46,7 +46,6 @@ namespace BlocksGame {
         const Pht::Material& GetBlueMaterial() const;
         const Pht::Material& GetGreenMaterial() const;
         const Pht::Material& GetGrayMaterial() const;
-        const Pht::Material& GetDarkGrayMaterial() const;
         const Pht::Material& GetLightGrayMaterial() const;
         const Pht::Material& GetYellowMaterial() const;
         

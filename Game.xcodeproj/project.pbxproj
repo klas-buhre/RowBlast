@@ -27,6 +27,14 @@
 		621D60961FEFB62000052107 /* CommonResources.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 621D60911FEFB62000052107 /* CommonResources.cpp */; };
 		621D609E1FEFB62A00052107 /* StringUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 621D609A1FEFB62A00052107 /* StringUtils.cpp */; };
 		621D60A11FF10FC200052107 /* MapScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 621D609F1FF10FC200052107 /* MapScene.cpp */; };
+		6227D4EC206BD034008EA77D /* TexturedEmissiveLighting.frag in Resources */ = {isa = PBXBuildFile; fileRef = 6227D4EA206BD033008EA77D /* TexturedEmissiveLighting.frag */; };
+		6227D4ED206BD034008EA77D /* TexturedEmissiveLighting.vert in Resources */ = {isa = PBXBuildFile; fileRef = 6227D4EB206BD033008EA77D /* TexturedEmissiveLighting.vert */; };
+		6227D4EF206BD83F008EA77D /* laser_bomb_emission.png in Resources */ = {isa = PBXBuildFile; fileRef = 6227D4EE206BD83E008EA77D /* laser_bomb_emission.png */; };
+		6227D4F5206CFD25008EA77D /* bomb_798.obj in Resources */ = {isa = PBXBuildFile; fileRef = 6227D4F4206CFD25008EA77D /* bomb_798.obj */; };
+		6227D500206D3051008EA77D /* bomb_798_emission.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6227D4FE206D304F008EA77D /* bomb_798_emission.jpg */; };
+		6227D501206D3051008EA77D /* bomb_798.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6227D4FF206D3050008EA77D /* bomb_798.jpg */; };
+		6227D503206D3A3B008EA77D /* laser_bomb_diffuse.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6227D502206D3A3A008EA77D /* laser_bomb_diffuse.jpg */; };
+		6227D507206D5309008EA77D /* laser_bomb_268.obj in Resources */ = {isa = PBXBuildFile; fileRef = 6227D506206D5309008EA77D /* laser_bomb_268.obj */; };
 		62318C3A20651F79008332CB /* particle_sprite_twinkle_blurred.png in Resources */ = {isa = PBXBuildFile; fileRef = 62318C3920651F79008332CB /* particle_sprite_twinkle_blurred.png */; };
 		62318C3E20655100008332CB /* particle_sprite_point_blurred.png in Resources */ = {isa = PBXBuildFile; fileRef = 62318C3D206550FF008332CB /* particle_sprite_point_blurred.png */; };
 		62318C422066B84A008332CB /* particle_sprite_halo.png in Resources */ = {isa = PBXBuildFile; fileRef = 62318C412066B849008332CB /* particle_sprite_halo.png */; };
@@ -153,7 +161,6 @@
 		6270DC9E1FCB23D800FB457D /* level9.json in Resources */ = {isa = PBXBuildFile; fileRef = 6270DC861FCB23D800FB457D /* level9.json */; };
 		6270DCA91FCB248E00FB457D /* settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 6270DCA11FCB248E00FB457D /* settings.png */; };
 		6270DCAA1FCB248E00FB457D /* sky.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6270DCA21FCB248E00FB457D /* sky.jpg */; };
-		6270DCAB1FCB248E00FB457D /* sky_2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6270DCA31FCB248E00FB457D /* sky_2.jpg */; };
 		6270DCAC1FCB248E00FB457D /* sky_blurred.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6270DCA41FCB248E00FB457D /* sky_blurred.jpg */; };
 		6270DCAD1FCB248E00FB457D /* sky_upside_down.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6270DCA51FCB248E00FB457D /* sky_upside_down.jpg */; };
 		6270DCAE1FCB248E00FB457D /* sky_upside_down_patched_mirrored.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6270DCA61FCB248E00FB457D /* sky_upside_down_patched_mirrored.jpg */; };
@@ -295,6 +302,14 @@
 		621D609C1FEFB62A00052107 /* StringUtils.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = StringUtils.hpp; sourceTree = "<group>"; };
 		621D609F1FF10FC200052107 /* MapScene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MapScene.cpp; sourceTree = "<group>"; };
 		621D60A01FF10FC200052107 /* MapScene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MapScene.hpp; sourceTree = "<group>"; };
+		6227D4EA206BD033008EA77D /* TexturedEmissiveLighting.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = TexturedEmissiveLighting.frag; sourceTree = "<group>"; };
+		6227D4EB206BD033008EA77D /* TexturedEmissiveLighting.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = TexturedEmissiveLighting.vert; sourceTree = "<group>"; };
+		6227D4EE206BD83E008EA77D /* laser_bomb_emission.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = laser_bomb_emission.png; sourceTree = "<group>"; };
+		6227D4F4206CFD25008EA77D /* bomb_798.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bomb_798.obj; sourceTree = "<group>"; };
+		6227D4FE206D304F008EA77D /* bomb_798_emission.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bomb_798_emission.jpg; sourceTree = "<group>"; };
+		6227D4FF206D3050008EA77D /* bomb_798.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bomb_798.jpg; sourceTree = "<group>"; };
+		6227D502206D3A3A008EA77D /* laser_bomb_diffuse.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = laser_bomb_diffuse.jpg; sourceTree = "<group>"; };
+		6227D506206D5309008EA77D /* laser_bomb_268.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = laser_bomb_268.obj; sourceTree = "<group>"; };
 		62318C3920651F79008332CB /* particle_sprite_twinkle_blurred.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = particle_sprite_twinkle_blurred.png; sourceTree = "<group>"; };
 		62318C3D206550FF008332CB /* particle_sprite_point_blurred.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = particle_sprite_point_blurred.png; sourceTree = "<group>"; };
 		62318C412066B849008332CB /* particle_sprite_halo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = particle_sprite_halo.png; sourceTree = "<group>"; };
@@ -508,7 +523,6 @@
 		6270DC861FCB23D800FB457D /* level9.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level9.json; sourceTree = "<group>"; };
 		6270DCA11FCB248E00FB457D /* settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings.png; sourceTree = "<group>"; };
 		6270DCA21FCB248E00FB457D /* sky.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sky.jpg; sourceTree = "<group>"; };
-		6270DCA31FCB248E00FB457D /* sky_2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sky_2.jpg; sourceTree = "<group>"; };
 		6270DCA41FCB248E00FB457D /* sky_blurred.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sky_blurred.jpg; sourceTree = "<group>"; };
 		6270DCA51FCB248E00FB457D /* sky_upside_down.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sky_upside_down.jpg; sourceTree = "<group>"; };
 		6270DCA61FCB248E00FB457D /* sky_upside_down_patched_mirrored.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sky_upside_down_patched_mirrored.jpg; sourceTree = "<group>"; };
@@ -1288,6 +1302,8 @@
 		6270DC571FCB22AE00FB457D /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				6227D506206D5309008EA77D /* laser_bomb_268.obj */,
+				6227D4F4206CFD25008EA77D /* bomb_798.obj */,
 				6276B70F2040297D0075C468 /* weld_76.obj */,
 				6276B705203F26E90075C468 /* triangle_320_r90.obj */,
 				6276B703203F26730075C468 /* triangle_320_r180.obj */,
@@ -1348,6 +1364,10 @@
 		6270DCA01FCB248E00FB457D /* Textures */ = {
 			isa = PBXGroup;
 			children = (
+				6227D4FE206D304F008EA77D /* bomb_798_emission.jpg */,
+				6227D4FF206D3050008EA77D /* bomb_798.jpg */,
+				6227D502206D3A3A008EA77D /* laser_bomb_diffuse.jpg */,
+				6227D4EE206BD83E008EA77D /* laser_bomb_emission.png */,
 				62318C4B2067F668008332CB /* flare24.png */,
 				62318C412066B849008332CB /* particle_sprite_halo.png */,
 				62318C3D206550FF008332CB /* particle_sprite_point_blurred.png */,
@@ -1361,7 +1381,6 @@
 				62E2222B1FE9748500AE098B /* cloud_E_512.png */,
 				62E2222D1FE9754B00AE098B /* cloud_F_512.png */,
 				6270DCA11FCB248E00FB457D /* settings.png */,
-				6270DCA31FCB248E00FB457D /* sky_2.jpg */,
 				6270DCA41FCB248E00FB457D /* sky_blurred.jpg */,
 				6270DCA61FCB248E00FB457D /* sky_upside_down_patched_mirrored.jpg */,
 				6270DCA51FCB248E00FB457D /* sky_upside_down.jpg */,
@@ -1491,6 +1510,8 @@
 				62944C8220053A2D00814D36 /* Text.vert */,
 				62944C7B20053A2D00814D36 /* Textured.frag */,
 				62944C8820053A2D00814D36 /* Textured.vert */,
+				6227D4EA206BD033008EA77D /* TexturedEmissiveLighting.frag */,
+				6227D4EB206BD033008EA77D /* TexturedEmissiveLighting.vert */,
 				62944C8520053A2D00814D36 /* TexturedLighting.frag */,
 				62944C7D20053A2D00814D36 /* TexturedLighting.vert */,
 				62944C8020053A2D00814D36 /* VertexColor.frag */,
@@ -1909,6 +1930,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6227D503206D3A3B008EA77D /* laser_bomb_diffuse.jpg in Resources */,
+				6227D4F5206CFD25008EA77D /* bomb_798.obj in Resources */,
 				62944D8720053A2D00814D36 /* Particle.vert in Resources */,
 				6270DC9D1FCB23D800FB457D /* level8.json in Resources */,
 				62318C4C2067F669008332CB /* flare24.png in Resources */,
@@ -1916,6 +1939,7 @@
 				6270DC991FCB23D800FB457D /* level4.json in Resources */,
 				62E335DE1FD2F31E0069B6CF /* level25.json in Resources */,
 				62944D8F20053A2D00814D36 /* EnvMap.vert in Resources */,
+				6227D4ED206BD034008EA77D /* TexturedEmissiveLighting.vert in Resources */,
 				62E335DC1FD2EF600069B6CF /* level24.json in Resources */,
 				62944D8220053A2D00814D36 /* PointParticle.vert in Resources */,
 				62318C3A20651F79008332CB /* particle_sprite_twinkle_blurred.png in Resources */,
@@ -1931,9 +1955,11 @@
 				6270DC901FCB23D800FB457D /* level17.json in Resources */,
 				6270DC8C1FCB23D800FB457D /* level13.json in Resources */,
 				62E2222C1FE9748500AE098B /* cloud_E_512.png in Resources */,
+				6227D500206D3051008EA77D /* bomb_798_emission.jpg in Resources */,
 				6276B700203F20150075C468 /* triangle_320.obj in Resources */,
 				6270DCB01FCB248E00FB457D /* star_particle.png in Resources */,
 				6270DC631FCB22AE00FB457D /* star.obj in Resources */,
+				6227D4EC206BD034008EA77D /* TexturedEmissiveLighting.frag in Resources */,
 				62944D8620053A2D00814D36 /* Text.vert in Resources */,
 				6270DCAA1FCB248E00FB457D /* sky.jpg in Resources */,
 				62944D8B20053A2D00814D36 /* PixelLighting.frag in Resources */,
@@ -1950,15 +1976,16 @@
 				6278590620375DBF00494A4D /* level27.json in Resources */,
 				62944D8A20053A2D00814D36 /* VertexLighting.frag in Resources */,
 				6270DCA91FCB248E00FB457D /* settings.png in Resources */,
-				6270DCAB1FCB248E00FB457D /* sky_2.jpg in Resources */,
 				62944D8520053A2D00814D36 /* EnvMap.frag in Resources */,
 				6270DC641FCB22AE00FB457D /* star_1428.obj in Resources */,
 				6270DC9E1FCB23D800FB457D /* level9.json in Resources */,
+				6227D507206D5309008EA77D /* laser_bomb_268.obj in Resources */,
 				62318C3E20655100008332CB /* particle_sprite_point_blurred.png in Resources */,
 				62318C422066B84A008332CB /* particle_sprite_halo.png in Resources */,
 				6276B7102040297E0075C468 /* weld_76.obj in Resources */,
 				62944D8920053A2D00814D36 /* TexturedLighting.frag in Resources */,
 				6270DC561FCB212B00FB457D /* Bomb.wav in Resources */,
+				6227D501206D3051008EA77D /* bomb_798.jpg in Resources */,
 				62944D8420053A2D00814D36 /* VertexColor.frag in Resources */,
 				62E222241FE9704900AE098B /* cloud_A_512.png in Resources */,
 				62944D7F20053A2D00814D36 /* Textured.frag in Resources */,
@@ -1991,6 +2018,7 @@
 				62944D7E20053A2D00814D36 /* PixelLighting.vert in Resources */,
 				62E2222E1FE9754C00AE098B /* cloud_F_512.png in Resources */,
 				6270DC8E1FCB23D800FB457D /* level15.json in Resources */,
+				6227D4EF206BD83F008EA77D /* laser_bomb_emission.png in Resources */,
 				6270DC961FCB23D800FB457D /* level22.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

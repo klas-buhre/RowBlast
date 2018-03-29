@@ -23,7 +23,6 @@ Materials::Materials(Pht::IEngine& engine) {
     CreateGreenMaterial(envMapTextures);
     CreateLightGrayMaterial(envMapTextures);
     CreateYellowMaterial(envMapTextures);
-    CreateSkyMaterial();
     
     Pht::EnvMapTextureFilenames fieldBlockEnvMapTextures {
         "sky_upside_down.jpg",
@@ -39,7 +38,6 @@ Materials::Materials(Pht::IEngine& engine) {
     CreateBlueFieldBlockMaterial(fieldBlockEnvMapTextures);
     CreateGreenFieldBlockMaterial(fieldBlockEnvMapTextures);
     CreateGrayFieldBlockMaterial(fieldBlockEnvMapTextures);
-    CreateDarkGrayFieldBlockMaterial(fieldBlockEnvMapTextures);
     CreateYellowFieldBlockMaterial(fieldBlockEnvMapTextures);
 }
 
@@ -121,10 +119,6 @@ void Materials::CreateYellowMaterial(const Pht::EnvMapTextureFilenames& envMapTe
                                                       reflectivity);
 }
 
-void Materials::CreateSkyMaterial() {
-    mSkyMaterial = std::make_unique<Pht::Material>("sky_2.jpg");
-}
-
 void Materials::CreateGoldFieldBlockMaterial(const Pht::EnvMapTextureFilenames& envMapTextures) {
     Pht::Color ambient {1.0f, 0.5f, 0.0f};
     Pht::Color diffuse {1.0f, 0.5f, 0.0f};
@@ -188,19 +182,6 @@ void Materials::CreateGrayFieldBlockMaterial(const Pht::EnvMapTextureFilenames& 
                                                               specular,
                                                               shininess,
                                                               fieldBlockReflectivity);
-}
-
-void Materials::CreateDarkGrayFieldBlockMaterial(const Pht::EnvMapTextureFilenames& envMapTextures) {
-    Pht::Color ambient {0.4f, 0.4f, 0.4f};
-    Pht::Color diffuse {0.4f, 0.4f, 0.4f};
-    Pht::Color specular {1.0f, 1.0f, 1.0f};
-    auto shininess {20.0f};
-    mDarkGrayFieldBlockMaterial = std::make_unique<Pht::Material>(envMapTextures,
-                                                                  ambient,
-                                                                  diffuse,
-                                                                  specular,
-                                                                  shininess,
-                                                                  fieldBlockReflectivity);
 }
 
 void Materials::CreateYellowFieldBlockMaterial(const Pht::EnvMapTextureFilenames& envMapTextures) {

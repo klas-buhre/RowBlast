@@ -457,10 +457,6 @@ const Pht::Material& GameScene::GameScene::GetGrayMaterial() const {
     return mCommonResources.GetMaterials().GetGrayFieldBlockMaterial();
 }
 
-const Pht::Material& GameScene::GameScene::GetDarkGrayMaterial() const {
-    return mCommonResources.GetMaterials().GetDarkGrayFieldBlockMaterial();
-}
-
 const Pht::Material& GameScene::GetYellowMaterial() const {
     return mCommonResources.GetMaterials().GetYellowFieldBlockMaterial();
 }

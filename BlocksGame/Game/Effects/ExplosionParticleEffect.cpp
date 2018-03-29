@@ -12,22 +12,6 @@
 
 using namespace BlocksGame;
 
-namespace {
-    const auto outerVelocity {10.0f};
-    const auto outerVelocityRandomPart {5.0f};
-    
-    Pht::Vec3 OuterParticleVelocityFunction() {
-        auto theta {Pht::NormalizedRand() * 360.0f};
-        auto magnitude {outerVelocity + (Pht::NormalizedRand() - 0.5f) * outerVelocityRandomPart};
-        
-        return {
-            static_cast<float>(magnitude * cos(theta)),
-            static_cast<float>(magnitude * sin(theta)),
-            0.0f
-        };
-    }
-}
-
 ExplosionParticleEffect::ExplosionParticleEffect(Pht::IEngine& engine, GameScene& scene) :
     mScene {scene} {
 
@@ -64,28 +48,6 @@ void ExplosionParticleEffect::InitInnerEffect(Pht::IEngine& engine) {
 }
 
 void ExplosionParticleEffect::InitShockWave(Pht::IEngine& engine) {
-/*
-    Pht::EmitterSettings particleEmitterSettings {
-        .mPosition = Pht::Vec3{0.0f, 0.0f, 0.0f},
-        .mSize = Pht::Vec3{0.0f, 0.0f, 0.0f},
-        .mTimeToLive = 0.0f,
-        .mBurst = 100
-    };
-    
-    Pht::ParticleSettings particleSettings {
-        .mVelocityFunction = OuterParticleVelocityFunction,
-        .mAcceleration = Pht::Vec3{0.0f, -10.0f, 0.0f},
-        .mColor = Pht::Vec4{1.0f, 0.6f, 0.2f, 1.0f},
-        .mColorRandomPart = Pht::Vec4{0.0f, 0.0f, 0.0f, 0.0f},
-        .mTextureFilename = "particle_sprite_twinkle_blurred.png",
-        .mTimeToLive = 0.4f,
-        .mTimeToLiveRandomPart = 0.2f,
-        .mFadeOutDuration = 0.0f,
-        .mPointSize = engine.GetRenderer().GetAdjustedNumPixels(60),
-        .mPointSizeRandomPart = engine.GetRenderer().GetAdjustedNumPixels(60),
-        .mShrinkDuration = 0.3f
-    };
-*/
     Pht::EmitterSettings particleEmitterSettings {
         .mPosition = Pht::Vec3{0.0f, 0.0f, 0.0f},
         .mSize = Pht::Vec3{0.0f, 0.0f, 0.0f},

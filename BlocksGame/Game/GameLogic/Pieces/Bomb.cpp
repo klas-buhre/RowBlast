@@ -19,7 +19,7 @@ Bomb::Bomb() {
     };
 
     InitGrids(fillGrid, clickGrid, BlockColor::None);
-    SetPreviewCellSize(0.8f);
+    SetPreviewCellSize(1.25f);
     SetNumRotations(1);
 }
 

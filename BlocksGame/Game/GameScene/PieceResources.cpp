@@ -220,18 +220,38 @@ void PieceResources::CreateWelds(Pht::ISceneManager& sceneManager, const GameSce
 }
 
 void PieceResources::CreateBombs(Pht::ISceneManager& sceneManager, const GameScene& scene) {
-    const auto cellSize {scene.GetCellSize()};
-    auto darkGrayMaterial {scene.GetDarkGrayMaterial()};
-    mBomb = sceneManager.CreateRenderableObject(Pht::SphereMesh {cellSize / 2.0f},
-                                                darkGrayMaterial);
+    Pht::Material bombMaterial {
+        "bomb_798.jpg",
+        "bomb_798_emission.jpg",
+        0.7f,
+        0.7f,
+        1.0f,
+        1.0f,
+        20.0f
+    };
     
-    darkGrayMaterial.SetOpacity(scene.GetGhostPieceOpacity());
-    mTransparentBomb = sceneManager.CreateRenderableObject(Pht::SphereMesh {cellSize / 2.0f},
-                                                           darkGrayMaterial);
-    auto redMaterial {scene.GetRedMaterial()};
-    mRowBomb = sceneManager.CreateRenderableObject(Pht::SphereMesh {cellSize / 2.0f}, redMaterial);
+    bombMaterial.SetEmissive(Pht::Color {3.0f, 3.0f, 3.0f});
+    mBomb = sceneManager.CreateRenderableObject(Pht::ObjMesh {"bomb_798.obj", 16.2f}, bombMaterial);
     
-    redMaterial.SetOpacity(scene.GetGhostPieceOpacity());
-    mTransparentRowBomb = sceneManager.CreateRenderableObject(Pht::SphereMesh {cellSize / 2.0f},
-                                                              redMaterial);
+    bombMaterial.SetOpacity(scene.GetGhostPieceOpacity());
+    mTransparentBomb = sceneManager.CreateRenderableObject(Pht::ObjMesh {"bomb_798.obj", 16.2f},
+                                                           bombMaterial);
+
+    Pht::Material rowBombMaterial {
+        "laser_bomb_diffuse.jpg",
+        "laser_bomb_emission.png",
+        0.5f,
+        0.5f,
+        1.0f,
+        1.0f,
+        30.0f
+    };
+    
+    rowBombMaterial.SetEmissive(Pht::Color {2.0f, 2.0f, 2.0f});
+    mRowBomb = sceneManager.CreateRenderableObject(Pht::ObjMesh {"laser_bomb_268.obj", 0.6f},
+                                                   rowBombMaterial);
+
+    rowBombMaterial.SetOpacity(scene.GetGhostPieceOpacity());
+    mTransparentRowBomb = sceneManager.CreateRenderableObject(Pht::ObjMesh {"laser_bomb_268.obj", 0.6f},
+                                                              rowBombMaterial);
 }

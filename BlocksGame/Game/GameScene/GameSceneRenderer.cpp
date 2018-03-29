@@ -303,12 +303,21 @@ void GameSceneRenderer::RenderPieceBlocks(const CellGrid& pieceBlocks,
             }
             
             if (isBomb) {
+                static float angle {0.0f};
+                angle += 0.3f;
+                sceneObject.GetTransform().Rotate({angle, angle, 0.0f});
+                
                 if (isTransparent) {
                     sceneObject.SetRenderable(&mPieceResources.GetTransparentBombRenderableObject());
                 } else {
                     sceneObject.SetRenderable(&mPieceResources.GetBombRenderableObject());
                 }
             } else if (isRowBomb) {
+
+                static float angle {0.0f};
+                angle += 0.3f;
+                sceneObject.GetTransform().Rotate({angle, 0.0f, 0.0f});
+
                 if (isTransparent) {
                     sceneObject.SetRenderable(&mPieceResources.GetTransparentRowBombRenderableObject());
                 } else {
