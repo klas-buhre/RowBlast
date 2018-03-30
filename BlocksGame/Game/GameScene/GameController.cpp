@@ -74,7 +74,16 @@ GameController::GameController(Pht::IEngine& engine,
     mPreviewPiecesAnimation {mScene, mGameLogic},
     mFlyingBlocksAnimation {mScene, mLevelResources, mPieceResources},
     mBlueprintSlotsFilledAnimation {mField, mScene, mLevelResources},
-    mRenderer {mScene, mField, mGameLogic, mScrollController, mPieceResources, mLevelResources} {}
+    mBombsAnimation {mScene, mPieceResources},
+    mRenderer {
+        mScene,
+        mField,
+        mGameLogic,
+        mScrollController,
+        mBombsAnimation,
+        mPieceResources,
+        mLevelResources
+    } {}
 
 void GameController::StartLevel(int levelIndex) {
     mLevel = LevelLoader::Load(levelIndex, mLevelResources);
@@ -93,6 +102,7 @@ void GameController::StartLevel(int levelIndex) {
     mFlyingBlocksAnimation.Init();
     mFallingPieceAnimation.Init();
     mSlidingTextAnimation.Init();
+    mBombsAnimation.Init();
     mGameViewControllers.Init(mScene);
     
     mState = GameState::LevelIntro;
@@ -158,6 +168,7 @@ GameController::Command GameController::UpdateGame() {
     mFlyingBlocksAnimation.Update(dt);
     mScene.Update();
     mPreviewPiecesAnimation.Update(dt);
+    mBombsAnimation.Update(dt);
     
     return command;
 }

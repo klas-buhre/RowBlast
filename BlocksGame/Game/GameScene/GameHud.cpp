@@ -495,6 +495,9 @@ void GameHud::UpdatePreviewPieceGroup(ThreePreviewPieces& previewPieces,
 void GameHud::UpdatePreviewPiece(PreviewPiece& previewPiece,
                                  const Piece* pieceType,
                                  const Pht::Vec3& position) {
+    previewPiece.mBombSceneObject = nullptr;
+    previewPiece.mRowBombSceneObject = nullptr;
+    
     auto& containerObject {previewPiece.mSceneObjects->GetContainerSceneObject()};
     auto& baseTransform {containerObject.GetTransform()};
     baseTransform.SetPosition(position);
@@ -534,8 +537,10 @@ void GameHud::UpdatePreviewPiece(PreviewPiece& previewPiece,
                 
                 if (isBomb) {
                     blockSceneObject.SetRenderable(&mPieceResources.GetBombRenderableObject());
+                    previewPiece.mBombSceneObject = &blockSceneObject;
                 } else if (isRowBomb) {
                     blockSceneObject.SetRenderable(&mPieceResources.GetRowBombRenderableObject());
+                    previewPiece.mRowBombSceneObject = &blockSceneObject;
                 } else {
                     auto& blockRenderable {
                         mPieceResources.GetBlockRenderableObject(renderableKind,

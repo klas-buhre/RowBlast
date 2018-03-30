@@ -1,7 +1,6 @@
 /*
 Backlog:
   -Engine:
-    -Physics.
     -Purchases.
     -Net/HTTP.
     -Analytics.
@@ -73,12 +72,6 @@ Backlog:
   
 Ongoing tasks:
     -Bombs should have bomb meshes.
-        -Add BombsAnimation.
-            -Rotate bomb with red dot towards the camera in FallingPiece postion, move alternative
-             position and preview position.
-            -Rotate the the row bomb around the x axis in the FallingPiecePosition, rotate it a tiny
-             bit around the x back and forth, and rotate it like the bomb in preview position.
-            -Animate the bomb materials emission.
         -Tune the bomb materials brightness.
     -Better particle effects for bombs and row bombs.
         -Laser.

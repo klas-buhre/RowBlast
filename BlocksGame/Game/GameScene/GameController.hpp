@@ -23,6 +23,7 @@
 #include "ClearLastBlocksAnimation.hpp"
 #include "SlidingTextAnimation.hpp"
 #include "BlastRadiusAnimation.hpp"
+#include "BombsAnimation.hpp"
 
 namespace Pht {
     class IEngine;
@@ -141,6 +142,7 @@ namespace BlocksGame {
         PreviewPiecesAnimation mPreviewPiecesAnimation;
         FlyingBlocksAnimation mFlyingBlocksAnimation;
         BlueprintSlotsFilledAnimation mBlueprintSlotsFilledAnimation;
+        BombsAnimation mBombsAnimation;
         GameSceneRenderer mRenderer;
         std::unique_ptr<Level> mLevel;
         bool mShouldUpdateGameLogic {false};

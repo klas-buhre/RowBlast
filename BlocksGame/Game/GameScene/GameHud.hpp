@@ -29,6 +29,8 @@ namespace BlocksGame {
     struct PreviewPiece {
         std::unique_ptr<SceneObjectPool> mSceneObjects;
         float mScale {0.0f};
+        Pht::SceneObject* mBombSceneObject {nullptr};
+        Pht::SceneObject* mRowBombSceneObject {nullptr};
     };
 
     using ThreePreviewPieces = std::array<PreviewPiece, 3>;

@@ -21,6 +21,7 @@ namespace BlocksGame {
     class FallingPiece;
     class PieceResources;
     class LevelResources;
+    class BombsAnimation;
     class SceneObjectPool;
     class Piece;
 
@@ -30,6 +31,7 @@ namespace BlocksGame {
                           const Field& field,
                           const GameLogic& gameLogic,
                           const ScrollController& scrollController,
+                          const BombsAnimation& bombsAnimation,
                           const PieceResources& pieceResources,
                           const LevelResources& levelResources);
         
@@ -55,6 +57,7 @@ namespace BlocksGame {
         void RenderPieceBlocks(const CellGrid& pieceBlocks,
                                const Pht::Vec3& pieceFieldPos,
                                bool isTransparent,
+                               bool isGhostPiece,
                                SceneObjectPool& pool);
         void RenderGhostPieces();
         void RenderGhostPieceForGestureControls(const FallingPiece& fallingPiece);
@@ -68,6 +71,7 @@ namespace BlocksGame {
         const Field& mField;
         const GameLogic& mGameLogic;
         const ScrollController& mScrollController;
+        const BombsAnimation& mBombsAnimation;
         const PieceResources& mPieceResources;
         const LevelResources& mLevelResources;
     };
