@@ -11,7 +11,7 @@ namespace {
     constexpr auto bombRotationAmplitude {22.0f};
     constexpr auto rowBombRotationSpeed {35.0f};
     constexpr auto emissiveAnimationDuration {1.5f};
-    constexpr auto emissiveAmplitude {2.0f};
+    constexpr auto emissiveAmplitude {1.5f};
     
     void SetEmissiveInRenderable(Pht::RenderableObject& renderableObject, float emissive) {
         Pht::Color emissiveColor {emissive, emissive, emissive};
@@ -26,7 +26,6 @@ BombsAnimation::BombsAnimation(GameScene& scene, PieceResources& pieceResources)
 void BombsAnimation::Init() {
     mBombRotation = {0.0f, 0.0f, 0.0f};
     mRowBombRotation = {0.0f, 0.0f, 0.0f};
-    mRowBombGhostPieceRotation = {0.0f, 0.0f, 0.0f};
     mAnimationTime = 0.0f;
     mEmissiveAnimationTime = 0.0f;
 }
@@ -41,7 +40,6 @@ void BombsAnimation::Update(float dt) {
     AnimateEmissive(dt);
     AnimateBombRotation(dt);
     AnimateRowBombRotation(dt);
-    AnimateRowBombGhostPieceRotation(dt);
 }
 
 void BombsAnimation::AnimateEmissive(float dt) {
@@ -80,10 +78,10 @@ void BombsAnimation::AnimateBombPreviewPieces(ThreePreviewPieces& previewPieces)
 }
 
 void BombsAnimation::AnimateRowBombRotation(float dt) {
-    mRowBombRotation.x += rowBombRotationSpeed * dt;
+    mRowBombRotation.y += rowBombRotationSpeed * dt;
     
-    if (mRowBombRotation.x > 360.0f) {
-        mRowBombRotation.x -= 360.0f;
+    if (mRowBombRotation.y > 360.0f) {
+        mRowBombRotation.y -= 360.0f;
     }
     
     AnimateRowBombPreviewPieces(mScene.GetHud().GetNextPreviewPieces());
@@ -96,11 +94,4 @@ void BombsAnimation::AnimateRowBombPreviewPieces(ThreePreviewPieces& previewPiec
             previewPiece.mRowBombSceneObject->GetTransform().SetRotation(mRowBombRotation);
         }
     }
-}
-
-void BombsAnimation::AnimateRowBombGhostPieceRotation(float dt) {
-    auto t {mAnimationTime * 2.0f * 3.1415f / bombAnimationDuration};
-    auto xAngle {bombRotationAmplitude * sin(t)};
-    
-    mRowBombGhostPieceRotation = {xAngle, 0.0f, 0.0f};
 }

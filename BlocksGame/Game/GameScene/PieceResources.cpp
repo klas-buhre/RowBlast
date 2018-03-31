@@ -242,16 +242,17 @@ void PieceResources::CreateBombs(Pht::ISceneManager& sceneManager, const GameSce
         "laser_bomb_emission.png",
         0.5f,
         0.5f,
-        1.0f,
+        0.5f,
         1.0f,
         30.0f
     };
     
     rowBombMaterial.SetEmissive(Pht::Color {2.0f, 2.0f, 2.0f});
-    mRowBomb = sceneManager.CreateRenderableObject(Pht::ObjMesh {"laser_bomb_268.obj", 0.6f},
+    mRowBomb = sceneManager.CreateRenderableObject(Pht::ObjMesh {"laser_bomb_224.obj", 0.6f},
                                                    rowBombMaterial);
 
     rowBombMaterial.SetOpacity(scene.GetGhostPieceOpacity());
-    mTransparentRowBomb = sceneManager.CreateRenderableObject(Pht::ObjMesh {"laser_bomb_268.obj", 0.6f},
+    mTransparentRowBomb = sceneManager.CreateRenderableObject(Pht::ObjMesh {"laser_bomb_224.obj", 0.6f},
                                                               rowBombMaterial);
+
 }

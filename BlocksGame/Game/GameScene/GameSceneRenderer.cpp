@@ -262,18 +262,12 @@ void GameSceneRenderer::RenderFallingPiece() {
     auto& pieceGrid {fallingPiece->GetPieceType().GetGrid(fallingPiece->GetRotation())};
     
     auto isTransparent {false};
-    auto isGhostPiece {false};
-    RenderPieceBlocks(pieceGrid,
-                      pieceFieldPos,
-                      isTransparent,
-                      isGhostPiece,
-                      mScene.GetPieceBlocks());
+    RenderPieceBlocks(pieceGrid, pieceFieldPos, isTransparent, mScene.GetPieceBlocks());
 }
 
 void GameSceneRenderer::RenderPieceBlocks(const CellGrid& pieceBlocks,
                                           const Pht::Vec3& pieceFieldPos,
                                           bool isTransparent,
-                                          bool isGhostPiece,
                                           SceneObjectPool& pool) {
     auto* fallingPiece {mGameLogic.GetFallingPiece()};
     assert(fallingPiece);
@@ -321,12 +315,7 @@ void GameSceneRenderer::RenderPieceBlocks(const CellGrid& pieceBlocks,
                     sceneObject.SetRenderable(&mPieceResources.GetBombRenderableObject());
                 }
             } else if (isRowBomb) {
-                if (isGhostPiece) {
-                    auto& rotation {mBombsAnimation.GetRowBombGhostPieceRotation()};
-                    sceneObject.GetTransform().SetRotation(rotation);
-                } else {
-                    sceneObject.GetTransform().SetRotation(mBombsAnimation.GetRowBombRotation());
-                }
+                sceneObject.GetTransform().SetRotation(mBombsAnimation.GetRowBombRotation());
                 
                 if (isTransparent) {
                     sceneObject.SetRenderable(&mPieceResources.GetTransparentRowBombRenderableObject());
@@ -389,12 +378,7 @@ void GameSceneRenderer::RenderGhostPieceForGestureControls(const FallingPiece& f
         position.z = mScene.GetPressedGhostPieceZ();
         auto& pieceGrid {pieceType.GetGrid(fallingPiece.GetRotation())};
         auto isTransparent {true};
-        auto isGhostPiece {true};
-        RenderPieceBlocks(pieceGrid,
-                          position,
-                          isTransparent,
-                          isGhostPiece,
-                          mScene.GetGhostPieces());
+        RenderPieceBlocks(pieceGrid, position, isTransparent, mScene.GetGhostPieces());
     }
 }
 
@@ -459,16 +443,15 @@ void GameSceneRenderer::RenderClickableGhostPieces(const FallingPiece& fallingPi
         } else {
             auto& pieceGrid {pieceType.GetGrid(move.mRotation)};
             auto& pool {mScene.GetGhostPieces()};
-            auto isGhostPiece {true};
             
             if (isMoveButtonDown) {
                 Pht::Vec3 position {ghostPieceFieldPos};
                 position.z = mScene.GetPressedGhostPieceZ();
                 auto isTransparent {false};
-                RenderPieceBlocks(pieceGrid, position, isTransparent, isGhostPiece, pool);
+                RenderPieceBlocks(pieceGrid, position, isTransparent, pool);
             } else {
                 auto isTransparent {true};
-                RenderPieceBlocks(pieceGrid, ghostPieceFieldPos, isTransparent, isGhostPiece, pool);
+                RenderPieceBlocks(pieceGrid, ghostPieceFieldPos, isTransparent, pool);
             }
         }
     }

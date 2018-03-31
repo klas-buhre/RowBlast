@@ -26,23 +26,17 @@ namespace BlocksGame {
             return mRowBombRotation;
         }
 
-        const Pht::Vec3& GetRowBombGhostPieceRotation() const {
-            return mRowBombGhostPieceRotation;
-        }
-
     private:
         void AnimateEmissive(float dt);
         void AnimateBombRotation(float dt);
         void AnimateBombPreviewPieces(ThreePreviewPieces& previewPieces);
         void AnimateRowBombRotation(float dt);
         void AnimateRowBombPreviewPieces(ThreePreviewPieces& previewPieces);
-        void AnimateRowBombGhostPieceRotation(float dt);
         
         GameScene& mScene;
         PieceResources& mPieceResources;
         Pht::Vec3 mBombRotation;
         Pht::Vec3 mRowBombRotation;
-        Pht::Vec3 mRowBombGhostPieceRotation;
         float mAnimationTime {0.0f};
         float mEmissiveAnimationTime {0.0f};
     };
