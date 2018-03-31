@@ -4,6 +4,7 @@
 #include <memory>
 
 #include "Matrix.hpp"
+#include "Materials.hpp"
 
 namespace Pht {
     class RenderableObject;
@@ -19,6 +20,7 @@ namespace Pht {
     public:
         virtual ~IRenderer() {}
         
+        virtual void DisableShader(ShaderType shaderType) = 0;
         virtual void SetClearColorBuffer(bool clearColorBuffer) = 0;
         virtual void SetHudMode(bool hudMode) = 0;
         virtual void SetProjectionMode(ProjectionMode projectionMode) = 0;

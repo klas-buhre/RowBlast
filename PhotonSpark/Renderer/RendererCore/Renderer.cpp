@@ -370,6 +370,10 @@ void Renderer::SetLightDirectionInShaders() {
     }
 }
 
+void Renderer::DisableShader(ShaderType shaderType) {
+    mShaders.erase(shaderType);
+}
+
 void Renderer::SetClearColorBuffer(bool clearColorBuffer) {
     mClearColorBuffer = clearColorBuffer;
 }
