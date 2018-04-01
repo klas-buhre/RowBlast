@@ -19,6 +19,8 @@
 #include "../Shaders/VertexColor.frag"
 #include "../Shaders/Particle.vert"
 #include "../Shaders/Particle.frag"
+#include "../Shaders/ParticleTextureColor.vert"
+#include "../Shaders/ParticleTextureColor.frag"
 #include "../Shaders/ParticleNoAlphaTexture.vert"
 #include "../Shaders/ParticleNoAlphaTexture.frag"
 #include "../Shaders/PointParticle.vert"
@@ -224,6 +226,7 @@ Renderer::Renderer(bool createRenderBuffers) :
         {ShaderType::EnvMap,                   {{.mNormals = true}}},
         {ShaderType::VertexColor,              {{.mColors = true}}},
         {ShaderType::Particle,                 {{.mTextureCoords = true, .mColors = true}}},
+        {ShaderType::ParticleTextureColor,     {{.mTextureCoords = true, .mColors = true}}},
         {ShaderType::ParticleNoAlphaTexture,   {{.mTextureCoords = true, .mColors = true}}},
         {ShaderType::PointParticle,            {{.mColors = true, .mPointSizes = true}}}
     } {
@@ -326,6 +329,7 @@ void Renderer::InitShaders() {
     GetShaderProgram(ShaderType::EnvMap).Build(EnvMapVertexShader, EnvMapFragmentShader);
     GetShaderProgram(ShaderType::VertexColor).Build(VertexColorVertexShader, VertexColorFragmentShader);
     GetShaderProgram(ShaderType::Particle).Build(ParticleVertexShader, ParticleFragmentShader);
+    GetShaderProgram(ShaderType::ParticleTextureColor).Build(ParticleTextureColorVertexShader, ParticleTextureColorFragmentShader);
     GetShaderProgram(ShaderType::ParticleNoAlphaTexture).Build(ParticleNoAlphaTextureVertexShader, ParticleNoAlphaTextureFragmentShader);
     GetShaderProgram(ShaderType::PointParticle).Build(PointParticleVertexShader, PointParticleFragmentShader);
     

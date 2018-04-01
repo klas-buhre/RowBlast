@@ -23,6 +23,7 @@ namespace Pht {
         EnvMap,
         VertexColor,
         Particle,
+        ParticleTextureColor,
         ParticleNoAlphaTexture,
         PointParticle
     };
