@@ -93,24 +93,31 @@ void ParticleEmitter::EmitParticle(Particle& particle) {
     
     if (mParticleSettings.mSize.HasValue()) {
         assert(mParticleSettings.mSizeRandomPart.HasValue());
-        particle.mFullSize = mParticleSettings.mSize.GetValue() +
-                            (NormalizedRand() - 0.5f) * mParticleSettings.mSizeRandomPart.GetValue();
+        
+        auto randomAdd {mParticleSettings.mSizeRandomPart.GetValue() * (NormalizedRand() - 0.5f)};
+        particle.mFullSize = mParticleSettings.mSize.GetValue() + Vec2{randomAdd, randomAdd};
         
         if (mParticleSettings.mInitialSize.HasValue()) {
             particle.mSize = mParticleSettings.mInitialSize.GetValue();
         } else {
-            particle.mSize = 0.0f;
+            particle.mSize = {0.0f, 0.0f};
         }
     } else {
         assert(mParticleSettings.mPointSize.HasValue());
         assert(mParticleSettings.mPointSizeRandomPart.HasValue());
-        particle.mFullSize = mParticleSettings.mPointSize.GetValue() +
-                            (NormalizedRand() - 0.5f) * mParticleSettings.mPointSizeRandomPart.GetValue();
+        
+        auto fullSize {
+            mParticleSettings.mPointSize.GetValue() +
+            mParticleSettings.mPointSizeRandomPart.GetValue() * (NormalizedRand() - 0.5f)
+        };
+        
+        particle.mFullSize = {fullSize, fullSize};
 
         if (mParticleSettings.mInitialPointSize.HasValue()) {
-            particle.mSize = mParticleSettings.mInitialPointSize.GetValue();
+            auto size {mParticleSettings.mInitialPointSize.GetValue()};
+            particle.mSize = {static_cast<float>(size), static_cast<float>(size)};
         } else {
-            particle.mSize = 0.0f;
+            particle.mSize = {0.0f, 0.0f};
         }
     }
     

@@ -29,20 +29,39 @@ namespace {
                 particle.mSize += (particle.mFullSize - particleSettings.mInitialSize.GetValue()) *
                                   dt / particleSettings.mGrowDuration;
             } else if (particleSettings.mInitialPointSize.HasValue()) {
-                particle.mSize += (particle.mFullSize - particleSettings.mInitialPointSize.GetValue()) *
-                                  dt / particleSettings.mGrowDuration;
+                auto deltaSize {
+                    (particle.mFullSize.x - particleSettings.mInitialPointSize.GetValue()) *
+                    dt / particleSettings.mGrowDuration
+                };
+                
+                particle.mSize += {deltaSize, deltaSize};
             } else {
                 particle.mSize += particle.mFullSize * dt / particleSettings.mGrowDuration;
             }
             
-            if (particle.mSize > particle.mFullSize) {
-                particle.mSize = particle.mFullSize;
+            if (particle.mSize.x > particle.mFullSize.x) {
+                particle.mSize.x = particle.mFullSize.x;
+            }
+            
+            if (particle.mSize.y > particle.mFullSize.y) {
+                particle.mSize.y = particle.mFullSize.y;
             }
         } else if (particle.mAge > particle.mTimeToLive - particleSettings.mShrinkDuration) {
-            particle.mSize -= particle.mFullSize * dt / particleSettings.mShrinkDuration;
+            auto deltaSize {particle.mFullSize * dt / particleSettings.mShrinkDuration};
             
-            if (particle.mSize < 0.0f) {
-                particle.mSize = 0.0f;
+            Vec2 scaledDeltaSize {
+                deltaSize.x * particleSettings.mShrinkScale.x,
+                deltaSize.y * particleSettings.mShrinkScale.y
+            };
+            
+            particle.mSize -= scaledDeltaSize;
+            
+            if (particle.mSize.x < 0.0f) {
+                particle.mSize.x = 0.0f;
+            }
+            
+            if (particle.mSize.y < 0.0f) {
+                particle.mSize.y = 0.0f;
             }
         } else {
             particle.mSize = particle.mFullSize;
@@ -171,7 +190,7 @@ void ParticleEffect::WriteVertexBuffer() {
 void ParticleEffect::WritePoints() {
     for (auto& particle: mParticles) {
         if (particle.mIsActive) {
-            mVertexBuffer->Write(particle.mPosition, particle.mColor, particle.mSize);
+            mVertexBuffer->Write(particle.mPosition, particle.mColor, particle.mSize.x);
         }
     }
     
@@ -192,10 +211,10 @@ void ParticleEffect::WriteParticleTriangles(const Particle& particle) {
     auto& color {particle.mColor};
     auto halfSize {particle.mSize / 2.0f};
     
-    Vec3 v1 {-halfSize, -halfSize, 0.0f};
-    Vec3 v2 {halfSize, -halfSize, 0.0f};
-    Vec3 v3 {halfSize, halfSize, 0.0f};
-    Vec3 v4 {-halfSize, halfSize, 0.0f};
+    Vec3 v1 {-halfSize.x, -halfSize.y, 0.0f};
+    Vec3 v2 {halfSize.x, -halfSize.y, 0.0f};
+    Vec3 v3 {halfSize.x, halfSize.y, 0.0f};
+    Vec3 v4 {-halfSize.x, halfSize.y, 0.0f};
     
     if (particle.mZAngle != 0.0f) {
         auto thetaRadians {ToRadians(particle.mZAngle)};

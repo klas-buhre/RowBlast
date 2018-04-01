@@ -108,6 +108,10 @@ namespace BlocksGame {
             return mFieldPosition;
         }
         
+        float GetFieldWidth() const {
+            return mFieldWidth;
+        }
+        
         float GetCellSize() const {
             return mCellSize;
         }

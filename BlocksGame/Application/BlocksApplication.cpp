@@ -11,8 +11,12 @@ Backlog:
      new rows.
     -Maybe some bombs and row bombs can be part of the level and detonated if landed on. Then there
      could be some cascading scenarios like landing on a row bomb that triggers a bomb on the same
-     row on the other side of the field.
-    -Scroll sideways in some levels?
+     row on the other side of the field. If landing a bomb on a level bomb then there could be a
+     bigger explosion. If landing a row bomb on a level row bomb then there vould be a bigger laser
+     that clears 3 rows.
+    -Some levels could have som pink striped level blocks with welds that are affected by graivty.
+    -Scroll sideways in some levels? And/or already have colored piece blocks in the level before
+     any pieces are landed?
     -Prevent the crossed tilted welds from happening seven and mirrored seven (in both
      GestureInputHandler and ClickInputHandler) so that those pieces can be pulled down. Or, allow
      it and solve it when pulling down loose pieces?
@@ -30,6 +34,7 @@ Backlog:
     -The blast radius animation should fade in and start at at slightly smaller scale and then scale
      into the right size.
     -Could try reducing scroll speed in map scene using a spring.
+    -Could zoom in on map pin when clicking on a level in the map.
     -Could have the rounded cylinder i some places in the HUDs.
     -GUI: the buttons in the views could be yellow with black text and triangular edges like in
      Mario Kart 8. There could also be a reflection animation in the button.
@@ -71,10 +76,11 @@ Backlog:
     -Credit the icon creator: <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
   
 Ongoing tasks:
+    -Better particle effects for bombs and row bombs.
+        -Tune the particles around the laser.
+        -Throw away blocks one by one as they are hit by the laser.
     -Bombs should have bomb meshes.
         -Tune the bomb materials brightness.
-    -Better particle effects for bombs and row bombs.
-        -Laser.
 
 Ideas:
     -The pause button could lead to a widget that has an undo button, a boosters button and a game
@@ -287,6 +293,7 @@ Put the build_freetype.sh script in freetype root dir then execute it.
 
 // Engine includes.
 #include "IEngine.hpp"
+#include "IRenderer.hpp"
 #include "IInput.hpp"
 #include "ISceneManager.hpp"
 
@@ -316,6 +323,10 @@ BlocksApplication::BlocksApplication(Pht::IEngine& engine) :
     mFadeEffect {engine.GetSceneManager(), engine.GetRenderer(), titleFadeInDuration, 1.0f, 0.0f} {
 
     engine.GetInput().SetUseGestureRecognizers(false);
+    
+    auto& renderer {engine.GetRenderer()};
+    renderer.DisableShader(Pht::ShaderType::PixelLighting);
+    renderer.DisableShader(Pht::ShaderType::PointParticle);
     
     mFadeEffect.GetSceneObject().SetLayer(GlobalLayer::sceneSwitchFadeEffect);
     InsertFadeEffectInActiveScene();

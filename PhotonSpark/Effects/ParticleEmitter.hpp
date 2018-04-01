@@ -29,22 +29,23 @@ namespace Pht {
         float mFadeOutDuration {1.0f};
         float mZAngularVelocity {0.0f};
         float mZAngularVelocityRandomPart {0.0f};
-        Optional<float> mSize;
+        Optional<Vec2> mSize;
         Optional<float> mSizeRandomPart;
-        Optional<float> mInitialSize;
+        Optional<Vec2> mInitialSize;
         Optional<int> mPointSize;            // In pixels.
         Optional<int> mPointSizeRandomPart;  // In pixels.
         Optional<int> mInitialPointSize;     // In pixels.
         float mGrowDuration {0.1f};
         float mShrinkDuration {1.0f};
+        Vec2 mShrinkScale {1.0f, 1.0f};
     };
-    
+
     struct Particle {
         Vec3 mPosition;
         Vec3 mVelocity;
         Vec4 mColor;
-        float mSize;
-        float mFullSize;
+        Vec2 mSize;
+        Vec2 mFullSize;
         float mZAngle;
         float mZAngularVelocity;
         float mAge;

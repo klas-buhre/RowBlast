@@ -31,7 +31,7 @@ PieceDropParticleEffect::PieceDropParticleEffect(Pht::IEngine& engine, GameScene
         .mTimeToLiveRandomPart = 0.4f,
         .mFadeOutDuration = 0.0f,
         .mZAngularVelocityRandomPart = 400.0f,
-        .mSize = 2.42f,
+        .mSize = Pht::Vec2{2.42f, 2.42f},
         .mSizeRandomPart = 0.0f,
         .mShrinkDuration = 0.4f
     };

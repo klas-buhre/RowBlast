@@ -13,7 +13,7 @@
 #include "WeldsAnimation.hpp"
 #include "BlueprintSlotsFilledAnimation.hpp"
 #include "ExplosionParticleEffect.hpp"
-#include "RowExplosionParticleEffect.hpp"
+#include "LaserParticleEffect.hpp"
 #include "PieceDropParticleEffect.hpp"
 #include "LevelResources.hpp"
 #include "Level.hpp"
@@ -130,7 +130,7 @@ namespace BlocksGame {
         ScrollController mScrollController;
         GameScene mScene;
         ExplosionParticleEffect mExplosionParticleEffect;
-        RowExplosionParticleEffect mRowExplosionParticleEffect;
+        LaserParticleEffect mLaserParticleEffect;
         PieceDropParticleEffect mPieceDropParticleEffect;
         BlastRadiusAnimation mBlastRadiusAnimation;
         SlidingTextAnimation mSlidingTextAnimation;

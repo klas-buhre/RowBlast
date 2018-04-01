@@ -17,13 +17,13 @@ namespace {
     bool ShouldUpdateGameLogic(CollapsingFieldAnimation::State fieldAnimationState,
                                FallingPieceAnimation::State fallingPieceAnimationState,
                                ExplosionParticleEffect::State explosionAnimationState,
-                               RowExplosionParticleEffect::State rowExplosionAnimationState,
+                               LaserParticleEffect::State laserAnimationState,
                                ScrollController::State scrollState) {
         return (fieldAnimationState == CollapsingFieldAnimation::State::Inactive ||
                 fieldAnimationState == CollapsingFieldAnimation::State::BlocksBouncing) &&
                fallingPieceAnimationState == FallingPieceAnimation::State::Inactive &&
                explosionAnimationState == ExplosionParticleEffect::State::Inactive &&
-               rowExplosionAnimationState == RowExplosionParticleEffect::State::Inactive &&
+               laserAnimationState == LaserParticleEffect::State::Inactive &&
                scrollState != ScrollController::State::Scrolling &&
                scrollState != ScrollController::State::LevelOverviewScroll &&
                scrollState != ScrollController::State::BeforeLevelOverviewScroll;
@@ -50,7 +50,7 @@ GameController::GameController(Pht::IEngine& engine,
         mGameViewControllers.GetGameHudController()
     },
     mExplosionParticleEffect {engine, mScene},
-    mRowExplosionParticleEffect {engine, mScene},
+    mLaserParticleEffect {engine, mScene},
     mPieceDropParticleEffect {engine, mScene},
     mBlastRadiusAnimation {engine, mScene},
     mSlidingTextAnimation {engine, mScene},
@@ -61,7 +61,7 @@ GameController::GameController(Pht::IEngine& engine,
         mScrollController,
         mScene,
         mExplosionParticleEffect,
-        mRowExplosionParticleEffect,
+        mLaserParticleEffect,
         mFlyingBlocksAnimation,
         mPieceDropParticleEffect,
         mBlastRadiusAnimation,
@@ -97,7 +97,7 @@ void GameController::StartLevel(int levelIndex) {
     mPieceDropParticleEffect.Init();
     mBlastRadiusAnimation.Init();
     mExplosionParticleEffect.Init();
-    mRowExplosionParticleEffect.Init();
+    mLaserParticleEffect.Init();
     mPreviewPiecesAnimation.Init();
     mFlyingBlocksAnimation.Init();
     mFallingPieceAnimation.Init();
@@ -141,14 +141,14 @@ GameController::Command GameController::UpdateGame() {
     auto fieldAnimationState {mCollapsingFieldAnimation.Update(dt)};
     mBlueprintSlotsFilledAnimation.Update(dt);
     auto explosionState {mExplosionParticleEffect.GetState()};
-    auto rowExplosionState {mRowExplosionParticleEffect.GetState()};
+    auto laserState {mLaserParticleEffect.GetState()};
     auto fallingPieceAnimationState {mFallingPieceAnimation.Update(dt)};
     
     if (mState == GameState::Playing) {
         mShouldUpdateGameLogic = ShouldUpdateGameLogic(fieldAnimationState,
                                                        fallingPieceAnimationState,
                                                        explosionState,
-                                                       rowExplosionState,
+                                                       laserState,
                                                        scrollState);
         auto result {mGameLogic.Update(mShouldUpdateGameLogic)};
 
@@ -164,7 +164,7 @@ GameController::Command GameController::UpdateGame() {
     mPieceDropParticleEffect.Update(dt);
     mBlastRadiusAnimation.Update(dt);
     mExplosionParticleEffect.Update(dt);
-    mRowExplosionParticleEffect.Update(dt);
+    mLaserParticleEffect.Update(dt);
     mFlyingBlocksAnimation.Update(dt);
     mScene.Update();
     mPreviewPiecesAnimation.Update(dt);

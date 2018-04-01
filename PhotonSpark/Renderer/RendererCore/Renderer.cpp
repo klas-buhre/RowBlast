@@ -74,6 +74,7 @@ namespace {
     bool IsParticleShader(ShaderType shaderType) {
         switch (shaderType) {
             case ShaderType::Particle:
+            case ShaderType::ParticleTextureColor:
             case ShaderType::ParticleNoAlphaTexture:
             case ShaderType::PointParticle:
                 return true;

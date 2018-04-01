@@ -21,7 +21,7 @@ namespace BlocksGame {
     class Level;
     class ScrollController;
     class ExplosionParticleEffect;
-    class RowExplosionParticleEffect;
+    class LaserParticleEffect;
     class FlyingBlocksAnimation;
     class PieceDropParticleEffect;
     class GameHudController;
@@ -50,7 +50,7 @@ namespace BlocksGame {
                   const ScrollController& scrollController,
                   const GameScene& gameScene,
                   ExplosionParticleEffect& explosionParticleEffect,
-                  RowExplosionParticleEffect& rowExplosionParticleEffect,
+                  LaserParticleEffect& laserParticleEffect,
                   FlyingBlocksAnimation& flyingBlocksAnimation,
                   PieceDropParticleEffect& pieceDropParticleEffect,
                   BlastRadiusAnimation& blastRadiusAnimation,
@@ -175,7 +175,7 @@ namespace BlocksGame {
         Field& mField;
         const ScrollController& mScrollController;
         ExplosionParticleEffect& mExplosionParticleEffect;
-        RowExplosionParticleEffect& mRowExplosionParticleEffect;
+        LaserParticleEffect& mLaserParticleEffect;
         FlyingBlocksAnimation& mFlyingBlocksAnimation;
         PieceDropParticleEffect& mPieceDropParticleEffect;
         BlastRadiusAnimation& mBlastRadiusAnimation;

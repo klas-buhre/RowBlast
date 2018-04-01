@@ -15,7 +15,7 @@
 #include "Level.hpp"
 #include "ScrollController.hpp"
 #include "ExplosionParticleEffect.hpp"
-#include "RowExplosionParticleEffect.hpp"
+#include "LaserParticleEffect.hpp"
 #include "FlyingBlocksAnimation.hpp"
 #include "PieceDropParticleEffect.hpp"
 #include "BlastRadiusAnimation.hpp"
@@ -52,7 +52,7 @@ GameLogic::GameLogic(Pht::IEngine& engine,
                      const ScrollController& scrollController,
                      const GameScene& gameScene,
                      ExplosionParticleEffect& explosionParticleEffect,
-                     RowExplosionParticleEffect& rowExplosionParticleEffect,
+                     LaserParticleEffect& laserParticleEffect,
                      FlyingBlocksAnimation& flyingBlocksAnimation,
                      PieceDropParticleEffect& pieceDropParticleEffect,
                      BlastRadiusAnimation& blastRadiusAnimation,
@@ -62,7 +62,7 @@ GameLogic::GameLogic(Pht::IEngine& engine,
     mField {field},
     mScrollController {scrollController},
     mExplosionParticleEffect {explosionParticleEffect},
-    mRowExplosionParticleEffect {rowExplosionParticleEffect},
+    mLaserParticleEffect {laserParticleEffect},
     mFlyingBlocksAnimation {flyingBlocksAnimation},
     mPieceDropParticleEffect {pieceDropParticleEffect},
     mBlastRadiusAnimation {blastRadiusAnimation},
@@ -442,7 +442,7 @@ void GameLogic::DetonateBomb() {
     auto detonationPos {mFallingPiece->GetRenderablePosition() + Pht::Vec2{1.0f, 1.0f}};
     
     if (mFallingPiece->GetPieceType().IsRowBomb()) {
-        mRowExplosionParticleEffect.StartExplosion(detonationPos);
+        mLaserParticleEffect.StartLaser(detonationPos);
         
         auto removedSubCells {mField.RemoveRow(intDetonationPos.y)};
 

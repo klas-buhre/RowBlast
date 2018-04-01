@@ -58,7 +58,7 @@ void BlocksGame::CreateNextLevelParticleEffect(Pht::IEngine& engine,
         .mTimeToLiveRandomPart = 0.4f,
         .mFadeOutDuration = 0.0f,
         .mZAngularVelocityRandomPart = 200.0f,
-        .mSize = 2.5f,
+        .mSize = Pht::Vec2{2.5f, 2.5f},
         .mSizeRandomPart = 0.5f,
         .mShrinkDuration = 1.2f
     };
@@ -75,7 +75,7 @@ void BlocksGame::CreateNextLevelParticleEffect(Pht::IEngine& engine,
         .mTimeToLiveRandomPart = 0.4f,
         .mFadeOutDuration = 0.2f,
         .mZAngularVelocityRandomPart = 200.0f,
-        .mSize = 1.0f,
+        .mSize = Pht::Vec2{1.0f, 1.0f},
         .mSizeRandomPart = 0.5f,
         .mShrinkDuration = 1.2f
     };

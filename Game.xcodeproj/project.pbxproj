@@ -80,7 +80,7 @@
 		624447A61EDDD2C40080ECE8 /* FlyingBlocksAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6244472E1EDDD2C40080ECE8 /* FlyingBlocksAnimation.cpp */; };
 		624447A71EDDD2C40080ECE8 /* ExplosionParticleEffect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 624447311EDDD2C40080ECE8 /* ExplosionParticleEffect.cpp */; };
 		624447A81EDDD2C40080ECE8 /* PieceDropParticleEffect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 624447331EDDD2C40080ECE8 /* PieceDropParticleEffect.cpp */; };
-		624447A91EDDD2C40080ECE8 /* RowExplosionParticleEffect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 624447351EDDD2C40080ECE8 /* RowExplosionParticleEffect.cpp */; };
+		624447A91EDDD2C40080ECE8 /* LaserParticleEffect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 624447351EDDD2C40080ECE8 /* LaserParticleEffect.cpp */; };
 		624447B11EDDD2C40080ECE8 /* GameController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 624447471EDDD2C40080ECE8 /* GameController.cpp */; };
 		624447B31EDDD2C40080ECE8 /* GameSceneRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6244474B1EDDD2C40080ECE8 /* GameSceneRenderer.cpp */; };
 		624447B41EDDD2C40080ECE8 /* GameScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6244474D1EDDD2C40080ECE8 /* GameScene.cpp */; };
@@ -124,6 +124,9 @@
 		626451DD206FA93200E304F2 /* laser_bomb_224.obj in Resources */ = {isa = PBXBuildFile; fileRef = 626451DC206FA93100E304F2 /* laser_bomb_224.obj */; };
 		626451E0206FA93F00E304F2 /* laser_bomb_emission.png in Resources */ = {isa = PBXBuildFile; fileRef = 626451DE206FA93E00E304F2 /* laser_bomb_emission.png */; };
 		626451E1206FA93F00E304F2 /* laser_bomb_diffuse.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 626451DF206FA93E00E304F2 /* laser_bomb_diffuse.jpg */; };
+		626451E5206FEDFF00E304F2 /* laser_beam_red.png in Resources */ = {isa = PBXBuildFile; fileRef = 626451E4206FEDFF00E304F2 /* laser_beam_red.png */; };
+		626451E82070E2DF00E304F2 /* ParticleTextureColor.vert in Resources */ = {isa = PBXBuildFile; fileRef = 626451E62070E2DE00E304F2 /* ParticleTextureColor.vert */; };
+		626451E92070E2DF00E304F2 /* ParticleTextureColor.frag in Resources */ = {isa = PBXBuildFile; fileRef = 626451E72070E2DF00E304F2 /* ParticleTextureColor.frag */; };
 		626C4D9E1EEC19DF000D4DF6 /* MapController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 626C4D8F1EEC19DF000D4DF6 /* MapController.cpp */; };
 		626C4DA71EEC20B8000D4DF6 /* SettingsButtonView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 626C4DA51EEC20B8000D4DF6 /* SettingsButtonView.cpp */; };
 		626C4DAA1EEC2506000D4DF6 /* SettingsButtonController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 626C4DA81EEC2506000D4DF6 /* SettingsButtonController.cpp */; };
@@ -165,7 +168,6 @@
 		6270DCAC1FCB248E00FB457D /* sky_blurred.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6270DCA41FCB248E00FB457D /* sky_blurred.jpg */; };
 		6270DCAD1FCB248E00FB457D /* sky_upside_down.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6270DCA51FCB248E00FB457D /* sky_upside_down.jpg */; };
 		6270DCAE1FCB248E00FB457D /* sky_upside_down_patched_mirrored.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6270DCA61FCB248E00FB457D /* sky_upside_down_patched_mirrored.jpg */; };
-		6270DCB01FCB248E00FB457D /* star_particle.png in Resources */ = {isa = PBXBuildFile; fileRef = 6270DCA81FCB248E00FB457D /* star_particle.png */; };
 		6270DCB31FCDA99100FB457D /* TitleScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6270DCB11FCDA99100FB457D /* TitleScene.cpp */; };
 		6273A91F20289F6900BF542A /* GuiViewManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6273A91D20289F6900BF542A /* GuiViewManager.cpp */; };
 		6276B700203F20150075C468 /* triangle_320.obj in Resources */ = {isa = PBXBuildFile; fileRef = 6276B6FF203F20150075C468 /* triangle_320.obj */; };
@@ -397,8 +399,8 @@
 		624447321EDDD2C40080ECE8 /* ExplosionParticleEffect.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ExplosionParticleEffect.hpp; sourceTree = "<group>"; };
 		624447331EDDD2C40080ECE8 /* PieceDropParticleEffect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PieceDropParticleEffect.cpp; sourceTree = "<group>"; };
 		624447341EDDD2C40080ECE8 /* PieceDropParticleEffect.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PieceDropParticleEffect.hpp; sourceTree = "<group>"; };
-		624447351EDDD2C40080ECE8 /* RowExplosionParticleEffect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RowExplosionParticleEffect.cpp; sourceTree = "<group>"; };
-		624447361EDDD2C40080ECE8 /* RowExplosionParticleEffect.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = RowExplosionParticleEffect.hpp; sourceTree = "<group>"; };
+		624447351EDDD2C40080ECE8 /* LaserParticleEffect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LaserParticleEffect.cpp; sourceTree = "<group>"; };
+		624447361EDDD2C40080ECE8 /* LaserParticleEffect.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LaserParticleEffect.hpp; sourceTree = "<group>"; };
 		624447471EDDD2C40080ECE8 /* GameController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameController.cpp; sourceTree = "<group>"; };
 		624447481EDDD2C40080ECE8 /* GameController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameController.hpp; sourceTree = "<group>"; };
 		6244474B1EDDD2C40080ECE8 /* GameSceneRenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameSceneRenderer.cpp; sourceTree = "<group>"; };
@@ -483,6 +485,9 @@
 		626451DC206FA93100E304F2 /* laser_bomb_224.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = laser_bomb_224.obj; sourceTree = "<group>"; };
 		626451DE206FA93E00E304F2 /* laser_bomb_emission.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = laser_bomb_emission.png; sourceTree = "<group>"; };
 		626451DF206FA93E00E304F2 /* laser_bomb_diffuse.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = laser_bomb_diffuse.jpg; sourceTree = "<group>"; };
+		626451E4206FEDFF00E304F2 /* laser_beam_red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = laser_beam_red.png; sourceTree = "<group>"; };
+		626451E62070E2DE00E304F2 /* ParticleTextureColor.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ParticleTextureColor.vert; sourceTree = "<group>"; };
+		626451E72070E2DF00E304F2 /* ParticleTextureColor.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ParticleTextureColor.frag; sourceTree = "<group>"; };
 		626C4D8F1EEC19DF000D4DF6 /* MapController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MapController.cpp; sourceTree = "<group>"; };
 		626C4D901EEC19DF000D4DF6 /* MapController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MapController.hpp; sourceTree = "<group>"; };
 		626C4DA51EEC20B8000D4DF6 /* SettingsButtonView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SettingsButtonView.cpp; sourceTree = "<group>"; };
@@ -529,7 +534,6 @@
 		6270DCA41FCB248E00FB457D /* sky_blurred.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sky_blurred.jpg; sourceTree = "<group>"; };
 		6270DCA51FCB248E00FB457D /* sky_upside_down.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sky_upside_down.jpg; sourceTree = "<group>"; };
 		6270DCA61FCB248E00FB457D /* sky_upside_down_patched_mirrored.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sky_upside_down_patched_mirrored.jpg; sourceTree = "<group>"; };
-		6270DCA81FCB248E00FB457D /* star_particle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star_particle.png; sourceTree = "<group>"; };
 		6270DCB11FCDA99100FB457D /* TitleScene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TitleScene.cpp; sourceTree = "<group>"; };
 		6270DCB21FCDA99100FB457D /* TitleScene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TitleScene.hpp; sourceTree = "<group>"; };
 		6273A91A20275CFB00BF542A /* UiLayer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = UiLayer.hpp; sourceTree = "<group>"; };
@@ -1083,10 +1087,10 @@
 			children = (
 				624447311EDDD2C40080ECE8 /* ExplosionParticleEffect.cpp */,
 				624447321EDDD2C40080ECE8 /* ExplosionParticleEffect.hpp */,
+				624447351EDDD2C40080ECE8 /* LaserParticleEffect.cpp */,
+				624447361EDDD2C40080ECE8 /* LaserParticleEffect.hpp */,
 				624447331EDDD2C40080ECE8 /* PieceDropParticleEffect.cpp */,
 				624447341EDDD2C40080ECE8 /* PieceDropParticleEffect.hpp */,
-				624447351EDDD2C40080ECE8 /* RowExplosionParticleEffect.cpp */,
-				624447361EDDD2C40080ECE8 /* RowExplosionParticleEffect.hpp */,
 			);
 			path = Effects;
 			sourceTree = "<group>";
@@ -1369,6 +1373,7 @@
 		6270DCA01FCB248E00FB457D /* Textures */ = {
 			isa = PBXGroup;
 			children = (
+				626451E4206FEDFF00E304F2 /* laser_beam_red.png */,
 				626451DF206FA93E00E304F2 /* laser_bomb_diffuse.jpg */,
 				626451DE206FA93E00E304F2 /* laser_bomb_emission.png */,
 				6227D4FE206D304F008EA77D /* bomb_798_emission.jpg */,
@@ -1390,7 +1395,6 @@
 				6270DCA61FCB248E00FB457D /* sky_upside_down_patched_mirrored.jpg */,
 				6270DCA51FCB248E00FB457D /* sky_upside_down.jpg */,
 				6270DCA21FCB248E00FB457D /* sky.jpg */,
-				6270DCA81FCB248E00FB457D /* star_particle.png */,
 			);
 			path = Textures;
 			sourceTree = "<group>";
@@ -1507,6 +1511,8 @@
 				62944C8320053A2D00814D36 /* Particle.vert */,
 				62318C472067F0A4008332CB /* ParticleNoAlphaTexture.frag */,
 				62318C482067F0A4008332CB /* ParticleNoAlphaTexture.vert */,
+				626451E72070E2DF00E304F2 /* ParticleTextureColor.frag */,
+				626451E62070E2DE00E304F2 /* ParticleTextureColor.vert */,
 				62944C8720053A2D00814D36 /* PixelLighting.frag */,
 				62944C7A20053A2D00814D36 /* PixelLighting.vert */,
 				62944C8420053A2D00814D36 /* PointParticle.frag */,
@@ -1951,6 +1957,7 @@
 				626451E0206FA93F00E304F2 /* laser_bomb_emission.png in Resources */,
 				6270DC951FCB23D800FB457D /* level21.json in Resources */,
 				62A8AAF71FE2DEA1000EB01C /* cloud_B_envmap.jpg in Resources */,
+				626451E92070E2DF00E304F2 /* ParticleTextureColor.frag in Resources */,
 				62944D8E20053A2D00814D36 /* VertexColor.vert in Resources */,
 				62318C492067F0A4008332CB /* ParticleNoAlphaTexture.frag in Resources */,
 				62944D8820053A2D00814D36 /* PointParticle.frag in Resources */,
@@ -1960,10 +1967,10 @@
 				62944DB020053A2D00814D36 /* build_freetype.sh in Resources */,
 				6270DC901FCB23D800FB457D /* level17.json in Resources */,
 				6270DC8C1FCB23D800FB457D /* level13.json in Resources */,
+				626451E5206FEDFF00E304F2 /* laser_beam_red.png in Resources */,
 				62E2222C1FE9748500AE098B /* cloud_E_512.png in Resources */,
 				6227D500206D3051008EA77D /* bomb_798_emission.jpg in Resources */,
 				6276B700203F20150075C468 /* triangle_320.obj in Resources */,
-				6270DCB01FCB248E00FB457D /* star_particle.png in Resources */,
 				6270DC631FCB22AE00FB457D /* star.obj in Resources */,
 				6227D4EC206BD034008EA77D /* TexturedEmissiveLighting.frag in Resources */,
 				62944D8620053A2D00814D36 /* Text.vert in Resources */,
@@ -1998,6 +2005,7 @@
 				6276B706203F26E90075C468 /* triangle_320_r90.obj in Resources */,
 				626451E1206FA93F00E304F2 /* laser_bomb_diffuse.jpg in Resources */,
 				6270DC8A1FCB23D800FB457D /* level11.json in Resources */,
+				626451E82070E2DF00E304F2 /* ParticleTextureColor.vert in Resources */,
 				62944D8020053A2D00814D36 /* VertexLighting.vert in Resources */,
 				6270DC611FCB22AE00FB457D /* cube_428.obj in Resources */,
 				6270DC891FCB23D800FB457D /* level10.json in Resources */,
@@ -2050,7 +2058,7 @@
 				6251E29320442B6900584E28 /* FallingPiece.cpp in Sources */,
 				62944D9B20053A2D00814D36 /* FileSystemIOS.mm in Sources */,
 				62944DA520053A2D00814D36 /* SceneResources.cpp in Sources */,
-				624447A91EDDD2C40080ECE8 /* RowExplosionParticleEffect.cpp in Sources */,
+				624447A91EDDD2C40080ECE8 /* LaserParticleEffect.cpp in Sources */,
 				62944D7B20053A2D00814D36 /* Material.cpp in Sources */,
 				62944DA720053A2D00814D36 /* LightComponent.cpp in Sources */,
 				624447A01EDDD2C40080ECE8 /* CloseButton.cpp in Sources */,

@@ -34,7 +34,7 @@ void ExplosionParticleEffect::InitInnerEffect(Pht::IEngine& engine) {
         .mTimeToLive = 0.25f,
         .mTimeToLiveRandomPart = 0.0f,
         .mFadeOutDuration = 0.15f,
-        .mSize = 22.0f,
+        .mSize = Pht::Vec2{22.0f, 22.0f},
         .mSizeRandomPart = 0.0f,
         .mGrowDuration = 0.0f,
         .mShrinkDuration = 0.0f
@@ -62,9 +62,9 @@ void ExplosionParticleEffect::InitShockWave(Pht::IEngine& engine) {
         .mTimeToLive = 0.35f,
         .mTimeToLiveRandomPart = 0.0f,
         .mFadeOutDuration = 0.35f,
-        .mSize = 13.5f,
+        .mSize = Pht::Vec2{13.5f, 13.5f},
         .mSizeRandomPart = 0.0f,
-        .mInitialSize = 2.0f,
+        .mInitialSize = Pht::Vec2{2.0f, 2.0f},
         .mGrowDuration = 0.35f,
         .mShrinkDuration = 0.0f
     };
