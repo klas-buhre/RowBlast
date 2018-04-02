@@ -185,15 +185,21 @@ TitleScene::TitleScene(Pht::IEngine& engine, const CommonResources& commonResour
                                                        7.7f,
                                                        20.0f);
     
-    auto& titleText {scene->CreateText("BLOCKS", {mFont, 1.0f, Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f}})};
-    auto& titleTextSceneObject {titleText.GetSceneObject()};
-    titleTextSceneObject.GetTransform().SetPosition({-6.5f, 6.0f, UiLayer::text});
-    titleTextSceneObject.SetLayer(static_cast<int>(Layer::Ui));
-    scene->GetRoot().AddChild(titleTextSceneObject);
+    Pht::Vec4 textColor {1.0f, 1.0f, 1.0f, 1.0f};
+    
+    auto& titleLine1 {scene->CreateText("ROW", {mFont, 1.0f, textColor})};
+    auto& titleLine1SceneObject {titleLine1.GetSceneObject()};
+    titleLine1SceneObject.GetTransform().SetPosition({-4.0f, 7.0f, UiLayer::text});
+    titleLine1SceneObject.SetLayer(static_cast<int>(Layer::Ui));
+    scene->GetRoot().AddChild(titleLine1SceneObject);
 
-    auto& tapText {
-        scene->CreateText("Tap to continue...", {mTapFont, 1.0f, Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f}})
-    };
+    auto& titleLine2 {scene->CreateText("BLAST", {mFont, 1.0f, textColor})};
+    auto& titleLine2SceneObject {titleLine2.GetSceneObject()};
+    titleLine2SceneObject.GetTransform().SetPosition({-5.6f, 4.8f, UiLayer::text});
+    titleLine2SceneObject.SetLayer(static_cast<int>(Layer::Ui));
+    scene->GetRoot().AddChild(titleLine2SceneObject);
+
+    auto& tapText {scene->CreateText("Tap to continue...", {mTapFont, 1.0f, textColor})};
     auto& tapTextSceneObject {tapText.GetSceneObject()};
     tapTextSceneObject.GetTransform().SetPosition({-3.7f, -6.0f, UiLayer::text});
     tapTextSceneObject.SetLayer(static_cast<int>(Layer::Ui));

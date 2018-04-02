@@ -11,7 +11,7 @@ namespace {
     constexpr auto bombRotationAmplitude {22.0f};
     constexpr auto rowBombRotationSpeed {35.0f};
     constexpr auto emissiveAnimationDuration {1.5f};
-    constexpr auto emissiveAmplitude {1.5f};
+    constexpr auto emissiveAmplitude {1.7f};
     
     void SetEmissiveInRenderable(Pht::RenderableObject& renderableObject, float emissive) {
         Pht::Color emissiveColor {emissive, emissive, emissive};

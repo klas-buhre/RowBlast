@@ -223,13 +223,13 @@ void PieceResources::CreateBombs(Pht::ISceneManager& sceneManager, const GameSce
     Pht::Material bombMaterial {
         "bomb_798.jpg",
         "bomb_798_emission.jpg",
-        0.7f,
-        0.7f,
+        0.87f,
+        0.87f,
         1.0f,
         1.0f,
         20.0f
     };
-    
+
     bombMaterial.SetEmissive(Pht::Color {3.0f, 3.0f, 3.0f});
     mBomb = sceneManager.CreateRenderableObject(Pht::ObjMesh {"bomb_798.obj", 16.2f}, bombMaterial);
     
@@ -240,13 +240,14 @@ void PieceResources::CreateBombs(Pht::ISceneManager& sceneManager, const GameSce
     Pht::Material rowBombMaterial {
         "laser_bomb_diffuse.jpg",
         "laser_bomb_emission.png",
-        0.5f,
-        0.5f,
-        0.5f,
+        0.55f,
+        0.65f,
+        0.05f,
         1.0f,
-        30.0f
+        20.0f
     };
     
+    rowBombMaterial.SetAmbient(Pht::Color {0.5f, 0.5f, 0.85f});
     rowBombMaterial.SetEmissive(Pht::Color {2.0f, 2.0f, 2.0f});
     mRowBomb = sceneManager.CreateRenderableObject(Pht::ObjMesh {"laser_bomb_224.obj", 0.6f},
                                                    rowBombMaterial);
