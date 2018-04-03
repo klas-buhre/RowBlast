@@ -145,16 +145,16 @@ void LevelResources::CreateBlueprintRenderables(Pht::IEngine& engine, const Game
     );
 }
 
-Pht::RenderableObject& LevelResources::GetLevelBlockRenderable(BlockRenderableKind renderableKind) const {
-    switch (renderableKind) {
-        case BlockRenderableKind::LowerRightHalf:
-        case BlockRenderableKind::UpperRightHalf:
-        case BlockRenderableKind::UpperLeftHalf:
-        case BlockRenderableKind::LowerLeftHalf:
+Pht::RenderableObject& LevelResources::GetLevelBlockRenderable(BlockKind blockKind) const {
+    switch (blockKind) {
+        case BlockKind::LowerRightHalf:
+        case BlockKind::UpperRightHalf:
+        case BlockKind::UpperLeftHalf:
+        case BlockKind::LowerLeftHalf:
             return *mGrayTriangle;
-        case BlockRenderableKind::Full:
+        case BlockKind::Full:
             return *mGrayCube;
-        case BlockRenderableKind::None:
+        case BlockKind::None:
             assert(!"Not a mesh");
             break;
     }

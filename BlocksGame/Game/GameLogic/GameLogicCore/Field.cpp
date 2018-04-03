@@ -833,7 +833,7 @@ void Field::MergeTriangleBlocksIntoCube(const Pht::IVec2& position) {
     auto& firstSubCell {cell.mFirstSubCell};
     
     firstSubCell.mFill = Fill::Full;
-    firstSubCell.mBlockRenderableKind = BlockRenderableKind::Full;
+    firstSubCell.mBlockKind = BlockKind::Full;
     
     auto& firstSubCellWelds {firstSubCell.mWelds};
     auto& secondSubCellWelds {cell.mSecondSubCell.mWelds};
@@ -1470,14 +1470,14 @@ void Field::SaveSubCellAndCancelFill(Field::RemovedSubCells& removedSubCells,
                                      const SubCell& subCell) {
     auto position {subCell.mPosition};
     
-    if (subCell.mBlockRenderableKind != BlockRenderableKind::None) {
+    if (subCell.mBlockKind != BlockKind::None) {
         RemovedSubCell removedSubCell {
             .mPosition = Pht::IVec2{
                 static_cast<int>(position.x),
                 static_cast<int>(position.y)
             },
             .mRotation = subCell.mRotation,
-            .mRenderableKind = subCell.mBlockRenderableKind,
+            .mBlockKind = subCell.mBlockKind,
             .mColor = subCell.mColor,
             .mIsLevel = subCell.mIsLevel
         };

@@ -9,20 +9,20 @@ const int Quantities::numWeldBrightness {4};
 
 const float BlueprintSlotFillAnimation::mInitialOpacity {0.6f};
 
-BlockRenderableKind BlocksGame::ToBlockRenderableKind(Fill fill) {
+BlockKind BlocksGame::ToBlockKind(Fill fill) {
     switch (fill) {
         case Fill::Empty:
-            return BlockRenderableKind::None;
+            return BlockKind::None;
         case Fill::LowerRightHalf:
-            return BlockRenderableKind::LowerRightHalf;
+            return BlockKind::LowerRightHalf;
         case Fill::UpperRightHalf:
-            return BlockRenderableKind::UpperRightHalf;
+            return BlockKind::UpperRightHalf;
         case Fill::UpperLeftHalf:
-            return BlockRenderableKind::UpperLeftHalf;
+            return BlockKind::UpperLeftHalf;
         case Fill::LowerLeftHalf:
-            return BlockRenderableKind::LowerLeftHalf;
+            return BlockKind::LowerLeftHalf;
         case Fill::Full:
-            return BlockRenderableKind::Full;
+            return BlockKind::Full;
     }
 }
 

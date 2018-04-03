@@ -28,7 +28,7 @@ namespace BlocksGame {
     public:
         PieceResources(Pht::IEngine& engine, const GameScene& scene);
         
-        Pht::RenderableObject& GetBlockRenderableObject(BlockRenderableKind blockRenderableKind,
+        Pht::RenderableObject& GetBlockRenderableObject(BlockKind blockKind,
                                                         BlockColor color,
                                                         BlockBrightness brightness) const;
         Pht::RenderableObject& GetWeldRenderableObject(WeldRenderableKind weldRenderableKind,
@@ -52,9 +52,9 @@ namespace BlocksGame {
         }
 
     private:
-        int CalcBlockIndex(BlockRenderableKind blockRenderableKind,
+        int CalcBlockIndex(BlockKind blockKind,
                            BlockColor color,
-                           BlockBrightness brightness) const ;
+                           BlockBrightness brightness) const;
         int CalcWeldIndex(WeldRenderableKind weldRenderableKind,
                           BlockColor color,
                           BlockBrightness brightness) const;

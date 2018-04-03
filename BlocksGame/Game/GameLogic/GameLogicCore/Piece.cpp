@@ -214,7 +214,7 @@ CellGrid Piece::InitCellGrid(const Piece::FillGrid& fillGrid,
             auto& subCell {result[row][column].mFirstSubCell};
             subCell.mFill = fillGrid[row][column];
             subCell.mWelds = MakeWelds(row, column, fillGrid);
-            subCell.mBlockRenderableKind = ToBlockRenderableKind(subCell.mFill);
+            subCell.mBlockKind = ToBlockKind(subCell.mFill);
             subCell.mColor = blockColor;
             subCell.mFlashingBlockAnimation.mIsActive = true;
             subCell.mIsPartOfIndivisiblePiece = isIndivisible;

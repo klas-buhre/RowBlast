@@ -119,7 +119,7 @@ void GameHud::CreateGrayBlock(Pht::Scene& scene,
                               Pht::SceneObject& progressContainer,
                               const LevelResources& levelResources) {
     auto& grayBlock {scene.CreateSceneObject()};
-    grayBlock.SetRenderable(&levelResources.GetLevelBlockRenderable(BlockRenderableKind::Full));
+    grayBlock.SetRenderable(&levelResources.GetLevelBlockRenderable(BlockKind::Full));
     
     auto& transform {grayBlock.GetTransform()};
     transform.SetPosition({0.19f, 0.2f, UiLayer::block});
@@ -174,7 +174,7 @@ void GameHud::CreateLPiece(Pht::Scene& scene, Pht::SceneObject& movesContainer) 
     baseTransform.SetScale(scale);
     
     auto& greenBlockRenderable {
-        mPieceResources.GetBlockRenderableObject(BlockRenderableKind::Full,
+        mPieceResources.GetBlockRenderableObject(BlockKind::Full,
                                                  BlockColor::Green,
                                                  BlockBrightness::Normal)
     };
@@ -530,9 +530,9 @@ void GameHud::UpdatePreviewPiece(PreviewPiece& previewPiece,
     for (auto row {0}; row < pieceNumRows; row++) {
         for (auto column {0}; column < pieceNumColumns; column++) {
             auto& subCell {grid[row][column].mFirstSubCell};
-            auto renderableKind {subCell.mBlockRenderableKind};
+            auto blockKind {subCell.mBlockKind};
  
-            if (renderableKind != BlockRenderableKind::None) {
+            if (blockKind != BlockKind::None) {
                 auto& blockSceneObject {previewPiece.mSceneObjects->AccuireSceneObject()};
                 
                 if (isBomb) {
@@ -543,7 +543,7 @@ void GameHud::UpdatePreviewPiece(PreviewPiece& previewPiece,
                     previewPiece.mRowBombSceneObject = &blockSceneObject;
                 } else {
                     auto& blockRenderable {
-                        mPieceResources.GetBlockRenderableObject(renderableKind,
+                        mPieceResources.GetBlockRenderableObject(blockKind,
                                                                  subCell.mColor,
                                                                  BlockBrightness::Normal)
                     };

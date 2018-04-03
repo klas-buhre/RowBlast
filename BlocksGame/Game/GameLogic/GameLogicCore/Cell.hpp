@@ -27,7 +27,7 @@ namespace BlocksGame {
         Deg270
     };
     
-    enum class BlockRenderableKind {
+    enum class BlockKind {
         LowerRightHalf,
         UpperRightHalf,
         UpperLeftHalf,
@@ -36,7 +36,7 @@ namespace BlocksGame {
         None
     };
     
-    BlockRenderableKind ToBlockRenderableKind(Fill fill);
+    BlockKind ToBlockKind(Fill fill);
     
     enum class BlockColor {
         Red,
@@ -146,7 +146,7 @@ namespace BlocksGame {
         Welds mWelds;
         int mPieceId {0};
         Pht::Vec2 mPosition {0.0f, 0.0f};
-        BlockRenderableKind mBlockRenderableKind {BlockRenderableKind::None};
+        BlockKind mBlockKind {BlockKind::None};
         BlockColor mColor {BlockColor::None};
         Rotation mRotation {Rotation::Deg0};
         FallingBlockAnimation mFallingBlockAnimation;

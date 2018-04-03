@@ -173,10 +173,10 @@ Pht::Vec3 FlyingBlocksAnimation::CalculateBlockInitialPosition(const RemovedSubC
 
 Pht::RenderableObject& FlyingBlocksAnimation::GetBlockRenderableObject(const RemovedSubCell& subCell) {
     if (subCell.mIsLevel) {
-        return mLevelResources.GetLevelBlockRenderable(subCell.mRenderableKind);
+        return mLevelResources.GetLevelBlockRenderable(subCell.mBlockKind);
     }
     
-    return mPieceResources.GetBlockRenderableObject(subCell.mRenderableKind,
+    return mPieceResources.GetBlockRenderableObject(subCell.mBlockKind,
                                                     subCell.mColor,
                                                     BlockBrightness::Normal);
 }

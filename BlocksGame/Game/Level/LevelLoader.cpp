@@ -45,19 +45,14 @@ namespace {
             case ' ':
                 return Fill::Empty;
             case 'G':
-            case 'O':
                 return Fill::Full;
             case 'd':
-            case 'D':
                 return Fill::LowerRightHalf;
             case 'b':
-            case 'B':
                 return Fill::LowerLeftHalf;
             case 'p':
-            case 'P':
                 return Fill::UpperLeftHalf;
             case 'q':
-            case 'Q':
                 return Fill::UpperRightHalf;
             default:
                 assert(!"Unknown cell type");
@@ -68,18 +63,13 @@ namespace {
         switch (c) {
             case ' ':
             case 'G':
-            case 'O':
             case 'd':
-            case 'D':
                 return Rotation::Deg0;
             case 'b':
-            case 'B':
                 return Rotation::Deg90;
             case 'p':
-            case 'P':
                 return Rotation::Deg180;
             case 'q':
-            case 'Q':
                 return Rotation::Deg270;
             default:
                 assert(!"Unknown cell type");
@@ -91,7 +81,7 @@ namespace {
         
         cell.mFirstSubCell.mPosition = Pht::Vec2 {static_cast<float>(column), static_cast<float>(row)};
         cell.mFirstSubCell.mFill = CellFill(c);
-        cell.mFirstSubCell.mBlockRenderableKind = ToBlockRenderableKind(cell.mFirstSubCell.mFill);
+        cell.mFirstSubCell.mBlockKind = ToBlockKind(cell.mFirstSubCell.mFill);
         cell.mFirstSubCell.mRotation = CellRotation(c);
         
         if (!cell.mFirstSubCell.IsEmpty()) {

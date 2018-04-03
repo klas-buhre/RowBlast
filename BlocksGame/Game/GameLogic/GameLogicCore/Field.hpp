@@ -19,7 +19,7 @@ namespace BlocksGame {
     struct RemovedSubCell {
         Pht::IVec2 mPosition;
         Rotation mRotation;
-        BlockRenderableKind mRenderableKind {BlockRenderableKind::None};
+        BlockKind mBlockKind {BlockKind::None};
         BlockColor mColor;
         bool mIsLevel {false};
     };

@@ -97,9 +97,9 @@ void GameSceneRenderer::RenderFieldBlocks() {
 }
 
 void GameSceneRenderer::RenderFieldBlock(const SubCell& subCell, bool isSecondSubCell) {
-    auto renderableKind {subCell.mBlockRenderableKind};
+    auto blockKind {subCell.mBlockKind};
     
-    if (renderableKind == BlockRenderableKind::None) {
+    if (blockKind == BlockKind::None) {
         return;
     }
     
@@ -116,7 +116,7 @@ void GameSceneRenderer::RenderFieldBlock(const SubCell& subCell, bool isSecondSu
     auto& transform {sceneObject.GetTransform()};
     transform.SetPosition(blockPosition);
     
-    if (renderableKind != BlockRenderableKind::Full) {
+    if (blockKind != BlockKind::Full) {
         Pht::Vec3 blockRotation {0.0f, 0.0f, RotationToDeg(subCell.mRotation)};
         transform.SetRotation(blockRotation);
     } else {
@@ -124,13 +124,13 @@ void GameSceneRenderer::RenderFieldBlock(const SubCell& subCell, bool isSecondSu
     }
 
     if (subCell.mIsLevel) {
-        sceneObject.SetRenderable(&mLevelResources.GetLevelBlockRenderable(renderableKind));
+        sceneObject.SetRenderable(&mLevelResources.GetLevelBlockRenderable(blockKind));
     } else {
         auto color {subCell.mColor};
         auto brightness {subCell.mFlashingBlockAnimation.mBrightness};
 
         auto& renderableObject {
-            mPieceResources.GetBlockRenderableObject(renderableKind, color, brightness)
+            mPieceResources.GetBlockRenderableObject(blockKind, color, brightness)
         };
         
         sceneObject.SetRenderable(&renderableObject);
@@ -282,9 +282,9 @@ void GameSceneRenderer::RenderPieceBlocks(const CellGrid& pieceBlocks,
     for (auto row {0}; row < pieceNumRows; row++) {
         for (auto column {0}; column < pieceNumColumns; column++) {
             auto& subCell {pieceBlocks[row][column].mFirstSubCell};
-            auto renderableKind {subCell.mBlockRenderableKind};
+            auto blockKind {subCell.mBlockKind};
             
-            if (renderableKind == BlockRenderableKind::None) {
+            if (blockKind == BlockKind::None) {
                 continue;
             }
             
@@ -299,7 +299,7 @@ void GameSceneRenderer::RenderPieceBlocks(const CellGrid& pieceBlocks,
             auto& transform {sceneObject.GetTransform()};
             transform.SetPosition(blockPosition);
 
-            if (renderableKind != BlockRenderableKind::Full) {
+            if (blockKind != BlockKind::Full) {
                 Pht::Vec3 blockRotation {0.0f, 0.0f, RotationToDeg(subCell.mRotation)};
                 transform.SetRotation(blockRotation);
             } else {
@@ -327,7 +327,7 @@ void GameSceneRenderer::RenderPieceBlocks(const CellGrid& pieceBlocks,
                 auto brightness {BlockBrightness::Normal};
 
                 auto& blockRenderableObject {
-                    mPieceResources.GetBlockRenderableObject(renderableKind, color, brightness)
+                    mPieceResources.GetBlockRenderableObject(blockKind, color, brightness)
                 };
                 
                 sceneObject.SetRenderable(&blockRenderableObject);
