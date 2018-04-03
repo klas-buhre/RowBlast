@@ -45,6 +45,8 @@ namespace {
             case ' ':
                 return Fill::Empty;
             case 'G':
+            case 'B':
+            case 'L':
                 return Fill::Full;
             case 'd':
                 return Fill::LowerRightHalf;
@@ -58,12 +60,37 @@ namespace {
                 assert(!"Unknown cell type");
         }
     }
-    
+
+    BlockKind CellBlockKind(char c) {
+        switch (c) {
+            case ' ':
+                return BlockKind::None;
+            case 'G':
+                return BlockKind::Full;
+            case 'B':
+                return BlockKind::Bomb;
+            case 'L':
+                return BlockKind::RowBomb;
+            case 'd':
+                return BlockKind::LowerRightHalf;
+            case 'b':
+                return BlockKind::LowerLeftHalf;
+            case 'p':
+                return BlockKind::UpperLeftHalf;
+            case 'q':
+                return BlockKind::UpperRightHalf;
+            default:
+                assert(!"Unknown cell type");
+        }
+    }
+
     Rotation CellRotation(char c) {
         switch (c) {
             case ' ':
             case 'G':
             case 'd':
+            case 'B':
+            case 'L':
                 return Rotation::Deg0;
             case 'b':
                 return Rotation::Deg90;
@@ -78,16 +105,17 @@ namespace {
     
     Cell CreateCell(char c, int column, int row) {
         Cell cell;
+        auto& firstSubCell {cell.mFirstSubCell};
         
-        cell.mFirstSubCell.mPosition = Pht::Vec2 {static_cast<float>(column), static_cast<float>(row)};
-        cell.mFirstSubCell.mFill = CellFill(c);
-        cell.mFirstSubCell.mBlockKind = ToBlockKind(cell.mFirstSubCell.mFill);
-        cell.mFirstSubCell.mRotation = CellRotation(c);
-        
-        if (!cell.mFirstSubCell.IsEmpty()) {
-            cell.mFirstSubCell.mIsLevel = true;
+        firstSubCell.mPosition = Pht::Vec2 {static_cast<float>(column), static_cast<float>(row)};
+        firstSubCell.mFill = CellFill(c);
+        firstSubCell.mBlockKind = CellBlockKind(c);
+        firstSubCell.mRotation = CellRotation(c);
+
+        if (!firstSubCell.IsEmpty() && !firstSubCell.IsBomb()) {
+            cell.mFirstSubCell.mIsGrayLevelBlock = true;
         }
-        
+
         return cell;
     }
     

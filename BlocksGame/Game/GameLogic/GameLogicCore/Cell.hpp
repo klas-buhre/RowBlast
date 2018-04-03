@@ -26,16 +26,18 @@ namespace BlocksGame {
         Deg180,
         Deg270
     };
-    
+
     enum class BlockKind {
         LowerRightHalf,
         UpperRightHalf,
         UpperLeftHalf,
         LowerLeftHalf,
         Full,
+        Bomb,
+        RowBomb,
         None
     };
-    
+
     BlockKind ToBlockKind(Fill fill);
     
     enum class BlockColor {
@@ -133,6 +135,7 @@ namespace BlocksGame {
         bool FillsUpperCellSide() const;
         bool FillsRightCellSide() const;
         bool FillsLeftCellSide() const;
+        bool IsBomb() const;
 
         bool IsFull() const {
             return mFill == Fill::Full;
@@ -151,7 +154,7 @@ namespace BlocksGame {
         Rotation mRotation {Rotation::Deg0};
         FallingBlockAnimation mFallingBlockAnimation;
         FlashingBlockAnimation mFlashingBlockAnimation;
-        bool mIsLevel {false};
+        bool mIsGrayLevelBlock {false};
         bool mIsPartOfIndivisiblePiece {false};
         bool mIsFound {false};
         ScanDirection mTriedScanDirection {ScanDirection::None};

@@ -172,13 +172,17 @@ Pht::Vec3 FlyingBlocksAnimation::CalculateBlockInitialPosition(const RemovedSubC
 }
 
 Pht::RenderableObject& FlyingBlocksAnimation::GetBlockRenderableObject(const RemovedSubCell& subCell) {
-    if (subCell.mIsLevel) {
+    if (subCell.mIsGrayLevelBlock) {
         return mLevelResources.GetLevelBlockRenderable(subCell.mBlockKind);
+    } else if (subCell.mBlockKind == BlockKind::Bomb) {
+        return mPieceResources.GetBombRenderableObject();
+    } else if (subCell.mBlockKind == BlockKind::RowBomb) {
+        return mPieceResources.GetRowBombRenderableObject();
+    } else {
+        return mPieceResources.GetBlockRenderableObject(subCell.mBlockKind,
+                                                        subCell.mColor,
+                                                        BlockBrightness::Normal);
     }
-    
-    return mPieceResources.GetBlockRenderableObject(subCell.mBlockKind,
-                                                    subCell.mColor,
-                                                    BlockBrightness::Normal);
 }
 
 Pht::SceneObject& FlyingBlocksAnimation::AccuireSceneObject() {

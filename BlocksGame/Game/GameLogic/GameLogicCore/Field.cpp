@@ -230,7 +230,7 @@ int Field::CalculateNumLevelBlocks() const {
         for (auto column {0}; column < mNumColumns; ++column) {
             auto& cell {mGrid[row][column]};
             
-            if (cell.mFirstSubCell.mIsLevel || cell.mSecondSubCell.mIsLevel) {
+            if (cell.mFirstSubCell.mIsGrayLevelBlock || cell.mSecondSubCell.mIsGrayLevelBlock) {
                 ++result;
             }
         }
@@ -258,7 +258,7 @@ int Field::CalculateNumEmptyBlueprintSlots() const {
 int Field::CalculateHighestLevelBlock() const {
     for (auto row {mNumRows - 1}; row >= 0; --row) {
         for (auto column {0}; column < mNumColumns; ++column) {
-            if (mGrid[row][column].mFirstSubCell.mIsLevel) {
+            if (mGrid[row][column].mFirstSubCell.mIsGrayLevelBlock) {
                 return row;
             }
         }
@@ -589,7 +589,7 @@ void Field::MakeDiagonalWeld(Cell& cell) {
 }
 
 void Field::MakeWelds(SubCell& subCell, const Pht::IVec2& position) {
-    if (subCell.IsEmpty() || subCell.mIsLevel) {
+    if (subCell.IsEmpty() || subCell.mIsGrayLevelBlock || subCell.IsBomb()) {
         return;
     }
     
@@ -723,7 +723,7 @@ bool Field::ShouldBeLeftWeld(const SubCell& subCell, const Pht::IVec2& position)
 }
 
 void Field::BreakRedundantWelds(SubCell& subCell, const Pht::IVec2& position) {
-    if (subCell.IsEmpty() || subCell.mIsLevel) {
+    if (subCell.IsEmpty() || subCell.mIsGrayLevelBlock || subCell.IsBomb()) {
         return;
     }
 
@@ -920,7 +920,9 @@ void Field::PullDownPiece(int row, int column, ScanDirection scanDirection) {
 void Field::PullDownPiece(const SubCell& subCell,
                           const Pht::IVec2& scanPosition,
                           ScanDirection scanDirection) {
-    if (subCell.IsEmpty() || subCell.mIsLevel || subCell.mTriedScanDirection == scanDirection) {
+    if (subCell.IsEmpty() || subCell.mIsGrayLevelBlock ||
+        subCell.mTriedScanDirection == scanDirection) {
+        
         return;
     }
     
@@ -944,7 +946,14 @@ PieceBlocks Field::ExtractPieceBlocks(Pht::IVec2& piecePosition,
                                       const Pht::IVec2& scanPosition,
                                       ScanDirection scanDirection) {
     mPieceBlockCoords.Clear();
-    FindPieceBlocks(color, scanPosition);
+    auto& firstSubCell {mGrid[scanPosition.y][scanPosition.x].mFirstSubCell};
+    
+    if (firstSubCell.IsBomb()) {
+        PieceBlockCoord bombPieceCoord {scanPosition, true};
+        mPieceBlockCoords.PushBack(bombPieceCoord);
+    } else {
+        FindPieceBlocks(color, scanPosition);
+    }
     
     piecePosition.x = XMin(mPieceBlockCoords);
     piecePosition.y = YMin(mPieceBlockCoords);
@@ -1090,7 +1099,7 @@ void Field::DetectBlocksThatShouldNotBounce() {
         for (auto column {0}; column < mNumColumns; ++column) {
             auto& subCell {mGrid[row][column].mFirstSubCell};
             
-            if (subCell.mIsLevel && subCell.mFallingBlockAnimation.mShouldBounce &&
+            if (subCell.mIsGrayLevelBlock && subCell.mFallingBlockAnimation.mShouldBounce &&
                 subCell.mTriedScanDirection == ScanDirection::None && subCell.mPosition.y > row) {
                 
                 Pht::IVec2 gridPosition {column, row};
@@ -1115,8 +1124,8 @@ Field::IsFloating Field::IsBlockStructureFloating(const Pht::IVec2& gridPosition
     
     auto& subCell {mGrid[gridPosition.y][gridPosition.x].mFirstSubCell};
     
-    if (!subCell.mIsLevel || !subCell.mFallingBlockAnimation.mShouldBounce || subCell.mIsFound ||
-        subCell.mTriedScanDirection != ScanDirection::None) {
+    if (!subCell.mIsGrayLevelBlock || !subCell.mFallingBlockAnimation.mShouldBounce ||
+        subCell.mIsFound || subCell.mTriedScanDirection != ScanDirection::None) {
         
         return IsFloating::Unknown;
     }
@@ -1137,13 +1146,13 @@ Field::IsFloating Field::IsBlockStructureFloating(const Pht::IVec2& gridPosition
                 return IsFloating::No;
             }
             
-            if (!firstLowerSubCell.IsEmpty() && !firstLowerSubCell.mIsLevel) {
+            if (!firstLowerSubCell.IsEmpty() && !firstLowerSubCell.mIsGrayLevelBlock) {
                 return IsFloating::No;
             }
             
             auto& secondLowerSubCell {lowerCell.mSecondSubCell};
             
-            if (!secondLowerSubCell.IsEmpty() && !secondLowerSubCell.mIsLevel) {
+            if (!secondLowerSubCell.IsEmpty() && !secondLowerSubCell.mIsGrayLevelBlock) {
                 return IsFloating::No;
             }
         }
@@ -1185,7 +1194,7 @@ void Field::SetShouldNotBounce(const Pht::IVec2& gridPosition) {
     
     auto& subCell {mGrid[gridPosition.y][gridPosition.x].mFirstSubCell};
     
-    if (!subCell.mIsLevel || !subCell.mFallingBlockAnimation.mShouldBounce ||
+    if (!subCell.mIsGrayLevelBlock || !subCell.mFallingBlockAnimation.mShouldBounce ||
         subCell.mTriedScanDirection != ScanDirection::None) {
         
         return;
@@ -1206,7 +1215,7 @@ void Field::SetIsScanned(const Pht::IVec2& gridPosition) {
     
     auto& subCell {mGrid[gridPosition.y][gridPosition.x].mFirstSubCell};
     
-    if (!subCell.mIsLevel || subCell.mTriedScanDirection != ScanDirection::None) {
+    if (!subCell.mIsGrayLevelBlock || subCell.mTriedScanDirection != ScanDirection::None) {
         return;
     }
     
@@ -1479,7 +1488,7 @@ void Field::SaveSubCellAndCancelFill(Field::RemovedSubCells& removedSubCells,
             .mRotation = subCell.mRotation,
             .mBlockKind = subCell.mBlockKind,
             .mColor = subCell.mColor,
-            .mIsLevel = subCell.mIsLevel
+            .mIsGrayLevelBlock = subCell.mIsGrayLevelBlock
         };
         
         removedSubCells.PushBack(removedSubCell);

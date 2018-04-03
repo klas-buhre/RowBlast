@@ -154,8 +154,8 @@ Pht::RenderableObject& LevelResources::GetLevelBlockRenderable(BlockKind blockKi
             return *mGrayTriangle;
         case BlockKind::Full:
             return *mGrayCube;
-        case BlockKind::None:
-            assert(!"Not a mesh");
+        default:
+            assert(!"Unsupported block kind");
             break;
     }
 }

@@ -80,6 +80,7 @@ Ongoing tasks:
         -If clearing a full row with level bombs inside, should level bombs be
          triggered? Or, should they only be triggered when hit by pieces or explosions/lasers?
             -They should not trigger.
+        -Fix field bomb static angle.
         -Throw away blocks one by one as they are hit by the laser.
 
 

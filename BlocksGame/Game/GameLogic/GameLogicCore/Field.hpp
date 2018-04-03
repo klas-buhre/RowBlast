@@ -21,7 +21,7 @@ namespace BlocksGame {
         Rotation mRotation;
         BlockKind mBlockKind {BlockKind::None};
         BlockColor mColor;
-        bool mIsLevel {false};
+        bool mIsGrayLevelBlock {false};
     };
     
     enum class IsCollision {

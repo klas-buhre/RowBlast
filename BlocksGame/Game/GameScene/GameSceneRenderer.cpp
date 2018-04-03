@@ -113,18 +113,33 @@ void GameSceneRenderer::RenderFieldBlock(const SubCell& subCell, bool isSecondSu
         mScene.GetBouncingBlockZ() : 0.0f
     };
 
+    auto isSomeKindOfBomb {subCell.IsBomb()};
     auto& transform {sceneObject.GetTransform()};
     transform.SetPosition(blockPosition);
     
-    if (blockKind != BlockKind::Full) {
-        Pht::Vec3 blockRotation {0.0f, 0.0f, RotationToDeg(subCell.mRotation)};
-        transform.SetRotation(blockRotation);
+    if (isSomeKindOfBomb) {
+        if (subCell.mBlockKind == BlockKind::Bomb) {
+            transform.SetRotation(mBombsAnimation.GetBombRotation());
+        } else {
+            transform.SetRotation(mBombsAnimation.GetRowBombRotation());
+        }
     } else {
-        transform.SetRotation({0.0f, 0.0f, 0.0f});
+        if (blockKind != BlockKind::Full) {
+            Pht::Vec3 blockRotation {0.0f, 0.0f, RotationToDeg(subCell.mRotation)};
+            transform.SetRotation(blockRotation);
+        } else {
+            transform.SetRotation({0.0f, 0.0f, 0.0f});
+        }
     }
-
-    if (subCell.mIsLevel) {
+    
+    if (subCell.mIsGrayLevelBlock) {
         sceneObject.SetRenderable(&mLevelResources.GetLevelBlockRenderable(blockKind));
+    } else if (isSomeKindOfBomb) {
+        if (subCell.mBlockKind == BlockKind::Bomb) {
+            sceneObject.SetRenderable(&mPieceResources.GetBombRenderableObject());
+        } else {
+            sceneObject.SetRenderable(&mPieceResources.GetRowBombRenderableObject());
+        }
     } else {
         auto color {subCell.mColor};
         auto brightness {subCell.mFlashingBlockAnimation.mBrightness};

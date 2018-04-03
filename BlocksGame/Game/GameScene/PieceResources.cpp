@@ -30,8 +30,8 @@ namespace {
                 return "triangle_320_r90.obj";
             case BlockKind::Full:
                 return "cube_428.obj";
-            case BlockKind::None:
-                assert(!"Not a mesh");
+            default:
+                assert(!"Unsupported block kind");
                 break;
         }
     }
