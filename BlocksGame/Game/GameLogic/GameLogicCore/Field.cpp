@@ -1479,7 +1479,9 @@ void Field::SaveSubCellAndCancelFill(Field::RemovedSubCells& removedSubCells,
                                      const SubCell& subCell) {
     auto position {subCell.mPosition};
     
-    if (subCell.mBlockKind != BlockKind::None) {
+    if (subCell.mBlockKind != BlockKind::None &&
+        subCell.mPosition.y >= static_cast<float>(mLowestVisibleRow)) {
+
         RemovedSubCell removedSubCell {
             .mPosition = Pht::IVec2{
                 static_cast<int>(position.x),

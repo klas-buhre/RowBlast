@@ -25,6 +25,14 @@ namespace BlocksGame {
         const Pht::Vec3& GetRowBombRotation() const {
             return mRowBombRotation;
         }
+        
+        const Pht::Vec3& GetBombStaticRotation() const {
+            return mBombStaticRotation;
+        }
+        
+        const Pht::Vec3& GetRowBombStaticRotation() const {
+            return mRowBombStaticRotation;
+        }
 
     private:
         void AnimateEmissive(float dt);
@@ -39,6 +47,8 @@ namespace BlocksGame {
         Pht::Vec3 mRowBombRotation;
         float mAnimationTime {0.0f};
         float mEmissiveAnimationTime {0.0f};
+        const Pht::Vec3 mBombStaticRotation {107.0f, -17.0f, 0.0f};
+        const Pht::Vec3 mRowBombStaticRotation {0.0f, 90.0f, 0.0f};
     };
 }
 

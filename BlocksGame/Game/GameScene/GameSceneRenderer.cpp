@@ -119,9 +119,9 @@ void GameSceneRenderer::RenderFieldBlock(const SubCell& subCell, bool isSecondSu
     
     if (isSomeKindOfBomb) {
         if (subCell.mBlockKind == BlockKind::Bomb) {
-            transform.SetRotation(mBombsAnimation.GetBombRotation());
+            transform.SetRotation(mBombsAnimation.GetBombStaticRotation());
         } else {
-            transform.SetRotation(mBombsAnimation.GetRowBombRotation());
+            transform.SetRotation(mBombsAnimation.GetRowBombStaticRotation());
         }
     } else {
         if (blockKind != BlockKind::Full) {

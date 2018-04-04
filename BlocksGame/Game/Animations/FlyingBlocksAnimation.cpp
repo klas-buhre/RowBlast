@@ -86,6 +86,14 @@ void FlyingBlocksAnimation::AddBlocks(const Field::RemovedSubCells& subCells,
         auto dx {static_cast<float>(removedSubCell.mPosition.x - detonationPos.x)};
         auto dy {static_cast<float>(removedSubCell.mPosition.y - detonationPos.y)};
         
+        if (dx == 0.0f) {
+            dx = dy * (Pht::NormalizedRand() * 0.2f - 0.1f);
+        }
+        
+        if (dy == 0.0f) {
+            dy = dx * (Pht::NormalizedRand() * 0.2f - 0.1f);
+        }
+
         Pht::Vec3 explosiveForceDirecton {dx, dy, 1.0f};
         explosiveForceDirecton.Normalize();
         
