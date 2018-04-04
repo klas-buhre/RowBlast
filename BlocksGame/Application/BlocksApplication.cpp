@@ -77,11 +77,31 @@ Ongoing tasks:
      row on the other side of the field. If landing a bomb on a level bomb then there could be a
      bigger explosion. If landing a row bomb on a level row bomb then there vould be a bigger laser
      that clears 3 rows.
-        -If clearing a full row with level bombs inside, should level bombs be
+        -If clearing a full row containing some level bombs inside, should level bombs be
          triggered? Or, should they only be triggered when hit by pieces or explosions/lasers?
-            -They should not trigger.
-        -Throw away blocks one by one as they are hit by the laser.
-
+            -They should not trigger since they only way of choosing not to use those level bombs is
+             to fill the row.
+        -If level bombs get pulled down and land should they trigger?
+            -Probably more logical if they trigger since bomb pieces trigger when landing. Probably
+             tricky to implement but it might go simething like this: Field during pulling down of
+             pieces detects that a level bomb has been pulled down and will eventually land. The
+             Field then adds that event to GameLogic which will detonate the level bomb once it is
+             Updated again (after the CollapsingFieldAnimation is done with dragging down the bomb
+             position).
+        -If pulled down blocks land on level bombs should they trigger?
+            -Probably more logical if they trigger since level bombs trigger when pieces land on
+             them. Also tricky to implement, bit it might work similar to pulled down level bombs.
+        -Level bombs should affect a 3x3 area.
+        -Throw away blocks one by one as they are hit by the laser and explosion shockwave.
+            -GameLogic could be in two states Normal and FieldExploding. The GameLogic works as
+             before in Normal state. In FieldExploding state blocks are removed from Field as time
+             goes on, not in one go as it is now. For level bombs, after some time the (3x3) area
+             of blocks is removed. For bomb pieces after a time the 3x3 area is removed from Field,
+             then after that the 5x5 area. For RowBombs it works similar but for the vertical laser
+             beam. CollapsingFieldAnimation should not run when GameLogic is in FieldExploding state
+             nor should Field pull down any pieces be since it would not work.
+        -Handling multiple explosions at the same time.
+            -Add an EffectsManager that has a pool of multiple explosion effects.
 
 
 Ideas:
@@ -115,7 +135,7 @@ Time Estimation in days:
         Cost: 5
         Done
     -Try bombs part of level.
-        Cost: 5
+        Cost: 10
     -Camera shake.
         Cost: 3
     -Use new GUI/Menu textures.
@@ -146,7 +166,7 @@ Time Estimation in days:
     -Physics.
         Cost: 15
 
-        Total: 171
+        Total: 176
 
 
 Comomon piece type sets:
