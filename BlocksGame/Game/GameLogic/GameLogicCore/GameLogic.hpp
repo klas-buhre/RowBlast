@@ -141,6 +141,7 @@ namespace BlocksGame {
         void UpdateFallingPieceYpos();
         void LandFallingPiece(bool startParticleEffect);
         void DetonateBomb();
+        void GoToFieldExplosionsState();
         void PullDownLoosePieces();
         void RotateFallingPiece(const Pht::TouchEvent& touchEvent);
         Rotation CalculateNewRotation(const Pht::TouchEvent& touchEvent);
@@ -150,6 +151,11 @@ namespace BlocksGame {
                                        Direction collisionDirection);
         Result HandleInput();
         void ForwardTouchToInputHandler(const Pht::TouchEvent& touchEvent);
+        
+        enum class State {
+            Normal,
+            FieldExplosions
+        };
         
         enum class CascadeState {
             NotCascading,
@@ -182,6 +188,7 @@ namespace BlocksGame {
         GameHudController& mGameHudController;
         const Settings& mSettings;
         ControlType mPreviousControlType;
+        State mState {State::Normal};
         CascadeState mCascadeState {CascadeState::NotCascading};
         float mCascadeWaitTime {0.0f};
         FallingPieceAnimation mFallingPieceAnimation;

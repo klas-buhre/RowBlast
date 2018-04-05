@@ -75,22 +75,23 @@ Ongoing tasks:
     -Maybe some bombs and row bombs can be part of the level and detonated if landed on. Then there
      could be some cascading scenarios like landing on a row bomb that triggers a bomb on the same
      row on the other side of the field. If landing a bomb on a level bomb then there could be a
-     bigger explosion. If landing a row bomb on a level row bomb then there vould be a bigger laser
+     bigger explosion. If landing a row bomb on a level row bomb then there could be a bigger laser
      that clears 3 rows.
         -If clearing a full row containing some level bombs inside, should level bombs be
          triggered? Or, should they only be triggered when hit by pieces or explosions/lasers?
             -They should not trigger since they only way of choosing not to use those level bombs is
              to fill the row.
         -If level bombs get pulled down and land should they trigger?
-            -Probably more logical if they trigger since bomb pieces trigger when landing. Probably
-             tricky to implement but it might go simething like this: Field during pulling down of
-             pieces detects that a level bomb has been pulled down and will eventually land. The
-             Field then adds that event to GameLogic which will detonate the level bomb once it is
-             Updated again (after the CollapsingFieldAnimation is done with dragging down the bomb
-             position).
-        -If pulled down blocks land on level bombs should they trigger?
+            -Sort of logical if they trigger since bomb pieces trigger when landing. However,
+             not triggering could open up for more strategic play by letting the player move level
+             bombs to different rows. Try don't trigger for now.
+        -If pulled down piece blocks (not gray level blocks) land on level bombs should they trigger?
             -Probably more logical if they trigger since level bombs trigger when pieces land on
-             them. Also tricky to implement, bit it might work similar to pulled down level bombs.
+             them. Probably tricky to implement but it might go simething like this:
+             during pulling down of pieces, Field detects that a level bomb will eventually be
+             land on by piece blocks. The Field then adds that event to GameLogic which will
+             detonate the level bomb once it is Updated again (after the CollapsingFieldAnimation is
+             done with dragging down the piece blocks position).
         -Level bombs should affect a 3x3 area.
         -Throw away blocks one by one as they are hit by the laser and explosion shockwave.
             -GameLogic could be in two states Normal and FieldExploding. The GameLogic works as
@@ -99,9 +100,10 @@ Ongoing tasks:
              of blocks is removed. For bomb pieces after a time the 3x3 area is removed from Field,
              then after that the 5x5 area. For RowBombs it works similar but for the vertical laser
              beam. CollapsingFieldAnimation should not run when GameLogic is in FieldExploding state
-             nor should Field pull down any pieces be since it would not work.
+             nor should Field pull down any pieces since it would not work.
         -Handling multiple explosions at the same time.
             -Add an EffectsManager that has a pool of multiple explosion effects.
+            -FlyingBlocksAnimation must handle the force from newer explosions on the active blocks.
 
 
 Ideas:

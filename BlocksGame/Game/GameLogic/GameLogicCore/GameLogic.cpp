@@ -87,6 +87,7 @@ void GameLogic::Init(const Level& level) {
         mLandingMovementDuration = std::numeric_limits<float>::max();
     }
     
+    mState = State::Normal;
     mCascadeState = CascadeState::NotCascading;
 
     RemoveFallingPiece();
@@ -436,6 +437,8 @@ void GameLogic::LandFallingPiece(bool startParticleEffect) {
 }
 
 void GameLogic::DetonateBomb() {
+    GoToFieldExplosionsState();
+    
     mEngine.GetAudio().PlaySound(CommonResources::mBombSound);
     
     auto intDetonationPos {mFallingPiece->GetIntPosition() + Pht::IVec2{1, 1}};
@@ -465,6 +468,13 @@ void GameLogic::DetonateBomb() {
     }
     
     PullDownLoosePieces();
+}
+
+void GameLogic::GoToFieldExplosionsState() {
+    mState = State::FieldExplosions;
+    
+    mField.SetBlocksYPositionAndBounceFlag();
+    mField.SaveState();
 }
 
 void GameLogic::PullDownLoosePieces() {

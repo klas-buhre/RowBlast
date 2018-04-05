@@ -65,8 +65,10 @@ namespace BlocksGame {
         
         void Init(const Level& level);
         void RestorePreviousState();
+        void SaveState();
         void OnEndOfFrame();
         void SetChanged();
+        void SetBlocksYPositionAndBounceFlag();
         int DetectCollisionDown(const PieceBlocks& pieceBlocks, const Pht::IVec2& position) const;
         int DetectCollisionRight(const PieceBlocks& pieceBlocks, const Pht::IVec2& position) const;
         int DetectCollisionLeft(const PieceBlocks& pieceBlocks, const Pht::IVec2& position) const;
@@ -167,7 +169,6 @@ namespace BlocksGame {
             Unknown
         };
         
-        void SaveState();
         void CopyGridNoAlloc(CellGrid& to, const CellGrid& from);
         bool IsCellAccordingToBlueprint(int row, int column) const;
         Pht::IVec2 ScanUntilCollision(const PieceBlocks& pieceBlocks,
@@ -204,7 +205,6 @@ namespace BlocksGame {
         void SetShouldNotBounce(const Pht::IVec2& gridPosition);
         void SetIsScanned(const Pht::IVec2& gridPosition);
         void ResetAllCellsFoundFlag();
-        void SetBlocksYPositionAndBounceFlag();
         void RemoveRowImpl(int rowIndex, Field::RemovedSubCells& removedSubCells);
         void BreakCellDownWelds(int row, int column);
         void BreakCellUpWelds(int row, int column);

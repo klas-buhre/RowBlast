@@ -1365,9 +1365,7 @@ void Field::BreakLowerRightWeld(int row, int column) {
 }
 
 Field::RemovedSubCells Field::RemoveRow(int rowIndex) {
-    SetBlocksYPositionAndBounceFlag();
     SetChanged();
-    SaveState();
     
     RemovedSubCells removedSubCells;
     RemoveRowImpl(rowIndex, removedSubCells);
@@ -1377,9 +1375,7 @@ Field::RemovedSubCells Field::RemoveRow(int rowIndex) {
 
 Field::RemovedSubCells Field::RemoveAreaOfSubCells(const Pht::IVec2& areaPos,
                                                    const Pht::IVec2& areaSize) {
-    SetBlocksYPositionAndBounceFlag();
     SetChanged();
-    SaveState();
     
     RemovedSubCells removedSubCells;
     

@@ -40,6 +40,7 @@
 		62318C4A2067F0A4008332CB /* ParticleNoAlphaTexture.vert in Resources */ = {isa = PBXBuildFile; fileRef = 62318C482067F0A4008332CB /* ParticleNoAlphaTexture.vert */; };
 		62318C4C2067F669008332CB /* flare24.png in Resources */ = {isa = PBXBuildFile; fileRef = 62318C4B2067F668008332CB /* flare24.png */; };
 		623326732073D69500AC505A /* level29.json in Resources */ = {isa = PBXBuildFile; fileRef = 623326722073D69400AC505A /* level29.json */; };
+		62332676207658DA00AC505A /* FieldExplosionsStates.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62332674207658DA00AC505A /* FieldExplosionsStates.cpp */; };
 		623B31D31F17A325000C64A1 /* BlueprintSlotsFilledAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623B31D11F17A325000C64A1 /* BlueprintSlotsFilledAnimation.cpp */; };
 		623B33181F1F6203000C64A1 /* RestartConfirmationDialogView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623B33161F1F6203000C64A1 /* RestartConfirmationDialogView.cpp */; };
 		623B331B1F1F6539000C64A1 /* RestartConfirmationDialogController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623B33191F1F6539000C64A1 /* RestartConfirmationDialogController.cpp */; };
@@ -320,6 +321,8 @@
 		62318C482067F0A4008332CB /* ParticleNoAlphaTexture.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ParticleNoAlphaTexture.vert; sourceTree = "<group>"; };
 		62318C4B2067F668008332CB /* flare24.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = flare24.png; sourceTree = "<group>"; };
 		623326722073D69400AC505A /* level29.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level29.json; sourceTree = "<group>"; };
+		62332674207658DA00AC505A /* FieldExplosionsStates.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FieldExplosionsStates.cpp; sourceTree = "<group>"; };
+		62332675207658DA00AC505A /* FieldExplosionsStates.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = FieldExplosionsStates.hpp; sourceTree = "<group>"; };
 		623B31D11F17A325000C64A1 /* BlueprintSlotsFilledAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BlueprintSlotsFilledAnimation.cpp; sourceTree = "<group>"; };
 		623B31D21F17A325000C64A1 /* BlueprintSlotsFilledAnimation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = BlueprintSlotsFilledAnimation.hpp; sourceTree = "<group>"; };
 		623B33161F1F6203000C64A1 /* RestartConfirmationDialogView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RestartConfirmationDialogView.cpp; sourceTree = "<group>"; };
@@ -1216,6 +1219,8 @@
 				6251E27420442B6900584E28 /* FallingPiece.hpp */,
 				6251E28220442B6900584E28 /* Field.cpp */,
 				6251E27A20442B6900584E28 /* Field.hpp */,
+				62332674207658DA00AC505A /* FieldExplosionsStates.cpp */,
+				62332675207658DA00AC505A /* FieldExplosionsStates.hpp */,
 				6251E28020442B6900584E28 /* GameLogic.cpp */,
 				6251E27820442B6900584E28 /* GameLogic.hpp */,
 				6251E27320442B6900584E28 /* GestureInputHandler.cpp */,
@@ -2157,6 +2162,7 @@
 				623FB836204C18030066652E /* LPiece.cpp in Sources */,
 				623FB833204C18030066652E /* FPiece.cpp in Sources */,
 				62944D6C20053A2D00814D36 /* MeshUtils.cpp in Sources */,
+				62332676207658DA00AC505A /* FieldExplosionsStates.cpp in Sources */,
 				6255510A201C93EA008A8BD3 /* GameHud.cpp in Sources */,
 				62944DAA20053A2D00814D36 /* SceneManager.cpp in Sources */,
 				623FB831204C18030066652E /* BigTrianglePiece.cpp in Sources */,
