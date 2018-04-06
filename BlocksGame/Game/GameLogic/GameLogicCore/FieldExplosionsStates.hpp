@@ -11,6 +11,7 @@ namespace Pht {
 
 namespace BlocksGame {
     class Field;
+    class ExplosionParticleEffect;
     class LaserParticleEffect;
     class FlyingBlocksAnimation;
     
@@ -23,6 +24,7 @@ namespace BlocksGame {
 
         FieldExplosionsStates(Pht::IEngine& engine,
                               Field& field,
+                              ExplosionParticleEffect& explosionParticleEffect,
                               LaserParticleEffect& laserParticleEffect,
                               FlyingBlocksAnimation& flyingBlocksAnimation);
         
@@ -32,6 +34,28 @@ namespace BlocksGame {
         void DetonateLevelBomb(const Pht::IVec2& position);
 
     private:
+        struct BombExplosionState {
+            Pht::IVec2 mPosition;
+            float mElapsedTime {0.0f};
+        };
+        
+        struct LaserState {
+            enum class CuttingState {
+                FreeSpace,
+                Cutting,
+                Done
+            };
+
+            struct CuttingProgress {
+                float mXPosition;
+                CuttingState mState {CuttingState::FreeSpace};
+            };
+            
+            CuttingProgress mLeftCuttingProgress;
+            CuttingProgress mRightCuttingProgress;
+            int mCuttingPositionY;
+        };
+        
         struct ExplosionState {
             enum class Kind {
                 Bomb,
@@ -40,18 +64,22 @@ namespace BlocksGame {
             };
             
             Kind mKind;
-            Pht::IVec2 mPosition;
-            float mElapsedTime {0.0f};
+            BombExplosionState mBombExplosionState;
+            LaserState mLaserState;
         };
         
         using ExplosionsStates = Pht::StaticVector<ExplosionState, 200>;
         
         State UpdateExplosionState(ExplosionState& explosionState, float dt);
-        State UpdateRowBombLaserState(ExplosionState& laserState, float dt);
+        State UpdateBombExplosionState(BombExplosionState& bombExplosionState, float dt);
+        State UpdateRowBombLaserState(LaserState& laserState, float dt);
+        void UpdateLeftCuttingProgress(LaserState& laserState, float dt);
+        void UpdateRightCuttingProgress(LaserState& laserState, float dt);
         void RemoveRows();
         
         Pht::IEngine& mEngine;
         Field& mField;
+        ExplosionParticleEffect& mExplosionParticleEffect;
         LaserParticleEffect& mLaserParticleEffect;
         FlyingBlocksAnimation& mFlyingBlocksAnimation;
         ExplosionsStates mExplosionsStates;

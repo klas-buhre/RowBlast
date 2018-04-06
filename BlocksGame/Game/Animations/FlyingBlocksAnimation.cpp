@@ -51,12 +51,12 @@ void FlyingBlocksAnimation::Init() {
 
 void FlyingBlocksAnimation::AddBlockRows(const Field::RemovedSubCells& subCells) {
     for (auto& removedSubCell: subCells) {
-
         Pht::Vec3 explosiveForceDirecton {
             Pht::NormalizedRand() - 0.5f,
             Pht::NormalizedRand() - 0.5f,
             1.0f
         };
+
         explosiveForceDirecton.Normalize();
         auto force {explosiveForceDirecton * rowExplosionForceMagnitude};
         

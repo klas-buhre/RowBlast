@@ -11,6 +11,7 @@
 #include "ClickInputHandler.hpp"
 #include "FallingPieceAnimation.hpp"
 #include "Settings.hpp"
+#include "FieldExplosionsStates.hpp"
 
 namespace Pht {
     class IEngine;
@@ -137,6 +138,7 @@ namespace BlocksGame {
         void UpdateLevelProgress();
         Pht::Vec2 CalculateFallingPieceInitPos();
         void HandleCascading();
+        void UpdateFieldExplosionsStates();
         void HandleControlTypeChange();
         void UpdateFallingPieceYpos();
         void LandFallingPiece(bool startParticleEffect);
@@ -153,7 +155,7 @@ namespace BlocksGame {
         void ForwardTouchToInputHandler(const Pht::TouchEvent& touchEvent);
         
         enum class State {
-            Normal,
+            LogicUpdate,
             FieldExplosions
         };
         
@@ -188,9 +190,10 @@ namespace BlocksGame {
         GameHudController& mGameHudController;
         const Settings& mSettings;
         ControlType mPreviousControlType;
-        State mState {State::Normal};
+        State mState {State::LogicUpdate};
         CascadeState mCascadeState {CascadeState::NotCascading};
         float mCascadeWaitTime {0.0f};
+        FieldExplosionsStates mFieldExplosionsStates;
         FallingPieceAnimation mFallingPieceAnimation;
         FallingPiece mFallingPieceStorage;
         GestureInputHandler mGestureInputHandler;

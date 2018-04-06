@@ -5,13 +5,16 @@
 
 // Game includes.
 #include "Field.hpp"
+#include "ExplosionParticleEffect.hpp"
 #include "LaserParticleEffect.hpp"
 #include "FlyingBlocksAnimation.hpp"
 
 using namespace BlocksGame;
 
 namespace {
-    constexpr auto laserForceSpeed {20.0f};
+    constexpr auto bombExplosionMaxReach {2};
+    constexpr auto bombExplosionForceSpeed {50.0f}; // {25.0f};
+    constexpr auto laserCuttingSpeed {25.0f};
     
     bool CompareRowsTopToDown(int rowIndexA, int rowIndexB) {
         return rowIndexA > rowIndexB;
@@ -20,47 +23,216 @@ namespace {
 
 FieldExplosionsStates::FieldExplosionsStates(Pht::IEngine& engine,
                                              Field& field,
+                                             ExplosionParticleEffect& explosionParticleEffect,
                                              LaserParticleEffect& laserParticleEffect,
                                              FlyingBlocksAnimation& flyingBlocksAnimation) :
     mEngine {engine},
     mField {field},
+    mExplosionParticleEffect {explosionParticleEffect},
     mLaserParticleEffect {laserParticleEffect},
     mFlyingBlocksAnimation {flyingBlocksAnimation} {}
 
 FieldExplosionsStates::State FieldExplosionsStates::Update() {
-    auto state {State::Inactive};
     auto dt {mEngine.GetLastFrameSeconds()};
     
     for (auto i {0}; i < mExplosionsStates.Size();) {
         if (UpdateExplosionState(mExplosionsStates.At(i), dt) == State::Active) {
-            state = State::Active;
             ++i;
         } else {
             mExplosionsStates.Erase(i);
         }
     }
     
-    if (state == State::Inactive) {
+    if (mExplosionsStates.IsEmpty()) {
         RemoveRows();
+        return State::Inactive;
     }
     
-    return state;
+    return State::Active;
 }
 
 FieldExplosionsStates::State
 FieldExplosionsStates::UpdateExplosionState(ExplosionState& explosionState, float dt) {
     switch (explosionState.mKind) {
         case ExplosionState::Kind::Bomb:
-            return State::Inactive;
+            return UpdateBombExplosionState(explosionState.mBombExplosionState, dt);
         case ExplosionState::Kind::Laser:
-            return UpdateRowBombLaserState(explosionState, dt);
+            return UpdateRowBombLaserState(explosionState.mLaserState, dt);
         case ExplosionState::Kind::LevelBomb:
             return State::Inactive;
     }
 }
 
 FieldExplosionsStates::State
-FieldExplosionsStates::UpdateRowBombLaserState(ExplosionState& laserState, float dt) {
+FieldExplosionsStates::UpdateBombExplosionState(BombExplosionState& bombExplosionState, float dt) {
+    auto previousElapsedTime {bombExplosionState.mElapsedTime};
+    bombExplosionState.mElapsedTime += dt;
+    
+    auto explosionForceReach {
+        static_cast<int>(bombExplosionState.mElapsedTime * bombExplosionForceSpeed)
+    };
+    
+    auto previousExplosionForceReach {
+        static_cast<int>(previousElapsedTime * bombExplosionForceSpeed)
+    };
+    
+    if (explosionForceReach != previousExplosionForceReach && explosionForceReach > 0) {
+        if (explosionForceReach > bombExplosionMaxReach) {
+            explosionForceReach = bombExplosionMaxReach;
+        }
+        
+        Pht::IVec2 areaPosition {
+            bombExplosionState.mPosition.x - explosionForceReach,
+            bombExplosionState.mPosition.y - explosionForceReach
+        };
+        
+        Pht::IVec2 areaSize {explosionForceReach * 2 + 1, explosionForceReach * 2 + 1};
+        auto removedSubCells {mField.RemoveAreaOfSubCells(areaPosition, areaSize)};
+        
+        if (removedSubCells.Size() > 0) {
+            mFlyingBlocksAnimation.AddBlocks(removedSubCells, bombExplosionState.mPosition);
+        
+            for (auto& subCell: removedSubCells) {
+                switch (subCell.mBlockKind) {
+                    case BlockKind::Bomb:
+                        DetonateLevelBomb(subCell.mGridPosition);
+                        break;
+                    case BlockKind::RowBomb: {
+                        Pht::Vec2 exactPosition {
+                            static_cast<float>(subCell.mGridPosition.x),
+                            static_cast<float>(subCell.mGridPosition.y)
+                        };
+                        DetonateRowBomb(subCell.mGridPosition, exactPosition);
+                        break;
+                    }
+                    default:
+                        break;
+                }
+            }
+        }
+        
+        if (explosionForceReach == bombExplosionMaxReach) {
+            return State::Inactive;
+        }
+    }
+
+    return State::Active;
+}
+
+FieldExplosionsStates::State
+FieldExplosionsStates::UpdateRowBombLaserState(LaserState& laserState, float dt) {
+    auto previousLeftColumn {static_cast<int>(laserState.mLeftCuttingProgress.mXPosition)};
+    auto previousRightColumn {static_cast<int>(laserState.mRightCuttingProgress.mXPosition)};
+    
+    UpdateLeftCuttingProgress(laserState, dt);
+    UpdateRightCuttingProgress(laserState, dt);
+
+    auto leftColumn {static_cast<int>(laserState.mLeftCuttingProgress.mXPosition)};
+    auto rightColumn {static_cast<int>(laserState.mRightCuttingProgress.mXPosition)};
+    
+    if (previousLeftColumn != leftColumn || previousRightColumn != rightColumn) {
+        auto row {laserState.mCuttingPositionY};
+        Pht::IVec2 areaPosition {previousLeftColumn, row};
+        Pht::IVec2 areaSize {previousRightColumn - previousLeftColumn + 1, 1};
+        auto removedSubCells {mField.RemoveAreaOfSubCells(areaPosition, areaSize)};
+        
+        if (removedSubCells.Size() > 0) {
+            mFlyingBlocksAnimation.AddBlockRows(removedSubCells);
+
+            for (auto& subCell: removedSubCells) {
+                if (subCell.mBlockKind == BlockKind::Bomb) {
+                    DetonateLevelBomb(subCell.mGridPosition);
+                }
+            }
+        }
+    }
+
+    if (laserState.mLeftCuttingProgress.mState == LaserState::CuttingState::Done &&
+        laserState.mRightCuttingProgress.mState == LaserState::CuttingState::Done) {
+
+        return State::Inactive;
+    }
+    
+    return State::Active;
+}
+
+void FieldExplosionsStates::UpdateLeftCuttingProgress(LaserState& laserState, float dt) {
+    auto row {laserState.mCuttingPositionY};
+    auto& cuttingProgress {laserState.mLeftCuttingProgress};
+
+    switch (cuttingProgress.mState) {
+        case LaserState::CuttingState::FreeSpace: {
+            for (auto column {static_cast<int>(cuttingProgress.mXPosition)};;) {
+                if (column < 0) {
+                    cuttingProgress.mState = LaserState::CuttingState::Done;
+                    break;
+                }
+                if (!mField.GetCell(row, column).IsEmpty()) {
+                    cuttingProgress.mXPosition = static_cast<float>(column) + 0.9f;
+                    cuttingProgress.mState = LaserState::CuttingState::Cutting;
+                    break;
+                }
+                --column;
+            }
+            break;
+        }
+        case LaserState::CuttingState::Cutting: {
+            cuttingProgress.mXPosition -= laserCuttingSpeed * dt;
+            auto column {static_cast<int>(cuttingProgress.mXPosition)};
+            if (column < 0) {
+                cuttingProgress.mState = LaserState::CuttingState::Done;
+                return;
+            }
+            if (mField.GetCell(row, column).IsEmpty()) {
+                cuttingProgress.mState = LaserState::CuttingState::FreeSpace;
+            }
+            break;
+        }
+        case LaserState::CuttingState::Done:
+            break;
+    }
+}
+
+void FieldExplosionsStates::UpdateRightCuttingProgress(LaserState& laserState, float dt) {
+    auto row {laserState.mCuttingPositionY};
+    auto& cuttingProgress {laserState.mRightCuttingProgress};
+
+    switch (cuttingProgress.mState) {
+        case LaserState::CuttingState::FreeSpace: {
+            for (auto column {static_cast<int>(cuttingProgress.mXPosition)};;) {
+                if (column >= mField.GetNumColumns()) {
+                    cuttingProgress.mState = LaserState::CuttingState::Done;
+                    break;
+                }
+                if (!mField.GetCell(row, column).IsEmpty()) {
+                    cuttingProgress.mXPosition = static_cast<float>(column) + 0.1f;
+                    cuttingProgress.mState = LaserState::CuttingState::Cutting;
+                    break;
+                }
+                ++column;
+            }
+            break;
+        }
+        case LaserState::CuttingState::Cutting: {
+            cuttingProgress.mXPosition += laserCuttingSpeed * dt;
+            auto column {static_cast<int>(cuttingProgress.mXPosition)};
+            if (column >= mField.GetNumColumns()) {
+                cuttingProgress.mState = LaserState::CuttingState::Done;
+                return;
+            }
+            if (mField.GetCell(row, column).IsEmpty()) {
+                cuttingProgress.mState = LaserState::CuttingState::FreeSpace;
+            }
+            break;
+        }
+        case LaserState::CuttingState::Done:
+            break;
+    }
+}
+
+/*
+FieldExplosionsStates::State
+FieldExplosionsStates::UpdateRowBombLaserState(LaserState& laserState, float dt) {
     auto previousElapsedTime {laserState.mElapsedTime};
     laserState.mElapsedTime += dt;
     
@@ -74,11 +246,11 @@ FieldExplosionsStates::UpdateRowBombLaserState(ExplosionState& laserState, float
         
         if (removedSubCells.Size() > 0) {
             mFlyingBlocksAnimation.AddBlockRows(removedSubCells);
-        }
-        
-        for (auto& subCell: removedSubCells) {
-            if (subCell.mBlockKind == BlockKind::Bomb) {
-                DetonateLevelBomb(subCell.mGridPosition);
+
+            for (auto& subCell: removedSubCells) {
+                if (subCell.mBlockKind == BlockKind::Bomb) {
+                    DetonateLevelBomb(subCell.mGridPosition);
+                }
             }
         }
 
@@ -89,8 +261,9 @@ FieldExplosionsStates::UpdateRowBombLaserState(ExplosionState& laserState, float
         }
     }
 
-    return State::Inactive;
+    return State::Active;
 }
+*/
 
 void FieldExplosionsStates::RemoveRows() {
     mRowsToRemove.Sort(CompareRowsTopToDown);
@@ -104,7 +277,16 @@ void FieldExplosionsStates::RemoveRows() {
 
 void FieldExplosionsStates::DetonateBomb(const Pht::IVec2& position,
                                          const Pht::Vec2& exactPosition) {
-
+    mExplosionParticleEffect.StartExplosion(exactPosition);
+    
+    mField.RemoveAreaOfSubCells(position, {1, 1});
+    
+    BombExplosionState bombExplosionState {position};
+    ExplosionState explosionState {
+        .mKind = ExplosionState::Kind::Bomb,
+        .mBombExplosionState = bombExplosionState
+    };
+    mExplosionsStates.PushBack(explosionState);
 }
 
 void FieldExplosionsStates::DetonateRowBomb(const Pht::IVec2& position,
@@ -113,8 +295,15 @@ void FieldExplosionsStates::DetonateRowBomb(const Pht::IVec2& position,
     
     mField.RemoveAreaOfSubCells(position, {1, 1});
     
-    ExplosionState laserState {ExplosionState::Kind::Laser, position};
-    mExplosionsStates.PushBack(laserState);
+    auto cuttingPositionX {static_cast<float>(position.x) + 0.5f};
+    LaserState laserState {
+        .mLeftCuttingProgress = LaserState::CuttingProgress{cuttingPositionX},
+        .mRightCuttingProgress = LaserState::CuttingProgress{cuttingPositionX},
+        .mCuttingPositionY = position.y
+    };
+    
+    ExplosionState explosionState {.mKind = ExplosionState::Kind::Laser, .mLaserState = laserState};
+    mExplosionsStates.PushBack(explosionState);
     
     if (mRowsToRemove.Find(position.y) == nullptr) {
         mRowsToRemove.PushBack(position.y);

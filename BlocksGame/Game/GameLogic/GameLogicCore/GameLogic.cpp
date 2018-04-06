@@ -69,6 +69,13 @@ GameLogic::GameLogic(Pht::IEngine& engine,
     mGameHudController {gameHudController},
     mSettings {settings},
     mPreviousControlType {mSettings.mControlType},
+    mFieldExplosionsStates {
+        engine,
+        field,
+        explosionParticleEffect,
+        laserParticleEffect,
+        flyingBlocksAnimation
+    },
     mFallingPieceAnimation {*this, mFallingPieceStorage},
     mGestureInputHandler {*this, mFallingPieceStorage},
     mClickInputHandler {engine, field, gameScene, *this},
@@ -87,7 +94,7 @@ void GameLogic::Init(const Level& level) {
         mLandingMovementDuration = std::numeric_limits<float>::max();
     }
     
-    mState = State::Normal;
+    mState = State::LogicUpdate;
     mCascadeState = CascadeState::NotCascading;
 
     RemoveFallingPiece();
@@ -113,26 +120,28 @@ void GameLogic::Init(const Level& level) {
 }
 
 GameLogic::Result GameLogic::Update(bool shouldUpdateLogic) {
-    if (shouldUpdateLogic) {
-        HandleCascading();
-        
-        if (mCascadeState != CascadeState::NotCascading) {
-            return Result::None;
-        }
-        
-        HandleControlTypeChange();
-        
-        if (mFallingPieceInitReason != FallingPieceInitReason::None) {
-            auto result {InitFallingPiece()};
-            mFallingPieceInitReason = FallingPieceInitReason::None;
-            
-            if (result != Result::None) {
-                return result;
+    switch (mState) {
+        case State::LogicUpdate:
+            if (shouldUpdateLogic) {
+                HandleCascading();
+                if (mCascadeState != CascadeState::NotCascading) {
+                    return Result::None;
+                }
+                HandleControlTypeChange();
+                if (mFallingPieceInitReason != FallingPieceInitReason::None) {
+                    auto result {InitFallingPiece()};
+                    mFallingPieceInitReason = FallingPieceInitReason::None;
+                    if (result != Result::None) {
+                        return result;
+                    }
+                }
+                mFallingPiece->UpdateTime(mEngine.GetLastFrameSeconds());
+                UpdateFallingPieceYpos();
             }
-        }
-        
-        mFallingPiece->UpdateTime(mEngine.GetLastFrameSeconds());
-        UpdateFallingPieceYpos();
+            break;
+        case State::FieldExplosions:
+            UpdateFieldExplosionsStates();
+            break;
     }
     
     return HandleInput();
@@ -299,6 +308,14 @@ void GameLogic::HandleCascading() {
     }
 }
 
+void GameLogic::UpdateFieldExplosionsStates() {
+    if (mFieldExplosionsStates.Update() == FieldExplosionsStates::State::Inactive) {
+        mState = State::LogicUpdate;
+        UpdateLevelProgress();
+        PullDownLoosePieces();
+    }
+}
+
 void GameLogic::HandleControlTypeChange() {
     if (mFallingPiece == nullptr) {
         return;
@@ -446,29 +463,14 @@ void GameLogic::DetonateBomb() {
     auto detonationPos {mFallingPiece->GetRenderablePosition() + Pht::Vec2{1.0f, 1.0f}};
     
     if (mFallingPiece->GetPieceType().IsRowBomb()) {
-        mLaserParticleEffect.StartLaser(detonationPos);
-        
-        auto removedSubCells {mField.RemoveRow(intDetonationPos.y)};
-
-        if (removedSubCells.Size() > 0) {
-            mFlyingBlocksAnimation.AddBlockRows(removedSubCells);
-        }
+        mFieldExplosionsStates.DetonateRowBomb(intDetonationPos, detonationPos);
     } else {
-        mExplosionParticleEffect.StartExplosion(detonationPos);
-        
-        Pht::IVec2 detonationAreaPos {intDetonationPos - Pht::IVec2{2, 2}};
-        auto removedSubCells {mField.RemoveAreaOfSubCells(detonationAreaPos, bombDetonationAreaSize)};
-
-        if (removedSubCells.Size() > 0) {
-            mFlyingBlocksAnimation.AddBlocks(removedSubCells, intDetonationPos);
-        }
+        mFieldExplosionsStates.DetonateBomb(intDetonationPos, detonationPos);
         
         if (mBlastRadiusAnimation.IsActive()) {
             mBlastRadiusAnimation.Stop();
         }
     }
-    
-    PullDownLoosePieces();
 }
 
 void GameLogic::GoToFieldExplosionsState() {
