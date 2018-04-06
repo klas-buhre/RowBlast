@@ -83,8 +83,8 @@ void FlyingBlocksAnimation::AddBlockRows(const Field::RemovedSubCells& subCells)
 void FlyingBlocksAnimation::AddBlocks(const Field::RemovedSubCells& subCells,
                                       const Pht::IVec2& detonationPos) {
     for (auto& removedSubCell: subCells) {
-        auto dx {static_cast<float>(removedSubCell.mPosition.x - detonationPos.x)};
-        auto dy {static_cast<float>(removedSubCell.mPosition.y - detonationPos.y)};
+        auto dx {removedSubCell.mExactPosition.x - static_cast<float>(detonationPos.x)};
+        auto dy {removedSubCell.mExactPosition.y - static_cast<float>(detonationPos.y)};
         
         if (dx == 0.0f) {
             dx = dy * (Pht::NormalizedRand() * 0.2f - 0.1f);
@@ -171,8 +171,8 @@ Pht::Vec3 FlyingBlocksAnimation::CalculateBlockInitialPosition(const RemovedSubC
     auto& fieldLowerLeft {mScene.GetFieldLoweLeft()};
 
     Pht::Vec3 position {
-        static_cast<float>(subCell.mPosition.x) * cellSize + cellSize / 2.0f + fieldLowerLeft.x,
-        static_cast<float>(subCell.mPosition.y) * cellSize + cellSize / 2.0f + fieldLowerLeft.y,
+        subCell.mExactPosition.x * cellSize + cellSize / 2.0f + fieldLowerLeft.x,
+        subCell.mExactPosition.y * cellSize + cellSize / 2.0f + fieldLowerLeft.y,
         mScene.GetFieldPosition().z
     };
     

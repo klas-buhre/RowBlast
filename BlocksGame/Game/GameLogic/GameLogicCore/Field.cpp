@@ -1286,8 +1286,8 @@ void Field::RemoveRowImpl(int rowIndex, Field::RemovedSubCells& removedSubCells)
     for (auto column {0}; column < mNumColumns; ++column) {
         auto& cell {mGrid[rowIndex][column]};
         
-        ProcessSubCell(removedSubCells, cell.mFirstSubCell);
-        ProcessSubCell(removedSubCells, cell.mSecondSubCell);
+        ProcessSubCell(removedSubCells, cell.mFirstSubCell, rowIndex, column);
+        ProcessSubCell(removedSubCells, cell.mSecondSubCell, rowIndex, column);
         
         BreakCellDownWelds(rowIndex + 1, column);
         BreakCellUpWelds(rowIndex - 1, column);
@@ -1402,8 +1402,8 @@ Field::RemovedSubCells Field::RemoveAreaOfSubCells(const Pht::IVec2& areaPos,
             }
             
             auto& cell {mGrid[row][column]};
-            ProcessSubCell(removedSubCells, cell.mFirstSubCell);
-            ProcessSubCell(removedSubCells, cell.mSecondSubCell);
+            ProcessSubCell(removedSubCells, cell.mFirstSubCell, row, column);
+            ProcessSubCell(removedSubCells, cell.mSecondSubCell, row, column);
             
             cell = Cell {};
         }
@@ -1429,8 +1429,8 @@ Field::RemovedSubCells Field::RemoveAllNonEmptySubCells() {
                 continue;
             }
             
-            ProcessSubCell(removedSubCells, cell.mFirstSubCell);
-            ProcessSubCell(removedSubCells, cell.mSecondSubCell);
+            ProcessSubCell(removedSubCells, cell.mFirstSubCell, row, column);
+            ProcessSubCell(removedSubCells, cell.mSecondSubCell, row, column);
             cell = Cell {};
         }
     }
@@ -1447,24 +1447,29 @@ void Field::RemoveWholePiece(int pieceId, Field::RemovedSubCells& removedSubCell
                 continue;
             }
             
-            RemoveMatchingSubCell(pieceId, removedSubCells, cell.mFirstSubCell);
-            RemoveMatchingSubCell(pieceId, removedSubCells, cell.mSecondSubCell);
+            RemoveMatchingSubCell(pieceId, removedSubCells, cell.mFirstSubCell, row, column);
+            RemoveMatchingSubCell(pieceId, removedSubCells, cell.mSecondSubCell, row, column);
         }
     }
 }
 
 void Field::RemoveMatchingSubCell(int pieceId,
                                   Field::RemovedSubCells& removedSubCells,
-                                  SubCell& subCell) {
+                                  SubCell& subCell,
+                                  int row,
+                                  int column) {
     if (subCell.mPieceId == pieceId) {
-        SaveSubCellAndCancelFill(removedSubCells, subCell);
+        SaveSubCellAndCancelFill(removedSubCells, subCell, row, column);
         
         subCell = SubCell {};
     }
 }
 
-void Field::ProcessSubCell(Field::RemovedSubCells& removedSubCells, const SubCell& subCell) {
-    SaveSubCellAndCancelFill(removedSubCells, subCell);
+void Field::ProcessSubCell(Field::RemovedSubCells& removedSubCells,
+                           const SubCell& subCell,
+                           int row,
+                           int column) {
+    SaveSubCellAndCancelFill(removedSubCells, subCell, row, column);
     
     if (subCell.mIsPartOfIndivisiblePiece) {
         RemoveWholePiece(subCell.mPieceId, removedSubCells);
@@ -1472,17 +1477,15 @@ void Field::ProcessSubCell(Field::RemovedSubCells& removedSubCells, const SubCel
 }
 
 void Field::SaveSubCellAndCancelFill(Field::RemovedSubCells& removedSubCells,
-                                     const SubCell& subCell) {
+                                     const SubCell& subCell,
+                                     int row,
+                                     int column) {
     auto position {subCell.mPosition};
     
-    if (subCell.mBlockKind != BlockKind::None &&
-        subCell.mPosition.y >= static_cast<float>(mLowestVisibleRow)) {
-
+    if (subCell.mBlockKind != BlockKind::None && row >= mLowestVisibleRow) {
         RemovedSubCell removedSubCell {
-            .mPosition = Pht::IVec2{
-                static_cast<int>(position.x),
-                static_cast<int>(position.y)
-            },
+            .mExactPosition = subCell.mPosition,
+            .mGridPosition = Pht::IVec2{column, row},
             .mRotation = subCell.mRotation,
             .mBlockKind = subCell.mBlockKind,
             .mColor = subCell.mColor,

@@ -66,7 +66,7 @@ FieldExplosionsStates::UpdateRowBombLaserState(RowBombLaserState& laserState, fl
         
         for (auto& subCell: removedSubCells) {
             if (subCell.mBlockKind == BlockKind::Bomb) {
-                DetonateLevelBomb(subCell.mPosition);
+                DetonateLevelBomb(subCell.mGridPosition);
             }
         }
 

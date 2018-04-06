@@ -17,13 +17,14 @@ namespace BlocksGame {
     class Level;
 
     struct RemovedSubCell {
-        Pht::IVec2 mPosition;
+        Pht::Vec2 mExactPosition;
+        Pht::IVec2 mGridPosition;
         Rotation mRotation;
         BlockKind mBlockKind {BlockKind::None};
         BlockColor mColor;
         bool mIsGrayLevelBlock {false};
     };
-    
+
     enum class IsCollision {
         Yes,
         NextWillBe,
@@ -217,10 +218,17 @@ namespace BlocksGame {
         void RemoveWholePiece(int pieceId, Field::RemovedSubCells& removedSubCells);
         void RemoveMatchingSubCell(int pieceId,
                                    Field::RemovedSubCells& removedSubCells,
-                                   SubCell& subCell);
-        void ProcessSubCell(Field::RemovedSubCells& removedSubCells, const SubCell& subCell);
+                                   SubCell& subCell,
+                                   int row,
+                                   int column);
+        void ProcessSubCell(Field::RemovedSubCells& removedSubCells,
+                            const SubCell& subCell,
+                            int row,
+                            int column);
         void SaveSubCellAndCancelFill(Field::RemovedSubCells& removedSubCells,
-                                      const SubCell& subCell);
+                                      const SubCell& subCell,
+                                      int row,
+                                      int column);
 
         CellGrid mGrid;
         CellGrid mPreviousGrid;
