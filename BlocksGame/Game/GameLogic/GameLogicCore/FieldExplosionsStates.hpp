@@ -32,44 +32,29 @@ namespace BlocksGame {
         void DetonateLevelBomb(const Pht::IVec2& position);
 
     private:
-        // Maybe these structs can be changed into one single struct:
-        // ExplosionState {mKind, mPosition, mElapsedTime}
-        
-        struct BombExplosionState {
-            enum class State {
-                Stage1,
-                Stage2,
+        struct ExplosionState {
+            enum class Kind {
+                Bomb,
+                Laser,
+                LevelBomb
             };
             
-            Pht::IVec2 mPosition;
-            float mElapsedTime {0.0f};
-            State mState {State::Stage1};
-        };
-
-        struct RowBombLaserState {
-            Pht::IVec2 mPosition;
-            float mElapsedTime {0.0f};
-        };
-
-        struct LevelBombExplosionState {
+            Kind mKind;
             Pht::IVec2 mPosition;
             float mElapsedTime {0.0f};
         };
         
-        using BombExplosionsStates = Pht::StaticVector<BombExplosionState, 10>;
-        using RowBombLasersStates = Pht::StaticVector<RowBombLaserState, 10>;
-        using LevelBombExplosionsStates = Pht::StaticVector<LevelBombExplosionState, 100>;
+        using ExplosionsStates = Pht::StaticVector<ExplosionState, 200>;
         
-        State UpdateRowBombLaserState(RowBombLaserState& laserState, float dt);
+        State UpdateExplosionState(ExplosionState& explosionState, float dt);
+        State UpdateRowBombLaserState(ExplosionState& laserState, float dt);
         void RemoveRows();
         
         Pht::IEngine& mEngine;
         Field& mField;
         LaserParticleEffect& mLaserParticleEffect;
         FlyingBlocksAnimation& mFlyingBlocksAnimation;
-        BombExplosionsStates mBombExplosionsStates;
-        RowBombLasersStates mRowBombLasersStates;
-        LevelBombExplosionsStates mLevelBombExplosionsStates;
+        ExplosionsStates mExplosionsStates;
         Pht::StaticVector<int, 10> mRowsToRemove;
     };
 }

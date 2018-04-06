@@ -31,12 +31,12 @@ FieldExplosionsStates::State FieldExplosionsStates::Update() {
     auto state {State::Inactive};
     auto dt {mEngine.GetLastFrameSeconds()};
     
-    for (auto i {0}; i < mRowBombLasersStates.Size();) {
-        if (UpdateRowBombLaserState(mRowBombLasersStates.At(i), dt) == State::Active) {
+    for (auto i {0}; i < mExplosionsStates.Size();) {
+        if (UpdateExplosionState(mExplosionsStates.At(i), dt) == State::Active) {
             state = State::Active;
             ++i;
         } else {
-            mRowBombLasersStates.Erase(i);
+            mExplosionsStates.Erase(i);
         }
     }
     
@@ -48,7 +48,19 @@ FieldExplosionsStates::State FieldExplosionsStates::Update() {
 }
 
 FieldExplosionsStates::State
-FieldExplosionsStates::UpdateRowBombLaserState(RowBombLaserState& laserState, float dt) {
+FieldExplosionsStates::UpdateExplosionState(ExplosionState& explosionState, float dt) {
+    switch (explosionState.mKind) {
+        case ExplosionState::Kind::Bomb:
+            return State::Inactive;
+        case ExplosionState::Kind::Laser:
+            return UpdateRowBombLaserState(explosionState, dt);
+        case ExplosionState::Kind::LevelBomb:
+            return State::Inactive;
+    }
+}
+
+FieldExplosionsStates::State
+FieldExplosionsStates::UpdateRowBombLaserState(ExplosionState& laserState, float dt) {
     auto previousElapsedTime {laserState.mElapsedTime};
     laserState.mElapsedTime += dt;
     
@@ -101,8 +113,8 @@ void FieldExplosionsStates::DetonateRowBomb(const Pht::IVec2& position,
     
     mField.RemoveAreaOfSubCells(position, {1, 1});
     
-    RowBombLaserState laser {position};
-    mRowBombLasersStates.PushBack(laser);
+    ExplosionState laserState {ExplosionState::Kind::Laser, position};
+    mExplosionsStates.PushBack(laserState);
     
     if (mRowsToRemove.Find(position.y) == nullptr) {
         mRowsToRemove.PushBack(position.y);
