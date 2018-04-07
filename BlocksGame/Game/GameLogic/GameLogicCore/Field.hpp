@@ -61,7 +61,14 @@ namespace BlocksGame {
             IsCollision mIsCollision {IsCollision::No};
             CollisionPoints mCollisionPoints;
         };
-    
+
+        struct ImpactedBomb {
+            Pht::IVec2 mPosition;
+            BlockKind mKind;
+        };
+        
+        using ImpactedBombs = Pht::StaticVector<ImpactedBomb, maxNumColumns>;
+
         Field();
         
         void Init(const Level& level);
@@ -84,6 +91,8 @@ namespace BlocksGame {
         int DetectFreeSpaceLeft(const PieceBlocks& pieceBlocks, const Pht::IVec2& position) const;
         CollisionPoints GetOccupiedArea(const PieceBlocks& pieceBlocks,
                                         const Pht::IVec2& position) const;
+        ImpactedBombs DetectImpactedBombs(const PieceBlocks& pieceBlocks,
+                                          const Pht::IVec2& position);
         void LandFallingPiece(const FallingPiece& fallingPiece);
         void LandPieceBlocks(const PieceBlocks& pieceBlocks,
                              int pieceId,

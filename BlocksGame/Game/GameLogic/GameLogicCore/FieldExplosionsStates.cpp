@@ -15,7 +15,9 @@ namespace {
     constexpr auto bombExplosionMaxReach {2};
     constexpr auto bombExplosionForceSpeed {50.0f}; // {25.0f};
     constexpr auto laserCuttingSpeed {25.0f};
-    
+    constexpr auto levelBombExplosionMaxReach {1};
+    constexpr auto levelBombExplosionForceSpeed {25.0f};
+
     bool CompareRowsTopToDown(int rowIndexA, int rowIndexB) {
         return rowIndexA > rowIndexB;
     }
@@ -59,64 +61,16 @@ FieldExplosionsStates::UpdateExplosionState(ExplosionState& explosionState, floa
         case ExplosionState::Kind::Laser:
             return UpdateRowBombLaserState(explosionState.mLaserState, dt);
         case ExplosionState::Kind::LevelBomb:
-            return State::Inactive;
+            return UpdateLevelBombExplosionState(explosionState.mBombExplosionState, dt);
     }
 }
 
 FieldExplosionsStates::State
 FieldExplosionsStates::UpdateBombExplosionState(BombExplosionState& bombExplosionState, float dt) {
-    auto previousElapsedTime {bombExplosionState.mElapsedTime};
-    bombExplosionState.mElapsedTime += dt;
-    
-    auto explosionForceReach {
-        static_cast<int>(bombExplosionState.mElapsedTime * bombExplosionForceSpeed)
-    };
-    
-    auto previousExplosionForceReach {
-        static_cast<int>(previousElapsedTime * bombExplosionForceSpeed)
-    };
-    
-    if (explosionForceReach != previousExplosionForceReach && explosionForceReach > 0) {
-        if (explosionForceReach > bombExplosionMaxReach) {
-            explosionForceReach = bombExplosionMaxReach;
-        }
-        
-        Pht::IVec2 areaPosition {
-            bombExplosionState.mPosition.x - explosionForceReach,
-            bombExplosionState.mPosition.y - explosionForceReach
-        };
-        
-        Pht::IVec2 areaSize {explosionForceReach * 2 + 1, explosionForceReach * 2 + 1};
-        auto removedSubCells {mField.RemoveAreaOfSubCells(areaPosition, areaSize)};
-        
-        if (removedSubCells.Size() > 0) {
-            mFlyingBlocksAnimation.AddBlocks(removedSubCells, bombExplosionState.mPosition);
-        
-            for (auto& subCell: removedSubCells) {
-                switch (subCell.mBlockKind) {
-                    case BlockKind::Bomb:
-                        DetonateLevelBomb(subCell.mGridPosition);
-                        break;
-                    case BlockKind::RowBomb: {
-                        Pht::Vec2 exactPosition {
-                            static_cast<float>(subCell.mGridPosition.x),
-                            static_cast<float>(subCell.mGridPosition.y)
-                        };
-                        DetonateRowBomb(subCell.mGridPosition, exactPosition);
-                        break;
-                    }
-                    default:
-                        break;
-                }
-            }
-        }
-        
-        if (explosionForceReach == bombExplosionMaxReach) {
-            return State::Inactive;
-        }
-    }
-
-    return State::Active;
+    return UpdateGenericBombExplosionState(bombExplosionState,
+                                           bombExplosionForceSpeed,
+                                           bombExplosionMaxReach,
+                                           dt);
 }
 
 FieldExplosionsStates::State
@@ -137,13 +91,21 @@ FieldExplosionsStates::UpdateRowBombLaserState(LaserState& laserState, float dt)
         auto removedSubCells {mField.RemoveAreaOfSubCells(areaPosition, areaSize)};
         
         if (removedSubCells.Size() > 0) {
-            mFlyingBlocksAnimation.AddBlockRows(removedSubCells);
-
-            for (auto& subCell: removedSubCells) {
-                if (subCell.mBlockKind == BlockKind::Bomb) {
-                    DetonateLevelBomb(subCell.mGridPosition);
+            for (auto i {0}; i < removedSubCells.Size();) {
+                auto& subCell {removedSubCells.At(i)};
+                
+                switch (subCell.mBlockKind) {
+                    case BlockKind::Bomb:
+                        DetonateLevelBomb(subCell.mGridPosition);
+                        removedSubCells.Erase(i);
+                        break;
+                    default:
+                        ++i;
+                        break;
                 }
             }
+            
+            mFlyingBlocksAnimation.AddBlockRows(removedSubCells);
         }
     }
 
@@ -232,7 +194,7 @@ void FieldExplosionsStates::UpdateRightCuttingProgress(LaserState& laserState, f
 
 /*
 FieldExplosionsStates::State
-FieldExplosionsStates::UpdateRowBombLaserState(LaserState& laserState, float dt) {
+FieldExplosionsStates::UpdateBigLaserState(LaserState& laserState, float dt) {
     auto previousElapsedTime {laserState.mElapsedTime};
     laserState.mElapsedTime += dt;
     
@@ -240,18 +202,30 @@ FieldExplosionsStates::UpdateRowBombLaserState(LaserState& laserState, float dt)
     auto previousLaserForceReach {static_cast<int>(previousElapsedTime * laserForceSpeed)};
     
     if (laserForceReach != previousLaserForceReach && laserForceReach > 0) {
-        Pht::IVec2 areaPosition {laserState.mPosition.x - laserForceReach, laserState.mPosition.y};
-        Pht::IVec2 areaSize {laserForceReach * 2 + 1, 1};
+        Pht::IVec2 areaPosition {
+            laserState.mPosition.x - laserForceReach,
+            laserState.mPosition.y - 1
+        };
+ 
+        Pht::IVec2 areaSize {laserForceReach * 2 + 1, 3};
         auto removedSubCells {mField.RemoveAreaOfSubCells(areaPosition, areaSize)};
-        
-        if (removedSubCells.Size() > 0) {
-            mFlyingBlocksAnimation.AddBlockRows(removedSubCells);
 
-            for (auto& subCell: removedSubCells) {
-                if (subCell.mBlockKind == BlockKind::Bomb) {
-                    DetonateLevelBomb(subCell.mGridPosition);
+        if (removedSubCells.Size() > 0) {
+            for (auto i {0}; i < removedSubCells.Size();) {
+                auto& subCell {removedSubCells.At(i)};
+ 
+                switch (subCell.mBlockKind) {
+                    case BlockKind::Bomb:
+                        DetonateLevelBomb(subCell.mGridPosition);
+                        removedSubCells.Erase(i);
+                        break;
+                    default:
+                        ++i;
+                        break;
                 }
             }
+ 
+            mFlyingBlocksAnimation.AddBlockRows(removedSubCells);
         }
 
         if (laserState.mPosition.x + laserForceReach >= mField.GetNumColumns() - 1 &&
@@ -264,6 +238,79 @@ FieldExplosionsStates::UpdateRowBombLaserState(LaserState& laserState, float dt)
     return State::Active;
 }
 */
+
+FieldExplosionsStates::State
+FieldExplosionsStates::UpdateLevelBombExplosionState(BombExplosionState& levelBombExplosionState,
+                                                     float dt) {
+    return UpdateGenericBombExplosionState(levelBombExplosionState,
+                                           levelBombExplosionForceSpeed,
+                                           levelBombExplosionMaxReach,
+                                           dt);
+}
+
+FieldExplosionsStates::State
+FieldExplosionsStates::UpdateGenericBombExplosionState(BombExplosionState& explosionState,
+                                                       float explosionForceSpeed,
+                                                       float explosionMaxReach,
+                                                       float dt) {
+    auto previousElapsedTime {explosionState.mElapsedTime};
+    explosionState.mElapsedTime += dt;
+    
+    auto explosionForceReach {
+        static_cast<int>(explosionState.mElapsedTime * explosionForceSpeed)
+    };
+    
+    auto previousExplosionForceReach {
+        static_cast<int>(previousElapsedTime * explosionForceSpeed)
+    };
+    
+    if (explosionForceReach != previousExplosionForceReach && explosionForceReach > 0) {
+        if (explosionForceReach > explosionMaxReach) {
+            explosionForceReach = explosionMaxReach;
+        }
+        
+        Pht::IVec2 areaPosition {
+            explosionState.mPosition.x - explosionForceReach,
+            explosionState.mPosition.y - explosionForceReach
+        };
+        
+        Pht::IVec2 areaSize {explosionForceReach * 2 + 1, explosionForceReach * 2 + 1};
+        auto removedSubCells {mField.RemoveAreaOfSubCells(areaPosition, areaSize)};
+        
+        if (removedSubCells.Size() > 0) {
+            for (auto i {0}; i < removedSubCells.Size();) {
+                auto& subCell {removedSubCells.At(i)};
+                
+                switch (subCell.mBlockKind) {
+                    case BlockKind::Bomb:
+                        DetonateLevelBomb(subCell.mGridPosition);
+                        removedSubCells.Erase(i);
+                        break;
+                    case BlockKind::RowBomb: {
+                        Pht::Vec2 exactPosition {
+                            static_cast<float>(subCell.mGridPosition.x),
+                            static_cast<float>(subCell.mGridPosition.y)
+                        };
+                        DetonateRowBomb(subCell.mGridPosition, exactPosition);
+                        removedSubCells.Erase(i);
+                        break;
+                    }
+                    default:
+                        ++i;
+                        break;
+                }
+            }
+            
+            mFlyingBlocksAnimation.AddBlocks(removedSubCells, explosionState.mPosition);
+        }
+        
+        if (explosionForceReach == explosionMaxReach) {
+            return State::Inactive;
+        }
+    }
+
+    return State::Active;
+}
 
 void FieldExplosionsStates::RemoveRows() {
     mRowsToRemove.Sort(CompareRowsTopToDown);
@@ -311,5 +358,15 @@ void FieldExplosionsStates::DetonateRowBomb(const Pht::IVec2& position,
 }
 
 void FieldExplosionsStates::DetonateLevelBomb(const Pht::IVec2& position) {
-
+    Pht::Vec2 effectPosition {static_cast<float>(position.x), static_cast<float>(position.y)};
+    mExplosionParticleEffect.StartExplosion(effectPosition);
+    
+    mField.RemoveAreaOfSubCells(position, {1, 1});
+    
+    BombExplosionState bombExplosionState {position};
+    ExplosionState explosionState {
+        .mKind = ExplosionState::Kind::LevelBomb,
+        .mBombExplosionState = bombExplosionState
+    };
+    mExplosionsStates.PushBack(explosionState);
 }

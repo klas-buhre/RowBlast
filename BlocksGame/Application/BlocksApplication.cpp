@@ -24,7 +24,6 @@ Backlog:
     -Undo to the previous move initial state or the the previous move last state before move? Should 
      not really matter since the user can select any piece from the selectables but maybe it is most 
      convenient to go back to the state before the move and not the initial state.
-    -Mega bomb?
   -Rendering:
     -The blast radius animation should fade in and start at at slightly smaller scale and then scale
      into the right size.
@@ -81,6 +80,9 @@ Ongoing tasks:
          triggered? Or, should they only be triggered when hit by pieces or explosions/lasers?
             -They should not trigger since they only way of choosing not to use those level bombs is
              to fill the row.
+        -If clearing a full row containing a level bomb inside and the piece lands on it, should the
+         level bomb be triggered?
+            -Yes, it should be triggered.
         -If level bombs get pulled down and land should they trigger?
             -Sort of logical if they trigger since bomb pieces trigger when landing. However,
              not triggering could open up for more strategic play by letting the player move level
@@ -92,7 +94,6 @@ Ongoing tasks:
              land on by piece blocks. The Field then adds that event to GameLogic which will
              detonate the level bomb once it is Updated again (after the CollapsingFieldAnimation is
              done with dragging down the piece blocks position).
-        -Level bombs should affect a 3x3 area.
         -Throw away blocks one by one as they are hit by the laser and explosion shockwave.
             -GameLogic could be in two states Normal and FieldExploding. The GameLogic works as
              before in Normal state. In FieldExploding state blocks are removed from Field as time
@@ -103,7 +104,11 @@ Ongoing tasks:
              nor should Field pull down any pieces since it would not work.
         -Handling multiple explosions at the same time.
             -Add an EffectsManager that has a pool of multiple explosion effects.
+            -Could add a detonation delay together with slower explosion reach.
             -FlyingBlocksAnimation must handle the force from newer explosions on the active blocks.
+        -Rendering.
+            -Add the big bomb explosion and big laser.
+            -Maybe the level bomb model should be the sci-fi ice grenade.
 
 
 Ideas:

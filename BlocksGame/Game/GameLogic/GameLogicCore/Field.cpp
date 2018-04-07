@@ -496,6 +496,61 @@ Field::CollisionPoints Field::GetOccupiedArea(const PieceBlocks& pieceBlocks,
     return collisions;
 }
 
+Field::ImpactedBombs Field::DetectImpactedBombs(const PieceBlocks& pieceBlocks,
+                                                const Pht::IVec2& position) {
+    ImpactedBombs impactedBombs;
+    auto lowerPosition {position - Pht::IVec2{0, 1}};
+    
+    CheckCollision(mCollisionResult, pieceBlocks, lowerPosition, Pht::IVec2{0, 0}, false);
+    
+    for (auto& collisionPointPieceCoord: mCollisionResult.mCollisionPoints) {
+        Pht::IVec2 collisionPoint {collisionPointPieceCoord + lowerPosition};
+        
+        if (collisionPoint.x < 0 || collisionPoint.x >= mNumColumns ||
+            collisionPoint.y >= mNumRows) {
+            
+            continue;
+        }
+        
+        if (collisionPoint.y < mLowestVisibleRow) {
+            return impactedBombs;
+        }
+        
+        auto& cell {mGrid[collisionPoint.y][collisionPoint.x]};
+        
+        if (!cell.mFirstSubCell.IsEmpty() && !cell.mFirstSubCell.IsBomb()) {
+            return impactedBombs;
+        }
+        
+        if (!cell.mSecondSubCell.IsEmpty() && !cell.mSecondSubCell.IsBomb()) {
+            return impactedBombs;
+        }
+    }
+
+    for (auto& collisionPointPieceCoord: mCollisionResult.mCollisionPoints) {
+        Pht::IVec2 collisionPoint {collisionPointPieceCoord + lowerPosition};
+        
+        if (collisionPoint.x < 0 || collisionPoint.x >= mNumColumns ||
+            collisionPoint.y >= mNumRows) {
+            
+            continue;
+        }
+        
+        auto blockKind {mGrid[collisionPoint.y][collisionPoint.x].mFirstSubCell.mBlockKind};
+        
+        switch (blockKind) {
+            case BlockKind::Bomb:
+            case BlockKind::RowBomb:
+                impactedBombs.PushBack({collisionPoint, blockKind});
+                break;
+            default:
+                break;
+        }
+    }
+    
+    return impactedBombs;
+}
+
 void Field::LandFallingPiece(const FallingPiece& fallingPiece) {
     SetChanged();
     SaveState();

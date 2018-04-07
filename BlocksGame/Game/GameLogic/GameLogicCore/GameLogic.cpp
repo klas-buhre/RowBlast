@@ -11,7 +11,6 @@
 #include "IAudio.hpp"
 
 // Game includes.
-#include "Field.hpp"
 #include "Level.hpp"
 #include "ScrollController.hpp"
 #include "ExplosionParticleEffect.hpp"
@@ -436,8 +435,13 @@ void GameLogic::LandFallingPiece(bool startParticleEffect) {
     }
     
     if (IsBomb(mFallingPiece->GetPieceType())) {
-        DetonateBomb();
+        DetonateDroppedBomb();
     } else {
+        auto impactedLevelBombs {
+            mField.DetectImpactedBombs(CreatePieceBlocks(*mFallingPiece),
+                                       mFallingPiece->GetIntPosition())
+        };
+        
         mField.LandFallingPiece(*mFallingPiece);
         
         if (mLevel->GetObjective() == Level::Objective::Clear) {
@@ -445,15 +449,20 @@ void GameLogic::LandFallingPiece(bool startParticleEffect) {
 
             if (removedSubCells.Size() > 0) {
                 mFlyingBlocksAnimation.AddBlockRows(removedSubCells);
-                PullDownLoosePieces();
+                
+                if (impactedLevelBombs.IsEmpty()) {
+                    PullDownLoosePieces();
+                }
             }
         }
+        
+        DetonateImpactedLevelBombs(impactedLevelBombs);
     }
     
     NextMove();
 }
 
-void GameLogic::DetonateBomb() {
+void GameLogic::DetonateDroppedBomb() {
     GoToFieldExplosionsState();
     mField.SaveState();
 
@@ -470,6 +479,12 @@ void GameLogic::DetonateBomb() {
         if (mBlastRadiusAnimation.IsActive()) {
             mBlastRadiusAnimation.Stop();
         }
+    }
+}
+
+void GameLogic::DetonateImpactedLevelBombs(const Field::ImpactedBombs& impactedLevelBombs) {
+    for (auto& impactedLevelBomb: impactedLevelBombs) {
+        
     }
 }
 
@@ -592,7 +607,7 @@ void GameLogic::RotatePieceOrDetonateBomb(const Pht::TouchEvent& touchEvent) {
     auto& pieceType {mFallingPiece->GetPieceType()};
     
     if (IsBomb(pieceType)) {
-        DetonateBomb();
+        DetonateDroppedBomb();
         NextMove();
     } else if (pieceType.CanRotateAroundZ()) {
         RotateFallingPiece(touchEvent);

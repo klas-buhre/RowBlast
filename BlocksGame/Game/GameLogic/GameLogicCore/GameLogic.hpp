@@ -7,6 +7,7 @@
 #include "NextPieceGenerator.hpp"
 #include "CollisionDetection.hpp"
 #include "Piece.hpp"
+#include "Field.hpp"
 #include "GestureInputHandler.hpp"
 #include "ClickInputHandler.hpp"
 #include "FallingPieceAnimation.hpp"
@@ -18,7 +19,6 @@ namespace Pht {
 }
 
 namespace BlocksGame {
-    class Field;
     class Level;
     class ScrollController;
     class ExplosionParticleEffect;
@@ -142,7 +142,8 @@ namespace BlocksGame {
         void HandleControlTypeChange();
         void UpdateFallingPieceYpos();
         void LandFallingPiece(bool startParticleEffect);
-        void DetonateBomb();
+        void DetonateDroppedBomb();
+        void DetonateImpactedLevelBombs(const Field::ImpactedBombs& impactedLevelBombs);
         void GoToFieldExplosionsState();
         void PullDownLoosePieces();
         void RotateFallingPiece(const Pht::TouchEvent& touchEvent);

@@ -75,6 +75,11 @@ namespace BlocksGame {
         State UpdateRowBombLaserState(LaserState& laserState, float dt);
         void UpdateLeftCuttingProgress(LaserState& laserState, float dt);
         void UpdateRightCuttingProgress(LaserState& laserState, float dt);
+        State UpdateLevelBombExplosionState(BombExplosionState& levelBombExplosionState, float dt);
+        State UpdateGenericBombExplosionState(BombExplosionState& explosionState,
+                                              float explosionForceSpeed,
+                                              float explosionMaxReach,
+                                              float dt);
         void RemoveRows();
         
         Pht::IEngine& mEngine;
