@@ -31,6 +31,7 @@ namespace BlocksGame {
         State Update();
         void DetonateBomb(const Pht::IVec2& position, const Pht::Vec2& exactPosition);
         void DetonateRowBomb(const Pht::IVec2& position, const Pht::Vec2& exactPosition);
+        void DetonateRowBomb(const Pht::IVec2& position);
         void DetonateLevelBomb(const Pht::IVec2& position);
 
     private:

@@ -48,7 +48,7 @@ namespace BlocksGame {
         
         GameLogic(Pht::IEngine& engine,
                   Field& field,
-                  const ScrollController& scrollController,
+                  ScrollController& scrollController,
                   const GameScene& gameScene,
                   ExplosionParticleEffect& explosionParticleEffect,
                   LaserParticleEffect& laserParticleEffect,
@@ -65,6 +65,7 @@ namespace BlocksGame {
         void SwitchPiece() override;
         void SetFallingPieceXPosWithCollisionDetection(float fallingPieceNewX) override;
         int GetGhostPieceRow() const override;
+        bool IsInFieldExplosionsState() const override;
         void StartBlastRadiusAnimation(const Pht::IVec2& position) override;
         void StopBlastRadiusAnimation() override;
         

@@ -27,7 +27,8 @@ Backlog:
   -Rendering:
     -The blast radius animation should fade in and start at at slightly smaller scale and then scale
      into the right size.
-    -Try increase ambient in red, green and gold non-field materials.
+    -Try increase ambient in red, green and gold non-field materials. Could also try to make the
+     field blocks slightly brighter by increasing the ambient factor in the field light source.
     -Could try reducing scroll speed in map scene using a spring.
     -Could zoom in on map pin when clicking on a level in the map.
     -Could have the rounded cylinder i some places in the HUDs.
@@ -103,6 +104,12 @@ Ongoing tasks:
              beam. CollapsingFieldAnimation should not run when GameLogic is in FieldExploding state
              nor should Field pull down any pieces since it would not work.
         -Handling multiple explosions at the same time.
+            -Fix the bug when level bomb get triggered when it should not when clearing line containg
+             a row bomb and triggering the row bomb at the same time.
+                -Solve by just setting cleared rows to empty at first, not really removing them until
+                 after FieldExplosions state? Probably solves the scroll problem as well if the
+                 scroll controller is not allowed to leave idle state while game logic is in field
+                 explosions state. Problem will probably happen with bombs as well.
             -Add an EffectsManager that has a pool of multiple explosion effects.
             -Could add a detonation delay together with slower explosion reach.
             -FlyingBlocksAnimation must handle the force from newer explosions on the active blocks.

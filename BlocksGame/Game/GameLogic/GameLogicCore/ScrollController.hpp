@@ -10,6 +10,7 @@ namespace Pht {
 
 namespace BlocksGame {
     class Field;
+    class IGameLogic;
     
     class ScrollController {
     public:
@@ -47,6 +48,10 @@ namespace BlocksGame {
             return mScrollDirection;
         }
         
+        void SetGameLogic(const IGameLogic& gameLogic) {
+            mGameLogic = &gameLogic;
+        }
+        
     private:
         void UpdateInBeforeLevelOverviewScrollState();
         void UpdateInLevelOverviewScrollState();
@@ -63,6 +68,7 @@ namespace BlocksGame {
         
         Pht::IEngine& mEngine;
         Field& mField;
+        const IGameLogic* mGameLogic {nullptr};
         State mState {State::Idle};
         Level::Objective mLevelObjective {Level::Objective::Clear};
         ScrollDirection mScrollDirection {ScrollDirection::Up};

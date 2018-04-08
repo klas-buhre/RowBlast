@@ -6,6 +6,7 @@
 
 // Game includes.
 #include "Field.hpp"
+#include "IGameLogic.hpp"
 
 using namespace BlocksGame;
 
@@ -140,6 +141,10 @@ void ScrollController::UpdateInLevelOverviewScrollStateBuildObjective(float dt) 
 }
 
 void ScrollController::UpdateInIdleState() {
+    if (mGameLogic->IsInFieldExplosionsState()) {
+        return;
+    }
+
     auto preferredLowestVisibleRow {static_cast<float>(CalculatePreferredLowestVisibleRow())};
     
     if (preferredLowestVisibleRow < mLowestVisibleRow) {

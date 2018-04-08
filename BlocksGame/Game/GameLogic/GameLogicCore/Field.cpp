@@ -497,7 +497,7 @@ Field::CollisionPoints Field::GetOccupiedArea(const PieceBlocks& pieceBlocks,
 }
 
 Field::ImpactedBombs Field::DetectImpactedBombs(const PieceBlocks& pieceBlocks,
-                                                const Pht::IVec2& position) {
+                                                const Pht::IVec2& position) const {
     ImpactedBombs impactedBombs;
     auto lowerPosition {position - Pht::IVec2{0, 1}};
     
@@ -551,9 +551,31 @@ Field::ImpactedBombs Field::DetectImpactedBombs(const PieceBlocks& pieceBlocks,
     return impactedBombs;
 }
 
+void Field::MarkBombAsDetonated(const ImpactedBombs& bombs) {
+    for (auto& bomb: bombs) {
+        auto& position {bomb.mPosition};
+        auto& subCell {mGrid[position.y][position.x].mFirstSubCell};
+        
+        subCell.mBlockKind = BlockKind::DetonatedBomb;
+        subCell.mFill = Fill::Full;
+    }
+}
+
+void Field::UnmarkDetonatedBombs() {
+    for (auto row {0}; row < mNumRows; ++row) {
+        for (auto column {0}; column < mNumColumns; ++column) {
+            auto& subCell {mGrid[row][column].mFirstSubCell};
+            
+            if (subCell.mBlockKind == BlockKind::DetonatedBomb) {
+                subCell.mBlockKind = BlockKind::None;
+                subCell.mFill = Fill::Empty;
+            }
+        }
+    }
+}
+
 void Field::LandFallingPiece(const FallingPiece& fallingPiece) {
     SetChanged();
-    SaveState();
     
     auto pieceBlocks {CreatePieceBlocks(fallingPiece)};
     LandPieceBlocks(pieceBlocks, fallingPiece.GetId(), fallingPiece.GetIntPosition(), true, true);
@@ -1537,7 +1559,9 @@ void Field::SaveSubCellAndCancelFill(Field::RemovedSubCells& removedSubCells,
                                      int column) {
     auto position {subCell.mPosition};
     
-    if (subCell.mBlockKind != BlockKind::None && row >= mLowestVisibleRow) {
+    if (subCell.mBlockKind != BlockKind::None && subCell.mBlockKind != BlockKind::DetonatedBomb &&
+        row >= mLowestVisibleRow) {
+
         RemovedSubCell removedSubCell {
             .mExactPosition = subCell.mPosition,
             .mGridPosition = Pht::IVec2{column, row},

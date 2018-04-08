@@ -357,6 +357,11 @@ void FieldExplosionsStates::DetonateRowBomb(const Pht::IVec2& position,
     }
 }
 
+void FieldExplosionsStates::DetonateRowBomb(const Pht::IVec2& position) {
+    Pht::Vec2 effectPosition {static_cast<float>(position.x), static_cast<float>(position.y)};
+    DetonateRowBomb(position, effectPosition);
+}
+
 void FieldExplosionsStates::DetonateLevelBomb(const Pht::IVec2& position) {
     Pht::Vec2 effectPosition {static_cast<float>(position.x), static_cast<float>(position.y)};
     mExplosionParticleEffect.StartExplosion(effectPosition);

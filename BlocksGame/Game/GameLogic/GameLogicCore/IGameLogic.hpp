@@ -22,6 +22,7 @@ namespace BlocksGame {
         virtual void SwitchPiece() = 0;
         virtual void SetFallingPieceXPosWithCollisionDetection(float fallingPieceNewX) = 0;
         virtual int GetGhostPieceRow() const = 0;
+        virtual bool IsInFieldExplosionsState() const = 0;
         virtual void StartBlastRadiusAnimation(const Pht::IVec2& position) = 0;
         virtual void StopBlastRadiusAnimation() = 0;
     };

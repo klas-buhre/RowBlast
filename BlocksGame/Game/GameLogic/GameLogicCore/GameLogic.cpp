@@ -48,7 +48,7 @@ namespace {
 
 GameLogic::GameLogic(Pht::IEngine& engine,
                      Field& field,
-                     const ScrollController& scrollController,
+                     ScrollController& scrollController,
                      const GameScene& gameScene,
                      ExplosionParticleEffect& explosionParticleEffect,
                      LaserParticleEffect& laserParticleEffect,
@@ -78,7 +78,10 @@ GameLogic::GameLogic(Pht::IEngine& engine,
     mFallingPieceAnimation {*this, mFallingPieceStorage},
     mGestureInputHandler {*this, mFallingPieceStorage},
     mClickInputHandler {engine, field, gameScene, *this},
-    mFallingPiece {&mFallingPieceStorage} {}
+    mFallingPiece {&mFallingPieceStorage} {
+    
+    scrollController.SetGameLogic(*this);
+}
 
 void GameLogic::Init(const Level& level) {
     mLevel = &level;
@@ -430,6 +433,8 @@ void GameLogic::OnFallingPieceAnimationFinished(bool startParticleEffect) {
 }
 
 void GameLogic::LandFallingPiece(bool startParticleEffect) {
+    mField.SaveState();
+    
     if (startParticleEffect) {
         mPieceDropParticleEffect.StartEffect(*mFallingPiece);
     }
@@ -443,6 +448,7 @@ void GameLogic::LandFallingPiece(bool startParticleEffect) {
         };
         
         mField.LandFallingPiece(*mFallingPiece);
+        DetonateImpactedLevelBombs(impactedLevelBombs);
         
         if (mLevel->GetObjective() == Level::Objective::Clear) {
             auto removedSubCells {mField.RemoveFilledRows()};
@@ -456,7 +462,9 @@ void GameLogic::LandFallingPiece(bool startParticleEffect) {
             }
         }
         
-        DetonateImpactedLevelBombs(impactedLevelBombs);
+        if (impactedLevelBombs.Size() > 0) {
+            mField.UnmarkDetonatedBombs();
+        }
     }
     
     NextMove();
@@ -464,7 +472,6 @@ void GameLogic::LandFallingPiece(bool startParticleEffect) {
 
 void GameLogic::DetonateDroppedBomb() {
     GoToFieldExplosionsState();
-    mField.SaveState();
 
     mEngine.GetAudio().PlaySound(CommonResources::mBombSound);
     
@@ -483,9 +490,27 @@ void GameLogic::DetonateDroppedBomb() {
 }
 
 void GameLogic::DetonateImpactedLevelBombs(const Field::ImpactedBombs& impactedLevelBombs) {
-    for (auto& impactedLevelBomb: impactedLevelBombs) {
-        
+    if (impactedLevelBombs.IsEmpty()) {
+        return;
     }
+    
+    GoToFieldExplosionsState();
+    
+    for (auto& impactedLevelBomb: impactedLevelBombs) {
+        switch (impactedLevelBomb.mKind) {
+            case BlockKind::Bomb:
+                mFieldExplosionsStates.DetonateLevelBomb(impactedLevelBomb.mPosition);
+                break;
+            case BlockKind::RowBomb:
+                mFieldExplosionsStates.DetonateRowBomb(impactedLevelBomb.mPosition);
+                break;
+            default:
+                assert(false);
+                break;
+        }
+    }
+    
+    mField.MarkBombAsDetonated(impactedLevelBombs);
 }
 
 void GameLogic::GoToFieldExplosionsState() {
@@ -642,6 +667,10 @@ void GameLogic::SetFallingPieceXPosWithCollisionDetection(float fallingPieceNewX
 
 int GameLogic::GetGhostPieceRow() const {
     return mGhostPieceRow;
+}
+
+bool GameLogic::IsInFieldExplosionsState() const {
+    return mState == State::FieldExplosions;
 }
 
 void GameLogic::StartBlastRadiusAnimationAtGhostPiece() {

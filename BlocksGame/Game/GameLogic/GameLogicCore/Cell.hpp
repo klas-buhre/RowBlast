@@ -35,6 +35,7 @@ namespace BlocksGame {
         Full,
         Bomb,
         RowBomb,
+        DetonatedBomb,
         None
     };
 
