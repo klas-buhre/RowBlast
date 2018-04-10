@@ -567,8 +567,7 @@ void Field::UnmarkDetonatedBombs() {
             auto& subCell {mGrid[row][column].mFirstSubCell};
             
             if (subCell.mBlockKind == BlockKind::DetonatedBomb) {
-                subCell.mBlockKind = BlockKind::None;
-                subCell.mFill = Fill::Empty;
+                subCell = SubCell {};
             }
         }
     }
@@ -1341,22 +1340,50 @@ void Field::SetBlocksYPositionAndBounceFlag() {
     }
 }
 
-Field::RemovedSubCells Field::RemoveFilledRows() {
+Field::RemovedSubCells Field::ClearFilledRows() {
     SetBlocksYPositionAndBounceFlag();
     SetChanged();
     
     RemovedSubCells removedSubCells;
     auto pastHighestVisibleRow {mLowestVisibleRow + GetNumRowsInOneScreen()};
     
-    for (auto rowIndex {mLowestVisibleRow}; rowIndex < pastHighestVisibleRow;) {
+    for (auto rowIndex {mLowestVisibleRow}; rowIndex < pastHighestVisibleRow; ++rowIndex) {
         if (RowIsFull(mGrid[rowIndex])) {
+            for (auto column {0}; column < mNumColumns; ++column) {
+                auto& cell {mGrid[rowIndex][column]};
+                auto& firstSubCell {cell.mFirstSubCell};
+                auto& secondSubCell {cell.mSecondSubCell};
+                
+                ProcessSubCell(removedSubCells, firstSubCell, rowIndex, column);
+                ProcessSubCell(removedSubCells, secondSubCell, rowIndex, column);
+                
+                BreakCellDownWelds(rowIndex + 1, column);
+                BreakCellUpWelds(rowIndex - 1, column);
+                
+                firstSubCell = SubCell {};
+                firstSubCell.mBlockKind = BlockKind::ClearedRowBlock;
+                secondSubCell = SubCell {};
+                secondSubCell.mBlockKind = BlockKind::ClearedRowBlock;
+            }
+        }
+    }
+
+    return removedSubCells;
+}
+
+void Field::RemoveClearedRows() {
+    SetChanged();
+    
+    RemovedSubCells removedSubCells;
+    auto pastHighestVisibleRow {mLowestVisibleRow + GetNumRowsInOneScreen()};
+    
+    for (auto rowIndex {mLowestVisibleRow}; rowIndex < pastHighestVisibleRow;) {
+        if (mGrid[rowIndex][0].mFirstSubCell.mBlockKind == BlockKind::ClearedRowBlock) {
             RemoveRowImpl(rowIndex, removedSubCells);
         } else {
             ++rowIndex;
         }
     }
-    
-    return removedSubCells;
 }
 
 void Field::RemoveRowImpl(int rowIndex, Field::RemovedSubCells& removedSubCells) {
@@ -1560,7 +1587,7 @@ void Field::SaveSubCellAndCancelFill(Field::RemovedSubCells& removedSubCells,
     auto position {subCell.mPosition};
     
     if (subCell.mBlockKind != BlockKind::None && subCell.mBlockKind != BlockKind::DetonatedBomb &&
-        row >= mLowestVisibleRow) {
+        subCell.mBlockKind != BlockKind::ClearedRowBlock && row >= mLowestVisibleRow) {
 
         RemovedSubCell removedSubCell {
             .mExactPosition = subCell.mPosition,

@@ -146,7 +146,7 @@ namespace BlocksGame {
         void DetonateDroppedBomb();
         void DetonateImpactedLevelBombs(const Field::ImpactedBombs& impactedLevelBombs);
         void GoToFieldExplosionsState();
-        void PullDownLoosePieces();
+        void RemoveClearedRowsAndPullDownLoosePieces();
         void RotateFallingPiece(const Pht::TouchEvent& touchEvent);
         Rotation CalculateNewRotation(const Pht::TouchEvent& touchEvent);
         void RotatateAndAdjustPosition(Rotation newRotation,

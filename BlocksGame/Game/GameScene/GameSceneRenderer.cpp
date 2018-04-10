@@ -99,8 +99,12 @@ void GameSceneRenderer::RenderFieldBlocks() {
 void GameSceneRenderer::RenderFieldBlock(const SubCell& subCell, bool isSecondSubCell) {
     auto blockKind {subCell.mBlockKind};
     
-    if (blockKind == BlockKind::None) {
-        return;
+    switch (blockKind) {
+        case BlockKind::None:
+        case BlockKind::ClearedRowBlock:
+            return;
+        default:
+            break;
     }
     
     auto& sceneObject {mScene.GetFieldBlocks().AccuireSceneObject()};

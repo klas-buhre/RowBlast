@@ -114,7 +114,8 @@ namespace BlocksGame {
         
         using RemovedSubCells = Pht::StaticVector<RemovedSubCell, maxNumColumns * maxNumRows>;
         
-        RemovedSubCells RemoveFilledRows();
+        RemovedSubCells ClearFilledRows();
+        void RemoveClearedRows();
         RemovedSubCells RemoveRow(int rowIndex);
         RemovedSubCells RemoveAreaOfSubCells(const Pht::IVec2& areaPos,
                                              const Pht::IVec2& areaSize);

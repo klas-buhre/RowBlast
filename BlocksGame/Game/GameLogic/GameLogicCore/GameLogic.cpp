@@ -299,10 +299,10 @@ void GameLogic::HandleCascading() {
         case CascadeState::WaitingToClearLine:
             mCascadeWaitTime += mEngine.GetLastFrameSeconds();
             if (mCascadeWaitTime > cascadeWaitTime && !mScrollController.IsScrolling()) {
-                auto removedSubCells {mField.RemoveFilledRows()};
+                auto removedSubCells {mField.ClearFilledRows()};
                 mFlyingBlocksAnimation.AddBlockRows(removedSubCells);
                 UpdateLevelProgress();
-                PullDownLoosePieces();
+                RemoveClearedRowsAndPullDownLoosePieces();
             }
             break;
         case CascadeState::NotCascading:
@@ -314,7 +314,7 @@ void GameLogic::UpdateFieldExplosionsStates() {
     if (mFieldExplosionsStates.Update() == FieldExplosionsStates::State::Inactive) {
         mState = State::LogicUpdate;
         UpdateLevelProgress();
-        PullDownLoosePieces();
+        RemoveClearedRowsAndPullDownLoosePieces();
     }
 }
 
@@ -451,13 +451,13 @@ void GameLogic::LandFallingPiece(bool startParticleEffect) {
         DetonateImpactedLevelBombs(impactedLevelBombs);
         
         if (mLevel->GetObjective() == Level::Objective::Clear) {
-            auto removedSubCells {mField.RemoveFilledRows()};
+            auto removedSubCells {mField.ClearFilledRows()};
 
             if (removedSubCells.Size() > 0) {
                 mFlyingBlocksAnimation.AddBlockRows(removedSubCells);
                 
                 if (impactedLevelBombs.IsEmpty()) {
-                    PullDownLoosePieces();
+                    RemoveClearedRowsAndPullDownLoosePieces();
                 }
             }
         }
@@ -518,7 +518,8 @@ void GameLogic::GoToFieldExplosionsState() {
     mField.SetBlocksYPositionAndBounceFlag();
 }
 
-void GameLogic::PullDownLoosePieces() {
+void GameLogic::RemoveClearedRowsAndPullDownLoosePieces() {
+    mField.RemoveClearedRows();
     mField.SetLowestVisibleRow(mScrollController.CalculatePreferredLowestVisibleRow());
     mField.PullDownLoosePieces();
     mField.DetectBlocksThatShouldNotBounce();

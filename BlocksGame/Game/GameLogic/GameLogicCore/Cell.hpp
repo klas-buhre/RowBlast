@@ -36,6 +36,7 @@ namespace BlocksGame {
         Bomb,
         RowBomb,
         DetonatedBomb,
+        ClearedRowBlock,
         None
     };
 
