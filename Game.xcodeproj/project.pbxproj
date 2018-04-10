@@ -187,6 +187,8 @@
 		6286F9B21FF3BE5E004DEF90 /* MapPin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6286F9B01FF3BE5E004DEF90 /* MapPin.cpp */; };
 		6286F9B51FF6B273004DEF90 /* NextLevelParticleEffect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6286F9B31FF6B273004DEF90 /* NextLevelParticleEffect.cpp */; };
 		6286F9BB1FFA4B6A004DEF90 /* MapHud.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6286F9B91FFA4B6A004DEF90 /* MapHud.cpp */; };
+		628EC298207CF15D0071F368 /* EffectManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 628EC296207CF15D0071F368 /* EffectManager.cpp */; };
+		628EC29A207D24090071F368 /* level30.json in Resources */ = {isa = PBXBuildFile; fileRef = 628EC299207D24080071F368 /* level30.json */; };
 		62944D6A20053A2D00814D36 /* TriangleMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62944C4D20053A2D00814D36 /* TriangleMesh.cpp */; };
 		62944D6B20053A2D00814D36 /* VertexBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62944C4E20053A2D00814D36 /* VertexBuffer.cpp */; };
 		62944D6C20053A2D00814D36 /* MeshUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62944C5020053A2D00814D36 /* MeshUtils.cpp */; };
@@ -567,6 +569,9 @@
 		6286F9B41FF6B273004DEF90 /* NextLevelParticleEffect.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = NextLevelParticleEffect.hpp; sourceTree = "<group>"; };
 		6286F9B91FFA4B6A004DEF90 /* MapHud.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MapHud.cpp; sourceTree = "<group>"; };
 		6286F9BA1FFA4B6A004DEF90 /* MapHud.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MapHud.hpp; sourceTree = "<group>"; };
+		628EC296207CF15D0071F368 /* EffectManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = EffectManager.cpp; sourceTree = "<group>"; };
+		628EC297207CF15D0071F368 /* EffectManager.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = EffectManager.hpp; sourceTree = "<group>"; };
+		628EC299207D24080071F368 /* level30.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level30.json; sourceTree = "<group>"; };
 		62944C4D20053A2D00814D36 /* TriangleMesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TriangleMesh.cpp; sourceTree = "<group>"; };
 		62944C4E20053A2D00814D36 /* VertexBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VertexBuffer.cpp; sourceTree = "<group>"; };
 		62944C4F20053A2D00814D36 /* IMesh.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = IMesh.hpp; sourceTree = "<group>"; };
@@ -1090,6 +1095,8 @@
 		624447301EDDD2C40080ECE8 /* Effects */ = {
 			isa = PBXGroup;
 			children = (
+				628EC296207CF15D0071F368 /* EffectManager.cpp */,
+				628EC297207CF15D0071F368 /* EffectManager.hpp */,
 				624447311EDDD2C40080ECE8 /* ExplosionParticleEffect.cpp */,
 				624447321EDDD2C40080ECE8 /* ExplosionParticleEffect.hpp */,
 				624447351EDDD2C40080ECE8 /* LaserParticleEffect.cpp */,
@@ -1374,6 +1381,7 @@
 				6278590520375DBF00494A4D /* level27.json */,
 				6278591D203B309900494A4D /* level28.json */,
 				623326722073D69400AC505A /* level29.json */,
+				628EC299207D24080071F368 /* level30.json */,
 			);
 			path = Levels;
 			sourceTree = "<group>";
@@ -1956,6 +1964,7 @@
 				6270DC6E1FCB231B00FB457D /* HussarBoldWeb.otf in Resources */,
 				6270DC991FCB23D800FB457D /* level4.json in Resources */,
 				62E335DE1FD2F31E0069B6CF /* level25.json in Resources */,
+				628EC29A207D24090071F368 /* level30.json in Resources */,
 				626451DD206FA93200E304F2 /* laser_bomb_224.obj in Resources */,
 				62944D8F20053A2D00814D36 /* EnvMap.vert in Resources */,
 				6227D4ED206BD034008EA77D /* TexturedEmissiveLighting.vert in Resources */,
@@ -2078,6 +2087,7 @@
 				62944D7820053A2D00814D36 /* RenderPass.cpp in Sources */,
 				624447B61EDDD2C40080ECE8 /* GameMenuView.cpp in Sources */,
 				624447A51EDDD2C40080ECE8 /* FlashingBlocksAnimation.cpp in Sources */,
+				628EC298207CF15D0071F368 /* EffectManager.cpp in Sources */,
 				62944D9020053A2D00814D36 /* InputHandler.cpp in Sources */,
 				623FB82E204C18030066652E /* PlusPiece.cpp in Sources */,
 				626C4D9E1EEC19DF000D4DF6 /* MapController.cpp in Sources */,

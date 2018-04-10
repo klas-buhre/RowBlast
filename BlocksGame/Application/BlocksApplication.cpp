@@ -84,6 +84,8 @@ Ongoing tasks:
         -If clearing a full row containing a level bomb inside and the piece lands on it, should the
          level bomb be triggered?
             -Yes, it should be triggered.
+            -Fix the bug when landing on and filling a row containing 6 level bombs. Only some of
+             level bombs get triggered since the rest of them are removed when clearing the row.
         -If level bombs get pulled down and land should they trigger?
             -Sort of logical if they trigger since bomb pieces trigger when landing. However,
              not triggering could open up for more strategic play by letting the player move level
@@ -95,16 +97,7 @@ Ongoing tasks:
              land on by piece blocks. The Field then adds that event to GameLogic which will
              detonate the level bomb once it is Updated again (after the CollapsingFieldAnimation is
              done with dragging down the piece blocks position).
-        -Throw away blocks one by one as they are hit by the laser and explosion shockwave.
-            -GameLogic could be in two states Normal and FieldExploding. The GameLogic works as
-             before in Normal state. In FieldExploding state blocks are removed from Field as time
-             goes on, not in one go as it is now. For level bombs, after some time the (3x3) area
-             of blocks is removed. For bomb pieces after a time the 3x3 area is removed from Field,
-             then after that the 5x5 area. For RowBombs it works similar but for the vertical laser
-             beam. CollapsingFieldAnimation should not run when GameLogic is in FieldExploding state
-             nor should Field pull down any pieces since it would not work.
         -Handling multiple explosions at the same time.
-            -Add an EffectsManager that has a pool of multiple explosion effects.
             -Could add a detonation delay together with slower explosion reach.
             -FlyingBlocksAnimation must handle the force from newer explosions on the active blocks.
         -Rendering.

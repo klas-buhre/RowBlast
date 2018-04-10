@@ -18,6 +18,7 @@ namespace BlocksGame {
     public:
         enum class State {
             Ongoing,
+            OnlyParticles,
             Inactive
         };
         

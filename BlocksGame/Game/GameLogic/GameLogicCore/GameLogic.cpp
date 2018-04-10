@@ -13,8 +13,6 @@
 // Game includes.
 #include "Level.hpp"
 #include "ScrollController.hpp"
-#include "ExplosionParticleEffect.hpp"
-#include "LaserParticleEffect.hpp"
 #include "FlyingBlocksAnimation.hpp"
 #include "PieceDropParticleEffect.hpp"
 #include "BlastRadiusAnimation.hpp"
@@ -50,8 +48,7 @@ GameLogic::GameLogic(Pht::IEngine& engine,
                      Field& field,
                      ScrollController& scrollController,
                      const GameScene& gameScene,
-                     ExplosionParticleEffect& explosionParticleEffect,
-                     LaserParticleEffect& laserParticleEffect,
+                     EffectManager& effectManager,
                      FlyingBlocksAnimation& flyingBlocksAnimation,
                      PieceDropParticleEffect& pieceDropParticleEffect,
                      BlastRadiusAnimation& blastRadiusAnimation,
@@ -60,21 +57,13 @@ GameLogic::GameLogic(Pht::IEngine& engine,
     mEngine {engine},
     mField {field},
     mScrollController {scrollController},
-    mExplosionParticleEffect {explosionParticleEffect},
-    mLaserParticleEffect {laserParticleEffect},
     mFlyingBlocksAnimation {flyingBlocksAnimation},
     mPieceDropParticleEffect {pieceDropParticleEffect},
     mBlastRadiusAnimation {blastRadiusAnimation},
     mGameHudController {gameHudController},
     mSettings {settings},
     mPreviousControlType {mSettings.mControlType},
-    mFieldExplosionsStates {
-        engine,
-        field,
-        explosionParticleEffect,
-        laserParticleEffect,
-        flyingBlocksAnimation
-    },
+    mFieldExplosionsStates {engine, field, effectManager, flyingBlocksAnimation},
     mFallingPieceAnimation {*this, mFallingPieceStorage},
     mGestureInputHandler {*this, mFallingPieceStorage},
     mClickInputHandler {engine, field, gameScene, *this},

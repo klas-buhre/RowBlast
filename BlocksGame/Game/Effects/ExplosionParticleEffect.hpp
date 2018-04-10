@@ -5,10 +5,11 @@
 
 // Engine includes.
 #include "Vector.hpp"
+#include "SceneObject.hpp"
 
 namespace Pht {
     class IEngine;
-    class SceneObject;
+    class ParticleSettings;
 }
 
 namespace BlocksGame {
@@ -21,7 +22,12 @@ namespace BlocksGame {
             Inactive
         };
         
-        ExplosionParticleEffect(Pht::IEngine& engine, GameScene& scene);
+        enum class Kind {
+            Bomb,
+            LevelBomb
+        };
+        
+        ExplosionParticleEffect(Pht::IEngine& engine, GameScene& scene, Kind kind);
         
         void Init();
         void StartExplosion(const Pht::Vec2& position);
@@ -29,8 +35,8 @@ namespace BlocksGame {
         State GetState() const;
         
     private:
-        void InitInnerEffect(Pht::IEngine& engine);
-        void InitShockWave(Pht::IEngine& engine);
+        void InitInnerEffect(Pht::IEngine& engine, const Pht::ParticleSettings& particleSettings);
+        void InitShockWave(Pht::IEngine& engine, const Pht::ParticleSettings& particleSettings);
         
         GameScene& mScene;
         std::unique_ptr<Pht::SceneObject> mShockWave;

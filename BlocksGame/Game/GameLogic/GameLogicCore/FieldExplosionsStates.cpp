@@ -5,8 +5,7 @@
 
 // Game includes.
 #include "Field.hpp"
-#include "ExplosionParticleEffect.hpp"
-#include "LaserParticleEffect.hpp"
+#include "EffectManager.hpp"
 #include "FlyingBlocksAnimation.hpp"
 
 using namespace BlocksGame;
@@ -25,13 +24,11 @@ namespace {
 
 FieldExplosionsStates::FieldExplosionsStates(Pht::IEngine& engine,
                                              Field& field,
-                                             ExplosionParticleEffect& explosionParticleEffect,
-                                             LaserParticleEffect& laserParticleEffect,
+                                             EffectManager& effectManager,
                                              FlyingBlocksAnimation& flyingBlocksAnimation) :
     mEngine {engine},
     mField {field},
-    mExplosionParticleEffect {explosionParticleEffect},
-    mLaserParticleEffect {laserParticleEffect},
+    mEffectManager {effectManager},
     mFlyingBlocksAnimation {flyingBlocksAnimation} {}
 
 FieldExplosionsStates::State FieldExplosionsStates::Update() {
@@ -324,7 +321,7 @@ void FieldExplosionsStates::RemoveRows() {
 
 void FieldExplosionsStates::DetonateBomb(const Pht::IVec2& position,
                                          const Pht::Vec2& exactPosition) {
-    mExplosionParticleEffect.StartExplosion(exactPosition);
+    mEffectManager.StartExplosion(exactPosition);
     
     mField.RemoveAreaOfSubCells(position, {1, 1});
     
@@ -338,7 +335,7 @@ void FieldExplosionsStates::DetonateBomb(const Pht::IVec2& position,
 
 void FieldExplosionsStates::DetonateRowBomb(const Pht::IVec2& position,
                                             const Pht::Vec2& exactPosition) {
-    mLaserParticleEffect.StartLaser(exactPosition);
+    mEffectManager.StartLaser(exactPosition);
     
     mField.RemoveAreaOfSubCells(position, {1, 1});
     
@@ -364,7 +361,7 @@ void FieldExplosionsStates::DetonateRowBomb(const Pht::IVec2& position) {
 
 void FieldExplosionsStates::DetonateLevelBomb(const Pht::IVec2& position) {
     Pht::Vec2 effectPosition {static_cast<float>(position.x), static_cast<float>(position.y)};
-    mExplosionParticleEffect.StartExplosion(effectPosition);
+    mEffectManager.StartLevelBombExplosion(effectPosition);
     
     mField.RemoveAreaOfSubCells(position, {1, 1});
     

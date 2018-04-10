@@ -11,8 +11,7 @@ namespace Pht {
 
 namespace BlocksGame {
     class Field;
-    class ExplosionParticleEffect;
-    class LaserParticleEffect;
+    class EffectManager;
     class FlyingBlocksAnimation;
     
     class FieldExplosionsStates {
@@ -24,8 +23,7 @@ namespace BlocksGame {
 
         FieldExplosionsStates(Pht::IEngine& engine,
                               Field& field,
-                              ExplosionParticleEffect& explosionParticleEffect,
-                              LaserParticleEffect& laserParticleEffect,
+                              EffectManager& effectManager,
                               FlyingBlocksAnimation& flyingBlocksAnimation);
         
         State Update();
@@ -85,8 +83,7 @@ namespace BlocksGame {
         
         Pht::IEngine& mEngine;
         Field& mField;
-        ExplosionParticleEffect& mExplosionParticleEffect;
-        LaserParticleEffect& mLaserParticleEffect;
+        EffectManager& mEffectManager;
         FlyingBlocksAnimation& mFlyingBlocksAnimation;
         ExplosionsStates mExplosionsStates;
         Pht::StaticVector<int, 10> mRowsToRemove;

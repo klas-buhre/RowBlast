@@ -195,5 +195,9 @@ LaserParticleEffect::State LaserParticleEffect::GetState() const {
         return State::Ongoing;
     }
     
+    if (mParticles->GetComponent<Pht::ParticleEffect>()->IsActive()) {
+        return State::OnlyParticles;
+    }
+    
     return State::Inactive;
 }

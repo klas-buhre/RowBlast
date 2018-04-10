@@ -21,8 +21,7 @@ namespace Pht {
 namespace BlocksGame {
     class Level;
     class ScrollController;
-    class ExplosionParticleEffect;
-    class LaserParticleEffect;
+    class EffectManager;
     class FlyingBlocksAnimation;
     class PieceDropParticleEffect;
     class GameHudController;
@@ -50,8 +49,7 @@ namespace BlocksGame {
                   Field& field,
                   ScrollController& scrollController,
                   const GameScene& gameScene,
-                  ExplosionParticleEffect& explosionParticleEffect,
-                  LaserParticleEffect& laserParticleEffect,
+                  EffectManager& effectManger,
                   FlyingBlocksAnimation& flyingBlocksAnimation,
                   PieceDropParticleEffect& pieceDropParticleEffect,
                   BlastRadiusAnimation& blastRadiusAnimation,
@@ -184,8 +182,6 @@ namespace BlocksGame {
         Pht::IEngine& mEngine;
         Field& mField;
         const ScrollController& mScrollController;
-        ExplosionParticleEffect& mExplosionParticleEffect;
-        LaserParticleEffect& mLaserParticleEffect;
         FlyingBlocksAnimation& mFlyingBlocksAnimation;
         PieceDropParticleEffect& mPieceDropParticleEffect;
         BlastRadiusAnimation& mBlastRadiusAnimation;

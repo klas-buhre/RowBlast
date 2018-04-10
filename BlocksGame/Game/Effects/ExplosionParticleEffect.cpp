@@ -12,32 +12,82 @@
 
 using namespace BlocksGame;
 
-ExplosionParticleEffect::ExplosionParticleEffect(Pht::IEngine& engine, GameScene& scene) :
+ExplosionParticleEffect::ExplosionParticleEffect(Pht::IEngine& engine,
+                                                 GameScene& scene,
+                                                 Kind kind) :
     mScene {scene} {
 
-    InitInnerEffect(engine);
-    InitShockWave(engine);
+    switch (kind) {
+        case Kind::Bomb: {
+            Pht::ParticleSettings innerParticleSettings {
+                .mColor = Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f},
+                .mColorRandomPart = Pht::Vec4{0.0f, 0.0f, 0.0f, 0.0f},
+                .mTextureFilename = "flare24.png",
+                .mTimeToLive = 0.25f,
+                .mTimeToLiveRandomPart = 0.0f,
+                .mFadeOutDuration = 0.15f,
+                .mSize = Pht::Vec2{22.0f, 22.0f},
+                .mSizeRandomPart = 0.0f,
+                .mGrowDuration = 0.0f,
+                .mShrinkDuration = 0.0f
+            };
+            InitInnerEffect(engine, innerParticleSettings);
+            Pht::ParticleSettings shockWaveParticleSettings {
+                .mColor = Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f},
+                .mColorRandomPart = Pht::Vec4{0.0f, 0.0f, 0.0f, 0.0f},
+                .mTextureFilename = "particle_sprite_halo.png",
+                .mTimeToLive = 0.35f,
+                .mTimeToLiveRandomPart = 0.0f,
+                .mFadeOutDuration = 0.35f,
+                .mSize = Pht::Vec2{13.5f, 13.5f},
+                .mSizeRandomPart = 0.0f,
+                .mInitialSize = Pht::Vec2{2.0f, 2.0f},
+                .mGrowDuration = 0.35f,
+                .mShrinkDuration = 0.0f
+            };
+            InitShockWave(engine, shockWaveParticleSettings);
+            break;
+        }
+        case Kind::LevelBomb: {
+            Pht::ParticleSettings innerParticleSettings {
+                .mColor = Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f},
+                .mColorRandomPart = Pht::Vec4{0.0f, 0.0f, 0.0f, 0.0f},
+                .mTextureFilename = "flare24.png",
+                .mTimeToLive = 0.25f,
+                .mTimeToLiveRandomPart = 0.0f,
+                .mFadeOutDuration = 0.15f,
+                .mSize = Pht::Vec2{16.5f, 16.5f},
+                .mSizeRandomPart = 0.0f,
+                .mGrowDuration = 0.0f,
+                .mShrinkDuration = 0.0f
+            };
+            InitInnerEffect(engine, innerParticleSettings);
+            Pht::ParticleSettings shockWaveParticleSettings {
+                .mColor = Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f},
+                .mColorRandomPart = Pht::Vec4{0.0f, 0.0f, 0.0f, 0.0f},
+                .mTextureFilename = "particle_sprite_halo.png",
+                .mTimeToLive = 0.35f,
+                .mTimeToLiveRandomPart = 0.0f,
+                .mFadeOutDuration = 0.35f,
+                .mSize = Pht::Vec2{10.0f, 10.0f},
+                .mSizeRandomPart = 0.0f,
+                .mInitialSize = Pht::Vec2{1.5f, 1.5f},
+                .mGrowDuration = 0.35f,
+                .mShrinkDuration = 0.0f
+            };
+            InitShockWave(engine, shockWaveParticleSettings);
+            break;
+        }
+    }
 }
 
-void ExplosionParticleEffect::InitInnerEffect(Pht::IEngine& engine) {
+void ExplosionParticleEffect::InitInnerEffect(Pht::IEngine& engine,
+                                              const Pht::ParticleSettings& particleSettings) {
     Pht::EmitterSettings particleEmitterSettings {
         .mPosition = Pht::Vec3{0.0f, 0.0f, 0.0f},
         .mSize = Pht::Vec3{0.0f, 0.0f, 0.0f},
         .mTimeToLive = 0.0f,
         .mBurst = 1
-    };
-    
-    Pht::ParticleSettings particleSettings {
-        .mColor = Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f},
-        .mColorRandomPart = Pht::Vec4{0.0f, 0.0f, 0.0f, 0.0f},
-        .mTextureFilename = "flare24.png",
-        .mTimeToLive = 0.25f,
-        .mTimeToLiveRandomPart = 0.0f,
-        .mFadeOutDuration = 0.15f,
-        .mSize = Pht::Vec2{22.0f, 22.0f},
-        .mSizeRandomPart = 0.0f,
-        .mGrowDuration = 0.0f,
-        .mShrinkDuration = 0.0f
     };
     
     auto& particleSystem {engine.GetParticleSystem()};
@@ -47,26 +97,13 @@ void ExplosionParticleEffect::InitInnerEffect(Pht::IEngine& engine) {
     mInnerParticleEffect->GetRenderable()->GetMaterial().SetShaderType(Pht::ShaderType::ParticleNoAlphaTexture);
 }
 
-void ExplosionParticleEffect::InitShockWave(Pht::IEngine& engine) {
+void ExplosionParticleEffect::InitShockWave(Pht::IEngine& engine,
+                                            const Pht::ParticleSettings& particleSettings) {
     Pht::EmitterSettings particleEmitterSettings {
         .mPosition = Pht::Vec3{0.0f, 0.0f, 0.0f},
         .mSize = Pht::Vec3{0.0f, 0.0f, 0.0f},
         .mTimeToLive = 0.0f,
         .mBurst = 1
-    };
-
-    Pht::ParticleSettings particleSettings {
-        .mColor = Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f},
-        .mColorRandomPart = Pht::Vec4{0.0f, 0.0f, 0.0f, 0.0f},
-        .mTextureFilename = "particle_sprite_halo.png",
-        .mTimeToLive = 0.35f,
-        .mTimeToLiveRandomPart = 0.0f,
-        .mFadeOutDuration = 0.35f,
-        .mSize = Pht::Vec2{13.5f, 13.5f},
-        .mSizeRandomPart = 0.0f,
-        .mInitialSize = Pht::Vec2{2.0f, 2.0f},
-        .mGrowDuration = 0.35f,
-        .mShrinkDuration = 0.0f
     };
 
     auto& particleSystem {engine.GetParticleSystem()};
@@ -77,10 +114,15 @@ void ExplosionParticleEffect::InitShockWave(Pht::IEngine& engine) {
 
 void ExplosionParticleEffect::Init() {
     mScene.GetFlyingBlocksContainer().AddChild(*mInnerParticleEffect);
+    mInnerParticleEffect->SetIsStatic(true);
     mScene.GetEffectsContainer().AddChild(*mShockWave);
+    mShockWave->SetIsStatic(true);
 }
 
 void ExplosionParticleEffect::StartExplosion(const Pht::Vec2& position) {
+    mInnerParticleEffect->SetIsStatic(false);
+    mShockWave->SetIsStatic(false);
+
     const auto cellSize {mScene.GetCellSize()};
     auto& fieldLowerLeft {mScene.GetFieldLoweLeft()};
 
@@ -104,8 +146,19 @@ void ExplosionParticleEffect::StartExplosion(const Pht::Vec2& position) {
 }
 
 void ExplosionParticleEffect::Update(float dt) {
-    mShockWave->GetComponent<Pht::ParticleEffect>()->Update(dt);
-    mInnerParticleEffect->GetComponent<Pht::ParticleEffect>()->Update(dt);
+    auto* shockWave {mShockWave->GetComponent<Pht::ParticleEffect>()};
+    auto* innerEffect {mInnerParticleEffect->GetComponent<Pht::ParticleEffect>()};
+
+    shockWave->Update(dt);
+    innerEffect->Update(dt);
+    
+    if (!shockWave->IsActive()) {
+        mShockWave->SetIsStatic(true);
+    }
+    
+    if (!innerEffect->IsActive()) {
+        mInnerParticleEffect->SetIsStatic(true);
+    }
 }
 
 ExplosionParticleEffect::State ExplosionParticleEffect::GetState() const {

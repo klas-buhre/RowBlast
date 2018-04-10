@@ -12,8 +12,7 @@
 #include "FlashingBlocksAnimation.hpp"
 #include "WeldsAnimation.hpp"
 #include "BlueprintSlotsFilledAnimation.hpp"
-#include "ExplosionParticleEffect.hpp"
-#include "LaserParticleEffect.hpp"
+#include "EffectManager.hpp"
 #include "PieceDropParticleEffect.hpp"
 #include "LevelResources.hpp"
 #include "Level.hpp"
@@ -129,8 +128,7 @@ namespace BlocksGame {
         WeldsAnimation mWeldsAnimation;
         ScrollController mScrollController;
         GameScene mScene;
-        ExplosionParticleEffect mExplosionParticleEffect;
-        LaserParticleEffect mLaserParticleEffect;
+        EffectManager mEffectManager;
         PieceDropParticleEffect mPieceDropParticleEffect;
         BlastRadiusAnimation mBlastRadiusAnimation;
         SlidingTextAnimation mSlidingTextAnimation;
