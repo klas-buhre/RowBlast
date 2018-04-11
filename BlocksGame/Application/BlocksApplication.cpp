@@ -6,6 +6,7 @@ Backlog:
     -Analytics.
     
   -Gameplay:
+    -Maybe the corner blocks in the bomb blast area should not be cleared.
     -Speed up gameplay by updating GameLogic already when falling blocks are close to enter the
      bouncing state? If cascading, wait until all bocks have entered bouncing state before claring
      new rows.

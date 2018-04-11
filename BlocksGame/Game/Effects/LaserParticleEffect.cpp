@@ -143,9 +143,10 @@ void LaserParticleEffect::InitParticles(Pht::IEngine& engine) {
 }
 
 void LaserParticleEffect::Init() {
+    mScene.GetEffectsContainer().AddChild(*mThinBeam);
+
     auto& container {mScene.GetFlyingBlocksContainer()};
     container.AddChild(*mThickBeam);
-    container.AddChild(*mThinBeam);
     container.AddChild(*mFlare);
     container.AddChild(*mParticles);
 }
@@ -163,8 +164,14 @@ void LaserParticleEffect::StartLaser(const Pht::Vec2& position) {
     
     mThickBeam->GetTransform().SetPosition(beamCenterPositionInScene);
     mThickBeam->GetComponent<Pht::ParticleEffect>()->Start();
-    
-    mThinBeam->GetTransform().SetPosition(beamCenterPositionInScene);
+
+    Pht::Vec3 beamCenterPositionInField {
+        fieldWidth / 2.0f,
+        position.y * cellSize + cellSize / 2.0f,
+        mScene.GetFieldPosition().z + 1.0f
+    };
+
+    mThinBeam->GetTransform().SetPosition(beamCenterPositionInField);
     mThinBeam->GetComponent<Pht::ParticleEffect>()->Start();
 
     mParticles->GetTransform().SetPosition(beamCenterPositionInScene);
