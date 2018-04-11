@@ -1478,7 +1478,8 @@ Field::RemovedSubCells Field::RemoveRow(int rowIndex) {
 }
 
 Field::RemovedSubCells Field::RemoveAreaOfSubCells(const Pht::IVec2& areaPos,
-                                                   const Pht::IVec2& areaSize) {
+                                                   const Pht::IVec2& areaSize,
+                                                   bool removeCorners) {
     SetChanged();
     
     RemovedSubCells removedSubCells;
@@ -1487,6 +1488,32 @@ Field::RemovedSubCells Field::RemoveAreaOfSubCells(const Pht::IVec2& areaPos,
         for (auto column {areaPos.x}; column < areaPos.x + areaSize.x; ++column) {
             if (row < 0 || row >= mNumRows || column < 0 || column >= mNumColumns) {
                 continue;
+            }
+            
+            if (!removeCorners) {
+                if (column == areaPos.x && row == areaPos.y) {
+                    BreakCellRightWelds(row, column);
+                    BreakCellUpWelds(row, column);
+                    continue;
+                }
+                
+                if (column == areaPos.x + areaSize.x - 1 && row == areaPos.y) {
+                    BreakCellLeftWelds(row, column);
+                    BreakCellUpWelds(row, column);
+                    continue;
+                }
+
+                if (column == areaPos.x + areaSize.x - 1 && row == areaPos.y + areaSize.y - 1) {
+                    BreakCellLeftWelds(row, column);
+                    BreakCellDownWelds(row, column);
+                    continue;
+                }
+
+                if (column == areaPos.x && row == areaPos.y + areaSize.y - 1) {
+                    BreakCellRightWelds(row, column);
+                    BreakCellDownWelds(row, column);
+                    continue;
+                }
             }
             
             if (column == areaPos.x) {

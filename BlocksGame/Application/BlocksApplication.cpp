@@ -72,7 +72,7 @@ Backlog:
     -Credit the icon creator: <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
 
 Ongoing tasks:
-    -Maybe the corner blocks in the bomb blast area should not be cleared.
+    -Fix the blast radius animation.
     -Maybe some bombs and row bombs can be part of the level and detonated if landed on. Then there
      could be some cascading scenarios like landing on a row bomb that triggers a bomb on the same
      row on the other side of the field. If landing a bomb on a level bomb then there could be a
@@ -92,7 +92,9 @@ Ongoing tasks:
              bombs to different rows. Try don't trigger for now.
         -If pulled down piece blocks (not gray level blocks) land on level bombs should they trigger?
             -Probably more logical if they trigger since level bombs trigger when pieces land on
-             them. Probably tricky to implement but it might go simething like this:
+             them. However, it seems to be hard for the player to prevent pulled down blocks from
+             accidentaly hitting bombs at lower rows. Probably tricky to implement but it might go
+             something like this:
              during pulling down of pieces, Field detects that a level bomb will eventually be
              land on by piece blocks. The Field then adds that event to GameLogic which will
              detonate the level bomb once it is Updated again (after the CollapsingFieldAnimation is
@@ -101,7 +103,6 @@ Ongoing tasks:
             -Could add a detonation delay together with slower explosion reach.
             -FlyingBlocksAnimation must handle the force from newer explosions on the active blocks.
         -Rendering.
-            -Add the big bomb explosion.
             -Maybe the level bomb model should be the sci-fi ice grenade.
 
 

@@ -15,7 +15,6 @@ using namespace BlocksGame;
 namespace {
     const auto subCellMass {1.0f};
     const auto rowExplosionForceMagnitude {12.0f};
-    const auto explosiveForceMagnitude {30.0f};
     const Pht::Vec3 gravitationalAcceleration {0.0f, -60.0f, 0.0f};
     const Pht::Vec3 explosionGravitationalAcceleration {0.0f, -40.0f, 0.0f};
     const auto eraseLimit {-27.0f};
@@ -81,7 +80,8 @@ void FlyingBlocksAnimation::AddBlockRows(const Field::RemovedSubCells& subCells)
 }
 
 void FlyingBlocksAnimation::AddBlocks(const Field::RemovedSubCells& subCells,
-                                      const Pht::IVec2& detonationPos) {
+                                      const Pht::IVec2& detonationPos,
+                                      float explosiveForceMagnitude) {
     for (auto& removedSubCell: subCells) {
         auto dx {removedSubCell.mExactPosition.x - static_cast<float>(detonationPos.x)};
         auto dy {removedSubCell.mExactPosition.y - static_cast<float>(detonationPos.y)};

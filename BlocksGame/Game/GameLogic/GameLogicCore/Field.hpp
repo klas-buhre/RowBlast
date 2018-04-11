@@ -118,7 +118,8 @@ namespace BlocksGame {
         void RemoveClearedRows();
         RemovedSubCells RemoveRow(int rowIndex);
         RemovedSubCells RemoveAreaOfSubCells(const Pht::IVec2& areaPos,
-                                             const Pht::IVec2& areaSize);
+                                             const Pht::IVec2& areaSize,
+                                             bool removeCorners);
         RemovedSubCells RemoveAllNonEmptySubCells();
         void RemovePiece(int pieceId,
                          const Pht::IVec2& position,

@@ -43,7 +43,9 @@ namespace BlocksGame {
         void Init();
         void Update(float dt);
         void AddBlockRows(const Field::RemovedSubCells& subCells);
-        void AddBlocks(const Field::RemovedSubCells& subCells, const Pht::IVec2& detonationPos);
+        void AddBlocks(const Field::RemovedSubCells& subCells,
+                       const Pht::IVec2& detonationPos,
+                       float explosiveForceMagnitude);
 
     private:
         Pht::Vec3 CalculateBlockInitialPosition(const RemovedSubCell& subCell);

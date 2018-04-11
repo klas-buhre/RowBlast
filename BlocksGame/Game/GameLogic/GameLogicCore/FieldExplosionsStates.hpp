@@ -79,8 +79,10 @@ namespace BlocksGame {
         State UpdateLevelBombExplosionState(BombExplosionState& levelBombExplosionState, float dt);
         State UpdateBigBombExplosionState(BombExplosionState& bigBombExplosionState, float dt);
         State UpdateGenericBombExplosionState(BombExplosionState& explosionState,
+                                              float explosiveForceMagnitude,
                                               float explosionForceSpeed,
                                               float explosionMaxReach,
+                                              bool removeCorners,
                                               float dt);
         void RemoveRows();
         
