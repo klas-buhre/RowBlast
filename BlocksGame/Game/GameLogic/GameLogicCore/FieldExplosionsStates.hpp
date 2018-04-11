@@ -31,6 +31,7 @@ namespace BlocksGame {
         void DetonateRowBomb(const Pht::IVec2& position, const Pht::Vec2& exactPosition);
         void DetonateRowBomb(const Pht::IVec2& position);
         void DetonateLevelBomb(const Pht::IVec2& position);
+        void DetonateBigBomb(const Pht::IVec2& position);
 
     private:
         struct BombExplosionState {
@@ -59,7 +60,8 @@ namespace BlocksGame {
             enum class Kind {
                 Bomb,
                 Laser,
-                LevelBomb
+                LevelBomb,
+                BigBomb
             };
             
             Kind mKind;
@@ -75,6 +77,7 @@ namespace BlocksGame {
         void UpdateLeftCuttingProgress(LaserState& laserState, float dt);
         void UpdateRightCuttingProgress(LaserState& laserState, float dt);
         State UpdateLevelBombExplosionState(BombExplosionState& levelBombExplosionState, float dt);
+        State UpdateBigBombExplosionState(BombExplosionState& bigBombExplosionState, float dt);
         State UpdateGenericBombExplosionState(BombExplosionState& explosionState,
                                               float explosionForceSpeed,
                                               float explosionMaxReach,

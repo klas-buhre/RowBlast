@@ -6,7 +6,6 @@ Backlog:
     -Analytics.
     
   -Gameplay:
-    -Maybe the corner blocks in the bomb blast area should not be cleared.
     -Speed up gameplay by updating GameLogic already when falling blocks are close to enter the
      bouncing state? If cascading, wait until all bocks have entered bouncing state before claring
      new rows.
@@ -73,11 +72,11 @@ Backlog:
     -Credit the icon creator: <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
 
 Ongoing tasks:
+    -Maybe the corner blocks in the bomb blast area should not be cleared.
     -Maybe some bombs and row bombs can be part of the level and detonated if landed on. Then there
      could be some cascading scenarios like landing on a row bomb that triggers a bomb on the same
      row on the other side of the field. If landing a bomb on a level bomb then there could be a
-     bigger explosion. If landing a row bomb on a level row bomb then there could be a bigger laser
-     that clears 3 rows.
+     bigger explosion.
         -If clearing a full row containing some level bombs inside, should level bombs be
          triggered? Or, should they only be triggered when hit by pieces or explosions/lasers?
             -They should not trigger since they only way of choosing not to use those level bombs is
@@ -102,7 +101,7 @@ Ongoing tasks:
             -Could add a detonation delay together with slower explosion reach.
             -FlyingBlocksAnimation must handle the force from newer explosions on the active blocks.
         -Rendering.
-            -Add the big bomb explosion and big laser.
+            -Add the big bomb explosion.
             -Maybe the level bomb model should be the sci-fi ice grenade.
 
 

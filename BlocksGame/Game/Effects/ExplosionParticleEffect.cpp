@@ -78,6 +78,36 @@ ExplosionParticleEffect::ExplosionParticleEffect(Pht::IEngine& engine,
             InitShockWave(engine, shockWaveParticleSettings);
             break;
         }
+        case Kind::BigBomb: {
+            Pht::ParticleSettings innerParticleSettings {
+                .mColor = Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f},
+                .mColorRandomPart = Pht::Vec4{0.0f, 0.0f, 0.0f, 0.0f},
+                .mTextureFilename = "flare24.png",
+                .mTimeToLive = 0.25f,
+                .mTimeToLiveRandomPart = 0.0f,
+                .mFadeOutDuration = 0.15f,
+                .mSize = Pht::Vec2{30.0f, 30.0f},
+                .mSizeRandomPart = 0.0f,
+                .mGrowDuration = 0.0f,
+                .mShrinkDuration = 0.0f
+            };
+            InitInnerEffect(engine, innerParticleSettings);
+            Pht::ParticleSettings shockWaveParticleSettings {
+                .mColor = Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f},
+                .mColorRandomPart = Pht::Vec4{0.0f, 0.0f, 0.0f, 0.0f},
+                .mTextureFilename = "particle_sprite_halo.png",
+                .mTimeToLive = 0.42f,
+                .mTimeToLiveRandomPart = 0.0f,
+                .mFadeOutDuration = 0.42f,
+                .mSize = Pht::Vec2{19.0f, 19.0f},
+                .mSizeRandomPart = 0.0f,
+                .mInitialSize = Pht::Vec2{2.8f, 2.8f},
+                .mGrowDuration = 0.42f,
+                .mShrinkDuration = 0.0f
+            };
+            InitShockWave(engine, shockWaveParticleSettings);
+            break;
+        }
     }
 }
 

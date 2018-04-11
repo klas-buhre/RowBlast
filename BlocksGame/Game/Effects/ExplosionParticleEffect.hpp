@@ -24,7 +24,8 @@ namespace BlocksGame {
         
         enum class Kind {
             Bomb,
-            LevelBomb
+            LevelBomb,
+            BigBomb
         };
         
         ExplosionParticleEffect(Pht::IEngine& engine, GameScene& scene, Kind kind);

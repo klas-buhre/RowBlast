@@ -8,7 +8,8 @@ namespace {
 }
 
 EffectManager::EffectManager(Pht::IEngine& engine, GameScene& scene) :
-    mExplosionEffect {engine, scene, ExplosionParticleEffect::Kind::Bomb} {
+    mExplosionEffect {engine, scene, ExplosionParticleEffect::Kind::Bomb},
+    mBigExplosionEffect {engine, scene, ExplosionParticleEffect::Kind::BigBomb} {
     
     mLaserEffects.resize(numLaserEffects);
     
@@ -28,6 +29,7 @@ EffectManager::EffectManager(Pht::IEngine& engine, GameScene& scene) :
 void EffectManager::Init() {
     mState = State::Inactive;
     mExplosionEffect.Init();
+    mBigExplosionEffect.Init();
 
     for (auto& laser: mLaserEffects) {
         laser->Init();
@@ -41,6 +43,11 @@ void EffectManager::Init() {
 void EffectManager::StartExplosion(const Pht::Vec2& position) {
     mState = State::OngoingEffects;
     mExplosionEffect.StartExplosion(position);
+}
+
+void EffectManager::StartBigExplosion(const Pht::Vec2& position) {
+    mState = State::OngoingEffects;
+    mBigExplosionEffect.StartExplosion(position);
 }
 
 void EffectManager::StartLaser(const Pht::Vec2& position)  {
@@ -71,11 +78,14 @@ void EffectManager::Update(float dt) {
     }
 
     mExplosionEffect.Update(dt);
+    mBigExplosionEffect.Update(dt);
 
     auto anyActiveEffects {false};
     auto onlyParticlesAcitveInLaser {false};
 
-    if (mExplosionEffect.GetState() == ExplosionParticleEffect::State::Ongoing) {
+    if (mExplosionEffect.GetState() == ExplosionParticleEffect::State::Ongoing ||
+        mBigExplosionEffect.GetState() == ExplosionParticleEffect::State::Ongoing) {
+
         anyActiveEffects = true;
     }
 

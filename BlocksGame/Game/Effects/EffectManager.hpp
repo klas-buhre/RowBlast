@@ -30,6 +30,7 @@ namespace BlocksGame {
 
         void Init();
         void StartExplosion(const Pht::Vec2& position);
+        void StartBigExplosion(const Pht::Vec2& position);
         void StartLaser(const Pht::Vec2& position);
         void StartLevelBombExplosion(const Pht::Vec2& position);
         void Update(float dt);
@@ -41,6 +42,7 @@ namespace BlocksGame {
     private:
         State mState {State::Inactive};
         ExplosionParticleEffect mExplosionEffect;
+        ExplosionParticleEffect mBigExplosionEffect;
         std::vector<std::unique_ptr<LaserParticleEffect>> mLaserEffects;
         std::vector<std::unique_ptr<ExplosionParticleEffect>> mLevelBombExplosionEffects;
     };

@@ -442,7 +442,7 @@ void GameLogic::LandFallingPiece(bool startParticleEffect) {
         if (mLevel->GetObjective() == Level::Objective::Clear) {
             auto removedSubCells {mField.ClearFilledRows()};
 
-            if (removedSubCells.Size() > 0) {
+            if (!removedSubCells.IsEmpty()) {
                 mFlyingBlocksAnimation.AddBlockRows(removedSubCells);
                 
                 if (impactedLevelBombs.IsEmpty()) {
@@ -451,7 +451,7 @@ void GameLogic::LandFallingPiece(bool startParticleEffect) {
             }
         }
         
-        if (impactedLevelBombs.Size() > 0) {
+        if (!impactedLevelBombs.IsEmpty()) {
             mField.UnmarkDetonatedBombs();
         }
     }
@@ -464,13 +464,37 @@ void GameLogic::DetonateDroppedBomb() {
 
     mEngine.GetAudio().PlaySound(CommonResources::mBombSound);
     
-    auto intDetonationPos {mFallingPiece->GetIntPosition() + Pht::IVec2{1, 1}};
-    auto detonationPos {mFallingPiece->GetRenderablePosition() + Pht::Vec2{1.0f, 1.0f}};
+    auto impactedLevelBombs {
+        mField.DetectImpactedBombs(CreatePieceBlocks(*mFallingPiece),
+                                   mFallingPiece->GetIntPosition())
+    };
+    
+    auto intPieceDetonationPos {mFallingPiece->GetIntPosition() + Pht::IVec2{1, 1}};
+    auto pieceDetonationPos {mFallingPiece->GetRenderablePosition() + Pht::Vec2{1.0f, 1.0f}};
     
     if (mFallingPiece->GetPieceType().IsRowBomb()) {
-        mFieldExplosionsStates.DetonateRowBomb(intDetonationPos, detonationPos);
+        if (!impactedLevelBombs.IsEmpty()) {
+            auto& impactedLevelBomb {impactedLevelBombs.Front()};
+            
+            switch (impactedLevelBomb.mKind) {
+                case BlockKind::Bomb:
+                    mFieldExplosionsStates.DetonateLevelBomb(impactedLevelBomb.mPosition);
+                    break;
+                case BlockKind::RowBomb:
+                    mFieldExplosionsStates.DetonateRowBomb(impactedLevelBomb.mPosition);
+                    break;
+                default:
+                    break;
+            }
+        }
+        
+        mFieldExplosionsStates.DetonateRowBomb(intPieceDetonationPos, pieceDetonationPos);
     } else {
-        mFieldExplosionsStates.DetonateBomb(intDetonationPos, detonationPos);
+        if (!impactedLevelBombs.IsEmpty() && impactedLevelBombs.Front().mKind == BlockKind::Bomb) {
+            mFieldExplosionsStates.DetonateBigBomb(intPieceDetonationPos);
+        } else {
+            mFieldExplosionsStates.DetonateBomb(intPieceDetonationPos, pieceDetonationPos);
+        }
         
         if (mBlastRadiusAnimation.IsActive()) {
             mBlastRadiusAnimation.Stop();
