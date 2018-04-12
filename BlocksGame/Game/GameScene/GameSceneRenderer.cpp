@@ -140,7 +140,7 @@ void GameSceneRenderer::RenderFieldBlock(const SubCell& subCell, bool isSecondSu
         sceneObject.SetRenderable(&mLevelResources.GetLevelBlockRenderable(blockKind));
     } else if (isSomeKindOfBomb) {
         if (subCell.mBlockKind == BlockKind::Bomb) {
-            sceneObject.SetRenderable(&mPieceResources.GetBombRenderableObject());
+            sceneObject.SetRenderable(&mLevelResources.GetLevelBombRenderable());
         } else {
             sceneObject.SetRenderable(&mPieceResources.GetRowBombRenderableObject());
         }

@@ -29,8 +29,8 @@ Backlog:
     -The blast radius animation should fade in and start at at slightly smaller scale and then scale
      into the right size.
     -Try increase ambient in red, green and gold non-field materials. Could also try to make the
-    -Could try a small bounce when pieces land.
      field blocks slightly brighter by increasing the ambient factor in the field light source.
+    -Could try a small bounce when pieces land.
     -Could try reducing scroll speed in map scene using a spring.
     -Could zoom in on map pin when clicking on a level in the map.
     -Could have the rounded cylinder i some places in the HUDs.
@@ -101,8 +101,6 @@ Ongoing tasks:
         -Handling multiple explosions at the same time.
             -Could add a detonation delay together with slower explosion reach.
             -FlyingBlocksAnimation must handle the force from newer explosions on the active blocks.
-        -Rendering.
-            -Maybe the level bomb model should be the sci-fi ice grenade.
 
 
 Ideas:

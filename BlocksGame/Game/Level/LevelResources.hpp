@@ -35,16 +35,22 @@ namespace BlocksGame {
             return *mBlueprintSquareAnimation;
         }
 
+        Pht::RenderableObject& GetLevelBombRenderable() const {
+            return *mLevelBomb;
+        }
+
     private:
         void CreatePieceTypes(Pht::IEngine& engine, const GameScene& scene);
         void CreateCellRenderables(Pht::ISceneManager& sceneManager, const GameScene& scene);
         void CreateBlueprintRenderables(Pht::IEngine& engine, const GameScene& scene);
+        void CreateLevelBombRenderable(Pht::IEngine& engine);
         
         PieceTypes mPieceTypes;
         std::unique_ptr<Pht::RenderableObject> mGrayCube;
         std::unique_ptr<Pht::RenderableObject> mGrayTriangle;
         std::unique_ptr<Pht::RenderableObject> mBlueprintSquare;
         std::unique_ptr<Pht::RenderableObject> mBlueprintSquareAnimation;
+        std::unique_ptr<Pht::RenderableObject> mLevelBomb;
     };
 }
 

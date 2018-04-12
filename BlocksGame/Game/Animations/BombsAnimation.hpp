@@ -10,10 +10,13 @@
 namespace BlocksGame {
     class GameScene;
     class PieceResources;
+    class LevelResources;
     
     class BombsAnimation {
     public:
-        BombsAnimation(GameScene& scene, PieceResources& pieceResources);
+        BombsAnimation(GameScene& scene,
+                       PieceResources& pieceResources,
+                       LevelResources& levelResources);
         
         void Init();
         void Update(float dt);
@@ -43,11 +46,12 @@ namespace BlocksGame {
         
         GameScene& mScene;
         PieceResources& mPieceResources;
+        LevelResources& mLevelResources;
         Pht::Vec3 mBombRotation;
         Pht::Vec3 mRowBombRotation;
         float mAnimationTime {0.0f};
         float mEmissiveAnimationTime {0.0f};
-        const Pht::Vec3 mBombStaticRotation {107.0f, -17.0f, 0.0f};
+        const Pht::Vec3 mBombStaticRotation {-115.0f, -30.0f, 0.0f};
         const Pht::Vec3 mRowBombStaticRotation {0.0f, 90.0f, 0.0f};
     };
 }

@@ -70,7 +70,7 @@ GameController::GameController(Pht::IEngine& engine,
     mPreviewPiecesAnimation {mScene, mGameLogic},
     mFlyingBlocksAnimation {mScene, mLevelResources, mPieceResources},
     mBlueprintSlotsFilledAnimation {mField, mScene, mLevelResources},
-    mBombsAnimation {mScene, mPieceResources},
+    mBombsAnimation {mScene, mPieceResources, mLevelResources},
     mRenderer {
         mScene,
         mField,

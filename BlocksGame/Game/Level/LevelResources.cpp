@@ -41,6 +41,7 @@ LevelResources::LevelResources(Pht::IEngine& engine, const GameScene& scene) {
     CreatePieceTypes(engine, scene);
     CreateCellRenderables(engine.GetSceneManager(), scene);
     CreateBlueprintRenderables(engine, scene);
+    CreateLevelBombRenderable(engine);
 }
 
 void LevelResources::CreatePieceTypes(Pht::IEngine& engine, const GameScene& scene) {
@@ -143,6 +144,23 @@ void LevelResources::CreateBlueprintRenderables(Pht::IEngine& engine, const Game
         Pht::QuadMesh {cellSize, cellSize},
         animationMaterial
     );
+}
+
+void LevelResources::CreateLevelBombRenderable(Pht::IEngine& engine) {
+    Pht::Material bombMaterial {
+        "level_bomb_798.jpg",
+        "level_bomb_798_emission.jpg",
+        0.68f,
+        0.65f,
+        0.8f,
+        1.0f,
+        20.0f
+    };
+
+    bombMaterial.SetEmissive(Pht::Color {3.0f, 3.0f, 3.0f});
+    auto& sceneManager {engine.GetSceneManager()};
+    mLevelBomb = sceneManager.CreateRenderableObject(Pht::ObjMesh {"level_bomb_798.obj", 16.2f},
+                                                     bombMaterial);
 }
 
 Pht::RenderableObject& LevelResources::GetLevelBlockRenderable(BlockKind blockKind) const {
