@@ -227,9 +227,9 @@ void OfflineRasterizer::DrawTiltedTrapezoid315(const Vec2& upperRight,
 }
 
 void OfflineRasterizer::DrawCircle(const Vec2& center,
-                                  float radius,
-                                  float width,
-                                  const Vec4& color) {
+                                   float radius,
+                                   float width,
+                                   const Vec4& color) {
     auto centerPixelCoord {ToPixelCoordinates(center)};
     auto scaleFactor {static_cast<float>(mImageSize.y) / mCoordSystemSize.y};
     auto radiusInPixels {radius * scaleFactor};

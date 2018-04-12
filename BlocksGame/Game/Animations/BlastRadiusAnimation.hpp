@@ -17,10 +17,15 @@ namespace BlocksGame {
     
     class BlastRadiusAnimation {
     public:
+        enum class Kind {
+            Bomb,
+            BigBomb
+        };
+
         BlastRadiusAnimation(Pht::IEngine& engine, GameScene& scene);
     
         void Init();
-        void Start();
+        void Start(Kind kind);
         void Stop();
         void SetPosition(const Pht::Vec2& position);
         void Update(float dt);
@@ -29,7 +34,15 @@ namespace BlocksGame {
             return mState == State::Active;
         }
         
+        Kind GetActiveKind() const {
+            return mActiveKind;
+        }
+        
     private:
+        std::unique_ptr<Pht::SceneObject> CreateSceneObject(const Pht::IImage& image,
+                                                            float squareSide,
+                                                            Pht::IEngine& engine);
+
         enum class State {
             Active,
             Inactive
@@ -37,7 +50,9 @@ namespace BlocksGame {
         
         GameScene& mScene;
         State mState {State::Inactive};
-        std::unique_ptr<Pht::SceneObject> mSceneObject;
+        Kind mActiveKind {Kind::Bomb};
+        std::unique_ptr<Pht::SceneObject> mBombRadiusSceneObject;
+        std::unique_ptr<Pht::SceneObject> mBigBombRadiusSceneObject;
         float mTime {0.0f};
         Pht::SceneResources mSceneResources;
     };

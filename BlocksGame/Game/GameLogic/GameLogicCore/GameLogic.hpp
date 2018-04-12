@@ -13,6 +13,7 @@
 #include "FallingPieceAnimation.hpp"
 #include "Settings.hpp"
 #include "FieldExplosionsStates.hpp"
+#include "BlastRadiusAnimation.hpp"
 
 namespace Pht {
     class IEngine;
@@ -27,7 +28,6 @@ namespace BlocksGame {
     class GameHudController;
     class IInputHandler;
     class GameScene;
-    class BlastRadiusAnimation;
     
     enum class PreviewPieceAnimationToStart {
         NextPieceAndSwitch,
@@ -151,6 +151,7 @@ namespace BlocksGame {
                                        const PieceBlocks& pieceBlocks,
                                        const Pht::IVec2& position,
                                        Direction collisionDirection);
+        BlastRadiusAnimation::Kind CalcBlastRadiusKind(const Pht::IVec2& position);
         Result HandleInput();
         void ForwardTouchToInputHandler(const Pht::TouchEvent& touchEvent);
         

@@ -6,28 +6,30 @@ Backlog:
     -Analytics.
     
   -Gameplay:
+    -Prevent the crossed tilted welds from happening seven and mirrored seven (in both
+     GestureInputHandler and ClickInputHandler) so that those pieces can be pulled down. Or, allow
+     it and solve it when pulling down loose pieces?
+    -When playing a level with clear objective the game could scroll up if there is no room to spawn
+     the falling piece. If we are at the top of the level then it is game over, or maybe the top
+     rows could be cleared so the the piece fits.
     -Speed up gameplay by updating GameLogic already when falling blocks are close to enter the
      bouncing state? If cascading, wait until all bocks have entered bouncing state before claring
      new rows.
     -Some levels could have som pink striped level blocks with welds that are affected by graivty.
-    -Scroll sideways in some levels? And/or already have colored piece blocks in the level before
-     any pieces are landed?
-    -Prevent the crossed tilted welds from happening seven and mirrored seven (in both
-     GestureInputHandler and ClickInputHandler) so that those pieces can be pulled down. Or, allow
-     it and solve it when pulling down loose pieces?
-    -Maybe init falling piece after SwitchPiece() in the same frame instead of the next.
     -Maybe blocks in the visible part of the field could disappear on some levels. For each move a
      random block disappears.
+    -Scroll sideways in some levels? And/or already have colored piece blocks in the level before
+     any pieces are landed?
+    -Maybe init falling piece after SwitchPiece() in the same frame instead of the next.
     -Maybe a sensitivity setting. Tetris Blitz has lower sensitility on iPad but not on iPhone.
-    -When playing a level with clear objective the game could scroll up if there is no room to spawn
-     the falling piece. If we are at the top of the level then it is game over.
-    -Undo to the previous move initial state or the the previous move last state before move? Should 
+    -Undo to the previous move initial state or the the previous move last state before move? Should
      not really matter since the user can select any piece from the selectables but maybe it is most 
      convenient to go back to the state before the move and not the initial state.
   -Rendering:
     -The blast radius animation should fade in and start at at slightly smaller scale and then scale
      into the right size.
     -Try increase ambient in red, green and gold non-field materials. Could also try to make the
+    -Could try a small bounce when pieces land.
      field blocks slightly brighter by increasing the ambient factor in the field light source.
     -Could try reducing scroll speed in map scene using a spring.
     -Could zoom in on map pin when clicking on a level in the map.
@@ -38,8 +40,6 @@ Backlog:
      into the cube. Render the triangles and the cube at the same time, vary the opacity for the
      triangels from 1 to 0 and from 0 to 1 for the cube.
     -Maybe add a time duration for each rotation in the FallingPieceAnimation.
-    -Maybe the bombs could have constant particle effects as if it is about to explode. And they
-     could be be of different shapes other than spheres.
     -Camera shake when clearing 3 or more rows or using a bomb.
     -Try adding welds to the level blocks.
     -One or two stars in level cleared dialog could be placed more in the middle.
@@ -72,7 +72,6 @@ Backlog:
     -Credit the icon creator: <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
 
 Ongoing tasks:
-    -Fix the blast radius animation.
     -Maybe some bombs and row bombs can be part of the level and detonated if landed on. Then there
      could be some cascading scenarios like landing on a row bomb that triggers a bomb on the same
      row on the other side of the field. If landing a bomb on a level bomb then there could be a
@@ -138,6 +137,8 @@ Time Estimation in days:
         Done
     -Try bombs part of level.
         Cost: 10
+    -Do some of the top items in the backlog.
+        Cost: 4
     -Camera shake.
         Cost: 3
     -Use new GUI/Menu textures.
@@ -168,7 +169,7 @@ Time Estimation in days:
     -Physics.
         Cost: 15
 
-        Total: 176
+        Total: 180
 
 
 Comomon piece type sets:
