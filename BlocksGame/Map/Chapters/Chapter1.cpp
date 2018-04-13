@@ -34,7 +34,8 @@ namespace {
         MapLevel {.mLevelIndex = 28, .mPosition = {22.0f, -2.0f, 10.0f}},
         MapLevel {.mLevelIndex = 29, .mPosition = {23.5f, 1.0f, 10.0f}},
         MapLevel {.mLevelIndex = 30, .mPosition = {22.0f, 4.0f, 10.0f}},
-        MapLevel {.mLevelIndex = 31, .mPosition = {19.5f, 5.0f, 10.0f}}
+        MapLevel {.mLevelIndex = 31, .mPosition = {19.5f, 5.0f, 10.0f}},
+        MapLevel {.mLevelIndex = 32, .mPosition = {17.0f, 4.0f, 10.0f}}
     };
     
     const std::vector<BlockPathVolume> blockPaths {

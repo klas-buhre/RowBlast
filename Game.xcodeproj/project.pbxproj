@@ -189,9 +189,7 @@
 		6286F9BB1FFA4B6A004DEF90 /* MapHud.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6286F9B91FFA4B6A004DEF90 /* MapHud.cpp */; };
 		628EC298207CF15D0071F368 /* EffectManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 628EC296207CF15D0071F368 /* EffectManager.cpp */; };
 		628EC29A207D24090071F368 /* level30.json in Resources */ = {isa = PBXBuildFile; fileRef = 628EC299207D24080071F368 /* level30.json */; };
-		628EC29D207FB4EC0071F368 /* level_bomb_798.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 628EC29B207FB4EB0071F368 /* level_bomb_798.jpg */; };
-		628EC2A2207FBC990071F368 /* level_bomb_798_emission.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 628EC2A1207FBC980071F368 /* level_bomb_798_emission.jpg */; };
-		628EC2A4207FC0100071F368 /* level_bomb_798.obj in Resources */ = {isa = PBXBuildFile; fileRef = 628EC2A3207FC0100071F368 /* level_bomb_798.obj */; };
+		628EC2AC2080C4880071F368 /* level31.json in Resources */ = {isa = PBXBuildFile; fileRef = 628EC2AB2080C4880071F368 /* level31.json */; };
 		62944D6A20053A2D00814D36 /* TriangleMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62944C4D20053A2D00814D36 /* TriangleMesh.cpp */; };
 		62944D6B20053A2D00814D36 /* VertexBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62944C4E20053A2D00814D36 /* VertexBuffer.cpp */; };
 		62944D6C20053A2D00814D36 /* MeshUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62944C5020053A2D00814D36 /* MeshUtils.cpp */; };
@@ -575,9 +573,7 @@
 		628EC296207CF15D0071F368 /* EffectManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = EffectManager.cpp; sourceTree = "<group>"; };
 		628EC297207CF15D0071F368 /* EffectManager.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = EffectManager.hpp; sourceTree = "<group>"; };
 		628EC299207D24080071F368 /* level30.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level30.json; sourceTree = "<group>"; };
-		628EC29B207FB4EB0071F368 /* level_bomb_798.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = level_bomb_798.jpg; sourceTree = "<group>"; };
-		628EC2A1207FBC980071F368 /* level_bomb_798_emission.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = level_bomb_798_emission.jpg; sourceTree = "<group>"; };
-		628EC2A3207FC0100071F368 /* level_bomb_798.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = level_bomb_798.obj; sourceTree = "<group>"; };
+		628EC2AB2080C4880071F368 /* level31.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level31.json; sourceTree = "<group>"; };
 		62944C4D20053A2D00814D36 /* TriangleMesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TriangleMesh.cpp; sourceTree = "<group>"; };
 		62944C4E20053A2D00814D36 /* VertexBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VertexBuffer.cpp; sourceTree = "<group>"; };
 		62944C4F20053A2D00814D36 /* IMesh.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = IMesh.hpp; sourceTree = "<group>"; };
@@ -1331,7 +1327,6 @@
 		6270DC571FCB22AE00FB457D /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				628EC2A3207FC0100071F368 /* level_bomb_798.obj */,
 				626451DC206FA93100E304F2 /* laser_bomb_224.obj */,
 				6227D4F4206CFD25008EA77D /* bomb_798.obj */,
 				6276B70F2040297D0075C468 /* weld_76.obj */,
@@ -1389,6 +1384,7 @@
 				6278591D203B309900494A4D /* level28.json */,
 				623326722073D69400AC505A /* level29.json */,
 				628EC299207D24080071F368 /* level30.json */,
+				628EC2AB2080C4880071F368 /* level31.json */,
 			);
 			path = Levels;
 			sourceTree = "<group>";
@@ -1396,8 +1392,6 @@
 		6270DCA01FCB248E00FB457D /* Textures */ = {
 			isa = PBXGroup;
 			children = (
-				628EC2A1207FBC980071F368 /* level_bomb_798_emission.jpg */,
-				628EC29B207FB4EB0071F368 /* level_bomb_798.jpg */,
 				626451E4206FEDFF00E304F2 /* laser_beam_red.png */,
 				626451DF206FA93E00E304F2 /* laser_bomb_diffuse.jpg */,
 				626451DE206FA93E00E304F2 /* laser_bomb_emission.png */,
@@ -2006,6 +2000,7 @@
 				6270DC881FCB23D800FB457D /* level1.json in Resources */,
 				6270DC981FCB23D800FB457D /* level3.json in Resources */,
 				621A4E721E50B60C00D53AFD /* Icon.png in Resources */,
+				628EC2AC2080C4880071F368 /* level31.json in Resources */,
 				62E335E01FD2F4EE0069B6CF /* level26.json in Resources */,
 				6270DC931FCB23D800FB457D /* level2.json in Resources */,
 				6270DC9A1FCB23D800FB457D /* level5.json in Resources */,
@@ -2022,7 +2017,6 @@
 				62318C422066B84A008332CB /* particle_sprite_halo.png in Resources */,
 				6276B7102040297E0075C468 /* weld_76.obj in Resources */,
 				62944D8920053A2D00814D36 /* TexturedLighting.frag in Resources */,
-				628EC29D207FB4EC0071F368 /* level_bomb_798.jpg in Resources */,
 				6270DC561FCB212B00FB457D /* Bomb.wav in Resources */,
 				6227D501206D3051008EA77D /* bomb_798.jpg in Resources */,
 				62944D8420053A2D00814D36 /* VertexColor.frag in Resources */,
@@ -2033,7 +2027,6 @@
 				626451E1206FA93F00E304F2 /* laser_bomb_diffuse.jpg in Resources */,
 				6270DC8A1FCB23D800FB457D /* level11.json in Resources */,
 				626451E82070E2DF00E304F2 /* ParticleTextureColor.vert in Resources */,
-				628EC2A2207FBC990071F368 /* level_bomb_798_emission.jpg in Resources */,
 				62944D8020053A2D00814D36 /* VertexLighting.vert in Resources */,
 				6270DC611FCB22AE00FB457D /* cube_428.obj in Resources */,
 				6270DC891FCB23D800FB457D /* level10.json in Resources */,
@@ -2058,7 +2051,6 @@
 				6276B702203F25AD0075C468 /* triangle_320_r270.obj in Resources */,
 				62944D8C20053A2D00814D36 /* Textured.vert in Resources */,
 				6270DC8B1FCB23D800FB457D /* level12.json in Resources */,
-				628EC2A4207FC0100071F368 /* level_bomb_798.obj in Resources */,
 				62944D7E20053A2D00814D36 /* PixelLighting.vert in Resources */,
 				62E2222E1FE9754C00AE098B /* cloud_F_512.png in Resources */,
 				6270DC8E1FCB23D800FB457D /* level15.json in Resources */,

@@ -13,8 +13,6 @@ namespace {
     constexpr auto rowBombRotationSpeed {35.0f};
     constexpr auto emissiveAnimationDuration {1.5f};
     constexpr auto emissiveAmplitude {1.7f};
-    constexpr auto levelBombEmissiveAmplitude {0.42f};
-    
     
     void SetEmissiveInRenderable(Pht::RenderableObject& renderableObject, float emissive) {
         Pht::Color emissiveColor {emissive, emissive, emissive};
@@ -62,10 +60,7 @@ void BombsAnimation::AnimateEmissive(float dt) {
     SetEmissiveInRenderable(mPieceResources.GetTransparentBombRenderableObject(), emissive);
     SetEmissiveInRenderable(mPieceResources.GetRowBombRenderableObject(), emissive);
     SetEmissiveInRenderable(mPieceResources.GetTransparentRowBombRenderableObject(), emissive);
-
-    auto levelBombEmissive {levelBombEmissiveAmplitude * (sineOfT + 1.0f) / 2.0f};
-    
-    SetEmissiveInRenderable(mLevelResources.GetLevelBombRenderable(), levelBombEmissive);
+    SetEmissiveInRenderable(mLevelResources.GetLevelBombRenderable(), emissive);
 }
 
 void BombsAnimation::AnimateBombRotation(float dt) {

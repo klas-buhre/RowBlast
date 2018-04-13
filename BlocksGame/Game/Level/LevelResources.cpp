@@ -148,18 +148,20 @@ void LevelResources::CreateBlueprintRenderables(Pht::IEngine& engine, const Game
 
 void LevelResources::CreateLevelBombRenderable(Pht::IEngine& engine) {
     Pht::Material bombMaterial {
-        "level_bomb_798.jpg",
-        "level_bomb_798_emission.jpg",
-        0.68f,
-        0.65f,
-        0.8f,
+        "bomb_798.jpg",
+        "bomb_798_emission.jpg",
+        1.2f,
         1.0f,
-        20.0f
+        1.0f,
+        1.0f,
+        50.0f
     };
 
+    bombMaterial.SetAmbient(Pht::Color {1.18f, 1.18f, 1.7f});
+    bombMaterial.SetDiffuse(Pht::Color {0.8f, 0.8f, 1.6f});
     bombMaterial.SetEmissive(Pht::Color {3.0f, 3.0f, 3.0f});
     auto& sceneManager {engine.GetSceneManager()};
-    mLevelBomb = sceneManager.CreateRenderableObject(Pht::ObjMesh {"level_bomb_798.obj", 16.2f},
+    mLevelBomb = sceneManager.CreateRenderableObject(Pht::ObjMesh {"bomb_798.obj", 16.2f},
                                                      bombMaterial);
 }
 

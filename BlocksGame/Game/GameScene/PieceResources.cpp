@@ -223,11 +223,11 @@ void PieceResources::CreateBombs(Pht::ISceneManager& sceneManager, const GameSce
     Pht::Material bombMaterial {
         "bomb_798.jpg",
         "bomb_798_emission.jpg",
-        0.87f,
+        1.0f,
         0.87f,
         1.0f,
         1.0f,
-        20.0f
+        30.0f
     };
 
     bombMaterial.SetEmissive(Pht::Color {3.0f, 3.0f, 3.0f});

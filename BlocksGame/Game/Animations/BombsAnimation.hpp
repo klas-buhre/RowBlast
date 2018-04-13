@@ -51,7 +51,7 @@ namespace BlocksGame {
         Pht::Vec3 mRowBombRotation;
         float mAnimationTime {0.0f};
         float mEmissiveAnimationTime {0.0f};
-        const Pht::Vec3 mBombStaticRotation {-115.0f, -30.0f, 0.0f};
+        const Pht::Vec3 mBombStaticRotation {110.0f, -20.0f, 0.0f};
         const Pht::Vec3 mRowBombStaticRotation {0.0f, 90.0f, 0.0f};
     };
 }
