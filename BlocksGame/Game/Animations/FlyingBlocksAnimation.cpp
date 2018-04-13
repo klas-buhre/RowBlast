@@ -9,6 +9,7 @@
 #include "GameScene.hpp"
 #include "LevelResources.hpp"
 #include "PieceResources.hpp"
+#include "BombsAnimation.hpp"
 
 using namespace BlocksGame;
 
@@ -22,10 +23,12 @@ namespace {
 
 FlyingBlocksAnimation::FlyingBlocksAnimation(GameScene& scene,
                                              const LevelResources& levelResources,
-                                             const PieceResources& pieceResources) :
+                                             const PieceResources& pieceResources,
+                                             const BombsAnimation& bombsAnimation) :
     mScene {scene},
     mLevelResources {levelResources},
-    mPieceResources {pieceResources} {
+    mPieceResources {pieceResources},
+    mBombsAnimation {bombsAnimation} {
     
     mSceneObjects.resize(maxNumBlockSceneObjects);
     
@@ -63,7 +66,18 @@ void FlyingBlocksAnimation::AddBlockRows(const Field::RemovedSubCells& subCells)
         sceneObject.SetRenderable(&GetBlockRenderableObject(removedSubCell));
         auto& transform {sceneObject.GetTransform()};
         transform.SetPosition(CalculateBlockInitialPosition(removedSubCell));
-        transform.SetRotation({0.0f, 0.0f, RotationToDeg(removedSubCell.mRotation)});
+        
+        switch (removedSubCell.mBlockKind) {
+            case BlockKind::Bomb:
+                transform.SetRotation(mBombsAnimation.GetBombStaticRotation());
+                break;
+            case BlockKind::RowBomb:
+                transform.SetRotation(mBombsAnimation.GetRowBombStaticRotation());
+                break;
+            default:
+                transform.SetRotation({0.0f, 0.0f, RotationToDeg(removedSubCell.mRotation)});
+                break;
+        }
         
         FlyingBlock flyingBlock {
             .mVelocity = force / subCellMass,
@@ -183,7 +197,7 @@ Pht::RenderableObject& FlyingBlocksAnimation::GetBlockRenderableObject(const Rem
     if (subCell.mIsGrayLevelBlock) {
         return mLevelResources.GetLevelBlockRenderable(subCell.mBlockKind);
     } else if (subCell.mBlockKind == BlockKind::Bomb) {
-        return mPieceResources.GetBombRenderableObject();
+        return mLevelResources.GetLevelBombRenderable();
     } else if (subCell.mBlockKind == BlockKind::RowBomb) {
         return mPieceResources.GetRowBombRenderableObject();
     } else {

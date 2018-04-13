@@ -138,9 +138,9 @@ namespace BlocksGame {
         PieceResources mPieceResources;
         LevelResources mLevelResources;
         PreviewPiecesAnimation mPreviewPiecesAnimation;
-        FlyingBlocksAnimation mFlyingBlocksAnimation;
         BlueprintSlotsFilledAnimation mBlueprintSlotsFilledAnimation;
         BombsAnimation mBombsAnimation;
+        FlyingBlocksAnimation mFlyingBlocksAnimation;
         GameSceneRenderer mRenderer;
         std::unique_ptr<Level> mLevel;
         bool mShouldUpdateGameLogic {false};

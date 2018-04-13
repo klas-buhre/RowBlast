@@ -20,6 +20,7 @@ namespace BlocksGame {
     class GameScene;
     class LevelResources;
     class PieceResources;
+    class BombsAnimation;
 
     class FlyingBlocksAnimation {
     public:
@@ -38,7 +39,8 @@ namespace BlocksGame {
 
         FlyingBlocksAnimation(GameScene& scene,
                               const LevelResources& levelResources,
-                              const PieceResources& pieceResources);
+                              const PieceResources& pieceResources,
+                              const BombsAnimation& bombsAnimation);
         
         void Init();
         void Update(float dt);
@@ -61,6 +63,7 @@ namespace BlocksGame {
         GameScene& mScene;
         const LevelResources& mLevelResources;
         const PieceResources& mPieceResources;
+        const BombsAnimation& mBombsAnimation;
         FlyingBlocks mFlyingBlocks;
         std::vector<std::unique_ptr<Pht::SceneObject>> mSceneObjects;
         FreeSceneObjects mFreeSceneObjects;
