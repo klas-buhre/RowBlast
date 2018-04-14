@@ -1486,7 +1486,7 @@ Field::RemovedSubCells Field::RemoveAreaOfSubCells(const Pht::IVec2& areaPos,
     
     for (auto row {areaPos.y}; row < areaPos.y + areaSize.y; ++row) {
         for (auto column {areaPos.x}; column < areaPos.x + areaSize.x; ++column) {
-            if (row < 0 || row >= mNumRows || column < 0 || column >= mNumColumns) {
+            if (row < mLowestVisibleRow || row >= mNumRows || column < 0 || column >= mNumColumns) {
                 continue;
             }
             

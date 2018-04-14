@@ -6,12 +6,12 @@ Backlog:
     -Analytics.
     
   -Gameplay:
-    -Prevent the crossed tilted welds from happening seven and mirrored seven (in both
+   X-Prevent the crossed tilted welds from happening seven and mirrored seven (in both
      GestureInputHandler and ClickInputHandler) so that those pieces can be pulled down. Or, allow
      it and solve it when pulling down loose pieces?
-    -Fix the piece pull down bug on level 31. See screenshot.
-    -Improve the AI move evaluation.
-    -When playing a level with clear objective the game could scroll up if there is no room to spawn
+   X-Fix the piece pull down bug on level 31. See screenshot.
+   X-Improve the AI move evaluation.
+   X-When playing a level with clear objective the game could scroll up if there is no room to spawn
      the falling piece. If we are at the top of the level then it is game over, or maybe the top
      rows could be cleared so the the piece fits.
     -Speed up gameplay by updating GameLogic already when falling blocks are close to enter the
@@ -28,11 +28,12 @@ Backlog:
      not really matter since the user can select any piece from the selectables but maybe it is most 
      convenient to go back to the state before the move and not the initial state.
   -Rendering:
-    -The blast radius animation should fade in and start at at slightly smaller scale and then scale
+   X-The blast radius animation should fade in and start at at slightly smaller scale and then scale
      into the right size.
-    -Try increase ambient in red, green and gold non-field materials. Could also try to make the
+   X-Try increase ambient in red, green and gold non-field materials. Could also try to make the
      field blocks slightly brighter by increasing the ambient factor in the field light source.
-    -Could try a small bounce when pieces land.
+   X-Could try a small bounce when pieces land.
+   X-Prevent flying blocks from intersecting.
     -Could try reducing scroll speed in map scene using a spring.
     -Could zoom in on map pin when clicking on a level in the map.
     -Could have the rounded cylinder i some places in the HUDs.
@@ -74,34 +75,7 @@ Backlog:
     -Credit the icon creator: <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
 
 Ongoing tasks:
-    -Left to do for level bombs:
-        -Figure out what to do with the scenario when some bombs are not triggered.
-    -Maybe some bombs and row bombs can be part of the level and detonated if landed on. Then there
-     could be some cascading scenarios like landing on a row bomb that triggers a bomb on the same
-     row on the other side of the field. If landing a bomb on a level bomb then there could be a
-     bigger explosion.
-        -If clearing a full row containing some level bombs inside, should level bombs be
-         triggered? Or, should they only be triggered when hit by pieces or explosions/lasers?
-            -They should not trigger since they only way of choosing not to use those level bombs is
-             to fill the row.
-        -If clearing a full row containing a level bomb inside and the piece lands on it, should the
-         level bomb be triggered?
-            -Yes, it should be triggered.
-            -Fix the bug when landing on and filling a row containing 6 level bombs. Only some of
-             level bombs get triggered since the rest of them are removed when clearing the row.
-        -If level bombs get pulled down and land should they trigger?
-            -Sort of logical if they trigger since bomb pieces trigger when landing. However,
-             not triggering could open up for more strategic play by letting the player move level
-             bombs to different rows. Try don't trigger for now.
-        -If pulled down piece blocks (not gray level blocks) land on level bombs should they trigger?
-            -Probably more logical if they trigger since level bombs trigger when pieces land on
-             them. However, it seems to be hard for the player to prevent pulled down blocks from
-             accidentaly hitting bombs at lower rows. Probably tricky to implement but it might go
-             something like this:
-             during pulling down of pieces, Field detects that a level bomb will eventually be
-             land on by piece blocks. The Field then adds that event to GameLogic which will
-             detonate the level bomb once it is Updated again (after the CollapsingFieldAnimation is
-             done with dragging down the piece blocks position).
+
 
 
 Ideas:
@@ -136,8 +110,9 @@ Time Estimation in days:
         Done
     -Try bombs part of level.
         Cost: 10
-    -Do some of the top items in the backlog.
-        Cost: 6
+        Done
+    -Do the marked items in the backlog.
+        Cost: 8
     -Camera shake.
         Cost: 3
     -Use new GUI/Menu textures.
@@ -165,10 +140,9 @@ Time Estimation in days:
     -Login/sign up account.
         Cost: 10
     -Back end.
-    -Physics.
-        Cost: 15
+        Cost: ?
 
-        Total: 180
+        Total: 167
 
 
 Comomon piece type sets:
@@ -289,6 +263,29 @@ Comomon piece type sets:
         Green           18.0
         Blue            27.5
         Yellow          15.0
+ 
+ 
+Decision notes on level bombs:
+        -If clearing a full row containing some level bombs inside, should level bombs be
+         triggered? Or, should they only be triggered when hit by pieces or explosions/lasers?
+            -They should not trigger since they only way of choosing not to use those level bombs is
+             to fill the row.
+        -If clearing a full row containing a level bomb inside and the piece lands on it, should the
+         level bomb be triggered?
+            -Yes, it should be triggered since it is landed on but level bombs next to the hit level
+             bomb should not trigger since they are cleared because of the full row.
+        -If level bombs get pulled down and land should they trigger?
+            -They should not triggering since this could open up for more strategic play by letting
+             the player move level bombs to different rows.
+        -If pulled down piece blocks (not gray level blocks) land on level bombs should they trigger?
+            -In one way it is logical if they trigger since level bombs trigger when pieces land on
+             them. On the other hand, it seems to be hard for the player to prevent pulled down
+             blocks from accidentaly hitting bombs at lower rows. Probably tricky to implement but
+             it might go something like this:
+             during pulling down of pieces, Field detects that a level bomb will eventually be
+             land on by piece blocks. The Field then adds that event to GameLogic which will
+             detonate the level bomb once it is Updated again (after the CollapsingFieldAnimation is
+             done with dragging down the piece blocks position).
  
  
 Create rounded cube in Blender:

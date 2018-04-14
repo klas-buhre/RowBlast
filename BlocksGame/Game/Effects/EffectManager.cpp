@@ -3,7 +3,7 @@
 using namespace BlocksGame;
 
 namespace {
-    constexpr auto numLevelBombEffects {20};
+    constexpr auto numLevelBombEffects {30};
     constexpr auto numLaserEffects {8};
 }
 
