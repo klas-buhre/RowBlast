@@ -37,6 +37,7 @@ namespace BlocksGame {
         struct BombExplosionState {
             Pht::IVec2 mPosition;
             float mElapsedTime {0.0f};
+            bool mShouldApplyForceToAlreadyFlyingBlocks {true};
         };
         
         struct LaserState {

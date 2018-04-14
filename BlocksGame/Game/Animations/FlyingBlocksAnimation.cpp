@@ -95,7 +95,12 @@ void FlyingBlocksAnimation::AddBlockRows(const Field::RemovedSubCells& subCells)
 
 void FlyingBlocksAnimation::AddBlocks(const Field::RemovedSubCells& subCells,
                                       const Pht::IVec2& detonationPos,
-                                      float explosiveForceMagnitude) {
+                                      float explosiveForceMagnitude,
+                                      bool applyForceToAlreadyFlyingBlocks) {
+    if (applyForceToAlreadyFlyingBlocks) {
+        ApplyForceToAlreadyFlyingBlocks(explosiveForceMagnitude, detonationPos);
+    }
+
     for (auto& removedSubCell: subCells) {
         auto dx {removedSubCell.mExactPosition.x - static_cast<float>(detonationPos.x)};
         auto dy {removedSubCell.mExactPosition.y - static_cast<float>(detonationPos.y)};
@@ -108,8 +113,8 @@ void FlyingBlocksAnimation::AddBlocks(const Field::RemovedSubCells& subCells,
             dy = dx * (Pht::NormalizedRand() * 0.2f - 0.1f);
         }
 
-        Pht::Vec3 explosiveForceDirecton {dx, dy, 1.0f};
-        explosiveForceDirecton.Normalize();
+        Pht::Vec3 explosiveForceDirection {dx, dy, 1.0f};
+        explosiveForceDirection.Normalize();
         
         auto forceMagnitude {0.0f};
         auto distSquare {dx * dx + dy * dy};
@@ -119,7 +124,7 @@ void FlyingBlocksAnimation::AddBlocks(const Field::RemovedSubCells& subCells,
             forceMagnitude = explosiveForceMagnitude / distSquare;
         }
         
-        auto force {explosiveForceDirecton * forceMagnitude};
+        auto force {explosiveForceDirection * forceMagnitude};
         auto angularVelocity {forceMagnitude * 50.0f};
         
         auto& sceneObject {AccuireSceneObject()};
@@ -140,6 +145,38 @@ void FlyingBlocksAnimation::AddBlocks(const Field::RemovedSubCells& subCells,
         };
 
         mFlyingBlocks.PushBack(flyingBlock);
+    }
+}
+
+void FlyingBlocksAnimation::ApplyForceToAlreadyFlyingBlocks(float explosiveForceMagnitude,
+                                                            const Pht::IVec2& detonationPos) {
+    auto cellSize {mScene.GetCellSize()};
+    auto& fieldLowerLeft {mScene.GetFieldLoweLeft()};
+
+    Pht::Vec3 detonationPosWorldSpace {
+        static_cast<float>(detonationPos.x) * cellSize + cellSize / 2.0f + fieldLowerLeft.x,
+        static_cast<float>(detonationPos.y) * cellSize + cellSize / 2.0f + fieldLowerLeft.y,
+        mScene.GetFieldPosition().z
+    };
+    
+    for (auto& block: mFlyingBlocks) {
+        auto& blockPosition {block.mSceneObject->GetTransform().GetPosition()};
+        auto dx {(blockPosition.x - static_cast<float>(detonationPosWorldSpace.x)) / cellSize};
+        auto dy {(blockPosition.y - static_cast<float>(detonationPosWorldSpace.y)) / cellSize};
+
+        Pht::Vec3 explosiveForceDirecton {dx, dy, 1.0f};
+        explosiveForceDirecton.Normalize();
+        
+        auto forceMagnitude {0.0f};
+        auto distSquare {dx * dx + dy * dy};
+        if (distSquare == 0.0f) {
+            forceMagnitude = explosiveForceMagnitude;
+        } else {
+            forceMagnitude = explosiveForceMagnitude / distSquare;
+        }
+        
+        auto force {explosiveForceDirecton * forceMagnitude};
+        block.mVelocity += force / subCellMass;
     }
 }
 

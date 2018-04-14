@@ -14,9 +14,9 @@ namespace {
     constexpr auto bombExplosionMaxReach {2};
     constexpr auto bombExplosionForceSpeed {50.0f};
     constexpr auto bombExplosiveForceMagnitude {30.0f};
-    constexpr auto laserCuttingSpeed {25.0f};
+    constexpr auto laserCuttingSpeed {39.0f};
     constexpr auto levelBombExplosionMaxReach {1};
-    constexpr auto levelBombExplosionForceSpeed {20.0f};
+    constexpr auto levelBombExplosionForceSpeed {12.0f};
     constexpr auto levelBombExplosiveForceMagnitude {20.0f};
     constexpr auto bigBombExplosionMaxReach {2};
     constexpr auto bigBombExplosionForceSpeed {50.0f};
@@ -281,7 +281,9 @@ FieldExplosionsStates::UpdateGenericBombExplosionState(BombExplosionState& explo
             
             mFlyingBlocksAnimation.AddBlocks(removedSubCells,
                                              explosionState.mPosition,
-                                             explosiveForceMagnitude);
+                                             explosiveForceMagnitude,
+                                             explosionState.mShouldApplyForceToAlreadyFlyingBlocks);
+            explosionState.mShouldApplyForceToAlreadyFlyingBlocks = false;
         }
         
         if (explosionForceReach == explosionMaxReach) {

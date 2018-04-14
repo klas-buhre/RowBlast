@@ -9,6 +9,8 @@ Backlog:
     -Prevent the crossed tilted welds from happening seven and mirrored seven (in both
      GestureInputHandler and ClickInputHandler) so that those pieces can be pulled down. Or, allow
      it and solve it when pulling down loose pieces?
+    -Fix the piece pull down bug on level 31. See screenshot.
+    -Improve the AI move evaluation.
     -When playing a level with clear objective the game could scroll up if there is no room to spawn
      the falling piece. If we are at the top of the level then it is game over, or maybe the top
      rows could be cleared so the the piece fits.
@@ -72,6 +74,8 @@ Backlog:
     -Credit the icon creator: <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
 
 Ongoing tasks:
+    -Left to do for level bombs:
+        -Figure out what to do with the scenario when some bombs are not triggered.
     -Maybe some bombs and row bombs can be part of the level and detonated if landed on. Then there
      could be some cascading scenarios like landing on a row bomb that triggers a bomb on the same
      row on the other side of the field. If landing a bomb on a level bomb then there could be a
@@ -98,9 +102,6 @@ Ongoing tasks:
              land on by piece blocks. The Field then adds that event to GameLogic which will
              detonate the level bomb once it is Updated again (after the CollapsingFieldAnimation is
              done with dragging down the piece blocks position).
-        -Handling multiple explosions at the same time.
-            -Could add a detonation delay together with slower explosion reach.
-            -FlyingBlocksAnimation must handle the force from newer explosions on the active blocks.
 
 
 Ideas:
@@ -136,7 +137,7 @@ Time Estimation in days:
     -Try bombs part of level.
         Cost: 10
     -Do some of the top items in the backlog.
-        Cost: 4
+        Cost: 6
     -Camera shake.
         Cost: 3
     -Use new GUI/Menu textures.

@@ -47,9 +47,12 @@ namespace BlocksGame {
         void AddBlockRows(const Field::RemovedSubCells& subCells);
         void AddBlocks(const Field::RemovedSubCells& subCells,
                        const Pht::IVec2& detonationPos,
-                       float explosiveForceMagnitude);
+                       float explosiveForceMagnitude,
+                       bool applyForceToAlreadyFlyingBlocks);
 
     private:
+        void ApplyForceToAlreadyFlyingBlocks(float explosiveForceMagnitude,
+                                             const Pht::IVec2& detonationPos);
         Pht::Vec3 CalculateBlockInitialPosition(const RemovedSubCell& subCell);
         Pht::RenderableObject& GetBlockRenderableObject(const RemovedSubCell& subCell);
         Pht::SceneObject& AccuireSceneObject();
