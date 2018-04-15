@@ -14,7 +14,6 @@ Backlog:
    X-When playing a level with clear objective the game could scroll up if there is no room to spawn
      the falling piece. If we are at the top of the level then it is game over, or maybe the top
      rows could be cleared so the the piece fits.
-   X-Don't detonate bomb if tapping with gesture controls. Only detonate when dropping piece.
     -Speed up gameplay by updating GameLogic already when falling blocks are close to enter the
      bouncing state? If cascading, wait until all bocks have entered bouncing state before claring
      new rows.

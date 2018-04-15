@@ -540,8 +540,13 @@ void GameLogic::RemoveClearedRowsAndPullDownLoosePieces() {
     mCascadeState = CascadeState::Cascading;
 }
 
-void GameLogic::RotateFallingPiece(const Pht::TouchEvent& touchEvent) {
+void GameLogic::RotatePiece(const Pht::TouchEvent& touchEvent) {
     auto& pieceType {mFallingPiece->GetPieceType()};
+    
+    if (!pieceType.CanRotateAroundZ()) {
+        return;
+    }
+    
     auto newRotation {CalculateNewRotation(touchEvent)};
     
     PieceBlocks pieceBlocks {
@@ -638,19 +643,6 @@ void GameLogic::SwitchPiece() {
     mCurrentMove.mSelectablePieces[0] = &mFallingPiece->GetPieceType();
     mFallingPieceInitReason = FallingPieceInitReason::Switch;
     mPreviewPieceAnimationToStart = PreviewPieceAnimationToStart::SwitchPiece;
-}
-
-void GameLogic::RotatePieceOrDetonateBomb(const Pht::TouchEvent& touchEvent) {
-    std::cout << "tap" << std::endl;
-    
-    auto& pieceType {mFallingPiece->GetPieceType()};
-    
-    if (IsBomb(pieceType)) {
-        DetonateDroppedBomb();
-        NextMove();
-    } else if (pieceType.CanRotateAroundZ()) {
-        RotateFallingPiece(touchEvent);
-    }
 }
 
 void GameLogic::SetFallingPieceXPosWithCollisionDetection(float fallingPieceNewX) {

@@ -59,7 +59,7 @@ namespace BlocksGame {
         void DropFallingPiece() override;
         void StartFallingPieceAnimation(const Movement& lastMovement) override;
         void OnFallingPieceAnimationFinished(bool startParticleEffect) override;
-        void RotatePieceOrDetonateBomb(const Pht::TouchEvent& touchEvent) override;
+        void RotatePiece(const Pht::TouchEvent& touchEvent) override;
         void SwitchPiece() override;
         void SetFallingPieceXPosWithCollisionDetection(float fallingPieceNewX) override;
         int GetGhostPieceRow() const override;
@@ -145,7 +145,6 @@ namespace BlocksGame {
         void DetonateImpactedLevelBombs(const Field::ImpactedBombs& impactedLevelBombs);
         void GoToFieldExplosionsState();
         void RemoveClearedRowsAndPullDownLoosePieces();
-        void RotateFallingPiece(const Pht::TouchEvent& touchEvent);
         Rotation CalculateNewRotation(const Pht::TouchEvent& touchEvent);
         void RotatateAndAdjustPosition(Rotation newRotation,
                                        const PieceBlocks& pieceBlocks,
