@@ -8,6 +8,7 @@
 #include "OfflineRasterizer.hpp"
 #include "IImage.hpp"
 #include "ISceneManager.hpp"
+#include "MathUtils.hpp"
 
 // Game includes.
 #include "GameScene.hpp"
@@ -15,6 +16,32 @@
 using namespace BlocksGame;
 
 namespace {
+    constexpr auto opacityCurveAmplitude {0.2f};
+    constexpr auto frequency {0.7f};
+    constexpr auto opacityTarget {1.0f - opacityCurveAmplitude};
+    constexpr auto fadeInTime {0.23f};
+    
+    Pht::StaticVector<Pht::Vec2, 20> scalePoints {
+        {0.0f, 0.0f},
+        {0.1f, 0.005f},
+        {0.2f, 0.01f},
+        {0.3f, 0.02f},
+        {0.35f, 0.035f},
+        {0.4f, 0.05f},
+        {0.45f, 0.065f},
+        {0.5f, 0.08f},
+        {0.55f, 0.115f},
+        {0.6f, 0.15f},
+        {0.65f, 0.225f},
+        {0.7f, 0.3f},
+        {0.75f, 0.41f},
+        {0.8f, 0.52f},
+        {0.85f, 0.62f},
+        {0.9f, 0.7f},
+        {0.95f, 0.87f},
+        {1.0f, 1.0f},
+    };
+
     void DrawEdgeBigBlast(Pht::OfflineRasterizer& rasterizer, float squareSide, float cellSize) {
         const auto edgeLength {cellSize * 1.1f};
         const auto edgeWidth {0.09f};
@@ -224,18 +251,18 @@ void BlastRadiusAnimation::Init() {
 }
 
 void BlastRadiusAnimation::Start(Kind kind) {
-    mState = State::Active;
+    mState = State::FadingIn;
+    mActiveKind = kind;
+    mTime = 0.0f;
     
     switch (kind) {
         case Kind::Bomb:
             mBombRadiusSceneObject->SetIsVisible(true);
             mBigBombRadiusSceneObject->SetIsVisible(false);
-            mActiveKind = Kind::Bomb;
             break;
         case Kind::BigBomb:
             mBigBombRadiusSceneObject->SetIsVisible(true);
             mBombRadiusSceneObject->SetIsVisible(false);
-            mActiveKind = Kind::BigBomb;
             break;
     }
 }
@@ -261,18 +288,73 @@ void BlastRadiusAnimation::SetPosition(const Pht::Vec2& position) {
 }
 
 void BlastRadiusAnimation::Update(float dt) {
-    if (mState == State::Inactive) {
-        return;
+    switch (mState) {
+        case State::FadingIn:
+            UpdateInFadingInState(dt);
+            break;
+        case State::Active:
+            UpdateInActiveState(dt);
+            break;
+        case State::Inactive:
+            break;
     }
-    
+}
+
+void BlastRadiusAnimation::UpdateInFadingInState(float dt) {
     mTime += dt;
-    const auto opacityCurveAmplitude {0.2f};
-    const auto frequency {0.7f};
+    
+    SetOpacity(opacityTarget * mTime / fadeInTime);
+    
+    auto normalizedTime {(fadeInTime - mTime) / fadeInTime};
+    auto scale {1.0f + 1.0f * Pht::Lerp(normalizedTime, scalePoints)};
+
+    SetScale(scale);
+
+    if (mTime > fadeInTime) {
+        mState = State::Active;
+        SetOpacity(opacityTarget);
+        SetScale(1.0f);
+    }
+}
+
+void BlastRadiusAnimation::UpdateInActiveState(float dt) {
+    mTime += dt;
     
     auto opacity {
         1.0f - opacityCurveAmplitude + opacityCurveAmplitude * std::sin(2.0f * 3.1415f * frequency * mTime)
     };
     
-    mBombRadiusSceneObject->GetRenderable()->GetMaterial().SetOpacity(opacity);
-    mBigBombRadiusSceneObject->GetRenderable()->GetMaterial().SetOpacity(opacity);
+    SetOpacity(opacity);
+}
+
+void BlastRadiusAnimation::SetOpacity(float opacity) {
+    switch (mActiveKind) {
+        case Kind::Bomb:
+            mBombRadiusSceneObject->GetRenderable()->GetMaterial().SetOpacity(opacity);
+            break;
+        case Kind::BigBomb:
+            mBigBombRadiusSceneObject->GetRenderable()->GetMaterial().SetOpacity(opacity);
+            break;
+    }
+}
+
+void BlastRadiusAnimation::SetScale(float scale) {
+    switch (mActiveKind) {
+        case Kind::Bomb:
+            mBombRadiusSceneObject->GetTransform().SetScale(scale);
+            break;
+        case Kind::BigBomb:
+            mBigBombRadiusSceneObject->GetTransform().SetScale(scale);
+            break;
+    }
+}
+
+bool BlastRadiusAnimation::IsActive() const {
+    switch (mState) {
+        case State::FadingIn:
+        case State::Active:
+            return true;
+        case State::Inactive:
+            return false;
+    }
 }

@@ -14,6 +14,7 @@ Backlog:
    X-When playing a level with clear objective the game could scroll up if there is no room to spawn
      the falling piece. If we are at the top of the level then it is game over, or maybe the top
      rows could be cleared so the the piece fits.
+   X-Don't detonate bomb if tapping with gesture controls. Only detonate when dropping piece.
     -Speed up gameplay by updating GameLogic already when falling blocks are close to enter the
      bouncing state? If cascading, wait until all bocks have entered bouncing state before claring
      new rows.
@@ -28,13 +29,13 @@ Backlog:
      not really matter since the user can select any piece from the selectables but maybe it is most 
      convenient to go back to the state before the move and not the initial state.
   -Rendering:
-   X-The blast radius animation should fade in and start at at slightly smaller scale and then scale
-     into the right size.
    X-Try increase ambient in red, green and gold non-field materials. Could also try to make the
      field blocks slightly brighter by increasing the ambient factor in the field light source.
    X-Could try a small bounce when pieces land.
    X-Prevent flying blocks from intersecting.
     -Could try reducing scroll speed in map scene using a spring.
+    -The title text could appear with the sliding text animation and with a quad behind it to give
+     contrast.
     -Could zoom in on map pin when clicking on a level in the map.
     -Could have the rounded cylinder i some places in the HUDs.
     -GUI: the buttons in the views could be yellow with black text and triangular edges like in
@@ -129,10 +130,10 @@ Time Estimation in days:
         Cost: 10
     -Levels/Chapters.
         Cost: 10
-    -Purchases.
-        Cost: 15
     -Sounds/music.
         Cost: 5
+    -Purchases.
+        Cost: 15
     -Net/HTTP.
         Cost: 10
     -Analytics.

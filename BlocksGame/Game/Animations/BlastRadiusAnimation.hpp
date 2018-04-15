@@ -29,11 +29,8 @@ namespace BlocksGame {
         void Stop();
         void SetPosition(const Pht::Vec2& position);
         void Update(float dt);
-        
-        bool IsActive() const {
-            return mState == State::Active;
-        }
-        
+        bool IsActive() const;
+
         Kind GetActiveKind() const {
             return mActiveKind;
         }
@@ -42,8 +39,13 @@ namespace BlocksGame {
         std::unique_ptr<Pht::SceneObject> CreateSceneObject(const Pht::IImage& image,
                                                             float squareSide,
                                                             Pht::IEngine& engine);
+        void UpdateInFadingInState(float dt);
+        void UpdateInActiveState(float dt);
+        void SetOpacity(float opacity);
+        void SetScale(float scale);
 
         enum class State {
+            FadingIn,
             Active,
             Inactive
         };
