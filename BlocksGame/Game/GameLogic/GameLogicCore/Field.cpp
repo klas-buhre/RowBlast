@@ -1540,10 +1540,21 @@ Field::RemovedSubCells Field::RemoveAreaOfSubCells(const Pht::IVec2& areaPos,
         }
     }
     
-    BreakLowerLeftWeld(areaPos.y + areaSize.y, areaPos.x + areaSize.x);
-    BreakUpperLeftWeld(areaPos.y - 1, areaPos.x + areaSize.x);
-    BreakUpperRightWeld(areaPos.y - 1, areaPos.x - 1);
-    BreakLowerRightWeld(areaPos.y + areaSize.y, areaPos.x - 1);
+    if (removeCorners) {
+        BreakLowerLeftWeld(areaPos.y + areaSize.y, areaPos.x + areaSize.x);
+        BreakUpperLeftWeld(areaPos.y - 1, areaPos.x + areaSize.x);
+        BreakUpperRightWeld(areaPos.y - 1, areaPos.x - 1);
+        BreakLowerRightWeld(areaPos.y + areaSize.y, areaPos.x - 1);
+    } else {
+        BreakLowerLeftWeld(areaPos.y + areaSize.y, areaPos.x + areaSize.x - 1);
+        BreakLowerLeftWeld(areaPos.y + areaSize.y - 1, areaPos.x + areaSize.x);
+        BreakUpperLeftWeld(areaPos.y, areaPos.x + areaSize.x);
+        BreakUpperLeftWeld(areaPos.y - 1, areaPos.x + areaSize.x - 1);
+        BreakUpperRightWeld(areaPos.y - 1, areaPos.x);
+        BreakUpperRightWeld(areaPos.y, areaPos.x - 1);
+        BreakLowerRightWeld(areaPos.y + areaSize.y - 1, areaPos.x - 1);
+        BreakLowerRightWeld(areaPos.y + areaSize.y, areaPos.x);
+    }
     
     return removedSubCells;
 }
