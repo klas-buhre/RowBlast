@@ -57,6 +57,8 @@ namespace BlocksGame {
         Pht::RenderableObject& GetBlockRenderableObject(const RemovedSubCell& subCell);
         Pht::SceneObject& AccuireSceneObject();
         void ReleaseSceneObject(Pht::SceneObject& sceneObject);
+        void UpdateBlocks(float dt);
+        void HandleCollisions(float dt);
         
         static constexpr int maxNumBlockSceneObjects {Field::maxNumRows * Field::maxNumColumns};
         
@@ -70,6 +72,7 @@ namespace BlocksGame {
         FlyingBlocks mFlyingBlocks;
         std::vector<std::unique_ptr<Pht::SceneObject>> mSceneObjects;
         FreeSceneObjects mFreeSceneObjects;
+        float mIntersectionDistanceSquared {0.0f};
     };
 }
 

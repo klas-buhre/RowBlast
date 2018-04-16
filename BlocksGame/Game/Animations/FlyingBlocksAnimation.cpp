@@ -35,6 +35,9 @@ FlyingBlocksAnimation::FlyingBlocksAnimation(GameScene& scene,
     for (auto& sceneObject: mSceneObjects) {
         sceneObject = std::make_unique<Pht::SceneObject>();
     }
+    
+    auto blockSize {scene.GetCellSize()};
+    mIntersectionDistanceSquared = blockSize * blockSize;
 }
 
 void FlyingBlocksAnimation::Init() {
@@ -181,6 +184,11 @@ void FlyingBlocksAnimation::ApplyForceToAlreadyFlyingBlocks(float explosiveForce
 }
 
 void FlyingBlocksAnimation::Update(float dt) {
+    UpdateBlocks(dt);
+    HandleCollisions(dt);
+}
+
+void FlyingBlocksAnimation::UpdateBlocks(float dt) {
     auto i {0};
 
     while (i < mFlyingBlocks.Size()) {
@@ -213,6 +221,48 @@ void FlyingBlocksAnimation::Update(float dt) {
             mFlyingBlocks.Erase(i);
         } else {
             ++i;
+        }
+    }
+}
+
+void FlyingBlocksAnimation::HandleCollisions(float dt) {
+    auto numBlocks {mFlyingBlocks.Size()};
+    
+    for (auto i {0}; i < numBlocks; ++i) {
+        for (auto j {i + 1}; j < numBlocks; ++j) {
+            auto& block1 {mFlyingBlocks.At(i)};
+            auto& block2 {mFlyingBlocks.At(j)};
+            auto& block1Position {block1.mSceneObject->GetTransform().GetPosition()};
+            auto& block2Position {block2.mSceneObject->GetTransform().GetPosition()};
+            
+            Pht::Vec3 pos1MinusPos2 {block1Position - block2Position};
+            auto distSquared {pos1MinusPos2.LengthSquared()};
+            
+            if (distSquared > mIntersectionDistanceSquared) {
+                continue;
+            }
+            
+            if (distSquared == 0.0f) {
+                distSquared = 0.01f;
+            }
+            
+            Pht::Vec3 pos2MinusPos1 {block2Position - block1Position};
+            auto v1MinusV2 {block1.mVelocity - block2.mVelocity};
+            auto v2MinusV1 {block2.mVelocity - block1.mVelocity};
+            
+            // Equations from wikipedia: https://en.wikipedia.org/wiki/Elastic_collision
+            // section "Two-dimensional collision with two moving objects". Used in 3d space here.
+            auto dv1 {-pos1MinusPos2 * v1MinusV2.Dot(pos1MinusPos2) / distSquared};
+            auto dv2 {-pos2MinusPos1 * v2MinusV1.Dot(pos2MinusPos1) / distSquared};
+
+            auto newPos1 {block1Position + (block1.mVelocity + dv1) * dt};
+            auto newPos2 {block2Position + (block2.mVelocity + dv2) * dt};
+            auto newDistSquared {(newPos1 - newPos2).LengthSquared()};
+            
+            if (newDistSquared > distSquared) {
+                block1.mVelocity += dv1;
+                block2.mVelocity += dv2;
+            }
         }
     }
 }
