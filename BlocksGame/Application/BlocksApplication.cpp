@@ -30,7 +30,7 @@ Backlog:
   -Rendering:
    X-Try increase ambient in red, green and gold non-field materials. Could also try to make the
      field blocks slightly brighter by increasing the ambient factor in the field light source.
-   X-Could try a small bounce when pieces land.
+   X-Could try a small bounce when pieces lands.
     -Could try reducing scroll speed in map scene using a spring.
     -The title text could appear with the sliding text animation and with a quad behind it to give
      contrast.
