@@ -35,10 +35,6 @@ namespace BlocksGame {
             return *mLightGrayMaterial;
         }
 
-        const Pht::Material& GetYellowMaterial() const {
-            return *mYellowMaterial;
-        }
-        
         const Pht::Material& GetGoldFieldBlockMaterial() const {
             return *mGoldFieldBlockMaterial;
         }
@@ -69,7 +65,6 @@ namespace BlocksGame {
         void CreateRedMaterial(const Pht::EnvMapTextureFilenames& envMapTextures);
         void CreateGreenMaterial(const Pht::EnvMapTextureFilenames& envMapTextures);
         void CreateLightGrayMaterial(const Pht::EnvMapTextureFilenames& envMapTextures);
-        void CreateYellowMaterial(const Pht::EnvMapTextureFilenames& envMapTextures);
         void CreateSkyMaterial();
         void CreateGoldFieldBlockMaterial(const Pht::EnvMapTextureFilenames& envMapTextures);
         void CreateRedFieldBlockMaterial(const Pht::EnvMapTextureFilenames& envMapTextures);
@@ -83,7 +78,6 @@ namespace BlocksGame {
         std::unique_ptr<Pht::Material> mBlueMaterial;
         std::unique_ptr<Pht::Material> mGreenMaterial;
         std::unique_ptr<Pht::Material> mLightGrayMaterial;
-        std::unique_ptr<Pht::Material> mYellowMaterial;
         std::unique_ptr<Pht::Material> mGoldFieldBlockMaterial;
         std::unique_ptr<Pht::Material> mRedFieldBlockMaterial;
         std::unique_ptr<Pht::Material> mBlueFieldBlockMaterial;

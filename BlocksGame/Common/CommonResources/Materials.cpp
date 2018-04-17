@@ -22,7 +22,6 @@ Materials::Materials(Pht::IEngine& engine) {
     CreateRedMaterial(envMapTextures);
     CreateGreenMaterial(envMapTextures);
     CreateLightGrayMaterial(envMapTextures);
-    CreateYellowMaterial(envMapTextures);
     
     Pht::EnvMapTextureFilenames fieldBlockEnvMapTextures {
         "sky_upside_down.jpg",
@@ -42,10 +41,10 @@ Materials::Materials(Pht::IEngine& engine) {
 }
 
 void Materials::CreateGoldMaterial(const Pht::EnvMapTextureFilenames& envMapTextures) {
-    Pht::Color ambient {1.0f, 0.5f, 0.0f};
+    Pht::Color ambient {1.1f, 0.55f, 0.0f};
     Pht::Color diffuse {1.0f, 0.5f, 0.0f};
     Pht::Color specular {1.0f, 1.0f, 1.0f};
-    auto shininess {20.0f};
+    auto shininess {21.0f};
     mGoldMaterial = std::make_unique<Pht::Material>(envMapTextures,
                                                     ambient,
                                                     diffuse,
@@ -55,10 +54,10 @@ void Materials::CreateGoldMaterial(const Pht::EnvMapTextureFilenames& envMapText
 }
 
 void Materials::CreateBlueMaterial(const Pht::EnvMapTextureFilenames& envMapTextures) {
-    Pht::Color ambient {0.0f, 0.475f, 1.0f};
+    Pht::Color ambient {0.0f, 0.5225f, 1.1f};
     Pht::Color diffuse {0.0f, 0.475f, 1.0f};
     Pht::Color specular {1.0f, 1.0f, 1.0f};
-    auto shininess {20.0f};
+    auto shininess {21.0f};
     mBlueMaterial = std::make_unique<Pht::Material>(envMapTextures,
                                                     ambient,
                                                     diffuse,
@@ -68,10 +67,10 @@ void Materials::CreateBlueMaterial(const Pht::EnvMapTextureFilenames& envMapText
 }
 
 void Materials::CreateRedMaterial(const Pht::EnvMapTextureFilenames& envMapTextures) {
-    Pht::Color ambient {1.0f, 0.185f, 0.185f};
+    Pht::Color ambient {1.05f, 0.325f, 0.325f};
     Pht::Color diffuse {1.0f, 0.185f, 0.185f};
     Pht::Color specular {1.0f, 1.0f, 1.0f};
-    auto shininess {20.0f};
+    auto shininess {21.0f};
     mRedMaterial = std::make_unique<Pht::Material>(envMapTextures,
                                                    ambient,
                                                    diffuse,
@@ -81,10 +80,10 @@ void Materials::CreateRedMaterial(const Pht::EnvMapTextureFilenames& envMapTextu
 }
 
 void Materials::CreateGreenMaterial(const Pht::EnvMapTextureFilenames& envMapTextures) {
-    Pht::Color ambient {0.1f, 0.595f, 0.1f};
+    Pht::Color ambient {0.11f, 0.63f, 0.11f};
     Pht::Color diffuse {0.1f, 0.595f, 0.1f};
     Pht::Color specular {1.0f, 1.0f, 1.0f};
-    auto shininess {20.0f};
+    auto shininess {21.0f};
     mGreenMaterial = std::make_unique<Pht::Material>(envMapTextures,
                                                      ambient,
                                                      diffuse,
@@ -94,29 +93,16 @@ void Materials::CreateGreenMaterial(const Pht::EnvMapTextureFilenames& envMapTex
 }
 
 void Materials::CreateLightGrayMaterial(const Pht::EnvMapTextureFilenames& envMapTextures) {
-    Pht::Color ambient {0.55f, 0.55f, 0.55f};
-    Pht::Color diffuse {0.55f, 0.55f, 0.55f};
+    Pht::Color ambient {0.575f, 0.575f, 0.575f};
+    Pht::Color diffuse {0.575f, 0.575f, 0.575f};
     Pht::Color specular {1.0f, 1.0f, 1.0f};
-    auto shininess {20.0f};
+    auto shininess {25.0f};
     mLightGrayMaterial = std::make_unique<Pht::Material>(envMapTextures,
                                                          ambient,
                                                          diffuse,
                                                          specular,
                                                          shininess,
                                                          reflectivity);
-}
-
-void Materials::CreateYellowMaterial(const Pht::EnvMapTextureFilenames& envMapTextures) {
-    Pht::Color ambient {0.96f, 0.62f, 0.0f};
-    Pht::Color diffuse {0.96f, 0.62f, 0.0f};
-    Pht::Color specular {1.0f, 1.0f, 1.0f};
-    auto shininess {20.0f};
-    mYellowMaterial = std::make_unique<Pht::Material>(envMapTextures,
-                                                      ambient,
-                                                      diffuse,
-                                                      specular,
-                                                      shininess,
-                                                      reflectivity);
 }
 
 void Materials::CreateGoldFieldBlockMaterial(const Pht::EnvMapTextureFilenames& envMapTextures) {

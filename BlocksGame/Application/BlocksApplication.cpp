@@ -28,8 +28,6 @@ Backlog:
      not really matter since the user can select any piece from the selectables but maybe it is most 
      convenient to go back to the state before the move and not the initial state.
   -Rendering:
-   X-Try increase ambient in red, green and gold non-field materials. Could also try to make the
-     field blocks slightly brighter by increasing the ambient factor in the field light source.
    X-Could try a small bounce when pieces lands.
     -Could try reducing scroll speed in map scene using a spring.
     -The title text could appear with the sliding text animation and with a quad behind it to give
@@ -74,6 +72,8 @@ Backlog:
     -Credit the icon creator: <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
 
 Ongoing tasks:
+   X-Try increase ambient in red, green and gold non-field materials. Could also try to make the
+     field blocks slightly brighter by increasing the ambient factor in the field light source.
 
 
 
