@@ -72,7 +72,6 @@ Backlog:
     -Credit the icon creator: <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
 
 Ongoing tasks:
-    -Rename the engine folder to PhotonBeam, rename game folder to RowBlast.
     -Try increase ambient in red, green and gold non-field materials. Could also try to make the
      field blocks slightly brighter by increasing the ambient factor in the field light source.
 
