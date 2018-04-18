@@ -13,7 +13,7 @@
 // Game includes.
 #include "CommonResources.hpp"
 
-using namespace BlocksGame;
+using namespace RowBlast;
 
 MenuButton::MenuButton(Pht::IEngine& engine,
                        Pht::GuiView& view,

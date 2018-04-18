@@ -4,7 +4,7 @@
 #include "GameScene.hpp"
 #include "GameLogic.hpp"
 
-using namespace BlocksGame;
+using namespace RowBlast;
 
 namespace {
     constexpr auto animationDuration {0.28f};

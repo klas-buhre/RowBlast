@@ -4,7 +4,7 @@
 // Game includes.
 #include "Piece.hpp"
 
-namespace BlocksGame {
+namespace RowBlast {
     class Bomb: public Piece {
     public:
         Bomb();

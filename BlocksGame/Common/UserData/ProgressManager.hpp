@@ -4,7 +4,7 @@
 #include <vector>
 #include <array>
 
-namespace BlocksGame {
+namespace RowBlast {
     struct StarLimits {
         int mTwo {0};
         int mThree {0};

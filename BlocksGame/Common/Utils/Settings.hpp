@@ -1,7 +1,7 @@
 #ifndef Settings_hpp
 #define Settings_hpp
 
-namespace BlocksGame {
+namespace RowBlast {
     enum class ControlType {
         Click,
         Gesture

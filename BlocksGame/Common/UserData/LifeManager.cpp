@@ -6,7 +6,7 @@
 #include "JsonUtil.hpp"
 #include "FileStorage.hpp"
 
-using namespace BlocksGame;
+using namespace RowBlast;
 
 namespace {
     constexpr auto fullNumLives {5};

@@ -11,7 +11,7 @@ namespace Pht {
     class IEngine;
 }
 
-namespace BlocksGame {
+namespace RowBlast {
     class GameHudView: public Pht::GuiView {
     public:
         explicit GameHudView(Pht::IEngine& engine);

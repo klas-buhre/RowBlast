@@ -10,7 +10,7 @@
 #include "CommonResources.hpp"
 #include "IGameHudEventListener.hpp"
 
-using namespace BlocksGame;
+using namespace RowBlast;
 
 GameHudController::GameHudController(Pht::IEngine& engine) :
     mView {engine},

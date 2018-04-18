@@ -7,7 +7,7 @@
 #include "InputUtil.hpp"
 #include "GameLogic.hpp"
 
-using namespace BlocksGame;
+using namespace RowBlast;
 
 GameMenuController::GameMenuController(Pht::IEngine& engine,
                                        const CommonResources& commonResources) :

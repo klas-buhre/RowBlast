@@ -7,7 +7,7 @@
 // Game includes.
 #include "Cell.hpp"
 
-namespace BlocksGame {
+namespace RowBlast {
     class Piece;
 
     class FallingPiece {

@@ -6,7 +6,7 @@
 #include "GuiView.hpp"
 #include "SceneObject.hpp"
 
-using namespace BlocksGame;
+using namespace RowBlast;
 
 void GuiViewManager::Init(Pht::SceneObject& parentObject) {
     for (auto* view: mViews) {

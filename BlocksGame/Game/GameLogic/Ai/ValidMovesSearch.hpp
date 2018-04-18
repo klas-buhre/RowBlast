@@ -10,7 +10,7 @@
 // Game includes.
 #include "Field.hpp"
 
-namespace BlocksGame {
+namespace RowBlast {
     class Piece;
     
     class Movement {

@@ -9,7 +9,7 @@ namespace Pht {
     class Scene;
 }
 
-namespace BlocksGame {
+namespace RowBlast {
     void CreateNextLevelParticleEffect(Pht::IEngine& engine,
                                        Pht::Scene& scene,
                                        const Pht::Vec3& position,

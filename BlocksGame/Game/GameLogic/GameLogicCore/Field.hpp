@@ -11,7 +11,7 @@
 #include "Cell.hpp"
 #include "Piece.hpp"
 
-namespace BlocksGame {
+namespace RowBlast {
     class Piece;
     class FallingPiece;
     class Level;

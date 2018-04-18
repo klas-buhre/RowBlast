@@ -1,6 +1,6 @@
 #include "FallingPiece.hpp"
 
-using namespace BlocksGame;
+using namespace RowBlast;
 
 void FallingPiece::Init(const Piece& pieceType, const Pht::Vec2& position, float speed) {
     mPosition = position;

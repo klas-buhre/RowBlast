@@ -10,7 +10,7 @@
 // Game includes.
 #include "Piece.hpp"
 
-namespace BlocksGame {
+namespace RowBlast {
     using TwoPieces = std::array<const Piece*, 2>;
     
     class NextPieceGenerator {

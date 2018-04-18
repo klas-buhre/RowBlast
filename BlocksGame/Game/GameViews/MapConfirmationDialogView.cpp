@@ -11,7 +11,7 @@
 #include "MenuQuad.hpp"
 #include "UiLayer.hpp"
 
-using namespace BlocksGame;
+using namespace RowBlast;
 
 MapConfirmationDialogView::MapConfirmationDialogView(Pht::IEngine& engine,
                                                      const CommonResources& commonResources) {

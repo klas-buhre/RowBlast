@@ -8,7 +8,7 @@
 #include "Field.hpp"
 #include "IGameLogic.hpp"
 
-using namespace BlocksGame;
+using namespace RowBlast;
 
 namespace {
     const auto numVisibleLevelRows {6};

@@ -20,7 +20,7 @@ namespace Pht {
     class ScissorBox;
 }
 
-namespace BlocksGame {
+namespace RowBlast {
     class Level;
     class ScrollController;
     class CommonResources;

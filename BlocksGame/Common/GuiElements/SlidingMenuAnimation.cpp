@@ -10,7 +10,7 @@
 #include "StaticVector.hpp"
 #include "MathUtils.hpp"
 
-using namespace BlocksGame;
+using namespace RowBlast;
 
 namespace {
     const auto slideTime {0.3f};

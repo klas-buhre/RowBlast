@@ -9,7 +9,7 @@
 // Game includes.
 #include "Ai.hpp"
 
-namespace BlocksGame {
+namespace RowBlast {
     class Field;
     class FallingPiece;
     class GameScene;

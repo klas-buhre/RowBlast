@@ -20,7 +20,7 @@ namespace Pht {
     class LightComponent;
 }
 
-namespace BlocksGame {
+namespace RowBlast {
     class GameLogic;
     class LevelResources;
     class PieceResources;

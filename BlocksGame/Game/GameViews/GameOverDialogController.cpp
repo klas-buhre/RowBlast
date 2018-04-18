@@ -7,7 +7,7 @@
 #include "InputUtil.hpp"
 #include "UserData.hpp"
 
-using namespace BlocksGame;
+using namespace RowBlast;
 
 GameOverDialogController::GameOverDialogController(Pht::IEngine& engine,
                                                    const CommonResources& commonResources,

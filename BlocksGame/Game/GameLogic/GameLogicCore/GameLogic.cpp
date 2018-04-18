@@ -19,7 +19,7 @@
 #include "GameHudController.hpp"
 #include "CommonResources.hpp"
 
-using namespace BlocksGame;
+using namespace RowBlast;
 
 namespace {
     const auto maxRotateAdjustment {2};

@@ -8,7 +8,7 @@
 // Game includes:
 #include "CommonResources.hpp"
 
-using namespace BlocksGame;
+using namespace RowBlast;
 
 SettingsButtonController::SettingsButtonController(Pht::IEngine& engine) :
     mView {engine},

@@ -14,7 +14,7 @@ namespace Pht {
     class IEngine;
 }
 
-namespace BlocksGame {
+namespace RowBlast {
     class CommonResources;
     
     class NoMovesDialogView: public Pht::GuiView {

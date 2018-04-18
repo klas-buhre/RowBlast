@@ -8,7 +8,7 @@
 #include "GameLogic.hpp"
 #include "Level.hpp"
 
-using namespace BlocksGame;
+using namespace RowBlast;
 
 namespace {
     const float halfColumn {0.5f};

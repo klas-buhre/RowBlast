@@ -8,7 +8,7 @@
 #include "LevelResources.hpp"
 #include "GameScene.hpp"
 
-using namespace BlocksGame;
+using namespace RowBlast;
 
 namespace {
     const auto duration {0.35f};

@@ -1,7 +1,7 @@
 #ifndef FieldAnalyzer_hpp
 #define FieldAnalyzer_hpp
 
-namespace BlocksGame {
+namespace RowBlast {
     class Field;
     
     class FieldAnalyzer {

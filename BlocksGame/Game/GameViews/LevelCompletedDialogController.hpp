@@ -11,7 +11,7 @@ namespace Pht {
     class IAudio;
 }
 
-namespace BlocksGame {
+namespace RowBlast {
     class CommonResources;
     
     class LevelCompletedDialogController {

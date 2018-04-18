@@ -14,7 +14,7 @@
 // Game includes.
 #include "CommonResources.hpp"
 
-using namespace BlocksGame;
+using namespace RowBlast;
 
 namespace {
     const Pht::Vec2 buttonSize {62.0f, 62.0f};

@@ -7,7 +7,7 @@
 #include "GameScene.hpp"
 #include "GhostPieceProducer.hpp"
 
-using namespace BlocksGame;
+using namespace RowBlast;
 
 LPiece::LPiece(Pht::IEngine& engine, const GameScene& scene) {
     FillGrid fillGrid = {

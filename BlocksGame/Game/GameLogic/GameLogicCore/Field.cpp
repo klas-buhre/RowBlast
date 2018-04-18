@@ -9,7 +9,7 @@
 #include "CollisionDetection.hpp"
 #include "WeldsAnimation.hpp"
 
-using namespace BlocksGame;
+using namespace RowBlast;
 
 namespace {
     const auto maxNumScanTries {Field::maxNumRows};

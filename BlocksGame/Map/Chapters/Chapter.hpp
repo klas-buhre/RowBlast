@@ -9,7 +9,7 @@
 // Game includes.
 #include "FloatingBlocks.hpp"
 
-namespace BlocksGame {
+namespace RowBlast {
     struct MapLevel {
         int mLevelIndex;
         Pht::Vec3 mPosition;

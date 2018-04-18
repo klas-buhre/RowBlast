@@ -1,7 +1,7 @@
 #ifndef CollapsingFieldAnimation_hpp
 #define CollapsingFieldAnimation_hpp
 
-namespace BlocksGame {
+namespace RowBlast {
     class Field;
     
     class CollapsingFieldAnimation {

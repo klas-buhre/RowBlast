@@ -7,7 +7,7 @@
 // Game includes.
 #include "GameHud.hpp"
 
-namespace BlocksGame {
+namespace RowBlast {
     class GameScene;
     class PieceResources;
     class LevelResources;

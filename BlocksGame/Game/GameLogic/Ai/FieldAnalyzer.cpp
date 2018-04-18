@@ -3,7 +3,7 @@
 // Game includes.
 #include "Field.hpp"
 
-using namespace BlocksGame;
+using namespace RowBlast;
 
 FieldAnalyzer::FieldAnalyzer(const Field& field) :
     mField {field} {}

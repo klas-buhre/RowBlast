@@ -8,7 +8,7 @@
 #include "EffectManager.hpp"
 #include "FlyingBlocksAnimation.hpp"
 
-using namespace BlocksGame;
+using namespace RowBlast;
 
 namespace {
     constexpr auto bombExplosionMaxReach {2};

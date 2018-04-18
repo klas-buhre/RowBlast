@@ -16,7 +16,7 @@ namespace Pht {
     class IAudio;
 }
 
-namespace BlocksGame {
+namespace RowBlast {
     class CloseButton {
     public:
         CloseButton(Pht::IEngine& engine,

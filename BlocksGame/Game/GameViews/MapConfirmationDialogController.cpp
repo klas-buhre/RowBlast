@@ -6,7 +6,7 @@
 // Game includes.
 #include "InputUtil.hpp"
 
-using namespace BlocksGame;
+using namespace RowBlast;
 
 MapConfirmationDialogController::
 MapConfirmationDialogController(Pht::IEngine& engine, const CommonResources& commonResources) :

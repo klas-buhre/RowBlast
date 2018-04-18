@@ -1,7 +1,7 @@
 #ifndef IGameHudEventListener_hpp
 #define IGameHudEventListener_hpp
 
-namespace BlocksGame {
+namespace RowBlast {
     class IGameHudEventListener {
     public:
         virtual ~IGameHudEventListener() {}

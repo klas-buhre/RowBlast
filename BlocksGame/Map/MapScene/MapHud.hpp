@@ -11,7 +11,7 @@ namespace Pht {
     class TextComponent;
 }
 
-namespace BlocksGame {
+namespace RowBlast {
     class UserData;
     
     class MapHud {

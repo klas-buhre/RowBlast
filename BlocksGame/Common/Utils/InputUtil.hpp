@@ -7,7 +7,7 @@
 #include "IInput.hpp"
 #include "InputEvent.hpp"
 
-namespace BlocksGame {
+namespace RowBlast {
     namespace InputUtil {
         template <typename Result, Result defaultResult>
         Result HandleInput(Pht::IInput& input,

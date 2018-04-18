@@ -12,7 +12,7 @@
 #include "MenuQuad.hpp"
 #include "UiLayer.hpp"
 
-using namespace BlocksGame;
+using namespace RowBlast;
 
 SettingsMenuView::SettingsMenuView(Pht::IEngine& engine, const CommonResources& commonResources) {
     Pht::TextProperties textProperties {commonResources.GetHussarFontSize27()};

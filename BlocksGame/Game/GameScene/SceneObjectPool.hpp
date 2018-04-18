@@ -7,7 +7,7 @@
 // Engine includes.
 #include "SceneObject.hpp"
 
-namespace BlocksGame {
+namespace RowBlast {
     class Level;
     
     enum class SceneObjectPoolKind {

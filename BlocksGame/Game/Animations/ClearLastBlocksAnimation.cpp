@@ -4,7 +4,7 @@
 #include "FlyingBlocksAnimation.hpp"
 #include "Field.hpp"
 
-using namespace BlocksGame;
+using namespace RowBlast;
 
 namespace {
     constexpr auto beforeClearTime {0.5f};

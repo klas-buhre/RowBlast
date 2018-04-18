@@ -8,7 +8,7 @@
 #include "Piece.hpp"
 #include "ClickInputHandler.hpp"
 
-using namespace BlocksGame;
+using namespace RowBlast;
 
 namespace {
     int CalcPoolSize(SceneObjectPoolKind poolKind, const Level& level) {

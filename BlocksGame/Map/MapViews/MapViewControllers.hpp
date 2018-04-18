@@ -12,7 +12,7 @@ namespace Pht {
     class IEngine;
 }
 
-namespace BlocksGame {
+namespace RowBlast {
     class SettingsMenuController;
     class NoLivesDialogController;
     class CommonViewControllers;

@@ -17,7 +17,7 @@ namespace Pht {
     class Font;
 }
 
-namespace BlocksGame {
+namespace RowBlast {
     class CommonResources;
     
     class MapPin {

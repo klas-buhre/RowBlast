@@ -12,7 +12,7 @@ namespace Pht {
     class ParticleSettings;
 }
 
-namespace BlocksGame {
+namespace RowBlast {
     class GameScene;
     
     class ExplosionParticleEffect {

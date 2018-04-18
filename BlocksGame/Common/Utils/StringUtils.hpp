@@ -5,7 +5,7 @@
 #include <chrono>
 #include <assert.h>
 
-namespace BlocksGame {
+namespace RowBlast {
     using StaticStringBuffer = std::array<char, 64>;
     
     namespace StringUtils {

@@ -15,7 +15,7 @@ namespace Pht {
     class ISceneManager;
 }
 
-namespace BlocksGame {
+namespace RowBlast {
     class GameScene;
     
     enum class WeldRenderableKind {

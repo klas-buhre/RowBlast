@@ -8,7 +8,7 @@
 #include "ParticleSystem.hpp"
 #include "ParticleEffect.hpp"
 
-using namespace BlocksGame;
+using namespace RowBlast;
 
 PieceDropParticleEffect::PieceDropParticleEffect(Pht::IEngine& engine, GameScene& scene) :
     mScene {scene},

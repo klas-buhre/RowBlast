@@ -72,7 +72,8 @@ Backlog:
     -Credit the icon creator: <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
 
 Ongoing tasks:
-   X-Try increase ambient in red, green and gold non-field materials. Could also try to make the
+    -Rename the engine folder to PhotonBeam, rename game folder to RowBlast.
+    -Try increase ambient in red, green and gold non-field materials. Could also try to make the
      field blocks slightly brighter by increasing the ambient factor in the field light source.
 
 
@@ -309,7 +310,7 @@ FreeType compilation:
 Put the build_freetype.sh script in freetype root dir then execute it.
 */
 
-#include "BlocksApplication.hpp"
+#include "RowBlastApplication.hpp"
 
 #include <iostream>
 
@@ -322,7 +323,7 @@ Put the build_freetype.sh script in freetype root dir then execute it.
 // Game includes.
 #include "UiLayer.hpp"
 
-using namespace BlocksGame;
+using namespace RowBlast;
 
 namespace {
     constexpr auto fadeDuration {0.22f};
@@ -330,10 +331,10 @@ namespace {
 }
 
 std::unique_ptr<Pht::IApplication> CreateApplication(Pht::IEngine& engine) {
-    return std::make_unique<BlocksApplication>(engine);
+    return std::make_unique<RowBlastApplication>(engine);
 }
 
-BlocksApplication::BlocksApplication(Pht::IEngine& engine) :
+RowBlastApplication::RowBlastApplication(Pht::IEngine& engine) :
     mEngine {engine},
     mCommonResources {engine},
     mSettings {},
@@ -355,7 +356,7 @@ BlocksApplication::BlocksApplication(Pht::IEngine& engine) :
     mFadeEffect.StartInMidFade();
 }
 
-void BlocksApplication::OnUpdate() {
+void RowBlastApplication::OnUpdate() {
     if (mState != State::GameScene) {
         mUserData.Update();
     }
@@ -364,7 +365,7 @@ void BlocksApplication::OnUpdate() {
     HandleTransitions();
 }
 
-void BlocksApplication::UpdateScene() {
+void RowBlastApplication::UpdateScene() {
     switch (mState) {
         case State::TitleScene: {
             auto command {mTitleController.Update()};
@@ -387,7 +388,7 @@ void BlocksApplication::UpdateScene() {
     }
 }
 
-void BlocksApplication::UpdateGameScene() {
+void RowBlastApplication::UpdateGameScene() {
     auto command {mGameController.Update()};
     
     if (!mFadeEffect.IsFadingOut()) {
@@ -407,7 +408,7 @@ void BlocksApplication::UpdateGameScene() {
     }
 }
 
-void BlocksApplication::HandleTransitions() {
+void RowBlastApplication::HandleTransitions() {
     if (mFadeEffect.Update(mEngine.GetLastFrameSeconds()) == Pht::FadeEffect::State::Transition) {
         switch (mNextState) {
             case State::MapScene:
@@ -424,31 +425,31 @@ void BlocksApplication::HandleTransitions() {
     }
 }
 
-void BlocksApplication::InsertFadeEffectInActiveScene() {
+void RowBlastApplication::InsertFadeEffectInActiveScene() {
     auto* scene {mEngine.GetSceneManager().GetActiveScene()};
     scene->GetRoot().AddChild(mFadeEffect.GetSceneObject());
 }
 
-void BlocksApplication::BeginFadeToMap() {
+void RowBlastApplication::BeginFadeToMap() {
     mFadeEffect.Start();
     mNextState = State::MapScene;
     mEngine.GetInput().DisableInput();
 }
 
-void BlocksApplication::BeginFadeToGame(int level) {
+void RowBlastApplication::BeginFadeToGame(int level) {
     mLevelToStart = level;
     mFadeEffect.Start();
     mNextState = State::GameScene;
     mEngine.GetInput().DisableInput();
 }
 
-void BlocksApplication::StartMap() {
+void RowBlastApplication::StartMap() {
     mState = State::MapScene;
     mMapController.Init();
     mEngine.GetInput().EnableInput();
 }
 
-void BlocksApplication::StartGame() {
+void RowBlastApplication::StartGame() {
     mState = State::GameScene;
     mGameController.StartLevel(mLevelToStart);
 }

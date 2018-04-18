@@ -1,6 +1,6 @@
 #include "CommonViewControllers.hpp"
 
-using namespace BlocksGame;
+using namespace RowBlast;
 
 CommonViewControllers::CommonViewControllers(Pht::IEngine& engine,
                                              const CommonResources& commonResources,

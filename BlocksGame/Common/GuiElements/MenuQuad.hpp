@@ -12,7 +12,7 @@ namespace Pht {
     class SceneResources;
 }
 
-namespace BlocksGame {
+namespace RowBlast {
     namespace MenuQuad {
         std::unique_ptr<Pht::SceneObject> CreateGray(Pht::IEngine& engine,
                                                      Pht::SceneResources& sceneResources,

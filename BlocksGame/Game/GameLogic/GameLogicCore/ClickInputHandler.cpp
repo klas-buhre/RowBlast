@@ -12,7 +12,7 @@
 #include "GameScene.hpp"
 #include "IGameLogic.hpp"
 
-using namespace BlocksGame;
+using namespace RowBlast;
 
 namespace {
     const float inputUnitsPerColumn {26.5f * 1.25f}; // {26.5f * 10.0f / Field::numColumns};

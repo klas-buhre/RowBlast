@@ -14,7 +14,7 @@ namespace Pht {
     class SceneObject;
 }
 
-namespace BlocksGame {
+namespace RowBlast {
     class CommonResources;
 
     struct BlockPathVolume {

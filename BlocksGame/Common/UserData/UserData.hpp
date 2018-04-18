@@ -4,7 +4,7 @@
 #include "LifeManager.hpp"
 #include "ProgressManager.hpp"
 
-namespace BlocksGame {
+namespace RowBlast {
     class UserData {
     public:
         void Update();

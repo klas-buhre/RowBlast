@@ -1,6 +1,6 @@
 #include "Chapter1.hpp"
 
-using namespace BlocksGame;
+using namespace RowBlast;
 
 namespace {
     const std::vector<MapLevel> levels {
@@ -52,6 +52,6 @@ namespace {
     };
 }
 
-Chapter BlocksGame::GetChapter1() {
+Chapter RowBlast::GetChapter1() {
     return Chapter {levels, blockPaths};
 }

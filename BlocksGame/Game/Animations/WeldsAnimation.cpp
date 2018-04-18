@@ -3,7 +3,7 @@
 // Game includes.
 #include "Field.hpp"
 
-using namespace BlocksGame;
+using namespace RowBlast;
 
 namespace {
     constexpr auto scaleSpeed {3.2f};

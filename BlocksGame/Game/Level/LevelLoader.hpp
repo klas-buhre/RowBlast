@@ -4,7 +4,7 @@
 // Game includes.
 #include "Level.hpp"
 
-namespace BlocksGame {
+namespace RowBlast {
     class LevelResources;
     
     namespace LevelLoader {

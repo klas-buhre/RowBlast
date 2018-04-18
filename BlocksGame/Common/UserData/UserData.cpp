@@ -1,6 +1,6 @@
 #include "UserData.hpp"
 
-using namespace BlocksGame;
+using namespace RowBlast;
 
 void UserData::Update() {
     mLifeManager.Update();

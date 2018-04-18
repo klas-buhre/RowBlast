@@ -6,7 +6,7 @@
 // Game includes.
 #include "LevelResources.hpp"
 
-using namespace BlocksGame;
+using namespace RowBlast;
 
 namespace {
     Level::Color ReadColor(const rapidjson::Document& document) {

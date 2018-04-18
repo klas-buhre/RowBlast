@@ -11,7 +11,7 @@ namespace Pht {
     class FadeEffect;
 }
 
-namespace BlocksGame {
+namespace RowBlast {
     class CommonResources;
     class UserData;
     

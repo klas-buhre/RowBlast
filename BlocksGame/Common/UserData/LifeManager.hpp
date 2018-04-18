@@ -3,7 +3,7 @@
 
 #include <chrono>
 
-namespace BlocksGame {
+namespace RowBlast {
     class LifeManager {
     public:
         LifeManager();

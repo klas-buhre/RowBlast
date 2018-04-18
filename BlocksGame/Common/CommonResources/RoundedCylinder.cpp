@@ -7,7 +7,7 @@
 #include "CylinderMesh.hpp"
 #include "SphereMesh.hpp"
 
-using namespace BlocksGame;
+using namespace RowBlast;
 
 namespace {
     void CreateSphere(Pht::Scene& scene,
@@ -27,10 +27,10 @@ namespace {
     }
 }
 
-void BlocksGame::CreateRoundedCylinder(Pht::Scene& scene,
-                                       Pht::SceneObject& parentObject,
-                                       const Pht::Vec3& position,
-                                       const Pht::Vec2& size) {
+void RowBlast::CreateRoundedCylinder(Pht::Scene& scene,
+                                     Pht::SceneObject& parentObject,
+                                     const Pht::Vec3& position,
+                                     const Pht::Vec2& size) {
     auto& sceneObject {scene.CreateSceneObject()};
     sceneObject.GetTransform().SetPosition(position);
     parentObject.AddChild(sceneObject);

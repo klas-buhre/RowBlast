@@ -1,7 +1,7 @@
 #ifndef ClearLastBlocksAnimation_hpp
 #define ClearLastBlocksAnimation_hpp
 
-namespace BlocksGame {
+namespace RowBlast {
     class FlyingBlocksAnimation;
     class Field;
     

@@ -3,7 +3,7 @@
 #include <algorithm>
 #include <assert.h>
 
-using namespace BlocksGame;
+using namespace RowBlast;
 
 namespace {
     Fill RotateCellFillClockwise90Deg(Fill fill) {

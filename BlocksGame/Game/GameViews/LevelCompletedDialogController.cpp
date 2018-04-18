@@ -7,7 +7,7 @@
 #include "InputUtil.hpp"
 #include "CommonResources.hpp"
 
-using namespace BlocksGame;
+using namespace RowBlast;
 
 LevelCompletedDialogController::LevelCompletedDialogController(Pht::IEngine& engine,
                                                                const CommonResources& commonResources) :

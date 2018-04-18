@@ -13,7 +13,7 @@
 // Game includes.
 #include "GameScene.hpp"
 
-using namespace BlocksGame;
+using namespace RowBlast;
 
 namespace {
     constexpr auto opacityCurveAmplitude {0.2f};

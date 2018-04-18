@@ -35,7 +35,7 @@
 #include "Bomb.hpp"
 #include "RowBomb.hpp"
 
-using namespace BlocksGame;
+using namespace RowBlast;
 
 LevelResources::LevelResources(Pht::IEngine& engine, const GameScene& scene) {
     CreatePieceTypes(engine, scene);

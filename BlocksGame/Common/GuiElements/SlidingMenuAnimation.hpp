@@ -10,7 +10,7 @@ namespace Pht {
     class FadeEffect;
 }
 
-namespace BlocksGame {
+namespace RowBlast {
     class SlidingMenuAnimation {
     public:
         enum class State {

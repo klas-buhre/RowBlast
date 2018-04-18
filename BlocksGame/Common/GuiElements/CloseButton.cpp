@@ -13,7 +13,7 @@
 #include "CommonResources.hpp"
 #include "UiLayer.hpp"
 
-using namespace BlocksGame;
+using namespace RowBlast;
 
 namespace {
     const Pht::Color color {1.0f, 0.3f, 0.3};

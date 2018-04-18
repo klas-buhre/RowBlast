@@ -8,7 +8,7 @@
 #include "UiLayer.hpp"
 #include "GameScene.hpp"
 
-using namespace BlocksGame;
+using namespace RowBlast;
 
 namespace {
     constexpr auto fade {0.6f};

@@ -17,7 +17,7 @@
 #include "GameHudController.hpp"
 #include "UiLayer.hpp"
 
-using namespace BlocksGame;
+using namespace RowBlast;
 
 namespace {
     const Pht::Vec3 lightDirectionA {0.6f, 1.0f, 1.0f};

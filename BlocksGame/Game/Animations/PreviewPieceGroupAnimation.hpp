@@ -7,7 +7,7 @@
 // Game includes.
 #include "GameHud.hpp"
 
-namespace BlocksGame {
+namespace RowBlast {
     struct PreviewPiecePositionsConfig {
         Pht::Vec3 mLeft;
         Pht::Vec3 mSlot1;

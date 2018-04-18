@@ -4,7 +4,7 @@
 // Engine includes.
 #include "Vector.hpp"
 
-namespace BlocksGame {
+namespace RowBlast {
     class Field;
     class SubCell;
     class WeldAnimation;

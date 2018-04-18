@@ -8,7 +8,7 @@
 #include "Piece.hpp"
 #include "ProgressManager.hpp"
 
-namespace BlocksGame {
+namespace RowBlast {
     class Level {
     public:
         enum class Objective {

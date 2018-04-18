@@ -5,7 +5,7 @@
 #include "IRenderer.hpp"
 #include "IAudio.hpp"
 
-using namespace BlocksGame;
+using namespace RowBlast;
 
 const std::string CommonResources::mBlipSound {"Blip.wav"};
 const std::string CommonResources::mBombSound {"Bomb.wav"};

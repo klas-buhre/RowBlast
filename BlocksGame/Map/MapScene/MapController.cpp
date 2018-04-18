@@ -11,7 +11,7 @@
 #include "NoLivesDialogController.hpp"
 #include "UserData.hpp"
 
-using namespace BlocksGame;
+using namespace RowBlast;
 
 namespace {
     const auto cameraDeaccelerationFactor {0.88f};

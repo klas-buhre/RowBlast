@@ -11,7 +11,7 @@ namespace Pht {
     class IEngine;
 }
 
-namespace BlocksGame {
+namespace RowBlast {
     class SettingsButtonView: public Pht::GuiView {
     public:
         explicit SettingsButtonView(Pht::IEngine& engine);

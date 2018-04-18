@@ -16,7 +16,7 @@
 #include "CommonResources.hpp"
 #include "UiLayer.hpp"
 
-using namespace BlocksGame;
+using namespace RowBlast;
 
 namespace {
     enum class Layer {
@@ -93,19 +93,19 @@ namespace {
         HazeLayer {
             .mPosition = {0.0f, 0.0f, -700.0f},
             .mSize = {1500.0f, 1050.0f},
-            .mUpperColor = {0.17f, 0.41f, 1.0f, 1.0f},
+            .mUpperColor = {0.17f, 0.41f, 0.89f, 1.0f},
             .mLowerColor = {0.55f, 0.89f, 1.0f, 1.0f}
         },
         HazeLayer {
             .mPosition = {0.0f, 0.0f, -350.0f},
             .mSize = {500.0f, 500.0f},
-            .mUpperColor = {0.17f, 0.41f, 1.0f, 0.35f},
+            .mUpperColor = {0.17f, 0.41f, 0.89f, 0.35f},
             .mLowerColor = {0.55f, 0.89f, 1.0f, 0.35f}
         },
         HazeLayer {
             .mPosition = {0.0f, 0.0f, -250.0f},
             .mSize = {380.0f, 380.0f},
-            .mUpperColor = {0.17f, 0.41f, 1.0f, 0.35f},
+            .mUpperColor = {0.17f, 0.41f, 0.89f, 0.35f},
             .mLowerColor = {0.55f, 0.89f, 1.0f, 0.35f}
         }
     };

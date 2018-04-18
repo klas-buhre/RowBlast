@@ -1,6 +1,6 @@
 #include "EffectManager.hpp"
 
-using namespace BlocksGame;
+using namespace RowBlast;
 
 namespace {
     constexpr auto numLevelBombEffects {30};

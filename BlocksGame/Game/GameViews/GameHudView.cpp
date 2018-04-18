@@ -12,7 +12,7 @@
 #include "ISceneManager.hpp"
 #include "UiLayer.hpp"
 
-using namespace BlocksGame;
+using namespace RowBlast;
 
 namespace {
     std::unique_ptr<Pht::SceneObject> CreatePauseButtonSceneObject(Pht::OfflineRasterizer& rasterizer,

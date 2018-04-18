@@ -13,7 +13,7 @@ namespace Pht {
     class IEngine;
 }
 
-namespace BlocksGame {
+namespace RowBlast {
     class CommonResources;
     
     class GameMenuView: public Pht::GuiView {

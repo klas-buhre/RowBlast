@@ -1,6 +1,6 @@
 #include "Bomb.hpp"
 
-using namespace BlocksGame;
+using namespace RowBlast;
 
 Bomb::Bomb() {
     FillGrid fillGrid = {

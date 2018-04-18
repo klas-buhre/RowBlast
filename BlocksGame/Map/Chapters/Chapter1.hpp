@@ -4,7 +4,7 @@
 // Game includes.
 #include "Chapter.hpp"
 
-namespace BlocksGame {
+namespace RowBlast {
     Chapter GetChapter1();
 }
 

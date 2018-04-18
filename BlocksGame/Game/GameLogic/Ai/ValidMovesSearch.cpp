@@ -5,7 +5,7 @@
 // Game includes.
 #include "CollisionDetection.hpp"
 
-using namespace BlocksGame;
+using namespace RowBlast;
 
 namespace {
     const auto maxRotateAdjustment {2};

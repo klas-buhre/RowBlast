@@ -9,7 +9,7 @@ namespace Pht {
     class SceneObject;
 }
 
-namespace BlocksGame {
+namespace RowBlast {
     struct GradientRectangleColors {
         Pht::Vec4 mLeft;
         Pht::Vec4 mMid;

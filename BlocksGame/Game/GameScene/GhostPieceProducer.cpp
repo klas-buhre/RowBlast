@@ -9,7 +9,7 @@
 #include "RenderableObject.hpp"
 #include "ISceneManager.hpp"
 
-using namespace BlocksGame;
+using namespace RowBlast;
 
 namespace {
     const auto borderWidth {0.09f};

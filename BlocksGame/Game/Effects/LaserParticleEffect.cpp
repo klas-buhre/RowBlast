@@ -10,7 +10,7 @@
 // Game includes.
 #include "GameScene.hpp"
 
-using namespace BlocksGame;
+using namespace RowBlast;
 
 namespace {
     Pht::Vec3 ParticleVelocity() {

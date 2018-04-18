@@ -5,7 +5,7 @@
 #include "Cell.hpp"
 #include "Field.hpp"
 
-namespace BlocksGame {
+namespace RowBlast {
     enum class Direction {
         Up,
         Down,

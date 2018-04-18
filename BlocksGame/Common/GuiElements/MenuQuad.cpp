@@ -6,7 +6,7 @@
 #include "QuadMesh.hpp"
 #include "ISceneManager.hpp"
 
-using namespace BlocksGame;
+using namespace RowBlast;
 
 std::unique_ptr<Pht::SceneObject> MenuQuad::CreateGray(Pht::IEngine& engine,
                                                        Pht::SceneResources& sceneResources,

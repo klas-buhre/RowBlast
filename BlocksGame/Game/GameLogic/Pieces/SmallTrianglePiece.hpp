@@ -8,7 +8,7 @@ namespace Pht {
     class IEngine;
 }
 
-namespace BlocksGame {
+namespace RowBlast {
     class GameScene;
     
     class SmallTrianglePiece: public Piece {

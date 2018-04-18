@@ -11,7 +11,7 @@
 #include "MenuQuad.hpp"
 #include "UiLayer.hpp"
 
-using namespace BlocksGame;
+using namespace RowBlast;
 
 namespace {
     const Pht::Color buttonColor {0.4f, 0.74f, 1.0f};

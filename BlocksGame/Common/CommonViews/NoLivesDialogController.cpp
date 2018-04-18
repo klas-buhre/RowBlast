@@ -7,7 +7,7 @@
 #include "InputUtil.hpp"
 #include "UserData.hpp"
 
-using namespace BlocksGame;
+using namespace RowBlast;
 
 NoLivesDialogController::NoLivesDialogController(Pht::IEngine& engine,
                                                  const CommonResources& commonResources,

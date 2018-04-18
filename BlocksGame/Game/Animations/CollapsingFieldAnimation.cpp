@@ -3,7 +3,7 @@
 // Game includes.
 #include "Field.hpp"
 
-using namespace BlocksGame;
+using namespace RowBlast;
 
 namespace {
     constexpr auto gravitationalAcceleration {-50.0f};

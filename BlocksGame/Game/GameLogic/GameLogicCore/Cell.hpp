@@ -10,7 +10,7 @@ namespace Pht {
     class SceneObject;
 }
 
-namespace BlocksGame {
+namespace RowBlast {
     enum class Fill {
         Empty,
         LowerRightHalf,

@@ -13,7 +13,7 @@
 #include "GameScene.hpp"
 #include "FlashingBlocksAnimation.hpp"
 
-using namespace BlocksGame;
+using namespace RowBlast;
 
 namespace {
     constexpr auto numWeldRenderables {3};

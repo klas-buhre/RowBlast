@@ -9,7 +9,7 @@ namespace Pht {
     class SceneObject;
 }
 
-namespace BlocksGame {
+namespace RowBlast {
     void CreateRoundedCylinder(Pht::Scene& scene,
                                Pht::SceneObject& parentObject,
                                const Pht::Vec3& position,

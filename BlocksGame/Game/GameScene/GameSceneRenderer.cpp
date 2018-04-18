@@ -13,7 +13,7 @@
 #include "PieceResources.hpp"
 #include "LevelResources.hpp"
 
-using namespace BlocksGame;
+using namespace RowBlast;
 
 namespace {
     const auto dz {0.05f};

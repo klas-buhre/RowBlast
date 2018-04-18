@@ -10,7 +10,7 @@
 // Game includes.
 #include "CommonResources.hpp"
 
-using namespace BlocksGame;
+using namespace RowBlast;
 
 namespace {
     void CreateSmallBlock(const Pht::Vec3& position,

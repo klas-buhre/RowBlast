@@ -10,7 +10,7 @@
 #include "SceneObject.hpp"
 #include "QuadMesh.hpp"
 
-using namespace BlocksGame;
+using namespace RowBlast;
 
 namespace {
     const auto averageCloudBrightness {0.9f};

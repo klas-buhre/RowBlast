@@ -13,7 +13,7 @@
 #include "GradientRectangle.hpp"
 #include "UiLayer.hpp"
 
-using namespace BlocksGame;
+using namespace RowBlast;
 
 namespace {
     constexpr auto livesRectangleDistFromBorder {2.4f};

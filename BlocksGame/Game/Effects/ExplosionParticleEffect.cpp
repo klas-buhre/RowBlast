@@ -10,7 +10,7 @@
 // Game includes.
 #include "GameScene.hpp"
 
-using namespace BlocksGame;
+using namespace RowBlast;
 
 ExplosionParticleEffect::ExplosionParticleEffect(Pht::IEngine& engine,
                                                  GameScene& scene,

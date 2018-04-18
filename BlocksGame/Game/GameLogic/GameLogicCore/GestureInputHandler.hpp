@@ -4,7 +4,7 @@
 // Engine includes.
 #include "SwipeGestureRecognizer.hpp"
 
-namespace BlocksGame {
+namespace RowBlast {
     class FallingPiece;
     class IGameLogic;
     class Level;

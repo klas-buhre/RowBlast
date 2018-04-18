@@ -9,7 +9,7 @@
 #include "MenuQuad.hpp"
 #include "UiLayer.hpp"
 
-using namespace BlocksGame;
+using namespace RowBlast;
 
 GameOverDialogView::GameOverDialogView(Pht::IEngine& engine,
                                        const CommonResources& commonResources) {

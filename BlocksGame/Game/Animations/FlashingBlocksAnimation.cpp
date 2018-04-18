@@ -3,7 +3,7 @@
 // Game includes.
 #include "Field.hpp"
 
-using namespace BlocksGame;
+using namespace RowBlast;
 
 namespace {
     const auto flashDuration {0.22f};

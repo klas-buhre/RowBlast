@@ -5,7 +5,7 @@
 #include "PieceResources.hpp"
 #include "LevelResources.hpp"
 
-using namespace BlocksGame;
+using namespace RowBlast;
 
 namespace {
     constexpr auto bombAnimationDuration {4.5f};

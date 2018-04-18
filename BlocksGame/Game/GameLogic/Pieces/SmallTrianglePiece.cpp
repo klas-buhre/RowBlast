@@ -7,7 +7,7 @@
 #include "GameScene.hpp"
 #include "GhostPieceProducer.hpp"
 
-using namespace BlocksGame;
+using namespace RowBlast;
 
 SmallTrianglePiece::SmallTrianglePiece(Pht::IEngine& engine, const GameScene& scene) {
     FillGrid fillGrid = {

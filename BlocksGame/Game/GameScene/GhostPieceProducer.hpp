@@ -13,7 +13,7 @@ namespace Pht {
     class RenderableObject;
 }
 
-namespace BlocksGame {
+namespace RowBlast {
     enum class BorderSegmentKind {
         Start,
         Upper,

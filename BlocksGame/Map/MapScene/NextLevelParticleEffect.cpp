@@ -11,7 +11,7 @@
 #include "ParticleEffect.hpp"
 #include "ParticleSystem.hpp"
 
-using namespace BlocksGame;
+using namespace RowBlast;
 
 namespace {
     void CreateParticleEffect(Pht::IEngine& engine,
@@ -44,10 +44,10 @@ namespace {
     }
 }
 
-void BlocksGame::CreateNextLevelParticleEffect(Pht::IEngine& engine,
-                                               Pht::Scene& scene,
-                                               const Pht::Vec3& position,
-                                               int layer) {
+void RowBlast::CreateNextLevelParticleEffect(Pht::IEngine& engine,
+                                             Pht::Scene& scene,
+                                             const Pht::Vec3& position,
+                                             int layer) {
     Pht::ParticleSettings twinkleParticleSettings {
         .mVelocity = Pht::Vec3{0.0f, 1.0f, 0.0f},
         .mVelocityRandomPart = Pht::Vec3{0.0f, 1.0f, 0.0f},

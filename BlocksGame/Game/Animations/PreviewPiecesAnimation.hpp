@@ -4,7 +4,7 @@
 // Game includes.
 #include "PreviewPieceGroupAnimation.hpp"
 
-namespace BlocksGame {
+namespace RowBlast {
     class GameScene;
     class GameLogic;
     

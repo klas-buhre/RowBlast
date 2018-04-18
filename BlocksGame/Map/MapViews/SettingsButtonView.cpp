@@ -11,7 +11,7 @@
 #include "ISceneManager.hpp"
 #include "UiLayer.hpp"
 
-using namespace BlocksGame;
+using namespace RowBlast;
 
 namespace {
     const Pht::Color circleColor {0.0f, 0.5f, 1.0f};

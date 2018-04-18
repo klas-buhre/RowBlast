@@ -7,7 +7,7 @@
 #include "IInput.hpp"
 #include "InputEvent.hpp"
 
-using namespace BlocksGame;
+using namespace RowBlast;
 
 TitleController::TitleController(Pht::IEngine& engine, const CommonResources& commonResources) :
     mEngine {engine},

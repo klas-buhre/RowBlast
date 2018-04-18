@@ -1,6 +1,6 @@
 #include "Level.hpp"
 
-using namespace BlocksGame;
+using namespace RowBlast;
 
 Level::Level(int index,
              Objective objective,

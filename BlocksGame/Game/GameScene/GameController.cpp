@@ -11,7 +11,7 @@
 #include "UserData.hpp"
 #include "CommonResources.hpp"
 
-using namespace BlocksGame;
+using namespace RowBlast;
 
 namespace {
     bool ShouldUpdateGameLogic(CollapsingFieldAnimation::State fieldAnimationState,

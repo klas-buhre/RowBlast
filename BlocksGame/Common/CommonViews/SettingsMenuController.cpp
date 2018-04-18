@@ -8,7 +8,7 @@
 #include "InputUtil.hpp"
 #include "Settings.hpp"
 
-using namespace BlocksGame;
+using namespace RowBlast;
 
 SettingsMenuController::SettingsMenuController(Pht::IEngine& engine,
                                                const CommonResources& commonResources,

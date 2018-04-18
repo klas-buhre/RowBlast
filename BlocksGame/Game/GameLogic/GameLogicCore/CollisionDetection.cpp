@@ -3,7 +3,7 @@
 // Game includes.
 #include "Piece.hpp"
 
-using namespace BlocksGame;
+using namespace RowBlast;
 
 namespace {
     Pht::Vec2 CalculateCenter(const Field::CollisionPoints& collisionPoints) {

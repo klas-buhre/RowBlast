@@ -1,5 +1,5 @@
-#ifndef BlocksApplication_hpp
-#define BlocksApplication_hpp
+#ifndef RowBlastApplication_hpp
+#define RowBlastApplication_hpp
 
 // Engine includes.
 #include "IApplication.hpp"
@@ -18,10 +18,10 @@ namespace Pht {
     class IEngine;
 }
 
-namespace BlocksGame {
-    class BlocksApplication: public Pht::IApplication {
+namespace RowBlast {
+    class RowBlastApplication: public Pht::IApplication {
     public:
-        BlocksApplication(Pht::IEngine& engine);
+        RowBlastApplication(Pht::IEngine& engine);
     
         void OnInitialize() override {}
         void OnUpdate() override;

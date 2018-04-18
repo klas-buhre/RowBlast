@@ -11,7 +11,7 @@
 #include "PieceResources.hpp"
 #include "BombsAnimation.hpp"
 
-using namespace BlocksGame;
+using namespace RowBlast;
 
 namespace {
     const auto subCellMass {1.0f};

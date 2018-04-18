@@ -2,7 +2,7 @@
 
 #include <cstdio>
 
-using namespace BlocksGame;
+using namespace RowBlast;
 
 void StringUtils::FormatToMinutesAndSeconds(StaticStringBuffer& buffer,
                                             std::chrono::seconds numSeconds) {

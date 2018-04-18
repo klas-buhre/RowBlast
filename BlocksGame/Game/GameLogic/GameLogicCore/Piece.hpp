@@ -14,7 +14,7 @@
 
 #define HIGH_DETAIL
 
-namespace BlocksGame {
+namespace RowBlast {
     using ClickGrid = std::vector<std::vector<int>>;
     
     class Piece {

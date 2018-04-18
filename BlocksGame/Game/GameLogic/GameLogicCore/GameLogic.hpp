@@ -19,7 +19,7 @@ namespace Pht {
     class IEngine;
 }
 
-namespace BlocksGame {
+namespace RowBlast {
     class Level;
     class ScrollController;
     class EffectManager;

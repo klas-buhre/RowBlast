@@ -10,7 +10,7 @@ namespace Pht {
     class TouchEvent;
 }
 
-namespace BlocksGame {
+namespace RowBlast {
     class CommonResources;
     class GameLogic;
     

@@ -9,7 +9,7 @@
 #include "MenuQuad.hpp"
 #include "UiLayer.hpp"
 
-using namespace BlocksGame;
+using namespace RowBlast;
 
 NoMovesDialogView::NoMovesDialogView(Pht::IEngine& engine, const CommonResources& commonResources) {
     Pht::TextProperties textProperties {commonResources.GetHussarFontSize27()};

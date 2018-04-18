@@ -1,6 +1,6 @@
 #include "Materials.hpp"
 
-using namespace BlocksGame;
+using namespace RowBlast;
 
 namespace {
     const auto reflectivity {0.84f};

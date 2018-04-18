@@ -12,7 +12,7 @@ namespace Pht {
     class RenderableObject;
 }
 
-namespace BlocksGame {
+namespace RowBlast {
     class Field;
     class GameLogic;
     class GameScene;

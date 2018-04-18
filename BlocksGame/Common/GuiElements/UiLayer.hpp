@@ -1,7 +1,7 @@
 #ifndef UiLayer_hpp
 #define UiLayer_hpp
 
-namespace BlocksGame {
+namespace RowBlast {
     namespace UiLayer {
         constexpr auto buttonText {1.0f};
         constexpr auto root {0.0f};

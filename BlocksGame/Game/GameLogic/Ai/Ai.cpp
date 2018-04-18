@@ -4,7 +4,7 @@
 #include "FallingPiece.hpp"
 #include "Level.hpp"
 
-using namespace BlocksGame;
+using namespace RowBlast;
 
 namespace {
     bool CompareMoves(const Move* a, const Move* b) {

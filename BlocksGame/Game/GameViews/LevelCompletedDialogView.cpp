@@ -14,7 +14,7 @@
 #include "MenuQuad.hpp"
 #include "UiLayer.hpp"
 
-using namespace BlocksGame;
+using namespace RowBlast;
 
 namespace {
     std::array<Pht::Vec3, 3> starOffsets {

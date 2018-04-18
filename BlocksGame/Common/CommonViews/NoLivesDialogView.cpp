@@ -12,7 +12,7 @@
 #include "StringUtils.hpp"
 #include "UiLayer.hpp"
 
-using namespace BlocksGame;
+using namespace RowBlast;
 
 namespace {
     constexpr auto countdownNumChars {5};

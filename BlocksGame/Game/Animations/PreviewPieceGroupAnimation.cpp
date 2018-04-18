@@ -3,7 +3,7 @@
 // Engine includes.
 #include "MathUtils.hpp"
 
-using namespace BlocksGame;
+using namespace RowBlast;
 
 namespace {
     Pht::StaticVector<Pht::Vec2, 20> slidePoints {

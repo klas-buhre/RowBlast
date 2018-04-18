@@ -9,7 +9,7 @@ namespace Pht {
     class IEngine;
 }
 
-namespace BlocksGame {
+namespace RowBlast {
     class Field;
     class EffectManager;
     class FlyingBlocksAnimation;

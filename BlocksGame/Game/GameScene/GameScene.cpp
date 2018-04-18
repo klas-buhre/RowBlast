@@ -16,7 +16,7 @@
 #include "LevelResources.hpp"
 #include "UiLayer.hpp"
 
-using namespace BlocksGame;
+using namespace RowBlast;
 
 namespace {
     const auto fieldQuadZ {-1.0f};

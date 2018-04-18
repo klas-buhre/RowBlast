@@ -20,7 +20,7 @@ namespace Pht {
     class TextProperties;
 }
 
-namespace BlocksGame {
+namespace RowBlast {
     class MenuButton {
     public:
         struct Style {

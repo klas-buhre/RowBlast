@@ -11,7 +11,7 @@ namespace Pht {
     class ISceneManager;
 }
 
-namespace BlocksGame {
+namespace RowBlast {
     class GameScene;
     
     using PieceTypes = std::map<std::string, std::unique_ptr<const Piece>>;

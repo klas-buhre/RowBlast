@@ -1,6 +1,6 @@
 #include "Cell.hpp"
 
-using namespace BlocksGame;
+using namespace RowBlast;
 
 const int Quantities::numBlockRenderables {5};
 const int Quantities::numBlockColors {4};
@@ -9,7 +9,7 @@ const int Quantities::numWeldBrightness {4};
 
 const float BlueprintSlotFillAnimation::mInitialOpacity {0.6f};
 
-BlockKind BlocksGame::ToBlockKind(Fill fill) {
+BlockKind RowBlast::ToBlockKind(Fill fill) {
     switch (fill) {
         case Fill::Empty:
             return BlockKind::None;
@@ -26,7 +26,7 @@ BlockKind BlocksGame::ToBlockKind(Fill fill) {
     }
 }
 
-float BlocksGame::RotationToDeg(Rotation rotation) {
+float RowBlast::RotationToDeg(Rotation rotation) {
     switch (rotation) {
         case Rotation::Deg0:
             return 0.0f;

@@ -10,7 +10,7 @@ namespace Pht {
     class SceneObject;
 }
 
-namespace BlocksGame {
+namespace RowBlast {
     class Field;
     class GameScene;
     class LevelResources;

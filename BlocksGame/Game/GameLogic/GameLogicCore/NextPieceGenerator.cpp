@@ -2,7 +2,7 @@
 
 #include <assert.h>
 
-using namespace BlocksGame;
+using namespace RowBlast;
 
 void NextPieceGenerator::Init(const std::vector<const Piece*>& pieceTypes) {
     mPieceTypes = &pieceTypes;

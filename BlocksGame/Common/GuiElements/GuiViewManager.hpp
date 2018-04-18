@@ -8,7 +8,7 @@ namespace Pht {
     class SceneObject;
 }
 
-namespace BlocksGame {
+namespace RowBlast {
     class GuiViewManager {
     public:
         void Init(Pht::SceneObject& parentObject);

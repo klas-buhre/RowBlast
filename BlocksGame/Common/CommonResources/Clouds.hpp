@@ -13,7 +13,7 @@ namespace Pht {
     class SceneObject;
 }
 
-namespace BlocksGame {
+namespace RowBlast {
     struct CloudPathVolume {
         Pht::Vec3 mPosition;
         Pht::Vec3 mSize;

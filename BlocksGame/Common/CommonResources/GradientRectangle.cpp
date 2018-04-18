@@ -6,7 +6,7 @@
 #include "QuadMesh.hpp"
 #include "SceneObject.hpp"
 
-using namespace BlocksGame;
+using namespace RowBlast;
 
 namespace {
     Pht::SceneObject& CreateGradientQuad(const Pht::Vec2& size,
@@ -28,15 +28,15 @@ namespace {
     }
 }
 
-Pht::SceneObject& BlocksGame::CreateGradientRectangle(Pht::Scene& scene,
-                                                      Pht::SceneObject& parentObject,
-                                                      const Pht::Vec3& position,
-                                                      const Pht::Vec2& size,
-                                                      float tilt,
-                                                      float leftQuadWidth,
-                                                      float rightQuadWidth,
-                                                      const GradientRectangleColors& upperColors,
-                                                      const GradientRectangleColors& lowerColors) {
+Pht::SceneObject& RowBlast::CreateGradientRectangle(Pht::Scene& scene,
+                                                    Pht::SceneObject& parentObject,
+                                                    const Pht::Vec3& position,
+                                                    const Pht::Vec2& size,
+                                                    float tilt,
+                                                    float leftQuadWidth,
+                                                    float rightQuadWidth,
+                                                    const GradientRectangleColors& upperColors,
+                                                    const GradientRectangleColors& lowerColors) {
     auto& sceneObject {scene.CreateSceneObject()};
     parentObject.AddChild(sceneObject);
     

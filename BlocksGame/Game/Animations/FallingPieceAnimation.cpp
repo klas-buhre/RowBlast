@@ -5,7 +5,7 @@
 #include "ValidMovesSearch.hpp"
 #include "IGameLogic.hpp"
 
-using namespace BlocksGame;
+using namespace RowBlast;
 
 namespace {
     const auto speed {50.0f};

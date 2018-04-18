@@ -6,7 +6,7 @@
 #include "FieldAnalyzer.hpp"
 #include "Field.hpp"
 
-namespace BlocksGame {
+namespace RowBlast {
     class FallingPiece;
     class Level;
     
