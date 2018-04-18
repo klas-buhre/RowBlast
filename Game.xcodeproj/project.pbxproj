@@ -1088,27 +1088,27 @@
 		627859F520875936006F9869 /* RendererCore */ = {
 			isa = PBXGroup;
 			children = (
-				627859F620875936006F9869 /* VboCache.cpp */,
-				627859F720875936006F9869 /* TextRenderer.hpp */,
-				627859F820875936006F9869 /* Material.hpp */,
-				627859F920875936006F9869 /* RenderQueue.hpp */,
-				627859FA20875936006F9869 /* Renderer.hpp */,
-				627859FB20875936006F9869 /* TextureCache.cpp */,
 				627859FC20875936006F9869 /* Camera.cpp */,
-				627859FD20875936006F9869 /* RenderableObject.cpp */,
-				627859FE20875936006F9869 /* RenderPass.cpp */,
-				627859FF20875936006F9869 /* ShaderProgram.hpp */,
-				62785A0020875936006F9869 /* RenderableObject.hpp */,
-				62785A0120875936006F9869 /* RenderPass.hpp */,
-				62785A0220875936006F9869 /* ShaderProgram.cpp */,
-				62785A0320875936006F9869 /* VboCache.hpp */,
-				62785A0420875936006F9869 /* TextRenderer.cpp */,
+				62785A0A20875936006F9869 /* Camera.hpp */,
 				62785A0520875936006F9869 /* IRenderer.hpp */,
 				62785A0620875936006F9869 /* Material.cpp */,
-				62785A0720875936006F9869 /* RenderQueue.cpp */,
+				627859F820875936006F9869 /* Material.hpp */,
+				627859FD20875936006F9869 /* RenderableObject.cpp */,
+				62785A0020875936006F9869 /* RenderableObject.hpp */,
 				62785A0820875936006F9869 /* Renderer.cpp */,
+				627859FA20875936006F9869 /* Renderer.hpp */,
+				627859FE20875936006F9869 /* RenderPass.cpp */,
+				62785A0120875936006F9869 /* RenderPass.hpp */,
+				62785A0720875936006F9869 /* RenderQueue.cpp */,
+				627859F920875936006F9869 /* RenderQueue.hpp */,
+				62785A0220875936006F9869 /* ShaderProgram.cpp */,
+				627859FF20875936006F9869 /* ShaderProgram.hpp */,
+				62785A0420875936006F9869 /* TextRenderer.cpp */,
+				627859F720875936006F9869 /* TextRenderer.hpp */,
+				627859FB20875936006F9869 /* TextureCache.cpp */,
 				62785A0920875936006F9869 /* TextureCache.hpp */,
-				62785A0A20875936006F9869 /* Camera.hpp */,
+				627859F620875936006F9869 /* VboCache.cpp */,
+				62785A0320875936006F9869 /* VboCache.hpp */,
 			);
 			path = RendererCore;
 			sourceTree = "<group>";
@@ -1161,17 +1161,17 @@
 		62785A2C20875936006F9869 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				62785A2D20875936006F9869 /* JsonUtil.cpp */,
-				62785A2E20875936006F9869 /* FileSystem.hpp */,
-				62785A2F20875936006F9869 /* StaticVector.hpp */,
 				62785A3020875936006F9869 /* FileStorage.cpp */,
-				62785A3120875936006F9869 /* OfflineRasterizer.cpp */,
-				62785A3220875936006F9869 /* Optional.hpp */,
-				62785A3320875936006F9869 /* Fnv1Hash.hpp */,
 				62785A3420875936006F9869 /* FileStorage.hpp */,
-				62785A3520875936006F9869 /* OfflineRasterizer.hpp */,
+				62785A2E20875936006F9869 /* FileSystem.hpp */,
+				62785A3320875936006F9869 /* Fnv1Hash.hpp */,
 				62785A3620875936006F9869 /* IImage.hpp */,
+				62785A2D20875936006F9869 /* JsonUtil.cpp */,
 				62785A3720875936006F9869 /* JsonUtil.hpp */,
+				62785A3120875936006F9869 /* OfflineRasterizer.cpp */,
+				62785A3520875936006F9869 /* OfflineRasterizer.hpp */,
+				62785A3220875936006F9869 /* Optional.hpp */,
+				62785A2F20875936006F9869 /* StaticVector.hpp */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1580,20 +1580,20 @@
 		62785CDD2087618D006F9869 /* GameScene */ = {
 			isa = PBXGroup;
 			children = (
-				62785CDE2087618D006F9869 /* GhostPieceProducer.cpp */,
-				62785CDF2087618D006F9869 /* GameSceneRenderer.cpp */,
-				62785CE02087618D006F9869 /* GameHud.cpp */,
-				62785CE12087618D006F9869 /* PieceResources.cpp */,
-				62785CE22087618D006F9869 /* SceneObjectPool.cpp */,
-				62785CE32087618D006F9869 /* GameController.hpp */,
-				62785CE42087618D006F9869 /* GameScene.hpp */,
-				62785CE52087618D006F9869 /* SceneObjectPool.hpp */,
 				62785CE62087618D006F9869 /* GameController.cpp */,
-				62785CE72087618D006F9869 /* GameScene.cpp */,
-				62785CE82087618D006F9869 /* GhostPieceProducer.hpp */,
-				62785CE92087618D006F9869 /* GameSceneRenderer.hpp */,
+				62785CE32087618D006F9869 /* GameController.hpp */,
+				62785CE02087618D006F9869 /* GameHud.cpp */,
 				62785CEA2087618D006F9869 /* GameHud.hpp */,
+				62785CE72087618D006F9869 /* GameScene.cpp */,
+				62785CE42087618D006F9869 /* GameScene.hpp */,
+				62785CDF2087618D006F9869 /* GameSceneRenderer.cpp */,
+				62785CE92087618D006F9869 /* GameSceneRenderer.hpp */,
+				62785CDE2087618D006F9869 /* GhostPieceProducer.cpp */,
+				62785CE82087618D006F9869 /* GhostPieceProducer.hpp */,
+				62785CE12087618D006F9869 /* PieceResources.cpp */,
 				62785CEB2087618D006F9869 /* PieceResources.hpp */,
+				62785CE22087618D006F9869 /* SceneObjectPool.cpp */,
+				62785CE52087618D006F9869 /* SceneObjectPool.hpp */,
 			);
 			path = GameScene;
 			sourceTree = "<group>";
@@ -1601,9 +1601,9 @@
 		62785CEC2087618D006F9869 /* GameLogic */ = {
 			isa = PBXGroup;
 			children = (
+				62785D322087618E006F9869 /* Ai */,
 				62785CED2087618D006F9869 /* GameLogicCore */,
 				62785D052087618D006F9869 /* Pieces */,
-				62785D322087618E006F9869 /* Ai */,
 			);
 			path = GameLogic;
 			sourceTree = "<group>";
@@ -1611,29 +1611,29 @@
 		62785CED2087618D006F9869 /* GameLogicCore */ = {
 			isa = PBXGroup;
 			children = (
-				62785CEE2087618D006F9869 /* Piece.cpp */,
-				62785CEF2087618D006F9869 /* IGameLogic.hpp */,
-				62785CF02087618D006F9869 /* GestureInputHandler.cpp */,
-				62785CF12087618D006F9869 /* FallingPiece.hpp */,
-				62785CF22087618D006F9869 /* CollisionDetection.cpp */,
-				62785CF32087618D006F9869 /* ScrollController.cpp */,
 				62785CF42087618D006F9869 /* Cell.cpp */,
-				62785CF52087618D006F9869 /* FieldExplosionsStates.hpp */,
-				62785CF62087618D006F9869 /* GameLogic.hpp */,
-				62785CF72087618D006F9869 /* NextPieceGenerator.hpp */,
-				62785CF82087618D006F9869 /* Field.hpp */,
-				62785CF92087618D006F9869 /* ClickInputHandler.cpp */,
-				62785CFA2087618D006F9869 /* FallingPiece.cpp */,
-				62785CFB2087618D006F9869 /* CollisionDetection.hpp */,
-				62785CFC2087618D006F9869 /* ScrollController.hpp */,
 				62785CFD2087618D006F9869 /* Cell.hpp */,
-				62785CFE2087618D006F9869 /* FieldExplosionsStates.cpp */,
-				62785CFF2087618D006F9869 /* GameLogic.cpp */,
-				62785D002087618D006F9869 /* NextPieceGenerator.cpp */,
-				62785D012087618D006F9869 /* Field.cpp */,
+				62785CF92087618D006F9869 /* ClickInputHandler.cpp */,
 				62785D022087618D006F9869 /* ClickInputHandler.hpp */,
-				62785D032087618D006F9869 /* Piece.hpp */,
+				62785CF22087618D006F9869 /* CollisionDetection.cpp */,
+				62785CFB2087618D006F9869 /* CollisionDetection.hpp */,
+				62785CFA2087618D006F9869 /* FallingPiece.cpp */,
+				62785CF12087618D006F9869 /* FallingPiece.hpp */,
+				62785D012087618D006F9869 /* Field.cpp */,
+				62785CF82087618D006F9869 /* Field.hpp */,
+				62785CFE2087618D006F9869 /* FieldExplosionsStates.cpp */,
+				62785CF52087618D006F9869 /* FieldExplosionsStates.hpp */,
+				62785CFF2087618D006F9869 /* GameLogic.cpp */,
+				62785CF62087618D006F9869 /* GameLogic.hpp */,
+				62785CF02087618D006F9869 /* GestureInputHandler.cpp */,
 				62785D042087618D006F9869 /* GestureInputHandler.hpp */,
+				62785CEF2087618D006F9869 /* IGameLogic.hpp */,
+				62785D002087618D006F9869 /* NextPieceGenerator.cpp */,
+				62785CF72087618D006F9869 /* NextPieceGenerator.hpp */,
+				62785CEE2087618D006F9869 /* Piece.cpp */,
+				62785D032087618D006F9869 /* Piece.hpp */,
+				62785CF32087618D006F9869 /* ScrollController.cpp */,
+				62785CFC2087618D006F9869 /* ScrollController.hpp */,
 			);
 			path = GameLogicCore;
 			sourceTree = "<group>";
@@ -1641,50 +1641,50 @@
 		62785D052087618D006F9869 /* Pieces */ = {
 			isa = PBXGroup;
 			children = (
+				62785D122087618D006F9869 /* BigLPiece.cpp */,
+				62785D1D2087618D006F9869 /* BigLPiece.hpp */,
+				62785D282087618E006F9869 /* BigTrianglePiece.cpp */,
 				62785D062087618D006F9869 /* BigTrianglePiece.hpp */,
+				62785D292087618E006F9869 /* Bomb.cpp */,
 				62785D072087618D006F9869 /* Bomb.hpp */,
-				62785D082087618D006F9869 /* ShortIPiece.cpp */,
-				62785D092087618D006F9869 /* MirroredSevenPiece.cpp */,
-				62785D0A2087618D006F9869 /* LongIPiece.hpp */,
-				62785D0B2087618D006F9869 /* FPiece.hpp */,
-				62785D0C2087618D006F9869 /* RowBomb.hpp */,
 				62785D0D2087618D006F9869 /* BPiece.cpp */,
-				62785D0E2087618D006F9869 /* LPiece.hpp */,
-				62785D0F2087618D006F9869 /* MirroredZPiece.hpp */,
+				62785D2E2087618E006F9869 /* BPiece.hpp */,
+				62785D302087618E006F9869 /* DiamondPiece.cpp */,
 				62785D102087618D006F9869 /* DiamondPiece.hpp */,
 				62785D112087618D006F9869 /* DPiece.cpp */,
-				62785D122087618D006F9869 /* BigLPiece.cpp */,
+				62785D1C2087618D006F9869 /* DPiece.hpp */,
+				62785D2B2087618E006F9869 /* FPiece.cpp */,
+				62785D0B2087618D006F9869 /* FPiece.hpp */,
+				62785D2C2087618E006F9869 /* LongIPiece.cpp */,
+				62785D0A2087618D006F9869 /* LongIPiece.hpp */,
+				62785D2F2087618E006F9869 /* LPiece.cpp */,
+				62785D0E2087618D006F9869 /* LPiece.hpp */,
+				62785D1E2087618D006F9869 /* MiddleIPiece.cpp */,
 				62785D132087618D006F9869 /* MiddleIPiece.hpp */,
-				62785D142087618D006F9869 /* SmallTrianglePiece.hpp */,
+				62785D1B2087618D006F9869 /* MirroredFPiece.cpp */,
+				62785D252087618D006F9869 /* MirroredFPiece.hpp */,
+				62785D092087618D006F9869 /* MirroredSevenPiece.cpp */,
+				62785D2A2087618E006F9869 /* MirroredSevenPiece.hpp */,
+				62785D312087618E006F9869 /* MirroredZPiece.cpp */,
+				62785D0F2087618D006F9869 /* MirroredZPiece.hpp */,
+				62785D222087618D006F9869 /* PlusPiece.cpp */,
+				62785D182087618D006F9869 /* PlusPiece.hpp */,
+				62785D262087618D006F9869 /* PyramidPiece.cpp */,
+				62785D1A2087618D006F9869 /* PyramidPiece.hpp */,
+				62785D2D2087618E006F9869 /* RowBomb.cpp */,
+				62785D0C2087618D006F9869 /* RowBomb.hpp */,
+				62785D212087618D006F9869 /* SevenPiece.cpp */,
 				62785D152087618D006F9869 /* SevenPiece.hpp */,
+				62785D082087618D006F9869 /* ShortIPiece.cpp */,
+				62785D272087618E006F9869 /* ShortIPiece.hpp */,
+				62785D1F2087618D006F9869 /* SmallTrianglePiece.cpp */,
+				62785D142087618D006F9869 /* SmallTrianglePiece.hpp */,
+				62785D242087618D006F9869 /* TPiece.cpp */,
+				62785D192087618D006F9869 /* TPiece.hpp */,
+				62785D202087618D006F9869 /* TrianglePiece.cpp */,
 				62785D162087618D006F9869 /* TrianglePiece.hpp */,
 				62785D172087618D006F9869 /* ZPiece.cpp */,
-				62785D182087618D006F9869 /* PlusPiece.hpp */,
-				62785D192087618D006F9869 /* TPiece.hpp */,
-				62785D1A2087618D006F9869 /* PyramidPiece.hpp */,
-				62785D1B2087618D006F9869 /* MirroredFPiece.cpp */,
-				62785D1C2087618D006F9869 /* DPiece.hpp */,
-				62785D1D2087618D006F9869 /* BigLPiece.hpp */,
-				62785D1E2087618D006F9869 /* MiddleIPiece.cpp */,
-				62785D1F2087618D006F9869 /* SmallTrianglePiece.cpp */,
-				62785D202087618D006F9869 /* TrianglePiece.cpp */,
-				62785D212087618D006F9869 /* SevenPiece.cpp */,
-				62785D222087618D006F9869 /* PlusPiece.cpp */,
 				62785D232087618D006F9869 /* ZPiece.hpp */,
-				62785D242087618D006F9869 /* TPiece.cpp */,
-				62785D252087618D006F9869 /* MirroredFPiece.hpp */,
-				62785D262087618D006F9869 /* PyramidPiece.cpp */,
-				62785D272087618E006F9869 /* ShortIPiece.hpp */,
-				62785D282087618E006F9869 /* BigTrianglePiece.cpp */,
-				62785D292087618E006F9869 /* Bomb.cpp */,
-				62785D2A2087618E006F9869 /* MirroredSevenPiece.hpp */,
-				62785D2B2087618E006F9869 /* FPiece.cpp */,
-				62785D2C2087618E006F9869 /* LongIPiece.cpp */,
-				62785D2D2087618E006F9869 /* RowBomb.cpp */,
-				62785D2E2087618E006F9869 /* BPiece.hpp */,
-				62785D2F2087618E006F9869 /* LPiece.cpp */,
-				62785D302087618E006F9869 /* DiamondPiece.cpp */,
-				62785D312087618E006F9869 /* MirroredZPiece.cpp */,
 			);
 			path = Pieces;
 			sourceTree = "<group>";
@@ -1692,12 +1692,12 @@
 		62785D322087618E006F9869 /* Ai */ = {
 			isa = PBXGroup;
 			children = (
-				62785D332087618E006F9869 /* ValidMovesSearch.cpp */,
 				62785D342087618E006F9869 /* Ai.cpp */,
+				62785D382087618E006F9869 /* Ai.hpp */,
 				62785D352087618E006F9869 /* FieldAnalyzer.cpp */,
 				62785D362087618E006F9869 /* FieldAnalyzer.hpp */,
+				62785D332087618E006F9869 /* ValidMovesSearch.cpp */,
 				62785D372087618E006F9869 /* ValidMovesSearch.hpp */,
-				62785D382087618E006F9869 /* Ai.hpp */,
 			);
 			path = Ai;
 			sourceTree = "<group>";
@@ -1764,11 +1764,11 @@
 		62785D622087618E006F9869 /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				62785D632087618E006F9869 /* GuiElements */,
-				62785D6F2087618E006F9869 /* CommonViews */,
-				62785D7A2087618E006F9869 /* Utils */,
 				62785D7F2087618E006F9869 /* CommonResources */,
+				62785D6F2087618E006F9869 /* CommonViews */,
+				62785D632087618E006F9869 /* GuiElements */,
 				62785D8C2087618E006F9869 /* UserData */,
+				62785D7A2087618E006F9869 /* Utils */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -1776,17 +1776,17 @@
 		62785D632087618E006F9869 /* GuiElements */ = {
 			isa = PBXGroup;
 			children = (
-				62785D642087618E006F9869 /* MenuButton.hpp */,
-				62785D652087618E006F9869 /* UiLayer.hpp */,
 				62785D662087618E006F9869 /* CloseButton.cpp */,
+				62785D6D2087618E006F9869 /* CloseButton.hpp */,
 				62785D672087618E006F9869 /* GuiViewManager.cpp */,
+				62785D6E2087618E006F9869 /* GuiViewManager.hpp */,
+				62785D6C2087618E006F9869 /* MenuButton.cpp */,
+				62785D642087618E006F9869 /* MenuButton.hpp */,
 				62785D682087618E006F9869 /* MenuQuad.cpp */,
+				62785D6B2087618E006F9869 /* MenuQuad.hpp */,
 				62785D692087618E006F9869 /* SlidingMenuAnimation.cpp */,
 				62785D6A2087618E006F9869 /* SlidingMenuAnimation.hpp */,
-				62785D6B2087618E006F9869 /* MenuQuad.hpp */,
-				62785D6C2087618E006F9869 /* MenuButton.cpp */,
-				62785D6D2087618E006F9869 /* CloseButton.hpp */,
-				62785D6E2087618E006F9869 /* GuiViewManager.hpp */,
+				62785D652087618E006F9869 /* UiLayer.hpp */,
 			);
 			path = GuiElements;
 			sourceTree = "<group>";
@@ -1822,18 +1822,18 @@
 		62785D7F2087618E006F9869 /* CommonResources */ = {
 			isa = PBXGroup;
 			children = (
-				62785D802087618E006F9869 /* Materials.cpp */,
-				62785D812087618E006F9869 /* RoundedCylinder.cpp */,
-				62785D822087618E006F9869 /* GradientRectangle.hpp */,
-				62785D832087618E006F9869 /* CommonResources.hpp */,
-				62785D842087618E006F9869 /* FloatingBlocks.hpp */,
-				62785D852087618E006F9869 /* Clouds.hpp */,
 				62785D862087618E006F9869 /* Clouds.cpp */,
-				62785D872087618E006F9869 /* Materials.hpp */,
-				62785D882087618E006F9869 /* RoundedCylinder.hpp */,
-				62785D892087618E006F9869 /* GradientRectangle.cpp */,
+				62785D852087618E006F9869 /* Clouds.hpp */,
 				62785D8A2087618E006F9869 /* CommonResources.cpp */,
+				62785D832087618E006F9869 /* CommonResources.hpp */,
 				62785D8B2087618E006F9869 /* FloatingBlocks.cpp */,
+				62785D842087618E006F9869 /* FloatingBlocks.hpp */,
+				62785D892087618E006F9869 /* GradientRectangle.cpp */,
+				62785D822087618E006F9869 /* GradientRectangle.hpp */,
+				62785D802087618E006F9869 /* Materials.cpp */,
+				62785D872087618E006F9869 /* Materials.hpp */,
+				62785D812087618E006F9869 /* RoundedCylinder.cpp */,
+				62785D882087618E006F9869 /* RoundedCylinder.hpp */,
 			);
 			path = CommonResources;
 			sourceTree = "<group>";
@@ -1841,12 +1841,12 @@
 		62785D8C2087618E006F9869 /* UserData */ = {
 			isa = PBXGroup;
 			children = (
-				62785D8D2087618E006F9869 /* UserData.hpp */,
-				62785D8E2087618E006F9869 /* ProgressManager.hpp */,
 				62785D8F2087618E006F9869 /* LifeManager.cpp */,
 				62785D902087618E006F9869 /* LifeManager.hpp */,
-				62785D912087618E006F9869 /* UserData.cpp */,
 				62785D922087618E006F9869 /* ProgressManager.cpp */,
+				62785D8E2087618E006F9869 /* ProgressManager.hpp */,
+				62785D912087618E006F9869 /* UserData.cpp */,
+				62785D8D2087618E006F9869 /* UserData.hpp */,
 			);
 			path = UserData;
 			sourceTree = "<group>";
@@ -1905,8 +1905,8 @@
 		62785DAB2087618E006F9869 /* Application */ = {
 			isa = PBXGroup;
 			children = (
-				62785DAC2087618E006F9869 /* RowBlastApplication.hpp */,
 				62785DAD2087618E006F9869 /* RowBlastApplication.cpp */,
+				62785DAC2087618E006F9869 /* RowBlastApplication.hpp */,
 			);
 			path = Application;
 			sourceTree = "<group>";

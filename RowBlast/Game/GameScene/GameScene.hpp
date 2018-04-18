@@ -41,7 +41,6 @@ namespace RowBlast {
                   const PieceResources& pieceResources,
                   const GameLogic& gameLogic);
         void Update();
-        const Pht::Material& GetGoldMaterial() const;
         const Pht::Material& GetRedMaterial() const;
         const Pht::Material& GetBlueMaterial() const;
         const Pht::Material& GetGreenMaterial() const;
