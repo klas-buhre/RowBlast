@@ -22,6 +22,7 @@ namespace RowBlast {
         
     private:
         void AnimateFlashingBlock(SubCell& subCell, int row, int column, float dt);
+        void UpdateBlockInActiveState(SubCell& subCell, int row, int column, float dt);
         bool IsBlockAccordingToBlueprint(SubCell& subCell, int row, int column);
         
         Field& mField;

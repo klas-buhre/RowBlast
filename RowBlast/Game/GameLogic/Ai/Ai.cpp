@@ -50,7 +50,7 @@ void Ai::EvaluateMoves(const FallingPiece& fallingPiece) {
         auto& move {moves.At(i)};
         PieceBlocks pieceBlocks {pieceType.GetGrid(move.mRotation), pieceNumRows, pieceNumcolumns};
         
-        mField.LandPieceBlocks(pieceBlocks, pieceId, move.mPosition, false, false);
+        mField.LandPieceBlocks(pieceBlocks, pieceId, move.mPosition, false, false, false);
         EvaluateMove(move, fallingPiece);
         mField.RemovePiece(pieceId, move.mPosition, pieceNumRows, pieceNumcolumns);
     }

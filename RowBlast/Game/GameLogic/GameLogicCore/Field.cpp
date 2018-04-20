@@ -573,11 +573,16 @@ void Field::UnmarkDetonatedBombs() {
     }
 }
 
-void Field::LandFallingPiece(const FallingPiece& fallingPiece) {
+void Field::LandFallingPiece(const FallingPiece& fallingPiece, bool startBounceAnimation) {
     SetChanged();
     
     auto pieceBlocks {CreatePieceBlocks(fallingPiece)};
-    LandPieceBlocks(pieceBlocks, fallingPiece.GetId(), fallingPiece.GetIntPosition(), true, true);
+    LandPieceBlocks(pieceBlocks,
+                    fallingPiece.GetId(),
+                    fallingPiece.GetIntPosition(),
+                    true,
+                    true,
+                    startBounceAnimation);
     ManageWelds();
 }
 
@@ -585,7 +590,8 @@ void Field::LandPieceBlocks(const PieceBlocks& pieceBlocks,
                             int pieceId,
                             const Pht::IVec2& position,
                             bool updateCellPosition,
-                            bool startBlueprintCellAnimation) {
+                            bool startBlueprintCellAnimation,
+                            bool startBounceAnimation) {
     for (auto pieceRow {0}; pieceRow < pieceBlocks.mNumRows; ++pieceRow) {
         for (auto pieceColumn {0}; pieceColumn < pieceBlocks.mNumColumns; ++pieceColumn) {
             auto& pieceCell {pieceBlocks.mGrid[pieceRow][pieceColumn]};
@@ -618,6 +624,12 @@ void Field::LandPieceBlocks(const PieceBlocks& pieceBlocks,
                 if (blueprintCell.mFill != Fill::Empty && IsCellAccordingToBlueprint(row, column)) {
                     blueprintCell.mAnimation.mIsActive = true;
                 }
+            }
+            
+            if (startBounceAnimation) {
+                auto& fallingBlockAnimation {fieldSubCell.mFallingBlockAnimation};
+                fallingBlockAnimation.mState = FallingBlockAnimation::State::Bouncing;
+                fallingBlockAnimation.mVelocity = FallingBlockAnimation::fallingPieceBounceVelocity;
             }
         }
     }

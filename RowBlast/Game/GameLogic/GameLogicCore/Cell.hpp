@@ -115,7 +115,17 @@ namespace RowBlast {
     };
     
     struct FlashingBlockAnimation {
-        bool mIsActive {false};
+        enum class State {
+            Waiting,
+            Active,
+            Inactive
+        };
+        
+        bool IsActive() const {
+            return mState == State::Active;
+        }
+        
+        State mState {State::Inactive};
         float mElapsedTime {0.0f};
         BlockBrightness mBrightness {BlockBrightness::Normal};
     };
@@ -126,6 +136,8 @@ namespace RowBlast {
             Bouncing,
             Inactive
         };
+        
+        static constexpr float fallingPieceBounceVelocity {-12.5f};
         
         float mVelocity {0.0f};
         State mState {State::Inactive};

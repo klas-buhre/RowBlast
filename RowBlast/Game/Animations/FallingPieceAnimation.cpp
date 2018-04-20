@@ -112,10 +112,10 @@ void FallingPieceAnimation::LandFallingPiece() {
     
     auto secondToLastMovementIndex {mMovements.Size() - 2};
 
-    auto startParticleEffect {
+    auto finalMovementWasADrop {
         secondToLastMovementIndex >= 0 ?
         mMovements.At(secondToLastMovementIndex)->GetPosition().y > landingPosition.y : false
     };
     
-    mGameLogic.OnFallingPieceAnimationFinished(startParticleEffect);
+    mGameLogic.OnFallingPieceAnimationFinished(finalMovementWasADrop);
 }

@@ -16,7 +16,16 @@ namespace RowBlast {
         explicit CollapsingFieldAnimation(Field& field);
     
         State Update(float dt);
+        void ResetBlockAnimations();
         
+        void GoToBlocksBouncingState() {
+            mState = State::BlocksBouncing;
+        }
+        
+        void GoToInactiveState() {
+            mState = State::Inactive;
+        }
+
     private:
         void UpdateInWaitingState(float dt);
         void UpdateInActiveState(float dt);

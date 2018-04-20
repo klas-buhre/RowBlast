@@ -250,3 +250,13 @@ void CollapsingFieldAnimation::GoToWaitingState() {
     mWaitedTime = 0.0f;
     mState = State::Waiting;
 }
+
+void CollapsingFieldAnimation::ResetBlockAnimations() {
+    for (auto row {0}; row < mField.GetNumRows(); ++row) {
+        for (auto column {0}; column < mField.GetNumColumns(); ++column) {
+            auto& cell {mField.GetCell(row, column)};
+            cell.mFirstSubCell.mFallingBlockAnimation = FallingBlockAnimation {};
+            cell.mSecondSubCell.mFallingBlockAnimation = FallingBlockAnimation {};
+        }
+    }
+}

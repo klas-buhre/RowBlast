@@ -14,6 +14,7 @@
 #include "Level.hpp"
 #include "ScrollController.hpp"
 #include "FlyingBlocksAnimation.hpp"
+#include "CollapsingFieldAnimation.hpp"
 #include "PieceDropParticleEffect.hpp"
 #include "BlastRadiusAnimation.hpp"
 #include "GameHudController.hpp"
@@ -50,6 +51,7 @@ GameLogic::GameLogic(Pht::IEngine& engine,
                      const GameScene& gameScene,
                      EffectManager& effectManager,
                      FlyingBlocksAnimation& flyingBlocksAnimation,
+                     CollapsingFieldAnimation& collapsingFieldAnimation,
                      PieceDropParticleEffect& pieceDropParticleEffect,
                      BlastRadiusAnimation& blastRadiusAnimation,
                      GameHudController& gameHudController,
@@ -58,6 +60,7 @@ GameLogic::GameLogic(Pht::IEngine& engine,
     mField {field},
     mScrollController {scrollController},
     mFlyingBlocksAnimation {flyingBlocksAnimation},
+    mCollapsingFieldAnimation {collapsingFieldAnimation},
     mPieceDropParticleEffect {pieceDropParticleEffect},
     mBlastRadiusAnimation {blastRadiusAnimation},
     mGameHudController {gameHudController},
@@ -408,23 +411,23 @@ void GameLogic::UpdateFallingPieceYpos() {
 }
 
 void GameLogic::DropFallingPiece() {
-    bool startParticleEffect {mFallingPiece->GetPosition().y > mGhostPieceRow};
+    bool finalMovementWasADrop {mFallingPiece->GetPosition().y > mGhostPieceRow};
     mFallingPiece->SetY(mGhostPieceRow);
-    LandFallingPiece(startParticleEffect);
+    LandFallingPiece(finalMovementWasADrop);
 }
 
 void GameLogic::StartFallingPieceAnimation(const Movement& lastMovement) {
     mFallingPieceAnimation.Start(lastMovement);
 }
 
-void GameLogic::OnFallingPieceAnimationFinished(bool startParticleEffect) {
-    LandFallingPiece(startParticleEffect);
+void GameLogic::OnFallingPieceAnimationFinished(bool finalMovementWasADrop) {
+    LandFallingPiece(finalMovementWasADrop);
 }
 
-void GameLogic::LandFallingPiece(bool startParticleEffect) {
+void GameLogic::LandFallingPiece(bool finalMovementWasADrop) {
     mField.SaveState();
     
-    if (startParticleEffect) {
+    if (finalMovementWasADrop) {
         mPieceDropParticleEffect.StartEffect(*mFallingPiece);
     }
     
@@ -436,7 +439,14 @@ void GameLogic::LandFallingPiece(bool startParticleEffect) {
                                        mFallingPiece->GetIntPosition())
         };
         
-        mField.LandFallingPiece(*mFallingPiece);
+        auto startBounceAnimation {false};
+        
+        if (finalMovementWasADrop) {
+            startBounceAnimation = true;
+            mCollapsingFieldAnimation.GoToBlocksBouncingState();
+        }
+        
+        mField.LandFallingPiece(*mFallingPiece, startBounceAnimation);
         DetonateImpactedLevelBombs(impactedLevelBombs);
         
         if (mLevel->GetObjective() == Level::Objective::Clear) {
@@ -444,6 +454,8 @@ void GameLogic::LandFallingPiece(bool startParticleEffect) {
 
             if (!removedSubCells.IsEmpty()) {
                 mFlyingBlocksAnimation.AddBlockRows(removedSubCells);
+                mCollapsingFieldAnimation.GoToInactiveState();
+                mCollapsingFieldAnimation.ResetBlockAnimations();
                 
                 if (impactedLevelBombs.IsEmpty()) {
                     RemoveClearedRowsAndPullDownLoosePieces();

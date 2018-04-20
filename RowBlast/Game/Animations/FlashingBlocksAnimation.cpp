@@ -6,7 +6,13 @@
 using namespace RowBlast;
 
 namespace {
-    const auto flashDuration {0.22f};
+    constexpr auto flashDuration {0.22f};
+    
+    void UpdateBlockInWaitingState(SubCell& subCell, float dt) {
+        if (subCell.mFallingBlockAnimation.mState != FallingBlockAnimation::State::Bouncing) {
+            subCell.mFlashingBlockAnimation.mState = FlashingBlockAnimation::State::Active;
+        }
+    }
 }
 
 const Pht::Color FlashingBlocksAnimation::colorAdd {0.23f, 0.23f, 0.23f};
@@ -35,14 +41,26 @@ void FlashingBlocksAnimation::AnimateFlashingBlock(SubCell& subCell,
                                                    int row,
                                                    int column,
                                                    float dt) {
-    auto& flashingBlockAnimation {subCell.mFlashingBlockAnimation};
-    
-    if (!flashingBlockAnimation.mIsActive) {
-        return;
+    switch (subCell.mFlashingBlockAnimation.mState) {
+        case FlashingBlockAnimation::State::Inactive:
+            return;
+        case FlashingBlockAnimation::State::Waiting:
+            UpdateBlockInWaitingState(subCell, dt);
+            break;
+        case FlashingBlockAnimation::State::Active:
+            UpdateBlockInActiveState(subCell, row, column, dt);
+            break;
     }
+}
+
+void FlashingBlocksAnimation::UpdateBlockInActiveState(SubCell& subCell,
+                                                       int row,
+                                                       int column,
+                                                       float dt) {
+    auto& flashingBlockAnimation {subCell.mFlashingBlockAnimation};
+    flashingBlockAnimation.mElapsedTime += dt;
     
     mField.SetChanged();
-    flashingBlockAnimation.mElapsedTime += dt;
     
     if (IsBlockAccordingToBlueprint(subCell, row, column)) {
         flashingBlockAnimation.mBrightness = BlockBrightness::BlueprintFillFlashing;

@@ -95,12 +95,13 @@ namespace RowBlast {
                                           const Pht::IVec2& position) const;
         void MarkBombAsDetonated(const ImpactedBombs& bombs);
         void UnmarkDetonatedBombs();
-        void LandFallingPiece(const FallingPiece& fallingPiece);
+        void LandFallingPiece(const FallingPiece& fallingPiece, bool startBounceAnimation);
         void LandPieceBlocks(const PieceBlocks& pieceBlocks,
                              int pieceId,
                              const Pht::IVec2& position,
                              bool updateCellPosition,
-                             bool startBlueprintCellAnimation);
+                             bool startBlueprintCellAnimation,
+                             bool startBounceAnimation);
         void ManageWelds();
         void MergeTriangleBlocksIntoCube(const Pht::IVec2& position);
         void PullDownLoosePieces();

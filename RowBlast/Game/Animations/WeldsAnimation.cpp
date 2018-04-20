@@ -54,8 +54,8 @@ void WeldsAnimation::Update(float dt) {
                     mField.SetChanged();
                 } else {
                     auto cellIsFlashing {
-                        cell.mFirstSubCell.mFlashingBlockAnimation.mIsActive ||
-                        cell.mSecondSubCell.mFlashingBlockAnimation.mIsActive
+                        cell.mFirstSubCell.mFlashingBlockAnimation.IsActive() ||
+                        cell.mSecondSubCell.mFlashingBlockAnimation.IsActive()
                     };
                     
                     AnimateWeld(diagonalAnimation, cellIsFlashing, false, dt);
@@ -98,14 +98,14 @@ void WeldsAnimation::AnimateBlockWelds(SubCell& subCell, const Pht::IVec2& posit
 }
 
 void WeldsAnimation::AnimateUpWeld(SubCell& subCell, const Pht::IVec2& position, float dt) {
-    auto subCellIsFlashing {subCell.mFlashingBlockAnimation.mIsActive};
+    auto subCellIsFlashing {subCell.mFlashingBlockAnimation.IsActive()};
     
     if (position.y + 1 < mField.GetNumRows()) {
         auto& upperCell {mField.GetCell(position + Pht::IVec2{0, 1})};
 
         auto upperCellIsFlashing {
-            upperCell.mFirstSubCell.mFlashingBlockAnimation.mIsActive ||
-            upperCell.mSecondSubCell.mFlashingBlockAnimation.mIsActive
+            upperCell.mFirstSubCell.mFlashingBlockAnimation.IsActive() ||
+            upperCell.mSecondSubCell.mFlashingBlockAnimation.IsActive()
         };
         
         AnimateWeld(subCell.mWelds.mAnimations.mUp,
@@ -121,14 +121,14 @@ void WeldsAnimation::AnimateUpWeld(SubCell& subCell, const Pht::IVec2& position,
 }
 
 void WeldsAnimation::AnimateRightWeld(SubCell& subCell, const Pht::IVec2& position, float dt) {
-    auto subCellIsFlashing {subCell.mFlashingBlockAnimation.mIsActive};
+    auto subCellIsFlashing {subCell.mFlashingBlockAnimation.IsActive()};
     
     if (position.x + 1 < mField.GetNumColumns()) {
         auto& cellToTheRight {mField.GetCell(position + Pht::IVec2{1, 0})};
         
         auto cellToTheRightIsFlashing {
-            cellToTheRight.mFirstSubCell.mFlashingBlockAnimation.mIsActive ||
-            cellToTheRight.mSecondSubCell.mFlashingBlockAnimation.mIsActive
+            cellToTheRight.mFirstSubCell.mFlashingBlockAnimation.IsActive() ||
+            cellToTheRight.mSecondSubCell.mFlashingBlockAnimation.IsActive()
         };
         
         AnimateWeld(subCell.mWelds.mAnimations.mRight,

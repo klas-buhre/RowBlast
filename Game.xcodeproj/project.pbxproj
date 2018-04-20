@@ -1051,27 +1051,27 @@
 		627859DE20875936006F9869 /* Mesh */ = {
 			isa = PBXGroup;
 			children = (
-				627859DF20875936006F9869 /* TriangleMesh.cpp */,
-				627859E020875936006F9869 /* VertexBuffer.cpp */,
+				627859E720875936006F9869 /* BoxMesh.cpp */,
+				627859EE20875936006F9869 /* BoxMesh.hpp */,
+				627859E520875936006F9869 /* CylinderMesh.cpp */,
+				627859EC20875936006F9869 /* CylinderMesh.hpp */,
 				627859E120875936006F9869 /* IMesh.hpp */,
 				627859E220875936006F9869 /* MeshUtils.cpp */,
-				627859E320875936006F9869 /* ParametricSurface.cpp */,
-				627859E420875936006F9869 /* ObjMesh.hpp */,
-				627859E520875936006F9869 /* CylinderMesh.cpp */,
-				627859E620875936006F9869 /* QuadMesh.hpp */,
-				627859E720875936006F9869 /* BoxMesh.cpp */,
-				627859E820875936006F9869 /* TorusMesh.hpp */,
-				627859E920875936006F9869 /* SphereMesh.cpp */,
-				627859EA20875936006F9869 /* ParametricSurface.hpp */,
-				627859EB20875936006F9869 /* ObjMesh.cpp */,
-				627859EC20875936006F9869 /* CylinderMesh.hpp */,
-				627859ED20875936006F9869 /* QuadMesh.cpp */,
-				627859EE20875936006F9869 /* BoxMesh.hpp */,
-				627859EF20875936006F9869 /* TorusMesh.cpp */,
-				627859F020875936006F9869 /* SphereMesh.hpp */,
-				627859F120875936006F9869 /* VertexBuffer.hpp */,
-				627859F220875936006F9869 /* TriangleMesh.hpp */,
 				627859F320875936006F9869 /* MeshUtils.hpp */,
+				627859EB20875936006F9869 /* ObjMesh.cpp */,
+				627859E420875936006F9869 /* ObjMesh.hpp */,
+				627859E320875936006F9869 /* ParametricSurface.cpp */,
+				627859EA20875936006F9869 /* ParametricSurface.hpp */,
+				627859ED20875936006F9869 /* QuadMesh.cpp */,
+				627859E620875936006F9869 /* QuadMesh.hpp */,
+				627859E920875936006F9869 /* SphereMesh.cpp */,
+				627859F020875936006F9869 /* SphereMesh.hpp */,
+				627859EF20875936006F9869 /* TorusMesh.cpp */,
+				627859E820875936006F9869 /* TorusMesh.hpp */,
+				627859DF20875936006F9869 /* TriangleMesh.cpp */,
+				627859F220875936006F9869 /* TriangleMesh.hpp */,
+				627859E020875936006F9869 /* VertexBuffer.cpp */,
+				627859F120875936006F9869 /* VertexBuffer.hpp */,
 			);
 			path = Mesh;
 			sourceTree = "<group>";
@@ -1147,13 +1147,13 @@
 		62785A2420875936006F9869 /* Input */ = {
 			isa = PBXGroup;
 			children = (
-				62785A2520875936006F9869 /* InputHandler.cpp */,
-				62785A2620875936006F9869 /* InputEvent.hpp */,
-				62785A2720875936006F9869 /* SwipeGestureRecognizer.hpp */,
-				62785A2820875936006F9869 /* InputEvent.cpp */,
-				62785A2920875936006F9869 /* SwipeGestureRecognizer.cpp */,
-				62785A2A20875936006F9869 /* InputHandler.hpp */,
 				62785A2B20875936006F9869 /* IInput.hpp */,
+				62785A2820875936006F9869 /* InputEvent.cpp */,
+				62785A2620875936006F9869 /* InputEvent.hpp */,
+				62785A2520875936006F9869 /* InputHandler.cpp */,
+				62785A2A20875936006F9869 /* InputHandler.hpp */,
+				62785A2920875936006F9869 /* SwipeGestureRecognizer.cpp */,
+				62785A2720875936006F9869 /* SwipeGestureRecognizer.hpp */,
 			);
 			path = Input;
 			sourceTree = "<group>";
@@ -1179,12 +1179,12 @@
 		62785A3820875936006F9869 /* Math */ = {
 			isa = PBXGroup;
 			children = (
+				62785A3E20875936006F9869 /* MathUtils.cpp */,
 				62785A3920875936006F9869 /* MathUtils.hpp */,
-				62785A3A20875936006F9869 /* Vector.hpp */,
-				62785A3B20875936006F9869 /* Transform.hpp */,
 				62785A3C20875936006F9869 /* Matrix.hpp */,
 				62785A3D20875936006F9869 /* Transform.cpp */,
-				62785A3E20875936006F9869 /* MathUtils.cpp */,
+				62785A3B20875936006F9869 /* Transform.hpp */,
+				62785A3A20875936006F9869 /* Vector.hpp */,
 			);
 			path = Math;
 			sourceTree = "<group>";
@@ -1192,16 +1192,16 @@
 		62785A3F20875936006F9869 /* iOS */ = {
 			isa = PBXGroup;
 			children = (
-				62785A4020875936006F9869 /* SoundIOS.mm */,
-				62785A4120875936006F9869 /* GLKViewExtension.mm */,
 				62785A4220875936006F9869 /* AppDelegate.h */,
-				62785A4320875936006F9869 /* GLKViewExtension.h */,
-				62785A4420875936006F9869 /* GLKViewControllerExtension.h */,
-				62785A4520875936006F9869 /* main.m */,
-				62785A4620875936006F9869 /* FileSystemIOS.mm */,
 				62785A4720875936006F9869 /* AppDelegate.mm */,
-				62785A4820875936006F9869 /* ImageIOS.mm */,
+				62785A4620875936006F9869 /* FileSystemIOS.mm */,
+				62785A4420875936006F9869 /* GLKViewControllerExtension.h */,
 				62785A4920875936006F9869 /* GLKViewControllerExtension.mm */,
+				62785A4320875936006F9869 /* GLKViewExtension.h */,
+				62785A4120875936006F9869 /* GLKViewExtension.mm */,
+				62785A4820875936006F9869 /* ImageIOS.mm */,
+				62785A4520875936006F9869 /* main.m */,
+				62785A4020875936006F9869 /* SoundIOS.mm */,
 			);
 			path = iOS;
 			sourceTree = "<group>";
@@ -1209,10 +1209,10 @@
 		62785A4A20875936006F9869 /* Audio */ = {
 			isa = PBXGroup;
 			children = (
-				62785A4B20875936006F9869 /* ISound.hpp */,
 				62785A4C20875936006F9869 /* Audio.cpp */,
-				62785A4D20875936006F9869 /* IAudio.hpp */,
 				62785A4E20875936006F9869 /* Audio.hpp */,
+				62785A4D20875936006F9869 /* IAudio.hpp */,
+				62785A4B20875936006F9869 /* ISound.hpp */,
 			);
 			path = Audio;
 			sourceTree = "<group>";
@@ -1220,12 +1220,12 @@
 		62785A4F20875936006F9869 /* Gui */ = {
 			isa = PBXGroup;
 			children = (
-				62785A5020875936006F9869 /* GuiView.hpp */,
 				62785A5120875936006F9869 /* Button.cpp */,
+				62785A5520875936006F9869 /* Button.hpp */,
 				62785A5220875936006F9869 /* Font.cpp */,
 				62785A5320875936006F9869 /* Font.hpp */,
 				62785A5420875936006F9869 /* GuiView.cpp */,
-				62785A5520875936006F9869 /* Button.hpp */,
+				62785A5020875936006F9869 /* GuiView.hpp */,
 			);
 			path = Gui;
 			sourceTree = "<group>";
@@ -1258,15 +1258,15 @@
 		62785A6920875936006F9869 /* Effects */ = {
 			isa = PBXGroup;
 			children = (
-				62785A6A20875936006F9869 /* ParticleEmitter.hpp */,
 				62785A6B20875936006F9869 /* FadeEffect.cpp */,
-				62785A6C20875936006F9869 /* ParticleSystem.cpp */,
-				62785A6D20875936006F9869 /* ParticleEffect.cpp */,
-				62785A6E20875936006F9869 /* ParticleSystem.hpp */,
-				62785A6F20875936006F9869 /* ParticleEffect.hpp */,
-				62785A7020875936006F9869 /* IParticleSystem.hpp */,
 				62785A7120875936006F9869 /* FadeEffect.hpp */,
+				62785A7020875936006F9869 /* IParticleSystem.hpp */,
+				62785A6D20875936006F9869 /* ParticleEffect.cpp */,
+				62785A6F20875936006F9869 /* ParticleEffect.hpp */,
 				62785A7220875936006F9869 /* ParticleEmitter.cpp */,
+				62785A6A20875936006F9869 /* ParticleEmitter.hpp */,
+				62785A6C20875936006F9869 /* ParticleSystem.cpp */,
+				62785A6E20875936006F9869 /* ParticleSystem.hpp */,
 			);
 			path = Effects;
 			sourceTree = "<group>";
@@ -1274,10 +1274,10 @@
 		62785A7320875936006F9869 /* Engine */ = {
 			isa = PBXGroup;
 			children = (
-				62785A7420875936006F9869 /* Engine.hpp */,
-				62785A7520875936006F9869 /* IEngine.hpp */,
-				62785A7620875936006F9869 /* IApplication.hpp */,
 				62785A7720875936006F9869 /* Engine.cpp */,
+				62785A7420875936006F9869 /* Engine.hpp */,
+				62785A7620875936006F9869 /* IApplication.hpp */,
+				62785A7520875936006F9869 /* IEngine.hpp */,
 			);
 			path = Engine;
 			sourceTree = "<group>";
@@ -1718,13 +1718,13 @@
 		62785D402087618E006F9869 /* Effects */ = {
 			isa = PBXGroup;
 			children = (
-				62785D412087618E006F9869 /* EffectManager.hpp */,
-				62785D422087618E006F9869 /* PieceDropParticleEffect.cpp */,
-				62785D432087618E006F9869 /* LaserParticleEffect.cpp */,
-				62785D442087618E006F9869 /* ExplosionParticleEffect.cpp */,
-				62785D452087618E006F9869 /* LaserParticleEffect.hpp */,
-				62785D462087618E006F9869 /* ExplosionParticleEffect.hpp */,
 				62785D472087618E006F9869 /* EffectManager.cpp */,
+				62785D412087618E006F9869 /* EffectManager.hpp */,
+				62785D442087618E006F9869 /* ExplosionParticleEffect.cpp */,
+				62785D462087618E006F9869 /* ExplosionParticleEffect.hpp */,
+				62785D432087618E006F9869 /* LaserParticleEffect.cpp */,
+				62785D452087618E006F9869 /* LaserParticleEffect.hpp */,
+				62785D422087618E006F9869 /* PieceDropParticleEffect.cpp */,
 				62785D482087618E006F9869 /* PieceDropParticleEffect.hpp */,
 			);
 			path = Effects;
@@ -1733,29 +1733,29 @@
 		62785D492087618E006F9869 /* Animations */ = {
 			isa = PBXGroup;
 			children = (
-				62785D4A2087618E006F9869 /* SlidingTextAnimation.hpp */,
-				62785D4B2087618E006F9869 /* FlashingBlocksAnimation.cpp */,
-				62785D4C2087618E006F9869 /* FallingPieceAnimation.cpp */,
-				62785D4D2087618E006F9869 /* ClearLastBlocksAnimation.cpp */,
 				62785D4E2087618E006F9869 /* BlastRadiusAnimation.cpp */,
-				62785D4F2087618E006F9869 /* PreviewPiecesAnimation.cpp */,
-				62785D502087618E006F9869 /* WeldsAnimation.cpp */,
-				62785D512087618E006F9869 /* CollapsingFieldAnimation.cpp */,
-				62785D522087618E006F9869 /* PreviewPieceGroupAnimation.cpp */,
-				62785D532087618E006F9869 /* BombsAnimation.cpp */,
-				62785D542087618E006F9869 /* BlueprintSlotsFilledAnimation.cpp */,
-				62785D552087618E006F9869 /* FlyingBlocksAnimation.cpp */,
-				62785D562087618E006F9869 /* CollapsingFieldAnimation.hpp */,
-				62785D572087618E006F9869 /* PreviewPieceGroupAnimation.hpp */,
-				62785D582087618E006F9869 /* BombsAnimation.hpp */,
-				62785D592087618E006F9869 /* BlueprintSlotsFilledAnimation.hpp */,
-				62785D5A2087618E006F9869 /* FlyingBlocksAnimation.hpp */,
-				62785D5B2087618E006F9869 /* SlidingTextAnimation.cpp */,
-				62785D5C2087618E006F9869 /* FlashingBlocksAnimation.hpp */,
-				62785D5D2087618E006F9869 /* FallingPieceAnimation.hpp */,
-				62785D5E2087618E006F9869 /* ClearLastBlocksAnimation.hpp */,
 				62785D5F2087618E006F9869 /* BlastRadiusAnimation.hpp */,
+				62785D542087618E006F9869 /* BlueprintSlotsFilledAnimation.cpp */,
+				62785D592087618E006F9869 /* BlueprintSlotsFilledAnimation.hpp */,
+				62785D532087618E006F9869 /* BombsAnimation.cpp */,
+				62785D582087618E006F9869 /* BombsAnimation.hpp */,
+				62785D4D2087618E006F9869 /* ClearLastBlocksAnimation.cpp */,
+				62785D5E2087618E006F9869 /* ClearLastBlocksAnimation.hpp */,
+				62785D512087618E006F9869 /* CollapsingFieldAnimation.cpp */,
+				62785D562087618E006F9869 /* CollapsingFieldAnimation.hpp */,
+				62785D4C2087618E006F9869 /* FallingPieceAnimation.cpp */,
+				62785D5D2087618E006F9869 /* FallingPieceAnimation.hpp */,
+				62785D4B2087618E006F9869 /* FlashingBlocksAnimation.cpp */,
+				62785D5C2087618E006F9869 /* FlashingBlocksAnimation.hpp */,
+				62785D552087618E006F9869 /* FlyingBlocksAnimation.cpp */,
+				62785D5A2087618E006F9869 /* FlyingBlocksAnimation.hpp */,
+				62785D522087618E006F9869 /* PreviewPieceGroupAnimation.cpp */,
+				62785D572087618E006F9869 /* PreviewPieceGroupAnimation.hpp */,
+				62785D4F2087618E006F9869 /* PreviewPiecesAnimation.cpp */,
 				62785D602087618E006F9869 /* PreviewPiecesAnimation.hpp */,
+				62785D5B2087618E006F9869 /* SlidingTextAnimation.cpp */,
+				62785D4A2087618E006F9869 /* SlidingTextAnimation.hpp */,
+				62785D502087618E006F9869 /* WeldsAnimation.cpp */,
 				62785D612087618E006F9869 /* WeldsAnimation.hpp */,
 			);
 			path = Animations;

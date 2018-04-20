@@ -24,6 +24,7 @@ namespace RowBlast {
     class ScrollController;
     class EffectManager;
     class FlyingBlocksAnimation;
+    class CollapsingFieldAnimation;
     class PieceDropParticleEffect;
     class GameHudController;
     class IInputHandler;
@@ -51,6 +52,7 @@ namespace RowBlast {
                   const GameScene& gameScene,
                   EffectManager& effectManger,
                   FlyingBlocksAnimation& flyingBlocksAnimation,
+                  CollapsingFieldAnimation& collapsingFieldAnimation,
                   PieceDropParticleEffect& pieceDropParticleEffect,
                   BlastRadiusAnimation& blastRadiusAnimation,
                   GameHudController& gameHudController,
@@ -58,7 +60,7 @@ namespace RowBlast {
         
         void DropFallingPiece() override;
         void StartFallingPieceAnimation(const Movement& lastMovement) override;
-        void OnFallingPieceAnimationFinished(bool startParticleEffect) override;
+        void OnFallingPieceAnimationFinished(bool finalMovementWasADrop) override;
         void RotatePiece(const Pht::TouchEvent& touchEvent) override;
         void SwitchPiece() override;
         void SetFallingPieceXPosWithCollisionDetection(float fallingPieceNewX) override;
@@ -140,7 +142,7 @@ namespace RowBlast {
         void UpdateFieldExplosionsStates();
         void HandleControlTypeChange();
         void UpdateFallingPieceYpos();
-        void LandFallingPiece(bool startParticleEffect);
+        void LandFallingPiece(bool finalMovementWasADrop);
         void DetonateDroppedBomb();
         void DetonateImpactedLevelBombs(const Field::ImpactedBombs& impactedLevelBombs);
         void GoToFieldExplosionsState();
@@ -183,6 +185,7 @@ namespace RowBlast {
         Field& mField;
         const ScrollController& mScrollController;
         FlyingBlocksAnimation& mFlyingBlocksAnimation;
+        CollapsingFieldAnimation& mCollapsingFieldAnimation;
         PieceDropParticleEffect& mPieceDropParticleEffect;
         BlastRadiusAnimation& mBlastRadiusAnimation;
         GameHudController& mGameHudController;
