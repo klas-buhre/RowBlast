@@ -1,6 +1,9 @@
 #ifndef GameController_hpp
 #define GameController_hpp
 
+// Engine includes.
+#include "CameraShake.hpp"
+
 // Game includes.
 #include "Field.hpp"
 #include "GameLogic.hpp"
@@ -127,6 +130,7 @@ namespace RowBlast {
         FlashingBlocksAnimation mFlashingBlocksAnimation;
         WeldsAnimation mWeldsAnimation;
         ScrollController mScrollController;
+        Pht::CameraShake mCameraShake;
         GameScene mScene;
         EffectManager mEffectManager;
         PieceDropParticleEffect mPieceDropParticleEffect;

@@ -7,8 +7,7 @@ Backlog:
     
   -Gameplay:
    X-Prevent the crossed tilted welds from happening seven and mirrored seven (in both
-     GestureInputHandler and ClickInputHandler) so that those pieces can be pulled down. Or, allow
-     it and solve it when pulling down loose pieces?
+     GestureInputHandler and ClickInputHandler) so that those pieces can be pulled down.
    X-Fix the piece pull down bug on level 31. See screenshot.
    X-Improve the AI move evaluation.
    X-When playing a level with clear objective the game could scroll up if there is no room to spawn
@@ -38,7 +37,6 @@ Backlog:
     -Maybe the merging of two triangles into a cube could be done by letting the two triangles fade
      into the cube. Render the triangles and the cube at the same time, vary the opacity for the
      triangels from 1 to 0 and from 0 to 1 for the cube.
-    -Maybe add a time duration for each rotation in the FallingPieceAnimation.
     -Camera shake when clearing 3 or more rows or using a bomb.
     -Try adding welds to the level blocks.
     -One or two stars in level cleared dialog could be placed more in the middle.
@@ -53,8 +51,6 @@ Backlog:
     -Could have a rotating particle/flare in the sliding text animation.
     -Could have particles in the FlyingBlocksAnimation in the points from which the blocks gets
      tossed.
-    -The blocks in FlyingBlocksAnimation should bounce off each other instead of passing right 
-     through.
     -MenuButtons can start a shrink animation when pressed down.
   -Tutorial:
     -Make the tutorial as short as possible. Don't give all the rules of the game at once. Instead,
@@ -71,6 +67,10 @@ Backlog:
     -Credit the icon creator: <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
 
 Ongoing tasks:
+    -Camera shake.
+        -Try pre-computed perlin noise.
+        -Tune the shake.
+        -Camera shake when clearing 3 or more rows or using a bomb.
 
 
 Ideas:

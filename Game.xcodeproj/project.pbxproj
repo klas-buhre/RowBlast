@@ -262,6 +262,7 @@
 		62785E1B2087618E006F9869 /* RowBlastApplication.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62785DAD2087618E006F9869 /* RowBlastApplication.cpp */; };
 		628EC29A207D24090071F368 /* level30.json in Resources */ = {isa = PBXBuildFile; fileRef = 628EC299207D24080071F368 /* level30.json */; };
 		628EC2AC2080C4880071F368 /* level31.json in Resources */ = {isa = PBXBuildFile; fileRef = 628EC2AB2080C4880071F368 /* level31.json */; };
+		6299DD7A208B4178001F74E2 /* CameraShake.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6299DD78208B4178001F74E2 /* CameraShake.cpp */; };
 		62A8AAF71FE2DEA1000EB01C /* cloud_B_envmap.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62A8AAF61FE2DEA0000EB01C /* cloud_B_envmap.jpg */; };
 		62A8AAF91FE2E442000EB01C /* cloud_C_envmap.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62A8AAF81FE2E441000EB01C /* cloud_C_envmap.jpg */; };
 		62E222241FE9704900AE098B /* cloud_A_512.png in Resources */ = {isa = PBXBuildFile; fileRef = 62E222231FE9704800AE098B /* cloud_A_512.png */; };
@@ -836,6 +837,8 @@
 		62785DAD2087618E006F9869 /* RowBlastApplication.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RowBlastApplication.cpp; sourceTree = "<group>"; };
 		628EC299207D24080071F368 /* level30.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level30.json; sourceTree = "<group>"; };
 		628EC2AB2080C4880071F368 /* level31.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level31.json; sourceTree = "<group>"; };
+		6299DD78208B4178001F74E2 /* CameraShake.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CameraShake.cpp; sourceTree = "<group>"; };
+		6299DD79208B4178001F74E2 /* CameraShake.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CameraShake.hpp; sourceTree = "<group>"; };
 		62A8AAF61FE2DEA0000EB01C /* cloud_B_envmap.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = cloud_B_envmap.jpg; sourceTree = "<group>"; };
 		62A8AAF81FE2E441000EB01C /* cloud_C_envmap.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = cloud_C_envmap.jpg; sourceTree = "<group>"; };
 		62E222231FE9704800AE098B /* cloud_A_512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cloud_A_512.png; sourceTree = "<group>"; };
@@ -1258,6 +1261,8 @@
 		62785A6920875936006F9869 /* Effects */ = {
 			isa = PBXGroup;
 			children = (
+				6299DD78208B4178001F74E2 /* CameraShake.cpp */,
+				6299DD79208B4178001F74E2 /* CameraShake.hpp */,
 				62785A6B20875936006F9869 /* FadeEffect.cpp */,
 				62785A7120875936006F9869 /* FadeEffect.hpp */,
 				62785A7020875936006F9869 /* IParticleSystem.hpp */,
@@ -2117,6 +2122,7 @@
 				62785E002087618E006F9869 /* SlidingMenuAnimation.cpp in Sources */,
 				62785DD22087618E006F9869 /* MirroredSevenPiece.cpp in Sources */,
 				62785B0220875937006F9869 /* TriangleMesh.cpp in Sources */,
+				6299DD7A208B4178001F74E2 /* CameraShake.cpp in Sources */,
 				62785E0F2087618E006F9869 /* UserData.cpp in Sources */,
 				62785DD42087618E006F9869 /* DPiece.cpp in Sources */,
 				62785E122087618E006F9869 /* Chapter1.cpp in Sources */,

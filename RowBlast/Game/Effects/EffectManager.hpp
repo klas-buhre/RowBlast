@@ -13,6 +13,7 @@
 
 namespace Pht {
     class IEngine;
+    class CameraShake;
 }
 
 namespace RowBlast {
@@ -26,7 +27,7 @@ namespace RowBlast {
             Inactive
         };
 
-        EffectManager(Pht::IEngine& engine, GameScene& scene);
+        EffectManager(Pht::IEngine& engine, GameScene& scene, Pht::CameraShake& cameraShake);
 
         void Init();
         void StartExplosion(const Pht::Vec2& position);
@@ -40,6 +41,7 @@ namespace RowBlast {
         }
 
     private:
+        Pht::CameraShake& mCameraShake;
         State mState {State::Inactive};
         ExplosionParticleEffect mExplosionEffect;
         ExplosionParticleEffect mBigExplosionEffect;

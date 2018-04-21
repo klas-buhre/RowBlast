@@ -8,6 +8,7 @@
 #include "Fnv1Hash.hpp"
 #include "LightComponent.hpp"
 #include "CameraComponent.hpp"
+#include "CameraShake.hpp"
 
 // Game includes.
 #include "Level.hpp"
@@ -101,11 +102,13 @@ namespace {
 GameScene::GameScene(Pht::IEngine& engine,
                      const ScrollController& scrollController,
                      const CommonResources& commonResources,
-                     GameHudController& gameHudController) :
+                     GameHudController& gameHudController,
+                     const Pht::CameraShake& cameraShake) :
     mEngine {engine},
     mScrollController {scrollController},
     mCommonResources {commonResources},
     mGameHudController {gameHudController},
+    mCameraShake {cameraShake},
     mFieldPosition {0.0f, 0.0f, 0.0f} {}
 
 void GameScene::Init(const Level& level,
@@ -384,7 +387,7 @@ void GameScene::Update() {
     mHud->Update();
     UpdateLightAnimation();
     
-    if (mScrollController.IsScrolling()) {
+    if (mScrollController.IsScrolling() || mCameraShake.IsShaking()) {
         UpdateCameraPositionAndScissorBox();
     }
 }
@@ -397,10 +400,13 @@ void GameScene::UpdateCameraPositionAndScissorBox() {
         renderer.GetOrthographicFrustumSize().y / 2.0f - mCellSize * lowerClipAreaHeightInCells
     };
 
+    auto& cameraShakeTranslation {mCameraShake.GetCameraTranslation()};
     Pht::Vec3 cameraPosition {0.0f, cameraYPosition, 20.5f};
+    cameraPosition += cameraShakeTranslation;
     mCamera->GetSceneObject().GetTransform().SetPosition(cameraPosition);
     
     Pht::Vec3 target {0.0f, cameraYPosition, 0.0f};
+    target += cameraShakeTranslation;
     Pht::Vec3 up {0.0f, 1.0f, 0.0f};
     mCamera->SetTarget(target, up);
     

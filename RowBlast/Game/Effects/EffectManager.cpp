@@ -1,13 +1,21 @@
 #include "EffectManager.hpp"
 
+// Engine includes.
+#include "CameraShake.hpp"
+
 using namespace RowBlast;
 
 namespace {
     constexpr auto numLevelBombEffects {30};
     constexpr auto numLaserEffects {8};
+    constexpr auto cameraShakeTime {0.25f};
+    constexpr auto cameraShakeMagnitude {0.25f};
 }
 
-EffectManager::EffectManager(Pht::IEngine& engine, GameScene& scene) :
+EffectManager::EffectManager(Pht::IEngine& engine,
+                             GameScene& scene,
+                             Pht::CameraShake& cameraShake) :
+    mCameraShake {cameraShake},
     mExplosionEffect {engine, scene, ExplosionParticleEffect::Kind::Bomb},
     mBigExplosionEffect {engine, scene, ExplosionParticleEffect::Kind::BigBomb} {
     
@@ -38,16 +46,20 @@ void EffectManager::Init() {
     for (auto& levelBombExplosion: mLevelBombExplosionEffects) {
         levelBombExplosion->Init();
     }
+
+    mCameraShake.Init();
 }
 
 void EffectManager::StartExplosion(const Pht::Vec2& position) {
     mState = State::OngoingEffects;
     mExplosionEffect.StartExplosion(position);
+    mCameraShake.StartShake(cameraShakeTime, cameraShakeMagnitude);
 }
 
 void EffectManager::StartBigExplosion(const Pht::Vec2& position) {
     mState = State::OngoingEffects;
     mBigExplosionEffect.StartExplosion(position);
+    mCameraShake.StartShake(cameraShakeTime, cameraShakeMagnitude);
 }
 
 void EffectManager::StartLaser(const Pht::Vec2& position)  {
@@ -59,6 +71,8 @@ void EffectManager::StartLaser(const Pht::Vec2& position)  {
             break;
         }
     }
+    
+    mCameraShake.StartShake(cameraShakeTime, cameraShakeMagnitude);
 }
 
 void EffectManager::StartLevelBombExplosion(const Pht::Vec2& position) {
@@ -70,6 +84,8 @@ void EffectManager::StartLevelBombExplosion(const Pht::Vec2& position) {
             break;
         }
     }
+    
+    mCameraShake.StartShake(cameraShakeTime, cameraShakeMagnitude);
 }
 
 void EffectManager::Update(float dt) {
@@ -119,4 +135,6 @@ void EffectManager::Update(float dt) {
             mState = State::Inactive;
         }
     }
+    
+    mCameraShake.Update(dt);
 }

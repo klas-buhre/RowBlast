@@ -18,6 +18,7 @@ namespace Pht {
     class Scene;
     class CameraComponent;
     class ScissorBox;
+    class CameraShake;
 }
 
 namespace RowBlast {
@@ -34,7 +35,8 @@ namespace RowBlast {
         GameScene(Pht::IEngine& engine,
                   const ScrollController& scrollController,
                   const CommonResources& commonResources,
-                  GameHudController& gameHudController);
+                  GameHudController& gameHudController,
+                  const Pht::CameraShake& cameraShake);
         
         void Init(const Level& level,
                   const LevelResources& levelResources,
@@ -172,6 +174,7 @@ namespace RowBlast {
         const ScrollController& mScrollController;
         const CommonResources& mCommonResources;
         GameHudController& mGameHudController;
+        const Pht::CameraShake& mCameraShake;
         Pht::Scene* mScene {nullptr};
         Pht::CameraComponent* mCamera {nullptr};
         Pht::LightComponent* mLight {nullptr};

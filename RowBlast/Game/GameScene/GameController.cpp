@@ -41,13 +41,15 @@ GameController::GameController(Pht::IEngine& engine,
     mFlashingBlocksAnimation {mField},
     mWeldsAnimation {mField},
     mScrollController {engine, mField},
+    mCameraShake {},
     mScene {
         engine,
         mScrollController,
         commonResources,
-        mGameViewControllers.GetGameHudController()
+        mGameViewControllers.GetGameHudController(),
+        mCameraShake
     },
-    mEffectManager {engine, mScene},
+    mEffectManager {engine, mScene, mCameraShake},
     mPieceDropParticleEffect {engine, mScene},
     mBlastRadiusAnimation {engine, mScene},
     mSlidingTextAnimation {engine, mScene},
