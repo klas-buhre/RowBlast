@@ -41,7 +41,7 @@ GameController::GameController(Pht::IEngine& engine,
     mFlashingBlocksAnimation {mField},
     mWeldsAnimation {mField},
     mScrollController {engine, mField},
-    mCameraShake {},
+    mCameraShake {Pht::CameraShake::ShakeKind::PerlinNoise},
     mScene {
         engine,
         mScrollController,
@@ -96,6 +96,7 @@ void GameController::StartLevel(int levelIndex) {
     mPieceDropParticleEffect.Init();
     mBlastRadiusAnimation.Init();
     mEffectManager.Init();
+    mCameraShake.Init();
     mPreviewPiecesAnimation.Init();
     mFlyingBlocksAnimation.Init();
     mFallingPieceAnimation.Init();
@@ -160,6 +161,7 @@ GameController::Command GameController::UpdateGame() {
     mPieceDropParticleEffect.Update(dt);
     mBlastRadiusAnimation.Update(dt);
     mEffectManager.Update(dt);
+    mCameraShake.Update(dt);
     mFlyingBlocksAnimation.Update(dt);
     mScene.Update();
     mPreviewPiecesAnimation.Update(dt);

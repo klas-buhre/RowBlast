@@ -263,6 +263,7 @@
 		628EC29A207D24090071F368 /* level30.json in Resources */ = {isa = PBXBuildFile; fileRef = 628EC299207D24080071F368 /* level30.json */; };
 		628EC2AC2080C4880071F368 /* level31.json in Resources */ = {isa = PBXBuildFile; fileRef = 628EC2AB2080C4880071F368 /* level31.json */; };
 		6299DD7A208B4178001F74E2 /* CameraShake.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6299DD78208B4178001F74E2 /* CameraShake.cpp */; };
+		6299DD80208BA21C001F74E2 /* FastNoise.cc in Sources */ = {isa = PBXBuildFile; fileRef = 6299DD7F208BA21C001F74E2 /* FastNoise.cc */; };
 		62A8AAF71FE2DEA1000EB01C /* cloud_B_envmap.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62A8AAF61FE2DEA0000EB01C /* cloud_B_envmap.jpg */; };
 		62A8AAF91FE2E442000EB01C /* cloud_C_envmap.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62A8AAF81FE2E441000EB01C /* cloud_C_envmap.jpg */; };
 		62E222241FE9704900AE098B /* cloud_A_512.png in Resources */ = {isa = PBXBuildFile; fileRef = 62E222231FE9704800AE098B /* cloud_A_512.png */; };
@@ -839,6 +840,8 @@
 		628EC2AB2080C4880071F368 /* level31.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level31.json; sourceTree = "<group>"; };
 		6299DD78208B4178001F74E2 /* CameraShake.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CameraShake.cpp; sourceTree = "<group>"; };
 		6299DD79208B4178001F74E2 /* CameraShake.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CameraShake.hpp; sourceTree = "<group>"; };
+		6299DD7E208BA21C001F74E2 /* FastNoise.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FastNoise.h; sourceTree = "<group>"; };
+		6299DD7F208BA21C001F74E2 /* FastNoise.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FastNoise.cc; sourceTree = "<group>"; };
 		62A8AAF61FE2DEA0000EB01C /* cloud_B_envmap.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = cloud_B_envmap.jpg; sourceTree = "<group>"; };
 		62A8AAF81FE2E441000EB01C /* cloud_C_envmap.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = cloud_C_envmap.jpg; sourceTree = "<group>"; };
 		62E222231FE9704800AE098B /* cloud_A_512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cloud_A_512.png; sourceTree = "<group>"; };
@@ -1119,30 +1122,30 @@
 		62785A0B20875936006F9869 /* Shaders */ = {
 			isa = PBXGroup;
 			children = (
-				62785A0C20875936006F9869 /* PixelLighting.vert */,
-				62785A0D20875936006F9869 /* Textured.frag */,
-				62785A0E20875936006F9869 /* TexturedEmissiveLighting.frag */,
-				62785A0F20875936006F9869 /* VertexLighting.vert */,
-				62785A1020875936006F9869 /* TexturedLighting.vert */,
-				62785A1120875936006F9869 /* PointParticle.vert */,
-				62785A1220875936006F9869 /* Particle.frag */,
-				62785A1320875936006F9869 /* VertexColor.frag */,
 				62785A1420875936006F9869 /* EnvMap.frag */,
-				62785A1520875936006F9869 /* Text.vert */,
-				62785A1620875936006F9869 /* ParticleNoAlphaTexture.frag */,
-				62785A1720875936006F9869 /* ParticleTextureColor.frag */,
-				62785A1820875936006F9869 /* Particle.vert */,
-				62785A1920875936006F9869 /* PointParticle.frag */,
-				62785A1A20875936006F9869 /* TexturedLighting.frag */,
-				62785A1B20875936006F9869 /* VertexLighting.frag */,
-				62785A1C20875936006F9869 /* PixelLighting.frag */,
-				62785A1D20875936006F9869 /* Textured.vert */,
-				62785A1E20875936006F9869 /* TexturedEmissiveLighting.vert */,
-				62785A1F20875936006F9869 /* ParticleTextureColor.vert */,
-				62785A2020875936006F9869 /* Text.frag */,
-				62785A2120875936006F9869 /* ParticleNoAlphaTexture.vert */,
-				62785A2220875936006F9869 /* VertexColor.vert */,
 				62785A2320875936006F9869 /* EnvMap.vert */,
+				62785A1220875936006F9869 /* Particle.frag */,
+				62785A1820875936006F9869 /* Particle.vert */,
+				62785A1620875936006F9869 /* ParticleNoAlphaTexture.frag */,
+				62785A2120875936006F9869 /* ParticleNoAlphaTexture.vert */,
+				62785A1720875936006F9869 /* ParticleTextureColor.frag */,
+				62785A1F20875936006F9869 /* ParticleTextureColor.vert */,
+				62785A1C20875936006F9869 /* PixelLighting.frag */,
+				62785A0C20875936006F9869 /* PixelLighting.vert */,
+				62785A1920875936006F9869 /* PointParticle.frag */,
+				62785A1120875936006F9869 /* PointParticle.vert */,
+				62785A2020875936006F9869 /* Text.frag */,
+				62785A1520875936006F9869 /* Text.vert */,
+				62785A0D20875936006F9869 /* Textured.frag */,
+				62785A1D20875936006F9869 /* Textured.vert */,
+				62785A0E20875936006F9869 /* TexturedEmissiveLighting.frag */,
+				62785A1E20875936006F9869 /* TexturedEmissiveLighting.vert */,
+				62785A1A20875936006F9869 /* TexturedLighting.frag */,
+				62785A1020875936006F9869 /* TexturedLighting.vert */,
+				62785A1320875936006F9869 /* VertexColor.frag */,
+				62785A2220875936006F9869 /* VertexColor.vert */,
+				62785A1B20875936006F9869 /* VertexLighting.frag */,
+				62785A0F20875936006F9869 /* VertexLighting.vert */,
 			);
 			path = Shaders;
 			sourceTree = "<group>";
@@ -1236,23 +1239,23 @@
 		62785A5620875936006F9869 /* Scene */ = {
 			isa = PBXGroup;
 			children = (
-				62785A5720875936006F9869 /* Scene.cpp */,
-				62785A5820875936006F9869 /* TextComponent.cpp */,
-				62785A5920875936006F9869 /* ObjMeshLoader.hpp */,
-				62785A5A20875936006F9869 /* ISceneManager.hpp */,
-				62785A5B20875936006F9869 /* LightComponent.hpp */,
-				62785A5C20875936006F9869 /* SceneResources.cpp */,
-				62785A5D20875936006F9869 /* CameraComponent.hpp */,
-				62785A5E20875936006F9869 /* SceneObject.hpp */,
-				62785A5F20875936006F9869 /* SceneManager.hpp */,
-				62785A6020875936006F9869 /* ObjMeshLoader.cpp */,
-				62785A6120875936006F9869 /* LightComponent.cpp */,
-				62785A6220875936006F9869 /* SceneResources.hpp */,
 				62785A6320875936006F9869 /* CameraComponent.cpp */,
-				62785A6420875936006F9869 /* SceneObject.cpp */,
-				62785A6520875936006F9869 /* SceneManager.cpp */,
-				62785A6620875936006F9869 /* Scene.hpp */,
+				62785A5D20875936006F9869 /* CameraComponent.hpp */,
+				62785A5A20875936006F9869 /* ISceneManager.hpp */,
 				62785A6720875936006F9869 /* ISceneObjectComponent.hpp */,
+				62785A6120875936006F9869 /* LightComponent.cpp */,
+				62785A5B20875936006F9869 /* LightComponent.hpp */,
+				62785A6020875936006F9869 /* ObjMeshLoader.cpp */,
+				62785A5920875936006F9869 /* ObjMeshLoader.hpp */,
+				62785A5720875936006F9869 /* Scene.cpp */,
+				62785A6620875936006F9869 /* Scene.hpp */,
+				62785A6520875936006F9869 /* SceneManager.cpp */,
+				62785A5F20875936006F9869 /* SceneManager.hpp */,
+				62785A6420875936006F9869 /* SceneObject.cpp */,
+				62785A5E20875936006F9869 /* SceneObject.hpp */,
+				62785A5C20875936006F9869 /* SceneResources.cpp */,
+				62785A6220875936006F9869 /* SceneResources.hpp */,
+				62785A5820875936006F9869 /* TextComponent.cpp */,
 				62785A6820875936006F9869 /* TextComponent.hpp */,
 			);
 			path = Scene;
@@ -1290,6 +1293,7 @@
 		62785A7820875936006F9869 /* ThirdParty */ = {
 			isa = PBXGroup;
 			children = (
+				6299DD7D208BA21C001F74E2 /* FastNoise */,
 				62785A7920875936006F9869 /* FreeType */,
 				62785ADB20875936006F9869 /* RapidJson */,
 			);
@@ -1916,6 +1920,15 @@
 			path = Application;
 			sourceTree = "<group>";
 		};
+		6299DD7D208BA21C001F74E2 /* FastNoise */ = {
+			isa = PBXGroup;
+			children = (
+				6299DD7F208BA21C001F74E2 /* FastNoise.cc */,
+				6299DD7E208BA21C001F74E2 /* FastNoise.h */,
+			);
+			path = FastNoise;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -2182,6 +2195,7 @@
 				62785B1220875937006F9869 /* TextRenderer.cpp in Sources */,
 				62785DE82087618E006F9869 /* Ai.cpp in Sources */,
 				62785DAF2087618E006F9869 /* TitleController.cpp in Sources */,
+				6299DD80208BA21C001F74E2 /* FastNoise.cc in Sources */,
 				62785DCB2087618E006F9869 /* ClickInputHandler.cpp in Sources */,
 				62785E082087618E006F9869 /* Materials.cpp in Sources */,
 				62785DB12087618E006F9869 /* GameHudView.cpp in Sources */,

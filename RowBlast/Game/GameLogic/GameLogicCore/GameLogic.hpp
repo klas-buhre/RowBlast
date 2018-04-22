@@ -186,6 +186,7 @@ namespace RowBlast {
         const ScrollController& mScrollController;
         FlyingBlocksAnimation& mFlyingBlocksAnimation;
         CollapsingFieldAnimation& mCollapsingFieldAnimation;
+        EffectManager& mEffectManager;
         PieceDropParticleEffect& mPieceDropParticleEffect;
         BlastRadiusAnimation& mBlastRadiusAnimation;
         GameHudController& mGameHudController;

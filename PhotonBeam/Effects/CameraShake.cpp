@@ -1,8 +1,32 @@
 #include "CameraShake.hpp"
 
+#include <cstdlib>
+#include <array>
+
 #include "MathUtils.hpp"
 
 using namespace Pht;
+
+namespace {
+    constexpr auto speed {19.0f};
+
+    const std::array<float, 7> samplePointStart {
+        90.0f,
+        57.0f,
+        63.0f,
+        22.0f,
+        186.0f,
+        20.0f,
+        194.0f
+    };
+}
+
+CameraShake::CameraShake(ShakeKind shakeKind) :
+    mShakeKind {shakeKind},
+    mFastNoise {1337} {
+
+    mFastNoise.SetFrequency(1.0f);
+}
 
 void CameraShake::Init() {
     mState = State::Inactive;
@@ -16,8 +40,21 @@ void CameraShake::Update(float dt) {
     
     auto magnitude {mMagnitude * (mShakeTime - mElapsedTime) / mShakeTime};
     
-    mCameraTranslation.x = magnitude * (NormalizedRand() - 0.5f);
-    mCameraTranslation.y = magnitude * (NormalizedRand() - 0.5f);
+    switch (mShakeKind) {
+        case ShakeKind::Random:
+            mCameraTranslation.x = magnitude * (NormalizedRand() - 0.5f);
+            mCameraTranslation.y = magnitude * (NormalizedRand() - 0.5f);
+            break;
+        case ShakeKind::PerlinNoise: {
+            mSamplePoint += speed * dt;
+            auto noiseX {mFastNoise.GetPerlin(mSamplePoint, 0.0f)};
+            auto noiseY {mFastNoise.GetPerlin(0.0f, mSamplePoint)};
+            mCameraTranslation.x = magnitude * noiseX;
+            mCameraTranslation.y = magnitude * noiseY;
+            break;
+        }
+    }
+    
     mCameraTranslation.z = 0.0f;
     
     mElapsedTime += dt;
@@ -29,8 +66,13 @@ void CameraShake::Update(float dt) {
 }
 
 void CameraShake::StartShake(float shakeTime, float magnitude) {
-    mState = State::Shaking;
     mElapsedTime = 0.0f;
     mShakeTime = shakeTime;
     mMagnitude = magnitude;
+    
+    if (mShakeKind == ShakeKind::PerlinNoise && mState != State::Shaking) {
+        mSamplePoint = samplePointStart[std::rand() % samplePointStart.size()];
+    }
+    
+    mState = State::Shaking;
 }

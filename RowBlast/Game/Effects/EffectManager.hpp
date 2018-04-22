@@ -34,6 +34,7 @@ namespace RowBlast {
         void StartBigExplosion(const Pht::Vec2& position);
         void StartLaser(const Pht::Vec2& position);
         void StartLevelBombExplosion(const Pht::Vec2& position);
+        void StartSmallCameraShake();
         void Update(float dt);
 
         State GetState() const {

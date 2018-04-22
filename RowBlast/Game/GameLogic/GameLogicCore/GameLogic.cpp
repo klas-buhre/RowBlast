@@ -15,6 +15,7 @@
 #include "ScrollController.hpp"
 #include "FlyingBlocksAnimation.hpp"
 #include "CollapsingFieldAnimation.hpp"
+#include "EffectManager.hpp"
 #include "PieceDropParticleEffect.hpp"
 #include "BlastRadiusAnimation.hpp"
 #include "GameHudController.hpp"
@@ -23,13 +24,14 @@
 using namespace RowBlast;
 
 namespace {
-    const auto maxRotateAdjustment {2};
+    constexpr auto maxRotateAdjustment {2};
     const Pht::IVec2 bombDetonationAreaSize {5, 5};
-    const float halfColumn {0.5f};
-    const auto landingNoMovementDurationFalling {1.0f};
-    const auto landingMovementDurationFalling {4.0f};
-    const auto cascadeWaitTime {0.25f};
-    
+    constexpr float halfColumn {0.5f};
+    constexpr auto landingNoMovementDurationFalling {1.0f};
+    constexpr auto landingMovementDurationFalling {4.0f};
+    constexpr auto cascadeWaitTime {0.25f};
+    constexpr auto cameraShakeNumRowsLimit {5};
+
     PieceBlocks CreatePieceBlocks(const FallingPiece& fallingPiece) {
         auto& pieceType {fallingPiece.GetPieceType()};
     
@@ -42,6 +44,27 @@ namespace {
     
     bool IsBomb(const Piece& pieceType) {
         return pieceType.IsBomb() || pieceType.IsRowBomb();
+    }
+    
+    int CalcNumRemovedRows(const Field::RemovedSubCells& removedSubCells) {
+        Pht::Optional<int> previousRowIndex;
+        auto numRemovedRows {0};
+        
+        for (auto& subCell: removedSubCells) {
+            auto rowIndex {subCell.mGridPosition.y};
+            
+            if (previousRowIndex.HasValue()) {
+                if (previousRowIndex.GetValue() != rowIndex) {
+                    previousRowIndex = rowIndex;
+                    ++numRemovedRows;
+                }
+            } else {
+                previousRowIndex = rowIndex;
+                numRemovedRows = 1;
+            }
+        }
+        
+        return numRemovedRows;
     }
 }
 
@@ -61,6 +84,7 @@ GameLogic::GameLogic(Pht::IEngine& engine,
     mScrollController {scrollController},
     mFlyingBlocksAnimation {flyingBlocksAnimation},
     mCollapsingFieldAnimation {collapsingFieldAnimation},
+    mEffectManager {effectManager},
     mPieceDropParticleEffect {pieceDropParticleEffect},
     mBlastRadiusAnimation {blastRadiusAnimation},
     mGameHudController {gameHudController},
@@ -453,6 +477,10 @@ void GameLogic::LandFallingPiece(bool finalMovementWasADrop) {
             auto removedSubCells {mField.ClearFilledRows()};
 
             if (!removedSubCells.IsEmpty()) {
+                if (CalcNumRemovedRows(removedSubCells) >= cameraShakeNumRowsLimit) {
+                    mEffectManager.StartSmallCameraShake();
+                }
+                
                 mFlyingBlocksAnimation.AddBlockRows(removedSubCells);
                 mCollapsingFieldAnimation.GoToInactiveState();
                 mCollapsingFieldAnimation.ResetBlockAnimations();
