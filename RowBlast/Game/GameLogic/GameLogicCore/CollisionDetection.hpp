@@ -30,6 +30,10 @@ namespace RowBlast {
                                        const SubCell& piece,
                                        const Pht::IVec2& scanDirection,
                                        bool isScanStart);
+        bool IsIllegalTiltedWeldPosition(const Field& field,
+                                         const Pht::IVec2& piecePosition,
+                                         Rotation pieceRotation,
+                                         const Piece& pieceType);
     }
 }
 

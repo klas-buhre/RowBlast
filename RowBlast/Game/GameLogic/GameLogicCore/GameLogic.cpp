@@ -611,7 +611,12 @@ void GameLogic::RotatePiece(const Pht::TouchEvent& touchEvent) {
         
         RotatateAndAdjustPosition(newRotation, pieceBlocks, position, collisionDirection);
     } else {
-        mFallingPiece->SetRotation(newRotation);
+        if (!CollisionDetection::IsIllegalTiltedWeldPosition(mField,
+                                                             position,
+                                                             newRotation,
+                                                             pieceType)) {
+            mFallingPiece->SetRotation(newRotation);
+        }
     }
 
     mGhostPieceRow = mField.DetectCollisionDown(CreatePieceBlocks(*mFallingPiece),
@@ -642,7 +647,11 @@ void GameLogic::RotatateAndAdjustPosition(Rotation newRotation,
     switch (collisionDirection) {
         case Direction::Right: {
             auto freeXPos {mField.DetectFreeSpaceLeft(pieceBlocks, position)};
-            if (position.x - freeXPos <= maxRotateAdjustment) {
+            if (position.x - freeXPos <= maxRotateAdjustment &&
+                !CollisionDetection::IsIllegalTiltedWeldPosition(mField,
+                                                                 Pht::IVec2{freeXPos, position.y},
+                                                                 newRotation,
+                                                                 mFallingPiece->GetPieceType())) {
                 mFallingPiece->SetX(freeXPos + halfColumn);
                 mFallingPiece->SetRotation(newRotation);
             }
@@ -650,7 +659,11 @@ void GameLogic::RotatateAndAdjustPosition(Rotation newRotation,
         }
         case Direction::Left: {
             auto freeXPos {mField.DetectFreeSpaceRight(pieceBlocks, position)};
-            if (freeXPos - position.x <= maxRotateAdjustment) {
+            if (freeXPos - position.x <= maxRotateAdjustment &&
+                !CollisionDetection::IsIllegalTiltedWeldPosition(mField,
+                                                                 Pht::IVec2{freeXPos, position.y},
+                                                                 newRotation,
+                                                                 mFallingPiece->GetPieceType())) {
                 mFallingPiece->SetX(freeXPos + halfColumn);
                 mFallingPiece->SetRotation(newRotation);
             }
@@ -658,7 +671,11 @@ void GameLogic::RotatateAndAdjustPosition(Rotation newRotation,
         }
         case Direction::Up: {
             auto freeYPos {mField.DetectFreeSpaceDown(pieceBlocks, position)};
-            if (position.y - freeYPos <= maxRotateAdjustment) {
+            if (position.y - freeYPos <= maxRotateAdjustment &&
+                !CollisionDetection::IsIllegalTiltedWeldPosition(mField,
+                                                                 Pht::IVec2{position.x, freeYPos},
+                                                                 newRotation,
+                                                                 mFallingPiece->GetPieceType())) {
                 mFallingPiece->SetY(freeYPos);
                 mFallingPiece->SetRotation(newRotation);
             }
@@ -666,7 +683,11 @@ void GameLogic::RotatateAndAdjustPosition(Rotation newRotation,
         }
         case Direction::Down: {
             auto freeYPos {mField.DetectFreeSpaceUp(pieceBlocks, position)};
-            if (freeYPos - position.y <= maxRotateAdjustment) {
+            if (freeYPos - position.y <= maxRotateAdjustment &&
+                !CollisionDetection::IsIllegalTiltedWeldPosition(mField,
+                                                                 Pht::IVec2{position.x, freeYPos},
+                                                                 newRotation,
+                                                                 mFallingPiece->GetPieceType())) {
                 mFallingPiece->SetY(freeYPos);
                 mFallingPiece->SetRotation(newRotation);
             }

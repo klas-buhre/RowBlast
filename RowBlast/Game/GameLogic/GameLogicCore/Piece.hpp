@@ -29,6 +29,16 @@ namespace RowBlast {
             Pht::IVec2 mRelativePosition;
             Rotation mRotation;
         };
+        
+        struct TiltedWeldCheck {
+            enum class Kind {
+                DownLeftToUpRight,
+                DownRightToUpLeft
+            };
+            
+            Kind mKind;
+            Pht::IVec2 mPosition;
+        };
 
         Piece();
         virtual ~Piece() {}
@@ -41,6 +51,7 @@ namespace RowBlast {
         const Pht::Optional<Pht::IVec2>& GetLeftExtremityCheckPosition(Rotation rotation) const;
         const Dimensions& GetDimensions(Rotation rotation) const;
         const Pht::Optional<DuplicateMoveCheck>& GetDuplicateMoveCheck(Rotation rotation) const;
+        const Pht::Optional<TiltedWeldCheck>& GetTiltedWeldCheck(Rotation rotation) const;
         Pht::Vec2 GetCenterPosition(Rotation rotation) const;
         const Pht::Vec2& GetButtonCenterPosition(Rotation rotation) const;
         const Pht::Vec2& GetButtonSize(Rotation rotation) const;
@@ -108,6 +119,7 @@ namespace RowBlast {
         void CalculateMinMax(int& yMax, int& xMin, int& xMax, const CellGrid& grid) const;
         void AddOverhangCheckPositions(Rotation rotation);
         void AddExtremityCheckPositions(Rotation rotation);
+        void AddTiltedWeldCheck(Rotation rotation);
         void AddDimensions(Rotation rotation);
         void InitClickGrids(const ClickGrid& clickGrid);
         ClickGrid RotateClickGridClockwise90Deg(const ClickGrid& grid, Rotation newRotation);
@@ -130,6 +142,7 @@ namespace RowBlast {
         std::vector<Pht::Optional<Pht::IVec2>> mLeftExtremityCheckPositions;
         std::vector<Dimensions> mDimensions;
         std::vector<Pht::Optional<DuplicateMoveCheck>> mDuplicateMoveChecks;
+        std::vector<Pht::Optional<TiltedWeldCheck>> mTiltedWeldChecks;
         std::vector<Pht::Vec2> mButtonCenterPositions;
         std::vector<Pht::Vec2> mButtonSizes;
     };

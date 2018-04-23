@@ -6,13 +6,12 @@ Backlog:
     -Analytics.
     
   -Gameplay:
-   X-Prevent the crossed tilted welds from happening seven and mirrored seven (in both
-     GestureInputHandler and ClickInputHandler) so that those pieces can be pulled down.
    X-Fix the piece pull down bug on level 31. See screenshot.
    X-Improve the AI move evaluation.
    X-When playing a level with clear objective the game could scroll up if there is no room to spawn
      the falling piece. If we are at the top of the level then it is game over, or maybe the top
      rows could be cleared so the the piece fits.
+   X-Should level bombs be triggered when a piece lands partially on them? Try it out.
     -Speed up gameplay by updating GameLogic already when falling blocks are close to enter the
      bouncing state? If cascading, wait until all bocks have entered bouncing state before claring
      new rows.
@@ -65,6 +64,7 @@ Backlog:
   -Make ready for release:
     -Make icons and launch screens for all supported device resulutions.
     -Credit the icon creator: <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+    -Credit FastNoise, MIT license: https://github.com/Auburns/FastNoise/
 
 Ongoing tasks:
 

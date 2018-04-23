@@ -1884,16 +1884,16 @@
 		62785D992087618E006F9869 /* MapScene */ = {
 			isa = PBXGroup;
 			children = (
-				62785D9A2087618E006F9869 /* MapPin.hpp */,
-				62785D9B2087618E006F9869 /* MapHud.hpp */,
-				62785D9C2087618E006F9869 /* NextLevelParticleEffect.hpp */,
 				62785D9D2087618E006F9869 /* MapController.cpp */,
-				62785D9E2087618E006F9869 /* MapScene.cpp */,
-				62785D9F2087618E006F9869 /* NextLevelParticleEffect.cpp */,
 				62785DA02087618E006F9869 /* MapController.hpp */,
-				62785DA12087618E006F9869 /* MapScene.hpp */,
-				62785DA22087618E006F9869 /* MapPin.cpp */,
 				62785DA32087618E006F9869 /* MapHud.cpp */,
+				62785D9B2087618E006F9869 /* MapHud.hpp */,
+				62785DA22087618E006F9869 /* MapPin.cpp */,
+				62785D9A2087618E006F9869 /* MapPin.hpp */,
+				62785D9E2087618E006F9869 /* MapScene.cpp */,
+				62785DA12087618E006F9869 /* MapScene.hpp */,
+				62785D9F2087618E006F9869 /* NextLevelParticleEffect.cpp */,
+				62785D9C2087618E006F9869 /* NextLevelParticleEffect.hpp */,
 			);
 			path = MapScene;
 			sourceTree = "<group>";

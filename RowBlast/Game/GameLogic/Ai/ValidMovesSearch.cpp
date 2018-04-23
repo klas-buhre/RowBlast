@@ -508,7 +508,11 @@ void ValidMovesSearch::SearchDown(ValidMoves& validMoves,
 void ValidMovesSearch::SaveMove(ValidMoves& validMoves,
                                 const MovingPiece& piece,
                                 const Movement* previousMovement) {
-    if (IsDuplicateMoveFoundAtDifferentLocation(piece)) {
+    if (IsDuplicateMoveFoundAtDifferentLocation(piece) ||
+        CollisionDetection::IsIllegalTiltedWeldPosition(mField,
+                                                        piece.mPosition,
+                                                        piece.mRotation,
+                                                        piece.mPieceType)) {
         return;
     }
     
@@ -659,7 +663,11 @@ ValidMovesSearch::HandleCollision(const MovingPiece& piece, SearchMovement searc
 void ValidMovesSearch::SaveMoveIfNotFoundBefore(ValidMoves& validMoves,
                                                 const MovingPiece& piece,
                                                 const Movement* previousMovement) {
-    if (GetFoundMove(piece) || IsDuplicateMoveFoundAtDifferentLocation(piece)) {
+    if (GetFoundMove(piece) || IsDuplicateMoveFoundAtDifferentLocation(piece) ||
+        CollisionDetection::IsIllegalTiltedWeldPosition(mField,
+                                                        piece.mPosition,
+                                                        piece.mRotation,
+                                                        piece.mPieceType)) {
         return;
     }
     

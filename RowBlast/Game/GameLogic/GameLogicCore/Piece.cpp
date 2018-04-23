@@ -97,6 +97,10 @@ const Pht::Optional<Piece::DuplicateMoveCheck>& Piece::GetDuplicateMoveCheck(Rot
     return mDuplicateMoveChecks[static_cast<int>(rotation)];
 }
 
+const Pht::Optional<Piece::TiltedWeldCheck>& Piece::GetTiltedWeldCheck(Rotation rotation) const {
+    return mTiltedWeldChecks[static_cast<int>(rotation)];
+}
+
 Pht::Vec2 Piece::GetCenterPosition(Rotation rotation) const {
     return GetButtonCenterPosition(rotation) / 2.0f;
 }
@@ -165,6 +169,12 @@ void Piece::InitGrids(const FillGrid& fillGrid,
     AddExtremityCheckPositions(Rotation::Deg90);
     AddExtremityCheckPositions(Rotation::Deg180);
     AddExtremityCheckPositions(Rotation::Deg270);
+    
+    mTiltedWeldChecks.resize(4);
+    AddTiltedWeldCheck(Rotation::Deg0);
+    AddTiltedWeldCheck(Rotation::Deg90);
+    AddTiltedWeldCheck(Rotation::Deg180);
+    AddTiltedWeldCheck(Rotation::Deg270);
 
     mDimensions.resize(4);
     AddDimensions(Rotation::Deg0);
@@ -420,6 +430,36 @@ void Piece::AddExtremityCheckPositions(Rotation rotation) {
     
     mRightExtremityCheckPositions[index] = rightExtremityCheckPosition;
     mLeftExtremityCheckPositions[index] = leftExtremityCheckPosition;
+}
+
+void Piece::AddTiltedWeldCheck(Rotation rotation) {
+    const auto& grid {GetGrid(rotation)};
+    
+    for (auto row {0}; row < mGridNumRows; ++row) {
+        for (auto column {0}; column < mGridNumColumns; ++column) {
+            if (grid[row][column].mFirstSubCell.mWelds.mUpRight) {
+                TiltedWeldCheck tiltedWeldCheckValue {
+                    TiltedWeldCheck::Kind::DownLeftToUpRight,
+                    Pht::IVec2{column, row}
+                };
+                
+                mTiltedWeldChecks[static_cast<int>(rotation)] = tiltedWeldCheckValue;
+                return;
+            }
+
+            if (grid[row][column].mFirstSubCell.mWelds.mUpLeft) {
+                TiltedWeldCheck tiltedWeldCheckValue {
+                    TiltedWeldCheck::Kind::DownRightToUpLeft,
+                    Pht::IVec2{column, row}
+                };
+                
+                mTiltedWeldChecks[static_cast<int>(rotation)] = tiltedWeldCheckValue;
+                return;
+            }
+        }
+    }
+    
+    mTiltedWeldChecks[static_cast<int>(rotation)] = Pht::Optional<TiltedWeldCheck> {};
 }
 
 void Piece::AddDimensions(Rotation rotation) {
