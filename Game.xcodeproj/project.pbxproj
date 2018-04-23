@@ -264,6 +264,7 @@
 		628EC2AC2080C4880071F368 /* level31.json in Resources */ = {isa = PBXBuildFile; fileRef = 628EC2AB2080C4880071F368 /* level31.json */; };
 		6299DD7A208B4178001F74E2 /* CameraShake.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6299DD78208B4178001F74E2 /* CameraShake.cpp */; };
 		6299DD80208BA21C001F74E2 /* FastNoise.cc in Sources */ = {isa = PBXBuildFile; fileRef = 6299DD7F208BA21C001F74E2 /* FastNoise.cc */; };
+		6299DD82208E39C1001F74E2 /* level32.json in Resources */ = {isa = PBXBuildFile; fileRef = 6299DD81208E39C0001F74E2 /* level32.json */; };
 		62A8AAF71FE2DEA1000EB01C /* cloud_B_envmap.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62A8AAF61FE2DEA0000EB01C /* cloud_B_envmap.jpg */; };
 		62A8AAF91FE2E442000EB01C /* cloud_C_envmap.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62A8AAF81FE2E441000EB01C /* cloud_C_envmap.jpg */; };
 		62E222241FE9704900AE098B /* cloud_A_512.png in Resources */ = {isa = PBXBuildFile; fileRef = 62E222231FE9704800AE098B /* cloud_A_512.png */; };
@@ -842,6 +843,7 @@
 		6299DD79208B4178001F74E2 /* CameraShake.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CameraShake.hpp; sourceTree = "<group>"; };
 		6299DD7E208BA21C001F74E2 /* FastNoise.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FastNoise.h; sourceTree = "<group>"; };
 		6299DD7F208BA21C001F74E2 /* FastNoise.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FastNoise.cc; sourceTree = "<group>"; };
+		6299DD81208E39C0001F74E2 /* level32.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level32.json; sourceTree = "<group>"; };
 		62A8AAF61FE2DEA0000EB01C /* cloud_B_envmap.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = cloud_B_envmap.jpg; sourceTree = "<group>"; };
 		62A8AAF81FE2E441000EB01C /* cloud_C_envmap.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = cloud_C_envmap.jpg; sourceTree = "<group>"; };
 		62E222231FE9704800AE098B /* cloud_A_512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cloud_A_512.png; sourceTree = "<group>"; };
@@ -994,6 +996,7 @@
 				623326722073D69400AC505A /* level29.json */,
 				628EC299207D24080071F368 /* level30.json */,
 				628EC2AB2080C4880071F368 /* level31.json */,
+				6299DD81208E39C0001F74E2 /* level32.json */,
 			);
 			path = Levels;
 			sourceTree = "<group>";
@@ -1873,10 +1876,10 @@
 		62785D942087618E006F9869 /* Chapters */ = {
 			isa = PBXGroup;
 			children = (
-				62785D952087618E006F9869 /* Chapter.hpp */,
-				62785D962087618E006F9869 /* Chapter1.hpp */,
 				62785D972087618E006F9869 /* Chapter.cpp */,
+				62785D952087618E006F9869 /* Chapter.hpp */,
 				62785D982087618E006F9869 /* Chapter1.cpp */,
+				62785D962087618E006F9869 /* Chapter1.hpp */,
 			);
 			path = Chapters;
 			sourceTree = "<group>";
@@ -1995,6 +1998,7 @@
 				6270DC951FCB23D800FB457D /* level21.json in Resources */,
 				62A8AAF71FE2DEA1000EB01C /* cloud_B_envmap.jpg in Resources */,
 				62A8AAF91FE2E442000EB01C /* cloud_C_envmap.jpg in Resources */,
+				6299DD82208E39C1001F74E2 /* level32.json in Resources */,
 				6270DC9B1FCB23D800FB457D /* level6.json in Resources */,
 				6270DC901FCB23D800FB457D /* level17.json in Resources */,
 				62785B1720875937006F9869 /* Textured.frag in Resources */,

@@ -90,40 +90,45 @@ FieldExplosionsStates::UpdateRowBombLaserState(LaserState& laserState, float dt)
 
     auto leftColumn {static_cast<int>(laserState.mLeftCuttingProgress.mXPosition)};
     auto rightColumn {static_cast<int>(laserState.mRightCuttingProgress.mXPosition)};
+    auto row {laserState.mCuttingPositionY};
     
     if (previousLeftColumn != leftColumn || previousRightColumn != rightColumn) {
-        auto row {laserState.mCuttingPositionY};
-        Pht::IVec2 areaPosition {previousLeftColumn, row};
-        Pht::IVec2 areaSize {previousRightColumn - previousLeftColumn + 1, 1};
-        auto removeCorners {true};
-        auto removedSubCells {mField.RemoveAreaOfSubCells(areaPosition, areaSize, removeCorners)};
-        
-        if (removedSubCells.Size() > 0) {
-            for (auto i {0}; i < removedSubCells.Size();) {
-                auto& subCell {removedSubCells.At(i)};
-                
-                switch (subCell.mBlockKind) {
-                    case BlockKind::Bomb:
-                        DetonateLevelBomb(subCell.mGridPosition);
-                        removedSubCells.Erase(i);
-                        break;
-                    default:
-                        ++i;
-                        break;
-                }
-            }
-            
-            mFlyingBlocksAnimation.AddBlockRows(removedSubCells);
-        }
+        RemoveBlocksHitByLaser(previousLeftColumn, previousRightColumn, row);
     }
 
     if (laserState.mLeftCuttingProgress.mState == LaserState::CuttingState::Done &&
         laserState.mRightCuttingProgress.mState == LaserState::CuttingState::Done) {
 
+        RemoveBlocksHitByLaser(leftColumn, rightColumn, row);
         return State::Inactive;
     }
     
     return State::Active;
+}
+
+void FieldExplosionsStates::RemoveBlocksHitByLaser(int leftColumn, int rightColumn, int row) {
+    Pht::IVec2 areaPosition {leftColumn, row};
+    Pht::IVec2 areaSize {rightColumn - leftColumn + 1, 1};
+    auto removeCorners {true};
+    auto removedSubCells {mField.RemoveAreaOfSubCells(areaPosition, areaSize, removeCorners)};
+
+    if (removedSubCells.Size() > 0) {
+        for (auto i {0}; i < removedSubCells.Size();) {
+            auto& subCell {removedSubCells.At(i)};
+            
+            switch (subCell.mBlockKind) {
+                case BlockKind::Bomb:
+                    DetonateLevelBomb(subCell.mGridPosition);
+                    removedSubCells.Erase(i);
+                    break;
+                default:
+                    ++i;
+                    break;
+            }
+        }
+        
+        mFlyingBlocksAnimation.AddBlockRows(removedSubCells);
+    }
 }
 
 void FieldExplosionsStates::UpdateLeftCuttingProgress(LaserState& laserState, float dt) {

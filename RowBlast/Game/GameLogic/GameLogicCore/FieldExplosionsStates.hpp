@@ -75,6 +75,7 @@ namespace RowBlast {
         State UpdateExplosionState(ExplosionState& explosionState, float dt);
         State UpdateBombExplosionState(BombExplosionState& bombExplosionState, float dt);
         State UpdateRowBombLaserState(LaserState& laserState, float dt);
+        void RemoveBlocksHitByLaser(int leftColumn, int rightColumn, int row);
         void UpdateLeftCuttingProgress(LaserState& laserState, float dt);
         void UpdateRightCuttingProgress(LaserState& laserState, float dt);
         State UpdateLevelBombExplosionState(BombExplosionState& levelBombExplosionState, float dt);

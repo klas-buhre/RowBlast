@@ -11,9 +11,7 @@
         "B",
         "D",
         "Seven",
-        "MirroredSeven",
-        "Bomb",
-        "RowBomb"
+        "MirroredSeven"
     ],
     "clearGrid": [
         "        ",
@@ -29,14 +27,18 @@
         "        ",
         "        ",
         "        ",
+        "     G G",
+        "  BL  B ",
+        " GGG GGG",
+        "        ",
+        "        ",
+        "        ",
+        "        ",
+        "  BBBB  ",
+        " GGGGGG ",
+        " GGGGGG ",
+        "GpGGGqG ",
         "G G G GL",
-        " G G   L",
-        "G G G GL",
-        " G   G L",
-        "G G G GL",
-        "   G G L",
-        "L G G  G",
-        "LG G G  ",
-        "L G G G "
+        "GGG GGGG"
     ]
 }
