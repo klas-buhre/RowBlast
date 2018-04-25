@@ -2,6 +2,8 @@
 
 #include <assert.h>
 
+#include "IRenderer.hpp"
+
 using namespace Pht;
 
 namespace {
@@ -9,7 +11,7 @@ namespace {
     const Vec2 defaultScreenInputSize {320.0f, 568.0f};
 }
 
-InputHandler::InputHandler(const Vec2& nativeScreenInputSize) :
+InputHandler::InputHandler(const IRenderer& renderer, const Vec2& nativeScreenInputSize) :
     mNativeScreenInputSize {nativeScreenInputSize} {
     
     auto nativeWhRatio {nativeScreenInputSize.x / nativeScreenInputSize.y};
@@ -17,6 +19,7 @@ InputHandler::InputHandler(const Vec2& nativeScreenInputSize) :
     
     mScreenInputSize.x = nativeWhRatio * defaultScreenInputSize.x / defaultWhRatio;
     mScreenInputSize.y = defaultScreenInputSize.y;
+    mScreenInputSize *= renderer.GetFrustumHeightFactor();
     
     mEventQueue.resize(eventQueueMaxSize);
 }

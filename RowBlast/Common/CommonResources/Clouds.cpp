@@ -174,15 +174,17 @@ void Clouds::InitHazeLayers(const std::vector<HazeLayer>& hazeLayers,
     auto& sceneObject {scene.CreateSceneObject()};
     sceneObject.SetLayer(sceneLayerIndex);
     scene.GetRoot().AddChild(sceneObject);
+    
+    auto frustumHeightFactor {mEngine.GetRenderer().GetFrustumHeightFactor()};
 
     for (auto& hazeLayer: hazeLayers) {
         auto& size {hazeLayer.mSize};
         
         Pht::QuadMesh::Vertices vertices {
-            {{-size.x / 2.0f, -size.y / 2.0f, 0.0f}, hazeLayer.mLowerColor},
-            {{size.x / 2.0f, -size.y / 2.0f, 0.0f}, hazeLayer.mLowerColor},
-            {{size.x / 2.0f, size.y / 2.0f, 0.0f}, hazeLayer.mUpperColor},
-            {{-size.x / 2.0f, size.y / 2.0f, 0.0f}, hazeLayer.mUpperColor},
+            {{-size.x / 2.0f, -size.y * frustumHeightFactor / 2.0f, 0.0f}, hazeLayer.mLowerColor},
+            {{size.x / 2.0f, -size.y * frustumHeightFactor / 2.0f, 0.0f}, hazeLayer.mLowerColor},
+            {{size.x / 2.0f, size.y * frustumHeightFactor / 2.0f, 0.0f}, hazeLayer.mUpperColor},
+            {{-size.x / 2.0f, size.y * frustumHeightFactor / 2.0f, 0.0f}, hazeLayer.mUpperColor},
         };
         
         Pht::Material material;

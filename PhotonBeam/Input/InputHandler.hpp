@@ -8,9 +8,11 @@
 #include "IInput.hpp"
 
 namespace Pht {
+    class IRenderer;
+
     class InputHandler: public IInput {
     public:
-        InputHandler(const Vec2& nativeScreenInputSize);
+        InputHandler(const IRenderer& renderer, const Vec2& nativeScreenInputSize);
         
         void SetUseGestureRecognizers(bool useGestureRecognizers) override;
         void EnableInput() override;

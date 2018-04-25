@@ -28,6 +28,7 @@ namespace Pht {
         const Mat4& GetProjectionMatrix() const override;
         const Vec2& GetHudFrustumSize() const override;
         const Vec2& GetOrthographicFrustumSize() const override;
+        float GetFrustumHeightFactor() const override;
         const IVec2& GetRenderBufferSize() const override;
 
         void Init(bool createRenderBuffers);
@@ -41,6 +42,7 @@ namespace Pht {
         void InitOpenGl(bool createRenderBuffers);
         void InitCamera();
         void InitHudFrustum();
+        float GetAspectRatio() const;
         void InitShaders();
         void SetDepthTest(bool depthTest);
         void SetDepthWrite(bool depthWrite);

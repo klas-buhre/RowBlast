@@ -43,7 +43,8 @@
 using namespace Pht;
 
 namespace {
-    const static auto defaultScreenHeight {1136};
+    constexpr auto defaultScreenHeight {1136};
+    constexpr auto frustumHeightFactorNarrowAspectRatio {1.15f};
     const Mat4 identityMatrix;
     const Vec4 modelSpaceOrigin {0.0f, 0.0f, 0.0f, 1.0f};
     
@@ -289,7 +290,7 @@ void Renderer::InitOpenGl(bool createRenderBuffers) {
 void Renderer::InitCamera() {
     mCamera = Camera {
         mRenderBufferSize,
-        perspectiveFrustumSettings.mHeight,
+        perspectiveFrustumSettings.mHeight * GetFrustumHeightFactor(),
         perspectiveFrustumSettings.mZNearClip,
         perspectiveFrustumSettings.mZFarClip
     };
@@ -299,7 +300,7 @@ void Renderer::InitCamera() {
     Vec3 up {0.0f, 1.0f, 0.0f};
     mCamera.LookAt(cameraPosition, target, up);
     
-    mOrthographicFrustumSize.y = orthographicFrustumSettings.mHeight;
+    mOrthographicFrustumSize.y = orthographicFrustumSettings.mHeight * GetFrustumHeightFactor();
     mOrthographicFrustumSize.x = mOrthographicFrustumSize.y * mRenderBufferSize.x / mRenderBufferSize.y;
     mCamera.SetOrthographicProjection(mRenderBufferSize,
                                       mOrthographicFrustumSize.y,
@@ -309,14 +310,27 @@ void Renderer::InitCamera() {
 
 void Renderer::InitHudFrustum() {
     mHudCameraPosition = Vec3 {0.0f, 0.0f, 0.0f};
-    float frustumWidth {hudFrustumSettings.mHeight * mRenderBufferSize.x / mRenderBufferSize.y};
+    auto frustumHeight {hudFrustumSettings.mHeight * GetFrustumHeightFactor()};
+    float frustumWidth {frustumHeight * mRenderBufferSize.x / mRenderBufferSize.y};
     mHudFrustum.mProjection = Mat4::OrthographicProjection(-frustumWidth / 2.0f,
                                                            frustumWidth / 2.0f,
-                                                           -hudFrustumSettings.mHeight / 2.0f,
-                                                           hudFrustumSettings.mHeight / 2.0f,
+                                                           -frustumHeight / 2.0f,
+                                                           frustumHeight / 2.0f,
                                                            hudFrustumSettings.mZNearClip,
                                                            hudFrustumSettings.mZFarClip);
-    mHudFrustum.mSize = {frustumWidth, hudFrustumSettings.mHeight};
+    mHudFrustum.mSize = {frustumWidth, frustumHeight};
+}
+
+float Renderer::GetAspectRatio() const {
+    return static_cast<float>(mRenderBufferSize.y) / static_cast<float>(mRenderBufferSize.x);
+}
+
+float Renderer::GetFrustumHeightFactor() const {
+    if (GetAspectRatio() >= 2.0f) {
+        return frustumHeightFactorNarrowAspectRatio;
+    }
+    
+    return 1.0f;
 }
 
 void Renderer::InitShaders() {
@@ -573,7 +587,7 @@ const Vec3& Renderer::GetCameraPosition() const {
 }
 
 int Renderer::GetAdjustedNumPixels(int numPixels) const {
-    return numPixels * mRenderBufferSize.y / defaultScreenHeight;
+    return numPixels * mRenderBufferSize.y / (defaultScreenHeight * GetFrustumHeightFactor());
 }
 
 const Mat4& Renderer::GetViewMatrix() const {

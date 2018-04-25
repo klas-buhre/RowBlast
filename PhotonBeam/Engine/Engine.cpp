@@ -14,7 +14,7 @@ namespace {
 
 Engine::Engine(bool createRenderBuffers, const Vec2& screenInputSize) :
     mRenderer {createRenderBuffers},
-    mInputHandler {screenInputSize},
+    mInputHandler {mRenderer, screenInputSize},
     mSceneManager {mRenderer} {
     
     std::srand(static_cast<int>(std::time(0)));

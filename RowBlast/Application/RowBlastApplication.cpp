@@ -30,12 +30,15 @@ Backlog:
      contrast.
     -Could zoom in on map pin when clicking on a level in the map.
     -Could have the rounded cylinder i some places in the HUDs.
-    -GUI: the buttons in the views could be yellow with black text and triangular edges like in
+    -Maybe slightly less bevel in the blocks.
+    -GUI: the buttons could be yellow with black text with rounded corners. The menu quad could be
+     white with tilted stripes like in Mario Run and the upper part could be dark grey/black with
+     yellow text.
+     Or: the buttons in the views could be yellow with black text and triangular edges like in
      Mario Kart 8. There could also be a reflection animation in the button.
     -Maybe the merging of two triangles into a cube could be done by letting the two triangles fade
      into the cube. Render the triangles and the cube at the same time, vary the opacity for the
      triangels from 1 to 0 and from 0 to 1 for the cube.
-    -Camera shake when clearing 3 or more rows or using a bomb.
     -Try adding welds to the level blocks.
     -One or two stars in level cleared dialog could be placed more in the middle.
     -There could be a particle effect behind the stars in the level cleared dialog. Stars could also
@@ -66,6 +69,8 @@ Backlog:
     -Credit FastNoise, MIT license: https://github.com/Auburns/FastNoise/
 
 Ongoing tasks:
+    -The gesture input sensitivity seems too high.
+    -Support for iPhone X screen.
 
 
 Ideas:
@@ -101,15 +106,15 @@ Time Estimation in days:
     -Try bombs part of level.
         Cost: 10
         Done
-    -Do the marked items in the backlog.
-        Cost: 8
     -Camera shake.
         Cost: 3
         Done
-    -Use new GUI/Menu textures.
-        Cost: 3
     -Support for iPhone X screen.
         Cost: 10
+    -Use new GUI/Menu textures.
+        Cost: 3
+    -Do the marked items in the backlog.
+        Cost: 8
     -Animations/effects when clearing a level.
         Cost: 7
     -Moving the next level particle effect to the next level after clearing a level.
