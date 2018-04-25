@@ -14,14 +14,15 @@ namespace {
 
 Engine::Engine(bool createRenderBuffers, const Vec2& screenInputSize) :
     mRenderer {createRenderBuffers},
-    mInputHandler {mRenderer, screenInputSize},
-    mSceneManager {mRenderer} {
+    mInputHandler {screenInputSize},
+    mSceneManager {mRenderer, mInputHandler} {
     
     std::srand(static_cast<int>(std::time(0)));
 }
 
 void Engine::Init(bool createRenderBuffers) {
     mRenderer.Init(createRenderBuffers);
+    mInputHandler.Init(mRenderer);
 
     // Create and init the application.
     mApplication = CreateApplication(*this);

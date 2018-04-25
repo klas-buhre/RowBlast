@@ -12,7 +12,7 @@ namespace Pht {
 
     class InputHandler: public IInput {
     public:
-        InputHandler(const IRenderer& renderer, const Vec2& nativeScreenInputSize);
+        InputHandler(const Vec2& nativeScreenInputSize);
         
         void SetUseGestureRecognizers(bool useGestureRecognizers) override;
         void EnableInput() override;
@@ -23,6 +23,7 @@ namespace Pht {
         bool ConsumeWholeTouch() override;
         const Vec2& GetScreenInputSize() const override;
 
+        void Init(const IRenderer& renderer);
         void PushToQueue(InputEvent& event);
         
         bool GetUseGestureRecognizers() const {

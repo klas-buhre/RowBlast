@@ -17,6 +17,7 @@ namespace Pht {
         virtual ~ISceneManager() {}
         
         virtual std::unique_ptr<Scene> CreateScene(Scene::Name name) = 0;
+        virtual void InitSceneSystems(float narrowFrustumHeightFactor) = 0;
         virtual void SetLoadedScene(std::unique_ptr<Scene> scene) = 0;
         virtual Scene* GetActiveScene() = 0;
         virtual std::unique_ptr<RenderableObject> CreateRenderableObject(const IMesh& mesh,
@@ -24,6 +25,8 @@ namespace Pht {
         virtual std::unique_ptr<SceneObject> CreateSceneObject(const IMesh& mesh,
                                                                const Material& material,
                                                                SceneResources& sceneResources) = 0;
+
+        static constexpr auto defaultNarrowFrustumHeightFactor {1.217f};
     };
 }
 

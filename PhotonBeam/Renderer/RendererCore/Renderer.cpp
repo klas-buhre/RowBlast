@@ -35,6 +35,7 @@
 #include "GuiView.hpp"
 #include "SceneObject.hpp"
 #include "Scene.hpp"
+#include "ISceneManager.hpp"
 #include "CameraComponent.hpp"
 #include "LightComponent.hpp"
 #include "TextComponent.hpp"
@@ -44,7 +45,6 @@ using namespace Pht;
 
 namespace {
     constexpr auto defaultScreenHeight {1136};
-    constexpr auto frustumHeightFactorNarrowAspectRatio {1.15f};
     const Mat4 identityMatrix;
     const Vec4 modelSpaceOrigin {0.0f, 0.0f, 0.0f, 1.0f};
     
@@ -243,9 +243,9 @@ void Renderer::Init(bool createRenderBuffers) {
     std::cout << "Renderer: Initializing..." << std::endl;
     
     InitOpenGl(createRenderBuffers);
-    InitCamera();
-    InitHudFrustum();
     InitShaders();
+    InitCamera(ISceneManager::defaultNarrowFrustumHeightFactor);
+
     mTextRenderer = std::make_unique<TextRenderer>(mRenderBufferSize);
     
     std::cout << "Renderer: Using " << mRenderBufferSize.x << "x" << mRenderBufferSize.y
@@ -327,7 +327,7 @@ float Renderer::GetAspectRatio() const {
 
 float Renderer::GetFrustumHeightFactor() const {
     if (GetAspectRatio() >= 2.0f) {
-        return frustumHeightFactorNarrowAspectRatio;
+        return mNarrowFrustumHeightFactor;
     }
     
     return 1.0f;
@@ -347,8 +347,6 @@ void Renderer::InitShaders() {
     GetShaderProgram(ShaderType::ParticleTextureColor).Build(ParticleTextureColorVertexShader, ParticleTextureColorFragmentShader);
     GetShaderProgram(ShaderType::ParticleNoAlphaTexture).Build(ParticleNoAlphaTextureVertexShader, ParticleNoAlphaTextureFragmentShader);
     GetShaderProgram(ShaderType::PointParticle).Build(PointParticleVertexShader, PointParticleFragmentShader);
-    
-    SetupProjectionInShaders();
 }
 
 void Renderer::SetupProjectionInShaders() {
@@ -588,6 +586,14 @@ const Vec3& Renderer::GetCameraPosition() const {
 
 int Renderer::GetAdjustedNumPixels(int numPixels) const {
     return numPixels * mRenderBufferSize.y / (defaultScreenHeight * GetFrustumHeightFactor());
+}
+
+void Renderer::InitCamera(float narrowFrustumHeightFactor) {
+    mNarrowFrustumHeightFactor = narrowFrustumHeightFactor;
+
+    InitCamera();
+    InitHudFrustum();
+    SetupProjectionInShaders();
 }
 
 const Mat4& Renderer::GetViewMatrix() const {

@@ -7,21 +7,23 @@
 using namespace Pht;
 
 namespace {
-    const auto eventQueueMaxSize {1000};
+    constexpr auto eventQueueMaxSize {1000};
     const Vec2 defaultScreenInputSize {320.0f, 568.0f};
 }
 
-InputHandler::InputHandler(const IRenderer& renderer, const Vec2& nativeScreenInputSize) :
+InputHandler::InputHandler(const Vec2& nativeScreenInputSize) :
     mNativeScreenInputSize {nativeScreenInputSize} {
     
-    auto nativeWhRatio {nativeScreenInputSize.x / nativeScreenInputSize.y};
+    mEventQueue.resize(eventQueueMaxSize);
+}
+
+void InputHandler::Init(const IRenderer& renderer) {
+    auto nativeWhRatio {mNativeScreenInputSize.x / mNativeScreenInputSize.y};
     auto defaultWhRatio {defaultScreenInputSize.x / defaultScreenInputSize.y};
     
     mScreenInputSize.x = nativeWhRatio * defaultScreenInputSize.x / defaultWhRatio;
     mScreenInputSize.y = defaultScreenInputSize.y;
     mScreenInputSize *= renderer.GetFrustumHeightFactor();
-    
-    mEventQueue.resize(eventQueueMaxSize);
 }
 
 void InputHandler::SetUseGestureRecognizers(bool useGestureRecognizers) {

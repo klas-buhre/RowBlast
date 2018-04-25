@@ -71,6 +71,10 @@ Backlog:
 Ongoing tasks:
     -The gesture input sensitivity seems too high.
     -Support for iPhone X screen.
+        -Fix issue with font sizes in game scene when using a different narrowFrustumHeightFactor.
+        -Make sure frustum sizes are correct for all calls to GetHudFrustumSize() and
+         GetOrthographicFrustumSize() (make sure that ISceneManager::InitSceneSystems() has been
+         called).
 
 
 Ideas:

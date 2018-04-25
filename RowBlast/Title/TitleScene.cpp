@@ -148,6 +148,8 @@ TitleScene::TitleScene(Pht::IEngine& engine, const CommonResources& commonResour
     auto& sceneManager {engine.GetSceneManager()};
     auto scene {sceneManager.CreateScene(Pht::Hash::Fnv1a("titleScene"))};
     
+    sceneManager.InitSceneSystems(Pht::ISceneManager::defaultNarrowFrustumHeightFactor);
+    
     scene->AddRenderPass(Pht::RenderPass {static_cast<int>(Layer::Background)});
     
     Pht::RenderPass uiRenderPass {static_cast<int>(Layer::Ui)};

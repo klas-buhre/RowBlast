@@ -5,16 +5,23 @@
 #include "Renderer.hpp"
 #include "RenderableObject.hpp"
 #include "Fnv1Hash.hpp"
+#include "InputHandler.hpp"
 
 using namespace Pht;
 
-SceneManager::SceneManager(Renderer& renderer) :
-    mRenderer {renderer} {}
+SceneManager::SceneManager(Renderer& renderer, InputHandler& inputHandler) :
+    mRenderer {renderer},
+    mInputHandler {inputHandler} {}
 
 SceneManager::~SceneManager() {}
 
 std::unique_ptr<Scene> SceneManager::CreateScene(Scene::Name name) {
     return std::make_unique<Scene>(*this, name);
+}
+
+void SceneManager::InitSceneSystems(float narrowFrustumHeightFactor) {
+    mRenderer.InitCamera(narrowFrustumHeightFactor);
+    mInputHandler.Init(mRenderer);
 }
 
 void SceneManager::SetLoadedScene(std::unique_ptr<Scene> scene) {

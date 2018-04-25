@@ -138,6 +138,8 @@ void MapScene::CreateScene(const Chapter& chapter) {
     auto scene {sceneManager.CreateScene(Pht::Hash::Fnv1a("mapScene"))};
     mScene = scene.get();
     
+    sceneManager.InitSceneSystems(Pht::ISceneManager::defaultNarrowFrustumHeightFactor);
+    
     scene->AddRenderPass(Pht::RenderPass {static_cast<int>(Layer::Map)});
     Pht::RenderPass hudRenderPass {static_cast<int>(Layer::Hud)};
     hudRenderPass.SetHudMode(true);

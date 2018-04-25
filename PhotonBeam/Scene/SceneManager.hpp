@@ -5,13 +5,15 @@
 
 namespace Pht {
     class Renderer;
+    class InputHandler;
     
     class SceneManager: public ISceneManager {
     public:
-        SceneManager(Renderer& renderer);
+        SceneManager(Renderer& renderer, InputHandler& inputHandler);
         ~SceneManager();
         
         std::unique_ptr<Scene> CreateScene(Scene::Name name) override;
+        void InitSceneSystems(float narrowFrustumHeightFactor) override;
         void SetLoadedScene(std::unique_ptr<Scene> scene) override;
         Scene* GetActiveScene() override;
         std::unique_ptr<RenderableObject> CreateRenderableObject(const IMesh& mesh,
@@ -22,6 +24,7 @@ namespace Pht {
 
     private:
         Renderer& mRenderer;
+        InputHandler& mInputHandler;
         std::unique_ptr<Scene> mScene;
     };
 }

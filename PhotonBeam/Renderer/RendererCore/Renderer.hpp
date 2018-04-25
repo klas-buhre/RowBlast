@@ -32,6 +32,7 @@ namespace Pht {
         const IVec2& GetRenderBufferSize() const override;
 
         void Init(bool createRenderBuffers);
+        void InitCamera(float narrowFrustumHeightFactor);
         void InitRenderQueue(const Scene& scene);
         std::unique_ptr<RenderableObject> CreateRenderableObject(const IMesh& mesh,
                                                                  const Material& material);
@@ -87,6 +88,7 @@ namespace Pht {
         Vec3 mHudCameraPosition;
         HudFrustum mHudFrustum;
         Vec2 mOrthographicFrustumSize;
+        float mNarrowFrustumHeightFactor {1.0f};
         IVec2 mRenderBufferSize;
         RenderQueue mRenderQueue;
         std::unordered_map<ShaderType, ShaderProgram> mShaders;

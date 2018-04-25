@@ -1530,10 +1530,10 @@
 		62785CB72087618D006F9869 /* Title */ = {
 			isa = PBXGroup;
 			children = (
-				62785CB82087618D006F9869 /* TitleScene.cpp */,
-				62785CB92087618D006F9869 /* TitleController.hpp */,
-				62785CBA2087618D006F9869 /* TitleScene.hpp */,
 				62785CBB2087618D006F9869 /* TitleController.cpp */,
+				62785CB92087618D006F9869 /* TitleController.hpp */,
+				62785CB82087618D006F9869 /* TitleScene.cpp */,
+				62785CBA2087618D006F9869 /* TitleScene.hpp */,
 			);
 			path = Title;
 			sourceTree = "<group>";
