@@ -8,17 +8,18 @@
 
 // Game includes.
 #include "MenuButton.hpp"
+#include "CommonResources.hpp"
 
 namespace Pht {
     class IEngine;
 }
 
 namespace RowBlast {
-    class CommonResources;
-    
     class SettingsMenuView: public Pht::GuiView {
     public:
-        SettingsMenuView(Pht::IEngine& engine, const CommonResources& commonResources);
+        SettingsMenuView(Pht::IEngine& engine,
+                         const CommonResources& commonResources,
+                         PotentiallyZoomedScreen potentiallyZoomedScreen);
 
         const MenuButton& GetControlsButton() const {
             return *mControlsButton;

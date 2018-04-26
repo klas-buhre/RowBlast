@@ -11,10 +11,11 @@ using namespace RowBlast;
 
 NoLivesDialogController::NoLivesDialogController(Pht::IEngine& engine,
                                                  const CommonResources& commonResources,
-                                                 const UserData& userData) :
+                                                 const UserData& userData,
+                                                 PotentiallyZoomedScreen potentiallyZoomedScreen) :
     mInput {engine.GetInput()},
     mUserData {userData},
-    mView {engine, commonResources, userData},
+    mView {engine, commonResources, userData, potentiallyZoomedScreen},
     mSlidingMenuAnimation {engine, mView} {}
 
 void NoLivesDialogController::Init(SlidingMenuAnimation::UpdateFade updateFade,

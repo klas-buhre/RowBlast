@@ -5,16 +5,17 @@
 #include <memory>
 
 // Engine includes.
-#include "Font.hpp"
 #include "Vector.hpp"
 #include "SceneObject.hpp"
 
 namespace Pht {
     class IEngine;
+    class Font;
 }
 
 namespace RowBlast {
     class GameScene;
+    class CommonResources;
     
     class SlidingTextAnimation {
     public:
@@ -32,7 +33,9 @@ namespace RowBlast {
             SlotsFilled
         };
         
-        SlidingTextAnimation(Pht::IEngine& engine, GameScene& scene);
+        SlidingTextAnimation(Pht::IEngine& engine,
+                             GameScene& scene,
+                             const CommonResources& commonResources);
         
         void Init();
         void Start(Message message);
@@ -50,7 +53,9 @@ namespace RowBlast {
             std::vector<std::unique_ptr<Pht::SceneObject>> mTextLines;
         };
         
-        void CreateText(float displayTime, const std::vector<TextLine>& textLines);
+        void CreateText(const Pht::Font& font,
+                        float displayTime,
+                        const std::vector<TextLine>& textLines);
         void SetAlpha(float newAlhpa);
         void StartSlideOut();
         void UpdateInSlidingInState();
@@ -59,7 +64,6 @@ namespace RowBlast {
     
         Pht::IEngine& mEngine;
         GameScene& mScene;
-        Pht::Font mFont;
         State mState {State::Inactive};
         float mElapsedTime {0.0f};
         const Text* mText {nullptr};

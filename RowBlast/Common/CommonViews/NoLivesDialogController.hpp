@@ -4,6 +4,7 @@
 // Game includes.
 #include "NoLivesDialogView.hpp"
 #include "SlidingMenuAnimation.hpp"
+#include "CommonResources.hpp"
 
 namespace Pht {
     class IInput;
@@ -12,7 +13,6 @@ namespace Pht {
 }
 
 namespace RowBlast {
-    class CommonResources;
     class UserData;
     
     class NoLivesDialogController {
@@ -25,7 +25,8 @@ namespace RowBlast {
         
         NoLivesDialogController(Pht::IEngine& engine,
                                 const CommonResources& commonResources,
-                                const UserData& userData);
+                                const UserData& userData,
+                                PotentiallyZoomedScreen potentiallyZoomedScreen);
         
         void Init(SlidingMenuAnimation::UpdateFade updateFade, bool shouldSlideOut);
         Result Update();

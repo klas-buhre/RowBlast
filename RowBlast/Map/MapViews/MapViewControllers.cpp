@@ -6,6 +6,7 @@
 // Game includes.
 #include "MapScene.hpp"
 #include "UiLayer.hpp"
+#include "CommonResources.hpp"
 
 using namespace RowBlast;
 
@@ -28,8 +29,8 @@ MapViewControllers::MapViewControllers(Pht::IEngine& engine,
         UiLayer::backgroundFade
     },
     mSettingsButtonController {engine},
-    mNoLivesDialogController {engine, commonResources, userData},
-    mSettingsMenuController {engine, commonResources, settings} {
+    mNoLivesDialogController {engine, commonResources, userData, PotentiallyZoomedScreen::No},
+    mSettingsMenuController {engine, commonResources, settings, PotentiallyZoomedScreen::No} {
     
     mViewManager.AddView(mSettingsButtonController.GetView());
     mViewManager.AddView(mNoLivesDialogController.GetView());

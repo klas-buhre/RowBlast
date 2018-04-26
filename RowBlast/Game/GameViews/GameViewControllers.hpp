@@ -21,7 +21,6 @@ namespace Pht {
 }
 
 namespace RowBlast {
-    class CommonResources;
     class UserData;
     class GameScene;
     class Settings;

@@ -8,15 +8,21 @@
 #include "TextComponent.hpp"
 
 // Game includes.
-#include "CommonResources.hpp"
 #include "MenuQuad.hpp"
 #include "UiLayer.hpp"
 
 using namespace RowBlast;
 
-SettingsMenuView::SettingsMenuView(Pht::IEngine& engine, const CommonResources& commonResources) {
-    Pht::TextProperties textProperties {commonResources.GetHussarFontSize27()};
-    Pht::TextProperties settingsTextProperties {commonResources.GetHussarFontSize30()};
+SettingsMenuView::SettingsMenuView(Pht::IEngine& engine,
+                                   const CommonResources& commonResources,
+                                   PotentiallyZoomedScreen potentiallyZoomedScreen) {
+    Pht::TextProperties textProperties {
+        commonResources.GetHussarFontSize27(potentiallyZoomedScreen)
+    };
+
+    Pht::TextProperties settingsTextProperties {
+        commonResources.GetHussarFontSize35(potentiallyZoomedScreen)
+    };
     
     Pht::Vec2 size {engine.GetRenderer().GetHudFrustumSize().x, 12.6f};
     

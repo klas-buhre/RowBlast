@@ -10,20 +10,21 @@
 // Game includes.
 #include "MenuButton.hpp"
 #include "CloseButton.hpp"
+#include "CommonResources.hpp"
 
 namespace Pht {
     class IEngine;
 }
 
 namespace RowBlast {
-    class CommonResources;
     class UserData;
     
     class NoLivesDialogView: public Pht::GuiView {
     public:
         NoLivesDialogView(Pht::IEngine& engine,
                           const CommonResources& commonResources,
-                          const UserData& userData);
+                          const UserData& userData,
+                          PotentiallyZoomedScreen potentiallyZoomedScreen);
 
         void Update();
         

@@ -4,6 +4,7 @@
 // Game includes.
 #include "SettingsMenuView.hpp"
 #include "SlidingMenuAnimation.hpp"
+#include "CommonResources.hpp"
 
 namespace Pht {
     class IEngine;
@@ -12,7 +13,6 @@ namespace Pht {
 }
 
 namespace RowBlast {
-    class CommonResources;
     class Settings;
     
     class SettingsMenuController {
@@ -24,7 +24,8 @@ namespace RowBlast {
         
         SettingsMenuController(Pht::IEngine& engine,
                                const CommonResources& commonResources,
-                               Settings& settings);
+                               Settings& settings,
+                               PotentiallyZoomedScreen potentiallyZoomedScreen);
         
         void Init(SlidingMenuAnimation::UpdateFade updateFade);
         void SetFadeEffect(Pht::FadeEffect& fadeEffect);

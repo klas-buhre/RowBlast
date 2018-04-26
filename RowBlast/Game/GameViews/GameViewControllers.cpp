@@ -6,6 +6,7 @@
 // Game includes.
 #include "UiLayer.hpp"
 #include "GameScene.hpp"
+#include "CommonResources.hpp"
 
 using namespace RowBlast;
 
@@ -32,8 +33,8 @@ GameViewControllers::GameViewControllers(Pht::IEngine& engine,
     mLevelCompletedDialogController {engine, commonResources},
     mRestartConfirmationDialogController {engine, commonResources, userData},
     mMapConfirmationDialogController {engine, commonResources},
-    mNoLivesDialogController {engine, commonResources, userData},
-    mSettingsMenuController {engine, commonResources, settings} {
+    mSettingsMenuController {engine, commonResources, settings, PotentiallyZoomedScreen::Yes},
+    mNoLivesDialogController {engine, commonResources, userData, PotentiallyZoomedScreen::Yes} {
 
     mViewManager.AddView(mGameHudController.GetView());
     mViewManager.AddView(mGameMenuController.GetView());

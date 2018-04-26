@@ -6,7 +6,6 @@
 #include "TextComponent.hpp"
 
 // Game includes.
-#include "CommonResources.hpp"
 #include "MenuQuad.hpp"
 #include "UserData.hpp"
 #include "StringUtils.hpp"
@@ -20,10 +19,11 @@ namespace {
 
 NoLivesDialogView::NoLivesDialogView(Pht::IEngine& engine,
                                      const CommonResources& commonResources,
-                                     const UserData& userData) :
+                                     const UserData& userData,
+                                     PotentiallyZoomedScreen potentiallyZoomedScreen) :
     mUserData {userData} {
     
-    Pht::TextProperties textProperties {commonResources.GetHussarFontSize27()};
+    Pht::TextProperties textProperties {commonResources.GetHussarFontSize27(potentiallyZoomedScreen)};
     Pht::Vec2 size {engine.GetRenderer().GetHudFrustumSize().x, 9.0f};
     SetSize(size);
     SetPosition({0.0f, 0.0f});

@@ -16,7 +16,6 @@ namespace Pht {
 
 namespace RowBlast {
     class MapScene;
-    class CommonResources;
     class UserData;
     class Settings;
     

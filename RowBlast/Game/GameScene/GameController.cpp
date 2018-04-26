@@ -51,7 +51,7 @@ GameController::GameController(Pht::IEngine& engine,
     mEffectManager {engine, mScene, mCameraShake},
     mPieceDropParticleEffect {engine, mScene},
     mBlastRadiusAnimation {engine, mScene},
-    mSlidingTextAnimation {engine, mScene},
+    mSlidingTextAnimation {engine, mScene, commonResources},
     mClearLastBlocksAnimation {mField, mFlyingBlocksAnimation},
     mGameLogic {
         engine,

@@ -28,7 +28,10 @@ LevelCompletedDialogView::LevelCompletedDialogView(Pht::IEngine& engine,
                                                    const CommonResources& commonResources) :
     mEngine {engine} {
     
-    Pht::TextProperties textProperties {commonResources.GetHussarFontSize27()};
+    Pht::TextProperties textProperties {
+        commonResources.GetHussarFontSize27(PotentiallyZoomedScreen::Yes)
+    };
+
     LoadStar(commonResources);
 
     Pht::Vec2 size {engine.GetRenderer().GetHudFrustumSize().x, 11.0f};

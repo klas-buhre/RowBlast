@@ -24,7 +24,6 @@ namespace {
     constexpr auto lowerClipAreaHeightInCells {2.15f};
     constexpr auto fieldPadding {0.1f};
     constexpr auto lightAnimationDuration {5.0f};
-    constexpr auto narrowFrustumHeightFactor {1.11f};
     const Pht::Vec3 lightDirectionA {0.57f, 1.0f, 0.6f};
     const Pht::Vec3 lightDirectionB {1.0f, 1.0f, 0.74f};
     
@@ -120,7 +119,7 @@ void GameScene::Init(const Level& level,
     auto scene {sceneManager.CreateScene(Pht::Hash::Fnv1a("gameScene"))};
     mScene = scene.get();
     
-    sceneManager.InitSceneSystems(narrowFrustumHeightFactor);
+    sceneManager.InitSceneSystems(CommonResources::narrowFrustumHeightFactor);
     
     CreateRenderPasses();
     CreateLightAndCamera();
@@ -360,7 +359,7 @@ void GameScene::CreateHud(const GameLogic& gameLogic,
                                      levelResources,
                                      pieceResources,
                                      mGameHudController,
-                                     mCommonResources.GetHussarFontSize22(),
+                                     mCommonResources.GetHussarFontSize22(PotentiallyZoomedScreen::Yes),
                                      *mScene,
                                      *mHudContainer,
                                      static_cast<int>(Layer::Hud),

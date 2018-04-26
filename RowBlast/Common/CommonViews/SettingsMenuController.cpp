@@ -12,10 +12,11 @@ using namespace RowBlast;
 
 SettingsMenuController::SettingsMenuController(Pht::IEngine& engine,
                                                const CommonResources& commonResources,
-                                               Settings& settings) :
+                                               Settings& settings,
+                                               PotentiallyZoomedScreen potentiallyZoomedScreen) :
     mEngine {engine},
     mSettings {settings},
-    mView {engine, commonResources},
+    mView {engine, commonResources, potentiallyZoomedScreen},
     mSlidingMenuAnimation {engine, mView} {}
 
 void SettingsMenuController::Init(SlidingMenuAnimation::UpdateFade updateFade) {

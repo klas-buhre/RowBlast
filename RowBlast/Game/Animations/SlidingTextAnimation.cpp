@@ -11,6 +11,7 @@
 
 // Game includes.
 #include "GameScene.hpp"
+#include "CommonResources.hpp"
 
 using namespace RowBlast;
 
@@ -42,24 +43,25 @@ namespace {
     };
 }
 
-SlidingTextAnimation::SlidingTextAnimation(Pht::IEngine& engine, GameScene& scene) :
+SlidingTextAnimation::SlidingTextAnimation(Pht::IEngine& engine,
+                                           GameScene& scene,
+                                           const CommonResources& commonResources) :
     mEngine {engine},
     mScene {scene},
-    mFont {"HussarBoldWeb.otf", engine.GetRenderer().GetAdjustedNumPixels(52)},
     mContainerSceneObject {std::make_unique<Pht::SceneObject>()} {
-
-    auto& frustumSize {engine.GetRenderer().GetHudFrustumSize()};
-    mSlideInStartPosition = {0.0f, -frustumSize.y / 4.0f - textHeight / 2.0f, 0.0f};
-    mSlideOutFinalPosition = {0.0f, frustumSize.y / 4.0f + textHeight / 2.0f, 0.0f};
     
+    auto& font {commonResources.GetHussarFontSize52PotentiallyZoomedScreen()};
+
     mTexts.reserve(4);
-    CreateText(2.7f, {{{-3.1f, 1.0f}, "Clear all"}, {{-4.0f, -1.0f}, "gray blocks!"}});
-    CreateText(2.7f, {{{-4.0f, 1.0f}, "You cleared"}, {{-3.55f, -1.0f}, "all blocks!"}});
-    CreateText(2.7f, {{{-2.5f, 1.0f}, "Fill all"}, {{-3.5f, -1.0f}, "gray slots!"}});
-    CreateText(2.7f, {{{-3.3f, 1.0f}, "You filled"}, {{-3.05f, -1.0f}, "all slots!"}});
+    CreateText(font, 2.7f, {{{-3.1f, 1.0f}, "Clear all"}, {{-4.0f, -1.0f}, "gray blocks!"}});
+    CreateText(font, 2.7f, {{{-4.0f, 1.0f}, "You cleared"}, {{-3.55f, -1.0f}, "all blocks!"}});
+    CreateText(font, 2.7f, {{{-2.5f, 1.0f}, "Fill all"}, {{-3.5f, -1.0f}, "gray slots!"}});
+    CreateText(font, 2.7f, {{{-3.3f, 1.0f}, "You filled"}, {{-3.05f, -1.0f}, "all slots!"}});
 }
 
-void SlidingTextAnimation::CreateText(float displayTime, const std::vector<TextLine>& textLines) {
+void SlidingTextAnimation::CreateText(const Pht::Font& font,
+                                      float displayTime,
+                                      const std::vector<TextLine>& textLines) {
     auto sceneObject {std::make_unique<Pht::SceneObject>()};
     std::vector<std::unique_ptr<Pht::SceneObject>> textLineSceneObjects;
     
@@ -71,7 +73,7 @@ void SlidingTextAnimation::CreateText(float displayTime, const std::vector<TextL
         auto textComponent {
             std::make_unique<Pht::TextComponent>(*textLineSceneObject,
                                                  textLine.mText,
-                                                 Pht::TextProperties{mFont})
+                                                 Pht::TextProperties{font})
         };
     
         textLineSceneObject->SetComponent<Pht::TextComponent>(std::move(textComponent));
@@ -89,6 +91,10 @@ void SlidingTextAnimation::Init() {
     for (auto& text: mTexts) {
         text.mSceneObject->SetIsVisible(false);
     }
+    
+    auto& frustumSize {mEngine.GetRenderer().GetHudFrustumSize()};
+    mSlideInStartPosition = {0.0f, -frustumSize.y / 4.0f - textHeight / 2.0f, 0.0f};
+    mSlideOutFinalPosition = {0.0f, frustumSize.y / 4.0f + textHeight / 2.0f, 0.0f};
 }
 
 void SlidingTextAnimation::Start(Message message) {

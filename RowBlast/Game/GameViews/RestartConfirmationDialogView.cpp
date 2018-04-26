@@ -15,8 +15,13 @@ using namespace RowBlast;
 
 RestartConfirmationDialogView::RestartConfirmationDialogView(Pht::IEngine& engine,
                                                              const CommonResources& commonResources) {
-    Pht::TextProperties textProperties {commonResources.GetHussarFontSize27()};
-    Pht::TextProperties restartTextProperties {commonResources.GetHussarFontSize30()};
+    Pht::TextProperties textProperties {
+        commonResources.GetHussarFontSize27(PotentiallyZoomedScreen::Yes)
+    };
+
+    Pht::TextProperties restartTextProperties {
+        commonResources.GetHussarFontSize35(PotentiallyZoomedScreen::Yes)
+    };
     
     auto frustumWidth {engine.GetRenderer().GetHudFrustumSize().x};
     Pht::Vec2 size {frustumWidth, 11.5f};

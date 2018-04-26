@@ -12,7 +12,10 @@
 using namespace RowBlast;
 
 NoMovesDialogView::NoMovesDialogView(Pht::IEngine& engine, const CommonResources& commonResources) {
-    Pht::TextProperties textProperties {commonResources.GetHussarFontSize27()};
+    Pht::TextProperties textProperties {
+        commonResources.GetHussarFontSize27(PotentiallyZoomedScreen::Yes)
+    };
+
     Pht::Vec2 size {engine.GetRenderer().GetHudFrustumSize().x, 8.0f};
     SetSize(size);
     SetPosition({0.0f, 0.0f});

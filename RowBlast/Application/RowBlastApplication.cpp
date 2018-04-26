@@ -30,7 +30,7 @@ Backlog:
      contrast.
     -Could zoom in on map pin when clicking on a level in the map.
     -Could have the rounded cylinder i some places in the HUDs.
-    -Maybe slightly less bevel in the blocks.
+   X-Maybe slightly less bevel in the blocks.
     -GUI: the buttons could be yellow with black text with rounded corners. The menu quad could be
      white with tilted stripes like in Mario Run and the upper part could be dark grey/black with
      yellow text. The menu quad could have rounded corners. If the quad has rounded corners then it
@@ -72,10 +72,6 @@ Backlog:
 Ongoing tasks:
     -The gesture input sensitivity seems too high.
     -Support for iPhone X screen.
-        -Fix issue with font sizes in game scene when using a different narrowFrustumHeightFactor.
-            -Probably solved for the common GUI views by having two view instances, one in map scene
-             and one in game scene which use different fonts. Fonts outside views in game scene
-             should be owned by the scene.
         -Make sure frustum sizes are correct for all calls to GetHudFrustumSize() and
          GetOrthographicFrustumSize() (make sure that ISceneManager::InitSceneSystems() has been
          called).
@@ -121,7 +117,7 @@ Time Estimation in days:
     -Support for iPhone X screen.
         Cost: 10
     -Use new GUI/Menu textures.
-        Cost: 3
+        Cost: 6
     -Do the marked items in the backlog.
         Cost: 8
     -Animations/effects when clearing a level.
@@ -147,7 +143,7 @@ Time Estimation in days:
     -Back end.
         Cost: ?
 
-        Total: 167
+        Total: 170
 
 
 Comomon piece type sets:

@@ -18,8 +18,13 @@ namespace {
 }
 
 GameMenuView::GameMenuView(Pht::IEngine& engine, const CommonResources& commonResources) {
-    Pht::TextProperties buttonTextProperties {commonResources.GetHussarFontSize27()};
-    Pht::TextProperties pausedTextProperties {commonResources.GetHussarFontSize30()};
+    Pht::TextProperties buttonTextProperties {
+        commonResources.GetHussarFontSize27(PotentiallyZoomedScreen::Yes)
+    };
+
+    Pht::TextProperties pausedTextProperties {
+        commonResources.GetHussarFontSize35(PotentiallyZoomedScreen::Yes)
+    };
     
     auto frustumWidth {engine.GetRenderer().GetHudFrustumSize().x};
     Pht::Vec2 size {frustumWidth, 19.0f};

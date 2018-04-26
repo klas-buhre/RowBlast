@@ -185,7 +185,7 @@ void MapScene::CreateScene(const Chapter& chapter) {
     
     mHud = std::make_unique<MapHud>(mEngine,
                                     mUserData,
-                                    mCommonResources.GetHussarFontSize22(),
+                                    mCommonResources.GetHussarFontSize22(PotentiallyZoomedScreen::No),
                                     *scene,
                                     static_cast<int>(Layer::Hud));
     
