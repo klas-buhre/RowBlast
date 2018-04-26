@@ -21,6 +21,7 @@ SettingsMenuController::SettingsMenuController(Pht::IEngine& engine,
 void SettingsMenuController::Init(SlidingMenuAnimation::UpdateFade updateFade) {
     mUpdateFade = updateFade;
     mSlidingMenuAnimation.Init(updateFade);
+    UpdateViewToReflectSettings();
 }
 
 void SettingsMenuController::SetFadeEffect(Pht::FadeEffect& fadeEffect) {
@@ -53,13 +54,11 @@ SettingsMenuController::Result SettingsMenuController::OnTouch(const Pht::TouchE
     if (mView.GetControlsButton().IsClicked(touchEvent)) {
         if (mSettings.mControlType == ControlType::Click) {
             mSettings.mControlType = ControlType::Gesture;
-            mView.GetControlsClickText().SetIsVisible(false);
-            mView.GetControlsSwipeText().SetIsVisible(true);
         } else {
             mSettings.mControlType = ControlType::Click;
-            mView.GetControlsClickText().SetIsVisible(true);
-            mView.GetControlsSwipeText().SetIsVisible(false);
         }
+        
+        UpdateViewToReflectSettings();
     }
 
     if (mView.GetSoundButton().IsClicked(touchEvent)) {
@@ -67,13 +66,11 @@ SettingsMenuController::Result SettingsMenuController::OnTouch(const Pht::TouchE
         
         if (audio.IsSoundEnabled()) {
             audio.DisableSound();
-            mView.GetSoundOnText().SetIsVisible(false);
-            mView.GetSoundOffText().SetIsVisible(true);
         } else {
             audio.EnableSound();
-            mView.GetSoundOnText().SetIsVisible(true);
-            mView.GetSoundOffText().SetIsVisible(false);
         }
+        
+        UpdateViewToReflectSettings();
     }
 
     if (mView.GetBackButton().IsClicked(touchEvent)) {
@@ -82,4 +79,24 @@ SettingsMenuController::Result SettingsMenuController::OnTouch(const Pht::TouchE
     }
     
     return Result::None;
+}
+
+void SettingsMenuController::UpdateViewToReflectSettings() {
+    if (mSettings.mControlType == ControlType::Click) {
+        mView.GetControlsClickText().SetIsVisible(true);
+        mView.GetControlsSwipeText().SetIsVisible(false);
+    } else {
+        mView.GetControlsClickText().SetIsVisible(false);
+        mView.GetControlsSwipeText().SetIsVisible(true);
+    }
+    
+    auto& audio {mEngine.GetAudio()};
+
+    if (audio.IsSoundEnabled()) {
+        mView.GetSoundOnText().SetIsVisible(true);
+        mView.GetSoundOffText().SetIsVisible(false);
+    } else {
+        mView.GetSoundOnText().SetIsVisible(false);
+        mView.GetSoundOffText().SetIsVisible(true);
+    }
 }

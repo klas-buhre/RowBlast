@@ -4,7 +4,6 @@
 #include "IEngine.hpp"
 
 // Game includes.
-#include "CommonViewControllers.hpp"
 #include "UiLayer.hpp"
 #include "GameScene.hpp"
 
@@ -18,7 +17,7 @@ namespace {
 GameViewControllers::GameViewControllers(Pht::IEngine& engine,
                                          const CommonResources& commonResources,
                                          const UserData& userData,
-                                         CommonViewControllers& commonViewControllers) :
+                                         Settings& settings) :
     mFadeEffect {
         engine.GetSceneManager(),
         engine.GetRenderer(),
@@ -33,8 +32,8 @@ GameViewControllers::GameViewControllers(Pht::IEngine& engine,
     mLevelCompletedDialogController {engine, commonResources},
     mRestartConfirmationDialogController {engine, commonResources, userData},
     mMapConfirmationDialogController {engine, commonResources},
-    mSettingsMenuController {commonViewControllers.GetSettingsMenuController()},
-    mNoLivesDialogController {commonViewControllers.GetNoLivesDialogController()} {
+    mNoLivesDialogController {engine, commonResources, userData},
+    mSettingsMenuController {engine, commonResources, settings} {
 
     mViewManager.AddView(mGameHudController.GetView());
     mViewManager.AddView(mGameMenuController.GetView());

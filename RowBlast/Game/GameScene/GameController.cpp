@@ -30,12 +30,11 @@ namespace {
 
 GameController::GameController(Pht::IEngine& engine,
                                const CommonResources& commonResources,
-                               CommonViewControllers& commonViewControllers,
                                UserData& userData,
                                Settings& settings) :
     mEngine {engine},
     mUserData {userData},
-    mGameViewControllers {engine, commonResources, mUserData, commonViewControllers},
+    mGameViewControllers {engine, commonResources, mUserData, settings},
     mField {},
     mCollapsingFieldAnimation {mField},
     mFlashingBlocksAnimation {mField},

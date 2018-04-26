@@ -71,7 +71,6 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine, const CommonResources& 
     mControlsSwipeText = &(mControlsButton->CreateText({-1.05f, -0.23f, UiLayer::buttonText},
                                                        "SWIPE",
                                                        textProperties).GetSceneObject());
-    mControlsSwipeText->SetIsVisible(false);
 
     auto soundBarSceneObject {
         sceneManager.CreateSceneObject(Pht::QuadMesh {7.0f, 1.72f}, barMaterial, GetSceneResources())
@@ -94,7 +93,6 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine, const CommonResources& 
     mSoundOffText = &(mSoundButton->CreateText({-0.7f, -0.23f, UiLayer::buttonText},
                                                "OFF",
                                                textProperties).GetSceneObject());
-    mSoundOffText->SetIsVisible(false);
 
     MenuButton::Style backButtonStyle {buttonStyle};
     backButtonStyle.mPressedScale = 0.925f;

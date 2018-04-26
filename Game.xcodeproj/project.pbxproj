@@ -237,7 +237,6 @@
 		62785E022087618E006F9869 /* NoLivesDialogController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62785D712087618E006F9869 /* NoLivesDialogController.cpp */; };
 		62785E032087618E006F9869 /* NoLivesDialogView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62785D722087618E006F9869 /* NoLivesDialogView.cpp */; };
 		62785E042087618E006F9869 /* SettingsMenuController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62785D742087618E006F9869 /* SettingsMenuController.cpp */; };
-		62785E052087618E006F9869 /* CommonViewControllers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62785D752087618E006F9869 /* CommonViewControllers.cpp */; };
 		62785E062087618E006F9869 /* SettingsMenuView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62785D772087618E006F9869 /* SettingsMenuView.cpp */; };
 		62785E072087618E006F9869 /* StringUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62785D7D2087618E006F9869 /* StringUtils.cpp */; };
 		62785E082087618E006F9869 /* Materials.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62785D802087618E006F9869 /* Materials.cpp */; };
@@ -786,9 +785,7 @@
 		62785D702087618E006F9869 /* SettingsMenuView.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SettingsMenuView.hpp; sourceTree = "<group>"; };
 		62785D712087618E006F9869 /* NoLivesDialogController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NoLivesDialogController.cpp; sourceTree = "<group>"; };
 		62785D722087618E006F9869 /* NoLivesDialogView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NoLivesDialogView.cpp; sourceTree = "<group>"; };
-		62785D732087618E006F9869 /* CommonViewControllers.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CommonViewControllers.hpp; sourceTree = "<group>"; };
 		62785D742087618E006F9869 /* SettingsMenuController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SettingsMenuController.cpp; sourceTree = "<group>"; };
-		62785D752087618E006F9869 /* CommonViewControllers.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CommonViewControllers.cpp; sourceTree = "<group>"; };
 		62785D762087618E006F9869 /* SettingsMenuController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SettingsMenuController.hpp; sourceTree = "<group>"; };
 		62785D772087618E006F9869 /* SettingsMenuView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SettingsMenuView.cpp; sourceTree = "<group>"; };
 		62785D782087618E006F9869 /* NoLivesDialogController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = NoLivesDialogController.hpp; sourceTree = "<group>"; };
@@ -1806,8 +1803,6 @@
 		62785D6F2087618E006F9869 /* CommonViews */ = {
 			isa = PBXGroup;
 			children = (
-				62785D752087618E006F9869 /* CommonViewControllers.cpp */,
-				62785D732087618E006F9869 /* CommonViewControllers.hpp */,
 				62785D712087618E006F9869 /* NoLivesDialogController.cpp */,
 				62785D782087618E006F9869 /* NoLivesDialogController.hpp */,
 				62785D722087618E006F9869 /* NoLivesDialogView.cpp */,
@@ -1904,11 +1899,11 @@
 		62785DA42087618E006F9869 /* MapViews */ = {
 			isa = PBXGroup;
 			children = (
-				62785DA52087618E006F9869 /* SettingsButtonView.cpp */,
-				62785DA62087618E006F9869 /* SettingsButtonController.cpp */,
-				62785DA72087618E006F9869 /* MapViewControllers.hpp */,
-				62785DA82087618E006F9869 /* SettingsButtonController.hpp */,
 				62785DA92087618E006F9869 /* MapViewControllers.cpp */,
+				62785DA72087618E006F9869 /* MapViewControllers.hpp */,
+				62785DA62087618E006F9869 /* SettingsButtonController.cpp */,
+				62785DA82087618E006F9869 /* SettingsButtonController.hpp */,
+				62785DA52087618E006F9869 /* SettingsButtonView.cpp */,
 				62785DAA2087618E006F9869 /* SettingsButtonView.hpp */,
 			);
 			path = MapViews;
@@ -2229,7 +2224,6 @@
 				62785E072087618E006F9869 /* StringUtils.cpp in Sources */,
 				62785B1120875937006F9869 /* ShaderProgram.cpp in Sources */,
 				62785B0820875937006F9869 /* SphereMesh.cpp in Sources */,
-				62785E052087618E006F9869 /* CommonViewControllers.cpp in Sources */,
 				62785B2E20875937006F9869 /* InputHandler.cpp in Sources */,
 				62785DFC2087618E006F9869 /* SlidingTextAnimation.cpp in Sources */,
 				62785B2F20875937006F9869 /* InputEvent.cpp in Sources */,

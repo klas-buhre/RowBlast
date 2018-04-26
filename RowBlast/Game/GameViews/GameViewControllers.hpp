@@ -13,6 +13,8 @@
 #include "LevelCompletedDialogController.hpp"
 #include "RestartConfirmationDialogController.hpp"
 #include "MapConfirmationDialogController.hpp"
+#include "SettingsMenuController.hpp"
+#include "NoLivesDialogController.hpp"
 
 namespace Pht {
     class IEngine;
@@ -21,10 +23,8 @@ namespace Pht {
 namespace RowBlast {
     class CommonResources;
     class UserData;
-    class CommonViewControllers;
-    class SettingsMenuController;
-    class NoLivesDialogController;
     class GameScene;
+    class Settings;
     
     class GameViewControllers {
     public:
@@ -44,7 +44,7 @@ namespace RowBlast {
         GameViewControllers(Pht::IEngine& engine,
                             const CommonResources& commonResources,
                             const UserData& userData,
-                            CommonViewControllers& commonViewControllers);
+                            Settings& settings);
         
         void Init(GameScene& scene);
         void SetActiveController(Controller controller);
@@ -95,8 +95,8 @@ namespace RowBlast {
         LevelCompletedDialogController mLevelCompletedDialogController;
         RestartConfirmationDialogController mRestartConfirmationDialogController;
         MapConfirmationDialogController mMapConfirmationDialogController;
-        SettingsMenuController& mSettingsMenuController;
-        NoLivesDialogController& mNoLivesDialogController;
+        SettingsMenuController mSettingsMenuController;
+        NoLivesDialogController mNoLivesDialogController;
     };
 }
 

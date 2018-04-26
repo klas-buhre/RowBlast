@@ -7,7 +7,6 @@
 
 // Game includes.
 #include "CommonResources.hpp"
-#include "CommonViewControllers.hpp"
 #include "UserData.hpp"
 #include "TitleController.hpp"
 #include "MapController.hpp"
@@ -48,7 +47,6 @@ namespace RowBlast {
         CommonResources mCommonResources;
         Settings mSettings;
         UserData mUserData;
-        CommonViewControllers mCommonViewControllers;
         TitleController mTitleController;
         MapController mMapController;
         GameController mGameController;

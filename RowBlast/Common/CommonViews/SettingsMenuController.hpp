@@ -37,6 +37,7 @@ namespace RowBlast {
     private:
         Result HandleInput();
         Result OnTouch(const Pht::TouchEvent& touchEvent);
+        void UpdateViewToReflectSettings();
         
         Pht::IEngine& mEngine;
         Settings& mSettings;

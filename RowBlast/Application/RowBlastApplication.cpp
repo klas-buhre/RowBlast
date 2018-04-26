@@ -344,10 +344,9 @@ RowBlastApplication::RowBlastApplication(Pht::IEngine& engine) :
     mCommonResources {engine},
     mSettings {},
     mUserData {},
-    mCommonViewControllers {engine, mCommonResources, mUserData, mSettings},
     mTitleController {engine, mCommonResources},
-    mMapController {engine, mCommonResources, mCommonViewControllers, mUserData},
-    mGameController {engine, mCommonResources, mCommonViewControllers, mUserData, mSettings},
+    mMapController {engine, mCommonResources, mUserData, mSettings},
+    mGameController {engine, mCommonResources, mUserData, mSettings},
     mFadeEffect {engine.GetSceneManager(), engine.GetRenderer(), titleFadeInDuration, 1.0f, 0.0f} {
 
     engine.GetInput().SetUseGestureRecognizers(false);

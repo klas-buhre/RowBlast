@@ -33,7 +33,6 @@ namespace Pht {
 
 namespace RowBlast {
     class CommonResources;
-    class CommonViewControllers;
     class UserData;
     class Settings;
     class FallingPieceAnimation;
@@ -49,7 +48,6 @@ namespace RowBlast {
 
         GameController(Pht::IEngine& engine,
                        const CommonResources& commonResources,
-                       CommonViewControllers& commonViewControllers,
                        UserData& userData,
                        Settings& settings);
     

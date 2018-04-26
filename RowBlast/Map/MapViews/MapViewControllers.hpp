@@ -6,6 +6,8 @@
 
 // Game includes.
 #include "SettingsButtonController.hpp"
+#include "SettingsMenuController.hpp"
+#include "NoLivesDialogController.hpp"
 #include "GuiViewManager.hpp"
 
 namespace Pht {
@@ -13,10 +15,10 @@ namespace Pht {
 }
 
 namespace RowBlast {
-    class SettingsMenuController;
-    class NoLivesDialogController;
-    class CommonViewControllers;
     class MapScene;
+    class CommonResources;
+    class UserData;
+    class Settings;
     
     class MapViewControllers {
     public:
@@ -28,7 +30,9 @@ namespace RowBlast {
         
         MapViewControllers(Pht::IEngine& engine,
                            MapScene& scene,
-                           CommonViewControllers& commonViewControllers);
+                           const CommonResources& commonResources,
+                           const UserData& userData,
+                           Settings& settings);
 
         void Init();
         void SetActiveController(Controller controller);
@@ -50,8 +54,8 @@ namespace RowBlast {
         Pht::FadeEffect mFadeEffect;
         GuiViewManager mViewManager;
         SettingsButtonController mSettingsButtonController;
-        NoLivesDialogController& mNoLivesDialogController;
-        SettingsMenuController& mSettingsMenuController;
+        NoLivesDialogController mNoLivesDialogController;
+        SettingsMenuController mSettingsMenuController;
     };
 }
 

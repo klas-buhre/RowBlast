@@ -29,12 +29,12 @@ int MapController::Command::GetLevel() const {
 
 MapController::MapController(Pht::IEngine& engine,
                              const CommonResources& commonResources,
-                             CommonViewControllers& commonViewControllers,
-                             UserData& userData) :
+                             UserData& userData,
+                             Settings& settings) :
     mEngine {engine},
     mUserData {userData},
     mScene {engine, commonResources, userData},
-    mMapViewControllers {engine, mScene, commonViewControllers} {}
+    mMapViewControllers {engine, mScene, commonResources, userData, settings} {}
 
 void MapController::Init() {
     mScene.Init();

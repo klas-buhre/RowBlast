@@ -4,7 +4,6 @@
 #include "IEngine.hpp"
 
 // Game includes.
-#include "CommonViewControllers.hpp"
 #include "MapScene.hpp"
 #include "UiLayer.hpp"
 
@@ -17,7 +16,9 @@ namespace {
 
 MapViewControllers::MapViewControllers(Pht::IEngine& engine,
                                        MapScene& scene,
-                                       CommonViewControllers& commonViewControllers) :
+                                       const CommonResources& commonResources,
+                                       const UserData& userData,
+                                       Settings& settings) :
     mScene {scene},
     mFadeEffect {
         engine.GetSceneManager(),
@@ -27,8 +28,8 @@ MapViewControllers::MapViewControllers(Pht::IEngine& engine,
         UiLayer::backgroundFade
     },
     mSettingsButtonController {engine},
-    mNoLivesDialogController {commonViewControllers.GetNoLivesDialogController()},
-    mSettingsMenuController {commonViewControllers.GetSettingsMenuController()} {
+    mNoLivesDialogController {engine, commonResources, userData},
+    mSettingsMenuController {engine, commonResources, settings} {
     
     mViewManager.AddView(mSettingsButtonController.GetView());
     mViewManager.AddView(mNoLivesDialogController.GetView());

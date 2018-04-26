@@ -26,6 +26,7 @@ CameraShake::CameraShake(ShakeKind shakeKind) :
     mFastNoise {1337} {
 
     mFastNoise.SetFrequency(1.0f);
+    Init();
 }
 
 void CameraShake::Init() {

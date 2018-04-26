@@ -11,8 +11,8 @@ namespace Pht {
 
 namespace RowBlast {
     class CommonResources;
-    class CommonViewControllers;
     class UserData;
+    class Settings;
     
     class MapController {
     public:
@@ -38,8 +38,8 @@ namespace RowBlast {
     
         MapController(Pht::IEngine& engine,
                       const CommonResources& commonResources,
-                      CommonViewControllers& commonViewControllers,
-                      UserData& userData);
+                      UserData& userData,
+                      Settings& settings);
     
         void Init();
         Command Update();
