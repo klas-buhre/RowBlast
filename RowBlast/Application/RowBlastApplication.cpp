@@ -33,7 +33,8 @@ Backlog:
     -Maybe slightly less bevel in the blocks.
     -GUI: the buttons could be yellow with black text with rounded corners. The menu quad could be
      white with tilted stripes like in Mario Run and the upper part could be dark grey/black with
-     yellow text.
+     yellow text. The menu quad could have rounded corners. If the quad has rounded corners then it
+     could slide in from the side. The upper part could could have horizontal stripes or checked.
      Or: the buttons in the views could be yellow with black text and triangular edges like in
      Mario Kart 8. There could also be a reflection animation in the button.
     -Maybe the merging of two triangles into a cube could be done by letting the two triangles fade
@@ -72,10 +73,14 @@ Ongoing tasks:
     -The gesture input sensitivity seems too high.
     -Support for iPhone X screen.
         -Fix issue with font sizes in game scene when using a different narrowFrustumHeightFactor.
+            -Probably solved for the common GUI views by having two view instances, one in map scene
+             and one in game scene which use different fonts. Fonts outside views in game scene
+             should be owned by the scene.
         -Make sure frustum sizes are correct for all calls to GetHudFrustumSize() and
          GetOrthographicFrustumSize() (make sure that ISceneManager::InitSceneSystems() has been
          called).
-
+        -Try baught rounded cylinder for the progress and moves left.
+        -Trim camera position and HUD object positions.
 
 Ideas:
     -The pause button could lead to a widget that has an undo button, a boosters button and a game
