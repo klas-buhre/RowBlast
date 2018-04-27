@@ -27,10 +27,12 @@ namespace {
     }
 }
 
-void RowBlast::CreateRoundedCylinder(Pht::Scene& scene,
-                                     Pht::SceneObject& parentObject,
-                                     const Pht::Vec3& position,
-                                     const Pht::Vec2& size) {
+Pht::SceneObject& RowBlast::CreateRoundedCylinder(Pht::Scene& scene,
+                                                  Pht::SceneObject& parentObject,
+                                                  const Pht::Vec3& position,
+                                                  const Pht::Vec2& size,
+                                                  float opacity,
+                                                  const Pht::Color& color) {
     auto& sceneObject {scene.CreateSceneObject()};
     sceneObject.GetTransform().SetPosition(position);
     parentObject.AddChild(sceneObject);
@@ -44,20 +46,18 @@ void RowBlast::CreateRoundedCylinder(Pht::Scene& scene,
         "cloud_C_envmap.jpg"
     };
 
-    Pht::Color ambient {0.55f, 0.55f, 0.55f};
-    Pht::Color diffuse {0.55f, 0.55f, 0.55f};
     Pht::Color specular {1.0f, 1.0f, 1.0f};
     const auto shininess {20.0f};
     const auto reflectivity {0.84f};
     Pht::Material material {
         envMapTextures,
-        ambient,
-        diffuse,
+        color,
+        color,
         specular,
         shininess,
         reflectivity
     };
-    material.SetOpacity(0.8f);
+    material.SetOpacity(opacity);
 
     auto& cylinder {
         scene.CreateSceneObject(Pht::CylinderMesh {size.y / 2.0f, size.x, false}, material)
@@ -68,4 +68,6 @@ void RowBlast::CreateRoundedCylinder(Pht::Scene& scene,
     
     CreateSphere(scene, sceneObject, {size.x / 2.0f, 0.0f, 0.0f}, size.y / 2.0f, -90.0f, material);
     CreateSphere(scene, sceneObject, {-size.x / 2.0f, 0.0f, 0.0f}, size.y / 2.0f, 90.0f, material);
+    
+    return sceneObject;
 }

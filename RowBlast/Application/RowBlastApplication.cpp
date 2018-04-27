@@ -72,7 +72,6 @@ Backlog:
 Ongoing tasks:
     -The gesture input sensitivity seems too high.
     -Support for iPhone X screen.
-        -Try rounded cylinder for the progress and moves left.
         -Trim camera position and HUD object positions.
 
 Ideas:

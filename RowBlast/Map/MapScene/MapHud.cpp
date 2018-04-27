@@ -12,14 +12,14 @@
 #include "StringUtils.hpp"
 #include "GradientRectangle.hpp"
 #include "UiLayer.hpp"
+#include "RoundedCylinder.hpp"
 
 using namespace RowBlast;
 
 namespace {
-    constexpr auto livesRectangleDistFromBorder {2.4f};
-    constexpr auto livesTextDistFromBorder {1.3f};
-    constexpr auto countdownTextDistFromBorder {1.45f};
     constexpr auto countdownNumChars {5};
+    const Pht::Color roundedCylinderColor {0.55f, 0.55f, 0.55f};
+    constexpr auto roundedCylinderOpacity {0.65f};
 }
 
 MapHud::MapHud(Pht::IEngine& engine,
@@ -33,43 +33,74 @@ MapHud::MapHud(Pht::IEngine& engine,
     hudObject.SetLayer(hudLayer);
     scene.GetRoot().AddChild(hudObject);
     
-    Pht::TextProperties textProperties {font, 1.0f, Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f}};
+    Pht::TextProperties textProperties {
+        font,
+        1.0f,
+        Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f},
+        Pht::TextShadow::Yes,
+        {0.05f, 0.05f},
+        {0.4f, 0.4f, 0.4f, 0.5f}
+    };
+    
+    CreateLivesObject(engine, scene, hudObject, textProperties);
+    CreateNewLifeCountdownObject(engine, scene, hudObject, textProperties);
+}
+
+void MapHud::CreateLivesObject(Pht::IEngine& engine,
+                               Pht::Scene& scene,
+                               Pht::SceneObject& parentObject,
+                               const Pht::TextProperties& textProperties) {
+    Pht::Vec3 livesContainerPosition {
+        -engine.GetRenderer().GetHudFrustumSize().x / 2.0f + 2.3f,
+        12.45f,
+        UiLayer::root
+    };
+
+    auto& livesContainer {scene.CreateSceneObject()};
+    livesContainer.GetTransform().SetPosition(livesContainerPosition);
+    parentObject.AddChild(livesContainer);
+
+    Pht::Vec3 cylinderPosition {0.0f, 0.0f, UiLayer::lowerTextRectangle};
+    CreateRoundedCylinder(scene,
+                          livesContainer,
+                          cylinderPosition,
+                          {2.5, 1.1f},
+                          roundedCylinderOpacity,
+                          roundedCylinderColor);
     
     // Warning! Must be three spaces to fit digits.
     mLivesText = &scene.CreateText("LIVES   ", textProperties);
-    
-    Pht::Vec3 livesTextPosition {
-        -engine.GetRenderer().GetHudFrustumSize().x / 2.0f + livesTextDistFromBorder,
-        12.65f,
-        UiLayer::text
-    };
-    
-    mLivesText->GetSceneObject().GetTransform().SetPosition(livesTextPosition);
-    hudObject.AddChild(mLivesText->GetSceneObject());
-    
-    Pht::Vec3 newLifeCountdownTextPosition {
-        -engine.GetRenderer().GetHudFrustumSize().x / 2.0f + countdownTextDistFromBorder,
-        12.0f,
-        UiLayer::text
-    };
-    
-    mNewLifeCountdownText = &scene.CreateText("00:00", textProperties);
-    mNewLifeCountdownText->GetSceneObject().GetTransform().SetPosition(newLifeCountdownTextPosition);
-    hudObject.AddChild(mNewLifeCountdownText->GetSceneObject());
-    
-    CreateLivesRectangle(engine, scene, hudObject);
-    CreateCountdownRectangle(engine, scene, hudObject);
+
+    mLivesText->GetSceneObject().GetTransform().SetPosition({-1.1f, -0.23f, UiLayer::text});
+    livesContainer.AddChild(mLivesText->GetSceneObject());
 }
 
-void MapHud::CreateLivesRectangle(Pht::IEngine& engine,
-                                  Pht::Scene& scene,
-                                  Pht::SceneObject& parentObject) {
-    Pht::Vec3 position {
-        -engine.GetRenderer().GetHudFrustumSize().x / 2.0f + livesRectangleDistFromBorder,
-        12.87f,
-        UiLayer::textRectangle
+void MapHud::CreateNewLifeCountdownObject(Pht::IEngine& engine,
+                                          Pht::Scene& scene,
+                                          Pht::SceneObject& parentObject,
+                                          const Pht::TextProperties& textProperties) {
+    Pht::Vec3 newLifeCountdownContainerPosition {
+        -engine.GetRenderer().GetHudFrustumSize().x / 2.0f + 2.3f,
+        11.2f,
+        UiLayer::root
     };
+
+    mNewLifeCountdownContainer = &scene.CreateSceneObject();
+    mNewLifeCountdownContainer->GetTransform().SetPosition(newLifeCountdownContainerPosition);
+    parentObject.AddChild(*mNewLifeCountdownContainer);
+
+    Pht::Vec3 rectanglePosition {0.0f, 0.0f, UiLayer::lowerTextRectangle};
+    CreateCountdownRectangle(engine, scene, *mNewLifeCountdownContainer, rectanglePosition);
     
+    mNewLifeCountdownText = &scene.CreateText("00:00", textProperties);
+    mNewLifeCountdownText->GetSceneObject().GetTransform().SetPosition({-0.9f, -0.23f, UiLayer::text});
+    mNewLifeCountdownContainer->AddChild(mNewLifeCountdownText->GetSceneObject());
+}
+
+void MapHud::CreateCountdownRectangle(Pht::IEngine& engine,
+                                      Pht::Scene& scene,
+                                      Pht::SceneObject& parentObject,
+                                      const Pht::Vec3& position) {
     Pht::Vec2 size {4.0f, 0.7f};
     auto leftQuadWidth {1.0f};
     auto rightQuadWidth {1.0f};
@@ -91,46 +122,14 @@ void MapHud::CreateLivesRectangle(Pht::IEngine& engine,
                             colors);
 }
 
-void MapHud::CreateCountdownRectangle(Pht::IEngine& engine,
-                                      Pht::Scene& scene,
-                                      Pht::SceneObject& parentObject) {
-    Pht::Vec3 position {
-        -engine.GetRenderer().GetHudFrustumSize().x / 2.0f + livesRectangleDistFromBorder,
-        12.22f,
-        UiLayer::textRectangle
-    };
-    
-    Pht::Vec2 size {4.0f, 0.7f};
-    auto leftQuadWidth {1.0f};
-    auto rightQuadWidth {1.0f};
-    
-    GradientRectangleColors colors {
-        .mLeft = {0.6f, 0.3f, 0.75f, 0.0f},
-        .mMid = {0.6f, 0.3f, 0.75f, 0.8f},
-        .mRight = {0.6f, 0.3f, 0.75f, 0.0f}
-    };
-    
-    mNewLifeCountdownRectangle = &CreateGradientRectangle(scene,
-                                                          parentObject,
-                                                          position,
-                                                          size,
-                                                          0.0f,
-                                                          leftQuadWidth,
-                                                          rightQuadWidth,
-                                                          colors,
-                                                          colors);
-}
-
 void MapHud::Update() {
     UpdateLivesText();
     UpdateCountdown();
     
     if (mUserData.GetLifeManager().HasFullNumLives()) {
-        mNewLifeCountdownRectangle->SetIsVisible(false);
-        mNewLifeCountdownText->GetSceneObject().SetIsVisible(false);
+        mNewLifeCountdownContainer->SetIsVisible(false);
     } else {
-        mNewLifeCountdownRectangle->SetIsVisible(true);
-        mNewLifeCountdownText->GetSceneObject().SetIsVisible(true);
+        mNewLifeCountdownContainer->SetIsVisible(true);
     }
 }
 

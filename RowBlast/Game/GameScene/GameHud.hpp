@@ -106,9 +106,6 @@ namespace RowBlast {
                                           Pht::SceneObject& parentObject,
                                           const Pht::TextProperties& textProperties,
                                           const Level& level);
-        void CreateSmallPiecesRectangle(const Pht::Vec3& position,
-                                        Pht::Scene& scene,
-                                        Pht::SceneObject& parentObject);
         Pht::SceneObject& CreateTextRectangle(const Pht::Vec3& position,
                                               float length,
                                               bool isBright,

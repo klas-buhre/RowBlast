@@ -11,6 +11,7 @@
 
 // Game includes.
 #include "GradientRectangle.hpp"
+#include "RoundedCylinder.hpp"
 #include "GameLogic.hpp"
 #include "LevelResources.hpp"
 #include "PieceResources.hpp"
@@ -22,8 +23,10 @@ using namespace RowBlast;
 namespace {
     const Pht::Vec3 lightDirectionA {0.6f, 1.0f, 1.0f};
     const Pht::Vec3 lightDirectionB {0.4f, 1.0f, 1.0f};
-    const auto lightAnimationDuration {5.0f};
-    const auto cellSize {1.25f};
+    constexpr auto lightAnimationDuration {5.0f};
+    const Pht::Color roundedCylinderColor {0.65f, 0.65f, 0.65f};
+    constexpr auto roundedCylinderOpacity {0.5f};
+    constexpr auto cellSize {1.25f};
 }
 
 GameHud::GameHud(Pht::IEngine& engine,
@@ -54,11 +57,20 @@ GameHud::GameHud(Pht::IEngine& engine,
 
     CreateLightAndCamera(scene, parentObject, hudLayer);
     
-    Pht::TextProperties textProperties {font, 1.0f, Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f}};
-    CreateProgressObject(scene, parentObject, textProperties, levelResources);
-    CreateMovesObject(scene, parentObject, textProperties);
-    CreateNextPiecesObject(scene, parentObject, textProperties, level);
-    CreateSelectablePiecesObject(scene, parentObject, textProperties, level);
+    Pht::TextProperties upperTextProperties {
+        font,
+        1.0f,
+        Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f},
+        Pht::TextShadow::Yes,
+        {0.05f, 0.05f},
+        {0.4f, 0.4f, 0.4f, 0.5f}
+    };
+    CreateProgressObject(scene, parentObject, upperTextProperties, levelResources);
+    CreateMovesObject(scene, parentObject, upperTextProperties);
+    
+    Pht::TextProperties lowerTextProperties {font, 1.0f, Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f}};
+    CreateNextPiecesObject(scene, parentObject, lowerTextProperties, level);
+    CreateSelectablePiecesObject(scene, parentObject, lowerTextProperties, level);
 }
 
 void GameHud::CreateLightAndCamera(Pht::Scene& scene,
@@ -90,23 +102,25 @@ void GameHud::CreateProgressObject(Pht::Scene& scene,
                                    const Pht::TextProperties& textProperties,
                                    const LevelResources& levelResources) {
     auto& progressContainer {scene.CreateSceneObject()};
-    progressContainer.GetTransform().SetPosition({-4.1f, 12.6f, UiLayer::root});
+    progressContainer.GetTransform().SetPosition({-3.7f, 12.55f, UiLayer::root});
     parentObject.AddChild(progressContainer);
     
-    Pht::Vec3 textRectanglePosition {0.9f, 0.2f, UiLayer::lowerTextRectangle};
-    CreateTextRectangle(textRectanglePosition, 4.4f, false, scene, progressContainer);
+    Pht::Vec3 cylinderPosition {0.0f, 0.0f, UiLayer::lowerTextRectangle};
+    CreateRoundedCylinder(scene,
+                          progressContainer,
+                          cylinderPosition,
+                          {2.2, 1.1f},
+                          roundedCylinderOpacity,
+                          roundedCylinderColor);
     
     std::string text {"    "};  // Warning! Must be four spaces to fit digits.
     mProgressText = &scene.CreateText(text, textProperties);
     auto& progressTextSceneobject {mProgressText->GetSceneObject()};
-    progressTextSceneobject.GetTransform().SetPosition({1.1f, 0.0f, UiLayer::text});
+    progressTextSceneobject.GetTransform().SetPosition({0.0f, -0.2f, UiLayer::text});
     progressContainer.AddChild(progressTextSceneobject);
     
     switch (mLevelObjective) {
         case Level::Objective::Clear:
-            CreateSmallPiecesRectangle({0.15f, 0.1f, UiLayer::piecesRectangle},
-                                       scene,
-                                       progressContainer);
             CreateGrayBlock(scene, progressContainer, levelResources);
             break;
         case Level::Objective::Build:
@@ -122,7 +136,7 @@ void GameHud::CreateGrayBlock(Pht::Scene& scene,
     grayBlock.SetRenderable(&levelResources.GetLevelBlockRenderable(BlockKind::Full));
     
     auto& transform {grayBlock.GetTransform()};
-    transform.SetPosition({0.19f, 0.2f, UiLayer::block});
+    transform.SetPosition({-0.8f, 0.0f, UiLayer::block});
     transform.SetRotation({-30.0f, -30.0f, 0.0f});
     transform.SetScale(0.505f);
     
@@ -136,7 +150,7 @@ void GameHud::CreateBlueprintSlot(Pht::Scene& scene,
     blueprintSlot.SetRenderable(&levelResources.GetBlueprintSlotRenderable());
     
     auto& transform {blueprintSlot.GetTransform()};
-    transform.SetPosition({0.55f, 0.2f, UiLayer::block});
+    transform.SetPosition({-0.7f, 0.0f, UiLayer::block});
     transform.SetRotation({-30.0f, -30.0f, 0.0f});
     transform.SetScale(0.56f);
     
@@ -147,19 +161,23 @@ void GameHud::CreateMovesObject(Pht::Scene& scene,
                                 Pht::SceneObject& parentObject,
                                 const Pht::TextProperties& textProperties) {
     auto& movesContainer {scene.CreateSceneObject()};
-    movesContainer.GetTransform().SetPosition({3.1f, 12.6f, UiLayer::root});
+    movesContainer.GetTransform().SetPosition({3.7f, 12.55f, UiLayer::root});
     parentObject.AddChild(movesContainer);
     
-    Pht::Vec3 textRectanglePosition {0.9f, 0.2f, UiLayer::lowerTextRectangle};
-    CreateTextRectangle(textRectanglePosition, 4.4f, false, scene, movesContainer);
+    Pht::Vec3 cylinderPosition {0.0f, 0.0f, UiLayer::lowerTextRectangle};
+    CreateRoundedCylinder(scene,
+                          movesContainer,
+                          cylinderPosition,
+                          {2.2, 1.1f},
+                          roundedCylinderOpacity,
+                          roundedCylinderColor);
     
     std::string text {"   "};   // Warning! Must be three spaces to fit digits.
     mMovesText = &scene.CreateText(text, textProperties);
     auto& movesTextSceneobject {mMovesText->GetSceneObject()};
-    movesTextSceneobject.GetTransform().SetPosition({1.1f, 0.0f, UiLayer::text});
+    movesTextSceneobject.GetTransform().SetPosition({0.0f, -0.2f, UiLayer::text});
     movesContainer.AddChild(movesTextSceneobject);
     
-    CreateSmallPiecesRectangle({0.15f, 0.1f, UiLayer::piecesRectangle}, scene, movesContainer);
     CreateLPiece(scene, movesContainer);
 }
 
@@ -168,21 +186,21 @@ void GameHud::CreateLPiece(Pht::Scene& scene, Pht::SceneObject& movesContainer) 
     movesContainer.AddChild(lPiece);
     
     auto& baseTransform {lPiece.GetTransform()};
-    baseTransform.SetPosition({0.12f, 0.2f, UiLayer::root});
+    baseTransform.SetPosition({-0.8f, 0.05f, UiLayer::root});
     baseTransform.SetRotation({-30.0f, -30.0f, 0.0f});
     auto scale {0.32f};
     baseTransform.SetScale(scale);
     
-    auto& greenBlockRenderable {
+    auto& blockRenderable {
         mPieceResources.GetBlockRenderableObject(BlockKind::Full,
                                                  BlockColor::Green,
                                                  BlockBrightness::Normal)
     };
     
     auto halfCellSize {0.625f};
-    CreateGreenBlock({-halfCellSize, -halfCellSize, -scale}, greenBlockRenderable, scene, lPiece);
-    CreateGreenBlock({halfCellSize, -halfCellSize, -scale}, greenBlockRenderable, scene, lPiece);
-    CreateGreenBlock({halfCellSize, halfCellSize, -scale}, greenBlockRenderable, scene, lPiece);
+    CreateGreenBlock({-halfCellSize, -halfCellSize, -scale}, blockRenderable, scene, lPiece);
+    CreateGreenBlock({halfCellSize, -halfCellSize, -scale}, blockRenderable, scene, lPiece);
+    CreateGreenBlock({halfCellSize, halfCellSize, -scale}, blockRenderable, scene, lPiece);
 }
 
 void GameHud::CreateGreenBlock(const Pht::Vec3& position,
@@ -251,37 +269,6 @@ void GameHud::CreateSelectablePiecesObject(Pht::Scene& scene,
     selectablePiecesContainer.AddChild(textSceneObject);
     
     CreateThreePreviewPieces(mSelectablePreviewPieces, selectablePiecesContainer, level);
-}
-
-void GameHud::CreateSmallPiecesRectangle(const Pht::Vec3& position,
-                                         Pht::Scene& scene,
-                                         Pht::SceneObject& parentObject) {
-    Pht::Vec2 size {1.8f, 1.3f};
-    auto tilt {0.23f};
-    auto leftQuadWidth {0.3f};
-    auto rightQuadWidth {0.3f};
- 
-    GradientRectangleColors upperColors {
-        .mLeft = {0.9f, 0.9f, 1.0f, 0.0f},
-        .mMid = {0.85f, 0.75f, 0.95f, 0.9f},
-        .mRight = {0.9f, 0.9f, 1.0f, 0.0f}
-    };
-
-    GradientRectangleColors lowerColors {
-        .mLeft = {0.9f, 0.9f, 1.0f, 0.0f},
-        .mMid = {0.9f, 0.9f, 1.0f, 0.0f},
-        .mRight = {0.9f, 0.9f, 1.0f, 0.0f}
-    };
-    
-    CreateGradientRectangle(scene,
-                            parentObject,
-                            position,
-                            size,
-                            tilt,
-                            leftQuadWidth,
-                            rightQuadWidth,
-                            upperColors,
-                            lowerColors);
 }
 
 Pht::SceneObject& GameHud::CreateTextRectangle(const Pht::Vec3& position,

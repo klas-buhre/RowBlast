@@ -3,12 +3,16 @@
 
 #include <chrono>
 
+// Engine includes.
+#include "Vector.hpp"
+
 namespace Pht {
     class IEngine;
     class Scene;
     class SceneObject;
     class Font;
     class TextComponent;
+    class TextProperties;
 }
 
 namespace RowBlast {
@@ -25,19 +29,25 @@ namespace RowBlast {
         void Update();
         
     private:
-        void CreateLivesRectangle(Pht::IEngine& engine,
-                                  Pht::Scene& scene,
-                                  Pht::SceneObject& parentObject);
+        void CreateLivesObject(Pht::IEngine& engine,
+                               Pht::Scene& scene,
+                               Pht::SceneObject& parentObject,
+                               const Pht::TextProperties& textProperties);
+        void CreateNewLifeCountdownObject(Pht::IEngine& engine,
+                                          Pht::Scene& scene,
+                                          Pht::SceneObject& parentObject,
+                                          const Pht::TextProperties& textProperties);
         void CreateCountdownRectangle(Pht::IEngine& engine,
                                       Pht::Scene& scene,
-                                      Pht::SceneObject& parentObject);
+                                      Pht::SceneObject& parentObject,
+                                      const Pht::Vec3& position);
         void UpdateLivesText();
         void UpdateCountdown();
         
         const UserData& mUserData;
         Pht::TextComponent* mLivesText {nullptr};
         Pht::TextComponent* mNewLifeCountdownText {nullptr};
-        Pht::SceneObject* mNewLifeCountdownRectangle {nullptr};
+        Pht::SceneObject* mNewLifeCountdownContainer {nullptr};
         int mNumLives {-1};
         std::chrono::seconds mSecondsUntilNewLife;
     };

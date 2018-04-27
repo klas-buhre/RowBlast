@@ -7,13 +7,16 @@
 namespace Pht {
     class Scene;
     class SceneObject;
+    class Color;
 }
 
 namespace RowBlast {
-    void CreateRoundedCylinder(Pht::Scene& scene,
-                               Pht::SceneObject& parentObject,
-                               const Pht::Vec3& position,
-                               const Pht::Vec2& size);
+    Pht::SceneObject& CreateRoundedCylinder(Pht::Scene& scene,
+                                            Pht::SceneObject& parentObject,
+                                            const Pht::Vec3& position,
+                                            const Pht::Vec2& size,
+                                            float opacity,
+                                            const Pht::Color& color);
 }
 
 #endif
