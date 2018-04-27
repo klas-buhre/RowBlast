@@ -12,6 +12,7 @@
 
 // Game includes.
 #include "GameScene.hpp"
+#include "CommonResources.hpp"
 #include "SmallTrianglePiece.hpp"
 #include "TrianglePiece.hpp"
 #include "BigTrianglePiece.hpp"
@@ -37,10 +38,12 @@
 
 using namespace RowBlast;
 
-LevelResources::LevelResources(Pht::IEngine& engine, const GameScene& scene) {
+LevelResources::LevelResources(Pht::IEngine& engine,
+                               const GameScene& scene,
+                               const CommonResources& commonResources) {
     CreatePieceTypes(engine, scene);
     CreateCellRenderables(engine.GetSceneManager(), scene);
-    CreateBlueprintRenderables(engine, scene);
+    CreateBlueprintRenderables(engine, scene, commonResources);
     CreateLevelBombRenderable(engine);
 }
 
@@ -84,7 +87,9 @@ void LevelResources::CreateCellRenderables(Pht::ISceneManager& sceneManager,
     );
 }
 
-void LevelResources::CreateBlueprintRenderables(Pht::IEngine& engine, const GameScene& scene) {
+void LevelResources::CreateBlueprintRenderables(Pht::IEngine& engine,
+                                                const GameScene& scene,
+                                                const CommonResources& commonResources) {
     const auto edgeWidth {0.07f};
     auto cellSize {scene.GetCellSize()};
     auto squareSide {cellSize + edgeWidth};
@@ -92,7 +97,7 @@ void LevelResources::CreateBlueprintRenderables(Pht::IEngine& engine, const Game
     auto& renderer {engine.GetRenderer()};
 
     auto& renderBufferSize {renderer.GetRenderBufferSize()};
-    auto& frustumSize {renderer.GetOrthographicFrustumSize()};
+    auto& frustumSize {commonResources.GetOrthographicFrustumSizePotentiallyZoomedScreen()};
     
     auto xScaleFactor {static_cast<float>(renderBufferSize.x) / static_cast<float>(frustumSize.x)};
     auto yScaleFactor {static_cast<float>(renderBufferSize.y) / static_cast<float>(frustumSize.y)};

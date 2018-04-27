@@ -72,10 +72,7 @@ Backlog:
 Ongoing tasks:
     -The gesture input sensitivity seems too high.
     -Support for iPhone X screen.
-        -Make sure frustum sizes are correct for all calls to GetHudFrustumSize() and
-         GetOrthographicFrustumSize() (make sure that ISceneManager::InitSceneSystems() has been
-         called).
-        -Try baught rounded cylinder for the progress and moves left.
+        -Try rounded cylinder for the progress and moves left.
         -Trim camera position and HUD object positions.
 
 Ideas:

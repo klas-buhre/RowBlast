@@ -35,6 +35,9 @@ CommonResources::CommonResources(Pht::IEngine& engine) :
     mHussarFontSize52PotentiallyZoomedScreen = std::make_unique<Pht::Font>("HussarBoldWeb.otf",
                                                                            renderer.GetAdjustedNumPixels(52));
 
+    mOrthographicFrustumSizePotentiallyZoomedScreen = renderer.GetOrthographicFrustumSize();
+    mHudFrustumSizePotentiallyZoomedScreen = renderer.GetHudFrustumSize();
+
     sceneManager.InitSceneSystems(Pht::ISceneManager::defaultNarrowFrustumHeightFactor);
     AddSounds(engine.GetAudio());
 }

@@ -26,7 +26,7 @@ GameViewControllers::GameViewControllers(Pht::IEngine& engine,
         fade,
         UiLayer::backgroundFade
     },
-    mGameHudController {engine},
+    mGameHudController {engine, commonResources},
     mGameMenuController {engine, commonResources},
     mGameOverDialogController {engine, commonResources, userData},
     mNoMovesDialogController {engine, commonResources},

@@ -44,7 +44,8 @@ ZPiece::ZPiece(Pht::IEngine& engine, const GameScene& scene) {
     };
     
     auto cellSize {scene.GetCellSize()};
-    GhostPieceProducer ghostPieceProducer {engine, cellSize, Pht::IVec2{3, 3}};
+    auto& commonResources {scene.GetCommonResources()};
+    GhostPieceProducer ghostPieceProducer {engine, cellSize, Pht::IVec2{3, 3}, commonResources};
     
     ghostPieceProducer.DrawBorder(border, FillGhostPiece::Yes);
     SetFilledGhostPieceRenderable(ghostPieceProducer.ProduceRenderable());

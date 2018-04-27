@@ -11,6 +11,7 @@
 #include "IImage.hpp"
 #include "ISceneManager.hpp"
 #include "UiLayer.hpp"
+#include "CommonResources.hpp"
 
 using namespace RowBlast;
 
@@ -46,7 +47,7 @@ namespace {
     }
 }
 
-GameHudView::GameHudView(Pht::IEngine& engine) {
+GameHudView::GameHudView(Pht::IEngine& engine, const CommonResources& commonResources) {
     SetPosition({-5.2f, -11.85f});
     
     const auto circleRadius {0.85f};
@@ -54,7 +55,7 @@ GameHudView::GameHudView(Pht::IEngine& engine) {
     auto& renderer {engine.GetRenderer()};
 
     auto& renderBufferSize {renderer.GetRenderBufferSize()};
-    auto& frustumSize {renderer.GetOrthographicFrustumSize()};
+    auto& frustumSize {commonResources.GetHudFrustumSizePotentiallyZoomedScreen()};
     
     auto xScaleFactor {static_cast<float>(renderBufferSize.x) / static_cast<float>(frustumSize.x)};
     auto yScaleFactor {static_cast<float>(renderBufferSize.y) / static_cast<float>(frustumSize.y)};

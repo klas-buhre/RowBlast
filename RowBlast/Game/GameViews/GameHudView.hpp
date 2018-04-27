@@ -12,9 +12,11 @@ namespace Pht {
 }
 
 namespace RowBlast {
+    class CommonResources;
+    
     class GameHudView: public Pht::GuiView {
     public:
-        explicit GameHudView(Pht::IEngine& engine);
+        GameHudView(Pht::IEngine& engine, const CommonResources& commonResources);
         
         Pht::Button& GetPauseButton() const {
             return *mPauseButton;

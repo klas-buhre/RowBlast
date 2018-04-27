@@ -14,6 +14,7 @@ namespace Pht {
 
 namespace RowBlast {
     class GameScene;
+    class CommonResources;
     
     class BlastRadiusAnimation {
     public:
@@ -22,7 +23,9 @@ namespace RowBlast {
             BigBomb
         };
 
-        BlastRadiusAnimation(Pht::IEngine& engine, GameScene& scene);
+        BlastRadiusAnimation(Pht::IEngine& engine,
+                             GameScene& scene,
+                             const CommonResources& commonResources);
     
         void Init();
         void Start(Kind kind);

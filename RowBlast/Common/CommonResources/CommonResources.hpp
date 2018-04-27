@@ -3,6 +3,9 @@
 
 #include <memory>
 
+// Engine includes.
+#include "Vector.hpp"
+
 // Game includes.
 #include "Materials.hpp"
 #include "Font.hpp"
@@ -29,6 +32,14 @@ namespace RowBlast {
         const Pht::Font& GetHussarFontSize52PotentiallyZoomedScreen() const {
             return *mHussarFontSize52PotentiallyZoomedScreen;
         }
+        
+        const Pht::Vec2& GetOrthographicFrustumSizePotentiallyZoomedScreen() const {
+            return mOrthographicFrustumSizePotentiallyZoomedScreen;
+        }
+
+        const Pht::Vec2& GetHudFrustumSizePotentiallyZoomedScreen() const {
+            return mHudFrustumSizePotentiallyZoomedScreen;
+        }
 
         const Materials& GetMaterials() const {
             return mMaterials;
@@ -49,6 +60,8 @@ namespace RowBlast {
         std::unique_ptr<Pht::Font> mHussarFontSize27PotentiallyZoomedScreen;
         std::unique_ptr<Pht::Font> mHussarFontSize35PotentiallyZoomedScreen;
         std::unique_ptr<Pht::Font> mHussarFontSize52PotentiallyZoomedScreen;
+        Pht::Vec2 mOrthographicFrustumSizePotentiallyZoomedScreen;
+        Pht::Vec2 mHudFrustumSizePotentiallyZoomedScreen;
     };
 }
 

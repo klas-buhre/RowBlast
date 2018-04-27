@@ -1714,12 +1714,12 @@
 		62785D392087618E006F9869 /* Level */ = {
 			isa = PBXGroup;
 			children = (
-				62785D3A2087618E006F9869 /* LevelResources.hpp */,
-				62785D3B2087618E006F9869 /* LevelLoader.cpp */,
 				62785D3C2087618E006F9869 /* Level.cpp */,
 				62785D3D2087618E006F9869 /* Level.hpp */,
-				62785D3E2087618E006F9869 /* LevelResources.cpp */,
+				62785D3B2087618E006F9869 /* LevelLoader.cpp */,
 				62785D3F2087618E006F9869 /* LevelLoader.hpp */,
+				62785D3E2087618E006F9869 /* LevelResources.cpp */,
+				62785D3A2087618E006F9869 /* LevelResources.hpp */,
 			);
 			path = Level;
 			sourceTree = "<group>";

@@ -50,6 +50,10 @@ namespace RowBlast {
         const Pht::Material& GetLightGrayMaterial() const;
         const Pht::Material& GetYellowMaterial() const;
         
+        const CommonResources& GetCommonResources() const {
+            return mCommonResources;
+        }
+        
         const Pht::CameraComponent& GetCamera() const {
             assert(mCamera);
             return *mCamera;

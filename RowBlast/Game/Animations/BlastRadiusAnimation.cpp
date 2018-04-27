@@ -12,6 +12,7 @@
 
 // Game includes.
 #include "GameScene.hpp"
+#include "CommonResources.hpp"
 
 using namespace RowBlast;
 
@@ -198,7 +199,9 @@ namespace {
     }
 }
 
-BlastRadiusAnimation::BlastRadiusAnimation(Pht::IEngine& engine, GameScene& scene) :
+BlastRadiusAnimation::BlastRadiusAnimation(Pht::IEngine& engine,
+                                           GameScene& scene,
+                                           const CommonResources& commonResources) :
     mScene {scene} {
     
     auto cellSize {scene.GetCellSize()};
@@ -207,7 +210,7 @@ BlastRadiusAnimation::BlastRadiusAnimation(Pht::IEngine& engine, GameScene& scen
     auto& renderer {engine.GetRenderer()};
 
     auto& renderBufferSize {renderer.GetRenderBufferSize()};
-    auto& frustumSize {renderer.GetOrthographicFrustumSize()};
+    auto& frustumSize {commonResources.GetOrthographicFrustumSizePotentiallyZoomedScreen()};
     
     auto xScaleFactor {static_cast<float>(renderBufferSize.x) / static_cast<float>(frustumSize.x)};
     auto yScaleFactor {static_cast<float>(renderBufferSize.y) / static_cast<float>(frustumSize.y)};

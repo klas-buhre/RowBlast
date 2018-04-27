@@ -9,6 +9,9 @@
 #include "RenderableObject.hpp"
 #include "ISceneManager.hpp"
 
+// Game includes.
+#include "CommonResources.hpp"
+
 using namespace RowBlast;
 
 namespace {
@@ -22,7 +25,8 @@ namespace {
 
 GhostPieceProducer::GhostPieceProducer(Pht::IEngine& engine,
                                        float cellSize,
-                                       const Pht::IVec2& pieceGridSize) :
+                                       const Pht::IVec2& pieceGridSize,
+                                       const CommonResources& commonResources) :
     mEngine {engine},
     mCellSize {cellSize},
     mCoordinateSystemSize {
@@ -34,7 +38,7 @@ GhostPieceProducer::GhostPieceProducer(Pht::IEngine& engine,
     
     auto& renderer {engine.GetRenderer()};
     auto& renderBufferSize {renderer.GetRenderBufferSize()};
-    auto& frustumSize {renderer.GetOrthographicFrustumSize()};
+    auto& frustumSize {commonResources.GetOrthographicFrustumSizePotentiallyZoomedScreen()};
     
     auto xScaleFactor {
         cellSize * static_cast<float>(renderBufferSize.x) / static_cast<float>(frustumSize.x)

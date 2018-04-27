@@ -14,6 +14,8 @@ namespace Pht {
 }
 
 namespace RowBlast {
+    class CommonResources;
+    
     enum class BorderSegmentKind {
         Start,
         Upper,
@@ -54,7 +56,8 @@ namespace RowBlast {
     public:
         GhostPieceProducer(Pht::IEngine& engine,
                            float cellSize,
-                           const Pht::IVec2& pieceGridSize);
+                           const Pht::IVec2& pieceGridSize,
+                           const CommonResources& commonResources);
         
         void Clear();
         void DrawBorder(const GhostPieceBorder& border, FillGhostPiece fillGhostPiece);
