@@ -35,10 +35,20 @@ void CameraShake::Init() {
 }
 
 void CameraShake::Update(float dt) {
-    if (mState == State::Inactive) {
-        return;
+    switch (mState) {
+        case State::Shaking:
+            UpdateInShakingState(dt);
+            break;
+        case State::LastShake:
+            mState = State::Inactive;
+            mCameraTranslation = {0.0f, 0.0f, 0.0f};
+            break;
+        case State::Inactive:
+            break;
     }
-    
+}
+
+void CameraShake::UpdateInShakingState(float dt) {
     auto magnitude {mMagnitude * (mShakeTime - mElapsedTime) / mShakeTime};
     
     switch (mShakeKind) {
@@ -61,7 +71,7 @@ void CameraShake::Update(float dt) {
     mElapsedTime += dt;
     
     if (mElapsedTime >= mShakeTime) {
-        mState = State::Inactive;
+        mState = State::LastShake;
         mCameraTranslation = {0.0f, 0.0f, 0.0f};
     }
 }
@@ -76,4 +86,14 @@ void CameraShake::StartShake(float shakeTime, float magnitude) {
     }
     
     mState = State::Shaking;
+}
+
+bool CameraShake::IsShaking() const {
+    switch (mState) {
+        case State::Shaking:
+        case State::LastShake:
+            return true;
+        case State::Inactive:
+            return false;
+    }
 }

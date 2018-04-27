@@ -19,18 +19,18 @@ namespace Pht {
         void Init();
         void Update(float dt);
         void StartShake(float shakeTime, float magnitude);
-
-        bool IsShaking() const {
-            return mState == State::Shaking;
-        }
+        bool IsShaking() const;
         
         const Vec3& GetCameraTranslation() const {
             return mCameraTranslation;
         }
 
     private:
+        void UpdateInShakingState(float dt);
+        
         enum class State {
             Shaking,
+            LastShake,
             Inactive
         };
         
