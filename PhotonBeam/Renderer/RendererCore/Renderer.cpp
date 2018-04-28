@@ -45,6 +45,8 @@ using namespace Pht;
 
 namespace {
     constexpr auto defaultScreenHeight {1136};
+    constexpr auto topPadding {0.92f};
+    constexpr auto bottomPadding {1.57f};
     const Mat4 identityMatrix;
     const Vec4 modelSpaceOrigin {0.0f, 0.0f, 0.0f, 1.0f};
     
@@ -627,6 +629,22 @@ const Vec2& Renderer::GetOrthographicFrustumSize() const {
 
 const IVec2& Renderer::GetRenderBufferSize() const {
     return mRenderBufferSize;
+}
+
+float Renderer::GetTopPaddingHeight() const {
+    if (GetAspectRatio() >= 2.0f) {
+        return topPadding * mNarrowFrustumHeightFactor;
+    }
+    
+    return 0.0f;
+}
+
+float Renderer::GetBottomPaddingHeight() const {
+    if (GetAspectRatio() >= 2.0f) {
+        return bottomPadding * mNarrowFrustumHeightFactor;
+    }
+    
+    return 0.0f;
 }
 
 void Renderer::RenderText(const std::string& text,

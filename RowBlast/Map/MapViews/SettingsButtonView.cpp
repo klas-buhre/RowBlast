@@ -19,8 +19,15 @@ namespace {
 }
 
 SettingsButtonView::SettingsButtonView(Pht::IEngine& engine) {
-    auto hudFrustumSize {engine.GetRenderer().GetHudFrustumSize()};
-    SetPosition({-hudFrustumSize.x / 2.0f + 1.5f, -hudFrustumSize.y / 2.0f + 1.5f});
+    auto& renderer {engine.GetRenderer()};
+    auto& hudFrustumSize {renderer.GetHudFrustumSize()};
+    
+    Pht::Vec2 position {
+        -hudFrustumSize.x / 2.0f + 1.5f,
+        -hudFrustumSize.y / 2.0f + 1.5f + renderer.GetBottomPaddingHeight()
+    };
+    
+    SetPosition(position);
     
     Pht::Material circleMaterial {circleColor};
     circleMaterial.SetOpacity(0.8f);

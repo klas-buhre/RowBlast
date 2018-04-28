@@ -40,6 +40,14 @@ namespace RowBlast {
         const Pht::Vec2& GetHudFrustumSizePotentiallyZoomedScreen() const {
             return mHudFrustumSizePotentiallyZoomedScreen;
         }
+        
+        float GetTopPaddingPotentiallyZoomedScreen() const {
+            return mTopPaddingPotentiallyZoomedScreen;
+        }
+
+        float GetBottomPaddingPotentiallyZoomedScreen() const {
+            return mBottomPaddingPotentiallyZoomedScreen;
+        }
 
         const Materials& GetMaterials() const {
             return mMaterials;
@@ -62,6 +70,8 @@ namespace RowBlast {
         std::unique_ptr<Pht::Font> mHussarFontSize52PotentiallyZoomedScreen;
         Pht::Vec2 mOrthographicFrustumSizePotentiallyZoomedScreen;
         Pht::Vec2 mHudFrustumSizePotentiallyZoomedScreen;
+        float mTopPaddingPotentiallyZoomedScreen {0.0f};
+        float mBottomPaddingPotentiallyZoomedScreen {0.0f};
     };
 }
 

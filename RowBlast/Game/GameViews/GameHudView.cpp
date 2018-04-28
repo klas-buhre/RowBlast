@@ -48,14 +48,20 @@ namespace {
 }
 
 GameHudView::GameHudView(Pht::IEngine& engine, const CommonResources& commonResources) {
-    SetPosition({-5.2f, -11.85f});
+    auto& frustumSize {commonResources.GetHudFrustumSizePotentiallyZoomedScreen()};
+
+    Pht::Vec2 position {
+        -5.2f,
+        -frustumSize.y / 2.0f + commonResources.GetBottomPaddingPotentiallyZoomedScreen() + 1.4625f
+    };
+
+    SetPosition(position);
     
     const auto circleRadius {0.85f};
     Pht::Vec2 coordinateSystemSize {circleRadius * 2.0f, circleRadius * 2.0f};
-    auto& renderer {engine.GetRenderer()};
 
+    auto& renderer {engine.GetRenderer()};
     auto& renderBufferSize {renderer.GetRenderBufferSize()};
-    auto& frustumSize {commonResources.GetHudFrustumSizePotentiallyZoomedScreen()};
     
     auto xScaleFactor {static_cast<float>(renderBufferSize.x) / static_cast<float>(frustumSize.x)};
     auto yScaleFactor {static_cast<float>(renderBufferSize.y) / static_cast<float>(frustumSize.y)};

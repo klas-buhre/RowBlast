@@ -71,8 +71,6 @@ Backlog:
 
 Ongoing tasks:
     -The gesture input sensitivity seems too high.
-    -Support for iPhone X screen.
-        -Trim camera position and HUD object positions.
 
 Ideas:
     -The pause button could lead to a widget that has an undo button, a boosters button and a game
@@ -112,6 +110,7 @@ Time Estimation in days:
         Done
     -Support for iPhone X screen.
         Cost: 10
+        Done
     -Use new GUI/Menu textures.
         Cost: 6
     -Do the marked items in the backlog.

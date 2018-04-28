@@ -37,6 +37,8 @@ CommonResources::CommonResources(Pht::IEngine& engine) :
 
     mOrthographicFrustumSizePotentiallyZoomedScreen = renderer.GetOrthographicFrustumSize();
     mHudFrustumSizePotentiallyZoomedScreen = renderer.GetHudFrustumSize();
+    mTopPaddingPotentiallyZoomedScreen = renderer.GetTopPaddingHeight();
+    mBottomPaddingPotentiallyZoomedScreen = renderer.GetBottomPaddingHeight();
 
     sceneManager.InitSceneSystems(Pht::ISceneManager::defaultNarrowFrustumHeightFactor);
     AddSounds(engine.GetAudio());

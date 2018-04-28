@@ -29,6 +29,8 @@ namespace Pht {
         virtual const Vec2& GetOrthographicFrustumSize() const = 0;
         virtual float GetFrustumHeightFactor() const = 0;
         virtual const IVec2& GetRenderBufferSize() const = 0;
+        virtual float GetTopPaddingHeight() const = 0;
+        virtual float GetBottomPaddingHeight() const = 0;
         virtual const Mat4& GetViewMatrix() const = 0;
         virtual const Mat4& GetProjectionMatrix() const = 0;
     };

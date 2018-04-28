@@ -104,7 +104,15 @@ void GameHud::CreateProgressObject(Pht::Scene& scene,
                                    const Pht::TextProperties& textProperties,
                                    const LevelResources& levelResources) {
     auto& progressContainer {scene.CreateSceneObject()};
-    progressContainer.GetTransform().SetPosition({-3.7f, 12.55f, UiLayer::root});
+    auto& renderer {mEngine.GetRenderer()};
+    
+    Pht::Vec3 position {
+        -3.7f,
+        renderer.GetHudFrustumSize().y / 2.0f - renderer.GetTopPaddingHeight() - 0.7625f,
+        UiLayer::root
+    };
+    
+    progressContainer.GetTransform().SetPosition(position);
     parentObject.AddChild(progressContainer);
     
     Pht::Vec3 cylinderPosition {0.0f, 0.0f, UiLayer::lowerTextRectangle};
@@ -164,7 +172,15 @@ void GameHud::CreateMovesObject(Pht::Scene& scene,
                                 Pht::SceneObject& parentObject,
                                 const Pht::TextProperties& textProperties) {
     auto& movesContainer {scene.CreateSceneObject()};
-    movesContainer.GetTransform().SetPosition({3.7f, 12.55f, UiLayer::root});
+    auto& renderer {mEngine.GetRenderer()};
+    
+    Pht::Vec3 position {
+        3.7f,
+        renderer.GetHudFrustumSize().y / 2.0f - renderer.GetTopPaddingHeight() - 0.7625f,
+        UiLayer::root
+    };
+
+    movesContainer.GetTransform().SetPosition(position);
     parentObject.AddChild(movesContainer);
     
     Pht::Vec3 cylinderPosition {0.0f, 0.0f, UiLayer::lowerTextRectangle};
@@ -222,8 +238,16 @@ void GameHud::CreateNextPiecesObject(Pht::Scene& scene,
                                      const Pht::TextProperties& textProperties,
                                      const Level& level) {
     auto& nextPiecesContainer {scene.CreateSceneObject()};
+    auto& renderer {mEngine.GetRenderer()};
+    
+    Pht::Vec3 position {
+        -2.3f,
+        -renderer.GetHudFrustumSize().y / 2.0f + renderer.GetBottomPaddingHeight() + 1.0125f,
+        UiLayer::root
+    };
+
     mNextPiecesContainer = &nextPiecesContainer;
-    nextPiecesContainer.GetTransform().SetPosition({-2.3f, -12.3f, UiLayer::root});
+    nextPiecesContainer.GetTransform().SetPosition(position);
     parentObject.AddChild(nextPiecesContainer);
     
     CreatePiecesRectangle({0.15f, 0.0f, UiLayer::piecesRectangle}, false, scene, nextPiecesContainer);
@@ -244,8 +268,16 @@ void GameHud::CreateSelectablePiecesObject(Pht::Scene& scene,
                                            const Pht::TextProperties& textProperties,
                                            const Level& level) {
     auto& selectablePiecesContainer {scene.CreateSceneObject()};
+    auto& renderer {mEngine.GetRenderer()};
+    
+    Pht::Vec3 position {
+        3.1f,
+        -renderer.GetHudFrustumSize().y / 2.0f + renderer.GetBottomPaddingHeight() + 1.0125f,
+        UiLayer::root
+    };
+
     mSelectablePiecesContainer = &selectablePiecesContainer;
-    selectablePiecesContainer.GetTransform().SetPosition({3.1f, -12.3f, UiLayer::root});
+    selectablePiecesContainer.GetTransform().SetPosition(position);
     parentObject.AddChild(selectablePiecesContainer);
     
     mSelectablePiecesRectangle = &CreatePiecesRectangle({0.15f, 0.0f, UiLayer::piecesRectangle},

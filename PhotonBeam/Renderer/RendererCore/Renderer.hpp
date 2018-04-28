@@ -30,6 +30,8 @@ namespace Pht {
         const Vec2& GetOrthographicFrustumSize() const override;
         float GetFrustumHeightFactor() const override;
         const IVec2& GetRenderBufferSize() const override;
+        float GetTopPaddingHeight() const override;
+        float GetBottomPaddingHeight() const override;
 
         void Init(bool createRenderBuffers);
         void InitCamera(float narrowFrustumHeightFactor);

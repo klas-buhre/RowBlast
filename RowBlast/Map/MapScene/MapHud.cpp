@@ -51,9 +51,12 @@ void MapHud::CreateLivesObject(Pht::IEngine& engine,
                                Pht::Scene& scene,
                                Pht::SceneObject& parentObject,
                                const Pht::TextProperties& textProperties) {
+    auto& renderer {engine.GetRenderer()};
+    auto& hudFrustumSize {renderer.GetHudFrustumSize()};
+    
     Pht::Vec3 livesContainerPosition {
-        -engine.GetRenderer().GetHudFrustumSize().x / 2.0f + 2.3f,
-        12.45f,
+        -hudFrustumSize.x / 2.0f + 2.3f,
+        hudFrustumSize.y / 2.0f - 0.8625f - renderer.GetTopPaddingHeight(),
         UiLayer::root
     };
 
@@ -81,9 +84,12 @@ void MapHud::CreateNewLifeCountdownObject(Pht::IEngine& engine,
                                           Pht::Scene& scene,
                                           Pht::SceneObject& parentObject,
                                           const Pht::TextProperties& textProperties) {
+    auto& renderer {engine.GetRenderer()};
+    auto& hudFrustumSize {renderer.GetHudFrustumSize()};
+
     Pht::Vec3 newLifeCountdownContainerPosition {
-        -engine.GetRenderer().GetHudFrustumSize().x / 2.0f + 2.3f,
-        11.2f,
+        -hudFrustumSize.x / 2.0f + 2.3f,
+        hudFrustumSize.y / 2.0f - 2.11f - renderer.GetTopPaddingHeight(),
         UiLayer::root
     };
 

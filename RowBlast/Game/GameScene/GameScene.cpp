@@ -396,12 +396,12 @@ void GameScene::Update() {
 
 void GameScene::UpdateCameraPositionAndScissorBox() {
     auto& renderer {mEngine.GetRenderer()};
-    auto frustumHeightFactor {renderer.GetFrustumHeightFactor()};
+    auto& frustumSize {renderer.GetOrthographicFrustumSize()};
+    auto bottomPadding {renderer.GetBottomPaddingHeight()};
     
     auto cameraYPosition {
         mFieldLoweLeft.y + mScrollController.GetLowestVisibleRow() * mCellSize +
-        renderer.GetOrthographicFrustumSize().y / (2.0f * frustumHeightFactor) -
-        mCellSize * lowerClipAreaHeightInCells * frustumHeightFactor
+        frustumSize.y / 2.0f - mCellSize * lowerClipAreaHeightInCells - bottomPadding
     };
 
     auto& cameraShakeTranslation {mCameraShake.GetCameraTranslation()};
@@ -416,8 +416,8 @@ void GameScene::UpdateCameraPositionAndScissorBox() {
     
     Pht::Vec2 scissorBoxLowerLeft {
         mFieldPosition.x - (mFieldWidth + fieldPadding) / 2.0f,
-        cameraYPosition - renderer.GetOrthographicFrustumSize().y / (2.0f * frustumHeightFactor) +
-        lowerClipAreaHeightInCells * mCellSize * frustumHeightFactor
+        cameraYPosition - frustumSize.y / 2.0f + lowerClipAreaHeightInCells * mCellSize +
+        bottomPadding
     };
     
     Pht::Vec2 scissorBoxSize {mFieldWidth + fieldPadding, 19.0f * mCellSize};
