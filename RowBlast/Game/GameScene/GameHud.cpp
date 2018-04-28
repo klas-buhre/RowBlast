@@ -24,7 +24,8 @@ namespace {
     const Pht::Vec3 lightDirectionA {0.6f, 1.0f, 1.0f};
     const Pht::Vec3 lightDirectionB {0.4f, 1.0f, 1.0f};
     constexpr auto lightAnimationDuration {5.0f};
-    const Pht::Color roundedCylinderColor {0.65f, 0.65f, 0.65f};
+    const Pht::Color roundedCylinderAmbient {0.75f, 0.75f, 0.75f};
+    const Pht::Color roundedCylinderDiffuse {0.55f, 0.55f, 0.55f};
     constexpr auto roundedCylinderOpacity {0.5f};
     constexpr auto cellSize {1.25f};
 }
@@ -56,7 +57,7 @@ GameHud::GameHud(Pht::IEngine& engine,
     gameHudController.SetHudEventListener(*this);
 
     CreateLightAndCamera(scene, parentObject, hudLayer);
-    
+
     Pht::TextProperties upperTextProperties {
         font,
         1.0f,
@@ -65,6 +66,7 @@ GameHud::GameHud(Pht::IEngine& engine,
         {0.05f, 0.05f},
         {0.4f, 0.4f, 0.4f, 0.5f}
     };
+
     CreateProgressObject(scene, parentObject, upperTextProperties, levelResources);
     CreateMovesObject(scene, parentObject, upperTextProperties);
     
@@ -111,12 +113,13 @@ void GameHud::CreateProgressObject(Pht::Scene& scene,
                           cylinderPosition,
                           {2.2, 1.1f},
                           roundedCylinderOpacity,
-                          roundedCylinderColor);
+                          roundedCylinderAmbient,
+                          roundedCylinderDiffuse);
     
     std::string text {"    "};  // Warning! Must be four spaces to fit digits.
     mProgressText = &scene.CreateText(text, textProperties);
     auto& progressTextSceneobject {mProgressText->GetSceneObject()};
-    progressTextSceneobject.GetTransform().SetPosition({0.0f, -0.2f, UiLayer::text});
+    progressTextSceneobject.GetTransform().SetPosition({0.0f, -0.23f, UiLayer::text});
     progressContainer.AddChild(progressTextSceneobject);
     
     switch (mLevelObjective) {
@@ -170,12 +173,13 @@ void GameHud::CreateMovesObject(Pht::Scene& scene,
                           cylinderPosition,
                           {2.2, 1.1f},
                           roundedCylinderOpacity,
-                          roundedCylinderColor);
+                          roundedCylinderAmbient,
+                          roundedCylinderDiffuse);
     
     std::string text {"   "};   // Warning! Must be three spaces to fit digits.
     mMovesText = &scene.CreateText(text, textProperties);
     auto& movesTextSceneobject {mMovesText->GetSceneObject()};
-    movesTextSceneobject.GetTransform().SetPosition({0.0f, -0.2f, UiLayer::text});
+    movesTextSceneobject.GetTransform().SetPosition({0.0f, -0.23f, UiLayer::text});
     movesContainer.AddChild(movesTextSceneobject);
     
     CreateLPiece(scene, movesContainer);

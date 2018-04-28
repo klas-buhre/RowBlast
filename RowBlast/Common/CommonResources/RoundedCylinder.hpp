@@ -16,7 +16,8 @@ namespace RowBlast {
                                             const Pht::Vec3& position,
                                             const Pht::Vec2& size,
                                             float opacity,
-                                            const Pht::Color& color);
+                                            const Pht::Color& ambient,
+                                            const Pht::Color& diffuse);
 }
 
 #endif

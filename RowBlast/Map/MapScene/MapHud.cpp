@@ -18,7 +18,8 @@ using namespace RowBlast;
 
 namespace {
     constexpr auto countdownNumChars {5};
-    const Pht::Color roundedCylinderColor {0.55f, 0.55f, 0.55f};
+    const Pht::Color roundedCylinderAmbient {0.65f, 0.65f, 0.65f};
+    const Pht::Color roundedCylinderDiffuse {0.5f, 0.5f, 0.5f};
     constexpr auto roundedCylinderOpacity {0.65f};
 }
 
@@ -66,7 +67,8 @@ void MapHud::CreateLivesObject(Pht::IEngine& engine,
                           cylinderPosition,
                           {2.5, 1.1f},
                           roundedCylinderOpacity,
-                          roundedCylinderColor);
+                          roundedCylinderAmbient,
+                          roundedCylinderDiffuse);
     
     // Warning! Must be three spaces to fit digits.
     mLivesText = &scene.CreateText("LIVES   ", textProperties);

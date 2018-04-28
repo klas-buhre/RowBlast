@@ -32,7 +32,8 @@ Pht::SceneObject& RowBlast::CreateRoundedCylinder(Pht::Scene& scene,
                                                   const Pht::Vec3& position,
                                                   const Pht::Vec2& size,
                                                   float opacity,
-                                                  const Pht::Color& color) {
+                                                  const Pht::Color& ambient,
+                                                  const Pht::Color& diffuse) {
     auto& sceneObject {scene.CreateSceneObject()};
     sceneObject.GetTransform().SetPosition(position);
     parentObject.AddChild(sceneObject);
@@ -47,12 +48,12 @@ Pht::SceneObject& RowBlast::CreateRoundedCylinder(Pht::Scene& scene,
     };
 
     Pht::Color specular {1.0f, 1.0f, 1.0f};
-    const auto shininess {20.0f};
+    const auto shininess {30.0f};
     const auto reflectivity {0.84f};
     Pht::Material material {
         envMapTextures,
-        color,
-        color,
+        ambient,
+        diffuse,
         specular,
         shininess,
         reflectivity
