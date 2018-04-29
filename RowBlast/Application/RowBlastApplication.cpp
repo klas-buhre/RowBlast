@@ -46,10 +46,13 @@ Backlog:
      rotate in around the y axis for about a second and then only rotate around the z axis. During
      this short animation the stars could be scaled up as well.
     -The sliding text could slide in from the left and right; one row from the right and the other
-     row from the left like in Stellar. The font could be similar to ethnocentric and have a 
-     gradient effect like this in the text shader:
+     row from the left like in Stellar. While displaying the text the two text lines should not
+     continue sliding slowly and then accelerate out again. The font could be similar to
+     ethnocentric and have a gradient effect like this in the text shader:
      gl_FragColor = vec4(TextureCoordOut.y, 1.0, 1.0, texture2D(Sampler, TextureCoordOut).a) * TextColor;
      The title text can also have that gradient.
+     There could be three quads behind the text to give it contrast, one thick quad in the middle
+     and two thinner above and bellow. The quads could scale in like the blast radius animation.
     -Could have a rotating particle/flare in the sliding text animation.
     -Could have particles in the FlyingBlocksAnimation in the points from which the blocks gets
      tossed.
@@ -111,6 +114,8 @@ Time Estimation in days:
     -Support for iPhone X screen.
         Cost: 10
         Done
+    -Improving sliding text animation.
+        Cost: 2
     -Use new GUI/Menu textures.
         Cost: 6
     -Do the marked items in the backlog.
@@ -119,8 +124,6 @@ Time Estimation in days:
         Cost: 7
     -Moving the next level particle effect to the next level after clearing a level.
         Cost: 2
-    -Improving sliding text animation.
-        Cost: 3
     -Tutorial.
         Cost: 10
     -Levels/Chapters.
@@ -138,7 +141,7 @@ Time Estimation in days:
     -Back end.
         Cost: ?
 
-        Total: 170
+        Total: 169
 
 
 Comomon piece type sets:

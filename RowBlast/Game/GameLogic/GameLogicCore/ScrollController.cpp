@@ -16,7 +16,7 @@ namespace {
     const auto deaccelerationStartTime {0.4f};
     const auto waitTimeClearObjective {1.0f};
     const auto waitTimeBuildObjective {0.5f};
-    const auto overviewScrollSpeed {9.0f};
+    const auto overviewScrollSpeed {10.0f};
     const auto overviewDeaccelerationDuration {1.0f};
 }
 
