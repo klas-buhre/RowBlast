@@ -12,7 +12,7 @@ using namespace RowBlast;
 
 namespace {
     const float halfColumn {0.5f};
-    const float inputUnitsPerColumn {26.5f * 1.25f}; // {26.5f * 10.0f / Field::numColumns};
+    const float inputUnitsPerColumn {41.5f};
     const float dropOnTouchEndMaxTime {1.2f};
 }
 
@@ -213,8 +213,10 @@ void GestureInputHandler::HandleDraggingSideways(const Pht::TouchEvent& touchEve
             break;
         case DiffState::Diffing:
             if (diffSign != 0 && diffSign != mLastNonZeroDiffSign) {
+#ifdef DEBUG
                 std::cout << "Going to Accumulating state" << std::endl;
-                
+#endif
+
                 mDiffState = DiffState::Accumulating;
                 mAccumulatedDiff = diff;
                 mFallingPiece.SetX(mFallingPiece.GetIntPosition().x + halfColumn);
