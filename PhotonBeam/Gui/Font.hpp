@@ -30,6 +30,11 @@ namespace Pht {
         No
     };
     
+    enum class SnapToPixel {
+        Yes,
+        No
+    };
+    
     struct TextProperties {
         const Font& mFont;
         float mScale {1.0f};
@@ -37,6 +42,7 @@ namespace Pht {
         TextShadow mShadow {TextShadow::No};
         Pht::Vec2 mOffset {0.0f, 0.0f};
         Vec4 mShadowColor {0.0f, 0.0f, 0.0f, 1.0f};
+        SnapToPixel mSnapToPixel {SnapToPixel::Yes};
     };
 }
 

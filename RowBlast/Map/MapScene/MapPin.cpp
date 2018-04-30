@@ -74,7 +74,8 @@ MapPin::MapPin(Pht::IEngine& engine,
         Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f},
         Pht::TextShadow::Yes,
         Pht::Vec2{0.1f, 0.1f},
-        Pht::Vec4{0.4f, 0.4f, 0.4f, 0.5f}
+        Pht::Vec4{0.4f, 0.4f, 0.4f, 0.5f},
+        Pht::SnapToPixel::No
     };
     
     auto& text {scene.CreateText(std::to_string(level), textProperties)};

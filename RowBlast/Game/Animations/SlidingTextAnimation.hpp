@@ -49,16 +49,18 @@ namespace RowBlast {
 
         struct Text {
             float mDisplayTime {1.0f};
-            std::unique_ptr<Pht::SceneObject> mSceneObject;
-            std::vector<std::unique_ptr<Pht::SceneObject>> mTextLines;
+            Pht::Vec3 mUpperTextLinePosition;
+            std::unique_ptr<Pht::SceneObject> mUpperTextLineSceneObject;
+            Pht::Vec3 mLowerTextLinePosition;
+            std::unique_ptr<Pht::SceneObject> mLowerTextLineSceneObject;
         };
         
         void CreateText(const Pht::Font& font,
                         float displayTime,
-                        const std::vector<TextLine>& textLines);
-        void SetAlpha(float newAlhpa);
-        void StartSlideOut();
+                        const TextLine& upperTextLine,
+                        const TextLine& lowerTextLine);
         void UpdateInSlidingInState();
+        void UpdateTextLineSceneObjectPositions();
         void UpdateInDisplayingTextState();
         void UpdateInSlidingOutState();
     
@@ -69,8 +71,12 @@ namespace RowBlast {
         const Text* mText {nullptr};
         std::unique_ptr<Pht::SceneObject> mContainerSceneObject;
         std::vector<Text> mTexts;
-        Pht::Vec3 mSlideInStartPosition;
-        Pht::Vec3 mSlideOutFinalPosition;
+        Pht::Vec3 mLeftPosition;
+        Pht::Vec3 mRightPosition;
+        Pht::Vec3 mTextPosition;
+        float mVelocity {0.0f};
+        float mInitialVelocity {0.0f};
+        float mDisplayVelocity {0.0f};
     };
 }
 

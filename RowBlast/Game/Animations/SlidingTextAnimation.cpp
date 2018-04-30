@@ -15,10 +15,28 @@
 
 using namespace RowBlast;
 
+/*
+
+D = (V0 - Vd) * Ts / 2 + Vd * (Ts + Td / 2) = V0 * Ts / 2 - Vd * Ts / 2 + Vd * Ts + Vd * Td / 2 =
+  = V0 * Ts / 2 + Vd * Ts / 2 + Vd * Td / 2
+Dd = Vd * Td
+Constants:
+D
+Dd
+Ts
+Td
+
+Variables:
+Vd = Dd / Td
+V0 = D * 2 / Ts - Vd - Vd * Td / Ts
+
+*/
+
 namespace {
-    constexpr auto slideTime {0.5f};
+    constexpr auto slideTime {0.2f};
+    constexpr auto displayDistance {0.65f};
+    constexpr auto textWidth {8.0f};
     const Pht::Vec3 centerPosition {0.0f, 0.0f, 0.0f};
-    constexpr auto textHeight {3.0f};
     constexpr auto alpha {0.88f};
     
     Pht::StaticVector<Pht::Vec2, 20> slidePoints {
@@ -53,65 +71,82 @@ SlidingTextAnimation::SlidingTextAnimation(Pht::IEngine& engine,
     auto& font {commonResources.GetHussarFontSize52PotentiallyZoomedScreen()};
 
     mTexts.reserve(4);
-    CreateText(font, 2.7f, {{{-3.1f, 1.0f}, "Clear all"}, {{-4.0f, -1.0f}, "gray blocks!"}});
-    CreateText(font, 2.7f, {{{-4.0f, 1.0f}, "You cleared"}, {{-3.55f, -1.0f}, "all blocks!"}});
-    CreateText(font, 2.7f, {{{-2.5f, 1.0f}, "Fill all"}, {{-3.5f, -1.0f}, "gray slots!"}});
-    CreateText(font, 2.7f, {{{-3.3f, 1.0f}, "You filled"}, {{-3.05f, -1.0f}, "all slots!"}});
+    CreateText(font, 2.5f, {{-3.1f, 1.0f}, "Clear all"}, {{-4.0f, -1.0f}, "gray blocks!"});
+    CreateText(font, 2.5f, {{-4.0f, 1.0f}, "You cleared"}, {{-3.55f, -1.0f}, "all blocks!"});
+    CreateText(font, 2.5f, {{-2.5f, 1.0f}, "Fill all"}, {{-3.5f, -1.0f}, "gray slots!"});
+    CreateText(font, 2.5f, {{-3.3f, 1.0f}, "You filled"}, {{-3.05f, -1.0f}, "all slots!"});
 }
 
 void SlidingTextAnimation::CreateText(const Pht::Font& font,
                                       float displayTime,
-                                      const std::vector<TextLine>& textLines) {
-    auto sceneObject {std::make_unique<Pht::SceneObject>()};
-    std::vector<std::unique_ptr<Pht::SceneObject>> textLineSceneObjects;
+                                      const TextLine& upperTextLine,
+                                      const TextLine& lowerTextLine) {
+    Pht::TextProperties textProperties {font, 1.0f, {1.0f, 1.0f, 1.0f, alpha}};
+    textProperties.mSnapToPixel = Pht::SnapToPixel::No;
+
+    auto upperTextLineSceneObject {std::make_unique<Pht::SceneObject>()};
+    auto upperTextComponent {
+        std::make_unique<Pht::TextComponent>(*upperTextLineSceneObject,
+                                             upperTextLine.mText,
+                                             textProperties)
+    };
+    upperTextLineSceneObject->SetComponent<Pht::TextComponent>(std::move(upperTextComponent));
+    mContainerSceneObject->AddChild(*upperTextLineSceneObject);
     
-    for (auto& textLine: textLines) {
-        auto textLineSceneObject {std::make_unique<Pht::SceneObject>()};
-        Pht::Vec3 textLinePosition {textLine.mPosition.x, textLine.mPosition.y, 0.0f};
-        textLineSceneObject->GetTransform().SetPosition(textLinePosition);
-        
-        auto textComponent {
-            std::make_unique<Pht::TextComponent>(*textLineSceneObject,
-                                                 textLine.mText,
-                                                 Pht::TextProperties{font})
-        };
+    auto lowerTextLineSceneObject {std::make_unique<Pht::SceneObject>()};
+    auto lowerTextComponent {
+        std::make_unique<Pht::TextComponent>(*lowerTextLineSceneObject,
+                                             lowerTextLine.mText,
+                                             textProperties)
+    };
+    lowerTextLineSceneObject->SetComponent<Pht::TextComponent>(std::move(lowerTextComponent));
+    mContainerSceneObject->AddChild(*lowerTextLineSceneObject);
     
-        textLineSceneObject->SetComponent<Pht::TextComponent>(std::move(textComponent));
-        sceneObject->AddChild(*textLineSceneObject);
-        textLineSceneObjects.push_back(std::move(textLineSceneObject));
-    }
-    
-    mContainerSceneObject->AddChild(*sceneObject);
-    mTexts.push_back(Text {displayTime, std::move(sceneObject), std::move(textLineSceneObjects)});
+    mTexts.push_back(
+        Text {
+            displayTime,
+            Pht::Vec3{upperTextLine.mPosition.x, upperTextLine.mPosition.y, 0.0f},
+            std::move(upperTextLineSceneObject),
+            Pht::Vec3{lowerTextLine.mPosition.x, lowerTextLine.mPosition.y, 0.0f},
+            std::move(lowerTextLineSceneObject)
+        }
+    );
 }
 
 void SlidingTextAnimation::Init() {
     mScene.GetHudContainer().AddChild(*mContainerSceneObject);
-    
+
     for (auto& text: mTexts) {
-        text.mSceneObject->SetIsVisible(false);
+        text.mUpperTextLineSceneObject->SetIsVisible(false);
+        text.mLowerTextLineSceneObject->SetIsVisible(false);
     }
-    
+
     auto& frustumSize {mEngine.GetRenderer().GetHudFrustumSize()};
-    mSlideInStartPosition = {0.0f, -frustumSize.y / 4.0f - textHeight / 2.0f, 0.0f};
-    mSlideOutFinalPosition = {0.0f, frustumSize.y / 4.0f + textHeight / 2.0f, 0.0f};
+    mLeftPosition = {-frustumSize.x / 2.0f - textWidth / 2.0f, 0.0f, 0.0f};
+    mRightPosition = {frustumSize.x / 2.0f + textWidth / 2.0f, 0.0f, 0.0f};
 }
 
+/*
+Vd = Dd / Td
+V0 = D * 2 / Ts - Vd - Vd * Td / Ts
+*/
 void SlidingTextAnimation::Start(Message message) {
     mState = State::SlidingIn;
     
     mText = &mTexts[static_cast<int>(message)];
-    mText->mSceneObject->SetIsVisible(true);
+    mText->mUpperTextLineSceneObject->SetIsVisible(true);
+    mText->mLowerTextLineSceneObject->SetIsVisible(true);
 
     mElapsedTime = 0.0f;
-    SetAlpha(0.0f);
-}
-
-void SlidingTextAnimation::SetAlpha(float newAlhpa) {
-    for (auto& textLineSceneObject: mText->mTextLines) {
-        auto* textComponent {textLineSceneObject->GetComponent<Pht::TextComponent>()};
-        textComponent->GetProperties().mColor.w = newAlhpa;
-    }
+    
+    mTextPosition = centerPosition;
+    
+    mDisplayVelocity = displayDistance / mText->mDisplayTime;
+    mInitialVelocity = mRightPosition.x * 2.0f / slideTime - mDisplayVelocity -
+                       mDisplayVelocity * mText->mDisplayTime / slideTime;
+    mVelocity = mInitialVelocity;
+    
+    UpdateTextLineSceneObjectPositions();
 }
 
 SlidingTextAnimation::State SlidingTextAnimation::Update() {
@@ -129,63 +164,62 @@ SlidingTextAnimation::State SlidingTextAnimation::Update() {
             break;
     }
     
-    return mState;    
+    return mState;
 }
 
 void SlidingTextAnimation::UpdateInSlidingInState() {
     auto dt {mEngine.GetLastFrameSeconds()};
-    auto& transform {mText->mSceneObject->GetTransform()};
-    auto position {transform.GetPosition()};
-    auto distance = centerPosition.y - mSlideInStartPosition.y;
-    auto normalizedTime {(slideTime - mElapsedTime) / slideTime};
     
-    position.y = centerPosition.y - distance * Pht::Lerp(normalizedTime, slidePoints);
+    mTextPosition.x += mVelocity * dt;
+    mVelocity -= dt * (mInitialVelocity - mDisplayVelocity) / slideTime;
     mElapsedTime += dt;
     
-    transform.SetPosition(position);
-    
-    SetAlpha(alpha * mElapsedTime / slideTime);
-    
-    if (position.y >= 0.0f || mElapsedTime > slideTime) {
-        transform.SetPosition({0.0f, 0.0f, 0.0f});
+    if (mVelocity < mDisplayVelocity || mTextPosition.x >= mRightPosition.x - displayDistance / 2.0f) {
         mState = State::DisplayingText;
         mElapsedTime = 0.0f;
-        SetAlpha(alpha);
+        mTextPosition.x = mRightPosition.x - displayDistance / 2.0f;
         
         mEngine.GetInput().EnableInput();
     }
+    
+    UpdateTextLineSceneObjectPositions();
+}
+
+void SlidingTextAnimation::UpdateTextLineSceneObjectPositions() {
+    auto upperTextLinePosition {mLeftPosition + mTextPosition + mText->mUpperTextLinePosition};
+    mText->mUpperTextLineSceneObject->GetTransform().SetPosition(upperTextLinePosition);
+    
+    auto lowerTextLinePosition {mRightPosition - mTextPosition + mText->mLowerTextLinePosition};
+    mText->mLowerTextLineSceneObject->GetTransform().SetPosition(lowerTextLinePosition);
 }
 
 void SlidingTextAnimation::UpdateInDisplayingTextState() {
-    mElapsedTime += mEngine.GetLastFrameSeconds();
+    auto dt {mEngine.GetLastFrameSeconds()};
+    mTextPosition.x += mDisplayVelocity * dt;
+    mElapsedTime += dt;
     
     if (mElapsedTime > mText->mDisplayTime || mEngine.GetInput().ConsumeWholeTouch()) {
-        StartSlideOut();
+        mState = State::SlidingOut;
+        mElapsedTime = 0.0f;
+        mVelocity = mDisplayVelocity;
     }
-}
-
-void SlidingTextAnimation::StartSlideOut() {
-    mState = State::SlidingOut;
-    mElapsedTime = 0.0f;
+    
+    UpdateTextLineSceneObjectPositions();
 }
 
 void SlidingTextAnimation::UpdateInSlidingOutState() {
     auto dt {mEngine.GetLastFrameSeconds()};
-    auto& transform {mText->mSceneObject->GetTransform()};
-    auto position {transform.GetPosition()};
-    auto distance = mSlideOutFinalPosition.y - centerPosition.y;
-    auto normalizedTime {mElapsedTime / slideTime};
-
-    position.y = centerPosition.y + distance * normalizedTime * normalizedTime * normalizedTime;
+    
+    mTextPosition.x += mVelocity * dt;
+    mVelocity += dt * (mInitialVelocity - mDisplayVelocity) / slideTime;
     mElapsedTime += dt;
-    
-    transform.SetPosition(position);
-    
-    SetAlpha(alpha * (slideTime - mElapsedTime) / slideTime);
-    
-    if (transform.GetPosition().y >= mSlideOutFinalPosition.y || mElapsedTime > slideTime) {
-        transform.SetPosition(mSlideOutFinalPosition);
+
+    UpdateTextLineSceneObjectPositions();
+
+    if (mTextPosition.x >= mRightPosition.x * 2.0f) {
         mState = State::Inactive;
-        mText->mSceneObject->SetIsVisible(false);
+
+        mText->mUpperTextLineSceneObject->SetIsVisible(false);
+        mText->mLowerTextLineSceneObject->SetIsVisible(false);
     }
 }

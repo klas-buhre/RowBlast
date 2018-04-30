@@ -672,7 +672,12 @@ void Renderer::RenderTextImpl(const std::string& text,
         mRenderBufferSize.y / 2.0f + mRenderBufferSize.y * position.y / mHudFrustum.mSize.y
     };
     
-    Vec2 pixelPosition {std::floor(pixelX), std::floor(pixelY)};
+    Vec2 pixelPosition {pixelX, pixelY};
+    
+    if (properties.mSnapToPixel == SnapToPixel::Yes) {
+        pixelPosition.x = std::floor(pixelPosition.x);
+        pixelPosition.y = std::floor(pixelPosition.y);
+    }
     
     mTextRenderer->RenderText(text, pixelPosition, properties);
 }
