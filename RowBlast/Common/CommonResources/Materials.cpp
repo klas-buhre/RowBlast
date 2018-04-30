@@ -40,7 +40,7 @@ Materials::Materials(Pht::IEngine& engine) {
 }
 
 void Materials::CreateGoldMaterial(const Pht::EnvMapTextureFilenames& envMapTextures) {
-    Pht::Color ambient {1.1f, 0.55f, 0.0f};
+    Pht::Color ambient {1.08f, 0.54f, 0.0f};
     Pht::Color diffuse {1.0f, 0.5f, 0.0f};
     Pht::Color specular {1.0f, 1.0f, 1.0f};
     auto shininess {21.0f};

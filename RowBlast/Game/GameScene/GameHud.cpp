@@ -131,14 +131,6 @@ void GameHud::CreateProgressObject(Pht::Scene& scene,
     progressTextSceneobject.GetTransform().SetPosition({0.0f, -0.23f, UiLayer::text});
     progressContainer.AddChild(progressTextSceneobject);
     
-    Pht::Material backlightMaterial {"backlight.png"};
-    backlightMaterial.SetBlend(Pht::Blend::Yes);
-    auto& backlightSceneObject {
-        scene.CreateSceneObject(Pht::QuadMesh {1.8f, 1.8f}, backlightMaterial)
-    };
-    backlightSceneObject.GetTransform().SetPosition({-0.75f, -0.01f, UiLayer::piecesRectangle});
-    progressContainer.AddChild(backlightSceneObject);
-    
     switch (mLevelObjective) {
         case Level::Objective::Clear:
             CreateGrayBlock(scene, progressContainer, levelResources);
@@ -206,14 +198,6 @@ void GameHud::CreateMovesObject(Pht::Scene& scene,
     auto& movesTextSceneobject {mMovesText->GetSceneObject()};
     movesTextSceneobject.GetTransform().SetPosition({0.0f, -0.23f, UiLayer::text});
     movesContainer.AddChild(movesTextSceneobject);
-    
-    Pht::Material backlightMaterial {"backlight.png"};
-    backlightMaterial.SetBlend(Pht::Blend::Yes);
-    auto& backlightSceneObject {
-        scene.CreateSceneObject(Pht::QuadMesh {1.65f, 1.65f}, backlightMaterial)
-    };
-    backlightSceneObject.GetTransform().SetPosition({-0.63f, -0.05f, UiLayer::piecesRectangle});
-    movesContainer.AddChild(backlightSceneObject);
     
     CreateLPiece(scene, movesContainer);
 }

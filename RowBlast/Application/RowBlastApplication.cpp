@@ -46,7 +46,7 @@ Backlog:
      rotate in around the y axis for about a second and then only rotate around the z axis. During
      this short animation the stars could be scaled up as well.
     -The sliding text could slide in from the left and right; one row from the right and the other
-     row from the left like in Stellar. While displaying the text the two text lines should not
+     row from the left like in Stellar. While displaying the text the two text lines should
      continue sliding slowly and then accelerate out again. The font could be similar to
      ethnocentric and have a gradient effect like this in the text shader:
      gl_FragColor = vec4(TextureCoordOut.y, 1.0, 1.0, texture2D(Sampler, TextureCoordOut).a) * TextColor;
@@ -73,7 +73,7 @@ Backlog:
     -Credit FastNoise, MIT license: https://github.com/Auburns/FastNoise/
 
 Ongoing tasks:
-    -The gesture input sensitivity seems too high.
+
 
 Ideas:
     -The pause button could lead to a widget that has an undo button, a boosters button and a game
