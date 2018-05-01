@@ -54,6 +54,11 @@ namespace RowBlast {
             return mCommonResources;
         }
         
+        Pht::Scene& GetScene() {
+            assert(mScene);
+            return *mScene;
+        }
+
         const Pht::CameraComponent& GetCamera() const {
             assert(mCamera);
             return *mCamera;

@@ -655,7 +655,7 @@ void Renderer::RenderText(const std::string& text,
         shadowProperties.mColor = properties.mShadowColor;
         
         RenderTextImpl(text, position, shadowProperties);
-        RenderTextImpl(text, position + properties.mOffset * properties.mScale, properties);
+        RenderTextImpl(text, position + properties.mShadowOffset * properties.mScale, properties);
     } else {
         RenderTextImpl(text, position, properties);
     }
@@ -679,7 +679,11 @@ void Renderer::RenderTextImpl(const std::string& text,
         pixelPosition.y = std::floor(pixelPosition.y);
     }
     
-    mTextRenderer->RenderText(text, pixelPosition, properties);
+    auto italicSlant {
+        mRenderBufferSize.x * properties.mItalicSlant * properties.mScale / mHudFrustum.mSize.x
+    };
+    
+    mTextRenderer->RenderText(text, pixelPosition, italicSlant, properties);
 }
 
 void Renderer::RenderScene(const Scene& scene) {

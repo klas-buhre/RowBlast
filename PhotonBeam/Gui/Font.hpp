@@ -40,9 +40,10 @@ namespace Pht {
         float mScale {1.0f};
         Vec4 mColor {1.0f, 1.0f, 1.0f, 1.0f};
         TextShadow mShadow {TextShadow::No};
-        Pht::Vec2 mOffset {0.0f, 0.0f};
+        Pht::Vec2 mShadowOffset {0.0f, 0.0f};
         Vec4 mShadowColor {0.0f, 0.0f, 0.0f, 1.0f};
         SnapToPixel mSnapToPixel {SnapToPixel::Yes};
+        float mItalicSlant {0.0f};
     };
 }
 

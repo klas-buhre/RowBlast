@@ -27,6 +27,7 @@ TextRenderer::~TextRenderer() {
 
 void TextRenderer::RenderText(const std::string& text,
                               Vec2 position,
+                              float slant,
                               const TextProperties& properties) {
     mTextShader.Use();
     auto& uniforms {mTextShader.GetUniforms()};
@@ -52,13 +53,13 @@ void TextRenderer::RenderText(const std::string& text,
         GLfloat h {glyph.mSize.y * properties.mScale};
         
         GLfloat vertices[6][4] = {
-            {xPos,     yPos + h, 0.0f, 0.0f},
-            {xPos,     yPos,     0.0f, 1.0f},
-            {xPos + w, yPos,     1.0f, 1.0f},
+            {xPos + slant,     yPos + h, 0.0f, 0.0f},
+            {xPos,             yPos,     0.0f, 1.0f},
+            {xPos + w,         yPos,     1.0f, 1.0f},
 
-            {xPos,     yPos + h, 0.0f, 0.0f},
-            {xPos + w, yPos,     1.0f, 1.0f},
-            {xPos + w, yPos + h, 1.0f, 0.0f}
+            {xPos + slant,     yPos + h, 0.0f, 0.0f},
+            {xPos + w,         yPos,     1.0f, 1.0f},
+            {xPos + w + slant, yPos + h, 1.0f, 0.0f}
         };
 
         glBindTexture(GL_TEXTURE_2D, glyph.mTexture);

@@ -20,9 +20,11 @@ namespace RowBlast {
     class SlidingTextAnimation {
     public:
         enum class State {
+            RectangleAppearing,
             SlidingIn,
-            SlidingOut,
             DisplayingText,
+            SlidingOut,
+            RectangleDisappearing,
             Inactive
         };
         
@@ -59,17 +61,20 @@ namespace RowBlast {
                         float displayTime,
                         const TextLine& upperTextLine,
                         const TextLine& lowerTextLine);
+        void CreateGradientRectangles(Pht::SceneObject& containerSceneObject);
+        void UpdateInRectangleAppearingState();
         void UpdateInSlidingInState();
         void UpdateTextLineSceneObjectPositions();
         void UpdateInDisplayingTextState();
         void UpdateInSlidingOutState();
+        void UpdateInRectangleDisappearingState();
     
         Pht::IEngine& mEngine;
         GameScene& mScene;
         State mState {State::Inactive};
         float mElapsedTime {0.0f};
         const Text* mText {nullptr};
-        std::unique_ptr<Pht::SceneObject> mContainerSceneObject;
+        Pht::SceneObject* mGradientRectanglesSceneObject {nullptr};
         std::vector<Text> mTexts;
         Pht::Vec3 mLeftPosition;
         Pht::Vec3 mRightPosition;

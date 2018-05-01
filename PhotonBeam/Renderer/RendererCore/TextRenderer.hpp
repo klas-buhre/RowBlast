@@ -16,7 +16,10 @@ namespace Pht {
         TextRenderer(const IVec2& screenSize);
         ~TextRenderer();
         
-        void RenderText(const std::string& text, Vec2 position, const TextProperties& properties);
+        void RenderText(const std::string& text,
+                        Vec2 position,
+                        float slant,
+                        const TextProperties& properties);
         
     private:
         Mat4 mProjection;
