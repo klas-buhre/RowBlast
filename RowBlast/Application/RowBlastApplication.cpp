@@ -64,16 +64,8 @@ Backlog:
     -Credit FastNoise, MIT license: https://github.com/Auburns/FastNoise/
 
 Ongoing tasks:
-    -The sliding text could slide in from the left and right; one row from the right and the other
-     row from the left like in Stellar. While displaying the text the two text lines should
-     continue sliding slowly and then accelerate out again. The font could be similar to
-     ethnocentric and have a gradient effect like this in the text shader:
+    -Title text could slide in like in the sliding text animation.
      gl_FragColor = vec4(1.0, 1.0 - TextureCoordOut.y * 0.1, 1.0 - TextureCoordOut.y * 0.2, texture2D(Sampler, TextureCoordOut).a) * TextColor;
-     The title text can also have that gradient.
-     Could try upper case text in italic.
-     There could be three quads behind the text to give it contrast, one thick quad in the middle
-     and two thinner above and bellow. The quads could scale in like the blast radius animation.
-    -Could have a rotating particle/flare in the sliding text animation.
 
 Ideas:
     -The pause button could lead to a widget that has an undo button, a boosters button and a game
@@ -115,7 +107,8 @@ Time Estimation in days:
         Cost: 10
         Done
     -Improving sliding text animation.
-        Cost: 2
+        Cost: 3
+        Done
     -Use new GUI/Menu textures.
         Cost: 6
     -Do the marked items in the backlog.
@@ -141,7 +134,7 @@ Time Estimation in days:
     -Back end.
         Cost: ?
 
-        Total: 169
+        Total: 170
 
 
 Comomon piece type sets:

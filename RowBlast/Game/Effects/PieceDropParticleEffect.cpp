@@ -1,12 +1,14 @@
 #include "PieceDropParticleEffect.hpp"
 
+// Engine includes.
+#include "IEngine.hpp"
+#include "SceneObject.hpp"
+#include "IParticleSystem.hpp"
+#include "ParticleEffect.hpp"
+
 // Game includes.
 #include "GameScene.hpp"
 #include "FallingPiece.hpp"
-#include "IEngine.hpp"
-#include "SceneObject.hpp"
-#include "ParticleSystem.hpp"
-#include "ParticleEffect.hpp"
 
 using namespace RowBlast;
 

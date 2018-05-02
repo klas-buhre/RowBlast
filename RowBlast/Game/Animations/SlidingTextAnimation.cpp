@@ -9,6 +9,8 @@
 #include "TextComponent.hpp"
 #include "MathUtils.hpp"
 #include "Scene.hpp"
+#include "IParticleSystem.hpp"
+#include "ParticleEffect.hpp"
 
 // Game includes.
 #include "GameScene.hpp"
@@ -66,30 +68,28 @@ SlidingTextAnimation::SlidingTextAnimation(Pht::IEngine& engine,
     auto& font {commonResources.GetHussarFontSize52PotentiallyZoomedScreen()};
 
     mTexts.reserve(4);
-    // CreateText(font, 2.5f, {{-3.1f, 0.5}, "Clear all"}, {{-4.0f, -1.0f}, "gray blocks!"});
-    CreateText(font, 2.5f, {{-3.1f, 1.0f}, "CLEAR ALL"}, {{-4.0f, -1.0f}, "GRAY BLOCKS"});
-    CreateText(font, 2.5f, {{-4.0f, 1.0f}, "You cleared"}, {{-3.55f, -1.0f}, "all blocks!"});
-    CreateText(font, 2.5f, {{-2.5f, 1.0f}, "Fill all"}, {{-3.5f, -1.0f}, "gray slots!"});
-    CreateText(font, 2.5f, {{-3.3f, 1.0f}, "You filled"}, {{-3.05f, -1.0f}, "all slots!"});
+    CreateText(font, 2.5f, {{-3.6f, 0.4f}, "CLEAR ALL"}, {{-4.7f, -1.5f}, "GRAY BLOCKS"});
+    CreateText(font, 2.5f, {{-1.0f, 0.4f}, "ALL"}, {{-3.0f, -1.5f}, "CLEARED!"});
+    CreateText(font, 2.5f, {{-2.7f, 0.4f}, "FILL ALL"}, {{-4.3f, -1.5f}, "GRAY SLOTS"});
+    CreateText(font, 2.5f, {{-3.5f, 0.4f}, "ALL SLOTS"}, {{-2.1f, -1.5f}, "FILLED!"});
+    
+    CreateTwinkleParticleEffect();
 }
 
 void SlidingTextAnimation::CreateText(const Pht::Font& font,
                                       float displayTime,
                                       const TextLine& upperTextLine,
                                       const TextLine& lowerTextLine) {
-    // Pht::TextProperties textProperties {font, 1.0f, {1.0f, 1.0f, 1.0f, alpha}};
-    // Pht::TextProperties textProperties {font, 1.0f, {0.88f, 0.88f, 0.88f, 1.0f}};
-    // Pht::TextProperties textProperties {font, 1.0f, {1.0f, 0.9f, 0.8f, 1.0f}};
     Pht::TextProperties textProperties {
         font,
         1.0f,
-        {1.0f, 0.95f, 0.9f, 1.0f}, // {1.0f, 0.9f, 0.8f, 1.0f},
+        {1.0f, 0.975f, 0.95f, 1.0f},
         Pht::TextShadow::Yes,
         {0.1f, 0.1f},
         {0.2f, 0.2f, 0.2f, 0.5f}
     };
     textProperties.mSnapToPixel = Pht::SnapToPixel::No;
-    textProperties.mItalicSlant = 0.1f;
+    textProperties.mItalicSlant = 0.12f;
 
     auto upperTextLineSceneObject {std::make_unique<Pht::SceneObject>()};
     auto upperTextComponent {
@@ -118,6 +118,35 @@ void SlidingTextAnimation::CreateText(const Pht::Font& font,
     );
 }
 
+void SlidingTextAnimation::CreateTwinkleParticleEffect() {
+    Pht::EmitterSettings particleEmitterSettings {
+        .mPosition = Pht::Vec3{0.0f, 0.0f, 0.0f},
+        .mSize = Pht::Vec3{0.0f, 0.0f, 0.0f},
+        .mTimeToLive = 0.0f,
+        .mBurst = 1
+    };
+    
+    Pht::ParticleSettings particleSettings {
+        .mVelocity = Pht::Vec3{0.0f, 0.0f, 0.0f},
+        .mVelocityRandomPart = Pht::Vec3{0.0f, 0.0f, 0.0f},
+        .mColor = Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f},
+        .mColorRandomPart = Pht::Vec4{0.0f, 0.0f, 0.0f, 0.0f},
+        .mTextureFilename = "particle_sprite_twinkle_blurred.png",
+        .mTimeToLive = 1.2f,
+        .mTimeToLiveRandomPart = 0.0f,
+        .mFadeOutDuration = 0.0f,
+        .mZAngularVelocity = 100.0f,
+        .mSize = Pht::Vec2{5.5f, 5.5f},
+        .mSizeRandomPart = 0.0f,
+        .mShrinkDuration = 0.5f
+    };
+    
+    auto& particleSystem {mEngine.GetParticleSystem()};
+    mTwinkleParticleEffect = particleSystem.CreateParticleEffectSceneObject(particleSettings,
+                                                                            particleEmitterSettings,
+                                                                            Pht::RenderMode::Triangles);
+}
+
 void SlidingTextAnimation::Init() {
     auto& containerSceneObject {mScene.GetScene().CreateSceneObject()};
     containerSceneObject.GetTransform().SetPosition(centerPosition);
@@ -131,6 +160,8 @@ void SlidingTextAnimation::Init() {
     }
     
     CreateGradientRectangles(containerSceneObject);
+    
+    containerSceneObject.AddChild(*mTwinkleParticleEffect);
 
     auto& frustumSize {mEngine.GetRenderer().GetHudFrustumSize()};
     mLeftPosition = {-frustumSize.x / 2.0f - textWidth / 2.0f, 0.0f, 0.0f};
@@ -153,9 +184,9 @@ void SlidingTextAnimation::CreateGradientRectangles(Pht::SceneObject& containerS
     auto rightQuadWidth {frustumSize.x / 3.0f};
 
     GradientRectangleColors colors {
-        .mLeft = {0.9f, 0.45f, 0.0f, 0.8f},
+        .mLeft = {0.93f, 0.5f, 0.0f, 0.8f},
         .mMid = {0.3f, 0.3f, 0.35f, 0.8f},
-        .mRight = {0.9f, 0.45f, 0.0f, 0.8f}
+        .mRight = {0.93f, 0.5f, 0.0f, 0.8f}
     };
 
     CreateGradientRectangle(scene,
@@ -193,8 +224,6 @@ void SlidingTextAnimation::Start(Message message) {
     mState = State::RectangleAppearing;
     
     mText = &mTexts[static_cast<int>(message)];
-    mText->mUpperTextLineSceneObject->SetIsVisible(true);
-    mText->mLowerTextLineSceneObject->SetIsVisible(true);
 
     mElapsedTime = 0.0f;
     
@@ -252,6 +281,9 @@ void SlidingTextAnimation::UpdateInRectangleAppearingState() {
         mState = State::SlidingIn;
         SetAlpha(*mGradientRectanglesSceneObject, 1.0f);
         mGradientRectanglesSceneObject->GetTransform().SetScale(1.0f);
+        
+        mText->mUpperTextLineSceneObject->SetIsVisible(true);
+        mText->mLowerTextLineSceneObject->SetIsVisible(true);
     }
 }
 
@@ -268,6 +300,8 @@ void SlidingTextAnimation::UpdateInSlidingInState() {
         mTextPosition.x = mRightPosition.x - displayDistance / 2.0f;
         
         mEngine.GetInput().EnableInput();
+        
+        mTwinkleParticleEffect->GetComponent<Pht::ParticleEffect>()->Start();
     }
     
     UpdateTextLineSceneObjectPositions();
@@ -286,6 +320,8 @@ void SlidingTextAnimation::UpdateInDisplayingTextState() {
     mTextPosition.x += mDisplayVelocity * dt;
     mElapsedTime += dt;
     
+    mTwinkleParticleEffect->GetComponent<Pht::ParticleEffect>()->Update(dt);
+    
     if (mElapsedTime > mText->mDisplayTime || mEngine.GetInput().ConsumeWholeTouch()) {
         mState = State::SlidingOut;
         mElapsedTime = 0.0f;
@@ -303,6 +339,8 @@ void SlidingTextAnimation::UpdateInSlidingOutState() {
     mElapsedTime += dt;
 
     UpdateTextLineSceneObjectPositions();
+    
+    mTwinkleParticleEffect->GetComponent<Pht::ParticleEffect>()->Update(dt);
 
     if (mTextPosition.x >= mRightPosition.x * 2.0f) {
         mState = State::RectangleDisappearing;
@@ -310,6 +348,8 @@ void SlidingTextAnimation::UpdateInSlidingOutState() {
 
         mText->mUpperTextLineSceneObject->SetIsVisible(false);
         mText->mLowerTextLineSceneObject->SetIsVisible(false);
+        
+        mTwinkleParticleEffect->GetComponent<Pht::ParticleEffect>()->Stop();
     }
 }
 

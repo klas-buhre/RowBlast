@@ -61,6 +61,7 @@ namespace RowBlast {
                         float displayTime,
                         const TextLine& upperTextLine,
                         const TextLine& lowerTextLine);
+        void CreateTwinkleParticleEffect();
         void CreateGradientRectangles(Pht::SceneObject& containerSceneObject);
         void UpdateInRectangleAppearingState();
         void UpdateInSlidingInState();
@@ -75,6 +76,7 @@ namespace RowBlast {
         float mElapsedTime {0.0f};
         const Text* mText {nullptr};
         Pht::SceneObject* mGradientRectanglesSceneObject {nullptr};
+        std::unique_ptr<Pht::SceneObject> mTwinkleParticleEffect;
         std::vector<Text> mTexts;
         Pht::Vec3 mLeftPosition;
         Pht::Vec3 mRightPosition;
