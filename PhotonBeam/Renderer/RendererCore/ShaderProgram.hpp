@@ -22,6 +22,7 @@ namespace Pht {
             GLint mReflectivity {0};
             GLint mOpacity {0};
             GLint mTextColor {0};
+            GLint mTextColorSubtraction {0};
             GLint mSampler {0};
             GLint mEmissionSampler {0};
             GLint mModel {0};

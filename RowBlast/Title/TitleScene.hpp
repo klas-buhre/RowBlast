@@ -9,9 +9,11 @@
 // Game includes.
 #include "FloatingBlocks.hpp"
 #include "Clouds.hpp"
+#include "TitleAnimation.hpp"
 
 namespace Pht {
     class IEngine;
+    class SceneObject;
 }
 
 namespace RowBlast {
@@ -26,8 +28,9 @@ namespace RowBlast {
     private:
         std::unique_ptr<Clouds> mClouds;
         std::unique_ptr<FloatingBlocks> mFloatingBlocks;
-        Pht::Font mFont;
+        std::unique_ptr<TitleAnimation> mTitleAnimation;
         Pht::Font mTapFont;
+        Pht::SceneObject* mTapTextSceneObject {nullptr};
     };
 }
 

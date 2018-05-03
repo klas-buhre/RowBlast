@@ -23,6 +23,7 @@
 		62318C422066B84A008332CB /* particle_sprite_halo.png in Resources */ = {isa = PBXBuildFile; fileRef = 62318C412066B849008332CB /* particle_sprite_halo.png */; };
 		62318C4C2067F669008332CB /* flare24.png in Resources */ = {isa = PBXBuildFile; fileRef = 62318C4B2067F668008332CB /* flare24.png */; };
 		623326732073D69500AC505A /* level29.json in Resources */ = {isa = PBXBuildFile; fileRef = 623326722073D69400AC505A /* level29.json */; };
+		62398E60209A2784000F5F79 /* TitleAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62398E5E209A2784000F5F79 /* TitleAnimation.cpp */; };
 		62411A971E61E62800035D2A /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62411A961E61E62800035D2A /* GLKit.framework */; };
 		626451DD206FA93200E304F2 /* laser_bomb_224.obj in Resources */ = {isa = PBXBuildFile; fileRef = 626451DC206FA93100E304F2 /* laser_bomb_224.obj */; };
 		626451E0206FA93F00E304F2 /* laser_bomb_emission.png in Resources */ = {isa = PBXBuildFile; fileRef = 626451DE206FA93E00E304F2 /* laser_bomb_emission.png */; };
@@ -259,6 +260,8 @@
 		62785E192087618E006F9869 /* SettingsButtonController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62785DA62087618E006F9869 /* SettingsButtonController.cpp */; };
 		62785E1A2087618E006F9869 /* MapViewControllers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62785DA92087618E006F9869 /* MapViewControllers.cpp */; };
 		62785E1B2087618E006F9869 /* RowBlastApplication.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62785DAD2087618E006F9869 /* RowBlastApplication.cpp */; };
+		627D37A8209B55FA0068B50C /* TextGradient.frag in Resources */ = {isa = PBXBuildFile; fileRef = 627D37A6209B55F90068B50C /* TextGradient.frag */; };
+		627D37A9209B55FA0068B50C /* TextGradient.vert in Resources */ = {isa = PBXBuildFile; fileRef = 627D37A7209B55FA0068B50C /* TextGradient.vert */; };
 		628EC29A207D24090071F368 /* level30.json in Resources */ = {isa = PBXBuildFile; fileRef = 628EC299207D24080071F368 /* level30.json */; };
 		628EC2AC2080C4880071F368 /* level31.json in Resources */ = {isa = PBXBuildFile; fileRef = 628EC2AB2080C4880071F368 /* level31.json */; };
 		6299DD7A208B4178001F74E2 /* CameraShake.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6299DD78208B4178001F74E2 /* CameraShake.cpp */; };
@@ -295,6 +298,8 @@
 		62318C412066B849008332CB /* particle_sprite_halo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = particle_sprite_halo.png; sourceTree = "<group>"; };
 		62318C4B2067F668008332CB /* flare24.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = flare24.png; sourceTree = "<group>"; };
 		623326722073D69400AC505A /* level29.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level29.json; sourceTree = "<group>"; };
+		62398E5E209A2784000F5F79 /* TitleAnimation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TitleAnimation.cpp; sourceTree = "<group>"; };
+		62398E5F209A2784000F5F79 /* TitleAnimation.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TitleAnimation.hpp; sourceTree = "<group>"; };
 		62411A961E61E62800035D2A /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		626451DC206FA93100E304F2 /* laser_bomb_224.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = laser_bomb_224.obj; sourceTree = "<group>"; };
 		626451DE206FA93E00E304F2 /* laser_bomb_emission.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = laser_bomb_emission.png; sourceTree = "<group>"; };
@@ -834,6 +839,8 @@
 		62785DAA2087618E006F9869 /* SettingsButtonView.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SettingsButtonView.hpp; sourceTree = "<group>"; };
 		62785DAC2087618E006F9869 /* RowBlastApplication.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = RowBlastApplication.hpp; sourceTree = "<group>"; };
 		62785DAD2087618E006F9869 /* RowBlastApplication.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RowBlastApplication.cpp; sourceTree = "<group>"; };
+		627D37A6209B55F90068B50C /* TextGradient.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = TextGradient.frag; sourceTree = "<group>"; };
+		627D37A7209B55FA0068B50C /* TextGradient.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = TextGradient.vert; sourceTree = "<group>"; };
 		628EC299207D24080071F368 /* level30.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level30.json; sourceTree = "<group>"; };
 		628EC2AB2080C4880071F368 /* level31.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level31.json; sourceTree = "<group>"; };
 		6299DD78208B4178001F74E2 /* CameraShake.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CameraShake.cpp; sourceTree = "<group>"; };
@@ -1136,6 +1143,8 @@
 				62785A1120875936006F9869 /* PointParticle.vert */,
 				62785A2020875936006F9869 /* Text.frag */,
 				62785A1520875936006F9869 /* Text.vert */,
+				627D37A6209B55F90068B50C /* TextGradient.frag */,
+				627D37A7209B55FA0068B50C /* TextGradient.vert */,
 				62785A0D20875936006F9869 /* Textured.frag */,
 				62785A1D20875936006F9869 /* Textured.vert */,
 				62785A0E20875936006F9869 /* TexturedEmissiveLighting.frag */,
@@ -1527,6 +1536,8 @@
 		62785CB72087618D006F9869 /* Title */ = {
 			isa = PBXGroup;
 			children = (
+				62398E5E209A2784000F5F79 /* TitleAnimation.cpp */,
+				62398E5F209A2784000F5F79 /* TitleAnimation.hpp */,
 				62785CBB2087618D006F9869 /* TitleController.cpp */,
 				62785CB92087618D006F9869 /* TitleController.hpp */,
 				62785CB82087618D006F9869 /* TitleScene.cpp */,
@@ -2042,12 +2053,14 @@
 				62785B2620875937006F9869 /* PixelLighting.frag in Resources */,
 				6276B706203F26E90075C468 /* triangle_320_r90.obj in Resources */,
 				626451E1206FA93F00E304F2 /* laser_bomb_diffuse.jpg in Resources */,
+				627D37A8209B55FA0068B50C /* TextGradient.frag in Resources */,
 				6270DC8A1FCB23D800FB457D /* level11.json in Resources */,
 				6270DC611FCB22AE00FB457D /* cube_428.obj in Resources */,
 				6270DC891FCB23D800FB457D /* level10.json in Resources */,
 				623326732073D69500AC505A /* level29.json in Resources */,
 				6278591C203AFB7C00494A4D /* Images.xcassets in Resources */,
 				6270DC621FCB22AE00FB457D /* cube_554.obj in Resources */,
+				627D37A9209B55FA0068B50C /* TextGradient.vert in Resources */,
 				6270DCAC1FCB248E00FB457D /* sky_blurred.jpg in Resources */,
 				62E2222A1FE9737F00AE098B /* cloud_D_512.png in Resources */,
 				62E222261FE971C300AE098B /* cloud_B_512.png in Resources */,
@@ -2087,6 +2100,7 @@
 				62785DF22087618E006F9869 /* FallingPieceAnimation.cpp in Sources */,
 				62785DDD2087618E006F9869 /* TPiece.cpp in Sources */,
 				62785DEF2087618E006F9869 /* ExplosionParticleEffect.cpp in Sources */,
+				62398E60209A2784000F5F79 /* TitleAnimation.cpp in Sources */,
 				62785DD62087618E006F9869 /* ZPiece.cpp in Sources */,
 				62785DB02087618E006F9869 /* GameMenuView.cpp in Sources */,
 				62785DFD2087618E006F9869 /* CloseButton.cpp in Sources */,

@@ -3,6 +3,8 @@
 #define STRINGIFY(A)  #A
 #include "../Shaders/Text.vert"
 #include "../Shaders/Text.frag"
+#include "../Shaders/TextGradient.vert"
+#include "../Shaders/TextGradient.frag"
 
 #include "Font.hpp"
 #include "IEngine.hpp"
@@ -11,7 +13,8 @@ using namespace Pht;
 
 TextRenderer::TextRenderer(const IVec2& screenSize) :
     mProjection {Mat4::OrthographicProjection(0.0f, screenSize.x, 0.0f, screenSize.y, -1.0f, 1.0f)},
-    mTextShader {{}} {
+    mTextShader {{}},
+    mTextGradientShader {{}} {
     
     glGenBuffers(1, &mVbo);
     glBindBuffer(GL_ARRAY_BUFFER, mVbo);
@@ -19,6 +22,9 @@ TextRenderer::TextRenderer(const IVec2& screenSize) :
     
     mTextShader.Build(TextVertexShader, TextFragmentShader);
     mTextShader.SetProjection(mProjection);
+
+    mTextGradientShader.Build(TextGradientVertexShader, TextGradientFragmentShader);
+    mTextGradientShader.SetProjection(mProjection);
 }
 
 TextRenderer::~TextRenderer() {
@@ -29,11 +35,19 @@ void TextRenderer::RenderText(const std::string& text,
                               Vec2 position,
                               float slant,
                               const TextProperties& properties) {
-    mTextShader.Use();
-    auto& uniforms {mTextShader.GetUniforms()};
-    auto& attributes {mTextShader.GetAttributes()};
+    auto& shader {GetShaderProgram(properties)};
+    
+    shader.Use();
+    auto& uniforms {shader.GetUniforms()};
+    auto& attributes {shader.GetAttributes()};
     
     glUniform4fv(uniforms.mTextColor, 1, properties.mColor.Pointer());
+    
+    if (properties.mGradientBottomColorSubtraction.HasValue()) {
+        glUniform3fv(uniforms.mTextColorSubtraction,
+                     1,
+                     properties.mGradientBottomColorSubtraction.GetValue().Pointer());
+    }
 
     glDisable(GL_DEPTH_TEST);
 
@@ -74,4 +88,12 @@ void TextRenderer::RenderText(const std::string& text,
     glDisableVertexAttribArray(attributes.mTextCoords);
     glDisable(GL_BLEND);
     glEnable(GL_DEPTH_TEST);
+}
+
+ShaderProgram& TextRenderer::GetShaderProgram(const TextProperties& textProperties) {
+    if (textProperties.mGradientBottomColorSubtraction.HasValue()) {
+        return mTextGradientShader;
+    }
+    
+    return mTextShader;
 }

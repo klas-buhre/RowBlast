@@ -72,6 +72,7 @@ void ShaderProgram::Build(const char* vertexShaderSource, const char* fragmentSh
     mUniforms.mReflectivity = glGetUniformLocation(mProgram, "Reflectivity");
     mUniforms.mOpacity = glGetUniformLocation(mProgram, "Opacity");
     mUniforms.mTextColor = glGetUniformLocation(mProgram, "TextColor");
+    mUniforms.mTextColorSubtraction = glGetUniformLocation(mProgram, "TextColorSubtraction");
     mUniforms.mSampler = glGetUniformLocation(mProgram, "Sampler");
     mUniforms.mEmissionSampler = glGetUniformLocation(mProgram, "EmissionSampler");
     mUniforms.mModel = glGetUniformLocation(mProgram, "Model");

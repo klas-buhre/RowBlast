@@ -142,7 +142,6 @@ namespace {
 }
 
 TitleScene::TitleScene(Pht::IEngine& engine, const CommonResources& commonResources) :
-    mFont {"ethnocentric_rg_it.ttf", engine.GetRenderer().GetAdjustedNumPixels(100)},
     mTapFont {"HussarBoldWeb.otf", engine.GetRenderer().GetAdjustedNumPixels(35)} {
     
     auto& sceneManager {engine.GetSceneManager()};
@@ -171,13 +170,17 @@ TitleScene::TitleScene(Pht::IEngine& engine, const CommonResources& commonResour
     camera.GetSceneObject().GetTransform().SetPosition(cameraPosition);
     camera.SetTarget(target, up);
     scene->GetRoot().AddChild(camera.GetSceneObject());
+    
+    auto& uiContainer {scene->CreateSceneObject()};
+    uiContainer.SetLayer(static_cast<int>(Layer::Ui));
+    scene->GetRoot().AddChild(uiContainer);
 
     mClouds = std::make_unique<Clouds>(engine,
                                        *scene,
                                        static_cast<int>(Layer::Background),
                                        cloudPaths,
                                        hazeLayers,
-                                       3.0f);
+                                       2.1f);
 
     mFloatingBlocks = std::make_unique<FloatingBlocks>(engine,
                                                        *scene,
@@ -186,44 +189,24 @@ TitleScene::TitleScene(Pht::IEngine& engine, const CommonResources& commonResour
                                                        commonResources,
                                                        7.7f,
                                                        20.0f);
+
+    mTitleAnimation = std::make_unique<TitleAnimation>(engine, *scene, uiContainer);
     
-    Pht::Vec4 textColor {1.0f, 1.0f, 1.0f, 1.0f};
-
-    Pht::TextProperties titleTextProperties {
-        mFont,
-        1.0f,
-        textColor,
-        Pht::TextShadow::Yes,
-        {0.1f, 0.1f},
-        {0.4f, 0.4f, 0.4f, 0.5f}
-    };
-
-    auto& titleLine1 {scene->CreateText("ROW", titleTextProperties)};
-    auto& titleLine1SceneObject {titleLine1.GetSceneObject()};
-    titleLine1SceneObject.GetTransform().SetPosition({-4.0f, 7.0f, UiLayer::text});
-    titleLine1SceneObject.SetLayer(static_cast<int>(Layer::Ui));
-    scene->GetRoot().AddChild(titleLine1SceneObject);
-
-    auto& titleLine2 {scene->CreateText("BLAST", titleTextProperties)};
-    auto& titleLine2SceneObject {titleLine2.GetSceneObject()};
-    titleLine2SceneObject.GetTransform().SetPosition({-5.6f, 4.8f, UiLayer::text});
-    titleLine2SceneObject.SetLayer(static_cast<int>(Layer::Ui));
-    scene->GetRoot().AddChild(titleLine2SceneObject);
-
     Pht::TextProperties tapTextProperties {
         mTapFont,
         1.0f,
-        textColor,
+        {1.0f, 1.0f, 1.0f, 1.0f},
         Pht::TextShadow::Yes,
         {0.05f, 0.05f},
         {0.4f, 0.4f, 0.4f, 0.5f}
     };
 
     auto& tapText {scene->CreateText("Tap to continue...", tapTextProperties)};
-    auto& tapTextSceneObject {tapText.GetSceneObject()};
-    tapTextSceneObject.GetTransform().SetPosition({-3.6f, -6.0f, UiLayer::text});
-    tapTextSceneObject.SetLayer(static_cast<int>(Layer::Ui));
-    scene->GetRoot().AddChild(tapTextSceneObject);
+    mTapTextSceneObject = &tapText.GetSceneObject();
+    mTapTextSceneObject->GetTransform().SetPosition({-3.6f, -6.0f, UiLayer::text});
+    mTapTextSceneObject->SetLayer(static_cast<int>(Layer::Ui));
+    mTapTextSceneObject->SetIsVisible(false);
+    uiContainer.AddChild(*mTapTextSceneObject);
     
     scene->SetDistanceFunction(Pht::DistanceFunction::WorldSpaceNegativeZ);
     
@@ -233,4 +216,9 @@ TitleScene::TitleScene(Pht::IEngine& engine, const CommonResources& commonResour
 void TitleScene::Update() {
     mClouds->Update();
     mFloatingBlocks->Update();
+    mTitleAnimation->Update();
+    
+    if (mTitleAnimation->IsDone()) {
+        mTapTextSceneObject->SetIsVisible(true);
+    }
 }

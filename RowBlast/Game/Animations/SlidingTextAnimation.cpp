@@ -1,7 +1,5 @@
 #include "SlidingTextAnimation.hpp"
 
-#include <assert.h>
-
 // Engine includes.
 #include "IEngine.hpp"
 #include "IRenderer.hpp"
@@ -83,13 +81,14 @@ void SlidingTextAnimation::CreateText(const Pht::Font& font,
     Pht::TextProperties textProperties {
         font,
         1.0f,
-        {1.0f, 0.975f, 0.95f, 1.0f},
+        {1.0f, 1.0f, 1.0f, 1.0f},
         Pht::TextShadow::Yes,
         {0.1f, 0.1f},
         {0.2f, 0.2f, 0.2f, 0.5f}
     };
     textProperties.mSnapToPixel = Pht::SnapToPixel::No;
     textProperties.mItalicSlant = 0.12f;
+    textProperties.mGradientBottomColorSubtraction = Pht::Vec3 {0.0f, 0.05f, 0.1f};
 
     auto upperTextLineSceneObject {std::make_unique<Pht::SceneObject>()};
     auto upperTextComponent {

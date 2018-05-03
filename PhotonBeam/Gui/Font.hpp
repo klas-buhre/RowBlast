@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "Vector.hpp"
+#include "Optional.hpp"
 
 namespace Pht {
     class Font {
@@ -44,6 +45,7 @@ namespace Pht {
         Vec4 mShadowColor {0.0f, 0.0f, 0.0f, 1.0f};
         SnapToPixel mSnapToPixel {SnapToPixel::Yes};
         float mItalicSlant {0.0f};
+        Pht::Optional<Pht::Vec3> mGradientBottomColorSubtraction;
     };
 }
 

@@ -22,9 +22,12 @@ namespace Pht {
                         const TextProperties& properties);
         
     private:
+        ShaderProgram& GetShaderProgram(const TextProperties& properties);
+        
         Mat4 mProjection;
         GLuint mVbo {0};
         ShaderProgram mTextShader;
+        ShaderProgram mTextGradientShader;
     };
 }
 

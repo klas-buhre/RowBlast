@@ -64,8 +64,7 @@ Backlog:
     -Credit FastNoise, MIT license: https://github.com/Auburns/FastNoise/
 
 Ongoing tasks:
-    -Title text could slide in like in the sliding text animation.
-     gl_FragColor = vec4(1.0, 1.0 - TextureCoordOut.y * 0.1, 1.0 - TextureCoordOut.y * 0.2, texture2D(Sampler, TextureCoordOut).a) * TextColor;
+
 
 Ideas:
     -The pause button could lead to a widget that has an undo button, a boosters button and a game

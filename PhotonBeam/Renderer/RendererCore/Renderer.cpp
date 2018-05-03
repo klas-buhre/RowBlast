@@ -653,6 +653,7 @@ void Renderer::RenderText(const std::string& text,
     if (properties.mShadow == TextShadow::Yes) {
         TextProperties shadowProperties {properties};
         shadowProperties.mColor = properties.mShadowColor;
+        shadowProperties.mGradientBottomColorSubtraction = Optional<Vec3> {};
         
         RenderTextImpl(text, position, shadowProperties);
         RenderTextImpl(text, position + properties.mShadowOffset * properties.mScale, properties);
