@@ -277,6 +277,27 @@ Decision notes on level bombs:
              land on by piece blocks. The Field then adds that event to GameLogic which will
              detonate the level bomb once it is Updated again (after the CollapsingFieldAnimation is
              done with dragging down the piece blocks position).
+
+
+Add these clouds before generating sky background texture from title scene:
+        CloudPathVolume {
+            .mPosition = {-7.5f, -47.0f, -100.0f},
+            .mSize = {0.0f, 0.0f, 0.0f},
+            .mCloudSize = {30.0f, 30.0f},
+            .mNumClouds = 2,
+        },
+        CloudPathVolume {
+            .mPosition = {-15.0f, -60.0f, -100.0f},
+            .mSize = {0.0f, 0.0f, 0.0f},
+            .mCloudSize = {30.0f, 30.0f},
+            .mNumClouds = 2,
+        },
+        CloudPathVolume {
+            .mPosition = {10.0f, -60.0f, -100.0f},
+            .mSize = {0.0f, 0.0f, 0.0f},
+            .mCloudSize = {25.0f, 25.0f},
+            .mNumClouds = 2,
+        },
  
  
 Create rounded cube in Blender:

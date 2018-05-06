@@ -9,18 +9,6 @@
 using namespace RowBlast;
 
 namespace {
-    Level::Color ReadColor(const rapidjson::Document& document) {
-        auto color {Pht::Json::ReadString(document, "color")};
-        
-        if (color == "pink") {
-            return Level::Color::Pink;
-        } else if (color == "green") {
-            return Level::Color::Green;
-        } else {
-            assert(!"Unknown color");
-        }
-    }
-    
     std::vector<const Piece*> ReadPieceTypes(const rapidjson::Document& document,
                                              const PieceTypes& pieceTypes) {
         assert(document.HasMember("pieces"));
@@ -202,7 +190,7 @@ std::unique_ptr<Level> LevelLoader::Load(int levelIndex, const LevelResources& l
         .mThree = Pht::Json::ReadInt(document, "threeStars")
     };
     
-    auto color {ReadColor(document)};
+    auto backgroundTextureFilename {Pht::Json::ReadString(document, "background")};
     auto levelPieces {ReadPieceTypes(document, levelResources.GetPieceTypes())};    
     auto clearGrid {ReadClearGrid(document)};
     auto blueprintGrid {ReadBlueprintGrid(document)};
@@ -233,7 +221,7 @@ std::unique_ptr<Level> LevelLoader::Load(int levelIndex, const LevelResources& l
                                 moves,
                                 starLimits,
                                 levelPieces,
-                                color)
+                                backgroundTextureFilename)
     };
     
     if (clearGrid) {

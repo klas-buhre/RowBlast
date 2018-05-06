@@ -3,7 +3,7 @@
     "moves": 40,
     "twoStars": 25,
     "threeStars": 15,
-    "color": "pink",
+    "background": "sky5.jpg",
     "pieces": [
         "LongI",
         "I",

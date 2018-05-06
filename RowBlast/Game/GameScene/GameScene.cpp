@@ -125,10 +125,10 @@ void GameScene::Init(const Level& level,
     CreateLightAndCamera();
     InitFieldDimensions(level);
     
-    CreateBackground();
+    CreateBackground(level);
     CreateBackgroundLayerLight();
     CreateFloatingCubes();
-    CreateFieldQuad(level);
+    CreateFieldQuad();
     CreateFieldContainer();
     CreateBlueprintSlots(level, levelResources);
     CreatePieceDropEffectsContainer();
@@ -195,11 +195,10 @@ void GameScene::CreateLightAndCamera() {
     mScene->GetRoot().AddChild(mCamera->GetSceneObject());
 }
 
-void GameScene::CreateBackground() {
-    Pht::Material backgroundMaterial {"sky_blurred.jpg"};
+void GameScene::CreateBackground(const Level& level) {
+    Pht::Material backgroundMaterial {level.GetBackgroundTextureFilename()};
     auto& background {mScene->CreateSceneObject(Pht::QuadMesh {300.0f, 300.0f}, backgroundMaterial)};
     background.GetTransform().SetPosition({0.0f, 0.0f, -115.0f});
-    
     background.SetLayer(static_cast<int>(Layer::Background));
     mScene->GetRoot().AddChild(background);
 }
@@ -238,11 +237,11 @@ void GameScene::InitFieldDimensions(const Level& level) {
     };
 }
 
-void GameScene::CreateFieldQuad(const Level& level) {
+void GameScene::CreateFieldQuad() {
     Pht::Material fieldMaterial;
     fieldMaterial.SetOpacity(0.85f);
 
-    auto vertices {CreateFieldVertices(level)};
+    auto vertices {CreateFieldVertices()};
     auto& fieldQuad {mScene->CreateSceneObject(Pht::QuadMesh {vertices}, fieldMaterial)};
     Pht::Vec3 quadPosition {mFieldPosition.x, mFieldPosition.y, mFieldPosition.z + fieldQuadZ};
     fieldQuad.GetTransform().SetPosition(quadPosition);
@@ -256,26 +255,16 @@ void GameScene::CreateFieldContainer() {
     mScene->GetRoot().AddChild(*mFieldContainer);
 }
 
-Pht::QuadMesh::Vertices GameScene::CreateFieldVertices(const Level& level) {
+Pht::QuadMesh::Vertices GameScene::CreateFieldVertices() {
     auto width {mFieldWidth + fieldPadding};
     auto height {mFieldHeight + fieldPadding};
     
-    switch (level.GetColor()) {
-        case Level::Color::Pink:
-            return {
-                {{-width / 2.0f, -height / 2.0f, 0.0f}, {0.3f, 0.3f, 0.945f, 1.0f}},
-                {{width / 2.0f, -height / 2.0f, 0.0f}, {0.85f, 0.225f, 0.425f, 1.0f}},
-                {{width / 2.0f, height / 2.0f, 0.0f}, {0.3f, 0.3f, 0.95f, 1.0f}},
-                {{-width / 2.0f, height / 2.0f, 0.0f}, {0.9f, 0.225f, 0.425f, 1.0f}},
-            };
-        case Level::Color::Green:
-            return {
-                {{-width / 2.0f, -height / 2.0f, 0.0f}, {0.225f, 0.225f, 0.8f, 1.0f}},
-                {{width / 2.0f, -height / 2.0f, 0.0f}, {0.225f, 0.225f, 0.8f, 1.0f}},
-                {{width / 2.0f, height / 2.0f, 0.0f}, {0.225f, 0.7f, 0.425f, 1.0f}},
-                {{-width / 2.0f, height / 2.0f, 0.0f}, {0.9f, 0.225f, 0.425f, 1.0f}},
-            };
-    }
+    return {
+        {{-width / 2.0f, -height / 2.0f, 0.0f}, {0.3f, 0.3f, 0.945f, 1.0f}},
+        {{width / 2.0f, -height / 2.0f, 0.0f}, {0.85f, 0.225f, 0.425f, 1.0f}},
+        {{width / 2.0f, height / 2.0f, 0.0f}, {0.3f, 0.3f, 0.95f, 1.0f}},
+        {{-width / 2.0f, height / 2.0f, 0.0f}, {0.9f, 0.225f, 0.425f, 1.0f}},
+    };
 }
 
 void GameScene::CreateBlueprintSlots(const Level& level, const LevelResources& levelResources) {

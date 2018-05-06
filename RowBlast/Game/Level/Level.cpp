@@ -10,7 +10,7 @@ Level::Level(int index,
              int numMoves,
              const StarLimits& starLimits,
              const std::vector<const Piece*>& pieceTypes,
-             Color color) :
+             const std::string& backgroundTextureFilename) :
     mIndex {index},
     mObjective {objective},
     mNumColumns {numColumns},
@@ -19,4 +19,4 @@ Level::Level(int index,
     mNumMoves {numMoves},
     mStarLimits {starLimits},
     mPieceTypes {pieceTypes},
-    mColor {color} {}
+    mBackgroundTextureFilename {backgroundTextureFilename} {}

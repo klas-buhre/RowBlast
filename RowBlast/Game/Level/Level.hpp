@@ -2,6 +2,7 @@
 #define Level_hpp
 
 #include <memory>
+#include <string>
 
 // Game includes.
 #include "Cell.hpp"
@@ -16,11 +17,6 @@ namespace RowBlast {
             Build
         };
         
-        enum class Color {
-            Pink,
-            Green
-        };
-        
         Level(int index,
               Objective objective,
               int numColumns,
@@ -29,7 +25,7 @@ namespace RowBlast {
               int numMoves,
               const StarLimits& starLimits,
               const std::vector<const Piece*>& pieceTypes,
-              Color color);
+              const std::string& backgroundTextureFilename);
         
         void SetClearGrid(std::unique_ptr<CellGrid> clearGrid) {
             mClearGrid = std::move(clearGrid);
@@ -79,8 +75,8 @@ namespace RowBlast {
             return mBlueprintGrid.get();
         }
         
-        Color GetColor() const {
-            return mColor;
+        const std::string& GetBackgroundTextureFilename() const {
+            return mBackgroundTextureFilename;
         }
 
     private:
@@ -94,7 +90,7 @@ namespace RowBlast {
         std::vector<const Piece*> mPieceTypes;
         std::unique_ptr<CellGrid> mClearGrid;
         std::unique_ptr<BlueprintCellGrid> mBlueprintGrid;
-        Color mColor {Color::Pink};
+        std::string mBackgroundTextureFilename;
     };
 }
 

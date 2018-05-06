@@ -3,7 +3,7 @@
     "moves": 16,
     "twoStars": 15,
     "threeStars": 10,
-    "color": "pink",
+    "background": "sky3.jpg",
     "pieces": [
         "SmallTriangle",
         "Triangle",

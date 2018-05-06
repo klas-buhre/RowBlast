@@ -15,7 +15,7 @@
 using namespace RowBlast;
 
 namespace {
-    const float inputUnitsPerColumn {26.5f * 1.25f}; // {26.5f * 10.0f / Field::numColumns};
+    const float inputUnitsPerColumn {41.5f};
 }
 
 MoveButton::MoveButton(Pht::IEngine& engine) :
