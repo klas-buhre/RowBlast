@@ -5,10 +5,11 @@
 
 // Engine includes.
 #include "Vector.hpp"
+#include "Font.hpp"
 
 // Game includes.
 #include "Materials.hpp"
-#include "Font.hpp"
+#include "GuiResources.hpp"
 
 namespace Pht {
     class IEngine;
@@ -52,6 +53,10 @@ namespace RowBlast {
         const Materials& GetMaterials() const {
             return mMaterials;
         }
+        
+        const GuiResources& GetGuiResources() const {
+            return *mGuiResources;
+        }
 
         static const std::string mBlipSound;
         static const std::string mBombSound;
@@ -61,6 +66,7 @@ namespace RowBlast {
         void AddSounds(Pht::IAudio& audio);
         
         Materials mMaterials;
+        std::unique_ptr<GuiResources> mGuiResources;
         std::unique_ptr<Pht::Font> mHussarFontSize22;
         std::unique_ptr<Pht::Font> mHussarFontSize27;
         std::unique_ptr<Pht::Font> mHussarFontSize35;

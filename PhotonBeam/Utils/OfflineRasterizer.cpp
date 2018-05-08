@@ -133,7 +133,8 @@ void OfflineRasterizer::DrawRectangle(const Vec2& upperRight,
 void OfflineRasterizer::DrawTiltedTrapezoid45(const Vec2& upperRight,
                                               const Vec2& lowerLeft,
                                               float width,
-                                              const Vec4& color) {
+                                              const Vec4& color,
+                                              DrawOver drawOver) {
     auto upperRightPixelCoord {ToPixelCoordinates(upperRight)};
     auto lowerLeftPixelCoord {ToPixelCoordinates(lowerLeft)};
     auto yScaleFactor {static_cast<float>(mImageSize.y) / mCoordSystemSize.y};
@@ -149,7 +150,7 @@ void OfflineRasterizer::DrawTiltedTrapezoid45(const Vec2& upperRight,
         }
         
         for (auto y {yColumnStart}; y >= yColumnEnd; --y) {
-            SetPixel(x, y, color);
+            SetPixel(x, y, color, drawOver);
         }
     }
 }
@@ -157,7 +158,8 @@ void OfflineRasterizer::DrawTiltedTrapezoid45(const Vec2& upperRight,
 void OfflineRasterizer::DrawTiltedTrapezoid135(const Vec2& upperLeft,
                                                const Vec2& lowerRight,
                                                float width,
-                                               const Vec4& color) {
+                                               const Vec4& color,
+                                               DrawOver drawOver) {
     auto upperLeftPixelCoord {ToPixelCoordinates(upperLeft)};
     auto lowerRightPixelCoord {ToPixelCoordinates(lowerRight)};
     auto yScaleFactor {static_cast<float>(mImageSize.y) / mCoordSystemSize.y};
@@ -173,7 +175,7 @@ void OfflineRasterizer::DrawTiltedTrapezoid135(const Vec2& upperLeft,
         }
         
         for (auto y {yColumnStart}; y >= yColumnEnd; --y) {
-            SetPixel(x, y, color);
+            SetPixel(x, y, color, drawOver);
         }
     }
 }
@@ -181,7 +183,8 @@ void OfflineRasterizer::DrawTiltedTrapezoid135(const Vec2& upperLeft,
 void OfflineRasterizer::DrawTiltedTrapezoid225(const Vec2& upperLeft,
                                                const Vec2& lowerRight,
                                                float width,
-                                               const Vec4& color) {
+                                               const Vec4& color,
+                                               DrawOver drawOver) {
     auto upperLeftPixelCoord {ToPixelCoordinates(upperLeft)};
     auto lowerRightPixelCoord {ToPixelCoordinates(lowerRight)};
     auto yScaleFactor {static_cast<float>(mImageSize.y) / mCoordSystemSize.y};
@@ -197,7 +200,7 @@ void OfflineRasterizer::DrawTiltedTrapezoid225(const Vec2& upperLeft,
         }
         
         for (auto y {yColumnStart}; y >= yColumnEnd; --y) {
-            SetPixel(x, y, color);
+            SetPixel(x, y, color, drawOver);
         }
     }
 }
@@ -205,7 +208,8 @@ void OfflineRasterizer::DrawTiltedTrapezoid225(const Vec2& upperLeft,
 void OfflineRasterizer::DrawTiltedTrapezoid315(const Vec2& upperRight,
                                                const Vec2& lowerLeft,
                                                float width,
-                                               const Vec4& color) {
+                                               const Vec4& color,
+                                               DrawOver drawOver) {
     auto upperRightPixelCoord {ToPixelCoordinates(upperRight)};
     auto lowerLeftPixelCoord {ToPixelCoordinates(lowerLeft)};
     auto yScaleFactor {static_cast<float>(mImageSize.y) / mCoordSystemSize.y};
@@ -221,7 +225,7 @@ void OfflineRasterizer::DrawTiltedTrapezoid315(const Vec2& upperRight,
         }
         
         for (auto y {yColumnStart}; y >= yColumnEnd; --y) {
-            SetPixel(x, y, color);
+            SetPixel(x, y, color, drawOver);
         }
     }
 }

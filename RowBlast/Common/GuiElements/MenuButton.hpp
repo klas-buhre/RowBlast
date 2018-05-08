@@ -28,6 +28,7 @@ namespace RowBlast {
             Pht::Color mSelectedColor;
             float mPressedScale {1.0f};
             bool mIsRounded {true};
+            bool mHasShadow {false};
             float mOpacity {0.8f};
         };
         
@@ -52,7 +53,6 @@ namespace RowBlast {
         
         Pht::GuiView& mView;
         Pht::IAudio& mAudio;
-        Pht::Vec3 mPosition;
         std::unique_ptr<Pht::Button> mButton;
         std::vector<Pht::SceneObject*> mSceneObjects;
     };

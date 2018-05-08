@@ -43,6 +43,7 @@ namespace RowBlast {
                   const PieceResources& pieceResources,
                   const GameLogic& gameLogic);
         void Update();
+        void UpdateLightAnimation();
         const Pht::Material& GetRedMaterial() const;
         const Pht::Material& GetBlueMaterial() const;
         const Pht::Material& GetGreenMaterial() const;
@@ -177,7 +178,6 @@ namespace RowBlast {
                        const Level& level);
         void CreateUiViewsContainer();
         void SetScissorBox(const Pht::ScissorBox& scissorBox, int layer);
-        void UpdateLightAnimation();
         
         Pht::IEngine& mEngine;
         const ScrollController& mScrollController;

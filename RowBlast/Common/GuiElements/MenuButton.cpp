@@ -9,6 +9,7 @@
 #include "GuiView.hpp"
 #include "ISceneManager.hpp"
 #include "TextComponent.hpp"
+#include "ObjMesh.hpp"
 
 // Game includes.
 #include "CommonResources.hpp"
@@ -22,9 +23,10 @@ MenuButton::MenuButton(Pht::IEngine& engine,
                        const Pht::Vec2& inputSize,
                        const Style& style) :
     mView {view},
-    mAudio {engine.GetAudio()},
-    mPosition {position} {
+    mAudio {engine.GetAudio()} {
     
+    /*
+    TODO: remove
     Pht::Material material {style.mColor};
     material.SetOpacity(style.mOpacity);
     
@@ -35,18 +37,42 @@ MenuButton::MenuButton(Pht::IEngine& engine,
                                        material,
                                        view.GetSceneResources())
     };
+    */
+    Pht::Material material {style.mColor, style.mColor, {1.0f, 1.0f, 1.0f}, 20.0f};
+    material.SetOpacity(style.mOpacity);
+    
+    auto& sceneManager {engine.GetSceneManager()};
+    auto sceneObject {
+        sceneManager.CreateSceneObject(Pht::ObjMesh {"medium_button_0385.obj"},
+                                       material,
+                                       view.GetSceneResources())
+    };
     sceneObject->GetTransform().SetPosition(position);
     
     mButton = std::make_unique<Pht::Button>(*sceneObject, inputSize, engine);
     
     AddSceneObject(std::move(sceneObject));
     
+    if (style.mHasShadow) {
+        Pht::Material shaddowMaterial {Pht::Color{0.4f, 0.4f, 0.4f}};
+        shaddowMaterial.SetOpacity(0.15f);
+        auto shadowSceneObject {
+            sceneManager.CreateSceneObject(Pht::ObjMesh {"medium_button_0385.obj"},
+                                           shaddowMaterial,
+                                           view.GetSceneResources())
+        };
+        shadowSceneObject->GetTransform().SetPosition(position - Pht::Vec3{0.15f, 0.15f, 0.1f});
+        AddSceneObject(std::move(shadowSceneObject));
+    }
+    
     auto onDownFunction {[this, style] () {
         for (auto* sceneObject: mSceneObjects) {
             sceneObject->GetTransform().SetScale(style.mPressedScale);
             
             if (auto* renderable {sceneObject->GetRenderable()}) {
-                renderable->GetMaterial().SetAmbient(style.mSelectedColor);
+                if (renderable->GetMaterial().GetBlend() == Pht::Blend::No) {
+                    renderable->GetMaterial().SetAmbient(style.mSelectedColor);
+                }
             }
             
             if (auto* textComponent {sceneObject->GetComponent<Pht::TextComponent>()}) {
@@ -62,7 +88,9 @@ MenuButton::MenuButton(Pht::IEngine& engine,
             sceneObject->GetTransform().SetScale(1.0f);
             
             if (auto* renderable {sceneObject->GetRenderable()}) {
-                renderable->GetMaterial().SetAmbient(style.mColor);
+                if (renderable->GetMaterial().GetBlend() == Pht::Blend::No) {
+                    renderable->GetMaterial().SetAmbient(style.mColor);
+                }
             }
 
             if (auto* textComponent {sceneObject->GetComponent<Pht::TextComponent>()}) {

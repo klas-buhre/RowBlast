@@ -42,6 +42,8 @@ CommonResources::CommonResources(Pht::IEngine& engine) :
 
     sceneManager.InitSceneSystems(Pht::ISceneManager::defaultNarrowFrustumHeightFactor);
     AddSounds(engine.GetAudio());
+    
+    mGuiResources = std::make_unique<GuiResources>(engine, *this);
 }
 
 void CommonResources::AddSounds(Pht::IAudio& audio) {

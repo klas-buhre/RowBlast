@@ -26,19 +26,23 @@ namespace Pht {
         void DrawTiltedTrapezoid45(const Vec2& upperRight,
                                    const Vec2& lowerLeft,
                                    float width,
-                                   const Vec4& color);
+                                   const Vec4& color,
+                                   DrawOver drawOver = DrawOver::No);
         void DrawTiltedTrapezoid135(const Vec2& upperLeft,
                                     const Vec2& lowerRight,
                                     float width,
-                                    const Vec4& color);
+                                    const Vec4& color,
+                                    DrawOver drawOver = DrawOver::No);
         void DrawTiltedTrapezoid225(const Vec2& upperLeft,
                                     const Vec2& lowerRight,
                                     float width,
-                                    const Vec4& color);
+                                    const Vec4& color,
+                                    DrawOver drawOver = DrawOver::No);
         void DrawTiltedTrapezoid315(const Vec2& upperRight,
                                     const Vec2& lowerLeft,
                                     float width,
-                                    const Vec4& color);
+                                    const Vec4& color,
+                                    DrawOver drawOver = DrawOver::No);
         void DrawCircle(const Vec2& center, float radius, float width, const Vec4& color);
         void FillEnclosedArea(const Vec4& color);
         std::unique_ptr<IImage> ProduceImage() const;

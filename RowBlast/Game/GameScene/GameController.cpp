@@ -216,6 +216,7 @@ GameController::Command GameController::UpdateInPausedState() {
             break;
     }
     
+    mScene.UpdateLightAnimation();
     mUserData.Update();
     
     return command;

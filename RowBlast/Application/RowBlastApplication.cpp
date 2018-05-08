@@ -29,14 +29,7 @@ Backlog:
     -The title text could appear with the sliding text animation and with a quad behind it to give
      contrast.
     -Could zoom in on map pin when clicking on a level in the map.
-    -Could have the rounded cylinder i some places in the HUDs.
    X-Maybe slightly less bevel in the blocks.
-    -GUI: the buttons could be yellow with black text with rounded corners. The menu quad could be
-     white with tilted stripes like in Mario Run and the upper part could be dark grey/black with
-     yellow text. The menu quad could have rounded corners. If the quad has rounded corners then it
-     could slide in from the side. The upper part could could have horizontal stripes or checked.
-     Or: the buttons in the views could be yellow with black text and triangular edges like in
-     Mario Kart 8. There could also be a reflection animation in the button.
     -Maybe the merging of two triangles into a cube could be done by letting the two triangles fade
      into the cube. Render the triangles and the cube at the same time, vary the opacity for the
      triangels from 1 to 0 and from 0 to 1 for the cube.
@@ -64,7 +57,15 @@ Backlog:
     -Credit FastNoise, MIT license: https://github.com/Auburns/FastNoise/
 
 Ongoing tasks:
-
+    -GUI: the buttons could be yellow with black text with rounded corners. The menu quad could be
+     white with tilted stripes like in Mario Run and the upper part could be dark grey/black with
+     yellow text. The menu quad could have rounded corners. If the quad has rounded corners then it
+     could slide in from the side. The upper part could could have horizontal stripes or be checked.
+     The upper part could be blue with a sideways gradient and have filled light blue circles.
+        -Tune button input size.
+        -Where to store the button renderable? In GuiResources or create a renderable for each
+         instance of MenuButton and keep the option to supply the button color.
+        -Add stencil buffer to OfflineRasterizer to do the rounded edges of the MenuWindow.
 
 Ideas:
     -The pause button could lead to a widget that has an undo button, a boosters button and a game
@@ -108,7 +109,7 @@ Time Estimation in days:
     -Improving sliding text animation.
         Cost: 3
         Done
-    -Use new GUI/Menu textures.
+    -New GUI/Menus.
         Cost: 6
     -Do the marked items in the backlog.
         Cost: 8
@@ -317,6 +318,12 @@ bevel width: 0.135
 weld size: 0.19
 segments: 5
 profile 0.5
+
+medium_button_0385.obj:
+size: 8.5x2.1
+bevel width: 0.385
+segments: 5
+
 
 FreeType compilation:
 Put the build_freetype.sh script in freetype root dir then execute it.
