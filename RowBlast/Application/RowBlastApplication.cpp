@@ -57,12 +57,10 @@ Backlog:
     -Credit FastNoise, MIT license: https://github.com/Auburns/FastNoise/
 
 Ongoing tasks:
-    -GUI: the buttons could be yellow with black text with rounded corners. The menu quad could be
-     white with tilted stripes like in Mario Run and the upper part could be dark grey/black with
-     yellow text. The menu quad could have rounded corners. If the quad has rounded corners then it
-     could slide in from the side. The upper part could could have horizontal stripes or be checked.
-     The upper part could be blue with a sideways gradient and have filled light blue circles.
-        -Add stencil buffer to OfflineRasterizer to do the rounded edges of the MenuWindow.
+    -GUI: If the quad has rounded corners then it could slide in from the side.
+     The upper part could could have horizontal stripes or be checked.
+        -The upper part could be blue with a sideways gradient and have filled light blue circles.
+
 
 Ideas:
     -The pause button could lead to a widget that has an undo button, a boosters button and a game

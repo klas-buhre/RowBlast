@@ -16,8 +16,45 @@ using namespace RowBlast;
 namespace {
     const Pht::Vec4 whiteColor {0.95f, 0.94f, 0.94f, 1.0f};
     const Pht::Vec4 grayColor {0.935f, 0.925f, 0.925f, 1.0f};
+    const Pht::Vec4 stencilColor {1.0f, 1.0f, 1.0f, 1.0f};
     constexpr auto stripeStep {0.35f};
     constexpr auto xBorder {0.45f};
+    constexpr auto cornerRadius {0.38f};
+    
+    void FillStencilBuffer(Pht::OfflineRasterizer& rasterizer, const Pht::Vec2& menuSize) {
+        rasterizer.SetStencilBufferFillMode();
+        
+        rasterizer.DrawCircle({cornerRadius, cornerRadius},
+                              cornerRadius,
+                              cornerRadius,
+                              stencilColor);
+        rasterizer.DrawCircle({menuSize.x - cornerRadius, cornerRadius},
+                              cornerRadius,
+                              cornerRadius,
+                              stencilColor);
+        rasterizer.DrawCircle({menuSize.x - cornerRadius, menuSize.y - cornerRadius},
+                              cornerRadius,
+                              cornerRadius,
+                              stencilColor);
+        rasterizer.DrawCircle({cornerRadius, menuSize.y - cornerRadius},
+                              cornerRadius,
+                              cornerRadius,
+                              stencilColor);
+        
+        Pht::Vec2 lowerLeft1 {cornerRadius, 0.0f};
+        Pht::Vec2 upperRight1 {menuSize.x - cornerRadius, menuSize.y};
+        rasterizer.DrawRectangle(upperRight1, lowerLeft1, stencilColor);
+
+        Pht::Vec2 lowerLeft2 {0.0f, cornerRadius};
+        Pht::Vec2 upperRight2 {cornerRadius, menuSize.y - cornerRadius};
+        rasterizer.DrawRectangle(upperRight2, lowerLeft2, stencilColor);
+
+        Pht::Vec2 lowerLeft3 {menuSize.x - cornerRadius, cornerRadius};
+        Pht::Vec2 upperRight3 {menuSize.x, menuSize.y - cornerRadius};
+        rasterizer.DrawRectangle(upperRight3, lowerLeft3, stencilColor);
+
+        rasterizer.EnableStencilTest();
+    }
 
     void DrawStripes(Pht::OfflineRasterizer& rasterizer, const Pht::Vec2& menuSize) {
         const auto stripeWidth {(stripeStep / 2.0f) / std::sqrt(2.0f)};
@@ -59,12 +96,12 @@ MenuWindow::MenuWindow(Pht::IEngine& engine, const CommonResources& commonResour
     };
     
     auto rasterizer {std::make_unique<Pht::OfflineRasterizer>(mSize, imageSize)};
-    rasterizer->DrawRectangle(mSize, {0.0f, 0.0f}, grayColor);
+    FillStencilBuffer(*rasterizer, mSize);
     
+    rasterizer->DrawRectangle(mSize, {0.0f, 0.0f}, grayColor);
     DrawStripes(*rasterizer, mSize);
     
     auto image {rasterizer->ProduceImage()};
-
     Pht::Material imageMaterial {*image, Pht::GenerateMipmap::Yes};
     imageMaterial.SetBlend(Pht::Blend::Yes);
     auto& sceneManager {engine.GetSceneManager()};

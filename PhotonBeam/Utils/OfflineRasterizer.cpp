@@ -78,6 +78,20 @@ void OfflineRasterizer::ClearBuffer() {
     for (auto& pixel: mBuffer) {
         pixel = transparentPixel;
     }
+
+    for (auto& pixel: mStencilBuffer) {
+        pixel = transparentPixel;
+    }
+}
+
+void OfflineRasterizer::SetStencilBufferFillMode() {
+    mDrawMode = DrawMode::StencilBufferFill;
+    mStencilBuffer.resize(mImageSize.x * mImageSize.y);
+}
+
+void OfflineRasterizer::EnableStencilTest() {
+    assert(mStencilBuffer.size() == mBuffer.size());
+    mDrawMode = DrawMode::StencilTest;
 }
 
 IVec2 OfflineRasterizer::ToPixelCoordinates(const Vec2& point) const {
@@ -97,6 +111,22 @@ void OfflineRasterizer::SetPixel(int x, int y, const Vec4& color, DrawOver drawO
 
     auto offset {(mImageSize.y - y - 1) * mImageSize.x + x};
 
+    switch (mDrawMode) {
+        case DrawMode::Normal:
+            SetPixelInNormalDrawMode(color, drawOver, offset);
+            break;
+        case DrawMode::StencilBufferFill:
+            SetPixelInStencilBufferFillMode(color, drawOver, offset);
+            break;
+        case DrawMode::StencilTest:
+            if (mStencilBuffer[offset].w == 1.0f) {
+                SetPixelInNormalDrawMode(color, drawOver, offset);
+            }
+            break;
+    }
+}
+
+void OfflineRasterizer::SetPixelInNormalDrawMode(const Vec4& color, DrawOver drawOver, int offset) {
     switch (drawOver) {
         case DrawOver::Yes:
             mBuffer[offset] = color;
@@ -104,6 +134,21 @@ void OfflineRasterizer::SetPixel(int x, int y, const Vec4& color, DrawOver drawO
         case DrawOver::No:
             if (mBuffer[offset] == transparentPixel) {
                 mBuffer[offset] = color;
+            }
+            break;
+    }
+}
+
+void OfflineRasterizer::SetPixelInStencilBufferFillMode(const Vec4& color,
+                                                        DrawOver drawOver,
+                                                        int offset) {
+    switch (drawOver) {
+        case DrawOver::Yes:
+            mStencilBuffer[offset] = color;
+            break;
+        case DrawOver::No:
+            if (mStencilBuffer[offset] == transparentPixel) {
+                mStencilBuffer[offset] = color;
             }
             break;
     }

@@ -19,6 +19,8 @@ namespace Pht {
         OfflineRasterizer(const Vec2& coordinateSystemSize, const IVec2& imageSize);
         
         void ClearBuffer();
+        void SetStencilBufferFillMode();
+        void EnableStencilTest();
         void DrawRectangle(const Vec2& upperRight,
                            const Vec2& lowerLeft,
                            const Vec4& color,
@@ -57,13 +59,23 @@ namespace Pht {
         
         IVec2 ToPixelCoordinates(const Vec2& point) const;
         void SetPixel(int x, int y, const Vec4& color, DrawOver drawOver = DrawOver::No);
+        void SetPixelInNormalDrawMode(const Vec4& color, DrawOver drawOver, int offset);
+        void SetPixelInStencilBufferFillMode(const Vec4& color, DrawOver drawOver, int offset);
         const Vec4& GetPixel(int x, int y) const;
         bool ShouldSkipLine(int y) const;
         ScanlineState UpdateScanlineFsm(int x, int y, ScanlineState state) const;
         
+        enum class DrawMode {
+            Normal,
+            StencilBufferFill,
+            StencilTest
+        };
+
+        DrawMode mDrawMode {DrawMode::Normal};
         Vec2 mCoordSystemSize;
         IVec2 mImageSize;
         std::vector<Vec4> mBuffer;
+        std::vector<Vec4> mStencilBuffer;
     };
 }
 
