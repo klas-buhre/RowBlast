@@ -58,8 +58,6 @@ Backlog:
 
 Ongoing tasks:
     -GUI: If the quad has rounded corners then it could slide in from the side.
-     The upper part could could have horizontal stripes or be checked.
-        -The upper part could be blue with a sideways gradient and have filled light blue circles.
 
 
 Ideas:

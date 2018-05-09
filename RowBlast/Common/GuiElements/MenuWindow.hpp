@@ -9,6 +9,7 @@
 
 namespace Pht {
     class IEngine;
+    class OfflineRasterizer;
 }
 
 namespace RowBlast {
@@ -32,6 +33,11 @@ namespace RowBlast {
         }
         
     private:
+        void FillStencilBuffer(Pht::OfflineRasterizer& rasterizer);
+        void DrawStripes(Pht::OfflineRasterizer& rasterizer);
+        void DrawCaptionBar(Pht::OfflineRasterizer& rasterizer);
+        void DrawFooterBar(Pht::OfflineRasterizer& rasterizer);
+        
         std::unique_ptr<Pht::RenderableObject> mRenderableObject;
         Pht::Vec2 mSize;
     };

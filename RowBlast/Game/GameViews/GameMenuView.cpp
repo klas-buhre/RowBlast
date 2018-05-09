@@ -48,19 +48,6 @@ GameMenuView::GameMenuView(Pht::IEngine& engine, const CommonResources& commonRe
 
     SetSize(menuWindow.GetSize());
     SetPosition({0.0f, 0.0f});
-
-    auto frustumWidth {engine.GetRenderer().GetHudFrustumSize().x};
-
-    Pht::Material lineMaterial {Pht::Color{1.0f, 1.0f, 1.0f}};
-    lineMaterial.SetOpacity(0.4f);
-    auto& sceneManager {engine.GetSceneManager()};
-    auto lineSceneObject {
-        sceneManager.CreateSceneObject(Pht::QuadMesh {frustumWidth - 1.0f, 0.08f},
-                                       lineMaterial,
-                                       GetSceneResources())
-    };
-    lineSceneObject->GetTransform().SetPosition({0.0f, 6.0f, UiLayer::textRectangle});
-    AddSceneObject(std::move(lineSceneObject));
     
     CreateText({-1.71f, 7.4f, UiLayer::text}, "PAUSED", pausedTextProperties);
     
@@ -74,35 +61,35 @@ GameMenuView::GameMenuView(Pht::IEngine& engine, const CommonResources& commonRe
 
     mResumeButton = std::make_unique<MenuButton>(engine,
                                                  *this,
-                                                 Pht::Vec3 {0.0f, 4.2f, UiLayer::textRectangle},
+                                                 Pht::Vec3 {0.0f, 4.7f, UiLayer::textRectangle},
                                                  buttonInputSize,
                                                  buttonStyle);
     mResumeButton->CreateText({-1.25f, -0.23f, UiLayer::buttonText}, "Resume", buttonTextProperties);
     
     mUndoButton = std::make_unique<MenuButton>(engine,
                                                *this,
-                                               Pht::Vec3 {0.0f, 1.6f, UiLayer::textRectangle},
+                                               Pht::Vec3 {0.0f, 2.1f, UiLayer::textRectangle},
                                                buttonInputSize,
                                                buttonStyle);
     mUndoButton->CreateText({-1.9f, -0.23f, UiLayer::buttonText}, "Undo Move", buttonTextProperties);
     
     mRestartButton = std::make_unique<MenuButton>(engine,
                                                   *this,
-                                                  Pht::Vec3 {0.0f, -1.0f, UiLayer::textRectangle},
+                                                  Pht::Vec3 {0.0f, -0.5f, UiLayer::textRectangle},
                                                   buttonInputSize,
                                                   buttonStyle);
     mRestartButton->CreateText({-1.2f, -0.23f, UiLayer::buttonText}, "Restart", buttonTextProperties);
 
     mSettingsButton = std::make_unique<MenuButton>(engine,
                                                    *this,
-                                                   Pht::Vec3 {0.0f, -3.6f, UiLayer::textRectangle},
+                                                   Pht::Vec3 {0.0f, -3.1f, UiLayer::textRectangle},
                                                    buttonInputSize,
                                                    buttonStyle);
     mSettingsButton->CreateText({-1.3f, -0.23f, UiLayer::buttonText}, "Settings", buttonTextProperties);
 
     mMapButton = std::make_unique<MenuButton>(engine,
                                               *this,
-                                              Pht::Vec3 {0.0f, -6.2f, UiLayer::textRectangle},
+                                              Pht::Vec3 {0.0f, -5.7f, UiLayer::textRectangle},
                                               buttonInputSize,
                                               buttonStyle);
     mMapButton->CreateText({-0.7f, -0.23f, UiLayer::buttonText}, "Map", buttonTextProperties);

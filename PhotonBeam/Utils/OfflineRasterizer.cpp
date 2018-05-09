@@ -175,6 +175,46 @@ void OfflineRasterizer::DrawRectangle(const Vec2& upperRight,
     }
 }
 
+void OfflineRasterizer::DrawGradientRectangle(const Vec2& upperRight,
+                                              const Vec2& lowerLeft,
+                                              const HorizontalGradientColors& colors,
+                                              DrawOver drawOver) {
+    auto upperRightPixelCoord {ToPixelCoordinates(upperRight)};
+    auto lowerLeftPixelCoord {ToPixelCoordinates(lowerLeft)};
+    
+    for (auto y {lowerLeftPixelCoord.y}; y <= upperRightPixelCoord.y; ++y) {
+        for (auto x {lowerLeftPixelCoord.x}; x <= upperRightPixelCoord.x; ++x) {
+            auto normalizedX {
+                static_cast<float>(x - lowerLeftPixelCoord.x) /
+                static_cast<float>(upperRightPixelCoord.x - lowerLeftPixelCoord.x)
+            };
+
+            SetPixel(x, y, colors.mLeft.Lerp(normalizedX, colors.mRight), drawOver);
+        }
+    }
+}
+
+void OfflineRasterizer::DrawGradientRectangle(const Vec2& upperRight,
+                                              const Vec2& lowerLeft,
+                                              const VerticalGradientColors& colors,
+                                              DrawOver drawOver) {
+    auto upperRightPixelCoord {ToPixelCoordinates(upperRight)};
+    auto lowerLeftPixelCoord {ToPixelCoordinates(lowerLeft)};
+    
+    for (auto y {lowerLeftPixelCoord.y}; y <= upperRightPixelCoord.y; ++y) {
+        auto normalizedY {
+            static_cast<float>(y - lowerLeftPixelCoord.y) /
+            static_cast<float>(upperRightPixelCoord.y - lowerLeftPixelCoord.y)
+        };
+        
+        auto color {colors.mBottom.Lerp(normalizedY, colors.mTop)};
+
+        for (auto x {lowerLeftPixelCoord.x}; x <= upperRightPixelCoord.x; ++x) {
+            SetPixel(x, y, color, drawOver);
+        }
+    }
+}
+
 void OfflineRasterizer::DrawTiltedTrapezoid45(const Vec2& upperRight,
                                               const Vec2& lowerLeft,
                                               float width,
@@ -278,7 +318,8 @@ void OfflineRasterizer::DrawTiltedTrapezoid315(const Vec2& upperRight,
 void OfflineRasterizer::DrawCircle(const Vec2& center,
                                    float radius,
                                    float width,
-                                   const Vec4& color) {
+                                   const Vec4& color,
+                                   DrawOver drawOver) {
     auto centerPixelCoord {ToPixelCoordinates(center)};
     auto scaleFactor {static_cast<float>(mImageSize.y) / mCoordSystemSize.y};
     auto radiusInPixels {radius * scaleFactor};
@@ -295,7 +336,7 @@ void OfflineRasterizer::DrawCircle(const Vec2& center,
             auto distToCenter {(pixelCoordFloat - centerPixelCoordFloat).Length()};
             
             if (distToCenter <= radiusInPixels && distToCenter >= radiusInPixels - widthInPixels) {
-                SetPixel(x, y, color);
+                SetPixel(x, y, color, drawOver);
             }
         }
     }

@@ -16,6 +16,16 @@ namespace Pht {
     
     class OfflineRasterizer {
     public:
+        struct HorizontalGradientColors {
+            const Vec4 mLeft;
+            const Vec4 mRight;
+        };
+
+        struct VerticalGradientColors {
+            const Vec4 mBottom;
+            const Vec4 mTop;
+        };
+
         OfflineRasterizer(const Vec2& coordinateSystemSize, const IVec2& imageSize);
         
         void ClearBuffer();
@@ -25,6 +35,14 @@ namespace Pht {
                            const Vec2& lowerLeft,
                            const Vec4& color,
                            DrawOver drawOver = DrawOver::No);
+        void DrawGradientRectangle(const Vec2& upperRight,
+                                   const Vec2& lowerLeft,
+                                   const HorizontalGradientColors& colors,
+                                   DrawOver drawOver = DrawOver::No);
+        void DrawGradientRectangle(const Vec2& upperRight,
+                                   const Vec2& lowerLeft,
+                                   const VerticalGradientColors& colors,
+                                   DrawOver drawOver = DrawOver::No);
         void DrawTiltedTrapezoid45(const Vec2& upperRight,
                                    const Vec2& lowerLeft,
                                    float width,
@@ -45,7 +63,11 @@ namespace Pht {
                                     float width,
                                     const Vec4& color,
                                     DrawOver drawOver = DrawOver::No);
-        void DrawCircle(const Vec2& center, float radius, float width, const Vec4& color);
+        void DrawCircle(const Vec2& center,
+                        float radius,
+                        float width,
+                        const Vec4& color,
+                        DrawOver drawOver = DrawOver::No);
         void FillEnclosedArea(const Vec4& color);
         std::unique_ptr<IImage> ProduceImage() const;
         
