@@ -48,19 +48,15 @@ RestartConfirmationDialogView::RestartConfirmationDialogView(Pht::IEngine& engin
     CreateText({-5.4f, 1.5f, UiLayer::text}, "Are you sure you want to restart", textProperties);
     CreateText({-1.65f, 0.5f, UiLayer::text}, "the level?", textProperties);
     
-    Pht::Vec2 buttonSize {10.0f, 1.72f};
     Pht::Vec2 buttonInputSize {215.0f, 43.0f};
     MenuButton::Style buttonStyle;
     buttonStyle.mColor = Pht::Color {0.4f, 0.74f, 1.0f};
     buttonStyle.mSelectedColor = Pht::Color {0.6f, 0.94f, 1.0f};
     buttonStyle.mPressedScale = 0.925f;
-    buttonStyle.mOpacity = 0.76f;
-    buttonStyle.mIsRounded = false;
     
     mYesButton = std::make_unique<MenuButton>(engine,
                                               *this,
                                               Pht::Vec3 {0.0f, -1.4f, UiLayer::textRectangle},
-                                              buttonSize,
                                               buttonInputSize,
                                               buttonStyle);
     mYesButton->CreateText({-0.6f, -0.23f, UiLayer::buttonText}, "YES", textProperties);
@@ -68,7 +64,6 @@ RestartConfirmationDialogView::RestartConfirmationDialogView(Pht::IEngine& engin
     mNoButton = std::make_unique<MenuButton>(engine,
                                              *this,
                                              Pht::Vec3 {0.0f, -3.7f, UiLayer::textRectangle},
-                                             buttonSize,
                                              buttonInputSize,
                                              buttonStyle);
     mNoButton->CreateText({-0.5f, -0.23f, UiLayer::buttonText}, "NO", textProperties);

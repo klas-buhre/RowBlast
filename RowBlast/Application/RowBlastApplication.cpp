@@ -62,9 +62,6 @@ Ongoing tasks:
      yellow text. The menu quad could have rounded corners. If the quad has rounded corners then it
      could slide in from the side. The upper part could could have horizontal stripes or be checked.
      The upper part could be blue with a sideways gradient and have filled light blue circles.
-        -Tune button input size.
-        -Where to store the button renderable? In GuiResources or create a renderable for each
-         instance of MenuButton and keep the option to supply the button color.
         -Add stencil buffer to OfflineRasterizer to do the rounded edges of the MenuWindow.
 
 Ideas:

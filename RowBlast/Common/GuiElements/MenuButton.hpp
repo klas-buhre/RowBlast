@@ -24,18 +24,16 @@ namespace RowBlast {
     class MenuButton {
     public:
         struct Style {
+            std::string mMeshFilename;
             Pht::Color mColor;
             Pht::Color mSelectedColor;
             float mPressedScale {1.0f};
-            bool mIsRounded {true};
             bool mHasShadow {false};
-            float mOpacity {0.8f};
         };
         
         MenuButton(Pht::IEngine& engine,
                    Pht::GuiView& view,
                    const Pht::Vec3& position,
-                   const Pht::Vec2& size,
                    const Pht::Vec2& inputSize,
                    const Style& style);
         

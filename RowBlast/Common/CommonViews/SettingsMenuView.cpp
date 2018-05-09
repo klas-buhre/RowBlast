@@ -56,19 +56,15 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine,
     
     CreateText({-4.65f, 1.07f, UiLayer::text}, "CONTROLS", textProperties);
     
-    Pht::Vec2 buttonSize {4.0f, 1.72f};
     Pht::Vec2 buttonInputSize {86.0f, 43.0f};
     MenuButton::Style buttonStyle;
     buttonStyle.mColor = Pht::Color {0.4f, 0.74f, 1.0f};
     buttonStyle.mSelectedColor = Pht::Color {0.6f, 0.94f, 1.0f};
-    buttonStyle.mOpacity = 0.76f;
-    buttonStyle.mIsRounded = false;
     
     Pht::Vec3 controlsButtonPosition {3.5f, 1.3f, UiLayer::textRectangle};
     mControlsButton = std::make_unique<MenuButton>(engine,
                                                    *this,
                                                    controlsButtonPosition,
-                                                   buttonSize,
                                                    buttonInputSize,
                                                    buttonStyle);
     mControlsClickText = &(mControlsButton->CreateText({-1.05f, -0.23f, UiLayer::buttonText},
@@ -90,7 +86,6 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine,
     mSoundButton = std::make_unique<MenuButton>(engine,
                                                 *this,
                                                 soundButtonPosition,
-                                                buttonSize,
                                                 buttonInputSize,
                                                 buttonStyle);
     mSoundOnText = &(mSoundButton->CreateText({-0.6f, -0.23f, UiLayer::buttonText},
@@ -103,13 +98,11 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine,
     MenuButton::Style backButtonStyle {buttonStyle};
     backButtonStyle.mPressedScale = 0.925f;
     
-    Pht::Vec2 backButtonSize {11.0f, 1.72f};
     Pht::Vec2 backButtonInputSize {236.0f, 43.0f};
     
     mBackButton = std::make_unique<MenuButton>(engine,
                                                *this,
                                                Pht::Vec3 {0.0f, -3.9f, UiLayer::textRectangle},
-                                               backButtonSize,
                                                backButtonInputSize,
                                                backButtonStyle);
     mBackButton->CreateText({-1.0f, -0.23f, UiLayer::buttonText}, "BACK", textProperties);

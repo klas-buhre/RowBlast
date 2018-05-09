@@ -19,31 +19,16 @@ using namespace RowBlast;
 MenuButton::MenuButton(Pht::IEngine& engine,
                        Pht::GuiView& view,
                        const Pht::Vec3& position,
-                       const Pht::Vec2& size,
                        const Pht::Vec2& inputSize,
                        const Style& style) :
     mView {view},
     mAudio {engine.GetAudio()} {
     
-    /*
-    TODO: remove
-    Pht::Material material {style.mColor};
-    material.SetOpacity(style.mOpacity);
-    
-    auto& sceneManager {engine.GetSceneManager()};
-    
-    auto sceneObject {
-        sceneManager.CreateSceneObject(Pht::QuadMesh {size.x, size.y},
-                                       material,
-                                       view.GetSceneResources())
-    };
-    */
     Pht::Material material {style.mColor, style.mColor, {1.0f, 1.0f, 1.0f}, 20.0f};
-    material.SetOpacity(style.mOpacity);
     
     auto& sceneManager {engine.GetSceneManager()};
     auto sceneObject {
-        sceneManager.CreateSceneObject(Pht::ObjMesh {"medium_button_0385.obj"},
+        sceneManager.CreateSceneObject(Pht::ObjMesh {style.mMeshFilename},
                                        material,
                                        view.GetSceneResources())
     };
@@ -57,7 +42,7 @@ MenuButton::MenuButton(Pht::IEngine& engine,
         Pht::Material shaddowMaterial {Pht::Color{0.4f, 0.4f, 0.4f}};
         shaddowMaterial.SetOpacity(0.15f);
         auto shadowSceneObject {
-            sceneManager.CreateSceneObject(Pht::ObjMesh {"medium_button_0385.obj"},
+            sceneManager.CreateSceneObject(Pht::ObjMesh {style.mMeshFilename},
                                            shaddowMaterial,
                                            view.GetSceneResources())
         };
@@ -102,24 +87,6 @@ MenuButton::MenuButton(Pht::IEngine& engine,
     mButton->SetOnUpInside(onUpFunction);
     mButton->SetOnUpOutside(onUpFunction);
     mButton->SetOnMoveOutside(onUpFunction);
-    
-    if (style.mIsRounded) {
-        auto leftSceneObject {
-            sceneManager.CreateSceneObject(Pht::SphereMesh {size.y / 2.0f},
-                                           material,
-                                           view.GetSceneResources())
-        };
-        leftSceneObject->GetTransform().SetPosition(position + Pht::Vec3 {-size.x / 2.0f, 0.0f, 0.0f});
-        AddSceneObject(std::move(leftSceneObject));
-        
-        auto rightSceneObject {
-            sceneManager.CreateSceneObject(Pht::SphereMesh {size.y / 2.0f},
-                                           material,
-                                           view.GetSceneResources())
-        };
-        rightSceneObject->GetTransform().SetPosition(position + Pht::Vec3 {size.x / 2.0f, 0.0f, 0.0f});
-        AddSceneObject(std::move(rightSceneObject));
-    }
 }
 
 Pht::TextComponent& MenuButton::CreateText(const Pht::Vec3& position,

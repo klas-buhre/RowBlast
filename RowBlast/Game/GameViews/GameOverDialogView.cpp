@@ -32,7 +32,6 @@ GameOverDialogView::GameOverDialogView(Pht::IEngine& engine,
     };
     mCloseButton = std::make_unique<CloseButton>(engine, *this, closeButtonPosition, textProperties);
         
-    Pht::Vec2 buttonSize {6.5f, 2.1f};
     Pht::Vec2 buttonInputSize {180.0f, 47.0f};
     MenuButton::Style buttonStyle;
     buttonStyle.mColor = Pht::Color {0.2f, 0.82f, 0.2f};
@@ -41,7 +40,6 @@ GameOverDialogView::GameOverDialogView(Pht::IEngine& engine,
     mRetryButton = std::make_unique<MenuButton>(engine,
                                                 *this,
                                                 Pht::Vec3 {0.0f, -1.0f, UiLayer::textRectangle},
-                                                buttonSize,
                                                 buttonInputSize,
                                                 buttonStyle);
     mRetryButton->CreateText({-1.05f, -0.23f, UiLayer::buttonText}, "RETRY", textProperties);
