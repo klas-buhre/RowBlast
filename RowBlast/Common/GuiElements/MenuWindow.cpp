@@ -14,8 +14,9 @@
 using namespace RowBlast;
 
 namespace {
-    const Pht::Vec4 grayColor {0.9f, 0.88f, 0.88f, 1.0f};
-    const Pht::Vec4 darkerGrayColor {0.87f, 0.85f, 0.85f, 1.0f};
+    const Pht::Vec4 grayColor {0.885f, 0.865f, 0.865f, 1.0f};
+    const Pht::Vec4 darkerGrayColor {0.855f, 0.835f, 0.835f, 1.0f};
+    const Pht::Vec4 footerBorderColor {0.835f, 0.825f, 0.825f, 1.0f};
     const Pht::Vec4 blueColor {0.45f, 0.75f, 1.0f, 1.0};
     const Pht::Vec4 lightBlueColor {0.5f, 0.8f, 1.0f, 1.0};
     const Pht::Vec4 stencilColor {1.0f, 1.0f, 1.0f, 1.0f};
@@ -25,6 +26,7 @@ namespace {
     constexpr auto captionBarCircleRadius {0.17f};
     constexpr auto captionBarCircleSpacing {0.5f};
     constexpr auto footerBarHeight {2.0f};
+    constexpr auto footerBarBorderHeight {0.075f};
 }
 
 MenuWindow::MenuWindow(Pht::IEngine& engine, const CommonResources& commonResources, Size size) {
@@ -132,8 +134,8 @@ void MenuWindow::DrawMainArea(Pht::OfflineRasterizer& rasterizer) {
     rasterizer.DrawGradientRectangle(upperRight1, lowerLeft1, rectangleColors, Pht::DrawOver::Yes);
     
     Pht::Vec2 lowerLeft2 {0.0f, footerBarHeight};
-    Pht::Vec2 upperRight2 {mSize.x, footerBarHeight + 0.075f};
-    rasterizer.DrawRectangle(upperRight2, lowerLeft2, darkerGrayColor, Pht::DrawOver::Yes);
+    Pht::Vec2 upperRight2 {mSize.x, footerBarHeight + footerBarBorderHeight};
+    rasterizer.DrawRectangle(upperRight2, lowerLeft2, footerBorderColor, Pht::DrawOver::Yes);
 
     auto xStart {0.0f};
     

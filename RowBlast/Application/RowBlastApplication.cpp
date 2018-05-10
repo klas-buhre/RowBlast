@@ -29,6 +29,7 @@ Backlog:
     -The title text could appear with the sliding text animation and with a quad behind it to give
      contrast.
     -Could zoom in on map pin when clicking on a level in the map.
+   X-Maybe the red field material should not be env mapped to get a better color.
    X-Maybe slightly less bevel in the blocks.
     -Maybe the merging of two triangles into a cube could be done by letting the two triangles fade
      into the cube. Render the triangles and the cube at the same time, vary the opacity for the
@@ -58,7 +59,6 @@ Backlog:
 
 Ongoing tasks:
     -GUI:
-        -Tune the menu window blue and gray colors.
         -Fix the rest of the views.
         -Try sliding in from the side.
 
