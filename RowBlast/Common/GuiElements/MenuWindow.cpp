@@ -56,13 +56,14 @@ MenuWindow::MenuWindow(Pht::IEngine& engine, const CommonResources& commonResour
     };
     
     auto rasterizer {std::make_unique<Pht::OfflineRasterizer>(mSize, imageSize)};
+
     FillStencilBuffer(*rasterizer);
-    
+
     rasterizer->DrawRectangle(mSize, {0.0f, 0.0f}, grayColor);
     DrawStripes(*rasterizer);
     DrawCaptionBar(*rasterizer);
     DrawFooterBar(*rasterizer);
-    
+
     auto image {rasterizer->ProduceImage()};
     Pht::Material imageMaterial {*image, Pht::GenerateMipmap::Yes};
     imageMaterial.SetBlend(Pht::Blend::Yes);
@@ -140,9 +141,8 @@ void MenuWindow::DrawCaptionBar(Pht::OfflineRasterizer& rasterizer) {
         }
     }
 }
-/*
+
 void MenuWindow::DrawFooterBar(Pht::OfflineRasterizer& rasterizer) {
-    // Pht::OfflineRasterizer::HorizontalGradientColors rectangleColors {darkGrayColor, darkGrayColor};
     Pht::OfflineRasterizer::HorizontalGradientColors rectangleColors {darkerGrayColor, darkGrayColor};
     Pht::Vec2 lowerLeft1 {0.0f, 0.0f};
     Pht::Vec2 upperRight1 {mSize.x, mSize.y - captionBarHeight};
@@ -169,8 +169,8 @@ void MenuWindow::DrawFooterBar(Pht::OfflineRasterizer& rasterizer) {
         }
     }
 }
-*/
 
+/*
 void MenuWindow::DrawFooterBar(Pht::OfflineRasterizer& rasterizer) {
     // Pht::OfflineRasterizer::HorizontalGradientColors rectangleColors {darkGrayColor, darkGrayColor};
     Pht::OfflineRasterizer::HorizontalGradientColors rectangleColors {darkerGrayColor, darkGrayColor};
@@ -199,3 +199,4 @@ void MenuWindow::DrawFooterBar(Pht::OfflineRasterizer& rasterizer) {
         }
     }
 }
+*/

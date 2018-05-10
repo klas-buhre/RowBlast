@@ -57,8 +57,10 @@ Backlog:
     -Credit FastNoise, MIT license: https://github.com/Auburns/FastNoise/
 
 Ongoing tasks:
-    -GUI: If the quad has rounded corners then it could slide in from the side.
-
+    -GUI:
+        -Tune the menu window blue and gray colors.
+        -Fix the rest of the views.
+        -Try sliding in from the side.
 
 Ideas:
     -The pause button could lead to a widget that has an undo button, a boosters button and a game

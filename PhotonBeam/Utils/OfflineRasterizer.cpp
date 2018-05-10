@@ -182,13 +182,13 @@ void OfflineRasterizer::DrawGradientRectangle(const Vec2& upperRight,
     auto upperRightPixelCoord {ToPixelCoordinates(upperRight)};
     auto lowerLeftPixelCoord {ToPixelCoordinates(lowerLeft)};
     
-    for (auto y {lowerLeftPixelCoord.y}; y <= upperRightPixelCoord.y; ++y) {
-        for (auto x {lowerLeftPixelCoord.x}; x <= upperRightPixelCoord.x; ++x) {
-            auto normalizedX {
-                static_cast<float>(x - lowerLeftPixelCoord.x) /
-                static_cast<float>(upperRightPixelCoord.x - lowerLeftPixelCoord.x)
-            };
+    for (auto x {lowerLeftPixelCoord.x}; x <= upperRightPixelCoord.x; ++x) {
+        auto normalizedX {
+            static_cast<float>(x - lowerLeftPixelCoord.x) /
+            static_cast<float>(upperRightPixelCoord.x - lowerLeftPixelCoord.x)
+        };
 
+        for (auto y {lowerLeftPixelCoord.y}; y <= upperRightPixelCoord.y; ++y) {
             SetPixel(x, y, colors.mLeft.Lerp(normalizedX, colors.mRight), drawOver);
         }
     }
@@ -330,8 +330,13 @@ void OfflineRasterizer::DrawCircle(const Vec2& center,
         static_cast<float>(centerPixelCoord.y) + 0.5f
     };
     
-    for (auto y {0}; y < mImageSize.y; ++y) {
-        for (auto x {0}; x < mImageSize.x; ++x) {
+    auto xBegin {centerPixelCoord.x - radiusInPixels - 1};
+    auto xEnd {centerPixelCoord.x + radiusInPixels + 1};
+    auto yBegin {centerPixelCoord.y - radiusInPixels - 1};
+    auto yEnd {centerPixelCoord.y + radiusInPixels + 1};
+    
+    for (auto y {yBegin}; y < yEnd; ++y) {
+        for (auto x {xBegin}; x < xEnd; ++x) {
             Pht::Vec2 pixelCoordFloat {static_cast<float>(x) + 0.5f, static_cast<float>(y) + 0.5f};
             auto distToCenter {(pixelCoordFloat - centerPixelCoordFloat).Length()};
             
