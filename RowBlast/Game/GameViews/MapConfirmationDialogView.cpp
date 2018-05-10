@@ -15,55 +15,51 @@ using namespace RowBlast;
 
 MapConfirmationDialogView::MapConfirmationDialogView(Pht::IEngine& engine,
                                                      const CommonResources& commonResources) {
-    Pht::TextProperties textProperties {
-        commonResources.GetHussarFontSize27(PotentiallyZoomedScreen::Yes)
-    };
+    auto& guiResources {commonResources.GetGuiResources()};
+    auto& menuWindow {guiResources.GetMediumMenuWindow()};
+    
+    auto menuWindowSceneObject {std::make_unique<Pht::SceneObject>(&menuWindow.GetRenderable())};
+    menuWindowSceneObject->GetTransform().SetPosition({0.0f, 0.0f, UiLayer::background});
+    AddSceneObject(std::move(menuWindowSceneObject));
 
-    Pht::TextProperties goToMapTextProperties {
-        commonResources.GetHussarFontSize35(PotentiallyZoomedScreen::Yes)
-    };
+    SetSize(menuWindow.GetSize());
     
-    auto frustumWidth {engine.GetRenderer().GetHudFrustumSize().x};
-    Pht::Vec2 size {frustumWidth, 11.5f};
-    SetSize(size);
-    SetPosition({0.0f, 0.0f});
+    CreateText({-1.0f, 5.0f, UiLayer::text}, "MAP", guiResources.GetCaptionTextProperties());
     
-    auto quad {MenuQuad::CreateGray(engine, GetSceneResources(), size)};
-    quad->GetTransform().SetPosition({0.0f, 0.0f, UiLayer::background});
-    AddSceneObject(std::move(quad));
+    auto& textProperties {guiResources.GetSmallTextProperties()};
+    CreateText({-5.5f, 2.5f, UiLayer::text}, "Are you sure you want to go back", textProperties);
+    CreateText({-1.8f, 1.5f, UiLayer::text}, "to the map?", textProperties);
     
-    CreateText({-1.0f, 4.0f, UiLayer::text}, "MAP", goToMapTextProperties);
-    
-    Pht::Material lineMaterial {Pht::Color{1.0f, 1.0f, 1.0f}};
-    lineMaterial.SetOpacity(0.4f);
-    auto lineSceneObject {
-        engine.GetSceneManager().CreateSceneObject(Pht::QuadMesh {frustumWidth - 1.0f, 0.08f},
-                                                   lineMaterial,
-                                                   GetSceneResources())
-    };
-    lineSceneObject->GetTransform().SetPosition({0.0f, 3.0f, UiLayer::textRectangle});
-    AddSceneObject(std::move(lineSceneObject));
-    
-    CreateText({-5.6f, 1.5f, UiLayer::text}, "Are you sure you want to go back", textProperties);
-    CreateText({-1.8f, 0.5f, UiLayer::text}, "to the map?", textProperties);
-    
-    Pht::Vec2 buttonInputSize {215.0f, 43.0f};
-    MenuButton::Style buttonStyle;
-    buttonStyle.mColor = Pht::Color {0.4f, 0.74f, 1.0f};
-    buttonStyle.mSelectedColor = Pht::Color {0.6f, 0.94f, 1.0f};
-    buttonStyle.mPressedScale = 0.925f;
-    
+    Pht::Vec2 buttonInputSize {183.0f, 45.0f};
+    MenuButton::Style yellowButtonStyle;
+    yellowButtonStyle.mMeshFilename = GuiResources::mMediumButtonMeshFilename;
+    yellowButtonStyle.mColor = GuiResources::mYellowButtonColor;
+    yellowButtonStyle.mSelectedColor = GuiResources::mYellowSelectedButtonColor;
+    yellowButtonStyle.mPressedScale = 1.05f;
+    yellowButtonStyle.mHasShadow = true;
+
     mYesButton = std::make_unique<MenuButton>(engine,
                                               *this,
-                                              Pht::Vec3 {0.0f, -1.4f, UiLayer::textRectangle},
+                                              Pht::Vec3 {0.0f, -0.5f, UiLayer::textRectangle},
                                               buttonInputSize,
-                                              buttonStyle);
-    mYesButton->CreateText({-0.6f, -0.23f, UiLayer::buttonText}, "YES", textProperties);
+                                              yellowButtonStyle);
+    mYesButton->CreateText({-0.6f, -0.23f, UiLayer::buttonText},
+                           "Yes",
+                           guiResources.GetBlackButtonTextProperties());
     
+    MenuButton::Style blueButtonStyle;
+    blueButtonStyle.mMeshFilename = GuiResources::mMediumButtonMeshFilename;
+    blueButtonStyle.mColor = GuiResources::mBlueButtonColor;
+    blueButtonStyle.mSelectedColor = GuiResources::mBlueSelectedButtonColor;
+    blueButtonStyle.mPressedScale = 1.05f;
+    blueButtonStyle.mHasShadow = true;
+
     mNoButton = std::make_unique<MenuButton>(engine,
                                              *this,
-                                             Pht::Vec3 {0.0f, -3.7f, UiLayer::textRectangle},
+                                             Pht::Vec3 {0.0f, -3.1f, UiLayer::textRectangle},
                                              buttonInputSize,
-                                             buttonStyle);
-    mNoButton->CreateText({-0.5f, -0.23f, UiLayer::buttonText}, "NO", textProperties);
+                                             blueButtonStyle);
+    mNoButton->CreateText({-0.5f, -0.23f, UiLayer::buttonText},
+                          "No",
+                          guiResources.GetWhiteButtonTextProperties());
 }

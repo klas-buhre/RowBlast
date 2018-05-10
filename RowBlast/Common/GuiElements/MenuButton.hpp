@@ -14,7 +14,6 @@ namespace Pht {
     class IAudio;
     class GuiView;
     class TouchEvent;
-    class Text;
     class SceneObject;
     class TextComponent;
     class TextProperties;

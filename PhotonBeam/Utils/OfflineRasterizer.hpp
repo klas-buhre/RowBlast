@@ -79,6 +79,7 @@ namespace Pht {
             SecondBorder
         };
         
+        void ClearStencilBuffer();
         IVec2 ToPixelCoordinates(const Vec2& point) const;
         void SetPixel(int x, int y, const Vec4& color, DrawOver drawOver = DrawOver::No);
         void SetPixelInNormalDrawMode(const Vec4& color, DrawOver drawOver, int offset);

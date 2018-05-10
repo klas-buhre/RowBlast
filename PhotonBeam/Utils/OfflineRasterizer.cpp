@@ -79,14 +79,19 @@ void OfflineRasterizer::ClearBuffer() {
         pixel = transparentPixel;
     }
 
-    for (auto& pixel: mStencilBuffer) {
-        pixel = transparentPixel;
-    }
+    ClearStencilBuffer();
 }
 
 void OfflineRasterizer::SetStencilBufferFillMode() {
     mDrawMode = DrawMode::StencilBufferFill;
     mStencilBuffer.resize(mImageSize.x * mImageSize.y);
+    ClearStencilBuffer();
+}
+
+void OfflineRasterizer::ClearStencilBuffer() {
+    for (auto& pixel: mStencilBuffer) {
+        pixel = transparentPixel;
+    }
 }
 
 void OfflineRasterizer::EnableStencilTest() {
