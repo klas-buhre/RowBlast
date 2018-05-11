@@ -25,40 +25,40 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine,
 
     SetSize(menuWindow.GetSize());
     
-    CreateText({-2.0f, 5.0f, UiLayer::text},
+    CreateText({-2.2f, 5.0f, UiLayer::text},
                "SETTINGS",
                guiResources.GetCaptionTextProperties(zoom));
     
     auto& textProperties {guiResources.GetSmallTextProperties(zoom)};
-    CreateText({-4.65f, 1.07f, UiLayer::text}, "Controls", textProperties);
+    CreateText({-5.3f, 2.07f, UiLayer::text}, "Controls", textProperties);
     
     MenuButton::Style settingsButtonStyle;
-    settingsButtonStyle.mMeshFilename = GuiResources::mMediumButtonMeshFilename;
+    settingsButtonStyle.mMeshFilename = GuiResources::mSmallButtonMeshFilename;
     settingsButtonStyle.mColor = GuiResources::mBlueButtonColor;
     settingsButtonStyle.mSelectedColor = GuiResources::mBlueSelectedButtonColor;
     settingsButtonStyle.mPressedScale = 1.05f;
     settingsButtonStyle.mHasShadow = true;
 
-    Pht::Vec2 buttonInputSize {86.0f, 43.0f};
+    Pht::Vec2 buttonInputSize {78.0f, 43.0f};
     
     auto& buttonTextProperties {guiResources.GetWhiteButtonTextProperties(zoom)};
     
-    Pht::Vec3 controlsButtonPosition {3.5f, 1.3f, UiLayer::textRectangle};
+    Pht::Vec3 controlsButtonPosition {3.45f, 2.3f, UiLayer::textRectangle};
     mControlsButton = std::make_unique<MenuButton>(engine,
                                                    *this,
                                                    controlsButtonPosition,
                                                    buttonInputSize,
                                                    settingsButtonStyle);
-    mControlsClickText = &(mControlsButton->CreateText({-1.05f, -0.23f, UiLayer::buttonText},
+    mControlsClickText = &(mControlsButton->CreateText({-0.85f, -0.23f, UiLayer::buttonText},
                                                        "Click",
                                                        buttonTextProperties).GetSceneObject());
     mControlsSwipeText = &(mControlsButton->CreateText({-1.05f, -0.23f, UiLayer::buttonText},
                                                        "Swipe",
                                                        buttonTextProperties).GetSceneObject());
 
-    CreateText({-4.65f, -1.53f, UiLayer::text}, "Sound", textProperties);
+    CreateText({-5.3f, -0.53f, UiLayer::text}, "Sound", textProperties);
     
-    Pht::Vec3 soundButtonPosition {3.5f, -1.3f, UiLayer::textRectangle};
+    Pht::Vec3 soundButtonPosition {3.45f, -0.3f, UiLayer::textRectangle};
     mSoundButton = std::make_unique<MenuButton>(engine,
                                                 *this,
                                                 soundButtonPosition,
@@ -78,12 +78,12 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine,
     backButtonStyle.mPressedScale = 1.05f;
     backButtonStyle.mHasShadow = true;
     
-    Pht::Vec2 backButtonInputSize {236.0f, 43.0f};
+    Pht::Vec2 backButtonInputSize {194.0f, 43.0f};
     
     mBackButton = std::make_unique<MenuButton>(engine,
                                                *this,
-                                               Pht::Vec3 {0.0f, -3.9f, UiLayer::textRectangle},
+                                               Pht::Vec3 {0.0f, -3.3f, UiLayer::textRectangle},
                                                backButtonInputSize,
                                                backButtonStyle);
-    mBackButton->CreateText({-1.0f, -0.23f, UiLayer::buttonText}, "BACK", buttonTextProperties);
+    mBackButton->CreateText({-1.0f, -0.23f, UiLayer::buttonText}, "Back", buttonTextProperties);
 }

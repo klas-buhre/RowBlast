@@ -20,38 +20,77 @@ namespace {
 NoLivesDialogView::NoLivesDialogView(Pht::IEngine& engine,
                                      const CommonResources& commonResources,
                                      const UserData& userData,
-                                     PotentiallyZoomedScreen potentiallyZoomedScreen) :
+                                     PotentiallyZoomedScreen zoom) :
     mUserData {userData} {
     
-    Pht::TextProperties textProperties {commonResources.GetHussarFontSize27(potentiallyZoomedScreen)};
-    Pht::Vec2 size {engine.GetRenderer().GetHudFrustumSize().x, 9.0f};
-    SetSize(size);
-    SetPosition({0.0f, 0.0f});
+    auto& guiResources {commonResources.GetGuiResources()};
+    auto& menuWindow {guiResources.GetMediumMenuWindow(zoom)};
     
-    auto quad {MenuQuad::CreateGreen(engine, GetSceneResources(), size)};
-    quad->GetTransform().SetPosition({0.0f, 0.0f, UiLayer::background});
-    AddSceneObject(std::move(quad));
+    auto menuWindowSceneObject {std::make_unique<Pht::SceneObject>(&menuWindow.GetRenderable())};
+    menuWindowSceneObject->GetTransform().SetPosition({0.0f, 0.0f, UiLayer::background});
+    AddSceneObject(std::move(menuWindowSceneObject));
+
+    SetSize(menuWindow.GetSize());
+    
+    CreateText({-2.2f, 5.0f, UiLayer::text},
+               "NO LIVES",
+               guiResources.GetCaptionTextProperties(zoom));
     
     Pht::Vec3 closeButtonPosition {
-        GetSize().x / 2.0f - 1.0f,
-        GetSize().y / 2.0f - 1.0f,
+        GetSize().x / 2.0f - 1.5f,
+        GetSize().y / 2.0f - 1.5f,
         UiLayer::textRectangle
     };
-    mCloseButton = std::make_unique<CloseButton>(engine, *this, closeButtonPosition, textProperties);
+    
+    Pht::Vec2 closeButtonInputSize {78.0f, 43.0f};
+    
+    MenuButton::Style closeButtonStyle;
+    closeButtonStyle.mMeshFilename = GuiResources::mCloseButtonMeshFilename;
+    closeButtonStyle.mColor = GuiResources::mYellowButtonColor;
+    closeButtonStyle.mSelectedColor = GuiResources::mYellowSelectedButtonColor;
+    closeButtonStyle.mPressedScale = 1.05f;
+    closeButtonStyle.mHasShadow = true;
+    
+    mCloseButton = std::make_unique<MenuButton>(engine,
+                                                *this,
+                                                closeButtonPosition,
+                                                closeButtonInputSize,
+                                                closeButtonStyle);
+    mCloseButton->CreateText({-0.33f, -0.33f, UiLayer::text},
+                             "X",
+                             guiResources.GetLargeBlackButtonTextProperties(zoom));
       
-    Pht::Vec2 buttonInputSize {180.0f, 47.0f};
-    MenuButton::Style buttonStyle;
-    buttonStyle.mColor = Pht::Color {0.2f, 0.82f, 0.2f};
-    buttonStyle.mSelectedColor = Pht::Color {0.23f, 1.0f, 0.23f};
+    Pht::Vec2 refillLivesInputSize {180.0f, 47.0f};
+    
+    MenuButton::Style refillLivesButtonStyle;
+    refillLivesButtonStyle.mMeshFilename = GuiResources::mMediumButtonMeshFilename;
+    refillLivesButtonStyle.mColor = GuiResources::mGreenButtonColor;
+    refillLivesButtonStyle.mSelectedColor = GuiResources::mGreenSelectedButtonColor;
+    refillLivesButtonStyle.mPressedScale = 1.05f;
+    refillLivesButtonStyle.mHasShadow = true;
+
+    Pht::TextProperties whiteButtonTextProperties {
+        commonResources.GetHussarFontSize35(zoom),
+        1.0f,
+        {1.0f, 1.0f, 1.0f, 1.0f},
+        Pht::TextShadow::Yes,
+        {0.05f, 0.05f},
+        {0.4f, 0.4f, 0.4f, 0.5f}
+    };
 
     mRefillLivesButton = std::make_unique<MenuButton>(engine,
                                                       *this,
-                                                      Pht::Vec3 {0.0f, -2.0f, UiLayer::textRectangle},
-                                                      buttonInputSize,
-                                                      buttonStyle);
-    mRefillLivesButton->CreateText({-2.0f, -0.23f, UiLayer::buttonText}, "REFILL LIVES", textProperties);
+                                                      Pht::Vec3 {0.0f, -2.6f, UiLayer::textRectangle},
+                                                      refillLivesInputSize,
+                                                      refillLivesButtonStyle);
+    mRefillLivesButton->CreateText({-2.5f, -0.23f, UiLayer::buttonText},
+                                   "Refill Lives",
+                                   whiteButtonTextProperties);
+    mRefillLivesButton->GetSceneObject().GetTransform().SetScale({1.1f, 1.4f, 1.0f});
     
-    CreateText({-2.4f, 2.5f, UiLayer::text}, "No more lives!", textProperties);
+    auto& textProperties {guiResources.GetSmallTextProperties(zoom)};
+    
+    CreateText({-1.4f, 2.5f, UiLayer::text}, "Lives: 0", textProperties);
     CreateText({-3.0f, 1.0f, UiLayer::text}, "Refill lives for $1", textProperties);
     CreateText({-4.0f, 0.0f, UiLayer::text}, "Time to next life:", textProperties);
     mCountdownText = &CreateText({1.9f, 0.0f, UiLayer::text}, "00:00", textProperties);

@@ -17,6 +17,7 @@ namespace Pht {
     class IEngine;
     class Scene;
     class CameraComponent;
+    class LightComponent;
     class SceneObject;
 }
 
@@ -48,12 +49,15 @@ namespace RowBlast {
         void CreatePins(const Chapter& chapter);
         void CreatePin(Pht::SceneObject& pinContainerObject, int level, const Pht::Vec3& position);
         void SetCameraAtCurrentLevel();
+        void UpdateUiLightAnimation();
         
         Pht::IEngine& mEngine;
         UserData& mUserData;
         const CommonResources& mCommonResources;
         Pht::Scene* mScene {nullptr};
         Pht::CameraComponent* mCamera {nullptr};
+        Pht::LightComponent* mUiLight {nullptr};
+        float mLightAnimationTime {0.0f};
         std::unique_ptr<Clouds> mClouds;
         std::unique_ptr<FloatingBlocks> mFloatingBlocks;
         std::vector<std::unique_ptr<MapPin>> mPins;

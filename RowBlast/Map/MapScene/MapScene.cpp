@@ -23,6 +23,9 @@ using namespace RowBlast;
 
 namespace {
     const auto halfMapWidth {22.0f};
+    constexpr auto lightAnimationDuration {5.0f};
+    const Pht::Vec3 lightDirectionA {0.57f, 1.0f, 0.6f};
+    const Pht::Vec3 lightDirectionB {1.0f, 1.0f, 0.74f};
     
     enum class Layer {
         Map,
@@ -148,7 +151,14 @@ void MapScene::CreateScene(const Chapter& chapter) {
     Pht::RenderPass uiViewsRenderPass {static_cast<int>(Layer::UiViews)};
     uiViewsRenderPass.SetHudMode(true);
     uiViewsRenderPass.SetIsDepthTestAllowed(false);
-    mScene->AddRenderPass(uiViewsRenderPass);
+    uiViewsRenderPass.SetRenderOrder(Pht::RenderOrder::BackToFront);
+    auto& uiLightSceneObject {scene->CreateSceneObject()};
+    uiLightSceneObject.SetIsVisible(false);
+    auto uiLightComponent {std::make_unique<Pht::LightComponent>(uiLightSceneObject)};
+    mUiLight = uiLightComponent.get();
+    uiViewsRenderPass.SetLight(mUiLight);
+    uiLightSceneObject.SetComponent<Pht::LightComponent>(std::move(uiLightComponent));
+    scene->AddRenderPass(uiViewsRenderPass);
 
     Pht::RenderPass fadeEffectRenderPass {static_cast<int>(Layer::SceneSwitchFadeEffect)};
     fadeEffectRenderPass.SetHudMode(true);
@@ -191,6 +201,7 @@ void MapScene::CreateScene(const Chapter& chapter) {
     
     mUiViewsContainer = &scene->CreateSceneObject();
     mUiViewsContainer->SetLayer(static_cast<int>(Layer::UiViews));
+    mUiViewsContainer->AddChild(uiLightSceneObject);
     scene->GetRoot().AddChild(*mUiViewsContainer);
     
     scene->SetDistanceFunction(Pht::DistanceFunction::WorldSpaceNegativeZ);
@@ -267,6 +278,18 @@ void MapScene::Update() {
     mClouds->Update();
     mFloatingBlocks->Update();
     mHud->Update();
+    UpdateUiLightAnimation();
+}
+
+void MapScene::UpdateUiLightAnimation() {
+    mLightAnimationTime += mEngine.GetLastFrameSeconds();
+    
+    if (mLightAnimationTime > lightAnimationDuration) {
+        mLightAnimationTime = 0.0f;
+    }
+    
+    auto t {(cos(mLightAnimationTime * 2.0f * 3.1415f / lightAnimationDuration) + 1.0f) / 2.0f};
+    mUiLight->SetDirection(lightDirectionA.Lerp(t, lightDirectionB));
 }
 
 void MapScene::SetCameraXPosition(float xPosition) {

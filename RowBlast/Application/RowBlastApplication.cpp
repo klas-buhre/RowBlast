@@ -59,8 +59,11 @@ Backlog:
 
 Ongoing tasks:
     -GUI:
+        -Fix the Refill lives/Buy moves button.
         -Fix the rest of the views.
+        -Remove MenuQuad and CloseButton.
         -Try sliding in from the side.
+ 
 
 Ideas:
     -The pause button could lead to a widget that has an undo button, a boosters button and a game
@@ -317,6 +320,16 @@ profile 0.5
 medium_button_0385.obj:
 size: 9.0x2.1
 bevel width: 0.385
+segments: 5
+
+small_button_0385.obj:
+size: 3.6x2.1
+bevel width: 0.385
+segments: 5
+
+close_button_032.obj:
+size: 1.9x1.9
+bevel width: 0.32
 segments: 5
 
 

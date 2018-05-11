@@ -9,7 +9,6 @@
 
 // Game includes.
 #include "MenuButton.hpp"
-#include "CloseButton.hpp"
 #include "CommonResources.hpp"
 
 namespace Pht {
@@ -28,7 +27,7 @@ namespace RowBlast {
 
         void Update();
         
-        const CloseButton& GetCloseButton() const {
+        const MenuButton& GetCloseButton() const {
             return *mCloseButton;
         }
         
@@ -38,7 +37,7 @@ namespace RowBlast {
         
     private:
         const UserData& mUserData;
-        std::unique_ptr<CloseButton> mCloseButton;
+        std::unique_ptr<MenuButton> mCloseButton;
         std::unique_ptr<MenuButton> mRefillLivesButton;
         std::chrono::seconds mSecondsUntilNewLife;
         Pht::TextComponent* mCountdownText {nullptr};

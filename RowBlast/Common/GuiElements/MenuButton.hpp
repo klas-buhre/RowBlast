@@ -44,7 +44,7 @@ namespace RowBlast {
         Pht::SceneObject& GetSceneObject() {
             return *mSceneObjects.front();
         }
-        
+
     private:
         void AddSceneObject(std::unique_ptr<Pht::SceneObject> sceneObject);
         
