@@ -15,56 +15,52 @@ using namespace RowBlast;
 
 RestartConfirmationDialogView::RestartConfirmationDialogView(Pht::IEngine& engine,
                                                              const CommonResources& commonResources) {
-    Pht::TextProperties textProperties {
-        commonResources.GetHussarFontSize27(PotentiallyZoomedScreen::Yes)
-    };
+    PotentiallyZoomedScreen zoom {PotentiallyZoomedScreen::Yes};
+    auto& guiResources {commonResources.GetGuiResources()};
+    auto& menuWindow {guiResources.GetMediumMenuWindow(zoom)};
+    
+    auto menuWindowSceneObject {std::make_unique<Pht::SceneObject>(&menuWindow.GetRenderable())};
+    menuWindowSceneObject->GetTransform().SetPosition({0.0f, 0.0f, UiLayer::background});
+    AddSceneObject(std::move(menuWindowSceneObject));
 
-    Pht::TextProperties restartTextProperties {
-        commonResources.GetHussarFontSize35(PotentiallyZoomedScreen::Yes)
-    };
+    SetSize(menuWindow.GetSize());
+
+    CreateText({-1.85f, 5.0f, UiLayer::text}, "RESTART", guiResources.GetCaptionTextProperties(zoom));
     
-    auto frustumWidth {engine.GetRenderer().GetHudFrustumSize().x};
-    Pht::Vec2 size {frustumWidth, 11.5f};
-    SetSize(size);
-    SetPosition({0.0f, 0.0f});
-    
-    auto quad {MenuQuad::CreateGray(engine, GetSceneResources(), size)};
-    quad->GetTransform().SetPosition({0.0f, 0.0f, UiLayer::background});
-    AddSceneObject(std::move(quad));
-    
-    CreateText({-1.85f, 4.0f, UiLayer::text}, "RESTART", restartTextProperties);
-    
-    Pht::Material lineMaterial {Pht::Color{1.0f, 1.0f, 1.0f}};
-    lineMaterial.SetOpacity(0.4f);
-    auto& sceneManager {engine.GetSceneManager()};
-    auto lineSceneObject {
-        sceneManager.CreateSceneObject(Pht::QuadMesh {frustumWidth - 1.0f, 0.08f},
-                                       lineMaterial,
-                                       GetSceneResources())
-    };
-    lineSceneObject->GetTransform().SetPosition({0.0f, 3.0f, UiLayer::textRectangle});
-    AddSceneObject(std::move(lineSceneObject));
-    
-    CreateText({-5.4f, 1.5f, UiLayer::text}, "Are you sure you want to restart", textProperties);
-    CreateText({-1.65f, 0.5f, UiLayer::text}, "the level?", textProperties);
-    
-    Pht::Vec2 buttonInputSize {215.0f, 43.0f};
-    MenuButton::Style buttonStyle;
-    buttonStyle.mColor = Pht::Color {0.4f, 0.74f, 1.0f};
-    buttonStyle.mSelectedColor = Pht::Color {0.6f, 0.94f, 1.0f};
-    buttonStyle.mPressedScale = 0.925f;
-    
+    auto& textProperties {guiResources.GetSmallTextProperties(zoom)};
+    CreateText({-5.4f, 2.5f, UiLayer::text}, "Are you sure you want to restart", textProperties);
+    CreateText({-1.65f, 1.5f, UiLayer::text}, "the level?", textProperties);
+
+    Pht::Vec2 buttonInputSize {194.0f, 43.0f};
+    MenuButton::Style yellowButtonStyle;
+    yellowButtonStyle.mMeshFilename = GuiResources::mMediumButtonMeshFilename;
+    yellowButtonStyle.mColor = GuiResources::mYellowButtonColor;
+    yellowButtonStyle.mSelectedColor = GuiResources::mYellowSelectedButtonColor;
+    yellowButtonStyle.mPressedScale = 1.05f;
+    yellowButtonStyle.mHasShadow = true;
+
     mYesButton = std::make_unique<MenuButton>(engine,
                                               *this,
-                                              Pht::Vec3 {0.0f, -1.4f, UiLayer::textRectangle},
+                                              Pht::Vec3 {0.0f, -0.7f, UiLayer::textRectangle},
                                               buttonInputSize,
-                                              buttonStyle);
-    mYesButton->CreateText({-0.6f, -0.23f, UiLayer::buttonText}, "YES", textProperties);
+                                              yellowButtonStyle);
+    mYesButton->CreateText({-0.6f, -0.23f, UiLayer::buttonText},
+                           "Yes",
+                           guiResources.GetBlackButtonTextProperties(zoom));
     
+    MenuButton::Style blueButtonStyle;
+    blueButtonStyle.mMeshFilename = GuiResources::mMediumButtonMeshFilename;
+    blueButtonStyle.mColor = GuiResources::mBlueButtonColor;
+    blueButtonStyle.mSelectedColor = GuiResources::mBlueSelectedButtonColor;
+    blueButtonStyle.mPressedScale = 1.05f;
+    blueButtonStyle.mHasShadow = true;
+
     mNoButton = std::make_unique<MenuButton>(engine,
                                              *this,
-                                             Pht::Vec3 {0.0f, -3.7f, UiLayer::textRectangle},
+                                             Pht::Vec3 {0.0f, -3.3f, UiLayer::textRectangle},
                                              buttonInputSize,
-                                             buttonStyle);
-    mNoButton->CreateText({-0.5f, -0.23f, UiLayer::buttonText}, "NO", textProperties);
+                                             blueButtonStyle);
+    mNoButton->CreateText({-0.5f, -0.23f, UiLayer::buttonText},
+                          "No",
+                          guiResources.GetWhiteButtonTextProperties(zoom));
 }

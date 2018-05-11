@@ -17,29 +17,14 @@ namespace RowBlast {
     class GuiResources {
     public:
         GuiResources(Pht::IEngine& engine, const CommonResources& commonResources);
+        const MenuWindow& GetMediumMenuWindow(PotentiallyZoomedScreen potentiallyZoomed) const;
+        const Pht::TextProperties& GetBlackButtonTextProperties(PotentiallyZoomedScreen potentiallyZoomed) const;
+        const Pht::TextProperties& GetWhiteButtonTextProperties(PotentiallyZoomedScreen potentiallyZoomed) const;
+        const Pht::TextProperties& GetCaptionTextProperties(PotentiallyZoomedScreen potentiallyZoomed) const;
+        const Pht::TextProperties& GetSmallTextProperties(PotentiallyZoomedScreen potentiallyZoomed) const;
     
-        const MenuWindow& GetLargeMenuWindow() const {
-            return mLargeMenuWindow;
-        }
-
-        const MenuWindow& GetMediumMenuWindow() const {
-            return mMediumMenuWindow;
-        }
-        
-        const Pht::TextProperties& GetBlackButtonTextProperties() const {
-            return mBlackButtonTextProperties;
-        }
-
-        const Pht::TextProperties& GetWhiteButtonTextProperties() const {
-            return mWhiteButtonTextProperties;
-        }
-
-        const Pht::TextProperties& GetCaptionTextProperties() const {
-            return mCaptionTextProperties;
-        }
-
-        const Pht::TextProperties& GetSmallTextProperties() const {
-            return mSmallTextProperties;
+        const MenuWindow& GetLargeMenuWindowPotentiallyZoomedScreen() const {
+            return mLargeMenuWindowPotentiallyZoomedScreen;
         }
 
         static const Pht::Color mBlueButtonColor;
@@ -49,12 +34,17 @@ namespace RowBlast {
         static const std::string mMediumButtonMeshFilename;
 
     private:
-        MenuWindow mLargeMenuWindow;
         MenuWindow mMediumMenuWindow;
         Pht::TextProperties mBlackButtonTextProperties;
         Pht::TextProperties mWhiteButtonTextProperties;
         Pht::TextProperties mCaptionTextProperties;
         Pht::TextProperties mSmallTextProperties;
+        MenuWindow mLargeMenuWindowPotentiallyZoomedScreen;
+        MenuWindow mMediumMenuWindowPotentiallyZoomedScreen;
+        Pht::TextProperties mBlackButtonTextPropertiesPotentiallyZoomedScreen;
+        Pht::TextProperties mWhiteButtonTextPropertiesPotentiallyZoomedScreen;
+        Pht::TextProperties mCaptionTextPropertiesPotentiallyZoomedScreen;
+        Pht::TextProperties mSmallTextPropertiesPotentiallyZoomedScreen;
     };
 }
 

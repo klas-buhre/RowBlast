@@ -15,6 +15,11 @@ namespace Pht {
 namespace RowBlast {
     class CommonResources;
     
+    enum class PotentiallyZoomedScreen {
+        Yes,
+        No
+    };
+    
     class MenuWindow {
     public:
         enum class Size {
@@ -23,7 +28,10 @@ namespace RowBlast {
             Small
         };
         
-        MenuWindow(Pht::IEngine& engine, const CommonResources& commonResources, Size size);
+        MenuWindow(Pht::IEngine& engine,
+                   const CommonResources& commonResources,
+                   Size size,
+                   PotentiallyZoomedScreen potentiallyZoomed);
 
         Pht::RenderableObject& GetRenderable() const {
             return *mRenderableObject;

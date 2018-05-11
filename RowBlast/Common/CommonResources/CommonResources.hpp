@@ -16,12 +16,7 @@ namespace Pht {
     class IAudio;
 }
 
-namespace RowBlast {
-    enum class PotentiallyZoomedScreen {
-        Yes,
-        No
-    };
-    
+namespace RowBlast {    
     class CommonResources {
     public:
         explicit CommonResources(Pht::IEngine& engine);

@@ -29,10 +29,17 @@ namespace {
     constexpr auto footerBarBorderHeight {0.075f};
 }
 
-MenuWindow::MenuWindow(Pht::IEngine& engine, const CommonResources& commonResources, Size size) {
+MenuWindow::MenuWindow(Pht::IEngine& engine,
+                       const CommonResources& commonResources,
+                       Size size,
+                       PotentiallyZoomedScreen potentiallyZoomed) {
     auto& renderer {engine.GetRenderer()};
     auto& renderBufferSize {renderer.GetRenderBufferSize()};
-    auto& frustumSize {commonResources.GetHudFrustumSizePotentiallyZoomedScreen()};
+    
+    auto& frustumSize {
+        potentiallyZoomed == PotentiallyZoomedScreen::Yes ?
+        commonResources.GetHudFrustumSizePotentiallyZoomedScreen() : renderer.GetHudFrustumSize()
+    };
     
     auto xScaleFactor {static_cast<float>(renderBufferSize.x) / static_cast<float>(frustumSize.x)};
     auto yScaleFactor {static_cast<float>(renderBufferSize.y) / static_cast<float>(frustumSize.y)};

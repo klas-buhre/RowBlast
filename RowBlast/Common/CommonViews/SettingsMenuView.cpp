@@ -15,88 +15,68 @@ using namespace RowBlast;
 
 SettingsMenuView::SettingsMenuView(Pht::IEngine& engine,
                                    const CommonResources& commonResources,
-                                   PotentiallyZoomedScreen potentiallyZoomedScreen) {
-    Pht::TextProperties textProperties {
-        commonResources.GetHussarFontSize27(potentiallyZoomedScreen)
-    };
+                                   PotentiallyZoomedScreen zoom) {
+    auto& guiResources {commonResources.GetGuiResources()};
+    auto& menuWindow {guiResources.GetMediumMenuWindow(zoom)};
+    
+    auto menuWindowSceneObject {std::make_unique<Pht::SceneObject>(&menuWindow.GetRenderable())};
+    menuWindowSceneObject->GetTransform().SetPosition({0.0f, 0.0f, UiLayer::background});
+    AddSceneObject(std::move(menuWindowSceneObject));
 
-    Pht::TextProperties settingsTextProperties {
-        commonResources.GetHussarFontSize35(potentiallyZoomedScreen)
-    };
+    SetSize(menuWindow.GetSize());
     
-    Pht::Vec2 size {engine.GetRenderer().GetHudFrustumSize().x, 12.6f};
+    CreateText({-2.0f, 5.0f, UiLayer::text},
+               "SETTINGS",
+               guiResources.GetCaptionTextProperties(zoom));
     
-    SetSize(size);
-    SetPosition({0.0f, 0.0f});
+    auto& textProperties {guiResources.GetSmallTextProperties(zoom)};
+    CreateText({-4.65f, 1.07f, UiLayer::text}, "Controls", textProperties);
     
-    auto quad {MenuQuad::CreateGray(engine, GetSceneResources(), size)};
-    quad->GetTransform().SetPosition({0.0f, 0.0f, UiLayer::background});
-    AddSceneObject(std::move(quad));
-    
-    Pht::Material lineMaterial {Pht::Color{1.0f, 1.0f, 1.0f}};
-    lineMaterial.SetOpacity(0.4f);
-    auto& sceneManager {engine.GetSceneManager()};
-    auto lineSceneObject {
-        sceneManager.CreateSceneObject(Pht::QuadMesh {size.x - 1.0f, 0.08f},
-                                       lineMaterial,
-                                       GetSceneResources())
-    };
-    lineSceneObject->GetTransform().SetPosition({0.0f, 3.3f, UiLayer::textRectangle});
-    AddSceneObject(std::move(lineSceneObject));
-    
-    CreateText({-2.0f, 4.3f, UiLayer::text}, "SETTINGS", settingsTextProperties);
-    
-    Pht::Material barMaterial {Pht::Color{0.4f, 0.74f, 1.0f}};
-    barMaterial.SetOpacity(0.24f);
-    auto controlsBarSceneObject {
-        sceneManager.CreateSceneObject(Pht::QuadMesh {7.0f, 1.72f}, barMaterial, GetSceneResources())
-    };
-    controlsBarSceneObject->GetTransform().SetPosition({-2.0f, 1.3f, UiLayer::textRectangle});
-    AddSceneObject(std::move(controlsBarSceneObject));
-    
-    CreateText({-4.65f, 1.07f, UiLayer::text}, "CONTROLS", textProperties);
-    
+    MenuButton::Style settingsButtonStyle;
+    settingsButtonStyle.mMeshFilename = GuiResources::mMediumButtonMeshFilename;
+    settingsButtonStyle.mColor = GuiResources::mBlueButtonColor;
+    settingsButtonStyle.mSelectedColor = GuiResources::mBlueSelectedButtonColor;
+    settingsButtonStyle.mPressedScale = 1.05f;
+    settingsButtonStyle.mHasShadow = true;
+
     Pht::Vec2 buttonInputSize {86.0f, 43.0f};
-    MenuButton::Style buttonStyle;
-    buttonStyle.mColor = Pht::Color {0.4f, 0.74f, 1.0f};
-    buttonStyle.mSelectedColor = Pht::Color {0.6f, 0.94f, 1.0f};
+    
+    auto& buttonTextProperties {guiResources.GetWhiteButtonTextProperties(zoom)};
     
     Pht::Vec3 controlsButtonPosition {3.5f, 1.3f, UiLayer::textRectangle};
     mControlsButton = std::make_unique<MenuButton>(engine,
                                                    *this,
                                                    controlsButtonPosition,
                                                    buttonInputSize,
-                                                   buttonStyle);
+                                                   settingsButtonStyle);
     mControlsClickText = &(mControlsButton->CreateText({-1.05f, -0.23f, UiLayer::buttonText},
-                                                       "CLICK",
-                                                       textProperties).GetSceneObject());
+                                                       "Click",
+                                                       buttonTextProperties).GetSceneObject());
     mControlsSwipeText = &(mControlsButton->CreateText({-1.05f, -0.23f, UiLayer::buttonText},
-                                                       "SWIPE",
-                                                       textProperties).GetSceneObject());
+                                                       "Swipe",
+                                                       buttonTextProperties).GetSceneObject());
 
-    auto soundBarSceneObject {
-        sceneManager.CreateSceneObject(Pht::QuadMesh {7.0f, 1.72f}, barMaterial, GetSceneResources())
-    };
-    soundBarSceneObject->GetTransform().SetPosition({-2.0f, -1.3f, UiLayer::textRectangle});
-    AddSceneObject(std::move(soundBarSceneObject));
-        
-    CreateText({-4.65f, -1.53f, UiLayer::text}, "SOUND", textProperties);
+    CreateText({-4.65f, -1.53f, UiLayer::text}, "Sound", textProperties);
     
     Pht::Vec3 soundButtonPosition {3.5f, -1.3f, UiLayer::textRectangle};
     mSoundButton = std::make_unique<MenuButton>(engine,
                                                 *this,
                                                 soundButtonPosition,
                                                 buttonInputSize,
-                                                buttonStyle);
+                                                settingsButtonStyle);
     mSoundOnText = &(mSoundButton->CreateText({-0.6f, -0.23f, UiLayer::buttonText},
-                                              "ON",
-                                              textProperties).GetSceneObject());
+                                              "On",
+                                              buttonTextProperties).GetSceneObject());
     mSoundOffText = &(mSoundButton->CreateText({-0.7f, -0.23f, UiLayer::buttonText},
-                                               "OFF",
-                                               textProperties).GetSceneObject());
+                                               "Off",
+                                               buttonTextProperties).GetSceneObject());
 
-    MenuButton::Style backButtonStyle {buttonStyle};
-    backButtonStyle.mPressedScale = 0.925f;
+    MenuButton::Style backButtonStyle;
+    backButtonStyle.mMeshFilename = GuiResources::mMediumButtonMeshFilename;
+    backButtonStyle.mColor = GuiResources::mBlueButtonColor;
+    backButtonStyle.mSelectedColor = GuiResources::mBlueSelectedButtonColor;
+    backButtonStyle.mPressedScale = 1.05f;
+    backButtonStyle.mHasShadow = true;
     
     Pht::Vec2 backButtonInputSize {236.0f, 43.0f};
     
@@ -105,5 +85,5 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine,
                                                Pht::Vec3 {0.0f, -3.9f, UiLayer::textRectangle},
                                                backButtonInputSize,
                                                backButtonStyle);
-    mBackButton->CreateText({-1.0f, -0.23f, UiLayer::buttonText}, "BACK", textProperties);
+    mBackButton->CreateText({-1.0f, -0.23f, UiLayer::buttonText}, "BACK", buttonTextProperties);
 }
