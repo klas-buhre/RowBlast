@@ -9,9 +9,12 @@ const Pht::Color GuiResources::mBlueButtonColor {0.0f, 0.385f, 1.0f};
 const Pht::Color GuiResources::mBlueSelectedButtonColor {0.0f, 0.32f, 0.85f};
 const Pht::Color GuiResources::mYellowButtonColor {0.68f, 0.535f, 0.0f};
 const Pht::Color GuiResources::mYellowSelectedButtonColor {0.55f, 0.45f, 0.0f};
-const Pht::Color GuiResources::mGreenButtonColor {0.05f, 0.52f, 0.05f};
-const Pht::Color GuiResources::mGreenSelectedButtonColor {0.1f, 0.615f, 0.1f};
+const Pht::Color GuiResources::mGreenButtonColor {0.1f, 0.51f, 0.1f};
+const Pht::Color GuiResources::mGreenSelectedButtonColor {0.085f, 0.43f, 0.085f};
+const Pht::Color GuiResources::mBlackButtonColor {0.255f, 0.25f, 0.25f};
+const Pht::Color GuiResources::mBlackSelectedButtonColor {0.215f, 0.21f, 0.21f};
 
+const std::string GuiResources::mBigButtonMeshFilename {"big_button_048.obj"};
 const std::string GuiResources::mMediumButtonMeshFilename {"medium_button_0385.obj"};
 const std::string GuiResources::mSmallButtonMeshFilename {"small_button_0385.obj"};
 const std::string GuiResources::mCloseButtonMeshFilename {"close_button_032.obj"};
@@ -28,10 +31,13 @@ GuiResources::GuiResources(Pht::IEngine& engine, const CommonResources& commonRe
         1.0f,
         {0.3f, 0.3f, 0.3f, 1.0f}
     },
-    mLargeBlackButtonTextProperties {
+    mLargeWhiteButtonTextProperties {
         commonResources.GetHussarFontSize35(PotentiallyZoomedScreen::No),
         1.0f,
-        {0.26f, 0.26f, 0.26f, 1.0f}
+        {1.0f, 1.0f, 1.0f, 1.0f},
+        Pht::TextShadow::Yes,
+        {0.06f, 0.06f},
+        {0.4f, 0.4f, 0.4f, 0.5f}
     },
     mWhiteButtonTextProperties {
         commonResources.GetHussarFontSize27(PotentiallyZoomedScreen::No),
@@ -71,10 +77,13 @@ GuiResources::GuiResources(Pht::IEngine& engine, const CommonResources& commonRe
         1.0f,
         {0.3f, 0.3f, 0.3f, 1.0f}
     },
-    mLargeBlackButtonTextPropertiesPotentiallyZoomedScreen {
+    mLargeWhiteButtonTextPropertiesPotentiallyZoomedScreen {
         commonResources.GetHussarFontSize35(PotentiallyZoomedScreen::Yes),
         1.0f,
-        {0.26f, 0.26f, 0.26f, 1.0f}
+        {1.0f, 1.0f, 1.0f, 1.0f},
+        Pht::TextShadow::Yes,
+        {0.06f, 0.06f},
+        {0.4f, 0.4f, 0.4f, 0.5f}
     },
     mWhiteButtonTextPropertiesPotentiallyZoomedScreen {
         commonResources.GetHussarFontSize27(PotentiallyZoomedScreen::Yes),
@@ -119,12 +128,12 @@ GuiResources::GetBlackButtonTextProperties(PotentiallyZoomedScreen potentiallyZo
 }
 
 const Pht::TextProperties&
-GuiResources::GetLargeBlackButtonTextProperties(PotentiallyZoomedScreen potentiallyZoomed) const {
+GuiResources::GetLargeWhiteButtonTextProperties(PotentiallyZoomedScreen potentiallyZoomed) const {
     switch (potentiallyZoomed) {
         case PotentiallyZoomedScreen::Yes:
-            return mLargeBlackButtonTextPropertiesPotentiallyZoomedScreen;
+            return mLargeWhiteButtonTextPropertiesPotentiallyZoomedScreen;
         case PotentiallyZoomedScreen::No:
-            return mLargeBlackButtonTextProperties;
+            return mLargeWhiteButtonTextProperties;
     }
 }
 

@@ -59,7 +59,6 @@ Backlog:
 
 Ongoing tasks:
     -GUI:
-        -Fix the Refill lives/Buy moves button.
         -Fix the rest of the views.
         -Remove MenuQuad and CloseButton.
         -Try sliding in from the side.
@@ -316,6 +315,11 @@ bevel width: 0.135
 weld size: 0.19
 segments: 5
 profile 0.5
+
+big_button_048.obj:
+size: 9.4x2.6
+bevel width: 0.48
+segments: 5
 
 medium_button_0385.obj:
 size: 9.0x2.1

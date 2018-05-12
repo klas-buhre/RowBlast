@@ -269,6 +269,7 @@
 		627D381B20A59B9E0068B50C /* medium_button_0385.obj in Resources */ = {isa = PBXBuildFile; fileRef = 627D381A20A59B9D0068B50C /* medium_button_0385.obj */; };
 		627D381D20A5FF5E0068B50C /* small_button_0385.obj in Resources */ = {isa = PBXBuildFile; fileRef = 627D381C20A5FF5D0068B50C /* small_button_0385.obj */; };
 		627D382120A622260068B50C /* close_button_032.obj in Resources */ = {isa = PBXBuildFile; fileRef = 627D382020A622260068B50C /* close_button_032.obj */; };
+		627D382320A731480068B50C /* big_button_048.obj in Resources */ = {isa = PBXBuildFile; fileRef = 627D382220A731470068B50C /* big_button_048.obj */; };
 		628EC29A207D24090071F368 /* level30.json in Resources */ = {isa = PBXBuildFile; fileRef = 628EC299207D24080071F368 /* level30.json */; };
 		628EC2AC2080C4880071F368 /* level31.json in Resources */ = {isa = PBXBuildFile; fileRef = 628EC2AB2080C4880071F368 /* level31.json */; };
 		6299DD7A208B4178001F74E2 /* CameraShake.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6299DD78208B4178001F74E2 /* CameraShake.cpp */; };
@@ -857,6 +858,7 @@
 		627D381A20A59B9D0068B50C /* medium_button_0385.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = medium_button_0385.obj; sourceTree = "<group>"; };
 		627D381C20A5FF5D0068B50C /* small_button_0385.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = small_button_0385.obj; sourceTree = "<group>"; };
 		627D382020A622260068B50C /* close_button_032.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = close_button_032.obj; sourceTree = "<group>"; };
+		627D382220A731470068B50C /* big_button_048.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = big_button_048.obj; sourceTree = "<group>"; };
 		628EC299207D24080071F368 /* level30.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level30.json; sourceTree = "<group>"; };
 		628EC2AB2080C4880071F368 /* level31.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level31.json; sourceTree = "<group>"; };
 		6299DD78208B4178001F74E2 /* CameraShake.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CameraShake.cpp; sourceTree = "<group>"; };
@@ -958,6 +960,7 @@
 		6270DC571FCB22AE00FB457D /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				627D382220A731470068B50C /* big_button_048.obj */,
 				627D382020A622260068B50C /* close_button_032.obj */,
 				627D381C20A5FF5D0068B50C /* small_button_0385.obj */,
 				627D381A20A59B9D0068B50C /* medium_button_0385.obj */,
@@ -2108,6 +2111,7 @@
 				6276B702203F25AD0075C468 /* triangle_320_r270.obj in Resources */,
 				62785B1B20875937006F9869 /* PointParticle.vert in Resources */,
 				6270DC8B1FCB23D800FB457D /* level12.json in Resources */,
+				627D382320A731480068B50C /* big_button_048.obj in Resources */,
 				62E2222E1FE9754C00AE098B /* cloud_F_512.png in Resources */,
 				62785B1E20875937006F9869 /* EnvMap.frag in Resources */,
 				62785B2C20875937006F9869 /* VertexColor.vert in Resources */,

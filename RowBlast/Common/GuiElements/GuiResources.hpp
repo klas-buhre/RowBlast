@@ -19,7 +19,7 @@ namespace RowBlast {
         GuiResources(Pht::IEngine& engine, const CommonResources& commonResources);
         const MenuWindow& GetMediumMenuWindow(PotentiallyZoomedScreen potentiallyZoomed) const;
         const Pht::TextProperties& GetBlackButtonTextProperties(PotentiallyZoomedScreen potentiallyZoomed) const;
-        const Pht::TextProperties& GetLargeBlackButtonTextProperties(PotentiallyZoomedScreen potentiallyZoomed) const;
+        const Pht::TextProperties& GetLargeWhiteButtonTextProperties(PotentiallyZoomedScreen potentiallyZoomed) const;
         const Pht::TextProperties& GetWhiteButtonTextProperties(PotentiallyZoomedScreen potentiallyZoomed) const;
         const Pht::TextProperties& GetCaptionTextProperties(PotentiallyZoomedScreen potentiallyZoomed) const;
         const Pht::TextProperties& GetSmallTextProperties(PotentiallyZoomedScreen potentiallyZoomed) const;
@@ -34,6 +34,10 @@ namespace RowBlast {
         static const Pht::Color mYellowSelectedButtonColor;
         static const Pht::Color mGreenButtonColor;
         static const Pht::Color mGreenSelectedButtonColor;
+        static const Pht::Color mBlackButtonColor;
+        static const Pht::Color mBlackSelectedButtonColor;
+
+        static const std::string mBigButtonMeshFilename;
         static const std::string mMediumButtonMeshFilename;
         static const std::string mSmallButtonMeshFilename;
         static const std::string mCloseButtonMeshFilename;
@@ -41,14 +45,14 @@ namespace RowBlast {
     private:
         MenuWindow mMediumMenuWindow;
         Pht::TextProperties mBlackButtonTextProperties;
-        Pht::TextProperties mLargeBlackButtonTextProperties;
+        Pht::TextProperties mLargeWhiteButtonTextProperties;
         Pht::TextProperties mWhiteButtonTextProperties;
         Pht::TextProperties mCaptionTextProperties;
         Pht::TextProperties mSmallTextProperties;
         MenuWindow mLargeMenuWindowPotentiallyZoomedScreen;
         MenuWindow mMediumMenuWindowPotentiallyZoomedScreen;
         Pht::TextProperties mBlackButtonTextPropertiesPotentiallyZoomedScreen;
-        Pht::TextProperties mLargeBlackButtonTextPropertiesPotentiallyZoomedScreen;
+        Pht::TextProperties mLargeWhiteButtonTextPropertiesPotentiallyZoomedScreen;
         Pht::TextProperties mWhiteButtonTextPropertiesPotentiallyZoomedScreen;
         Pht::TextProperties mCaptionTextPropertiesPotentiallyZoomedScreen;
         Pht::TextProperties mSmallTextPropertiesPotentiallyZoomedScreen;
