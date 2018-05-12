@@ -72,6 +72,12 @@ GuiResources::GuiResources(Pht::IEngine& engine, const CommonResources& commonRe
         MenuWindow::Size::Medium,
         PotentiallyZoomedScreen::Yes
     },
+    mSmallMenuWindowPotentiallyZoomedScreen {
+        engine,
+        commonResources,
+        MenuWindow::Size::Small,
+        PotentiallyZoomedScreen::Yes
+    },
     mBlackButtonTextPropertiesPotentiallyZoomedScreen {
         commonResources.GetHussarFontSize27(PotentiallyZoomedScreen::Yes),
         1.0f,

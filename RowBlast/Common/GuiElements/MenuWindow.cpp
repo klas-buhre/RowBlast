@@ -54,7 +54,7 @@ MenuWindow::MenuWindow(Pht::IEngine& engine,
             mSize = {sizeX, 14.0f};
             break;
         case Size::Small:
-            mSize = {sizeX, 7.0f};
+            mSize = {sizeX, 11.0f};
             break;
     }
     

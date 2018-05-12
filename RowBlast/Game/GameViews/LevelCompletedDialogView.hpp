@@ -10,7 +10,6 @@
 
 // Game includes.
 #include "MenuButton.hpp"
-#include "CloseButton.hpp"
 
 namespace Pht {
     class IEngine;
@@ -27,7 +26,7 @@ namespace RowBlast {
         void Update();
         void SetNumStars(int numStars);
         
-        const CloseButton& GetCloseButton() const {
+        const MenuButton& GetCloseButton() const {
             return *mCloseButton;
         }
         
@@ -39,10 +38,12 @@ namespace RowBlast {
         void LoadStar(const CommonResources& commonResources);
         
         Pht::IEngine& mEngine;
-        std::unique_ptr<CloseButton> mCloseButton;
+        std::unique_ptr<MenuButton> mCloseButton;
         std::unique_ptr<MenuButton> mNextButton;
         std::unique_ptr<Pht::RenderableObject> mStarRenderable;
+        std::unique_ptr<Pht::RenderableObject> mStarShadowRenderable;
         std::vector<Pht::SceneObject*> mStars;
+        std::vector<Pht::SceneObject*> mStarShadows;
         float mStarAngle {0.0f};
     };
 }

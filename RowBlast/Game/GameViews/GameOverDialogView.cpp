@@ -13,36 +13,59 @@ using namespace RowBlast;
 
 GameOverDialogView::GameOverDialogView(Pht::IEngine& engine,
                                        const CommonResources& commonResources) {
-    Pht::TextProperties textProperties {
-        commonResources.GetHussarFontSize27(PotentiallyZoomedScreen::Yes)
-    };
-
-    Pht::Vec2 size {engine.GetRenderer().GetHudFrustumSize().x, 7.0f};
-    SetSize(size);
-    SetPosition({0.0f, 0.0f});
+    auto& guiResources {commonResources.GetGuiResources()};
+    auto& menuWindow {guiResources.GetSmallMenuWindowPotentiallyZoomedScreen()};
     
-    auto quad {MenuQuad::CreateGreen(engine, GetSceneResources(), size)};
-    quad->GetTransform().SetPosition({0.0f, 0.0f, UiLayer::background});
-    AddSceneObject(std::move(quad));
+    auto menuWindowSceneObject {std::make_unique<Pht::SceneObject>(&menuWindow.GetRenderable())};
+    menuWindowSceneObject->GetTransform().SetPosition({0.0f, 0.0f, UiLayer::background});
+    AddSceneObject(std::move(menuWindowSceneObject));
+
+    SetSize(menuWindow.GetSize());
+    
+    PotentiallyZoomedScreen zoom {PotentiallyZoomedScreen::Yes};
+    CreateText({-2.8f, 3.5f, UiLayer::text},
+               "GAME OVER",
+               guiResources.GetCaptionTextProperties(zoom));
     
     Pht::Vec3 closeButtonPosition {
-        GetSize().x / 2.0f - 1.0f,
-        GetSize().y / 2.0f - 1.0f,
+        GetSize().x / 2.0f - 1.5f,
+        GetSize().y / 2.0f - 1.5f,
         UiLayer::textRectangle
     };
-    mCloseButton = std::make_unique<CloseButton>(engine, *this, closeButtonPosition, textProperties);
-        
-    Pht::Vec2 buttonInputSize {180.0f, 47.0f};
-    MenuButton::Style buttonStyle;
-    buttonStyle.mColor = Pht::Color {0.2f, 0.82f, 0.2f};
-    buttonStyle.mSelectedColor = Pht::Color {0.23f, 1.0f, 0.23f};
+    
+    Pht::Vec2 closeButtonInputSize {55.0f, 55.0f};
+    
+    MenuButton::Style closeButtonStyle;
+    closeButtonStyle.mMeshFilename = GuiResources::mCloseButtonMeshFilename;
+    closeButtonStyle.mColor = GuiResources::mBlackButtonColor;
+    closeButtonStyle.mSelectedColor = GuiResources::mBlackSelectedButtonColor;
+    closeButtonStyle.mPressedScale = 1.05f;
+    closeButtonStyle.mHasShadow = true;
+    
+    mCloseButton = std::make_unique<MenuButton>(engine,
+                                                *this,
+                                                closeButtonPosition,
+                                                closeButtonInputSize,
+                                                closeButtonStyle);
+    mCloseButton->CreateText({-0.34f, -0.35f, UiLayer::text},
+                             "X",
+                             guiResources.GetLargeWhiteButtonTextProperties(zoom));
+
+    Pht::Vec2 retryButtonInputSize {205.0f, 59.0f};
+    
+    MenuButton::Style retryButtonStyle;
+    retryButtonStyle.mMeshFilename = GuiResources::mBigButtonMeshFilename;
+    retryButtonStyle.mColor = GuiResources::mGreenButtonColor;
+    retryButtonStyle.mSelectedColor = GuiResources::mGreenSelectedButtonColor;
+    retryButtonStyle.mPressedScale = 1.05f;
+    retryButtonStyle.mHasShadow = true;
 
     mRetryButton = std::make_unique<MenuButton>(engine,
                                                 *this,
                                                 Pht::Vec3 {0.0f, -1.0f, UiLayer::textRectangle},
-                                                buttonInputSize,
-                                                buttonStyle);
-    mRetryButton->CreateText({-1.05f, -0.23f, UiLayer::buttonText}, "RETRY", textProperties);
-    
-    CreateText({-2.0f, 1.5f, UiLayer::text}, "Game Over!", textProperties);
+                                                retryButtonInputSize,
+                                                retryButtonStyle);
+    mRetryButton->CreateText({-1.25f, -0.31f, UiLayer::buttonText},
+                            "Retry",
+                            guiResources.GetLargeWhiteButtonTextProperties(zoom));
 }

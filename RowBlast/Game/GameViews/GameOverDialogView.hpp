@@ -8,7 +8,6 @@
 
 // Game includes.
 #include "MenuButton.hpp"
-#include "CloseButton.hpp"
 
 namespace Pht {
     class IEngine;
@@ -21,7 +20,7 @@ namespace RowBlast {
     public:
         GameOverDialogView(Pht::IEngine& engine, const CommonResources& commonResources);
 
-        const CloseButton& GetCloseButton() const {
+        const MenuButton& GetCloseButton() const {
             return *mCloseButton;
         }
         
@@ -30,7 +29,7 @@ namespace RowBlast {
         }
         
     private:
-        std::unique_ptr<CloseButton> mCloseButton;
+        std::unique_ptr<MenuButton> mCloseButton;
         std::unique_ptr<MenuButton> mRetryButton;
     };
 }

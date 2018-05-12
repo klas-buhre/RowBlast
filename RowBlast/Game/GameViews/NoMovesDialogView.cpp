@@ -12,37 +12,62 @@
 using namespace RowBlast;
 
 NoMovesDialogView::NoMovesDialogView(Pht::IEngine& engine, const CommonResources& commonResources) {
-    Pht::TextProperties textProperties {
-        commonResources.GetHussarFontSize27(PotentiallyZoomedScreen::Yes)
-    };
-
-    Pht::Vec2 size {engine.GetRenderer().GetHudFrustumSize().x, 8.0f};
-    SetSize(size);
-    SetPosition({0.0f, 0.0f});
+    auto& guiResources {commonResources.GetGuiResources()};
+    auto& menuWindow {guiResources.GetSmallMenuWindowPotentiallyZoomedScreen()};
     
-    auto quad {MenuQuad::CreateGreen(engine, GetSceneResources(), size)};
-    quad->GetTransform().SetPosition({0.0f, 0.0f, UiLayer::background});
-    AddSceneObject(std::move(quad));
+    auto menuWindowSceneObject {std::make_unique<Pht::SceneObject>(&menuWindow.GetRenderable())};
+    menuWindowSceneObject->GetTransform().SetPosition({0.0f, 0.0f, UiLayer::background});
+    AddSceneObject(std::move(menuWindowSceneObject));
+
+    SetSize(menuWindow.GetSize());
+    
+    PotentiallyZoomedScreen zoom {PotentiallyZoomedScreen::Yes};
+    CreateText({-2.5f, 3.5f, UiLayer::text},
+               "NO MOVES",
+               guiResources.GetCaptionTextProperties(zoom));
     
     Pht::Vec3 closeButtonPosition {
-        GetSize().x / 2.0f - 1.0f,
-        GetSize().y / 2.0f - 1.0f,
+        GetSize().x / 2.0f - 1.5f,
+        GetSize().y / 2.0f - 1.5f,
         UiLayer::textRectangle
     };
-    mCloseButton = std::make_unique<CloseButton>(engine, *this, closeButtonPosition, textProperties);
-
-    Pht::Vec2 buttonInputSize {180.0f, 47.0f};
-    MenuButton::Style buttonStyle;
-    buttonStyle.mColor = Pht::Color {0.2f, 0.82f, 0.2f};
-    buttonStyle.mSelectedColor = Pht::Color {0.23f, 1.0f, 0.23f};
     
+    Pht::Vec2 closeButtonInputSize {55.0f, 55.0f};
+    
+    MenuButton::Style closeButtonStyle;
+    closeButtonStyle.mMeshFilename = GuiResources::mCloseButtonMeshFilename;
+    closeButtonStyle.mColor = GuiResources::mBlackButtonColor;
+    closeButtonStyle.mSelectedColor = GuiResources::mBlackSelectedButtonColor;
+    closeButtonStyle.mPressedScale = 1.05f;
+    closeButtonStyle.mHasShadow = true;
+    
+    mCloseButton = std::make_unique<MenuButton>(engine,
+                                                *this,
+                                                closeButtonPosition,
+                                                closeButtonInputSize,
+                                                closeButtonStyle);
+    mCloseButton->CreateText({-0.34f, -0.35f, UiLayer::text},
+                             "X",
+                             guiResources.GetLargeWhiteButtonTextProperties(zoom));
+
+    auto& textProperties {guiResources.GetSmallTextProperties(zoom)};
+    CreateText({-5.5f, 1.0f, UiLayer::text}, "Purchase 5 more moves for $0.99", textProperties);
+    
+    Pht::Vec2 playOnButtonInputSize {205.0f, 59.0f};
+    
+    MenuButton::Style playOnButtonStyle;
+    playOnButtonStyle.mMeshFilename = GuiResources::mBigButtonMeshFilename;
+    playOnButtonStyle.mColor = GuiResources::mGreenButtonColor;
+    playOnButtonStyle.mSelectedColor = GuiResources::mGreenSelectedButtonColor;
+    playOnButtonStyle.mPressedScale = 1.05f;
+    playOnButtonStyle.mHasShadow = true;
+
     mPlayOnButton = std::make_unique<MenuButton>(engine,
                                                  *this,
-                                                 Pht::Vec3 {0.0f, -2.0f, UiLayer::textRectangle},
-                                                 buttonInputSize,
-                                                 buttonStyle);
-    mPlayOnButton->CreateText({-1.5f, -0.23f, UiLayer::buttonText}, "PLAY ON", textProperties);
-    
-    CreateText({-2.0f, 1.5f, UiLayer::text}, "Out of moves!", textProperties);
-    CreateText({-4.0f, 0.5f, UiLayer::text}, "Get 5 more moves for $1", textProperties);
+                                                 Pht::Vec3 {0.0f, -1.5f, UiLayer::textRectangle},
+                                                 playOnButtonInputSize,
+                                                 playOnButtonStyle);
+    mPlayOnButton->CreateText({-1.4f, -0.31f, UiLayer::buttonText},
+                             "$0.99",
+                             guiResources.GetLargeWhiteButtonTextProperties(zoom));
 }
