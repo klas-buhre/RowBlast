@@ -59,7 +59,6 @@ Backlog:
 
 Ongoing tasks:
     -GUI:
-        -Remove MenuQuad and CloseButton.
         -Try sliding in from the side.
  
 

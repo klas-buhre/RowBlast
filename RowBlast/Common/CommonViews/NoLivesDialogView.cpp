@@ -6,7 +6,6 @@
 #include "TextComponent.hpp"
 
 // Game includes.
-#include "MenuQuad.hpp"
 #include "UserData.hpp"
 #include "StringUtils.hpp"
 #include "UiLayer.hpp"

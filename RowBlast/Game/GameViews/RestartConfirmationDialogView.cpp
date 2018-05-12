@@ -8,7 +8,6 @@
 
 // Game includes.
 #include "CommonResources.hpp"
-#include "MenuQuad.hpp"
 #include "UiLayer.hpp"
 
 using namespace RowBlast;

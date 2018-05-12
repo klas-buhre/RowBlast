@@ -8,7 +8,6 @@
 #include "TextComponent.hpp"
 
 // Game includes.
-#include "MenuQuad.hpp"
 #include "UiLayer.hpp"
 
 using namespace RowBlast;
