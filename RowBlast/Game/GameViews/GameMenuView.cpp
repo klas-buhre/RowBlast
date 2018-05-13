@@ -25,23 +25,31 @@ GameMenuView::GameMenuView(Pht::IEngine& engine, const CommonResources& commonRe
     
     PotentiallyZoomedScreen zoom {PotentiallyZoomedScreen::Yes};
     CreateText({-1.71f, 7.5f, UiLayer::text}, "PAUSED", guiResources.GetCaptionTextProperties(zoom));
-    
-    Pht::Vec2 buttonInputSize {194.0f, 45.0f};
+
+    MenuButton::Style yellowButtonStyle;
+    yellowButtonStyle.mMeshFilename = GuiResources::mMediumButtonMeshFilename;
+    yellowButtonStyle.mColor = GuiResources::mYellowButtonColor;
+    yellowButtonStyle.mSelectedColor = GuiResources::mYellowSelectedButtonColor;
+    yellowButtonStyle.mPressedScale = 1.05f;
+    yellowButtonStyle.mHasShadow = true;
+
     MenuButton::Style blueButtonStyle;
     blueButtonStyle.mMeshFilename = GuiResources::mMediumButtonMeshFilename;
     blueButtonStyle.mColor = GuiResources::mBlueButtonColor;
     blueButtonStyle.mSelectedColor = GuiResources::mBlueSelectedButtonColor;
     blueButtonStyle.mPressedScale = 1.05f;
     blueButtonStyle.mHasShadow = true;
+    
+    Pht::Vec2 buttonInputSize {194.0f, 45.0f};
 
     mResumeButton = std::make_unique<MenuButton>(engine,
                                                  *this,
                                                  Pht::Vec3 {0.0f, 4.7f, UiLayer::textRectangle},
                                                  buttonInputSize,
-                                                 blueButtonStyle);
+                                                 yellowButtonStyle);
     mResumeButton->CreateText({-1.25f, -0.23f, UiLayer::buttonText},
                               "Resume",
-                              guiResources.GetWhiteButtonTextProperties(zoom));
+                              guiResources.GetBlackButtonTextProperties(zoom));
     
     mUndoButton = std::make_unique<MenuButton>(engine,
                                                *this,
@@ -61,30 +69,23 @@ GameMenuView::GameMenuView(Pht::IEngine& engine, const CommonResources& commonRe
                                 "Settings",
                                 guiResources.GetWhiteButtonTextProperties(zoom));
 
-    MenuButton::Style yellowButtonStyle;
-    yellowButtonStyle.mMeshFilename = GuiResources::mMediumButtonMeshFilename;
-    yellowButtonStyle.mColor = GuiResources::mYellowButtonColor;
-    yellowButtonStyle.mSelectedColor = GuiResources::mYellowSelectedButtonColor;
-    yellowButtonStyle.mPressedScale = 1.05f;
-    yellowButtonStyle.mHasShadow = true;
-
     mRestartButton = std::make_unique<MenuButton>(engine,
                                                   *this,
                                                   Pht::Vec3 {0.0f, -3.1f, UiLayer::textRectangle},
                                                   buttonInputSize,
-                                                  yellowButtonStyle);
-    mRestartButton->CreateText({-1.2f, -0.23f, UiLayer::buttonText},
+                                                  blueButtonStyle);
+    mRestartButton->CreateText({-1.3f, -0.23f, UiLayer::buttonText},
                                "Restart",
-                               guiResources.GetBlackButtonTextProperties(zoom));
+                               guiResources.GetWhiteButtonTextProperties(zoom));
 
     mMapButton = std::make_unique<MenuButton>(engine,
                                               *this,
                                               Pht::Vec3 {0.0f, -5.7f, UiLayer::textRectangle},
                                               buttonInputSize,
-                                              yellowButtonStyle);
-    mMapButton->CreateText({-0.7f, -0.23f, UiLayer::buttonText},
+                                              blueButtonStyle);
+    mMapButton->CreateText({-0.8f, -0.23f, UiLayer::buttonText},
                            "Map",
-                           guiResources.GetBlackButtonTextProperties(zoom));
+                           guiResources.GetWhiteButtonTextProperties(zoom));
 }
 
 void GameMenuView::EnableUndoButton() {

@@ -13,7 +13,7 @@
 using namespace RowBlast;
 
 namespace {
-    const auto slideTime {0.3f};
+    const auto slideTime {0.25f};
     const Pht::Vec2 centerPosition {0.0f, 0.0f};
     
     Pht::StaticVector<Pht::Vec2, 20> slidePoints {
