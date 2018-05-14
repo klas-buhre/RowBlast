@@ -30,7 +30,8 @@ namespace RowBlast {
             Right,
             Left,
             Up,
-            Down
+            Down,
+            Scale
         };
         
         SlidingMenuAnimation(Pht::IEngine& engine, Pht::GuiView& view);
@@ -49,11 +50,13 @@ namespace RowBlast {
         void UpdateInSlidingInState();
         void UpdateInSlidingInStateLeftOrRight();
         void UpdateInSlidingInStateUpOrDown();
+        void UpdateInSlidingInStateScaling();
         bool HasCompletelySlidIn(const Pht::Vec2& position);
         void GoToShowingMenuState();
         void UpdateInSlidingOutState();
         void UpdateInSlidingOutStateLeftOrRight();
         void UpdateInSlidingOutStateUpOrDown();
+        void UpdateInSlidingOutStateScaling();
         bool HasCompletelySlidOut(const Pht::Vec2& position);
         void GoToDoneState();
     

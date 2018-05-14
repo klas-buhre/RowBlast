@@ -8,6 +8,7 @@
 #include "Scene.hpp"
 #include "IParticleSystem.hpp"
 #include "ParticleEffect.hpp"
+#include "SceneObjectUtils.hpp"
 
 // Game includes.
 #include "GradientRectangle.hpp"
@@ -44,16 +45,6 @@ namespace {
         {0.95f, 0.87f},
         {1.0f, 1.0f},
     };
-    
-    void SetAlpha(Pht::SceneObject& sceneObject, float alpha) {
-        for (auto& child: sceneObject.GetChildren()) {
-            SetAlpha(*child, alpha);
-        }
-        
-        if (auto* renderable {sceneObject.GetRenderable()}) {
-            renderable->GetMaterial().SetOpacity(alpha);
-        }
-    }
 }
 
 TitleAnimation::TitleAnimation(Pht::IEngine& engine,
@@ -204,7 +195,7 @@ void TitleAnimation::CreateGradientRectangles(Pht::Scene& scene,
                             colors,
                             colors);
     
-    SetAlpha(*mGradientRectanglesSceneObject, 0.0f);
+    Pht::SceneObjectUtils::SetAlphaRecursively(*mGradientRectanglesSceneObject, 0.0f);
 }
 
 void TitleAnimation::Update() {
@@ -243,7 +234,8 @@ void TitleAnimation::UpdateInRectangleAppearingState() {
     auto dt {mEngine.GetLastFrameSeconds()};
     mElapsedTime += dt;
     
-    SetAlpha(*mGradientRectanglesSceneObject, mElapsedTime / rectangleFadeInTime);
+    Pht::SceneObjectUtils::SetAlphaRecursively(*mGradientRectanglesSceneObject,
+                                               mElapsedTime / rectangleFadeInTime);
 
     auto normalizedTime {(rectangleFadeInTime - mElapsedTime) / rectangleFadeInTime};
     auto scale {1.0f + 3.0f * Pht::Lerp(normalizedTime, scalePoints)};
@@ -252,7 +244,7 @@ void TitleAnimation::UpdateInRectangleAppearingState() {
     
     if (mElapsedTime > rectangleFadeInTime) {
         mState = State::SlidingIn;
-        SetAlpha(*mGradientRectanglesSceneObject, 1.0f);
+        Pht::SceneObjectUtils::SetAlphaRecursively(*mGradientRectanglesSceneObject, 1.0f);
         mGradientRectanglesSceneObject->GetTransform().SetScale(1.0f);
         
         mText.mUpperTextLineSceneObject->SetIsVisible(true);

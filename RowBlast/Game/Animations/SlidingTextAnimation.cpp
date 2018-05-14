@@ -9,6 +9,7 @@
 #include "Scene.hpp"
 #include "IParticleSystem.hpp"
 #include "ParticleEffect.hpp"
+#include "SceneObjectUtils.hpp"
 
 // Game includes.
 #include "GameScene.hpp"
@@ -45,16 +46,6 @@ namespace {
         {0.95f, 0.87f},
         {1.0f, 1.0f},
     };
-    
-    void SetAlpha(Pht::SceneObject& sceneObject, float alpha) {
-        for (auto& child: sceneObject.GetChildren()) {
-            SetAlpha(*child, alpha);
-        }
-        
-        if (auto* renderable {sceneObject.GetRenderable()}) {
-            renderable->GetMaterial().SetOpacity(alpha);
-        }
-    }
 }
 
 SlidingTextAnimation::SlidingTextAnimation(Pht::IEngine& engine,
@@ -238,7 +229,7 @@ void SlidingTextAnimation::Start(Message message) {
     mGradientRectanglesSceneObject->SetIsVisible(true);
     mGradientRectanglesSceneObject->SetIsStatic(false);
     mGradientRectanglesSceneObject->GetTransform().SetPosition({0.0f, 0.0f, 0.0f});
-    SetAlpha(*mGradientRectanglesSceneObject, 0.0f);
+    Pht::SceneObjectUtils::SetAlphaRecursively(*mGradientRectanglesSceneObject, 0.0f);
 }
 
 SlidingTextAnimation::State SlidingTextAnimation::Update() {
@@ -269,7 +260,8 @@ void SlidingTextAnimation::UpdateInRectangleAppearingState() {
     auto dt {mEngine.GetLastFrameSeconds()};
     mElapsedTime += dt;
     
-    SetAlpha(*mGradientRectanglesSceneObject, mElapsedTime / rectangleFadeInTime);
+    Pht::SceneObjectUtils::SetAlphaRecursively(*mGradientRectanglesSceneObject,
+                                               mElapsedTime / rectangleFadeInTime);
 
     auto normalizedTime {(rectangleFadeInTime - mElapsedTime) / rectangleFadeInTime};
     auto scale {1.0f + 3.0f * Pht::Lerp(normalizedTime, scalePoints)};
@@ -278,7 +270,7 @@ void SlidingTextAnimation::UpdateInRectangleAppearingState() {
     
     if (mElapsedTime > rectangleFadeInTime) {
         mState = State::SlidingIn;
-        SetAlpha(*mGradientRectanglesSceneObject, 1.0f);
+        Pht::SceneObjectUtils::SetAlphaRecursively(*mGradientRectanglesSceneObject, 1.0f);
         mGradientRectanglesSceneObject->GetTransform().SetScale(1.0f);
         
         mText->mUpperTextLineSceneObject->SetIsVisible(true);
@@ -356,8 +348,8 @@ void SlidingTextAnimation::UpdateInRectangleDisappearingState() {
     auto dt {mEngine.GetLastFrameSeconds()};
     mElapsedTime += dt;
     
-    SetAlpha(*mGradientRectanglesSceneObject,
-             (rectangleFadeInTime - mElapsedTime) / rectangleFadeInTime);
+    Pht::SceneObjectUtils::SetAlphaRecursively(*mGradientRectanglesSceneObject,
+                                               (rectangleFadeInTime - mElapsedTime) / rectangleFadeInTime);
 
     if (mElapsedTime > rectangleFadeInTime) {
         mState = State::Inactive;

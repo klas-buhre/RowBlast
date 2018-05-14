@@ -9,11 +9,13 @@
 #include "FadeEffect.hpp"
 #include "StaticVector.hpp"
 #include "MathUtils.hpp"
+#include "TextComponent.hpp"
+#include "SceneObjectUtils.hpp"
 
 using namespace RowBlast;
 
 namespace {
-    const auto slideTime {0.235f};
+    const auto slideTime {0.22f};
     const Pht::Vec2 centerPosition {0.0f, 0.0f};
     
     Pht::StaticVector<Pht::Vec2, 20> slidePoints {
@@ -62,6 +64,9 @@ void SlidingMenuAnimation::Init(UpdateFade updateFade, SlideDirection slideInDir
         case SlideDirection::Down:
             mSlideInStartPosition = {0.0f, frustumSize.y / 2.0f + mView.GetSize().y / 2.0f};
             break;
+        case SlideDirection::Scale:
+            Pht::SceneObjectUtils::ScaleRecursively(mView.GetRoot(), 0.0f);
+            break;
     }
     
     mView.SetPosition(mSlideInStartPosition);
@@ -101,6 +106,8 @@ void SlidingMenuAnimation::StartSlideOut(UpdateFade updateFade, SlideDirection s
         case SlideDirection::Down:
             mSlideOutFinalPosition = {0.0f, -frustumSize.y / 2.0f - mView.GetSize().y / 2.0f};
             break;
+        case SlideDirection::Scale:
+            break;
     }
 
     mView.SetPosition(centerPosition);
@@ -130,6 +137,11 @@ SlidingMenuAnimation::State SlidingMenuAnimation::Update() {
 }
 
 void SlidingMenuAnimation::UpdateInSlidingInState() {
+    if (mUpdateFade == UpdateFade::Yes &&
+        mFadeEffect->GetState() != Pht::FadeEffect::State::Transition) {
+        mFadeEffect->Update(mEngine.GetLastFrameSeconds());
+    }
+
     switch (mSlideInDirection) {
         case SlideDirection::Right:
         case SlideDirection::Left:
@@ -138,6 +150,9 @@ void SlidingMenuAnimation::UpdateInSlidingInState() {
         case SlideDirection::Up:
         case SlideDirection::Down:
             UpdateInSlidingInStateUpOrDown();
+            break;
+        case SlideDirection::Scale:
+            UpdateInSlidingInStateScaling();
             break;
     }
 }
@@ -150,11 +165,6 @@ void SlidingMenuAnimation::UpdateInSlidingInStateLeftOrRight() {
     
     position.x = centerPosition.x - distance * Pht::Lerp(normalizedTime, slidePoints);
     mElapsedTime += dt;
-    
-    if (mUpdateFade == UpdateFade::Yes &&
-        mFadeEffect->GetState() != Pht::FadeEffect::State::Transition) {
-        mFadeEffect->Update(dt);
-    }
     
     if (HasCompletelySlidIn(position)) {
         position.x = 0.0f;
@@ -180,11 +190,6 @@ void SlidingMenuAnimation::UpdateInSlidingInStateUpOrDown() {
     position.y = centerPosition.y - distance * Pht::Lerp(normalizedTime, slidePoints);
     mElapsedTime += dt;
     
-    if (mUpdateFade == UpdateFade::Yes &&
-        mFadeEffect->GetState() != Pht::FadeEffect::State::Transition) {
-        mFadeEffect->Update(dt);
-    }
-    
     if (HasCompletelySlidIn(position)) {
         position.y = 0.0f;
         
@@ -198,6 +203,25 @@ void SlidingMenuAnimation::UpdateInSlidingInStateUpOrDown() {
     }
     
     mView.SetPosition(position);
+}
+
+void SlidingMenuAnimation::UpdateInSlidingInStateScaling() {
+    auto dt {mEngine.GetLastFrameSeconds()};
+    
+    mElapsedTime += dt;
+    Pht::SceneObjectUtils::ScaleRecursively(mView.GetRoot(), mElapsedTime / slideTime);
+
+    if (mElapsedTime > slideTime) {
+        Pht::SceneObjectUtils::ScaleRecursively(mView.GetRoot(), 1.0f);
+        
+        if (mUpdateFade == UpdateFade::Yes) {
+            if (mFadeEffect->GetState() == Pht::FadeEffect::State::Transition) {
+                GoToShowingMenuState();
+            }
+        } else {
+            GoToShowingMenuState();
+        }
+    }
 }
 
 bool SlidingMenuAnimation::HasCompletelySlidIn(const Pht::Vec2& position) {
@@ -226,6 +250,8 @@ bool SlidingMenuAnimation::HasCompletelySlidIn(const Pht::Vec2& position) {
                 return true;
             }
             break;
+        case SlideDirection::Scale:
+            break;
     }
     
     return false;
@@ -237,7 +263,11 @@ void SlidingMenuAnimation::GoToShowingMenuState() {
 }
 
 void SlidingMenuAnimation::UpdateInSlidingOutState() {
-    switch (mSlideInDirection) {
+    if (mUpdateFade == UpdateFade::Yes && mFadeEffect->GetState() != Pht::FadeEffect::State::Idle) {
+        mFadeEffect->Update(mEngine.GetLastFrameSeconds());
+    }
+
+    switch (mSlideOutDirection) {
         case SlideDirection::Right:
         case SlideDirection::Left:
             UpdateInSlidingOutStateLeftOrRight();
@@ -245,6 +275,9 @@ void SlidingMenuAnimation::UpdateInSlidingOutState() {
         case SlideDirection::Up:
         case SlideDirection::Down:
             UpdateInSlidingOutStateUpOrDown();
+            break;
+        case SlideDirection::Scale:
+            UpdateInSlidingOutStateScaling();
             break;
     }
 }
@@ -257,10 +290,6 @@ void SlidingMenuAnimation::UpdateInSlidingOutStateLeftOrRight() {
     
     position.x = centerPosition.x + distance * normalizedTime * normalizedTime * normalizedTime;
     mElapsedTime += dt;
-    
-    if (mUpdateFade == UpdateFade::Yes && mFadeEffect->GetState() != Pht::FadeEffect::State::Idle) {
-        mFadeEffect->Update(dt);
-    }
     
     if (HasCompletelySlidOut(position)) {
         position.x = mSlideOutFinalPosition.x;
@@ -286,10 +315,6 @@ void SlidingMenuAnimation::UpdateInSlidingOutStateUpOrDown() {
     position.y = centerPosition.y + distance * normalizedTime * normalizedTime * normalizedTime;
     mElapsedTime += dt;
     
-    if (mUpdateFade == UpdateFade::Yes && mFadeEffect->GetState() != Pht::FadeEffect::State::Idle) {
-        mFadeEffect->Update(dt);
-    }
-    
     if (HasCompletelySlidOut(position)) {
         position.y = mSlideOutFinalPosition.y;
         
@@ -303,6 +328,26 @@ void SlidingMenuAnimation::UpdateInSlidingOutStateUpOrDown() {
     }
     
     mView.SetPosition(position);
+}
+
+void SlidingMenuAnimation::UpdateInSlidingOutStateScaling() {
+    auto dt {mEngine.GetLastFrameSeconds()};
+    
+    mElapsedTime += dt;
+    Pht::SceneObjectUtils::ScaleRecursively(mView.GetRoot(),
+                                            1.0f - Pht::Lerp(mElapsedTime / slideTime, slidePoints));
+
+    if (mElapsedTime > slideTime) {
+        Pht::SceneObjectUtils::ScaleRecursively(mView.GetRoot(), 0.0f);
+        
+        if (mUpdateFade == UpdateFade::Yes) {
+            if (mFadeEffect->GetState() == Pht::FadeEffect::State::Idle) {
+                GoToDoneState();
+            }
+        } else {
+            GoToDoneState();
+        }
+    }
 }
 
 bool SlidingMenuAnimation::HasCompletelySlidOut(const Pht::Vec2& position) {
@@ -331,6 +376,8 @@ bool SlidingMenuAnimation::HasCompletelySlidOut(const Pht::Vec2& position) {
                 return true;
             }
             break;
+        case SlideDirection::Scale:
+            break;
     }
     
     return false;
@@ -339,4 +386,8 @@ bool SlidingMenuAnimation::HasCompletelySlidOut(const Pht::Vec2& position) {
 void SlidingMenuAnimation::GoToDoneState() {
     mState = State::Done;
     mEngine.GetInput().EnableInput();
+    
+    if (mUpdateFade == UpdateFade::Yes) {
+        mFadeEffect->Reset();
+    }
 }

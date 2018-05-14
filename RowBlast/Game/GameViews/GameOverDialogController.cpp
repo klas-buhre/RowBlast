@@ -18,7 +18,8 @@ GameOverDialogController::GameOverDialogController(Pht::IEngine& engine,
     mSlidingMenuAnimation {engine, mView} {}
 
 void GameOverDialogController::Init() {
-    mSlidingMenuAnimation.Init(SlidingMenuAnimation::UpdateFade::Yes);
+    mSlidingMenuAnimation.Init(SlidingMenuAnimation::UpdateFade::Yes,
+                               SlidingMenuAnimation::SlideDirection::Up);
 }
 
 void GameOverDialogController::SetFadeEffect(Pht::FadeEffect& fadeEffect) {

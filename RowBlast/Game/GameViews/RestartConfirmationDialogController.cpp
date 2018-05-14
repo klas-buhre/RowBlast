@@ -20,7 +20,7 @@ RestartConfirmationDialogController(Pht::IEngine& engine,
 
 void RestartConfirmationDialogController::Init() {
     mSlidingMenuAnimation.Init(SlidingMenuAnimation::UpdateFade::No,
-                               SlidingMenuAnimation::SlideDirection::Left);
+                               SlidingMenuAnimation::SlideDirection::Scale);
 }
 
 void RestartConfirmationDialogController::SetFadeEffect(Pht::FadeEffect& fadeEffect) {
