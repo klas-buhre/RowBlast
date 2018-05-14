@@ -21,7 +21,14 @@ SettingsMenuController::SettingsMenuController(Pht::IEngine& engine,
 
 void SettingsMenuController::Init(SlidingMenuAnimation::UpdateFade updateFade) {
     mUpdateFade = updateFade;
-    mSlidingMenuAnimation.Init(updateFade);
+    
+    auto slideInDirection {
+        updateFade == SlidingMenuAnimation::UpdateFade::Yes ?
+            SlidingMenuAnimation::SlideDirection::Right :
+            SlidingMenuAnimation::SlideDirection::Left
+    };
+
+    mSlidingMenuAnimation.Init(updateFade, slideInDirection);
     UpdateViewToReflectSettings();
 }
 
@@ -75,8 +82,14 @@ SettingsMenuController::Result SettingsMenuController::OnTouch(const Pht::TouchE
     }
 
     if (mView.GetBackButton().IsClicked(touchEvent)) {
+        auto slideOutDirection {
+            mUpdateFade == SlidingMenuAnimation::UpdateFade::Yes ?
+                SlidingMenuAnimation::SlideDirection::Left :
+                SlidingMenuAnimation::SlideDirection::Right
+        };
+
         mDeferredResult = Result::GoBack;
-        mSlidingMenuAnimation.StartSlideOut(mUpdateFade);
+        mSlidingMenuAnimation.StartSlideOut(mUpdateFade, slideOutDirection);
     }
     
     return Result::None;

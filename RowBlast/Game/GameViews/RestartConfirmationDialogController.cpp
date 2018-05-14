@@ -19,7 +19,8 @@ RestartConfirmationDialogController(Pht::IEngine& engine,
     mSlidingMenuAnimation {engine, mView} {}
 
 void RestartConfirmationDialogController::Init() {
-    mSlidingMenuAnimation.Init(SlidingMenuAnimation::UpdateFade::No);
+    mSlidingMenuAnimation.Init(SlidingMenuAnimation::UpdateFade::No,
+                               SlidingMenuAnimation::SlideDirection::Left);
 }
 
 void RestartConfirmationDialogController::SetFadeEffect(Pht::FadeEffect& fadeEffect) {
@@ -53,7 +54,8 @@ RestartConfirmationDialogController::OnTouch(const Pht::TouchEvent& touchEvent) 
     if (mView.GetYesButton().IsClicked(touchEvent)) {
         if (mUserData.GetLifeManager().GetNumLives() == 0) {
             mDeferredResult = Result::RestartGame;
-            mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::Yes);
+            mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::Yes,
+                                                SlidingMenuAnimation::SlideDirection::Right);
         } else {
             return Result::RestartGame;
         }
@@ -61,7 +63,8 @@ RestartConfirmationDialogController::OnTouch(const Pht::TouchEvent& touchEvent) 
 
     if (mView.GetNoButton().IsClicked(touchEvent)) {
         mDeferredResult = Result::DoNotRestartGame;
-        mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::No);
+        mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::No,
+                                            SlidingMenuAnimation::SlideDirection::Right);
         return Result::None;
     }
     

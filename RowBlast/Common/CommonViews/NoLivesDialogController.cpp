@@ -20,7 +20,7 @@ NoLivesDialogController::NoLivesDialogController(Pht::IEngine& engine,
 
 void NoLivesDialogController::Init(SlidingMenuAnimation::UpdateFade updateFade,
                                    bool shouldSlideOut) {
-    mSlidingMenuAnimation.Init(updateFade);
+    mSlidingMenuAnimation.Init(updateFade, SlidingMenuAnimation::SlideDirection::Up);
     mShouldSlideOut = shouldSlideOut;
 }
 
@@ -40,7 +40,8 @@ NoLivesDialogController::Result NoLivesDialogController::Update() {
             mView.Update();
             if (mUserData.GetLifeManager().GetNumLives() > 0) {
                 mDeferredResult = Result::Close;
-                mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::Yes);
+                mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::Yes,
+                                                    SlidingMenuAnimation::SlideDirection::Down);
             }
             return HandleInput();
         case SlidingMenuAnimation::State::Done:
@@ -59,7 +60,8 @@ NoLivesDialogController::Result NoLivesDialogController::OnTouch(const Pht::Touc
     if (mView.GetCloseButton().IsClicked(touchEvent)) {
         if (mShouldSlideOut) {
             mDeferredResult = Result::Close;
-            mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::Yes);
+            mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::Yes,
+                                                SlidingMenuAnimation::SlideDirection::Down);
             return Result::None;
         }
         
@@ -69,7 +71,8 @@ NoLivesDialogController::Result NoLivesDialogController::OnTouch(const Pht::Touc
     if (mView.GetRefillLivesButton().IsClicked(touchEvent)) {
         if (mShouldSlideOut) {
             mDeferredResult = Result::RefillLives;
-            mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::Yes);
+            mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::Yes,
+                                                SlidingMenuAnimation::SlideDirection::Down);
             return Result::None;
         }
         

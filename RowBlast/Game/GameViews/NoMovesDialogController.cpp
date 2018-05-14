@@ -15,7 +15,8 @@ NoMovesDialogController::NoMovesDialogController(Pht::IEngine& engine,
     mSlidingMenuAnimation {engine, mView} {}
 
 void NoMovesDialogController::Init() {
-    mSlidingMenuAnimation.Init(SlidingMenuAnimation::UpdateFade::Yes);
+    mSlidingMenuAnimation.Init(SlidingMenuAnimation::UpdateFade::Yes,
+                               SlidingMenuAnimation::SlideDirection::Up);
 }
 
 void NoMovesDialogController::SetFadeEffect(Pht::FadeEffect& fadeEffect) {
@@ -51,7 +52,8 @@ NoMovesDialogController::Result NoMovesDialogController::OnTouch(const Pht::Touc
 
     if (mView.GetPlayOnButton().IsClicked(touchEvent)) {
         mDeferredResult = Result::PlayOn;
-        mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::Yes);
+        mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::Yes,
+                                            SlidingMenuAnimation::SlideDirection::Down);
         return Result::None;
     }
     

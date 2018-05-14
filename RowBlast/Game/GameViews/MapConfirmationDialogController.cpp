@@ -15,7 +15,8 @@ MapConfirmationDialogController(Pht::IEngine& engine, const CommonResources& com
     mSlidingMenuAnimation {engine, mView} {}
 
 void MapConfirmationDialogController::Init() {
-    mSlidingMenuAnimation.Init(SlidingMenuAnimation::UpdateFade::No);
+    mSlidingMenuAnimation.Init(SlidingMenuAnimation::UpdateFade::No,
+                               SlidingMenuAnimation::SlideDirection::Left);
 }
 
 void MapConfirmationDialogController::SetFadeEffect(Pht::FadeEffect& fadeEffect) {
@@ -52,7 +53,8 @@ MapConfirmationDialogController::OnTouch(const Pht::TouchEvent& touchEvent) {
 
     if (mView.GetNoButton().IsClicked(touchEvent)) {
         mDeferredResult = Result::DoNotGoToMap;
-        mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::No);
+        mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::No,
+                                            SlidingMenuAnimation::SlideDirection::Right);
         return Result::None;
     }
     

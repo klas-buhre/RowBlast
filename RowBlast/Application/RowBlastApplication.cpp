@@ -62,7 +62,6 @@ Backlog:
 Ongoing tasks:
     -GUI:
         -Tune the gray.
-        -Try sliding in paused menu from the side.
         -Try scale up for popups.
  
  

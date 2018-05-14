@@ -17,7 +17,7 @@
 using namespace RowBlast;
 
 namespace {
-    std::unique_ptr<Pht::SceneObject> CreateSceneMainObject(Pht::ISceneManager& sceneManager,
+    std::unique_ptr<Pht::SceneObject> CreateMainSceneObject(Pht::ISceneManager& sceneManager,
                                                             Pht::GuiView& view,
                                                             const MenuButton::Style& style) {
         if (style.mRenderableObject) {
@@ -40,7 +40,7 @@ MenuButton::MenuButton(Pht::IEngine& engine,
     mAudio {engine.GetAudio()} {
     
     auto& sceneManager {engine.GetSceneManager()};
-    auto sceneObject {CreateSceneMainObject(sceneManager, view, style)};
+    auto sceneObject {CreateMainSceneObject(sceneManager, view, style)};
     
     sceneObject->GetTransform().SetPosition(position);
     
