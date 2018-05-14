@@ -11,6 +11,8 @@ Backlog:
    X-When playing a level with clear objective the game could scroll up if there is no room to spawn
      the falling piece. If we are at the top of the level then it is game over, or maybe the top
      rows could be cleared so the the piece fits.
+   X-Fix bug where the switchable pieces can change if double clocking on switch when the frame rate
+     is really low like in the iPad simulator. 
     -Speed up gameplay by updating GameLogic already when falling blocks are close to enter the
      bouncing state? If cascading, wait until all bocks have entered bouncing state before claring
      new rows.
@@ -59,7 +61,10 @@ Backlog:
 
 Ongoing tasks:
     -GUI:
-        -Try sliding in from the side.
+        -Tune the gray.
+        -Try sliding in paused menu from the side.
+        -Try scale up for popups.
+ 
  
 
 Ideas:
@@ -116,6 +121,8 @@ Time Estimation in days:
         Cost: 10
     -Levels/Chapters.
         Cost: 10
+    -Store settings in file.
+        Cost: 0.5
     -Sounds/music.
         Cost: 5
     -Purchases.

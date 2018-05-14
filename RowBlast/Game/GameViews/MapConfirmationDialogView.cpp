@@ -24,7 +24,7 @@ MapConfirmationDialogView::MapConfirmationDialogView(Pht::IEngine& engine,
 
     SetSize(menuWindow.GetSize());
     
-    CreateText({-1.0f, 5.0f, UiLayer::text}, "MAP", guiResources.GetCaptionTextProperties(zoom));
+    CreateText({-1.0f, 5.1f, UiLayer::text}, "MAP", guiResources.GetCaptionTextProperties(zoom));
     
     auto& textProperties {guiResources.GetSmallTextProperties(zoom)};
     CreateText({-5.5f, 2.5f, UiLayer::text}, "Are you sure you want to go back", textProperties);

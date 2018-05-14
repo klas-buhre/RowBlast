@@ -41,33 +41,27 @@ LevelCompletedDialogView::LevelCompletedDialogView(Pht::IEngine& engine,
 
     SetSize(menuWindow.GetSize());
     
-    CreateText({-3.4f, 5.0f, UiLayer::text},
+    CreateText({-3.4f, 5.1f, UiLayer::text},
                "LEVEL CLEARED",
                guiResources.GetCaptionTextProperties(zoom));
-    
+
     Pht::Vec3 closeButtonPosition {
         GetSize().x / 2.0f - 1.5f,
         GetSize().y / 2.0f - 1.5f,
         UiLayer::textRectangle
     };
-    
+
     Pht::Vec2 closeButtonInputSize {55.0f, 55.0f};
-    
+
     MenuButton::Style closeButtonStyle;
-    closeButtonStyle.mMeshFilename = GuiResources::mCloseButtonMeshFilename;
-    closeButtonStyle.mColor = GuiResources::mBlackButtonColor;
-    closeButtonStyle.mSelectedColor = GuiResources::mBlackSelectedButtonColor;
     closeButtonStyle.mPressedScale = 1.05f;
-    closeButtonStyle.mHasShadow = true;
+    closeButtonStyle.mRenderableObject = &guiResources.GetCloseButton(zoom);
     
     mCloseButton = std::make_unique<MenuButton>(engine,
                                                 *this,
                                                 closeButtonPosition,
                                                 closeButtonInputSize,
                                                 closeButtonStyle);
-    mCloseButton->CreateText({-0.34f, -0.35f, UiLayer::text},
-                             "X",
-                             guiResources.GetLargeWhiteButtonTextProperties(zoom));
 
     Pht::Vec2 nextButtonInputSize {205.0f, 59.0f};
     

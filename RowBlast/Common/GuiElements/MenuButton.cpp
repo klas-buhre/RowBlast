@@ -16,6 +16,21 @@
 
 using namespace RowBlast;
 
+namespace {
+    std::unique_ptr<Pht::SceneObject> CreateSceneMainObject(Pht::ISceneManager& sceneManager,
+                                                            Pht::GuiView& view,
+                                                            const MenuButton::Style& style) {
+        if (style.mRenderableObject) {
+            return std::make_unique<Pht::SceneObject>(style.mRenderableObject);
+        }
+
+        Pht::Material material {style.mColor, style.mColor, {1.0f, 1.0f, 1.0f}, 20.0f};        
+        return sceneManager.CreateSceneObject(Pht::ObjMesh {style.mMeshFilename},
+                                              material,
+                                              view.GetSceneResources());
+    }
+}
+
 MenuButton::MenuButton(Pht::IEngine& engine,
                        Pht::GuiView& view,
                        const Pht::Vec3& position,
@@ -24,14 +39,9 @@ MenuButton::MenuButton(Pht::IEngine& engine,
     mView {view},
     mAudio {engine.GetAudio()} {
     
-    Pht::Material material {style.mColor, style.mColor, {1.0f, 1.0f, 1.0f}, 20.0f};
-    
     auto& sceneManager {engine.GetSceneManager()};
-    auto sceneObject {
-        sceneManager.CreateSceneObject(Pht::ObjMesh {style.mMeshFilename},
-                                       material,
-                                       view.GetSceneResources())
-    };
+    auto sceneObject {CreateSceneMainObject(sceneManager, view, style)};
+    
     sceneObject->GetTransform().SetPosition(position);
     
     mButton = std::make_unique<Pht::Button>(*sceneObject, inputSize, engine);

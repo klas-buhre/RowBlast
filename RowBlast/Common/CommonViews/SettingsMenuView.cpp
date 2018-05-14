@@ -24,7 +24,7 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine,
 
     SetSize(menuWindow.GetSize());
     
-    CreateText({-2.2f, 5.0f, UiLayer::text},
+    CreateText({-2.2f, 5.1f, UiLayer::text},
                "SETTINGS",
                guiResources.GetCaptionTextProperties(zoom));
     

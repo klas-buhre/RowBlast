@@ -15,6 +15,7 @@
 		620A981D1EE2A3B400AD6C61 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 620A981C1EE2A3B400AD6C61 /* AVFoundation.framework */; };
 		620A98291EE2B5C000AD6C61 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 620A98281EE2B5C000AD6C61 /* CoreMedia.framework */; };
 		621A4E721E50B60C00D53AFD /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 621A4E681E50B60C00D53AFD /* Icon.png */; };
+		621B571520A8A16F00772229 /* CloseButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 621B571320A8A16F00772229 /* CloseButton.cpp */; };
 		6227D4F5206CFD25008EA77D /* bomb_798.obj in Resources */ = {isa = PBXBuildFile; fileRef = 6227D4F4206CFD25008EA77D /* bomb_798.obj */; };
 		6227D500206D3051008EA77D /* bomb_798_emission.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6227D4FE206D304F008EA77D /* bomb_798_emission.jpg */; };
 		6227D501206D3051008EA77D /* bomb_798.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6227D4FF206D3050008EA77D /* bomb_798.jpg */; };
@@ -266,7 +267,6 @@
 		627D380B20A08E500068B50C /* GuiResources.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 627D380920A08E4F0068B50C /* GuiResources.cpp */; };
 		627D381B20A59B9E0068B50C /* medium_button_0385.obj in Resources */ = {isa = PBXBuildFile; fileRef = 627D381A20A59B9D0068B50C /* medium_button_0385.obj */; };
 		627D381D20A5FF5E0068B50C /* small_button_0385.obj in Resources */ = {isa = PBXBuildFile; fileRef = 627D381C20A5FF5D0068B50C /* small_button_0385.obj */; };
-		627D382120A622260068B50C /* close_button_032.obj in Resources */ = {isa = PBXBuildFile; fileRef = 627D382020A622260068B50C /* close_button_032.obj */; };
 		627D382320A731480068B50C /* big_button_048.obj in Resources */ = {isa = PBXBuildFile; fileRef = 627D382220A731470068B50C /* big_button_048.obj */; };
 		628EC29A207D24090071F368 /* level30.json in Resources */ = {isa = PBXBuildFile; fileRef = 628EC299207D24080071F368 /* level30.json */; };
 		628EC2AC2080C4880071F368 /* level31.json in Resources */ = {isa = PBXBuildFile; fileRef = 628EC2AB2080C4880071F368 /* level31.json */; };
@@ -296,6 +296,8 @@
 		620A981C1EE2A3B400AD6C61 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		620A98281EE2B5C000AD6C61 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		621A4E681E50B60C00D53AFD /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		621B571320A8A16F00772229 /* CloseButton.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CloseButton.cpp; sourceTree = "<group>"; };
+		621B571420A8A16F00772229 /* CloseButton.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CloseButton.hpp; sourceTree = "<group>"; };
 		6227D4F4206CFD25008EA77D /* bomb_798.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bomb_798.obj; sourceTree = "<group>"; };
 		6227D4FE206D304F008EA77D /* bomb_798_emission.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bomb_798_emission.jpg; sourceTree = "<group>"; };
 		6227D4FF206D3050008EA77D /* bomb_798.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bomb_798.jpg; sourceTree = "<group>"; };
@@ -851,7 +853,6 @@
 		627D380A20A08E500068B50C /* GuiResources.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = GuiResources.hpp; sourceTree = "<group>"; };
 		627D381A20A59B9D0068B50C /* medium_button_0385.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = medium_button_0385.obj; sourceTree = "<group>"; };
 		627D381C20A5FF5D0068B50C /* small_button_0385.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = small_button_0385.obj; sourceTree = "<group>"; };
-		627D382020A622260068B50C /* close_button_032.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = close_button_032.obj; sourceTree = "<group>"; };
 		627D382220A731470068B50C /* big_button_048.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = big_button_048.obj; sourceTree = "<group>"; };
 		628EC299207D24080071F368 /* level30.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level30.json; sourceTree = "<group>"; };
 		628EC2AB2080C4880071F368 /* level31.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level31.json; sourceTree = "<group>"; };
@@ -955,7 +956,6 @@
 			isa = PBXGroup;
 			children = (
 				627D382220A731470068B50C /* big_button_048.obj */,
-				627D382020A622260068B50C /* close_button_032.obj */,
 				627D381C20A5FF5D0068B50C /* small_button_0385.obj */,
 				627D381A20A59B9D0068B50C /* medium_button_0385.obj */,
 				626451DC206FA93100E304F2 /* laser_bomb_224.obj */,
@@ -1814,6 +1814,8 @@
 		62785D632087618E006F9869 /* GuiElements */ = {
 			isa = PBXGroup;
 			children = (
+				621B571320A8A16F00772229 /* CloseButton.cpp */,
+				621B571420A8A16F00772229 /* CloseButton.hpp */,
 				627D380920A08E4F0068B50C /* GuiResources.cpp */,
 				627D380A20A08E500068B50C /* GuiResources.hpp */,
 				62785D672087618E006F9869 /* GuiViewManager.cpp */,
@@ -2107,7 +2109,6 @@
 				62785B2C20875937006F9869 /* VertexColor.vert in Resources */,
 				6270DC8E1FCB23D800FB457D /* level15.json in Resources */,
 				6270DC961FCB23D800FB457D /* level22.json in Resources */,
-				627D382120A622260068B50C /* close_button_032.obj in Resources */,
 				62785B2120875937006F9869 /* ParticleTextureColor.frag in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2257,6 +2258,7 @@
 				62785DB22087618E006F9869 /* GameViewControllers.cpp in Sources */,
 				62785B4020875937006F9869 /* GuiView.cpp in Sources */,
 				62785E182087618E006F9869 /* SettingsButtonView.cpp in Sources */,
+				621B571520A8A16F00772229 /* CloseButton.cpp in Sources */,
 				62785E042087618E006F9869 /* SettingsMenuController.cpp in Sources */,
 				62785E072087618E006F9869 /* StringUtils.cpp in Sources */,
 				62785B1120875937006F9869 /* ShaderProgram.cpp in Sources */,

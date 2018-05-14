@@ -23,6 +23,7 @@ namespace RowBlast {
         const Pht::TextProperties& GetWhiteButtonTextProperties(PotentiallyZoomedScreen potentiallyZoomed) const;
         const Pht::TextProperties& GetCaptionTextProperties(PotentiallyZoomedScreen potentiallyZoomed) const;
         const Pht::TextProperties& GetSmallTextProperties(PotentiallyZoomedScreen potentiallyZoomed) const;
+        Pht::RenderableObject& GetCloseButton(PotentiallyZoomedScreen potentiallyZoomed) const;
     
         const MenuWindow& GetLargeMenuWindowPotentiallyZoomedScreen() const {
             return mLargeMenuWindowPotentiallyZoomedScreen;
@@ -38,13 +39,10 @@ namespace RowBlast {
         static const Pht::Color mYellowSelectedButtonColor;
         static const Pht::Color mGreenButtonColor;
         static const Pht::Color mGreenSelectedButtonColor;
-        static const Pht::Color mBlackButtonColor;
-        static const Pht::Color mBlackSelectedButtonColor;
 
         static const std::string mBigButtonMeshFilename;
         static const std::string mMediumButtonMeshFilename;
         static const std::string mSmallButtonMeshFilename;
-        static const std::string mCloseButtonMeshFilename;
 
     private:
         MenuWindow mMediumMenuWindow;
@@ -61,6 +59,8 @@ namespace RowBlast {
         Pht::TextProperties mWhiteButtonTextPropertiesPotentiallyZoomedScreen;
         Pht::TextProperties mCaptionTextPropertiesPotentiallyZoomedScreen;
         Pht::TextProperties mSmallTextPropertiesPotentiallyZoomedScreen;
+        std::unique_ptr<Pht::RenderableObject> mCloseButton;
+        std::unique_ptr<Pht::RenderableObject> mCloseButtonPotentiallyZoomedScreen;
     };
 }
 

@@ -35,20 +35,14 @@ GameOverDialogView::GameOverDialogView(Pht::IEngine& engine,
     Pht::Vec2 closeButtonInputSize {55.0f, 55.0f};
     
     MenuButton::Style closeButtonStyle;
-    closeButtonStyle.mMeshFilename = GuiResources::mCloseButtonMeshFilename;
-    closeButtonStyle.mColor = GuiResources::mBlackButtonColor;
-    closeButtonStyle.mSelectedColor = GuiResources::mBlackSelectedButtonColor;
     closeButtonStyle.mPressedScale = 1.05f;
-    closeButtonStyle.mHasShadow = true;
+    closeButtonStyle.mRenderableObject = &guiResources.GetCloseButton(zoom);
     
     mCloseButton = std::make_unique<MenuButton>(engine,
                                                 *this,
                                                 closeButtonPosition,
                                                 closeButtonInputSize,
                                                 closeButtonStyle);
-    mCloseButton->CreateText({-0.34f, -0.35f, UiLayer::text},
-                             "X",
-                             guiResources.GetLargeWhiteButtonTextProperties(zoom));
 
     Pht::Vec2 retryButtonInputSize {205.0f, 59.0f};
     

@@ -2,6 +2,7 @@
 
 // Game includes.
 #include "CommonResources.hpp"
+#include "CloseButton.hpp"
 
 using namespace RowBlast;
 
@@ -11,13 +12,10 @@ const Pht::Color GuiResources::mYellowButtonColor {0.68f, 0.535f, 0.0f};
 const Pht::Color GuiResources::mYellowSelectedButtonColor {0.55f, 0.45f, 0.0f};
 const Pht::Color GuiResources::mGreenButtonColor {0.1f, 0.51f, 0.1f};
 const Pht::Color GuiResources::mGreenSelectedButtonColor {0.085f, 0.43f, 0.085f};
-const Pht::Color GuiResources::mBlackButtonColor {0.255f, 0.25f, 0.25f};
-const Pht::Color GuiResources::mBlackSelectedButtonColor {0.215f, 0.21f, 0.21f};
 
 const std::string GuiResources::mBigButtonMeshFilename {"big_button_048.obj"};
 const std::string GuiResources::mMediumButtonMeshFilename {"medium_button_0385.obj"};
 const std::string GuiResources::mSmallButtonMeshFilename {"small_button_0385.obj"};
-const std::string GuiResources::mCloseButtonMeshFilename {"close_button_032.obj"};
 
 GuiResources::GuiResources(Pht::IEngine& engine, const CommonResources& commonResources) :
     mMediumMenuWindow {
@@ -111,6 +109,10 @@ GuiResources::GuiResources(Pht::IEngine& engine, const CommonResources& commonRe
         commonResources.GetHussarFontSize27(PotentiallyZoomedScreen::Yes),
         1.0f,
         {0.26f, 0.26f, 0.26f, 1.0f}
+    },
+    mCloseButton {CreateCloseButton(engine, commonResources, PotentiallyZoomedScreen::No)},
+    mCloseButtonPotentiallyZoomedScreen {
+        CreateCloseButton(engine, commonResources, PotentiallyZoomedScreen::Yes)
     } {}
 
 const MenuWindow&
@@ -170,5 +172,15 @@ GuiResources::GetSmallTextProperties(PotentiallyZoomedScreen potentiallyZoomed) 
             return mSmallTextPropertiesPotentiallyZoomedScreen;
         case PotentiallyZoomedScreen::No:
             return mSmallTextProperties;
+    }
+}
+
+Pht::RenderableObject&
+GuiResources::GetCloseButton(PotentiallyZoomedScreen potentiallyZoomed) const {
+    switch (potentiallyZoomed) {
+        case PotentiallyZoomedScreen::Yes:
+            return *mCloseButtonPotentiallyZoomedScreen;
+        case PotentiallyZoomedScreen::No:
+            return *mCloseButton;
     }
 }

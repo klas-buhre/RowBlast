@@ -15,6 +15,7 @@ namespace Pht {
     class GuiView;
     class TouchEvent;
     class SceneObject;
+    class RenderableObject;
     class TextComponent;
     class TextProperties;
 }
@@ -28,6 +29,7 @@ namespace RowBlast {
             Pht::Color mSelectedColor;
             float mPressedScale {1.0f};
             bool mHasShadow {false};
+            Pht::RenderableObject* mRenderableObject {nullptr};
         };
         
         MenuButton(Pht::IEngine& engine,
