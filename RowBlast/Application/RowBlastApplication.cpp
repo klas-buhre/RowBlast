@@ -60,8 +60,6 @@ Backlog:
     -Credit FastNoise, MIT license: https://github.com/Auburns/FastNoise/
 
 Ongoing tasks:
-    -GUI:
-        -Tune the gray.
  
  
 
@@ -109,10 +107,11 @@ Time Estimation in days:
         Done
     -New GUI/Menus.
         Cost: 6
-    -Do the marked items in the backlog.
-        Cost: 8
+        Done
     -Animations/effects when clearing a level.
         Cost: 7
+    -Do the marked items in the backlog.
+        Cost: 8
     -Moving the next level particle effect to the next level after clearing a level.
         Cost: 2
     -Tutorial.

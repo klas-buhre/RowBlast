@@ -14,16 +14,16 @@
 using namespace RowBlast;
 
 namespace {
-    const Pht::Vec4 grayColor {0.89f, 0.87f, 0.87f, 1.0f};
-    const Pht::Vec4 darkerGrayColor {0.86f, 0.84f, 0.84f, 1.0f};
-    const Pht::Vec4 footerBorderColor {0.84f, 0.83f, 0.83f, 1.0f};
+    const Pht::Vec4 grayColor {0.91f, 0.91f, 0.93f, 1.0f};
+    const Pht::Vec4 darkerGrayColor {0.88f, 0.88f, 0.90f, 1.0f};
+    const Pht::Vec4 footerBorderColor {0.86f, 0.86f, 0.87f, 1.0f};
     const Pht::Vec4 blueColor {0.45f, 0.75f, 1.0f, 1.0};
     const Pht::Vec4 lightBlueColor {0.5f, 0.8f, 1.0f, 1.0};
     const Pht::Vec4 stencilColor {1.0f, 1.0f, 1.0f, 1.0f};
     constexpr auto xBorder {0.45f};
     constexpr auto cornerRadius {0.37f};
     constexpr auto captionBarHeight {3.0f};
-    constexpr auto captionBarCircleRadius {0.17f};
+    constexpr auto captionBarCircleRadius {0.155f};
     constexpr auto captionBarCircleSpacing {0.5f};
     constexpr auto footerBarHeight {2.0f};
     constexpr auto footerBarBorderHeight {0.075f};

@@ -50,7 +50,7 @@ MenuButton::MenuButton(Pht::IEngine& engine,
     
     if (style.mHasShadow) {
         Pht::Material shaddowMaterial {Pht::Color{0.4f, 0.4f, 0.4f}};
-        shaddowMaterial.SetOpacity(0.15f);
+        shaddowMaterial.SetOpacity(0.16f);
         auto shadowSceneObject {
             sceneManager.CreateSceneObject(Pht::ObjMesh {style.mMeshFilename},
                                            shaddowMaterial,

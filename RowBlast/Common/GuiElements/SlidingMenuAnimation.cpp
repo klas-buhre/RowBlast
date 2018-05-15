@@ -65,6 +65,7 @@ void SlidingMenuAnimation::Init(UpdateFade updateFade, SlideDirection slideInDir
             mSlideInStartPosition = {0.0f, frustumSize.y / 2.0f + mView.GetSize().y / 2.0f};
             break;
         case SlideDirection::Scale:
+            mSlideInStartPosition = centerPosition;
             Pht::SceneObjectUtils::ScaleRecursively(mView.GetRoot(), 0.0f);
             break;
     }
