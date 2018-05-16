@@ -23,8 +23,7 @@ namespace {
     constexpr auto xBorder {0.45f};
     constexpr auto cornerRadius {0.37f};
     constexpr auto captionBarHeight {3.0f};
-    constexpr auto captionBarCircleRadius {0.155f};
-    constexpr auto captionBarCircleSpacing {0.5f};
+    constexpr auto squareSide {0.5f};
     constexpr auto footerBarHeight {2.0f};
     constexpr auto footerBarBorderHeight {0.075f};
 }
@@ -116,20 +115,18 @@ void MenuWindow::DrawCaptionBar(Pht::OfflineRasterizer& rasterizer) {
     Pht::Vec2 upperRight1 {mSize.x, mSize.y};
     rasterizer.DrawGradientRectangle(upperRight1, lowerLeft1, rectangleColors, Pht::DrawOver::Yes);
     
-    auto xStart {0.0f};
+    auto xStart {-squareSide / 2.0f};
     
-    for (auto y {mSize.y - captionBarHeight + captionBarCircleRadius + captionBarCircleSpacing / 5.0f};
-         y < mSize.y + captionBarCircleSpacing;
-         y += captionBarCircleSpacing) {
+    for (auto y {mSize.y - captionBarHeight + squareSide / 2.0f};
+         y < mSize.y + squareSide;
+         y += squareSide) {
         
-        xStart -= captionBarCircleSpacing / 2.0f;
+        xStart -= squareSide;
         
-        for (auto x {xStart}; x < mSize.x + captionBarCircleSpacing; x += captionBarCircleSpacing) {
-            rasterizer.DrawCircle({x, y},
-                                  captionBarCircleRadius,
-                                  captionBarCircleRadius,
-                                  lightBlueColor,
-                                  Pht::DrawOver::Yes);
+        for (auto x {xStart}; x < mSize.x + squareSide; x += squareSide * 2.0f) {
+            Pht::Vec2 lowerLeft {x - squareSide / 2.0f, y -  squareSide / 2.0f};
+            Pht::Vec2 upperRight {x + squareSide / 2.0f, y +  squareSide / 2.0f};
+            rasterizer.DrawRectangle(upperRight, lowerLeft, lightBlueColor, Pht::DrawOver::Yes);
         }
     }
 }
@@ -140,24 +137,22 @@ void MenuWindow::DrawMainArea(Pht::OfflineRasterizer& rasterizer) {
     Pht::Vec2 upperRight1 {mSize.x, mSize.y - captionBarHeight};
     rasterizer.DrawGradientRectangle(upperRight1, lowerLeft1, rectangleColors, Pht::DrawOver::Yes);
     
+    auto xStart {-squareSide - squareSide / 2.0f};
+    
+    for (auto y {mSize.y - captionBarHeight - squareSide / 2.0f};
+         y > -squareSide;
+         y -= squareSide) {
+
+        xStart -= squareSide;
+        
+        for (auto x {xStart}; x < mSize.x + squareSide; x += squareSide * 2.0f) {
+            Pht::Vec2 lowerLeft {x - squareSide / 2.0f, y -  squareSide / 2.0f};
+            Pht::Vec2 upperRight {x + squareSide / 2.0f, y +  squareSide / 2.0f};
+            rasterizer.DrawRectangle(upperRight, lowerLeft, grayColor, Pht::DrawOver::Yes);
+        }
+    }
+    
     Pht::Vec2 lowerLeft2 {0.0f, footerBarHeight};
     Pht::Vec2 upperRight2 {mSize.x, footerBarHeight + footerBarBorderHeight};
     rasterizer.DrawRectangle(upperRight2, lowerLeft2, footerBorderColor, Pht::DrawOver::Yes);
-
-    auto xStart {0.0f};
-    
-    for (auto y {mSize.y - captionBarHeight - captionBarCircleRadius - captionBarCircleSpacing / 5.0f};
-         y > -captionBarCircleSpacing;
-         y -= captionBarCircleSpacing) {
-
-        xStart -= captionBarCircleSpacing / 2.0f;
-        
-        for (auto x {xStart}; x < mSize.x + captionBarCircleSpacing; x += captionBarCircleSpacing) {
-            rasterizer.DrawCircle({x, y},
-                                  captionBarCircleRadius,
-                                  captionBarCircleRadius,
-                                  grayColor,
-                                  Pht::DrawOver::Yes);
-        }
-    }
 }

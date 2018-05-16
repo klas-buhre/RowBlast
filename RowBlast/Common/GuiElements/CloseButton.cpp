@@ -20,9 +20,9 @@ namespace {
     constexpr auto crossSize {0.55f};
     
     void DrawButton(Pht::OfflineRasterizer& rasterizer) {
-        Pht::Vec4 fillColor {0.0f, 0.385f, 1.0f, 0.6f};
+        Pht::Vec4 fillColor {0.5f, 0.5f, 0.5f, 1.0f};
         Pht::Vec4 whiteColor {1.0f, 1.0f, 1.0f, 0.8f};
-
+        
         rasterizer.DrawCircle({circleRadius, circleRadius},
                               circleRadius - padding,
                               circleRadius - padding,

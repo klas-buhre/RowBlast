@@ -28,22 +28,12 @@ Backlog:
      convenient to go back to the state before the move and not the initial state.
   -Rendering:
     -Could try reducing scroll speed in map scene using a spring.
-    -The title text could appear with the sliding text animation and with a quad behind it to give
-     contrast.
     -Could zoom in on map pin when clicking on a level in the map.
    X-Maybe the red field material should not be env mapped to get a better color.
    X-Maybe slightly less bevel in the blocks.
-    -Maybe the merging of two triangles into a cube could be done by letting the two triangles fade
+   X-Maybe the merging of two triangles into a cube could be done by letting the two triangles fade
      into the cube. Render the triangles and the cube at the same time, vary the opacity for the
      triangels from 1 to 0 and from 0 to 1 for the cube.
-    -Try adding welds to the level blocks.
-    -One or two stars in level cleared dialog could be placed more in the middle.
-    -There could be a particle effect behind the stars in the level cleared dialog. Stars could also
-     rotate in around the y axis for about a second and then only rotate around the z axis. During
-     this short animation the stars could be scaled up as well.
-    -Could have particles in the FlyingBlocksAnimation in the points from which the blocks gets
-     tossed.
-    -MenuButtons can start a shrink animation when pressed down.
   -Tutorial:
     -Make the tutorial as short as possible. Don't give all the rules of the game at once. Instead,
      let the user figure it out by playing. For example, introduce changing the visible moves in the
@@ -60,8 +50,14 @@ Backlog:
     -Credit FastNoise, MIT license: https://github.com/Auburns/FastNoise/
 
 Ongoing tasks:
- 
- 
+    -Animations/effects when clearing a level.
+        -Make the HUD and field disappear.
+        -Fireworks.
+        -Confetti.
+        -There could be a flare effect behind the stars in the level cleared scene. Stars could also
+         rotate in around the y axis for about a second and then only rotate around the z axis. During
+         this short animation the stars could be scaled up as well.
+
 
 Ideas:
     -The pause button could lead to a widget that has an undo button, a boosters button and a game
