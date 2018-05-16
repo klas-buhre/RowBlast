@@ -68,7 +68,6 @@ MenuButton::MenuButton(Pht::IEngine& engine,
         Pht::SceneObjectUtils::ScaleRecursively(*mSceneObject, style.mPressedScale);
         if (auto* renderable {mSceneObject->GetRenderable()}) {
             renderable->GetMaterial().SetAmbient(style.mSelectedColor);
-            renderable->GetMaterial().SetDiffuse(style.mSelectedColor);
         }
     }};
     
@@ -78,7 +77,6 @@ MenuButton::MenuButton(Pht::IEngine& engine,
         Pht::SceneObjectUtils::ScaleRecursively(*mSceneObject, 1.0f);
         if (auto* renderable {mSceneObject->GetRenderable()}) {
             renderable->GetMaterial().SetAmbient(style.mColor);
-            renderable->GetMaterial().SetDiffuse(style.mColor);
         }
     }};
     
