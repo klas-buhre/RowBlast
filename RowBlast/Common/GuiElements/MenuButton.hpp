@@ -44,16 +44,14 @@ namespace RowBlast {
         bool IsClicked(const Pht::TouchEvent& event) const;
         
         Pht::SceneObject& GetSceneObject() {
-            return *mSceneObjects.front();
+            return *mSceneObject;
         }
 
     private:
-        void AddSceneObject(std::unique_ptr<Pht::SceneObject> sceneObject);
-        
         Pht::GuiView& mView;
         Pht::IAudio& mAudio;
         std::unique_ptr<Pht::Button> mButton;
-        std::vector<Pht::SceneObject*> mSceneObjects;
+        Pht::SceneObject* mSceneObject;
     };
 }
 

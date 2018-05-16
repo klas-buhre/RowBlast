@@ -10,6 +10,7 @@
 #include "ISceneManager.hpp"
 #include "TextComponent.hpp"
 #include "ObjMesh.hpp"
+#include "SceneObjectUtils.hpp"
 
 // Game includes.
 #include "CommonResources.hpp"
@@ -41,56 +42,43 @@ MenuButton::MenuButton(Pht::IEngine& engine,
     
     auto& sceneManager {engine.GetSceneManager()};
     auto sceneObject {CreateMainSceneObject(sceneManager, view, style)};
-    
     sceneObject->GetTransform().SetPosition(position);
     
     mButton = std::make_unique<Pht::Button>(*sceneObject, inputSize, engine);
     
-    AddSceneObject(std::move(sceneObject));
+    mSceneObject = sceneObject.get();
+    mView.AddSceneObject(std::move(sceneObject));
     
     if (style.mHasShadow) {
         Pht::Material shaddowMaterial {Pht::Color{0.4f, 0.4f, 0.4f}};
         shaddowMaterial.SetOpacity(0.16f);
+        
         auto shadowSceneObject {
             sceneManager.CreateSceneObject(Pht::ObjMesh {style.mMeshFilename},
                                            shaddowMaterial,
                                            view.GetSceneResources())
         };
-        shadowSceneObject->GetTransform().SetPosition(position - Pht::Vec3{0.15f, 0.15f, 0.1f});
-        AddSceneObject(std::move(shadowSceneObject));
+
+        shadowSceneObject->GetTransform().SetPosition(Pht::Vec3{-0.15f, -0.15f, -0.1f});
+        mSceneObject->AddChild(*shadowSceneObject);
+        mView.GetSceneResources().AddSceneObject(std::move(shadowSceneObject));
     }
     
     auto onDownFunction {[this, style] () {
-        for (auto* sceneObject: mSceneObjects) {
-            sceneObject->GetTransform().SetScale(style.mPressedScale);
-            
-            if (auto* renderable {sceneObject->GetRenderable()}) {
-                if (renderable->GetMaterial().GetBlend() == Pht::Blend::No) {
-                    renderable->GetMaterial().SetAmbient(style.mSelectedColor);
-                }
-            }
-            
-            if (auto* textComponent {sceneObject->GetComponent<Pht::TextComponent>()}) {
-                textComponent->GetProperties().mScale = style.mPressedScale;
-            }
+        Pht::SceneObjectUtils::ScaleRecursively(*mSceneObject, style.mPressedScale);
+        if (auto* renderable {mSceneObject->GetRenderable()}) {
+            renderable->GetMaterial().SetAmbient(style.mSelectedColor);
+            renderable->GetMaterial().SetDiffuse(style.mSelectedColor);
         }
     }};
     
     mButton->SetOnDown(onDownFunction);
     
     auto onUpFunction {[this, style] () {
-        for (auto sceneObject: mSceneObjects) {
-            sceneObject->GetTransform().SetScale(1.0f);
-            
-            if (auto* renderable {sceneObject->GetRenderable()}) {
-                if (renderable->GetMaterial().GetBlend() == Pht::Blend::No) {
-                    renderable->GetMaterial().SetAmbient(style.mColor);
-                }
-            }
-
-            if (auto* textComponent {sceneObject->GetComponent<Pht::TextComponent>()}) {
-                textComponent->GetProperties().mScale = 1.0f;
-            }
+        Pht::SceneObjectUtils::ScaleRecursively(*mSceneObject, 1.0f);
+        if (auto* renderable {mSceneObject->GetRenderable()}) {
+            renderable->GetMaterial().SetAmbient(style.mColor);
+            renderable->GetMaterial().SetDiffuse(style.mColor);
         }
     }};
     
@@ -108,9 +96,8 @@ Pht::TextComponent& MenuButton::CreateText(const Pht::Vec3& position,
     auto& retVal {*textComponent};
     sceneObject->SetComponent<Pht::TextComponent>(std::move(textComponent));
     sceneObject->GetTransform().SetPosition(position);
-    mSceneObjects.front()->AddChild(*sceneObject);
+    mSceneObject->AddChild(*sceneObject);
     
-    mSceneObjects.push_back(sceneObject.get());
     mView.GetSceneResources().AddSceneObject(std::move(sceneObject));
     return retVal;
 }
@@ -123,9 +110,4 @@ bool MenuButton::IsClicked(const Pht::TouchEvent& event) const {
     }
     
     return isClicked;
-}
-
-void MenuButton::AddSceneObject(std::unique_ptr<Pht::SceneObject> sceneObject) {
-    mSceneObjects.push_back(sceneObject.get());
-    mView.AddSceneObject(std::move(sceneObject));
 }
