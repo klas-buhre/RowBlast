@@ -81,6 +81,14 @@ GameController::GameController(Pht::IEngine& engine,
         mBombsAnimation,
         mPieceResources,
         mLevelResources
+    },
+    mLevelCompletedController {
+        engine,
+        mGameViewControllers,
+        mSlidingTextAnimation,
+        mClearLastBlocksAnimation,
+        mGameLogic,
+        mUserData
     } {}
 
 void GameController::StartLevel(int levelIndex) {
@@ -102,10 +110,10 @@ void GameController::StartLevel(int levelIndex) {
     mSlidingTextAnimation.Init();
     mBombsAnimation.Init();
     mGameViewControllers.Init(mScene);
+    mLevelCompletedController.Init(*mLevel);
     
     mState = GameState::LevelIntro;
     mLevelIntroState = LevelIntroState::Overview;
-    mLevelCompletedState = LevelCompletedState::ObjectiveAchievedAnimation;
     
     mUserData.StartLevel(levelIndex);
 }
@@ -187,8 +195,7 @@ void GameController::ChangeGameState(GameLogic::Result gameLogicResult) {
             break;
         case GameLogic::Result::LevelCompleted:
             mState = GameState::LevelCompleted;
-            mGameViewControllers.SetActiveController(GameViewControllers::None);
-            StartLevelCompletedAnimation();
+            mLevelCompletedController.Start();
             break;
         default:
             break;
@@ -370,6 +377,23 @@ void GameController::StartLevelObjectiveAnimation() {
     }
 }
 
+GameController::Command GameController::UpdateInLevelCompletedState() {
+    auto command {Command::None};
+    
+    switch (mLevelCompletedController.Update()) {
+        case LevelCompletedDialogController::Result::None:
+            break;
+        case LevelCompletedDialogController::Result::NextLevel:
+            command = Command::GoToNextLevel;
+            break;
+        case LevelCompletedDialogController::Result::BackToMap:
+            command = Command::GoToMap;
+            break;
+    }
+    
+    return command;
+}
+
 GameController::Command GameController::UpdateNoMovesDialog() {
     auto command {Command::None};
     
@@ -429,72 +453,6 @@ GameController::Command GameController::UpdateGameOverDialog() {
     return command;
 }
 
-GameController::Command GameController::UpdateInLevelCompletedState() {
-    auto command {Command::None};
-    
-    switch (mLevelCompletedState) {
-        case LevelCompletedState::ObjectiveAchievedAnimation:
-            if (mSlidingTextAnimation.Update() == SlidingTextAnimation::State::Inactive) {
-                if (mLevel->GetObjective() == Level::Objective::Clear) {
-                    mLevelCompletedState = LevelCompletedState::ClearingLastBlocks;
-                    mClearLastBlocksAnimation.Start();
-                } else {
-                    GoToLevelCompletedStateLevelCompletedDialog();
-                }
-            }
-            break;
-        case LevelCompletedState::ClearingLastBlocks:
-            if (mClearLastBlocksAnimation.Update(mEngine.GetLastFrameSeconds()) ==
-                ClearLastBlocksAnimation::State::Inactive) {
-                GoToLevelCompletedStateLevelCompletedDialog();
-            }
-            break;
-        case LevelCompletedState::LevelCompletedDialog:
-            command = UpdateLevelCompletedDialog();
-            break;
-    }
-    
-    return command;
-}
-
-GameController::Command GameController::UpdateLevelCompletedDialog() {
-    auto command {Command::None};
-    auto result {mGameViewControllers.GetLevelCompletedDialogController().Update()};
-    
-    switch (result) {
-        case LevelCompletedDialogController::Result::None:
-            break;
-        case LevelCompletedDialogController::Result::NextLevel:
-            command = Command::GoToNextLevel;
-            break;
-        case LevelCompletedDialogController::Result::BackToMap:
-            command = Command::GoToMap;
-            break;
-    }
-    
-    if (result != LevelCompletedDialogController::Result::None) {
-        auto numStars {
-            ProgressManager::CalculateNumStars(mGameLogic.GetMovesUsedIncludingCurrent(),
-                                               mLevel->GetStarLimits())
-        };
-        
-        mUserData.CompleteLevel(mLevel->GetIndex(), numStars);
-    }
-    
-    return command;
-}
-
-void GameController::StartLevelCompletedAnimation() {
-    switch (mLevel->GetObjective()) {
-        case Level::Objective::Clear:
-            mSlidingTextAnimation.Start(SlidingTextAnimation::Message::BlocksCleared);
-            break;
-        case Level::Objective::Build:
-            mSlidingTextAnimation.Start(SlidingTextAnimation::Message::SlotsFilled);
-            break;
-    }
-}
-
 void GameController::GoToPlayingState() {
     mState = GameState::Playing;
     mEngine.GetInput().EnableInput();
@@ -531,24 +489,6 @@ void GameController::GoToPausedStateGameMenu(SlidingMenuAnimation::UpdateFade up
     mGameViewControllers.SetActiveController(GameViewControllers::GameMenu);
     auto isUndoMovePossible {mShouldUpdateGameLogic && mGameLogic.IsUndoMovePossible()};
     mGameViewControllers.GetGameMenuController().Init(updateFade, isUndoMovePossible);
-}
-
-void GameController::GoToLevelCompletedStateLevelCompletedDialog() {
-    mLevelCompletedState = LevelCompletedState::LevelCompletedDialog;
-    mGameViewControllers.SetActiveController(GameViewControllers::LevelCompletedDialog);
-    
-    auto& levelCompletedDialogController {
-        mGameViewControllers.GetLevelCompletedDialogController()
-    };
-    
-    levelCompletedDialogController.Init();
-    
-    auto numStars {
-        ProgressManager::CalculateNumStars(mGameLogic.GetMovesUsedIncludingCurrent(),
-                                           mLevel->GetStarLimits())
-    };
-    
-    levelCompletedDialogController.GetView().SetNumStars(numStars);
 }
 
 void GameController::GoToGameOverStateGameOverDialog() {

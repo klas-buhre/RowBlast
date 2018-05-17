@@ -26,6 +26,7 @@
 #include "SlidingTextAnimation.hpp"
 #include "BlastRadiusAnimation.hpp"
 #include "BombsAnimation.hpp"
+#include "LevelCompletedController.hpp"
 
 namespace Pht {
     class IEngine;
@@ -65,20 +66,17 @@ namespace RowBlast {
         Command UpdateSubState();
         void UpdateInLevelIntroState();
         void StartLevelObjectiveAnimation();
+        Command UpdateInLevelCompletedState();
         Command UpdateNoMovesDialog();
         Command UpdateInGameOverState();
         Command UpdateGameOverDialog();
-        Command UpdateInLevelCompletedState();
-        Command UpdateLevelCompletedDialog();
         void ChangeGameState(GameLogic::Result gameLogicResult);
-        void StartLevelCompletedAnimation();
         void GoToPlayingState();
         void GoToPausedStateNoLivesDialog();
         void GoToPausedStateRestartConfirmationDialog();
         void GoToPausedStateMapConfirmationDialog();
         void GoToPausedStateSettingsMenu();
         void GoToPausedStateGameMenu(SlidingMenuAnimation::UpdateFade updateFade);
-        void GoToLevelCompletedStateLevelCompletedDialog();
         void GoToGameOverStateGameOverDialog();
         void GoToGameOverStateNoLivesDialog();
         
@@ -104,12 +102,6 @@ namespace RowBlast {
             MapConfirmationDialog
         };
         
-        enum class LevelCompletedState {
-            ObjectiveAchievedAnimation,
-            ClearingLastBlocks,
-            LevelCompletedDialog
-        };
-        
         enum class GameOverState {
             GameOverDialog,
             NoLivesDialog
@@ -118,7 +110,6 @@ namespace RowBlast {
         GameState mState {GameState::LevelIntro};
         LevelIntroState mLevelIntroState {LevelIntroState::Overview};
         PausedState mPausedState {PausedState::GameMenu};
-        LevelCompletedState mLevelCompletedState {LevelCompletedState::ObjectiveAchievedAnimation};
         GameOverState mGameOverState {GameOverState::GameOverDialog};
         Pht::IEngine& mEngine;
         UserData& mUserData;
@@ -144,6 +135,7 @@ namespace RowBlast {
         BombsAnimation mBombsAnimation;
         FlyingBlocksAnimation mFlyingBlocksAnimation;
         GameSceneRenderer mRenderer;
+        LevelCompletedController mLevelCompletedController;
         std::unique_ptr<Level> mLevel;
         bool mShouldUpdateGameLogic {false};
     };

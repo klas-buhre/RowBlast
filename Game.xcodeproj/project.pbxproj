@@ -20,6 +20,7 @@
 		6227D4F5206CFD25008EA77D /* bomb_798.obj in Resources */ = {isa = PBXBuildFile; fileRef = 6227D4F4206CFD25008EA77D /* bomb_798.obj */; };
 		6227D500206D3051008EA77D /* bomb_798_emission.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6227D4FE206D304F008EA77D /* bomb_798_emission.jpg */; };
 		6227D501206D3051008EA77D /* bomb_798.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6227D4FF206D3050008EA77D /* bomb_798.jpg */; };
+		622DDC8820ADB65C002862FA /* LevelCompletedController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 622DDC8620ADB65C002862FA /* LevelCompletedController.cpp */; };
 		62318C3A20651F79008332CB /* particle_sprite_twinkle_blurred.png in Resources */ = {isa = PBXBuildFile; fileRef = 62318C3920651F79008332CB /* particle_sprite_twinkle_blurred.png */; };
 		62318C3E20655100008332CB /* particle_sprite_point_blurred.png in Resources */ = {isa = PBXBuildFile; fileRef = 62318C3D206550FF008332CB /* particle_sprite_point_blurred.png */; };
 		62318C422066B84A008332CB /* particle_sprite_halo.png in Resources */ = {isa = PBXBuildFile; fileRef = 62318C412066B849008332CB /* particle_sprite_halo.png */; };
@@ -304,6 +305,8 @@
 		6227D4F4206CFD25008EA77D /* bomb_798.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bomb_798.obj; sourceTree = "<group>"; };
 		6227D4FE206D304F008EA77D /* bomb_798_emission.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bomb_798_emission.jpg; sourceTree = "<group>"; };
 		6227D4FF206D3050008EA77D /* bomb_798.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bomb_798.jpg; sourceTree = "<group>"; };
+		622DDC8620ADB65C002862FA /* LevelCompletedController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LevelCompletedController.cpp; sourceTree = "<group>"; };
+		622DDC8720ADB65C002862FA /* LevelCompletedController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = LevelCompletedController.hpp; sourceTree = "<group>"; };
 		62318C3920651F79008332CB /* particle_sprite_twinkle_blurred.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = particle_sprite_twinkle_blurred.png; sourceTree = "<group>"; };
 		62318C3D206550FF008332CB /* particle_sprite_point_blurred.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = particle_sprite_point_blurred.png; sourceTree = "<group>"; };
 		62318C412066B849008332CB /* particle_sprite_halo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = particle_sprite_halo.png; sourceTree = "<group>"; };
@@ -946,6 +949,15 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		621B571A20AC9F7200772229 /* LevelCompletedSubScene */ = {
+			isa = PBXGroup;
+			children = (
+				622DDC8620ADB65C002862FA /* LevelCompletedController.cpp */,
+				622DDC8720ADB65C002862FA /* LevelCompletedController.hpp */,
+			);
+			path = LevelCompletedSubScene;
+			sourceTree = "<group>";
+		};
 		6270DC521FCB212B00FB457D /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
@@ -1578,6 +1590,7 @@
 				62785CDD2087618D006F9869 /* GameScene */,
 				62785CBD2087618D006F9869 /* GameViews */,
 				62785D392087618E006F9869 /* Level */,
+				621B571A20AC9F7200772229 /* LevelCompletedSubScene */,
 			);
 			path = Game;
 			sourceTree = "<group>";
@@ -2158,6 +2171,7 @@
 				62785B3420875937006F9869 /* Transform.cpp in Sources */,
 				62785DB82087618E006F9869 /* MapConfirmationDialogView.cpp in Sources */,
 				62785B3620875937006F9869 /* SoundIOS.mm in Sources */,
+				622DDC8820ADB65C002862FA /* LevelCompletedController.cpp in Sources */,
 				62785DF02087618E006F9869 /* EffectManager.cpp in Sources */,
 				62785B4720875937006F9869 /* SceneObject.cpp in Sources */,
 				62785B0E20875937006F9869 /* Camera.cpp in Sources */,
