@@ -166,9 +166,9 @@ void SlidingTextAnimation::CreateGradientRectangles(Pht::SceneObject& containerS
     
     auto& frustumSize {mEngine.GetRenderer().GetHudFrustumSize()};
     
-    auto height {4.0f};
-    auto stripeHeight {0.11f};
-    auto stripeOffset {0.25f};
+    auto height {4.1f};
+    auto stripeHeight {0.09f};
+    auto stripeOffset {stripeHeight / 2.0f};
     Pht::Vec2 size {frustumSize.x, height};
     auto leftQuadWidth {frustumSize.x / 3.0f};
     auto rightQuadWidth {frustumSize.x / 3.0f};
@@ -188,7 +188,13 @@ void SlidingTextAnimation::CreateGradientRectangles(Pht::SceneObject& containerS
                             rightQuadWidth,
                             colors,
                             colors);
-    
+
+    GradientRectangleColors stripeColors {
+        .mLeft = {0.93f, 0.5f, 0.0f, 0.8f},
+        .mMid = {1.0f, 0.95f, 0.9f, 0.95f},
+        .mRight = {0.93f, 0.5f, 0.0f, 0.8f}
+    };
+
     Pht::Vec2 stripeSize {frustumSize.x, stripeHeight};
     CreateGradientRectangle(scene,
                             *mGradientRectanglesSceneObject,
@@ -197,8 +203,8 @@ void SlidingTextAnimation::CreateGradientRectangles(Pht::SceneObject& containerS
                             0.0f,
                             leftQuadWidth,
                             rightQuadWidth,
-                            colors,
-                            colors);
+                            stripeColors,
+                            stripeColors);
     CreateGradientRectangle(scene,
                             *mGradientRectanglesSceneObject,
                             {0.0f, -height / 2.0f - stripeOffset, UiLayer::textRectangle},
@@ -206,8 +212,8 @@ void SlidingTextAnimation::CreateGradientRectangles(Pht::SceneObject& containerS
                             0.0f,
                             leftQuadWidth,
                             rightQuadWidth,
-                            colors,
-                            colors);
+                            stripeColors,
+                            stripeColors);
 }
 
 void SlidingTextAnimation::Start(Message message) {
