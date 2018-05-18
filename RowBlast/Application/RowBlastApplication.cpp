@@ -51,7 +51,6 @@ Backlog:
 
 Ongoing tasks:
     -Animations/effects when clearing a level.
-        -Make the HUD and field disappear.
         -Fireworks.
         -Confetti.
         -There could be a flare effect behind the stars in the level cleared scene. Stars could also

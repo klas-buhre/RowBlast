@@ -8,7 +8,7 @@ using namespace RowBlast;
 
 namespace {
     constexpr auto beforeClearTime {0.5f};
-    constexpr auto afterClearTime {1.25f};
+    constexpr auto afterClearTime {0.75f};
 }
 
 ClearLastBlocksAnimation::ClearLastBlocksAnimation(Field& field,

@@ -242,11 +242,11 @@ void GameScene::CreateFieldQuad() {
     fieldMaterial.SetOpacity(0.85f);
 
     auto vertices {CreateFieldVertices()};
-    auto& fieldQuad {mScene->CreateSceneObject(Pht::QuadMesh {vertices}, fieldMaterial)};
+    mFieldQuad = &mScene->CreateSceneObject(Pht::QuadMesh {vertices}, fieldMaterial);
     Pht::Vec3 quadPosition {mFieldPosition.x, mFieldPosition.y, mFieldPosition.z + fieldQuadZ};
-    fieldQuad.GetTransform().SetPosition(quadPosition);
-    fieldQuad.SetLayer(static_cast<int>(Layer::FieldQuad));
-    mScene->GetRoot().AddChild(fieldQuad);
+    mFieldQuad->GetTransform().SetPosition(quadPosition);
+    mFieldQuad->SetLayer(static_cast<int>(Layer::FieldQuad));
+    mScene->GetRoot().AddChild(*mFieldQuad);
 }
 
 void GameScene::CreateFieldContainer() {
@@ -411,6 +411,16 @@ void GameScene::SetScissorBox(const Pht::ScissorBox& scissorBox, int layer) {
     assert(renderPass);
     
     renderPass->SetScissorBox(scissorBox);
+}
+
+Pht::ScissorBox& GameScene::GetFieldScissorBox() {
+    auto* fieldQuadRenderPass {mScene->GetRenderPass(static_cast<int>(Layer::FieldQuad))};
+    assert(fieldQuadRenderPass);
+    
+    auto& scissorBox {fieldQuadRenderPass->GetScissorBox()};
+    assert(scissorBox.HasValue());
+    
+    return scissorBox.GetValue();
 }
 
 void GameScene::UpdateLightAnimation() {

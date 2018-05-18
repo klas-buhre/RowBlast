@@ -113,6 +113,7 @@ void GameHud::CreateProgressObject(Pht::Scene& scene,
         UiLayer::root
     };
     
+    mProgressContainer = &progressContainer;
     progressContainer.GetTransform().SetPosition(position);
     parentObject.AddChild(progressContainer);
     
@@ -181,6 +182,7 @@ void GameHud::CreateMovesObject(Pht::Scene& scene,
         UiLayer::root
     };
 
+    mMovesContainer = &movesContainer;
     movesContainer.GetTransform().SetPosition(position);
     parentObject.AddChild(movesContainer);
     
@@ -345,7 +347,7 @@ Pht::SceneObject& GameHud::CreatePiecesRectangle(const Pht::Vec3& position,
     
     GradientRectangleColors upperColors {
         .mLeft = {0.9f, 0.9f, 1.0f, 0.0f},
-        .mMid = {isBright ? 0.95f : 0.85f, isBright ? 0.6f : 0.4f, 0.95f, 0.93f}, // .mMid = {0.85f, 0.7f, 0.95f, 0.93f},
+        .mMid = {isBright ? 0.95f : 0.85f, isBright ? 0.6f : 0.4f, 0.95f, 0.93f},
         .mRight = {0.9f, 0.9f, 1.0f, 0.0f}
     };
 

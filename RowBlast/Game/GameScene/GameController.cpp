@@ -84,6 +84,7 @@ GameController::GameController(Pht::IEngine& engine,
     },
     mLevelCompletedController {
         engine,
+        mScene,
         mGameViewControllers,
         mSlidingTextAnimation,
         mClearLastBlocksAnimation,

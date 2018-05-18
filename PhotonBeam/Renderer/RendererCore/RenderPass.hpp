@@ -68,7 +68,11 @@ namespace Pht {
         const Optional<ScissorBox>& GetScissorBox() const {
             return mScissorBox;
         }
-        
+
+        Optional<ScissorBox>& GetScissorBox() {
+            return mScissorBox;
+        }
+
         int GetLayerMask() const {
             return mLayerMask;
         }

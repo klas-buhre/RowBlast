@@ -50,6 +50,7 @@ namespace RowBlast {
         const Pht::Material& GetGrayMaterial() const;
         const Pht::Material& GetLightGrayMaterial() const;
         const Pht::Material& GetYellowMaterial() const;
+        Pht::ScissorBox& GetFieldScissorBox();
         
         const CommonResources& GetCommonResources() const {
             return mCommonResources;
@@ -113,6 +114,11 @@ namespace RowBlast {
         SceneObjectPool& GetGhostPieces() {
             assert(mGhostPieces);
             return *mGhostPieces;
+        }
+
+        Pht::SceneObject& GetFieldQuadSceneObject() {
+            assert(mFieldQuad);
+            return *mFieldQuad;
         }
         
         const Pht::Vec3& GetFieldPosition() const {
@@ -192,6 +198,7 @@ namespace RowBlast {
         std::unique_ptr<SceneObjectPool> mFieldBlocks;
         std::unique_ptr<SceneObjectPool> mPieceBlocks;
         std::unique_ptr<SceneObjectPool> mGhostPieces;
+        Pht::SceneObject* mFieldQuad {nullptr};
         Pht::SceneObject* mFieldContainer {nullptr};
         Pht::SceneObject* mPieceDropEffectsContainer {nullptr};
         Pht::SceneObject* mFieldBlocksContainer {nullptr};

@@ -1,13 +1,16 @@
 #ifndef LevelCompletedController_hpp
 #define LevelCompletedController_hpp
 
+// Game includes.
 #include "LevelCompletedDialogController.hpp"
+#include "SlidingFieldAnimation.hpp"
 
 namespace Pht {
     class IEngine;
 }
 
 namespace RowBlast {
+    class GameScene;
     class GameViewControllers;
     class SlidingTextAnimation;
     class ClearLastBlocksAnimation;
@@ -18,6 +21,7 @@ namespace RowBlast {
     class LevelCompletedController {
     public:
         LevelCompletedController(Pht::IEngine& engine,
+                                 GameScene& gameScene,
                                  GameViewControllers& gameViewControllers,
                                  SlidingTextAnimation& slidingTextAnimation,
                                  ClearLastBlocksAnimation& clearLastBlocksAnimation,
@@ -36,6 +40,7 @@ namespace RowBlast {
         enum class State {
             ObjectiveAchievedAnimation,
             ClearingLastBlocks,
+            SlidingOutFieldAnimation,
             LevelCompletedDialog
         };
         
@@ -47,6 +52,7 @@ namespace RowBlast {
         GameLogic& mGameLogic;
         UserData& mUserData;
         const Level* mLevel {nullptr};
+        SlidingFieldAnimation mSlidingFieldAnimation;
     };
 }
 

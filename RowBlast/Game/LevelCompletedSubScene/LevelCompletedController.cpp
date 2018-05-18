@@ -14,6 +14,7 @@
 using namespace RowBlast;
 
 LevelCompletedController::LevelCompletedController(Pht::IEngine& engine,
+                                                   GameScene& gameScene,
                                                    GameViewControllers& gameViewControllers,
                                                    SlidingTextAnimation& slidingTextAnimation,
                                                    ClearLastBlocksAnimation& clearLastBlocksAnimation,
@@ -24,7 +25,8 @@ LevelCompletedController::LevelCompletedController(Pht::IEngine& engine,
     mSlidingTextAnimation {slidingTextAnimation},
     mClearLastBlocksAnimation {clearLastBlocksAnimation},
     mGameLogic {gameLogic},
-    mUserData {userData} {}
+    mUserData {userData},
+    mSlidingFieldAnimation {engine, gameScene} {}
 
 void LevelCompletedController::Init(const Level& level) {
     mLevel = &level;
@@ -65,6 +67,12 @@ LevelCompletedDialogController::Result LevelCompletedController::Update() {
         case State::ClearingLastBlocks:
             if (mClearLastBlocksAnimation.Update(mEngine.GetLastFrameSeconds()) ==
                 ClearLastBlocksAnimation::State::Inactive) {
+                mState = State::SlidingOutFieldAnimation;
+                mSlidingFieldAnimation.Start();
+            }
+            break;
+        case State::SlidingOutFieldAnimation:
+            if (mSlidingFieldAnimation.Update() == SlidingFieldAnimation::State::Inactive) {
                 GoToLevelCompletedDialogState();
             }
             break;
