@@ -51,6 +51,8 @@ Backlog:
 
 Ongoing tasks:
     -Animations/effects when clearing a level.
+        -Add a fade effect between the background and the effects and dialog and disable fade for
+         the dialog.
         -Fireworks.
         -Confetti.
         -There could be a flare effect behind the stars in the level cleared scene. Stars could also

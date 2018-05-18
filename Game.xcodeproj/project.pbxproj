@@ -278,6 +278,7 @@
 		62A8AAF71FE2DEA1000EB01C /* cloud_B_envmap.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62A8AAF61FE2DEA0000EB01C /* cloud_B_envmap.jpg */; };
 		62A8AAF91FE2E442000EB01C /* cloud_C_envmap.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62A8AAF81FE2E441000EB01C /* cloud_C_envmap.jpg */; };
 		62BE274620AEDD990014C6DD /* SlidingFieldAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62BE274420AEDD990014C6DD /* SlidingFieldAnimation.cpp */; };
+		62BE274920AF179D0014C6DD /* FireworksParticleEffect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62BE274720AF179D0014C6DD /* FireworksParticleEffect.cpp */; };
 		62E222241FE9704900AE098B /* cloud_A_512.png in Resources */ = {isa = PBXBuildFile; fileRef = 62E222231FE9704800AE098B /* cloud_A_512.png */; };
 		62E222261FE971C300AE098B /* cloud_B_512.png in Resources */ = {isa = PBXBuildFile; fileRef = 62E222251FE971C300AE098B /* cloud_B_512.png */; };
 		62E222281FE9729A00AE098B /* cloud_C_512.png in Resources */ = {isa = PBXBuildFile; fileRef = 62E222271FE9729900AE098B /* cloud_C_512.png */; };
@@ -872,6 +873,8 @@
 		62A8AAF81FE2E441000EB01C /* cloud_C_envmap.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = cloud_C_envmap.jpg; sourceTree = "<group>"; };
 		62BE274420AEDD990014C6DD /* SlidingFieldAnimation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SlidingFieldAnimation.cpp; sourceTree = "<group>"; };
 		62BE274520AEDD990014C6DD /* SlidingFieldAnimation.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SlidingFieldAnimation.hpp; sourceTree = "<group>"; };
+		62BE274720AF179D0014C6DD /* FireworksParticleEffect.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FireworksParticleEffect.cpp; sourceTree = "<group>"; };
+		62BE274820AF179D0014C6DD /* FireworksParticleEffect.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = FireworksParticleEffect.hpp; sourceTree = "<group>"; };
 		62E222231FE9704800AE098B /* cloud_A_512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cloud_A_512.png; sourceTree = "<group>"; };
 		62E222251FE971C300AE098B /* cloud_B_512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cloud_B_512.png; sourceTree = "<group>"; };
 		62E222271FE9729900AE098B /* cloud_C_512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cloud_C_512.png; sourceTree = "<group>"; };
@@ -955,6 +958,8 @@
 		621B571A20AC9F7200772229 /* LevelCompletedSubScene */ = {
 			isa = PBXGroup;
 			children = (
+				62BE274720AF179D0014C6DD /* FireworksParticleEffect.cpp */,
+				62BE274820AF179D0014C6DD /* FireworksParticleEffect.hpp */,
 				622DDC8620ADB65C002862FA /* LevelCompletedController.cpp */,
 				622DDC8720ADB65C002862FA /* LevelCompletedController.hpp */,
 				62BE274420AEDD990014C6DD /* SlidingFieldAnimation.cpp */,
@@ -2184,6 +2189,7 @@
 				62785E0A2087618E006F9869 /* Clouds.cpp in Sources */,
 				62785DCE2087618E006F9869 /* GameLogic.cpp in Sources */,
 				62BE274620AEDD990014C6DD /* SlidingFieldAnimation.cpp in Sources */,
+				62BE274920AF179D0014C6DD /* FireworksParticleEffect.cpp in Sources */,
 				62785B4820875937006F9869 /* SceneManager.cpp in Sources */,
 				62785DD92087618E006F9869 /* SmallTrianglePiece.cpp in Sources */,
 				62785DBC2087618E006F9869 /* NoMovesDialogController.cpp in Sources */,

@@ -128,6 +128,7 @@ void GameScene::Init(const Level& level,
     CreateBackground(level);
     CreateBackgroundLayerLight();
     CreateFloatingCubes();
+    CreateLevelCompletedEffectsContainer();
     CreateFieldQuad();
     CreateFieldContainer();
     CreateBlueprintSlots(level, levelResources);
@@ -225,6 +226,12 @@ void GameScene::CreateFloatingCubes() {
                                                        mCommonResources,
                                                        7.7f,
                                                        8.0f);
+}
+
+void GameScene::CreateLevelCompletedEffectsContainer() {
+    mLevelCompletedEffectsContainer = &mScene->CreateSceneObject();
+    mLevelCompletedEffectsContainer->SetLayer(static_cast<int>(Layer::Background));
+    mScene->GetRoot().AddChild(*mLevelCompletedEffectsContainer);
 }
 
 void GameScene::InitFieldDimensions(const Level& level) {

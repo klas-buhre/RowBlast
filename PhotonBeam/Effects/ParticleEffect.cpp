@@ -21,6 +21,12 @@ namespace {
         }
         
         particle.mVelocity += particleSettings.mAcceleration * dt;
+        
+        if (particleSettings.mDragCoefficient.HasValue()) {
+            auto dragCoeff {particleSettings.mDragCoefficient.GetValue()};
+            particle.mVelocity -= particle.mVelocity * dragCoeff * dt;
+        }
+
         particle.mPosition += particle.mVelocity * dt;
         particle.mZAngle += particle.mZAngularVelocity * dt;
         

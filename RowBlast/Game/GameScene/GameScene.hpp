@@ -121,6 +121,11 @@ namespace RowBlast {
             return *mFieldQuad;
         }
         
+        Pht::SceneObject& GetLevelCompletedEffectsContainer() {
+            assert(mLevelCompletedEffectsContainer);
+            return *mLevelCompletedEffectsContainer;
+        }
+        
         const Pht::Vec3& GetFieldPosition() const {
             return mFieldPosition;
         }
@@ -168,6 +173,7 @@ namespace RowBlast {
         void CreateBackground(const Level& level);
         void CreateBackgroundLayerLight();
         void CreateFloatingCubes();
+        void CreateLevelCompletedEffectsContainer();
         void InitFieldDimensions(const Level& level);
         void CreateFieldQuad();
         void CreateFieldContainer();
@@ -206,6 +212,7 @@ namespace RowBlast {
         Pht::SceneObject* mFlyingBlocksContainer {nullptr};
         Pht::SceneObject* mHudContainer {nullptr};
         Pht::SceneObject* mUiViewsContainer {nullptr};
+        Pht::SceneObject* mLevelCompletedEffectsContainer {nullptr};
         const Pht::Vec3 mFieldPosition;
         const float mCellSize {1.25f};
         const float mBlastRadiusAnimationZ {mCellSize / 2.0f + 0.1f};

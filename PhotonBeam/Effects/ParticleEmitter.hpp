@@ -21,6 +21,7 @@ namespace Pht {
         Vec3 mVelocity {0.0f, 0.0f, 0.0f};
         Vec3 mVelocityRandomPart {0.0f, 0.0f, 0.0f};
         Vec3 mAcceleration {0.0f, 0.0f, 0.0f};
+        Optional<float> mDragCoefficient;
         Vec4 mColor {1.0f, 1.0f, 1.0f, 1.0f};
         Vec4 mColorRandomPart {1.0f, 1.0f, 1.0f, 1.0f};
         std::string mTextureFilename;

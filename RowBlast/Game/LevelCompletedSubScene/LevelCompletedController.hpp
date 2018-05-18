@@ -4,6 +4,7 @@
 // Game includes.
 #include "LevelCompletedDialogController.hpp"
 #include "SlidingFieldAnimation.hpp"
+#include "FireworksParticleEffect.hpp"
 
 namespace Pht {
     class IEngine;
@@ -41,11 +42,13 @@ namespace RowBlast {
             ObjectiveAchievedAnimation,
             ClearingLastBlocks,
             SlidingOutFieldAnimation,
+            Fireworks,
             LevelCompletedDialog
         };
         
         State mState {State::ObjectiveAchievedAnimation};
         Pht::IEngine& mEngine;
+        GameScene& mGameScene;
         GameViewControllers& mGameViewControllers;
         SlidingTextAnimation& mSlidingTextAnimation;
         ClearLastBlocksAnimation& mClearLastBlocksAnimation;
@@ -53,6 +56,7 @@ namespace RowBlast {
         UserData& mUserData;
         const Level* mLevel {nullptr};
         SlidingFieldAnimation mSlidingFieldAnimation;
+        FireworksParticleEffect mFireworksParticleEffect;
     };
 }
 

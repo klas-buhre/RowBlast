@@ -2,6 +2,7 @@
 
 // Engine includes.
 #include "IEngine.hpp"
+#include "IRenderer.hpp"
 
 // Game includes.
 #include "GameViewControllers.hpp"
@@ -10,6 +11,7 @@
 #include "GameLogic.hpp"
 #include "UserData.hpp"
 #include "Level.hpp"
+#include "GameScene.hpp"
 
 using namespace RowBlast;
 
@@ -21,20 +23,35 @@ LevelCompletedController::LevelCompletedController(Pht::IEngine& engine,
                                                    GameLogic& gameLogic,
                                                    UserData& userData) :
     mEngine {engine},
+    mGameScene {gameScene},
     mGameViewControllers {gameViewControllers},
     mSlidingTextAnimation {slidingTextAnimation},
     mClearLastBlocksAnimation {clearLastBlocksAnimation},
     mGameLogic {gameLogic},
     mUserData {userData},
-    mSlidingFieldAnimation {engine, gameScene} {}
+    mSlidingFieldAnimation {engine, gameScene},
+    mFireworksParticleEffect {engine} {}
 
 void LevelCompletedController::Init(const Level& level) {
     mLevel = &level;
+    
+    auto& orthographicFrustumSize {mEngine.GetRenderer().GetOrthographicFrustumSize()};
+    Pht::Vec3 effectsVolume {orthographicFrustumSize.x, orthographicFrustumSize.y, 15.0f};
+    
+    auto& container {mGameScene.GetLevelCompletedEffectsContainer()};
+    container.SetIsStatic(true);
+    container.SetIsVisible(false);
+    
+    mFireworksParticleEffect.Init(container, effectsVolume);
 }
 
 void LevelCompletedController::Start() {
     mState = State::ObjectiveAchievedAnimation;
-    
+
+    auto& container {mGameScene.GetLevelCompletedEffectsContainer()};
+    container.SetIsStatic(false);
+    container.SetIsVisible(true);
+
     mGameViewControllers.SetActiveController(GameViewControllers::None);
     StartLevelCompletedTextAnimation();
 }
@@ -73,6 +90,12 @@ LevelCompletedDialogController::Result LevelCompletedController::Update() {
             break;
         case State::SlidingOutFieldAnimation:
             if (mSlidingFieldAnimation.Update() == SlidingFieldAnimation::State::Inactive) {
+                mState = State::Fireworks;
+                mFireworksParticleEffect.Start();
+            }
+            break;
+        case State::Fireworks:
+            if (mFireworksParticleEffect.Update() == FireworksParticleEffect::State::Inactive) {
                 GoToLevelCompletedDialogState();
             }
             break;
