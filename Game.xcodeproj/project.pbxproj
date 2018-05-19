@@ -279,6 +279,8 @@
 		62A8AAF91FE2E442000EB01C /* cloud_C_envmap.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62A8AAF81FE2E441000EB01C /* cloud_C_envmap.jpg */; };
 		62BE274620AEDD990014C6DD /* SlidingFieldAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62BE274420AEDD990014C6DD /* SlidingFieldAnimation.cpp */; };
 		62BE274920AF179D0014C6DD /* FireworksParticleEffect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62BE274720AF179D0014C6DD /* FireworksParticleEffect.cpp */; };
+		62BE274C20B063570014C6DD /* ConfettiParticleEffect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62BE274A20B063570014C6DD /* ConfettiParticleEffect.cpp */; };
+		62BE274E20B069310014C6DD /* confetti.png in Resources */ = {isa = PBXBuildFile; fileRef = 62BE274D20B069310014C6DD /* confetti.png */; };
 		62E222241FE9704900AE098B /* cloud_A_512.png in Resources */ = {isa = PBXBuildFile; fileRef = 62E222231FE9704800AE098B /* cloud_A_512.png */; };
 		62E222261FE971C300AE098B /* cloud_B_512.png in Resources */ = {isa = PBXBuildFile; fileRef = 62E222251FE971C300AE098B /* cloud_B_512.png */; };
 		62E222281FE9729A00AE098B /* cloud_C_512.png in Resources */ = {isa = PBXBuildFile; fileRef = 62E222271FE9729900AE098B /* cloud_C_512.png */; };
@@ -875,6 +877,9 @@
 		62BE274520AEDD990014C6DD /* SlidingFieldAnimation.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SlidingFieldAnimation.hpp; sourceTree = "<group>"; };
 		62BE274720AF179D0014C6DD /* FireworksParticleEffect.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FireworksParticleEffect.cpp; sourceTree = "<group>"; };
 		62BE274820AF179D0014C6DD /* FireworksParticleEffect.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = FireworksParticleEffect.hpp; sourceTree = "<group>"; };
+		62BE274A20B063570014C6DD /* ConfettiParticleEffect.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ConfettiParticleEffect.cpp; sourceTree = "<group>"; };
+		62BE274B20B063570014C6DD /* ConfettiParticleEffect.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ConfettiParticleEffect.hpp; sourceTree = "<group>"; };
+		62BE274D20B069310014C6DD /* confetti.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = confetti.png; sourceTree = "<group>"; };
 		62E222231FE9704800AE098B /* cloud_A_512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cloud_A_512.png; sourceTree = "<group>"; };
 		62E222251FE971C300AE098B /* cloud_B_512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cloud_B_512.png; sourceTree = "<group>"; };
 		62E222271FE9729900AE098B /* cloud_C_512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cloud_C_512.png; sourceTree = "<group>"; };
@@ -958,6 +963,8 @@
 		621B571A20AC9F7200772229 /* LevelCompletedSubScene */ = {
 			isa = PBXGroup;
 			children = (
+				62BE274A20B063570014C6DD /* ConfettiParticleEffect.cpp */,
+				62BE274B20B063570014C6DD /* ConfettiParticleEffect.hpp */,
 				62BE274720AF179D0014C6DD /* FireworksParticleEffect.cpp */,
 				62BE274820AF179D0014C6DD /* FireworksParticleEffect.hpp */,
 				622DDC8620ADB65C002862FA /* LevelCompletedController.cpp */,
@@ -1049,6 +1056,7 @@
 		6270DCA01FCB248E00FB457D /* Textures */ = {
 			isa = PBXGroup;
 			children = (
+				62BE274D20B069310014C6DD /* confetti.png */,
 				627D37FF209F10D70068B50C /* sky1.jpg */,
 				627D3802209F22EF0068B50C /* sky2.jpg */,
 				627D3804209F22F00068B50C /* sky3.jpg */,
@@ -2078,6 +2086,7 @@
 				62E335E01FD2F4EE0069B6CF /* level26.json in Resources */,
 				6270DC931FCB23D800FB457D /* level2.json in Resources */,
 				6270DC9A1FCB23D800FB457D /* level5.json in Resources */,
+				62BE274E20B069310014C6DD /* confetti.png in Resources */,
 				6270DC6D1FCB231B00FB457D /* ethnocentric_rg_it.ttf in Resources */,
 				62785B2020875937006F9869 /* ParticleNoAlphaTexture.frag in Resources */,
 				62785B4E20875937006F9869 /* build_freetype.sh in Resources */,
@@ -2194,6 +2203,7 @@
 				62785DD92087618E006F9869 /* SmallTrianglePiece.cpp in Sources */,
 				62785DBC2087618E006F9869 /* NoMovesDialogController.cpp in Sources */,
 				62785B4520875937006F9869 /* LightComponent.cpp in Sources */,
+				62BE274C20B063570014C6DD /* ConfettiParticleEffect.cpp in Sources */,
 				62785DFA2087618E006F9869 /* BlueprintSlotsFilledAnimation.cpp in Sources */,
 				62785DDF2087618E006F9869 /* BigTrianglePiece.cpp in Sources */,
 				62785B4120875937006F9869 /* Scene.cpp in Sources */,

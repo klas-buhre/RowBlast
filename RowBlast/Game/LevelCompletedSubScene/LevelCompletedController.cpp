@@ -45,7 +45,8 @@ LevelCompletedController::LevelCompletedController(Pht::IEngine& engine,
         -effectsVolumeDepth / 2.0f
     },
     mSlidingFieldAnimation {engine, gameScene},
-    mFireworksParticleEffect {engine} {
+    mFireworksParticleEffect {engine},
+    mConfettiParticleEffect {engine} {
     
     mFadeEffect.GetSceneObject().SetLayer(static_cast<int>(GameScene::Layer::LevelCompletedFadeEffect));
 }
@@ -64,6 +65,7 @@ void LevelCompletedController::Init(const Level& level) {
     container.SetIsVisible(false);
     
     mFireworksParticleEffect.Init(container, effectsVolume);
+    mConfettiParticleEffect.Init(container, effectsVolume);
     
     mFadeEffect.Reset();
     mGameScene.GetScene().GetRoot().AddChild(mFadeEffect.GetSceneObject());
@@ -100,36 +102,16 @@ LevelCompletedDialogController::Result LevelCompletedController::Update() {
     
     switch (mState) {
         case State::ObjectiveAchievedAnimation:
-            if (mSlidingTextAnimation.Update() == SlidingTextAnimation::State::Inactive) {
-                if (mLevel->GetObjective() == Level::Objective::Clear) {
-                    mState = State::ClearingLastBlocks;
-                    mClearLastBlocksAnimation.Start();
-                } else {
-                    GoToLevelCompletedDialogState();
-                }
-            }
+            UpdateInObjectiveAchievedAnimationState();
             break;
         case State::ClearingLastBlocks:
-            if (mClearLastBlocksAnimation.Update(mEngine.GetLastFrameSeconds()) ==
-                ClearLastBlocksAnimation::State::Inactive) {
-                mState = State::SlidingOutFieldAnimation;
-                mSlidingFieldAnimation.Start();
-            }
+            UpdateInClearingLastBlocksState();
             break;
         case State::SlidingOutFieldAnimation:
-            if (mSlidingFieldAnimation.Update() == SlidingFieldAnimation::State::Inactive) {
-                mState = State::Fireworks;
-                mFireworksParticleEffect.Start();
-                mFadeEffect.Start();
-            }
+            UpdateInSlidingOutFieldAnimationState();
             break;
-        case State::Fireworks:
-            if (mFadeEffect.GetState() != Pht::FadeEffect::State::Transition) {
-                mFadeEffect.Update(mEngine.GetLastFrameSeconds());
-            }
-            if (mFireworksParticleEffect.Update() == FireworksParticleEffect::State::Inactive) {
-                GoToLevelCompletedDialogState();
-            }
+        case State::FireworksAndConfetti:
+            UpdateInFireworksAndConfettiState();
             break;
         case State::LevelCompletedDialog:
             result = UpdateLevelCompletedDialog();
@@ -137,6 +119,51 @@ LevelCompletedDialogController::Result LevelCompletedController::Update() {
     }
     
     return result;
+}
+
+void LevelCompletedController::UpdateInObjectiveAchievedAnimationState() {
+    if (mSlidingTextAnimation.Update() == SlidingTextAnimation::State::Inactive) {
+        if (mLevel->GetObjective() == Level::Objective::Clear) {
+            mState = State::ClearingLastBlocks;
+            mClearLastBlocksAnimation.Start();
+        } else {
+            mState = State::SlidingOutFieldAnimation;
+            mSlidingFieldAnimation.Start();
+        }
+    }
+}
+
+void LevelCompletedController::UpdateInClearingLastBlocksState() {
+    if (mClearLastBlocksAnimation.Update(mEngine.GetLastFrameSeconds()) ==
+        ClearLastBlocksAnimation::State::Inactive) {
+
+        mState = State::SlidingOutFieldAnimation;
+        mSlidingFieldAnimation.Start();
+    }
+}
+
+void LevelCompletedController::UpdateInSlidingOutFieldAnimationState() {
+    if (mSlidingFieldAnimation.Update() == SlidingFieldAnimation::State::Inactive) {
+        mState = State::FireworksAndConfetti;
+        mFireworksParticleEffect.Start();
+        mConfettiParticleEffect.Start();
+        mFadeEffect.Start();
+    }
+}
+
+void LevelCompletedController::UpdateInFireworksAndConfettiState() {
+    if (mFadeEffect.GetState() != Pht::FadeEffect::State::Transition) {
+        mFadeEffect.Update(mEngine.GetLastFrameSeconds());
+    }
+
+    auto fireworkState {mFireworksParticleEffect.Update()};
+    auto confettiState {mConfettiParticleEffect.Update()};
+
+    if (fireworkState == FireworksParticleEffect::State::Inactive &&
+        confettiState == ConfettiParticleEffect::State::Inactive) {
+
+        GoToLevelCompletedDialogState();
+    }
 }
 
 void LevelCompletedController::GoToLevelCompletedDialogState() {

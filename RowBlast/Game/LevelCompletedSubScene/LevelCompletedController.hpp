@@ -8,6 +8,7 @@
 #include "LevelCompletedDialogController.hpp"
 #include "SlidingFieldAnimation.hpp"
 #include "FireworksParticleEffect.hpp"
+#include "ConfettiParticleEffect.hpp"
 
 namespace Pht {
     class IEngine;
@@ -38,6 +39,10 @@ namespace RowBlast {
         
     private:
         void StartLevelCompletedTextAnimation();
+        void UpdateInObjectiveAchievedAnimationState();
+        void UpdateInClearingLastBlocksState();
+        void UpdateInSlidingOutFieldAnimationState();
+        void UpdateInFireworksAndConfettiState();
         void GoToLevelCompletedDialogState();
         LevelCompletedDialogController::Result UpdateLevelCompletedDialog();
         
@@ -45,7 +50,7 @@ namespace RowBlast {
             ObjectiveAchievedAnimation,
             ClearingLastBlocks,
             SlidingOutFieldAnimation,
-            Fireworks,
+            FireworksAndConfetti,
             LevelCompletedDialog
         };
         
@@ -61,6 +66,7 @@ namespace RowBlast {
         Pht::FadeEffect mFadeEffect;
         SlidingFieldAnimation mSlidingFieldAnimation;
         FireworksParticleEffect mFireworksParticleEffect;
+        ConfettiParticleEffect mConfettiParticleEffect;
     };
 }
 

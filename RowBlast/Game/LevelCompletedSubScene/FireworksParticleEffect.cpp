@@ -14,12 +14,13 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto numFireworks {10};
+    constexpr auto numFireworks {13};
     constexpr auto fireworksDuration {6.0f};
+    constexpr auto fireworksWaitDuration {1.0f};
     constexpr auto fireworkTimeToLive {1.5f};
     constexpr auto fireworkTimeToLiveRandomPart {1.0f};
     constexpr auto velocity {25.0f};
-    constexpr auto velocityRandomPart {10.0f};
+    constexpr auto velocityRandomPart {12.0f};
     
     const std::array<Pht::Vec4, 3> colors {
         Pht::Vec4{1.0f, 0.6f, 0.6f, 1.0f},
@@ -28,7 +29,7 @@ namespace {
     };
     
     Pht::Vec3 ParticleVelocityFunction() {
-        auto theta {Pht::NormalizedRand() * 360.0f};
+        auto theta {Pht::ToRadians(Pht::NormalizedRand() * 360.0f)};
         auto magnitude {velocity + (Pht::NormalizedRand() - 0.5f) * velocityRandomPart};
         
         return {
@@ -53,7 +54,7 @@ void FireworksParticleEffect::Init(Pht::SceneObject& parentObject, const Pht::Ve
     for (auto& firework: mFireworks) {
         Pht::Vec3 position {
             (Pht::NormalizedRand() - 0.5f) * effectsVolume.x,
-            (Pht::NormalizedRand() - 0.5f) * effectsVolume.y,
+            (Pht::NormalizedRand() - 0.5f) * effectsVolume.y + effectsVolume.y / 5.0f,
             (Pht::NormalizedRand() - 0.5f) * effectsVolume.z
         };
         
@@ -74,18 +75,20 @@ void FireworksParticleEffect::Start() {
 }
 
 FireworksParticleEffect::State FireworksParticleEffect::Update() {
-    auto dt {mEngine.GetLastFrameSeconds()};
-    
     switch (mState) {
-        case State::Ongoing:
-            for (auto& firework: mFireworks) {
-                firework->Update(dt);
-            }
+        case State::Ongoing: {
+            auto dt {mEngine.GetLastFrameSeconds()};
             mElapsedTime += dt;
-            if (mElapsedTime > fireworksDuration) {
+            if (mElapsedTime > fireworksWaitDuration) {
+                for (auto& firework: mFireworks) {
+                    firework->Update(dt);
+                }
+            }
+            if (mElapsedTime > fireworksDuration + fireworksWaitDuration) {
                 mState = State::Inactive;
             }
             break;
+        }
         case State::Inactive:
             break;
     }
@@ -96,7 +99,7 @@ FireworksParticleEffect::State FireworksParticleEffect::Update() {
 FireworksParticleEffect::Firework::Firework(Pht::IEngine& engine) {
     Pht::ParticleSettings particleSettings {
         .mVelocityFunction = ParticleVelocityFunction,
-        .mAcceleration = Pht::Vec3{0.0f, -20.0f, 0.0f},
+        .mAcceleration = Pht::Vec3{0.0f, -18.0f, 0.0f},
         .mDragCoefficient = 3.0f,
         .mColor = Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f},
         .mColorRandomPart = Pht::Vec4{0.0f, 0.0f, 0.0f, 0.0f},
@@ -114,7 +117,7 @@ FireworksParticleEffect::Firework::Firework(Pht::IEngine& engine) {
         .mPosition = Pht::Vec3{0.0f, 0.0f, 0.0f},
         .mSize = Pht::Vec3{0.0f, 0.0f, 0.0f},
         .mTimeToLive = 0.0f,
-        .mBurst = 60
+        .mBurst = 50
     };
     
     auto& particleSystem {engine.GetParticleSystem()};
