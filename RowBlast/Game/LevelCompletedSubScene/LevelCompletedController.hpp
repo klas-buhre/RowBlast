@@ -1,6 +1,9 @@
 #ifndef LevelCompletedController_hpp
 #define LevelCompletedController_hpp
 
+// Engine includes.
+#include "FadeEffect.hpp"
+
 // Game includes.
 #include "LevelCompletedDialogController.hpp"
 #include "SlidingFieldAnimation.hpp"
@@ -55,6 +58,7 @@ namespace RowBlast {
         GameLogic& mGameLogic;
         UserData& mUserData;
         const Level* mLevel {nullptr};
+        Pht::FadeEffect mFadeEffect;
         SlidingFieldAnimation mSlidingFieldAnimation;
         FireworksParticleEffect mFireworksParticleEffect;
     };

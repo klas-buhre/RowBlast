@@ -16,7 +16,7 @@ LevelCompletedDialogController::LevelCompletedDialogController(Pht::IEngine& eng
     mSlidingMenuAnimation {engine, mView} {}
 
 void LevelCompletedDialogController::Init() {
-    mSlidingMenuAnimation.Init(SlidingMenuAnimation::UpdateFade::Yes);
+    mSlidingMenuAnimation.Init(SlidingMenuAnimation::UpdateFade::No);
     mView.Init();
 }
 

@@ -51,10 +51,8 @@ Backlog:
 
 Ongoing tasks:
     -Animations/effects when clearing a level.
-        -Add a fade effect between the background and the effects and dialog and disable fade for
-         the dialog.
-        -Fireworks.
         -Confetti.
+        -Allow the user to skip ahead by tapping.
         -There could be a flare effect behind the stars in the level cleared scene. Stars could also
          rotate in around the y axis for about a second and then only rotate around the z axis. During
          this short animation the stars could be scaled up as well.

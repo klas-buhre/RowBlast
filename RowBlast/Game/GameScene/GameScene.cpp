@@ -15,7 +15,6 @@
 #include "ScrollController.hpp"
 #include "CommonResources.hpp"
 #include "LevelResources.hpp"
-#include "UiLayer.hpp"
 
 using namespace RowBlast;
 
@@ -27,19 +26,6 @@ namespace {
     const Pht::Vec3 lightDirectionA {0.57f, 1.0f, 0.6f};
     const Pht::Vec3 lightDirectionB {1.0f, 1.0f, 0.74f};
     
-    enum class Layer {
-        Background,
-        FieldQuad,
-        FieldBlueprintSlots,
-        FieldPieceDropEffects,
-        FieldBlocksAndFallingPiece,
-        Effects,
-        FlyingBlocks,
-        Hud,
-        UiViews,
-        SceneSwitchFadeEffect = GlobalLayer::sceneSwitchFadeEffect
-    };
-
 #if 0
     const std::vector<BlockPathVolume> floatingBlockPaths {
         BlockPathVolume {
@@ -177,6 +163,14 @@ void GameScene::CreateRenderPasses() {
     hudRenderPass.SetHudMode(true);
     mScene->AddRenderPass(hudRenderPass);
     
+    Pht::RenderPass levelCompletedFadeEffectRenderPass {
+        static_cast<int>(Layer::LevelCompletedFadeEffect)
+    };
+    levelCompletedFadeEffectRenderPass.SetHudMode(true);
+    mScene->AddRenderPass(levelCompletedFadeEffectRenderPass);
+    
+    mScene->AddRenderPass(Pht::RenderPass {static_cast<int>(Layer::LevelCompletedEffects)});
+    
     Pht::RenderPass uiViewsRenderPass {static_cast<int>(Layer::UiViews)};
     uiViewsRenderPass.SetHudMode(true);
     uiViewsRenderPass.SetIsDepthTestAllowed(false);
@@ -230,7 +224,7 @@ void GameScene::CreateFloatingCubes() {
 
 void GameScene::CreateLevelCompletedEffectsContainer() {
     mLevelCompletedEffectsContainer = &mScene->CreateSceneObject();
-    mLevelCompletedEffectsContainer->SetLayer(static_cast<int>(Layer::Background));
+    mLevelCompletedEffectsContainer->SetLayer(static_cast<int>(Layer::LevelCompletedEffects));
     mScene->GetRoot().AddChild(*mLevelCompletedEffectsContainer);
 }
 

@@ -12,6 +12,7 @@
 #include "ScrollController.hpp"
 #include "SceneObjectPool.hpp"
 #include "GameHud.hpp"
+#include "UiLayer.hpp"
 
 namespace Pht {
     class IEngine;
@@ -32,6 +33,21 @@ namespace RowBlast {
     
     class GameScene {
     public:
+        enum class Layer {
+            Background,
+            FieldQuad,
+            FieldBlueprintSlots,
+            FieldPieceDropEffects,
+            FieldBlocksAndFallingPiece,
+            Effects,
+            FlyingBlocks,
+            Hud,
+            LevelCompletedFadeEffect,
+            LevelCompletedEffects,
+            UiViews,
+            SceneSwitchFadeEffect = GlobalLayer::sceneSwitchFadeEffect
+        };
+    
         GameScene(Pht::IEngine& engine,
                   const ScrollController& scrollController,
                   const CommonResources& commonResources,
