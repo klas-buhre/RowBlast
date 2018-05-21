@@ -31,7 +31,8 @@ LevelCompletedController::LevelCompletedController(Pht::IEngine& engine,
                                                    SlidingTextAnimation& slidingTextAnimation,
                                                    ClearLastBlocksAnimation& clearLastBlocksAnimation,
                                                    GameLogic& gameLogic,
-                                                   UserData& userData) :
+                                                   UserData& userData,
+                                                   const CommonResources& commonResources) :
     mEngine {engine},
     mGameScene {gameScene},
     mGameViewControllers {gameViewControllers},
@@ -48,7 +49,8 @@ LevelCompletedController::LevelCompletedController(Pht::IEngine& engine,
     },
     mSlidingFieldAnimation {engine, gameScene},
     mFireworksParticleEffect {engine},
-    mConfettiParticleEffect {engine} {
+    mConfettiParticleEffect {engine},
+    mStarsAnimation {engine, gameScene, commonResources} {
     
     mFadeEffect.GetSceneObject().SetLayer(static_cast<int>(GameScene::Layer::LevelCompletedFadeEffect));
 }
@@ -68,6 +70,7 @@ void LevelCompletedController::Init(const Level& level) {
     
     mFireworksParticleEffect.Init(container, effectsVolume);
     mConfettiParticleEffect.Init(container, effectsVolume);
+    mStarsAnimation.Init();
     
     mFadeEffect.Reset();
     mGameScene.GetScene().GetRoot().AddChild(mFadeEffect.GetSceneObject());
@@ -115,6 +118,9 @@ LevelCompletedDialogController::Result LevelCompletedController::Update() {
             break;
         case State::FireworksAndConfetti:
             UpdateFireworksAndConfetti();
+            break;
+        case State::StarsAppearingAnimation:
+            UpdateInStarsAppearingAnimationState();
             break;
         case State::LevelCompletedDialog:
             result = UpdateLevelCompletedDialog();
@@ -175,8 +181,20 @@ void LevelCompletedController::UpdateFireworksAndConfetti() {
         if (effectsAreDone || mTimeSpentInFireworksAndConfettiState > fireworksAndConfettiDuration ||
             mEngine.GetInput().ConsumeWholeTouch()) {
 
-            GoToLevelCompletedDialogState();
+            auto numStars {
+                ProgressManager::CalculateNumStars(mGameLogic.GetMovesUsedIncludingCurrent(),
+                                                   mLevel->GetStarLimits())
+            };
+
+            mStarsAnimation.Start(numStars);
+            mState = State::StarsAppearingAnimation;
         }
+    }
+}
+
+void LevelCompletedController::UpdateInStarsAppearingAnimationState() {
+    if (mStarsAnimation.Update() == StarsAnimation::State::Rotating) {
+        GoToLevelCompletedDialogState();
     }
 }
 
@@ -200,6 +218,7 @@ void LevelCompletedController::GoToLevelCompletedDialogState() {
 
 LevelCompletedDialogController::Result LevelCompletedController::UpdateLevelCompletedDialog() {
     UpdateFireworksAndConfetti();
+    mStarsAnimation.Update();
 
     auto result {mGameViewControllers.GetLevelCompletedDialogController().Update()};
     

@@ -12,7 +12,7 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto velocity {30.0f};
+    constexpr auto velocity {35.0f};
     constexpr auto velocityRandomPart {50.0f};
     
     Pht::Vec3 LeftParticleVelocityFunction() {
@@ -39,10 +39,11 @@ namespace {
 
     std::unique_ptr<Pht::SceneObject> CreateConfettiEffect(Pht::IEngine& engine,
                                                            const Pht::Vec4& color,
-                                                           std::function<Pht::Vec3()> velocityFunction) {
+                                                           std::function<Pht::Vec3()> velocityFunction,
+                                                           const Pht::Vec3& gravity) {
         Pht::ParticleSettings particleSettings {
             .mVelocityFunction = velocityFunction,
-            .mAcceleration = Pht::Vec3{0.0f, -16.0f, 0.0f},
+            .mAcceleration = gravity,
             .mDragCoefficient = 2.2f,
             .mColor = color,
             .mColorRandomPart = Pht::Vec4{0.4f, 0.4f, 0.4f, 0.0f},
@@ -82,8 +83,14 @@ namespace {
 ConfettiParticleEffect::ConfettiParticleEffect(Pht::IEngine& engine) :
     mEngine {engine} {
 
-    mLeftEffect = CreateConfettiEffect(engine, {1.0f, 0.3f, 0.7f, 1.0f}, LeftParticleVelocityFunction);
-    mRightEffect = CreateConfettiEffect(engine, {0.5f, 0.5f, 1.0f, 1.0f}, RightParticleVelocityFunction);
+    mLeftEffect = CreateConfettiEffect(engine,
+                                       {1.0f, 0.3f, 0.7f, 1.0f},
+                                       LeftParticleVelocityFunction,
+                                       {-2.75f, -16.0f, 0.0f});
+    mRightEffect = CreateConfettiEffect(engine,
+                                        {0.5f, 0.5f, 1.0f, 1.0f},
+                                        RightParticleVelocityFunction,
+                                        {2.75f, -16.0f, 0.0f});
 }
 
 void ConfettiParticleEffect::Init(Pht::SceneObject& parentObject, const Pht::Vec3& effectsVolume) {

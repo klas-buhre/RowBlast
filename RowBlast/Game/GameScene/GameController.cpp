@@ -89,7 +89,8 @@ GameController::GameController(Pht::IEngine& engine,
         mSlidingTextAnimation,
         mClearLastBlocksAnimation,
         mGameLogic,
-        mUserData
+        mUserData,
+        commonResources
     } {}
 
 void GameController::StartLevel(int levelIndex) {

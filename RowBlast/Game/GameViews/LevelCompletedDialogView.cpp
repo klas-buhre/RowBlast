@@ -80,7 +80,7 @@ LevelCompletedDialogView::LevelCompletedDialogView(Pht::IEngine& engine,
     mNextButton->CreateText({-1.1f, -0.31f, UiLayer::buttonText},
                             "Next",
                             guiResources.GetLargeWhiteButtonTextProperties(zoom));
-
+/*
     for (auto i {0}; i < 3; ++i) {
         auto star {std::make_unique<Pht::SceneObject>(mStarRenderable.get())};
         auto& transform {star->GetTransform()};
@@ -96,6 +96,7 @@ LevelCompletedDialogView::LevelCompletedDialogView(Pht::IEngine& engine,
         mStarShadows.push_back(shadow.get());
         AddSceneObject(std::move(shadow));
     }
+*/
 }
 
 void LevelCompletedDialogView::LoadStar(const CommonResources& commonResources) {
@@ -114,6 +115,7 @@ void LevelCompletedDialogView::Init() {
 }
 
 void LevelCompletedDialogView::Update() {
+/*
     auto speed {12.0f};
     
     for (auto* star: mStars) {
@@ -127,11 +129,12 @@ void LevelCompletedDialogView::Update() {
     }
 
     mStarAngle -= mEngine.GetLastFrameSeconds() * speed;
+*/
 }
 
 void LevelCompletedDialogView::SetNumStars(int numStars) {
     assert(numStars <= 3);
-    
+/*
     for (auto* star: mStars) {
         star->SetIsVisible(false);
     }
@@ -144,4 +147,5 @@ void LevelCompletedDialogView::SetNumStars(int numStars) {
         mStars[i]->SetIsVisible(true);
         mStarShadows[i]->SetIsVisible(true);
     }
+*/
 }

@@ -9,6 +9,7 @@
 #include "SlidingFieldAnimation.hpp"
 #include "FireworksParticleEffect.hpp"
 #include "ConfettiParticleEffect.hpp"
+#include "StarsAnimation.hpp"
 
 namespace Pht {
     class IEngine;
@@ -22,6 +23,7 @@ namespace RowBlast {
     class GameLogic;
     class UserData;
     class Level;
+    class CommonResources;
 
     class LevelCompletedController {
     public:
@@ -31,7 +33,8 @@ namespace RowBlast {
                                  SlidingTextAnimation& slidingTextAnimation,
                                  ClearLastBlocksAnimation& clearLastBlocksAnimation,
                                  GameLogic& gameLogic,
-                                 UserData& userData);
+                                 UserData& userData,
+                                 const CommonResources& commonResources);
 
         void Init(const Level& level);
         void Start();
@@ -43,6 +46,7 @@ namespace RowBlast {
         void UpdateInClearingLastBlocksState();
         void UpdateInSlidingOutFieldAnimationState();
         void UpdateFireworksAndConfetti();
+        void UpdateInStarsAppearingAnimationState();
         void GoToLevelCompletedDialogState();
         LevelCompletedDialogController::Result UpdateLevelCompletedDialog();
         
@@ -51,6 +55,7 @@ namespace RowBlast {
             ClearingLastBlocks,
             SlidingOutFieldAnimation,
             FireworksAndConfetti,
+            StarsAppearingAnimation,
             LevelCompletedDialog
         };
         
@@ -67,6 +72,7 @@ namespace RowBlast {
         SlidingFieldAnimation mSlidingFieldAnimation;
         FireworksParticleEffect mFireworksParticleEffect;
         ConfettiParticleEffect mConfettiParticleEffect;
+        StarsAnimation mStarsAnimation;
         float mTimeSpentInFireworksAndConfettiState {0.0f};
     };
 }

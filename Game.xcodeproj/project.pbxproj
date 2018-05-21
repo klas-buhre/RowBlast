@@ -281,6 +281,7 @@
 		62BE274920AF179D0014C6DD /* FireworksParticleEffect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62BE274720AF179D0014C6DD /* FireworksParticleEffect.cpp */; };
 		62BE274C20B063570014C6DD /* ConfettiParticleEffect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62BE274A20B063570014C6DD /* ConfettiParticleEffect.cpp */; };
 		62BE274E20B069310014C6DD /* confetti.png in Resources */ = {isa = PBXBuildFile; fileRef = 62BE274D20B069310014C6DD /* confetti.png */; };
+		62BE275120B30FD80014C6DD /* StarsAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62BE274F20B30FD80014C6DD /* StarsAnimation.cpp */; };
 		62E222241FE9704900AE098B /* cloud_A_512.png in Resources */ = {isa = PBXBuildFile; fileRef = 62E222231FE9704800AE098B /* cloud_A_512.png */; };
 		62E222261FE971C300AE098B /* cloud_B_512.png in Resources */ = {isa = PBXBuildFile; fileRef = 62E222251FE971C300AE098B /* cloud_B_512.png */; };
 		62E222281FE9729A00AE098B /* cloud_C_512.png in Resources */ = {isa = PBXBuildFile; fileRef = 62E222271FE9729900AE098B /* cloud_C_512.png */; };
@@ -880,6 +881,8 @@
 		62BE274A20B063570014C6DD /* ConfettiParticleEffect.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ConfettiParticleEffect.cpp; sourceTree = "<group>"; };
 		62BE274B20B063570014C6DD /* ConfettiParticleEffect.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ConfettiParticleEffect.hpp; sourceTree = "<group>"; };
 		62BE274D20B069310014C6DD /* confetti.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = confetti.png; sourceTree = "<group>"; };
+		62BE274F20B30FD80014C6DD /* StarsAnimation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = StarsAnimation.cpp; sourceTree = "<group>"; };
+		62BE275020B30FD80014C6DD /* StarsAnimation.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = StarsAnimation.hpp; sourceTree = "<group>"; };
 		62E222231FE9704800AE098B /* cloud_A_512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cloud_A_512.png; sourceTree = "<group>"; };
 		62E222251FE971C300AE098B /* cloud_B_512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cloud_B_512.png; sourceTree = "<group>"; };
 		62E222271FE9729900AE098B /* cloud_C_512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cloud_C_512.png; sourceTree = "<group>"; };
@@ -971,6 +974,8 @@
 				622DDC8720ADB65C002862FA /* LevelCompletedController.hpp */,
 				62BE274420AEDD990014C6DD /* SlidingFieldAnimation.cpp */,
 				62BE274520AEDD990014C6DD /* SlidingFieldAnimation.hpp */,
+				62BE274F20B30FD80014C6DD /* StarsAnimation.cpp */,
+				62BE275020B30FD80014C6DD /* StarsAnimation.hpp */,
 			);
 			path = LevelCompletedSubScene;
 			sourceTree = "<group>";
@@ -2237,6 +2242,7 @@
 				62785DE42087618E006F9869 /* LPiece.cpp in Sources */,
 				62785E1B2087618E006F9869 /* RowBlastApplication.cpp in Sources */,
 				62785DD32087618E006F9869 /* BPiece.cpp in Sources */,
+				62BE275120B30FD80014C6DD /* StarsAnimation.cpp in Sources */,
 				62785E0B2087618E006F9869 /* GradientRectangle.cpp in Sources */,
 				62785B0920875937006F9869 /* ObjMesh.cpp in Sources */,
 				62785B4320875937006F9869 /* SceneResources.cpp in Sources */,
