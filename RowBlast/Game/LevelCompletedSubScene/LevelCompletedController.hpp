@@ -42,7 +42,7 @@ namespace RowBlast {
         void UpdateInObjectiveAchievedAnimationState();
         void UpdateInClearingLastBlocksState();
         void UpdateInSlidingOutFieldAnimationState();
-        void UpdateInFireworksAndConfettiState();
+        void UpdateFireworksAndConfetti();
         void GoToLevelCompletedDialogState();
         LevelCompletedDialogController::Result UpdateLevelCompletedDialog();
         
@@ -67,6 +67,7 @@ namespace RowBlast {
         SlidingFieldAnimation mSlidingFieldAnimation;
         FireworksParticleEffect mFireworksParticleEffect;
         ConfettiParticleEffect mConfettiParticleEffect;
+        float mTimeSpentInFireworksAndConfettiState {0.0f};
     };
 }
 

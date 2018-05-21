@@ -49,7 +49,6 @@ Backlog:
 
 Ongoing tasks:
     -Animations/effects when clearing a level.
-        -Allow the user to skip ahead by tapping.
         -There could be a flare effect behind the stars in the level cleared scene. Stars could also
          rotate in around the y axis for about a second and then only rotate around the z axis. During
          this short animation the stars could be scaled up as well.

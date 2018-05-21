@@ -3,6 +3,7 @@
 // Engine includes.
 #include "IEngine.hpp"
 #include "IRenderer.hpp"
+#include "IInput.hpp"
 #include "Scene.hpp"
 #include "CameraComponent.hpp"
 
@@ -21,6 +22,7 @@ namespace {
     constexpr auto fade {0.6f};
     constexpr auto fadeTime {0.3f};
     constexpr auto effectsVolumeDepth {20.0f};
+    constexpr auto fireworksAndConfettiDuration {5.0f};
 }
 
 LevelCompletedController::LevelCompletedController(Pht::IEngine& engine,
@@ -73,6 +75,7 @@ void LevelCompletedController::Init(const Level& level) {
 
 void LevelCompletedController::Start() {
     mState = State::ObjectiveAchievedAnimation;
+    mTimeSpentInFireworksAndConfettiState = 0.0f;
 
     auto& container {mGameScene.GetLevelCompletedEffectsContainer()};
     auto& cameraPosition {mGameScene.GetCamera().GetSceneObject().GetTransform().GetPosition()};
@@ -111,7 +114,7 @@ LevelCompletedDialogController::Result LevelCompletedController::Update() {
             UpdateInSlidingOutFieldAnimationState();
             break;
         case State::FireworksAndConfetti:
-            UpdateInFireworksAndConfettiState();
+            UpdateFireworksAndConfetti();
             break;
         case State::LevelCompletedDialog:
             result = UpdateLevelCompletedDialog();
@@ -151,18 +154,29 @@ void LevelCompletedController::UpdateInSlidingOutFieldAnimationState() {
     }
 }
 
-void LevelCompletedController::UpdateInFireworksAndConfettiState() {
+void LevelCompletedController::UpdateFireworksAndConfetti() {
+    auto dt {mEngine.GetLastFrameSeconds()};
+    
     if (mFadeEffect.GetState() != Pht::FadeEffect::State::Transition) {
-        mFadeEffect.Update(mEngine.GetLastFrameSeconds());
+        mFadeEffect.Update(dt);
     }
 
     auto fireworkState {mFireworksParticleEffect.Update()};
     auto confettiState {mConfettiParticleEffect.Update()};
 
-    if (fireworkState == FireworksParticleEffect::State::Inactive &&
-        confettiState == ConfettiParticleEffect::State::Inactive) {
+    if (mState == State::FireworksAndConfetti) {
+        auto effectsAreDone {
+            fireworkState == FireworksParticleEffect::State::Inactive &&
+            confettiState == ConfettiParticleEffect::State::Inactive
+        };
+        
+        mTimeSpentInFireworksAndConfettiState += dt;
+        
+        if (effectsAreDone || mTimeSpentInFireworksAndConfettiState > fireworksAndConfettiDuration ||
+            mEngine.GetInput().ConsumeWholeTouch()) {
 
-        GoToLevelCompletedDialogState();
+            GoToLevelCompletedDialogState();
+        }
     }
 }
 
@@ -185,6 +199,8 @@ void LevelCompletedController::GoToLevelCompletedDialogState() {
 }
 
 LevelCompletedDialogController::Result LevelCompletedController::UpdateLevelCompletedDialog() {
+    UpdateFireworksAndConfetti();
+
     auto result {mGameViewControllers.GetLevelCompletedDialogController().Update()};
     
     if (result != LevelCompletedDialogController::Result::None) {
