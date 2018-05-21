@@ -13,9 +13,7 @@ Backlog:
      rows could be cleared so the the piece fits.
    X-Fix bug where the switchable pieces can change if double clocking on switch when the frame rate
      is really low like in the iPad simulator. 
-    -Speed up gameplay by updating GameLogic already when falling blocks are close to enter the
-     bouncing state? If cascading, wait until all bocks have entered bouncing state before claring
-     new rows.
+   X-Speed up gameplay slightly?
     -Some levels could have som pink striped level blocks with welds that are affected by graivty.
     -Maybe blocks in the visible part of the field could disappear on some levels. For each move a
      random block disappears.
@@ -51,7 +49,6 @@ Backlog:
 
 Ongoing tasks:
     -Animations/effects when clearing a level.
-        -Fix bug where blocks in the field are not sliding out.
         -Allow the user to skip ahead by tapping.
         -There could be a flare effect behind the stars in the level cleared scene. Stars could also
          rotate in around the y axis for about a second and then only rotate around the z axis. During
@@ -109,9 +106,9 @@ Time Estimation in days:
         Cost: 8
     -Moving the next level particle effect to the next level after clearing a level.
         Cost: 2
-    -Tutorial.
-        Cost: 10
     -Levels/Chapters.
+        Cost: 10
+    -Tutorial.
         Cost: 10
     -Store settings in file.
         Cost: 0.5

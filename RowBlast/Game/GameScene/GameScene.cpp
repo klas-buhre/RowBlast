@@ -401,6 +401,10 @@ void GameScene::UpdateCameraPositionAndScissorBox() {
     Pht::Vec2 scissorBoxSize {mFieldWidth + fieldPadding, 19.0f * mCellSize};
     Pht::ScissorBox scissorBox {scissorBoxLowerLeft, scissorBoxSize};
     
+    SetScissorBox(scissorBox);
+}
+
+void GameScene::SetScissorBox(const Pht::ScissorBox& scissorBox) {
     SetScissorBox(scissorBox, static_cast<int>(Layer::FieldQuad));
     SetScissorBox(scissorBox, static_cast<int>(Layer::FieldBlueprintSlots));
     SetScissorBox(scissorBox, static_cast<int>(Layer::FieldPieceDropEffects));
@@ -414,7 +418,7 @@ void GameScene::SetScissorBox(const Pht::ScissorBox& scissorBox, int layer) {
     renderPass->SetScissorBox(scissorBox);
 }
 
-Pht::ScissorBox& GameScene::GetFieldScissorBox() {
+const Pht::ScissorBox& GameScene::GetFieldScissorBox() const {
     auto* fieldQuadRenderPass {mScene->GetRenderPass(static_cast<int>(Layer::FieldQuad))};
     assert(fieldQuadRenderPass);
     

@@ -60,13 +60,14 @@ namespace RowBlast {
                   const GameLogic& gameLogic);
         void Update();
         void UpdateLightAnimation();
+        void SetScissorBox(const Pht::ScissorBox& scissorBox);
         const Pht::Material& GetRedMaterial() const;
         const Pht::Material& GetBlueMaterial() const;
         const Pht::Material& GetGreenMaterial() const;
         const Pht::Material& GetGrayMaterial() const;
         const Pht::Material& GetLightGrayMaterial() const;
         const Pht::Material& GetYellowMaterial() const;
-        Pht::ScissorBox& GetFieldScissorBox();
+        const Pht::ScissorBox& GetFieldScissorBox() const;
         
         const CommonResources& GetCommonResources() const {
             return mCommonResources;
@@ -85,6 +86,11 @@ namespace RowBlast {
         GameHud& GetHud() {
             assert(mHud);
             return *mHud;
+        }
+
+        Pht::SceneObject& GetFieldContainer() {
+            assert(mFieldContainer);
+            return *mFieldContainer;
         }
 
         Pht::SceneObject& GetPieceDropEffectsContainer() {

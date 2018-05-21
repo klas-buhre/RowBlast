@@ -42,8 +42,8 @@ namespace {
                                                            std::function<Pht::Vec3()> velocityFunction) {
         Pht::ParticleSettings particleSettings {
             .mVelocityFunction = velocityFunction,
-            .mAcceleration = Pht::Vec3{0.0f, -15.0f, 0.0f},
-            .mDragCoefficient = 2.0f,
+            .mAcceleration = Pht::Vec3{0.0f, -16.0f, 0.0f},
+            .mDragCoefficient = 2.2f,
             .mColor = color,
             .mColorRandomPart = Pht::Vec4{0.4f, 0.4f, 0.4f, 0.0f},
             .mTextureFilename = "confetti.png",
@@ -62,7 +62,7 @@ namespace {
             .mPosition = Pht::Vec3{0.0f, 0.0f, 0.0f},
             .mSize = Pht::Vec3{0.0f, 0.0f, 0.0f},
             .mTimeToLive = 0.0f,
-            .mBurst = 130
+            .mBurst = 200
         };
         
         auto& particleSystem {engine.GetParticleSystem()};

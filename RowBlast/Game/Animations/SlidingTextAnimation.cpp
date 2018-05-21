@@ -58,7 +58,7 @@ SlidingTextAnimation::SlidingTextAnimation(Pht::IEngine& engine,
 
     mTexts.reserve(4);
     CreateText(font, 2.5f, {{-3.6f, 0.4f}, "CLEAR ALL"}, {{-4.7f, -1.5f}, "GRAY BLOCKS"});
-    CreateText(font, 2.5f, {{-1.0f, 0.4f}, "ALL"}, {{-3.0f, -1.5f}, "CLEARED!"});
+    CreateText(font, 1.6f, {{-1.1f, 0.4f}, "ALL"}, {{-3.0f, -1.5f}, "CLEARED!"});
     CreateText(font, 2.5f, {{-2.7f, 0.4f}, "FILL ALL"}, {{-4.3f, -1.5f}, "GRAY SLOTS"});
     CreateText(font, 2.5f, {{-3.5f, 0.4f}, "ALL SLOTS"}, {{-2.1f, -1.5f}, "FILLED!"});
     

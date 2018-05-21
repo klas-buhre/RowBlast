@@ -34,6 +34,9 @@ void SlidingFieldAnimation::Start() {
         mFieldInitialPosition.z
     };
     
+    auto& fieldContainerPosition {mScene.GetFieldContainer().GetTransform().GetPosition()};
+    mFieldContainerRelativePosition = fieldContainerPosition - mFieldInitialPosition;
+    
     auto& scissorBoxPosition {mScene.GetFieldScissorBox().mLowerLeft};
     mScissorBoxRelativePosition = Pht::Vec2 {
         scissorBoxPosition.x - mFieldInitialPosition.x,
@@ -63,15 +66,23 @@ SlidingFieldAnimation::State SlidingFieldAnimation::Update() {
 }
 
 void SlidingFieldAnimation::UpdateField() {
-    auto& transform {mScene.GetFieldQuadSceneObject().GetTransform()};
-    auto position {transform.GetPosition()};
+    auto& fieldQuadTransform {mScene.GetFieldQuadSceneObject().GetTransform()};
+    auto fieldQuadPosition {fieldQuadTransform.GetPosition()};
     auto distance = mFieldFinalPosition.x - mFieldInitialPosition.x;
     auto normalizedTime {mElapsedTime / slideTime};
     
-    position.x = mFieldInitialPosition.x +
-                 distance * normalizedTime * normalizedTime * normalizedTime;
-    transform.SetPosition(position);
-    mScene.GetFieldScissorBox().mLowerLeft.x = position.x + mScissorBoxRelativePosition.x;
+    fieldQuadPosition.x = mFieldInitialPosition.x +
+                          distance * normalizedTime * normalizedTime * normalizedTime;
+    fieldQuadTransform.SetPosition(fieldQuadPosition);
+    
+    auto& fieldContainerTransform {mScene.GetFieldContainer().GetTransform()};
+    auto fieldContainerPosition {fieldContainerTransform.GetPosition()};
+    fieldContainerPosition.x = fieldQuadPosition.x + mFieldContainerRelativePosition.x;
+    fieldContainerTransform.SetPosition(fieldContainerPosition);
+    
+    auto scissorBox {mScene.GetFieldScissorBox()};
+    scissorBox.mLowerLeft.x = fieldQuadPosition.x + mScissorBoxRelativePosition.x;
+    mScene.SetScissorBox(scissorBox);
 }
 
 void SlidingFieldAnimation::UpdateHud() {

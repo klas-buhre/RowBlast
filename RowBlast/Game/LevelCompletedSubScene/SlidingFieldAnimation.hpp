@@ -33,6 +33,7 @@ namespace RowBlast {
         float mElapsedTime {0.0f};
         Pht::Vec3 mFieldInitialPosition;
         Pht::Vec3 mFieldFinalPosition;
+        Pht::Vec3 mFieldContainerRelativePosition;
         Pht::Vec2 mScissorBoxRelativePosition;
         float mUpperHudInitialYPosition {0.0f};
         float mUpperHudFinalYPosition {0.0f};
