@@ -194,26 +194,15 @@ void LevelCompletedController::UpdateFireworksAndConfetti() {
 
 void LevelCompletedController::UpdateInStarsAppearingAnimationState() {
     if (mStarsAnimation.Update() == StarsAnimation::State::Rotating) {
-        GoToLevelCompletedDialogState();
+        mState = State::LevelCompletedDialog;
+        mGameViewControllers.SetActiveController(GameViewControllers::LevelCompletedDialog);
+        
+        auto& levelCompletedDialogController {
+            mGameViewControllers.GetLevelCompletedDialogController()
+        };
+        
+        levelCompletedDialogController.Init();
     }
-}
-
-void LevelCompletedController::GoToLevelCompletedDialogState() {
-    mState = State::LevelCompletedDialog;
-    mGameViewControllers.SetActiveController(GameViewControllers::LevelCompletedDialog);
-    
-    auto& levelCompletedDialogController {
-        mGameViewControllers.GetLevelCompletedDialogController()
-    };
-    
-    levelCompletedDialogController.Init();
-    
-    auto numStars {
-        ProgressManager::CalculateNumStars(mGameLogic.GetMovesUsedIncludingCurrent(),
-                                           mLevel->GetStarLimits())
-    };
-    
-    levelCompletedDialogController.GetView().SetNumStars(numStars);
 }
 
 LevelCompletedDialogController::Result LevelCompletedController::UpdateLevelCompletedDialog() {

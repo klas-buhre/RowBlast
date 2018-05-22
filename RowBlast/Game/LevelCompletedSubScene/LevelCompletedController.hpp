@@ -47,7 +47,6 @@ namespace RowBlast {
         void UpdateInSlidingOutFieldAnimationState();
         void UpdateFireworksAndConfetti();
         void UpdateInStarsAppearingAnimationState();
-        void GoToLevelCompletedDialogState();
         LevelCompletedDialogController::Result UpdateLevelCompletedDialog();
         
         enum class State {
