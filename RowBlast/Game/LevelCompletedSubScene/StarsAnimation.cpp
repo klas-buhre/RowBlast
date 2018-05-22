@@ -30,8 +30,6 @@ StarsAnimation::StarsAnimation(Pht::IEngine& engine,
     mEngine {engine},
     mScene {scene} {
     
-    mContainer = std::make_unique<Pht::SceneObject>();
-    
     auto& sceneManager {mEngine.GetSceneManager()};
     Pht::Material shaddowMaterial {Pht::Color{0.4f, 0.4f, 0.4f}};
     shaddowMaterial.SetOpacity(0.075f);
@@ -39,29 +37,34 @@ StarsAnimation::StarsAnimation(Pht::IEngine& engine,
                                                             shaddowMaterial);
 
     for (auto& star: mStarAnimations) {
-        star = std::make_unique<StarAnimation>(engine,
-                                               *mContainer,
-                                               *mShadowRenderable,
-                                               commonResources);
+        star = std::make_unique<StarAnimation>(engine, *mShadowRenderable, commonResources);
     }
 }
 
 void StarsAnimation::Init() {
-    mScene.GetUiViewsContainer().AddChild(*mContainer);
+    auto& starsContainer {mScene.GetStarsContainer()};
+    starsContainer.SetIsVisible(false);
+    starsContainer.SetIsStatic(true);
+
+    auto& shadowsContainer {mScene.GetStarShadowsContainer()};
+    shadowsContainer.SetIsVisible(false);
+    shadowsContainer.SetIsStatic(true);
     
-    mContainer->SetIsStatic(true);
-    mContainer->SetIsVisible(false);
+    for (auto& star: mStarAnimations) {
+        star->Init(starsContainer, shadowsContainer);
+    }
 }
 
 void StarsAnimation::Start(int numStars) {
     mNumStars = numStars;
 
-    for (auto& star: mStarAnimations) {
-        star->Reset();
-    }
+    auto& starsContainer {mScene.GetStarsContainer()};
+    starsContainer.SetIsVisible(true);
+    starsContainer.SetIsStatic(false);
 
-    mContainer->SetIsStatic(false);
-    mContainer->SetIsVisible(true);
+    auto& shadowsContainer {mScene.GetStarShadowsContainer()};
+    shadowsContainer.SetIsVisible(true);
+    shadowsContainer.SetIsStatic(false);
 
     switch (numStars) {
         case 1:
@@ -95,34 +98,42 @@ StarsAnimation::State StarsAnimation::Update() {
     return state;
 }
 
+void StarsAnimation::ShowStarShadows() {
+    for (auto i {0}; i < mNumStars; ++i) {
+        mStarAnimations[i]->ShowShadow();
+    }
+}
+
 StarsAnimation::StarAnimation::StarAnimation(Pht::IEngine& engine,
-                                             Pht::SceneObject& parentObject,
                                              Pht::RenderableObject& shadowRenderable,
                                              const CommonResources& commonResources) {
     auto& sceneManager {engine.GetSceneManager()};
     mStarRenderable = sceneManager.CreateRenderableObject(Pht::ObjMesh {"star_1428.obj", 0.26f},
                                                           commonResources.GetMaterials().GetGoldMaterial());
     mStar = std::make_unique<Pht::SceneObject>(mStarRenderable.get());
-    parentObject.AddChild(*mStar);
-    
     mShadow = std::make_unique<Pht::SceneObject>(&shadowRenderable);
-    mShadow->GetTransform().SetPosition(shadowOffset);
-    mStar->AddChild(*mShadow);
 }
 
-void StarsAnimation::StarAnimation::Reset() {
+void StarsAnimation::StarAnimation::Init(Pht::SceneObject& starsContainer,
+                                         Pht::SceneObject& shadowsContainer) {
      mStar->SetIsVisible(false);
+     starsContainer.AddChild(*mStar);
      mShadow->SetIsVisible(false);
+     shadowsContainer.AddChild(*mShadow);
 }
 
 void StarsAnimation::StarAnimation::Start(const Pht::Vec3& position, float waitTime) {
     mStar->GetTransform().SetPosition(position);
-    mStar->SetIsVisible(true);
+    mShadow->GetTransform().SetPosition(position + shadowOffset);
 
     mState = State::Waiting;
     mElapsedTime = 0.0f;
     mWaitTime = waitTime;
     mStarZAngle = 0.0f;
+}
+
+void StarsAnimation::StarAnimation::ShowShadow() {
+    mShadow->SetIsVisible(true);
 }
 
 StarsAnimation::StarAnimation::State StarsAnimation::StarAnimation::Update(float dt) {
@@ -135,7 +146,6 @@ StarsAnimation::StarAnimation::State StarsAnimation::StarAnimation::Update(float
             break;
         case State::Flashing:
             mState = State::Rotating;
-            mShadow->SetIsVisible(true);
             break;
         case State::Rotating:
             UpdateInRotatingState(dt);
@@ -150,12 +160,14 @@ void StarsAnimation::StarAnimation::UpdateInWaitingState(float dt) {
     if (mElapsedTime > mWaitTime) {
         mState = State::ScalingIn;
         mElapsedTime = 0.0f;
+        mStar->SetIsVisible(true);
     }
 }
 
 void StarsAnimation::StarAnimation::UpdateInRotatingState(float dt) {
-    auto& transform {mStar->GetTransform()};
-    transform.SetRotation({0.0f, 0.0f, mStarZAngle});
+    Pht::Vec3 rotation {0.0f, 0.0f, mStarZAngle};
+    mStar->GetTransform().SetRotation(rotation);
+    mShadow->GetTransform().SetRotation(rotation);
 
     mStarZAngle -= zRotationSpeed * dt;
 }

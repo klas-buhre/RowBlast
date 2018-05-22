@@ -125,6 +125,8 @@ void GameScene::Init(const Level& level,
     CreateFlyingBlocksContainer();
     CreateHud(gameLogic, levelResources, pieceResources, level);
     CreateUiViewsContainer();
+    CreateStarsContainer();
+    CreateStarShadowsContainer();
     
     scene->SetDistanceFunction(Pht::DistanceFunction::WorldSpaceNegativeZ);
     sceneManager.SetLoadedScene(std::move(scene));
@@ -176,6 +178,14 @@ void GameScene::CreateRenderPasses() {
     uiViewsRenderPass.SetIsDepthTestAllowed(false);
     uiViewsRenderPass.SetRenderOrder(Pht::RenderOrder::BackToFront);
     mScene->AddRenderPass(uiViewsRenderPass);
+
+    Pht::RenderPass starsRenderPass {static_cast<int>(Layer::Stars)};
+    starsRenderPass.SetHudMode(true);
+    mScene->AddRenderPass(starsRenderPass);
+
+    Pht::RenderPass starShadowsRenderPass {static_cast<int>(Layer::StarShadows)};
+    starShadowsRenderPass.SetHudMode(true);
+    mScene->AddRenderPass(starShadowsRenderPass);
     
     Pht::RenderPass fadeEffectRenderPass {static_cast<int>(Layer::SceneSwitchFadeEffect)};
     fadeEffectRenderPass.SetHudMode(true);
@@ -360,6 +370,18 @@ void GameScene::CreateUiViewsContainer() {
     mUiViewsContainer = &mScene->CreateSceneObject();
     mUiViewsContainer->SetLayer(static_cast<int>(Layer::UiViews));
     mScene->GetRoot().AddChild(*mUiViewsContainer);
+}
+
+void GameScene::CreateStarsContainer() {
+    mStarsContainer = &mScene->CreateSceneObject();
+    mStarsContainer->SetLayer(static_cast<int>(Layer::Stars));
+    mScene->GetRoot().AddChild(*mStarsContainer);
+}
+
+void GameScene::CreateStarShadowsContainer() {
+    mStarShadowsContainer = &mScene->CreateSceneObject();
+    mStarShadowsContainer->SetLayer(static_cast<int>(Layer::StarShadows));
+    mScene->GetRoot().AddChild(*mStarShadowsContainer);
 }
 
 void GameScene::Update() {

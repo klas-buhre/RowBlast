@@ -48,6 +48,7 @@ namespace RowBlast {
         void UpdateFireworksAndConfetti();
         void UpdateInStarsAppearingAnimationState();
         LevelCompletedDialogController::Result UpdateLevelCompletedDialog();
+        void SetStarShadowsScissorBox();
         
         enum class State {
             ObjectiveAchievedAnimation,

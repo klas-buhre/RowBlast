@@ -45,6 +45,8 @@ namespace RowBlast {
             LevelCompletedFadeEffect,
             LevelCompletedEffects,
             UiViews,
+            Stars,
+            StarShadows,
             SceneSwitchFadeEffect = GlobalLayer::sceneSwitchFadeEffect
         };
     
@@ -61,6 +63,7 @@ namespace RowBlast {
         void Update();
         void UpdateLightAnimation();
         void SetScissorBox(const Pht::ScissorBox& scissorBox);
+        void SetScissorBox(const Pht::ScissorBox& scissorBox, int layer);
         const Pht::Material& GetRedMaterial() const;
         const Pht::Material& GetBlueMaterial() const;
         const Pht::Material& GetGreenMaterial() const;
@@ -147,7 +150,17 @@ namespace RowBlast {
             assert(mLevelCompletedEffectsContainer);
             return *mLevelCompletedEffectsContainer;
         }
-        
+
+        Pht::SceneObject& GetStarShadowsContainer() {
+            assert(mStarShadowsContainer);
+            return *mStarShadowsContainer;
+        }
+
+        Pht::SceneObject& GetStarsContainer() {
+            assert(mStarsContainer);
+            return *mStarsContainer;
+        }
+
         const Pht::Vec3& GetFieldPosition() const {
             return mFieldPosition;
         }
@@ -211,7 +224,8 @@ namespace RowBlast {
                        const PieceResources& pieceResources,
                        const Level& level);
         void CreateUiViewsContainer();
-        void SetScissorBox(const Pht::ScissorBox& scissorBox, int layer);
+        void CreateStarShadowsContainer();
+        void CreateStarsContainer();
         
         Pht::IEngine& mEngine;
         const ScrollController& mScrollController;
@@ -235,6 +249,8 @@ namespace RowBlast {
         Pht::SceneObject* mHudContainer {nullptr};
         Pht::SceneObject* mUiViewsContainer {nullptr};
         Pht::SceneObject* mLevelCompletedEffectsContainer {nullptr};
+        Pht::SceneObject* mStarShadowsContainer {nullptr};
+        Pht::SceneObject* mStarsContainer {nullptr};
         const Pht::Vec3 mFieldPosition;
         const float mCellSize {1.25f};
         const float mBlastRadiusAnimationZ {mCellSize / 2.0f + 0.1f};

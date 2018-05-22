@@ -196,20 +196,18 @@ void LevelCompletedController::UpdateInStarsAppearingAnimationState() {
     if (mStarsAnimation.Update() == StarsAnimation::State::Rotating) {
         mState = State::LevelCompletedDialog;
         mGameViewControllers.SetActiveController(GameViewControllers::LevelCompletedDialog);
-        
-        auto& levelCompletedDialogController {
-            mGameViewControllers.GetLevelCompletedDialogController()
-        };
-        
-        levelCompletedDialogController.Init();
+        mGameViewControllers.GetLevelCompletedDialogController().Init();
+        SetStarShadowsScissorBox();
+        mStarsAnimation.ShowStarShadows();
     }
 }
 
 LevelCompletedDialogController::Result LevelCompletedController::UpdateLevelCompletedDialog() {
     UpdateFireworksAndConfetti();
     mStarsAnimation.Update();
-
+    
     auto result {mGameViewControllers.GetLevelCompletedDialogController().Update()};
+    SetStarShadowsScissorBox();
     
     if (result != LevelCompletedDialogController::Result::None) {
         auto numStars {
@@ -221,4 +219,13 @@ LevelCompletedDialogController::Result LevelCompletedController::UpdateLevelComp
     }
     
     return result;
+}
+
+void LevelCompletedController::SetStarShadowsScissorBox() {
+    auto& view {mGameViewControllers.GetLevelCompletedDialogController().GetView()};
+    auto viewPosition {view.GetPosition()};
+    auto viewSize {view.GetSize()};
+    Pht::Vec2 lowerLeft {viewPosition.x - viewSize.x / 2.0f, viewPosition.y - viewSize.y / 2.0f};
+    Pht::ScissorBox scissorBox {lowerLeft, viewSize};
+    mGameScene.SetScissorBox(scissorBox, static_cast<int>(GameScene::Layer::StarShadows));
 }

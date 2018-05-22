@@ -15,7 +15,7 @@ namespace RowBlast {
     }
     
     namespace GlobalLayer {
-        constexpr auto sceneSwitchFadeEffect {14};
+        constexpr auto sceneSwitchFadeEffect {15};
     }
 }
 

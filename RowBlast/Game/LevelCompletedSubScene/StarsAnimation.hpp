@@ -30,6 +30,7 @@ namespace RowBlast {
         void Init();
         void Start(int numStars);
         State Update();
+        void ShowStarShadows();
         
     private:
         class StarAnimation {
@@ -42,13 +43,13 @@ namespace RowBlast {
             };
 
             StarAnimation(Pht::IEngine& engine,
-                          Pht::SceneObject& parentObject,
                           Pht::RenderableObject& shadowRenderable,
                           const CommonResources& commonResources);
             
-            void Reset();
+            void Init(Pht::SceneObject& starsContainer, Pht::SceneObject& shadowsContainer);
             void Start(const Pht::Vec3& position, float waitTime);
             State Update(float dt);
+            void ShowShadow();
             
         private:
             void UpdateInWaitingState(float dt);
@@ -67,7 +68,6 @@ namespace RowBlast {
         Pht::IEngine& mEngine;
         GameScene& mScene;
         int mNumStars {0};
-        std::unique_ptr<Pht::SceneObject> mContainer;
         std::array<std::unique_ptr<StarAnimation>, 3> mStarAnimations;
         std::unique_ptr<Pht::RenderableObject> mShadowRenderable;
         std::unique_ptr<Pht::RenderableObject> mGlowRenderable;
