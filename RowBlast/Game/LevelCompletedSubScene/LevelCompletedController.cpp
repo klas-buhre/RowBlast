@@ -193,6 +193,8 @@ void LevelCompletedController::UpdateFireworksAndConfetti() {
 }
 
 void LevelCompletedController::UpdateInStarsAppearingAnimationState() {
+    UpdateFireworksAndConfetti();
+
     if (mStarsAnimation.Update() == StarsAnimation::State::Rotating) {
         mState = State::LevelCompletedDialog;
         mGameViewControllers.SetActiveController(GameViewControllers::LevelCompletedDialog);

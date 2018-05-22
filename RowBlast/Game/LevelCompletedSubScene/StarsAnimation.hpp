@@ -53,6 +53,7 @@ namespace RowBlast {
             
         private:
             void UpdateInWaitingState(float dt);
+            void UpdateInScalingInState(float dt);
             void UpdateInRotatingState(float dt);
             
             State mState {State::Waiting};

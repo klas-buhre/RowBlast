@@ -142,7 +142,7 @@ StarsAnimation::StarAnimation::State StarsAnimation::StarAnimation::Update(float
             UpdateInWaitingState(dt);
             break;
         case State::ScalingIn:
-            mState = State::Flashing;
+            UpdateInScalingInState(dt);
             break;
         case State::Flashing:
             mState = State::Rotating;
@@ -161,6 +161,24 @@ void StarsAnimation::StarAnimation::UpdateInWaitingState(float dt) {
         mState = State::ScalingIn;
         mElapsedTime = 0.0f;
         mStar->SetIsVisible(true);
+        mStar->GetRenderable()->GetMaterial().SetOpacity(0.0f);
+    }
+}
+
+void StarsAnimation::StarAnimation::UpdateInScalingInState(float dt) {
+    mElapsedTime += dt;
+    auto normalizedTime {(scaleTime - mElapsedTime) / scaleTime};
+    
+    mStar->GetTransform().SetScale(1.0f + 3.0f * normalizedTime);
+    mStar->GetRenderable()->GetMaterial().SetOpacity(mElapsedTime / scaleTime);
+    
+    if (mElapsedTime > scaleTime) {
+        mState = State::Flashing;
+        mStar->GetTransform().SetScale(1.0f);
+        
+        auto& material {mStar->GetRenderable()->GetMaterial()};
+        material.SetOpacity(1.0f);
+        material.GetDepthState().mDepthWrite = true;
     }
 }
 

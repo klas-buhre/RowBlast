@@ -138,11 +138,11 @@ void FireworksParticleEffect::Firework::Init(Pht::SceneObject& parentObject,
     mState = State::Waiting;
     mElapsedTime = 0.0f;
     
-    auto& particleSettings {
-        mExplosion->GetComponent<Pht::ParticleEffect>()->GetEmitter().GetParticleSettings()
-    };
-    
-    particleSettings.mColor = color;
+    auto* particleEffect {mExplosion->GetComponent<Pht::ParticleEffect>()};
+    assert(particleEffect);
+
+    particleEffect->Stop();
+    particleEffect->GetEmitter().GetParticleSettings().mColor = color;
 }
 
 void FireworksParticleEffect::Firework::Update(float dt) {

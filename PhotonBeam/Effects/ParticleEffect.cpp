@@ -141,17 +141,22 @@ ParticleEffect::~ParticleEffect() {
 void ParticleEffect::Start() {
     mEmitter.Start();
     mIsActive = true;
-    
-    for (auto& particle: mParticles) {
-        particle.mIsActive = false;
-    }
-    
+    ResetParticles();
     mSceneObject.SetIsVisible(true);
 }
 
 void ParticleEffect::Stop() {
     mIsActive = false;
+    ResetParticles();
     mSceneObject.SetIsVisible(false);
+}
+
+void ParticleEffect::ResetParticles() {
+    for (auto& particle: mParticles) {
+        particle.mIsActive = false;
+    }
+    
+    WriteVertexBuffer();
 }
 
 void ParticleEffect::Update(float dt) {

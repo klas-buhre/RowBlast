@@ -45,6 +45,7 @@ namespace Pht {
         }
 
     private:
+        void ResetParticles();
         void WriteVertexBuffer();
         void WritePoints();
         void WriteTriangles();

@@ -113,6 +113,9 @@ void ConfettiParticleEffect::Init(Pht::SceneObject& parentObject, const Pht::Vec
     
     parentObject.AddChild(*mRightEffect);
     mRightEffect->GetTransform().SetPosition(rightPosition);
+    
+    mLeftEffect->GetComponent<Pht::ParticleEffect>()->Stop();
+    mRightEffect->GetComponent<Pht::ParticleEffect>()->Stop();
 }
 
 void ConfettiParticleEffect::Start() {
