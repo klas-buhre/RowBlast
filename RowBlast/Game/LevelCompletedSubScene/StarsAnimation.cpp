@@ -116,9 +116,7 @@ void StarsAnimation::StarAnimation::Reset() {
 }
 
 void StarsAnimation::StarAnimation::Start(const Pht::Vec3& position, float waitTime) {
-    auto& transform {mStar->GetTransform()};
-    transform.SetPosition(position);
-    transform.SetRotation({90.0f, 0.0f, 0.0f});
+    mStar->GetTransform().SetPosition(position);
     mStar->SetIsVisible(true);
 
     mState = State::Waiting;
@@ -157,7 +155,7 @@ void StarsAnimation::StarAnimation::UpdateInWaitingState(float dt) {
 
 void StarsAnimation::StarAnimation::UpdateInRotatingState(float dt) {
     auto& transform {mStar->GetTransform()};
-    transform.SetRotation({90.0f, 0.0f, mStarZAngle});
+    transform.SetRotation({0.0f, 0.0f, mStarZAngle});
 
     mStarZAngle -= zRotationSpeed * dt;
 }
