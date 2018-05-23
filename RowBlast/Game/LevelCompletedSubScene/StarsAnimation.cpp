@@ -6,6 +6,8 @@
 #include "IEngine.hpp"
 #include "ObjMesh.hpp"
 #include "ISceneManager.hpp"
+#include "IParticleSystem.hpp"
+#include "ParticleEffect.hpp"
 
 // Game includes.
 #include "GameScene.hpp"
@@ -20,6 +22,10 @@ namespace {
     constexpr auto farZPosition {UiLayer::block - starRadius * initialScale};
     constexpr auto zRotationSpeed {12.0f};
     constexpr auto yRotation {90.0f};
+    constexpr auto flashTime {0.22f};
+    constexpr auto glowTime {2.0f};
+    constexpr auto glowScaleDownTime {0.3f};
+    const Pht::Color flashingColorAdd {0.2f, 0.2f, 0.2f};
     const Pht::Vec3 leftMostStarPosition {-3.8f, 1.3f, farZPosition};
     const Pht::Vec3 leftStarPosition {-2.0f, 1.3f, farZPosition};
     const Pht::Vec3 middleStarPosition {0.0f, 1.8f, farZPosition};
@@ -110,27 +116,73 @@ void StarsAnimation::ShowStarShadows() {
 
 StarsAnimation::StarAnimation::StarAnimation(Pht::IEngine& engine,
                                              Pht::RenderableObject& shadowRenderable,
-                                             const CommonResources& commonResources) {
+                                             const CommonResources& commonResources) :
+    mGoldStarMaterial {commonResources.GetMaterials().GetGoldStarMaterial()} {
+
     auto& sceneManager {engine.GetSceneManager()};
-    mStarRenderable =
-        sceneManager.CreateRenderableObject(Pht::ObjMesh {"star_1428.obj", 0.26f},
-                                            commonResources.GetMaterials().GetGoldStarMaterial());
+    mStarRenderable = sceneManager.CreateRenderableObject(Pht::ObjMesh {"star_1428.obj", 0.26f},
+                                                          mGoldStarMaterial);
     mStar = std::make_unique<Pht::SceneObject>(mStarRenderable.get());
     mShadow = std::make_unique<Pht::SceneObject>(&shadowRenderable);
+    
+    CreateGlowParticleEffect(engine);
+}
+
+void StarsAnimation::StarAnimation::CreateGlowParticleEffect(Pht::IEngine& engine) {
+    Pht::EmitterSettings particleEmitterSettings {
+        .mPosition = Pht::Vec3{0.0f, 0.0f, 0.0f},
+        .mSize = Pht::Vec3{0.0f, 0.0f, 0.0f},
+        .mTimeToLive = 0.0f,
+        .mBurst = 1
+    };
+    
+    Pht::ParticleSettings particleSettings {
+        .mVelocity = Pht::Vec3{0.0f, 0.0f, 0.0f},
+        .mVelocityRandomPart = Pht::Vec3{0.0f, 0.0f, 0.0f},
+        .mColor = Pht::Vec4{0.5f, 0.5f, 1.0f, 1.0f},
+        .mColorRandomPart = Pht::Vec4{0.0f, 0.0f, 0.0f, 0.0f},
+        .mTextureFilename = "glow_lines.png",
+        .mTimeToLive = 3.0f,
+        .mTimeToLiveRandomPart = 0.0f,
+        .mFadeOutDuration = 0.5f,
+        .mZAngularVelocity = 20.0f,
+        .mSize = Pht::Vec2{11.5f, 11.5f},
+        .mSizeRandomPart = 0.0f,
+        .mShrinkDuration = 0.5f
+    };
+    
+    auto& particleSystem {engine.GetParticleSystem()};
+    mGlowEffect = particleSystem.CreateParticleEffectSceneObject(particleSettings,
+                                                                 particleEmitterSettings,
+                                                                 Pht::RenderMode::Triangles);
+    mGlowEffect->GetRenderable()->GetMaterial().GetDepthState().mDepthTest = true;
 }
 
 void StarsAnimation::StarAnimation::Init(Pht::SceneObject& starsContainer,
                                          Pht::SceneObject& shadowsContainer) {
-     mStar->SetIsVisible(false);
-     starsContainer.AddChild(*mStar);
-     mShadow->SetIsVisible(false);
-     shadowsContainer.AddChild(*mShadow);
+    mStar->SetIsVisible(false);
+    starsContainer.AddChild(*mStar);
+    starsContainer.AddChild(*mGlowEffect);
+    mShadow->SetIsVisible(false);
+    shadowsContainer.AddChild(*mShadow);
+    
+    auto* particleEffect {mGlowEffect->GetComponent<Pht::ParticleEffect>()};
+    assert(particleEffect);
+
+    particleEffect->Stop();
 }
 
 void StarsAnimation::StarAnimation::Start(const Pht::Vec3& position, float waitTime) {
     auto& starTransform {mStar->GetTransform()};
     starTransform.SetPosition(position);
     starTransform.SetRotation({yRotation, 0.0f, 0.0f});
+    
+    auto glowPosition {position};
+    glowPosition.z -= starRadius;
+    auto& glowTransform {mGlowEffect->GetTransform()};
+    glowTransform.SetPosition(glowPosition);
+    glowTransform.SetScale(1.0f);
+
     auto shadowPosition {position};
     shadowPosition.z = UiLayer::block;
     mShadow->GetTransform().SetPosition(shadowPosition + shadowOffset);
@@ -139,6 +191,8 @@ void StarsAnimation::StarAnimation::Start(const Pht::Vec3& position, float waitT
     mElapsedTime = 0.0f;
     mWaitTime = waitTime;
     mStarZAngle = 0.0f;
+    
+    SetIsFlashing(false);
 }
 
 void StarsAnimation::StarAnimation::ShowShadow() {
@@ -159,7 +213,10 @@ StarsAnimation::StarAnimation::State StarsAnimation::StarAnimation::Update(float
             UpdateInScalingInState(dt);
             break;
         case State::Flashing:
-            mState = State::Rotating;
+            UpdateInFlashingState(dt);
+            break;
+        case State::RotatingAndGlowing:
+            UpdateInRotatingAndGlowingState(dt);
             break;
         case State::Rotating:
             UpdateInRotatingState(dt);
@@ -195,6 +252,11 @@ void StarsAnimation::StarAnimation::UpdateInScalingInState(float dt) {
     
     if (mElapsedTime > scaleTime) {
         mState = State::Flashing;
+        mElapsedTime = 0.0f;
+        SetIsFlashing(true);
+        
+        mGlowEffect->GetComponent<Pht::ParticleEffect>()->Start();
+        
         transform.SetScale(1.0f);
         transform.SetRotation({0.0f, 0.0f, 0.0f});
         position.z = farZPosition;
@@ -206,10 +268,59 @@ void StarsAnimation::StarAnimation::UpdateInScalingInState(float dt) {
     }
 }
 
+void StarsAnimation::StarAnimation::UpdateInFlashingState(float dt) {
+    mGlowEffect->GetComponent<Pht::ParticleEffect>()->Update(dt);
+    mElapsedTime += dt;
+
+    if (mElapsedTime > flashTime) {
+        mState = State::RotatingAndGlowing;
+        mElapsedTime = 0.0f;
+        SetIsFlashing(false);
+    }
+}
+
+void StarsAnimation::StarAnimation::UpdateInRotatingAndGlowingState(float dt) {
+    mGlowEffect->GetComponent<Pht::ParticleEffect>()->Update(dt);
+    UpdateRotation(dt);
+    mElapsedTime += dt;
+
+    if (mElapsedTime > glowTime - mWaitTime) {
+        mState = State::Rotating;
+        mElapsedTime = 0.0f;
+    }
+}
+
 void StarsAnimation::StarAnimation::UpdateInRotatingState(float dt) {
+    mGlowEffect->GetComponent<Pht::ParticleEffect>()->Update(dt);
+    UpdateRotation(dt);
+    mElapsedTime += dt;
+    
+    if (mElapsedTime < glowScaleDownTime) {
+        mGlowEffect->GetTransform().SetScale((glowScaleDownTime - mElapsedTime) / glowScaleDownTime);
+    }
+}
+
+void StarsAnimation::StarAnimation::UpdateRotation(float dt) {
     Pht::Vec3 rotation {0.0f, 0.0f, mStarZAngle};
     mStar->GetTransform().SetRotation(rotation);
     mShadow->GetTransform().SetRotation(rotation);
 
     mStarZAngle -= zRotationSpeed * dt;
+}
+
+void StarsAnimation::StarAnimation::SetIsFlashing(bool isFlashing) {
+    auto& renderableMaterial {mStar->GetRenderable()->GetMaterial()};
+    const auto& ambient {mGoldStarMaterial.GetAmbient()};
+    const auto& diffuse {mGoldStarMaterial.GetDiffuse()};
+    const auto& specular {mGoldStarMaterial.GetSpecular()};
+    
+    if (isFlashing) {
+        renderableMaterial.SetAmbient(ambient + flashingColorAdd);
+        renderableMaterial.SetDiffuse(diffuse + flashingColorAdd);
+        renderableMaterial.SetSpecular(specular + flashingColorAdd);
+    } else {
+        renderableMaterial.SetAmbient(ambient);
+        renderableMaterial.SetDiffuse(diffuse);
+        renderableMaterial.SetSpecular(specular);
+    }
 }

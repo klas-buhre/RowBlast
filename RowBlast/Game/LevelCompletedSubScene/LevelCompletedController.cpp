@@ -22,7 +22,7 @@ namespace {
     constexpr auto fade {0.6f};
     constexpr auto fadeTime {0.3f};
     constexpr auto effectsVolumeDepth {20.0f};
-    constexpr auto fireworksAndConfettiDuration {5.0f};
+    constexpr auto fireworksAndConfettiDuration {4.5f};
 }
 
 LevelCompletedController::LevelCompletedController(Pht::IEngine& engine,
