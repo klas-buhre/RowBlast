@@ -14,13 +14,17 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto scaleTime {0.4f};
+    constexpr auto scaleTime {0.38f};
+    constexpr auto initialScale {7.0f};
+    constexpr auto starRadius {3.0f};
+    constexpr auto farZPosition {UiLayer::block - starRadius * initialScale};
     constexpr auto zRotationSpeed {12.0f};
-    const Pht::Vec3 leftMostStarPosition {-3.8f, 1.3f, UiLayer::block};
-    const Pht::Vec3 leftStarPosition {-2.0f, 1.3f, UiLayer::block};
-    const Pht::Vec3 middleStarPosition {0.0f, 1.8f, UiLayer::block};
-    const Pht::Vec3 rightStarPosition {2.0f, 1.3f, UiLayer::block};
-    const Pht::Vec3 rightMostStarPosition {3.8f, 1.3f, UiLayer::block};
+    constexpr auto yRotation {90.0f};
+    const Pht::Vec3 leftMostStarPosition {-3.8f, 1.3f, farZPosition};
+    const Pht::Vec3 leftStarPosition {-2.0f, 1.3f, farZPosition};
+    const Pht::Vec3 middleStarPosition {0.0f, 1.8f, farZPosition};
+    const Pht::Vec3 rightStarPosition {2.0f, 1.3f, farZPosition};
+    const Pht::Vec3 rightMostStarPosition {3.8f, 1.3f, farZPosition};
     const Pht::Vec3 shadowOffset {-0.3f, -0.3f, -0.3f};
 }
 
@@ -108,8 +112,9 @@ StarsAnimation::StarAnimation::StarAnimation(Pht::IEngine& engine,
                                              Pht::RenderableObject& shadowRenderable,
                                              const CommonResources& commonResources) {
     auto& sceneManager {engine.GetSceneManager()};
-    mStarRenderable = sceneManager.CreateRenderableObject(Pht::ObjMesh {"star_1428.obj", 0.26f},
-                                                          commonResources.GetMaterials().GetGoldMaterial());
+    mStarRenderable =
+        sceneManager.CreateRenderableObject(Pht::ObjMesh {"star_1428.obj", 0.26f},
+                                            commonResources.GetMaterials().GetGoldStarMaterial());
     mStar = std::make_unique<Pht::SceneObject>(mStarRenderable.get());
     mShadow = std::make_unique<Pht::SceneObject>(&shadowRenderable);
 }
@@ -123,8 +128,12 @@ void StarsAnimation::StarAnimation::Init(Pht::SceneObject& starsContainer,
 }
 
 void StarsAnimation::StarAnimation::Start(const Pht::Vec3& position, float waitTime) {
-    mStar->GetTransform().SetPosition(position);
-    mShadow->GetTransform().SetPosition(position + shadowOffset);
+    auto& starTransform {mStar->GetTransform()};
+    starTransform.SetPosition(position);
+    starTransform.SetRotation({yRotation, 0.0f, 0.0f});
+    auto shadowPosition {position};
+    shadowPosition.z = UiLayer::block;
+    mShadow->GetTransform().SetPosition(shadowPosition + shadowOffset);
 
     mState = State::Waiting;
     mElapsedTime = 0.0f;
@@ -134,6 +143,11 @@ void StarsAnimation::StarAnimation::Start(const Pht::Vec3& position, float waitT
 
 void StarsAnimation::StarAnimation::ShowShadow() {
     mShadow->SetIsVisible(true);
+    
+    auto& transform {mStar->GetTransform()};
+    auto starPosition {transform.GetPosition()};
+    starPosition.z = UiLayer::block;
+    transform.SetPosition(starPosition);
 }
 
 StarsAnimation::StarAnimation::State StarsAnimation::StarAnimation::Update(float dt) {
@@ -169,12 +183,22 @@ void StarsAnimation::StarAnimation::UpdateInScalingInState(float dt) {
     mElapsedTime += dt;
     auto normalizedTime {(scaleTime - mElapsedTime) / scaleTime};
     
-    mStar->GetTransform().SetScale(1.0f + 3.0f * normalizedTime);
+    auto& transform {mStar->GetTransform()};
+    transform.SetScale(1.0f + initialScale * normalizedTime * normalizedTime);
+    transform.SetRotation({0.0f, yRotation * normalizedTime, 0.0f});
+    
+    auto position {transform.GetPosition()};
+    position.z = UiLayer::block - starRadius * initialScale * normalizedTime * normalizedTime;
+    transform.SetPosition(position);
+    
     mStar->GetRenderable()->GetMaterial().SetOpacity(mElapsedTime / scaleTime);
     
     if (mElapsedTime > scaleTime) {
         mState = State::Flashing;
-        mStar->GetTransform().SetScale(1.0f);
+        transform.SetScale(1.0f);
+        transform.SetRotation({0.0f, 0.0f, 0.0f});
+        position.z = farZPosition;
+        transform.SetPosition(position);
         
         auto& material {mStar->GetRenderable()->GetMaterial()};
         material.SetOpacity(1.0f);

@@ -18,6 +18,7 @@ Materials::Materials(Pht::IEngine& engine) {
     };
 
     CreateGoldMaterial(envMapTextures);
+    CreateGoldStarMaterial(envMapTextures);
     CreateBlueMaterial(envMapTextures);
     CreateRedMaterial(envMapTextures);
     CreateGreenMaterial(envMapTextures);
@@ -50,6 +51,20 @@ void Materials::CreateGoldMaterial(const Pht::EnvMapTextureFilenames& envMapText
                                                     specular,
                                                     shininess,
                                                     reflectivity);
+}
+
+void Materials::CreateGoldStarMaterial(const Pht::EnvMapTextureFilenames& envMapTextures) {
+    Pht::Color ambient {1.05f, 0.58f, 0.0f};
+    Pht::Color diffuse {0.87f, 0.495f, 0.0f};
+    Pht::Color specular {1.0f, 1.0f, 1.0f};
+    auto shininess {27.0f};
+    auto goldStarReflectivity {0.77f};
+    mGoldStarMaterial = std::make_unique<Pht::Material>(envMapTextures,
+                                                        ambient,
+                                                        diffuse,
+                                                        specular,
+                                                        shininess,
+                                                        goldStarReflectivity);
 }
 
 void Materials::CreateBlueMaterial(const Pht::EnvMapTextureFilenames& envMapTextures) {
