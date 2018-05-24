@@ -376,6 +376,19 @@ void GameScene::CreateStarsContainer() {
     mStarsContainer = &mScene->CreateSceneObject();
     mStarsContainer->SetLayer(static_cast<int>(Layer::Stars));
     mScene->GetRoot().AddChild(*mStarsContainer);
+    
+    auto& lightSceneObject {mScene->CreateSceneObject()};
+    lightSceneObject.SetIsVisible(false);
+    auto lightComponent {std::make_unique<Pht::LightComponent>(lightSceneObject)};
+    lightComponent->SetDirection({1.0f, 1.0f, 0.97f});
+    lightComponent->SetDirectionalIntensity(0.9f);
+    
+    auto* starsRenderPass {mScene->GetRenderPass(static_cast<int>(Layer::Stars))};
+    assert(starsRenderPass);
+    starsRenderPass->SetLight(lightComponent.get());
+    
+    lightSceneObject.SetComponent<Pht::LightComponent>(std::move(lightComponent));
+    mStarsContainer->AddChild(lightSceneObject);
 }
 
 void GameScene::CreateStarShadowsContainer() {

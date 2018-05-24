@@ -117,7 +117,7 @@ void StarsAnimation::ShowStarShadows() {
 StarsAnimation::StarAnimation::StarAnimation(Pht::IEngine& engine,
                                              Pht::RenderableObject& shadowRenderable,
                                              const CommonResources& commonResources) :
-    mGoldStarMaterial {commonResources.GetMaterials().GetGoldStarMaterial()} {
+    mGoldStarMaterial {commonResources.GetMaterials().GetGoldMaterial()} {
 
     auto& sceneManager {engine.GetSceneManager()};
     mStarRenderable = sceneManager.CreateRenderableObject(Pht::ObjMesh {"star_1428.obj", 0.26f},
