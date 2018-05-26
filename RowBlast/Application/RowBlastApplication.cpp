@@ -4,16 +4,17 @@ Backlog:
     -Purchases.
     -Net/HTTP.
     -Analytics.
-    
+
   -Gameplay:
-   X-Fix the piece pull down bug on level 31. See screenshot.
+   X-Speed up gameplay slightly? Maybe FallingPieceAnimation speed could depend on distance so that
+     it always takes the same amount of time.
    X-Improve the AI move evaluation.
+   X-Fix the piece pull down bug on level 31. See screenshot.
    X-When playing a level with clear objective the game could scroll up if there is no room to spawn
      the falling piece. If we are at the top of the level then it is game over, or maybe the top
      rows could be cleared so the the piece fits.
    X-Fix bug where the switchable pieces can change if double clocking on switch when the frame rate
      is really low like in the iPad simulator. 
-   X-Speed up gameplay slightly?
     -Some levels could have som pink striped level blocks with welds that are affected by graivty.
     -Maybe blocks in the visible part of the field could disappear on some levels. For each move a
      random block disappears.
@@ -27,8 +28,6 @@ Backlog:
   -Rendering:
     -Could try reducing scroll speed in map scene using a spring.
     -Could zoom in on map pin when clicking on a level in the map.
-   X-Maybe the red field material should not be env mapped to get a better color.
-   X-Maybe slightly less bevel in the blocks.
    X-Maybe the merging of two triangles into a cube could be done by letting the two triangles fade
      into the cube. Render the triangles and the cube at the same time, vary the opacity for the
      triangels from 1 to 0 and from 0 to 1 for the cube.
@@ -48,6 +47,7 @@ Backlog:
     -Credit FastNoise, MIT license: https://github.com/Auburns/FastNoise/
 
 Ongoing tasks:
+   X-Maybe slightly less bevel in the blocks.
 
 
 
@@ -101,7 +101,9 @@ Time Estimation in days:
         Done
     -Do the marked items in the backlog.
         Cost: 8
-    -Moving the next level particle effect to the next level after clearing a level.
+    -Dialog before level starts that states objectives and displays piece types.
+        Cost: 2
+    -Moving the next level particle effect to the next level after clearing a level. Add an avatar?
         Cost: 2
     -Levels/Chapters.
         Cost: 10
@@ -122,7 +124,7 @@ Time Estimation in days:
     -Back end.
         Cost: ?
 
-        Total: 170
+        Total: 172
 
 
 Comomon piece type sets:
