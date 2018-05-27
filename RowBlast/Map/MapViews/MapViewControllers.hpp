@@ -6,6 +6,7 @@
 
 // Game includes.
 #include "SettingsButtonController.hpp"
+#include "LevelStartDialogController.hpp"
 #include "SettingsMenuController.hpp"
 #include "NoLivesDialogController.hpp"
 #include "GuiViewManager.hpp"
@@ -23,6 +24,7 @@ namespace RowBlast {
     public:
         enum Controller {
             SettingsButton,
+            LevelStartDialog,
             NoLivesDialog,
             SettingsMenu
         };
@@ -40,6 +42,10 @@ namespace RowBlast {
             return mSettingsButtonController;
         }
         
+        LevelStartDialogController& GetLevelStartDialogController() {
+            return mLevelStartDialogController;
+        }
+
         NoLivesDialogController& GetNoLivesDialogController() {
             return mNoLivesDialogController;
         }
@@ -53,6 +59,7 @@ namespace RowBlast {
         Pht::FadeEffect mFadeEffect;
         GuiViewManager mViewManager;
         SettingsButtonController mSettingsButtonController;
+        LevelStartDialogController mLevelStartDialogController;
         NoLivesDialogController mNoLivesDialogController;
         SettingsMenuController mSettingsMenuController;
     };

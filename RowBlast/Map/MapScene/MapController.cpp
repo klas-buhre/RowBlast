@@ -42,6 +42,7 @@ void MapController::Init() {
     mMapViewControllers.Init();
     
     mCameraXVelocity = 0.0f;
+    mState = State::Map;
 }
 
 MapController::Command MapController::Update() {
@@ -49,7 +50,10 @@ MapController::Command MapController::Update() {
     
     switch (mState) {
         case State::Map:
-            command = UpdateMap();
+            UpdateMap();
+            break;
+        case State::LevelStartDialog:
+            command = UpdateLevelStartDialog();
             break;
         case State::NoLivesDialog:
             UpdateNoLivesDialog();
@@ -64,11 +68,27 @@ MapController::Command MapController::Update() {
     return command;
 }
 
-MapController::Command MapController::UpdateMap() {
-    auto command {HandleInput()};
+void MapController::UpdateMap() {
+    HandleInput();
     
     if (!mIsTouching) {
         UpdateCamera();
+    }
+}
+
+MapController::Command MapController::UpdateLevelStartDialog() {
+    auto command {Command{Command::None}};
+
+    switch (mMapViewControllers.GetLevelStartDialogController().Update()) {
+        case LevelStartDialogController::Result::None:
+            break;
+        case LevelStartDialogController::Result::Play:
+            command = Command {Command::StartGame, mLevelToStart};
+            break;
+        case LevelStartDialogController::Result::Close:
+            mState = State::Map;
+            mMapViewControllers.SetActiveController(MapViewControllers::SettingsButton);
+            break;
     }
     
     return command;
@@ -101,8 +121,7 @@ void MapController::UpdateSettingsMenu() {
     }
 }
 
-MapController::Command MapController::HandleInput() {
-    auto command {Command{Command::None}};
+void MapController::HandleInput() {
     auto& input {mEngine.GetInput()};
     
     while (input.HasEvents()) {
@@ -112,7 +131,7 @@ MapController::Command MapController::HandleInput() {
                 auto& touchEvent {event.GetTouchEvent()};
                 switch (mMapViewControllers.GetSettingsButtonController().OnTouch(touchEvent)) {
                     case SettingsButtonController::Result::None:
-                        command = HandleTouch(touchEvent);
+                        HandleTouch(touchEvent);
                         break;
                     case SettingsButtonController::Result::ClickedSettings:
                         GoToSettingsMenuState();
@@ -129,11 +148,9 @@ MapController::Command MapController::HandleInput() {
         
         input.PopNextEvent();
     }
-    
-    return command;
 }
 
-MapController::Command MapController::HandleTouch(const Pht::TouchEvent& touch) {
+void MapController::HandleTouch(const Pht::TouchEvent& touch) {
     UpdateTouchingState(touch);
     
     mEngine.GetRenderer().SetProjectionMode(Pht::ProjectionMode::Perspective);
@@ -148,16 +165,17 @@ MapController::Command MapController::HandleTouch(const Pht::TouchEvent& touch) 
         switch (pin->GetButton().OnTouch(touch)) {
             case Pht::Button::Result::Down:
                 pin->SetIsSelected(true);
-                return Command::None;
+                return;
             case Pht::Button::Result::MoveInside:
-                return Command::None;
+                return;
             case Pht::Button::Result::MoveOutside:
                 pin->SetIsSelected(false);
                 StartPan(touch);
                 break;
             case Pht::Button::Result::UpInside:
                 pin->SetIsSelected(false);
-                return HandleLevelClick(pin->GetLevel());
+                HandleLevelClick(pin->GetLevel());
+                return;
             default:
                 pin->SetIsSelected(false);
                 break;
@@ -165,20 +183,20 @@ MapController::Command MapController::HandleTouch(const Pht::TouchEvent& touch) 
     }
     
     Pan(touch);
-    
-    return Command::None;
 }
 
-MapController::Command MapController::HandleLevelClick(int level) {
+void MapController::HandleLevelClick(int level) {
     if (mUserData.GetLifeManager().GetNumLives() == 0) {
         mState = State::NoLivesDialog;
         mMapViewControllers.SetActiveController(MapViewControllers::NoLivesDialog);
         mMapViewControllers.GetNoLivesDialogController().Init(SlidingMenuAnimation::UpdateFade::Yes,
                                                               true);
-        return Command::None;
+    } else {
+        mLevelToStart = level;
+        mState = State::LevelStartDialog;
+        mMapViewControllers.SetActiveController(MapViewControllers::LevelStartDialog);
+        mMapViewControllers.GetLevelStartDialogController().Init();
     }
-    
-    return Command {Command::StartGame, level};
 }
 
 void MapController::UpdateTouchingState(const Pht::TouchEvent& touch) {

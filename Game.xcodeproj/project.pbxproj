@@ -274,6 +274,8 @@
 		6299DD7A208B4178001F74E2 /* CameraShake.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6299DD78208B4178001F74E2 /* CameraShake.cpp */; };
 		6299DD80208BA21C001F74E2 /* FastNoise.cc in Sources */ = {isa = PBXBuildFile; fileRef = 6299DD7F208BA21C001F74E2 /* FastNoise.cc */; };
 		6299DD82208E39C1001F74E2 /* level32.json in Resources */ = {isa = PBXBuildFile; fileRef = 6299DD81208E39C0001F74E2 /* level32.json */; };
+		629B837120BAD7DA00DD2D0E /* LevelStartDialogView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 629B836F20BAD7DA00DD2D0E /* LevelStartDialogView.cpp */; };
+		629B837420BAD82E00DD2D0E /* LevelStartDialogController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 629B837220BAD82E00DD2D0E /* LevelStartDialogController.cpp */; };
 		62A8AAF71FE2DEA1000EB01C /* cloud_B_envmap.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62A8AAF61FE2DEA0000EB01C /* cloud_B_envmap.jpg */; };
 		62A8AAF91FE2E442000EB01C /* cloud_C_envmap.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62A8AAF81FE2E441000EB01C /* cloud_C_envmap.jpg */; };
 		62BE274620AEDD990014C6DD /* SlidingFieldAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62BE274420AEDD990014C6DD /* SlidingFieldAnimation.cpp */; };
@@ -872,6 +874,10 @@
 		6299DD7E208BA21C001F74E2 /* FastNoise.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FastNoise.h; sourceTree = "<group>"; };
 		6299DD7F208BA21C001F74E2 /* FastNoise.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FastNoise.cc; sourceTree = "<group>"; };
 		6299DD81208E39C0001F74E2 /* level32.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level32.json; sourceTree = "<group>"; };
+		629B836F20BAD7DA00DD2D0E /* LevelStartDialogView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LevelStartDialogView.cpp; sourceTree = "<group>"; };
+		629B837020BAD7DA00DD2D0E /* LevelStartDialogView.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = LevelStartDialogView.hpp; sourceTree = "<group>"; };
+		629B837220BAD82E00DD2D0E /* LevelStartDialogController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LevelStartDialogController.cpp; sourceTree = "<group>"; };
+		629B837320BAD82E00DD2D0E /* LevelStartDialogController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = LevelStartDialogController.hpp; sourceTree = "<group>"; };
 		62A8AAF61FE2DEA0000EB01C /* cloud_B_envmap.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = cloud_B_envmap.jpg; sourceTree = "<group>"; };
 		62A8AAF81FE2E441000EB01C /* cloud_C_envmap.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = cloud_C_envmap.jpg; sourceTree = "<group>"; };
 		62BE274420AEDD990014C6DD /* SlidingFieldAnimation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SlidingFieldAnimation.cpp; sourceTree = "<group>"; };
@@ -1974,6 +1980,10 @@
 		62785DA42087618E006F9869 /* MapViews */ = {
 			isa = PBXGroup;
 			children = (
+				629B837220BAD82E00DD2D0E /* LevelStartDialogController.cpp */,
+				629B837320BAD82E00DD2D0E /* LevelStartDialogController.hpp */,
+				629B836F20BAD7DA00DD2D0E /* LevelStartDialogView.cpp */,
+				629B837020BAD7DA00DD2D0E /* LevelStartDialogView.hpp */,
 				62785DA92087618E006F9869 /* MapViewControllers.cpp */,
 				62785DA72087618E006F9869 /* MapViewControllers.hpp */,
 				62785DA62087618E006F9869 /* SettingsButtonController.cpp */,
@@ -2202,6 +2212,7 @@
 				622DDC8820ADB65C002862FA /* LevelCompletedController.cpp in Sources */,
 				62785DF02087618E006F9869 /* EffectManager.cpp in Sources */,
 				62785B4720875937006F9869 /* SceneObject.cpp in Sources */,
+				629B837420BAD82E00DD2D0E /* LevelStartDialogController.cpp in Sources */,
 				62785B0E20875937006F9869 /* Camera.cpp in Sources */,
 				62785DB42087618E006F9869 /* GameMenuController.cpp in Sources */,
 				62785E0A2087618E006F9869 /* Clouds.cpp in Sources */,
@@ -2260,6 +2271,7 @@
 				62785B4620875937006F9869 /* CameraComponent.cpp in Sources */,
 				62785B4A20875937006F9869 /* ParticleSystem.cpp in Sources */,
 				62785E092087618E006F9869 /* RoundedCylinder.cpp in Sources */,
+				629B837120BAD7DA00DD2D0E /* LevelStartDialogView.cpp in Sources */,
 				62785E142087618E006F9869 /* MapScene.cpp in Sources */,
 				62785DC42087618E006F9869 /* GameController.cpp in Sources */,
 				62785B0A20875937006F9869 /* QuadMesh.cpp in Sources */,

@@ -48,8 +48,8 @@ namespace RowBlast {
         Settings mSettings;
         UserData mUserData;
         TitleController mTitleController;
-        MapController mMapController;
         GameController mGameController;
+        MapController mMapController;
         Pht::FadeEffect mFadeEffect;
         int mLevelToStart;
     };

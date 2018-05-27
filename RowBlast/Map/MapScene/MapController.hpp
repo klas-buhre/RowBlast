@@ -45,13 +45,14 @@ namespace RowBlast {
         Command Update();
     
     private:
-        Command UpdateMap();
+        void UpdateMap();
+        Command UpdateLevelStartDialog();
         void UpdateNoLivesDialog();
         void UpdateSettingsMenu();
-        Command HandleInput();
+        void HandleInput();
         void UpdateTouchingState(const Pht::TouchEvent& touch);
-        Command HandleTouch(const Pht::TouchEvent& touch);
-        Command HandleLevelClick(int level);
+        void HandleTouch(const Pht::TouchEvent& touch);
+        void HandleLevelClick(int level);
         void Pan(const Pht::TouchEvent& touch);
         void StartPan(const Pht::TouchEvent& touch);
         void UpdateCamera();
@@ -59,6 +60,7 @@ namespace RowBlast {
         
         enum class State {
             Map,
+            LevelStartDialog,
             NoLivesDialog,
             SettingsMenu
         };
@@ -72,6 +74,7 @@ namespace RowBlast {
         Pht::Vec2 mTouchLocationAtPanBegin {0.0f, 0.0f};
         float mCameraXVelocity {0.0f};
         bool mIsTouching {false};
+        int mLevelToStart;
     };
 }
 

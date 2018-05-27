@@ -29,10 +29,12 @@ MapViewControllers::MapViewControllers(Pht::IEngine& engine,
         UiLayer::backgroundFade
     },
     mSettingsButtonController {engine},
+    mLevelStartDialogController {engine, commonResources},
     mNoLivesDialogController {engine, commonResources, userData, PotentiallyZoomedScreen::No},
     mSettingsMenuController {engine, commonResources, settings, PotentiallyZoomedScreen::No} {
     
     mViewManager.AddView(mSettingsButtonController.GetView());
+    mViewManager.AddView(mLevelStartDialogController.GetView());
     mViewManager.AddView(mNoLivesDialogController.GetView());
     mViewManager.AddView(mSettingsMenuController.GetView());
 }
@@ -40,6 +42,7 @@ MapViewControllers::MapViewControllers(Pht::IEngine& engine,
 void MapViewControllers::Init() {
     mFadeEffect.Reset();
 
+    mLevelStartDialogController.SetFadeEffect(mFadeEffect);
     mNoLivesDialogController.SetFadeEffect(mFadeEffect);
     mSettingsMenuController.SetFadeEffect(mFadeEffect);
 
