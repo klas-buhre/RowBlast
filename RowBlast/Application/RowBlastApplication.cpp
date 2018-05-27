@@ -26,11 +26,11 @@ Backlog:
      not really matter since the user can select any piece from the selectables but maybe it is most 
      convenient to go back to the state before the move and not the initial state.
   -Rendering:
-    -Could try reducing scroll speed in map scene using a spring.
-    -Could zoom in on map pin when clicking on a level in the map.
+   X-Maybe slightly less bevel in the blocks.
    X-Maybe the merging of two triangles into a cube could be done by letting the two triangles fade
      into the cube. Render the triangles and the cube at the same time, vary the opacity for the
      triangels from 1 to 0 and from 0 to 1 for the cube.
+    -Could zoom in on map pin when clicking on a level in the map.
   -Tutorial:
     -Make the tutorial as short as possible. Don't give all the rules of the game at once. Instead,
      let the user figure it out by playing. For example, introduce changing the visible moves in the
@@ -47,7 +47,7 @@ Backlog:
     -Credit FastNoise, MIT license: https://github.com/Auburns/FastNoise/
 
 Ongoing tasks:
-   X-Maybe slightly less bevel in the blocks.
+    -Dialog before level starts that states objectives and displays piece types.
 
 
 
@@ -99,10 +99,10 @@ Time Estimation in days:
     -Animations/effects when clearing a level.
         Cost: 7
         Done
-    -Do the marked items in the backlog.
-        Cost: 8
     -Dialog before level starts that states objectives and displays piece types.
         Cost: 2
+    -Do the marked items in the backlog.
+        Cost: 8
     -Moving the next level particle effect to the next level after clearing a level. Add an avatar?
         Cost: 2
     -Levels/Chapters.

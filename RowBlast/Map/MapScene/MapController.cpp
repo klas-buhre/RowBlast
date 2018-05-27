@@ -10,12 +10,13 @@
 #include "SettingsMenuController.hpp"
 #include "NoLivesDialogController.hpp"
 #include "UserData.hpp"
+#include "MathUtils.hpp"
 
 using namespace RowBlast;
 
 namespace {
-    const auto cameraDeaccelerationFactor {0.88f};
-    const auto cameraCutoffVelocity {0.2f};
+    constexpr auto cameraCutoffVelocity {0.1f};
+    constexpr auto dampingCoefficient {5.0f};
 }
 
 MapController::Command::Command(Kind kind, int level) :
@@ -39,6 +40,8 @@ MapController::MapController(Pht::IEngine& engine,
 void MapController::Init() {
     mScene.Init();
     mMapViewControllers.Init();
+    
+    mCameraXVelocity = 0.0f;
 }
 
 MapController::Command MapController::Update() {
@@ -197,7 +200,7 @@ void MapController::Pan(const Pht::TouchEvent& touch) {
             break;
         case Pht::TouchState::Ongoing: {
             auto translation = touch.mLocation - mTouchLocationAtPanBegin;
-            auto newCameraXPosition {mCameraXPositionAtPanBegin - translation.x * 0.026f};
+            auto newCameraXPosition {mCameraXPositionAtPanBegin - translation.x * 0.024f};
             
             mCameraXVelocity = (newCameraXPosition - mScene.GetCameraXPosition()) /
                                mEngine.GetLastFrameSeconds();
@@ -216,14 +219,24 @@ void MapController::StartPan(const Pht::TouchEvent& touch) {
 }
 
 void MapController::UpdateCamera() {
-    if (std::fabs(mCameraXVelocity) < cameraCutoffVelocity) {
+    if (mCameraXVelocity == 0.0f) {
+        return;
+    }
+    
+    auto cameraXPosition {mScene.GetCameraXPosition()};
+    auto deacceleration {dampingCoefficient * mCameraXVelocity};
+    auto dt {mEngine.GetLastFrameSeconds()};
+    auto previousVelocity {mCameraXVelocity};
+    mCameraXVelocity -= deacceleration * dt;
+    
+    if (std::fabs(mCameraXVelocity) < cameraCutoffVelocity ||
+        Pht::Sign(mCameraXVelocity) != Pht::Sign(previousVelocity)) {
+
         mCameraXVelocity = 0.0f;
     }
 
-    auto cameraXPosition {mScene.GetCameraXPosition()};
-    cameraXPosition += mCameraXVelocity * mEngine.GetLastFrameSeconds();
+    cameraXPosition += mCameraXVelocity * dt;
     mScene.SetCameraXPosition(cameraXPosition);
-    mCameraXVelocity *= cameraDeaccelerationFactor;
 }
 
 void MapController::GoToSettingsMenuState() {
