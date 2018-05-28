@@ -8,8 +8,6 @@
 #include "SceneObject.hpp"
 
 namespace RowBlast {
-    class Level;
-    
     enum class SceneObjectPoolKind {
         FieldBlocks,
         PieceBlocks,
@@ -21,7 +19,7 @@ namespace RowBlast {
     public:
         SceneObjectPool(SceneObjectPoolKind poolKind,
                         Pht::SceneObject& parentSceneObject,
-                        const Level& level);
+                        int numFieldColumns = 0);
         
         void ReclaimAll();
         Pht::SceneObject& AccuireSceneObject();

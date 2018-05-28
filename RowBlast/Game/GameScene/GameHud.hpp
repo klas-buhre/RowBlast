@@ -110,12 +110,10 @@ namespace RowBlast {
                               Pht::SceneObject& lPiece);
         void CreateNextPiecesObject(Pht::Scene& scene,
                                     Pht::SceneObject& parentObject,
-                                    const Pht::TextProperties& textProperties,
-                                    const Level& level);
+                                    const Pht::TextProperties& textProperties);
         void CreateSelectablePiecesObject(Pht::Scene& scene,
                                           Pht::SceneObject& parentObject,
-                                          const Pht::TextProperties& textProperties,
-                                          const Level& level);
+                                          const Pht::TextProperties& textProperties);
         Pht::SceneObject& CreateTextRectangle(const Pht::Vec3& position,
                                               float length,
                                               bool isBright,
@@ -126,8 +124,7 @@ namespace RowBlast {
                                                 Pht::Scene& scene,
                                                 Pht::SceneObject& parentObject);
         void CreateThreePreviewPieces(ThreePreviewPieces& previewPieces,
-                                      Pht::SceneObject& parentObject,
-                                      const Level& level);
+                                      Pht::SceneObject& parentObject);
         void UpdateLightAnimation();
         void UpdateProgress();
         void UpdateMovesLeft();

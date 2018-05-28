@@ -232,3 +232,22 @@ std::unique_ptr<Level> LevelLoader::Load(int levelIndex, const LevelResources& l
     
     return level;
 }
+
+std::unique_ptr<LevelInfo> LevelLoader::LoadInfo(int levelIndex,
+                                                 const LevelResources& levelResources) {
+    rapidjson::Document document;
+    Pht::Json::ParseFile(document, "level" + std::to_string(levelIndex) + ".json");
+
+    auto levelPieces {ReadPieceTypes(document, levelResources.GetPieceTypes())};
+    Level::Objective objective;
+    
+    if (document.HasMember("clearGrid")) {
+        objective = Level::Objective::Clear;
+    } else  if (document.HasMember("blueprintGrid")) {
+        objective = Level::Objective::Build;
+    } else {
+        assert(!"Unknown objective");
+    }
+    
+    return std::make_unique<LevelInfo>(levelIndex, objective, levelPieces);
+}

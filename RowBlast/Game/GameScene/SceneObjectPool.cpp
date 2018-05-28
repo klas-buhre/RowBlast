@@ -11,11 +11,11 @@
 using namespace RowBlast;
 
 namespace {
-    int CalcPoolSize(SceneObjectPoolKind poolKind, const Level& level) {
+    int CalcPoolSize(SceneObjectPoolKind poolKind, int numFieldColumns) {
         switch (poolKind) {
             case SceneObjectPoolKind::FieldBlocks: {
                 auto visibleRows {Field::maxNumRows};
-                auto visibleColumns {level.GetNumColumns()};
+                auto visibleColumns {numFieldColumns};
                 return 3 * visibleRows * visibleColumns - visibleRows - visibleColumns;
             }
             case SceneObjectPoolKind::PieceBlocks:
@@ -30,11 +30,11 @@ namespace {
 
 SceneObjectPool::SceneObjectPool(SceneObjectPoolKind poolKind,
                                  Pht::SceneObject& parentSceneObject,
-                                 const Level& level) :
+                                 int numFieldColumns) :
     mContainerSceneObject {std::make_unique<Pht::SceneObject>()} {
     
     parentSceneObject.AddChild(*mContainerSceneObject);
-    mSceneObjects.resize(CalcPoolSize(poolKind, level));
+    mSceneObjects.resize(CalcPoolSize(poolKind, numFieldColumns));
     
     for (auto& sceneObject: mSceneObjects) {
         sceneObject = std::make_unique<Pht::SceneObject>();

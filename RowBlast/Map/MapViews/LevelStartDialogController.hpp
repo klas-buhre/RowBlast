@@ -23,7 +23,7 @@ namespace RowBlast {
         
         LevelStartDialogController(Pht::IEngine& engine, const CommonResources& commonResources);
         
-        void Init();
+        void Init(const LevelInfo& levelInfo);
         void SetFadeEffect(Pht::FadeEffect& fadeEffect);
         Result Update();
         

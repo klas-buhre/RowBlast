@@ -72,8 +72,8 @@ GameHud::GameHud(Pht::IEngine& engine,
     CreateMovesObject(scene, parentObject, upperTextProperties);
     
     Pht::TextProperties lowerTextProperties {font, 1.0f, Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f}};
-    CreateNextPiecesObject(scene, parentObject, lowerTextProperties, level);
-    CreateSelectablePiecesObject(scene, parentObject, lowerTextProperties, level);
+    CreateNextPiecesObject(scene, parentObject, lowerTextProperties);
+    CreateSelectablePiecesObject(scene, parentObject, lowerTextProperties);
 }
 
 void GameHud::CreateLightAndCamera(Pht::Scene& scene,
@@ -238,8 +238,7 @@ void GameHud::CreateGreenBlock(const Pht::Vec3& position,
 
 void GameHud::CreateNextPiecesObject(Pht::Scene& scene,
                                      Pht::SceneObject& parentObject,
-                                     const Pht::TextProperties& textProperties,
-                                     const Level& level) {
+                                     const Pht::TextProperties& textProperties) {
     auto& nextPiecesContainer {scene.CreateSceneObject()};
     auto& renderer {mEngine.GetRenderer()};
     
@@ -263,13 +262,12 @@ void GameHud::CreateNextPiecesObject(Pht::Scene& scene,
     textSceneObject.GetTransform().SetPosition({-0.1f, 1.22f, UiLayer::text});
     nextPiecesContainer.AddChild(textSceneObject);
     
-    CreateThreePreviewPieces(mNextPreviewPieces, nextPiecesContainer, level);
+    CreateThreePreviewPieces(mNextPreviewPieces, nextPiecesContainer);
 }
 
 void GameHud::CreateSelectablePiecesObject(Pht::Scene& scene,
                                            Pht::SceneObject& parentObject,
-                                           const Pht::TextProperties& textProperties,
-                                           const Level& level) {
+                                           const Pht::TextProperties& textProperties) {
     auto& selectablePiecesContainer {scene.CreateSceneObject()};
     auto& renderer {mEngine.GetRenderer()};
     
@@ -307,7 +305,7 @@ void GameHud::CreateSelectablePiecesObject(Pht::Scene& scene,
     textSceneObject.GetTransform().SetPosition({-0.55f, 1.22f, UiLayer::text});
     selectablePiecesContainer.AddChild(textSceneObject);
     
-    CreateThreePreviewPieces(mSelectablePreviewPieces, selectablePiecesContainer, level);
+    CreateThreePreviewPieces(mSelectablePreviewPieces, selectablePiecesContainer);
 }
 
 Pht::SceneObject& GameHud::CreateTextRectangle(const Pht::Vec3& position,
@@ -369,14 +367,12 @@ Pht::SceneObject& GameHud::CreatePiecesRectangle(const Pht::Vec3& position,
 }
 
 void GameHud::CreateThreePreviewPieces(ThreePreviewPieces& previewPieces,
-                                       Pht::SceneObject& parentObject,
-                                       const Level& level) {
+                                       Pht::SceneObject& parentObject) {
     for (auto i {0}; i < previewPieces.size(); ++i) {
         auto& piece {previewPieces[i]};
         
         piece.mSceneObjects = std::make_unique<SceneObjectPool>(SceneObjectPoolKind::PreviewPieceBlocks,
-                                                                parentObject,
-                                                                level);
+                                                                parentObject);
         piece.mSceneObjects->SetIsActive(false);
         
         auto& transform {piece.mSceneObjects->GetContainerSceneObject().GetTransform()};

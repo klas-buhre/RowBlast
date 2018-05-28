@@ -92,6 +92,16 @@ namespace RowBlast {
         std::unique_ptr<BlueprintCellGrid> mBlueprintGrid;
         std::string mBackgroundTextureFilename;
     };
+    
+    struct LevelInfo {
+        LevelInfo(int index,
+                  Level::Objective mObjective,
+                  const std::vector<const Piece*>& pieceTypes);
+        
+        int mIndex {0};
+        Level::Objective mObjective;
+        std::vector<const Piece*> mPieceTypes;
+    };
 }
 
 #endif

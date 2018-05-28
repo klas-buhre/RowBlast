@@ -54,6 +54,10 @@ namespace RowBlast {
     
         void StartLevel(int levelIndex);
         Command Update();
+        
+        const LevelResources& GetLevelResources() const {
+            return mLevelResources;
+        }
     
     private:
         Command UpdateGame();

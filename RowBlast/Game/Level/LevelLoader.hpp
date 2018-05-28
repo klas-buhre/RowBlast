@@ -9,6 +9,7 @@ namespace RowBlast {
     
     namespace LevelLoader {
         std::unique_ptr<Level> Load(int levelIndex, const LevelResources& levelResources);
+        std::unique_ptr<LevelInfo> LoadInfo(int levelIndex, const LevelResources& levelResources);
     }
 }
 

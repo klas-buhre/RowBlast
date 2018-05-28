@@ -7,10 +7,13 @@
 #include "IRenderer.hpp"
 #include "IInput.hpp"
 #include "InputEvent.hpp"
+#include "MathUtils.hpp"
+
+// Game includes.
 #include "SettingsMenuController.hpp"
 #include "NoLivesDialogController.hpp"
 #include "UserData.hpp"
-#include "MathUtils.hpp"
+#include "LevelLoader.hpp"
 
 using namespace RowBlast;
 
@@ -31,9 +34,11 @@ int MapController::Command::GetLevel() const {
 MapController::MapController(Pht::IEngine& engine,
                              const CommonResources& commonResources,
                              UserData& userData,
-                             Settings& settings) :
+                             Settings& settings,
+                             const LevelResources& levelResources) :
     mEngine {engine},
     mUserData {userData},
+    mLevelResources {levelResources},
     mScene {engine, commonResources, userData},
     mMapViewControllers {engine, mScene, commonResources, userData, settings} {}
 
@@ -185,17 +190,19 @@ void MapController::HandleTouch(const Pht::TouchEvent& touch) {
     Pan(touch);
 }
 
-void MapController::HandleLevelClick(int level) {
+void MapController::HandleLevelClick(int levelIndex) {
     if (mUserData.GetLifeManager().GetNumLives() == 0) {
         mState = State::NoLivesDialog;
         mMapViewControllers.SetActiveController(MapViewControllers::NoLivesDialog);
         mMapViewControllers.GetNoLivesDialogController().Init(SlidingMenuAnimation::UpdateFade::Yes,
                                                               true);
     } else {
-        mLevelToStart = level;
+        mLevelToStart = levelIndex;
         mState = State::LevelStartDialog;
         mMapViewControllers.SetActiveController(MapViewControllers::LevelStartDialog);
-        mMapViewControllers.GetLevelStartDialogController().Init();
+        
+        auto levelInfo {LevelLoader::LoadInfo(levelIndex, mLevelResources)};
+        mMapViewControllers.GetLevelStartDialogController().Init(*levelInfo);
     }
 }
 

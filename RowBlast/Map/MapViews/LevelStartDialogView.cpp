@@ -1,8 +1,12 @@
 #include "LevelStartDialogView.hpp"
 
+// Engine includes.
+#include "TextComponent.hpp"
+
 // Game includes.
 #include "CommonResources.hpp"
 #include "UiLayer.hpp"
+#include "Level.hpp"
 
 using namespace RowBlast;
 
@@ -18,9 +22,9 @@ LevelStartDialogView::LevelStartDialogView(Pht::IEngine& engine,
 
     SetSize(menuWindow.GetSize());
     
-    CreateText({-3.4f, 5.1f, UiLayer::text},
-               "LEVEL 23",
-               guiResources.GetCaptionTextProperties(zoom));
+    mCaption = &CreateText({-2.1f, 5.1f, UiLayer::text},
+                           "LEVEL 1",
+                           guiResources.GetCaptionTextProperties(zoom));
 
     Pht::Vec3 closeButtonPosition {
         GetSize().x / 2.0f - 1.5f,
@@ -40,6 +44,16 @@ LevelStartDialogView::LevelStartDialogView(Pht::IEngine& engine,
                                                 closeButtonInputSize,
                                                 closeButtonStyle);
 
+    auto& textProperties {guiResources.GetSmallTextProperties(zoom)};
+    mClearObjective = &CreateText({-3.6f, 2.7f, UiLayer::text},
+                                  "Clear all gray blocks",
+                                  textProperties);
+    mClearObjective->GetSceneObject().SetIsVisible(false);
+    mBuildObjective = &CreateText({-2.95f, 2.7f, UiLayer::text},
+                                  "Fill all gray slots",
+                                  textProperties);
+    mBuildObjective->GetSceneObject().SetIsVisible(false);
+
     Pht::Vec2 playButtonInputSize {205.0f, 59.0f};
     
     MenuButton::Style playButtonStyle;
@@ -51,10 +65,26 @@ LevelStartDialogView::LevelStartDialogView(Pht::IEngine& engine,
 
     mPlayButton = std::make_unique<MenuButton>(engine,
                                                *this,
-                                               Pht::Vec3 {0.0f, -2.9f, UiLayer::textRectangle},
+                                               Pht::Vec3 {0.0f, -3.1f, UiLayer::textRectangle},
                                                playButtonInputSize,
                                                playButtonStyle);
     mPlayButton->CreateText({-1.1f, -0.31f, UiLayer::buttonText},
                             "Play",
                             guiResources.GetLargeWhiteButtonTextProperties(zoom));
+}
+
+void LevelStartDialogView::Init(const LevelInfo& levelInfo) {
+    mCaption->GetText() = "LEVEL " + std::to_string(levelInfo.mIndex);
+    
+    mClearObjective->GetSceneObject().SetIsVisible(false);
+    mBuildObjective->GetSceneObject().SetIsVisible(false);
+    
+    switch (levelInfo.mObjective) {
+        case Level::Objective::Clear:
+            mClearObjective->GetSceneObject().SetIsVisible(true);
+            break;
+        case Level::Objective::Build:
+            mBuildObjective->GetSceneObject().SetIsVisible(true);
+            break;
+    }
 }

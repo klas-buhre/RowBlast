@@ -20,3 +20,10 @@ Level::Level(int index,
     mStarLimits {starLimits},
     mPieceTypes {pieceTypes},
     mBackgroundTextureFilename {backgroundTextureFilename} {}
+
+LevelInfo::LevelInfo(int index,
+                     Level::Objective objective,
+                     const std::vector<const Piece*>& pieceTypes) :
+    mIndex {index},
+    mObjective {objective},
+    mPieceTypes {pieceTypes} {}

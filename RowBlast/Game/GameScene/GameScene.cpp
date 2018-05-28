@@ -325,13 +325,11 @@ void GameScene::CreateFieldBlocksContainer() {
 void GameScene::CreateSceneObjectPools(const Level& level) {
     mFieldBlocks = std::make_unique<SceneObjectPool>(SceneObjectPoolKind::FieldBlocks,
                                                      *mFieldBlocksContainer,
-                                                     level);
+                                                     level.GetNumColumns());
     mPieceBlocks = std::make_unique<SceneObjectPool>(SceneObjectPoolKind::PieceBlocks,
-                                                     *mFieldBlocksContainer,
-                                                     level);
+                                                     *mFieldBlocksContainer);
     mGhostPieces = std::make_unique<SceneObjectPool>(SceneObjectPoolKind::GhostPieces,
-                                                     *mFieldBlocksContainer,
-                                                     level);
+                                                     *mFieldBlocksContainer);
 }
 
 void GameScene::CreateEffectsContainer() {

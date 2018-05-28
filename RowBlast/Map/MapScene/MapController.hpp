@@ -13,6 +13,7 @@ namespace RowBlast {
     class CommonResources;
     class UserData;
     class Settings;
+    class LevelResources;
     
     class MapController {
     public:
@@ -39,7 +40,8 @@ namespace RowBlast {
         MapController(Pht::IEngine& engine,
                       const CommonResources& commonResources,
                       UserData& userData,
-                      Settings& settings);
+                      Settings& settings,
+                      const LevelResources& levelResources);
     
         void Init();
         Command Update();
@@ -52,7 +54,7 @@ namespace RowBlast {
         void HandleInput();
         void UpdateTouchingState(const Pht::TouchEvent& touch);
         void HandleTouch(const Pht::TouchEvent& touch);
-        void HandleLevelClick(int level);
+        void HandleLevelClick(int levelIndex);
         void Pan(const Pht::TouchEvent& touch);
         void StartPan(const Pht::TouchEvent& touch);
         void UpdateCamera();
@@ -67,6 +69,7 @@ namespace RowBlast {
         
         Pht::IEngine& mEngine;
         UserData& mUserData;
+        const LevelResources& mLevelResources;
         State mState {State::Map};
         MapScene mScene;
         MapViewControllers mMapViewControllers;
