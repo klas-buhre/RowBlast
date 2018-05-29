@@ -12,6 +12,7 @@ namespace Pht {
 
 namespace RowBlast {
     class CommonResources;
+    class PieceResources;
     
     class LevelStartDialogController {
     public:
@@ -23,7 +24,7 @@ namespace RowBlast {
         
         LevelStartDialogController(Pht::IEngine& engine, const CommonResources& commonResources);
         
-        void Init(const LevelInfo& levelInfo);
+        void Init(const LevelInfo& levelInfo, const PieceResources& pieceResources);
         void SetFadeEffect(Pht::FadeEffect& fadeEffect);
         Result Update();
         

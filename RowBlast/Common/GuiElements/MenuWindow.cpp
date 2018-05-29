@@ -20,8 +20,11 @@ namespace {
     const Pht::Vec4 blueColor {0.45f, 0.75f, 1.0f, 1.0};
     const Pht::Vec4 lightBlueColor {0.5f, 0.8f, 1.0f, 1.0};
     const Pht::Vec4 stencilColor {1.0f, 1.0f, 1.0f, 1.0f};
+    const Pht::Vec4 borderColor {0.5f, 0.8f, 1.0f, 1.0};
+    const Pht::Vec4 darkBlueColor {0.0f, 0.0f, 0.5f, 1.0};
     constexpr auto xBorder {0.45f};
-    constexpr auto cornerRadius {0.37f};
+    constexpr auto darkBorderThickness {0.2f};
+    constexpr auto outerCornerRadius {0.37f};
     constexpr auto captionBarHeight {3.0f};
     constexpr auto squareSide {0.5f};
     constexpr auto footerBarHeight {2.0f};
@@ -31,6 +34,7 @@ namespace {
 MenuWindow::MenuWindow(Pht::IEngine& engine,
                        const CommonResources& commonResources,
                        Size size,
+                       Style style,
                        PotentiallyZoomedScreen potentiallyZoomed) {
     auto& renderer {engine.GetRenderer()};
     auto& renderBufferSize {renderer.GetRenderBufferSize()};
@@ -64,10 +68,21 @@ MenuWindow::MenuWindow(Pht::IEngine& engine,
     
     auto rasterizer {std::make_unique<Pht::OfflineRasterizer>(mSize, imageSize)};
 
-    FillStencilBuffer(*rasterizer);
-
-    DrawCaptionBar(*rasterizer);
-    DrawMainArea(*rasterizer);
+    switch (style) {
+        case Style::Bright:
+            FillStencilBuffer(*rasterizer, outerCornerRadius, 0.0f);
+            DrawBrightCaptionBar(*rasterizer);
+            DrawBrightMainArea(*rasterizer);
+            break;
+        case Style::Dark:
+            FillStencilBuffer(*rasterizer, outerCornerRadius, 0.0f);
+            DrawDarkBorder(*rasterizer);
+            FillStencilBuffer(*rasterizer,
+                              outerCornerRadius - darkBorderThickness,
+                              darkBorderThickness);
+            DrawDarkMainArea(*rasterizer);
+            break;
+    }
 
     auto image {rasterizer->ProduceImage()};
     Pht::Material imageMaterial {*image, Pht::GenerateMipmap::Yes};
@@ -77,39 +92,44 @@ MenuWindow::MenuWindow(Pht::IEngine& engine,
                                                             imageMaterial);
 }
 
-void MenuWindow::FillStencilBuffer(Pht::OfflineRasterizer& rasterizer) {
+void MenuWindow::FillStencilBuffer(Pht::OfflineRasterizer& rasterizer,
+                                   float cornerRadius,
+                                   float padding) {
     rasterizer.SetStencilBufferFillMode();
     
-    rasterizer.DrawCircle({cornerRadius, cornerRadius}, cornerRadius, cornerRadius, stencilColor);
-    rasterizer.DrawCircle({mSize.x - cornerRadius, cornerRadius},
+    rasterizer.DrawCircle({cornerRadius + padding, cornerRadius + padding},
                           cornerRadius,
                           cornerRadius,
                           stencilColor);
-    rasterizer.DrawCircle({mSize.x - cornerRadius, mSize.y - cornerRadius},
+    rasterizer.DrawCircle({mSize.x - cornerRadius - padding, cornerRadius + padding},
                           cornerRadius,
                           cornerRadius,
                           stencilColor);
-    rasterizer.DrawCircle({cornerRadius, mSize.y - cornerRadius},
+    rasterizer.DrawCircle({mSize.x - cornerRadius - padding, mSize.y - cornerRadius - padding},
+                          cornerRadius,
+                          cornerRadius,
+                          stencilColor);
+    rasterizer.DrawCircle({cornerRadius + padding, mSize.y - cornerRadius - padding},
                           cornerRadius,
                           cornerRadius,
                           stencilColor);
     
-    Pht::Vec2 lowerLeft1 {cornerRadius, 0.0f};
-    Pht::Vec2 upperRight1 {mSize.x - cornerRadius, mSize.y};
+    Pht::Vec2 lowerLeft1 {cornerRadius + padding, padding};
+    Pht::Vec2 upperRight1 {mSize.x - cornerRadius - padding, mSize.y - padding};
     rasterizer.DrawRectangle(upperRight1, lowerLeft1, stencilColor);
 
-    Pht::Vec2 lowerLeft2 {0.0f, cornerRadius};
-    Pht::Vec2 upperRight2 {cornerRadius, mSize.y - cornerRadius};
+    Pht::Vec2 lowerLeft2 {padding, cornerRadius + padding};
+    Pht::Vec2 upperRight2 {cornerRadius + padding, mSize.y - cornerRadius - padding};
     rasterizer.DrawRectangle(upperRight2, lowerLeft2, stencilColor);
 
-    Pht::Vec2 lowerLeft3 {mSize.x - cornerRadius, cornerRadius};
-    Pht::Vec2 upperRight3 {mSize.x, mSize.y - cornerRadius};
+    Pht::Vec2 lowerLeft3 {mSize.x - cornerRadius - padding, cornerRadius + padding};
+    Pht::Vec2 upperRight3 {mSize.x - padding, mSize.y - cornerRadius - padding};
     rasterizer.DrawRectangle(upperRight3, lowerLeft3, stencilColor);
 
     rasterizer.EnableStencilTest();
 }
 
-void MenuWindow::DrawCaptionBar(Pht::OfflineRasterizer& rasterizer) {
+void MenuWindow::DrawBrightCaptionBar(Pht::OfflineRasterizer& rasterizer) {
     Pht::OfflineRasterizer::HorizontalGradientColors rectangleColors {blueColor, lightBlueColor};
     Pht::Vec2 lowerLeft1 {0.0f, mSize.y - captionBarHeight};
     Pht::Vec2 upperRight1 {mSize.x, mSize.y};
@@ -131,7 +151,7 @@ void MenuWindow::DrawCaptionBar(Pht::OfflineRasterizer& rasterizer) {
     }
 }
 
-void MenuWindow::DrawMainArea(Pht::OfflineRasterizer& rasterizer) {
+void MenuWindow::DrawBrightMainArea(Pht::OfflineRasterizer& rasterizer) {
     Pht::OfflineRasterizer::HorizontalGradientColors rectangleColors {darkerGrayColor, grayColor};
     Pht::Vec2 lowerLeft1 {0.0f, 0.0f};
     Pht::Vec2 upperRight1 {mSize.x, mSize.y - captionBarHeight};
@@ -155,4 +175,16 @@ void MenuWindow::DrawMainArea(Pht::OfflineRasterizer& rasterizer) {
     Pht::Vec2 lowerLeft2 {0.0f, footerBarHeight};
     Pht::Vec2 upperRight2 {mSize.x, footerBarHeight + footerBarBorderHeight};
     rasterizer.DrawRectangle(upperRight2, lowerLeft2, footerBorderColor, Pht::DrawOver::Yes);
+}
+
+void MenuWindow::DrawDarkBorder(Pht::OfflineRasterizer& rasterizer) {
+    Pht::Vec2 lowerLeft {0.0f, 0.0f};
+    Pht::Vec2 upperRight {mSize.x, mSize.y};
+    rasterizer.DrawRectangle(upperRight, lowerLeft, borderColor, Pht::DrawOver::Yes);
+}
+
+void MenuWindow::DrawDarkMainArea(Pht::OfflineRasterizer& rasterizer) {
+    Pht::Vec2 lowerLeft {0.0f, 0.0f};
+    Pht::Vec2 upperRight {mSize.x, mSize.y};
+    rasterizer.DrawRectangle(upperRight, lowerLeft, darkBlueColor, Pht::DrawOver::Yes);
 }

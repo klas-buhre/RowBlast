@@ -25,6 +25,7 @@ namespace {
             levelPieceTypes.push_back(i->second.get());
         }
         
+        assert(levelPieceTypes.size() <= Level::maxNumPieceTypes);
         return levelPieceTypes;
     }
     

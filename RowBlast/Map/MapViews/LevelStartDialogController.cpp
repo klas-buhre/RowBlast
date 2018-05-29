@@ -15,8 +15,9 @@ LevelStartDialogController::LevelStartDialogController(Pht::IEngine& engine,
     mView {engine, commonResources},
     mSlidingMenuAnimation {engine, mView} {}
 
-void LevelStartDialogController::Init(const LevelInfo& levelInfo) {
-    mView.Init(levelInfo);
+void LevelStartDialogController::Init(const LevelInfo& levelInfo,
+                                      const PieceResources& pieceResources) {
+    mView.Init(levelInfo, pieceResources);
     mSlidingMenuAnimation.Init(SlidingMenuAnimation::UpdateFade::Yes);
 }
 

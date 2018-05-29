@@ -22,6 +22,21 @@ GuiResources::GuiResources(Pht::IEngine& engine, const CommonResources& commonRe
         engine,
         commonResources,
         MenuWindow::Size::Medium,
+        MenuWindow::Style::Bright,
+        PotentiallyZoomedScreen::No
+    },
+    mLargeMenuWindow {
+        engine,
+        commonResources,
+        MenuWindow::Size::Large,
+        MenuWindow::Style::Bright,
+        PotentiallyZoomedScreen::No
+    },
+    mLargeDarkMenuWindow {
+        engine,
+        commonResources,
+        MenuWindow::Size::Large,
+        MenuWindow::Style::Dark,
         PotentiallyZoomedScreen::No
     },
     mBlackButtonTextProperties {
@@ -58,22 +73,30 @@ GuiResources::GuiResources(Pht::IEngine& engine, const CommonResources& commonRe
         1.0f,
         {0.35f, 0.35f, 0.35f, 1.0f}
     },
+    mLargeTextProperties {
+        commonResources.GetHussarFontSize35(PotentiallyZoomedScreen::No),
+        1.0f,
+        {0.35f, 0.35f, 0.35f, 1.0f}
+    },
     mLargeMenuWindowPotentiallyZoomedScreen {
         engine,
         commonResources,
         MenuWindow::Size::Large,
+        MenuWindow::Style::Bright,
         PotentiallyZoomedScreen::Yes
     },
     mMediumMenuWindowPotentiallyZoomedScreen {
         engine,
         commonResources,
         MenuWindow::Size::Medium,
+        MenuWindow::Style::Bright,
         PotentiallyZoomedScreen::Yes
     },
     mSmallMenuWindowPotentiallyZoomedScreen {
         engine,
         commonResources,
         MenuWindow::Size::Small,
+        MenuWindow::Style::Bright,
         PotentiallyZoomedScreen::Yes
     },
     mBlackButtonTextPropertiesPotentiallyZoomedScreen {
@@ -122,6 +145,15 @@ GuiResources::GetMediumMenuWindow(PotentiallyZoomedScreen potentiallyZoomed) con
             return mMediumMenuWindowPotentiallyZoomedScreen;
         case PotentiallyZoomedScreen::No:
             return mMediumMenuWindow;
+    }
+}
+
+const MenuWindow& GuiResources::GetLargeMenuWindow(PotentiallyZoomedScreen potentiallyZoomed) const {
+    switch (potentiallyZoomed) {
+        case PotentiallyZoomedScreen::Yes:
+            return mLargeMenuWindowPotentiallyZoomedScreen;
+        case PotentiallyZoomedScreen::No:
+            return mLargeMenuWindow;
     }
 }
 

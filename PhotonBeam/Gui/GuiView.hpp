@@ -11,6 +11,7 @@
 
 namespace Pht {
     class TextComponent;
+    class ISceneManager;
     
     class GuiView {
     public:
@@ -23,6 +24,10 @@ namespace Pht {
         TextComponent& CreateText(const Vec3& position,
                                   const std::string& text,
                                   const TextProperties& properties);
+        SceneObject& CreateSceneObject(const IMesh& mesh,
+                                       const Material& material,
+                                       ISceneManager& sceneManager);
+        SceneObject& CreateSceneObject();
         Vec2 GetPosition() const;
         
         void SetSize(const Vec2& size) {

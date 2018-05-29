@@ -28,9 +28,15 @@ namespace RowBlast {
             Small
         };
         
+        enum class Style {
+            Bright,
+            Dark
+        };
+        
         MenuWindow(Pht::IEngine& engine,
                    const CommonResources& commonResources,
                    Size size,
+                   Style style,
                    PotentiallyZoomedScreen potentiallyZoomed);
 
         Pht::RenderableObject& GetRenderable() const {
@@ -42,9 +48,13 @@ namespace RowBlast {
         }
         
     private:
-        void FillStencilBuffer(Pht::OfflineRasterizer& rasterizer);
-        void DrawCaptionBar(Pht::OfflineRasterizer& rasterizer);
-        void DrawMainArea(Pht::OfflineRasterizer& rasterizer);
+        void FillStencilBuffer(Pht::OfflineRasterizer& rasterizer,
+                               float cornerRadius,
+                               float padding);
+        void DrawBrightCaptionBar(Pht::OfflineRasterizer& rasterizer);
+        void DrawBrightMainArea(Pht::OfflineRasterizer& rasterizer);
+        void DrawDarkBorder(Pht::OfflineRasterizer& rasterizer);
+        void DrawDarkMainArea(Pht::OfflineRasterizer& rasterizer);
         
         std::unique_ptr<Pht::RenderableObject> mRenderableObject;
         Pht::Vec2 mSize;

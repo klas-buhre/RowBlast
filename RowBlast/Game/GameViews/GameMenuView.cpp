@@ -13,8 +13,9 @@
 using namespace RowBlast;
 
 GameMenuView::GameMenuView(Pht::IEngine& engine, const CommonResources& commonResources) {
+    PotentiallyZoomedScreen zoom {PotentiallyZoomedScreen::Yes};
     auto& guiResources {commonResources.GetGuiResources()};
-    auto& menuWindow {guiResources.GetLargeMenuWindowPotentiallyZoomedScreen()};
+    auto& menuWindow {guiResources.GetLargeMenuWindow(zoom)};
     
     auto menuWindowSceneObject {std::make_unique<Pht::SceneObject>(&menuWindow.GetRenderable())};
     menuWindowSceneObject->GetTransform().SetPosition({0.0f, 0.0f, UiLayer::background});
@@ -23,8 +24,7 @@ GameMenuView::GameMenuView(Pht::IEngine& engine, const CommonResources& commonRe
     SetSize(menuWindow.GetSize());
     SetPosition({0.0f, 0.0f});
     
-    PotentiallyZoomedScreen zoom {PotentiallyZoomedScreen::Yes};
-    CreateText({-1.71f, 7.5f, UiLayer::text}, "PAUSED", guiResources.GetCaptionTextProperties(zoom));
+    CreateText({-1.71f, 7.6f, UiLayer::text}, "PAUSED", guiResources.GetCaptionTextProperties(zoom));
 
     MenuButton::Style yellowButtonStyle;
     yellowButtonStyle.mMeshFilename = GuiResources::mMediumButtonMeshFilename;

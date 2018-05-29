@@ -58,6 +58,10 @@ namespace RowBlast {
         const LevelResources& GetLevelResources() const {
             return mLevelResources;
         }
+        
+        const PieceResources& GetPieceResources() const {
+            return mPieceResources;
+        }
     
     private:
         Command UpdateGame();

@@ -14,6 +14,7 @@ namespace RowBlast {
     class UserData;
     class Settings;
     class LevelResources;
+    class PieceResources;
     
     class MapController {
     public:
@@ -41,7 +42,8 @@ namespace RowBlast {
                       const CommonResources& commonResources,
                       UserData& userData,
                       Settings& settings,
-                      const LevelResources& levelResources);
+                      const LevelResources& levelResources,
+                      const PieceResources& pieceResources);
     
         void Init();
         Command Update();
@@ -70,6 +72,7 @@ namespace RowBlast {
         Pht::IEngine& mEngine;
         UserData& mUserData;
         const LevelResources& mLevelResources;
+        const PieceResources& mPieceResources;
         State mState {State::Map};
         MapScene mScene;
         MapViewControllers mMapViewControllers;

@@ -30,6 +30,7 @@ Backlog:
    X-Maybe the merging of two triangles into a cube could be done by letting the two triangles fade
      into the cube. Render the triangles and the cube at the same time, vary the opacity for the
      triangels from 1 to 0 and from 0 to 1 for the cube.
+    -Maybe remove the menu window from the level completed view and remove the fade.
     -Could zoom in on map pin when clicking on a level in the map.
   -Tutorial:
     -Make the tutorial as short as possible. Don't give all the rules of the game at once. Instead,
@@ -48,7 +49,7 @@ Backlog:
 
 Ongoing tasks:
     -Dialog before level starts that states objectives and displays piece types.
-
+        -Try a dark menu window.
 
 
 Ideas:
@@ -370,7 +371,8 @@ RowBlastApplication::RowBlastApplication(Pht::IEngine& engine) :
         mCommonResources,
         mUserData,
         mSettings,
-        mGameController.GetLevelResources()
+        mGameController.GetLevelResources(),
+        mGameController.GetPieceResources()
     },
     mFadeEffect {engine.GetSceneManager(), engine.GetRenderer(), titleFadeInDuration, 1.0f, 0.0f} {
 

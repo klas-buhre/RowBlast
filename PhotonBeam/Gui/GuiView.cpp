@@ -1,6 +1,7 @@
 #include "GuiView.hpp"
 
 #include "TextComponent.hpp"
+#include "ISceneManager.hpp"
 
 using namespace Pht;
 
@@ -36,6 +37,22 @@ TextComponent& GuiView::CreateText(const Vec3& position,
     sceneObject->SetComponent<TextComponent>(std::move(textComponent));
     sceneObject->GetTransform().SetPosition(position);
     AddSceneObject(std::move(sceneObject));
+    return retVal;
+}
+
+SceneObject& GuiView::CreateSceneObject(const IMesh& mesh,
+                                        const Material& material,
+                                        ISceneManager& sceneManager) {
+    auto sceneObject {sceneManager.CreateSceneObject(mesh, material, mSceneResources)};
+    auto& retVal {*sceneObject};
+    mSceneResources.AddSceneObject(std::move(sceneObject));
+    return retVal;
+}
+
+SceneObject& GuiView::CreateSceneObject() {
+    auto sceneObject {std::make_unique<SceneObject>()};
+    auto& retVal {*sceneObject};
+    mSceneResources.AddSceneObject(std::move(sceneObject));
     return retVal;
 }
 

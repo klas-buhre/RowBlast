@@ -78,6 +78,8 @@ namespace RowBlast {
         const std::string& GetBackgroundTextureFilename() const {
             return mBackgroundTextureFilename;
         }
+        
+        static constexpr int maxNumPieceTypes {11};
 
     private:
         int mIndex {0};

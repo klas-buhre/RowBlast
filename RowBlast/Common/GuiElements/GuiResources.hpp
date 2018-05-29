@@ -18,19 +18,24 @@ namespace RowBlast {
     public:
         GuiResources(Pht::IEngine& engine, const CommonResources& commonResources);
         const MenuWindow& GetMediumMenuWindow(PotentiallyZoomedScreen potentiallyZoomed) const;
+        const MenuWindow& GetLargeMenuWindow(PotentiallyZoomedScreen potentiallyZoomed) const;
         const Pht::TextProperties& GetBlackButtonTextProperties(PotentiallyZoomedScreen potentiallyZoomed) const;
         const Pht::TextProperties& GetLargeWhiteButtonTextProperties(PotentiallyZoomedScreen potentiallyZoomed) const;
         const Pht::TextProperties& GetWhiteButtonTextProperties(PotentiallyZoomedScreen potentiallyZoomed) const;
         const Pht::TextProperties& GetCaptionTextProperties(PotentiallyZoomedScreen potentiallyZoomed) const;
         const Pht::TextProperties& GetSmallTextProperties(PotentiallyZoomedScreen potentiallyZoomed) const;
         Pht::RenderableObject& GetCloseButton(PotentiallyZoomedScreen potentiallyZoomed) const;
-    
-        const MenuWindow& GetLargeMenuWindowPotentiallyZoomedScreen() const {
-            return mLargeMenuWindowPotentiallyZoomedScreen;
-        }
 
         const MenuWindow& GetSmallMenuWindowPotentiallyZoomedScreen() const {
             return mSmallMenuWindowPotentiallyZoomedScreen;
+        }
+        
+        const Pht::TextProperties& GetLargeTextProperties() const {
+            return mLargeTextProperties;
+        }
+        
+        const MenuWindow& GetLargeDarkMenuWindow() const {
+            return mLargeDarkMenuWindow;
         }
 
         static const Pht::Color mBlueButtonColor;
@@ -46,11 +51,14 @@ namespace RowBlast {
 
     private:
         MenuWindow mMediumMenuWindow;
+        MenuWindow mLargeMenuWindow;
+        MenuWindow mLargeDarkMenuWindow;
         Pht::TextProperties mBlackButtonTextProperties;
         Pht::TextProperties mLargeWhiteButtonTextProperties;
         Pht::TextProperties mWhiteButtonTextProperties;
         Pht::TextProperties mCaptionTextProperties;
         Pht::TextProperties mSmallTextProperties;
+        Pht::TextProperties mLargeTextProperties;
         MenuWindow mLargeMenuWindowPotentiallyZoomedScreen;
         MenuWindow mMediumMenuWindowPotentiallyZoomedScreen;
         MenuWindow mSmallMenuWindowPotentiallyZoomedScreen;

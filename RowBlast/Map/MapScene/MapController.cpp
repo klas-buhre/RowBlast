@@ -35,10 +35,12 @@ MapController::MapController(Pht::IEngine& engine,
                              const CommonResources& commonResources,
                              UserData& userData,
                              Settings& settings,
-                             const LevelResources& levelResources) :
+                             const LevelResources& levelResources,
+                             const PieceResources& pieceResources) :
     mEngine {engine},
     mUserData {userData},
     mLevelResources {levelResources},
+    mPieceResources {pieceResources},
     mScene {engine, commonResources, userData},
     mMapViewControllers {engine, mScene, commonResources, userData, settings} {}
 
@@ -202,7 +204,7 @@ void MapController::HandleLevelClick(int levelIndex) {
         mMapViewControllers.SetActiveController(MapViewControllers::LevelStartDialog);
         
         auto levelInfo {LevelLoader::LoadInfo(levelIndex, mLevelResources)};
-        mMapViewControllers.GetLevelStartDialogController().Init(*levelInfo);
+        mMapViewControllers.GetLevelStartDialogController().Init(*levelInfo, mPieceResources);
     }
 }
 
