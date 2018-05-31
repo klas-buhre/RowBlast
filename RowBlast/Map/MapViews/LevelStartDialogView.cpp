@@ -121,11 +121,11 @@ void LevelStartDialogView::CreatePreviewPiecesContainer(Pht::IEngine& engine) {
         blocksTransform.SetRotation({-30.0f, -30.0f, 0.0f});
     }
     
-    CreateGlowEffect(*container, engine);
+    CreateGlowEffects(*container, engine);
     AddSceneObject(std::move(container));
 }
 
-void LevelStartDialogView::CreateGlowEffect(Pht::SceneObject& parentObject, Pht::IEngine& engine) {
+void LevelStartDialogView::CreateGlowEffects(Pht::SceneObject& parentObject, Pht::IEngine& engine) {
     Pht::EmitterSettings particleEmitterSettings {
         .mPosition = Pht::Vec3{0.0f, 0.0f, 0.0f},
         .mSize = Pht::Vec3{0.0f, 0.0f, 0.0f},
@@ -137,8 +137,7 @@ void LevelStartDialogView::CreateGlowEffect(Pht::SceneObject& parentObject, Pht:
     Pht::ParticleSettings particleSettings {
         .mVelocity = Pht::Vec3{0.0f, 0.0f, 0.0f},
         .mVelocityRandomPart = Pht::Vec3{0.0f, 0.0f, 0.0f},
-        // .mColor = Pht::Vec4{0.5f, 0.5f, 1.0f, 1.0f},
-        .mColor = Pht::Vec4{2.0f, 2.0f, 1.0f, 1.0f},
+        .mColor = Pht::Vec4{0.5f, 0.5f, 1.0f, 1.0f},
         .mColorRandomPart = Pht::Vec4{0.0f, 0.0f, 0.0f, 0.0f},
         .mTextureFilename = "flare03.png",
         .mTimeToLive = std::numeric_limits<float>::infinity(),
@@ -148,7 +147,7 @@ void LevelStartDialogView::CreateGlowEffect(Pht::SceneObject& parentObject, Pht:
         .mSize = Pht::Vec2{15.0f, 15.0f},
         .mSizeRandomPart = 0.0f,
         .mShrinkDuration = 0.0f,
-        .mGrowDuration = 0.5f
+        .mGrowDuration = 0.75f
     };
     
     auto& particleSystem {engine.GetParticleSystem()};
@@ -158,8 +157,33 @@ void LevelStartDialogView::CreateGlowEffect(Pht::SceneObject& parentObject, Pht:
     auto& material {mGlowEffect->GetRenderable()->GetMaterial()};
     material.SetShaderType(Pht::ShaderType::ParticleNoAlphaTexture);
     
-    mGlowEffect->GetTransform().SetPosition({0.0f, 0.0f, UiLayer::buttonText});
+    mGlowEffect->GetTransform().SetPosition({0.0f, 0.1f, UiLayer::buttonText});
     parentObject.AddChild(*mGlowEffect);
+    
+    Pht::ParticleSettings particleSettings2 {
+        .mVelocity = Pht::Vec3{0.0f, 0.0f, 0.0f},
+        .mVelocityRandomPart = Pht::Vec3{0.0f, 0.0f, 0.0f},
+        .mColor = Pht::Vec4{0.4f, 0.4f, 1.0f, 1.0f},
+        .mColorRandomPart = Pht::Vec4{0.0f, 0.0f, 0.0f, 0.0f},
+        .mTextureFilename = "flare24.png",
+        .mTimeToLive = std::numeric_limits<float>::infinity(),
+        .mTimeToLiveRandomPart = 0.0f,
+        .mFadeOutDuration = 0.5f,
+        .mZAngularVelocity = 0.0f,
+        .mSize = Pht::Vec2{22.0f, 22.0f},
+        .mSizeRandomPart = 0.0f,
+        .mShrinkDuration = 0.0f,
+        .mGrowDuration = 0.2f
+    };
+    
+    mRoundGlowEffect = particleSystem.CreateParticleEffectSceneObject(particleSettings2,
+                                                                      particleEmitterSettings,
+                                                                      Pht::RenderMode::Triangles);
+    auto& material2 {mRoundGlowEffect->GetRenderable()->GetMaterial()};
+    material2.SetShaderType(Pht::ShaderType::ParticleNoAlphaTexture);
+    
+    mRoundGlowEffect->GetTransform().SetPosition({0.0f, 0.1f, -0.9f});
+    parentObject.AddChild(*mRoundGlowEffect);
 }
 
 void LevelStartDialogView::Init(const LevelInfo& levelInfo, const PieceResources& pieceResources) {
@@ -176,8 +200,6 @@ void LevelStartDialogView::Init(const LevelInfo& levelInfo, const PieceResources
             mBuildObjective->GetSceneObject().SetIsVisible(true);
             break;
     }
-    
-    mGlowEffect->GetComponent<Pht::ParticleEffect>()->Start();
     
     for (auto& previewPiece: mPreviewPieces) {
         previewPiece.mBlockSceneObjects->SetIsActive(false);
@@ -284,8 +306,14 @@ void LevelStartDialogView::InitPreviewPiece(LevelStartPreviewPiece& previewPiece
     }
 }
 
+void LevelStartDialogView::StartEffects() {
+    mGlowEffect->GetComponent<Pht::ParticleEffect>()->Start();
+    mRoundGlowEffect->GetComponent<Pht::ParticleEffect>()->Start();
+}
+
 void LevelStartDialogView::Update() {
     auto dt {mEngine.GetLastFrameSeconds()};
     
     mGlowEffect->GetComponent<Pht::ParticleEffect>()->Update(dt);
+    mRoundGlowEffect->GetComponent<Pht::ParticleEffect>()->Update(dt);
 }

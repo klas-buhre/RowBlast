@@ -49,7 +49,6 @@ Backlog:
 
 Ongoing tasks:
     -Dialog before level starts that states objectives and displays piece types.
-        -Add background glow behind the blocks.
         -Bomb emission and rotation animations.
 
 

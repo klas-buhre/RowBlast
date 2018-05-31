@@ -29,6 +29,8 @@ void LevelStartDialogController::SetFadeEffect(Pht::FadeEffect& fadeEffect) {
 LevelStartDialogController::Result LevelStartDialogController::Update() {
     mView.Update();
     
+    auto previousSlidingMenuAnimationState {mSlidingMenuAnimation.GetState()};
+    
     switch (mSlidingMenuAnimation.Update()) {
         case SlidingMenuAnimation::State::Idle:
             mSlidingMenuAnimation.StartSlideIn();
@@ -37,6 +39,9 @@ LevelStartDialogController::Result LevelStartDialogController::Update() {
         case SlidingMenuAnimation::State::SlidingOut:
             break;
         case SlidingMenuAnimation::State::ShowingMenu:
+            if (previousSlidingMenuAnimationState != SlidingMenuAnimation::State::ShowingMenu) {
+                mView.StartEffects();
+            }
             return HandleInput();
         case SlidingMenuAnimation::State::Done:
             return mDeferredResult;

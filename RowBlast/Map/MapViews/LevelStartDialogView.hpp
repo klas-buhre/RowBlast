@@ -28,6 +28,7 @@ namespace RowBlast {
         LevelStartDialogView(Pht::IEngine& engine, const CommonResources& commonResources);
         
         void Init(const LevelInfo& levelInfo, const PieceResources& pieceResources);
+        void StartEffects();
         void Update();
         
         const MenuButton& GetCloseButton() const {
@@ -46,7 +47,7 @@ namespace RowBlast {
         };
 
         void CreatePreviewPiecesContainer(Pht::IEngine& engine);
-        void CreateGlowEffect(Pht::SceneObject& parentObject, Pht::IEngine& engine);
+        void CreateGlowEffects(Pht::SceneObject& parentObject, Pht::IEngine& engine);
         void InitPreviewPiece(LevelStartPreviewPiece& previewPiece,
                               const Piece& pieceType,
                               const Pht::Vec3& position,
@@ -62,6 +63,7 @@ namespace RowBlast {
         Pht::TextComponent* mBuildObjective {nullptr};
         LevelStartPreviewPieces mPreviewPieces;
         std::unique_ptr<Pht::SceneObject> mGlowEffect;
+        std::unique_ptr<Pht::SceneObject> mRoundGlowEffect;
     };
 }
 

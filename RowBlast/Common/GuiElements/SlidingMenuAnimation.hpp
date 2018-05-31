@@ -46,6 +46,10 @@ namespace RowBlast {
             mFadeEffect = &fadeEffect;
         }
         
+        State GetState() const {
+            return mState;
+        }
+        
     private:
         void UpdateInSlidingInState();
         void UpdateInSlidingInStateLeftOrRight();
