@@ -59,7 +59,7 @@ namespace RowBlast {
             return mLevelResources;
         }
         
-        const PieceResources& GetPieceResources() const {
+        PieceResources& GetPieceResources() {
             return mPieceResources;
         }
     

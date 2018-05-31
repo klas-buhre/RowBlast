@@ -6,6 +6,7 @@
 #include "QuadMesh.hpp"
 #include "IParticleSystem.hpp"
 #include "ParticleEffect.hpp"
+#include "SceneObjectUtils.hpp"
 
 // Game includes.
 #include "CommonResources.hpp"
@@ -19,11 +20,18 @@ namespace {
     constexpr auto cellSize {1.25f};
     constexpr auto previewPieceSpacing {2.0f};
     constexpr auto numPieceTypeRows {2};
+    constexpr auto bombAnimationDuration {4.5f};
+    constexpr auto bombRotationAmplitude {22.0f};
+    constexpr auto rowBombRotationSpeed {35.0f};
+    constexpr auto emissiveAnimationDuration {1.5f};
+    constexpr auto emissiveAmplitude {1.7f};
 }
 
 LevelStartDialogView::LevelStartDialogView(Pht::IEngine& engine,
-                                           const CommonResources& commonResources) :
-    mEngine {engine} {
+                                           const CommonResources& commonResources,
+                                           PieceResources& pieceResources) :
+    mEngine {engine},
+    mPieceResources {pieceResources} {
 
     PotentiallyZoomedScreen zoom {PotentiallyZoomedScreen::No};
     auto& guiResources {commonResources.GetGuiResources()};
@@ -137,7 +145,8 @@ void LevelStartDialogView::CreateGlowEffects(Pht::SceneObject& parentObject, Pht
     Pht::ParticleSettings particleSettings {
         .mVelocity = Pht::Vec3{0.0f, 0.0f, 0.0f},
         .mVelocityRandomPart = Pht::Vec3{0.0f, 0.0f, 0.0f},
-        .mColor = Pht::Vec4{0.5f, 0.5f, 1.0f, 1.0f},
+        .mColor = Pht::Vec4{0.45f, 0.45f, 1.0f, 1.0f},
+        // .mColor = Pht::Vec4{0.55f, 0.5f, 1.0f, 1.0f},
         .mColorRandomPart = Pht::Vec4{0.0f, 0.0f, 0.0f, 0.0f},
         .mTextureFilename = "flare03.png",
         .mTimeToLive = std::numeric_limits<float>::infinity(),
@@ -164,6 +173,7 @@ void LevelStartDialogView::CreateGlowEffects(Pht::SceneObject& parentObject, Pht
         .mVelocity = Pht::Vec3{0.0f, 0.0f, 0.0f},
         .mVelocityRandomPart = Pht::Vec3{0.0f, 0.0f, 0.0f},
         .mColor = Pht::Vec4{0.4f, 0.4f, 1.0f, 1.0f},
+        // .mColor = Pht::Vec4{0.75f, 0.0f, 0.9f, 1.0f},
         .mColorRandomPart = Pht::Vec4{0.0f, 0.0f, 0.0f, 0.0f},
         .mTextureFilename = "flare24.png",
         .mTimeToLive = std::numeric_limits<float>::infinity(),
@@ -186,7 +196,7 @@ void LevelStartDialogView::CreateGlowEffects(Pht::SceneObject& parentObject, Pht
     parentObject.AddChild(*mRoundGlowEffect);
 }
 
-void LevelStartDialogView::Init(const LevelInfo& levelInfo, const PieceResources& pieceResources) {
+void LevelStartDialogView::Init(const LevelInfo& levelInfo) {
     mCaption->GetText() = "LEVEL " + std::to_string(levelInfo.mIndex);
     
     mClearObjective->GetSceneObject().SetIsVisible(false);
@@ -200,6 +210,9 @@ void LevelStartDialogView::Init(const LevelInfo& levelInfo, const PieceResources
             mBuildObjective->GetSceneObject().SetIsVisible(true);
             break;
     }
+    
+    mGlowEffect->GetComponent<Pht::ParticleEffect>()->Stop();
+    mRoundGlowEffect->GetComponent<Pht::ParticleEffect>()->Stop();
     
     for (auto& previewPiece: mPreviewPieces) {
         previewPiece.mBlockSceneObjects->SetIsActive(false);
@@ -220,7 +233,7 @@ void LevelStartDialogView::Init(const LevelInfo& levelInfo, const PieceResources
     for (auto i {0}; i < numPieceTypesUpperRow; ++i) {
         auto& previewPiece {mPreviewPieces[i]};
         auto* pieceType {levelInfo.mPieceTypes[i]};
-        InitPreviewPiece(previewPiece, *pieceType, previewPiecePosition, pieceResources);
+        InitPreviewPiece(previewPiece, *pieceType, previewPiecePosition);
         previewPiecePosition.x += previewPieceSpacing;
     }
     
@@ -235,15 +248,18 @@ void LevelStartDialogView::Init(const LevelInfo& levelInfo, const PieceResources
     for (auto i {numPieceTypesUpperRow}; i < numPieceTypes; ++i) {
         auto& previewPiece {mPreviewPieces[i]};
         auto* pieceType {levelInfo.mPieceTypes[i]};
-        InitPreviewPiece(previewPiece, *pieceType, previewPiecePosition, pieceResources);
+        InitPreviewPiece(previewPiece, *pieceType, previewPiecePosition);
         previewPiecePosition.x += previewPieceSpacing;
     }
+
+    mAnimationTime = 0.0f;
+    mEmissiveAnimationTime = 0.0f;
+    mRowBombRotation = {0.0f, 0.0f, 0.0f};
 }
 
 void LevelStartDialogView::InitPreviewPiece(LevelStartPreviewPiece& previewPiece,
                                             const Piece& pieceType,
-                                            const Pht::Vec3& position,
-                                            const PieceResources& pieceResources) {
+                                            const Pht::Vec3& position) {
     previewPiece.mBombSceneObject = nullptr;
     previewPiece.mRowBombSceneObject = nullptr;
 
@@ -279,16 +295,16 @@ void LevelStartDialogView::InitPreviewPiece(LevelStartPreviewPiece& previewPiece
                 auto& blockSceneObject {previewPiece.mBlockSceneObjects->AccuireSceneObject()};
                 
                 if (isBomb) {
-                    blockSceneObject.SetRenderable(&pieceResources.GetBombRenderableObject());
+                    blockSceneObject.SetRenderable(&mPieceResources.GetBombRenderableObject());
                     previewPiece.mBombSceneObject = &blockSceneObject;
                 } else if (isRowBomb) {
-                    blockSceneObject.SetRenderable(&pieceResources.GetRowBombRenderableObject());
+                    blockSceneObject.SetRenderable(&mPieceResources.GetRowBombRenderableObject());
                     previewPiece.mRowBombSceneObject = &blockSceneObject;
                 } else {
                     auto& blockRenderable {
-                        pieceResources.GetBlockRenderableObject(blockKind,
-                                                                subCell.mColor,
-                                                                BlockBrightness::Normal)
+                        mPieceResources.GetBlockRenderableObject(blockKind,
+                                                                 subCell.mColor,
+                                                                 BlockBrightness::Normal)
                     };
                     
                     blockSceneObject.SetRenderable(&blockRenderable);
@@ -316,4 +332,60 @@ void LevelStartDialogView::Update() {
     
     mGlowEffect->GetComponent<Pht::ParticleEffect>()->Update(dt);
     mRoundGlowEffect->GetComponent<Pht::ParticleEffect>()->Update(dt);
+    
+    UpdateAnimations(dt);
+}
+
+void LevelStartDialogView::UpdateAnimations(float dt) {
+    mAnimationTime += dt;
+    
+    if (mAnimationTime > bombAnimationDuration) {
+        mAnimationTime = 0.0f;
+    }
+
+    AnimateEmissive(dt);
+    AnimateBombRotation(dt);
+    AnimateRowBombRotation(dt);
+}
+
+void LevelStartDialogView::AnimateEmissive(float dt) {
+    mEmissiveAnimationTime += dt;
+    
+    if (mEmissiveAnimationTime > emissiveAnimationDuration) {
+        mEmissiveAnimationTime = 0.0f;
+    }
+
+    auto sineOfT {sin(mEmissiveAnimationTime * 2.0f * 3.1415f / emissiveAnimationDuration)};
+    auto emissive {emissiveAmplitude * (sineOfT + 1.0f) / 2.0f};
+    
+    Pht::SceneObjectUtils::SetEmissiveInRenderable(mPieceResources.GetBombRenderableObject(),
+                                                   emissive);
+    Pht::SceneObjectUtils::SetEmissiveInRenderable(mPieceResources.GetRowBombRenderableObject(),
+                                                   emissive);
+}
+
+void LevelStartDialogView::AnimateBombRotation(float dt) {
+    auto t {mAnimationTime * 2.0f * 3.1415f / bombAnimationDuration};
+    auto xAngle {bombRotationAmplitude * sin(t) + 90.0f};
+    auto yAngle {bombRotationAmplitude * cos(t)};
+    
+    for (auto& previewPiece: mPreviewPieces) {
+        if (previewPiece.mBlockSceneObjects->IsActive() && previewPiece.mBombSceneObject) {
+            previewPiece.mBombSceneObject->GetTransform().SetRotation({xAngle, yAngle, 0.0f});
+        }
+    }
+}
+
+void LevelStartDialogView::AnimateRowBombRotation(float dt) {
+    mRowBombRotation.y += rowBombRotationSpeed * dt;
+    
+    if (mRowBombRotation.y > 360.0f) {
+        mRowBombRotation.y -= 360.0f;
+    }
+    
+    for (auto& previewPiece: mPreviewPieces) {
+        if (previewPiece.mBlockSceneObjects->IsActive() && previewPiece.mRowBombSceneObject) {
+            previewPiece.mRowBombSceneObject->GetTransform().SetRotation(mRowBombRotation);
+        }
+    }
 }

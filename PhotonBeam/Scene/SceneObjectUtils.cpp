@@ -31,3 +31,9 @@ void SceneObjectUtils::SetAlphaRecursively(Pht::SceneObject& sceneObject, float 
         renderable->GetMaterial().SetOpacity(alpha);
     }
 }
+
+void SceneObjectUtils::SetEmissiveInRenderable(Pht::RenderableObject& renderableObject,
+                                               float emissive) {
+    Pht::Color emissiveColor {emissive, emissive, emissive};
+    renderableObject.GetMaterial().SetEmissive(emissiveColor);
+}

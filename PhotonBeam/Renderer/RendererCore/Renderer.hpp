@@ -47,7 +47,7 @@ namespace Pht {
         void InitHudFrustum();
         float GetAspectRatio() const;
         void InitShaders();
-        void SetDepthTest(bool depthTest);
+        void SetDepthTest(const DepthState& depthState);
         void SetDepthWrite(bool depthWrite);
         void SetScissorBox(const Vec2& lowerLeft, const Vec2& size);
         void SetScissorTest(bool scissorTest);

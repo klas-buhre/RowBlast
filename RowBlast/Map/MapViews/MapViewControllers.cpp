@@ -19,7 +19,8 @@ MapViewControllers::MapViewControllers(Pht::IEngine& engine,
                                        MapScene& scene,
                                        const CommonResources& commonResources,
                                        const UserData& userData,
-                                       Settings& settings) :
+                                       Settings& settings,
+                                       PieceResources& pieceResources) :
     mScene {scene},
     mFadeEffect {
         engine.GetSceneManager(),
@@ -29,7 +30,7 @@ MapViewControllers::MapViewControllers(Pht::IEngine& engine,
         UiLayer::backgroundFade
     },
     mSettingsButtonController {engine},
-    mLevelStartDialogController {engine, commonResources},
+    mLevelStartDialogController {engine, commonResources, pieceResources},
     mNoLivesDialogController {engine, commonResources, userData, PotentiallyZoomedScreen::No},
     mSettingsMenuController {engine, commonResources, settings, PotentiallyZoomedScreen::No} {
     

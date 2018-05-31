@@ -35,6 +35,7 @@ namespace Pht {
     
     struct DepthState {
         bool mDepthTest {true};
+        bool mDepthTestAllowedOverride {false};
         bool mDepthWrite {true};
     };
 

@@ -48,8 +48,7 @@ Backlog:
     -Credit FastNoise, MIT license: https://github.com/Auburns/FastNoise/
 
 Ongoing tasks:
-    -Dialog before level starts that states objectives and displays piece types.
-        -Bomb emission and rotation animations.
+
 
 
 Ideas:
@@ -102,6 +101,7 @@ Time Estimation in days:
         Done
     -Dialog before level starts that states objectives and displays piece types.
         Cost: 2
+        Done
     -Do the marked items in the backlog.
         Cost: 8
     -Moving the next level particle effect to the next level after clearing a level. Add an avatar?

@@ -10,14 +10,14 @@
 using namespace RowBlast;
 
 LevelStartDialogController::LevelStartDialogController(Pht::IEngine& engine,
-                                                       const CommonResources& commonResources) :
+                                                       const CommonResources& commonResources,
+                                                       PieceResources& pieceResources) :
     mInput {engine.GetInput()},
-    mView {engine, commonResources},
+    mView {engine, commonResources, pieceResources},
     mSlidingMenuAnimation {engine, mView} {}
 
-void LevelStartDialogController::Init(const LevelInfo& levelInfo,
-                                      const PieceResources& pieceResources) {
-    mView.Init(levelInfo, pieceResources);
+void LevelStartDialogController::Init(const LevelInfo& levelInfo) {
+    mView.Init(levelInfo);
     mSlidingMenuAnimation.Init(SlidingMenuAnimation::UpdateFade::Yes,
                                SlidingMenuAnimation::SlideDirection::Scale);
 }

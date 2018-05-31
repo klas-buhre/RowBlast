@@ -19,6 +19,7 @@ namespace RowBlast {
     class MapScene;
     class UserData;
     class Settings;
+    class PieceResources;
     
     class MapViewControllers {
     public:
@@ -33,7 +34,8 @@ namespace RowBlast {
                            MapScene& scene,
                            const CommonResources& commonResources,
                            const UserData& userData,
-                           Settings& settings);
+                           Settings& settings,
+                           PieceResources& pieceResources);
 
         void Init();
         void SetActiveController(Controller controller);

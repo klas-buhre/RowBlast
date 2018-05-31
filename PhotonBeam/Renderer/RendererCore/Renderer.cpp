@@ -286,7 +286,6 @@ void Renderer::InitOpenGl(bool createRenderBuffers) {
         glViewport(0, 0, mRenderBufferSize.x, mRenderBufferSize.y);
     }
     
-    SetDepthTest(true);
     glEnable(GL_CULL_FACE);
 }
 
@@ -403,11 +402,11 @@ void Renderer::SetHudMode(bool hudMode) {
     SetupProjectionInShaders();
 }
 
-void Renderer::SetDepthTest(bool depthTest) {
-    if (!mIsDepthTestAllowed) {
+void Renderer::SetDepthTest(const DepthState& depthState) {
+    if (!mIsDepthTestAllowed && !depthState.mDepthTestAllowedOverride) {
         glDisable(GL_DEPTH_TEST);
     } else {
-        if (depthTest) {
+        if (depthState.mDepthTest) {
             glEnable(GL_DEPTH_TEST);
         } else {
             glDisable(GL_DEPTH_TEST);
@@ -570,7 +569,7 @@ void Renderer::SetMaterialProperties(const ShaderProgram::UniformHandles& unifor
     
     BindSpecialTextures(shaderType, material);
     SetupBlend(IsParticleShader(shaderType), material);
-    SetDepthTest(material.GetDepthState().mDepthTest);
+    SetDepthTest(material.GetDepthState());
 }
 
 ShaderProgram& Renderer::GetShaderProgram(ShaderType shaderType) {

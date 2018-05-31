@@ -1,5 +1,8 @@
 #include "BombsAnimation.hpp"
 
+// Engine includes.
+#include "SceneObjectUtils.hpp"
+
 // Game includes.
 #include "GameScene.hpp"
 #include "PieceResources.hpp"
@@ -13,11 +16,6 @@ namespace {
     constexpr auto rowBombRotationSpeed {35.0f};
     constexpr auto emissiveAnimationDuration {1.5f};
     constexpr auto emissiveAmplitude {1.7f};
-    
-    void SetEmissiveInRenderable(Pht::RenderableObject& renderableObject, float emissive) {
-        Pht::Color emissiveColor {emissive, emissive, emissive};
-        renderableObject.GetMaterial().SetEmissive(emissiveColor);
-    }
 }
 
 BombsAnimation::BombsAnimation(GameScene& scene,
@@ -56,11 +54,16 @@ void BombsAnimation::AnimateEmissive(float dt) {
     auto sineOfT {sin(mEmissiveAnimationTime * 2.0f * 3.1415f / emissiveAnimationDuration)};
     auto emissive {emissiveAmplitude * (sineOfT + 1.0f) / 2.0f};
     
-    SetEmissiveInRenderable(mPieceResources.GetBombRenderableObject(), emissive);
-    SetEmissiveInRenderable(mPieceResources.GetTransparentBombRenderableObject(), emissive);
-    SetEmissiveInRenderable(mPieceResources.GetRowBombRenderableObject(), emissive);
-    SetEmissiveInRenderable(mPieceResources.GetTransparentRowBombRenderableObject(), emissive);
-    SetEmissiveInRenderable(mLevelResources.GetLevelBombRenderable(), emissive);
+    Pht::SceneObjectUtils::SetEmissiveInRenderable(mPieceResources.GetBombRenderableObject(),
+                                                   emissive);
+    Pht::SceneObjectUtils::SetEmissiveInRenderable(mPieceResources.GetTransparentBombRenderableObject(),
+                                                   emissive);
+    Pht::SceneObjectUtils::SetEmissiveInRenderable(mPieceResources.GetRowBombRenderableObject(),
+                                                   emissive);
+    Pht::SceneObjectUtils::SetEmissiveInRenderable(mPieceResources.GetTransparentRowBombRenderableObject(),
+                                                   emissive);
+    Pht::SceneObjectUtils::SetEmissiveInRenderable(mLevelResources.GetLevelBombRenderable(),
+                                                   emissive);
 }
 
 void BombsAnimation::AnimateBombRotation(float dt) {

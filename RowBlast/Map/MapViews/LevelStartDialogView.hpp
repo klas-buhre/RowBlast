@@ -25,9 +25,11 @@ namespace RowBlast {
     
     class LevelStartDialogView: public Pht::GuiView {
     public:
-        LevelStartDialogView(Pht::IEngine& engine, const CommonResources& commonResources);
+        LevelStartDialogView(Pht::IEngine& engine,
+                             const CommonResources& commonResources,
+                             PieceResources& pieceResources);
         
-        void Init(const LevelInfo& levelInfo, const PieceResources& pieceResources);
+        void Init(const LevelInfo& levelInfo);
         void StartEffects();
         void Update();
         
@@ -50,12 +52,16 @@ namespace RowBlast {
         void CreateGlowEffects(Pht::SceneObject& parentObject, Pht::IEngine& engine);
         void InitPreviewPiece(LevelStartPreviewPiece& previewPiece,
                               const Piece& pieceType,
-                              const Pht::Vec3& position,
-                              const PieceResources& pieceResources);
+                              const Pht::Vec3& position);
+        void UpdateAnimations(float dt);
+        void AnimateEmissive(float dt);
+        void AnimateBombRotation(float dt);
+        void AnimateRowBombRotation(float dt);
 
         using LevelStartPreviewPieces = std::array<LevelStartPreviewPiece, Level::maxNumPieceTypes>;
 
         Pht::IEngine& mEngine;
+        PieceResources& mPieceResources;
         std::unique_ptr<MenuButton> mCloseButton;
         std::unique_ptr<MenuButton> mPlayButton;
         Pht::TextComponent* mCaption {nullptr};
@@ -64,6 +70,9 @@ namespace RowBlast {
         LevelStartPreviewPieces mPreviewPieces;
         std::unique_ptr<Pht::SceneObject> mGlowEffect;
         std::unique_ptr<Pht::SceneObject> mRoundGlowEffect;
+        float mAnimationTime {0.0f};
+        float mEmissiveAnimationTime {0.0f};
+        Pht::Vec3 mRowBombRotation;
     };
 }
 
