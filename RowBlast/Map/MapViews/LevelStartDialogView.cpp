@@ -3,6 +3,9 @@
 // Engine includes.
 #include "TextComponent.hpp"
 #include "IEngine.hpp"
+#include "QuadMesh.hpp"
+#include "IParticleSystem.hpp"
+#include "ParticleEffect.hpp"
 
 // Game includes.
 #include "CommonResources.hpp"
@@ -19,10 +22,12 @@ namespace {
 }
 
 LevelStartDialogView::LevelStartDialogView(Pht::IEngine& engine,
-                                           const CommonResources& commonResources) {
+                                           const CommonResources& commonResources) :
+    mEngine {engine} {
+
     PotentiallyZoomedScreen zoom {PotentiallyZoomedScreen::No};
     auto& guiResources {commonResources.GetGuiResources()};
-    auto& menuWindow {guiResources.GetLargeMenuWindow(zoom)};
+    auto& menuWindow {guiResources.GetLargeDarkMenuWindow()};
     
     auto menuWindowSceneObject {std::make_unique<Pht::SceneObject>(&menuWindow.GetRenderable())};
     menuWindowSceneObject->GetTransform().SetPosition({0.0f, 0.0f, UiLayer::background});
@@ -30,9 +35,8 @@ LevelStartDialogView::LevelStartDialogView(Pht::IEngine& engine,
 
     SetSize(menuWindow.GetSize());
     
-    mCaption = &CreateText({-2.1f, 7.6f, UiLayer::text},
-                           "LEVEL 1",
-                           guiResources.GetCaptionTextProperties(zoom));
+    auto& largeTextProperties {guiResources.GetLargeWhiteTextProperties()};
+    mCaption = &CreateText({-2.1f, 7.6f, UiLayer::text}, "LEVEL 1", largeTextProperties);
 
     Pht::Vec3 closeButtonPosition {
         GetSize().x / 2.0f - 1.5f,
@@ -52,17 +56,33 @@ LevelStartDialogView::LevelStartDialogView(Pht::IEngine& engine,
                                                 closeButtonInputSize,
                                                 closeButtonStyle);
 
-    CreateText({-1.45f, 5.0f, UiLayer::text}, "PIECES", guiResources.GetLargeTextProperties());
-    CreateText({-1.3f, -1.9f, UiLayer::text}, "GOAL", guiResources.GetLargeTextProperties());
+    Pht::Material lineMaterial {Pht::Color{0.6f, 0.8f, 1.0f}};
+    lineMaterial.SetOpacity(0.3f);
+    auto& sceneManager {engine.GetSceneManager()};
+    auto& lineSceneObject {
+        CreateSceneObject(Pht::QuadMesh {GetSize().x - 1.5f, 0.06f}, lineMaterial, sceneManager)
+    };
+    lineSceneObject.GetTransform().SetPosition({0.0f, 6.6f, UiLayer::textRectangle});
+    GetRoot().AddChild(lineSceneObject);
 
-    auto& textProperties {guiResources.GetSmallTextProperties(zoom)};
+    CreateText({-1.45f, 5.0f, UiLayer::text}, "PIECES", largeTextProperties);
+    
+    auto& lineSceneObject2 {
+        CreateSceneObject(Pht::QuadMesh {GetSize().x - 1.5f, 0.06f}, lineMaterial, sceneManager)
+    };
+    lineSceneObject2.GetTransform().SetPosition({0.0f, -0.5f, UiLayer::textRectangle});
+    GetRoot().AddChild(lineSceneObject2);
+
+    CreateText({-1.3f, -1.9f, UiLayer::text}, "GOAL", largeTextProperties);
+
+    auto& smallTextProperties {guiResources.GetSmallWhiteTextProperties()};
     mClearObjective = &CreateText({-3.6f, -3.1f, UiLayer::text},
                                   "Clear all gray blocks",
-                                  textProperties);
+                                  smallTextProperties);
     mClearObjective->GetSceneObject().SetIsVisible(false);
     mBuildObjective = &CreateText({-2.95f, -3.1f, UiLayer::text},
                                   "Fill all gray slots",
-                                  textProperties);
+                                  smallTextProperties);
     mBuildObjective->GetSceneObject().SetIsVisible(false);
 
     Pht::Vec2 playButtonInputSize {205.0f, 59.0f};
@@ -72,7 +92,6 @@ LevelStartDialogView::LevelStartDialogView(Pht::IEngine& engine,
     playButtonStyle.mColor = GuiResources::mBlueButtonColor;
     playButtonStyle.mSelectedColor = GuiResources::mBlueSelectedButtonColor;
     playButtonStyle.mPressedScale = 1.05f;
-    playButtonStyle.mHasShadow = true;
 
     mPlayButton = std::make_unique<MenuButton>(engine,
                                                *this,
@@ -80,8 +99,8 @@ LevelStartDialogView::LevelStartDialogView(Pht::IEngine& engine,
                                                playButtonInputSize,
                                                playButtonStyle);
     mPlayButton->CreateText({-1.1f, -0.31f, UiLayer::buttonText},
-                            "Play",
-                            guiResources.GetLargeWhiteButtonTextProperties(zoom));
+                            "PLAY",
+                            largeTextProperties);
     
     CreatePreviewPiecesContainer(engine);
 }
@@ -102,32 +121,45 @@ void LevelStartDialogView::CreatePreviewPiecesContainer(Pht::IEngine& engine) {
         blocksTransform.SetRotation({-30.0f, -30.0f, 0.0f});
     }
     
-    CreatePreviewPiecesRectangle(*container, engine);
+    CreateGlowEffect(*container, engine);
     AddSceneObject(std::move(container));
 }
 
-void LevelStartDialogView::CreatePreviewPiecesRectangle(Pht::SceneObject& parentObject,
-                                                        Pht::IEngine& engine) {
-    Pht::Vec2 size {GetSize().x - 1.0f, 4.8f};
-    auto leftQuadWidth {4.0f};
-    auto rightQuadWidth {4.0f};
-    
-    GradientRectangleColors colors {
-        .mLeft = {0.6f, 0.3f, 0.75f, 0.0f},
-        .mMid = {0.6f, 0.3f, 0.75f, 0.8f},
-        .mRight = {0.6f, 0.3f, 0.75f, 0.0f}
+void LevelStartDialogView::CreateGlowEffect(Pht::SceneObject& parentObject, Pht::IEngine& engine) {
+    Pht::EmitterSettings particleEmitterSettings {
+        .mPosition = Pht::Vec3{0.0f, 0.0f, 0.0f},
+        .mSize = Pht::Vec3{0.0f, 0.0f, 0.0f},
+        .mTimeToLive = 0.0f,
+        .mFrequency = 0.0f,
+        .mBurst = 1
     };
-
-    CreateGradientRectangle(engine.GetSceneManager(),
-                            *this,
-                            parentObject,
-                            {0.0f, 0.0f, -0.9f},
-                            size,
-                            0.0f,
-                            leftQuadWidth,
-                            rightQuadWidth,
-                            colors,
-                            colors);
+    
+    Pht::ParticleSettings particleSettings {
+        .mVelocity = Pht::Vec3{0.0f, 0.0f, 0.0f},
+        .mVelocityRandomPart = Pht::Vec3{0.0f, 0.0f, 0.0f},
+        // .mColor = Pht::Vec4{0.5f, 0.5f, 1.0f, 1.0f},
+        .mColor = Pht::Vec4{2.0f, 2.0f, 1.0f, 1.0f},
+        .mColorRandomPart = Pht::Vec4{0.0f, 0.0f, 0.0f, 0.0f},
+        .mTextureFilename = "flare03.png",
+        .mTimeToLive = std::numeric_limits<float>::infinity(),
+        .mTimeToLiveRandomPart = 0.0f,
+        .mFadeOutDuration = 0.5f,
+        .mZAngularVelocity = 00.0f,
+        .mSize = Pht::Vec2{15.0f, 15.0f},
+        .mSizeRandomPart = 0.0f,
+        .mShrinkDuration = 0.0f,
+        .mGrowDuration = 0.5f
+    };
+    
+    auto& particleSystem {engine.GetParticleSystem()};
+    mGlowEffect = particleSystem.CreateParticleEffectSceneObject(particleSettings,
+                                                                 particleEmitterSettings,
+                                                                 Pht::RenderMode::Triangles);
+    auto& material {mGlowEffect->GetRenderable()->GetMaterial()};
+    material.SetShaderType(Pht::ShaderType::ParticleNoAlphaTexture);
+    
+    mGlowEffect->GetTransform().SetPosition({0.0f, 0.0f, UiLayer::buttonText});
+    parentObject.AddChild(*mGlowEffect);
 }
 
 void LevelStartDialogView::Init(const LevelInfo& levelInfo, const PieceResources& pieceResources) {
@@ -144,6 +176,8 @@ void LevelStartDialogView::Init(const LevelInfo& levelInfo, const PieceResources
             mBuildObjective->GetSceneObject().SetIsVisible(true);
             break;
     }
+    
+    mGlowEffect->GetComponent<Pht::ParticleEffect>()->Start();
     
     for (auto& previewPiece: mPreviewPieces) {
         previewPiece.mBlockSceneObjects->SetIsActive(false);
@@ -164,7 +198,7 @@ void LevelStartDialogView::Init(const LevelInfo& levelInfo, const PieceResources
     for (auto i {0}; i < numPieceTypesUpperRow; ++i) {
         auto& previewPiece {mPreviewPieces[i]};
         auto* pieceType {levelInfo.mPieceTypes[i]};
-        UpdatePreviewPiece(previewPiece, *pieceType, previewPiecePosition, pieceResources);
+        InitPreviewPiece(previewPiece, *pieceType, previewPiecePosition, pieceResources);
         previewPiecePosition.x += previewPieceSpacing;
     }
     
@@ -179,15 +213,15 @@ void LevelStartDialogView::Init(const LevelInfo& levelInfo, const PieceResources
     for (auto i {numPieceTypesUpperRow}; i < numPieceTypes; ++i) {
         auto& previewPiece {mPreviewPieces[i]};
         auto* pieceType {levelInfo.mPieceTypes[i]};
-        UpdatePreviewPiece(previewPiece, *pieceType, previewPiecePosition, pieceResources);
+        InitPreviewPiece(previewPiece, *pieceType, previewPiecePosition, pieceResources);
         previewPiecePosition.x += previewPieceSpacing;
     }
 }
 
-void LevelStartDialogView::UpdatePreviewPiece(LevelStartPreviewPiece& previewPiece,
-                                              const Piece& pieceType,
-                                              const Pht::Vec3& position,
-                                              const PieceResources& pieceResources) {
+void LevelStartDialogView::InitPreviewPiece(LevelStartPreviewPiece& previewPiece,
+                                            const Piece& pieceType,
+                                            const Pht::Vec3& position,
+                                            const PieceResources& pieceResources) {
     previewPiece.mBombSceneObject = nullptr;
     previewPiece.mRowBombSceneObject = nullptr;
 
@@ -248,4 +282,10 @@ void LevelStartDialogView::UpdatePreviewPiece(LevelStartPreviewPiece& previewPie
             }
         }
     }
+}
+
+void LevelStartDialogView::Update() {
+    auto dt {mEngine.GetLastFrameSeconds()};
+    
+    mGlowEffect->GetComponent<Pht::ParticleEffect>()->Update(dt);
 }

@@ -86,9 +86,13 @@ namespace {
     
     int CalculateNumParticles(const EmitterSettings& emitterSettings,
                               const ParticleSettings& particleSettings) {
-        return emitterSettings.mFrequency *
-               (particleSettings.mTimeToLive + particleSettings.mTimeToLiveRandomPart) * 2.0f +
-               emitterSettings.mBurst;
+        if (emitterSettings.mFrequency > 0.0f) {
+            return emitterSettings.mFrequency *
+                   (particleSettings.mTimeToLive + particleSettings.mTimeToLiveRandomPart) * 2.0f +
+                   emitterSettings.mBurst;
+        }
+        
+        return emitterSettings.mBurst;
     }
 }
 

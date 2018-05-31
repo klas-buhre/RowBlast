@@ -152,12 +152,21 @@ void MapScene::CreateScene(const Chapter& chapter) {
     uiViewsRenderPass.SetHudMode(true);
     uiViewsRenderPass.SetIsDepthTestAllowed(false);
     uiViewsRenderPass.SetRenderOrder(Pht::RenderOrder::BackToFront);
+
     auto& uiLightSceneObject {scene->CreateSceneObject()};
     uiLightSceneObject.SetIsVisible(false);
     auto uiLightComponent {std::make_unique<Pht::LightComponent>(uiLightSceneObject)};
     mUiLight = uiLightComponent.get();
     uiViewsRenderPass.SetLight(mUiLight);
     uiLightSceneObject.SetComponent<Pht::LightComponent>(std::move(uiLightComponent));
+
+    auto& uiCameraSceneObject {scene->CreateSceneObject()};
+    uiCameraSceneObject.SetIsVisible(false);
+    uiCameraSceneObject.GetTransform().SetPosition({0.0f, 0.0f, 300.0f});
+    auto uiCameraComponent {std::make_unique<Pht::CameraComponent>(uiCameraSceneObject)};
+    uiViewsRenderPass.SetCamera(uiCameraComponent.get());
+    uiCameraSceneObject.SetComponent<Pht::CameraComponent>(std::move(uiCameraComponent));
+
     scene->AddRenderPass(uiViewsRenderPass);
 
     Pht::RenderPass fadeEffectRenderPass {static_cast<int>(Layer::SceneSwitchFadeEffect)};
@@ -202,6 +211,7 @@ void MapScene::CreateScene(const Chapter& chapter) {
     mUiViewsContainer = &scene->CreateSceneObject();
     mUiViewsContainer->SetLayer(static_cast<int>(Layer::UiViews));
     mUiViewsContainer->AddChild(uiLightSceneObject);
+    mUiViewsContainer->AddChild(uiCameraSceneObject);
     scene->GetRoot().AddChild(*mUiViewsContainer);
     
     scene->SetDistanceFunction(Pht::DistanceFunction::WorldSpaceNegativeZ);

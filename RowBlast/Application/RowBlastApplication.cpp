@@ -49,7 +49,8 @@ Backlog:
 
 Ongoing tasks:
     -Dialog before level starts that states objectives and displays piece types.
-        -Try a dark menu window.
+        -Add background glow behind the blocks.
+        -Bomb emission and rotation animations.
 
 
 Ideas:

@@ -20,10 +20,11 @@ namespace {
     const Pht::Vec4 blueColor {0.45f, 0.75f, 1.0f, 1.0};
     const Pht::Vec4 lightBlueColor {0.5f, 0.8f, 1.0f, 1.0};
     const Pht::Vec4 stencilColor {1.0f, 1.0f, 1.0f, 1.0f};
-    const Pht::Vec4 borderColor {0.5f, 0.8f, 1.0f, 1.0};
-    const Pht::Vec4 darkBlueColor {0.0f, 0.0f, 0.5f, 1.0};
+    const Pht::Vec4 borderColor {0.3f, 0.6f, 1.0f, 1.0};
+    const Pht::Vec4 innerBorderColor {0.2f, 0.35f, 0.5f, 1.0};
+    const Pht::Vec4 darkerBlueColor {0.04f, 0.07f, 0.2f, 1.0};
     constexpr auto xBorder {0.45f};
-    constexpr auto darkBorderThickness {0.2f};
+    constexpr auto darkBorderThickness {0.09f};
     constexpr auto outerCornerRadius {0.37f};
     constexpr auto captionBarHeight {3.0f};
     constexpr auto squareSide {0.5f};
@@ -75,11 +76,10 @@ MenuWindow::MenuWindow(Pht::IEngine& engine,
             DrawBrightMainArea(*rasterizer);
             break;
         case Style::Dark:
-            FillStencilBuffer(*rasterizer, outerCornerRadius, 0.0f);
             DrawDarkBorder(*rasterizer);
             FillStencilBuffer(*rasterizer,
-                              outerCornerRadius - darkBorderThickness,
-                              darkBorderThickness);
+                              outerCornerRadius - darkBorderThickness * 2.0f,
+                              darkBorderThickness * 2.0f);
             DrawDarkMainArea(*rasterizer);
             break;
     }
@@ -87,6 +87,11 @@ MenuWindow::MenuWindow(Pht::IEngine& engine,
     auto image {rasterizer->ProduceImage()};
     Pht::Material imageMaterial {*image, Pht::GenerateMipmap::Yes};
     imageMaterial.SetBlend(Pht::Blend::Yes);
+    
+    if (style == Style::Dark) {
+        imageMaterial.SetOpacity(0.95f);
+    }
+
     auto& sceneManager {engine.GetSceneManager()};
     mRenderableObject = sceneManager.CreateRenderableObject(Pht::QuadMesh {mSize.x, mSize.y},
                                                             imageMaterial);
@@ -178,13 +183,45 @@ void MenuWindow::DrawBrightMainArea(Pht::OfflineRasterizer& rasterizer) {
 }
 
 void MenuWindow::DrawDarkBorder(Pht::OfflineRasterizer& rasterizer) {
+    FillStencilBuffer(rasterizer, outerCornerRadius, 0.0f);
+    
     Pht::Vec2 lowerLeft {0.0f, 0.0f};
     Pht::Vec2 upperRight {mSize.x, mSize.y};
     rasterizer.DrawRectangle(upperRight, lowerLeft, borderColor, Pht::DrawOver::Yes);
+
+    FillStencilBuffer(rasterizer,
+                      outerCornerRadius - darkBorderThickness,
+                      darkBorderThickness);
+
+    Pht::Vec2 lowerLeft2 {0.0f, 0.0f};
+    Pht::Vec2 upperRight2 {mSize.x, mSize.y};
+    rasterizer.DrawRectangle(upperRight2, lowerLeft2, innerBorderColor, Pht::DrawOver::Yes);
 }
 
 void MenuWindow::DrawDarkMainArea(Pht::OfflineRasterizer& rasterizer) {
     Pht::Vec2 lowerLeft {0.0f, 0.0f};
     Pht::Vec2 upperRight {mSize.x, mSize.y};
-    rasterizer.DrawRectangle(upperRight, lowerLeft, darkBlueColor, Pht::DrawOver::Yes);
+    rasterizer.DrawRectangle(upperRight, lowerLeft, darkerBlueColor, Pht::DrawOver::Yes);
+    
+    Pht::OfflineRasterizer::VerticalGradientColors upperRectangleColors {
+        darkerBlueColor,
+        innerBorderColor
+    };
+    Pht::Vec2 lowerLeft2 {0.0f, mSize.y - mSize.y / 3.0f};
+    Pht::Vec2 upperRight2 {mSize.x, mSize.y};
+    rasterizer.DrawGradientRectangle(upperRight2,
+                                     lowerLeft2,
+                                     upperRectangleColors,
+                                     Pht::DrawOver::Yes);
+
+    Pht::OfflineRasterizer::VerticalGradientColors lowerRectangleColors {
+        innerBorderColor,
+        darkerBlueColor
+    };
+    Pht::Vec2 lowerLeft3 {0.0f, 0.0f};
+    Pht::Vec2 upperRight3 {mSize.x, mSize.y / 3.0f};
+    rasterizer.DrawGradientRectangle(upperRight3,
+                                     lowerLeft3,
+                                     lowerRectangleColors,
+                                     Pht::DrawOver::Yes);
 }

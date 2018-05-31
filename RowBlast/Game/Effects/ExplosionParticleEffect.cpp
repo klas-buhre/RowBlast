@@ -117,6 +117,7 @@ void ExplosionParticleEffect::InitInnerEffect(Pht::IEngine& engine,
         .mPosition = Pht::Vec3{0.0f, 0.0f, 0.0f},
         .mSize = Pht::Vec3{0.0f, 0.0f, 0.0f},
         .mTimeToLive = 0.0f,
+        .mFrequency = 0.0f,
         .mBurst = 1
     };
     
@@ -124,7 +125,8 @@ void ExplosionParticleEffect::InitInnerEffect(Pht::IEngine& engine,
     mInnerParticleEffect = particleSystem.CreateParticleEffectSceneObject(particleSettings,
                                                                           particleEmitterSettings,
                                                                           Pht::RenderMode::Triangles);
-    mInnerParticleEffect->GetRenderable()->GetMaterial().SetShaderType(Pht::ShaderType::ParticleNoAlphaTexture);
+    auto& material {mInnerParticleEffect->GetRenderable()->GetMaterial()};
+    material.SetShaderType(Pht::ShaderType::ParticleNoAlphaTexture);
 }
 
 void ExplosionParticleEffect::InitShockWave(Pht::IEngine& engine,
@@ -133,6 +135,7 @@ void ExplosionParticleEffect::InitShockWave(Pht::IEngine& engine,
         .mPosition = Pht::Vec3{0.0f, 0.0f, 0.0f},
         .mSize = Pht::Vec3{0.0f, 0.0f, 0.0f},
         .mTimeToLive = 0.0f,
+        .mFrequency = 0.0f,
         .mBurst = 1
     };
 

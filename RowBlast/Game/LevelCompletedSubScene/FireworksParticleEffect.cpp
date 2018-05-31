@@ -117,6 +117,7 @@ FireworksParticleEffect::Firework::Firework(Pht::IEngine& engine) {
         .mPosition = Pht::Vec3{0.0f, 0.0f, 0.0f},
         .mSize = Pht::Vec3{0.0f, 0.0f, 0.0f},
         .mTimeToLive = 0.0f,
+        .mFrequency = 0.0f,
         .mBurst = 50
     };
     

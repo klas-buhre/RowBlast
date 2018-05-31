@@ -11,7 +11,7 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto fade {0.6f};
+    constexpr auto fade {0.3f};
     constexpr auto fadeTime {0.3f};
 }
 
