@@ -145,8 +145,7 @@ void LevelStartDialogView::CreateGlowEffects(Pht::SceneObject& parentObject, Pht
     Pht::ParticleSettings particleSettings {
         .mVelocity = Pht::Vec3{0.0f, 0.0f, 0.0f},
         .mVelocityRandomPart = Pht::Vec3{0.0f, 0.0f, 0.0f},
-        .mColor = Pht::Vec4{0.45f, 0.45f, 1.0f, 1.0f},
-        // .mColor = Pht::Vec4{0.55f, 0.5f, 1.0f, 1.0f},
+        .mColor = Pht::Vec4{0.5f, 0.5f, 1.0f, 1.0f},
         .mColorRandomPart = Pht::Vec4{0.0f, 0.0f, 0.0f, 0.0f},
         .mTextureFilename = "flare03.png",
         .mTimeToLive = std::numeric_limits<float>::infinity(),
@@ -172,8 +171,7 @@ void LevelStartDialogView::CreateGlowEffects(Pht::SceneObject& parentObject, Pht
     Pht::ParticleSettings particleSettings2 {
         .mVelocity = Pht::Vec3{0.0f, 0.0f, 0.0f},
         .mVelocityRandomPart = Pht::Vec3{0.0f, 0.0f, 0.0f},
-        .mColor = Pht::Vec4{0.4f, 0.4f, 1.0f, 1.0f},
-        // .mColor = Pht::Vec4{0.75f, 0.0f, 0.9f, 1.0f},
+        .mColor = Pht::Vec4{0.6f, 0.0f, 0.75f, 1.0f},
         .mColorRandomPart = Pht::Vec4{0.0f, 0.0f, 0.0f, 0.0f},
         .mTextureFilename = "flare24.png",
         .mTimeToLive = std::numeric_limits<float>::infinity(),
