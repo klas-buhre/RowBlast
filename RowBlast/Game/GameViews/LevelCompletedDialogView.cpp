@@ -1,5 +1,9 @@
 #include "LevelCompletedDialogView.hpp"
 
+// Engine includes.
+#include "IEngine.hpp"
+#include "QuadMesh.hpp"
+
 // Game includes.
 #include "CommonResources.hpp"
 #include "UiLayer.hpp"
@@ -10,7 +14,7 @@ LevelCompletedDialogView::LevelCompletedDialogView(Pht::IEngine& engine,
                                                    const CommonResources& commonResources) {
     PotentiallyZoomedScreen zoom {PotentiallyZoomedScreen::Yes};
     auto& guiResources {commonResources.GetGuiResources()};
-    auto& menuWindow {guiResources.GetMediumMenuWindow(zoom)};
+    auto& menuWindow {guiResources.GetMediumDarkMenuWindowPotentiallyZoomedScreen()};
     
     auto menuWindowSceneObject {std::make_unique<Pht::SceneObject>(&menuWindow.GetRenderable())};
     menuWindowSceneObject->GetTransform().SetPosition({0.0f, 0.0f, UiLayer::background});
@@ -20,7 +24,7 @@ LevelCompletedDialogView::LevelCompletedDialogView(Pht::IEngine& engine,
     
     CreateText({-3.4f, 5.1f, UiLayer::text},
                "LEVEL CLEARED",
-               guiResources.GetCaptionTextProperties(zoom));
+               guiResources.GetLargeWhiteTextProperties());
 
     Pht::Vec3 closeButtonPosition {
         GetSize().x / 2.0f - 1.5f,
@@ -40,6 +44,15 @@ LevelCompletedDialogView::LevelCompletedDialogView(Pht::IEngine& engine,
                                                 closeButtonInputSize,
                                                 closeButtonStyle);
 
+    Pht::Material lineMaterial {Pht::Color{0.6f, 0.8f, 1.0f}};
+    lineMaterial.SetOpacity(0.3f);
+    auto& sceneManager {engine.GetSceneManager()};
+    auto& lineSceneObject {
+        CreateSceneObject(Pht::QuadMesh {GetSize().x - 1.5f, 0.06f}, lineMaterial, sceneManager)
+    };
+    lineSceneObject.GetTransform().SetPosition({0.0f, 4.1f, UiLayer::textRectangle});
+    GetRoot().AddChild(lineSceneObject);
+
     Pht::Vec2 nextButtonInputSize {205.0f, 59.0f};
     
     MenuButton::Style nextButtonStyle;
@@ -47,14 +60,13 @@ LevelCompletedDialogView::LevelCompletedDialogView(Pht::IEngine& engine,
     nextButtonStyle.mColor = GuiResources::mBlueButtonColor;
     nextButtonStyle.mSelectedColor = GuiResources::mBlueSelectedButtonColor;
     nextButtonStyle.mPressedScale = 1.05f;
-    nextButtonStyle.mHasShadow = true;
 
     mNextButton = std::make_unique<MenuButton>(engine,
                                                *this,
-                                               Pht::Vec3 {0.0f, -2.9f, UiLayer::textRectangle},
+                                               Pht::Vec3 {0.0f, -3.5f, UiLayer::textRectangle},
                                                nextButtonInputSize,
                                                nextButtonStyle);
     mNextButton->CreateText({-1.1f, -0.31f, UiLayer::buttonText},
-                            "Next",
-                            guiResources.GetLargeWhiteButtonTextProperties(zoom));
+                            "NEXT",
+                            guiResources.GetLargeWhiteTextProperties());
 }

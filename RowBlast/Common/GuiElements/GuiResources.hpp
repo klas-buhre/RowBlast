@@ -44,7 +44,11 @@ namespace RowBlast {
         const MenuWindow& GetLargeDarkMenuWindow() const {
             return mLargeDarkMenuWindow;
         }
-        
+
+        const MenuWindow& GetMediumDarkMenuWindowPotentiallyZoomedScreen() const {
+            return mMediumDarkMenuWindowPotentiallyZoomedScreen;
+        }
+
         static const Pht::Color mBlueButtonColor;
         static const Pht::Color mBlueSelectedButtonColor;
         static const Pht::Color mYellowButtonColor;
@@ -69,6 +73,7 @@ namespace RowBlast {
         MenuWindow mLargeMenuWindowPotentiallyZoomedScreen;
         MenuWindow mMediumMenuWindowPotentiallyZoomedScreen;
         MenuWindow mSmallMenuWindowPotentiallyZoomedScreen;
+        MenuWindow mMediumDarkMenuWindowPotentiallyZoomedScreen;
         Pht::TextProperties mBlackButtonTextPropertiesPotentiallyZoomedScreen;
         Pht::TextProperties mLargeWhiteButtonTextPropertiesPotentiallyZoomedScreen;
         Pht::TextProperties mWhiteButtonTextPropertiesPotentiallyZoomedScreen;

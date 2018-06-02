@@ -46,7 +46,6 @@ namespace RowBlast {
             LevelCompletedEffects,
             UiViews,
             Stars,
-            StarShadows,
             SceneSwitchFadeEffect = GlobalLayer::sceneSwitchFadeEffect
         };
     
@@ -63,7 +62,6 @@ namespace RowBlast {
         void Update();
         void UpdateLightAnimation();
         void SetScissorBox(const Pht::ScissorBox& scissorBox);
-        void SetScissorBox(const Pht::ScissorBox& scissorBox, int layer);
         const Pht::Material& GetRedMaterial() const;
         const Pht::Material& GetBlueMaterial() const;
         const Pht::Material& GetGreenMaterial() const;
@@ -151,11 +149,6 @@ namespace RowBlast {
             return *mLevelCompletedEffectsContainer;
         }
 
-        Pht::SceneObject& GetStarShadowsContainer() {
-            assert(mStarShadowsContainer);
-            return *mStarShadowsContainer;
-        }
-
         Pht::SceneObject& GetStarsContainer() {
             assert(mStarsContainer);
             return *mStarsContainer;
@@ -224,8 +217,8 @@ namespace RowBlast {
                        const PieceResources& pieceResources,
                        const Level& level);
         void CreateUiViewsContainer();
-        void CreateStarShadowsContainer();
         void CreateStarsContainer();
+        void SetScissorBox(const Pht::ScissorBox& scissorBox, int layer);
         
         Pht::IEngine& mEngine;
         const ScrollController& mScrollController;
@@ -249,7 +242,6 @@ namespace RowBlast {
         Pht::SceneObject* mHudContainer {nullptr};
         Pht::SceneObject* mUiViewsContainer {nullptr};
         Pht::SceneObject* mLevelCompletedEffectsContainer {nullptr};
-        Pht::SceneObject* mStarShadowsContainer {nullptr};
         Pht::SceneObject* mStarsContainer {nullptr};
         const Pht::Vec3 mFieldPosition;
         const float mCellSize {1.25f};

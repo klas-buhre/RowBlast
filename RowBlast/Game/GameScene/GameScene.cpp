@@ -25,7 +25,7 @@ namespace {
     constexpr auto lightAnimationDuration {5.0f};
     const Pht::Vec3 lightDirectionA {0.57f, 1.0f, 0.6f};
     const Pht::Vec3 lightDirectionB {1.0f, 1.0f, 0.74f};
-    
+
 #if 0
     const std::vector<BlockPathVolume> floatingBlockPaths {
         BlockPathVolume {
@@ -126,7 +126,6 @@ void GameScene::Init(const Level& level,
     CreateHud(gameLogic, levelResources, pieceResources, level);
     CreateUiViewsContainer();
     CreateStarsContainer();
-    CreateStarShadowsContainer();
     
     scene->SetDistanceFunction(Pht::DistanceFunction::WorldSpaceNegativeZ);
     sceneManager.SetLoadedScene(std::move(scene));
@@ -183,10 +182,6 @@ void GameScene::CreateRenderPasses() {
     starsRenderPass.SetHudMode(true);
     mScene->AddRenderPass(starsRenderPass);
 
-    Pht::RenderPass starShadowsRenderPass {static_cast<int>(Layer::StarShadows)};
-    starShadowsRenderPass.SetHudMode(true);
-    mScene->AddRenderPass(starShadowsRenderPass);
-    
     Pht::RenderPass fadeEffectRenderPass {static_cast<int>(Layer::SceneSwitchFadeEffect)};
     fadeEffectRenderPass.SetHudMode(true);
     mScene->AddRenderPass(fadeEffectRenderPass);
@@ -378,8 +373,8 @@ void GameScene::CreateStarsContainer() {
     auto& lightSceneObject {mScene->CreateSceneObject()};
     lightSceneObject.SetIsVisible(false);
     auto lightComponent {std::make_unique<Pht::LightComponent>(lightSceneObject)};
-    lightComponent->SetDirection({1.0f, 1.0f, 0.97f});
-    lightComponent->SetDirectionalIntensity(0.9f);
+    lightComponent->SetDirection({0.8f, 0.8f, 1.0f});
+    lightComponent->SetDirectionalIntensity(0.75f);
     
     auto* starsRenderPass {mScene->GetRenderPass(static_cast<int>(Layer::Stars))};
     assert(starsRenderPass);
@@ -387,12 +382,6 @@ void GameScene::CreateStarsContainer() {
     
     lightSceneObject.SetComponent<Pht::LightComponent>(std::move(lightComponent));
     mStarsContainer->AddChild(lightSceneObject);
-}
-
-void GameScene::CreateStarShadowsContainer() {
-    mStarShadowsContainer = &mScene->CreateSceneObject();
-    mStarShadowsContainer->SetLayer(static_cast<int>(Layer::StarShadows));
-    mScene->GetRoot().AddChild(*mStarShadowsContainer);
 }
 
 void GameScene::Update() {

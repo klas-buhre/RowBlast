@@ -19,7 +19,8 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto fade {0.6f};
+    constexpr auto fade {0.5f};
+    constexpr auto halfFade {0.3f};
     constexpr auto fadeTime {0.3f};
     constexpr auto effectsVolumeDepth {20.0f};
     constexpr auto fireworksAndConfettiDuration {4.5f};
@@ -117,6 +118,9 @@ LevelCompletedDialogController::Result LevelCompletedController::Update() {
             UpdateInSlidingOutFieldAnimationState();
             break;
         case State::FireworksAndConfetti:
+            if (mFadeEffect.GetState() != Pht::FadeEffect::State::Transition) {
+                mFadeEffect.Update(mEngine.GetLastFrameSeconds());
+            }
             UpdateFireworksAndConfetti();
             break;
         case State::StarsAppearingAnimation:
@@ -161,12 +165,6 @@ void LevelCompletedController::UpdateInSlidingOutFieldAnimationState() {
 }
 
 void LevelCompletedController::UpdateFireworksAndConfetti() {
-    auto dt {mEngine.GetLastFrameSeconds()};
-    
-    if (mFadeEffect.GetState() != Pht::FadeEffect::State::Transition) {
-        mFadeEffect.Update(dt);
-    }
-
     auto fireworkState {mFireworksParticleEffect.Update()};
     auto confettiState {mConfettiParticleEffect.Update()};
 
@@ -176,7 +174,7 @@ void LevelCompletedController::UpdateFireworksAndConfetti() {
             confettiState == ConfettiParticleEffect::State::Inactive
         };
         
-        mTimeSpentInFireworksAndConfettiState += dt;
+        mTimeSpentInFireworksAndConfettiState += mEngine.GetLastFrameSeconds();
         
         if (effectsAreDone || mTimeSpentInFireworksAndConfettiState > fireworksAndConfettiDuration ||
             mEngine.GetInput().ConsumeWholeTouch()) {
@@ -188,19 +186,30 @@ void LevelCompletedController::UpdateFireworksAndConfetti() {
 
             mStarsAnimation.Start(numStars);
             mState = State::StarsAppearingAnimation;
+            mFadeEffect.GetSceneObject().GetRenderable()->GetMaterial().SetOpacity(fade);
         }
     }
 }
 
 void LevelCompletedController::UpdateInStarsAppearingAnimationState() {
     UpdateFireworksAndConfetti();
+    
+    auto& fadeMaterial {mFadeEffect.GetSceneObject().GetRenderable()->GetMaterial()};
+    
+    if (fadeMaterial.GetOpacity() > halfFade) {
+        mFadeEffect.Update(mEngine.GetLastFrameSeconds());
+        
+        if (fadeMaterial.GetOpacity() < halfFade) {
+            fadeMaterial.SetOpacity(halfFade);
+            mFadeEffect.GetSceneObject().SetIsVisible(true);
+        }
+    }
 
     if (mStarsAnimation.Update() == StarsAnimation::State::Rotating) {
         mState = State::LevelCompletedDialog;
         mGameViewControllers.SetActiveController(GameViewControllers::LevelCompletedDialog);
         mGameViewControllers.GetLevelCompletedDialogController().Init();
-        SetStarShadowsScissorBox();
-        mStarsAnimation.ShowStarShadows();
+        mStarsAnimation.MoveToFront();
     }
 }
 
@@ -209,7 +218,6 @@ LevelCompletedDialogController::Result LevelCompletedController::UpdateLevelComp
     mStarsAnimation.Update();
     
     auto result {mGameViewControllers.GetLevelCompletedDialogController().Update()};
-    SetStarShadowsScissorBox();
     
     if (result != LevelCompletedDialogController::Result::None) {
         auto numStars {
@@ -221,13 +229,4 @@ LevelCompletedDialogController::Result LevelCompletedController::UpdateLevelComp
     }
     
     return result;
-}
-
-void LevelCompletedController::SetStarShadowsScissorBox() {
-    auto& view {mGameViewControllers.GetLevelCompletedDialogController().GetView()};
-    auto viewPosition {view.GetPosition()};
-    auto viewSize {view.GetSize()};
-    Pht::Vec2 lowerLeft {viewPosition.x - viewSize.x / 2.0f, viewPosition.y - viewSize.y / 2.0f};
-    Pht::ScissorBox scissorBox {lowerLeft, viewSize};
-    mGameScene.SetScissorBox(scissorBox, static_cast<int>(GameScene::Layer::StarShadows));
 }
