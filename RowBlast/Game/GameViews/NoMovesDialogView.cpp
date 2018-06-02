@@ -2,7 +2,7 @@
 
 // Engine includes.
 #include "IEngine.hpp"
-#include "IRenderer.hpp"
+#include "QuadMesh.hpp"
 
 // Game includes.
 #include "CommonResources.hpp"
@@ -11,8 +11,9 @@
 using namespace RowBlast;
 
 NoMovesDialogView::NoMovesDialogView(Pht::IEngine& engine, const CommonResources& commonResources) {
+    PotentiallyZoomedScreen zoom {PotentiallyZoomedScreen::Yes};
     auto& guiResources {commonResources.GetGuiResources()};
-    auto& menuWindow {guiResources.GetSmallMenuWindowPotentiallyZoomedScreen()};
+    auto& menuWindow {guiResources.GetSmallDarkMenuWindowPotentiallyZoomedScreen()};
     
     auto menuWindowSceneObject {std::make_unique<Pht::SceneObject>(&menuWindow.GetRenderable())};
     menuWindowSceneObject->GetTransform().SetPosition({0.0f, 0.0f, UiLayer::background});
@@ -20,10 +21,9 @@ NoMovesDialogView::NoMovesDialogView(Pht::IEngine& engine, const CommonResources
 
     SetSize(menuWindow.GetSize());
     
-    PotentiallyZoomedScreen zoom {PotentiallyZoomedScreen::Yes};
     CreateText({-2.5f, 3.5f, UiLayer::text},
                "NO MOVES",
-               guiResources.GetCaptionTextProperties(zoom));
+               guiResources.GetLargeWhiteTextProperties(zoom));
     
     Pht::Vec3 closeButtonPosition {
         GetSize().x / 2.0f - 1.5f,
@@ -43,8 +43,17 @@ NoMovesDialogView::NoMovesDialogView(Pht::IEngine& engine, const CommonResources
                                                 closeButtonInputSize,
                                                 closeButtonStyle);
 
-    auto& textProperties {guiResources.GetSmallTextProperties(zoom)};
-    CreateText({-5.5f, 1.0f, UiLayer::text}, "Purchase 5 more moves for $0.99", textProperties);
+    Pht::Material lineMaterial {Pht::Color{0.6f, 0.8f, 1.0f}};
+    lineMaterial.SetOpacity(0.3f);
+    auto& sceneManager {engine.GetSceneManager()};
+    auto& lineSceneObject {
+        CreateSceneObject(Pht::QuadMesh {GetSize().x - 1.5f, 0.06f}, lineMaterial, sceneManager)
+    };
+    lineSceneObject.GetTransform().SetPosition({0.0f, 2.6f, UiLayer::textRectangle});
+    GetRoot().AddChild(lineSceneObject);
+
+    auto& textProperties {guiResources.GetSmallWhiteTextProperties(zoom)};
+    CreateText({-5.5f, 0.5f, UiLayer::text}, "Purchase 5 more moves for $0.99", textProperties);
     
     Pht::Vec2 playOnButtonInputSize {205.0f, 59.0f};
     
@@ -53,14 +62,13 @@ NoMovesDialogView::NoMovesDialogView(Pht::IEngine& engine, const CommonResources
     playOnButtonStyle.mColor = GuiResources::mGreenButtonColor;
     playOnButtonStyle.mSelectedColor = GuiResources::mGreenSelectedButtonColor;
     playOnButtonStyle.mPressedScale = 1.05f;
-    playOnButtonStyle.mHasShadow = true;
 
     mPlayOnButton = std::make_unique<MenuButton>(engine,
                                                  *this,
-                                                 Pht::Vec3 {0.0f, -1.5f, UiLayer::textRectangle},
+                                                 Pht::Vec3 {0.0f, -2.5f, UiLayer::textRectangle},
                                                  playOnButtonInputSize,
                                                  playOnButtonStyle);
     mPlayOnButton->CreateText({-1.4f, -0.31f, UiLayer::buttonText},
                              "$0.99",
-                             guiResources.GetLargeWhiteButtonTextProperties(zoom));
+                             guiResources.GetLargeWhiteTextProperties(zoom));
 }

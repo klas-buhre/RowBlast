@@ -27,7 +27,7 @@ Backlog:
      convenient to go back to the state before the move and not the initial state.
   -Rendering:
    X-Maybe slightly less bevel in the blocks.
-    -Maybe convert the no moves, game over and no lives dialogs to dark style.
+   X-Convert the no lives dialog to dark style.
     -Could zoom in on map pin when clicking on a level in the map.
   -Tutorial:
     -Make the tutorial as short as possible. Don't give all the rules of the game at once. Instead,

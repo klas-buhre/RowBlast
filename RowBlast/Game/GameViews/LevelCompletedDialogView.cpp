@@ -24,7 +24,7 @@ LevelCompletedDialogView::LevelCompletedDialogView(Pht::IEngine& engine,
     
     CreateText({-3.4f, 5.1f, UiLayer::text},
                "LEVEL CLEARED",
-               guiResources.GetLargeWhiteTextProperties());
+               guiResources.GetLargeWhiteTextProperties(zoom));
 
     Pht::Vec3 closeButtonPosition {
         GetSize().x / 2.0f - 1.5f,
@@ -68,5 +68,5 @@ LevelCompletedDialogView::LevelCompletedDialogView(Pht::IEngine& engine,
                                                nextButtonStyle);
     mNextButton->CreateText({-1.1f, -0.31f, UiLayer::buttonText},
                             "NEXT",
-                            guiResources.GetLargeWhiteTextProperties());
+                            guiResources.GetLargeWhiteTextProperties(zoom));
 }

@@ -43,7 +43,7 @@ LevelStartDialogView::LevelStartDialogView(Pht::IEngine& engine,
 
     SetSize(menuWindow.GetSize());
     
-    auto& largeTextProperties {guiResources.GetLargeWhiteTextProperties()};
+    auto& largeTextProperties {guiResources.GetLargeWhiteTextProperties(zoom)};
     mCaption = &CreateText({-2.1f, 7.6f, UiLayer::text}, "LEVEL 1", largeTextProperties);
 
     Pht::Vec3 closeButtonPosition {
@@ -83,7 +83,7 @@ LevelStartDialogView::LevelStartDialogView(Pht::IEngine& engine,
 
     CreateText({-1.3f, -1.9f, UiLayer::text}, "GOAL", largeTextProperties);
 
-    auto& smallTextProperties {guiResources.GetSmallWhiteTextProperties()};
+    auto& smallTextProperties {guiResources.GetSmallWhiteTextProperties(zoom)};
     mClearObjective = &CreateText({-3.6f, -3.1f, UiLayer::text},
                                   "Clear all gray blocks",
                                   smallTextProperties);

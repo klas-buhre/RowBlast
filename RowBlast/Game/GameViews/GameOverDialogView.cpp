@@ -2,7 +2,7 @@
 
 // Engine includes.
 #include "IEngine.hpp"
-#include "IRenderer.hpp"
+#include "QuadMesh.hpp"
 
 // Game includes.
 #include "CommonResources.hpp"
@@ -12,8 +12,9 @@ using namespace RowBlast;
 
 GameOverDialogView::GameOverDialogView(Pht::IEngine& engine,
                                        const CommonResources& commonResources) {
+    PotentiallyZoomedScreen zoom {PotentiallyZoomedScreen::Yes};
     auto& guiResources {commonResources.GetGuiResources()};
-    auto& menuWindow {guiResources.GetSmallMenuWindowPotentiallyZoomedScreen()};
+    auto& menuWindow {guiResources.GetSmallDarkMenuWindowPotentiallyZoomedScreen()};
     
     auto menuWindowSceneObject {std::make_unique<Pht::SceneObject>(&menuWindow.GetRenderable())};
     menuWindowSceneObject->GetTransform().SetPosition({0.0f, 0.0f, UiLayer::background});
@@ -21,10 +22,9 @@ GameOverDialogView::GameOverDialogView(Pht::IEngine& engine,
 
     SetSize(menuWindow.GetSize());
     
-    PotentiallyZoomedScreen zoom {PotentiallyZoomedScreen::Yes};
     CreateText({-2.8f, 3.5f, UiLayer::text},
                "GAME OVER",
-               guiResources.GetCaptionTextProperties(zoom));
+               guiResources.GetLargeWhiteTextProperties(zoom));
     
     Pht::Vec3 closeButtonPosition {
         GetSize().x / 2.0f - 1.5f,
@@ -44,6 +44,15 @@ GameOverDialogView::GameOverDialogView(Pht::IEngine& engine,
                                                 closeButtonInputSize,
                                                 closeButtonStyle);
 
+    Pht::Material lineMaterial {Pht::Color{0.6f, 0.8f, 1.0f}};
+    lineMaterial.SetOpacity(0.3f);
+    auto& sceneManager {engine.GetSceneManager()};
+    auto& lineSceneObject {
+        CreateSceneObject(Pht::QuadMesh {GetSize().x - 1.5f, 0.06f}, lineMaterial, sceneManager)
+    };
+    lineSceneObject.GetTransform().SetPosition({0.0f, 2.6f, UiLayer::textRectangle});
+    GetRoot().AddChild(lineSceneObject);
+
     Pht::Vec2 retryButtonInputSize {205.0f, 59.0f};
     
     MenuButton::Style retryButtonStyle;
@@ -51,14 +60,13 @@ GameOverDialogView::GameOverDialogView(Pht::IEngine& engine,
     retryButtonStyle.mColor = GuiResources::mGreenButtonColor;
     retryButtonStyle.mSelectedColor = GuiResources::mGreenSelectedButtonColor;
     retryButtonStyle.mPressedScale = 1.05f;
-    retryButtonStyle.mHasShadow = true;
 
     mRetryButton = std::make_unique<MenuButton>(engine,
                                                 *this,
-                                                Pht::Vec3 {0.0f, -1.0f, UiLayer::textRectangle},
+                                                Pht::Vec3 {0.0f, -1.25f, UiLayer::textRectangle},
                                                 retryButtonInputSize,
                                                 retryButtonStyle);
     mRetryButton->CreateText({-1.25f, -0.31f, UiLayer::buttonText},
                             "Retry",
-                            guiResources.GetLargeWhiteButtonTextProperties(zoom));
+                            guiResources.GetLargeWhiteTextProperties(zoom));
 }

@@ -90,17 +90,17 @@ GuiResources::GuiResources(Pht::IEngine& engine, const CommonResources& commonRe
         MenuWindow::Style::Bright,
         PotentiallyZoomedScreen::Yes
     },
-    mSmallMenuWindowPotentiallyZoomedScreen {
-        engine,
-        commonResources,
-        MenuWindow::Size::Small,
-        MenuWindow::Style::Bright,
-        PotentiallyZoomedScreen::Yes
-    },
     mMediumDarkMenuWindowPotentiallyZoomedScreen {
         engine,
         commonResources,
         MenuWindow::Size::Medium,
+        MenuWindow::Style::Dark,
+        PotentiallyZoomedScreen::Yes
+    },
+    mSmallDarkMenuWindowPotentiallyZoomedScreen {
+        engine,
+        commonResources,
+        MenuWindow::Size::Small,
         MenuWindow::Style::Dark,
         PotentiallyZoomedScreen::Yes
     },
@@ -137,6 +137,16 @@ GuiResources::GuiResources(Pht::IEngine& engine, const CommonResources& commonRe
         commonResources.GetHussarFontSize27(PotentiallyZoomedScreen::Yes),
         1.0f,
         {0.26f, 0.26f, 0.26f, 1.0f}
+    },
+    mSmallWhiteTextPropertiesPotentiallyZoomedScreen {
+        commonResources.GetHussarFontSize27(PotentiallyZoomedScreen::Yes),
+        1.0f,
+        {0.95f, 0.95f, 0.95f, 1.0f}
+    },
+    mLargeWhiteTextPropertiesPotentiallyZoomedScreen {
+        commonResources.GetHussarFontSize35(PotentiallyZoomedScreen::Yes),
+        1.0f,
+        {0.95f, 0.95f, 0.95f, 1.0f}
     },
     mCloseButton {CreateCloseButton(engine, commonResources, PotentiallyZoomedScreen::No)},
     mCloseButtonPotentiallyZoomedScreen {
@@ -200,6 +210,26 @@ GuiResources::GetSmallTextProperties(PotentiallyZoomedScreen potentiallyZoomed) 
             return mSmallTextPropertiesPotentiallyZoomedScreen;
         case PotentiallyZoomedScreen::No:
             return mSmallTextProperties;
+    }
+}
+
+const Pht::TextProperties&
+GuiResources::GetLargeWhiteTextProperties(PotentiallyZoomedScreen potentiallyZoomed) const {
+    switch (potentiallyZoomed) {
+        case PotentiallyZoomedScreen::Yes:
+            return mLargeWhiteTextPropertiesPotentiallyZoomedScreen;
+        case PotentiallyZoomedScreen::No:
+            return mLargeWhiteTextProperties;
+    }
+}
+
+const Pht::TextProperties&
+GuiResources::GetSmallWhiteTextProperties(PotentiallyZoomedScreen potentiallyZoomed) const {
+    switch (potentiallyZoomed) {
+        case PotentiallyZoomedScreen::Yes:
+            return mSmallWhiteTextPropertiesPotentiallyZoomedScreen;
+        case PotentiallyZoomedScreen::No:
+            return mSmallWhiteTextProperties;
     }
 }
 

@@ -18,7 +18,7 @@ GameOverDialogController::GameOverDialogController(Pht::IEngine& engine,
     mSlidingMenuAnimation {engine, mView} {}
 
 void GameOverDialogController::Init() {
-    mSlidingMenuAnimation.Init(SlidingMenuAnimation::UpdateFade::Yes,
+    mSlidingMenuAnimation.Init(SlidingMenuAnimation::UpdateFade::No,
                                SlidingMenuAnimation::SlideDirection::Up);
 }
 
@@ -57,7 +57,7 @@ GameOverDialogController::OnTouch(const Pht::TouchEvent& touchEvent) {
     if (mView.GetRetryButton().IsClicked(touchEvent)) {
         if (mUserData.GetLifeManager().GetNumLives() == 0) {
             mDeferredResult = Result::Retry;
-            mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::Yes);
+            mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::No);
             return Result::None;
         }
         
