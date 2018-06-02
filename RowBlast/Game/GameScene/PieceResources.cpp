@@ -17,6 +17,7 @@ using namespace RowBlast;
 
 namespace {
     constexpr auto numWeldRenderables {3};
+    constexpr auto diagonalWeldAlpha {0.5f};
     
     std::string ToMeshName(BlockKind blockKind) {
         switch (blockKind) {
@@ -210,6 +211,11 @@ void PieceResources::CreateWelds(Pht::ISceneManager& sceneManager, const GameSce
                 auto brightness {static_cast<BlockBrightness>(brightnessIndex)};
                 
                 auto material {ToMaterial(color, brightness, scene)};
+                
+                if (weldRenderableKind == WeldRenderableKind::Diagonal) {
+                    material.SetOpacity(diagonalWeldAlpha);
+                }
+                
                 auto weldIndex {CalcWeldIndex(weldRenderableKind, color, brightness)};
                 mWelds[weldIndex] = ToWeldRenderableObject(weldRenderableKind,
                                                            material,

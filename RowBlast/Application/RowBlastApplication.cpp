@@ -27,10 +27,7 @@ Backlog:
      convenient to go back to the state before the move and not the initial state.
   -Rendering:
    X-Maybe slightly less bevel in the blocks.
-   X-Maybe the merging of two triangles into a cube could be done by letting the two triangles fade
-     into the cube. Render the triangles and the cube at the same time, vary the opacity for the
-     triangels from 1 to 0 and from 0 to 1 for the cube.
-    -Maybe remove the menu window from the level completed view and remove the fade.
+    -Maybe convert the no moves, game over and no lives dialogs to dark style.
     -Could zoom in on map pin when clicking on a level in the map.
   -Tutorial:
     -Make the tutorial as short as possible. Don't give all the rules of the game at once. Instead,
