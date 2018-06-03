@@ -464,8 +464,7 @@ void GameController::GoToPlayingState() {
 void GameController::GoToPausedStateNoLivesDialog() {
     mPausedState = PausedState::NoLivesDialog;
     mGameViewControllers.SetActiveController(GameViewControllers::NoLivesDialog);
-    mGameViewControllers.GetNoLivesDialogController().Init(SlidingMenuAnimation::UpdateFade::Yes,
-                                                           true);
+    mGameViewControllers.GetNoLivesDialogController().Init(true);
 }
 
 void GameController::GoToPausedStateRestartConfirmationDialog() {
@@ -502,6 +501,5 @@ void GameController::GoToGameOverStateGameOverDialog() {
 void GameController::GoToGameOverStateNoLivesDialog() {
     mGameOverState = GameOverState::NoLivesDialog;
     mGameViewControllers.SetActiveController(GameViewControllers::NoLivesDialog);
-    mGameViewControllers.GetNoLivesDialogController().Init(SlidingMenuAnimation::UpdateFade::Yes,
-                                                           false);
+    mGameViewControllers.GetNoLivesDialogController().Init(false);
 }

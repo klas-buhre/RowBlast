@@ -195,8 +195,7 @@ void MapController::HandleLevelClick(int levelIndex) {
     if (mUserData.GetLifeManager().GetNumLives() == 0) {
         mState = State::NoLivesDialog;
         mMapViewControllers.SetActiveController(MapViewControllers::NoLivesDialog);
-        mMapViewControllers.GetNoLivesDialogController().Init(SlidingMenuAnimation::UpdateFade::Yes,
-                                                              true);
+        mMapViewControllers.GetNoLivesDialogController().Init(true);
     } else {
         mLevelToStart = levelIndex;
         mState = State::LevelStartDialog;

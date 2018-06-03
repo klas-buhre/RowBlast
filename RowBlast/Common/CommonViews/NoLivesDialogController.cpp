@@ -18,9 +18,9 @@ NoLivesDialogController::NoLivesDialogController(Pht::IEngine& engine,
     mView {engine, commonResources, userData, potentiallyZoomedScreen},
     mSlidingMenuAnimation {engine, mView} {}
 
-void NoLivesDialogController::Init(SlidingMenuAnimation::UpdateFade updateFade,
-                                   bool shouldSlideOut) {
-    mSlidingMenuAnimation.Init(updateFade, SlidingMenuAnimation::SlideDirection::Up);
+void NoLivesDialogController::Init(bool shouldSlideOut) {
+    mSlidingMenuAnimation.Init(SlidingMenuAnimation::UpdateFade::No,
+                               SlidingMenuAnimation::SlideDirection::Up);
     mShouldSlideOut = shouldSlideOut;
 }
 

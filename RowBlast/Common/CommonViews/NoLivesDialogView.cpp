@@ -4,6 +4,7 @@
 #include "IEngine.hpp"
 #include "IRenderer.hpp"
 #include "TextComponent.hpp"
+#include "QuadMesh.hpp"
 
 // Game includes.
 #include "UserData.hpp"
@@ -23,7 +24,7 @@ NoLivesDialogView::NoLivesDialogView(Pht::IEngine& engine,
     mUserData {userData} {
     
     auto& guiResources {commonResources.GetGuiResources()};
-    auto& menuWindow {guiResources.GetMediumMenuWindow(zoom)};
+    auto& menuWindow {guiResources.GetMediumDarkMenuWindow(zoom)};
     
     auto menuWindowSceneObject {std::make_unique<Pht::SceneObject>(&menuWindow.GetRenderable())};
     menuWindowSceneObject->GetTransform().SetPosition({0.0f, 0.0f, UiLayer::background});
@@ -33,7 +34,7 @@ NoLivesDialogView::NoLivesDialogView(Pht::IEngine& engine,
     
     CreateText({-2.2f, 5.1f, UiLayer::text},
                "NO LIVES",
-               guiResources.GetCaptionTextProperties(zoom));
+               guiResources.GetLargeWhiteTextProperties(zoom));
     
     Pht::Vec3 closeButtonPosition {
         GetSize().x / 2.0f - 1.5f,
@@ -52,7 +53,30 @@ NoLivesDialogView::NoLivesDialogView(Pht::IEngine& engine,
                                                 closeButtonPosition,
                                                 closeButtonInputSize,
                                                 closeButtonStyle);
-      
+
+    Pht::Material lineMaterial {Pht::Color{0.6f, 0.8f, 1.0f}};
+    lineMaterial.SetOpacity(0.3f);
+    auto& sceneManager {engine.GetSceneManager()};
+    auto& lineSceneObject {
+        CreateSceneObject(Pht::QuadMesh {GetSize().x - 1.5f, 0.06f}, lineMaterial, sceneManager)
+    };
+    lineSceneObject.GetTransform().SetPosition({0.0f, 4.1f, UiLayer::textRectangle});
+    GetRoot().AddChild(lineSceneObject);
+    
+    auto& textProperties {guiResources.GetSmallWhiteTextProperties(zoom)};
+    
+    CreateText({-1.4f, 2.5f, UiLayer::text}, "Lives: 0", textProperties);
+    CreateText({-4.5f, 1.5f, UiLayer::text}, "Time until next life:", textProperties);
+    mCountdownText = &CreateText({2.3f, 1.5f, UiLayer::text}, "00:00", textProperties);
+
+    auto& line2SceneObject {
+        CreateSceneObject(Pht::QuadMesh {GetSize().x - 1.5f, 0.06f}, lineMaterial, sceneManager)
+    };
+    line2SceneObject.GetTransform().SetPosition({0.0f, 0.5f, UiLayer::textRectangle});
+    GetRoot().AddChild(line2SceneObject);
+
+    CreateText({-4.4f, -1.0f, UiLayer::text}, "Purchase 5 lives for $0.99", textProperties);
+
     Pht::Vec2 refillLivesInputSize {205.0f, 59.0f};
     
     MenuButton::Style refillLivesButtonStyle;
@@ -60,24 +84,15 @@ NoLivesDialogView::NoLivesDialogView(Pht::IEngine& engine,
     refillLivesButtonStyle.mColor = GuiResources::mGreenButtonColor;
     refillLivesButtonStyle.mSelectedColor = GuiResources::mGreenSelectedButtonColor;
     refillLivesButtonStyle.mPressedScale = 1.05f;
-    refillLivesButtonStyle.mHasShadow = true;
 
     mRefillLivesButton = std::make_unique<MenuButton>(engine,
                                                       *this,
-                                                      Pht::Vec3 {0.0f, -2.6f, UiLayer::textRectangle},
+                                                      Pht::Vec3 {0.0f, -3.6f, UiLayer::textRectangle},
                                                       refillLivesInputSize,
                                                       refillLivesButtonStyle);
     mRefillLivesButton->CreateText({-1.4f, -0.31f, UiLayer::buttonText},
                                    "$0.99",
-                                   guiResources.GetLargeWhiteButtonTextProperties(zoom));
-    
-    auto& textProperties {guiResources.GetSmallTextProperties(zoom)};
-    
-    CreateText({-1.4f, 2.5f, UiLayer::text}, "Lives: 0", textProperties);
-    CreateText({-4.5f, 1.5f, UiLayer::text}, "Time until next life:", textProperties);
-    mCountdownText = &CreateText({2.3f, 1.5f, UiLayer::text}, "00:00", textProperties);
-
-    CreateText({-4.4f, -0.1f, UiLayer::text}, "Purchase 5 lives for $0.99", textProperties);
+                                   guiResources.GetLargeWhiteTextProperties(zoom));
 }
 
 void NoLivesDialogView::Update() {

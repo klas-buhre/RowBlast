@@ -28,7 +28,7 @@ namespace RowBlast {
                                 const UserData& userData,
                                 PotentiallyZoomedScreen potentiallyZoomedScreen);
         
-        void Init(SlidingMenuAnimation::UpdateFade updateFade, bool shouldSlideOut);
+        void Init(bool shouldSlideOut);
         Result Update();
         void SetFadeEffect(Pht::FadeEffect& fadeEffect);
         
