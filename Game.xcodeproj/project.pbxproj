@@ -277,6 +277,8 @@
 		629B837120BAD7DA00DD2D0E /* LevelStartDialogView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 629B836F20BAD7DA00DD2D0E /* LevelStartDialogView.cpp */; };
 		629B837420BAD82E00DD2D0E /* LevelStartDialogController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 629B837220BAD82E00DD2D0E /* LevelStartDialogController.cpp */; };
 		629B837620BED74E00DD2D0E /* flare03.png in Resources */ = {isa = PBXBuildFile; fileRef = 629B837520BED74D00DD2D0E /* flare03.png */; };
+		629B837820C4470300DD2D0E /* level33.json in Resources */ = {isa = PBXBuildFile; fileRef = 629B837720C4470200DD2D0E /* level33.json */; };
+		629B837A20C458F700DD2D0E /* level34.json in Resources */ = {isa = PBXBuildFile; fileRef = 629B837920C458F600DD2D0E /* level34.json */; };
 		62A8AAF71FE2DEA1000EB01C /* cloud_B_envmap.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62A8AAF61FE2DEA0000EB01C /* cloud_B_envmap.jpg */; };
 		62A8AAF91FE2E442000EB01C /* cloud_C_envmap.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62A8AAF81FE2E441000EB01C /* cloud_C_envmap.jpg */; };
 		62BE274620AEDD990014C6DD /* SlidingFieldAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62BE274420AEDD990014C6DD /* SlidingFieldAnimation.cpp */; };
@@ -880,6 +882,8 @@
 		629B837220BAD82E00DD2D0E /* LevelStartDialogController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LevelStartDialogController.cpp; sourceTree = "<group>"; };
 		629B837320BAD82E00DD2D0E /* LevelStartDialogController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = LevelStartDialogController.hpp; sourceTree = "<group>"; };
 		629B837520BED74D00DD2D0E /* flare03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = flare03.png; sourceTree = "<group>"; };
+		629B837720C4470200DD2D0E /* level33.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level33.json; sourceTree = "<group>"; };
+		629B837920C458F600DD2D0E /* level34.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level34.json; sourceTree = "<group>"; };
 		62A8AAF61FE2DEA0000EB01C /* cloud_B_envmap.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = cloud_B_envmap.jpg; sourceTree = "<group>"; };
 		62A8AAF81FE2E441000EB01C /* cloud_C_envmap.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = cloud_C_envmap.jpg; sourceTree = "<group>"; };
 		62BE274420AEDD990014C6DD /* SlidingFieldAnimation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SlidingFieldAnimation.cpp; sourceTree = "<group>"; };
@@ -1064,6 +1068,8 @@
 				628EC299207D24080071F368 /* level30.json */,
 				628EC2AB2080C4880071F368 /* level31.json */,
 				6299DD81208E39C0001F74E2 /* level32.json */,
+				629B837720C4470200DD2D0E /* level33.json */,
+				629B837920C458F600DD2D0E /* level34.json */,
 			);
 			path = Levels;
 			sourceTree = "<group>";
@@ -2085,7 +2091,9 @@
 				62A8AAF91FE2E442000EB01C /* cloud_C_envmap.jpg in Resources */,
 				6299DD82208E39C1001F74E2 /* level32.json in Resources */,
 				6270DC9B1FCB23D800FB457D /* level6.json in Resources */,
+				629B837820C4470300DD2D0E /* level33.json in Resources */,
 				6270DC901FCB23D800FB457D /* level17.json in Resources */,
+				629B837A20C458F700DD2D0E /* level34.json in Resources */,
 				62785B1720875937006F9869 /* Textured.frag in Resources */,
 				62785B2A20875937006F9869 /* Text.frag in Resources */,
 				6270DC8C1FCB23D800FB457D /* level13.json in Resources */,
