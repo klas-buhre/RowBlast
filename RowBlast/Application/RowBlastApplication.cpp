@@ -44,8 +44,8 @@ Backlog:
     -Credit FastNoise, MIT license: https://github.com/Auburns/FastNoise/
 
 Ongoing tasks:
-    -Decide if level bombs should count as full blocks that can cause a row to be cleared.
-    -If so, decide if the level bombs should be triggered when clearing them in filled rows.
+    -Level bombs (including level row bombs) should not count as full blocks that can cause a row to
+     be cleared.
 
 
 Ideas:
