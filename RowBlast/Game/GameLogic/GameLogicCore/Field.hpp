@@ -93,8 +93,6 @@ namespace RowBlast {
                                         const Pht::IVec2& position) const;
         ImpactedBombs DetectImpactedBombs(const PieceBlocks& pieceBlocks,
                                           const Pht::IVec2& position) const;
-        void MarkBombAsDetonated(const ImpactedBombs& bombs);
-        void UnmarkDetonatedBombs();
         void LandFallingPiece(const FallingPiece& fallingPiece, bool startBounceAnimation);
         void LandPieceBlocks(const PieceBlocks& pieceBlocks,
                              int pieceId,

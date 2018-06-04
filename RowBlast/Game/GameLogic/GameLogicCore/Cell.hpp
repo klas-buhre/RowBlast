@@ -35,7 +35,6 @@ namespace RowBlast {
         Full,
         Bomb,
         RowBomb,
-        DetonatedBomb,
         ClearedRowBlock,
         None
     };
@@ -176,7 +175,7 @@ namespace RowBlast {
     
     struct Cell {
         bool IsFull() const;
-        
+
         bool IsEmpty() const {
             return mFirstSubCell.IsEmpty() && mSecondSubCell.IsEmpty();
         }

@@ -44,8 +44,7 @@ Backlog:
     -Credit FastNoise, MIT license: https://github.com/Auburns/FastNoise/
 
 Ongoing tasks:
-    -Level bombs (including level row bombs) should not count as full blocks that can cause a row to
-     be cleared.
+
 
 
 Ideas:
@@ -246,14 +245,16 @@ Comomon piece type sets:
  
  
 Decision notes on level bombs:
-        -If clearing a full row containing some level bombs inside, should level bombs be
-         triggered? Or, should they only be triggered when hit by pieces or explosions/lasers?
-            -They should not trigger since they only way of choosing not to use those level bombs is
-             to fill the row.
-        -If clearing a full row containing a level bomb inside and the piece lands on it, should the
-         level bomb be triggered?
-            -Yes, it should be triggered since it is landed on but level bombs next to the hit level
-             bomb should not trigger since they are cleared because of the full row.
+        -Should level bombs be counted as full blocks that can be used to clear a row?
+            -One idea was that rows containging level bombs could be cleared and the level bombs
+             should not trigger since the only way of choosing not to use those level bombs would
+             have been to fill the row. However, after testing it became clear that rows with level
+             bombs were often cleared by mistake during for example cascading, or you would end up
+             in a situation where you would have to clear them even though it will lead to failing
+             the level. So it was decided that level bombs does not count as full blocks that can
+             clear a row. It also solves the ambiguous case when landing on level bombs and at the
+             same time clearing the row containg those level bombs and some extra bombs. Should all
+             those level bombs be triggered or only the ones landed on?
         -If level bombs get pulled down and land should they trigger?
             -They should not triggering since this could open up for more strategic play by letting
              the player move level bombs to different rows.

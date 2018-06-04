@@ -490,10 +490,6 @@ void GameLogic::LandFallingPiece(bool finalMovementWasADrop) {
                 }
             }
         }
-        
-        if (!impactedLevelBombs.IsEmpty()) {
-            mField.UnmarkDetonatedBombs();
-        }
     }
     
     NextMove();
@@ -562,8 +558,6 @@ void GameLogic::DetonateImpactedLevelBombs(const Field::ImpactedBombs& impactedL
                 break;
         }
     }
-    
-    mField.MarkBombAsDetonated(impactedLevelBombs);
 }
 
 void GameLogic::GoToFieldExplosionsState() {

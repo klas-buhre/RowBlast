@@ -18,7 +18,7 @@ namespace {
 
     bool RowIsFull(const std::vector<Cell>& row) {
         for (auto& cell: row) {
-            if (!cell.IsFull()) {
+            if (!cell.IsFull() || cell.mFirstSubCell.IsBomb()) {
                 return false;
             }
         }
@@ -285,6 +285,10 @@ bool Field::IsCellAccordingToBlueprint(int row, int column) const {
     auto& cell {mGrid[row][column]};
     auto blueprintFill {(*mBlueprintGrid)[row][column].mFill};
     
+    if (cell.mFirstSubCell.IsBomb()) {
+        return false;
+    }
+    
     switch (blueprintFill) {
         case Fill::Full:
             if (!cell.IsFull()) {
@@ -525,28 +529,6 @@ Field::ImpactedBombs Field::DetectImpactedBombs(const PieceBlocks& pieceBlocks,
     }
     
     return impactedBombs;
-}
-
-void Field::MarkBombAsDetonated(const ImpactedBombs& bombs) {
-    for (auto& bomb: bombs) {
-        auto& position {bomb.mPosition};
-        auto& subCell {mGrid[position.y][position.x].mFirstSubCell};
-        
-        subCell.mBlockKind = BlockKind::DetonatedBomb;
-        subCell.mFill = Fill::Full;
-    }
-}
-
-void Field::UnmarkDetonatedBombs() {
-    for (auto row {0}; row < mNumRows; ++row) {
-        for (auto column {0}; column < mNumColumns; ++column) {
-            auto& subCell {mGrid[row][column].mFirstSubCell};
-            
-            if (subCell.mBlockKind == BlockKind::DetonatedBomb) {
-                subCell = SubCell {};
-            }
-        }
-    }
 }
 
 void Field::LandFallingPiece(const FallingPiece& fallingPiece, bool startBounceAnimation) {
@@ -1612,8 +1594,8 @@ void Field::SaveSubCellAndCancelFill(Field::RemovedSubCells& removedSubCells,
                                      int column) {
     auto position {subCell.mPosition};
     
-    if (subCell.mBlockKind != BlockKind::None && subCell.mBlockKind != BlockKind::DetonatedBomb &&
-        subCell.mBlockKind != BlockKind::ClearedRowBlock && row >= mLowestVisibleRow) {
+    if (subCell.mBlockKind != BlockKind::None && subCell.mBlockKind != BlockKind::ClearedRowBlock &&
+        row >= mLowestVisibleRow) {
 
         RemovedSubCell removedSubCell {
             .mExactPosition = subCell.mPosition,
