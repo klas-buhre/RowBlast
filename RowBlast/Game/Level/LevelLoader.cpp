@@ -36,6 +36,10 @@ namespace {
             case 'G':
             case 'B':
             case 'L':
+            case 'r':
+            case 'g':
+            case 'l':
+            case 'y':
                 return Fill::Full;
             case 'd':
                 return Fill::LowerRightHalf;
@@ -55,6 +59,10 @@ namespace {
             case ' ':
                 return BlockKind::None;
             case 'G':
+            case 'r':
+            case 'g':
+            case 'l':
+            case 'y':
                 return BlockKind::Full;
             case 'B':
                 return BlockKind::Bomb;
@@ -72,6 +80,21 @@ namespace {
                 assert(!"Unknown cell type");
         }
     }
+    
+    BlockColor CellBlockColor(char c) {
+        switch (c) {
+            case 'r':
+                return BlockColor::Red;
+            case 'g':
+                return BlockColor::Green;
+            case 'l':
+                return BlockColor::Blue;
+            case 'y':
+                return BlockColor::Yellow;
+            default:
+                return BlockColor::None;
+        }
+    }
 
     Rotation CellRotation(char c) {
         switch (c) {
@@ -80,6 +103,10 @@ namespace {
             case 'd':
             case 'B':
             case 'L':
+            case 'r':
+            case 'g':
+            case 'l':
+            case 'y':
                 return Rotation::Deg0;
             case 'b':
                 return Rotation::Deg90;
@@ -92,6 +119,19 @@ namespace {
         }
     }
     
+    bool IsGrayLevelBlock(char c) {
+        switch (c) {
+            case 'G':
+            case 'd':
+            case 'b':
+            case 'p':
+            case 'q':
+                return true;
+            default:
+                return false;
+        }
+    }
+    
     Cell CreateCell(char c, int column, int row) {
         Cell cell;
         auto& firstSubCell {cell.mFirstSubCell};
@@ -99,11 +139,9 @@ namespace {
         firstSubCell.mPosition = Pht::Vec2 {static_cast<float>(column), static_cast<float>(row)};
         firstSubCell.mFill = CellFill(c);
         firstSubCell.mBlockKind = CellBlockKind(c);
+        firstSubCell.mColor = CellBlockColor(c);
         firstSubCell.mRotation = CellRotation(c);
-
-        if (!firstSubCell.IsEmpty() && !firstSubCell.IsBomb()) {
-            cell.mFirstSubCell.mIsGrayLevelBlock = true;
-        }
+        firstSubCell.mIsGrayLevelBlock = IsGrayLevelBlock(c);
 
         return cell;
     }

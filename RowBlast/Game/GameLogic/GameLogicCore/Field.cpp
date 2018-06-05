@@ -159,6 +159,7 @@ void Field::Init(const Level& level) {
     
     if (auto* clearGrid {level.GetClearGrid()}) {
         mGrid = *clearGrid;
+        assert(mNumRows - CalculateHighestLevelBlock() >= 14);
     } else {
         auto* blueprintGrid {level.GetBlueprintGrid()};
         assert(blueprintGrid);
@@ -174,6 +175,9 @@ void Field::Init(const Level& level) {
         }
     }
     
+    mLowestVisibleRow = 0;
+    ManageWelds();
+
     mPreviousGrid = mGrid;
     SetChanged();
 }

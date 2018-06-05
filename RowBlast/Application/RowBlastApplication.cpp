@@ -44,7 +44,7 @@ Backlog:
     -Credit FastNoise, MIT license: https://github.com/Auburns/FastNoise/
 
 Ongoing tasks:
-
+    -Fix the pull down bug.
 
 
 Ideas:
