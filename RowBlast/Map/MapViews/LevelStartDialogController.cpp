@@ -18,12 +18,8 @@ LevelStartDialogController::LevelStartDialogController(Pht::IEngine& engine,
 
 void LevelStartDialogController::Init(const LevelInfo& levelInfo) {
     mView.Init(levelInfo);
-    mSlidingMenuAnimation.Init(SlidingMenuAnimation::UpdateFade::Yes,
+    mSlidingMenuAnimation.Init(SlidingMenuAnimation::UpdateFade::No,
                                SlidingMenuAnimation::SlideDirection::Scale);
-}
-
-void LevelStartDialogController::SetFadeEffect(Pht::FadeEffect& fadeEffect) {
-    mSlidingMenuAnimation.SetFadeEffect(fadeEffect);
 }
 
 LevelStartDialogController::Result LevelStartDialogController::Update() {
@@ -59,7 +55,7 @@ LevelStartDialogController::Result
 LevelStartDialogController::OnTouch(const Pht::TouchEvent& touchEvent) {
     if (mView.GetCloseButton().IsClicked(touchEvent)) {
         mDeferredResult = Result::Close;
-        mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::Yes,
+        mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::No,
                                             SlidingMenuAnimation::SlideDirection::Left);
     }
 

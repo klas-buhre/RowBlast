@@ -27,7 +27,6 @@ namespace RowBlast {
                                    PieceResources& pieceResources);
         
         void Init(const LevelInfo& levelInfo);
-        void SetFadeEffect(Pht::FadeEffect& fadeEffect);
         Result Update();
         
         LevelStartDialogView& GetView() {

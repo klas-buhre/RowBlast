@@ -19,10 +19,6 @@ void NoMovesDialogController::Init() {
                                SlidingMenuAnimation::SlideDirection::Up);
 }
 
-void NoMovesDialogController::SetFadeEffect(Pht::FadeEffect& fadeEffect) {
-    mSlidingMenuAnimation.SetFadeEffect(fadeEffect);
-}
-
 NoMovesDialogController::Result NoMovesDialogController::Update() {
     switch (mSlidingMenuAnimation.Update()) {
         case SlidingMenuAnimation::State::Idle:

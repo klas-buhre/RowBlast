@@ -11,7 +11,7 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto fade {0.3f};
+    constexpr auto fade {0.6f};
     constexpr auto fadeTime {0.3f};
 }
 
@@ -43,8 +43,6 @@ MapViewControllers::MapViewControllers(Pht::IEngine& engine,
 void MapViewControllers::Init() {
     mFadeEffect.Reset();
 
-    mLevelStartDialogController.SetFadeEffect(mFadeEffect);
-    mNoLivesDialogController.SetFadeEffect(mFadeEffect);
     mSettingsMenuController.SetFadeEffect(mFadeEffect);
 
     auto& uiViewContainer {mScene.GetUiViewsContainer()};

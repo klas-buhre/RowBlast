@@ -20,7 +20,6 @@ using namespace RowBlast;
 
 namespace {
     constexpr auto fade {0.5f};
-    constexpr auto halfFade {0.3f};
     constexpr auto fadeTime {0.3f};
     constexpr auto effectsVolumeDepth {20.0f};
     constexpr auto fireworksAndConfettiDuration {4.5f};
@@ -193,17 +192,6 @@ void LevelCompletedController::UpdateFireworksAndConfetti() {
 
 void LevelCompletedController::UpdateInStarsAppearingAnimationState() {
     UpdateFireworksAndConfetti();
-    
-    auto& fadeMaterial {mFadeEffect.GetSceneObject().GetRenderable()->GetMaterial()};
-    
-    if (fadeMaterial.GetOpacity() > halfFade) {
-        mFadeEffect.Update(mEngine.GetLastFrameSeconds());
-        
-        if (fadeMaterial.GetOpacity() < halfFade) {
-            fadeMaterial.SetOpacity(halfFade);
-            mFadeEffect.GetSceneObject().SetIsVisible(true);
-        }
-    }
 
     if (mStarsAnimation.Update() == StarsAnimation::State::Rotating) {
         mState = State::LevelCompletedDialog;
@@ -217,6 +205,10 @@ LevelCompletedDialogController::Result LevelCompletedController::UpdateLevelComp
     UpdateFireworksAndConfetti();
     mStarsAnimation.Update();
     
+    if (mFadeEffect.GetState() != Pht::FadeEffect::State::Idle) {
+        mFadeEffect.Update(mEngine.GetLastFrameSeconds());
+    }
+
     auto result {mGameViewControllers.GetLevelCompletedDialogController().Update()};
     
     if (result != LevelCompletedDialogController::Result::None) {

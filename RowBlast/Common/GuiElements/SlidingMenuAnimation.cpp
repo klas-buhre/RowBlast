@@ -140,6 +140,7 @@ SlidingMenuAnimation::State SlidingMenuAnimation::Update() {
 void SlidingMenuAnimation::UpdateInSlidingInState() {
     if (mUpdateFade == UpdateFade::Yes &&
         mFadeEffect->GetState() != Pht::FadeEffect::State::Transition) {
+
         mFadeEffect->Update(mEngine.GetLastFrameSeconds());
     }
 

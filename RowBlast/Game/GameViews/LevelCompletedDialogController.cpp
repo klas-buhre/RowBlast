@@ -19,10 +19,6 @@ void LevelCompletedDialogController::Init() {
     mSlidingMenuAnimation.Init(SlidingMenuAnimation::UpdateFade::No);
 }
 
-void LevelCompletedDialogController::SetFadeEffect(Pht::FadeEffect& fadeEffect) {
-    mSlidingMenuAnimation.SetFadeEffect(fadeEffect);
-}
-
 LevelCompletedDialogController::Result LevelCompletedDialogController::Update() {
     switch (mSlidingMenuAnimation.Update()) {
         case SlidingMenuAnimation::State::Idle:

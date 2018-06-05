@@ -22,10 +22,6 @@ void GameOverDialogController::Init() {
                                SlidingMenuAnimation::SlideDirection::Up);
 }
 
-void GameOverDialogController::SetFadeEffect(Pht::FadeEffect& fadeEffect) {
-    mSlidingMenuAnimation.SetFadeEffect(fadeEffect);
-}
-
 GameOverDialogController::Result GameOverDialogController::Update() {
     switch (mSlidingMenuAnimation.Update()) {
         case SlidingMenuAnimation::State::Idle:

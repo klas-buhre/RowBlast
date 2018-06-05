@@ -30,7 +30,6 @@ namespace RowBlast {
         
         void Init(bool shouldSlideOut);
         Result Update();
-        void SetFadeEffect(Pht::FadeEffect& fadeEffect);
         
         Pht::GuiView& GetView() {
             return mView;

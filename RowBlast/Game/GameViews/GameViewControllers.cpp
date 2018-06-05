@@ -51,11 +51,7 @@ void GameViewControllers::Init(GameScene& scene) {
     mFadeEffect.Reset();
     
     mGameMenuController.SetFadeEffect(mFadeEffect);
-    mGameOverDialogController.SetFadeEffect(mFadeEffect);
-    mNoMovesDialogController.SetFadeEffect(mFadeEffect);
-    mLevelCompletedDialogController.SetFadeEffect(mFadeEffect);
     mSettingsMenuController.SetFadeEffect(mFadeEffect);
-    mNoLivesDialogController.SetFadeEffect(mFadeEffect);
     mRestartConfirmationDialogController.SetFadeEffect(mFadeEffect);
     mMapConfirmationDialogController.SetFadeEffect(mFadeEffect);
     

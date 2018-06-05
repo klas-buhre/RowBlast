@@ -27,7 +27,6 @@ namespace RowBlast {
                                  const UserData& userData);
         
         void Init();
-        void SetFadeEffect(Pht::FadeEffect& fadeEffect);
         Result Update();
         
         Pht::GuiView& GetView() {

@@ -24,10 +24,6 @@ void NoLivesDialogController::Init(bool shouldSlideOut) {
     mShouldSlideOut = shouldSlideOut;
 }
 
-void NoLivesDialogController::SetFadeEffect(Pht::FadeEffect& fadeEffect) {
-    mSlidingMenuAnimation.SetFadeEffect(fadeEffect);
-}
-
 NoLivesDialogController::Result NoLivesDialogController::Update() {
     switch (mSlidingMenuAnimation.Update()) {
         case SlidingMenuAnimation::State::Idle:
@@ -40,7 +36,7 @@ NoLivesDialogController::Result NoLivesDialogController::Update() {
             mView.Update();
             if (mUserData.GetLifeManager().GetNumLives() > 0) {
                 mDeferredResult = Result::Close;
-                mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::Yes,
+                mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::No,
                                                     SlidingMenuAnimation::SlideDirection::Down);
             }
             return HandleInput();
@@ -60,7 +56,7 @@ NoLivesDialogController::Result NoLivesDialogController::OnTouch(const Pht::Touc
     if (mView.GetCloseButton().IsClicked(touchEvent)) {
         if (mShouldSlideOut) {
             mDeferredResult = Result::Close;
-            mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::Yes,
+            mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::No,
                                                 SlidingMenuAnimation::SlideDirection::Down);
             return Result::None;
         }
@@ -71,7 +67,7 @@ NoLivesDialogController::Result NoLivesDialogController::OnTouch(const Pht::Touc
     if (mView.GetRefillLivesButton().IsClicked(touchEvent)) {
         if (mShouldSlideOut) {
             mDeferredResult = Result::RefillLives;
-            mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::Yes,
+            mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::No,
                                                 SlidingMenuAnimation::SlideDirection::Down);
             return Result::None;
         }
