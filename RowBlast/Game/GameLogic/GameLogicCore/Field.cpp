@@ -388,6 +388,7 @@ void Field::CheckCollision(CollisionResult& result,
 
             if (fieldRow < mLowestVisibleRow || fieldRow >= mNumRows || fieldColumn < 0 ||
                 fieldColumn >= mNumColumns) {
+
                 result.mCollisionPoints.PushBack(Pht::IVec2{pieceColumn, pieceRow});
                 continue;
             }
@@ -983,11 +984,11 @@ void Field::PullDownPiece(const SubCell& subCell,
 
     Pht::IVec2 step {0, -1};
     auto collisionPosition {ScanUntilCollision(pieceBlocks, piecePosition, step)};
-    
-    if (collisionPosition.y + 1 >= mLowestVisibleRow) {
-        LandPulledDownPieceBlocks(pieceBlocks, collisionPosition + Pht::IVec2 {0, 1});
-    } else {
+  
+    if (collisionPosition.y >= piecePosition.y) {
         LandPulledDownPieceBlocks(pieceBlocks, piecePosition);
+    } else {
+        LandPulledDownPieceBlocks(pieceBlocks, collisionPosition + Pht::IVec2 {0, 1});
     }
 }
 

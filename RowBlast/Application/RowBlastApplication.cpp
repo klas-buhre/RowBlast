@@ -44,7 +44,8 @@ Backlog:
     -Credit FastNoise, MIT license: https://github.com/Auburns/FastNoise/
 
 Ongoing tasks:
-    -Fix the pull down bug.
+    -Add launch screen for iPad.
+    -Add some more levels with piece blocks.
 
 
 Ideas:
