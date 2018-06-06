@@ -18,7 +18,7 @@ namespace {
     const auto rowExplosionForceMagnitude {12.0f};
     const Pht::Vec3 gravitationalAcceleration {0.0f, -60.0f, 0.0f};
     const Pht::Vec3 explosionGravitationalAcceleration {0.0f, -40.0f, 0.0f};
-    const auto eraseLimit {-27.0f};
+    const auto eraseLimit {20.0f};
 }
 
 FlyingBlocksAnimation::FlyingBlocksAnimation(GameScene& scene,
@@ -216,7 +216,7 @@ void FlyingBlocksAnimation::UpdateBlocks(float dt) {
             transform.SetPosition(position);
         }
 
-        if (transform.GetPosition().y < eraseLimit) {
+        if (transform.GetPosition().y < cameraPosition.y - eraseLimit) {
             ReleaseSceneObject(*flyingBlock.mSceneObject);
             mFlyingBlocks.Erase(i);
         } else {

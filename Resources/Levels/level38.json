@@ -1,6 +1,6 @@
 {
     "speed": 0.0,
-    "moves": 10,
+    "moves": 15,
     "twoStars": 25,
     "threeStars": 15,
     "background": "sky2.jpg",
@@ -47,6 +47,20 @@
         "    GGG",
         "   GGGG",
         "  GGGGG",
-        " GGGGGG"
+        " GGGGGG",
+        "GGGGG  ",
+        "       ",
+        "      l",
+        "     gl",
+        "    rgl",
+        "   yrgl",
+        "  lyrgl",
+        "LGGGGGG",
+        "G      ",
+        "GG     ",
+        "GGG    ",
+        "GGGG   ",
+        "GGGGG  ",
+        "GGGGGG "
     ]
 }
