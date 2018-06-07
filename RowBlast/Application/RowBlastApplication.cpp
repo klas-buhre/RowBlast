@@ -18,15 +18,12 @@ Backlog:
     -Some levels could have som pink striped level blocks with welds that are affected by graivty.
     -Maybe blocks in the visible part of the field could disappear on some levels. For each move a
      random block disappears.
-    -Scroll sideways in some levels? And/or already have colored piece blocks in the level before
-     any pieces are landed?
     -Maybe init falling piece after SwitchPiece() in the same frame instead of the next.
     -Maybe a sensitivity setting. Tetris Blitz has lower sensitility on iPad but not on iPhone.
     -Undo to the previous move initial state or the the previous move last state before move? Should
      not really matter since the user can select any piece from the selectables but maybe it is most 
      convenient to go back to the state before the move and not the initial state.
   -Rendering:
-   X-Maybe slightly less bevel in the blocks.
     -Could zoom in on map pin when clicking on a level in the map.
   -Tutorial:
     -Make the tutorial as short as possible. Don't give all the rules of the game at once. Instead,
@@ -44,7 +41,8 @@ Backlog:
     -Credit FastNoise, MIT license: https://github.com/Auburns/FastNoise/
 
 Ongoing tasks:
-    -Add some more levels with piece blocks.
+   X-Maybe slightly less bevel in the blocks.
+
 
 
 Ideas:
