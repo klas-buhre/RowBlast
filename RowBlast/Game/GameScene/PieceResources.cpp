@@ -85,8 +85,8 @@ namespace {
                            Pht::ISceneManager& sceneManager) {
         switch (weldRenderableKind) {
             case WeldRenderableKind::Normal:
-                return sceneManager.CreateRenderableObject(Pht::QuadMesh {0.17f,
-                                                                          0.85f,
+                return sceneManager.CreateRenderableObject(Pht::QuadMesh {0.16f,
+                                                                          0.88f,
                                                                           std::string{"normalWeld"}},
                                                            material);
             case WeldRenderableKind::Aslope:

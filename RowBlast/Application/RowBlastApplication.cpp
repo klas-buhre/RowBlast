@@ -4,6 +4,7 @@ Backlog:
     -Purchases.
     -Net/HTTP.
     -Analytics.
+    -Metal.
 
   -Gameplay:
    X-Speed up gameplay slightly? Maybe FallingPieceAnimation speed could depend on distance so that
@@ -24,7 +25,9 @@ Backlog:
      not really matter since the user can select any piece from the selectables but maybe it is most 
      convenient to go back to the state before the move and not the initial state.
   -Rendering:
+    -Maybe the buttons in the bright gui windows could be skewed/tilted to the right.
     -Could zoom in on map pin when clicking on a level in the map.
+    -A Metal rendering back end?
   -Tutorial:
     -Make the tutorial as short as possible. Don't give all the rules of the game at once. Instead,
      let the user figure it out by playing. For example, introduce changing the visible moves in the
@@ -41,7 +44,6 @@ Backlog:
     -Credit FastNoise, MIT license: https://github.com/Auburns/FastNoise/
 
 Ongoing tasks:
-   X-Maybe slightly less bevel in the blocks.
 
 
 
@@ -293,7 +295,7 @@ Scale cube so that size is 1.0. Select the wrench to the right.
 Then, Add Modifier > Bevel > turn up width > turn up segments.
 
 triangle_320:
-bevel width: 0.135
+bevel width: 0.13
 segments: 5
 profile 0.5
 Export settings:
@@ -301,7 +303,7 @@ Export settings:
     Up: Z Up
 
 cube_428:
-bevel width: 0.135
+bevel width: 0.13
 weld size: 0.19
 segments: 5
 profile 0.5
@@ -319,11 +321,6 @@ segments: 5
 small_button_0385.obj:
 size: 3.6x2.1
 bevel width: 0.385
-segments: 5
-
-close_button_032.obj:
-size: 1.9x1.9
-bevel width: 0.32
 segments: 5
 
 
