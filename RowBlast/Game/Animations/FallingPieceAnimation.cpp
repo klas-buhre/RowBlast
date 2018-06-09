@@ -8,7 +8,8 @@
 using namespace RowBlast;
 
 namespace {
-    const auto speed {50.0f};
+    constexpr auto fastSpeed {64.0f};
+    constexpr auto slowSpeed {50.0f};
     const Pht::Vec2 halfColumn {0.5f, 0.0f};
 }
 
@@ -30,6 +31,12 @@ void FallingPieceAnimation::Start(const Movement& lastMovement) {
     
     mMovements.Reverse();
     mState = State::Active;
+    
+    if (mFallingPiece.GetPieceType().IsBomb() || mFallingPiece.GetPieceType().IsRowBomb()) {
+        mSpeed = slowSpeed;
+    } else {
+        mSpeed = fastSpeed;
+    }
 }
 
 FallingPieceAnimation::State FallingPieceAnimation::Update(float dt) {
@@ -55,13 +62,13 @@ void FallingPieceAnimation::Animate(float dt) {
     const auto* movement {mMovements.At(mMovementIndex)};
     const auto& position {mFallingPiece.GetPosition()};
     auto targetPosition {movement->GetPosition() + halfColumn};
-    auto positionChange {speed * dt};
+    auto positionChange {mSpeed * dt};
     
     if (position.y > targetPosition.y) {
         Pht::Vec2 newPosition {position.x, position.y - positionChange};
         
         if (newPosition.y < targetPosition.y) {
-            auto dtConsumed {(position.y - targetPosition.y) / speed};
+            auto dtConsumed {(position.y - targetPosition.y) / mSpeed};
             mFallingPiece.SetY(targetPosition.y);
             NextMovement();
             Animate(dt - dtConsumed);
@@ -72,7 +79,7 @@ void FallingPieceAnimation::Animate(float dt) {
         Pht::Vec2 newPosition {position.x - positionChange, position.y};
         
         if (newPosition.x < targetPosition.x) {
-            auto dtConsumed {(position.x - targetPosition.x) / speed};
+            auto dtConsumed {(position.x - targetPosition.x) / mSpeed};
             mFallingPiece.SetX(targetPosition.x);
             NextMovement();
             Animate(dt - dtConsumed);
@@ -83,7 +90,7 @@ void FallingPieceAnimation::Animate(float dt) {
         Pht::Vec2 newPosition {position.x + positionChange, position.y};
         
         if (newPosition.x > targetPosition.x) {
-            auto dtConsumed {(targetPosition.x - position.x) / speed};
+            auto dtConsumed {(targetPosition.x - position.x) / mSpeed};
             mFallingPiece.SetX(targetPosition.x);
             NextMovement();
             Animate(dt - dtConsumed);

@@ -7,14 +7,12 @@ Backlog:
     -Metal.
 
   -Gameplay:
-   X-Speed up gameplay slightly? Maybe FallingPieceAnimation speed could depend on distance so that
-     it always takes the same amount of time.
    X-Improve the AI move evaluation.
    X-Fix the piece pull down bug on level 31. See screenshot.
    X-When playing a level with clear objective the game could scroll up if there is no room to spawn
      the falling piece. If we are at the top of the level then it is game over, or maybe the top
      rows could be cleared so the the piece fits.
-   X-Fix bug where the switchable pieces can change if double clocking on switch when the frame rate
+   X-Fix bug where the switchable pieces can change if double clicking on switch when the frame rate
      is really low like in the iPad simulator. 
     -Some levels could have som pink striped level blocks with welds that are affected by graivty.
     -Maybe blocks in the visible part of the field could disappear on some levels. For each move a
@@ -44,7 +42,9 @@ Backlog:
     -Credit FastNoise, MIT license: https://github.com/Auburns/FastNoise/
 
 Ongoing tasks:
-
+   X-Speed up gameplay slightly.
+        -Gravity?
+        -Cascade wait time?
 
 
 Ideas:

@@ -39,6 +39,7 @@ namespace RowBlast {
         State mState {State::Inactive};
         MovementPtrs mMovements;
         int mMovementIndex {0};
+        float mSpeed {0.0f};
     };
 }
 
