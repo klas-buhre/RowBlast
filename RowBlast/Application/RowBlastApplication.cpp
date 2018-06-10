@@ -13,7 +13,8 @@ Backlog:
      the falling piece. If we are at the top of the level then it is game over, or maybe the top
      rows could be cleared so the the piece fits.
    X-Fix bug where the switchable pieces can change if double clicking on switch when the frame rate
-     is really low like in the iPad simulator. 
+     is really low like in the iPad simulator.
+   X-Fix bug where it becomes game over when switching piece when the piece has fallen a bit.
     -Some levels could have som pink striped level blocks with welds that are affected by graivty.
     -Maybe blocks in the visible part of the field could disappear on some levels. For each move a
      random block disappears.
@@ -43,7 +44,6 @@ Backlog:
 
 Ongoing tasks:
    X-Speed up gameplay slightly.
-        -Gravity?
         -Cascade wait time?
 
 

@@ -6,7 +6,7 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto gravitationalAcceleration {-50.0f};
+    constexpr auto gravitationalAcceleration {-55.0f};
     constexpr auto springCoefficient {5000.0f};
     constexpr auto dampingCoefficient {55.75f};
     constexpr auto waitTime {0.18f};

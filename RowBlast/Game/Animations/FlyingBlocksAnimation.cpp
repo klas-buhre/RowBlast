@@ -16,7 +16,7 @@ using namespace RowBlast;
 namespace {
     const auto subCellMass {1.0f};
     const auto rowExplosionForceMagnitude {12.0f};
-    const Pht::Vec3 gravitationalAcceleration {0.0f, -60.0f, 0.0f};
+    const Pht::Vec3 gravitationalAcceleration {0.0f, -65.0f, 0.0f};
     const Pht::Vec3 explosionGravitationalAcceleration {0.0f, -40.0f, 0.0f};
     const auto eraseLimit {20.0f};
 }
