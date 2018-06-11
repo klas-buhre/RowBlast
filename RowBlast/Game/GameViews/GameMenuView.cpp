@@ -27,14 +27,14 @@ GameMenuView::GameMenuView(Pht::IEngine& engine, const CommonResources& commonRe
     CreateText({-1.71f, 7.6f, UiLayer::text}, "PAUSED", guiResources.GetCaptionTextProperties(zoom));
 
     MenuButton::Style yellowButtonStyle;
-    yellowButtonStyle.mMeshFilename = GuiResources::mMediumButtonMeshFilename;
+    yellowButtonStyle.mMeshFilename = GuiResources::mMediumButtonSkewedMeshFilename;
     yellowButtonStyle.mColor = GuiResources::mYellowButtonColor;
     yellowButtonStyle.mSelectedColor = GuiResources::mYellowSelectedButtonColor;
     yellowButtonStyle.mPressedScale = 1.05f;
     yellowButtonStyle.mHasShadow = true;
 
     MenuButton::Style blueButtonStyle;
-    blueButtonStyle.mMeshFilename = GuiResources::mMediumButtonMeshFilename;
+    blueButtonStyle.mMeshFilename = GuiResources::mMediumButtonSkewedMeshFilename;
     blueButtonStyle.mColor = GuiResources::mBlueButtonColor;
     blueButtonStyle.mSelectedColor = GuiResources::mBlueSelectedButtonColor;
     blueButtonStyle.mPressedScale = 1.05f;

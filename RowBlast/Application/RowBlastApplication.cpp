@@ -24,8 +24,6 @@ Backlog:
      not really matter since the user can select any piece from the selectables but maybe it is most 
      convenient to go back to the state before the move and not the initial state.
   -Rendering:
-    -Maybe the buttons in the bright gui windows could be skewed/tilted to the right.
-    -Could zoom in on map pin when clicking on a level in the map.
     -A Metal rendering back end?
   -Tutorial:
     -Make the tutorial as short as possible. Don't give all the rules of the game at once. Instead,
@@ -315,6 +313,12 @@ segments: 5
 
 medium_button_0385.obj:
 size: 9.0x2.1
+bevel width: 0.385
+segments: 5
+
+medium_button_skewed_0385.obj:
+size: 9.0x2.1
+shear: 0.24
 bevel width: 0.385
 segments: 5
 

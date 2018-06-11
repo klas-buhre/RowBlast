@@ -32,7 +32,7 @@ MapConfirmationDialogView::MapConfirmationDialogView(Pht::IEngine& engine,
     
     Pht::Vec2 buttonInputSize {194.0f, 45.0f};
     MenuButton::Style yellowButtonStyle;
-    yellowButtonStyle.mMeshFilename = GuiResources::mMediumButtonMeshFilename;
+    yellowButtonStyle.mMeshFilename = GuiResources::mMediumButtonSkewedMeshFilename;
     yellowButtonStyle.mColor = GuiResources::mYellowButtonColor;
     yellowButtonStyle.mSelectedColor = GuiResources::mYellowSelectedButtonColor;
     yellowButtonStyle.mPressedScale = 1.05f;
@@ -48,7 +48,7 @@ MapConfirmationDialogView::MapConfirmationDialogView(Pht::IEngine& engine,
                            guiResources.GetBlackButtonTextProperties(zoom));
     
     MenuButton::Style blueButtonStyle;
-    blueButtonStyle.mMeshFilename = GuiResources::mMediumButtonMeshFilename;
+    blueButtonStyle.mMeshFilename = GuiResources::mMediumButtonSkewedMeshFilename;
     blueButtonStyle.mColor = GuiResources::mBlueButtonColor;
     blueButtonStyle.mSelectedColor = GuiResources::mBlueSelectedButtonColor;
     blueButtonStyle.mPressedScale = 1.05f;

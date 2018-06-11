@@ -49,6 +49,7 @@ namespace RowBlast {
 
         static const std::string mBigButtonMeshFilename;
         static const std::string mMediumButtonMeshFilename;
+        static const std::string mMediumButtonSkewedMeshFilename;
         static const std::string mSmallButtonMeshFilename;
 
     private:

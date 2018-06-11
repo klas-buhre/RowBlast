@@ -15,6 +15,7 @@ const Pht::Color GuiResources::mGreenSelectedButtonColor {0.085f, 0.43f, 0.085f}
 
 const std::string GuiResources::mBigButtonMeshFilename {"big_button_048.obj"};
 const std::string GuiResources::mMediumButtonMeshFilename {"medium_button_0385.obj"};
+const std::string GuiResources::mMediumButtonSkewedMeshFilename {"medium_button_skewed_0385.obj"};
 const std::string GuiResources::mSmallButtonMeshFilename {"small_button_0385.obj"};
 
 GuiResources::GuiResources(Pht::IEngine& engine, const CommonResources& commonResources) :
