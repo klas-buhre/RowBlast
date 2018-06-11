@@ -41,6 +41,7 @@ namespace RowBlast {
         }
 
         static const Pht::Color mBlueButtonColor;
+        static const Pht::Color mDarkBlueButtonColor;
         static const Pht::Color mBlueSelectedButtonColor;
         static const Pht::Color mYellowButtonColor;
         static const Pht::Color mYellowSelectedButtonColor;

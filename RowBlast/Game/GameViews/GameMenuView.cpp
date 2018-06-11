@@ -35,7 +35,7 @@ GameMenuView::GameMenuView(Pht::IEngine& engine, const CommonResources& commonRe
 
     MenuButton::Style blueButtonStyle;
     blueButtonStyle.mMeshFilename = GuiResources::mMediumButtonSkewedMeshFilename;
-    blueButtonStyle.mColor = GuiResources::mBlueButtonColor;
+    blueButtonStyle.mColor = GuiResources::mDarkBlueButtonColor;
     blueButtonStyle.mSelectedColor = GuiResources::mBlueSelectedButtonColor;
     blueButtonStyle.mPressedScale = 1.05f;
     blueButtonStyle.mHasShadow = true;

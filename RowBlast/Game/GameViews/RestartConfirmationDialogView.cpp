@@ -49,7 +49,7 @@ RestartConfirmationDialogView::RestartConfirmationDialogView(Pht::IEngine& engin
     
     MenuButton::Style blueButtonStyle;
     blueButtonStyle.mMeshFilename = GuiResources::mMediumButtonSkewedMeshFilename;
-    blueButtonStyle.mColor = GuiResources::mBlueButtonColor;
+    blueButtonStyle.mColor = GuiResources::mDarkBlueButtonColor;
     blueButtonStyle.mSelectedColor = GuiResources::mBlueSelectedButtonColor;
     blueButtonStyle.mPressedScale = 1.05f;
     blueButtonStyle.mHasShadow = true;

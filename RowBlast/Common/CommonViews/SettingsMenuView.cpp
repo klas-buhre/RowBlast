@@ -33,7 +33,7 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine,
     
     MenuButton::Style settingsButtonStyle;
     settingsButtonStyle.mMeshFilename = GuiResources::mSmallButtonMeshFilename;
-    settingsButtonStyle.mColor = GuiResources::mBlueButtonColor;
+    settingsButtonStyle.mColor = GuiResources::mDarkBlueButtonColor;
     settingsButtonStyle.mSelectedColor = GuiResources::mBlueSelectedButtonColor;
     settingsButtonStyle.mPressedScale = 1.05f;
     settingsButtonStyle.mHasShadow = true;
@@ -72,7 +72,7 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine,
 
     MenuButton::Style backButtonStyle;
     backButtonStyle.mMeshFilename = GuiResources::mMediumButtonMeshFilename;
-    backButtonStyle.mColor = GuiResources::mBlueButtonColor;
+    backButtonStyle.mColor = GuiResources::mDarkBlueButtonColor;
     backButtonStyle.mSelectedColor = GuiResources::mBlueSelectedButtonColor;
     backButtonStyle.mPressedScale = 1.05f;
     backButtonStyle.mHasShadow = true;
