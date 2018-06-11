@@ -25,6 +25,10 @@ namespace RowBlast {
         void GoToInactiveState() {
             mState = State::Inactive;
         }
+        
+        bool IsInactive() const {
+            return mState == State::Inactive;
+        }
 
     private:
         void UpdateInWaitingState(float dt);

@@ -29,7 +29,7 @@ namespace {
     constexpr float halfColumn {0.5f};
     constexpr auto landingNoMovementDurationFalling {1.0f};
     constexpr auto landingMovementDurationFalling {4.0f};
-    constexpr auto cascadeWaitTime {0.25f};
+    constexpr auto cascadeWaitTime {0.23f};
     constexpr auto cameraShakeNumRowsLimit {5};
 
     PieceBlocks CreatePieceBlocks(const FallingPiece& fallingPiece) {
@@ -314,10 +314,13 @@ void GameLogic::HandleCascading() {
             break;
         case CascadeState::WaitingToClearLine:
             mCascadeWaitTime += mEngine.GetLastFrameSeconds();
-            if (mCascadeWaitTime > cascadeWaitTime && !mScrollController.IsScrolling()) {
+            if ((mCascadeWaitTime > cascadeWaitTime || mCollapsingFieldAnimation.IsInactive())
+                && !mScrollController.IsScrolling()) {
+
                 auto removedSubCells {mField.ClearFilledRows()};
                 mFlyingBlocksAnimation.AddBlockRows(removedSubCells);
                 UpdateLevelProgress();
+                mCollapsingFieldAnimation.GoToInactiveState();
                 RemoveClearedRowsAndPullDownLoosePieces();
             }
             break;

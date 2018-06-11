@@ -12,8 +12,8 @@ using namespace RowBlast;
 
 namespace {
     const auto numVisibleLevelRows {6};
-    const auto scrollTime {0.8f};
-    const auto deaccelerationStartTime {0.4f};
+    const auto scrollTime {0.72f};
+    const auto deaccelerationStartTime {0.36f};
     const auto waitTimeClearObjective {1.0f};
     const auto waitTimeBuildObjective {0.5f};
     const auto overviewScrollSpeed {11.0f};
