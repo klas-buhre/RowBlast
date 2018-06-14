@@ -78,19 +78,14 @@ void Ai::EvaluateMoveForClearObjective(Move& move, const FallingPiece& fallingPi
     };
     
     auto numFilledRows {filledRowsResult.mFilledRowIndices.Size()};
-    auto filledRowsMetric {0.0f};
-    
-    if (numFilledRows > 0) {
-        filledRowsMetric = static_cast<float>(numFilledRows) * filledRowsResult.mPieceCellsInFilledRows;
-    }
-    
     auto burriedHolesArea {mFieldAnalyzer.GetBurriedHolesAreaInVisibleRows()};
     auto wellsArea {mFieldAnalyzer.GetWellsAreaInVisibleRows()};
     auto numTransitions {static_cast<float>(mFieldAnalyzer.GetNumTransitionsInVisibleRows())};
     
     move.mScore = -landingHeight
-                  + filledRowsMetric
-                  - 4.0f * burriedHolesArea
+                  + 2.0f * numFilledRows
+                  + filledRowsResult.mPieceCellsInFilledRows
+                  - 4.1f * burriedHolesArea
                   - wellsArea
                   - numTransitions;
     

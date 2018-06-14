@@ -7,14 +7,14 @@ Backlog:
     -Metal.
 
   -Gameplay:
-   X-Improve the AI move evaluation.
+   X-Fix bug where it becomes game over when switching piece when the piece has fallen a bit.
    X-Fix the piece pull down bug on level 31. See screenshot.
-   X-When playing a level with clear objective the game could scroll up if there is no room to spawn
-     the falling piece. If we are at the top of the level then it is game over, or maybe the top
-     rows could be cleared so the the piece fits.
    X-Fix bug where the switchable pieces can change if double clicking on switch when the frame rate
      is really low like in the iPad simulator.
-   X-Fix bug where it becomes game over when switching piece when the piece has fallen a bit.
+    -Would be good if the FieldAnalyzer could take cascading/gravity into account when calculating
+     BurriedHolesAreaInVisibleRows, at least for SevenPiece and MirroredSevenPiece. Currently, the
+     AI gives to low scores for moves that it wrongly thinks will cause a lot burried holes because
+     it does not pull down the non-cleared part of for example the SevenPiece.
     -Some levels could have som pink striped level blocks with welds that are affected by graivty.
     -Maybe blocks in the visible part of the field could disappear on some levels. For each move a
      random block disappears.
@@ -41,8 +41,10 @@ Backlog:
     -Credit FastNoise, MIT license: https://github.com/Auburns/FastNoise/
 
 Ongoing tasks:
-   X-Speed up gameplay slightly.
-        -Cascade wait time?
+   X-When playing a level with clear objective and speed is zero, the game could scroll up if there
+     is no room to spawn the falling piece. If we are at the top of the level then it is game over,
+     or maybe the top rows could be cleared so the the piece fits.
+
 
 
 Ideas:
@@ -96,7 +98,7 @@ Time Estimation in days:
     -Dialog before level starts that states objectives and displays piece types.
         Cost: 2
         Done
-    -Do the marked items in the backlog.
+    -Do the marked non-bug items in the backlog.
         Cost: 8
     -Moving the next level particle effect to the next level after clearing a level. Add an avatar?
         Cost: 2
@@ -104,6 +106,8 @@ Time Estimation in days:
         Cost: 10
     -Tutorial.
         Cost: 10
+    -Fix all bugs.
+        Cost: 4
     -Store settings in file.
         Cost: 0.5
     -Sounds/music.
@@ -119,7 +123,7 @@ Time Estimation in days:
     -Back end.
         Cost: ?
 
-        Total: 172
+        Total: 176
 
 
 Comomon piece type sets:

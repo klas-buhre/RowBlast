@@ -110,26 +110,22 @@ int FieldAnalyzer::GetNumTransitionsInColumns() const {
     auto numColumns {mField.GetNumColumns()};
     
     for (auto column {0}; column < numColumns; ++column) {
+        auto previousCellIsEmpty {false};
+        
         for (auto row {lowestVisibleRow}; row < pastHighestVisibleRow - 1; ++row) {
-            // TODO: Exclude cells with mIsInFilledRow==true.
-            auto thisCellIsEmpty {mField.mGrid[row][column].IsEmpty()};
-            auto nextCellIsEmpty {mField.mGrid[row + 1][column].IsEmpty()};
+            auto& cell {mField.mGrid[row][column]};
             
-            if (thisCellIsEmpty != nextCellIsEmpty) {
+            if (cell.mIsInFilledRow) {
+                continue;
+            }
+            
+            auto thisCellIsEmpty {cell.IsEmpty()};
+            
+            if (thisCellIsEmpty != previousCellIsEmpty) {
                 ++numTransitions;
             }
-        }
-        
-        auto bottomCellIsEmpty {mField.mGrid[lowestVisibleRow][column].IsEmpty()};
-        
-        if (bottomCellIsEmpty) {
-            ++numTransitions;
-        }
-        
-        auto topCellIsEmpty {mField.mGrid[pastHighestVisibleRow - 1][column].IsEmpty()};
-        
-        if (topCellIsEmpty) {
-            ++numTransitions;
+            
+            previousCellIsEmpty = thisCellIsEmpty;
         }
     }
     
