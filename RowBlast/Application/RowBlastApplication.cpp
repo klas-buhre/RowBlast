@@ -7,7 +7,6 @@ Backlog:
     -Metal.
 
   -Gameplay:
-   X-Fix bug where it becomes game over when switching piece when the piece has fallen a bit.
    X-Fix the piece pull down bug on level 31. See screenshot.
    X-Fix bug where the switchable pieces can change if double clicking on switch when the frame rate
      is really low like in the iPad simulator.
@@ -23,7 +22,10 @@ Backlog:
     -Undo to the previous move initial state or the the previous move last state before move? Should
      not really matter since the user can select any piece from the selectables but maybe it is most 
      convenient to go back to the state before the move and not the initial state.
+  -GUI:
+    -Maybe the level objective/start dialog should be available from the game menu.
   -Rendering:
+    -Maybe try the font in fontawesome.com.
     -A Metal rendering back end?
   -Tutorial:
     -Make the tutorial as short as possible. Don't give all the rules of the game at once. Instead,
@@ -41,9 +43,16 @@ Backlog:
     -Credit FastNoise, MIT license: https://github.com/Auburns/FastNoise/
 
 Ongoing tasks:
-   X-When playing a level with clear objective and speed is zero, the game could scroll up if there
-     is no room to spawn the falling piece. If we are at the top of the level then it is game over,
-     or maybe the top rows could be cleared so the the piece fits.
+   X-When playing a level with clear objective, the game could scroll up if there
+     is no room to spawn the falling piece. If we are at the top of the level then it is game over.
+        -Detecting when to scroll up is done by letting the ScrollController scan the 5x5 area
+         (plus the 5 cells wide row under it) where pieces are spawned, when calculating the
+         preferred lowest visible row. For example, if there are some blocks in the 2 lower rows of
+         the spawn area, then the lowest preferred row should be set to a value that makes the spawn
+         area empty. For example, if there are some blocks in the row under the spawn area, then the
+         preferred lowest visible row is not changed. So the preferred lowest visible row is
+         calculated as a combination of the highest level block and any piece blocks in or near the
+         spawn area.
 
 
 

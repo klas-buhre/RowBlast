@@ -128,6 +128,13 @@ namespace RowBlast {
         }
         
     private:
+        enum class FallingPieceInitReason {
+            None,
+            NextMove,
+            Switch,
+            UndoMove
+        };
+
         Result InitFallingPiece();
         void SetPieceType();
         bool IsLevelCompleted();
@@ -137,7 +144,8 @@ namespace RowBlast {
         void RemoveFallingPiece();
         void NextMove();
         void UpdateLevelProgress();
-        Pht::Vec2 CalculateFallingPieceInitPos();
+        Pht::Vec2 CalculateFallingPieceInitPos(const Piece& pieceType,
+                                               FallingPieceInitReason fallingPieceInitReason);
         void HandleCascading();
         void UpdateFieldExplosionsStates();
         void HandleControlTypeChange();
@@ -153,6 +161,7 @@ namespace RowBlast {
                                        const Pht::IVec2& position,
                                        Direction collisionDirection);
         BlastRadiusAnimation::Kind CalcBlastRadiusKind(const Pht::IVec2& position);
+        bool IsThereRoomToSwitchPiece();
         Result HandleInput();
         void ForwardTouchToInputHandler(const Pht::TouchEvent& touchEvent);
         
@@ -165,13 +174,6 @@ namespace RowBlast {
             NotCascading,
             Cascading,
             WaitingToClearLine
-        };
-        
-        enum class FallingPieceInitReason {
-            None,
-            NextMove,
-            Switch,
-            UndoMove
         };
         
         struct MoveData {

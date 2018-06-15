@@ -180,7 +180,9 @@ GameLogic::Result GameLogic::InitFallingPiece() {
     
     mFallingPiece = &mFallingPieceStorage;
     SetPieceType();
-    auto initPosition {CalculateFallingPieceInitPos()};
+    auto initPosition {
+        CalculateFallingPieceInitPos(*mCurrentMove.mPieceType, mFallingPieceInitReason)
+    };
     mFallingPiece->Init(*mCurrentMove.mPieceType, initPosition, mLevel->GetSpeed());
     
     ManageMoveHistory();
@@ -268,11 +270,11 @@ void GameLogic::RemoveFallingPiece() {
     mFallingPiece = nullptr;
 }
 
-Pht::Vec2 GameLogic::CalculateFallingPieceInitPos() {
-    auto& pieceType {*mCurrentMove.mPieceType};
+Pht::Vec2 GameLogic::CalculateFallingPieceInitPos(const Piece& pieceType,
+                                                  FallingPieceInitReason fallingPieceInitReason) {
     auto startXPos {mField.GetNumColumns() / 2 - pieceType.GetGridNumColumns() / 2};
     
-    if (mFallingPieceInitReason == FallingPieceInitReason::Switch && mLevel->GetSpeed() > 0.0f) {
+    if (fallingPieceInitReason == FallingPieceInitReason::Switch && mLevel->GetSpeed() > 0.0f) {
         return Pht::Vec2 {startXPos + halfColumn, mFallingPiece->GetPosition().y};
     }
     
@@ -593,7 +595,6 @@ void GameLogic::RotatePiece(const Pht::TouchEvent& touchEvent) {
     };
     
     auto position {mFallingPiece->GetIntPosition()};
-    
     Field::CollisionResult collisionResult;
     mField.CheckCollision(collisionResult, pieceBlocks, position, Pht::IVec2{0, 0}, false);
 
@@ -696,11 +697,35 @@ void GameLogic::RotatateAndAdjustPosition(Rotation newRotation,
 }
 
 void GameLogic::SwitchPiece() {
-    mFallingPieceInitType = mCurrentMove.mSelectablePieces[1];
-    mCurrentMove.mSelectablePieces[1] = mCurrentMove.mSelectablePieces[0];
-    mCurrentMove.mSelectablePieces[0] = &mFallingPiece->GetPieceType();
-    mFallingPieceInitReason = FallingPieceInitReason::Switch;
-    mPreviewPieceAnimationToStart = PreviewPieceAnimationToStart::SwitchPiece;
+    if (IsThereRoomToSwitchPiece()) {
+        mFallingPieceInitType = mCurrentMove.mSelectablePieces[1];
+        mCurrentMove.mSelectablePieces[1] = mCurrentMove.mSelectablePieces[0];
+        mCurrentMove.mSelectablePieces[0] = &mFallingPiece->GetPieceType();
+        mFallingPieceInitReason = FallingPieceInitReason::Switch;
+        mPreviewPieceAnimationToStart = PreviewPieceAnimationToStart::SwitchPiece;
+    }
+}
+
+bool GameLogic::IsThereRoomToSwitchPiece() {
+    auto& pieceType {*mCurrentMove.mSelectablePieces[1]};
+    
+    PieceBlocks pieceBlocks {
+        pieceType.GetGrid(Rotation::Deg0),
+        pieceType.GetGridNumRows(),
+        pieceType.GetGridNumColumns()
+    };
+ 
+    auto position {CalculateFallingPieceInitPos(pieceType, FallingPieceInitReason::Switch)};
+    
+    Pht::IVec2 intPosition {
+        static_cast<int>(std::floor(position.x)),
+        static_cast<int>(std::floor(position.y))
+    };
+
+    Field::CollisionResult collisionResult;
+    mField.CheckCollision(collisionResult, pieceBlocks, intPosition, Pht::IVec2{0, 0}, false);
+
+    return collisionResult.mIsCollision == IsCollision::No;
 }
 
 void GameLogic::SetFallingPieceXPosWithCollisionDetection(float fallingPieceNewX) {
