@@ -159,7 +159,7 @@ void Field::Init(const Level& level) {
     
     if (auto* clearGrid {level.GetClearGrid()}) {
         mGrid = *clearGrid;
-        assert(mNumRows - CalculateHighestLevelBlock() >= 14);
+        assert(mNumRows - CalculateHighestLevelBlock().GetValue() >= 14);
     } else {
         auto* blueprintGrid {level.GetBlueprintGrid()};
         assert(blueprintGrid);
@@ -259,7 +259,7 @@ int Field::CalculateNumEmptyBlueprintSlots() const {
     return result;
 }
 
-int Field::CalculateHighestLevelBlock() const {
+Pht::Optional<int> Field::CalculateHighestLevelBlock() const {
     for (auto row {mNumRows - 1}; row >= 0; --row) {
         for (auto column {0}; column < mNumColumns; ++column) {
             if (mGrid[row][column].mFirstSubCell.mIsGrayLevelBlock) {
@@ -268,7 +268,24 @@ int Field::CalculateHighestLevelBlock() const {
         }
     }
 
-    return 0;
+    return Pht::Optional<int> {};
+}
+
+Pht::Optional<int> Field::CalculateHighestBlockInSpawningArea(int lowestVisibleRow) const {
+    auto spawningAreaLeftColumn {mNumColumns / 2 - Piece::maxColumns / 2};
+    auto spawningAreaRightColumn {spawningAreaLeftColumn + Piece::maxColumns - 1};
+    auto spawningAreaBottomRow {lowestVisibleRow + numRowsUpToSpawningArea};
+    auto spawningAreaTopRow {spawningAreaBottomRow + Piece::maxRows - 1};
+    
+    for (auto row {spawningAreaTopRow}; row >= spawningAreaBottomRow; --row) {
+        for (auto column {spawningAreaLeftColumn}; column <= spawningAreaRightColumn; ++column) {
+            if (row <= mNumRows - 1 && !mGrid[row][column].IsEmpty()) {
+                return row;
+            }
+        }
+    }
+
+    return Pht::Optional<int> {};
 }
 
 int Field::AccordingToBlueprintHeight() const {

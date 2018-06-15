@@ -48,6 +48,7 @@ namespace RowBlast {
     public:
         static constexpr int maxNumColumns {9};
         static constexpr int maxNumRows {18};
+        static constexpr int numRowsUpToSpawningArea {13};
         
         struct PieceBlockCoord {
             Pht::IVec2 mPosition;
@@ -68,6 +69,7 @@ namespace RowBlast {
         };
         
         using ImpactedBombs = Pht::StaticVector<ImpactedBomb, maxNumColumns>;
+        using RemovedSubCells = Pht::StaticVector<RemovedSubCell, maxNumColumns * maxNumRows>;
 
         Field();
         
@@ -108,11 +110,9 @@ namespace RowBlast {
         bool AnyFilledRows() const;
         int CalculateNumLevelBlocks() const;
         int CalculateNumEmptyBlueprintSlots() const;
-        int CalculateHighestLevelBlock() const;
+        Pht::Optional<int> CalculateHighestLevelBlock() const;
+        Pht::Optional<int> CalculateHighestBlockInSpawningArea(int lowestVisibleRow) const;
         int AccordingToBlueprintHeight() const;
-        
-        using RemovedSubCells = Pht::StaticVector<RemovedSubCell, maxNumColumns * maxNumRows>;
-        
         RemovedSubCells ClearFilledRows();
         void RemoveClearedRows();
         RemovedSubCells RemoveRow(int rowIndex);

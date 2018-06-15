@@ -43,17 +43,7 @@ Backlog:
     -Credit FastNoise, MIT license: https://github.com/Auburns/FastNoise/
 
 Ongoing tasks:
-   X-When playing a level with clear objective, the game could scroll up if there
-     is no room to spawn the falling piece. If we are at the top of the level then it is game over.
-        -Detecting when to scroll up is done by letting the ScrollController scan the 5x5 area
-         (plus the 5 cells wide row under it) where pieces are spawned, when calculating the
-         preferred lowest visible row. For example, if there are some blocks in the 2 lower rows of
-         the spawn area, then the lowest preferred row should be set to a value that makes the spawn
-         area empty. For example, if there are some blocks in the row under the spawn area, then the
-         preferred lowest visible row is not changed. So the preferred lowest visible row is
-         calculated as a combination of the highest level block and any piece blocks in or near the
-         spawn area.
-
+    -Moving the next level particle effect to the next level after clearing a level. Add an avatar?
 
 
 Ideas:
@@ -109,6 +99,7 @@ Time Estimation in days:
         Done
     -Do the marked non-bug items in the backlog.
         Cost: 8
+        Done
     -Moving the next level particle effect to the next level after clearing a level. Add an avatar?
         Cost: 2
     -Levels/Chapters.

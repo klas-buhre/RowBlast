@@ -164,13 +164,37 @@ int ScrollController::CalculatePreferredLowestVisibleRow() const {
 }
 
 int ScrollController::CalculatePreferredLowestVisibleRowClearObjective() const {
-    auto preferredLowestVisibleRow {mField.CalculateHighestLevelBlock() + 1 - numVisibleLevelRows};
+    auto highestLevelBlock {mField.CalculateHighestLevelBlock()};
     
-    if (preferredLowestVisibleRow < 0) {
-        preferredLowestVisibleRow = 0;
+    auto lowestVisibleRowBasedOnLevelBlocks {
+        highestLevelBlock.HasValue() ? highestLevelBlock.GetValue() + 1 - numVisibleLevelRows : 0
+    };
+    
+    if (lowestVisibleRowBasedOnLevelBlocks < 0) {
+        lowestVisibleRowBasedOnLevelBlocks = 0;
     }
     
-    return preferredLowestVisibleRow;
+    auto highestBlockInSpawningArea {
+        mField.CalculateHighestBlockInSpawningArea(lowestVisibleRowBasedOnLevelBlocks)
+    };
+    
+    auto lowestVisibleRowBasedOnBlocksInSpawningArea {
+        highestBlockInSpawningArea.HasValue() ?
+        highestBlockInSpawningArea.GetValue() + 1 - Field::numRowsUpToSpawningArea :
+        lowestVisibleRowBasedOnLevelBlocks
+    };
+    
+    auto highestPossibleLowestVisibleRow {mField.GetNumRows() - mField.GetNumRowsInOneScreen()};
+    
+    if (lowestVisibleRowBasedOnBlocksInSpawningArea > highestPossibleLowestVisibleRow) {
+        lowestVisibleRowBasedOnBlocksInSpawningArea = highestPossibleLowestVisibleRow;
+    }
+    
+    if (lowestVisibleRowBasedOnBlocksInSpawningArea > lowestVisibleRowBasedOnLevelBlocks) {
+        return lowestVisibleRowBasedOnBlocksInSpawningArea;
+    }
+    
+    return lowestVisibleRowBasedOnLevelBlocks;
 }
 
 int ScrollController::CalculatePreferredLowestVisibleRowBuildObjective() const {

@@ -392,6 +392,8 @@ void GameLogic::UndoMove() {
     }
     
     mField.RestorePreviousState();
+    mField.SetLowestVisibleRow(mScrollController.CalculatePreferredLowestVisibleRow());
+
     mCurrentMove = mPreviousMoveInitialState;
     mFallingPieceInitType = mPreviousMoveInitialState.mPieceType;
     mFallingPieceInitReason = FallingPieceInitReason::UndoMove;
@@ -697,13 +699,15 @@ void GameLogic::RotatateAndAdjustPosition(Rotation newRotation,
 }
 
 void GameLogic::SwitchPiece() {
-    if (IsThereRoomToSwitchPiece()) {
-        mFallingPieceInitType = mCurrentMove.mSelectablePieces[1];
-        mCurrentMove.mSelectablePieces[1] = mCurrentMove.mSelectablePieces[0];
-        mCurrentMove.mSelectablePieces[0] = &mFallingPiece->GetPieceType();
-        mFallingPieceInitReason = FallingPieceInitReason::Switch;
-        mPreviewPieceAnimationToStart = PreviewPieceAnimationToStart::SwitchPiece;
+    if (!IsThereRoomToSwitchPiece()) {
+        return;
     }
+    
+    mFallingPieceInitType = mCurrentMove.mSelectablePieces[1];
+    mCurrentMove.mSelectablePieces[1] = mCurrentMove.mSelectablePieces[0];
+    mCurrentMove.mSelectablePieces[0] = &mFallingPiece->GetPieceType();
+    mFallingPieceInitReason = FallingPieceInitReason::Switch;
+    mPreviewPieceAnimationToStart = PreviewPieceAnimationToStart::SwitchPiece;
 }
 
 bool GameLogic::IsThereRoomToSwitchPiece() {
