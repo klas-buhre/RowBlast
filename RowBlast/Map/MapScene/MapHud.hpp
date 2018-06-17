@@ -37,10 +37,10 @@ namespace RowBlast {
                                           Pht::Scene& scene,
                                           Pht::SceneObject& parentObject,
                                           const Pht::TextProperties& textProperties);
-        void CreateCountdownRectangle(Pht::IEngine& engine,
-                                      Pht::Scene& scene,
-                                      Pht::SceneObject& parentObject,
-                                      const Pht::Vec3& position);
+        void CreateTextRectangle(Pht::IEngine& engine,
+                                 Pht::Scene& scene,
+                                 Pht::SceneObject& parentObject,
+                                 const Pht::Vec3& position);
         void UpdateLivesText();
         void UpdateCountdown();
         

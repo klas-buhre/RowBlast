@@ -43,7 +43,9 @@ Backlog:
     -Credit FastNoise, MIT license: https://github.com/Auburns/FastNoise/
 
 Ongoing tasks:
-    -Moving the next level particle effect to the next level after clearing a level. Add an avatar?
+    -Animated movement of an avatar to the next level after clearing a level.
+     Then start the particle effect (or move it first), no animation.
+        -Could have an avatar icon of a pixelated smily face with a frame around it.
 
 
 Ideas:
@@ -100,7 +102,7 @@ Time Estimation in days:
     -Do the marked non-bug items in the backlog.
         Cost: 8
         Done
-    -Moving the next level particle effect to the next level after clearing a level. Add an avatar?
+    -Animated movement of an avatar to the next level after clearing a level.
         Cost: 2
     -Levels/Chapters.
         Cost: 10

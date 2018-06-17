@@ -12,15 +12,11 @@
 #include "StringUtils.hpp"
 #include "GradientRectangle.hpp"
 #include "UiLayer.hpp"
-#include "RoundedCylinder.hpp"
 
 using namespace RowBlast;
 
 namespace {
     constexpr auto countdownNumChars {5};
-    const Pht::Color roundedCylinderAmbient {0.65f, 0.65f, 0.65f};
-    const Pht::Color roundedCylinderDiffuse {0.5f, 0.5f, 0.5f};
-    constexpr auto roundedCylinderOpacity {0.65f};
 }
 
 MapHud::MapHud(Pht::IEngine& engine,
@@ -64,15 +60,9 @@ void MapHud::CreateLivesObject(Pht::IEngine& engine,
     livesContainer.GetTransform().SetPosition(livesContainerPosition);
     parentObject.AddChild(livesContainer);
 
-    Pht::Vec3 cylinderPosition {0.0f, 0.0f, UiLayer::lowerTextRectangle};
-    CreateRoundedCylinder(scene,
-                          livesContainer,
-                          cylinderPosition,
-                          {2.5, 1.1f},
-                          roundedCylinderOpacity,
-                          roundedCylinderAmbient,
-                          roundedCylinderDiffuse);
-    
+    Pht::Vec3 rectanglePosition {0.0f, 0.0f, UiLayer::lowerTextRectangle};
+    CreateTextRectangle(engine, scene, livesContainer, rectanglePosition);
+
     // Warning! Must be three spaces to fit digits.
     mLivesText = &scene.CreateText("LIVES   ", textProperties);
 
@@ -98,17 +88,17 @@ void MapHud::CreateNewLifeCountdownObject(Pht::IEngine& engine,
     parentObject.AddChild(*mNewLifeCountdownContainer);
 
     Pht::Vec3 rectanglePosition {0.0f, 0.0f, UiLayer::lowerTextRectangle};
-    CreateCountdownRectangle(engine, scene, *mNewLifeCountdownContainer, rectanglePosition);
+    CreateTextRectangle(engine, scene, *mNewLifeCountdownContainer, rectanglePosition);
     
     mNewLifeCountdownText = &scene.CreateText("00:00", textProperties);
     mNewLifeCountdownText->GetSceneObject().GetTransform().SetPosition({-0.9f, -0.23f, UiLayer::text});
     mNewLifeCountdownContainer->AddChild(mNewLifeCountdownText->GetSceneObject());
 }
 
-void MapHud::CreateCountdownRectangle(Pht::IEngine& engine,
-                                      Pht::Scene& scene,
-                                      Pht::SceneObject& parentObject,
-                                      const Pht::Vec3& position) {
+void MapHud::CreateTextRectangle(Pht::IEngine& engine,
+                                 Pht::Scene& scene,
+                                 Pht::SceneObject& parentObject,
+                                 const Pht::Vec3& position) {
     Pht::Vec2 size {4.0f, 0.7f};
     auto leftQuadWidth {1.0f};
     auto rightQuadWidth {1.0f};

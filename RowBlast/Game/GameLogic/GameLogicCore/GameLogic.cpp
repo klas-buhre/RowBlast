@@ -576,6 +576,15 @@ void GameLogic::RemoveClearedRowsAndPullDownLoosePieces() {
     mField.RemoveClearedRows();
     mField.SetLowestVisibleRow(mScrollController.CalculatePreferredLowestVisibleRow());
     mField.PullDownLoosePieces();
+    
+    // A second calculation of the lowest visible row and pulling down pieces is needed because the
+    // first calculation of lowest visible row could be too high if some piece blocks are remaining
+    // inside the spawning area since they have not been pulled down yet at the time of calculating
+    // the lowest visible row. The correct lowest visible row can be calculated after those piece
+    // blocks have been pulled down.
+    mField.SetLowestVisibleRow(mScrollController.CalculatePreferredLowestVisibleRow());
+    mField.PullDownLoosePieces();
+
     mField.DetectBlocksThatShouldNotBounce();
     
     mCascadeState = CascadeState::Cascading;
