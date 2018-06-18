@@ -219,21 +219,21 @@ void MapScene::CreateScene(const Chapter& chapter) {
 }
 
 void MapScene::CreatePins(const Chapter& chapter) {
-    auto& pinContainerObject {mScene->CreateSceneObject()};
-    pinContainerObject.SetLayer(static_cast<int>(Layer::Map));
-    mScene->GetRoot().AddChild(pinContainerObject);
+    mPinsContainer = &mScene->CreateSceneObject();
+    mPinsContainer->SetLayer(static_cast<int>(Layer::Map));
+    mScene->GetRoot().AddChild(*mPinsContainer);
     
     mPreviousPin = nullptr;
     mPins.clear();
     
     for (auto& level: chapter.mLevels) {
-        CreatePin(pinContainerObject, level.mLevelIndex, level.mPosition);
+        CreatePin(*mPinsContainer, level.mLevelIndex, level.mPosition);
     }
 }
 
-void MapScene::CreatePin(Pht::SceneObject& pinContainerObject,
-                            int level,
-                            const Pht::Vec3& position) {
+void MapScene::CreatePin(Pht::SceneObject& pinsContainerObject,
+                         int level,
+                         const Pht::Vec3& position) {
     auto& progressManager {mUserData.GetProgressManager()};
     auto isClickable {level <= progressManager.GetProgress()};
     
@@ -264,7 +264,7 @@ void MapScene::CreatePin(Pht::SceneObject& pinContainerObject,
         auto& transform {connection.GetTransform()};
         transform.SetRotation({connectionXAngle, 0.0f, connectionZAngle});
         transform.SetPosition(connectionPosition);
-        pinContainerObject.AddChild(connection);
+        pinsContainerObject.AddChild(connection);
     }
     
     auto pin {
@@ -272,7 +272,7 @@ void MapScene::CreatePin(Pht::SceneObject& pinContainerObject,
                                  mCommonResources,
                                  mFont,
                                  *mScene,
-                                 pinContainerObject,
+                                 pinsContainerObject,
                                  *mStarRenderable,
                                  position,
                                  level,

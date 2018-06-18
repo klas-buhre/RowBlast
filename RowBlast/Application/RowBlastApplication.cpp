@@ -41,11 +41,11 @@ Backlog:
     -Make icons and launch screens for all supported device resulutions.
     -Credit the icon creator: <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
     -Credit FastNoise, MIT license: https://github.com/Auburns/FastNoise/
-
+    -Credit Emojione: https://www.emojione.com/licenses
 Ongoing tasks:
     -Animated movement of an avatar to the next level after clearing a level.
      Then start the particle effect (or move it first), no animation.
-        -Could have an avatar icon of a pixelated smily face with a frame around it.
+
 
 
 Ideas:

@@ -38,7 +38,12 @@ namespace RowBlast {
         const std::vector<std::unique_ptr<MapPin>>& GetPins() const {
             return mPins;
         }
-        
+
+        Pht::SceneObject& GetPinsContainer() {
+            assert(mPinsContainer);
+            return *mPinsContainer;
+        }
+
         Pht::SceneObject& GetUiViewsContainer() {
             assert(mUiViewsContainer);
             return *mUiViewsContainer;
@@ -65,6 +70,7 @@ namespace RowBlast {
         std::unique_ptr<Pht::RenderableObject> mStarRenderable;
         Pht::Font mFont;
         std::unique_ptr<MapHud> mHud;
+        Pht::SceneObject* mPinsContainer {nullptr};
         Pht::SceneObject* mUiViewsContainer {nullptr};
     };
 }

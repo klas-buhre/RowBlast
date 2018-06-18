@@ -4,6 +4,7 @@
 // Game includes.
 #include "MapScene.hpp"
 #include "MapViewControllers.hpp"
+#include "Avatar.hpp"
 
 namespace Pht {
     class IEngine;
@@ -74,6 +75,7 @@ namespace RowBlast {
         const LevelResources& mLevelResources;
         State mState {State::Map};
         MapScene mScene;
+        Avatar mAvatar;
         MapViewControllers mMapViewControllers;
         float mCameraXPositionAtPanBegin {0.0f};
         Pht::Vec2 mTouchLocationAtPanBegin {0.0f, 0.0f};

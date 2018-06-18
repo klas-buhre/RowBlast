@@ -41,14 +41,18 @@ MapController::MapController(Pht::IEngine& engine,
     mUserData {userData},
     mLevelResources {levelResources},
     mScene {engine, commonResources, userData},
+    mAvatar {engine, mScene, commonResources},
     mMapViewControllers {engine, mScene, commonResources, userData, settings, pieceResources} {}
 
 void MapController::Init() {
     mScene.Init();
+    mAvatar.Init();
     mMapViewControllers.Init();
     
     mCameraXVelocity = 0.0f;
     mState = State::Map;
+    
+    mAvatar.SetPosition({16.4f, -4.25f, 10.6f});
 }
 
 MapController::Command MapController::Update() {
