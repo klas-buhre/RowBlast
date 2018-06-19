@@ -52,7 +52,8 @@ void MapController::Init() {
     mCameraXVelocity = 0.0f;
     mState = State::Map;
     
-    mAvatar.SetPosition({16.3f, -4.2f, 10.65f});
+    auto& currentPin {*mScene.GetPins()[mUserData.GetProgressManager().GetProgress() - 1]};
+    mAvatar.SetPosition(currentPin.GetPosition());
 }
 
 MapController::Command MapController::Update() {

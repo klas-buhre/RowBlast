@@ -29,6 +29,7 @@ namespace {
     
     enum class Layer {
         Map,
+        Avatar,
         Hud,
         UiViews,
         SceneSwitchFadeEffect = GlobalLayer::sceneSwitchFadeEffect
@@ -144,6 +145,7 @@ void MapScene::CreateScene(const Chapter& chapter) {
     sceneManager.InitSceneSystems(Pht::ISceneManager::defaultNarrowFrustumHeightFactor);
     
     scene->AddRenderPass(Pht::RenderPass {static_cast<int>(Layer::Map)});
+    scene->AddRenderPass(Pht::RenderPass {static_cast<int>(Layer::Avatar)});
     Pht::RenderPass hudRenderPass {static_cast<int>(Layer::Hud)};
     hudRenderPass.SetHudMode(true);
     scene->AddRenderPass(hudRenderPass);
@@ -198,6 +200,10 @@ void MapScene::CreateScene(const Chapter& chapter) {
     CreatePins(chapter);
     SetCameraAtCurrentLevel();
     
+    mAvatarContainer = &scene->CreateSceneObject();
+    mAvatarContainer->SetLayer(static_cast<int>(Layer::Avatar));
+    scene->GetRoot().AddChild(*mAvatarContainer);
+    
     auto* pin {mPins[mUserData.GetProgressManager().GetProgress() - 1].get()};
     auto& pinPosition {pin->GetPosition()};
     CreateNextLevelParticleEffect(mEngine, *scene, pinPosition, static_cast<int>(Layer::Map));
@@ -219,15 +225,15 @@ void MapScene::CreateScene(const Chapter& chapter) {
 }
 
 void MapScene::CreatePins(const Chapter& chapter) {
-    mPinsContainer = &mScene->CreateSceneObject();
-    mPinsContainer->SetLayer(static_cast<int>(Layer::Map));
-    mScene->GetRoot().AddChild(*mPinsContainer);
+    auto& pinsContainer {mScene->CreateSceneObject()};
+    pinsContainer.SetLayer(static_cast<int>(Layer::Map));
+    mScene->GetRoot().AddChild(pinsContainer);
     
     mPreviousPin = nullptr;
     mPins.clear();
     
     for (auto& level: chapter.mLevels) {
-        CreatePin(*mPinsContainer, level.mLevelIndex, level.mPosition);
+        CreatePin(pinsContainer, level.mLevelIndex, level.mPosition);
     }
 }
 

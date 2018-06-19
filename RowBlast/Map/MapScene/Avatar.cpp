@@ -14,6 +14,7 @@ using namespace RowBlast;
 
 namespace {
     constexpr auto pictureSize {0.65f};
+    const Pht::Vec3 avatarOffset {0.8f, -0.7f, 0.65f};
 }
 
 Avatar::Avatar(Pht::IEngine& engine, MapScene& mapScene, const CommonResources& commonResources) :
@@ -41,9 +42,9 @@ Avatar::Avatar(Pht::IEngine& engine, MapScene& mapScene, const CommonResources& 
 }
 
 void Avatar::Init() {
-    mMapScene.GetPinsContainer().AddChild(*mSceneObject);
+    mMapScene.GetAvatarContainer().AddChild(*mSceneObject);
 }
 
 void Avatar::SetPosition(const Pht::Vec3& position) {
-    mSceneObject->GetTransform().SetPosition(position);
+    mSceneObject->GetTransform().SetPosition(position + avatarOffset);
 }
