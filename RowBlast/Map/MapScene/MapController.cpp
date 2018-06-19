@@ -52,7 +52,7 @@ void MapController::Init() {
     mCameraXVelocity = 0.0f;
     mState = State::Map;
     
-    mAvatar.SetPosition({16.4f, -4.25f, 10.6f});
+    mAvatar.SetPosition({16.3f, -4.2f, 10.65f});
 }
 
 MapController::Command MapController::Update() {

@@ -13,7 +13,7 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto pictureSize {0.7f};
+    constexpr auto pictureSize {0.65f};
 }
 
 Avatar::Avatar(Pht::IEngine& engine, MapScene& mapScene, const CommonResources& commonResources) :
@@ -23,14 +23,14 @@ Avatar::Avatar(Pht::IEngine& engine, MapScene& mapScene, const CommonResources& 
     auto& sceneManager {engine.GetSceneManager()};
     
     auto frame {
-        sceneManager.CreateSceneObject(Pht::ObjMesh {"avatar_frame_266.obj", 0.4f},
+        sceneManager.CreateSceneObject(Pht::ObjMesh {"avatar_frame_208.obj", 0.38f},
                                        commonResources.GetMaterials().GetGoldMaterial(),
                                        mSceneResources)
     };
     mSceneObject->AddChild(*frame);
     mSceneResources.AddSceneObject(std::move(frame));
     
-    Pht::Material pictureMaterial {"smiley_avatar.jpg"};
+    Pht::Material pictureMaterial {"avatar.jpg"};
     auto picture {
         sceneManager.CreateSceneObject(Pht::QuadMesh {pictureSize, pictureSize},
                                        pictureMaterial,

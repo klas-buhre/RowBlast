@@ -29,8 +29,8 @@
 		62398E60209A2784000F5F79 /* TitleAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62398E5E209A2784000F5F79 /* TitleAnimation.cpp */; };
 		62411A971E61E62800035D2A /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62411A961E61E62800035D2A /* GLKit.framework */; };
 		62487E7020D7F40400E4429E /* Avatar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62487E6E20D7F40400E4429E /* Avatar.cpp */; };
-		62487E7220D7F7E900E4429E /* avatar_frame_266.obj in Resources */ = {isa = PBXBuildFile; fileRef = 62487E7120D7F7E900E4429E /* avatar_frame_266.obj */; };
-		62487E8220D8194E00E4429E /* smiley_avatar.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62487E8120D8194D00E4429E /* smiley_avatar.jpg */; };
+		62487E9620D9573E00E4429E /* avatar.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62487E9520D9573E00E4429E /* avatar.jpg */; };
+		62487E9820D95A9800E4429E /* avatar_frame_208.obj in Resources */ = {isa = PBXBuildFile; fileRef = 62487E9720D95A9800E4429E /* avatar_frame_208.obj */; };
 		626451DD206FA93200E304F2 /* laser_bomb_224.obj in Resources */ = {isa = PBXBuildFile; fileRef = 626451DC206FA93100E304F2 /* laser_bomb_224.obj */; };
 		626451E0206FA93F00E304F2 /* laser_bomb_emission.png in Resources */ = {isa = PBXBuildFile; fileRef = 626451DE206FA93E00E304F2 /* laser_bomb_emission.png */; };
 		626451E1206FA93F00E304F2 /* laser_bomb_diffuse.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 626451DF206FA93E00E304F2 /* laser_bomb_diffuse.jpg */; };
@@ -338,8 +338,8 @@
 		62411A961E61E62800035D2A /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		62487E6E20D7F40400E4429E /* Avatar.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Avatar.cpp; sourceTree = "<group>"; };
 		62487E6F20D7F40400E4429E /* Avatar.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Avatar.hpp; sourceTree = "<group>"; };
-		62487E7120D7F7E900E4429E /* avatar_frame_266.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = avatar_frame_266.obj; sourceTree = "<group>"; };
-		62487E8120D8194D00E4429E /* smiley_avatar.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = smiley_avatar.jpg; sourceTree = "<group>"; };
+		62487E9520D9573E00E4429E /* avatar.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = avatar.jpg; sourceTree = "<group>"; };
+		62487E9720D95A9800E4429E /* avatar_frame_208.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = avatar_frame_208.obj; sourceTree = "<group>"; };
 		626451DC206FA93100E304F2 /* laser_bomb_224.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = laser_bomb_224.obj; sourceTree = "<group>"; };
 		626451DE206FA93E00E304F2 /* laser_bomb_emission.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = laser_bomb_emission.png; sourceTree = "<group>"; };
 		626451DF206FA93E00E304F2 /* laser_bomb_diffuse.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = laser_bomb_diffuse.jpg; sourceTree = "<group>"; };
@@ -1027,7 +1027,7 @@
 		6270DC571FCB22AE00FB457D /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				62487E7120D7F7E900E4429E /* avatar_frame_266.obj */,
+				62487E9720D95A9800E4429E /* avatar_frame_208.obj */,
 				627D382220A731470068B50C /* big_button_048.obj */,
 				6227D4F4206CFD25008EA77D /* bomb_798.obj */,
 				629B838720CA940D00DD2D0E /* cube_428.obj */,
@@ -1106,7 +1106,7 @@
 		6270DCA01FCB248E00FB457D /* Textures */ = {
 			isa = PBXGroup;
 			children = (
-				62487E8120D8194D00E4429E /* smiley_avatar.jpg */,
+				62487E9520D9573E00E4429E /* avatar.jpg */,
 				629B837520BED74D00DD2D0E /* flare03.png */,
 				62BE275620B5D7B20014C6DD /* glow_lines.png */,
 				62BE274D20B069310014C6DD /* confetti.png */,
@@ -2125,13 +2125,12 @@
 				62A8AAF71FE2DEA1000EB01C /* cloud_B_envmap.jpg in Resources */,
 				62A8AAF91FE2E442000EB01C /* cloud_C_envmap.jpg in Resources */,
 				6299DD82208E39C1001F74E2 /* level32.json in Resources */,
-				62487E8220D8194E00E4429E /* smiley_avatar.jpg in Resources */,
 				6270DC9B1FCB23D800FB457D /* level6.json in Resources */,
-				62487E7220D7F7E900E4429E /* avatar_frame_266.obj in Resources */,
 				629B837820C4470300DD2D0E /* level33.json in Resources */,
 				6270DC901FCB23D800FB457D /* level17.json in Resources */,
 				629B837A20C458F700DD2D0E /* level34.json in Resources */,
 				62785B1720875937006F9869 /* Textured.frag in Resources */,
+				62487E9620D9573E00E4429E /* avatar.jpg in Resources */,
 				62785B2A20875937006F9869 /* Text.frag in Resources */,
 				6270DC8C1FCB23D800FB457D /* level13.json in Resources */,
 				626451E5206FEDFF00E304F2 /* laser_beam_red.png in Resources */,
@@ -2210,6 +2209,7 @@
 				62DE641C20CE953D00A50F26 /* medium_button_skewed_0385.obj in Resources */,
 				6270DC941FCB23D800FB457D /* level20.json in Resources */,
 				62785B1B20875937006F9869 /* PointParticle.vert in Resources */,
+				62487E9820D95A9800E4429E /* avatar_frame_208.obj in Resources */,
 				629B838220C6E06500DD2D0E /* level38.json in Resources */,
 				6270DC8B1FCB23D800FB457D /* level12.json in Resources */,
 				627D382320A731480068B50C /* big_button_048.obj in Resources */,
