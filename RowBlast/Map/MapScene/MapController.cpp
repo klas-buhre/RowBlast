@@ -42,15 +42,17 @@ MapController::MapController(Pht::IEngine& engine,
     mLevelResources {levelResources},
     mScene {engine, commonResources, userData},
     mAvatar {engine, mScene, commonResources},
+    mAvatarAnimation {engine, mAvatar},
     mMapViewControllers {engine, mScene, commonResources, userData, settings, pieceResources} {}
 
 void MapController::Init() {
     mScene.Init();
     mAvatar.Init();
+    mAvatarAnimation.Init();
     mMapViewControllers.Init();
     
-    mCameraXVelocity = 0.0f;
     mState = State::Map;
+    mCameraXVelocity = 0.0f;
     
     auto& currentPin {*mScene.GetPins()[mUserData.GetProgressManager().GetProgress() - 1]};
     mAvatar.SetPosition(currentPin.GetPosition());
@@ -77,6 +79,10 @@ MapController::Command MapController::Update() {
     mScene.Update();
     
     return command;
+}
+
+void MapController::SetCameraAtLevel(int levelIndex) {
+    mScene.SetCameraAtLevel(levelIndex);
 }
 
 void MapController::UpdateMap() {
@@ -197,17 +203,12 @@ void MapController::HandleTouch(const Pht::TouchEvent& touch) {
 }
 
 void MapController::HandleLevelClick(int levelIndex) {
-    if (mUserData.GetLifeManager().GetNumLives() == 0) {
+    if (mUserData.GetLifeManager().GetNumLives() > 0) {
+        GoToLevelStartDialogState(levelIndex);
+    } else {
         mState = State::NoLivesDialog;
         mMapViewControllers.SetActiveController(MapViewControllers::NoLivesDialog);
         mMapViewControllers.GetNoLivesDialogController().Init(true);
-    } else {
-        mLevelToStart = levelIndex;
-        mState = State::LevelStartDialog;
-        mMapViewControllers.SetActiveController(MapViewControllers::LevelStartDialog);
-        
-        auto levelInfo {LevelLoader::LoadInfo(levelIndex, mLevelResources)};
-        mMapViewControllers.GetLevelStartDialogController().Init(*levelInfo);
     }
 }
 
@@ -267,6 +268,15 @@ void MapController::UpdateCamera() {
 
     cameraXPosition += mCameraXVelocity * dt;
     mScene.SetCameraXPosition(cameraXPosition);
+}
+
+void MapController::GoToLevelStartDialogState(int levelToStart) {
+    mState = State::LevelStartDialog;
+    mLevelToStart = levelToStart;
+    mMapViewControllers.SetActiveController(MapViewControllers::LevelStartDialog);
+
+    auto levelInfo {LevelLoader::LoadInfo(mLevelToStart, mLevelResources)};
+    mMapViewControllers.GetLevelStartDialogController().Init(*levelInfo);
 }
 
 void MapController::GoToSettingsMenuState() {

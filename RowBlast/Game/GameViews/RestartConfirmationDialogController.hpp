@@ -18,7 +18,7 @@ namespace RowBlast {
     public:
         enum class Result {
             None,
-            RestartGame,
+            RestartLevel,
             DoNotRestartGame
         };
         

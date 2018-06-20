@@ -18,8 +18,9 @@ ProgressManager::ProgressManager() {
     if (!LoadState()) {
         mNumStars = {0};
     }
-    // mNumStars = {2, 3, 1, 3, 2, 2, 2, 1, 1, 1, 1, 1, 3, 2, 2, 1, 2, 2, 1, 3, 2, 2, 1, 3, 1, 2, 3, 2, 1, 3, 1, 2, 3, 2, 1, 3, 2, 1, 0};
+    mNumStars = {2, 3, 1, 3, 2, 2, 2, 1, 1, 1, 1, 1, 3, 2, 2, 1, 2, 2, 1, 3, 2, 2, 1, 3, 1, 2, 3, 2, 1, 3, 1, 2, 3, 2, 1, 3, 2, 1, 0};
     // mNumStars = {2, 3, 1, 3, 2, 2, 2, 1, 1, 1, 1, 1, 3, 2, 2, 1, 2, 2, 1, 1, 3, 2, 2, 1, 3, 0};
+    // mNumStars = {2, 0};
 }
 
 int ProgressManager::CalculateNumStars(int movesUsed, const StarLimits& starLimits) {
@@ -36,6 +37,7 @@ int ProgressManager::CalculateNumStars(int movesUsed, const StarLimits& starLimi
 
 void ProgressManager::StartLevel(int levelIndex) {
     mCurrentLevel = levelIndex;
+    mProgressedAtPreviousGameRound = false;
     SaveState();
 }
 
@@ -47,6 +49,7 @@ void ProgressManager::CompleteLevel(int levelIndex, int numStars) {
     if (levelIndex == progress) {
         mNumStars[progress - 1] = numStars;
         mNumStars.push_back(0);
+        mProgressedAtPreviousGameRound = true;
     } else if (levelIndex < progress) {
         if (numStars > mNumStars[levelIndex - 1]) {
             mNumStars[levelIndex - 1] = numStars;

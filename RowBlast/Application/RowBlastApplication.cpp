@@ -10,6 +10,8 @@ Backlog:
    X-Fix the piece pull down bug on level 31. See screenshot.
    X-Fix bug where the switchable pieces can change if double clicking on switch when the frame rate
      is really low like in the iPad simulator.
+    -Maybe the FieldAnalyzer should give more value to cleared level blocks than cleared piece
+     blocks.
     -Would be good if the FieldAnalyzer could take cascading/gravity into account when calculating
      BurriedHolesAreaInVisibleRows, at least for SevenPiece and MirroredSevenPiece. Currently, the
      AI gives to low scores for moves that it wrongly thinks will cause a lot burried holes because
@@ -45,6 +47,10 @@ Backlog:
 Ongoing tasks:
     -Animated movement of an avatar to the next level after clearing a level.
      Then start the particle effect (or move it first), no animation.
+        -Complete a level for the first time and press next: Go back to map and run the avatar
+         animation. Bring up the start level dialog when the animation is finished.
+        -Complete a level for the first time and press close: Go back to map and run the avatar
+         animation. Don't bring up the start level dialog when the animation is finished.
 
 
 
@@ -405,7 +411,7 @@ void RowBlastApplication::UpdateScene() {
             auto command {mTitleController.Update()};
             if (!mFadeEffect.IsFadingOut() && command == TitleController::Command::GoToMap) {
                 mFadeEffect.SetDuration(fadeDuration);
-                BeginFadeToMap();
+                BeginFadeToMap(MapController::State::Map);
             }
             break;
         }
@@ -430,13 +436,19 @@ void RowBlastApplication::UpdateGameScene() {
             case GameController::Command::None:
                 break;
             case GameController::Command::GoToMap:
-                BeginFadeToMap();
+                BeginFadeToMap(MapController::State::Map);
                 break;
-            case GameController::Command::RestartGame:
-                BeginFadeToGame(mLevelToStart);
+            case GameController::Command::RestartLevel:
+                BeginFadeToMap(MapController::State::LevelStartDialog);
                 break;
             case GameController::Command::GoToNextLevel:
-                BeginFadeToGame(mUserData.GetProgressManager().GetCurrentLevel() + 1);
+                mLevelToStart = mUserData.GetProgressManager().GetCurrentLevel() + 1;
+                if (mUserData.GetProgressManager().ProgressedAtPreviousGameRound()) {
+                    // TODO: Should start avatar animation.
+                    BeginFadeToMap(MapController::State::Map);
+                } else {
+                    BeginFadeToMap(MapController::State::LevelStartDialog);
+                }
                 break;
         }
     }
@@ -464,7 +476,8 @@ void RowBlastApplication::InsertFadeEffectInActiveScene() {
     scene->GetRoot().AddChild(mFadeEffect.GetSceneObject());
 }
 
-void RowBlastApplication::BeginFadeToMap() {
+void RowBlastApplication::BeginFadeToMap(MapController::State mapControllerInitialState) {
+    mMapControllerInitialState = mapControllerInitialState;
     mFadeEffect.Start();
     mNextState = State::MapScene;
     mEngine.GetInput().DisableInput();
@@ -479,8 +492,20 @@ void RowBlastApplication::BeginFadeToGame(int level) {
 
 void RowBlastApplication::StartMap() {
     mState = State::MapScene;
-    mMapController.Init();
     mEngine.GetInput().EnableInput();
+    mMapController.Init();
+    
+    switch (mMapControllerInitialState) {
+        case MapController::State::Map:
+            break;
+        case MapController::State::LevelStartDialog:
+            mMapController.SetCameraAtLevel(mLevelToStart);
+            mMapController.GoToLevelStartDialogState(mLevelToStart);
+            break;
+        default:
+            assert(!"Illegal map initial state");
+            break;
+    }
 }
 
 void RowBlastApplication::StartGame() {

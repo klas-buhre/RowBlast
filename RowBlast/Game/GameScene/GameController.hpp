@@ -41,7 +41,7 @@ namespace RowBlast {
     class GameController {
     public:
         enum class Command {
-            RestartGame,
+            RestartLevel,
             GoToMap,
             GoToNextLevel,
             None

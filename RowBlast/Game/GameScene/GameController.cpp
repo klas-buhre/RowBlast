@@ -271,7 +271,7 @@ GameController::Command GameController::UpdateNoLivesDialog() {
             break;
         case NoLivesDialogController::Result::RefillLives:
             mUserData.GetLifeManager().RefillLives();
-            command = Command::RestartGame;
+            command = Command::RestartLevel;
             break;
         case NoLivesDialogController::Result::Close:
             if (mState == GameState::Paused) {
@@ -291,13 +291,13 @@ GameController::Command GameController::UpdateRestartConfirmationDialog() {
     switch (mGameViewControllers.GetRestartConfirmationDialogController().Update()) {
         case RestartConfirmationDialogController::Result::None:
             break;
-        case RestartConfirmationDialogController::Result::RestartGame: {
+        case RestartConfirmationDialogController::Result::RestartLevel: {
             auto& lifeManager {mUserData.GetLifeManager()};
             lifeManager.FailLevel();
             if (lifeManager.GetNumLives() == 0) {
                 GoToPausedStateNoLivesDialog();
             } else {
-                command = Command::RestartGame;
+                command = Command::RestartLevel;
             }
             break;
         }
@@ -444,7 +444,7 @@ GameController::Command GameController::UpdateGameOverDialog() {
             if (mUserData.GetLifeManager().GetNumLives() == 0) {
                 GoToGameOverStateNoLivesDialog();
             } else {
-                command = Command::RestartGame;
+                command = Command::RestartLevel;
             }
             break;
         case GameOverDialogController::Result::BackToMap:

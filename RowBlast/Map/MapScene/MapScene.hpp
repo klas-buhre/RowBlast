@@ -34,6 +34,7 @@ namespace RowBlast {
         void Update();
         void SetCameraXPosition(float xPosition);
         float GetCameraXPosition() const;
+        void SetCameraAtLevel(int levelIndex);
         
         const std::vector<std::unique_ptr<MapPin>>& GetPins() const {
             return mPins;
@@ -53,7 +54,6 @@ namespace RowBlast {
         void CreateScene(const Chapter& chapter);
         void CreatePins(const Chapter& chapter);
         void CreatePin(Pht::SceneObject& pinContainerObject, int level, const Pht::Vec3& position);
-        void SetCameraAtCurrentLevel();
         void UpdateUiLightAnimation();
         
         Pht::IEngine& mEngine;

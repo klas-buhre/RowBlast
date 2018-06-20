@@ -48,3 +48,7 @@ void Avatar::Init() {
 void Avatar::SetPosition(const Pht::Vec3& position) {
     mSceneObject->GetTransform().SetPosition(position + avatarOffset);
 }
+
+const Pht::Vec3& Avatar::GetPosition() const {
+    return mSceneObject->GetTransform().GetPosition();
+}

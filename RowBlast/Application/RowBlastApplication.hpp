@@ -30,7 +30,7 @@ namespace RowBlast {
         void UpdateGameScene();
         void HandleTransitions();
         void InsertFadeEffectInActiveScene();
-        void BeginFadeToMap();
+        void BeginFadeToMap(MapController::State mapControllerInitialState);
         void BeginFadeToGame(int level);
         void StartMap();
         void StartGame();
@@ -52,6 +52,7 @@ namespace RowBlast {
         MapController mMapController;
         Pht::FadeEffect mFadeEffect;
         int mLevelToStart;
+        MapController::State mMapControllerInitialState {MapController::State::Map};
     };
 }
 

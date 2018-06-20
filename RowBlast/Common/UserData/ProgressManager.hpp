@@ -25,12 +25,17 @@ namespace RowBlast {
             return mCurrentLevel;
         }
         
+        bool ProgressedAtPreviousGameRound() const {
+            return mProgressedAtPreviousGameRound;
+        }
+        
     private:
         void SaveState();
         bool LoadState();
 
         int mCurrentLevel {1};
         std::vector<int> mNumStars;
+        bool mProgressedAtPreviousGameRound {false};
     };
 }
 

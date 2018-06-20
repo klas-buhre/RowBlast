@@ -5,6 +5,7 @@
 #include "MapScene.hpp"
 #include "MapViewControllers.hpp"
 #include "Avatar.hpp"
+#include "AvatarAnimation.hpp"
 
 namespace Pht {
     class IEngine;
@@ -38,6 +39,13 @@ namespace RowBlast {
             Kind mKind {None};
             int mLevel;
         };
+        
+        enum class State {
+            Map,
+            LevelStartDialog,
+            NoLivesDialog,
+            SettingsMenu
+        };
     
         MapController(Pht::IEngine& engine,
                       const CommonResources& commonResources,
@@ -47,8 +55,10 @@ namespace RowBlast {
                       PieceResources& pieceResources);
     
         void Init();
+        void GoToLevelStartDialogState(int levelToStart);
         Command Update();
-    
+        void SetCameraAtLevel(int levelIndex);
+
     private:
         void UpdateMap();
         Command UpdateLevelStartDialog();
@@ -63,19 +73,13 @@ namespace RowBlast {
         void UpdateCamera();
         void GoToSettingsMenuState();
         
-        enum class State {
-            Map,
-            LevelStartDialog,
-            NoLivesDialog,
-            SettingsMenu
-        };
-        
         Pht::IEngine& mEngine;
         UserData& mUserData;
         const LevelResources& mLevelResources;
         State mState {State::Map};
         MapScene mScene;
         Avatar mAvatar;
+        AvatarAnimation mAvatarAnimation;
         MapViewControllers mMapViewControllers;
         float mCameraXPositionAtPanBegin {0.0f};
         Pht::Vec2 mTouchLocationAtPanBegin {0.0f, 0.0f};

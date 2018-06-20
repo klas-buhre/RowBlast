@@ -198,7 +198,7 @@ void MapScene::CreateScene(const Chapter& chapter) {
                                                        20.0f);
     
     CreatePins(chapter);
-    SetCameraAtCurrentLevel();
+    SetCameraAtLevel(mUserData.GetProgressManager().GetCurrentLevel());
     
     mAvatarContainer = &scene->CreateSceneObject();
     mAvatarContainer->SetLayer(static_cast<int>(Layer::Avatar));
@@ -323,9 +323,9 @@ void MapScene::SetCameraXPosition(float xPosition) {
     mCamera->SetTarget(target, up);
 }
 
-void MapScene::SetCameraAtCurrentLevel() {
-    auto* pin {mPins[mUserData.GetProgressManager().GetCurrentLevel() - 1].get()};
-    SetCameraXPosition(pin->GetPosition().x);
+void MapScene::SetCameraAtLevel(int levelIndex) {
+    auto& pin {*mPins[levelIndex - 1]};
+    SetCameraXPosition(pin.GetPosition().x);
 }
 
 float MapScene::GetCameraXPosition() const {

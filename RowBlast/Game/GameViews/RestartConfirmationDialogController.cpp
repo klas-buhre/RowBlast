@@ -53,11 +53,11 @@ RestartConfirmationDialogController::Result
 RestartConfirmationDialogController::OnTouch(const Pht::TouchEvent& touchEvent) {
     if (mView.GetYesButton().IsClicked(touchEvent)) {
         if (mUserData.GetLifeManager().GetNumLives() == 0) {
-            mDeferredResult = Result::RestartGame;
+            mDeferredResult = Result::RestartLevel;
             mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::Yes,
                                                 SlidingMenuAnimation::SlideDirection::Right);
         } else {
-            return Result::RestartGame;
+            return Result::RestartLevel;
         }
     }
 
