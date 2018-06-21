@@ -59,10 +59,13 @@ namespace RowBlast {
         void GoToLevelStartDialogState(int levelToStart);
         void GoToAvatarAnimationState(int levelToStart);
         Command Update();
-        void SetCameraAtLevel(int levelIndex);
         
         void SetStartLevelDialogOnAnimationFinished(bool startLevelDialogOnAnimationFinished) {
             mStartLevelDialogOnAnimationFinished = startLevelDialogOnAnimationFinished;
+        }
+        
+        MapScene& GetScene() {
+            return mScene;
         }
 
     private:

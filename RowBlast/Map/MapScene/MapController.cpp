@@ -84,10 +84,6 @@ MapController::Command MapController::Update() {
     return command;
 }
 
-void MapController::SetCameraAtLevel(int levelIndex) {
-    mScene.SetCameraAtLevel(levelIndex);
-}
-
 void MapController::UpdateMap() {
     HandleInput();
     

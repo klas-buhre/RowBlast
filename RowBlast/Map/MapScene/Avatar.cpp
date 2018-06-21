@@ -14,7 +14,7 @@ using namespace RowBlast;
 
 namespace {
     constexpr auto pictureSize {0.65f};
-    const Pht::Vec3 avatarOffset {0.0f, -0.8f, 0.8f};
+    const Pht::Vec3 avatarOffset {0.0f, -0.9f, 0.75f};
 }
 
 Avatar::Avatar(Pht::IEngine& engine, MapScene& mapScene, const CommonResources& commonResources) :

@@ -35,6 +35,7 @@ namespace RowBlast {
         void SetCameraXPosition(float xPosition);
         float GetCameraXPosition() const;
         void SetCameraAtLevel(int levelIndex);
+        void SetCameraBetweenLevels(int levelA, int levelB);
         
         const std::vector<std::unique_ptr<MapPin>>& GetPins() const {
             return mPins;

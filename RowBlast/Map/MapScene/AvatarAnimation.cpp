@@ -9,7 +9,7 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto animationDuration {5.0f};
+    constexpr auto animationDuration {2.8f};
 }
 
 AvatarAnimation::AvatarAnimation(Pht::IEngine& engine, Avatar& avatar) :
@@ -45,8 +45,9 @@ AvatarAnimation::State AvatarAnimation::Update() {
 void AvatarAnimation::UpdateInActiveState() {
     mElapsedTime += mEngine.GetLastFrameSeconds();
     auto normalizedTime {mElapsedTime / animationDuration};
-
-    auto avatarPosition {mStartPosition.Lerp(normalizedTime, mDestinationPosition)};
+    auto t {(cos((normalizedTime * 0.5f + 0.5f) * 2.0f * 3.1415f) + 1.0f) / 2.0f};
+    
+    auto avatarPosition {mStartPosition.Lerp(t, mDestinationPosition)};
     mAvatar.SetPosition(avatarPosition);
     
     if (mElapsedTime > animationDuration) {

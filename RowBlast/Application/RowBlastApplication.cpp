@@ -27,7 +27,7 @@ Backlog:
   -GUI:
     -Maybe the level objective/start dialog should be available from the game menu.
   -Rendering:
-    -Maybe try the font in fontawesome.com.
+    -Maybe try the font in fontawesome.com for the bright dialogs.
     -A Metal rendering back end?
   -Tutorial:
     -Make the tutorial as short as possible. Don't give all the rules of the game at once. Instead,
@@ -45,13 +45,7 @@ Backlog:
     -Credit FastNoise, MIT license: https://github.com/Auburns/FastNoise/
     -Credit Google for avatars? : http://www.iconarchive.com/show/noto-emoji-people-face-icons-by-google.1.html
 Ongoing tasks:
-    -Animated movement of an avatar to the next level after clearing a level.
-     Then start the particle effect (or move it first), no animation.
-        -Complete a level for the first time and press next: Go back to map and run the avatar
-         animation. Bring up the start level dialog when the animation is finished.
-        -Complete a level for the first time and press close: Go back to map and run the avatar
-         animation. Don't bring up the start level dialog when the animation is finished.
-        -Animate avatar acceleration.
+    -Go from one world/chapter to another.
 
 
 
@@ -111,6 +105,9 @@ Time Estimation in days:
         Done
     -Animated movement of an avatar to the next level after clearing a level.
         Cost: 2
+        Done
+    -Go from one world/chapter to another.
+        Cost: 3
     -Levels/Chapters.
         Cost: 10
     -Tutorial.
@@ -132,7 +129,7 @@ Time Estimation in days:
     -Back end.
         Cost: ?
 
-        Total: 176
+        Total: 179
 
 
 Comomon piece type sets:
@@ -437,7 +434,13 @@ void RowBlastApplication::UpdateGameScene() {
             case GameController::Command::None:
                 break;
             case GameController::Command::GoToMap:
-                BeginFadeToMap(MapController::State::Map);
+                mLevelToStart = mUserData.GetProgressManager().GetCurrentLevel() + 1;
+                if (mUserData.GetProgressManager().ProgressedAtPreviousGameRound()) {
+                    BeginFadeToMap(MapController::State::AvatarAnimation);
+                    mMapController.SetStartLevelDialogOnAnimationFinished(false);
+                } else {
+                    BeginFadeToMap(MapController::State::Map);
+                }
                 break;
             case GameController::Command::RestartLevel:
                 BeginFadeToMap(MapController::State::LevelStartDialog);
@@ -500,11 +503,11 @@ void RowBlastApplication::StartMap() {
         case MapController::State::Map:
             break;
         case MapController::State::LevelStartDialog:
-            mMapController.SetCameraAtLevel(mLevelToStart);
+            mMapController.GetScene().SetCameraAtLevel(mLevelToStart);
             mMapController.GoToLevelStartDialogState(mLevelToStart);
             break;
         case MapController::State::AvatarAnimation:
-            mMapController.SetCameraAtLevel(mLevelToStart);
+            mMapController.GetScene().SetCameraBetweenLevels(mLevelToStart - 1, mLevelToStart);
             mMapController.GoToAvatarAnimationState(mLevelToStart);
             break;
         default:

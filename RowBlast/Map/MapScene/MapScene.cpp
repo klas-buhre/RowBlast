@@ -333,6 +333,12 @@ void MapScene::SetCameraAtLevel(int levelIndex) {
     SetCameraXPosition(pin.GetPosition().x);
 }
 
+void MapScene::SetCameraBetweenLevels(int levelA, int levelB) {
+    auto& pinA {*mPins[levelA - 1]};
+    auto& pinB {*mPins[levelB - 1]};
+    SetCameraXPosition((pinA.GetPosition().x + pinB.GetPosition().x) / 2.0f);
+}
+
 float MapScene::GetCameraXPosition() const {
     return mCamera->GetSceneObject().GetTransform().GetPosition().x;
 }
