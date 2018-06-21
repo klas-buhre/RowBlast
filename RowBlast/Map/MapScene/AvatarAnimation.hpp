@@ -15,6 +15,7 @@ namespace RowBlast {
     public:
         enum class State {
             Active,
+            Finished,
             Inactive
         };
 
@@ -25,6 +26,8 @@ namespace RowBlast {
         State Update();
         
     private:
+        void UpdateInActiveState();
+        
         Pht::IEngine& mEngine;
         Avatar& mAvatar;
         State mState {State::Inactive};

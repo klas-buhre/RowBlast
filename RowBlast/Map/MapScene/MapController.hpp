@@ -42,6 +42,7 @@ namespace RowBlast {
         
         enum class State {
             Map,
+            AvatarAnimation,
             LevelStartDialog,
             NoLivesDialog,
             SettingsMenu
@@ -56,11 +57,17 @@ namespace RowBlast {
     
         void Init();
         void GoToLevelStartDialogState(int levelToStart);
+        void GoToAvatarAnimationState(int levelToStart);
         Command Update();
         void SetCameraAtLevel(int levelIndex);
+        
+        void SetStartLevelDialogOnAnimationFinished(bool startLevelDialogOnAnimationFinished) {
+            mStartLevelDialogOnAnimationFinished = startLevelDialogOnAnimationFinished;
+        }
 
     private:
         void UpdateMap();
+        void UpdateAvatarAnimation();
         Command UpdateLevelStartDialog();
         void UpdateNoLivesDialog();
         void UpdateSettingsMenu();
@@ -86,6 +93,7 @@ namespace RowBlast {
         float mCameraXVelocity {0.0f};
         bool mIsTouching {false};
         int mLevelToStart;
+        bool mStartLevelDialogOnAnimationFinished {false};
     };
 }
 

@@ -30,8 +30,8 @@
 		62411A971E61E62800035D2A /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62411A961E61E62800035D2A /* GLKit.framework */; };
 		62487E7020D7F40400E4429E /* Avatar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62487E6E20D7F40400E4429E /* Avatar.cpp */; };
 		62487E9620D9573E00E4429E /* avatar.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62487E9520D9573E00E4429E /* avatar.jpg */; };
-		62487E9820D95A9800E4429E /* avatar_frame_208.obj in Resources */ = {isa = PBXBuildFile; fileRef = 62487E9720D95A9800E4429E /* avatar_frame_208.obj */; };
 		62487E9D20DA836800E4429E /* AvatarAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62487E9B20DA836800E4429E /* AvatarAnimation.cpp */; };
+		62487E9F20DBC3E500E4429E /* avatar_frame_208.obj in Resources */ = {isa = PBXBuildFile; fileRef = 62487E9E20DBC3E400E4429E /* avatar_frame_208.obj */; };
 		626451DD206FA93200E304F2 /* laser_bomb_224.obj in Resources */ = {isa = PBXBuildFile; fileRef = 626451DC206FA93100E304F2 /* laser_bomb_224.obj */; };
 		626451E0206FA93F00E304F2 /* laser_bomb_emission.png in Resources */ = {isa = PBXBuildFile; fileRef = 626451DE206FA93E00E304F2 /* laser_bomb_emission.png */; };
 		626451E1206FA93F00E304F2 /* laser_bomb_diffuse.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 626451DF206FA93E00E304F2 /* laser_bomb_diffuse.jpg */; };
@@ -340,9 +340,9 @@
 		62487E6E20D7F40400E4429E /* Avatar.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Avatar.cpp; sourceTree = "<group>"; };
 		62487E6F20D7F40400E4429E /* Avatar.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Avatar.hpp; sourceTree = "<group>"; };
 		62487E9520D9573E00E4429E /* avatar.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = avatar.jpg; sourceTree = "<group>"; };
-		62487E9720D95A9800E4429E /* avatar_frame_208.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = avatar_frame_208.obj; sourceTree = "<group>"; };
 		62487E9B20DA836800E4429E /* AvatarAnimation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AvatarAnimation.cpp; sourceTree = "<group>"; };
 		62487E9C20DA836800E4429E /* AvatarAnimation.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AvatarAnimation.hpp; sourceTree = "<group>"; };
+		62487E9E20DBC3E400E4429E /* avatar_frame_208.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = avatar_frame_208.obj; sourceTree = "<group>"; };
 		626451DC206FA93100E304F2 /* laser_bomb_224.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = laser_bomb_224.obj; sourceTree = "<group>"; };
 		626451DE206FA93E00E304F2 /* laser_bomb_emission.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = laser_bomb_emission.png; sourceTree = "<group>"; };
 		626451DF206FA93E00E304F2 /* laser_bomb_diffuse.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = laser_bomb_diffuse.jpg; sourceTree = "<group>"; };
@@ -1030,7 +1030,7 @@
 		6270DC571FCB22AE00FB457D /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				62487E9720D95A9800E4429E /* avatar_frame_208.obj */,
+				62487E9E20DBC3E400E4429E /* avatar_frame_208.obj */,
 				627D382220A731470068B50C /* big_button_048.obj */,
 				6227D4F4206CFD25008EA77D /* bomb_798.obj */,
 				629B838720CA940D00DD2D0E /* cube_428.obj */,
@@ -2135,6 +2135,7 @@
 				6270DC901FCB23D800FB457D /* level17.json in Resources */,
 				629B837A20C458F700DD2D0E /* level34.json in Resources */,
 				62785B1720875937006F9869 /* Textured.frag in Resources */,
+				62487E9F20DBC3E500E4429E /* avatar_frame_208.obj in Resources */,
 				62487E9620D9573E00E4429E /* avatar.jpg in Resources */,
 				62785B2A20875937006F9869 /* Text.frag in Resources */,
 				6270DC8C1FCB23D800FB457D /* level13.json in Resources */,
@@ -2214,7 +2215,6 @@
 				62DE641C20CE953D00A50F26 /* medium_button_skewed_0385.obj in Resources */,
 				6270DC941FCB23D800FB457D /* level20.json in Resources */,
 				62785B1B20875937006F9869 /* PointParticle.vert in Resources */,
-				62487E9820D95A9800E4429E /* avatar_frame_208.obj in Resources */,
 				629B838220C6E06500DD2D0E /* level38.json in Resources */,
 				6270DC8B1FCB23D800FB457D /* level12.json in Resources */,
 				627D382320A731480068B50C /* big_button_048.obj in Resources */,

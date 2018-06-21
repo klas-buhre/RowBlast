@@ -145,7 +145,12 @@ void MapScene::CreateScene(const Chapter& chapter) {
     sceneManager.InitSceneSystems(Pht::ISceneManager::defaultNarrowFrustumHeightFactor);
     
     scene->AddRenderPass(Pht::RenderPass {static_cast<int>(Layer::Map)});
-    scene->AddRenderPass(Pht::RenderPass {static_cast<int>(Layer::Avatar)});
+    
+    Pht::RenderPass avatarRenderPass {static_cast<int>(Layer::Avatar)};
+    avatarRenderPass.SetIsDepthTestAllowed(false);
+    avatarRenderPass.SetRenderOrder(Pht::RenderOrder::BackToFront);
+    mScene->AddRenderPass(avatarRenderPass);
+
     Pht::RenderPass hudRenderPass {static_cast<int>(Layer::Hud)};
     hudRenderPass.SetHudMode(true);
     scene->AddRenderPass(hudRenderPass);

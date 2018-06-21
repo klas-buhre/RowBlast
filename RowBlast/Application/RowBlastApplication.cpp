@@ -51,6 +51,7 @@ Ongoing tasks:
          animation. Bring up the start level dialog when the animation is finished.
         -Complete a level for the first time and press close: Go back to map and run the avatar
          animation. Don't bring up the start level dialog when the animation is finished.
+        -Animate avatar acceleration.
 
 
 
@@ -444,8 +445,8 @@ void RowBlastApplication::UpdateGameScene() {
             case GameController::Command::GoToNextLevel:
                 mLevelToStart = mUserData.GetProgressManager().GetCurrentLevel() + 1;
                 if (mUserData.GetProgressManager().ProgressedAtPreviousGameRound()) {
-                    // TODO: Should start avatar animation.
-                    BeginFadeToMap(MapController::State::Map);
+                    BeginFadeToMap(MapController::State::AvatarAnimation);
+                    mMapController.SetStartLevelDialogOnAnimationFinished(true);
                 } else {
                     BeginFadeToMap(MapController::State::LevelStartDialog);
                 }
@@ -501,6 +502,10 @@ void RowBlastApplication::StartMap() {
         case MapController::State::LevelStartDialog:
             mMapController.SetCameraAtLevel(mLevelToStart);
             mMapController.GoToLevelStartDialogState(mLevelToStart);
+            break;
+        case MapController::State::AvatarAnimation:
+            mMapController.SetCameraAtLevel(mLevelToStart);
+            mMapController.GoToAvatarAnimationState(mLevelToStart);
             break;
         default:
             assert(!"Illegal map initial state");

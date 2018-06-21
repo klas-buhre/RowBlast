@@ -14,7 +14,7 @@ using namespace RowBlast;
 
 namespace {
     constexpr auto pictureSize {0.65f};
-    const Pht::Vec3 avatarOffset {0.8f, -0.7f, 0.65f};
+    const Pht::Vec3 avatarOffset {0.0f, -0.8f, 0.8f};
 }
 
 Avatar::Avatar(Pht::IEngine& engine, MapScene& mapScene, const CommonResources& commonResources) :
@@ -28,6 +28,8 @@ Avatar::Avatar(Pht::IEngine& engine, MapScene& mapScene, const CommonResources& 
                                        commonResources.GetMaterials().GetGoldMaterial(),
                                        mSceneResources)
     };
+
+    frame->GetTransform().SetPosition(avatarOffset);
     mSceneObject->AddChild(*frame);
     mSceneResources.AddSceneObject(std::move(frame));
     
@@ -37,6 +39,8 @@ Avatar::Avatar(Pht::IEngine& engine, MapScene& mapScene, const CommonResources& 
                                        pictureMaterial,
                                        mSceneResources)
     };
+
+    picture->GetTransform().SetPosition(avatarOffset - Pht::Vec3{0.0f, 0.0f, 0.01f});
     mSceneObject->AddChild(*picture);
     mSceneResources.AddSceneObject(std::move(picture));
 }
@@ -46,7 +50,7 @@ void Avatar::Init() {
 }
 
 void Avatar::SetPosition(const Pht::Vec3& position) {
-    mSceneObject->GetTransform().SetPosition(position + avatarOffset);
+    mSceneObject->GetTransform().SetPosition(position);
 }
 
 const Pht::Vec3& Avatar::GetPosition() const {

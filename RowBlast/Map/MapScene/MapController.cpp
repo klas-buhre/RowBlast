@@ -61,8 +61,11 @@ void MapController::Init() {
 MapController::Command MapController::Update() {
     auto command {Command{Command::None}};
     
+    UpdateAvatarAnimation();
+    
     switch (mState) {
         case State::Map:
+        case State::AvatarAnimation:
             UpdateMap();
             break;
         case State::LevelStartDialog:
@@ -90,6 +93,14 @@ void MapController::UpdateMap() {
     
     if (!mIsTouching) {
         UpdateCamera();
+    }
+}
+
+void MapController::UpdateAvatarAnimation() {
+    if (mAvatarAnimation.Update() == AvatarAnimation::State::Finished) {
+        if (mState == State::AvatarAnimation && mStartLevelDialogOnAnimationFinished) {
+            GoToLevelStartDialogState(mLevelToStart);
+        }
     }
 }
 
@@ -270,12 +281,24 @@ void MapController::UpdateCamera() {
     mScene.SetCameraXPosition(cameraXPosition);
 }
 
+void MapController::GoToAvatarAnimationState(int levelToStart) {
+    mState = State::AvatarAnimation;
+    mLevelToStart = levelToStart;
+    
+    auto nextLevel {mUserData.GetProgressManager().GetProgress()};
+    auto& nextPin {*mScene.GetPins()[nextLevel - 1]};
+    auto& currentPin {*mScene.GetPins()[nextLevel - 2]};
+    
+    mAvatar.SetPosition(currentPin.GetPosition());
+    mAvatarAnimation.Start(nextPin.GetPosition());
+}
+
 void MapController::GoToLevelStartDialogState(int levelToStart) {
     mState = State::LevelStartDialog;
     mLevelToStart = levelToStart;
     mMapViewControllers.SetActiveController(MapViewControllers::LevelStartDialog);
 
-    auto levelInfo {LevelLoader::LoadInfo(mLevelToStart, mLevelResources)};
+    auto levelInfo {LevelLoader::LoadInfo(levelToStart, mLevelResources)};
     mMapViewControllers.GetLevelStartDialogController().Init(*levelInfo);
 }
 
