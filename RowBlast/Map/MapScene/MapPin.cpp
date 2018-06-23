@@ -37,10 +37,12 @@ MapPin::MapPin(Pht::IEngine& engine,
                const Pht::Vec3& position,
                int level,
                int numStars,
-               bool isClickable) :
+               bool isClickable,
+               const MapPlace& place) :
     mBlueMaterial {commonResources.GetMaterials().GetBlueMaterial()},
     mLevel {level},
-    mIsClickable {isClickable} {
+    mIsClickable {isClickable},
+    mPlace {place} {
     
     const auto& material {
         isClickable ? mBlueMaterial :
@@ -78,15 +80,19 @@ MapPin::MapPin(Pht::IEngine& engine,
         Pht::SnapToPixel::No
     };
     
-    auto& text {scene.CreateText(std::to_string(level), textProperties)};
+    auto isPortal {place.GetKind() == MapPlace::Kind::Portal};
+    auto textString {isPortal ? "..." : std::to_string(level)};
+    auto& text {scene.CreateText(textString, textProperties)};
     auto adjustedTextOffset {textOffset};
     
-    if (mLevel > 19) {
-        adjustedTextOffset.x -= 0.21f;
-    } else if (mLevel > 9) {
-        adjustedTextOffset.x -= 0.17f;
+    if (!isPortal) {
+        if (mLevel > 19) {
+            adjustedTextOffset.x -= 0.21f;
+        } else if (mLevel > 9) {
+            adjustedTextOffset.x -= 0.17f;
+        }
     }
-    
+
     auto& textSceneObject {text.GetSceneObject()};
     textSceneObject.GetTransform().SetPosition(adjustedTextOffset);
     mSceneObject->AddChild(textSceneObject);

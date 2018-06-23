@@ -7,6 +7,9 @@
 #include "Vector.hpp"
 #include "Button.hpp"
 
+// Game includes.
+#include "World.hpp"
+
 namespace Pht {
     class IEngine;
     class Scene;
@@ -31,7 +34,8 @@ namespace RowBlast {
                const Pht::Vec3& position,
                int level,
                int numStars,
-               bool isClickable);
+               bool isClickable,
+               const MapPlace& place);
 
         void SetIsSelected(bool isSelected);
         const Pht::Vec3& GetPosition() const;
@@ -47,6 +51,10 @@ namespace RowBlast {
         int GetLevel() const {
             return mLevel;
         }
+        
+        const MapPlace& GetPlace() const {
+            return mPlace;
+        }
 
     private:
         const Pht::Material& mBlueMaterial;
@@ -54,6 +62,7 @@ namespace RowBlast {
         std::unique_ptr<Pht::Button> mButton;
         int mLevel;
         bool mIsClickable {false};
+        MapPlace mPlace;
     };
 }
 

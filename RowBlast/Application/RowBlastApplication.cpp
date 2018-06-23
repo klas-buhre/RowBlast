@@ -45,7 +45,7 @@ Backlog:
     -Credit FastNoise, MIT license: https://github.com/Auburns/FastNoise/
     -Credit Google for avatars? : http://www.iconarchive.com/show/noto-emoji-people-face-icons-by-google.1.html
 Ongoing tasks:
-    -Go from one world/chapter to another.
+    -Go from one world to another.
 
 
 
@@ -106,9 +106,9 @@ Time Estimation in days:
     -Animated movement of an avatar to the next level after clearing a level.
         Cost: 2
         Done
-    -Go from one world/chapter to another.
+    -Go from one world to another.
         Cost: 3
-    -Levels/Chapters.
+    -Levels/Worlds.
         Cost: 10
     -Tutorial.
         Cost: 10

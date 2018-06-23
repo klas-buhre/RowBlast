@@ -12,11 +12,7 @@ namespace Pht {
         Optional(const T& value) :
             mHasValue {true},
             mValue {value} {}
-        
-        operator bool() const {
-            return mHasValue;
-        }
-        
+
         bool HasValue() const {
             return mHasValue;
         }

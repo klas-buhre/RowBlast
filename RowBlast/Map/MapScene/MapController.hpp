@@ -77,7 +77,7 @@ namespace RowBlast {
         void HandleInput();
         void UpdateTouchingState(const Pht::TouchEvent& touch);
         void HandleTouch(const Pht::TouchEvent& touch);
-        void HandleLevelClick(int levelIndex);
+        void HandlePinClick(const MapPin& pin);
         void Pan(const Pht::TouchEvent& touch);
         void StartPan(const Pht::TouchEvent& touch);
         void UpdateCamera();

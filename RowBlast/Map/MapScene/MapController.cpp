@@ -198,7 +198,7 @@ void MapController::HandleTouch(const Pht::TouchEvent& touch) {
                 break;
             case Pht::Button::Result::UpInside:
                 pin->SetIsSelected(false);
-                HandleLevelClick(pin->GetLevel());
+                HandlePinClick(*pin);
                 return;
             default:
                 pin->SetIsSelected(false);
@@ -209,13 +209,21 @@ void MapController::HandleTouch(const Pht::TouchEvent& touch) {
     Pan(touch);
 }
 
-void MapController::HandleLevelClick(int levelIndex) {
-    if (mUserData.GetLifeManager().GetNumLives() > 0) {
-        GoToLevelStartDialogState(levelIndex);
-    } else {
-        mState = State::NoLivesDialog;
-        mMapViewControllers.SetActiveController(MapViewControllers::NoLivesDialog);
-        mMapViewControllers.GetNoLivesDialogController().Init(true);
+void MapController::HandlePinClick(const MapPin& pin) {
+    auto& mapPlace {pin.GetPlace()};
+    
+    switch (mapPlace.GetKind()) {
+        case MapPlace::Kind::MapLevel:
+            if (mUserData.GetLifeManager().GetNumLives() > 0) {
+                GoToLevelStartDialogState(pin.GetLevel());
+            } else {
+                mState = State::NoLivesDialog;
+                mMapViewControllers.SetActiveController(MapViewControllers::NoLivesDialog);
+                mMapViewControllers.GetNoLivesDialogController().Init(true);
+            }
+            break;
+        case MapPlace::Kind::Portal:
+            break;
     }
 }
 

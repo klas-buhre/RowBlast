@@ -15,7 +15,7 @@
 // Game includes.
 #include "CommonResources.hpp"
 #include "UserData.hpp"
-#include "Chapter.hpp"
+#include "World.hpp"
 #include "NextLevelParticleEffect.hpp"
 #include "UiLayer.hpp"
 
@@ -34,91 +34,6 @@ namespace {
         UiViews,
         SceneSwitchFadeEffect = GlobalLayer::sceneSwitchFadeEffect
     };
-
-    const std::vector<CloudPathVolume> cloudPaths {
-        CloudPathVolume {
-            .mPosition = {0.0f, 0.0f, -10.0f},
-            .mSize = {120.0f, 0.0f, 0.0f},
-        },
-        CloudPathVolume {
-            .mPosition = {0.0f, -50.0f, -50.0f},
-            .mSize = {170.0f, 0.0f, 10.0f},
-            .mCloudSize = {50.0f, 50.0f},
-            .mNumClouds = 3,
-            .mNumCloudsPerCluster = 3
-        },
-        CloudPathVolume {
-            .mPosition = {0.0f, -60.0f, -50.0f},
-            .mSize = {170.0f, 0.0f, 10.0f},
-            .mCloudSize = {30.0f, 30.0f},
-            .mNumClouds = 3,
-            .mNumCloudsPerCluster = 3
-        },
-        CloudPathVolume {
-            .mPosition = {0.0f, -30.0f, -50.0f},
-            .mSize = {170.0f, 0.0f, 10.0f},
-            .mCloudSize = {50.0f, 50.0f},
-            .mNumClouds = 3,
-            .mNumCloudsPerCluster = 3
-        },
-        CloudPathVolume {
-            .mPosition = {0.0f, 40.0f, -50.0f},
-            .mSize = {170.0f, 0.0f, 10.0f}
-        },
-        CloudPathVolume {
-            .mPosition = {0.0f, 0.0f, -100.0f},
-            .mSize = {250.0f, 180.0f, 20.0f},
-            .mCloudSize = {60.0f, 60.0f},
-            .mCloudSizeRandPart = 60.0f,
-            .mNumClouds = 10,
-            .mNumCloudsPerCluster = 5
-        },
-        CloudPathVolume {
-            .mPosition = {0.0f, 0.0f, -200.0f},
-            .mSize = {400.0f, 320.0f, 20.0f},
-            .mCloudSize = {50.0f, 50.0f},
-            .mCloudSizeRandPart = 65.0f,
-            .mNumClouds = 16,
-            .mNumCloudsPerCluster = 5
-        },
-        CloudPathVolume {
-            .mPosition = {0.0f, 0.0f, -300.0f},
-            .mSize = {510.0f, 400.0f, 20.0f},
-            .mCloudSize = {50.0f, 50.0f},
-            .mCloudSizeRandPart = 50.0f,
-            .mNumClouds = 16,
-            .mNumCloudsPerCluster = 5
-        },
-        CloudPathVolume {
-            .mPosition = {0.0f, 0.0f, -400.0f},
-            .mSize = {510.0f, 400.0f, 20.0f},
-            .mCloudSize = {50.0f, 50.0f},
-            .mCloudSizeRandPart = 50.0f,
-            .mNumClouds = 16,
-            .mNumCloudsPerCluster = 5
-        }
-    };
-
-    const std::vector<HazeLayer> hazeLayers {
-        HazeLayer {
-            .mPosition = {0.0f, 0.0f, -700.0f},
-            .mSize = {1500.0f, 1050.0f},
-            .mUpperColor = {0.17f, 0.38f, 0.89f, 1.0f},
-            .mLowerColor = {0.55f, 0.89f, 1.0f, 1.0f}
-        },
-        HazeLayer {
-            .mPosition = {0.0f, 0.0f, -350.0f},
-            .mSize = {500.0f, 500.0f},
-            .mUpperColor = {0.17f, 0.38f, 0.89f, 0.35f},
-            .mLowerColor = {0.55f, 0.89f, 1.0f, 0.35f}
-        },
-        HazeLayer {
-            .mPosition = {0.0f, 0.0f, -250.0f},
-            .mSize = {380.0f, 380.0f},
-            .mUpperColor = {0.17f, 0.38f, 0.89f, 0.35f},
-            .mLowerColor = {0.55f, 0.89f, 1.0f, 0.35f}
-        }
-    };
 }
 
 MapScene::MapScene(Pht::IEngine& engine,
@@ -134,10 +49,10 @@ MapScene::MapScene(Pht::IEngine& engine,
     mFont {"ethnocentric_rg_it.ttf", engine.GetRenderer().GetAdjustedNumPixels(46)} {}
 
 void MapScene::Init() {
-    CreateScene(GetChapter(1));
+    CreateScene(GetWorld(1));
 }
 
-void MapScene::CreateScene(const Chapter& chapter) {
+void MapScene::CreateScene(const World& world) {
     auto& sceneManager {mEngine.GetSceneManager()};
     auto scene {sceneManager.CreateScene(Pht::Hash::Fnv1a("mapScene"))};
     mScene = scene.get();
@@ -190,19 +105,19 @@ void MapScene::CreateScene(const Chapter& chapter) {
     mClouds = std::make_unique<Clouds>(mEngine,
                                        *scene,
                                        static_cast<int>(Layer::Map),
-                                       cloudPaths,
-                                       hazeLayers,
+                                       world.mCloudPaths,
+                                       world.mHazeLayers,
                                        1.5f);
 
     mFloatingBlocks = std::make_unique<FloatingBlocks>(mEngine,
                                                        *scene,
                                                        static_cast<int>(Layer::Map),
-                                                       chapter.mBlockPaths,
+                                                       world.mBlockPaths,
                                                        mCommonResources,
                                                        1.5f,
                                                        20.0f);
     
-    CreatePins(chapter);
+    CreatePins(world);
     SetCameraAtLevel(mUserData.GetProgressManager().GetCurrentLevel());
     
     mAvatarContainer = &scene->CreateSceneObject();
@@ -229,7 +144,7 @@ void MapScene::CreateScene(const Chapter& chapter) {
     sceneManager.SetLoadedScene(std::move(scene));
 }
 
-void MapScene::CreatePins(const Chapter& chapter) {
+void MapScene::CreatePins(const World& world) {
     auto& pinsContainer {mScene->CreateSceneObject()};
     pinsContainer.SetLayer(static_cast<int>(Layer::Map));
     mScene->GetRoot().AddChild(pinsContainer);
@@ -237,14 +152,30 @@ void MapScene::CreatePins(const Chapter& chapter) {
     mPreviousPin = nullptr;
     mPins.clear();
     
-    for (auto& level: chapter.mLevels) {
-        CreatePin(pinsContainer, level.mLevelIndex, level.mPosition);
+    for (auto& place: world.mPlaces) {
+        CreatePin(pinsContainer, place);
     }
 }
 
-void MapScene::CreatePin(Pht::SceneObject& pinsContainerObject,
-                         int level,
-                         const Pht::Vec3& position) {
+void MapScene::CreatePin(Pht::SceneObject& pinsContainerObject, const MapPlace& place) {
+    auto level {0};
+    Pht::Vec3 position;
+    
+    switch (place.GetKind()) {
+        case MapPlace::Kind::MapLevel: {
+            auto& mapLevel {place.GetMapLevel()};
+            level = mapLevel.mLevelIndex;
+            position = mapLevel.mPosition;
+            break;
+        }
+        case MapPlace::Kind::Portal: {
+            auto& portal {place.GetPortal()};
+            level = portal.mLevelIndexEquivalent;
+            position = portal.mPosition;
+            break;
+        }
+    }
+    
     auto& progressManager {mUserData.GetProgressManager()};
     auto isClickable {level <= progressManager.GetProgress()};
     
@@ -288,7 +219,8 @@ void MapScene::CreatePin(Pht::SceneObject& pinsContainerObject,
                                  position,
                                  level,
                                  progressManager.GetNumStars(level),
-                                 isClickable)
+                                 isClickable,
+                                 place)
     };
     
     mPreviousPin = pin.get();

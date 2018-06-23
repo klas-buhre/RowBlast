@@ -24,7 +24,8 @@ namespace Pht {
 namespace RowBlast {
     class CommonResources;
     class UserData;
-    class Chapter;
+    class World;
+    class MapPlace;
 
     class MapScene {
     public:
@@ -52,9 +53,9 @@ namespace RowBlast {
         }
         
     private:
-        void CreateScene(const Chapter& chapter);
-        void CreatePins(const Chapter& chapter);
-        void CreatePin(Pht::SceneObject& pinContainerObject, int level, const Pht::Vec3& position);
+        void CreateScene(const World& world);
+        void CreatePins(const World& world);
+        void CreatePin(Pht::SceneObject& pinContainerObject, const MapPlace& place);
         void UpdateUiLightAnimation();
         
         Pht::IEngine& mEngine;
