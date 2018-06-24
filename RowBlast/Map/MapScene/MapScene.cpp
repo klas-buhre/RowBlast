@@ -15,7 +15,7 @@
 // Game includes.
 #include "CommonResources.hpp"
 #include "UserData.hpp"
-#include "World.hpp"
+#include "Universe.hpp"
 #include "NextLevelParticleEffect.hpp"
 #include "UiLayer.hpp"
 
@@ -38,10 +38,12 @@ namespace {
 
 MapScene::MapScene(Pht::IEngine& engine,
                    const CommonResources& commonResources,
-                   UserData& userData) :
+                   UserData& userData,
+                   const Universe& universe) :
     mEngine {engine},
     mUserData {userData},
     mCommonResources {commonResources},
+    mUniverse {universe},
     mStarRenderable {
         engine.GetSceneManager().CreateRenderableObject(Pht::ObjMesh {"star.obj", 0.05f},
                                                         commonResources.GetMaterials().GetGoldMaterial())
@@ -49,10 +51,7 @@ MapScene::MapScene(Pht::IEngine& engine,
     mFont {"ethnocentric_rg_it.ttf", engine.GetRenderer().GetAdjustedNumPixels(46)} {}
 
 void MapScene::Init() {
-    CreateScene(GetWorld(1));
-}
-
-void MapScene::CreateScene(const World& world) {
+    auto& world {mUniverse.GetWorld(mWorldIndex)};
     auto& sceneManager {mEngine.GetSceneManager()};
     auto scene {sceneManager.CreateScene(Pht::Hash::Fnv1a("mapScene"))};
     mScene = scene.get();
@@ -124,10 +123,11 @@ void MapScene::CreateScene(const World& world) {
     mAvatarContainer->SetLayer(static_cast<int>(Layer::Avatar));
     scene->GetRoot().AddChild(*mAvatarContainer);
     
-    auto* pin {mPins[mUserData.GetProgressManager().GetProgress() - 1].get()};
-    auto& pinPosition {pin->GetPosition()};
-    CreateNextLevelParticleEffect(mEngine, *scene, pinPosition, static_cast<int>(Layer::Map));
-    
+    if (auto* pin {GetPin(mUserData.GetProgressManager().GetProgress())}) {
+        auto& pinPosition {pin->GetPosition()};
+        CreateNextLevelParticleEffect(mEngine, *scene, pinPosition, static_cast<int>(Layer::Map));
+    }
+
     mHud = std::make_unique<MapHud>(mEngine,
                                     mUserData,
                                     mCommonResources.GetHussarFontSize22(PotentiallyZoomedScreen::No),
@@ -261,16 +261,30 @@ void MapScene::SetCameraXPosition(float xPosition) {
 }
 
 void MapScene::SetCameraAtLevel(int levelIndex) {
-    auto& pin {*mPins[levelIndex - 1]};
-    SetCameraXPosition(pin.GetPosition().x);
+    if (auto* pin {GetPin(levelIndex)}) {
+        SetCameraXPosition(pin->GetPosition().x);
+    }
 }
 
 void MapScene::SetCameraBetweenLevels(int levelA, int levelB) {
-    auto& pinA {*mPins[levelA - 1]};
-    auto& pinB {*mPins[levelB - 1]};
-    SetCameraXPosition((pinA.GetPosition().x + pinB.GetPosition().x) / 2.0f);
+    auto* pinA {GetPin(levelA)};
+    auto* pinB {GetPin(levelB)};
+    
+    if (pinA && pinB) {
+        SetCameraXPosition((pinA->GetPosition().x + pinB->GetPosition().x) / 2.0f);
+    }
 }
 
 float MapScene::GetCameraXPosition() const {
     return mCamera->GetSceneObject().GetTransform().GetPosition().x;
+}
+
+const MapPin* MapScene::GetPin(int levelIndex) const {
+    for (const auto& pin: mPins) {
+        if (pin->GetLevel() == levelIndex) {
+            return pin.get();
+        }
+    }
+    
+    return nullptr;
 }

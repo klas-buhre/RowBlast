@@ -273,6 +273,7 @@
 		6299DD7A208B4178001F74E2 /* CameraShake.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6299DD78208B4178001F74E2 /* CameraShake.cpp */; };
 		6299DD80208BA21C001F74E2 /* FastNoise.cc in Sources */ = {isa = PBXBuildFile; fileRef = 6299DD7F208BA21C001F74E2 /* FastNoise.cc */; };
 		6299DD82208E39C1001F74E2 /* level32.json in Resources */ = {isa = PBXBuildFile; fileRef = 6299DD81208E39C0001F74E2 /* level32.json */; };
+		629AB6A220DFDD7600D43A0D /* Universe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 629AB6A020DFDD7600D43A0D /* Universe.cpp */; };
 		629B837120BAD7DA00DD2D0E /* LevelStartDialogView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 629B836F20BAD7DA00DD2D0E /* LevelStartDialogView.cpp */; };
 		629B837420BAD82E00DD2D0E /* LevelStartDialogController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 629B837220BAD82E00DD2D0E /* LevelStartDialogController.cpp */; };
 		629B837620BED74E00DD2D0E /* flare03.png in Resources */ = {isa = PBXBuildFile; fileRef = 629B837520BED74D00DD2D0E /* flare03.png */; };
@@ -890,6 +891,8 @@
 		6299DD7E208BA21C001F74E2 /* FastNoise.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FastNoise.h; sourceTree = "<group>"; };
 		6299DD7F208BA21C001F74E2 /* FastNoise.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FastNoise.cc; sourceTree = "<group>"; };
 		6299DD81208E39C0001F74E2 /* level32.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level32.json; sourceTree = "<group>"; };
+		629AB6A020DFDD7600D43A0D /* Universe.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Universe.cpp; sourceTree = "<group>"; };
+		629AB6A120DFDD7600D43A0D /* Universe.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Universe.hpp; sourceTree = "<group>"; };
 		629B836F20BAD7DA00DD2D0E /* LevelStartDialogView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LevelStartDialogView.cpp; sourceTree = "<group>"; };
 		629B837020BAD7DA00DD2D0E /* LevelStartDialogView.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = LevelStartDialogView.hpp; sourceTree = "<group>"; };
 		629B837220BAD82E00DD2D0E /* LevelStartDialogController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LevelStartDialogController.cpp; sourceTree = "<group>"; };
@@ -1024,6 +1027,8 @@
 		623E3D5220DE4A2600BB800F /* Worlds */ = {
 			isa = PBXGroup;
 			children = (
+				629AB6A020DFDD7600D43A0D /* Universe.cpp */,
+				629AB6A120DFDD7600D43A0D /* Universe.hpp */,
 				623E3D5520DE4A2600BB800F /* World.cpp */,
 				623E3D5320DE4A2600BB800F /* World.hpp */,
 				623E3D5620DE4A2600BB800F /* World1.cpp */,
@@ -2240,6 +2245,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				62785E012087618E006F9869 /* MenuButton.cpp in Sources */,
+				629AB6A220DFDD7600D43A0D /* Universe.cpp in Sources */,
 				62785B1420875937006F9869 /* RenderQueue.cpp in Sources */,
 				62785DF22087618E006F9869 /* FallingPieceAnimation.cpp in Sources */,
 				62785DDD2087618E006F9869 /* TPiece.cpp in Sources */,

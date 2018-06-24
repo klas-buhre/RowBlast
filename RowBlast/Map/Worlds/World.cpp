@@ -3,6 +3,7 @@
 #include <assert.h>
 
 #include "World1.hpp"
+#include "World2.hpp"
 
 using namespace RowBlast;
 
@@ -32,12 +33,3 @@ World::World(const std::vector<MapPlace>& mapPlaces,
     mBlockPaths {blockPaths},
     mCloudPaths {cloudPaths},
     mHazeLayers {hazeLayers} {}
-
-World RowBlast::GetWorld(int worldIndex) {
-    switch (worldIndex) {
-        case 1:
-            return GetWorld1();
-        default:
-            assert(!"Unknown world!");
-    }
-}

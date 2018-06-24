@@ -12,6 +12,7 @@
 #include "MapController.hpp"
 #include "GameController.hpp"
 #include "Settings.hpp"
+#include "Universe.hpp"
 
 namespace Pht {
     class IEngine;
@@ -27,6 +28,8 @@ namespace RowBlast {
         
     private:
         void UpdateScene();
+        void UpdateTitleScene();
+        void UpdateMapScene();
         void UpdateGameScene();
         void HandleTransitions();
         void InsertFadeEffectInActiveScene();
@@ -47,6 +50,7 @@ namespace RowBlast {
         CommonResources mCommonResources;
         Settings mSettings;
         UserData mUserData;
+        Universe mUniverse;
         TitleController mTitleController;
         GameController mGameController;
         MapController mMapController;

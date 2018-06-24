@@ -26,10 +26,14 @@ namespace RowBlast {
     class UserData;
     class World;
     class MapPlace;
+    class Universe;
 
     class MapScene {
     public:
-        MapScene(Pht::IEngine& engine, const CommonResources& commonResources, UserData& userData);
+        MapScene(Pht::IEngine& engine,
+                 const CommonResources& commonResources,
+                 UserData& userData,
+                 const Universe& universe);
         
         void Init();
         void Update();
@@ -37,6 +41,7 @@ namespace RowBlast {
         float GetCameraXPosition() const;
         void SetCameraAtLevel(int levelIndex);
         void SetCameraBetweenLevels(int levelA, int levelB);
+        const MapPin* GetPin(int levelIndex) const;
         
         const std::vector<std::unique_ptr<MapPin>>& GetPins() const {
             return mPins;
@@ -52,8 +57,11 @@ namespace RowBlast {
             return *mUiViewsContainer;
         }
         
+        void SetWorldIndex(int worldIndex) {
+            mWorldIndex = worldIndex;
+        }
+        
     private:
-        void CreateScene(const World& world);
         void CreatePins(const World& world);
         void CreatePin(Pht::SceneObject& pinContainerObject, const MapPlace& place);
         void UpdateUiLightAnimation();
@@ -61,6 +69,7 @@ namespace RowBlast {
         Pht::IEngine& mEngine;
         UserData& mUserData;
         const CommonResources& mCommonResources;
+        const Universe& mUniverse;
         Pht::Scene* mScene {nullptr};
         Pht::CameraComponent* mCamera {nullptr};
         Pht::LightComponent* mUiLight {nullptr};
@@ -74,6 +83,7 @@ namespace RowBlast {
         std::unique_ptr<MapHud> mHud;
         Pht::SceneObject* mAvatarContainer {nullptr};
         Pht::SceneObject* mUiViewsContainer {nullptr};
+        int mWorldIndex {1};
     };
 }
 

@@ -35,12 +35,13 @@ MapController::MapController(Pht::IEngine& engine,
                              const CommonResources& commonResources,
                              UserData& userData,
                              Settings& settings,
+                             const Universe& universe,
                              const LevelResources& levelResources,
                              PieceResources& pieceResources) :
     mEngine {engine},
     mUserData {userData},
     mLevelResources {levelResources},
-    mScene {engine, commonResources, userData},
+    mScene {engine, commonResources, userData, universe},
     mAvatar {engine, mScene, commonResources},
     mAvatarAnimation {engine, mAvatar},
     mMapViewControllers {engine, mScene, commonResources, userData, settings, pieceResources} {}
@@ -54,8 +55,11 @@ void MapController::Init() {
     mState = State::Map;
     mCameraXVelocity = 0.0f;
     
-    auto& currentPin {*mScene.GetPins()[mUserData.GetProgressManager().GetProgress() - 1]};
-    mAvatar.SetPosition(currentPin.GetPosition());
+    if (auto* currentPin {mScene.GetPin(mUserData.GetProgressManager().GetProgress())}) {
+        mAvatar.SetPosition(currentPin->GetPosition());
+    } else {
+        mAvatar.Hide();
+    }
 }
 
 MapController::Command MapController::Update() {
@@ -66,7 +70,7 @@ MapController::Command MapController::Update() {
     switch (mState) {
         case State::Map:
         case State::AvatarAnimation:
-            UpdateMap();
+            command = UpdateMap();
             break;
         case State::LevelStartDialog:
             command = UpdateLevelStartDialog();
@@ -84,12 +88,14 @@ MapController::Command MapController::Update() {
     return command;
 }
 
-void MapController::UpdateMap() {
-    HandleInput();
+MapController::Command MapController::UpdateMap() {
+    auto command {HandleInput()};
     
     if (!mIsTouching) {
         UpdateCamera();
     }
+    
+    return command;
 }
 
 void MapController::UpdateAvatarAnimation() {
@@ -145,7 +151,8 @@ void MapController::UpdateSettingsMenu() {
     }
 }
 
-void MapController::HandleInput() {
+MapController::Command MapController::HandleInput() {
+    auto command {Command{Command::None}};
     auto& input {mEngine.GetInput()};
     
     while (input.HasEvents()) {
@@ -155,7 +162,7 @@ void MapController::HandleInput() {
                 auto& touchEvent {event.GetTouchEvent()};
                 switch (mMapViewControllers.GetSettingsButtonController().OnTouch(touchEvent)) {
                     case SettingsButtonController::Result::None:
-                        HandleTouch(touchEvent);
+                        command = HandleTouch(touchEvent);
                         break;
                     case SettingsButtonController::Result::ClickedSettings:
                         GoToSettingsMenuState();
@@ -172,9 +179,12 @@ void MapController::HandleInput() {
         
         input.PopNextEvent();
     }
+    
+    return command;
 }
 
-void MapController::HandleTouch(const Pht::TouchEvent& touch) {
+MapController::Command MapController::HandleTouch(const Pht::TouchEvent& touch) {
+    auto command {Command{Command::None}};
     UpdateTouchingState(touch);
     
     mEngine.GetRenderer().SetProjectionMode(Pht::ProjectionMode::Perspective);
@@ -189,17 +199,16 @@ void MapController::HandleTouch(const Pht::TouchEvent& touch) {
         switch (pin->GetButton().OnTouch(touch)) {
             case Pht::Button::Result::Down:
                 pin->SetIsSelected(true);
-                return;
+                return command;
             case Pht::Button::Result::MoveInside:
-                return;
+                return command;
             case Pht::Button::Result::MoveOutside:
                 pin->SetIsSelected(false);
                 StartPan(touch);
                 break;
             case Pht::Button::Result::UpInside:
                 pin->SetIsSelected(false);
-                HandlePinClick(*pin);
-                return;
+                return HandlePinClick(*pin);
             default:
                 pin->SetIsSelected(false);
                 break;
@@ -207,9 +216,11 @@ void MapController::HandleTouch(const Pht::TouchEvent& touch) {
     }
     
     Pan(touch);
+    return command;
 }
 
-void MapController::HandlePinClick(const MapPin& pin) {
+MapController::Command MapController::HandlePinClick(const MapPin& pin) {
+    auto command {Command{Command::None}};
     auto& mapPlace {pin.GetPlace()};
     
     switch (mapPlace.GetKind()) {
@@ -223,8 +234,12 @@ void MapController::HandlePinClick(const MapPin& pin) {
             }
             break;
         case MapPlace::Kind::Portal:
+            mScene.SetWorldIndex(mapPlace.GetPortal().mDestinationWorldIndex);
+            command = Command {Command::StartMap};
             break;
     }
+    
+    return command;
 }
 
 void MapController::UpdateTouchingState(const Pht::TouchEvent& touch) {
@@ -290,11 +305,13 @@ void MapController::GoToAvatarAnimationState(int levelToStart) {
     mLevelToStart = levelToStart;
     
     auto nextLevel {mUserData.GetProgressManager().GetProgress()};
-    auto& nextPin {*mScene.GetPins()[nextLevel - 1]};
-    auto& currentPin {*mScene.GetPins()[nextLevel - 2]};
+    auto* nextPin {mScene.GetPin(nextLevel)};
+    auto* currentPin {mScene.GetPin(nextLevel - 1)};
     
-    mAvatar.SetPosition(currentPin.GetPosition());
-    mAvatarAnimation.Start(nextPin.GetPosition());
+    if (nextPin && currentPin) {
+        mAvatar.SetPosition(currentPin->GetPosition());
+        mAvatarAnimation.Start(nextPin->GetPosition());
+    }
 }
 
 void MapController::GoToLevelStartDialogState(int levelToStart) {

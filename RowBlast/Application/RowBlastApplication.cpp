@@ -45,8 +45,11 @@ Backlog:
     -Credit FastNoise, MIT license: https://github.com/Auburns/FastNoise/
     -Credit Google for avatars? : http://www.iconarchive.com/show/noto-emoji-people-face-icons-by-google.1.html
 Ongoing tasks:
-    -Go from one world to another.
-
+    -Go from one world to another. Problems:
+        -Calculating world index from level index. Needed at startup when initing map world index
+         based on current level.
+        -How to set camera position after appearing on the other side of a portal. Should be set to
+         the position of the portal.
 
 
 Ideas:
@@ -344,8 +347,6 @@ Put the build_freetype.sh script in freetype root dir then execute it.
 
 #include "RowBlastApplication.hpp"
 
-#include <iostream>
-
 // Engine includes.
 #include "IEngine.hpp"
 #include "IRenderer.hpp"
@@ -371,6 +372,7 @@ RowBlastApplication::RowBlastApplication(Pht::IEngine& engine) :
     mCommonResources {engine},
     mSettings {},
     mUserData {},
+    mUniverse {},
     mTitleController {engine, mCommonResources},
     mGameController {engine, mCommonResources, mUserData, mSettings},
     mMapController {
@@ -378,6 +380,7 @@ RowBlastApplication::RowBlastApplication(Pht::IEngine& engine) :
         mCommonResources,
         mUserData,
         mSettings,
+        mUniverse,
         mGameController.GetLevelResources(),
         mGameController.GetPieceResources()
     },
@@ -405,24 +408,47 @@ void RowBlastApplication::OnUpdate() {
 
 void RowBlastApplication::UpdateScene() {
     switch (mState) {
-        case State::TitleScene: {
-            auto command {mTitleController.Update()};
-            if (!mFadeEffect.IsFadingOut() && command == TitleController::Command::GoToMap) {
-                mFadeEffect.SetDuration(fadeDuration);
-                BeginFadeToMap(MapController::State::Map);
-            }
+        case State::TitleScene:
+            UpdateTitleScene();
             break;
-        }
-        case State::MapScene: {
-            auto command {mMapController.Update()};
-            if (!mFadeEffect.IsFadingOut() && command.GetKind() == MapController::Command::StartGame) {
-                BeginFadeToGame(command.GetLevel());
-            }
+        case State::MapScene:
+            UpdateMapScene();
             break;
-        }
         case State::GameScene:
             UpdateGameScene();
             break;
+    }
+}
+
+void RowBlastApplication::UpdateTitleScene() {
+    auto command {mTitleController.Update()};
+    
+    if (!mFadeEffect.IsFadingOut()) {
+        switch (command) {
+            case TitleController::Command::None:
+                break;
+            case TitleController::Command::GoToMap:
+                mFadeEffect.SetDuration(fadeDuration);
+                BeginFadeToMap(MapController::State::Map);
+                break;
+        }
+    }
+}
+
+void RowBlastApplication::UpdateMapScene() {
+    auto command {mMapController.Update()};
+    
+    if (!mFadeEffect.IsFadingOut()) {
+        switch (command.GetKind()) {
+            case MapController::Command::None:
+                break;
+            case MapController::Command::StartGame:
+                BeginFadeToGame(command.GetLevel());
+                break;
+            case MapController::Command::StartMap:
+                BeginFadeToMap(MapController::State::Map);
+                break;
+        }
     }
 }
 

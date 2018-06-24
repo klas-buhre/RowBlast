@@ -17,7 +17,7 @@ namespace RowBlast {
     };
     
     struct Portal {
-        int mToWorldIndex;
+        int mDestinationWorldIndex;
         int mLevelIndexEquivalent;
         Pht::Vec3 mPosition;
     };
@@ -58,8 +58,6 @@ namespace RowBlast {
         const std::vector<CloudPathVolume>& mCloudPaths;
         const std::vector<HazeLayer>& mHazeLayers;
     };
-    
-    World GetWorld(int worldIndex);
 }
 
 #endif

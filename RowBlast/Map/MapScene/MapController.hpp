@@ -17,6 +17,7 @@ namespace RowBlast {
     class Settings;
     class LevelResources;
     class PieceResources;
+    class Universe;
     
     class MapController {
     public:
@@ -24,6 +25,7 @@ namespace RowBlast {
         public:
             enum Kind {
                 StartGame,
+                StartMap,
                 None
             };
             
@@ -52,6 +54,7 @@ namespace RowBlast {
                       const CommonResources& commonResources,
                       UserData& userData,
                       Settings& settings,
+                      const Universe& universe,
                       const LevelResources& levelResources,
                       PieceResources& pieceResources);
     
@@ -69,15 +72,15 @@ namespace RowBlast {
         }
 
     private:
-        void UpdateMap();
+        Command UpdateMap();
         void UpdateAvatarAnimation();
         Command UpdateLevelStartDialog();
         void UpdateNoLivesDialog();
         void UpdateSettingsMenu();
-        void HandleInput();
+        Command HandleInput();
         void UpdateTouchingState(const Pht::TouchEvent& touch);
-        void HandleTouch(const Pht::TouchEvent& touch);
-        void HandlePinClick(const MapPin& pin);
+        Command HandleTouch(const Pht::TouchEvent& touch);
+        Command HandlePinClick(const MapPin& pin);
         void Pan(const Pht::TouchEvent& touch);
         void StartPan(const Pht::TouchEvent& touch);
         void UpdateCamera();

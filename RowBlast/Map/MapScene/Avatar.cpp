@@ -47,6 +47,7 @@ Avatar::Avatar(Pht::IEngine& engine, MapScene& mapScene, const CommonResources& 
 
 void Avatar::Init() {
     mMapScene.GetAvatarContainer().AddChild(*mSceneObject);
+    mSceneObject->SetIsVisible(true);
 }
 
 void Avatar::SetPosition(const Pht::Vec3& position) {
@@ -55,4 +56,8 @@ void Avatar::SetPosition(const Pht::Vec3& position) {
 
 const Pht::Vec3& Avatar::GetPosition() const {
     return mSceneObject->GetTransform().GetPosition();
+}
+
+void Avatar::Hide() {
+    mSceneObject->SetIsVisible(false);
 }
