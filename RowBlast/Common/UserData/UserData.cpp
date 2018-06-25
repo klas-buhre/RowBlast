@@ -6,12 +6,12 @@ void UserData::Update() {
     mLifeManager.Update();
 }
 
-void UserData::StartLevel(int levelIndex) {
-    mProgressManager.StartLevel(levelIndex);
+void UserData::StartLevel(int levelId) {
+    mProgressManager.StartLevel(levelId);
     mLifeManager.StartLevel();
 }
 
-void UserData::CompleteLevel(int levelIndex, int numStars) {
-    mProgressManager.CompleteLevel(levelIndex, numStars);
+void UserData::CompleteLevel(int levelId, int numStars) {
+    mProgressManager.CompleteLevel(levelId, numStars);
     mLifeManager.CompleteLevel();
 }

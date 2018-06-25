@@ -11,7 +11,8 @@ namespace RowBlast {
     public:
         Universe();
         
-        const World& GetWorld(int worldIndex) const;
+        const World& GetWorld(int worldId) const;
+        int CalcWorldId(int levelId) const;
         
     private:
         std::vector<World> mWorlds;

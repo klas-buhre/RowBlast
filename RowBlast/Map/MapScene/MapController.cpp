@@ -14,6 +14,7 @@
 #include "NoLivesDialogController.hpp"
 #include "UserData.hpp"
 #include "LevelLoader.hpp"
+#include "Universe.hpp"
 
 using namespace RowBlast;
 
@@ -41,6 +42,7 @@ MapController::MapController(Pht::IEngine& engine,
     mEngine {engine},
     mUserData {userData},
     mLevelResources {levelResources},
+    mUniverse {universe},
     mScene {engine, commonResources, userData, universe},
     mAvatar {engine, mScene, commonResources},
     mAvatarAnimation {engine, mAvatar},
@@ -55,7 +57,7 @@ void MapController::Init() {
     mState = State::Map;
     mCameraXVelocity = 0.0f;
     
-    if (auto* currentPin {mScene.GetPin(mUserData.GetProgressManager().GetProgress())}) {
+    if (auto* currentPin {mScene.GetLevelPin(mUserData.GetProgressManager().GetProgress())}) {
         mAvatar.SetPosition(currentPin->GetPosition());
     } else {
         mAvatar.Hide();
@@ -100,8 +102,17 @@ MapController::Command MapController::UpdateMap() {
 
 void MapController::UpdateAvatarAnimation() {
     if (mAvatarAnimation.Update() == AvatarAnimation::State::Finished) {
-        if (mState == State::AvatarAnimation && mStartLevelDialogOnAnimationFinished) {
-            GoToLevelStartDialogState(mLevelToStart);
+        switch (mState) {
+            case State::AvatarAnimation:
+                if (mStartLevelDialogOnAnimationFinished) {
+                    GoToLevelStartDialogState(mLevelToStart);
+                }
+                if (mHideAvatarOnAnimationFinished) {
+                    mAvatar.Hide();
+                }
+                break;
+            default:
+                break;
         }
     }
 }
@@ -233,10 +244,13 @@ MapController::Command MapController::HandlePinClick(const MapPin& pin) {
                 mMapViewControllers.GetNoLivesDialogController().Init(true);
             }
             break;
-        case MapPlace::Kind::Portal:
-            mScene.SetWorldIndex(mapPlace.GetPortal().mDestinationWorldIndex);
+        case MapPlace::Kind::Portal: {
+            auto& portal {mapPlace.GetPortal()};
+            mScene.SetWorldId(portal.mDestinationWorldId);
+            mScene.SetClickedPortalNextLevelId(portal.mNextLevelId);
             command = Command {Command::StartMap};
             break;
+        }
     }
     
     return command;
@@ -306,15 +320,27 @@ void MapController::GoToAvatarAnimationState(int levelToStart) {
     
     auto nextLevel {mUserData.GetProgressManager().GetProgress()};
     auto* nextPin {mScene.GetPin(nextLevel)};
-    auto* currentPin {mScene.GetPin(nextLevel - 1)};
+    auto* currentPin {mScene.GetLevelPin(nextLevel - 1)};
     
     if (nextPin && currentPin) {
+        mAvatar.Show();
         mAvatar.SetPosition(currentPin->GetPosition());
         mAvatarAnimation.Start(nextPin->GetPosition());
+    }
+    
+    if (nextPin && nextPin->GetPlace().GetKind() == MapPlace::Kind::Portal) {
+        mHideAvatarOnAnimationFinished = true;
+        mStartLevelDialogOnAnimationFinished = false;
+    } else {
+        mHideAvatarOnAnimationFinished = false;
     }
 }
 
 void MapController::GoToLevelStartDialogState(int levelToStart) {
+    if (mScene.GetWorldId() != mUniverse.CalcWorldId(levelToStart)) {
+        return;
+    }
+
     mState = State::LevelStartDialog;
     mLevelToStart = levelToStart;
     mMapViewControllers.SetActiveController(MapViewControllers::LevelStartDialog);

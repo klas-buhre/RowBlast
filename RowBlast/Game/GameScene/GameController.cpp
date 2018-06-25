@@ -93,8 +93,8 @@ GameController::GameController(Pht::IEngine& engine,
         commonResources
     } {}
 
-void GameController::StartLevel(int levelIndex) {
-    mLevel = LevelLoader::Load(levelIndex, mLevelResources);
+void GameController::StartLevel(int levelId) {
+    mLevel = LevelLoader::Load(levelId, mLevelResources);
 
     mField.Init(*mLevel);
     mScrollController.Init(mLevel->GetObjective());
@@ -117,7 +117,7 @@ void GameController::StartLevel(int levelIndex) {
     mState = GameState::LevelIntro;
     mLevelIntroState = LevelIntroState::Overview;
     
-    mUserData.StartLevel(levelIndex);
+    mUserData.StartLevel(levelId);
 }
 
 GameController::Command GameController::Update() {

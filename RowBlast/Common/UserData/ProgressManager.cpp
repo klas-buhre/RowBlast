@@ -18,9 +18,7 @@ ProgressManager::ProgressManager() {
     if (!LoadState()) {
         mNumStars = {0};
     }
-    mNumStars = {2, 3, 1, 3, 2, 2, 2, 1, 1, 1, 1, 1, 3, 2, 2, 1, 2, 2, 1, 3, 2, 2, 1, 3, 1, 2, 3, 2, 1, 3, 1, 2, 3, 2, 1, 3, 2, 1, 2, 1, 0};
-    // mNumStars = {2, 3, 1, 3, 2, 2, 2, 1, 1, 1, 1, 1, 3, 2, 2, 1, 2, 2, 1, 1, 3, 2, 2, 1, 3, 0};
-    // mNumStars = {2, 0};
+    mNumStars = {2, 3, 1, 3, 2, 2, 2, 1, 1, 1, 1, 1, 3, 2, 2, 1, 2, 2, 1, 3, 2, 2, 1, 3, 1, 3, 2, 1, 3, 1, 2, 3, 2, 1, 3, 2, 1, 3, 1, 0};
 }
 
 int ProgressManager::CalculateNumStars(int movesUsed, const StarLimits& starLimits) {
@@ -35,24 +33,24 @@ int ProgressManager::CalculateNumStars(int movesUsed, const StarLimits& starLimi
     return 1;
 }
 
-void ProgressManager::StartLevel(int levelIndex) {
-    mCurrentLevel = levelIndex;
+void ProgressManager::StartLevel(int levelId) {
+    mCurrentLevel = levelId;
     mProgressedAtPreviousGameRound = false;
     SaveState();
 }
 
-void ProgressManager::CompleteLevel(int levelIndex, int numStars) {
-    assert(levelIndex > 0);
+void ProgressManager::CompleteLevel(int levelId, int numStars) {
+    assert(levelId > 0);
     assert(numStars > 0 && numStars <= 3);
     
     auto progress {GetProgress()};
-    if (levelIndex == progress) {
+    if (levelId == progress) {
         mNumStars[progress - 1] = numStars;
         mNumStars.push_back(0);
         mProgressedAtPreviousGameRound = true;
-    } else if (levelIndex < progress) {
-        if (numStars > mNumStars[levelIndex - 1]) {
-            mNumStars[levelIndex - 1] = numStars;
+    } else if (levelId < progress) {
+        if (numStars > mNumStars[levelId - 1]) {
+            mNumStars[levelId - 1] = numStars;
         }
     } else {
         assert(!"Completed wrong level.");
@@ -61,11 +59,11 @@ void ProgressManager::CompleteLevel(int levelIndex, int numStars) {
     SaveState();
 }
 
-int ProgressManager::GetNumStars(int levelIndex) {
-    assert(levelIndex > 0);
+int ProgressManager::GetNumStars(int levelId) {
+    assert(levelId > 0);
     
-    if (levelIndex <= GetProgress()) {
-        return mNumStars[levelIndex - 1];
+    if (levelId <= GetProgress()) {
+        return mNumStars[levelId - 1];
     }
     
     return 0;

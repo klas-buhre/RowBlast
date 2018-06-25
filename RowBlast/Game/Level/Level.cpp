@@ -2,7 +2,7 @@
 
 using namespace RowBlast;
 
-Level::Level(int index,
+Level::Level(int id,
              Objective objective,
              int numColumns,
              int numRows,
@@ -11,7 +11,7 @@ Level::Level(int index,
              const StarLimits& starLimits,
              const std::vector<const Piece*>& pieceTypes,
              const std::string& backgroundTextureFilename) :
-    mIndex {index},
+    mId {id},
     mObjective {objective},
     mNumColumns {numColumns},
     mNumRows {numRows},
@@ -21,9 +21,9 @@ Level::Level(int index,
     mPieceTypes {pieceTypes},
     mBackgroundTextureFilename {backgroundTextureFilename} {}
 
-LevelInfo::LevelInfo(int index,
+LevelInfo::LevelInfo(int id,
                      Level::Objective objective,
                      const std::vector<const Piece*>& pieceTypes) :
-    mIndex {index},
+    mId {id},
     mObjective {objective},
     mPieceTypes {pieceTypes} {}

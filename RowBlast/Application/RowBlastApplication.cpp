@@ -45,11 +45,9 @@ Backlog:
     -Credit FastNoise, MIT license: https://github.com/Auburns/FastNoise/
     -Credit Google for avatars? : http://www.iconarchive.com/show/noto-emoji-people-face-icons-by-google.1.html
 Ongoing tasks:
-    -Go from one world to another. Problems:
-        -Calculating world index from level index. Needed at startup when initing map world index
-         based on current level.
-        -How to set camera position after appearing on the other side of a portal. Should be set to
-         the position of the portal.
+    -Go from one world to another.
+        -Try a portal effect.
+
 
 
 Ideas:
@@ -395,6 +393,9 @@ RowBlastApplication::RowBlastApplication(Pht::IEngine& engine) :
     mFadeEffect.GetSceneObject().SetLayer(GlobalLayer::sceneSwitchFadeEffect);
     InsertFadeEffectInActiveScene();
     mFadeEffect.StartInMidFade();
+    
+    auto currentLevelId {mUserData.GetProgressManager().GetCurrentLevel()};
+    mMapController.GetScene().SetWorldId(mUniverse.CalcWorldId(currentLevelId));
 }
 
 void RowBlastApplication::OnUpdate() {

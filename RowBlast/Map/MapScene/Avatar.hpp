@@ -23,6 +23,7 @@ namespace RowBlast {
         void SetPosition(const Pht::Vec3& position);
         const Pht::Vec3& GetPosition() const;
         void Hide();
+        void Show();
         
     private:
         MapScene& mMapScene;

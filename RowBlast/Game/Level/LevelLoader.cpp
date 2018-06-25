@@ -217,9 +217,9 @@ namespace {
     }
 }
 
-std::unique_ptr<Level> LevelLoader::Load(int levelIndex, const LevelResources& levelResources) {
+std::unique_ptr<Level> LevelLoader::Load(int levelId, const LevelResources& levelResources) {
     rapidjson::Document document;
-    Pht::Json::ParseFile(document, "level" + std::to_string(levelIndex) + ".json");
+    Pht::Json::ParseFile(document, "level" + std::to_string(levelId) + ".json");
 
     auto speed {Pht::Json::ReadFloat(document, "speed")};
     auto moves {Pht::Json::ReadInt(document, "moves")};
@@ -252,7 +252,7 @@ std::unique_ptr<Level> LevelLoader::Load(int levelIndex, const LevelResources& l
     }
     
     auto level {
-        std::make_unique<Level>(levelIndex,
+        std::make_unique<Level>(levelId,
                                 objective,
                                 numColumns,
                                 numRows,
@@ -272,10 +272,10 @@ std::unique_ptr<Level> LevelLoader::Load(int levelIndex, const LevelResources& l
     return level;
 }
 
-std::unique_ptr<LevelInfo> LevelLoader::LoadInfo(int levelIndex,
+std::unique_ptr<LevelInfo> LevelLoader::LoadInfo(int levelId,
                                                  const LevelResources& levelResources) {
     rapidjson::Document document;
-    Pht::Json::ParseFile(document, "level" + std::to_string(levelIndex) + ".json");
+    Pht::Json::ParseFile(document, "level" + std::to_string(levelId) + ".json");
 
     auto levelPieces {ReadPieceTypes(document, levelResources.GetPieceTypes())};
     Level::Objective objective;
@@ -288,5 +288,5 @@ std::unique_ptr<LevelInfo> LevelLoader::LoadInfo(int levelIndex,
         assert(!"Unknown objective");
     }
     
-    return std::make_unique<LevelInfo>(levelIndex, objective, levelPieces);
+    return std::make_unique<LevelInfo>(levelId, objective, levelPieces);
 }

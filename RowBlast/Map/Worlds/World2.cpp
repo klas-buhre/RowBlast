@@ -4,15 +4,15 @@ using namespace RowBlast;
 
 namespace {
     const std::vector<MapPlace> places {
-        MapPlace {Portal {1, 41, {-24.0f, -3.0f, 9.5f}}},
-        MapPlace {MapLevel {41, {-20.0f, -3.3f, 9.5f}}},
-        MapPlace {MapLevel {42, {-16.0f, -3.6f, 8.5f}}},
-        MapPlace {MapLevel {43, {-12.0f, -4.0f, 8.5f}}},
-        MapPlace {MapLevel {44, {-10.0f, -4.7f, 10.0f}}},
-        MapPlace {MapLevel {45, {-6.2f, -5.4f, 10.0f}}},
-        MapPlace {MapLevel {46, {-3.2f, -4.5, 8.5f}}},
-        MapPlace {MapLevel {47, {-3.0f, -1.0f, 8.5f}}},
-        MapPlace {Portal {3, 48, {-5.5f, 1.0f, 9.5f}}}
+        MapPlace {Portal {1, 40, {-24.0f, -3.0f, 9.5f}}},
+        MapPlace {MapLevel {40, {-20.0f, -3.3f, 9.5f}}},
+        MapPlace {MapLevel {41, {-16.0f, -3.6f, 8.5f}}},
+        MapPlace {MapLevel {42, {-12.0f, -4.0f, 8.5f}}},
+        MapPlace {MapLevel {43, {-10.0f, -4.7f, 10.0f}}},
+        MapPlace {MapLevel {44, {-6.2f, -5.4f, 10.0f}}},
+        MapPlace {MapLevel {45, {-3.2f, -4.5, 8.5f}}},
+        MapPlace {MapLevel {46, {-3.0f, -1.0f, 8.5f}}},
+        MapPlace {Portal {3, 47, {-5.5f, 1.0f, 9.5f}}}
     };
     
     const std::vector<BlockPathVolume> blockPaths {

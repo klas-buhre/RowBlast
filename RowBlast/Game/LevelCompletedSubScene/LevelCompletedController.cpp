@@ -217,7 +217,7 @@ LevelCompletedDialogController::Result LevelCompletedController::UpdateLevelComp
                                                mLevel->GetStarLimits())
         };
         
-        mUserData.CompleteLevel(mLevel->GetIndex(), numStars);
+        mUserData.CompleteLevel(mLevel->GetId(), numStars);
     }
     
     return result;

@@ -16,9 +16,9 @@ namespace RowBlast {
         
         static int CalculateNumStars(int movesUsed, const StarLimits& starLimits);
         
-        void StartLevel(int levelIndex);
-        void CompleteLevel(int levelIndex, int numStars);
-        int GetNumStars(int levelIndex);
+        void StartLevel(int levelId);
+        void CompleteLevel(int levelId, int numStars);
+        int GetNumStars(int levelId);
         int GetProgress();
         
         int GetCurrentLevel() const {

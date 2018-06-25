@@ -51,7 +51,7 @@ MapScene::MapScene(Pht::IEngine& engine,
     mFont {"ethnocentric_rg_it.ttf", engine.GetRenderer().GetAdjustedNumPixels(46)} {}
 
 void MapScene::Init() {
-    auto& world {mUniverse.GetWorld(mWorldIndex)};
+    auto& world {mUniverse.GetWorld(mWorldId)};
     auto& sceneManager {mEngine.GetSceneManager()};
     auto scene {sceneManager.CreateScene(Pht::Hash::Fnv1a("mapScene"))};
     mScene = scene.get();
@@ -117,13 +117,18 @@ void MapScene::Init() {
                                                        20.0f);
     
     CreatePins(world);
-    SetCameraAtLevel(mUserData.GetProgressManager().GetCurrentLevel());
+    
+    if (mClickedPortalNextLevelId.HasValue()) {
+        SetCameraAtPortal(mClickedPortalNextLevelId.GetValue());
+    } else {
+        SetCameraAtLevel(mUserData.GetProgressManager().GetCurrentLevel());
+    }
     
     mAvatarContainer = &scene->CreateSceneObject();
     mAvatarContainer->SetLayer(static_cast<int>(Layer::Avatar));
     scene->GetRoot().AddChild(*mAvatarContainer);
     
-    if (auto* pin {GetPin(mUserData.GetProgressManager().GetProgress())}) {
+    if (auto* pin {GetLevelPin(mUserData.GetProgressManager().GetProgress())}) {
         auto& pinPosition {pin->GetPosition()};
         CreateNextLevelParticleEffect(mEngine, *scene, pinPosition, static_cast<int>(Layer::Map));
     }
@@ -142,6 +147,8 @@ void MapScene::Init() {
     
     scene->SetDistanceFunction(Pht::DistanceFunction::WorldSpaceNegativeZ);
     sceneManager.SetLoadedScene(std::move(scene));
+    
+    mClickedPortalNextLevelId = Pht::Optional<int> {};
 }
 
 void MapScene::CreatePins(const World& world) {
@@ -158,26 +165,26 @@ void MapScene::CreatePins(const World& world) {
 }
 
 void MapScene::CreatePin(Pht::SceneObject& pinsContainerObject, const MapPlace& place) {
-    auto level {0};
+    auto levelId {0};
     Pht::Vec3 position;
     
     switch (place.GetKind()) {
         case MapPlace::Kind::MapLevel: {
             auto& mapLevel {place.GetMapLevel()};
-            level = mapLevel.mLevelIndex;
+            levelId = mapLevel.mLevelId;
             position = mapLevel.mPosition;
             break;
         }
         case MapPlace::Kind::Portal: {
             auto& portal {place.GetPortal()};
-            level = portal.mLevelIndexEquivalent;
+            levelId = portal.mNextLevelId;
             position = portal.mPosition;
             break;
         }
     }
     
     auto& progressManager {mUserData.GetProgressManager()};
-    auto isClickable {level <= progressManager.GetProgress()};
+    auto isClickable {levelId <= progressManager.GetProgress()};
     
     if (mPreviousPin) {
         const auto& connectionMaterial {
@@ -217,8 +224,8 @@ void MapScene::CreatePin(Pht::SceneObject& pinsContainerObject, const MapPlace& 
                                  pinsContainerObject,
                                  *mStarRenderable,
                                  position,
-                                 level,
-                                 progressManager.GetNumStars(level),
+                                 levelId,
+                                 progressManager.GetNumStars(levelId),
                                  isClickable,
                                  place)
     };
@@ -260,18 +267,24 @@ void MapScene::SetCameraXPosition(float xPosition) {
     mCamera->SetTarget(target, up);
 }
 
-void MapScene::SetCameraAtLevel(int levelIndex) {
-    if (auto* pin {GetPin(levelIndex)}) {
+void MapScene::SetCameraAtLevel(int levelId) {
+    if (auto* pin {GetLevelPin(levelId)}) {
         SetCameraXPosition(pin->GetPosition().x);
     }
 }
 
-void MapScene::SetCameraBetweenLevels(int levelA, int levelB) {
-    auto* pinA {GetPin(levelA)};
-    auto* pinB {GetPin(levelB)};
+void MapScene::SetCameraBetweenLevels(int levelIdA, int levelIdB) {
+    auto* pinA {GetPin(levelIdA)};
+    auto* pinB {GetPin(levelIdB)};
     
     if (pinA && pinB) {
         SetCameraXPosition((pinA->GetPosition().x + pinB->GetPosition().x) / 2.0f);
+    }
+}
+
+void MapScene::SetCameraAtPortal(int portalNextLevelId) {
+     if (auto* pin {GetPortalPin(portalNextLevelId)}) {
+        SetCameraXPosition(pin->GetPosition().x);
     }
 }
 
@@ -279,10 +292,42 @@ float MapScene::GetCameraXPosition() const {
     return mCamera->GetSceneObject().GetTransform().GetPosition().x;
 }
 
-const MapPin* MapScene::GetPin(int levelIndex) const {
+const MapPin* MapScene::GetPin(int id) const {
     for (const auto& pin: mPins) {
-        if (pin->GetLevel() == levelIndex) {
+        if (pin->GetLevel() == id) {
             return pin.get();
+        }
+    }
+    
+    return nullptr;
+}
+
+const MapPin* MapScene::GetLevelPin(int levelId) const {
+    for (const auto& pin: mPins) {
+        switch (pin->GetPlace().GetKind()) {
+            case MapPlace::Kind::Portal:
+                break;
+            case MapPlace::Kind::MapLevel:
+                if (pin->GetPlace().GetMapLevel().mLevelId == levelId) {
+                    return pin.get();
+                }
+                break;
+        }
+    }
+    
+    return nullptr;
+}
+
+const MapPin* MapScene::GetPortalPin(int portalNextLevelId) const {
+    for (const auto& pin: mPins) {
+        switch (pin->GetPlace().GetKind()) {
+            case MapPlace::Kind::Portal:
+                if (pin->GetPlace().GetPortal().mNextLevelId == portalNextLevelId) {
+                    return pin.get();
+                }
+                break;
+            case MapPlace::Kind::MapLevel:
+                break;
         }
     }
     

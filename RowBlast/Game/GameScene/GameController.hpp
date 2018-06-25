@@ -52,7 +52,7 @@ namespace RowBlast {
                        UserData& userData,
                        Settings& settings);
     
-        void StartLevel(int levelIndex);
+        void StartLevel(int levelId);
         Command Update();
         
         const LevelResources& GetLevelResources() const {

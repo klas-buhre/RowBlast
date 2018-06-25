@@ -12,13 +12,13 @@
 
 namespace RowBlast {
     struct MapLevel {
-        int mLevelIndex;
+        int mLevelId;
         Pht::Vec3 mPosition;
     };
     
     struct Portal {
-        int mDestinationWorldIndex;
-        int mLevelIndexEquivalent;
+        int mDestinationWorldId;
+        int mNextLevelId;
         Pht::Vec3 mPosition;
     };
 

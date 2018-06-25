@@ -195,7 +195,7 @@ void LevelStartDialogView::CreateGlowEffects(Pht::SceneObject& parentObject, Pht
 }
 
 void LevelStartDialogView::Init(const LevelInfo& levelInfo) {
-    mCaption->GetText() = "LEVEL " + std::to_string(levelInfo.mIndex);
+    mCaption->GetText() = "LEVEL " + std::to_string(levelInfo.mId);
     
     mClearObjective->GetSceneObject().SetIsVisible(false);
     mBuildObjective->GetSceneObject().SetIsVisible(false);

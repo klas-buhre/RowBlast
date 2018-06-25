@@ -43,8 +43,7 @@ namespace {
         MapPlace {MapLevel {37, {2.0f, 2.0f, 10.0f}}},
         MapPlace {MapLevel {38, {4.0f, 4.0f, 10.0f}}},
         MapPlace {MapLevel {39, {8.0f, 4.0f, 10.0f}}},
-        MapPlace {MapLevel {40, {12.0f, 4.0f, 10.0f}}},
-        MapPlace {Portal {2, 41, {14.0f, 3.0f, 8.5f}}}
+        MapPlace {Portal {2, 40, {12.0f, 4.0f, 10.0f}}}
     };
     
     const std::vector<BlockPathVolume> blockPaths {

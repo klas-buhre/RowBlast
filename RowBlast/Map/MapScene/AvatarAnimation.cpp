@@ -9,7 +9,7 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto animationDuration {2.8f};
+    constexpr auto animationDuration {2.5f};
 }
 
 AvatarAnimation::AvatarAnimation(Pht::IEngine& engine, Avatar& avatar) :

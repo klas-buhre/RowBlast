@@ -6,6 +6,7 @@
 
 // Engine includes.
 #include "Font.hpp"
+#include "Optional.hpp"
 
 // Game includes.
 #include "Clouds.hpp"
@@ -39,9 +40,10 @@ namespace RowBlast {
         void Update();
         void SetCameraXPosition(float xPosition);
         float GetCameraXPosition() const;
-        void SetCameraAtLevel(int levelIndex);
-        void SetCameraBetweenLevels(int levelA, int levelB);
-        const MapPin* GetPin(int levelIndex) const;
+        void SetCameraAtLevel(int levelId);
+        void SetCameraBetweenLevels(int levelIdA, int levelIdB);
+        const MapPin* GetPin(int id) const;
+        const MapPin* GetLevelPin(int levelId) const;
         
         const std::vector<std::unique_ptr<MapPin>>& GetPins() const {
             return mPins;
@@ -57,14 +59,24 @@ namespace RowBlast {
             return *mUiViewsContainer;
         }
         
-        void SetWorldIndex(int worldIndex) {
-            mWorldIndex = worldIndex;
+        void SetWorldId(int worldId) {
+            mWorldId = worldId;
         }
         
+        void SetClickedPortalNextLevelId(int clickedPortalNextLevelId) {
+            mClickedPortalNextLevelId = clickedPortalNextLevelId;
+        }
+        
+        int GetWorldId() const {
+            return mWorldId;
+        }
+
     private:
         void CreatePins(const World& world);
         void CreatePin(Pht::SceneObject& pinContainerObject, const MapPlace& place);
         void UpdateUiLightAnimation();
+        void SetCameraAtPortal(int portalNextLevelId);
+        const MapPin* GetPortalPin(int portalNextLevelId) const;
         
         Pht::IEngine& mEngine;
         UserData& mUserData;
@@ -83,7 +95,8 @@ namespace RowBlast {
         std::unique_ptr<MapHud> mHud;
         Pht::SceneObject* mAvatarContainer {nullptr};
         Pht::SceneObject* mUiViewsContainer {nullptr};
-        int mWorldIndex {1};
+        int mWorldId {1};
+        Pht::Optional<int> mClickedPortalNextLevelId;
     };
 }
 

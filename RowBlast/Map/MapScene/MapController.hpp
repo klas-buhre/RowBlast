@@ -89,6 +89,7 @@ namespace RowBlast {
         Pht::IEngine& mEngine;
         UserData& mUserData;
         const LevelResources& mLevelResources;
+        const Universe& mUniverse;
         State mState {State::Map};
         MapScene mScene;
         Avatar mAvatar;
@@ -100,6 +101,7 @@ namespace RowBlast {
         bool mIsTouching {false};
         int mLevelToStart;
         bool mStartLevelDialogOnAnimationFinished {false};
+        bool mHideAvatarOnAnimationFinished {false};
     };
 }
 

@@ -17,7 +17,7 @@ namespace RowBlast {
             Build
         };
         
-        Level(int index,
+        Level(int id,
               Objective objective,
               int numColumns,
               int numRows,
@@ -35,8 +35,8 @@ namespace RowBlast {
             mBlueprintGrid = std::move(blueprintGrid);
         }
         
-        int GetIndex() const {
-            return mIndex;
+        int GetId() const {
+            return mId;
         }
         
         Objective GetObjective() const {
@@ -82,7 +82,7 @@ namespace RowBlast {
         static constexpr int maxNumPieceTypes {11};
 
     private:
-        int mIndex {0};
+        int mId {0};
         Objective mObjective;
         int mNumColumns {0};
         int mNumRows {0};
@@ -96,11 +96,9 @@ namespace RowBlast {
     };
     
     struct LevelInfo {
-        LevelInfo(int index,
-                  Level::Objective mObjective,
-                  const std::vector<const Piece*>& pieceTypes);
+        LevelInfo(int id, Level::Objective mObjective, const std::vector<const Piece*>& pieceTypes);
         
-        int mIndex {0};
+        int mId {0};
         Level::Objective mObjective;
         std::vector<const Piece*> mPieceTypes;
     };

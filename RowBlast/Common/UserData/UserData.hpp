@@ -8,8 +8,8 @@ namespace RowBlast {
     class UserData {
     public:
         void Update();
-        void StartLevel(int levelIndex);
-        void CompleteLevel(int levelIndex, int numStars);
+        void StartLevel(int levelId);
+        void CompleteLevel(int levelId, int numStars);
         
         const LifeManager& GetLifeManager() const {
             return mLifeManager;

@@ -61,3 +61,7 @@ const Pht::Vec3& Avatar::GetPosition() const {
 void Avatar::Hide() {
     mSceneObject->SetIsVisible(false);
 }
+
+void Avatar::Show() {
+    mSceneObject->SetIsVisible(true);
+}
