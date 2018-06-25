@@ -125,8 +125,9 @@ void ParticleEmitter::EmitParticle(Particle& particle) {
     particle.mTimeToLive = mParticleSettings.mTimeToLive +
                            (NormalizedRand() - 0.5f) * mParticleSettings.mTimeToLiveRandomPart;
     
-    if (mParticleSettings.mZAngularVelocity > 0.0f ||
+    if (mParticleSettings.mZAngularVelocity != 0.0f ||
         mParticleSettings.mZAngularVelocityRandomPart > 0.0f) {
+
         particle.mZAngle = NormalizedRand() * 360.0f;
         particle.mZAngularVelocity = mParticleSettings.mZAngularVelocity +
                                      (NormalizedRand() - 0.5f) * mParticleSettings.mZAngularVelocityRandomPart;

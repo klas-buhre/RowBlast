@@ -5,8 +5,6 @@
 // Engine includes.
 #include "IEngine.hpp"
 #include "Scene.hpp"
-#include "IRenderer.hpp"
-#include "MathUtils.hpp"
 #include "SceneObject.hpp"
 #include "ParticleEffect.hpp"
 #include "ParticleSystem.hpp"

@@ -45,8 +45,6 @@ Backlog:
     -Credit FastNoise, MIT license: https://github.com/Auburns/FastNoise/
     -Credit Google for avatars? : http://www.iconarchive.com/show/noto-emoji-people-face-icons-by-google.1.html
 Ongoing tasks:
-    -Go from one world to another.
-        -Try a portal effect.
 
 
 
@@ -109,6 +107,7 @@ Time Estimation in days:
         Done
     -Go from one world to another.
         Cost: 3
+        Done
     -Levels/Worlds.
         Cost: 10
     -Tutorial.

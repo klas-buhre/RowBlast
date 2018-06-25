@@ -70,32 +70,30 @@ MapPin::MapPin(Pht::IEngine& engine,
     
     mButton = std::make_unique<Pht::Button>(*mSceneObject, buttonSize, engine);
     
-    Pht::TextProperties textProperties {
-        font,
-        1.0f,
-        Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f},
-        Pht::TextShadow::Yes,
-        Pht::Vec2{0.1f, 0.1f},
-        Pht::Vec4{0.4f, 0.4f, 0.4f, 0.5f},
-        Pht::SnapToPixel::No
-    };
-    
-    auto isPortal {place.GetKind() == MapPlace::Kind::Portal};
-    auto textString {isPortal ? "..." : std::to_string(level)};
-    auto& text {scene.CreateText(textString, textProperties)};
-    auto adjustedTextOffset {textOffset};
-    
-    if (!isPortal) {
+    if (place.GetKind() == MapPlace::Kind::MapLevel) {
+        Pht::TextProperties textProperties {
+            font,
+            1.0f,
+            Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f},
+            Pht::TextShadow::Yes,
+            Pht::Vec2{0.1f, 0.1f},
+            Pht::Vec4{0.4f, 0.4f, 0.4f, 0.5f},
+            Pht::SnapToPixel::No
+        };
+        
+        auto& text {scene.CreateText(std::to_string(level), textProperties)};
+        auto adjustedTextOffset {textOffset};
+        
         if (mLevel > 19) {
             adjustedTextOffset.x -= 0.21f;
         } else if (mLevel > 9) {
             adjustedTextOffset.x -= 0.17f;
         }
-    }
 
-    auto& textSceneObject {text.GetSceneObject()};
-    textSceneObject.GetTransform().SetPosition(adjustedTextOffset);
-    mSceneObject->AddChild(textSceneObject);
+        auto& textSceneObject {text.GetSceneObject()};
+        textSceneObject.GetTransform().SetPosition(adjustedTextOffset);
+        mSceneObject->AddChild(textSceneObject);
+    }
 }
 
 void MapPin::SetIsSelected(bool isSelected) {

@@ -17,6 +17,7 @@
 #include "UserData.hpp"
 #include "Universe.hpp"
 #include "NextLevelParticleEffect.hpp"
+#include "PortalParticleEffect.hpp"
 #include "UiLayer.hpp"
 
 using namespace RowBlast;
@@ -101,22 +102,9 @@ void MapScene::Init() {
     mCamera = &scene->CreateCamera();
     scene->GetRoot().AddChild(mCamera->GetSceneObject());
     
-    mClouds = std::make_unique<Clouds>(mEngine,
-                                       *scene,
-                                       static_cast<int>(Layer::Map),
-                                       world.mCloudPaths,
-                                       world.mHazeLayers,
-                                       1.5f);
-
-    mFloatingBlocks = std::make_unique<FloatingBlocks>(mEngine,
-                                                       *scene,
-                                                       static_cast<int>(Layer::Map),
-                                                       world.mBlockPaths,
-                                                       mCommonResources,
-                                                       1.5f,
-                                                       20.0f);
-    
+    CreateCloudsAndBlocks(world);
     CreatePins(world);
+    CreateEffects();
     
     if (mClickedPortalNextLevelId.HasValue()) {
         SetCameraAtPortal(mClickedPortalNextLevelId.GetValue());
@@ -127,11 +115,6 @@ void MapScene::Init() {
     mAvatarContainer = &scene->CreateSceneObject();
     mAvatarContainer->SetLayer(static_cast<int>(Layer::Avatar));
     scene->GetRoot().AddChild(*mAvatarContainer);
-    
-    if (auto* pin {GetLevelPin(mUserData.GetProgressManager().GetProgress())}) {
-        auto& pinPosition {pin->GetPosition()};
-        CreateNextLevelParticleEffect(mEngine, *scene, pinPosition, static_cast<int>(Layer::Map));
-    }
 
     mHud = std::make_unique<MapHud>(mEngine,
                                     mUserData,
@@ -149,6 +132,23 @@ void MapScene::Init() {
     sceneManager.SetLoadedScene(std::move(scene));
     
     mClickedPortalNextLevelId = Pht::Optional<int> {};
+}
+
+void MapScene::CreateCloudsAndBlocks(const World& world) {
+    mClouds = std::make_unique<Clouds>(mEngine,
+                                       *mScene,
+                                       static_cast<int>(Layer::Map),
+                                       world.mCloudPaths,
+                                       world.mHazeLayers,
+                                       1.5f);
+
+    mFloatingBlocks = std::make_unique<FloatingBlocks>(mEngine,
+                                                       *mScene,
+                                                       static_cast<int>(Layer::Map),
+                                                       world.mBlockPaths,
+                                                       mCommonResources,
+                                                       1.5f,
+                                                       20.0f);
 }
 
 void MapScene::CreatePins(const World& world) {
@@ -232,6 +232,22 @@ void MapScene::CreatePin(Pht::SceneObject& pinsContainerObject, const MapPlace& 
     
     mPreviousPin = pin.get();
     mPins.push_back(std::move(pin));
+}
+
+void MapScene::CreateEffects() {
+    if (auto* pin {GetLevelPin(mUserData.GetProgressManager().GetProgress())}) {
+        auto& pinPosition {pin->GetPosition()};
+        CreateNextLevelParticleEffect(mEngine, *mScene, pinPosition, static_cast<int>(Layer::Map));
+    }
+    
+    for (const auto& pin: mPins) {
+        if (pin->GetPlace().GetKind() == MapPlace::Kind::Portal) {
+            CreatePortalParticleEffect(mEngine,
+                                       *mScene,
+                                       pin->GetPosition(),
+                                       static_cast<int>(Layer::Map));
+        }
+    }
 }
 
 void MapScene::Update() {
