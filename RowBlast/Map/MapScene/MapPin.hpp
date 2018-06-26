@@ -57,6 +57,9 @@ namespace RowBlast {
         }
 
     private:
+        void CreateStars(int numStars, Pht::RenderableObject& starRenderable, Pht::Scene& scene);
+        void CreateText(int level, const Pht::Font& font, Pht::Scene& scene);
+        
         const Pht::Material& mBlueMaterial;
         Pht::SceneObject* mSceneObject {nullptr};
         std::unique_ptr<Pht::Button> mButton;
