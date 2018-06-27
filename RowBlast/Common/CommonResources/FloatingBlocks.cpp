@@ -13,11 +13,11 @@
 using namespace RowBlast;
 
 namespace {
-    void CreateSmallBlock(const Pht::Vec3& position,
-                          float scale,
-                          Pht::RenderableObject& renderable,
-                          Pht::Scene& scene,
-                          Pht::SceneObject& parent) {
+    void CreateBlock(const Pht::Vec3& position,
+                     float scale,
+                     Pht::RenderableObject& renderable,
+                     Pht::Scene& scene,
+                     Pht::SceneObject& parent) {
         auto& sceneObject {scene.CreateSceneObject()};
         sceneObject.SetRenderable(&renderable);
         
@@ -96,34 +96,137 @@ void FloatingBlocks::InitBlocks(Pht::Scene& scene, float scale, float angularVel
         block.mVelocity = velocity;
         block.mAngularVelocity = blockAngularVelocity;
         
-        auto* renderable {mBlockRenderables[std::rand() % numRenderables].get()};
+        auto& renderable {*mBlockRenderables[std::rand() % numRenderables]};
         
-        if (volume.mIsLPiece) {
-            auto smallBlockSize {scale / 1.7f};
-            auto smallBlockScale {smallBlockSize / scale};
-            CreateSmallBlock({-smallBlockSize / 2.0f, smallBlockSize / 2.0f, 0.0f},
-                             smallBlockScale,
-                             *renderable,
-                             scene,
-                             *block.mSceneObject);
-            CreateSmallBlock({smallBlockSize / 2.0f, smallBlockSize / 2.0f, 0.0f},
-                             smallBlockScale,
-                             *renderable,
-                             scene,
-                             *block.mSceneObject);
-            CreateSmallBlock({smallBlockSize / 2.0f, -smallBlockSize / 2.0f, 0.0f},
-                             smallBlockScale,
-                             *renderable,
-                             scene,
-                             *block.mSceneObject);
-        } else {
-            block.mSceneObject->SetRenderable(renderable);
+        switch (volume.mPieceType) {
+            case FloatingPieceType::BigSingleBlock:
+                block.mSceneObject->SetRenderable(&renderable);
+                break;
+            case FloatingPieceType::SingleBlock: {
+                auto blockSize {scale / 1.7f};
+                auto blockScale {blockSize / scale};
+                CreateBlock({0.0f, 0.0f, 0.0f}, blockScale, renderable, scene, *block.mSceneObject);
+                break;
+            }
+            case FloatingPieceType::L:
+                CreateLPiece(block, scale, renderable, scene);
+                break;
+            case FloatingPieceType::I:
+                CreateIPiece(block, scale, renderable, scene);
+                break;
+            case FloatingPieceType::ShortI:
+                CreateShortIPiece(block, scale, renderable, scene);
+                break;
+            case FloatingPieceType::B:
+                CreateBPiece(block, scale, renderable, scene);
+                break;
         }
         
         auto& transform {block.mSceneObject->GetTransform()};
         transform.SetPosition(position);
         transform.SetRotation(rotation);
     }
+}
+
+void FloatingBlocks::CreateLPiece(FloatingBlock& block,
+                                  float scale,
+                                  Pht::RenderableObject& renderable,
+                                  Pht::Scene& scene) {
+    auto blockSize {scale / 1.7f};
+    auto blockScale {blockSize / scale};
+
+    CreateBlock({-blockSize / 2.0f, blockSize / 2.0f, 0.0f},
+                blockScale,
+                renderable,
+                scene,
+                *block.mSceneObject);
+    CreateBlock({blockSize / 2.0f, blockSize / 2.0f, 0.0f},
+                blockScale,
+                renderable,
+                scene,
+                *block.mSceneObject);
+    CreateBlock({blockSize / 2.0f, -blockSize / 2.0f, 0.0f},
+                blockScale,
+                renderable,
+                scene,
+                *block.mSceneObject);
+}
+
+void FloatingBlocks::CreateIPiece(FloatingBlock& block,
+                                  float scale,
+                                  Pht::RenderableObject& renderable,
+                                  Pht::Scene& scene) {
+    auto blockSize {scale / 1.7f};
+    auto blockScale {blockSize / scale};
+
+    CreateBlock({-blockSize, 0.0f, 0.0f},
+                blockScale,
+                renderable,
+                scene,
+                *block.mSceneObject);
+    CreateBlock({0.0f, 0.0f, 0.0f},
+                blockScale,
+                renderable,
+                scene,
+                *block.mSceneObject);
+    CreateBlock({blockSize, 0.0f, 0.0f},
+                blockScale,
+                renderable,
+                scene,
+                *block.mSceneObject);
+}
+
+void FloatingBlocks::CreateShortIPiece(FloatingBlock& block,
+                                       float scale,
+                                       Pht::RenderableObject& renderable,
+                                       Pht::Scene& scene) {
+    auto blockSize {scale / 1.7f};
+    auto blockScale {blockSize / scale};
+    
+    CreateBlock({-blockSize / 2.0f, 0.0f, 0.0f},
+                blockScale,
+                renderable,
+                scene,
+                *block.mSceneObject);
+    CreateBlock({blockSize / 2.0f, 0.0f, 0.0f},
+                blockScale,
+                renderable,
+                scene,
+                *block.mSceneObject);
+}
+
+void FloatingBlocks::CreateBPiece(FloatingBlock& block,
+                                  float scale,
+                                  Pht::RenderableObject& renderable,
+                                  Pht::Scene& scene) {
+    auto blockSize {scale / 1.7f};
+    auto blockScale {blockSize / scale};
+
+    CreateBlock({-blockSize / 2.0f, -blockSize, 0.0f},
+                blockScale,
+                renderable,
+                scene,
+                *block.mSceneObject);
+    CreateBlock({-blockSize / 2.0f, 0.0f, 0.0f},
+                blockScale,
+                renderable,
+                scene,
+                *block.mSceneObject);
+    CreateBlock({blockSize / 2.0f, -blockSize, 0.0f},
+                blockScale,
+                renderable,
+                scene,
+                *block.mSceneObject);
+    CreateBlock({blockSize / 2.0f, 0.0f, 0.0f},
+                blockScale,
+                renderable,
+                scene,
+                *block.mSceneObject);
+    CreateBlock({blockSize / 2.0f, blockSize, 0.0f},
+                blockScale,
+                renderable,
+                scene,
+                *block.mSceneObject);
 }
 
 void FloatingBlocks::Update() {

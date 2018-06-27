@@ -16,11 +16,20 @@ namespace Pht {
 
 namespace RowBlast {
     class CommonResources;
+    
+    enum class FloatingPieceType {
+        BigSingleBlock,
+        SingleBlock,
+        L,
+        I,
+        ShortI,
+        B
+    };
 
     struct BlockPathVolume {
         Pht::Vec3 mPosition;
-        Pht::Vec3 mSize;
-        bool mIsLPiece {false};
+        Pht::Vec3 mSize {0.0f, 0.0f, 0.0f};
+        FloatingPieceType mPieceType {FloatingPieceType::BigSingleBlock};
     };
     
     class FloatingBlocks {
@@ -36,15 +45,31 @@ namespace RowBlast {
         void Update();
         
     private:
-        void InitBlocks(Pht::Scene& scene, float scale, float angularVelocity);
-        
-        static constexpr int numRenderables {4};
-
         struct FloatingBlock {
             Pht::Vec3 mVelocity;
             Pht::Vec3 mAngularVelocity;
             Pht::SceneObject* mSceneObject;
         };
+
+        void InitBlocks(Pht::Scene& scene, float scale, float angularVelocity);
+        void CreateLPiece(FloatingBlock& block,
+                          float scale,
+                          Pht::RenderableObject& renderable,
+                          Pht::Scene& scene);
+        void CreateIPiece(FloatingBlock& block,
+                          float scale,
+                          Pht::RenderableObject& renderable,
+                          Pht::Scene& scene);
+        void CreateShortIPiece(FloatingBlock& block,
+                               float scale,
+                               Pht::RenderableObject& renderable,
+                               Pht::Scene& scene);
+        void CreateBPiece(FloatingBlock& block,
+                          float scale,
+                          Pht::RenderableObject& renderable,
+                          Pht::Scene& scene);
+    
+        static constexpr int numRenderables {4};
 
         Pht::IEngine& mEngine;
         std::vector<FloatingBlock> mBlocks;

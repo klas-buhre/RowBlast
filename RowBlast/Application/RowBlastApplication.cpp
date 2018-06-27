@@ -26,6 +26,7 @@ Backlog:
      convenient to go back to the state before the move and not the initial state.
   -GUI:
     -Maybe the level objective/start dialog should be available from the game menu.
+    -Menu window that displays 3rd party lib credits.
   -Rendering:
     -Maybe try the font in fontawesome.com for the bright dialogs.
     -A Metal rendering back end?
@@ -45,8 +46,9 @@ Backlog:
     -Credit FastNoise, MIT license: https://github.com/Auburns/FastNoise/
     -Credit Google for avatars? : http://www.iconarchive.com/show/noto-emoji-people-face-icons-by-google.1.html
 Ongoing tasks:
-
-
+    -Levels/Worlds.
+        -Maps.
+        -Levels.
 
 Ideas:
     -The pause button could lead to a widget that has an undo button, a boosters button and a game

@@ -22,6 +22,7 @@ namespace RowBlast {
         int mNumClouds {1};
         Pht::Optional<int> mNumCloudsPerCluster;
         Pht::Vec2 mClusterSize {40.0f, 30.0f};
+        Pht::Optional<float> mVelocity;
     };
     
     struct HazeLayer {

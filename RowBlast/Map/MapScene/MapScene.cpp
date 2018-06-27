@@ -147,7 +147,7 @@ void MapScene::CreateCloudsAndBlocks(const World& world) {
                                                        static_cast<int>(Layer::Map),
                                                        world.mBlockPaths,
                                                        mCommonResources,
-                                                       1.5f,
+                                                       2.0f,
                                                        20.0f);
 }
 

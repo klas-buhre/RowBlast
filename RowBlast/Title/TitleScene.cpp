@@ -114,7 +114,7 @@ namespace {
         BlockPathVolume {
             .mPosition = {-3.0f, -3.0f, -8.0f},
             .mSize = {0.0f, 0.0f, 0.0f},
-            .mIsLPiece = true
+            .mPieceType = FloatingPieceType::L
         },
         BlockPathVolume {
             .mPosition = {-8.0f, -13.0f, -5.0f},
@@ -123,12 +123,12 @@ namespace {
         BlockPathVolume {
             .mPosition = {-5.0f, 13.0f, -8.0f},
             .mSize = {0.0f, 0.0f, 0.0f},
-            .mIsLPiece = true
+            .mPieceType = FloatingPieceType::L
         },
         BlockPathVolume {
             .mPosition = {10.0f, 23.0f, -20.0f},
             .mSize = {0.0f, 0.0f, 0.0f},
-            .mIsLPiece = true
+            .mPieceType = FloatingPieceType::L
         },
         BlockPathVolume {
             .mPosition = {1.0f, -25.0f, -18.0f},

@@ -55,6 +55,18 @@ namespace {
         };
     }
     
+    Pht::Vec3 CalcCloudVelocity(const CloudPathVolume& volume, float velocity) {
+        if (volume.mSize == Pht::Vec3 {0.0f, 0.0f, 0.0f}) {
+            return Pht::Vec3 {0.0f, 0.0f, 0.0f};
+        }
+        
+        if (volume.mVelocity.HasValue()) {
+            return Pht::Vec3 {volume.mVelocity.GetValue(), 0.0f, 0.0f};
+        }
+        
+        return Pht::Vec3 {velocity, 0.0f, 0.0f};
+    }
+    
     float CalcCloudBrightness(const Pht::Vec3& cloudPosition,
                               const Pht::Vec3& clusterPosition,
                               const Pht::Vec2& clusterSize,
@@ -154,12 +166,7 @@ Clouds::Clouds(Pht::IEngine& engine,
             sceneObject.AddChild(cloudSceneObject);
             cloudSceneObject.GetTransform().SetPosition(cloudPosition);
             
-            Pht::Vec3 cloudVelocity {
-                volume.mSize == Pht::Vec3{0.0f, 0.0f, 0.0f} ? 0.0f : velocity,
-                0.0f,
-                0.0f
-            };
-            
+            Pht::Vec3 cloudVelocity {CalcCloudVelocity(volume, velocity)};
             Cloud cloud {cloudVelocity, cloudSceneObject, volume};
             mClouds.push_back(cloud);
         }
