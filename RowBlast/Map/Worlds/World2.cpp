@@ -4,61 +4,30 @@ using namespace RowBlast;
 
 namespace {
     const std::vector<MapPlace> places {
-        MapPlace {Portal {1, 40, {-24.0f, -3.0f, 9.5f}}},
-        MapPlace {MapLevel {40, {-20.0f, -3.3f, 9.5f}}},
-        MapPlace {MapLevel {41, {-16.0f, -3.6f, 8.5f}}},
-        MapPlace {MapLevel {42, {-12.0f, -4.0f, 8.5f}}},
-        MapPlace {MapLevel {43, {-10.0f, -4.7f, 10.0f}}},
-        MapPlace {MapLevel {44, {-6.2f, -5.4f, 10.0f}}},
-        MapPlace {MapLevel {45, {-3.2f, -4.5, 8.5f}}},
-        MapPlace {MapLevel {46, {-3.0f, -1.0f, 8.5f}}},
-        MapPlace {Portal {3, 47, {-5.5f, 1.0f, 9.5f}}}
+        MapPlace {Portal {1, 19, {-24.0f, 3.0f, 10.0f}}},
+        MapPlace {MapLevel {19, {-21.5f, 1.0f, 10.0f}}},
+        MapPlace {MapLevel {20, {-19.5f, -1.5f, 10.0f}}},
+        MapPlace {MapLevel {21, {-17.0f, -3.5f, 10.0f}}},
+        MapPlace {MapLevel {22, {-13.5f, -4.5f, 10.0f}}},
+        MapPlace {MapLevel {23, {-10.0f, -4.0f, 10.0f}}},
+        MapPlace {MapLevel {24, {-8.5f, -2.0f, 10.0f}}},
+        MapPlace {MapLevel {25, {-10.0f, 0.0f, 10.0f}}},
+        MapPlace {MapLevel {26, {-13.5f, 0.5f, 10.0f}}},
+        MapPlace {MapLevel {27, {-15.0f, 2.5f, 10.0f}}},
+        MapPlace {MapLevel {28, {-13.0f, 4.0f, 10.0f}}},
+        MapPlace {MapLevel {29, {-9.5f, 3.5f, 10.0f}}},
+        MapPlace {MapLevel {30, {-6.0f, 2.5f, 10.0f}}},
+        MapPlace {MapLevel {31, {-3.5f, 0.5f, 10.0f}}},
+        MapPlace {MapLevel {32, {-1.5f, -2.0f, 10.0f}}},
+        MapPlace {MapLevel {33, {1.5f, -3.5f, 10.0f}}},
+        MapPlace {MapLevel {34, {4.5f, -4.0f, 10.0f}}},
+        MapPlace {MapLevel {35, {8.0f, -3.5f, 10.0f}}},
+        MapPlace {MapLevel {36, {11.0f, -2.5f, 10.0f}}},
+        MapPlace {MapLevel {37, {14.0f, -1.0f, 10.0f}}},
+        MapPlace {MapLevel {38, {16.5f, 1.0f, 10.0f}}},
+        MapPlace {MapLevel {39, {19.5f, 1.5f, 10.0f}}},
+        MapPlace {Portal {3, 40, {23.0f, 1.5f, 10.0f}}}
     };
-
-/*
-    const std::vector<MapPlace> places {
-        MapPlace {MapLevel {1, {-24.0f, -3.0f, 9.5f}}},
-        MapPlace {MapLevel {2, {-20.0f, -3.3f, 9.5f}}},
-        MapPlace {MapLevel {3, {-16.0f, -3.6f, 8.5f}}},
-        MapPlace {MapLevel {4, {-12.0f, -4.0f, 8.5f}}},
-        MapPlace {MapLevel {5, {-10.0f, -4.7f, 10.0f}}},
-        MapPlace {MapLevel {6, {-6.2f, -5.4f, 10.0f}}},
-        MapPlace {MapLevel {7, {-3.2f, -4.5, 8.5f}}},
-        MapPlace {MapLevel {8, {-3.0f, -1.0f, 8.5f}}},
-        MapPlace {MapLevel {9, {-5.5f, 1.0f, 9.5f}}},
-        MapPlace {MapLevel {10, {-9.2f, 1.5f, 9.5f}}},
-        MapPlace {MapLevel {11, {-13.0f, 1.0f, 9.5f}}},
-        MapPlace {MapLevel {12, {-17.0f, 1.0f, 9.5f}}},
-        MapPlace {MapLevel {13, {-20.f, 0.0f, 9.5f}}},
-        MapPlace {MapLevel {14, {-22.5f, 2.0f, 9.5f}}},
-        MapPlace {MapLevel {15, {-21.0f, 5.0f, 9.5f}}},
-        MapPlace {MapLevel {16, {-17.5f, 4.5f, 9.5f}}},
-        MapPlace {MapLevel {17, {-13.5f, 4.5f, 9.5f}}},
-        MapPlace {MapLevel {18, {-10.0f, 5.0f, 9.5f}}},
-        MapPlace {MapLevel {19, {-6.5f, 5.0f, 9.5}}},
-        MapPlace {MapLevel {20, {-3.5f, 4.5f, 9.5f}}},
-        MapPlace {MapLevel {21, {-1.0f, 2.0f, 10.0f}}},
-        MapPlace {MapLevel {22, {1.0f, -1.0f, 10.0f}}},
-        MapPlace {MapLevel {23, {3.0f, -3.0f, 10.0f}}},
-        MapPlace {MapLevel {24, {7.0f, -3.5, 10.0f}}},
-        MapPlace {MapLevel {25, {11.0f, -3.5f, 10.0f}}},
-        MapPlace {MapLevel {26, {15.5f, -3.5f, 10.0f}}},
-        MapPlace {MapLevel {27, {19.5f, -3.5f, 10.0f}}},
-        MapPlace {MapLevel {28, {22.0f, -2.0f, 10.0f}}},
-        MapPlace {MapLevel {29, {23.5f, 1.0f, 10.0f}}},
-        MapPlace {MapLevel {30, {22.0f, 4.0f, 10.0f}}},
-        MapPlace {MapLevel {31, {19.5f, 5.0f, 10.0f}}},
-        MapPlace {MapLevel {32, {17.0f, 4.0f, 10.0f}}},
-        MapPlace {MapLevel {33, {15.5f, 1.0f, 10.0f}}},
-        MapPlace {MapLevel {34, {12.0f, 0.0f, 10.0f}}},
-        MapPlace {MapLevel {35, {8.0f, 0.0f, 10.0f}}},
-        MapPlace {MapLevel {36, {4.0f, 0.0f, 10.0f}}},
-        MapPlace {MapLevel {37, {2.0f, 2.0f, 10.0f}}},
-        MapPlace {MapLevel {38, {4.0f, 4.0f, 10.0f}}},
-        MapPlace {MapLevel {39, {8.0f, 4.0f, 10.0f}}},
-        MapPlace {Portal {2, 40, {12.0f, 4.0f, 10.0f}}}
-    };
-*/
 
     const std::vector<BlockPathVolume> blockPaths {
         BlockPathVolume {.mPosition = {-22.0f, 0.5f, -15.0f}, .mSize = {0.0f, 0.0f, 0.0f}, .mPieceType = FloatingPieceType::ShortI},
@@ -74,6 +43,20 @@ namespace {
     };
     
     const std::vector<CloudPathVolume> cloudPaths {
+        CloudPathVolume {
+            .mPosition = {0.0f, -4.55f, 14.9f},
+            .mSize = {70.0f, 0.0f, 0.0f},
+            .mCloudSize = {7.0f, 7.0f},
+            .mNumClouds = 2,
+            .mVelocity = 0.75f
+        },
+        CloudPathVolume {
+            .mPosition = {0.0f, 4.8f, 14.9f},
+            .mSize = {70.0f, 0.0f, 0.0f},
+            .mCloudSize = {10.0f, 10.0f},
+            .mNumClouds = 2,
+            .mVelocity = 0.75f
+        },
         CloudPathVolume {
             .mPosition = {0.0f, 0.0f, -10.0f},
             .mSize = {120.0f, 0.0f, 0.0f},
@@ -136,6 +119,28 @@ namespace {
             .mNumCloudsPerCluster = 5
         }
     };
+#if 0
+    const std::vector<HazeLayer> hazeLayers {
+        HazeLayer {
+            .mPosition = {0.0f, 0.0f, -700.0f},
+            .mSize = {1500.0f, 1050.0f},
+            .mUpperColor = {0.4f, 0.2f, 0.4f, 1.0f},
+            .mLowerColor = {1.0f, 0.4f, 0.5f, 1.0f}
+        },
+        HazeLayer {
+            .mPosition = {0.0f, 0.0f, -350.0f},
+            .mSize = {500.0f, 500.0f},
+            .mUpperColor = {0.4f, 0.2f, 0.4f, 1.0f},
+            .mLowerColor = {1.0f, 0.4f, 0.5f, 1.0f}
+        },
+        HazeLayer {
+            .mPosition = {0.0f, 0.0f, -250.0f},
+            .mSize = {380.0f, 380.0f},
+            .mUpperColor = {0.4f, 0.2f, 0.4f, 1.0f},
+            .mLowerColor = {1.0f, 0.4f, 0.5f, 1.0f}
+        }
+    };
+#endif
 
     const std::vector<HazeLayer> hazeLayers {
         HazeLayer {
