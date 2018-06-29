@@ -3,6 +3,8 @@
 using namespace RowBlast;
 
 namespace {
+    constexpr auto lightIntensity {0.9f};
+
     const std::vector<MapPlace> places {
         MapPlace {Portal {1, 19, {-24.0f, 3.0f, 10.0f}}},
         MapPlace {MapLevel {19, {-21.5f, 1.0f, 10.0f}}},
@@ -30,18 +32,32 @@ namespace {
     };
 
     const std::vector<BlockPathVolume> blockPaths {
-        BlockPathVolume {.mPosition = {-22.0f, 0.5f, -15.0f}, .mSize = {0.0f, 0.0f, 0.0f}, .mPieceType = FloatingPieceType::ShortI},
-        BlockPathVolume {.mPosition = {-22.0f, -5.0f, 12.0f}, .mSize = {0.0f, 0.0f, 0.0f}},
-        BlockPathVolume {.mPosition = {-16.0f, -5.0f, 12.0f}, .mSize = {0.0f, 0.0f, 0.0f}},
-        BlockPathVolume {.mPosition = {-7.0f, -5.0f, 8.0f}, .mSize = {0.0f, 0.0f, 0.0f}, .mPieceType = FloatingPieceType::L},
-        BlockPathVolume {.mPosition = {-1.0f, 5.0f, 8.0f}, .mSize = {0.0f, 0.0f, 0.0f}},
-        BlockPathVolume {.mPosition = {0.0f, -4.0f, 13.0f}, .mSize = {0.0f, 0.0f, 0.0f}, .mPieceType = FloatingPieceType::L},
-        BlockPathVolume {.mPosition = {5.0f, -5.0f, 11.0f}, .mSize = {0.0f, 0.0f, 0.0f}},
-        BlockPathVolume {.mPosition = {-9.0f, 0.5f, 5.0f}, .mSize = {0.0f, 0.0f, 0.0f}},
-        BlockPathVolume {.mPosition = {-13.0f, 5.0f, -15.0f}, .mSize = {0.0f, 0.0f, 0.0f}},
-        BlockPathVolume {.mPosition = {3.0f, 0.5f, 8.0f}, .mSize = {0.0f, 0.0f, 0.0f}}
+        BlockPathVolume {{-25.0f, -1.0f, 5.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::ShortI},
+        BlockPathVolume {{-22.0f, -3.0f, 12.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::L},
+        BlockPathVolume {{-19.0f, 3.0f, 12.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::I},
+        BlockPathVolume {{-17.0f, 3.0f, 0.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::SingleBlock},
+        BlockPathVolume {{-16.5f, -9.0f, 5.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::ShortI},
+        BlockPathVolume {{-16.0f, 0.0f, 10.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::SingleBlock},
+        BlockPathVolume {{-12.0f, -2.0f, 8.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::ShortI},
+        BlockPathVolume {{-10.0f, -4.0f, 13.7f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::SingleBlock},
+        BlockPathVolume {{-7.0f, 3.0f, 0.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::B},
+        BlockPathVolume {{-6.0f, -3.0f, 12.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::L},
+        BlockPathVolume {{-3.0f, 4.0f, 12.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::ShortI},
+        BlockPathVolume {{0.0f, -4.0f, 13.7f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::SingleBlock},
+        BlockPathVolume {{0.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::SingleBlock},
+        BlockPathVolume {{1.5f, 3.0f, 12.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::I},
+        BlockPathVolume {{4.0f, -5.5f, 12.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::L},
+        BlockPathVolume {{6.0f, 0.0f, 8.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::L},
+        BlockPathVolume {{8.0f, 4.5f, 12.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::B},
+        BlockPathVolume {{9.0f, -5.0f, 12.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::ShortI},
+        BlockPathVolume {{11.0f, 2.0f, 5.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::SingleBlock},
+        BlockPathVolume {{14.0f, -4.0f, 12.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::L},
+        BlockPathVolume {{16.5f, -4.0f, 0.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::ShortI},
+        BlockPathVolume {{16.5f, 7.0f, 4.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::L},
+        BlockPathVolume {{19.0f, -3.0f, 12.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::I},
+        BlockPathVolume {{23.0f, -3.0f, 12.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::ShortI},
     };
-    
+
     const std::vector<CloudPathVolume> cloudPaths {
         CloudPathVolume {
             .mPosition = {0.0f, -4.55f, 14.9f},
@@ -119,7 +135,7 @@ namespace {
             .mNumCloudsPerCluster = 5
         }
     };
-#if 0
+
     const std::vector<HazeLayer> hazeLayers {
         HazeLayer {
             .mPosition = {0.0f, 0.0f, -700.0f},
@@ -140,8 +156,8 @@ namespace {
             .mLowerColor = {1.0f, 0.4f, 0.5f, 1.0f}
         }
     };
-#endif
 
+#if 0
     const std::vector<HazeLayer> hazeLayers {
         HazeLayer {
             .mPosition = {0.0f, 0.0f, -700.0f},
@@ -162,8 +178,9 @@ namespace {
             .mLowerColor = {0.55f, 0.89f, 1.0f, 0.35f}
         }
     };
+#endif
 }
 
 World RowBlast::GetWorld2() {
-    return World {places, blockPaths, cloudPaths, hazeLayers};
+    return World {places, blockPaths, cloudPaths, hazeLayers, lightIntensity};
 }

@@ -3,6 +3,8 @@
 using namespace RowBlast;
 
 namespace {
+    constexpr auto lightIntensity {1.0f};
+
     const std::vector<MapPlace> places {
         MapPlace {MapLevel {1, {-24.0f, -3.0f, 10.0f}}},
         MapPlace {MapLevel {2, {-21.5f, -1.2f, 9.0f}}},
@@ -157,5 +159,5 @@ namespace {
 }
 
 World RowBlast::GetWorld1() {
-    return World {places, blockPaths, cloudPaths, hazeLayers};
+    return World {places, blockPaths, cloudPaths, hazeLayers, lightIntensity};
 }

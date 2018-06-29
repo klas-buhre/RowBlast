@@ -28,6 +28,7 @@ Backlog:
     -Maybe the level objective/start dialog should be available from the game menu.
     -Menu window that displays 3rd party lib credits.
   -Rendering:
+    -Try a rounded border for the field.
     -Maybe try the font in fontawesome.com for the bright dialogs.
     -A Metal rendering back end?
   -Tutorial:
@@ -45,17 +46,18 @@ Backlog:
     -Credit the icon creator: <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
     -Credit FastNoise, MIT license: https://github.com/Auburns/FastNoise/
     -Credit Google for avatars? : http://www.iconarchive.com/show/noto-emoji-people-face-icons-by-google.1.html
+
 Ongoing tasks:
-    -Levels/Worlds.
-        -Maps.
-        -Levels.
+    -Worlds.
+
+
 
 Ideas:
     -The pause button could lead to a widget that has an undo button, a boosters button and a game
      menu button.
     -A booster could destroy all welds in the visible part of the field.
 
-Time Estimation in days:
+Ordered Backlog:
     -Convert GameScene into a Pht::Scene.
         Cost: 10
         Done
@@ -110,7 +112,9 @@ Time Estimation in days:
     -Go from one world to another.
         Cost: 3
         Done
-    -Levels/Worlds.
+    -Worlds.
+        Cost: 4
+    -Levels.
         Cost: 10
     -Tutorial.
         Cost: 10
@@ -131,7 +135,7 @@ Time Estimation in days:
     -Back end.
         Cost: ?
 
-        Total: 179
+        Total cost: 183
 
 
 Comomon piece type sets:

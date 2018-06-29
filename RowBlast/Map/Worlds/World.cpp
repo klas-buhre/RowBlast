@@ -24,12 +24,3 @@ const Portal& MapPlace::GetPortal() const {
     assert(mKind == Kind::Portal);
     return mPortal;
 }
-
-World::World(const std::vector<MapPlace>& mapPlaces,
-             const std::vector<BlockPathVolume>& blockPaths,
-             const std::vector<CloudPathVolume>& cloudPaths,
-             const std::vector<HazeLayer>& hazeLayers) :
-    mPlaces {mapPlaces},
-    mBlockPaths {blockPaths},
-    mCloudPaths {cloudPaths},
-    mHazeLayers {hazeLayers} {}

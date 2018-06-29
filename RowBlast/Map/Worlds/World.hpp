@@ -46,17 +46,12 @@ namespace RowBlast {
         };
     };
 
-    class World {
-    public:
-        World(const std::vector<MapPlace>& mapPlaces,
-              const std::vector<BlockPathVolume>& blockPaths,
-              const std::vector<CloudPathVolume>& cloudPaths,
-              const std::vector<HazeLayer>& hazeLayers);
-        
+    struct World {
         const std::vector<MapPlace>& mPlaces;
         const std::vector<BlockPathVolume>& mBlockPaths;
         const std::vector<CloudPathVolume>& mCloudPaths;
         const std::vector<HazeLayer>& mHazeLayers;
+        float mLightIntensity {1.0f};
     };
 }
 
