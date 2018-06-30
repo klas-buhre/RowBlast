@@ -9,6 +9,7 @@
 #include "Scene.hpp"
 #include "SceneObject.hpp"
 #include "QuadMesh.hpp"
+#include "Material.hpp"
 
 using namespace RowBlast;
 
@@ -105,7 +106,8 @@ Clouds::Clouds(Pht::IEngine& engine,
                int layerIndex,
                const std::vector<CloudPathVolume>& volumes,
                const std::vector<HazeLayer>& hazeLayers,
-               float velocity) :
+               float velocity,
+               const Pht::Color& color) :
     mEngine {engine},
     mPathVolumes {volumes} {
     
@@ -159,6 +161,7 @@ Clouds::Clouds(Pht::IEngine& engine,
             
             auto& textureFilename {textureFilenames[std::rand() % textureFilenames.size()]};
             Pht::Material cloudMaterial {textureFilename, cloudBrightness, 0.0f, 0.0f, 0.0f};
+            cloudMaterial.SetAmbient(color * cloudBrightness);
             cloudMaterial.SetBlend(Pht::Blend::Yes);
 
             auto& cloudSceneObject = scene.CreateSceneObject(Pht::QuadMesh {cloudSize.x, cloudSize.y},

@@ -156,8 +156,10 @@ namespace {
             .mLowerColor = {0.55f, 0.89f, 1.0f, 0.35f}
         }
     };
+    
+    const Pht::Color cloudColor {1.0f, 1.0f, 1.0f};
 }
 
 World RowBlast::GetWorld1() {
-    return World {places, blockPaths, cloudPaths, hazeLayers, lightIntensity};
+    return World {places, blockPaths, cloudPaths, hazeLayers, lightIntensity, cloudColor};
 }

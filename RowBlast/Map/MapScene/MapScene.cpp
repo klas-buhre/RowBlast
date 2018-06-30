@@ -142,7 +142,8 @@ void MapScene::CreateCloudsAndBlocks(const World& world) {
                                        static_cast<int>(Layer::Map),
                                        world.mCloudPaths,
                                        world.mHazeLayers,
-                                       1.5f);
+                                       1.5f,
+                                       world.mCloudColor);
 
     mFloatingBlocks = std::make_unique<FloatingBlocks>(mEngine,
                                                        *mScene,

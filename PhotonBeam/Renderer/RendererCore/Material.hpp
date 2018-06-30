@@ -12,6 +12,10 @@ namespace Pht {
         Color operator+(const Color& other) const {
             return Color {mRed + other.mRed, mGreen + other.mGreen, mBlue + other.mBlue};
         }
+        
+        Color operator*(float brightness) const {
+            return Color {mRed * brightness, mGreen * brightness, mBlue * brightness};
+        }
     };
     
     enum class ShaderType {

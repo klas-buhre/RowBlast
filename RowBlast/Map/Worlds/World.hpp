@@ -5,6 +5,7 @@
 
 // Engine includes.
 #include "Vector.hpp"
+#include "Material.hpp"
 
 // Game includes.
 #include "FloatingBlocks.hpp"
@@ -52,6 +53,7 @@ namespace RowBlast {
         const std::vector<CloudPathVolume>& mCloudPaths;
         const std::vector<HazeLayer>& mHazeLayers;
         float mLightIntensity {1.0f};
+        Pht::Color mCloudColor;
     };
 }
 

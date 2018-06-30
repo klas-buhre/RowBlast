@@ -11,6 +11,7 @@ namespace Pht {
     class IEngine;
     class Scene;
     class SceneObject;
+    class Color;
 }
 
 namespace RowBlast {
@@ -39,7 +40,8 @@ namespace RowBlast {
                int layerIndex,
                const std::vector<CloudPathVolume>& volumes,
                const std::vector<HazeLayer>& hazeLayers,
-               float velocity);
+               float velocity,
+               const Pht::Color& cloudColor);
         
         void Update();
         

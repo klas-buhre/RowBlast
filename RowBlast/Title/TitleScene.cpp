@@ -89,6 +89,8 @@ namespace {
         }
     };
     
+    const Pht::Color cloudColor {1.0f, 1.0f, 1.0f};
+    
     const std::vector<HazeLayer> hazeLayers {
         HazeLayer {
             .mPosition = {0.0f, 0.0f, -700.0f},
@@ -180,7 +182,8 @@ TitleScene::TitleScene(Pht::IEngine& engine, const CommonResources& commonResour
                                        static_cast<int>(Layer::Background),
                                        cloudPaths,
                                        hazeLayers,
-                                       2.1f);
+                                       2.1f,
+                                       cloudColor);
 
     mFloatingBlocks = std::make_unique<FloatingBlocks>(engine,
                                                        *scene,
