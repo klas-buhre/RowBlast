@@ -3,7 +3,7 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto lightIntensity {0.9f};
+    constexpr auto lightIntensity {0.895f};
 
     const std::vector<MapPlace> places {
         MapPlace {Portal {1, 19, {-24.0f, 3.0f, 10.0f}}},
@@ -138,7 +138,7 @@ namespace {
 
     const Pht::Vec4 upperColor {0.3f, 0.22f, 0.79f, 1.0f};
     const Pht::Vec4 lowerColor {1.0f, 0.6f, 0.6f, 1.0f};
-
+    
     const std::vector<HazeLayer> hazeLayers {
         HazeLayer {
             .mPosition = {0.0f, 0.0f, -700.0f},

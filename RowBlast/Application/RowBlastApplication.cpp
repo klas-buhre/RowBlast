@@ -48,7 +48,7 @@ Backlog:
     -Credit Google for avatars? : http://www.iconarchive.com/show/noto-emoji-people-face-icons-by-google.1.html
 
 Ongoing tasks:
-    -Worlds.
+    -Render level background images for the second world.
 
 
 
@@ -114,6 +114,7 @@ Ordered Backlog:
         Done
     -Worlds.
         Cost: 4
+        Done
     -Levels.
         Cost: 10
     -Tutorial.
