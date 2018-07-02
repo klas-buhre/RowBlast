@@ -28,7 +28,6 @@ Backlog:
     -Maybe the level objective/start dialog should be available from the game menu.
     -Menu window that displays 3rd party lib credits.
   -Rendering:
-    -Try a rounded border for the field.
     -Maybe try the font in fontawesome.com for the bright dialogs.
     -A Metal rendering back end?
   -Tutorial:
@@ -48,8 +47,7 @@ Backlog:
     -Credit Google for avatars? : http://www.iconarchive.com/show/noto-emoji-people-face-icons-by-google.1.html
 
 Ongoing tasks:
-    -Render level background images for the second world.
-
+    -Try a rounded border for the field.
 
 
 Ideas:

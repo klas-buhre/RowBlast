@@ -10,6 +10,7 @@ namespace Pht {
 
 namespace RowBlast {
     class Avatar;
+    class MapScene;
     
     class AvatarAnimation {
     public:
@@ -19,16 +20,18 @@ namespace RowBlast {
             Inactive
         };
 
-        AvatarAnimation(Pht::IEngine& engine, Avatar& avatar);
+        AvatarAnimation(Pht::IEngine& engine, MapScene& scene, Avatar& avatar);
         
         void Init();
         void Start(const Pht::Vec3& destinationPosition);
         State Update();
+        bool IsActive() const;
         
     private:
         void UpdateInActiveState();
         
         Pht::IEngine& mEngine;
+        MapScene& mScene;
         Avatar& mAvatar;
         State mState {State::Inactive};
         float mElapsedTime {0.0f};

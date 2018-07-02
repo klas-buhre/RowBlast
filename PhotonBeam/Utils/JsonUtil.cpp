@@ -43,6 +43,15 @@ std::string Json::ReadString(const rapidjson::Value& object, const std::string& 
     return value.GetString();
 }
 
+bool Json::ReadBool(const rapidjson::Value& object, const std::string& name) {
+    assert(object.HasMember(name.c_str()));
+    
+    const auto& value {object[name.c_str()]};
+    assert(value.IsBool());
+    
+    return value.GetBool();
+}
+
 int Json::ReadInt(const rapidjson::Value& object, const std::string& name) {
     assert(object.HasMember(name.c_str()));
     

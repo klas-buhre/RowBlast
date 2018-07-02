@@ -230,6 +230,7 @@ std::unique_ptr<Level> LevelLoader::Load(int levelId, const LevelResources& leve
     };
     
     auto backgroundTextureFilename {Pht::Json::ReadString(document, "background")};
+    auto isDark {Pht::Json::ReadBool(document, "dark")};
     auto levelPieces {ReadPieceTypes(document, levelResources.GetPieceTypes())};    
     auto clearGrid {ReadClearGrid(document)};
     auto blueprintGrid {ReadBlueprintGrid(document)};
@@ -260,7 +261,8 @@ std::unique_ptr<Level> LevelLoader::Load(int levelId, const LevelResources& leve
                                 moves,
                                 starLimits,
                                 levelPieces,
-                                backgroundTextureFilename)
+                                backgroundTextureFilename,
+                                isDark)
     };
     
     if (clearGrid) {

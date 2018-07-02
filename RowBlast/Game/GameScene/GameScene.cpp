@@ -25,6 +25,7 @@ namespace {
     constexpr auto lightAnimationDuration {5.0f};
     const Pht::Vec3 lightDirectionA {0.57f, 1.0f, 0.6f};
     const Pht::Vec3 lightDirectionB {1.0f, 1.0f, 0.74f};
+    constexpr auto darkLevelLightIntensity {0.94f};
 
 #if 0
     const std::vector<BlockPathVolume> floatingBlockPaths {
@@ -112,7 +113,7 @@ void GameScene::Init(const Level& level,
     InitFieldDimensions(level);
     
     CreateBackground(level);
-    CreateBackgroundLayerLight();
+    CreateBackgroundLayerLight(level);
     CreateFloatingCubes();
     CreateLevelCompletedEffectsContainer();
     CreateFieldQuad();
@@ -197,18 +198,24 @@ void GameScene::CreateLightAndCamera() {
 
 void GameScene::CreateBackground(const Level& level) {
     Pht::Material backgroundMaterial {level.GetBackgroundTextureFilename()};
+
     auto& background {mScene->CreateSceneObject(Pht::QuadMesh {300.0f, 300.0f}, backgroundMaterial)};
     background.GetTransform().SetPosition({0.0f, 0.0f, -115.0f});
     background.SetLayer(static_cast<int>(Layer::Background));
     mScene->GetRoot().AddChild(background);
 }
 
-void GameScene::CreateBackgroundLayerLight() {
+void GameScene::CreateBackgroundLayerLight(const Level& level) {
     auto& lightSceneObject {mScene->CreateSceneObject()};
     lightSceneObject.SetIsVisible(false);
     auto lightComponent {std::make_unique<Pht::LightComponent>(lightSceneObject)};
     lightComponent->SetDirection(lightDirectionB);
     
+    if (level.IsDark()) {
+        lightComponent->SetAmbientIntensity(darkLevelLightIntensity);
+        lightComponent->SetDirectionalIntensity(darkLevelLightIntensity);
+    }
+
     auto* backgroundRenderPass {mScene->GetRenderPass(static_cast<int>(Layer::Background))};
     assert(backgroundRenderPass);
     backgroundRenderPass->SetLight(lightComponent.get());

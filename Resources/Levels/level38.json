@@ -3,7 +3,8 @@
     "moves": 15,
     "twoStars": 15,
     "threeStars": 12,
-    "background": "sky2.jpg",
+    "background": "sky8.jpg",
+    "dark": true,
     "pieces": [
         "LongI",
         "I",

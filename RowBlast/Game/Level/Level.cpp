@@ -10,7 +10,8 @@ Level::Level(int id,
              int numMoves,
              const StarLimits& starLimits,
              const std::vector<const Piece*>& pieceTypes,
-             const std::string& backgroundTextureFilename) :
+             const std::string& backgroundTextureFilename,
+             bool isDark) :
     mId {id},
     mObjective {objective},
     mNumColumns {numColumns},
@@ -19,7 +20,8 @@ Level::Level(int id,
     mNumMoves {numMoves},
     mStarLimits {starLimits},
     mPieceTypes {pieceTypes},
-    mBackgroundTextureFilename {backgroundTextureFilename} {}
+    mBackgroundTextureFilename {backgroundTextureFilename},
+    mIsDark {isDark} {}
 
 LevelInfo::LevelInfo(int id,
                      Level::Objective objective,

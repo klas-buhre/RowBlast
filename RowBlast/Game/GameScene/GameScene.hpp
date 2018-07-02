@@ -199,7 +199,7 @@ namespace RowBlast {
         void CreateRenderPasses();
         void CreateLightAndCamera();
         void CreateBackground(const Level& level);
-        void CreateBackgroundLayerLight();
+        void CreateBackgroundLayerLight(const Level& level);
         void CreateFloatingCubes();
         void CreateLevelCompletedEffectsContainer();
         void InitFieldDimensions(const Level& level);

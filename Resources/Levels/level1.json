@@ -4,6 +4,7 @@
     "twoStars": 4,
     "threeStars": 3,
     "background": "sky1.jpg",
+    "dark": false,
     "pieces": [
         "LongI",
         "I",

@@ -45,7 +45,7 @@ MapController::MapController(Pht::IEngine& engine,
     mUniverse {universe},
     mScene {engine, commonResources, userData, universe},
     mAvatar {engine, mScene, commonResources},
-    mAvatarAnimation {engine, mAvatar},
+    mAvatarAnimation {engine, mScene, mAvatar},
     mMapViewControllers {engine, mScene, commonResources, userData, settings, pieceResources} {}
 
 void MapController::Init() {
@@ -226,7 +226,10 @@ MapController::Command MapController::HandleTouch(const Pht::TouchEvent& touch) 
         }
     }
     
-    Pan(touch);
+    if (!mAvatarAnimation.IsActive()) {
+        Pan(touch);
+    }
+
     return command;
 }
 

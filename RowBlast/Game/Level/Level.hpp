@@ -25,7 +25,8 @@ namespace RowBlast {
               int numMoves,
               const StarLimits& starLimits,
               const std::vector<const Piece*>& pieceTypes,
-              const std::string& backgroundTextureFilename);
+              const std::string& backgroundTextureFilename,
+              bool isDark);
         
         void SetClearGrid(std::unique_ptr<CellGrid> clearGrid) {
             mClearGrid = std::move(clearGrid);
@@ -79,6 +80,10 @@ namespace RowBlast {
             return mBackgroundTextureFilename;
         }
         
+        bool IsDark() const {
+            return mIsDark;
+        }
+        
         static constexpr int maxNumPieceTypes {11};
 
     private:
@@ -93,6 +98,7 @@ namespace RowBlast {
         std::unique_ptr<CellGrid> mClearGrid;
         std::unique_ptr<BlueprintCellGrid> mBlueprintGrid;
         std::string mBackgroundTextureFilename;
+        bool mIsDark {false};
     };
     
     struct LevelInfo {

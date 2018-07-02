@@ -14,6 +14,7 @@ namespace Pht {
         void ParseDocument(rapidjson::Document& document, const std::string& jsonString);
         void EncodeDocument(rapidjson::Document& document, std::string& jsonString);
         std::string ReadString(const rapidjson::Value& object, const std::string& name);
+        bool ReadBool(const rapidjson::Value& object, const std::string& name);
         int ReadInt(const rapidjson::Value& object, const std::string& name);
         uint64_t ReadUInt64(const rapidjson::Value& object, const std::string& name);
         float ReadFloat(const rapidjson::Value& object, const std::string& name);

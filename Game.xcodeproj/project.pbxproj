@@ -268,6 +268,10 @@
 		627D381B20A59B9E0068B50C /* medium_button_0385.obj in Resources */ = {isa = PBXBuildFile; fileRef = 627D381A20A59B9D0068B50C /* medium_button_0385.obj */; };
 		627D381D20A5FF5E0068B50C /* small_button_0385.obj in Resources */ = {isa = PBXBuildFile; fileRef = 627D381C20A5FF5D0068B50C /* small_button_0385.obj */; };
 		627D382320A731480068B50C /* big_button_048.obj in Resources */ = {isa = PBXBuildFile; fileRef = 627D382220A731470068B50C /* big_button_048.obj */; };
+		6287B4D220EA6C1A00C00EF0 /* sky5.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6287B4D120EA6C1900C00EF0 /* sky5.jpg */; };
+		6287B4D420EA6DA200C00EF0 /* sky6.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6287B4D320EA6DA100C00EF0 /* sky6.jpg */; };
+		6287B4D620EA742400C00EF0 /* sky7.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6287B4D520EA742300C00EF0 /* sky7.jpg */; };
+		6287B4D820EA74F900C00EF0 /* sky8.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6287B4D720EA74F900C00EF0 /* sky8.jpg */; };
 		628EC29A207D24090071F368 /* level30.json in Resources */ = {isa = PBXBuildFile; fileRef = 628EC299207D24080071F368 /* level30.json */; };
 		628EC2AC2080C4880071F368 /* level31.json in Resources */ = {isa = PBXBuildFile; fileRef = 628EC2AB2080C4880071F368 /* level31.json */; };
 		6299DD7A208B4178001F74E2 /* CameraShake.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6299DD78208B4178001F74E2 /* CameraShake.cpp */; };
@@ -886,6 +890,10 @@
 		627D381A20A59B9D0068B50C /* medium_button_0385.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = medium_button_0385.obj; sourceTree = "<group>"; };
 		627D381C20A5FF5D0068B50C /* small_button_0385.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = small_button_0385.obj; sourceTree = "<group>"; };
 		627D382220A731470068B50C /* big_button_048.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = big_button_048.obj; sourceTree = "<group>"; };
+		6287B4D120EA6C1900C00EF0 /* sky5.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sky5.jpg; sourceTree = "<group>"; };
+		6287B4D320EA6DA100C00EF0 /* sky6.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sky6.jpg; sourceTree = "<group>"; };
+		6287B4D520EA742300C00EF0 /* sky7.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sky7.jpg; sourceTree = "<group>"; };
+		6287B4D720EA74F900C00EF0 /* sky8.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sky8.jpg; sourceTree = "<group>"; };
 		628EC299207D24080071F368 /* level30.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level30.json; sourceTree = "<group>"; };
 		628EC2AB2080C4880071F368 /* level31.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level31.json; sourceTree = "<group>"; };
 		6299DD78208B4178001F74E2 /* CameraShake.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CameraShake.cpp; sourceTree = "<group>"; };
@@ -1164,6 +1172,10 @@
 				627D3802209F22EF0068B50C /* sky2.jpg */,
 				627D3804209F22F00068B50C /* sky3.jpg */,
 				627D3801209F22EF0068B50C /* sky4.jpg */,
+				6287B4D120EA6C1900C00EF0 /* sky5.jpg */,
+				6287B4D320EA6DA100C00EF0 /* sky6.jpg */,
+				6287B4D520EA742300C00EF0 /* sky7.jpg */,
+				6287B4D720EA74F900C00EF0 /* sky8.jpg */,
 			);
 			path = Textures;
 			sourceTree = "<group>";
@@ -2139,6 +2151,7 @@
 				62E335DC1FD2EF600069B6CF /* level24.json in Resources */,
 				62318C3A20651F79008332CB /* particle_sprite_twinkle_blurred.png in Resources */,
 				62785B2B20875937006F9869 /* ParticleNoAlphaTexture.vert in Resources */,
+				6287B4D820EA74F900C00EF0 /* sky8.jpg in Resources */,
 				627D3805209F22F00068B50C /* sky4.jpg in Resources */,
 				626451E0206FA93F00E304F2 /* laser_bomb_emission.png in Resources */,
 				62785B1A20875937006F9869 /* TexturedLighting.vert in Resources */,
@@ -2162,6 +2175,7 @@
 				62E2222C1FE9748500AE098B /* cloud_E_512.png in Resources */,
 				62785B2220875937006F9869 /* Particle.vert in Resources */,
 				6227D500206D3051008EA77D /* bomb_798_emission.jpg in Resources */,
+				6287B4D620EA742400C00EF0 /* sky7.jpg in Resources */,
 				62785B1D20875937006F9869 /* VertexColor.frag in Resources */,
 				629B837C20C544F000DD2D0E /* level35.json in Resources */,
 				629B838020C58B8100DD2D0E /* level37.json in Resources */,
@@ -2184,6 +2198,7 @@
 				62785B2020875937006F9869 /* ParticleNoAlphaTexture.frag in Resources */,
 				62785B4E20875937006F9869 /* build_freetype.sh in Resources */,
 				6278591E203B309A00494A4D /* level28.json in Resources */,
+				6287B4D420EA6DA200C00EF0 /* sky6.jpg in Resources */,
 				6270DC971FCB23D800FB457D /* level23.json in Resources */,
 				629B838620C9694E00DD2D0E /* level40.json in Resources */,
 				6278590620375DBF00494A4D /* level27.json in Resources */,
@@ -2205,6 +2220,7 @@
 				629B838E20CAD34100DD2D0E /* triangle_320.obj in Resources */,
 				627D3806209F22F00068B50C /* sky2.jpg in Resources */,
 				629B838420C81D1700DD2D0E /* level39.json in Resources */,
+				6287B4D220EA6C1A00C00EF0 /* sky5.jpg in Resources */,
 				62785B2620875937006F9869 /* PixelLighting.frag in Resources */,
 				629B839020CAD7C500DD2D0E /* triangle_320_r90.obj in Resources */,
 				626451E1206FA93F00E304F2 /* laser_bomb_diffuse.jpg in Resources */,

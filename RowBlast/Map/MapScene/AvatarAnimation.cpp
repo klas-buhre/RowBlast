@@ -5,6 +5,7 @@
 
 // Game includes.
 #include "Avatar.hpp"
+#include "MapScene.hpp"
 
 using namespace RowBlast;
 
@@ -12,8 +13,9 @@ namespace {
     constexpr auto animationDuration {2.5f};
 }
 
-AvatarAnimation::AvatarAnimation(Pht::IEngine& engine, Avatar& avatar) :
+AvatarAnimation::AvatarAnimation(Pht::IEngine& engine, MapScene& scene, Avatar& avatar) :
     mEngine {engine},
+    mScene {scene},
     mAvatar {avatar} {}
 
 void AvatarAnimation::Init() {
@@ -25,6 +27,7 @@ void AvatarAnimation::Start(const Pht::Vec3& destinationPosition) {
     mStartPosition = mAvatar.GetPosition();
     mDestinationPosition = destinationPosition;
     mElapsedTime = 0.0f;
+    mScene.SetCameraXPosition(mStartPosition.x);
 }
 
 AvatarAnimation::State AvatarAnimation::Update() {
@@ -50,8 +53,14 @@ void AvatarAnimation::UpdateInActiveState() {
     auto avatarPosition {mStartPosition.Lerp(t, mDestinationPosition)};
     mAvatar.SetPosition(avatarPosition);
     
+    mScene.SetCameraXPosition(avatarPosition.x);
+    
     if (mElapsedTime > animationDuration) {
         mState = State::Finished;
         mAvatar.SetPosition(mDestinationPosition);
     }
+}
+
+bool AvatarAnimation::IsActive() const {
+    return mState == State::Active;
 }
