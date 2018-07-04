@@ -12,6 +12,7 @@
 #include "ScrollController.hpp"
 #include "SceneObjectPool.hpp"
 #include "GameHud.hpp"
+#include "FieldBorder.hpp"
 #include "UiLayer.hpp"
 
 namespace Pht {
@@ -139,9 +140,9 @@ namespace RowBlast {
             return *mGhostPieces;
         }
 
-        Pht::SceneObject& GetFieldQuadSceneObject() {
-            assert(mFieldQuad);
-            return *mFieldQuad;
+        Pht::SceneObject& GetFieldQuadContainer() {
+            assert(mFieldQuadContainer);
+            return *mFieldQuadContainer;
         }
         
         Pht::SceneObject& GetLevelCompletedEffectsContainer() {
@@ -195,7 +196,7 @@ namespace RowBlast {
         }
         
     private:
-        void UpdateCameraPositionAndScissorBox();
+        void UpdateCameraPosition();
         void CreateRenderPasses();
         void CreateLightAndCamera();
         void CreateBackground(const Level& level);
@@ -220,11 +221,13 @@ namespace RowBlast {
         void CreateStarsContainer();
         void SetScissorBox(const Pht::ScissorBox& scissorBox, int layer);
         
+        const float mCellSize {1.25f};
         Pht::IEngine& mEngine;
         const ScrollController& mScrollController;
         const CommonResources& mCommonResources;
         GameHudController& mGameHudController;
         const Pht::CameraShake& mCameraShake;
+        FieldBorder mFieldBorder;
         Pht::Scene* mScene {nullptr};
         Pht::CameraComponent* mCamera {nullptr};
         Pht::LightComponent* mLight {nullptr};
@@ -233,7 +236,7 @@ namespace RowBlast {
         std::unique_ptr<SceneObjectPool> mFieldBlocks;
         std::unique_ptr<SceneObjectPool> mPieceBlocks;
         std::unique_ptr<SceneObjectPool> mGhostPieces;
-        Pht::SceneObject* mFieldQuad {nullptr};
+        Pht::SceneObject* mFieldQuadContainer {nullptr};
         Pht::SceneObject* mFieldContainer {nullptr};
         Pht::SceneObject* mPieceDropEffectsContainer {nullptr};
         Pht::SceneObject* mFieldBlocksContainer {nullptr};
@@ -244,7 +247,6 @@ namespace RowBlast {
         Pht::SceneObject* mLevelCompletedEffectsContainer {nullptr};
         Pht::SceneObject* mStarsContainer {nullptr};
         const Pht::Vec3 mFieldPosition;
-        const float mCellSize {1.25f};
         const float mBlastRadiusAnimationZ {mCellSize / 2.0f + 0.1f};
         const float mGhostPieceZ {-0.2f};
         const float mPressedGhostPieceZ {mCellSize / 2.0f + 0.2f};

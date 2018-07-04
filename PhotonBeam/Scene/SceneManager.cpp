@@ -24,12 +24,15 @@ void SceneManager::InitSceneSystems(float narrowFrustumHeightFactor) {
     mInputHandler.Init(mRenderer);
 }
 
-void SceneManager::SetLoadedScene(std::unique_ptr<Scene> scene) {
-    mScene = std::move(scene);
-    
+void SceneManager::InitRenderer() {
     if (mScene) {
         mRenderer.InitRenderQueue(*mScene);
     }
+}
+
+void SceneManager::SetLoadedScene(std::unique_ptr<Scene> scene) {
+    mScene = std::move(scene);
+    InitRenderer();
 }
 
 Scene* SceneManager::GetActiveScene() {

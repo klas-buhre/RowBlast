@@ -22,6 +22,7 @@ namespace {
     constexpr auto fieldQuadZ {-1.0f};
     constexpr auto lowerClipAreaHeightInCells {2.15f};
     constexpr auto fieldPadding {0.1f};
+    constexpr auto fieldBorderHeightInCells {19.0f};
     constexpr auto lightAnimationDuration {5.0f};
     const Pht::Vec3 lightDirectionA {0.57f, 1.0f, 0.6f};
     const Pht::Vec3 lightDirectionB {1.0f, 1.0f, 0.74f};
@@ -96,6 +97,7 @@ GameScene::GameScene(Pht::IEngine& engine,
     mCommonResources {commonResources},
     mGameHudController {gameHudController},
     mCameraShake {cameraShake},
+    mFieldBorder {engine, *this, commonResources, fieldBorderHeightInCells * mCellSize},
     mFieldPosition {0.0f, 0.0f, 0.0f} {}
 
 void GameScene::Init(const Level& level,
@@ -128,10 +130,12 @@ void GameScene::Init(const Level& level,
     CreateUiViewsContainer();
     CreateStarsContainer();
     
+    mFieldBorder.Init();
+    
     scene->SetDistanceFunction(Pht::DistanceFunction::WorldSpaceNegativeZ);
     sceneManager.SetLoadedScene(std::move(scene));
     
-    UpdateCameraPositionAndScissorBox();
+    UpdateCameraPosition();
 }
 
 void GameScene::CreateRenderPasses() {
@@ -251,15 +255,18 @@ void GameScene::InitFieldDimensions(const Level& level) {
 }
 
 void GameScene::CreateFieldQuad() {
+    mFieldQuadContainer = &mScene->CreateSceneObject();
+    mFieldQuadContainer->SetLayer(static_cast<int>(Layer::FieldQuad));
+    mScene->GetRoot().AddChild(*mFieldQuadContainer);
+    
     Pht::Material fieldMaterial;
     fieldMaterial.SetOpacity(0.85f);
 
     auto vertices {CreateFieldVertices()};
-    mFieldQuad = &mScene->CreateSceneObject(Pht::QuadMesh {vertices}, fieldMaterial);
+    auto& fieldQuad {mScene->CreateSceneObject(Pht::QuadMesh {vertices}, fieldMaterial)};
     Pht::Vec3 quadPosition {mFieldPosition.x, mFieldPosition.y, mFieldPosition.z + fieldQuadZ};
-    mFieldQuad->GetTransform().SetPosition(quadPosition);
-    mFieldQuad->SetLayer(static_cast<int>(Layer::FieldQuad));
-    mScene->GetRoot().AddChild(*mFieldQuad);
+    fieldQuad.GetTransform().SetPosition(quadPosition);
+    mFieldQuadContainer->AddChild(fieldQuad);
 }
 
 void GameScene::CreateFieldContainer() {
@@ -397,11 +404,11 @@ void GameScene::Update() {
     UpdateLightAnimation();
     
     if (mScrollController.IsScrolling() || mCameraShake.IsShaking()) {
-        UpdateCameraPositionAndScissorBox();
+        UpdateCameraPosition();
     }
 }
 
-void GameScene::UpdateCameraPositionAndScissorBox() {
+void GameScene::UpdateCameraPosition() {
     auto& renderer {mEngine.GetRenderer()};
     auto& frustumSize {renderer.GetOrthographicFrustumSize()};
     auto bottomPadding {renderer.GetBottomPaddingHeight()};
@@ -431,6 +438,20 @@ void GameScene::UpdateCameraPositionAndScissorBox() {
     Pht::ScissorBox scissorBox {scissorBoxLowerLeft, scissorBoxSize};
     
     SetScissorBox(scissorBox);
+    
+    Pht::Vec3 leftBorderPosition {
+        scissorBoxLowerLeft.x,
+        scissorBoxLowerLeft.y + fieldBorderHeightInCells * mCellSize / 2.0f,
+        0.0f
+    };
+
+    Pht::Vec3 rightBorderPosition {
+        scissorBoxLowerLeft.x + scissorBoxSize.x,
+        scissorBoxLowerLeft.y + fieldBorderHeightInCells * mCellSize / 2.0f,
+        0.0f
+    };
+
+    mFieldBorder.SetPositions(leftBorderPosition, rightBorderPosition, {});
 }
 
 void GameScene::SetScissorBox(const Pht::ScissorBox& scissorBox) {

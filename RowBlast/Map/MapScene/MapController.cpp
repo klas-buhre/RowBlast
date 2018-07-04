@@ -8,6 +8,7 @@
 #include "IInput.hpp"
 #include "InputEvent.hpp"
 #include "MathUtils.hpp"
+#include "ISceneManager.hpp"
 
 // Game includes.
 #include "SettingsMenuController.hpp"
@@ -62,6 +63,8 @@ void MapController::Init() {
     } else {
         mAvatar.Hide();
     }
+    
+    mEngine.GetSceneManager().InitRenderer();
 }
 
 MapController::Command MapController::Update() {

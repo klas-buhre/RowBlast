@@ -3,6 +3,7 @@
 // Engine includes.
 #include "IEngine.hpp"
 #include "IInput.hpp"
+#include "ISceneManager.hpp"
 
 // Game includes.
 #include "LevelLoader.hpp"
@@ -118,6 +119,8 @@ void GameController::StartLevel(int levelId) {
     mLevelIntroState = LevelIntroState::Overview;
     
     mUserData.StartLevel(levelId);
+    
+    mEngine.GetSceneManager().InitRenderer();
 }
 
 GameController::Command GameController::Update() {
