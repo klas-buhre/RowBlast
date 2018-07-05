@@ -25,7 +25,7 @@ void SlidingFieldAnimation::Start() {
     mElapsedTime = 0.0f;
     
     auto& orthographicFrustumSize {mEngine.GetRenderer().GetOrthographicFrustumSize()};
-    auto& fieldSceneObject {mScene.GetFieldQuadContainer()};
+    auto& fieldSceneObject {mScene.GetFieldQuad()};
     
     mFieldInitialPosition = fieldSceneObject.GetTransform().GetPosition();
     mFieldFinalPosition = Pht::Vec3 {
@@ -66,7 +66,7 @@ SlidingFieldAnimation::State SlidingFieldAnimation::Update() {
 }
 
 void SlidingFieldAnimation::UpdateField() {
-    auto& fieldQuadTransform {mScene.GetFieldQuadContainer().GetTransform()};
+    auto& fieldQuadTransform {mScene.GetFieldQuad().GetTransform()};
     auto fieldQuadPosition {fieldQuadTransform.GetPosition()};
     auto distance = mFieldFinalPosition.x - mFieldInitialPosition.x;
     auto normalizedTime {mElapsedTime / slideTime};

@@ -17,9 +17,17 @@ using namespace RowBlast;
 
 namespace {
     constexpr auto borderThickness {0.05f};
-    // constexpr auto outerCornerRadius {0.17f};
-    const Pht::Vec4 borderColor {0.3f, 0.6f, 1.0f, 0.75};
-    const Pht::Vec4 darkerBorderColor {0.3f, 0.6f, 1.0f, 0.5f};
+/*
+    const Pht::Vec4 leftBorderColor {0.65f, 0.65f, 0.65f, 0.85f};
+    const Pht::Vec4 leftDarkerBorderColor {0.65f, 0.65f, 0.65f, 0.25f};
+    const Pht::Vec4 rightBorderColor {0.65f, 0.65f, 0.65f, 0.85f};
+    const Pht::Vec4 rightDarkerBorderColor {0.65f, 0.65f, 0.65f, 0.25f};
+*/
+
+    const Pht::Vec4 redBorderColor {1.0f, 0.4f, 0.6f, 0.85f};
+    const Pht::Vec4 redDarkerBorderColor {1.0f, 0.4f, 0.6f, 0.25f};
+    const Pht::Vec4 blueBorderColor {0.3f, 0.6f, 1.0f, 0.85f};
+    const Pht::Vec4 blueDarkerBorderColor {0.3f, 0.6f, 1.0f, 0.25f};
 
     std::unique_ptr<Pht::OfflineRasterizer> CreateRasterizer(Pht::IEngine& engine,
                                                              const Pht::Vec2& coordinateSystemSize,
@@ -56,11 +64,9 @@ FieldBorder::FieldBorder(Pht::IEngine& engine,
 }
 
 void FieldBorder::Init() {
-/*
-    auto& fieldQuadContainer {mScene.GetFieldQuadContainer()};
-    fieldQuadContainer.AddChild(*mLeftBorder);
-    fieldQuadContainer.AddChild(*mRightBorder);
-*/
+    auto& container {mScene.GetFieldBorderContainer()};
+    container.AddChild(*mLeftBorder);
+    container.AddChild(*mRightBorder);
 }
 
 void FieldBorder::CreateLeftBorder(Pht::IEngine& engine,
@@ -70,13 +76,21 @@ void FieldBorder::CreateLeftBorder(Pht::IEngine& engine,
     Pht::Vec2 borderSize {borderThickness * 2.0f, height};
     auto rasterizer {CreateRasterizer(engine, borderSize, commonResources)};
     
+    Pht::OfflineRasterizer::VerticalGradientColors borderColors {blueBorderColor, redBorderColor};
     Pht::Vec2 lowerLeft {0.0f, 0.0f};
     Pht::Vec2 upperRight {borderThickness, borderSize.y};
-    rasterizer->DrawRectangle(upperRight, lowerLeft, borderColor, Pht::DrawOver::Yes);
+    rasterizer->DrawGradientRectangle(upperRight, lowerLeft, borderColors, Pht::DrawOver::Yes);
 
+    Pht::OfflineRasterizer::VerticalGradientColors darkerBorderColors {
+        blueDarkerBorderColor,
+        redDarkerBorderColor
+    };
     Pht::Vec2 lowerLeft2 {borderThickness, 0.0f};
     Pht::Vec2 upperRight2 {borderThickness * 2.0f, borderSize.y};
-    rasterizer->DrawRectangle(upperRight2, lowerLeft2, darkerBorderColor, Pht::DrawOver::Yes);
+    rasterizer->DrawGradientRectangle(upperRight2,
+                                      lowerLeft2,
+                                      darkerBorderColors,
+                                      Pht::DrawOver::Yes);
 
     auto image {rasterizer->ProduceImage()};
     mLeftBorder = CreateSceneObject(*image, borderSize, engine);
@@ -89,13 +103,21 @@ void FieldBorder::CreateRightBorder(Pht::IEngine& engine,
     Pht::Vec2 borderSize {borderThickness * 2.0f, height};
     auto rasterizer {CreateRasterizer(engine, borderSize, commonResources)};
     
+    Pht::OfflineRasterizer::VerticalGradientColors darkerBorderColors {
+        redDarkerBorderColor,
+        blueDarkerBorderColor
+    };
     Pht::Vec2 lowerLeft {0.0f, 0.0f};
     Pht::Vec2 upperRight {borderThickness, borderSize.y};
-    rasterizer->DrawRectangle(upperRight, lowerLeft, darkerBorderColor, Pht::DrawOver::Yes);
+    rasterizer->DrawGradientRectangle(upperRight,
+                                      lowerLeft,
+                                      darkerBorderColors,
+                                      Pht::DrawOver::Yes);
 
+    Pht::OfflineRasterizer::VerticalGradientColors borderColors {redBorderColor, blueBorderColor};
     Pht::Vec2 lowerLeft2 {borderThickness, 0.0f};
     Pht::Vec2 upperRight2 {borderThickness * 2.0f, borderSize.y};
-    rasterizer->DrawRectangle(upperRight2, lowerLeft2, borderColor, Pht::DrawOver::Yes);
+    rasterizer->DrawGradientRectangle(upperRight2, lowerLeft2, borderColors, Pht::DrawOver::Yes);
 
     auto image {rasterizer->ProduceImage()};
     mRightBorder = CreateSceneObject(*image, borderSize, engine);

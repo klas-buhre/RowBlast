@@ -20,6 +20,7 @@ using namespace RowBlast;
 
 namespace {
     constexpr auto fieldQuadZ {-1.0f};
+    constexpr auto fieldBorderZ {-0.5f};
     constexpr auto lowerClipAreaHeightInCells {2.15f};
     constexpr auto fieldPadding {0.1f};
     constexpr auto fieldBorderHeightInCells {19.0f};
@@ -124,6 +125,7 @@ void GameScene::Init(const Level& level,
     CreatePieceDropEffectsContainer();
     CreateFieldBlocksContainer();
     CreateSceneObjectPools(level);
+    CreateFieldBorderContainer();
     CreateEffectsContainer();
     CreateFlyingBlocksContainer();
     CreateHud(gameLogic, levelResources, pieceResources, level);
@@ -255,18 +257,15 @@ void GameScene::InitFieldDimensions(const Level& level) {
 }
 
 void GameScene::CreateFieldQuad() {
-    mFieldQuadContainer = &mScene->CreateSceneObject();
-    mFieldQuadContainer->SetLayer(static_cast<int>(Layer::FieldQuad));
-    mScene->GetRoot().AddChild(*mFieldQuadContainer);
-    
     Pht::Material fieldMaterial;
     fieldMaterial.SetOpacity(0.85f);
 
     auto vertices {CreateFieldVertices()};
-    auto& fieldQuad {mScene->CreateSceneObject(Pht::QuadMesh {vertices}, fieldMaterial)};
+    mFieldQuad = &mScene->CreateSceneObject(Pht::QuadMesh {vertices}, fieldMaterial);
+    mFieldQuad->SetLayer(static_cast<int>(Layer::FieldQuad));
     Pht::Vec3 quadPosition {mFieldPosition.x, mFieldPosition.y, mFieldPosition.z + fieldQuadZ};
-    fieldQuad.GetTransform().SetPosition(quadPosition);
-    mFieldQuadContainer->AddChild(fieldQuad);
+    mFieldQuad->GetTransform().SetPosition(quadPosition);
+    mScene->GetRoot().AddChild(*mFieldQuad);
 }
 
 void GameScene::CreateFieldContainer() {
@@ -339,6 +338,12 @@ void GameScene::CreateSceneObjectPools(const Level& level) {
                                                      *mFieldBlocksContainer);
     mGhostPieces = std::make_unique<SceneObjectPool>(SceneObjectPoolKind::GhostPieces,
                                                      *mFieldBlocksContainer);
+}
+
+void GameScene::CreateFieldBorderContainer() {
+    mFieldBorderContainer = &mScene->CreateSceneObject();
+    mFieldBorderContainer->SetLayer(static_cast<int>(Layer::Effects));
+    mScene->GetRoot().AddChild(*mFieldBorderContainer);
 }
 
 void GameScene::CreateEffectsContainer() {
@@ -442,13 +447,13 @@ void GameScene::UpdateCameraPosition() {
     Pht::Vec3 leftBorderPosition {
         scissorBoxLowerLeft.x,
         scissorBoxLowerLeft.y + fieldBorderHeightInCells * mCellSize / 2.0f,
-        0.0f
+        fieldBorderZ
     };
 
     Pht::Vec3 rightBorderPosition {
         scissorBoxLowerLeft.x + scissorBoxSize.x,
         scissorBoxLowerLeft.y + fieldBorderHeightInCells * mCellSize / 2.0f,
-        0.0f
+        fieldBorderZ
     };
 
     mFieldBorder.SetPositions(leftBorderPosition, rightBorderPosition, {});
