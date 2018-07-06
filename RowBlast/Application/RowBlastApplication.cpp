@@ -27,9 +27,7 @@ Backlog:
   -GUI:
     -Maybe the level objective/start dialog should be available from the game menu.
     -Menu window that displays 3rd party lib credits.
-  -Rendering:
     -Maybe try the font in fontawesome.com for the bright dialogs.
-    -A Metal rendering back end?
   -Tutorial:
     -Make the tutorial as short as possible. Don't give all the rules of the game at once. Instead,
      let the user figure it out by playing. For example, introduce changing the visible moves in the
@@ -47,7 +45,7 @@ Backlog:
     -Credit Google for avatars? : http://www.iconarchive.com/show/noto-emoji-people-face-icons-by-google.1.html
 
 Ongoing tasks:
-    -Try a rounded border for the field.
+
 
 
 Ideas:

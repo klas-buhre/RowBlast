@@ -18,14 +18,14 @@ namespace RowBlast {
 
     class FieldBorder {
     public:
-        FieldBorder(Pht::IEngine& engine,
-                    GameScene& scene,
-                    const CommonResources& commonResources,
-                    float height);
+        FieldBorder(Pht::IEngine& engine, GameScene& scene, const CommonResources& commonResources);
     
-        void Init();
-        void SetPositions(const Pht::Vec3& left, const Pht::Vec3& right, const Pht::Vec3& bottom);
+        void Init(const Pht::Vec3& leftPosition, const Pht::Vec3& rightPosition, int numRows);
         
+        static constexpr auto brightBorderThickness {0.055f};
+        static constexpr auto darkerBorderThickness {0.045f};
+        static constexpr auto borderThickness {brightBorderThickness + darkerBorderThickness};
+
     private:
         void CreateLeftBorder(Pht::IEngine& engine,
                               GameScene& scene,
@@ -42,7 +42,6 @@ namespace RowBlast {
         GameScene& mScene;
         std::unique_ptr<Pht::SceneObject> mLeftBorder;
         std::unique_ptr<Pht::SceneObject> mRightBorder;
-        std::unique_ptr<Pht::SceneObject> mBottomBorder;
         Pht::SceneResources mSceneResources;
     };
 }

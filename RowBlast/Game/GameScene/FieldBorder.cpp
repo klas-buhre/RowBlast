@@ -16,18 +16,11 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto borderThickness {0.05f};
-/*
-    const Pht::Vec4 leftBorderColor {0.65f, 0.65f, 0.65f, 0.85f};
-    const Pht::Vec4 leftDarkerBorderColor {0.65f, 0.65f, 0.65f, 0.25f};
-    const Pht::Vec4 rightBorderColor {0.65f, 0.65f, 0.65f, 0.85f};
-    const Pht::Vec4 rightDarkerBorderColor {0.65f, 0.65f, 0.65f, 0.25f};
-*/
-
-    const Pht::Vec4 redBorderColor {1.0f, 0.4f, 0.6f, 0.85f};
-    const Pht::Vec4 redDarkerBorderColor {1.0f, 0.4f, 0.6f, 0.25f};
-    const Pht::Vec4 blueBorderColor {0.3f, 0.6f, 1.0f, 0.85f};
-    const Pht::Vec4 blueDarkerBorderColor {0.3f, 0.6f, 1.0f, 0.25f};
+    const Pht::Vec4 redBorderColor {1.0f, 0.45f, 0.65f, 0.85f};
+    const Pht::Vec4 redDarkerBorderColor {1.0f, 0.45f, 0.65f, 0.25f};
+    const Pht::Vec4 blueBorderColor {0.4f, 0.6f, 1.0f, 0.85f};
+    const Pht::Vec4 blueDarkerBorderColor {0.4f, 0.6f, 1.0f, 0.25f};
+    constexpr auto defaultNumRows {19};
 
     std::unique_ptr<Pht::OfflineRasterizer> CreateRasterizer(Pht::IEngine& engine,
                                                              const Pht::Vec2& coordinateSystemSize,
@@ -55,38 +48,47 @@ namespace {
 
 FieldBorder::FieldBorder(Pht::IEngine& engine,
                          GameScene& scene,
-                         const CommonResources& commonResources,
-                         float height) :
+                         const CommonResources& commonResources) :
     mScene {scene} {
     
-    CreateLeftBorder(engine, scene, commonResources, height);
-    CreateRightBorder(engine, scene, commonResources, height);
+    auto defaultHeight {static_cast<float>(defaultNumRows) * scene.GetCellSize()};
+    CreateLeftBorder(engine, scene, commonResources, defaultHeight);
+    CreateRightBorder(engine, scene, commonResources, defaultHeight);
 }
 
-void FieldBorder::Init() {
-    auto& container {mScene.GetFieldBorderContainer()};
+void FieldBorder::Init(const Pht::Vec3& leftPosition, const Pht::Vec3& rightPosition, int numRows) {
+    auto& container {mScene.GetFieldQuadContainer()};
     container.AddChild(*mLeftBorder);
     container.AddChild(*mRightBorder);
+    
+    auto scale {static_cast<float>(numRows) / static_cast<float>(defaultNumRows)};
+    auto& leftTransform {mLeftBorder->GetTransform()};
+    leftTransform.SetScale({1.0f, scale, 1.0f});
+    leftTransform.SetPosition(leftPosition);
+    
+    auto& rightTransform {mRightBorder->GetTransform()};
+    rightTransform.SetScale({1.0f, scale, 1.0f});
+    rightTransform.SetPosition(rightPosition);
 }
 
 void FieldBorder::CreateLeftBorder(Pht::IEngine& engine,
                                    GameScene& scene,
                                    const CommonResources& commonResources,
-                                   float height) {
-    Pht::Vec2 borderSize {borderThickness * 2.0f, height};
+                                   float defaultHeight) {
+    Pht::Vec2 borderSize {borderThickness, defaultHeight};
     auto rasterizer {CreateRasterizer(engine, borderSize, commonResources)};
     
     Pht::OfflineRasterizer::VerticalGradientColors borderColors {blueBorderColor, redBorderColor};
     Pht::Vec2 lowerLeft {0.0f, 0.0f};
-    Pht::Vec2 upperRight {borderThickness, borderSize.y};
+    Pht::Vec2 upperRight {brightBorderThickness, borderSize.y};
     rasterizer->DrawGradientRectangle(upperRight, lowerLeft, borderColors, Pht::DrawOver::Yes);
 
     Pht::OfflineRasterizer::VerticalGradientColors darkerBorderColors {
         blueDarkerBorderColor,
         redDarkerBorderColor
     };
-    Pht::Vec2 lowerLeft2 {borderThickness, 0.0f};
-    Pht::Vec2 upperRight2 {borderThickness * 2.0f, borderSize.y};
+    Pht::Vec2 lowerLeft2 {brightBorderThickness, 0.0f};
+    Pht::Vec2 upperRight2 {borderThickness, borderSize.y};
     rasterizer->DrawGradientRectangle(upperRight2,
                                       lowerLeft2,
                                       darkerBorderColors,
@@ -99,8 +101,8 @@ void FieldBorder::CreateLeftBorder(Pht::IEngine& engine,
 void FieldBorder::CreateRightBorder(Pht::IEngine& engine,
                                     GameScene& scene,
                                     const CommonResources& commonResources,
-                                    float height) {
-    Pht::Vec2 borderSize {borderThickness * 2.0f, height};
+                                    float defaultHeight) {
+    Pht::Vec2 borderSize {borderThickness, defaultHeight};
     auto rasterizer {CreateRasterizer(engine, borderSize, commonResources)};
     
     Pht::OfflineRasterizer::VerticalGradientColors darkerBorderColors {
@@ -108,15 +110,15 @@ void FieldBorder::CreateRightBorder(Pht::IEngine& engine,
         blueDarkerBorderColor
     };
     Pht::Vec2 lowerLeft {0.0f, 0.0f};
-    Pht::Vec2 upperRight {borderThickness, borderSize.y};
+    Pht::Vec2 upperRight {darkerBorderThickness, borderSize.y};
     rasterizer->DrawGradientRectangle(upperRight,
                                       lowerLeft,
                                       darkerBorderColors,
                                       Pht::DrawOver::Yes);
 
     Pht::OfflineRasterizer::VerticalGradientColors borderColors {redBorderColor, blueBorderColor};
-    Pht::Vec2 lowerLeft2 {borderThickness, 0.0f};
-    Pht::Vec2 upperRight2 {borderThickness * 2.0f, borderSize.y};
+    Pht::Vec2 lowerLeft2 {darkerBorderThickness, 0.0f};
+    Pht::Vec2 upperRight2 {borderThickness, borderSize.y};
     rasterizer->DrawGradientRectangle(upperRight2, lowerLeft2, borderColors, Pht::DrawOver::Yes);
 
     auto image {rasterizer->ProduceImage()};
@@ -133,11 +135,4 @@ std::unique_ptr<Pht::SceneObject> FieldBorder::CreateSceneObject(const Pht::IIma
     return sceneManager.CreateSceneObject(Pht::QuadMesh {size.x, size.y},
                                           imageMaterial,
                                           mSceneResources);
-}
-
-void FieldBorder::SetPositions(const Pht::Vec3& left,
-                               const Pht::Vec3& right,
-                               const Pht::Vec3& bottom) {
-    mLeftBorder->GetTransform().SetPosition(left);
-    mRightBorder->GetTransform().SetPosition(right);
 }

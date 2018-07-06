@@ -105,11 +105,6 @@ namespace RowBlast {
             return *mFieldBlocksContainer;
         }
 
-        Pht::SceneObject& GetFieldBorderContainer() {
-            assert(mFieldBorderContainer);
-            return *mFieldBorderContainer;
-        }
-
         Pht::SceneObject& GetEffectsContainer() {
             assert(mEffectsContainer);
             return *mEffectsContainer;
@@ -145,9 +140,9 @@ namespace RowBlast {
             return *mGhostPieces;
         }
 
-        Pht::SceneObject& GetFieldQuad() {
-            assert(mFieldQuad);
-            return *mFieldQuad;
+        Pht::SceneObject& GetFieldQuadContainer() {
+            assert(mFieldQuadContainer);
+            return *mFieldQuadContainer;
         }
         
         Pht::SceneObject& GetLevelCompletedEffectsContainer() {
@@ -211,7 +206,6 @@ namespace RowBlast {
         void InitFieldDimensions(const Level& level);
         void CreateFieldQuad();
         void CreateFieldContainer();
-        void CreateFieldBorderContainer();
         Pht::QuadMesh::Vertices CreateFieldVertices();
         void CreateBlueprintSlots(const Level& level, const LevelResources& levelResources);
         void CreatePieceDropEffectsContainer();
@@ -225,6 +219,7 @@ namespace RowBlast {
                        const Level& level);
         void CreateUiViewsContainer();
         void CreateStarsContainer();
+        void InitFieldBorder(const Level& level);
         void SetScissorBox(const Pht::ScissorBox& scissorBox, int layer);
         
         const float mCellSize {1.25f};
@@ -242,11 +237,10 @@ namespace RowBlast {
         std::unique_ptr<SceneObjectPool> mFieldBlocks;
         std::unique_ptr<SceneObjectPool> mPieceBlocks;
         std::unique_ptr<SceneObjectPool> mGhostPieces;
-        Pht::SceneObject* mFieldQuad {nullptr};
+        Pht::SceneObject* mFieldQuadContainer {nullptr};
         Pht::SceneObject* mFieldContainer {nullptr};
         Pht::SceneObject* mPieceDropEffectsContainer {nullptr};
         Pht::SceneObject* mFieldBlocksContainer {nullptr};
-        Pht::SceneObject* mFieldBorderContainer {nullptr};
         Pht::SceneObject* mEffectsContainer {nullptr};
         Pht::SceneObject* mFlyingBlocksContainer {nullptr};
         Pht::SceneObject* mHudContainer {nullptr};
