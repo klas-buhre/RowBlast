@@ -16,7 +16,7 @@ namespace Pht {
 }
 
 namespace RowBlast {
-    class GameScene;
+    class CommonResources;
     
     enum class WeldRenderableKind {
         Normal,
@@ -26,7 +26,7 @@ namespace RowBlast {
     
     class PieceResources {
     public:
-        PieceResources(Pht::IEngine& engine, const GameScene& scene);
+        PieceResources(Pht::IEngine& engine, const CommonResources& commonResources);
         
         Pht::RenderableObject& GetBlockRenderableObject(BlockKind blockKind,
                                                         BlockColor color,
@@ -58,9 +58,9 @@ namespace RowBlast {
         int CalcWeldIndex(WeldRenderableKind weldRenderableKind,
                           BlockColor color,
                           BlockBrightness brightness) const;
-        void CreateBlocks(Pht::ISceneManager& sceneManager, const GameScene& scene);
-        void CreateWelds(Pht::ISceneManager& sceneManager, const GameScene& scene);
-        void CreateBombs(Pht::ISceneManager& sceneManager, const GameScene& scene);
+        void CreateBlocks(Pht::ISceneManager& sceneManager, const CommonResources& commonResources);
+        void CreateWelds(Pht::ISceneManager& sceneManager, const CommonResources& commonResources);
+        void CreateBombs(Pht::ISceneManager& sceneManager);
         
         std::vector<std::unique_ptr<Pht::RenderableObject>> mBlocks;
         std::vector<std::unique_ptr<Pht::RenderableObject>> mWelds;

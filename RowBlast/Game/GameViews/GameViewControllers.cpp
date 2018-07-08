@@ -18,7 +18,8 @@ namespace {
 GameViewControllers::GameViewControllers(Pht::IEngine& engine,
                                          const CommonResources& commonResources,
                                          const UserData& userData,
-                                         Settings& settings) :
+                                         Settings& settings,
+                                         PieceResources& pieceResources) :
     mFadeEffect {
         engine.GetSceneManager(),
         engine.GetRenderer(),
@@ -34,17 +35,19 @@ GameViewControllers::GameViewControllers(Pht::IEngine& engine,
     mRestartConfirmationDialogController {engine, commonResources, userData},
     mMapConfirmationDialogController {engine, commonResources},
     mSettingsMenuController {engine, commonResources, settings, PotentiallyZoomedScreen::Yes},
-    mNoLivesDialogController {engine, commonResources, userData, PotentiallyZoomedScreen::Yes} {
-
-    mViewManager.AddView(mGameHudController.GetView());
-    mViewManager.AddView(mGameMenuController.GetView());
-    mViewManager.AddView(mGameOverDialogController.GetView());
-    mViewManager.AddView(mNoMovesDialogController.GetView());
-    mViewManager.AddView(mLevelCompletedDialogController.GetView());
-    mViewManager.AddView(mSettingsMenuController.GetView());
-    mViewManager.AddView(mNoLivesDialogController.GetView());
-    mViewManager.AddView(mRestartConfirmationDialogController.GetView());
-    mViewManager.AddView(mMapConfirmationDialogController.GetView());
+    mNoLivesDialogController {engine, commonResources, userData, PotentiallyZoomedScreen::Yes},
+    mLevelGoalDialogController {engine, commonResources, pieceResources} {
+        
+    mViewManager.AddView(static_cast<int>(GameHud), mGameHudController.GetView());
+    mViewManager.AddView(static_cast<int>(GameMenu), mGameMenuController.GetView());
+    mViewManager.AddView(static_cast<int>(GameOverDialog), mGameOverDialogController.GetView());
+    mViewManager.AddView(static_cast<int>(NoMovesDialog), mNoMovesDialogController.GetView());
+    mViewManager.AddView(static_cast<int>(LevelCompletedDialog), mLevelCompletedDialogController.GetView());
+    mViewManager.AddView(static_cast<int>(SettingsMenu), mSettingsMenuController.GetView());
+    mViewManager.AddView(static_cast<int>(NoLivesDialog), mNoLivesDialogController.GetView());
+    mViewManager.AddView(static_cast<int>(LevelGoalDialog), mLevelGoalDialogController.GetView());
+    mViewManager.AddView(static_cast<int>(RestartConfirmationDialog), mRestartConfirmationDialogController.GetView());
+    mViewManager.AddView(static_cast<int>(MapConfirmationDialog), mMapConfirmationDialogController.GetView());
 }
 
 void GameViewControllers::Init(GameScene& scene) {

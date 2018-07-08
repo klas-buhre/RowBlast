@@ -67,6 +67,7 @@ namespace RowBlast {
         Command UpdateGame();
         Command UpdateInPausedState();
         void UpdateGameMenu();
+        void UpdateLevelGoalDialog();
         void UpdateSettingsMenu();
         Command UpdateNoLivesDialog();
         Command UpdateRestartConfirmationDialog();
@@ -84,6 +85,7 @@ namespace RowBlast {
         void GoToPausedStateRestartConfirmationDialog();
         void GoToPausedStateMapConfirmationDialog();
         void GoToPausedStateSettingsMenu();
+        void GoToPausedStateLevelGoalDialog();
         void GoToPausedStateGameMenu(SlidingMenuAnimation::UpdateFade updateFade);
         void GoToGameOverStateGameOverDialog();
         void GoToGameOverStateNoLivesDialog();
@@ -104,6 +106,7 @@ namespace RowBlast {
         
         enum class PausedState {
             GameMenu,
+            LevelGoalDialog,
             SettingsMenu,
             NoLivesDialog,
             RestartConfirmationDialog,
@@ -121,6 +124,7 @@ namespace RowBlast {
         GameOverState mGameOverState {GameOverState::GameOverDialog};
         Pht::IEngine& mEngine;
         UserData& mUserData;
+        PieceResources mPieceResources;
         GameViewControllers mGameViewControllers;
         Field mField;
         CollapsingFieldAnimation mCollapsingFieldAnimation;
@@ -136,7 +140,6 @@ namespace RowBlast {
         ClearLastBlocksAnimation mClearLastBlocksAnimation;
         GameLogic mGameLogic;
         FallingPieceAnimation& mFallingPieceAnimation;
-        PieceResources mPieceResources;
         LevelResources mLevelResources;
         PreviewPiecesAnimation mPreviewPiecesAnimation;
         BlueprintSlotsFilledAnimation mBlueprintSlotsFilledAnimation;

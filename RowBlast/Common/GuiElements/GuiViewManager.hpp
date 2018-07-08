@@ -1,7 +1,7 @@
 #ifndef GuiViewManager_hpp
 #define GuiViewManager_hpp
 
-#include <vector>
+#include <map>
 
 namespace Pht {
     class GuiView;
@@ -12,12 +12,12 @@ namespace RowBlast {
     class GuiViewManager {
     public:
         void Init(Pht::SceneObject& parentObject);
-        void AddView(Pht::GuiView& view);
-        void ActivateView(int viewIndex);
+        void AddView(int viewId, Pht::GuiView& view);
+        void ActivateView(int viewId);
         void DeactivateAllViews();
         
     private:
-        std::vector<Pht::GuiView*> mViews;
+        std::map<int, Pht::GuiView*> mViews;
     };
 }
 

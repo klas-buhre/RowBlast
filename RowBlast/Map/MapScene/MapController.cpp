@@ -77,8 +77,8 @@ MapController::Command MapController::Update() {
         case State::AvatarAnimation:
             command = UpdateMap();
             break;
-        case State::LevelStartDialog:
-            command = UpdateLevelStartDialog();
+        case State::LevelGoalDialog:
+            command = UpdateLevelGoalDialog();
             break;
         case State::NoLivesDialog:
             UpdateNoLivesDialog();
@@ -108,7 +108,7 @@ void MapController::UpdateAvatarAnimation() {
         switch (mState) {
             case State::AvatarAnimation:
                 if (mStartLevelDialogOnAnimationFinished) {
-                    GoToLevelStartDialogState(mLevelToStart);
+                    GoToLevelGoalDialogState(mLevelToStart);
                 }
                 if (mHideAvatarOnAnimationFinished) {
                     mAvatar.Hide();
@@ -120,16 +120,16 @@ void MapController::UpdateAvatarAnimation() {
     }
 }
 
-MapController::Command MapController::UpdateLevelStartDialog() {
+MapController::Command MapController::UpdateLevelGoalDialog() {
     auto command {Command{Command::None}};
 
-    switch (mMapViewControllers.GetLevelStartDialogController().Update()) {
-        case LevelStartDialogController::Result::None:
+    switch (mMapViewControllers.GetLevelGoalDialogController().Update()) {
+        case LevelGoalDialogController::Result::None:
             break;
-        case LevelStartDialogController::Result::Play:
+        case LevelGoalDialogController::Result::Play:
             command = Command {Command::StartGame, mLevelToStart};
             break;
-        case LevelStartDialogController::Result::Close:
+        case LevelGoalDialogController::Result::Close:
             mState = State::Map;
             mMapViewControllers.SetActiveController(MapViewControllers::SettingsButton);
             break;
@@ -243,7 +243,7 @@ MapController::Command MapController::HandlePinClick(const MapPin& pin) {
     switch (mapPlace.GetKind()) {
         case MapPlace::Kind::MapLevel:
             if (mUserData.GetLifeManager().GetNumLives() > 0) {
-                GoToLevelStartDialogState(pin.GetLevel());
+                GoToLevelGoalDialogState(pin.GetLevel());
             } else {
                 mState = State::NoLivesDialog;
                 mMapViewControllers.SetActiveController(MapViewControllers::NoLivesDialog);
@@ -342,17 +342,18 @@ void MapController::GoToAvatarAnimationState(int levelToStart) {
     }
 }
 
-void MapController::GoToLevelStartDialogState(int levelToStart) {
+void MapController::GoToLevelGoalDialogState(int levelToStart) {
     if (mScene.GetWorldId() != mUniverse.CalcWorldId(levelToStart)) {
         return;
     }
 
-    mState = State::LevelStartDialog;
+    mState = State::LevelGoalDialog;
     mLevelToStart = levelToStart;
-    mMapViewControllers.SetActiveController(MapViewControllers::LevelStartDialog);
+    mMapViewControllers.SetActiveController(MapViewControllers::LevelGoalDialog);
 
     auto levelInfo {LevelLoader::LoadInfo(levelToStart, mLevelResources)};
-    mMapViewControllers.GetLevelStartDialogController().Init(*levelInfo);
+    auto& levelGoalDialogController {mMapViewControllers.GetLevelGoalDialogController()};
+    levelGoalDialogController.Init(SlidingMenuAnimation::UpdateFade::Yes, *levelInfo);
 }
 
 void MapController::GoToSettingsMenuState() {

@@ -1,4 +1,4 @@
-#include "LevelStartDialogView.hpp"
+#include "LevelGoalDialogView.hpp"
 
 // Engine includes.
 #include "TextComponent.hpp"
@@ -27,9 +27,9 @@ namespace {
     constexpr auto emissiveAmplitude {1.7f};
 }
 
-LevelStartDialogView::LevelStartDialogView(Pht::IEngine& engine,
-                                           const CommonResources& commonResources,
-                                           PieceResources& pieceResources) :
+LevelGoalDialogView::LevelGoalDialogView(Pht::IEngine& engine,
+                                         const CommonResources& commonResources,
+                                         PieceResources& pieceResources) :
     mEngine {engine},
     mPieceResources {pieceResources} {
 
@@ -113,7 +113,7 @@ LevelStartDialogView::LevelStartDialogView(Pht::IEngine& engine,
     CreatePreviewPiecesContainer(engine);
 }
 
-void LevelStartDialogView::CreatePreviewPiecesContainer(Pht::IEngine& engine) {
+void LevelGoalDialogView::CreatePreviewPiecesContainer(Pht::IEngine& engine) {
     auto container {std::make_unique<Pht::SceneObject>()};
     container->GetTransform().SetPosition({0.0f, 2.3f, UiLayer::block});
     
@@ -133,7 +133,7 @@ void LevelStartDialogView::CreatePreviewPiecesContainer(Pht::IEngine& engine) {
     AddSceneObject(std::move(container));
 }
 
-void LevelStartDialogView::CreateGlowEffects(Pht::SceneObject& parentObject, Pht::IEngine& engine) {
+void LevelGoalDialogView::CreateGlowEffects(Pht::SceneObject& parentObject, Pht::IEngine& engine) {
     Pht::EmitterSettings particleEmitterSettings {
         .mPosition = Pht::Vec3{0.0f, 0.0f, 0.0f},
         .mSize = Pht::Vec3{0.0f, 0.0f, 0.0f},
@@ -194,7 +194,7 @@ void LevelStartDialogView::CreateGlowEffects(Pht::SceneObject& parentObject, Pht
     parentObject.AddChild(*mRoundGlowEffect);
 }
 
-void LevelStartDialogView::Init(const LevelInfo& levelInfo) {
+void LevelGoalDialogView::Init(const LevelInfo& levelInfo) {
     mCaption->GetText() = "LEVEL " + std::to_string(levelInfo.mId);
     
     mClearObjective->GetSceneObject().SetIsVisible(false);
@@ -255,9 +255,9 @@ void LevelStartDialogView::Init(const LevelInfo& levelInfo) {
     mRowBombRotation = {0.0f, 0.0f, 0.0f};
 }
 
-void LevelStartDialogView::InitPreviewPiece(LevelStartPreviewPiece& previewPiece,
-                                            const Piece& pieceType,
-                                            const Pht::Vec3& position) {
+void LevelGoalDialogView::InitPreviewPiece(LevelStartPreviewPiece& previewPiece,
+                                           const Piece& pieceType,
+                                           const Pht::Vec3& position) {
     previewPiece.mBombSceneObject = nullptr;
     previewPiece.mRowBombSceneObject = nullptr;
 
@@ -320,12 +320,12 @@ void LevelStartDialogView::InitPreviewPiece(LevelStartPreviewPiece& previewPiece
     }
 }
 
-void LevelStartDialogView::StartEffects() {
+void LevelGoalDialogView::StartEffects() {
     mGlowEffect->GetComponent<Pht::ParticleEffect>()->Start();
     mRoundGlowEffect->GetComponent<Pht::ParticleEffect>()->Start();
 }
 
-void LevelStartDialogView::Update() {
+void LevelGoalDialogView::Update() {
     auto dt {mEngine.GetLastFrameSeconds()};
     
     mGlowEffect->GetComponent<Pht::ParticleEffect>()->Update(dt);
@@ -334,7 +334,7 @@ void LevelStartDialogView::Update() {
     UpdateAnimations(dt);
 }
 
-void LevelStartDialogView::UpdateAnimations(float dt) {
+void LevelGoalDialogView::UpdateAnimations(float dt) {
     mAnimationTime += dt;
     
     if (mAnimationTime > bombAnimationDuration) {
@@ -346,7 +346,7 @@ void LevelStartDialogView::UpdateAnimations(float dt) {
     AnimateRowBombRotation(dt);
 }
 
-void LevelStartDialogView::AnimateEmissive(float dt) {
+void LevelGoalDialogView::AnimateEmissive(float dt) {
     mEmissiveAnimationTime += dt;
     
     if (mEmissiveAnimationTime > emissiveAnimationDuration) {
@@ -362,7 +362,7 @@ void LevelStartDialogView::AnimateEmissive(float dt) {
                                                    emissive);
 }
 
-void LevelStartDialogView::AnimateBombRotation(float dt) {
+void LevelGoalDialogView::AnimateBombRotation(float dt) {
     auto t {mAnimationTime * 2.0f * 3.1415f / bombAnimationDuration};
     auto xAngle {bombRotationAmplitude * sin(t) + 90.0f};
     auto yAngle {bombRotationAmplitude * cos(t)};
@@ -374,7 +374,7 @@ void LevelStartDialogView::AnimateBombRotation(float dt) {
     }
 }
 
-void LevelStartDialogView::AnimateRowBombRotation(float dt) {
+void LevelGoalDialogView::AnimateRowBombRotation(float dt) {
     mRowBombRotation.y += rowBombRotationSpeed * dt;
     
     if (mRowBombRotation.y > 360.0f) {

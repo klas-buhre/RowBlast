@@ -35,7 +35,8 @@ GameController::GameController(Pht::IEngine& engine,
                                Settings& settings) :
     mEngine {engine},
     mUserData {userData},
-    mGameViewControllers {engine, commonResources, mUserData, settings},
+    mPieceResources {engine, commonResources},
+    mGameViewControllers {engine, commonResources, mUserData, settings, mPieceResources},
     mField {},
     mCollapsingFieldAnimation {mField},
     mFlashingBlocksAnimation {mField},
@@ -68,7 +69,6 @@ GameController::GameController(Pht::IEngine& engine,
         settings
     },
     mFallingPieceAnimation {mGameLogic.GetFallingPieceAnimation()},
-    mPieceResources {engine, mScene},
     mLevelResources {engine, mScene, commonResources},
     mPreviewPiecesAnimation {mScene, mGameLogic},
     mBlueprintSlotsFilledAnimation {mField, mScene, mLevelResources},
@@ -214,6 +214,9 @@ GameController::Command GameController::UpdateInPausedState() {
         case PausedState::GameMenu:
             UpdateGameMenu();
             break;
+        case PausedState::LevelGoalDialog:
+            UpdateLevelGoalDialog();
+            break;
         case PausedState::SettingsMenu:
             UpdateSettingsMenu();
             break;
@@ -244,14 +247,28 @@ void GameController::UpdateGameMenu() {
         case GameMenuController::Result::UndoMove:
             mGameLogic.UndoMove();
             break;
-        case GameMenuController::Result::RestartGame:
-            GoToPausedStateRestartConfirmationDialog();
+        case GameMenuController::Result::GoToLevelGoalDialog:
+            GoToPausedStateLevelGoalDialog();
             break;
         case GameMenuController::Result::GoToSettingsMenu:
             GoToPausedStateSettingsMenu();
             break;
+        case GameMenuController::Result::RestartGame:
+            GoToPausedStateRestartConfirmationDialog();
+            break;
         case GameMenuController::Result::BackToMap:
             GoToPausedStateMapConfirmationDialog();
+            break;
+    }
+}
+
+void GameController::UpdateLevelGoalDialog() {
+    switch (mGameViewControllers.GetLevelGoalDialogController().Update()) {
+        case LevelGoalDialogController::Result::None:
+            break;
+        case LevelGoalDialogController::Result::Play:
+        case LevelGoalDialogController::Result::Close:
+            GoToPausedStateGameMenu(SlidingMenuAnimation::UpdateFade::Yes);
             break;
     }
 }
@@ -486,6 +503,15 @@ void GameController::GoToPausedStateSettingsMenu() {
     mPausedState = PausedState::SettingsMenu;
     mGameViewControllers.SetActiveController(GameViewControllers::SettingsMenu);
     mGameViewControllers.GetSettingsMenuController().Init(SlidingMenuAnimation::UpdateFade::No);
+}
+
+void GameController::GoToPausedStateLevelGoalDialog() {
+    mPausedState = PausedState::LevelGoalDialog;
+    mGameViewControllers.SetActiveController(GameViewControllers::LevelGoalDialog);
+    
+    auto levelInfo {LevelLoader::LoadInfo(mLevel->GetId(), mLevelResources)};
+    auto& levelGoalDialogController {mGameViewControllers.GetLevelGoalDialogController()};
+    levelGoalDialogController.Init(SlidingMenuAnimation::UpdateFade::No, *levelInfo);
 }
 
 void GameController::GoToPausedStateGameMenu(SlidingMenuAnimation::UpdateFade updateFade) {

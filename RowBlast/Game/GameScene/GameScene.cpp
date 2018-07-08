@@ -496,22 +496,6 @@ void GameScene::UpdateLightAnimation() {
     mLight->SetDirection(lightDirectionA.Lerp(t, lightDirectionB));
 }
 
-const Pht::Material& GameScene::GetRedMaterial() const {
-    return mCommonResources.GetMaterials().GetRedFieldBlockMaterial();
-}
-
-const Pht::Material& GameScene::GetBlueMaterial() const {
-    return mCommonResources.GetMaterials().GetBlueFieldBlockMaterial();
-}
-
-const Pht::Material& GameScene::GetGreenMaterial() const {
-    return mCommonResources.GetMaterials().GetGreenFieldBlockMaterial();
-}
-
 const Pht::Material& GameScene::GameScene::GetGrayMaterial() const {
     return mCommonResources.GetMaterials().GetGrayFieldBlockMaterial();
-}
-
-const Pht::Material& GameScene::GetYellowMaterial() const {
-    return mCommonResources.GetMaterials().GetYellowFieldBlockMaterial();
 }

@@ -20,8 +20,9 @@ namespace RowBlast {
             None,
             ResumeGame,
             UndoMove,
-            RestartGame,
+            GoToLevelGoalDialog,
             GoToSettingsMenu,
+            RestartGame,
             BackToMap
         };
         

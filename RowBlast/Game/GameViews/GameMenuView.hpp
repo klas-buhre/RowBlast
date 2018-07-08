@@ -34,6 +34,10 @@ namespace RowBlast {
         const MenuButton& GetUndoButton() const {
             return *mUndoButton;
         }
+        
+        const MenuButton& GetGoalButton() const {
+            return *mGoalButton;
+        }
 
         const MenuButton& GetRestartButton() const {
             return *mRestartButton;

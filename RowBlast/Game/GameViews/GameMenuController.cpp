@@ -66,16 +66,23 @@ GameMenuController::Result GameMenuController::OnTouch(const Pht::TouchEvent& to
             return Result::UndoMove;
         }
     }
+
+    if (mView.GetGoalButton().IsClicked(touchEvent)) {
+        mDeferredResult = Result::GoToLevelGoalDialog;
+        mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::Yes,
+                                            SlidingMenuAnimation::SlideDirection::Left);
+        return Result::None;
+    }
     
-    if (mView.GetRestartButton().IsClicked(touchEvent)) {
-        mDeferredResult = Result::RestartGame;
+    if (mView.GetSettingsButton().IsClicked(touchEvent)) {
+        mDeferredResult = Result::GoToSettingsMenu;
         mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::No,
                                             SlidingMenuAnimation::SlideDirection::Left);
         return Result::None;
     }
 
-    if (mView.GetSettingsButton().IsClicked(touchEvent)) {
-        mDeferredResult = Result::GoToSettingsMenu;
+    if (mView.GetRestartButton().IsClicked(touchEvent)) {
+        mDeferredResult = Result::RestartGame;
         mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::No,
                                             SlidingMenuAnimation::SlideDirection::Left);
         return Result::None;

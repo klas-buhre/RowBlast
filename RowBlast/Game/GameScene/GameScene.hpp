@@ -63,12 +63,7 @@ namespace RowBlast {
         void Update();
         void UpdateLightAnimation();
         void SetScissorBox(const Pht::ScissorBox& scissorBox);
-        const Pht::Material& GetRedMaterial() const;
-        const Pht::Material& GetBlueMaterial() const;
-        const Pht::Material& GetGreenMaterial() const;
         const Pht::Material& GetGrayMaterial() const;
-        const Pht::Material& GetLightGrayMaterial() const;
-        const Pht::Material& GetYellowMaterial() const;
         const Pht::ScissorBox& GetFieldScissorBox() const;
         
         const CommonResources& GetCommonResources() const {
@@ -191,10 +186,6 @@ namespace RowBlast {
             return mFieldLoweLeft;
         }
         
-        float GetGhostPieceOpacity() const {
-            return mGhostPieceOpacity;
-        }
-        
     private:
         void UpdateCameraPosition();
         void CreateRenderPasses();
@@ -257,7 +248,6 @@ namespace RowBlast {
         float mFieldWidth {0.0f};
         float mFieldHeight {0.0f};
         Pht::Vec2 mFieldLoweLeft;
-        const float mGhostPieceOpacity {0.5f};
         std::unique_ptr<GameHud> mHud;
     };
 }

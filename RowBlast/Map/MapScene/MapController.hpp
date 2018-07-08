@@ -45,7 +45,7 @@ namespace RowBlast {
         enum class State {
             Map,
             AvatarAnimation,
-            LevelStartDialog,
+            LevelGoalDialog,
             NoLivesDialog,
             SettingsMenu
         };
@@ -59,7 +59,7 @@ namespace RowBlast {
                       PieceResources& pieceResources);
     
         void Init();
-        void GoToLevelStartDialogState(int levelToStart);
+        void GoToLevelGoalDialogState(int levelToStart);
         void GoToAvatarAnimationState(int levelToStart);
         Command Update();
         
@@ -74,7 +74,7 @@ namespace RowBlast {
     private:
         Command UpdateMap();
         void UpdateAvatarAnimation();
-        Command UpdateLevelStartDialog();
+        Command UpdateLevelGoalDialog();
         void UpdateNoLivesDialog();
         void UpdateSettingsMenu();
         Command HandleInput();

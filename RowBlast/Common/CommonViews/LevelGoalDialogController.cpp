@@ -1,4 +1,4 @@
-#include "LevelStartDialogController.hpp"
+#include "LevelGoalDialogController.hpp"
 
 // Engine includes.
 #include "IEngine.hpp"
@@ -9,24 +9,32 @@
 
 using namespace RowBlast;
 
-LevelStartDialogController::LevelStartDialogController(Pht::IEngine& engine,
-                                                       const CommonResources& commonResources,
-                                                       PieceResources& pieceResources) :
+LevelGoalDialogController::LevelGoalDialogController(Pht::IEngine& engine,
+                                                     const CommonResources& commonResources,
+                                                     PieceResources& pieceResources) :
     mInput {engine.GetInput()},
     mView {engine, commonResources, pieceResources},
     mSlidingMenuAnimation {engine, mView} {}
 
-void LevelStartDialogController::Init(const LevelInfo& levelInfo) {
+void LevelGoalDialogController::Init(SlidingMenuAnimation::UpdateFade updateFade,
+                                     const LevelInfo& levelInfo) {
+    mUpdateFade = updateFade;
+    
+    auto slideInDirection {
+        updateFade == SlidingMenuAnimation::UpdateFade::Yes ?
+            SlidingMenuAnimation::SlideDirection::Scale :
+            SlidingMenuAnimation::SlideDirection::Left
+    };
+
     mView.Init(levelInfo);
-    mSlidingMenuAnimation.Init(SlidingMenuAnimation::UpdateFade::Yes,
-                               SlidingMenuAnimation::SlideDirection::Scale);
+    mSlidingMenuAnimation.Init(updateFade, slideInDirection);
 }
 
-void LevelStartDialogController::SetFadeEffect(Pht::FadeEffect& fadeEffect) {
+void LevelGoalDialogController::SetFadeEffect(Pht::FadeEffect& fadeEffect) {
     mSlidingMenuAnimation.SetFadeEffect(fadeEffect);
 }
 
-LevelStartDialogController::Result LevelStartDialogController::Update() {
+LevelGoalDialogController::Result LevelGoalDialogController::Update() {
     mView.Update();
     
     auto previousSlidingMenuAnimationState {mSlidingMenuAnimation.GetState()};
@@ -50,16 +58,16 @@ LevelStartDialogController::Result LevelStartDialogController::Update() {
     return Result::None;
 }
 
-LevelStartDialogController::Result LevelStartDialogController::HandleInput() {
+LevelGoalDialogController::Result LevelGoalDialogController::HandleInput() {
     return InputUtil::HandleInput<Result, Result::None>(
         mInput, [this] (const Pht::TouchEvent& touch) { return OnTouch(touch); });
 }
 
-LevelStartDialogController::Result
-LevelStartDialogController::OnTouch(const Pht::TouchEvent& touchEvent) {
+LevelGoalDialogController::Result
+LevelGoalDialogController::OnTouch(const Pht::TouchEvent& touchEvent) {
     if (mView.GetCloseButton().IsClicked(touchEvent)) {
         mDeferredResult = Result::Close;
-        mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::Yes,
+        mSlidingMenuAnimation.StartSlideOut(mUpdateFade,
                                             SlidingMenuAnimation::SlideDirection::Left);
     }
 

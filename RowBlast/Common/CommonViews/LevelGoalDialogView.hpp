@@ -1,5 +1,5 @@
-#ifndef LevelStartDialogView_hpp
-#define LevelStartDialogView_hpp
+#ifndef LevelGoalDialogView_hpp
+#define LevelGoalDialogView_hpp
 
 #include <memory>
 #include <array>
@@ -23,11 +23,11 @@ namespace RowBlast {
     class LevelInfo;
     class PieceResources;
     
-    class LevelStartDialogView: public Pht::GuiView {
+    class LevelGoalDialogView: public Pht::GuiView {
     public:
-        LevelStartDialogView(Pht::IEngine& engine,
-                             const CommonResources& commonResources,
-                             PieceResources& pieceResources);
+        LevelGoalDialogView(Pht::IEngine& engine,
+                            const CommonResources& commonResources,
+                            PieceResources& pieceResources);
         
         void Init(const LevelInfo& levelInfo);
         void StartEffects();

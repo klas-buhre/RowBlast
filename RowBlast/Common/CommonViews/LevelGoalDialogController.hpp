@@ -1,8 +1,8 @@
-#ifndef LevelStartDialogController_hpp
-#define LevelStartDialogController_hpp
+#ifndef LevelGoalDialogController_hpp
+#define LevelGoalDialogController_hpp
 
 // Game includes.
-#include "LevelStartDialogView.hpp"
+#include "LevelGoalDialogView.hpp"
 #include "SlidingMenuAnimation.hpp"
 
 namespace Pht {
@@ -14,7 +14,7 @@ namespace RowBlast {
     class CommonResources;
     class PieceResources;
     
-    class LevelStartDialogController {
+    class LevelGoalDialogController {
     public:
         enum class Result {
             None,
@@ -22,15 +22,15 @@ namespace RowBlast {
             Close
         };
         
-        LevelStartDialogController(Pht::IEngine& engine,
-                                   const CommonResources& commonResources,
-                                   PieceResources& pieceResources);
+        LevelGoalDialogController(Pht::IEngine& engine,
+                                  const CommonResources& commonResources,
+                                  PieceResources& pieceResources);
         
-        void Init(const LevelInfo& levelInfo);
+        void Init(SlidingMenuAnimation::UpdateFade updateFade, const LevelInfo& levelInfo);
         void SetFadeEffect(Pht::FadeEffect& fadeEffect);
         Result Update();
         
-        LevelStartDialogView& GetView() {
+        LevelGoalDialogView& GetView() {
             return mView;
         }
     
@@ -39,9 +39,10 @@ namespace RowBlast {
         Result OnTouch(const Pht::TouchEvent& touchEvent);
         
         Pht::IInput& mInput;
-        LevelStartDialogView mView;
+        LevelGoalDialogView mView;
         SlidingMenuAnimation mSlidingMenuAnimation;
         Result mDeferredResult {Result::None};
+        SlidingMenuAnimation::UpdateFade mUpdateFade {SlidingMenuAnimation::UpdateFade::Yes};
     };
 }
 

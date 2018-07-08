@@ -44,7 +44,12 @@ Backlog:
     -Credit Google for avatars? : http://www.iconarchive.com/show/noto-emoji-people-face-icons-by-google.1.html
 
 Ongoing tasks:
-    -Maybe the level objective/start dialog should be available from the game menu.
+    -Maybe the level goal dialog should be available from the game menu.
+        -The dialog should slide out to the right when in the game scene.
+        -Fix menu window size for iPhone X, everything int the view should be potentially zoomed.
+        -Fix hud camera position when displaying the dialog.
+        -Maybe hide the close and play buttons in the game scene and show a back button instead.
+        -Should there still be background fade in the game scene?
 
 
 Ideas:
@@ -471,7 +476,7 @@ void RowBlastApplication::UpdateGameScene() {
                 }
                 break;
             case GameController::Command::RestartLevel:
-                BeginFadeToMap(MapController::State::LevelStartDialog);
+                BeginFadeToMap(MapController::State::LevelGoalDialog);
                 break;
             case GameController::Command::GoToNextLevel:
                 mLevelToStart = mUserData.GetProgressManager().GetCurrentLevel() + 1;
@@ -479,7 +484,7 @@ void RowBlastApplication::UpdateGameScene() {
                     BeginFadeToMap(MapController::State::AvatarAnimation);
                     mMapController.SetStartLevelDialogOnAnimationFinished(true);
                 } else {
-                    BeginFadeToMap(MapController::State::LevelStartDialog);
+                    BeginFadeToMap(MapController::State::LevelGoalDialog);
                 }
                 break;
         }
@@ -530,9 +535,9 @@ void RowBlastApplication::StartMap() {
     switch (mMapControllerInitialState) {
         case MapController::State::Map:
             break;
-        case MapController::State::LevelStartDialog:
+        case MapController::State::LevelGoalDialog:
             mMapController.GetScene().SetCameraAtLevel(mLevelToStart);
-            mMapController.GoToLevelStartDialogState(mLevelToStart);
+            mMapController.GoToLevelGoalDialogState(mLevelToStart);
             break;
         case MapController::State::AvatarAnimation:
             mMapController.GetScene().SetCameraBetweenLevels(mLevelToStart - 1, mLevelToStart);

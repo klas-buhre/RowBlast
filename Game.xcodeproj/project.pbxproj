@@ -273,6 +273,8 @@
 		6287B4D620EA742400C00EF0 /* sky7.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6287B4D520EA742300C00EF0 /* sky7.jpg */; };
 		6287B4D820EA74F900C00EF0 /* sky8.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6287B4D720EA74F900C00EF0 /* sky8.jpg */; };
 		6287B4DB20ECCA6400C00EF0 /* FieldBorder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6287B4D920ECCA6400C00EF0 /* FieldBorder.cpp */; };
+		6287B4E020F25C7700C00EF0 /* LevelGoalDialogView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6287B4DC20F25C7600C00EF0 /* LevelGoalDialogView.cpp */; };
+		6287B4E120F25C7700C00EF0 /* LevelGoalDialogController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6287B4DE20F25C7700C00EF0 /* LevelGoalDialogController.cpp */; };
 		628EC29A207D24090071F368 /* level30.json in Resources */ = {isa = PBXBuildFile; fileRef = 628EC299207D24080071F368 /* level30.json */; };
 		628EC2AC2080C4880071F368 /* level31.json in Resources */ = {isa = PBXBuildFile; fileRef = 628EC2AB2080C4880071F368 /* level31.json */; };
 		6299DD7A208B4178001F74E2 /* CameraShake.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6299DD78208B4178001F74E2 /* CameraShake.cpp */; };
@@ -281,8 +283,6 @@
 		629AB6A220DFDD7600D43A0D /* Universe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 629AB6A020DFDD7600D43A0D /* Universe.cpp */; };
 		629AB6A520E140E800D43A0D /* PortalParticleEffect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 629AB6A320E140E800D43A0D /* PortalParticleEffect.cpp */; };
 		629AB6AD20E15FA400D43A0D /* portal.png in Resources */ = {isa = PBXBuildFile; fileRef = 629AB6AC20E15FA400D43A0D /* portal.png */; };
-		629B837120BAD7DA00DD2D0E /* LevelStartDialogView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 629B836F20BAD7DA00DD2D0E /* LevelStartDialogView.cpp */; };
-		629B837420BAD82E00DD2D0E /* LevelStartDialogController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 629B837220BAD82E00DD2D0E /* LevelStartDialogController.cpp */; };
 		629B837620BED74E00DD2D0E /* flare03.png in Resources */ = {isa = PBXBuildFile; fileRef = 629B837520BED74D00DD2D0E /* flare03.png */; };
 		629B837820C4470300DD2D0E /* level33.json in Resources */ = {isa = PBXBuildFile; fileRef = 629B837720C4470200DD2D0E /* level33.json */; };
 		629B837A20C458F700DD2D0E /* level34.json in Resources */ = {isa = PBXBuildFile; fileRef = 629B837920C458F600DD2D0E /* level34.json */; };
@@ -897,6 +897,10 @@
 		6287B4D720EA74F900C00EF0 /* sky8.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sky8.jpg; sourceTree = "<group>"; };
 		6287B4D920ECCA6400C00EF0 /* FieldBorder.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FieldBorder.cpp; sourceTree = "<group>"; };
 		6287B4DA20ECCA6400C00EF0 /* FieldBorder.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = FieldBorder.hpp; sourceTree = "<group>"; };
+		6287B4DC20F25C7600C00EF0 /* LevelGoalDialogView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelGoalDialogView.cpp; sourceTree = "<group>"; };
+		6287B4DD20F25C7600C00EF0 /* LevelGoalDialogController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LevelGoalDialogController.hpp; sourceTree = "<group>"; };
+		6287B4DE20F25C7700C00EF0 /* LevelGoalDialogController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelGoalDialogController.cpp; sourceTree = "<group>"; };
+		6287B4DF20F25C7700C00EF0 /* LevelGoalDialogView.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LevelGoalDialogView.hpp; sourceTree = "<group>"; };
 		628EC299207D24080071F368 /* level30.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level30.json; sourceTree = "<group>"; };
 		628EC2AB2080C4880071F368 /* level31.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level31.json; sourceTree = "<group>"; };
 		6299DD78208B4178001F74E2 /* CameraShake.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CameraShake.cpp; sourceTree = "<group>"; };
@@ -909,10 +913,6 @@
 		629AB6A320E140E800D43A0D /* PortalParticleEffect.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PortalParticleEffect.cpp; sourceTree = "<group>"; };
 		629AB6A420E140E800D43A0D /* PortalParticleEffect.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PortalParticleEffect.hpp; sourceTree = "<group>"; };
 		629AB6AC20E15FA400D43A0D /* portal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = portal.png; sourceTree = "<group>"; };
-		629B836F20BAD7DA00DD2D0E /* LevelStartDialogView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LevelStartDialogView.cpp; sourceTree = "<group>"; };
-		629B837020BAD7DA00DD2D0E /* LevelStartDialogView.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = LevelStartDialogView.hpp; sourceTree = "<group>"; };
-		629B837220BAD82E00DD2D0E /* LevelStartDialogController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LevelStartDialogController.cpp; sourceTree = "<group>"; };
-		629B837320BAD82E00DD2D0E /* LevelStartDialogController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = LevelStartDialogController.hpp; sourceTree = "<group>"; };
 		629B837520BED74D00DD2D0E /* flare03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = flare03.png; sourceTree = "<group>"; };
 		629B837720C4470200DD2D0E /* level33.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level33.json; sourceTree = "<group>"; };
 		629B837920C458F600DD2D0E /* level34.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level34.json; sourceTree = "<group>"; };
@@ -1970,6 +1970,10 @@
 		62785D6F2087618E006F9869 /* CommonViews */ = {
 			isa = PBXGroup;
 			children = (
+				6287B4DE20F25C7700C00EF0 /* LevelGoalDialogController.cpp */,
+				6287B4DD20F25C7600C00EF0 /* LevelGoalDialogController.hpp */,
+				6287B4DC20F25C7600C00EF0 /* LevelGoalDialogView.cpp */,
+				6287B4DF20F25C7700C00EF0 /* LevelGoalDialogView.hpp */,
 				62785D712087618E006F9869 /* NoLivesDialogController.cpp */,
 				62785D782087618E006F9869 /* NoLivesDialogController.hpp */,
 				62785D722087618E006F9869 /* NoLivesDialogView.cpp */,
@@ -2061,10 +2065,6 @@
 		62785DA42087618E006F9869 /* MapViews */ = {
 			isa = PBXGroup;
 			children = (
-				629B837220BAD82E00DD2D0E /* LevelStartDialogController.cpp */,
-				629B837320BAD82E00DD2D0E /* LevelStartDialogController.hpp */,
-				629B836F20BAD7DA00DD2D0E /* LevelStartDialogView.cpp */,
-				629B837020BAD7DA00DD2D0E /* LevelStartDialogView.hpp */,
 				62785DA92087618E006F9869 /* MapViewControllers.cpp */,
 				62785DA72087618E006F9869 /* MapViewControllers.hpp */,
 				62785DA62087618E006F9869 /* SettingsButtonController.cpp */,
@@ -2284,6 +2284,7 @@
 				62398E60209A2784000F5F79 /* TitleAnimation.cpp in Sources */,
 				62785DD62087618E006F9869 /* ZPiece.cpp in Sources */,
 				62785DB02087618E006F9869 /* GameMenuView.cpp in Sources */,
+				6287B4E020F25C7700C00EF0 /* LevelGoalDialogView.cpp in Sources */,
 				62785DC02087618E006F9869 /* GameSceneRenderer.cpp in Sources */,
 				62785DC72087618E006F9869 /* GestureInputHandler.cpp in Sources */,
 				62785B3920875937006F9869 /* FileSystemIOS.mm in Sources */,
@@ -2295,6 +2296,7 @@
 				62487E7020D7F40400E4429E /* Avatar.cpp in Sources */,
 				62785DEB2087618E006F9869 /* Level.cpp in Sources */,
 				62785DC82087618E006F9869 /* CollisionDetection.cpp in Sources */,
+				6287B4E120F25C7700C00EF0 /* LevelGoalDialogController.cpp in Sources */,
 				62785E062087618E006F9869 /* SettingsMenuView.cpp in Sources */,
 				62785DC62087618E006F9869 /* Piece.cpp in Sources */,
 				62785B0F20875937006F9869 /* RenderableObject.cpp in Sources */,
@@ -2314,7 +2316,6 @@
 				622DDC8820ADB65C002862FA /* LevelCompletedController.cpp in Sources */,
 				62785DF02087618E006F9869 /* EffectManager.cpp in Sources */,
 				62785B4720875937006F9869 /* SceneObject.cpp in Sources */,
-				629B837420BAD82E00DD2D0E /* LevelStartDialogController.cpp in Sources */,
 				62785B0E20875937006F9869 /* Camera.cpp in Sources */,
 				62785DB42087618E006F9869 /* GameMenuController.cpp in Sources */,
 				62785E0A2087618E006F9869 /* Clouds.cpp in Sources */,
@@ -2375,7 +2376,6 @@
 				62785B4620875937006F9869 /* CameraComponent.cpp in Sources */,
 				62785B4A20875937006F9869 /* ParticleSystem.cpp in Sources */,
 				62785E092087618E006F9869 /* RoundedCylinder.cpp in Sources */,
-				629B837120BAD7DA00DD2D0E /* LevelStartDialogView.cpp in Sources */,
 				62785E142087618E006F9869 /* MapScene.cpp in Sources */,
 				62785DC42087618E006F9869 /* GameController.cpp in Sources */,
 				62785B0A20875937006F9869 /* QuadMesh.cpp in Sources */,

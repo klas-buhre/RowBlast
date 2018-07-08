@@ -7,10 +7,10 @@
 #include "ISceneManager.hpp"
 #include "Material.hpp"
 #include "ObjMesh.hpp"
-#include "SphereMesh.hpp"
+#include "QuadMesh.hpp"
 
 // Game includes.
-#include "GameScene.hpp"
+#include "CommonResources.hpp"
 #include "FlashingBlocksAnimation.hpp"
 
 using namespace RowBlast;
@@ -18,6 +18,8 @@ using namespace RowBlast;
 namespace {
     constexpr auto numWeldRenderables {3};
     constexpr auto diagonalWeldAlpha {0.5f};
+    constexpr auto ghostPieceOpacity {0.5f};
+    constexpr auto cellSize {1.25f};
     
     std::string ToMeshName(BlockKind blockKind) {
         switch (blockKind) {
@@ -37,16 +39,16 @@ namespace {
         }
     }
     
-    const Pht::Material& ToMaterial(BlockColor color, const GameScene& scene) {
+    const Pht::Material& ToMaterial(BlockColor color, const CommonResources& commonResources) {
         switch (color) {
             case BlockColor::Red:
-                return scene.GetRedMaterial();
+                return commonResources.GetMaterials().GetRedFieldBlockMaterial();
             case BlockColor::Green:
-                return scene.GetGreenMaterial();
+                return commonResources.GetMaterials().GetGreenFieldBlockMaterial();
             case BlockColor::Blue:
-                return scene.GetBlueMaterial();
+                return commonResources.GetMaterials().GetBlueFieldBlockMaterial();
             case BlockColor::Yellow:
-                return scene.GetYellowMaterial();
+                return commonResources.GetMaterials().GetYellowFieldBlockMaterial();
             case BlockColor::None:
                 assert(!"Not a color");
                 break;
@@ -59,8 +61,10 @@ namespace {
         material.SetSpecular(material.GetSpecular() + colorAdd);
     }
     
-    Pht::Material ToMaterial(BlockColor color, BlockBrightness brightness, const GameScene& scene) {
-        auto material {ToMaterial(color, scene)};
+    Pht::Material ToMaterial(BlockColor color,
+                             BlockBrightness brightness,
+                             const CommonResources& commonResources) {
+        auto material {ToMaterial(color, commonResources)};
         
         switch (brightness) {
             case BlockBrightness::Normal:
@@ -101,12 +105,12 @@ namespace {
     }
 }
 
-PieceResources::PieceResources(Pht::IEngine& engine, const GameScene& scene) {
+PieceResources::PieceResources(Pht::IEngine& engine, const CommonResources& commonResources) {
     auto& sceneManager {engine.GetSceneManager()};
     
-    CreateBlocks(sceneManager, scene);
-    CreateWelds(sceneManager, scene);
-    CreateBombs(sceneManager, scene);
+    CreateBlocks(sceneManager, commonResources);
+    CreateWelds(sceneManager, commonResources);
+    CreateBombs(sceneManager);
 }
 
 Pht::RenderableObject& PieceResources::GetBlockRenderableObject(BlockKind blockKind,
@@ -161,14 +165,13 @@ int PieceResources::CalcWeldIndex(WeldRenderableKind weldRenderable,
     return index;
 }
 
-void PieceResources::CreateBlocks(Pht::ISceneManager& sceneManager, const GameScene& scene) {
+void PieceResources::CreateBlocks(Pht::ISceneManager& sceneManager,
+                                  const CommonResources& commonResources) {
     auto numBlocks {
         Quantities::numBlockRenderables * Quantities::numBlockColors * Quantities::numBlockBrightness
     };
     
     mBlocks.resize(numBlocks);
-    
-    auto cellSize {scene.GetCellSize()};
     
     for (auto blockKindIndex {0};
          blockKindIndex < Quantities::numBlockRenderables;
@@ -182,7 +185,7 @@ void PieceResources::CreateBlocks(Pht::ISceneManager& sceneManager, const GameSc
                 auto brightness {static_cast<BlockBrightness>(brightnessIndex)};
                 
                 auto meshName {ToMeshName(blockKind)};
-                auto material {ToMaterial(color, brightness, scene)};
+                auto material {ToMaterial(color, brightness, commonResources)};
                 auto blockIndex {CalcBlockIndex(blockKind, color, brightness)};
                 
                 auto renderableObject {
@@ -195,7 +198,8 @@ void PieceResources::CreateBlocks(Pht::ISceneManager& sceneManager, const GameSc
     }
 }
 
-void PieceResources::CreateWelds(Pht::ISceneManager& sceneManager, const GameScene& scene) {
+void PieceResources::CreateWelds(Pht::ISceneManager& sceneManager,
+                                 const CommonResources& commonResources) {
     auto numWelds {numWeldRenderables * Quantities::numBlockColors * Quantities::numWeldBrightness};
     mWelds.resize(numWelds);
     
@@ -210,7 +214,7 @@ void PieceResources::CreateWelds(Pht::ISceneManager& sceneManager, const GameSce
                 auto color {static_cast<BlockColor>(colorIndex)};
                 auto brightness {static_cast<BlockBrightness>(brightnessIndex)};
                 
-                auto material {ToMaterial(color, brightness, scene)};
+                auto material {ToMaterial(color, brightness, commonResources)};
                 
                 if (weldRenderableKind == WeldRenderableKind::Diagonal) {
                     material.SetOpacity(diagonalWeldAlpha);
@@ -225,7 +229,7 @@ void PieceResources::CreateWelds(Pht::ISceneManager& sceneManager, const GameSce
     }
 }
 
-void PieceResources::CreateBombs(Pht::ISceneManager& sceneManager, const GameScene& scene) {
+void PieceResources::CreateBombs(Pht::ISceneManager& sceneManager) {
     Pht::Material bombMaterial {
         "bomb_798.jpg",
         "bomb_798_emission.jpg",
@@ -240,7 +244,7 @@ void PieceResources::CreateBombs(Pht::ISceneManager& sceneManager, const GameSce
     bombMaterial.GetDepthState().mDepthTestAllowedOverride = true;
     mBomb = sceneManager.CreateRenderableObject(Pht::ObjMesh {"bomb_798.obj", 16.2f}, bombMaterial);
     
-    bombMaterial.SetOpacity(scene.GetGhostPieceOpacity());
+    bombMaterial.SetOpacity(ghostPieceOpacity);
     mTransparentBomb = sceneManager.CreateRenderableObject(Pht::ObjMesh {"bomb_798.obj", 16.2f},
                                                            bombMaterial);
 
@@ -260,7 +264,7 @@ void PieceResources::CreateBombs(Pht::ISceneManager& sceneManager, const GameSce
     mRowBomb = sceneManager.CreateRenderableObject(Pht::ObjMesh {"laser_bomb_224.obj", 0.6f},
                                                    rowBombMaterial);
 
-    rowBombMaterial.SetOpacity(scene.GetGhostPieceOpacity());
+    rowBombMaterial.SetOpacity(ghostPieceOpacity);
     mTransparentRowBomb = sceneManager.CreateRenderableObject(Pht::ObjMesh {"laser_bomb_224.obj", 0.6f},
                                                               rowBombMaterial);
 

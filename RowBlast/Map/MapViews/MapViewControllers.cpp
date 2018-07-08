@@ -30,20 +30,20 @@ MapViewControllers::MapViewControllers(Pht::IEngine& engine,
         UiLayer::backgroundFade
     },
     mSettingsButtonController {engine},
-    mLevelStartDialogController {engine, commonResources, pieceResources},
+    mLevelGoalDialogController {engine, commonResources, pieceResources},
     mNoLivesDialogController {engine, commonResources, userData, PotentiallyZoomedScreen::No},
     mSettingsMenuController {engine, commonResources, settings, PotentiallyZoomedScreen::No} {
     
-    mViewManager.AddView(mSettingsButtonController.GetView());
-    mViewManager.AddView(mLevelStartDialogController.GetView());
-    mViewManager.AddView(mNoLivesDialogController.GetView());
-    mViewManager.AddView(mSettingsMenuController.GetView());
+    mViewManager.AddView(static_cast<int>(SettingsButton), mSettingsButtonController.GetView());
+    mViewManager.AddView(static_cast<int>(LevelGoalDialog), mLevelGoalDialogController.GetView());
+    mViewManager.AddView(static_cast<int>(NoLivesDialog), mNoLivesDialogController.GetView());
+    mViewManager.AddView(static_cast<int>(SettingsMenu), mSettingsMenuController.GetView());
 }
 
 void MapViewControllers::Init() {
     mFadeEffect.Reset();
 
-    mLevelStartDialogController.SetFadeEffect(mFadeEffect);
+    mLevelGoalDialogController.SetFadeEffect(mFadeEffect);
     mSettingsMenuController.SetFadeEffect(mFadeEffect);
 
     auto& uiViewContainer {mScene.GetUiViewsContainer()};
