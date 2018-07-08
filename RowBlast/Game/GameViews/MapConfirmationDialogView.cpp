@@ -24,11 +24,11 @@ MapConfirmationDialogView::MapConfirmationDialogView(Pht::IEngine& engine,
 
     SetSize(menuWindow.GetSize());
     
-    CreateText({-1.0f, 5.1f, UiLayer::text}, "MAP", guiResources.GetCaptionTextProperties(zoom));
+    CreateText({-1.0f, 4.5f, UiLayer::text}, "MAP", guiResources.GetCaptionTextProperties(zoom));
     
     auto& textProperties {guiResources.GetSmallTextProperties(zoom)};
-    CreateText({-5.5f, 2.5f, UiLayer::text}, "Are you sure you want to go back", textProperties);
-    CreateText({-1.8f, 1.5f, UiLayer::text}, "to the map?", textProperties);
+    CreateText({-5.5f, 1.9f, UiLayer::text}, "Are you sure you want to go back", textProperties);
+    CreateText({-1.8f, 0.9f, UiLayer::text}, "to the map?", textProperties);
     
     Pht::Vec2 buttonInputSize {194.0f, 45.0f};
     MenuButton::Style yellowButtonStyle;
@@ -40,7 +40,7 @@ MapConfirmationDialogView::MapConfirmationDialogView(Pht::IEngine& engine,
 
     mYesButton = std::make_unique<MenuButton>(engine,
                                               *this,
-                                              Pht::Vec3 {0.0f, -0.7f, UiLayer::textRectangle},
+                                              Pht::Vec3 {0.0f, -1.3f, UiLayer::textRectangle},
                                               buttonInputSize,
                                               yellowButtonStyle);
     mYesButton->CreateText({-0.6f, -0.23f, UiLayer::buttonText},
@@ -56,7 +56,7 @@ MapConfirmationDialogView::MapConfirmationDialogView(Pht::IEngine& engine,
 
     mNoButton = std::make_unique<MenuButton>(engine,
                                              *this,
-                                             Pht::Vec3 {0.0f, -3.3f, UiLayer::textRectangle},
+                                             Pht::Vec3 {0.0f, -3.9f, UiLayer::textRectangle},
                                              buttonInputSize,
                                              blueButtonStyle);
     mNoButton->CreateText({-0.5f, -0.23f, UiLayer::buttonText},

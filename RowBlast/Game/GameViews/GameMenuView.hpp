@@ -50,6 +50,7 @@ namespace RowBlast {
     private:
         std::unique_ptr<MenuButton> mResumeButton;
         std::unique_ptr<MenuButton> mUndoButton;
+        std::unique_ptr<MenuButton> mGoalButton;
         std::unique_ptr<MenuButton> mRestartButton;
         std::unique_ptr<MenuButton> mSettingsButton;
         std::unique_ptr<MenuButton> mMapButton;

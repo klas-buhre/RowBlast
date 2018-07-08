@@ -14,8 +14,8 @@
 using namespace RowBlast;
 
 namespace {
-    const Pht::Vec4 grayColor {0.91f, 0.91f, 0.93f, 1.0f};
-    const Pht::Vec4 darkerGrayColor {0.88f, 0.88f, 0.90f, 1.0f};
+    const Pht::Vec4 grayColor {0.93f, 0.91f, 0.91f, 1.0f};
+    const Pht::Vec4 darkerGrayColor {0.91f, 0.89f, 0.89f, 1.0f};
     const Pht::Vec4 footerBorderColor {0.86f, 0.86f, 0.87f, 1.0f};
     const Pht::Vec4 blueColor {0.45f, 0.75f, 1.0f, 1.0};
     const Pht::Vec4 lightBlueColor {0.5f, 0.8f, 1.0f, 1.0};
@@ -28,8 +28,37 @@ namespace {
     constexpr auto outerCornerRadius {0.37f};
     constexpr auto captionBarHeight {3.0f};
     constexpr auto squareSide {0.5f};
-    constexpr auto footerBarHeight {2.0f};
-    constexpr auto footerBarBorderHeight {0.075f};
+    
+    Pht::Vec2 CalcSize(MenuWindow::Size size,
+                       MenuWindow::Style style,
+                       const Pht::Vec2& frustumSize) {
+        auto sizeX {std::min(frustumSize.x - xBorder * 2.0f, 14.4f - xBorder * 2.0f)};
+        
+        switch (style) {
+            case MenuWindow::Style::Bright:
+                switch (size) {
+                    case MenuWindow::Size::Large:
+                        return {sizeX, 20.4f};
+                    case MenuWindow::Size::Medium:
+                        return {sizeX, 12.8f};
+                    case MenuWindow::Size::Small:
+                        return {sizeX, 11.0f};
+                }
+                break;
+            case MenuWindow::Style::Dark:
+                switch (size) {
+                    case MenuWindow::Size::Large:
+                        return {sizeX, 19.0f};
+                    case MenuWindow::Size::Medium:
+                        return {sizeX, 14.0f};
+                    case MenuWindow::Size::Small:
+                        return {sizeX, 11.0f};
+                }
+                break;
+        }
+        
+        assert(!"Unsupported menu window size");
+    }
 }
 
 MenuWindow::MenuWindow(Pht::IEngine& engine,
@@ -48,19 +77,7 @@ MenuWindow::MenuWindow(Pht::IEngine& engine,
     auto xScaleFactor {static_cast<float>(renderBufferSize.x) / static_cast<float>(frustumSize.x)};
     auto yScaleFactor {static_cast<float>(renderBufferSize.y) / static_cast<float>(frustumSize.y)};
     
-    auto sizeX {std::min(frustumSize.x - xBorder * 2.0f, 15.0f - xBorder * 2.0f)};
-    
-    switch (size) {
-        case Size::Large:
-            mSize = {sizeX, 19.0f};
-            break;
-        case Size::Medium:
-            mSize = {sizeX, 14.0f};
-            break;
-        case Size::Small:
-            mSize = {sizeX, 11.0f};
-            break;
-    }
+    mSize = CalcSize(size, style, frustumSize);
     
     Pht::IVec2 imageSize {
         static_cast<int>(mSize.x * xScaleFactor),
@@ -176,10 +193,6 @@ void MenuWindow::DrawBrightMainArea(Pht::OfflineRasterizer& rasterizer) {
             rasterizer.DrawRectangle(upperRight, lowerLeft, grayColor, Pht::DrawOver::Yes);
         }
     }
-    
-    Pht::Vec2 lowerLeft2 {0.0f, footerBarHeight};
-    Pht::Vec2 upperRight2 {mSize.x, footerBarHeight + footerBarBorderHeight};
-    rasterizer.DrawRectangle(upperRight2, lowerLeft2, footerBorderColor, Pht::DrawOver::Yes);
 }
 
 void MenuWindow::DrawDarkBorder(Pht::OfflineRasterizer& rasterizer) {

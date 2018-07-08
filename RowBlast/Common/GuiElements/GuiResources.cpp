@@ -145,7 +145,7 @@ GuiResources::GuiResources(Pht::IEngine& engine, const CommonResources& commonRe
     mSmallTextPropertiesPotentiallyZoomedScreen {
         commonResources.GetHussarFontSize27(PotentiallyZoomedScreen::Yes),
         1.0f,
-        {0.26f, 0.26f, 0.26f, 1.0f}
+        {0.3f, 0.3f, 0.3f, 1.0f}
     },
     mSmallWhiteTextPropertiesPotentiallyZoomedScreen {
         commonResources.GetHussarFontSize27(PotentiallyZoomedScreen::Yes),

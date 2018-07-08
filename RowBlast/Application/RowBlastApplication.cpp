@@ -25,7 +25,6 @@ Backlog:
      not really matter since the user can select any piece from the selectables but maybe it is most 
      convenient to go back to the state before the move and not the initial state.
   -GUI:
-    -Maybe the level objective/start dialog should be available from the game menu.
     -Menu window that displays 3rd party lib credits.
     -Maybe try the font in fontawesome.com for the bright dialogs.
   -Tutorial:
@@ -45,7 +44,7 @@ Backlog:
     -Credit Google for avatars? : http://www.iconarchive.com/show/noto-emoji-people-face-icons-by-google.1.html
 
 Ongoing tasks:
-
+    -Maybe the level objective/start dialog should be available from the game menu.
 
 
 Ideas:

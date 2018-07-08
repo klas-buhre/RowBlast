@@ -103,7 +103,7 @@ LevelStartDialogView::LevelStartDialogView(Pht::IEngine& engine,
 
     mPlayButton = std::make_unique<MenuButton>(engine,
                                                *this,
-                                               Pht::Vec3 {0.0f, -5.5f, UiLayer::textRectangle},
+                                               Pht::Vec3 {0.0f, -6.0f, UiLayer::textRectangle},
                                                playButtonInputSize,
                                                playButtonStyle);
     mPlayButton->CreateText({-1.1f, -0.31f, UiLayer::buttonText},
