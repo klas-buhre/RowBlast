@@ -44,10 +44,7 @@ Backlog:
     -Credit Google for avatars? : http://www.iconarchive.com/show/noto-emoji-people-face-icons-by-google.1.html
 
 Ongoing tasks:
-    -Maybe the level goal dialog should be available from the game menu.
-        -The dialog should slide out to the right when in the game scene.
-        -Maybe hide the close and play buttons in the game scene and show a back button instead.
-        -Should there still be background fade in the game scene?
+
 
 
 Ideas:
@@ -113,12 +110,16 @@ Ordered Backlog:
     -Worlds.
         Cost: 4
         Done
-    -Levels.
-        Cost: 10
+    -Levels in the first world.
+        Cost: 5
     -Tutorial.
         Cost: 10
     -Fix all bugs.
         Cost: 4
+    -Levels in the second world.
+        Cost: 5
+    -Space world.
+        Cost: 10
     -Store settings in file.
         Cost: 0.5
     -Sounds/music.
@@ -134,7 +135,7 @@ Ordered Backlog:
     -Back end.
         Cost: ?
 
-        Total cost: 183
+        Total cost: 193
 
 
 Comomon piece type sets:

@@ -6,7 +6,6 @@
 // Game includes.
 #include "UiLayer.hpp"
 #include "GameScene.hpp"
-#include "CommonResources.hpp"
 
 using namespace RowBlast;
 
@@ -40,7 +39,7 @@ GameViewControllers::GameViewControllers(Pht::IEngine& engine,
         engine,
         commonResources,
         pieceResources,
-        PotentiallyZoomedScreen::Yes
+        LevelGoalDialogView::Scene::Game
     } {
         
     mViewManager.AddView(static_cast<int>(GameHud), mGameHudController.GetView());

@@ -5,29 +5,32 @@
 
 // Game includes.
 #include "InputUtil.hpp"
+#include "CommonResources.hpp"
 
 using namespace RowBlast;
 
 LevelGoalDialogController::LevelGoalDialogController(Pht::IEngine& engine,
                                                      const CommonResources& commonResources,
                                                      PieceResources& pieceResources,
-                                                     PotentiallyZoomedScreen zoom) :
+                                                     LevelGoalDialogView::Scene scene) :
     mInput {engine.GetInput()},
-    mView {engine, commonResources, pieceResources, zoom},
-    mSlidingMenuAnimation {engine, mView} {}
+    mView {engine, commonResources, pieceResources, scene},
+    mSlidingMenuAnimation {engine, mView},
+    mScene {scene} {}
 
-void LevelGoalDialogController::Init(SlidingMenuAnimation::UpdateFade updateFade,
-                                     const LevelInfo& levelInfo) {
-    mUpdateFade = updateFade;
-    
-    auto slideInDirection {
-        updateFade == SlidingMenuAnimation::UpdateFade::Yes ?
-            SlidingMenuAnimation::SlideDirection::Scale :
-            SlidingMenuAnimation::SlideDirection::Left
-    };
-
+void LevelGoalDialogController::Init(const LevelInfo& levelInfo) {
     mView.Init(levelInfo);
-    mSlidingMenuAnimation.Init(updateFade, slideInDirection);
+    
+    switch (mScene) {
+        case LevelGoalDialogView::Scene::Map:
+            mSlidingMenuAnimation.Init(SlidingMenuAnimation::UpdateFade::Yes,
+                                       SlidingMenuAnimation::SlideDirection::Scale);
+            break;
+        case LevelGoalDialogView::Scene::Game:
+            mSlidingMenuAnimation.Init(SlidingMenuAnimation::UpdateFade::No,
+                                       SlidingMenuAnimation::SlideDirection::Left);
+            break;
+    }
 }
 
 void LevelGoalDialogController::SetFadeEffect(Pht::FadeEffect& fadeEffect) {
@@ -65,14 +68,36 @@ LevelGoalDialogController::Result LevelGoalDialogController::HandleInput() {
 
 LevelGoalDialogController::Result
 LevelGoalDialogController::OnTouch(const Pht::TouchEvent& touchEvent) {
+    switch (mScene) {
+        case LevelGoalDialogView::Scene::Map:
+            return OnTouchInMapScene(touchEvent);
+        case LevelGoalDialogView::Scene::Game:
+            return OnTouchInGameScene(touchEvent);
+    }
+}
+
+LevelGoalDialogController::Result
+LevelGoalDialogController::OnTouchInMapScene(const Pht::TouchEvent& touchEvent) {
     if (mView.GetCloseButton().IsClicked(touchEvent)) {
         mDeferredResult = Result::Close;
-        mSlidingMenuAnimation.StartSlideOut(mUpdateFade,
+        mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::Yes,
                                             SlidingMenuAnimation::SlideDirection::Left);
+        return Result::None;
     }
 
     if (mView.GetPlayButton().IsClicked(touchEvent)) {
         return Result::Play;
+    }
+    
+    return Result::None;
+}
+
+LevelGoalDialogController::Result
+LevelGoalDialogController::OnTouchInGameScene(const Pht::TouchEvent& touchEvent) {
+    if (mView.GetBackButton().IsClicked(touchEvent)) {
+        mDeferredResult = Result::Close;
+        mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::No,
+                                            SlidingMenuAnimation::SlideDirection::Right);
     }
     
     return Result::None;

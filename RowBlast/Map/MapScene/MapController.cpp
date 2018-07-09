@@ -352,8 +352,7 @@ void MapController::GoToLevelGoalDialogState(int levelToStart) {
     mMapViewControllers.SetActiveController(MapViewControllers::LevelGoalDialog);
 
     auto levelInfo {LevelLoader::LoadInfo(levelToStart, mLevelResources)};
-    auto& levelGoalDialogController {mMapViewControllers.GetLevelGoalDialogController()};
-    levelGoalDialogController.Init(SlidingMenuAnimation::UpdateFade::Yes, *levelInfo);
+    mMapViewControllers.GetLevelGoalDialogController().Init(*levelInfo);
 }
 
 void MapController::GoToSettingsMenuState() {

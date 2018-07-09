@@ -69,7 +69,7 @@ GameMenuController::Result GameMenuController::OnTouch(const Pht::TouchEvent& to
 
     if (mView.GetGoalButton().IsClicked(touchEvent)) {
         mDeferredResult = Result::GoToLevelGoalDialog;
-        mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::Yes,
+        mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::No,
                                             SlidingMenuAnimation::SlideDirection::Left);
         return Result::None;
     }

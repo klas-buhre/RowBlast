@@ -267,8 +267,10 @@ void GameController::UpdateLevelGoalDialog() {
         case LevelGoalDialogController::Result::None:
             break;
         case LevelGoalDialogController::Result::Play:
+            assert(!"Unexpected result");
+            break;
         case LevelGoalDialogController::Result::Close:
-            GoToPausedStateGameMenu(SlidingMenuAnimation::UpdateFade::Yes);
+            GoToPausedStateGameMenu(SlidingMenuAnimation::UpdateFade::No);
             break;
     }
 }
@@ -510,8 +512,7 @@ void GameController::GoToPausedStateLevelGoalDialog() {
     mGameViewControllers.SetActiveController(GameViewControllers::LevelGoalDialog);
     
     auto levelInfo {LevelLoader::LoadInfo(mLevel->GetId(), mLevelResources)};
-    auto& levelGoalDialogController {mGameViewControllers.GetLevelGoalDialogController()};
-    levelGoalDialogController.Init(SlidingMenuAnimation::UpdateFade::No, *levelInfo);
+    mGameViewControllers.GetLevelGoalDialogController().Init(*levelInfo);
 }
 
 void GameController::GoToPausedStateGameMenu(SlidingMenuAnimation::UpdateFade updateFade) {

@@ -4,7 +4,6 @@
 // Game includes.
 #include "LevelGoalDialogView.hpp"
 #include "SlidingMenuAnimation.hpp"
-#include "CommonResources.hpp"
 
 namespace Pht {
     class IInput;
@@ -26,9 +25,9 @@ namespace RowBlast {
         LevelGoalDialogController(Pht::IEngine& engine,
                                   const CommonResources& commonResources,
                                   PieceResources& pieceResources,
-                                  PotentiallyZoomedScreen potentiallyZoomedScreen);
+                                  LevelGoalDialogView::Scene scene);
         
-        void Init(SlidingMenuAnimation::UpdateFade updateFade, const LevelInfo& levelInfo);
+        void Init(const LevelInfo& levelInfo);
         void SetFadeEffect(Pht::FadeEffect& fadeEffect);
         Result Update();
         
@@ -39,12 +38,14 @@ namespace RowBlast {
     private:
         Result HandleInput();
         Result OnTouch(const Pht::TouchEvent& touchEvent);
-        
+        Result OnTouchInMapScene(const Pht::TouchEvent& touchEvent);
+        Result OnTouchInGameScene(const Pht::TouchEvent& touchEvent);
+
         Pht::IInput& mInput;
         LevelGoalDialogView mView;
         SlidingMenuAnimation mSlidingMenuAnimation;
         Result mDeferredResult {Result::None};
-        SlidingMenuAnimation::UpdateFade mUpdateFade {SlidingMenuAnimation::UpdateFade::Yes};
+        LevelGoalDialogView::Scene mScene {LevelGoalDialogView::Scene::Map};
     };
 }
 

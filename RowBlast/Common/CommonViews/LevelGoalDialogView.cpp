@@ -24,15 +24,17 @@ namespace {
     constexpr auto rowBombRotationSpeed {35.0f};
     constexpr auto emissiveAnimationDuration {1.5f};
     constexpr auto emissiveAmplitude {1.7f};
+    const Pht::Vec3 captionPosition {-1.7f, 7.6f, UiLayer::text};
 }
 
 LevelGoalDialogView::LevelGoalDialogView(Pht::IEngine& engine,
                                          const CommonResources& commonResources,
                                          PieceResources& pieceResources,
-                                         PotentiallyZoomedScreen zoom) :
+                                         Scene scene) :
     mEngine {engine},
     mPieceResources {pieceResources} {
-
+    
+    auto zoom {scene == Scene::Game ? PotentiallyZoomedScreen::Yes : PotentiallyZoomedScreen::No};
     auto& guiResources {commonResources.GetGuiResources()};
     auto& menuWindow {guiResources.GetLargeDarkMenuWindow(zoom)};
     
@@ -43,26 +45,28 @@ LevelGoalDialogView::LevelGoalDialogView(Pht::IEngine& engine,
     SetSize(menuWindow.GetSize());
     
     auto& largeTextProperties {guiResources.GetLargeWhiteTextProperties(zoom)};
-    mCaption = &CreateText({-2.1f, 7.6f, UiLayer::text}, "LEVEL 1", largeTextProperties);
-
-    Pht::Vec3 closeButtonPosition {
-        GetSize().x / 2.0f - 1.5f,
-        GetSize().y / 2.0f - 1.5f,
-        UiLayer::textRectangle
-    };
-
-    Pht::Vec2 closeButtonInputSize {55.0f, 55.0f};
-
-    MenuButton::Style closeButtonStyle;
-    closeButtonStyle.mPressedScale = 1.05f;
-    closeButtonStyle.mRenderableObject = &guiResources.GetCloseButton(zoom);
+    mCaption = &CreateText(captionPosition, "LEVEL 1", largeTextProperties);
     
-    mCloseButton = std::make_unique<MenuButton>(engine,
-                                                *this,
-                                                closeButtonPosition,
-                                                closeButtonInputSize,
-                                                closeButtonStyle);
+    if (scene == Scene::Map) {
+        Pht::Vec3 closeButtonPosition {
+            GetSize().x / 2.0f - 1.5f,
+            GetSize().y / 2.0f - 1.5f,
+            UiLayer::textRectangle
+        };
 
+        Pht::Vec2 closeButtonInputSize {55.0f, 55.0f};
+
+        MenuButton::Style closeButtonStyle;
+        closeButtonStyle.mPressedScale = 1.05f;
+        closeButtonStyle.mRenderableObject = &guiResources.GetCloseButton(zoom);
+        
+        mCloseButton = std::make_unique<MenuButton>(engine,
+                                                    *this,
+                                                    closeButtonPosition,
+                                                    closeButtonInputSize,
+                                                    closeButtonStyle);
+    }
+    
     Pht::Material lineMaterial {Pht::Color{0.6f, 0.8f, 1.0f}};
     lineMaterial.SetOpacity(0.3f);
     auto& sceneManager {engine.GetSceneManager()};
@@ -92,23 +96,42 @@ LevelGoalDialogView::LevelGoalDialogView(Pht::IEngine& engine,
                                   smallTextProperties);
     mBuildObjective->GetSceneObject().SetIsVisible(false);
 
-    Pht::Vec2 playButtonInputSize {205.0f, 59.0f};
-    
-    MenuButton::Style playButtonStyle;
-    playButtonStyle.mMeshFilename = GuiResources::mBigButtonMeshFilename;
-    playButtonStyle.mColor = GuiResources::mBlueButtonColor;
-    playButtonStyle.mSelectedColor = GuiResources::mBlueSelectedButtonColor;
-    playButtonStyle.mPressedScale = 1.05f;
+    if (scene == Scene::Map) {
+        Pht::Vec2 playButtonInputSize {205.0f, 59.0f};
+        
+        MenuButton::Style playButtonStyle;
+        playButtonStyle.mMeshFilename = GuiResources::mBigButtonMeshFilename;
+        playButtonStyle.mColor = GuiResources::mBlueButtonColor;
+        playButtonStyle.mSelectedColor = GuiResources::mBlueSelectedButtonColor;
+        playButtonStyle.mPressedScale = 1.05f;
 
-    mPlayButton = std::make_unique<MenuButton>(engine,
-                                               *this,
-                                               Pht::Vec3 {0.0f, -6.0f, UiLayer::textRectangle},
-                                               playButtonInputSize,
-                                               playButtonStyle);
-    mPlayButton->CreateText({-1.1f, -0.31f, UiLayer::buttonText},
-                            "PLAY",
-                            largeTextProperties);
-    
+        mPlayButton = std::make_unique<MenuButton>(engine,
+                                                   *this,
+                                                   Pht::Vec3 {0.0f, -6.0f, UiLayer::textRectangle},
+                                                   playButtonInputSize,
+                                                   playButtonStyle);
+        mPlayButton->CreateText({-1.1f, -0.31f, UiLayer::buttonText},
+                                "PLAY",
+                                largeTextProperties);
+    } else {
+        Pht::Vec2 backButtonInputSize {194.0f, 43.0f};
+        
+        MenuButton::Style backButtonStyle;
+        backButtonStyle.mMeshFilename = GuiResources::mMediumButtonMeshFilename;
+        backButtonStyle.mColor = GuiResources::mBlueButtonColor;
+        backButtonStyle.mSelectedColor = GuiResources::mBlueSelectedButtonColor;
+        backButtonStyle.mPressedScale = 1.05f;
+        
+        mBackButton = std::make_unique<MenuButton>(engine,
+                                                   *this,
+                                                   Pht::Vec3 {0.0f, -6.0f, UiLayer::textRectangle},
+                                                   backButtonInputSize,
+                                                   backButtonStyle);
+        mBackButton->CreateText({-0.81f, -0.23f, UiLayer::buttonText},
+                                "Back",
+                                guiResources.GetSmallWhiteTextProperties(zoom));
+    }
+
     CreatePreviewPiecesContainer(engine);
 }
 
@@ -195,6 +218,16 @@ void LevelGoalDialogView::CreateGlowEffects(Pht::SceneObject& parentObject, Pht:
 
 void LevelGoalDialogView::Init(const LevelInfo& levelInfo) {
     mCaption->GetText() = "LEVEL " + std::to_string(levelInfo.mId);
+    
+    auto adjustedCaptionPosition {captionPosition};
+    
+    if (levelInfo.mId > 19) {
+        adjustedCaptionPosition.x -= 0.31f;
+    } else if (levelInfo.mId > 9) {
+        adjustedCaptionPosition.x -= 0.17f;
+    }
+    
+    mCaption->GetSceneObject().GetTransform().SetPosition(adjustedCaptionPosition);
     
     mClearObjective->GetSceneObject().SetIsVisible(false);
     mBuildObjective->GetSceneObject().SetIsVisible(false);

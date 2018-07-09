@@ -6,12 +6,11 @@
 // Game includes.
 #include "MapScene.hpp"
 #include "UiLayer.hpp"
-#include "CommonResources.hpp"
 
 using namespace RowBlast;
 
 namespace {
-    constexpr auto fade {0.3f};
+    constexpr auto fade {0.5f};
     constexpr auto fadeTime {0.3f};
 }
 
@@ -34,7 +33,7 @@ MapViewControllers::MapViewControllers(Pht::IEngine& engine,
         engine,
         commonResources,
         pieceResources,
-        PotentiallyZoomedScreen::No
+        LevelGoalDialogView::Scene::Map
     },
     mNoLivesDialogController {engine, commonResources, userData, PotentiallyZoomedScreen::No},
     mSettingsMenuController {engine, commonResources, settings, PotentiallyZoomedScreen::No} {

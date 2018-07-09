@@ -26,23 +26,35 @@ namespace RowBlast {
     
     class LevelGoalDialogView: public Pht::GuiView {
     public:
+        enum class Scene {
+            Map,
+            Game
+        };
+
         LevelGoalDialogView(Pht::IEngine& engine,
                             const CommonResources& commonResources,
                             PieceResources& pieceResources,
-                            PotentiallyZoomedScreen potentiallyZoomedScreen);
+                            Scene scene);
         
         void Init(const LevelInfo& levelInfo);
         void StartEffects();
         void Update();
         
-        const MenuButton& GetCloseButton() const {
+        MenuButton& GetCloseButton() {
+            assert(mCloseButton);
             return *mCloseButton;
         }
         
-        const MenuButton& GetPlayButton() const {
+        MenuButton& GetPlayButton() {
+            assert(mPlayButton);
             return *mPlayButton;
         }
-        
+
+        MenuButton& GetBackButton() {
+            assert(mBackButton);
+            return *mBackButton;
+        }
+
     private:
         struct LevelStartPreviewPiece {
             std::unique_ptr<SceneObjectPool> mBlockSceneObjects;
@@ -66,6 +78,7 @@ namespace RowBlast {
         PieceResources& mPieceResources;
         std::unique_ptr<MenuButton> mCloseButton;
         std::unique_ptr<MenuButton> mPlayButton;
+        std::unique_ptr<MenuButton> mBackButton;
         Pht::TextComponent* mCaption {nullptr};
         Pht::TextComponent* mClearObjective {nullptr};
         Pht::TextComponent* mBuildObjective {nullptr};
