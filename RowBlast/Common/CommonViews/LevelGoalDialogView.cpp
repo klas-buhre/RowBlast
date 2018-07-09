@@ -9,7 +9,6 @@
 #include "SceneObjectUtils.hpp"
 
 // Game includes.
-#include "CommonResources.hpp"
 #include "PieceResources.hpp"
 #include "UiLayer.hpp"
 #include "GradientRectangle.hpp"
@@ -29,13 +28,13 @@ namespace {
 
 LevelGoalDialogView::LevelGoalDialogView(Pht::IEngine& engine,
                                          const CommonResources& commonResources,
-                                         PieceResources& pieceResources) :
+                                         PieceResources& pieceResources,
+                                         PotentiallyZoomedScreen zoom) :
     mEngine {engine},
     mPieceResources {pieceResources} {
 
-    PotentiallyZoomedScreen zoom {PotentiallyZoomedScreen::No};
     auto& guiResources {commonResources.GetGuiResources()};
-    auto& menuWindow {guiResources.GetLargeDarkMenuWindow()};
+    auto& menuWindow {guiResources.GetLargeDarkMenuWindow(zoom)};
     
     auto menuWindowSceneObject {std::make_unique<Pht::SceneObject>(&menuWindow.GetRenderable())};
     menuWindowSceneObject->GetTransform().SetPosition({0.0f, 0.0f, UiLayer::background});

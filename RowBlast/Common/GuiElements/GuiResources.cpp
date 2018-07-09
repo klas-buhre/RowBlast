@@ -99,6 +99,13 @@ GuiResources::GuiResources(Pht::IEngine& engine, const CommonResources& commonRe
         MenuWindow::Style::Bright,
         PotentiallyZoomedScreen::Yes
     },
+    mLargeDarkMenuWindowPotentiallyZoomedScreen {
+        engine,
+        commonResources,
+        MenuWindow::Size::Large,
+        MenuWindow::Style::Dark,
+        PotentiallyZoomedScreen::Yes
+    },
     mMediumDarkMenuWindowPotentiallyZoomedScreen {
         engine,
         commonResources,
@@ -179,6 +186,16 @@ GuiResources::GetMediumDarkMenuWindow(PotentiallyZoomedScreen potentiallyZoomed)
             return mMediumDarkMenuWindowPotentiallyZoomedScreen;
         case PotentiallyZoomedScreen::No:
             return mMediumDarkMenuWindow;
+    }
+}
+
+const MenuWindow&
+GuiResources::GetLargeDarkMenuWindow(PotentiallyZoomedScreen potentiallyZoomed) const {
+    switch (potentiallyZoomed) {
+        case PotentiallyZoomedScreen::Yes:
+            return mLargeDarkMenuWindowPotentiallyZoomedScreen;
+        case PotentiallyZoomedScreen::No:
+            return mLargeDarkMenuWindow;
     }
 }
 

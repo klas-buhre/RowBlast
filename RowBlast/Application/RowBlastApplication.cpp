@@ -46,8 +46,6 @@ Backlog:
 Ongoing tasks:
     -Maybe the level goal dialog should be available from the game menu.
         -The dialog should slide out to the right when in the game scene.
-        -Fix menu window size for iPhone X, everything int the view should be potentially zoomed.
-        -Fix hud camera position when displaying the dialog.
         -Maybe hide the close and play buttons in the game scene and show a back button instead.
         -Should there still be background fade in the game scene?
 

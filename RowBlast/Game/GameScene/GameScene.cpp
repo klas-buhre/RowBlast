@@ -378,6 +378,18 @@ void GameScene::CreateUiViewsContainer() {
     mUiViewsContainer = &mScene->CreateSceneObject();
     mUiViewsContainer->SetLayer(static_cast<int>(Layer::UiViews));
     mScene->GetRoot().AddChild(*mUiViewsContainer);
+    
+    auto& uiCameraSceneObject {mScene->CreateSceneObject()};
+    uiCameraSceneObject.SetIsVisible(false);
+    uiCameraSceneObject.GetTransform().SetPosition({0.0f, 0.0f, 300.0f});
+    auto uiCameraComponent {std::make_unique<Pht::CameraComponent>(uiCameraSceneObject)};
+    
+    auto* uiRenderPass {mScene->GetRenderPass(static_cast<int>(Layer::UiViews))};
+    assert(uiRenderPass);
+    uiRenderPass->SetCamera(uiCameraComponent.get());
+    
+    uiCameraSceneObject.SetComponent<Pht::CameraComponent>(std::move(uiCameraComponent));
+    mUiViewsContainer->AddChild(uiCameraSceneObject);
 }
 
 void GameScene::CreateStarsContainer() {

@@ -4,6 +4,7 @@
 // Game includes.
 #include "LevelGoalDialogView.hpp"
 #include "SlidingMenuAnimation.hpp"
+#include "CommonResources.hpp"
 
 namespace Pht {
     class IInput;
@@ -24,7 +25,8 @@ namespace RowBlast {
         
         LevelGoalDialogController(Pht::IEngine& engine,
                                   const CommonResources& commonResources,
-                                  PieceResources& pieceResources);
+                                  PieceResources& pieceResources,
+                                  PotentiallyZoomedScreen potentiallyZoomedScreen);
         
         void Init(SlidingMenuAnimation::UpdateFade updateFade, const LevelInfo& levelInfo);
         void SetFadeEffect(Pht::FadeEffect& fadeEffect);

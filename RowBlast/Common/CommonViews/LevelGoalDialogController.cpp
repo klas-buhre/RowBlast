@@ -5,15 +5,15 @@
 
 // Game includes.
 #include "InputUtil.hpp"
-#include "CommonResources.hpp"
 
 using namespace RowBlast;
 
 LevelGoalDialogController::LevelGoalDialogController(Pht::IEngine& engine,
                                                      const CommonResources& commonResources,
-                                                     PieceResources& pieceResources) :
+                                                     PieceResources& pieceResources,
+                                                     PotentiallyZoomedScreen zoom) :
     mInput {engine.GetInput()},
-    mView {engine, commonResources, pieceResources},
+    mView {engine, commonResources, pieceResources, zoom},
     mSlidingMenuAnimation {engine, mView} {}
 
 void LevelGoalDialogController::Init(SlidingMenuAnimation::UpdateFade updateFade,

@@ -30,7 +30,12 @@ MapViewControllers::MapViewControllers(Pht::IEngine& engine,
         UiLayer::backgroundFade
     },
     mSettingsButtonController {engine},
-    mLevelGoalDialogController {engine, commonResources, pieceResources},
+    mLevelGoalDialogController {
+        engine,
+        commonResources,
+        pieceResources,
+        PotentiallyZoomedScreen::No
+    },
     mNoLivesDialogController {engine, commonResources, userData, PotentiallyZoomedScreen::No},
     mSettingsMenuController {engine, commonResources, settings, PotentiallyZoomedScreen::No} {
     

@@ -36,7 +36,12 @@ GameViewControllers::GameViewControllers(Pht::IEngine& engine,
     mMapConfirmationDialogController {engine, commonResources},
     mSettingsMenuController {engine, commonResources, settings, PotentiallyZoomedScreen::Yes},
     mNoLivesDialogController {engine, commonResources, userData, PotentiallyZoomedScreen::Yes},
-    mLevelGoalDialogController {engine, commonResources, pieceResources} {
+    mLevelGoalDialogController {
+        engine,
+        commonResources,
+        pieceResources,
+        PotentiallyZoomedScreen::Yes
+    } {
         
     mViewManager.AddView(static_cast<int>(GameHud), mGameHudController.GetView());
     mViewManager.AddView(static_cast<int>(GameMenu), mGameMenuController.GetView());

@@ -12,6 +12,7 @@
 #include "MenuButton.hpp"
 #include "SceneObjectPool.hpp"
 #include "Level.hpp"
+#include "CommonResources.hpp"
 
 namespace Pht {
     class IEngine;
@@ -27,7 +28,8 @@ namespace RowBlast {
     public:
         LevelGoalDialogView(Pht::IEngine& engine,
                             const CommonResources& commonResources,
-                            PieceResources& pieceResources);
+                            PieceResources& pieceResources,
+                            PotentiallyZoomedScreen potentiallyZoomedScreen);
         
         void Init(const LevelInfo& levelInfo);
         void StartEffects();
