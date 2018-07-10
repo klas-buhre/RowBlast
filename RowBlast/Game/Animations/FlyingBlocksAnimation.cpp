@@ -211,8 +211,8 @@ void FlyingBlocksAnimation::UpdateBlocks(float dt) {
         auto position {transform.GetPosition()};
         auto& cameraPosition {mScene.GetCamera().GetSceneObject().GetTransform().GetPosition()};
         
-        if (position.z > cameraPosition.z - 1.0f) {
-            position.z = cameraPosition.z - 1.0f;
+        if (position.z > cameraPosition.z - 4.0f) {
+            position.z = cameraPosition.z - 4.0f;
             transform.SetPosition(position);
         }
 
