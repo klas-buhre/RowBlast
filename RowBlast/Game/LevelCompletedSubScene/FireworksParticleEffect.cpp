@@ -107,7 +107,7 @@ FireworksParticleEffect::Firework::Firework(Pht::IEngine& engine) {
         .mTimeToLive = fireworkTimeToLive,
         .mTimeToLiveRandomPart = fireworkTimeToLiveRandomPart,
         .mFadeOutDuration = 1.0f,
-        .mSize = Pht::Vec2{1.1f, 1.1f},
+        .mSize = Pht::Vec2{0.9f, 0.9f},
         .mSizeRandomPart = 0.5f,
         .mGrowDuration = 0.0f,
         .mShrinkDuration = 0.5f

@@ -6,10 +6,13 @@
     "background": "sky2.jpg",
     "dark": false,
     "pieces": [
+        "LongI",
+        "I",
+        "L",
         "B",
         "D",
-        "L",
-        "ShortI"
+        "Seven",
+        "MirroredSeven"
     ],
     "clearGrid": [
         "       ",
@@ -25,15 +28,18 @@
         "       ",
         "       ",
         "       ",
-        "GG  GGG",
-        "GGG GGG",
-        "  GGGGG",
-        "  GGGGG",
-        " GGGGGG",
-        "GGGGG  ",
-        "GGGGG  ",
         "GGGGGG ",
-        "GGGG GG",
-        "GGGG GG"
+        "GGGGGG ",
+        "GGGGGG ",
+        "GGG G G",
+        "GGGGG G",
+        "GGGGG G",
+        "GGG G G",
+        "GGGGG G",
+        "GGGGG G",
+        "GGG G G",
+        "GGGGG G",
+        "GGGGG G",
+        "GGGGG G"
     ]
 }

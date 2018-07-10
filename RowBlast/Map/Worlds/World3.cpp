@@ -1,4 +1,4 @@
-#include "World1.hpp"
+#include "World3.hpp"
 
 using namespace RowBlast;
 
@@ -6,25 +6,25 @@ namespace {
     constexpr auto lightIntensity {0.98f};
 
     const std::vector<MapPlace> places {
-        MapPlace {MapLevel {1, {-24.0f, -3.0f, 10.0f}}},
-        MapPlace {MapLevel {2, {-21.5f, -1.2f, 9.0f}}},
-        MapPlace {MapLevel {3, {-18.0f, -1.2f, 9.0f}}},
-        MapPlace {MapLevel {4, {-16.0f, -2.5f, 10.0f}}},
-        MapPlace {MapLevel {5, {-13.0f, -4.0f, 10.0f}}},
-        MapPlace {MapLevel {6, {-10.0f, -3.0f, 10.0f}}},
-        MapPlace {MapLevel {7, {-8.0f, -1.0f, 9.0f}}},
-        MapPlace {MapLevel {8, {-6.0f, 0.5f, 9.0f}}},
-        MapPlace {MapLevel {9, {-3.0f, 1.0f, 9.0f}}},
-        MapPlace {MapLevel {10, {-0.5f, -1.0f, 9.5f}}},
-        MapPlace {MapLevel {11, {1.0f, -3.5f, 9.5f}}},
-        MapPlace {MapLevel {12, {4.0f, -4.0f, 10.0f}}},
-        MapPlace {MapLevel {13, {7.0f, -3.0f, 10.0f}}},
-        MapPlace {MapLevel {14, {9.0f, -0.5f, 10.0f}}},
-        MapPlace {MapLevel {15, {11.5f, 1.5f, 10.0f}}},
-        MapPlace {MapLevel {16, {14.5f, 2.0f, 10.0f}}},
-        MapPlace {MapLevel {17, {17.5f, 1.0f, 10.0f}}},
-        MapPlace {MapLevel {18, {20.0f, -1.0f, 10.0f}}},
-        MapPlace {Portal {2, 19, {23.0f, -1.5f, 10.0f}}}
+        MapPlace {Portal {2, 40, {-24.0f, -3.0f, 10.0f}}},
+        MapPlace {MapLevel {40, {-21.5f, -1.2f, 9.0f}}},
+        MapPlace {MapLevel {41, {-18.0f, -1.2f, 9.0f}}},
+        MapPlace {MapLevel {42, {-16.0f, -2.5f, 10.0f}}},
+        MapPlace {MapLevel {43, {-13.0f, -4.0f, 10.0f}}},
+        MapPlace {MapLevel {44, {-10.0f, -3.0f, 10.0f}}},
+        MapPlace {MapLevel {45, {-8.0f, -1.0f, 9.0f}}},
+        MapPlace {MapLevel {46, {-6.0f, 0.5f, 9.0f}}},
+        MapPlace {MapLevel {47, {-3.0f, 1.0f, 9.0f}}},
+        MapPlace {MapLevel {48, {-0.5f, -1.0f, 9.5f}}},
+        MapPlace {MapLevel {49, {1.0f, -3.5f, 9.5f}}},
+        MapPlace {MapLevel {50, {4.0f, -4.0f, 10.0f}}},
+        MapPlace {MapLevel {51, {7.0f, -3.0f, 10.0f}}},
+        MapPlace {MapLevel {52, {9.0f, -0.5f, 10.0f}}},
+        MapPlace {MapLevel {53, {11.5f, 1.5f, 10.0f}}},
+        MapPlace {MapLevel {54, {14.5f, 2.0f, 10.0f}}},
+        MapPlace {MapLevel {55, {17.5f, 1.0f, 10.0f}}},
+        MapPlace {MapLevel {56, {20.0f, -1.0f, 10.0f}}},
+        MapPlace {Portal {4, 57, {23.0f, -1.5f, 10.0f}}}
     };
 
     const std::vector<BlockPathVolume> blockPaths {
@@ -160,6 +160,6 @@ namespace {
     const Pht::Color cloudColor {1.0f, 1.0f, 1.0f};
 }
 
-World RowBlast::GetWorld1() {
+World RowBlast::GetWorld3() {
     return World {places, blockPaths, cloudPaths, hazeLayers, lightIntensity, cloudColor};
 }

@@ -24,6 +24,8 @@ namespace {
         Ui,
         SceneSwitchFadeEffect = GlobalLayer::sceneSwitchFadeEffect
     };
+    
+    constexpr auto lightIntensity {0.98f};
 
     const std::vector<CloudPathVolume> cloudPaths {
         CloudPathVolume {
@@ -163,6 +165,8 @@ TitleScene::TitleScene(Pht::IEngine& engine, const CommonResources& commonResour
 
     auto& light {scene->CreateGlobalLight()};
     light.SetDirection({1.0f, 1.0f, 1.0f});
+    light.SetAmbientIntensity(lightIntensity);
+    light.SetDirectionalIntensity(lightIntensity);
     scene->GetRoot().AddChild(light.GetSceneObject());
 
     auto& camera {scene->CreateCamera()};

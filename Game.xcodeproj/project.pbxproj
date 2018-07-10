@@ -12,6 +12,8 @@
 		288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
 		4D27E4840F9AD71900447247 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D27E4830F9AD71900447247 /* OpenGLES.framework */; };
 		4D27E4B50F9AD7D600447247 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D27E4B40F9AD7D600447247 /* QuartzCore.framework */; };
+		6205F93020F515F500716574 /* World3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6205F92E20F515F500716574 /* World3.cpp */; };
+		6205F93220F519CF00716574 /* level41.json in Resources */ = {isa = PBXBuildFile; fileRef = 6205F93120F519CE00716574 /* level41.json */; };
 		620A981D1EE2A3B400AD6C61 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 620A981C1EE2A3B400AD6C61 /* AVFoundation.framework */; };
 		620A98291EE2B5C000AD6C61 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 620A98281EE2B5C000AD6C61 /* CoreMedia.framework */; };
 		621A4E721E50B60C00D53AFD /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 621A4E681E50B60C00D53AFD /* Icon.png */; };
@@ -326,6 +328,9 @@
 		288765FC0DF74451002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		4D27E4830F9AD71900447247 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		4D27E4B40F9AD7D600447247 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		6205F92E20F515F500716574 /* World3.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = World3.cpp; sourceTree = "<group>"; };
+		6205F92F20F515F500716574 /* World3.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = World3.hpp; sourceTree = "<group>"; };
+		6205F93120F519CE00716574 /* level41.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level41.json; sourceTree = "<group>"; };
 		620A981C1EE2A3B400AD6C61 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		620A98281EE2B5C000AD6C61 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		621A4E681E50B60C00D53AFD /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
@@ -1051,6 +1056,8 @@
 				623E3D5420DE4A2600BB800F /* World1.hpp */,
 				62CC4CE220DE9104008C5D96 /* World2.cpp */,
 				62CC4CE320DE9104008C5D96 /* World2.hpp */,
+				6205F92E20F515F500716574 /* World3.cpp */,
+				6205F92F20F515F500716574 /* World3.hpp */,
 			);
 			path = Worlds;
 			sourceTree = "<group>";
@@ -1139,6 +1146,7 @@
 				629B838120C6E06400DD2D0E /* level38.json */,
 				629B838320C81D1700DD2D0E /* level39.json */,
 				629B838520C9694D00DD2D0E /* level40.json */,
+				6205F93120F519CE00716574 /* level41.json */,
 			);
 			path = Levels;
 			sourceTree = "<group>";
@@ -2261,6 +2269,7 @@
 				62E2222E1FE9754C00AE098B /* cloud_F_512.png in Resources */,
 				62785B1E20875937006F9869 /* EnvMap.frag in Resources */,
 				62785B2C20875937006F9869 /* VertexColor.vert in Resources */,
+				6205F93220F519CF00716574 /* level41.json in Resources */,
 				6270DC8E1FCB23D800FB457D /* level15.json in Resources */,
 				6270DC961FCB23D800FB457D /* level22.json in Resources */,
 				62785B2120875937006F9869 /* ParticleTextureColor.frag in Resources */,
@@ -2356,6 +2365,7 @@
 				62785B0520875937006F9869 /* ParametricSurface.cpp in Sources */,
 				62785DC12087618E006F9869 /* GameHud.cpp in Sources */,
 				62785DE32087618E006F9869 /* RowBomb.cpp in Sources */,
+				6205F93020F515F500716574 /* World3.cpp in Sources */,
 				62785E132087618E006F9869 /* MapController.cpp in Sources */,
 				62785DDC2087618E006F9869 /* PlusPiece.cpp in Sources */,
 				627D37AE209C78250068B50C /* MenuWindow.cpp in Sources */,

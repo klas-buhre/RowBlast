@@ -28,6 +28,7 @@ namespace {
     const Pht::Vec3 lightDirectionA {0.57f, 1.0f, 0.6f};
     const Pht::Vec3 lightDirectionB {1.0f, 1.0f, 0.74f};
     constexpr auto darkLevelLightIntensity {0.94f};
+    constexpr auto brightLevelLightIntensity {0.985f};
 
 #if 0
     const std::vector<BlockPathVolume> floatingBlockPaths {
@@ -219,6 +220,9 @@ void GameScene::CreateBackgroundLayerLight(const Level& level) {
     if (level.IsDark()) {
         lightComponent->SetAmbientIntensity(darkLevelLightIntensity);
         lightComponent->SetDirectionalIntensity(darkLevelLightIntensity);
+    } else {
+        lightComponent->SetAmbientIntensity(brightLevelLightIntensity);
+        lightComponent->SetDirectionalIntensity(brightLevelLightIntensity);
     }
 
     auto* backgroundRenderPass {mScene->GetRenderPass(static_cast<int>(Layer::Background))};

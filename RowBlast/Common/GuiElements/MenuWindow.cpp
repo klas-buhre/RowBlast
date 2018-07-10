@@ -14,8 +14,8 @@
 using namespace RowBlast;
 
 namespace {
-    const Pht::Vec4 grayColor {0.93f, 0.91f, 0.91f, 1.0f};
-    const Pht::Vec4 darkerGrayColor {0.91f, 0.89f, 0.89f, 1.0f};
+    const Pht::Vec4 grayColor {0.95f, 0.94f, 0.91f, 1.0f};
+    const Pht::Vec4 darkerGrayColor {0.93f, 0.92f, 0.89f, 1.0f};
     const Pht::Vec4 footerBorderColor {0.86f, 0.86f, 0.87f, 1.0f};
     const Pht::Vec4 blueColor {0.45f, 0.75f, 1.0f, 1.0};
     const Pht::Vec4 lightBlueColor {0.5f, 0.8f, 1.0f, 1.0};
@@ -32,7 +32,7 @@ namespace {
     Pht::Vec2 CalcSize(MenuWindow::Size size,
                        MenuWindow::Style style,
                        const Pht::Vec2& frustumSize) {
-        auto sizeX {std::min(frustumSize.x - xBorder * 2.0f, 14.4f - xBorder * 2.0f)};
+        auto sizeX {std::min(frustumSize.x - xBorder * 2.0f, 14.0f - xBorder * 2.0f)};
         
         switch (style) {
             case MenuWindow::Style::Bright:
