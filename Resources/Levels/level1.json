@@ -1,19 +1,15 @@
 {
-    "speed": 0.5,
-    "moves": 5,
-    "twoStars": 4,
-    "threeStars": 3,
+    "speed": 0.0,
+    "moves": 30,
+    "twoStars": 25,
+    "threeStars": 15,
     "background": "sky1.jpg",
     "dark": false,
     "pieces": [
-        "LongI",
-        "I",
-        "ShortI",
-        "L",
         "B",
         "D",
-        "Seven",
-        "MirroredSeven"
+        "L",
+        "ShortI"
     ],
     "clearGrid": [
         "       ",
@@ -29,11 +25,15 @@
         "       ",
         "       ",
         "       ",
-        "       ",
-        "       ",
+        "GG  GGG",
+        "GGG GGG",
+        "  GGGGG",
+        "  GGGGG",
+        " GGGGGG",
+        "GGGGG  ",
+        "GGGGG  ",
         "GGGGGG ",
-        "GGGGGG ",
-        "GGG G G",
-        "GGGGG G"
+        "GGGG GG",
+        "GGGG GG"
     ]
 }

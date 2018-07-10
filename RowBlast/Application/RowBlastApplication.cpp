@@ -45,6 +45,10 @@ Backlog:
 
 Ongoing tasks:
     -Levels in the first world.
+        -First level introduces clicking on pieces and clearing rows.
+        -Second level introduces switching of pieces.
+        -Third level introduces changing the visible moves.
+        -Introduce piece bombs or piece lasers at around level 5 or 6.
 
 
 
