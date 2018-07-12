@@ -7,9 +7,9 @@
 using namespace RowBlast;
 
 const Pht::Color GuiResources::mBlueButtonColor {0.0f, 0.37f, 0.96f};
-const Pht::Color GuiResources::mDarkBlueButtonColor {0.0f, 0.35f, 0.925f};
+const Pht::Color GuiResources::mDarkBlueButtonColor {0.0f, 0.333f, 0.87f};
 const Pht::Color GuiResources::mBlueSelectedButtonColor {0.0f, 0.3f, 0.8f};
-const Pht::Color GuiResources::mYellowButtonColor {0.68f, 0.535f, 0.0f};
+const Pht::Color GuiResources::mYellowButtonColor {0.64f, 0.508f, 0.0f};
 const Pht::Color GuiResources::mYellowSelectedButtonColor {0.55f, 0.45f, 0.0f};
 const Pht::Color GuiResources::mGreenButtonColor {0.1f, 0.51f, 0.1f};
 const Pht::Color GuiResources::mGreenSelectedButtonColor {0.085f, 0.43f, 0.085f};

@@ -283,12 +283,12 @@ void GameScene::CreateFieldContainer() {
 Pht::QuadMesh::Vertices GameScene::CreateFieldVertices() {
     auto width {mFieldWidth + fieldPadding};
     auto height {mFieldHeight + fieldPadding};
-    
+
     return {
-        {{-width / 2.0f, -height / 2.0f, 0.0f}, {0.3f, 0.3f, 0.945f, 1.0f}},
-        {{width / 2.0f, -height / 2.0f, 0.0f}, {0.85f, 0.225f, 0.425f, 1.0f}},
-        {{width / 2.0f, height / 2.0f, 0.0f}, {0.3f, 0.3f, 0.95f, 1.0f}},
-        {{-width / 2.0f, height / 2.0f, 0.0f}, {0.9f, 0.225f, 0.425f, 1.0f}},
+        {{-width / 2.0f, -height / 2.0f, 0.0f}, {0.3f, 0.3f, 0.79f, 1.0f}},
+        {{width / 2.0f, -height / 2.0f, 0.0f}, {0.8f, 0.225f, 0.425f, 1.0f}},
+        {{width / 2.0f, height / 2.0f, 0.0f}, {0.3f, 0.3f, 0.79f, 1.0f}},
+        {{-width / 2.0f, height / 2.0f, 0.0f}, {0.81f, 0.225f, 0.425f, 1.0f}},
     };
 }
 

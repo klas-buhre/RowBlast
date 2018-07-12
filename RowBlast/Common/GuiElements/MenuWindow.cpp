@@ -14,8 +14,8 @@
 using namespace RowBlast;
 
 namespace {
-    const Pht::Vec4 grayColor {0.95f, 0.94f, 0.91f, 1.0f};
-    const Pht::Vec4 darkerGrayColor {0.93f, 0.92f, 0.89f, 1.0f};
+    const Pht::Vec4 grayColor {0.96f, 0.95f, 0.92f, 1.0f};
+    const Pht::Vec4 darkerGrayColor {0.94f, 0.93f, 0.9f, 1.0f};
     const Pht::Vec4 footerBorderColor {0.86f, 0.86f, 0.87f, 1.0f};
     const Pht::Vec4 blueColor {0.45f, 0.75f, 1.0f, 1.0};
     const Pht::Vec4 lightBlueColor {0.5f, 0.8f, 1.0f, 1.0};

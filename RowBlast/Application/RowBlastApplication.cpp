@@ -44,6 +44,7 @@ Backlog:
     -Credit Google for avatars? : http://www.iconarchive.com/show/noto-emoji-people-face-icons-by-google.1.html
 
 Ongoing tasks:
+    -The progress and moves objects in the game hud could be a bit bigger with bigger font.
     -Levels in the first world.
         -First level introduces clicking on pieces and clearing rows.
         -Second level introduces switching of pieces.

@@ -101,8 +101,8 @@ void GameMenuView::EnableUndoButton() {
     mIsUndoButtonEnabled = true;
     
     auto& material {mUndoButton->GetSceneObject().GetRenderable()->GetMaterial()};
-    material.SetAmbient(GuiResources::mBlueButtonColor);
-    material.SetDiffuse(GuiResources::mBlueButtonColor);
+    material.SetAmbient(GuiResources::mDarkBlueButtonColor);
+    material.SetDiffuse(GuiResources::mDarkBlueButtonColor);
 }
 
 void GameMenuView::DisableUndoButton() {
