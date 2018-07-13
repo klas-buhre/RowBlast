@@ -9,6 +9,7 @@
 #include "LightComponent.hpp"
 #include "TextComponent.hpp"
 #include "QuadMesh.hpp"
+#include "SceneObjectUtils.hpp"
 
 // Game includes.
 #include "GradientRectangle.hpp"
@@ -18,6 +19,7 @@
 #include "PieceResources.hpp"
 #include "GameHudController.hpp"
 #include "UiLayer.hpp"
+#include "CommonResources.hpp"
 
 using namespace RowBlast;
 
@@ -36,7 +38,7 @@ GameHud::GameHud(Pht::IEngine& engine,
                  const LevelResources& levelResources,
                  const PieceResources& pieceResources,
                  GameHudController& gameHudController,
-                 const Pht::Font& font,
+                 const CommonResources& commonResources,
                  Pht::Scene& scene,
                  Pht::SceneObject& parentObject,
                  int hudLayer,
@@ -60,7 +62,7 @@ GameHud::GameHud(Pht::IEngine& engine,
     CreateLightAndCamera(scene, parentObject, hudLayer);
 
     Pht::TextProperties upperTextProperties {
-        font,
+        commonResources.GetHussarFontSize27(PotentiallyZoomedScreen::Yes),
         1.0f,
         Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f},
         Pht::TextShadow::Yes,
@@ -71,7 +73,12 @@ GameHud::GameHud(Pht::IEngine& engine,
     CreateProgressObject(scene, parentObject, upperTextProperties, levelResources);
     CreateMovesObject(scene, parentObject, upperTextProperties);
     
-    Pht::TextProperties lowerTextProperties {font, 1.0f, Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f}};
+    Pht::TextProperties lowerTextProperties {
+        commonResources.GetHussarFontSize22(PotentiallyZoomedScreen::Yes),
+        1.0f,
+        Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f}
+    };
+
     CreateNextPiecesObject(scene, parentObject, lowerTextProperties);
     CreateSelectablePiecesObject(scene, parentObject, lowerTextProperties);
 }
@@ -108,8 +115,8 @@ void GameHud::CreateProgressObject(Pht::Scene& scene,
     auto& renderer {mEngine.GetRenderer()};
     
     Pht::Vec3 position {
-        -3.7f,
-        renderer.GetHudFrustumSize().y / 2.0f - renderer.GetTopPaddingHeight() - 0.7625f,
+        -3.4f,
+        renderer.GetHudFrustumSize().y / 2.0f - renderer.GetTopPaddingHeight() - 0.87f,
         UiLayer::root
     };
     
@@ -121,7 +128,7 @@ void GameHud::CreateProgressObject(Pht::Scene& scene,
     CreateRoundedCylinder(scene,
                           progressContainer,
                           cylinderPosition,
-                          {2.2, 1.1f},
+                          {2.5, 1.1f},
                           roundedCylinderOpacity,
                           roundedCylinderAmbient,
                           roundedCylinderDiffuse);
@@ -129,7 +136,7 @@ void GameHud::CreateProgressObject(Pht::Scene& scene,
     std::string text {"    "};  // Warning! Must be four spaces to fit digits.
     mProgressText = &scene.CreateText(text, textProperties);
     auto& progressTextSceneobject {mProgressText->GetSceneObject()};
-    progressTextSceneobject.GetTransform().SetPosition({0.0f, -0.23f, UiLayer::text});
+    progressTextSceneobject.GetTransform().SetPosition({-0.25f, -0.3f, UiLayer::text});
     progressContainer.AddChild(progressTextSceneobject);
     
     switch (mLevelObjective) {
@@ -140,6 +147,8 @@ void GameHud::CreateProgressObject(Pht::Scene& scene,
             CreateBlueprintSlot(scene, progressContainer, levelResources);
             break;
     }
+    
+    Pht::SceneObjectUtils::ScaleRecursively(*mProgressContainer, 1.1f);
 }
 
 void GameHud::CreateGrayBlock(Pht::Scene& scene,
@@ -149,7 +158,7 @@ void GameHud::CreateGrayBlock(Pht::Scene& scene,
     grayBlock.SetRenderable(&levelResources.GetLevelBlockRenderable(BlockKind::Full));
     
     auto& transform {grayBlock.GetTransform()};
-    transform.SetPosition({-0.8f, 0.0f, UiLayer::block});
+    transform.SetPosition({-0.95f, 0.0f, UiLayer::block});
     transform.SetRotation({-30.0f, -30.0f, 0.0f});
     transform.SetScale(0.505f);
     
@@ -163,7 +172,7 @@ void GameHud::CreateBlueprintSlot(Pht::Scene& scene,
     blueprintSlot.SetRenderable(&levelResources.GetBlueprintSlotRenderable());
     
     auto& transform {blueprintSlot.GetTransform()};
-    transform.SetPosition({-0.7f, 0.0f, UiLayer::block});
+    transform.SetPosition({-0.85f, 0.0f, UiLayer::block});
     transform.SetRotation({-30.0f, -30.0f, 0.0f});
     transform.SetScale(0.56f);
     
@@ -177,8 +186,8 @@ void GameHud::CreateMovesObject(Pht::Scene& scene,
     auto& renderer {mEngine.GetRenderer()};
     
     Pht::Vec3 position {
-        3.7f,
-        renderer.GetHudFrustumSize().y / 2.0f - renderer.GetTopPaddingHeight() - 0.7625f,
+        3.4f,
+        renderer.GetHudFrustumSize().y / 2.0f - renderer.GetTopPaddingHeight() - 0.87f,
         UiLayer::root
     };
 
@@ -190,7 +199,7 @@ void GameHud::CreateMovesObject(Pht::Scene& scene,
     CreateRoundedCylinder(scene,
                           movesContainer,
                           cylinderPosition,
-                          {2.2, 1.1f},
+                          {2.5, 1.1f},
                           roundedCylinderOpacity,
                           roundedCylinderAmbient,
                           roundedCylinderDiffuse);
@@ -198,10 +207,12 @@ void GameHud::CreateMovesObject(Pht::Scene& scene,
     std::string text {"   "};   // Warning! Must be three spaces to fit digits.
     mMovesText = &scene.CreateText(text, textProperties);
     auto& movesTextSceneobject {mMovesText->GetSceneObject()};
-    movesTextSceneobject.GetTransform().SetPosition({0.0f, -0.23f, UiLayer::text});
+    movesTextSceneobject.GetTransform().SetPosition({-0.05f, -0.3f, UiLayer::text});
     movesContainer.AddChild(movesTextSceneobject);
     
     CreateLPiece(scene, movesContainer);
+    
+    Pht::SceneObjectUtils::ScaleRecursively(*mMovesContainer, 1.1f);
 }
 
 void GameHud::CreateLPiece(Pht::Scene& scene, Pht::SceneObject& movesContainer) {
@@ -209,7 +220,7 @@ void GameHud::CreateLPiece(Pht::Scene& scene, Pht::SceneObject& movesContainer) 
     movesContainer.AddChild(lPiece);
     
     auto& baseTransform {lPiece.GetTransform()};
-    baseTransform.SetPosition({-0.8f, 0.05f, UiLayer::root});
+    baseTransform.SetPosition({-0.95f, 0.05f, UiLayer::root});
     baseTransform.SetRotation({-30.0f, -30.0f, 0.0f});
     auto scale {0.32f};
     baseTransform.SetScale(scale);

@@ -25,6 +25,7 @@ namespace RowBlast {
     class LevelResources;
     class PieceResources;
     class GameHudController;
+    class CommonResources;
     
     struct PreviewPiece {
         std::unique_ptr<SceneObjectPool> mSceneObjects;
@@ -43,7 +44,7 @@ namespace RowBlast {
                 const LevelResources& levelResources,
                 const PieceResources& pieceResources,
                 GameHudController& gameHudController,
-                const Pht::Font& font,
+                const CommonResources& commonResources,
                 Pht::Scene& scene,
                 Pht::SceneObject& parentObject,
                 int hudLayer,

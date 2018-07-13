@@ -28,6 +28,7 @@ Backlog:
     -Menu window that displays 3rd party lib credits.
     -Maybe try the font in fontawesome.com for the bright dialogs.
   -Tutorial:
+    -Look at the Tetris Blitz tutorial: https://www.youtube.com/watch?v=Mz_t9u8eocI
     -Make the tutorial as short as possible. Don't give all the rules of the game at once. Instead,
      let the user figure it out by playing. For example, introduce changing the visible moves in the
      second or third level. Let the first level introduce the rule of clearing lines and selecting
@@ -44,7 +45,6 @@ Backlog:
     -Credit Google for avatars? : http://www.iconarchive.com/show/noto-emoji-people-face-icons-by-google.1.html
 
 Ongoing tasks:
-    -The progress and moves objects in the game hud could be a bit bigger with bigger font.
     -Levels in the first world.
         -First level introduces clicking on pieces and clearing rows.
         -Second level introduces switching of pieces.
