@@ -46,10 +46,13 @@ Backlog:
 
 Ongoing tasks:
     -Levels in the first world.
-        -First level introduces clicking on pieces and clearing rows.
-        -Second level introduces switching of pieces.
-        -Third level introduces changing the visible moves.
+        -The first world could contain the basics, plus level piece blocks and bombs.
+        -First level introduces clicking on pieces, clearing rows and switching of pieces.
+        -Second level introduces changing the visible moves.
+        -Third level introduces cascading.
         -Introduce piece bombs or piece lasers at around level 5 or 6.
+        -Old levels to keep in the first world: 5, 9, 11, 14, 15, 16, 19.
+
 
 
 

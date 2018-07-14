@@ -7,9 +7,9 @@
     "dark": false,
     "pieces": [
         "B",
-        "D",
         "L",
-        "ShortI"
+        "LongI",
+        "D"
     ],
     "clearGrid": [
         "       ",
@@ -31,8 +31,10 @@
         "  GGGGG",
         " GGGGGG",
         "GGGGG  ",
-        "GGGGG  ",
         "GGGGGG ",
+        "GG   GG",
+        "GGGG GG",
+        "GGGG GG",
         "GGGG GG",
         "GGGG GG"
     ]

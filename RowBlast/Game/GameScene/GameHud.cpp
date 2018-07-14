@@ -136,7 +136,7 @@ void GameHud::CreateProgressObject(Pht::Scene& scene,
     std::string text {"    "};  // Warning! Must be four spaces to fit digits.
     mProgressText = &scene.CreateText(text, textProperties);
     auto& progressTextSceneobject {mProgressText->GetSceneObject()};
-    progressTextSceneobject.GetTransform().SetPosition({-0.25f, -0.3f, UiLayer::text});
+    progressTextSceneobject.GetTransform().SetPosition({-0.25f, -0.29f, UiLayer::text});
     progressContainer.AddChild(progressTextSceneobject);
     
     switch (mLevelObjective) {
@@ -207,7 +207,7 @@ void GameHud::CreateMovesObject(Pht::Scene& scene,
     std::string text {"   "};   // Warning! Must be three spaces to fit digits.
     mMovesText = &scene.CreateText(text, textProperties);
     auto& movesTextSceneobject {mMovesText->GetSceneObject()};
-    movesTextSceneobject.GetTransform().SetPosition({-0.05f, -0.3f, UiLayer::text});
+    movesTextSceneobject.GetTransform().SetPosition({-0.05f, -0.29f, UiLayer::text});
     movesContainer.AddChild(movesTextSceneobject);
     
     CreateLPiece(scene, movesContainer);
