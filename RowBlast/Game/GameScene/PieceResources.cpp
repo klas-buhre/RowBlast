@@ -95,7 +95,7 @@ namespace {
                                                            material);
             case WeldRenderableKind::Aslope:
                 return sceneManager.CreateRenderableObject(Pht::QuadMesh {0.19f,
-                                                                          0.85f,
+                                                                          0.75f,
                                                                           std::string{"aslopeWeld"}},
                                                            material);
             case WeldRenderableKind::Diagonal:
