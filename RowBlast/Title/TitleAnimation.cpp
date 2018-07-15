@@ -22,7 +22,7 @@ namespace {
     constexpr auto slideTime {0.23f};
     constexpr auto displayDistance {0.65f};
     constexpr auto displayTime {1.75f};
-    constexpr auto textWidth {10.0f};
+    constexpr auto textWidth {11.0f};
     const Pht::Vec3 centerPosition {0.0f, 5.0f, 0.0f};
     
     Pht::StaticVector<Pht::Vec2, 20> scalePoints {
@@ -78,6 +78,7 @@ TitleAnimation::TitleAnimation(Pht::IEngine& engine,
     mVelocity = mInitialVelocity;
     
     UpdateTextLineSceneObjectPositions();
+    Pht::SceneObjectUtils::ScaleRecursively(containerSceneObject, 1.1f);
 }
 
 void TitleAnimation::CreateText() {

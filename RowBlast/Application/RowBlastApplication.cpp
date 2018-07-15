@@ -45,12 +45,13 @@ Backlog:
     -Credit Google for avatars? : http://www.iconarchive.com/show/noto-emoji-people-face-icons-by-google.1.html
 
 Ongoing tasks:
+    -Bigger font in the sliding text animation.
     -Levels in the first world.
         -The first world could contain the basics, plus level piece blocks and bombs.
         -First level introduces clicking on pieces, clearing rows and switching of pieces.
         -Second level introduces changing the visible moves.
         -Third level introduces cascading.
-        -Introduce piece bombs or piece lasers at around level 5 or 6.
+        -Introduce piece bombs at level 7.
         -Old levels to keep in the first world: 5, 9, 11, 14, 15, 16, 19.
 
 
