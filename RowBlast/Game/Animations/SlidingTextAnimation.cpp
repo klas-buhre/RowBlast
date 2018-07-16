@@ -23,7 +23,7 @@ namespace {
     constexpr auto rectangleFadeInTime {0.3f};
     constexpr auto slideTime {0.2f};
     constexpr auto displayDistance {0.65f};
-    constexpr auto textWidth {8.0f};
+    constexpr auto textWidth {8.8f};
     const Pht::Vec3 centerPosition {0.0f, 1.0f, 0.0f};
     
     Pht::StaticVector<Pht::Vec2, 20> scalePoints {
@@ -57,10 +57,10 @@ SlidingTextAnimation::SlidingTextAnimation(Pht::IEngine& engine,
     auto& font {commonResources.GetHussarFontSize52PotentiallyZoomedScreen()};
 
     mTexts.reserve(4);
-    CreateText(font, 2.5f, {{-3.6f, 0.4f}, "CLEAR ALL"}, {{-4.7f, -1.5f}, "GRAY BLOCKS"});
-    CreateText(font, 1.6f, {{-1.1f, 0.4f}, "ALL"}, {{-3.0f, -1.5f}, "CLEARED!"});
-    CreateText(font, 2.5f, {{-2.7f, 0.4f}, "FILL ALL"}, {{-4.3f, -1.5f}, "GRAY SLOTS"});
-    CreateText(font, 2.5f, {{-3.5f, 0.4f}, "ALL SLOTS"}, {{-2.1f, -1.5f}, "FILLED!"});
+    CreateText(font, 2.5f, {{-3.96f, 0.26f}, "CLEAR ALL"}, {{-5.17f, -1.65f}, "GRAY BLOCKS"});
+    CreateText(font, 1.6f, {{-1.21f, 0.26f}, "ALL"}, {{-3.3f, -1.65f}, "CLEARED!"});
+    CreateText(font, 2.5f, {{-2.97f, 0.26f}, "FILL ALL"}, {{-4.73f, -1.65f}, "GRAY SLOTS"});
+    CreateText(font, 2.5f, {{-3.85f, 0.26f}, "ALL SLOTS"}, {{-2.31f, -1.65f}, "FILLED!"});
     
     CreateTwinkleParticleEffect();
 }
@@ -71,7 +71,7 @@ void SlidingTextAnimation::CreateText(const Pht::Font& font,
                                       const TextLine& lowerTextLine) {
     Pht::TextProperties textProperties {
         font,
-        1.0f,
+        1.1f,
         {1.0f, 1.0f, 1.0f, 1.0f},
         Pht::TextShadow::Yes,
         {0.1f, 0.1f},

@@ -1,6 +1,6 @@
 {
     "speed": 0.0,
-    "moves": 45,
+    "moves": 30,
     "twoStars": 25,
     "threeStars": 15,
     "background": "sky3.jpg",
@@ -8,13 +8,14 @@
     "pieces": [
         "LongI",
         "I",
+        "ShortI",
+        "L",
         "B",
         "D",
         "Seven",
-        "MirroredSeven",
-        "Bomb"
+        "MirroredSeven"
     ],
-    "clearGrid": [
+    "blueprintGrid": [
         "       ",
         "       ",
         "       ",
@@ -26,23 +27,25 @@
         "       ",
         "       ",
         "       ",
-        "  ly ly",
-        "  ly ly",
-        "  GGGGG",
-        "  GGGGG",
-        "  GGGGG",
-        "GG GGGG",
-        "GG GGGG",
         "       ",
         "       ",
-        "GG GGGG",
-        "GGG  GG",
-        "  GGGGG",
-        "  GGGGG",
+        "       ",
+        "       ",
+        "       ",
+        "       ",
+        "       ",
+        "GGGGGG ",
+        "       ",
+        "GGGGGG ",
         "GG     ",
         "GG     ",
-        "GG     ",
-        "GG     ",
-        "GG     "
+        "GGG    ",
+        "GGG    ",
+        "GGGGG  ",
+        "GGGGG  ",
+        "GGG GGG",
+        "GGG GGG",
+        "  GGG  ",
+        "  GGG  "
     ]
 }
