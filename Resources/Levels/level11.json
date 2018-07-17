@@ -1,6 +1,6 @@
 {
     "speed": 0.0,
-    "moves": 30,
+    "moves": 40,
     "twoStars": 25,
     "threeStars": 15,
     "background": "sky3.jpg",
@@ -12,7 +12,8 @@
         "B",
         "D",
         "Seven",
-        "MirroredSeven"
+        "MirroredSeven",
+        "RowBomb"
     ],
     "clearGrid": [
         "       ",
@@ -39,6 +40,7 @@
         "GG   GG",
         "GG   GG",
         "G    GG",
+        "G     G",
         "G     G",
         "G     G"
     ]
