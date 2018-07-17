@@ -29,6 +29,10 @@ Backlog:
     -Maybe try the font in fontawesome.com for the bright dialogs.
   -Tutorial:
     -Look at the Tetris Blitz tutorial: https://www.youtube.com/watch?v=Mz_t9u8eocI
+    -The first world could contain the basics, plus level piece blocks and bombs.
+    -First level introduces clicking on pieces, clearing rows and switching of pieces.
+    -Second level introduces changing the visible moves.
+    -Third level introduces cascading.
     -Start level 6 with a laser.
     -Start level 7 with a bomb.
     -Make the tutorial as short as possible. Don't give all the rules of the game at once. Instead,
@@ -48,12 +52,7 @@ Backlog:
 
 Ongoing tasks:
     -Levels in the first world.
-        -The first world could contain the basics, plus level piece blocks and bombs.
-        -First level introduces clicking on pieces, clearing rows and switching of pieces.
-        -Second level introduces changing the visible moves.
-        -Third level introduces cascading.
-        -Introduce piece bombs at level 7.
-        -Old levels to keep in the first world: 5, 9, 11, 14, 15, 16, 19.
+        -Old levels to keep in the first world: 14, 15, 16, 19.
 
 
 

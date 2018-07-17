@@ -14,13 +14,13 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto numFireworks {20};
+    constexpr auto numFireworks {30};
     constexpr auto fireworksDuration {5.0f};
     constexpr auto fireworksWaitDuration {1.0f};
     constexpr auto fireworkTimeToLive {1.5f};
     constexpr auto fireworkTimeToLiveRandomPart {1.0f};
     constexpr auto velocity {25.0f};
-    constexpr auto velocityRandomPart {12.0f};
+    constexpr auto velocityRandomPart {6.0f};
     
     const std::array<Pht::Vec4, 3> colors {
         Pht::Vec4{1.0f, 0.6f, 0.6f, 1.0f},
@@ -55,7 +55,7 @@ void FireworksParticleEffect::Init(Pht::SceneObject& parentObject, const Pht::Ve
         Pht::Vec3 position {
             (Pht::NormalizedRand() - 0.5f) * effectsVolume.x,
             (Pht::NormalizedRand() - 0.5f) * effectsVolume.y + effectsVolume.y / 5.0f,
-            (Pht::NormalizedRand() - 0.5f) * effectsVolume.z
+            (Pht::NormalizedRand() - 0.5f) * effectsVolume.z - 6.0f
         };
         
         auto waitTime {
