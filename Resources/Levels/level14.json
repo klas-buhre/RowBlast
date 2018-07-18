@@ -1,8 +1,8 @@
 {
     "speed": 0.0,
-    "moves": 40,
-    "twoStars": 25,
-    "threeStars": 15,
+    "moves": 45,
+    "twoStars": 35,
+    "threeStars": 25,
     "background": "sky2.jpg",
     "dark": false,
     "pieces": [
@@ -12,7 +12,9 @@
         "B",
         "D",
         "Seven",
-        "MirroredSeven"
+        "MirroredSeven",
+        "Bomb",
+        "RowBomb"
     ],
     "clearGrid": [
         "       ",
@@ -33,13 +35,11 @@
         "G G G  ",
         "   G   ",
         " G   G ",
-        "     GG",
+        "  GG GG",
         "GG     ",
         "   G  G",
-        " G   G ",
+        "GG   G ",
         "G G G  ",
-        " G G  G",
-        "     G ",
         " G G  G"
     ]
 }
