@@ -24,6 +24,8 @@ Backlog:
     -Undo to the previous move initial state or the the previous move last state before move? Should
      not really matter since the user can select any piece from the selectables but maybe it is most 
      convenient to go back to the state before the move and not the initial state.
+  -Rendering:
+    -Maybe the blue background material should be a bit less blue?
   -GUI:
     -Menu window that displays 3rd party lib credits.
     -Maybe try the font in fontawesome.com for the bright dialogs.
@@ -52,7 +54,7 @@ Backlog:
 
 Ongoing tasks:
     -Levels in the first world.
-        -Old levels to keep in the first world: 14, 15, 16, 19.
+        -Old levels to keep in the first world: 14, 15, 16.
 
 
 

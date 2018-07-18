@@ -31,6 +31,7 @@
 		62398E60209A2784000F5F79 /* TitleAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62398E5E209A2784000F5F79 /* TitleAnimation.cpp */; };
 		623E3D5720DE4A2600BB800F /* World.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623E3D5520DE4A2600BB800F /* World.cpp */; };
 		623E3D5820DE4A2600BB800F /* World1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623E3D5620DE4A2600BB800F /* World1.cpp */; };
+		6240508620FF69C00077A454 /* level46.json in Resources */ = {isa = PBXBuildFile; fileRef = 6240508520FF69C00077A454 /* level46.json */; };
 		62411A971E61E62800035D2A /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62411A961E61E62800035D2A /* GLKit.framework */; };
 		62487E7020D7F40400E4429E /* Avatar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62487E6E20D7F40400E4429E /* Avatar.cpp */; };
 		62487E9620D9573E00E4429E /* avatar.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62487E9520D9573E00E4429E /* avatar.jpg */; };
@@ -358,6 +359,7 @@
 		623E3D5420DE4A2600BB800F /* World1.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = World1.hpp; sourceTree = "<group>"; };
 		623E3D5520DE4A2600BB800F /* World.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = World.cpp; sourceTree = "<group>"; };
 		623E3D5620DE4A2600BB800F /* World1.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = World1.cpp; sourceTree = "<group>"; };
+		6240508520FF69C00077A454 /* level46.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level46.json; sourceTree = "<group>"; };
 		62411A961E61E62800035D2A /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		62487E6E20D7F40400E4429E /* Avatar.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Avatar.cpp; sourceTree = "<group>"; };
 		62487E6F20D7F40400E4429E /* Avatar.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Avatar.hpp; sourceTree = "<group>"; };
@@ -1159,6 +1161,7 @@
 				6261FFD620FCC912008F1619 /* level43.json */,
 				6261FFD820FD2C29008F1619 /* level44.json */,
 				6261FFDA20FE06CA008F1619 /* level45.json */,
+				6240508520FF69C00077A454 /* level46.json */,
 			);
 			path = Levels;
 			sourceTree = "<group>";
@@ -2280,6 +2283,7 @@
 				62785B1B20875937006F9869 /* PointParticle.vert in Resources */,
 				629B838220C6E06500DD2D0E /* level38.json in Resources */,
 				6261FFD520FB969B008F1619 /* level42.json in Resources */,
+				6240508620FF69C00077A454 /* level46.json in Resources */,
 				6270DC8B1FCB23D800FB457D /* level12.json in Resources */,
 				627D382320A731480068B50C /* big_button_048.obj in Resources */,
 				62E2222E1FE9754C00AE098B /* cloud_F_512.png in Resources */,
