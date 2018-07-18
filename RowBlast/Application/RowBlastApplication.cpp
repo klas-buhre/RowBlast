@@ -54,7 +54,7 @@ Backlog:
 
 Ongoing tasks:
     -Levels in the first world.
-        -Old levels to keep in the first world: 14, 15, 16.
+        -Levels left to do: 15, 16, 17.
 
 
 
