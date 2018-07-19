@@ -53,8 +53,7 @@ Backlog:
     -Credit Google for avatars? : http://www.iconarchive.com/show/noto-emoji-people-face-icons-by-google.1.html
 
 Ongoing tasks:
-    -Levels in the first world.
-        -Levels left to do: 16, 17.
+  -Tutorial.
 
 
 
@@ -124,6 +123,7 @@ Ordered Backlog:
         Done
     -Levels in the first world.
         Cost: 5
+        Done
     -Tutorial.
         Cost: 10
     -Fix all bugs.
