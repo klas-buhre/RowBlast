@@ -323,6 +323,7 @@ void GameLogic::HandleCascading() {
                 mFlyingBlocksAnimation.AddBlockRows(removedSubCells);
                 UpdateLevelProgress();
                 mCollapsingFieldAnimation.GoToInactiveState();
+                mCollapsingFieldAnimation.ResetBlockAnimations();
                 RemoveClearedRowsAndPullDownLoosePieces();
             }
             break;

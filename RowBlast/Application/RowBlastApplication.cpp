@@ -54,7 +54,7 @@ Backlog:
 
 Ongoing tasks:
     -Levels in the first world.
-        -Levels left to do: 15, 16, 17.
+        -Levels left to do: 16, 17.
 
 
 
