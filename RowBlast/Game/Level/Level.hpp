@@ -17,6 +17,11 @@ namespace RowBlast {
             Build
         };
         
+        struct PredeterminedMove {
+            Pht::IVec2 mPosition;
+            Rotation mRotation;
+        };
+        
         Level(int id,
               Objective objective,
               int numColumns,
@@ -26,6 +31,7 @@ namespace RowBlast {
               const StarLimits& starLimits,
               const std::vector<const Piece*>& pieceTypes,
               const std::vector<const Piece*>& pieceSequence,
+              const std::vector<PredeterminedMove>& predeterminedMoves,
               const std::string& backgroundTextureFilename,
               bool isDark);
         
@@ -72,6 +78,10 @@ namespace RowBlast {
         const std::vector<const Piece*>& GetPieceSequence() const {
             return mPieceSequence;
         }
+        
+        const std::vector<PredeterminedMove>& GetPredeterminedMoves() const {
+            return mPredeterminedMoves;
+        }
 
         const CellGrid* GetClearGrid() const {
             return mClearGrid.get();
@@ -101,6 +111,7 @@ namespace RowBlast {
         StarLimits mStarLimits;
         std::vector<const Piece*> mPieceTypes;
         std::vector<const Piece*> mPieceSequence;
+        std::vector<PredeterminedMove> mPredeterminedMoves;
         std::unique_ptr<CellGrid> mClearGrid;
         std::unique_ptr<BlueprintCellGrid> mBlueprintGrid;
         std::string mBackgroundTextureFilename;

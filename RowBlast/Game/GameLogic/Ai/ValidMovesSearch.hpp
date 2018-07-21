@@ -9,6 +9,7 @@
 
 // Game includes.
 #include "Field.hpp"
+#include "Level.hpp"
 
 namespace RowBlast {
     class Piece;
@@ -76,7 +77,9 @@ namespace RowBlast {
         explicit ValidMovesSearch(Field& field);
         
         void Init();
-        void FindValidMoves(ValidMoves& validMoves, MovingPiece piece);
+        void FindValidMoves(ValidMoves& validMoves,
+                            MovingPiece piece,
+                            const Level::PredeterminedMove* predeterminedMove);
         
     private:
         enum class SearchDirection {
@@ -199,6 +202,7 @@ namespace RowBlast {
         Field& mField;
         SearchGrid mSearchGrid;
         mutable Field::CollisionResult mCollisionResult;
+        const Level::PredeterminedMove* mPredeterminedMove {nullptr};
     };
 }
 

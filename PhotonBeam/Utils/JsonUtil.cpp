@@ -79,23 +79,18 @@ float Json::ReadFloat(const rapidjson::Value& object, const std::string& name) {
     return value.GetFloat();
 }
 
-Vec3 Json::ReadVec3(const rapidjson::Value& object, const std::string& name) {
+IVec2 Json::ReadIVec2(const rapidjson::Value& object, const std::string& name) {
     assert(object.HasMember(name.c_str()));
 
     const auto& value {object[name.c_str()]};
     assert(value.IsArray());
     
     const auto& array {value.GetArray()};
-    assert(array.Size() == 3);
-    assert(array[0].IsFloat());
-    assert(array[1].IsFloat());
-    assert(array[2].IsFloat());
+    assert(array.Size() == 2);
+    assert(array[0].IsInt());
+    assert(array[1].IsInt());
     
-    return {
-        array[0].GetFloat(),
-        array[1].GetFloat(),
-        array[2].GetFloat()
-    };
+    return {array[0].GetInt(), array[1].GetInt()};
 }
 
 void Json::AddInt(rapidjson::Value& object,

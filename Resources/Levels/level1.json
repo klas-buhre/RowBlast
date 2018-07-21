@@ -17,6 +17,12 @@
         "B",
         "LongI"
     ],
+    "predeterminedMoves": [
+        {
+            "position": [1, 9],
+            "rotation": 270
+        }
+    ],
     "clearGrid": [
         "       ",
         "       ",

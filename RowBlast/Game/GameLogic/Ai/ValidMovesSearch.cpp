@@ -92,7 +92,11 @@ void ValidMovesSearch::Init() {
     }
 }
 
-void ValidMovesSearch::FindValidMoves(ValidMoves& validMoves, MovingPiece piece) {
+void ValidMovesSearch::FindValidMoves(ValidMoves& validMoves,
+                                      MovingPiece piece,
+                                      const Level::PredeterminedMove* predeterminedMove) {
+    mPredeterminedMove = predeterminedMove;
+
     InitSearchGrid();
     FindMostValidMovesWithHumanLikeSearch(validMoves, piece);
     ResetVisitedLocations();
@@ -516,6 +520,14 @@ void ValidMovesSearch::SaveMove(ValidMoves& validMoves,
         return;
     }
     
+    if (mPredeterminedMove) {
+        if (piece.mPosition != mPredeterminedMove->mPosition ||
+            piece.mRotation != mPredeterminedMove->mRotation) {
+            
+            return;
+        }
+    }
+    
     if (auto* foundMove {GetFoundMove(piece)}) {
         auto foundMoveNumMovements {CalcNumMovements(*foundMove->mLastMovement)};
         auto thisMoveNumMovements {CalcNumMovements(*previousMovement) + 1};
@@ -671,6 +683,14 @@ void ValidMovesSearch::SaveMoveIfNotFoundBefore(ValidMoves& validMoves,
         return;
     }
     
+    if (mPredeterminedMove) {
+        if (piece.mPosition != mPredeterminedMove->mPosition ||
+            piece.mRotation != mPredeterminedMove->mRotation) {
+            
+            return;
+        }
+    }
+
     auto* lastMovement {AddMovement(validMoves, piece, previousMovement)};
     Move move {piece.mPosition, piece.mRotation, lastMovement};
 

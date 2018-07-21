@@ -60,6 +60,7 @@ Ongoing tasks:
         -Predetermined moves.
         -Windows that pop up during play and disappears when a move is selected.
         -Windows that pop up during play and disappears when clicked on button.
+        -Changing input type should be disabled during level 1 to 3.
 
 
 

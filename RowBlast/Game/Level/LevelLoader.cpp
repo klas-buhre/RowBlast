@@ -239,6 +239,8 @@ std::unique_ptr<Level> LevelLoader::Load(int levelId, const LevelResources& leve
     if (document.HasMember("pieceSequence")) {
         pieceSequence = ReadPieceTypes(document, "pieceSequence", levelResources.GetPieceTypes());
     }
+    
+    std::vector<Level::PredeterminedMove> predeterminedMoves;
 
     auto clearGrid {ReadClearGrid(document)};
     auto blueprintGrid {ReadBlueprintGrid(document)};
@@ -270,6 +272,7 @@ std::unique_ptr<Level> LevelLoader::Load(int levelId, const LevelResources& leve
                                 starLimits,
                                 levelPieces,
                                 pieceSequence,
+                                predeterminedMoves,
                                 backgroundTextureFilename,
                                 isDark)
     };

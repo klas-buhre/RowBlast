@@ -44,8 +44,8 @@ namespace RowBlast {
                           IGameLogic& gameLogic);
         
         void Init(const Level& level);
-        void CalculateMoves(const FallingPiece& fallingPiece);
-        void UpdateMoves(const FallingPiece& fallingPiece);
+        void CalculateMoves(const FallingPiece& fallingPiece, int movesUsed);
+        void UpdateMoves(const FallingPiece& fallingPiece, int movesUsed);
         void CreateNewSetOfVisibleMoves();
         void HandleTouch(const Pht::TouchEvent& touchEvent);
         const VisibleMoves* GetVisibleMoves() const;

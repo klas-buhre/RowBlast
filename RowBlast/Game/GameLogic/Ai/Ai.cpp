@@ -2,7 +2,6 @@
 
 // Game includes.
 #include "FallingPiece.hpp"
-#include "Level.hpp"
 
 using namespace RowBlast;
 
@@ -22,7 +21,7 @@ void Ai::Init(const Level& level) {
     mValidMovesSearch.Init();
 }
 
-Ai::MovePtrs& Ai::CalculateMoves(const FallingPiece& fallingPiece) {
+Ai::MovePtrs& Ai::CalculateMoves(const FallingPiece& fallingPiece, int movesUsed) {
     mValidMoves.Clear();
     
     MovingPiece piece {
@@ -31,11 +30,25 @@ Ai::MovePtrs& Ai::CalculateMoves(const FallingPiece& fallingPiece) {
         fallingPiece.GetPieceType()
     };
     
-    mValidMovesSearch.FindValidMoves(mValidMoves, piece);
+    mValidMovesSearch.FindValidMoves(mValidMoves, piece, GetPredeterminedMove(movesUsed));
     EvaluateMoves(fallingPiece);
     SortMoves();
     
     return mSortedMoves;
+}
+
+const Level::PredeterminedMove* Ai::GetPredeterminedMove(int movesUsed) {
+    auto& predeterminedMoves {mLevel->GetPredeterminedMoves()};
+    
+    if (predeterminedMoves.empty()) {
+        return nullptr;
+    }
+
+    if (movesUsed < predeterminedMoves.size()) {
+        return &predeterminedMoves[movesUsed];
+    }
+    
+    return nullptr;
 }
 
 void Ai::EvaluateMoves(const FallingPiece& fallingPiece) {
@@ -124,7 +137,7 @@ void Ai::SortMoves() {
     mSortedMoves.Sort(CompareMoves);
 }
 
-ValidMoves& Ai::FindValidMoves(const FallingPiece& fallingPiece) {
+ValidMoves& Ai::FindValidMoves(const FallingPiece& fallingPiece, int movesUsed) {
     mUpdatedValidMoves.Clear();
     
     MovingPiece piece {
@@ -133,6 +146,6 @@ ValidMoves& Ai::FindValidMoves(const FallingPiece& fallingPiece) {
         fallingPiece.GetPieceType()
     };
     
-    mValidMovesSearch.FindValidMoves(mUpdatedValidMoves, piece);
+    mValidMovesSearch.FindValidMoves(mUpdatedValidMoves, piece, GetPredeterminedMove(movesUsed));
     return mUpdatedValidMoves;
 }

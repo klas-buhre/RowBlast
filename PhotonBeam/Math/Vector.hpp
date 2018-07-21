@@ -79,6 +79,10 @@ namespace Pht {
         bool operator==(const Vector2& v) const {
             return x == v.x && y == v.y;
         }
+        
+        bool operator!=(const Vector2& v) const {
+            return !(*this == v);
+        }
 
         Vector2 Lerp(float t, const Vector2& v) const {
             return Vector2(x * (1 - t) + v.x * t,
@@ -186,6 +190,10 @@ namespace Pht {
 
         bool operator==(const Vector3& v) const {
             return x == v.x && y == v.y && z == v.z;
+        }
+
+        bool operator!=(const Vector3& v) const {
+            return !(*this == v);
         }
 
         Vector3 Lerp(float t, const Vector3& v) const {

@@ -64,15 +64,15 @@ void ClickInputHandler::Init(const Level& level) {
     }
 }
 
-void ClickInputHandler::CalculateMoves(const FallingPiece& fallingPiece) {
+void ClickInputHandler::CalculateMoves(const FallingPiece& fallingPiece, int movesUsed) {
     mPieceType = &fallingPiece.GetPieceType();
-    mAllValidMoves = &mAi.CalculateMoves(fallingPiece);
+    mAllValidMoves = &mAi.CalculateMoves(fallingPiece, movesUsed);
 }
 
-void ClickInputHandler::UpdateMoves(const FallingPiece& fallingPiece) {
+void ClickInputHandler::UpdateMoves(const FallingPiece& fallingPiece, int movesUsed) {
     assert(mAllValidMoves);
     
-    auto& updatedMoves {mAi.FindValidMoves(fallingPiece)};
+    auto& updatedMoves {mAi.FindValidMoves(fallingPiece, movesUsed)};
     auto& previousMoves {*mAllValidMoves};
     
     for (auto* move: previousMoves) {
