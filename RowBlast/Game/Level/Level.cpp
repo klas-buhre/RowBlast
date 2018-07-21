@@ -10,6 +10,7 @@ Level::Level(int id,
              int numMoves,
              const StarLimits& starLimits,
              const std::vector<const Piece*>& pieceTypes,
+             const std::vector<const Piece*>& pieceSequence,
              const std::string& backgroundTextureFilename,
              bool isDark) :
     mId {id},
@@ -20,6 +21,7 @@ Level::Level(int id,
     mNumMoves {numMoves},
     mStarLimits {starLimits},
     mPieceTypes {pieceTypes},
+    mPieceSequence {pieceSequence},
     mBackgroundTextureFilename {backgroundTextureFilename},
     mIsDark {isDark} {}
 

@@ -4,10 +4,11 @@
 
 using namespace RowBlast;
 
-void NextPieceGenerator::Init(const std::vector<const Piece*>& pieceTypes) {
+void NextPieceGenerator::Init(const std::vector<const Piece*>& pieceTypes,
+                              const std::vector<const Piece*>& initialPieceSequence) {
     mPieceTypes = &pieceTypes;
     
-    GenerateSequence();
+    GenerateSequence(initialPieceSequence);
     
     mNext2Pieces[1] = GetNextFromSequence();
     mNext2Pieces[0] = GetNextFromSequence();
@@ -22,7 +23,7 @@ const Piece& NextPieceGenerator::GetNext() {
     return *next;
 }
 
-void NextPieceGenerator::GenerateSequence() {
+void NextPieceGenerator::GenerateSequence(const std::vector<const Piece*>& initialPieceSequence) {
     Pieces bag;
     
     for (auto* pieceType: *mPieceTypes) {
@@ -30,7 +31,13 @@ void NextPieceGenerator::GenerateSequence() {
     }
     
     mSequence.Clear();
-    auto numPieceTypes {mPieceTypes->size()};
+    
+    for (auto* piece: initialPieceSequence) {
+        mSequence.PushBack(piece);
+        bag.EraseValue(piece);
+    }
+    
+    auto numPieceTypes {bag.Size()};
     
     for (auto i {0}; i < numPieceTypes; ++i) {
         auto pieceIndex {std::rand() % bag.Size()};
@@ -43,7 +50,7 @@ void NextPieceGenerator::GenerateSequence() {
 
 const Piece* NextPieceGenerator::GetNextFromSequence() {
     if (mIndexInSequence >= mSequence.Size()) {
-        GenerateSequence();
+        GenerateSequence({});
     }
     
     auto* next {mSequence.At(mIndexInSequence)};

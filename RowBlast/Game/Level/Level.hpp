@@ -25,6 +25,7 @@ namespace RowBlast {
               int numMoves,
               const StarLimits& starLimits,
               const std::vector<const Piece*>& pieceTypes,
+              const std::vector<const Piece*>& pieceSequence,
               const std::string& backgroundTextureFilename,
               bool isDark);
         
@@ -67,7 +68,11 @@ namespace RowBlast {
         const std::vector<const Piece*>& GetPieceTypes() const {
             return mPieceTypes;
         }
-        
+
+        const std::vector<const Piece*>& GetPieceSequence() const {
+            return mPieceSequence;
+        }
+
         const CellGrid* GetClearGrid() const {
             return mClearGrid.get();
         }
@@ -95,6 +100,7 @@ namespace RowBlast {
         int mNumMoves {0};
         StarLimits mStarLimits;
         std::vector<const Piece*> mPieceTypes;
+        std::vector<const Piece*> mPieceSequence;
         std::unique_ptr<CellGrid> mClearGrid;
         std::unique_ptr<BlueprintCellGrid> mBlueprintGrid;
         std::string mBackgroundTextureFilename;

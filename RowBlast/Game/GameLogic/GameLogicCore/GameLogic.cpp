@@ -124,7 +124,7 @@ void GameLogic::Init(const Level& level) {
     
     mCurrentMove = MoveData {};
     auto& nextPieceGenerator {mCurrentMove.mNextPieceGenerator};
-    nextPieceGenerator.Init(mLevel->GetPieceTypes());
+    nextPieceGenerator.Init(mLevel->GetPieceTypes(), mLevel->GetPieceSequence());
     mCurrentMove.mSelectablePieces[1] = &nextPieceGenerator.GetNext();
     mCurrentMove.mSelectablePieces[0] = &nextPieceGenerator.GetNext();
     mCurrentMoveInitialState = mCurrentMove;

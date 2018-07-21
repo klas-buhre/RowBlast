@@ -11,6 +11,12 @@
         "LongI",
         "D"
     ],
+    "pieceSequence": [
+        "L",
+        "D",
+        "B",
+        "LongI"
+    ],
     "clearGrid": [
         "       ",
         "       ",
@@ -25,14 +31,13 @@
         "       ",
         "       ",
         "       ",
-        "GG  GGG",
+        "G    GG",
+        "GG   GG",
         "GGG GGG",
-        "  GGGGG",
-        "  GGGGG",
-        " GGGGGG",
+        "GGGGG  ",
         "GGGGG  ",
         "GGGGGG ",
-        "GG   GG",
+        "GGGG GG",
         "GGGG GG",
         "GGGG GG",
         "GGGG GG",

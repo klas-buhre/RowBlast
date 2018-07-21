@@ -38,6 +38,16 @@ namespace Pht {
             }
         }
         
+        // Warning! The destructor on the erased element is not called. Only store store POD types.
+        void EraseValue(const T& value) {
+            for (auto i {0}; i < mSize; ++i) {
+                if (mData[i] == value) {
+                    Erase(i);
+                    break;
+                }
+            }
+        }
+        
         const T* Find(const T& element) const {
             for (auto i {0}; i < mSize; ++i) {
                 if (mData[i] == element) {

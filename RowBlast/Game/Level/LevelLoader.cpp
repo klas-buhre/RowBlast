@@ -10,11 +10,12 @@ using namespace RowBlast;
 
 namespace {
     std::vector<const Piece*> ReadPieceTypes(const rapidjson::Document& document,
+                                             const std::string& memberName,
                                              const PieceTypes& pieceTypes) {
-        assert(document.HasMember("pieces"));
+        assert(document.HasMember(memberName.c_str()));
         
         std::vector<const Piece*> levelPieceTypes;
-        const auto& piecesArray {document["pieces"]};
+        const auto& piecesArray {document[memberName.c_str()]};
         assert(piecesArray.IsArray());
         
         for (const auto& pieceStr: piecesArray.GetArray()) {
@@ -231,7 +232,14 @@ std::unique_ptr<Level> LevelLoader::Load(int levelId, const LevelResources& leve
     
     auto backgroundTextureFilename {Pht::Json::ReadString(document, "background")};
     auto isDark {Pht::Json::ReadBool(document, "dark")};
-    auto levelPieces {ReadPieceTypes(document, levelResources.GetPieceTypes())};    
+    auto levelPieces {ReadPieceTypes(document, "pieces", levelResources.GetPieceTypes())};
+    
+    std::vector<const Piece*> pieceSequence;
+    
+    if (document.HasMember("pieceSequence")) {
+        pieceSequence = ReadPieceTypes(document, "pieceSequence", levelResources.GetPieceTypes());
+    }
+
     auto clearGrid {ReadClearGrid(document)};
     auto blueprintGrid {ReadBlueprintGrid(document)};
     
@@ -261,6 +269,7 @@ std::unique_ptr<Level> LevelLoader::Load(int levelId, const LevelResources& leve
                                 moves,
                                 starLimits,
                                 levelPieces,
+                                pieceSequence,
                                 backgroundTextureFilename,
                                 isDark)
     };
@@ -279,7 +288,7 @@ std::unique_ptr<LevelInfo> LevelLoader::LoadInfo(int levelId,
     rapidjson::Document document;
     Pht::Json::ParseFile(document, "level" + std::to_string(levelId) + ".json");
 
-    auto levelPieces {ReadPieceTypes(document, levelResources.GetPieceTypes())};
+    auto levelPieces {ReadPieceTypes(document, "pieces", levelResources.GetPieceTypes())};
     Level::Objective objective;
     
     if (document.HasMember("clearGrid")) {

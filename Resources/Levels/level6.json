@@ -1,8 +1,8 @@
 {
     "speed": 0.0,
-    "moves": 40,
-    "twoStars": 25,
-    "threeStars": 15,
+    "moves": 45,
+    "twoStars": 35,
+    "threeStars": 25,
     "background": "sky2.jpg",
     "dark": false,
     "pieces": [
@@ -12,6 +12,9 @@
         "D",
         "Seven",
         "MirroredSeven",
+        "RowBomb"
+    ],
+    "pieceSequence": [
         "RowBomb"
     ],
     "clearGrid": [

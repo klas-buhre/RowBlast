@@ -29,18 +29,6 @@ Backlog:
   -GUI:
     -Menu window that displays 3rd party lib credits.
     -Maybe try the font in fontawesome.com for the bright dialogs.
-  -Tutorial:
-    -Look at the Tetris Blitz tutorial: https://www.youtube.com/watch?v=Mz_t9u8eocI
-    -The first world could contain the basics, plus level piece blocks and bombs.
-    -First level introduces clicking on pieces, clearing rows and switching of pieces.
-    -Second level introduces changing the visible moves.
-    -Third level introduces cascading.
-    -Start level 6 with a laser.
-    -Start level 7 with a bomb.
-    -Make the tutorial as short as possible. Don't give all the rules of the game at once. Instead,
-     let the user figure it out by playing. For example, introduce changing the visible moves in the
-     second or third level. Let the first level introduce the rule of clearing lines and selecting
-     moves and switching pieces.
   -Purchases:
   -Back end:
   -Levels:
@@ -54,7 +42,24 @@ Backlog:
 
 Ongoing tasks:
   -Tutorial.
-
+    -Look at the Tetris Blitz tutorial: https://www.youtube.com/watch?v=Mz_t9u8eocI
+    -The first world could contain the basics, plus level piece blocks and bombs.
+    -The second world could introduce level bombs and triangle blocks.
+    -The third world could introduce the build objective.
+    -First level introduces clicking on pieces, clearing rows and switching of pieces.
+    -Second level introduces changing the visible moves.
+    -Third level introduces cascading. Also, explain that only the gray blocks need to be cleared,
+     not the piece blocks.
+    -Start level 6 with a laser.
+    -Start level 7 with a bomb.
+    -Make the tutorial as short as possible. Don't give all the rules of the game at once. Instead,
+     let the user figure it out by playing. For example, introduce changing the visible moves in the
+     second or third level. Let the first level introduce the rule of clearing lines and selecting
+     moves and switching pieces.
+    -Implementation:
+        -Predetermined moves.
+        -Windows that pop up during play and disappears when a move is selected.
+        -Windows that pop up during play and disappears when clicked on button.
 
 
 
@@ -132,16 +137,16 @@ Ordered Backlog:
         Cost: 5
     -Space world.
         Cost: 10
+    -Net/HTTP.
+        Cost: 10
+    -Analytics.
+        Cost: 5
     -Store settings in file.
         Cost: 0.5
     -Sounds/music.
         Cost: 5
     -Purchases.
         Cost: 15
-    -Net/HTTP.
-        Cost: 10
-    -Analytics.
-        Cost: 5
     -Login/sign up account.
         Cost: 10
     -Back end.

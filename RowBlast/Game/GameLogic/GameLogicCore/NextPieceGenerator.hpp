@@ -15,7 +15,8 @@ namespace RowBlast {
     
     class NextPieceGenerator {
     public:
-        void Init(const std::vector<const Piece*>& pieceTypes);
+        void Init(const std::vector<const Piece*>& pieceTypes,
+                  const std::vector<const Piece*>& initialPieceSequence);
         const Piece& GetNext();
         
         const TwoPieces& GetNext2Pieces() const {
@@ -23,7 +24,7 @@ namespace RowBlast {
         }
         
     private:
-        void GenerateSequence();
+        void GenerateSequence(const std::vector<const Piece*>& initialPieceSequence);
         const Piece* GetNextFromSequence();
         
         using Pieces = Pht::StaticVector<const Piece*, static_cast<int>(Piece::numPieceTypes)>;
