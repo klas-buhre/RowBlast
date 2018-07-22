@@ -57,9 +57,9 @@ Ongoing tasks:
      second or third level. Let the first level introduce the rule of clearing lines and selecting
      moves and switching pieces.
     -Implementation:
-        -Predetermined moves.
         -Windows that pop up during play and disappears when a move is selected.
         -Windows that pop up during play and disappears when clicked on button.
+        -Switching pieces should be disabled during the first two moves in the first level.
         -Changing input type should be disabled during level 1 to 3.
 
 

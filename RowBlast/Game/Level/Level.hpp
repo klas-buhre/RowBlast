@@ -20,6 +20,7 @@ namespace RowBlast {
         struct PredeterminedMove {
             Pht::IVec2 mPosition;
             Rotation mRotation;
+            const Piece& mPieceType;
         };
         
         Level(int id,

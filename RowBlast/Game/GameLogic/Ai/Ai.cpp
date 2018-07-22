@@ -30,14 +30,17 @@ Ai::MovePtrs& Ai::CalculateMoves(const FallingPiece& fallingPiece, int movesUsed
         fallingPiece.GetPieceType()
     };
     
-    mValidMovesSearch.FindValidMoves(mValidMoves, piece, GetPredeterminedMove(movesUsed));
+    auto* predeterminedMove {GetPredeterminedMove(fallingPiece, movesUsed)};
+    
+    mValidMovesSearch.FindValidMoves(mValidMoves, piece, predeterminedMove);
     EvaluateMoves(fallingPiece);
     SortMoves();
     
     return mSortedMoves;
 }
 
-const Level::PredeterminedMove* Ai::GetPredeterminedMove(int movesUsed) {
+const Level::PredeterminedMove* Ai::GetPredeterminedMove(const FallingPiece& fallingPiece,
+                                                         int movesUsed) {
     auto& predeterminedMoves {mLevel->GetPredeterminedMoves()};
     
     if (predeterminedMoves.empty()) {
@@ -45,7 +48,11 @@ const Level::PredeterminedMove* Ai::GetPredeterminedMove(int movesUsed) {
     }
 
     if (movesUsed < predeterminedMoves.size()) {
-        return &predeterminedMoves[movesUsed];
+        auto& predeterminedMove {predeterminedMoves[movesUsed]};
+        
+        if (&predeterminedMove.mPieceType == &fallingPiece.GetPieceType()) {
+            return &predeterminedMove;
+        }
     }
     
     return nullptr;
@@ -146,6 +153,8 @@ ValidMoves& Ai::FindValidMoves(const FallingPiece& fallingPiece, int movesUsed) 
         fallingPiece.GetPieceType()
     };
     
-    mValidMovesSearch.FindValidMoves(mUpdatedValidMoves, piece, GetPredeterminedMove(movesUsed));
+    auto* predeterminedMove {GetPredeterminedMove(fallingPiece, movesUsed)};
+    
+    mValidMovesSearch.FindValidMoves(mUpdatedValidMoves, piece, predeterminedMove);
     return mUpdatedValidMoves;
 }

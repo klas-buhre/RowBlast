@@ -30,6 +30,54 @@ namespace {
         return levelPieceTypes;
     }
     
+    Rotation DegToRotation(int deg) {
+        switch (deg) {
+            case 0:
+                return Rotation::Deg0;
+            case 90:
+                return Rotation::Deg90;
+            case 180:
+                return Rotation::Deg180;
+            case 270:
+                return Rotation::Deg270;
+            default:
+                assert(!"Unsupported rotation");
+        }
+    }
+    
+    std::vector<Level::PredeterminedMove> ReadPredeterminedMoves(const rapidjson::Document& document,
+                                                                 const PieceTypes& pieceTypes) {
+        std::vector<Level::PredeterminedMove> predeterminedMoves;
+        
+        if (!document.HasMember("predeterminedMoves")) {
+             return predeterminedMoves;
+        }
+
+        const auto& predeterminedMovesArray {document["predeterminedMoves"]};
+        assert(predeterminedMovesArray.IsArray());
+        
+        for (const auto& predeterminedMoveObject: predeterminedMovesArray.GetArray()) {
+            assert(predeterminedMoveObject.IsObject());
+            
+            auto position {Pht::Json::ReadIVec2(predeterminedMoveObject, "position")};
+            auto rotationDeg {Pht::Json::ReadInt(predeterminedMoveObject, "rotation")};
+        
+            auto pieceStr {Pht::Json::ReadString(predeterminedMoveObject, "piece")};
+            auto i {pieceTypes.find(pieceStr)};
+            assert(i != std::end(pieceTypes));
+
+            Level::PredeterminedMove predeterminedMove {
+                position,
+                DegToRotation(rotationDeg),
+                *(i->second.get())
+            };
+            
+            predeterminedMoves.push_back(predeterminedMove);
+        }
+        
+        return predeterminedMoves;
+    }
+    
     Fill CellFill(char c) {
         switch (c) {
             case ' ':
@@ -230,18 +278,19 @@ std::unique_ptr<Level> LevelLoader::Load(int levelId, const LevelResources& leve
         .mThree = Pht::Json::ReadInt(document, "threeStars")
     };
     
+    auto& pieceTypes {levelResources.GetPieceTypes()};
+    
     auto backgroundTextureFilename {Pht::Json::ReadString(document, "background")};
     auto isDark {Pht::Json::ReadBool(document, "dark")};
-    auto levelPieces {ReadPieceTypes(document, "pieces", levelResources.GetPieceTypes())};
+    auto levelPieces {ReadPieceTypes(document, "pieces", pieceTypes)};
     
     std::vector<const Piece*> pieceSequence;
     
     if (document.HasMember("pieceSequence")) {
-        pieceSequence = ReadPieceTypes(document, "pieceSequence", levelResources.GetPieceTypes());
+        pieceSequence = ReadPieceTypes(document, "pieceSequence", pieceTypes);
     }
     
-    std::vector<Level::PredeterminedMove> predeterminedMoves;
-
+    auto predeterminedMoves {ReadPredeterminedMoves(document, pieceTypes)};
     auto clearGrid {ReadClearGrid(document)};
     auto blueprintGrid {ReadBlueprintGrid(document)};
     
