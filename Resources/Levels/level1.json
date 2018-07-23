@@ -7,14 +7,18 @@
     "dark": false,
     "pieces": [
         "B",
+        "MirroredSeven",
         "L",
         "LongI",
-        "D"
+        "D",
+        "Seven"
     ],
     "pieceSequence": [
         "L",
         "D",
+        "MirroredSeven",
         "B",
+        "Seven",
         "LongI"
     ],
     "predeterminedMoves": [
