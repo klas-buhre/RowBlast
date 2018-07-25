@@ -13,7 +13,8 @@ Level::Level(int id,
              const std::vector<const Piece*>& pieceSequence,
              const std::vector<PredeterminedMove>& predeterminedMoves,
              const std::string& backgroundTextureFilename,
-             bool isDark) :
+             bool isDark,
+             bool isPartOfTutorial) :
     mId {id},
     mObjective {objective},
     mNumColumns {numColumns},
@@ -25,7 +26,8 @@ Level::Level(int id,
     mPieceSequence {pieceSequence},
     mPredeterminedMoves {predeterminedMoves},
     mBackgroundTextureFilename {backgroundTextureFilename},
-    mIsDark {isDark} {}
+    mIsDark {isDark},
+    mIsPartOfTutorial {isPartOfTutorial} {}
 
 LevelInfo::LevelInfo(int id,
                      Level::Objective objective,

@@ -38,6 +38,9 @@
 		62487E9620D9573E00E4429E /* avatar.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62487E9520D9573E00E4429E /* avatar.jpg */; };
 		62487E9D20DA836800E4429E /* AvatarAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62487E9B20DA836800E4429E /* AvatarAnimation.cpp */; };
 		62487E9F20DBC3E500E4429E /* avatar_frame_208.obj in Resources */ = {isa = PBXBuildFile; fileRef = 62487E9E20DBC3E400E4429E /* avatar_frame_208.obj */; };
+		6259B7E52107992D0055FE8D /* Tutorial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6259B7E32107992D0055FE8D /* Tutorial.cpp */; };
+		6259B7E82107C6BE0055FE8D /* PlacePieceWindowView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6259B7E62107C6BE0055FE8D /* PlacePieceWindowView.cpp */; };
+		6259B7EB2107CDF20055FE8D /* PlacePieceWindowController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6259B7E92107CDF20055FE8D /* PlacePieceWindowController.cpp */; };
 		6261FFD520FB969B008F1619 /* level42.json in Resources */ = {isa = PBXBuildFile; fileRef = 6261FFD420FB969A008F1619 /* level42.json */; };
 		6261FFD720FCC912008F1619 /* level43.json in Resources */ = {isa = PBXBuildFile; fileRef = 6261FFD620FCC912008F1619 /* level43.json */; };
 		6261FFD920FD2C29008F1619 /* level44.json in Resources */ = {isa = PBXBuildFile; fileRef = 6261FFD820FD2C29008F1619 /* level44.json */; };
@@ -369,6 +372,12 @@
 		62487E9B20DA836800E4429E /* AvatarAnimation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AvatarAnimation.cpp; sourceTree = "<group>"; };
 		62487E9C20DA836800E4429E /* AvatarAnimation.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AvatarAnimation.hpp; sourceTree = "<group>"; };
 		62487E9E20DBC3E400E4429E /* avatar_frame_208.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = avatar_frame_208.obj; sourceTree = "<group>"; };
+		6259B7E32107992D0055FE8D /* Tutorial.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Tutorial.cpp; sourceTree = "<group>"; };
+		6259B7E42107992D0055FE8D /* Tutorial.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Tutorial.hpp; sourceTree = "<group>"; };
+		6259B7E62107C6BE0055FE8D /* PlacePieceWindowView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PlacePieceWindowView.cpp; sourceTree = "<group>"; };
+		6259B7E72107C6BE0055FE8D /* PlacePieceWindowView.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PlacePieceWindowView.hpp; sourceTree = "<group>"; };
+		6259B7E92107CDF20055FE8D /* PlacePieceWindowController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PlacePieceWindowController.cpp; sourceTree = "<group>"; };
+		6259B7EA2107CDF20055FE8D /* PlacePieceWindowController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PlacePieceWindowController.hpp; sourceTree = "<group>"; };
 		6261FFD420FB969A008F1619 /* level42.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level42.json; sourceTree = "<group>"; };
 		6261FFD620FCC912008F1619 /* level43.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level43.json; sourceTree = "<group>"; };
 		6261FFD820FD2C29008F1619 /* level44.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level44.json; sourceTree = "<group>"; };
@@ -1074,6 +1083,19 @@
 			path = Worlds;
 			sourceTree = "<group>";
 		};
+		6259B7E2210799150055FE8D /* Tutorial */ = {
+			isa = PBXGroup;
+			children = (
+				6259B7E92107CDF20055FE8D /* PlacePieceWindowController.cpp */,
+				6259B7EA2107CDF20055FE8D /* PlacePieceWindowController.hpp */,
+				6259B7E62107C6BE0055FE8D /* PlacePieceWindowView.cpp */,
+				6259B7E72107C6BE0055FE8D /* PlacePieceWindowView.hpp */,
+				6259B7E32107992D0055FE8D /* Tutorial.cpp */,
+				6259B7E42107992D0055FE8D /* Tutorial.hpp */,
+			);
+			path = Tutorial;
+			sourceTree = "<group>";
+		};
 		6270DC521FCB212B00FB457D /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
@@ -1733,6 +1755,7 @@
 				62785CBD2087618D006F9869 /* GameViews */,
 				62785D392087618E006F9869 /* Level */,
 				621B571A20AC9F7200772229 /* LevelCompletedSubScene */,
+				6259B7E2210799150055FE8D /* Tutorial */,
 			);
 			path = Game;
 			sourceTree = "<group>";
@@ -2321,6 +2344,7 @@
 				62785DC02087618E006F9869 /* GameSceneRenderer.cpp in Sources */,
 				62785DC72087618E006F9869 /* GestureInputHandler.cpp in Sources */,
 				62785B3920875937006F9869 /* FileSystemIOS.mm in Sources */,
+				6259B7E52107992D0055FE8D /* Tutorial.cpp in Sources */,
 				62785B1520875937006F9869 /* Renderer.cpp in Sources */,
 				62785B3F20875937006F9869 /* Font.cpp in Sources */,
 				62785DC52087618E006F9869 /* GameScene.cpp in Sources */,
@@ -2373,6 +2397,7 @@
 				6299DD7A208B4178001F74E2 /* CameraShake.cpp in Sources */,
 				62785E0F2087618E006F9869 /* UserData.cpp in Sources */,
 				62785DD42087618E006F9869 /* DPiece.cpp in Sources */,
+				6259B7E82107C6BE0055FE8D /* PlacePieceWindowView.cpp in Sources */,
 				62785B3520875937006F9869 /* MathUtils.cpp in Sources */,
 				62785B3B20875937006F9869 /* ImageIOS.mm in Sources */,
 				62785B1320875937006F9869 /* Material.cpp in Sources */,
@@ -2390,6 +2415,7 @@
 				62785DC12087618E006F9869 /* GameHud.cpp in Sources */,
 				62785DE32087618E006F9869 /* RowBomb.cpp in Sources */,
 				6205F93020F515F500716574 /* World3.cpp in Sources */,
+				6259B7EB2107CDF20055FE8D /* PlacePieceWindowController.cpp in Sources */,
 				62785E132087618E006F9869 /* MapController.cpp in Sources */,
 				62785DDC2087618E006F9869 /* PlusPiece.cpp in Sources */,
 				627D37AE209C78250068B50C /* MenuWindow.cpp in Sources */,

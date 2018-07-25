@@ -44,9 +44,12 @@ SlidingMenuAnimation::SlidingMenuAnimation(Pht::IEngine& engine, Pht::GuiView& v
     mEngine {engine},
     mView {view} {}
 
-void SlidingMenuAnimation::Init(UpdateFade updateFade, SlideDirection slideInDirection) {
+void SlidingMenuAnimation::Init(UpdateFade updateFade,
+                                SlideDirection slideInDirection,
+                                UpdatePosition updatePosition) {
     mState = State::Idle;
     mUpdateFade = updateFade;
+    mUpdatePosition = updatePosition;
     mSlideInDirection = slideInDirection;
     
     auto& frustumSize {mEngine.GetRenderer().GetHudFrustumSize()};
@@ -70,7 +73,9 @@ void SlidingMenuAnimation::Init(UpdateFade updateFade, SlideDirection slideInDir
             break;
     }
     
-    mView.SetPosition(mSlideInStartPosition);
+    if (mUpdatePosition == UpdatePosition::Yes) {
+        mView.SetPosition(mSlideInStartPosition);
+    }
     
     if (mUpdateFade == UpdateFade::Yes) {
         mFadeEffect->Reset();
@@ -80,7 +85,9 @@ void SlidingMenuAnimation::Init(UpdateFade updateFade, SlideDirection slideInDir
 }
 
 void SlidingMenuAnimation::StartSlideIn() {
-    mView.SetPosition(mSlideInStartPosition);
+    if (mUpdatePosition == UpdatePosition::Yes) {
+        mView.SetPosition(mSlideInStartPosition);
+    }
     
     if (mUpdateFade == UpdateFade::Yes) {
         mFadeEffect->Start();
@@ -90,7 +97,9 @@ void SlidingMenuAnimation::StartSlideIn() {
     mElapsedTime = 0.0f;
 }
 
-void SlidingMenuAnimation::StartSlideOut(UpdateFade updateFade, SlideDirection slideOutDirection) {
+void SlidingMenuAnimation::StartSlideOut(UpdateFade updateFade,
+                                         SlideDirection slideOutDirection,
+                                         UpdatePosition updatePosition) {
     mSlideOutDirection = slideOutDirection;
     auto& frustumSize {mEngine.GetRenderer().GetHudFrustumSize()};
     
@@ -111,12 +120,15 @@ void SlidingMenuAnimation::StartSlideOut(UpdateFade updateFade, SlideDirection s
             break;
     }
 
-    mView.SetPosition(centerPosition);
-    
+    mUpdatePosition = updatePosition;
     mUpdateFade = updateFade;
     mState = State::SlidingOut;
     mElapsedTime = 0.0f;
-    
+
+    if (mUpdatePosition == UpdatePosition::Yes) {
+        mView.SetPosition(centerPosition);
+    }
+
     mEngine.GetInput().DisableInput();
 }
 

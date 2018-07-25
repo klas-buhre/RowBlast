@@ -27,6 +27,7 @@
 #include "BlastRadiusAnimation.hpp"
 #include "BombsAnimation.hpp"
 #include "LevelCompletedController.hpp"
+#include "Tutorial.hpp"
 
 namespace Pht {
     class IEngine;
@@ -138,6 +139,7 @@ namespace RowBlast {
         BlastRadiusAnimation mBlastRadiusAnimation;
         SlidingTextAnimation mSlidingTextAnimation;
         ClearLastBlocksAnimation mClearLastBlocksAnimation;
+        Tutorial mTutorial;
         GameLogic mGameLogic;
         FallingPieceAnimation& mFallingPieceAnimation;
         LevelResources mLevelResources;

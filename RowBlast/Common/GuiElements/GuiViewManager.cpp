@@ -23,13 +23,13 @@ void GuiViewManager::AddView(int viewId, Pht::GuiView& view) {
 void GuiViewManager::ActivateView(int viewIndex) {
     DeactivateAllViews();
     
-    auto view {mViews.find(viewIndex)};
+    auto viewEntry {mViews.find(viewIndex)};
     
-    if (view == std::end(mViews)) {
+    if (viewEntry == std::end(mViews)) {
         assert(!"View not found");
     }
     
-    view->second->SetIsActive(true);
+    viewEntry->second->SetIsActive(true);
 }
 
 void GuiViewManager::DeactivateAllViews() {

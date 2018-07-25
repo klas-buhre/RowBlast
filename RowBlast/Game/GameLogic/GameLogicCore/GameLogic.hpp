@@ -29,6 +29,7 @@ namespace RowBlast {
     class GameHudController;
     class IInputHandler;
     class GameScene;
+    class Tutorial;
     
     enum class PreviewPieceAnimationToStart {
         NextPieceAndSwitch,
@@ -56,6 +57,7 @@ namespace RowBlast {
                   PieceDropParticleEffect& pieceDropParticleEffect,
                   BlastRadiusAnimation& blastRadiusAnimation,
                   GameHudController& gameHudController,
+                  Tutorial& tutorial,
                   const Settings& settings);
         
         void DropFallingPiece() override;
@@ -192,6 +194,7 @@ namespace RowBlast {
         PieceDropParticleEffect& mPieceDropParticleEffect;
         BlastRadiusAnimation& mBlastRadiusAnimation;
         GameHudController& mGameHudController;
+        Tutorial& mTutorial;
         const Settings& mSettings;
         ControlType mPreviousControlType;
         State mState {State::LogicUpdate};

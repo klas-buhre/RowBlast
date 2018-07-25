@@ -284,8 +284,14 @@ std::unique_ptr<Level> LevelLoader::Load(int levelId, const LevelResources& leve
     auto isDark {Pht::Json::ReadBool(document, "dark")};
     auto levelPieces {ReadPieceTypes(document, "pieces", pieceTypes)};
     
-    std::vector<const Piece*> pieceSequence;
+    auto isPartOfTutorial {false};
+
+    if (document.HasMember("partOfTutorial")) {
+        isPartOfTutorial = Pht::Json::ReadBool(document, "partOfTutorial");
+    }
     
+    std::vector<const Piece*> pieceSequence;
+
     if (document.HasMember("pieceSequence")) {
         pieceSequence = ReadPieceTypes(document, "pieceSequence", pieceTypes);
     }
@@ -323,7 +329,8 @@ std::unique_ptr<Level> LevelLoader::Load(int levelId, const LevelResources& leve
                                 pieceSequence,
                                 predeterminedMoves,
                                 backgroundTextureFilename,
-                                isDark)
+                                isDark,
+                                isPartOfTutorial)
     };
     
     if (clearGrid) {

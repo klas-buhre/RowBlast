@@ -19,6 +19,7 @@
 #include "PieceDropParticleEffect.hpp"
 #include "BlastRadiusAnimation.hpp"
 #include "GameHudController.hpp"
+#include "Tutorial.hpp"
 #include "CommonResources.hpp"
 
 using namespace RowBlast;
@@ -78,6 +79,7 @@ GameLogic::GameLogic(Pht::IEngine& engine,
                      PieceDropParticleEffect& pieceDropParticleEffect,
                      BlastRadiusAnimation& blastRadiusAnimation,
                      GameHudController& gameHudController,
+                     Tutorial& tutorial,
                      const Settings& settings) :
     mEngine {engine},
     mField {field},
@@ -88,6 +90,7 @@ GameLogic::GameLogic(Pht::IEngine& engine,
     mPieceDropParticleEffect {pieceDropParticleEffect},
     mBlastRadiusAnimation {blastRadiusAnimation},
     mGameHudController {gameHudController},
+    mTutorial {tutorial},
     mSettings {settings},
     mPreviousControlType {mSettings.mControlType},
     mFieldExplosionsStates {engine, field, effectManager, flyingBlocksAnimation},
@@ -255,10 +258,12 @@ void GameLogic::ManageMoveHistory() {
             if (GetMovesUsedIncludingCurrent() == 1) {
                 mPreviousMoveInitialState = mCurrentMoveInitialState;
             }
+            mTutorial.OnNextMove(GetMovesUsedIncludingCurrent());
             break;
         case FallingPieceInitReason::UndoMove:
             mCurrentMoveInitialState = mCurrentMove;
             mPreviousMoveInitialState = mCurrentMoveInitialState;
+            mTutorial.OnNextMove(GetMovesUsedIncludingCurrent());
             break;
         case FallingPieceInitReason::None:
         case FallingPieceInitReason::Switch:

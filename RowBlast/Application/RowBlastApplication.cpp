@@ -62,13 +62,13 @@ Ongoing tasks:
         -Second move: Window that says "Blocks are cleared when horizontal rows are filled. Tap the
          suggested move to fill three rows". Disappears at next move. Switch is disabled. Hand
          pointing where to tap.
-        -Third move: Window that says "You can switch piece at any time. Tap switch to find a better
-         fit". Disappears when switched to the predetermined piece. Hand pointing where to tap.
+        -Third move: Window that says "Tap switch to try a better fitting piece".
+         Disappears when switched to the predetermined piece. Hand pointing where to tap.
          Window comes back if the piece switched to is not the predetermined piece. Cannot tap the
          moves if the piece is not the predetermined piece.
         -Fourth move: Same as third.
     -Implementation:
-        -Windows that pop up during play and disappears when a move is selected.
+        -Windows that pops up during play and disappears at a certain stage/action.
         -Windows that pop up during play and disappears when clicked on button.
         -Arrow or hand that points when asked to click somewhere.
         -Switching pieces should be disabled during the first two moves in the first level.

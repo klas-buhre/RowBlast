@@ -5,6 +5,7 @@
     "threeStars": 15,
     "background": "sky1.jpg",
     "dark": false,
+    "partOfTutorial": true,
     "pieces": [
         "B",
         "MirroredSeven",

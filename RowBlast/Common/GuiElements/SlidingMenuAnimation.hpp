@@ -26,6 +26,11 @@ namespace RowBlast {
             No
         };
         
+        enum class UpdatePosition {
+            Yes,
+            No
+        };
+        
         enum class SlideDirection {
             Right,
             Left,
@@ -36,10 +41,13 @@ namespace RowBlast {
         
         SlidingMenuAnimation(Pht::IEngine& engine, Pht::GuiView& view);
         
-        void Init(UpdateFade updateFade, SlideDirection slideInDirection = SlideDirection::Right);
+        void Init(UpdateFade updateFade,
+                  SlideDirection slideInDirection = SlideDirection::Right,
+                  UpdatePosition updatePosition = UpdatePosition::Yes);
         void StartSlideIn();
         void StartSlideOut(UpdateFade updateFade,
-                           SlideDirection slideOutDirection = SlideDirection::Left);
+                           SlideDirection slideOutDirection = SlideDirection::Left,
+                           UpdatePosition updatePosition = UpdatePosition::Yes);
         State Update();
 
         void SetFadeEffect(Pht::FadeEffect& fadeEffect) {
@@ -70,6 +78,7 @@ namespace RowBlast {
         SlideDirection mSlideInDirection {SlideDirection::Up};
         SlideDirection mSlideOutDirection {SlideDirection::Down};
         UpdateFade mUpdateFade {UpdateFade::Yes};
+        UpdatePosition mUpdatePosition {UpdatePosition::Yes};
         float mElapsedTime {0.0f};
         Pht::Vec2 mSlideInStartPosition;
         Pht::Vec2 mSlideOutFinalPosition;
