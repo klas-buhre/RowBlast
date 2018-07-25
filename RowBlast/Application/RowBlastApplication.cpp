@@ -71,8 +71,8 @@ Ongoing tasks:
         -Windows that pops up during play and disappears at a certain stage/action.
         -Windows that pop up during play and disappears when clicked on button.
         -Arrow or hand that points when asked to click somewhere.
-        -Switching pieces should be disabled during the first two moves in the first level.
         -Changing input type should be disabled during level 1 to 3.
+        -Pausing to bring up the game menu should be disabled during tutorial.
  
 
 

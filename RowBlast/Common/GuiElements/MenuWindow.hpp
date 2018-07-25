@@ -25,7 +25,8 @@ namespace RowBlast {
         enum class Size {
             Large,
             Medium,
-            Small
+            Small,
+            Smallest
         };
         
         enum class Style {

@@ -4,6 +4,7 @@
 // Game includes.
 #include "GuiViewManager.hpp"
 #include "PlacePieceWindowController.hpp"
+#include "FillRowsWindowController.hpp"
 
 namespace Pht {
     class IEngine;
@@ -22,12 +23,14 @@ namespace RowBlast {
         void Update();
         void OnNextMove(int numMovesUsedIncludingCurrent);
         void OnSwitchPiece(const Piece& pieceType);
-        bool IsSwitchPieceAllowed() const;
+        bool IsSwitchPieceAllowed(int numMovesUsedIncludingCurrent) const;
         bool IsPlacePieceAllowed(const Piece& pieceType) const;
+        bool IsPauseAllowed() const;
 
     private:
         enum class Controller {
             PlacePieceWindow,
+            FillRowsWindow,
             None
         };
 
@@ -39,6 +42,7 @@ namespace RowBlast {
         Controller mActiveController {Controller::None};
         GuiViewManager mViewManager;
         PlacePieceWindowController mPlacePieceWindowController;
+        FillRowsWindowController mFillRowsWindowController;
     };
 }
 

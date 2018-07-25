@@ -1,4 +1,4 @@
-#include "PlacePieceWindowView.hpp"
+#include "FillRowsWindowView.hpp"
 
 // Game includes.
 #include "CommonResources.hpp"
@@ -6,7 +6,7 @@
 
 using namespace RowBlast;
 
-PlacePieceWindowView::PlacePieceWindowView(const CommonResources& commonResources) {
+FillRowsWindowView::FillRowsWindowView(const CommonResources& commonResources) {
     PotentiallyZoomedScreen zoom {PotentiallyZoomedScreen::Yes};
     auto& guiResources {commonResources.GetGuiResources()};
     auto& menuWindow {guiResources.GetSmallestDarkMenuWindowPotentiallyZoomedScreen()};
@@ -19,6 +19,8 @@ PlacePieceWindowView::PlacePieceWindowView(const CommonResources& commonResource
     SetSize(menuWindow.GetSize());
 
     auto& textProperties {guiResources.GetSmallWhiteTextProperties(zoom)};
-    CreateText({-5.4f, 0.30f, UiLayer::text}, "Tap the suggested move to place", textProperties);
-    CreateText({-1.5f, -0.775f, UiLayer::text}, "the piece", textProperties);
+    CreateText({-4.15f, 0.8375f, UiLayer::text}, "Blocks are cleared when", textProperties);
+    CreateText({-5.8f, -0.2375f, UiLayer::text}, "horizontal rows are filled. Tap the", textProperties);
+    CreateText({-5.6f, -1.3125f, UiLayer::text}, "suggested move to fill three rows", textProperties);
 }
+

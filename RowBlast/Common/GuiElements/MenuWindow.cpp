@@ -43,6 +43,8 @@ namespace {
                         return {sizeX, 12.8f};
                     case MenuWindow::Size::Small:
                         return {sizeX, 11.0f};
+                    case MenuWindow::Size::Smallest:
+                        return {sizeX, 6.2f};
                 }
                 break;
             case MenuWindow::Style::Dark:
@@ -53,6 +55,8 @@ namespace {
                         return {sizeX, 14.0f};
                     case MenuWindow::Size::Small:
                         return {sizeX, 11.0f};
+                    case MenuWindow::Size::Smallest:
+                        return {sizeX, 6.2f};
                 }
                 break;
         }
