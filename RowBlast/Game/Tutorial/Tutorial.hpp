@@ -5,6 +5,7 @@
 #include "GuiViewManager.hpp"
 #include "PlacePieceWindowController.hpp"
 #include "FillRowsWindowController.hpp"
+#include "SwitchPieceWindowController.hpp"
 
 namespace Pht {
     class IEngine;
@@ -21,20 +22,21 @@ namespace RowBlast {
         
         void Init(const Level& level);
         void Update();
-        void OnNextMove(int numMovesUsedIncludingCurrent);
-        void OnSwitchPiece(const Piece& pieceType);
+        void OnNewMove(int numMovesUsedIncludingCurrent);
+        void OnSwitchPiece(int numMovesUsedIncludingCurrent, const Piece& pieceType);
         bool IsSwitchPieceAllowed(int numMovesUsedIncludingCurrent) const;
-        bool IsPlacePieceAllowed(const Piece& pieceType) const;
+        bool IsPlacePieceAllowed(int numMovesUsedIncludingCurrent, const Piece& pieceType) const;
         bool IsPauseAllowed() const;
 
     private:
         enum class Controller {
             PlacePieceWindow,
             FillRowsWindow,
+            SwitchPieceWindow,
             None
         };
 
-        void OnNextMoveFirstLevel(int numMovesUsedIncludingCurrent);
+        void OnNewMoveFirstLevel(int numMovesUsedIncludingCurrent);
         void SetActiveController(Controller controller);
         
         GameScene& mScene;
@@ -43,6 +45,7 @@ namespace RowBlast {
         GuiViewManager mViewManager;
         PlacePieceWindowController mPlacePieceWindowController;
         FillRowsWindowController mFillRowsWindowController;
+        SwitchPieceWindowController mSwitchPieceWindowController;
     };
 }
 

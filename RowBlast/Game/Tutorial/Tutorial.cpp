@@ -11,10 +11,12 @@ using namespace RowBlast;
 Tutorial::Tutorial(Pht::IEngine& engine, GameScene& scene, const CommonResources& commonResources) :
     mScene {scene},
     mPlacePieceWindowController {engine, commonResources},
-    mFillRowsWindowController {engine, commonResources} {
+    mFillRowsWindowController {engine, commonResources},
+    mSwitchPieceWindowController {engine, commonResources} {
     
     mViewManager.AddView(static_cast<int>(Controller::PlacePieceWindow), mPlacePieceWindowController.GetView());
     mViewManager.AddView(static_cast<int>(Controller::FillRowsWindow), mFillRowsWindowController.GetView());
+    mViewManager.AddView(static_cast<int>(Controller::SwitchPieceWindow), mSwitchPieceWindowController.GetView());
 }
 
 void Tutorial::Init(const Level& level) {
@@ -53,8 +55,13 @@ void Tutorial::Update() {
             break;
         case Controller::FillRowsWindow:
             if (mFillRowsWindowController.Update() == FillRowsWindowController::Result::Done) {
-                SetActiveController(Controller::FillRowsWindow);
-                mFillRowsWindowController.Init();
+                SetActiveController(Controller::SwitchPieceWindow);
+                mSwitchPieceWindowController.Init();
+            }
+            break;
+        case Controller::SwitchPieceWindow:
+            if (mSwitchPieceWindowController.Update() == SwitchPieceWindowController::Result::Done) {
+                SetActiveController(Controller::None);
             }
             break;
         case Controller::None:
@@ -62,22 +69,21 @@ void Tutorial::Update() {
     }
 }
 
-void Tutorial::OnNextMove(int numMovesUsedIncludingCurrent) {
+void Tutorial::OnNewMove(int numMovesUsedIncludingCurrent) {
     if (!mLevel->IsPartOfTutorial()) {
         return;
     }
     
     switch (mLevel->GetId()) {
         case 1:
-            OnNextMoveFirstLevel(numMovesUsedIncludingCurrent);
+            OnNewMoveFirstLevel(numMovesUsedIncludingCurrent);
             break;
         default:
             assert(!"Unsupported tutorial level");
     }
-
 }
 
-void Tutorial::OnNextMoveFirstLevel(int numMovesUsedIncludingCurrent) {
+void Tutorial::OnNewMoveFirstLevel(int numMovesUsedIncludingCurrent) {
     switch (numMovesUsedIncludingCurrent) {
         case 1:
             SetActiveController(Controller::PlacePieceWindow);
@@ -89,16 +95,44 @@ void Tutorial::OnNextMoveFirstLevel(int numMovesUsedIncludingCurrent) {
         case 3:
             mFillRowsWindowController.Close();
             break;
+        case 4:
+            SetActiveController(Controller::SwitchPieceWindow);
+            mSwitchPieceWindowController.Init();
+            break;
         default:
             assert(!"Unsupported number of used moves");
     }
 }
 
-void Tutorial::OnSwitchPiece(const Piece& pieceType) {
+void Tutorial::OnSwitchPiece(int numMovesUsedIncludingCurrent, const Piece& pieceType) {
     if (!mLevel->IsPartOfTutorial()) {
         return;
     }
+    
+    if (mLevel->GetId() == 1) {
+        switch (numMovesUsedIncludingCurrent) {
+            case 3:
+            case 4: {
+                auto& predeterminedMoves {mLevel->GetPredeterminedMoves()};
+                assert(numMovesUsedIncludingCurrent <= predeterminedMoves.size());
+                auto& predeterminedMove {predeterminedMoves[numMovesUsedIncludingCurrent - 1]};
 
+                if (mActiveController == Controller::SwitchPieceWindow) {
+                    if (&predeterminedMove.mPieceType == &pieceType) {
+                        mSwitchPieceWindowController.Close();
+                    }
+                } else {
+                    if (&predeterminedMove.mPieceType != &pieceType) {
+                        SetActiveController(Controller::SwitchPieceWindow);
+                        mSwitchPieceWindowController.Init();
+                    }
+                }
+                break;
+            }
+            default:
+                break;
+        }
+    }
 }
 
 bool Tutorial::IsSwitchPieceAllowed(int numMovesUsedIncludingCurrent) const {
@@ -113,12 +147,19 @@ bool Tutorial::IsSwitchPieceAllowed(int numMovesUsedIncludingCurrent) const {
     return true;
 }
 
-bool Tutorial::IsPlacePieceAllowed(const Piece& pieceType) const {
+bool Tutorial::IsPlacePieceAllowed(int numMovesUsedIncludingCurrent, const Piece& pieceType) const {
     if (!mLevel->IsPartOfTutorial()) {
         return true;
     }
 
-    return false;
+    if (mLevel->GetId() == 1) {
+        auto& predeterminedMoves {mLevel->GetPredeterminedMoves()};
+        assert(numMovesUsedIncludingCurrent <= predeterminedMoves.size());
+        auto& predeterminedMove {predeterminedMoves[numMovesUsedIncludingCurrent - 1]};
+        return &predeterminedMove.mPieceType == &pieceType;
+    }
+
+    return true;
 }
 
 bool Tutorial::IsPauseAllowed() const {

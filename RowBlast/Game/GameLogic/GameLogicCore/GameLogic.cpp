@@ -258,15 +258,17 @@ void GameLogic::ManageMoveHistory() {
             if (GetMovesUsedIncludingCurrent() == 1) {
                 mPreviousMoveInitialState = mCurrentMoveInitialState;
             }
-            mTutorial.OnNextMove(GetMovesUsedIncludingCurrent());
+            mTutorial.OnNewMove(GetMovesUsedIncludingCurrent());
             break;
         case FallingPieceInitReason::UndoMove:
             mCurrentMoveInitialState = mCurrentMove;
             mPreviousMoveInitialState = mCurrentMoveInitialState;
-            mTutorial.OnNextMove(GetMovesUsedIncludingCurrent());
+            mTutorial.OnNewMove(GetMovesUsedIncludingCurrent());
+            break;
+        case FallingPieceInitReason::Switch:
+            mTutorial.OnSwitchPiece(GetMovesUsedIncludingCurrent(), mFallingPiece->GetPieceType());
             break;
         case FallingPieceInitReason::None:
-        case FallingPieceInitReason::Switch:
             break;
     }
 }
@@ -884,7 +886,10 @@ void GameLogic::ForwardTouchToInputHandler(const Pht::TouchEvent& touchEvent) {
     
     switch (mSettings.mControlType) {
         case ControlType::Click:
-            mClickInputHandler.HandleTouch(touchEvent);
+            if (mTutorial.IsPlacePieceAllowed(GetMovesUsedIncludingCurrent(),
+                                              mFallingPiece->GetPieceType())) {
+                mClickInputHandler.HandleTouch(touchEvent);
+            }
             break;
         case ControlType::Gesture:
             mGestureInputHandler.HandleTouch(touchEvent);
