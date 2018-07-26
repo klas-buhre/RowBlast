@@ -67,10 +67,15 @@ Ongoing tasks:
          Window comes back if the piece switched to is not the predetermined piece. Cannot tap the
          moves if the piece is not the predetermined piece.
         -Fourth move: Same as third.
+    -Second level:
+        -TODO
+    -Third level:
+        -TODO
+    -Sixth level:
+        -First move: Dialog that says "The laser clears a row". A 3 frame animation showing a laser
+         landing and clearing a row. A "Play" button removes the dialog.
     -Implementation:
-        -Windows that pops up during play and disappears at a certain stage/action.
-        -Windows that pop up during play and disappears when clicked on button.
-        -Arrow or hand that points when asked to click somewhere.
+        -Hand that points when asked to click somewhere.
         -Input type cannot be gesture during level 1 to 2.
         -Pausing to bring up the game menu should be disabled during tutorial.
  

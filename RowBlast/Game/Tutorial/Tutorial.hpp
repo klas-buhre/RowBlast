@@ -6,6 +6,7 @@
 #include "PlacePieceWindowController.hpp"
 #include "FillRowsWindowController.hpp"
 #include "SwitchPieceWindowController.hpp"
+#include "LaserDialogController.hpp"
 
 namespace Pht {
     class IEngine;
@@ -18,10 +19,17 @@ namespace RowBlast {
     
     class Tutorial {
     public:
+        enum class Result {
+            Play,
+            TutorialHasFocus
+        };
+        
         Tutorial(Pht::IEngine& engine, GameScene& scene, const CommonResources& commonResources);
         
         void Init(const Level& level);
         void Update();
+        Result UpdateDialogs();
+        Result OnLevelStart();
         void OnNewMove(int numMovesUsedIncludingCurrent);
         void OnSwitchPiece(int numMovesUsedIncludingCurrent, const Piece& pieceType);
         bool IsSwitchPieceAllowed(int numMovesUsedIncludingCurrent) const;
@@ -33,10 +41,12 @@ namespace RowBlast {
             PlacePieceWindow,
             FillRowsWindow,
             SwitchPieceWindow,
+            LaserDialog,
             None
         };
 
         void OnNewMoveFirstLevel(int numMovesUsedIncludingCurrent);
+        void OnNewMoveSixthLevel(int numMovesUsedIncludingCurrent);
         void SetActiveController(Controller controller);
         
         GameScene& mScene;
@@ -46,6 +56,7 @@ namespace RowBlast {
         PlacePieceWindowController mPlacePieceWindowController;
         FillRowsWindowController mFillRowsWindowController;
         SwitchPieceWindowController mSwitchPieceWindowController;
+        LaserDialogController mLaserDialogController;
     };
 }
 

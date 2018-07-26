@@ -75,6 +75,7 @@ namespace RowBlast {
         Command UpdateMapConfirmationDialog();
         Command UpdateSubState();
         void UpdateInLevelIntroState();
+        void UpdateTutorialDialogs();
         void StartLevelObjectiveAnimation();
         Command UpdateInLevelCompletedState();
         Command UpdateNoMovesDialog();
@@ -93,6 +94,7 @@ namespace RowBlast {
         
         enum class GameState {
             LevelIntro,
+            TutorialDialog,
             Playing,
             Paused,
             LevelCompleted,

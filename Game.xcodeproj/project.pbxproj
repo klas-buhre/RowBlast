@@ -312,6 +312,8 @@
 		629B839420CADA7B00DD2D0E /* triangle_320_r270.obj in Resources */ = {isa = PBXBuildFile; fileRef = 629B839320CADA7B00DD2D0E /* triangle_320_r270.obj */; };
 		62A03FCB2108D5A800A4C2A5 /* SwitchPieceWindowView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62A03FC92108D5A800A4C2A5 /* SwitchPieceWindowView.cpp */; };
 		62A03FCE2108D5E200A4C2A5 /* SwitchPieceWindowController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62A03FCC2108D5E200A4C2A5 /* SwitchPieceWindowController.cpp */; };
+		62A03FD121091B5500A4C2A5 /* LaserDialogView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62A03FCF21091B5500A4C2A5 /* LaserDialogView.cpp */; };
+		62A03FD421091BA600A4C2A5 /* LaserDialogController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62A03FD221091BA600A4C2A5 /* LaserDialogController.cpp */; };
 		62A8AAF71FE2DEA1000EB01C /* cloud_B_envmap.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62A8AAF61FE2DEA0000EB01C /* cloud_B_envmap.jpg */; };
 		62A8AAF91FE2E442000EB01C /* cloud_C_envmap.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62A8AAF81FE2E441000EB01C /* cloud_C_envmap.jpg */; };
 		62BE274620AEDD990014C6DD /* SlidingFieldAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62BE274420AEDD990014C6DD /* SlidingFieldAnimation.cpp */; };
@@ -965,6 +967,10 @@
 		62A03FCA2108D5A800A4C2A5 /* SwitchPieceWindowView.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SwitchPieceWindowView.hpp; sourceTree = "<group>"; };
 		62A03FCC2108D5E200A4C2A5 /* SwitchPieceWindowController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SwitchPieceWindowController.cpp; sourceTree = "<group>"; };
 		62A03FCD2108D5E200A4C2A5 /* SwitchPieceWindowController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SwitchPieceWindowController.hpp; sourceTree = "<group>"; };
+		62A03FCF21091B5500A4C2A5 /* LaserDialogView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LaserDialogView.cpp; sourceTree = "<group>"; };
+		62A03FD021091B5500A4C2A5 /* LaserDialogView.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = LaserDialogView.hpp; sourceTree = "<group>"; };
+		62A03FD221091BA600A4C2A5 /* LaserDialogController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LaserDialogController.cpp; sourceTree = "<group>"; };
+		62A03FD321091BA600A4C2A5 /* LaserDialogController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = LaserDialogController.hpp; sourceTree = "<group>"; };
 		62A8AAF61FE2DEA0000EB01C /* cloud_B_envmap.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = cloud_B_envmap.jpg; sourceTree = "<group>"; };
 		62A8AAF81FE2E441000EB01C /* cloud_C_envmap.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = cloud_C_envmap.jpg; sourceTree = "<group>"; };
 		62BE274420AEDD990014C6DD /* SlidingFieldAnimation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SlidingFieldAnimation.cpp; sourceTree = "<group>"; };
@@ -1102,6 +1108,10 @@
 				6259B7F0210814E50055FE8D /* FillRowsWindowController.hpp */,
 				6259B7EC210814BF0055FE8D /* FillRowsWindowView.cpp */,
 				6259B7ED210814BF0055FE8D /* FillRowsWindowView.hpp */,
+				62A03FD221091BA600A4C2A5 /* LaserDialogController.cpp */,
+				62A03FD321091BA600A4C2A5 /* LaserDialogController.hpp */,
+				62A03FCF21091B5500A4C2A5 /* LaserDialogView.cpp */,
+				62A03FD021091B5500A4C2A5 /* LaserDialogView.hpp */,
 				6259B7E92107CDF20055FE8D /* PlacePieceWindowController.cpp */,
 				6259B7EA2107CDF20055FE8D /* PlacePieceWindowController.hpp */,
 				6259B7E62107C6BE0055FE8D /* PlacePieceWindowView.cpp */,
@@ -2487,6 +2497,7 @@
 				62785DB12087618E006F9869 /* GameHudView.cpp in Sources */,
 				62785DD72087618E006F9869 /* MirroredFPiece.cpp in Sources */,
 				62785DF52087618E006F9869 /* PreviewPiecesAnimation.cpp in Sources */,
+				62A03FD421091BA600A4C2A5 /* LaserDialogController.cpp in Sources */,
 				62785DE12087618E006F9869 /* FPiece.cpp in Sources */,
 				62785DEA2087618E006F9869 /* LevelLoader.cpp in Sources */,
 				6259B7F1210814E50055FE8D /* FillRowsWindowController.cpp in Sources */,
@@ -2500,6 +2511,7 @@
 				62785E0C2087618E006F9869 /* CommonResources.cpp in Sources */,
 				62785E162087618E006F9869 /* MapPin.cpp in Sources */,
 				62785B0D20875937006F9869 /* TextureCache.cpp in Sources */,
+				62A03FD121091B5500A4C2A5 /* LaserDialogView.cpp in Sources */,
 				62785DF42087618E006F9869 /* BlastRadiusAnimation.cpp in Sources */,
 				6259B7EE210814BF0055FE8D /* FillRowsWindowView.cpp in Sources */,
 				62785E192087618E006F9869 /* SettingsButtonController.cpp in Sources */,

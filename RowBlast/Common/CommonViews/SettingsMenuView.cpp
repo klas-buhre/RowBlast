@@ -2,7 +2,6 @@
 
 // Engine includes.
 #include "IEngine.hpp"
-#include "IRenderer.hpp"
 #include "QuadMesh.hpp"
 #include "ISceneManager.hpp"
 #include "TextComponent.hpp"

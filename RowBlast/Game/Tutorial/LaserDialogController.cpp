@@ -1,4 +1,4 @@
-#include "NoMovesDialogController.hpp"
+#include "LaserDialogController.hpp"
 
 // Engine includes.
 #include "IEngine.hpp"
@@ -8,18 +8,19 @@
 
 using namespace RowBlast;
 
-NoMovesDialogController::NoMovesDialogController(Pht::IEngine& engine,
-                                                 const CommonResources& commonResources) :
+LaserDialogController::LaserDialogController(Pht::IEngine& engine,
+                                             const CommonResources& commonResources) :
     mInput {engine.GetInput()},
     mView {engine, commonResources},
     mSlidingMenuAnimation {engine, mView} {}
 
-void NoMovesDialogController::Init() {
+void LaserDialogController::Init() {
     mSlidingMenuAnimation.Init(SlidingMenuAnimation::UpdateFade::No,
-                               SlidingMenuAnimation::SlideDirection::Up);
+                               SlidingMenuAnimation::SlideDirection::Scale,
+                               SlidingMenuAnimation::UpdatePosition::No);
 }
 
-NoMovesDialogController::Result NoMovesDialogController::Update() {
+LaserDialogController::Result LaserDialogController::Update() {
     switch (mSlidingMenuAnimation.Update()) {
         case SlidingMenuAnimation::State::Idle:
             mSlidingMenuAnimation.StartSlideIn();
@@ -36,20 +37,17 @@ NoMovesDialogController::Result NoMovesDialogController::Update() {
     return Result::None;
 }
 
-NoMovesDialogController::Result NoMovesDialogController::HandleInput() {
+LaserDialogController::Result LaserDialogController::HandleInput() {
     return InputUtil::HandleInput<Result, Result::None>(
         mInput, [this] (const Pht::TouchEvent& touch) { return OnTouch(touch); });
 }
 
-NoMovesDialogController::Result NoMovesDialogController::OnTouch(const Pht::TouchEvent& touchEvent) {
-    if (mView.GetCloseButton().IsClicked(touchEvent)) {
-        return Result::BackToMap;
-    }
-
-    if (mView.GetPlayOnButton().IsClicked(touchEvent)) {
-        mDeferredResult = Result::PlayOn;
+LaserDialogController::Result LaserDialogController::OnTouch(const Pht::TouchEvent& touchEvent) {
+    if (mView.GetPlayButton().IsClicked(touchEvent)) {
+        mDeferredResult = Result::Play;
         mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::No,
-                                            SlidingMenuAnimation::SlideDirection::Down);
+                                            SlidingMenuAnimation::SlideDirection::Scale,
+                                            SlidingMenuAnimation::UpdatePosition::No);
     }
     
     return Result::None;

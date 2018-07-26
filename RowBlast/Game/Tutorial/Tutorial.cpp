@@ -12,11 +12,13 @@ Tutorial::Tutorial(Pht::IEngine& engine, GameScene& scene, const CommonResources
     mScene {scene},
     mPlacePieceWindowController {engine, commonResources},
     mFillRowsWindowController {engine, commonResources},
-    mSwitchPieceWindowController {engine, commonResources} {
+    mSwitchPieceWindowController {engine, commonResources},
+    mLaserDialogController {engine, commonResources} {
     
     mViewManager.AddView(static_cast<int>(Controller::PlacePieceWindow), mPlacePieceWindowController.GetView());
     mViewManager.AddView(static_cast<int>(Controller::FillRowsWindow), mFillRowsWindowController.GetView());
     mViewManager.AddView(static_cast<int>(Controller::SwitchPieceWindow), mSwitchPieceWindowController.GetView());
+    mViewManager.AddView(static_cast<int>(Controller::LaserDialog), mLaserDialogController.GetView());
 }
 
 void Tutorial::Init(const Level& level) {
@@ -64,9 +66,38 @@ void Tutorial::Update() {
                 SetActiveController(Controller::None);
             }
             break;
+        case Controller::LaserDialog:
         case Controller::None:
             break;
     }
+}
+
+Tutorial::Result Tutorial::UpdateDialogs() {
+    switch (mActiveController) {
+        case Controller::LaserDialog:
+            if (mLaserDialogController.Update() == LaserDialogController::Result::Play) {
+                SetActiveController(Controller::None);
+                return Result::Play;
+            }
+            break;
+        default:
+            assert(!"Unsupported dialog");
+    }
+    
+    return Result::TutorialHasFocus;
+}
+
+Tutorial::Result Tutorial::OnLevelStart() {
+    switch (mLevel->GetId()) {
+        case 6:
+            SetActiveController(Controller::LaserDialog);
+            mLaserDialogController.Init();
+            return Result::TutorialHasFocus;
+        default:
+            break;
+    }
+
+    return Result::Play;
 }
 
 void Tutorial::OnNewMove(int numMovesUsedIncludingCurrent) {
@@ -79,7 +110,7 @@ void Tutorial::OnNewMove(int numMovesUsedIncludingCurrent) {
             OnNewMoveFirstLevel(numMovesUsedIncludingCurrent);
             break;
         default:
-            assert(!"Unsupported tutorial level");
+            break;
     }
 }
 

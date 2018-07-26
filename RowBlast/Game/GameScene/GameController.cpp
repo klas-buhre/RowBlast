@@ -131,6 +131,7 @@ GameController::Command GameController::Update() {
     
     switch (mState) {
         case GameState::LevelIntro:
+        case GameState::TutorialDialog:
         case GameState::Playing:
         case GameState::GameOver:
         case GameState::LevelCompleted:
@@ -362,6 +363,9 @@ GameController::Command GameController::UpdateSubState() {
         case GameState::LevelIntro:
             UpdateInLevelIntroState();
             break;
+        case GameState::TutorialDialog:
+            UpdateTutorialDialogs();
+            break;
         case GameState::LevelCompleted:
             command = UpdateInLevelCompletedState();
             break;
@@ -387,9 +391,19 @@ void GameController::UpdateInLevelIntroState() {
             break;
         case LevelIntroState::ObjectiveAnimation:
             if (mSlidingTextAnimation.Update() == SlidingTextAnimation::State::Inactive) {
-                GoToPlayingState();
+                if (mTutorial.OnLevelStart() == Tutorial::Result::TutorialHasFocus) {
+                    mState = GameState::TutorialDialog;
+                } else {
+                    GoToPlayingState();
+                }
             }
             break;
+    }
+}
+
+void GameController::UpdateTutorialDialogs() {
+    if (mTutorial.UpdateDialogs() == Tutorial::Result::Play) {
+        GoToPlayingState();
     }
 }
 
