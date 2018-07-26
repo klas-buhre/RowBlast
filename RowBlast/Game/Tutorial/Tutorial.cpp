@@ -13,12 +13,14 @@ Tutorial::Tutorial(Pht::IEngine& engine, GameScene& scene, const CommonResources
     mPlacePieceWindowController {engine, commonResources},
     mFillRowsWindowController {engine, commonResources},
     mSwitchPieceWindowController {engine, commonResources},
-    mLaserDialogController {engine, commonResources} {
+    mLaserDialogController {engine, commonResources},
+    mBombDialogController {engine, commonResources} {
     
     mViewManager.AddView(static_cast<int>(Controller::PlacePieceWindow), mPlacePieceWindowController.GetView());
     mViewManager.AddView(static_cast<int>(Controller::FillRowsWindow), mFillRowsWindowController.GetView());
     mViewManager.AddView(static_cast<int>(Controller::SwitchPieceWindow), mSwitchPieceWindowController.GetView());
     mViewManager.AddView(static_cast<int>(Controller::LaserDialog), mLaserDialogController.GetView());
+    mViewManager.AddView(static_cast<int>(Controller::BombDialog), mBombDialogController.GetView());
 }
 
 void Tutorial::Init(const Level& level) {
@@ -67,6 +69,7 @@ void Tutorial::Update() {
             }
             break;
         case Controller::LaserDialog:
+        case Controller::BombDialog:
         case Controller::None:
             break;
     }
@@ -76,6 +79,12 @@ Tutorial::Result Tutorial::UpdateDialogs() {
     switch (mActiveController) {
         case Controller::LaserDialog:
             if (mLaserDialogController.Update() == LaserDialogController::Result::Play) {
+                SetActiveController(Controller::None);
+                return Result::Play;
+            }
+            break;
+        case Controller::BombDialog:
+            if (mBombDialogController.Update() == BombDialogController::Result::Play) {
                 SetActiveController(Controller::None);
                 return Result::Play;
             }
@@ -92,6 +101,10 @@ Tutorial::Result Tutorial::OnLevelStart() {
         case 6:
             SetActiveController(Controller::LaserDialog);
             mLaserDialogController.Init();
+            return Result::TutorialHasFocus;
+        case 7:
+            SetActiveController(Controller::BombDialog);
+            mBombDialogController.Init();
             return Result::TutorialHasFocus;
         default:
             break;

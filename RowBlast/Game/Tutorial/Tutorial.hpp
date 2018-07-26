@@ -7,6 +7,7 @@
 #include "FillRowsWindowController.hpp"
 #include "SwitchPieceWindowController.hpp"
 #include "LaserDialogController.hpp"
+#include "BombDialogController.hpp"
 
 namespace Pht {
     class IEngine;
@@ -42,6 +43,7 @@ namespace RowBlast {
             FillRowsWindow,
             SwitchPieceWindow,
             LaserDialog,
+            BombDialog,
             None
         };
 
@@ -57,6 +59,7 @@ namespace RowBlast {
         FillRowsWindowController mFillRowsWindowController;
         SwitchPieceWindowController mSwitchPieceWindowController;
         LaserDialogController mLaserDialogController;
+        BombDialogController mBombDialogController;
     };
 }
 
