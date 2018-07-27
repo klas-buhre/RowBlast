@@ -21,6 +21,13 @@ namespace RowBlast {
                          const CommonResources& commonResources,
                          PotentiallyZoomedScreen potentiallyZoomedScreen);
 
+        void EnableControlsButton();
+        void DisableControlsButton();
+        
+        bool IsControlsButtonEnabled() const {
+            return mIsControlsButtonEnabled;
+        }
+
         const MenuButton& GetControlsButton() const {
             return *mControlsButton;
         }
@@ -57,6 +64,7 @@ namespace RowBlast {
         Pht::SceneObject* mControlsSwipeText {nullptr};
         Pht::SceneObject* mSoundOnText {nullptr};
         Pht::SceneObject* mSoundOffText {nullptr};
+        bool mIsControlsButtonEnabled {true};
     };
 }
 

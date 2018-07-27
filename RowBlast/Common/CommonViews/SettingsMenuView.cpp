@@ -85,3 +85,20 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine,
                                                backButtonStyle);
     mBackButton->CreateText({-0.85f, -0.23f, UiLayer::buttonText}, "Back", buttonTextProperties);
 }
+
+void SettingsMenuView::EnableControlsButton() {
+    mIsControlsButtonEnabled = true;
+    
+    auto& material {mControlsButton->GetSceneObject().GetRenderable()->GetMaterial()};
+    material.SetAmbient(GuiResources::mDarkBlueButtonColor);
+    material.SetDiffuse(GuiResources::mDarkBlueButtonColor);
+}
+
+void SettingsMenuView::DisableControlsButton() {
+    mIsControlsButtonEnabled = false;
+    
+    Pht::Color greyColor {0.45f, 0.45f, 0.45f};
+    auto& material {mControlsButton->GetSceneObject().GetRenderable()->GetMaterial()};
+    material.SetAmbient(greyColor);
+    material.SetDiffuse(greyColor);
+}

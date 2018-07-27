@@ -35,7 +35,7 @@ namespace RowBlast {
         void OnSwitchPiece(int numMovesUsedIncludingCurrent, const Piece& pieceType);
         bool IsSwitchPieceAllowed(int numMovesUsedIncludingCurrent) const;
         bool IsPlacePieceAllowed(int numMovesUsedIncludingCurrent, const Piece& pieceType) const;
-        bool IsPauseAllowed() const;
+        bool IsGestureControlsAllowed() const;
 
     private:
         enum class Controller {

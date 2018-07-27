@@ -357,6 +357,7 @@ void MapController::GoToLevelGoalDialogState(int levelToStart) {
 
 void MapController::GoToSettingsMenuState() {
     mMapViewControllers.SetActiveController(MapViewControllers::SettingsMenu);
-    mMapViewControllers.GetSettingsMenuController().Init(SlidingMenuAnimation::UpdateFade::Yes);
+    mMapViewControllers.GetSettingsMenuController().Init(SlidingMenuAnimation::UpdateFade::Yes,
+                                                         true);
     mState = State::SettingsMenu;
 }

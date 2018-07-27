@@ -92,7 +92,7 @@ GameLogic::GameLogic(Pht::IEngine& engine,
     mGameHudController {gameHudController},
     mTutorial {tutorial},
     mSettings {settings},
-    mPreviousControlType {mSettings.mControlType},
+    mControlType {mSettings.mControlType},
     mFieldExplosionsStates {engine, field, effectManager, flyingBlocksAnimation},
     mFallingPieceAnimation {*this, mFallingPieceStorage},
     mGestureInputHandler {*this, mFallingPieceStorage},
@@ -104,6 +104,7 @@ GameLogic::GameLogic(Pht::IEngine& engine,
 
 void GameLogic::Init(const Level& level) {
     mLevel = &level;
+    mControlType = mTutorial.IsGestureControlsAllowed() ? mSettings.mControlType : ControlType::Click;
     mGestureInputHandler.Init(level);
     mClickInputHandler.Init(level);
     
@@ -198,11 +199,11 @@ GameLogic::Result GameLogic::InitFallingPiece() {
         return Result::GameOver;
     }
     
-    if (mCurrentMove.mPieceType->IsBomb() && mSettings.mControlType == ControlType::Gesture) {
+    if (mCurrentMove.mPieceType->IsBomb() && mControlType == ControlType::Gesture) {
         StartBlastRadiusAnimationAtGhostPiece();
     }
     
-    if (mSettings.mControlType == ControlType::Click) {
+    if (mControlType == ControlType::Click) {
         std::cout << "Calculating moves" << std::endl;
         
         mClickInputHandler.CalculateMoves(*mFallingPiece, GetMovesUsedIncludingCurrent() - 1);
@@ -352,7 +353,7 @@ void GameLogic::HandleControlTypeChange() {
         return;
     }
     
-    if (mSettings.mControlType != mPreviousControlType) {
+    if (mSettings.mControlType != mControlType && mTutorial.IsGestureControlsAllowed()) {
         switch (mSettings.mControlType) {
             case ControlType::Click:
                 if (mCurrentMove.mPieceType->IsBomb()) {
@@ -368,9 +369,9 @@ void GameLogic::HandleControlTypeChange() {
                 }
                 break;
         }
+        
+        mControlType = mSettings.mControlType;
     }
-    
-    mPreviousControlType = mSettings.mControlType;
 }
 
 void GameLogic::UpdateLevelProgress() {
@@ -427,7 +428,7 @@ void GameLogic::UpdateFallingPieceYpos() {
                 mFallingPiece->GoToLandingState(mGhostPieceRow);
             } else {
                 mFallingPiece->SetY(newYPosition);
-                if (mSettings.mControlType == ControlType::Click) {
+                if (mControlType == ControlType::Click) {
                     if (mFallingPiece->GetPreviousIntY() != static_cast<int>(newYPosition)) {
                         mClickInputHandler.UpdateMoves(*mFallingPiece,
                                                        GetMovesUsedIncludingCurrent() - 1);
@@ -884,7 +885,7 @@ void GameLogic::ForwardTouchToInputHandler(const Pht::TouchEvent& touchEvent) {
         return;
     }
     
-    switch (mSettings.mControlType) {
+    switch (mControlType) {
         case ControlType::Click:
             if (mTutorial.IsPlacePieceAllowed(GetMovesUsedIncludingCurrent(),
                                               mFallingPiece->GetPieceType())) {

@@ -19,8 +19,15 @@ SettingsMenuController::SettingsMenuController(Pht::IEngine& engine,
     mView {engine, commonResources, potentiallyZoomedScreen},
     mSlidingMenuAnimation {engine, mView} {}
 
-void SettingsMenuController::Init(SlidingMenuAnimation::UpdateFade updateFade) {
+void SettingsMenuController::Init(SlidingMenuAnimation::UpdateFade updateFade,
+                                  bool isGestureControlsAllowed) {
     mUpdateFade = updateFade;
+
+    if (isGestureControlsAllowed) {
+        mView.EnableControlsButton();
+    } else {
+        mView.DisableControlsButton();
+    }
     
     auto slideInDirection {
         updateFade == SlidingMenuAnimation::UpdateFade::Yes ?
@@ -29,7 +36,7 @@ void SettingsMenuController::Init(SlidingMenuAnimation::UpdateFade updateFade) {
     };
 
     mSlidingMenuAnimation.Init(updateFade, slideInDirection);
-    UpdateViewToReflectSettings();
+    UpdateViewToReflectSettings(isGestureControlsAllowed);
 }
 
 void SettingsMenuController::SetFadeEffect(Pht::FadeEffect& fadeEffect) {
@@ -59,14 +66,16 @@ SettingsMenuController::Result SettingsMenuController::HandleInput() {
 }
 
 SettingsMenuController::Result SettingsMenuController::OnTouch(const Pht::TouchEvent& touchEvent) {
-    if (mView.GetControlsButton().IsClicked(touchEvent)) {
-        if (mSettings.mControlType == ControlType::Click) {
-            mSettings.mControlType = ControlType::Gesture;
-        } else {
-            mSettings.mControlType = ControlType::Click;
+    if (mView.IsControlsButtonEnabled()) {
+        if (mView.GetControlsButton().IsClicked(touchEvent)) {
+            if (mSettings.mControlType == ControlType::Click) {
+                mSettings.mControlType = ControlType::Gesture;
+            } else {
+                mSettings.mControlType = ControlType::Click;
+            }
+            
+            UpdateViewToReflectSettings(true);
         }
-        
-        UpdateViewToReflectSettings();
     }
 
     if (mView.GetSoundButton().IsClicked(touchEvent)) {
@@ -78,7 +87,7 @@ SettingsMenuController::Result SettingsMenuController::OnTouch(const Pht::TouchE
             audio.EnableSound();
         }
         
-        UpdateViewToReflectSettings();
+        UpdateViewToReflectSettings(true);
     }
 
     if (mView.GetBackButton().IsClicked(touchEvent)) {
@@ -95,8 +104,8 @@ SettingsMenuController::Result SettingsMenuController::OnTouch(const Pht::TouchE
     return Result::None;
 }
 
-void SettingsMenuController::UpdateViewToReflectSettings() {
-    if (mSettings.mControlType == ControlType::Click) {
+void SettingsMenuController::UpdateViewToReflectSettings(bool isGestureControlsAllowed) {
+    if (mSettings.mControlType == ControlType::Click || !isGestureControlsAllowed) {
         mView.GetControlsClickText().SetIsVisible(true);
         mView.GetControlsSwipeText().SetIsVisible(false);
     } else {

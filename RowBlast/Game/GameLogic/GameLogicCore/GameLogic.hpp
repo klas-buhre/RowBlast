@@ -110,7 +110,7 @@ namespace RowBlast {
         }
         
         bool IsUsingClickControls() const {
-            return mPreviousControlType == ControlType::Click;
+            return mControlType == ControlType::Click;
         }
         
         const ClickInputHandler& GetClickInputHandler() const {
@@ -196,7 +196,7 @@ namespace RowBlast {
         GameHudController& mGameHudController;
         Tutorial& mTutorial;
         const Settings& mSettings;
-        ControlType mPreviousControlType;
+        ControlType mControlType;
         State mState {State::LogicUpdate};
         CascadeState mCascadeState {CascadeState::NotCascading};
         float mCascadeWaitTime {0.0f};

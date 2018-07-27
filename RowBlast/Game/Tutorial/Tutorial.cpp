@@ -206,6 +206,12 @@ bool Tutorial::IsPlacePieceAllowed(int numMovesUsedIncludingCurrent, const Piece
     return true;
 }
 
-bool Tutorial::IsPauseAllowed() const {
-    return mActiveController == Controller::None;
+bool Tutorial::IsGestureControlsAllowed() const {
+    switch (mLevel->GetId()) {
+        case 1:
+        case 2:
+            return false;
+        default:
+            return true;
+    }
 }

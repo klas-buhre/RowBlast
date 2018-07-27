@@ -79,7 +79,6 @@ Ongoing tasks:
          landing and clearing an area. A "Play" button removes the dialog.
     -Implementation:
         -Hand that points when asked to click somewhere.
-        -Input type cannot be gesture during level 1 to 2.
  
 
 

@@ -27,7 +27,7 @@ namespace RowBlast {
                                Settings& settings,
                                PotentiallyZoomedScreen potentiallyZoomedScreen);
         
-        void Init(SlidingMenuAnimation::UpdateFade updateFade);
+        void Init(SlidingMenuAnimation::UpdateFade updateFade, bool isGestureControlsAllowed);
         void SetFadeEffect(Pht::FadeEffect& fadeEffect);
         Result Update();
         
@@ -38,7 +38,7 @@ namespace RowBlast {
     private:
         Result HandleInput();
         Result OnTouch(const Pht::TouchEvent& touchEvent);
-        void UpdateViewToReflectSettings();
+        void UpdateViewToReflectSettings(bool isGestureControlsAllowed);
         
         Pht::IEngine& mEngine;
         Settings& mSettings;

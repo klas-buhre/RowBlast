@@ -102,6 +102,7 @@ void GameController::StartLevel(int levelId) {
     mField.Init(*mLevel);
     mScrollController.Init(mLevel->GetObjective());
     mScene.Init(*mLevel, mLevelResources, mPieceResources, mGameLogic);
+    mTutorial.Init(*mLevel);
     mGameLogic.Init(*mLevel);
     mGameViewControllers.SetActiveController(GameViewControllers::None);
     mBlueprintSlotsFilledAnimation.Init();
@@ -116,7 +117,6 @@ void GameController::StartLevel(int levelId) {
     mBombsAnimation.Init();
     mGameViewControllers.Init(mScene);
     mLevelCompletedController.Init(*mLevel);
-    mTutorial.Init(*mLevel);
     
     mState = GameState::LevelIntro;
     mLevelIntroState = LevelIntroState::Overview;
@@ -523,7 +523,8 @@ void GameController::GoToPausedStateMapConfirmationDialog() {
 void GameController::GoToPausedStateSettingsMenu() {
     mPausedState = PausedState::SettingsMenu;
     mGameViewControllers.SetActiveController(GameViewControllers::SettingsMenu);
-    mGameViewControllers.GetSettingsMenuController().Init(SlidingMenuAnimation::UpdateFade::No);
+    mGameViewControllers.GetSettingsMenuController().Init(SlidingMenuAnimation::UpdateFade::No,
+                                                          mTutorial.IsGestureControlsAllowed());
 }
 
 void GameController::GoToPausedStateLevelGoalDialog() {
