@@ -9,7 +9,11 @@ GuiView::GuiView() :
     mRoot {std::make_unique<Pht::SceneObject>()} {}
 
 void GuiView::SetPosition(const Vec2& position) {
-    mRoot->GetTransform().SetPosition({position.x, position.y, 0.0f});
+    SetPosition({position.x, position.y, 0.0f});
+}
+
+void GuiView::SetPosition(const Vec3& position) {
+    mRoot->GetTransform().SetPosition(position);
 }
 
 void GuiView::SetIsActive(bool isActive) {

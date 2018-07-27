@@ -19,6 +19,7 @@ namespace Pht {
         virtual ~GuiView() {}
         
         void SetPosition(const Vec2& position);
+        void SetPosition(const Vec3& position);
         void SetIsActive(bool isActive);
         void AddSceneObject(std::unique_ptr<SceneObject> sceneObject);
         TextComponent& CreateText(const Vec3& position,

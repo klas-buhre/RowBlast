@@ -71,13 +71,15 @@ Ongoing tasks:
         -TODO
     -Third level:
         -TODO
-    -Sixth level:
+    -Level 6:
         -First move: Dialog that says "The laser clears a row". A 3 frame animation showing a laser
          landing and clearing a row. A "Play" button removes the dialog.
+    -Level 7:
+        -First move: Dialog that says "The bomb clears an area". A 3 frame animation showing a bomb
+         landing and clearing an area. A "Play" button removes the dialog.
     -Implementation:
         -Hand that points when asked to click somewhere.
         -Input type cannot be gesture during level 1 to 2.
-        -Pausing to bring up the game menu should be disabled during tutorial.
  
 
 

@@ -11,6 +11,7 @@ namespace RowBlast {
         constexpr auto background {-2.0f};
         constexpr auto piecesRectangle {-2.0f};
         constexpr auto lowerTextRectangle {-3.0f};
+        constexpr auto tutorialWindow {-4.0f};
         constexpr auto backgroundFade {-3.5f};
     }
     
