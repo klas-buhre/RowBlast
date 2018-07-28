@@ -77,8 +77,6 @@ Ongoing tasks:
     -Level 7:
         -First move: Dialog that says "The bomb clears an area". A 3 frame animation showing a bomb
          landing and clearing an area. A "Play" button removes the dialog.
-    -Implementation:
-        -Hand that points when asked to click somewhere.
  
 
 

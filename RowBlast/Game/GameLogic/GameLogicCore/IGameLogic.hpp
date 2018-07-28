@@ -9,14 +9,14 @@ namespace Pht {
 }
 
 namespace RowBlast {
-    class Movement;
+    class Move;
     
     class IGameLogic {
     public:
         virtual ~IGameLogic() {}
         
         virtual void DropFallingPiece() = 0;
-        virtual void StartFallingPieceAnimation(const Movement& lastMovement) = 0;
+        virtual void SelectMove(const Move& move) = 0;
         virtual void OnFallingPieceAnimationFinished(bool finalMovementWasADrop) = 0;
         virtual void RotatePiece(const Pht::TouchEvent& touchEvent) = 0;
         virtual void SwitchPiece() = 0;

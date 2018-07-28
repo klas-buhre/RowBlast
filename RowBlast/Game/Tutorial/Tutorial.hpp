@@ -3,6 +3,7 @@
 
 // Game includes.
 #include "GuiViewManager.hpp"
+#include "HandAnimation.hpp"
 #include "PlacePieceWindowController.hpp"
 #include "FillRowsWindowController.hpp"
 #include "SwitchPieceWindowController.hpp"
@@ -32,6 +33,7 @@ namespace RowBlast {
         Result UpdateDialogs();
         Result OnLevelStart();
         void OnNewMove(int numMovesUsedIncludingCurrent);
+        void OnSelectMove();
         void OnSwitchPiece(int numMovesUsedIncludingCurrent, const Piece& pieceType);
         bool IsSwitchPieceAllowed(int numMovesUsedIncludingCurrent) const;
         bool IsPlacePieceAllowed(int numMovesUsedIncludingCurrent, const Piece& pieceType) const;
@@ -54,6 +56,7 @@ namespace RowBlast {
         GameScene& mScene;
         const Level* mLevel {nullptr};
         Controller mActiveController {Controller::None};
+        HandAnimation mHandAnimation;
         GuiViewManager mViewManager;
         PlacePieceWindowController mPlacePieceWindowController;
         FillRowsWindowController mFillRowsWindowController;

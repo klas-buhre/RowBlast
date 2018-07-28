@@ -2,7 +2,6 @@
 
 // Engine includes.
 #include "IEngine.hpp"
-#include "IRenderer.hpp"
 #include "MathUtils.hpp"
 #include "ParticleEffect.hpp"
 #include "IParticleSystem.hpp"

@@ -318,6 +318,8 @@
 		62A03FD421091BA600A4C2A5 /* LaserDialogController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62A03FD221091BA600A4C2A5 /* LaserDialogController.cpp */; };
 		62A8AAF71FE2DEA1000EB01C /* cloud_B_envmap.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62A8AAF61FE2DEA0000EB01C /* cloud_B_envmap.jpg */; };
 		62A8AAF91FE2E442000EB01C /* cloud_C_envmap.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62A8AAF81FE2E441000EB01C /* cloud_C_envmap.jpg */; };
+		62B1CB24210CB5AF00D0F195 /* hand10.png in Resources */ = {isa = PBXBuildFile; fileRef = 62B1CB23210CB5AE00D0F195 /* hand10.png */; };
+		62B1CB27210CB62100D0F195 /* HandAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62B1CB25210CB62100D0F195 /* HandAnimation.cpp */; };
 		62BE274620AEDD990014C6DD /* SlidingFieldAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62BE274420AEDD990014C6DD /* SlidingFieldAnimation.cpp */; };
 		62BE274920AF179D0014C6DD /* FireworksParticleEffect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62BE274720AF179D0014C6DD /* FireworksParticleEffect.cpp */; };
 		62BE274C20B063570014C6DD /* ConfettiParticleEffect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62BE274A20B063570014C6DD /* ConfettiParticleEffect.cpp */; };
@@ -979,6 +981,9 @@
 		62A03FD321091BA600A4C2A5 /* LaserDialogController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = LaserDialogController.hpp; sourceTree = "<group>"; };
 		62A8AAF61FE2DEA0000EB01C /* cloud_B_envmap.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = cloud_B_envmap.jpg; sourceTree = "<group>"; };
 		62A8AAF81FE2E441000EB01C /* cloud_C_envmap.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = cloud_C_envmap.jpg; sourceTree = "<group>"; };
+		62B1CB23210CB5AE00D0F195 /* hand10.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hand10.png; sourceTree = "<group>"; };
+		62B1CB25210CB62100D0F195 /* HandAnimation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = HandAnimation.cpp; sourceTree = "<group>"; };
+		62B1CB26210CB62100D0F195 /* HandAnimation.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = HandAnimation.hpp; sourceTree = "<group>"; };
 		62BE274420AEDD990014C6DD /* SlidingFieldAnimation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SlidingFieldAnimation.cpp; sourceTree = "<group>"; };
 		62BE274520AEDD990014C6DD /* SlidingFieldAnimation.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SlidingFieldAnimation.hpp; sourceTree = "<group>"; };
 		62BE274720AF179D0014C6DD /* FireworksParticleEffect.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FireworksParticleEffect.cpp; sourceTree = "<group>"; };
@@ -1118,6 +1123,8 @@
 				6259B7F0210814E50055FE8D /* FillRowsWindowController.hpp */,
 				6259B7EC210814BF0055FE8D /* FillRowsWindowView.cpp */,
 				6259B7ED210814BF0055FE8D /* FillRowsWindowView.hpp */,
+				62B1CB25210CB62100D0F195 /* HandAnimation.cpp */,
+				62B1CB26210CB62100D0F195 /* HandAnimation.hpp */,
 				62A03FD221091BA600A4C2A5 /* LaserDialogController.cpp */,
 				62A03FD321091BA600A4C2A5 /* LaserDialogController.hpp */,
 				62A03FCF21091B5500A4C2A5 /* LaserDialogView.cpp */,
@@ -1234,7 +1241,6 @@
 		6270DCA01FCB248E00FB457D /* Textures */ = {
 			isa = PBXGroup;
 			children = (
-				629AB6AC20E15FA400D43A0D /* portal.png */,
 				62487E9520D9573E00E4429E /* avatar.jpg */,
 				6227D4FE206D304F008EA77D /* bomb_798_emission.jpg */,
 				6227D4FF206D3050008EA77D /* bomb_798.jpg */,
@@ -1250,12 +1256,14 @@
 				629B837520BED74D00DD2D0E /* flare03.png */,
 				62318C4B2067F668008332CB /* flare24.png */,
 				62BE275620B5D7B20014C6DD /* glow_lines.png */,
+				62B1CB23210CB5AE00D0F195 /* hand10.png */,
 				626451E4206FEDFF00E304F2 /* laser_beam_red.png */,
 				626451DF206FA93E00E304F2 /* laser_bomb_diffuse.jpg */,
 				626451DE206FA93E00E304F2 /* laser_bomb_emission.png */,
 				62318C412066B849008332CB /* particle_sprite_halo.png */,
 				62318C3D206550FF008332CB /* particle_sprite_point_blurred.png */,
 				62318C3920651F79008332CB /* particle_sprite_twinkle_blurred.png */,
+				629AB6AC20E15FA400D43A0D /* portal.png */,
 				6270DCA11FCB248E00FB457D /* settings.png */,
 				6270DCA61FCB248E00FB457D /* sky_upside_down_patched_mirrored.jpg */,
 				6270DCA51FCB248E00FB457D /* sky_upside_down.jpg */,
@@ -2308,6 +2316,7 @@
 				62785B1F20875937006F9869 /* Text.vert in Resources */,
 				6276B7102040297E0075C468 /* weld_76.obj in Resources */,
 				62785B2520875937006F9869 /* VertexLighting.frag in Resources */,
+				62B1CB24210CB5AF00D0F195 /* hand10.png in Resources */,
 				6270DC561FCB212B00FB457D /* Bomb.wav in Resources */,
 				62785B2320875937006F9869 /* PointParticle.frag in Resources */,
 				6227D501206D3051008EA77D /* bomb_798.jpg in Resources */,
@@ -2527,6 +2536,7 @@
 				62785DF42087618E006F9869 /* BlastRadiusAnimation.cpp in Sources */,
 				6259B7EE210814BF0055FE8D /* FillRowsWindowView.cpp in Sources */,
 				62785E192087618E006F9869 /* SettingsButtonController.cpp in Sources */,
+				62B1CB27210CB62100D0F195 /* HandAnimation.cpp in Sources */,
 				62785DCC2087618E006F9869 /* FallingPiece.cpp in Sources */,
 				62785E032087618E006F9869 /* NoLivesDialogView.cpp in Sources */,
 				62785B0C20875937006F9869 /* VboCache.cpp in Sources */,

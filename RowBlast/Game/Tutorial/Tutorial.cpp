@@ -8,8 +8,17 @@
 
 using namespace RowBlast;
 
+namespace {
+    const Pht::Vec3 placePieceHandPosition {-2.2f, -3.8f, 0.0f};
+    const Pht::Vec3 fillRowsHandPosition {1.5f, -4.3f, 0.0f};
+    const Pht::Vec3 switchPieceHandPosition {3.3f, -10.7f, 0.0f};
+    const Pht::Vec3 bPieceHandPosition {3.1f, -4.3f, 0.0f};
+    const Pht::Vec3 longIPieceHandPosition {0.6f, -7.1f, 0.0f};
+}
+
 Tutorial::Tutorial(Pht::IEngine& engine, GameScene& scene, const CommonResources& commonResources) :
     mScene {scene},
+    mHandAnimation {engine, scene},
     mPlacePieceWindowController {engine, commonResources},
     mFillRowsWindowController {engine, commonResources},
     mSwitchPieceWindowController {engine, commonResources},
@@ -30,6 +39,8 @@ void Tutorial::Init(const Level& level) {
         return;
     }
 
+    mHandAnimation.Init();
+
     auto& uiViewContainer {mScene.GetUiViewsContainer()};
     mViewManager.Init(uiViewContainer);
     SetActiveController(Controller::None);
@@ -49,18 +60,22 @@ void Tutorial::Update() {
     if (!mLevel->IsPartOfTutorial()) {
         return;
     }
+    
+    mHandAnimation.Update();
 
     switch (mActiveController) {
         case Controller::PlacePieceWindow:
             if (mPlacePieceWindowController.Update() == PlacePieceWindowController::Result::Done) {
                 SetActiveController(Controller::FillRowsWindow);
                 mFillRowsWindowController.Init();
+                mHandAnimation.Start(fillRowsHandPosition, 45.0f);
             }
             break;
         case Controller::FillRowsWindow:
             if (mFillRowsWindowController.Update() == FillRowsWindowController::Result::Done) {
                 SetActiveController(Controller::SwitchPieceWindow);
                 mSwitchPieceWindowController.Init();
+                mHandAnimation.Start(switchPieceHandPosition, -180.0f);
             }
             break;
         case Controller::SwitchPieceWindow:
@@ -132,6 +147,7 @@ void Tutorial::OnNewMoveFirstLevel(int numMovesUsedIncludingCurrent) {
         case 1:
             SetActiveController(Controller::PlacePieceWindow);
             mPlacePieceWindowController.Init();
+            mHandAnimation.Start(placePieceHandPosition, -45.0f);
             break;
         case 2:
             mPlacePieceWindowController.Close();
@@ -142,10 +158,19 @@ void Tutorial::OnNewMoveFirstLevel(int numMovesUsedIncludingCurrent) {
         case 4:
             SetActiveController(Controller::SwitchPieceWindow);
             mSwitchPieceWindowController.Init();
+            mHandAnimation.Start(switchPieceHandPosition, -180.0f);
             break;
         default:
             assert(!"Unsupported number of used moves");
     }
+}
+
+void Tutorial::OnSelectMove() {
+    if (!mLevel->IsPartOfTutorial()) {
+        return;
+    }
+    
+    mHandAnimation.Stop();
 }
 
 void Tutorial::OnSwitchPiece(int numMovesUsedIncludingCurrent, const Piece& pieceType) {
@@ -164,11 +189,24 @@ void Tutorial::OnSwitchPiece(int numMovesUsedIncludingCurrent, const Piece& piec
                 if (mActiveController == Controller::SwitchPieceWindow) {
                     if (&predeterminedMove.mPieceType == &pieceType) {
                         mSwitchPieceWindowController.Close();
+                        mHandAnimation.Stop();
+                        
+                        switch (numMovesUsedIncludingCurrent) {
+                            case 3:
+                                mHandAnimation.Start(bPieceHandPosition, -45.0f);
+                                break;
+                            case 4:
+                                mHandAnimation.Start(longIPieceHandPosition, -90.0f);
+                                break;
+                            default:
+                                break;
+                        }
                     }
                 } else {
                     if (&predeterminedMove.mPieceType != &pieceType) {
                         SetActiveController(Controller::SwitchPieceWindow);
                         mSwitchPieceWindowController.Init();
+                        mHandAnimation.Start(switchPieceHandPosition, -180.0f);
                     }
                 }
                 break;

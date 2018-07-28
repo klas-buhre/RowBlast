@@ -254,7 +254,7 @@ void ClickInputHandler::HandleTouch(const Pht::TouchEvent& touchEvent) {
                 return;
             case Pht::Button::Result::UpInside:
                 mGameLogic.StopBlastRadiusAnimation();
-                mGameLogic.StartFallingPieceAnimation(*move.mLastMovement);
+                mGameLogic.SelectMove(move);
                 mState = State::Inactive;
                 return;
             case Pht::Button::Result::None:

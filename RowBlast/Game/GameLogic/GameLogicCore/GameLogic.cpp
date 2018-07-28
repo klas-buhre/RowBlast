@@ -458,8 +458,9 @@ void GameLogic::DropFallingPiece() {
     LandFallingPiece(finalMovementWasADrop);
 }
 
-void GameLogic::StartFallingPieceAnimation(const Movement& lastMovement) {
-    mFallingPieceAnimation.Start(lastMovement);
+void GameLogic::SelectMove(const Move& move) {
+    mTutorial.OnSelectMove();
+    mFallingPieceAnimation.Start(*move.mLastMovement);
 }
 
 void GameLogic::OnFallingPieceAnimationFinished(bool finalMovementWasADrop) {
