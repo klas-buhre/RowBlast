@@ -21,6 +21,8 @@ namespace RowBlast {
         void Start(const Pht::Vec3& position, float angle);
         void Update();
         void Stop();
+        void Hide();
+        void Unhide();
         
     private:
         enum class State {

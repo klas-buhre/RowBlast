@@ -32,6 +32,8 @@ namespace RowBlast {
         void Update();
         Result UpdateDialogs();
         Result OnLevelStart();
+        void OnPause();
+        void OnResumePlaying();
         void OnNewMove(int numMovesUsedIncludingCurrent);
         void OnSelectMove();
         void OnSwitchPiece(int numMovesUsedIncludingCurrent, const Piece& pieceType);

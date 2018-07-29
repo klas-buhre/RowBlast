@@ -500,6 +500,7 @@ void GameController::GoToPlayingState() {
     mState = GameState::Playing;
     mEngine.GetInput().EnableInput();
     mGameViewControllers.SetActiveController(GameViewControllers::GameHud);
+    mTutorial.OnResumePlaying();
 }
 
 void GameController::GoToPausedStateNoLivesDialog() {
@@ -540,6 +541,7 @@ void GameController::GoToPausedStateGameMenu(SlidingMenuAnimation::UpdateFade up
     mGameViewControllers.SetActiveController(GameViewControllers::GameMenu);
     auto isUndoMovePossible {mShouldUpdateGameLogic && mGameLogic.IsUndoMovePossible()};
     mGameViewControllers.GetGameMenuController().Init(updateFade, isUndoMovePossible);
+    mTutorial.OnPause();
 }
 
 void GameController::GoToGameOverStateGameOverDialog() {

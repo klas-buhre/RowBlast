@@ -11,7 +11,7 @@ using namespace RowBlast;
 namespace {
     const Pht::Vec3 placePieceHandPosition {-2.2f, -3.8f, 0.0f};
     const Pht::Vec3 fillRowsHandPosition {1.5f, -4.3f, 0.0f};
-    const Pht::Vec3 switchPieceHandPosition {3.3f, -10.7f, 0.0f};
+    const Pht::Vec3 switchPieceHandPosition {3.3f, -10.6f, 0.0f};
     const Pht::Vec3 bPieceHandPosition {3.1f, -4.3f, 0.0f};
     const Pht::Vec3 longIPieceHandPosition {0.6f, -7.1f, 0.0f};
 }
@@ -126,6 +126,22 @@ Tutorial::Result Tutorial::OnLevelStart() {
     }
 
     return Result::Play;
+}
+
+void Tutorial::OnPause() {
+    if (!mLevel->IsPartOfTutorial()) {
+        return;
+    }
+
+    mHandAnimation.Hide();
+}
+
+void Tutorial::OnResumePlaying() {
+    if (!mLevel->IsPartOfTutorial()) {
+        return;
+    }
+
+    mHandAnimation.Unhide();
 }
 
 void Tutorial::OnNewMove(int numMovesUsedIncludingCurrent) {

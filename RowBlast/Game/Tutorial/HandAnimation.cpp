@@ -14,9 +14,9 @@ namespace {
     constexpr auto moveTime {0.19f};
     constexpr auto stillTime {1.0f};
     constexpr auto handSize {2.2f};
-    const Pht::Vec3 backwardPosition {0.0f, -1.2f, 0.0f};
-    const Pht::Vec3 forwardPosition {0.0f, 0.0f, 0.0f};
-    const Pht::Vec3 circlePosition {forwardPosition + Pht::Vec3{-0.17f, 0.75f, -0.1f}};
+    const Pht::Vec3 backwardPosition {0.18f, -1.3f, 0.0f};
+    const Pht::Vec3 forwardPosition {0.18f, -0.1f, 0.0f};
+    const Pht::Vec3 circlePosition {-0.17f, 0.75f, -0.1f};
 }
 
 using namespace RowBlast;
@@ -29,7 +29,7 @@ void HandAnimation::Init() {
     mContainerSceneObject = &mScene.GetScene().CreateSceneObject();
     mScene.GetUiViewsContainer().AddChild(*mContainerSceneObject);
     
-    Pht::Material handMaterial {"hand10.png"};
+    Pht::Material handMaterial {"hand48.png"};
     handMaterial.SetBlend(Pht::Blend::Yes);
     mHandSceneObject = &mScene.GetScene().CreateSceneObject(Pht::QuadMesh {handSize, handSize},
                                                             handMaterial);
@@ -149,4 +149,14 @@ void HandAnimation::Stop() {
     mContainerSceneObject->SetIsVisible(false);
     mContainerSceneObject->SetIsStatic(true);
     mCircleEffect->Stop();
+}
+
+void HandAnimation::Hide() {
+    mContainerSceneObject->SetIsVisible(false);
+}
+
+void HandAnimation::Unhide() {
+    if (mState != State::Inactive) {
+        mContainerSceneObject->SetIsVisible(true);
+    }
 }
