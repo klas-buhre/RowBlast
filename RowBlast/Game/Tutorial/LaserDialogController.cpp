@@ -14,7 +14,8 @@ LaserDialogController::LaserDialogController(Pht::IEngine& engine,
     mView {engine, commonResources},
     mSlidingMenuAnimation {engine, mView} {}
 
-void LaserDialogController::Init() {
+void LaserDialogController::Init(Pht::Scene& scene) {
+    mView.Init(scene);
     mSlidingMenuAnimation.Init(SlidingMenuAnimation::UpdateFade::Yes,
                                SlidingMenuAnimation::SlideDirection::Scale,
                                SlidingMenuAnimation::UpdatePosition::No);
@@ -25,6 +26,8 @@ void LaserDialogController::SetFadeEffect(Pht::FadeEffect& fadeEffect) {
 }
 
 LaserDialogController::Result LaserDialogController::Update() {
+    mView.Update();
+
     switch (mSlidingMenuAnimation.Update()) {
         case SlidingMenuAnimation::State::Idle:
             mSlidingMenuAnimation.StartSlideIn();

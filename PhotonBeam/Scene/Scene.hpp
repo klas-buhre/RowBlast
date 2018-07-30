@@ -40,6 +40,7 @@ namespace Pht {
         SceneObject& CreateSceneObject();
         TextComponent& CreateText(const std::string& text, const TextProperties& properties);
         void AddSceneObject(std::unique_ptr<SceneObject> sceneObject);
+        void AddRenderableObject(std::unique_ptr<RenderableObject> renderableObject);
         void AddRenderPass(const RenderPass& renderPass);
         RenderPass* GetRenderPass(int layerIndex);
         

@@ -85,6 +85,10 @@ void Scene::AddSceneObject(std::unique_ptr<SceneObject> sceneObject) {
     mResources.AddSceneObject(std::move(sceneObject));
 }
 
+void Scene::AddRenderableObject(std::unique_ptr<RenderableObject> renderableObject) {
+    mResources.AddRenderableObject(std::move(renderableObject));
+}
+
 void Scene::AddRenderPass(const RenderPass& renderPass) {
     mRenderPasses.push_back(renderPass);
 }

@@ -131,7 +131,7 @@ Tutorial::Result Tutorial::OnLevelStart() {
     switch (mLevel->GetId()) {
         case 6:
             SetActiveController(Controller::LaserDialog);
-            mLaserDialogController.Init();
+            mLaserDialogController.Init(mScene.GetScene());
             return Result::TutorialHasFocus;
         case 7:
             SetActiveController(Controller::BombDialog);

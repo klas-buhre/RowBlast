@@ -324,6 +324,7 @@
 		62B1CB3B210DEAAE00D0F195 /* laser_frame2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62B1CB3A210DEAAE00D0F195 /* laser_frame2.jpg */; };
 		62B1CB3D210DEAB500D0F195 /* laser_frame3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62B1CB3C210DEAB500D0F195 /* laser_frame3.jpg */; };
 		62B1CB3F210DEABC00D0F195 /* laser_frame4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62B1CB3E210DEABB00D0F195 /* laser_frame4.jpg */; };
+		62B1CB45210F3E0700D0F195 /* SlideAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62B1CB43210F3E0700D0F195 /* SlideAnimation.cpp */; };
 		62BE274620AEDD990014C6DD /* SlidingFieldAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62BE274420AEDD990014C6DD /* SlidingFieldAnimation.cpp */; };
 		62BE274920AF179D0014C6DD /* FireworksParticleEffect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62BE274720AF179D0014C6DD /* FireworksParticleEffect.cpp */; };
 		62BE274C20B063570014C6DD /* ConfettiParticleEffect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62BE274A20B063570014C6DD /* ConfettiParticleEffect.cpp */; };
@@ -992,6 +993,8 @@
 		62B1CB3A210DEAAE00D0F195 /* laser_frame2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = laser_frame2.jpg; sourceTree = "<group>"; };
 		62B1CB3C210DEAB500D0F195 /* laser_frame3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = laser_frame3.jpg; sourceTree = "<group>"; };
 		62B1CB3E210DEABB00D0F195 /* laser_frame4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = laser_frame4.jpg; sourceTree = "<group>"; };
+		62B1CB43210F3E0700D0F195 /* SlideAnimation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SlideAnimation.cpp; sourceTree = "<group>"; };
+		62B1CB44210F3E0700D0F195 /* SlideAnimation.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SlideAnimation.hpp; sourceTree = "<group>"; };
 		62BE274420AEDD990014C6DD /* SlidingFieldAnimation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SlidingFieldAnimation.cpp; sourceTree = "<group>"; };
 		62BE274520AEDD990014C6DD /* SlidingFieldAnimation.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SlidingFieldAnimation.hpp; sourceTree = "<group>"; };
 		62BE274720AF179D0014C6DD /* FireworksParticleEffect.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FireworksParticleEffect.cpp; sourceTree = "<group>"; };
@@ -1141,6 +1144,8 @@
 				6259B7EA2107CDF20055FE8D /* PlacePieceWindowController.hpp */,
 				6259B7E62107C6BE0055FE8D /* PlacePieceWindowView.cpp */,
 				6259B7E72107C6BE0055FE8D /* PlacePieceWindowView.hpp */,
+				62B1CB43210F3E0700D0F195 /* SlideAnimation.cpp */,
+				62B1CB44210F3E0700D0F195 /* SlideAnimation.hpp */,
 				62A03FCC2108D5E200A4C2A5 /* SwitchPieceWindowController.cpp */,
 				62A03FCD2108D5E200A4C2A5 /* SwitchPieceWindowController.hpp */,
 				62A03FC92108D5A800A4C2A5 /* SwitchPieceWindowView.cpp */,
@@ -2517,6 +2522,7 @@
 				62785DB62087618E006F9869 /* GameHudController.cpp in Sources */,
 				62785DB72087618E006F9869 /* NoMovesDialogView.cpp in Sources */,
 				62785DE02087618E006F9869 /* Bomb.cpp in Sources */,
+				62B1CB45210F3E0700D0F195 /* SlideAnimation.cpp in Sources */,
 				62785DE62087618E006F9869 /* MirroredZPiece.cpp in Sources */,
 				62785DDB2087618E006F9869 /* SevenPiece.cpp in Sources */,
 				62785DD02087618E006F9869 /* Field.cpp in Sources */,
