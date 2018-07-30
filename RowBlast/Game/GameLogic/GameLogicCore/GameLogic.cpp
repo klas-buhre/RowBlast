@@ -393,7 +393,8 @@ void GameLogic::NextMove() {
 }
 
 bool GameLogic::IsUndoMovePossible() const {
-    return mCurrentMove.mId != mPreviousMoveInitialState.mId && mMovesUsed > 1;
+    return mCurrentMove.mId != mPreviousMoveInitialState.mId && mMovesUsed > 1 &&
+           mTutorial.IsUndoMoveAllowed(GetMovesUsedIncludingCurrent());
 }
 
 void GameLogic::UndoMove() {

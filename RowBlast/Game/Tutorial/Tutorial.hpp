@@ -1,6 +1,9 @@
 #ifndef Tutorial_hpp
 #define Tutorial_hpp
 
+// Engine includes.
+#include "FadeEffect.hpp"
+
 // Game includes.
 #include "GuiViewManager.hpp"
 #include "HandAnimation.hpp"
@@ -40,6 +43,7 @@ namespace RowBlast {
         bool IsSwitchPieceAllowed(int numMovesUsedIncludingCurrent) const;
         bool IsPlacePieceAllowed(int numMovesUsedIncludingCurrent, const Piece& pieceType) const;
         bool IsGestureControlsAllowed() const;
+        bool IsUndoMoveAllowed(int numMovesUsedIncludingCurrent) const;
 
     private:
         enum class Controller {
@@ -58,6 +62,7 @@ namespace RowBlast {
         GameScene& mScene;
         const Level* mLevel {nullptr};
         Controller mActiveController {Controller::None};
+        Pht::FadeEffect mFadeEffect;
         HandAnimation mHandAnimation;
         GuiViewManager mViewManager;
         PlacePieceWindowController mPlacePieceWindowController;

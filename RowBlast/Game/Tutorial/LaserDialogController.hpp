@@ -23,6 +23,7 @@ namespace RowBlast {
         LaserDialogController(Pht::IEngine& engine, const CommonResources& commonResources);
         
         void Init();
+        void SetFadeEffect(Pht::FadeEffect& fadeEffect);
         Result Update();
 
         Pht::GuiView& GetView() {

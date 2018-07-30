@@ -7,6 +7,11 @@ Backlog:
     -Metal.
 
   -Gameplay:
+   X-Maybe change so that there are three visible pieces in the switch object in the HUD. The two
+     that you can switch to and the active piece. The active piece is to the right and could be a
+     bit larger. Change name from switch to current so that the name next is not so confusing? Right
+     now, people might think that the pieces in next will be the current active piece in the next
+     move.
    X-Fix the piece pull down bug on level 31. See screenshot.
    X-Fix bug where the switchable pieces can change if double clicking on switch when the frame rate
      is really low like in the iPad simulator.
@@ -72,15 +77,22 @@ Ongoing tasks:
     -Third level:
         -TODO
     -Level 6:
-        -First move: Dialog that says "The laser clears a row". A 3 frame animation showing a laser
+        -First move: Dialog that says "The laser clears a row". A 4 frame animation showing a laser
          landing and clearing a row. A "Play" button removes the dialog.
+            Frame 1: Laser move showing.
+            Frame 2: Hand tapping the laser move.
+            Frame 3: Laser activates.
+            Frame 4: Blocks are flying.
     -Level 7:
         -First move: Dialog that says "The bomb clears an area". A 3 frame animation showing a bomb
          landing and clearing an area. A "Play" button removes the dialog.
     -Implementation:
         -Clips/Animations.
+ 
 
-
+rectangle select:
+position: 313, 617
+size: 481, 481
 
 
 

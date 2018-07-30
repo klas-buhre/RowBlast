@@ -33,9 +33,16 @@ LaserDialogView::LaserDialogView(Pht::IEngine& engine, const CommonResources& co
     };
     lineSceneObject.GetTransform().SetPosition({0.0f, 6.6f, UiLayer::textRectangle});
     GetRoot().AddChild(lineSceneObject);
+    
+    Pht::Material laserMaterial {"laser_frame2.jpg"};
+    auto& laserSceneObject {
+        CreateSceneObject(Pht::QuadMesh {9.5f, 9.5f}, laserMaterial, sceneManager)
+    };
+    laserSceneObject.GetTransform().SetPosition({0.0f, 1.3f, UiLayer::textRectangle});
+    GetRoot().AddChild(laserSceneObject);
 
     auto& textProperties {guiResources.GetSmallWhiteTextProperties(zoom)};
-    CreateText({-3.75f, -4.1f, UiLayer::text}, "The laser clears a row", textProperties);
+    CreateText({-3.75f, -4.9f, UiLayer::text}, "The laser clears a row", textProperties);
     
     Pht::Vec2 playButtonInputSize {205.0f, 59.0f};
 
@@ -47,7 +54,7 @@ LaserDialogView::LaserDialogView(Pht::IEngine& engine, const CommonResources& co
 
     mPlayButton = std::make_unique<MenuButton>(engine,
                                                *this,
-                                               Pht::Vec3 {0.0f, -6.7f, UiLayer::textRectangle},
+                                               Pht::Vec3 {0.0f, -7.2f, UiLayer::textRectangle},
                                                playButtonInputSize,
                                                playButtonStyle);
     mPlayButton->CreateText({-1.1f, -0.31f, UiLayer::buttonText},

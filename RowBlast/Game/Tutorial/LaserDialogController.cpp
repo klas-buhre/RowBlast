@@ -15,9 +15,13 @@ LaserDialogController::LaserDialogController(Pht::IEngine& engine,
     mSlidingMenuAnimation {engine, mView} {}
 
 void LaserDialogController::Init() {
-    mSlidingMenuAnimation.Init(SlidingMenuAnimation::UpdateFade::No,
+    mSlidingMenuAnimation.Init(SlidingMenuAnimation::UpdateFade::Yes,
                                SlidingMenuAnimation::SlideDirection::Scale,
                                SlidingMenuAnimation::UpdatePosition::No);
+}
+
+void LaserDialogController::SetFadeEffect(Pht::FadeEffect& fadeEffect) {
+    mSlidingMenuAnimation.SetFadeEffect(fadeEffect);
 }
 
 LaserDialogController::Result LaserDialogController::Update() {
@@ -45,7 +49,7 @@ LaserDialogController::Result LaserDialogController::HandleInput() {
 LaserDialogController::Result LaserDialogController::OnTouch(const Pht::TouchEvent& touchEvent) {
     if (mView.GetPlayButton().IsClicked(touchEvent)) {
         mDeferredResult = Result::Play;
-        mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::No,
+        mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::Yes,
                                             SlidingMenuAnimation::SlideDirection::Scale,
                                             SlidingMenuAnimation::UpdatePosition::No);
     }

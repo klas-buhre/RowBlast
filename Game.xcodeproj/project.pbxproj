@@ -320,6 +320,10 @@
 		62A8AAF91FE2E442000EB01C /* cloud_C_envmap.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62A8AAF81FE2E441000EB01C /* cloud_C_envmap.jpg */; };
 		62B1CB27210CB62100D0F195 /* HandAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62B1CB25210CB62100D0F195 /* HandAnimation.cpp */; };
 		62B1CB36210CFF6800D0F195 /* hand48.png in Resources */ = {isa = PBXBuildFile; fileRef = 62B1CB34210CFF6700D0F195 /* hand48.png */; };
+		62B1CB39210DEAA600D0F195 /* laser_frame1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62B1CB38210DEAA500D0F195 /* laser_frame1.jpg */; };
+		62B1CB3B210DEAAE00D0F195 /* laser_frame2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62B1CB3A210DEAAE00D0F195 /* laser_frame2.jpg */; };
+		62B1CB3D210DEAB500D0F195 /* laser_frame3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62B1CB3C210DEAB500D0F195 /* laser_frame3.jpg */; };
+		62B1CB3F210DEABC00D0F195 /* laser_frame4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62B1CB3E210DEABB00D0F195 /* laser_frame4.jpg */; };
 		62BE274620AEDD990014C6DD /* SlidingFieldAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62BE274420AEDD990014C6DD /* SlidingFieldAnimation.cpp */; };
 		62BE274920AF179D0014C6DD /* FireworksParticleEffect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62BE274720AF179D0014C6DD /* FireworksParticleEffect.cpp */; };
 		62BE274C20B063570014C6DD /* ConfettiParticleEffect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62BE274A20B063570014C6DD /* ConfettiParticleEffect.cpp */; };
@@ -984,6 +988,10 @@
 		62B1CB25210CB62100D0F195 /* HandAnimation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = HandAnimation.cpp; sourceTree = "<group>"; };
 		62B1CB26210CB62100D0F195 /* HandAnimation.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = HandAnimation.hpp; sourceTree = "<group>"; };
 		62B1CB34210CFF6700D0F195 /* hand48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hand48.png; sourceTree = "<group>"; };
+		62B1CB38210DEAA500D0F195 /* laser_frame1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = laser_frame1.jpg; sourceTree = "<group>"; };
+		62B1CB3A210DEAAE00D0F195 /* laser_frame2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = laser_frame2.jpg; sourceTree = "<group>"; };
+		62B1CB3C210DEAB500D0F195 /* laser_frame3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = laser_frame3.jpg; sourceTree = "<group>"; };
+		62B1CB3E210DEABB00D0F195 /* laser_frame4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = laser_frame4.jpg; sourceTree = "<group>"; };
 		62BE274420AEDD990014C6DD /* SlidingFieldAnimation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SlidingFieldAnimation.cpp; sourceTree = "<group>"; };
 		62BE274520AEDD990014C6DD /* SlidingFieldAnimation.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SlidingFieldAnimation.hpp; sourceTree = "<group>"; };
 		62BE274720AF179D0014C6DD /* FireworksParticleEffect.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FireworksParticleEffect.cpp; sourceTree = "<group>"; };
@@ -1241,6 +1249,10 @@
 		6270DCA01FCB248E00FB457D /* Textures */ = {
 			isa = PBXGroup;
 			children = (
+				62B1CB38210DEAA500D0F195 /* laser_frame1.jpg */,
+				62B1CB3A210DEAAE00D0F195 /* laser_frame2.jpg */,
+				62B1CB3C210DEAB500D0F195 /* laser_frame3.jpg */,
+				62B1CB3E210DEABB00D0F195 /* laser_frame4.jpg */,
 				62487E9520D9573E00E4429E /* avatar.jpg */,
 				6227D4FE206D304F008EA77D /* bomb_798_emission.jpg */,
 				6227D4FF206D3050008EA77D /* bomb_798.jpg */,
@@ -2273,6 +2285,7 @@
 				62487E9F20DBC3E500E4429E /* avatar_frame_208.obj in Resources */,
 				62487E9620D9573E00E4429E /* avatar.jpg in Resources */,
 				62785B2A20875937006F9869 /* Text.frag in Resources */,
+				62B1CB3B210DEAAE00D0F195 /* laser_frame2.jpg in Resources */,
 				6270DC8C1FCB23D800FB457D /* level13.json in Resources */,
 				626451E5206FEDFF00E304F2 /* laser_beam_red.png in Resources */,
 				62E2222C1FE9748500AE098B /* cloud_E_512.png in Resources */,
@@ -2306,6 +2319,7 @@
 				6287B4D420EA6DA200C00EF0 /* sky6.jpg in Resources */,
 				6270DC971FCB23D800FB457D /* level23.json in Resources */,
 				629B838620C9694E00DD2D0E /* level40.json in Resources */,
+				62B1CB3D210DEAB500D0F195 /* laser_frame3.jpg in Resources */,
 				6278590620375DBF00494A4D /* level27.json in Resources */,
 				62785B2820875937006F9869 /* TexturedEmissiveLighting.vert in Resources */,
 				6270DCA91FCB248E00FB457D /* settings.png in Resources */,
@@ -2359,10 +2373,12 @@
 				62785B1B20875937006F9869 /* PointParticle.vert in Resources */,
 				629B838220C6E06500DD2D0E /* level38.json in Resources */,
 				6261FFD520FB969B008F1619 /* level42.json in Resources */,
+				62B1CB3F210DEABC00D0F195 /* laser_frame4.jpg in Resources */,
 				6240508620FF69C00077A454 /* level46.json in Resources */,
 				6270DC8B1FCB23D800FB457D /* level12.json in Resources */,
 				627D382320A731480068B50C /* big_button_048.obj in Resources */,
 				62E2222E1FE9754C00AE098B /* cloud_F_512.png in Resources */,
+				62B1CB39210DEAA600D0F195 /* laser_frame1.jpg in Resources */,
 				62785B1E20875937006F9869 /* EnvMap.frag in Resources */,
 				62785B2C20875937006F9869 /* VertexColor.vert in Resources */,
 				6205F93220F519CF00716574 /* level41.json in Resources */,

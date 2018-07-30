@@ -2,6 +2,9 @@
 
 #include <assert.h>
 
+// Engine includes.
+#include "IEngine.hpp"
+
 // Game includes.
 #include "GameScene.hpp"
 #include "Level.hpp"
@@ -9,6 +12,8 @@
 using namespace RowBlast;
 
 namespace {
+    constexpr auto fade {0.5f};
+    constexpr auto fadeTime {0.3f};
     const Pht::Vec3 placePieceHandPosition {-2.2f, -3.8f, 0.0f};
     const Pht::Vec3 fillRowsHandPosition {1.5f, -4.3f, 0.0f};
     const Pht::Vec3 switchPieceHandPosition {3.3f, -10.6f, 0.0f};
@@ -18,6 +23,13 @@ namespace {
 
 Tutorial::Tutorial(Pht::IEngine& engine, GameScene& scene, const CommonResources& commonResources) :
     mScene {scene},
+    mFadeEffect {
+        engine.GetSceneManager(),
+        engine.GetRenderer(),
+        fadeTime,
+        fade,
+        UiLayer::backgroundFade
+    },
     mHandAnimation {engine, scene},
     mPlacePieceWindowController {engine, commonResources},
     mFillRowsWindowController {engine, commonResources},
@@ -40,8 +52,12 @@ void Tutorial::Init(const Level& level) {
     }
 
     mHandAnimation.Init();
+    mFadeEffect.Reset();
 
     auto& uiViewContainer {mScene.GetUiViewsContainer()};
+    mLaserDialogController.SetFadeEffect(mFadeEffect);
+    uiViewContainer.AddChild(mFadeEffect.GetSceneObject());
+
     mViewManager.Init(uiViewContainer);
     SetActiveController(Controller::None);
 }
@@ -264,6 +280,20 @@ bool Tutorial::IsGestureControlsAllowed() const {
     switch (mLevel->GetId()) {
         case 1:
         case 2:
+            return false;
+        default:
+            return true;
+    }
+}
+
+bool Tutorial::IsUndoMoveAllowed(int numMovesUsedIncludingCurrent) const {
+    switch (mLevel->GetId()) {
+        case 1:
+            return false;
+        case 2:
+            if (numMovesUsedIncludingCurrent >= 3) {
+                return true;
+            }
             return false;
         default:
             return true;
