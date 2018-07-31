@@ -33,9 +33,15 @@ BombDialogView::BombDialogView(Pht::IEngine& engine, const CommonResources& comm
     };
     lineSceneObject.GetTransform().SetPosition({0.0f, 6.6f, UiLayer::textRectangle});
     GetRoot().AddChild(lineSceneObject);
+    
+    mSlideAnimation = std::make_unique<SlideAnimation>(engine,
+                                                       *this,
+                                                       Pht::Vec3 {0.0f, 1.3f, UiLayer::textRectangle},
+                                                       8.5f,
+                                                       0.5f);
 
     auto& textProperties {guiResources.GetSmallWhiteTextProperties(zoom)};
-    CreateText({-4.15f, -4.1f, UiLayer::text}, "The bomb clears an area", textProperties);
+    CreateText({-4.15f, -4.6f, UiLayer::text}, "The bomb clears an area", textProperties);
     
     Pht::Vec2 playButtonInputSize {205.0f, 59.0f};
 
@@ -47,10 +53,26 @@ BombDialogView::BombDialogView(Pht::IEngine& engine, const CommonResources& comm
 
     mPlayButton = std::make_unique<MenuButton>(engine,
                                                *this,
-                                               Pht::Vec3 {0.0f, -6.7f, UiLayer::textRectangle},
+                                               Pht::Vec3 {0.0f, -7.0f, UiLayer::textRectangle},
                                                playButtonInputSize,
                                                playButtonStyle);
     mPlayButton->CreateText({-1.1f, -0.31f, UiLayer::buttonText},
                             "PLAY",
                             guiResources.GetLargeWhiteTextProperties(zoom));
+}
+
+void BombDialogView::Init(Pht::Scene& scene) {
+    std::vector<std::string> frameFilenames {
+        "bomb_frame1.jpg",
+        "bomb_frame2.jpg",
+        "bomb_frame3.jpg",
+        "bomb_frame4.jpg",
+        "bomb_frame5.jpg"
+    };
+
+    mSlideAnimation->Init(frameFilenames, scene);
+}
+
+void BombDialogView::Update() {
+    mSlideAnimation->Update();
 }

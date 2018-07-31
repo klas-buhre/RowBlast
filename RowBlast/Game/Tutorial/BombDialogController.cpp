@@ -14,13 +14,20 @@ BombDialogController::BombDialogController(Pht::IEngine& engine,
     mView {engine, commonResources},
     mSlidingMenuAnimation {engine, mView} {}
 
-void BombDialogController::Init() {
-    mSlidingMenuAnimation.Init(SlidingMenuAnimation::UpdateFade::No,
+void BombDialogController::Init(Pht::Scene& scene) {
+    mView.Init(scene);
+    mSlidingMenuAnimation.Init(SlidingMenuAnimation::UpdateFade::Yes,
                                SlidingMenuAnimation::SlideDirection::Scale,
                                SlidingMenuAnimation::UpdatePosition::No);
 }
 
+void BombDialogController::SetFadeEffect(Pht::FadeEffect& fadeEffect) {
+    mSlidingMenuAnimation.SetFadeEffect(fadeEffect);
+}
+
 BombDialogController::Result BombDialogController::Update() {
+    mView.Update();
+
     switch (mSlidingMenuAnimation.Update()) {
         case SlidingMenuAnimation::State::Idle:
             mSlidingMenuAnimation.StartSlideIn();
@@ -45,7 +52,7 @@ BombDialogController::Result BombDialogController::HandleInput() {
 BombDialogController::Result BombDialogController::OnTouch(const Pht::TouchEvent& touchEvent) {
     if (mView.GetPlayButton().IsClicked(touchEvent)) {
         mDeferredResult = Result::Play;
-        mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::No,
+        mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::Yes,
                                             SlidingMenuAnimation::SlideDirection::Scale,
                                             SlidingMenuAnimation::UpdatePosition::No);
     }

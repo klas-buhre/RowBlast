@@ -76,22 +76,10 @@ Ongoing tasks:
         -TODO
     -Third level:
         -TODO
-    -Level 7:
-        -First move: Dialog that says "The bomb clears an area". A 3 frame animation showing a bomb
-         landing and clearing an area. A "Play" button removes the dialog.
-            Frame 1: Laser move showing.
-            Frame 2: Hand tapping the laser move.
-            Frame 3: Bomb falling.
-            Frame 3: Bomb activates.
-            Frame 4: Blocks are flying.
     -Implementation:
         -Stop all laser particle effects and bomb particle effects at init.
 
 
-
-rectangle select:
-position: 313, 550
-size: 481, 481
 
 
 

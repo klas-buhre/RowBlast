@@ -56,6 +56,7 @@ void Tutorial::Init(const Level& level) {
 
     auto& uiViewContainer {mScene.GetUiViewsContainer()};
     mLaserDialogController.SetFadeEffect(mFadeEffect);
+    mBombDialogController.SetFadeEffect(mFadeEffect);
     uiViewContainer.AddChild(mFadeEffect.GetSceneObject());
 
     mViewManager.Init(uiViewContainer);
@@ -135,7 +136,7 @@ Tutorial::Result Tutorial::OnLevelStart() {
             return Result::TutorialHasFocus;
         case 7:
             SetActiveController(Controller::BombDialog);
-            mBombDialogController.Init();
+            mBombDialogController.Init(mScene.GetScene());
             return Result::TutorialHasFocus;
         default:
             break;

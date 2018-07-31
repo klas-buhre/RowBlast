@@ -22,7 +22,8 @@ namespace RowBlast {
         
         BombDialogController(Pht::IEngine& engine, const CommonResources& commonResources);
         
-        void Init();
+        void Init(Pht::Scene& scene);
+        void SetFadeEffect(Pht::FadeEffect& fadeEffect);
         Result Update();
 
         Pht::GuiView& GetView() {
