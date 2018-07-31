@@ -76,22 +76,21 @@ Ongoing tasks:
         -TODO
     -Third level:
         -TODO
-    -Level 6:
-        -First move: Dialog that says "The laser clears a row". A 4 frame animation showing a laser
-         landing and clearing a row. A "Play" button removes the dialog.
-            Frame 1: Laser move showing.
-            Frame 2: Hand tapping the laser move.
-            Frame 3: Laser activates.
-            Frame 4: Blocks are flying.
     -Level 7:
         -First move: Dialog that says "The bomb clears an area". A 3 frame animation showing a bomb
          landing and clearing an area. A "Play" button removes the dialog.
+            Frame 1: Laser move showing.
+            Frame 2: Hand tapping the laser move.
+            Frame 3: Bomb falling.
+            Frame 3: Bomb activates.
+            Frame 4: Blocks are flying.
     -Implementation:
+        -Stop all laser particle effects and bomb particle effects at init.
 
- 
+
 
 rectangle select:
-position: 313, 617
+position: 313, 550
 size: 481, 481
 
 
@@ -332,6 +331,14 @@ Decision notes on level bombs:
              land on by piece blocks. The Field then adds that event to GameLogic which will
              detonate the level bomb once it is Updated again (after the CollapsingFieldAnimation is
              done with dragging down the piece blocks position).
+
+
+Do this before making tutorial slides:
+    -Remove floating blocks
+    -Disable light animation
+    -Disable camera shake
+    -Disable bomb emission animation
+    -Disable bomb rotation animation
 
 
 Add these clouds before generating sky background texture from title scene:

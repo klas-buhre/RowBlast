@@ -38,7 +38,7 @@ LaserDialogView::LaserDialogView(Pht::IEngine& engine, const CommonResources& co
                                                        *this,
                                                        Pht::Vec3 {0.0f, 1.3f, UiLayer::textRectangle},
                                                        8.5f,
-                                                       0.55f);
+                                                       0.5f);
 
     auto& textProperties {guiResources.GetSmallWhiteTextProperties(zoom)};
     CreateText({-3.75f, -4.6f, UiLayer::text}, "The laser clears a row", textProperties);
@@ -66,7 +66,8 @@ void LaserDialogView::Init(Pht::Scene& scene) {
         "laser_frame1.jpg",
         "laser_frame2.jpg",
         "laser_frame3.jpg",
-        "laser_frame4.jpg"
+        "laser_frame4.jpg",
+        "laser_frame5.jpg"
     };
 
     mSlideAnimation->Init(frameFilenames, scene);
