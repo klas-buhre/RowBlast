@@ -30,7 +30,7 @@ ExplosionParticleEffect::ExplosionParticleEffect(Pht::IEngine& engine,
                 .mGrowDuration = 0.0f,
                 .mShrinkDuration = 0.0f
             };
-            InitInnerEffect(engine, innerParticleSettings);
+            CreateInnerEffect(engine, innerParticleSettings);
             Pht::ParticleSettings shockWaveParticleSettings {
                 .mColor = Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f},
                 .mColorRandomPart = Pht::Vec4{0.0f, 0.0f, 0.0f, 0.0f},
@@ -44,7 +44,7 @@ ExplosionParticleEffect::ExplosionParticleEffect(Pht::IEngine& engine,
                 .mGrowDuration = 0.35f,
                 .mShrinkDuration = 0.0f
             };
-            InitShockWave(engine, shockWaveParticleSettings);
+            CreateShockWave(engine, shockWaveParticleSettings);
             break;
         }
         case Kind::LevelBomb: {
@@ -60,7 +60,7 @@ ExplosionParticleEffect::ExplosionParticleEffect(Pht::IEngine& engine,
                 .mGrowDuration = 0.0f,
                 .mShrinkDuration = 0.0f
             };
-            InitInnerEffect(engine, innerParticleSettings);
+            CreateInnerEffect(engine, innerParticleSettings);
             Pht::ParticleSettings shockWaveParticleSettings {
                 .mColor = Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f},
                 .mColorRandomPart = Pht::Vec4{0.0f, 0.0f, 0.0f, 0.0f},
@@ -74,7 +74,7 @@ ExplosionParticleEffect::ExplosionParticleEffect(Pht::IEngine& engine,
                 .mGrowDuration = 0.35f,
                 .mShrinkDuration = 0.0f
             };
-            InitShockWave(engine, shockWaveParticleSettings);
+            CreateShockWave(engine, shockWaveParticleSettings);
             break;
         }
         case Kind::BigBomb: {
@@ -90,7 +90,7 @@ ExplosionParticleEffect::ExplosionParticleEffect(Pht::IEngine& engine,
                 .mGrowDuration = 0.0f,
                 .mShrinkDuration = 0.0f
             };
-            InitInnerEffect(engine, innerParticleSettings);
+            CreateInnerEffect(engine, innerParticleSettings);
             Pht::ParticleSettings shockWaveParticleSettings {
                 .mColor = Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f},
                 .mColorRandomPart = Pht::Vec4{0.0f, 0.0f, 0.0f, 0.0f},
@@ -104,14 +104,14 @@ ExplosionParticleEffect::ExplosionParticleEffect(Pht::IEngine& engine,
                 .mGrowDuration = 0.42f,
                 .mShrinkDuration = 0.0f
             };
-            InitShockWave(engine, shockWaveParticleSettings);
+            CreateShockWave(engine, shockWaveParticleSettings);
             break;
         }
     }
 }
 
-void ExplosionParticleEffect::InitInnerEffect(Pht::IEngine& engine,
-                                              const Pht::ParticleSettings& particleSettings) {
+void ExplosionParticleEffect::CreateInnerEffect(Pht::IEngine& engine,
+                                                const Pht::ParticleSettings& particleSettings) {
     Pht::EmitterSettings particleEmitterSettings {
         .mPosition = Pht::Vec3{0.0f, 0.0f, 0.0f},
         .mSize = Pht::Vec3{0.0f, 0.0f, 0.0f},
@@ -128,8 +128,8 @@ void ExplosionParticleEffect::InitInnerEffect(Pht::IEngine& engine,
     material.SetShaderType(Pht::ShaderType::ParticleNoAlphaTexture);
 }
 
-void ExplosionParticleEffect::InitShockWave(Pht::IEngine& engine,
-                                            const Pht::ParticleSettings& particleSettings) {
+void ExplosionParticleEffect::CreateShockWave(Pht::IEngine& engine,
+                                              const Pht::ParticleSettings& particleSettings) {
     Pht::EmitterSettings particleEmitterSettings {
         .mPosition = Pht::Vec3{0.0f, 0.0f, 0.0f},
         .mSize = Pht::Vec3{0.0f, 0.0f, 0.0f},
@@ -145,6 +145,9 @@ void ExplosionParticleEffect::InitShockWave(Pht::IEngine& engine,
 }
 
 void ExplosionParticleEffect::Init() {
+    mInnerParticleEffect->GetComponent<Pht::ParticleEffect>()->Stop();
+    mShockWave->GetComponent<Pht::ParticleEffect>()->Stop();
+    
     mScene.GetFlyingBlocksContainer().AddChild(*mInnerParticleEffect);
     mInnerParticleEffect->SetIsStatic(true);
     mScene.GetEffectsContainer().AddChild(*mShockWave);

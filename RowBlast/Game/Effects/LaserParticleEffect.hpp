@@ -30,10 +30,10 @@ namespace RowBlast {
         State GetState() const;
         
     private:
-        void InitThickBeam(Pht::IEngine& engine);
-        void InitThinBeam(Pht::IEngine& engine);
-        void InitFlare(Pht::IEngine& engine);
-        void InitParticles(Pht::IEngine& engine);
+        void CreateThickBeam(Pht::IEngine& engine);
+        void CreateThinBeam(Pht::IEngine& engine);
+        void CreateFlare(Pht::IEngine& engine);
+        void CreateParticles(Pht::IEngine& engine);
         
         GameScene& mScene;
         std::unique_ptr<Pht::SceneObject> mThickBeam;

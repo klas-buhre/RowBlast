@@ -36,8 +36,8 @@ namespace RowBlast {
         State GetState() const;
         
     private:
-        void InitInnerEffect(Pht::IEngine& engine, const Pht::ParticleSettings& particleSettings);
-        void InitShockWave(Pht::IEngine& engine, const Pht::ParticleSettings& particleSettings);
+        void CreateInnerEffect(Pht::IEngine& engine, const Pht::ParticleSettings& particleSettings);
+        void CreateShockWave(Pht::IEngine& engine, const Pht::ParticleSettings& particleSettings);
         
         GameScene& mScene;
         std::unique_ptr<Pht::SceneObject> mShockWave;

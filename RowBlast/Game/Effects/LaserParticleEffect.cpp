@@ -22,13 +22,13 @@ namespace {
 LaserParticleEffect::LaserParticleEffect(Pht::IEngine& engine, GameScene& scene) :
     mScene {scene} {
 
-    InitThickBeam(engine);
-    InitThinBeam(engine);
-    InitFlare(engine);
-    InitParticles(engine);
+    CreateThickBeam(engine);
+    CreateThinBeam(engine);
+    CreateFlare(engine);
+    CreateParticles(engine);
 }
 
-void LaserParticleEffect::InitThickBeam(Pht::IEngine& engine) {
+void LaserParticleEffect::CreateThickBeam(Pht::IEngine& engine) {
     Pht::EmitterSettings particleEmitterSettings {
         .mPosition = Pht::Vec3{0.0f, 0.0f, 0.0f},
         .mSize = Pht::Vec3{0.0f, 0.0f, 0.0f},
@@ -58,7 +58,7 @@ void LaserParticleEffect::InitThickBeam(Pht::IEngine& engine) {
     mThickBeam->GetRenderable()->GetMaterial().SetShaderType(Pht::ShaderType::ParticleTextureColor);
 }
 
-void LaserParticleEffect::InitThinBeam(Pht::IEngine& engine) {
+void LaserParticleEffect::CreateThinBeam(Pht::IEngine& engine) {
     Pht::EmitterSettings particleEmitterSettings {
         .mPosition = Pht::Vec3{0.0f, 0.0f, 0.0f},
         .mSize = Pht::Vec3{0.0f, 0.0f, 0.0f},
@@ -88,7 +88,7 @@ void LaserParticleEffect::InitThinBeam(Pht::IEngine& engine) {
     mThinBeam->GetRenderable()->GetMaterial().SetShaderType(Pht::ShaderType::ParticleTextureColor);
 }
 
-void LaserParticleEffect::InitFlare(Pht::IEngine& engine) {
+void LaserParticleEffect::CreateFlare(Pht::IEngine& engine) {
     Pht::EmitterSettings particleEmitterSettings {
         .mPosition = Pht::Vec3{0.0f, 0.0f, 0.0f},
         .mSize = Pht::Vec3{0.0f, 0.0f, 0.0f},
@@ -117,7 +117,7 @@ void LaserParticleEffect::InitFlare(Pht::IEngine& engine) {
     mFlare->GetRenderable()->GetMaterial().SetShaderType(Pht::ShaderType::ParticleNoAlphaTexture);
 }
 
-void LaserParticleEffect::InitParticles(Pht::IEngine& engine) {
+void LaserParticleEffect::CreateParticles(Pht::IEngine& engine) {
     Pht::EmitterSettings particleEmitterSettings {
         .mPosition = Pht::Vec3{0.0f, 0.0f, 0.0f},
         .mSize = Pht::Vec3{22.0f, 1.0f, 0.0f},
@@ -146,6 +146,11 @@ void LaserParticleEffect::InitParticles(Pht::IEngine& engine) {
 }
 
 void LaserParticleEffect::Init() {
+    mThickBeam->GetComponent<Pht::ParticleEffect>()->Stop();
+    mThinBeam->GetComponent<Pht::ParticleEffect>()->Stop();
+    mFlare->GetComponent<Pht::ParticleEffect>()->Stop();
+    mParticles->GetComponent<Pht::ParticleEffect>()->Stop();
+    
     mScene.GetEffectsContainer().AddChild(*mThinBeam);
 
     auto& container {mScene.GetFlyingBlocksContainer()};

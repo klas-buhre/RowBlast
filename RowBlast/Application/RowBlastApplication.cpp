@@ -77,7 +77,6 @@ Ongoing tasks:
     -Third level:
         -TODO
     -Implementation:
-        -Stop all laser particle effects and bomb particle effects at init.
 
 
 
