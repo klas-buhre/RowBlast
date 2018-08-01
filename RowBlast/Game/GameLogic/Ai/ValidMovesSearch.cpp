@@ -70,6 +70,10 @@ void MovingPiece::RotateAntiClockwise() {
     mRotation = static_cast<Rotation>(newRotation);
 }
 
+bool MovingPiece::IsAtTutorialMove(const Level::TutorialMove& tutorialMove) const {
+    return mPosition == tutorialMove.mPosition && mRotation == tutorialMove.mRotation;
+}
+
 void ValidMoves::Clear() {
     mMoves.Clear();
     mMovements.Clear();
@@ -94,8 +98,10 @@ void ValidMovesSearch::Init() {
 
 void ValidMovesSearch::FindValidMoves(ValidMoves& validMoves,
                                       MovingPiece piece,
-                                      const Level::PredeterminedMove* predeterminedMove) {
+                                      const Level::TutorialMove* predeterminedMove,
+                                      const Level::TutorialMove* suggestedMove) {
     mPredeterminedMove = predeterminedMove;
+    mSuggestedMove = suggestedMove;
 
     InitSearchGrid();
     FindMostValidMovesWithHumanLikeSearch(validMoves, piece);
@@ -520,12 +526,8 @@ void ValidMovesSearch::SaveMove(ValidMoves& validMoves,
         return;
     }
     
-    if (mPredeterminedMove) {
-        if (piece.mPosition != mPredeterminedMove->mPosition ||
-            piece.mRotation != mPredeterminedMove->mRotation) {
-            
-            return;
-        }
+    if (IsMoveDiscardedByTutorial(piece)) {
+        return;
     }
     
     if (auto* foundMove {GetFoundMove(piece)}) {
@@ -543,6 +545,25 @@ void ValidMovesSearch::SaveMove(ValidMoves& validMoves,
         validMoves.mMoves.PushBack(move);
         SetFoundMove(piece, validMoves.mMoves.Back());
     }
+}
+
+bool ValidMovesSearch::IsMoveDiscardedByTutorial(const MovingPiece& piece) const {
+    if (mPredeterminedMove) {
+        if (mSuggestedMove) {
+            if (!piece.IsAtTutorialMove(*mPredeterminedMove) &&
+                !piece.IsAtTutorialMove(*mSuggestedMove)) {
+                
+                return true;
+            }
+
+        } else {
+            if (!piece.IsAtTutorialMove(*mPredeterminedMove)) {
+                return true;
+            }
+        }
+    }
+    
+    return false;
 }
 
 void ValidMovesSearch::FindAllRemainingValidMoves(ValidMoves& validMoves, MovingPiece piece) {
@@ -683,12 +704,8 @@ void ValidMovesSearch::SaveMoveIfNotFoundBefore(ValidMoves& validMoves,
         return;
     }
     
-    if (mPredeterminedMove) {
-        if (piece.mPosition != mPredeterminedMove->mPosition ||
-            piece.mRotation != mPredeterminedMove->mRotation) {
-            
-            return;
-        }
+    if (IsMoveDiscardedByTutorial(piece)) {
+        return;
     }
 
     auto* lastMovement {AddMovement(validMoves, piece, previousMovement)};

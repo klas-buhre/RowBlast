@@ -45,37 +45,35 @@ namespace {
         }
     }
     
-    std::vector<Level::PredeterminedMove> ReadPredeterminedMoves(const rapidjson::Document& document,
-                                                                 const PieceTypes& pieceTypes) {
-        std::vector<Level::PredeterminedMove> predeterminedMoves;
+    std::vector<Level::TutorialMove> ReadTutorialMoves(const rapidjson::Document& document,
+                                                       const std::string& memberName,
+                                                       const PieceTypes& pieceTypes) {
+        assert(document.HasMember(memberName.c_str()));
         
-        if (!document.HasMember("predeterminedMoves")) {
-             return predeterminedMoves;
-        }
-
-        const auto& predeterminedMovesArray {document["predeterminedMoves"]};
-        assert(predeterminedMovesArray.IsArray());
+        std::vector<Level::TutorialMove> tutorialMoves;
+        const auto& tutorialMovesArray {document[memberName.c_str()]};
+        assert(tutorialMovesArray.IsArray());
         
-        for (const auto& predeterminedMoveObject: predeterminedMovesArray.GetArray()) {
-            assert(predeterminedMoveObject.IsObject());
+        for (const auto& tutorialMoveObject: tutorialMovesArray.GetArray()) {
+            assert(tutorialMoveObject.IsObject());
             
-            auto position {Pht::Json::ReadIVec2(predeterminedMoveObject, "position")};
-            auto rotationDeg {Pht::Json::ReadInt(predeterminedMoveObject, "rotation")};
+            auto position {Pht::Json::ReadIVec2(tutorialMoveObject, "position")};
+            auto rotationDeg {Pht::Json::ReadInt(tutorialMoveObject, "rotation")};
         
-            auto pieceStr {Pht::Json::ReadString(predeterminedMoveObject, "piece")};
+            auto pieceStr {Pht::Json::ReadString(tutorialMoveObject, "piece")};
             auto i {pieceTypes.find(pieceStr)};
             assert(i != std::end(pieceTypes));
 
-            Level::PredeterminedMove predeterminedMove {
+            Level::TutorialMove tutorialMove {
                 position,
                 DegToRotation(rotationDeg),
                 *(i->second.get())
             };
             
-            predeterminedMoves.push_back(predeterminedMove);
+            tutorialMoves.push_back(tutorialMove);
         }
         
-        return predeterminedMoves;
+        return tutorialMoves;
     }
     
     Fill CellFill(char c) {
@@ -296,7 +294,18 @@ std::unique_ptr<Level> LevelLoader::Load(int levelId, const LevelResources& leve
         pieceSequence = ReadPieceTypes(document, "pieceSequence", pieceTypes);
     }
     
-    auto predeterminedMoves {ReadPredeterminedMoves(document, pieceTypes)};
+    std::vector<Level::TutorialMove> predeterminedMoves;
+    
+    if (document.HasMember("predeterminedMoves")) {
+        predeterminedMoves = ReadTutorialMoves(document, "predeterminedMoves", pieceTypes);
+    }
+
+    std::vector<Level::TutorialMove> suggestedMoves;
+    
+    if (document.HasMember("suggestedMoves")) {
+        suggestedMoves = ReadTutorialMoves(document, "suggestedMoves", pieceTypes);
+    }
+
     auto clearGrid {ReadClearGrid(document)};
     auto blueprintGrid {ReadBlueprintGrid(document)};
     
@@ -328,6 +337,7 @@ std::unique_ptr<Level> LevelLoader::Load(int levelId, const LevelResources& leve
                                 levelPieces,
                                 pieceSequence,
                                 predeterminedMoves,
+                                suggestedMoves,
                                 backgroundTextureFilename,
                                 isDark,
                                 isPartOfTutorial)

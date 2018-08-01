@@ -5,11 +5,29 @@
     "threeStars": 15,
     "background": "sky2.jpg",
     "dark": false,
+    "partOfTutorial": true,
     "pieces": [
         "B",
         "D",
         "L",
-        "ShortI"
+        "I"
+    ],
+    "pieceSequence": [
+        "I"
+    ],
+    "predeterminedMoves": [
+        {
+            "position": [2, 9],
+            "rotation": 90,
+            "piece": "I"
+        }
+    ],
+    "suggestedMoves": [
+        {
+            "position": [0, 11],
+            "rotation": 0,
+            "piece": "I"
+        }
     ],
     "clearGrid": [
         "       ",
@@ -25,14 +43,16 @@
         "       ",
         "       ",
         "       ",
-        "GG  GGG",
         "GGG GGG",
-        "  GGGGG",
+        "GGG GGG",
+        "  G GGG",
         "  GGGGG",
         " GGGGGG",
         "GGGGG  ",
         "GGGGG  ",
         "GGGGGG ",
+        "   G GG",
+        "GGGG GG",
         "GGGG GG",
         "GGGG GG"
     ]

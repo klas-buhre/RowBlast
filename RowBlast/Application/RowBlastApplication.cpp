@@ -7,6 +7,7 @@ Backlog:
     -Metal.
 
   -Gameplay:
+   X-Maybe when pressing a move, the other moves should disappear.
    X-Maybe change so that there are three visible pieces in the switch object in the HUD. The two
      that you can switch to and the active piece. The active piece is to the right and could be a
      bit larger. Change name from switch to current so that the name next is not so confusing? Right
@@ -73,7 +74,10 @@ Ongoing tasks:
          moves if the piece is not the predetermined piece.
         -Fourth move: Same as third.
     -Second level:
-        -TODO
+        -First move: Displaying a bad suggested move. Window that says
+         "Tap the screen to find other moves". Disappears when the predetermined move is found. Hand
+         pointing where to tap. Window comes back if the move switched to is not the predetermined
+         move. Cannot tap the moves if the move is not the predetermined move.
     -Third level:
         -TODO
     -Implementation:
@@ -151,6 +155,8 @@ Ordered Backlog:
         Done
     -Tutorial.
         Cost: 10
+    -Try the new HUD switch piece.
+        Cost: 4
     -Fix all bugs.
         Cost: 4
     -Levels in the second world.
@@ -172,7 +178,7 @@ Ordered Backlog:
     -Back end.
         Cost: ?
 
-        Total cost: 193
+        Total cost: 197
 
 
 Comomon piece type sets:
@@ -326,6 +332,8 @@ Do this before making tutorial slides:
     -Disable camera shake
     -Disable bomb emission animation
     -Disable bomb rotation animation
+Gimp rectangle select:
+size: 481, 481
 
 
 Add these clouds before generating sky background texture from title scene:

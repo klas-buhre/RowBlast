@@ -22,9 +22,11 @@ namespace RowBlast {
         ValidMoves& FindValidMoves(const FallingPiece& fallingPiece, int movesUsed);
         
     private:
-        const Level::PredeterminedMove* GetPredeterminedMove(const FallingPiece& fallingPiece,
-                                                             int movesUsed);
-        void EvaluateMoves(const FallingPiece& fallingPiece);
+        const Level::TutorialMove* GetPredeterminedMove(const FallingPiece& fallingPiece,
+                                                        int movesUsed);
+        const Level::TutorialMove* GetSuggestedMove(const FallingPiece& fallingPiece,
+                                                    int movesUsed);
+        void EvaluateMoves(const FallingPiece& fallingPiece, int movesUsed);
         void EvaluateMove(Move& move, const FallingPiece& fallingPiece);
         void EvaluateMoveForClearObjective(Move& move, const FallingPiece& fallingPiece);
         void EvaluateMoveForBuildObjective(Move& move, const FallingPiece& fallingPiece);

@@ -17,7 +17,7 @@ namespace RowBlast {
             Build
         };
         
-        struct PredeterminedMove {
+        struct TutorialMove {
             Pht::IVec2 mPosition;
             Rotation mRotation;
             const Piece& mPieceType;
@@ -32,7 +32,8 @@ namespace RowBlast {
               const StarLimits& starLimits,
               const std::vector<const Piece*>& pieceTypes,
               const std::vector<const Piece*>& pieceSequence,
-              const std::vector<PredeterminedMove>& predeterminedMoves,
+              const std::vector<TutorialMove>& predeterminedMoves,
+              const std::vector<TutorialMove>& suggestedMoves,
               const std::string& backgroundTextureFilename,
               bool isDark,
               bool isPartOfTutorial);
@@ -81,8 +82,12 @@ namespace RowBlast {
             return mPieceSequence;
         }
         
-        const std::vector<PredeterminedMove>& GetPredeterminedMoves() const {
+        const std::vector<TutorialMove>& GetPredeterminedMoves() const {
             return mPredeterminedMoves;
+        }
+
+        const std::vector<TutorialMove>& GetSuggestedMoves() const {
+            return mSuggestedMoves;
         }
 
         const CellGrid* GetClearGrid() const {
@@ -117,7 +122,8 @@ namespace RowBlast {
         StarLimits mStarLimits;
         std::vector<const Piece*> mPieceTypes;
         std::vector<const Piece*> mPieceSequence;
-        std::vector<PredeterminedMove> mPredeterminedMoves;
+        std::vector<TutorialMove> mPredeterminedMoves;
+        std::vector<TutorialMove> mSuggestedMoves;
         std::unique_ptr<CellGrid> mClearGrid;
         std::unique_ptr<BlueprintCellGrid> mBlueprintGrid;
         std::string mBackgroundTextureFilename;

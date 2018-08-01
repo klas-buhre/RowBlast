@@ -59,6 +59,7 @@ namespace RowBlast {
     struct MovingPiece {
         void RotateClockwise();
         void RotateAntiClockwise();
+        bool IsAtTutorialMove(const Level::TutorialMove& tutorialMove) const;
         
         Pht::IVec2 mPosition;
         Rotation mRotation;
@@ -79,7 +80,8 @@ namespace RowBlast {
         void Init();
         void FindValidMoves(ValidMoves& validMoves,
                             MovingPiece piece,
-                            const Level::PredeterminedMove* predeterminedMove);
+                            const Level::TutorialMove* predeterminedMove,
+                            const Level::TutorialMove* suggestedMove);
         
     private:
         enum class SearchDirection {
@@ -166,6 +168,7 @@ namespace RowBlast {
         void SaveMove(ValidMoves& validMoves,
                       const MovingPiece& piece,
                       const Movement* previousMovement);
+        bool IsMoveDiscardedByTutorial(const MovingPiece& piece) const;
         void FindAllRemainingValidMoves(ValidMoves& validMoves, MovingPiece piece);
         void Search(ValidMoves& validMoves,
                     MovingPiece piece,
@@ -202,7 +205,8 @@ namespace RowBlast {
         Field& mField;
         SearchGrid mSearchGrid;
         mutable Field::CollisionResult mCollisionResult;
-        const Level::PredeterminedMove* mPredeterminedMove {nullptr};
+        const Level::TutorialMove* mPredeterminedMove {nullptr};
+        const Level::TutorialMove* mSuggestedMove {nullptr};
     };
 }
 
