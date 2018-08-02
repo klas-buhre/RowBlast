@@ -15,6 +15,7 @@ namespace RowBlast {
     class GameScene;
     class IGameLogic;
     class Level;
+    class Tutorial;
     
     class MoveButton {
     public:
@@ -41,13 +42,14 @@ namespace RowBlast {
         ClickInputHandler(Pht::IEngine& engine,
                           Field& field,
                           const GameScene& gameScene,
-                          IGameLogic& gameLogic);
+                          IGameLogic& gameLogic,
+                          Tutorial& tutorial);
         
         void Init(const Level& level);
         void CalculateMoves(const FallingPiece& fallingPiece, int movesUsed);
         void UpdateMoves(const FallingPiece& fallingPiece, int movesUsed);
         void CreateNewSetOfVisibleMoves();
-        void HandleTouch(const Pht::TouchEvent& touchEvent);
+        void HandleTouch(const Pht::TouchEvent& touchEvent, int movesUsed);
         const VisibleMoves* GetVisibleMoves() const;
         
     private:
@@ -68,6 +70,7 @@ namespace RowBlast {
         Field& mField;
         const GameScene& mGameScene;
         IGameLogic& mGameLogic;
+        Tutorial& mTutorial;
         Ai mAi;
         State mState {State::Inactive};
         Ai::MovePtrs* mAllValidMoves {nullptr};

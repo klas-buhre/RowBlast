@@ -8,6 +8,7 @@
 // Game includes.
 #include "GameScene.hpp"
 #include "Level.hpp"
+#include "ValidMovesSearch.hpp"
 
 using namespace RowBlast;
 
@@ -19,6 +20,8 @@ namespace {
     const Pht::Vec3 switchPieceHandPosition {3.3f, -10.6f, 0.0f};
     const Pht::Vec3 bPieceHandPosition {3.1f, -4.3f, 0.0f};
     const Pht::Vec3 longIPieceHandPosition {0.6f, -7.1f, 0.0f};
+    const Pht::Vec3 otherMovesHandPosition {3.7f, -7.5f, 0.0f};
+    const Pht::Vec3 iPieceHandPosition {-0.8f, -4.5f, 0.0f};
 }
 
 Tutorial::Tutorial(Pht::IEngine& engine, GameScene& scene, const CommonResources& commonResources) :
@@ -34,12 +37,14 @@ Tutorial::Tutorial(Pht::IEngine& engine, GameScene& scene, const CommonResources
     mPlacePieceWindowController {engine, commonResources},
     mFillRowsWindowController {engine, commonResources},
     mSwitchPieceWindowController {engine, commonResources},
+    mOtherMovesWindowController {engine, commonResources},
     mLaserDialogController {engine, commonResources},
     mBombDialogController {engine, commonResources} {
     
     mViewManager.AddView(static_cast<int>(Controller::PlacePieceWindow), mPlacePieceWindowController.GetView());
     mViewManager.AddView(static_cast<int>(Controller::FillRowsWindow), mFillRowsWindowController.GetView());
     mViewManager.AddView(static_cast<int>(Controller::SwitchPieceWindow), mSwitchPieceWindowController.GetView());
+    mViewManager.AddView(static_cast<int>(Controller::OtherMovesWindow), mOtherMovesWindowController.GetView());
     mViewManager.AddView(static_cast<int>(Controller::LaserDialog), mLaserDialogController.GetView());
     mViewManager.AddView(static_cast<int>(Controller::BombDialog), mBombDialogController.GetView());
 }
@@ -97,6 +102,11 @@ void Tutorial::Update() {
             break;
         case Controller::SwitchPieceWindow:
             if (mSwitchPieceWindowController.Update() == SwitchPieceWindowController::Result::Done) {
+                SetActiveController(Controller::None);
+            }
+            break;
+        case Controller::OtherMovesWindow:
+            if (mOtherMovesWindowController.Update() == OtherMovesWindowController::Result::Done) {
                 SetActiveController(Controller::None);
             }
             break;
@@ -169,6 +179,13 @@ void Tutorial::OnNewMove(int numMovesUsedIncludingCurrent) {
     switch (mLevel->GetId()) {
         case 1:
             OnNewMoveFirstLevel(numMovesUsedIncludingCurrent);
+            break;
+        case 2:
+            if (numMovesUsedIncludingCurrent == 1) {
+                SetActiveController(Controller::OtherMovesWindow);
+                mOtherMovesWindowController.Init();
+                mHandAnimation.Start(otherMovesHandPosition, 45.0f);
+            }
             break;
         default:
             break;
@@ -250,28 +267,68 @@ void Tutorial::OnSwitchPiece(int numMovesUsedIncludingCurrent, const Piece& piec
     }
 }
 
+void Tutorial::OnChangeVisibleMoves(int numMovesUsedIncludingCurrent, const Move& firstMove) {
+    if (!mLevel->IsPartOfTutorial()) {
+        return;
+    }
+
+    if (mLevel->GetId() == 2 && numMovesUsedIncludingCurrent == 1) {
+        auto& predeterminedMoves {mLevel->GetPredeterminedMoves()};
+        assert(numMovesUsedIncludingCurrent <= predeterminedMoves.size());
+        auto& predeterminedMove {predeterminedMoves[numMovesUsedIncludingCurrent - 1]};
+        
+        if (predeterminedMove.mPosition == firstMove.mPosition &&
+            predeterminedMove.mRotation == firstMove.mRotation) {
+            
+            mOtherMovesWindowController.Close();
+            mHandAnimation.Stop();
+            mHandAnimation.Start(iPieceHandPosition, -90.0f);
+        } else {
+            SetActiveController(Controller::OtherMovesWindow);
+            mOtherMovesWindowController.Init();
+            mHandAnimation.Start(otherMovesHandPosition, 45.0f);
+        }
+    }
+}
+
 bool Tutorial::IsSwitchPieceAllowed(int numMovesUsedIncludingCurrent) const {
     if (!mLevel->IsPartOfTutorial()) {
         return true;
     }
     
-    if (mLevel->GetId() == 1 && numMovesUsedIncludingCurrent <= 2) {
-        return false;
+    switch (mLevel->GetId()) {
+        case 1:
+            if (numMovesUsedIncludingCurrent <= 2) {
+                return false;
+            }
+            break;
+        case 2:
+            if (numMovesUsedIncludingCurrent <= 1) {
+                return false;
+            }
+            break;
+        default:
+            break;
     }
-    
+
     return true;
 }
 
-bool Tutorial::IsPlacePieceAllowed(int numMovesUsedIncludingCurrent, const Piece& pieceType) const {
+bool Tutorial::IsMoveAllowed(int numMovesUsedIncludingCurrent,
+                             const Piece& pieceType,
+                             const Move& move) const {
     if (!mLevel->IsPartOfTutorial()) {
         return true;
     }
 
-    if (mLevel->GetId() == 1) {
-        auto& predeterminedMoves {mLevel->GetPredeterminedMoves()};
-        assert(numMovesUsedIncludingCurrent <= predeterminedMoves.size());
+    auto& predeterminedMoves {mLevel->GetPredeterminedMoves()};
+    
+    if (numMovesUsedIncludingCurrent <= predeterminedMoves.size()) {
         auto& predeterminedMove {predeterminedMoves[numMovesUsedIncludingCurrent - 1]};
-        return &predeterminedMove.mPieceType == &pieceType;
+    
+        return predeterminedMove.mPosition == move.mPosition &&
+               predeterminedMove.mRotation == move.mRotation &&
+               &predeterminedMove.mPieceType == &pieceType;
     }
 
     return true;

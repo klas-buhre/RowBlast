@@ -73,11 +73,6 @@ Ongoing tasks:
          Window comes back if the piece switched to is not the predetermined piece. Cannot tap the
          moves if the piece is not the predetermined piece.
         -Fourth move: Same as third.
-    -Second level:
-        -First move: Displaying a bad suggested move. Window that says
-         "Tap the screen to find other moves". Disappears when the predetermined move is found. Hand
-         pointing where to tap. Window comes back if the move switched to is not the predetermined
-         move. Cannot tap the moves if the move is not the predetermined move.
     -Third level:
         -TODO
     -Implementation:

@@ -96,7 +96,7 @@ GameLogic::GameLogic(Pht::IEngine& engine,
     mFieldExplosionsStates {engine, field, effectManager, flyingBlocksAnimation},
     mFallingPieceAnimation {*this, mFallingPieceStorage},
     mGestureInputHandler {*this, mFallingPieceStorage},
-    mClickInputHandler {engine, field, gameScene, *this},
+    mClickInputHandler {engine, field, gameScene, *this, tutorial},
     mFallingPiece {&mFallingPieceStorage} {
     
     scrollController.SetGameLogic(*this);
@@ -889,10 +889,7 @@ void GameLogic::ForwardTouchToInputHandler(const Pht::TouchEvent& touchEvent) {
     
     switch (mControlType) {
         case ControlType::Click:
-            if (mTutorial.IsPlacePieceAllowed(GetMovesUsedIncludingCurrent(),
-                                              mFallingPiece->GetPieceType())) {
-                mClickInputHandler.HandleTouch(touchEvent);
-            }
+            mClickInputHandler.HandleTouch(touchEvent, GetMovesUsedIncludingCurrent());
             break;
         case ControlType::Gesture:
             mGestureInputHandler.HandleTouch(touchEvent);

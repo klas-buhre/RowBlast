@@ -10,6 +10,7 @@
 #include "PlacePieceWindowController.hpp"
 #include "FillRowsWindowController.hpp"
 #include "SwitchPieceWindowController.hpp"
+#include "OtherMovesWindowController.hpp"
 #include "LaserDialogController.hpp"
 #include "BombDialogController.hpp"
 
@@ -21,6 +22,7 @@ namespace RowBlast {
     class GameScene;
     class Level;
     class Piece;
+    class Move;
     
     class Tutorial {
     public:
@@ -40,8 +42,11 @@ namespace RowBlast {
         void OnNewMove(int numMovesUsedIncludingCurrent);
         void OnSelectMove();
         void OnSwitchPiece(int numMovesUsedIncludingCurrent, const Piece& pieceType);
+        void OnChangeVisibleMoves(int numMovesUsedIncludingCurrent, const Move& firstMove);
         bool IsSwitchPieceAllowed(int numMovesUsedIncludingCurrent) const;
-        bool IsPlacePieceAllowed(int numMovesUsedIncludingCurrent, const Piece& pieceType) const;
+        bool IsMoveAllowed(int numMovesUsedIncludingCurrent,
+                           const Piece& pieceType,
+                           const Move& move) const;
         bool IsGestureControlsAllowed() const;
         bool IsUndoMoveAllowed(int numMovesUsedIncludingCurrent) const;
 
@@ -50,6 +55,7 @@ namespace RowBlast {
             PlacePieceWindow,
             FillRowsWindow,
             SwitchPieceWindow,
+            OtherMovesWindow,
             LaserDialog,
             BombDialog,
             None
@@ -68,6 +74,7 @@ namespace RowBlast {
         PlacePieceWindowController mPlacePieceWindowController;
         FillRowsWindowController mFillRowsWindowController;
         SwitchPieceWindowController mSwitchPieceWindowController;
+        OtherMovesWindowController mOtherMovesWindowController;
         LaserDialogController mLaserDialogController;
         BombDialogController mBombDialogController;
     };

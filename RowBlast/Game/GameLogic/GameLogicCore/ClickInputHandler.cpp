@@ -11,6 +11,7 @@
 #include "Field.hpp"
 #include "GameScene.hpp"
 #include "IGameLogic.hpp"
+#include "Tutorial.hpp"
 
 using namespace RowBlast;
 
@@ -33,11 +34,13 @@ void MoveButton::SetSize(const Pht::Vec2& size) {
 ClickInputHandler::ClickInputHandler(Pht::IEngine& engine,
                                      Field& field,
                                      const GameScene& gameScene,
-                                     IGameLogic& gameLogic) :
+                                     IGameLogic& gameLogic,
+                                     Tutorial& tutorial) :
     mEngine {engine},
     mField {field},
     mGameScene {gameScene},
     mGameLogic {gameLogic},
+    mTutorial {tutorial},
     mAi {field},
     mSwipeUpRecognizer {Pht::SwipeDirection::Up, inputUnitsPerColumn} {
 
@@ -226,7 +229,7 @@ const ClickInputHandler::VisibleMoves* ClickInputHandler::GetVisibleMoves() cons
     }
 }
 
-void ClickInputHandler::HandleTouch(const Pht::TouchEvent& touchEvent) {
+void ClickInputHandler::HandleTouch(const Pht::TouchEvent& touchEvent, int movesUsed) {
     assert(mPieceType);
     
     if (mState == State::Inactive) {
@@ -253,9 +256,11 @@ void ClickInputHandler::HandleTouch(const Pht::TouchEvent& touchEvent) {
                 }
                 return;
             case Pht::Button::Result::UpInside:
-                mGameLogic.StopBlastRadiusAnimation();
-                mGameLogic.SelectMove(move);
-                mState = State::Inactive;
+                if (mTutorial.IsMoveAllowed(movesUsed, *mPieceType, move)) {
+                    mGameLogic.StopBlastRadiusAnimation();
+                    mGameLogic.SelectMove(move);
+                    mState = State::Inactive;
+                }
                 return;
             case Pht::Button::Result::None:
                 break;
@@ -271,6 +276,8 @@ void ClickInputHandler::HandleTouch(const Pht::TouchEvent& touchEvent) {
                 mGameLogic.SwitchPiece();
             } else {
                 CreateNewSetOfVisibleMoves();
+                assert(!mVisibleMoves.IsEmpty());
+                mTutorial.OnChangeVisibleMoves(movesUsed, mVisibleMoves.Front());
             }
             return;
         case Pht::TouchState::Other:
