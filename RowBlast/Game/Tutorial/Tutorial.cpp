@@ -39,6 +39,7 @@ Tutorial::Tutorial(Pht::IEngine& engine, GameScene& scene, const CommonResources
     mSwitchPieceWindowController {engine, commonResources},
     mOtherMovesWindowController {engine, commonResources},
     mCascadingDialogController {engine, commonResources},
+    mSameColorDialogController {engine, commonResources},
     mLaserDialogController {engine, commonResources},
     mBombDialogController {engine, commonResources} {
     
@@ -47,6 +48,7 @@ Tutorial::Tutorial(Pht::IEngine& engine, GameScene& scene, const CommonResources
     mViewManager.AddView(static_cast<int>(Controller::SwitchPieceWindow), mSwitchPieceWindowController.GetView());
     mViewManager.AddView(static_cast<int>(Controller::OtherMovesWindow), mOtherMovesWindowController.GetView());
     mViewManager.AddView(static_cast<int>(Controller::CascadingDialog), mCascadingDialogController.GetView());
+    mViewManager.AddView(static_cast<int>(Controller::SameColorDialog), mSameColorDialogController.GetView());
     mViewManager.AddView(static_cast<int>(Controller::LaserDialog), mLaserDialogController.GetView());
     mViewManager.AddView(static_cast<int>(Controller::BombDialog), mBombDialogController.GetView());
 }
@@ -62,6 +64,7 @@ void Tutorial::Init(const Level& level) {
     
     mFadeEffect.Reset();
     mCascadingDialogController.SetFadeEffect(mFadeEffect);
+    mSameColorDialogController.SetFadeEffect(mFadeEffect);
     mLaserDialogController.SetFadeEffect(mFadeEffect);
     mBombDialogController.SetFadeEffect(mFadeEffect);
     
@@ -115,6 +118,7 @@ void Tutorial::Update() {
             }
             break;
         case Controller::CascadingDialog:
+        case Controller::SameColorDialog:
         case Controller::LaserDialog:
         case Controller::BombDialog:
         case Controller::None:
@@ -126,6 +130,12 @@ Tutorial::Result Tutorial::UpdateDialogs() {
     switch (mActiveController) {
         case Controller::CascadingDialog:
             if (mCascadingDialogController.Update() == CascadingDialogController::Result::Play) {
+                SetActiveController(Controller::None);
+                return Result::Play;
+            }
+            break;
+        case Controller::SameColorDialog:
+            if (mSameColorDialogController.Update() == SameColorDialogController::Result::Play) {
                 SetActiveController(Controller::None);
                 return Result::Play;
             }
@@ -154,6 +164,10 @@ Tutorial::Result Tutorial::OnLevelStart() {
         case 3:
             SetActiveController(Controller::CascadingDialog);
             mCascadingDialogController.Init();
+            return Result::TutorialHasFocus;
+        case 4:
+            SetActiveController(Controller::SameColorDialog);
+            mSameColorDialogController.Init();
             return Result::TutorialHasFocus;
         case 6:
             SetActiveController(Controller::LaserDialog);

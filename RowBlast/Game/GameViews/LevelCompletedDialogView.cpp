@@ -63,7 +63,7 @@ LevelCompletedDialogView::LevelCompletedDialogView(Pht::IEngine& engine,
 
     mNextButton = std::make_unique<MenuButton>(engine,
                                                *this,
-                                               Pht::Vec3 {0.0f, -3.5f, UiLayer::textRectangle},
+                                               Pht::Vec3 {0.0f, -3.9f, UiLayer::textRectangle},
                                                nextButtonInputSize,
                                                nextButtonStyle);
     mNextButton->CreateText({-1.1f, -0.31f, UiLayer::buttonText},

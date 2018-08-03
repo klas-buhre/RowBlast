@@ -52,18 +52,9 @@ Ongoing tasks:
     -The first world could contain the basics, plus level piece blocks and bombs.
     -The second world could introduce level bombs and triangle blocks.
     -The third world could introduce the build objective.
-    -First level introduces clicking on pieces, clearing rows and switching of pieces.
-    -Second level introduces changing the visible moves.
-    -Third level introduces cascading. Also, explain that only the gray blocks need to be cleared,
-     not the piece blocks.
-    -Make the tutorial as short as possible. Don't give all the rules of the game at once. Instead,
-     let the user figure it out by playing. For example, introduce changing the visible moves in the
-     second or third level. Let the first level introduce the rule of clearing lines and selecting
-     moves and switching pieces.
-    -Fourth level:
-        -Maybe redesign the level.
-        -Dialog that says "Blocks of the same color stick to together when they touch".
-         "Play" button removes the dialog.
+    -Level 3: Let the user start with a piece that removes the first gray row.
+    -Redesign level 4?
+    -Level 19: Introduce level bombs.
     -Implementation:
 
 
