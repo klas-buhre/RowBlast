@@ -43,10 +43,10 @@ LaserDialogView::LaserDialogView(Pht::IEngine& engine, const CommonResources& co
     auto& textProperties {guiResources.GetSmallWhiteTextProperties(zoom)};
     CreateText({-3.75f, -4.6f, UiLayer::text}, "The laser clears a row", textProperties);
     
-    Pht::Vec2 playButtonInputSize {205.0f, 59.0f};
+    Pht::Vec2 playButtonInputSize {194.0f, 43.0f};
 
     MenuButton::Style playButtonStyle;
-    playButtonStyle.mMeshFilename = GuiResources::mBigButtonMeshFilename;
+    playButtonStyle.mMeshFilename = GuiResources::mMediumButtonMeshFilename;
     playButtonStyle.mColor = GuiResources::mBlueButtonColor;
     playButtonStyle.mSelectedColor = GuiResources::mBlueSelectedButtonColor;
     playButtonStyle.mPressedScale = 1.05f;
@@ -56,9 +56,7 @@ LaserDialogView::LaserDialogView(Pht::IEngine& engine, const CommonResources& co
                                                Pht::Vec3 {0.0f, -7.0f, UiLayer::textRectangle},
                                                playButtonInputSize,
                                                playButtonStyle);
-    mPlayButton->CreateText({-1.1f, -0.31f, UiLayer::buttonText},
-                            "PLAY",
-                            guiResources.GetLargeWhiteTextProperties(zoom));
+    mPlayButton->CreateText({-0.9f, -0.23f, UiLayer::buttonText}, "PLAY", textProperties);
 }
 
 void LaserDialogView::Init(Pht::Scene& scene) {

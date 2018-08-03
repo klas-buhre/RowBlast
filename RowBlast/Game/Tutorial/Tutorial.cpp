@@ -38,6 +38,7 @@ Tutorial::Tutorial(Pht::IEngine& engine, GameScene& scene, const CommonResources
     mFillRowsWindowController {engine, commonResources},
     mSwitchPieceWindowController {engine, commonResources},
     mOtherMovesWindowController {engine, commonResources},
+    mCascadingDialogController {engine, commonResources},
     mLaserDialogController {engine, commonResources},
     mBombDialogController {engine, commonResources} {
     
@@ -45,6 +46,7 @@ Tutorial::Tutorial(Pht::IEngine& engine, GameScene& scene, const CommonResources
     mViewManager.AddView(static_cast<int>(Controller::FillRowsWindow), mFillRowsWindowController.GetView());
     mViewManager.AddView(static_cast<int>(Controller::SwitchPieceWindow), mSwitchPieceWindowController.GetView());
     mViewManager.AddView(static_cast<int>(Controller::OtherMovesWindow), mOtherMovesWindowController.GetView());
+    mViewManager.AddView(static_cast<int>(Controller::CascadingDialog), mCascadingDialogController.GetView());
     mViewManager.AddView(static_cast<int>(Controller::LaserDialog), mLaserDialogController.GetView());
     mViewManager.AddView(static_cast<int>(Controller::BombDialog), mBombDialogController.GetView());
 }
@@ -57,11 +59,13 @@ void Tutorial::Init(const Level& level) {
     }
 
     mHandAnimation.Init();
+    
     mFadeEffect.Reset();
-
-    auto& uiViewContainer {mScene.GetUiViewsContainer()};
+    mCascadingDialogController.SetFadeEffect(mFadeEffect);
     mLaserDialogController.SetFadeEffect(mFadeEffect);
     mBombDialogController.SetFadeEffect(mFadeEffect);
+    
+    auto& uiViewContainer {mScene.GetUiViewsContainer()};
     uiViewContainer.AddChild(mFadeEffect.GetSceneObject());
 
     mViewManager.Init(uiViewContainer);
@@ -110,6 +114,7 @@ void Tutorial::Update() {
                 SetActiveController(Controller::None);
             }
             break;
+        case Controller::CascadingDialog:
         case Controller::LaserDialog:
         case Controller::BombDialog:
         case Controller::None:
@@ -119,6 +124,12 @@ void Tutorial::Update() {
 
 Tutorial::Result Tutorial::UpdateDialogs() {
     switch (mActiveController) {
+        case Controller::CascadingDialog:
+            if (mCascadingDialogController.Update() == CascadingDialogController::Result::Play) {
+                SetActiveController(Controller::None);
+                return Result::Play;
+            }
+            break;
         case Controller::LaserDialog:
             if (mLaserDialogController.Update() == LaserDialogController::Result::Play) {
                 SetActiveController(Controller::None);
@@ -140,6 +151,10 @@ Tutorial::Result Tutorial::UpdateDialogs() {
 
 Tutorial::Result Tutorial::OnLevelStart() {
     switch (mLevel->GetId()) {
+        case 3:
+            SetActiveController(Controller::CascadingDialog);
+            mCascadingDialogController.Init();
+            return Result::TutorialHasFocus;
         case 6:
             SetActiveController(Controller::LaserDialog);
             mLaserDialogController.Init(mScene.GetScene());

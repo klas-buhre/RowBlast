@@ -11,6 +11,7 @@
 #include "FillRowsWindowController.hpp"
 #include "SwitchPieceWindowController.hpp"
 #include "OtherMovesWindowController.hpp"
+#include "CascadingDialogController.hpp"
 #include "LaserDialogController.hpp"
 #include "BombDialogController.hpp"
 
@@ -56,6 +57,7 @@ namespace RowBlast {
             FillRowsWindow,
             SwitchPieceWindow,
             OtherMovesWindow,
+            CascadingDialog,
             LaserDialog,
             BombDialog,
             None
@@ -75,6 +77,7 @@ namespace RowBlast {
         FillRowsWindowController mFillRowsWindowController;
         SwitchPieceWindowController mSwitchPieceWindowController;
         OtherMovesWindowController mOtherMovesWindowController;
+        CascadingDialogController mCascadingDialogController;
         LaserDialogController mLaserDialogController;
         BombDialogController mBombDialogController;
     };

@@ -56,25 +56,14 @@ Ongoing tasks:
     -Second level introduces changing the visible moves.
     -Third level introduces cascading. Also, explain that only the gray blocks need to be cleared,
      not the piece blocks.
-    -Start level 6 with a laser.
-    -Start level 7 with a bomb.
     -Make the tutorial as short as possible. Don't give all the rules of the game at once. Instead,
      let the user figure it out by playing. For example, introduce changing the visible moves in the
      second or third level. Let the first level introduce the rule of clearing lines and selecting
      moves and switching pieces.
-    -First level:
-        -First move: Window that says "Tap the suggested move to place the piece". Disappears at
-         next move. Switch is disabled. Hand pointing where to tap.
-        -Second move: Window that says "Blocks are cleared when horizontal rows are filled. Tap the
-         suggested move to fill three rows". Disappears at next move. Switch is disabled. Hand
-         pointing where to tap.
-        -Third move: Window that says "Tap switch to try a better fitting piece".
-         Disappears when switched to the predetermined piece. Hand pointing where to tap.
-         Window comes back if the piece switched to is not the predetermined piece. Cannot tap the
-         moves if the piece is not the predetermined piece.
-        -Fourth move: Same as third.
-    -Third level:
-        -TODO
+    -Fourth level:
+        -Maybe redesign the level.
+        -Dialog that says "Blocks of the same color stick to together when they touch".
+         "Play" button removes the dialog.
     -Implementation:
 
 

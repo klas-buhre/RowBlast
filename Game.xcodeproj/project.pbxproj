@@ -295,6 +295,8 @@
 		62A03FD421091BA600A4C2A5 /* LaserDialogController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62A03FD221091BA600A4C2A5 /* LaserDialogController.cpp */; };
 		62A57D0C21122AEB00603ABC /* OtherMovesWindowView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62A57D0A21122AEB00603ABC /* OtherMovesWindowView.cpp */; };
 		62A57D0F21122B0D00603ABC /* OtherMovesWindowController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62A57D0D21122B0D00603ABC /* OtherMovesWindowController.cpp */; };
+		62A57D12211368AF00603ABC /* CascadingDialogView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62A57D10211368AF00603ABC /* CascadingDialogView.cpp */; };
+		62A57D15211368CF00603ABC /* CascadingDialogController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62A57D13211368CF00603ABC /* CascadingDialogController.cpp */; };
 		62B1CB27210CB62100D0F195 /* HandAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62B1CB25210CB62100D0F195 /* HandAnimation.cpp */; };
 		62B1CB45210F3E0700D0F195 /* SlideAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62B1CB43210F3E0700D0F195 /* SlideAnimation.cpp */; };
 		62B1CB4C210F8DAF00D0F195 /* hand48.png in Resources */ = {isa = PBXBuildFile; fileRef = 62B1CB47210F8DAF00D0F195 /* hand48.png */; };
@@ -973,6 +975,10 @@
 		62A57D0B21122AEB00603ABC /* OtherMovesWindowView.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = OtherMovesWindowView.hpp; sourceTree = "<group>"; };
 		62A57D0D21122B0D00603ABC /* OtherMovesWindowController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = OtherMovesWindowController.cpp; sourceTree = "<group>"; };
 		62A57D0E21122B0D00603ABC /* OtherMovesWindowController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = OtherMovesWindowController.hpp; sourceTree = "<group>"; };
+		62A57D10211368AF00603ABC /* CascadingDialogView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CascadingDialogView.cpp; sourceTree = "<group>"; };
+		62A57D11211368AF00603ABC /* CascadingDialogView.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CascadingDialogView.hpp; sourceTree = "<group>"; };
+		62A57D13211368CF00603ABC /* CascadingDialogController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CascadingDialogController.cpp; sourceTree = "<group>"; };
+		62A57D14211368CF00603ABC /* CascadingDialogController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CascadingDialogController.hpp; sourceTree = "<group>"; };
 		62B1CB25210CB62100D0F195 /* HandAnimation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = HandAnimation.cpp; sourceTree = "<group>"; };
 		62B1CB26210CB62100D0F195 /* HandAnimation.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = HandAnimation.hpp; sourceTree = "<group>"; };
 		62B1CB43210F3E0700D0F195 /* SlideAnimation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SlideAnimation.cpp; sourceTree = "<group>"; };
@@ -1148,6 +1154,10 @@
 				621A30B1210A8E6D008851C4 /* BombDialogController.hpp */,
 				621A30AD210A8E50008851C4 /* BombDialogView.cpp */,
 				621A30AE210A8E50008851C4 /* BombDialogView.hpp */,
+				62A57D13211368CF00603ABC /* CascadingDialogController.cpp */,
+				62A57D14211368CF00603ABC /* CascadingDialogController.hpp */,
+				62A57D10211368AF00603ABC /* CascadingDialogView.cpp */,
+				62A57D11211368AF00603ABC /* CascadingDialogView.hpp */,
 				6259B7EF210814E50055FE8D /* FillRowsWindowController.cpp */,
 				6259B7F0210814E50055FE8D /* FillRowsWindowController.hpp */,
 				6259B7EC210814BF0055FE8D /* FillRowsWindowView.cpp */,
@@ -2466,6 +2476,7 @@
 				62785DDD2087618E006F9869 /* TPiece.cpp in Sources */,
 				62785DEF2087618E006F9869 /* ExplosionParticleEffect.cpp in Sources */,
 				62398E60209A2784000F5F79 /* TitleAnimation.cpp in Sources */,
+				62A57D12211368AF00603ABC /* CascadingDialogView.cpp in Sources */,
 				62785DD62087618E006F9869 /* ZPiece.cpp in Sources */,
 				62785DB02087618E006F9869 /* GameMenuView.cpp in Sources */,
 				6287B4E020F25C7700C00EF0 /* LevelGoalDialogView.cpp in Sources */,
@@ -2581,6 +2592,7 @@
 				62785DB72087618E006F9869 /* NoMovesDialogView.cpp in Sources */,
 				62785DE02087618E006F9869 /* Bomb.cpp in Sources */,
 				62B1CB45210F3E0700D0F195 /* SlideAnimation.cpp in Sources */,
+				62A57D15211368CF00603ABC /* CascadingDialogController.cpp in Sources */,
 				62785DE62087618E006F9869 /* MirroredZPiece.cpp in Sources */,
 				62785DDB2087618E006F9869 /* SevenPiece.cpp in Sources */,
 				62785DD02087618E006F9869 /* Field.cpp in Sources */,
