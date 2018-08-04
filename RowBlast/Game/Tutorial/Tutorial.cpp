@@ -20,8 +20,10 @@ namespace {
     const Pht::Vec3 switchPieceHandPosition {3.3f, -10.6f, 0.0f};
     const Pht::Vec3 bPieceHandPosition {3.1f, -4.3f, 0.0f};
     const Pht::Vec3 longIPieceHandPosition {0.6f, -7.1f, 0.0f};
-    const Pht::Vec3 otherMovesHandPosition {3.7f, -7.5f, 0.0f};
+    const Pht::Vec3 otherMovesHandPosition1 {3.7f, -7.5f, 0.0f};
+    const Pht::Vec3 otherMovesHandPosition2 {1.6f, -8.5f, 0.0f};
     const Pht::Vec3 iPieceHandPosition {-0.8f, -4.5f, 0.0f};
+    const Pht::Vec3 secondLevelBPieceHandPosition {-2.5f, -4.4f, 0.0f};
 }
 
 Tutorial::Tutorial(Pht::IEngine& engine, GameScene& scene, const CommonResources& commonResources) :
@@ -210,11 +212,7 @@ void Tutorial::OnNewMove(int numMovesUsedIncludingCurrent) {
             OnNewMoveFirstLevel(numMovesUsedIncludingCurrent);
             break;
         case 2:
-            if (numMovesUsedIncludingCurrent == 1) {
-                SetActiveController(Controller::OtherMovesWindow);
-                mOtherMovesWindowController.Init();
-                mHandAnimation.Start(otherMovesHandPosition, 45.0f);
-            }
+            OnNewMoveSecondLevel(numMovesUsedIncludingCurrent);
             break;
         default:
             break;
@@ -241,6 +239,23 @@ void Tutorial::OnNewMoveFirstLevel(int numMovesUsedIncludingCurrent) {
             break;
         default:
             assert(!"Unsupported number of used moves");
+    }
+}
+
+void Tutorial::OnNewMoveSecondLevel(int numMovesUsedIncludingCurrent) {
+    switch (numMovesUsedIncludingCurrent) {
+        case 1:
+            SetActiveController(Controller::OtherMovesWindow);
+            mOtherMovesWindowController.Init();
+            mHandAnimation.Start(otherMovesHandPosition1, 45.0f);
+            break;
+        case 2:
+            SetActiveController(Controller::OtherMovesWindow);
+            mOtherMovesWindowController.Init();
+            mHandAnimation.Start(otherMovesHandPosition2, 45.0f);
+            break;
+        default:
+            break;
     }
 }
 
@@ -301,21 +316,49 @@ void Tutorial::OnChangeVisibleMoves(int numMovesUsedIncludingCurrent, const Move
         return;
     }
 
-    if (mLevel->GetId() == 2 && numMovesUsedIncludingCurrent == 1) {
-        auto& predeterminedMoves {mLevel->GetPredeterminedMoves()};
-        assert(numMovesUsedIncludingCurrent <= predeterminedMoves.size());
-        auto& predeterminedMove {predeterminedMoves[numMovesUsedIncludingCurrent - 1]};
-        
-        if (predeterminedMove.mPosition == firstMove.mPosition &&
-            predeterminedMove.mRotation == firstMove.mRotation) {
-            
-            mOtherMovesWindowController.Close();
-            mHandAnimation.Stop();
-            mHandAnimation.Start(iPieceHandPosition, -90.0f);
-        } else {
-            SetActiveController(Controller::OtherMovesWindow);
-            mOtherMovesWindowController.Init();
-            mHandAnimation.Start(otherMovesHandPosition, 45.0f);
+    if (mLevel->GetId() == 2) {
+        switch (numMovesUsedIncludingCurrent) {
+            case 1:
+            case 2: {
+                auto& predeterminedMoves {mLevel->GetPredeterminedMoves()};
+                assert(numMovesUsedIncludingCurrent <= predeterminedMoves.size());
+                auto& predeterminedMove {predeterminedMoves[numMovesUsedIncludingCurrent - 1]};
+                
+                if (predeterminedMove.mPosition == firstMove.mPosition &&
+                    predeterminedMove.mRotation == firstMove.mRotation) {
+                    
+                    mOtherMovesWindowController.Close();
+                    mHandAnimation.Stop();
+                    
+                    switch (numMovesUsedIncludingCurrent) {
+                        case 1:
+                            mHandAnimation.Start(iPieceHandPosition, -90.0f);
+                            break;
+                        case 2:
+                            mHandAnimation.Start(secondLevelBPieceHandPosition, 45.0f);
+                            break;
+                        default:
+                            break;
+                    }
+                } else {
+                    SetActiveController(Controller::OtherMovesWindow);
+                    mOtherMovesWindowController.Init();
+                    
+                    switch (numMovesUsedIncludingCurrent) {
+                        case 1:
+                            mHandAnimation.Start(otherMovesHandPosition1, 45.0f);
+                            break;
+                        case 2:
+                            mHandAnimation.Start(otherMovesHandPosition2, 45.0f);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                break;
+            }
+            default:
+                break;
         }
     }
 }
@@ -327,12 +370,8 @@ bool Tutorial::IsSwitchPieceAllowed(int numMovesUsedIncludingCurrent) const {
     
     switch (mLevel->GetId()) {
         case 1:
-            if (numMovesUsedIncludingCurrent <= 2) {
-                return false;
-            }
-            break;
         case 2:
-            if (numMovesUsedIncludingCurrent <= 1) {
+            if (numMovesUsedIncludingCurrent <= 2) {
                 return false;
             }
             break;
@@ -378,7 +417,7 @@ bool Tutorial::IsUndoMoveAllowed(int numMovesUsedIncludingCurrent) const {
         case 1:
             return false;
         case 2:
-            if (numMovesUsedIncludingCurrent >= 3) {
+            if (numMovesUsedIncludingCurrent >= 4) {
                 return true;
             }
             return false;

@@ -13,13 +13,19 @@
         "I"
     ],
     "pieceSequence": [
-        "I"
+        "I",
+        "B"
     ],
     "predeterminedMoves": [
         {
             "position": [2, 9],
             "rotation": 90,
             "piece": "I"
+        },
+        {
+            "position": [0, 7],
+            "rotation": 270,
+            "piece": "B"
         }
     ],
     "suggestedMoves": [
@@ -27,6 +33,11 @@
             "position": [0, 11],
             "rotation": 0,
             "piece": "I"
+        },
+        {
+            "position": [0, 9],
+            "rotation": 180,
+            "piece": "B"
         }
     ],
     "clearGrid": [
@@ -47,10 +58,10 @@
         "GGG GGG",
         "  G GGG",
         "  GGGGG",
-        " GGGGGG",
+        "G GGGGG",
         "GGGGG  ",
         "GGGGG  ",
-        "GGGGGG ",
+        "GGGGG G",
         "   G GG",
         "GGGG GG",
         "GGGG GG",

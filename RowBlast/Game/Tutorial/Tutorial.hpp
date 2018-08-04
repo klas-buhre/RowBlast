@@ -66,7 +66,7 @@ namespace RowBlast {
         };
 
         void OnNewMoveFirstLevel(int numMovesUsedIncludingCurrent);
-        void OnNewMoveSixthLevel(int numMovesUsedIncludingCurrent);
+        void OnNewMoveSecondLevel(int numMovesUsedIncludingCurrent);
         void SetActiveController(Controller controller);
         
         GameScene& mScene;
