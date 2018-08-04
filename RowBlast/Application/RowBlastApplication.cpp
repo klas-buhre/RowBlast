@@ -7,7 +7,6 @@ Backlog:
     -Metal.
 
   -Gameplay:
-   X-Maybe when pressing a move, the other moves should disappear.
    X-Maybe change so that there are three visible pieces in the switch object in the HUD. The two
      that you can switch to and the active piece. The active piece is to the right and could be a
      bit larger. Change name from switch to current so that the name next is not so confusing? Right
@@ -52,7 +51,6 @@ Ongoing tasks:
     -The first world could contain the basics, plus level piece blocks and bombs.
     -The second world could introduce level bombs and triangle blocks.
     -The third world could introduce the build objective.
-    -Level 3: Let the user start with a piece that removes the first gray row.
     -Redesign level 4?
     -Level 19: Introduce level bombs.
     -Implementation:

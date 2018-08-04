@@ -50,6 +50,7 @@ namespace RowBlast {
         float mScore {0.0f};
         bool mHasBeenPresented {false};
         bool mIsReachable {true};
+        bool mIsHidden {false};
         MoveButton* mButton {nullptr};
     };
     

@@ -442,6 +442,10 @@ void GameSceneRenderer::RenderClickableGhostPieces(const FallingPiece& fallingPi
     for (auto i {0}; i < moveAlternatives->Size(); ++i) {
         auto& move {moveAlternatives->At(i)};
         
+        if (move.mIsHidden) {
+            continue;
+        }
+        
         Pht::Vec3 ghostPieceFieldPos {
             static_cast<float>(move.mPosition.x) * cellSize,
             static_cast<float>(move.mPosition.y) * cellSize,

@@ -122,9 +122,7 @@ void ClickInputHandler::ClearClickGrid() {
 void ClickInputHandler::PopulateSetOfVisibleMoves() {
     assert(mAllValidMoves);
 
-    for (auto i {0}; i < mAllValidMoves->Size(); ++i) {
-        auto* move {mAllValidMoves->At(i)};
-        
+    for (auto* move: *mAllValidMoves) {
         if (!move->mHasBeenPresented && move->mIsReachable && IsRoomForMove(*move) &&
             mVisibleMoves.Size() < maxNumVisibleMoves) {
             
@@ -229,6 +227,20 @@ const ClickInputHandler::VisibleMoves* ClickInputHandler::GetVisibleMoves() cons
     }
 }
 
+void ClickInputHandler::HideMoves(const Move& visibleMove) {
+    for (auto& move: mVisibleMoves) {
+        if (&move != &visibleMove) {
+            move.mIsHidden = true;
+        }
+    }
+}
+
+void ClickInputHandler::UnhideMoves() {
+    for (auto& move: mVisibleMoves) {
+        move.mIsHidden = false;
+    }
+}
+
 void ClickInputHandler::HandleTouch(const Pht::TouchEvent& touchEvent, int movesUsed) {
     assert(mPieceType);
     
@@ -238,24 +250,27 @@ void ClickInputHandler::HandleTouch(const Pht::TouchEvent& touchEvent, int moves
     
     mEngine.GetRenderer().SetProjectionMode(Pht::ProjectionMode::Orthographic);
     
-    for (auto i {0}; i < mVisibleMoves.Size(); ++i) {
-        auto& move {mVisibleMoves.At(i)};
-        
+    for (auto& move: mVisibleMoves) {
         switch (move.mButton->GetButton().OnTouch(touchEvent)) {
             case Pht::Button::Result::Down:
+                HideMoves(move);
                 if (mPieceType->IsBomb()) {
                     mGameLogic.StartBlastRadiusAnimation(move.mPosition);
                 }
                 return;
             case Pht::Button::Result::MoveInside:
                 return;
-            case Pht::Button::Result::UpOutside:
             case Pht::Button::Result::MoveOutside:
+                UnhideMoves();
+                return;
+            case Pht::Button::Result::UpOutside:
+                UnhideMoves();
                 if (mPieceType->IsBomb()) {
                     mGameLogic.StopBlastRadiusAnimation();
                 }
                 return;
             case Pht::Button::Result::UpInside:
+                UnhideMoves();
                 if (mTutorial.IsMoveAllowed(movesUsed, *mPieceType, move)) {
                     mGameLogic.StopBlastRadiusAnimation();
                     mGameLogic.SelectMove(move);

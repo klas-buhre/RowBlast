@@ -60,6 +60,8 @@ namespace RowBlast {
         void SetupButton(MoveButton& moveButton, Move& move);
         void HandleTouchBegin();
         void RecognizeSwipe(const Pht::TouchEvent& touchEvent);
+        void HideMoves(const Move& visibleMove);
+        void UnhideMoves();
         
         enum class State {
             PresentingMoves,

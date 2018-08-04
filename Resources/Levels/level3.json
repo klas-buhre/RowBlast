@@ -15,6 +15,9 @@
         "Seven",
         "MirroredSeven"
     ],
+    "pieceSequence": [
+        "MirroredSeven"
+    ],
     "clearGrid": [
         "       ",
         "       ",
