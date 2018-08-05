@@ -51,7 +51,7 @@ Ongoing tasks:
     -The first world could contain the basics, plus level piece blocks and bombs.
     -The second world could introduce level bombs and triangle blocks.
     -The third world could introduce the build objective.
-    -Redesign level 4?
+    -Maybe fix the second frame in the level 6 slide animation.
     -Level 19: Introduce level bombs.
     -Implementation:
 
