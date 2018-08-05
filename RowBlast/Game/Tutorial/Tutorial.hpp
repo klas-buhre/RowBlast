@@ -15,6 +15,7 @@
 #include "SameColorDialogController.hpp"
 #include "LaserDialogController.hpp"
 #include "BombDialogController.hpp"
+#include "LevelBombDialogController.hpp"
 
 namespace Pht {
     class IEngine;
@@ -62,6 +63,7 @@ namespace RowBlast {
             SameColorDialog,
             LaserDialog,
             BombDialog,
+            LevelBombDialog,
             None
         };
 
@@ -83,6 +85,7 @@ namespace RowBlast {
         SameColorDialogController mSameColorDialogController;
         LaserDialogController mLaserDialogController;
         BombDialogController mBombDialogController;
+        LevelBombDialogController mLevelBombDialogController;
     };
 }
 

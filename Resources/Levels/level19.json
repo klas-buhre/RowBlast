@@ -5,6 +5,7 @@
     "threeStars": 15,
     "background": "sky5.jpg",
     "dark": true,
+    "partOfTutorial": true,
     "pieces": [
         "LongI",
         "I",

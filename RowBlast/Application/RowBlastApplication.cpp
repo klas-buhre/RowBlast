@@ -47,13 +47,9 @@ Backlog:
 
 Ongoing tasks:
   -Tutorial.
-    -Look at the Tetris Blitz tutorial: https://www.youtube.com/watch?v=Mz_t9u8eocI
-    -The first world could contain the basics, plus level piece blocks and bombs.
     -The second world could introduce level bombs and triangle blocks.
     -The third world could introduce the build objective.
-    -Maybe fix the second frame in the level 6 slide animation.
     -Level 19: Introduce level bombs.
-    -Implementation:
 
 
 

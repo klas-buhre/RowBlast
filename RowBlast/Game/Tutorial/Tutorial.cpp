@@ -43,7 +43,8 @@ Tutorial::Tutorial(Pht::IEngine& engine, GameScene& scene, const CommonResources
     mCascadingDialogController {engine, commonResources},
     mSameColorDialogController {engine, commonResources},
     mLaserDialogController {engine, commonResources},
-    mBombDialogController {engine, commonResources} {
+    mBombDialogController {engine, commonResources},
+    mLevelBombDialogController {engine, commonResources} {
     
     mViewManager.AddView(static_cast<int>(Controller::PlacePieceWindow), mPlacePieceWindowController.GetView());
     mViewManager.AddView(static_cast<int>(Controller::FillRowsWindow), mFillRowsWindowController.GetView());
@@ -53,6 +54,7 @@ Tutorial::Tutorial(Pht::IEngine& engine, GameScene& scene, const CommonResources
     mViewManager.AddView(static_cast<int>(Controller::SameColorDialog), mSameColorDialogController.GetView());
     mViewManager.AddView(static_cast<int>(Controller::LaserDialog), mLaserDialogController.GetView());
     mViewManager.AddView(static_cast<int>(Controller::BombDialog), mBombDialogController.GetView());
+    mViewManager.AddView(static_cast<int>(Controller::LevelBombDialog), mLevelBombDialogController.GetView());
 }
 
 void Tutorial::Init(const Level& level) {
@@ -69,6 +71,7 @@ void Tutorial::Init(const Level& level) {
     mSameColorDialogController.SetFadeEffect(mFadeEffect);
     mLaserDialogController.SetFadeEffect(mFadeEffect);
     mBombDialogController.SetFadeEffect(mFadeEffect);
+    mLevelBombDialogController.SetFadeEffect(mFadeEffect);
     
     auto& uiViewContainer {mScene.GetUiViewsContainer()};
     uiViewContainer.AddChild(mFadeEffect.GetSceneObject());
@@ -123,6 +126,7 @@ void Tutorial::Update() {
         case Controller::SameColorDialog:
         case Controller::LaserDialog:
         case Controller::BombDialog:
+        case Controller::LevelBombDialog:
         case Controller::None:
             break;
     }
@@ -154,6 +158,12 @@ Tutorial::Result Tutorial::UpdateDialogs() {
                 return Result::Play;
             }
             break;
+        case Controller::LevelBombDialog:
+            if (mLevelBombDialogController.Update() == LevelBombDialogController::Result::Play) {
+                SetActiveController(Controller::None);
+                return Result::Play;
+            }
+            break;
         default:
             assert(!"Unsupported dialog");
     }
@@ -178,6 +188,10 @@ Tutorial::Result Tutorial::OnLevelStart() {
         case 7:
             SetActiveController(Controller::BombDialog);
             mBombDialogController.Init(mScene.GetScene());
+            return Result::TutorialHasFocus;
+        case 19:
+            SetActiveController(Controller::LevelBombDialog);
+            mLevelBombDialogController.Init(mScene.GetScene());
             return Result::TutorialHasFocus;
         default:
             break;
