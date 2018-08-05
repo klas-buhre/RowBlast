@@ -271,6 +271,7 @@
 		6287B4E120F25C7700C00EF0 /* LevelGoalDialogController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6287B4DE20F25C7700C00EF0 /* LevelGoalDialogController.cpp */; };
 		628EC29A207D24090071F368 /* level30.json in Resources */ = {isa = PBXBuildFile; fileRef = 628EC299207D24080071F368 /* level30.json */; };
 		628EC2AC2080C4880071F368 /* level31.json in Resources */ = {isa = PBXBuildFile; fileRef = 628EC2AB2080C4880071F368 /* level31.json */; };
+		6299915E2117374C00C845D1 /* laser_frame2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6299915D2117374B00C845D1 /* laser_frame2.jpg */; };
 		6299DD7A208B4178001F74E2 /* CameraShake.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6299DD78208B4178001F74E2 /* CameraShake.cpp */; };
 		6299DD80208BA21C001F74E2 /* FastNoise.cc in Sources */ = {isa = PBXBuildFile; fileRef = 6299DD7F208BA21C001F74E2 /* FastNoise.cc */; };
 		6299DD82208E39C1001F74E2 /* level32.json in Resources */ = {isa = PBXBuildFile; fileRef = 6299DD81208E39C0001F74E2 /* level32.json */; };
@@ -337,7 +338,6 @@
 		62B1CB94210F8F8600D0F195 /* sky6.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62B1CB7C210F8F8500D0F195 /* sky6.jpg */; };
 		62B1CB992110BA4600D0F195 /* laser_frame5.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62B1CB952110BA4400D0F195 /* laser_frame5.jpg */; };
 		62B1CB9A2110BA4600D0F195 /* laser_frame1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62B1CB962110BA4500D0F195 /* laser_frame1.jpg */; };
-		62B1CB9B2110BA4600D0F195 /* laser_frame2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62B1CB972110BA4500D0F195 /* laser_frame2.jpg */; };
 		62B1CB9C2110BA4600D0F195 /* laser_frame4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62B1CB982110BA4500D0F195 /* laser_frame4.jpg */; };
 		62B1CB9E2110C46700D0F195 /* laser_frame3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62B1CB9D2110C46600D0F195 /* laser_frame3.jpg */; };
 		62B1CBA62110D46E00D0F195 /* bomb_frame1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62B1CBA12110D46C00D0F195 /* bomb_frame1.jpg */; };
@@ -943,6 +943,7 @@
 		6287B4DF20F25C7700C00EF0 /* LevelGoalDialogView.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LevelGoalDialogView.hpp; sourceTree = "<group>"; };
 		628EC299207D24080071F368 /* level30.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level30.json; sourceTree = "<group>"; };
 		628EC2AB2080C4880071F368 /* level31.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level31.json; sourceTree = "<group>"; };
+		6299915D2117374B00C845D1 /* laser_frame2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = laser_frame2.jpg; sourceTree = "<group>"; };
 		6299DD78208B4178001F74E2 /* CameraShake.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CameraShake.cpp; sourceTree = "<group>"; };
 		6299DD79208B4178001F74E2 /* CameraShake.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CameraShake.hpp; sourceTree = "<group>"; };
 		6299DD7E208BA21C001F74E2 /* FastNoise.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FastNoise.h; sourceTree = "<group>"; };
@@ -1025,7 +1026,6 @@
 		62B1CB7C210F8F8500D0F195 /* sky6.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sky6.jpg; sourceTree = "<group>"; };
 		62B1CB952110BA4400D0F195 /* laser_frame5.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = laser_frame5.jpg; sourceTree = "<group>"; };
 		62B1CB962110BA4500D0F195 /* laser_frame1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = laser_frame1.jpg; sourceTree = "<group>"; };
-		62B1CB972110BA4500D0F195 /* laser_frame2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = laser_frame2.jpg; sourceTree = "<group>"; };
 		62B1CB982110BA4500D0F195 /* laser_frame4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = laser_frame4.jpg; sourceTree = "<group>"; };
 		62B1CB9D2110C46600D0F195 /* laser_frame3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = laser_frame3.jpg; sourceTree = "<group>"; };
 		62B1CBA12110D46C00D0F195 /* bomb_frame1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bomb_frame1.jpg; sourceTree = "<group>"; };
@@ -2223,7 +2223,7 @@
 				62B1CBA22110D46D00D0F195 /* bomb_frame4.jpg */,
 				62B1CBA52110D46E00D0F195 /* bomb_frame5.jpg */,
 				62B1CB962110BA4500D0F195 /* laser_frame1.jpg */,
-				62B1CB972110BA4500D0F195 /* laser_frame2.jpg */,
+				6299915D2117374B00C845D1 /* laser_frame2.jpg */,
 				62B1CB9D2110C46600D0F195 /* laser_frame3.jpg */,
 				62B1CB982110BA4500D0F195 /* laser_frame4.jpg */,
 				62B1CB952110BA4400D0F195 /* laser_frame5.jpg */,
@@ -2341,9 +2341,9 @@
 				62E335DE1FD2F31E0069B6CF /* level25.json in Resources */,
 				628EC29A207D24090071F368 /* level30.json in Resources */,
 				626451DD206FA93200E304F2 /* laser_bomb_224.obj in Resources */,
-				62B1CB9B2110BA4600D0F195 /* laser_frame2.jpg in Resources */,
 				62B1CB5C210F8EE500D0F195 /* settings.png in Resources */,
 				62E335DC1FD2EF600069B6CF /* level24.json in Resources */,
+				6299915E2117374C00C845D1 /* laser_frame2.jpg in Resources */,
 				62785B2B20875937006F9869 /* ParticleNoAlphaTexture.vert in Resources */,
 				62785B1A20875937006F9869 /* TexturedLighting.vert in Resources */,
 				62785B1C20875937006F9869 /* Particle.frag in Resources */,
