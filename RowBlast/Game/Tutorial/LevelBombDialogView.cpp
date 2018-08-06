@@ -42,7 +42,8 @@ LevelBombDialogView::LevelBombDialogView(Pht::IEngine& engine,
                                                        0.5f);
 
     auto& textProperties {guiResources.GetSmallWhiteTextProperties(zoom)};
-    CreateText({-4.15f, -4.6f, UiLayer::text}, "The bomb clears an area", textProperties);
+    CreateText({-4.25f, -4.3f, UiLayer::text}, "Land a piece on bombs to", textProperties);
+    CreateText({-2.4f, -5.375f, UiLayer::text}, "detonate them", textProperties);
     
     Pht::Vec2 playButtonInputSize {194.0f, 43.0f};
 
@@ -54,7 +55,7 @@ LevelBombDialogView::LevelBombDialogView(Pht::IEngine& engine,
 
     mPlayButton = std::make_unique<MenuButton>(engine,
                                                *this,
-                                               Pht::Vec3 {0.0f, -7.0f, UiLayer::textRectangle},
+                                               Pht::Vec3 {0.0f, -7.4f, UiLayer::textRectangle},
                                                playButtonInputSize,
                                                playButtonStyle);
     mPlayButton->CreateText({-0.9f, -0.23f, UiLayer::buttonText}, "PLAY", textProperties);
@@ -62,11 +63,11 @@ LevelBombDialogView::LevelBombDialogView(Pht::IEngine& engine,
 
 void LevelBombDialogView::Init(Pht::Scene& scene) {
     std::vector<std::string> frameFilenames {
-        "bomb_frame1.jpg",
-        "bomb_frame2.jpg",
-        "bomb_frame3.jpg",
-        "bomb_frame4.jpg",
-        "bomb_frame5.jpg"
+        "level_bomb_frame1.jpg",
+        "level_bomb_frame2.jpg",
+        "level_bomb_frame3.jpg",
+        "level_bomb_frame4.jpg",
+        "level_bomb_frame5.jpg"
     };
 
     mSlideAnimation->Init(frameFilenames, scene);

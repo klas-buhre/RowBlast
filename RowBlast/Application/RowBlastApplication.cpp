@@ -32,6 +32,8 @@ Backlog:
   -Rendering:
     -Maybe the blue background material should be a bit less blue?
     -Maybe the gold background material should be a bit less red?
+    -Maybe remove light animation for the field blocks and always have a light direction that looks
+     good?
     -Try adding animated text messages like "Awesome" or "Combo" when clearing rows.
   -GUI:
     -Menu window that displays 3rd party lib credits.

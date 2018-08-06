@@ -17,6 +17,9 @@
         "F",
         "MirroredF"
     ],
+    "pieceSequence": [
+        "L"
+    ],
     "clearGrid": [
         "       ",
         "       ",
