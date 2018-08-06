@@ -274,6 +274,7 @@
 		6299915E2117374C00C845D1 /* laser_frame2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6299915D2117374B00C845D1 /* laser_frame2.jpg */; };
 		6299916121173EB100C845D1 /* LevelBombDialogView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6299915F21173EB100C845D1 /* LevelBombDialogView.cpp */; };
 		6299916421173ECF00C845D1 /* LevelBombDialogController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6299916221173ECF00C845D1 /* LevelBombDialogController.cpp */; };
+		629991662118A12200C845D1 /* level48.json in Resources */ = {isa = PBXBuildFile; fileRef = 629991652118A12200C845D1 /* level48.json */; };
 		6299DD7A208B4178001F74E2 /* CameraShake.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6299DD78208B4178001F74E2 /* CameraShake.cpp */; };
 		6299DD80208BA21C001F74E2 /* FastNoise.cc in Sources */ = {isa = PBXBuildFile; fileRef = 6299DD7F208BA21C001F74E2 /* FastNoise.cc */; };
 		6299DD82208E39C1001F74E2 /* level32.json in Resources */ = {isa = PBXBuildFile; fileRef = 6299DD81208E39C0001F74E2 /* level32.json */; };
@@ -950,6 +951,7 @@
 		6299916021173EB100C845D1 /* LevelBombDialogView.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = LevelBombDialogView.hpp; sourceTree = "<group>"; };
 		6299916221173ECF00C845D1 /* LevelBombDialogController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LevelBombDialogController.cpp; sourceTree = "<group>"; };
 		6299916321173ECF00C845D1 /* LevelBombDialogController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = LevelBombDialogController.hpp; sourceTree = "<group>"; };
+		629991652118A12200C845D1 /* level48.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level48.json; sourceTree = "<group>"; };
 		6299DD78208B4178001F74E2 /* CameraShake.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CameraShake.cpp; sourceTree = "<group>"; };
 		6299DD79208B4178001F74E2 /* CameraShake.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CameraShake.hpp; sourceTree = "<group>"; };
 		6299DD7E208BA21C001F74E2 /* FastNoise.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FastNoise.h; sourceTree = "<group>"; };
@@ -1299,6 +1301,7 @@
 				6261FFDA20FE06CA008F1619 /* level45.json */,
 				6240508520FF69C00077A454 /* level46.json */,
 				6240508720FF82A10077A454 /* level47.json */,
+				629991652118A12200C845D1 /* level48.json */,
 			);
 			path = Levels;
 			sourceTree = "<group>";
@@ -2412,6 +2415,7 @@
 				62B1CB5B210F8EE500D0F195 /* cloud_A_512.png in Resources */,
 				629B838620C9694E00DD2D0E /* level40.json in Resources */,
 				62B1CB87210F8F8600D0F195 /* particle_sprite_halo.png in Resources */,
+				629991662118A12200C845D1 /* level48.json in Resources */,
 				6278590620375DBF00494A4D /* level27.json in Resources */,
 				62785B2820875937006F9869 /* TexturedEmissiveLighting.vert in Resources */,
 				62B1CB8B210F8F8600D0F195 /* sky_upside_down.jpg in Resources */,
