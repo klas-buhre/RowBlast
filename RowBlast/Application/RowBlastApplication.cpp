@@ -31,6 +31,8 @@ Backlog:
      convenient to go back to the state before the move and not the initial state.
   -Rendering:
     -Maybe the blue background material should be a bit less blue?
+    -Maybe the gold background material should be a bit less red?
+    -Try adding animated text messages like "Awesome" or "Combo" when clearing rows.
   -GUI:
     -Menu window that displays 3rd party lib credits.
     -Maybe try the font in fontawesome.com for the bright dialogs.

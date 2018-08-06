@@ -37,8 +37,8 @@ SameColorDialogView::SameColorDialogView(Pht::IEngine& engine,
     GetRoot().AddChild(lineSceneObject);
 
     auto& textProperties {guiResources.GetSmallWhiteTextProperties(zoom)};
-    CreateText({-4.9f, 0.30f + 0.4f, UiLayer::text}, "Blocks of the same color stick", textProperties);
-    CreateText({-4.3f, -0.775f + 0.4f, UiLayer::text}, "together when they touch", textProperties);
+    CreateText({-4.9f, 0.30f + 0.45f, UiLayer::text}, "Blocks of the same color stick", textProperties);
+    CreateText({-4.2f, -0.775f + 0.45f, UiLayer::text}, "together when they touch", textProperties);
     
     Pht::Vec2 playButtonInputSize {194.0f, 43.0f};
 

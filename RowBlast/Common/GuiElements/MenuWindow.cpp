@@ -32,10 +32,9 @@ namespace {
     Pht::Vec2 CalcSize(MenuWindow::Size size,
                        MenuWindow::Style style,
                        const Pht::Vec2& frustumSize) {
-        auto sizeX {std::min(frustumSize.x - xBorder * 2.0f, 14.0f - xBorder * 2.0f)};
-        
         switch (style) {
-            case MenuWindow::Style::Bright:
+            case MenuWindow::Style::Bright: {
+                auto sizeX {std::min(frustumSize.x - xBorder * 2.0f, 13.5f - xBorder * 2.0f)};
                 switch (size) {
                     case MenuWindow::Size::Large:
                         return {sizeX, 20.4f};
@@ -47,7 +46,9 @@ namespace {
                         return {sizeX, 5.5f};
                 }
                 break;
-            case MenuWindow::Style::Dark:
+            }
+            case MenuWindow::Style::Dark: {
+                auto sizeX {std::min(frustumSize.x - xBorder * 2.0f, 14.0f - xBorder * 2.0f)};
                 switch (size) {
                     case MenuWindow::Size::Large:
                         return {sizeX, 19.0f};
@@ -59,6 +60,7 @@ namespace {
                         return {sizeX, 5.5f};
                 }
                 break;
+            }
         }
         
         assert(!"Unsupported menu window size");
