@@ -7,11 +7,6 @@ Backlog:
     -Metal.
 
   -Gameplay:
-   X-Maybe change so that there are three visible pieces in the switch object in the HUD. The two
-     that you can switch to and the active piece. The active piece is to the right and could be a
-     bit larger. Change name from switch to current so that the name next is not so confusing? Right
-     now, people might think that the pieces in next will be the current active piece in the next
-     move.
    X-Fix the piece pull down bug on level 31. See screenshot.
    X-Fix bug where the switchable pieces can change if double clicking on switch when the frame rate
      is really low like in the iPad simulator.
@@ -50,11 +45,16 @@ Backlog:
     -Credit Google for avatars? : http://www.iconarchive.com/show/noto-emoji-people-face-icons-by-google.1.html
 
 Ongoing tasks:
-  -Tutorial.
-    -The second world could introduce level bombs and triangle blocks.
-    -The third world could introduce the build objective.
-    -Level 19: Introduce level bombs.
-
+  -The second world could introduce level bombs and triangle blocks.
+  -The third world could introduce the build objective.
+  -Try the new HUD.
+    -Maybe change so that there are three visible pieces in the switch object in the HUD. The two
+     that you can switch to and the active piece. The active piece is to the right and could be a
+     bit larger. Change name from switch to current so that the name next is not so confusing? Right
+     now, people might think that the pieces in next will be the current active piece in the next
+     move.
+    -Maybe decrease the zoom on iPhone X to make room for the extra piece in the HUD. Also, maybe
+     the HUD up a bit so that it is more comfortable to to press switch on iPhone X.
 
 
 
@@ -128,10 +128,9 @@ Ordered Backlog:
         Done
     -Tutorial.
         Cost: 10
-    -Try the new HUD switch piece.
-        Cost: 4
-    -Fix all bugs.
-        Cost: 4
+        Done
+    -Try the new HUD.
+        Cost: 5
     -Levels in the second world.
         Cost: 5
     -Space world.
@@ -144,6 +143,8 @@ Ordered Backlog:
         Cost: 0.5
     -Sounds/music.
         Cost: 5
+    -Fix all bugs.
+        Cost: 4
     -Purchases.
         Cost: 15
     -Login/sign up account.

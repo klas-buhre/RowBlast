@@ -359,6 +359,7 @@
 		62BE275120B30FD80014C6DD /* StarsAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62BE274F20B30FD80014C6DD /* StarsAnimation.cpp */; };
 		62BE275320B42A360014C6DD /* star_1428.obj in Resources */ = {isa = PBXBuildFile; fileRef = 62BE275220B42A360014C6DD /* star_1428.obj */; };
 		62CC4CE420DE9104008C5D96 /* World2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62CC4CE220DE9104008C5D96 /* World2.cpp */; };
+		62DBEB67211B00C300AA5391 /* GameHudRectangles.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62DBEB65211B00C300AA5391 /* GameHudRectangles.cpp */; };
 		62DE641C20CE953D00A50F26 /* medium_button_skewed_0385.obj in Resources */ = {isa = PBXBuildFile; fileRef = 62DE641B20CE953C00A50F26 /* medium_button_skewed_0385.obj */; };
 		62E335DC1FD2EF600069B6CF /* level24.json in Resources */ = {isa = PBXBuildFile; fileRef = 62E335DB1FD2EF600069B6CF /* level24.json */; };
 		62E335DE1FD2F31E0069B6CF /* level25.json in Resources */ = {isa = PBXBuildFile; fileRef = 62E335DD1FD2F31E0069B6CF /* level25.json */; };
@@ -1062,6 +1063,8 @@
 		62BE275220B42A360014C6DD /* star_1428.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = star_1428.obj; sourceTree = "<group>"; };
 		62CC4CE220DE9104008C5D96 /* World2.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = World2.cpp; sourceTree = "<group>"; };
 		62CC4CE320DE9104008C5D96 /* World2.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = World2.hpp; sourceTree = "<group>"; };
+		62DBEB65211B00C300AA5391 /* GameHudRectangles.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameHudRectangles.cpp; sourceTree = "<group>"; };
+		62DBEB66211B00C300AA5391 /* GameHudRectangles.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = GameHudRectangles.hpp; sourceTree = "<group>"; };
 		62DE641B20CE953C00A50F26 /* medium_button_skewed_0385.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = medium_button_skewed_0385.obj; sourceTree = "<group>"; };
 		62E335DB1FD2EF600069B6CF /* level24.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level24.json; sourceTree = "<group>"; };
 		62E335DD1FD2F31E0069B6CF /* level25.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level25.json; sourceTree = "<group>"; };
@@ -1910,6 +1913,8 @@
 				62785CE82087618D006F9869 /* GhostPieceProducer.hpp */,
 				62785CE12087618D006F9869 /* PieceResources.cpp */,
 				62785CEB2087618D006F9869 /* PieceResources.hpp */,
+				62DBEB65211B00C300AA5391 /* GameHudRectangles.cpp */,
+				62DBEB66211B00C300AA5391 /* GameHudRectangles.hpp */,
 				62785CE22087618D006F9869 /* SceneObjectPool.cpp */,
 				62785CE52087618D006F9869 /* SceneObjectPool.hpp */,
 			);
@@ -2684,6 +2689,7 @@
 				62785B4020875937006F9869 /* GuiView.cpp in Sources */,
 				62785E182087618E006F9869 /* SettingsButtonView.cpp in Sources */,
 				621B571520A8A16F00772229 /* CloseButton.cpp in Sources */,
+				62DBEB67211B00C300AA5391 /* GameHudRectangles.cpp in Sources */,
 				62785E042087618E006F9869 /* SettingsMenuController.cpp in Sources */,
 				62785E072087618E006F9869 /* StringUtils.cpp in Sources */,
 				62785B1120875937006F9869 /* ShaderProgram.cpp in Sources */,

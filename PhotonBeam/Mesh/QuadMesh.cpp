@@ -7,15 +7,20 @@
 using namespace Pht;
 
 QuadMesh::QuadMesh(float xSize, float ySize, const Optional<std::string>& name) :
-    QuadMesh {xSize, ySize, Vec2{1.0f, 1.0f}, name} {}
+    QuadMesh {xSize, ySize, Vec2{1.0f, 1.0f}, 0.0f, name} {}
+
+QuadMesh::QuadMesh(float xSize, float ySize, float tilt, const Optional<std::string>& name) :
+    QuadMesh {xSize, ySize, Vec2{1.0f, 1.0f}, tilt, name} {}
 
 QuadMesh::QuadMesh(float xSize,
                    float ySize,
                    const Vec2& textureCount,
+                   float tilt,
                    const Optional<std::string>& name) :
     mName {name},
     mXSize {xSize},
     mYSize {ySize},
+    mTilt {tilt},
     mTextureCount {textureCount} {}
 
 QuadMesh::QuadMesh(const Vertices& vertices, const Optional<std::string>& name) :
@@ -36,8 +41,8 @@ VertexBuffer QuadMesh::GetVertices(VertexFlags flags) const {
         MeshUtils::QuadVertices vertices {
             {-halfX, -halfY, 0.0f},
             {halfX, -halfY, 0.0f},
-            {halfX, halfY, 0.0f},
-            {-halfX, halfY, 0.0f}
+            {halfX + mTilt, halfY, 0.0f},
+            {-halfX + mTilt, halfY, 0.0f}
         };
 
         auto textureCoords {MeshUtils::CreateQuadTextureCoords(mTextureCount)};

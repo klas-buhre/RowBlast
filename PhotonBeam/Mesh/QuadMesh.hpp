@@ -17,11 +17,13 @@ namespace Pht {
             Vertex mV2;
             Vertex mV3;
         };
-        
+
         QuadMesh(float xSize, float ySize, const Optional<std::string>& name = {});
+        QuadMesh(float xSize, float ySize, float tilt, const Optional<std::string>& name = {});
         QuadMesh(float xSize,
                  float ySize,
                  const Vec2& textureCount,
+                 float tilt,
                  const Optional<std::string>& name = {});
         QuadMesh(const Vertices& vertices, const Optional<std::string>& name = {});
         
@@ -32,6 +34,7 @@ namespace Pht {
         Optional<std::string> mName;
         float mXSize {0.0f};
         float mYSize {0.0f};
+        float mTilt {0.0f};
         Vertices mVertices;
         Vec2 mTextureCount;
     };
