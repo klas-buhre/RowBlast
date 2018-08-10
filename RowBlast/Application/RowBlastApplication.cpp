@@ -25,7 +25,6 @@ Backlog:
      not really matter since the user can select any piece from the selectables but maybe it is most 
      convenient to go back to the state before the move and not the initial state.
   -Rendering:
-    -Try only gray blocks under the HUD in the game scene.
     -Maybe the blue background material should be a bit less blue?
     -Maybe the gold background material should be a bit less red?
     -Maybe remove light animation for the field blocks and always have a light direction that looks

@@ -25,11 +25,18 @@ namespace RowBlast {
         ShortI,
         B
     };
+    
+    enum class FloatingBlockColor {
+        Random,
+        RandomExceptGray,
+        Gray
+    };
 
     struct BlockPathVolume {
         Pht::Vec3 mPosition;
         Pht::Vec3 mSize {0.0f, 0.0f, 0.0f};
         FloatingPieceType mPieceType {FloatingPieceType::BigSingleBlock};
+        FloatingBlockColor mBlockColor;
     };
     
     class FloatingBlocks {
@@ -52,6 +59,7 @@ namespace RowBlast {
         };
 
         void InitBlocks(Pht::Scene& scene, float scale, float angularVelocity);
+        Pht::RenderableObject& CalcBlockRenderable(FloatingBlockColor color);
         void CreateLPiece(FloatingBlock& block,
                           float scale,
                           Pht::RenderableObject& renderable,

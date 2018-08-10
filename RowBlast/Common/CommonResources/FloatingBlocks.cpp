@@ -97,7 +97,7 @@ void FloatingBlocks::InitBlocks(Pht::Scene& scene, float scale, float angularVel
         block.mVelocity = velocity;
         block.mAngularVelocity = blockAngularVelocity;
         
-        auto& renderable {*mBlockRenderables[std::rand() % numRenderables]};
+        auto& renderable {CalcBlockRenderable(volume.mBlockColor)};
         
         switch (volume.mPieceType) {
             case FloatingPieceType::BigSingleBlock:
@@ -126,6 +126,17 @@ void FloatingBlocks::InitBlocks(Pht::Scene& scene, float scale, float angularVel
         auto& transform {block.mSceneObject->GetTransform()};
         transform.SetPosition(position);
         transform.SetRotation(rotation);
+    }
+}
+
+Pht::RenderableObject& FloatingBlocks::CalcBlockRenderable(FloatingBlockColor color) {
+    switch (color) {
+        case FloatingBlockColor::Random:
+            return *mBlockRenderables[std::rand() % numRenderables];
+        case FloatingBlockColor::RandomExceptGray:
+            return *mBlockRenderables[std::rand() % (numRenderables - 1)];
+        case FloatingBlockColor::Gray:
+            return *mBlockRenderables[numRenderables - 1];
     }
 }
 

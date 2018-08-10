@@ -63,32 +63,38 @@ namespace {
         BlockPathVolume {
             .mPosition = {-10.0f, 15.0f, -10.0f},
             .mSize = {0.0f, 0.0f, 0.0f},
-            .mPieceType = FloatingPieceType::L
+            .mPieceType = FloatingPieceType::L,
+            .mBlockColor = FloatingBlockColor::RandomExceptGray
         },
         BlockPathVolume {
             .mPosition = {12.0f, 22.0f, -20.0f},
-            .mSize = {0.0f, 0.0f, 0.0f}
+            .mSize = {0.0f, 0.0f, 0.0f},
+            .mBlockColor = FloatingBlockColor::RandomExceptGray
         },
         BlockPathVolume {
             .mPosition = {-10.0f, 0.0f, -10.0f},
-            .mSize = {0.0f, 0.0f, 0.0f}
+            .mSize = {0.0f, 0.0f, 0.0f},
+            .mBlockColor = FloatingBlockColor::RandomExceptGray
         },
         BlockPathVolume {
             .mPosition = {13.0f, 0.0f, -20.0f},
             .mSize = {0.0f, 0.0f, 0.0f},
-            .mPieceType = FloatingPieceType::L
+            .mPieceType = FloatingPieceType::L,
+            .mBlockColor = FloatingBlockColor::RandomExceptGray
         },
         BlockPathVolume {
             .mPosition = {-7.0f, -20.0f, -10.0f},
-            .mSize = {0.0f, 0.0f, 0.0f}
+            .mSize = {0.0f, 0.0f, 0.0f},
+            .mBlockColor = FloatingBlockColor::Gray
         },
         BlockPathVolume {
             .mPosition = {10.0f, -30.0f, -20.0f},
-            .mSize = {0.0f, 0.0f, 0.0f}
+            .mSize = {0.0f, 0.0f, 0.0f},
+            .mBlockColor = FloatingBlockColor::Gray
         },
     };
 }
-        
+
 GameScene::GameScene(Pht::IEngine& engine,
                      const ScrollController& scrollController,
                      const CommonResources& commonResources,
