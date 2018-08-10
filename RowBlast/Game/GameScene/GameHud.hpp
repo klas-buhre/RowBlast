@@ -24,6 +24,7 @@ namespace RowBlast {
     class GameLogic;
     class LevelResources;
     class PieceResources;
+    class GameHudRectangles;
     class GameHudController;
     class CommonResources;
     
@@ -43,6 +44,7 @@ namespace RowBlast {
                 const GameLogic& gameLogic,
                 const LevelResources& levelResources,
                 const PieceResources& pieceResources,
+                const GameHudRectangles& hudRectangles,
                 GameHudController& gameHudController,
                 const CommonResources& commonResources,
                 Pht::Scene& scene,
@@ -111,19 +113,10 @@ namespace RowBlast {
                               Pht::SceneObject& lPiece);
         void CreateNextPiecesObject(Pht::Scene& scene,
                                     Pht::SceneObject& parentObject,
-                                    const Pht::TextProperties& textProperties);
+                                    const GameHudRectangles& hudRectangles);
         void CreateSelectablePiecesObject(Pht::Scene& scene,
                                           Pht::SceneObject& parentObject,
-                                          const Pht::TextProperties& textProperties);
-        Pht::SceneObject& CreateTextRectangle(const Pht::Vec3& position,
-                                              float length,
-                                              bool isBright,
-                                              Pht::Scene& scene,
-                                              Pht::SceneObject& parentObject);
-        Pht::SceneObject& CreatePiecesRectangle(const Pht::Vec3& position,
-                                                bool isBright,
-                                                Pht::Scene& scene,
-                                                Pht::SceneObject& parentObject);
+                                          const GameHudRectangles& hudRectangles);
         void CreateThreePreviewPieces(ThreePreviewPieces& previewPieces,
                                       Pht::SceneObject& parentObject);
         void UpdateLightAnimation();
@@ -149,10 +142,8 @@ namespace RowBlast {
         Pht::TextComponent* mMovesText {nullptr};
         Pht::LightComponent* mLight {nullptr};
         float mLightAnimationTime {0.0f};
-        Pht::SceneObject* mSwitchTextRectangle {nullptr};
-        Pht::SceneObject* mBrightSwitchTextRectangle {nullptr};
         Pht::SceneObject* mSelectablePiecesRectangle {nullptr};
-        Pht::SceneObject* mBrightSelectablePiecesRectangle {nullptr};
+        Pht::SceneObject* mPressedSelectablePiecesRectangle {nullptr};
         Pht::SceneObject* mProgressContainer {nullptr};
         Pht::SceneObject* mMovesContainer {nullptr};
         Pht::SceneObject* mNextPiecesContainer {nullptr};

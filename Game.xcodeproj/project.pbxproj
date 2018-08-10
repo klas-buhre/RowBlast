@@ -1905,6 +1905,8 @@
 				62785CE32087618D006F9869 /* GameController.hpp */,
 				62785CE02087618D006F9869 /* GameHud.cpp */,
 				62785CEA2087618D006F9869 /* GameHud.hpp */,
+				62DBEB65211B00C300AA5391 /* GameHudRectangles.cpp */,
+				62DBEB66211B00C300AA5391 /* GameHudRectangles.hpp */,
 				62785CE72087618D006F9869 /* GameScene.cpp */,
 				62785CE42087618D006F9869 /* GameScene.hpp */,
 				62785CDF2087618D006F9869 /* GameSceneRenderer.cpp */,
@@ -1913,8 +1915,6 @@
 				62785CE82087618D006F9869 /* GhostPieceProducer.hpp */,
 				62785CE12087618D006F9869 /* PieceResources.cpp */,
 				62785CEB2087618D006F9869 /* PieceResources.hpp */,
-				62DBEB65211B00C300AA5391 /* GameHudRectangles.cpp */,
-				62DBEB66211B00C300AA5391 /* GameHudRectangles.hpp */,
 				62785CE22087618D006F9869 /* SceneObjectPool.cpp */,
 				62785CE52087618D006F9869 /* SceneObjectPool.hpp */,
 			);

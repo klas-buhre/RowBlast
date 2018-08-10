@@ -23,16 +23,28 @@ namespace RowBlast {
             return *mPiecesRectangleRenderable;
         }
 
+        Pht::RenderableObject& GetPressedPiecesRectangleRenderable() const {
+            return *mPressedPiecesRectangleRenderable;
+        }
+
     private:
-        void CreatePiecesRectangle(Pht::IEngine& engine, const CommonResources& commonResources);
+        std::unique_ptr<Pht::RenderableObject>
+        CreatePiecesRectangle(Pht::IEngine& engine,
+                              const CommonResources& commonResources,
+                              const Pht::Vec4& colorSubtract);
         void FillStencilBuffer(Pht::OfflineRasterizer& rasterizer,
                                const Pht::Vec2& size,
                                float cornerRadius,
                                float padding);
-        void DrawPiecesRectangleBorder(Pht::OfflineRasterizer& rasterizer, const Pht::Vec2& size);
-        void DrawPiecesRectangleMainArea(Pht::OfflineRasterizer& rasterizer, const Pht::Vec2& size);
+        void DrawPiecesRectangleBorder(Pht::OfflineRasterizer& rasterizer,
+                                       const Pht::Vec2& size,
+                                       const Pht::Vec4& colorSubtract);
+        void DrawPiecesRectangleMainArea(Pht::OfflineRasterizer& rasterizer,
+                                         const Pht::Vec2& size,
+                                         const Pht::Vec4& colorSubtract);
         
         std::unique_ptr<Pht::RenderableObject> mPiecesRectangleRenderable;
+        std::unique_ptr<Pht::RenderableObject> mPressedPiecesRectangleRenderable;
     };
 }
 

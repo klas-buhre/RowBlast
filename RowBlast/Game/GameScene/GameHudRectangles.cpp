@@ -20,7 +20,8 @@ namespace {
     const Pht::Vec4 borderColor {0.725f, 0.35f, 0.85f, 0.75f};
     const Pht::Vec4 lowerBorderColor {0.725f, 0.35f, 0.85f, 0.1f};
     const Pht::Vec4 innerColor {0.85f, 0.4f, 0.95f, 0.93f};
-    const Pht::Vec4 darkerColor {0.9f, 0.9f, 1.0f, 0.0f};
+    const Pht::Vec4 lowerInnerColor {0.9f, 0.9f, 1.0f, 0.0f};
+    const Pht::Vec4 pressedColorSubtract {0.1f, 0.1f, 0.1f, 0.0f};
 
     const Pht::Vec2 piecesRectangleSize {4.8f, 2.4f};
     constexpr auto borderThickness {0.055f};
@@ -44,30 +45,45 @@ namespace {
     
         return std::make_unique<Pht::OfflineRasterizer>(size, imageSize);
     }
+    
+    Pht::Vec4 PositiveSubtract(const Pht::Vec4& a, const Pht::Vec4& b) {
+        return {
+            std::fmax(a.x - b.x, 0.0f),
+            std::fmax(a.y - b.y, 0.0f),
+            std::fmax(a.z - b.z, 0.0f),
+            std::fmax(a.w - b.w, 0.0f)
+        };
+    }
 }
 
 GameHudRectangles::GameHudRectangles(Pht::IEngine& engine, const CommonResources& commonResources) {
-    CreatePiecesRectangle(engine, commonResources);
+    mPiecesRectangleRenderable = CreatePiecesRectangle(engine,
+                                                       commonResources,
+                                                       {0.0f, 0.0f, 0.0f, 0.0f});
+    mPressedPiecesRectangleRenderable = CreatePiecesRectangle(engine,
+                                                              commonResources,
+                                                              pressedColorSubtract);
 }
 
-void GameHudRectangles::CreatePiecesRectangle(Pht::IEngine& engine,
-                                              const CommonResources& commonResources) {
+std::unique_ptr<Pht::RenderableObject>
+GameHudRectangles::CreatePiecesRectangle(Pht::IEngine& engine,
+                                         const CommonResources& commonResources,
+                                         const Pht::Vec4& colorSubtract) {
     auto rasterizer {CreateRasterizer(engine, commonResources, piecesRectangleSize)};
 
-    DrawPiecesRectangleBorder(*rasterizer, piecesRectangleSize);
+    DrawPiecesRectangleBorder(*rasterizer, piecesRectangleSize, colorSubtract);
     FillStencilBuffer(*rasterizer,
                       piecesRectangleSize,
                       piecesRectangleOuterCornerRadius - borderThickness * 2.0f,
                       borderThickness * 2.0f);
-    DrawPiecesRectangleMainArea(*rasterizer, piecesRectangleSize);
+    DrawPiecesRectangleMainArea(*rasterizer, piecesRectangleSize, colorSubtract);
 
     auto image {rasterizer->ProduceImage()};
     Pht::Material imageMaterial {*image, Pht::GenerateMipmap::Yes};
     imageMaterial.SetBlend(Pht::Blend::Yes);
     
     Pht::QuadMesh quadMesh {piecesRectangleSize.x, piecesRectangleSize.y, piecesRectangleTilt};
-    auto& sceneManager {engine.GetSceneManager()};
-    mPiecesRectangleRenderable = sceneManager.CreateRenderableObject(quadMesh, imageMaterial);
+    return engine.GetSceneManager().CreateRenderableObject(quadMesh, imageMaterial);
 }
 
 void GameHudRectangles::FillStencilBuffer(Pht::OfflineRasterizer& rasterizer,
@@ -109,12 +125,13 @@ void GameHudRectangles::FillStencilBuffer(Pht::OfflineRasterizer& rasterizer,
 }
 
 void GameHudRectangles::DrawPiecesRectangleBorder(Pht::OfflineRasterizer& rasterizer,
-                                                  const Pht::Vec2& size) {
+                                                  const Pht::Vec2& size,
+                                                  const Pht::Vec4& colorSubtract) {
     FillStencilBuffer(rasterizer, size, piecesRectangleOuterCornerRadius, 0.0f);
     
     Pht::OfflineRasterizer::VerticalGradientColors outerBorderColors {
-        lowerOuterBorderColor,
-        outerBorderColor
+        PositiveSubtract(lowerOuterBorderColor, colorSubtract),
+        PositiveSubtract(outerBorderColor, colorSubtract)
     };
     Pht::Vec2 lowerLeft {0.0f, 0.0f};
     Pht::Vec2 upperRight {size.x, size.y};
@@ -126,8 +143,8 @@ void GameHudRectangles::DrawPiecesRectangleBorder(Pht::OfflineRasterizer& raster
                       borderThickness);
 
     Pht::OfflineRasterizer::VerticalGradientColors borderColors {
-        lowerBorderColor,
-        borderColor
+        PositiveSubtract(lowerBorderColor, colorSubtract),
+        PositiveSubtract(borderColor, colorSubtract)
     };
     Pht::Vec2 lowerLeft2 {0.0f, 0.0f};
     Pht::Vec2 upperRight2 {size.x, size.y};
@@ -135,12 +152,12 @@ void GameHudRectangles::DrawPiecesRectangleBorder(Pht::OfflineRasterizer& raster
 }
 
 void GameHudRectangles::DrawPiecesRectangleMainArea(Pht::OfflineRasterizer& rasterizer,
-                                                    const Pht::Vec2& size) {
-    Pht::Vec2 lowerLeft {0.0f, 0.0f};
-    Pht::Vec2 upperRight {size.x, size.y};
-    rasterizer.DrawRectangle(upperRight, lowerLeft, darkerColor, Pht::DrawOver::Yes);
-    
-    Pht::OfflineRasterizer::VerticalGradientColors upperRectangleColors {darkerColor, innerColor};
+                                                    const Pht::Vec2& size,
+                                                    const Pht::Vec4& colorSubtract) {
+    Pht::OfflineRasterizer::VerticalGradientColors upperRectangleColors {
+        PositiveSubtract(lowerInnerColor, colorSubtract),
+        PositiveSubtract(innerColor, colorSubtract)
+    };
     Pht::Vec2 lowerLeft2 {0.0f, 0.0f};
     Pht::Vec2 upperRight2 {size.x, size.y};
     rasterizer.DrawGradientRectangle(upperRight2,

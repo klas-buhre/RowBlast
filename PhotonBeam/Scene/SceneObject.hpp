@@ -17,7 +17,6 @@ namespace Pht {
         explicit SceneObject(Name name);
         explicit SceneObject(RenderableObject* renderable);
         
-        void SetRenderable(RenderableObject* renderable);
         Vec3 GetWorldSpacePosition() const;
         void Update(bool parentMatrixChanged);
         void AddChild(SceneObject& child);
@@ -72,6 +71,10 @@ namespace Pht {
         
         const RenderableObject* GetRenderable() const {
             return mRenderable;
+        }
+        
+        void SetRenderable(RenderableObject* renderable) {
+            mRenderable = renderable;
         }
         
         RenderableObject* GetRenderable() {

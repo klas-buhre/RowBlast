@@ -13,11 +13,6 @@ SceneObject::SceneObject(RenderableObject* renderable) :
     mRenderable {renderable} {
 }
 
-void SceneObject::SetRenderable(RenderableObject* renderable) {
-    assert(renderable);
-    mRenderable = renderable;
-}
-
 Vec3 SceneObject::GetWorldSpacePosition() const {
     auto& w {mMatrix.w};
     return {w.x, w.y, w.z};

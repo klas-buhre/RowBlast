@@ -12,6 +12,7 @@
 #include "ScrollController.hpp"
 #include "SceneObjectPool.hpp"
 #include "GameHud.hpp"
+#include "GameHudRectangles.hpp"
 #include "FieldBorder.hpp"
 #include "UiLayer.hpp"
 
@@ -220,6 +221,7 @@ namespace RowBlast {
         GameHudController& mGameHudController;
         const Pht::CameraShake& mCameraShake;
         FieldBorder mFieldBorder;
+        GameHudRectangles mHudRectangles;
         Pht::Scene* mScene {nullptr};
         Pht::CameraComponent* mCamera {nullptr};
         Pht::LightComponent* mLight {nullptr};

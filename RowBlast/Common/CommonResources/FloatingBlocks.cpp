@@ -49,7 +49,8 @@ FloatingBlocks::FloatingBlocks(Pht::IEngine& engine,
         sceneManager.CreateRenderableObject(cubeMesh, materials.GetGoldMaterial()),
         sceneManager.CreateRenderableObject(cubeMesh, materials.GetBlueMaterial()),
         sceneManager.CreateRenderableObject(cubeMesh, materials.GetRedMaterial()),
-        sceneManager.CreateRenderableObject(cubeMesh, materials.GetGreenMaterial())
+        sceneManager.CreateRenderableObject(cubeMesh, materials.GetGreenMaterial()),
+        sceneManager.CreateRenderableObject(cubeMesh, materials.GetLightGrayMaterial())
     };
     
     auto& sceneObject {scene.CreateSceneObject()};

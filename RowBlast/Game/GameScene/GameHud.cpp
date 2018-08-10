@@ -12,11 +12,11 @@
 #include "SceneObjectUtils.hpp"
 
 // Game includes.
-#include "GradientRectangle.hpp"
 #include "RoundedCylinder.hpp"
 #include "GameLogic.hpp"
 #include "LevelResources.hpp"
 #include "PieceResources.hpp"
+#include "GameHudRectangles.hpp"
 #include "GameHudController.hpp"
 #include "UiLayer.hpp"
 #include "CommonResources.hpp"
@@ -37,6 +37,7 @@ GameHud::GameHud(Pht::IEngine& engine,
                  const GameLogic& gameLogic,
                  const LevelResources& levelResources,
                  const PieceResources& pieceResources,
+                 const GameHudRectangles& hudRectangles,
                  GameHudController& gameHudController,
                  const CommonResources& commonResources,
                  Pht::Scene& scene,
@@ -61,7 +62,7 @@ GameHud::GameHud(Pht::IEngine& engine,
 
     CreateLightAndCamera(scene, parentObject, hudLayer);
 
-    Pht::TextProperties upperTextProperties {
+    Pht::TextProperties textProperties {
         commonResources.GetHussarFontSize27(PotentiallyZoomedScreen::Yes),
         1.0f,
         Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f},
@@ -70,17 +71,11 @@ GameHud::GameHud(Pht::IEngine& engine,
         {0.4f, 0.4f, 0.4f, 0.5f}
     };
 
-    CreateProgressObject(scene, parentObject, upperTextProperties, levelResources);
-    CreateMovesObject(scene, parentObject, upperTextProperties);
+    CreateProgressObject(scene, parentObject, textProperties, levelResources);
+    CreateMovesObject(scene, parentObject, textProperties);
     
-    Pht::TextProperties lowerTextProperties {
-        commonResources.GetHussarFontSize22(PotentiallyZoomedScreen::Yes),
-        1.0f,
-        Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f}
-    };
-
-    CreateNextPiecesObject(scene, parentObject, lowerTextProperties);
-    CreateSelectablePiecesObject(scene, parentObject, lowerTextProperties);
+    CreateNextPiecesObject(scene, parentObject, hudRectangles);
+    CreateSelectablePiecesObject(scene, parentObject, hudRectangles);
 }
 
 void GameHud::CreateLightAndCamera(Pht::Scene& scene,
@@ -249,7 +244,7 @@ void GameHud::CreateGreenBlock(const Pht::Vec3& position,
 
 void GameHud::CreateNextPiecesObject(Pht::Scene& scene,
                                      Pht::SceneObject& parentObject,
-                                     const Pht::TextProperties& textProperties) {
+                                     const GameHudRectangles& hudRectangles) {
     auto& nextPiecesContainer {scene.CreateSceneObject()};
     auto& renderer {mEngine.GetRenderer()};
     
@@ -262,23 +257,18 @@ void GameHud::CreateNextPiecesObject(Pht::Scene& scene,
     mNextPiecesContainer = &nextPiecesContainer;
     nextPiecesContainer.GetTransform().SetPosition(position);
     parentObject.AddChild(nextPiecesContainer);
-    
-    CreatePiecesRectangle({0.15f, 0.0f, UiLayer::piecesRectangle}, false, scene, nextPiecesContainer);
-    
-    Pht::Vec3 textRectanglePosition {0.55f, 1.42f, UiLayer::textRectangle};
-    CreateTextRectangle(textRectanglePosition, 4.8f, false, scene, nextPiecesContainer);
-    
-    auto& text {scene.CreateText("NEXT", textProperties)};
-    auto& textSceneObject {text.GetSceneObject()};
-    textSceneObject.GetTransform().SetPosition({-0.1f, 1.22f, UiLayer::text});
-    nextPiecesContainer.AddChild(textSceneObject);
-    
+
+    auto& nextPiecesRectangle {scene.CreateSceneObject()};
+    nextPiecesRectangle.SetRenderable(&hudRectangles.GetPiecesRectangleRenderable());
+    nextPiecesRectangle.GetTransform().SetPosition({0.15f, 0.3f, UiLayer::piecesRectangle});
+    nextPiecesContainer.AddChild(nextPiecesRectangle);
+
     CreateThreePreviewPieces(mNextPreviewPieces, nextPiecesContainer);
 }
 
 void GameHud::CreateSelectablePiecesObject(Pht::Scene& scene,
                                            Pht::SceneObject& parentObject,
-                                           const Pht::TextProperties& textProperties) {
+                                           const GameHudRectangles& hudRectangles) {
     auto& selectablePiecesContainer {scene.CreateSceneObject()};
     auto& renderer {mEngine.GetRenderer()};
     
@@ -287,94 +277,23 @@ void GameHud::CreateSelectablePiecesObject(Pht::Scene& scene,
         -renderer.GetHudFrustumSize().y / 2.0f + renderer.GetBottomPaddingHeight() + 1.0125f,
         UiLayer::root
     };
-
+    
     mSelectablePiecesContainer = &selectablePiecesContainer;
     selectablePiecesContainer.GetTransform().SetPosition(position);
     parentObject.AddChild(selectablePiecesContainer);
-    
-    mSelectablePiecesRectangle = &CreatePiecesRectangle({0.15f, 0.0f, UiLayer::piecesRectangle},
-                                                        false,
-                                                        scene,
-                                                        selectablePiecesContainer);
-    mSwitchTextRectangle = &CreateTextRectangle({0.55f, 1.42f, UiLayer::textRectangle}, 4.8f,
-                                                false,
-                                                scene,
-                                                selectablePiecesContainer);
-    mBrightSelectablePiecesRectangle = &CreatePiecesRectangle({0.15f, 0.0f, UiLayer::piecesRectangle},
-                                                              true,
-                                                              scene,
-                                                              selectablePiecesContainer);
-    mBrightSwitchTextRectangle = &CreateTextRectangle({0.55f, 1.42f, UiLayer::textRectangle}, 4.8f,
-                                                      true,
-                                                      scene,
-                                                      selectablePiecesContainer);
-    mBrightSelectablePiecesRectangle->SetIsVisible(false);
-    mBrightSwitchTextRectangle->SetIsVisible(false);
 
-    auto& text {scene.CreateText("SWITCH", textProperties)};
-    auto& textSceneObject {text.GetSceneObject()};
-    textSceneObject.GetTransform().SetPosition({-0.55f, 1.22f, UiLayer::text});
-    selectablePiecesContainer.AddChild(textSceneObject);
+    mSelectablePiecesRectangle = &scene.CreateSceneObject();
+    mSelectablePiecesRectangle->SetRenderable(&hudRectangles.GetPiecesRectangleRenderable());
+    mSelectablePiecesRectangle->GetTransform().SetPosition({0.15f, 0.3f, UiLayer::piecesRectangle});
+    selectablePiecesContainer.AddChild(*mSelectablePiecesRectangle);
     
+    mPressedSelectablePiecesRectangle = &scene.CreateSceneObject();
+    mPressedSelectablePiecesRectangle->SetRenderable(&hudRectangles.GetPressedPiecesRectangleRenderable());
+    mPressedSelectablePiecesRectangle->GetTransform().SetPosition({0.15f, 0.3f, UiLayer::piecesRectangle});
+    selectablePiecesContainer.AddChild(*mPressedSelectablePiecesRectangle);
+    mPressedSelectablePiecesRectangle->SetIsVisible(false);
+
     CreateThreePreviewPieces(mSelectablePreviewPieces, selectablePiecesContainer);
-}
-
-Pht::SceneObject& GameHud::CreateTextRectangle(const Pht::Vec3& position,
-                                               float length,
-                                               bool isBright,
-                                               Pht::Scene& scene,
-                                               Pht::SceneObject& parentObject) {
-    Pht::Vec2 size {length, 0.7f};
-    auto leftQuadWidth {1.0f};
-    auto rightQuadWidth {1.0f};
-    
-    GradientRectangleColors colors {
-        .mLeft = {0.6f, 0.3f, 0.75f, 0.0f},
-        .mMid = {isBright ? 0.7f : 0.6f, isBright ? 0.5f : 0.3f, isBright ? 0.85f : 0.75f, 0.8f},
-        .mRight = {0.6f, 0.3f, 0.75f, 0.0f}
-    };
-
-    return CreateGradientRectangle(scene,
-                                   parentObject,
-                                   position,
-                                   size,
-                                   0.0f,
-                                   leftQuadWidth,
-                                   rightQuadWidth,
-                                   colors,
-                                   colors);
-}
-
-Pht::SceneObject& GameHud::CreatePiecesRectangle(const Pht::Vec3& position,
-                                                 bool isBright,
-                                                 Pht::Scene& scene,
-                                                 Pht::SceneObject& parentObject) {
-    Pht::Vec2 size {4.8f, 2.2f};
-    auto tilt {0.50f};
-    auto leftQuadWidth {0.4f};
-    auto rightQuadWidth {0.4f};
-    
-    GradientRectangleColors upperColors {
-        .mLeft = {0.9f, 0.9f, 1.0f, 0.0f},
-        .mMid = {isBright ? 0.95f : 0.85f, isBright ? 0.6f : 0.4f, 0.95f, 0.93f},
-        .mRight = {0.9f, 0.9f, 1.0f, 0.0f}
-    };
-
-    GradientRectangleColors lowerColors {
-        .mLeft = {0.9f, 0.9f, 1.0f, 0.0f},
-        .mMid = {0.9f, 0.9f, 1.0f, 0.0f},
-        .mRight = {0.9f, 0.9f, 1.0f, 0.0f}
-    };
-    
-    return CreateGradientRectangle(scene,
-                                   parentObject,
-                                   position,
-                                   size,
-                                   tilt,
-                                   leftQuadWidth,
-                                   rightQuadWidth,
-                                   upperColors,
-                                   lowerColors);
 }
 
 void GameHud::CreateThreePreviewPieces(ThreePreviewPieces& previewPieces,
@@ -393,17 +312,13 @@ void GameHud::CreateThreePreviewPieces(ThreePreviewPieces& previewPieces,
 }
 
 void GameHud::OnSwitchButtonDown() {
-    mBrightSelectablePiecesRectangle->SetIsVisible(true);
-    mBrightSwitchTextRectangle->SetIsVisible(true);
+    mPressedSelectablePiecesRectangle->SetIsVisible(true);
     mSelectablePiecesRectangle->SetIsVisible(false);
-    mSwitchTextRectangle->SetIsVisible(false);
 }
 
 void GameHud::OnSwitchButtonUp() {
-    mBrightSelectablePiecesRectangle->SetIsVisible(false);
-    mBrightSwitchTextRectangle->SetIsVisible(false);
+    mPressedSelectablePiecesRectangle->SetIsVisible(false);
     mSelectablePiecesRectangle->SetIsVisible(true);
-    mSwitchTextRectangle->SetIsVisible(true);
 }
 
 void GameHud::Update() {

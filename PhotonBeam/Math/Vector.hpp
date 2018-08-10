@@ -242,6 +242,10 @@ namespace Pht {
         Vector4 operator+(const Vector4& v) const {
             return Vector4(x + v.x, y + v.y, z + v.z, w + v.w);
         }
+        
+        Vector4 operator-(const Vector4& v) const {
+            return Vector4(x - v.x, y - v.y, z - v.z, w - v.w);
+        }
 
         Vector4 operator*(T s) const {
             return Vector4(x * s, y * s, z * s, w * s);

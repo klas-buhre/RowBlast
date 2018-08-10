@@ -69,7 +69,7 @@ namespace RowBlast {
                           Pht::RenderableObject& renderable,
                           Pht::Scene& scene);
     
-        static constexpr int numRenderables {4};
+        static constexpr int numRenderables {5};
 
         Pht::IEngine& mEngine;
         std::vector<FloatingBlock> mBlocks;
