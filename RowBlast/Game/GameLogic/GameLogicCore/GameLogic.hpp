@@ -130,14 +130,14 @@ namespace RowBlast {
         }
         
     private:
-        enum class FallingPieceInitReason {
+        enum class FallingPieceSpawnReason {
             None,
             NextMove,
             Switch,
             UndoMove
         };
 
-        Result InitFallingPiece();
+        Result SpawnFallingPiece();
         void SetPieceType();
         bool IsLevelCompleted();
         void ManageMoveHistory();
@@ -146,8 +146,8 @@ namespace RowBlast {
         void RemoveFallingPiece();
         void NextMove();
         void UpdateLevelProgress();
-        Pht::Vec2 CalculateFallingPieceInitPos(const Piece& pieceType,
-                                               FallingPieceInitReason fallingPieceInitReason);
+        Pht::Vec2 CalculateFallingPieceSpawnPos(const Piece& pieceType,
+                                                FallingPieceSpawnReason fallingPieceSpawnReason);
         void HandleCascading();
         void UpdateFieldExplosionsStates();
         void HandleControlTypeChange();
@@ -206,8 +206,8 @@ namespace RowBlast {
         GestureInputHandler mGestureInputHandler;
         ClickInputHandler mClickInputHandler;
         FallingPiece* mFallingPiece {nullptr};
-        FallingPieceInitReason mFallingPieceInitReason {FallingPieceInitReason::None};
-        const Piece* mFallingPieceInitType {nullptr};
+        FallingPieceSpawnReason mFallingPieceSpawnReason {FallingPieceSpawnReason::None};
+        const Piece* mFallingPieceSpawnType {nullptr};
         MoveData mCurrentMove;
         MoveData mCurrentMoveInitialState;
         MoveData mPreviousMoveInitialState;

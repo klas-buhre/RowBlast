@@ -120,8 +120,8 @@ void GameLogic::Init(const Level& level) {
     mCascadeState = CascadeState::NotCascading;
 
     RemoveFallingPiece();
-    mFallingPieceInitReason = FallingPieceInitReason::NextMove;
-    mFallingPieceInitType = nullptr;
+    mFallingPieceSpawnReason = FallingPieceSpawnReason::NextMove;
+    mFallingPieceSpawnType = nullptr;
     
     mMovesLeft = mLevel->GetNumMoves();
     mMovesUsed = 0;
@@ -150,9 +150,9 @@ GameLogic::Result GameLogic::Update(bool shouldUpdateLogic) {
                     return Result::None;
                 }
                 HandleControlTypeChange();
-                if (mFallingPieceInitReason != FallingPieceInitReason::None) {
-                    auto result {InitFallingPiece()};
-                    mFallingPieceInitReason = FallingPieceInitReason::None;
+                if (mFallingPieceSpawnReason != FallingPieceSpawnReason::None) {
+                    auto result {SpawnFallingPiece()};
+                    mFallingPieceSpawnReason = FallingPieceSpawnReason::None;
                     if (result != Result::None) {
                         return result;
                     }
@@ -169,8 +169,8 @@ GameLogic::Result GameLogic::Update(bool shouldUpdateLogic) {
     return HandleInput();
 }
 
-GameLogic::Result GameLogic::InitFallingPiece() {
-    assert(mFallingPieceInitReason != FallingPieceInitReason::None);
+GameLogic::Result GameLogic::SpawnFallingPiece() {
+    assert(mFallingPieceSpawnReason != FallingPieceSpawnReason::None);
     
     if (mBlastRadiusAnimation.IsActive()) {
         mBlastRadiusAnimation.Stop();
@@ -184,10 +184,10 @@ GameLogic::Result GameLogic::InitFallingPiece() {
     
     mFallingPiece = &mFallingPieceStorage;
     SetPieceType();
-    auto initPosition {
-        CalculateFallingPieceInitPos(*mCurrentMove.mPieceType, mFallingPieceInitReason)
+    auto spawnPosition {
+        CalculateFallingPieceSpawnPos(*mCurrentMove.mPieceType, mFallingPieceSpawnReason)
     };
-    mFallingPiece->Init(*mCurrentMove.mPieceType, initPosition, mLevel->GetSpeed());
+    mFallingPiece->Spawn(*mCurrentMove.mPieceType, spawnPosition, mLevel->GetSpeed());
     
     ManageMoveHistory();
     
@@ -218,9 +218,9 @@ GameLogic::Result GameLogic::InitFallingPiece() {
 }
 
 void GameLogic::SetPieceType() {
-    if (mFallingPieceInitType) {
-        mCurrentMove.mPieceType = mFallingPieceInitType;
-        mFallingPieceInitType = nullptr;
+    if (mFallingPieceSpawnType) {
+        mCurrentMove.mPieceType = mFallingPieceSpawnType;
+        mFallingPieceSpawnType = nullptr;
     } else {
         mCurrentMove.mPieceType = mCurrentMove.mSelectablePieces[1];
         mCurrentMove.mSelectablePieces[1] = mCurrentMove.mSelectablePieces[0];
@@ -249,8 +249,8 @@ bool GameLogic::IsLevelCompleted() {
 void GameLogic::ManageMoveHistory() {
     mCurrentMove.mId = mFallingPiece->GetId();
     
-    switch (mFallingPieceInitReason) {
-        case FallingPieceInitReason::NextMove:
+    switch (mFallingPieceSpawnReason) {
+        case FallingPieceSpawnReason::NextMove:
             ++mMovesUsed;
             if (GetMovesUsedIncludingCurrent() > 1) {
                 mPreviousMoveInitialState = mCurrentMoveInitialState;
@@ -261,15 +261,15 @@ void GameLogic::ManageMoveHistory() {
             }
             mTutorial.OnNewMove(GetMovesUsedIncludingCurrent());
             break;
-        case FallingPieceInitReason::UndoMove:
+        case FallingPieceSpawnReason::UndoMove:
             mCurrentMoveInitialState = mCurrentMove;
             mPreviousMoveInitialState = mCurrentMoveInitialState;
             mTutorial.OnNewMove(GetMovesUsedIncludingCurrent());
             break;
-        case FallingPieceInitReason::Switch:
+        case FallingPieceSpawnReason::Switch:
             mTutorial.OnSwitchPiece(GetMovesUsedIncludingCurrent(), mFallingPiece->GetPieceType());
             break;
-        case FallingPieceInitReason::None:
+        case FallingPieceSpawnReason::None:
             break;
     }
 }
@@ -278,11 +278,11 @@ void GameLogic::RemoveFallingPiece() {
     mFallingPiece = nullptr;
 }
 
-Pht::Vec2 GameLogic::CalculateFallingPieceInitPos(const Piece& pieceType,
-                                                  FallingPieceInitReason fallingPieceInitReason) {
+Pht::Vec2 GameLogic::CalculateFallingPieceSpawnPos(const Piece& pieceType,
+                                                   FallingPieceSpawnReason fallingPieceSpawnReason) {
     auto startXPos {mField.GetNumColumns() / 2 - pieceType.GetGridNumColumns() / 2};
     
-    if (fallingPieceInitReason == FallingPieceInitReason::Switch && mLevel->GetSpeed() > 0.0f) {
+    if (fallingPieceSpawnReason == FallingPieceSpawnReason::Switch && mLevel->GetSpeed() > 0.0f) {
         return Pht::Vec2 {startXPos + halfColumn, mFallingPiece->GetPosition().y};
     }
     
@@ -387,7 +387,7 @@ void GameLogic::UpdateLevelProgress() {
 
 void GameLogic::NextMove() {
     RemoveFallingPiece();
-    mFallingPieceInitReason = FallingPieceInitReason::NextMove;
+    mFallingPieceSpawnReason = FallingPieceSpawnReason::NextMove;
     --mMovesLeft;
     UpdateLevelProgress();
 }
@@ -406,8 +406,8 @@ void GameLogic::UndoMove() {
     mField.SetLowestVisibleRow(mScrollController.CalculatePreferredLowestVisibleRow());
 
     mCurrentMove = mPreviousMoveInitialState;
-    mFallingPieceInitType = mPreviousMoveInitialState.mPieceType;
-    mFallingPieceInitReason = FallingPieceInitReason::UndoMove;
+    mFallingPieceSpawnType = mPreviousMoveInitialState.mPieceType;
+    mFallingPieceSpawnReason = FallingPieceSpawnReason::UndoMove;
     RemoveFallingPiece();
     ++mMovesLeft;
     --mMovesUsed;
@@ -727,10 +727,10 @@ void GameLogic::SwitchPiece() {
         return;
     }
     
-    mFallingPieceInitType = mCurrentMove.mSelectablePieces[1];
+    mFallingPieceSpawnType = mCurrentMove.mSelectablePieces[1];
     mCurrentMove.mSelectablePieces[1] = mCurrentMove.mSelectablePieces[0];
     mCurrentMove.mSelectablePieces[0] = &mFallingPiece->GetPieceType();
-    mFallingPieceInitReason = FallingPieceInitReason::Switch;
+    mFallingPieceSpawnReason = FallingPieceSpawnReason::Switch;
     mPreviewPieceAnimationToStart = PreviewPieceAnimationToStart::SwitchPiece;
 }
 
@@ -743,7 +743,7 @@ bool GameLogic::IsThereRoomToSwitchPiece() {
         pieceType.GetGridNumColumns()
     };
  
-    auto position {CalculateFallingPieceInitPos(pieceType, FallingPieceInitReason::Switch)};
+    auto position {CalculateFallingPieceSpawnPos(pieceType, FallingPieceSpawnReason::Switch)};
     
     Pht::IVec2 intPosition {
         static_cast<int>(std::floor(position.x)),

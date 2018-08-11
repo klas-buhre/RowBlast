@@ -2,7 +2,7 @@
 
 using namespace RowBlast;
 
-void FallingPiece::Init(const Piece& pieceType, const Pht::Vec2& position, float speed) {
+void FallingPiece::Spawn(const Piece& pieceType, const Pht::Vec2& position, float speed) {
     mPosition = position;
     mRotation = Rotation::Deg0;
     mPieceType = &pieceType;

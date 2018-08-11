@@ -35,8 +35,13 @@ namespace {
         auto& renderBufferSize {renderer.GetRenderBufferSize()};
         auto& frustumSize {commonResources.GetHudFrustumSizePotentiallyZoomedScreen()};
         
-        auto xScaleFactor {static_cast<float>(renderBufferSize.x) / static_cast<float>(frustumSize.x)};
-        auto yScaleFactor {static_cast<float>(renderBufferSize.y) / static_cast<float>(frustumSize.y)};
+        auto xScaleFactor {
+            static_cast<float>(renderBufferSize.x) / static_cast<float>(frustumSize.x)
+        };
+
+        auto yScaleFactor {
+            static_cast<float>(renderBufferSize.y) / static_cast<float>(frustumSize.y)
+        };
         
         Pht::IVec2 imageSize {
             static_cast<int>(size.x * xScaleFactor),

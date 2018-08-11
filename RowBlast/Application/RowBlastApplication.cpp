@@ -50,9 +50,7 @@ Ongoing tasks:
   -Try the new HUD.
     -Maybe change so that there are three visible pieces in the switch object in the HUD. The two
      that you can switch to and the active piece. The active piece is to the right and could be a
-     bit larger. Change name from switch to current so that the name next is not so confusing? Right
-     now, people might think that the pieces in next will be the current active piece in the next
-     move.
+     bit larger.
     -Maybe decrease the zoom on iPhone X to make room for the extra piece in the HUD. Also, maybe
      the HUD up a bit so that it is more comfortable to to press switch on iPhone X.
 
