@@ -259,7 +259,7 @@ void GameHud::CreateNextPiecesObject(Pht::Scene& scene,
     parentObject.AddChild(nextPiecesContainer);
 
     auto& nextPiecesRectangle {scene.CreateSceneObject()};
-    nextPiecesRectangle.SetRenderable(&hudRectangles.GetPiecesRectangleRenderable());
+    nextPiecesRectangle.SetRenderable(&hudRectangles.GetNextPiecesRectangle());
     nextPiecesRectangle.GetTransform().SetPosition({0.15f, 0.3f, UiLayer::piecesRectangle});
     nextPiecesContainer.AddChild(nextPiecesRectangle);
 
@@ -273,7 +273,7 @@ void GameHud::CreateSelectablePiecesObject(Pht::Scene& scene,
     auto& renderer {mEngine.GetRenderer()};
     
     Pht::Vec3 position {
-        3.1f,
+        3.75f,
         -renderer.GetHudFrustumSize().y / 2.0f + renderer.GetBottomPaddingHeight() + 1.0125f,
         UiLayer::root
     };
@@ -283,12 +283,12 @@ void GameHud::CreateSelectablePiecesObject(Pht::Scene& scene,
     parentObject.AddChild(selectablePiecesContainer);
 
     mSelectablePiecesRectangle = &scene.CreateSceneObject();
-    mSelectablePiecesRectangle->SetRenderable(&hudRectangles.GetPiecesRectangleRenderable());
+    mSelectablePiecesRectangle->SetRenderable(&hudRectangles.GetSelectablePiecesRectangle());
     mSelectablePiecesRectangle->GetTransform().SetPosition({0.15f, 0.3f, UiLayer::piecesRectangle});
     selectablePiecesContainer.AddChild(*mSelectablePiecesRectangle);
     
     mPressedSelectablePiecesRectangle = &scene.CreateSceneObject();
-    mPressedSelectablePiecesRectangle->SetRenderable(&hudRectangles.GetPressedPiecesRectangleRenderable());
+    mPressedSelectablePiecesRectangle->SetRenderable(&hudRectangles.GetPressedSelectablePiecesRectangle());
     mPressedSelectablePiecesRectangle->GetTransform().SetPosition({0.15f, 0.3f, UiLayer::piecesRectangle});
     selectablePiecesContainer.AddChild(*mPressedSelectablePiecesRectangle);
     mPressedSelectablePiecesRectangle->SetIsVisible(false);

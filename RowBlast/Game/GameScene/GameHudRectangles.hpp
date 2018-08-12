@@ -19,18 +19,23 @@ namespace RowBlast {
     public:
         GameHudRectangles(Pht::IEngine& engine, const CommonResources& commonResources);
 
-        Pht::RenderableObject& GetPiecesRectangleRenderable() const {
-            return *mPiecesRectangleRenderable;
+        Pht::RenderableObject& GetNextPiecesRectangle() const {
+            return *mNextPiecesRectangle;
         }
 
-        Pht::RenderableObject& GetPressedPiecesRectangleRenderable() const {
-            return *mPressedPiecesRectangleRenderable;
+        Pht::RenderableObject& GetSelectablePiecesRectangle() const {
+            return *mSelectablePiecesRectangle;
+        }
+
+        Pht::RenderableObject& GetPressedSelectablePiecesRectangle() const {
+            return *mPressedSelectablePiecesRectangle;
         }
 
     private:
         std::unique_ptr<Pht::RenderableObject>
         CreatePiecesRectangle(Pht::IEngine& engine,
                               const CommonResources& commonResources,
+                              const Pht::Vec2& size,
                               const Pht::Vec4& colorSubtract);
         void FillStencilBuffer(Pht::OfflineRasterizer& rasterizer,
                                const Pht::Vec2& size,
@@ -43,8 +48,9 @@ namespace RowBlast {
                                          const Pht::Vec2& size,
                                          const Pht::Vec4& colorSubtract);
         
-        std::unique_ptr<Pht::RenderableObject> mPiecesRectangleRenderable;
-        std::unique_ptr<Pht::RenderableObject> mPressedPiecesRectangleRenderable;
+        std::unique_ptr<Pht::RenderableObject> mNextPiecesRectangle;
+        std::unique_ptr<Pht::RenderableObject> mSelectablePiecesRectangle;
+        std::unique_ptr<Pht::RenderableObject> mPressedSelectablePiecesRectangle;
     };
 }
 

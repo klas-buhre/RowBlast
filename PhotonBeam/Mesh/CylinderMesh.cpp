@@ -20,7 +20,8 @@ CylinderMesh::CylinderMesh(float radius,
         height,
         createDiscs,
         CylinderTextureCounts{{1.0f, 1.0f}, {1.0f, 1.0f}},
-        name} {}
+        name
+    } {}
 
 CylinderMesh::CylinderMesh(float radius,
                            float height,
@@ -38,9 +39,11 @@ Optional<std::string> CylinderMesh::GetName() const {
 }
 
 VertexBuffer CylinderMesh::GetVertices(VertexFlags flags) const {
-    VertexBuffer vertexBuffer {discVertexCount * 2 + bodyVertexCount,
-                               discIndexCount * 2 + bodyIndexCount,
-                               flags};
+    VertexBuffer vertexBuffer {
+        discVertexCount * 2 + bodyVertexCount,
+        discIndexCount * 2 + bodyIndexCount,
+        flags
+    };
     
     GenerateBody(vertexBuffer);
     

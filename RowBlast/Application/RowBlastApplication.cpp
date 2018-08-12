@@ -48,12 +48,12 @@ Ongoing tasks:
   -The second world could introduce level bombs and triangle blocks.
   -The third world could introduce the build objective.
   -Try the new HUD.
-    -Maybe change so that there are three visible pieces in the switch object in the HUD. The two
+    -Change so that there are three visible pieces in the switch object in the HUD. The two
      that you can switch to and the active piece. The active piece is to the right and could be a
      bit larger.
     -Maybe decrease the zoom on iPhone X to make room for the extra piece in the HUD. Also, maybe
      the HUD up a bit so that it is more comfortable to to press switch on iPhone X.
-
+    -Maybe move the pause button to the upper right corner.
 
 
 

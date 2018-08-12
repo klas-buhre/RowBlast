@@ -23,7 +23,8 @@ namespace {
     const Pht::Vec4 lowerInnerColor {0.9f, 0.9f, 1.0f, 0.0f};
     const Pht::Vec4 pressedColorSubtract {0.1f, 0.1f, 0.1f, 0.0f};
 
-    const Pht::Vec2 piecesRectangleSize {4.8f, 2.4f};
+    const Pht::Vec2 nextPiecesRectangleSize {4.8f, 2.4f};
+    const Pht::Vec2 selectablePiecesRectangleSize {6.1f, 2.4f};
     constexpr auto borderThickness {0.055f};
     constexpr auto piecesRectangleOuterCornerRadius {0.25f};
     constexpr auto piecesRectangleTilt {0.6f};
@@ -62,32 +63,39 @@ namespace {
 }
 
 GameHudRectangles::GameHudRectangles(Pht::IEngine& engine, const CommonResources& commonResources) {
-    mPiecesRectangleRenderable = CreatePiecesRectangle(engine,
+    mNextPiecesRectangle = CreatePiecesRectangle(engine,
+                                                 commonResources,
+                                                 nextPiecesRectangleSize,
+                                                 {0.0f, 0.0f, 0.0f, 0.0f});
+    mSelectablePiecesRectangle = CreatePiecesRectangle(engine,
                                                        commonResources,
+                                                       selectablePiecesRectangleSize,
                                                        {0.0f, 0.0f, 0.0f, 0.0f});
-    mPressedPiecesRectangleRenderable = CreatePiecesRectangle(engine,
+    mPressedSelectablePiecesRectangle = CreatePiecesRectangle(engine,
                                                               commonResources,
+                                                              selectablePiecesRectangleSize,
                                                               pressedColorSubtract);
 }
 
 std::unique_ptr<Pht::RenderableObject>
 GameHudRectangles::CreatePiecesRectangle(Pht::IEngine& engine,
                                          const CommonResources& commonResources,
+                                         const Pht::Vec2& size,
                                          const Pht::Vec4& colorSubtract) {
-    auto rasterizer {CreateRasterizer(engine, commonResources, piecesRectangleSize)};
+    auto rasterizer {CreateRasterizer(engine, commonResources, size)};
 
-    DrawPiecesRectangleBorder(*rasterizer, piecesRectangleSize, colorSubtract);
+    DrawPiecesRectangleBorder(*rasterizer, size, colorSubtract);
     FillStencilBuffer(*rasterizer,
-                      piecesRectangleSize,
+                      size,
                       piecesRectangleOuterCornerRadius - borderThickness * 2.0f,
                       borderThickness * 2.0f);
-    DrawPiecesRectangleMainArea(*rasterizer, piecesRectangleSize, colorSubtract);
+    DrawPiecesRectangleMainArea(*rasterizer, size, colorSubtract);
 
     auto image {rasterizer->ProduceImage()};
     Pht::Material imageMaterial {*image, Pht::GenerateMipmap::Yes};
     imageMaterial.SetBlend(Pht::Blend::Yes);
     
-    Pht::QuadMesh quadMesh {piecesRectangleSize.x, piecesRectangleSize.y, piecesRectangleTilt};
+    Pht::QuadMesh quadMesh {size.x, size.y, piecesRectangleTilt};
     return engine.GetSceneManager().CreateRenderableObject(quadMesh, imageMaterial);
 }
 
