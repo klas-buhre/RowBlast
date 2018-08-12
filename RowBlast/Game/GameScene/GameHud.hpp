@@ -35,8 +35,10 @@ namespace RowBlast {
         Pht::SceneObject* mRowBombSceneObject {nullptr};
     };
 
-    using ThreePreviewPieces = std::array<PreviewPiece, 3>;
-    using PreviewPieceRelativePositions = std::array<Pht::Vec3, 4>;
+    using NextPreviewPieces = std::array<PreviewPiece, 3>;
+    using SelectablePreviewPieces = std::array<PreviewPiece, 3>; // TODO: change to 4
+    using NextPreviewPiecesRelativePositions = std::array<Pht::Vec3, 4>;
+    using SelectablePreviewPiecesRelativePositions = std::array<Pht::Vec3, 4>; // TODO: change to 5
     
     class GameHud: public IGameHudEventListener {
     public:
@@ -59,16 +61,20 @@ namespace RowBlast {
         void OnNextPieceAnimationFinished();
         void Update();
         
-        ThreePreviewPieces& GetNextPreviewPieces() {
+        NextPreviewPieces& GetNextPreviewPieces() {
             return mNextPreviewPieces;
         }
         
-        ThreePreviewPieces& GetSelectablePreviewPieces() {
+        SelectablePreviewPieces& GetSelectablePreviewPieces() {
             return mSelectablePreviewPieces;
         }
         
-        const PreviewPieceRelativePositions& GetPreviewPieceRelativePositions() const {
-            return mPreviewPieceRelativePositions;
+        const NextPreviewPiecesRelativePositions& GetNextPreviewPiecesRelativePositions() const {
+            return mNextPreviewPiecesRelativePositions;
+        }
+
+        const SelectablePreviewPiecesRelativePositions& GetSelectablePreviewPiecesRelativePositions() const {
+            return mSelectablePreviewPiecesRelativePositions;
         }
 
         Pht::SceneObject& GetProgressContainer() {
@@ -117,17 +123,17 @@ namespace RowBlast {
         void CreateSelectablePiecesObject(Pht::Scene& scene,
                                           Pht::SceneObject& parentObject,
                                           const GameHudRectangles& hudRectangles);
-        void CreateThreePreviewPieces(ThreePreviewPieces& previewPieces,
-                                      Pht::SceneObject& parentObject);
         void UpdateLightAnimation();
         void UpdateProgress();
         void UpdateMovesLeft();
         void UpdatePreviewPieces();
-        void UpdatePreviewPieceGroup(ThreePreviewPieces& previewPieces,
-                                     const TwoPieces& pieces,
-                                     const TwoPieces& piecesPreviousFrame,
-                                     bool shouldStartPreviewPieceAnimation,
-                                     bool shouldDeactivateSlotZero);
+        void UpdateNextPreviewPieceGroup(const TwoPieces& pieces,
+                                         const TwoPieces& piecesPreviousFrame,
+                                         bool shouldStartPreviewPieceAnimation);
+        void UpdateSelectablePreviewPieceGroup(const TwoPieces& pieces,
+                                               const TwoPieces& piecesPreviousFrame,
+                                               bool shouldStartPreviewPieceAnimation,
+                                               bool shouldDeactivateSlotZero);
         void UpdatePreviewPiece(PreviewPiece& previewPiece,
                                 const Piece* pieceType,
                                 const Pht::Vec3& position);
@@ -148,11 +154,12 @@ namespace RowBlast {
         Pht::SceneObject* mMovesContainer {nullptr};
         Pht::SceneObject* mNextPiecesContainer {nullptr};
         Pht::SceneObject* mSelectablePiecesContainer {nullptr};
-        ThreePreviewPieces mNextPreviewPieces;
-        ThreePreviewPieces mSelectablePreviewPieces;
+        NextPreviewPieces mNextPreviewPieces;
+        SelectablePreviewPieces mSelectablePreviewPieces;
         TwoPieces mNext2PiecesPreviousFrame;
         TwoPieces mSelectablePiecesPreviousFrame;
-        const PreviewPieceRelativePositions mPreviewPieceRelativePositions;
+        const NextPreviewPiecesRelativePositions mNextPreviewPiecesRelativePositions;
+        const SelectablePreviewPiecesRelativePositions mSelectablePreviewPiecesRelativePositions;
     };
 }
 

@@ -64,7 +64,8 @@ void PreviewPiecesAnimation::Update(float dt) {
 
 void PreviewPiecesAnimation::StartNextPieceAndSwitchingAnimation() {
     auto& hud {mScene.GetHud()};
-    auto& piecePositionsInHud {hud.GetPreviewPieceRelativePositions()};
+    auto& nextPiecesPositionsInHud {hud.GetNextPreviewPiecesRelativePositions()};
+    auto& selectablePiecesPositionsInHud {hud.GetSelectablePreviewPiecesRelativePositions()};
     auto& nextPiecesContainerPos {hud.GetNextPiecesContainer().GetTransform().GetPosition()};
     
     auto& selectablePiecesContainerPos {
@@ -72,47 +73,43 @@ void PreviewPiecesAnimation::StartNextPieceAndSwitchingAnimation() {
     };
     
     Pht::Vec3 nextPieceRightPosition {
-        selectablePiecesContainerPos - nextPiecesContainerPos + piecePositionsInHud[1]
+        selectablePiecesContainerPos - nextPiecesContainerPos + selectablePiecesPositionsInHud[1]
     };
     
-    PreviewPiecePositionsConfig nextPiecePositions {
-        .mLeft = piecePositionsInHud[0],
-        .mSlot1 = piecePositionsInHud[1],
-        .mSlot2 = piecePositionsInHud[2],
+    NextPreviewPiecesPositionsConfig nextPiecesPositions {
+        .mLeft = nextPiecesPositionsInHud[0],
+        .mSlot1 = nextPiecesPositionsInHud[1],
+        .mSlot2 = nextPiecesPositionsInHud[2],
         .mRight = nextPieceRightPosition
     };
 
-    mNextPieceAnimation.Start(PreviewPieceGroupAnimation::Kind::NextPiece,
-                              hud.GetNextPreviewPieces(),
-                              nextPiecePositions);
+    mNextPieceAnimation.StartNextPieceAnimation(hud.GetNextPreviewPieces(), nextPiecesPositions);
     
-    PreviewPiecePositionsConfig switchPiecePositions {
-        .mLeft = piecePositionsInHud[0],
-        .mSlot1 = piecePositionsInHud[1],
-        .mSlot2 = piecePositionsInHud[2],
-        .mRight = piecePositionsInHud[3]
+    SelectablePreviewPiecesPositionsConfig selectablePiecesPositions {
+        .mLeft = selectablePiecesPositionsInHud[0],
+        .mSlot1 = selectablePiecesPositionsInHud[1],
+        .mSlot2 = selectablePiecesPositionsInHud[2],
+        .mRight = selectablePiecesPositionsInHud[3]
     };
 
-    mSwitchPieceAnimation.Start(PreviewPieceGroupAnimation::Kind::SwitchDuringNextPiece,
-                                hud.GetSelectablePreviewPieces(),
-                                switchPiecePositions);
+    mSwitchPieceAnimation.StartSwitchDuringNextPieceAnimation(hud.GetSelectablePreviewPieces(),
+                                                              selectablePiecesPositions);
     GoToNextPieceAndSwitchState();
 }
 
 void PreviewPiecesAnimation::StartSwitchingPiecesAnimation() {
     auto& hud {mScene.GetHud()};
-    auto& piecePositionsInHud {hud.GetPreviewPieceRelativePositions()};
+    auto& piecePositionsInHud {hud.GetSelectablePreviewPiecesRelativePositions()};
     
-    PreviewPiecePositionsConfig piecePositions {
+    SelectablePreviewPiecesPositionsConfig piecePositions {
         .mLeft = piecePositionsInHud[0],
         .mSlot1 = piecePositionsInHud[1],
         .mSlot2 = piecePositionsInHud[2],
         .mRight = piecePositionsInHud[3]
     };
 
-    mSwitchPieceAnimation.Start(PreviewPieceGroupAnimation::Kind::Switch,
-                                hud.GetSelectablePreviewPieces(),
-                                piecePositions);
+    mSwitchPieceAnimation.StartSwitchPieceAnimation(hud.GetSelectablePreviewPieces(),
+                                                    piecePositions);
     GoToSwitchingPieceState();
 }
 

@@ -8,13 +8,20 @@
 #include "GameHud.hpp"
 
 namespace RowBlast {
-    struct PreviewPiecePositionsConfig {
+    struct NextPreviewPiecesPositionsConfig {
         Pht::Vec3 mLeft;
         Pht::Vec3 mSlot1;
         Pht::Vec3 mSlot2;
         Pht::Vec3 mRight;
     };
-    
+
+    struct SelectablePreviewPiecesPositionsConfig {
+        Pht::Vec3 mLeft;
+        Pht::Vec3 mSlot1;
+        Pht::Vec3 mSlot2;
+        Pht::Vec3 mRight;
+    };
+
     class PreviewPieceGroupAnimation {
     public:
         enum class Kind {
@@ -24,9 +31,14 @@ namespace RowBlast {
             None
         };
         
-        void Start(Kind kind,
-                   ThreePreviewPieces& previewPieces,
-                   const PreviewPiecePositionsConfig& piecePositionsConfig);
+        void StartNextPieceAnimation(NextPreviewPieces& previewPieces,
+                                     const NextPreviewPiecesPositionsConfig& piecePositionsConfig);
+        void StartSwitchDuringNextPieceAnimation(
+            SelectablePreviewPieces& previewPieces,
+            const SelectablePreviewPiecesPositionsConfig& piecePositionsConfig);
+        void StartSwitchPieceAnimation(
+            SelectablePreviewPieces& previewPieces,
+            const SelectablePreviewPiecesPositionsConfig& piecePositionsConfig);
         void Update(float normalizedElapsedTime);
         
     private:
@@ -39,17 +51,19 @@ namespace RowBlast {
         void UpdateNextPieceAnimation(float slideValue);
         void UpdateSwitchDuringNextPieceAnimation(float slideValue);
         void UpdateSwitchPieceAnimation(float slideValue);
-        void AnimatePiece(int previewPieceIndex,
+        void AnimatePiece(PreviewPiece& previewPiece,
                           float xStart,
                           float xStop,
                           float slideFunctionValue,
                           Scaling scaling);
-        PreviewPiece& GetPreviewPiece(int previewPieceIndex);
-        Pht::SceneObject& GetSceneObject(int previewPieceIndex);
+        PreviewPiece& GetNextPreviewPiece(int previewPieceIndex);
+        PreviewPiece& GetSelectablePreviewPiece(int previewPieceIndex);
         
         Kind mKind {Kind::None};
-        PreviewPiecePositionsConfig mPiecePositionsConfig;
-        ThreePreviewPieces* mPreviewPieces {nullptr};
+        NextPreviewPieces* mNextPreviewPieces {nullptr};
+        NextPreviewPiecesPositionsConfig mNextPiecePositionsConfig;
+        SelectablePreviewPieces* mSelectablePreviewPieces {nullptr};
+        SelectablePreviewPiecesPositionsConfig mSelectablePreviewPiecesPositionsConfig;
     };
 }
 

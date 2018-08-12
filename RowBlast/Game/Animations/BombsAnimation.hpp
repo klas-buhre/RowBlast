@@ -40,9 +40,7 @@ namespace RowBlast {
     private:
         void AnimateEmissive(float dt);
         void AnimateBombRotation(float dt);
-        void AnimateBombPreviewPieces(ThreePreviewPieces& previewPieces);
         void AnimateRowBombRotation(float dt);
-        void AnimateRowBombPreviewPieces(ThreePreviewPieces& previewPieces);
         
         GameScene& mScene;
         PieceResources& mPieceResources;

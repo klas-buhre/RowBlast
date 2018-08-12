@@ -16,6 +16,24 @@ namespace {
     constexpr auto rowBombRotationSpeed {35.0f};
     constexpr auto emissiveAnimationDuration {1.5f};
     constexpr auto emissiveAmplitude {1.7f};
+    
+    template <typename T>
+    void AnimateBombPreviewPieces(T& previewPieces, const Pht::Vec3& bombRotation) {
+        for (auto& previewPiece: previewPieces) {
+            if (previewPiece.mBombSceneObject) {
+                previewPiece.mBombSceneObject->GetTransform().SetRotation(bombRotation);
+            }
+        }
+    }
+    
+    template <typename T>
+    void AnimateRowBombPreviewPieces(T& previewPieces, const Pht::Vec3& rowBombRotation) {
+        for (auto& previewPiece: previewPieces) {
+            if (previewPiece.mRowBombSceneObject) {
+                previewPiece.mRowBombSceneObject->GetTransform().SetRotation(rowBombRotation);
+            }
+        }
+    }
 }
 
 BombsAnimation::BombsAnimation(GameScene& scene,
@@ -73,16 +91,8 @@ void BombsAnimation::AnimateBombRotation(float dt) {
     
     mBombRotation = {xAngle, yAngle, 0.0f};
     
-    AnimateBombPreviewPieces(mScene.GetHud().GetNextPreviewPieces());
-    AnimateBombPreviewPieces(mScene.GetHud().GetSelectablePreviewPieces());
-}
-
-void BombsAnimation::AnimateBombPreviewPieces(ThreePreviewPieces& previewPieces) {
-    for (auto& previewPiece: previewPieces) {
-        if (previewPiece.mBombSceneObject) {
-            previewPiece.mBombSceneObject->GetTransform().SetRotation(mBombRotation);
-        }
-    }
+    AnimateBombPreviewPieces(mScene.GetHud().GetNextPreviewPieces(), mBombRotation);
+    AnimateBombPreviewPieces(mScene.GetHud().GetSelectablePreviewPieces(), mBombRotation);
 }
 
 void BombsAnimation::AnimateRowBombRotation(float dt) {
@@ -92,14 +102,6 @@ void BombsAnimation::AnimateRowBombRotation(float dt) {
         mRowBombRotation.y -= 360.0f;
     }
     
-    AnimateRowBombPreviewPieces(mScene.GetHud().GetNextPreviewPieces());
-    AnimateRowBombPreviewPieces(mScene.GetHud().GetSelectablePreviewPieces());
-}
-
-void BombsAnimation::AnimateRowBombPreviewPieces(ThreePreviewPieces& previewPieces) {
-    for (auto& previewPiece: previewPieces) {
-        if (previewPiece.mRowBombSceneObject) {
-            previewPiece.mRowBombSceneObject->GetTransform().SetRotation(mRowBombRotation);
-        }
-    }
+    AnimateRowBombPreviewPieces(mScene.GetHud().GetNextPreviewPieces(), mRowBombRotation);
+    AnimateRowBombPreviewPieces(mScene.GetHud().GetSelectablePreviewPieces(), mRowBombRotation);
 }
