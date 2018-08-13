@@ -101,6 +101,11 @@ void PreviewPieceGroupAnimation::UpdateSwitchDuringNextPieceAnimation(float slid
                  Scaling::NoScaling);
     AnimatePiece(GetSelectablePreviewPiece(2),
                  mSelectablePreviewPiecesPositionsConfig.mSlot2.x,
+                 mSelectablePreviewPiecesPositionsConfig.mSlot3.x,
+                 slideValue,
+                 Scaling::NoScaling);
+    AnimatePiece(GetSelectablePreviewPiece(3),
+                 mSelectablePreviewPiecesPositionsConfig.mSlot3.x,
                  mSelectablePreviewPiecesPositionsConfig.mRight.x,
                  slideValue,
                  Scaling::ScaleDown);
@@ -119,6 +124,11 @@ void PreviewPieceGroupAnimation::UpdateSwitchPieceAnimation(float slideValue) {
                  Scaling::NoScaling);
     AnimatePiece(GetSelectablePreviewPiece(2),
                  mSelectablePreviewPiecesPositionsConfig.mSlot2.x,
+                 mSelectablePreviewPiecesPositionsConfig.mSlot3.x,
+                 slideValue,
+                 Scaling::NoScaling);
+    AnimatePiece(GetSelectablePreviewPiece(3),
+                 mSelectablePreviewPiecesPositionsConfig.mSlot3.x,
                  mSelectablePreviewPiecesPositionsConfig.mRight.x,
                  slideValue,
                  Scaling::ScaleDown);

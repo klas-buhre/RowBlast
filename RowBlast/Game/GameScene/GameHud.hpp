@@ -36,9 +36,9 @@ namespace RowBlast {
     };
 
     using NextPreviewPieces = std::array<PreviewPiece, 3>;
-    using SelectablePreviewPieces = std::array<PreviewPiece, 3>; // TODO: change to 4
+    using SelectablePreviewPieces = std::array<PreviewPiece, 4>;
     using NextPreviewPiecesRelativePositions = std::array<Pht::Vec3, 4>;
-    using SelectablePreviewPiecesRelativePositions = std::array<Pht::Vec3, 4>; // TODO: change to 5
+    using SelectablePreviewPiecesRelativePositions = std::array<Pht::Vec3, 5>;
     
     class GameHud: public IGameHudEventListener {
     public:
@@ -127,12 +127,8 @@ namespace RowBlast {
         void UpdateProgress();
         void UpdateMovesLeft();
         void UpdatePreviewPieces();
-        void UpdateNextPreviewPieceGroup(const TwoPieces& pieces,
-                                         const TwoPieces& piecesPreviousFrame,
-                                         bool shouldStartPreviewPieceAnimation);
-        void UpdateSelectablePreviewPieceGroup(const TwoPieces& pieces,
-                                               const TwoPieces& piecesPreviousFrame,
-                                               bool shouldStartPreviewPieceAnimation,
+        void UpdateNextPreviewPieceGroup(bool shouldStartPreviewPieceAnimation);
+        void UpdateSelectablePreviewPieceGroup(bool shouldStartPreviewPieceAnimation,
                                                bool shouldDeactivateSlotZero);
         void UpdatePreviewPiece(PreviewPiece& previewPiece,
                                 const Piece* pieceType,
@@ -158,6 +154,7 @@ namespace RowBlast {
         SelectablePreviewPieces mSelectablePreviewPieces;
         TwoPieces mNext2PiecesPreviousFrame;
         TwoPieces mSelectablePiecesPreviousFrame;
+        const Piece* mActivePiecePreviousFrame {nullptr};
         const NextPreviewPiecesRelativePositions mNextPreviewPiecesRelativePositions;
         const SelectablePreviewPiecesRelativePositions mSelectablePreviewPiecesRelativePositions;
     };

@@ -76,6 +76,7 @@ namespace RowBlast {
         bool IsUndoMovePossible() const;
         void UndoMove();
         int GetMovesUsedIncludingCurrent() const;
+        const Piece* GetPieceType() const;
         
         void SetMovesLeft(int movesLeft) {
             mMovesLeft = movesLeft;

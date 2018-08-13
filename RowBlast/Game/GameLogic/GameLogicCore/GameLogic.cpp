@@ -229,6 +229,14 @@ void GameLogic::SetPieceType() {
     }
 }
 
+const Piece* GameLogic::GetPieceType() const {
+    if (mFallingPiece || mFallingPieceSpawnReason == FallingPieceSpawnReason::UndoMove) {
+        return mCurrentMove.mPieceType;
+    }
+    
+    return nullptr;
+}
+
 bool GameLogic::IsLevelCompleted() {
     switch (mLevel->GetObjective()) {
         case Level::Objective::Clear:
@@ -728,6 +736,7 @@ void GameLogic::SwitchPiece() {
     }
     
     mFallingPieceSpawnType = mCurrentMove.mSelectablePieces[1];
+    mCurrentMove.mPieceType = mCurrentMove.mSelectablePieces[1];
     mCurrentMove.mSelectablePieces[1] = mCurrentMove.mSelectablePieces[0];
     mCurrentMove.mSelectablePieces[0] = &mFallingPiece->GetPieceType();
     mFallingPieceSpawnReason = FallingPieceSpawnReason::Switch;

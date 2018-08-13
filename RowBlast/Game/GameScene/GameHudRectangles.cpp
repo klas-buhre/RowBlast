@@ -24,7 +24,7 @@ namespace {
     const Pht::Vec4 pressedColorSubtract {0.1f, 0.1f, 0.1f, 0.0f};
 
     const Pht::Vec2 nextPiecesRectangleSize {4.8f, 2.4f};
-    const Pht::Vec2 selectablePiecesRectangleSize {6.1f, 2.4f};
+    const Pht::Vec2 selectablePiecesRectangleSize {6.8f, 2.4f};
     constexpr auto borderThickness {0.055f};
     constexpr auto piecesRectangleOuterCornerRadius {0.25f};
     constexpr auto piecesRectangleTilt {0.6f};

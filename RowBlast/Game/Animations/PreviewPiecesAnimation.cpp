@@ -89,7 +89,8 @@ void PreviewPiecesAnimation::StartNextPieceAndSwitchingAnimation() {
         .mLeft = selectablePiecesPositionsInHud[0],
         .mSlot1 = selectablePiecesPositionsInHud[1],
         .mSlot2 = selectablePiecesPositionsInHud[2],
-        .mRight = selectablePiecesPositionsInHud[3]
+        .mSlot3 = selectablePiecesPositionsInHud[3],
+        .mRight = selectablePiecesPositionsInHud[4]
     };
 
     mSwitchPieceAnimation.StartSwitchDuringNextPieceAnimation(hud.GetSelectablePreviewPieces(),
@@ -105,7 +106,8 @@ void PreviewPiecesAnimation::StartSwitchingPiecesAnimation() {
         .mLeft = piecePositionsInHud[0],
         .mSlot1 = piecePositionsInHud[1],
         .mSlot2 = piecePositionsInHud[2],
-        .mRight = piecePositionsInHud[3]
+        .mSlot3 = piecePositionsInHud[3],
+        .mRight = piecePositionsInHud[4]
     };
 
     mSwitchPieceAnimation.StartSwitchPieceAnimation(hud.GetSelectablePreviewPieces(),

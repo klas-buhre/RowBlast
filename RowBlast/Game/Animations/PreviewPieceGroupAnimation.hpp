@@ -19,6 +19,7 @@ namespace RowBlast {
         Pht::Vec3 mLeft;
         Pht::Vec3 mSlot1;
         Pht::Vec3 mSlot2;
+        Pht::Vec3 mSlot3;
         Pht::Vec3 mRight;
     };
 
