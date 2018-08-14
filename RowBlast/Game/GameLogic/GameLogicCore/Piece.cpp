@@ -129,6 +129,14 @@ int Piece::GetNumEmptyTopRows() const {
     return 0;
 }
 
+bool Piece::NeedsUpAdjustmentInHud() const {
+    return false;
+}
+
+bool Piece::NeedsDownAdjustmentInHud() const {
+    return false;
+}
+
 Pht::RenderableObject* Piece::GetGhostPieceRenderable() const {
     return mGhostPieceRenderable.get();
 }

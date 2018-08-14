@@ -58,3 +58,11 @@ SevenPiece::SevenPiece(Pht::IEngine& engine, const GameScene& scene) {
     ghostPieceProducer.DrawBorder(border, FillGhostPiece::Yes);
     SetPressedGhostPieceRenderable(ghostPieceProducer.ProduceRenderable());
 }
+
+int SevenPiece::GetNumEmptyTopRows() const {
+    return 1;
+}
+
+bool SevenPiece::NeedsUpAdjustmentInHud() const {
+    return true;
+}

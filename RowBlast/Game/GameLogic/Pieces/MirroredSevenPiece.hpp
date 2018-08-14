@@ -14,6 +14,8 @@ namespace RowBlast {
     class MirroredSevenPiece: public Piece {
     public:
         MirroredSevenPiece(Pht::IEngine& engine, const GameScene& scene);
+        
+        bool NeedsDownAdjustmentInHud() const override;
     };
 }
 

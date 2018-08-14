@@ -66,17 +66,17 @@ GameHud::GameHud(Pht::IEngine& engine,
     mPieceResources {pieceResources},
     mLevelObjective {level.GetObjective()},
     mNextPreviewPiecesRelativePositions {
-        Pht::Vec3{-2.03f, 0.01f, UiLayer::block},
-        Pht::Vec3{-0.73f, 0.01f, UiLayer::block},
-        Pht::Vec3{1.27f, 0.01f, UiLayer::block},
-        Pht::Vec3{2.57f, 0.01f, UiLayer::block}
+        Pht::Vec3{-1.88f, 0.0f, UiLayer::block},
+        Pht::Vec3{-0.58f, 0.0f, UiLayer::block},
+        Pht::Vec3{1.42f, 0.0f, UiLayer::block},
+        Pht::Vec3{2.72f, 0.0f, UiLayer::block}
     },
     mSelectablePreviewPiecesRelativePositions {
-        Pht::Vec3{-3.03f, 0.01f, UiLayer::block},
-        Pht::Vec3{-1.73f, 0.01f, UiLayer::block},
-        Pht::Vec3{0.27f, 0.01f, UiLayer::block},
-        Pht::Vec3{2.27f, 0.01f, UiLayer::block},
-        Pht::Vec3{3.57f, 0.01f, UiLayer::block}
+        Pht::Vec3{-3.03f, 0.0f, UiLayer::block},
+        Pht::Vec3{-1.73f, 0.0f, UiLayer::block},
+        Pht::Vec3{0.27f, 0.0f, UiLayer::block},
+        Pht::Vec3{2.27f, 0.0f, UiLayer::block},
+        Pht::Vec3{3.57f, 0.0f, UiLayer::block}
     } {
     
     mNext2PiecesPreviousFrame.fill(nullptr);
@@ -274,7 +274,7 @@ void GameHud::CreateNextPiecesObject(Pht::Scene& scene,
     
     Pht::Vec3 position {
         -3.3f,
-        -renderer.GetHudFrustumSize().y / 2.0f + renderer.GetBottomPaddingHeight() + 1.0125f,
+        -renderer.GetHudFrustumSize().y / 2.0f + renderer.GetBottomPaddingHeight() + 1.35f,
         UiLayer::root
     };
 
@@ -284,7 +284,7 @@ void GameHud::CreateNextPiecesObject(Pht::Scene& scene,
 
     auto& nextPiecesRectangle {scene.CreateSceneObject()};
     nextPiecesRectangle.SetRenderable(&hudRectangles.GetNextPiecesRectangle());
-    nextPiecesRectangle.GetTransform().SetPosition({0.15f, 0.3f, UiLayer::piecesRectangle});
+    nextPiecesRectangle.GetTransform().SetPosition({0.15f, 0.0f, UiLayer::piecesRectangle});
     nextPiecesContainer.AddChild(nextPiecesRectangle);
 
     CreatePreviewPieces(mNextPreviewPieces,
@@ -300,7 +300,7 @@ void GameHud::CreateSelectablePiecesObject(Pht::Scene& scene,
     
     Pht::Vec3 position {
         3.1f,
-        -renderer.GetHudFrustumSize().y / 2.0f + renderer.GetBottomPaddingHeight() + 1.0125f,
+        -renderer.GetHudFrustumSize().y / 2.0f + renderer.GetBottomPaddingHeight() + 1.35f,
         UiLayer::root
     };
     
@@ -310,12 +310,12 @@ void GameHud::CreateSelectablePiecesObject(Pht::Scene& scene,
 
     mSelectablePiecesRectangle = &scene.CreateSceneObject();
     mSelectablePiecesRectangle->SetRenderable(&hudRectangles.GetSelectablePiecesRectangle());
-    mSelectablePiecesRectangle->GetTransform().SetPosition({0.15f, 0.3f, UiLayer::piecesRectangle});
+    mSelectablePiecesRectangle->GetTransform().SetPosition({0.15f, 0.0f, UiLayer::piecesRectangle});
     selectablePiecesContainer.AddChild(*mSelectablePiecesRectangle);
     
     mPressedSelectablePiecesRectangle = &scene.CreateSceneObject();
     mPressedSelectablePiecesRectangle->SetRenderable(&hudRectangles.GetPressedSelectablePiecesRectangle());
-    mPressedSelectablePiecesRectangle->GetTransform().SetPosition({0.15f, 0.3f, UiLayer::piecesRectangle});
+    mPressedSelectablePiecesRectangle->GetTransform().SetPosition({0.15f, 0.0f, UiLayer::piecesRectangle});
     selectablePiecesContainer.AddChild(*mPressedSelectablePiecesRectangle);
     mPressedSelectablePiecesRectangle->SetIsVisible(false);
 
@@ -501,6 +501,12 @@ void GameHud::UpdatePreviewPiece(PreviewPiece& previewPiece,
         -static_cast<float>(pieceNumRows) * cellSize / 2.0f + cellSize / 2.0f,
         0.0f
     };
+    
+    if (pieceType->NeedsUpAdjustmentInHud()) {
+        lowerLeft.y += cellSize / 2.0f;
+    } else if (pieceType->NeedsDownAdjustmentInHud()) {
+        lowerLeft.y -= cellSize / 2.0f;
+    }
     
     for (auto row {0}; row < pieceNumRows; row++) {
         for (auto column {0}; column < pieceNumColumns; column++) {

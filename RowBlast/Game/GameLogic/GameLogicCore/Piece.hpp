@@ -63,6 +63,8 @@ namespace RowBlast {
         virtual bool IsBomb() const;
         virtual bool IsRowBomb() const;
         virtual int GetNumEmptyTopRows() const;
+        virtual bool NeedsUpAdjustmentInHud() const;
+        virtual bool NeedsDownAdjustmentInHud() const;
         
         int GetGridNumRows() const {
             return mGridNumRows;

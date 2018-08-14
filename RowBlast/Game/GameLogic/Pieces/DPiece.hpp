@@ -14,6 +14,8 @@ namespace RowBlast {
     class DPiece: public Piece {
     public:
         DPiece(Pht::IEngine& engine, const GameScene& scene);
+        
+        bool NeedsDownAdjustmentInHud() const override;
     };
 }
 

@@ -55,3 +55,7 @@ DPiece::DPiece(Pht::IEngine& engine, const GameScene& scene) {
     ghostPieceProducer.DrawBorder(border, FillGhostPiece::Yes);
     SetPressedGhostPieceRenderable(ghostPieceProducer.ProduceRenderable());
 }
+
+bool DPiece::NeedsDownAdjustmentInHud() const {
+    return true;
+}

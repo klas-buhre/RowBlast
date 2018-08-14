@@ -316,6 +316,12 @@ void LevelGoalDialogView::InitPreviewPiece(LevelStartPreviewPiece& previewPiece,
         0.0f
     };
     
+    if (pieceType.NeedsUpAdjustmentInHud()) {
+        lowerLeft.y += cellSize / 2.0f;
+    } else if (pieceType.NeedsDownAdjustmentInHud()) {
+        lowerLeft.y -= cellSize / 2.0f;
+    }
+    
     for (auto row {0}; row < pieceNumRows; row++) {
         for (auto column {0}; column < pieceNumColumns; column++) {
             auto& subCell {grid[row][column].mFirstSubCell};

@@ -58,3 +58,7 @@ MirroredSevenPiece::MirroredSevenPiece(Pht::IEngine& engine, const GameScene& sc
     ghostPieceProducer.DrawBorder(border, FillGhostPiece::Yes);
     SetPressedGhostPieceRenderable(ghostPieceProducer.ProduceRenderable());
 }
+
+bool MirroredSevenPiece::NeedsDownAdjustmentInHud() const {
+    return true;
+}
