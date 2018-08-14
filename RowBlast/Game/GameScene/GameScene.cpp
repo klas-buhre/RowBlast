@@ -516,6 +516,8 @@ void GameScene::UpdateLightAnimation() {
         mLightAnimationTime = 0.0f;
     }
     
+    mLightAnimationTime = 2.5f;
+    
     auto t {(cos(mLightAnimationTime * 2.0f * 3.1415f / lightAnimationDuration) + 1.0f) / 2.0f};
     mLight->SetDirection(lightDirectionA.Lerp(t, lightDirectionB));
 }

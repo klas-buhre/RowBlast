@@ -72,11 +72,11 @@ GameHud::GameHud(Pht::IEngine& engine,
         Pht::Vec3{2.72f, 0.0f, UiLayer::block}
     },
     mSelectablePreviewPiecesRelativePositions {
-        Pht::Vec3{-3.03f, 0.0f, UiLayer::block},
-        Pht::Vec3{-1.73f, 0.0f, UiLayer::block},
-        Pht::Vec3{0.27f, 0.0f, UiLayer::block},
-        Pht::Vec3{2.27f, 0.0f, UiLayer::block},
-        Pht::Vec3{3.57f, 0.0f, UiLayer::block}
+        Pht::Vec3{-3.08f, 0.0f, UiLayer::block},
+        Pht::Vec3{-1.78f, 0.0f, UiLayer::block},
+        Pht::Vec3{0.22f, 0.0f, UiLayer::block},
+        Pht::Vec3{2.62f, 0.0f, UiLayer::block},
+        Pht::Vec3{3.72f, 0.0f, UiLayer::block}
     } {
     
     mNext2PiecesPreviousFrame.fill(nullptr);
@@ -273,7 +273,7 @@ void GameHud::CreateNextPiecesObject(Pht::Scene& scene,
     auto& renderer {mEngine.GetRenderer()};
     
     Pht::Vec3 position {
-        -3.3f,
+        -3.2f,
         -renderer.GetHudFrustumSize().y / 2.0f + renderer.GetBottomPaddingHeight() + 1.35f,
         UiLayer::root
     };

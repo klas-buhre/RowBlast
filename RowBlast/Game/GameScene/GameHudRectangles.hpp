@@ -36,7 +36,8 @@ namespace RowBlast {
         CreatePiecesRectangle(Pht::IEngine& engine,
                               const CommonResources& commonResources,
                               const Pht::Vec2& size,
-                              const Pht::Vec4& colorSubtract);
+                              const Pht::Vec4& colorSubtract,
+                              bool drawLine);
         void FillStencilBuffer(Pht::OfflineRasterizer& rasterizer,
                                const Pht::Vec2& size,
                                float cornerRadius,
@@ -47,6 +48,7 @@ namespace RowBlast {
         void DrawPiecesRectangleMainArea(Pht::OfflineRasterizer& rasterizer,
                                          const Pht::Vec2& size,
                                          const Pht::Vec4& colorSubtract);
+        void DrawLine(Pht::OfflineRasterizer& rasterizer, const Pht::Vec4& colorSubtract);
         
         std::unique_ptr<Pht::RenderableObject> mNextPiecesRectangle;
         std::unique_ptr<Pht::RenderableObject> mSelectablePiecesRectangle;

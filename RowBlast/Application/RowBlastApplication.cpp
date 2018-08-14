@@ -49,9 +49,8 @@ Ongoing tasks:
   -The second world could introduce level bombs and triangle blocks.
   -The third world could introduce the build objective.
   -Try the new HUD.
-    -Try a line in the selectable pieces.
     -Maybe decrease the zoom on iPhone X to make room for the extra piece in the HUD. Also, maybe
-     the HUD up a bit so that it is more comfortable to to press switch on iPhone X.
+     move the HUD up a bit so that it is more comfortable to to press switch on iPhone X.
     -Maybe move the pause button to the upper right corner.
     -Fix any env map issues.
     -Should the active piece be visible in the HUD before the first move?

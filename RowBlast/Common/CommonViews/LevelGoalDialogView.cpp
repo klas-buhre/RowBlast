@@ -84,14 +84,14 @@ LevelGoalDialogView::LevelGoalDialogView(Pht::IEngine& engine,
     lineSceneObject2.GetTransform().SetPosition({0.0f, -0.5f, UiLayer::textRectangle});
     GetRoot().AddChild(lineSceneObject2);
 
-    CreateText({-1.3f, -1.9f, UiLayer::text}, "GOAL", largeTextProperties);
+    CreateText({-1.3f, -2.1f, UiLayer::text}, "GOAL", largeTextProperties);
 
     auto& smallTextProperties {guiResources.GetSmallWhiteTextProperties(zoom)};
-    mClearObjective = &CreateText({-3.6f, -3.1f, UiLayer::text},
+    mClearObjective = &CreateText({-3.6f, -3.3f, UiLayer::text},
                                   "Clear all gray blocks",
                                   smallTextProperties);
     mClearObjective->GetSceneObject().SetIsVisible(false);
-    mBuildObjective = &CreateText({-2.95f, -3.1f, UiLayer::text},
+    mBuildObjective = &CreateText({-2.95f, -3.3f, UiLayer::text},
                                   "Fill all gray slots",
                                   smallTextProperties);
     mBuildObjective->GetSceneObject().SetIsVisible(false);
