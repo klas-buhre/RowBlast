@@ -55,7 +55,7 @@ namespace RowBlast {
 
         static const std::string mBlipSound;
         static const std::string mBombSound;
-        static constexpr auto narrowFrustumHeightFactor {1.11f};
+        static constexpr auto narrowFrustumHeightFactor {1.13f};
         
     private:
         void AddSounds(Pht::IAudio& audio);

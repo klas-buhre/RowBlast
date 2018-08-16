@@ -51,7 +51,7 @@ GameHudView::GameHudView(Pht::IEngine& engine, const CommonResources& commonReso
     auto& frustumSize {commonResources.GetHudFrustumSizePotentiallyZoomedScreen()};
 
     Pht::Vec2 position {
-        -6.2f,
+        -6.4f,
         -frustumSize.y / 2.0f + commonResources.GetBottomPaddingPotentiallyZoomedScreen() + 1.4625f
     };
 

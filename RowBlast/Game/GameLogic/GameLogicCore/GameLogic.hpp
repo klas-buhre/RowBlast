@@ -163,7 +163,7 @@ namespace RowBlast {
                                        const PieceBlocks& pieceBlocks,
                                        const Pht::IVec2& position,
                                        Direction collisionDirection);
-        BlastRadiusAnimation::Kind CalcBlastRadiusKind(const Pht::IVec2& position);
+        BlastRadiusAnimation::Kind CalculateBlastRadiusKind(const Pht::IVec2& position);
         bool IsThereRoomToSwitchPiece();
         Result HandleInput();
         void ForwardTouchToInputHandler(const Pht::TouchEvent& touchEvent);

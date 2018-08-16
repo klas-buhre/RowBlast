@@ -789,7 +789,7 @@ void GameLogic::SetFallingPieceXPosWithCollisionDetection(float fallingPieceNewX
     if (mBlastRadiusAnimation.IsActive()) {
         SetBlastRadiusAnimationPositionAtGhostPiece();
         Pht::IVec2 ghostPiecePosition {mFallingPiece->GetIntPosition().x, mGhostPieceRow};
-        auto blastRadiusKind {CalcBlastRadiusKind(ghostPiecePosition)};
+        auto blastRadiusKind {CalculateBlastRadiusKind(ghostPiecePosition)};
         
         if (blastRadiusKind != mBlastRadiusAnimation.GetActiveKind()) {
             mBlastRadiusAnimation.Start(blastRadiusKind);
@@ -807,7 +807,7 @@ bool GameLogic::IsInFieldExplosionsState() const {
 
 void GameLogic::StartBlastRadiusAnimationAtGhostPiece() {
     Pht::IVec2 ghostPiecePosition {mFallingPiece->GetIntPosition().x, mGhostPieceRow};
-    mBlastRadiusAnimation.Start(CalcBlastRadiusKind(ghostPiecePosition));
+    mBlastRadiusAnimation.Start(CalculateBlastRadiusKind(ghostPiecePosition));
 
     SetBlastRadiusAnimationPositionAtGhostPiece();
 }
@@ -822,7 +822,7 @@ void GameLogic::SetBlastRadiusAnimationPositionAtGhostPiece() {
 }
 
 void GameLogic::StartBlastRadiusAnimation(const Pht::IVec2& position) {
-    mBlastRadiusAnimation.Start(CalcBlastRadiusKind(position));
+    mBlastRadiusAnimation.Start(CalculateBlastRadiusKind(position));
     
     Pht::Vec2 blastRadiusAnimationPos {
         static_cast<float>(position.x) + 1.0f,
@@ -836,7 +836,7 @@ void GameLogic::StopBlastRadiusAnimation() {
     mBlastRadiusAnimation.Stop();
 }
 
-BlastRadiusAnimation::Kind GameLogic::CalcBlastRadiusKind(const Pht::IVec2& position) {
+BlastRadiusAnimation::Kind GameLogic::CalculateBlastRadiusKind(const Pht::IVec2& position) {
     auto impactedLevelBombsIfDropped {
         mField.DetectImpactedBombs(CreatePieceBlocks(*mFallingPiece), position)
     };

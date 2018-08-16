@@ -46,7 +46,7 @@ using namespace Pht;
 namespace {
     constexpr auto defaultScreenHeight {1136};
     constexpr auto topPadding {0.92f};
-    constexpr auto bottomPadding {1.57f};
+    constexpr auto bottomPadding {1.67f};
     const Mat4 identityMatrix;
     const Vec4 modelSpaceOrigin {0.0f, 0.0f, 0.0f, 1.0f};
     

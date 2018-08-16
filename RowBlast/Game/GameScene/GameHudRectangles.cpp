@@ -23,9 +23,9 @@ namespace {
     const Pht::Vec4 lowerInnerColor {0.9f, 0.9f, 1.0f, 0.0f};
     const Pht::Vec4 pressedColorSubtract {0.1f, 0.1f, 0.1f, 0.0f};
 
-    const Pht::Vec2 nextPiecesRectangleSize {4.6f, 2.4f};
-    const Pht::Vec2 selectablePiecesRectangleSize {6.9f, 2.4f};
-    constexpr auto lineXPosition {4.4f};
+    const Pht::Vec2 nextPiecesRectangleSize {4.5f, 2.4f};
+    const Pht::Vec2 selectablePiecesRectangleSize {6.8f, 2.4f};
+    constexpr auto lineXPosition {4.35f};
     constexpr auto lineThickness {0.02f};
     constexpr auto borderThickness {0.055f};
     constexpr auto piecesRectangleOuterCornerRadius {0.25f};

@@ -48,6 +48,18 @@ namespace {
             transform.SetRotation({-30.0f, -30.0f, 0.0f});
         }
     }
+    
+    float CalculateLowerHudObjectYPosition(Pht::IEngine& engine) {
+        auto& renderer {engine.GetRenderer()};
+        auto bottomPadding {renderer.GetBottomPaddingHeight()};
+        auto yPosition {-renderer.GetHudFrustumSize().y / 2.0f + bottomPadding + 1.35f};
+        
+        if (bottomPadding != 0.0f) {
+            yPosition += 0.19f;
+        }
+        
+        return yPosition;
+    }
 }
 
 GameHud::GameHud(Pht::IEngine& engine,
@@ -270,13 +282,7 @@ void GameHud::CreateNextPiecesObject(Pht::Scene& scene,
                                      Pht::SceneObject& parentObject,
                                      const GameHudRectangles& hudRectangles) {
     auto& nextPiecesContainer {scene.CreateSceneObject()};
-    auto& renderer {mEngine.GetRenderer()};
-    
-    Pht::Vec3 position {
-        -3.2f,
-        -renderer.GetHudFrustumSize().y / 2.0f + renderer.GetBottomPaddingHeight() + 1.35f,
-        UiLayer::root
-    };
+    Pht::Vec3 position {-3.65f, CalculateLowerHudObjectYPosition(mEngine), UiLayer::root};
 
     mNextPiecesContainer = &nextPiecesContainer;
     nextPiecesContainer.GetTransform().SetPosition(position);
@@ -296,13 +302,7 @@ void GameHud::CreateSelectablePiecesObject(Pht::Scene& scene,
                                            Pht::SceneObject& parentObject,
                                            const GameHudRectangles& hudRectangles) {
     auto& selectablePiecesContainer {scene.CreateSceneObject()};
-    auto& renderer {mEngine.GetRenderer()};
-    
-    Pht::Vec3 position {
-        3.1f,
-        -renderer.GetHudFrustumSize().y / 2.0f + renderer.GetBottomPaddingHeight() + 1.35f,
-        UiLayer::root
-    };
+    Pht::Vec3 position {2.65f, CalculateLowerHudObjectYPosition(mEngine), UiLayer::root};
     
     mSelectablePiecesContainer = &selectablePiecesContainer;
     selectablePiecesContainer.GetTransform().SetPosition(position);

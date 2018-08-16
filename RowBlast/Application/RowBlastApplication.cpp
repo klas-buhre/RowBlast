@@ -30,6 +30,10 @@ Backlog:
     -Maybe the gold background material should be a bit less red?
     -Maybe remove light animation for the field blocks and always have a light direction that looks
      good?
+    -The flashing blocks animation could use a continuous decrease in light add instead of descrete
+     as it is now. This should be possible if the material of the renderable object of the flashing
+     block is changed. Because of this, only one piece of the same color can flash at one time since
+     there is only one flashing renderable object for one color.
     -Try adding animated text messages like "Awesome" or "Combo" when clearing rows.
   -GUI:
     -Menu window that displays 3rd party lib credits.
@@ -49,11 +53,9 @@ Ongoing tasks:
   -The second world could introduce level bombs and triangle blocks.
   -The third world could introduce the build objective.
   -Try the new HUD.
-    -Maybe decrease the zoom on iPhone X to make room for the extra piece in the HUD. Also, maybe
-     move the HUD up a bit so that it is more comfortable to to press switch on iPhone X.
-    -Maybe move the pause button to the upper right corner.
+    -Change the pause button to the same design as the HUD rectangles.
+    -Trim button input sizes.
     -Fix any env map issues.
-    -Should the active piece be visible in the HUD before the first move?
     -Should the active piece disappear from the HUD once it has landed?
 
 
