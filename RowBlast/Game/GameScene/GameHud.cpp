@@ -84,7 +84,7 @@ GameHud::GameHud(Pht::IEngine& engine,
         Pht::Vec3{2.72f, 0.0f, UiLayer::block}
     },
     mSelectablePreviewPiecesRelativePositions {
-        Pht::Vec3{-3.08f, 0.0f, UiLayer::block},
+        Pht::Vec3{-2.96f, 0.0f, UiLayer::block},
         Pht::Vec3{-1.78f, 0.0f, UiLayer::block},
         Pht::Vec3{0.22f, 0.0f, UiLayer::block},
         Pht::Vec3{2.62f, 0.0f, UiLayer::block},

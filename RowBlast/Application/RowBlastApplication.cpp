@@ -53,8 +53,7 @@ Ongoing tasks:
   -The second world could introduce level bombs and triangle blocks.
   -The third world could introduce the build objective.
   -Try the new HUD.
-    -Trim button input sizes.
-    -Fix any env map issues.
+    -Fix switch piece in tutorial.
     -Should the active piece disappear from the HUD once it has landed?
 
 
