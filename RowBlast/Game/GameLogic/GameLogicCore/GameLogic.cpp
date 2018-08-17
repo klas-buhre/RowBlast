@@ -336,6 +336,11 @@ void GameLogic::HandleCascading() {
                 && !mScrollController.IsScrolling()) {
 
                 auto removedSubCells {mField.ClearFilledRows()};
+                
+                if (CalcNumRemovedRows(removedSubCells) >= cameraShakeNumRowsLimit) {
+                    mEffectManager.StartSmallCameraShake();
+                }
+
                 mFlyingBlocksAnimation.AddBlockRows(removedSubCells);
                 UpdateLevelProgress();
                 mCollapsingFieldAnimation.GoToInactiveState();
