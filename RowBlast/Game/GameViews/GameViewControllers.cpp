@@ -18,7 +18,8 @@ GameViewControllers::GameViewControllers(Pht::IEngine& engine,
                                          const CommonResources& commonResources,
                                          const UserData& userData,
                                          Settings& settings,
-                                         PieceResources& pieceResources) :
+                                         const PieceResources& pieceResources,
+                                         const GameHudRectangles& hudRectangles) :
     mFadeEffect {
         engine.GetSceneManager(),
         engine.GetRenderer(),
@@ -26,7 +27,7 @@ GameViewControllers::GameViewControllers(Pht::IEngine& engine,
         fade,
         UiLayer::backgroundFade
     },
-    mGameHudController {engine, commonResources},
+    mGameHudController {engine, commonResources, hudRectangles},
     mGameMenuController {engine, commonResources},
     mGameOverDialogController {engine, commonResources, userData},
     mNoMovesDialogController {engine, commonResources},

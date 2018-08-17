@@ -24,7 +24,7 @@ namespace RowBlast {
         
         LevelGoalDialogController(Pht::IEngine& engine,
                                   const CommonResources& commonResources,
-                                  PieceResources& pieceResources,
+                                  const PieceResources& pieceResources,
                                   LevelGoalDialogView::Scene scene);
         
         void Init(const LevelInfo& levelInfo);

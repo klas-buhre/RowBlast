@@ -99,14 +99,15 @@ GameScene::GameScene(Pht::IEngine& engine,
                      const ScrollController& scrollController,
                      const CommonResources& commonResources,
                      GameHudController& gameHudController,
-                     const Pht::CameraShake& cameraShake) :
+                     const Pht::CameraShake& cameraShake,
+                     const GameHudRectangles& hudRectangles) :
     mEngine {engine},
     mScrollController {scrollController},
     mCommonResources {commonResources},
     mGameHudController {gameHudController},
     mCameraShake {cameraShake},
+    mHudRectangles {hudRectangles},
     mFieldBorder {engine, *this, commonResources},
-    mHudRectangles {engine, commonResources},
     mFieldPosition {0.0f, 0.0f, 0.0f} {}
 
 void GameScene::Init(const Level& level,

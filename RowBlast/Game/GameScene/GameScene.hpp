@@ -12,7 +12,6 @@
 #include "ScrollController.hpp"
 #include "SceneObjectPool.hpp"
 #include "GameHud.hpp"
-#include "GameHudRectangles.hpp"
 #include "FieldBorder.hpp"
 #include "UiLayer.hpp"
 
@@ -32,6 +31,7 @@ namespace RowBlast {
     class PieceResources;
     class GameLogic;
     class GameHudController;
+    class GameHudRectangles;
     
     class GameScene {
     public:
@@ -55,7 +55,8 @@ namespace RowBlast {
                   const ScrollController& scrollController,
                   const CommonResources& commonResources,
                   GameHudController& gameHudController,
-                  const Pht::CameraShake& cameraShake);
+                  const Pht::CameraShake& cameraShake,
+                  const GameHudRectangles& hudRectangles);
         
         void Init(const Level& level,
                   const LevelResources& levelResources,
@@ -220,8 +221,8 @@ namespace RowBlast {
         const CommonResources& mCommonResources;
         GameHudController& mGameHudController;
         const Pht::CameraShake& mCameraShake;
+        const GameHudRectangles& mHudRectangles;
         FieldBorder mFieldBorder;
-        GameHudRectangles mHudRectangles;
         Pht::Scene* mScene {nullptr};
         Pht::CameraComponent* mCamera {nullptr};
         Pht::LightComponent* mLight {nullptr};

@@ -19,6 +19,14 @@ namespace RowBlast {
     public:
         GameHudRectangles(Pht::IEngine& engine, const CommonResources& commonResources);
 
+        Pht::RenderableObject& GetPauseButtonRectangle() const {
+            return *mPauseButtonRectangle;
+        }
+
+        Pht::RenderableObject& GetPressedPauseButtonRectangle() const {
+            return *mPressedPauseButtonRectangle;
+        }
+
         Pht::RenderableObject& GetNextPiecesRectangle() const {
             return *mNextPiecesRectangle;
         }
@@ -33,23 +41,26 @@ namespace RowBlast {
 
     private:
         std::unique_ptr<Pht::RenderableObject>
-        CreatePiecesRectangle(Pht::IEngine& engine,
-                              const CommonResources& commonResources,
-                              const Pht::Vec2& size,
-                              const Pht::Vec4& colorSubtract,
-                              bool drawLine);
+        CreateRectangle(Pht::IEngine& engine,
+                        const CommonResources& commonResources,
+                        const Pht::Vec2& size,
+                        float tilt,
+                        const Pht::Vec4& colorSubtract,
+                        bool drawDividerLine);
         void FillStencilBuffer(Pht::OfflineRasterizer& rasterizer,
                                const Pht::Vec2& size,
                                float cornerRadius,
                                float padding);
-        void DrawPiecesRectangleBorder(Pht::OfflineRasterizer& rasterizer,
-                                       const Pht::Vec2& size,
-                                       const Pht::Vec4& colorSubtract);
-        void DrawPiecesRectangleMainArea(Pht::OfflineRasterizer& rasterizer,
-                                         const Pht::Vec2& size,
-                                         const Pht::Vec4& colorSubtract);
+        void DrawRectangleBorder(Pht::OfflineRasterizer& rasterizer,
+                                 const Pht::Vec2& size,
+                                 const Pht::Vec4& colorSubtract);
+        void DrawRectangleMainArea(Pht::OfflineRasterizer& rasterizer,
+                                   const Pht::Vec2& size,
+                                   const Pht::Vec4& colorSubtract);
         void DrawLine(Pht::OfflineRasterizer& rasterizer, const Pht::Vec4& colorSubtract);
         
+        std::unique_ptr<Pht::RenderableObject> mPauseButtonRectangle;
+        std::unique_ptr<Pht::RenderableObject> mPressedPauseButtonRectangle;
         std::unique_ptr<Pht::RenderableObject> mNextPiecesRectangle;
         std::unique_ptr<Pht::RenderableObject> mSelectablePiecesRectangle;
         std::unique_ptr<Pht::RenderableObject> mPressedSelectablePiecesRectangle;

@@ -26,6 +26,7 @@ namespace RowBlast {
     class GameScene;
     class Settings;
     class PieceResources;
+    class GameHudRectangles;
     
     class GameViewControllers {
     public:
@@ -47,7 +48,8 @@ namespace RowBlast {
                             const CommonResources& commonResources,
                             const UserData& userData,
                             Settings& settings,
-                            PieceResources& pieceResources);
+                            const PieceResources& pieceResources,
+                            const GameHudRectangles& hudRectangles);
         
         void Init(GameScene& scene);
         void SetActiveController(Controller controller);

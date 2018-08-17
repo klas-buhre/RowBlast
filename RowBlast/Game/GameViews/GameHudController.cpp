@@ -12,8 +12,10 @@
 
 using namespace RowBlast;
 
-GameHudController::GameHudController(Pht::IEngine& engine, const CommonResources& commonResources) :
-    mView {engine, commonResources},
+GameHudController::GameHudController(Pht::IEngine& engine,
+                                     const CommonResources& commonResources,
+                                     const GameHudRectangles& hudRectangles) :
+    mView {engine, commonResources, hudRectangles},
     mEngine {engine} {}
 
 GameHudController::Result GameHudController::OnTouch(const Pht::TouchEvent& event) {

@@ -29,7 +29,7 @@ namespace {
 
 LevelGoalDialogView::LevelGoalDialogView(Pht::IEngine& engine,
                                          const CommonResources& commonResources,
-                                         PieceResources& pieceResources,
+                                         const PieceResources& pieceResources,
                                          Scene scene) :
     mEngine {engine},
     mPieceResources {pieceResources} {

@@ -6,59 +6,39 @@
 #include "IEngine.hpp"
 #include "IRenderer.hpp"
 #include "SceneObject.hpp"
-#include "Font.hpp"
 #include "OfflineRasterizer.hpp"
 #include "IImage.hpp"
 #include "ISceneManager.hpp"
 #include "UiLayer.hpp"
 #include "CommonResources.hpp"
+#include "GameHudRectangles.hpp"
 
 using namespace RowBlast;
 
 namespace {
-    std::unique_ptr<Pht::SceneObject> CreatePauseButtonSceneObject(Pht::OfflineRasterizer& rasterizer,
-                                                                   Pht::IEngine& engine,
-                                                                   const Pht::Vec2& coordinateSystemSize,
-                                                                   float circleRadius,
-                                                                   const Pht::Vec4& fillColor,
-                                                                   Pht::SceneResources& resources) {
-        Pht::Vec4 borderColor {1.0f, 1.0f, 1.0f, 0.95f};
-        rasterizer.DrawCircle({circleRadius, circleRadius}, circleRadius - 0.05f, 0.05f, borderColor);
+    float CalculateLowerHudObjectYPosition(const CommonResources& commonResources) {
+        auto bottomPadding {commonResources.GetBottomPaddingPotentiallyZoomedScreen()};
+        auto& frustumSize {commonResources.GetHudFrustumSizePotentiallyZoomedScreen()};
+        auto yPosition {-frustumSize.y / 2.0f + bottomPadding + 1.35f};
         
-        rasterizer.FillEnclosedArea(fillColor);
+        if (bottomPadding != 0.0f) {
+            yPosition += 0.19f;
+        }
         
-        Pht::Vec2 leftBarLowerLeft {circleRadius - 0.24f, circleRadius - 0.33f};
-        Pht::Vec2 leftBarUpperRight {circleRadius - 0.08f, circleRadius + 0.33f};
-        rasterizer.DrawRectangle(leftBarUpperRight, leftBarLowerLeft, borderColor, Pht::DrawOver::Yes);
-
-        Pht::Vec2 rightBarLowerLeft {circleRadius + 0.08f, circleRadius - 0.33f};
-        Pht::Vec2 rightBarUpperRight {circleRadius + 0.24f, circleRadius + 0.33f};
-        rasterizer.DrawRectangle(rightBarUpperRight, rightBarLowerLeft, borderColor, Pht::DrawOver::Yes);
-        
-        auto image {rasterizer.ProduceImage()};
-        
-        Pht::Material imageMaterial {*image, Pht::GenerateMipmap::Yes};
-        imageMaterial.SetBlend(Pht::Blend::Yes);
-        
-        auto& sceneManager {engine.GetSceneManager()};
-        return sceneManager.CreateSceneObject(Pht::QuadMesh {coordinateSystemSize.x, coordinateSystemSize.y},
-                                              imageMaterial,
-                                              resources);
+        return yPosition;
     }
 }
 
-GameHudView::GameHudView(Pht::IEngine& engine, const CommonResources& commonResources) {
+GameHudView::GameHudView(Pht::IEngine& engine,
+                         const CommonResources& commonResources,
+                         const GameHudRectangles& hudRectangles) {
     auto& frustumSize {commonResources.GetHudFrustumSizePotentiallyZoomedScreen()};
 
-    Pht::Vec2 position {
-        -6.4f,
-        -frustumSize.y / 2.0f + commonResources.GetBottomPaddingPotentiallyZoomedScreen() + 1.4625f
-    };
-
+    Pht::Vec2 position {-6.6f, CalculateLowerHudObjectYPosition(commonResources)};
     SetPosition(position);
     
-    const auto circleRadius {0.85f};
-    Pht::Vec2 coordinateSystemSize {circleRadius * 2.0f, circleRadius * 2.0f};
+    const auto pauseBarsAreaSize {0.5f};
+    Pht::Vec2 coordinateSystemSize {pauseBarsAreaSize * 2.0f, pauseBarsAreaSize * 2.0f};
 
     auto& renderer {engine.GetRenderer()};
     auto& renderBufferSize {renderer.GetRenderBufferSize()};
@@ -72,61 +52,74 @@ GameHudView::GameHudView(Pht::IEngine& engine, const CommonResources& commonReso
     };
     
     auto rasterizer {std::make_unique<Pht::OfflineRasterizer>(coordinateSystemSize, imageSize)};
-    
-    Pht::Vec4 fillColor {0.75f, 0.35f, 0.85f, 0.63f};
-    auto pauseButtonSceneObject {CreatePauseButtonSceneObject(*rasterizer,
-                                                              engine,
-                                                              coordinateSystemSize,
-                                                              circleRadius,
-                                                              fillColor,
-                                                              GetSceneResources())};
-    auto& pauseButtonSceneObjectCapture {*pauseButtonSceneObject};
-    
-    rasterizer->ClearBuffer();
-    
-    Pht::Vec4 pressedFillColor {0.95f, 0.6f, 0.95f, 0.63f};
-    auto pressedPauseButtonSceneObject {CreatePauseButtonSceneObject(*rasterizer,
-                                                                     engine,
-                                                                     coordinateSystemSize,
-                                                                     circleRadius,
-                                                                     pressedFillColor,
-                                                                     GetSceneResources())};
-    pressedPauseButtonSceneObject->GetTransform().SetScale(1.35f);
-    pressedPauseButtonSceneObject->SetIsVisible(false);
-    auto& pressedPauseButtonSceneObjectCapture {*pressedPauseButtonSceneObject};
 
-    auto buttonSceneObject {std::make_unique<Pht::SceneObject>(nullptr)};
-    
-    Pht::Vec2 buttonSize {60.0f, 60.0f};
-    mPauseButton = std::make_unique<Pht::Button>(*buttonSceneObject, buttonSize, engine);
-    buttonSceneObject->SetIsVisible(false);
-    AddSceneObject(std::move(buttonSceneObject));
+    Pht::Vec4 barColor {0.3f, 0.15f, 0.355f, 0.65f};
+    Pht::Vec4 barBorderColor {1.0f, 1.0f, 1.0f, 1.0f};
+
+    Pht::Vec2 leftBarLowerLeft {pauseBarsAreaSize - 0.24f, pauseBarsAreaSize - 0.32f};
+    Pht::Vec2 leftBarUpperRight {pauseBarsAreaSize - 0.10f, pauseBarsAreaSize + 0.32f};
+    rasterizer->DrawRectangle(leftBarUpperRight, leftBarLowerLeft, barColor, Pht::DrawOver::Yes);
+
+    Pht::Vec2 rightBarLowerLeft {pauseBarsAreaSize + 0.10f, pauseBarsAreaSize - 0.32f};
+    Pht::Vec2 rightBarUpperRight {pauseBarsAreaSize + 0.24f, pauseBarsAreaSize + 0.32f};
+    rasterizer->DrawRectangle(rightBarUpperRight, rightBarLowerLeft, barColor, Pht::DrawOver::Yes);
+
+    auto image {rasterizer->ProduceImage()};
+
+    Pht::Material imageMaterial {*image, Pht::GenerateMipmap::Yes};
+    imageMaterial.SetBlend(Pht::Blend::Yes);
+
+    auto& sceneManager {engine.GetSceneManager()};
+    auto pauseBarsRenderable {
+        sceneManager.CreateRenderableObject(Pht::QuadMesh {coordinateSystemSize.x, coordinateSystemSize.y},
+                                            imageMaterial)
+    };
+
+    auto& pauseButtonSceneObject {CreateSceneObject()};
+    GetRoot().AddChild(pauseButtonSceneObject);
+
+    auto& normalPauseButtonSceneObject {CreateSceneObject()};
+    normalPauseButtonSceneObject.SetRenderable(&hudRectangles.GetPauseButtonRectangle());
+    pauseButtonSceneObject.AddChild(normalPauseButtonSceneObject);
+    auto& normalPauseButtonBarsSceneObject {CreateSceneObject()};
+    normalPauseButtonBarsSceneObject.SetRenderable(pauseBarsRenderable.get());
+    normalPauseButtonBarsSceneObject.GetTransform().SetPosition({0.2f, 0.0f, UiLayer::buttonText});
+    normalPauseButtonSceneObject.AddChild(normalPauseButtonBarsSceneObject);
+
+    auto& pressedPauseButtonSceneObject {CreateSceneObject()};
+    pressedPauseButtonSceneObject.SetIsVisible(false);
+    pressedPauseButtonSceneObject.SetRenderable(&hudRectangles.GetPressedPauseButtonRectangle());
+    pauseButtonSceneObject.AddChild(pressedPauseButtonSceneObject);
+    auto& pressedPauseButtonBarsSceneObject {CreateSceneObject()};
+    pressedPauseButtonBarsSceneObject.SetRenderable(pauseBarsRenderable.get());
+    pressedPauseButtonBarsSceneObject.GetTransform().SetPosition({0.2f, 0.0f, UiLayer::buttonText});
+    pressedPauseButtonSceneObject.AddChild(pressedPauseButtonBarsSceneObject);
+
+    Pht::Vec2 pauseButtonSize {60.0f, 60.0f};
+    mPauseButton = std::make_unique<Pht::Button>(pauseButtonSceneObject, pauseButtonSize, engine);
     
     auto pausePressedFunction {[&] () {
-        pauseButtonSceneObjectCapture.SetIsVisible(false);
-        pressedPauseButtonSceneObjectCapture.SetIsVisible(true);
+        normalPauseButtonSceneObject.SetIsVisible(false);
+        pressedPauseButtonSceneObject.SetIsVisible(true);
     }};
     
     mPauseButton->SetOnDown(pausePressedFunction);
     
     auto pauseUnpressedFunction {[&] () {
-        pauseButtonSceneObjectCapture.SetIsVisible(true);
-        pressedPauseButtonSceneObjectCapture.SetIsVisible(false);
+        normalPauseButtonSceneObject.SetIsVisible(true);
+        pressedPauseButtonSceneObject.SetIsVisible(false);
     }};
     
     mPauseButton->SetOnUpInside(pauseUnpressedFunction);
     mPauseButton->SetOnUpOutside(pauseUnpressedFunction);
     mPauseButton->SetOnMoveOutside(pauseUnpressedFunction);
-    
-    AddSceneObject(std::move(pauseButtonSceneObject));
-    AddSceneObject(std::move(pressedPauseButtonSceneObject));
-    
-    auto switchButtonSceneObject {std::make_unique<Pht::SceneObject>(nullptr)};
-    switchButtonSceneObject->SetIsVisible(false);
-    switchButtonSceneObject->GetTransform().SetPosition({8.65f, 0.0f, UiLayer::root});
-    
+
+    auto& switchButtonSceneObject {CreateSceneObject()};
+    GetRoot().AddChild(switchButtonSceneObject);
     Pht::Vec2 switchButtonSize {110.0f, 60.0f};
-    mSwitchButton = std::make_unique<Pht::Button>(*switchButtonSceneObject, switchButtonSize, engine);
-    
-    AddSceneObject(std::move(switchButtonSceneObject));
+    mSwitchButton = std::make_unique<Pht::Button>(switchButtonSceneObject, switchButtonSize, engine);
+    switchButtonSceneObject.SetIsVisible(false);
+    switchButtonSceneObject.GetTransform().SetPosition({8.65f, 0.0f, UiLayer::root});
+
+    GetSceneResources().AddRenderableObject(std::move(pauseBarsRenderable));
 }

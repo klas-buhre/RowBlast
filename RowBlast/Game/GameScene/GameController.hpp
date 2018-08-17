@@ -28,6 +28,7 @@
 #include "BombsAnimation.hpp"
 #include "LevelCompletedController.hpp"
 #include "Tutorial.hpp"
+#include "GameHudRectangles.hpp"
 
 namespace Pht {
     class IEngine;
@@ -128,6 +129,7 @@ namespace RowBlast {
         Pht::IEngine& mEngine;
         UserData& mUserData;
         PieceResources mPieceResources;
+        GameHudRectangles mHudRectangles;
         GameViewControllers mGameViewControllers;
         Field mField;
         CollapsingFieldAnimation mCollapsingFieldAnimation;

@@ -33,7 +33,7 @@ namespace RowBlast {
 
         LevelGoalDialogView(Pht::IEngine& engine,
                             const CommonResources& commonResources,
-                            PieceResources& pieceResources,
+                            const PieceResources& pieceResources,
                             Scene scene);
         
         void Init(const LevelInfo& levelInfo);
@@ -75,7 +75,7 @@ namespace RowBlast {
         using LevelStartPreviewPieces = std::array<LevelStartPreviewPiece, Level::maxNumPieceTypes>;
 
         Pht::IEngine& mEngine;
-        PieceResources& mPieceResources;
+        const PieceResources& mPieceResources;
         std::unique_ptr<MenuButton> mCloseButton;
         std::unique_ptr<MenuButton> mPlayButton;
         std::unique_ptr<MenuButton> mBackButton;

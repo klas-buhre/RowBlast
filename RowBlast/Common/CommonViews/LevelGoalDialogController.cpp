@@ -11,7 +11,7 @@ using namespace RowBlast;
 
 LevelGoalDialogController::LevelGoalDialogController(Pht::IEngine& engine,
                                                      const CommonResources& commonResources,
-                                                     PieceResources& pieceResources,
+                                                     const PieceResources& pieceResources,
                                                      LevelGoalDialogView::Scene scene) :
     mInput {engine.GetInput()},
     mView {engine, commonResources, pieceResources, scene},
