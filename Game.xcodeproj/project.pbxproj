@@ -18,7 +18,6 @@
 		620A98291EE2B5C000AD6C61 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 620A98281EE2B5C000AD6C61 /* CoreMedia.framework */; };
 		621A30AF210A8E50008851C4 /* BombDialogView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 621A30AD210A8E50008851C4 /* BombDialogView.cpp */; };
 		621A30B2210A8E6D008851C4 /* BombDialogController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 621A30B0210A8E6D008851C4 /* BombDialogController.cpp */; };
-		621A4E721E50B60C00D53AFD /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 621A4E681E50B60C00D53AFD /* Icon.png */; };
 		621B571520A8A16F00772229 /* CloseButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 621B571320A8A16F00772229 /* CloseButton.cpp */; };
 		621B571820AA0AA700772229 /* SceneObjectUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 621B571620AA0AA700772229 /* SceneObjectUtils.cpp */; };
 		6227D4F5206CFD25008EA77D /* bomb_798.obj in Resources */ = {isa = PBXBuildFile; fileRef = 6227D4F4206CFD25008EA77D /* bomb_798.obj */; };
@@ -43,6 +42,7 @@
 		6261FFD920FD2C29008F1619 /* level44.json in Resources */ = {isa = PBXBuildFile; fileRef = 6261FFD820FD2C29008F1619 /* level44.json */; };
 		6261FFDB20FE06CA008F1619 /* level45.json in Resources */ = {isa = PBXBuildFile; fileRef = 6261FFDA20FE06CA008F1619 /* level45.json */; };
 		626451DD206FA93200E304F2 /* laser_bomb_224.obj in Resources */ = {isa = PBXBuildFile; fileRef = 626451DC206FA93100E304F2 /* laser_bomb_224.obj */; };
+		626722E42127656F0058528D /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 626722E32127656F0058528D /* Icon.png */; };
 		6270DC551FCB212B00FB457D /* Blip.wav in Resources */ = {isa = PBXBuildFile; fileRef = 6270DC531FCB212B00FB457D /* Blip.wav */; };
 		6270DC561FCB212B00FB457D /* Bomb.wav in Resources */ = {isa = PBXBuildFile; fileRef = 6270DC541FCB212B00FB457D /* Bomb.wav */; };
 		6270DC621FCB22AE00FB457D /* cube_554.obj in Resources */ = {isa = PBXBuildFile; fileRef = 6270DC591FCB22AE00FB457D /* cube_554.obj */; };
@@ -382,7 +382,6 @@
 		621A30AE210A8E50008851C4 /* BombDialogView.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = BombDialogView.hpp; sourceTree = "<group>"; };
 		621A30B0210A8E6D008851C4 /* BombDialogController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = BombDialogController.cpp; sourceTree = "<group>"; };
 		621A30B1210A8E6D008851C4 /* BombDialogController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = BombDialogController.hpp; sourceTree = "<group>"; };
-		621A4E681E50B60C00D53AFD /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		621B571320A8A16F00772229 /* CloseButton.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CloseButton.cpp; sourceTree = "<group>"; };
 		621B571420A8A16F00772229 /* CloseButton.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CloseButton.hpp; sourceTree = "<group>"; };
 		621B571620AA0AA700772229 /* SceneObjectUtils.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SceneObjectUtils.cpp; sourceTree = "<group>"; };
@@ -420,6 +419,7 @@
 		6261FFD820FD2C29008F1619 /* level44.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level44.json; sourceTree = "<group>"; };
 		6261FFDA20FE06CA008F1619 /* level45.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level45.json; sourceTree = "<group>"; };
 		626451DC206FA93100E304F2 /* laser_bomb_224.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = laser_bomb_224.obj; sourceTree = "<group>"; };
+		626722E32127656F0058528D /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		6270DC531FCB212B00FB457D /* Blip.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Blip.wav; sourceTree = "<group>"; };
 		6270DC541FCB212B00FB457D /* Bomb.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Bomb.wav; sourceTree = "<group>"; };
 		6270DC591FCB22AE00FB457D /* cube_554.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cube_554.obj; sourceTree = "<group>"; };
@@ -1130,7 +1130,7 @@
 			isa = PBXGroup;
 			children = (
 				6270DC6A1FCB231B00FB457D /* Fonts */,
-				621A4E681E50B60C00D53AFD /* Icon.png */,
+				626722E22127656F0058528D /* Icons */,
 				6278591A203AFB7C00494A4D /* LaunchScreens */,
 				6270DC6F1FCB23D800FB457D /* Levels */,
 				6270DC571FCB22AE00FB457D /* Models */,
@@ -1221,6 +1221,14 @@
 				6259B7E42107992D0055FE8D /* Tutorial.hpp */,
 			);
 			path = Tutorial;
+			sourceTree = "<group>";
+		};
+		626722E22127656F0058528D /* Icons */ = {
+			isa = PBXGroup;
+			children = (
+				626722E32127656F0058528D /* Icon.png */,
+			);
+			path = Icons;
 			sourceTree = "<group>";
 		};
 		6270DC521FCB212B00FB457D /* Sounds */ = {
@@ -2361,6 +2369,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				626722E42127656F0058528D /* Icon.png in Resources */,
 				62B1CB8E210F8F8600D0F195 /* sky2.jpg in Resources */,
 				62B1CBAC2110E9C400D0F195 /* bomb_frame2.jpg in Resources */,
 				629B839420CADA7B00DD2D0E /* triangle_320_r270.obj in Resources */,
@@ -2406,7 +2415,6 @@
 				6270DC8D1FCB23D800FB457D /* level14.json in Resources */,
 				6270DC881FCB23D800FB457D /* level1.json in Resources */,
 				6270DC981FCB23D800FB457D /* level3.json in Resources */,
-				621A4E721E50B60C00D53AFD /* Icon.png in Resources */,
 				628EC2AC2080C4880071F368 /* level31.json in Resources */,
 				62785B2720875937006F9869 /* Textured.vert in Resources */,
 				62B1CB7E210F8F8600D0F195 /* sky8.jpg in Resources */,
