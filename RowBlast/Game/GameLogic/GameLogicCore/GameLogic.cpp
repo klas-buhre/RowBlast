@@ -401,6 +401,7 @@ void GameLogic::UpdateLevelProgress() {
 void GameLogic::NextMove() {
     RemoveFallingPiece();
     mFallingPieceSpawnReason = FallingPieceSpawnReason::NextMove;
+    mPreviewPieceAnimationToStart = PreviewPieceAnimationToStart::RemoveActivePiece;
     --mMovesLeft;
     UpdateLevelProgress();
 }

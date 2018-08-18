@@ -55,6 +55,15 @@ void PreviewPieceGroupAnimation::StartSwitchPieceAnimation(
     mSelectablePreviewPiecesPositionsConfig = piecePositionsConfig;
 }
 
+void PreviewPieceGroupAnimation::StartRemoveActivePieceAnimation(
+    SelectablePreviewPieces& previewPieces,
+    const SelectablePreviewPiecesPositionsConfig& piecePositionsConfig) {
+
+    mKind = Kind::RemoveActivePiece;
+    mSelectablePreviewPieces = &previewPieces;
+    mSelectablePreviewPiecesPositionsConfig = piecePositionsConfig;
+}
+
 void PreviewPieceGroupAnimation::Update(float normalizedElapsedTime) {
     auto reversedTime {1.0f - normalizedElapsedTime};
     auto slideValue {Pht::Lerp(reversedTime, slidePoints)};
@@ -68,6 +77,9 @@ void PreviewPieceGroupAnimation::Update(float normalizedElapsedTime) {
             break;
         case Kind::Switch:
             UpdateSwitchPieceAnimation(slideValue);
+            break;
+        case Kind::RemoveActivePiece:
+            UpdateRemoveActivePieceAnimation(slideValue);
             break;
         case Kind::None:
             assert(!"Invalid animation kind.");
@@ -130,6 +142,14 @@ void PreviewPieceGroupAnimation::UpdateSwitchPieceAnimation(float slideValue) {
     AnimatePiece(GetSelectablePreviewPiece(3),
                  mSelectablePreviewPiecesPositionsConfig.mSlot3.x,
                  mSelectablePreviewPiecesPositionsConfig.mRight.x,
+                 slideValue,
+                 Scaling::ScaleDown);
+}
+
+void PreviewPieceGroupAnimation::UpdateRemoveActivePieceAnimation(float slideValue) {
+    AnimatePiece(GetSelectablePreviewPiece(3),
+                 mSelectablePreviewPiecesPositionsConfig.mSlot3.x,
+                 mSelectablePreviewPiecesPositionsConfig.mSlot3.x,
                  slideValue,
                  Scaling::ScaleDown);
 }

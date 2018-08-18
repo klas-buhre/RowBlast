@@ -29,6 +29,7 @@ namespace RowBlast {
             NextPiece,
             SwitchDuringNextPiece,
             Switch,
+            RemoveActivePiece,
             None
         };
         
@@ -38,6 +39,9 @@ namespace RowBlast {
             SelectablePreviewPieces& previewPieces,
             const SelectablePreviewPiecesPositionsConfig& piecePositionsConfig);
         void StartSwitchPieceAnimation(
+            SelectablePreviewPieces& previewPieces,
+            const SelectablePreviewPiecesPositionsConfig& piecePositionsConfig);
+        void StartRemoveActivePieceAnimation(
             SelectablePreviewPieces& previewPieces,
             const SelectablePreviewPiecesPositionsConfig& piecePositionsConfig);
         void Update(float normalizedElapsedTime);
@@ -52,6 +56,7 @@ namespace RowBlast {
         void UpdateNextPieceAnimation(float slideValue);
         void UpdateSwitchDuringNextPieceAnimation(float slideValue);
         void UpdateSwitchPieceAnimation(float slideValue);
+        void UpdateRemoveActivePieceAnimation(float slideValue);
         void AnimatePiece(PreviewPiece& previewPiece,
                           float xStart,
                           float xStop,

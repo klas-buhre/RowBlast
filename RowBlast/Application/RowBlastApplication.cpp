@@ -35,6 +35,7 @@ Backlog:
      block is changed. Because of this, only one piece of the same color can flash at one time since
      there is only one flashing renderable object for one color.
     -Try adding animated text messages like "Awesome" or "Combo" when clearing rows.
+    -The falling piece could scale in/out instead of just popping in and out of existence.
   -GUI:
     -Menu window that displays 3rd party lib credits.
     -Maybe try the font in fontawesome.com for the bright dialogs.
@@ -52,9 +53,7 @@ Backlog:
 Ongoing tasks:
   -The second world could introduce level bombs and triangle blocks.
   -The third world could introduce the build objective.
-  -Try the new HUD.
-    -Should the active piece disappear from the HUD once it has landed?
-
+  -Fix bug when the falling piece can pass through blocks.
 
 
 
@@ -129,6 +128,7 @@ Ordered Backlog:
         Done
     -Try the new HUD.
         Cost: 5
+        Done
     -Levels in the second world.
         Cost: 5
     -Finish the remaining rendering tasks.
