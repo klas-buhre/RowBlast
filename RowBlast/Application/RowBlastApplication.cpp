@@ -51,8 +51,9 @@ Backlog:
     -Credit Google for avatars? : http://www.iconarchive.com/show/noto-emoji-people-face-icons-by-google.1.html
 
 Ongoing tasks:
-  -The second world could introduce level bombs and triangle blocks.
-  -The third world could introduce the build objective.
+  -Levels in the second world.
+    -The second world could introduce level bombs and triangle blocks.
+    -The third world could introduce the build objective.
   -Fix bug when the falling piece can pass through blocks.
 
 
@@ -126,7 +127,7 @@ Ordered Backlog:
     -Tutorial.
         Cost: 10
         Done
-    -Try the new HUD.
+    -Redesign the game HUD.
         Cost: 5
         Done
     -Levels in the second world.

@@ -8,7 +8,7 @@
 // Game includes.
 #include "GameScene.hpp"
 #include "Level.hpp"
-#include "ValidMovesSearch.hpp"
+#include "MoveDefinitions.hpp"
 
 using namespace RowBlast;
 

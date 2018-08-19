@@ -2,7 +2,7 @@
 
 // Game includes.
 #include "FallingPiece.hpp"
-#include "ValidMovesSearch.hpp"
+#include "MoveDefinitions.hpp"
 #include "IGameLogic.hpp"
 
 using namespace RowBlast;
