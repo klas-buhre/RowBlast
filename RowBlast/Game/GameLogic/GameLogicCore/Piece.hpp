@@ -62,6 +62,7 @@ namespace RowBlast {
         virtual bool CanRotateAroundZ() const;
         virtual bool IsBomb() const;
         virtual bool IsRowBomb() const;
+        virtual bool PositionCanBeAdjusteInMovesSearch() const;
         virtual int GetNumEmptyTopRows() const;
         virtual bool NeedsUpAdjustmentInHud() const;
         virtual bool NeedsDownAdjustmentInHud() const;

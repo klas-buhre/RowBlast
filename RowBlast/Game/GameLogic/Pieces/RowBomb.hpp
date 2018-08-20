@@ -12,6 +12,7 @@ namespace RowBlast {
         bool IsRowBomb() const override;
         bool CanRotateAroundZ() const override;
         int GetNumEmptyTopRows() const override;
+        bool PositionCanBeAdjusteInMovesSearch() const override;
     };
 }
 

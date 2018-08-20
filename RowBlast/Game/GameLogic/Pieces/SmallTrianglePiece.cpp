@@ -51,3 +51,7 @@ SmallTrianglePiece::SmallTrianglePiece(Pht::IEngine& engine, const GameScene& sc
     ghostPieceProducer.DrawBorder(border, FillGhostPiece::Yes);
     SetPressedGhostPieceRenderable(ghostPieceProducer.ProduceRenderable());
 }
+
+bool SmallTrianglePiece::PositionCanBeAdjusteInMovesSearch() const {
+    return false;
+}

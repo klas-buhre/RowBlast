@@ -54,7 +54,6 @@ Ongoing tasks:
   -Levels in the second world.
     -The second world could introduce level bombs and triangle blocks.
     -The third world could introduce the build objective.
-  -Fix bug when the falling piece can pass through blocks.
 
 
 

@@ -125,6 +125,10 @@ bool Piece::IsRowBomb() const {
     return false;
 }
 
+bool Piece::PositionCanBeAdjusteInMovesSearch() const {
+    return true;
+}
+
 int Piece::GetNumEmptyTopRows() const {
     return 0;
 }

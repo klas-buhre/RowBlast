@@ -14,6 +14,8 @@ namespace RowBlast {
     class SmallTrianglePiece: public Piece {
     public:
         SmallTrianglePiece(Pht::IEngine& engine, const GameScene& scene);
+        
+        bool PositionCanBeAdjusteInMovesSearch() const override;
     };
 }
 

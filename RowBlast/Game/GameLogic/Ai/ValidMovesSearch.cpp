@@ -187,6 +187,10 @@ void ValidMovesSearch::ResetVisitedLocations() {
 }
 
 void ValidMovesSearch::AdjustPosition(MovingPiece& piece) {
+    if (!piece.mPieceType.PositionCanBeAdjusteInMovesSearch()) {
+        return;
+    }
+
     const auto& position {piece.mPosition};
     auto pieceBlocks {CreatePieceBlocks(piece)};
     
