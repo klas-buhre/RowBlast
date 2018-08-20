@@ -54,6 +54,7 @@ Ongoing tasks:
   -Levels in the second world.
     -The second world could introduce level bombs and triangle blocks.
     -The third world could introduce the build objective.
+    -Levels to keep in the second world: 19, 21 or 26, 27?, 28, 30, 34,
 
 
 
@@ -130,9 +131,9 @@ Ordered Backlog:
         Cost: 5
         Done
     -Levels in the second world.
-        Cost: 5
+        Cost: 7
     -Finish the remaining rendering tasks.
-        Cost: 4
+        Cost: 5
     -Space world.
         Cost: 10
     -Net/HTTP.
@@ -152,7 +153,7 @@ Ordered Backlog:
     -Back end.
         Cost: ?
 
-        Total cost: 201
+        Total cost: 204
 
 
 Comomon piece type sets:
