@@ -38,7 +38,6 @@ Backlog:
     -The falling piece could scale in/out instead of just popping in and out of existence.
   -GUI:
     -Menu window that displays 3rd party lib credits.
-    -Maybe try the font in fontawesome.com for the bright dialogs.
   -Purchases:
   -Back end:
   -Levels:

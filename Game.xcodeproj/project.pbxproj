@@ -355,6 +355,8 @@
 		62B1CBAC2110E9C400D0F195 /* bomb_frame2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62B1CBAB2110E9C300D0F195 /* bomb_frame2.jpg */; };
 		62B2BAE22129A060009C529D /* level49.json in Resources */ = {isa = PBXBuildFile; fileRef = 62B2BAE12129A060009C529D /* level49.json */; };
 		62B2BAE52129B400009C529D /* MoveDefinitions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62B2BAE32129B400009C529D /* MoveDefinitions.cpp */; };
+		62B2BAE8212C2830009C529D /* level50.json in Resources */ = {isa = PBXBuildFile; fileRef = 62B2BAE6212C282F009C529D /* level50.json */; };
+		62B2BAE9212C2830009C529D /* level51.json in Resources */ = {isa = PBXBuildFile; fileRef = 62B2BAE7212C282F009C529D /* level51.json */; };
 		62BE274620AEDD990014C6DD /* SlidingFieldAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62BE274420AEDD990014C6DD /* SlidingFieldAnimation.cpp */; };
 		62BE274920AF179D0014C6DD /* FireworksParticleEffect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62BE274720AF179D0014C6DD /* FireworksParticleEffect.cpp */; };
 		62BE274C20B063570014C6DD /* ConfettiParticleEffect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62BE274A20B063570014C6DD /* ConfettiParticleEffect.cpp */; };
@@ -1057,6 +1059,8 @@
 		62B2BAE12129A060009C529D /* level49.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level49.json; sourceTree = "<group>"; };
 		62B2BAE32129B400009C529D /* MoveDefinitions.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MoveDefinitions.cpp; sourceTree = "<group>"; };
 		62B2BAE42129B400009C529D /* MoveDefinitions.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MoveDefinitions.hpp; sourceTree = "<group>"; };
+		62B2BAE6212C282F009C529D /* level50.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level50.json; sourceTree = "<group>"; };
+		62B2BAE7212C282F009C529D /* level51.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level51.json; sourceTree = "<group>"; };
 		62BE274420AEDD990014C6DD /* SlidingFieldAnimation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SlidingFieldAnimation.cpp; sourceTree = "<group>"; };
 		62BE274520AEDD990014C6DD /* SlidingFieldAnimation.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SlidingFieldAnimation.hpp; sourceTree = "<group>"; };
 		62BE274720AF179D0014C6DD /* FireworksParticleEffect.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FireworksParticleEffect.cpp; sourceTree = "<group>"; };
@@ -1329,6 +1333,8 @@
 				6240508720FF82A10077A454 /* level47.json */,
 				629991652118A12200C845D1 /* level48.json */,
 				62B2BAE12129A060009C529D /* level49.json */,
+				62B2BAE6212C282F009C529D /* level50.json */,
+				62B2BAE7212C282F009C529D /* level51.json */,
 			);
 			path = Levels;
 			sourceTree = "<group>";
@@ -2424,12 +2430,14 @@
 				6270DC8D1FCB23D800FB457D /* level14.json in Resources */,
 				6270DC881FCB23D800FB457D /* level1.json in Resources */,
 				6270DC981FCB23D800FB457D /* level3.json in Resources */,
+				62B2BAE9212C2830009C529D /* level51.json in Resources */,
 				628EC2AC2080C4880071F368 /* level31.json in Resources */,
 				62785B2720875937006F9869 /* Textured.vert in Resources */,
 				62B1CB7E210F8F8600D0F195 /* sky8.jpg in Resources */,
 				62B1CB5D210F8EE500D0F195 /* cloud_C_512.png in Resources */,
 				62B1CB80210F8F8600D0F195 /* confetti.png in Resources */,
 				62B1CB60210F8EE500D0F195 /* portal.png in Resources */,
+				62B2BAE8212C2830009C529D /* level50.json in Resources */,
 				62B1CB62210F8EE500D0F195 /* cloud_D_512.png in Resources */,
 				62785B1820875937006F9869 /* TexturedEmissiveLighting.frag in Resources */,
 				6299916C2118C77600C845D1 /* level_bomb_frame1.jpg in Resources */,
