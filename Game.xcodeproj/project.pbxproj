@@ -357,6 +357,7 @@
 		62B2BAE52129B400009C529D /* MoveDefinitions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62B2BAE32129B400009C529D /* MoveDefinitions.cpp */; };
 		62B2BAE8212C2830009C529D /* level50.json in Resources */ = {isa = PBXBuildFile; fileRef = 62B2BAE6212C282F009C529D /* level50.json */; };
 		62B2BAE9212C2830009C529D /* level51.json in Resources */ = {isa = PBXBuildFile; fileRef = 62B2BAE7212C282F009C529D /* level51.json */; };
+		62B2BAEB212C6902009C529D /* level52.json in Resources */ = {isa = PBXBuildFile; fileRef = 62B2BAEA212C6901009C529D /* level52.json */; };
 		62BE274620AEDD990014C6DD /* SlidingFieldAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62BE274420AEDD990014C6DD /* SlidingFieldAnimation.cpp */; };
 		62BE274920AF179D0014C6DD /* FireworksParticleEffect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62BE274720AF179D0014C6DD /* FireworksParticleEffect.cpp */; };
 		62BE274C20B063570014C6DD /* ConfettiParticleEffect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62BE274A20B063570014C6DD /* ConfettiParticleEffect.cpp */; };
@@ -1061,6 +1062,7 @@
 		62B2BAE42129B400009C529D /* MoveDefinitions.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MoveDefinitions.hpp; sourceTree = "<group>"; };
 		62B2BAE6212C282F009C529D /* level50.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level50.json; sourceTree = "<group>"; };
 		62B2BAE7212C282F009C529D /* level51.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level51.json; sourceTree = "<group>"; };
+		62B2BAEA212C6901009C529D /* level52.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level52.json; sourceTree = "<group>"; };
 		62BE274420AEDD990014C6DD /* SlidingFieldAnimation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SlidingFieldAnimation.cpp; sourceTree = "<group>"; };
 		62BE274520AEDD990014C6DD /* SlidingFieldAnimation.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SlidingFieldAnimation.hpp; sourceTree = "<group>"; };
 		62BE274720AF179D0014C6DD /* FireworksParticleEffect.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FireworksParticleEffect.cpp; sourceTree = "<group>"; };
@@ -1335,6 +1337,7 @@
 				62B2BAE12129A060009C529D /* level49.json */,
 				62B2BAE6212C282F009C529D /* level50.json */,
 				62B2BAE7212C282F009C529D /* level51.json */,
+				62B2BAEA212C6901009C529D /* level52.json */,
 			);
 			path = Levels;
 			sourceTree = "<group>";
@@ -2460,6 +2463,7 @@
 				62785B4E20875937006F9869 /* build_freetype.sh in Resources */,
 				6278591E203B309A00494A4D /* level28.json in Resources */,
 				6270DC971FCB23D800FB457D /* level23.json in Resources */,
+				62B2BAEB212C6902009C529D /* level52.json in Resources */,
 				62B1CB5B210F8EE500D0F195 /* cloud_A_512.png in Resources */,
 				629B838620C9694E00DD2D0E /* level40.json in Resources */,
 				62B1CB87210F8F8600D0F195 /* particle_sprite_halo.png in Resources */,
