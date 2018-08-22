@@ -322,12 +322,12 @@ Pht::Vec2 GameLogic::CalculateFallingPieceSpawnPos(const Piece& pieceType,
 void GameLogic::HandleCascading() {
     switch (mCascadeState) {
         case CascadeState::Cascading:
-            mField.ManageWelds();
             if (mField.AnyFilledRows()) {
                 mCascadeWaitTime = 0.0f;
                 mCascadeState = CascadeState::WaitingToClearLine;
             } else {
                 mCascadeState = CascadeState::NotCascading;
+                mField.ManageWelds();
             }
             break;
         case CascadeState::WaitingToClearLine:
@@ -524,6 +524,10 @@ void GameLogic::LandFallingPiece(bool finalMovementWasADrop) {
                 }
             }
         }
+    }
+    
+    if (mState != State::FieldExplosions && mCascadeState == CascadeState::NotCascading) {
+        mField.ManageWelds();
     }
     
     NextMove();

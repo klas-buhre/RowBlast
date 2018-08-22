@@ -561,7 +561,6 @@ void Field::LandFallingPiece(const FallingPiece& fallingPiece, bool startBounceA
                     true,
                     true,
                     startBounceAnimation);
-    ManageWelds();
 }
 
 void Field::LandPieceBlocks(const PieceBlocks& pieceBlocks,
