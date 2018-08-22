@@ -28,6 +28,7 @@ Backlog:
     -Maybe the top of the sky in the map scene and title scene could be a bit darker blue.
     -Maybe the blue background material should be a bit less blue?
     -Maybe the gold background material should be a bit less red?
+    -Adjust the red field material?
     -Maybe remove light animation for the field blocks and always have a light direction that looks
      good?
     -The flashing blocks animation could use a continuous decrease in light add instead of descrete

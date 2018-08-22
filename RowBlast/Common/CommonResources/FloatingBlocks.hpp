@@ -12,6 +12,7 @@ namespace Pht {
     class IEngine;
     class Scene;
     class SceneObject;
+    class ISceneManager;
 }
 
 namespace RowBlast {
@@ -23,7 +24,9 @@ namespace RowBlast {
         L,
         I,
         ShortI,
-        B
+        B,
+        Bomb,
+        RowBomb
     };
     
     enum class FloatingBlockColor {
@@ -58,8 +61,10 @@ namespace RowBlast {
             Pht::SceneObject* mSceneObject;
         };
 
+        void CreateBomb(Pht::ISceneManager& sceneManager);
+        void CreateRowBomb(Pht::ISceneManager& sceneManager);
         void InitBlocks(Pht::Scene& scene, float scale, float angularVelocity);
-        Pht::RenderableObject& CalcBlockRenderable(FloatingBlockColor color);
+        Pht::RenderableObject& CalcBlockRenderable(const BlockPathVolume& volume);
         void CreateLPiece(FloatingBlock& block,
                           float scale,
                           Pht::RenderableObject& renderable,
@@ -76,12 +81,16 @@ namespace RowBlast {
                           float scale,
                           Pht::RenderableObject& renderable,
                           Pht::Scene& scene);
+        void AnimateEmissive(float dt);
     
-        static constexpr int numRenderables {5};
+        static constexpr int numBlockRenderables {5};
 
         Pht::IEngine& mEngine;
         std::vector<FloatingBlock> mBlocks;
-        std::array<std::unique_ptr<Pht::RenderableObject>, numRenderables> mBlockRenderables;
+        std::array<std::unique_ptr<Pht::RenderableObject>, numBlockRenderables> mBlockRenderables;
+        std::unique_ptr<Pht::RenderableObject> mBombRenderable;
+        std::unique_ptr<Pht::RenderableObject> mRowBombRenderable;
+        float mEmissiveAnimationTime {0.0f};
         std::vector<BlockPathVolume> mVolumes;
     };
 }

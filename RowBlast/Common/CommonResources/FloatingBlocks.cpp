@@ -6,6 +6,7 @@
 #include "ObjMesh.hpp"
 #include "SceneObject.hpp"
 #include "MathUtils.hpp"
+#include "SceneObjectUtils.hpp"
 
 // Game includes.
 #include "CommonResources.hpp"
@@ -13,6 +14,9 @@
 using namespace RowBlast;
 
 namespace {
+    constexpr auto emissiveAnimationDuration {1.5f};
+    constexpr auto emissiveAmplitude {1.7f};
+
     void CreateBlock(const Pht::Vec3& position,
                      float scale,
                      Pht::RenderableObject& renderable,
@@ -53,6 +57,9 @@ FloatingBlocks::FloatingBlocks(Pht::IEngine& engine,
         sceneManager.CreateRenderableObject(cubeMesh, materials.GetLightGrayMaterial())
     };
     
+    CreateBomb(sceneManager);
+    CreateRowBomb(sceneManager);
+    
     auto& sceneObject {scene.CreateSceneObject()};
     sceneObject.SetLayer(layerIndex);
     scene.GetRoot().AddChild(sceneObject);
@@ -63,6 +70,39 @@ FloatingBlocks::FloatingBlocks(Pht::IEngine& engine,
     }
     
     InitBlocks(scene, scale, angularVelocity);
+}
+
+void FloatingBlocks::CreateBomb(Pht::ISceneManager& sceneManager) {
+    Pht::Material bombMaterial {
+        "bomb_798.jpg",
+        "bomb_798_emission.jpg",
+        1.0f,
+        0.87f,
+        1.0f,
+        1.0f,
+        30.0f
+    };
+
+    bombMaterial.SetEmissive(Pht::Color {3.0f, 3.0f, 3.0f});
+    mBombRenderable = sceneManager.CreateRenderableObject(Pht::ObjMesh {"bomb_798.obj", 16.2f},
+                                                          bombMaterial);
+}
+
+void FloatingBlocks::CreateRowBomb(Pht::ISceneManager& sceneManager) {
+    Pht::Material rowBombMaterial {
+        "laser_bomb_diffuse.jpg",
+        "laser_bomb_emission.png",
+        0.55f,
+        0.65f,
+        0.05f,
+        1.0f,
+        20.0f
+    };
+    
+    rowBombMaterial.SetAmbient(Pht::Color {0.5f, 0.5f, 0.85f});
+    rowBombMaterial.SetEmissive(Pht::Color {2.0f, 2.0f, 2.0f});
+    mRowBombRenderable = sceneManager.CreateRenderableObject(Pht::ObjMesh {"laser_bomb_224.obj", 0.6f},
+                                                             rowBombMaterial);
 }
 
 void FloatingBlocks::InitBlocks(Pht::Scene& scene, float scale, float angularVelocity) {
@@ -97,7 +137,7 @@ void FloatingBlocks::InitBlocks(Pht::Scene& scene, float scale, float angularVel
         block.mVelocity = velocity;
         block.mAngularVelocity = blockAngularVelocity;
         
-        auto& renderable {CalcBlockRenderable(volume.mBlockColor)};
+        auto& renderable {CalcBlockRenderable(volume)};
         
         switch (volume.mPieceType) {
             case FloatingPieceType::BigSingleBlock:
@@ -121,6 +161,10 @@ void FloatingBlocks::InitBlocks(Pht::Scene& scene, float scale, float angularVel
             case FloatingPieceType::B:
                 CreateBPiece(block, scale, renderable, scene);
                 break;
+            case FloatingPieceType::Bomb:
+            case FloatingPieceType::RowBomb:
+                block.mSceneObject->SetRenderable(&renderable);
+                break;
         }
         
         auto& transform {block.mSceneObject->GetTransform()};
@@ -129,14 +173,23 @@ void FloatingBlocks::InitBlocks(Pht::Scene& scene, float scale, float angularVel
     }
 }
 
-Pht::RenderableObject& FloatingBlocks::CalcBlockRenderable(FloatingBlockColor color) {
-    switch (color) {
+Pht::RenderableObject& FloatingBlocks::CalcBlockRenderable(const BlockPathVolume& volume) {
+    switch (volume.mPieceType) {
+        case FloatingPieceType::Bomb:
+            return *mBombRenderable;
+        case FloatingPieceType::RowBomb:
+            return *mRowBombRenderable;
+        default:
+            break;
+    }
+
+    switch (volume.mBlockColor) {
         case FloatingBlockColor::Random:
-            return *mBlockRenderables[std::rand() % numRenderables];
+            return *mBlockRenderables[std::rand() % numBlockRenderables];
         case FloatingBlockColor::RandomExceptGray:
-            return *mBlockRenderables[std::rand() % (numRenderables - 1)];
+            return *mBlockRenderables[std::rand() % (numBlockRenderables - 1)];
         case FloatingBlockColor::Gray:
-            return *mBlockRenderables[numRenderables - 1];
+            return *mBlockRenderables[numBlockRenderables - 1];
     }
 }
 
@@ -243,6 +296,8 @@ void FloatingBlocks::CreateBPiece(FloatingBlock& block,
 
 void FloatingBlocks::Update() {
     auto dt {mEngine.GetLastFrameSeconds()};
+    
+    AnimateEmissive(dt);
 
     for (auto i {0}; i < mBlocks.size(); ++i) {
         auto& block {mBlocks[i]};
@@ -263,4 +318,18 @@ void FloatingBlocks::Update() {
             block.mVelocity.x = -block.mVelocity.x;
         }
     }
+}
+
+void FloatingBlocks::AnimateEmissive(float dt) {
+    mEmissiveAnimationTime += dt;
+    
+    if (mEmissiveAnimationTime > emissiveAnimationDuration) {
+        mEmissiveAnimationTime = 0.0f;
+    }
+
+    auto sineOfT {sin(mEmissiveAnimationTime * 2.0f * 3.1415f / emissiveAnimationDuration)};
+    auto emissive {emissiveAmplitude * (sineOfT + 1.0f) / 2.0f};
+    
+    Pht::SceneObjectUtils::SetEmissiveInRenderable(*mBombRenderable, emissive);
+    Pht::SceneObjectUtils::SetEmissiveInRenderable(*mRowBombRenderable, emissive);
 }
