@@ -358,6 +358,7 @@
 		62B2BAE8212C2830009C529D /* level50.json in Resources */ = {isa = PBXBuildFile; fileRef = 62B2BAE6212C282F009C529D /* level50.json */; };
 		62B2BAE9212C2830009C529D /* level51.json in Resources */ = {isa = PBXBuildFile; fileRef = 62B2BAE7212C282F009C529D /* level51.json */; };
 		62B2BAEB212C6902009C529D /* level52.json in Resources */ = {isa = PBXBuildFile; fileRef = 62B2BAEA212C6901009C529D /* level52.json */; };
+		62B2BAED212D9B4F009C529D /* level53.json in Resources */ = {isa = PBXBuildFile; fileRef = 62B2BAEC212D9B4F009C529D /* level53.json */; };
 		62BE274620AEDD990014C6DD /* SlidingFieldAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62BE274420AEDD990014C6DD /* SlidingFieldAnimation.cpp */; };
 		62BE274920AF179D0014C6DD /* FireworksParticleEffect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62BE274720AF179D0014C6DD /* FireworksParticleEffect.cpp */; };
 		62BE274C20B063570014C6DD /* ConfettiParticleEffect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62BE274A20B063570014C6DD /* ConfettiParticleEffect.cpp */; };
@@ -1063,6 +1064,7 @@
 		62B2BAE6212C282F009C529D /* level50.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level50.json; sourceTree = "<group>"; };
 		62B2BAE7212C282F009C529D /* level51.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level51.json; sourceTree = "<group>"; };
 		62B2BAEA212C6901009C529D /* level52.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level52.json; sourceTree = "<group>"; };
+		62B2BAEC212D9B4F009C529D /* level53.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level53.json; sourceTree = "<group>"; };
 		62BE274420AEDD990014C6DD /* SlidingFieldAnimation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SlidingFieldAnimation.cpp; sourceTree = "<group>"; };
 		62BE274520AEDD990014C6DD /* SlidingFieldAnimation.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SlidingFieldAnimation.hpp; sourceTree = "<group>"; };
 		62BE274720AF179D0014C6DD /* FireworksParticleEffect.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FireworksParticleEffect.cpp; sourceTree = "<group>"; };
@@ -1338,6 +1340,7 @@
 				62B2BAE6212C282F009C529D /* level50.json */,
 				62B2BAE7212C282F009C529D /* level51.json */,
 				62B2BAEA212C6901009C529D /* level52.json */,
+				62B2BAEC212D9B4F009C529D /* level53.json */,
 			);
 			path = Levels;
 			sourceTree = "<group>";
@@ -2310,29 +2313,29 @@
 			isa = PBXGroup;
 			children = (
 				62B1CB65210F8F8500D0F195 /* bomb_798_emission.jpg */,
-				62B1CB66210F8F8500D0F195 /* sky8.jpg */,
 				62B1CB67210F8F8500D0F195 /* bomb_798.jpg */,
-				62B1CB68210F8F8500D0F195 /* confetti.png */,
-				62B1CB69210F8F8500D0F195 /* particle_sprite_twinkle_blurred.png */,
-				62B1CB6A210F8F8500D0F195 /* glow_lines.png */,
-				62B1CB6B210F8F8500D0F195 /* flare03.png */,
+				62B1CB75210F8F8500D0F195 /* cloud_B_envmap.jpg */,
 				62B1CB6C210F8F8500D0F195 /* cloud_C_envmap.jpg */,
+				62B1CB68210F8F8500D0F195 /* confetti.png */,
+				62B1CB6B210F8F8500D0F195 /* flare03.png */,
+				62B1CB74210F8F8500D0F195 /* flare24.png */,
+				62B1CB6A210F8F8500D0F195 /* glow_lines.png */,
 				62B1CB6D210F8F8500D0F195 /* laser_beam_red.png */,
-				62B1CB6E210F8F8500D0F195 /* particle_sprite_point_blurred.png */,
-				62B1CB6F210F8F8500D0F195 /* particle_sprite_halo.png */,
-				62B1CB70210F8F8500D0F195 /* laser_bomb_emission.png */,
 				62B1CB71210F8F8500D0F195 /* laser_bomb_diffuse.jpg */,
+				62B1CB70210F8F8500D0F195 /* laser_bomb_emission.png */,
+				62B1CB6F210F8F8500D0F195 /* particle_sprite_halo.png */,
+				62B1CB6E210F8F8500D0F195 /* particle_sprite_point_blurred.png */,
+				62B1CB69210F8F8500D0F195 /* particle_sprite_twinkle_blurred.png */,
 				62B1CB72210F8F8500D0F195 /* sky_upside_down_patched_mirrored.jpg */,
 				62B1CB73210F8F8500D0F195 /* sky_upside_down.jpg */,
-				62B1CB74210F8F8500D0F195 /* flare24.png */,
-				62B1CB75210F8F8500D0F195 /* cloud_B_envmap.jpg */,
+				62B1CB78210F8F8500D0F195 /* sky1.jpg */,
 				62B1CB76210F8F8500D0F195 /* sky2.jpg */,
 				62B1CB77210F8F8500D0F195 /* sky3.jpg */,
-				62B1CB78210F8F8500D0F195 /* sky1.jpg */,
 				62B1CB79210F8F8500D0F195 /* sky4.jpg */,
 				62B1CB7A210F8F8500D0F195 /* sky5.jpg */,
-				62B1CB7B210F8F8500D0F195 /* sky7.jpg */,
 				62B1CB7C210F8F8500D0F195 /* sky6.jpg */,
+				62B1CB7B210F8F8500D0F195 /* sky7.jpg */,
+				62B1CB66210F8F8500D0F195 /* sky8.jpg */,
 			);
 			path = Game;
 			sourceTree = "<group>";
@@ -2445,6 +2448,7 @@
 				62785B1820875937006F9869 /* TexturedEmissiveLighting.frag in Resources */,
 				6299916C2118C77600C845D1 /* level_bomb_frame1.jpg in Resources */,
 				62E335E01FD2F4EE0069B6CF /* level26.json in Resources */,
+				62B2BAED212D9B4F009C529D /* level53.json in Resources */,
 				6270DC931FCB23D800FB457D /* level2.json in Resources */,
 				6261FFDB20FE06CA008F1619 /* level45.json in Resources */,
 				6270DC9A1FCB23D800FB457D /* level5.json in Resources */,
