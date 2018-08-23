@@ -1,8 +1,8 @@
 {
     "speed": 0.0,
-    "moves": 45,
-    "twoStars": 35,
-    "threeStars": 25,
+    "moves": 43,
+    "twoStars": 33,
+    "threeStars": 23,
     "background": "sky3.jpg",
     "dark": false,
     "partOfTutorial": true,

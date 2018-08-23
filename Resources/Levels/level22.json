@@ -1,7 +1,7 @@
 {
     "speed": 0.0,
-    "moves": 35,
-    "twoStars": 25,
+    "moves": 34,
+    "twoStars": 24,
     "threeStars": 17,
     "background": "sky8.jpg",
     "dark": true,
