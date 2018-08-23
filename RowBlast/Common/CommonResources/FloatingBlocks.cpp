@@ -57,8 +57,8 @@ FloatingBlocks::FloatingBlocks(Pht::IEngine& engine,
         sceneManager.CreateRenderableObject(cubeMesh, materials.GetLightGrayMaterial())
     };
     
-    CreateBomb(sceneManager);
-    CreateRowBomb(sceneManager);
+    CreateBomb(sceneManager, scale);
+    CreateRowBomb(sceneManager, scale);
     
     auto& sceneObject {scene.CreateSceneObject()};
     sceneObject.SetLayer(layerIndex);
@@ -72,7 +72,7 @@ FloatingBlocks::FloatingBlocks(Pht::IEngine& engine,
     InitBlocks(scene, scale, angularVelocity);
 }
 
-void FloatingBlocks::CreateBomb(Pht::ISceneManager& sceneManager) {
+void FloatingBlocks::CreateBomb(Pht::ISceneManager& sceneManager, float scale) {
     Pht::Material bombMaterial {
         "bomb_798.jpg",
         "bomb_798_emission.jpg",
@@ -84,11 +84,11 @@ void FloatingBlocks::CreateBomb(Pht::ISceneManager& sceneManager) {
     };
 
     bombMaterial.SetEmissive(Pht::Color {3.0f, 3.0f, 3.0f});
-    mBombRenderable = sceneManager.CreateRenderableObject(Pht::ObjMesh {"bomb_798.obj", 16.2f},
+    mBombRenderable = sceneManager.CreateRenderableObject(Pht::ObjMesh {"bomb_798.obj", 8.1f * scale},
                                                           bombMaterial);
 }
 
-void FloatingBlocks::CreateRowBomb(Pht::ISceneManager& sceneManager) {
+void FloatingBlocks::CreateRowBomb(Pht::ISceneManager& sceneManager, float scale) {
     Pht::Material rowBombMaterial {
         "laser_bomb_diffuse.jpg",
         "laser_bomb_emission.png",
@@ -101,7 +101,7 @@ void FloatingBlocks::CreateRowBomb(Pht::ISceneManager& sceneManager) {
     
     rowBombMaterial.SetAmbient(Pht::Color {0.5f, 0.5f, 0.85f});
     rowBombMaterial.SetEmissive(Pht::Color {2.0f, 2.0f, 2.0f});
-    mRowBombRenderable = sceneManager.CreateRenderableObject(Pht::ObjMesh {"laser_bomb_224.obj", 0.6f},
+    mRowBombRenderable = sceneManager.CreateRenderableObject(Pht::ObjMesh {"laser_bomb_224.obj", 0.3f * scale},
                                                              rowBombMaterial);
 }
 

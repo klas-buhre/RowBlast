@@ -61,8 +61,8 @@ namespace RowBlast {
             Pht::SceneObject* mSceneObject;
         };
 
-        void CreateBomb(Pht::ISceneManager& sceneManager);
-        void CreateRowBomb(Pht::ISceneManager& sceneManager);
+        void CreateBomb(Pht::ISceneManager& sceneManager, float scale);
+        void CreateRowBomb(Pht::ISceneManager& sceneManager, float scale);
         void InitBlocks(Pht::Scene& scene, float scale, float angularVelocity);
         Pht::RenderableObject& CalcBlockRenderable(const BlockPathVolume& volume);
         void CreateLPiece(FloatingBlock& block,

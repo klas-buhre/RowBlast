@@ -29,7 +29,7 @@ namespace {
 
     const std::vector<CloudPathVolume> cloudPaths {
         CloudPathVolume {
-            .mPosition = {0.0f, 0.0f, -10.0f},
+            .mPosition = {0.0f, 0.0f, -15.0f},
             .mSize = {75.0f, 0.0f, 0.0f},
         },
         CloudPathVolume {
@@ -121,8 +121,9 @@ namespace {
             .mPieceType = FloatingPieceType::L
         },
         BlockPathVolume {
-            .mPosition = {-8.0f, -13.0f, -5.0f},
-            .mSize = {0.0f, 0.0f, 0.0f}
+            .mPosition = {-5.0f, -8.0f, 5.0f},
+            .mSize = {0.0f, 0.0f, 0.0f},
+            .mPieceType = FloatingPieceType::SingleBlock
         },
         BlockPathVolume {
             .mPosition = {-5.0f, 13.0f, -8.0f},
@@ -135,12 +136,14 @@ namespace {
             .mPieceType = FloatingPieceType::L
         },
         BlockPathVolume {
-            .mPosition = {1.0f, -25.0f, -18.0f},
-            .mSize = {0.0f, 0.0f, 0.0f}
+            .mPosition = {3.0f, -13.0f, -5.0f},
+            .mSize = {0.0f, 0.0f, 0.0f},
+            .mPieceType = FloatingPieceType::SingleBlock
         },
         BlockPathVolume {
-            .mPosition = {5.0f, 0.0f, -30.0f},
-            .mSize = {0.0f, 0.0f, 0.0f}
+            .mPosition = {5.0f, 0.0f, -25.0f},
+            .mSize = {0.0f, 0.0f, 0.0f},
+            .mPieceType = FloatingPieceType::RowBomb
         }
     };
 }
