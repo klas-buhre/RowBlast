@@ -54,7 +54,7 @@ Ongoing tasks:
   -Levels in the second world.
     -The second world could introduce level bombs and triangle blocks.
     -The third world could introduce the build objective.
-    -Levels to keep in the second world: 27, 28, 30, 34, 42
+    -Levels to keep in the second world: 28, 30, 34, 42
 
 
 
