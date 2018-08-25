@@ -47,7 +47,7 @@ GameController::GameController(Pht::IEngine& engine,
     },
     mField {},
     mCollapsingFieldAnimation {mField},
-    mFlashingBlocksAnimation {mField},
+    mFlashingBlocksAnimation {mField, mPieceResources},
     mWeldsAnimation {mField},
     mScrollController {engine, mField},
     mCameraShake {Pht::CameraShake::ShakeKind::PerlinNoise},
@@ -72,6 +72,7 @@ GameController::GameController(Pht::IEngine& engine,
         mScene,
         mEffectManager,
         mFlyingBlocksAnimation,
+        mFlashingBlocksAnimation,
         mCollapsingFieldAnimation,
         mPieceDropParticleEffect,
         mBlastRadiusAnimation,
@@ -121,6 +122,7 @@ void GameController::StartLevel(int levelId) {
     mCameraShake.Init();
     mPreviewPiecesAnimation.Init();
     mFlyingBlocksAnimation.Init();
+    mFlashingBlocksAnimation.Init();
     mFallingPieceAnimation.Init();
     mSlidingTextAnimation.Init();
     mBombsAnimation.Init();

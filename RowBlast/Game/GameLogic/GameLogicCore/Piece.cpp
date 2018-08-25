@@ -157,6 +157,8 @@ void Piece::InitGrids(const FillGrid& fillGrid,
                       const ClickGrid& clickGrid,
                       BlockColor blockColor,
                       bool isIndivisible) {
+    mColor = blockColor;
+
     mGridNumRows = static_cast<int>(fillGrid.size());
     mGridNumColumns = static_cast<int>(fillGrid.front().size());
     assert(mGridNumRows == mGridNumColumns);

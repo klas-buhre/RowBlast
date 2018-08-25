@@ -125,7 +125,6 @@ namespace RowBlast {
         }
         
         State mState {State::Inactive};
-        float mElapsedTime {0.0f};
         BlockBrightness mBrightness {BlockBrightness::Normal};
     };
     

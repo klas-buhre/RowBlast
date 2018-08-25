@@ -553,6 +553,7 @@ Field::ImpactedBombs Field::DetectImpactedBombs(const PieceBlocks& pieceBlocks,
 
 void Field::LandFallingPiece(const FallingPiece& fallingPiece, bool startBounceAnimation) {
     SetChanged();
+    ResetFlashingBlockAnimations();
     
     auto pieceBlocks {CreatePieceBlocks(fallingPiece)};
     LandPieceBlocks(pieceBlocks,
@@ -608,6 +609,16 @@ void Field::LandPieceBlocks(const PieceBlocks& pieceBlocks,
                 fallingBlockAnimation.mState = FallingBlockAnimation::State::Bouncing;
                 fallingBlockAnimation.mVelocity = FallingBlockAnimation::fallingPieceBounceVelocity;
             }
+        }
+    }
+}
+
+void Field::ResetFlashingBlockAnimations() {
+    for (auto row {0}; row < mNumRows; ++row) {
+        for (auto column {0}; column < mNumColumns; ++column) {
+            auto& cell {mGrid[row][column]};
+            cell.mFirstSubCell.mFlashingBlockAnimation = FlashingBlockAnimation {};
+            cell.mSecondSubCell.mFlashingBlockAnimation = FlashingBlockAnimation {};
         }
     }
 }

@@ -31,10 +31,6 @@ Backlog:
     -Adjust the red field material?
     -Maybe remove light animation for the field blocks and always have a light direction that looks
      good?
-    -The flashing blocks animation could use a continuous decrease in light add instead of descrete
-     as it is now. This should be possible if the material of the renderable object of the flashing
-     block is changed. Because of this, only one piece of the same color can flash at one time since
-     there is only one flashing renderable object for one color.
     -Try adding animated text messages like "Awesome" or "Combo" when clearing rows.
     -The falling piece could scale in/out instead of just popping in and out of existence.
   -GUI:
@@ -51,6 +47,8 @@ Backlog:
     -Credit Google for avatars? : http://www.iconarchive.com/show/noto-emoji-people-face-icons-by-google.1.html
 
 Ongoing tasks:
+  -Can the blocks flash before the bounce is finished? Looks better that way.
+  -Tune the flashing blocks.
   -Levels in the second world.
     -The second world could introduce level bombs and triangle blocks.
     -The third world could introduce the build objective.

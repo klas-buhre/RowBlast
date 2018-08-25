@@ -14,6 +14,7 @@
 #include "Level.hpp"
 #include "ScrollController.hpp"
 #include "FlyingBlocksAnimation.hpp"
+#include "FlashingBlocksAnimation.hpp"
 #include "CollapsingFieldAnimation.hpp"
 #include "EffectManager.hpp"
 #include "PieceDropParticleEffect.hpp"
@@ -75,6 +76,7 @@ GameLogic::GameLogic(Pht::IEngine& engine,
                      const GameScene& gameScene,
                      EffectManager& effectManager,
                      FlyingBlocksAnimation& flyingBlocksAnimation,
+                     FlashingBlocksAnimation& flashingBlocksAnimation,
                      CollapsingFieldAnimation& collapsingFieldAnimation,
                      PieceDropParticleEffect& pieceDropParticleEffect,
                      BlastRadiusAnimation& blastRadiusAnimation,
@@ -85,6 +87,7 @@ GameLogic::GameLogic(Pht::IEngine& engine,
     mField {field},
     mScrollController {scrollController},
     mFlyingBlocksAnimation {flyingBlocksAnimation},
+    mFlashingBlocksAnimation {flashingBlocksAnimation},
     mCollapsingFieldAnimation {collapsingFieldAnimation},
     mEffectManager {effectManager},
     mPieceDropParticleEffect {pieceDropParticleEffect},
@@ -489,7 +492,9 @@ void GameLogic::LandFallingPiece(bool finalMovementWasADrop) {
         mPieceDropParticleEffect.StartEffect(*mFallingPiece);
     }
     
-    if (IsBomb(mFallingPiece->GetPieceType())) {
+    auto& pieceType {mFallingPiece->GetPieceType()};
+    
+    if (IsBomb(pieceType)) {
         DetonateDroppedBomb();
     } else {
         auto impactedLevelBombs {
@@ -505,6 +510,7 @@ void GameLogic::LandFallingPiece(bool finalMovementWasADrop) {
         }
         
         mField.LandFallingPiece(*mFallingPiece, startBounceAnimation);
+        mFlashingBlocksAnimation.Start(pieceType.GetColor());
         DetonateImpactedLevelBombs(impactedLevelBombs);
         
         if (mLevel->GetObjective() == Level::Objective::Clear) {

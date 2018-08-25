@@ -30,6 +30,7 @@ namespace RowBlast {
     class IInputHandler;
     class GameScene;
     class Tutorial;
+    class FlashingBlocksAnimation;
     
     enum class PreviewPieceAnimationToStart {
         NextPieceAndSwitch,
@@ -54,6 +55,7 @@ namespace RowBlast {
                   const GameScene& gameScene,
                   EffectManager& effectManger,
                   FlyingBlocksAnimation& flyingBlocksAnimation,
+                  FlashingBlocksAnimation& flashingBlocksAnimation,
                   CollapsingFieldAnimation& collapsingFieldAnimation,
                   PieceDropParticleEffect& pieceDropParticleEffect,
                   BlastRadiusAnimation& blastRadiusAnimation,
@@ -191,6 +193,7 @@ namespace RowBlast {
         Field& mField;
         const ScrollController& mScrollController;
         FlyingBlocksAnimation& mFlyingBlocksAnimation;
+        FlashingBlocksAnimation& mFlashingBlocksAnimation;
         CollapsingFieldAnimation& mCollapsingFieldAnimation;
         EffectManager& mEffectManager;
         PieceDropParticleEffect& mPieceDropParticleEffect;

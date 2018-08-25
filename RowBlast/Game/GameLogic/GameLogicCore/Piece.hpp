@@ -66,7 +66,11 @@ namespace RowBlast {
         virtual int GetNumEmptyTopRows() const;
         virtual bool NeedsUpAdjustmentInHud() const;
         virtual bool NeedsDownAdjustmentInHud() const;
-        
+
+        BlockColor GetColor() const {
+            return mColor;
+        }
+
         int GetGridNumRows() const {
             return mGridNumRows;
         }
@@ -133,6 +137,7 @@ namespace RowBlast {
         std::vector<CellGrid> mGrids;
         int mClickGridNumRows {0};
         int mClickGridNumColumns {0};
+        BlockColor mColor {BlockColor::None};
         std::vector<ClickGrid> mClickGrids;
         int mNumRotations {4};
         std::unique_ptr<Pht::RenderableObject> mGhostPieceRenderable;

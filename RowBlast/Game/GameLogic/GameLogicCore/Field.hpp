@@ -102,6 +102,7 @@ namespace RowBlast {
                              bool updateCellPosition,
                              bool startBlueprintCellAnimation,
                              bool startBounceAnimation);
+        void ResetFlashingBlockAnimations();
         void ManageWelds();
         void MergeTriangleBlocksIntoCube(const Pht::IVec2& position);
         void PullDownLoosePieces();
