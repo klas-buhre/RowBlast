@@ -6,12 +6,12 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto flashDuration {0.3f};
+    constexpr auto flashDuration {0.32f};
 }
 
-const Pht::Color FlashingBlocksAnimation::colorAdd {0.3f, 0.3f, 0.3f};
+const Pht::Color FlashingBlocksAnimation::colorAdd {0.32f, 0.32f, 0.32f};
+const Pht::Color FlashingBlocksAnimation::semiFlashingColorAdd {0.16f, 0.16f, 0.16f};
 const Pht::Color FlashingBlocksAnimation::brightColorAdd {0.53f, 0.53f, 0.53f};
-const Pht::Color FlashingBlocksAnimation::semiFlashingColorAdd {0.15f, 0.15f, 0.15f};
 
 FlashingBlocksAnimation::FlashingBlocksAnimation(Field& field, PieceResources& pieceResources) :
     mField {field},
@@ -50,20 +50,20 @@ void FlashingBlocksAnimation::UpdateInWaitingState() {
                 continue;
             }
             
-            ActivateNonBouncingWaitingBlock(cell.mFirstSubCell, row, column);
-            ActivateNonBouncingWaitingBlock(cell.mSecondSubCell, row, column);
+            ActivateWaitingBlock(cell.mFirstSubCell, row, column);
+            ActivateWaitingBlock(cell.mSecondSubCell, row, column);
         }
+    }
+    
+    if (mState == State::Waiting) {
+        mState = State::Inactive;
     }
 }
 
-void FlashingBlocksAnimation::ActivateNonBouncingWaitingBlock(SubCell& subCell,
-                                                              int row,
-                                                              int column) {
+void FlashingBlocksAnimation::ActivateWaitingBlock(SubCell& subCell, int row, int column) {
     auto& flashingBlockAnimation {subCell.mFlashingBlockAnimation};
     
-    if (flashingBlockAnimation.mState == FlashingBlockAnimation::State::Waiting /*&&
-        subCell.mFallingBlockAnimation.mState != FallingBlockAnimation::State::Bouncing*/) {
-        
+    if (flashingBlockAnimation.mState == FlashingBlockAnimation::State::Waiting) {
         if (mState == State::Waiting) {
             mState = State::Active;
             UpdateRenderables();
@@ -88,8 +88,8 @@ void FlashingBlocksAnimation::UpdateInActiveState(float dt) {
                 continue;
             }
             
-            ActivateNonBouncingWaitingBlock(cell.mFirstSubCell, row, column);
-            ActivateNonBouncingWaitingBlock(cell.mSecondSubCell, row, column);
+            ActivateWaitingBlock(cell.mFirstSubCell, row, column);
+            ActivateWaitingBlock(cell.mSecondSubCell, row, column);
         }
     }
     

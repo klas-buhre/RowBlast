@@ -25,7 +25,7 @@ namespace RowBlast {
         
     private:
         void UpdateInWaitingState();
-        void ActivateNonBouncingWaitingBlock(SubCell& subCell, int row, int column);
+        void ActivateWaitingBlock(SubCell& subCell, int row, int column);
         void UpdateInActiveState(float dt);
         bool IsBlockAccordingToBlueprint(SubCell& subCell, int row, int column);
         void UpdateRenderables();

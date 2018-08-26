@@ -47,8 +47,6 @@ Backlog:
     -Credit Google for avatars? : http://www.iconarchive.com/show/noto-emoji-people-face-icons-by-google.1.html
 
 Ongoing tasks:
-  -Can the blocks flash before the bounce is finished? Looks better that way.
-  -Tune the flashing blocks.
   -Levels in the second world.
     -The second world could introduce level bombs and triangle blocks.
     -The third world could introduce the build objective.
