@@ -54,3 +54,7 @@ PyramidPiece::PyramidPiece(Pht::IEngine& engine, const GameScene& scene) {
     ghostPieceProducer.DrawBorder(border, FillGhostPiece::Yes);
     SetPressedGhostPieceRenderable(ghostPieceProducer.ProduceRenderable());
 }
+
+bool PyramidPiece::NeedsDownAdjustmentInHud() const {
+    return true;
+}
