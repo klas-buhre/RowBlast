@@ -361,6 +361,7 @@
 		62B2BAED212D9B4F009C529D /* level53.json in Resources */ = {isa = PBXBuildFile; fileRef = 62B2BAEC212D9B4F009C529D /* level53.json */; };
 		62B2BAEF2130089D009C529D /* level54.json in Resources */ = {isa = PBXBuildFile; fileRef = 62B2BAEE2130089C009C529D /* level54.json */; };
 		62B2BAF12133FE61009C529D /* level55.json in Resources */ = {isa = PBXBuildFile; fileRef = 62B2BAF02133FE60009C529D /* level55.json */; };
+		62B2BAF32134495E009C529D /* level56.json in Resources */ = {isa = PBXBuildFile; fileRef = 62B2BAF22134495D009C529D /* level56.json */; };
 		62BE274620AEDD990014C6DD /* SlidingFieldAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62BE274420AEDD990014C6DD /* SlidingFieldAnimation.cpp */; };
 		62BE274920AF179D0014C6DD /* FireworksParticleEffect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62BE274720AF179D0014C6DD /* FireworksParticleEffect.cpp */; };
 		62BE274C20B063570014C6DD /* ConfettiParticleEffect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62BE274A20B063570014C6DD /* ConfettiParticleEffect.cpp */; };
@@ -1069,6 +1070,7 @@
 		62B2BAEC212D9B4F009C529D /* level53.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level53.json; sourceTree = "<group>"; };
 		62B2BAEE2130089C009C529D /* level54.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level54.json; sourceTree = "<group>"; };
 		62B2BAF02133FE60009C529D /* level55.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level55.json; sourceTree = "<group>"; };
+		62B2BAF22134495D009C529D /* level56.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level56.json; sourceTree = "<group>"; };
 		62BE274420AEDD990014C6DD /* SlidingFieldAnimation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SlidingFieldAnimation.cpp; sourceTree = "<group>"; };
 		62BE274520AEDD990014C6DD /* SlidingFieldAnimation.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SlidingFieldAnimation.hpp; sourceTree = "<group>"; };
 		62BE274720AF179D0014C6DD /* FireworksParticleEffect.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FireworksParticleEffect.cpp; sourceTree = "<group>"; };
@@ -1347,6 +1349,7 @@
 				62B2BAEC212D9B4F009C529D /* level53.json */,
 				62B2BAEE2130089C009C529D /* level54.json */,
 				62B2BAF02133FE60009C529D /* level55.json */,
+				62B2BAF22134495D009C529D /* level56.json */,
 			);
 			path = Levels;
 			sourceTree = "<group>";
@@ -2450,6 +2453,7 @@
 				62B1CB5D210F8EE500D0F195 /* cloud_C_512.png in Resources */,
 				62B1CB80210F8F8600D0F195 /* confetti.png in Resources */,
 				62B1CB60210F8EE500D0F195 /* portal.png in Resources */,
+				62B2BAF32134495E009C529D /* level56.json in Resources */,
 				62B2BAE8212C2830009C529D /* level50.json in Resources */,
 				62B1CB62210F8EE500D0F195 /* cloud_D_512.png in Resources */,
 				62785B1820875937006F9869 /* TexturedEmissiveLighting.frag in Resources */,
