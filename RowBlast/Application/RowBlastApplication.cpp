@@ -32,7 +32,6 @@ Backlog:
     -Maybe remove light animation for the field blocks and always have a light direction that looks
      good?
     -Try adding animated text messages like "Awesome" or "Combo" when clearing rows.
-    -The falling piece could scale in/out instead of just popping in and out of existence.
   -GUI:
     -Menu window that displays 3rd party lib credits.
   -Purchases:
@@ -47,6 +46,7 @@ Backlog:
     -Credit Google for avatars? : http://www.iconarchive.com/show/noto-emoji-people-face-icons-by-google.1.html
 
 Ongoing tasks:
+  -The falling piece could scale in/out instead of just popping in and out of existence.
   -Levels in the second world.
     -The second world could introduce level bombs and triangle blocks.
     -The third world could introduce the build objective.

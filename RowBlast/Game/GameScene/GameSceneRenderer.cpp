@@ -298,6 +298,10 @@ void GameSceneRenderer::RenderPieceBlocks(const CellGrid& pieceBlocks,
     auto isBomb {pieceType.IsBomb()};
     auto isRowBomb {pieceType.IsRowBomb()};
     
+    Pht::Vec3 pieceGridSize {pieceNumColumns * cellSize, pieceNumRows * cellSize, 0.0f};
+    auto& containerObject {pool.GetContainerSceneObject()};
+    containerObject.GetTransform().SetPosition(pieceFieldPos + pieceGridSize / 2.0f);
+
     for (auto row {0}; row < pieceNumRows; row++) {
         for (auto column {0}; column < pieceNumColumns; column++) {
             auto& subCell {pieceBlocks[row][column].mFirstSubCell};
@@ -310,9 +314,9 @@ void GameSceneRenderer::RenderPieceBlocks(const CellGrid& pieceBlocks,
             auto& sceneObject {pool.AccuireSceneObject()};
             
             Pht::Vec3 blockPosition {
-                column * cellSize + cellSize / 2.0f + pieceFieldPos.x,
-                row * cellSize + cellSize / 2.0f + pieceFieldPos.y,
-                pieceFieldPos.z
+                column * cellSize + cellSize / 2.0f - pieceGridSize.x / 2.0f,
+                row * cellSize + cellSize / 2.0f - pieceGridSize.y / 2.0f,
+                0.0f
             };
 
             auto& transform {sceneObject.GetTransform()};
