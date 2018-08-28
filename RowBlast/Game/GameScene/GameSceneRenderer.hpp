@@ -57,6 +57,7 @@ namespace RowBlast {
         void RenderPieceBlocks(const CellGrid& pieceBlocks,
                                const Pht::Vec3& pieceFieldPos,
                                bool isTransparent,
+                               bool isGhostPiece,
                                SceneObjectPool& pool);
         void RenderGhostPieces();
         void RenderGhostPieceForGestureControls(const FallingPiece& fallingPiece);
