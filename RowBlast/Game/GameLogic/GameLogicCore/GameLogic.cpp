@@ -19,6 +19,7 @@
 #include "EffectManager.hpp"
 #include "PieceDropParticleEffect.hpp"
 #include "BlastRadiusAnimation.hpp"
+#include "FallingPieceScaleAnimation.hpp"
 #include "GameHudController.hpp"
 #include "Tutorial.hpp"
 #include "CommonResources.hpp"
@@ -80,6 +81,7 @@ GameLogic::GameLogic(Pht::IEngine& engine,
                      CollapsingFieldAnimation& collapsingFieldAnimation,
                      PieceDropParticleEffect& pieceDropParticleEffect,
                      BlastRadiusAnimation& blastRadiusAnimation,
+                     FallingPieceScaleAnimation& fallingPieceScaleAnimation,
                      GameHudController& gameHudController,
                      Tutorial& tutorial,
                      const Settings& settings) :
@@ -92,6 +94,7 @@ GameLogic::GameLogic(Pht::IEngine& engine,
     mEffectManager {effectManager},
     mPieceDropParticleEffect {pieceDropParticleEffect},
     mBlastRadiusAnimation {blastRadiusAnimation},
+    mFallingPieceScaleAnimation {fallingPieceScaleAnimation},
     mGameHudController {gameHudController},
     mTutorial {tutorial},
     mSettings {settings},
@@ -212,6 +215,8 @@ GameLogic::Result GameLogic::SpawnFallingPiece() {
         mClickInputHandler.CalculateMoves(*mFallingPiece, GetMovesUsedIncludingCurrent() - 1);
         mClickInputHandler.CreateNewSetOfVisibleMoves();
     }
+    
+    mFallingPieceScaleAnimation.Start();
     
     if (mMovesLeft == 0) {
         return Result::OutOfMoves;

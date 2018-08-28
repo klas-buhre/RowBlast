@@ -26,6 +26,7 @@
 #include "SlidingTextAnimation.hpp"
 #include "BlastRadiusAnimation.hpp"
 #include "BombsAnimation.hpp"
+#include "FallingPieceScaleAnimation.hpp"
 #include "LevelCompletedController.hpp"
 #include "Tutorial.hpp"
 #include "GameHudRectangles.hpp"
@@ -143,6 +144,7 @@ namespace RowBlast {
         BlastRadiusAnimation mBlastRadiusAnimation;
         SlidingTextAnimation mSlidingTextAnimation;
         ClearLastBlocksAnimation mClearLastBlocksAnimation;
+        FallingPieceScaleAnimation mFallingPieceScaleAnimation;
         Tutorial mTutorial;
         GameLogic mGameLogic;
         FallingPieceAnimation& mFallingPieceAnimation;

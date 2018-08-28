@@ -7,6 +7,10 @@ Backlog:
     -Metal.
 
   -Gameplay:
+   X-All pieces should probably have the same grid size so that the falling piece y-position is the
+     same when switching piece. As it is now, the y-positions appears to change when switching if
+     the level has a non-zero speed. Also, the falling piece scale animation should look better if
+     this is done.
    X-Fix the piece pull down bug on level 31. See screenshot.
    X-Fix bug where the switchable pieces can change if double clicking on switch when the frame rate
      is really low like in the iPad simulator.
@@ -46,7 +50,6 @@ Backlog:
     -Credit Google for avatars? : http://www.iconarchive.com/show/noto-emoji-people-face-icons-by-google.1.html
 
 Ongoing tasks:
-  -The falling piece could scale in/out instead of just popping in and out of existence.
   -Levels in the second world.
     -The second world could introduce level bombs and triangle blocks.
     -The third world could introduce the build objective.
