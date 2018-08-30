@@ -7,10 +7,6 @@ Backlog:
     -Metal.
 
   -Gameplay:
-   X-All pieces should probably have the same grid size so that the falling piece y-position is the
-     same when switching piece. As it is now, the y-positions appears to change when switching if
-     the level has a non-zero speed. Also, the falling piece scale animation should look better if
-     this is done.
    X-Fix the piece pull down bug on level 31. See screenshot.
    X-Fix bug where the switchable pieces can change if double clicking on switch when the frame rate
      is really low like in the iPad simulator.

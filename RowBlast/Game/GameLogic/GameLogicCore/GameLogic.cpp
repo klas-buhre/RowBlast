@@ -299,7 +299,17 @@ Pht::Vec2 GameLogic::CalculateFallingPieceSpawnPos(const Piece& pieceType,
     auto startXPos {mField.GetNumColumns() / 2 - pieceType.GetGridNumColumns() / 2};
     
     if (fallingPieceSpawnReason == FallingPieceSpawnReason::Switch && mLevel->GetSpeed() > 0.0f) {
-        return Pht::Vec2 {startXPos + halfColumn, mFallingPiece->GetPosition().y};
+        auto pieceNumEmptyBottompRows {pieceType.GetDimensions(Rotation::Deg0).mYmin};
+        
+        auto previousPieceNumEmptyBottomRows {
+            mFallingPiece->GetPieceType().GetDimensions(Rotation::Deg0).mYmin
+        };
+        
+        auto yAdjust {
+            static_cast<float>(previousPieceNumEmptyBottomRows - pieceNumEmptyBottompRows)
+        };
+        
+        return Pht::Vec2 {startXPos + halfColumn, mFallingPiece->GetPosition().y + yAdjust};
     }
     
     auto topRowInScreen {
@@ -317,7 +327,9 @@ Pht::Vec2 GameLogic::CalculateFallingPieceSpawnPos(const Piece& pieceType,
             break;
     }
     
-    auto desiredUpperPos {topRowInScreen - 3 + pieceType.GetNumEmptyTopRows()};
+    auto& pieceDimensions {pieceType.GetDimensions(Rotation::Deg0)};
+    auto pieceNumEmptyTopRows {pieceType.GetGridNumRows() - pieceDimensions.mYmax - 1};
+    auto desiredUpperPos {topRowInScreen - 3 + pieceNumEmptyTopRows};
     
     if (mLevel->GetSpeed() > 0.0f) {
         ++desiredUpperPos;

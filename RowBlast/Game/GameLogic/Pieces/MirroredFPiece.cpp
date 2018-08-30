@@ -61,7 +61,3 @@ MirroredFPiece::MirroredFPiece(Pht::IEngine& engine, const GameScene& scene) {
     ghostPieceProducer.DrawBorder(border, FillGhostPiece::Yes);
     SetPressedGhostPieceRenderable(ghostPieceProducer.ProduceRenderable());
 }
-
-int MirroredFPiece::GetNumEmptyTopRows() const {
-    return 1;
-}

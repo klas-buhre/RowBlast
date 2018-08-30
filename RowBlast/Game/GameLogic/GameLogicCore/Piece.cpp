@@ -129,10 +129,6 @@ bool Piece::PositionCanBeAdjusteInMovesSearch() const {
     return true;
 }
 
-int Piece::GetNumEmptyTopRows() const {
-    return 0;
-}
-
 bool Piece::NeedsUpAdjustmentInHud() const {
     return false;
 }
@@ -483,6 +479,7 @@ void Piece::AddDimensions(Rotation rotation) {
         .mXmin = mGridNumColumns - 1,
         .mXmax = 0,
         .mYmin = mGridNumRows - 1,
+        .mYmax = 0
     };
     
     for (auto row {0}; row < mGridNumRows; ++row) {
@@ -491,7 +488,11 @@ void Piece::AddDimensions(Rotation rotation) {
                 if (row < dimensions.mYmin) {
                     dimensions.mYmin = row;
                 }
-                
+
+                if (row > dimensions.mYmax) {
+                    dimensions.mYmax = row;
+                }
+
                 if (column > dimensions.mXmax) {
                     dimensions.mXmax = column;
                 }

@@ -59,10 +59,6 @@ SevenPiece::SevenPiece(Pht::IEngine& engine, const GameScene& scene) {
     SetPressedGhostPieceRenderable(ghostPieceProducer.ProduceRenderable());
 }
 
-int SevenPiece::GetNumEmptyTopRows() const {
-    return 1;
-}
-
 bool SevenPiece::NeedsUpAdjustmentInHud() const {
     return true;
 }

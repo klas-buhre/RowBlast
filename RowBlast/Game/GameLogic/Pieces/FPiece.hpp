@@ -14,8 +14,6 @@ namespace RowBlast {
     class FPiece: public Piece {
     public:
         FPiece(Pht::IEngine& engine, const GameScene& scene);
-        
-        int GetNumEmptyTopRows() const override;
     };
 }
 

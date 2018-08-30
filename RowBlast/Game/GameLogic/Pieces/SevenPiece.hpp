@@ -15,7 +15,6 @@ namespace RowBlast {
     public:
         SevenPiece(Pht::IEngine& engine, const GameScene& scene);
         
-        int GetNumEmptyTopRows() const override;
         bool NeedsUpAdjustmentInHud() const override;
     };
 }

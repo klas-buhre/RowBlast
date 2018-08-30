@@ -59,7 +59,3 @@ LongIPiece::LongIPiece(Pht::IEngine& engine, const GameScene& scene) {
     ghostPieceProducer.DrawBorder(border, FillGhostPiece::Yes);
     SetPressedGhostPieceRenderable(ghostPieceProducer.ProduceRenderable());
 }
-
-int LongIPiece::GetNumEmptyTopRows() const {
-    return 2;
-}

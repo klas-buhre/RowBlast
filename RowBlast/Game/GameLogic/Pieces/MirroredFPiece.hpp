@@ -14,8 +14,6 @@ namespace RowBlast {
     class MirroredFPiece: public Piece {
     public:
         MirroredFPiece(Pht::IEngine& engine, const GameScene& scene);
-        
-        int GetNumEmptyTopRows() const override;
     };
 }
 

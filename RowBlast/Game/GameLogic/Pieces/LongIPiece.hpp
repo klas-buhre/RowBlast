@@ -14,8 +14,6 @@ namespace RowBlast {
     class LongIPiece: public Piece {
     public:
         LongIPiece(Pht::IEngine& engine, const GameScene& scene);
-        
-        int GetNumEmptyTopRows() const override;
     };
 }
 

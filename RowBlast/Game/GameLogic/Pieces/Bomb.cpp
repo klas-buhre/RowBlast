@@ -31,10 +31,6 @@ bool Bomb::CanRotateAroundZ() const {
     return false;
 }
 
-int Bomb::GetNumEmptyTopRows() const {
-    return 1;
-}
-
 bool Bomb::PositionCanBeAdjusteInMovesSearch() const {
     return false;
 }
