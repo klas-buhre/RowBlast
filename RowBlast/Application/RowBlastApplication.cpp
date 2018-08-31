@@ -48,8 +48,9 @@ Backlog:
 Ongoing tasks:
   -Levels in the second world.
     -The second world could introduce level bombs and triangle blocks.
+    -Maybe move level 19 to the first world.
     -The third world could introduce the build objective.
-    -Levels to keep in the second world: 30, 34, 42, 55
+    -Levels to keep in the second world: 34, 42, 55?
 
 
 
