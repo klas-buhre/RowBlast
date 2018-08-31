@@ -14,13 +14,13 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto numFireworks {30};
+    constexpr auto numFireworks {16};
     constexpr auto fireworksDuration {5.0f};
     constexpr auto fireworksWaitDuration {1.0f};
     constexpr auto fireworkTimeToLive {1.5f};
     constexpr auto fireworkTimeToLiveRandomPart {1.0f};
     constexpr auto velocity {25.0f};
-    constexpr auto velocityRandomPart {6.0f};
+    constexpr auto velocityRandomPart {1.0f};
     
     const std::array<Pht::Vec4, 3> colors {
         Pht::Vec4{1.0f, 0.6f, 0.6f, 1.0f},
@@ -30,12 +30,14 @@ namespace {
     
     Pht::Vec3 ParticleVelocityFunction() {
         auto theta {Pht::ToRadians(Pht::NormalizedRand() * 360.0f)};
+        auto phi {Pht::ToRadians(Pht::NormalizedRand() * 360.0f)};
+        auto sinTheta {std::sin(theta)};
         auto magnitude {velocity + (Pht::NormalizedRand() - 0.5f) * velocityRandomPart};
         
         return {
-            static_cast<float>(magnitude * cos(theta)),
-            static_cast<float>(magnitude * sin(theta)),
-            0.0f
+            static_cast<float>(magnitude * sinTheta * std::cos(phi)),
+            static_cast<float>(magnitude * sinTheta * std::sin(phi)),
+            static_cast<float>(magnitude * std::cos(theta))
         };
     }
 }
@@ -55,7 +57,7 @@ void FireworksParticleEffect::Init(Pht::SceneObject& parentObject, const Pht::Ve
         Pht::Vec3 position {
             (Pht::NormalizedRand() - 0.5f) * effectsVolume.x,
             (Pht::NormalizedRand() - 0.5f) * effectsVolume.y + effectsVolume.y / 5.0f,
-            (Pht::NormalizedRand() - 0.5f) * effectsVolume.z - 6.0f
+            (Pht::NormalizedRand() - 0.5f) * effectsVolume.z - 8.5f
         };
         
         auto waitTime {
@@ -107,8 +109,8 @@ FireworksParticleEffect::Firework::Firework(Pht::IEngine& engine) {
         .mTimeToLive = fireworkTimeToLive,
         .mTimeToLiveRandomPart = fireworkTimeToLiveRandomPart,
         .mFadeOutDuration = 1.0f,
-        .mSize = Pht::Vec2{0.9f, 0.9f},
-        .mSizeRandomPart = 0.5f,
+        .mSize = Pht::Vec2{0.7f, 0.7f},
+        .mSizeRandomPart = 0.3f,
         .mGrowDuration = 0.0f,
         .mShrinkDuration = 0.5f
     };
@@ -118,7 +120,7 @@ FireworksParticleEffect::Firework::Firework(Pht::IEngine& engine) {
         .mSize = Pht::Vec3{0.0f, 0.0f, 0.0f},
         .mTimeToLive = 0.0f,
         .mFrequency = 0.0f,
-        .mBurst = 50
+        .mBurst = 140
     };
     
     auto& particleSystem {engine.GetParticleSystem()};
