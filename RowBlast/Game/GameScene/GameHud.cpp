@@ -147,7 +147,7 @@ void GameHud::CreateProgressObject(Pht::Scene& scene,
     
     Pht::Vec3 position {
         -3.4f,
-        renderer.GetHudFrustumSize().y / 2.0f - renderer.GetTopPaddingHeight() - 0.87f,
+        renderer.GetHudFrustumSize().y / 2.0f - renderer.GetTopPaddingHeight() - 0.67f,
         UiLayer::root
     };
     
@@ -159,7 +159,7 @@ void GameHud::CreateProgressObject(Pht::Scene& scene,
     CreateRoundedCylinder(scene,
                           progressContainer,
                           cylinderPosition,
-                          {2.5, 1.1f},
+                          {2.5, 1.05f},
                           roundedCylinderOpacity,
                           roundedCylinderAmbient,
                           roundedCylinderDiffuse);
@@ -218,7 +218,7 @@ void GameHud::CreateMovesObject(Pht::Scene& scene,
     
     Pht::Vec3 position {
         3.4f,
-        renderer.GetHudFrustumSize().y / 2.0f - renderer.GetTopPaddingHeight() - 0.87f,
+        renderer.GetHudFrustumSize().y / 2.0f - renderer.GetTopPaddingHeight() - 0.67f,
         UiLayer::root
     };
 
@@ -230,7 +230,7 @@ void GameHud::CreateMovesObject(Pht::Scene& scene,
     CreateRoundedCylinder(scene,
                           movesContainer,
                           cylinderPosition,
-                          {2.5, 1.1f},
+                          {2.5, 1.05f},
                           roundedCylinderOpacity,
                           roundedCylinderAmbient,
                           roundedCylinderDiffuse);

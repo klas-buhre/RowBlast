@@ -32,7 +32,8 @@ LevelCompletedController::LevelCompletedController(Pht::IEngine& engine,
                                                    ClearLastBlocksAnimation& clearLastBlocksAnimation,
                                                    GameLogic& gameLogic,
                                                    UserData& userData,
-                                                   const CommonResources& commonResources) :
+                                                   const CommonResources& commonResources,
+                                                   Pht::CameraShake& cameraShake) :
     mEngine {engine},
     mGameScene {gameScene},
     mGameViewControllers {gameViewControllers},
@@ -50,7 +51,7 @@ LevelCompletedController::LevelCompletedController(Pht::IEngine& engine,
     mSlidingFieldAnimation {engine, gameScene},
     mFireworksParticleEffect {engine},
     mConfettiParticleEffect {engine},
-    mStarsAnimation {engine, gameScene, commonResources} {
+    mStarsAnimation {engine, gameScene, commonResources, cameraShake} {
     
     mFadeEffect.GetSceneObject().SetLayer(static_cast<int>(GameScene::Layer::LevelCompletedFadeEffect));
 }

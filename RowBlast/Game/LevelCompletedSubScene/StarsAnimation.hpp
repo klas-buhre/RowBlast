@@ -10,6 +10,7 @@
 
 namespace Pht {
     class IEngine;
+    class CameraShake;
 }
 
 namespace RowBlast {
@@ -25,7 +26,8 @@ namespace RowBlast {
 
         StarsAnimation(Pht::IEngine& engine,
                        GameScene& scene,
-                       const CommonResources& commonResources);
+                       const CommonResources& commonResources,
+                       Pht::CameraShake& cameraShake);
 
         void Init();
         void Start(int numStars);
@@ -42,7 +44,9 @@ namespace RowBlast {
                 Rotating
             };
 
-            StarAnimation(Pht::IEngine& engine, const CommonResources& commonResources);
+            StarAnimation(Pht::IEngine& engine,
+                          const CommonResources& commonResources,
+                          Pht::CameraShake& cameraShake);
             
             void Init(Pht::SceneObject& starsContainer);
             void Start(const Pht::Vec3& position, float waitTime);
@@ -58,6 +62,7 @@ namespace RowBlast {
             void SetIsFlashing(bool isFlashing);
             
             State mState {State::Waiting};
+            Pht::CameraShake& mCameraShake;
             const Pht::Material& mGoldStarMaterial;
             std::unique_ptr<Pht::RenderableObject> mStarRenderable;
             std::unique_ptr<Pht::SceneObject> mStar;

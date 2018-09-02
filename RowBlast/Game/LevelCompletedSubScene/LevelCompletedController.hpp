@@ -13,6 +13,7 @@
 
 namespace Pht {
     class IEngine;
+    class CameraShake;
 }
 
 namespace RowBlast {
@@ -34,7 +35,8 @@ namespace RowBlast {
                                  ClearLastBlocksAnimation& clearLastBlocksAnimation,
                                  GameLogic& gameLogic,
                                  UserData& userData,
-                                 const CommonResources& commonResources);
+                                 const CommonResources& commonResources,
+                                 Pht::CameraShake& cameraShake);
 
         void Init(const Level& level);
         void Start();

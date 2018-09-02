@@ -105,7 +105,8 @@ GameController::GameController(Pht::IEngine& engine,
         mClearLastBlocksAnimation,
         mGameLogic,
         mUserData,
-        commonResources
+        commonResources,
+        mCameraShake
     } {}
 
 void GameController::StartLevel(int levelId) {

@@ -8,6 +8,7 @@
 #include "ISceneManager.hpp"
 #include "IParticleSystem.hpp"
 #include "ParticleEffect.hpp"
+#include "CameraShake.hpp"
 
 // Game includes.
 #include "GameScene.hpp"
@@ -29,16 +30,19 @@ namespace {
     const Pht::Vec3 middleStarPosition {0.0f, 1.3f, farZPosition};
     const Pht::Vec3 rightStarPosition {2.0f, 0.8f, farZPosition};
     const Pht::Vec3 rightMostStarPosition {3.8f, 0.8f, farZPosition};
+    constexpr auto cameraShakeTime {0.25f};
+    constexpr auto cameraShakeMagnitude {0.8f};
 }
 
 StarsAnimation::StarsAnimation(Pht::IEngine& engine,
                                GameScene& scene,
-                               const CommonResources& commonResources) :
+                               const CommonResources& commonResources,
+                               Pht::CameraShake& cameraShake) :
     mEngine {engine},
     mScene {scene} {
     
     for (auto& star: mStarAnimations) {
-        star = std::make_unique<StarAnimation>(engine, commonResources);
+        star = std::make_unique<StarAnimation>(engine, commonResources, cameraShake);
     }
 }
 
@@ -98,7 +102,9 @@ void StarsAnimation::MoveToFront() {
 }
 
 StarsAnimation::StarAnimation::StarAnimation(Pht::IEngine& engine,
-                                             const CommonResources& commonResources) :
+                                             const CommonResources& commonResources,
+                                             Pht::CameraShake& cameraShake) :
+    mCameraShake {cameraShake},
     mGoldStarMaterial {commonResources.GetMaterials().GetGoldMaterial()} {
 
     auto& sceneManager {engine.GetSceneManager()};
@@ -240,6 +246,8 @@ void StarsAnimation::StarAnimation::UpdateInScalingInState(float dt) {
         auto& material {mStar->GetRenderable()->GetMaterial()};
         material.SetOpacity(1.0f);
         material.GetDepthState().mDepthWrite = true;
+        
+        mCameraShake.StartShake(cameraShakeTime, cameraShakeMagnitude);
     }
 }
 

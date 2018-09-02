@@ -101,7 +101,7 @@ FireworksParticleEffect::State FireworksParticleEffect::Update() {
 FireworksParticleEffect::Firework::Firework(Pht::IEngine& engine) {
     Pht::ParticleSettings particleSettings {
         .mVelocityFunction = ParticleVelocityFunction,
-        .mAcceleration = Pht::Vec3{0.0f, -18.0f, 0.0f},
+        .mAcceleration = Pht::Vec3{0.0f, -11.0f, 0.0f},
         .mDragCoefficient = 3.0f,
         .mColor = Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f},
         .mColorRandomPart = Pht::Vec4{0.0f, 0.0f, 0.0f, 0.0f},
