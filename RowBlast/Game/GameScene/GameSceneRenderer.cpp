@@ -401,7 +401,7 @@ void GameSceneRenderer::RenderGhostPieceForGestureControls(const FallingPiece& f
         mScene.GetGhostPieceZ()
     };
     
-    if (auto* ghostPieceRenderable {GetGhostPieceRenderable(pieceType)}) {
+    if (auto* ghostPieceRenderable {pieceType.GetGhostPieceRenderable()}) {
         Pht::Vec3 ghostPieceCenterLocalCoords {
             cellSize * static_cast<float>(pieceType.GetGridNumColumns()) / 2.0f,
             cellSize * static_cast<float>(pieceType.GetGridNumRows()) / 2.0f,
@@ -437,14 +437,6 @@ void GameSceneRenderer::RenderGhostPiece(Pht::RenderableObject& ghostPieceRender
     sceneObject.SetRenderable(&ghostPieceRenderable);
 }
 
-Pht::RenderableObject* GameSceneRenderer::GetGhostPieceRenderable(const Piece& pieceType) const {
-    if (mField.GetBlueprintGrid()) {
-        return pieceType.GetGhostPieceRenderable();
-    }
-    
-    return pieceType.GetFilledGhostPieceRenderable();
-}
-
 void GameSceneRenderer::RenderClickableGhostPieces(const FallingPiece& fallingPiece) {
     auto* moveAlternatives {mGameLogic.GetClickInputHandler().GetVisibleMoves()};
     
@@ -455,7 +447,7 @@ void GameSceneRenderer::RenderClickableGhostPieces(const FallingPiece& fallingPi
     const auto cellSize {mScene.GetCellSize()};
     auto ghostPieceZ {mScene.GetGhostPieceZ()};
     auto& pieceType {fallingPiece.GetPieceType()};
-    auto* ghostPieceRenderable {GetGhostPieceRenderable(pieceType)};
+    auto* ghostPieceRenderable {pieceType.GetGhostPieceRenderable()};
     
     Pht::Vec3 ghostPieceCenterLocalCoords {
         cellSize * static_cast<float>(pieceType.GetGridNumColumns()) / 2.0f,

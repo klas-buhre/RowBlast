@@ -20,6 +20,7 @@ using namespace RowBlast;
 
 namespace {
     constexpr auto fieldQuadZ {-1.0f};
+    constexpr auto blueprintZ {-0.7f};
     constexpr auto fieldBorderZ {-0.5f};
     constexpr auto lowerClipAreaHeightInCells {2.15f};
     constexpr auto fieldPadding {0.1f};
@@ -108,6 +109,7 @@ GameScene::GameScene(Pht::IEngine& engine,
     mCameraShake {cameraShake},
     mHudRectangles {hudRectangles},
     mFieldBorder {engine, *this, commonResources},
+    mFieldGrid {engine, *this, commonResources},
     mFieldPosition {0.0f, 0.0f, 0.0f} {}
 
 void GameScene::Init(const Level& level,
@@ -141,6 +143,7 @@ void GameScene::Init(const Level& level,
     CreateStarsContainer();
     
     InitFieldBorder(level);
+    mFieldGrid.Init(level.GetNumRows());
     
     scene->SetDistanceFunction(Pht::DistanceFunction::WorldSpaceNegativeZ);
     sceneManager.SetLoadedScene(std::move(scene));
@@ -273,7 +276,7 @@ void GameScene::CreateFieldQuad() {
     mScene->GetRoot().AddChild(*mFieldQuadContainer);
 
     Pht::Material fieldMaterial;
-    fieldMaterial.SetOpacity(0.85f);
+    fieldMaterial.SetOpacity(0.95f);
 
     auto vertices {CreateFieldVertices()};
     auto& fieldQuad {mScene->CreateSceneObject(Pht::QuadMesh {vertices}, fieldMaterial)};
@@ -322,7 +325,7 @@ void GameScene::CreateBlueprintSlots(const Level& level, const LevelResources& l
                 Pht::Vec3 blueprintSlotPosition {
                     column * mCellSize + mCellSize / 2.0f,
                     row * mCellSize + mCellSize / 2.0f,
-                    mBlueprintZ
+                    blueprintZ
                 };
                 
                 blueprintSlot.GetTransform().SetPosition(blueprintSlotPosition);
@@ -479,7 +482,7 @@ void GameScene::UpdateCameraPosition() {
     
     Pht::Vec2 scissorBoxSize {
         mFieldWidth + fieldPadding + FieldBorder::borderThickness + scissorBoxPadding,
-        19.0f * mCellSize
+        16.3f * mCellSize
     };
 
     Pht::ScissorBox scissorBox {scissorBoxLowerLeft, scissorBoxSize};

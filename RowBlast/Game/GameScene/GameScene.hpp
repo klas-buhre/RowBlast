@@ -13,6 +13,7 @@
 #include "SceneObjectPool.hpp"
 #include "GameHud.hpp"
 #include "FieldBorder.hpp"
+#include "FieldGrid.hpp"
 #include "UiLayer.hpp"
 
 namespace Pht {
@@ -180,6 +181,10 @@ namespace RowBlast {
             return mBlueprintAnimationZ;
         }
         
+        float GetFieldGridZ() const {
+            return mFieldGridZ;
+        }
+        
         float GetBouncingBlockZ() const {
             return mBouncingBlockZ;
         }
@@ -223,6 +228,7 @@ namespace RowBlast {
         const Pht::CameraShake& mCameraShake;
         const GameHudRectangles& mHudRectangles;
         FieldBorder mFieldBorder;
+        FieldGrid mFieldGrid;
         Pht::Scene* mScene {nullptr};
         Pht::CameraComponent* mCamera {nullptr};
         Pht::LightComponent* mLight {nullptr};
@@ -246,7 +252,7 @@ namespace RowBlast {
         const float mGhostPieceZ {-0.2f};
         const float mPressedGhostPieceZ {mCellSize / 2.0f + 0.2f};
         const float mBlueprintAnimationZ {-0.6f};
-        const float mBlueprintZ {-0.7f};
+        const float mFieldGridZ {-0.8f};
         const float mBouncingBlockZ {-0.2f};
         float mFieldWidth {0.0f};
         float mFieldHeight {0.0f};

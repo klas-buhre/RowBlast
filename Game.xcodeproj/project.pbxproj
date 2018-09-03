@@ -42,6 +42,7 @@
 		625B02CD21386AC3000744F2 /* level_bomb_frame4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 625B02C821386AC2000744F2 /* level_bomb_frame4.jpg */; };
 		625B02CE21386AC3000744F2 /* level_bomb_frame5.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 625B02C921386AC2000744F2 /* level_bomb_frame5.jpg */; };
 		625B02CF21386AC3000744F2 /* level_bomb_frame1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 625B02CA21386AC2000744F2 /* level_bomb_frame1.jpg */; };
+		625B02D2213D7B8B000744F2 /* FieldGrid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 625B02D0213D7B8B000744F2 /* FieldGrid.cpp */; };
 		6261FFD520FB969B008F1619 /* level42.json in Resources */ = {isa = PBXBuildFile; fileRef = 6261FFD420FB969A008F1619 /* level42.json */; };
 		6261FFD720FCC912008F1619 /* level43.json in Resources */ = {isa = PBXBuildFile; fileRef = 6261FFD620FCC912008F1619 /* level43.json */; };
 		6261FFD920FD2C29008F1619 /* level44.json in Resources */ = {isa = PBXBuildFile; fileRef = 6261FFD820FD2C29008F1619 /* level44.json */; };
@@ -429,6 +430,8 @@
 		625B02C821386AC2000744F2 /* level_bomb_frame4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = level_bomb_frame4.jpg; sourceTree = "<group>"; };
 		625B02C921386AC2000744F2 /* level_bomb_frame5.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = level_bomb_frame5.jpg; sourceTree = "<group>"; };
 		625B02CA21386AC2000744F2 /* level_bomb_frame1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = level_bomb_frame1.jpg; sourceTree = "<group>"; };
+		625B02D0213D7B8B000744F2 /* FieldGrid.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FieldGrid.cpp; sourceTree = "<group>"; };
+		625B02D1213D7B8B000744F2 /* FieldGrid.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = FieldGrid.hpp; sourceTree = "<group>"; };
 		6261FFD420FB969A008F1619 /* level42.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level42.json; sourceTree = "<group>"; };
 		6261FFD620FCC912008F1619 /* level43.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level43.json; sourceTree = "<group>"; };
 		6261FFD820FD2C29008F1619 /* level44.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level44.json; sourceTree = "<group>"; };
@@ -1939,6 +1942,8 @@
 			children = (
 				6287B4D920ECCA6400C00EF0 /* FieldBorder.cpp */,
 				6287B4DA20ECCA6400C00EF0 /* FieldBorder.hpp */,
+				625B02D0213D7B8B000744F2 /* FieldGrid.cpp */,
+				625B02D1213D7B8B000744F2 /* FieldGrid.hpp */,
 				62785CE62087618D006F9869 /* GameController.cpp */,
 				62785CE32087618D006F9869 /* GameController.hpp */,
 				62785CE02087618D006F9869 /* GameHud.cpp */,
@@ -2687,6 +2692,7 @@
 				62785DBB2087618E006F9869 /* MapConfirmationDialogController.cpp in Sources */,
 				62785DBE2087618E006F9869 /* LevelCompletedDialogView.cpp in Sources */,
 				62785DCF2087618E006F9869 /* NextPieceGenerator.cpp in Sources */,
+				625B02D2213D7B8B000744F2 /* FieldGrid.cpp in Sources */,
 				62785E152087618E006F9869 /* NextLevelParticleEffect.cpp in Sources */,
 				62785DBA2087618E006F9869 /* RestartConfirmationDialogController.cpp in Sources */,
 				62785DED2087618E006F9869 /* PieceDropParticleEffect.cpp in Sources */,

@@ -23,7 +23,6 @@ namespace RowBlast {
     class LevelResources;
     class BombsAnimation;
     class SceneObjectPool;
-    class Piece;
 
     class GameSceneRenderer {
     public:
@@ -64,7 +63,6 @@ namespace RowBlast {
         void RenderGhostPiece(Pht::RenderableObject& ghostPieceRenderable,
                               const Pht::Vec3& position,
                               Rotation rotation);
-        Pht::RenderableObject* GetGhostPieceRenderable(const Piece& pieceType) const;
         void RenderClickableGhostPieces(const FallingPiece& fallingPiece);
         
         GameScene& mScene;
