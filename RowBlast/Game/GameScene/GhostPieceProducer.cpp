@@ -19,8 +19,7 @@ namespace {
     const auto borderOffset {0.04f};
     const Pht::Vec4 borderColor {1.0f, 1.0f, 1.0f, 0.82f};
     const Pht::Vec4 brightBorderColor {1.0f, 1.0f, 1.0f, 1.0f};
-    const Pht::Vec4 fillColor {1.0f, 1.0f, 1.0f, 0.075f};
-    const Pht::Vec4 brightFillColor {1.0f, 1.0f, 1.0f, 0.42f};
+    const Pht::Vec4 fillColor {1.0f, 1.0f, 1.0f, 0.42f};
 }
 
 GhostPieceProducer::GhostPieceProducer(Pht::IEngine& engine,
@@ -33,8 +32,7 @@ GhostPieceProducer::GhostPieceProducer(Pht::IEngine& engine,
         static_cast<float>(pieceGridSize.x) * cellSize,
         static_cast<float>(pieceGridSize.y) * cellSize
     },
-    mBorderColor {borderColor},
-    mFillColor {fillColor} {
+    mBorderColor {borderColor} {
     
     auto& renderer {engine.GetRenderer()};
     auto& renderBufferSize {renderer.GetRenderBufferSize()};
@@ -128,13 +126,12 @@ void GhostPieceProducer::DrawBorder(const GhostPieceBorder& border, FillGhostPie
     }
     
     if (fillGhostPiece == FillGhostPiece::Yes) {
-        mRasterizer->FillEnclosedArea(mFillColor);
+        mRasterizer->FillEnclosedArea(fillColor);
     }
 }
 
-void GhostPieceProducer::SetBrightBorderAndFill() {
+void GhostPieceProducer::SetBrightBorder() {
     mBorderColor = brightBorderColor;
-    mFillColor = brightFillColor;
 }
 
 void GhostPieceProducer::DrawUpperBorder(const Pht::IVec2& segmentEndPosition) {

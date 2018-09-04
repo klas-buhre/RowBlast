@@ -41,15 +41,11 @@ MiddleIPiece::MiddleIPiece(Pht::IEngine& engine, const GameScene& scene) {
     auto& commonResources {scene.GetCommonResources()};
     GhostPieceProducer ghostPieceProducer {engine, cellSize, Pht::IVec2{3, 1}, commonResources};
     
-    ghostPieceProducer.DrawBorder(border, FillGhostPiece::Yes);
-    SetFilledGhostPieceRenderable(ghostPieceProducer.ProduceRenderable());
-    
-    ghostPieceProducer.Clear();
     ghostPieceProducer.DrawBorder(border, FillGhostPiece::No);
     SetGhostPieceRenderable(ghostPieceProducer.ProduceRenderable());
 
     ghostPieceProducer.Clear();
-    ghostPieceProducer.SetBrightBorderAndFill();
+    ghostPieceProducer.SetBrightBorder();
     ghostPieceProducer.DrawBorder(border, FillGhostPiece::Yes);
     SetPressedGhostPieceRenderable(ghostPieceProducer.ProduceRenderable());
 }

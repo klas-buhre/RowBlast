@@ -61,7 +61,7 @@ namespace RowBlast {
         
         void Clear();
         void DrawBorder(const GhostPieceBorder& border, FillGhostPiece fillGhostPiece);
-        void SetBrightBorderAndFill();
+        void SetBrightBorder();
         std::unique_ptr<Pht::RenderableObject> ProduceRenderable() const;
         
     private:
@@ -89,7 +89,6 @@ namespace RowBlast {
         std::unique_ptr<Pht::OfflineRasterizer> mRasterizer;
         Pht::Vec2 mSegmentStartPosition {0.0f, 0.0f};
         Pht::Vec4 mBorderColor;
-        Pht::Vec4 mFillColor;
     };
 }
 

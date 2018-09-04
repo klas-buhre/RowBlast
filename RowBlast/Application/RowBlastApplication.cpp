@@ -48,7 +48,6 @@ Backlog:
 
 Ongoing tasks:
   -Only render the grid segments that are in the visible part of the field.
-  -Remove the filled ghost pieces.
   -Try adding animated text messages like "Awesome" or "Combo" when clearing rows.
   -Levels in the second world.
     -The second world could introduce level bombs and triangle blocks.

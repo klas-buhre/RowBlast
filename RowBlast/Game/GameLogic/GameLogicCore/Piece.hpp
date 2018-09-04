@@ -57,7 +57,6 @@ namespace RowBlast {
         const Pht::Vec2& GetButtonCenterPosition(Rotation rotation) const;
         const Pht::Vec2& GetButtonSize(Rotation rotation) const;
         Pht::RenderableObject* GetGhostPieceRenderable() const;
-        Pht::RenderableObject* GetFilledGhostPieceRenderable() const;
         Pht::RenderableObject* GetPressedGhostPieceRenderable() const;
         
         virtual bool CanRotateAroundZ() const;
@@ -110,7 +109,6 @@ namespace RowBlast {
         void SetNumRotations(int numRotations);
         void SetDuplicateMoveCheck(Rotation rotation, const DuplicateMoveCheck& duplicateMoveCheck);
         void SetGhostPieceRenderable(std::unique_ptr<Pht::RenderableObject> renderable);
-        void SetFilledGhostPieceRenderable(std::unique_ptr<Pht::RenderableObject> renderable);
         void SetPressedGhostPieceRenderable(std::unique_ptr<Pht::RenderableObject> renderable);
         
     private:
@@ -141,7 +139,6 @@ namespace RowBlast {
         std::vector<ClickGrid> mClickGrids;
         int mNumRotations {4};
         std::unique_ptr<Pht::RenderableObject> mGhostPieceRenderable;
-        std::unique_ptr<Pht::RenderableObject> mFilledGhostPieceRenderable;
         std::unique_ptr<Pht::RenderableObject> mPressedGhostPieceRenderable;
         float mPreviewCellSize {1.0f};
         std::vector<Pht::IVec2> mRightOverhangCheckPositions;
