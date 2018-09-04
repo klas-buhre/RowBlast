@@ -87,6 +87,10 @@ namespace RowBlast {
             assert(mHud);
             return *mHud;
         }
+        
+        const FieldGrid& GetFieldGrid() const {
+            return mFieldGrid;
+        }
 
         Pht::SceneObject& GetFieldContainer() {
             assert(mFieldContainer);

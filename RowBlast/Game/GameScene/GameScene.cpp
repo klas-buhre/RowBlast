@@ -143,7 +143,7 @@ void GameScene::Init(const Level& level,
     CreateStarsContainer();
     
     InitFieldBorder(level);
-    mFieldGrid.Init(level.GetNumRows());
+    mFieldGrid.Init(level);
     
     scene->SetDistanceFunction(Pht::DistanceFunction::WorldSpaceNegativeZ);
     sceneManager.SetLoadedScene(std::move(scene));

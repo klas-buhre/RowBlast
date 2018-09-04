@@ -33,6 +33,8 @@ Backlog:
     -The background images for the second world could be a bit less colorful.
     -Maybe remove light animation for the field blocks and always have a light direction that looks
      good?
+    -There could be a UFO instead of an avatar.
+    -Could have planets in the background even in the sky worlds.
   -GUI:
     -Menu window that displays 3rd party lib credits.
   -Purchases:
@@ -47,7 +49,6 @@ Backlog:
     -Credit Google for avatars? : http://www.iconarchive.com/show/noto-emoji-people-face-icons-by-google.1.html
 
 Ongoing tasks:
-  -Only render the grid segments that are in the visible part of the field.
   -Try adding animated text messages like "Awesome" or "Combo" when clearing rows.
   -Levels in the second world.
     -The second world could introduce level bombs and triangle blocks.

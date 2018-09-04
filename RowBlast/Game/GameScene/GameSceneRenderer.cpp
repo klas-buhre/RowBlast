@@ -16,7 +16,8 @@
 using namespace RowBlast;
 
 namespace {
-    const auto dz {0.05f};
+    constexpr auto dz {0.05f};
+    constexpr auto numVisibleGridSegments {3};
 }
 
 GameSceneRenderer::GameSceneRenderer(GameScene& scene,
@@ -35,10 +36,40 @@ GameSceneRenderer::GameSceneRenderer(GameScene& scene,
     mLevelResources {levelResources} {}
 
 void GameSceneRenderer::Render() {
+    RenderFieldGrid();
     RenderBlueprintSlots();
     RenderFieldBlocks();
     RenderFallingPiece();
     RenderGhostPieces();
+}
+
+void GameSceneRenderer::RenderFieldGrid() {
+    auto& gridSegments {mScene.GetFieldGrid().GetSegments()};
+    
+    for (auto& gridSegment: gridSegments) {
+        gridSegment.mSceneObject.SetIsVisible(false);
+    }
+    
+    auto lowestVisibleRow {static_cast<int>(mScrollController.GetLowestVisibleRow())};
+    auto numSegments {static_cast<int>(gridSegments.size())};
+    
+    for (auto i {numSegments - 1}; i >= 0; --i) {
+        auto& gridSegment {gridSegments[i]};
+        
+        if (gridSegment.mRow <= lowestVisibleRow) {
+            for (auto j {0}; j < numVisibleGridSegments; ++j) {
+                auto visibleSegmentIndex {i + j};
+                
+                if (visibleSegmentIndex >= numSegments) {
+                    break;
+                }
+                
+                gridSegments[visibleSegmentIndex].mSceneObject.SetIsVisible(true);
+            }
+            
+            break;
+        }
+    }
 }
 
 void GameSceneRenderer::RenderBlueprintSlots() {

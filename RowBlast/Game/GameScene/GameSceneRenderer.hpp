@@ -37,6 +37,7 @@ namespace RowBlast {
         void Render();
         
     private:
+        void RenderFieldGrid();
         void RenderBlueprintSlots();
         void RenderFieldBlocks();
         void RenderFieldBlock(const SubCell& subCell, bool isSecondSubCell);
