@@ -49,7 +49,11 @@ Backlog:
     -Credit Google for avatars? : http://www.iconarchive.com/show/noto-emoji-people-face-icons-by-google.1.html
 
 Ongoing tasks:
-  -Try adding animated text messages like "Awesome" or "Combo" when clearing rows.
+  -Fix bug where grid segments are disappearing.
+  -ComboTextAnimation: Add animated text messages like "Awesome" or "Combo" when clearing rows.
+    -Could say "Awesome" if doing a good cascade or clearing 5 rows, and "Combo #" if clearing rows
+     back to back.
+    -First the text scales in, then it is still, then it slides up and fades out.
   -Levels in the second world.
     -The second world could introduce level bombs and triangle blocks.
     -Maybe move level 19 to the first world.

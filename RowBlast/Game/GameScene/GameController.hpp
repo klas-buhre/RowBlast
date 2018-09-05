@@ -24,6 +24,7 @@
 #include "PreviewPiecesAnimation.hpp"
 #include "ClearLastBlocksAnimation.hpp"
 #include "SlidingTextAnimation.hpp"
+#include "ComboTextAnimation.hpp"
 #include "BlastRadiusAnimation.hpp"
 #include "BombsAnimation.hpp"
 #include "FallingPieceScaleAnimation.hpp"
@@ -143,6 +144,7 @@ namespace RowBlast {
         PieceDropParticleEffect mPieceDropParticleEffect;
         BlastRadiusAnimation mBlastRadiusAnimation;
         SlidingTextAnimation mSlidingTextAnimation;
+        ComboTextAnimation mComboTextAnimation;
         ClearLastBlocksAnimation mClearLastBlocksAnimation;
         FallingPieceScaleAnimation mFallingPieceScaleAnimation;
         Tutorial mTutorial;

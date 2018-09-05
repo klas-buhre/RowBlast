@@ -60,6 +60,7 @@ SlidingFieldAnimation::State SlidingFieldAnimation::Update() {
     
     if (mElapsedTime >= slideTime) {
         mState = State::Inactive;
+        mScene.GetFieldQuadContainer().SetIsVisible(false);
     }
     
     return mState;

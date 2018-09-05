@@ -63,6 +63,7 @@ GameController::GameController(Pht::IEngine& engine,
     mPieceDropParticleEffect {engine, mScene},
     mBlastRadiusAnimation {engine, mScene, commonResources},
     mSlidingTextAnimation {engine, mScene, commonResources},
+    mComboTextAnimation {engine, mScene, commonResources},
     mClearLastBlocksAnimation {mField, mFlyingBlocksAnimation},
     mFallingPieceScaleAnimation {mScene},
     mTutorial {engine, mScene, commonResources},
@@ -78,6 +79,7 @@ GameController::GameController(Pht::IEngine& engine,
         mPieceDropParticleEffect,
         mBlastRadiusAnimation,
         mFallingPieceScaleAnimation,
+        mComboTextAnimation,
         mGameViewControllers.GetGameHudController(),
         mTutorial,
         settings
@@ -128,6 +130,7 @@ void GameController::StartLevel(int levelId) {
     mFlashingBlocksAnimation.Init();
     mFallingPieceAnimation.Init();
     mSlidingTextAnimation.Init();
+    mComboTextAnimation.Init();
     mBombsAnimation.Init();
     mFallingPieceScaleAnimation.Init();
     mGameViewControllers.Init(mScene);
@@ -198,6 +201,7 @@ GameController::Command GameController::UpdateGame() {
     mScene.Update();
     mPreviewPiecesAnimation.Update(dt);
     mBombsAnimation.Update(dt);
+    mComboTextAnimation.Update(dt);
     
     mTutorial.Update();
     

@@ -20,6 +20,7 @@
 #include "PieceDropParticleEffect.hpp"
 #include "BlastRadiusAnimation.hpp"
 #include "FallingPieceScaleAnimation.hpp"
+#include "ComboTextAnimation.hpp"
 #include "GameHudController.hpp"
 #include "Tutorial.hpp"
 #include "CommonResources.hpp"
@@ -82,6 +83,7 @@ GameLogic::GameLogic(Pht::IEngine& engine,
                      PieceDropParticleEffect& pieceDropParticleEffect,
                      BlastRadiusAnimation& blastRadiusAnimation,
                      FallingPieceScaleAnimation& fallingPieceScaleAnimation,
+                     ComboTextAnimation& comboTextAnimation,
                      GameHudController& gameHudController,
                      Tutorial& tutorial,
                      const Settings& settings) :
@@ -95,6 +97,7 @@ GameLogic::GameLogic(Pht::IEngine& engine,
     mPieceDropParticleEffect {pieceDropParticleEffect},
     mBlastRadiusAnimation {blastRadiusAnimation},
     mFallingPieceScaleAnimation {fallingPieceScaleAnimation},
+    mComboTextAnimation {comboTextAnimation},
     mGameHudController {gameHudController},
     mTutorial {tutorial},
     mSettings {settings},
@@ -534,6 +537,8 @@ void GameLogic::LandFallingPiece(bool finalMovementWasADrop) {
             auto removedSubCells {mField.ClearFilledRows()};
 
             if (!removedSubCells.IsEmpty()) {
+                mComboTextAnimation.Start(ComboTextAnimation::Message::Combo);
+
                 if (CalcNumRemovedRows(removedSubCells) >= cameraShakeNumRowsLimit) {
                     mEffectManager.StartSmallCameraShake();
                 }
@@ -558,6 +563,8 @@ void GameLogic::LandFallingPiece(bool finalMovementWasADrop) {
 
 void GameLogic::DetonateDroppedBomb() {
     GoToFieldExplosionsState();
+    
+    mComboTextAnimation.Start(ComboTextAnimation::Message::Awesome);
 
     mEngine.GetAudio().PlaySound(CommonResources::mBombSound);
     
