@@ -18,16 +18,17 @@
 using namespace RowBlast;
 
 namespace {
-    const Pht::Vec3 startPosition {0.0f, 5.0f, 0.0f};
+    const Pht::Vec3 startPosition {0.0f, 5.5f, 0.0f};
     constexpr auto scaleInDuration {0.27f};
     constexpr auto displayTextDuration {0.6f};
     constexpr auto slideOutDuration {0.25f};
     constexpr auto slideDistance {12.0f};
     constexpr auto acceleration {2.0f * slideDistance / (slideOutDuration * slideOutDuration)};
-    // constexpr auto textAlpha {0.93f};
     constexpr auto textAlpha {0.94f};
     constexpr auto textShadowAlpha {0.5f};
-    constexpr auto textScale {0.9f};
+    constexpr auto textScale {0.83f};
+    const std::string comboString {"COMBO "};
+    const std::string comboDigits {"     "}; // Warning! Must be five spaces to fit digits.
     
     Pht::StaticVector<Pht::Vec2, 20> scalePoints {
         {0.0f, 0.0f},
@@ -57,15 +58,16 @@ ComboTextAnimation::ComboTextAnimation(Pht::IEngine& engine,
     mScene {scene} {
     
     auto& font {commonResources.GetHussarFontSize52PotentiallyZoomedScreen()};
-    CreateText(font, {-3.0f, -0.5f}, "COMBO!");
-    CreateText(font, {-3.0f, -0.5f}, "AWESOME!");
+    mComboTextSceneObject = &CreateText(font, {-3.4f, -0.5f}, comboString + comboDigits);
+    mAwesomeTextSceneObject = &CreateText(font, {-3.8f, -0.5f}, "AWESOME!");
+    mFantasticTextSceneObject = &CreateText(font, {-3.9f, -0.5f}, "FANTASTIC!");
     
     CreateTwinkleParticleEffect(engine);
 }
 
-void ComboTextAnimation::CreateText(const Pht::Font& font,
-                                    const Pht::Vec2& position,
-                                    const std::string& text) {
+Pht::SceneObject& ComboTextAnimation::CreateText(const Pht::Font& font,
+                                                 const Pht::Vec2& position,
+                                                 const std::string& text) {
     Pht::TextProperties textProperties {
         font,
         textScale,
@@ -76,8 +78,7 @@ void ComboTextAnimation::CreateText(const Pht::Font& font,
     };
     textProperties.mSnapToPixel = Pht::SnapToPixel::No;
     textProperties.mItalicSlant = 0.15f;
-    // textProperties.mGradientBottomColorSubtraction = Pht::Vec3 {0.2f, 0.2f, 0.0f};
-    textProperties.mGradientBottomColorSubtraction = Pht::Vec3 {0.0f, 0.2f, 0.2f};
+    textProperties.mGradientBottomColorSubtraction = Pht::Vec3 {0.0f, 0.15f, 0.15f};
 
     auto textSceneObject {std::make_unique<Pht::SceneObject>()};
     textSceneObject->GetTransform().SetPosition({position.x, position.y, UiLayer::text});
@@ -87,7 +88,10 @@ void ComboTextAnimation::CreateText(const Pht::Font& font,
     };
     textSceneObject->SetComponent(std::move(textComponent));
     
+    auto& retval {*textSceneObject};
     mTextSceneObjects.push_back(std::move(textSceneObject));
+    
+    return retval;
 }
 
 void ComboTextAnimation::CreateTwinkleParticleEffect(Pht::IEngine& engine) {
@@ -109,7 +113,7 @@ void ComboTextAnimation::CreateTwinkleParticleEffect(Pht::IEngine& engine) {
         .mTimeToLiveRandomPart = 0.0f,
         .mFadeOutDuration = 0.0f,
         .mZAngularVelocity = 100.0f,
-        .mSize = Pht::Vec2{4.5f, 4.5f},
+        .mSize = Pht::Vec2{4.6f, 4.6f},
         .mSizeRandomPart = 0.0f,
         .mShrinkDuration = 0.3f
     };
@@ -133,10 +137,38 @@ void ComboTextAnimation::Init() {
     HideAllTextObjects();
 }
 
-void ComboTextAnimation::Start(Message message) {
+void ComboTextAnimation::StartComboMessage(int numCombos) {
+    Start(*mComboTextSceneObject);
+    mTwinkleParticleEffect->GetTransform().SetPosition({-3.15f, 0.3f, UiLayer::text});
+    
+    const auto bufSize {64};
+    char buffer[bufSize];
+    std::snprintf(buffer, bufSize, "%d!  ", numCombos);
+    
+    auto& text {mComboTextSceneObject->GetComponent<Pht::TextComponent>()->GetText()};
+    auto textLength {text.size()};
+    auto comboStringSize {comboString.size()};
+    assert(textLength >= comboStringSize + comboDigits.size());
+    text[comboStringSize] = buffer[0];
+    text[comboStringSize + 1] = buffer[1];
+    text[comboStringSize + 2] = buffer[2];
+    text[comboStringSize + 3] = buffer[3];
+}
+
+void ComboTextAnimation::StartAwesomeMessage() {
+    Start(*mAwesomeTextSceneObject);
+    mTwinkleParticleEffect->GetTransform().SetPosition({-3.25f, 0.55f, UiLayer::text});
+}
+
+void ComboTextAnimation::StartFantasticMessage() {
+    Start(*mFantasticTextSceneObject);
+    mTwinkleParticleEffect->GetTransform().SetPosition({-3.6f, 0.55f, UiLayer::text});
+}
+
+void ComboTextAnimation::Start(Pht::SceneObject& textSceneObject) {
     HideAllTextObjects();
     
-    mActiveTextSceneObject = mTextSceneObjects[static_cast<int>(message)].get();
+    mActiveTextSceneObject = &textSceneObject;
     mActiveTextSceneObject->SetIsVisible(true);
     mActiveTextSceneObject->SetIsStatic(false);
     
@@ -149,15 +181,6 @@ void ComboTextAnimation::Start(Message message) {
     mState = State::ScalingIn;
     mElapsedTime = 0.0f;
     mContainerSceneObject->GetTransform().SetPosition(startPosition);
-    
-    switch (message) {
-        case Message::Combo:
-            mTwinkleParticleEffect->GetTransform().SetPosition({-2.7f, 0.3f, UiLayer::text});
-            break;
-        case Message::Awesome:
-            mTwinkleParticleEffect->GetTransform().SetPosition({-2.7f, 0.3f, UiLayer::text});
-            break;
-    }
 }
 
 void ComboTextAnimation::Update(float dt) {

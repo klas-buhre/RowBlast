@@ -537,7 +537,7 @@ void GameLogic::LandFallingPiece(bool finalMovementWasADrop) {
             auto removedSubCells {mField.ClearFilledRows()};
 
             if (!removedSubCells.IsEmpty()) {
-                mComboTextAnimation.Start(ComboTextAnimation::Message::Combo);
+                mComboTextAnimation.StartComboMessage(2);
 
                 if (CalcNumRemovedRows(removedSubCells) >= cameraShakeNumRowsLimit) {
                     mEffectManager.StartSmallCameraShake();
@@ -564,8 +564,6 @@ void GameLogic::LandFallingPiece(bool finalMovementWasADrop) {
 void GameLogic::DetonateDroppedBomb() {
     GoToFieldExplosionsState();
     
-    mComboTextAnimation.Start(ComboTextAnimation::Message::Awesome);
-
     mEngine.GetAudio().PlaySound(CommonResources::mBombSound);
     
     auto impactedLevelBombs {
@@ -577,6 +575,8 @@ void GameLogic::DetonateDroppedBomb() {
     auto pieceDetonationPos {mFallingPiece->GetRenderablePosition() + Pht::Vec2{1.0f, 1.0f}};
     
     if (mFallingPiece->GetPieceType().IsRowBomb()) {
+        mComboTextAnimation.StartAwesomeMessage();
+        
         if (!impactedLevelBombs.IsEmpty()) {
             auto& impactedLevelBomb {impactedLevelBombs.Front()};
             
@@ -594,6 +594,8 @@ void GameLogic::DetonateDroppedBomb() {
         
         mFieldExplosionsStates.DetonateRowBomb(intPieceDetonationPos, pieceDetonationPos);
     } else {
+        mComboTextAnimation.StartFantasticMessage();
+        
         if (!impactedLevelBombs.IsEmpty() && impactedLevelBombs.Front().mKind == BlockKind::Bomb) {
             mFieldExplosionsStates.DetonateBigBomb(intPieceDetonationPos);
         } else {
