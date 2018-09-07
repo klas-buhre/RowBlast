@@ -22,8 +22,8 @@ LevelCompletedDialogView::LevelCompletedDialogView(Pht::IEngine& engine,
 
     SetSize(menuWindow.GetSize());
     
-    CreateText({-3.4f, 5.1f, UiLayer::text},
-               "LEVEL CLEARED",
+    CreateText({-3.7f, 5.1f, UiLayer::text},
+               "LEVEL CLEARED!",
                guiResources.GetLargeWhiteTextProperties(zoom));
 
     Pht::Vec3 closeButtonPosition {

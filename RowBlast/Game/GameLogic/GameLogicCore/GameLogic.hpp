@@ -14,6 +14,7 @@
 #include "Settings.hpp"
 #include "FieldExplosionsStates.hpp"
 #include "BlastRadiusAnimation.hpp"
+#include "ComboDetector.hpp"
 
 namespace Pht {
     class IEngine;
@@ -203,7 +204,6 @@ namespace RowBlast {
         PieceDropParticleEffect& mPieceDropParticleEffect;
         BlastRadiusAnimation& mBlastRadiusAnimation;
         FallingPieceScaleAnimation& mFallingPieceScaleAnimation;
-        ComboTextAnimation& mComboTextAnimation;
         GameHudController& mGameHudController;
         Tutorial& mTutorial;
         const Settings& mSettings;
@@ -213,6 +213,7 @@ namespace RowBlast {
         float mCascadeWaitTime {0.0f};
         FieldExplosionsStates mFieldExplosionsStates;
         FallingPieceAnimation mFallingPieceAnimation;
+        ComboDetector mComboDetector;
         FallingPiece mFallingPieceStorage;
         GestureInputHandler mGestureInputHandler;
         ClickInputHandler mClickInputHandler;

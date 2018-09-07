@@ -34,7 +34,6 @@ namespace {
     constexpr auto landingNoMovementDurationFalling {1.0f};
     constexpr auto landingMovementDurationFalling {4.0f};
     constexpr auto cascadeWaitTime {0.23f};
-    constexpr auto cameraShakeNumRowsLimit {5};
 
     PieceBlocks CreatePieceBlocks(const FallingPiece& fallingPiece) {
         auto& pieceType {fallingPiece.GetPieceType()};
@@ -48,27 +47,6 @@ namespace {
     
     bool IsBomb(const Piece& pieceType) {
         return pieceType.IsBomb() || pieceType.IsRowBomb();
-    }
-    
-    int CalcNumRemovedRows(const Field::RemovedSubCells& removedSubCells) {
-        Pht::Optional<int> previousRowIndex;
-        auto numRemovedRows {0};
-        
-        for (auto& subCell: removedSubCells) {
-            auto rowIndex {subCell.mGridPosition.y};
-            
-            if (previousRowIndex.HasValue()) {
-                if (previousRowIndex.GetValue() != rowIndex) {
-                    previousRowIndex = rowIndex;
-                    ++numRemovedRows;
-                }
-            } else {
-                previousRowIndex = rowIndex;
-                numRemovedRows = 1;
-            }
-        }
-        
-        return numRemovedRows;
     }
 }
 
@@ -97,13 +75,13 @@ GameLogic::GameLogic(Pht::IEngine& engine,
     mPieceDropParticleEffect {pieceDropParticleEffect},
     mBlastRadiusAnimation {blastRadiusAnimation},
     mFallingPieceScaleAnimation {fallingPieceScaleAnimation},
-    mComboTextAnimation {comboTextAnimation},
     mGameHudController {gameHudController},
     mTutorial {tutorial},
     mSettings {settings},
     mControlType {mSettings.mControlType},
     mFieldExplosionsStates {engine, field, effectManager, flyingBlocksAnimation},
     mFallingPieceAnimation {*this, mFallingPieceStorage},
+    mComboDetector {comboTextAnimation, effectManager},
     mGestureInputHandler {*this, mFallingPieceStorage},
     mClickInputHandler {engine, field, gameScene, *this, tutorial},
     mFallingPiece {&mFallingPieceStorage} {
@@ -116,6 +94,7 @@ void GameLogic::Init(const Level& level) {
     mControlType = mTutorial.IsGestureControlsAllowed() ? mSettings.mControlType : ControlType::Click;
     mGestureInputHandler.Init(level);
     mClickInputHandler.Init(level);
+    mComboDetector.Init();
     
     if (mLevel->GetSpeed() > 0.0f) {
         mLandingNoMovementDuration = landingNoMovementDurationFalling;
@@ -186,6 +165,7 @@ GameLogic::Result GameLogic::SpawnFallingPiece() {
     }
     
     UpdateLevelProgress();
+    mComboDetector.OnSpawnPiece();
     
     if (IsLevelCompleted()) {
         return Result::LevelCompleted;
@@ -283,6 +263,7 @@ void GameLogic::ManageMoveHistory() {
         case FallingPieceSpawnReason::UndoMove:
             mCurrentMoveInitialState = mCurrentMove;
             mPreviousMoveInitialState = mCurrentMoveInitialState;
+            mComboDetector.OnUndoMove();
             mTutorial.OnNewMove(GetMovesUsedIncludingCurrent());
             break;
         case FallingPieceSpawnReason::Switch:
@@ -359,11 +340,7 @@ void GameLogic::HandleCascading() {
                 && !mScrollController.IsScrolling()) {
 
                 auto removedSubCells {mField.ClearFilledRows()};
-                
-                if (CalcNumRemovedRows(removedSubCells) >= cameraShakeNumRowsLimit) {
-                    mEffectManager.StartSmallCameraShake();
-                }
-
+                mComboDetector.OnClearedFilledRows(removedSubCells);
                 mFlyingBlocksAnimation.AddBlockRows(removedSubCells);
                 UpdateLevelProgress();
                 mCollapsingFieldAnimation.GoToInactiveState();
@@ -516,6 +493,7 @@ void GameLogic::LandFallingPiece(bool finalMovementWasADrop) {
     
     if (IsBomb(pieceType)) {
         DetonateDroppedBomb();
+        mComboDetector.OnClearedNoFilledRows();
     } else {
         auto impactedLevelBombs {
             mField.DetectImpactedBombs(CreatePieceBlocks(*mFallingPiece),
@@ -537,19 +515,17 @@ void GameLogic::LandFallingPiece(bool finalMovementWasADrop) {
             auto removedSubCells {mField.ClearFilledRows()};
 
             if (!removedSubCells.IsEmpty()) {
-                mComboTextAnimation.StartComboMessage(2);
-
-                if (CalcNumRemovedRows(removedSubCells) >= cameraShakeNumRowsLimit) {
-                    mEffectManager.StartSmallCameraShake();
-                }
-                
+                mComboDetector.OnClearedFilledRows(removedSubCells);
                 mFlyingBlocksAnimation.AddBlockRows(removedSubCells);
+                
                 mCollapsingFieldAnimation.GoToInactiveState();
                 mCollapsingFieldAnimation.ResetBlockAnimations();
                 
                 if (impactedLevelBombs.IsEmpty()) {
                     RemoveClearedRowsAndPullDownLoosePieces();
                 }
+            } else {
+                mComboDetector.OnClearedNoFilledRows();
             }
         }
     }
@@ -575,8 +551,6 @@ void GameLogic::DetonateDroppedBomb() {
     auto pieceDetonationPos {mFallingPiece->GetRenderablePosition() + Pht::Vec2{1.0f, 1.0f}};
     
     if (mFallingPiece->GetPieceType().IsRowBomb()) {
-        mComboTextAnimation.StartAwesomeMessage();
-        
         if (!impactedLevelBombs.IsEmpty()) {
             auto& impactedLevelBomb {impactedLevelBombs.Front()};
             
@@ -594,8 +568,6 @@ void GameLogic::DetonateDroppedBomb() {
         
         mFieldExplosionsStates.DetonateRowBomb(intPieceDetonationPos, pieceDetonationPos);
     } else {
-        mComboTextAnimation.StartFantasticMessage();
-        
         if (!impactedLevelBombs.IsEmpty() && impactedLevelBombs.Front().mKind == BlockKind::Bomb) {
             mFieldExplosionsStates.DetonateBigBomb(intPieceDetonationPos);
         } else {
@@ -650,6 +622,7 @@ void GameLogic::RemoveClearedRowsAndPullDownLoosePieces() {
 
     mField.DetectBlocksThatShouldNotBounce();
     
+    mComboDetector.GoToCascadingState();
     mCascadeState = CascadeState::Cascading;
 }
 

@@ -50,9 +50,6 @@ Backlog:
 
 Ongoing tasks:
   -Fix bug where grid segments are disappearing.
-  -ComboTextAnimation:
-    -Could say "Awesome" if doing a good cascade, and "Fantastic" if clearing 5 rows, and "Combo N"
-     if clearing rows back to back for the Nth time.
   -Levels in the second world.
     -The second world could introduce level bombs and triangle blocks.
     -Maybe move level 19 to the first world.

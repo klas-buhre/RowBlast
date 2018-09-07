@@ -137,30 +137,27 @@ namespace {
         }
     };
 
-    const Pht::Vec4 upperColor {0.3f, 0.22f, 0.79f, 1.0f};
-    const Pht::Vec4 lowerColor {1.0f, 0.6f, 0.6f, 1.0f};
-    
     const std::vector<HazeLayer> hazeLayers {
         HazeLayer {
             .mPosition = {0.0f, 0.0f, -700.0f},
             .mSize = {1500.0f, 1050.0f},
-            .mUpperColor = upperColor,
-            .mLowerColor = lowerColor
+            .mUpperColor = {0.29f, 0.215f, 0.79f, 1.0f},
+            .mLowerColor = {1.0f, 0.6f, 0.6f, 1.0f}
         },
         HazeLayer {
             .mPosition = {0.0f, 0.0f, -350.0f},
             .mSize = {500.0f, 500.0f},
-            .mUpperColor = upperColor,
-            .mLowerColor = lowerColor
+            .mUpperColor = {0.29f, 0.215f, 0.79f, 0.35f},
+            .mLowerColor = {1.0f, 0.6f, 0.6f, 0.35f}
         },
         HazeLayer {
             .mPosition = {0.0f, 0.0f, -250.0f},
             .mSize = {380.0f, 380.0f},
-            .mUpperColor = upperColor,
-            .mLowerColor = lowerColor
+            .mUpperColor = {0.29f, 0.215f, 0.79f, 0.35f},
+            .mLowerColor = {1.0f, 0.6f, 0.6f, 0.35f}
         }
     };
-    
+
     const Pht::Color cloudColor {1.06f, 0.975f, 0.975f};
 }
 
