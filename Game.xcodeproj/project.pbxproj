@@ -312,6 +312,7 @@
 		62A729DC2140160500255BF7 /* ComboTextAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62A729DA2140160500255BF7 /* ComboTextAnimation.cpp */; };
 		62A729DF21427BAB00255BF7 /* ComboDetector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62A729DD21427BAA00255BF7 /* ComboDetector.cpp */; };
 		62A729E12143DDD600255BF7 /* level57.json in Resources */ = {isa = PBXBuildFile; fileRef = 62A729E02143DDD500255BF7 /* level57.json */; };
+		62A729E32144170D00255BF7 /* level58.json in Resources */ = {isa = PBXBuildFile; fileRef = 62A729E22144170D00255BF7 /* level58.json */; };
 		62B1CB27210CB62100D0F195 /* HandAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62B1CB25210CB62100D0F195 /* HandAnimation.cpp */; };
 		62B1CB45210F3E0700D0F195 /* SlideAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62B1CB43210F3E0700D0F195 /* SlideAnimation.cpp */; };
 		62B1CB4C210F8DAF00D0F195 /* hand48.png in Resources */ = {isa = PBXBuildFile; fileRef = 62B1CB47210F8DAF00D0F195 /* hand48.png */; };
@@ -1026,6 +1027,7 @@
 		62A729DD21427BAA00255BF7 /* ComboDetector.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ComboDetector.cpp; sourceTree = "<group>"; };
 		62A729DE21427BAA00255BF7 /* ComboDetector.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ComboDetector.hpp; sourceTree = "<group>"; };
 		62A729E02143DDD500255BF7 /* level57.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level57.json; sourceTree = "<group>"; };
+		62A729E22144170D00255BF7 /* level58.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level58.json; sourceTree = "<group>"; };
 		62B1CB25210CB62100D0F195 /* HandAnimation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = HandAnimation.cpp; sourceTree = "<group>"; };
 		62B1CB26210CB62100D0F195 /* HandAnimation.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = HandAnimation.hpp; sourceTree = "<group>"; };
 		62B1CB43210F3E0700D0F195 /* SlideAnimation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SlideAnimation.cpp; sourceTree = "<group>"; };
@@ -1365,6 +1367,7 @@
 				62B2BAF02133FE60009C529D /* level55.json */,
 				62B2BAF22134495D009C529D /* level56.json */,
 				62A729E02143DDD500255BF7 /* level57.json */,
+				62A729E22144170D00255BF7 /* level58.json */,
 			);
 			path = Levels;
 			sourceTree = "<group>";
@@ -2558,6 +2561,7 @@
 				6270DC941FCB23D800FB457D /* level20.json in Resources */,
 				62B1CB91210F8F8600D0F195 /* sky4.jpg in Resources */,
 				62B1CB85210F8F8600D0F195 /* laser_beam_red.png in Resources */,
+				62A729E32144170D00255BF7 /* level58.json in Resources */,
 				62785B1B20875937006F9869 /* PointParticle.vert in Resources */,
 				62B1CB92210F8F8600D0F195 /* sky5.jpg in Resources */,
 				62B1CB8C210F8F8600D0F195 /* flare24.png in Resources */,
