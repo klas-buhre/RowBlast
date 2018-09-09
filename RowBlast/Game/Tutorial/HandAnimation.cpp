@@ -14,7 +14,8 @@ namespace {
     constexpr auto moveTime {0.19f};
     constexpr auto stillTime {1.0f};
     constexpr auto handSize {2.2f};
-    const Pht::Vec3 backwardPosition {0.18f, -1.3f, 0.0f};
+    constexpr auto handUpScaleAdd {0.5f};
+    const Pht::Vec3 backwardPosition {0.4f, -1.3f, 0.0f};
     const Pht::Vec3 forwardPosition {0.18f, -0.1f, 0.0f};
     const Pht::Vec3 circlePosition {-0.17f, 0.75f, -0.1f};
 }
@@ -105,11 +106,14 @@ void HandAnimation::UpdateInGoingForwardState() {
     mElapsedTime += mEngine.GetLastFrameSeconds();
     
     auto t {mElapsedTime / moveTime};
-    mHandSceneObject->GetTransform().SetPosition(backwardPosition.Lerp(t, forwardPosition));
+    auto& transform {mHandSceneObject->GetTransform()};
+    transform.SetPosition(backwardPosition.Lerp(t, forwardPosition));
+    transform.SetScale(1.0f + handUpScaleAdd * (1.0f - t));
     
     if (mElapsedTime > moveTime) {
         mState = State::GoingBackward;
-        mHandSceneObject->GetTransform().SetPosition(forwardPosition);
+        transform.SetPosition(forwardPosition);
+        transform.SetScale(1.0f);
         mElapsedTime = 0.0f;
         
         mCircleEffect->Start();
@@ -120,14 +124,16 @@ void HandAnimation::UpdateInGoingBackwardState() {
     mElapsedTime += mEngine.GetLastFrameSeconds();
     
     auto t {mElapsedTime / moveTime};
-    mHandSceneObject->GetTransform().SetPosition(forwardPosition.Lerp(t, backwardPosition));
+    auto& transform {mHandSceneObject->GetTransform()};
+    transform.SetPosition(forwardPosition.Lerp(t, backwardPosition));
+    transform.SetScale(1.0f + handUpScaleAdd * t);
     
     if (mElapsedTime > moveTime) {
         mState = State::Still;
-        mHandSceneObject->GetTransform().SetPosition(backwardPosition);
+        transform.SetPosition(backwardPosition);
+        transform.SetScale(1.0 + handUpScaleAdd);
         mElapsedTime = 0.0f;
     }
-
 }
 
 void HandAnimation::UpdateInStillState() {
@@ -140,8 +146,11 @@ void HandAnimation::UpdateInStillState() {
 
 void HandAnimation::GoToForwardState() {
     mState = State::GoingForward;
-    mHandSceneObject->GetTransform().SetPosition(backwardPosition);
     mElapsedTime = 0.0f;
+    
+    auto& transform {mHandSceneObject->GetTransform()};
+    transform.SetPosition(backwardPosition);
+    transform.SetScale(1.0 + handUpScaleAdd);
 }
 
 void HandAnimation::Stop() {
