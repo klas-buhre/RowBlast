@@ -10,6 +10,7 @@
 #include "FireworksParticleEffect.hpp"
 #include "ConfettiParticleEffect.hpp"
 #include "StarsAnimation.hpp"
+#include "ClearLastBlocksAnimation.hpp"
 
 namespace Pht {
     class IEngine;
@@ -25,6 +26,8 @@ namespace RowBlast {
     class UserData;
     class Level;
     class CommonResources;
+    class FlyingBlocksAnimation;
+    class Field;
 
     class LevelCompletedController {
     public:
@@ -32,11 +35,12 @@ namespace RowBlast {
                                  GameScene& gameScene,
                                  GameViewControllers& gameViewControllers,
                                  SlidingTextAnimation& slidingTextAnimation,
-                                 ClearLastBlocksAnimation& clearLastBlocksAnimation,
                                  GameLogic& gameLogic,
                                  UserData& userData,
                                  const CommonResources& commonResources,
-                                 Pht::CameraShake& cameraShake);
+                                 Pht::CameraShake& cameraShake,
+                                 Field& field,
+                                 FlyingBlocksAnimation& flyingBlocksAnimation);
 
         void Init(const Level& level);
         void Start();
@@ -45,17 +49,21 @@ namespace RowBlast {
     private:
         void StartLevelCompletedTextAnimation();
         void UpdateInObjectiveAchievedAnimationState();
+        void UpdateObjectiveAchievedAnimation();
+        void UpdateInConfettiState();
         void UpdateInClearingLastBlocksState();
         void UpdateInSlidingOutFieldAnimationState();
+        void UpdateInFireworksState();
         void UpdateFireworksAndConfetti();
         void UpdateInStarsAppearingAnimationState();
         LevelCompletedDialogController::Result UpdateLevelCompletedDialog();
         
         enum class State {
             ObjectiveAchievedAnimation,
+            Confetti,
             ClearingLastBlocks,
             SlidingOutFieldAnimation,
-            FireworksAndConfetti,
+            Fireworks,
             StarsAppearingAnimation,
             LevelCompletedDialog
         };
@@ -65,16 +73,16 @@ namespace RowBlast {
         GameScene& mGameScene;
         GameViewControllers& mGameViewControllers;
         SlidingTextAnimation& mSlidingTextAnimation;
-        ClearLastBlocksAnimation& mClearLastBlocksAnimation;
         GameLogic& mGameLogic;
         UserData& mUserData;
         const Level* mLevel {nullptr};
         Pht::FadeEffect mFadeEffect;
+        ClearLastBlocksAnimation mClearLastBlocksAnimation;
         SlidingFieldAnimation mSlidingFieldAnimation;
         FireworksParticleEffect mFireworksParticleEffect;
         ConfettiParticleEffect mConfettiParticleEffect;
         StarsAnimation mStarsAnimation;
-        float mTimeSpentInFireworksAndConfettiState {0.0f};
+        float mElapsedTime {0.0f};
     };
 }
 

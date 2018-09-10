@@ -489,11 +489,11 @@ void GameLogic::LandFallingPiece(bool finalMovementWasADrop) {
         mPieceDropParticleEffect.StartEffect(*mFallingPiece);
     }
     
+    auto clearedAnyFilledRows {false};
     auto& pieceType {mFallingPiece->GetPieceType()};
     
     if (IsBomb(pieceType)) {
         DetonateDroppedBomb();
-        mComboDetector.OnClearedNoFilledRows();
     } else {
         auto impactedLevelBombs {
             mField.DetectImpactedBombs(CreatePieceBlocks(*mFallingPiece),
@@ -515,6 +515,7 @@ void GameLogic::LandFallingPiece(bool finalMovementWasADrop) {
             auto removedSubCells {mField.ClearFilledRows()};
 
             if (!removedSubCells.IsEmpty()) {
+                clearedAnyFilledRows = true;
                 mComboDetector.OnClearedFilledRows(removedSubCells);
                 mFlyingBlocksAnimation.AddBlockRows(removedSubCells);
                 
@@ -524,10 +525,12 @@ void GameLogic::LandFallingPiece(bool finalMovementWasADrop) {
                 if (impactedLevelBombs.IsEmpty()) {
                     RemoveClearedRowsAndPullDownLoosePieces();
                 }
-            } else {
-                mComboDetector.OnClearedNoFilledRows();
             }
         }
+    }
+    
+    if (!clearedAnyFilledRows) {
+        mComboDetector.OnClearedNoFilledRows();
     }
     
     if (mState != State::FieldExplosions && mCascadeState == CascadeState::NotCascading) {

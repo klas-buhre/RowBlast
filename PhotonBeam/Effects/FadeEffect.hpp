@@ -27,6 +27,8 @@ namespace Pht {
         void Start();
         void StartInMidFade();
         State Update(float dt);
+        void UpdateFadeOut(float dt);
+        void UpdateFadeIn(float dt);
         bool IsFadingOut() const;
         void SetDuration(float duration);
         

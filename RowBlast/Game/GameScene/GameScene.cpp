@@ -178,10 +178,6 @@ void GameScene::CreateRenderPasses() {
     flyingBlocksRenderPass.SetProjectionMode(Pht::ProjectionMode::Orthographic);
     mScene->AddRenderPass(flyingBlocksRenderPass);
 
-    Pht::RenderPass hudRenderPass {static_cast<int>(Layer::Hud)};
-    hudRenderPass.SetHudMode(true);
-    mScene->AddRenderPass(hudRenderPass);
-    
     Pht::RenderPass levelCompletedFadeEffectRenderPass {
         static_cast<int>(Layer::LevelCompletedFadeEffect)
     };
@@ -189,6 +185,10 @@ void GameScene::CreateRenderPasses() {
     mScene->AddRenderPass(levelCompletedFadeEffectRenderPass);
     
     mScene->AddRenderPass(Pht::RenderPass {static_cast<int>(Layer::LevelCompletedEffects)});
+    
+    Pht::RenderPass hudRenderPass {static_cast<int>(Layer::Hud)};
+    hudRenderPass.SetHudMode(true);
+    mScene->AddRenderPass(hudRenderPass);
     
     Pht::RenderPass uiViewsRenderPass {static_cast<int>(Layer::UiViews)};
     uiViewsRenderPass.SetHudMode(true);

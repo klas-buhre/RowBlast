@@ -44,9 +44,9 @@ namespace RowBlast {
             FieldBlocksAndFallingPiece,
             Effects,
             FlyingBlocks,
-            Hud,
             LevelCompletedFadeEffect,
             LevelCompletedEffects,
+            Hud,
             UiViews,
             Stars,
             SceneSwitchFadeEffect = GlobalLayer::sceneSwitchFadeEffect

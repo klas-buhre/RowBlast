@@ -22,7 +22,6 @@
 #include "PieceResources.hpp"
 #include "GameViewControllers.hpp"
 #include "PreviewPiecesAnimation.hpp"
-#include "ClearLastBlocksAnimation.hpp"
 #include "SlidingTextAnimation.hpp"
 #include "ComboTextAnimation.hpp"
 #include "BlastRadiusAnimation.hpp"
@@ -145,7 +144,6 @@ namespace RowBlast {
         BlastRadiusAnimation mBlastRadiusAnimation;
         SlidingTextAnimation mSlidingTextAnimation;
         ComboTextAnimation mComboTextAnimation;
-        ClearLastBlocksAnimation mClearLastBlocksAnimation;
         FallingPieceScaleAnimation mFallingPieceScaleAnimation;
         Tutorial mTutorial;
         GameLogic mGameLogic;

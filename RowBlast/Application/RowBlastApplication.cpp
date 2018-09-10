@@ -25,10 +25,10 @@ Backlog:
      not really matter since the user can select any piece from the selectables but maybe it is most 
      convenient to go back to the state before the move and not the initial state.
   -Rendering:
-    -Should the field be slightly less colorful?
+    -Should the field quad be slightly less colorful?
     -Maybe the top of the sky in the first map scene and title scene could be a bit darker blue.
     -Maybe the blue background material should be a bit less blue?
-    -Maybe the gold background material should be a bit less red?
+    -Maybe the red background material should be a bit less red?
     -Adjust the red field material?
     -The background images for the second world could be a bit less colorful.
     -Maybe remove light animation for the field blocks and always have a light direction that looks
@@ -49,12 +49,13 @@ Backlog:
     -Credit Google for avatars? : http://www.iconarchive.com/show/noto-emoji-people-face-icons-by-google.1.html
 
 Ongoing tasks:
+  -Make hand animation a bit smaller.
   -Fix bug where grid segments are disappearing.
   -Levels in the second world.
     -The second world could introduce level bombs and triangle blocks.
     -Maybe move level 19 to the first world.
     -The third world could introduce the build objective.
-    -Levels to keep in the second world: 34?, 42, 55?
+    -Levels to keep in the second world: 42
 
 
 

@@ -64,7 +64,6 @@ GameController::GameController(Pht::IEngine& engine,
     mBlastRadiusAnimation {engine, mScene, commonResources},
     mSlidingTextAnimation {engine, mScene, commonResources},
     mComboTextAnimation {engine, mScene, commonResources},
-    mClearLastBlocksAnimation {mField, mFlyingBlocksAnimation},
     mFallingPieceScaleAnimation {mScene},
     mTutorial {engine, mScene, commonResources},
     mGameLogic {
@@ -104,11 +103,12 @@ GameController::GameController(Pht::IEngine& engine,
         mScene,
         mGameViewControllers,
         mSlidingTextAnimation,
-        mClearLastBlocksAnimation,
         mGameLogic,
         mUserData,
         commonResources,
-        mCameraShake
+        mCameraShake,
+        mField,
+        mFlyingBlocksAnimation
     } {}
 
 void GameController::StartLevel(int levelId) {

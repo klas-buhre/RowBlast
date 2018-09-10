@@ -229,7 +229,6 @@
 		62785DF02087618E006F9869 /* EffectManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62785D472087618E006F9869 /* EffectManager.cpp */; };
 		62785DF12087618E006F9869 /* FlashingBlocksAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62785D4B2087618E006F9869 /* FlashingBlocksAnimation.cpp */; };
 		62785DF22087618E006F9869 /* FallingPieceAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62785D4C2087618E006F9869 /* FallingPieceAnimation.cpp */; };
-		62785DF32087618E006F9869 /* ClearLastBlocksAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62785D4D2087618E006F9869 /* ClearLastBlocksAnimation.cpp */; };
 		62785DF42087618E006F9869 /* BlastRadiusAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62785D4E2087618E006F9869 /* BlastRadiusAnimation.cpp */; };
 		62785DF52087618E006F9869 /* PreviewPiecesAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62785D4F2087618E006F9869 /* PreviewPiecesAnimation.cpp */; };
 		62785DF62087618E006F9869 /* WeldsAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62785D502087618E006F9869 /* WeldsAnimation.cpp */; };
@@ -313,6 +312,7 @@
 		62A729DF21427BAB00255BF7 /* ComboDetector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62A729DD21427BAA00255BF7 /* ComboDetector.cpp */; };
 		62A729E12143DDD600255BF7 /* level57.json in Resources */ = {isa = PBXBuildFile; fileRef = 62A729E02143DDD500255BF7 /* level57.json */; };
 		62A729E32144170D00255BF7 /* level58.json in Resources */ = {isa = PBXBuildFile; fileRef = 62A729E22144170D00255BF7 /* level58.json */; };
+		62A729E621452F7F00255BF7 /* ClearLastBlocksAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62A729E421452F7E00255BF7 /* ClearLastBlocksAnimation.cpp */; };
 		62B1CB27210CB62100D0F195 /* HandAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62B1CB25210CB62100D0F195 /* HandAnimation.cpp */; };
 		62B1CB45210F3E0700D0F195 /* SlideAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62B1CB43210F3E0700D0F195 /* SlideAnimation.cpp */; };
 		62B1CB4C210F8DAF00D0F195 /* hand48.png in Resources */ = {isa = PBXBuildFile; fileRef = 62B1CB47210F8DAF00D0F195 /* hand48.png */; };
@@ -881,7 +881,6 @@
 		62785D4A2087618E006F9869 /* SlidingTextAnimation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SlidingTextAnimation.hpp; sourceTree = "<group>"; };
 		62785D4B2087618E006F9869 /* FlashingBlocksAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FlashingBlocksAnimation.cpp; sourceTree = "<group>"; };
 		62785D4C2087618E006F9869 /* FallingPieceAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FallingPieceAnimation.cpp; sourceTree = "<group>"; };
-		62785D4D2087618E006F9869 /* ClearLastBlocksAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ClearLastBlocksAnimation.cpp; sourceTree = "<group>"; };
 		62785D4E2087618E006F9869 /* BlastRadiusAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BlastRadiusAnimation.cpp; sourceTree = "<group>"; };
 		62785D4F2087618E006F9869 /* PreviewPiecesAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PreviewPiecesAnimation.cpp; sourceTree = "<group>"; };
 		62785D502087618E006F9869 /* WeldsAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WeldsAnimation.cpp; sourceTree = "<group>"; };
@@ -898,7 +897,6 @@
 		62785D5B2087618E006F9869 /* SlidingTextAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SlidingTextAnimation.cpp; sourceTree = "<group>"; };
 		62785D5C2087618E006F9869 /* FlashingBlocksAnimation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FlashingBlocksAnimation.hpp; sourceTree = "<group>"; };
 		62785D5D2087618E006F9869 /* FallingPieceAnimation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FallingPieceAnimation.hpp; sourceTree = "<group>"; };
-		62785D5E2087618E006F9869 /* ClearLastBlocksAnimation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ClearLastBlocksAnimation.hpp; sourceTree = "<group>"; };
 		62785D5F2087618E006F9869 /* BlastRadiusAnimation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = BlastRadiusAnimation.hpp; sourceTree = "<group>"; };
 		62785D602087618E006F9869 /* PreviewPiecesAnimation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PreviewPiecesAnimation.hpp; sourceTree = "<group>"; };
 		62785D612087618E006F9869 /* WeldsAnimation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = WeldsAnimation.hpp; sourceTree = "<group>"; };
@@ -1028,6 +1026,8 @@
 		62A729DE21427BAA00255BF7 /* ComboDetector.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ComboDetector.hpp; sourceTree = "<group>"; };
 		62A729E02143DDD500255BF7 /* level57.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level57.json; sourceTree = "<group>"; };
 		62A729E22144170D00255BF7 /* level58.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level58.json; sourceTree = "<group>"; };
+		62A729E421452F7E00255BF7 /* ClearLastBlocksAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ClearLastBlocksAnimation.cpp; sourceTree = "<group>"; };
+		62A729E521452F7F00255BF7 /* ClearLastBlocksAnimation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ClearLastBlocksAnimation.hpp; sourceTree = "<group>"; };
 		62B1CB25210CB62100D0F195 /* HandAnimation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = HandAnimation.cpp; sourceTree = "<group>"; };
 		62B1CB26210CB62100D0F195 /* HandAnimation.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = HandAnimation.hpp; sourceTree = "<group>"; };
 		62B1CB43210F3E0700D0F195 /* SlideAnimation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SlideAnimation.cpp; sourceTree = "<group>"; };
@@ -1178,6 +1178,8 @@
 		621B571A20AC9F7200772229 /* LevelCompletedSubScene */ = {
 			isa = PBXGroup;
 			children = (
+				62A729E421452F7E00255BF7 /* ClearLastBlocksAnimation.cpp */,
+				62A729E521452F7F00255BF7 /* ClearLastBlocksAnimation.hpp */,
 				62BE274A20B063570014C6DD /* ConfettiParticleEffect.cpp */,
 				62BE274B20B063570014C6DD /* ConfettiParticleEffect.hpp */,
 				62BE274720AF179D0014C6DD /* FireworksParticleEffect.cpp */,
@@ -2121,8 +2123,6 @@
 				62785D592087618E006F9869 /* BlueprintSlotsFilledAnimation.hpp */,
 				62785D532087618E006F9869 /* BombsAnimation.cpp */,
 				62785D582087618E006F9869 /* BombsAnimation.hpp */,
-				62785D4D2087618E006F9869 /* ClearLastBlocksAnimation.cpp */,
-				62785D5E2087618E006F9869 /* ClearLastBlocksAnimation.hpp */,
 				62785D512087618E006F9869 /* CollapsingFieldAnimation.cpp */,
 				62785D562087618E006F9869 /* CollapsingFieldAnimation.hpp */,
 				62A729DA2140160500255BF7 /* ComboTextAnimation.cpp */,
@@ -2666,7 +2666,6 @@
 				62785B3520875937006F9869 /* MathUtils.cpp in Sources */,
 				62785B3B20875937006F9869 /* ImageIOS.mm in Sources */,
 				62785B1320875937006F9869 /* Material.cpp in Sources */,
-				62785DF32087618E006F9869 /* ClearLastBlocksAnimation.cpp in Sources */,
 				623E3D5720DE4A2600BB800F /* World.cpp in Sources */,
 				62785DEC2087618E006F9869 /* LevelResources.cpp in Sources */,
 				62785DB32087618E006F9869 /* LevelCompletedDialogController.cpp in Sources */,
@@ -2701,6 +2700,7 @@
 				62785DC92087618E006F9869 /* ScrollController.cpp in Sources */,
 				62785B4C20875937006F9869 /* ParticleEmitter.cpp in Sources */,
 				62785DB92087618E006F9869 /* RestartConfirmationDialogView.cpp in Sources */,
+				62A729E621452F7F00255BF7 /* ClearLastBlocksAnimation.cpp in Sources */,
 				62785B4620875937006F9869 /* CameraComponent.cpp in Sources */,
 				62785B4A20875937006F9869 /* ParticleSystem.cpp in Sources */,
 				62785E092087618E006F9869 /* RoundedCylinder.cpp in Sources */,

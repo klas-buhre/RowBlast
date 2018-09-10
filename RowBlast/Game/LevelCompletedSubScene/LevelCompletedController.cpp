@@ -10,7 +10,6 @@
 // Game includes.
 #include "GameViewControllers.hpp"
 #include "SlidingTextAnimation.hpp"
-#include "ClearLastBlocksAnimation.hpp"
 #include "GameLogic.hpp"
 #include "UserData.hpp"
 #include "Level.hpp"
@@ -22,23 +21,24 @@ namespace {
     constexpr auto fade {0.5f};
     constexpr auto fadeTime {0.3f};
     constexpr auto effectsVolumeDepth {20.0f};
-    constexpr auto fireworksAndConfettiDuration {4.5f};
+    constexpr auto fireworksDuration {2.0f};
+    constexpr auto confettiWaitTime {0.85f};
 }
 
 LevelCompletedController::LevelCompletedController(Pht::IEngine& engine,
                                                    GameScene& gameScene,
                                                    GameViewControllers& gameViewControllers,
                                                    SlidingTextAnimation& slidingTextAnimation,
-                                                   ClearLastBlocksAnimation& clearLastBlocksAnimation,
                                                    GameLogic& gameLogic,
                                                    UserData& userData,
                                                    const CommonResources& commonResources,
-                                                   Pht::CameraShake& cameraShake) :
+                                                   Pht::CameraShake& cameraShake,
+                                                   Field& field,
+                                                   FlyingBlocksAnimation& flyingBlocksAnimation) :
     mEngine {engine},
     mGameScene {gameScene},
     mGameViewControllers {gameViewControllers},
     mSlidingTextAnimation {slidingTextAnimation},
-    mClearLastBlocksAnimation {clearLastBlocksAnimation},
     mGameLogic {gameLogic},
     mUserData {userData},
     mFadeEffect {
@@ -48,6 +48,7 @@ LevelCompletedController::LevelCompletedController(Pht::IEngine& engine,
         fade,
         -effectsVolumeDepth / 2.0f
     },
+    mClearLastBlocksAnimation {field, flyingBlocksAnimation},
     mSlidingFieldAnimation {engine, gameScene},
     mFireworksParticleEffect {engine},
     mConfettiParticleEffect {engine},
@@ -79,7 +80,7 @@ void LevelCompletedController::Init(const Level& level) {
 
 void LevelCompletedController::Start() {
     mState = State::ObjectiveAchievedAnimation;
-    mTimeSpentInFireworksAndConfettiState = 0.0f;
+    mElapsedTime = 0.0f;
 
     auto& container {mGameScene.GetLevelCompletedEffectsContainer()};
     auto& cameraPosition {mGameScene.GetCamera().GetSceneObject().GetTransform().GetPosition()};
@@ -111,17 +112,17 @@ LevelCompletedDialogController::Result LevelCompletedController::Update() {
         case State::ObjectiveAchievedAnimation:
             UpdateInObjectiveAchievedAnimationState();
             break;
+        case State::Confetti:
+            UpdateInConfettiState();
+            break;
         case State::ClearingLastBlocks:
             UpdateInClearingLastBlocksState();
             break;
         case State::SlidingOutFieldAnimation:
             UpdateInSlidingOutFieldAnimationState();
             break;
-        case State::FireworksAndConfetti:
-            if (mFadeEffect.GetState() != Pht::FadeEffect::State::Transition) {
-                mFadeEffect.Update(mEngine.GetLastFrameSeconds());
-            }
-            UpdateFireworksAndConfetti();
+        case State::Fireworks:
+            UpdateInFireworksState();
             break;
         case State::StarsAppearingAnimation:
             UpdateInStarsAppearingAnimationState();
@@ -135,7 +136,22 @@ LevelCompletedDialogController::Result LevelCompletedController::Update() {
 }
 
 void LevelCompletedController::UpdateInObjectiveAchievedAnimationState() {
+    mElapsedTime += mEngine.GetLastFrameSeconds();
+    
+    if (mElapsedTime > confettiWaitTime) {
+        mConfettiParticleEffect.Start();
+        mState = State::Confetti;
+    }
+
+    UpdateObjectiveAchievedAnimation();
+}
+
+void LevelCompletedController::UpdateObjectiveAchievedAnimation() {
     if (mSlidingTextAnimation.Update() == SlidingTextAnimation::State::Inactive) {
+        if (mState == State::ObjectiveAchievedAnimation) {
+            mConfettiParticleEffect.Start();
+        }
+
         if (mLevel->GetObjective() == Level::Objective::Clear) {
             mState = State::ClearingLastBlocks;
             mClearLastBlocksAnimation.Start();
@@ -146,7 +162,14 @@ void LevelCompletedController::UpdateInObjectiveAchievedAnimationState() {
     }
 }
 
+void LevelCompletedController::UpdateInConfettiState() {
+    mConfettiParticleEffect.Update();
+    UpdateObjectiveAchievedAnimation();
+}
+
 void LevelCompletedController::UpdateInClearingLastBlocksState() {
+    mConfettiParticleEffect.Update();
+
     if (mClearLastBlocksAnimation.Update(mEngine.GetLastFrameSeconds()) ==
         ClearLastBlocksAnimation::State::Inactive) {
 
@@ -156,27 +179,34 @@ void LevelCompletedController::UpdateInClearingLastBlocksState() {
 }
 
 void LevelCompletedController::UpdateInSlidingOutFieldAnimationState() {
+    mConfettiParticleEffect.Update();
+
     if (mSlidingFieldAnimation.Update() == SlidingFieldAnimation::State::Inactive) {
-        mState = State::FireworksAndConfetti;
+        mState = State::Fireworks;
+        mElapsedTime = 0.0f;
         mFireworksParticleEffect.Start();
-        mConfettiParticleEffect.Start();
         mFadeEffect.Start();
     }
+}
+
+void LevelCompletedController::UpdateInFireworksState() {
+    mFadeEffect.UpdateFadeOut(mEngine.GetLastFrameSeconds());
+    UpdateFireworksAndConfetti();
 }
 
 void LevelCompletedController::UpdateFireworksAndConfetti() {
     auto fireworkState {mFireworksParticleEffect.Update()};
     auto confettiState {mConfettiParticleEffect.Update()};
 
-    if (mState == State::FireworksAndConfetti) {
+    if (mState == State::Fireworks) {
         auto effectsAreDone {
             fireworkState == FireworksParticleEffect::State::Inactive &&
             confettiState == ConfettiParticleEffect::State::Inactive
         };
         
-        mTimeSpentInFireworksAndConfettiState += mEngine.GetLastFrameSeconds();
+        mElapsedTime += mEngine.GetLastFrameSeconds();
         
-        if (effectsAreDone || mTimeSpentInFireworksAndConfettiState > fireworksAndConfettiDuration ||
+        if (effectsAreDone || mElapsedTime > fireworksDuration ||
             mEngine.GetInput().ConsumeWholeTouch()) {
 
             auto numStars {
@@ -186,12 +216,12 @@ void LevelCompletedController::UpdateFireworksAndConfetti() {
 
             mStarsAnimation.Start(numStars);
             mState = State::StarsAppearingAnimation;
-            mFadeEffect.GetSceneObject().GetRenderable()->GetMaterial().SetOpacity(fade);
         }
     }
 }
 
 void LevelCompletedController::UpdateInStarsAppearingAnimationState() {
+    mFadeEffect.UpdateFadeOut(mEngine.GetLastFrameSeconds());
     UpdateFireworksAndConfetti();
 
     if (mStarsAnimation.Update() == StarsAnimation::State::Rotating) {
@@ -199,6 +229,7 @@ void LevelCompletedController::UpdateInStarsAppearingAnimationState() {
         mGameViewControllers.SetActiveController(GameViewControllers::LevelCompletedDialog);
         mGameViewControllers.GetLevelCompletedDialogController().Init();
         mStarsAnimation.MoveToFront();
+        mFadeEffect.StartInMidFade();
     }
 }
 
@@ -206,9 +237,7 @@ LevelCompletedDialogController::Result LevelCompletedController::UpdateLevelComp
     UpdateFireworksAndConfetti();
     mStarsAnimation.Update();
     
-    if (mFadeEffect.GetState() != Pht::FadeEffect::State::Idle) {
-        mFadeEffect.Update(mEngine.GetLastFrameSeconds());
-    }
+    mFadeEffect.UpdateFadeIn(mEngine.GetLastFrameSeconds());
 
     auto result {mGameViewControllers.GetLevelCompletedDialogController().Update()};
     

@@ -14,9 +14,9 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto numFireworks {16};
-    constexpr auto fireworksDuration {5.0f};
-    constexpr auto fireworksWaitDuration {1.0f};
+    constexpr auto numFireworks {14};
+    constexpr auto fireworksDuration {4.0f};
+    constexpr auto fireworksWaitDuration {0.3f};
     constexpr auto fireworkTimeToLive {1.5f};
     constexpr auto fireworkTimeToLiveRandomPart {1.0f};
     constexpr auto velocity {25.0f};

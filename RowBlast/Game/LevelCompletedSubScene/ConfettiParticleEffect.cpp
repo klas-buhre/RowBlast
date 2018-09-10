@@ -64,7 +64,7 @@ namespace {
             .mSize = Pht::Vec3{0.0f, 0.0f, 0.0f},
             .mTimeToLive = 0.0f,
             .mFrequency = 0.0f,
-            .mBurst = 200
+            .mBurst = 180
         };
         
         auto& particleSystem {engine.GetParticleSystem()};
