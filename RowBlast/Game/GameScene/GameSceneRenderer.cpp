@@ -17,7 +17,7 @@ using namespace RowBlast;
 
 namespace {
     constexpr auto dz {0.05f};
-    constexpr auto numVisibleGridSegments {3};
+    constexpr auto numVisibleGridRows {17};
 }
 
 GameSceneRenderer::GameSceneRenderer(GameScene& scene,
@@ -51,20 +51,24 @@ void GameSceneRenderer::RenderFieldGrid() {
     }
     
     auto lowestVisibleRow {static_cast<int>(mScrollController.GetLowestVisibleRow())};
+    auto pastHighestVisibleRow {lowestVisibleRow + numVisibleGridRows};
     auto numSegments {static_cast<int>(gridSegments.size())};
     
     for (auto i {numSegments - 1}; i >= 0; --i) {
         auto& gridSegment {gridSegments[i]};
         
         if (gridSegment.mRow <= lowestVisibleRow) {
-            for (auto j {0}; j < numVisibleGridSegments; ++j) {
-                auto visibleSegmentIndex {i + j};
+            for (auto visibleSegmentIndex {i};
+                 visibleSegmentIndex < numSegments;
+                 ++visibleSegmentIndex) {
+
+                auto& visibleGridSegment {gridSegments[visibleSegmentIndex]};
                 
-                if (visibleSegmentIndex >= numSegments) {
+                if (visibleGridSegment.mRow >= pastHighestVisibleRow) {
                     break;
                 }
                 
-                gridSegments[visibleSegmentIndex].mSceneObject.SetIsVisible(true);
+                visibleGridSegment.mSceneObject.SetIsVisible(true);
             }
             
             break;
