@@ -94,17 +94,6 @@ void FadeEffect::UpdateFadeOut(float dt) {
     }
 }
 
-void FadeEffect::UpdateFadeIn(float dt) {
-    switch (mState) {
-        case State::Transition:
-        case State::FadingIn:
-            Update(dt);
-            break;
-        default:
-            break;
-    }
-}
-
 bool FadeEffect::IsFadingOut() const {
     return mState == State::FadingOut;
 }

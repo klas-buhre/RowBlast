@@ -229,7 +229,6 @@ void LevelCompletedController::UpdateInStarsAppearingAnimationState() {
         mGameViewControllers.SetActiveController(GameViewControllers::LevelCompletedDialog);
         mGameViewControllers.GetLevelCompletedDialogController().Init();
         mStarsAnimation.MoveToFront();
-        mFadeEffect.StartInMidFade();
     }
 }
 
@@ -237,7 +236,7 @@ LevelCompletedDialogController::Result LevelCompletedController::UpdateLevelComp
     UpdateFireworksAndConfetti();
     mStarsAnimation.Update();
     
-    mFadeEffect.UpdateFadeIn(mEngine.GetLastFrameSeconds());
+    mFadeEffect.Update(mEngine.GetLastFrameSeconds());
 
     auto result {mGameViewControllers.GetLevelCompletedDialogController().Update()};
     

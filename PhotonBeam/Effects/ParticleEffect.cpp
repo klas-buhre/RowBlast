@@ -8,7 +8,7 @@
 using namespace Pht;
 
 namespace {
-    Vec3 RotateZ(const Vec3 v, float sinTheta, float cosTheta) {
+    Vec3 RotateZ(const Vec3& v, float sinTheta, float cosTheta) {
         return {v.x * cosTheta - v.y * sinTheta, v.x * sinTheta + v.y * cosTheta, 0.0f};
     }
     

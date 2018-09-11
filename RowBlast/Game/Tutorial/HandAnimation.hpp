@@ -43,7 +43,10 @@ namespace RowBlast {
         State mState {State::Inactive};
         Pht::SceneObject* mContainerSceneObject {nullptr};
         Pht::SceneObject* mHandSceneObject {nullptr};
+        Pht::SceneObject* mHandShadowSceneObject {nullptr};
         Pht::ParticleEffect* mCircleEffect {nullptr};
+        Pht::Vec3 mHandShadowBackwardPosition;
+        Pht::Vec3 mHandShadowForwardPosition;
         float mElapsedTime {0.0f};
     };
 }

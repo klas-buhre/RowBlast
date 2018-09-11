@@ -49,7 +49,6 @@ Backlog:
     -Credit Google for avatars? : http://www.iconarchive.com/show/noto-emoji-people-face-icons-by-google.1.html
 
 Ongoing tasks:
-  -Make hand animation a bit smaller.
   -Fix bug where grid segments are disappearing.
   -Levels in the second world.
     -The second world could introduce level bombs and triangle blocks.
