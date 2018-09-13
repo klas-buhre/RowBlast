@@ -85,6 +85,14 @@ namespace Pht {
             return mIsDepthTestAllowed;
         }
 
+        void SetIsEnabled(bool isEnabled) {
+            mIsEnabled = isEnabled;
+        }
+        
+        bool IsEnabled() const {
+            return mIsEnabled;
+        }
+
     private:
         ProjectionMode mProjectionMode {ProjectionMode::Perspective};
         RenderOrder mRenderOrder {RenderOrder::Optimized};
@@ -94,6 +102,7 @@ namespace Pht {
         Optional<ScissorBox> mScissorBox;
         int mLayerMask {0};
         bool mIsDepthTestAllowed {true};
+        bool mIsEnabled {true};
     };
 }
 

@@ -182,6 +182,7 @@ void GameScene::CreateRenderPasses() {
         static_cast<int>(Layer::LevelCompletedFadeEffect)
     };
     levelCompletedFadeEffectRenderPass.SetHudMode(true);
+    levelCompletedFadeEffectRenderPass.SetIsEnabled(false);
     mScene->AddRenderPass(levelCompletedFadeEffectRenderPass);
     
     mScene->AddRenderPass(Pht::RenderPass {static_cast<int>(Layer::LevelCompletedEffects)});
@@ -198,6 +199,7 @@ void GameScene::CreateRenderPasses() {
 
     Pht::RenderPass starsRenderPass {static_cast<int>(Layer::Stars)};
     starsRenderPass.SetHudMode(true);
+    starsRenderPass.SetIsEnabled(false);
     mScene->AddRenderPass(starsRenderPass);
 
     Pht::RenderPass fadeEffectRenderPass {static_cast<int>(Layer::SceneSwitchFadeEffect)};
@@ -425,6 +427,14 @@ void GameScene::CreateStarsContainer() {
     
     lightSceneObject.SetComponent<Pht::LightComponent>(std::move(lightComponent));
     mStarsContainer->AddChild(lightSceneObject);
+    
+    auto& cameraSceneObject {mScene->CreateSceneObject()};
+    cameraSceneObject.SetIsVisible(false);
+    cameraSceneObject.GetTransform().SetPosition({0.0f, -20.5f, 20.5f});
+    auto cameraComponent {std::make_unique<Pht::CameraComponent>(cameraSceneObject)};
+    starsRenderPass->SetCamera(cameraComponent.get());
+    cameraSceneObject.SetComponent<Pht::CameraComponent>(std::move(cameraComponent));
+    mStarsContainer->AddChild(cameraSceneObject);
 }
 
 void GameScene::InitFieldBorder(const Level& level) {

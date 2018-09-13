@@ -28,7 +28,6 @@ Backlog:
     -Should the field quad be slightly less blue?
     -Maybe remove light animation for the field blocks and always have a light direction that looks
      good?
-    -Adjust the red field material?
     -Maybe the top of the sky in the first map scene and title scene could be a bit darker blue.
     -The background images for the second world could be a bit less colorful.
     -There could be a UFO instead of an avatar.
@@ -47,7 +46,7 @@ Backlog:
     -Credit Google for avatars? : http://www.iconarchive.com/show/noto-emoji-people-face-icons-by-google.1.html
 
 Ongoing tasks:
-  -Maybe increase ambient in the gold background material.
+  -Adjust the red field material.
   -Levels in the second world.
     -The second world could introduce level bombs and triangle blocks.
     -Maybe move level 19 to the first world.

@@ -40,8 +40,8 @@ Materials::Materials(Pht::IEngine& engine) {
 }
 
 void Materials::CreateGoldMaterial(const Pht::EnvMapTextureFilenames& envMapTextures) {
-    Pht::Color ambient {1.0f, 0.54f, 0.08f};
-    Pht::Color diffuse {1.0f, 0.5f, 0.0f};
+    Pht::Color ambient {0.91f, 0.55f, 0.08f};
+    Pht::Color diffuse {0.51f, 0.4f, 0.0f};
     Pht::Color specular {1.0f, 1.0f, 1.0f};
     auto shininess {21.0f};
     mGoldMaterial = std::make_unique<Pht::Material>(envMapTextures,
@@ -49,7 +49,7 @@ void Materials::CreateGoldMaterial(const Pht::EnvMapTextureFilenames& envMapText
                                                     diffuse,
                                                     specular,
                                                     shininess,
-                                                    reflectivity);
+                                                    0.6f);
 }
 
 void Materials::CreateBlueMaterial(const Pht::EnvMapTextureFilenames& envMapTextures) {

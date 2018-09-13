@@ -92,6 +92,10 @@ void LevelCompletedController::Start() {
 
     mGameViewControllers.SetActiveController(GameViewControllers::None);
     StartLevelCompletedTextAnimation();
+    
+    auto& scene {mGameScene.GetScene()};
+    scene.GetRenderPass(static_cast<int>(GameScene::Layer::LevelCompletedFadeEffect))->SetIsEnabled(true);
+    scene.GetRenderPass(static_cast<int>(GameScene::Layer::Stars))->SetIsEnabled(true);
 }
 
 void LevelCompletedController::StartLevelCompletedTextAnimation() {

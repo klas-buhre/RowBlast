@@ -692,6 +692,10 @@ void Renderer::RenderScene(const Scene& scene) {
     const LightComponent* previousLight {nullptr};
     
     for (auto& renderPass: scene.GetRenderPasses()) {
+        if (!renderPass.IsEnabled()) {
+            continue;
+        }
+
         // Setup camera.
         auto* cameraOverride {renderPass.GetCamera()};
         auto* camera {cameraOverride ? cameraOverride : scene.GetCamera()};
