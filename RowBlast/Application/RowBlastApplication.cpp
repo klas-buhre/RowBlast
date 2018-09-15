@@ -48,8 +48,6 @@ Ongoing tasks:
   -Should the field quad be slightly less blue and/or slightly less transparent?
   -Should the red field material be slightly more red?
   -Levels in the second world.
-    -Maybe move level 19 to the first world.
-    -The third world could introduce the build objective.
 
 
 
