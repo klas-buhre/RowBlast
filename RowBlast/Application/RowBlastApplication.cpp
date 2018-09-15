@@ -45,12 +45,11 @@ Backlog:
     -Credit Google for avatars? : http://www.iconarchive.com/show/noto-emoji-people-face-icons-by-google.1.html
 
 Ongoing tasks:
-  -Should the field quad be slightly less blue?
+  -Should the field quad be slightly less blue and/or slightly less transparent?
+  -Should the red field material be slightly more red?
   -Levels in the second world.
-    -The second world could introduce level bombs and triangle blocks.
     -Maybe move level 19 to the first world.
     -The third world could introduce the build objective.
-    -Levels to keep in the second world: 42
 
 
 

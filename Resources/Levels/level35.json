@@ -4,7 +4,7 @@
     "twoStars": 40,
     "threeStars": 25,
     "background": "sky5.jpg",
-    "dark": false,
+    "dark": true,
     "pieces": [
         "SmallTriangle",
         "Triangle",

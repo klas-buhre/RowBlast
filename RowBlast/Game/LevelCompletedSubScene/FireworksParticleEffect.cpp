@@ -57,7 +57,7 @@ void FireworksParticleEffect::Init(Pht::SceneObject& parentObject, const Pht::Ve
         Pht::Vec3 position {
             (Pht::NormalizedRand() - 0.5f) * effectsVolume.x,
             (Pht::NormalizedRand() - 0.5f) * effectsVolume.y + effectsVolume.y / 5.0f,
-            (Pht::NormalizedRand() - 0.5f) * effectsVolume.z - 8.5f
+            (Pht::NormalizedRand() - 0.5f) * effectsVolume.z - 10.0f
         };
         
         auto waitTime {
