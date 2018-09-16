@@ -16,7 +16,6 @@ Backlog:
      BurriedHolesAreaInVisibleRows, at least for SevenPiece and MirroredSevenPiece. Currently, the
      AI gives to low scores for moves that it wrongly thinks will cause a lot burried holes because
      it does not pull down the non-cleared part of for example the SevenPiece.
-    -Some levels could have som pink striped level blocks with welds that are affected by graivty.
     -Maybe blocks in the visible part of the field could disappear on some levels. For each move a
      random block disappears.
     -Maybe init falling piece after SwitchPiece() in the same frame instead of the next.
@@ -30,6 +29,7 @@ Backlog:
     -Maybe the top of the sky in the first map scene and title scene could be a bit darker blue.
     -The background images for the second world could be a bit less colorful.
     -There could be a UFO instead of an avatar.
+    -The UFO could also appear in the title scene.
     -Could have planets in the background even in the sky worlds.
   -GUI:
     -Menu window that displays 3rd party lib credits.
@@ -48,6 +48,7 @@ Ongoing tasks:
   -Should the field quad be slightly less blue and/or slightly less transparent?
   -Should the red field material be slightly more red?
   -Levels in the second world.
+
 
 
 

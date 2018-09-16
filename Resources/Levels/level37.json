@@ -1,18 +1,17 @@
 {
     "speed": 0.0,
     "moves": 30,
-    "twoStars": 25,
-    "threeStars": 15,
-    "background": "sky4.jpg",
-    "dark": false,
+    "twoStars": 27,
+    "threeStars": 22,
+    "background": "sky7.jpg",
+    "dark": true,
     "pieces": [
-        "LongI",
-        "I",
         "L",
-        "B",
-        "D",
-        "Seven",
-        "MirroredSeven"
+        "SmallTriangle",
+        "Triangle",
+        "BigTriangle",
+        "Bomb",
+        "RowBomb"
     ],
     "clearGrid": [
         "       ",
@@ -28,18 +27,17 @@
         "       ",
         "       ",
         "       ",
-        "GGG GGG",
-        "G GG GG",
-        "GGG GGG",
-        " GGGG G",
-        "GG GGGG",
-        "GGGGG G",
-        " GGG GG",
-        "GG GGGG",
+        "GGGG   ",
+        "GGGG   ",
+        "GGGG   ",
+        " GGGGGG",
+        "G     G",
+        "G     G",
+        "G     G",
+        "G     G",
         "GGGGGG ",
-        "G GGG G",
-        "GGGG GG",
-        "GGG GGG",
-        "G GGG G"
+        "   GGGG",
+        "   GGGG",
+        "   GGGG"
     ]
 }
