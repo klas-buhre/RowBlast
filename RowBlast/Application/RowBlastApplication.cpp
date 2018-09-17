@@ -26,11 +26,12 @@ Backlog:
   -Rendering:
     -Maybe remove light animation for the field blocks and always have a light direction that looks
      good?
+    -Could have planets in the background even in the sky worlds.
     -Maybe the top of the sky in the first map scene and title scene could be a bit darker blue.
     -The background images for the second world could be a bit less colorful.
     -There could be a UFO instead of an avatar.
     -The UFO could also appear in the title scene.
-    -Could have planets in the background even in the sky worlds.
+    -Could add a gradient in the cloud textures that the lower parts of a cloud is darker.
   -GUI:
     -Menu window that displays 3rd party lib credits.
   -Purchases:
