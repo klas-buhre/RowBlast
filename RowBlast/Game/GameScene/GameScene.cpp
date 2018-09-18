@@ -26,7 +26,7 @@ namespace {
     constexpr auto fieldPadding {0.1f};
     constexpr auto scissorBoxPadding {0.01f};
     constexpr auto lightAnimationDuration {5.0f};
-    const Pht::Vec3 lightDirectionA {0.57f, 1.0f, 0.6f};
+    const Pht::Vec3 lightDirectionA {0.785f, 1.0f, 0.67f};
     const Pht::Vec3 lightDirectionB {1.0f, 1.0f, 0.74f};
     constexpr auto darkLevelLightIntensity {0.94f};
     constexpr auto brightLevelLightIntensity {0.985f};
@@ -278,7 +278,7 @@ void GameScene::CreateFieldQuad() {
     mScene->GetRoot().AddChild(*mFieldQuadContainer);
 
     Pht::Material fieldMaterial;
-    fieldMaterial.SetOpacity(0.95f);
+    fieldMaterial.SetOpacity(0.96f);
 
     auto vertices {CreateFieldVertices()};
     auto& fieldQuad {mScene->CreateSceneObject(Pht::QuadMesh {vertices}, fieldMaterial)};
@@ -298,9 +298,9 @@ Pht::QuadMesh::Vertices GameScene::CreateFieldVertices() {
     auto height {mFieldHeight + fieldPadding};
 
     return {
-        {{-width / 2.0f, -height / 2.0f, 0.0f}, {0.3f, 0.3f, 0.79f, 1.0f}},
+        {{-width / 2.0f, -height / 2.0f, 0.0f}, {0.3f, 0.3f, 0.752f, 1.0f}},
         {{width / 2.0f, -height / 2.0f, 0.0f}, {0.8f, 0.225f, 0.425f, 1.0f}},
-        {{width / 2.0f, height / 2.0f, 0.0f}, {0.3f, 0.3f, 0.79f, 1.0f}},
+        {{width / 2.0f, height / 2.0f, 0.0f}, {0.3f, 0.3f, 0.752f, 1.0f}},
         {{-width / 2.0f, height / 2.0f, 0.0f}, {0.81f, 0.225f, 0.425f, 1.0f}},
     };
 }
@@ -529,8 +529,6 @@ void GameScene::UpdateLightAnimation() {
     if (mLightAnimationTime > lightAnimationDuration) {
         mLightAnimationTime = 0.0f;
     }
-    
-    mLightAnimationTime = 2.5f;
     
     auto t {(cos(mLightAnimationTime * 2.0f * 3.1415f / lightAnimationDuration) + 1.0f) / 2.0f};
     mLight->SetDirection(lightDirectionA.Lerp(t, lightDirectionB));

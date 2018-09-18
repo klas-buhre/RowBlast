@@ -24,9 +24,9 @@ Backlog:
      not really matter since the user can select any piece from the selectables but maybe it is most 
      convenient to go back to the state before the move and not the initial state.
   -Rendering:
-    -Maybe remove light animation for the field blocks and always have a light direction that looks
-     good?
     -Could have planets in the background even in the sky worlds.
+    -In the sky scenes, the gradient should only go to the horizon, not to the bottom of the screen.
+    -Maybe smooth the dark area in the field env map.
     -Maybe the top of the sky in the first map scene and title scene could be a bit darker blue.
     -The background images for the second world could be a bit less colorful.
     -There could be a UFO instead of an avatar.
@@ -40,14 +40,13 @@ Backlog:
   -Sound:
     -Buy sounds and music.
   -Make ready for release:
+    -Make launch screens for all supported device resulutions. Should say Teleporter Studios.
     -Make icons and launch screens for all supported device resulutions.
     -Credit the icon creator: <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
     -Credit FastNoise, MIT license: https://github.com/Auburns/FastNoise/
     -Credit Google for avatars? : http://www.iconarchive.com/show/noto-emoji-people-face-icons-by-google.1.html
 
 Ongoing tasks:
-  -Should the field quad be slightly less blue and/or slightly less transparent?
-  -Should the red field material be slightly more red?
   -Levels in the second world.
 
 
