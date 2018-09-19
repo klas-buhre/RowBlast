@@ -28,10 +28,10 @@ Backlog:
     -In the sky scenes, the gradient should only go to the horizon, not to the bottom of the screen.
     -Maybe smooth the dark area in the field env map.
     -Maybe the top of the sky in the first map scene and title scene could be a bit darker blue.
+    -Could add a gradient in the cloud textures that the lower parts of a cloud is darker.
     -The background images for the second world could be a bit less colorful.
     -There could be a UFO instead of an avatar.
     -The UFO could also appear in the title scene.
-    -Could add a gradient in the cloud textures that the lower parts of a cloud is darker.
   -GUI:
     -Menu window that displays 3rd party lib credits.
   -Purchases:
@@ -47,7 +47,7 @@ Backlog:
     -Credit Google for avatars? : http://www.iconarchive.com/show/noto-emoji-people-face-icons-by-google.1.html
 
 Ongoing tasks:
-  -Levels in the second world.
+  -Try the previous light direction with reduced intensity.
 
 
 
@@ -126,8 +126,9 @@ Ordered Backlog:
         Done
     -Levels in the second world.
         Cost: 7
+        Done
     -Finish the remaining rendering tasks.
-        Cost: 5
+        Cost: 7
     -Space world.
         Cost: 10
     -Net/HTTP.
@@ -147,7 +148,7 @@ Ordered Backlog:
     -Back end.
         Cost: ?
 
-        Total cost: 204
+        Total cost: 206
 
 
 Comomon piece type sets:
