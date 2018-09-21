@@ -127,8 +127,8 @@ namespace {
             .mNumCloudsPerCluster = 5
         },
         CloudPathVolume {
-            .mPosition = {0.0f, 0.0f, -400.0f},
-            .mSize = {510.0f, 400.0f, 20.0f},
+            .mPosition = {0.0f, -100.0f, -400.0f},
+            .mSize = {510.0f, 200.0f, 20.0f},
             .mCloudSize = {50.0f, 50.0f},
             .mCloudSizeRandPart = 50.0f,
             .mNumClouds = 16,
@@ -157,9 +157,26 @@ namespace {
         }
     };
     
+    const std::vector<PlanetConfig> planets {
+        PlanetConfig {
+            .mPosition = {0.0f, 200.0f, -550.0f},
+            .mOrientation = {30.0f, 0.0f, -35.0f},
+            .mSize = 3.5f,
+            .mAngularVelocity = 5.0f,
+            .mType = PlanetType::Ogma
+        },
+        PlanetConfig {
+            .mPosition = {-30.0f, 170.0f, -420.0f},
+            .mOrientation = {30.0f, 0.0f, -35.0f},
+            .mSize = 0.95f,
+            .mAngularVelocity = 5.0f,
+            .mType = PlanetType::Moon
+        }
+    };
+    
     const Pht::Color cloudColor {1.0f, 1.0f, 1.0f};
 }
 
 World RowBlast::GetWorld1() {
-    return World {places, blockPaths, cloudPaths, hazeLayers, lightIntensity, cloudColor};
+    return World {places, blockPaths, cloudPaths, hazeLayers, planets, lightIntensity, cloudColor};
 }

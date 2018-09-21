@@ -82,8 +82,8 @@ namespace {
             .mNumCloudsPerCluster = 5
         },
         CloudPathVolume {
-            .mPosition = {0.0f, 0.0f, -400.0f},
-            .mSize = {500.0f, 400.0f, 20.0f},
+            .mPosition = {0.0f, -100.0f, -400.0f},
+            .mSize = {510.0f, 200.0f, 20.0f},
             .mCloudSize = {50.0f, 50.0f},
             .mCloudSizeRandPart = 50.0f,
             .mNumClouds = 16,
@@ -126,7 +126,7 @@ namespace {
             .mPieceType = FloatingPieceType::SingleBlock
         },
         BlockPathVolume {
-            .mPosition = {-5.0f, 13.0f, -8.0f},
+            .mPosition = {-5.0f, 13.0f, -18.0f},
             .mSize = {0.0f, 0.0f, 0.0f},
             .mPieceType = FloatingPieceType::L
         },
@@ -144,6 +144,23 @@ namespace {
             .mPosition = {5.0f, 0.0f, -25.0f},
             .mSize = {0.0f, 0.0f, 0.0f},
             .mPieceType = FloatingPieceType::RowBomb
+        }
+    };
+    
+    const std::vector<PlanetConfig> planets {
+        PlanetConfig {
+            .mPosition = {0.0f, 250.0f, -550.0f},
+            .mOrientation = {30.0f, 0.0f, -35.0f},
+            .mSize = 3.5f,
+            .mAngularVelocity = 5.0f,
+            .mType = PlanetType::Ogma
+        },
+        PlanetConfig {
+            .mPosition = {-30.0f, 220.0f, -420.0f},
+            .mOrientation = {30.0f, 0.0f, -35.0f},
+            .mSize = 0.95f,
+            .mAngularVelocity = 5.0f,
+            .mType = PlanetType::Moon
         }
     };
 }
@@ -192,6 +209,11 @@ TitleScene::TitleScene(Pht::IEngine& engine, const CommonResources& commonResour
                                        2.1f,
                                        cloudColor);
 
+    mPlanets = std::make_unique<Planets>(engine,
+                                         *scene,
+                                         static_cast<int>(Layer::Background),
+                                         planets);
+
     mFloatingBlocks = std::make_unique<FloatingBlocks>(engine,
                                                        *scene,
                                                        static_cast<int>(Layer::Background),
@@ -225,6 +247,7 @@ TitleScene::TitleScene(Pht::IEngine& engine, const CommonResources& commonResour
 
 void TitleScene::Update() {
     mClouds->Update();
+    mPlanets->Update();
     mFloatingBlocks->Update();
     mTitleAnimation->Update();
     

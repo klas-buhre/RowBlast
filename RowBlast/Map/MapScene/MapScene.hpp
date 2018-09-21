@@ -10,6 +10,7 @@
 
 // Game includes.
 #include "Clouds.hpp"
+#include "Planets.hpp"
 #include "FloatingBlocks.hpp"
 #include "MapPin.hpp"
 #include "MapHud.hpp"
@@ -72,7 +73,7 @@ namespace RowBlast {
         }
 
     private:
-        void CreateCloudsAndBlocks(const World& world);
+        void CreateBackground(const World& world);
         void CreatePins(const World& world);
         void CreatePin(Pht::SceneObject& pinContainerObject, const MapPlace& place);
         void CreateEffects();
@@ -89,6 +90,7 @@ namespace RowBlast {
         Pht::LightComponent* mUiLight {nullptr};
         float mLightAnimationTime {0.0f};
         std::unique_ptr<Clouds> mClouds;
+        std::unique_ptr<Planets> mPlanets;
         std::unique_ptr<FloatingBlocks> mFloatingBlocks;
         std::vector<std::unique_ptr<MapPin>> mPins;
         MapPin* mPreviousPin {nullptr};

@@ -104,7 +104,7 @@ void MapScene::Init() {
     mCamera = &scene->CreateCamera();
     scene->GetRoot().AddChild(mCamera->GetSceneObject());
     
-    CreateCloudsAndBlocks(world);
+    CreateBackground(world);
     CreatePins(world);
     CreateEffects();
     
@@ -136,7 +136,7 @@ void MapScene::Init() {
     mClickedPortalNextLevelId = Pht::Optional<int> {};
 }
 
-void MapScene::CreateCloudsAndBlocks(const World& world) {
+void MapScene::CreateBackground(const World& world) {
     mClouds = std::make_unique<Clouds>(mEngine,
                                        *mScene,
                                        static_cast<int>(Layer::Map),
@@ -144,6 +144,11 @@ void MapScene::CreateCloudsAndBlocks(const World& world) {
                                        world.mHazeLayers,
                                        1.5f,
                                        world.mCloudColor);
+
+    mPlanets = std::make_unique<Planets>(mEngine,
+                                         *mScene,
+                                         static_cast<int>(Layer::Map),
+                                         world.mPlanets);
 
     mFloatingBlocks = std::make_unique<FloatingBlocks>(mEngine,
                                                        *mScene,
@@ -255,6 +260,7 @@ void MapScene::CreateEffects() {
 
 void MapScene::Update() {
     mClouds->Update();
+    mPlanets->Update();
     mFloatingBlocks->Update();
     mHud->Update();
     UpdateUiLightAnimation();

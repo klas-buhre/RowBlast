@@ -9,6 +9,7 @@
 // Game includes.
 #include "FloatingBlocks.hpp"
 #include "Clouds.hpp"
+#include "Planets.hpp"
 #include "TitleAnimation.hpp"
 
 namespace Pht {
@@ -27,6 +28,7 @@ namespace RowBlast {
         
     private:
         std::unique_ptr<Clouds> mClouds;
+        std::unique_ptr<Planets> mPlanets;
         std::unique_ptr<FloatingBlocks> mFloatingBlocks;
         std::unique_ptr<TitleAnimation> mTitleAnimation;
         Pht::Font mTapFont;

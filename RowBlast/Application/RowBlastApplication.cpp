@@ -7,6 +7,7 @@ Backlog:
     -Metal.
 
   -Gameplay:
+   X-An objective could be to bring down all asteroids.
    X-Fix the piece pull down bug on level 31. See screenshot.
    X-Fix bug where the switchable pieces can change if double clicking on switch when the frame rate
      is really low like in the iPad simulator.
@@ -24,10 +25,7 @@ Backlog:
      not really matter since the user can select any piece from the selectables but maybe it is most 
      convenient to go back to the state before the move and not the initial state.
   -Rendering:
-    -Could have planets in the background even in the sky worlds.
-    -In the sky scenes, the gradient should only go to the horizon, not to the bottom of the screen.
     -Maybe smooth the dark area in the field env map.
-    -Maybe the top of the sky in the first map scene and title scene could be a bit darker blue.
     -Could add a gradient in the cloud textures that the lower parts of a cloud is darker.
     -The background images for the second world could be a bit less colorful.
     -There could be a UFO instead of an avatar.
@@ -47,7 +45,9 @@ Backlog:
     -Credit Google for avatars? : http://www.iconarchive.com/show/noto-emoji-people-face-icons-by-google.1.html
 
 Ongoing tasks:
-  -Try the previous light direction with reduced intensity.
+    -Could have planets in the background even in the sky worlds.
+    -In the sky scenes, the gradient should only go to the horizon, not to the bottom of the screen.
+    -Maybe the top of the sky in the first map scene and title scene could be a bit darker blue.
 
 
 

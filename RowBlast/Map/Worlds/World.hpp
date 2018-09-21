@@ -10,6 +10,7 @@
 // Game includes.
 #include "FloatingBlocks.hpp"
 #include "Clouds.hpp"
+#include "Planets.hpp"
 
 namespace RowBlast {
     struct MapLevel {
@@ -52,6 +53,7 @@ namespace RowBlast {
         const std::vector<BlockPathVolume>& mBlockPaths;
         const std::vector<CloudPathVolume>& mCloudPaths;
         const std::vector<HazeLayer>& mHazeLayers;
+        const std::vector<PlanetConfig>& mPlanets;
         float mLightIntensity {1.0f};
         Pht::Color mCloudColor;
     };
