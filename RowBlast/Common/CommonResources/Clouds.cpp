@@ -73,26 +73,19 @@ namespace {
                               const Pht::Vec2& clusterSize,
                               const CloudPathVolume& volume) {
         auto localCloudPosition {cloudPosition - clusterPosition};
-        
-        if (localCloudPosition.x > clusterSize.x / 2.0f) {
-            localCloudPosition.x = clusterSize.x / 2.0f;
-        } else if (localCloudPosition.x < -clusterSize.x / 2.0f) {
-            localCloudPosition.x = -clusterSize.x / 2.0f;
-        }
 
         if (localCloudPosition.y > clusterSize.y / 2.0f) {
             localCloudPosition.y = clusterSize.y / 2.0f;
         } else if (localCloudPosition.y < -clusterSize.y / 2.0f) {
             localCloudPosition.y = -clusterSize.y / 2.0f;
         }
-        
+
         auto brightnessFactor {
-            (localCloudPosition.x + localCloudPosition.y + localCloudPosition.z) * 2.0f /
-            (clusterSize.x + clusterSize.y + volume.mSize.z)
+            (localCloudPosition.y + localCloudPosition.z) * 2.0f /
+            (clusterSize.y + volume.mSize.z)
         };
-        
-        auto brightness {averageCloudBrightness + brightnessFactor * 0.25f};
-        
+        auto brightness {averageCloudBrightness + brightnessFactor * 0.2f};
+
         if (brightness > maxCloudBrightness) {
             brightness = maxCloudBrightness;
         }
@@ -184,29 +177,54 @@ void Clouds::InitHazeLayers(const std::vector<HazeLayer>& hazeLayers,
     auto& sceneObject {scene.CreateSceneObject()};
     sceneObject.SetLayer(sceneLayerIndex);
     scene.GetRoot().AddChild(sceneObject);
-    
-    auto frustumHeightFactor {mEngine.GetRenderer().GetFrustumHeightFactor()};
 
     for (auto& hazeLayer: hazeLayers) {
         auto& size {hazeLayer.mSize};
+        auto quarterYSize {size.y / 4.0f};
         
-        Pht::QuadMesh::Vertices vertices {
-            {{-size.x / 2.0f, -size.y * frustumHeightFactor / 2.0f, 0.0f}, hazeLayer.mLowerColor},
-            {{size.x / 2.0f, -size.y * frustumHeightFactor / 2.0f, 0.0f}, hazeLayer.mLowerColor},
-            {{size.x / 2.0f, size.y * frustumHeightFactor / 2.0f, 0.0f}, hazeLayer.mUpperColor},
-            {{-size.x / 2.0f, size.y * frustumHeightFactor / 2.0f, 0.0f}, hazeLayer.mUpperColor},
+        Pht::QuadMesh::Vertices lowerVertices {
+            {{-size.x / 2.0f, -quarterYSize, 0.0f}, hazeLayer.mLowerColor},
+            {{size.x / 2.0f, -quarterYSize, 0.0f}, hazeLayer.mLowerColor},
+            {{size.x / 2.0f, quarterYSize, 0.0f}, hazeLayer.mLowerColor},
+            {{-size.x / 2.0f, quarterYSize, 0.0f}, hazeLayer.mLowerColor},
         };
         
-        Pht::Material material;
+        Pht::Material lowerMaterial;
         
-        if (hazeLayer.mLowerColor.w != 1.0f || hazeLayer.mUpperColor.w != 1.0f) {
-            material.SetBlend(Pht::Blend::Yes);
+        if (hazeLayer.mLowerColor.w != 1.0f) {
+            lowerMaterial.SetBlend(Pht::Blend::Yes);
         }
         
-        auto& hazeSceneObject {scene.CreateSceneObject(Pht::QuadMesh {vertices}, material)};
-        hazeSceneObject.GetTransform().SetPosition(hazeLayer.mPosition);
-        hazeSceneObject.SetLayer(sceneLayerIndex);
-        sceneObject.AddChild(hazeSceneObject);
+        auto& lowerHazeSceneObject {
+            scene.CreateSceneObject(Pht::QuadMesh {lowerVertices}, lowerMaterial)
+        };
+        auto lowerPosition {hazeLayer.mPosition - Pht::Vec3{0.0f, quarterYSize, 0.0f}};
+        lowerHazeSceneObject.GetTransform().SetPosition(lowerPosition);
+        lowerHazeSceneObject.SetLayer(sceneLayerIndex);
+        sceneObject.AddChild(lowerHazeSceneObject);
+        
+        auto scale {hazeLayer.mUpperScale};
+        
+        Pht::QuadMesh::Vertices upperVertices {
+            {{-size.x / 2.0f, -quarterYSize * scale, 0.0f}, hazeLayer.mLowerColor},
+            {{size.x / 2.0f, -quarterYSize * scale, 0.0f}, hazeLayer.mLowerColor},
+            {{size.x / 2.0f, quarterYSize * scale, 0.0f}, hazeLayer.mUpperColor},
+            {{-size.x / 2.0f, quarterYSize * scale, 0.0f}, hazeLayer.mUpperColor},
+        };
+        
+        Pht::Material upperMaterial;
+        
+        if (hazeLayer.mLowerColor.w != 1.0f || hazeLayer.mUpperColor.w != 1.0f) {
+            upperMaterial.SetBlend(Pht::Blend::Yes);
+        }
+        
+        auto& upperHazeSceneObject {
+            scene.CreateSceneObject(Pht::QuadMesh {upperVertices}, upperMaterial)
+        };
+        auto upperPosition {hazeLayer.mPosition + Pht::Vec3{0.0f, quarterYSize * scale, 0.0f}};
+        upperHazeSceneObject.GetTransform().SetPosition(upperPosition);
+        upperHazeSceneObject.SetLayer(sceneLayerIndex);
+        sceneObject.AddChild(upperHazeSceneObject);
     }
 }
 

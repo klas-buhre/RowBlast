@@ -46,8 +46,9 @@ Backlog:
 
 Ongoing tasks:
     -Could have planets in the background even in the sky worlds.
-    -In the sky scenes, the gradient should only go to the horizon, not to the bottom of the screen.
-    -Maybe the top of the sky in the first map scene and title scene could be a bit darker blue.
+      -The planets should have their own light source with intensity 1.0.
+      -Try the other gas giant for world 1.
+    -Adjust the cloud positions.
 
 
 

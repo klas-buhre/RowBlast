@@ -139,22 +139,23 @@ namespace {
 
     const std::vector<HazeLayer> hazeLayers {
         HazeLayer {
-            .mPosition = {0.0f, 0.0f, -700.0f},
-            .mSize = {1500.0f, 1050.0f},
-            .mUpperColor = {0.29f, 0.215f, 0.79f, 1.0f},
-            .mLowerColor = {1.0f, 0.6f, 0.6f, 1.0f}
+            .mPosition = {0.0f, 0.0f, -370.0f},
+            .mSize = {1000.0f, 700.0f},
+            .mUpperColor = {0.29f, 0.215f, 0.79f, 0.0f},
+            .mLowerColor = {0.8225, 0.50375, 0.6475, 1.0f},
+            .mUpperScale = 0.5f
         },
         HazeLayer {
             .mPosition = {0.0f, 0.0f, -350.0f},
-            .mSize = {500.0f, 500.0f},
+            .mSize = {500.0f, 650.0f},
             .mUpperColor = {0.29f, 0.215f, 0.79f, 0.35f},
-            .mLowerColor = {1.0f, 0.6f, 0.6f, 0.35f}
+            .mLowerColor = {0.8225, 0.50375, 0.6475, 0.35f}
         },
         HazeLayer {
             .mPosition = {0.0f, 0.0f, -250.0f},
-            .mSize = {380.0f, 380.0f},
+            .mSize = {380.0f, 480.0f},
             .mUpperColor = {0.29f, 0.215f, 0.79f, 0.35f},
-            .mLowerColor = {1.0f, 0.6f, 0.6f, 0.35f}
+            .mLowerColor = {0.8225, 0.50375, 0.6475, 0.35f}
         }
     };
     
