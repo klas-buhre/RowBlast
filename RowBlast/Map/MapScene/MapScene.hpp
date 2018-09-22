@@ -73,7 +73,7 @@ namespace RowBlast {
         }
 
     private:
-        void CreateBackground(const World& world);
+        void CreateWorld(const World& world);
         void CreatePins(const World& world);
         void CreatePin(Pht::SceneObject& pinContainerObject, const MapPlace& place);
         void CreateEffects();
@@ -89,8 +89,8 @@ namespace RowBlast {
         Pht::CameraComponent* mCamera {nullptr};
         Pht::LightComponent* mUiLight {nullptr};
         float mLightAnimationTime {0.0f};
-        std::unique_ptr<Clouds> mClouds;
         std::unique_ptr<Planets> mPlanets;
+        std::unique_ptr<Clouds> mClouds;
         std::unique_ptr<FloatingBlocks> mFloatingBlocks;
         std::vector<std::unique_ptr<MapPin>> mPins;
         MapPin* mPreviousPin {nullptr};

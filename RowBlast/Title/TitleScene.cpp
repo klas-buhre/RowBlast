@@ -20,6 +20,7 @@ using namespace RowBlast;
 
 namespace {
     enum class Layer {
+        Planets,
         Background,
         Ui,
         SceneSwitchFadeEffect = GlobalLayer::sceneSwitchFadeEffect
@@ -174,6 +175,7 @@ TitleScene::TitleScene(Pht::IEngine& engine, const CommonResources& commonResour
     
     sceneManager.InitSceneSystems(Pht::ISceneManager::defaultNarrowFrustumHeightFactor);
     
+    scene->AddRenderPass(Pht::RenderPass {static_cast<int>(Layer::Planets)});
     scene->AddRenderPass(Pht::RenderPass {static_cast<int>(Layer::Background)});
     
     Pht::RenderPass uiRenderPass {static_cast<int>(Layer::Ui)};
@@ -202,6 +204,11 @@ TitleScene::TitleScene(Pht::IEngine& engine, const CommonResources& commonResour
     uiContainer.SetLayer(static_cast<int>(Layer::Ui));
     scene->GetRoot().AddChild(uiContainer);
 
+    mPlanets = std::make_unique<Planets>(engine,
+                                         *scene,
+                                         static_cast<int>(Layer::Planets),
+                                         planets);
+
     mClouds = std::make_unique<Clouds>(engine,
                                        *scene,
                                        static_cast<int>(Layer::Background),
@@ -209,11 +216,6 @@ TitleScene::TitleScene(Pht::IEngine& engine, const CommonResources& commonResour
                                        hazeLayers,
                                        2.1f,
                                        cloudColor);
-
-    mPlanets = std::make_unique<Planets>(engine,
-                                         *scene,
-                                         static_cast<int>(Layer::Background),
-                                         planets);
 
     mFloatingBlocks = std::make_unique<FloatingBlocks>(engine,
                                                        *scene,
@@ -247,8 +249,8 @@ TitleScene::TitleScene(Pht::IEngine& engine, const CommonResources& commonResour
 }
 
 void TitleScene::Update() {
-    mClouds->Update();
     mPlanets->Update();
+    mClouds->Update();
     mFloatingBlocks->Update();
     mTitleAnimation->Update();
     

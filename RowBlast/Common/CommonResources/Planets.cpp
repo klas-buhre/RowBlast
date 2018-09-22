@@ -5,6 +5,7 @@
 #include "ISceneManager.hpp"
 #include "ObjMesh.hpp"
 #include "SceneObject.hpp"
+#include "LightComponent.hpp"
 
 using namespace RowBlast;
 
@@ -117,6 +118,15 @@ Planets::Planets(Pht::IEngine& engine,
     auto& containerSceneObject {scene.CreateSceneObject()};
     containerSceneObject.SetLayer(layerIndex);
     scene.GetRoot().AddChild(containerSceneObject);
+    
+    auto& lightSceneObject {scene.CreateSceneObject()};
+    lightSceneObject.SetIsVisible(false);
+    auto lightComponent {std::make_unique<Pht::LightComponent>(lightSceneObject)};
+    lightComponent->SetDirectionalIntensity(1.0f);
+    auto* planetsRenderPass {scene.GetRenderPass(layerIndex)};
+    planetsRenderPass->SetLight(lightComponent.get());
+    lightSceneObject.SetComponent<Pht::LightComponent>(std::move(lightComponent));
+    containerSceneObject.AddChild(lightSceneObject);
 
     mPlanets.reserve(planetConfigs.size());
     

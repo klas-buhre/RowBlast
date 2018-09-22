@@ -29,6 +29,7 @@ namespace {
     const Pht::Vec3 lightDirectionB {1.0f, 1.0f, 0.74f};
     
     enum class Layer {
+        Planets,
         Map,
         Avatar,
         Hud,
@@ -59,6 +60,7 @@ void MapScene::Init() {
     
     sceneManager.InitSceneSystems(Pht::ISceneManager::defaultNarrowFrustumHeightFactor);
     
+    scene->AddRenderPass(Pht::RenderPass {static_cast<int>(Layer::Planets)});
     scene->AddRenderPass(Pht::RenderPass {static_cast<int>(Layer::Map)});
     
     Pht::RenderPass avatarRenderPass {static_cast<int>(Layer::Avatar)};
@@ -104,7 +106,7 @@ void MapScene::Init() {
     mCamera = &scene->CreateCamera();
     scene->GetRoot().AddChild(mCamera->GetSceneObject());
     
-    CreateBackground(world);
+    CreateWorld(world);
     CreatePins(world);
     CreateEffects();
     
@@ -136,7 +138,12 @@ void MapScene::Init() {
     mClickedPortalNextLevelId = Pht::Optional<int> {};
 }
 
-void MapScene::CreateBackground(const World& world) {
+void MapScene::CreateWorld(const World& world) {
+    mPlanets = std::make_unique<Planets>(mEngine,
+                                         *mScene,
+                                         static_cast<int>(Layer::Planets),
+                                         world.mPlanets);
+
     mClouds = std::make_unique<Clouds>(mEngine,
                                        *mScene,
                                        static_cast<int>(Layer::Map),
@@ -144,11 +151,6 @@ void MapScene::CreateBackground(const World& world) {
                                        world.mHazeLayers,
                                        1.5f,
                                        world.mCloudColor);
-
-    mPlanets = std::make_unique<Planets>(mEngine,
-                                         *mScene,
-                                         static_cast<int>(Layer::Map),
-                                         world.mPlanets);
 
     mFloatingBlocks = std::make_unique<FloatingBlocks>(mEngine,
                                                        *mScene,
@@ -259,8 +261,8 @@ void MapScene::CreateEffects() {
 }
 
 void MapScene::Update() {
-    mClouds->Update();
     mPlanets->Update();
+    mClouds->Update();
     mFloatingBlocks->Update();
     mHud->Update();
     UpdateUiLightAnimation();

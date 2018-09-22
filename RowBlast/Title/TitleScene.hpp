@@ -27,8 +27,8 @@ namespace RowBlast {
         void Update();
         
     private:
-        std::unique_ptr<Clouds> mClouds;
         std::unique_ptr<Planets> mPlanets;
+        std::unique_ptr<Clouds> mClouds;
         std::unique_ptr<FloatingBlocks> mFloatingBlocks;
         std::unique_ptr<TitleAnimation> mTitleAnimation;
         Pht::Font mTapFont;

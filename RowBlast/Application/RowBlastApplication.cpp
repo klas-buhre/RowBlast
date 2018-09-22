@@ -45,9 +45,7 @@ Backlog:
     -Credit Google for avatars? : http://www.iconarchive.com/show/noto-emoji-people-face-icons-by-google.1.html
 
 Ongoing tasks:
-    -Could have planets in the background even in the sky worlds.
-      -The planets should have their own light source with intensity 1.0.
-      -Try the other gas giant for world 1.
+    -Try the other gas giant for world 1.
     -Adjust the cloud positions.
 
 
