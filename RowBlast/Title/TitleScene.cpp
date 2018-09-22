@@ -30,60 +30,59 @@ namespace {
 
     const std::vector<CloudPathVolume> cloudPaths {
         CloudPathVolume {
-            .mPosition = {0.0f, 0.0f, -15.0f},
-            .mSize = {75.0f, 0.0f, 0.0f},
+            .mPosition = {0.0f, -4.55f, 14.9f},
+            .mSize = {70.0f, 0.0f, 0.0f},
+            .mCloudSize = {7.0f, 7.0f},
+            .mNumClouds = 2,
+            .mVelocity = 0.75f
         },
         CloudPathVolume {
-            .mPosition = {0.0f, -50.0f, -50.0f},
-            .mSize = {140.0f, 0.0f, 10.0f},
+            .mPosition = {0.0f, -40.0f, -50.0f},
+            .mSize = {170.0f, 0.0f, 10.0f},
             .mCloudSize = {50.0f, 50.0f},
             .mNumClouds = 3,
             .mNumCloudsPerCluster = 3
         },
         CloudPathVolume {
-            .mPosition = {0.0f, -60.0f, -50.0f},
-            .mSize = {150.0f, 0.0f, 10.0f},
+            .mPosition = {0.0f, -50.0f, -50.0f},
+            .mSize = {170.0f, 0.0f, 10.0f},
             .mCloudSize = {30.0f, 30.0f},
             .mNumClouds = 3,
             .mNumCloudsPerCluster = 3
         },
         CloudPathVolume {
-            .mPosition = {0.0f, -30.0f, -50.0f},
-            .mSize = {150.0f, 0.0f, 10.0f},
+            .mPosition = {0.0f, -20.0f, -50.0f},
+            .mSize = {170.0f, 0.0f, 10.0f},
             .mCloudSize = {50.0f, 50.0f},
             .mNumClouds = 3,
             .mNumCloudsPerCluster = 3
         },
         CloudPathVolume {
-            .mPosition = {0.0f, 40.0f, -50.0f},
-            .mSize = {150.0f, 0.0f, 10.0f}
-        },
-        CloudPathVolume {
-            .mPosition = {0.0f, 0.0f, -100.0f},
-            .mSize = {210.0f, 180.0f, 20.0f},
+            .mPosition = {0.0f, -35.0f, -100.0f},
+            .mSize = {250.0f, 90.0f, 20.0f},
             .mCloudSize = {60.0f, 60.0f},
             .mCloudSizeRandPart = 60.0f,
             .mNumClouds = 10,
             .mNumCloudsPerCluster = 5
         },
         CloudPathVolume {
-            .mPosition = {0.0f, 0.0f, -200.0f},
-            .mSize = {380.0f, 320.0f, 20.0f},
+            .mPosition = {0.0f, -50.0f, -200.0f},
+            .mSize = {400.0f, 160.0f, 20.0f},
             .mCloudSize = {50.0f, 50.0f},
             .mCloudSizeRandPart = 65.0f,
             .mNumClouds = 16,
             .mNumCloudsPerCluster = 5
         },
         CloudPathVolume {
-            .mPosition = {0.0f, 0.0f, -300.0f},
-            .mSize = {500.0f, 400.0f, 20.0f},
+            .mPosition = {0.0f, -50.0f, -300.0f},
+            .mSize = {510.0f, 200.0f, 20.0f},
             .mCloudSize = {50.0f, 50.0f},
             .mCloudSizeRandPart = 50.0f,
             .mNumClouds = 16,
             .mNumCloudsPerCluster = 5
         },
         CloudPathVolume {
-            .mPosition = {0.0f, -100.0f, -350.0f},
+            .mPosition = {0.0f, -50.0f, -350.0f},
             .mSize = {510.0f, 200.0f, 20.0f},
             .mCloudSize = {50.0f, 50.0f},
             .mCloudSizeRandPart = 50.0f,

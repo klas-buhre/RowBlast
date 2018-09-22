@@ -78,56 +78,52 @@ namespace {
             .mSize = {120.0f, 0.0f, 0.0f},
         },
         CloudPathVolume {
-            .mPosition = {0.0f, -50.0f, -50.0f},
+            .mPosition = {0.0f, -40.0f, -50.0f},
             .mSize = {170.0f, 0.0f, 10.0f},
             .mCloudSize = {50.0f, 50.0f},
             .mNumClouds = 3,
             .mNumCloudsPerCluster = 3
         },
         CloudPathVolume {
-            .mPosition = {0.0f, -60.0f, -50.0f},
+            .mPosition = {0.0f, -50.0f, -50.0f},
             .mSize = {170.0f, 0.0f, 10.0f},
             .mCloudSize = {30.0f, 30.0f},
             .mNumClouds = 3,
             .mNumCloudsPerCluster = 3
         },
         CloudPathVolume {
-            .mPosition = {0.0f, -30.0f, -50.0f},
+            .mPosition = {0.0f, -20.0f, -50.0f},
             .mSize = {170.0f, 0.0f, 10.0f},
             .mCloudSize = {50.0f, 50.0f},
             .mNumClouds = 3,
             .mNumCloudsPerCluster = 3
         },
         CloudPathVolume {
-            .mPosition = {0.0f, 40.0f, -50.0f},
-            .mSize = {170.0f, 0.0f, 10.0f}
-        },
-        CloudPathVolume {
-            .mPosition = {0.0f, 0.0f, -100.0f},
-            .mSize = {250.0f, 180.0f, 20.0f},
+            .mPosition = {0.0f, -35.0f, -100.0f},
+            .mSize = {250.0f, 90.0f, 20.0f},
             .mCloudSize = {60.0f, 60.0f},
             .mCloudSizeRandPart = 60.0f,
             .mNumClouds = 10,
             .mNumCloudsPerCluster = 5
         },
         CloudPathVolume {
-            .mPosition = {0.0f, 0.0f, -200.0f},
-            .mSize = {400.0f, 320.0f, 20.0f},
+            .mPosition = {0.0f, -50.0f, -200.0f},
+            .mSize = {400.0f, 160.0f, 20.0f},
             .mCloudSize = {50.0f, 50.0f},
             .mCloudSizeRandPart = 65.0f,
             .mNumClouds = 16,
             .mNumCloudsPerCluster = 5
         },
         CloudPathVolume {
-            .mPosition = {0.0f, 0.0f, -300.0f},
-            .mSize = {510.0f, 400.0f, 20.0f},
+            .mPosition = {0.0f, -50.0f, -300.0f},
+            .mSize = {510.0f, 200.0f, 20.0f},
             .mCloudSize = {50.0f, 50.0f},
             .mCloudSizeRandPart = 50.0f,
             .mNumClouds = 16,
             .mNumCloudsPerCluster = 5
         },
         CloudPathVolume {
-            .mPosition = {0.0f, -100.0f, -400.0f},
+            .mPosition = {0.0f, -50.0f, -350.0f},
             .mSize = {510.0f, 200.0f, 20.0f},
             .mCloudSize = {50.0f, 50.0f},
             .mCloudSizeRandPart = 50.0f,
@@ -135,25 +131,26 @@ namespace {
             .mNumCloudsPerCluster = 5
         }
     };
-
+    
     const std::vector<HazeLayer> hazeLayers {
         HazeLayer {
-            .mPosition = {0.0f, 0.0f, -700.0f},
-            .mSize = {1500.0f, 1050.0f},
-            .mUpperColor = {0.17f, 0.38f, 0.89f, 1.0f},
-            .mLowerColor = {0.55f, 0.89f, 1.0f, 1.0f}
+            .mPosition = {0.0f, 0.0f, -370.0f},
+            .mSize = {1000.0f, 700.0f},
+            .mUpperColor = {0.17f, 0.38f, 0.89f, 0.0f},
+            .mLowerColor = {0.455f, 0.7625f, 0.9725f, 1.0f},
+            .mUpperScale = 0.5f
         },
         HazeLayer {
             .mPosition = {0.0f, 0.0f, -350.0f},
-            .mSize = {500.0f, 500.0f},
+            .mSize = {500.0f, 650.0f},
             .mUpperColor = {0.17f, 0.38f, 0.89f, 0.35f},
-            .mLowerColor = {0.55f, 0.89f, 1.0f, 0.35f}
+            .mLowerColor = {0.455f, 0.7625f, 0.9725f, 0.35f}
         },
         HazeLayer {
             .mPosition = {0.0f, 0.0f, -250.0f},
-            .mSize = {380.0f, 380.0f},
+            .mSize = {380.0f, 480.0f},
             .mUpperColor = {0.17f, 0.38f, 0.89f, 0.35f},
-            .mLowerColor = {0.55f, 0.89f, 1.0f, 0.35f}
+            .mLowerColor = {0.455f, 0.7625f, 0.9725f, 0.35f}
         }
     };
     
@@ -164,6 +161,13 @@ namespace {
             .mSize = 3.5f,
             .mAngularVelocity = 5.0f,
             .mType = PlanetType::Ogma
+        },
+        PlanetConfig {
+            .mPosition = {-30.0f, 170.0f, -420.0f},
+            .mOrientation = {30.0f, 0.0f, -35.0f},
+            .mSize = 0.95f,
+            .mAngularVelocity = 5.0f,
+            .mType = PlanetType::Moon
         }
     };
     

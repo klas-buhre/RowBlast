@@ -25,11 +25,13 @@ Backlog:
      not really matter since the user can select any piece from the selectables but maybe it is most 
      convenient to go back to the state before the move and not the initial state.
   -Rendering:
-    -Maybe smooth the dark area in the field env map.
     -Could add a gradient in the cloud textures that the lower parts of a cloud is darker.
     -The background images for the second world could be a bit less colorful.
+    -Maybe smooth the dark area in the field env map.
+    -Maybe less reflectivity in the gray and yellow field block materials.
     -There could be a UFO instead of an avatar.
     -The UFO could also appear in the title scene.
+    -Maybe remove the gradient rectangle from the title text.
   -GUI:
     -Menu window that displays 3rd party lib credits.
   -Purchases:
@@ -46,7 +48,6 @@ Backlog:
 
 Ongoing tasks:
     -Try the other gas giant for world 1.
-    -Adjust the cloud positions.
 
 
 
