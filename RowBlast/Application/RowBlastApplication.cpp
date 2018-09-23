@@ -25,8 +25,7 @@ Backlog:
      not really matter since the user can select any piece from the selectables but maybe it is most 
      convenient to go back to the state before the move and not the initial state.
   -Rendering:
-    -Could add a gradient in the cloud textures that the lower parts of a cloud is darker.
-    -The background images for the second world could be a bit less colorful.
+    -Background images for the game scene.
     -Maybe smooth the dark area in the field env map.
     -Maybe less reflectivity in the gray and yellow field block materials.
     -There could be a UFO instead of an avatar.
@@ -47,7 +46,7 @@ Backlog:
     -Credit Google for avatars? : http://www.iconarchive.com/show/noto-emoji-people-face-icons-by-google.1.html
 
 Ongoing tasks:
-    -Try the other gas giant for world 1.
+    -Could add a gradient in the cloud textures that the lower parts of a cloud is darker.
 
 
 
@@ -127,8 +126,10 @@ Ordered Backlog:
     -Levels in the second world.
         Cost: 7
         Done
-    -Finish the remaining rendering tasks.
+    -Finish the remaining title and map scene-related rendering tasks.
         Cost: 7
+    -Finish the remaining game scene-related rendering tasks.
+        Cost: 4
     -Space world.
         Cost: 10
     -Net/HTTP.
@@ -148,7 +149,7 @@ Ordered Backlog:
     -Back end.
         Cost: ?
 
-        Total cost: 206
+        Total cost: 210
 
 
 Comomon piece type sets:

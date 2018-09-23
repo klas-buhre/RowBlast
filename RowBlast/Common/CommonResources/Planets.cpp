@@ -15,7 +15,7 @@ namespace {
     Pht::SceneObject& CreateOgmaSceneObject(Pht::Scene& scene,
                                             Pht::SceneObject& containerSceneObject,
                                             const PlanetConfig& planetConfig) {
-        Pht::Material ogmaMaterial {"planet_ogma.jpg", 0.05f, 1.0f, 0.00f, 1.0f};
+        Pht::Material ogmaMaterial {"planet_ogma.jpg", 0.02f, 1.0f, 0.00f, 1.0f};
         auto& ogmaPlanet {
             scene.CreateSceneObject(Pht::ObjMesh {planetMeshName, planetConfig.mSize},
                                     ogmaMaterial)
@@ -44,7 +44,7 @@ namespace {
     Pht::SceneObject& CreateTitawinSceneObject(Pht::Scene& scene,
                                                Pht::SceneObject& containerSceneObject,
                                                const PlanetConfig& planetConfig) {
-        Pht::Material titawinMaterial {"planet_titawin.jpg", 0.05f, 1.0f, 0.00f, 1.0f};
+        Pht::Material titawinMaterial {"planet_titawin.jpg", 0.02f, 1.0f, 0.00f, 1.0f};
         auto& titawinPlanet {
             scene.CreateSceneObject(Pht::ObjMesh {planetMeshName, planetConfig.mSize},
                                     titawinMaterial)
@@ -122,7 +122,7 @@ Planets::Planets(Pht::IEngine& engine,
     auto& lightSceneObject {scene.CreateSceneObject()};
     lightSceneObject.SetIsVisible(false);
     auto lightComponent {std::make_unique<Pht::LightComponent>(lightSceneObject)};
-    lightComponent->SetDirectionalIntensity(1.0f);
+    lightComponent->SetDirectionalIntensity(1.15f);
     auto* planetsRenderPass {scene.GetRenderPass(layerIndex)};
     planetsRenderPass->SetLight(lightComponent.get());
     lightSceneObject.SetComponent<Pht::LightComponent>(std::move(lightComponent));

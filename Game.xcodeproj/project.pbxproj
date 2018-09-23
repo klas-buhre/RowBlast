@@ -50,6 +50,7 @@
 		626451DD206FA93200E304F2 /* laser_bomb_224.obj in Resources */ = {isa = PBXBuildFile; fileRef = 626451DC206FA93100E304F2 /* laser_bomb_224.obj */; };
 		626722E42127656F0058528D /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 626722E32127656F0058528D /* Icon.png */; };
 		6269408F2154F94300D9857A /* planet_ring.obj in Resources */ = {isa = PBXBuildFile; fileRef = 6269408E2154F94300D9857A /* planet_ring.obj */; };
+		626940992157F31500D9857A /* ogma_rings.png in Resources */ = {isa = PBXBuildFile; fileRef = 626940982157F31400D9857A /* ogma_rings.png */; };
 		6270DC551FCB212B00FB457D /* Blip.wav in Resources */ = {isa = PBXBuildFile; fileRef = 6270DC531FCB212B00FB457D /* Blip.wav */; };
 		6270DC561FCB212B00FB457D /* Bomb.wav in Resources */ = {isa = PBXBuildFile; fileRef = 6270DC541FCB212B00FB457D /* Bomb.wav */; };
 		6270DC621FCB22AE00FB457D /* cube_554.obj in Resources */ = {isa = PBXBuildFile; fileRef = 6270DC591FCB22AE00FB457D /* cube_554.obj */; };
@@ -379,7 +380,6 @@
 		62DE641C20CE953D00A50F26 /* medium_button_skewed_0385.obj in Resources */ = {isa = PBXBuildFile; fileRef = 62DE641B20CE953C00A50F26 /* medium_button_skewed_0385.obj */; };
 		62E01BAF2153E00F009F0B99 /* planet_960.obj in Resources */ = {isa = PBXBuildFile; fileRef = 62E01BAE2153E00E009F0B99 /* planet_960.obj */; };
 		62E01BB12153E2A6009F0B99 /* planet_ogma.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62E01BB02153E2A6009F0B99 /* planet_ogma.jpg */; };
-		62E01BB72153EA56009F0B99 /* ogma_rings.png in Resources */ = {isa = PBXBuildFile; fileRef = 62E01BB62153EA55009F0B99 /* ogma_rings.png */; };
 		62E01BBA2153F2B2009F0B99 /* Planets.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62E01BB82153F2B2009F0B99 /* Planets.cpp */; };
 		62E01BBC2154100B009F0B99 /* planet_titawin.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62E01BBB2154100B009F0B99 /* planet_titawin.jpg */; };
 		62E01BBE215417A3009F0B99 /* titawin_clouds.png in Resources */ = {isa = PBXBuildFile; fileRef = 62E01BBD215417A3009F0B99 /* titawin_clouds.png */; };
@@ -451,6 +451,7 @@
 		626451DC206FA93100E304F2 /* laser_bomb_224.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = laser_bomb_224.obj; sourceTree = "<group>"; };
 		626722E32127656F0058528D /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		6269408E2154F94300D9857A /* planet_ring.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = planet_ring.obj; sourceTree = "<group>"; };
+		626940982157F31400D9857A /* ogma_rings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ogma_rings.png; sourceTree = "<group>"; };
 		6270DC531FCB212B00FB457D /* Blip.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Blip.wav; sourceTree = "<group>"; };
 		6270DC541FCB212B00FB457D /* Bomb.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Bomb.wav; sourceTree = "<group>"; };
 		6270DC591FCB22AE00FB457D /* cube_554.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cube_554.obj; sourceTree = "<group>"; };
@@ -1112,7 +1113,6 @@
 		62DE641B20CE953C00A50F26 /* medium_button_skewed_0385.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = medium_button_skewed_0385.obj; sourceTree = "<group>"; };
 		62E01BAE2153E00E009F0B99 /* planet_960.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = planet_960.obj; sourceTree = "<group>"; };
 		62E01BB02153E2A6009F0B99 /* planet_ogma.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = planet_ogma.jpg; sourceTree = "<group>"; };
-		62E01BB62153EA55009F0B99 /* ogma_rings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ogma_rings.png; sourceTree = "<group>"; };
 		62E01BB82153F2B2009F0B99 /* Planets.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Planets.cpp; sourceTree = "<group>"; };
 		62E01BB92153F2B2009F0B99 /* Planets.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Planets.hpp; sourceTree = "<group>"; };
 		62E01BBB2154100B009F0B99 /* planet_titawin.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = planet_titawin.jpg; sourceTree = "<group>"; };
@@ -2352,10 +2352,10 @@
 		62B1CB51210F8EE500D0F195 /* Map */ = {
 			isa = PBXGroup;
 			children = (
+				626940982157F31400D9857A /* ogma_rings.png */,
 				62E01BBF2154210A009F0B99 /* moon.jpg */,
 				62E01BBD215417A3009F0B99 /* titawin_clouds.png */,
 				62E01BBB2154100B009F0B99 /* planet_titawin.jpg */,
-				62E01BB62153EA55009F0B99 /* ogma_rings.png */,
 				62E01BB02153E2A6009F0B99 /* planet_ogma.jpg */,
 				62B1CB52210F8EE500D0F195 /* cloud_A_512.png */,
 				62B1CB53210F8EE500D0F195 /* settings.png */,
@@ -2490,8 +2490,8 @@
 				62785B1D20875937006F9869 /* VertexColor.frag in Resources */,
 				62B2BAEF2130089D009C529D /* level54.json in Resources */,
 				62B1CB84210F8F8600D0F195 /* cloud_C_envmap.jpg in Resources */,
+				626940992157F31500D9857A /* ogma_rings.png in Resources */,
 				629B837C20C544F000DD2D0E /* level35.json in Resources */,
-				62E01BB72153EA56009F0B99 /* ogma_rings.png in Resources */,
 				629B838020C58B8100DD2D0E /* level37.json in Resources */,
 				6269408F2154F94300D9857A /* planet_ring.obj in Resources */,
 				62B1CB9C2110BA4600D0F195 /* laser_frame4.jpg in Resources */,

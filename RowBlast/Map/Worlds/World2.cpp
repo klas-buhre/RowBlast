@@ -75,7 +75,7 @@ namespace {
             .mVelocity = 0.75f
         },
         CloudPathVolume {
-            .mPosition = {0.0f, 0.0f, -10.0f},
+            .mPosition = {0.0f, -5.0f, -10.0f},
             .mSize = {120.0f, 0.0f, 0.0f},
         },
         CloudPathVolume {
@@ -167,6 +167,13 @@ namespace {
             .mPosition = {-30.0f, 170.0f, -420.0f},
             .mOrientation = {30.0f, 0.0f, -35.0f},
             .mSize = 0.95f,
+            .mAngularVelocity = 5.0f,
+            .mType = PlanetType::Moon
+        },
+        PlanetConfig {
+            .mPosition = {180.0f, 200.0f, -500.0f},
+            .mOrientation = {30.0f, 0.0f, -35.0f},
+            .mSize = 1.2f,
             .mAngularVelocity = 5.0f,
             .mType = PlanetType::Titawin
         }

@@ -74,7 +74,7 @@ namespace {
             .mVelocity = 0.75f
         },
         CloudPathVolume {
-            .mPosition = {0.0f, 0.0f, -10.0f},
+            .mPosition = {0.0f, -5.0f, -10.0f},
             .mSize = {120.0f, 0.0f, 0.0f},
         },
         CloudPathVolume {
@@ -157,15 +157,15 @@ namespace {
     const std::vector<PlanetConfig> planets {
         PlanetConfig {
             .mPosition = {0.0f, 200.0f, -550.0f},
-            .mOrientation = {30.0f, 0.0f, -35.0f},
-            .mSize = 3.5f,
+            .mOrientation = {40.0f, 0.0f, -45.0f},
+            .mSize = 3.3f,
             .mAngularVelocity = 5.0f,
             .mType = PlanetType::Ogma
         },
         PlanetConfig {
             .mPosition = {-30.0f, 170.0f, -420.0f},
             .mOrientation = {30.0f, 0.0f, -35.0f},
-            .mSize = 0.95f,
+            .mSize = 0.9f,
             .mAngularVelocity = 5.0f,
             .mType = PlanetType::Moon
         }
