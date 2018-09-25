@@ -74,22 +74,34 @@ void ShaderProgram::Build(const char* vertexShaderSource, const char* fragmentSh
     mUniforms.mTextColor = glGetUniformLocation(mProgram, "TextColor");
     mUniforms.mTextColorSubtraction = glGetUniformLocation(mProgram, "TextColorSubtraction");
     mUniforms.mSampler = glGetUniformLocation(mProgram, "Sampler");
-    mUniforms.mEmissionSampler = glGetUniformLocation(mProgram, "EmissionSampler");
+    mUniforms.mSecondSampler = glGetUniformLocation(mProgram, "SecondSampler");
     mUniforms.mModel = glGetUniformLocation(mProgram, "Model");
     mUniforms.mModel3x3 = glGetUniformLocation(mProgram, "Model3x3");
     mUniforms.mCameraPosition = glGetUniformLocation(mProgram, "CameraPosition");
 }
 
 void ShaderProgram::SetProjection(const Mat4& projectionMatrix) {
+    if (!mIsEnabled) {
+        return;
+    }
+    
     glUseProgram(mProgram);
     glUniformMatrix4fv(mUniforms.mProjection, 1, 0, projectionMatrix.Pointer());
 }
 
 void ShaderProgram::SetLightPosition(const Vec3& lightPosition) {
+    if (!mIsEnabled) {
+        return;
+    }
+
     glUseProgram(mProgram);
     glUniform3fv(mUniforms.mLightPosition, 1, lightPosition.Pointer());
 }
 
 void ShaderProgram::Use() const {
+    if (!mIsEnabled) {
+        return;
+    }
+
     glUseProgram(mProgram);
 }

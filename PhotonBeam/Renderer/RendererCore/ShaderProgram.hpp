@@ -24,7 +24,7 @@ namespace Pht {
             GLint mTextColor {0};
             GLint mTextColorSubtraction {0};
             GLint mSampler {0};
-            GLint mEmissionSampler {0};
+            GLint mSecondSampler {0};
             GLint mModel {0};
             GLint mModel3x3 {0};
             GLint mCameraPosition {0};
@@ -57,12 +57,21 @@ namespace Pht {
         VertexFlags GetVertexFlags() const {
             return mVertexFlags;
         }
+        
+        void SetIsEnabled(bool isEnabled) {
+            mIsEnabled = isEnabled;
+        }
+        
+        bool IsEnabled() const {
+            return mIsEnabled;
+        }
     
     private:
         GLuint mProgram {0};
         UniformHandles mUniforms;
         AttributeHandles mAttributes;
         VertexFlags mVertexFlags;
+        bool mIsEnabled {true};
     };
 }
 

@@ -60,7 +60,23 @@ Material::Material(const EnvMapTextureFilenames& envMapTextures,
     mShininess {shininess},
     mReflectivity {reflectivity},
     mShaderType {ShaderType::EnvMap},
-    mTexture {TextureCache::GetTexture(envMapTextures)} {}
+    mEnvMapTexture {TextureCache::GetTexture(envMapTextures)} {}
+
+Material::Material(const std::string& textureName,
+                   const EnvMapTextureFilenames& envMapTextures,
+                   const Color& ambient,
+                   const Color& diffuse,
+                   const Color& specular,
+                   float shininess,
+                   float reflectivity) :
+    mAmbient {ambient},
+    mDiffuse {diffuse},
+    mSpecular {specular},
+    mShininess {shininess},
+    mReflectivity {reflectivity},
+    mShaderType {ShaderType::TexturedEnvMapLighting},
+    mTexture {TextureCache::GetTexture(textureName, GenerateMipmap::Yes)},
+    mEnvMapTexture {TextureCache::GetTexture(envMapTextures)} {}
 
 Material::Material(const Color& ambient, 
                    const Color& diffuse, 
@@ -88,6 +104,10 @@ const Texture* Material::GetTexture() const {
 
 const Texture* Material::GetEmissionTexture() const {
     return mEmissionTexture.get();
+}
+
+const Texture* Material::GetEnvMapTexture() const {
+    return mEnvMapTexture.get();
 }
 
 void Material::SetOpacity(float opacity) {

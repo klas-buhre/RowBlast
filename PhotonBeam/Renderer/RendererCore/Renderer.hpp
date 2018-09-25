@@ -19,6 +19,7 @@ namespace Pht {
     public:
         Renderer(bool createRenderBuffers);
         
+        void EnableShader(ShaderType shaderType) override;
         void DisableShader(ShaderType shaderType) override;
         void SetClearColorBuffer(bool clearColorBuffer) override;
         void SetHudMode(bool hudMode) override;

@@ -21,6 +21,7 @@ namespace Pht {
         virtual ~IRenderer() {}
         
         virtual void DisableShader(ShaderType shaderType) = 0;
+        virtual void EnableShader(ShaderType shaderType) = 0;
         virtual void SetClearColorBuffer(bool clearColorBuffer) = 0;
         virtual void SetHudMode(bool hudMode) = 0;
         virtual void SetProjectionMode(ProjectionMode projectionMode) = 0;
