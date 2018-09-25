@@ -4,10 +4,10 @@
 #include "IEngine.hpp"
 #include "ISceneManager.hpp"
 #include "ObjMesh.hpp"
-#include "QuadMesh.hpp"
 
 // Game includes.
 #include "MapScene.hpp"
+#include "CommonResources.hpp"
 
 using namespace RowBlast;
 
@@ -15,31 +15,21 @@ namespace {
     const Pht::Vec3 ufoOffset {0.0f, -0.5f, 2.0f};
 }
 
-Ufo::Ufo(Pht::IEngine& engine, MapScene& mapScene) :
+Ufo::Ufo(Pht::IEngine& engine, MapScene& mapScene, const CommonResources& commonResources) :
     mMapScene {mapScene},
     mSceneObject {std::make_unique<Pht::SceneObject>()} {
 
     auto& sceneManager {engine.GetSceneManager()};
-    
-    Pht::EnvMapTextureFilenames envMapTextures {
-        "cloud_B_envmap.jpg",
-        "cloud_C_envmap.jpg",
-        "cloud_B_envmap.jpg",
-        "cloud_C_envmap.jpg",
-        "cloud_B_envmap.jpg",
-        "cloud_C_envmap.jpg"
-    };
 
     Pht::Color ambient {0.78f, 0.78f, 0.78f};
     Pht::Color diffuse {0.78f, 0.78f, 0.78f};
-
     Pht::Color specular {1.0f, 1.0f, 1.0f};
     const auto shininess {15.0f};
     const auto reflectivity {0.84f};
     
     Pht::Material ufoMaterial {
         "ufo.jpg",
-        envMapTextures,
+        commonResources.GetMaterials().GetEnvMapTextureFilenames(),
         ambient,
         diffuse,
         specular,

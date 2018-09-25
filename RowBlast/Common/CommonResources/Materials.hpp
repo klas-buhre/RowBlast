@@ -15,6 +15,10 @@ namespace RowBlast {
     public:
         explicit Materials(Pht::IEngine& engine);
         
+        const Pht::EnvMapTextureFilenames& GetEnvMapTextureFilenames() const {
+            return mEnvMapTextureFilenames;
+        }
+        
         const Pht::Material& GetGoldMaterial() const {
             return *mGoldMaterial;
         }
@@ -56,18 +60,18 @@ namespace RowBlast {
         }
 
     private:
-        void CreateGoldMaterial(const Pht::EnvMapTextureFilenames& envMapTextures);
-        void CreateBlueMaterial(const Pht::EnvMapTextureFilenames& envMapTextures);
-        void CreateRedMaterial(const Pht::EnvMapTextureFilenames& envMapTextures);
-        void CreateGreenMaterial(const Pht::EnvMapTextureFilenames& envMapTextures);
-        void CreateLightGrayMaterial(const Pht::EnvMapTextureFilenames& envMapTextures);
-        void CreateSkyMaterial();
+        void CreateGoldMaterial();
+        void CreateBlueMaterial();
+        void CreateRedMaterial();
+        void CreateGreenMaterial();
+        void CreateLightGrayMaterial();
         void CreateRedFieldBlockMaterial(const Pht::EnvMapTextureFilenames& envMapTextures);
         void CreateBlueFieldBlockMaterial(const Pht::EnvMapTextureFilenames& envMapTextures);
         void CreateGreenFieldBlockMaterial(const Pht::EnvMapTextureFilenames& envMapTextures);
         void CreateGrayFieldBlockMaterial(const Pht::EnvMapTextureFilenames& envMapTextures);
         void CreateYellowFieldBlockMaterial(const Pht::EnvMapTextureFilenames& envMapTextures);
         
+        Pht::EnvMapTextureFilenames mEnvMapTextureFilenames;
         std::unique_ptr<Pht::Material> mGoldMaterial;
         std::unique_ptr<Pht::Material> mRedMaterial;
         std::unique_ptr<Pht::Material> mBlueMaterial;

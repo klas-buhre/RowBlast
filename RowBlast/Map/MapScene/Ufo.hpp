@@ -13,10 +13,11 @@ namespace Pht {
 
 namespace RowBlast {
     class MapScene;
+    class CommonResources;
     
     class Ufo {
     public:
-        Ufo(Pht::IEngine& engine, MapScene& mapScene);
+        Ufo(Pht::IEngine& engine, MapScene& mapScene, const CommonResources& commonResources);
         
         void Init();
         void SetPosition(const Pht::Vec3& position);
