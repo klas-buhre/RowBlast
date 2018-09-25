@@ -31,7 +31,7 @@ namespace {
     enum class Layer {
         Planets,
         Map,
-        Avatar,
+        Ufo,
         Hud,
         UiViews,
         SceneSwitchFadeEffect = GlobalLayer::sceneSwitchFadeEffect
@@ -58,15 +58,12 @@ void MapScene::Init() {
     auto scene {sceneManager.CreateScene(Pht::Hash::Fnv1a("mapScene"))};
     mScene = scene.get();
     
+    mEngine.GetRenderer().EnableShader(Pht::ShaderType::TexturedEnvMapLighting);
     sceneManager.InitSceneSystems(Pht::ISceneManager::defaultNarrowFrustumHeightFactor);
     
     scene->AddRenderPass(Pht::RenderPass {static_cast<int>(Layer::Planets)});
     scene->AddRenderPass(Pht::RenderPass {static_cast<int>(Layer::Map)});
-    
-    Pht::RenderPass avatarRenderPass {static_cast<int>(Layer::Avatar)};
-    avatarRenderPass.SetIsDepthTestAllowed(false);
-    avatarRenderPass.SetRenderOrder(Pht::RenderOrder::BackToFront);
-    mScene->AddRenderPass(avatarRenderPass);
+    scene->AddRenderPass(Pht::RenderPass {static_cast<int>(Layer::Ufo)});
 
     Pht::RenderPass hudRenderPass {static_cast<int>(Layer::Hud)};
     hudRenderPass.SetHudMode(true);
@@ -116,9 +113,9 @@ void MapScene::Init() {
         SetCameraAtLevel(mUserData.GetProgressManager().GetCurrentLevel());
     }
     
-    mAvatarContainer = &scene->CreateSceneObject();
-    mAvatarContainer->SetLayer(static_cast<int>(Layer::Avatar));
-    scene->GetRoot().AddChild(*mAvatarContainer);
+    mUfoContainer = &scene->CreateSceneObject();
+    mUfoContainer->SetLayer(static_cast<int>(Layer::Ufo));
+    scene->GetRoot().AddChild(*mUfoContainer);
 
     mHud = std::make_unique<MapHud>(mEngine,
                                     mUserData,

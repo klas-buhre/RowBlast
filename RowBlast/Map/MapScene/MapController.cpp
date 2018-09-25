@@ -45,23 +45,23 @@ MapController::MapController(Pht::IEngine& engine,
     mLevelResources {levelResources},
     mUniverse {universe},
     mScene {engine, commonResources, userData, universe},
-    mAvatar {engine, mScene, commonResources},
-    mAvatarAnimation {engine, mScene, mAvatar},
+    mUfo {engine, mScene},
+    mUfoAnimation {engine, mScene, mUfo},
     mMapViewControllers {engine, mScene, commonResources, userData, settings, pieceResources} {}
 
 void MapController::Init() {
     mScene.Init();
-    mAvatar.Init();
-    mAvatarAnimation.Init();
+    mUfo.Init();
+    mUfoAnimation.Init();
     mMapViewControllers.Init();
     
     mState = State::Map;
     mCameraXVelocity = 0.0f;
     
     if (auto* currentPin {mScene.GetLevelPin(mUserData.GetProgressManager().GetProgress())}) {
-        mAvatar.SetPosition(currentPin->GetPosition());
+        mUfo.SetPosition(currentPin->GetPosition());
     } else {
-        mAvatar.Hide();
+        mUfo.Hide();
     }
     
     mEngine.GetSceneManager().InitRenderer();
@@ -70,11 +70,11 @@ void MapController::Init() {
 MapController::Command MapController::Update() {
     auto command {Command{Command::None}};
     
-    UpdateAvatarAnimation();
+    UpdateUfoAnimation();
     
     switch (mState) {
         case State::Map:
-        case State::AvatarAnimation:
+        case State::UfoAnimation:
             command = UpdateMap();
             break;
         case State::LevelGoalDialog:
@@ -103,15 +103,15 @@ MapController::Command MapController::UpdateMap() {
     return command;
 }
 
-void MapController::UpdateAvatarAnimation() {
-    if (mAvatarAnimation.Update() == AvatarAnimation::State::Finished) {
+void MapController::UpdateUfoAnimation() {
+    if (mUfoAnimation.Update() == UfoAnimation::State::Finished) {
         switch (mState) {
-            case State::AvatarAnimation:
+            case State::UfoAnimation:
                 if (mStartLevelDialogOnAnimationFinished) {
                     GoToLevelGoalDialogState(mLevelToStart);
                 }
-                if (mHideAvatarOnAnimationFinished) {
-                    mAvatar.Hide();
+                if (mHideUfoOnAnimationFinished) {
+                    mUfo.Hide();
                 }
                 break;
             default:
@@ -229,7 +229,7 @@ MapController::Command MapController::HandleTouch(const Pht::TouchEvent& touch) 
         }
     }
     
-    if (!mAvatarAnimation.IsActive()) {
+    if (!mUfoAnimation.IsActive()) {
         Pan(touch);
     }
 
@@ -320,8 +320,8 @@ void MapController::UpdateCamera() {
     mScene.SetCameraXPosition(cameraXPosition);
 }
 
-void MapController::GoToAvatarAnimationState(int levelToStart) {
-    mState = State::AvatarAnimation;
+void MapController::GoToUfoAnimationState(int levelToStart) {
+    mState = State::UfoAnimation;
     mLevelToStart = levelToStart;
     
     auto nextLevel {mUserData.GetProgressManager().GetProgress()};
@@ -329,16 +329,16 @@ void MapController::GoToAvatarAnimationState(int levelToStart) {
     auto* currentPin {mScene.GetLevelPin(nextLevel - 1)};
     
     if (nextPin && currentPin) {
-        mAvatar.Show();
-        mAvatar.SetPosition(currentPin->GetPosition());
-        mAvatarAnimation.Start(nextPin->GetPosition());
+        mUfo.Show();
+        mUfo.SetPosition(currentPin->GetPosition());
+        mUfoAnimation.Start(nextPin->GetPosition());
     }
     
     if (nextPin && nextPin->GetPlace().GetKind() == MapPlace::Kind::Portal) {
-        mHideAvatarOnAnimationFinished = true;
+        mHideUfoOnAnimationFinished = true;
         mStartLevelDialogOnAnimationFinished = false;
     } else {
-        mHideAvatarOnAnimationFinished = false;
+        mHideUfoOnAnimationFinished = false;
     }
 }
 

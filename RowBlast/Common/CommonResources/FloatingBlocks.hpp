@@ -39,7 +39,7 @@ namespace RowBlast {
         Pht::Vec3 mPosition;
         Pht::Vec3 mSize {0.0f, 0.0f, 0.0f};
         FloatingPieceType mPieceType {FloatingPieceType::BigSingleBlock};
-        FloatingBlockColor mBlockColor;
+        FloatingBlockColor mBlockColor {FloatingBlockColor::RandomExceptGray};
     };
     
     class FloatingBlocks {

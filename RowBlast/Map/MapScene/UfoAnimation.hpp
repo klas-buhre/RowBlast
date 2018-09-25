@@ -1,5 +1,5 @@
-#ifndef AvatarAnimation_hpp
-#define AvatarAnimation_hpp
+#ifndef UfoAnimation_hpp
+#define UfoAnimation_hpp
 
 // Engine includes.
 #include "Vector.hpp"
@@ -9,10 +9,10 @@ namespace Pht {
 }
 
 namespace RowBlast {
-    class Avatar;
+    class Ufo;
     class MapScene;
     
-    class AvatarAnimation {
+    class UfoAnimation {
     public:
         enum class State {
             Active,
@@ -20,7 +20,7 @@ namespace RowBlast {
             Inactive
         };
 
-        AvatarAnimation(Pht::IEngine& engine, MapScene& scene, Avatar& avatar);
+        UfoAnimation(Pht::IEngine& engine, MapScene& scene, Ufo& ufo);
         
         void Init();
         void Start(const Pht::Vec3& destinationPosition);
@@ -28,15 +28,18 @@ namespace RowBlast {
         bool IsActive() const;
         
     private:
+        void UpdateRotation();
         void UpdateInActiveState();
         
         Pht::IEngine& mEngine;
         MapScene& mScene;
-        Avatar& mAvatar;
+        Ufo& mUfo;
         State mState {State::Inactive};
         float mElapsedTime {0.0f};
+        float mElapsedTiltTime {0.0f};
         Pht::Vec3 mStartPosition;
         Pht::Vec3 mDestinationPosition;
+        Pht::Vec3 mRotation;
     };
 }
 

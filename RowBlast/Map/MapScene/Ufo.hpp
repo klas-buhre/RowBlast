@@ -1,5 +1,5 @@
-#ifndef Avatar_hpp
-#define Avatar_hpp
+#ifndef Ufo_hpp
+#define Ufo_hpp
 
 #include <memory>
 
@@ -13,21 +13,22 @@ namespace Pht {
 
 namespace RowBlast {
     class MapScene;
-    class CommonResources;
     
-    class Avatar {
+    class Ufo {
     public:
-        Avatar(Pht::IEngine& engine, MapScene& mapScene, const CommonResources& commonResources);
+        Ufo(Pht::IEngine& engine, MapScene& mapScene);
         
         void Init();
         void SetPosition(const Pht::Vec3& position);
         const Pht::Vec3& GetPosition() const;
+        void SetRotation(const Pht::Vec3& rotation);
         void Hide();
         void Show();
         
     private:
         MapScene& mMapScene;
         std::unique_ptr<Pht::SceneObject> mSceneObject;
+        std::unique_ptr<Pht::SceneObject> mUfoSceneObject;
         Pht::SceneResources mSceneResources;
     };
 }

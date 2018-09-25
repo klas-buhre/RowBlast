@@ -29,9 +29,8 @@
 		6240508620FF69C00077A454 /* level46.json in Resources */ = {isa = PBXBuildFile; fileRef = 6240508520FF69C00077A454 /* level46.json */; };
 		6240508820FF82A10077A454 /* level47.json in Resources */ = {isa = PBXBuildFile; fileRef = 6240508720FF82A10077A454 /* level47.json */; };
 		62411A971E61E62800035D2A /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62411A961E61E62800035D2A /* GLKit.framework */; };
-		62487E7020D7F40400E4429E /* Avatar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62487E6E20D7F40400E4429E /* Avatar.cpp */; };
-		62487E9D20DA836800E4429E /* AvatarAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62487E9B20DA836800E4429E /* AvatarAnimation.cpp */; };
-		62487E9F20DBC3E500E4429E /* avatar_frame_208.obj in Resources */ = {isa = PBXBuildFile; fileRef = 62487E9E20DBC3E400E4429E /* avatar_frame_208.obj */; };
+		62487E7020D7F40400E4429E /* Ufo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62487E6E20D7F40400E4429E /* Ufo.cpp */; };
+		62487E9D20DA836800E4429E /* UfoAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62487E9B20DA836800E4429E /* UfoAnimation.cpp */; };
 		6259B7E52107992D0055FE8D /* Tutorial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6259B7E32107992D0055FE8D /* Tutorial.cpp */; };
 		6259B7E82107C6BE0055FE8D /* PlacePieceWindowView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6259B7E62107C6BE0055FE8D /* PlacePieceWindowView.cpp */; };
 		6259B7EB2107CDF20055FE8D /* PlacePieceWindowController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6259B7E92107CDF20055FE8D /* PlacePieceWindowController.cpp */; };
@@ -51,6 +50,10 @@
 		626722E42127656F0058528D /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 626722E32127656F0058528D /* Icon.png */; };
 		6269408F2154F94300D9857A /* planet_ring.obj in Resources */ = {isa = PBXBuildFile; fileRef = 6269408E2154F94300D9857A /* planet_ring.obj */; };
 		626940992157F31500D9857A /* ogma_rings.png in Resources */ = {isa = PBXBuildFile; fileRef = 626940982157F31400D9857A /* ogma_rings.png */; };
+		626940A5215932C800D9857A /* ufo_3620.obj in Resources */ = {isa = PBXBuildFile; fileRef = 626940A4215932C800D9857A /* ufo_3620.obj */; };
+		626940A72159399000D9857A /* ufo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 626940A62159399000D9857A /* ufo.jpg */; };
+		626940AA215A35A600D9857A /* TexturedEnvMapLighting.vert in Resources */ = {isa = PBXBuildFile; fileRef = 626940A8215A35A500D9857A /* TexturedEnvMapLighting.vert */; };
+		626940AB215A35A600D9857A /* TexturedEnvMapLighting.frag in Resources */ = {isa = PBXBuildFile; fileRef = 626940A9215A35A600D9857A /* TexturedEnvMapLighting.frag */; };
 		6270DC551FCB212B00FB457D /* Blip.wav in Resources */ = {isa = PBXBuildFile; fileRef = 6270DC531FCB212B00FB457D /* Blip.wav */; };
 		6270DC561FCB212B00FB457D /* Bomb.wav in Resources */ = {isa = PBXBuildFile; fileRef = 6270DC541FCB212B00FB457D /* Bomb.wav */; };
 		6270DC621FCB22AE00FB457D /* cube_554.obj in Resources */ = {isa = PBXBuildFile; fileRef = 6270DC591FCB22AE00FB457D /* cube_554.obj */; };
@@ -322,7 +325,6 @@
 		62B1CB5C210F8EE500D0F195 /* settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 62B1CB53210F8EE500D0F195 /* settings.png */; };
 		62B1CB5D210F8EE500D0F195 /* cloud_C_512.png in Resources */ = {isa = PBXBuildFile; fileRef = 62B1CB54210F8EE500D0F195 /* cloud_C_512.png */; };
 		62B1CB5E210F8EE500D0F195 /* cloud_B_512.png in Resources */ = {isa = PBXBuildFile; fileRef = 62B1CB55210F8EE500D0F195 /* cloud_B_512.png */; };
-		62B1CB5F210F8EE500D0F195 /* avatar.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62B1CB56210F8EE500D0F195 /* avatar.jpg */; };
 		62B1CB60210F8EE500D0F195 /* portal.png in Resources */ = {isa = PBXBuildFile; fileRef = 62B1CB57210F8EE500D0F195 /* portal.png */; };
 		62B1CB61210F8EE500D0F195 /* cloud_F_512.png in Resources */ = {isa = PBXBuildFile; fileRef = 62B1CB58210F8EE500D0F195 /* cloud_F_512.png */; };
 		62B1CB62210F8EE500D0F195 /* cloud_D_512.png in Resources */ = {isa = PBXBuildFile; fileRef = 62B1CB59210F8EE500D0F195 /* cloud_D_512.png */; };
@@ -422,11 +424,10 @@
 		6240508520FF69C00077A454 /* level46.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level46.json; sourceTree = "<group>"; };
 		6240508720FF82A10077A454 /* level47.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level47.json; sourceTree = "<group>"; };
 		62411A961E61E62800035D2A /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
-		62487E6E20D7F40400E4429E /* Avatar.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Avatar.cpp; sourceTree = "<group>"; };
-		62487E6F20D7F40400E4429E /* Avatar.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Avatar.hpp; sourceTree = "<group>"; };
-		62487E9B20DA836800E4429E /* AvatarAnimation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AvatarAnimation.cpp; sourceTree = "<group>"; };
-		62487E9C20DA836800E4429E /* AvatarAnimation.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AvatarAnimation.hpp; sourceTree = "<group>"; };
-		62487E9E20DBC3E400E4429E /* avatar_frame_208.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = avatar_frame_208.obj; sourceTree = "<group>"; };
+		62487E6E20D7F40400E4429E /* Ufo.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Ufo.cpp; sourceTree = "<group>"; };
+		62487E6F20D7F40400E4429E /* Ufo.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Ufo.hpp; sourceTree = "<group>"; };
+		62487E9B20DA836800E4429E /* UfoAnimation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = UfoAnimation.cpp; sourceTree = "<group>"; };
+		62487E9C20DA836800E4429E /* UfoAnimation.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = UfoAnimation.hpp; sourceTree = "<group>"; };
 		6259B7E32107992D0055FE8D /* Tutorial.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Tutorial.cpp; sourceTree = "<group>"; };
 		6259B7E42107992D0055FE8D /* Tutorial.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Tutorial.hpp; sourceTree = "<group>"; };
 		6259B7E62107C6BE0055FE8D /* PlacePieceWindowView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PlacePieceWindowView.cpp; sourceTree = "<group>"; };
@@ -452,6 +453,10 @@
 		626722E32127656F0058528D /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		6269408E2154F94300D9857A /* planet_ring.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = planet_ring.obj; sourceTree = "<group>"; };
 		626940982157F31400D9857A /* ogma_rings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ogma_rings.png; sourceTree = "<group>"; };
+		626940A4215932C800D9857A /* ufo_3620.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ufo_3620.obj; sourceTree = "<group>"; };
+		626940A62159399000D9857A /* ufo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = ufo.jpg; sourceTree = "<group>"; };
+		626940A8215A35A500D9857A /* TexturedEnvMapLighting.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = TexturedEnvMapLighting.vert; sourceTree = "<group>"; };
+		626940A9215A35A600D9857A /* TexturedEnvMapLighting.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = TexturedEnvMapLighting.frag; sourceTree = "<group>"; };
 		6270DC531FCB212B00FB457D /* Blip.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Blip.wav; sourceTree = "<group>"; };
 		6270DC541FCB212B00FB457D /* Bomb.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Bomb.wav; sourceTree = "<group>"; };
 		6270DC591FCB22AE00FB457D /* cube_554.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cube_554.obj; sourceTree = "<group>"; };
@@ -1047,7 +1052,6 @@
 		62B1CB53210F8EE500D0F195 /* settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings.png; sourceTree = "<group>"; };
 		62B1CB54210F8EE500D0F195 /* cloud_C_512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cloud_C_512.png; sourceTree = "<group>"; };
 		62B1CB55210F8EE500D0F195 /* cloud_B_512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cloud_B_512.png; sourceTree = "<group>"; };
-		62B1CB56210F8EE500D0F195 /* avatar.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = avatar.jpg; sourceTree = "<group>"; };
 		62B1CB57210F8EE500D0F195 /* portal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = portal.png; sourceTree = "<group>"; };
 		62B1CB58210F8EE500D0F195 /* cloud_F_512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cloud_F_512.png; sourceTree = "<group>"; };
 		62B1CB59210F8EE500D0F195 /* cloud_D_512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cloud_D_512.png; sourceTree = "<group>"; };
@@ -1297,9 +1301,9 @@
 		6270DC571FCB22AE00FB457D /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				626940A4215932C800D9857A /* ufo_3620.obj */,
 				6269408E2154F94300D9857A /* planet_ring.obj */,
 				62E01BAE2153E00E009F0B99 /* planet_960.obj */,
-				62487E9E20DBC3E400E4429E /* avatar_frame_208.obj */,
 				627D382220A731470068B50C /* big_button_048.obj */,
 				6227D4F4206CFD25008EA77D /* bomb_798.obj */,
 				629B838720CA940D00DD2D0E /* cube_428.obj */,
@@ -1518,6 +1522,8 @@
 				62785A1D20875936006F9869 /* Textured.vert */,
 				62785A0E20875936006F9869 /* TexturedEmissiveLighting.frag */,
 				62785A1E20875936006F9869 /* TexturedEmissiveLighting.vert */,
+				626940A9215A35A600D9857A /* TexturedEnvMapLighting.frag */,
+				626940A8215A35A500D9857A /* TexturedEnvMapLighting.vert */,
 				62785A1A20875936006F9869 /* TexturedLighting.frag */,
 				62785A1020875936006F9869 /* TexturedLighting.vert */,
 				62785A1320875936006F9869 /* VertexColor.frag */,
@@ -2275,10 +2281,6 @@
 		62785D992087618E006F9869 /* MapScene */ = {
 			isa = PBXGroup;
 			children = (
-				62487E6E20D7F40400E4429E /* Avatar.cpp */,
-				62487E6F20D7F40400E4429E /* Avatar.hpp */,
-				62487E9B20DA836800E4429E /* AvatarAnimation.cpp */,
-				62487E9C20DA836800E4429E /* AvatarAnimation.hpp */,
 				62785D9D2087618E006F9869 /* MapController.cpp */,
 				62785DA02087618E006F9869 /* MapController.hpp */,
 				62785DA32087618E006F9869 /* MapHud.cpp */,
@@ -2291,6 +2293,10 @@
 				62785D9C2087618E006F9869 /* NextLevelParticleEffect.hpp */,
 				629AB6A320E140E800D43A0D /* PortalParticleEffect.cpp */,
 				629AB6A420E140E800D43A0D /* PortalParticleEffect.hpp */,
+				62487E6E20D7F40400E4429E /* Ufo.cpp */,
+				62487E6F20D7F40400E4429E /* Ufo.hpp */,
+				62487E9B20DA836800E4429E /* UfoAnimation.cpp */,
+				62487E9C20DA836800E4429E /* UfoAnimation.hpp */,
 			);
 			path = MapScene;
 			sourceTree = "<group>";
@@ -2352,6 +2358,7 @@
 		62B1CB51210F8EE500D0F195 /* Map */ = {
 			isa = PBXGroup;
 			children = (
+				626940A62159399000D9857A /* ufo.jpg */,
 				626940982157F31400D9857A /* ogma_rings.png */,
 				62E01BBF2154210A009F0B99 /* moon.jpg */,
 				62E01BBD215417A3009F0B99 /* titawin_clouds.png */,
@@ -2361,7 +2368,6 @@
 				62B1CB53210F8EE500D0F195 /* settings.png */,
 				62B1CB54210F8EE500D0F195 /* cloud_C_512.png */,
 				62B1CB55210F8EE500D0F195 /* cloud_B_512.png */,
-				62B1CB56210F8EE500D0F195 /* avatar.jpg */,
 				62B1CB57210F8EE500D0F195 /* portal.png */,
 				62B1CB58210F8EE500D0F195 /* cloud_F_512.png */,
 				62B1CB59210F8EE500D0F195 /* cloud_D_512.png */,
@@ -2475,17 +2481,18 @@
 				6270DC951FCB23D800FB457D /* level21.json in Resources */,
 				629B837E20C587A100DD2D0E /* level36.json in Resources */,
 				6299DD82208E39C1001F74E2 /* level32.json in Resources */,
+				626940A5215932C800D9857A /* ufo_3620.obj in Resources */,
 				6270DC9B1FCB23D800FB457D /* level6.json in Resources */,
 				629B837820C4470300DD2D0E /* level33.json in Resources */,
 				6270DC901FCB23D800FB457D /* level17.json in Resources */,
 				629B837A20C458F700DD2D0E /* level34.json in Resources */,
 				62785B1720875937006F9869 /* Textured.frag in Resources */,
-				62487E9F20DBC3E500E4429E /* avatar_frame_208.obj in Resources */,
 				62E01BBC2154100B009F0B99 /* planet_titawin.jpg in Resources */,
 				62785B2A20875937006F9869 /* Text.frag in Resources */,
 				62B2BAE22129A060009C529D /* level49.json in Resources */,
 				6270DC8C1FCB23D800FB457D /* level13.json in Resources */,
 				62B1CBAA2110D46E00D0F195 /* bomb_frame5.jpg in Resources */,
+				626940AA215A35A600D9857A /* TexturedEnvMapLighting.vert in Resources */,
 				62785B2220875937006F9869 /* Particle.vert in Resources */,
 				62785B1D20875937006F9869 /* VertexColor.frag in Resources */,
 				62B2BAEF2130089D009C529D /* level54.json in Resources */,
@@ -2560,6 +2567,7 @@
 				62B1CB93210F8F8600D0F195 /* sky7.jpg in Resources */,
 				62785B1920875937006F9869 /* VertexLighting.vert in Resources */,
 				627D381D20A5FF5E0068B50C /* small_button_0385.obj in Resources */,
+				626940AB215A35A600D9857A /* TexturedEnvMapLighting.frag in Resources */,
 				629B838E20CAD34100DD2D0E /* triangle_320.obj in Resources */,
 				629B838420C81D1700DD2D0E /* level39.json in Resources */,
 				62785B2620875937006F9869 /* PixelLighting.frag in Resources */,
@@ -2569,7 +2577,6 @@
 				6270DC8A1FCB23D800FB457D /* level11.json in Resources */,
 				6270DC891FCB23D800FB457D /* level10.json in Resources */,
 				623326732073D69500AC505A /* level29.json in Resources */,
-				62B1CB5F210F8EE500D0F195 /* avatar.jpg in Resources */,
 				6278591C203AFB7C00494A4D /* Images.xcassets in Resources */,
 				625B02CD21386AC3000744F2 /* level_bomb_frame4.jpg in Resources */,
 				62B2BAF12133FE61009C529D /* level55.json in Resources */,
@@ -2595,6 +2602,7 @@
 				62B1CB85210F8F8600D0F195 /* laser_beam_red.png in Resources */,
 				62A729E32144170D00255BF7 /* level58.json in Resources */,
 				62785B1B20875937006F9869 /* PointParticle.vert in Resources */,
+				626940A72159399000D9857A /* ufo.jpg in Resources */,
 				62B1CB92210F8F8600D0F195 /* sky5.jpg in Resources */,
 				62B1CB8C210F8F8600D0F195 /* flare24.png in Resources */,
 				629B838220C6E06500DD2D0E /* level38.json in Resources */,
@@ -2644,7 +2652,7 @@
 				62785DC52087618E006F9869 /* GameScene.cpp in Sources */,
 				62785B0420875937006F9869 /* MeshUtils.cpp in Sources */,
 				62785B4920875937006F9869 /* FadeEffect.cpp in Sources */,
-				62487E7020D7F40400E4429E /* Avatar.cpp in Sources */,
+				62487E7020D7F40400E4429E /* Ufo.cpp in Sources */,
 				62785DEB2087618E006F9869 /* Level.cpp in Sources */,
 				62785DC82087618E006F9869 /* CollisionDetection.cpp in Sources */,
 				6287B4E120F25C7700C00EF0 /* LevelGoalDialogController.cpp in Sources */,
@@ -2760,7 +2768,7 @@
 				62785B3020875937006F9869 /* SwipeGestureRecognizer.cpp in Sources */,
 				62785B0320875937006F9869 /* VertexBuffer.cpp in Sources */,
 				62785DE72087618E006F9869 /* ValidMovesSearch.cpp in Sources */,
-				62487E9D20DA836800E4429E /* AvatarAnimation.cpp in Sources */,
+				62487E9D20DA836800E4429E /* UfoAnimation.cpp in Sources */,
 				62785B1220875937006F9869 /* TextRenderer.cpp in Sources */,
 				62785DE82087618E006F9869 /* Ai.cpp in Sources */,
 				62785DAF2087618E006F9869 /* TitleController.cpp in Sources */,

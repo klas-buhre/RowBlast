@@ -105,7 +105,7 @@ void Materials::CreateLightGrayMaterial(const Pht::EnvMapTextureFilenames& envMa
 }
 
 void Materials::CreateRedFieldBlockMaterial(const Pht::EnvMapTextureFilenames& envMapTextures) {
-    Pht::Color ambient {0.75f, 0.25f, 0.25f};
+    Pht::Color ambient {0.75f, 0.24f, 0.24f};
     Pht::Color diffuse {0.37f, 0.235f, 0.255f};
     Pht::Color specular {1.0f, 1.0f, 1.0f};
     auto shininess {20.0f};

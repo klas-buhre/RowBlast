@@ -28,9 +28,8 @@ Backlog:
     -Background images for the game scene.
     -Maybe smooth the dark area in the field env map.
     -Maybe less reflectivity in the gray and yellow field block materials.
-    -There could be a UFO instead of an avatar.
-    -The UFO could also appear in the title scene.
     -Maybe remove the gradient rectangle from the title text.
+    -Could have the Roswell spaceship in the space world.
   -GUI:
     -Menu window that displays 3rd party lib credits.
   -Purchases:
@@ -43,9 +42,12 @@ Backlog:
     -Make icons and launch screens for all supported device resulutions.
     -Credit the icon creator: <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
     -Credit FastNoise, MIT license: https://github.com/Auburns/FastNoise/
-    -Credit Google for avatars? : http://www.iconarchive.com/show/noto-emoji-people-face-icons-by-google.1.html
 
 Ongoing tasks:
+    -The UFO could hover up and down.
+    -Fix the UFO animation destinations so that it does not hit other objects.
+      -Just add special UFO destination offsets to the problematic MapPlaces.
+    -The UFO could also appear in the title scene.
     -Could add a gradient in the cloud textures that the lower parts of a cloud is darker.
 
 
@@ -492,7 +494,7 @@ void RowBlastApplication::UpdateGameScene() {
             case GameController::Command::GoToMap:
                 mLevelToStart = mUserData.GetProgressManager().GetCurrentLevel() + 1;
                 if (mUserData.GetProgressManager().ProgressedAtPreviousGameRound()) {
-                    BeginFadeToMap(MapController::State::AvatarAnimation);
+                    BeginFadeToMap(MapController::State::UfoAnimation);
                     mMapController.SetStartLevelDialogOnAnimationFinished(false);
                 } else {
                     BeginFadeToMap(MapController::State::Map);
@@ -504,7 +506,7 @@ void RowBlastApplication::UpdateGameScene() {
             case GameController::Command::GoToNextLevel:
                 mLevelToStart = mUserData.GetProgressManager().GetCurrentLevel() + 1;
                 if (mUserData.GetProgressManager().ProgressedAtPreviousGameRound()) {
-                    BeginFadeToMap(MapController::State::AvatarAnimation);
+                    BeginFadeToMap(MapController::State::UfoAnimation);
                     mMapController.SetStartLevelDialogOnAnimationFinished(true);
                 } else {
                     BeginFadeToMap(MapController::State::LevelGoalDialog);
@@ -562,9 +564,9 @@ void RowBlastApplication::StartMap() {
             mMapController.GetScene().SetCameraAtLevel(mLevelToStart);
             mMapController.GoToLevelGoalDialogState(mLevelToStart);
             break;
-        case MapController::State::AvatarAnimation:
+        case MapController::State::UfoAnimation:
             mMapController.GetScene().SetCameraBetweenLevels(mLevelToStart - 1, mLevelToStart);
-            mMapController.GoToAvatarAnimationState(mLevelToStart);
+            mMapController.GoToUfoAnimationState(mLevelToStart);
             break;
         default:
             assert(!"Illegal map initial state");

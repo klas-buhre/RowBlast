@@ -4,8 +4,8 @@
 // Game includes.
 #include "MapScene.hpp"
 #include "MapViewControllers.hpp"
-#include "Avatar.hpp"
-#include "AvatarAnimation.hpp"
+#include "Ufo.hpp"
+#include "UfoAnimation.hpp"
 
 namespace Pht {
     class IEngine;
@@ -44,7 +44,7 @@ namespace RowBlast {
         
         enum class State {
             Map,
-            AvatarAnimation,
+            UfoAnimation,
             LevelGoalDialog,
             NoLivesDialog,
             SettingsMenu
@@ -60,7 +60,7 @@ namespace RowBlast {
     
         void Init();
         void GoToLevelGoalDialogState(int levelToStart);
-        void GoToAvatarAnimationState(int levelToStart);
+        void GoToUfoAnimationState(int levelToStart);
         Command Update();
         
         void SetStartLevelDialogOnAnimationFinished(bool startLevelDialogOnAnimationFinished) {
@@ -73,7 +73,7 @@ namespace RowBlast {
 
     private:
         Command UpdateMap();
-        void UpdateAvatarAnimation();
+        void UpdateUfoAnimation();
         Command UpdateLevelGoalDialog();
         void UpdateNoLivesDialog();
         void UpdateSettingsMenu();
@@ -92,8 +92,8 @@ namespace RowBlast {
         const Universe& mUniverse;
         State mState {State::Map};
         MapScene mScene;
-        Avatar mAvatar;
-        AvatarAnimation mAvatarAnimation;
+        Ufo mUfo;
+        UfoAnimation mUfoAnimation;
         MapViewControllers mMapViewControllers;
         float mCameraXPositionAtPanBegin {0.0f};
         Pht::Vec2 mTouchLocationAtPanBegin {0.0f, 0.0f};
@@ -101,7 +101,7 @@ namespace RowBlast {
         bool mIsTouching {false};
         int mLevelToStart;
         bool mStartLevelDialogOnAnimationFinished {false};
-        bool mHideAvatarOnAnimationFinished {false};
+        bool mHideUfoOnAnimationFinished {false};
     };
 }
 

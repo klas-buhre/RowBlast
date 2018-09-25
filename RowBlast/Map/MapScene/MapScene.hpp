@@ -50,9 +50,9 @@ namespace RowBlast {
             return mPins;
         }
 
-        Pht::SceneObject& GetAvatarContainer() {
-            assert(mAvatarContainer);
-            return *mAvatarContainer;
+        Pht::SceneObject& GetUfoContainer() {
+            assert(mUfoContainer);
+            return *mUfoContainer;
         }
 
         Pht::SceneObject& GetUiViewsContainer() {
@@ -97,7 +97,7 @@ namespace RowBlast {
         std::unique_ptr<Pht::RenderableObject> mStarRenderable;
         Pht::Font mFont;
         std::unique_ptr<MapHud> mHud;
-        Pht::SceneObject* mAvatarContainer {nullptr};
+        Pht::SceneObject* mUfoContainer {nullptr};
         Pht::SceneObject* mUiViewsContainer {nullptr};
         int mWorldId {1};
         Pht::Optional<int> mClickedPortalNextLevelId;
