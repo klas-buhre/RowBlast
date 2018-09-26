@@ -16,6 +16,7 @@ namespace RowBlast {
     struct MapLevel {
         int mLevelId;
         Pht::Vec3 mPosition;
+        Pht::Vec3 mUfoOffset {0.0f, 0.0f, 0.0f};
     };
     
     struct Portal {

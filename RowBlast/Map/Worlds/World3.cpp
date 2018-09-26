@@ -60,7 +60,7 @@ namespace {
     
     const std::vector<CloudPathVolume> cloudPaths {
         CloudPathVolume {
-            .mPosition = {0.0f, -4.55f, 14.9f},
+            .mPosition = {0.0f, -5.3f, 14.9f},
             .mSize = {70.0f, 0.0f, 0.0f},
             .mCloudSize = {7.0f, 7.0f},
             .mNumClouds = 2,

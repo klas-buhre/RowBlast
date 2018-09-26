@@ -15,6 +15,7 @@ namespace RowBlast {
     class UfoAnimation {
     public:
         enum class State {
+            WaitingForWarpSpeed,
             Active,
             Finished,
             Inactive
@@ -24,12 +25,14 @@ namespace RowBlast {
         
         void Init();
         void Start(const Pht::Vec3& destinationPosition);
+        void StartWarpSpeed(const Pht::Vec3& destinationPosition);
         State Update();
         bool IsActive() const;
         
     private:
         void UpdateRotation();
         void UpdateHoverTranslation();
+        void UpdateInWaitingForWarpSpeedState();
         void UpdateInActiveState();
         
         Pht::IEngine& mEngine;
@@ -39,9 +42,11 @@ namespace RowBlast {
         float mElapsedTime {0.0f};
         float mElapsedTiltTime {0.0f};
         float mElapsedHoverTime {0.0f};
+        float mAnimationDuration {0.0f};
         Pht::Vec3 mStartPosition;
         Pht::Vec3 mDestinationPosition;
         Pht::Vec3 mRotation;
+        bool mShouldUpdateCameraPosition {true};
     };
 }
 

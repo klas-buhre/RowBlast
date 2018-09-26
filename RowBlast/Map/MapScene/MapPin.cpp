@@ -123,3 +123,12 @@ void MapPin::SetIsSelected(bool isSelected) {
 const Pht::Vec3& MapPin::GetPosition() const {
     return mSceneObject->GetTransform().GetPosition();
 }
+
+Pht::Vec3 MapPin::GetUfoPosition() const {
+    switch (mPlace.GetKind()) {
+        case MapPlace::Kind::MapLevel:
+            return mPlace.GetMapLevel().mUfoOffset + GetPosition();
+        case MapPlace::Kind::Portal:
+            return GetPosition();
+    }
+}

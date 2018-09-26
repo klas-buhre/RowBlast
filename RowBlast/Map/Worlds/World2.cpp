@@ -7,27 +7,27 @@ namespace {
 
     const std::vector<MapPlace> places {
         MapPlace {Portal {1, 19, {-24.0f, 3.0f, 10.0f}}},
-        MapPlace {MapLevel {19, {-21.5f, 1.0f, 10.0f}}},
+        MapPlace {MapLevel {19, {-21.5f, 1.0f, 10.0f}, {0.0f, -0.7f, 0.0f}}},
         MapPlace {MapLevel {20, {-19.5f, -1.5f, 10.0f}}},
         MapPlace {MapLevel {21, {-17.0f, -3.5f, 10.0f}}},
-        MapPlace {MapLevel {22, {-13.5f, -4.5f, 10.0f}}},
-        MapPlace {MapLevel {23, {-10.0f, -4.0f, 10.0f}}},
-        MapPlace {MapLevel {24, {-8.5f, -2.0f, 10.0f}}},
-        MapPlace {MapLevel {25, {-10.0f, 0.0f, 10.0f}}},
-        MapPlace {MapLevel {26, {-13.5f, 0.5f, 10.0f}}},
-        MapPlace {MapLevel {27, {-15.0f, 2.5f, 10.0f}}},
-        MapPlace {MapLevel {28, {-13.0f, 4.0f, 10.0f}}},
-        MapPlace {MapLevel {29, {-9.5f, 3.5f, 10.0f}}},
-        MapPlace {MapLevel {30, {-6.0f, 2.5f, 10.0f}}},
-        MapPlace {MapLevel {31, {-3.5f, 0.5f, 10.0f}}},
+        MapPlace {MapLevel {22, {-13.5f, -4.5f, 10.0f}, {0.0f, 2.6f, 0.0f}}},
+        MapPlace {MapLevel {23, {-10.0f, -4.0f, 10.0f}, {0.0f, 2.6f, 0.0f}}},
+        MapPlace {MapLevel {24, {-8.5f, -2.0f, 10.0f}, {0.0f, 2.3f, 0.0f}}},
+        MapPlace {MapLevel {25, {-10.0f, 0.0f, 10.0f}, {0.0f, -0.6f, 0.0f}}},
+        MapPlace {MapLevel {26, {-13.5f, 0.5f, 10.0f}, {0.0f, -0.6f, 0.0f}}},
+        MapPlace {MapLevel {27, {-15.0f, 2.5f, 10.0f}, {0.0f, -1.0f, 0.0f}}},
+        MapPlace {MapLevel {28, {-13.0f, 4.0f, 10.0f}, {0.0f, -1.0f, 0.0f}}},
+        MapPlace {MapLevel {29, {-9.5f, 3.5f, 10.0f}, {0.0f, -1.0f, 0.0f}}},
+        MapPlace {MapLevel {30, {-6.0f, 2.5f, 10.0f}, {0.0f, -1.0f, 0.0f}}},
+        MapPlace {MapLevel {31, {-3.5f, 0.5f, 10.0f}, {0.0f, -0.6f, 0.0f}}},
         MapPlace {MapLevel {32, {-1.5f, -2.0f, 10.0f}}},
         MapPlace {MapLevel {33, {1.5f, -3.5f, 10.0f}}},
-        MapPlace {MapLevel {34, {4.5f, -4.0f, 10.0f}}},
-        MapPlace {MapLevel {35, {8.0f, -3.5f, 10.0f}}},
+        MapPlace {MapLevel {34, {4.5f, -4.0f, 10.0f}, {0.0f, 2.6f, 0.0f}}},
+        MapPlace {MapLevel {35, {8.0f, -3.5f, 10.0f}, {0.0f, 2.6f, 0.0f}}},
         MapPlace {MapLevel {36, {11.0f, -2.5f, 10.0f}}},
         MapPlace {MapLevel {37, {14.0f, -1.0f, 10.0f}}},
-        MapPlace {MapLevel {38, {16.5f, 1.0f, 10.0f}}},
-        MapPlace {MapLevel {39, {19.5f, 1.5f, 10.0f}}},
+        MapPlace {MapLevel {38, {16.5f, 1.0f, 10.0f}, {0.0f, -0.7f, 0.0f}}},
+        MapPlace {MapLevel {39, {19.5f, 1.5f, 10.0f}, {0.0f, 1.5f, 1.0f}}},
         MapPlace {Portal {3, 40, {23.0f, 1.5f, 10.0f}}}
     };
 
@@ -55,13 +55,13 @@ namespace {
         BlockPathVolume {{16.5f, -4.0f, 0.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::ShortI},
         BlockPathVolume {{15.0f, 3.0f, 13.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::RowBomb},
         BlockPathVolume {{19.0f, -3.0f, 12.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::I},
-        BlockPathVolume {{19.5f, 7.0f, 4.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::L},
+        BlockPathVolume {{22.0f, -1.0f, 4.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::L},
         BlockPathVolume {{23.0f, -3.0f, 12.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::ShortI}
     };
 
     const std::vector<CloudPathVolume> cloudPaths {
         CloudPathVolume {
-            .mPosition = {0.0f, -4.55f, 14.9f},
+            .mPosition = {0.0f, -5.3f, 14.9f},
             .mSize = {70.0f, 0.0f, 0.0f},
             .mCloudSize = {7.0f, 7.0f},
             .mNumClouds = 2,

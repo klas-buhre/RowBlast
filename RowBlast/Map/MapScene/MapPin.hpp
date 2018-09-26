@@ -39,6 +39,7 @@ namespace RowBlast {
 
         void SetIsSelected(bool isSelected);
         const Pht::Vec3& GetPosition() const;
+        Pht::Vec3 GetUfoPosition() const;
 
         Pht::Button& GetButton() {
             return *mButton;

@@ -59,7 +59,7 @@ void MapController::Init() {
     mCameraXVelocity = 0.0f;
     
     if (auto* currentPin {mScene.GetLevelPin(mUserData.GetProgressManager().GetProgress())}) {
-        mUfo.SetPosition(currentPin->GetPosition());
+        mUfo.SetPosition(currentPin->GetUfoPosition());
     } else {
         mUfo.Hide();
     }
@@ -330,13 +330,15 @@ void MapController::GoToUfoAnimationState(int levelToStart) {
     
     if (nextPin && currentPin) {
         mUfo.Show();
-        mUfo.SetPosition(currentPin->GetPosition());
-        mUfoAnimation.Start(nextPin->GetPosition());
+        mUfo.SetPosition(currentPin->GetUfoPosition());
+        mUfoAnimation.Start(nextPin->GetUfoPosition());
     }
     
     if (nextPin && nextPin->GetPlace().GetKind() == MapPlace::Kind::Portal) {
         mHideUfoOnAnimationFinished = true;
         mStartLevelDialogOnAnimationFinished = false;
+        mUfoAnimation.StartWarpSpeed(nextPin->GetUfoPosition());
+        mScene.SetCameraBetweenLevels(nextLevel - 1, nextLevel);
     } else {
         mHideUfoOnAnimationFinished = false;
     }

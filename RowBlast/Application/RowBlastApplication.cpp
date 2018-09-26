@@ -28,7 +28,6 @@ Backlog:
     -Background images for the game scene.
     -Maybe smooth the dark area in the field env map.
     -Maybe less reflectivity in the gray and yellow field block materials.
-    -Maybe remove the gradient rectangle from the title text.
     -Could have the Roswell spaceship in the space world.
   -GUI:
     -Menu window that displays 3rd party lib credits.
@@ -44,9 +43,8 @@ Backlog:
     -Credit FastNoise, MIT license: https://github.com/Auburns/FastNoise/
 
 Ongoing tasks:
-    -Fix the UFO animation destinations so that it does not hit other objects.
-      -Just add special UFO destination offsets to the problematic MapPlaces.
     -The UFO could also appear in the title scene.
+    -Maybe remove the gradient rectangle from the title text.
     -Could add a gradient in the cloud textures that the lower parts of a cloud is darker.
 
 
@@ -564,7 +562,6 @@ void RowBlastApplication::StartMap() {
             mMapController.GoToLevelGoalDialogState(mLevelToStart);
             break;
         case MapController::State::UfoAnimation:
-            mMapController.GetScene().SetCameraBetweenLevels(mLevelToStart - 1, mLevelToStart);
             mMapController.GoToUfoAnimationState(mLevelToStart);
             break;
         default:

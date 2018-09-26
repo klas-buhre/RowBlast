@@ -9,21 +9,21 @@ namespace {
         MapPlace {MapLevel {1, {-24.0f, -3.0f, 10.0f}}},
         MapPlace {MapLevel {2, {-21.5f, -1.2f, 9.0f}}},
         MapPlace {MapLevel {3, {-18.0f, -1.2f, 9.0f}}},
-        MapPlace {MapLevel {4, {-16.0f, -2.5f, 10.0f}}},
-        MapPlace {MapLevel {5, {-13.0f, -4.0f, 10.0f}}},
+        MapPlace {MapLevel {4, {-16.0f, -2.5f, 10.0f}, {0.0f, 2.5f, 0.0f}}},
+        MapPlace {MapLevel {5, {-13.0f, -4.0f, 10.0f}, {0.0f, 2.6f, 0.0f}}},
         MapPlace {MapLevel {6, {-10.0f, -3.0f, 10.0f}}},
-        MapPlace {MapLevel {7, {-8.0f, -1.0f, 9.0f}}},
-        MapPlace {MapLevel {8, {-6.0f, 0.5f, 9.0f}}},
-        MapPlace {MapLevel {9, {-3.0f, 1.0f, 9.0f}}},
-        MapPlace {MapLevel {10, {-0.5f, -1.0f, 9.5f}}},
+        MapPlace {MapLevel {7, {-8.0f, -1.0f, 9.0f}, {0.0f, -0.25f, 0.0f}}},
+        MapPlace {MapLevel {8, {-6.0f, 0.5f, 9.0f}, {0.0f, -0.7f, 0.0f}}},
+        MapPlace {MapLevel {9, {-3.0f, 1.0f, 9.0f}, {0.0f, -0.7f, 0.0f}}},
+        MapPlace {MapLevel {10, {-0.5f, -1.0f, 9.5f}, {0.0f, -0.25f, 0.0f}}},
         MapPlace {MapLevel {11, {1.0f, -3.5f, 9.5f}}},
-        MapPlace {MapLevel {12, {4.0f, -4.0f, 10.0f}}},
+        MapPlace {MapLevel {12, {4.0f, -4.0f, 10.0f}, {0.0f, 2.6f, 0.0f}}},
         MapPlace {MapLevel {13, {7.0f, -3.0f, 10.0f}}},
-        MapPlace {MapLevel {14, {9.0f, -0.5f, 10.0f}}},
-        MapPlace {MapLevel {15, {11.5f, 1.5f, 10.0f}}},
-        MapPlace {MapLevel {16, {14.5f, 2.0f, 10.0f}}},
-        MapPlace {MapLevel {17, {17.5f, 1.0f, 10.0f}}},
-        MapPlace {MapLevel {18, {20.0f, -1.0f, 10.0f}}},
+        MapPlace {MapLevel {14, {9.0f, -0.5f, 10.0f}, {0.0f, -0.25f, 0.0f}}},
+        MapPlace {MapLevel {15, {11.5f, 1.5f, 10.0f}, {0.0f, -1.0f, 0.0f}}},
+        MapPlace {MapLevel {16, {14.5f, 2.0f, 10.0f}, {0.0f, -1.0f, 0.0f}}},
+        MapPlace {MapLevel {17, {17.5f, 1.0f, 10.0f}, {0.0f, -0.7f, 0.0f}}},
+        MapPlace {MapLevel {18, {20.0f, -1.0f, 10.0f}, {0.0f, 2.3f, 1.0f}}},
         MapPlace {Portal {2, 19, {23.0f, -1.5f, 10.0f}}}
     };
 
@@ -51,16 +51,16 @@ namespace {
         BlockPathVolume {{13.0f, -10.0f, 4.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::SingleBlock},
         BlockPathVolume {{14.0f, 6.0f, 2.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::I},
         BlockPathVolume {{14.5f, -3.0f, 10.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::B},
+        BlockPathVolume {{17.0f, 3.5f, 12.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::ShortI},
         BlockPathVolume {{18.5f, -3.0f, 4.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::L},
         BlockPathVolume {{20.0f, -3.5f, 12.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::I},
-        BlockPathVolume {{21.0f, 3.5f, 12.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::ShortI},
         BlockPathVolume {{23.0f, 3.5f, 3.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::SingleBlock},
-        BlockPathVolume {{27.0f, -7.5f, 4.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::L},
+        BlockPathVolume {{27.0f, -7.5f, 4.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::L}
     };
     
     const std::vector<CloudPathVolume> cloudPaths {
         CloudPathVolume {
-            .mPosition = {0.0f, -4.55f, 14.9f},
+            .mPosition = {0.0f, -5.3f, 14.9f},
             .mSize = {70.0f, 0.0f, 0.0f},
             .mCloudSize = {7.0f, 7.0f},
             .mNumClouds = 2,
