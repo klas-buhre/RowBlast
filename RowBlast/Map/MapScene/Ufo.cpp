@@ -62,6 +62,11 @@ void Ufo::SetRotation(const Pht::Vec3& rotation) {
     mUfoSceneObject->GetTransform().SetRotation(rotation);
 }
 
+void Ufo::SetHoverTranslation(float hoverTranslation) {
+    auto& transform {mUfoSceneObject->GetTransform()};
+    transform.SetPosition(ufoOffset + Pht::Vec3{0.0f, hoverTranslation, 0.0f});
+}
+
 void Ufo::Hide() {
     mSceneObject->SetIsVisible(false);
 }

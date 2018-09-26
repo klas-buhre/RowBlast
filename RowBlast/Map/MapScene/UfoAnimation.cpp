@@ -14,6 +14,8 @@ namespace {
     constexpr auto tiltDuration {3.6f};
     constexpr auto maxTiltAngle {4.0f};
     constexpr auto rotationSpeed {100.0f};
+    constexpr auto hoverDuration {4.5f};
+    constexpr auto maxHoverTranslation {0.095f};
 }
 
 UfoAnimation::UfoAnimation(Pht::IEngine& engine, MapScene& scene, Ufo& ufo) :
@@ -25,6 +27,7 @@ void UfoAnimation::Init() {
     mState = State::Inactive;
     mRotation = {0.0f, 0.0f, 0.0f};
     mElapsedTiltTime = 0.0f;
+    mElapsedHoverTime = 0.0f;
 }
 
 void UfoAnimation::Start(const Pht::Vec3& destinationPosition) {
@@ -37,6 +40,7 @@ void UfoAnimation::Start(const Pht::Vec3& destinationPosition) {
 
 UfoAnimation::State UfoAnimation::Update() {
     UpdateRotation();
+    UpdateHoverTranslation();
  
     switch (mState) {
         case State::Active:
@@ -71,6 +75,18 @@ void UfoAnimation::UpdateRotation() {
     mRotation.z = sin(normalizedTime * 2.0f * 3.1415f + 3.1415f) * maxTiltAngle;
 
     mUfo.SetRotation(mRotation);
+}
+
+void UfoAnimation::UpdateHoverTranslation() {
+    mElapsedHoverTime += mEngine.GetLastFrameSeconds();
+    
+    if (mElapsedHoverTime > hoverDuration) {
+        mElapsedHoverTime -= hoverDuration;
+    }
+    
+    auto normalizedTime {mElapsedHoverTime / hoverDuration};
+    auto hoverTranslation {sin(normalizedTime * 2.0f * 3.1415f) * maxHoverTranslation};
+    mUfo.SetHoverTranslation(hoverTranslation);
 }
 
 void UfoAnimation::UpdateInActiveState() {

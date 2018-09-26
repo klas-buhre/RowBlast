@@ -44,7 +44,6 @@ Backlog:
     -Credit FastNoise, MIT license: https://github.com/Auburns/FastNoise/
 
 Ongoing tasks:
-    -The UFO could hover up and down.
     -Fix the UFO animation destinations so that it does not hit other objects.
       -Just add special UFO destination offsets to the problematic MapPlaces.
     -The UFO could also appear in the title scene.

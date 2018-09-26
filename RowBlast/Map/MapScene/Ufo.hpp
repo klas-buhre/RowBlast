@@ -23,6 +23,7 @@ namespace RowBlast {
         void SetPosition(const Pht::Vec3& position);
         const Pht::Vec3& GetPosition() const;
         void SetRotation(const Pht::Vec3& rotation);
+        void SetHoverTranslation(float hoverTranslation);
         void Hide();
         void Show();
         

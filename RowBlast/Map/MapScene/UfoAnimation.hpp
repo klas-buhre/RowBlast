@@ -29,6 +29,7 @@ namespace RowBlast {
         
     private:
         void UpdateRotation();
+        void UpdateHoverTranslation();
         void UpdateInActiveState();
         
         Pht::IEngine& mEngine;
@@ -37,6 +38,7 @@ namespace RowBlast {
         State mState {State::Inactive};
         float mElapsedTime {0.0f};
         float mElapsedTiltTime {0.0f};
+        float mElapsedHoverTime {0.0f};
         Pht::Vec3 mStartPosition;
         Pht::Vec3 mDestinationPosition;
         Pht::Vec3 mRotation;
