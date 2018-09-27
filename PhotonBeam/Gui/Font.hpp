@@ -31,6 +31,11 @@ namespace Pht {
         No
     };
     
+    enum class TextSpecular {
+        Yes,
+        No
+    };
+    
     enum class SnapToPixel {
         Yes,
         No
@@ -46,6 +51,9 @@ namespace Pht {
         SnapToPixel mSnapToPixel {SnapToPixel::Yes};
         float mItalicSlant {0.0f};
         Pht::Optional<Pht::Vec3> mGradientBottomColorSubtraction;
+        TextSpecular mSpecular {TextSpecular::No};
+        Pht::Vec2 mSpecularOffset {0.0f, 0.0f};
+        Vec4 mSpecularColor {1.0f, 1.0f, 1.0f, 1.0f};
     };
 }
 

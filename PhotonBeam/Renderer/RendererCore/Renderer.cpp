@@ -663,16 +663,28 @@ float Renderer::GetBottomPaddingHeight() const {
 void Renderer::RenderText(const std::string& text,
                           const Vec2& position,
                           const TextProperties& properties) {
+    auto textPosition {position};
+    
     if (properties.mShadow == TextShadow::Yes) {
         TextProperties shadowProperties {properties};
         shadowProperties.mColor = properties.mShadowColor;
         shadowProperties.mGradientBottomColorSubtraction = Optional<Vec3> {};
-        
+
         RenderTextImpl(text, position, shadowProperties);
-        RenderTextImpl(text, position + properties.mShadowOffset * properties.mScale, properties);
-    } else {
-        RenderTextImpl(text, position, properties);
+        
+        textPosition = position + properties.mShadowOffset * properties.mScale;
     }
+    
+    if (properties.mSpecular == TextSpecular::Yes) {
+        TextProperties specularProperties {properties};
+        specularProperties.mColor = properties.mSpecularColor;
+        specularProperties.mGradientBottomColorSubtraction = Optional<Vec3> {};
+        RenderTextImpl(text,
+                       textPosition + properties.mSpecularOffset * properties.mScale,
+                       specularProperties);
+    }
+        
+    RenderTextImpl(text, textPosition, properties);
 }
 
 void Renderer::RenderTextImpl(const std::string& text,
