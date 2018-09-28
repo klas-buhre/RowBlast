@@ -31,16 +31,13 @@ namespace RowBlast {
         
         void CreateText();
         void CreateTwinkleParticleEffect(Pht::IEngine& engine);
-        void CreateGradientRectangles(Pht::Scene& scene, Pht::SceneObject& containerSceneObject);
         void UpdateInWaitingState();
-        void UpdateInRectangleAppearingState();
         void UpdateInSlidingInState();
         void UpdateTextLineSceneObjectPositions();
         void UpdateInSlidingSlowlyState();
     
         enum class State {
             Waiting,
-            RectangleAppearing,
             SlidingIn,
             SlidingSlowly,
             Inactive
@@ -50,7 +47,6 @@ namespace RowBlast {
         State mState {State::Waiting};
         Pht::Font mFont;
         float mElapsedTime {0.0f};
-        Pht::SceneObject* mGradientRectanglesSceneObject {nullptr};
         std::unique_ptr<Pht::SceneObject> mTwinkleParticleEffect;
         Text mText;
         Pht::Vec3 mLeftPosition;

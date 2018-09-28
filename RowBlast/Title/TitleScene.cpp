@@ -26,8 +26,6 @@ namespace {
         SceneSwitchFadeEffect = GlobalLayer::sceneSwitchFadeEffect
     };
     
-    constexpr auto lightIntensity {0.98f};
-
     const std::vector<CloudPathVolume> cloudPaths {
         CloudPathVolume {
             .mPosition = {0.0f, -4.55f, 14.9f},
@@ -90,7 +88,9 @@ namespace {
             .mNumCloudsPerCluster = 5
         }
     };
-    
+
+#if 0
+    constexpr auto lightIntensity {0.98f};
     const Pht::Color cloudColor {1.0f, 1.0f, 1.0f};
 
     const std::vector<HazeLayer> hazeLayers {
@@ -114,37 +114,30 @@ namespace {
             .mLowerColor = {0.455f, 0.7625f, 0.9725f, 0.35f}
         }
     };
+#endif
 
-    const std::vector<BlockPathVolume> floatingBlockPaths {
-        BlockPathVolume {
-            .mPosition = {-3.0f, -3.0f, -8.0f},
-            .mSize = {0.0f, 0.0f, 0.0f},
-            .mPieceType = FloatingPieceType::L
+    constexpr auto lightIntensity {0.895f};
+    const Pht::Color cloudColor {1.06f, 0.975f, 0.975f};
+    
+    const std::vector<HazeLayer> hazeLayers {
+        HazeLayer {
+            .mPosition = {0.0f, 0.0f, -370.0f},
+            .mSize = {1000.0f, 700.0f},
+            .mUpperColor = {0.29f, 0.215f, 0.79f, 0.0f},
+            .mLowerColor = {0.8225, 0.50375, 0.6475, 1.0f},
+            .mUpperScale = 0.5f
         },
-        BlockPathVolume {
-            .mPosition = {-5.0f, -8.0f, 5.0f},
-            .mSize = {0.0f, 0.0f, 0.0f},
-            .mPieceType = FloatingPieceType::SingleBlock
+        HazeLayer {
+            .mPosition = {0.0f, 0.0f, -350.0f},
+            .mSize = {500.0f, 650.0f},
+            .mUpperColor = {0.29f, 0.215f, 0.79f, 0.35f},
+            .mLowerColor = {0.8225, 0.50375, 0.6475, 0.35f}
         },
-        BlockPathVolume {
-            .mPosition = {-5.0f, 13.0f, -18.0f},
-            .mSize = {0.0f, 0.0f, 0.0f},
-            .mPieceType = FloatingPieceType::L
-        },
-        BlockPathVolume {
-            .mPosition = {10.0f, 23.0f, -20.0f},
-            .mSize = {0.0f, 0.0f, 0.0f},
-            .mPieceType = FloatingPieceType::L
-        },
-        BlockPathVolume {
-            .mPosition = {3.0f, -13.0f, -5.0f},
-            .mSize = {0.0f, 0.0f, 0.0f},
-            .mPieceType = FloatingPieceType::SingleBlock
-        },
-        BlockPathVolume {
-            .mPosition = {5.0f, 0.0f, -25.0f},
-            .mSize = {0.0f, 0.0f, 0.0f},
-            .mPieceType = FloatingPieceType::RowBomb
+        HazeLayer {
+            .mPosition = {0.0f, 0.0f, -250.0f},
+            .mSize = {380.0f, 480.0f},
+            .mUpperColor = {0.29f, 0.215f, 0.79f, 0.35f},
+            .mLowerColor = {0.8225, 0.50375, 0.6475, 0.35f}
         }
     };
     
@@ -162,6 +155,39 @@ namespace {
             .mSize = 0.95f,
             .mAngularVelocity = 5.0f,
             .mType = PlanetType::Moon
+        }
+    };
+
+    const std::vector<BlockPathVolume> floatingBlockPaths {
+        BlockPathVolume {
+            .mPosition = {-3.0f, -3.0f, -8.0f},
+            .mSize = {0.0f, 0.0f, 0.0f},
+            .mPieceType = FloatingPieceType::L
+        },
+        BlockPathVolume {
+            .mPosition = {-5.0f, -8.0f, 5.0f},
+            .mSize = {0.0f, 0.0f, 0.0f},
+            .mPieceType = FloatingPieceType::SingleBlock
+        },
+        BlockPathVolume {
+            .mPosition = {-5.0f, 8.0f, -18.0f},
+            .mSize = {0.0f, 0.0f, 0.0f},
+            .mPieceType = FloatingPieceType::L
+        },
+        BlockPathVolume {
+            .mPosition = {10.0f, 7.0f, -20.0f},
+            .mSize = {0.0f, 0.0f, 0.0f},
+            .mPieceType = FloatingPieceType::L
+        },
+        BlockPathVolume {
+            .mPosition = {3.0f, -13.0f, -5.0f},
+            .mSize = {0.0f, 0.0f, 0.0f},
+            .mPieceType = FloatingPieceType::SingleBlock
+        },
+        BlockPathVolume {
+            .mPosition = {5.0f, 0.0f, -25.0f},
+            .mSize = {0.0f, 0.0f, 0.0f},
+            .mPieceType = FloatingPieceType::RowBomb
         }
     };
 }

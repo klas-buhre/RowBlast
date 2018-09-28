@@ -44,7 +44,6 @@ Backlog:
 
 Ongoing tasks:
     -The UFO could also appear in the title scene.
-    -Maybe remove the gradient rectangle from the title text.
     -Could add a gradient in the cloud textures that the lower parts of a cloud is darker.
 
 
