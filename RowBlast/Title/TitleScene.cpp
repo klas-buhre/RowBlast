@@ -15,6 +15,8 @@
 // Game includes.
 #include "CommonResources.hpp"
 #include "UiLayer.hpp"
+#include "UserData.hpp"
+#include "Universe.hpp"
 
 using namespace RowBlast;
 
@@ -88,11 +90,11 @@ namespace {
             .mNumCloudsPerCluster = 5
         }
     };
-/*
-    constexpr auto lightIntensity {0.98f};
-    const Pht::Color cloudColor {1.0f, 1.0f, 1.0f};
 
-    const std::vector<HazeLayer> hazeLayers {
+    constexpr auto dayLightIntensity {0.98f};
+    const Pht::Color brightCloudColor {1.0f, 1.0f, 1.0f};
+
+    const std::vector<HazeLayer> blueHazeLayers {
         HazeLayer {
             .mPosition = {0.0f, 0.0f, -370.0f},
             .mSize = {1000.0f, 700.0f},
@@ -113,12 +115,11 @@ namespace {
             .mLowerColor = {0.455f, 0.7625f, 0.9725f, 0.35f}
         }
     };
-*/
 
-    constexpr auto lightIntensity {0.895f};
-    const Pht::Color cloudColor {1.06f, 0.975f, 0.975f};
+    constexpr auto sunsetLightIntensity {0.895f};
+    const Pht::Color sunsetCloudColor {1.06f, 0.975f, 0.975f};
     
-    const std::vector<HazeLayer> hazeLayers {
+    const std::vector<HazeLayer> sunsetHazeLayers {
         HazeLayer {
             .mPosition = {0.0f, 0.0f, -370.0f},
             .mSize = {1000.0f, 700.0f},
@@ -194,9 +195,59 @@ namespace {
             .mPieceType = FloatingPieceType::RowBomb
         },
     };
+    
+    float CalculateLightIntensity(int worldId) {
+        switch (worldId) {
+            case 1:
+                return dayLightIntensity;
+            case 2:
+                return sunsetLightIntensity;
+            default:
+                return dayLightIntensity;
+        }
+    }
+
+    Pht::Color CalculateCloudColor(int worldId) {
+        switch (worldId) {
+            case 1:
+                return brightCloudColor;
+            case 2:
+                return sunsetCloudColor;
+            default:
+                return brightCloudColor;
+        }
+    }
+    
+    const std::vector<HazeLayer>& CalculateHazeLayers(int worldId) {
+        switch (worldId) {
+            case 1:
+                return blueHazeLayers;
+            case 2:
+                return sunsetHazeLayers;
+            default:
+                return blueHazeLayers;
+        }
+    }
+    
+    int CalculateWorldId(const UserData& userData, const Universe& universe) {
+        auto currentLevelId {userData.GetProgressManager().GetCurrentLevel()};
+        auto mapSceneWorldId {universe.CalcWorldId(currentLevelId)};
+        
+        switch (mapSceneWorldId) {
+            case 1:
+                return 2;
+            case 2:
+                return 1;
+            default:
+                return (std::rand() % 2) + 1;
+        }
+    }
 }
 
-TitleScene::TitleScene(Pht::IEngine& engine, const CommonResources& commonResources) :
+TitleScene::TitleScene(Pht::IEngine& engine,
+                       const CommonResources& commonResources,
+                       const UserData& userData,
+                       const Universe& universe) :
     mTapFont {"HussarBoldWeb.otf", engine.GetRenderer().GetAdjustedNumPixels(35)} {
     
     auto& sceneManager {engine.GetSceneManager()};
@@ -215,8 +266,11 @@ TitleScene::TitleScene(Pht::IEngine& engine, const CommonResources& commonResour
     fadeEffectRenderPass.SetHudMode(true);
     scene->AddRenderPass(fadeEffectRenderPass);
 
+    auto worldId {CalculateWorldId(userData, universe)};
+
     auto& light {scene->CreateGlobalLight()};
     light.SetDirection({1.0f, 1.0f, 1.0f});
+    auto lightIntensity {CalculateLightIntensity(worldId)};
     light.SetAmbientIntensity(lightIntensity);
     light.SetDirectionalIntensity(lightIntensity);
     scene->GetRoot().AddChild(light.GetSceneObject());
@@ -242,9 +296,9 @@ TitleScene::TitleScene(Pht::IEngine& engine, const CommonResources& commonResour
                                        *scene,
                                        static_cast<int>(Layer::Background),
                                        cloudPaths,
-                                       hazeLayers,
+                                       CalculateHazeLayers(worldId),
                                        2.1f,
-                                       cloudColor);
+                                       CalculateCloudColor(worldId));
 
     mFloatingBlocks = std::make_unique<FloatingBlocks>(engine,
                                                        *scene,
@@ -266,12 +320,12 @@ TitleScene::TitleScene(Pht::IEngine& engine, const CommonResources& commonResour
         {1.0f, 1.0f, 1.0f, 1.0f},
         Pht::TextShadow::Yes,
         {0.05f, 0.05f},
-        {0.4f, 0.4f, 0.4f, 0.5f}
+        {0.35f, 0.35f, 0.35f, 0.75f}
     };
 
     auto& tapText {scene->CreateText("Tap to continue...", tapTextProperties)};
     mTapTextSceneObject = &tapText.GetSceneObject();
-    mTapTextSceneObject->GetTransform().SetPosition({-3.6f, -6.0f, UiLayer::text});
+    mTapTextSceneObject->GetTransform().SetPosition({-3.6f, -9.0f, UiLayer::text});
     mTapTextSceneObject->SetLayer(static_cast<int>(Layer::Ui));
     mTapTextSceneObject->SetIsVisible(false);
     uiContainer.AddChild(*mTapTextSceneObject);

@@ -25,7 +25,6 @@ Backlog:
      not really matter since the user can select any piece from the selectables but maybe it is most 
      convenient to go back to the state before the move and not the initial state.
   -Rendering:
-    -Background images for the game scene.
     -Maybe smooth the dark area in the field env map.
     -Maybe less reflectivity in the gray and yellow field block materials.
     -Could have the Roswell spaceship in the space world.
@@ -43,8 +42,9 @@ Backlog:
     -Credit FastNoise, MIT license: https://github.com/Auburns/FastNoise/
 
 Ongoing tasks:
+    -Maybe reduce the red component in the sunset clouds.
     -Could add a gradient in the cloud textures so that the lower parts of a cloud is darker.
-
+    -Background images for the game scene.
 
 
 
@@ -397,7 +397,7 @@ RowBlastApplication::RowBlastApplication(Pht::IEngine& engine) :
     mSettings {},
     mUserData {},
     mUniverse {},
-    mTitleController {engine, mCommonResources},
+    mTitleController {engine, mCommonResources, mUserData, mUniverse},
     mGameController {engine, mCommonResources, mUserData, mSettings},
     mMapController {
         engine,

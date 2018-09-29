@@ -14,9 +14,12 @@ namespace {
     const Pht::Vec3 ufoPosition {0.25f, 1.95f, 11.0f};
 }
 
-TitleController::TitleController(Pht::IEngine& engine, const CommonResources& commonResources) :
+TitleController::TitleController(Pht::IEngine& engine,
+                                 const CommonResources& commonResources,
+                                 const UserData& userData,
+                                 const Universe& universe) :
     mEngine {engine},
-    mScene {engine, commonResources},
+    mScene {engine, commonResources, userData, universe},
     mUfo {engine, commonResources, 2.0f},
     mUfoAnimation {engine, mUfo} {
     
