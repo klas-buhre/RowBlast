@@ -9,9 +9,22 @@
 
 using namespace RowBlast;
 
+namespace {
+    const Pht::Vec3 distantUfoPosition {40.0f, 220.0f, -600.0f};
+    const Pht::Vec3 ufoPosition {0.25f, 1.95f, 11.0f};
+}
+
 TitleController::TitleController(Pht::IEngine& engine, const CommonResources& commonResources) :
     mEngine {engine},
-    mScene {engine, commonResources} {}
+    mScene {engine, commonResources},
+    mUfo {engine, commonResources, 2.0f},
+    mUfoAnimation {engine, mUfo} {
+    
+    mUfo.Init(mScene.GetUfoContainer());
+    mUfoAnimation.Init();
+    mUfo.SetPosition(distantUfoPosition);
+    mUfoAnimation.StartWarpSpeed(ufoPosition);
+}
 
 TitleController::Command TitleController::Update() {
     auto command {Command::None};
@@ -21,6 +34,7 @@ TitleController::Command TitleController::Update() {
     }
     
     mScene.Update();
+    mUfoAnimation.Update();
     
     return command;
 }

@@ -30,9 +30,13 @@ namespace RowBlast {
     };
     
     enum class FloatingBlockColor {
+        Red = 0,
+        Green,
+        Blue,
+        Gold,
+        Gray,
         Random,
-        RandomExceptGray,
-        Gray
+        RandomExceptGray
     };
 
     struct BlockPathVolume {

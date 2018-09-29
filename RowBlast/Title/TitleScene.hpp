@@ -26,6 +26,11 @@ namespace RowBlast {
         
         void Update();
         
+        Pht::SceneObject& GetUfoContainer() {
+            assert(mUfoContainer);
+            return *mUfoContainer;
+        }
+
     private:
         std::unique_ptr<Planets> mPlanets;
         std::unique_ptr<Clouds> mClouds;
@@ -33,6 +38,7 @@ namespace RowBlast {
         std::unique_ptr<TitleAnimation> mTitleAnimation;
         Pht::Font mTapFont;
         Pht::SceneObject* mTapTextSceneObject {nullptr};
+        Pht::SceneObject* mUfoContainer {nullptr};
     };
 }
 

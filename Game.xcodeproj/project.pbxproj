@@ -29,8 +29,6 @@
 		6240508620FF69C00077A454 /* level46.json in Resources */ = {isa = PBXBuildFile; fileRef = 6240508520FF69C00077A454 /* level46.json */; };
 		6240508820FF82A10077A454 /* level47.json in Resources */ = {isa = PBXBuildFile; fileRef = 6240508720FF82A10077A454 /* level47.json */; };
 		62411A971E61E62800035D2A /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62411A961E61E62800035D2A /* GLKit.framework */; };
-		62487E7020D7F40400E4429E /* Ufo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62487E6E20D7F40400E4429E /* Ufo.cpp */; };
-		62487E9D20DA836800E4429E /* UfoAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62487E9B20DA836800E4429E /* UfoAnimation.cpp */; };
 		6259B7E52107992D0055FE8D /* Tutorial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6259B7E32107992D0055FE8D /* Tutorial.cpp */; };
 		6259B7E82107C6BE0055FE8D /* PlacePieceWindowView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6259B7E62107C6BE0055FE8D /* PlacePieceWindowView.cpp */; };
 		6259B7EB2107CDF20055FE8D /* PlacePieceWindowController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6259B7E92107CDF20055FE8D /* PlacePieceWindowController.cpp */; };
@@ -54,6 +52,8 @@
 		626940A72159399000D9857A /* ufo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 626940A62159399000D9857A /* ufo.jpg */; };
 		626940AA215A35A600D9857A /* TexturedEnvMapLighting.vert in Resources */ = {isa = PBXBuildFile; fileRef = 626940A8215A35A500D9857A /* TexturedEnvMapLighting.vert */; };
 		626940AB215A35A600D9857A /* TexturedEnvMapLighting.frag in Resources */ = {isa = PBXBuildFile; fileRef = 626940A9215A35A600D9857A /* TexturedEnvMapLighting.frag */; };
+		626940B0215E7A9500D9857A /* Ufo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 626940AE215E7A9500D9857A /* Ufo.cpp */; };
+		626940B1215E7A9500D9857A /* UfoAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 626940AF215E7A9500D9857A /* UfoAnimation.cpp */; };
 		6270DC551FCB212B00FB457D /* Blip.wav in Resources */ = {isa = PBXBuildFile; fileRef = 6270DC531FCB212B00FB457D /* Blip.wav */; };
 		6270DC561FCB212B00FB457D /* Bomb.wav in Resources */ = {isa = PBXBuildFile; fileRef = 6270DC541FCB212B00FB457D /* Bomb.wav */; };
 		6270DC621FCB22AE00FB457D /* cube_554.obj in Resources */ = {isa = PBXBuildFile; fileRef = 6270DC591FCB22AE00FB457D /* cube_554.obj */; };
@@ -424,10 +424,6 @@
 		6240508520FF69C00077A454 /* level46.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level46.json; sourceTree = "<group>"; };
 		6240508720FF82A10077A454 /* level47.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level47.json; sourceTree = "<group>"; };
 		62411A961E61E62800035D2A /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
-		62487E6E20D7F40400E4429E /* Ufo.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Ufo.cpp; sourceTree = "<group>"; };
-		62487E6F20D7F40400E4429E /* Ufo.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Ufo.hpp; sourceTree = "<group>"; };
-		62487E9B20DA836800E4429E /* UfoAnimation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = UfoAnimation.cpp; sourceTree = "<group>"; };
-		62487E9C20DA836800E4429E /* UfoAnimation.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = UfoAnimation.hpp; sourceTree = "<group>"; };
 		6259B7E32107992D0055FE8D /* Tutorial.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Tutorial.cpp; sourceTree = "<group>"; };
 		6259B7E42107992D0055FE8D /* Tutorial.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Tutorial.hpp; sourceTree = "<group>"; };
 		6259B7E62107C6BE0055FE8D /* PlacePieceWindowView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PlacePieceWindowView.cpp; sourceTree = "<group>"; };
@@ -457,6 +453,10 @@
 		626940A62159399000D9857A /* ufo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = ufo.jpg; sourceTree = "<group>"; };
 		626940A8215A35A500D9857A /* TexturedEnvMapLighting.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = TexturedEnvMapLighting.vert; sourceTree = "<group>"; };
 		626940A9215A35A600D9857A /* TexturedEnvMapLighting.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = TexturedEnvMapLighting.frag; sourceTree = "<group>"; };
+		626940AC215E7A9400D9857A /* UfoAnimation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = UfoAnimation.hpp; sourceTree = "<group>"; };
+		626940AD215E7A9400D9857A /* Ufo.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Ufo.hpp; sourceTree = "<group>"; };
+		626940AE215E7A9500D9857A /* Ufo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Ufo.cpp; sourceTree = "<group>"; };
+		626940AF215E7A9500D9857A /* UfoAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UfoAnimation.cpp; sourceTree = "<group>"; };
 		6270DC531FCB212B00FB457D /* Blip.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Blip.wav; sourceTree = "<group>"; };
 		6270DC541FCB212B00FB457D /* Bomb.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Bomb.wav; sourceTree = "<group>"; };
 		6270DC591FCB22AE00FB457D /* cube_554.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cube_554.obj; sourceTree = "<group>"; };
@@ -2251,6 +2251,10 @@
 				62E01BB92153F2B2009F0B99 /* Planets.hpp */,
 				62785D812087618E006F9869 /* RoundedCylinder.cpp */,
 				62785D882087618E006F9869 /* RoundedCylinder.hpp */,
+				626940AE215E7A9500D9857A /* Ufo.cpp */,
+				626940AD215E7A9400D9857A /* Ufo.hpp */,
+				626940AF215E7A9500D9857A /* UfoAnimation.cpp */,
+				626940AC215E7A9400D9857A /* UfoAnimation.hpp */,
 			);
 			path = CommonResources;
 			sourceTree = "<group>";
@@ -2293,10 +2297,6 @@
 				62785D9C2087618E006F9869 /* NextLevelParticleEffect.hpp */,
 				629AB6A320E140E800D43A0D /* PortalParticleEffect.cpp */,
 				629AB6A420E140E800D43A0D /* PortalParticleEffect.hpp */,
-				62487E6E20D7F40400E4429E /* Ufo.cpp */,
-				62487E6F20D7F40400E4429E /* Ufo.hpp */,
-				62487E9B20DA836800E4429E /* UfoAnimation.cpp */,
-				62487E9C20DA836800E4429E /* UfoAnimation.hpp */,
 			);
 			path = MapScene;
 			sourceTree = "<group>";
@@ -2631,6 +2631,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				626940B0215E7A9500D9857A /* Ufo.cpp in Sources */,
 				62785E012087618E006F9869 /* MenuButton.cpp in Sources */,
 				629AB6A220DFDD7600D43A0D /* Universe.cpp in Sources */,
 				62785B1420875937006F9869 /* RenderQueue.cpp in Sources */,
@@ -2652,7 +2653,6 @@
 				62785DC52087618E006F9869 /* GameScene.cpp in Sources */,
 				62785B0420875937006F9869 /* MeshUtils.cpp in Sources */,
 				62785B4920875937006F9869 /* FadeEffect.cpp in Sources */,
-				62487E7020D7F40400E4429E /* Ufo.cpp in Sources */,
 				62785DEB2087618E006F9869 /* Level.cpp in Sources */,
 				62785DC82087618E006F9869 /* CollisionDetection.cpp in Sources */,
 				6287B4E120F25C7700C00EF0 /* LevelGoalDialogController.cpp in Sources */,
@@ -2768,7 +2768,6 @@
 				62785B3020875937006F9869 /* SwipeGestureRecognizer.cpp in Sources */,
 				62785B0320875937006F9869 /* VertexBuffer.cpp in Sources */,
 				62785DE72087618E006F9869 /* ValidMovesSearch.cpp in Sources */,
-				62487E9D20DA836800E4429E /* UfoAnimation.cpp in Sources */,
 				62785B1220875937006F9869 /* TextRenderer.cpp in Sources */,
 				62785DE82087618E006F9869 /* Ai.cpp in Sources */,
 				62785DAF2087618E006F9869 /* TitleController.cpp in Sources */,
@@ -2835,6 +2834,7 @@
 				62785DE92087618E006F9869 /* FieldAnalyzer.cpp in Sources */,
 				62785B3220875937006F9869 /* FileStorage.cpp in Sources */,
 				62785DFB2087618E006F9869 /* FlyingBlocksAnimation.cpp in Sources */,
+				626940B1215E7A9500D9857A /* UfoAnimation.cpp in Sources */,
 				62785E022087618E006F9869 /* NoLivesDialogController.cpp in Sources */,
 				627D380B20A08E500068B50C /* GuiResources.cpp in Sources */,
 				62785B3720875937006F9869 /* GLKViewExtension.mm in Sources */,

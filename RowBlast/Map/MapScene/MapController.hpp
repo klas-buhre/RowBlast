@@ -102,6 +102,7 @@ namespace RowBlast {
         int mLevelToStart;
         bool mStartLevelDialogOnAnimationFinished {false};
         bool mHideUfoOnAnimationFinished {false};
+        bool mCameraShouldFollowUfo {true};
     };
 }
 

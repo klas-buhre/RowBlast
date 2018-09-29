@@ -45,13 +45,13 @@ MapController::MapController(Pht::IEngine& engine,
     mLevelResources {levelResources},
     mUniverse {universe},
     mScene {engine, commonResources, userData, universe},
-    mUfo {engine, mScene, commonResources},
-    mUfoAnimation {engine, mScene, mUfo},
+    mUfo {engine, commonResources, 1.0f},
+    mUfoAnimation {engine, mUfo},
     mMapViewControllers {engine, mScene, commonResources, userData, settings, pieceResources} {}
 
 void MapController::Init() {
     mScene.Init();
-    mUfo.Init();
+    mUfo.Init(mScene.GetUfoContainer());
     mUfoAnimation.Init();
     mMapViewControllers.Init();
     
@@ -104,19 +104,27 @@ MapController::Command MapController::UpdateMap() {
 }
 
 void MapController::UpdateUfoAnimation() {
-    if (mUfoAnimation.Update() == UfoAnimation::State::Finished) {
-        switch (mState) {
-            case State::UfoAnimation:
+    switch (mUfoAnimation.Update()) {
+        case UfoAnimation::State::Active:
+            if (mCameraShouldFollowUfo) {
+                mScene.SetCameraXPosition(mUfo.GetPosition().x);
+            }
+            break;
+        case UfoAnimation::State::Finished:
+            if (mCameraShouldFollowUfo) {
+                mScene.SetCameraXPosition(mUfo.GetPosition().x);
+            }
+            if (mState == State::UfoAnimation) {
                 if (mStartLevelDialogOnAnimationFinished) {
                     GoToLevelGoalDialogState(mLevelToStart);
                 }
                 if (mHideUfoOnAnimationFinished) {
                     mUfo.Hide();
                 }
-                break;
-            default:
-                break;
-        }
+            }
+            break;
+        default:
+            break;
     }
 }
 
@@ -332,13 +340,16 @@ void MapController::GoToUfoAnimationState(int levelToStart) {
         mUfo.Show();
         mUfo.SetPosition(currentPin->GetUfoPosition());
         mUfoAnimation.Start(nextPin->GetUfoPosition());
+        mScene.SetCameraXPosition(mUfo.GetPosition().x);
+        mCameraShouldFollowUfo = true;
     }
     
     if (nextPin && nextPin->GetPlace().GetKind() == MapPlace::Kind::Portal) {
         mHideUfoOnAnimationFinished = true;
         mStartLevelDialogOnAnimationFinished = false;
-        mUfoAnimation.StartWarpSpeed(nextPin->GetUfoPosition());
+        mUfoAnimation.StartHighSpeed(nextPin->GetUfoPosition());
         mScene.SetCameraBetweenLevels(nextLevel - 1, nextLevel);
+        mCameraShouldFollowUfo = false;
     } else {
         mHideUfoOnAnimationFinished = false;
     }

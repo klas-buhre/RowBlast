@@ -88,8 +88,7 @@ namespace {
             .mNumCloudsPerCluster = 5
         }
     };
-
-#if 0
+/*
     constexpr auto lightIntensity {0.98f};
     const Pht::Color cloudColor {1.0f, 1.0f, 1.0f};
 
@@ -114,7 +113,7 @@ namespace {
             .mLowerColor = {0.455f, 0.7625f, 0.9725f, 0.35f}
         }
     };
-#endif
+*/
 
     constexpr auto lightIntensity {0.895f};
     const Pht::Color cloudColor {1.06f, 0.975f, 0.975f};
@@ -140,7 +139,7 @@ namespace {
             .mLowerColor = {0.8225, 0.50375, 0.6475, 0.35f}
         }
     };
-    
+
     const std::vector<PlanetConfig> planets {
         PlanetConfig {
             .mPosition = {0.0f, 250.0f, -550.0f},
@@ -160,35 +159,40 @@ namespace {
 
     const std::vector<BlockPathVolume> floatingBlockPaths {
         BlockPathVolume {
-            .mPosition = {-3.0f, -3.0f, -8.0f},
+            .mPosition = {-8.0f, 8.0f, -22.0f},
             .mSize = {0.0f, 0.0f, 0.0f},
-            .mPieceType = FloatingPieceType::L
-        },
-        BlockPathVolume {
-            .mPosition = {-5.0f, -8.0f, 5.0f},
-            .mSize = {0.0f, 0.0f, 0.0f},
-            .mPieceType = FloatingPieceType::SingleBlock
-        },
-        BlockPathVolume {
-            .mPosition = {-5.0f, 8.0f, -18.0f},
-            .mSize = {0.0f, 0.0f, 0.0f},
-            .mPieceType = FloatingPieceType::L
+            .mPieceType = FloatingPieceType::B,
+            .mBlockColor = FloatingBlockColor::Blue
         },
         BlockPathVolume {
             .mPosition = {10.0f, 7.0f, -20.0f},
             .mSize = {0.0f, 0.0f, 0.0f},
-            .mPieceType = FloatingPieceType::L
+            .mPieceType = FloatingPieceType::I,
+            .mBlockColor = FloatingBlockColor::Green
         },
         BlockPathVolume {
-            .mPosition = {3.0f, -13.0f, -5.0f},
+            .mPosition = {-5.0f, -3.0f, -10.0f},
             .mSize = {0.0f, 0.0f, 0.0f},
-            .mPieceType = FloatingPieceType::SingleBlock
+            .mPieceType = FloatingPieceType::L,
+            .mBlockColor = FloatingBlockColor::Gold
         },
         BlockPathVolume {
-            .mPosition = {5.0f, 0.0f, -25.0f},
+            .mPosition = {5.0f, -4.0f, -5.0f},
+            .mSize = {0.0f, 0.0f, 0.0f},
+            .mPieceType = FloatingPieceType::SingleBlock,
+            .mBlockColor = FloatingBlockColor::Red
+        },
+        BlockPathVolume {
+            .mPosition = {-5.0f, -8.0f, 5.0f},
+            .mSize = {0.0f, 0.0f, 0.0f},
+            .mPieceType = FloatingPieceType::SingleBlock,
+            .mBlockColor = FloatingBlockColor::RandomExceptGray
+        },
+        BlockPathVolume {
+            .mPosition = {3.0f, -14.0f, -10.0f},
             .mSize = {0.0f, 0.0f, 0.0f},
             .mPieceType = FloatingPieceType::RowBomb
-        }
+        },
     };
 }
 
@@ -249,6 +253,10 @@ TitleScene::TitleScene(Pht::IEngine& engine, const CommonResources& commonResour
                                                        commonResources,
                                                        7.7f,
                                                        20.0f);
+
+    mUfoContainer = &scene->CreateSceneObject();
+    mUfoContainer->SetLayer(static_cast<int>(Layer::Background));
+    scene->GetRoot().AddChild(*mUfoContainer);
 
     mTitleAnimation = std::make_unique<TitleAnimation>(engine, *scene, uiContainer);
     

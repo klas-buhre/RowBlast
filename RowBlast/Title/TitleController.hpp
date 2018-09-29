@@ -3,6 +3,8 @@
 
 // Game includes.
 #include "TitleScene.hpp"
+#include "Ufo.hpp"
+#include "UfoAnimation.hpp"
 
 namespace Pht {
     class IEngine;
@@ -25,6 +27,8 @@ namespace RowBlast {
     private:
         Pht::IEngine& mEngine;
         TitleScene mScene;
+        Ufo mUfo;
+        UfoAnimation mUfoAnimation;
     };
 }
 

@@ -5,25 +5,24 @@
 
 // Game includes.
 #include "Ufo.hpp"
-#include "MapScene.hpp"
 
 using namespace RowBlast;
 
 namespace {
     constexpr auto animationDuration {2.5f};
-    constexpr auto warpSpeedDuration {7.5f};
+    constexpr auto highSpeedDuration {7.5f};
+    constexpr auto warpSpeedDuration {1.0f};
     constexpr auto tiltDuration {3.6f};
     constexpr auto maxTiltAngle {4.0f};
     constexpr auto rotationSpeed {100.0f};
     constexpr auto hoverDuration {4.5f};
     constexpr auto maxHoverTranslation {0.095f};
-    constexpr auto warpSpeedWaitDuration {0.5f};
+    constexpr auto highSpeedWaitDuration {0.5f};
     const Pht::Vec3 distantTranslation {0.0f, 170.0f, -400.0f};
 }
 
-UfoAnimation::UfoAnimation(Pht::IEngine& engine, MapScene& scene, Ufo& ufo) :
+UfoAnimation::UfoAnimation(Pht::IEngine& engine, Ufo& ufo) :
     mEngine {engine},
-    mScene {scene},
     mUfo {ufo} {}
 
 void UfoAnimation::Init() {
@@ -39,15 +38,20 @@ void UfoAnimation::Start(const Pht::Vec3& destinationPosition) {
     mDestinationPosition = destinationPosition;
     mElapsedTime = 0.0f;
     mAnimationDuration = animationDuration;
-    mScene.SetCameraXPosition(mStartPosition.x);
-    mShouldUpdateCameraPosition = true;
+}
+
+void UfoAnimation::StartHighSpeed(const Pht::Vec3& destinationPosition) {
+    mDestinationPosition = destinationPosition + distantTranslation;
+    mState = State::WaitingForHighSpeed;
+    mElapsedTime = 0.0f;
 }
 
 void UfoAnimation::StartWarpSpeed(const Pht::Vec3& destinationPosition) {
-    mDestinationPosition = destinationPosition + distantTranslation;
-    mState = State::WaitingForWarpSpeed;
+    mState = State::Active;
+    mStartPosition = mUfo.GetPosition();
+    mDestinationPosition = destinationPosition;
     mElapsedTime = 0.0f;
-    mShouldUpdateCameraPosition = false;
+    mAnimationDuration = warpSpeedDuration;
 }
 
 UfoAnimation::State UfoAnimation::Update() {
@@ -55,8 +59,8 @@ UfoAnimation::State UfoAnimation::Update() {
     UpdateHoverTranslation();
  
     switch (mState) {
-        case State::WaitingForWarpSpeed:
-            UpdateInWaitingForWarpSpeedState();
+        case State::WaitingForHighSpeed:
+            UpdateInWaitingForHighSpeedState();
             break;
         case State::Active:
             UpdateInActiveState();
@@ -104,13 +108,13 @@ void UfoAnimation::UpdateHoverTranslation() {
     mUfo.SetHoverTranslation(hoverTranslation);
 }
 
-void UfoAnimation::UpdateInWaitingForWarpSpeedState() {
+void UfoAnimation::UpdateInWaitingForHighSpeedState() {
     mElapsedTime += mEngine.GetLastFrameSeconds();
     
-    if (mElapsedTime > warpSpeedWaitDuration) {
+    if (mElapsedTime > highSpeedWaitDuration) {
         mState = State::Active;
         mStartPosition = mUfo.GetPosition();
-        mAnimationDuration = warpSpeedDuration;
+        mAnimationDuration = highSpeedDuration;
         mElapsedTime = 0.0f;
     }
 }
@@ -122,11 +126,7 @@ void UfoAnimation::UpdateInActiveState() {
     
     auto ufoPosition {mStartPosition.Lerp(t, mDestinationPosition)};
     mUfo.SetPosition(ufoPosition);
-    
-    if (mShouldUpdateCameraPosition) {
-        mScene.SetCameraXPosition(ufoPosition.x);
-    }
-    
+
     if (mElapsedTime > mAnimationDuration) {
         mState = State::Finished;
         mUfo.SetPosition(mDestinationPosition);

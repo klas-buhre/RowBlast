@@ -6,7 +6,6 @@
 #include "ObjMesh.hpp"
 
 // Game includes.
-#include "MapScene.hpp"
 #include "CommonResources.hpp"
 
 using namespace RowBlast;
@@ -15,8 +14,7 @@ namespace {
     const Pht::Vec3 ufoOffset {0.0f, -0.5f, 2.0f};
 }
 
-Ufo::Ufo(Pht::IEngine& engine, MapScene& mapScene, const CommonResources& commonResources) :
-    mMapScene {mapScene},
+Ufo::Ufo(Pht::IEngine& engine, const CommonResources& commonResources, float scale) :
     mSceneObject {std::make_unique<Pht::SceneObject>()} {
 
     auto& sceneManager {engine.GetSceneManager()};
@@ -37,7 +35,7 @@ Ufo::Ufo(Pht::IEngine& engine, MapScene& mapScene, const CommonResources& common
         reflectivity
     };
     
-    mUfoSceneObject = sceneManager.CreateSceneObject(Pht::ObjMesh {"ufo_3620.obj", 0.76f},
+    mUfoSceneObject = sceneManager.CreateSceneObject(Pht::ObjMesh {"ufo_3620.obj", 0.76f * scale},
                                                      ufoMaterial,
                                                      mSceneResources);
 
@@ -45,8 +43,8 @@ Ufo::Ufo(Pht::IEngine& engine, MapScene& mapScene, const CommonResources& common
     mSceneObject->AddChild(*mUfoSceneObject);
 }
 
-void Ufo::Init() {
-    mMapScene.GetUfoContainer().AddChild(*mSceneObject);
+void Ufo::Init(Pht::SceneObject& parentSceneObject) {
+    parentSceneObject.AddChild(*mSceneObject);
     mSceneObject->SetIsVisible(true);
 }
 

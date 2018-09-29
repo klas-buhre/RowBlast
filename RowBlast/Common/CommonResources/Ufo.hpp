@@ -12,14 +12,13 @@ namespace Pht {
 }
 
 namespace RowBlast {
-    class MapScene;
     class CommonResources;
     
     class Ufo {
     public:
-        Ufo(Pht::IEngine& engine, MapScene& mapScene, const CommonResources& commonResources);
+        Ufo(Pht::IEngine& engine, const CommonResources& commonResources, float scale);
         
-        void Init();
+        void Init(Pht::SceneObject& parentSceneObject);
         void SetPosition(const Pht::Vec3& position);
         const Pht::Vec3& GetPosition() const;
         void SetRotation(const Pht::Vec3& rotation);
@@ -28,7 +27,6 @@ namespace RowBlast {
         void Show();
         
     private:
-        MapScene& mMapScene;
         std::unique_ptr<Pht::SceneObject> mSceneObject;
         std::unique_ptr<Pht::SceneObject> mUfoSceneObject;
         Pht::SceneResources mSceneResources;

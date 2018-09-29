@@ -50,10 +50,10 @@ FloatingBlocks::FloatingBlocks(Pht::IEngine& engine,
     auto& sceneManager {engine.GetSceneManager()};
     
     mBlockRenderables = {
-        sceneManager.CreateRenderableObject(cubeMesh, materials.GetGoldMaterial()),
-        sceneManager.CreateRenderableObject(cubeMesh, materials.GetBlueMaterial()),
         sceneManager.CreateRenderableObject(cubeMesh, materials.GetRedMaterial()),
         sceneManager.CreateRenderableObject(cubeMesh, materials.GetGreenMaterial()),
+        sceneManager.CreateRenderableObject(cubeMesh, materials.GetBlueMaterial()),
+        sceneManager.CreateRenderableObject(cubeMesh, materials.GetGoldMaterial()),
         sceneManager.CreateRenderableObject(cubeMesh, materials.GetLightGrayMaterial())
     };
     
@@ -184,12 +184,16 @@ Pht::RenderableObject& FloatingBlocks::CalcBlockRenderable(const BlockPathVolume
     }
 
     switch (volume.mBlockColor) {
+        case FloatingBlockColor::Red:
+        case FloatingBlockColor::Green:
+        case FloatingBlockColor::Blue:
+        case FloatingBlockColor::Gold:
+        case FloatingBlockColor::Gray:
+            return *mBlockRenderables[static_cast<int>(volume.mBlockColor)];
         case FloatingBlockColor::Random:
             return *mBlockRenderables[std::rand() % numBlockRenderables];
         case FloatingBlockColor::RandomExceptGray:
             return *mBlockRenderables[std::rand() % (numBlockRenderables - 1)];
-        case FloatingBlockColor::Gray:
-            return *mBlockRenderables[numBlockRenderables - 1];
     }
 }
 
