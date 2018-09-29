@@ -179,7 +179,7 @@ namespace {
         }
     };
 
-    const Pht::Color cloudColor {1.06f, 0.975f, 0.975f};
+    const Pht::Color cloudColor {1.04f, 0.965f, 0.975f};
 }
 
 World RowBlast::GetWorld2() {

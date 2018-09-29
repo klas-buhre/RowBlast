@@ -107,7 +107,7 @@ void TitleAnimation::CreateTwinkleParticleEffect(Pht::IEngine& engine) {
         .mColor = Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f},
         .mColorRandomPart = Pht::Vec4{0.0f, 0.0f, 0.0f, 0.0f},
         .mTextureFilename = "particle_sprite_twinkle_blurred.png",
-        .mTimeToLive = 1.2f,
+        .mTimeToLive = 1.4f,
         .mTimeToLiveRandomPart = 0.0f,
         .mFadeOutDuration = 0.0f,
         .mZAngularVelocity = 100.0f,

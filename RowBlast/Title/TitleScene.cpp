@@ -117,7 +117,7 @@ namespace {
     };
 
     constexpr auto sunsetLightIntensity {0.895f};
-    const Pht::Color sunsetCloudColor {1.06f, 0.975f, 0.975f};
+    const Pht::Color sunsetCloudColor {1.04f, 0.965f, 0.975f};
     
     const std::vector<HazeLayer> sunsetHazeLayers {
         HazeLayer {

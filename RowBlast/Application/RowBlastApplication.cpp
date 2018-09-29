@@ -42,9 +42,10 @@ Backlog:
     -Credit FastNoise, MIT license: https://github.com/Auburns/FastNoise/
 
 Ongoing tasks:
-    -Maybe reduce the red component in the sunset clouds.
     -Could add a gradient in the cloud textures so that the lower parts of a cloud is darker.
-    -Background images for the game scene.
+    -Background images for the game scene. Could reduce the red component in the sunset clouds when
+     making the images.
+
 
 
 
