@@ -2358,20 +2358,20 @@
 		62B1CB51210F8EE500D0F195 /* Map */ = {
 			isa = PBXGroup;
 			children = (
-				626940A62159399000D9857A /* ufo.jpg */,
-				626940982157F31400D9857A /* ogma_rings.png */,
-				62E01BBF2154210A009F0B99 /* moon.jpg */,
-				62E01BBD215417A3009F0B99 /* titawin_clouds.png */,
-				62E01BBB2154100B009F0B99 /* planet_titawin.jpg */,
-				62E01BB02153E2A6009F0B99 /* planet_ogma.jpg */,
 				62B1CB52210F8EE500D0F195 /* cloud_A_512.png */,
-				62B1CB53210F8EE500D0F195 /* settings.png */,
-				62B1CB54210F8EE500D0F195 /* cloud_C_512.png */,
 				62B1CB55210F8EE500D0F195 /* cloud_B_512.png */,
-				62B1CB57210F8EE500D0F195 /* portal.png */,
-				62B1CB58210F8EE500D0F195 /* cloud_F_512.png */,
+				62B1CB54210F8EE500D0F195 /* cloud_C_512.png */,
 				62B1CB59210F8EE500D0F195 /* cloud_D_512.png */,
 				62B1CB5A210F8EE500D0F195 /* cloud_E_512.png */,
+				62B1CB58210F8EE500D0F195 /* cloud_F_512.png */,
+				62E01BBF2154210A009F0B99 /* moon.jpg */,
+				626940982157F31400D9857A /* ogma_rings.png */,
+				62E01BB02153E2A6009F0B99 /* planet_ogma.jpg */,
+				62E01BBB2154100B009F0B99 /* planet_titawin.jpg */,
+				62B1CB57210F8EE500D0F195 /* portal.png */,
+				62B1CB53210F8EE500D0F195 /* settings.png */,
+				62E01BBD215417A3009F0B99 /* titawin_clouds.png */,
+				626940A62159399000D9857A /* ufo.jpg */,
 			);
 			path = Map;
 			sourceTree = "<group>";

@@ -29,6 +29,8 @@ Backlog:
     -Maybe less reflectivity in the gray and yellow field block materials.
     -Could have the Roswell spaceship in the space world.
   -GUI:
+    -Adjust the window sizes and header area sizes. Make it more like the CascadingDialogView.
+    -Change the settings dialog window into a dark window.
     -Menu window that displays 3rd party lib credits.
   -Purchases:
   -Back end:
@@ -42,7 +44,6 @@ Backlog:
     -Credit FastNoise, MIT license: https://github.com/Auburns/FastNoise/
 
 Ongoing tasks:
-    -Could add a gradient in the cloud textures so that the lower parts of a cloud is darker.
     -Background images for the game scene. Could reduce the red component in the sunset clouds when
      making the images.
 
@@ -126,6 +127,7 @@ Ordered Backlog:
         Done
     -Finish the remaining title and map scene-related rendering tasks.
         Cost: 7
+        Done
     -Finish the remaining game scene-related rendering tasks.
         Cost: 4
     -Space world.

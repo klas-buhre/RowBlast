@@ -67,9 +67,9 @@ namespace {
             .mVelocity = 0.75f
         },
         CloudPathVolume {
-            .mPosition = {0.0f, 4.8f, 14.9f},
+            .mPosition = {0.0f, 4.9f, 14.9f},
             .mSize = {70.0f, 0.0f, 0.0f},
-            .mCloudSize = {10.0f, 10.0f},
+            .mCloudSize = {7.0f, 7.0f},
             .mNumClouds = 2,
             .mVelocity = 0.75f
         },
