@@ -25,8 +25,9 @@ Backlog:
      not really matter since the user can select any piece from the selectables but maybe it is most 
      convenient to go back to the state before the move and not the initial state.
   -Rendering:
-    -Maybe smooth the dark area in the field env map.
     -Maybe less reflectivity in the gray and yellow field block materials.
+    -Green and yellow field block materials could be a bit darker.
+    -Maybe smooth the dark area in the field env map.
     -Could have the Roswell spaceship in the space world.
   -GUI:
     -Adjust the window sizes and header area sizes. Make it more like the CascadingDialogView.
@@ -44,9 +45,7 @@ Backlog:
     -Credit FastNoise, MIT license: https://github.com/Auburns/FastNoise/
 
 Ongoing tasks:
-    -Background images for the game scene. Could reduce the red component in the sunset clouds when
-     making the images.
-
+    -Space world.
 
 
 
@@ -128,10 +127,10 @@ Ordered Backlog:
     -Finish the remaining title and map scene-related rendering tasks.
         Cost: 7
         Done
-    -Finish the remaining game scene-related rendering tasks.
-        Cost: 4
     -Space world.
         Cost: 10
+    -Finish the remaining game scene-related rendering tasks.
+        Cost: 4
     -Net/HTTP.
         Cost: 10
     -Analytics.

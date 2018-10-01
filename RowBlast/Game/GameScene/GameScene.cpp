@@ -218,9 +218,8 @@ void GameScene::CreateLightAndCamera() {
 
 void GameScene::CreateBackground(const Level& level) {
     Pht::Material backgroundMaterial {level.GetBackgroundTextureFilename()};
-
-    auto& background {mScene->CreateSceneObject(Pht::QuadMesh {300.0f, 300.0f}, backgroundMaterial)};
-    background.GetTransform().SetPosition({0.0f, 0.0f, -115.0f});
+    auto& background {mScene->CreateSceneObject(Pht::QuadMesh {227.3f, 300.0f}, backgroundMaterial)};
+    background.GetTransform().SetPosition({0.0f, -10.0f, -115.0f});
     background.SetLayer(static_cast<int>(Layer::Background));
     mScene->GetRoot().AddChild(background);
 }
