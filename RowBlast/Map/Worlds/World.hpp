@@ -55,7 +55,8 @@ namespace RowBlast {
         const std::vector<CloudPathVolume>& mCloudPaths;
         const std::vector<HazeLayer>& mHazeLayers;
         const std::vector<PlanetConfig>& mPlanets;
-        float mLightIntensity {1.0f};
+        float mAmbientLightIntensity {1.0f};
+        float mDirectionalLightIntensity {1.0f};
         Pht::Color mCloudColor;
     };
 }

@@ -96,8 +96,8 @@ void MapScene::Init() {
 
     auto& light {scene->CreateGlobalLight()};
     light.SetDirection({1.0f, 1.0f, 1.0f});
-    light.SetAmbientIntensity(world.mLightIntensity);
-    light.SetDirectionalIntensity(world.mLightIntensity);
+    light.SetAmbientIntensity(world.mAmbientLightIntensity);
+    light.SetDirectionalIntensity(world.mDirectionalLightIntensity);
     scene->GetRoot().AddChild(light.GetSceneObject());
 
     mCamera = &scene->CreateCamera();

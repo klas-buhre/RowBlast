@@ -183,5 +183,14 @@ namespace {
 }
 
 World RowBlast::GetWorld2() {
-    return World {places, blockPaths, cloudPaths, hazeLayers, planets, lightIntensity, cloudColor};
+    return World {
+        places,
+        blockPaths,
+        cloudPaths,
+        hazeLayers,
+        planets,
+        lightIntensity,
+        lightIntensity,
+        cloudColor
+    };
 }
