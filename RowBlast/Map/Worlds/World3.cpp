@@ -3,8 +3,8 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto ambientLightIntensity {0.64f};
-    constexpr auto directionalLightIntensity {1.0f};
+    constexpr auto ambientLightIntensity {0.82f};
+    constexpr auto directionalLightIntensity {0.82f};
 
     const std::vector<MapPlace> places {
         MapPlace {Portal {2, 40, {-24.0f, -3.0f, 10.0f}}},
@@ -63,6 +63,7 @@ namespace {
     const std::vector<HazeLayer> hazeLayers {};
     
     const std::vector<PlanetConfig> planets {
+/*
         PlanetConfig {
             .mPosition = {0.0f, 200.0f, -550.0f},
             .mOrientation = {30.0f, 0.0f, -35.0f},
@@ -70,6 +71,7 @@ namespace {
             .mAngularVelocity = 5.0f,
             .mType = PlanetType::Ogma
         },
+*/
         PlanetConfig {
             .mPosition = {-30.0f, 170.0f, -420.0f},
             .mOrientation = {30.0f, 0.0f, -35.0f},
@@ -87,6 +89,8 @@ namespace {
     };
     
     const Pht::Color cloudColor {1.0f, 1.0f, 1.0f};
+    // const std::string backgroundTextureFilename {"Up_2K_TEX.jpg"};
+    const std::string backgroundTextureFilename {"Front_2K_TEX.jpg"};
 }
 
 World RowBlast::GetWorld3() {
@@ -96,6 +100,7 @@ World RowBlast::GetWorld3() {
         cloudPaths,
         hazeLayers,
         planets,
+        backgroundTextureFilename,
         ambientLightIntensity,
         directionalLightIntensity,
         cloudColor

@@ -50,9 +50,10 @@ Ongoing tasks:
         -Background texture.
         -New planets.
         -Star.
-        -Asteroids.
+        -Asteroid belt.
       -Game scene:
         -Background textures.
+          -Reduce star sizes by scaling down the map scene background texture.
         -Adjust field quad brightness.
         -Adjust background layer light.
 

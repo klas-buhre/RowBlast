@@ -5,6 +5,7 @@
 #include "IRenderer.hpp"
 #include "Material.hpp"
 #include "CylinderMesh.hpp"
+#include "QuadMesh.hpp"
 #include "ObjMesh.hpp"
 #include "MathUtils.hpp"
 #include "ISceneManager.hpp"
@@ -29,7 +30,7 @@ namespace {
     const Pht::Vec3 lightDirectionB {1.0f, 1.0f, 0.74f};
     
     enum class Layer {
-        Planets,
+        Space,
         Map,
         Ufo,
         Hud,
@@ -61,7 +62,7 @@ void MapScene::Init() {
     mEngine.GetRenderer().EnableShader(Pht::ShaderType::TexturedEnvMapLighting);
     sceneManager.InitSceneSystems(Pht::ISceneManager::defaultNarrowFrustumHeightFactor);
     
-    scene->AddRenderPass(Pht::RenderPass {static_cast<int>(Layer::Planets)});
+    scene->AddRenderPass(Pht::RenderPass {static_cast<int>(Layer::Space)});
     scene->AddRenderPass(Pht::RenderPass {static_cast<int>(Layer::Map)});
     scene->AddRenderPass(Pht::RenderPass {static_cast<int>(Layer::Ufo)});
 
@@ -136,9 +137,21 @@ void MapScene::Init() {
 }
 
 void MapScene::CreateWorld(const World& world) {
+    if (!world.mBackgroundTextureFilename.empty()) {
+        Pht::Material backgroundMaterial {world.mBackgroundTextureFilename};
+        
+        auto& background {
+            mScene->CreateSceneObject(Pht::QuadMesh {2400.0f, 2400.0f}, backgroundMaterial)
+        };
+        
+        background.GetTransform().SetPosition({0.0f, 0.0f, -720.0f});
+        background.SetLayer(static_cast<int>(Layer::Space));
+        mScene->GetRoot().AddChild(background);
+    }
+    
     mPlanets = std::make_unique<Planets>(mEngine,
                                          *mScene,
-                                         static_cast<int>(Layer::Planets),
+                                         static_cast<int>(Layer::Space),
                                          world.mPlanets);
 
     mClouds = std::make_unique<Clouds>(mEngine,

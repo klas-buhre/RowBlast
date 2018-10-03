@@ -189,6 +189,7 @@ World RowBlast::GetWorld2() {
         cloudPaths,
         hazeLayers,
         planets,
+        "",
         lightIntensity,
         lightIntensity,
         cloudColor
