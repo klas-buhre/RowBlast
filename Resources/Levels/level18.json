@@ -4,7 +4,7 @@
     "twoStars": 45,
     "threeStars": 30,
     "background": "sky3.jpg",
-    "dark": false,
+    "lightIntensity": "Daylight",
     "pieces": [
         "LongI",
         "I",

@@ -9,6 +9,24 @@
 using namespace RowBlast;
 
 namespace {
+    Level::LightIntensity ReadLightIntensity(const rapidjson::Document& document) {
+        auto lightIntensity {Pht::Json::ReadString(document, "lightIntensity")};
+        
+        if (lightIntensity == "Daylight") {
+            return Level::LightIntensity::Daylight;
+        }
+
+        if (lightIntensity == "Sunset") {
+            return Level::LightIntensity::Sunset;
+        }
+
+        if (lightIntensity == "Dark") {
+            return Level::LightIntensity::Dark;
+        }
+
+        assert(!"Unsupported light intensity");
+    }
+
     std::vector<const Piece*> ReadPieceTypes(const rapidjson::Document& document,
                                              const std::string& memberName,
                                              const PieceTypes& pieceTypes) {
@@ -279,7 +297,7 @@ std::unique_ptr<Level> LevelLoader::Load(int levelId, const LevelResources& leve
     auto& pieceTypes {levelResources.GetPieceTypes()};
     
     auto backgroundTextureFilename {Pht::Json::ReadString(document, "background")};
-    auto isDark {Pht::Json::ReadBool(document, "dark")};
+    auto lightIntensity {ReadLightIntensity(document)};
     auto levelPieces {ReadPieceTypes(document, "pieces", pieceTypes)};
     
     auto isPartOfTutorial {false};
@@ -339,7 +357,7 @@ std::unique_ptr<Level> LevelLoader::Load(int levelId, const LevelResources& leve
                                 predeterminedMoves,
                                 suggestedMoves,
                                 backgroundTextureFilename,
-                                isDark,
+                                lightIntensity,
                                 isPartOfTutorial)
     };
     

@@ -14,7 +14,7 @@ Level::Level(int id,
              const std::vector<TutorialMove>& predeterminedMoves,
              const std::vector<TutorialMove>& suggestedMoves,
              const std::string& backgroundTextureFilename,
-             bool isDark,
+             LightIntensity lightIntensity,
              bool isPartOfTutorial) :
     mId {id},
     mObjective {objective},
@@ -28,7 +28,7 @@ Level::Level(int id,
     mPredeterminedMoves {predeterminedMoves},
     mSuggestedMoves {suggestedMoves},
     mBackgroundTextureFilename {backgroundTextureFilename},
-    mIsDark {isDark},
+    mLightIntensity {lightIntensity},
     mIsPartOfTutorial {isPartOfTutorial} {}
 
 LevelInfo::LevelInfo(int id,

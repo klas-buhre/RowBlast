@@ -17,6 +17,12 @@ namespace RowBlast {
             Build
         };
         
+        enum class LightIntensity {
+            Daylight,
+            Sunset,
+            Dark
+        };
+        
         struct TutorialMove {
             Pht::IVec2 mPosition;
             Rotation mRotation;
@@ -35,7 +41,7 @@ namespace RowBlast {
               const std::vector<TutorialMove>& predeterminedMoves,
               const std::vector<TutorialMove>& suggestedMoves,
               const std::string& backgroundTextureFilename,
-              bool isDark,
+              LightIntensity lightIntensity,
               bool isPartOfTutorial);
         
         void SetClearGrid(std::unique_ptr<CellGrid> clearGrid) {
@@ -102,8 +108,8 @@ namespace RowBlast {
             return mBackgroundTextureFilename;
         }
         
-        bool IsDark() const {
-            return mIsDark;
+        LightIntensity GetLightIntensity() const {
+            return mLightIntensity;
         }
 
         bool IsPartOfTutorial() const {
@@ -127,7 +133,7 @@ namespace RowBlast {
         std::unique_ptr<CellGrid> mClearGrid;
         std::unique_ptr<BlueprintCellGrid> mBlueprintGrid;
         std::string mBackgroundTextureFilename;
-        bool mIsDark {false};
+        LightIntensity mLightIntensity {LightIntensity::Daylight};
         bool mIsPartOfTutorial {false};
     };
     

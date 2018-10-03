@@ -4,7 +4,7 @@
     "twoStars": 30,
     "threeStars": 25,
     "background": "sky4.jpg",
-    "dark": true,
+    "lightIntensity": "Sunset",
     "pieces": [
         "BigTriangle",
         "Diamond",

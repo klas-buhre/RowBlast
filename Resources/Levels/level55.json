@@ -4,7 +4,7 @@
     "twoStars": 15,
     "threeStars": 10,
     "background": "sky6.jpg",
-    "dark": true,
+    "lightIntensity": "Dark",
     "pieces": [
         "SmallTriangle",
         "Triangle",

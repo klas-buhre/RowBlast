@@ -3,8 +3,8 @@
     "moves": 25,
     "twoStars": 20,
     "threeStars": 15,
-    "background": "sky2.jpg",
-    "dark": false,
+    "background": "Up_2K_TEX.jpg",
+    "lightIntensity": "Dark",
     "pieces": [
         "LongI",
         "I",

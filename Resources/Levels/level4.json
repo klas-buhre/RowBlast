@@ -4,7 +4,7 @@
     "twoStars": 25,
     "threeStars": 15,
     "background": "sky1.jpg",
-    "dark": false,
+    "lightIntensity": "Daylight",
     "partOfTutorial": true,
     "pieces": [
         "LongI",

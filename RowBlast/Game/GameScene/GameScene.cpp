@@ -28,8 +28,9 @@ namespace {
     constexpr auto lightAnimationDuration {5.0f};
     const Pht::Vec3 lightDirectionA {0.785f, 1.0f, 0.67f};
     const Pht::Vec3 lightDirectionB {1.0f, 1.0f, 0.74f};
-    constexpr auto darkLevelLightIntensity {0.94f};
-    constexpr auto brightLevelLightIntensity {0.985f};
+    constexpr auto daylightLightIntensity {0.985f};
+    constexpr auto sunsetLightIntensity {0.94f};
+    constexpr auto darkLightIntensity {0.85f};
 
 #if 0
     const std::vector<BlockPathVolume> floatingBlockPaths {
@@ -131,7 +132,7 @@ void GameScene::Init(const Level& level,
     CreateBackgroundLayerLight(level);
     CreateFloatingCubes();
     CreateLevelCompletedEffectsContainer();
-    CreateFieldQuad();
+    CreateFieldQuad(level);
     CreateFieldContainer();
     CreateBlueprintSlots(level, levelResources);
     CreatePieceDropEffectsContainer();
@@ -230,12 +231,19 @@ void GameScene::CreateBackgroundLayerLight(const Level& level) {
     auto lightComponent {std::make_unique<Pht::LightComponent>(lightSceneObject)};
     lightComponent->SetDirection(lightDirectionB);
     
-    if (level.IsDark()) {
-        lightComponent->SetAmbientIntensity(darkLevelLightIntensity);
-        lightComponent->SetDirectionalIntensity(darkLevelLightIntensity);
-    } else {
-        lightComponent->SetAmbientIntensity(brightLevelLightIntensity);
-        lightComponent->SetDirectionalIntensity(brightLevelLightIntensity);
+    switch (level.GetLightIntensity()) {
+        case Level::LightIntensity::Daylight:
+            lightComponent->SetAmbientIntensity(daylightLightIntensity);
+            lightComponent->SetDirectionalIntensity(daylightLightIntensity);
+            break;
+        case Level::LightIntensity::Sunset:
+            lightComponent->SetAmbientIntensity(sunsetLightIntensity);
+            lightComponent->SetDirectionalIntensity(sunsetLightIntensity);
+            break;
+        case Level::LightIntensity::Dark:
+            lightComponent->SetAmbientIntensity(darkLightIntensity);
+            lightComponent->SetDirectionalIntensity(darkLightIntensity);
+            break;
     }
 
     auto* backgroundRenderPass {mScene->GetRenderPass(static_cast<int>(Layer::Background))};
@@ -272,7 +280,7 @@ void GameScene::InitFieldDimensions(const Level& level) {
     };
 }
 
-void GameScene::CreateFieldQuad() {
+void GameScene::CreateFieldQuad(const Level& level) {
     mFieldQuadContainer = &mScene->CreateSceneObject();
     mFieldQuadContainer->SetLayer(static_cast<int>(Layer::FieldQuad));
     mScene->GetRoot().AddChild(*mFieldQuadContainer);
@@ -280,7 +288,7 @@ void GameScene::CreateFieldQuad() {
     Pht::Material fieldMaterial;
     fieldMaterial.SetOpacity(0.96f);
 
-    auto vertices {CreateFieldVertices()};
+    auto vertices {CreateFieldVertices(level)};
     auto& fieldQuad {mScene->CreateSceneObject(Pht::QuadMesh {vertices}, fieldMaterial)};
     Pht::Vec3 quadPosition {mFieldPosition.x, mFieldPosition.y, mFieldPosition.z + fieldQuadZ};
     fieldQuad.GetTransform().SetPosition(quadPosition);
@@ -293,15 +301,16 @@ void GameScene::CreateFieldContainer() {
     mScene->GetRoot().AddChild(*mFieldContainer);
 }
 
-Pht::QuadMesh::Vertices GameScene::CreateFieldVertices() {
+Pht::QuadMesh::Vertices GameScene::CreateFieldVertices(const Level& level) {
     auto width {mFieldWidth + fieldPadding};
     auto height {mFieldHeight + fieldPadding};
+    auto f {level.GetLightIntensity() == Level::LightIntensity::Dark ? 0.9f : 1.0f};
 
     return {
-        {{-width / 2.0f, -height / 2.0f, 0.0f}, {0.3f, 0.3f, 0.752f, 1.0f}},
-        {{width / 2.0f, -height / 2.0f, 0.0f}, {0.8f, 0.225f, 0.425f, 1.0f}},
-        {{width / 2.0f, height / 2.0f, 0.0f}, {0.3f, 0.3f, 0.752f, 1.0f}},
-        {{-width / 2.0f, height / 2.0f, 0.0f}, {0.81f, 0.225f, 0.425f, 1.0f}},
+        {{-width / 2.0f, -height / 2.0f, 0.0f}, {0.3f * f, 0.3f * f, 0.752f * f, 1.0f}},
+        {{width / 2.0f, -height / 2.0f, 0.0f}, {0.8f * f, 0.225f * f, 0.425f * f, 1.0f}},
+        {{width / 2.0f, height / 2.0f, 0.0f}, {0.3f * f, 0.3f * f, 0.752f * f, 1.0f}},
+        {{-width / 2.0f, height / 2.0f, 0.0f}, {0.81f * f, 0.225f * f, 0.425f * f, 1.0f}},
     };
 }
 

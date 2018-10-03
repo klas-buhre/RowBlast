@@ -4,7 +4,7 @@
     "twoStars": 23,
     "threeStars": 20,
     "background": "sky5.jpg",
-    "dark": true,
+    "lightIntensity": "Sunset",
     "pieces": [
         "LongI",
         "ShortI",

@@ -46,6 +46,15 @@ Backlog:
 
 Ongoing tasks:
     -Space world.
+      -Map scene.
+        -Background texture.
+        -New planets.
+        -Star.
+        -Asteroids.
+      -Game scene:
+        -Background textures.
+        -Adjust field quad brightness.
+        -Adjust background layer light.
 
 
 
@@ -129,6 +138,8 @@ Ordered Backlog:
         Done
     -Space world.
         Cost: 10
+    -Levels for the space world.
+        Cost: 7
     -Finish the remaining game scene-related rendering tasks.
         Cost: 4
     -Net/HTTP.
@@ -148,7 +159,7 @@ Ordered Backlog:
     -Back end.
         Cost: ?
 
-        Total cost: 210
+        Total cost: 217
 
 
 Comomon piece type sets:
