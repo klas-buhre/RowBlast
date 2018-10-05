@@ -65,7 +65,7 @@ void TitleAnimation::CreateText() {
         {0.25f, 0.225f, 0.15f, 1.0f}
     };
     textProperties.mSnapToPixel = Pht::SnapToPixel::No;
-    textProperties.mGradientBottomColorSubtraction = Pht::Vec3 {0.25f, 0.4f, 0.65f};
+    textProperties.mTopGradientColorSubtraction = Pht::Vec3 {0.25f, 0.4f, 0.65f};
     textProperties.mSpecular = Pht::TextSpecular::Yes;
     textProperties.mSpecularOffset = {0.04f, 0.04f};
 

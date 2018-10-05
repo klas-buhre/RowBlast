@@ -23,8 +23,12 @@
 		6227D4F5206CFD25008EA77D /* bomb_798.obj in Resources */ = {isa = PBXBuildFile; fileRef = 6227D4F4206CFD25008EA77D /* bomb_798.obj */; };
 		622DDC8820ADB65C002862FA /* LevelCompletedController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 622DDC8620ADB65C002862FA /* LevelCompletedController.cpp */; };
 		623326732073D69500AC505A /* level29.json in Resources */ = {isa = PBXBuildFile; fileRef = 623326722073D69400AC505A /* level29.json */; };
-		6234616021653F9000ECD0DF /* Front_2K_TEX.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6234615F21653F8F00ECD0DF /* Front_2K_TEX.jpg */; };
-		6234616221653F9900ECD0DF /* Up_2K_TEX.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6234616121653F9900ECD0DF /* Up_2K_TEX.jpg */; };
+		6234616221653F9900ECD0DF /* space.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6234616121653F9900ECD0DF /* space.jpg */; };
+		623461662166216800ECD0DF /* wadow_rings.png in Resources */ = {isa = PBXBuildFile; fileRef = 623461642166216700ECD0DF /* wadow_rings.png */; };
+		6234616A21662B1400ECD0DF /* planet_wadow.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6234616921662B1300ECD0DF /* planet_wadow.jpg */; };
+		6234616D2166692700ECD0DF /* TextTopGradient.frag in Resources */ = {isa = PBXBuildFile; fileRef = 6234616B2166692700ECD0DF /* TextTopGradient.frag */; };
+		6234616E2166692700ECD0DF /* TextTopGradient.vert in Resources */ = {isa = PBXBuildFile; fileRef = 6234616C2166692700ECD0DF /* TextTopGradient.vert */; };
+		6234617921668D1E00ECD0DF /* planet_rayeon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6234617821668D1E00ECD0DF /* planet_rayeon.jpg */; };
 		62398E60209A2784000F5F79 /* TitleAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62398E5E209A2784000F5F79 /* TitleAnimation.cpp */; };
 		623E3D5720DE4A2600BB800F /* World.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623E3D5520DE4A2600BB800F /* World.cpp */; };
 		623E3D5820DE4A2600BB800F /* World1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623E3D5620DE4A2600BB800F /* World1.cpp */; };
@@ -277,8 +281,8 @@
 		62785E192087618E006F9869 /* SettingsButtonController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62785DA62087618E006F9869 /* SettingsButtonController.cpp */; };
 		62785E1A2087618E006F9869 /* MapViewControllers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62785DA92087618E006F9869 /* MapViewControllers.cpp */; };
 		62785E1B2087618E006F9869 /* RowBlastApplication.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62785DAD2087618E006F9869 /* RowBlastApplication.cpp */; };
-		627D37A8209B55FA0068B50C /* TextGradient.frag in Resources */ = {isa = PBXBuildFile; fileRef = 627D37A6209B55F90068B50C /* TextGradient.frag */; };
-		627D37A9209B55FA0068B50C /* TextGradient.vert in Resources */ = {isa = PBXBuildFile; fileRef = 627D37A7209B55FA0068B50C /* TextGradient.vert */; };
+		627D37A8209B55FA0068B50C /* TextBottomGradient.frag in Resources */ = {isa = PBXBuildFile; fileRef = 627D37A6209B55F90068B50C /* TextBottomGradient.frag */; };
+		627D37A9209B55FA0068B50C /* TextBottomGradient.vert in Resources */ = {isa = PBXBuildFile; fileRef = 627D37A7209B55FA0068B50C /* TextBottomGradient.vert */; };
 		627D37AE209C78250068B50C /* MenuWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 627D37AC209C78250068B50C /* MenuWindow.cpp */; };
 		627D380B20A08E500068B50C /* GuiResources.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 627D380920A08E4F0068B50C /* GuiResources.cpp */; };
 		627D381B20A59B9E0068B50C /* medium_button_0385.obj in Resources */ = {isa = PBXBuildFile; fileRef = 627D381A20A59B9D0068B50C /* medium_button_0385.obj */; };
@@ -415,8 +419,12 @@
 		622DDC8620ADB65C002862FA /* LevelCompletedController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LevelCompletedController.cpp; sourceTree = "<group>"; };
 		622DDC8720ADB65C002862FA /* LevelCompletedController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = LevelCompletedController.hpp; sourceTree = "<group>"; };
 		623326722073D69400AC505A /* level29.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level29.json; sourceTree = "<group>"; };
-		6234615F21653F8F00ECD0DF /* Front_2K_TEX.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Front_2K_TEX.jpg; sourceTree = "<group>"; };
-		6234616121653F9900ECD0DF /* Up_2K_TEX.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Up_2K_TEX.jpg; sourceTree = "<group>"; };
+		6234616121653F9900ECD0DF /* space.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = space.jpg; sourceTree = "<group>"; };
+		623461642166216700ECD0DF /* wadow_rings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wadow_rings.png; sourceTree = "<group>"; };
+		6234616921662B1300ECD0DF /* planet_wadow.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = planet_wadow.jpg; sourceTree = "<group>"; };
+		6234616B2166692700ECD0DF /* TextTopGradient.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = TextTopGradient.frag; sourceTree = "<group>"; };
+		6234616C2166692700ECD0DF /* TextTopGradient.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = TextTopGradient.vert; sourceTree = "<group>"; };
+		6234617821668D1E00ECD0DF /* planet_rayeon.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = planet_rayeon.jpg; sourceTree = "<group>"; };
 		62398E5E209A2784000F5F79 /* TitleAnimation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TitleAnimation.cpp; sourceTree = "<group>"; };
 		62398E5F209A2784000F5F79 /* TitleAnimation.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TitleAnimation.hpp; sourceTree = "<group>"; };
 		623E3D5320DE4A2600BB800F /* World.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = World.hpp; sourceTree = "<group>"; };
@@ -978,8 +986,8 @@
 		62785DAA2087618E006F9869 /* SettingsButtonView.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SettingsButtonView.hpp; sourceTree = "<group>"; };
 		62785DAC2087618E006F9869 /* RowBlastApplication.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = RowBlastApplication.hpp; sourceTree = "<group>"; };
 		62785DAD2087618E006F9869 /* RowBlastApplication.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RowBlastApplication.cpp; sourceTree = "<group>"; };
-		627D37A6209B55F90068B50C /* TextGradient.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = TextGradient.frag; sourceTree = "<group>"; };
-		627D37A7209B55FA0068B50C /* TextGradient.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = TextGradient.vert; sourceTree = "<group>"; };
+		627D37A6209B55F90068B50C /* TextBottomGradient.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = TextBottomGradient.frag; sourceTree = "<group>"; };
+		627D37A7209B55FA0068B50C /* TextBottomGradient.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = TextBottomGradient.vert; sourceTree = "<group>"; };
 		627D37AC209C78250068B50C /* MenuWindow.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MenuWindow.cpp; sourceTree = "<group>"; };
 		627D37AD209C78250068B50C /* MenuWindow.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MenuWindow.hpp; sourceTree = "<group>"; };
 		627D380920A08E4F0068B50C /* GuiResources.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GuiResources.cpp; sourceTree = "<group>"; };
@@ -1516,8 +1524,10 @@
 				62785A1120875936006F9869 /* PointParticle.vert */,
 				62785A2020875936006F9869 /* Text.frag */,
 				62785A1520875936006F9869 /* Text.vert */,
-				627D37A6209B55F90068B50C /* TextGradient.frag */,
-				627D37A7209B55FA0068B50C /* TextGradient.vert */,
+				627D37A6209B55F90068B50C /* TextBottomGradient.frag */,
+				627D37A7209B55FA0068B50C /* TextBottomGradient.vert */,
+				6234616B2166692700ECD0DF /* TextTopGradient.frag */,
+				6234616C2166692700ECD0DF /* TextTopGradient.vert */,
 				62785A0D20875936006F9869 /* Textured.frag */,
 				62785A1D20875936006F9869 /* Textured.vert */,
 				62785A0E20875936006F9869 /* TexturedEmissiveLighting.frag */,
@@ -2372,8 +2382,10 @@
 				62B1CB53210F8EE500D0F195 /* settings.png */,
 				62E01BBD215417A3009F0B99 /* titawin_clouds.png */,
 				626940A62159399000D9857A /* ufo.jpg */,
-				6234615F21653F8F00ECD0DF /* Front_2K_TEX.jpg */,
-				6234616121653F9900ECD0DF /* Up_2K_TEX.jpg */,
+				6234616121653F9900ECD0DF /* space.jpg */,
+				623461642166216700ECD0DF /* wadow_rings.png */,
+				6234616921662B1300ECD0DF /* planet_wadow.jpg */,
+				6234617821668D1E00ECD0DF /* planet_rayeon.jpg */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -2472,6 +2484,7 @@
 				628EC29A207D24090071F368 /* level30.json in Resources */,
 				626451DD206FA93200E304F2 /* laser_bomb_224.obj in Resources */,
 				62B1CB5C210F8EE500D0F195 /* settings.png in Resources */,
+				623461662166216800ECD0DF /* wadow_rings.png in Resources */,
 				62E335DC1FD2EF600069B6CF /* level24.json in Resources */,
 				6299915E2117374C00C845D1 /* laser_frame2.jpg in Resources */,
 				62785B2B20875937006F9869 /* ParticleNoAlphaTexture.vert in Resources */,
@@ -2495,6 +2508,7 @@
 				62785B2220875937006F9869 /* Particle.vert in Resources */,
 				62785B1D20875937006F9869 /* VertexColor.frag in Resources */,
 				62B2BAEF2130089D009C529D /* level54.json in Resources */,
+				6234617921668D1E00ECD0DF /* planet_rayeon.jpg in Resources */,
 				62B1CB84210F8F8600D0F195 /* cloud_C_envmap.jpg in Resources */,
 				626940992157F31500D9857A /* ogma_rings.png in Resources */,
 				629B837C20C544F000DD2D0E /* level35.json in Resources */,
@@ -2544,6 +2558,7 @@
 				625B02CE21386AC3000744F2 /* level_bomb_frame5.jpg in Resources */,
 				62B2BAEB212C6902009C529D /* level52.json in Resources */,
 				62B1CB5B210F8EE500D0F195 /* cloud_A_512.png in Resources */,
+				6234616D2166692700ECD0DF /* TextTopGradient.frag in Resources */,
 				629B838620C9694E00DD2D0E /* level40.json in Resources */,
 				62B1CB87210F8F8600D0F195 /* particle_sprite_halo.png in Resources */,
 				629991662118A12200C845D1 /* level48.json in Resources */,
@@ -2564,13 +2579,12 @@
 				62B1CB82210F8F8600D0F195 /* glow_lines.png in Resources */,
 				62785B1920875937006F9869 /* VertexLighting.vert in Resources */,
 				627D381D20A5FF5E0068B50C /* small_button_0385.obj in Resources */,
-				6234616021653F9000ECD0DF /* Front_2K_TEX.jpg in Resources */,
 				626940AB215A35A600D9857A /* TexturedEnvMapLighting.frag in Resources */,
 				629B838E20CAD34100DD2D0E /* triangle_320.obj in Resources */,
 				629B838420C81D1700DD2D0E /* level39.json in Resources */,
 				62785B2620875937006F9869 /* PixelLighting.frag in Resources */,
 				629B839020CAD7C500DD2D0E /* triangle_320_r90.obj in Resources */,
-				627D37A8209B55FA0068B50C /* TextGradient.frag in Resources */,
+				627D37A8209B55FA0068B50C /* TextBottomGradient.frag in Resources */,
 				627D381B20A59B9E0068B50C /* medium_button_0385.obj in Resources */,
 				6270DC8A1FCB23D800FB457D /* level11.json in Resources */,
 				6270DC891FCB23D800FB457D /* level10.json in Resources */,
@@ -2579,7 +2593,7 @@
 				625B02CD21386AC3000744F2 /* level_bomb_frame4.jpg in Resources */,
 				62B2BAF12133FE61009C529D /* level55.json in Resources */,
 				6270DC621FCB22AE00FB457D /* cube_554.obj in Resources */,
-				627D37A9209B55FA0068B50C /* TextGradient.vert in Resources */,
+				627D37A9209B55FA0068B50C /* TextBottomGradient.vert in Resources */,
 				6270DC551FCB212B00FB457D /* Blip.wav in Resources */,
 				625B02CC21386AC3000744F2 /* level_bomb_frame2.jpg in Resources */,
 				6270DC8F1FCB23D800FB457D /* level16.json in Resources */,
@@ -2590,6 +2604,7 @@
 				62785B2420875937006F9869 /* TexturedLighting.frag in Resources */,
 				62785B1620875937006F9869 /* PixelLighting.vert in Resources */,
 				62B1CB86210F8F8600D0F195 /* particle_sprite_point_blurred.png in Resources */,
+				6234616E2166692700ECD0DF /* TextTopGradient.vert in Resources */,
 				62B1CB8D210F8F8600D0F195 /* cloud_B_envmap.jpg in Resources */,
 				62B1CBA82110D46E00D0F195 /* bomb_frame3.jpg in Resources */,
 				629B838820CA940E00DD2D0E /* cube_428.obj in Resources */,
@@ -2608,10 +2623,11 @@
 				62E01BAF2153E00F009F0B99 /* planet_960.obj in Resources */,
 				62B1CB9A2110BA4600D0F195 /* laser_frame1.jpg in Resources */,
 				62B1CB5E210F8EE500D0F195 /* cloud_B_512.png in Resources */,
+				6234616A21662B1400ECD0DF /* planet_wadow.jpg in Resources */,
 				626940DF21627B3800D9857A /* sky6.jpg in Resources */,
 				627D382320A731480068B50C /* big_button_048.obj in Resources */,
 				626940D32162641900D9857A /* sky3.jpg in Resources */,
-				6234616221653F9900ECD0DF /* Up_2K_TEX.jpg in Resources */,
+				6234616221653F9900ECD0DF /* space.jpg in Resources */,
 				62B1CB4C210F8DAF00D0F195 /* hand48.png in Resources */,
 				626940C1216115E300D9857A /* sky1.jpg in Resources */,
 				62B1CB61210F8EE500D0F195 /* cloud_F_512.png in Resources */,

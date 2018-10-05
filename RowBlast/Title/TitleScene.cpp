@@ -290,7 +290,8 @@ TitleScene::TitleScene(Pht::IEngine& engine,
     mPlanets = std::make_unique<Planets>(engine,
                                          *scene,
                                          static_cast<int>(Layer::Planets),
-                                         planets);
+                                         planets,
+                                         Pht::Vec3{-1.0f, 1.0f, 1.0f});
 
     mClouds = std::make_unique<Clouds>(engine,
                                        *scene,

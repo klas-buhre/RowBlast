@@ -5,6 +5,7 @@ using namespace RowBlast;
 namespace {
     constexpr auto ambientLightIntensity {0.82f};
     constexpr auto directionalLightIntensity {0.82f};
+    const Pht::Vec3 backgroundLightDirection {-1.0f, 1.0f, 0.85f};
 
     const std::vector<MapPlace> places {
         MapPlace {Portal {2, 40, {-24.0f, -3.0f, 10.0f}}},
@@ -31,15 +32,11 @@ namespace {
     const std::vector<BlockPathVolume> blockPaths {
         BlockPathVolume {{-27.0f, 0.0f, -1.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::B},
         BlockPathVolume {{-25.0f, 3.0f, 2.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::SingleBlock},
-        BlockPathVolume {{-22.0f, 3.0f, 12.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::I},
         BlockPathVolume {{-21.0f, -3.0f, 13.7f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::SingleBlock},
         BlockPathVolume {{-17.0f, -4.0f, 12.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::L},
         BlockPathVolume {{-17.0f, 3.0f, 7.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::SingleBlock},
-        BlockPathVolume {{-14.0f, 3.0f, 12.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::L},
-        BlockPathVolume {{-13.0f, 5.0f, -15.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::SingleBlock},
         BlockPathVolume {{-12.0f, -4.0f, 13.7f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::SingleBlock},
         BlockPathVolume {{-9.0f, 0.5f, 5.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::SingleBlock},
-        BlockPathVolume {{-8.0f, 4.0f, 10.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::B},
         BlockPathVolume {{-5.0f, -4.0f, 3.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::ShortI},
         BlockPathVolume {{-3.0f, -3.0f, 12.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::L},
         BlockPathVolume {{-1.0f, 5.0f, 8.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::SingleBlock},
@@ -47,50 +44,45 @@ namespace {
         BlockPathVolume {{3.0f, 0.5f, 8.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::B},
         BlockPathVolume {{5.0f, -5.0f, 11.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::SingleBlock},
         BlockPathVolume {{6.0f, 7.0f, 3.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::ShortI},
-        BlockPathVolume {{8.0f, 3.5f, 12.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::ShortI},
         BlockPathVolume {{10.0f, -3.5f, 12.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::L},
         BlockPathVolume {{13.0f, -10.0f, 4.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::SingleBlock},
         BlockPathVolume {{14.0f, 6.0f, 2.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::I},
         BlockPathVolume {{14.5f, -3.0f, 10.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::B},
         BlockPathVolume {{18.5f, -3.0f, 4.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::L},
         BlockPathVolume {{20.0f, -3.5f, 12.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::I},
-        BlockPathVolume {{21.0f, 3.5f, 12.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::ShortI},
         BlockPathVolume {{23.0f, 3.5f, 3.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::SingleBlock},
         BlockPathVolume {{27.0f, -7.5f, 4.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::L},
     };
     
     const std::vector<CloudPathVolume> cloudPaths {};
     const std::vector<HazeLayer> hazeLayers {};
-    
+
     const std::vector<PlanetConfig> planets {
-/*
         PlanetConfig {
-            .mPosition = {0.0f, 200.0f, -550.0f},
-            .mOrientation = {30.0f, 0.0f, -35.0f},
+            .mPosition = {50.0f, 75.0f, -550.0f},
+            .mOrientation = {15.0f, 0.0f, 35.0f},
             .mSize = 3.5f,
-            .mAngularVelocity = 5.0f,
-            .mType = PlanetType::Ogma
+            .mAngularVelocity = 2.5f,
+            .mType = PlanetType::Wadow
         },
-*/
         PlanetConfig {
-            .mPosition = {-30.0f, 170.0f, -420.0f},
-            .mOrientation = {30.0f, 0.0f, -35.0f},
-            .mSize = 0.95f,
-            .mAngularVelocity = 5.0f,
-            .mType = PlanetType::Moon
+            .mPosition = {200.0f, -300.0f, -420.0f},
+            .mOrientation = {0.0f, 90.0f, 0.0f},
+            .mSize = 4.5f,
+            .mAngularVelocity = 2.5f,
+            .mType = PlanetType::Rayeon
         },
         PlanetConfig {
             .mPosition = {180.0f, 200.0f, -500.0f},
             .mOrientation = {30.0f, 0.0f, -35.0f},
             .mSize = 1.2f,
             .mAngularVelocity = 5.0f,
-            .mType = PlanetType::Titawin
+            .mType = PlanetType::Moon
         }
     };
-    
+
     const Pht::Color cloudColor {1.0f, 1.0f, 1.0f};
-    // const std::string backgroundTextureFilename {"Up_2K_TEX.jpg"};
-    const std::string backgroundTextureFilename {"Front_2K_TEX.jpg"};
+    const std::string backgroundTextureFilename {"space.jpg"};
 }
 
 World RowBlast::GetWorld3() {
@@ -101,6 +93,7 @@ World RowBlast::GetWorld3() {
         hazeLayers,
         planets,
         backgroundTextureFilename,
+        backgroundLightDirection,
         ambientLightIntensity,
         directionalLightIntensity,
         cloudColor

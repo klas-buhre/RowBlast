@@ -4,6 +4,7 @@ using namespace RowBlast;
 
 namespace {
     constexpr auto lightIntensity {0.895f};
+    const Pht::Vec3 backgroundLightDirection {-1.0f, 1.0f, 1.0f};
 
     const std::vector<MapPlace> places {
         MapPlace {Portal {1, 19, {-24.0f, 3.0f, 10.0f}}},
@@ -190,6 +191,7 @@ World RowBlast::GetWorld2() {
         hazeLayers,
         planets,
         "",
+        backgroundLightDirection,
         lightIntensity,
         lightIntensity,
         cloudColor

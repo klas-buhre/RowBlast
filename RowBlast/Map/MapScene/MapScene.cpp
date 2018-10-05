@@ -152,7 +152,8 @@ void MapScene::CreateWorld(const World& world) {
     mPlanets = std::make_unique<Planets>(mEngine,
                                          *mScene,
                                          static_cast<int>(Layer::Space),
-                                         world.mPlanets);
+                                         world.mPlanets,
+                                         world.mBackgroundLightDirection);
 
     mClouds = std::make_unique<Clouds>(mEngine,
                                        *mScene,

@@ -17,7 +17,9 @@ namespace RowBlast {
     enum class PlanetType {
         Ogma,
         Titawin,
-        Moon
+        Moon,
+        Rayeon,
+        Wadow
     };
 
     struct PlanetConfig {
@@ -33,7 +35,8 @@ namespace RowBlast {
         Planets(Pht::IEngine& engine,
                 Pht::Scene& scene,
                 int layerIndex,
-                const std::vector<PlanetConfig>& planetConfigs);
+                const std::vector<PlanetConfig>& planetConfigs,
+                const Pht::Vec3& backgroundLightDirection);
         
         void Update();
         

@@ -78,7 +78,7 @@ Pht::SceneObject& ComboTextAnimation::CreateText(const Pht::Font& font,
     };
     textProperties.mSnapToPixel = Pht::SnapToPixel::No;
     textProperties.mItalicSlant = 0.15f;
-    textProperties.mGradientBottomColorSubtraction = Pht::Vec3 {0.0f, 0.15f, 0.15f};
+    textProperties.mBottomGradientColorSubtraction = Pht::Vec3 {0.0f, 0.15f, 0.15f};
 
     auto textSceneObject {std::make_unique<Pht::SceneObject>()};
     textSceneObject->GetTransform().SetPosition({position.x, position.y, UiLayer::text});

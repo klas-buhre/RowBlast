@@ -1,4 +1,4 @@
-static const char* TextGradientFragmentShader = STRINGIFY(
+static const char* TextBottomGradientFragmentShader = STRINGIFY(
 
 varying highp vec2 TextureCoordOut;
 

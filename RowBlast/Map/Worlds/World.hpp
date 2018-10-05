@@ -56,6 +56,7 @@ namespace RowBlast {
         const std::vector<HazeLayer>& mHazeLayers;
         const std::vector<PlanetConfig>& mPlanets;
         std::string mBackgroundTextureFilename;
+        Pht::Vec3 mBackgroundLightDirection {-1.0f, 1.0f, 1.0f};
         float mAmbientLightIntensity {1.0f};
         float mDirectionalLightIntensity {1.0f};
         Pht::Color mCloudColor;

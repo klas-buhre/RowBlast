@@ -15,13 +15,13 @@ namespace {
     Pht::SceneObject& CreateOgmaSceneObject(Pht::Scene& scene,
                                             Pht::SceneObject& containerSceneObject,
                                             const PlanetConfig& planetConfig) {
-        Pht::Material ogmaMaterial {"planet_ogma.jpg", 0.02f, 1.0f, 0.00f, 1.0f};
+        Pht::Material ogmaMaterial {"planet_ogma.jpg", 0.02f, 1.0f, 0.0f, 1.0f};
         auto& ogmaPlanet {
             scene.CreateSceneObject(Pht::ObjMesh {planetMeshName, planetConfig.mSize},
                                     ogmaMaterial)
         };
         
-        Pht::Material ringMaterial {"ogma_rings.png", 1.0f, 1.0f, 0.00f, 1.0f};
+        Pht::Material ringMaterial {"ogma_rings.png", 1.0f, 1.0f, 0.0f, 1.0f};
         ringMaterial.SetBlend(Pht::Blend::Yes);
         auto& rings {
             scene.CreateSceneObject(Pht::ObjMesh {"planet_ring.obj", planetConfig.mSize * 3.0f},
@@ -80,7 +80,8 @@ namespace {
     Pht::SceneObject& CreateMoonSceneObject(Pht::Scene& scene,
                                             Pht::SceneObject& containerSceneObject,
                                             const PlanetConfig& planetConfig) {
-        Pht::Material moonMaterial {"moon.jpg", 0.05f, 1.0f, 0.00f, 1.0f};
+        Pht::Material moonMaterial {"moon.jpg", 0.05f, 1.0f, 0.0f, 1.0f};
+    
         auto& moon {
             scene.CreateSceneObject(Pht::ObjMesh {planetMeshName, planetConfig.mSize},
                                     moonMaterial)
@@ -95,6 +96,54 @@ namespace {
         return moon;
     }
 
+    Pht::SceneObject& CreateRayeonSceneObject(Pht::Scene& scene,
+                                             Pht::SceneObject& containerSceneObject,
+                                             const PlanetConfig& planetConfig) {
+        Pht::Material rayeonMaterial {"planet_rayeon.jpg", 0.0f, 0.75f, 0.0f, 1.0f};
+    
+        auto& rayeonPlanet {
+            scene.CreateSceneObject(Pht::ObjMesh {planetMeshName, planetConfig.mSize},
+                                    rayeonMaterial)
+        };
+        
+        auto& transform {rayeonPlanet.GetTransform()};
+        transform.SetPosition(planetConfig.mPosition);
+        transform.SetRotation(planetConfig.mOrientation);
+        
+        containerSceneObject.AddChild(rayeonPlanet);
+        
+        return rayeonPlanet;
+    }
+
+    Pht::SceneObject& CreateWadowSceneObject(Pht::Scene& scene,
+                                             Pht::SceneObject& containerSceneObject,
+                                             const PlanetConfig& planetConfig) {
+        Pht::Material wadowMaterial {"planet_wadow.jpg", 0.125f, 0.98f, 0.6f, 70.0f};
+        auto& wadowPlanet {
+            scene.CreateSceneObject(Pht::ObjMesh {planetMeshName, planetConfig.mSize},
+                                    wadowMaterial)
+        };
+        
+        Pht::Material ringMaterial {"wadow_rings.png", 0.9f, 1.0f, 0.0f, 1.0f};
+        ringMaterial.SetBlend(Pht::Blend::Yes);
+        auto& rings {
+            scene.CreateSceneObject(Pht::ObjMesh {"planet_ring.obj", planetConfig.mSize * 3.0f},
+                                    ringMaterial)
+        };
+        
+        auto& wadowPlanetSystem {scene.CreateSceneObject()};
+        wadowPlanetSystem.AddChild(wadowPlanet);
+        wadowPlanetSystem.AddChild(rings);
+        
+        auto& transform {wadowPlanetSystem.GetTransform()};
+        transform.SetPosition(planetConfig.mPosition);
+        transform.SetRotation(planetConfig.mOrientation);
+        
+        containerSceneObject.AddChild(wadowPlanetSystem);
+        
+        return wadowPlanet;
+    }
+
     Pht::SceneObject& CreatePlanetSceneObject(Pht::Scene& scene,
                                               Pht::SceneObject& containerSceneObject,
                                               const PlanetConfig& planetConfig) {
@@ -105,6 +154,10 @@ namespace {
                 return CreateTitawinSceneObject(scene, containerSceneObject, planetConfig);
             case PlanetType::Moon:
                 return CreateMoonSceneObject(scene, containerSceneObject, planetConfig);
+            case PlanetType::Rayeon:
+                return CreateRayeonSceneObject(scene, containerSceneObject, planetConfig);
+            case PlanetType::Wadow:
+                return CreateWadowSceneObject(scene, containerSceneObject, planetConfig);
         }
     }
 }
@@ -112,7 +165,8 @@ namespace {
 Planets::Planets(Pht::IEngine& engine,
                  Pht::Scene& scene,
                  int layerIndex,
-                 const std::vector<PlanetConfig>& planetConfigs) :
+                 const std::vector<PlanetConfig>& planetConfigs,
+                 const Pht::Vec3& backgroundLightDirection) :
     mEngine {engine} {
 
     auto& containerSceneObject {scene.CreateSceneObject()};
@@ -122,6 +176,7 @@ Planets::Planets(Pht::IEngine& engine,
     auto& lightSceneObject {scene.CreateSceneObject()};
     lightSceneObject.SetIsVisible(false);
     auto lightComponent {std::make_unique<Pht::LightComponent>(lightSceneObject)};
+    lightComponent->SetDirection(backgroundLightDirection);
     lightComponent->SetDirectionalIntensity(1.15f);
     auto* planetsRenderPass {scene.GetRenderPass(layerIndex)};
     planetsRenderPass->SetLight(lightComponent.get());

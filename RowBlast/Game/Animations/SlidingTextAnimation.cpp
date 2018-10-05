@@ -79,7 +79,7 @@ void SlidingTextAnimation::CreateText(const Pht::Font& font,
     };
     textProperties.mSnapToPixel = Pht::SnapToPixel::No;
     textProperties.mItalicSlant = 0.15f;
-    textProperties.mGradientBottomColorSubtraction = Pht::Vec3 {0.0f, 0.05f, 0.1f};
+    textProperties.mBottomGradientColorSubtraction = Pht::Vec3 {0.0f, 0.05f, 0.1f};
 
     auto upperTextLineSceneObject {std::make_unique<Pht::SceneObject>()};
     auto upperTextComponent {
