@@ -19,6 +19,7 @@
 #include "Universe.hpp"
 #include "NextLevelParticleEffect.hpp"
 #include "PortalParticleEffect.hpp"
+#include "SunParticleEffect.hpp"
 #include "UiLayer.hpp"
 
 using namespace RowBlast;
@@ -33,6 +34,7 @@ namespace {
         Space,
         Map,
         Ufo,
+        SunEffect,
         Hud,
         UiViews,
         SceneSwitchFadeEffect = GlobalLayer::sceneSwitchFadeEffect
@@ -65,6 +67,7 @@ void MapScene::Init() {
     scene->AddRenderPass(Pht::RenderPass {static_cast<int>(Layer::Space)});
     scene->AddRenderPass(Pht::RenderPass {static_cast<int>(Layer::Map)});
     scene->AddRenderPass(Pht::RenderPass {static_cast<int>(Layer::Ufo)});
+    scene->AddRenderPass(Pht::RenderPass {static_cast<int>(Layer::SunEffect)});
 
     Pht::RenderPass hudRenderPass {static_cast<int>(Layer::Hud)};
     hudRenderPass.SetHudMode(true);
@@ -106,7 +109,7 @@ void MapScene::Init() {
     
     CreateWorld(world);
     CreatePins(world);
-    CreateEffects();
+    CreateEffects(world);
     
     if (mClickedPortalNextLevelId.HasValue()) {
         SetCameraAtPortal(mClickedPortalNextLevelId.GetValue());
@@ -255,7 +258,7 @@ void MapScene::CreatePin(Pht::SceneObject& pinsContainerObject, const MapPlace& 
     mPins.push_back(std::move(pin));
 }
 
-void MapScene::CreateEffects() {
+void MapScene::CreateEffects(const World& world) {
     if (auto* pin {GetLevelPin(mUserData.GetProgressManager().GetProgress())}) {
         auto& pinPosition {pin->GetPosition()};
         CreateNextLevelParticleEffect(mEngine, *mScene, pinPosition, static_cast<int>(Layer::Map));
@@ -268,6 +271,13 @@ void MapScene::CreateEffects() {
                                        pin->GetPosition(),
                                        static_cast<int>(Layer::Map));
         }
+    }
+    
+    if (world.mSun.HasValue()) {
+        CreateSunParticleEffect(mEngine,
+                                *mScene,
+                                world.mSun.GetValue(),
+                                static_cast<int>(Layer::SunEffect));
     }
 }
 

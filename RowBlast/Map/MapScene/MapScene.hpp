@@ -76,7 +76,7 @@ namespace RowBlast {
         void CreateWorld(const World& world);
         void CreatePins(const World& world);
         void CreatePin(Pht::SceneObject& pinContainerObject, const MapPlace& place);
-        void CreateEffects();
+        void CreateEffects(const World& world);
         void UpdateUiLightAnimation();
         void SetCameraAtPortal(int portalNextLevelId);
         const MapPin* GetPortalPin(int portalNextLevelId) const;

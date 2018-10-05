@@ -46,7 +46,8 @@ Backlog:
     -Credit FastNoise, MIT license: https://github.com/Auburns/FastNoise/
 
 Ongoing tasks:
-    -Randomize light background direction between -1 and 1 for title scene and sky worlds.
+    -Randomize light background direction between -1 and 1 for title scene and sky worlds. And sun
+     position in space world.
     -Space world.
       -Map scene.
         -Background texture.
@@ -55,7 +56,8 @@ Ongoing tasks:
         -Asteroid belt.
       -Game scene:
         -Background textures.
-          -Reduce star sizes by scaling down the map scene background texture.
+          -Reduce star sizes by scaling down the map scene background texture (maybe use the 4k
+           map scene background texture for this).
         -Adjust field quad brightness.
         -Adjust background layer light.
 

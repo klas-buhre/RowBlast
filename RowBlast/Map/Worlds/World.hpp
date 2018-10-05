@@ -11,6 +11,7 @@
 #include "FloatingBlocks.hpp"
 #include "Clouds.hpp"
 #include "Planets.hpp"
+#include "SunParticleEffect.hpp"
 
 namespace RowBlast {
     struct MapLevel {
@@ -55,6 +56,7 @@ namespace RowBlast {
         const std::vector<CloudPathVolume>& mCloudPaths;
         const std::vector<HazeLayer>& mHazeLayers;
         const std::vector<PlanetConfig>& mPlanets;
+        Pht::Optional<Sun> mSun;
         std::string mBackgroundTextureFilename;
         Pht::Vec3 mBackgroundLightDirection {-1.0f, 1.0f, 1.0f};
         float mAmbientLightIntensity {1.0f};
