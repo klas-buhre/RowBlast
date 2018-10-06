@@ -3,13 +3,6 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto ambientLightIntensity {0.82f};
-    constexpr auto directionalLightIntensity {0.82f};
-    const Pht::Vec3 backgroundLightDirectionA {-1.0f, 1.0f, 0.85f};
-    const Pht::Vec3 backgroundLightDirectionB {-0.75f, 1.0f, -0.5f};
-    const Sun sunA {.mPosition = {-20.0f, 440.0f, -720.0f}, .mSize = {580.0f, 580.0f}};
-    const Sun sunB {.mPosition = {-10.0f, 240.0f, -620.0f}, .mSize = {580.0f, 580.0f}};
-    
     const std::vector<MapPlace> places {
         MapPlace {Portal {2, 40, {-24.0f, -3.0f, 10.0f}}},
         MapPlace {MapLevel {40, {-21.5f, -1.2f, 9.0f}}},
@@ -84,6 +77,19 @@ namespace {
         }
     };
 
+    const std::vector<BackgroundLight> backgroundLights {
+        BackgroundLight {
+            .mDirection = {-1.0f, 1.0f, 0.85f},
+            .mSun = Sun{.mPosition = {-20.0f, 440.0f, -720.0f}, .mSize = {580.0f, 580.0f}}
+        },
+        BackgroundLight {
+            .mDirection = {-0.75f, 1.0f, -0.5f},
+            .mSun = Sun {.mPosition = {-10.0f, 240.0f, -620.0f}, .mSize = {580.0f, 580.0f}}
+        }
+    };
+
+    constexpr auto ambientLightIntensity {0.82f};
+    constexpr auto directionalLightIntensity {0.82f};
     const Pht::Color cloudColor {1.0f, 1.0f, 1.0f};
     const std::string backgroundTextureFilename {"space.jpg"};
 }
@@ -95,9 +101,8 @@ World RowBlast::GetWorld3() {
         cloudPaths,
         hazeLayers,
         planets,
-        sunB,
+        backgroundLights,
         backgroundTextureFilename,
-        backgroundLightDirectionB,
         ambientLightIntensity,
         directionalLightIntensity,
         cloudColor

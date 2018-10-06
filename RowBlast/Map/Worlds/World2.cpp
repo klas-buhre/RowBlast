@@ -3,9 +3,6 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto lightIntensity {0.895f};
-    const Pht::Vec3 backgroundLightDirection {-1.0f, 1.0f, 1.0f};
-
     const std::vector<MapPlace> places {
         MapPlace {Portal {1, 19, {-24.0f, 3.0f, 10.0f}}},
         MapPlace {MapLevel {19, {-21.5f, 1.0f, 10.0f}, {0.0f, -0.7f, 0.0f}}},
@@ -179,7 +176,13 @@ namespace {
             .mType = PlanetType::Titawin
         }
     };
+    
+    const std::vector<BackgroundLight> backgroundLights {
+        BackgroundLight {.mDirection = {1.0f, 1.0f, 1.0f}, .mSun = Pht::Optional<Sun>{}},
+        BackgroundLight {.mDirection = {-1.0f, 1.0f, 1.0f}, .mSun = Pht::Optional<Sun>{}}
+    };
 
+    constexpr auto lightIntensity {0.895f};
     const Pht::Color cloudColor {1.04f, 0.965f, 0.975f};
 }
 
@@ -190,9 +193,8 @@ World RowBlast::GetWorld2() {
         cloudPaths,
         hazeLayers,
         planets,
-        Pht::Optional<Sun>{},
+        backgroundLights,
         "",
-        backgroundLightDirection,
         lightIntensity,
         lightIntensity,
         cloudColor

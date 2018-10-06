@@ -29,6 +29,7 @@ namespace RowBlast {
     class World;
     class MapPlace;
     class Universe;
+    class BackgroundLight;
 
     class MapScene {
     public:
@@ -73,10 +74,10 @@ namespace RowBlast {
         }
 
     private:
-        void CreateWorld(const World& world);
+        void CreateWorld(const World& world, const BackgroundLight& backgroundLight);
         void CreatePins(const World& world);
         void CreatePin(Pht::SceneObject& pinContainerObject, const MapPlace& place);
-        void CreateEffects(const World& world);
+        void CreateEffects(const World& world, const BackgroundLight& backgroundLight);
         void UpdateUiLightAnimation();
         void SetCameraAtPortal(int portalNextLevelId);
         const MapPin* GetPortalPin(int portalNextLevelId) const;

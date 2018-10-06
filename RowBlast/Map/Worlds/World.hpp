@@ -49,6 +49,11 @@ namespace RowBlast {
             Portal mPortal;
         };
     };
+    
+    struct BackgroundLight {
+        Pht::Vec3 mDirection {-1.0f, 1.0f, 1.0f};
+        Pht::Optional<Sun> mSun;
+    };
 
     struct World {
         const std::vector<MapPlace>& mPlaces;
@@ -56,9 +61,8 @@ namespace RowBlast {
         const std::vector<CloudPathVolume>& mCloudPaths;
         const std::vector<HazeLayer>& mHazeLayers;
         const std::vector<PlanetConfig>& mPlanets;
-        Pht::Optional<Sun> mSun;
+        const std::vector<BackgroundLight>& mBackgroundLights;
         std::string mBackgroundTextureFilename;
-        Pht::Vec3 mBackgroundLightDirection {-1.0f, 1.0f, 1.0f};
         float mAmbientLightIntensity {1.0f};
         float mDirectionalLightIntensity {1.0f};
         Pht::Color mCloudColor;

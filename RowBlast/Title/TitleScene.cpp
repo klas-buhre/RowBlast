@@ -287,11 +287,15 @@ TitleScene::TitleScene(Pht::IEngine& engine,
     uiContainer.SetLayer(static_cast<int>(Layer::Ui));
     scene->GetRoot().AddChild(uiContainer);
 
+    Pht::Vec3 planetsLightDirection {
+        std::rand() % 2 == 0 ? Pht::Vec3{1.0f, 1.0f, 1.0f} : Pht::Vec3{-1.0f, 1.0f, 1.0f}
+    };
+    
     mPlanets = std::make_unique<Planets>(engine,
                                          *scene,
                                          static_cast<int>(Layer::Planets),
                                          planets,
-                                         Pht::Vec3{-1.0f, 1.0f, 1.0f});
+                                         planetsLightDirection);
 
     mClouds = std::make_unique<Clouds>(engine,
                                        *scene,

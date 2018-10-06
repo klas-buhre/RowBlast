@@ -3,9 +3,6 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto lightIntensity {0.98f};
-    const Pht::Vec3 backgroundLightDirection {-1.0f, 1.0f, 1.0f};
-
     const std::vector<MapPlace> places {
         MapPlace {MapLevel {1, {-24.0f, -3.0f, 10.0f}}},
         MapPlace {MapLevel {2, {-21.5f, -1.2f, 9.0f}}},
@@ -171,7 +168,13 @@ namespace {
             .mType = PlanetType::Moon
         }
     };
+
+    const std::vector<BackgroundLight> backgroundLights {
+        BackgroundLight {.mDirection = {1.0f, 1.0f, 1.0f}, .mSun = Pht::Optional<Sun>{}},
+        BackgroundLight {.mDirection = {-1.0f, 1.0f, 1.0f}, .mSun = Pht::Optional<Sun>{}}
+    };
     
+    constexpr auto lightIntensity {0.98f};
     const Pht::Color cloudColor {1.0f, 1.0f, 1.0f};
 }
 
@@ -182,9 +185,8 @@ World RowBlast::GetWorld1() {
         cloudPaths,
         hazeLayers,
         planets,
-        Pht::Optional<Sun>{},
+        backgroundLights,
         "",
-        backgroundLightDirection,
         lightIntensity,
         lightIntensity,
         cloudColor

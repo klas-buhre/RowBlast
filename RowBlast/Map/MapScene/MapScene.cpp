@@ -39,6 +39,13 @@ namespace {
         UiViews,
         SceneSwitchFadeEffect = GlobalLayer::sceneSwitchFadeEffect
     };
+
+    const BackgroundLight& GetBackgroundLight(const World& world) {
+        auto& backgroundLights {world.mBackgroundLights};
+        
+        assert(!backgroundLights.empty());
+        return backgroundLights[std::rand() % backgroundLights.size()];
+    }
 }
 
 MapScene::MapScene(Pht::IEngine& engine,
@@ -107,9 +114,11 @@ void MapScene::Init() {
     mCamera = &scene->CreateCamera();
     scene->GetRoot().AddChild(mCamera->GetSceneObject());
     
-    CreateWorld(world);
+    auto& backgroundLight {GetBackgroundLight(world)};
+    
+    CreateWorld(world, backgroundLight);
     CreatePins(world);
-    CreateEffects(world);
+    CreateEffects(world, backgroundLight);
     
     if (mClickedPortalNextLevelId.HasValue()) {
         SetCameraAtPortal(mClickedPortalNextLevelId.GetValue());
@@ -139,7 +148,7 @@ void MapScene::Init() {
     mClickedPortalNextLevelId = Pht::Optional<int> {};
 }
 
-void MapScene::CreateWorld(const World& world) {
+void MapScene::CreateWorld(const World& world, const BackgroundLight& backgroundLight) {
     if (!world.mBackgroundTextureFilename.empty()) {
         Pht::Material backgroundMaterial {world.mBackgroundTextureFilename};
         
@@ -156,7 +165,7 @@ void MapScene::CreateWorld(const World& world) {
                                          *mScene,
                                          static_cast<int>(Layer::Space),
                                          world.mPlanets,
-                                         world.mBackgroundLightDirection);
+                                         backgroundLight.mDirection);
 
     mClouds = std::make_unique<Clouds>(mEngine,
                                        *mScene,
@@ -258,7 +267,7 @@ void MapScene::CreatePin(Pht::SceneObject& pinsContainerObject, const MapPlace& 
     mPins.push_back(std::move(pin));
 }
 
-void MapScene::CreateEffects(const World& world) {
+void MapScene::CreateEffects(const World& world, const BackgroundLight& backgroundLight) {
     if (auto* pin {GetLevelPin(mUserData.GetProgressManager().GetProgress())}) {
         auto& pinPosition {pin->GetPosition()};
         CreateNextLevelParticleEffect(mEngine, *mScene, pinPosition, static_cast<int>(Layer::Map));
@@ -273,10 +282,10 @@ void MapScene::CreateEffects(const World& world) {
         }
     }
     
-    if (world.mSun.HasValue()) {
+    if (backgroundLight.mSun.HasValue()) {
         CreateSunParticleEffect(mEngine,
                                 *mScene,
-                                world.mSun.GetValue(),
+                                backgroundLight.mSun.GetValue(),
                                 static_cast<int>(Layer::SunEffect));
     }
 }

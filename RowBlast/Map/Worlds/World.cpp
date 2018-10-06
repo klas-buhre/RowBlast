@@ -2,9 +2,6 @@
 
 #include <assert.h>
 
-#include "World1.hpp"
-#include "World2.hpp"
-
 using namespace RowBlast;
 
 MapPlace::MapPlace(const MapLevel& mapLevel) :
