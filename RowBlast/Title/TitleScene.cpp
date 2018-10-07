@@ -242,6 +242,28 @@ namespace {
                 return (std::rand() % 2) + 1;
         }
     }
+    
+    Pht::Vec3 GetPlanetsLightDirection(int planetsLightIndex) {
+        switch (planetsLightIndex) {
+            case 0:
+                return Pht::Vec3{1.0f, 1.0f, 1.0f};
+            case 1:
+                return Pht::Vec3{-1.0f, 1.0f, 1.0f};
+            default:
+                assert(!"Unsupported light index");
+        }
+    }
+    
+    float GetPlanetsLightIntensity(int planetsLightIndex) {
+        switch (planetsLightIndex) {
+            case 0:
+                return 1.15f;
+            case 1:
+                return 1.2f;
+            default:
+                assert(!"Unsupported light index");
+        }
+    }
 }
 
 TitleScene::TitleScene(Pht::IEngine& engine,
@@ -287,15 +309,14 @@ TitleScene::TitleScene(Pht::IEngine& engine,
     uiContainer.SetLayer(static_cast<int>(Layer::Ui));
     scene->GetRoot().AddChild(uiContainer);
 
-    Pht::Vec3 planetsLightDirection {
-        std::rand() % 2 == 0 ? Pht::Vec3{1.0f, 1.0f, 1.0f} : Pht::Vec3{-1.0f, 1.0f, 1.0f}
-    };
+    auto planetsLightIndex {std::rand() % 2};
     
     mPlanets = std::make_unique<Planets>(engine,
                                          *scene,
                                          static_cast<int>(Layer::Planets),
                                          planets,
-                                         planetsLightDirection);
+                                         GetPlanetsLightDirection(planetsLightIndex),
+                                         GetPlanetsLightIntensity(planetsLightIndex));
 
     mClouds = std::make_unique<Clouds>(engine,
                                        *scene,

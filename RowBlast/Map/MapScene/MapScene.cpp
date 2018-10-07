@@ -165,7 +165,8 @@ void MapScene::CreateWorld(const World& world, const BackgroundLight& background
                                          *mScene,
                                          static_cast<int>(Layer::Space),
                                          world.mPlanets,
-                                         backgroundLight.mDirection);
+                                         backgroundLight.mDirection,
+                                         backgroundLight.mIntensity);
 
     mClouds = std::make_unique<Clouds>(mEngine,
                                        *mScene,

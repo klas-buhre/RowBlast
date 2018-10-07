@@ -170,8 +170,16 @@ namespace {
     };
 
     const std::vector<BackgroundLight> backgroundLights {
-        BackgroundLight {.mDirection = {1.0f, 1.0f, 1.0f}, .mSun = Pht::Optional<Sun>{}},
-        BackgroundLight {.mDirection = {-1.0f, 1.0f, 1.0f}, .mSun = Pht::Optional<Sun>{}}
+        BackgroundLight {
+            .mDirection = {1.0f, 1.0f, 1.0f},
+            .mIntensity = 1.15f,
+            .mSun = Pht::Optional<Sun>{}
+        },
+        BackgroundLight {
+            .mDirection = {-1.0f, 1.0f, 1.0f},
+            .mIntensity = 1.2f,
+            .mSun = Pht::Optional<Sun>{}
+        }
     };
     
     constexpr auto lightIntensity {0.98f};

@@ -166,7 +166,8 @@ Planets::Planets(Pht::IEngine& engine,
                  Pht::Scene& scene,
                  int layerIndex,
                  const std::vector<PlanetConfig>& planetConfigs,
-                 const Pht::Vec3& backgroundLightDirection) :
+                 const Pht::Vec3& lightDirection,
+                 float lightIntensity) :
     mEngine {engine} {
 
     auto& containerSceneObject {scene.CreateSceneObject()};
@@ -176,8 +177,8 @@ Planets::Planets(Pht::IEngine& engine,
     auto& lightSceneObject {scene.CreateSceneObject()};
     lightSceneObject.SetIsVisible(false);
     auto lightComponent {std::make_unique<Pht::LightComponent>(lightSceneObject)};
-    lightComponent->SetDirection(backgroundLightDirection);
-    lightComponent->SetDirectionalIntensity(1.15f);
+    lightComponent->SetDirection(lightDirection);
+    lightComponent->SetDirectionalIntensity(lightIntensity);
     auto* planetsRenderPass {scene.GetRenderPass(layerIndex)};
     planetsRenderPass->SetLight(lightComponent.get());
     lightSceneObject.SetComponent<Pht::LightComponent>(std::move(lightComponent));

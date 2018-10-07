@@ -53,8 +53,8 @@ void Materials::CreateGoldMaterial() {
 }
 
 void Materials::CreateBlueMaterial() {
-    Pht::Color ambient {0.05f, 0.5225f, 1.0f};
-    Pht::Color diffuse {0.0f, 0.475f, 1.0f};
+    Pht::Color ambient {0.05f, 0.5225f, 0.97f};
+    Pht::Color diffuse {0.0f, 0.475f, 0.97f};
     Pht::Color specular {1.0f, 1.0f, 1.0f};
     auto shininess {21.0f};
     mBlueMaterial = std::make_unique<Pht::Material>(mEnvMapTextureFilenames,

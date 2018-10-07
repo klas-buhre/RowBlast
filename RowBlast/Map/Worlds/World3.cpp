@@ -28,14 +28,14 @@ namespace {
     const std::vector<BlockPathVolume> blockPaths {
         BlockPathVolume {{-27.0f, 0.0f, -1.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::B},
         BlockPathVolume {{-25.0f, 3.0f, 2.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::SingleBlock},
-        BlockPathVolume {{-21.0f, -3.0f, 13.7f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::Asteroid},
+        BlockPathVolume {{-20.5f, -3.0f, 13.7f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::Asteroid},
         BlockPathVolume {{-17.0f, -4.0f, 12.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::L},
         BlockPathVolume {{-17.0f, 2.0f, 7.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::Asteroid},
         BlockPathVolume {{-12.0f, -4.0f, 13.7f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::SingleBlock},
         BlockPathVolume {{-9.0f, 0.5f, 5.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::SingleBlock},
         BlockPathVolume {{-5.0f, -4.0f, 3.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::ShortI},
-        BlockPathVolume {{-3.0f, -3.0f, 12.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::Asteroid},
-        BlockPathVolume {{-1.0f, 5.0f, 8.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::SingleBlock},
+        BlockPathVolume {{-3.0f, -3.0f, 13.7f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::Asteroid},
+        BlockPathVolume {{-1.0f, 5.9f, 8.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::SingleBlock},
         BlockPathVolume {{1.0f, -14.0f, 0.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::SingleBlock},
         BlockPathVolume {{3.0f, 0.5f, 8.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::B},
         BlockPathVolume {{5.0f, -5.0f, 11.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::SingleBlock},
@@ -80,16 +80,19 @@ namespace {
     const std::vector<BackgroundLight> backgroundLights {
         BackgroundLight {
             .mDirection = {-1.0f, 1.0f, 0.85f},
-            .mSun = Sun{.mPosition = {-20.0f, 440.0f, -720.0f}, .mSize = {580.0f, 580.0f}}
+            .mIntensity = 1.15f,
+            .mSun = Sun {.mPosition = {-20.0f, 440.0f, -720.0f}, .mSize = {580.0f, 580.0f}}
         },
         BackgroundLight {
             .mDirection = {-0.75f, 1.0f, -0.5f},
+            .mIntensity = 1.15f,
             .mSun = Sun {.mPosition = {-10.0f, 240.0f, -620.0f}, .mSize = {580.0f, 580.0f}}
         }
     };
 
-    constexpr auto ambientLightIntensity {0.82f};
-    constexpr auto directionalLightIntensity {0.82f};
+    constexpr auto ambientLightIntensity {0.81f};
+    constexpr auto directionalLightIntensity {0.81f};
+
     const Pht::Color cloudColor {1.0f, 1.0f, 1.0f};
     const std::string backgroundTextureFilename {"space.jpg"};
 }

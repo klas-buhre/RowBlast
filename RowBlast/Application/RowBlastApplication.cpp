@@ -45,14 +45,7 @@ Backlog:
     -Credit FastNoise, MIT license: https://github.com/Auburns/FastNoise/
 
 Ongoing tasks:
-    -Maybe a bit less blue in the blue material.
     -Space world.
-      -Map scene.
-        -Background texture.
-        -New planets.
-        -Star.
-        -Asteroid belt.
-        -Trim foreground light.
       -Game scene:
         -Background textures.
           -Reduce star sizes by scaling down the map scene background texture (maybe use the 4k

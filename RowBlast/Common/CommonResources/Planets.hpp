@@ -36,7 +36,8 @@ namespace RowBlast {
                 Pht::Scene& scene,
                 int layerIndex,
                 const std::vector<PlanetConfig>& planetConfigs,
-                const Pht::Vec3& backgroundLightDirection);
+                const Pht::Vec3& lightDirection,
+                float lightIntensity);
         
         void Update();
         

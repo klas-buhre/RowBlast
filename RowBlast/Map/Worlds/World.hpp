@@ -52,6 +52,7 @@ namespace RowBlast {
     
     struct BackgroundLight {
         Pht::Vec3 mDirection {-1.0f, 1.0f, 1.0f};
+        float mIntensity {1.2f};
         Pht::Optional<Sun> mSun;
     };
 
