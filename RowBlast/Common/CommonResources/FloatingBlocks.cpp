@@ -59,6 +59,8 @@ FloatingBlocks::FloatingBlocks(Pht::IEngine& engine,
     
     CreateBomb(sceneManager, scale);
     CreateRowBomb(sceneManager, scale);
+    CreateAsteroid(sceneManager, scale);
+    CreateBigAsteroid(sceneManager, scale);
     
     auto& sceneObject {scene.CreateSceneObject()};
     sceneObject.SetLayer(layerIndex);
@@ -103,6 +105,18 @@ void FloatingBlocks::CreateRowBomb(Pht::ISceneManager& sceneManager, float scale
     rowBombMaterial.SetEmissive(Pht::Color {2.0f, 2.0f, 2.0f});
     mRowBombRenderable = sceneManager.CreateRenderableObject(Pht::ObjMesh {"laser_bomb_224.obj", 0.3f * scale},
                                                              rowBombMaterial);
+}
+
+void FloatingBlocks::CreateAsteroid(Pht::ISceneManager& sceneManager, float scale) {
+    Pht::Material asteroidMaterial {"asteroid.jpg", 0.425f, 1.0f, 0.05f, 1.0f};
+    mAsteroidRenderable = sceneManager.CreateRenderableObject(Pht::ObjMesh {"asteroid_998.obj", 17.6f * scale},
+                                                              asteroidMaterial);
+}
+
+void FloatingBlocks::CreateBigAsteroid(Pht::ISceneManager& sceneManager, float scale) {
+    Pht::Material asteroidMaterial {"asteroid.jpg", 0.425f, 1.0f, 0.05f, 1.0f};
+    mBigAsteroidRenderable = sceneManager.CreateRenderableObject(Pht::ObjMesh {"asteroid_998.obj", 30.0f * scale},
+                                                                 asteroidMaterial);
 }
 
 void FloatingBlocks::InitBlocks(Pht::Scene& scene, float scale, float angularVelocity) {
@@ -163,6 +177,8 @@ void FloatingBlocks::InitBlocks(Pht::Scene& scene, float scale, float angularVel
                 break;
             case FloatingPieceType::Bomb:
             case FloatingPieceType::RowBomb:
+            case FloatingPieceType::Asteroid:
+            case FloatingPieceType::BigAsteroid:
                 block.mSceneObject->SetRenderable(&renderable);
                 break;
         }
@@ -179,6 +195,10 @@ Pht::RenderableObject& FloatingBlocks::CalcBlockRenderable(const BlockPathVolume
             return *mBombRenderable;
         case FloatingPieceType::RowBomb:
             return *mRowBombRenderable;
+        case FloatingPieceType::Asteroid:
+            return *mAsteroidRenderable;
+        case FloatingPieceType::BigAsteroid:
+            return *mBigAsteroidRenderable;
         default:
             break;
     }

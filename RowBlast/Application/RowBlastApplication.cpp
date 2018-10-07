@@ -25,7 +25,6 @@ Backlog:
      not really matter since the user can select any piece from the selectables but maybe it is most 
      convenient to go back to the state before the move and not the initial state.
   -Rendering:
-    -Maybe a bit less blue in the blue material.
     -Maybe less reflectivity in the gray and yellow field block materials.
     -Green and yellow field block materials could be a bit darker.
     -Maybe smooth the dark area in the field env map.
@@ -46,14 +45,15 @@ Backlog:
     -Credit FastNoise, MIT license: https://github.com/Auburns/FastNoise/
 
 Ongoing tasks:
-    -Randomize light background direction between -1 and 1 for title scene and sky worlds. And sun
-     position in space world.
+    -A level should say if there is an asteroid in the floating blocks.
+    -Maybe a bit less blue in the blue material.
     -Space world.
       -Map scene.
         -Background texture.
         -New planets.
         -Star.
         -Asteroid belt.
+        -Trim foreground light.
       -Game scene:
         -Background textures.
           -Reduce star sizes by scaling down the map scene background texture (maybe use the 4k

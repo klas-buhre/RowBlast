@@ -26,7 +26,9 @@ namespace RowBlast {
         ShortI,
         B,
         Bomb,
-        RowBomb
+        RowBomb,
+        Asteroid,
+        BigAsteroid
     };
     
     enum class FloatingBlockColor {
@@ -67,6 +69,8 @@ namespace RowBlast {
 
         void CreateBomb(Pht::ISceneManager& sceneManager, float scale);
         void CreateRowBomb(Pht::ISceneManager& sceneManager, float scale);
+        void CreateAsteroid(Pht::ISceneManager& sceneManager, float scale);
+        void CreateBigAsteroid(Pht::ISceneManager& sceneManager, float scale);
         void InitBlocks(Pht::Scene& scene, float scale, float angularVelocity);
         Pht::RenderableObject& CalcBlockRenderable(const BlockPathVolume& volume);
         void CreateLPiece(FloatingBlock& block,
@@ -94,6 +98,8 @@ namespace RowBlast {
         std::array<std::unique_ptr<Pht::RenderableObject>, numBlockRenderables> mBlockRenderables;
         std::unique_ptr<Pht::RenderableObject> mBombRenderable;
         std::unique_ptr<Pht::RenderableObject> mRowBombRenderable;
+        std::unique_ptr<Pht::RenderableObject> mAsteroidRenderable;
+        std::unique_ptr<Pht::RenderableObject> mBigAsteroidRenderable;
         float mEmissiveAnimationTime {0.0f};
         std::vector<BlockPathVolume> mVolumes;
     };

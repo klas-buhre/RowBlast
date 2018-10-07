@@ -167,11 +167,13 @@ namespace {
                 assert(vertexRef.mTextureCoordIndex < quantities.mTextureCoordCount);
             }
             
-            objFile.get();
+            if (objFile.peek() == '/') {
+                objFile.get();
             
-            objFile >> vertexRef.mNormalIndex;
-            vertexRef.mNormalIndex--;
-            assert(vertexRef.mNormalIndex < quantities.mNormalCount);
+                objFile >> vertexRef.mNormalIndex;
+                vertexRef.mNormalIndex--;
+                assert(vertexRef.mNormalIndex < quantities.mNormalCount);
+            }
         } else {
             vertexRef.mNormalIndex = vertexRef.mVertexIndex;
         }

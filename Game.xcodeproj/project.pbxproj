@@ -30,6 +30,8 @@
 		6234616E2166692700ECD0DF /* TextTopGradient.vert in Resources */ = {isa = PBXBuildFile; fileRef = 6234616C2166692700ECD0DF /* TextTopGradient.vert */; };
 		6234617921668D1E00ECD0DF /* planet_rayeon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6234617821668D1E00ECD0DF /* planet_rayeon.jpg */; };
 		6234617E2167BD7800ECD0DF /* SunParticleEffect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6234617C2167BD7700ECD0DF /* SunParticleEffect.cpp */; };
+		6234618C21691DAF00ECD0DF /* asteroid_998.obj in Resources */ = {isa = PBXBuildFile; fileRef = 6234618B21691DAE00ECD0DF /* asteroid_998.obj */; };
+		6234618E216920F200ECD0DF /* asteroid.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6234618D216920F200ECD0DF /* asteroid.jpg */; };
 		62398E60209A2784000F5F79 /* TitleAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62398E5E209A2784000F5F79 /* TitleAnimation.cpp */; };
 		623E3D5720DE4A2600BB800F /* World.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623E3D5520DE4A2600BB800F /* World.cpp */; };
 		623E3D5820DE4A2600BB800F /* World1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623E3D5620DE4A2600BB800F /* World1.cpp */; };
@@ -428,6 +430,8 @@
 		6234617821668D1E00ECD0DF /* planet_rayeon.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = planet_rayeon.jpg; sourceTree = "<group>"; };
 		6234617C2167BD7700ECD0DF /* SunParticleEffect.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SunParticleEffect.cpp; sourceTree = "<group>"; };
 		6234617D2167BD7700ECD0DF /* SunParticleEffect.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SunParticleEffect.hpp; sourceTree = "<group>"; };
+		6234618B21691DAE00ECD0DF /* asteroid_998.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = asteroid_998.obj; sourceTree = "<group>"; };
+		6234618D216920F200ECD0DF /* asteroid.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = asteroid.jpg; sourceTree = "<group>"; };
 		62398E5E209A2784000F5F79 /* TitleAnimation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TitleAnimation.cpp; sourceTree = "<group>"; };
 		62398E5F209A2784000F5F79 /* TitleAnimation.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TitleAnimation.hpp; sourceTree = "<group>"; };
 		623E3D5320DE4A2600BB800F /* World.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = World.hpp; sourceTree = "<group>"; };
@@ -1312,6 +1316,7 @@
 		6270DC571FCB22AE00FB457D /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				6234618B21691DAE00ECD0DF /* asteroid_998.obj */,
 				626940A4215932C800D9857A /* ufo_3620.obj */,
 				6269408E2154F94300D9857A /* planet_ring.obj */,
 				62E01BAE2153E00E009F0B99 /* planet_960.obj */,
@@ -2398,6 +2403,7 @@
 		62B1CB64210F8F8500D0F195 /* Game */ = {
 			isa = PBXGroup;
 			children = (
+				6234618D216920F200ECD0DF /* asteroid.jpg */,
 				62B1CB65210F8F8500D0F195 /* bomb_798_emission.jpg */,
 				62B1CB67210F8F8500D0F195 /* bomb_798.jpg */,
 				62B1CB75210F8F8500D0F195 /* cloud_B_envmap.jpg */,
@@ -2519,6 +2525,7 @@
 				629B837C20C544F000DD2D0E /* level35.json in Resources */,
 				629B838020C58B8100DD2D0E /* level37.json in Resources */,
 				6269408F2154F94300D9857A /* planet_ring.obj in Resources */,
+				6234618C21691DAF00ECD0DF /* asteroid_998.obj in Resources */,
 				62B1CB9C2110BA4600D0F195 /* laser_frame4.jpg in Resources */,
 				62B1CB89210F8F8600D0F195 /* laser_bomb_diffuse.jpg in Resources */,
 				6270DC631FCB22AE00FB457D /* star.obj in Resources */,
@@ -2590,6 +2597,7 @@
 				62785B2620875937006F9869 /* PixelLighting.frag in Resources */,
 				629B839020CAD7C500DD2D0E /* triangle_320_r90.obj in Resources */,
 				627D37A8209B55FA0068B50C /* TextBottomGradient.frag in Resources */,
+				6234618E216920F200ECD0DF /* asteroid.jpg in Resources */,
 				627D381B20A59B9E0068B50C /* medium_button_0385.obj in Resources */,
 				6270DC8A1FCB23D800FB457D /* level11.json in Resources */,
 				6270DC891FCB23D800FB457D /* level10.json in Resources */,
