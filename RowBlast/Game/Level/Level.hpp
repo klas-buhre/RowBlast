@@ -23,6 +23,11 @@ namespace RowBlast {
             Dark
         };
         
+        enum class FloatingBlocksSet {
+            Standard,
+            Asteroid
+        };
+        
         struct TutorialMove {
             Pht::IVec2 mPosition;
             Rotation mRotation;
@@ -41,6 +46,7 @@ namespace RowBlast {
               const std::vector<TutorialMove>& predeterminedMoves,
               const std::vector<TutorialMove>& suggestedMoves,
               const std::string& backgroundTextureFilename,
+              FloatingBlocksSet floatingBlocksSet,
               LightIntensity lightIntensity,
               bool isPartOfTutorial);
         
@@ -108,6 +114,10 @@ namespace RowBlast {
             return mBackgroundTextureFilename;
         }
         
+        FloatingBlocksSet GetFloatingBlocksSet() const {
+            return mFloatingBlocksSet;
+        }
+        
         LightIntensity GetLightIntensity() const {
             return mLightIntensity;
         }
@@ -133,6 +143,7 @@ namespace RowBlast {
         std::unique_ptr<CellGrid> mClearGrid;
         std::unique_ptr<BlueprintCellGrid> mBlueprintGrid;
         std::string mBackgroundTextureFilename;
+        FloatingBlocksSet mFloatingBlocksSet {FloatingBlocksSet::Standard};
         LightIntensity mLightIntensity {LightIntensity::Daylight};
         bool mIsPartOfTutorial {false};
     };

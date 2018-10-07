@@ -45,7 +45,6 @@ Backlog:
     -Credit FastNoise, MIT license: https://github.com/Auburns/FastNoise/
 
 Ongoing tasks:
-    -A level should say if there is an asteroid in the floating blocks.
     -Maybe a bit less blue in the blue material.
     -Space world.
       -Map scene.

@@ -27,6 +27,20 @@ namespace {
         assert(!"Unsupported light intensity");
     }
 
+    Level::FloatingBlocksSet ReadFloatingBlocksSet(const rapidjson::Document& document) {
+        auto floatingBlocksSet {Pht::Json::ReadString(document, "floatingBlocksSet")};
+        
+        if (floatingBlocksSet == "Standard") {
+            return Level::FloatingBlocksSet::Standard;
+        }
+
+        if (floatingBlocksSet == "Asteroid") {
+            return Level::FloatingBlocksSet::Asteroid;
+        }
+
+        assert(!"Unsupported floating blocks set");
+    }
+
     std::vector<const Piece*> ReadPieceTypes(const rapidjson::Document& document,
                                              const std::string& memberName,
                                              const PieceTypes& pieceTypes) {
@@ -297,6 +311,7 @@ std::unique_ptr<Level> LevelLoader::Load(int levelId, const LevelResources& leve
     auto& pieceTypes {levelResources.GetPieceTypes()};
     
     auto backgroundTextureFilename {Pht::Json::ReadString(document, "background")};
+    auto floatingBlocksSet {ReadFloatingBlocksSet(document)};
     auto lightIntensity {ReadLightIntensity(document)};
     auto levelPieces {ReadPieceTypes(document, "pieces", pieceTypes)};
     
@@ -357,6 +372,7 @@ std::unique_ptr<Level> LevelLoader::Load(int levelId, const LevelResources& leve
                                 predeterminedMoves,
                                 suggestedMoves,
                                 backgroundTextureFilename,
+                                floatingBlocksSet,
                                 lightIntensity,
                                 isPartOfTutorial)
     };

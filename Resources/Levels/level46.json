@@ -3,6 +3,7 @@
     "moves": 50,
     "twoStars": 40,
     "threeStars": 25,
+    "floatingBlocksSet": "Asteroid",
     "background": "sky1.jpg",
     "lightIntensity": "Dark",
     "pieces": [

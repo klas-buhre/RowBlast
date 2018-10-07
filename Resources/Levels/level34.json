@@ -3,6 +3,7 @@
     "moves": 28,
     "twoStars": 23,
     "threeStars": 18,
+    "floatingBlocksSet": "Standard",
     "background": "sky4.jpg",
     "lightIntensity": "Sunset",
     "pieces": [

@@ -3,6 +3,7 @@
     "moves": 40,
     "twoStars": 30,
     "threeStars": 18,
+    "floatingBlocksSet": "Standard",
     "background": "sky2.jpg",
     "lightIntensity": "Daylight",
     "partOfTutorial": true,

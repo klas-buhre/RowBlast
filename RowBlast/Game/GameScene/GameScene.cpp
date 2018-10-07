@@ -32,36 +32,7 @@ namespace {
     constexpr auto sunsetLightIntensity {0.94f};
     constexpr auto darkLightIntensity {0.85f};
 
-#if 0
-    const std::vector<BlockPathVolume> floatingBlockPaths {
-        BlockPathVolume {
-            .mPosition = {0.0f, 0.0f, -10.0f},
-            .mSize = {40.0f, 10.0f, 5.0f}
-        },
-        BlockPathVolume {
-            .mPosition = {0.0f, -15.0f, -10.0f},
-            .mSize = {40.0f, 10.0f, 5.0f}
-        },
-        BlockPathVolume {
-            .mPosition = {0.0f, 15.0f, -10.0f},
-            .mSize = {40.0f, 10.0f, 5.0f}
-        },
-        BlockPathVolume {
-            .mPosition = {0.0f, 25.0f, -20.0f},
-            .mSize = {40.0f, 10.0f, 5.0f}
-        },
-        BlockPathVolume {
-            .mPosition = {0.0f, -25.0f, -20.0f},
-            .mSize = {40.0f, 10.0f, 5.0f}
-        },
-        BlockPathVolume {
-            .mPosition = {0.0f, 0.0f, -20.0f},
-            .mSize = {40.0f, 10.0f, 5.0f}
-        }
-    };
-#endif
-
-    const std::vector<BlockPathVolume> floatingBlockPaths {
+    const std::vector<BlockPathVolume> standardFloatingBlockPaths {
         BlockPathVolume {
             .mPosition = {-10.0f, 15.0f, -10.0f},
             .mSize = {0.0f, 0.0f, 0.0f},
@@ -95,6 +66,50 @@ namespace {
             .mBlockColor = FloatingBlockColor::Gray
         },
     };
+
+    const std::vector<BlockPathVolume> asteroidFloatingBlockPaths {
+        BlockPathVolume {
+            .mPosition = {-10.0f, 15.0f, -10.0f},
+            .mSize = {0.0f, 0.0f, 0.0f},
+            .mPieceType = FloatingPieceType::L,
+            .mBlockColor = FloatingBlockColor::RandomExceptGray
+        },
+        BlockPathVolume {
+            .mPosition = {12.0f, 22.0f, -20.0f},
+            .mSize = {0.0f, 0.0f, 0.0f},
+            .mBlockColor = FloatingBlockColor::RandomExceptGray
+        },
+        BlockPathVolume {
+            .mPosition = {-10.0f, 0.0f, -10.0f},
+            .mSize = {0.0f, 0.0f, 0.0f},
+            .mBlockColor = FloatingBlockColor::RandomExceptGray
+        },
+        BlockPathVolume {
+            .mPosition = {13.0f, 0.0f, -20.0f},
+            .mSize = {0.0f, 0.0f, 0.0f},
+            .mPieceType = FloatingPieceType::L,
+            .mBlockColor = FloatingBlockColor::RandomExceptGray
+        },
+        BlockPathVolume {
+            .mPosition = {-7.0f, -20.0f, -10.0f},
+            .mSize = {0.0f, 0.0f, 0.0f},
+            .mBlockColor = FloatingBlockColor::Gray
+        },
+        BlockPathVolume {
+            .mPosition = {10.0f, -30.0f, -20.0f},
+            .mSize = {0.0f, 0.0f, 0.0f},
+            .mPieceType = FloatingPieceType::BigAsteroid
+        }
+    };
+    
+    const std::vector<BlockPathVolume>& GetFloatingBlockPaths(const Level& level) {
+        switch (level.GetFloatingBlocksSet()) {
+            case Level::FloatingBlocksSet::Standard:
+                return standardFloatingBlockPaths;
+            case Level::FloatingBlocksSet::Asteroid:
+                return asteroidFloatingBlockPaths;
+        }
+    }
 }
 
 GameScene::GameScene(Pht::IEngine& engine,
@@ -130,7 +145,7 @@ void GameScene::Init(const Level& level,
     
     CreateBackground(level);
     CreateBackgroundLayerLight(level);
-    CreateFloatingCubes();
+    CreateFloatingBlocks(level);
     CreateLevelCompletedEffectsContainer();
     CreateFieldQuad(level);
     CreateFieldContainer();
@@ -254,11 +269,11 @@ void GameScene::CreateBackgroundLayerLight(const Level& level) {
     mScene->GetRoot().AddChild(lightSceneObject);
 }
 
-void GameScene::CreateFloatingCubes() {
+void GameScene::CreateFloatingBlocks(const Level& level) {
     mFloatingBlocks = std::make_unique<FloatingBlocks>(mEngine,
                                                        *mScene,
                                                        static_cast<int>(Layer::Background),
-                                                       floatingBlockPaths,
+                                                       GetFloatingBlockPaths(level),
                                                        mCommonResources,
                                                        7.7f,
                                                        8.0f);
