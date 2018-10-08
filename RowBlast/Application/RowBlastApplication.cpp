@@ -132,10 +132,12 @@ Ordered Backlog:
         Done
     -Space world.
         Cost: 10
-    -Levels for the space world.
-        Cost: 7
     -Finish the remaining game scene-related rendering tasks.
         Cost: 4
+    -Do the most important gameplay tasks.
+        Cost: 7
+    -Levels for the space world.
+        Cost: 7
     -Net/HTTP.
         Cost: 10
     -Analytics.
@@ -153,7 +155,7 @@ Ordered Backlog:
     -Back end.
         Cost: ?
 
-        Total cost: 217
+        Total cost: 224
 
 
 Comomon piece type sets:
