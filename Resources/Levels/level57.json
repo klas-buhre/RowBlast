@@ -4,7 +4,7 @@
     "twoStars": 15,
     "threeStars": 10,
     "floatingBlocksSet": "Asteroid",
-    "background": "sky5.jpg",
+    "background": "space1.jpg",
     "lightIntensity": "Dark",
     "pieces": [
         "LongI",

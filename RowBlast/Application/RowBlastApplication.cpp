@@ -47,9 +47,6 @@ Backlog:
 Ongoing tasks:
     -Space world.
       -Game scene:
-        -Background textures.
-          -Reduce star sizes by scaling down the map scene background texture (maybe use the 4k
-           map scene background texture for this).
         -Adjust field quad brightness.
         -Adjust background layer light.
 
