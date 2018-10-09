@@ -30,11 +30,12 @@ namespace {
     const Pht::Vec3 lightDirectionB {1.0f, 1.0f, 0.74f};
     constexpr auto daylightLightIntensity {0.985f};
     constexpr auto sunsetLightIntensity {0.94f};
-    constexpr auto darkLightIntensity {0.85f};
+    constexpr auto darkLightIntensity {0.78f};
+    constexpr auto darkFieldQuadBrightness {0.9125f};
 
     const std::vector<BlockPathVolume> standardFloatingBlockPaths {
         BlockPathVolume {
-            .mPosition = {-10.0f, 15.0f, -10.0f},
+            .mPosition = {-11.0f, 15.0f, -15.0f},
             .mSize = {0.0f, 0.0f, 0.0f},
             .mPieceType = FloatingPieceType::L,
             .mBlockColor = FloatingBlockColor::RandomExceptGray
@@ -45,7 +46,7 @@ namespace {
             .mBlockColor = FloatingBlockColor::RandomExceptGray
         },
         BlockPathVolume {
-            .mPosition = {-10.0f, 0.0f, -10.0f},
+            .mPosition = {-11.0f, 0.0f, -15.0f},
             .mSize = {0.0f, 0.0f, 0.0f},
             .mBlockColor = FloatingBlockColor::RandomExceptGray
         },
@@ -56,7 +57,7 @@ namespace {
             .mBlockColor = FloatingBlockColor::RandomExceptGray
         },
         BlockPathVolume {
-            .mPosition = {-7.0f, -20.0f, -10.0f},
+            .mPosition = {-7.0f, -20.0f, -12.0f},
             .mSize = {0.0f, 0.0f, 0.0f},
             .mBlockColor = FloatingBlockColor::Gray
         },
@@ -69,39 +70,24 @@ namespace {
 
     const std::vector<BlockPathVolume> asteroidFloatingBlockPaths {
         BlockPathVolume {
-            .mPosition = {-10.0f, 15.0f, -10.0f},
+            .mPosition = {-11.0f, 15.0f, -15.0f},
             .mSize = {0.0f, 0.0f, 0.0f},
             .mPieceType = FloatingPieceType::L,
             .mBlockColor = FloatingBlockColor::RandomExceptGray
         },
         BlockPathVolume {
-            .mPosition = {12.0f, 22.0f, -20.0f},
-            .mSize = {0.0f, 0.0f, 0.0f},
-            .mBlockColor = FloatingBlockColor::RandomExceptGray
-        },
-        BlockPathVolume {
-            .mPosition = {-10.0f, 0.0f, -10.0f},
-            .mSize = {0.0f, 0.0f, 0.0f},
-            .mBlockColor = FloatingBlockColor::RandomExceptGray
-        },
-        BlockPathVolume {
-            .mPosition = {13.0f, 0.0f, -20.0f},
+            .mPosition = {-11.0f, 0.0f, -15.0f},
             .mSize = {0.0f, 0.0f, 0.0f},
             .mPieceType = FloatingPieceType::L,
             .mBlockColor = FloatingBlockColor::RandomExceptGray
         },
         BlockPathVolume {
-            .mPosition = {-7.0f, -20.0f, -10.0f},
-            .mSize = {0.0f, 0.0f, 0.0f},
-            .mBlockColor = FloatingBlockColor::Gray
-        },
-        BlockPathVolume {
-            .mPosition = {10.0f, -30.0f, -20.0f},
+            .mPosition = {-7.0f, -20.0f, -12.0f},
             .mSize = {0.0f, 0.0f, 0.0f},
             .mPieceType = FloatingPieceType::BigAsteroid
         }
     };
-    
+
     const std::vector<BlockPathVolume>& GetFloatingBlockPaths(const Level& level) {
         switch (level.GetFloatingBlocksSet()) {
             case Level::FloatingBlocksSet::Standard:
@@ -276,7 +262,7 @@ void GameScene::CreateFloatingBlocks(const Level& level) {
                                                        GetFloatingBlockPaths(level),
                                                        mCommonResources,
                                                        7.7f,
-                                                       8.0f);
+                                                       6.0f);
 }
 
 void GameScene::CreateLevelCompletedEffectsContainer() {
@@ -319,7 +305,10 @@ void GameScene::CreateFieldContainer() {
 Pht::QuadMesh::Vertices GameScene::CreateFieldVertices(const Level& level) {
     auto width {mFieldWidth + fieldPadding};
     auto height {mFieldHeight + fieldPadding};
-    auto f {level.GetLightIntensity() == Level::LightIntensity::Dark ? 0.9f : 1.0f};
+    
+    auto f {
+        level.GetLightIntensity() == Level::LightIntensity::Dark ? darkFieldQuadBrightness : 1.0f
+    };
 
     return {
         {{-width / 2.0f, -height / 2.0f, 0.0f}, {0.3f * f, 0.3f * f, 0.752f * f, 1.0f}},

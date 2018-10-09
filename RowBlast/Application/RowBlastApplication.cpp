@@ -11,6 +11,7 @@ Backlog:
    X-Fix the piece pull down bug on level 31. See screenshot.
    X-Fix bug where the switchable pieces can change if double clicking on switch when the frame rate
      is really low like in the iPad simulator.
+    -The UFO could be booster. It could clear 3 rows.
     -Maybe the FieldAnalyzer should give more value to cleared level blocks than cleared piece
      blocks.
     -Would be good if the FieldAnalyzer could take cascading/gravity into account when calculating
@@ -45,17 +46,9 @@ Backlog:
     -Credit FastNoise, MIT license: https://github.com/Auburns/FastNoise/
 
 Ongoing tasks:
-    -Space world.
-      -Game scene:
-        -Adjust field quad brightness.
-        -Adjust background layer light.
 
 
 
-Ideas:
-    -The pause button could lead to a widget that has an undo button, a boosters button and a game
-     menu button.
-    -A booster could destroy all welds in the visible part of the field.
 
 Ordered Backlog:
     -Convert GameScene into a Pht::Scene.
@@ -132,8 +125,7 @@ Ordered Backlog:
         Done
     -Space world.
         Cost: 10
-    -Finish the remaining game scene-related rendering tasks.
-        Cost: 4
+        Done
     -Do the most important gameplay tasks.
         Cost: 7
     -Levels for the space world.
@@ -142,6 +134,8 @@ Ordered Backlog:
         Cost: 10
     -Analytics.
         Cost: 5
+    -Finish the remaining game scene-related rendering tasks.
+        Cost: 4
     -Store settings in file.
         Cost: 0.5
     -Sounds/music.

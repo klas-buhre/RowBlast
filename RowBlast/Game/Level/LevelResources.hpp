@@ -33,9 +33,17 @@ namespace RowBlast {
         Pht::RenderableObject& GetBlueprintSlotRenderable() const {
             return *mBlueprintSquare;
         }
-        
+
+        Pht::RenderableObject& GetBlueprintSlotNonDepthWritingRenderable() const {
+            return *mBlueprintSquareNonDepthWriting;
+        }
+
         Pht::RenderableObject& GetBlueprintSlotAnimationRenderable() const {
             return *mBlueprintSquareAnimation;
+        }
+
+        Pht::RenderableObject& GetFieldCellRenderable() const {
+            return *mFieldCell;
         }
 
         Pht::RenderableObject& GetLevelBombRenderable() const {
@@ -54,7 +62,9 @@ namespace RowBlast {
         std::unique_ptr<Pht::RenderableObject> mGrayCube;
         std::unique_ptr<Pht::RenderableObject> mGrayTriangle;
         std::unique_ptr<Pht::RenderableObject> mBlueprintSquare;
+        std::unique_ptr<Pht::RenderableObject> mBlueprintSquareNonDepthWriting;
         std::unique_ptr<Pht::RenderableObject> mBlueprintSquareAnimation;
+        std::unique_ptr<Pht::RenderableObject> mFieldCell;
         std::unique_ptr<Pht::RenderableObject> mLevelBomb;
     };
 }

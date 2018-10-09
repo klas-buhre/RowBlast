@@ -29,7 +29,7 @@ namespace {
     constexpr auto lightAnimationDuration {5.0f};
     const Pht::Color roundedCylinderAmbient {0.75f, 0.75f, 0.75f};
     const Pht::Color roundedCylinderDiffuse {0.55f, 0.55f, 0.55f};
-    constexpr auto roundedCylinderOpacity {0.5f};
+    constexpr auto roundedCylinderOpacity {0.45f};
     constexpr auto cellSize {1.25f};
     
     template <typename T, typename U>
@@ -104,7 +104,7 @@ GameHud::GameHud(Pht::IEngine& engine,
         Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f},
         Pht::TextShadow::Yes,
         {0.05f, 0.05f},
-        {0.4f, 0.4f, 0.4f, 0.5f}
+        {0.27f, 0.27f, 0.27f, 0.5f}
     };
 
     CreateProgressObject(scene, parentObject, textProperties, levelResources);
@@ -199,15 +199,21 @@ void GameHud::CreateGrayBlock(Pht::Scene& scene,
 void GameHud::CreateBlueprintSlot(Pht::Scene& scene,
                                   Pht::SceneObject& progressContainer,
                                   const LevelResources& levelResources) {
-    auto& blueprintSlot {scene.CreateSceneObject()};
-    blueprintSlot.SetRenderable(&levelResources.GetBlueprintSlotRenderable());
-    
-    auto& transform {blueprintSlot.GetTransform()};
+    auto& blueprintSlotContainer {scene.CreateSceneObject()};
+    auto& transform {blueprintSlotContainer.GetTransform()};
     transform.SetPosition({-0.85f, 0.0f, UiLayer::block});
     transform.SetRotation({-30.0f, -30.0f, 0.0f});
     transform.SetScale(0.56f);
+    progressContainer.AddChild(blueprintSlotContainer);
     
-    progressContainer.AddChild(blueprintSlot);
+    auto& blueprintSlot {scene.CreateSceneObject()};
+    blueprintSlot.SetRenderable(&levelResources.GetBlueprintSlotNonDepthWritingRenderable());
+    blueprintSlotContainer.AddChild(blueprintSlot);
+    
+    auto& fieldCell {scene.CreateSceneObject()};
+    fieldCell.SetRenderable(&levelResources.GetFieldCellRenderable());
+    fieldCell.GetTransform().SetPosition({0.0f, 0.0f, -0.005f});
+    blueprintSlotContainer.AddChild(fieldCell);
 }
 
 void GameHud::CreateMovesObject(Pht::Scene& scene,

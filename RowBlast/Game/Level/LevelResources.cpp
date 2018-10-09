@@ -109,13 +109,13 @@ void LevelResources::CreateBlueprintRenderables(Pht::IEngine& engine,
     
     auto rasterizer {std::make_unique<Pht::OfflineRasterizer>(coordinateSystemSize, imageSize)};
     
-    Pht::Vec4 fillColor {1.0f, 1.0f, 1.0f, 0.21f};
+    Pht::Vec4 fillColor {1.0f, 1.0f, 1.0f, 0.192f};
     
     Pht::Vec2 lowerLeft {0.0f, 0.0f};
     Pht::Vec2 upperRight {squareSide, squareSide};
     rasterizer->DrawRectangle(upperRight, lowerLeft, fillColor);
     
-    Pht::Vec4 edgeColor {1.0f, 1.0f, 1.0f, 0.29f};
+    Pht::Vec4 edgeColor {1.0f, 1.0f, 1.0f, 0.265f};
     
     Pht::Vec2 lowerLeft1 {0.0f, 0.0f};
     Pht::Vec2 upperRight1 {squareSide, edgeWidth};
@@ -141,7 +141,13 @@ void LevelResources::CreateBlueprintRenderables(Pht::IEngine& engine,
     auto& sceneManager {engine.GetSceneManager()};
     mBlueprintSquare = sceneManager.CreateRenderableObject(Pht::QuadMesh {squareSide, squareSide},
                                                            imageMaterial);
-    
+
+    Pht::Material imageMaterialNonDepthWriting {*image, Pht::GenerateMipmap::Yes};
+    imageMaterialNonDepthWriting.SetBlend(Pht::Blend::Yes);
+    mBlueprintSquareNonDepthWriting =
+        sceneManager.CreateRenderableObject(Pht::QuadMesh {squareSide, squareSide},
+                                            imageMaterialNonDepthWriting);
+
     Pht::Material animationMaterial {Pht::Color {1.0f, 1.0f, 1.0f}};
     animationMaterial.SetOpacity(BlueprintSlotFillAnimation::mInitialOpacity);
 
@@ -149,6 +155,20 @@ void LevelResources::CreateBlueprintRenderables(Pht::IEngine& engine,
         Pht::QuadMesh {cellSize, cellSize},
         animationMaterial
     );
+    
+    auto f {0.9125f};
+
+    Pht::QuadMesh::Vertices fieldCellVertices  {
+        {{-squareSide / 2.0f, -squareSide / 2.0f, 0.0f}, {0.3f * f, 0.3f * f, 0.752f * f, 1.0f}},
+        {{squareSide / 2.0f, -squareSide / 2.0f, 0.0f}, {0.8f * f, 0.225f * f, 0.425f * f, 1.0f}},
+        {{squareSide / 2.0f, squareSide / 2.0f, 0.0f}, {0.3f * f, 0.3f * f, 0.752f * f, 1.0f}},
+        {{-squareSide / 2.0f, squareSide / 2.0f, 0.0f}, {0.3f * f, 0.3f * f, 0.752f * f, 1.0f}},
+    };
+
+    Pht::Material fieldMaterial;
+    fieldMaterial.SetOpacity(0.96f);
+    mFieldCell = sceneManager.CreateRenderableObject(Pht::QuadMesh {fieldCellVertices},
+                                                     fieldMaterial);
 }
 
 void LevelResources::CreateLevelBombRenderable(Pht::IEngine& engine) {
