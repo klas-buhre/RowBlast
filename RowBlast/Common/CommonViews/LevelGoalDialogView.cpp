@@ -234,6 +234,7 @@ void LevelGoalDialogView::Init(const LevelInfo& levelInfo) {
     
     switch (levelInfo.mObjective) {
         case Level::Objective::Clear:
+        case Level::Objective::BringDownAsteroid:
             mClearObjective->GetSceneObject().SetIsVisible(true);
             break;
         case Level::Objective::Build:

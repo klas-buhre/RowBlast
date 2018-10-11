@@ -9,7 +9,7 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto animationDuration {2.5f};
+    constexpr auto animationDuration {2.0f};
     constexpr auto highSpeedDuration {7.5f};
     constexpr auto warpSpeedDuration {1.0f};
     constexpr auto tiltDuration {3.6f};

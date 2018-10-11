@@ -32,7 +32,9 @@ namespace RowBlast {
             ClearBlocks,
             BlocksCleared,
             FillSlots,
-            SlotsFilled
+            SlotsFilled,
+            BringDownTheAsteroid,
+            TheAsteroidIsDown
         };
         
         SlidingTextAnimation(Pht::IEngine& engine,

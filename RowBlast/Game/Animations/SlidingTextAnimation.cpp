@@ -61,7 +61,9 @@ SlidingTextAnimation::SlidingTextAnimation(Pht::IEngine& engine,
     CreateText(font, 1.6f, {{-1.21f, 0.26f}, "ALL"}, {{-3.3f, -1.65f}, "CLEARED!"});
     CreateText(font, 2.5f, {{-2.97f, 0.26f}, "FILL ALL"}, {{-4.73f, -1.65f}, "GRAY SLOTS"});
     CreateText(font, 2.5f, {{-3.85f, 0.26f}, "ALL SLOTS"}, {{-2.31f, -1.65f}, "FILLED!"});
-    
+    CreateText(font, 2.5f, {{-5.0f, 0.26f}, "BRING DOWN"}, {{-5.2f, -1.65f}, "THE ASTEROID"});
+    CreateText(font, 2.5f, {{-5.1f, 0.26f}, "THE ASTEROID"}, {{-3.6f, -1.65f}, "IS DOWN!"});
+
     CreateTwinkleParticleEffect();
 }
 

@@ -14,7 +14,8 @@ namespace RowBlast {
     public:
         enum class Objective {
             Clear,
-            Build
+            Build,
+            BringDownAsteroid
         };
         
         enum class LightIntensity {

@@ -9,6 +9,24 @@
 using namespace RowBlast;
 
 namespace {
+    Level::Objective ReadObjective(const rapidjson::Document& document) {
+        auto objective {Pht::Json::ReadString(document, "objective")};
+        
+        if (objective == "Clear") {
+            return Level::Objective::Clear;
+        }
+
+        if (objective == "Build") {
+            return Level::Objective::Build;
+        }
+
+        if (objective == "BringDownAsteroid") {
+            return Level::Objective::BringDownAsteroid;
+        }
+
+        assert(!"Unsupported objective");
+    }
+    
     Level::LightIntensity ReadLightIntensity(const rapidjson::Document& document) {
         auto lightIntensity {Pht::Json::ReadString(document, "lightIntensity")};
         
@@ -359,6 +377,10 @@ std::unique_ptr<Level> LevelLoader::Load(int levelId, const LevelResources& leve
         numRows = static_cast<int>(blueprintGrid->size());
     }
     
+    if (document.HasMember("objective")) {
+        objective = ReadObjective(document);
+    }
+    
     auto level {
         std::make_unique<Level>(levelId,
                                 objective,
@@ -402,5 +424,9 @@ std::unique_ptr<LevelInfo> LevelLoader::LoadInfo(int levelId,
         assert(!"Unknown objective");
     }
     
+    if (document.HasMember("objective")) {
+        objective = ReadObjective(document);
+    }
+
     return std::make_unique<LevelInfo>(levelId, objective, levelPieces);
 }

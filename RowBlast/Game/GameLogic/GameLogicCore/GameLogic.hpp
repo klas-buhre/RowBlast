@@ -172,6 +172,7 @@ namespace RowBlast {
                                        const Pht::IVec2& position,
                                        Direction collisionDirection);
         BlastRadiusAnimation::Kind CalculateBlastRadiusKind(const Pht::IVec2& position);
+        bool LevelAllowsClearingFilledRows() const;
         bool IsThereRoomToSwitchPiece();
         Result HandleInput();
         void ForwardTouchToInputHandler(const Pht::TouchEvent& touchEvent);

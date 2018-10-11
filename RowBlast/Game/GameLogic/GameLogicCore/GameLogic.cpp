@@ -231,6 +231,7 @@ const Piece* GameLogic::GetPieceType() const {
 bool GameLogic::IsLevelCompleted() {
     switch (mLevel->GetObjective()) {
         case Level::Objective::Clear:
+        case Level::Objective::BringDownAsteroid:
             if (mNumLevelBlocksLeft == 0) {
                 return true;
             }
@@ -390,6 +391,7 @@ void GameLogic::HandleControlTypeChange() {
 void GameLogic::UpdateLevelProgress() {
     switch (mLevel->GetObjective()) {
         case Level::Objective::Clear:
+        case Level::Objective::BringDownAsteroid:
             mNumLevelBlocksLeft = mField.CalculateNumLevelBlocks();
             break;
         case Level::Objective::Build:
@@ -511,7 +513,7 @@ void GameLogic::LandFallingPiece(bool finalMovementWasADrop) {
         mFlashingBlocksAnimation.Start(pieceType.GetColor());
         DetonateImpactedLevelBombs(impactedLevelBombs);
         
-        if (mLevel->GetObjective() == Level::Objective::Clear) {
+        if (LevelAllowsClearingFilledRows()) {
             auto removedSubCells {mField.ClearFilledRows()};
 
             if (!removedSubCells.IsEmpty()) {
@@ -627,6 +629,16 @@ void GameLogic::RemoveClearedRowsAndPullDownLoosePieces() {
     
     mComboDetector.GoToCascadingState();
     mCascadeState = CascadeState::Cascading;
+}
+
+bool GameLogic::LevelAllowsClearingFilledRows() const {
+    switch (mLevel->GetObjective()) {
+        case Level::Objective::Clear:
+        case Level::Objective::BringDownAsteroid:
+            return true;
+        case Level::Objective::Build:
+            return false;
+    }
 }
 
 void GameLogic::RotatePiece(const Pht::TouchEvent& touchEvent) {

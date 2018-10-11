@@ -17,6 +17,7 @@
         "F",
         "MirroredF"
     ],
+    "objective": "BringDownAsteroid",
     "clearGrid": [
         "       ",
         "       ",

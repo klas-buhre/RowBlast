@@ -7,17 +7,16 @@ Backlog:
     -Metal.
 
   -Gameplay:
-   X-An objective could be to bring down all asteroids.
    X-Fix the piece pull down bug on level 31. See screenshot.
    X-Fix bug where the switchable pieces can change if double clicking on switch when the frame rate
      is really low like in the iPad simulator.
-    -The UFO could be booster. It could clear 3 rows.
     -Maybe the FieldAnalyzer should give more value to cleared level blocks than cleared piece
      blocks.
     -Would be good if the FieldAnalyzer could take cascading/gravity into account when calculating
      BurriedHolesAreaInVisibleRows, at least for SevenPiece and MirroredSevenPiece. Currently, the
      AI gives to low scores for moves that it wrongly thinks will cause a lot burried holes because
      it does not pull down the non-cleared part of for example the SevenPiece.
+    -The UFO could be booster. It could clear 3 rows.
     -Maybe blocks in the visible part of the field could disappear on some levels. For each move a
      random block disappears.
     -Maybe init falling piece after SwitchPiece() in the same frame instead of the next.
@@ -26,8 +25,7 @@ Backlog:
      not really matter since the user can select any piece from the selectables but maybe it is most 
      convenient to go back to the state before the move and not the initial state.
   -Rendering:
-    -Maybe less reflectivity in the gray and yellow field block materials.
-    -Green and yellow field block materials could be a bit darker.
+    -Maybe less reflectivity in the gray, yellow and green field block materials.
     -Maybe smooth the dark area in the field env map.
     -Could have the Roswell spaceship in the space world.
   -GUI:
@@ -44,9 +42,19 @@ Backlog:
     -Make icons and launch screens for all supported device resulutions.
     -Credit the icon creator: <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
     -Credit FastNoise, MIT license: https://github.com/Auburns/FastNoise/
+    -Maybe support for different languages.
 
 Ongoing tasks:
-
+    -An objective could be to bring down a given number of asteroids. An asteroid does not fill a
+     cell so it cannot be used to clear a row. An asteroid takes damage by bombs and lasers.
+     Could also bring down a big asteroid of 2x2 cells that can take a couple of explosions and
+     lasers.
+    -Implementation:
+      -Game logic.
+      -Scrolling.
+      -Asteroid rendering.
+      -Game HUD.
+      -Level goal dialog.
 
 
 
@@ -127,13 +135,13 @@ Ordered Backlog:
         Cost: 10
         Done
     -Do the most important gameplay tasks.
-        Cost: 7
-    -Levels for the space world.
-        Cost: 7
+        Cost: 8
     -Net/HTTP.
         Cost: 10
     -Analytics.
         Cost: 5
+    -Levels for the space world.
+        Cost: 7
     -Finish the remaining game scene-related rendering tasks.
         Cost: 4
     -Store settings in file.
@@ -149,7 +157,7 @@ Ordered Backlog:
     -Back end.
         Cost: ?
 
-        Total cost: 224
+        Total cost: 225
 
 
 Comomon piece type sets:
