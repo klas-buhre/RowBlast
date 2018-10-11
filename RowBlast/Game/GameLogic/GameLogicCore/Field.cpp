@@ -18,7 +18,7 @@ namespace {
 
     bool RowIsFull(const std::vector<Cell>& row) {
         for (auto& cell: row) {
-            if (!cell.IsFull() || cell.mFirstSubCell.IsBomb()) {
+            if (!cell.IsFull() || cell.mFirstSubCell.IsNonBlockObject()) {
                 return false;
             }
         }
@@ -304,7 +304,7 @@ bool Field::IsCellAccordingToBlueprint(int row, int column) const {
     auto& cell {mGrid[row][column]};
     auto blueprintFill {(*mBlueprintGrid)[row][column].mFill};
     
-    if (cell.mFirstSubCell.IsBomb()) {
+    if (cell.mFirstSubCell.IsNonBlockObject()) {
         return false;
     }
     
@@ -665,7 +665,7 @@ void Field::MakeDiagonalWeld(Cell& cell) {
 }
 
 void Field::MakeWelds(SubCell& subCell, const Pht::IVec2& position) {
-    if (subCell.IsEmpty() || subCell.mIsGrayLevelBlock || subCell.IsBomb()) {
+    if (subCell.IsEmpty() || subCell.mIsGrayLevelBlock || subCell.IsNonBlockObject()) {
         return;
     }
     
@@ -799,7 +799,7 @@ bool Field::ShouldBeLeftWeld(const SubCell& subCell, const Pht::IVec2& position)
 }
 
 void Field::BreakRedundantWelds(SubCell& subCell, const Pht::IVec2& position) {
-    if (subCell.IsEmpty() || subCell.mIsGrayLevelBlock || subCell.IsBomb()) {
+    if (subCell.IsEmpty() || subCell.mIsGrayLevelBlock || subCell.IsNonBlockObject()) {
         return;
     }
 
@@ -1024,9 +1024,9 @@ PieceBlocks Field::ExtractPieceBlocks(Pht::IVec2& piecePosition,
     mPieceBlockCoords.Clear();
     auto& firstSubCell {mGrid[scanPosition.y][scanPosition.x].mFirstSubCell};
     
-    if (firstSubCell.IsBomb()) {
-        PieceBlockCoord bombPieceCoord {scanPosition, true};
-        mPieceBlockCoords.PushBack(bombPieceCoord);
+    if (firstSubCell.IsNonBlockObject()) {
+        PieceBlockCoord pieceCoord {scanPosition, true};
+        mPieceBlockCoords.PushBack(pieceCoord);
     } else {
         FindPieceBlocks(color, scanPosition);
     }

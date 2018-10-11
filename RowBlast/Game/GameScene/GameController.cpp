@@ -437,7 +437,7 @@ void GameController::StartLevelObjectiveAnimation() {
         case Level::Objective::Build:
             mSlidingTextAnimation.Start(SlidingTextAnimation::Message::FillSlots);
             break;
-        case Level::Objective::BringDownAsteroid:
+        case Level::Objective::BringDownTheAsteroid:
             mSlidingTextAnimation.Start(SlidingTextAnimation::Message::BringDownTheAsteroid);
             break;
     }

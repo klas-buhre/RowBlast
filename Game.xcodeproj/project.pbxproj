@@ -49,6 +49,8 @@
 		625B02CE21386AC3000744F2 /* level_bomb_frame5.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 625B02C921386AC2000744F2 /* level_bomb_frame5.jpg */; };
 		625B02CF21386AC3000744F2 /* level_bomb_frame1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 625B02CA21386AC2000744F2 /* level_bomb_frame1.jpg */; };
 		625B02D2213D7B8B000744F2 /* FieldGrid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 625B02D0213D7B8B000744F2 /* FieldGrid.cpp */; };
+		625D3B49216FABDC00D67EC2 /* level59.json in Resources */ = {isa = PBXBuildFile; fileRef = 625D3B48216FABDB00D67EC2 /* level59.json */; };
+		625D3B4B216FB2A200D67EC2 /* level60.json in Resources */ = {isa = PBXBuildFile; fileRef = 625D3B4A216FB2A100D67EC2 /* level60.json */; };
 		6261FFD520FB969B008F1619 /* level42.json in Resources */ = {isa = PBXBuildFile; fileRef = 6261FFD420FB969A008F1619 /* level42.json */; };
 		6261FFD720FCC912008F1619 /* level43.json in Resources */ = {isa = PBXBuildFile; fileRef = 6261FFD620FCC912008F1619 /* level43.json */; };
 		6261FFD920FD2C29008F1619 /* level44.json in Resources */ = {isa = PBXBuildFile; fileRef = 6261FFD820FD2C29008F1619 /* level44.json */; };
@@ -459,6 +461,8 @@
 		625B02CA21386AC2000744F2 /* level_bomb_frame1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = level_bomb_frame1.jpg; sourceTree = "<group>"; };
 		625B02D0213D7B8B000744F2 /* FieldGrid.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FieldGrid.cpp; sourceTree = "<group>"; };
 		625B02D1213D7B8B000744F2 /* FieldGrid.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = FieldGrid.hpp; sourceTree = "<group>"; };
+		625D3B48216FABDB00D67EC2 /* level59.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level59.json; sourceTree = "<group>"; };
+		625D3B4A216FB2A100D67EC2 /* level60.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level60.json; sourceTree = "<group>"; };
 		6261FFD420FB969A008F1619 /* level42.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level42.json; sourceTree = "<group>"; };
 		6261FFD620FCC912008F1619 /* level43.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level43.json; sourceTree = "<group>"; };
 		6261FFD820FD2C29008F1619 /* level44.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level44.json; sourceTree = "<group>"; };
@@ -1411,6 +1415,8 @@
 				62B2BAF22134495D009C529D /* level56.json */,
 				62A729E02143DDD500255BF7 /* level57.json */,
 				62A729E22144170D00255BF7 /* level58.json */,
+				625D3B48216FABDB00D67EC2 /* level59.json */,
+				625D3B4A216FB2A100D67EC2 /* level60.json */,
 			);
 			path = Levels;
 			sourceTree = "<group>";
@@ -2532,6 +2538,7 @@
 				6234618C21691DAF00ECD0DF /* asteroid_998.obj in Resources */,
 				62B1CB9C2110BA4600D0F195 /* laser_frame4.jpg in Resources */,
 				62B1CB89210F8F8600D0F195 /* laser_bomb_diffuse.jpg in Resources */,
+				625D3B4B216FB2A200D67EC2 /* level60.json in Resources */,
 				6270DC631FCB22AE00FB457D /* star.obj in Resources */,
 				626940C7216130F500D9857A /* sky4.jpg in Resources */,
 				626940D721626E0500D9857A /* sky5.jpg in Resources */,
@@ -2593,6 +2600,7 @@
 				62B1CBA62110D46E00D0F195 /* bomb_frame1.jpg in Resources */,
 				62785B2320875937006F9869 /* PointParticle.frag in Resources */,
 				62B1CB8A210F8F8600D0F195 /* sky_upside_down_patched_mirrored.jpg in Resources */,
+				625D3B49216FABDC00D67EC2 /* level59.json in Resources */,
 				62B1CB82210F8F8600D0F195 /* glow_lines.png in Resources */,
 				62785B1920875937006F9869 /* VertexLighting.vert in Resources */,
 				627D381D20A5FF5E0068B50C /* small_button_0385.obj in Resources */,

@@ -35,6 +35,7 @@ namespace RowBlast {
         Full,
         Bomb,
         RowBomb,
+        Asteroid,
         ClearedRowBlock,
         None
     };
@@ -148,6 +149,7 @@ namespace RowBlast {
         bool FillsRightCellSide() const;
         bool FillsLeftCellSide() const;
         bool IsBomb() const;
+        bool IsNonBlockObject() const;
 
         bool IsFull() const {
             return mFill == Fill::Full;

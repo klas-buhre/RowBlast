@@ -106,7 +106,7 @@ void LevelCompletedController::StartLevelCompletedTextAnimation() {
         case Level::Objective::Build:
             mSlidingTextAnimation.Start(SlidingTextAnimation::Message::SlotsFilled);
             break;
-        case Level::Objective::BringDownAsteroid:
+        case Level::Objective::BringDownTheAsteroid:
             mSlidingTextAnimation.Start(SlidingTextAnimation::Message::TheAsteroidIsDown);
             break;
     }

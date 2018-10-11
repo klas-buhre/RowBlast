@@ -93,6 +93,17 @@ bool SubCell::IsBomb() const {
     }
 }
 
+bool SubCell::IsNonBlockObject() const {
+    switch (mBlockKind) {
+        case BlockKind::Bomb:
+        case BlockKind::RowBomb:
+        case BlockKind::Asteroid:
+            return true;
+        default:
+            return false;
+    }
+}
+
 bool Cell::IsFull() const {
     switch (mFirstSubCell.mFill) {
         case Fill::Empty:

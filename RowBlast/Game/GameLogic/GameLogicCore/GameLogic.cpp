@@ -231,7 +231,7 @@ const Piece* GameLogic::GetPieceType() const {
 bool GameLogic::IsLevelCompleted() {
     switch (mLevel->GetObjective()) {
         case Level::Objective::Clear:
-        case Level::Objective::BringDownAsteroid:
+        case Level::Objective::BringDownTheAsteroid:
             if (mNumLevelBlocksLeft == 0) {
                 return true;
             }
@@ -391,7 +391,7 @@ void GameLogic::HandleControlTypeChange() {
 void GameLogic::UpdateLevelProgress() {
     switch (mLevel->GetObjective()) {
         case Level::Objective::Clear:
-        case Level::Objective::BringDownAsteroid:
+        case Level::Objective::BringDownTheAsteroid:
             mNumLevelBlocksLeft = mField.CalculateNumLevelBlocks();
             break;
         case Level::Objective::Build:
@@ -634,7 +634,7 @@ void GameLogic::RemoveClearedRowsAndPullDownLoosePieces() {
 bool GameLogic::LevelAllowsClearingFilledRows() const {
     switch (mLevel->GetObjective()) {
         case Level::Objective::Clear:
-        case Level::Objective::BringDownAsteroid:
+        case Level::Objective::BringDownTheAsteroid:
             return true;
         case Level::Objective::Build:
             return false;

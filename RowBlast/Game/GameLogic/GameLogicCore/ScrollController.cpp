@@ -31,7 +31,7 @@ void ScrollController::Init(Level::Objective levelObjective) {
     
     switch (mLevelObjective) {
         case Level::Objective::Clear:
-        case Level::Objective::BringDownAsteroid:
+        case Level::Objective::BringDownTheAsteroid:
             mLowestVisibleRow = 0.0f;
             mBeforeLevelOverviewScrollWaitTime = waitTimeClearObjective;
             break;
@@ -76,7 +76,7 @@ void ScrollController::UpdateInBeforeLevelOverviewScrollState() {
         
         switch (mLevelObjective) {
             case Level::Objective::Clear:
-            case Level::Objective::BringDownAsteroid:
+            case Level::Objective::BringDownTheAsteroid:
                 mLowestVisibleRowTarget = CalculatePreferredLowestVisibleRowClearObjective();
                 mStartDeaccelerationTime =
                     (mLowestVisibleRowTarget - mLowestVisibleRow) / overviewScrollSpeed -
@@ -98,7 +98,7 @@ void ScrollController::UpdateInLevelOverviewScrollState() {
     
     switch (mLevelObjective) {
         case Level::Objective::Clear:
-        case Level::Objective::BringDownAsteroid:
+        case Level::Objective::BringDownTheAsteroid:
             UpdateInLevelOverviewScrollStateClearObjective(dt);
             break;
         case Level::Objective::Build:
@@ -160,7 +160,7 @@ void ScrollController::UpdateInIdleState() {
 int ScrollController::CalculatePreferredLowestVisibleRow() const {
     switch (mLevelObjective) {
         case Level::Objective::Clear:
-        case Level::Objective::BringDownAsteroid:
+        case Level::Objective::BringDownTheAsteroid:
             return CalculatePreferredLowestVisibleRowClearObjective();
         case Level::Objective::Build:
             return CalculatePreferredLowestVisibleRowBuildObjective();
@@ -316,7 +316,7 @@ bool ScrollController::IsScrollingDownInClearMode() const {
         case ScrollController::State::LastScrollStep:
             if (mScrollDirection == ScrollDirection::Down &&
                 (mLevelObjective == Level::Objective::Clear ||
-                 mLevelObjective == Level::Objective::BringDownAsteroid)) {
+                 mLevelObjective == Level::Objective::BringDownTheAsteroid)) {
                 return true;
             }
             break;

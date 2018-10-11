@@ -110,7 +110,7 @@ void Ai::EvaluateMoves(const FallingPiece& fallingPiece, int movesUsed) {
 void Ai::EvaluateMove(Move& move, const FallingPiece& fallingPiece) {
     switch (mLevel->GetObjective()) {
         case Level::Objective::Clear:
-        case Level::Objective::BringDownAsteroid:
+        case Level::Objective::BringDownTheAsteroid:
             EvaluateMoveForClearObjective(move, fallingPiece);
             break;
         case Level::Objective::Build:

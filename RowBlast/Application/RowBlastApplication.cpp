@@ -45,10 +45,10 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-    -An objective could be to bring down a given number of asteroids. An asteroid does not fill a
-     cell so it cannot be used to clear a row. An asteroid takes damage by bombs and lasers.
-     Could also bring down a big asteroid of 2x2 cells that can take a couple of explosions and
-     lasers.
+    -An objective could be to bring down a single asteroid. The asteroid does not fill a
+     cell so it cannot be used to clear a row. The asteroid takes damage by bombs and lasers.
+     Lava starts to appear when it is damaged. Could also bring down a big asteroid of 2x2 cells
+     that can take a couple more explosions and lasers.
     -Implementation:
       -Game logic.
       -Scrolling.

@@ -179,6 +179,8 @@ void GameSceneRenderer::RenderFieldBlock(const SubCell& subCell, bool isSecondSu
         } else {
             sceneObject.SetRenderable(&mPieceResources.GetRowBombRenderableObject());
         }
+    } else if (subCell.mBlockKind == BlockKind::Asteroid) {
+        sceneObject.SetRenderable(&mLevelResources.GetLevelBombRenderable());
     } else {
         auto color {subCell.mColor};
         auto brightness {subCell.mFlashingBlockAnimation.mBrightness};

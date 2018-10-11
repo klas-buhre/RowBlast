@@ -172,7 +172,7 @@ void GameHud::CreateProgressObject(Pht::Scene& scene,
     
     switch (mLevelObjective) {
         case Level::Objective::Clear:
-        case Level::Objective::BringDownAsteroid:
+        case Level::Objective::BringDownTheAsteroid:
             CreateGrayBlock(scene, progressContainer, levelResources);
             break;
         case Level::Objective::Build:
@@ -361,7 +361,7 @@ void GameHud::UpdateLightAnimation() {
 
 void GameHud::UpdateProgress() {
     auto progress {
-        mLevelObjective == Level::Objective::Clear || mLevelObjective == Level::Objective::BringDownAsteroid ?
+        mLevelObjective == Level::Objective::Clear || mLevelObjective == Level::Objective::BringDownTheAsteroid ?
         mGameLogic.GetNumLevelBlocksLeft() : mGameLogic.GetNumEmptyBlueprintSlotsLeft()
     };
     

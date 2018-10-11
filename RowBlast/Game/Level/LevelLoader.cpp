@@ -20,8 +20,8 @@ namespace {
             return Level::Objective::Build;
         }
 
-        if (objective == "BringDownAsteroid") {
-            return Level::Objective::BringDownAsteroid;
+        if (objective == "BringDownTheAsteroid") {
+            return Level::Objective::BringDownTheAsteroid;
         }
 
         assert(!"Unsupported objective");
@@ -133,6 +133,7 @@ namespace {
             case 'G':
             case 'B':
             case 'L':
+            case 'A':
             case 'r':
             case 'g':
             case 'l':
@@ -165,6 +166,8 @@ namespace {
                 return BlockKind::Bomb;
             case 'L':
                 return BlockKind::RowBomb;
+            case 'A':
+                return BlockKind::Asteroid;
             case 'd':
                 return BlockKind::LowerRightHalf;
             case 'b':
@@ -200,6 +203,7 @@ namespace {
             case 'd':
             case 'B':
             case 'L':
+            case 'A':
             case 'r':
             case 'g':
             case 'l':
