@@ -51,8 +51,8 @@ Ongoing tasks:
      that can take a couple more explosions and lasers.
     -Implementation:
       -Game logic.
-      -Scrolling.
       -Asteroid rendering.
+      -Scrolling.
       -Game HUD.
       -Level goal dialog.
 

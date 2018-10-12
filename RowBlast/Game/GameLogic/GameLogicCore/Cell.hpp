@@ -150,6 +150,10 @@ namespace RowBlast {
         bool FillsLeftCellSide() const;
         bool IsBomb() const;
         bool IsNonBlockObject() const;
+        
+        bool IsAsteroid() const {
+            return mBlockKind == BlockKind::Asteroid;
+        }
 
         bool IsFull() const {
             return mFill == Fill::Full;
@@ -184,6 +188,7 @@ namespace RowBlast {
         SubCell mFirstSubCell;
         SubCell mSecondSubCell;
         bool mIsInFilledRow {false};
+        bool mIsShiftedDown {false};
     };
     
     using CellGrid = std::vector<std::vector<Cell>>;

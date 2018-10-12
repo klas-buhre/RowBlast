@@ -1170,6 +1170,43 @@ void Field::LandPulledDownPieceBlocks(const PieceBlocks& pieceBlocks, const Pht:
     }
 }
 
+void Field::ShiftFieldDown(int rowIndex) {
+    PullDownLoosePieces();
+    ShiftGrayBlocksDown(rowIndex);
+    
+    // Need to do the same procedure again so that any blocks that were stuck the first pass can be
+    // moved in the second attempt.
+    PullDownLoosePieces();
+    ShiftGrayBlocksDown(rowIndex);
+    
+    ResetAllCellsShiftedDownFlag();
+}
+
+void Field::ShiftGrayBlocksDown(int rowIndex) {
+    for (auto column {0}; column < mNumColumns; ++column) {
+        for (auto row {rowIndex}; row < mNumRows - 1; ++row) {
+            auto& lowerCell {mGrid[row][column]};
+            auto& upperCell {mGrid[row + 1][column]};
+            
+            if (upperCell.mFirstSubCell.mIsGrayLevelBlock && !upperCell.mIsShiftedDown &&
+                lowerCell.IsEmpty()) {
+                
+                lowerCell = upperCell;
+                lowerCell.mIsShiftedDown = true;
+                upperCell = Cell {};
+            }
+        }
+    }
+}
+
+void Field::ResetAllCellsShiftedDownFlag() {
+    for (auto row {0}; row < mNumRows; ++row) {
+        for (auto column {0}; column < mNumColumns; ++column) {
+            mGrid[row][column].mIsShiftedDown = false;
+        }
+    }
+}
+
 void Field::DetectBlocksThatShouldNotBounce() {
     for (auto row {mNumRows - 1}; row >= mLowestVisibleRow; --row) {
         for (auto column {0}; column < mNumColumns; ++column) {
@@ -1490,6 +1527,12 @@ Field::RemovedSubCells Field::RemoveAreaOfSubCells(const Pht::IVec2& areaPos,
                 continue;
             }
             
+            auto& cell {mGrid[row][column]};
+            
+            if (cell.mFirstSubCell.IsAsteroid()) {
+                continue;
+            }
+            
             if (!removeCorners) {
                 if (column == areaPos.x && row == areaPos.y) {
                     BreakCellRightWelds(row, column);
@@ -1532,7 +1575,6 @@ Field::RemovedSubCells Field::RemoveAreaOfSubCells(const Pht::IVec2& areaPos,
                 BreakCellDownWelds(row + 1, column);
             }
             
-            auto& cell {mGrid[row][column]};
             ProcessSubCell(removedSubCells, cell.mFirstSubCell, row, column);
             ProcessSubCell(removedSubCells, cell.mSecondSubCell, row, column);
             

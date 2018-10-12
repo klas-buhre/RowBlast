@@ -303,10 +303,28 @@ void FieldExplosionsStates::RemoveRows() {
     mRowsToRemove.Sort(CompareRowsTopToDown);
     
     for (auto i {0}; i < mRowsToRemove.Size(); ++i) {
-        mField.RemoveRow(mRowsToRemove.At(i));
+        auto rowToRemove {mRowsToRemove.At(i)};
+        
+        if (RowContainsAsteroid(rowToRemove)) {
+            // Cannot remove the row the normal way since the asteroid is not removed. Instead,
+            // shift the field down wherever possible.
+            mField.ShiftFieldDown(rowToRemove);
+        } else {
+            mField.RemoveRow(rowToRemove);
+        }
     }
     
     mRowsToRemove.Clear();
+}
+
+bool FieldExplosionsStates::RowContainsAsteroid(int row) {
+    for (auto column {0}; column < mField.GetNumColumns(); ++column) {
+        if (mField.GetCell(row, column).mFirstSubCell.IsAsteroid()) {
+            return true;
+        }
+    }
+    
+    return false;
 }
 
 void FieldExplosionsStates::DetonateBomb(const Pht::IVec2& position,

@@ -87,6 +87,7 @@ namespace RowBlast {
                                               bool removeCorners,
                                               float dt);
         void RemoveRows();
+        bool RowContainsAsteroid(int row);
         
         Pht::IEngine& mEngine;
         Field& mField;

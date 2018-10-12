@@ -106,6 +106,7 @@ namespace RowBlast {
         void ManageWelds();
         void MergeTriangleBlocksIntoCube(const Pht::IVec2& position);
         void PullDownLoosePieces();
+        void ShiftFieldDown(int rowIndex);
         void DetectBlocksThatShouldNotBounce();
         int GetNumRowsInOneScreen() const;
         bool AnyFilledRows() const;
@@ -214,6 +215,8 @@ namespace RowBlast {
         void ResetAllCellsTriedScanDirection();
         void ClearPieceBlockGrid();
         void LandPulledDownPieceBlocks(const PieceBlocks& pieceBlocks, const Pht::IVec2& position);
+        void ShiftGrayBlocksDown(int rowIndex);
+        void ResetAllCellsShiftedDownFlag();
         IsFloating IsBlockStructureFloating(const Pht::IVec2& gridPosition);
         bool IsOutsideVisibleField(const Pht::IVec2& gridPosition);
         void SetShouldNotBounce(const Pht::IVec2& gridPosition);
