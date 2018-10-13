@@ -108,13 +108,13 @@ void FloatingBlocks::CreateRowBomb(Pht::ISceneManager& sceneManager, float scale
 }
 
 void FloatingBlocks::CreateAsteroid(Pht::ISceneManager& sceneManager, float scale) {
-    Pht::Material asteroidMaterial {"asteroid.jpg", 0.425f, 1.0f, 0.05f, 1.0f};
+    Pht::Material asteroidMaterial {"brown_asteroid.jpg", 0.425f, 1.0f, 0.05f, 1.0f};
     mAsteroidRenderable = sceneManager.CreateRenderableObject(Pht::ObjMesh {"asteroid_998.obj", 17.6f * scale},
                                                               asteroidMaterial);
 }
 
 void FloatingBlocks::CreateBigAsteroid(Pht::ISceneManager& sceneManager, float scale) {
-    Pht::Material asteroidMaterial {"asteroid.jpg", 0.425f, 1.0f, 0.05f, 1.0f};
+    Pht::Material asteroidMaterial {"brown_asteroid.jpg", 0.425f, 1.0f, 0.05f, 1.0f};
     mBigAsteroidRenderable = sceneManager.CreateRenderableObject(Pht::ObjMesh {"asteroid_998.obj", 30.0f * scale},
                                                                  asteroidMaterial);
 }

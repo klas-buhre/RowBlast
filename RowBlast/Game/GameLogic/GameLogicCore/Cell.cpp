@@ -97,7 +97,30 @@ bool SubCell::IsNonBlockObject() const {
     switch (mBlockKind) {
         case BlockKind::Bomb:
         case BlockKind::RowBomb:
-        case BlockKind::Asteroid:
+        case BlockKind::BigAsteroid:
+        case BlockKind::BigAsteroidMainCell:
+        case BlockKind::SmallAsteroid:
+            return true;
+        default:
+            return false;
+    }
+}
+
+bool SubCell::IsAsteroid() const {
+    switch (mBlockKind) {
+        case BlockKind::BigAsteroid:
+        case BlockKind::BigAsteroidMainCell:
+        case BlockKind::SmallAsteroid:
+            return true;
+        default:
+            return false;
+    }
+}
+
+bool SubCell::IsBigAsteroid() const {
+    switch (mBlockKind) {
+        case BlockKind::BigAsteroid:
+        case BlockKind::BigAsteroidMainCell:
             return true;
         default:
             return false;

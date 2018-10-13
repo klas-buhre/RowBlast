@@ -212,6 +212,7 @@ namespace RowBlast {
                                        const Pht::IVec2& scanPosition,
                                        ScanDirection scanDirection);
         void FindPieceBlocks(BlockColor color, const Pht::IVec2& position);
+        void FindAsteroidCells(const Pht::IVec2& position);
         void ResetAllCellsTriedScanDirection();
         void ClearPieceBlockGrid();
         void LandPulledDownPieceBlocks(const PieceBlocks& pieceBlocks, const Pht::IVec2& position);

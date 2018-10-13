@@ -133,7 +133,9 @@ namespace {
             case 'G':
             case 'B':
             case 'L':
+            case 'a':
             case 'A':
+            case 'S':
             case 'r':
             case 'g':
             case 'l':
@@ -166,8 +168,12 @@ namespace {
                 return BlockKind::Bomb;
             case 'L':
                 return BlockKind::RowBomb;
+            case 'a':
+                return BlockKind::BigAsteroid;
             case 'A':
-                return BlockKind::Asteroid;
+                return BlockKind::BigAsteroidMainCell;
+            case 'S':
+                return BlockKind::SmallAsteroid;
             case 'd':
                 return BlockKind::LowerRightHalf;
             case 'b':
@@ -203,7 +209,9 @@ namespace {
             case 'd':
             case 'B':
             case 'L':
+            case 'a':
             case 'A':
+            case 'S':
             case 'r':
             case 'g':
             case 'l':

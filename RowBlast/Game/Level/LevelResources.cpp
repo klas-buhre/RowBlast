@@ -45,6 +45,8 @@ LevelResources::LevelResources(Pht::IEngine& engine,
     CreateCellRenderables(engine.GetSceneManager(), scene);
     CreateBlueprintRenderables(engine, scene, commonResources);
     CreateLevelBombRenderable(engine);
+    CreateBigAsteroidRenderable(engine);
+    CreateSmallAsteroidRenderable(engine);
 }
 
 void LevelResources::CreatePieceTypes(Pht::IEngine& engine, const GameScene& scene) {
@@ -188,6 +190,20 @@ void LevelResources::CreateLevelBombRenderable(Pht::IEngine& engine) {
     auto& sceneManager {engine.GetSceneManager()};
     mLevelBomb = sceneManager.CreateRenderableObject(Pht::ObjMesh {"bomb_798.obj", 16.2f},
                                                      bombMaterial);
+}
+
+void LevelResources::CreateBigAsteroidRenderable(Pht::IEngine& engine) {
+    Pht::Material asteroidMaterial {"gray_asteroid.jpg", 0.7f, 0.9f, 0.05f, 1.0f};
+    auto& sceneManager {engine.GetSceneManager()};
+    mBigAsteroid = sceneManager.CreateRenderableObject(Pht::ObjMesh {"asteroid_2000.obj", 40.0f, Pht::MoveMeshToOrigin::Yes},
+                                                    asteroidMaterial);
+}
+
+void LevelResources::CreateSmallAsteroidRenderable(Pht::IEngine& engine) {
+    Pht::Material asteroidMaterial {"gray_asteroid.jpg", 0.7f, 0.9f, 0.05f, 1.0f};
+    auto& sceneManager {engine.GetSceneManager()};
+    mSmallAsteroid = sceneManager.CreateRenderableObject(Pht::ObjMesh {"asteroid_2000.obj", 20.0f, Pht::MoveMeshToOrigin::Yes},
+                                                         asteroidMaterial);
 }
 
 Pht::RenderableObject& LevelResources::GetLevelBlockRenderable(BlockKind blockKind) const {

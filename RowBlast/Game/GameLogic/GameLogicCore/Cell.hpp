@@ -35,7 +35,9 @@ namespace RowBlast {
         Full,
         Bomb,
         RowBomb,
-        Asteroid,
+        BigAsteroid,
+        BigAsteroidMainCell,
+        SmallAsteroid,
         ClearedRowBlock,
         None
     };
@@ -150,10 +152,8 @@ namespace RowBlast {
         bool FillsLeftCellSide() const;
         bool IsBomb() const;
         bool IsNonBlockObject() const;
-        
-        bool IsAsteroid() const {
-            return mBlockKind == BlockKind::Asteroid;
-        }
+        bool IsAsteroid() const;
+        bool IsBigAsteroid() const;
 
         bool IsFull() const {
             return mFill == Fill::Full;

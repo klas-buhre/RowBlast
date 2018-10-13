@@ -1025,8 +1025,12 @@ PieceBlocks Field::ExtractPieceBlocks(Pht::IVec2& piecePosition,
     auto& firstSubCell {mGrid[scanPosition.y][scanPosition.x].mFirstSubCell};
     
     if (firstSubCell.IsNonBlockObject()) {
-        PieceBlockCoord pieceCoord {scanPosition, true};
-        mPieceBlockCoords.PushBack(pieceCoord);
+        if (firstSubCell.IsBigAsteroid()) {
+            FindAsteroidCells(scanPosition);
+        } else {
+            PieceBlockCoord pieceCoord {scanPosition, true};
+            mPieceBlockCoords.PushBack(pieceCoord);
+        }
     } else {
         FindPieceBlocks(color, scanPosition);
     }
@@ -1123,6 +1127,24 @@ void Field::FindPieceBlocks(BlockColor color, const Pht::IVec2& position) {
     if (welds.mUpLeft) {
         FindPieceBlocks(color, position + Pht::IVec2 {-1, 1});
     }
+}
+
+void Field::FindAsteroidCells(const Pht::IVec2& position) {
+    auto& subCell {mGrid[position.y][position.x].mFirstSubCell};
+    
+    if (!subCell.IsBigAsteroid() || subCell.mIsFound) {
+        return;
+    }
+
+    PieceBlockCoord coord {position, true};
+    mPieceBlockCoords.PushBack(coord);
+    
+    subCell.mIsFound = true;
+    
+    FindAsteroidCells(position + Pht::IVec2 {0, 1});
+    FindAsteroidCells(position + Pht::IVec2 {1, 0});
+    FindAsteroidCells(position + Pht::IVec2 {0, -1});
+    FindAsteroidCells(position + Pht::IVec2 {-1, 0});
 }
 
 void Field::ResetAllCellsTriedScanDirection() {

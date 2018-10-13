@@ -137,6 +137,7 @@ void GameSceneRenderer::RenderFieldBlock(const SubCell& subCell, bool isSecondSu
     switch (blockKind) {
         case BlockKind::None:
         case BlockKind::ClearedRowBlock:
+        case BlockKind::BigAsteroid:
             return;
         default:
             break;
@@ -152,46 +153,44 @@ void GameSceneRenderer::RenderFieldBlock(const SubCell& subCell, bool isSecondSu
         mScene.GetBouncingBlockZ() : 0.0f
     };
 
-    auto isSomeKindOfBomb {subCell.IsBomb()};
     auto& transform {sceneObject.GetTransform()};
     transform.SetPosition(blockPosition);
     
-    if (isSomeKindOfBomb) {
-        if (subCell.mBlockKind == BlockKind::Bomb) {
+    switch (blockKind) {
+        case BlockKind::Bomb:
             transform.SetRotation(mBombsAnimation.GetBombStaticRotation());
-        } else {
-            transform.SetRotation(mBombsAnimation.GetRowBombStaticRotation());
-        }
-    } else {
-        if (blockKind != BlockKind::Full) {
-            Pht::Vec3 blockRotation {0.0f, 0.0f, RotationToDeg(subCell.mRotation)};
-            transform.SetRotation(blockRotation);
-        } else {
-            transform.SetRotation({0.0f, 0.0f, 0.0f});
-        }
-    }
-    
-    if (subCell.mIsGrayLevelBlock) {
-        sceneObject.SetRenderable(&mLevelResources.GetLevelBlockRenderable(blockKind));
-    } else if (isSomeKindOfBomb) {
-        if (subCell.mBlockKind == BlockKind::Bomb) {
             sceneObject.SetRenderable(&mLevelResources.GetLevelBombRenderable());
-        } else {
+            break;
+        case BlockKind::RowBomb:
+            transform.SetRotation(mBombsAnimation.GetRowBombStaticRotation());
             sceneObject.SetRenderable(&mPieceResources.GetRowBombRenderableObject());
-        }
-    } else if (subCell.mBlockKind == BlockKind::Asteroid) {
-        sceneObject.SetRenderable(&mLevelResources.GetLevelBombRenderable());
-    } else {
-        auto color {subCell.mColor};
-        auto brightness {subCell.mFlashingBlockAnimation.mBrightness};
-
-        auto& renderableObject {
-            mPieceResources.GetBlockRenderableObject(blockKind, color, brightness)
-        };
-        
-        sceneObject.SetRenderable(&renderableObject);
-        
-        RenderBlockWelds(subCell, blockPosition, mScene.GetFieldBlocks(), isSecondSubCell);
+            break;
+        case BlockKind::BigAsteroidMainCell:
+            transform.Translate({cellSize / 2.0f, cellSize / 2.0f, 0.0f});
+            sceneObject.SetRenderable(&mLevelResources.GetBigAsteroidRenderable());
+            break;
+        case BlockKind::SmallAsteroid:
+            sceneObject.SetRenderable(&mLevelResources.GetSmallAsteroidRenderable());
+            break;
+        default:
+            if (blockKind != BlockKind::Full) {
+                Pht::Vec3 blockRotation {0.0f, 0.0f, RotationToDeg(subCell.mRotation)};
+                transform.SetRotation(blockRotation);
+            } else {
+                transform.SetRotation({0.0f, 0.0f, 0.0f});
+            }
+            if (subCell.mIsGrayLevelBlock) {
+                sceneObject.SetRenderable(&mLevelResources.GetLevelBlockRenderable(blockKind));
+            } else {
+                auto color {subCell.mColor};
+                auto brightness {subCell.mFlashingBlockAnimation.mBrightness};
+                auto& renderableObject {
+                    mPieceResources.GetBlockRenderableObject(blockKind, color, brightness)
+                };
+                sceneObject.SetRenderable(&renderableObject);
+                RenderBlockWelds(subCell, blockPosition, mScene.GetFieldBlocks(), isSecondSubCell);
+            }
+            break;
     }
 }
 

@@ -236,6 +236,49 @@ namespace {
         }
     }
     
+    void MoveVerticesToOrigin(std::vector<Vec3>& vertices) {
+        auto maxVal {32000.0f};
+        auto minVal {-maxVal};
+        auto xMax {minVal};
+        auto yMax {minVal};
+        auto zMax {minVal};
+        auto xMin {maxVal};
+        auto yMin {maxVal};
+        auto zMin {maxVal};
+        
+        for (auto& vertex: vertices) {
+            if (vertex.x > xMax) {
+                xMax = vertex.x;
+            }
+
+            if (vertex.y > yMax) {
+                yMax = vertex.y;
+            }
+
+            if (vertex.z > zMax) {
+                zMax = vertex.z;
+            }
+            
+            if (vertex.x < xMin) {
+                xMin = vertex.x;
+            }
+
+            if (vertex.y < yMin) {
+                yMin = vertex.y;
+            }
+
+            if (vertex.z < zMin) {
+                zMin = vertex.z;
+            }
+        }
+        
+        Vec3 objectCenter {(xMax + xMin) / 2.0f, (yMax + yMin) / 2.0f, (zMax + zMin) / 2.0f};
+        
+        for (auto& vertex: vertices) {
+            vertex -= objectCenter;
+        }
+    }
+    
     void SetNewIndices(VertexRefs& vertexRefs) {
         auto newIndex {0};
         for (auto& keyValuePair: vertexRefs.mNewIndices) {
@@ -269,7 +312,10 @@ namespace {
     }
 }
 
-VertexBuffer ObjMeshLoader::Load(const std::string& filename, VertexFlags flags, float scale) {
+VertexBuffer ObjMeshLoader::Load(const std::string& filename,
+                                 VertexFlags flags,
+                                 float scale,
+                                 MoveMeshToOrigin moveMeshToOrigin) {
     assert(flags.mNormals);
 
     auto fullPath {FileSystem::GetResourceDirectory() + "/" + filename};
@@ -277,6 +323,10 @@ VertexBuffer ObjMeshLoader::Load(const std::string& filename, VertexFlags flags,
     
     std::vector<Vec3> vertices(quantities.mVertexCount);
     ReadVertices(vertices, fullPath);
+    
+    if (moveMeshToOrigin == MoveMeshToOrigin::Yes) {
+        MoveVerticesToOrigin(vertices);
+    }
     
     std::vector<Vec2> textureCoords(quantities.mTextureCoordCount);
     ReadTextureCoords(textureCoords, fullPath);

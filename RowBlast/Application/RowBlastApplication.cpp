@@ -25,6 +25,7 @@ Backlog:
      not really matter since the user can select any piece from the selectables but maybe it is most 
      convenient to go back to the state before the move and not the initial state.
   -Rendering:
+    -Maybe use the dark field quad brightness for the sky worlds as well.
     -Maybe less reflectivity in the gray, yellow and green field block materials.
     -Maybe smooth the dark area in the field env map.
     -Could have the Roswell spaceship in the space world.
@@ -51,8 +52,10 @@ Ongoing tasks:
      that can take a couple more explosions and lasers.
     -Implementation:
       -Game logic.
+        -Scrolling.
       -Asteroid rendering.
-      -Scrolling.
+        -Fix problem were blast radius animation is covered by the asteroid.
+        -Asteroid animation.
       -Game HUD.
       -Level goal dialog.
 

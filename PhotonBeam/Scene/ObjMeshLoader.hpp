@@ -4,8 +4,16 @@
 #include "VertexBuffer.hpp"
 
 namespace Pht {
+    enum class MoveMeshToOrigin {
+        Yes,
+        No
+    };
+    
     namespace ObjMeshLoader {
-        VertexBuffer Load(const std::string& filename, VertexFlags flags, float scale);
+        VertexBuffer Load(const std::string& filename,
+                          VertexFlags flags,
+                          float scale,
+                          MoveMeshToOrigin moveMeshToOrigin);
     }
 }
 
