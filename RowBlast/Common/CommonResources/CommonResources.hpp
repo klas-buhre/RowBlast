@@ -21,7 +21,7 @@ namespace RowBlast {
     public:
         explicit CommonResources(Pht::IEngine& engine);
         
-        const Pht::Font& GetHussarFontSize22(PotentiallyZoomedScreen potentiallyZoomed) const;
+        const Pht::Font& GetHussarFontSize20(PotentiallyZoomedScreen potentiallyZoomed) const;
         const Pht::Font& GetHussarFontSize27(PotentiallyZoomedScreen potentiallyZoomed) const;
         const Pht::Font& GetHussarFontSize35(PotentiallyZoomedScreen potentiallyZoomed) const;
         
@@ -62,10 +62,10 @@ namespace RowBlast {
         
         Materials mMaterials;
         std::unique_ptr<GuiResources> mGuiResources;
-        std::unique_ptr<Pht::Font> mHussarFontSize22;
+        std::unique_ptr<Pht::Font> mHussarFontSize20;
         std::unique_ptr<Pht::Font> mHussarFontSize27;
         std::unique_ptr<Pht::Font> mHussarFontSize35;
-        std::unique_ptr<Pht::Font> mHussarFontSize22PotentiallyZoomedScreen;
+        std::unique_ptr<Pht::Font> mHussarFontSize20PotentiallyZoomedScreen;
         std::unique_ptr<Pht::Font> mHussarFontSize27PotentiallyZoomedScreen;
         std::unique_ptr<Pht::Font> mHussarFontSize35PotentiallyZoomedScreen;
         std::unique_ptr<Pht::Font> mHussarFontSize52PotentiallyZoomedScreen;

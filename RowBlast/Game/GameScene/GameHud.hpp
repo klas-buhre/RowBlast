@@ -15,13 +15,13 @@ namespace Pht {
     class Scene;
     class SceneObject;
     class Font;
-    class TextProperties;
     class TextComponent;
     class LightComponent;
 }
 
 namespace RowBlast {
     class GameLogic;
+    class Field;
     class LevelResources;
     class PieceResources;
     class GameHudRectangles;
@@ -44,6 +44,7 @@ namespace RowBlast {
     public:
         GameHud(Pht::IEngine& engine,
                 const GameLogic& gameLogic,
+                const Field& field,
                 const LevelResources& levelResources,
                 const PieceResources& pieceResources,
                 const GameHudRectangles& hudRectangles,
@@ -101,17 +102,21 @@ namespace RowBlast {
         void CreateLightAndCamera(Pht::Scene& scene, Pht::SceneObject& parentObject, int hudLayer);
         void CreateProgressObject(Pht::Scene& scene,
                                   Pht::SceneObject& parentObject,
-                                  const Pht::TextProperties& textProperties,
+                                  const Field& field,
+                                  const CommonResources& commonResources,
                                   const LevelResources& levelResources);
         void CreateGrayBlock(Pht::Scene& scene,
                              Pht::SceneObject& progressContainer,
                              const LevelResources& levelResources);
+        void CreateAsteroid(Pht::Scene& scene,
+                            Pht::SceneObject& progressContainer,
+                            const LevelResources& levelResources);
         void CreateBlueprintSlot(Pht::Scene& scene,
                                  Pht::SceneObject& progressContainer,
                                  const LevelResources& levelResources);
         void CreateMovesObject(Pht::Scene& scene,
                                Pht::SceneObject& parentObject,
-                               const Pht::TextProperties& textProperties);
+                               const CommonResources& commonResources);
         void CreateLPiece(Pht::Scene& scene, Pht::SceneObject& movesContainer);
         void CreateGreenBlock(const Pht::Vec3& position,
                               Pht::RenderableObject& blockRenderable,
@@ -125,6 +130,7 @@ namespace RowBlast {
                                           const GameHudRectangles& hudRectangles);
         void UpdateLightAnimation();
         void UpdateProgress();
+        int CalculateProgress();
         void UpdateMovesLeft();
         void UpdatePreviewPieces();
         void UpdateNextPreviewPieceGroup(bool shouldStartPreviewPieceAnimation);
@@ -140,7 +146,8 @@ namespace RowBlast {
         const PieceResources& mPieceResources;
         Level::Objective mLevelObjective {Level::Objective::Clear};
         int mMovesLeft {0};
-        int mProgress {0};
+        int mProgress {-1};
+        int mProgressGoal {0};
         Pht::TextComponent* mProgressText {nullptr};
         Pht::TextComponent* mMovesText {nullptr};
         Pht::LightComponent* mLight {nullptr};

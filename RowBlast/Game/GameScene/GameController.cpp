@@ -118,7 +118,7 @@ void GameController::StartLevel(int levelId) {
 
     mField.Init(*mLevel);
     mScrollController.Init(mLevel->GetObjective());
-    mScene.Init(*mLevel, mLevelResources, mPieceResources, mGameLogic);
+    mScene.Init(*mLevel, mLevelResources, mPieceResources, mGameLogic, mField);
     mTutorial.Init(*mLevel);
     mGameLogic.Init(*mLevel);
     mGameViewControllers.SetActiveController(GameViewControllers::None);

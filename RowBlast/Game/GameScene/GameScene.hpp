@@ -27,6 +27,7 @@ namespace Pht {
 namespace RowBlast {
     class Level;
     class ScrollController;
+    class Field;
     class CommonResources;
     class LevelResources;
     class PieceResources;
@@ -62,7 +63,8 @@ namespace RowBlast {
         void Init(const Level& level,
                   const LevelResources& levelResources,
                   const PieceResources& pieceResources,
-                  const GameLogic& gameLogic);
+                  const GameLogic& gameLogic,
+                  const Field& field);
         void Update();
         void UpdateLightAnimation();
         void SetScissorBox(const Pht::ScissorBox& scissorBox);
@@ -220,6 +222,7 @@ namespace RowBlast {
         void CreateEffectsContainer();
         void CreateFlyingBlocksContainer();
         void CreateHud(const GameLogic& gameLogic,
+                       const Field& field,
                        const LevelResources& levelResources,
                        const PieceResources& pieceResources,
                        const Level& level);

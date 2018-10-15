@@ -117,7 +117,8 @@ GameScene::GameScene(Pht::IEngine& engine,
 void GameScene::Init(const Level& level,
                      const LevelResources& levelResources,
                      const PieceResources& pieceResources,
-                     const GameLogic& gameLogic) {
+                     const GameLogic& gameLogic,
+                     const Field& field) {
     auto& sceneManager {mEngine.GetSceneManager()};
     auto scene {sceneManager.CreateScene(Pht::Hash::Fnv1a("gameScene"))};
     mScene = scene.get();
@@ -141,7 +142,7 @@ void GameScene::Init(const Level& level,
     CreateSceneObjectPools(level);
     CreateEffectsContainer();
     CreateFlyingBlocksContainer();
-    CreateHud(gameLogic, levelResources, pieceResources, level);
+    CreateHud(gameLogic, field, levelResources, pieceResources, level);
     CreateUiViewsContainer();
     CreateStarsContainer();
     
@@ -385,6 +386,7 @@ void GameScene::CreateFlyingBlocksContainer() {
 }
 
 void GameScene::CreateHud(const GameLogic& gameLogic,
+                          const Field& field,
                           const LevelResources& levelResources,
                           const PieceResources& pieceResources,
                           const Level& level) {
@@ -394,6 +396,7 @@ void GameScene::CreateHud(const GameLogic& gameLogic,
     
     mHud = std::make_unique<GameHud>(mEngine,
                                      gameLogic,
+                                     field,
                                      levelResources,
                                      pieceResources,
                                      mHudRectangles,

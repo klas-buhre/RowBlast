@@ -10,9 +10,9 @@ Backlog:
    X-Fix the piece pull down bug on level 31. See screenshot.
    X-Fix bug where the switchable pieces can change if double clicking on switch when the frame rate
      is really low like in the iPad simulator.
-    -Maybe the FieldAnalyzer should give more value to cleared level blocks than cleared piece
+   X-Maybe the FieldAnalyzer should give more value to cleared level blocks than cleared piece
      blocks.
-    -Would be good if the FieldAnalyzer could take cascading/gravity into account when calculating
+   X-Would be good if the FieldAnalyzer could take cascading/gravity into account when calculating
      BurriedHolesAreaInVisibleRows, at least for SevenPiece and MirroredSevenPiece. Currently, the
      AI gives to low scores for moves that it wrongly thinks will cause a lot burried holes because
      it does not pull down the non-cleared part of for example the SevenPiece.
@@ -53,7 +53,8 @@ Ongoing tasks:
     -Implementation:
       -Game logic.
         -Scrolling.
-      -Game HUD.
+        -Shield?
+      -Update game HUD when asteroid is down.
       -Level goal dialog.
         -Put the asteroid in the dialog. The gray block and blueprint slot as well.
 

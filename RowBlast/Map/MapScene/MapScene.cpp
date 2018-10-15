@@ -132,7 +132,7 @@ void MapScene::Init() {
 
     mHud = std::make_unique<MapHud>(mEngine,
                                     mUserData,
-                                    mCommonResources.GetHussarFontSize22(PotentiallyZoomedScreen::No),
+                                    mCommonResources.GetHussarFontSize20(PotentiallyZoomedScreen::No),
                                     *scene,
                                     static_cast<int>(Layer::Hud));
     

@@ -18,16 +18,16 @@ CommonResources::CommonResources(Pht::IEngine& engine) :
     auto& sceneManager {engine.GetSceneManager()};
     
     sceneManager.InitSceneSystems(Pht::ISceneManager::defaultNarrowFrustumHeightFactor);
-    mHussarFontSize22 = std::make_unique<Pht::Font>("HussarBoldWeb.otf",
-                                                    renderer.GetAdjustedNumPixels(22));
+    mHussarFontSize20 = std::make_unique<Pht::Font>("HussarBoldWeb.otf",
+                                                    renderer.GetAdjustedNumPixels(20));
     mHussarFontSize27 = std::make_unique<Pht::Font>("HussarBoldWeb.otf",
                                                     renderer.GetAdjustedNumPixels(27));
     mHussarFontSize35 = std::make_unique<Pht::Font>("HussarBoldWeb.otf",
                                                     renderer.GetAdjustedNumPixels(35));
     
     sceneManager.InitSceneSystems(CommonResources::narrowFrustumHeightFactor);
-    mHussarFontSize22PotentiallyZoomedScreen = std::make_unique<Pht::Font>("HussarBoldWeb.otf",
-                                                                           renderer.GetAdjustedNumPixels(22));
+    mHussarFontSize20PotentiallyZoomedScreen = std::make_unique<Pht::Font>("HussarBoldWeb.otf",
+                                                                           renderer.GetAdjustedNumPixels(20));
     mHussarFontSize27PotentiallyZoomedScreen = std::make_unique<Pht::Font>("HussarBoldWeb.otf",
                                                                            renderer.GetAdjustedNumPixels(27));
     mHussarFontSize35PotentiallyZoomedScreen = std::make_unique<Pht::Font>("HussarBoldWeb.otf",
@@ -52,12 +52,12 @@ void CommonResources::AddSounds(Pht::IAudio& audio) {
 }
 
 const Pht::Font&
-CommonResources::GetHussarFontSize22(PotentiallyZoomedScreen potentiallyZoomed) const {
+CommonResources::GetHussarFontSize20(PotentiallyZoomedScreen potentiallyZoomed) const {
     switch (potentiallyZoomed) {
         case PotentiallyZoomedScreen::Yes:
-            return *mHussarFontSize22PotentiallyZoomedScreen;
+            return *mHussarFontSize20PotentiallyZoomedScreen;
         case PotentiallyZoomedScreen::No:
-            return *mHussarFontSize22;
+            return *mHussarFontSize20;
     }
 }
 
