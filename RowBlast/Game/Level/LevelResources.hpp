@@ -58,6 +58,10 @@ namespace RowBlast {
             return *mSmallAsteroid;
         }
 
+        Pht::RenderableObject& GetAsteroidFragmentRenderable() const {
+            return *mAsteroidFragment;
+        }
+
     private:
         void CreatePieceTypes(Pht::IEngine& engine, const GameScene& scene);
         void CreateCellRenderables(Pht::ISceneManager& sceneManager, const GameScene& scene);
@@ -67,6 +71,7 @@ namespace RowBlast {
         void CreateLevelBombRenderable(Pht::IEngine& engine);
         void CreateBigAsteroidRenderable(Pht::IEngine& engine);
         void CreateSmallAsteroidRenderable(Pht::IEngine& engine);
+        void CreateAsteroidFragmentRenderable(Pht::IEngine& engine);
         
         PieceTypes mPieceTypes;
         std::unique_ptr<Pht::RenderableObject> mGrayCube;
@@ -78,6 +83,7 @@ namespace RowBlast {
         std::unique_ptr<Pht::RenderableObject> mLevelBomb;
         std::unique_ptr<Pht::RenderableObject> mBigAsteroid;
         std::unique_ptr<Pht::RenderableObject> mSmallAsteroid;
+        std::unique_ptr<Pht::RenderableObject> mAsteroidFragment;
     };
 }
 

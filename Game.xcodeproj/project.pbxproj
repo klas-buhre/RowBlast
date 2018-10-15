@@ -54,6 +54,7 @@
 		625D3B5721724A9A00D67EC2 /* gray_asteroid.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 625D3B5621724A9900D67EC2 /* gray_asteroid.jpg */; };
 		625D3B59217251BD00D67EC2 /* brown_asteroid.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 625D3B58217251BC00D67EC2 /* brown_asteroid.jpg */; };
 		625D3B5C21734EDF00D67EC2 /* AsteroidAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 625D3B5A21734EDF00D67EC2 /* AsteroidAnimation.cpp */; };
+		625D3B5E2174B12500D67EC2 /* asteroid_fragment_500.obj in Resources */ = {isa = PBXBuildFile; fileRef = 625D3B5D2174B12400D67EC2 /* asteroid_fragment_500.obj */; };
 		6261FFD520FB969B008F1619 /* level42.json in Resources */ = {isa = PBXBuildFile; fileRef = 6261FFD420FB969A008F1619 /* level42.json */; };
 		6261FFD720FCC912008F1619 /* level43.json in Resources */ = {isa = PBXBuildFile; fileRef = 6261FFD620FCC912008F1619 /* level43.json */; };
 		6261FFD920FD2C29008F1619 /* level44.json in Resources */ = {isa = PBXBuildFile; fileRef = 6261FFD820FD2C29008F1619 /* level44.json */; };
@@ -470,6 +471,7 @@
 		625D3B58217251BC00D67EC2 /* brown_asteroid.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = brown_asteroid.jpg; sourceTree = "<group>"; };
 		625D3B5A21734EDF00D67EC2 /* AsteroidAnimation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AsteroidAnimation.cpp; sourceTree = "<group>"; };
 		625D3B5B21734EDF00D67EC2 /* AsteroidAnimation.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AsteroidAnimation.hpp; sourceTree = "<group>"; };
+		625D3B5D2174B12400D67EC2 /* asteroid_fragment_500.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = asteroid_fragment_500.obj; sourceTree = "<group>"; };
 		6261FFD420FB969A008F1619 /* level42.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level42.json; sourceTree = "<group>"; };
 		6261FFD620FCC912008F1619 /* level43.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level43.json; sourceTree = "<group>"; };
 		6261FFD820FD2C29008F1619 /* level44.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level44.json; sourceTree = "<group>"; };
@@ -1329,6 +1331,7 @@
 		6270DC571FCB22AE00FB457D /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				625D3B5D2174B12400D67EC2 /* asteroid_fragment_500.obj */,
 				625D3B54217249EC00D67EC2 /* asteroid_2000.obj */,
 				6234618B21691DAE00ECD0DF /* asteroid_998.obj */,
 				626940A4215932C800D9857A /* ufo_3620.obj */,
@@ -2559,6 +2562,7 @@
 				6270DC981FCB23D800FB457D /* level3.json in Resources */,
 				62B2BAE9212C2830009C529D /* level51.json in Resources */,
 				628EC2AC2080C4880071F368 /* level31.json in Resources */,
+				625D3B5E2174B12500D67EC2 /* asteroid_fragment_500.obj in Resources */,
 				62785B2720875937006F9869 /* Textured.vert in Resources */,
 				62B1CB5D210F8EE500D0F195 /* cloud_C_512.png in Resources */,
 				62B1CB80210F8F8600D0F195 /* confetti.png in Resources */,

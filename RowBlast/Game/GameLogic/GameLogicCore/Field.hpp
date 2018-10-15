@@ -23,6 +23,7 @@ namespace RowBlast {
         BlockKind mBlockKind {BlockKind::None};
         BlockColor mColor;
         bool mIsGrayLevelBlock {false};
+        bool mIsAsteroidFragment {false};
     };
 
     enum class IsCollision {

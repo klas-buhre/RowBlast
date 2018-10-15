@@ -1549,12 +1549,6 @@ Field::RemovedSubCells Field::RemoveAreaOfSubCells(const Pht::IVec2& areaPos,
                 continue;
             }
             
-            auto& cell {mGrid[row][column]};
-            
-            if (cell.mFirstSubCell.IsAsteroid()) {
-                continue;
-            }
-            
             if (!removeCorners) {
                 if (column == areaPos.x && row == areaPos.y) {
                     BreakCellRightWelds(row, column);
@@ -1597,10 +1591,14 @@ Field::RemovedSubCells Field::RemoveAreaOfSubCells(const Pht::IVec2& areaPos,
                 BreakCellDownWelds(row + 1, column);
             }
             
+            auto& cell {mGrid[row][column]};
+            
             ProcessSubCell(removedSubCells, cell.mFirstSubCell, row, column);
             ProcessSubCell(removedSubCells, cell.mSecondSubCell, row, column);
             
-            cell = Cell {};
+            if (!cell.mFirstSubCell.IsAsteroid()) {
+                cell = Cell {};
+            }
         }
     }
     
@@ -1697,7 +1695,8 @@ void Field::SaveSubCellAndCancelFill(Field::RemovedSubCells& removedSubCells,
             .mRotation = subCell.mRotation,
             .mBlockKind = subCell.mBlockKind,
             .mColor = subCell.mColor,
-            .mIsGrayLevelBlock = subCell.mIsGrayLevelBlock
+            .mIsGrayLevelBlock = subCell.mIsGrayLevelBlock,
+            .mIsAsteroidFragment = subCell.IsAsteroid()
         };
         
         removedSubCells.PushBack(removedSubCell);

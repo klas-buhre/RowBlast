@@ -91,6 +91,10 @@ void FlyingBlocksAnimation::AddBlockRows(const Field::RemovedSubCells& subCells)
             },
             .mSceneObject = &sceneObject
         };
+        
+        if (removedSubCell.mIsAsteroidFragment) {
+            flyingBlock.mAppliedForce = FlyingBlock::AppliedForce::Explosion;
+        }
 
         mFlyingBlocks.PushBack(flyingBlock);
     }
@@ -283,6 +287,8 @@ Pht::Vec3 FlyingBlocksAnimation::CalculateBlockInitialPosition(const RemovedSubC
 Pht::RenderableObject& FlyingBlocksAnimation::GetBlockRenderableObject(const RemovedSubCell& subCell) {
     if (subCell.mIsGrayLevelBlock) {
         return mLevelResources.GetLevelBlockRenderable(subCell.mBlockKind);
+    } else if (subCell.mIsAsteroidFragment) {
+        return mLevelResources.GetAsteroidFragmentRenderable();
     } else if (subCell.mBlockKind == BlockKind::Bomb) {
         return mLevelResources.GetLevelBombRenderable();
     } else if (subCell.mBlockKind == BlockKind::RowBomb) {

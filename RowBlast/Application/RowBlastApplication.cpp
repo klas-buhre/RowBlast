@@ -51,8 +51,6 @@ Ongoing tasks:
      Lava starts to appear when it is damaged. Could also bring down a big asteroid of 2x2 cells
      that can take a couple more explosions and lasers.
     -Implementation:
-      -Asteroid rendering.
-        -Small pieces of asteroid breaks of when the asteroid is hit by lasers or explosions.
       -Game logic.
         -Scrolling.
       -Game HUD.
