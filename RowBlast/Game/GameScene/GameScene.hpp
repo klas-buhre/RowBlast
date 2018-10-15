@@ -189,6 +189,10 @@ namespace RowBlast {
             return mFieldGridZ;
         }
         
+        float GetBigAsteroidZ() const {
+            return mBigAsteroidZ;
+        }
+        
         float GetBouncingBlockZ() const {
             return mBouncingBlockZ;
         }
@@ -256,7 +260,8 @@ namespace RowBlast {
         const float mGhostPieceZ {-0.2f};
         const float mPressedGhostPieceZ {mCellSize / 2.0f + 0.2f};
         const float mBlueprintAnimationZ {-0.6f};
-        const float mFieldGridZ {-0.8f};
+        const float mFieldGridZ {-1.8f};
+        const float mBigAsteroidZ {-1.0f};
         const float mBouncingBlockZ {-0.2f};
         float mFieldWidth {0.0f};
         float mFieldHeight {0.0f};

@@ -53,6 +53,7 @@
 		625D3B55217249EC00D67EC2 /* asteroid_2000.obj in Resources */ = {isa = PBXBuildFile; fileRef = 625D3B54217249EC00D67EC2 /* asteroid_2000.obj */; };
 		625D3B5721724A9A00D67EC2 /* gray_asteroid.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 625D3B5621724A9900D67EC2 /* gray_asteroid.jpg */; };
 		625D3B59217251BD00D67EC2 /* brown_asteroid.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 625D3B58217251BC00D67EC2 /* brown_asteroid.jpg */; };
+		625D3B5C21734EDF00D67EC2 /* AsteroidAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 625D3B5A21734EDF00D67EC2 /* AsteroidAnimation.cpp */; };
 		6261FFD520FB969B008F1619 /* level42.json in Resources */ = {isa = PBXBuildFile; fileRef = 6261FFD420FB969A008F1619 /* level42.json */; };
 		6261FFD720FCC912008F1619 /* level43.json in Resources */ = {isa = PBXBuildFile; fileRef = 6261FFD620FCC912008F1619 /* level43.json */; };
 		6261FFD920FD2C29008F1619 /* level44.json in Resources */ = {isa = PBXBuildFile; fileRef = 6261FFD820FD2C29008F1619 /* level44.json */; };
@@ -467,6 +468,8 @@
 		625D3B54217249EC00D67EC2 /* asteroid_2000.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = asteroid_2000.obj; sourceTree = "<group>"; };
 		625D3B5621724A9900D67EC2 /* gray_asteroid.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = gray_asteroid.jpg; sourceTree = "<group>"; };
 		625D3B58217251BC00D67EC2 /* brown_asteroid.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = brown_asteroid.jpg; sourceTree = "<group>"; };
+		625D3B5A21734EDF00D67EC2 /* AsteroidAnimation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AsteroidAnimation.cpp; sourceTree = "<group>"; };
+		625D3B5B21734EDF00D67EC2 /* AsteroidAnimation.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AsteroidAnimation.hpp; sourceTree = "<group>"; };
 		6261FFD420FB969A008F1619 /* level42.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level42.json; sourceTree = "<group>"; };
 		6261FFD620FCC912008F1619 /* level43.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level43.json; sourceTree = "<group>"; };
 		6261FFD820FD2C29008F1619 /* level44.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level44.json; sourceTree = "<group>"; };
@@ -2173,6 +2176,8 @@
 		62785D492087618E006F9869 /* Animations */ = {
 			isa = PBXGroup;
 			children = (
+				625D3B5A21734EDF00D67EC2 /* AsteroidAnimation.cpp */,
+				625D3B5B21734EDF00D67EC2 /* AsteroidAnimation.hpp */,
 				62785D4E2087618E006F9869 /* BlastRadiusAnimation.cpp */,
 				62785D5F2087618E006F9869 /* BlastRadiusAnimation.hpp */,
 				62785D542087618E006F9869 /* BlueprintSlotsFilledAnimation.cpp */,
@@ -2785,6 +2790,7 @@
 				62785B4320875937006F9869 /* SceneResources.cpp in Sources */,
 				62785B4420875937006F9869 /* ObjMeshLoader.cpp in Sources */,
 				62785DF82087618E006F9869 /* PreviewPieceGroupAnimation.cpp in Sources */,
+				625D3B5C21734EDF00D67EC2 /* AsteroidAnimation.cpp in Sources */,
 				62785DF12087618E006F9869 /* FlashingBlocksAnimation.cpp in Sources */,
 				62785DE22087618E006F9869 /* LongIPiece.cpp in Sources */,
 				62785DC92087618E006F9869 /* ScrollController.cpp in Sources */,

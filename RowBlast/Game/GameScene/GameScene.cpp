@@ -19,7 +19,7 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto fieldQuadZ {-1.0f};
+    constexpr auto fieldQuadZ {-2.0f};
     constexpr auto blueprintZ {-0.7f};
     constexpr auto fieldBorderZ {-0.5f};
     constexpr auto lowerClipAreaHeightInCells {2.15f};

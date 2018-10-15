@@ -239,6 +239,7 @@ std::unique_ptr<Pht::SceneObject> BlastRadiusAnimation::CreateSceneObject(const 
                                                                           Pht::IEngine& engine) {
     Pht::Material imageMaterial {image, Pht::GenerateMipmap::No};
     imageMaterial.SetBlend(Pht::Blend::Yes);
+    imageMaterial.GetDepthState().mDepthTest = false;
     
     auto& sceneManager {engine.GetSceneManager()};
     return sceneManager.CreateSceneObject(Pht::QuadMesh {squareSide, squareSide},

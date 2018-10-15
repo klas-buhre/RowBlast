@@ -26,6 +26,7 @@
 #include "ComboTextAnimation.hpp"
 #include "BlastRadiusAnimation.hpp"
 #include "BombsAnimation.hpp"
+#include "AsteroidAnimation.hpp"
 #include "FallingPieceScaleAnimation.hpp"
 #include "LevelCompletedController.hpp"
 #include "Tutorial.hpp"
@@ -152,6 +153,7 @@ namespace RowBlast {
         PreviewPiecesAnimation mPreviewPiecesAnimation;
         BlueprintSlotsFilledAnimation mBlueprintSlotsFilledAnimation;
         BombsAnimation mBombsAnimation;
+        AsteroidAnimation mAsteroidAnimation;
         FlyingBlocksAnimation mFlyingBlocksAnimation;
         GameSceneRenderer mRenderer;
         LevelCompletedController mLevelCompletedController;

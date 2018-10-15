@@ -88,6 +88,7 @@ GameController::GameController(Pht::IEngine& engine,
     mPreviewPiecesAnimation {mScene, mGameLogic},
     mBlueprintSlotsFilledAnimation {mField, mScene, mLevelResources},
     mBombsAnimation {mScene, mPieceResources, mLevelResources},
+    mAsteroidAnimation {},
     mFlyingBlocksAnimation {mScene, mLevelResources, mPieceResources, mBombsAnimation},
     mRenderer {
         mScene,
@@ -95,6 +96,7 @@ GameController::GameController(Pht::IEngine& engine,
         mGameLogic,
         mScrollController,
         mBombsAnimation,
+        mAsteroidAnimation,
         mPieceResources,
         mLevelResources
     },
@@ -132,6 +134,7 @@ void GameController::StartLevel(int levelId) {
     mSlidingTextAnimation.Init();
     mComboTextAnimation.Init();
     mBombsAnimation.Init();
+    mAsteroidAnimation.Init();
     mFallingPieceScaleAnimation.Init();
     mGameViewControllers.Init(mScene);
     mLevelCompletedController.Init(*mLevel);
@@ -160,9 +163,6 @@ GameController::Command GameController::Update() {
             command = UpdateInPausedState();
             break;
     }
-    
-    mRenderer.Render();
-    mField.OnEndOfFrame();
     
     return command;
 }
@@ -202,9 +202,13 @@ GameController::Command GameController::UpdateGame() {
     mPreviewPiecesAnimation.Update(dt);
     mBombsAnimation.Update(dt);
     mComboTextAnimation.Update(dt);
-    
     mTutorial.Update();
     
+    mRenderer.Render();
+    mField.OnEndOfFrame();
+    
+    mAsteroidAnimation.Update(dt);
+
     return command;
 }
 
@@ -259,7 +263,7 @@ GameController::Command GameController::UpdateInPausedState() {
     
     mScene.UpdateLightAnimation();
     mUserData.Update();
-    
+
     return command;
 }
 
@@ -272,6 +276,8 @@ void GameController::UpdateGameMenu() {
             break;
         case GameMenuController::Result::UndoMove:
             mGameLogic.UndoMove();
+            mRenderer.Render();
+            mField.OnEndOfFrame();
             break;
         case GameMenuController::Result::GoToLevelGoalDialog:
             GoToPausedStateLevelGoalDialog();

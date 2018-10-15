@@ -10,6 +10,7 @@
 #include "FallingPiece.hpp"
 #include "GameScene.hpp"
 #include "BombsAnimation.hpp"
+#include "AsteroidAnimation.hpp"
 #include "PieceResources.hpp"
 #include "LevelResources.hpp"
 
@@ -25,6 +26,7 @@ GameSceneRenderer::GameSceneRenderer(GameScene& scene,
                                      const GameLogic& gameLogic,
                                      const ScrollController& scrollController,
                                      const BombsAnimation& bombsAnimation,
+                                     AsteroidAnimation& asteroidAnimation,
                                      const PieceResources& pieceResources,
                                      const LevelResources& levelResources) :
     mScene {scene},
@@ -32,6 +34,7 @@ GameSceneRenderer::GameSceneRenderer(GameScene& scene,
     mGameLogic {gameLogic},
     mScrollController {scrollController},
     mBombsAnimation {bombsAnimation},
+    mAsteroidAnimation {asteroidAnimation},
     mPieceResources {pieceResources},
     mLevelResources {levelResources} {}
 
@@ -166,11 +169,13 @@ void GameSceneRenderer::RenderFieldBlock(const SubCell& subCell, bool isSecondSu
             sceneObject.SetRenderable(&mPieceResources.GetRowBombRenderableObject());
             break;
         case BlockKind::BigAsteroidMainCell:
-            transform.Translate({cellSize / 2.0f, cellSize / 2.0f, 0.0f});
+            transform.Translate({cellSize / 2.0f, cellSize / 2.0f, mScene.GetBigAsteroidZ()});
             sceneObject.SetRenderable(&mLevelResources.GetBigAsteroidRenderable());
+            mAsteroidAnimation.SetSceneObject(&sceneObject);
             break;
         case BlockKind::SmallAsteroid:
             sceneObject.SetRenderable(&mLevelResources.GetSmallAsteroidRenderable());
+            mAsteroidAnimation.SetSceneObject(&sceneObject);
             break;
         default:
             if (blockKind != BlockKind::Full) {

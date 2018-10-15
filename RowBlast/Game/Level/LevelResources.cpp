@@ -193,16 +193,16 @@ void LevelResources::CreateLevelBombRenderable(Pht::IEngine& engine) {
 }
 
 void LevelResources::CreateBigAsteroidRenderable(Pht::IEngine& engine) {
-    Pht::Material asteroidMaterial {"gray_asteroid.jpg", 0.7f, 0.9f, 0.05f, 1.0f};
+    Pht::Material asteroidMaterial {"gray_asteroid.jpg", 0.84f, 1.23f, 0.0f, 1.0f};
     auto& sceneManager {engine.GetSceneManager()};
-    mBigAsteroid = sceneManager.CreateRenderableObject(Pht::ObjMesh {"asteroid_2000.obj", 40.0f, Pht::MoveMeshToOrigin::Yes},
-                                                    asteroidMaterial);
+    mBigAsteroid = sceneManager.CreateRenderableObject(Pht::ObjMesh {"asteroid_2000.obj", 38.0f, Pht::MoveMeshToOrigin::Yes},
+                                                       asteroidMaterial);
 }
 
 void LevelResources::CreateSmallAsteroidRenderable(Pht::IEngine& engine) {
-    Pht::Material asteroidMaterial {"gray_asteroid.jpg", 0.7f, 0.9f, 0.05f, 1.0f};
+    Pht::Material asteroidMaterial {"gray_asteroid.jpg", 0.84f, 1.23f, 0.0f, 1.0f};
     auto& sceneManager {engine.GetSceneManager()};
-    mSmallAsteroid = sceneManager.CreateRenderableObject(Pht::ObjMesh {"asteroid_2000.obj", 20.0f, Pht::MoveMeshToOrigin::Yes},
+    mSmallAsteroid = sceneManager.CreateRenderableObject(Pht::ObjMesh {"asteroid_2000.obj", 19.0f, Pht::MoveMeshToOrigin::Yes},
                                                          asteroidMaterial);
 }
 

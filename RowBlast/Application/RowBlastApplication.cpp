@@ -51,13 +51,13 @@ Ongoing tasks:
      Lava starts to appear when it is damaged. Could also bring down a big asteroid of 2x2 cells
      that can take a couple more explosions and lasers.
     -Implementation:
+      -Asteroid rendering.
+        -Small pieces of asteroid breaks of when the asteroid is hit by lasers or explosions.
       -Game logic.
         -Scrolling.
-      -Asteroid rendering.
-        -Fix problem were blast radius animation is covered by the asteroid.
-        -Asteroid animation.
       -Game HUD.
       -Level goal dialog.
+        -Put the asteroid in the dialog. The gray block and blueprint slot as well.
 
 
 

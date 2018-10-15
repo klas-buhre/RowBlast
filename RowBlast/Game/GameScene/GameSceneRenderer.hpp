@@ -22,6 +22,7 @@ namespace RowBlast {
     class PieceResources;
     class LevelResources;
     class BombsAnimation;
+    class AsteroidAnimation;
     class SceneObjectPool;
 
     class GameSceneRenderer {
@@ -31,6 +32,7 @@ namespace RowBlast {
                           const GameLogic& gameLogic,
                           const ScrollController& scrollController,
                           const BombsAnimation& bombsAnimation,
+                          AsteroidAnimation& asteroidAnimation,
                           const PieceResources& pieceResources,
                           const LevelResources& levelResources);
         
@@ -71,6 +73,7 @@ namespace RowBlast {
         const GameLogic& mGameLogic;
         const ScrollController& mScrollController;
         const BombsAnimation& mBombsAnimation;
+        AsteroidAnimation& mAsteroidAnimation;
         const PieceResources& mPieceResources;
         const LevelResources& mLevelResources;
     };
