@@ -605,9 +605,28 @@ void GameLogic::GoToFieldExplosionsState() {
 
 void GameLogic::RemoveClearedRowsAndPullDownLoosePieces() {
     mField.RemoveClearedRows();
+    
+    switch (mLevel->GetObjective()) {
+        case Level::Objective::Clear:
+            PullDownLoosePiecesClearObjective();
+            break;
+        case Level::Objective::BringDownTheAsteroid:
+            PullDownLoosePiecesAsteroidObjective();
+            break;
+        case Level::Objective::Build:
+            assert(false);
+    }
+
+    mField.DetectBlocksThatShouldNotBounce();
+    
+    mComboDetector.GoToCascadingState();
+    mCascadeState = CascadeState::Cascading;
+}
+
+void GameLogic::PullDownLoosePiecesClearObjective() {
     mField.SetLowestVisibleRow(mScrollController.CalculatePreferredLowestVisibleRow());
     mField.PullDownLoosePieces();
-    
+
     // A second calculation of the lowest visible row and pulling down pieces is needed because the
     // first calculation of lowest visible row could be too high if some piece blocks are remaining
     // inside the spawning area since they have not been pulled down yet at the time of calculating
@@ -615,11 +634,24 @@ void GameLogic::RemoveClearedRowsAndPullDownLoosePieces() {
     // blocks have been pulled down.
     mField.SetLowestVisibleRow(mScrollController.CalculatePreferredLowestVisibleRow());
     mField.PullDownLoosePieces();
+}
 
-    mField.DetectBlocksThatShouldNotBounce();
+void GameLogic::PullDownLoosePiecesAsteroidObjective() {
+    // We first need to pull everything down as far as possible in order to calculate the lowest
+    // visible row. This is because the lowest visible row is calculated based on the asteroid
+    // position and the asteroid needs to be pulled down as far as possible to know its proper
+    // position.
+    mField.SaveInTempGrid();
+    mField.SetLowestVisibleRow(0);
+    mField.PullDownLoosePieces();
     
-    mComboDetector.GoToCascadingState();
-    mCascadeState = CascadeState::Cascading;
+    auto lowestVisibleRow {mScrollController.CalculatePreferredLowestVisibleRow()};
+    
+    // Now that we have the correct lowest visible row, we can restore the field and do the proper
+    // pull down of the pieces.
+    mField.RestoreFromTempGrid();
+    mField.SetLowestVisibleRow(lowestVisibleRow);
+    mField.PullDownLoosePieces();
 }
 
 bool GameLogic::LevelAllowsClearingFilledRows() const {

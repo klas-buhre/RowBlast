@@ -59,6 +59,7 @@ namespace RowBlast {
         void UpdateInLevelOverviewScrollStateBuildObjective(float dt);
         void UpdateInIdleState();
         int CalculatePreferredLowestVisibleRowClearObjective() const;
+        int CalculatePreferredLowestVisibleRowAsteroidObjective() const;
         int CalculatePreferredLowestVisibleRowBuildObjective() const;
         void StartScrollingDown(float preferredLowestVisibleRow);
         void StartScrollingUp(float preferredLowestVisibleRow);

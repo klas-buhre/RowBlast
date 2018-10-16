@@ -12,6 +12,7 @@ using namespace RowBlast;
 
 namespace {
     const auto numVisibleLevelRows {6};
+    const auto numVisibleRowsBelowAsteroid {6};
     const auto scrollTime {0.72f};
     const auto deaccelerationStartTime {0.36f};
     const auto waitTimeClearObjective {1.0f};
@@ -77,7 +78,7 @@ void ScrollController::UpdateInBeforeLevelOverviewScrollState() {
         switch (mLevelObjective) {
             case Level::Objective::Clear:
             case Level::Objective::BringDownTheAsteroid:
-                mLowestVisibleRowTarget = CalculatePreferredLowestVisibleRowClearObjective();
+                mLowestVisibleRowTarget = CalculatePreferredLowestVisibleRow();
                 mStartDeaccelerationTime =
                     (mLowestVisibleRowTarget - mLowestVisibleRow) / overviewScrollSpeed -
                     overviewDeaccelerationDuration / 2.0f;
@@ -160,8 +161,9 @@ void ScrollController::UpdateInIdleState() {
 int ScrollController::CalculatePreferredLowestVisibleRow() const {
     switch (mLevelObjective) {
         case Level::Objective::Clear:
-        case Level::Objective::BringDownTheAsteroid:
             return CalculatePreferredLowestVisibleRowClearObjective();
+        case Level::Objective::BringDownTheAsteroid:
+            return CalculatePreferredLowestVisibleRowAsteroidObjective();
         case Level::Objective::Build:
             return CalculatePreferredLowestVisibleRowBuildObjective();
     }
@@ -204,6 +206,20 @@ int ScrollController::CalculatePreferredLowestVisibleRowClearObjective() const {
     }
     
     return lowestVisibleRowBasedOnLevelBlocks;
+}
+
+int ScrollController::CalculatePreferredLowestVisibleRowAsteroidObjective() const {
+    auto asteroidRow {mField.CalculateAsteroidRow()};
+
+    auto lowestVisibleRow {
+        asteroidRow.HasValue() ? asteroidRow.GetValue() - numVisibleRowsBelowAsteroid : 0
+    };
+    
+    if (lowestVisibleRow < 0) {
+        lowestVisibleRow = 0;
+    }
+    
+    return lowestVisibleRow;
 }
 
 int ScrollController::CalculatePreferredLowestVisibleRowBuildObjective() const {

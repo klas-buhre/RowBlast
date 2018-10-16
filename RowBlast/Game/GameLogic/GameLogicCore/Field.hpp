@@ -79,6 +79,8 @@ namespace RowBlast {
         void SaveState();
         void OnEndOfFrame();
         void SetChanged();
+        void SaveInTempGrid();
+        void RestoreFromTempGrid();
         void SetBlocksYPositionAndBounceFlag();
         int DetectCollisionDown(const PieceBlocks& pieceBlocks, const Pht::IVec2& position) const;
         int DetectCollisionRight(const PieceBlocks& pieceBlocks, const Pht::IVec2& position) const;
@@ -251,6 +253,7 @@ namespace RowBlast {
 
         CellGrid mGrid;
         CellGrid mPreviousGrid;
+        CellGrid mTempGrid;
         std::unique_ptr<BlueprintCellGrid> mBlueprintGrid;
         int mNumColumns {0};
         int mNumRows {0};

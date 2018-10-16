@@ -52,8 +52,7 @@ Ongoing tasks:
      that can take a couple more explosions and lasers.
     -Implementation:
       -Game logic.
-        -Scrolling.
-        -Shield?
+        -Shield.
       -Level goal dialog.
         -Put the asteroid in the dialog. The gray block and blueprint slot as well.
 

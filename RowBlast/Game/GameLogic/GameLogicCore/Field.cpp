@@ -157,21 +157,32 @@ void Field::Init(const Level& level) {
     mNumColumns = level.GetNumColumns();
     mNumRows = level.GetNumRows();
     
-    if (auto* clearGrid {level.GetClearGrid()}) {
-        mGrid = *clearGrid;
-        assert(mNumRows - CalculateHighestLevelBlock().GetValue() >= 14);
-    } else {
-        auto* blueprintGrid {level.GetBlueprintGrid()};
-        assert(blueprintGrid);
-        
-        mBlueprintGrid = std::make_unique<BlueprintCellGrid>(*blueprintGrid);
-        mGrid.clear();
-        mGrid.reserve(mNumRows);
-        
-        std::vector<Cell> emptyRow(mNumColumns);
-        
-        for (auto rowIndex {0}; rowIndex < mNumRows; ++rowIndex) {
-            mGrid.push_back(emptyRow);
+    switch (level.GetObjective()) {
+        case Level::Objective::Clear: {
+            auto* clearGrid {level.GetClearGrid()};
+            assert(clearGrid);
+            mGrid = *clearGrid;
+            assert(mNumRows - CalculateHighestLevelBlock().GetValue() >= 14);
+            break;
+        }
+        case Level::Objective::BringDownTheAsteroid: {
+            auto* clearGrid {level.GetClearGrid()};
+            assert(clearGrid);
+            mGrid = *clearGrid;
+            assert(mNumRows - CalculateAsteroidRow().GetValue() >= 13);
+            break;
+        }
+        case Level::Objective::Build: {
+            auto* blueprintGrid {level.GetBlueprintGrid()};
+            assert(blueprintGrid);
+            mBlueprintGrid = std::make_unique<BlueprintCellGrid>(*blueprintGrid);
+            mGrid.clear();
+            mGrid.reserve(mNumRows);
+            std::vector<Cell> emptyRow(mNumColumns);
+            for (auto rowIndex {0}; rowIndex < mNumRows; ++rowIndex) {
+                mGrid.push_back(emptyRow);
+            }
+            break;
         }
     }
     
@@ -179,6 +190,7 @@ void Field::Init(const Level& level) {
     ManageWelds();
 
     mPreviousGrid = mGrid;
+    mTempGrid = mGrid;
     SetChanged();
 }
 
@@ -197,6 +209,15 @@ void Field::RestorePreviousState() {
 
 void Field::SaveState() {
     CopyGridNoAlloc(mPreviousGrid, mGrid);
+}
+
+void Field::SaveInTempGrid() {
+    CopyGridNoAlloc(mTempGrid, mGrid);
+}
+
+void Field::RestoreFromTempGrid() {
+    SetChanged();
+    CopyGridNoAlloc(mGrid, mTempGrid);
 }
 
 void Field::CopyGridNoAlloc(CellGrid& to, const CellGrid& from) {
@@ -1142,6 +1163,10 @@ void Field::FindPieceBlocks(BlockColor color, const Pht::IVec2& position) {
 }
 
 void Field::FindAsteroidCells(const Pht::IVec2& position) {
+    if (position.y < 0 || position.y >= mNumRows || position.x < 0 || position.x >= mNumColumns) {
+        return;
+    }
+    
     auto& subCell {mGrid[position.y][position.x].mFirstSubCell};
     
     if (!subCell.IsBigAsteroid() || subCell.mIsFound) {

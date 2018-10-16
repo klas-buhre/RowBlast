@@ -161,6 +161,8 @@ namespace RowBlast {
         void DetonateImpactedLevelBombs(const Field::ImpactedBombs& impactedLevelBombs);
         void GoToFieldExplosionsState();
         void RemoveClearedRowsAndPullDownLoosePieces();
+        void PullDownLoosePiecesClearObjective();
+        void PullDownLoosePiecesAsteroidObjective();
         Rotation CalculateNewRotation(const Pht::TouchEvent& touchEvent);
         void RotatateAndAdjustPosition(Rotation newRotation,
                                        const PieceBlocks& pieceBlocks,
