@@ -286,6 +286,18 @@ Pht::Optional<int> Field::CalculateHighestBlockInSpawningArea(int lowestVisibleR
     return Pht::Optional<int> {};
 }
 
+Pht::Optional<int> Field::CalculateAsteroidRow() const {
+    for (auto row {0}; row < mNumRows; ++row) {
+        for (auto column {0}; column < mNumColumns; ++column) {
+            if (mGrid[row][column].mFirstSubCell.IsAsteroid()) {
+                return row;
+            }
+        }
+    }
+    
+    return Pht::Optional<int> {};
+}
+
 int Field::AccordingToBlueprintHeight() const {
     assert(mBlueprintGrid);
     

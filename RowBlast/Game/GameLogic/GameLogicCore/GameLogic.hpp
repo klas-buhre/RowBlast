@@ -130,12 +130,8 @@ namespace RowBlast {
             return mCascadeState == CascadeState::Cascading;
         }
         
-        int GetNumLevelBlocksLeft() const {
-            return mNumLevelBlocksLeft;
-        }
-
-        int GetNumEmptyBlueprintSlotsLeft() const {
-            return mNumEmptyBlueprintSlotsLeft;
+        int GetNumObjectsLeftToClear() const {
+            return mNumObjectsLeftToClear;
         }
         
     private:
@@ -148,7 +144,6 @@ namespace RowBlast {
 
         Result SpawnFallingPiece();
         void SetPieceType();
-        bool IsLevelCompleted();
         void ManageMoveHistory();
         void StartBlastRadiusAnimationAtGhostPiece();
         void SetBlastRadiusAnimationPositionAtGhostPiece();
@@ -232,8 +227,7 @@ namespace RowBlast {
         int mGhostPieceRow {0};
         int mMovesUsed {0};
         int mMovesLeft {0};
-        int mNumLevelBlocksLeft {0};
-        int mNumEmptyBlueprintSlotsLeft {0};
+        int mNumObjectsLeftToClear {0};
     };
 }
 

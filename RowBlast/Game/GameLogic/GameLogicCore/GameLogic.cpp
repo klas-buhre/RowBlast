@@ -167,7 +167,7 @@ GameLogic::Result GameLogic::SpawnFallingPiece() {
     UpdateLevelProgress();
     mComboDetector.OnSpawnPiece();
     
-    if (IsLevelCompleted()) {
+    if (mNumObjectsLeftToClear == 0) {
         return Result::LevelCompleted;
     }
     
@@ -226,24 +226,6 @@ const Piece* GameLogic::GetPieceType() const {
     }
     
     return nullptr;
-}
-
-bool GameLogic::IsLevelCompleted() {
-    switch (mLevel->GetObjective()) {
-        case Level::Objective::Clear:
-        case Level::Objective::BringDownTheAsteroid:
-            if (mNumLevelBlocksLeft == 0) {
-                return true;
-            }
-            break;
-        case Level::Objective::Build:
-            if (mField.AccordingToBlueprintHeight() == mField.GetNumRows()) {
-                return true;
-            }
-            break;
-    }
-    
-    return false;
 }
 
 void GameLogic::ManageMoveHistory() {
@@ -391,11 +373,20 @@ void GameLogic::HandleControlTypeChange() {
 void GameLogic::UpdateLevelProgress() {
     switch (mLevel->GetObjective()) {
         case Level::Objective::Clear:
-        case Level::Objective::BringDownTheAsteroid:
-            mNumLevelBlocksLeft = mField.CalculateNumLevelBlocks();
+            mNumObjectsLeftToClear = mField.CalculateNumLevelBlocks();
             break;
+        case Level::Objective::BringDownTheAsteroid: {
+            auto asteroidRow {mField.CalculateAsteroidRow()};
+            assert(asteroidRow.HasValue());
+            if (asteroidRow.GetValue() == 0) {
+                mNumObjectsLeftToClear = 0;
+            } else {
+                mNumObjectsLeftToClear = 1;
+            }
+            break;
+        }
         case Level::Objective::Build:
-            mNumEmptyBlueprintSlotsLeft = mField.CalculateNumEmptyBlueprintSlots();
+            mNumObjectsLeftToClear = mField.CalculateNumEmptyBlueprintSlots();
             break;
     }
 }

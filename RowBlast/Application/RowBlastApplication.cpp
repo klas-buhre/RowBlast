@@ -54,7 +54,6 @@ Ongoing tasks:
       -Game logic.
         -Scrolling.
         -Shield?
-      -Update game HUD when asteroid is down.
       -Level goal dialog.
         -Put the asteroid in the dialog. The gray block and blueprint slot as well.
 

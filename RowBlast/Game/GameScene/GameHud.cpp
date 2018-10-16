@@ -409,19 +409,8 @@ void GameHud::UpdateLightAnimation() {
     mLight->SetDirection(lightDirectionA.Lerp(t, lightDirectionB));
 }
 
-int GameHud::CalculateProgress() {
-    switch (mLevelObjective) {
-        case Level::Objective::Clear:
-            return mProgressGoal - mGameLogic.GetNumLevelBlocksLeft();
-        case Level::Objective::BringDownTheAsteroid:
-            return mProgressGoal - 1;
-        case Level::Objective::Build:
-            return mProgressGoal - mGameLogic.GetNumEmptyBlueprintSlotsLeft();
-    }
-}
-
 void GameHud::UpdateProgress() {
-    auto progress {CalculateProgress()};
+    auto progress {mProgressGoal - mGameLogic.GetNumObjectsLeftToClear()};
 
     if (progress != mProgress) {
         WriteIntegerAtBeginningOfString(progress, mProgressText->GetText());

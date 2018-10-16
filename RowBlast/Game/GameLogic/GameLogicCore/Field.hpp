@@ -115,6 +115,7 @@ namespace RowBlast {
         int CalculateNumEmptyBlueprintSlots() const;
         Pht::Optional<int> CalculateHighestLevelBlock() const;
         Pht::Optional<int> CalculateHighestBlockInSpawningArea(int lowestVisibleRow) const;
+        Pht::Optional<int> CalculateAsteroidRow() const;
         int AccordingToBlueprintHeight() const;
         RemovedSubCells ClearFilledRows();
         void RemoveClearedRows();

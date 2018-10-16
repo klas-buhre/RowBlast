@@ -130,7 +130,6 @@ namespace RowBlast {
                                           const GameHudRectangles& hudRectangles);
         void UpdateLightAnimation();
         void UpdateProgress();
-        int CalculateProgress();
         void UpdateMovesLeft();
         void UpdatePreviewPieces();
         void UpdateNextPreviewPieceGroup(bool shouldStartPreviewPieceAnimation);
