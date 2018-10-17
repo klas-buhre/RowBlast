@@ -35,6 +35,7 @@ namespace Pht {
     
     enum class Blend {
         Yes,
+        Additive,
         No
     };
     

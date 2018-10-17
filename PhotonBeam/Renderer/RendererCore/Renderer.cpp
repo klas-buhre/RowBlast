@@ -110,22 +110,27 @@ namespace {
     }
     
     void SetupBlend(bool isParticleShader, const Material& material) {
-        if (material.GetBlend() == Blend::Yes) {
-            glEnable(GL_BLEND);
-
-            if (isParticleShader) {
-                glBlendFunc(GL_SRC_ALPHA, GL_ONE);
-            } else {
-                auto* texture {material.GetTexture()};
-                
-                if (texture && texture->HasPremultipliedAlpha()) {
-                    glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+        switch (material.GetBlend()) {
+            case Blend::Yes:
+                glEnable(GL_BLEND);
+                if (isParticleShader) {
+                    glBlendFunc(GL_SRC_ALPHA, GL_ONE);
                 } else {
-                    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+                    auto* texture {material.GetTexture()};
+                    if (texture && texture->HasPremultipliedAlpha()) {
+                        glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+                    } else {
+                        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+                    }
                 }
-            }
-        } else {
-            glDisable(GL_BLEND);
+                break;
+            case Blend::Additive:
+                glEnable(GL_BLEND);
+                glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+                break;
+            case Blend::No:
+                glDisable(GL_BLEND);
+                break;
         }
     }
 

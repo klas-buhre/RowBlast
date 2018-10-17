@@ -91,6 +91,10 @@ Material::Material(const Color& color) :
     Material {color, {0.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 0.0f}, 1.0f} {}
 
 Blend Material::GetBlend() const {
+    if (mBlend == Blend::Additive) {
+        return Blend::Additive;
+    }
+
     if (mBlend == Blend::Yes || mOpacity != 1.0f || mShaderType == ShaderType::VertexColor) {
         return Blend::Yes;
     }
@@ -129,7 +133,12 @@ void Material::SetShaderType(ShaderType shaderType) {
 void Material::SetBlend(Blend blend) {
     mBlend = blend;
     
-    if (mBlend == Blend::Yes) {
-        mDepthState.mDepthWrite = false;
+    switch (blend) {
+        case Blend::Yes:
+        case Blend::Additive:
+            mDepthState.mDepthWrite = false;
+            break;
+        case Blend::No:
+            break;
     }
 }
