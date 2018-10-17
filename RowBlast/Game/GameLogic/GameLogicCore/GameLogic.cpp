@@ -34,6 +34,8 @@ namespace {
     constexpr auto landingNoMovementDurationFalling {1.0f};
     constexpr auto landingMovementDurationFalling {4.0f};
     constexpr auto cascadeWaitTime {0.23f};
+    constexpr auto shieldRelativeYPosition {12};
+    constexpr auto shieldHeight {6};
 
     PieceBlocks CreatePieceBlocks(const FallingPiece& fallingPiece) {
         auto& pieceType {fallingPiece.GetPieceType()};
@@ -130,6 +132,12 @@ void GameLogic::Init(const Level& level) {
 }
 
 GameLogic::Result GameLogic::Update(bool shouldUpdateLogic) {
+    if (mLevel->GetObjective() == Level::Objective::BringDownTheAsteroid &&
+        mScrollController.IsScrollingDownInClearMode()) {
+        
+        RemoveBlocksInsideTheShield();
+    }
+
     switch (mState) {
         case State::LogicUpdate:
             if (shouldUpdateLogic) {
@@ -526,6 +534,10 @@ void GameLogic::LandFallingPiece(bool finalMovementWasADrop) {
         mComboDetector.OnClearedNoFilledRows();
     }
     
+    if (mLevel->GetObjective() == Level::Objective::BringDownTheAsteroid) {
+        RemoveBlocksInsideTheShield();
+    }
+    
     if (mState != State::FieldExplosions && mCascadeState == CascadeState::NotCascading) {
         mField.ManageWelds();
     }
@@ -661,6 +673,18 @@ bool GameLogic::LevelAllowsClearingFilledRows() const {
             return true;
         case Level::Objective::Build:
             return false;
+    }
+}
+
+void GameLogic::RemoveBlocksInsideTheShield() {
+    auto lowestVisibleRow {static_cast<int>(mScrollController.GetLowestVisibleRow())};
+    Pht::IVec2 areaPosition {0, lowestVisibleRow + shieldRelativeYPosition};
+    Pht::IVec2 areaSize {mField.GetNumColumns(), shieldHeight};
+    auto removeCorners {true};
+    auto removedSubCells {mField.RemoveAreaOfSubCells(areaPosition, areaSize, removeCorners)};
+
+    if (removedSubCells.Size() > 0) {
+        mFlyingBlocksAnimation.AddBlockRows(removedSubCells);
     }
 }
 
