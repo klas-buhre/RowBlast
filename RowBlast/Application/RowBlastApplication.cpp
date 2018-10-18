@@ -47,13 +47,8 @@ Backlog:
 
 Ongoing tasks:
     -An objective could be to bring down a single asteroid. The asteroid does not fill a
-     cell so it cannot be used to clear a row. The asteroid takes damage by bombs and lasers.
-     Lava starts to appear when it is damaged. Could also bring down a big asteroid of 2x2 cells
-     that can take a couple more explosions and lasers.
+     cell so it cannot be used to clear a row. Could also bring down a big asteroid of 2x2 cells.
     -Implementation:
-      -Game logic.
-        -Shield.
-          -Fix bug where the SevenPiece is not pulled down after the shield removed its isolated blocks.
       -Level goal dialog.
         -Put the asteroid in the dialog. The gray block and blueprint slot as well.
 

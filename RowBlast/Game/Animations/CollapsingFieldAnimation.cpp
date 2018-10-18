@@ -152,6 +152,18 @@ namespace {
         
         return subCell.mFallingBlockAnimation.mState;
     }
+    
+    void TransitionWronglyBouncingBlockToFalling(SubCell& subCell, int row) {
+        auto& animation {subCell.mFallingBlockAnimation};
+        
+        if (animation.mState == FallingBlockAnimation::State::Bouncing &&
+            animation.mVelocity == FallingBlockAnimation::fallingPieceBounceVelocity &&
+            subCell.mPosition.y - static_cast<float>(row) >= 1.0f) {
+            
+            animation.mState = FallingBlockAnimation::State::Falling;
+            animation.mVelocity = 0.0f;
+        }
+    }
 }
 
 CollapsingFieldAnimation::CollapsingFieldAnimation(Field& field) :
@@ -257,6 +269,16 @@ void CollapsingFieldAnimation::ResetBlockAnimations() {
             auto& cell {mField.GetCell(row, column)};
             cell.mFirstSubCell.mFallingBlockAnimation = FallingBlockAnimation {};
             cell.mSecondSubCell.mFallingBlockAnimation = FallingBlockAnimation {};
+        }
+    }
+}
+
+void CollapsingFieldAnimation::TransitionWronglyBouncingBlocksToFalling() {
+    for (auto row {0}; row < mField.GetNumRows(); ++row) {
+        for (auto column {0}; column < mField.GetNumColumns(); ++column) {
+            auto& cell {mField.GetCell(row, column)};
+            TransitionWronglyBouncingBlockToFalling(cell.mFirstSubCell, row);
+            TransitionWronglyBouncingBlockToFalling(cell.mSecondSubCell, row);
         }
     }
 }

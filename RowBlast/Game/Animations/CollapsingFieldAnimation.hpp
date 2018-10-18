@@ -17,6 +17,7 @@ namespace RowBlast {
     
         State Update(float dt);
         void ResetBlockAnimations();
+        void TransitionWronglyBouncingBlocksToFalling();
         
         void GoToBlocksBouncingState() {
             mState = State::BlocksBouncing;

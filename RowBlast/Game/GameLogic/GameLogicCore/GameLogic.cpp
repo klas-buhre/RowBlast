@@ -617,7 +617,7 @@ void GameLogic::GoToFieldExplosionsState() {
     mField.SetBlocksYPositionAndBounceFlag();
 }
 
-void GameLogic::RemoveClearedRowsAndPullDownLoosePieces() {
+void GameLogic::RemoveClearedRowsAndPullDownLoosePieces(bool doBounceCalculations) {
     mField.RemoveClearedRows();
     
     switch (mLevel->GetObjective()) {
@@ -631,7 +631,9 @@ void GameLogic::RemoveClearedRowsAndPullDownLoosePieces() {
             assert(false);
     }
 
-    mField.DetectBlocksThatShouldNotBounce();
+    if (doBounceCalculations) {
+        mField.DetectBlocksThatShouldNotBounce();
+    }
     
     mComboDetector.GoToCascadingState();
     mCascadeState = CascadeState::Cascading;
@@ -688,7 +690,19 @@ void GameLogic::RemoveBlocksInsideTheShield() {
     if (removedSubCells.Size() > 0) {
         mFlyingBlocksAnimation.AddBlockRows(removedSubCells);
         mShieldAnimation.StartFlash();
-        RemoveClearedRowsAndPullDownLoosePieces();
+        
+        if (mState != State::FieldExplosions) {
+            // It is not safe to pull down pieces while in FieldExplosions state.
+            auto doBounceCalculations {false};
+            RemoveClearedRowsAndPullDownLoosePieces(doBounceCalculations);
+            
+            // Blocks that have just landed are in bouncing state. Some of those recently landed
+            // blocks that belonged to a piece that was partly removed by the shield are still
+            // (wrongly) in bouncing state even though they will fall further since the blocks that
+            // connected them to the ground are removed. Fix this by transitioning those blocks to
+            // the falling state.
+            mCollapsingFieldAnimation.TransitionWronglyBouncingBlocksToFalling();
+        }
     }
 }
 
