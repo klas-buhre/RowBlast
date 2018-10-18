@@ -62,6 +62,7 @@ GameController::GameController(Pht::IEngine& engine,
     mEffectManager {engine, mScene, mCameraShake},
     mPieceDropParticleEffect {engine, mScene},
     mBlastRadiusAnimation {engine, mScene, commonResources},
+    mShieldAnimation {engine, mScene, mScrollController},
     mSlidingTextAnimation {engine, mScene, commonResources},
     mComboTextAnimation {engine, mScene, commonResources},
     mFallingPieceScaleAnimation {mScene},
@@ -78,6 +79,7 @@ GameController::GameController(Pht::IEngine& engine,
         mPieceDropParticleEffect,
         mBlastRadiusAnimation,
         mFallingPieceScaleAnimation,
+        mShieldAnimation,
         mComboTextAnimation,
         mGameViewControllers.GetGameHudController(),
         mTutorial,
@@ -125,6 +127,7 @@ void GameController::StartLevel(int levelId) {
     mBlueprintSlotsFilledAnimation.Init();
     mPieceDropParticleEffect.Init();
     mBlastRadiusAnimation.Init();
+    mShieldAnimation.Init(*mLevel);
     mEffectManager.Init();
     mCameraShake.Init();
     mPreviewPiecesAnimation.Init();
@@ -194,6 +197,7 @@ GameController::Command GameController::UpdateGame() {
     mWeldsAnimation.Update(dt);
     mPieceDropParticleEffect.Update(dt);
     mBlastRadiusAnimation.Update(dt);
+    mShieldAnimation.Update(dt);
     mEffectManager.Update(dt);
     mCameraShake.Update(dt);
     mFlyingBlocksAnimation.Update(dt);
@@ -420,6 +424,7 @@ void GameController::UpdateInLevelIntroState() {
                 if (mTutorial.OnLevelStart() == Tutorial::Result::TutorialHasFocus) {
                     mState = GameState::TutorialDialog;
                 } else {
+                    mShieldAnimation.Start();
                     GoToPlayingState();
                 }
             }
@@ -430,6 +435,7 @@ void GameController::UpdateInLevelIntroState() {
 void GameController::UpdateTutorialDialogs() {
     if (mTutorial.UpdateDialogs() == Tutorial::Result::Play) {
         GoToPlayingState();
+        mShieldAnimation.Start();
     }
 }
 

@@ -198,11 +198,15 @@ namespace RowBlast {
         float GetBouncingBlockZ() const {
             return mBouncingBlockZ;
         }
+        
+        float GetShieldAnimationZ() const {
+            return mShieldAnimationZ;
+        }
 
         const Pht::Vec2& GetFieldLoweLeft() const {
             return mFieldLoweLeft;
         }
-        
+
     private:
         void UpdateCameraPosition();
         void CreateRenderPasses();
@@ -259,7 +263,8 @@ namespace RowBlast {
         Pht::SceneObject* mLevelCompletedEffectsContainer {nullptr};
         Pht::SceneObject* mStarsContainer {nullptr};
         const Pht::Vec3 mFieldPosition;
-        const float mBlastRadiusAnimationZ {mCellSize / 2.0f + 0.1f};
+        const float mBlastRadiusAnimationZ {mCellSize / 2.0f + 0.15f};
+        const float mShieldAnimationZ {mCellSize / 2.0f + 0.1f};
         const float mGhostPieceZ {-0.2f};
         const float mPressedGhostPieceZ {mCellSize / 2.0f + 0.2f};
         const float mBlueprintAnimationZ {-0.6f};

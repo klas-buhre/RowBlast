@@ -33,6 +33,7 @@ namespace RowBlast {
     class Tutorial;
     class FlashingBlocksAnimation;
     class FallingPieceScaleAnimation;
+    class ShieldAnimation;
     class ComboTextAnimation;
     
     enum class PreviewPieceAnimationToStart {
@@ -63,6 +64,7 @@ namespace RowBlast {
                   PieceDropParticleEffect& pieceDropParticleEffect,
                   BlastRadiusAnimation& blastRadiusAnimation,
                   FallingPieceScaleAnimation& fallingPieceScaleAnimation,
+                  ShieldAnimation& shieldAnimation,
                   ComboTextAnimation& comboTextAnimation,
                   GameHudController& gameHudController,
                   Tutorial& tutorial,
@@ -203,6 +205,7 @@ namespace RowBlast {
         PieceDropParticleEffect& mPieceDropParticleEffect;
         BlastRadiusAnimation& mBlastRadiusAnimation;
         FallingPieceScaleAnimation& mFallingPieceScaleAnimation;
+        ShieldAnimation& mShieldAnimation;
         GameHudController& mGameHudController;
         Tutorial& mTutorial;
         const Settings& mSettings;

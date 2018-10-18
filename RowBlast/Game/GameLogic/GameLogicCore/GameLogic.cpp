@@ -20,6 +20,7 @@
 #include "PieceDropParticleEffect.hpp"
 #include "BlastRadiusAnimation.hpp"
 #include "FallingPieceScaleAnimation.hpp"
+#include "ShieldAnimation.hpp"
 #include "ComboTextAnimation.hpp"
 #include "GameHudController.hpp"
 #include "Tutorial.hpp"
@@ -34,7 +35,6 @@ namespace {
     constexpr auto landingNoMovementDurationFalling {1.0f};
     constexpr auto landingMovementDurationFalling {4.0f};
     constexpr auto cascadeWaitTime {0.23f};
-    constexpr auto shieldRelativeYPosition {12};
     constexpr auto shieldHeight {6};
 
     PieceBlocks CreatePieceBlocks(const FallingPiece& fallingPiece) {
@@ -63,6 +63,7 @@ GameLogic::GameLogic(Pht::IEngine& engine,
                      PieceDropParticleEffect& pieceDropParticleEffect,
                      BlastRadiusAnimation& blastRadiusAnimation,
                      FallingPieceScaleAnimation& fallingPieceScaleAnimation,
+                     ShieldAnimation& shieldAnimation,
                      ComboTextAnimation& comboTextAnimation,
                      GameHudController& gameHudController,
                      Tutorial& tutorial,
@@ -77,6 +78,7 @@ GameLogic::GameLogic(Pht::IEngine& engine,
     mPieceDropParticleEffect {pieceDropParticleEffect},
     mBlastRadiusAnimation {blastRadiusAnimation},
     mFallingPieceScaleAnimation {fallingPieceScaleAnimation},
+    mShieldAnimation {shieldAnimation},
     mGameHudController {gameHudController},
     mTutorial {tutorial},
     mSettings {settings},
@@ -678,13 +680,15 @@ bool GameLogic::LevelAllowsClearingFilledRows() const {
 
 void GameLogic::RemoveBlocksInsideTheShield() {
     auto lowestVisibleRow {static_cast<int>(mScrollController.GetLowestVisibleRow())};
-    Pht::IVec2 areaPosition {0, lowestVisibleRow + shieldRelativeYPosition};
+    Pht::IVec2 areaPosition {0, lowestVisibleRow + ShieldAnimation::shieldRelativeYPosition};
     Pht::IVec2 areaSize {mField.GetNumColumns(), shieldHeight};
     auto removeCorners {true};
     auto removedSubCells {mField.RemoveAreaOfSubCells(areaPosition, areaSize, removeCorners)};
 
     if (removedSubCells.Size() > 0) {
         mFlyingBlocksAnimation.AddBlockRows(removedSubCells);
+        mShieldAnimation.StartFlash();
+        RemoveClearedRowsAndPullDownLoosePieces();
     }
 }
 

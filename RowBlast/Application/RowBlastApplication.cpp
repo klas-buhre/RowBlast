@@ -53,6 +53,7 @@ Ongoing tasks:
     -Implementation:
       -Game logic.
         -Shield.
+          -Fix bug where the SevenPiece is not pulled down after the shield removed its isolated blocks.
       -Level goal dialog.
         -Put the asteroid in the dialog. The gray block and blueprint slot as well.
 
