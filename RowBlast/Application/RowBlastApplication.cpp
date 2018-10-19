@@ -26,8 +26,11 @@ Backlog:
      convenient to go back to the state before the move and not the initial state.
   -Rendering:
     -Maybe use the dark field quad brightness for the sky worlds as well.
-    -Maybe less reflectivity in the gray, yellow and green field block materials.
     -Maybe smooth the dark area in the field env map.
+    -Maybe less reflectivity in the gray, yellow and green field block materials?
+    -Maybe the green field material could be a bit less green.
+    -Maybe the blue field material could be a bit less blue.
+    -More ambient in gray and green field materials.
     -Could have the Roswell spaceship in the space world.
   -GUI:
     -Adjust the window sizes and header area sizes. Make it more like the CascadingDialogView.

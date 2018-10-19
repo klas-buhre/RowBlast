@@ -22,6 +22,7 @@
 		621B571820AA0AA700772229 /* SceneObjectUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 621B571620AA0AA700772229 /* SceneObjectUtils.cpp */; };
 		6227D4F5206CFD25008EA77D /* bomb_798.obj in Resources */ = {isa = PBXBuildFile; fileRef = 6227D4F4206CFD25008EA77D /* bomb_798.obj */; };
 		622DDC8820ADB65C002862FA /* LevelCompletedController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 622DDC8620ADB65C002862FA /* LevelCompletedController.cpp */; };
+		622EDD16217A42410007C652 /* level61.json in Resources */ = {isa = PBXBuildFile; fileRef = 622EDD15217A42400007C652 /* level61.json */; };
 		623326732073D69500AC505A /* level29.json in Resources */ = {isa = PBXBuildFile; fileRef = 623326722073D69400AC505A /* level29.json */; };
 		6234616221653F9900ECD0DF /* space.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6234616121653F9900ECD0DF /* space.jpg */; };
 		623461662166216800ECD0DF /* wadow_rings.png in Resources */ = {isa = PBXBuildFile; fileRef = 623461642166216700ECD0DF /* wadow_rings.png */; };
@@ -430,6 +431,7 @@
 		6227D4F4206CFD25008EA77D /* bomb_798.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bomb_798.obj; sourceTree = "<group>"; };
 		622DDC8620ADB65C002862FA /* LevelCompletedController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LevelCompletedController.cpp; sourceTree = "<group>"; };
 		622DDC8720ADB65C002862FA /* LevelCompletedController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = LevelCompletedController.hpp; sourceTree = "<group>"; };
+		622EDD15217A42400007C652 /* level61.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level61.json; sourceTree = "<group>"; };
 		623326722073D69400AC505A /* level29.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level29.json; sourceTree = "<group>"; };
 		6234616121653F9900ECD0DF /* space.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = space.jpg; sourceTree = "<group>"; };
 		623461642166216700ECD0DF /* wadow_rings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wadow_rings.png; sourceTree = "<group>"; };
@@ -1433,6 +1435,7 @@
 				62A729E22144170D00255BF7 /* level58.json */,
 				625D3B48216FABDB00D67EC2 /* level59.json */,
 				625D3B4A216FB2A100D67EC2 /* level60.json */,
+				622EDD15217A42400007C652 /* level61.json */,
 			);
 			path = Levels;
 			sourceTree = "<group>";
@@ -2647,6 +2650,7 @@
 				627D37A9209B55FA0068B50C /* TextBottomGradient.vert in Resources */,
 				6270DC551FCB212B00FB457D /* Blip.wav in Resources */,
 				625B02CC21386AC3000744F2 /* level_bomb_frame2.jpg in Resources */,
+				622EDD16217A42410007C652 /* level61.json in Resources */,
 				6270DC8F1FCB23D800FB457D /* level16.json in Resources */,
 				62785B2D20875937006F9869 /* EnvMap.vert in Resources */,
 				6261FFD920FD2C29008F1619 /* level44.json in Resources */,
