@@ -14,11 +14,12 @@
 using namespace RowBlast;
 
 namespace {
-    const auto subCellMass {1.0f};
-    const auto rowExplosionForceMagnitude {12.0f};
+    constexpr auto subCellMass {1.0f};
+    constexpr auto rowExplosionForceMagnitude {12.0f};
+    constexpr auto shieldForceMagnitude {13.0f};
     const Pht::Vec3 gravitationalAcceleration {0.0f, -65.0f, 0.0f};
     const Pht::Vec3 explosionGravitationalAcceleration {0.0f, -40.0f, 0.0f};
-    const auto eraseLimit {20.0f};
+    constexpr auto eraseLimit {20.0f};
 }
 
 FlyingBlocksAnimation::FlyingBlocksAnimation(GameScene& scene,
@@ -64,24 +65,7 @@ void FlyingBlocksAnimation::AddBlockRows(const Field::RemovedSubCells& subCells)
 
         explosiveForceDirecton.Normalize();
         auto force {explosiveForceDirecton * rowExplosionForceMagnitude};
-        
-        auto& sceneObject {AccuireSceneObject()};
-        sceneObject.SetRenderable(&GetBlockRenderableObject(removedSubCell));
-        auto& transform {sceneObject.GetTransform()};
-        transform.SetPosition(CalculateBlockInitialPosition(removedSubCell));
-        
-        switch (removedSubCell.mBlockKind) {
-            case BlockKind::Bomb:
-                transform.SetRotation(mBombsAnimation.GetBombStaticRotation());
-                break;
-            case BlockKind::RowBomb:
-                transform.SetRotation(mBombsAnimation.GetRowBombStaticRotation());
-                break;
-            default:
-                transform.SetRotation({0.0f, 0.0f, RotationToDeg(removedSubCell.mRotation)});
-                break;
-        }
-        
+
         FlyingBlock flyingBlock {
             .mVelocity = force / subCellMass,
             .mAngularVelocity = Pht::Vec3 {
@@ -89,7 +73,7 @@ void FlyingBlocksAnimation::AddBlockRows(const Field::RemovedSubCells& subCells)
                 720.0f * Pht::NormalizedRand() - 360.0f,
                 720.0f * Pht::NormalizedRand() - 360.0f
             },
-            .mSceneObject = &sceneObject
+            .mSceneObject = &SetupBlockSceneObject(removedSubCell)
         };
         
         if (removedSubCell.mIsAsteroidFragment) {
@@ -100,10 +84,31 @@ void FlyingBlocksAnimation::AddBlockRows(const Field::RemovedSubCells& subCells)
     }
 }
 
-void FlyingBlocksAnimation::AddBlocks(const Field::RemovedSubCells& subCells,
-                                      const Pht::IVec2& detonationPos,
-                                      float explosiveForceMagnitude,
-                                      bool applyForceToAlreadyFlyingBlocks) {
+Pht::SceneObject& FlyingBlocksAnimation::SetupBlockSceneObject(const RemovedSubCell& removedSubCell) {
+    auto& sceneObject {AccuireSceneObject()};
+    sceneObject.SetRenderable(&GetBlockRenderableObject(removedSubCell));
+    auto& transform {sceneObject.GetTransform()};
+    transform.SetPosition(CalculateBlockInitialPosition(removedSubCell));
+
+    switch (removedSubCell.mBlockKind) {
+        case BlockKind::Bomb:
+            transform.SetRotation(mBombsAnimation.GetBombStaticRotation());
+            break;
+        case BlockKind::RowBomb:
+            transform.SetRotation(mBombsAnimation.GetRowBombStaticRotation());
+            break;
+        default:
+            transform.SetRotation({0.0f, 0.0f, RotationToDeg(removedSubCell.mRotation)});
+            break;
+    }
+
+    return sceneObject;
+}
+
+void FlyingBlocksAnimation::AddBlocksRemovedByExplosion(const Field::RemovedSubCells& subCells,
+                                                        const Pht::IVec2& detonationPos,
+                                                        float explosiveForceMagnitude,
+                                                        bool applyForceToAlreadyFlyingBlocks) {
     if (applyForceToAlreadyFlyingBlocks) {
         ApplyForceToAlreadyFlyingBlocks(explosiveForceMagnitude, detonationPos);
     }
@@ -184,6 +189,34 @@ void FlyingBlocksAnimation::ApplyForceToAlreadyFlyingBlocks(float explosiveForce
         
         auto force {explosiveForceDirecton * forceMagnitude};
         block.mVelocity += force / subCellMass;
+    }
+}
+
+void FlyingBlocksAnimation::AddBlocksRemovedByTheShield(const Field::RemovedSubCells& subCells,
+                                                        int numFieldColumns) {
+    
+    for (auto& removedSubCell: subCells) {
+        Pht::Vec3 shieldForceDirecton {
+            removedSubCell.mGridPosition.x <= numFieldColumns / 2 ?
+                (-1.0f - Pht::NormalizedRand()) : (1.0f + Pht::NormalizedRand()),
+            Pht::NormalizedRand() - 0.25f,
+            1.0f
+        };
+
+        shieldForceDirecton.Normalize();
+        auto force {shieldForceDirecton * shieldForceMagnitude};
+
+        FlyingBlock flyingBlock {
+            .mVelocity = force / subCellMass,
+            .mAngularVelocity = Pht::Vec3 {
+                720.0f * Pht::NormalizedRand() - 360.0f,
+                720.0f * Pht::NormalizedRand() - 360.0f,
+                720.0f * Pht::NormalizedRand() - 360.0f
+            },
+            .mSceneObject = &SetupBlockSceneObject(removedSubCell)
+        };
+
+        mFlyingBlocks.PushBack(flyingBlock);
     }
 }
 

@@ -688,7 +688,7 @@ void GameLogic::RemoveBlocksInsideTheShield() {
     auto removedSubCells {mField.RemoveAreaOfSubCells(areaPosition, areaSize, removeCorners)};
 
     if (removedSubCells.Size() > 0) {
-        mFlyingBlocksAnimation.AddBlockRows(removedSubCells);
+        mFlyingBlocksAnimation.AddBlocksRemovedByTheShield(removedSubCells, mField.GetNumColumns());
         mShieldAnimation.StartFlash();
         
         if (mState != State::FieldExplosions) {

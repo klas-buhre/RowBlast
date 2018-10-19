@@ -45,12 +45,15 @@ namespace RowBlast {
         void Init();
         void Update(float dt);
         void AddBlockRows(const Field::RemovedSubCells& subCells);
-        void AddBlocks(const Field::RemovedSubCells& subCells,
-                       const Pht::IVec2& detonationPos,
-                       float explosiveForceMagnitude,
-                       bool applyForceToAlreadyFlyingBlocks);
+        void AddBlocksRemovedByExplosion(const Field::RemovedSubCells& subCells,
+                                         const Pht::IVec2& detonationPos,
+                                         float explosiveForceMagnitude,
+                                         bool applyForceToAlreadyFlyingBlocks);
+        void AddBlocksRemovedByTheShield(const Field::RemovedSubCells& subCells,
+                                         int numFieldColumns);
 
     private:
+        Pht::SceneObject& SetupBlockSceneObject(const RemovedSubCell& subCell);
         void ApplyForceToAlreadyFlyingBlocks(float explosiveForceMagnitude,
                                              const Pht::IVec2& detonationPos);
         Pht::Vec3 CalculateBlockInitialPosition(const RemovedSubCell& subCell);

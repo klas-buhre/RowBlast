@@ -284,10 +284,14 @@ FieldExplosionsStates::UpdateGenericBombExplosionState(BombExplosionState& explo
                 }
             }
             
-            mFlyingBlocksAnimation.AddBlocks(removedSubCells,
-                                             explosionState.mPosition,
-                                             explosiveForceMagnitude,
-                                             explosionState.mShouldApplyForceToAlreadyFlyingBlocks);
+            auto shouldApplyForceToAlreadyFlyingBlocks {
+                explosionState.mShouldApplyForceToAlreadyFlyingBlocks
+            };
+            
+            mFlyingBlocksAnimation.AddBlocksRemovedByExplosion(removedSubCells,
+                                                               explosionState.mPosition,
+                                                               explosiveForceMagnitude,
+                                                               shouldApplyForceToAlreadyFlyingBlocks);
             explosionState.mShouldApplyForceToAlreadyFlyingBlocks = false;
         }
         

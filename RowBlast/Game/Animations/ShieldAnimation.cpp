@@ -45,11 +45,12 @@ ShieldAnimation::ShieldAnimation(Pht::IEngine& engine,
 }
 
 void ShieldAnimation::Init(const Level& level) {
+    mLevel = &level;
+
     if (level.GetObjective() != Level::Objective::BringDownTheAsteroid) {
         return;
     }
     
-    mLevel = &level;
     mScene.GetFieldBlocksContainer().AddChild(*mShieldSceneObject);
     mState = State::Inactive;
     mShieldSceneObject->SetIsVisible(false);
