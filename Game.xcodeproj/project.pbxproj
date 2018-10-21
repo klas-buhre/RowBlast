@@ -40,6 +40,7 @@
 		62411A971E61E62800035D2A /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62411A961E61E62800035D2A /* GLKit.framework */; };
 		624C72E32177883D0006068B /* ShieldAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 624C72E12177883D0006068B /* ShieldAnimation.cpp */; };
 		624C72E52177AB260006068B /* shield.png in Resources */ = {isa = PBXBuildFile; fileRef = 624C72E42177AB250006068B /* shield.png */; };
+		6256934D217CEE0F003A3A9D /* big_button_043.obj in Resources */ = {isa = PBXBuildFile; fileRef = 6256934C217CEE0E003A3A9D /* big_button_043.obj */; };
 		6259B7E52107992D0055FE8D /* Tutorial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6259B7E32107992D0055FE8D /* Tutorial.cpp */; };
 		6259B7E82107C6BE0055FE8D /* PlacePieceWindowView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6259B7E62107C6BE0055FE8D /* PlacePieceWindowView.cpp */; };
 		6259B7EB2107CDF20055FE8D /* PlacePieceWindowController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6259B7E92107CDF20055FE8D /* PlacePieceWindowController.cpp */; };
@@ -300,7 +301,6 @@
 		627D380B20A08E500068B50C /* GuiResources.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 627D380920A08E4F0068B50C /* GuiResources.cpp */; };
 		627D381B20A59B9E0068B50C /* medium_button_0385.obj in Resources */ = {isa = PBXBuildFile; fileRef = 627D381A20A59B9D0068B50C /* medium_button_0385.obj */; };
 		627D381D20A5FF5E0068B50C /* small_button_0385.obj in Resources */ = {isa = PBXBuildFile; fileRef = 627D381C20A5FF5D0068B50C /* small_button_0385.obj */; };
-		627D382320A731480068B50C /* big_button_048.obj in Resources */ = {isa = PBXBuildFile; fileRef = 627D382220A731470068B50C /* big_button_048.obj */; };
 		6287B4DB20ECCA6400C00EF0 /* FieldBorder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6287B4D920ECCA6400C00EF0 /* FieldBorder.cpp */; };
 		6287B4E020F25C7700C00EF0 /* LevelGoalDialogView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6287B4DC20F25C7600C00EF0 /* LevelGoalDialogView.cpp */; };
 		6287B4E120F25C7700C00EF0 /* LevelGoalDialogController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6287B4DE20F25C7700C00EF0 /* LevelGoalDialogController.cpp */; };
@@ -454,6 +454,7 @@
 		624C72E12177883D0006068B /* ShieldAnimation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ShieldAnimation.cpp; sourceTree = "<group>"; };
 		624C72E22177883D0006068B /* ShieldAnimation.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ShieldAnimation.hpp; sourceTree = "<group>"; };
 		624C72E42177AB250006068B /* shield.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shield.png; sourceTree = "<group>"; };
+		6256934C217CEE0E003A3A9D /* big_button_043.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = big_button_043.obj; sourceTree = "<group>"; };
 		6259B7E32107992D0055FE8D /* Tutorial.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Tutorial.cpp; sourceTree = "<group>"; };
 		6259B7E42107992D0055FE8D /* Tutorial.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Tutorial.hpp; sourceTree = "<group>"; };
 		6259B7E62107C6BE0055FE8D /* PlacePieceWindowView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PlacePieceWindowView.cpp; sourceTree = "<group>"; };
@@ -1023,7 +1024,6 @@
 		627D380A20A08E500068B50C /* GuiResources.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = GuiResources.hpp; sourceTree = "<group>"; };
 		627D381A20A59B9D0068B50C /* medium_button_0385.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = medium_button_0385.obj; sourceTree = "<group>"; };
 		627D381C20A5FF5D0068B50C /* small_button_0385.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = small_button_0385.obj; sourceTree = "<group>"; };
-		627D382220A731470068B50C /* big_button_048.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = big_button_048.obj; sourceTree = "<group>"; };
 		6287B4D920ECCA6400C00EF0 /* FieldBorder.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FieldBorder.cpp; sourceTree = "<group>"; };
 		6287B4DA20ECCA6400C00EF0 /* FieldBorder.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = FieldBorder.hpp; sourceTree = "<group>"; };
 		6287B4DC20F25C7600C00EF0 /* LevelGoalDialogView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelGoalDialogView.cpp; sourceTree = "<group>"; };
@@ -1338,19 +1338,18 @@
 		6270DC571FCB22AE00FB457D /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				625D3B5D2174B12400D67EC2 /* asteroid_fragment_500.obj */,
-				625D3B54217249EC00D67EC2 /* asteroid_2000.obj */,
 				6234618B21691DAE00ECD0DF /* asteroid_998.obj */,
-				626940A4215932C800D9857A /* ufo_3620.obj */,
-				6269408E2154F94300D9857A /* planet_ring.obj */,
-				62E01BAE2153E00E009F0B99 /* planet_960.obj */,
-				627D382220A731470068B50C /* big_button_048.obj */,
+				625D3B54217249EC00D67EC2 /* asteroid_2000.obj */,
+				625D3B5D2174B12400D67EC2 /* asteroid_fragment_500.obj */,
+				6256934C217CEE0E003A3A9D /* big_button_043.obj */,
 				6227D4F4206CFD25008EA77D /* bomb_798.obj */,
 				629B838720CA940D00DD2D0E /* cube_428.obj */,
 				6270DC591FCB22AE00FB457D /* cube_554.obj */,
 				626451DC206FA93100E304F2 /* laser_bomb_224.obj */,
 				627D381A20A59B9D0068B50C /* medium_button_0385.obj */,
 				62DE641B20CE953C00A50F26 /* medium_button_skewed_0385.obj */,
+				62E01BAE2153E00E009F0B99 /* planet_960.obj */,
+				6269408E2154F94300D9857A /* planet_ring.obj */,
 				627D381C20A5FF5D0068B50C /* small_button_0385.obj */,
 				62BE275220B42A360014C6DD /* star_1428.obj */,
 				6270DC5A1FCB22AE00FB457D /* star.obj */,
@@ -1358,6 +1357,7 @@
 				629B839120CAD94600DD2D0E /* triangle_320_r180.obj */,
 				629B839320CADA7B00DD2D0E /* triangle_320_r270.obj */,
 				629B838D20CAD34000DD2D0E /* triangle_320.obj */,
+				626940A4215932C800D9857A /* ufo_3620.obj */,
 				6276B70F2040297D0075C468 /* weld_76.obj */,
 			);
 			path = Models;
@@ -2557,6 +2557,7 @@
 				6234617921668D1E00ECD0DF /* planet_rayeon.jpg in Resources */,
 				62B1CB84210F8F8600D0F195 /* cloud_C_envmap.jpg in Resources */,
 				626940992157F31500D9857A /* ogma_rings.png in Resources */,
+				6256934D217CEE0F003A3A9D /* big_button_043.obj in Resources */,
 				629B837C20C544F000DD2D0E /* level35.json in Resources */,
 				629B838020C58B8100DD2D0E /* level37.json in Resources */,
 				6269408F2154F94300D9857A /* planet_ring.obj in Resources */,
@@ -2680,7 +2681,6 @@
 				62B1CB9A2110BA4600D0F195 /* laser_frame1.jpg in Resources */,
 				62B1CB5E210F8EE500D0F195 /* cloud_B_512.png in Resources */,
 				626940DF21627B3800D9857A /* sky6.jpg in Resources */,
-				627D382320A731480068B50C /* big_button_048.obj in Resources */,
 				626940D32162641900D9857A /* sky3.jpg in Resources */,
 				6234616221653F9900ECD0DF /* space.jpg in Resources */,
 				62B1CB4C210F8DAF00D0F195 /* hand48.png in Resources */,

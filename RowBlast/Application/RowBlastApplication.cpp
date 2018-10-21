@@ -47,7 +47,6 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-      -Less bevel in the big button.
       -The blue button for the dark menues should a bit less blue.
       -The green button should be a bit less green.
 
@@ -350,9 +349,9 @@ weld size: 0.19
 segments: 5
 profile 0.5
 
-big_button_048.obj:
+big_button_043.obj:
 size: 9.4x2.6
-bevel width: 0.48
+bevel width: 0.43
 segments: 5
 
 medium_button_0385.obj:
