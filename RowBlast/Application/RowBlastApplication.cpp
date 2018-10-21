@@ -47,10 +47,10 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-      -Less bevel in the big button.
-      -The green button should be a bit less green.
-      -Change the settings dialog window into a dark window.
       -Adjust the bright window sizes and header area sizes.
+      -Less bevel in the big button.
+      -The blue button for the dark menues should a bit less blue.
+      -The green button should be a bit less green.
 
 
 

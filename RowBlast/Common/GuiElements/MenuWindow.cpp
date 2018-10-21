@@ -52,7 +52,7 @@ namespace {
                     case MenuWindow::Size::Large:
                         return {sizeX, 20.0f};
                     case MenuWindow::Size::Medium:
-                        return {sizeX, 14.0f};
+                        return {sizeX, 13.4f};
                     case MenuWindow::Size::Small:
                         return {sizeX, 11.0f};
                     case MenuWindow::Size::Smallest:

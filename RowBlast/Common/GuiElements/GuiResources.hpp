@@ -17,7 +17,6 @@ namespace RowBlast {
     class GuiResources {
     public:
         GuiResources(Pht::IEngine& engine, const CommonResources& commonResources);
-        const MenuWindow& GetMediumMenuWindow(PotentiallyZoomedScreen potentiallyZoomed) const;
         const MenuWindow& GetMediumDarkMenuWindow(PotentiallyZoomedScreen potentiallyZoomed) const;
         const MenuWindow& GetLargeDarkMenuWindow(PotentiallyZoomedScreen potentiallyZoomed) const;
         const Pht::TextProperties& GetBlackButtonTextProperties(PotentiallyZoomedScreen potentiallyZoomed) const;
@@ -29,6 +28,10 @@ namespace RowBlast {
         const Pht::TextProperties& GetSmallWhiteTextProperties(PotentiallyZoomedScreen potentiallyZoomed) const;        
         Pht::RenderableObject& GetCloseButton(PotentiallyZoomedScreen potentiallyZoomed) const;
 
+        const MenuWindow& GetMediumMenuWindowPotentiallyZoomedScreen() const {
+            return mMediumMenuWindowPotentiallyZoomedScreen;
+        }
+        
         const MenuWindow& GetLargeMenuWindowPotentiallyZoomedScreen() const {
             return mLargeMenuWindowPotentiallyZoomedScreen;
         }
@@ -55,7 +58,6 @@ namespace RowBlast {
         static const std::string mSmallButtonMeshFilename;
 
     private:
-        MenuWindow mMediumMenuWindow;
         MenuWindow mMediumDarkMenuWindow;
         MenuWindow mLargeDarkMenuWindow;
         Pht::TextProperties mBlackButtonTextProperties;

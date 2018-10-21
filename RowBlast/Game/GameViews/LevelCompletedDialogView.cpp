@@ -22,7 +22,7 @@ LevelCompletedDialogView::LevelCompletedDialogView(Pht::IEngine& engine,
 
     SetSize(menuWindow.GetSize());
     
-    CreateText({-3.7f, 5.25f, UiLayer::text},
+    CreateText({-3.7f, 4.95f, UiLayer::text},
                "LEVEL CLEARED!",
                guiResources.GetLargeWhiteTextProperties(zoom));
 
@@ -63,7 +63,7 @@ LevelCompletedDialogView::LevelCompletedDialogView(Pht::IEngine& engine,
 
     mNextButton = std::make_unique<MenuButton>(engine,
                                                *this,
-                                               Pht::Vec3 {0.0f, -4.0f, UiLayer::textRectangle},
+                                               Pht::Vec3 {0.0f, -4.2f, UiLayer::textRectangle},
                                                nextButtonInputSize,
                                                nextButtonStyle);
     mNextButton->CreateText({-1.1f, -0.31f, UiLayer::buttonText},

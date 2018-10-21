@@ -20,13 +20,6 @@ const std::string GuiResources::mMediumButtonSkewedMeshFilename {"medium_button_
 const std::string GuiResources::mSmallButtonMeshFilename {"small_button_0385.obj"};
 
 GuiResources::GuiResources(Pht::IEngine& engine, const CommonResources& commonResources) :
-    mMediumMenuWindow {
-        engine,
-        commonResources,
-        MenuWindow::Size::Medium,
-        MenuWindow::Style::Bright,
-        PotentiallyZoomedScreen::No
-    },
     mMediumDarkMenuWindow {
         engine,
         commonResources,
@@ -175,16 +168,6 @@ GuiResources::GuiResources(Pht::IEngine& engine, const CommonResources& commonRe
     mCloseButtonPotentiallyZoomedScreen {
         CreateCloseButton(engine, commonResources, PotentiallyZoomedScreen::Yes)
     } {}
-
-const MenuWindow&
-GuiResources::GetMediumMenuWindow(PotentiallyZoomedScreen potentiallyZoomed) const {
-    switch (potentiallyZoomed) {
-        case PotentiallyZoomedScreen::Yes:
-            return mMediumMenuWindowPotentiallyZoomedScreen;
-        case PotentiallyZoomedScreen::No:
-            return mMediumMenuWindow;
-    }
-}
 
 const MenuWindow&
 GuiResources::GetMediumDarkMenuWindow(PotentiallyZoomedScreen potentiallyZoomed) const {

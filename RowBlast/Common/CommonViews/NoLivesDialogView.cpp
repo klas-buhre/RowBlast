@@ -31,7 +31,7 @@ NoLivesDialogView::NoLivesDialogView(Pht::IEngine& engine,
 
     SetSize(menuWindow.GetSize());
     
-    CreateText({-2.2f, 5.25f, UiLayer::text},
+    CreateText({-2.2f, 4.95f, UiLayer::text},
                "NO LIVES",
                guiResources.GetLargeWhiteTextProperties(zoom));
     
@@ -64,17 +64,17 @@ NoLivesDialogView::NoLivesDialogView(Pht::IEngine& engine,
     
     auto& textProperties {guiResources.GetSmallWhiteTextProperties(zoom)};
     
-    CreateText({-1.4f, 2.8f, UiLayer::text}, "Lives: 0", textProperties);
-    CreateText({-4.5f, 1.8f, UiLayer::text}, "Time until next life:", textProperties);
-    mCountdownText = &CreateText({2.3f, 1.8f, UiLayer::text}, "00:00", textProperties);
+    CreateText({-1.4f, 2.5f, UiLayer::text}, "Lives: 0", textProperties);
+    CreateText({-4.5f, 1.5f, UiLayer::text}, "Time until next life:", textProperties);
+    mCountdownText = &CreateText({2.3f, 1.5f, UiLayer::text}, "00:00", textProperties);
 
     auto& line2SceneObject {
         CreateSceneObject(Pht::QuadMesh {GetSize().x - 1.5f, 0.06f}, lineMaterial, sceneManager)
     };
-    line2SceneObject.GetTransform().SetPosition({0.0f, 0.5f, UiLayer::textRectangle});
+    line2SceneObject.GetTransform().SetPosition({0.0f, 0.3f, UiLayer::textRectangle});
     GetRoot().AddChild(line2SceneObject);
 
-    CreateText({-4.4f, -1.0f, UiLayer::text}, "Purchase 5 lives for $0.99", textProperties);
+    CreateText({-4.4f, -1.4f, UiLayer::text}, "Purchase 5 lives for $0.99", textProperties);
 
     Pht::Vec2 refillLivesInputSize {205.0f, 59.0f};
     
@@ -86,7 +86,7 @@ NoLivesDialogView::NoLivesDialogView(Pht::IEngine& engine,
 
     mRefillLivesButton = std::make_unique<MenuButton>(engine,
                                                       *this,
-                                                      Pht::Vec3 {0.0f, -4.0f, UiLayer::textRectangle},
+                                                      Pht::Vec3 {0.0f, -4.2f, UiLayer::textRectangle},
                                                       refillLivesInputSize,
                                                       refillLivesButtonStyle);
     mRefillLivesButton->CreateText({-1.4f, -0.31f, UiLayer::buttonText},
