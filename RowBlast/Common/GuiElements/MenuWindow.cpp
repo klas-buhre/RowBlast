@@ -25,7 +25,8 @@ namespace {
     constexpr auto xBorder {0.45f};
     constexpr auto darkBorderThickness {0.09f};
     constexpr auto outerCornerRadius {0.37f};
-    constexpr auto captionBarHeight {3.0f};
+    constexpr auto largeCaptionBarHeight {3.0f};
+    constexpr auto smallCaptionBarHeight {2.5f};
     constexpr auto squareSide {0.5f};
     
     Pht::Vec2 CalcSize(MenuWindow::Size size,
@@ -38,7 +39,7 @@ namespace {
                     case MenuWindow::Size::Large:
                         return {sizeX, 20.4f};
                     case MenuWindow::Size::Medium:
-                        return {sizeX, 12.8f};
+                        return {sizeX, 11.8f};
                     case MenuWindow::Size::Small:
                         return {sizeX, 11.0f};
                     case MenuWindow::Size::Smallest:
@@ -92,11 +93,15 @@ MenuWindow::MenuWindow(Pht::IEngine& engine,
     auto rasterizer {std::make_unique<Pht::OfflineRasterizer>(mSize, imageSize)};
 
     switch (style) {
-        case Style::Bright:
+        case Style::Bright: {
             FillStencilBuffer(*rasterizer, outerCornerRadius, 0.0f);
-            DrawBrightCaptionBar(*rasterizer);
-            DrawBrightMainArea(*rasterizer);
+            auto captionBarHeight {
+                size == Size::Large ? largeCaptionBarHeight : smallCaptionBarHeight
+            };
+            DrawBrightCaptionBar(*rasterizer, captionBarHeight);
+            DrawBrightMainArea(*rasterizer, captionBarHeight);
             break;
+        }
         case Style::Dark:
             DrawDarkBorder(*rasterizer);
             FillStencilBuffer(*rasterizer,
@@ -156,7 +161,7 @@ void MenuWindow::FillStencilBuffer(Pht::OfflineRasterizer& rasterizer,
     rasterizer.EnableStencilTest();
 }
 
-void MenuWindow::DrawBrightCaptionBar(Pht::OfflineRasterizer& rasterizer) {
+void MenuWindow::DrawBrightCaptionBar(Pht::OfflineRasterizer& rasterizer, float captionBarHeight) {
     Pht::OfflineRasterizer::HorizontalGradientColors rectangleColors {blueColor, lightBlueColor};
     Pht::Vec2 lowerLeft1 {0.0f, mSize.y - captionBarHeight};
     Pht::Vec2 upperRight1 {mSize.x, mSize.y};
@@ -178,7 +183,7 @@ void MenuWindow::DrawBrightCaptionBar(Pht::OfflineRasterizer& rasterizer) {
     }
 }
 
-void MenuWindow::DrawBrightMainArea(Pht::OfflineRasterizer& rasterizer) {
+void MenuWindow::DrawBrightMainArea(Pht::OfflineRasterizer& rasterizer, float captionBarHeight) {
     Pht::OfflineRasterizer::HorizontalGradientColors rectangleColors {darkerGrayColor, grayColor};
     Pht::Vec2 lowerLeft1 {0.0f, 0.0f};
     Pht::Vec2 upperRight1 {mSize.x, mSize.y - captionBarHeight};

@@ -52,8 +52,8 @@ namespace RowBlast {
         void FillStencilBuffer(Pht::OfflineRasterizer& rasterizer,
                                float cornerRadius,
                                float padding);
-        void DrawBrightCaptionBar(Pht::OfflineRasterizer& rasterizer);
-        void DrawBrightMainArea(Pht::OfflineRasterizer& rasterizer);
+        void DrawBrightCaptionBar(Pht::OfflineRasterizer& rasterizer, float captionBarHeight);
+        void DrawBrightMainArea(Pht::OfflineRasterizer& rasterizer, float captionBarHeight);
         void DrawDarkBorder(Pht::OfflineRasterizer& rasterizer);
         void DrawDarkMainArea(Pht::OfflineRasterizer& rasterizer);
         
