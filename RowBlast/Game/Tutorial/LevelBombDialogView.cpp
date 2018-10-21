@@ -24,7 +24,7 @@ LevelBombDialogView::LevelBombDialogView(Pht::IEngine& engine,
     SetSize(menuWindow.GetSize());
     
     auto& largeTextProperties {guiResources.GetLargeWhiteTextProperties(zoom)};
-    CreateText({-1.6f, 7.6f, UiLayer::text}, "BOMBS", largeTextProperties);
+    CreateText({-1.6f, 8.25f, UiLayer::text}, "BOMBS", largeTextProperties);
 
     Pht::Material lineMaterial {Pht::Color{0.6f, 0.8f, 1.0f}};
     lineMaterial.SetOpacity(0.3f);
@@ -32,18 +32,18 @@ LevelBombDialogView::LevelBombDialogView(Pht::IEngine& engine,
     auto& lineSceneObject {
         CreateSceneObject(Pht::QuadMesh {GetSize().x - 1.5f, 0.06f}, lineMaterial, sceneManager)
     };
-    lineSceneObject.GetTransform().SetPosition({0.0f, 6.6f, UiLayer::textRectangle});
+    lineSceneObject.GetTransform().SetPosition({0.0f, GetSize().y / 2.0f - 2.6f, UiLayer::textRectangle});
     GetRoot().AddChild(lineSceneObject);
     
     mSlideAnimation = std::make_unique<SlideAnimation>(engine,
                                                        *this,
-                                                       Pht::Vec3 {0.0f, 1.3f, UiLayer::textRectangle},
+                                                       Pht::Vec3 {0.0f, 1.7f, UiLayer::textRectangle},
                                                        8.5f,
                                                        0.5f);
 
     auto& textProperties {guiResources.GetSmallWhiteTextProperties(zoom)};
-    CreateText({-4.25f, -4.3f, UiLayer::text}, "Land a piece on bombs to", textProperties);
-    CreateText({-2.4f, -5.375f, UiLayer::text}, "detonate them", textProperties);
+    CreateText({-4.25f, -4.4f, UiLayer::text}, "Land a piece on bombs to", textProperties);
+    CreateText({-2.4f, -5.475f, UiLayer::text}, "detonate them", textProperties);
     
     Pht::Vec2 playButtonInputSize {194.0f, 43.0f};
 
@@ -55,7 +55,7 @@ LevelBombDialogView::LevelBombDialogView(Pht::IEngine& engine,
 
     mPlayButton = std::make_unique<MenuButton>(engine,
                                                *this,
-                                               Pht::Vec3 {0.0f, -7.4f, UiLayer::textRectangle},
+                                               Pht::Vec3 {0.0f, -7.9f, UiLayer::textRectangle},
                                                playButtonInputSize,
                                                playButtonStyle);
     mPlayButton->CreateText({-0.9f, -0.23f, UiLayer::buttonText}, "PLAY", textProperties);

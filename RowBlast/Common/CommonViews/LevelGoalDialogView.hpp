@@ -63,7 +63,16 @@ namespace RowBlast {
         };
 
         void CreatePreviewPiecesContainer(Pht::IEngine& engine);
-        void CreateGlowEffects(Pht::SceneObject& parentObject, Pht::IEngine& engine);
+        void CreateGlowEffectsBehindPieces(Pht::SceneObject& parentObject, Pht::IEngine& engine);
+        void CreateGoalContainer(Pht::IEngine& engine,
+                                 const CommonResources& commonResources,
+                                 PotentiallyZoomedScreen zoom);
+        void CreateGrayCube(Pht::IEngine& engine,
+                            const CommonResources& commonResources,
+                            Pht::SceneObject& parent);
+        void CreateAsteroid(Pht::IEngine& engine, Pht::SceneObject& parent);
+        void CreateBlueprintSlot(Pht::IEngine& engine, Pht::SceneObject& parent);
+        void CreateGlowEffectsBehindGoal(Pht::SceneObject& parentObject, Pht::IEngine& engine);
         void InitPreviewPiece(LevelStartPreviewPiece& previewPiece,
                               const Piece& pieceType,
                               const Pht::Vec3& position);
@@ -71,6 +80,7 @@ namespace RowBlast {
         void AnimateEmissive(float dt);
         void AnimateBombRotation(float dt);
         void AnimateRowBombRotation(float dt);
+        void AnimateAsteroidRotation(float dt);
 
         using LevelStartPreviewPieces = std::array<LevelStartPreviewPiece, Level::maxNumPieceTypes>;
 
@@ -80,14 +90,18 @@ namespace RowBlast {
         std::unique_ptr<MenuButton> mPlayButton;
         std::unique_ptr<MenuButton> mBackButton;
         Pht::TextComponent* mCaption {nullptr};
-        Pht::TextComponent* mClearObjective {nullptr};
-        Pht::TextComponent* mBuildObjective {nullptr};
+        Pht::SceneObject* mClearObjectiveSceneObject {nullptr};
+        Pht::SceneObject* mAsteroidObjectiveSceneObject {nullptr};
+        Pht::SceneObject* mBuildObjectiveSceneObject {nullptr};
         LevelStartPreviewPieces mPreviewPieces;
         std::unique_ptr<Pht::SceneObject> mGlowEffect;
         std::unique_ptr<Pht::SceneObject> mRoundGlowEffect;
+        std::unique_ptr<Pht::SceneObject> mGoalRoundGlowEffect;
+        Pht::SceneObject* mAsteroidSceneObject {nullptr};
         float mAnimationTime {0.0f};
         float mEmissiveAnimationTime {0.0f};
         Pht::Vec3 mRowBombRotation;
+        Pht::Vec3 mAsteroidRotation;
     };
 }
 

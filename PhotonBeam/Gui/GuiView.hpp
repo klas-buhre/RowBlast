@@ -25,6 +25,10 @@ namespace Pht {
         TextComponent& CreateText(const Vec3& position,
                                   const std::string& text,
                                   const TextProperties& properties);
+        TextComponent& CreateText(const Vec3& position,
+                                  const std::string& text,
+                                  const TextProperties& properties,
+                                  Pht::SceneObject& parent);
         SceneObject& CreateSceneObject(const IMesh& mesh,
                                        const Material& material,
                                        ISceneManager& sceneManager);

@@ -34,13 +34,22 @@ void GuiView::AddSceneObject(std::unique_ptr<SceneObject> sceneObject) {
 TextComponent& GuiView::CreateText(const Vec3& position,
                                    const std::string& text,
                                    const TextProperties& properties) {
+    return CreateText(position, text, properties, *mRoot);
+}
+
+TextComponent& GuiView::CreateText(const Vec3& position,
+                                   const std::string& text,
+                                   const TextProperties& properties,
+                                   Pht::SceneObject& parent) {
     auto sceneObject {std::make_unique<SceneObject>()};
     auto textComponent {std::make_unique<TextComponent>(*sceneObject, text, properties)};
     
     auto& retVal {*textComponent};
     sceneObject->SetComponent<TextComponent>(std::move(textComponent));
     sceneObject->GetTransform().SetPosition(position);
-    AddSceneObject(std::move(sceneObject));
+    
+    parent.AddChild(*sceneObject);
+    mSceneResources.AddSceneObject(std::move(sceneObject));
     return retVal;
 }
 

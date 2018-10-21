@@ -33,8 +33,6 @@ Backlog:
     -More ambient in gray and green field materials.
     -Could have the Roswell spaceship in the space world.
   -GUI:
-    -Adjust the window sizes and header area sizes. Make it more like the CascadingDialogView.
-    -Change the settings dialog window into a dark window.
     -Menu window that displays 3rd party lib credits.
   -Purchases:
   -Back end:
@@ -49,11 +47,11 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-    -An objective could be to bring down a single asteroid. The asteroid does not fill a
-     cell so it cannot be used to clear a row. Could also bring down a big asteroid of 2x2 cells.
-    -Implementation:
-      -Level goal dialog.
-        -Put the asteroid in the dialog. The gray block and blueprint slot as well.
+      -Less bevel in the big button.
+      -The green button should be a bit less green.
+      -Change the settings dialog window into a dark window.
+      -Adjust the bright window sizes and header area sizes.
+
 
 
 

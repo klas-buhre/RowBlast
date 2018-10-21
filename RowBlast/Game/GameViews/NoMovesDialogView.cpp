@@ -21,13 +21,13 @@ NoMovesDialogView::NoMovesDialogView(Pht::IEngine& engine, const CommonResources
 
     SetSize(menuWindow.GetSize());
     
-    CreateText({-2.5f, 3.5f, UiLayer::text},
+    CreateText({-2.5f, 3.75f, UiLayer::text},
                "NO MOVES",
                guiResources.GetLargeWhiteTextProperties(zoom));
     
     Pht::Vec3 closeButtonPosition {
-        GetSize().x / 2.0f - 1.5f,
-        GetSize().y / 2.0f - 1.5f,
+        GetSize().x / 2.0f - 1.3f,
+        GetSize().y / 2.0f - 1.3f,
         UiLayer::textRectangle
     };
     
@@ -49,7 +49,7 @@ NoMovesDialogView::NoMovesDialogView(Pht::IEngine& engine, const CommonResources
     auto& lineSceneObject {
         CreateSceneObject(Pht::QuadMesh {GetSize().x - 1.5f, 0.06f}, lineMaterial, sceneManager)
     };
-    lineSceneObject.GetTransform().SetPosition({0.0f, 2.6f, UiLayer::textRectangle});
+    lineSceneObject.GetTransform().SetPosition({0.0f, GetSize().y / 2.0f - 2.6f, UiLayer::textRectangle});
     GetRoot().AddChild(lineSceneObject);
 
     auto& textProperties {guiResources.GetSmallWhiteTextProperties(zoom)};
@@ -65,7 +65,7 @@ NoMovesDialogView::NoMovesDialogView(Pht::IEngine& engine, const CommonResources
 
     mPlayOnButton = std::make_unique<MenuButton>(engine,
                                                  *this,
-                                                 Pht::Vec3 {0.0f, -2.5f, UiLayer::textRectangle},
+                                                 Pht::Vec3 {0.0f, -2.9f, UiLayer::textRectangle},
                                                  playOnButtonInputSize,
                                                  playOnButtonStyle);
     mPlayOnButton->CreateText({-1.4f, -0.31f, UiLayer::buttonText},

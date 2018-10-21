@@ -160,12 +160,13 @@ void LevelResources::CreateBlueprintRenderables(Pht::IEngine& engine,
     );
     
     auto f {0.9125f};
+    Pht::Vec4 fieldColor {0.3f * f, 0.3f * f, 0.752f * f, 1.0f};
 
     Pht::QuadMesh::Vertices fieldCellVertices  {
-        {{-squareSide / 2.0f, -squareSide / 2.0f, 0.0f}, {0.3f * f, 0.3f * f, 0.752f * f, 1.0f}},
-        {{squareSide / 2.0f, -squareSide / 2.0f, 0.0f}, {0.8f * f, 0.225f * f, 0.425f * f, 1.0f}},
-        {{squareSide / 2.0f, squareSide / 2.0f, 0.0f}, {0.3f * f, 0.3f * f, 0.752f * f, 1.0f}},
-        {{-squareSide / 2.0f, squareSide / 2.0f, 0.0f}, {0.3f * f, 0.3f * f, 0.752f * f, 1.0f}},
+        {{-squareSide / 2.0f, -squareSide / 2.0f, 0.0f}, fieldColor},
+        {{squareSide / 2.0f, -squareSide / 2.0f, 0.0f}, fieldColor},
+        {{squareSide / 2.0f, squareSide / 2.0f, 0.0f}, fieldColor},
+        {{-squareSide / 2.0f, squareSide / 2.0f, 0.0f}, fieldColor},
     };
 
     Pht::Material fieldMaterial;
