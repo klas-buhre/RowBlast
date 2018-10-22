@@ -47,8 +47,6 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-      -The blue button for the dark menues should a bit less blue.
-      -The green button should be a bit less green.
 
 
 

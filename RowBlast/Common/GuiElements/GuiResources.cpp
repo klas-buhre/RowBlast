@@ -6,13 +6,13 @@
 
 using namespace RowBlast;
 
-const Pht::Color GuiResources::mBlueButtonColor {0.0f, 0.345f, 0.91f};
+const Pht::Color GuiResources::mBlueButtonColor {0.0f, 0.34f, 0.895f};
 const Pht::Color GuiResources::mDarkBlueButtonColor {0.0f, 0.333f, 0.88f};
-const Pht::Color GuiResources::mBlueSelectedButtonColor {0.0f, 0.3f, 0.8f};
+const Pht::Color GuiResources::mBlueSelectedButtonColor {0.0f, 0.3f, 0.77f};
 const Pht::Color GuiResources::mYellowButtonColor {0.64f, 0.508f, 0.0f};
 const Pht::Color GuiResources::mYellowSelectedButtonColor {0.55f, 0.45f, 0.0f};
-const Pht::Color GuiResources::mGreenButtonColor {0.1f, 0.51f, 0.1f};
-const Pht::Color GuiResources::mGreenSelectedButtonColor {0.085f, 0.43f, 0.085f};
+const Pht::Color GuiResources::mGreenButtonColor {0.1f, 0.47f, 0.1f};
+const Pht::Color GuiResources::mGreenSelectedButtonColor {0.085f, 0.4f, 0.085f};
 
 const std::string GuiResources::mBigButtonMeshFilename {"big_button_043.obj"};
 const std::string GuiResources::mMediumButtonMeshFilename {"medium_button_0385.obj"};
