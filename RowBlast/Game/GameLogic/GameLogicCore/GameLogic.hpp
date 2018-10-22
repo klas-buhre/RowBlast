@@ -144,9 +144,9 @@ namespace RowBlast {
             UndoMove
         };
 
-        Result SpawnFallingPiece();
+        Result SpawnFallingPiece(FallingPieceSpawnReason fallingPieceSpawnReason);
         void SetPieceType();
-        void ManageMoveHistory();
+        void ManageMoveHistory(FallingPieceSpawnReason fallingPieceSpawnReason);
         void StartBlastRadiusAnimationAtGhostPiece();
         void SetBlastRadiusAnimationPositionAtGhostPiece();
         void RemoveFallingPiece();

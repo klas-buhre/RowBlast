@@ -149,7 +149,7 @@ GameLogic::Result GameLogic::Update(bool shouldUpdateLogic) {
                 }
                 HandleControlTypeChange();
                 if (mFallingPieceSpawnReason != FallingPieceSpawnReason::None) {
-                    auto result {SpawnFallingPiece()};
+                    auto result {SpawnFallingPiece(mFallingPieceSpawnReason)};
                     mFallingPieceSpawnReason = FallingPieceSpawnReason::None;
                     if (result != Result::None) {
                         return result;
@@ -167,8 +167,8 @@ GameLogic::Result GameLogic::Update(bool shouldUpdateLogic) {
     return HandleInput();
 }
 
-GameLogic::Result GameLogic::SpawnFallingPiece() {
-    assert(mFallingPieceSpawnReason != FallingPieceSpawnReason::None);
+GameLogic::Result GameLogic::SpawnFallingPiece(FallingPieceSpawnReason fallingPieceSpawnReason) {
+    assert(fallingPieceSpawnReason != FallingPieceSpawnReason::None);
     
     if (mBlastRadiusAnimation.IsActive()) {
         mBlastRadiusAnimation.Stop();
@@ -184,11 +184,11 @@ GameLogic::Result GameLogic::SpawnFallingPiece() {
     mFallingPiece = &mFallingPieceStorage;
     SetPieceType();
     auto spawnPosition {
-        CalculateFallingPieceSpawnPos(*mCurrentMove.mPieceType, mFallingPieceSpawnReason)
+        CalculateFallingPieceSpawnPos(*mCurrentMove.mPieceType, fallingPieceSpawnReason)
     };
     mFallingPiece->Spawn(*mCurrentMove.mPieceType, spawnPosition, mLevel->GetSpeed());
     
-    ManageMoveHistory();
+    ManageMoveHistory(fallingPieceSpawnReason);
     
     mGhostPieceRow = mField.DetectCollisionDown(CreatePieceBlocks(*mFallingPiece),
                                                 mFallingPiece->GetIntPosition());
@@ -238,10 +238,10 @@ const Piece* GameLogic::GetPieceType() const {
     return nullptr;
 }
 
-void GameLogic::ManageMoveHistory() {
+void GameLogic::ManageMoveHistory(FallingPieceSpawnReason fallingPieceSpawnReason) {
     mCurrentMove.mId = mFallingPiece->GetId();
     
-    switch (mFallingPieceSpawnReason) {
+    switch (fallingPieceSpawnReason) {
         case FallingPieceSpawnReason::NextMove:
             ++mMovesUsed;
             if (GetMovesUsedIncludingCurrent() > 1) {
@@ -830,12 +830,15 @@ void GameLogic::SwitchPiece() {
         return;
     }
     
+    auto* previousActivePieceType {mCurrentMove.mPieceType};
+    
     mFallingPieceSpawnType = mCurrentMove.mSelectablePieces[1];
     mCurrentMove.mPieceType = mCurrentMove.mSelectablePieces[1];
     mCurrentMove.mSelectablePieces[1] = mCurrentMove.mSelectablePieces[0];
-    mCurrentMove.mSelectablePieces[0] = &mFallingPiece->GetPieceType();
-    mFallingPieceSpawnReason = FallingPieceSpawnReason::Switch;
+    mCurrentMove.mSelectablePieces[0] = previousActivePieceType;
     mPreviewPieceAnimationToStart = PreviewPieceAnimationToStart::SwitchPiece;
+    
+    SpawnFallingPiece(FallingPieceSpawnReason::Switch);
 }
 
 bool GameLogic::IsThereRoomToSwitchPiece() {

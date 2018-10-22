@@ -8,8 +8,6 @@ Backlog:
 
   -Gameplay:
    X-Fix the piece pull down bug on level 31. See screenshot.
-   X-Fix bug where the switchable pieces can change if double clicking on switch when the frame rate
-     is really low like in the iPad simulator.
    X-Maybe the FieldAnalyzer should give more value to cleared level blocks than cleared piece
      blocks.
    X-Would be good if the FieldAnalyzer could take cascading/gravity into account when calculating
@@ -19,7 +17,6 @@ Backlog:
     -The UFO could be booster. It could clear 3 rows.
     -Maybe blocks in the visible part of the field could disappear on some levels. For each move a
      random block disappears.
-    -Maybe init falling piece after SwitchPiece() in the same frame instead of the next.
     -Maybe a sensitivity setting. Tetris Blitz has lower sensitility on iPad but not on iPhone.
     -Undo to the previous move initial state or the the previous move last state before move? Should
      not really matter since the user can select any piece from the selectables but maybe it is most 
@@ -31,7 +28,6 @@ Backlog:
     -Maybe the green field material could be a bit less green.
     -Maybe the blue field material could be a bit less blue.
     -More ambient in gray and green field materials.
-    -Could have the Roswell spaceship in the space world.
   -GUI:
     -Menu window that displays 3rd party lib credits.
   -Purchases:
