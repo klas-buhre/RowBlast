@@ -5,6 +5,7 @@
 
 // Game includes.
 #include "Field.hpp"
+#include "FieldGravity.hpp"
 #include "EffectManager.hpp"
 #include "FlyingBlocksAnimation.hpp"
 
@@ -29,10 +30,12 @@ namespace {
 
 FieldExplosionsStates::FieldExplosionsStates(Pht::IEngine& engine,
                                              Field& field,
+                                             FieldGravity& fieldGravity,
                                              EffectManager& effectManager,
                                              FlyingBlocksAnimation& flyingBlocksAnimation) :
     mEngine {engine},
     mField {field},
+    mFieldGravity {fieldGravity},
     mEffectManager {effectManager},
     mFlyingBlocksAnimation {flyingBlocksAnimation} {}
 
@@ -312,7 +315,7 @@ void FieldExplosionsStates::RemoveRows() {
         if (RowContainsAsteroid(rowToRemove)) {
             // Cannot remove the row the normal way since the asteroid is not removed. Instead,
             // shift the field down wherever possible.
-            mField.ShiftFieldDown(rowToRemove);
+            mFieldGravity.ShiftFieldDown(rowToRemove);
         } else {
             mField.RemoveRow(rowToRemove);
         }

@@ -41,6 +41,7 @@
 		624C72E32177883D0006068B /* ShieldAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 624C72E12177883D0006068B /* ShieldAnimation.cpp */; };
 		624C72E52177AB260006068B /* shield.png in Resources */ = {isa = PBXBuildFile; fileRef = 624C72E42177AB250006068B /* shield.png */; };
 		6256934D217CEE0F003A3A9D /* big_button_043.obj in Resources */ = {isa = PBXBuildFile; fileRef = 6256934C217CEE0E003A3A9D /* big_button_043.obj */; };
+		62569350217F3253003A3A9D /* FieldGravity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6256934E217F3253003A3A9D /* FieldGravity.cpp */; };
 		6259B7E52107992D0055FE8D /* Tutorial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6259B7E32107992D0055FE8D /* Tutorial.cpp */; };
 		6259B7E82107C6BE0055FE8D /* PlacePieceWindowView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6259B7E62107C6BE0055FE8D /* PlacePieceWindowView.cpp */; };
 		6259B7EB2107CDF20055FE8D /* PlacePieceWindowController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6259B7E92107CDF20055FE8D /* PlacePieceWindowController.cpp */; };
@@ -455,6 +456,8 @@
 		624C72E22177883D0006068B /* ShieldAnimation.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ShieldAnimation.hpp; sourceTree = "<group>"; };
 		624C72E42177AB250006068B /* shield.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shield.png; sourceTree = "<group>"; };
 		6256934C217CEE0E003A3A9D /* big_button_043.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = big_button_043.obj; sourceTree = "<group>"; };
+		6256934E217F3253003A3A9D /* FieldGravity.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FieldGravity.cpp; sourceTree = "<group>"; };
+		6256934F217F3253003A3A9D /* FieldGravity.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = FieldGravity.hpp; sourceTree = "<group>"; };
 		6259B7E32107992D0055FE8D /* Tutorial.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Tutorial.cpp; sourceTree = "<group>"; };
 		6259B7E42107992D0055FE8D /* Tutorial.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Tutorial.hpp; sourceTree = "<group>"; };
 		6259B7E62107C6BE0055FE8D /* PlacePieceWindowView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PlacePieceWindowView.cpp; sourceTree = "<group>"; };
@@ -2075,6 +2078,8 @@
 				62785CF82087618D006F9869 /* Field.hpp */,
 				62785CFE2087618D006F9869 /* FieldExplosionsStates.cpp */,
 				62785CF52087618D006F9869 /* FieldExplosionsStates.hpp */,
+				6256934E217F3253003A3A9D /* FieldGravity.cpp */,
+				6256934F217F3253003A3A9D /* FieldGravity.hpp */,
 				62785CFF2087618D006F9869 /* GameLogic.cpp */,
 				62785CF62087618D006F9869 /* GameLogic.hpp */,
 				62785CF02087618D006F9869 /* GestureInputHandler.cpp */,
@@ -2833,6 +2838,7 @@
 				62785DE02087618E006F9869 /* Bomb.cpp in Sources */,
 				62B1CB45210F3E0700D0F195 /* SlideAnimation.cpp in Sources */,
 				62A57D15211368CF00603ABC /* CascadingDialogController.cpp in Sources */,
+				62569350217F3253003A3A9D /* FieldGravity.cpp in Sources */,
 				62785DE62087618E006F9869 /* MirroredZPiece.cpp in Sources */,
 				62785DDB2087618E006F9869 /* SevenPiece.cpp in Sources */,
 				62785DD02087618E006F9869 /* Field.cpp in Sources */,

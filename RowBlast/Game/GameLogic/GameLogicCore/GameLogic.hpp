@@ -12,6 +12,7 @@
 #include "ClickInputHandler.hpp"
 #include "FallingPieceAnimation.hpp"
 #include "Settings.hpp"
+#include "FieldGravity.hpp"
 #include "FieldExplosionsStates.hpp"
 #include "BlastRadiusAnimation.hpp"
 #include "ComboDetector.hpp"
@@ -213,6 +214,7 @@ namespace RowBlast {
         State mState {State::LogicUpdate};
         CascadeState mCascadeState {CascadeState::NotCascading};
         float mCascadeWaitTime {0.0f};
+        FieldGravity mFieldGravity;
         FieldExplosionsStates mFieldExplosionsStates;
         FallingPieceAnimation mFallingPieceAnimation;
         ComboDetector mComboDetector;

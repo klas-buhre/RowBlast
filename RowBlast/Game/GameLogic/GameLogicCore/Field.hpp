@@ -51,12 +51,6 @@ namespace RowBlast {
         static constexpr int maxNumRows {18};
         static constexpr int numRowsUpToSpawningArea {13};
         
-        struct PieceBlockCoord {
-            Pht::IVec2 mPosition;
-            bool mIsFirstSubCell {true};
-        };
-
-        using PieceBlockCoords = Pht::StaticVector<PieceBlockCoord, maxNumColumns * maxNumRows * 2>;
         using CollisionPoints = Pht::StaticVector<Pht::IVec2, maxNumColumns * maxNumRows>;
 
         struct CollisionResult {
@@ -71,8 +65,6 @@ namespace RowBlast {
         
         using ImpactedBombs = Pht::StaticVector<ImpactedBomb, maxNumColumns>;
         using RemovedSubCells = Pht::StaticVector<RemovedSubCell, maxNumColumns * maxNumRows>;
-
-        Field();
         
         void Init(const Level& level);
         void RestorePreviousState();
@@ -108,9 +100,6 @@ namespace RowBlast {
         void ResetFlashingBlockAnimations();
         void ManageWelds();
         void MergeTriangleBlocksIntoCube(const Pht::IVec2& position);
-        void PullDownLoosePieces();
-        void ShiftFieldDown(int rowIndex);
-        void DetectBlocksThatShouldNotBounce();
         int GetNumRowsInOneScreen() const;
         bool AnyFilledRows() const;
         int CalculateNumLevelBlocks() const;
@@ -181,12 +170,7 @@ namespace RowBlast {
         
     private:
         friend class FieldAnalyzer;
-        
-        enum class IsFloating {
-            Yes,
-            No,
-            Unknown
-        };
+        friend class FieldGravity;
         
         void CopyGridNoAlloc(CellGrid& to, const CellGrid& from);
         bool IsCellAccordingToBlueprint(int row, int column) const;
@@ -207,26 +191,6 @@ namespace RowBlast {
         bool DownRightWeldWouldBeRedundant(const SubCell& subCell, const Pht::IVec2& position) const;
         bool DownLeftWeldWouldBeRedundant(const SubCell& subCell, const Pht::IVec2& position) const;
         bool UpLeftWeldWouldBeRedundant(const SubCell& subCell, const Pht::IVec2& position) const;
-        void PullDownPiece(int row, int column, ScanDirection scanDirection);
-        void PullDownPiece(const SubCell& subCell,
-                           const Pht::IVec2& position,
-                           ScanDirection scanDirection);
-        PieceBlocks ExtractPieceBlocks(Pht::IVec2& piecePosition,
-                                       BlockColor color,
-                                       const Pht::IVec2& scanPosition,
-                                       ScanDirection scanDirection);
-        void FindPieceBlocks(BlockColor color, const Pht::IVec2& position);
-        void FindAsteroidCells(const Pht::IVec2& position);
-        void ResetAllCellsTriedScanDirection();
-        void ClearPieceBlockGrid();
-        void LandPulledDownPieceBlocks(const PieceBlocks& pieceBlocks, const Pht::IVec2& position);
-        void ShiftGrayBlocksDown(int rowIndex);
-        void ResetAllCellsShiftedDownFlag();
-        IsFloating IsBlockStructureFloating(const Pht::IVec2& gridPosition);
-        bool IsOutsideVisibleField(const Pht::IVec2& gridPosition);
-        void SetShouldNotBounce(const Pht::IVec2& gridPosition);
-        void SetIsScanned(const Pht::IVec2& gridPosition);
-        void ResetAllCellsFoundFlag();
         void RemoveRowImpl(int rowIndex, Field::RemovedSubCells& removedSubCells);
         void BreakCellDownWelds(int row, int column);
         void BreakCellUpWelds(int row, int column);
@@ -259,9 +223,7 @@ namespace RowBlast {
         int mNumRows {0};
         int mLowestVisibleRow {0};
         bool mHasChanged {false};
-        CellGrid mPieceBlockGrid;
         mutable CollisionResult mCollisionResult;
-        PieceBlockCoords mPieceBlockCoords;
     };
 }
 

@@ -83,7 +83,8 @@ GameLogic::GameLogic(Pht::IEngine& engine,
     mTutorial {tutorial},
     mSettings {settings},
     mControlType {mSettings.mControlType},
-    mFieldExplosionsStates {engine, field, effectManager, flyingBlocksAnimation},
+    mFieldGravity {field},
+    mFieldExplosionsStates {engine, field, mFieldGravity, effectManager, flyingBlocksAnimation},
     mFallingPieceAnimation {*this, mFallingPieceStorage},
     mComboDetector {comboTextAnimation, effectManager},
     mGestureInputHandler {*this, mFallingPieceStorage},
@@ -632,7 +633,7 @@ void GameLogic::RemoveClearedRowsAndPullDownLoosePieces(bool doBounceCalculation
     }
 
     if (doBounceCalculations) {
-        mField.DetectBlocksThatShouldNotBounce();
+        mFieldGravity.DetectBlocksThatShouldNotBounce();
     }
     
     mComboDetector.GoToCascadingState();
@@ -641,7 +642,7 @@ void GameLogic::RemoveClearedRowsAndPullDownLoosePieces(bool doBounceCalculation
 
 void GameLogic::PullDownLoosePiecesClearObjective() {
     mField.SetLowestVisibleRow(mScrollController.CalculatePreferredLowestVisibleRow());
-    mField.PullDownLoosePieces();
+    mFieldGravity.PullDownLoosePieces();
 
     // A second calculation of the lowest visible row and pulling down pieces is needed because the
     // first calculation of lowest visible row could be too high if some piece blocks are remaining
@@ -649,7 +650,7 @@ void GameLogic::PullDownLoosePiecesClearObjective() {
     // the lowest visible row. The correct lowest visible row can be calculated after those piece
     // blocks have been pulled down.
     mField.SetLowestVisibleRow(mScrollController.CalculatePreferredLowestVisibleRow());
-    mField.PullDownLoosePieces();
+    mFieldGravity.PullDownLoosePieces();
 }
 
 void GameLogic::PullDownLoosePiecesAsteroidObjective() {
@@ -659,7 +660,7 @@ void GameLogic::PullDownLoosePiecesAsteroidObjective() {
     // position.
     mField.SaveInTempGrid();
     mField.SetLowestVisibleRow(0);
-    mField.PullDownLoosePieces();
+    mFieldGravity.PullDownLoosePieces();
     
     auto lowestVisibleRow {mScrollController.CalculatePreferredLowestVisibleRow()};
     
@@ -667,7 +668,7 @@ void GameLogic::PullDownLoosePiecesAsteroidObjective() {
     // pull down of the pieces.
     mField.RestoreFromTempGrid();
     mField.SetLowestVisibleRow(lowestVisibleRow);
-    mField.PullDownLoosePieces();
+    mFieldGravity.PullDownLoosePieces();
 }
 
 bool GameLogic::LevelAllowsClearingFilledRows() const {

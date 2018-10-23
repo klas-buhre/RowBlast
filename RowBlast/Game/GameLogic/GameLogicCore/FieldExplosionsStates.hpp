@@ -11,6 +11,7 @@ namespace Pht {
 
 namespace RowBlast {
     class Field;
+    class FieldGravity;
     class EffectManager;
     class FlyingBlocksAnimation;
     
@@ -23,6 +24,7 @@ namespace RowBlast {
 
         FieldExplosionsStates(Pht::IEngine& engine,
                               Field& field,
+                              FieldGravity& fieldGravity,
                               EffectManager& effectManager,
                               FlyingBlocksAnimation& flyingBlocksAnimation);
         
@@ -91,6 +93,7 @@ namespace RowBlast {
         
         Pht::IEngine& mEngine;
         Field& mField;
+        FieldGravity& mFieldGravity;
         EffectManager& mEffectManager;
         FlyingBlocksAnimation& mFlyingBlocksAnimation;
         ExplosionsStates mExplosionsStates;
