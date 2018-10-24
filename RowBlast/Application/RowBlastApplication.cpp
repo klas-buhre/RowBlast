@@ -7,7 +7,6 @@ Backlog:
     -Metal.
 
   -Gameplay:
-   X-Fix the piece pull down bug on level 31. See screenshot.
    X-Maybe the FieldAnalyzer should give more value to cleared level blocks than cleared piece
      blocks.
    X-Would be good if the FieldAnalyzer could take cascading/gravity into account when calculating

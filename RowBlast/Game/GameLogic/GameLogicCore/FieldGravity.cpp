@@ -123,19 +123,8 @@ PieceBlocks FieldGravity::ExtractPieceBlocks(Pht::IVec2& piecePosition,
                                              const Pht::IVec2& scanPosition,
                                              ScanDirection scanDirection) {
     mPieceBlockCoords.Clear();
-    auto& firstSubCell {mField.mGrid[scanPosition.y][scanPosition.x].mFirstSubCell};
-    
-    if (firstSubCell.IsNonBlockObject()) {
-        if (firstSubCell.IsBigAsteroid()) {
-            FindAsteroidCells(scanPosition);
-        } else {
-            PieceBlockCoord pieceCoord {scanPosition, true};
-            mPieceBlockCoords.PushBack(pieceCoord);
-        }
-    } else {
-        FindPieceBlocks(color, scanPosition);
-    }
-    
+    FindPieceClusterBlocks(color, scanPosition);
+
     piecePosition.x = XMin(mPieceBlockCoords);
     piecePosition.y = YMin(mPieceBlockCoords);
 
@@ -169,6 +158,90 @@ PieceBlocks FieldGravity::ExtractPieceBlocks(Pht::IVec2& piecePosition,
         YMax(mPieceBlockCoords) - piecePosition.y + 1,
         XMax(mPieceBlockCoords) - piecePosition.x + 1
     };
+}
+
+void FieldGravity::FindPieceClusterBlocks(BlockColor color, const Pht::IVec2& position) {
+    auto& firstSubCell {mField.mGrid[position.y][position.x].mFirstSubCell};
+    
+    if (firstSubCell.IsNonBlockObject()) {
+        if (firstSubCell.IsBigAsteroid()) {
+            FindAsteroidCells(position);
+        } else {
+            firstSubCell.mIsFound = true;
+            PieceBlockCoord pieceCoord {position, true};
+            mPieceBlockCoords.PushBack(pieceCoord);
+        }
+        
+        return;
+    }
+    
+    FindPieceBlocks(color, position);
+    
+    auto xMin {XMin(mPieceBlockCoords)};
+    auto yMin {YMin(mPieceBlockCoords)};
+    auto xMax {XMax(mPieceBlockCoords)};
+    auto yMax {YMax(mPieceBlockCoords)};
+    
+    enum class ColumnScanState {
+        Idle,
+        InsideFoundPiece,
+        AboveFoundPiece
+    };
+    
+    for (auto column {xMin}; column <= xMax; ++column) {
+        auto state {ColumnScanState::Idle};
+        auto aboveFoundPieceRow {0};
+
+        for (auto row {yMin}; row <= yMax; ++row) {
+            auto& cell {mField.mGrid[row][column]};
+            auto& firstSubCell {cell.mFirstSubCell};
+            auto& secondSubCell {cell.mSecondSubCell};
+            
+            switch (state) {
+                case ColumnScanState::Idle:
+                    if (firstSubCell.mIsFound || secondSubCell.mIsFound) {
+                        state = ColumnScanState::InsideFoundPiece;
+                    }
+                    break;
+                case ColumnScanState::InsideFoundPiece:
+                    if ((!firstSubCell.mIsFound && !firstSubCell.IsEmpty()) ||
+                        (!secondSubCell.mIsFound && !secondSubCell.IsEmpty())) {
+                        state = ColumnScanState::AboveFoundPiece;
+                        aboveFoundPieceRow = row;
+                    }
+                    break;
+                case ColumnScanState::AboveFoundPiece:
+                    if (firstSubCell.mIsFound || secondSubCell.mIsFound) {
+                        // Found a concave part of the found piece. Need to find any blocks inside
+                        // that concave area and add those to the found piece coords to prevent the
+                        // cluster from getting stuck when pulled down by gravity.
+                        // TODO: this algorithm does not completely work with triangular blocks or
+                        // the case when any piece is locked in two concave areas in two other
+                        // pieces.
+                        state = ColumnScanState::InsideFoundPiece;
+                        for (auto undiscoveredCellRow {aboveFoundPieceRow};
+                             undiscoveredCellRow < row;
+                             ++undiscoveredCellRow) {
+                            auto& undiscoveredCell {mField.mGrid[undiscoveredCellRow][column]};
+                            auto& firstUndiscoveredSubCell {undiscoveredCell.mFirstSubCell};
+                            auto& secondUndiscoveredSubCell {undiscoveredCell.mSecondSubCell};
+                            Pht::IVec2 undiscoveredCellPosition {column, undiscoveredCellRow};
+                            if (!firstUndiscoveredSubCell.IsEmpty() &&
+                                !firstUndiscoveredSubCell.mIsFound) {
+                                FindPieceClusterBlocks(firstUndiscoveredSubCell.mColor,
+                                                       undiscoveredCellPosition);
+                            }
+                            if (!secondUndiscoveredSubCell.IsEmpty() &&
+                                !secondUndiscoveredSubCell.mIsFound) {
+                                FindPieceClusterBlocks(firstUndiscoveredSubCell.mColor,
+                                                       undiscoveredCellPosition);
+                            }
+                        }
+                    }
+                    break;
+            }
+        }
+    }
 }
 
 void FieldGravity::FindPieceBlocks(BlockColor color, const Pht::IVec2& position) {
