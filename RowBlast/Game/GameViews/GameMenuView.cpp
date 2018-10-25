@@ -35,7 +35,7 @@ GameMenuView::GameMenuView(Pht::IEngine& engine, const CommonResources& commonRe
 
     MenuButton::Style blueButtonStyle;
     blueButtonStyle.mMeshFilename = GuiResources::mMediumButtonSkewedMeshFilename;
-    blueButtonStyle.mColor = GuiResources::mDarkBlueButtonColor;
+    blueButtonStyle.mColor = GuiResources::mBlueButtonColor;
     blueButtonStyle.mSelectedColor = GuiResources::mBlueSelectedButtonColor;
     blueButtonStyle.mPressedScale = 1.05f;
     blueButtonStyle.mHasShadow = true;
@@ -101,8 +101,8 @@ void GameMenuView::EnableUndoButton() {
     mIsUndoButtonEnabled = true;
     
     auto& material {mUndoButton->GetSceneObject().GetRenderable()->GetMaterial()};
-    material.SetAmbient(GuiResources::mDarkBlueButtonColor);
-    material.SetDiffuse(GuiResources::mDarkBlueButtonColor);
+    material.SetAmbient(GuiResources::mBlueButtonColor);
+    material.SetDiffuse(GuiResources::mBlueButtonColor);
 }
 
 void GameMenuView::DisableUndoButton() {

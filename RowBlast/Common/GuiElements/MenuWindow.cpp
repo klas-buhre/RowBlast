@@ -24,7 +24,7 @@ namespace {
     const Pht::Vec4 darkerBlueColor {0.04f, 0.07f, 0.2f, 1.0};
     constexpr auto xBorder {0.45f};
     constexpr auto darkBorderThickness {0.09f};
-    constexpr auto outerCornerRadius {0.37f};
+    constexpr auto outerCornerRadius {0.29f};
     constexpr auto largeCaptionBarHeight {3.0f};
     constexpr auto smallCaptionBarHeight {2.5f};
     constexpr auto squareSide {0.5f};

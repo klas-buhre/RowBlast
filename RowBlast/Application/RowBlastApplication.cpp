@@ -7,12 +7,6 @@ Backlog:
     -Metal.
 
   -Gameplay:
-   X-Maybe the FieldAnalyzer should give more value to cleared level blocks than cleared piece
-     blocks.
-   X-Would be good if the FieldAnalyzer could take cascading/gravity into account when calculating
-     BurriedHolesAreaInVisibleRows, at least for SevenPiece and MirroredSevenPiece. Currently, the
-     AI gives to low scores for moves that it wrongly thinks will cause a lot burried holes because
-     it does not pull down the non-cleared part of for example the SevenPiece.
     -The UFO could be booster. It could clear 3 rows.
     -Maybe blocks in the visible part of the field could disappear on some levels. For each move a
      random block disappears.
@@ -35,13 +29,19 @@ Backlog:
   -Sound:
     -Buy sounds and music.
   -Make ready for release:
+    -Do a soft launch in a couple of countries? Maybe the nordic countris and UK? Only english
+     localization is needed for that.
+    -Maybe support for different languages.
     -Make launch screens for all supported device resulutions. Should say Teleporter Studios.
     -Make icons and launch screens for all supported device resulutions.
     -Credit the icon creator: <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
     -Credit FastNoise, MIT license: https://github.com/Auburns/FastNoise/
-    -Maybe support for different languages.
 
 Ongoing tasks:
+   X-Would be good if the FieldAnalyzer could take cascading/gravity into account when calculating
+     BurriedHolesAreaInVisibleRows, at least for SevenPiece and FPiece. Currently, the
+     AI gives to low scores for moves that it wrongly thinks will cause a lot burried holes because
+     it does not pull down the non-cleared part of for example the SevenPiece.
 
 
 
@@ -124,14 +124,14 @@ Ordered Backlog:
         Done
     -Do the most important gameplay tasks.
         Cost: 8
+    -Do the most important game scene-related rendering tasks.
+        Cost: 4
     -Net/HTTP.
         Cost: 10
     -Analytics.
         Cost: 5
     -Levels for the space world.
         Cost: 7
-    -Finish the remaining game scene-related rendering tasks.
-        Cost: 4
     -Store settings in file.
         Cost: 0.5
     -Sounds/music.

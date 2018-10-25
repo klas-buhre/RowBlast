@@ -49,7 +49,7 @@ MapConfirmationDialogView::MapConfirmationDialogView(Pht::IEngine& engine,
     
     MenuButton::Style blueButtonStyle;
     blueButtonStyle.mMeshFilename = GuiResources::mMediumButtonSkewedMeshFilename;
-    blueButtonStyle.mColor = GuiResources::mDarkBlueButtonColor;
+    blueButtonStyle.mColor = GuiResources::mBlueButtonColor;
     blueButtonStyle.mSelectedColor = GuiResources::mBlueSelectedButtonColor;
     blueButtonStyle.mPressedScale = 1.05f;
     blueButtonStyle.mHasShadow = true;
