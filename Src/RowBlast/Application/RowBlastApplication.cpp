@@ -40,7 +40,7 @@ Backlog:
 Ongoing tasks:
    X-Would be good if the FieldAnalyzer could take cascading/gravity into account when calculating
      BurriedHolesAreaInVisibleRows, at least for SevenPiece and FPiece. Currently, the
-     AI gives to low scores for moves that it wrongly thinks will cause a lot burried holes because
+     AI gives too low scores for moves that it wrongly thinks will cause a lot burried holes because
      it does not pull down the non-cleared part of for example the SevenPiece.
 
 
@@ -48,7 +48,7 @@ if (landedPieceSitsOnClearedRow || landedPieceHangsUnderClearedRow) && aboveIsFi
     continue
 end
 
-enum ScanState
+enum HoleScanState
     Idle,
     InsideFilledRow,
     InsideLandedPiece,
@@ -56,65 +56,88 @@ enum ScanState
     AboveIsFilled
 end
 
-switch state
-    case ScanState::Idle
+struct BurriedHoleScanStates
+    HoleScanState mState {HoleScanState::Idle}
+    HoleScanState mPreviousState {HoleScanState::Idle}
+end
+
+BurriedHoleScanStates states
+switch states.mState
+    case HoleScanState::Idle
         if cellIsInFilledRow
-            state = ScanState::InsideFilledRow
+            states = TransitionHoleState(HoleScanState::InsideFilledRow, states)
         else if cellIsLandedPiece
             area += CalculateLowerHalfCellAreaContribution(cell)
-            state = ScanState::InsideLandedPiece
+            states = TransitionHoleState(HoleScanState::InsideLandedPiece, states)
         else
             if !cellIsEmpty
                 area += CalculateLowerHalfCellAreaContribution(cell)
-                state = ScanState::AboveIsFilled
+                states = TransitionHoleState(HoleScanState::AboveIsFilled, states)
             end
         end
         break
-    case ScanState::InsideFilledRow
+    case HoleScanState::InsideFilledRow
         if celIsInFilledRow
             break
         else if cellIsLandedPiece
-            area += CalculateAreaContributionUnderFilledRow(cell, previousState)
-            state = ScanSate::LandedPieceSitsOnOrHangsUnderFilledRow
+            area += CalculateAreaContributionUnderFilledRow(cell, states.mPreviousState)
+            states = TransitionHoleState(HoleScanState::LandedPieceSitsOnOrHangsUnderFilledRow, states)
         else if cellIsEmpty
-            state = ScanState::Idle
+            switch states.mPreviousState
+                case HoleScanState::InsideFilledRow
+                case HoleScanState::InsideLandedPiece
+                case HoleScanState::LandedPieceSitsOnOrHangsUnderFilledRow
+                    assert
+                case HoleScanState::Idle
+                    states = TransitionHoleState(HoleScanState::Idle, states)
+                case HoleScanState::AboveIsFilled
+                    area += 1.0
+                    states = TransitionHoleState(HoleScanState::AboveIsFilled, states)
+                    break
+            end
         else
-            area += CalculateAreaContributionUnderFilledRow(cell, previousState)
-            state = ScanState::AboveIsFilled
+            area += CalculateAreaContributionUnderFilledRow(cell, states.mPreviousState)
+            states = TransitionHoleState(HoleScanState::AboveIsFilled, states)
         end
         break
-    case ScanState::InsideLandedPiece
+    case HoleScanState::InsideLandedPiece
         if cellIsInFilledRow
-            state = ScanState::LandedPieceSitsOnOrHangsUnderFilledRow
+            states = TransitionHoleState(HoleScanState::LandedPieceSitsOnOrHangsUnderFilledRow, states)
         else if cellIsLandedPiece
             area += CalculateLowerHalfCellAreaContribution(cell)
         else
             area += CalculateAreaContribution(cell)
-            state = ScanState::AboveIsFilled
+            states = TransitionHoleState(HoleScanState::AboveIsFilled, states)
         end
         break
-    case ScanState::LandedPieceSitsOnOrHangsUnderFilledRow
+    case HoleScanState::LandedPieceSitsOnOrHangsUnderFilledRow
         if cellIsInFilledRow
             break
         else if cellIsLandedPiece
             area += CalculateLowerHalfCellAreaContribution(cell)
         else
             if !cellIsEmpty
-                area += CalculateAreaContribution(cell)
-                state = ScanState::AboveIsFilled
+                area += CalculateLowerHalfCellAreaContribution(cell)
+                states = TransitionHoleState(HoleScanState::AboveIsFilled, states)
             end
         end
         break
     case ScanState::AboveIsFilled
         if cellIsInFilledRow
-            break
+            states = TransitionHoleState(HoleScanState::InsideFilledRow, states) // review
         else if cellIsLandedPiece
             area += CalculateAreaContribution(cell)
-            state = ScanState::InsideLandedPiece
+            states = TransitionHoleState(HoleScanState::InsideLandedPiece, states)
         else
             area += CalculateAreaContribution(cell)
         end
         break
+end
+
+BurriedHoleScanStates TransitionHoleState(HoleScanState newState, BurriedHoleScanStates states)
+    states.mPreviousState = states.mState
+    states.mState = newState
+    return states
 end
 
 float CalculateAreaContribution(cell)
@@ -139,7 +162,7 @@ end
 
 float CalculateLowerHalfCellAreaContribution(cell)
     if cell is empty or cell is full
-        return
+        return 0.0
     end
     fill = cell.mSecondSubCell.IsEmpty() ? cell.mFirstSubCell.mFill : cell.mSecondSubCell.mFill
     switch fill
@@ -151,15 +174,15 @@ float CalculateLowerHalfCellAreaContribution(cell)
     end
 end
 
-float CalculateAreaContributionUnderFilledRow(cell, previousState)
+float CalculateAreaContributionUnderFilledRow(cell, previousState) // review
     switch previousState
-        case Idle
+        case HoleScanState::Idle
             return CalculateLowerHalfCellAreaContribution(cell)
-        case InsideFilledRow
+        case HoleScanState::InsideFilledRow
+        case HoleScanState::InsideLandedPiece
+        case HoleScanState::LandedPieceSitsOnOrHangsUnderFilledRow
             assert
-        case InsideLandedPiece
-        case LandedPieceSitsOnOrHangsUnderFilledRow
-        case AboveIsFilled
+        case HoleScanState::AboveIsFilled
             return CalculateAreaContribution(cell)
     end
 end
