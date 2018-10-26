@@ -44,6 +44,168 @@ Ongoing tasks:
      it does not pull down the non-cleared part of for example the SevenPiece.
 
 
+if (landedPieceSitsOnClearedRow || landedPieceHangsUnderClearedRow) && aboveIsFilled
+    continue
+end
+
+enum ScanState
+    Idle,
+    InsideFilledRow,
+    InsideLandedPiece,
+    LandedPieceSitsOnOrHangsUnderFilledRow,
+    AboveIsFilled
+end
+
+switch state
+    case ScanState::Idle
+        if cellIsInFilledRow
+            state = ScanState::InsideFilledRow
+        else if cellIsLandedPiece
+            area += CalculateLowerHalfCellAreaContribution(cell)
+            state = ScanState::InsideLandedPiece
+        else
+            if !cellIsEmpty
+                area += CalculateLowerHalfCellAreaContribution(cell)
+                state = ScanState::AboveIsFilled
+            end
+        end
+        break
+    case ScanState::InsideFilledRow
+        if celIsInFilledRow
+            break
+        else if cellIsLandedPiece
+            area += CalculateAreaContributionUnderFilledRow(cell, previousState)
+            state = ScanSate::LandedPieceSitsOnOrHangsUnderFilledRow
+        else if cellIsEmpty
+            state = ScanState::Idle
+        else
+            area += CalculateAreaContributionUnderFilledRow(cell, previousState)
+            state = ScanState::AboveIsFilled
+        end
+        break
+    case ScanState::InsideLandedPiece
+        if cellIsInFilledRow
+            state = ScanState::LandedPieceSitsOnOrHangsUnderFilledRow
+        else if cellIsLandedPiece
+            area += CalculateLowerHalfCellAreaContribution(cell)
+        else
+            area += CalculateAreaContribution(cell)
+            state = ScanState::AboveIsFilled
+        end
+        break
+    case ScanState::LandedPieceSitsOnOrHangsUnderFilledRow
+        if cellIsInFilledRow
+            break
+        else if cellIsLandedPiece
+            area += CalculateLowerHalfCellAreaContribution(cell)
+        else
+            if !cellIsEmpty
+                area += CalculateAreaContribution(cell)
+                state = ScanState::AboveIsFilled
+            end
+        end
+        break
+    case ScanState::AboveIsFilled
+        if cellIsInFilledRow
+            break
+        else if cellIsLandedPiece
+            area += CalculateAreaContribution(cell)
+            state = ScanState::InsideLandedPiece
+        else
+            area += CalculateAreaContribution(cell)
+        end
+        break
+end
+
+float CalculateAreaContribution(cell)
+    if cell is empty
+        return 1.0
+    end
+    if cell is full
+        return 0.0
+    end
+    fill = cell.mSecondSubCell.IsEmpty() ? cell.mFirstSubCell.mFill : cell.mSecondSubCell.mFill
+    switch fill
+        case Fill::UpperLeftHalf:
+        case Fill::UpperRightHalf:
+        case Fill::LowerLeftHalf:
+        case Fill::LowerRightHalf:
+            return 1.0f;
+        case Fill::Empty:
+        case Fill::Full:
+            assert
+    end
+end
+
+float CalculateLowerHalfCellAreaContribution(cell)
+    if cell is empty or cell is full
+        return
+    end
+    fill = cell.mSecondSubCell.IsEmpty() ? cell.mFirstSubCell.mFill : cell.mSecondSubCell.mFill
+    switch fill
+        case Fill::UpperLeftHalf
+        case Fill::UpperRightHalf
+            return 1.0
+        default:
+            return 0.0
+    end
+end
+
+float CalculateAreaContributionUnderFilledRow(cell, previousState)
+    switch previousState
+        case Idle
+            return CalculateLowerHalfCellAreaContribution(cell)
+        case InsideFilledRow
+            assert
+        case InsideLandedPiece
+        case LandedPieceSitsOnOrHangsUnderFilledRow
+        case AboveIsFilled
+            return CalculateAreaContribution(cell)
+    end
+end
+
+
+Scenario 1:
+
+ 7
+GG7GG
+G 7
+GG
+GG
+GGGGG
+
+Scenario 2:
+
+ 7
+ 7
+GG7GG
+G
+G
+G GGG
+GGGGG
+
+Scenario 3:
+
+  F
+ FF
+GGFGG
+G F
+G
+G
+GGGGG
+
+Scenario 4:
+
+  F
+  F
+  FF
+GGFGG
+G
+G
+G
+GGGGG
+
+
 
 
 Ordered Backlog:
@@ -126,8 +288,8 @@ Ordered Backlog:
         Cost: 8
     -Do the most important game scene-related rendering tasks.
         Cost: 4
-    -Net/HTTP.
-        Cost: 10
+    -Store GUI.
+        Cost: 5
     -Analytics.
         Cost: 5
     -Levels for the space world.
@@ -136,16 +298,22 @@ Ordered Backlog:
         Cost: 0.5
     -Sounds/music.
         Cost: 5
+    -Playtest.
+        Cost: 5
     -Fix all bugs.
         Cost: 4
     -Purchases.
-        Cost: 15
+        Cost: 10
+    -Soft launch.
+        Cost: 5
+    -Net/HTTP.
+        Cost: 10
     -Login/sign up account.
         Cost: 10
     -Back end.
         Cost: ?
 
-        Total cost: 225
+        Total cost: 235
 
 
 Comomon piece type sets:

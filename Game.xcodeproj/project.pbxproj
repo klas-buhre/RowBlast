@@ -1515,14 +1515,14 @@
 		625695442182382B003A3A9D /* Ai */ = {
 			isa = PBXGroup;
 			children = (
-				625695452182382B003A3A9D /* MoveDefinitions.cpp */,
-				625695462182382B003A3A9D /* ValidMovesSearch.cpp */,
 				625695472182382B003A3A9D /* Ai.cpp */,
+				6256954C2182382B003A3A9D /* Ai.hpp */,
 				625695482182382B003A3A9D /* FieldAnalyzer.cpp */,
 				625695492182382B003A3A9D /* FieldAnalyzer.hpp */,
+				625695452182382B003A3A9D /* MoveDefinitions.cpp */,
 				6256954A2182382B003A3A9D /* MoveDefinitions.hpp */,
+				625695462182382B003A3A9D /* ValidMovesSearch.cpp */,
 				6256954B2182382B003A3A9D /* ValidMovesSearch.hpp */,
-				6256954C2182382B003A3A9D /* Ai.hpp */,
 			);
 			path = Ai;
 			sourceTree = "<group>";
