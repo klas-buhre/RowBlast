@@ -130,9 +130,13 @@ void Ai::EvaluateMoveForClearObjective(Move& move, const FallingPiece& fallingPi
     };
     
     auto numFilledRows {filledRowsResult.mFilledRowIndices.Size()};
-    auto burriedHolesArea {mFieldAnalyzer.GetBurriedHolesAreaInVisibleRows()};
-    auto wellsArea {mFieldAnalyzer.GetWellsAreaInVisibleRows()};
-    auto numTransitions {static_cast<float>(mFieldAnalyzer.GetNumTransitionsInVisibleRows())};
+    auto burriedHolesArea {CalculateBurriedHolesArea(numFilledRows, fallingPiece)};
+    auto wellsArea {numFilledRows > 0 ? 0.0f : mFieldAnalyzer.CalculateWellsAreaInVisibleRows()};
+    
+    auto numTransitions {
+        numFilledRows > 0 ? 0.0f :
+        static_cast<float>(mFieldAnalyzer.CalculateNumTransitionsInVisibleRows())
+    };
     
     move.mScore = -landingHeight
                   + 2.0f * numFilledRows
@@ -144,6 +148,14 @@ void Ai::EvaluateMoveForClearObjective(Move& move, const FallingPiece& fallingPi
     mField.UnmarkFilledRows(filledRowsResult.mFilledRowIndices);
 }
 
+float Ai::CalculateBurriedHolesArea(int numFilledRows, const FallingPiece& fallingPiece) {
+    if (numFilledRows == 0) {
+        return mFieldAnalyzer.CalculateBurriedHolesAreaInVisibleRows();
+    }
+    
+    return mFieldAnalyzer.CalculateBurriedHolesAreaInVisibleRowsWithGravity(fallingPiece.GetId());
+}
+
 void Ai::EvaluateMoveForBuildObjective(Move& move, const FallingPiece& fallingPiece) {
     auto landingHeight {
         static_cast<float>(move.mPosition.y - mField.GetLowestVisibleRow()) +
@@ -151,11 +163,11 @@ void Ai::EvaluateMoveForBuildObjective(Move& move, const FallingPiece& fallingPi
     };
     
     auto numCellsAccordingToBlueprint {
-        static_cast<float>(mFieldAnalyzer.GetNumCellsAccordingToBlueprintInVisibleRows())
+        static_cast<float>(mFieldAnalyzer.CalculateNumCellsAccordingToBlueprintInVisibleRows())
     };
 
-    auto buildHolesArea {mFieldAnalyzer.GetBuildHolesAreaInVisibleRows()};
-    auto buildWellsArea {mFieldAnalyzer.GetBuildWellsAreaInVisibleRows()};
+    auto buildHolesArea {mFieldAnalyzer.CalculateBuildHolesAreaInVisibleRows()};
+    auto buildWellsArea {mFieldAnalyzer.CalculateBuildWellsAreaInVisibleRows()};
     
     move.mScore = -landingHeight
                   + 2.0f * numCellsAccordingToBlueprint

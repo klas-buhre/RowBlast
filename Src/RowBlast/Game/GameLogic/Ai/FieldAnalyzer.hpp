@@ -8,16 +8,17 @@ namespace RowBlast {
     public:
         explicit FieldAnalyzer(const Field& field);
         
-        float GetBurriedHolesAreaInVisibleRows() const;
-        float GetWellsAreaInVisibleRows() const;
-        int GetNumTransitionsInVisibleRows() const;
-        int GetNumCellsAccordingToBlueprintInVisibleRows() const;
-        float GetBuildHolesAreaInVisibleRows() const;
-        float GetBuildWellsAreaInVisibleRows() const;
+        float CalculateBurriedHolesAreaInVisibleRows() const;
+        float CalculateBurriedHolesAreaInVisibleRowsWithGravity(int landedPieceId) const;
+        float CalculateWellsAreaInVisibleRows() const;
+        int CalculateNumTransitionsInVisibleRows() const;
+        int CalculateNumCellsAccordingToBlueprintInVisibleRows() const;
+        float CalculateBuildHolesAreaInVisibleRows() const;
+        float CalculateBuildWellsAreaInVisibleRows() const;
         
     private:
-        int GetNumTransitionsInColumns() const;
-        int GetNumTransitionsInRows() const;
+        int CalculateNumTransitionsInColumns() const;
+        int CalculateNumTransitionsInRows() const;
         
         const Field& mField;
     };

@@ -1,14 +1,101 @@
 #include "FieldAnalyzer.hpp"
 
+#include <assert.h>
+
 // Game includes.
 #include "Field.hpp"
 
 using namespace RowBlast;
 
+namespace {
+    enum class HoleScanState {
+        Idle,
+        InsideFilledRow,
+        InsideLandedPiece,
+        LandedPieceSitsOnOrHangsUnderFilledRow,
+        AboveIsFilled
+    };
+
+    struct BurriedHoleScanStates {
+        HoleScanState mState {HoleScanState::Idle};
+        HoleScanState mPreviousState {HoleScanState::Idle};
+    };
+    
+    BurriedHoleScanStates TransitionHoleState(HoleScanState newState,
+                                              BurriedHoleScanStates states) {
+        states.mPreviousState = states.mState;
+        states.mState = newState;
+        return states;
+    }
+
+    float CalculateAreaContribution(const Cell& cell) {
+        if (cell.IsEmpty()) {
+            return 1.0f;
+        }
+        
+        if (cell.IsFull()) {
+            return 0.0f;
+        }
+        
+        auto fill {
+            cell.mSecondSubCell.IsEmpty() ? cell.mFirstSubCell.mFill : cell.mSecondSubCell.mFill
+        };
+    
+        switch (fill) {
+            case Fill::UpperLeftHalf:
+            case Fill::UpperRightHalf:
+            case Fill::LowerLeftHalf:
+            case Fill::LowerRightHalf:
+                return 1.0f;
+            case Fill::Empty:
+            case Fill::Full:
+                assert(false);
+                return 0.0f;
+        }
+    }
+
+    float CalculateLowerHalfCellAreaContribution(const Cell& cell) {
+        if (cell.IsEmpty() || cell.IsFull()) {
+            return 0.0f;
+        }
+        
+        auto fill {
+            cell.mSecondSubCell.IsEmpty() ? cell.mFirstSubCell.mFill : cell.mSecondSubCell.mFill
+        };
+        
+        switch (fill) {
+            case Fill::UpperLeftHalf:
+            case Fill::UpperRightHalf:
+                return 1.0f;
+            default:
+                return 0.0f;
+        }
+    }
+
+    float CalculateAreaContributionUnderFilledRow(const Cell& cell, HoleScanState previousState) {
+        switch (previousState) {
+            case HoleScanState::Idle:
+                return CalculateLowerHalfCellAreaContribution(cell);
+            case HoleScanState::InsideFilledRow:
+            case HoleScanState::InsideLandedPiece:
+            case HoleScanState::LandedPieceSitsOnOrHangsUnderFilledRow:
+                assert(false);
+                return 0.0f;
+            case HoleScanState::AboveIsFilled:
+                return CalculateAreaContribution(cell);
+        }
+    }
+    
+    bool IsCellPartOfLandedPiece(const Cell& cell, int landedPieceId) {
+        return cell.mFirstSubCell.mPieceId == landedPieceId ||
+               cell.mSecondSubCell.mPieceId == landedPieceId;
+    }
+}
+
 FieldAnalyzer::FieldAnalyzer(const Field& field) :
     mField {field} {}
 
-float FieldAnalyzer::GetBurriedHolesAreaInVisibleRows() const {
+float FieldAnalyzer::CalculateBurriedHolesAreaInVisibleRows() const {
     auto area {0.0f};
     auto numColumns {mField.GetNumColumns()};
     auto lowestVisibleRow {mField.GetLowestVisibleRow()};
@@ -55,6 +142,7 @@ float FieldAnalyzer::GetBurriedHolesAreaInVisibleRows() const {
                     break;
                 case Fill::Empty:
                 case Fill::Full:
+                    assert(false);
                     break;
             }
             
@@ -65,7 +153,100 @@ float FieldAnalyzer::GetBurriedHolesAreaInVisibleRows() const {
     return area;
 }
 
-float FieldAnalyzer::GetWellsAreaInVisibleRows() const {
+float FieldAnalyzer::CalculateBurriedHolesAreaInVisibleRowsWithGravity(int landedPieceId) const {
+    auto area {0.0f};
+    auto numColumns {mField.GetNumColumns()};
+    auto lowestVisibleRow {mField.GetLowestVisibleRow()};
+    
+    for (auto column {0}; column < numColumns; ++column) {
+        BurriedHoleScanStates states;
+        
+        for (auto row {lowestVisibleRow + mField.GetNumRowsInOneScreen() - 1};
+             row >= lowestVisibleRow;
+             --row) {
+            auto& cell {mField.mGrid[row][column]};
+            
+            switch (states.mState) {
+                case HoleScanState::Idle:
+                    if (cell.mIsInFilledRow) {
+                        states = TransitionHoleState(HoleScanState::InsideFilledRow, states);
+                    } else if (IsCellPartOfLandedPiece(cell, landedPieceId)) {
+                        area += CalculateLowerHalfCellAreaContribution(cell);
+                        states = TransitionHoleState(HoleScanState::InsideLandedPiece, states);
+                    } else {
+                        if (!cell.IsEmpty()) {
+                            area += CalculateLowerHalfCellAreaContribution(cell);
+                            states = TransitionHoleState(HoleScanState::AboveIsFilled, states);
+                        }
+                    }
+                    break;
+                case HoleScanState::InsideFilledRow:
+                    if (cell.mIsInFilledRow) {
+                        break;
+                    } else if (IsCellPartOfLandedPiece(cell, landedPieceId)) {
+                        area += CalculateAreaContributionUnderFilledRow(cell, states.mPreviousState);
+                        states = TransitionHoleState(
+                            HoleScanState::LandedPieceSitsOnOrHangsUnderFilledRow, states);
+                    } else if (cell.IsEmpty()) {
+                        switch (states.mPreviousState) {
+                            case HoleScanState::InsideFilledRow:
+                            case HoleScanState::InsideLandedPiece:
+                            case HoleScanState::LandedPieceSitsOnOrHangsUnderFilledRow:
+                                assert(false);
+                            case HoleScanState::Idle:
+                                states = TransitionHoleState(HoleScanState::Idle, states);
+                                break;
+                            case HoleScanState::AboveIsFilled:
+                                area += 1.0f;
+                                states = TransitionHoleState(HoleScanState::AboveIsFilled, states);
+                                break;
+                        }
+                    } else {
+                        area += CalculateAreaContributionUnderFilledRow(cell, states.mPreviousState);
+                        states = TransitionHoleState(HoleScanState::AboveIsFilled, states);
+                    }
+                    break;
+                case HoleScanState::InsideLandedPiece:
+                    if (cell.mIsInFilledRow) {
+                        states = TransitionHoleState(
+                            HoleScanState::LandedPieceSitsOnOrHangsUnderFilledRow, states);
+                    } else if (IsCellPartOfLandedPiece(cell, landedPieceId)) {
+                        area += CalculateLowerHalfCellAreaContribution(cell);
+                    } else {
+                        area += CalculateAreaContribution(cell);
+                        states = TransitionHoleState(HoleScanState::AboveIsFilled, states);
+                    }
+                    break;
+                case HoleScanState::LandedPieceSitsOnOrHangsUnderFilledRow:
+                    if (cell.mIsInFilledRow) {
+                        break;
+                    } else if (IsCellPartOfLandedPiece(cell, landedPieceId)) {
+                        area += CalculateLowerHalfCellAreaContribution(cell);
+                    } else {
+                        if (!cell.IsEmpty()) {
+                            area += CalculateLowerHalfCellAreaContribution(cell);
+                            states = TransitionHoleState(HoleScanState::AboveIsFilled, states);
+                        }
+                    }
+                    break;
+                case HoleScanState::AboveIsFilled:
+                    if (cell.mIsInFilledRow) {
+                        states = TransitionHoleState(HoleScanState::InsideFilledRow, states);
+                    } else if (IsCellPartOfLandedPiece(cell, landedPieceId)) {
+                        area += CalculateAreaContribution(cell);
+                        states = TransitionHoleState(HoleScanState::InsideLandedPiece, states);
+                    } else {
+                        area += CalculateAreaContribution(cell);
+                    }
+                    break;
+            }
+        }
+    }
+    
+    return area;
+}
+
+float FieldAnalyzer::CalculateWellsAreaInVisibleRows() const {
     auto area {0.0f};
     auto lowestVisibleRow {mField.GetLowestVisibleRow()};
     auto pastHighestVisibleRow {lowestVisibleRow + mField.GetNumRowsInOneScreen()};
@@ -99,11 +280,11 @@ float FieldAnalyzer::GetWellsAreaInVisibleRows() const {
     return area;
 }
 
-int FieldAnalyzer::GetNumTransitionsInVisibleRows() const {
-    return GetNumTransitionsInColumns() + GetNumTransitionsInRows();
+int FieldAnalyzer::CalculateNumTransitionsInVisibleRows() const {
+    return CalculateNumTransitionsInColumns() + CalculateNumTransitionsInRows();
 }
 
-int FieldAnalyzer::GetNumTransitionsInColumns() const {
+int FieldAnalyzer::CalculateNumTransitionsInColumns() const {
     auto numTransitions {0};
     auto lowestVisibleRow {mField.GetLowestVisibleRow()};
     auto pastHighestVisibleRow {lowestVisibleRow + mField.GetNumRowsInOneScreen()};
@@ -132,7 +313,7 @@ int FieldAnalyzer::GetNumTransitionsInColumns() const {
     return numTransitions;
 }
 
-int FieldAnalyzer::GetNumTransitionsInRows() const {
+int FieldAnalyzer::CalculateNumTransitionsInRows() const {
     auto numTransitions {0};
     auto lowestVisibleRow {mField.GetLowestVisibleRow()};
     auto pastHighestVisibleRow {lowestVisibleRow + mField.GetNumRowsInOneScreen()};
@@ -168,7 +349,7 @@ int FieldAnalyzer::GetNumTransitionsInRows() const {
     return numTransitions;
 }
 
-int FieldAnalyzer::GetNumCellsAccordingToBlueprintInVisibleRows() const {
+int FieldAnalyzer::CalculateNumCellsAccordingToBlueprintInVisibleRows() const {
     assert(mField.mBlueprintGrid);
     
     auto result {0};
@@ -191,7 +372,7 @@ int FieldAnalyzer::GetNumCellsAccordingToBlueprintInVisibleRows() const {
     return result;
 }
 
-float FieldAnalyzer::GetBuildHolesAreaInVisibleRows() const {
+float FieldAnalyzer::CalculateBuildHolesAreaInVisibleRows() const {
     assert(mField.mBlueprintGrid);
     
     auto area {0.0f};
@@ -256,7 +437,7 @@ float FieldAnalyzer::GetBuildHolesAreaInVisibleRows() const {
     return area;
 }
 
-float FieldAnalyzer::GetBuildWellsAreaInVisibleRows() const {
+float FieldAnalyzer::CalculateBuildWellsAreaInVisibleRows() const {
     assert(mField.mBlueprintGrid);
     
     auto area {0.0f};
