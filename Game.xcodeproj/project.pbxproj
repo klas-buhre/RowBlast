@@ -1261,12 +1261,12 @@
 		625694852182382B003A3A9D /* Title */ = {
 			isa = PBXGroup;
 			children = (
-				625694862182382B003A3A9D /* TitleAnimation.hpp */,
-				625694872182382B003A3A9D /* TitleScene.cpp */,
-				625694882182382B003A3A9D /* TitleController.hpp */,
-				625694892182382B003A3A9D /* TitleScene.hpp */,
-				6256948A2182382B003A3A9D /* TitleController.cpp */,
 				6256948B2182382B003A3A9D /* TitleAnimation.cpp */,
+				625694862182382B003A3A9D /* TitleAnimation.hpp */,
+				6256948A2182382B003A3A9D /* TitleController.cpp */,
+				625694882182382B003A3A9D /* TitleController.hpp */,
+				625694872182382B003A3A9D /* TitleScene.cpp */,
+				625694892182382B003A3A9D /* TitleScene.hpp */,
 			);
 			path = Title;
 			sourceTree = "<group>";
@@ -1609,19 +1609,19 @@
 		6256957D2182382B003A3A9D /* GuiElements */ = {
 			isa = PBXGroup;
 			children = (
-				6256957E2182382B003A3A9D /* MenuButton.hpp */,
-				6256957F2182382B003A3A9D /* UiLayer.hpp */,
-				625695802182382B003A3A9D /* GuiResources.hpp */,
 				625695812182382B003A3A9D /* CloseButton.cpp */,
+				625695892182382B003A3A9D /* CloseButton.hpp */,
+				625695882182382B003A3A9D /* GuiResources.cpp */,
+				625695802182382B003A3A9D /* GuiResources.hpp */,
 				625695822182382B003A3A9D /* GuiViewManager.cpp */,
+				6256958A2182382B003A3A9D /* GuiViewManager.hpp */,
+				625695872182382B003A3A9D /* MenuButton.cpp */,
+				6256957E2182382B003A3A9D /* MenuButton.hpp */,
+				625695852182382B003A3A9D /* MenuWindow.cpp */,
 				625695832182382B003A3A9D /* MenuWindow.hpp */,
 				625695842182382B003A3A9D /* SlidingMenuAnimation.cpp */,
-				625695852182382B003A3A9D /* MenuWindow.cpp */,
 				625695862182382B003A3A9D /* SlidingMenuAnimation.hpp */,
-				625695872182382B003A3A9D /* MenuButton.cpp */,
-				625695882182382B003A3A9D /* GuiResources.cpp */,
-				625695892182382B003A3A9D /* CloseButton.hpp */,
-				6256958A2182382B003A3A9D /* GuiViewManager.hpp */,
+				6256957F2182382B003A3A9D /* UiLayer.hpp */,
 			);
 			path = GuiElements;
 			sourceTree = "<group>";
@@ -1659,24 +1659,24 @@
 		6256959D2182382B003A3A9D /* CommonResources */ = {
 			isa = PBXGroup;
 			children = (
-				6256959E2182382B003A3A9D /* UfoAnimation.cpp */,
-				6256959F2182382B003A3A9D /* Materials.cpp */,
-				625695A02182382B003A3A9D /* RoundedCylinder.cpp */,
-				625695A12182382B003A3A9D /* GradientRectangle.hpp */,
-				625695A22182382B003A3A9D /* CommonResources.hpp */,
-				625695A32182382B003A3A9D /* FloatingBlocks.hpp */,
-				625695A42182382B003A3A9D /* Clouds.hpp */,
-				625695A52182382B003A3A9D /* Planets.cpp */,
-				625695A62182382B003A3A9D /* Ufo.cpp */,
 				625695A72182382B003A3A9D /* Clouds.cpp */,
-				625695A82182382B003A3A9D /* Planets.hpp */,
-				625695A92182382B003A3A9D /* Ufo.hpp */,
-				625695AA2182382B003A3A9D /* UfoAnimation.hpp */,
-				625695AB2182382B003A3A9D /* Materials.hpp */,
-				625695AC2182382B003A3A9D /* RoundedCylinder.hpp */,
-				625695AD2182382B003A3A9D /* GradientRectangle.cpp */,
+				625695A42182382B003A3A9D /* Clouds.hpp */,
 				625695AE2182382B003A3A9D /* CommonResources.cpp */,
+				625695A22182382B003A3A9D /* CommonResources.hpp */,
 				625695AF2182382B003A3A9D /* FloatingBlocks.cpp */,
+				625695A32182382B003A3A9D /* FloatingBlocks.hpp */,
+				625695AD2182382B003A3A9D /* GradientRectangle.cpp */,
+				625695A12182382B003A3A9D /* GradientRectangle.hpp */,
+				6256959F2182382B003A3A9D /* Materials.cpp */,
+				625695AB2182382B003A3A9D /* Materials.hpp */,
+				625695A52182382B003A3A9D /* Planets.cpp */,
+				625695A82182382B003A3A9D /* Planets.hpp */,
+				625695A02182382B003A3A9D /* RoundedCylinder.cpp */,
+				625695AC2182382B003A3A9D /* RoundedCylinder.hpp */,
+				625695A62182382B003A3A9D /* Ufo.cpp */,
+				625695A92182382B003A3A9D /* Ufo.hpp */,
+				6256959E2182382B003A3A9D /* UfoAnimation.cpp */,
+				625695AA2182382B003A3A9D /* UfoAnimation.hpp */,
 			);
 			path = CommonResources;
 			sourceTree = "<group>";
@@ -1684,12 +1684,12 @@
 		625695B02182382B003A3A9D /* UserData */ = {
 			isa = PBXGroup;
 			children = (
-				625695B12182382B003A3A9D /* UserData.hpp */,
-				625695B22182382B003A3A9D /* ProgressManager.hpp */,
 				625695B32182382B003A3A9D /* LifeManager.cpp */,
 				625695B42182382B003A3A9D /* LifeManager.hpp */,
-				625695B52182382B003A3A9D /* UserData.cpp */,
 				625695B62182382B003A3A9D /* ProgressManager.cpp */,
+				625695B22182382B003A3A9D /* ProgressManager.hpp */,
+				625695B52182382B003A3A9D /* UserData.cpp */,
+				625695B12182382B003A3A9D /* UserData.hpp */,
 			);
 			path = UserData;
 			sourceTree = "<group>";
@@ -1823,27 +1823,27 @@
 		625696E82182392B003A3A9D /* RendererCore */ = {
 			isa = PBXGroup;
 			children = (
-				625696E92182392B003A3A9D /* VboCache.cpp */,
-				625696EA2182392B003A3A9D /* TextRenderer.hpp */,
-				625696EB2182392B003A3A9D /* Material.hpp */,
-				625696EC2182392B003A3A9D /* RenderQueue.hpp */,
-				625696ED2182392B003A3A9D /* Renderer.hpp */,
-				625696EE2182392B003A3A9D /* TextureCache.cpp */,
 				625696EF2182392B003A3A9D /* Camera.cpp */,
-				625696F02182392B003A3A9D /* RenderableObject.cpp */,
-				625696F12182392B003A3A9D /* RenderPass.cpp */,
-				625696F22182392B003A3A9D /* ShaderProgram.hpp */,
-				625696F32182392B003A3A9D /* RenderableObject.hpp */,
-				625696F42182392B003A3A9D /* RenderPass.hpp */,
-				625696F52182392B003A3A9D /* ShaderProgram.cpp */,
-				625696F62182392B003A3A9D /* VboCache.hpp */,
-				625696F72182392B003A3A9D /* TextRenderer.cpp */,
+				625696FD2182392B003A3A9D /* Camera.hpp */,
 				625696F82182392B003A3A9D /* IRenderer.hpp */,
 				625696F92182392B003A3A9D /* Material.cpp */,
-				625696FA2182392B003A3A9D /* RenderQueue.cpp */,
+				625696EB2182392B003A3A9D /* Material.hpp */,
+				625696F02182392B003A3A9D /* RenderableObject.cpp */,
+				625696F32182392B003A3A9D /* RenderableObject.hpp */,
 				625696FB2182392B003A3A9D /* Renderer.cpp */,
+				625696ED2182392B003A3A9D /* Renderer.hpp */,
+				625696F12182392B003A3A9D /* RenderPass.cpp */,
+				625696F42182392B003A3A9D /* RenderPass.hpp */,
+				625696FA2182392B003A3A9D /* RenderQueue.cpp */,
+				625696EC2182392B003A3A9D /* RenderQueue.hpp */,
+				625696F52182392B003A3A9D /* ShaderProgram.cpp */,
+				625696F22182392B003A3A9D /* ShaderProgram.hpp */,
+				625696F72182392B003A3A9D /* TextRenderer.cpp */,
+				625696EA2182392B003A3A9D /* TextRenderer.hpp */,
+				625696EE2182392B003A3A9D /* TextureCache.cpp */,
 				625696FC2182392B003A3A9D /* TextureCache.hpp */,
-				625696FD2182392B003A3A9D /* Camera.hpp */,
+				625696E92182392B003A3A9D /* VboCache.cpp */,
+				625696F62182392B003A3A9D /* VboCache.hpp */,
 			);
 			path = RendererCore;
 			sourceTree = "<group>";
@@ -1851,36 +1851,36 @@
 		625696FE2182392B003A3A9D /* Shaders */ = {
 			isa = PBXGroup;
 			children = (
-				625696FF2182392B003A3A9D /* TextTopGradient.frag */,
-				625697002182392B003A3A9D /* PixelLighting.vert */,
-				625697012182392B003A3A9D /* Textured.frag */,
-				625697022182392B003A3A9D /* TexturedEmissiveLighting.frag */,
-				625697032182392B003A3A9D /* VertexLighting.vert */,
-				625697042182392B003A3A9D /* TexturedLighting.vert */,
-				625697052182392B003A3A9D /* PointParticle.vert */,
-				625697062182392B003A3A9D /* TextBottomGradient.frag */,
-				625697072182392B003A3A9D /* Particle.frag */,
-				625697082182392B003A3A9D /* VertexColor.frag */,
 				625697092182392B003A3A9D /* EnvMap.frag */,
-				6256970A2182392B003A3A9D /* TexturedEnvMapLighting.vert */,
-				6256970B2182392B003A3A9D /* Text.vert */,
-				6256970C2182392B003A3A9D /* ParticleNoAlphaTexture.frag */,
-				6256970D2182392B003A3A9D /* ParticleTextureColor.frag */,
-				6256970E2182392B003A3A9D /* TextBottomGradient.vert */,
-				6256970F2182392B003A3A9D /* Particle.vert */,
-				625697102182392B003A3A9D /* PointParticle.frag */,
-				625697112182392B003A3A9D /* TexturedLighting.frag */,
-				625697122182392B003A3A9D /* VertexLighting.frag */,
-				625697132182392B003A3A9D /* PixelLighting.frag */,
-				625697142182392B003A3A9D /* Textured.vert */,
-				625697152182392B003A3A9D /* TexturedEmissiveLighting.vert */,
-				625697162182392B003A3A9D /* TextTopGradient.vert */,
-				625697172182392B003A3A9D /* ParticleTextureColor.vert */,
-				625697182182392B003A3A9D /* Text.frag */,
-				625697192182392B003A3A9D /* ParticleNoAlphaTexture.vert */,
-				6256971A2182392B003A3A9D /* TexturedEnvMapLighting.frag */,
-				6256971B2182392B003A3A9D /* VertexColor.vert */,
 				6256971C2182392B003A3A9D /* EnvMap.vert */,
+				625697072182392B003A3A9D /* Particle.frag */,
+				6256970F2182392B003A3A9D /* Particle.vert */,
+				6256970C2182392B003A3A9D /* ParticleNoAlphaTexture.frag */,
+				625697192182392B003A3A9D /* ParticleNoAlphaTexture.vert */,
+				6256970D2182392B003A3A9D /* ParticleTextureColor.frag */,
+				625697172182392B003A3A9D /* ParticleTextureColor.vert */,
+				625697132182392B003A3A9D /* PixelLighting.frag */,
+				625697002182392B003A3A9D /* PixelLighting.vert */,
+				625697102182392B003A3A9D /* PointParticle.frag */,
+				625697052182392B003A3A9D /* PointParticle.vert */,
+				625697182182392B003A3A9D /* Text.frag */,
+				6256970B2182392B003A3A9D /* Text.vert */,
+				625697062182392B003A3A9D /* TextBottomGradient.frag */,
+				6256970E2182392B003A3A9D /* TextBottomGradient.vert */,
+				625696FF2182392B003A3A9D /* TextTopGradient.frag */,
+				625697162182392B003A3A9D /* TextTopGradient.vert */,
+				625697012182392B003A3A9D /* Textured.frag */,
+				625697142182392B003A3A9D /* Textured.vert */,
+				625697022182392B003A3A9D /* TexturedEmissiveLighting.frag */,
+				625697152182392B003A3A9D /* TexturedEmissiveLighting.vert */,
+				6256971A2182392B003A3A9D /* TexturedEnvMapLighting.frag */,
+				6256970A2182392B003A3A9D /* TexturedEnvMapLighting.vert */,
+				625697112182392B003A3A9D /* TexturedLighting.frag */,
+				625697042182392B003A3A9D /* TexturedLighting.vert */,
+				625697082182392B003A3A9D /* VertexColor.frag */,
+				6256971B2182392B003A3A9D /* VertexColor.vert */,
+				625697122182392B003A3A9D /* VertexLighting.frag */,
+				625697032182392B003A3A9D /* VertexLighting.vert */,
 			);
 			path = Shaders;
 			sourceTree = "<group>";

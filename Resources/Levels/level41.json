@@ -7,11 +7,11 @@
     "background": "space1.jpg",
     "lightIntensity": "Dark",
     "pieces": [
+        "LongI",
+        "I",
+        "L",
         "F",
         "MirroredF",
-        "L",
-        "B",
-        "D",
         "Seven",
         "MirroredSeven"
     ],
@@ -27,13 +27,13 @@
         "       ",
         "       ",
         "       ",
-        "       ",
-        "     ll",
-        "GGG GGG",
-        "GG  GGG",
-        "GG  GGG",
-        "GG  GGG",
-        "GGG GGG",
-        "GGG GGG"
+        "   y   ",
+        "   y   ",
+        "   GGGG",
+        "   GGGG",
+        "G  GGGG",
+        "GGGG   ",
+        "   GGGG",
+        "   GGGG"
     ]
 }

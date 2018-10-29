@@ -44,6 +44,24 @@ namespace {
         }
     }
 
+    float CalculateGrayLevelCellContribution(const SubCell& subCell) {
+        if (!subCell.mIsGrayLevelBlock) {
+            return 0.0f;
+        }
+        
+        switch (subCell.mFill) {
+            case Fill::Empty:
+                return 0.0f;
+            case Fill::LowerRightHalf:
+            case Fill::UpperRightHalf:
+            case Fill::UpperLeftHalf:
+            case Fill::LowerLeftHalf:
+                return 0.5f;
+            case Fill::Full:
+                return 1.0f;
+        }
+    }
+
     void BreakDownWelds(Welds& welds) {
         welds.mDownRight = false;
         welds.mDown = false;
@@ -1305,8 +1323,8 @@ void Field::RemovePiece(int pieceId,
     }
 }
 
-FilledRowsResult Field::MarkFilledRowsAndCountPieceCellsInFilledRows(int pieceId) {
-    FilledRowsResult result;
+FilledRowsResultWithPieceCells Field::MarkFilledRowsAndCountPieceCellsInFilledRows(int pieceId) {
+    FilledRowsResultWithPieceCells result;
     auto pastHighestVisibleRow {mLowestVisibleRow + GetNumRowsInOneScreen()};
     
     for (auto rowIndex {mLowestVisibleRow}; rowIndex < pastHighestVisibleRow; ++rowIndex) {
@@ -1321,6 +1339,27 @@ FilledRowsResult Field::MarkFilledRowsAndCountPieceCellsInFilledRows(int pieceId
                                                                                  pieceId);
                 result.mPieceCellsInFilledRows += CalculatePieceCellContribution(cell.mSecondSubCell,
                                                                                  pieceId);
+            }
+        }
+    }
+    
+    return result;
+}
+
+FilledRowsResultWithGrayLevelCells Field::MarkFilledRowsAndCountGrayLevelCellsInFilledRows() {
+    FilledRowsResultWithGrayLevelCells result;
+    auto pastHighestVisibleRow {mLowestVisibleRow + GetNumRowsInOneScreen()};
+    
+    for (auto rowIndex {mLowestVisibleRow}; rowIndex < pastHighestVisibleRow; ++rowIndex) {
+        auto& row {mGrid[rowIndex]};
+        
+        if (RowIsFull(row)) {
+            result.mFilledRowIndices.PushBack(rowIndex);
+            
+            for (auto& cell: row) {
+                cell.mIsInFilledRow = true;
+                result.mGrayLevelCellsInFilledRows += CalculateGrayLevelCellContribution(cell.mFirstSubCell);
+                result.mGrayLevelCellsInFilledRows += CalculateGrayLevelCellContribution(cell.mSecondSubCell);
             }
         }
     }

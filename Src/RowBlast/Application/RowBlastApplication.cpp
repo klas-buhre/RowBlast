@@ -17,11 +17,15 @@ Backlog:
   -Rendering:
     -Maybe use the dark field quad brightness for the sky worlds as well.
     -Maybe smooth the dark area in the field env map.
+    -Less red in the red field material.
+    -Maybe slightly thinner welds.
     -Maybe less reflectivity in the gray, yellow and green field block materials?
     -Maybe the green field material could be a bit less green.
     -Maybe the blue field material could be a bit less blue.
     -More ambient in gray and green field materials.
+    -Try buttons like those in tetris blitz for the dark menues.
   -GUI:
+    -Store.
     -Menu window that displays 3rd party lib credits.
   -Purchases:
   -Back end:
@@ -38,51 +42,7 @@ Backlog:
     -Credit FastNoise, MIT license: https://github.com/Auburns/FastNoise/
 
 Ongoing tasks:
-    -Play through all levels to see that the changes are ok. At level 9 at the moment.
-   X-Would be good if the FieldAnalyzer could take cascading/gravity into account when calculating
-     BurriedHolesAreaInVisibleRows, at least for SevenPiece and FPiece. Currently, the
-     AI gives too low scores for moves that it wrongly thinks will cause a lot burried holes because
-     it does not pull down the non-cleared part of for example the SevenPiece.
 
-Scenario 1:
-
- 7
-GG7GG
-G 7
-GG
-GG
-GGGGG
-
-Scenario 2:
-
- 7
- 7
-GG7GG
-G
-G
-G GGG
-GGGGG
-
-Scenario 3:
-
-  F
- FF
-GGFGG
-G F
-G
-G
-GGGGG
-
-Scenario 4:
-
-  F
-  F
-  FF
-GGFGG
-G
-G
-G
-GGGGG
 
 
 
@@ -165,6 +125,7 @@ Ordered Backlog:
         Done
     -Do the most important gameplay tasks.
         Cost: 8
+        Done
     -Do the most important game scene-related rendering tasks.
         Cost: 4
     -Store GUI.

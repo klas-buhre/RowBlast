@@ -29,6 +29,7 @@ namespace RowBlast {
         void EvaluateMoves(const FallingPiece& fallingPiece, int movesUsed);
         void EvaluateMove(Move& move, const FallingPiece& fallingPiece);
         void EvaluateMoveForClearObjective(Move& move, const FallingPiece& fallingPiece);
+        void EvaluateMoveForAsteroidObjective(Move& move, const FallingPiece& fallingPiece);
         void EvaluateMoveForBuildObjective(Move& move, const FallingPiece& fallingPiece);
         float CalculateBurriedHolesArea(int numFilledRows, const FallingPiece& fallingPiece);
         void SortMoves();

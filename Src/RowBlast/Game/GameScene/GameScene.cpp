@@ -308,7 +308,7 @@ Pht::QuadMesh::Vertices GameScene::CreateFieldVertices(const Level& level) {
     auto height {mFieldHeight + fieldPadding};
     
     auto f {
-        level.GetLightIntensity() == Level::LightIntensity::Dark ? darkFieldQuadBrightness : 1.0f
+        level.GetLightIntensity() == Level::LightIntensity::Dark ? darkFieldQuadBrightness : 0.95f // 1.0f
     };
 
     return {

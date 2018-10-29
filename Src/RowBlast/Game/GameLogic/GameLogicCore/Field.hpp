@@ -40,11 +40,16 @@ namespace RowBlast {
     
     using FilledRowIndices = Pht::StaticVector<int, Piece::maxRows>;
     
-    struct FilledRowsResult {
+    struct FilledRowsResultWithPieceCells {
         FilledRowIndices mFilledRowIndices;
         float mPieceCellsInFilledRows {0.0f};
     };
-    
+
+    struct FilledRowsResultWithGrayLevelCells {
+        FilledRowIndices mFilledRowIndices;
+        float mGrayLevelCellsInFilledRows {0.0f};
+    };
+
     class Field {
     public:
         static constexpr int maxNumColumns {9};
@@ -119,7 +124,8 @@ namespace RowBlast {
                          const Pht::IVec2& position,
                          int pieceNumRows,
                          int pieceNumColumns);
-        FilledRowsResult MarkFilledRowsAndCountPieceCellsInFilledRows(int pieceId);
+        FilledRowsResultWithPieceCells MarkFilledRowsAndCountPieceCellsInFilledRows(int pieceId);
+        FilledRowsResultWithGrayLevelCells MarkFilledRowsAndCountGrayLevelCellsInFilledRows();
         void UnmarkFilledRows(const FilledRowIndices& filledRowIndices);
         
         const Cell& GetCell(int row, int column) const {

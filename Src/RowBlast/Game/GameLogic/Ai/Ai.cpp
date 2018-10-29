@@ -110,8 +110,10 @@ void Ai::EvaluateMoves(const FallingPiece& fallingPiece, int movesUsed) {
 void Ai::EvaluateMove(Move& move, const FallingPiece& fallingPiece) {
     switch (mLevel->GetObjective()) {
         case Level::Objective::Clear:
-        case Level::Objective::BringDownTheAsteroid:
             EvaluateMoveForClearObjective(move, fallingPiece);
+            break;
+        case Level::Objective::BringDownTheAsteroid:
+            EvaluateMoveForAsteroidObjective(move, fallingPiece);
             break;
         case Level::Objective::Build:
             EvaluateMoveForBuildObjective(move, fallingPiece);
@@ -125,26 +127,19 @@ void Ai::EvaluateMoveForClearObjective(Move& move, const FallingPiece& fallingPi
         fallingPiece.GetPieceType().GetCenterPosition(move.mRotation).y
     };
 
-    auto filledRowsResult {
-        mField.MarkFilledRowsAndCountPieceCellsInFilledRows(fallingPiece.GetId())
-    };
-    
+    auto filledRowsResult {mField.MarkFilledRowsAndCountGrayLevelCellsInFilledRows()};
     auto numFilledRows {filledRowsResult.mFilledRowIndices.Size()};
     auto burriedHolesArea {CalculateBurriedHolesArea(numFilledRows, fallingPiece)};
-    auto wellsArea {numFilledRows > 0 ? 0.0f : mFieldAnalyzer.CalculateWellsAreaInVisibleRows()};
-    
-    auto numTransitions {
-        numFilledRows > 0 ? 0.0f :
-        static_cast<float>(mFieldAnalyzer.CalculateNumTransitionsInVisibleRows())
-    };
+    auto wellsArea {mFieldAnalyzer.CalculateWellsAreaInVisibleRows()};
+    auto numTransitions {static_cast<float>(mFieldAnalyzer.CalculateNumTransitionsInVisibleRows())};
     
     move.mScore = -landingHeight
                   + 2.0f * numFilledRows
-                  + filledRowsResult.mPieceCellsInFilledRows
+                  + filledRowsResult.mGrayLevelCellsInFilledRows
                   - 4.1f * burriedHolesArea
-                  - wellsArea
-                  - numTransitions;
-    
+                  - 0.6f * wellsArea
+                  - 0.6f * numTransitions;
+
     mField.UnmarkFilledRows(filledRowsResult.mFilledRowIndices);
 }
 
@@ -154,6 +149,31 @@ float Ai::CalculateBurriedHolesArea(int numFilledRows, const FallingPiece& falli
     }
     
     return mFieldAnalyzer.CalculateBurriedHolesAreaInVisibleRowsWithGravity(fallingPiece.GetId());
+}
+
+void Ai::EvaluateMoveForAsteroidObjective(Move& move, const FallingPiece& fallingPiece) {
+    auto landingHeight {
+        static_cast<float>(move.mPosition.y - mField.GetLowestVisibleRow()) +
+        fallingPiece.GetPieceType().GetCenterPosition(move.mRotation).y
+    };
+
+    auto filledRowsResult {
+        mField.MarkFilledRowsAndCountPieceCellsInFilledRows(fallingPiece.GetId())
+    };
+    
+    auto numFilledRows {filledRowsResult.mFilledRowIndices.Size()};
+    auto burriedHolesArea {CalculateBurriedHolesArea(numFilledRows, fallingPiece)};
+    auto wellsArea {mFieldAnalyzer.CalculateWellsAreaInVisibleRows()};
+    auto numTransitions {static_cast<float>(mFieldAnalyzer.CalculateNumTransitionsInVisibleRows())};
+    
+    move.mScore = -landingHeight
+                  + 2.0f * numFilledRows
+                  + filledRowsResult.mPieceCellsInFilledRows
+                  - 4.1f * burriedHolesArea
+                  - 0.6f * wellsArea
+                  - 0.6f * numTransitions;
+    
+    mField.UnmarkFilledRows(filledRowsResult.mFilledRowIndices);
 }
 
 void Ai::EvaluateMoveForBuildObjective(Move& move, const FallingPiece& fallingPiece) {
