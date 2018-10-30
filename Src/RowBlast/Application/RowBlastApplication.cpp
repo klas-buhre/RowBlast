@@ -23,7 +23,6 @@ Backlog:
     -Maybe the green field material could be a bit less green.
     -Maybe the blue field material could be a bit less blue.
     -More ambient in gray and green field materials.
-    -Try buttons like those in tetris blitz for the dark menues.
   -GUI:
     -Store.
     -Menu window that displays 3rd party lib credits.
@@ -42,7 +41,12 @@ Backlog:
     -Credit FastNoise, MIT license: https://github.com/Auburns/FastNoise/
 
 Ongoing tasks:
-
+    -Try buttons like those in tetris blitz for the dark menues.
+        -Add the gray small button for the settings menu.
+        -Add the big green button.
+        -Update all dark menues.
+        -Test how the glossy button would look in the bright windows.
+        -Remove the old button resources.
 
 
 

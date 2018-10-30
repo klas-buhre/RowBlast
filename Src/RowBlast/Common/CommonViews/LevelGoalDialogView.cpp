@@ -90,10 +90,9 @@ LevelGoalDialogView::LevelGoalDialogView(Pht::IEngine& engine,
         Pht::Vec2 playButtonInputSize {205.0f, 59.0f};
         
         MenuButton::Style playButtonStyle;
-        playButtonStyle.mMeshFilename = GuiResources::mBigButtonMeshFilename;
-        playButtonStyle.mColor = GuiResources::mBlueButtonColor;
-        playButtonStyle.mSelectedColor = GuiResources::mBlueSelectedButtonColor;
         playButtonStyle.mPressedScale = 1.05f;
+        playButtonStyle.mRenderableObject = &guiResources.GetLargeBlueGlossyButton(zoom);
+        playButtonStyle.mSelectedRenderableObject = &guiResources.GetLargeDarkBlueGlossyButton(zoom);
 
         mPlayButton = std::make_unique<MenuButton>(engine,
                                                    *this,
@@ -107,10 +106,10 @@ LevelGoalDialogView::LevelGoalDialogView(Pht::IEngine& engine,
         Pht::Vec2 backButtonInputSize {194.0f, 43.0f};
         
         MenuButton::Style backButtonStyle;
-        backButtonStyle.mMeshFilename = GuiResources::mMediumButtonMeshFilename;
-        backButtonStyle.mColor = GuiResources::mBlueButtonColor;
-        backButtonStyle.mSelectedColor = GuiResources::mBlueSelectedButtonColor;
         backButtonStyle.mPressedScale = 1.05f;
+        backButtonStyle.mRenderableObject = &guiResources.GetMediumBlueGlossyButton(zoom);
+        backButtonStyle.mSelectedRenderableObject = &guiResources.GetMediumDarkBlueGlossyButton(zoom);
+
         
         mBackButton = std::make_unique<MenuButton>(engine,
                                                    *this,

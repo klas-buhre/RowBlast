@@ -38,7 +38,8 @@ MenuButton::MenuButton(Pht::IEngine& engine,
                        const Pht::Vec2& inputSize,
                        const Style& style) :
     mView {view},
-    mAudio {engine.GetAudio()} {
+    mAudio {engine.GetAudio()},
+    mStyle {style} {
     
     auto& sceneManager {engine.GetSceneManager()};
     auto sceneObject {CreateMainSceneObject(sceneManager, view, style)};
@@ -64,19 +65,27 @@ MenuButton::MenuButton(Pht::IEngine& engine,
         mView.GetSceneResources().AddSceneObject(std::move(shadowSceneObject));
     }
     
-    auto onDownFunction {[this, style] () {
-        Pht::SceneObjectUtils::ScaleRecursively(*mSceneObject, style.mPressedScale);
-        if (auto* renderable {mSceneObject->GetRenderable()}) {
-            renderable->GetMaterial().SetAmbient(style.mSelectedColor);
+    auto onDownFunction {[this] () {
+        Pht::SceneObjectUtils::ScaleRecursively(*mSceneObject, mStyle.mPressedScale);
+        if (mStyle.mSelectedRenderableObject) {
+            mSceneObject->SetRenderable(mStyle.mSelectedRenderableObject);
+        } else {
+            if (auto* renderable {mSceneObject->GetRenderable()}) {
+                renderable->GetMaterial().SetAmbient(mStyle.mSelectedColor);
+            }
         }
     }};
     
     mButton->SetOnDown(onDownFunction);
     
-    auto onUpFunction {[this, style] () {
+    auto onUpFunction {[this] () {
         Pht::SceneObjectUtils::ScaleRecursively(*mSceneObject, 1.0f);
-        if (auto* renderable {mSceneObject->GetRenderable()}) {
-            renderable->GetMaterial().SetAmbient(style.mColor);
+        if (mStyle.mRenderableObject) {
+            mSceneObject->SetRenderable(mStyle.mRenderableObject);
+        } else {
+            if (auto* renderable {mSceneObject->GetRenderable()}) {
+                renderable->GetMaterial().SetAmbient(mStyle.mColor);
+            }
         }
     }};
     

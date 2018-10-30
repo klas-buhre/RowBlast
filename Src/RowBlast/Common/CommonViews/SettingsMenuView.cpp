@@ -38,12 +38,11 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine,
     
     auto& textProperties {guiResources.GetSmallWhiteTextProperties(zoom)};
     CreateText({-5.3f, 1.57f, UiLayer::text}, "Controls", textProperties);
-    
+
     MenuButton::Style settingsButtonStyle;
-    settingsButtonStyle.mMeshFilename = GuiResources::mSmallButtonMeshFilename;
-    settingsButtonStyle.mColor = GuiResources::mBlueButtonColor;
-    settingsButtonStyle.mSelectedColor = GuiResources::mBlueSelectedButtonColor;
     settingsButtonStyle.mPressedScale = 1.05f;
+    settingsButtonStyle.mRenderableObject = &guiResources.GetSmallBlueGlossyButton(zoom);
+    settingsButtonStyle.mSelectedRenderableObject = &guiResources.GetSmallDarkBlueGlossyButton(zoom);
 
     Pht::Vec2 buttonInputSize {78.0f, 43.0f};
     
@@ -76,11 +75,10 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine,
                                                textProperties).GetSceneObject());
 
     MenuButton::Style backButtonStyle;
-    backButtonStyle.mMeshFilename = GuiResources::mMediumButtonMeshFilename;
-    backButtonStyle.mColor = GuiResources::mBlueButtonColor;
-    backButtonStyle.mSelectedColor = GuiResources::mBlueSelectedButtonColor;
     backButtonStyle.mPressedScale = 1.05f;
-    
+    backButtonStyle.mRenderableObject = &guiResources.GetMediumBlueGlossyButton(zoom);
+    backButtonStyle.mSelectedRenderableObject = &guiResources.GetMediumDarkBlueGlossyButton(zoom);
+
     Pht::Vec2 backButtonInputSize {194.0f, 43.0f};
     
     mBackButton = std::make_unique<MenuButton>(engine,
