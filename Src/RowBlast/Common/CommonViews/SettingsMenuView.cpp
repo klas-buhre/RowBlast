@@ -13,7 +13,10 @@ using namespace RowBlast;
 
 SettingsMenuView::SettingsMenuView(Pht::IEngine& engine,
                                    const CommonResources& commonResources,
-                                   PotentiallyZoomedScreen zoom) {
+                                   PotentiallyZoomedScreen zoom) :
+    mCommonResources {commonResources},
+    mZoom {zoom} {
+
     auto& guiResources {commonResources.GetGuiResources()};
     auto& menuWindow {guiResources.GetMediumDarkMenuWindow(zoom)};
     
@@ -92,16 +95,16 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine,
 void SettingsMenuView::EnableControlsButton() {
     mIsControlsButtonEnabled = true;
     
-    auto& material {mControlsButton->GetSceneObject().GetRenderable()->GetMaterial()};
-    material.SetAmbient(GuiResources::mBlueButtonColor);
-    material.SetDiffuse(GuiResources::mBlueButtonColor);
+    auto& blueButtonRenderable {mCommonResources.GetGuiResources().GetSmallBlueGlossyButton(mZoom)};
+    mControlsButton->GetSceneObject().SetRenderable(&blueButtonRenderable);
 }
 
 void SettingsMenuView::DisableControlsButton() {
     mIsControlsButtonEnabled = false;
+
+    auto& grayButtonRenderable {
+        mCommonResources.GetGuiResources().GetSmallGrayGlossyButtonPotentiallyZoomedScreen()
+    };
     
-    Pht::Color greyColor {0.45f, 0.45f, 0.45f};
-    auto& material {mControlsButton->GetSceneObject().GetRenderable()->GetMaterial()};
-    material.SetAmbient(greyColor);
-    material.SetDiffuse(greyColor);
+    mControlsButton->GetSceneObject().SetRenderable(&grayButtonRenderable);
 }

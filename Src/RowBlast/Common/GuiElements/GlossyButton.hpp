@@ -25,6 +25,7 @@ namespace RowBlast {
     enum class ButtonColor {
         Blue,
         Green,
+        Gray,
         DarkBlue,
         DarkGreen
     };

@@ -24,7 +24,7 @@ namespace {
     };
     
     const ButtonColors blueButtonColors {
-        .mShadeColor = {0.0f, 0.15f, 0.3f, 1.0f},
+        .mShadeColor = {0.0f, 0.17f, 0.34f, 1.0f},
         .mGlossColor = {0.11f, 0.66f, 1.0f, 1.0f},
         .mUpperGradientColor = {0.0f, 0.585f, 0.935f, 1.0f},
         .mLowerGradientColor = {0.0f, 0.285f, 0.585f, 1.0f}
@@ -35,6 +35,13 @@ namespace {
         .mGlossColor = {0.08f, 0.55f, 0.83f, 1.0f},
         .mUpperGradientColor = {0.0f, 0.45f, 0.7f, 1.0f},
         .mLowerGradientColor = {0.0f, 0.225f, 0.5f, 1.0f}
+    };
+
+    const ButtonColors grayButtonColors {
+        .mShadeColor = {0.15f, 0.15f, 0.15f, 1.0f},
+        .mGlossColor = {0.6f, 0.6f, 0.6f, 1.0f},
+        .mUpperGradientColor = {0.52f, 0.52f, 0.52f, 1.0f},
+        .mLowerGradientColor = {0.28f, 0.28f, 0.28f, 1.0f}
     };
 
     Pht::Vec2 GetSize(ButtonSize size) {
@@ -82,11 +89,14 @@ namespace {
         switch (buttonColor) {
             case ButtonColor::Blue:
                 return blueButtonColors;
+            case ButtonColor::Green:
+                return grayButtonColors;
+            case ButtonColor::Gray:
+                return grayButtonColors;
             case ButtonColor::DarkBlue:
                 return darkBlueButtonColors;
-            case ButtonColor::Green:
             case ButtonColor::DarkGreen:
-                return blueButtonColors;
+                return grayButtonColors;
         }
     }
 

@@ -57,6 +57,8 @@ namespace RowBlast {
         }
         
     private:
+        const CommonResources& mCommonResources;
+        PotentiallyZoomedScreen mZoom {PotentiallyZoomedScreen::Yes};
         std::unique_ptr<MenuButton> mControlsButton;
         std::unique_ptr<MenuButton> mSoundButton;
         std::unique_ptr<MenuButton> mBackButton;
