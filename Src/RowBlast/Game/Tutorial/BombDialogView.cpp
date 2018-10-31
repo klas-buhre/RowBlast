@@ -46,9 +46,8 @@ BombDialogView::BombDialogView(Pht::IEngine& engine, const CommonResources& comm
     Pht::Vec2 playButtonInputSize {194.0f, 43.0f};
 
     MenuButton::Style playButtonStyle;
-    playButtonStyle.mMeshFilename = GuiResources::mMediumButtonMeshFilename;
-    playButtonStyle.mColor = GuiResources::mBlueButtonColor;
-    playButtonStyle.mSelectedColor = GuiResources::mBlueSelectedButtonColor;
+    playButtonStyle.mRenderableObject = &guiResources.GetMediumBlueGlossyButton(zoom);
+    playButtonStyle.mSelectedRenderableObject = &guiResources.GetMediumDarkBlueGlossyButton(zoom);
     playButtonStyle.mPressedScale = 1.05f;
 
     mPlayButton = std::make_unique<MenuButton>(engine,
@@ -56,7 +55,9 @@ BombDialogView::BombDialogView(Pht::IEngine& engine, const CommonResources& comm
                                                Pht::Vec3 {0.0f, -7.5f, UiLayer::textRectangle},
                                                playButtonInputSize,
                                                playButtonStyle);
-    mPlayButton->CreateText({-0.9f, -0.23f, UiLayer::buttonText}, "PLAY", textProperties);
+    mPlayButton->CreateText({-0.9f, -0.23f, UiLayer::buttonText},
+                            "PLAY",
+                            guiResources.GetWhiteButtonTextProperties(zoom));
 }
 
 void BombDialogView::Init(Pht::Scene& scene) {

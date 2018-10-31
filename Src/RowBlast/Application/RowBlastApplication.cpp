@@ -42,8 +42,6 @@ Backlog:
 
 Ongoing tasks:
     -Try buttons like those in tetris blitz for the dark menues.
-        -Update all dark menues. Remember to use button text properties and not normal small text
-         properties.
         -Test how the glossy button would look in the bright windows.
         -Remove the old button resources.
 

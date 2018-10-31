@@ -79,9 +79,8 @@ NoLivesDialogView::NoLivesDialogView(Pht::IEngine& engine,
     Pht::Vec2 refillLivesInputSize {205.0f, 59.0f};
     
     MenuButton::Style refillLivesButtonStyle;
-    refillLivesButtonStyle.mMeshFilename = GuiResources::mBigButtonMeshFilename;
-    refillLivesButtonStyle.mColor = GuiResources::mGreenButtonColor;
-    refillLivesButtonStyle.mSelectedColor = GuiResources::mGreenSelectedButtonColor;
+    refillLivesButtonStyle.mRenderableObject = &guiResources.GetLargeGreenGlossyButton(zoom);
+    refillLivesButtonStyle.mSelectedRenderableObject = &guiResources.GetLargeDarkGreenGlossyButton(zoom);
     refillLivesButtonStyle.mPressedScale = 1.05f;
 
     mRefillLivesButton = std::make_unique<MenuButton>(engine,
@@ -91,7 +90,7 @@ NoLivesDialogView::NoLivesDialogView(Pht::IEngine& engine,
                                                       refillLivesButtonStyle);
     mRefillLivesButton->CreateText({-1.4f, -0.31f, UiLayer::buttonText},
                                    "$0.99",
-                                   guiResources.GetLargeWhiteTextProperties(zoom));
+                                   guiResources.GetLargeWhiteButtonTextProperties(zoom));
 }
 
 void NoLivesDialogView::Update() {

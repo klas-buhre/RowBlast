@@ -59,9 +59,8 @@ GameOverDialogView::GameOverDialogView(Pht::IEngine& engine,
     Pht::Vec2 retryButtonInputSize {205.0f, 59.0f};
     
     MenuButton::Style retryButtonStyle;
-    retryButtonStyle.mMeshFilename = GuiResources::mBigButtonMeshFilename;
-    retryButtonStyle.mColor = GuiResources::mGreenButtonColor;
-    retryButtonStyle.mSelectedColor = GuiResources::mGreenSelectedButtonColor;
+    retryButtonStyle.mRenderableObject = &guiResources.GetLargeGreenGlossyButton(zoom);
+    retryButtonStyle.mSelectedRenderableObject = &guiResources.GetLargeDarkGreenGlossyButton(zoom);
     retryButtonStyle.mPressedScale = 1.05f;
 
     mRetryButton = std::make_unique<MenuButton>(engine,
@@ -70,6 +69,6 @@ GameOverDialogView::GameOverDialogView(Pht::IEngine& engine,
                                                 retryButtonInputSize,
                                                 retryButtonStyle);
     mRetryButton->CreateText({-1.25f, -0.31f, UiLayer::buttonText},
-                            "Retry",
-                            guiResources.GetLargeWhiteTextProperties(zoom));
+                             "Retry",
+                             guiResources.GetLargeWhiteButtonTextProperties(zoom));
 }
