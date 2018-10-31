@@ -65,13 +65,8 @@ namespace RowBlast {
         static const Pht::Color mBlueSelectedButtonColor;
         static const Pht::Color mYellowButtonColor;
         static const Pht::Color mYellowSelectedButtonColor;
-        static const Pht::Color mGreenButtonColor;
-        static const Pht::Color mGreenSelectedButtonColor;
 
-        static const std::string mBigButtonMeshFilename;
-        static const std::string mMediumButtonMeshFilename;
         static const std::string mMediumButtonSkewedMeshFilename;
-        static const std::string mSmallButtonMeshFilename;
 
     private:
         MenuWindow mMediumDarkMenuWindow;

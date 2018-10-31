@@ -42,8 +42,6 @@ Backlog:
 
 Ongoing tasks:
     -Try buttons like those in tetris blitz for the dark menues.
-        -Test how the glossy button would look in the bright windows.
-        -Remove the old button resources.
 
 
 
@@ -351,24 +349,9 @@ weld size: 0.19
 segments: 5
 profile 0.5
 
-big_button_043.obj:
-size: 9.4x2.6
-bevel width: 0.43
-segments: 5
-
-medium_button_0385.obj:
-size: 9.0x2.1
-bevel width: 0.385
-segments: 5
-
 medium_button_skewed_0385.obj:
 size: 9.0x2.1
 shear: 0.24
-bevel width: 0.385
-segments: 5
-
-small_button_0385.obj:
-size: 3.6x2.1
 bevel width: 0.385
 segments: 5
 
