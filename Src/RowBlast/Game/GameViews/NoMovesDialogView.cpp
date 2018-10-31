@@ -56,19 +56,19 @@ NoMovesDialogView::NoMovesDialogView(Pht::IEngine& engine, const CommonResources
     CreateText({-5.5f, 0.5f, UiLayer::text}, "Purchase 5 more moves for $0.99", textProperties);
     
     Pht::Vec2 playOnButtonInputSize {205.0f, 59.0f};
-    
+
     MenuButton::Style playOnButtonStyle;
-    playOnButtonStyle.mMeshFilename = GuiResources::mBigButtonMeshFilename;
-    playOnButtonStyle.mColor = GuiResources::mGreenButtonColor;
-    playOnButtonStyle.mSelectedColor = GuiResources::mGreenSelectedButtonColor;
     playOnButtonStyle.mPressedScale = 1.05f;
+    playOnButtonStyle.mRenderableObject = &guiResources.GetLargeGreenGlossyButton(zoom);
+    playOnButtonStyle.mSelectedRenderableObject = &guiResources.GetLargeDarkGreenGlossyButton(zoom);
 
     mPlayOnButton = std::make_unique<MenuButton>(engine,
                                                  *this,
                                                  Pht::Vec3 {0.0f, -2.9f, UiLayer::textRectangle},
                                                  playOnButtonInputSize,
                                                  playOnButtonStyle);
+    
     mPlayOnButton->CreateText({-1.4f, -0.31f, UiLayer::buttonText},
-                             "$0.99",
-                             guiResources.GetLargeWhiteTextProperties(zoom));
+                              "$0.99",
+                              guiResources.GetLargeWhiteButtonTextProperties(zoom));
 }

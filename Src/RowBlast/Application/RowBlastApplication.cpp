@@ -42,9 +42,8 @@ Backlog:
 
 Ongoing tasks:
     -Try buttons like those in tetris blitz for the dark menues.
-        -Add the gray small button for the settings menu.
-        -Add the big green button.
-        -Update all dark menues.
+        -Update all dark menues. Remember to use button text properties and not normal small text
+         properties.
         -Test how the glossy button would look in the bright windows.
         -Remove the old button resources.
 

@@ -61,5 +61,5 @@ MapConfirmationDialogView::MapConfirmationDialogView(Pht::IEngine& engine,
                                              blueButtonStyle);
     mNoButton->CreateText({-0.5f, -0.23f, UiLayer::buttonText},
                           "No",
-                          guiResources.GetWhiteButtonTextProperties(zoom));
+                          guiResources.GetWhiteButtonTextWithShadowPropertiesPotentiallyZoomedScreen());
 }

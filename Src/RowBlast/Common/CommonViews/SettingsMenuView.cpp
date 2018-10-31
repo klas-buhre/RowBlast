@@ -40,6 +40,7 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine,
     GetRoot().AddChild(lineSceneObject);
     
     auto& textProperties {guiResources.GetSmallWhiteTextProperties(zoom)};
+    auto& buttonTextProperties {guiResources.GetWhiteButtonTextProperties(zoom)};
     CreateText({-5.3f, 1.57f, UiLayer::text}, "Controls", textProperties);
 
     MenuButton::Style settingsButtonStyle;
@@ -57,10 +58,10 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine,
                                                    settingsButtonStyle);
     mControlsClickText = &(mControlsButton->CreateText({-0.85f, -0.23f, UiLayer::buttonText},
                                                        "Click",
-                                                       textProperties).GetSceneObject());
+                                                       buttonTextProperties).GetSceneObject());
     mControlsSwipeText = &(mControlsButton->CreateText({-1.05f, -0.23f, UiLayer::buttonText},
                                                        "Swipe",
-                                                       textProperties).GetSceneObject());
+                                                       buttonTextProperties).GetSceneObject());
 
     CreateText({-5.3f, -1.03f, UiLayer::text}, "Sound", textProperties);
     
@@ -72,10 +73,10 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine,
                                                 settingsButtonStyle);
     mSoundOnText = &(mSoundButton->CreateText({-0.6f, -0.23f, UiLayer::buttonText},
                                               "On",
-                                              textProperties).GetSceneObject());
+                                              buttonTextProperties).GetSceneObject());
     mSoundOffText = &(mSoundButton->CreateText({-0.7f, -0.23f, UiLayer::buttonText},
                                                "Off",
-                                               textProperties).GetSceneObject());
+                                               buttonTextProperties).GetSceneObject());
 
     MenuButton::Style backButtonStyle;
     backButtonStyle.mPressedScale = 1.05f;
@@ -89,7 +90,7 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine,
                                                Pht::Vec3 {0.0f, -4.5f, UiLayer::textRectangle},
                                                backButtonInputSize,
                                                backButtonStyle);
-    mBackButton->CreateText({-0.85f, -0.23f, UiLayer::buttonText}, "Back", textProperties);
+    mBackButton->CreateText({-0.85f, -0.23f, UiLayer::buttonText}, "Back", buttonTextProperties);
 }
 
 void SettingsMenuView::EnableControlsButton() {

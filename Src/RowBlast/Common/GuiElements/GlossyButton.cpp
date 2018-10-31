@@ -37,6 +37,20 @@ namespace {
         .mLowerGradientColor = {0.0f, 0.225f, 0.5f, 1.0f}
     };
 
+    const ButtonColors greenButtonColors {
+        .mShadeColor = {0.075f, 0.25f, 0.075f, 1.0f},
+        .mGlossColor = {0.275f, 0.82f, 0.275f, 1.0f},
+        .mUpperGradientColor = {0.225f, 0.74f, 0.225f, 1.0f},
+        .mLowerGradientColor = {0.125f, 0.39f, 0.125f, 1.0f}
+    };
+
+    const ButtonColors darkGreenButtonColors {
+        .mShadeColor = {0.075f, 0.25f, 0.075f, 1.0f},
+        .mGlossColor = {0.2f, 0.65f, 0.2f, 1.0f},
+        .mUpperGradientColor = {0.16f, 0.59f, 0.16f, 1.0f},
+        .mLowerGradientColor = {0.09f, 0.34f, 0.09f, 1.0f}
+    };
+
     const ButtonColors grayButtonColors {
         .mShadeColor = {0.15f, 0.15f, 0.15f, 1.0f},
         .mGlossColor = {0.6f, 0.6f, 0.6f, 1.0f},
@@ -90,13 +104,13 @@ namespace {
             case ButtonColor::Blue:
                 return blueButtonColors;
             case ButtonColor::Green:
-                return grayButtonColors;
+                return greenButtonColors;
             case ButtonColor::Gray:
                 return grayButtonColors;
             case ButtonColor::DarkBlue:
                 return darkBlueButtonColors;
             case ButtonColor::DarkGreen:
-                return grayButtonColors;
+                return darkGreenButtonColors;
         }
     }
 

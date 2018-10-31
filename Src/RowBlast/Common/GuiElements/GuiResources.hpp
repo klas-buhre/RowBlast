@@ -34,6 +34,8 @@ namespace RowBlast {
         Pht::RenderableObject& GetMediumDarkBlueGlossyButton(PotentiallyZoomedScreen potentiallyZoomed) const;
         Pht::RenderableObject& GetSmallBlueGlossyButton(PotentiallyZoomedScreen potentiallyZoomed) const;
         Pht::RenderableObject& GetSmallDarkBlueGlossyButton(PotentiallyZoomedScreen potentiallyZoomed) const;
+        Pht::RenderableObject& GetLargeGreenGlossyButton(PotentiallyZoomedScreen potentiallyZoomed) const;
+        Pht::RenderableObject& GetLargeDarkGreenGlossyButton(PotentiallyZoomedScreen potentiallyZoomed) const;
 
         const MenuWindow& GetMediumMenuWindowPotentiallyZoomedScreen() const {
             return mMediumMenuWindowPotentiallyZoomedScreen;
@@ -49,6 +51,10 @@ namespace RowBlast {
         
         const MenuWindow& GetSmallestDarkMenuWindowPotentiallyZoomedScreen() const {
             return mSmallestDarkMenuWindowPotentiallyZoomedScreen;
+        }
+        
+        const Pht::TextProperties& GetWhiteButtonTextWithShadowPropertiesPotentiallyZoomedScreen() const {
+            return mWhiteButtonTextWithShadowPropertiesPotentiallyZoomedScreen;
         }
 
         Pht::RenderableObject& GetSmallGrayGlossyButtonPotentiallyZoomedScreen() const {
@@ -86,6 +92,7 @@ namespace RowBlast {
         Pht::TextProperties mBlackButtonTextPropertiesPotentiallyZoomedScreen;
         Pht::TextProperties mLargeWhiteButtonTextPropertiesPotentiallyZoomedScreen;
         Pht::TextProperties mWhiteButtonTextPropertiesPotentiallyZoomedScreen;
+        Pht::TextProperties mWhiteButtonTextWithShadowPropertiesPotentiallyZoomedScreen;
         Pht::TextProperties mCaptionTextPropertiesPotentiallyZoomedScreen;
         Pht::TextProperties mSmallTextPropertiesPotentiallyZoomedScreen;
         Pht::TextProperties mSmallWhiteTextPropertiesPotentiallyZoomedScreen;
@@ -105,6 +112,10 @@ namespace RowBlast {
         std::unique_ptr<Pht::RenderableObject> mSmallDarkBlueGlossyButton;
         std::unique_ptr<Pht::RenderableObject> mSmallDarkBlueGlossyButtonPotentiallyZoomedScreen;
         std::unique_ptr<Pht::RenderableObject> mSmallGrayGlossyButtonPotentiallyZoomedScreen;
+        std::unique_ptr<Pht::RenderableObject> mLargeGreenGlossyButton;
+        std::unique_ptr<Pht::RenderableObject> mLargeGreenGlossyButtonPotentiallyZoomedScreen;
+        std::unique_ptr<Pht::RenderableObject> mLargeDarkGreenGlossyButton;
+        std::unique_ptr<Pht::RenderableObject> mLargeDarkGreenGlossyButtonPotentiallyZoomedScreen;
     };
 }
 

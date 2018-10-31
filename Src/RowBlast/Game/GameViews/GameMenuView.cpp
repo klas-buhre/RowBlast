@@ -58,7 +58,7 @@ GameMenuView::GameMenuView(Pht::IEngine& engine, const CommonResources& commonRe
                                                blueButtonStyle);
     mUndoButton->CreateText({-1.9f, -0.23f, UiLayer::buttonText},
                             "Undo Move",
-                            guiResources.GetWhiteButtonTextProperties(zoom));
+                            guiResources.GetWhiteButtonTextWithShadowPropertiesPotentiallyZoomedScreen());
 
     mGoalButton = std::make_unique<MenuButton>(engine,
                                                *this,
@@ -67,7 +67,7 @@ GameMenuView::GameMenuView(Pht::IEngine& engine, const CommonResources& commonRe
                                                blueButtonStyle);
     mGoalButton->CreateText({-1.0f, -0.23f, UiLayer::buttonText},
                             "Goal",
-                            guiResources.GetWhiteButtonTextProperties(zoom));
+                            guiResources.GetWhiteButtonTextWithShadowPropertiesPotentiallyZoomedScreen());
 
     mSettingsButton = std::make_unique<MenuButton>(engine,
                                                    *this,
@@ -76,7 +76,7 @@ GameMenuView::GameMenuView(Pht::IEngine& engine, const CommonResources& commonRe
                                                    blueButtonStyle);
     mSettingsButton->CreateText({-1.4f, -0.23f, UiLayer::buttonText},
                                 "Settings",
-                                guiResources.GetWhiteButtonTextProperties(zoom));
+                                guiResources.GetWhiteButtonTextWithShadowPropertiesPotentiallyZoomedScreen());
 
     mRestartButton = std::make_unique<MenuButton>(engine,
                                                   *this,
@@ -85,7 +85,7 @@ GameMenuView::GameMenuView(Pht::IEngine& engine, const CommonResources& commonRe
                                                   blueButtonStyle);
     mRestartButton->CreateText({-1.3f, -0.23f, UiLayer::buttonText},
                                "Restart",
-                               guiResources.GetWhiteButtonTextProperties(zoom));
+                               guiResources.GetWhiteButtonTextWithShadowPropertiesPotentiallyZoomedScreen());
 
     mMapButton = std::make_unique<MenuButton>(engine,
                                               *this,
@@ -94,7 +94,7 @@ GameMenuView::GameMenuView(Pht::IEngine& engine, const CommonResources& commonRe
                                               blueButtonStyle);
     mMapButton->CreateText({-0.8f, -0.23f, UiLayer::buttonText},
                            "Map",
-                           guiResources.GetWhiteButtonTextProperties(zoom));
+                           guiResources.GetWhiteButtonTextWithShadowPropertiesPotentiallyZoomedScreen());
 }
 
 void GameMenuView::EnableUndoButton() {

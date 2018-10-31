@@ -101,7 +101,7 @@ LevelGoalDialogView::LevelGoalDialogView(Pht::IEngine& engine,
                                                    playButtonStyle);
         mPlayButton->CreateText({-1.1f, -0.31f, UiLayer::buttonText},
                                 "PLAY",
-                                largeTextProperties);
+                                guiResources.GetLargeWhiteButtonTextProperties(zoom));
     } else {
         Pht::Vec2 backButtonInputSize {194.0f, 43.0f};
         
@@ -118,7 +118,7 @@ LevelGoalDialogView::LevelGoalDialogView(Pht::IEngine& engine,
                                                    backButtonStyle);
         mBackButton->CreateText({-0.81f, -0.23f, UiLayer::buttonText},
                                 "Back",
-                                guiResources.GetSmallWhiteTextProperties(zoom));
+                                guiResources.GetWhiteButtonTextProperties(zoom));
     }
 
     CreatePreviewPiecesContainer(engine);

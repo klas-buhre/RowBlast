@@ -41,18 +41,12 @@ GuiResources::GuiResources(Pht::IEngine& engine, const CommonResources& commonRe
     mLargeWhiteButtonTextProperties {
         commonResources.GetHussarFontSize35(PotentiallyZoomedScreen::No),
         1.0f,
-        {1.0f, 1.0f, 1.0f, 1.0f},
-        Pht::TextShadow::Yes,
-        {0.06f, 0.06f},
-        {0.4f, 0.4f, 0.4f, 0.5f}
+        {1.0f, 1.0f, 1.0f, 1.0f}
     },
     mWhiteButtonTextProperties {
         commonResources.GetHussarFontSize27(PotentiallyZoomedScreen::No),
         1.0f,
-        {1.0f, 1.0f, 1.0f, 1.0f},
-        Pht::TextShadow::Yes,
-        {0.05f, 0.05f},
-        {0.4f, 0.4f, 0.4f, 0.5f}
+        {1.0f, 1.0f, 1.0f, 1.0f}
     },
     mCaptionTextProperties {
         commonResources.GetHussarFontSize35(PotentiallyZoomedScreen::No),
@@ -127,12 +121,14 @@ GuiResources::GuiResources(Pht::IEngine& engine, const CommonResources& commonRe
     mLargeWhiteButtonTextPropertiesPotentiallyZoomedScreen {
         commonResources.GetHussarFontSize35(PotentiallyZoomedScreen::Yes),
         1.0f,
-        {1.0f, 1.0f, 1.0f, 1.0f},
-        Pht::TextShadow::Yes,
-        {0.06f, 0.06f},
-        {0.4f, 0.4f, 0.4f, 0.5f}
+        {1.0f, 1.0f, 1.0f, 1.0f}
     },
     mWhiteButtonTextPropertiesPotentiallyZoomedScreen {
+        commonResources.GetHussarFontSize27(PotentiallyZoomedScreen::Yes),
+        1.0f,
+        {1.0f, 1.0f, 1.0f, 1.0f}
+    },
+    mWhiteButtonTextWithShadowPropertiesPotentiallyZoomedScreen {
         commonResources.GetHussarFontSize27(PotentiallyZoomedScreen::Yes),
         1.0f,
         {1.0f, 1.0f, 1.0f, 1.0f},
@@ -256,6 +252,34 @@ GuiResources::GuiResources(Pht::IEngine& engine, const CommonResources& commonRe
                            commonResources,
                            ButtonSize::Small,
                            ButtonColor::Gray,
+                           PotentiallyZoomedScreen::Yes)
+    },
+    mLargeGreenGlossyButton {
+        CreateGlossyButton(engine,
+                           commonResources,
+                           ButtonSize::Large,
+                           ButtonColor::Green,
+                           PotentiallyZoomedScreen::No)
+    },
+    mLargeGreenGlossyButtonPotentiallyZoomedScreen {
+        CreateGlossyButton(engine,
+                           commonResources,
+                           ButtonSize::Large,
+                           ButtonColor::Green,
+                           PotentiallyZoomedScreen::Yes)
+    },
+    mLargeDarkGreenGlossyButton {
+        CreateGlossyButton(engine,
+                           commonResources,
+                           ButtonSize::Large,
+                           ButtonColor::DarkGreen,
+                           PotentiallyZoomedScreen::No)
+    },
+    mLargeDarkGreenGlossyButtonPotentiallyZoomedScreen {
+        CreateGlossyButton(engine,
+                           commonResources,
+                           ButtonSize::Large,
+                           ButtonColor::DarkGreen,
                            PotentiallyZoomedScreen::Yes)
     } {}
 
@@ -416,5 +440,25 @@ GuiResources::GetSmallDarkBlueGlossyButton(PotentiallyZoomedScreen potentiallyZo
             return *mSmallDarkBlueGlossyButtonPotentiallyZoomedScreen;
         case PotentiallyZoomedScreen::No:
             return *mSmallDarkBlueGlossyButton;
+    }
+}
+
+Pht::RenderableObject&
+GuiResources::GetLargeGreenGlossyButton(PotentiallyZoomedScreen potentiallyZoomed) const {
+    switch (potentiallyZoomed) {
+        case PotentiallyZoomedScreen::Yes:
+            return *mLargeGreenGlossyButtonPotentiallyZoomedScreen;
+        case PotentiallyZoomedScreen::No:
+            return *mLargeGreenGlossyButton;
+    }
+}
+
+Pht::RenderableObject&
+GuiResources::GetLargeDarkGreenGlossyButton(PotentiallyZoomedScreen potentiallyZoomed) const {
+    switch (potentiallyZoomed) {
+        case PotentiallyZoomedScreen::Yes:
+            return *mLargeDarkGreenGlossyButtonPotentiallyZoomedScreen;
+        case PotentiallyZoomedScreen::No:
+            return *mLargeDarkGreenGlossyButton;
     }
 }
