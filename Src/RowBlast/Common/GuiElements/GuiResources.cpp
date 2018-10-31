@@ -6,10 +6,10 @@
 
 using namespace RowBlast;
 
-const Pht::Color GuiResources::mBlueButtonColor {0.0f, 0.333f, 0.88f};
-const Pht::Color GuiResources::mBlueSelectedButtonColor {0.0f, 0.3f, 0.77f};
-const Pht::Color GuiResources::mYellowButtonColor {0.64f, 0.508f, 0.0f};
-const Pht::Color GuiResources::mYellowSelectedButtonColor {0.55f, 0.45f, 0.0f};
+const Pht::Color GuiResources::mBlueButtonColor {0.0f, 0.333f, 0.675f};
+const Pht::Color GuiResources::mBlueSelectedButtonColor {0.0f, 0.28f, 0.57f};
+const Pht::Color GuiResources::mYellowButtonColor {0.61f, 0.48f, 0.0f};
+const Pht::Color GuiResources::mYellowSelectedButtonColor {0.52f, 0.41f, 0.0f};
 
 const std::string GuiResources::mMediumButtonSkewedMeshFilename {"medium_button_skewed_0385.obj"};
 

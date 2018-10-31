@@ -41,7 +41,6 @@ Backlog:
     -Credit FastNoise, MIT license: https://github.com/Auburns/FastNoise/
 
 Ongoing tasks:
-    -Try buttons like those in tetris blitz for the dark menues.
 
 
 

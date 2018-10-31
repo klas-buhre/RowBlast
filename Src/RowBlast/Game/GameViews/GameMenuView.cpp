@@ -24,7 +24,7 @@ GameMenuView::GameMenuView(Pht::IEngine& engine, const CommonResources& commonRe
     SetSize(menuWindow.GetSize());
     SetPosition({0.0f, 0.0f});
     
-    CreateText({-1.71f, 8.25f, UiLayer::text}, "PAUSED", guiResources.GetCaptionTextProperties(zoom));
+    CreateText({-1.71f, 8.05f, UiLayer::text}, "PAUSED", guiResources.GetCaptionTextProperties(zoom));
 
     MenuButton::Style yellowButtonStyle;
     yellowButtonStyle.mMeshFilename = GuiResources::mMediumButtonSkewedMeshFilename;
@@ -44,7 +44,7 @@ GameMenuView::GameMenuView(Pht::IEngine& engine, const CommonResources& commonRe
 
     mResumeButton = std::make_unique<MenuButton>(engine,
                                                  *this,
-                                                 Pht::Vec3 {0.0f, 5.3f, UiLayer::textRectangle},
+                                                 Pht::Vec3 {0.0f, 5.1f, UiLayer::textRectangle},
                                                  buttonInputSize,
                                                  yellowButtonStyle);
     mResumeButton->CreateText({-1.25f, -0.23f, UiLayer::buttonText},
@@ -53,7 +53,7 @@ GameMenuView::GameMenuView(Pht::IEngine& engine, const CommonResources& commonRe
     
     mUndoButton = std::make_unique<MenuButton>(engine,
                                                *this,
-                                               Pht::Vec3 {0.0f, 2.7f, UiLayer::textRectangle},
+                                               Pht::Vec3 {0.0f, 2.5f, UiLayer::textRectangle},
                                                buttonInputSize,
                                                blueButtonStyle);
     mUndoButton->CreateText({-1.9f, -0.23f, UiLayer::buttonText},
@@ -62,7 +62,7 @@ GameMenuView::GameMenuView(Pht::IEngine& engine, const CommonResources& commonRe
 
     mGoalButton = std::make_unique<MenuButton>(engine,
                                                *this,
-                                               Pht::Vec3 {0.0f, 0.1f, UiLayer::textRectangle},
+                                               Pht::Vec3 {0.0f, -0.1f, UiLayer::textRectangle},
                                                buttonInputSize,
                                                blueButtonStyle);
     mGoalButton->CreateText({-1.0f, -0.23f, UiLayer::buttonText},
@@ -71,7 +71,7 @@ GameMenuView::GameMenuView(Pht::IEngine& engine, const CommonResources& commonRe
 
     mSettingsButton = std::make_unique<MenuButton>(engine,
                                                    *this,
-                                                   Pht::Vec3 {0.0f, -2.5f, UiLayer::textRectangle},
+                                                   Pht::Vec3 {0.0f, -2.7f, UiLayer::textRectangle},
                                                    buttonInputSize,
                                                    blueButtonStyle);
     mSettingsButton->CreateText({-1.4f, -0.23f, UiLayer::buttonText},
@@ -80,7 +80,7 @@ GameMenuView::GameMenuView(Pht::IEngine& engine, const CommonResources& commonRe
 
     mRestartButton = std::make_unique<MenuButton>(engine,
                                                   *this,
-                                                  Pht::Vec3 {0.0f, -5.1f, UiLayer::textRectangle},
+                                                  Pht::Vec3 {0.0f, -5.3f, UiLayer::textRectangle},
                                                   buttonInputSize,
                                                   blueButtonStyle);
     mRestartButton->CreateText({-1.3f, -0.23f, UiLayer::buttonText},
@@ -89,7 +89,7 @@ GameMenuView::GameMenuView(Pht::IEngine& engine, const CommonResources& commonRe
 
     mMapButton = std::make_unique<MenuButton>(engine,
                                               *this,
-                                              Pht::Vec3 {0.0f, -7.7f, UiLayer::textRectangle},
+                                              Pht::Vec3 {0.0f, -7.9f, UiLayer::textRectangle},
                                               buttonInputSize,
                                               blueButtonStyle);
     mMapButton->CreateText({-0.8f, -0.23f, UiLayer::buttonText},
@@ -108,7 +108,7 @@ void GameMenuView::EnableUndoButton() {
 void GameMenuView::DisableUndoButton() {
     mIsUndoButtonEnabled = false;
     
-    Pht::Color greyColor {0.45f, 0.45f, 0.45f};
+    Pht::Color greyColor {0.4f, 0.4f, 0.4f};
     auto& material {mUndoButton->GetSceneObject().GetRenderable()->GetMaterial()};
     material.SetAmbient(greyColor);
     material.SetDiffuse(greyColor);

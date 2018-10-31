@@ -37,7 +37,7 @@ namespace {
                 auto sizeX {std::min(frustumSize.x - xBorder * 2.0f, 13.5f - xBorder * 2.0f)};
                 switch (size) {
                     case MenuWindow::Size::Large:
-                        return {sizeX, 20.4f};
+                        return {sizeX, 20.0f};
                     case MenuWindow::Size::Medium:
                         return {sizeX, 11.8f};
                     case MenuWindow::Size::Small:
