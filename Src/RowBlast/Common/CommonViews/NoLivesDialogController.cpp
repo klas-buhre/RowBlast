@@ -5,17 +5,17 @@
 
 // Game includes.
 #include "InputUtil.hpp"
-#include "UserData.hpp"
+#include "UserServices.hpp"
 
 using namespace RowBlast;
 
 NoLivesDialogController::NoLivesDialogController(Pht::IEngine& engine,
                                                  const CommonResources& commonResources,
-                                                 const UserData& userData,
+                                                 const UserServices& userServices,
                                                  PotentiallyZoomedScreen potentiallyZoomedScreen) :
     mInput {engine.GetInput()},
-    mUserData {userData},
-    mView {engine, commonResources, userData, potentiallyZoomedScreen},
+    mUserServices {userServices},
+    mView {engine, commonResources, userServices, potentiallyZoomedScreen},
     mSlidingMenuAnimation {engine, mView} {}
 
 void NoLivesDialogController::Init(bool shouldSlideOut) {
@@ -34,7 +34,7 @@ NoLivesDialogController::Result NoLivesDialogController::Update() {
             break;
         case SlidingMenuAnimation::State::ShowingMenu:
             mView.Update();
-            if (mUserData.GetLifeManager().GetNumLives() > 0) {
+            if (mUserServices.GetLifeService().GetNumLives() > 0) {
                 mDeferredResult = Result::Close;
                 mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::No,
                                                     SlidingMenuAnimation::SlideDirection::Down);

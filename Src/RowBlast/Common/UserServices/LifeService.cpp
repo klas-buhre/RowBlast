@@ -1,4 +1,4 @@
-#include "LifeManager.hpp"
+#include "LifeService.hpp"
 
 #include <algorithm>
 
@@ -17,13 +17,13 @@ namespace {
     const std::string lifeLostTimePointMember {"lifeLostTimePoint"};
 }
 
-LifeManager::LifeManager() :
+LifeService::LifeService() :
     mNumLives {fullNumLives} {
     
     LoadState();
 }
 
-void LifeManager::Update() {
+void LifeService::Update() {
     if (mState != State::CountingDown) {
         if (HasFullNumLives()) {
             return;
@@ -55,7 +55,7 @@ void LifeManager::Update() {
     }
 }
 
-void LifeManager::StartLevel() {
+void LifeService::StartLevel() {
     if (mState == State::Idle) {
         mLifeLostTimePoint = std::chrono::steady_clock::now();
         mState = State::StartedPlayingWithFullLives;
@@ -68,7 +68,7 @@ void LifeManager::StartLevel() {
     SaveState();
 }
 
-void LifeManager::CompleteLevel() {
+void LifeService::CompleteLevel() {
     IncreaseNumLives();
     
     if (mState == State::StartedPlayingWithFullLives) {
@@ -78,7 +78,7 @@ void LifeManager::CompleteLevel() {
     SaveState();
 }
 
-void LifeManager::FailLevel() {
+void LifeService::FailLevel() {
     if (mState == State::StartedPlayingWithFullLives) {
         StartCountDown(std::chrono::steady_clock::now());
     }
@@ -86,17 +86,17 @@ void LifeManager::FailLevel() {
     SaveState();
 }
 
-void LifeManager::RefillLives() {
+void LifeService::RefillLives() {
     mNumLives = fullNumLives;
     mState = State::Idle;
     SaveState();
 }
 
-bool LifeManager::HasFullNumLives() const {
+bool LifeService::HasFullNumLives() const {
     return mNumLives >= fullNumLives;
 }
 
-std::chrono::seconds LifeManager::GetDurationUntilNewLife() const {
+std::chrono::seconds LifeService::GetDurationUntilNewLife() const {
     if (HasFullNumLives()) {
         return std::chrono::seconds {0};
     }
@@ -105,18 +105,18 @@ std::chrono::seconds LifeManager::GetDurationUntilNewLife() const {
     return std::chrono::duration_cast<std::chrono::seconds>(duration);
 }
 
-void LifeManager::IncreaseNumLives() {
+void LifeService::IncreaseNumLives() {
     if (mNumLives < fullNumLives) {
         ++mNumLives;
     }
 }
 
-void LifeManager::StartCountDown(std::chrono::steady_clock::time_point lifeLostTimePoint) {
+void LifeService::StartCountDown(std::chrono::steady_clock::time_point lifeLostTimePoint) {
     mLifeLostTimePoint = lifeLostTimePoint;
     mState = State::CountingDown;
 }
 
-void LifeManager::SaveState() {
+void LifeService::SaveState() {
     rapidjson::Document document;
     auto& allocator = document.GetAllocator();
     document.SetObject();
@@ -136,7 +136,7 @@ void LifeManager::SaveState() {
     Pht::FileStorage::Save(filename, jsonString);
 }
 
-bool LifeManager::LoadState() {
+bool LifeService::LoadState() {
     std::string jsonString;
     
     if (!Pht::FileStorage::Load(filename, jsonString)) {

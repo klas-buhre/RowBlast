@@ -9,7 +9,7 @@
 #include "LevelLoader.hpp"
 #include "SettingsMenuController.hpp"
 #include "NoLivesDialogController.hpp"
-#include "UserData.hpp"
+#include "UserServices.hpp"
 #include "CommonResources.hpp"
 
 using namespace RowBlast;
@@ -31,16 +31,16 @@ namespace {
 
 GameController::GameController(Pht::IEngine& engine,
                                const CommonResources& commonResources,
-                               UserData& userData,
+                               UserServices& userServices,
                                Settings& settings) :
     mEngine {engine},
-    mUserData {userData},
+    mUserServices {userServices},
     mPieceResources {engine, commonResources},
     mHudRectangles {engine, commonResources},
     mGameViewControllers {
         engine,
         commonResources,
-        mUserData,
+        mUserServices,
         settings,
         mPieceResources,
         mHudRectangles
@@ -108,7 +108,7 @@ GameController::GameController(Pht::IEngine& engine,
         mGameViewControllers,
         mSlidingTextAnimation,
         mGameLogic,
-        mUserData,
+        mUserServices,
         commonResources,
         mCameraShake,
         mField,
@@ -145,7 +145,7 @@ void GameController::StartLevel(int levelId) {
     mState = GameState::LevelIntro;
     mLevelIntroState = LevelIntroState::Overview;
     
-    mUserData.StartLevel(levelId);
+    mUserServices.StartLevel(levelId);
     
     mEngine.GetSceneManager().InitRenderer();
 }
@@ -230,7 +230,7 @@ void GameController::ChangeGameState(GameLogic::Result gameLogicResult) {
         case GameLogic::Result::GameOver:
             mState = GameState::GameOver;
             GoToGameOverStateGameOverDialog();
-            mUserData.GetLifeManager().FailLevel();
+            mUserServices.GetLifeService().FailLevel();
             break;
         case GameLogic::Result::LevelCompleted:
             mState = GameState::LevelCompleted;
@@ -266,7 +266,7 @@ GameController::Command GameController::UpdateInPausedState() {
     }
     
     mScene.UpdateLightAnimation();
-    mUserData.Update();
+    mUserServices.Update();
 
     return command;
 }
@@ -328,7 +328,7 @@ GameController::Command GameController::UpdateNoLivesDialog() {
         case NoLivesDialogController::Result::None:
             break;
         case NoLivesDialogController::Result::RefillLives:
-            mUserData.GetLifeManager().RefillLives();
+            mUserServices.GetLifeService().RefillLives();
             command = Command::RestartLevel;
             break;
         case NoLivesDialogController::Result::Close:
@@ -350,9 +350,9 @@ GameController::Command GameController::UpdateRestartConfirmationDialog() {
         case RestartConfirmationDialogController::Result::None:
             break;
         case RestartConfirmationDialogController::Result::RestartLevel: {
-            auto& lifeManager {mUserData.GetLifeManager()};
-            lifeManager.FailLevel();
-            if (lifeManager.GetNumLives() == 0) {
+            auto& lifeService {mUserServices.GetLifeService()};
+            lifeService.FailLevel();
+            if (lifeService.GetNumLives() == 0) {
                 GoToPausedStateNoLivesDialog();
             } else {
                 command = Command::RestartLevel;
@@ -374,7 +374,7 @@ GameController::Command GameController::UpdateMapConfirmationDialog() {
         case MapConfirmationDialogController::Result::None:
             break;
         case MapConfirmationDialogController::Result::GoToMap: {
-            mUserData.GetLifeManager().FailLevel();
+            mUserServices.GetLifeService().FailLevel();
             command = Command::GoToMap;
             break;
         }
@@ -475,7 +475,7 @@ GameController::Command GameController::UpdateInLevelCompletedState() {
 GameController::Command GameController::UpdateNoMovesDialog() {
     auto command {Command::None};
     
-    mUserData.Update();
+    mUserServices.Update();
     
     switch (mGameViewControllers.GetNoMovesDialogController().Update()) {
         case NoMovesDialogController::Result::None:
@@ -485,7 +485,7 @@ GameController::Command GameController::UpdateNoMovesDialog() {
             GoToPlayingState();
             break;
         case NoMovesDialogController::Result::BackToMap:
-            mUserData.GetLifeManager().FailLevel();
+            mUserServices.GetLifeService().FailLevel();
             command = Command::GoToMap;
             break;
     }
@@ -496,7 +496,7 @@ GameController::Command GameController::UpdateNoMovesDialog() {
 GameController::Command GameController::UpdateInGameOverState() {
     auto command {Command::None};
     
-    mUserData.Update();
+    mUserServices.Update();
     
     switch (mGameOverState) {
         case GameOverState::GameOverDialog:
@@ -517,7 +517,7 @@ GameController::Command GameController::UpdateGameOverDialog() {
         case GameOverDialogController::Result::None:
             break;
         case GameOverDialogController::Result::Retry:
-            if (mUserData.GetLifeManager().GetNumLives() == 0) {
+            if (mUserServices.GetLifeService().GetNumLives() == 0) {
                 GoToGameOverStateNoLivesDialog();
             } else {
                 command = Command::RestartLevel;

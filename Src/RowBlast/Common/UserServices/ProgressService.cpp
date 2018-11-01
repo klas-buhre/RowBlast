@@ -1,4 +1,4 @@
-#include "ProgressManager.hpp"
+#include "ProgressService.hpp"
 
 #include <assert.h>
 
@@ -14,7 +14,7 @@ namespace {
     const std::string numStarsMember {"numStars"};
 }
 
-ProgressManager::ProgressManager() {
+ProgressService::ProgressService() {
     if (!LoadState()) {
         mNumStars = {0};
     }
@@ -25,7 +25,7 @@ ProgressManager::ProgressManager() {
     // mNumStars = {0};
 }
 
-int ProgressManager::CalculateNumStars(int movesUsed, const StarLimits& starLimits) {
+int ProgressService::CalculateNumStars(int movesUsed, const StarLimits& starLimits) {
     if (movesUsed <= starLimits.mThree) {
         return 3;
     }
@@ -37,13 +37,13 @@ int ProgressManager::CalculateNumStars(int movesUsed, const StarLimits& starLimi
     return 1;
 }
 
-void ProgressManager::StartLevel(int levelId) {
+void ProgressService::StartLevel(int levelId) {
     mCurrentLevel = levelId;
     mProgressedAtPreviousGameRound = false;
     SaveState();
 }
 
-void ProgressManager::CompleteLevel(int levelId, int numStars) {
+void ProgressService::CompleteLevel(int levelId, int numStars) {
     assert(levelId > 0);
     assert(numStars > 0 && numStars <= 3);
     
@@ -63,7 +63,7 @@ void ProgressManager::CompleteLevel(int levelId, int numStars) {
     SaveState();
 }
 
-int ProgressManager::GetNumStars(int levelId) {
+int ProgressService::GetNumStars(int levelId) {
     assert(levelId > 0);
     
     if (levelId <= GetProgress()) {
@@ -73,11 +73,11 @@ int ProgressManager::GetNumStars(int levelId) {
     return 0;
 }
 
-int ProgressManager::GetProgress() {
+int ProgressService::GetProgress() {
     return static_cast<int>(mNumStars.size());
 }
 
-void ProgressManager::SaveState() {
+void ProgressService::SaveState() {
     rapidjson::Document document;
     auto& allocator = document.GetAllocator();
     document.SetObject();
@@ -97,7 +97,7 @@ void ProgressManager::SaveState() {
     Pht::FileStorage::Save(filename, jsonString);
 }
 
-bool ProgressManager::LoadState() {
+bool ProgressService::LoadState() {
     std::string jsonString;
     
     if (!Pht::FileStorage::Load(filename, jsonString)) {

@@ -7,7 +7,7 @@
 
 // Game includes.
 #include "CommonResources.hpp"
-#include "UserData.hpp"
+#include "UserServices.hpp"
 #include "TitleController.hpp"
 #include "MapController.hpp"
 #include "GameController.hpp"
@@ -49,7 +49,7 @@ namespace RowBlast {
         State mNextState {State::TitleScene};
         CommonResources mCommonResources;
         Settings mSettings;
-        UserData mUserData;
+        UserServices mUserServices;
         Universe mUniverse;
         TitleController mTitleController;
         GameController mGameController;

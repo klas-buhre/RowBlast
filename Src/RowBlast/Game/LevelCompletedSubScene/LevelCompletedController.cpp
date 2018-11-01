@@ -11,7 +11,7 @@
 #include "GameViewControllers.hpp"
 #include "SlidingTextAnimation.hpp"
 #include "GameLogic.hpp"
-#include "UserData.hpp"
+#include "UserServices.hpp"
 #include "Level.hpp"
 #include "GameScene.hpp"
 
@@ -30,7 +30,7 @@ LevelCompletedController::LevelCompletedController(Pht::IEngine& engine,
                                                    GameViewControllers& gameViewControllers,
                                                    SlidingTextAnimation& slidingTextAnimation,
                                                    GameLogic& gameLogic,
-                                                   UserData& userData,
+                                                   UserServices& userServices,
                                                    const CommonResources& commonResources,
                                                    Pht::CameraShake& cameraShake,
                                                    Field& field,
@@ -40,7 +40,7 @@ LevelCompletedController::LevelCompletedController(Pht::IEngine& engine,
     mGameViewControllers {gameViewControllers},
     mSlidingTextAnimation {slidingTextAnimation},
     mGameLogic {gameLogic},
-    mUserData {userData},
+    mUserServices {userServices},
     mFadeEffect {
         engine.GetSceneManager(),
         engine.GetRenderer(),
@@ -217,7 +217,7 @@ void LevelCompletedController::UpdateFireworksAndConfetti() {
             mEngine.GetInput().ConsumeWholeTouch()) {
 
             auto numStars {
-                ProgressManager::CalculateNumStars(mGameLogic.GetMovesUsedIncludingCurrent(),
+                ProgressService::CalculateNumStars(mGameLogic.GetMovesUsedIncludingCurrent(),
                                                    mLevel->GetStarLimits())
             };
 
@@ -249,11 +249,11 @@ LevelCompletedDialogController::Result LevelCompletedController::UpdateLevelComp
     
     if (result != LevelCompletedDialogController::Result::None) {
         auto numStars {
-            ProgressManager::CalculateNumStars(mGameLogic.GetMovesUsedIncludingCurrent(),
+            ProgressService::CalculateNumStars(mGameLogic.GetMovesUsedIncludingCurrent(),
                                                mLevel->GetStarLimits())
         };
         
-        mUserData.CompleteLevel(mLevel->GetId(), numStars);
+        mUserServices.CompleteLevel(mLevel->GetId(), numStars);
     }
     
     return result;

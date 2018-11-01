@@ -12,7 +12,7 @@ namespace Pht {
 
 namespace RowBlast {
     class CommonResources;
-    class UserData;
+    class UserServices;
     
     class GameOverDialogController {
     public:
@@ -24,7 +24,7 @@ namespace RowBlast {
         
         GameOverDialogController(Pht::IEngine& engine,
                                  const CommonResources& commonResources,
-                                 const UserData& userData);
+                                 const UserServices& userServices);
         
         void Init();
         Result Update();
@@ -38,7 +38,7 @@ namespace RowBlast {
         Result OnTouch(const Pht::TouchEvent& touchEvent);
         
         Pht::IInput& mInput;
-        const UserData& mUserData;
+        const UserServices& mUserServices;
         GameOverDialogView mView;
         SlidingMenuAnimation mSlidingMenuAnimation;
         Result mDeferredResult {Result::None};

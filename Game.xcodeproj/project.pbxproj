@@ -23,6 +23,9 @@
 		6234617921668D1E00ECD0DF /* planet_rayeon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6234617821668D1E00ECD0DF /* planet_rayeon.jpg */; };
 		6234618C21691DAF00ECD0DF /* asteroid_998.obj in Resources */ = {isa = PBXBuildFile; fileRef = 6234618B21691DAE00ECD0DF /* asteroid_998.obj */; };
 		62346192216B6FE900ECD0DF /* planet_wadow.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62346191216B6FE900ECD0DF /* planet_wadow.jpg */; };
+		6238F5E4218B60FE0008A0CF /* LifeService.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6238F5E0218B60FE0008A0CF /* LifeService.cpp */; };
+		6238F5E5218B60FE0008A0CF /* UserServices.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6238F5E2218B60FE0008A0CF /* UserServices.cpp */; };
+		6238F5E6218B60FE0008A0CF /* ProgressService.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6238F5E3218B60FE0008A0CF /* ProgressService.cpp */; };
 		6240508620FF69C00077A454 /* level46.json in Resources */ = {isa = PBXBuildFile; fileRef = 6240508520FF69C00077A454 /* level46.json */; };
 		6240508820FF82A10077A454 /* level47.json in Resources */ = {isa = PBXBuildFile; fileRef = 6240508720FF82A10077A454 /* level47.json */; };
 		62411A971E61E62800035D2A /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62411A961E61E62800035D2A /* GLKit.framework */; };
@@ -165,9 +168,6 @@
 		625696BA2182382C003A3A9D /* GradientRectangle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 625695AD2182382B003A3A9D /* GradientRectangle.cpp */; };
 		625696BB2182382C003A3A9D /* CommonResources.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 625695AE2182382B003A3A9D /* CommonResources.cpp */; };
 		625696BC2182382C003A3A9D /* FloatingBlocks.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 625695AF2182382B003A3A9D /* FloatingBlocks.cpp */; };
-		625696BD2182382C003A3A9D /* LifeManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 625695B32182382B003A3A9D /* LifeManager.cpp */; };
-		625696BE2182382C003A3A9D /* UserData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 625695B52182382B003A3A9D /* UserData.cpp */; };
-		625696BF2182382C003A3A9D /* ProgressManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 625695B62182382B003A3A9D /* ProgressManager.cpp */; };
 		625696C02182382C003A3A9D /* World3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 625695B92182382B003A3A9D /* World3.cpp */; };
 		625696C12182382C003A3A9D /* World2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 625695BA2182382B003A3A9D /* World2.cpp */; };
 		625696C22182382C003A3A9D /* World1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 625695BB2182382B003A3A9D /* World1.cpp */; };
@@ -426,6 +426,12 @@
 		6234617821668D1E00ECD0DF /* planet_rayeon.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = planet_rayeon.jpg; sourceTree = "<group>"; };
 		6234618B21691DAE00ECD0DF /* asteroid_998.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = asteroid_998.obj; sourceTree = "<group>"; };
 		62346191216B6FE900ECD0DF /* planet_wadow.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = planet_wadow.jpg; sourceTree = "<group>"; };
+		6238F5DE218B60FE0008A0CF /* UserServices.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = UserServices.hpp; sourceTree = "<group>"; };
+		6238F5DF218B60FE0008A0CF /* ProgressService.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ProgressService.hpp; sourceTree = "<group>"; };
+		6238F5E0218B60FE0008A0CF /* LifeService.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LifeService.cpp; sourceTree = "<group>"; };
+		6238F5E1218B60FE0008A0CF /* LifeService.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LifeService.hpp; sourceTree = "<group>"; };
+		6238F5E2218B60FE0008A0CF /* UserServices.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UserServices.cpp; sourceTree = "<group>"; };
+		6238F5E3218B60FE0008A0CF /* ProgressService.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ProgressService.cpp; sourceTree = "<group>"; };
 		6240508520FF69C00077A454 /* level46.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level46.json; sourceTree = "<group>"; };
 		6240508720FF82A10077A454 /* level47.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level47.json; sourceTree = "<group>"; };
 		62411A961E61E62800035D2A /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
@@ -711,12 +717,6 @@
 		625695AD2182382B003A3A9D /* GradientRectangle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GradientRectangle.cpp; sourceTree = "<group>"; };
 		625695AE2182382B003A3A9D /* CommonResources.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CommonResources.cpp; sourceTree = "<group>"; };
 		625695AF2182382B003A3A9D /* FloatingBlocks.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FloatingBlocks.cpp; sourceTree = "<group>"; };
-		625695B12182382B003A3A9D /* UserData.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = UserData.hpp; sourceTree = "<group>"; };
-		625695B22182382B003A3A9D /* ProgressManager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ProgressManager.hpp; sourceTree = "<group>"; };
-		625695B32182382B003A3A9D /* LifeManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LifeManager.cpp; sourceTree = "<group>"; };
-		625695B42182382B003A3A9D /* LifeManager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LifeManager.hpp; sourceTree = "<group>"; };
-		625695B52182382B003A3A9D /* UserData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UserData.cpp; sourceTree = "<group>"; };
-		625695B62182382B003A3A9D /* ProgressManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ProgressManager.cpp; sourceTree = "<group>"; };
 		625695B92182382B003A3A9D /* World3.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = World3.cpp; sourceTree = "<group>"; };
 		625695BA2182382B003A3A9D /* World2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = World2.cpp; sourceTree = "<group>"; };
 		625695BB2182382B003A3A9D /* World1.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = World1.cpp; sourceTree = "<group>"; };
@@ -1234,6 +1234,19 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		6238F5DD218B60FE0008A0CF /* UserServices */ = {
+			isa = PBXGroup;
+			children = (
+				6238F5E0218B60FE0008A0CF /* LifeService.cpp */,
+				6238F5E1218B60FE0008A0CF /* LifeService.hpp */,
+				6238F5E3218B60FE0008A0CF /* ProgressService.cpp */,
+				6238F5DF218B60FE0008A0CF /* ProgressService.hpp */,
+				6238F5E2218B60FE0008A0CF /* UserServices.cpp */,
+				6238F5DE218B60FE0008A0CF /* UserServices.hpp */,
+			);
+			path = UserServices;
+			sourceTree = "<group>";
+		};
 		625693512182382B003A3A9D /* Src */ = {
 			isa = PBXGroup;
 			children = (
@@ -1597,7 +1610,7 @@
 				6256959D2182382B003A3A9D /* CommonResources */,
 				6256958B2182382B003A3A9D /* CommonViews */,
 				6256957D2182382B003A3A9D /* GuiElements */,
-				625695B02182382B003A3A9D /* UserData */,
+				6238F5DD218B60FE0008A0CF /* UserServices */,
 				625695982182382B003A3A9D /* Utils */,
 			);
 			path = Common;
@@ -1680,19 +1693,6 @@
 			path = CommonResources;
 			sourceTree = "<group>";
 		};
-		625695B02182382B003A3A9D /* UserData */ = {
-			isa = PBXGroup;
-			children = (
-				625695B32182382B003A3A9D /* LifeManager.cpp */,
-				625695B42182382B003A3A9D /* LifeManager.hpp */,
-				625695B62182382B003A3A9D /* ProgressManager.cpp */,
-				625695B22182382B003A3A9D /* ProgressManager.hpp */,
-				625695B52182382B003A3A9D /* UserData.cpp */,
-				625695B12182382B003A3A9D /* UserData.hpp */,
-			);
-			path = UserData;
-			sourceTree = "<group>";
-		};
 		625695B72182382B003A3A9D /* Map */ = {
 			isa = PBXGroup;
 			children = (
@@ -1723,20 +1723,20 @@
 		625695C32182382B003A3A9D /* MapScene */ = {
 			isa = PBXGroup;
 			children = (
-				625695C42182382B003A3A9D /* MapPin.hpp */,
-				625695C52182382B003A3A9D /* PortalParticleEffect.hpp */,
-				625695C62182382B003A3A9D /* MapHud.hpp */,
-				625695C72182382B003A3A9D /* NextLevelParticleEffect.hpp */,
 				625695C82182382B003A3A9D /* MapController.cpp */,
-				625695C92182382B003A3A9D /* SunParticleEffect.hpp */,
-				625695CA2182382B003A3A9D /* MapScene.cpp */,
-				625695CB2182382B003A3A9D /* NextLevelParticleEffect.cpp */,
 				625695CC2182382B003A3A9D /* MapController.hpp */,
-				625695CD2182382B003A3A9D /* SunParticleEffect.cpp */,
-				625695CE2182382B003A3A9D /* MapScene.hpp */,
-				625695CF2182382B003A3A9D /* MapPin.cpp */,
-				625695D02182382B003A3A9D /* PortalParticleEffect.cpp */,
 				625695D12182382B003A3A9D /* MapHud.cpp */,
+				625695C62182382B003A3A9D /* MapHud.hpp */,
+				625695CF2182382B003A3A9D /* MapPin.cpp */,
+				625695C42182382B003A3A9D /* MapPin.hpp */,
+				625695CA2182382B003A3A9D /* MapScene.cpp */,
+				625695CE2182382B003A3A9D /* MapScene.hpp */,
+				625695CB2182382B003A3A9D /* NextLevelParticleEffect.cpp */,
+				625695C72182382B003A3A9D /* NextLevelParticleEffect.hpp */,
+				625695D02182382B003A3A9D /* PortalParticleEffect.cpp */,
+				625695C52182382B003A3A9D /* PortalParticleEffect.hpp */,
+				625695CD2182382B003A3A9D /* SunParticleEffect.cpp */,
+				625695C92182382B003A3A9D /* SunParticleEffect.hpp */,
 			);
 			path = MapScene;
 			sourceTree = "<group>";
@@ -2018,10 +2018,10 @@
 		625697702182392B003A3A9D /* Engine */ = {
 			isa = PBXGroup;
 			children = (
-				625697712182392B003A3A9D /* Engine.hpp */,
-				625697722182392B003A3A9D /* IEngine.hpp */,
-				625697732182392B003A3A9D /* IApplication.hpp */,
 				625697742182392B003A3A9D /* Engine.cpp */,
+				625697712182392B003A3A9D /* Engine.hpp */,
+				625697732182392B003A3A9D /* IApplication.hpp */,
+				625697722182392B003A3A9D /* IEngine.hpp */,
 			);
 			path = Engine;
 			sourceTree = "<group>";
@@ -2749,7 +2749,6 @@
 				625696852182382C003A3A9D /* BigTrianglePiece.cpp in Sources */,
 				625698442182392C003A3A9D /* Button.cpp in Sources */,
 				625698582182392C003A3A9D /* FastNoise.cc in Sources */,
-				625696BF2182382C003A3A9D /* ProgressManager.cpp in Sources */,
 				625696B42182382C003A3A9D /* UfoAnimation.cpp in Sources */,
 				625696CA2182382C003A3A9D /* PortalParticleEffect.cpp in Sources */,
 				625696A02182382C003A3A9D /* AsteroidAnimation.cpp in Sources */,
@@ -2840,7 +2839,6 @@
 				625696692182382C003A3A9D /* FieldGrid.cpp in Sources */,
 				625696482182382C003A3A9D /* PlacePieceWindowView.cpp in Sources */,
 				625696CF2182382C003A3A9D /* RowBlastApplication.cpp in Sources */,
-				625696BD2182382C003A3A9D /* LifeManager.cpp in Sources */,
 				625696472182382C003A3A9D /* SameColorDialogController.cpp in Sources */,
 				625696652182382C003A3A9D /* SceneObjectPool.cpp in Sources */,
 				6256965B2182382C003A3A9D /* RestartConfirmationDialogController.cpp in Sources */,
@@ -2876,6 +2874,8 @@
 				625696352182382C003A3A9D /* TitleAnimation.cpp in Sources */,
 				625698392182392C003A3A9D /* OfflineRasterizer.cpp in Sources */,
 				625696512182382C003A3A9D /* GameMenuView.cpp in Sources */,
+				6238F5E4218B60FE0008A0CF /* LifeService.cpp in Sources */,
+				6238F5E6218B60FE0008A0CF /* ProgressService.cpp in Sources */,
 				6256983E2182392C003A3A9D /* main.m in Sources */,
 				625698412182392C003A3A9D /* ImageIOS.mm in Sources */,
 				625698402182392C003A3A9D /* AppDelegate.mm in Sources */,
@@ -2897,7 +2897,6 @@
 				6256968A2182382C003A3A9D /* LPiece.cpp in Sources */,
 				625698382182392C003A3A9D /* FileStorage.cpp in Sources */,
 				625696842182382C003A3A9D /* PyramidPiece.cpp in Sources */,
-				625696BE2182382C003A3A9D /* UserData.cpp in Sources */,
 				625696492182382C003A3A9D /* OtherMovesWindowView.cpp in Sources */,
 				625696682182382C003A3A9D /* GameHudRectangles.cpp in Sources */,
 				6256963E2182382C003A3A9D /* CascadingDialogView.cpp in Sources */,
@@ -2920,6 +2919,7 @@
 				625696B62182382C003A3A9D /* RoundedCylinder.cpp in Sources */,
 				6256983A2182392C003A3A9D /* Transform.cpp in Sources */,
 				6256964F2182382C003A3A9D /* FireworksParticleEffect.cpp in Sources */,
+				6238F5E5218B60FE0008A0CF /* UserServices.cpp in Sources */,
 				625696942182382C003A3A9D /* PieceDropParticleEffect.cpp in Sources */,
 				6256968C2182382C003A3A9D /* MirroredZPiece.cpp in Sources */,
 				6256965A2182382C003A3A9D /* RestartConfirmationDialogView.cpp in Sources */,

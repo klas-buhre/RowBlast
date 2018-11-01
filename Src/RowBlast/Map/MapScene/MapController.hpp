@@ -13,7 +13,7 @@ namespace Pht {
 
 namespace RowBlast {
     class CommonResources;
-    class UserData;
+    class UserServices;
     class Settings;
     class LevelResources;
     class PieceResources;
@@ -52,7 +52,7 @@ namespace RowBlast {
     
         MapController(Pht::IEngine& engine,
                       const CommonResources& commonResources,
-                      UserData& userData,
+                      UserServices& userServices,
                       Settings& settings,
                       const Universe& universe,
                       const LevelResources& levelResources,
@@ -87,7 +87,7 @@ namespace RowBlast {
         void GoToSettingsMenuState();
         
         Pht::IEngine& mEngine;
-        UserData& mUserData;
+        UserServices& mUserServices;
         const LevelResources& mLevelResources;
         const Universe& mUniverse;
         State mState {State::Map};

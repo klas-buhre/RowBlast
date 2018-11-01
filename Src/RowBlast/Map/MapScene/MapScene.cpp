@@ -15,7 +15,7 @@
 
 // Game includes.
 #include "CommonResources.hpp"
-#include "UserData.hpp"
+#include "UserServices.hpp"
 #include "Universe.hpp"
 #include "NextLevelParticleEffect.hpp"
 #include "PortalParticleEffect.hpp"
@@ -50,10 +50,10 @@ namespace {
 
 MapScene::MapScene(Pht::IEngine& engine,
                    const CommonResources& commonResources,
-                   UserData& userData,
+                   UserServices& userServices,
                    const Universe& universe) :
     mEngine {engine},
-    mUserData {userData},
+    mUserServices {userServices},
     mCommonResources {commonResources},
     mUniverse {universe},
     mStarRenderable {
@@ -123,7 +123,7 @@ void MapScene::Init() {
     if (mClickedPortalNextLevelId.HasValue()) {
         SetCameraAtPortal(mClickedPortalNextLevelId.GetValue());
     } else {
-        SetCameraAtLevel(mUserData.GetProgressManager().GetCurrentLevel());
+        SetCameraAtLevel(mUserServices.GetProgressService().GetCurrentLevel());
     }
     
     mUfoContainer = &scene->CreateSceneObject();
@@ -131,7 +131,7 @@ void MapScene::Init() {
     scene->GetRoot().AddChild(*mUfoContainer);
 
     mHud = std::make_unique<MapHud>(mEngine,
-                                    mUserData,
+                                    mUserServices,
                                     mCommonResources.GetHussarFontSize20(PotentiallyZoomedScreen::No),
                                     *scene,
                                     static_cast<int>(Layer::Hud));
@@ -217,8 +217,8 @@ void MapScene::CreatePin(Pht::SceneObject& pinsContainerObject, const MapPlace& 
         }
     }
     
-    auto& progressManager {mUserData.GetProgressManager()};
-    auto isClickable {levelId <= progressManager.GetProgress()};
+    auto& progressService {mUserServices.GetProgressService()};
+    auto isClickable {levelId <= progressService.GetProgress()};
     
     if (mPreviousPin) {
         const auto& connectionMaterial {
@@ -259,7 +259,7 @@ void MapScene::CreatePin(Pht::SceneObject& pinsContainerObject, const MapPlace& 
                                  *mStarRenderable,
                                  position,
                                  levelId,
-                                 progressManager.GetNumStars(levelId),
+                                 progressService.GetNumStars(levelId),
                                  isClickable,
                                  place)
     };
@@ -269,7 +269,7 @@ void MapScene::CreatePin(Pht::SceneObject& pinsContainerObject, const MapPlace& 
 }
 
 void MapScene::CreateEffects(const World& world, const BackgroundLight& backgroundLight) {
-    if (auto* pin {GetLevelPin(mUserData.GetProgressManager().GetProgress())}) {
+    if (auto* pin {GetLevelPin(mUserServices.GetProgressService().GetProgress())}) {
         auto& pinPosition {pin->GetPosition()};
         CreateNextLevelParticleEffect(mEngine, *mScene, pinPosition, static_cast<int>(Layer::Map));
     }

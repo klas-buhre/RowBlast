@@ -13,7 +13,7 @@
 // Game includes.
 #include "SettingsMenuController.hpp"
 #include "NoLivesDialogController.hpp"
-#include "UserData.hpp"
+#include "UserServices.hpp"
 #include "LevelLoader.hpp"
 #include "Universe.hpp"
 
@@ -35,19 +35,19 @@ int MapController::Command::GetLevel() const {
 
 MapController::MapController(Pht::IEngine& engine,
                              const CommonResources& commonResources,
-                             UserData& userData,
+                             UserServices& userServices,
                              Settings& settings,
                              const Universe& universe,
                              const LevelResources& levelResources,
                              PieceResources& pieceResources) :
     mEngine {engine},
-    mUserData {userData},
+    mUserServices {userServices},
     mLevelResources {levelResources},
     mUniverse {universe},
-    mScene {engine, commonResources, userData, universe},
+    mScene {engine, commonResources, userServices, universe},
     mUfo {engine, commonResources, 1.0f},
     mUfoAnimation {engine, mUfo},
-    mMapViewControllers {engine, mScene, commonResources, userData, settings, pieceResources} {}
+    mMapViewControllers {engine, mScene, commonResources, userServices, settings, pieceResources} {}
 
 void MapController::Init() {
     mScene.Init();
@@ -58,7 +58,7 @@ void MapController::Init() {
     mState = State::Map;
     mCameraXVelocity = 0.0f;
     
-    if (auto* currentPin {mScene.GetLevelPin(mUserData.GetProgressManager().GetProgress())}) {
+    if (auto* currentPin {mScene.GetLevelPin(mUserServices.GetProgressService().GetProgress())}) {
         mUfo.SetPosition(currentPin->GetUfoPosition());
     } else {
         mUfo.Hide();
@@ -151,7 +151,7 @@ void MapController::UpdateNoLivesDialog() {
         case NoLivesDialogController::Result::None:
             break;
         case NoLivesDialogController::Result::RefillLives:
-            mUserData.GetLifeManager().RefillLives();
+            mUserServices.GetLifeService().RefillLives();
             mState = State::Map;
             mMapViewControllers.SetActiveController(MapViewControllers::SettingsButton);
             break;
@@ -250,7 +250,7 @@ MapController::Command MapController::HandlePinClick(const MapPin& pin) {
     
     switch (mapPlace.GetKind()) {
         case MapPlace::Kind::MapLevel:
-            if (mUserData.GetLifeManager().GetNumLives() > 0) {
+            if (mUserServices.GetLifeService().GetNumLives() > 0) {
                 GoToLevelGoalDialogState(pin.GetLevel());
             } else {
                 mState = State::NoLivesDialog;
@@ -332,7 +332,7 @@ void MapController::GoToUfoAnimationState(int levelToStart) {
     mState = State::UfoAnimation;
     mLevelToStart = levelToStart;
     
-    auto nextLevel {mUserData.GetProgressManager().GetProgress()};
+    auto nextLevel {mUserServices.GetProgressService().GetProgress()};
     auto* nextPin {mScene.GetPin(nextLevel)};
     auto* currentPin {mScene.GetLevelPin(nextLevel - 1)};
     

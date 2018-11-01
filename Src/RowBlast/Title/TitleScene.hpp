@@ -19,14 +19,14 @@ namespace Pht {
 
 namespace RowBlast {
     class CommonResources;
-    class UserData;
+    class UserServices;
     class Universe;
     
     class TitleScene {
     public:
         TitleScene(Pht::IEngine& engine,
                    const CommonResources& commonResources,
-                   const UserData& userData,
+                   const UserServices& userServices,
                    const Universe& universe);
         
         void Update();

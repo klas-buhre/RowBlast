@@ -25,7 +25,7 @@ namespace Pht {
 
 namespace RowBlast {
     class CommonResources;
-    class UserData;
+    class UserServices;
     class World;
     class MapPlace;
     class Universe;
@@ -35,7 +35,7 @@ namespace RowBlast {
     public:
         MapScene(Pht::IEngine& engine,
                  const CommonResources& commonResources,
-                 UserData& userData,
+                 UserServices& userServices,
                  const Universe& universe);
         
         void Init();
@@ -83,7 +83,7 @@ namespace RowBlast {
         const MapPin* GetPortalPin(int portalNextLevelId) const;
         
         Pht::IEngine& mEngine;
-        UserData& mUserData;
+        UserServices& mUserServices;
         const CommonResources& mCommonResources;
         const Universe& mUniverse;
         Pht::Scene* mScene {nullptr};

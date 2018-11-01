@@ -1,5 +1,5 @@
-#ifndef ProgressManager_hpp
-#define ProgressManager_hpp
+#ifndef ProgressService_hpp
+#define ProgressService_hpp
 
 #include <vector>
 #include <array>
@@ -10,9 +10,9 @@ namespace RowBlast {
         int mThree {0};
     };
     
-    class ProgressManager {
+    class ProgressService {
     public:
-        ProgressManager();
+        ProgressService();
         
         static int CalculateNumStars(int movesUsed, const StarLimits& starLimits);
         

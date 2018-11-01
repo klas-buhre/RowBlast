@@ -7,7 +7,7 @@
 // Game includes.
 #include "Cell.hpp"
 #include "Piece.hpp"
-#include "ProgressManager.hpp"
+#include "ProgressService.hpp"
 
 namespace RowBlast {
     class Level {

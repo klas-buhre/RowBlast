@@ -12,7 +12,7 @@ namespace Pht {
 
 namespace RowBlast {
     class CommonResources;
-    class UserData;
+    class UserServices;
     class Universe;
     
     class TitleController {
@@ -24,7 +24,7 @@ namespace RowBlast {
         
         TitleController(Pht::IEngine& engine,
                         const CommonResources& commonResources,
-                        const UserData& userData,
+                        const UserServices& userServices,
                         const Universe& universe);
     
         Command Update();

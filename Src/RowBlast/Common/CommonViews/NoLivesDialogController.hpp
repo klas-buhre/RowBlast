@@ -13,7 +13,7 @@ namespace Pht {
 }
 
 namespace RowBlast {
-    class UserData;
+    class UserServices;
     
     class NoLivesDialogController {
     public:
@@ -25,7 +25,7 @@ namespace RowBlast {
         
         NoLivesDialogController(Pht::IEngine& engine,
                                 const CommonResources& commonResources,
-                                const UserData& userData,
+                                const UserServices& userServices,
                                 PotentiallyZoomedScreen potentiallyZoomedScreen);
         
         void Init(bool shouldSlideOut);
@@ -40,7 +40,7 @@ namespace RowBlast {
         Result OnTouch(const Pht::TouchEvent& touchEvent);
         
         Pht::IInput& mInput;
-        const UserData& mUserData;
+        const UserServices& mUserServices;
         NoLivesDialogView mView;
         SlidingMenuAnimation mSlidingMenuAnimation;
         bool mShouldSlideOut {true};

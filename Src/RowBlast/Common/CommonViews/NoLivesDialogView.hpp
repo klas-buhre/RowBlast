@@ -16,13 +16,13 @@ namespace Pht {
 }
 
 namespace RowBlast {
-    class UserData;
+    class UserServices;
     
     class NoLivesDialogView: public Pht::GuiView {
     public:
         NoLivesDialogView(Pht::IEngine& engine,
                           const CommonResources& commonResources,
-                          const UserData& userData,
+                          const UserServices& userServices,
                           PotentiallyZoomedScreen potentiallyZoomedScreen);
 
         void Update();
@@ -36,7 +36,7 @@ namespace RowBlast {
         }
         
     private:
-        const UserData& mUserData;
+        const UserServices& mUserServices;
         std::unique_ptr<MenuButton> mCloseButton;
         std::unique_ptr<MenuButton> mRefillLivesButton;
         std::chrono::seconds mSecondsUntilNewLife;

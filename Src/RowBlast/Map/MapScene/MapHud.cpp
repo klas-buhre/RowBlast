@@ -8,7 +8,7 @@
 #include "TextComponent.hpp"
 
 // Game includes.
-#include "UserData.hpp"
+#include "UserServices.hpp"
 #include "StringUtils.hpp"
 #include "GradientRectangle.hpp"
 #include "UiLayer.hpp"
@@ -20,11 +20,11 @@ namespace {
 }
 
 MapHud::MapHud(Pht::IEngine& engine,
-               const UserData& userData,
+               const UserServices& userServices,
                const Pht::Font& font,
                Pht::Scene& scene,
                int hudLayer) :
-    mUserData {userData} {
+    mUserServices {userServices} {
     
     auto& hudObject {scene.CreateSceneObject()};
     hudObject.SetLayer(hudLayer);
@@ -124,7 +124,7 @@ void MapHud::Update() {
     UpdateLivesText();
     UpdateCountdown();
     
-    if (mUserData.GetLifeManager().HasFullNumLives()) {
+    if (mUserServices.GetLifeService().HasFullNumLives()) {
         mNewLifeCountdownContainer->SetIsVisible(false);
     } else {
         mNewLifeCountdownContainer->SetIsVisible(true);
@@ -132,7 +132,7 @@ void MapHud::Update() {
 }
 
 void MapHud::UpdateLivesText() {
-    auto lives {mUserData.GetLifeManager().GetNumLives()};
+    auto lives {mUserServices.GetLifeService().GetNumLives()};
     
     if (lives != mNumLives) {
         const auto bufSize {64};
@@ -151,7 +151,7 @@ void MapHud::UpdateLivesText() {
 }
 
 void MapHud::UpdateCountdown() {
-    auto secondsUntilNewLife {mUserData.GetLifeManager().GetDurationUntilNewLife()};
+    auto secondsUntilNewLife {mUserServices.GetLifeService().GetDurationUntilNewLife()};
 
     if (secondsUntilNewLife != mSecondsUntilNewLife) {
         StaticStringBuffer countdownBuffer;

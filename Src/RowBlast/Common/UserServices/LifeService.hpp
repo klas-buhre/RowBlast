@@ -1,12 +1,12 @@
-#ifndef LifeManager_hpp
-#define LifeManager_hpp
+#ifndef LifeService_hpp
+#define LifeService_hpp
 
 #include <chrono>
 
 namespace RowBlast {
-    class LifeManager {
+    class LifeService {
     public:
-        LifeManager();
+        LifeService();
         
         void Update();
         void StartLevel();

@@ -16,12 +16,12 @@ namespace Pht {
 }
 
 namespace RowBlast {
-    class UserData;
+    class UserServices;
     
     class MapHud {
     public:
         MapHud(Pht::IEngine& engine,
-               const UserData& userData,
+               const UserServices& userServices,
                const Pht::Font& font,
                Pht::Scene& scene,
                int hudLayer);
@@ -44,7 +44,7 @@ namespace RowBlast {
         void UpdateLivesText();
         void UpdateCountdown();
         
-        const UserData& mUserData;
+        const UserServices& mUserServices;
         Pht::TextComponent* mLivesText {nullptr};
         Pht::TextComponent* mNewLifeCountdownText {nullptr};
         Pht::SceneObject* mNewLifeCountdownContainer {nullptr};

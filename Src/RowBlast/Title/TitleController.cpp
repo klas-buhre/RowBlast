@@ -16,10 +16,10 @@ namespace {
 
 TitleController::TitleController(Pht::IEngine& engine,
                                  const CommonResources& commonResources,
-                                 const UserData& userData,
+                                 const UserServices& userServices,
                                  const Universe& universe) :
     mEngine {engine},
-    mScene {engine, commonResources, userData, universe},
+    mScene {engine, commonResources, userServices, universe},
     mUfo {engine, commonResources, 2.0f},
     mUfoAnimation {engine, mUfo} {
     

@@ -23,7 +23,7 @@ namespace RowBlast {
     class SlidingTextAnimation;
     class ClearLastBlocksAnimation;
     class GameLogic;
-    class UserData;
+    class UserServices;
     class Level;
     class CommonResources;
     class FlyingBlocksAnimation;
@@ -36,7 +36,7 @@ namespace RowBlast {
                                  GameViewControllers& gameViewControllers,
                                  SlidingTextAnimation& slidingTextAnimation,
                                  GameLogic& gameLogic,
-                                 UserData& userData,
+                                 UserServices& userServices,
                                  const CommonResources& commonResources,
                                  Pht::CameraShake& cameraShake,
                                  Field& field,
@@ -74,7 +74,7 @@ namespace RowBlast {
         GameViewControllers& mGameViewControllers;
         SlidingTextAnimation& mSlidingTextAnimation;
         GameLogic& mGameLogic;
-        UserData& mUserData;
+        UserServices& mUserServices;
         const Level* mLevel {nullptr};
         Pht::FadeEffect mFadeEffect;
         ClearLastBlocksAnimation mClearLastBlocksAnimation;

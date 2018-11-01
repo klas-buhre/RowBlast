@@ -6,7 +6,7 @@
 #include "QuadMesh.hpp"
 
 // Game includes.
-#include "UserData.hpp"
+#include "UserServices.hpp"
 #include "StringUtils.hpp"
 #include "UiLayer.hpp"
 
@@ -18,9 +18,9 @@ namespace {
 
 NoLivesDialogView::NoLivesDialogView(Pht::IEngine& engine,
                                      const CommonResources& commonResources,
-                                     const UserData& userData,
+                                     const UserServices& userServices,
                                      PotentiallyZoomedScreen zoom) :
-    mUserData {userData} {
+    mUserServices {userServices} {
     
     auto& guiResources {commonResources.GetGuiResources()};
     auto& menuWindow {guiResources.GetMediumDarkMenuWindow(zoom)};
@@ -94,7 +94,7 @@ NoLivesDialogView::NoLivesDialogView(Pht::IEngine& engine,
 }
 
 void NoLivesDialogView::Update() {
-    auto secondsUntilNewLife {mUserData.GetLifeManager().GetDurationUntilNewLife()};
+    auto secondsUntilNewLife {mUserServices.GetLifeService().GetDurationUntilNewLife()};
     
     if (secondsUntilNewLife != mSecondsUntilNewLife) {
         StaticStringBuffer countdownBuffer;

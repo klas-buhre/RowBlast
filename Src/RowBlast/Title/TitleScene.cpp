@@ -15,7 +15,7 @@
 // Game includes.
 #include "CommonResources.hpp"
 #include "UiLayer.hpp"
-#include "UserData.hpp"
+#include "UserServices.hpp"
 #include "Universe.hpp"
 
 using namespace RowBlast;
@@ -229,8 +229,8 @@ namespace {
         }
     }
     
-    int CalculateWorldId(const UserData& userData, const Universe& universe) {
-        auto currentLevelId {userData.GetProgressManager().GetCurrentLevel()};
+    int CalculateWorldId(const UserServices& userServices, const Universe& universe) {
+        auto currentLevelId {userServices.GetProgressService().GetCurrentLevel()};
         auto mapSceneWorldId {universe.CalcWorldId(currentLevelId)};
         
         switch (mapSceneWorldId) {
@@ -268,7 +268,7 @@ namespace {
 
 TitleScene::TitleScene(Pht::IEngine& engine,
                        const CommonResources& commonResources,
-                       const UserData& userData,
+                       const UserServices& userServices,
                        const Universe& universe) :
     mTapFont {"HussarBoldWeb.otf", engine.GetRenderer().GetAdjustedNumPixels(35)} {
     
@@ -288,7 +288,7 @@ TitleScene::TitleScene(Pht::IEngine& engine,
     fadeEffectRenderPass.SetHudMode(true);
     scene->AddRenderPass(fadeEffectRenderPass);
 
-    auto worldId {CalculateWorldId(userData, universe)};
+    auto worldId {CalculateWorldId(userServices, universe)};
 
     auto& light {scene->CreateGlobalLight()};
     light.SetDirection({1.0f, 1.0f, 1.0f});

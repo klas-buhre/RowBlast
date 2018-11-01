@@ -34,11 +34,12 @@ Backlog:
   -Make ready for release:
     -Do a soft launch in a couple of countries? Maybe the nordic countris and UK? Only english
      localization is needed for that.
-    -Maybe support for different languages.
+    -Store settings in file.
     -Make launch screens for all supported device resulutions. Should say Teleporter Studios.
     -Make icons and launch screens for all supported device resulutions.
     -Credit the icon creator: <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
     -Credit FastNoise, MIT license: https://github.com/Auburns/FastNoise/
+    -Maybe support for different languages.
 
 Ongoing tasks:
 
@@ -132,8 +133,6 @@ Ordered Backlog:
         Cost: 5
     -Levels for the space world.
         Cost: 7
-    -Store settings in file.
-        Cost: 0.5
     -Sounds/music.
         Cost: 5
     -Playtest.
@@ -385,14 +384,14 @@ RowBlastApplication::RowBlastApplication(Pht::IEngine& engine) :
     mEngine {engine},
     mCommonResources {engine},
     mSettings {},
-    mUserData {},
+    mUserServices {},
     mUniverse {},
-    mTitleController {engine, mCommonResources, mUserData, mUniverse},
-    mGameController {engine, mCommonResources, mUserData, mSettings},
+    mTitleController {engine, mCommonResources, mUserServices, mUniverse},
+    mGameController {engine, mCommonResources, mUserServices, mSettings},
     mMapController {
         engine,
         mCommonResources,
-        mUserData,
+        mUserServices,
         mSettings,
         mUniverse,
         mGameController.GetLevelResources(),
@@ -410,13 +409,13 @@ RowBlastApplication::RowBlastApplication(Pht::IEngine& engine) :
     InsertFadeEffectInActiveScene();
     mFadeEffect.StartInMidFade();
     
-    auto currentLevelId {mUserData.GetProgressManager().GetCurrentLevel()};
+    auto currentLevelId {mUserServices.GetProgressService().GetCurrentLevel()};
     mMapController.GetScene().SetWorldId(mUniverse.CalcWorldId(currentLevelId));
 }
 
 void RowBlastApplication::OnUpdate() {
     if (mState != State::GameScene) {
-        mUserData.Update();
+        mUserServices.Update();
     }
     
     UpdateScene();
@@ -477,8 +476,8 @@ void RowBlastApplication::UpdateGameScene() {
             case GameController::Command::None:
                 break;
             case GameController::Command::GoToMap:
-                mLevelToStart = mUserData.GetProgressManager().GetCurrentLevel() + 1;
-                if (mUserData.GetProgressManager().ProgressedAtPreviousGameRound()) {
+                mLevelToStart = mUserServices.GetProgressService().GetCurrentLevel() + 1;
+                if (mUserServices.GetProgressService().ProgressedAtPreviousGameRound()) {
                     BeginFadeToMap(MapController::State::UfoAnimation);
                     mMapController.SetStartLevelDialogOnAnimationFinished(false);
                 } else {
@@ -489,8 +488,8 @@ void RowBlastApplication::UpdateGameScene() {
                 BeginFadeToMap(MapController::State::LevelGoalDialog);
                 break;
             case GameController::Command::GoToNextLevel:
-                mLevelToStart = mUserData.GetProgressManager().GetCurrentLevel() + 1;
-                if (mUserData.GetProgressManager().ProgressedAtPreviousGameRound()) {
+                mLevelToStart = mUserServices.GetProgressService().GetCurrentLevel() + 1;
+                if (mUserServices.GetProgressService().ProgressedAtPreviousGameRound()) {
                     BeginFadeToMap(MapController::State::UfoAnimation);
                     mMapController.SetStartLevelDialogOnAnimationFinished(true);
                 } else {

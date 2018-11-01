@@ -5,15 +5,15 @@
 
 // Game includes.
 #include "InputUtil.hpp"
-#include "UserData.hpp"
+#include "UserServices.hpp"
 
 using namespace RowBlast;
 
 GameOverDialogController::GameOverDialogController(Pht::IEngine& engine,
                                                    const CommonResources& commonResources,
-                                                   const UserData& userData) :
+                                                   const UserServices& userServices) :
     mInput {engine.GetInput()},
-    mUserData {userData},
+    mUserServices {userServices},
     mView {engine, commonResources},
     mSlidingMenuAnimation {engine, mView} {}
 
@@ -51,7 +51,7 @@ GameOverDialogController::OnTouch(const Pht::TouchEvent& touchEvent) {
     }
 
     if (mView.GetRetryButton().IsClicked(touchEvent)) {
-        if (mUserData.GetLifeManager().GetNumLives() == 0) {
+        if (mUserServices.GetLifeService().GetNumLives() == 0) {
             mDeferredResult = Result::Retry;
             mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::No);
             return Result::None;

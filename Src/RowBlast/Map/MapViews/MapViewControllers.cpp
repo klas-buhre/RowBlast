@@ -17,7 +17,7 @@ namespace {
 MapViewControllers::MapViewControllers(Pht::IEngine& engine,
                                        MapScene& scene,
                                        const CommonResources& commonResources,
-                                       const UserData& userData,
+                                       const UserServices& userServices,
                                        Settings& settings,
                                        PieceResources& pieceResources) :
     mScene {scene},
@@ -35,7 +35,7 @@ MapViewControllers::MapViewControllers(Pht::IEngine& engine,
         pieceResources,
         LevelGoalDialogView::Scene::Map
     },
-    mNoLivesDialogController {engine, commonResources, userData, PotentiallyZoomedScreen::No},
+    mNoLivesDialogController {engine, commonResources, userServices, PotentiallyZoomedScreen::No},
     mSettingsMenuController {engine, commonResources, settings, PotentiallyZoomedScreen::No} {
     
     mViewManager.AddView(static_cast<int>(SettingsButton), mSettingsButtonController.GetView());

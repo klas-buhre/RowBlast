@@ -5,16 +5,16 @@
 
 // Game includes.
 #include "InputUtil.hpp"
-#include "UserData.hpp"
+#include "UserServices.hpp"
 
 using namespace RowBlast;
 
 RestartConfirmationDialogController::
 RestartConfirmationDialogController(Pht::IEngine& engine,
                                     const CommonResources& commonResources,
-                                    const UserData& userData) :
+                                    const UserServices& userServices) :
     mInput {engine.GetInput()},
-    mUserData {userData},
+    mUserServices {userServices},
     mView {engine, commonResources},
     mSlidingMenuAnimation {engine, mView} {}
 
@@ -52,7 +52,7 @@ RestartConfirmationDialogController::Result RestartConfirmationDialogController:
 RestartConfirmationDialogController::Result
 RestartConfirmationDialogController::OnTouch(const Pht::TouchEvent& touchEvent) {
     if (mView.GetYesButton().IsClicked(touchEvent)) {
-        if (mUserData.GetLifeManager().GetNumLives() == 0) {
+        if (mUserServices.GetLifeService().GetNumLives() == 0) {
             mDeferredResult = Result::RestartLevel;
             mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::Yes,
                                                 SlidingMenuAnimation::SlideDirection::Right);

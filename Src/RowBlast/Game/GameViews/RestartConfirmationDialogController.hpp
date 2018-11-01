@@ -12,7 +12,7 @@ namespace Pht {
 
 namespace RowBlast {
     class CommonResources;
-    class UserData;
+    class UserServices;
     
     class RestartConfirmationDialogController {
     public:
@@ -24,7 +24,7 @@ namespace RowBlast {
         
         RestartConfirmationDialogController(Pht::IEngine& engine,
                                             const CommonResources& commonResources,
-                                            const UserData& userData);
+                                            const UserServices& userServices);
         
         void Init();
         void SetFadeEffect(Pht::FadeEffect& fadeEffect);
@@ -39,7 +39,7 @@ namespace RowBlast {
         Result OnTouch(const Pht::TouchEvent& touchEvent);
         
         Pht::IInput& mInput;
-        const UserData& mUserData;
+        const UserServices& mUserServices;
         RestartConfirmationDialogView mView;
         SlidingMenuAnimation mSlidingMenuAnimation;
         Result mDeferredResult {Result::None};
