@@ -31,7 +31,7 @@ namespace {
     constexpr auto daylightLightIntensity {0.985f};
     constexpr auto sunsetLightIntensity {0.94f};
     constexpr auto darkLightIntensity {0.78f};
-    constexpr auto darkFieldQuadBrightness {0.9125f};
+    constexpr auto fieldQuadBrightness {0.9125f};
 
     const std::vector<BlockPathVolume> standardFloatingBlockPaths {
         BlockPathVolume {
@@ -134,7 +134,7 @@ void GameScene::Init(const Level& level,
     CreateBackgroundLayerLight(level);
     CreateFloatingBlocks(level);
     CreateLevelCompletedEffectsContainer();
-    CreateFieldQuad(level);
+    CreateFieldQuad();
     CreateFieldContainer();
     CreateBlueprintSlots(level, levelResources);
     CreatePieceDropEffectsContainer();
@@ -282,7 +282,7 @@ void GameScene::InitFieldDimensions(const Level& level) {
     };
 }
 
-void GameScene::CreateFieldQuad(const Level& level) {
+void GameScene::CreateFieldQuad() {
     mFieldQuadContainer = &mScene->CreateSceneObject();
     mFieldQuadContainer->SetLayer(static_cast<int>(Layer::FieldQuad));
     mScene->GetRoot().AddChild(*mFieldQuadContainer);
@@ -290,7 +290,7 @@ void GameScene::CreateFieldQuad(const Level& level) {
     Pht::Material fieldMaterial;
     fieldMaterial.SetOpacity(0.96f);
 
-    auto vertices {CreateFieldVertices(level)};
+    auto vertices {CreateFieldVertices()};
     auto& fieldQuad {mScene->CreateSceneObject(Pht::QuadMesh {vertices}, fieldMaterial)};
     Pht::Vec3 quadPosition {mFieldPosition.x, mFieldPosition.y, mFieldPosition.z + fieldQuadZ};
     fieldQuad.GetTransform().SetPosition(quadPosition);
@@ -303,13 +303,10 @@ void GameScene::CreateFieldContainer() {
     mScene->GetRoot().AddChild(*mFieldContainer);
 }
 
-Pht::QuadMesh::Vertices GameScene::CreateFieldVertices(const Level& level) {
+Pht::QuadMesh::Vertices GameScene::CreateFieldVertices() {
     auto width {mFieldWidth + fieldPadding};
     auto height {mFieldHeight + fieldPadding};
-    
-    auto f {
-        level.GetLightIntensity() == Level::LightIntensity::Dark ? darkFieldQuadBrightness : 0.95f // 1.0f
-    };
+    auto f {fieldQuadBrightness};
 
     return {
         {{-width / 2.0f, -height / 2.0f, 0.0f}, {0.3f * f, 0.3f * f, 0.752f * f, 1.0f}},

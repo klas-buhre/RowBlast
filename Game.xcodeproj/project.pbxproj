@@ -1348,18 +1348,18 @@
 		625694B82182382B003A3A9D /* LevelCompletedSubScene */ = {
 			isa = PBXGroup;
 			children = (
-				625694B92182382B003A3A9D /* FireworksParticleEffect.hpp */,
-				625694BA2182382B003A3A9D /* StarsAnimation.hpp */,
 				625694BB2182382B003A3A9D /* ClearLastBlocksAnimation.cpp */,
-				625694BC2182382B003A3A9D /* LevelCompletedController.cpp */,
-				625694BD2182382B003A3A9D /* ConfettiParticleEffect.cpp */,
-				625694BE2182382B003A3A9D /* SlidingFieldAnimation.cpp */,
-				625694BF2182382B003A3A9D /* ConfettiParticleEffect.hpp */,
-				625694C02182382B003A3A9D /* SlidingFieldAnimation.hpp */,
-				625694C12182382B003A3A9D /* FireworksParticleEffect.cpp */,
-				625694C22182382B003A3A9D /* StarsAnimation.cpp */,
 				625694C32182382B003A3A9D /* ClearLastBlocksAnimation.hpp */,
+				625694BD2182382B003A3A9D /* ConfettiParticleEffect.cpp */,
+				625694BF2182382B003A3A9D /* ConfettiParticleEffect.hpp */,
+				625694C12182382B003A3A9D /* FireworksParticleEffect.cpp */,
+				625694B92182382B003A3A9D /* FireworksParticleEffect.hpp */,
+				625694BC2182382B003A3A9D /* LevelCompletedController.cpp */,
 				625694C42182382B003A3A9D /* LevelCompletedController.hpp */,
+				625694BE2182382B003A3A9D /* SlidingFieldAnimation.cpp */,
+				625694C02182382B003A3A9D /* SlidingFieldAnimation.hpp */,
+				625694C22182382B003A3A9D /* StarsAnimation.cpp */,
+				625694BA2182382B003A3A9D /* StarsAnimation.hpp */,
 			);
 			path = LevelCompletedSubScene;
 			sourceTree = "<group>";

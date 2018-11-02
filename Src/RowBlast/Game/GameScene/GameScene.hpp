@@ -216,9 +216,9 @@ namespace RowBlast {
         void CreateFloatingBlocks(const Level& level);
         void CreateLevelCompletedEffectsContainer();
         void InitFieldDimensions(const Level& level);
-        void CreateFieldQuad(const Level& level);
+        void CreateFieldQuad();
         void CreateFieldContainer();
-        Pht::QuadMesh::Vertices CreateFieldVertices(const Level& level);
+        Pht::QuadMesh::Vertices CreateFieldVertices();
         void CreateBlueprintSlots(const Level& level, const LevelResources& levelResources);
         void CreatePieceDropEffectsContainer();
         void CreateFieldBlocksContainer();

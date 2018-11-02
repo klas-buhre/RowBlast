@@ -1,9 +1,9 @@
 /*
 Backlog:
   -Engine:
+    -Analytics.
     -Purchases.
     -Net/HTTP.
-    -Analytics.
     -Metal.
 
   -Gameplay:
@@ -15,8 +15,6 @@ Backlog:
      not really matter since the user can select any piece from the selectables but maybe it is most 
      convenient to go back to the state before the move and not the initial state.
   -Rendering:
-    -Maybe use the dark field quad brightness for the sky worlds as well.
-    -Maybe smooth the dark area in the field env map.
     -Less red in the red field material.
     -Maybe slightly thinner welds.
     -Maybe less reflectivity in the gray, yellow and green field block materials?
@@ -42,7 +40,7 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-
+    -Smooth the dark area in the field env map.
 
 
 
