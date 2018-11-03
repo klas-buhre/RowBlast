@@ -40,7 +40,8 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-    -Smooth the dark area in the field env map.
+
+
 
 
 
