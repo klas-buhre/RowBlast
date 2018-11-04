@@ -26,7 +26,7 @@
 		6238F5E4218B60FE0008A0CF /* LifeService.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6238F5E0218B60FE0008A0CF /* LifeService.cpp */; };
 		6238F5E5218B60FE0008A0CF /* UserServices.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6238F5E2218B60FE0008A0CF /* UserServices.cpp */; };
 		6238F5E6218B60FE0008A0CF /* ProgressService.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6238F5E3218B60FE0008A0CF /* ProgressService.cpp */; };
-		6238F610218E01DA0008A0CF /* sky_upside_down_patched_mirrored.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6238F60F218E01DA0008A0CF /* sky_upside_down_patched_mirrored.jpg */; };
+		6238F618218F0CEC0008A0CF /* sky_upside_down_patched_mirrored.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6238F617218F0CEB0008A0CF /* sky_upside_down_patched_mirrored.jpg */; };
 		6240508620FF69C00077A454 /* level46.json in Resources */ = {isa = PBXBuildFile; fileRef = 6240508520FF69C00077A454 /* level46.json */; };
 		6240508820FF82A10077A454 /* level47.json in Resources */ = {isa = PBXBuildFile; fileRef = 6240508720FF82A10077A454 /* level47.json */; };
 		62411A971E61E62800035D2A /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62411A961E61E62800035D2A /* GLKit.framework */; };
@@ -432,7 +432,7 @@
 		6238F5E1218B60FE0008A0CF /* LifeService.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LifeService.hpp; sourceTree = "<group>"; };
 		6238F5E2218B60FE0008A0CF /* UserServices.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UserServices.cpp; sourceTree = "<group>"; };
 		6238F5E3218B60FE0008A0CF /* ProgressService.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ProgressService.cpp; sourceTree = "<group>"; };
-		6238F60F218E01DA0008A0CF /* sky_upside_down_patched_mirrored.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sky_upside_down_patched_mirrored.jpg; sourceTree = "<group>"; };
+		6238F617218F0CEB0008A0CF /* sky_upside_down_patched_mirrored.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sky_upside_down_patched_mirrored.jpg; sourceTree = "<group>"; };
 		6240508520FF69C00077A454 /* level46.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level46.json; sourceTree = "<group>"; };
 		6240508720FF82A10077A454 /* level47.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level47.json; sourceTree = "<group>"; };
 		62411A961E61E62800035D2A /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
@@ -2447,7 +2447,7 @@
 		62B1CB64210F8F8500D0F195 /* Game */ = {
 			isa = PBXGroup;
 			children = (
-				6238F60F218E01DA0008A0CF /* sky_upside_down_patched_mirrored.jpg */,
+				6238F617218F0CEB0008A0CF /* sky_upside_down_patched_mirrored.jpg */,
 				624C72E42177AB250006068B /* shield.png */,
 				62B1CB65210F8F8500D0F195 /* bomb_798_emission.jpg */,
 				62B1CB67210F8F8500D0F195 /* bomb_798.jpg */,
@@ -2546,7 +2546,6 @@
 				623461662166216800ECD0DF /* wadow_rings.png in Resources */,
 				62E335DC1FD2EF600069B6CF /* level24.json in Resources */,
 				6299915E2117374C00C845D1 /* laser_frame2.jpg in Resources */,
-				6238F610218E01DA0008A0CF /* sky_upside_down_patched_mirrored.jpg in Resources */,
 				625698332182392C003A3A9D /* EnvMap.vert in Resources */,
 				6270DC951FCB23D800FB457D /* level21.json in Resources */,
 				629B837E20C587A100DD2D0E /* level36.json in Resources */,
@@ -2671,6 +2670,7 @@
 				62B1CB86210F8F8600D0F195 /* particle_sprite_point_blurred.png in Resources */,
 				62B1CB8D210F8F8600D0F195 /* cloud_B_envmap.jpg in Resources */,
 				62B1CBA82110D46E00D0F195 /* bomb_frame3.jpg in Resources */,
+				6238F618218F0CEC0008A0CF /* sky_upside_down_patched_mirrored.jpg in Resources */,
 				624C72E52177AB260006068B /* shield.png in Resources */,
 				625698252182392C003A3A9D /* TextBottomGradient.vert in Resources */,
 				629B838820CA940E00DD2D0E /* cube_428.obj in Resources */,
