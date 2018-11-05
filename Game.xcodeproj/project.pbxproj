@@ -205,7 +205,7 @@
 		625698132182392C003A3A9D /* Material.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 625696F92182392B003A3A9D /* Material.cpp */; };
 		625698142182392C003A3A9D /* RenderQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 625696FA2182392B003A3A9D /* RenderQueue.cpp */; };
 		625698152182392C003A3A9D /* Renderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 625696FB2182392B003A3A9D /* Renderer.cpp */; };
-		625698162182392C003A3A9D /* TextTopGradient.frag in Resources */ = {isa = PBXBuildFile; fileRef = 625696FF2182392B003A3A9D /* TextTopGradient.frag */; };
+		625698162182392C003A3A9D /* TextMidGradient.frag in Resources */ = {isa = PBXBuildFile; fileRef = 625696FF2182392B003A3A9D /* TextMidGradient.frag */; };
 		625698172182392C003A3A9D /* PixelLighting.vert in Resources */ = {isa = PBXBuildFile; fileRef = 625697002182392B003A3A9D /* PixelLighting.vert */; };
 		625698182182392C003A3A9D /* Textured.frag in Resources */ = {isa = PBXBuildFile; fileRef = 625697012182392B003A3A9D /* Textured.frag */; };
 		625698192182392C003A3A9D /* TexturedEmissiveLighting.frag in Resources */ = {isa = PBXBuildFile; fileRef = 625697022182392B003A3A9D /* TexturedEmissiveLighting.frag */; };
@@ -228,7 +228,7 @@
 		6256982A2182392C003A3A9D /* PixelLighting.frag in Resources */ = {isa = PBXBuildFile; fileRef = 625697132182392B003A3A9D /* PixelLighting.frag */; };
 		6256982B2182392C003A3A9D /* Textured.vert in Resources */ = {isa = PBXBuildFile; fileRef = 625697142182392B003A3A9D /* Textured.vert */; };
 		6256982C2182392C003A3A9D /* TexturedEmissiveLighting.vert in Resources */ = {isa = PBXBuildFile; fileRef = 625697152182392B003A3A9D /* TexturedEmissiveLighting.vert */; };
-		6256982D2182392C003A3A9D /* TextTopGradient.vert in Resources */ = {isa = PBXBuildFile; fileRef = 625697162182392B003A3A9D /* TextTopGradient.vert */; };
+		6256982D2182392C003A3A9D /* TextMidGradient.vert in Resources */ = {isa = PBXBuildFile; fileRef = 625697162182392B003A3A9D /* TextMidGradient.vert */; };
 		6256982E2182392C003A3A9D /* ParticleTextureColor.vert in Resources */ = {isa = PBXBuildFile; fileRef = 625697172182392B003A3A9D /* ParticleTextureColor.vert */; };
 		6256982F2182392C003A3A9D /* Text.frag in Resources */ = {isa = PBXBuildFile; fileRef = 625697182182392B003A3A9D /* Text.frag */; };
 		625698302182392C003A3A9D /* ParticleNoAlphaTexture.vert in Resources */ = {isa = PBXBuildFile; fileRef = 625697192182392B003A3A9D /* ParticleNoAlphaTexture.vert */; };
@@ -792,7 +792,7 @@
 		625696FB2182392B003A3A9D /* Renderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Renderer.cpp; sourceTree = "<group>"; };
 		625696FC2182392B003A3A9D /* TextureCache.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = TextureCache.hpp; sourceTree = "<group>"; };
 		625696FD2182392B003A3A9D /* Camera.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Camera.hpp; sourceTree = "<group>"; };
-		625696FF2182392B003A3A9D /* TextTopGradient.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = TextTopGradient.frag; sourceTree = "<group>"; };
+		625696FF2182392B003A3A9D /* TextMidGradient.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = TextMidGradient.frag; sourceTree = "<group>"; };
 		625697002182392B003A3A9D /* PixelLighting.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = PixelLighting.vert; sourceTree = "<group>"; };
 		625697012182392B003A3A9D /* Textured.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Textured.frag; sourceTree = "<group>"; };
 		625697022182392B003A3A9D /* TexturedEmissiveLighting.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = TexturedEmissiveLighting.frag; sourceTree = "<group>"; };
@@ -815,7 +815,7 @@
 		625697132182392B003A3A9D /* PixelLighting.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = PixelLighting.frag; sourceTree = "<group>"; };
 		625697142182392B003A3A9D /* Textured.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Textured.vert; sourceTree = "<group>"; };
 		625697152182392B003A3A9D /* TexturedEmissiveLighting.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = TexturedEmissiveLighting.vert; sourceTree = "<group>"; };
-		625697162182392B003A3A9D /* TextTopGradient.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = TextTopGradient.vert; sourceTree = "<group>"; };
+		625697162182392B003A3A9D /* TextMidGradient.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = TextMidGradient.vert; sourceTree = "<group>"; };
 		625697172182392B003A3A9D /* ParticleTextureColor.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ParticleTextureColor.vert; sourceTree = "<group>"; };
 		625697182182392B003A3A9D /* Text.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Text.frag; sourceTree = "<group>"; };
 		625697192182392B003A3A9D /* ParticleNoAlphaTexture.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ParticleNoAlphaTexture.vert; sourceTree = "<group>"; };
@@ -1866,8 +1866,8 @@
 				6256970B2182392B003A3A9D /* Text.vert */,
 				625697062182392B003A3A9D /* TextBottomGradient.frag */,
 				6256970E2182392B003A3A9D /* TextBottomGradient.vert */,
-				625696FF2182392B003A3A9D /* TextTopGradient.frag */,
-				625697162182392B003A3A9D /* TextTopGradient.vert */,
+				625696FF2182392B003A3A9D /* TextMidGradient.frag */,
+				625697162182392B003A3A9D /* TextMidGradient.vert */,
 				625697012182392B003A3A9D /* Textured.frag */,
 				625697142182392B003A3A9D /* Textured.vert */,
 				625697022182392B003A3A9D /* TexturedEmissiveLighting.frag */,
@@ -2577,7 +2577,7 @@
 				62B1CB9C2110BA4600D0F195 /* laser_frame4.jpg in Resources */,
 				6256982B2182392C003A3A9D /* Textured.vert in Resources */,
 				62B1CB89210F8F8600D0F195 /* laser_bomb_diffuse.jpg in Resources */,
-				625698162182392C003A3A9D /* TextTopGradient.frag in Resources */,
+				625698162182392C003A3A9D /* TextMidGradient.frag in Resources */,
 				625D3B4B216FB2A200D67EC2 /* level60.json in Resources */,
 				6270DC631FCB22AE00FB457D /* star.obj in Resources */,
 				626940C7216130F500D9857A /* sky4.jpg in Resources */,
@@ -2624,7 +2624,7 @@
 				62B1CB5B210F8EE500D0F195 /* cloud_A_512.png in Resources */,
 				625698202182392C003A3A9D /* EnvMap.frag in Resources */,
 				625698562182392C003A3A9D /* build_freetype.sh in Resources */,
-				6256982D2182392C003A3A9D /* TextTopGradient.vert in Resources */,
+				6256982D2182392C003A3A9D /* TextMidGradient.vert in Resources */,
 				629B838620C9694E00DD2D0E /* level40.json in Resources */,
 				625698222182392C003A3A9D /* Text.vert in Resources */,
 				6256981E2182392C003A3A9D /* Particle.frag in Resources */,

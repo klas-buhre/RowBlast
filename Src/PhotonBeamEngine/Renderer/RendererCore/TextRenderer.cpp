@@ -5,8 +5,8 @@
 #include "../Shaders/Text.frag"
 #include "../Shaders/TextBottomGradient.vert"
 #include "../Shaders/TextBottomGradient.frag"
-#include "../Shaders/TextTopGradient.vert"
-#include "../Shaders/TextTopGradient.frag"
+#include "../Shaders/TextMidGradient.vert"
+#include "../Shaders/TextMidGradient.frag"
 
 #include "Font.hpp"
 #include "IEngine.hpp"
@@ -17,7 +17,7 @@ TextRenderer::TextRenderer(const IVec2& screenSize) :
     mProjection {Mat4::OrthographicProjection(0.0f, screenSize.x, 0.0f, screenSize.y, -1.0f, 1.0f)},
     mTextShader {{}},
     mTextBottomGradientShader {{}},
-    mTextTopGradientShader {{}} {
+    mTextMidGradientShader {{}} {
     
     glGenBuffers(1, &mVbo);
     glBindBuffer(GL_ARRAY_BUFFER, mVbo);
@@ -29,8 +29,8 @@ TextRenderer::TextRenderer(const IVec2& screenSize) :
     mTextBottomGradientShader.Build(TextBottomGradientVertexShader, TextBottomGradientFragmentShader);
     mTextBottomGradientShader.SetProjection(mProjection);
 
-    mTextTopGradientShader.Build(TextTopGradientVertexShader, TextTopGradientFragmentShader);
-    mTextTopGradientShader.SetProjection(mProjection);
+    mTextMidGradientShader.Build(TextMidGradientVertexShader, TextMidGradientFragmentShader);
+    mTextMidGradientShader.SetProjection(mProjection);
 }
 
 TextRenderer::~TextRenderer() {
@@ -55,10 +55,10 @@ void TextRenderer::RenderText(const std::string& text,
                      properties.mBottomGradientColorSubtraction.GetValue().Pointer());
     }
 
-    if (properties.mTopGradientColorSubtraction.HasValue()) {
+    if (properties.mMidGradientColorSubtraction.HasValue()) {
         glUniform3fv(uniforms.mTextColorSubtraction,
                      1,
-                     properties.mTopGradientColorSubtraction.GetValue().Pointer());
+                     properties.mMidGradientColorSubtraction.GetValue().Pointer());
     }
 
     glDisable(GL_DEPTH_TEST);
@@ -107,8 +107,8 @@ ShaderProgram& TextRenderer::GetShaderProgram(const TextProperties& textProperti
         return mTextBottomGradientShader;
     }
 
-    if (textProperties.mTopGradientColorSubtraction.HasValue()) {
-        return mTextTopGradientShader;
+    if (textProperties.mMidGradientColorSubtraction.HasValue()) {
+        return mTextMidGradientShader;
     }
 
     return mTextShader;

@@ -51,10 +51,13 @@ namespace Pht {
         SnapToPixel mSnapToPixel {SnapToPixel::Yes};
         float mItalicSlant {0.0f};
         Pht::Optional<Pht::Vec3> mBottomGradientColorSubtraction;
-        Pht::Optional<Pht::Vec3> mTopGradientColorSubtraction;
+        Pht::Optional<Pht::Vec3> mMidGradientColorSubtraction;
         TextSpecular mSpecular {TextSpecular::No};
         Pht::Vec2 mSpecularOffset {0.0f, 0.0f};
         Vec4 mSpecularColor {1.0f, 1.0f, 1.0f, 1.0f};
+        TextShadow mSecondShadow {TextShadow::No};
+        Pht::Vec2 mSecondShadowOffset {0.0f, 0.0f};
+        Vec4 mSecondShadowColor {0.0f, 0.0f, 0.0f, 1.0f};
     };
 }
 

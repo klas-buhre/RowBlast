@@ -59,15 +59,18 @@ void TitleAnimation::CreateText() {
     Pht::TextProperties textProperties {
         mFont,
         1.0f,
-        {1.0f, 1.0f, 1.0f, 1.0f},
+        {0.8f, 0.84f, 0.9275f, 1.0f},
         Pht::TextShadow::Yes,
         {0.05f, 0.05f},
-        {0.25f, 0.225f, 0.15f, 1.0f}
+        {0.375f, 0.5125f, 0.625f, 1.0f}
     };
     textProperties.mSnapToPixel = Pht::SnapToPixel::No;
-    textProperties.mTopGradientColorSubtraction = Pht::Vec3 {0.25f, 0.4f, 0.65f};
+    textProperties.mMidGradientColorSubtraction = Pht::Vec3 {0.715f, 0.525f, 0.375f};
     textProperties.mSpecular = Pht::TextSpecular::Yes;
     textProperties.mSpecularOffset = {0.04f, 0.04f};
+    textProperties.mSecondShadow = Pht::TextShadow::Yes;
+    textProperties.mSecondShadowColor = Pht::Vec4 {0.21f, 0.21f, 0.21f, 1.0f};
+    textProperties.mSecondShadowOffset = Pht::Vec2 {0.05f, 0.05f};
 
     mText.mUpperTextLineSceneObject = std::make_unique<Pht::SceneObject>();
     auto upperTextComponent {

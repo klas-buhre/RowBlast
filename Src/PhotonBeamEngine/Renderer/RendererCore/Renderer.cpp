@@ -669,11 +669,22 @@ void Renderer::RenderText(const std::string& text,
                           const Vec2& position,
                           const TextProperties& properties) {
     auto textPosition {position};
-    
+
+    if (properties.mSecondShadow == TextShadow::Yes) {
+        TextProperties shadowProperties {properties};
+        shadowProperties.mColor = properties.mSecondShadowColor;
+        shadowProperties.mMidGradientColorSubtraction = Optional<Vec3> {};
+        shadowProperties.mBottomGradientColorSubtraction = Optional<Vec3> {};
+
+        RenderTextImpl(text,
+                       position - properties.mShadowOffset * properties.mScale,
+                       shadowProperties);
+    }
+
     if (properties.mShadow == TextShadow::Yes) {
         TextProperties shadowProperties {properties};
         shadowProperties.mColor = properties.mShadowColor;
-        shadowProperties.mTopGradientColorSubtraction = Optional<Vec3> {};
+        shadowProperties.mMidGradientColorSubtraction = Optional<Vec3> {};
         shadowProperties.mBottomGradientColorSubtraction = Optional<Vec3> {};
 
         RenderTextImpl(text, position, shadowProperties);
@@ -684,7 +695,7 @@ void Renderer::RenderText(const std::string& text,
     if (properties.mSpecular == TextSpecular::Yes) {
         TextProperties specularProperties {properties};
         specularProperties.mColor = properties.mSpecularColor;
-        specularProperties.mTopGradientColorSubtraction = Optional<Vec3> {};
+        specularProperties.mMidGradientColorSubtraction = Optional<Vec3> {};
         specularProperties.mBottomGradientColorSubtraction = Optional<Vec3> {};
 
         RenderTextImpl(text,

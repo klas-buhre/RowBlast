@@ -28,7 +28,7 @@ namespace Pht {
         GLuint mVbo {0};
         ShaderProgram mTextShader;
         ShaderProgram mTextBottomGradientShader;
-        ShaderProgram mTextTopGradientShader;
+        ShaderProgram mTextMidGradientShader;
     };
 }
 
