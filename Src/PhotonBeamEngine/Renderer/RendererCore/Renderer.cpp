@@ -677,7 +677,7 @@ void Renderer::RenderText(const std::string& text,
         shadowProperties.mBottomGradientColorSubtraction = Optional<Vec3> {};
 
         RenderTextImpl(text,
-                       position - properties.mShadowOffset * properties.mScale,
+                       position - properties.mSecondShadowOffset * properties.mScale,
                        shadowProperties);
     }
 

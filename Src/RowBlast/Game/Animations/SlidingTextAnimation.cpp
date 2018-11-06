@@ -56,13 +56,13 @@ SlidingTextAnimation::SlidingTextAnimation(Pht::IEngine& engine,
     
     auto& font {commonResources.GetHussarFontSize52PotentiallyZoomedScreen()};
 
-    mTexts.reserve(4);
-    CreateText(font, 2.5f, {{-3.96f, 0.26f}, "CLEAR ALL"}, {{-5.17f, -1.65f}, "GRAY BLOCKS"});
-    CreateText(font, 1.6f, {{-1.21f, 0.26f}, "ALL"}, {{-3.3f, -1.65f}, "CLEARED!"});
-    CreateText(font, 2.5f, {{-2.97f, 0.26f}, "FILL ALL"}, {{-4.73f, -1.65f}, "GRAY SLOTS"});
-    CreateText(font, 2.5f, {{-3.85f, 0.26f}, "ALL SLOTS"}, {{-2.31f, -1.65f}, "FILLED!"});
-    CreateText(font, 2.5f, {{-5.0f, 0.26f}, "BRING DOWN"}, {{-5.2f, -1.65f}, "THE ASTEROID"});
-    CreateText(font, 2.5f, {{-5.1f, 0.26f}, "THE ASTEROID"}, {{-3.6f, -1.65f}, "IS DOWN!"});
+    mTexts.reserve(6);
+    CreateText(font, 2.5f, {{-3.96f, 0.33f}, "CLEAR ALL"}, {{-5.17f, -1.58f}, "GRAY BLOCKS"});
+    CreateText(font, 1.6f, {{-1.21f, 0.33f}, "ALL"}, {{-3.3f, -1.58f}, "CLEARED!"});
+    CreateText(font, 2.5f, {{-2.97f, 0.33f}, "FILL ALL"}, {{-4.73f, -1.58f}, "GRAY SLOTS"});
+    CreateText(font, 2.5f, {{-3.85f, 0.33f}, "ALL SLOTS"}, {{-2.31f, -1.58f}, "FILLED!"});
+    CreateText(font, 2.5f, {{-5.0f, 0.33f}, "BRING DOWN"}, {{-5.2f, -1.58f}, "THE ASTEROID"});
+    CreateText(font, 2.5f, {{-5.1f, 0.33f}, "THE ASTEROID"}, {{-3.6f, -1.58f}, "IS DOWN!"});
 
     CreateTwinkleParticleEffect();
 }
@@ -74,14 +74,19 @@ void SlidingTextAnimation::CreateText(const Pht::Font& font,
     Pht::TextProperties textProperties {
         font,
         1.1f,
-        {1.0f, 1.0f, 1.0f, 1.0f},
+        {1.0f, 0.95f, 0.9f, 1.0f},
         Pht::TextShadow::Yes,
-        {0.1f, 0.1f},
-        {0.2f, 0.2f, 0.2f, 0.5f}
+        {0.03f, 0.03f},
+        {0.8f, 0.6f, 0.4f, 1.0f}
     };
     textProperties.mSnapToPixel = Pht::SnapToPixel::No;
     textProperties.mItalicSlant = 0.15f;
-    textProperties.mBottomGradientColorSubtraction = Pht::Vec3 {0.0f, 0.05f, 0.1f};
+    textProperties.mMidGradientColorSubtraction = Pht::Vec3 {0.1f, 0.2f, 0.3f};
+    textProperties.mSpecular = Pht::TextSpecular::Yes;
+    textProperties.mSpecularOffset = {0.02f, 0.02f};
+    textProperties.mSecondShadow = Pht::TextShadow::Yes;
+    textProperties.mSecondShadowColor = Pht::Vec4 {0.2f, 0.2f, 0.2f, 0.5f};
+    textProperties.mSecondShadowOffset = Pht::Vec2 {0.075f, 0.075f};
 
     auto upperTextLineSceneObject {std::make_unique<Pht::SceneObject>()};
     auto upperTextComponent {
@@ -102,9 +107,9 @@ void SlidingTextAnimation::CreateText(const Pht::Font& font,
     mTexts.push_back(
         Text {
             displayTime,
-            Pht::Vec3{upperTextLine.mPosition.x, upperTextLine.mPosition.y, 0.0f},
+            Pht::Vec3{upperTextLine.mPosition.x, upperTextLine.mPosition.y, 0.5f},
             std::move(upperTextLineSceneObject),
-            Pht::Vec3{lowerTextLine.mPosition.x, lowerTextLine.mPosition.y, 0.0f},
+            Pht::Vec3{lowerTextLine.mPosition.x, lowerTextLine.mPosition.y, 0.5f},
             std::move(lowerTextLineSceneObject)
         }
     );
