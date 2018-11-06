@@ -27,7 +27,7 @@ namespace Pht {
         Mat4 mProjection;
         GLuint mVbo {0};
         ShaderProgram mTextShader;
-        ShaderProgram mTextBottomGradientShader;
+        ShaderProgram mTextDoubleGradientShader;
         ShaderProgram mTextMidGradientShader;
     };
 }

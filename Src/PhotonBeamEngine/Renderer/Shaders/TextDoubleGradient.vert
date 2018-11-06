@@ -1,4 +1,4 @@
-static const char* TextBottomGradientVertexShader = STRINGIFY(
+static const char* TextDoubleGradientVertexShader = STRINGIFY(
 
 attribute vec4 TextCoords;
 

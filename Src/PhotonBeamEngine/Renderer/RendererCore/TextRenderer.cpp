@@ -3,8 +3,8 @@
 #define STRINGIFY(A)  #A
 #include "../Shaders/Text.vert"
 #include "../Shaders/Text.frag"
-#include "../Shaders/TextBottomGradient.vert"
-#include "../Shaders/TextBottomGradient.frag"
+#include "../Shaders/TextDoubleGradient.vert"
+#include "../Shaders/TextDoubleGradient.frag"
 #include "../Shaders/TextMidGradient.vert"
 #include "../Shaders/TextMidGradient.frag"
 
@@ -16,7 +16,7 @@ using namespace Pht;
 TextRenderer::TextRenderer(const IVec2& screenSize) :
     mProjection {Mat4::OrthographicProjection(0.0f, screenSize.x, 0.0f, screenSize.y, -1.0f, 1.0f)},
     mTextShader {{}},
-    mTextBottomGradientShader {{}},
+    mTextDoubleGradientShader {{}},
     mTextMidGradientShader {{}} {
     
     glGenBuffers(1, &mVbo);
@@ -26,8 +26,8 @@ TextRenderer::TextRenderer(const IVec2& screenSize) :
     mTextShader.Build(TextVertexShader, TextFragmentShader);
     mTextShader.SetProjection(mProjection);
 
-    mTextBottomGradientShader.Build(TextBottomGradientVertexShader, TextBottomGradientFragmentShader);
-    mTextBottomGradientShader.SetProjection(mProjection);
+    mTextDoubleGradientShader.Build(TextDoubleGradientVertexShader, TextDoubleGradientFragmentShader);
+    mTextDoubleGradientShader.SetProjection(mProjection);
 
     mTextMidGradientShader.Build(TextMidGradientVertexShader, TextMidGradientFragmentShader);
     mTextMidGradientShader.SetProjection(mProjection);
@@ -49,14 +49,14 @@ void TextRenderer::RenderText(const std::string& text,
     
     glUniform4fv(uniforms.mTextColor, 1, properties.mColor.Pointer());
     
-    if (properties.mBottomGradientColorSubtraction.HasValue()) {
-        glUniform3fv(uniforms.mTextColorSubtraction,
+    if (properties.mTopGradientColorSubtraction.HasValue()) {
+        glUniform3fv(uniforms.mTextTopColorSubtraction,
                      1,
-                     properties.mBottomGradientColorSubtraction.GetValue().Pointer());
+                     properties.mTopGradientColorSubtraction.GetValue().Pointer());
     }
 
     if (properties.mMidGradientColorSubtraction.HasValue()) {
-        glUniform3fv(uniforms.mTextColorSubtraction,
+        glUniform3fv(uniforms.mTextMidColorSubtraction,
                      1,
                      properties.mMidGradientColorSubtraction.GetValue().Pointer());
     }
@@ -103,8 +103,8 @@ void TextRenderer::RenderText(const std::string& text,
 }
 
 ShaderProgram& TextRenderer::GetShaderProgram(const TextProperties& textProperties) {
-    if (textProperties.mBottomGradientColorSubtraction.HasValue()) {
-        return mTextBottomGradientShader;
+    if (textProperties.mTopGradientColorSubtraction.HasValue()) {
+        return mTextDoubleGradientShader;
     }
 
     if (textProperties.mMidGradientColorSubtraction.HasValue()) {

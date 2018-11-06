@@ -24,7 +24,6 @@ namespace {
     constexpr auto slideOutDuration {0.25f};
     constexpr auto slideDistance {12.0f};
     constexpr auto acceleration {2.0f * slideDistance / (slideOutDuration * slideOutDuration)};
-    constexpr auto textAlpha {0.94f};
     constexpr auto textShadowAlpha {0.5f};
     constexpr auto textScale {0.83f};
     const std::string comboString {"COMBO "};
@@ -71,14 +70,19 @@ Pht::SceneObject& ComboTextAnimation::CreateText(const Pht::Font& font,
     Pht::TextProperties textProperties {
         font,
         textScale,
-        {1.0f, 1.0f, 1.0f, textAlpha},
+        {1.0f, 0.906f, 0.906f, 1.0f},
         Pht::TextShadow::Yes,
-        {0.08f, 0.08f},
-        {0.2f, 0.2f, 0.2f, textShadowAlpha},
+        {0.04f, 0.04f},
+        {0.58f, 0.42f, 0.52f, 1.0f}
     };
     textProperties.mSnapToPixel = Pht::SnapToPixel::No;
     textProperties.mItalicSlant = 0.15f;
-    textProperties.mBottomGradientColorSubtraction = Pht::Vec3 {0.0f, 0.15f, 0.15f};
+    textProperties.mMidGradientColorSubtraction = Pht::Vec3 {0.0f, 0.3f, 0.2f};
+    textProperties.mSpecular = Pht::TextSpecular::Yes;
+    textProperties.mSpecularOffset = {0.03f, 0.03f};
+    textProperties.mSecondShadow = Pht::TextShadow::Yes;
+    textProperties.mSecondShadowColor = Pht::Vec4 {0.2f, 0.2f, 0.2f, textShadowAlpha};
+    textProperties.mSecondShadowOffset = Pht::Vec2 {0.075f, 0.075f};
 
     auto textSceneObject {std::make_unique<Pht::SceneObject>()};
     textSceneObject->GetTransform().SetPosition({position.x, position.y, UiLayer::text});
@@ -175,8 +179,10 @@ void ComboTextAnimation::Start(Pht::SceneObject& textSceneObject) {
     auto& textProperties {
         mActiveTextSceneObject->GetComponent<Pht::TextComponent>()->GetProperties()
     };
-    textProperties.mColor.w = textAlpha;
-    textProperties.mShadowColor.w = textShadowAlpha;
+    textProperties.mColor.w = 1.0f;
+    textProperties.mSpecularColor.w = 1.0f;
+    textProperties.mShadowColor.w = 1.0f;
+    textProperties.mSecondShadowColor.w = textShadowAlpha;
     
     mState = State::ScalingIn;
     mElapsedTime = 0.0f;
@@ -248,8 +254,10 @@ void ComboTextAnimation::UpdateInSlidingOutState(float dt) {
         auto& textProperties {
             mActiveTextSceneObject->GetComponent<Pht::TextComponent>()->GetProperties()
         };
-        textProperties.mColor.w = alpha * textAlpha;
-        textProperties.mShadowColor.w = alpha * textShadowAlpha;
+        textProperties.mColor.w = alpha;
+        textProperties.mSpecularColor.w = alpha;
+        textProperties.mShadowColor.w = alpha;
+        textProperties.mSecondShadowColor.w = alpha * textShadowAlpha;
     }
 }
 

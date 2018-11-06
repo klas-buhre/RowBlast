@@ -27,6 +27,8 @@
 		6238F5E5218B60FE0008A0CF /* UserServices.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6238F5E2218B60FE0008A0CF /* UserServices.cpp */; };
 		6238F5E6218B60FE0008A0CF /* ProgressService.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6238F5E3218B60FE0008A0CF /* ProgressService.cpp */; };
 		6238F618218F0CEC0008A0CF /* sky_upside_down_patched_mirrored.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6238F617218F0CEB0008A0CF /* sky_upside_down_patched_mirrored.jpg */; };
+		6238F61B2191FCB40008A0CF /* TextDoubleGradient.vert in Resources */ = {isa = PBXBuildFile; fileRef = 6238F6192191FCB30008A0CF /* TextDoubleGradient.vert */; };
+		6238F61C2191FCB40008A0CF /* TextDoubleGradient.frag in Resources */ = {isa = PBXBuildFile; fileRef = 6238F61A2191FCB40008A0CF /* TextDoubleGradient.frag */; };
 		6240508620FF69C00077A454 /* level46.json in Resources */ = {isa = PBXBuildFile; fileRef = 6240508520FF69C00077A454 /* level46.json */; };
 		6240508820FF82A10077A454 /* level47.json in Resources */ = {isa = PBXBuildFile; fileRef = 6240508720FF82A10077A454 /* level47.json */; };
 		62411A971E61E62800035D2A /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62411A961E61E62800035D2A /* GLKit.framework */; };
@@ -212,7 +214,6 @@
 		6256981A2182392C003A3A9D /* VertexLighting.vert in Resources */ = {isa = PBXBuildFile; fileRef = 625697032182392B003A3A9D /* VertexLighting.vert */; };
 		6256981B2182392C003A3A9D /* TexturedLighting.vert in Resources */ = {isa = PBXBuildFile; fileRef = 625697042182392B003A3A9D /* TexturedLighting.vert */; };
 		6256981C2182392C003A3A9D /* PointParticle.vert in Resources */ = {isa = PBXBuildFile; fileRef = 625697052182392B003A3A9D /* PointParticle.vert */; };
-		6256981D2182392C003A3A9D /* TextBottomGradient.frag in Resources */ = {isa = PBXBuildFile; fileRef = 625697062182392B003A3A9D /* TextBottomGradient.frag */; };
 		6256981E2182392C003A3A9D /* Particle.frag in Resources */ = {isa = PBXBuildFile; fileRef = 625697072182392B003A3A9D /* Particle.frag */; };
 		6256981F2182392C003A3A9D /* VertexColor.frag in Resources */ = {isa = PBXBuildFile; fileRef = 625697082182392B003A3A9D /* VertexColor.frag */; };
 		625698202182392C003A3A9D /* EnvMap.frag in Resources */ = {isa = PBXBuildFile; fileRef = 625697092182392B003A3A9D /* EnvMap.frag */; };
@@ -220,7 +221,6 @@
 		625698222182392C003A3A9D /* Text.vert in Resources */ = {isa = PBXBuildFile; fileRef = 6256970B2182392B003A3A9D /* Text.vert */; };
 		625698232182392C003A3A9D /* ParticleNoAlphaTexture.frag in Resources */ = {isa = PBXBuildFile; fileRef = 6256970C2182392B003A3A9D /* ParticleNoAlphaTexture.frag */; };
 		625698242182392C003A3A9D /* ParticleTextureColor.frag in Resources */ = {isa = PBXBuildFile; fileRef = 6256970D2182392B003A3A9D /* ParticleTextureColor.frag */; };
-		625698252182392C003A3A9D /* TextBottomGradient.vert in Resources */ = {isa = PBXBuildFile; fileRef = 6256970E2182392B003A3A9D /* TextBottomGradient.vert */; };
 		625698262182392C003A3A9D /* Particle.vert in Resources */ = {isa = PBXBuildFile; fileRef = 6256970F2182392B003A3A9D /* Particle.vert */; };
 		625698272182392C003A3A9D /* PointParticle.frag in Resources */ = {isa = PBXBuildFile; fileRef = 625697102182392B003A3A9D /* PointParticle.frag */; };
 		625698282182392C003A3A9D /* TexturedLighting.frag in Resources */ = {isa = PBXBuildFile; fileRef = 625697112182392B003A3A9D /* TexturedLighting.frag */; };
@@ -433,6 +433,8 @@
 		6238F5E2218B60FE0008A0CF /* UserServices.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UserServices.cpp; sourceTree = "<group>"; };
 		6238F5E3218B60FE0008A0CF /* ProgressService.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ProgressService.cpp; sourceTree = "<group>"; };
 		6238F617218F0CEB0008A0CF /* sky_upside_down_patched_mirrored.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sky_upside_down_patched_mirrored.jpg; sourceTree = "<group>"; };
+		6238F6192191FCB30008A0CF /* TextDoubleGradient.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = TextDoubleGradient.vert; sourceTree = "<group>"; };
+		6238F61A2191FCB40008A0CF /* TextDoubleGradient.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = TextDoubleGradient.frag; sourceTree = "<group>"; };
 		6240508520FF69C00077A454 /* level46.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level46.json; sourceTree = "<group>"; };
 		6240508720FF82A10077A454 /* level47.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level47.json; sourceTree = "<group>"; };
 		62411A961E61E62800035D2A /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
@@ -799,7 +801,6 @@
 		625697032182392B003A3A9D /* VertexLighting.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = VertexLighting.vert; sourceTree = "<group>"; };
 		625697042182392B003A3A9D /* TexturedLighting.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = TexturedLighting.vert; sourceTree = "<group>"; };
 		625697052182392B003A3A9D /* PointParticle.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = PointParticle.vert; sourceTree = "<group>"; };
-		625697062182392B003A3A9D /* TextBottomGradient.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = TextBottomGradient.frag; sourceTree = "<group>"; };
 		625697072182392B003A3A9D /* Particle.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Particle.frag; sourceTree = "<group>"; };
 		625697082182392B003A3A9D /* VertexColor.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = VertexColor.frag; sourceTree = "<group>"; };
 		625697092182392B003A3A9D /* EnvMap.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = EnvMap.frag; sourceTree = "<group>"; };
@@ -807,7 +808,6 @@
 		6256970B2182392B003A3A9D /* Text.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Text.vert; sourceTree = "<group>"; };
 		6256970C2182392B003A3A9D /* ParticleNoAlphaTexture.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ParticleNoAlphaTexture.frag; sourceTree = "<group>"; };
 		6256970D2182392B003A3A9D /* ParticleTextureColor.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ParticleTextureColor.frag; sourceTree = "<group>"; };
-		6256970E2182392B003A3A9D /* TextBottomGradient.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = TextBottomGradient.vert; sourceTree = "<group>"; };
 		6256970F2182392B003A3A9D /* Particle.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Particle.vert; sourceTree = "<group>"; };
 		625697102182392B003A3A9D /* PointParticle.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = PointParticle.frag; sourceTree = "<group>"; };
 		625697112182392B003A3A9D /* TexturedLighting.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = TexturedLighting.frag; sourceTree = "<group>"; };
@@ -1864,8 +1864,8 @@
 				625697052182392B003A3A9D /* PointParticle.vert */,
 				625697182182392B003A3A9D /* Text.frag */,
 				6256970B2182392B003A3A9D /* Text.vert */,
-				625697062182392B003A3A9D /* TextBottomGradient.frag */,
-				6256970E2182392B003A3A9D /* TextBottomGradient.vert */,
+				6238F61A2191FCB40008A0CF /* TextDoubleGradient.frag */,
+				6238F6192191FCB30008A0CF /* TextDoubleGradient.vert */,
 				625696FF2182392B003A3A9D /* TextMidGradient.frag */,
 				625697162182392B003A3A9D /* TextMidGradient.vert */,
 				625697012182392B003A3A9D /* Textured.frag */,
@@ -2535,7 +2535,6 @@
 				62E01BB12153E2A6009F0B99 /* planet_ogma.jpg in Resources */,
 				6270DC9D1FCB23D800FB457D /* level8.json in Resources */,
 				6240508820FF82A10077A454 /* level47.json in Resources */,
-				6256981D2182392C003A3A9D /* TextBottomGradient.frag in Resources */,
 				62E01BC02154210A009F0B99 /* moon.jpg in Resources */,
 				6270DC6E1FCB231B00FB457D /* HussarBoldWeb.otf in Resources */,
 				6270DC991FCB23D800FB457D /* level4.json in Resources */,
@@ -2629,6 +2628,7 @@
 				625698222182392C003A3A9D /* Text.vert in Resources */,
 				6256981E2182392C003A3A9D /* Particle.frag in Resources */,
 				6256982E2182392C003A3A9D /* ParticleTextureColor.vert in Resources */,
+				6238F61C2191FCB40008A0CF /* TextDoubleGradient.frag in Resources */,
 				62B1CB87210F8F8600D0F195 /* particle_sprite_halo.png in Resources */,
 				625698242182392C003A3A9D /* ParticleTextureColor.frag in Resources */,
 				629991662118A12200C845D1 /* level48.json in Resources */,
@@ -2672,7 +2672,6 @@
 				62B1CBA82110D46E00D0F195 /* bomb_frame3.jpg in Resources */,
 				6238F618218F0CEC0008A0CF /* sky_upside_down_patched_mirrored.jpg in Resources */,
 				624C72E52177AB260006068B /* shield.png in Resources */,
-				625698252182392C003A3A9D /* TextBottomGradient.vert in Resources */,
 				629B838820CA940E00DD2D0E /* cube_428.obj in Resources */,
 				6270DC9C1FCB23D800FB457D /* level7.json in Resources */,
 				62DE641C20CE953D00A50F26 /* medium_button_skewed_0385.obj in Resources */,
@@ -2691,6 +2690,7 @@
 				62E01BAF2153E00F009F0B99 /* planet_960.obj in Resources */,
 				62B1CB9A2110BA4600D0F195 /* laser_frame1.jpg in Resources */,
 				62B1CB5E210F8EE500D0F195 /* cloud_B_512.png in Resources */,
+				6238F61B2191FCB40008A0CF /* TextDoubleGradient.vert in Resources */,
 				626940DF21627B3800D9857A /* sky6.jpg in Resources */,
 				626940D32162641900D9857A /* sky3.jpg in Resources */,
 				6234616221653F9900ECD0DF /* space.jpg in Resources */,
