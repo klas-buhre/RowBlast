@@ -1555,13 +1555,13 @@
 		625695542182382B003A3A9D /* Effects */ = {
 			isa = PBXGroup;
 			children = (
-				625695552182382B003A3A9D /* EffectManager.hpp */,
-				625695562182382B003A3A9D /* PieceDropParticleEffect.cpp */,
-				625695572182382B003A3A9D /* LaserParticleEffect.cpp */,
-				625695582182382B003A3A9D /* ExplosionParticleEffect.cpp */,
-				625695592182382B003A3A9D /* LaserParticleEffect.hpp */,
-				6256955A2182382B003A3A9D /* ExplosionParticleEffect.hpp */,
 				6256955B2182382B003A3A9D /* EffectManager.cpp */,
+				625695552182382B003A3A9D /* EffectManager.hpp */,
+				625695582182382B003A3A9D /* ExplosionParticleEffect.cpp */,
+				6256955A2182382B003A3A9D /* ExplosionParticleEffect.hpp */,
+				625695572182382B003A3A9D /* LaserParticleEffect.cpp */,
+				625695592182382B003A3A9D /* LaserParticleEffect.hpp */,
+				625695562182382B003A3A9D /* PieceDropParticleEffect.cpp */,
 				6256955C2182382B003A3A9D /* PieceDropParticleEffect.hpp */,
 			);
 			path = Effects;

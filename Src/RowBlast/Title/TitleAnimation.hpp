@@ -35,12 +35,13 @@ namespace RowBlast {
         void UpdateInSlidingInState();
         void UpdateTextLineSceneObjectPositions();
         void UpdateInSlidingSlowlyState();
+        void UpdateInTwinklesState();
     
         enum class State {
             Waiting,
             SlidingIn,
             SlidingSlowly,
-            Inactive
+            Twinkles
         };
 
         Pht::IEngine& mEngine;

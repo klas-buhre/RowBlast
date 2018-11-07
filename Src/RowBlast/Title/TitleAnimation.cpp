@@ -1,5 +1,7 @@
 #include "TitleAnimation.hpp"
 
+#include <array>
+
 // Engine includes.
 #include "IEngine.hpp"
 #include "IRenderer.hpp"
@@ -21,6 +23,12 @@ namespace {
     constexpr auto displayTime {1.75f};
     constexpr auto textWidth {11.0f};
     const Pht::Vec3 centerPosition {0.0f, 8.5f, 0.0f};
+
+    const std::array<Pht::Vec3, 3> twinklePositions {
+        Pht::Vec3 {-3.5f, 1.45f, UiLayer::text},
+        Pht::Vec3 {1.7f, -0.55f, UiLayer::text},
+        Pht::Vec3 {-2.85f, -0.4f, UiLayer::text}
+    };
 }
 
 TitleAnimation::TitleAnimation(Pht::IEngine& engine,
@@ -59,13 +67,14 @@ void TitleAnimation::CreateText() {
     Pht::TextProperties textProperties {
         mFont,
         1.0f,
-        {0.8f, 0.84f, 0.9275f, 1.0f},
+        {0.93f, 0.93f, 1.0f, 1.0f},
         Pht::TextShadow::Yes,
         {0.05f, 0.05f},
-        {0.375f, 0.5125f, 0.625f, 1.0f}
+        {0.51f, 0.51f, 0.67f, 1.0f},
     };
     textProperties.mSnapToPixel = Pht::SnapToPixel::No;
-    textProperties.mMidGradientColorSubtraction = Pht::Vec3 {0.715f, 0.525f, 0.375f};
+    textProperties.mMidGradientColorSubtraction = Pht::Vec3 {0.57f, 0.57f, 0.375f};
+    textProperties.mTopGradientColorSubtraction = Pht::Vec3 {0.6f, 0.3f, 0.1f};
     textProperties.mSpecular = Pht::TextSpecular::Yes;
     textProperties.mSpecularOffset = {0.04f, 0.04f};
     textProperties.mSecondShadow = Pht::TextShadow::Yes;
@@ -123,7 +132,7 @@ void TitleAnimation::CreateTwinkleParticleEffect(Pht::IEngine& engine) {
     mTwinkleParticleEffect = particleSystem.CreateParticleEffectSceneObject(particleSettings,
                                                                             particleEmitterSettings,
                                                                             Pht::RenderMode::Triangles);
-    mTwinkleParticleEffect->GetTransform().SetPosition({-3.5f, 1.45f, UiLayer::text});
+    mTwinkleParticleEffect->GetTransform().SetPosition(twinklePositions[0]);
 }
 
 void TitleAnimation::Update() {
@@ -137,9 +146,8 @@ void TitleAnimation::Update() {
         case State::SlidingSlowly:
             UpdateInSlidingSlowlyState();
             break;
-        case State::Inactive: {
-            auto dt {mEngine.GetLastFrameSeconds()};
-            mTwinkleParticleEffect->GetComponent<Pht::ParticleEffect>()->Update(dt);
+        case State::Twinkles: {
+            UpdateInTwinklesState();
             break;
         }
     }
@@ -187,7 +195,7 @@ void TitleAnimation::UpdateInSlidingSlowlyState() {
     mTextPosition.x += mDisplayVelocity * dt;
     
     if (mTextPosition.x > mRightPosition.x) {
-        mState = State::Inactive;
+        mState = State::Twinkles;
         mTextPosition.x = mRightPosition.x;
         mTwinkleParticleEffect->GetComponent<Pht::ParticleEffect>()->Start();
     }
@@ -195,9 +203,22 @@ void TitleAnimation::UpdateInSlidingSlowlyState() {
     UpdateTextLineSceneObjectPositions();
 }
 
+void TitleAnimation::UpdateInTwinklesState() {
+    auto dt {mEngine.GetLastFrameSeconds()};
+    auto* particleEffect {mTwinkleParticleEffect->GetComponent<Pht::ParticleEffect>()};
+    
+    particleEffect->Update(dt);
+    
+    if (!particleEffect->IsActive()) {
+        auto twinklePosition {twinklePositions[std::rand() % twinklePositions.size()]};
+        mTwinkleParticleEffect->GetTransform().SetPosition(twinklePosition);
+        particleEffect->Start();
+    }
+}
+
 bool TitleAnimation::IsDone() const {
     switch (mState) {
-        case State::Inactive:
+        case State::Twinkles:
             return true;
         default:
             return false;

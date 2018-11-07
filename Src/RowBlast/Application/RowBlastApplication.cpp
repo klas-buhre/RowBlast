@@ -37,7 +37,6 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-    -The title text could have the same gradient effect as Stellar galaxy commander.
     -Maybe slightly thinner welds.
 
 
