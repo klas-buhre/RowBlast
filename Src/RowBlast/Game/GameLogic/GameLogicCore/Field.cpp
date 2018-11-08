@@ -1156,7 +1156,7 @@ Field::RemovedSubCells Field::RemoveAreaOfSubCells(const Pht::IVec2& areaPos,
                 BreakCellLeftWelds(row, column + 1);
             }
 
-            if (row == areaPos.y) {
+            if (row == areaPos.y || row == mLowestVisibleRow) {
                 BreakCellUpWelds(row - 1, column);
             }
 

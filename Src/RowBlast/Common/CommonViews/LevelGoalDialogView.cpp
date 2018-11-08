@@ -26,6 +26,7 @@ namespace {
     constexpr auto emissiveAnimationDuration {1.5f};
     constexpr auto emissiveAmplitude {1.7f};
     constexpr auto asteroidRotationSpeed {35.0f};
+    constexpr auto grayCubeRotationSpeed {16.0f};
     const Pht::Vec3 captionPosition {-1.7f, 8.25f, UiLayer::text};
 }
 
@@ -257,18 +258,16 @@ void LevelGoalDialogView::CreateGrayCube(Pht::IEngine& engine,
                                          Pht::SceneObject& parent) {
     auto& sceneManager {engine.GetSceneManager()};
     
-    auto& grayCube {
-        CreateSceneObject(Pht::ObjMesh {"cube_428.obj", 1.25f},
-                          commonResources.GetMaterials().GetGrayFieldBlockMaterial(),
-                          sceneManager)
-    };
-    
-    auto& transform {grayCube.GetTransform()};
+    mGrayCubeSceneObject =
+        &CreateSceneObject(Pht::ObjMesh {"cube_428.obj", 1.25f},
+                           commonResources.GetMaterials().GetLightGrayMaterial(),
+                           sceneManager);
+
+    auto& transform {mGrayCubeSceneObject->GetTransform()};
     transform.SetPosition({0.0f, -1.0f, UiLayer::block});
-    transform.SetRotation({-30.0f, -30.0f, 0.0f});
-    transform.SetScale(0.85f);
+    transform.SetScale(1.3f);
     
-    parent.AddChild(grayCube);
+    parent.AddChild(*mGrayCubeSceneObject);
 }
 
 void LevelGoalDialogView::CreateAsteroid(Pht::IEngine& engine, Pht::SceneObject& parent) {
@@ -451,6 +450,7 @@ void LevelGoalDialogView::Init(const LevelInfo& levelInfo) {
     mEmissiveAnimationTime = 0.0f;
     mRowBombRotation = {0.0f, 0.0f, 0.0f};
     mAsteroidRotation = {0.0f, 0.0f, 0.0f};
+    mGrayCubeSceneObject->GetTransform().SetRotation({0.0f, 0.0f, 0.0f});
 }
 
 void LevelGoalDialogView::InitPreviewPiece(LevelStartPreviewPiece& previewPiece,
@@ -550,6 +550,7 @@ void LevelGoalDialogView::UpdateAnimations(float dt) {
     AnimateEmissive(dt);
     AnimateBombRotation(dt);
     AnimateRowBombRotation(dt);
+    AnimateGrayCubeRotation(dt);
     AnimateAsteroidRotation(dt);
 }
 
@@ -593,6 +594,11 @@ void LevelGoalDialogView::AnimateRowBombRotation(float dt) {
             previewPiece.mRowBombSceneObject->GetTransform().SetRotation(mRowBombRotation);
         }
     }
+}
+
+void LevelGoalDialogView::AnimateGrayCubeRotation(float dt) {
+    Pht::Vec3 rotationSpeed {grayCubeRotationSpeed, grayCubeRotationSpeed, 0.0f};
+    mGrayCubeSceneObject->GetTransform().Rotate(rotationSpeed * dt);
 }
 
 void LevelGoalDialogView::AnimateAsteroidRotation(float dt) {

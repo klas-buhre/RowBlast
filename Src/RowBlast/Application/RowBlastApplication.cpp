@@ -15,6 +15,7 @@ Backlog:
      not really matter since the user can select any piece from the selectables but maybe it is most 
      convenient to go back to the state before the move and not the initial state.
   -Rendering:
+    -Maybe slightly thinner welds.
     -Maybe the green field material could be a bit less green.
     -Maybe the blue field material could be a bit less blue.
     -More ambient in gray and green field materials.
@@ -37,7 +38,6 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-    -Maybe slightly thinner welds.
 
 
 

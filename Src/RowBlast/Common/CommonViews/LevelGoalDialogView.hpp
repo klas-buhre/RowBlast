@@ -80,6 +80,7 @@ namespace RowBlast {
         void AnimateEmissive(float dt);
         void AnimateBombRotation(float dt);
         void AnimateRowBombRotation(float dt);
+        void AnimateGrayCubeRotation(float dt);
         void AnimateAsteroidRotation(float dt);
 
         using LevelStartPreviewPieces = std::array<LevelStartPreviewPiece, Level::maxNumPieceTypes>;
@@ -97,6 +98,7 @@ namespace RowBlast {
         std::unique_ptr<Pht::SceneObject> mGlowEffect;
         std::unique_ptr<Pht::SceneObject> mRoundGlowEffect;
         std::unique_ptr<Pht::SceneObject> mGoalRoundGlowEffect;
+        Pht::SceneObject* mGrayCubeSceneObject {nullptr};
         Pht::SceneObject* mAsteroidSceneObject {nullptr};
         float mAnimationTime {0.0f};
         float mEmissiveAnimationTime {0.0f};
