@@ -31,7 +31,7 @@ namespace {
     constexpr auto daylightLightIntensity {0.985f};
     constexpr auto sunsetLightIntensity {0.94f};
     constexpr auto darkLightIntensity {0.78f};
-    constexpr auto fieldQuadBrightness {0.9125f};
+    constexpr auto fieldQuadBrightness {0.9f};
 
     const std::vector<BlockPathVolume> standardFloatingBlockPaths {
         BlockPathVolume {
