@@ -131,8 +131,8 @@ void Materials::CreateBlueFieldBlockMaterial(const Pht::EnvMapTextureFilenames& 
 }
 
 void Materials::CreateGreenFieldBlockMaterial(const Pht::EnvMapTextureFilenames& envMapTextures) {
-    Pht::Color ambient {0.1f, 0.615f, 0.1f};
-    Pht::Color diffuse {0.1f, 0.595f, 0.1f};
+    Pht::Color ambient {0.15f, 0.615f, 0.15f};
+    Pht::Color diffuse {0.15f, 0.53f, 0.05f};
     Pht::Color specular {1.0f, 1.0f, 1.0f};
     auto shininess {20.0f};
     mGreenFieldBlockMaterial = std::make_unique<Pht::Material>(envMapTextures,
@@ -144,8 +144,8 @@ void Materials::CreateGreenFieldBlockMaterial(const Pht::EnvMapTextureFilenames&
 }
 
 void Materials::CreateGrayFieldBlockMaterial(const Pht::EnvMapTextureFilenames& envMapTextures) {
-    Pht::Color ambient {0.52f, 0.52f, 0.48f};
-    Pht::Color diffuse {0.495f, 0.495f, 0.455f};
+    Pht::Color ambient {0.5175f, 0.5175f, 0.47175f};
+    Pht::Color diffuse {0.495f, 0.495f, 0.45f};
     Pht::Color specular {1.0f, 1.0f, 1.0f};
     auto shininess {30.0f};
     mGrayFieldBlockMaterial = std::make_unique<Pht::Material>(envMapTextures,

@@ -15,7 +15,6 @@ Backlog:
      not really matter since the user can select any piece from the selectables but maybe it is most 
      convenient to go back to the state before the move and not the initial state.
   -Rendering:
-    -Maybe the blue field material could be a bit less blue.
   -GUI:
     -Store.
     -Menu window that displays 3rd party lib credits.
@@ -35,8 +34,8 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-    -More ambient in green field material.
-    -Maybe the green field material could be a bit less green.
+    -Maybe the blue field material could be a bit less blue.
+    -The yellow field material diffuse could be a bit less bright.
 
 
 
