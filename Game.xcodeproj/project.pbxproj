@@ -1785,27 +1785,27 @@
 		625696D12182392B003A3A9D /* Mesh */ = {
 			isa = PBXGroup;
 			children = (
-				625696D22182392B003A3A9D /* TriangleMesh.cpp */,
-				625696D32182392B003A3A9D /* VertexBuffer.cpp */,
+				625696DA2182392B003A3A9D /* BoxMesh.cpp */,
+				625696E12182392B003A3A9D /* BoxMesh.hpp */,
+				625696D82182392B003A3A9D /* CylinderMesh.cpp */,
+				625696DF2182392B003A3A9D /* CylinderMesh.hpp */,
 				625696D42182392B003A3A9D /* IMesh.hpp */,
 				625696D52182392B003A3A9D /* MeshUtils.cpp */,
-				625696D62182392B003A3A9D /* ParametricSurface.cpp */,
-				625696D72182392B003A3A9D /* ObjMesh.hpp */,
-				625696D82182392B003A3A9D /* CylinderMesh.cpp */,
-				625696D92182392B003A3A9D /* QuadMesh.hpp */,
-				625696DA2182392B003A3A9D /* BoxMesh.cpp */,
-				625696DB2182392B003A3A9D /* TorusMesh.hpp */,
-				625696DC2182392B003A3A9D /* SphereMesh.cpp */,
-				625696DD2182392B003A3A9D /* ParametricSurface.hpp */,
-				625696DE2182392B003A3A9D /* ObjMesh.cpp */,
-				625696DF2182392B003A3A9D /* CylinderMesh.hpp */,
-				625696E02182392B003A3A9D /* QuadMesh.cpp */,
-				625696E12182392B003A3A9D /* BoxMesh.hpp */,
-				625696E22182392B003A3A9D /* TorusMesh.cpp */,
-				625696E32182392B003A3A9D /* SphereMesh.hpp */,
-				625696E42182392B003A3A9D /* VertexBuffer.hpp */,
-				625696E52182392B003A3A9D /* TriangleMesh.hpp */,
 				625696E62182392B003A3A9D /* MeshUtils.hpp */,
+				625696DE2182392B003A3A9D /* ObjMesh.cpp */,
+				625696D72182392B003A3A9D /* ObjMesh.hpp */,
+				625696D62182392B003A3A9D /* ParametricSurface.cpp */,
+				625696DD2182392B003A3A9D /* ParametricSurface.hpp */,
+				625696E02182392B003A3A9D /* QuadMesh.cpp */,
+				625696D92182392B003A3A9D /* QuadMesh.hpp */,
+				625696DC2182392B003A3A9D /* SphereMesh.cpp */,
+				625696E32182392B003A3A9D /* SphereMesh.hpp */,
+				625696E22182392B003A3A9D /* TorusMesh.cpp */,
+				625696DB2182392B003A3A9D /* TorusMesh.hpp */,
+				625696D22182392B003A3A9D /* TriangleMesh.cpp */,
+				625696E52182392B003A3A9D /* TriangleMesh.hpp */,
+				625696D32182392B003A3A9D /* VertexBuffer.cpp */,
+				625696E42182392B003A3A9D /* VertexBuffer.hpp */,
 			);
 			path = Mesh;
 			sourceTree = "<group>";
@@ -1887,13 +1887,13 @@
 		6256971D2182392B003A3A9D /* Input */ = {
 			isa = PBXGroup;
 			children = (
-				6256971E2182392B003A3A9D /* InputHandler.cpp */,
-				6256971F2182392B003A3A9D /* InputEvent.hpp */,
-				625697202182392B003A3A9D /* SwipeGestureRecognizer.hpp */,
-				625697212182392B003A3A9D /* InputEvent.cpp */,
-				625697222182392B003A3A9D /* SwipeGestureRecognizer.cpp */,
-				625697232182392B003A3A9D /* InputHandler.hpp */,
 				625697242182392B003A3A9D /* IInput.hpp */,
+				625697212182392B003A3A9D /* InputEvent.cpp */,
+				6256971F2182392B003A3A9D /* InputEvent.hpp */,
+				6256971E2182392B003A3A9D /* InputHandler.cpp */,
+				625697232182392B003A3A9D /* InputHandler.hpp */,
+				625697222182392B003A3A9D /* SwipeGestureRecognizer.cpp */,
+				625697202182392B003A3A9D /* SwipeGestureRecognizer.hpp */,
 			);
 			path = Input;
 			sourceTree = "<group>";
@@ -1901,17 +1901,17 @@
 		625697252182392B003A3A9D /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				625697262182392B003A3A9D /* JsonUtil.cpp */,
-				625697272182392B003A3A9D /* FileSystem.hpp */,
-				625697282182392B003A3A9D /* StaticVector.hpp */,
 				625697292182392B003A3A9D /* FileStorage.cpp */,
-				6256972A2182392B003A3A9D /* OfflineRasterizer.cpp */,
-				6256972B2182392B003A3A9D /* Optional.hpp */,
-				6256972C2182392B003A3A9D /* Fnv1Hash.hpp */,
 				6256972D2182392B003A3A9D /* FileStorage.hpp */,
-				6256972E2182392B003A3A9D /* OfflineRasterizer.hpp */,
+				625697272182392B003A3A9D /* FileSystem.hpp */,
+				6256972C2182392B003A3A9D /* Fnv1Hash.hpp */,
 				6256972F2182392B003A3A9D /* IImage.hpp */,
+				625697262182392B003A3A9D /* JsonUtil.cpp */,
 				625697302182392B003A3A9D /* JsonUtil.hpp */,
+				6256972A2182392B003A3A9D /* OfflineRasterizer.cpp */,
+				6256972E2182392B003A3A9D /* OfflineRasterizer.hpp */,
+				6256972B2182392B003A3A9D /* Optional.hpp */,
+				625697282182392B003A3A9D /* StaticVector.hpp */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1919,12 +1919,12 @@
 		625697312182392B003A3A9D /* Math */ = {
 			isa = PBXGroup;
 			children = (
+				625697372182392B003A3A9D /* MathUtils.cpp */,
 				625697322182392B003A3A9D /* MathUtils.hpp */,
-				625697332182392B003A3A9D /* Vector.hpp */,
-				625697342182392B003A3A9D /* Transform.hpp */,
 				625697352182392B003A3A9D /* Matrix.hpp */,
 				625697362182392B003A3A9D /* Transform.cpp */,
-				625697372182392B003A3A9D /* MathUtils.cpp */,
+				625697342182392B003A3A9D /* Transform.hpp */,
+				625697332182392B003A3A9D /* Vector.hpp */,
 			);
 			path = Math;
 			sourceTree = "<group>";
@@ -1949,10 +1949,10 @@
 		625697432182392B003A3A9D /* Audio */ = {
 			isa = PBXGroup;
 			children = (
-				625697442182392B003A3A9D /* ISound.hpp */,
 				625697452182392B003A3A9D /* Audio.cpp */,
-				625697462182392B003A3A9D /* IAudio.hpp */,
 				625697472182392B003A3A9D /* Audio.hpp */,
+				625697462182392B003A3A9D /* IAudio.hpp */,
+				625697442182392B003A3A9D /* ISound.hpp */,
 			);
 			path = Audio;
 			sourceTree = "<group>";
@@ -1973,25 +1973,25 @@
 		6256974F2182392B003A3A9D /* Scene */ = {
 			isa = PBXGroup;
 			children = (
-				625697502182392B003A3A9D /* Scene.cpp */,
-				625697512182392B003A3A9D /* TextComponent.cpp */,
-				625697522182392B003A3A9D /* ObjMeshLoader.hpp */,
-				625697532182392B003A3A9D /* ISceneManager.hpp */,
-				625697542182392B003A3A9D /* LightComponent.hpp */,
-				625697552182392B003A3A9D /* SceneResources.cpp */,
-				625697562182392B003A3A9D /* CameraComponent.hpp */,
-				625697572182392B003A3A9D /* SceneObject.hpp */,
-				625697582182392B003A3A9D /* SceneManager.hpp */,
-				625697592182392B003A3A9D /* SceneObjectUtils.hpp */,
-				6256975A2182392B003A3A9D /* ObjMeshLoader.cpp */,
-				6256975B2182392B003A3A9D /* LightComponent.cpp */,
-				6256975C2182392B003A3A9D /* SceneResources.hpp */,
 				6256975D2182392B003A3A9D /* CameraComponent.cpp */,
-				6256975E2182392B003A3A9D /* SceneObject.cpp */,
-				6256975F2182392B003A3A9D /* SceneManager.cpp */,
-				625697602182392B003A3A9D /* SceneObjectUtils.cpp */,
-				625697612182392B003A3A9D /* Scene.hpp */,
+				625697562182392B003A3A9D /* CameraComponent.hpp */,
+				625697532182392B003A3A9D /* ISceneManager.hpp */,
 				625697622182392B003A3A9D /* ISceneObjectComponent.hpp */,
+				6256975B2182392B003A3A9D /* LightComponent.cpp */,
+				625697542182392B003A3A9D /* LightComponent.hpp */,
+				6256975A2182392B003A3A9D /* ObjMeshLoader.cpp */,
+				625697522182392B003A3A9D /* ObjMeshLoader.hpp */,
+				625697502182392B003A3A9D /* Scene.cpp */,
+				625697612182392B003A3A9D /* Scene.hpp */,
+				6256975F2182392B003A3A9D /* SceneManager.cpp */,
+				625697582182392B003A3A9D /* SceneManager.hpp */,
+				6256975E2182392B003A3A9D /* SceneObject.cpp */,
+				625697572182392B003A3A9D /* SceneObject.hpp */,
+				625697602182392B003A3A9D /* SceneObjectUtils.cpp */,
+				625697592182392B003A3A9D /* SceneObjectUtils.hpp */,
+				625697552182392B003A3A9D /* SceneResources.cpp */,
+				6256975C2182392B003A3A9D /* SceneResources.hpp */,
+				625697512182392B003A3A9D /* TextComponent.cpp */,
 				625697632182392B003A3A9D /* TextComponent.hpp */,
 			);
 			path = Scene;
@@ -2000,17 +2000,17 @@
 		625697642182392B003A3A9D /* Effects */ = {
 			isa = PBXGroup;
 			children = (
-				625697652182392B003A3A9D /* ParticleEmitter.hpp */,
-				625697662182392B003A3A9D /* FadeEffect.cpp */,
-				625697672182392B003A3A9D /* CameraShake.hpp */,
-				625697682182392B003A3A9D /* ParticleSystem.cpp */,
-				625697692182392B003A3A9D /* ParticleEffect.cpp */,
-				6256976A2182392B003A3A9D /* ParticleSystem.hpp */,
-				6256976B2182392B003A3A9D /* ParticleEffect.hpp */,
-				6256976C2182392B003A3A9D /* IParticleSystem.hpp */,
-				6256976D2182392B003A3A9D /* FadeEffect.hpp */,
-				6256976E2182392B003A3A9D /* ParticleEmitter.cpp */,
 				6256976F2182392B003A3A9D /* CameraShake.cpp */,
+				625697672182392B003A3A9D /* CameraShake.hpp */,
+				625697662182392B003A3A9D /* FadeEffect.cpp */,
+				6256976D2182392B003A3A9D /* FadeEffect.hpp */,
+				6256976C2182392B003A3A9D /* IParticleSystem.hpp */,
+				625697692182392B003A3A9D /* ParticleEffect.cpp */,
+				6256976B2182392B003A3A9D /* ParticleEffect.hpp */,
+				6256976E2182392B003A3A9D /* ParticleEmitter.cpp */,
+				625697652182392B003A3A9D /* ParticleEmitter.hpp */,
+				625697682182392B003A3A9D /* ParticleSystem.cpp */,
+				6256976A2182392B003A3A9D /* ParticleSystem.hpp */,
 			);
 			path = Effects;
 			sourceTree = "<group>";

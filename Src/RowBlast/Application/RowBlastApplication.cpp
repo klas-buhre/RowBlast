@@ -34,8 +34,7 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-    -Maybe the blue field material could be a bit less blue.
-    -The yellow field material diffuse could be a bit less bright.
+    -Store GUI.
 
 
 
@@ -122,6 +121,7 @@ Ordered Backlog:
         Done
     -Do the most important game scene-related rendering tasks.
         Cost: 4
+        Done
     -Store GUI.
         Cost: 5
     -Analytics.
