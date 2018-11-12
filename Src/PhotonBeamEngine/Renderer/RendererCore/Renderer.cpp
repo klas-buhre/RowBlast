@@ -414,11 +414,6 @@ void Renderer::SetClearColorBuffer(bool clearColorBuffer) {
     mClearColorBuffer = clearColorBuffer;
 }
 
-void Renderer::SetHudMode(bool hudMode) {
-    mHudMode = hudMode;
-    SetupProjectionInShaders();
-}
-
 void Renderer::SetDepthTest(const DepthState& depthState) {
     if (!mIsDepthTestAllowed && !depthState.mDepthTestAllowedOverride) {
         glDisable(GL_DEPTH_TEST);
@@ -439,9 +434,12 @@ void Renderer::SetDepthWrite(bool depthWrite) {
     }
 }
 
+void Renderer::SetHudMode(bool hudMode) {
+    mHudMode = hudMode;
+}
+
 void Renderer::SetProjectionMode(ProjectionMode projectionMode) {
     mProjectionMode = projectionMode;
-    SetupProjectionInShaders();
 }
 
 void Renderer::SetScissorBox(const Vec2& lowerLeft, const Vec2& size) {
@@ -780,8 +778,9 @@ void Renderer::Render(const RenderPass& renderPass, DistanceFunction distanceFun
     auto projectionMode {renderPass.GetProjectionMode()};
     
     if (isHudMode != mHudMode || projectionMode != mProjectionMode) {
-        mHudMode = isHudMode;
+        SetHudMode(isHudMode);
         SetProjectionMode(projectionMode);
+        SetupProjectionInShaders();
     }
     
     auto& scissorBox {renderPass.GetScissorBox()};
