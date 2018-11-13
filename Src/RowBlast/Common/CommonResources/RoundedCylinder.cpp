@@ -38,6 +38,7 @@ Pht::SceneObject& RowBlast::CreateRoundedCylinder(Pht::Scene& scene,
     sceneObject.GetTransform().SetPosition(position);
     parentObject.AddChild(sceneObject);
     
+    /*
     Pht::EnvMapTextureFilenames envMapTextures {
         "cloud_B_envmap.jpg",
         "cloud_C_envmap.jpg",
@@ -59,6 +60,13 @@ Pht::SceneObject& RowBlast::CreateRoundedCylinder(Pht::Scene& scene,
         reflectivity
     };
     material.SetOpacity(opacity);
+    */
+/*
+    Pht::Material material {{0.175f, 0.175f, 0.175f}, {0.175f, 0.175f, 0.175f}, {0.0f, 0.0f, 0.0f}, 1.0f};
+    material.SetOpacity(0.75f);
+*/
+    Pht::Material material {{0.2f, 0.2f, 0.2f}, {0.2f, 0.2f, 0.2f}, {0.0f, 0.0f, 0.0f}, 1.0f};
+    material.SetOpacity(0.75f);
 
     auto& cylinder {
         scene.CreateSceneObject(Pht::CylinderMesh {size.y / 2.0f, size.x, false}, material)

@@ -22,6 +22,7 @@ Materials::Materials(Pht::IEngine& engine) :
     CreateRedMaterial();
     CreateGreenMaterial();
     CreateLightGrayMaterial();
+    CreateGrayYellowMaterial();
     
     Pht::EnvMapTextureFilenames fieldBlockEnvMapTextures {
         "sky_upside_down.jpg",
@@ -102,6 +103,19 @@ void Materials::CreateLightGrayMaterial() {
                                                          specular,
                                                          shininess,
                                                          reflectivity);
+}
+
+void Materials::CreateGrayYellowMaterial() {
+    Pht::Color ambient {0.64f, 0.605f, 0.525f};
+    Pht::Color diffuse {0.64f, 0.605f, 0.525f};
+    Pht::Color specular {1.0f, 1.0f, 1.0f};
+    auto shininess {25.0f};
+    mGrayYellowMaterial = std::make_unique<Pht::Material>(mEnvMapTextureFilenames,
+                                                          ambient,
+                                                          diffuse,
+                                                          specular,
+                                                          shininess,
+                                                          reflectivity);
 }
 
 void Materials::CreateRedFieldBlockMaterial(const Pht::EnvMapTextureFilenames& envMapTextures) {

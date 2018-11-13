@@ -31,6 +31,7 @@ namespace RowBlast {
             bool mHasShadow {false};
             Pht::RenderableObject* mRenderableObject {nullptr};
             Pht::RenderableObject* mSelectedRenderableObject {nullptr};
+            float mTextScale {1.0f};
         };
         
         MenuButton(Pht::IEngine& engine,
@@ -47,12 +48,17 @@ namespace RowBlast {
         Pht::SceneObject& GetSceneObject() {
             return *mSceneObject;
         }
+        
+        const Pht::Button& GetButton() const {
+            return *mButton;
+        }
 
     private:
         Pht::GuiView& mView;
         Pht::IAudio& mAudio;
         std::unique_ptr<Pht::Button> mButton;
-        Pht::SceneObject* mSceneObject;
+        Pht::SceneObject* mSceneObject {nullptr};
+        Pht::TextComponent* mText {nullptr};
         Style mStyle;
     };
 }

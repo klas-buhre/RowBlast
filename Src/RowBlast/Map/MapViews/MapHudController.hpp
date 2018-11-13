@@ -1,25 +1,26 @@
-#ifndef SettingsButtonController_hpp
-#define SettingsButtonController_hpp
+#ifndef MapHudController_hpp
+#define MapHudController_hpp
 
 // Game includes.
-#include "SettingsButtonView.hpp"
+#include "MapHudView.hpp"
 
 namespace Pht {
     class IEngine;
-    class IAudio;
     class TouchEvent;
 }
 
 namespace RowBlast {
-    class SettingsButtonController {
+    class MapHudController {
     public:
         enum class Result {
             None,
             TouchStartedOverButton,
-            ClickedSettings
+            ClickedSettingsButton,
+            ClickedCoinsButton,
+            ClickedLivesButton
         };
         
-        explicit SettingsButtonController(Pht::IEngine& engine);
+        MapHudController(Pht::IEngine& engine, const CommonResources& commonResources);
         
         Result OnTouch(const Pht::TouchEvent& event);
         
@@ -28,8 +29,7 @@ namespace RowBlast {
         }
 
     private:
-        SettingsButtonView mView;
-        Pht::IAudio& mAudio;
+        MapHudView mView;
     };
 }
 

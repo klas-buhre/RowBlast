@@ -66,6 +66,10 @@ namespace {
                 return {9.0f, 2.1f};
             case ButtonSize::Small:
                 return {3.6f, 2.1f};
+            case ButtonSize::Smaller:
+                return {1.9f, 1.9f};
+            case ButtonSize::Smallest:
+                return {1.2f, 1.2f};
         }
     }
     
@@ -75,7 +79,10 @@ namespace {
                 return 0.35f;
             case ButtonSize::Medium:
             case ButtonSize::Small:
+            case ButtonSize::Smaller:
                 return 0.3f;
+            case ButtonSize::Smallest:
+                return 0.23f;
         }
     }
     
@@ -85,6 +92,8 @@ namespace {
                 return 0.1f;
             case ButtonSize::Medium:
             case ButtonSize::Small:
+            case ButtonSize::Smaller:
+            case ButtonSize::Smallest:
                 return 0.08f;
         }
     }
@@ -96,6 +105,10 @@ namespace {
             case ButtonSize::Medium:
             case ButtonSize::Small:
                 return 0.89f;
+            case ButtonSize::Smaller:
+                return 0.79f;
+            case ButtonSize::Smallest:
+                return 0.4f;
         }
     }
     
@@ -143,11 +156,11 @@ namespace {
         Pht::Vec2 upperRight1 {size.x - cornerRadius - xPadding, size.y - upperYPadding};
         rasterizer.DrawRectangle(upperRight1, lowerLeft1, stencilColor);
 
-        Pht::Vec2 lowerLeft2 {xPadding, cornerRadius + lowerYPadding};
+        Pht::Vec2 lowerLeft2 {xPadding, cornerRadius + lowerYPadding - 0.05f};
         Pht::Vec2 upperRight2 {cornerRadius + xPadding, size.y - cornerRadius - upperYPadding};
         rasterizer.DrawRectangle(upperRight2, lowerLeft2, stencilColor);
 
-        Pht::Vec2 lowerLeft3 {size.x - cornerRadius - xPadding, cornerRadius + lowerYPadding};
+        Pht::Vec2 lowerLeft3 {size.x - cornerRadius - xPadding, cornerRadius + lowerYPadding - 0.05f};
         Pht::Vec2 upperRight3 {size.x - xPadding, size.y - cornerRadius - upperYPadding};
         rasterizer.DrawRectangle(upperRight3, lowerLeft3, stencilColor);
 

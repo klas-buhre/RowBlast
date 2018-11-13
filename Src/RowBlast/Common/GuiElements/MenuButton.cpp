@@ -74,6 +74,9 @@ MenuButton::MenuButton(Pht::IEngine& engine,
                 renderable->GetMaterial().SetAmbient(mStyle.mSelectedColor);
             }
         }
+        if (mText) {
+            mText->GetProperties().mScale = mStyle.mTextScale * mStyle.mPressedScale;
+        }
     }};
     
     mButton->SetOnDown(onDownFunction);
@@ -86,6 +89,9 @@ MenuButton::MenuButton(Pht::IEngine& engine,
             if (auto* renderable {mSceneObject->GetRenderable()}) {
                 renderable->GetMaterial().SetAmbient(mStyle.mColor);
             }
+        }
+        if (mText) {
+            mText->GetProperties().mScale = mStyle.mTextScale;
         }
     }};
     
@@ -100,13 +106,13 @@ Pht::TextComponent& MenuButton::CreateText(const Pht::Vec3& position,
     auto sceneObject {std::make_unique<Pht::SceneObject>()};
     auto textComponent {std::make_unique<Pht::TextComponent>(*sceneObject, text, properties)};
     
-    auto& retVal {*textComponent};
+    mText = textComponent.get();
     sceneObject->SetComponent<Pht::TextComponent>(std::move(textComponent));
     sceneObject->GetTransform().SetPosition(position);
     mSceneObject->AddChild(*sceneObject);
     
     mView.GetSceneResources().AddSceneObject(std::move(sceneObject));
-    return retVal;
+    return *mText;
 }
 
 bool MenuButton::IsClicked(const Pht::TouchEvent& event) const {

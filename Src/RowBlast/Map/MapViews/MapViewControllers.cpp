@@ -28,7 +28,7 @@ MapViewControllers::MapViewControllers(Pht::IEngine& engine,
         fade,
         UiLayer::backgroundFade
     },
-    mSettingsButtonController {engine},
+    mMapHudController {engine, commonResources},
     mLevelGoalDialogController {
         engine,
         commonResources,
@@ -38,7 +38,7 @@ MapViewControllers::MapViewControllers(Pht::IEngine& engine,
     mNoLivesDialogController {engine, commonResources, userServices, PotentiallyZoomedScreen::No},
     mSettingsMenuController {engine, commonResources, settings, PotentiallyZoomedScreen::No} {
     
-    mViewManager.AddView(static_cast<int>(SettingsButton), mSettingsButtonController.GetView());
+    mViewManager.AddView(static_cast<int>(MapHud), mMapHudController.GetView());
     mViewManager.AddView(static_cast<int>(LevelGoalDialog), mLevelGoalDialogController.GetView());
     mViewManager.AddView(static_cast<int>(NoLivesDialog), mNoLivesDialogController.GetView());
     mViewManager.AddView(static_cast<int>(SettingsMenu), mSettingsMenuController.GetView());
@@ -54,7 +54,7 @@ void MapViewControllers::Init() {
     uiViewContainer.AddChild(mFadeEffect.GetSceneObject());
     
     mViewManager.Init(uiViewContainer);
-    SetActiveController(SettingsButton);
+    SetActiveController(MapHud);
 }
 
 void MapViewControllers::SetActiveController(Controller controller) {

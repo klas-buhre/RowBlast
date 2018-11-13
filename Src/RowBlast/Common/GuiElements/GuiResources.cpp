@@ -276,6 +276,34 @@ GuiResources::GuiResources(Pht::IEngine& engine, const CommonResources& commonRe
                            ButtonSize::Large,
                            ButtonColor::DarkGreen,
                            PotentiallyZoomedScreen::Yes)
+    },
+    mSmallerBlueGlossyButton {
+        CreateGlossyButton(engine,
+                           commonResources,
+                           ButtonSize::Smaller,
+                           ButtonColor::Blue,
+                           PotentiallyZoomedScreen::No)
+    },
+    mSmallerDarkBlueGlossyButton {
+        CreateGlossyButton(engine,
+                           commonResources,
+                           ButtonSize::Smaller,
+                           ButtonColor::DarkBlue,
+                           PotentiallyZoomedScreen::No)
+    },
+    mSmallestBlueGlossyButton {
+        CreateGlossyButton(engine,
+                           commonResources,
+                           ButtonSize::Smallest,
+                           ButtonColor::Blue,
+                           PotentiallyZoomedScreen::No)
+    },
+    mSmallestDarkBlueGlossyButton {
+        CreateGlossyButton(engine,
+                           commonResources,
+                           ButtonSize::Smallest,
+                           ButtonColor::DarkBlue,
+                           PotentiallyZoomedScreen::No)
     } {}
 
 const MenuWindow&

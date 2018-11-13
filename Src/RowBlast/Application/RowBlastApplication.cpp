@@ -35,6 +35,10 @@ Backlog:
 
 Ongoing tasks:
     -Store GUI.
+      -Store view.
+        -Products view with balance.
+        -Purchase canceled view.
+        -Purchase successful/completed view?
 
 
 

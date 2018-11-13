@@ -8,6 +8,7 @@
 #include "CameraComponent.hpp"
 #include "LightComponent.hpp"
 #include "TextComponent.hpp"
+#include "ObjMesh.hpp"
 #include "QuadMesh.hpp"
 #include "SceneObjectUtils.hpp"
 
@@ -184,7 +185,7 @@ void GameHud::CreateProgressObject(Pht::Scene& scene,
     
     switch (mLevelObjective) {
         case Level::Objective::Clear:
-            CreateGrayBlock(scene, progressContainer, levelResources);
+            CreateGrayBlock(scene, progressContainer, commonResources);
             progressTextSceneobject.GetTransform().SetPosition({-0.48f, -0.215f, UiLayer::text});
             mProgressGoal = field.CalculateNumLevelBlocks();
             break;
@@ -212,9 +213,11 @@ void GameHud::CreateProgressObject(Pht::Scene& scene,
 
 void GameHud::CreateGrayBlock(Pht::Scene& scene,
                               Pht::SceneObject& progressContainer,
-                              const LevelResources& levelResources) {
-    auto& grayBlock {scene.CreateSceneObject()};
-    grayBlock.SetRenderable(&levelResources.GetLevelBlockRenderable(BlockKind::Full));
+                              const CommonResources& commonResources) {
+    auto& grayBlock {
+        scene.CreateSceneObject(Pht::ObjMesh {"cube_428.obj", 1.25f},
+                                commonResources.GetMaterials().GetGrayYellowMaterial())
+    };
     
     auto& transform {grayBlock.GetTransform()};
     transform.SetPosition({-1.05f, 0.0f, UiLayer::block});

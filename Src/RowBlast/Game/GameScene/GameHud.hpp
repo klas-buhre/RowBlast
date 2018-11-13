@@ -107,7 +107,7 @@ namespace RowBlast {
                                   const LevelResources& levelResources);
         void CreateGrayBlock(Pht::Scene& scene,
                              Pht::SceneObject& progressContainer,
-                             const LevelResources& levelResources);
+                             const CommonResources& commonResources);
         void CreateAsteroid(Pht::Scene& scene,
                             Pht::SceneObject& progressContainer,
                             const LevelResources& levelResources);

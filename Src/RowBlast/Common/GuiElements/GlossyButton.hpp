@@ -20,6 +20,8 @@ namespace RowBlast {
         Large,
         Medium,
         Small,
+        Smaller,
+        Smallest
     };
 
     enum class ButtonColor {

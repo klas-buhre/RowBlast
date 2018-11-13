@@ -5,7 +5,7 @@
 #include "FadeEffect.hpp"
 
 // Game includes.
-#include "SettingsButtonController.hpp"
+#include "MapHudController.hpp"
 #include "LevelGoalDialogController.hpp"
 #include "SettingsMenuController.hpp"
 #include "NoLivesDialogController.hpp"
@@ -24,7 +24,7 @@ namespace RowBlast {
     class MapViewControllers {
     public:
         enum Controller {
-            SettingsButton,
+            MapHud,
             LevelGoalDialog,
             NoLivesDialog,
             SettingsMenu
@@ -40,8 +40,8 @@ namespace RowBlast {
         void Init();
         void SetActiveController(Controller controller);
     
-        SettingsButtonController& GetSettingsButtonController() {
-            return mSettingsButtonController;
+        MapHudController& GetMapHudController() {
+            return mMapHudController;
         }
         
         LevelGoalDialogController& GetLevelGoalDialogController() {
@@ -60,7 +60,7 @@ namespace RowBlast {
         MapScene& mScene;
         Pht::FadeEffect mFadeEffect;
         GuiViewManager mViewManager;
-        SettingsButtonController mSettingsButtonController;
+        MapHudController mMapHudController;
         LevelGoalDialogController mLevelGoalDialogController;
         NoLivesDialogController mNoLivesDialogController;
         SettingsMenuController mSettingsMenuController;

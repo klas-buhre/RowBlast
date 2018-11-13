@@ -139,7 +139,7 @@ MapController::Command MapController::UpdateLevelGoalDialog() {
             break;
         case LevelGoalDialogController::Result::Close:
             mState = State::Map;
-            mMapViewControllers.SetActiveController(MapViewControllers::SettingsButton);
+            mMapViewControllers.SetActiveController(MapViewControllers::MapHud);
             break;
     }
     
@@ -153,11 +153,11 @@ void MapController::UpdateNoLivesDialog() {
         case NoLivesDialogController::Result::RefillLives:
             mUserServices.GetLifeService().RefillLives();
             mState = State::Map;
-            mMapViewControllers.SetActiveController(MapViewControllers::SettingsButton);
+            mMapViewControllers.SetActiveController(MapViewControllers::MapHud);
             break;
         case NoLivesDialogController::Result::Close:
             mState = State::Map;
-            mMapViewControllers.SetActiveController(MapViewControllers::SettingsButton);
+            mMapViewControllers.SetActiveController(MapViewControllers::MapHud);
             break;
     }
 }
@@ -168,7 +168,7 @@ void MapController::UpdateSettingsMenu() {
             break;
         case SettingsMenuController::Result::GoBack:
             mState = State::Map;
-            mMapViewControllers.SetActiveController(MapViewControllers::SettingsButton);
+            mMapViewControllers.SetActiveController(MapViewControllers::MapHud);
             break;
     }
 }
@@ -182,14 +182,16 @@ MapController::Command MapController::HandleInput() {
         switch (event.GetKind()) {
             case Pht::InputKind::Touch: {
                 auto& touchEvent {event.GetTouchEvent()};
-                switch (mMapViewControllers.GetSettingsButtonController().OnTouch(touchEvent)) {
-                    case SettingsButtonController::Result::None:
+                switch (mMapViewControllers.GetMapHudController().OnTouch(touchEvent)) {
+                    case MapHudController::Result::None:
                         command = HandleTouch(touchEvent);
                         break;
-                    case SettingsButtonController::Result::ClickedSettings:
+                    case MapHudController::Result::ClickedSettingsButton:
                         GoToSettingsMenuState();
                         break;
-                    case SettingsButtonController::Result::TouchStartedOverButton:
+                    case MapHudController::Result::ClickedCoinsButton:
+                    case MapHudController::Result::ClickedLivesButton:
+                    case MapHudController::Result::TouchStartedOverButton:
                         break;
                 }
                 break;
@@ -209,7 +211,9 @@ MapController::Command MapController::HandleTouch(const Pht::TouchEvent& touch) 
     auto command {Command{Command::None}};
     UpdateTouchingState(touch);
     
-    mEngine.GetRenderer().SetProjectionMode(Pht::ProjectionMode::Perspective);
+    auto& renderer {mEngine.GetRenderer()};
+    renderer.SetProjectionMode(Pht::ProjectionMode::Perspective);
+    renderer.SetHudMode(false);
 
     auto& pins {mScene.GetPins()};
     

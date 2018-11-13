@@ -29,6 +29,8 @@
 		6238F618218F0CEC0008A0CF /* sky_upside_down_patched_mirrored.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6238F617218F0CEB0008A0CF /* sky_upside_down_patched_mirrored.jpg */; };
 		6238F61B2191FCB40008A0CF /* TextDoubleGradient.vert in Resources */ = {isa = PBXBuildFile; fileRef = 6238F6192191FCB30008A0CF /* TextDoubleGradient.vert */; };
 		6238F61C2191FCB40008A0CF /* TextDoubleGradient.frag in Resources */ = {isa = PBXBuildFile; fileRef = 6238F61A2191FCB40008A0CF /* TextDoubleGradient.frag */; };
+		6238F620219A097A0008A0CF /* coin_852.obj in Resources */ = {isa = PBXBuildFile; fileRef = 6238F61F219A09790008A0CF /* coin_852.obj */; };
+		6238F622219AEC640008A0CF /* heart_112.obj in Resources */ = {isa = PBXBuildFile; fileRef = 6238F621219AEC640008A0CF /* heart_112.obj */; };
 		6240508620FF69C00077A454 /* level46.json in Resources */ = {isa = PBXBuildFile; fileRef = 6240508520FF69C00077A454 /* level46.json */; };
 		6240508820FF82A10077A454 /* level47.json in Resources */ = {isa = PBXBuildFile; fileRef = 6240508720FF82A10077A454 /* level47.json */; };
 		62411A971E61E62800035D2A /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62411A961E61E62800035D2A /* GLKit.framework */; };
@@ -183,8 +185,8 @@
 		625696C92182382C003A3A9D /* MapPin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 625695CF2182382B003A3A9D /* MapPin.cpp */; };
 		625696CA2182382C003A3A9D /* PortalParticleEffect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 625695D02182382B003A3A9D /* PortalParticleEffect.cpp */; };
 		625696CB2182382C003A3A9D /* MapHud.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 625695D12182382B003A3A9D /* MapHud.cpp */; };
-		625696CC2182382C003A3A9D /* SettingsButtonView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 625695D32182382B003A3A9D /* SettingsButtonView.cpp */; };
-		625696CD2182382C003A3A9D /* SettingsButtonController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 625695D42182382B003A3A9D /* SettingsButtonController.cpp */; };
+		625696CC2182382C003A3A9D /* MapHudView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 625695D32182382B003A3A9D /* MapHudView.cpp */; };
+		625696CD2182382C003A3A9D /* MapHudController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 625695D42182382B003A3A9D /* MapHudController.cpp */; };
 		625696CE2182382C003A3A9D /* MapViewControllers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 625695D72182382B003A3A9D /* MapViewControllers.cpp */; };
 		625696CF2182382C003A3A9D /* RowBlastApplication.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 625695DB2182382B003A3A9D /* RowBlastApplication.cpp */; };
 		625698022182392C003A3A9D /* TriangleMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 625696D22182392B003A3A9D /* TriangleMesh.cpp */; };
@@ -435,6 +437,8 @@
 		6238F617218F0CEB0008A0CF /* sky_upside_down_patched_mirrored.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sky_upside_down_patched_mirrored.jpg; sourceTree = "<group>"; };
 		6238F6192191FCB30008A0CF /* TextDoubleGradient.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = TextDoubleGradient.vert; sourceTree = "<group>"; };
 		6238F61A2191FCB40008A0CF /* TextDoubleGradient.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = TextDoubleGradient.frag; sourceTree = "<group>"; };
+		6238F61F219A09790008A0CF /* coin_852.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = coin_852.obj; sourceTree = "<group>"; };
+		6238F621219AEC640008A0CF /* heart_112.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = heart_112.obj; sourceTree = "<group>"; };
 		6240508520FF69C00077A454 /* level46.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level46.json; sourceTree = "<group>"; };
 		6240508720FF82A10077A454 /* level47.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level47.json; sourceTree = "<group>"; };
 		62411A961E61E62800035D2A /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
@@ -744,12 +748,12 @@
 		625695CF2182382B003A3A9D /* MapPin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MapPin.cpp; sourceTree = "<group>"; };
 		625695D02182382B003A3A9D /* PortalParticleEffect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PortalParticleEffect.cpp; sourceTree = "<group>"; };
 		625695D12182382B003A3A9D /* MapHud.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MapHud.cpp; sourceTree = "<group>"; };
-		625695D32182382B003A3A9D /* SettingsButtonView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SettingsButtonView.cpp; sourceTree = "<group>"; };
-		625695D42182382B003A3A9D /* SettingsButtonController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SettingsButtonController.cpp; sourceTree = "<group>"; };
+		625695D32182382B003A3A9D /* MapHudView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MapHudView.cpp; sourceTree = "<group>"; };
+		625695D42182382B003A3A9D /* MapHudController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MapHudController.cpp; sourceTree = "<group>"; };
 		625695D52182382B003A3A9D /* MapViewControllers.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MapViewControllers.hpp; sourceTree = "<group>"; };
-		625695D62182382B003A3A9D /* SettingsButtonController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SettingsButtonController.hpp; sourceTree = "<group>"; };
+		625695D62182382B003A3A9D /* MapHudController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MapHudController.hpp; sourceTree = "<group>"; };
 		625695D72182382B003A3A9D /* MapViewControllers.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MapViewControllers.cpp; sourceTree = "<group>"; };
-		625695D82182382B003A3A9D /* SettingsButtonView.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SettingsButtonView.hpp; sourceTree = "<group>"; };
+		625695D82182382B003A3A9D /* MapHudView.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MapHudView.hpp; sourceTree = "<group>"; };
 		625695DA2182382B003A3A9D /* RowBlastApplication.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = RowBlastApplication.hpp; sourceTree = "<group>"; };
 		625695DB2182382B003A3A9D /* RowBlastApplication.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RowBlastApplication.cpp; sourceTree = "<group>"; };
 		625696D22182392B003A3A9D /* TriangleMesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TriangleMesh.cpp; sourceTree = "<group>"; };
@@ -1744,12 +1748,12 @@
 		625695D22182382B003A3A9D /* MapViews */ = {
 			isa = PBXGroup;
 			children = (
-				625695D32182382B003A3A9D /* SettingsButtonView.cpp */,
-				625695D42182382B003A3A9D /* SettingsButtonController.cpp */,
-				625695D52182382B003A3A9D /* MapViewControllers.hpp */,
-				625695D62182382B003A3A9D /* SettingsButtonController.hpp */,
 				625695D72182382B003A3A9D /* MapViewControllers.cpp */,
-				625695D82182382B003A3A9D /* SettingsButtonView.hpp */,
+				625695D52182382B003A3A9D /* MapViewControllers.hpp */,
+				625695D42182382B003A3A9D /* MapHudController.cpp */,
+				625695D62182382B003A3A9D /* MapHudController.hpp */,
+				625695D32182382B003A3A9D /* MapHudView.cpp */,
+				625695D82182382B003A3A9D /* MapHudView.hpp */,
 			);
 			path = MapViews;
 			sourceTree = "<group>";
@@ -2277,6 +2281,8 @@
 		6270DC571FCB22AE00FB457D /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				6238F621219AEC640008A0CF /* heart_112.obj */,
+				6238F61F219A09790008A0CF /* coin_852.obj */,
 				6234618B21691DAE00ECD0DF /* asteroid_998.obj */,
 				625D3B54217249EC00D67EC2 /* asteroid_2000.obj */,
 				625D3B5D2174B12400D67EC2 /* asteroid_fragment_500.obj */,
@@ -2570,6 +2576,7 @@
 				626940992157F31500D9857A /* ogma_rings.png in Resources */,
 				629B837C20C544F000DD2D0E /* level35.json in Resources */,
 				629B838020C58B8100DD2D0E /* level37.json in Resources */,
+				6238F620219A097A0008A0CF /* coin_852.obj in Resources */,
 				6269408F2154F94300D9857A /* planet_ring.obj in Resources */,
 				6234618C21691DAF00ECD0DF /* asteroid_998.obj in Resources */,
 				6256981A2182392C003A3A9D /* VertexLighting.vert in Resources */,
@@ -2675,6 +2682,7 @@
 				629B838820CA940E00DD2D0E /* cube_428.obj in Resources */,
 				6270DC9C1FCB23D800FB457D /* level7.json in Resources */,
 				62DE641C20CE953D00A50F26 /* medium_button_skewed_0385.obj in Resources */,
+				6238F622219AEC640008A0CF /* heart_112.obj in Resources */,
 				6270DC941FCB23D800FB457D /* level20.json in Resources */,
 				62B1CB85210F8F8600D0F195 /* laser_beam_red.png in Resources */,
 				62A729E32144170D00255BF7 /* level58.json in Resources */,
@@ -2801,13 +2809,13 @@
 				625696412182382C003A3A9D /* BombDialogView.cpp in Sources */,
 				625696C22182382C003A3A9D /* World1.cpp in Sources */,
 				625696BA2182382C003A3A9D /* GradientRectangle.cpp in Sources */,
-				625696CD2182382C003A3A9D /* SettingsButtonController.cpp in Sources */,
+				625696CD2182382C003A3A9D /* MapHudController.cpp in Sources */,
 				625698502182392C003A3A9D /* FadeEffect.cpp in Sources */,
 				625696362182382C003A3A9D /* PlacePieceWindowController.cpp in Sources */,
 				625696922182382C003A3A9D /* Level.cpp in Sources */,
 				625696822182382C003A3A9D /* PlusPiece.cpp in Sources */,
 				6256980F2182392C003A3A9D /* RenderableObject.cpp in Sources */,
-				625696CC2182382C003A3A9D /* SettingsButtonView.cpp in Sources */,
+				625696CC2182382C003A3A9D /* MapHudView.cpp in Sources */,
 				6256980B2182392C003A3A9D /* TorusMesh.cpp in Sources */,
 				625696552182382C003A3A9D /* GameMenuController.cpp in Sources */,
 				6256968D2182382C003A3A9D /* MoveDefinitions.cpp in Sources */,
