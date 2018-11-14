@@ -29,8 +29,8 @@ namespace {
     const Pht::Vec3 lightDirectionA {0.6f, 1.0f, 1.0f};
     const Pht::Vec3 lightDirectionB {0.4f, 1.0f, 1.0f};
     constexpr auto lightAnimationDuration {5.0f};
-    const Pht::Color roundedCylinderAmbient {0.75f, 0.75f, 0.75f};
-    const Pht::Color roundedCylinderDiffuse {0.55f, 0.55f, 0.55f};
+    const Pht::Color roundedCylinderAmbient {0.49f, 0.49f, 0.49f};
+    const Pht::Color roundedCylinderDiffuse {0.62f, 0.62f, 0.62f};
     constexpr auto roundedCylinderOpacity {0.45f};
     constexpr auto cellSize {1.25f};
     
