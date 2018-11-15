@@ -86,6 +86,9 @@ MapController::Command MapController::Update() {
         case State::SettingsMenu:
             UpdateSettingsMenu();
             break;
+        case State::StoreMenu:
+            UpdateStoreMenu();
+            break;
     }
 
     mScene.Update();
@@ -138,8 +141,7 @@ MapController::Command MapController::UpdateLevelGoalDialog() {
             command = Command {Command::StartGame, mLevelToStart};
             break;
         case LevelGoalDialogController::Result::Close:
-            mState = State::Map;
-            mMapViewControllers.SetActiveController(MapViewControllers::MapHud);
+            GoToMapState();
             break;
     }
     
@@ -152,12 +154,10 @@ void MapController::UpdateNoLivesDialog() {
             break;
         case NoLivesDialogController::Result::RefillLives:
             mUserServices.GetLifeService().RefillLives();
-            mState = State::Map;
-            mMapViewControllers.SetActiveController(MapViewControllers::MapHud);
+            GoToMapState();
             break;
         case NoLivesDialogController::Result::Close:
-            mState = State::Map;
-            mMapViewControllers.SetActiveController(MapViewControllers::MapHud);
+            GoToMapState();
             break;
     }
 }
@@ -167,8 +167,17 @@ void MapController::UpdateSettingsMenu() {
         case SettingsMenuController::Result::None:
             break;
         case SettingsMenuController::Result::GoBack:
-            mState = State::Map;
-            mMapViewControllers.SetActiveController(MapViewControllers::MapHud);
+            GoToMapState();
+            break;
+    }
+}
+
+void MapController::UpdateStoreMenu() {
+    switch (mMapViewControllers.GetStoreMenuController().Update()) {
+        case StoreMenuController::Result::None:
+            break;
+        case StoreMenuController::Result::Close:
+            GoToMapState();
             break;
     }
 }
@@ -190,6 +199,8 @@ MapController::Command MapController::HandleInput() {
                         GoToSettingsMenuState();
                         break;
                     case MapHudController::Result::ClickedCoinsButton:
+                        GoToStoreMenuState();
+                        break;
                     case MapHudController::Result::ClickedLivesButton:
                     case MapHudController::Result::TouchStartedOverButton:
                         break;
@@ -377,4 +388,15 @@ void MapController::GoToSettingsMenuState() {
     mMapViewControllers.GetSettingsMenuController().Init(SlidingMenuAnimation::UpdateFade::Yes,
                                                          true);
     mState = State::SettingsMenu;
+}
+
+void MapController::GoToStoreMenuState() {
+    mMapViewControllers.SetActiveController(MapViewControllers::StoreMenu);
+    mMapViewControllers.GetStoreMenuController().Init();
+    mState = State::StoreMenu;
+}
+
+void MapController::GoToMapState() {
+    mState = State::Map;
+    mMapViewControllers.SetActiveController(MapViewControllers::MapHud);
 }

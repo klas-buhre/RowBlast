@@ -47,7 +47,8 @@ namespace RowBlast {
             UfoAnimation,
             LevelGoalDialog,
             NoLivesDialog,
-            SettingsMenu
+            SettingsMenu,
+            StoreMenu
         };
     
         MapController(Pht::IEngine& engine,
@@ -77,6 +78,7 @@ namespace RowBlast {
         Command UpdateLevelGoalDialog();
         void UpdateNoLivesDialog();
         void UpdateSettingsMenu();
+        void UpdateStoreMenu();
         Command HandleInput();
         void UpdateTouchingState(const Pht::TouchEvent& touch);
         Command HandleTouch(const Pht::TouchEvent& touch);
@@ -85,6 +87,8 @@ namespace RowBlast {
         void StartPan(const Pht::TouchEvent& touch);
         void UpdateCamera();
         void GoToSettingsMenuState();
+        void GoToStoreMenuState();
+        void GoToMapState();
         
         Pht::IEngine& mEngine;
         UserServices& mUserServices;

@@ -31,6 +31,8 @@
 		6238F61C2191FCB40008A0CF /* TextDoubleGradient.frag in Resources */ = {isa = PBXBuildFile; fileRef = 6238F61A2191FCB40008A0CF /* TextDoubleGradient.frag */; };
 		6238F620219A097A0008A0CF /* coin_852.obj in Resources */ = {isa = PBXBuildFile; fileRef = 6238F61F219A09790008A0CF /* coin_852.obj */; };
 		6238F622219AEC640008A0CF /* heart_112.obj in Resources */ = {isa = PBXBuildFile; fileRef = 6238F621219AEC640008A0CF /* heart_112.obj */; };
+		6238F625219C885B0008A0CF /* StoreMenuView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6238F623219C885B0008A0CF /* StoreMenuView.cpp */; };
+		6238F628219C89590008A0CF /* StoreMenuController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6238F626219C89590008A0CF /* StoreMenuController.cpp */; };
 		6240508620FF69C00077A454 /* level46.json in Resources */ = {isa = PBXBuildFile; fileRef = 6240508520FF69C00077A454 /* level46.json */; };
 		6240508820FF82A10077A454 /* level47.json in Resources */ = {isa = PBXBuildFile; fileRef = 6240508720FF82A10077A454 /* level47.json */; };
 		62411A971E61E62800035D2A /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62411A961E61E62800035D2A /* GLKit.framework */; };
@@ -439,6 +441,10 @@
 		6238F61A2191FCB40008A0CF /* TextDoubleGradient.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = TextDoubleGradient.frag; sourceTree = "<group>"; };
 		6238F61F219A09790008A0CF /* coin_852.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = coin_852.obj; sourceTree = "<group>"; };
 		6238F621219AEC640008A0CF /* heart_112.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = heart_112.obj; sourceTree = "<group>"; };
+		6238F623219C885B0008A0CF /* StoreMenuView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = StoreMenuView.cpp; sourceTree = "<group>"; };
+		6238F624219C885B0008A0CF /* StoreMenuView.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = StoreMenuView.hpp; sourceTree = "<group>"; };
+		6238F626219C89590008A0CF /* StoreMenuController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = StoreMenuController.cpp; sourceTree = "<group>"; };
+		6238F627219C89590008A0CF /* StoreMenuController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = StoreMenuController.hpp; sourceTree = "<group>"; };
 		6240508520FF69C00077A454 /* level46.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level46.json; sourceTree = "<group>"; };
 		6240508720FF82A10077A454 /* level47.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level47.json; sourceTree = "<group>"; };
 		62411A961E61E62800035D2A /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
@@ -1657,6 +1663,10 @@
 				625695932182382B003A3A9D /* SettingsMenuController.hpp */,
 				625695942182382B003A3A9D /* SettingsMenuView.cpp */,
 				6256958C2182382B003A3A9D /* SettingsMenuView.hpp */,
+				6238F626219C89590008A0CF /* StoreMenuController.cpp */,
+				6238F627219C89590008A0CF /* StoreMenuController.hpp */,
+				6238F623219C885B0008A0CF /* StoreMenuView.cpp */,
+				6238F624219C885B0008A0CF /* StoreMenuView.hpp */,
 			);
 			path = CommonViews;
 			sourceTree = "<group>";
@@ -2877,8 +2887,10 @@
 				6256968E2182382C003A3A9D /* ValidMovesSearch.cpp in Sources */,
 				625696402182382C003A3A9D /* FillRowsWindowController.cpp in Sources */,
 				625696432182382C003A3A9D /* Tutorial.cpp in Sources */,
+				6238F628219C89590008A0CF /* StoreMenuController.cpp in Sources */,
 				6256963C2182382C003A3A9D /* OtherMovesWindowController.cpp in Sources */,
 				6256983F2182392C003A3A9D /* FileSystemIOS.mm in Sources */,
+				6238F625219C885B0008A0CF /* StoreMenuView.cpp in Sources */,
 				625696352182382C003A3A9D /* TitleAnimation.cpp in Sources */,
 				625698392182392C003A3A9D /* OfflineRasterizer.cpp in Sources */,
 				625696512182382C003A3A9D /* GameMenuView.cpp in Sources */,

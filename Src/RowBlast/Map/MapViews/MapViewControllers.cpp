@@ -36,12 +36,14 @@ MapViewControllers::MapViewControllers(Pht::IEngine& engine,
         LevelGoalDialogView::Scene::Map
     },
     mNoLivesDialogController {engine, commonResources, userServices, PotentiallyZoomedScreen::No},
-    mSettingsMenuController {engine, commonResources, settings, PotentiallyZoomedScreen::No} {
+    mSettingsMenuController {engine, commonResources, settings, PotentiallyZoomedScreen::No},
+    mStoreMenuController {engine, commonResources, PotentiallyZoomedScreen::No} {
     
     mViewManager.AddView(static_cast<int>(MapHud), mMapHudController.GetView());
     mViewManager.AddView(static_cast<int>(LevelGoalDialog), mLevelGoalDialogController.GetView());
     mViewManager.AddView(static_cast<int>(NoLivesDialog), mNoLivesDialogController.GetView());
     mViewManager.AddView(static_cast<int>(SettingsMenu), mSettingsMenuController.GetView());
+    mViewManager.AddView(static_cast<int>(StoreMenu), mStoreMenuController.GetView());
 }
 
 void MapViewControllers::Init() {
@@ -49,6 +51,7 @@ void MapViewControllers::Init() {
 
     mLevelGoalDialogController.SetFadeEffect(mFadeEffect);
     mSettingsMenuController.SetFadeEffect(mFadeEffect);
+    mStoreMenuController.SetFadeEffect(mFadeEffect);
 
     auto& uiViewContainer {mScene.GetUiViewsContainer()};
     uiViewContainer.AddChild(mFadeEffect.GetSceneObject());
