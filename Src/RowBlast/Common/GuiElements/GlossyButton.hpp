@@ -21,7 +21,8 @@ namespace RowBlast {
         Medium,
         Small,
         Smaller,
-        Smallest
+        Smallest,
+        Thin
     };
 
     enum class ButtonColor {

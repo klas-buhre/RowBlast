@@ -1552,12 +1552,12 @@
 		6256954D2182382B003A3A9D /* Level */ = {
 			isa = PBXGroup;
 			children = (
-				6256954E2182382B003A3A9D /* LevelResources.hpp */,
-				6256954F2182382B003A3A9D /* LevelLoader.cpp */,
 				625695502182382B003A3A9D /* Level.cpp */,
 				625695512182382B003A3A9D /* Level.hpp */,
-				625695522182382B003A3A9D /* LevelResources.cpp */,
+				6256954F2182382B003A3A9D /* LevelLoader.cpp */,
 				625695532182382B003A3A9D /* LevelLoader.hpp */,
+				625695522182382B003A3A9D /* LevelResources.cpp */,
+				6256954E2182382B003A3A9D /* LevelResources.hpp */,
 			);
 			path = Level;
 			sourceTree = "<group>";

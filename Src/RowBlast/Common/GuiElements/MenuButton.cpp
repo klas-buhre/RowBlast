@@ -37,6 +37,14 @@ MenuButton::MenuButton(Pht::IEngine& engine,
                        const Pht::Vec3& position,
                        const Pht::Vec2& inputSize,
                        const Style& style) :
+    MenuButton {engine, view, view.GetRoot(), position, inputSize, style} {}
+
+MenuButton::MenuButton(Pht::IEngine& engine,
+                       Pht::GuiView& view,
+                       Pht::SceneObject& parent,
+                       const Pht::Vec3& position,
+                       const Pht::Vec2& inputSize,
+                       const Style& style) :
     mView {view},
     mAudio {engine.GetAudio()},
     mStyle {style} {
@@ -48,7 +56,8 @@ MenuButton::MenuButton(Pht::IEngine& engine,
     mButton = std::make_unique<Pht::Button>(*sceneObject, inputSize, engine);
     
     mSceneObject = sceneObject.get();
-    mView.AddSceneObject(std::move(sceneObject));
+    parent.AddChild(*mSceneObject);
+    mView.GetSceneResources().AddSceneObject(std::move(sceneObject));
     
     if (style.mHasShadow) {
         Pht::Material shaddowMaterial {Pht::Color{0.4f, 0.4f, 0.4f}};

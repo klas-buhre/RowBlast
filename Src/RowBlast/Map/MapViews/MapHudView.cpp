@@ -61,7 +61,7 @@ MapHudView::MapHudView(Pht::IEngine& engine, const CommonResources& commonResour
     
     Pht::Vec3 coinsButtonPosition {
         hudFrustumSize.x / 2.0f - 1.5f,
-        hudFrustumSize.y / 2.0f - 1.15f - renderer.GetTopPaddingHeight(),
+        hudFrustumSize.y / 2.0f - 1.0f - renderer.GetTopPaddingHeight(),
         UiLayer::root
     };
     
@@ -74,7 +74,7 @@ MapHudView::MapHudView(Pht::IEngine& engine, const CommonResources& commonResour
 
     Pht::Vec3 livesButtonPosition {
         -hudFrustumSize.x / 2.0f + 4.3f,
-        hudFrustumSize.y / 2.0f - 1.15f - renderer.GetTopPaddingHeight(),
+        hudFrustumSize.y / 2.0f - 1.0f - renderer.GetTopPaddingHeight(),
         UiLayer::root
     };
     

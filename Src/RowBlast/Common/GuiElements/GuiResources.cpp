@@ -304,6 +304,34 @@ GuiResources::GuiResources(Pht::IEngine& engine, const CommonResources& commonRe
                            ButtonSize::Smallest,
                            ButtonColor::DarkBlue,
                            PotentiallyZoomedScreen::No)
+    },
+    mThinGreenGlossyButton {
+        CreateGlossyButton(engine,
+                           commonResources,
+                           ButtonSize::Thin,
+                           ButtonColor::Green,
+                           PotentiallyZoomedScreen::No)
+    },
+    mThinGreenGlossyButtonPotentiallyZoomedScreen {
+        CreateGlossyButton(engine,
+                           commonResources,
+                           ButtonSize::Thin,
+                           ButtonColor::Green,
+                           PotentiallyZoomedScreen::Yes)
+    },
+    mThinDarkGreenGlossyButton {
+        CreateGlossyButton(engine,
+                           commonResources,
+                           ButtonSize::Thin,
+                           ButtonColor::DarkGreen,
+                           PotentiallyZoomedScreen::No)
+    },
+    mThinDarkGreenGlossyButtonPotentiallyZoomedScreen {
+        CreateGlossyButton(engine,
+                           commonResources,
+                           ButtonSize::Thin,
+                           ButtonColor::DarkGreen,
+                           PotentiallyZoomedScreen::Yes)
     } {}
 
 const MenuWindow&
@@ -483,5 +511,25 @@ GuiResources::GetLargeDarkGreenGlossyButton(PotentiallyZoomedScreen potentiallyZ
             return *mLargeDarkGreenGlossyButtonPotentiallyZoomedScreen;
         case PotentiallyZoomedScreen::No:
             return *mLargeDarkGreenGlossyButton;
+    }
+}
+
+Pht::RenderableObject&
+GuiResources::GetThinGreenGlossyButton(PotentiallyZoomedScreen potentiallyZoomed) const {
+    switch (potentiallyZoomed) {
+        case PotentiallyZoomedScreen::Yes:
+            return *mThinGreenGlossyButtonPotentiallyZoomedScreen;
+        case PotentiallyZoomedScreen::No:
+            return *mThinGreenGlossyButton;
+    }
+}
+
+Pht::RenderableObject&
+GuiResources::GetThinDarkGreenGlossyButton(PotentiallyZoomedScreen potentiallyZoomed) const {
+    switch (potentiallyZoomed) {
+        case PotentiallyZoomedScreen::Yes:
+            return *mThinDarkGreenGlossyButtonPotentiallyZoomedScreen;
+        case PotentiallyZoomedScreen::No:
+            return *mThinDarkGreenGlossyButton;
     }
 }

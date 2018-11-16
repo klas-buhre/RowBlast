@@ -27,7 +27,7 @@ using namespace RowBlast;
 namespace {
     const auto halfMapWidth {22.0f};
     constexpr auto lightAnimationDuration {5.0f};
-    const Pht::Vec3 lightDirectionA {0.57f, 1.0f, 0.6f};
+    const Pht::Vec3 lightDirectionA {0.785f, 1.0f, 0.67f};
     const Pht::Vec3 lightDirectionB {1.0f, 1.0f, 0.74f};
     
     enum class Layer {

@@ -54,5 +54,11 @@ StoreMenuController::Result StoreMenuController::OnTouch(const Pht::TouchEvent& 
         return Result::None;
     }
     
+    for (auto& productButton: mView.GetProductButtons()) {
+        if (productButton->IsClicked(touchEvent)) {
+        
+        }
+    }
+    
     return Result::None;
 }

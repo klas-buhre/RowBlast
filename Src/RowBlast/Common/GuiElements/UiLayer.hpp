@@ -8,6 +8,7 @@ namespace RowBlast {
         constexpr auto text {0.0f};
         constexpr auto textRectangle {-1.0f};
         constexpr auto block {-1.0f};
+        constexpr auto panel {-1.5f};
         constexpr auto background {-2.0f};
         constexpr auto piecesRectangle {-2.0f};
         constexpr auto lowerTextRectangle {-3.0f};

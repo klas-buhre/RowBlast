@@ -38,9 +38,6 @@ namespace RowBlast {
         void CreateNewLifeCountdownObject(Pht::Scene& scene,
                                           Pht::SceneObject& parentObject,
                                           const CommonResources& commonResources);
-        void CreateTextRectangle(Pht::Scene& scene,
-                                 Pht::SceneObject& parentObject,
-                                 const Pht::Vec3& position);
         void CreateCoinsObject(Pht::Scene& scene,
                                Pht::SceneObject& hudObject,
                                const CommonResources& commonResources);

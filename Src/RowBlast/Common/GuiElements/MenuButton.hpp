@@ -2,7 +2,6 @@
 #define MenuButton_hpp
 
 #include <memory>
-#include <vector>
 
 // Engine includes.
 #include "Button.hpp"
@@ -39,7 +38,14 @@ namespace RowBlast {
                    const Pht::Vec3& position,
                    const Pht::Vec2& inputSize,
                    const Style& style);
-        
+
+        MenuButton(Pht::IEngine& engine,
+                   Pht::GuiView& view,
+                   Pht::SceneObject& parent,
+                   const Pht::Vec3& position,
+                   const Pht::Vec2& inputSize,
+                   const Style& style);
+
         Pht::TextComponent& CreateText(const Pht::Vec3& position,
                                        const std::string& text,
                                        const Pht::TextProperties& properties);

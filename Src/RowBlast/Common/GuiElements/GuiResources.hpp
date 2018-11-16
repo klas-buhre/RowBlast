@@ -36,6 +36,8 @@ namespace RowBlast {
         Pht::RenderableObject& GetSmallDarkBlueGlossyButton(PotentiallyZoomedScreen potentiallyZoomed) const;
         Pht::RenderableObject& GetLargeGreenGlossyButton(PotentiallyZoomedScreen potentiallyZoomed) const;
         Pht::RenderableObject& GetLargeDarkGreenGlossyButton(PotentiallyZoomedScreen potentiallyZoomed) const;
+        Pht::RenderableObject& GetThinGreenGlossyButton(PotentiallyZoomedScreen potentiallyZoomed) const;
+        Pht::RenderableObject& GetThinDarkGreenGlossyButton(PotentiallyZoomedScreen potentiallyZoomed) const;
 
         const MenuWindow& GetMediumMenuWindowPotentiallyZoomedScreen() const {
             return mMediumMenuWindowPotentiallyZoomedScreen;
@@ -131,6 +133,10 @@ namespace RowBlast {
         std::unique_ptr<Pht::RenderableObject> mSmallerDarkBlueGlossyButton;
         std::unique_ptr<Pht::RenderableObject> mSmallestBlueGlossyButton;
         std::unique_ptr<Pht::RenderableObject> mSmallestDarkBlueGlossyButton;
+        std::unique_ptr<Pht::RenderableObject> mThinGreenGlossyButton;
+        std::unique_ptr<Pht::RenderableObject> mThinGreenGlossyButtonPotentiallyZoomedScreen;
+        std::unique_ptr<Pht::RenderableObject> mThinDarkGreenGlossyButton;
+        std::unique_ptr<Pht::RenderableObject> mThinDarkGreenGlossyButtonPotentiallyZoomedScreen;
     };
 }
 

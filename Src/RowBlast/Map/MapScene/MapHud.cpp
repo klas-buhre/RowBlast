@@ -77,7 +77,7 @@ void MapHud::CreateLivesObject(Pht::Scene& scene,
     
     Pht::Vec3 position {
         -hudFrustumSize.x / 2.0f + 2.7f,
-        hudFrustumSize.y / 2.0f - 1.15f - renderer.GetTopPaddingHeight(),
+        hudFrustumSize.y / 2.0f - 1.0f - renderer.GetTopPaddingHeight(),
         UiLayer::root
     };
     
@@ -134,12 +134,15 @@ void MapHud::CreateNewLifeCountdownObject(Pht::Scene& scene,
     Pht::TextProperties textProperties {
         commonResources.GetHussarFontSize20(PotentiallyZoomedScreen::No),
         1.1f,
-        Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f}
+        Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f},
+        Pht::TextShadow::Yes,
+        {0.05f, 0.05f},
+        {0.27f, 0.27f, 0.27f, 0.5f}
     };
 
     Pht::Vec3 newLifeCountdownContainerPosition {
         -hudFrustumSize.x / 2.0f + 2.7f,
-        hudFrustumSize.y / 2.0f - 2.25f - renderer.GetTopPaddingHeight(),
+        hudFrustumSize.y / 2.0f - 2.0f - renderer.GetTopPaddingHeight(),
         UiLayer::root
     };
 
@@ -147,36 +150,9 @@ void MapHud::CreateNewLifeCountdownObject(Pht::Scene& scene,
     mNewLifeCountdownContainer->GetTransform().SetPosition(newLifeCountdownContainerPosition);
     parentObject.AddChild(*mNewLifeCountdownContainer);
 
-    Pht::Vec3 rectanglePosition {0.0f, 0.0f, UiLayer::lowerTextRectangle};
-    CreateTextRectangle(scene, *mNewLifeCountdownContainer, rectanglePosition);
-    
     mNewLifeCountdownText = &scene.CreateText("00:00", textProperties);
     mNewLifeCountdownText->GetSceneObject().GetTransform().SetPosition({-0.9f, -0.23f, UiLayer::text});
     mNewLifeCountdownContainer->AddChild(mNewLifeCountdownText->GetSceneObject());
-}
-
-void MapHud::CreateTextRectangle(Pht::Scene& scene,
-                                 Pht::SceneObject& parentObject,
-                                 const Pht::Vec3& position) {
-    Pht::Vec2 size {3.0f, 0.7f};
-    auto leftQuadWidth {0.5f};
-    auto rightQuadWidth {0.5f};
-
-    GradientRectangleColors colors {
-        .mLeft = {0.175f, 0.175f, 0.175f, 0.0f},
-        .mMid = {0.175f, 0.175f, 0.175f, 0.75f},
-        .mRight = {0.175f, 0.175f, 0.175f, 0.0f}
-    };
-    
-    CreateGradientRectangle(scene,
-                            parentObject,
-                            position,
-                            size,
-                            0.0f,
-                            leftQuadWidth,
-                            rightQuadWidth,
-                            colors,
-                            colors);
 }
 
 void MapHud::CreateCoinsObject(Pht::Scene& scene,
@@ -188,7 +164,7 @@ void MapHud::CreateCoinsObject(Pht::Scene& scene,
     
     Pht::Vec3 position {
         hudFrustumSize.x / 2.0f - 3.5f,
-        hudFrustumSize.y / 2.0f - 1.15f - renderer.GetTopPaddingHeight(),
+        hudFrustumSize.y / 2.0f - 1.0f - renderer.GetTopPaddingHeight(),
         UiLayer::root
     };
     

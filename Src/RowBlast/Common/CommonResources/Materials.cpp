@@ -51,6 +51,7 @@ void Materials::CreateGoldMaterial() {
                                                     specular,
                                                     shininess,
                                                     0.6f);
+    mGoldMaterial->GetDepthState().mDepthTestAllowedOverride = true;
 }
 
 void Materials::CreateBlueMaterial() {
@@ -129,6 +130,7 @@ void Materials::CreateRedFieldBlockMaterial(const Pht::EnvMapTextureFilenames& e
                                                              specular,
                                                              shininess,
                                                              0.37f);
+    mRedFieldBlockMaterial->GetDepthState().mDepthTestAllowedOverride = true;
 }
 
 void Materials::CreateBlueFieldBlockMaterial(const Pht::EnvMapTextureFilenames& envMapTextures) {
@@ -142,6 +144,7 @@ void Materials::CreateBlueFieldBlockMaterial(const Pht::EnvMapTextureFilenames& 
                                                               specular,
                                                               shininess,
                                                               fieldBlockReflectivity);
+    mBlueFieldBlockMaterial->GetDepthState().mDepthTestAllowedOverride = true;
 }
 
 void Materials::CreateGreenFieldBlockMaterial(const Pht::EnvMapTextureFilenames& envMapTextures) {
@@ -155,6 +158,7 @@ void Materials::CreateGreenFieldBlockMaterial(const Pht::EnvMapTextureFilenames&
                                                                specular,
                                                                shininess,
                                                                fieldBlockReflectivity);
+    mGreenFieldBlockMaterial->GetDepthState().mDepthTestAllowedOverride = true;
 }
 
 void Materials::CreateGrayFieldBlockMaterial(const Pht::EnvMapTextureFilenames& envMapTextures) {
@@ -168,6 +172,7 @@ void Materials::CreateGrayFieldBlockMaterial(const Pht::EnvMapTextureFilenames& 
                                                               specular,
                                                               shininess,
                                                               fieldBlockReflectivity);
+    mGrayFieldBlockMaterial->GetDepthState().mDepthTestAllowedOverride = true;
 }
 
 void Materials::CreateYellowFieldBlockMaterial(const Pht::EnvMapTextureFilenames& envMapTextures) {
@@ -181,4 +186,5 @@ void Materials::CreateYellowFieldBlockMaterial(const Pht::EnvMapTextureFilenames
                                                                 specular,
                                                                 shininess,
                                                                 fieldBlockReflectivity);
+    mYellowFieldBlockMaterial->GetDepthState().mDepthTestAllowedOverride = true;
 }
