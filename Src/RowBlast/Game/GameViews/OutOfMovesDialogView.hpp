@@ -1,5 +1,5 @@
-#ifndef NoMovesDialogView_hpp
-#define NoMovesDialogView_hpp
+#ifndef OutOfMovesDialogView_hpp
+#define OutOfMovesDialogView_hpp
 
 #include <memory>
 
@@ -16,9 +16,9 @@ namespace Pht {
 namespace RowBlast {
     class CommonResources;
     
-    class NoMovesDialogView: public Pht::GuiView {
+    class OutOfMovesDialogView: public Pht::GuiView {
     public:
-        NoMovesDialogView(Pht::IEngine& engine, const CommonResources& commonResources);
+        OutOfMovesDialogView(Pht::IEngine& engine, const CommonResources& commonResources);
 
         const MenuButton& GetCloseButton() const {
             return *mCloseButton;

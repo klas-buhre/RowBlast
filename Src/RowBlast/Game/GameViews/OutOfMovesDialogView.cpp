@@ -1,4 +1,4 @@
-#include "NoMovesDialogView.hpp"
+#include "OutOfMovesDialogView.hpp"
 
 // Engine includes.
 #include "IEngine.hpp"
@@ -11,7 +11,8 @@
 
 using namespace RowBlast;
 
-NoMovesDialogView::NoMovesDialogView(Pht::IEngine& engine, const CommonResources& commonResources) {
+OutOfMovesDialogView::OutOfMovesDialogView(Pht::IEngine& engine,
+                                           const CommonResources& commonResources) {
     PotentiallyZoomedScreen zoom {PotentiallyZoomedScreen::Yes};
     auto& guiResources {commonResources.GetGuiResources()};
     auto& menuWindow {guiResources.GetSmallDarkMenuWindowPotentiallyZoomedScreen()};

@@ -224,8 +224,7 @@ void GameController::ChangeGameState(GameLogic::Result gameLogicResult) {
             break;
         case GameLogic::Result::OutOfMoves:
             mState = GameState::OutOfMoves;
-            mGameViewControllers.SetActiveController(GameViewControllers::NoMovesDialog);
-            mGameViewControllers.GetNoMovesDialogController().Init();
+            GoToOutOfMovesStateOutOfMovesDialog();
             break;
         case GameLogic::Result::GameOver:
             mState = GameState::GameOver;
@@ -400,7 +399,7 @@ GameController::Command GameController::UpdateSubState() {
             command = UpdateInLevelCompletedState();
             break;
         case GameState::OutOfMoves:
-            command = UpdateNoMovesDialog();
+            command = UpdateInOutOfMovesState();
             break;
         case GameState::GameOver:
             command = UpdateInGameOverState();
@@ -472,25 +471,53 @@ GameController::Command GameController::UpdateInLevelCompletedState() {
     return command;
 }
 
-GameController::Command GameController::UpdateNoMovesDialog() {
+GameController::Command GameController::UpdateInOutOfMovesState() {
+    auto command {Command::None};
+    
+    switch (mOutOfMovesState) {
+        case OutOfMovesState::OutOfMovesDialog:
+            command = UpdateOutOfMovesDialog();
+            break;
+        case OutOfMovesState::StoreMenu:
+            UpdateStoreMenu();
+            break;
+    }
+    
+    return command;
+}
+
+GameController::Command GameController::UpdateOutOfMovesDialog() {
     auto command {Command::None};
     
     mUserServices.Update();
     
-    switch (mGameViewControllers.GetNoMovesDialogController().Update()) {
-        case NoMovesDialogController::Result::None:
+    switch (mGameViewControllers.GetOutOfMovesDialogController().Update()) {
+        case OutOfMovesDialogController::Result::None:
             break;
-        case NoMovesDialogController::Result::PlayOn:
+        case OutOfMovesDialogController::Result::PlayOn:
+            GoToOutOfMovesStateStoreMenu();
+        /*
             mGameLogic.SetMovesLeft(5);
             GoToPlayingState();
+        */
             break;
-        case NoMovesDialogController::Result::BackToMap:
+        case OutOfMovesDialogController::Result::BackToMap:
             mUserServices.GetLifeService().FailLevel();
             command = Command::GoToMap;
             break;
     }
     
     return command;
+}
+
+void GameController::UpdateStoreMenu() {
+    switch (mGameViewControllers.GetStoreMenuController().Update()) {
+        case StoreMenuController::Result::None:
+            break;
+        case StoreMenuController::Result::Close:
+            GoToOutOfMovesStateOutOfMovesDialog();
+            break;
+    }
 }
 
 GameController::Command GameController::UpdateInGameOverState() {
@@ -577,6 +604,18 @@ void GameController::GoToPausedStateGameMenu(SlidingMenuAnimation::UpdateFade up
     auto isUndoMovePossible {mShouldUpdateGameLogic && mGameLogic.IsUndoMovePossible()};
     mGameViewControllers.GetGameMenuController().Init(updateFade, isUndoMovePossible);
     mTutorial.OnPause();
+}
+
+void GameController::GoToOutOfMovesStateOutOfMovesDialog() {
+    mOutOfMovesState = OutOfMovesState::OutOfMovesDialog;
+    mGameViewControllers.SetActiveController(GameViewControllers::OutOfMovesDialog);
+    mGameViewControllers.GetOutOfMovesDialogController().Init();
+}
+
+void GameController::GoToOutOfMovesStateStoreMenu() {
+    mOutOfMovesState = OutOfMovesState::StoreMenu;
+    mGameViewControllers.SetActiveController(GameViewControllers::StoreMenu);
+    mGameViewControllers.GetStoreMenuController().Init();
 }
 
 void GameController::GoToGameOverStateGameOverDialog() {

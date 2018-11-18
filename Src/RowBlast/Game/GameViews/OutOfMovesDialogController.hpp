@@ -1,8 +1,8 @@
-#ifndef NoMovesDialogController_hpp
-#define NoMovesDialogController_hpp
+#ifndef OutOfMovesDialogController_hpp
+#define OutOfMovesDialogController_hpp
 
 // Game includes.
-#include "NoMovesDialogView.hpp"
+#include "OutOfMovesDialogView.hpp"
 #include "SlidingMenuAnimation.hpp"
 
 namespace Pht {
@@ -13,7 +13,7 @@ namespace Pht {
 namespace RowBlast {
     class CommonResources;
     
-    class NoMovesDialogController {
+    class OutOfMovesDialogController {
     public:
         enum class Result {
             None,
@@ -21,7 +21,7 @@ namespace RowBlast {
             BackToMap
         };
         
-        NoMovesDialogController(Pht::IEngine& engine, const CommonResources& commonResources);
+        OutOfMovesDialogController(Pht::IEngine& engine, const CommonResources& commonResources);
         
         void Init();
         Result Update();
@@ -35,7 +35,7 @@ namespace RowBlast {
         Result OnTouch(const Pht::TouchEvent& touchEvent);
         
         Pht::IInput& mInput;
-        NoMovesDialogView mView;
+        OutOfMovesDialogView mView;
         SlidingMenuAnimation mSlidingMenuAnimation;
         Result mDeferredResult {Result::None};
     };

@@ -9,7 +9,7 @@
 #include "GameHudController.hpp"
 #include "GameMenuController.hpp"
 #include "GameOverDialogController.hpp"
-#include "NoMovesDialogController.hpp"
+#include "OutOfMovesDialogController.hpp"
 #include "LevelCompletedDialogController.hpp"
 #include "RestartConfirmationDialogController.hpp"
 #include "MapConfirmationDialogController.hpp"
@@ -35,7 +35,7 @@ namespace RowBlast {
             GameHud,
             GameMenu,
             GameOverDialog,
-            NoMovesDialog,
+            OutOfMovesDialog,
             LevelCompletedDialog,
             SettingsMenu,
             NoLivesDialog,
@@ -68,8 +68,8 @@ namespace RowBlast {
             return mGameOverDialogController;
         }
         
-        NoMovesDialogController& GetNoMovesDialogController() {
-            return mNoMovesDialogController;
+        OutOfMovesDialogController& GetOutOfMovesDialogController() {
+            return mOutOfMovesDialogController;
         }
 
         LevelCompletedDialogController& GetLevelCompletedDialogController() {
@@ -106,7 +106,7 @@ namespace RowBlast {
         GameHudController mGameHudController;
         GameMenuController mGameMenuController;
         GameOverDialogController mGameOverDialogController;
-        NoMovesDialogController mNoMovesDialogController;
+        OutOfMovesDialogController mOutOfMovesDialogController;
         LevelCompletedDialogController mLevelCompletedDialogController;
         RestartConfirmationDialogController mRestartConfirmationDialogController;
         MapConfirmationDialogController mMapConfirmationDialogController;

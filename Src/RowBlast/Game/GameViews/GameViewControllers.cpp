@@ -30,7 +30,7 @@ GameViewControllers::GameViewControllers(Pht::IEngine& engine,
     mGameHudController {engine, commonResources, hudRectangles},
     mGameMenuController {engine, commonResources},
     mGameOverDialogController {engine, commonResources, userServices},
-    mNoMovesDialogController {engine, commonResources},
+    mOutOfMovesDialogController {engine, commonResources},
     mLevelCompletedDialogController {engine, commonResources},
     mRestartConfirmationDialogController {engine, commonResources, userServices},
     mMapConfirmationDialogController {engine, commonResources},
@@ -47,7 +47,7 @@ GameViewControllers::GameViewControllers(Pht::IEngine& engine,
     mViewManager.AddView(static_cast<int>(GameHud), mGameHudController.GetView());
     mViewManager.AddView(static_cast<int>(GameMenu), mGameMenuController.GetView());
     mViewManager.AddView(static_cast<int>(GameOverDialog), mGameOverDialogController.GetView());
-    mViewManager.AddView(static_cast<int>(NoMovesDialog), mNoMovesDialogController.GetView());
+    mViewManager.AddView(static_cast<int>(OutOfMovesDialog), mOutOfMovesDialogController.GetView());
     mViewManager.AddView(static_cast<int>(LevelCompletedDialog), mLevelCompletedDialogController.GetView());
     mViewManager.AddView(static_cast<int>(SettingsMenu), mSettingsMenuController.GetView());
     mViewManager.AddView(static_cast<int>(NoLivesDialog), mNoLivesDialogController.GetView());

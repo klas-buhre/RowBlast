@@ -82,7 +82,9 @@ namespace RowBlast {
         void UpdateTutorialDialogs();
         void StartLevelObjectiveAnimation();
         Command UpdateInLevelCompletedState();
-        Command UpdateNoMovesDialog();
+        Command UpdateInOutOfMovesState();
+        Command UpdateOutOfMovesDialog();
+        void UpdateStoreMenu();
         Command UpdateInGameOverState();
         Command UpdateGameOverDialog();
         void ChangeGameState(GameLogic::Result gameLogicResult);
@@ -93,6 +95,8 @@ namespace RowBlast {
         void GoToPausedStateSettingsMenu();
         void GoToPausedStateLevelGoalDialog();
         void GoToPausedStateGameMenu(SlidingMenuAnimation::UpdateFade updateFade);
+        void GoToOutOfMovesStateOutOfMovesDialog();
+        void GoToOutOfMovesStateStoreMenu();
         void GoToGameOverStateGameOverDialog();
         void GoToGameOverStateNoLivesDialog();
         
@@ -120,6 +124,11 @@ namespace RowBlast {
             MapConfirmationDialog
         };
         
+        enum class OutOfMovesState {
+            OutOfMovesDialog,
+            StoreMenu
+        };
+        
         enum class GameOverState {
             GameOverDialog,
             NoLivesDialog
@@ -128,6 +137,7 @@ namespace RowBlast {
         GameState mState {GameState::LevelIntro};
         LevelIntroState mLevelIntroState {LevelIntroState::Overview};
         PausedState mPausedState {PausedState::GameMenu};
+        OutOfMovesState mOutOfMovesState {OutOfMovesState::OutOfMovesDialog};
         GameOverState mGameOverState {GameOverState::GameOverDialog};
         Pht::IEngine& mEngine;
         UserServices& mUserServices;
