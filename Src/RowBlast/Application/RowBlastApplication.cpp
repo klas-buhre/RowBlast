@@ -35,10 +35,11 @@ Backlog:
 
 Ongoing tasks:
     -Store GUI.
+      -Store controller that controls the other store view controllers.
       -Store views.
-        -Products view with balance.
-        -Purchase canceled view.
-        -Purchase successful/completed view?
+        -Implement Products menu with balance.
+        -Implement Purchase canceled dialog.
+        -Implement Purchase successful/completed dialog?
 
 
 

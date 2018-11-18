@@ -3,6 +3,7 @@
 // Engine includes.
 #include "IEngine.hpp"
 #include "QuadMesh.hpp"
+#include "ObjMesh.hpp"
 
 // Game includes.
 #include "CommonResources.hpp"
@@ -21,8 +22,8 @@ NoMovesDialogView::NoMovesDialogView(Pht::IEngine& engine, const CommonResources
 
     SetSize(menuWindow.GetSize());
     
-    CreateText({-2.5f, 3.75f, UiLayer::text},
-               "NO MOVES",
+    CreateText({-3.5f, 3.75f, UiLayer::text},
+               "OUT OF MOVES",
                guiResources.GetLargeWhiteTextProperties(zoom));
     
     Pht::Vec3 closeButtonPosition {
@@ -53,22 +54,41 @@ NoMovesDialogView::NoMovesDialogView(Pht::IEngine& engine, const CommonResources
     GetRoot().AddChild(lineSceneObject);
 
     auto& textProperties {guiResources.GetSmallWhiteTextProperties(zoom)};
-    CreateText({-5.5f, 0.5f, UiLayer::text}, "Purchase 5 more moves for $0.99", textProperties);
+    CreateText({-5.1f, 0.775f, UiLayer::text}, "Get 5 more moves and continue", textProperties);
+    CreateText({-1.3f, -0.3f, UiLayer::text}, "playing", textProperties);
     
-    Pht::Vec2 playOnButtonInputSize {205.0f, 59.0f};
+    Pht::Vec2 playOnButtonInputSize {194.0f, 50.0f};
 
     MenuButton::Style playOnButtonStyle;
     playOnButtonStyle.mPressedScale = 1.05f;
+    playOnButtonStyle.mTextScale = 1.05f;
     playOnButtonStyle.mRenderableObject = &guiResources.GetLargeGreenGlossyButton(zoom);
     playOnButtonStyle.mSelectedRenderableObject = &guiResources.GetLargeDarkGreenGlossyButton(zoom);
 
     mPlayOnButton = std::make_unique<MenuButton>(engine,
                                                  *this,
-                                                 Pht::Vec3 {0.0f, -2.9f, UiLayer::textRectangle},
+                                                 Pht::Vec3 {0.0f, -3.5f, UiLayer::textRectangle},
                                                  playOnButtonInputSize,
                                                  playOnButtonStyle);
-    
-    mPlayOnButton->CreateText({-1.4f, -0.31f, UiLayer::buttonText},
-                              "$0.99",
-                              guiResources.GetLargeWhiteButtonTextProperties(zoom));
+
+    Pht::TextProperties buttonTextProperties {
+        commonResources.GetHussarFontSize27(zoom),
+        1.05f,
+        Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f}
+    };
+
+    mPlayOnButton->CreateText({-3.1f, -0.24f, UiLayer::buttonText},
+                              "CONTINUE           10",
+                              buttonTextProperties);
+
+    auto& coin {
+        CreateSceneObject(Pht::ObjMesh {"coin_852.obj", 3.15f},
+                          commonResources.GetMaterials().GetGoldMaterial(),
+                          engine.GetSceneManager())
+    };
+    auto& coinTransform {coin.GetTransform()};
+    coinTransform.SetPosition({1.85f, 0.0f, UiLayer::text});
+    coinTransform.SetRotation({0.0f, 40.0f, 0.0f});
+    coinTransform.SetScale(0.9f);
+    mPlayOnButton->GetSceneObject().AddChild(coin);
 }

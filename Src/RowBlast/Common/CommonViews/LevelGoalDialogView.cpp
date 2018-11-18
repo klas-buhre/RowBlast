@@ -92,8 +92,8 @@ LevelGoalDialogView::LevelGoalDialogView(Pht::IEngine& engine,
         
         MenuButton::Style playButtonStyle;
         playButtonStyle.mPressedScale = 1.05f;
-        playButtonStyle.mRenderableObject = &guiResources.GetLargeBlueGlossyButton(zoom);
-        playButtonStyle.mSelectedRenderableObject = &guiResources.GetLargeDarkBlueGlossyButton(zoom);
+        playButtonStyle.mRenderableObject = &guiResources.GetLargerBlueGlossyButton(zoom);
+        playButtonStyle.mSelectedRenderableObject = &guiResources.GetLargerDarkBlueGlossyButton(zoom);
 
         mPlayButton = std::make_unique<MenuButton>(engine,
                                                    *this,

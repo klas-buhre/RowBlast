@@ -60,8 +60,10 @@ namespace {
 
     Pht::Vec2 GetSize(ButtonSize size) {
         switch (size) {
-            case ButtonSize::Large:
+            case ButtonSize::Larger:
                 return {9.4f, 2.6f};
+            case ButtonSize::Large:
+                return {9.0f, 2.3f};
             case ButtonSize::Medium:
                 return {9.0f, 2.1f};
             case ButtonSize::Small:
@@ -77,8 +79,10 @@ namespace {
     
     float GetCornerRadius(ButtonSize size) {
         switch (size) {
-            case ButtonSize::Large:
+            case ButtonSize::Larger:
                 return 0.35f;
+            case ButtonSize::Large:
+                return 0.325f;
             case ButtonSize::Medium:
             case ButtonSize::Small:
             case ButtonSize::Smaller:
@@ -91,6 +95,7 @@ namespace {
     
     float GetShadedAreaHeight(ButtonSize size) {
         switch (size) {
+            case ButtonSize::Larger:
             case ButtonSize::Large:
                 return 0.1f;
             case ButtonSize::Medium:
@@ -104,8 +109,10 @@ namespace {
 
     float GetGlossyAreaHeight(ButtonSize size) {
         switch (size) {
-            case ButtonSize::Large:
+            case ButtonSize::Larger:
                 return 1.1f;
+            case ButtonSize::Large:
+                return 0.97f;
             case ButtonSize::Medium:
             case ButtonSize::Small:
                 return 0.89f;
@@ -269,7 +276,7 @@ RowBlast::CreateGlossyButton(Pht::IEngine& engine,
     DrawButton(*rasterizer, size, color);
 
     auto image {rasterizer->ProduceImage()};
-    Pht::Material imageMaterial {*image, Pht::GenerateMipmap::Yes};
+    Pht::Material imageMaterial {*image, Pht::GenerateMipmap::No};
     imageMaterial.SetBlend(Pht::Blend::Yes);
     auto& sceneManager {engine.GetSceneManager()};
     return sceneManager.CreateRenderableObject(Pht::QuadMesh {coordinateSystemSize.x, coordinateSystemSize.y},

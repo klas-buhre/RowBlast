@@ -41,7 +41,8 @@ GameViewControllers::GameViewControllers(Pht::IEngine& engine,
         commonResources,
         pieceResources,
         LevelGoalDialogView::Scene::Game
-    } {
+    },
+    mStoreMenuController {engine, commonResources, PotentiallyZoomedScreen::Yes} {
         
     mViewManager.AddView(static_cast<int>(GameHud), mGameHudController.GetView());
     mViewManager.AddView(static_cast<int>(GameMenu), mGameMenuController.GetView());
@@ -53,6 +54,7 @@ GameViewControllers::GameViewControllers(Pht::IEngine& engine,
     mViewManager.AddView(static_cast<int>(LevelGoalDialog), mLevelGoalDialogController.GetView());
     mViewManager.AddView(static_cast<int>(RestartConfirmationDialog), mRestartConfirmationDialogController.GetView());
     mViewManager.AddView(static_cast<int>(MapConfirmationDialog), mMapConfirmationDialogController.GetView());
+    mViewManager.AddView(static_cast<int>(StoreMenu), mStoreMenuController.GetView());
 }
 
 void GameViewControllers::Init(GameScene& scene) {
@@ -62,6 +64,7 @@ void GameViewControllers::Init(GameScene& scene) {
     mSettingsMenuController.SetFadeEffect(mFadeEffect);
     mRestartConfirmationDialogController.SetFadeEffect(mFadeEffect);
     mMapConfirmationDialogController.SetFadeEffect(mFadeEffect);
+    mStoreMenuController.SetFadeEffect(mFadeEffect);
     
     auto& uiViewContainer {scene.GetUiViewsContainer()};
     uiViewContainer.AddChild(mFadeEffect.GetSceneObject());

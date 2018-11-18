@@ -56,8 +56,8 @@ LevelCompletedDialogView::LevelCompletedDialogView(Pht::IEngine& engine,
     Pht::Vec2 nextButtonInputSize {205.0f, 59.0f};
     
     MenuButton::Style nextButtonStyle;
-    nextButtonStyle.mRenderableObject = &guiResources.GetLargeBlueGlossyButton(zoom);
-    nextButtonStyle.mSelectedRenderableObject = &guiResources.GetLargeDarkBlueGlossyButton(zoom);
+    nextButtonStyle.mRenderableObject = &guiResources.GetLargerBlueGlossyButton(zoom);
+    nextButtonStyle.mSelectedRenderableObject = &guiResources.GetLargerDarkBlueGlossyButton(zoom);
     nextButtonStyle.mPressedScale = 1.05f;
 
     mNextButton = std::make_unique<MenuButton>(engine,

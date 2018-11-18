@@ -17,6 +17,7 @@ namespace RowBlast {
     class CommonResources;
     
     enum class ButtonSize {
+        Larger,
         Large,
         Medium,
         Small,
