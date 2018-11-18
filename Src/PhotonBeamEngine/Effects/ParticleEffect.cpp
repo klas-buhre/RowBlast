@@ -182,7 +182,7 @@ void ParticleEffect::Update(float dt) {
         }
     }
     
-    if (!anyActiveParticles) {
+    if (!anyActiveParticles && !mEmitter.IsActive()) {
         Stop();
     } else {
         WriteVertexBuffer();

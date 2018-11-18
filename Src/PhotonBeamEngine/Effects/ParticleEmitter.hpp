@@ -61,6 +61,7 @@ namespace Pht {
         
         void Start();
         void Update(float dt, std::vector<Particle>& particles);
+        bool IsActive() const;
         
         ParticleSettings& GetParticleSettings() {
             return mParticleSettings;

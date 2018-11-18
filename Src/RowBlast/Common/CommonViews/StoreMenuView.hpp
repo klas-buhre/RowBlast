@@ -22,12 +22,23 @@ namespace RowBlast {
                       const CommonResources& commonResources,
                       PotentiallyZoomedScreen potentiallyZoomedScreen);
         
+        void Init();
+        void StartEffects();
+        void Update();
+        
         const MenuButton& GetCloseButton() const {
             return *mCloseButton;
         }
         
-        const std::vector<std::unique_ptr<MenuButton>>& GetProductButtons() const {
-            return mProductButtons;
+        struct Product {
+            std::unique_ptr<MenuButton> mButton;
+            Pht::SceneObject* mCoinPile {nullptr};
+            std::unique_ptr<Pht::SceneObject> mGlowEffect;
+            std::unique_ptr<Pht::SceneObject> mTwinklesEffect;
+        };
+        
+        const std::vector<Product>& GetProducts() const {
+            return mProducts;
         }
         
     private:
@@ -37,9 +48,17 @@ namespace RowBlast {
                            Pht::IEngine& engine,
                            const CommonResources& commonResources,
                            PotentiallyZoomedScreen zoom);
-        
+        void CreateGlowEffect(Pht::IEngine& engine,
+                              Pht::SceneObject& parentObject,
+                              Product& product);
+        void CreateTwinklesEffect(Pht::IEngine& engine,
+                                  Pht::SceneObject& parentObject,
+                                  Product& product);
+
+        Pht::IEngine& mEngine;
         std::unique_ptr<MenuButton> mCloseButton;
-        std::vector<std::unique_ptr<MenuButton>> mProductButtons;
+        std::vector<Product> mProducts;
+        float mAnimationTime {0.0f};
     };
 }
 

@@ -29,10 +29,8 @@ void ParticleEmitter::Update(float dt, std::vector<Particle>& particles) {
     mAge += dt;
     mTimeSinceLastSpawn += dt;
     
-    if (mEmitterSettings.mTimeToLive != std::numeric_limits<float>::infinity()) {
-        if (mAge > mEmitterSettings.mTimeToLive) {
-            return;
-        }
+    if (!IsActive()) {
+        return;
     }
     
     if (mTimeSinceLastSpawn > 1.0f / mEmitterSettings.mFrequency) {
@@ -148,4 +146,14 @@ void ParticleEmitter::EmitBurst(std::vector<Particle>& particles) {
         auto& particle {particles[i]};
         EmitParticle(particle);
     }
+}
+
+bool ParticleEmitter::IsActive() const {
+    if (mEmitterSettings.mTimeToLive != std::numeric_limits<float>::infinity()) {
+        if (mAge > mEmitterSettings.mTimeToLive) {
+            return false;
+        }
+    }
+
+    return true;
 }

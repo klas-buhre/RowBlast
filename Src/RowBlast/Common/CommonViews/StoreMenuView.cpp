@@ -5,15 +5,25 @@
 #include "TextComponent.hpp"
 #include "QuadMesh.hpp"
 #include "ObjMesh.hpp"
+#include "IParticleSystem.hpp"
+#include "ParticleEffect.hpp"
 
 // Game includes.
 #include "UiLayer.hpp"
 
 using namespace RowBlast;
 
+namespace {
+    constexpr auto animationDuration {6.0f};
+    constexpr auto rotationAmplitude {17.5f};
+    constexpr auto coinPilesXAngle {30.0f};
+}
+
 StoreMenuView::StoreMenuView(Pht::IEngine& engine,
                              const CommonResources& commonResources,
-                             PotentiallyZoomedScreen zoom) {
+                             PotentiallyZoomedScreen zoom) :
+    mEngine {engine} {
+
     auto& guiResources {commonResources.GetGuiResources()};
     auto& menuWindow {guiResources.GetLargeDarkMenuWindow(zoom)};
     
@@ -121,6 +131,25 @@ void StoreMenuView::CreateProduct(const Pht::Vec3& position,
     panelSceneObject.GetTransform().SetPosition({0.0f, 0.0f, UiLayer::panel});
     container.AddChild(panelSceneObject);
 
+
+    Product product;
+    CreateGlowEffect(engine, container, product);
+    CreateTwinklesEffect(engine, container, product);
+    
+    auto& coinPile {
+        CreateSceneObject(Pht::ObjMesh {"coin_pile_4120.obj", 40.0f},
+                          commonResources.GetMaterials().GetGoldMaterial(),
+                          sceneManager)
+    };
+    product.mCoinPile = &coinPile;
+    auto& coinPileTransform {coinPile.GetTransform()};
+    coinPileTransform.SetPosition({0.0f, 0.7f, UiLayer::textRectangle});
+    coinPileTransform.SetRotation({coinPilesXAngle, 0.0f, 0.0f});
+    coinPileTransform.SetScale(1.0f);
+    container.AddChild(coinPile);
+
+
+
     auto& coin {
         CreateSceneObject(Pht::ObjMesh {"coin_852.obj", 3.15f},
                           commonResources.GetMaterials().GetGoldMaterial(),
@@ -157,7 +186,116 @@ void StoreMenuView::CreateProduct(const Pht::Vec3& position,
     };
     
     button->CreateText({-1.4f, -0.21f, UiLayer::buttonText}, price, textProperties);
-    mProductButtons.push_back(std::move(button));
+    product.mButton = std::move(button);
     
     CreateText({-0.1f, -0.95f, UiLayer::text}, numCoins, textProperties, container);
+    
+    mProducts.push_back(std::move(product));
+}
+
+void StoreMenuView::CreateGlowEffect(Pht::IEngine& engine,
+                                     Pht::SceneObject& parentObject,
+                                     Product& product) {
+    Pht::EmitterSettings particleEmitterSettings {
+        .mPosition = Pht::Vec3{0.0f, 0.0f, 0.0f},
+        .mSize = Pht::Vec3{0.0f, 0.0f, 0.0f},
+        .mTimeToLive = 0.0f,
+        .mFrequency = 0.0f,
+        .mBurst = 2
+    };
+    
+    Pht::ParticleSettings particleSettings {
+        .mVelocity = Pht::Vec3{0.0f, 0.0f, 0.0f},
+        .mVelocityRandomPart = Pht::Vec3{0.0f, 0.0f, 0.0f},
+        .mColor = Pht::Vec4{0.46f, 0.2f, 0.65f, 1.0f},
+        .mColorRandomPart = Pht::Vec4{0.0f, 0.0f, 0.0f, 0.0f},
+        .mTextureFilename = "flare24.png",
+        .mTimeToLive = std::numeric_limits<float>::infinity(),
+        .mTimeToLiveRandomPart = 0.0f,
+        .mFadeOutDuration = 0.5f,
+        .mZAngularVelocity = 20.0f,
+        .mZAngularVelocityRandomPart = 10.0f,
+        .mSize = Pht::Vec2{11.25f, 11.25f},
+        .mSizeRandomPart = 0.0f,
+        .mShrinkDuration = 0.0f,
+        .mGrowDuration = 0.5f
+    };
+    
+    auto& particleSystem {engine.GetParticleSystem()};
+    product.mGlowEffect = particleSystem.CreateParticleEffectSceneObject(particleSettings,
+                                                                         particleEmitterSettings,
+                                                                         Pht::RenderMode::Triangles);
+    auto& material {product.mGlowEffect->GetRenderable()->GetMaterial()};
+    material.SetShaderType(Pht::ShaderType::ParticleNoAlphaTexture);
+    
+    product.mGlowEffect->GetTransform().SetPosition({0.0f, 0.7f, -1.9f});
+    parentObject.AddChild(*product.mGlowEffect);
+}
+
+void StoreMenuView::CreateTwinklesEffect(Pht::IEngine& engine,
+                                         Pht::SceneObject& parentObject,
+                                         Product& product) {
+    Pht::EmitterSettings particleEmitterSettings {
+        .mPosition = Pht::Vec3{0.0f, 0.0f, 0.0f},
+        .mSize = Pht::Vec3{1.5f, 1.5f, 0.0f},
+        .mTimeToLive = std::numeric_limits<float>::infinity(),
+        .mFrequency = 2.0f
+    };
+    
+    Pht::ParticleSettings particleSettings {
+        .mVelocity = Pht::Vec3{0.0f, 0.0f, 0.0f},
+        .mVelocityRandomPart = Pht::Vec3{0.0f, 0.0f, 0.0f},
+        .mColor = Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f},
+        .mColorRandomPart = Pht::Vec4{0.1f, 0.1f, 0.1f, 0.0f},
+        .mTextureFilename = "particle_sprite_twinkle_blurred.png",
+        .mTimeToLive = 0.7f,
+        .mTimeToLiveRandomPart = 0.4f,
+        .mFadeOutDuration = 0.0f,
+        .mZAngularVelocityRandomPart = 400.0f,
+        .mSize = Pht::Vec2{2.42f, 2.42f},
+        .mSizeRandomPart = 0.0f,
+        .mShrinkDuration = 0.4f
+    };
+    
+    auto& particleSystem {engine.GetParticleSystem()};
+    product.mTwinklesEffect = particleSystem.CreateParticleEffectSceneObject(particleSettings,
+                                                                             particleEmitterSettings,
+                                                                             Pht::RenderMode::Triangles);
+    product.mTwinklesEffect->GetTransform().SetPosition({0.0f, 0.7f, UiLayer::root});
+    parentObject.AddChild(*product.mTwinklesEffect);
+}
+
+void StoreMenuView::Init() {
+    mAnimationTime = 0.0f;
+    
+    for (auto& product: mProducts) {
+        product.mGlowEffect->GetComponent<Pht::ParticleEffect>()->Stop();
+        product.mTwinklesEffect->GetComponent<Pht::ParticleEffect>()->Stop();
+    }
+}
+
+void StoreMenuView::StartEffects() {
+    for (auto& product: mProducts) {
+        product.mGlowEffect->GetComponent<Pht::ParticleEffect>()->Start();
+        product.mTwinklesEffect->GetComponent<Pht::ParticleEffect>()->Start();
+    }
+}
+
+void StoreMenuView::Update() {
+    auto dt {mEngine.GetLastFrameSeconds()};
+    mAnimationTime += dt;
+    
+    if (mAnimationTime > animationDuration) {
+        mAnimationTime = 0.0f;
+    }
+    
+    for (auto& product: mProducts) {
+        auto t {mAnimationTime * 2.0f * 3.1415f / animationDuration};
+        auto yAngle {rotationAmplitude * sin(t)};
+        
+        product.mCoinPile->GetTransform().SetRotation({coinPilesXAngle, yAngle, 0.0f});
+
+        product.mGlowEffect->GetComponent<Pht::ParticleEffect>()->Update(dt);
+        product.mTwinklesEffect->GetComponent<Pht::ParticleEffect>()->Update(dt);
+    }
 }

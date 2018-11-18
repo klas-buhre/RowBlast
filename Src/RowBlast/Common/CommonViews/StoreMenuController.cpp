@@ -25,6 +25,10 @@ void StoreMenuController::SetFadeEffect(Pht::FadeEffect& fadeEffect) {
 }
 
 StoreMenuController::Result StoreMenuController::Update() {
+    mView.Update();
+    
+    auto previousSlidingMenuAnimationState {mSlidingMenuAnimation.GetState()};
+
     switch (mSlidingMenuAnimation.Update()) {
         case SlidingMenuAnimation::State::Idle:
             mSlidingMenuAnimation.StartSlideIn();
@@ -33,6 +37,9 @@ StoreMenuController::Result StoreMenuController::Update() {
         case SlidingMenuAnimation::State::SlidingOut:
             break;
         case SlidingMenuAnimation::State::ShowingMenu:
+            if (previousSlidingMenuAnimationState != SlidingMenuAnimation::State::ShowingMenu) {
+                mView.StartEffects();
+            }
             return HandleInput();
         case SlidingMenuAnimation::State::Done:
             return mDeferredResult;
@@ -54,8 +61,8 @@ StoreMenuController::Result StoreMenuController::OnTouch(const Pht::TouchEvent& 
         return Result::None;
     }
     
-    for (auto& productButton: mView.GetProductButtons()) {
-        if (productButton->IsClicked(touchEvent)) {
+    for (auto& product: mView.GetProducts()) {
+        if (product.mButton->IsClicked(touchEvent)) {
         
         }
     }
