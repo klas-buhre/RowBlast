@@ -16,6 +16,7 @@ StoreMenuController::StoreMenuController(Pht::IEngine& engine,
     mSlidingMenuAnimation {engine, mView} {}
 
 void StoreMenuController::Init() {
+    mView.Init();
     mSlidingMenuAnimation.Init(SlidingMenuAnimation::UpdateFade::Yes,
                                SlidingMenuAnimation::SlideDirection::Left);
 }
@@ -26,8 +27,6 @@ void StoreMenuController::SetFadeEffect(Pht::FadeEffect& fadeEffect) {
 
 StoreMenuController::Result StoreMenuController::Update() {
     mView.Update();
-    
-    auto previousSlidingMenuAnimationState {mSlidingMenuAnimation.GetState()};
 
     switch (mSlidingMenuAnimation.Update()) {
         case SlidingMenuAnimation::State::Idle:
@@ -37,9 +36,6 @@ StoreMenuController::Result StoreMenuController::Update() {
         case SlidingMenuAnimation::State::SlidingOut:
             break;
         case SlidingMenuAnimation::State::ShowingMenu:
-            if (previousSlidingMenuAnimationState != SlidingMenuAnimation::State::ShowingMenu) {
-                mView.StartEffects();
-            }
             return HandleInput();
         case SlidingMenuAnimation::State::Done:
             return mDeferredResult;

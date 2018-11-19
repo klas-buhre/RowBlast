@@ -37,9 +37,6 @@ Ongoing tasks:
     -Store GUI.
       -Store controller that controls the other store view controllers.
       -Store views.
-        -Implement Products menu with balance.
-            -Try white glow lines instead of pink/purple.
-            -Each product should have different number of coins and small and big piles.
         -Implement Purchase canceled dialog.
         -Implement Purchase successful/completed dialog?
 
