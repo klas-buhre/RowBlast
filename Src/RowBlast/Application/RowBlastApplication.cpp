@@ -37,9 +37,25 @@ Ongoing tasks:
     -Store GUI.
       -Store controller that controls the other store view controllers.
       -Store views.
-        -Implement Purchase canceled dialog.
-        -Implement Purchase successful/completed dialog?
-
+        -Implement Purchase Unsuccessful dialog. Says "No money was removed from your account.".
+         Blue OK button and normal close button. Goes back to store menu.
+        -Implement Purchase Successful dialog. Says "You have received X gold coins.". Green OK
+         button and normal close button. If store opened from pressing add coins in map hud then go
+         back to map. If store opened from out of moves dialog and there is enough coins then go
+         back to game with extra moves. If store was opened from out of moves dialog but there is
+         not enough coins then go back to store menu. If store was opened from no lives dialog which
+         was triggered from map hud add lives and there is enough coins then go back to map. If
+         store was opened from no lives dialog which was triggered from a map start level click or
+         level restart and there is enough coins then go to to the level goal dialog for that level.
+         If store was opened from no lives dialog but there is not enough coins then go back to
+         store menu.
+        -Out of moves dialog, clicking on continue button: If having enough coins then go back to
+         game with extra moves. If not enough coins then go to store.
+        -No lives dialog, clicking continue button: If having enough coins and no lives dialog was
+         triggered from a map start level click or level restart then go to to the level goal dialog
+         for that level. If having enough coins and no lives dialog was triggered from pressing add
+         lives in the map hud when lives was zero then go back to map. If not enough coins then go
+         to store.
 
 
 
