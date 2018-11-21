@@ -22,9 +22,13 @@ namespace RowBlast {
         const Pht::Material& GetGoldMaterial() const {
             return *mGoldMaterial;
         }
-
+        
         const Pht::Material& GetLightGoldMaterial() const {
             return *mLightGoldMaterial;
+        }
+
+        const Pht::Material& GetLighterGoldMaterial() const {
+            return *mLighterGoldMaterial;
         }
 
         const Pht::Material& GetRedMaterial() const {
@@ -70,6 +74,7 @@ namespace RowBlast {
     private:
         void CreateGoldMaterial();
         void CreateLightGoldMaterial();
+        void CreateLighterGoldMaterial();
         void CreateBlueMaterial();
         void CreateRedMaterial();
         void CreateGreenMaterial();
@@ -84,6 +89,7 @@ namespace RowBlast {
         Pht::EnvMapTextureFilenames mEnvMapTextureFilenames;
         std::unique_ptr<Pht::Material> mGoldMaterial;
         std::unique_ptr<Pht::Material> mLightGoldMaterial;
+        std::unique_ptr<Pht::Material> mLighterGoldMaterial;
         std::unique_ptr<Pht::Material> mRedMaterial;
         std::unique_ptr<Pht::Material> mBlueMaterial;
         std::unique_ptr<Pht::Material> mGreenMaterial;

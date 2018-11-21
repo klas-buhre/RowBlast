@@ -33,7 +33,7 @@ MapViewControllers::MapViewControllers(Pht::IEngine& engine,
         engine,
         commonResources,
         pieceResources,
-        LevelGoalDialogView::Scene::Map
+        LevelGoalDialogView::SceneId::Map
     },
     mNoLivesDialogController {engine, commonResources, userServices, PotentiallyZoomedScreen::No},
     mSettingsMenuController {engine, commonResources, settings, PotentiallyZoomedScreen::No},

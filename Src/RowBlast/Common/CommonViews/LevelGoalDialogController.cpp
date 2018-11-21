@@ -12,21 +12,21 @@ using namespace RowBlast;
 LevelGoalDialogController::LevelGoalDialogController(Pht::IEngine& engine,
                                                      const CommonResources& commonResources,
                                                      const PieceResources& pieceResources,
-                                                     LevelGoalDialogView::Scene scene) :
+                                                     LevelGoalDialogView::SceneId sceneId) :
     mInput {engine.GetInput()},
-    mView {engine, commonResources, pieceResources, scene},
+    mView {engine, commonResources, pieceResources, sceneId},
     mSlidingMenuAnimation {engine, mView},
-    mScene {scene} {}
+    mSceneId {sceneId} {}
 
 void LevelGoalDialogController::Init(const LevelInfo& levelInfo) {
     mView.Init(levelInfo);
     
-    switch (mScene) {
-        case LevelGoalDialogView::Scene::Map:
+    switch (mSceneId) {
+        case LevelGoalDialogView::SceneId::Map:
             mSlidingMenuAnimation.Init(SlidingMenuAnimation::UpdateFade::Yes,
                                        SlidingMenuAnimation::SlideDirection::Scale);
             break;
-        case LevelGoalDialogView::Scene::Game:
+        case LevelGoalDialogView::SceneId::Game:
             mSlidingMenuAnimation.Init(SlidingMenuAnimation::UpdateFade::No,
                                        SlidingMenuAnimation::SlideDirection::Left);
             break;
@@ -68,10 +68,10 @@ LevelGoalDialogController::Result LevelGoalDialogController::HandleInput() {
 
 LevelGoalDialogController::Result
 LevelGoalDialogController::OnTouch(const Pht::TouchEvent& touchEvent) {
-    switch (mScene) {
-        case LevelGoalDialogView::Scene::Map:
+    switch (mSceneId) {
+        case LevelGoalDialogView::SceneId::Map:
             return OnTouchInMapScene(touchEvent);
-        case LevelGoalDialogView::Scene::Game:
+        case LevelGoalDialogView::SceneId::Game:
             return OnTouchInGameScene(touchEvent);
     }
 }

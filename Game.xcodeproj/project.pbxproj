@@ -38,6 +38,7 @@
 		62411A971E61E62800035D2A /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62411A961E61E62800035D2A /* GLKit.framework */; };
 		624C72E52177AB260006068B /* shield.png in Resources */ = {isa = PBXBuildFile; fileRef = 624C72E42177AB250006068B /* shield.png */; };
 		624C9DDE21A1A908000FB5E1 /* coin_pile_4120.obj in Resources */ = {isa = PBXBuildFile; fileRef = 624C9DDD21A1A907000FB5E1 /* coin_pile_4120.obj */; };
+		624C9DE121A47249000FB5E1 /* StoreController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 624C9DDF21A47249000FB5E1 /* StoreController.cpp */; };
 		625696332182382C003A3A9D /* TitleScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 625694872182382B003A3A9D /* TitleScene.cpp */; };
 		625696342182382C003A3A9D /* TitleController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6256948A2182382B003A3A9D /* TitleController.cpp */; };
 		625696352182382C003A3A9D /* TitleAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6256948B2182382B003A3A9D /* TitleAnimation.cpp */; };
@@ -451,6 +452,8 @@
 		62411A961E61E62800035D2A /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		624C72E42177AB250006068B /* shield.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shield.png; sourceTree = "<group>"; };
 		624C9DDD21A1A907000FB5E1 /* coin_pile_4120.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = coin_pile_4120.obj; sourceTree = "<group>"; };
+		624C9DDF21A47249000FB5E1 /* StoreController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = StoreController.cpp; sourceTree = "<group>"; };
+		624C9DE021A47249000FB5E1 /* StoreController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = StoreController.hpp; sourceTree = "<group>"; };
 		625694862182382B003A3A9D /* TitleAnimation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = TitleAnimation.hpp; sourceTree = "<group>"; };
 		625694872182382B003A3A9D /* TitleScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TitleScene.cpp; sourceTree = "<group>"; };
 		625694882182382B003A3A9D /* TitleController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = TitleController.hpp; sourceTree = "<group>"; };
@@ -1665,6 +1668,8 @@
 				625695932182382B003A3A9D /* SettingsMenuController.hpp */,
 				625695942182382B003A3A9D /* SettingsMenuView.cpp */,
 				6256958C2182382B003A3A9D /* SettingsMenuView.hpp */,
+				624C9DDF21A47249000FB5E1 /* StoreController.cpp */,
+				624C9DE021A47249000FB5E1 /* StoreController.hpp */,
 				6238F626219C89590008A0CF /* StoreMenuController.cpp */,
 				6238F627219C89590008A0CF /* StoreMenuController.hpp */,
 				6238F623219C885B0008A0CF /* StoreMenuView.cpp */,
@@ -2755,6 +2760,7 @@
 				625696C42182382C003A3A9D /* World.cpp in Sources */,
 				625698362182392C003A3A9D /* SwipeGestureRecognizer.cpp in Sources */,
 				625698522182392C003A3A9D /* ParticleEffect.cpp in Sources */,
+				624C9DE121A47249000FB5E1 /* StoreController.cpp in Sources */,
 				625696602182382C003A3A9D /* GhostPieceProducer.cpp in Sources */,
 				6256963F2182382C003A3A9D /* SwitchPieceWindowController.cpp in Sources */,
 				6256965F2182382C003A3A9D /* LevelCompletedDialogView.cpp in Sources */,

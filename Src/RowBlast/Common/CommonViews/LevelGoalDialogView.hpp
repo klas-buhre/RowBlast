@@ -26,7 +26,7 @@ namespace RowBlast {
     
     class LevelGoalDialogView: public Pht::GuiView {
     public:
-        enum class Scene {
+        enum class SceneId {
             Map,
             Game
         };
@@ -34,7 +34,7 @@ namespace RowBlast {
         LevelGoalDialogView(Pht::IEngine& engine,
                             const CommonResources& commonResources,
                             const PieceResources& pieceResources,
-                            Scene scene);
+                            SceneId sceneId);
         
         void Init(const LevelInfo& levelInfo);
         void StartEffects();

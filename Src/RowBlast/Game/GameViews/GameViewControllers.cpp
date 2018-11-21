@@ -40,7 +40,7 @@ GameViewControllers::GameViewControllers(Pht::IEngine& engine,
         engine,
         commonResources,
         pieceResources,
-        LevelGoalDialogView::Scene::Game
+        LevelGoalDialogView::SceneId::Game
     },
     mStoreMenuController {engine, commonResources, PotentiallyZoomedScreen::Yes} {
         

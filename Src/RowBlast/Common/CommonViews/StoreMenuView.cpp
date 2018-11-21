@@ -136,19 +136,20 @@ void StoreMenuView::CreateRenderables(Pht::IEngine& engine,
     auto& sceneManager {engine.GetSceneManager()};
     auto& goldMaterial {commonResources.GetMaterials().GetGoldMaterial()};
     auto& lightGoldMaterial {commonResources.GetMaterials().GetLightGoldMaterial()};
+    auto& lighterGoldMaterial {commonResources.GetMaterials().GetLighterGoldMaterial()};
     
     mCoinRenderable = sceneManager.CreateRenderableObject(Pht::ObjMesh {"coin_852.obj", 3.15f},
                                                           goldMaterial);
     mLightCoinRenderable = sceneManager.CreateRenderableObject(Pht::ObjMesh {"coin_852.obj", 3.15f},
-                                                               lightGoldMaterial);
+                                                               lighterGoldMaterial);
     mShortCoinStackRenderable = sceneManager.CreateRenderableObject(Pht::CylinderMesh {0.4f, 0.5f, true},
-                                                                    lightGoldMaterial);
+                                                                    lighterGoldMaterial);
     mTallCoinStackRenderable = sceneManager.CreateRenderableObject(Pht::CylinderMesh {0.4f, 1.0f, true},
-                                                                   lightGoldMaterial);
+                                                                   lighterGoldMaterial);
     mTallerCoinStackRenderable = sceneManager.CreateRenderableObject(Pht::CylinderMesh {0.21f, 1.5f, true},
-                                                                     lightGoldMaterial);
+                                                                     lighterGoldMaterial);
     mCoinPileRenderable = sceneManager.CreateRenderableObject(Pht::ObjMesh {"coin_pile_4120.obj", 40.0f},
-                                                              goldMaterial);
+                                                              lightGoldMaterial);
 }
 
 void StoreMenuView::CreateProduct(const Pht::Vec3& position,
@@ -394,7 +395,7 @@ void StoreMenuView::CreateTwinklesEffect(Pht::IEngine& engine,
         .mPosition = Pht::Vec3{0.0f, 0.0f, 0.0f},
         .mSize = twinklesVolume,
         .mTimeToLive = std::numeric_limits<float>::infinity(),
-        .mFrequency = 3.0f
+        .mFrequency = 2.0f
     };
     
     Pht::ParticleSettings particleSettings {

@@ -25,7 +25,7 @@ namespace RowBlast {
         LevelGoalDialogController(Pht::IEngine& engine,
                                   const CommonResources& commonResources,
                                   const PieceResources& pieceResources,
-                                  LevelGoalDialogView::Scene scene);
+                                  LevelGoalDialogView::SceneId sceneId);
         
         void Init(const LevelInfo& levelInfo);
         void SetFadeEffect(Pht::FadeEffect& fadeEffect);
@@ -45,7 +45,7 @@ namespace RowBlast {
         LevelGoalDialogView mView;
         SlidingMenuAnimation mSlidingMenuAnimation;
         Result mDeferredResult {Result::None};
-        LevelGoalDialogView::Scene mScene {LevelGoalDialogView::Scene::Map};
+        LevelGoalDialogView::SceneId mSceneId {LevelGoalDialogView::SceneId::Map};
     };
 }
 

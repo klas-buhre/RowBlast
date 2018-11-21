@@ -33,11 +33,11 @@ namespace {
 LevelGoalDialogView::LevelGoalDialogView(Pht::IEngine& engine,
                                          const CommonResources& commonResources,
                                          const PieceResources& pieceResources,
-                                         Scene scene) :
+                                         SceneId sceneId) :
     mEngine {engine},
     mPieceResources {pieceResources} {
     
-    auto zoom {scene == Scene::Game ? PotentiallyZoomedScreen::Yes : PotentiallyZoomedScreen::No};
+    auto zoom {sceneId == SceneId::Game ? PotentiallyZoomedScreen::Yes : PotentiallyZoomedScreen::No};
     auto& guiResources {commonResources.GetGuiResources()};
     auto& menuWindow {guiResources.GetLargeDarkMenuWindow(zoom)};
     
@@ -50,7 +50,7 @@ LevelGoalDialogView::LevelGoalDialogView(Pht::IEngine& engine,
     auto& largeTextProperties {guiResources.GetLargeWhiteTextProperties(zoom)};
     mCaption = &CreateText(captionPosition, "LEVEL 1", largeTextProperties);
     
-    if (scene == Scene::Map) {
+    if (sceneId == SceneId::Map) {
         Pht::Vec3 closeButtonPosition {
             GetSize().x / 2.0f - 1.3f,
             GetSize().y / 2.0f - 1.3f,
@@ -87,7 +87,7 @@ LevelGoalDialogView::LevelGoalDialogView(Pht::IEngine& engine,
     lineSceneObject2.GetTransform().SetPosition({0.0f, 0.5f, UiLayer::textRectangle});
     GetRoot().AddChild(lineSceneObject2);
 
-    if (scene == Scene::Map) {
+    if (sceneId == SceneId::Map) {
         Pht::Vec2 playButtonInputSize {205.0f, 59.0f};
         
         MenuButton::Style playButtonStyle;

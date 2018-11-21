@@ -19,6 +19,7 @@ Materials::Materials(Pht::IEngine& engine) :
 
     CreateGoldMaterial();
     CreateLightGoldMaterial();
+    CreateLighterGoldMaterial();
     CreateBlueMaterial();
     CreateRedMaterial();
     CreateGreenMaterial();
@@ -56,8 +57,8 @@ void Materials::CreateGoldMaterial() {
 }
 
 void Materials::CreateLightGoldMaterial() {
-    Pht::Color ambient {1.0f, 0.63f, 0.09f};
-    Pht::Color diffuse {0.55f, 0.46f, 0.0f};
+    Pht::Color ambient {0.95f, 0.595f, 0.085f};
+    Pht::Color diffuse {0.525f, 0.435f, 0.0f};
     Pht::Color specular {1.0f, 1.0f, 1.0f};
     auto shininess {21.0f};
     mLightGoldMaterial = std::make_unique<Pht::Material>(mEnvMapTextureFilenames,
@@ -67,6 +68,20 @@ void Materials::CreateLightGoldMaterial() {
                                                          shininess,
                                                          0.6f);
     mLightGoldMaterial->GetDepthState().mDepthTestAllowedOverride = true;
+}
+
+void Materials::CreateLighterGoldMaterial() {
+    Pht::Color ambient {1.0f, 0.63f, 0.09f};
+    Pht::Color diffuse {0.55f, 0.46f, 0.0f};
+    Pht::Color specular {1.0f, 1.0f, 1.0f};
+    auto shininess {21.0f};
+    mLighterGoldMaterial = std::make_unique<Pht::Material>(mEnvMapTextureFilenames,
+                                                           ambient,
+                                                           diffuse,
+                                                           specular,
+                                                           shininess,
+                                                           0.6f);
+    mLighterGoldMaterial->GetDepthState().mDepthTestAllowedOverride = true;
 }
 
 void Materials::CreateBlueMaterial() {

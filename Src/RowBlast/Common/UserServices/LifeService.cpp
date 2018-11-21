@@ -149,9 +149,9 @@ bool LifeService::LoadState() {
     mState = static_cast<State>(Pht::Json::ReadInt(document, stateMember));
     mNumLives = Pht::Json::ReadInt(document, numLivesMember);
     auto lifeLostTimePointInSeconds {Pht::Json::ReadUInt64(document, lifeLostTimePointMember)};
-    mLifeLostTimePoint = std::chrono::steady_clock::time_point {
+    mLifeLostTimePoint = std::chrono::steady_clock::now(); /*std::chrono::steady_clock::time_point {
         std::chrono::seconds(lifeLostTimePointInSeconds)
     };
-
+*/
     return true;
 }
