@@ -62,7 +62,7 @@ LevelBombDialogView::LevelBombDialogView(Pht::IEngine& engine,
                             guiResources.GetWhiteButtonTextProperties(zoom));
 }
 
-void LevelBombDialogView::Init(Pht::Scene& scene) {
+void LevelBombDialogView::SetUp(Pht::Scene& scene) {
     std::vector<std::string> frameFilenames {
         "level_bomb_frame1.jpg",
         "level_bomb_frame2.jpg",

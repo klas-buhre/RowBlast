@@ -14,11 +14,11 @@ BombDialogController::BombDialogController(Pht::IEngine& engine,
     mView {engine, commonResources},
     mSlidingMenuAnimation {engine, mView} {}
 
-void BombDialogController::Init(Pht::Scene& scene) {
-    mView.Init(scene);
-    mSlidingMenuAnimation.Init(SlidingMenuAnimation::UpdateFade::Yes,
-                               SlidingMenuAnimation::SlideDirection::Scale,
-                               SlidingMenuAnimation::UpdatePosition::No);
+void BombDialogController::SetUp(Pht::Scene& scene) {
+    mView.SetUp(scene);
+    mSlidingMenuAnimation.SetUp(SlidingMenuAnimation::UpdateFade::Yes,
+                                SlidingMenuAnimation::SlideDirection::Scale,
+                                SlidingMenuAnimation::UpdatePosition::No);
 }
 
 void BombDialogController::SetFadeEffect(Pht::FadeEffect& fadeEffect) {

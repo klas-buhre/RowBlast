@@ -60,7 +60,7 @@ LaserDialogView::LaserDialogView(Pht::IEngine& engine, const CommonResources& co
                             guiResources.GetWhiteButtonTextProperties(zoom));
 }
 
-void LaserDialogView::Init(Pht::Scene& scene) {
+void LaserDialogView::SetUp(Pht::Scene& scene) {
     std::vector<std::string> frameFilenames {
         "laser_frame1.jpg",
         "laser_frame2.jpg",

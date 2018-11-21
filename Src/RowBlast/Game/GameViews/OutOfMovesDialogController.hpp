@@ -23,7 +23,7 @@ namespace RowBlast {
         
         OutOfMovesDialogController(Pht::IEngine& engine, const CommonResources& commonResources);
         
-        void Init();
+        void SetUp();
         Result Update();
 
         Pht::GuiView& GetView() {

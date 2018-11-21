@@ -7,10 +7,10 @@ FillRowsWindowController::FillRowsWindowController(Pht::IEngine& engine,
     mView {commonResources},
     mSlidingMenuAnimation {engine, mView} {}
 
-void FillRowsWindowController::Init() {
-    mSlidingMenuAnimation.Init(SlidingMenuAnimation::UpdateFade::No,
-                               SlidingMenuAnimation::SlideDirection::Scale,
-                               SlidingMenuAnimation::UpdatePosition::No);
+void FillRowsWindowController::SetUp() {
+    mSlidingMenuAnimation.SetUp(SlidingMenuAnimation::UpdateFade::No,
+                                SlidingMenuAnimation::SlideDirection::Scale,
+                                SlidingMenuAnimation::UpdatePosition::No);
 }
 
 FillRowsWindowController::Result FillRowsWindowController::Update() {

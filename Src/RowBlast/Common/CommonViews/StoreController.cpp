@@ -43,32 +43,39 @@ void StoreController::Init(Pht::SceneObject& parentObject) {
     SetActiveViewController(ViewController::None);
 }
 
-void StoreController::StartPurchaseFlow(Trigger trigger) {
-    mTrigger = trigger;
+void StoreController::StartPurchaseFlow(TriggerProduct triggerProduct) {
+    mTriggerProduct = triggerProduct;
     mState = State::StoreMenu;
     SetActiveViewController(ViewController::StoreMenu);
-    mStoreMenuController.Init();
+    mStoreMenuController.SetUp();
 }
 
 StoreController::Result StoreController::Update() {
+    StoreController::Result result {Result::None};
+    
     switch (mState) {
         case State::StoreMenu:
+            result = UpdateStoreMenu();
             break;
         case State::Idle:
             break;
     }
 
-    return Result::None;
+    return result;
 }
 
-void StoreController::UpdateStoreMenu() {
+StoreController::Result StoreController::UpdateStoreMenu() {
+    StoreController::Result result {Result::None};
+
     switch (mStoreMenuController.Update()) {
         case StoreMenuController::Result::None:
             break;
         case StoreMenuController::Result::Close:
-            // GoToOutOfMovesStateOutOfMovesDialog();
+            result = Result::Close;
             break;
     }
+    
+    return result;
 }
 
 void StoreController::SetActiveViewController(ViewController viewController) {

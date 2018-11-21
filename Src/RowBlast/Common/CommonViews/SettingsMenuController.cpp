@@ -19,8 +19,8 @@ SettingsMenuController::SettingsMenuController(Pht::IEngine& engine,
     mView {engine, commonResources, potentiallyZoomedScreen},
     mSlidingMenuAnimation {engine, mView} {}
 
-void SettingsMenuController::Init(SlidingMenuAnimation::UpdateFade updateFade,
-                                  bool isGestureControlsAllowed) {
+void SettingsMenuController::SetUp(SlidingMenuAnimation::UpdateFade updateFade,
+                                   bool isGestureControlsAllowed) {
     mUpdateFade = updateFade;
 
     if (isGestureControlsAllowed) {
@@ -35,7 +35,7 @@ void SettingsMenuController::Init(SlidingMenuAnimation::UpdateFade updateFade,
             SlidingMenuAnimation::SlideDirection::Left
     };
 
-    mSlidingMenuAnimation.Init(updateFade, slideInDirection);
+    mSlidingMenuAnimation.SetUp(updateFade, slideInDirection);
     UpdateViewToReflectSettings(isGestureControlsAllowed);
 }
 

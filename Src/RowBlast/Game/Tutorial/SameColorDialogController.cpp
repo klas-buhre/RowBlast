@@ -14,10 +14,10 @@ SameColorDialogController::SameColorDialogController(Pht::IEngine& engine,
     mView {engine, commonResources},
     mSlidingMenuAnimation {engine, mView} {}
 
-void SameColorDialogController::Init() {
-    mSlidingMenuAnimation.Init(SlidingMenuAnimation::UpdateFade::Yes,
-                               SlidingMenuAnimation::SlideDirection::Scale,
-                               SlidingMenuAnimation::UpdatePosition::No);
+void SameColorDialogController::SetUp() {
+    mSlidingMenuAnimation.SetUp(SlidingMenuAnimation::UpdateFade::Yes,
+                                SlidingMenuAnimation::SlideDirection::Scale,
+                                SlidingMenuAnimation::UpdatePosition::No);
 }
 
 void SameColorDialogController::SetFadeEffect(Pht::FadeEffect& fadeEffect) {

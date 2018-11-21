@@ -41,9 +41,9 @@ namespace RowBlast {
         
         SlidingMenuAnimation(Pht::IEngine& engine, Pht::GuiView& view);
         
-        void Init(UpdateFade updateFade,
-                  SlideDirection slideInDirection = SlideDirection::Right,
-                  UpdatePosition updatePosition = UpdatePosition::Yes);
+        void SetUp(UpdateFade updateFade,
+                   SlideDirection slideInDirection = SlideDirection::Right,
+                   UpdatePosition updatePosition = UpdatePosition::Yes);
         void StartSlideIn();
         void StartSlideOut(UpdateFade updateFade,
                            SlideDirection slideOutDirection = SlideDirection::Left,

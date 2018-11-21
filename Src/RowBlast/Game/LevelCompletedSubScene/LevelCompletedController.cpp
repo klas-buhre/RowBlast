@@ -234,7 +234,7 @@ void LevelCompletedController::UpdateInStarsAppearingAnimationState() {
     if (mStarsAnimation.Update() == StarsAnimation::State::Rotating) {
         mState = State::LevelCompletedDialog;
         mGameViewControllers.SetActiveController(GameViewControllers::LevelCompletedDialog);
-        mGameViewControllers.GetLevelCompletedDialogController().Init();
+        mGameViewControllers.GetLevelCompletedDialogController().SetUp();
         mStarsAnimation.MoveToFront();
     }
 }

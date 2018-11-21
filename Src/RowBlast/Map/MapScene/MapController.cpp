@@ -47,13 +47,15 @@ MapController::MapController(Pht::IEngine& engine,
     mScene {engine, commonResources, userServices, universe},
     mUfo {engine, commonResources, 1.0f},
     mUfoAnimation {engine, mUfo},
-    mMapViewControllers {engine, mScene, commonResources, userServices, settings, pieceResources} {}
+    mMapViewControllers {engine, mScene, commonResources, userServices, settings, pieceResources},
+    mStoreController {engine, commonResources, StoreController::SceneId::Map} {}
 
 void MapController::Init() {
     mScene.Init();
     mUfo.Init(mScene.GetUfoContainer());
     mUfoAnimation.Init();
     mMapViewControllers.Init();
+    mStoreController.Init(mScene.GetUiViewsContainer());
     
     mState = State::Map;
     mCameraXVelocity = 0.0f;
@@ -86,8 +88,8 @@ MapController::Command MapController::Update() {
         case State::SettingsMenu:
             UpdateSettingsMenu();
             break;
-        case State::StoreMenu:
-            UpdateStoreMenu();
+        case State::Store:
+            UpdateStore();
             break;
     }
 
@@ -172,11 +174,11 @@ void MapController::UpdateSettingsMenu() {
     }
 }
 
-void MapController::UpdateStoreMenu() {
-    switch (mMapViewControllers.GetStoreMenuController().Update()) {
-        case StoreMenuController::Result::None:
+void MapController::UpdateStore() {
+    switch (mStoreController.Update()) {
+        case StoreController::Result::None:
             break;
-        case StoreMenuController::Result::Close:
+        case StoreController::Result::Close:
             GoToMapState();
             break;
     }
@@ -199,7 +201,7 @@ MapController::Command MapController::HandleInput() {
                         GoToSettingsMenuState();
                         break;
                     case MapHudController::Result::ClickedCoinsButton:
-                        GoToStoreMenuState();
+                        GoToStoreState(StoreController::TriggerProduct::Coins);
                         break;
                     case MapHudController::Result::ClickedLivesButton:
                     case MapHudController::Result::TouchStartedOverButton:
@@ -270,7 +272,7 @@ MapController::Command MapController::HandlePinClick(const MapPin& pin) {
             } else {
                 mState = State::NoLivesDialog;
                 mMapViewControllers.SetActiveController(MapViewControllers::NoLivesDialog);
-                mMapViewControllers.GetNoLivesDialogController().Init(true);
+                mMapViewControllers.GetNoLivesDialogController().SetUp(true);
             }
             break;
         case MapPlace::Kind::Portal: {
@@ -380,20 +382,20 @@ void MapController::GoToLevelGoalDialogState(int levelToStart) {
     mMapViewControllers.SetActiveController(MapViewControllers::LevelGoalDialog);
 
     auto levelInfo {LevelLoader::LoadInfo(levelToStart, mLevelResources)};
-    mMapViewControllers.GetLevelGoalDialogController().Init(*levelInfo);
+    mMapViewControllers.GetLevelGoalDialogController().SetUp(*levelInfo);
 }
 
 void MapController::GoToSettingsMenuState() {
     mMapViewControllers.SetActiveController(MapViewControllers::SettingsMenu);
-    mMapViewControllers.GetSettingsMenuController().Init(SlidingMenuAnimation::UpdateFade::Yes,
-                                                         true);
+    mMapViewControllers.GetSettingsMenuController().SetUp(SlidingMenuAnimation::UpdateFade::Yes,
+                                                          true);
     mState = State::SettingsMenu;
 }
 
-void MapController::GoToStoreMenuState() {
-    mMapViewControllers.SetActiveController(MapViewControllers::StoreMenu);
-    mMapViewControllers.GetStoreMenuController().Init();
-    mState = State::StoreMenu;
+void MapController::GoToStoreState(StoreController::TriggerProduct triggerProduct) {
+    mMapViewControllers.SetActiveController(MapViewControllers::None);
+    mStoreController.StartPurchaseFlow(triggerProduct);
+    mState = State::Store;
 }
 
 void MapController::GoToMapState() {

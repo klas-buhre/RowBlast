@@ -36,7 +36,7 @@ namespace RowBlast {
                             const PieceResources& pieceResources,
                             SceneId sceneId);
         
-        void Init(const LevelInfo& levelInfo);
+        void SetUp(const LevelInfo& levelInfo);
         void StartEffects();
         void Update();
         
@@ -73,9 +73,9 @@ namespace RowBlast {
         void CreateAsteroid(Pht::IEngine& engine, Pht::SceneObject& parent);
         void CreateBlueprintSlot(Pht::IEngine& engine, Pht::SceneObject& parent);
         void CreateGlowEffectsBehindGoal(Pht::SceneObject& parentObject, Pht::IEngine& engine);
-        void InitPreviewPiece(LevelStartPreviewPiece& previewPiece,
-                              const Piece& pieceType,
-                              const Pht::Vec3& position);
+        void SetUpPreviewPiece(LevelStartPreviewPiece& previewPiece,
+                               const Piece& pieceType,
+                               const Pht::Vec3& position);
         void UpdateAnimations(float dt);
         void AnimateEmissive(float dt);
         void AnimateBombRotation(float dt);

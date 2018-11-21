@@ -7,10 +7,10 @@ PlacePieceWindowController::PlacePieceWindowController(Pht::IEngine& engine,
     mView {commonResources},
     mSlidingMenuAnimation {engine, mView} {}
 
-void PlacePieceWindowController::Init() {
-    mSlidingMenuAnimation.Init(SlidingMenuAnimation::UpdateFade::No,
-                               SlidingMenuAnimation::SlideDirection::Scale,
-                               SlidingMenuAnimation::UpdatePosition::No);
+void PlacePieceWindowController::SetUp() {
+    mSlidingMenuAnimation.SetUp(SlidingMenuAnimation::UpdateFade::No,
+                                SlidingMenuAnimation::SlideDirection::Scale,
+                                SlidingMenuAnimation::UpdatePosition::No);
 }
 
 PlacePieceWindowController::Result PlacePieceWindowController::Update() {

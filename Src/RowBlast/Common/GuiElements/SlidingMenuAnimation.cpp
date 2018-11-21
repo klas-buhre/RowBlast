@@ -44,9 +44,9 @@ SlidingMenuAnimation::SlidingMenuAnimation(Pht::IEngine& engine, Pht::GuiView& v
     mEngine {engine},
     mView {view} {}
 
-void SlidingMenuAnimation::Init(UpdateFade updateFade,
-                                SlideDirection slideInDirection,
-                                UpdatePosition updatePosition) {
+void SlidingMenuAnimation::SetUp(UpdateFade updateFade,
+                                 SlideDirection slideInDirection,
+                                 UpdatePosition updatePosition) {
     mState = State::Idle;
     mUpdateFade = updateFade;
     mUpdatePosition = updatePosition;

@@ -28,7 +28,7 @@ namespace RowBlast {
                                 const UserServices& userServices,
                                 PotentiallyZoomedScreen potentiallyZoomedScreen);
         
-        void Init(bool shouldSlideOut);
+        void SetUp(bool shouldSlideOut);
         Result Update();
         
         Pht::GuiView& GetView() {

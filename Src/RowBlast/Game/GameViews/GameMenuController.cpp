@@ -19,9 +19,9 @@ void GameMenuController::SetFadeEffect(Pht::FadeEffect& fadeEffect) {
     mSlidingMenuAnimation.SetFadeEffect(fadeEffect);
 }
 
-void GameMenuController::Init(SlidingMenuAnimation::UpdateFade updateFade,
-                              bool isUndoMovePossible) {
-    mSlidingMenuAnimation.Init(updateFade, SlidingMenuAnimation::SlideDirection::Right);
+void GameMenuController::SetUp(SlidingMenuAnimation::UpdateFade updateFade,
+                               bool isUndoMovePossible) {
+    mSlidingMenuAnimation.SetUp(updateFade, SlidingMenuAnimation::SlideDirection::Right);
     
     if (isUndoMovePossible) {
         mView.EnableUndoButton();

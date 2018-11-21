@@ -14,11 +14,11 @@ LaserDialogController::LaserDialogController(Pht::IEngine& engine,
     mView {engine, commonResources},
     mSlidingMenuAnimation {engine, mView} {}
 
-void LaserDialogController::Init(Pht::Scene& scene) {
-    mView.Init(scene);
-    mSlidingMenuAnimation.Init(SlidingMenuAnimation::UpdateFade::Yes,
-                               SlidingMenuAnimation::SlideDirection::Scale,
-                               SlidingMenuAnimation::UpdatePosition::No);
+void LaserDialogController::SetUp(Pht::Scene& scene) {
+    mView.SetUp(scene);
+    mSlidingMenuAnimation.SetUp(SlidingMenuAnimation::UpdateFade::Yes,
+                                SlidingMenuAnimation::SlideDirection::Scale,
+                                SlidingMenuAnimation::UpdatePosition::No);
 }
 
 void LaserDialogController::SetFadeEffect(Pht::FadeEffect& fadeEffect) {

@@ -421,7 +421,7 @@ void StoreMenuView::CreateTwinklesEffect(Pht::IEngine& engine,
     parentObject.AddChild(*product.mTwinklesEffect);
 }
 
-void StoreMenuView::Init() {
+void StoreMenuView::SetUp() {
     mAnimationTime = 0.0f;
     
     for (auto& product: mProducts) {

@@ -14,9 +14,9 @@ OutOfMovesDialogController::OutOfMovesDialogController(Pht::IEngine& engine,
     mView {engine, commonResources},
     mSlidingMenuAnimation {engine, mView} {}
 
-void OutOfMovesDialogController::Init() {
-    mSlidingMenuAnimation.Init(SlidingMenuAnimation::UpdateFade::No,
-                               SlidingMenuAnimation::SlideDirection::Up);
+void OutOfMovesDialogController::SetUp() {
+    mSlidingMenuAnimation.SetUp(SlidingMenuAnimation::UpdateFade::No,
+                                SlidingMenuAnimation::SlideDirection::Up);
 }
 
 OutOfMovesDialogController::Result OutOfMovesDialogController::Update() {

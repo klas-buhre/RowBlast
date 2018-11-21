@@ -131,6 +131,7 @@ namespace {
         }
     };
 
+#if 0
     const std::vector<HazeLayer> hazeLayers {
         HazeLayer {
             .mPosition = {0.0f, 0.0f, -370.0f},
@@ -152,7 +153,30 @@ namespace {
             .mLowerColor = {0.8225, 0.50375, 0.6475, 0.35f}
         }
     };
-    
+#endif
+
+    const std::vector<HazeLayer> hazeLayers {
+        HazeLayer {
+            .mPosition = {0.0f, 0.0f, -370.0f},
+            .mSize = {1000.0f, 700.0f},
+            .mUpperColor = {0.29f, 0.215f, 0.79f, 0.0f},
+            .mLowerColor = {0.745f, 0.50375f, 0.7f, 1.0f},
+            .mUpperScale = 0.5f
+        },
+        HazeLayer {
+            .mPosition = {0.0f, 0.0f, -350.0f},
+            .mSize = {500.0f, 650.0f},
+            .mUpperColor = {0.29f, 0.215f, 0.79f, 0.35f},
+            .mLowerColor = {0.745f, 0.50375f, 0.7f, 0.35f}
+        },
+        HazeLayer {
+            .mPosition = {0.0f, 0.0f, -250.0f},
+            .mSize = {380.0f, 480.0f},
+            .mUpperColor = {0.29f, 0.215f, 0.79f, 0.35f},
+            .mLowerColor = {0.745f, 0.50375f, 0.7f, 0.35f}
+        }
+    };
+
     const std::vector<PlanetConfig> planets {
         PlanetConfig {
             .mPosition = {0.0f, 200.0f, -550.0f},
@@ -179,13 +203,8 @@ namespace {
     
     const std::vector<BackgroundLight> backgroundLights {
         BackgroundLight {
-            .mDirection = {1.0f, 1.0f, 1.0f},
-            .mIntensity = 1.15f,
-            .mSun = Pht::Optional<Sun>{}
-        },
-        BackgroundLight {
             .mDirection = {-1.0f, 1.0f, 1.0f},
-            .mIntensity = 1.2f,
+            .mIntensity = 1.24f,
             .mSun = Pht::Optional<Sun>{}
         }
     };

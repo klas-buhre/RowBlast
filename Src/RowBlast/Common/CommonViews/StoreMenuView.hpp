@@ -22,7 +22,7 @@ namespace RowBlast {
                       const CommonResources& commonResources,
                       PotentiallyZoomedScreen potentiallyZoomedScreen);
         
-        void Init();
+        void SetUp();
         void Update();
         
         const MenuButton& GetCloseButton() const {

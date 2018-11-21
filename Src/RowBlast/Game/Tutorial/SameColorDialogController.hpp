@@ -22,7 +22,7 @@ namespace RowBlast {
         
         SameColorDialogController(Pht::IEngine& engine, const CommonResources& commonResources);
         
-        void Init();
+        void SetUp();
         void SetFadeEffect(Pht::FadeEffect& fadeEffect);
         Result Update();
 

@@ -14,10 +14,10 @@ CascadingDialogController::CascadingDialogController(Pht::IEngine& engine,
     mView {engine, commonResources},
     mSlidingMenuAnimation {engine, mView} {}
 
-void CascadingDialogController::Init() {
-    mSlidingMenuAnimation.Init(SlidingMenuAnimation::UpdateFade::Yes,
-                               SlidingMenuAnimation::SlideDirection::Scale,
-                               SlidingMenuAnimation::UpdatePosition::No);
+void CascadingDialogController::SetUp() {
+    mSlidingMenuAnimation.SetUp(SlidingMenuAnimation::UpdateFade::Yes,
+                                SlidingMenuAnimation::SlideDirection::Scale,
+                                SlidingMenuAnimation::UpdatePosition::No);
 }
 
 void CascadingDialogController::SetFadeEffect(Pht::FadeEffect& fadeEffect) {

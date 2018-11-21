@@ -69,11 +69,11 @@ namespace RowBlast {
 
         void OnNewMoveFirstLevel(int numMovesUsedIncludingCurrent);
         void OnNewMoveSecondLevel(int numMovesUsedIncludingCurrent);
-        void SetActiveController(Controller controller);
+        void SetActiveViewController(Controller controller);
         
         GameScene& mScene;
         const Level* mLevel {nullptr};
-        Controller mActiveController {Controller::None};
+        Controller mActiveViewController {Controller::None};
         Pht::FadeEffect mFadeEffect;
         HandAnimation mHandAnimation;
         GuiViewManager mViewManager;

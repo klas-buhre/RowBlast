@@ -375,7 +375,7 @@ void LevelGoalDialogView::CreateGlowEffectsBehindGoal(Pht::SceneObject& parentOb
     parentObject.AddChild(*mGoalRoundGlowEffect);
 }
 
-void LevelGoalDialogView::Init(const LevelInfo& levelInfo) {
+void LevelGoalDialogView::SetUp(const LevelInfo& levelInfo) {
     mCaption->GetText() = "LEVEL " + std::to_string(levelInfo.mId);
     
     auto adjustedCaptionPosition {captionPosition};
@@ -427,7 +427,7 @@ void LevelGoalDialogView::Init(const LevelInfo& levelInfo) {
     for (auto i {0}; i < numPieceTypesUpperRow; ++i) {
         auto& previewPiece {mPreviewPieces[i]};
         auto* pieceType {levelInfo.mPieceTypes[i]};
-        InitPreviewPiece(previewPiece, *pieceType, previewPiecePosition);
+        SetUpPreviewPiece(previewPiece, *pieceType, previewPiecePosition);
         previewPiecePosition.x += previewPieceSpacing;
     }
     
@@ -442,7 +442,7 @@ void LevelGoalDialogView::Init(const LevelInfo& levelInfo) {
     for (auto i {numPieceTypesUpperRow}; i < numPieceTypes; ++i) {
         auto& previewPiece {mPreviewPieces[i]};
         auto* pieceType {levelInfo.mPieceTypes[i]};
-        InitPreviewPiece(previewPiece, *pieceType, previewPiecePosition);
+        SetUpPreviewPiece(previewPiece, *pieceType, previewPiecePosition);
         previewPiecePosition.x += previewPieceSpacing;
     }
 
@@ -453,9 +453,9 @@ void LevelGoalDialogView::Init(const LevelInfo& levelInfo) {
     mGrayCubeSceneObject->GetTransform().SetRotation({0.0f, 0.0f, 0.0f});
 }
 
-void LevelGoalDialogView::InitPreviewPiece(LevelStartPreviewPiece& previewPiece,
-                                           const Piece& pieceType,
-                                           const Pht::Vec3& position) {
+void LevelGoalDialogView::SetUpPreviewPiece(LevelStartPreviewPiece& previewPiece,
+                                            const Piece& pieceType,
+                                            const Pht::Vec3& position) {
     previewPiece.mBombSceneObject = nullptr;
     previewPiece.mRowBombSceneObject = nullptr;
 

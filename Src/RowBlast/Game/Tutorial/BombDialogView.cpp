@@ -60,7 +60,7 @@ BombDialogView::BombDialogView(Pht::IEngine& engine, const CommonResources& comm
                             guiResources.GetWhiteButtonTextProperties(zoom));
 }
 
-void BombDialogView::Init(Pht::Scene& scene) {
+void BombDialogView::SetUp(Pht::Scene& scene) {
     std::vector<std::string> frameFilenames {
         "bomb_frame1.jpg",
         "bomb_frame2.jpg",

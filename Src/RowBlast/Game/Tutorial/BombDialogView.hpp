@@ -22,7 +22,7 @@ namespace RowBlast {
     public:
         BombDialogView(Pht::IEngine& engine, const CommonResources& commonResources);
 
-        void Init(Pht::Scene& scene);
+        void SetUp(Pht::Scene& scene);
         void Update();
         
         const MenuButton& GetPlayButton() const {

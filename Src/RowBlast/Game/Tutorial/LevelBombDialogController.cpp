@@ -14,11 +14,11 @@ LevelBombDialogController::LevelBombDialogController(Pht::IEngine& engine,
     mView {engine, commonResources},
     mSlidingMenuAnimation {engine, mView} {}
 
-void LevelBombDialogController::Init(Pht::Scene& scene) {
-    mView.Init(scene);
-    mSlidingMenuAnimation.Init(SlidingMenuAnimation::UpdateFade::Yes,
-                               SlidingMenuAnimation::SlideDirection::Scale,
-                               SlidingMenuAnimation::UpdatePosition::No);
+void LevelBombDialogController::SetUp(Pht::Scene& scene) {
+    mView.SetUp(scene);
+    mSlidingMenuAnimation.SetUp(SlidingMenuAnimation::UpdateFade::Yes,
+                                SlidingMenuAnimation::SlideDirection::Scale,
+                                SlidingMenuAnimation::UpdatePosition::No);
 }
 
 void LevelBombDialogController::SetFadeEffect(Pht::FadeEffect& fadeEffect) {

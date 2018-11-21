@@ -15,10 +15,10 @@ StoreMenuController::StoreMenuController(Pht::IEngine& engine,
     mView {engine, commonResources, potentiallyZoomedScreen},
     mSlidingMenuAnimation {engine, mView} {}
 
-void StoreMenuController::Init() {
-    mView.Init();
-    mSlidingMenuAnimation.Init(SlidingMenuAnimation::UpdateFade::Yes,
-                               SlidingMenuAnimation::SlideDirection::Left);
+void StoreMenuController::SetUp() {
+    mView.SetUp();
+    mSlidingMenuAnimation.SetUp(SlidingMenuAnimation::UpdateFade::Yes,
+                                SlidingMenuAnimation::SlideDirection::Left);
 }
 
 void StoreMenuController::SetFadeEffect(Pht::FadeEffect& fadeEffect) {

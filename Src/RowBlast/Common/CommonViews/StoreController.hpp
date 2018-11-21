@@ -26,9 +26,10 @@ namespace RowBlast {
             Close
         };
         
-        enum class Trigger {
-            MapHud,
-            OutOfMovesDialog
+        enum class TriggerProduct {
+            Coins,
+            Moves,
+            Lives
         };
         
         StoreController(Pht::IEngine& engine,
@@ -36,7 +37,7 @@ namespace RowBlast {
                         SceneId sceneId);
         
         void Init(Pht::SceneObject& parentObject);
-        void StartPurchaseFlow(Trigger trigger);
+        void StartPurchaseFlow(TriggerProduct triggerProduct);
         Result Update();
 
     private:
@@ -45,7 +46,7 @@ namespace RowBlast {
             None
         };
 
-        void UpdateStoreMenu();
+        Result UpdateStoreMenu();
         void SetActiveViewController(ViewController viewController);
         
         enum class State {
@@ -54,7 +55,7 @@ namespace RowBlast {
         };
 
         State mState {State::Idle};
-        Trigger mTrigger;
+        TriggerProduct mTriggerProduct;
         Pht::FadeEffect mFadeEffect;
         GuiViewManager mViewManager;
         StoreMenuController mStoreMenuController;

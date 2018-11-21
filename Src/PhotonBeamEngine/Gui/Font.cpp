@@ -33,7 +33,7 @@ Font::Font(const std::string& filename, int size) {
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
     
     // Load the first printable set of the ASCII table.
-    for (char c = firstPrintableCharacter; c < lastPrintableCharacter; c++) {
+    for (char c {firstPrintableCharacter}; c < lastPrintableCharacter; c++) {
         if (FT_Load_Char(face, c, FT_LOAD_RENDER)) {
             std::cout << "ERROR::FREETYTPE: Failed to load Glyph" << std::endl;
             continue;

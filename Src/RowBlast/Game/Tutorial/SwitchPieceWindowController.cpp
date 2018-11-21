@@ -7,10 +7,10 @@ SwitchPieceWindowController::SwitchPieceWindowController(Pht::IEngine& engine,
     mView {commonResources},
     mSlidingMenuAnimation {engine, mView} {}
 
-void SwitchPieceWindowController::Init() {
-    mSlidingMenuAnimation.Init(SlidingMenuAnimation::UpdateFade::No,
-                               SlidingMenuAnimation::SlideDirection::Scale,
-                               SlidingMenuAnimation::UpdatePosition::No);
+void SwitchPieceWindowController::SetUp() {
+    mSlidingMenuAnimation.SetUp(SlidingMenuAnimation::UpdateFade::No,
+                                SlidingMenuAnimation::SlideDirection::Scale,
+                                SlidingMenuAnimation::UpdatePosition::No);
 }
 
 SwitchPieceWindowController::Result SwitchPieceWindowController::Update() {

@@ -27,7 +27,7 @@ namespace RowBlast {
                                   const PieceResources& pieceResources,
                                   LevelGoalDialogView::SceneId sceneId);
         
-        void Init(const LevelInfo& levelInfo);
+        void SetUp(const LevelInfo& levelInfo);
         void SetFadeEffect(Pht::FadeEffect& fadeEffect);
         Result Update();
         

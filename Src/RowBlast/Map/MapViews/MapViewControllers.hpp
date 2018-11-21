@@ -9,7 +9,6 @@
 #include "LevelGoalDialogController.hpp"
 #include "SettingsMenuController.hpp"
 #include "NoLivesDialogController.hpp"
-#include "StoreMenuController.hpp"
 #include "GuiViewManager.hpp"
 
 namespace Pht {
@@ -29,7 +28,7 @@ namespace RowBlast {
             LevelGoalDialog,
             NoLivesDialog,
             SettingsMenu,
-            StoreMenu
+            None
         };
         
         MapViewControllers(Pht::IEngine& engine,
@@ -58,10 +57,6 @@ namespace RowBlast {
             return mSettingsMenuController;
         }
 
-        StoreMenuController& GetStoreMenuController() {
-            return mStoreMenuController;
-        }
-
     private:
         MapScene& mScene;
         Pht::FadeEffect mFadeEffect;
@@ -70,7 +65,6 @@ namespace RowBlast {
         LevelGoalDialogController mLevelGoalDialogController;
         NoLivesDialogController mNoLivesDialogController;
         SettingsMenuController mSettingsMenuController;
-        StoreMenuController mStoreMenuController;
     };
 }
 

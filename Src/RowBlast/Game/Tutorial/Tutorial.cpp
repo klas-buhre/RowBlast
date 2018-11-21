@@ -77,11 +77,11 @@ void Tutorial::Init(const Level& level) {
     uiViewContainer.AddChild(mFadeEffect.GetSceneObject());
 
     mViewManager.Init(uiViewContainer);
-    SetActiveController(Controller::None);
+    SetActiveViewController(Controller::None);
 }
 
-void Tutorial::SetActiveController(Controller controller) {
-    mActiveController = controller;
+void Tutorial::SetActiveViewController(Controller controller) {
+    mActiveViewController = controller;
 
     if (controller == Controller::None) {
         mViewManager.DeactivateAllViews();
@@ -97,29 +97,29 @@ void Tutorial::Update() {
     
     mHandAnimation.Update();
 
-    switch (mActiveController) {
+    switch (mActiveViewController) {
         case Controller::PlacePieceWindow:
             if (mPlacePieceWindowController.Update() == PlacePieceWindowController::Result::Done) {
-                SetActiveController(Controller::FillRowsWindow);
-                mFillRowsWindowController.Init();
+                SetActiveViewController(Controller::FillRowsWindow);
+                mFillRowsWindowController.SetUp();
                 mHandAnimation.Start(fillRowsHandPosition, 45.0f);
             }
             break;
         case Controller::FillRowsWindow:
             if (mFillRowsWindowController.Update() == FillRowsWindowController::Result::Done) {
-                SetActiveController(Controller::SwitchPieceWindow);
-                mSwitchPieceWindowController.Init();
+                SetActiveViewController(Controller::SwitchPieceWindow);
+                mSwitchPieceWindowController.SetUp();
                 mHandAnimation.Start(switchPieceHandPosition, -180.0f);
             }
             break;
         case Controller::SwitchPieceWindow:
             if (mSwitchPieceWindowController.Update() == SwitchPieceWindowController::Result::Done) {
-                SetActiveController(Controller::None);
+                SetActiveViewController(Controller::None);
             }
             break;
         case Controller::OtherMovesWindow:
             if (mOtherMovesWindowController.Update() == OtherMovesWindowController::Result::Done) {
-                SetActiveController(Controller::None);
+                SetActiveViewController(Controller::None);
             }
             break;
         case Controller::CascadingDialog:
@@ -133,34 +133,34 @@ void Tutorial::Update() {
 }
 
 Tutorial::Result Tutorial::UpdateDialogs() {
-    switch (mActiveController) {
+    switch (mActiveViewController) {
         case Controller::CascadingDialog:
             if (mCascadingDialogController.Update() == CascadingDialogController::Result::Play) {
-                SetActiveController(Controller::None);
+                SetActiveViewController(Controller::None);
                 return Result::Play;
             }
             break;
         case Controller::SameColorDialog:
             if (mSameColorDialogController.Update() == SameColorDialogController::Result::Play) {
-                SetActiveController(Controller::None);
+                SetActiveViewController(Controller::None);
                 return Result::Play;
             }
             break;
         case Controller::LaserDialog:
             if (mLaserDialogController.Update() == LaserDialogController::Result::Play) {
-                SetActiveController(Controller::None);
+                SetActiveViewController(Controller::None);
                 return Result::Play;
             }
             break;
         case Controller::BombDialog:
             if (mBombDialogController.Update() == BombDialogController::Result::Play) {
-                SetActiveController(Controller::None);
+                SetActiveViewController(Controller::None);
                 return Result::Play;
             }
             break;
         case Controller::LevelBombDialog:
             if (mLevelBombDialogController.Update() == LevelBombDialogController::Result::Play) {
-                SetActiveController(Controller::None);
+                SetActiveViewController(Controller::None);
                 return Result::Play;
             }
             break;
@@ -174,24 +174,24 @@ Tutorial::Result Tutorial::UpdateDialogs() {
 Tutorial::Result Tutorial::OnLevelStart() {
     switch (mLevel->GetId()) {
         case 3:
-            SetActiveController(Controller::CascadingDialog);
-            mCascadingDialogController.Init();
+            SetActiveViewController(Controller::CascadingDialog);
+            mCascadingDialogController.SetUp();
             return Result::TutorialHasFocus;
         case 4:
-            SetActiveController(Controller::SameColorDialog);
-            mSameColorDialogController.Init();
+            SetActiveViewController(Controller::SameColorDialog);
+            mSameColorDialogController.SetUp();
             return Result::TutorialHasFocus;
         case 6:
-            SetActiveController(Controller::LaserDialog);
-            mLaserDialogController.Init(mScene.GetScene());
+            SetActiveViewController(Controller::LaserDialog);
+            mLaserDialogController.SetUp(mScene.GetScene());
             return Result::TutorialHasFocus;
         case 7:
-            SetActiveController(Controller::BombDialog);
-            mBombDialogController.Init(mScene.GetScene());
+            SetActiveViewController(Controller::BombDialog);
+            mBombDialogController.SetUp(mScene.GetScene());
             return Result::TutorialHasFocus;
         case 14:
-            SetActiveController(Controller::LevelBombDialog);
-            mLevelBombDialogController.Init(mScene.GetScene());
+            SetActiveViewController(Controller::LevelBombDialog);
+            mLevelBombDialogController.SetUp(mScene.GetScene());
             return Result::TutorialHasFocus;
         default:
             break;
@@ -236,8 +236,8 @@ void Tutorial::OnNewMove(int numMovesUsedIncludingCurrent) {
 void Tutorial::OnNewMoveFirstLevel(int numMovesUsedIncludingCurrent) {
     switch (numMovesUsedIncludingCurrent) {
         case 1:
-            SetActiveController(Controller::PlacePieceWindow);
-            mPlacePieceWindowController.Init();
+            SetActiveViewController(Controller::PlacePieceWindow);
+            mPlacePieceWindowController.SetUp();
             mHandAnimation.Start(placePieceHandPosition, -45.0f);
             break;
         case 2:
@@ -247,8 +247,8 @@ void Tutorial::OnNewMoveFirstLevel(int numMovesUsedIncludingCurrent) {
             mFillRowsWindowController.Close();
             break;
         case 4:
-            SetActiveController(Controller::SwitchPieceWindow);
-            mSwitchPieceWindowController.Init();
+            SetActiveViewController(Controller::SwitchPieceWindow);
+            mSwitchPieceWindowController.SetUp();
             mHandAnimation.Start(switchPieceHandPosition, -180.0f);
             break;
         default:
@@ -259,13 +259,13 @@ void Tutorial::OnNewMoveFirstLevel(int numMovesUsedIncludingCurrent) {
 void Tutorial::OnNewMoveSecondLevel(int numMovesUsedIncludingCurrent) {
     switch (numMovesUsedIncludingCurrent) {
         case 1:
-            SetActiveController(Controller::OtherMovesWindow);
-            mOtherMovesWindowController.Init();
+            SetActiveViewController(Controller::OtherMovesWindow);
+            mOtherMovesWindowController.SetUp();
             mHandAnimation.Start(otherMovesHandPosition1, 45.0f);
             break;
         case 2:
-            SetActiveController(Controller::OtherMovesWindow);
-            mOtherMovesWindowController.Init();
+            SetActiveViewController(Controller::OtherMovesWindow);
+            mOtherMovesWindowController.SetUp();
             mHandAnimation.Start(otherMovesHandPosition2, 90.0f);
             break;
         default:
@@ -294,7 +294,7 @@ void Tutorial::OnSwitchPiece(int numMovesUsedIncludingCurrent, const Piece& piec
                 assert(numMovesUsedIncludingCurrent <= predeterminedMoves.size());
                 auto& predeterminedMove {predeterminedMoves[numMovesUsedIncludingCurrent - 1]};
 
-                if (mActiveController == Controller::SwitchPieceWindow) {
+                if (mActiveViewController == Controller::SwitchPieceWindow) {
                     if (&predeterminedMove.mPieceType == &pieceType) {
                         mSwitchPieceWindowController.Close();
                         mHandAnimation.Stop();
@@ -312,8 +312,8 @@ void Tutorial::OnSwitchPiece(int numMovesUsedIncludingCurrent, const Piece& piec
                     }
                 } else {
                     if (&predeterminedMove.mPieceType != &pieceType) {
-                        SetActiveController(Controller::SwitchPieceWindow);
-                        mSwitchPieceWindowController.Init();
+                        SetActiveViewController(Controller::SwitchPieceWindow);
+                        mSwitchPieceWindowController.SetUp();
                         mHandAnimation.Start(switchPieceHandPosition, -180.0f);
                     }
                 }
@@ -355,8 +355,8 @@ void Tutorial::OnChangeVisibleMoves(int numMovesUsedIncludingCurrent, const Move
                             break;
                     }
                 } else {
-                    SetActiveController(Controller::OtherMovesWindow);
-                    mOtherMovesWindowController.Init();
+                    SetActiveViewController(Controller::OtherMovesWindow);
+                    mOtherMovesWindowController.SetUp();
                     
                     switch (numMovesUsedIncludingCurrent) {
                         case 1:

@@ -18,17 +18,17 @@ LevelGoalDialogController::LevelGoalDialogController(Pht::IEngine& engine,
     mSlidingMenuAnimation {engine, mView},
     mSceneId {sceneId} {}
 
-void LevelGoalDialogController::Init(const LevelInfo& levelInfo) {
-    mView.Init(levelInfo);
+void LevelGoalDialogController::SetUp(const LevelInfo& levelInfo) {
+    mView.SetUp(levelInfo);
     
     switch (mSceneId) {
         case LevelGoalDialogView::SceneId::Map:
-            mSlidingMenuAnimation.Init(SlidingMenuAnimation::UpdateFade::Yes,
-                                       SlidingMenuAnimation::SlideDirection::Scale);
+            mSlidingMenuAnimation.SetUp(SlidingMenuAnimation::UpdateFade::Yes,
+                                        SlidingMenuAnimation::SlideDirection::Scale);
             break;
         case LevelGoalDialogView::SceneId::Game:
-            mSlidingMenuAnimation.Init(SlidingMenuAnimation::UpdateFade::No,
-                                       SlidingMenuAnimation::SlideDirection::Left);
+            mSlidingMenuAnimation.SetUp(SlidingMenuAnimation::UpdateFade::No,
+                                        SlidingMenuAnimation::SlideDirection::Left);
             break;
     }
 }

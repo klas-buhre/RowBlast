@@ -4,6 +4,7 @@
 // Game includes.
 #include "MapScene.hpp"
 #include "MapViewControllers.hpp"
+#include "StoreController.hpp"
 #include "Ufo.hpp"
 #include "UfoAnimation.hpp"
 
@@ -48,7 +49,7 @@ namespace RowBlast {
             LevelGoalDialog,
             NoLivesDialog,
             SettingsMenu,
-            StoreMenu
+            Store
         };
     
         MapController(Pht::IEngine& engine,
@@ -78,7 +79,7 @@ namespace RowBlast {
         Command UpdateLevelGoalDialog();
         void UpdateNoLivesDialog();
         void UpdateSettingsMenu();
-        void UpdateStoreMenu();
+        void UpdateStore();
         Command HandleInput();
         void UpdateTouchingState(const Pht::TouchEvent& touch);
         Command HandleTouch(const Pht::TouchEvent& touch);
@@ -87,7 +88,7 @@ namespace RowBlast {
         void StartPan(const Pht::TouchEvent& touch);
         void UpdateCamera();
         void GoToSettingsMenuState();
-        void GoToStoreMenuState();
+        void GoToStoreState(StoreController::TriggerProduct triggerProduct);
         void GoToMapState();
         
         Pht::IEngine& mEngine;
@@ -99,6 +100,7 @@ namespace RowBlast {
         Ufo mUfo;
         UfoAnimation mUfoAnimation;
         MapViewControllers mMapViewControllers;
+        StoreController mStoreController;
         float mCameraXPositionAtPanBegin {0.0f};
         Pht::Vec2 mTouchLocationAtPanBegin {0.0f, 0.0f};
         float mCameraXVelocity {0.0f};

@@ -17,7 +17,7 @@ namespace RowBlast {
         
         OtherMovesWindowController(Pht::IEngine& engine, const CommonResources& commonResources);
         
-        void Init();
+        void SetUp();
         Result Update();
         void Close();
 

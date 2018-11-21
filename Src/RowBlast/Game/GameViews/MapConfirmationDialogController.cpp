@@ -14,9 +14,9 @@ MapConfirmationDialogController(Pht::IEngine& engine, const CommonResources& com
     mView {engine, commonResources},
     mSlidingMenuAnimation {engine, mView} {}
 
-void MapConfirmationDialogController::Init() {
-    mSlidingMenuAnimation.Init(SlidingMenuAnimation::UpdateFade::No,
-                               SlidingMenuAnimation::SlideDirection::Scale);
+void MapConfirmationDialogController::SetUp() {
+    mSlidingMenuAnimation.SetUp(SlidingMenuAnimation::UpdateFade::No,
+                                SlidingMenuAnimation::SlideDirection::Scale);
 }
 
 void MapConfirmationDialogController::SetFadeEffect(Pht::FadeEffect& fadeEffect) {

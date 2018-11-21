@@ -7,10 +7,10 @@ OtherMovesWindowController::OtherMovesWindowController(Pht::IEngine& engine,
     mView {commonResources},
     mSlidingMenuAnimation {engine, mView} {}
 
-void OtherMovesWindowController::Init() {
-    mSlidingMenuAnimation.Init(SlidingMenuAnimation::UpdateFade::No,
-                               SlidingMenuAnimation::SlideDirection::Scale,
-                               SlidingMenuAnimation::UpdatePosition::No);
+void OtherMovesWindowController::SetUp() {
+    mSlidingMenuAnimation.SetUp(SlidingMenuAnimation::UpdateFade::No,
+                                SlidingMenuAnimation::SlideDirection::Scale,
+                                SlidingMenuAnimation::UpdatePosition::No);
 }
 
 OtherMovesWindowController::Result OtherMovesWindowController::Update() {

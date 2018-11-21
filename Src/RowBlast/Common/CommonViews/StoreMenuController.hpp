@@ -24,7 +24,7 @@ namespace RowBlast {
                             const CommonResources& commonResources,
                             PotentiallyZoomedScreen potentiallyZoomedScreen);
         
-        void Init();
+        void SetUp();
         void SetFadeEffect(Pht::FadeEffect& fadeEffect);
         Result Update();
         
