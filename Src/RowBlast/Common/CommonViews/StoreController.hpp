@@ -23,7 +23,7 @@ namespace RowBlast {
         
         enum class Result {
             None,
-            Close
+            Done
         };
         
         enum class TriggerProduct {

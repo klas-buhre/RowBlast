@@ -60,6 +60,10 @@ StoreController::Result StoreController::Update() {
         case State::Idle:
             break;
     }
+    
+    if (result == Result::Done) {
+        SetActiveViewController(ViewController::None);
+    }
 
     return result;
 }
@@ -71,7 +75,7 @@ StoreController::Result StoreController::UpdateStoreMenu() {
         case StoreMenuController::Result::None:
             break;
         case StoreMenuController::Result::Close:
-            result = Result::Close;
+            result = Result::Done;
             break;
     }
     

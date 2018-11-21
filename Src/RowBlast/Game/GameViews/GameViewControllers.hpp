@@ -16,7 +16,6 @@
 #include "SettingsMenuController.hpp"
 #include "NoLivesDialogController.hpp"
 #include "LevelGoalDialogController.hpp"
-#include "StoreMenuController.hpp"
 
 namespace Pht {
     class IEngine;
@@ -42,7 +41,6 @@ namespace RowBlast {
             LevelGoalDialog,
             RestartConfirmationDialog,
             MapConfirmationDialog,
-            StoreMenu,
             None
         };
         
@@ -95,10 +93,6 @@ namespace RowBlast {
         LevelGoalDialogController& GetLevelGoalDialogController() {
             return mLevelGoalDialogController;
         }
-        
-        StoreMenuController& GetStoreMenuController() {
-            return mStoreMenuController;
-        }
 
     private:
         Pht::FadeEffect mFadeEffect;
@@ -113,7 +107,6 @@ namespace RowBlast {
         SettingsMenuController mSettingsMenuController;
         NoLivesDialogController mNoLivesDialogController;
         LevelGoalDialogController mLevelGoalDialogController;
-        StoreMenuController mStoreMenuController;
     };
 }
 

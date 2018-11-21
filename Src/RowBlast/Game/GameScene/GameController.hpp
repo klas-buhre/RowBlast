@@ -21,6 +21,7 @@
 #include "Level.hpp"
 #include "PieceResources.hpp"
 #include "GameViewControllers.hpp"
+#include "StoreController.hpp"
 #include "PreviewPiecesAnimation.hpp"
 #include "SlidingTextAnimation.hpp"
 #include "ComboTextAnimation.hpp"
@@ -84,7 +85,7 @@ namespace RowBlast {
         Command UpdateInLevelCompletedState();
         Command UpdateInOutOfMovesState();
         Command UpdateOutOfMovesDialog();
-        void UpdateStoreMenu();
+        void UpdateStore();
         Command UpdateInGameOverState();
         Command UpdateGameOverDialog();
         void ChangeGameState(GameLogic::Result gameLogicResult);
@@ -96,7 +97,7 @@ namespace RowBlast {
         void GoToPausedStateLevelGoalDialog();
         void GoToPausedStateGameMenu(SlidingMenuAnimation::UpdateFade updateFade);
         void GoToOutOfMovesStateOutOfMovesDialog();
-        void GoToOutOfMovesStateStoreMenu();
+        void GoToOutOfMovesStateStore();
         void GoToGameOverStateGameOverDialog();
         void GoToGameOverStateNoLivesDialog();
         
@@ -126,7 +127,7 @@ namespace RowBlast {
         
         enum class OutOfMovesState {
             OutOfMovesDialog,
-            StoreMenu
+            Store
         };
         
         enum class GameOverState {
@@ -144,6 +145,7 @@ namespace RowBlast {
         PieceResources mPieceResources;
         GameHudRectangles mHudRectangles;
         GameViewControllers mGameViewControllers;
+        StoreController mStoreController;
         Field mField;
         CollapsingFieldAnimation mCollapsingFieldAnimation;
         FlashingBlocksAnimation mFlashingBlocksAnimation;

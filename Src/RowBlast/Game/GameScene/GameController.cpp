@@ -45,6 +45,7 @@ GameController::GameController(Pht::IEngine& engine,
         mPieceResources,
         mHudRectangles
     },
+    mStoreController {engine, commonResources, StoreController::SceneId::Game},
     mField {},
     mCollapsingFieldAnimation {mField},
     mFlashingBlocksAnimation {mField, mPieceResources},
@@ -124,6 +125,7 @@ void GameController::StartLevel(int levelId) {
     mTutorial.Init(*mLevel);
     mGameLogic.Init(*mLevel);
     mGameViewControllers.SetActiveController(GameViewControllers::None);
+    mStoreController.Init(mScene.GetUiViewsContainer());
     mBlueprintSlotsFilledAnimation.Init();
     mPieceDropParticleEffect.Init();
     mBlastRadiusAnimation.Init();
@@ -478,8 +480,8 @@ GameController::Command GameController::UpdateInOutOfMovesState() {
         case OutOfMovesState::OutOfMovesDialog:
             command = UpdateOutOfMovesDialog();
             break;
-        case OutOfMovesState::StoreMenu:
-            UpdateStoreMenu();
+        case OutOfMovesState::Store:
+            UpdateStore();
             break;
     }
     
@@ -495,7 +497,7 @@ GameController::Command GameController::UpdateOutOfMovesDialog() {
         case OutOfMovesDialogController::Result::None:
             break;
         case OutOfMovesDialogController::Result::PlayOn:
-            GoToOutOfMovesStateStoreMenu();
+            GoToOutOfMovesStateStore();
         /*
             mGameLogic.SetMovesLeft(5);
             GoToPlayingState();
@@ -510,11 +512,11 @@ GameController::Command GameController::UpdateOutOfMovesDialog() {
     return command;
 }
 
-void GameController::UpdateStoreMenu() {
-    switch (mGameViewControllers.GetStoreMenuController().Update()) {
-        case StoreMenuController::Result::None:
+void GameController::UpdateStore() {
+    switch (mStoreController.Update()) {
+        case StoreController::Result::None:
             break;
-        case StoreMenuController::Result::Close:
+        case StoreController::Result::Done:
             GoToOutOfMovesStateOutOfMovesDialog();
             break;
     }
@@ -612,10 +614,10 @@ void GameController::GoToOutOfMovesStateOutOfMovesDialog() {
     mGameViewControllers.GetOutOfMovesDialogController().SetUp();
 }
 
-void GameController::GoToOutOfMovesStateStoreMenu() {
-    mOutOfMovesState = OutOfMovesState::StoreMenu;
-    mGameViewControllers.SetActiveController(GameViewControllers::StoreMenu);
-    mGameViewControllers.GetStoreMenuController().SetUp();
+void GameController::GoToOutOfMovesStateStore() {
+    mOutOfMovesState = OutOfMovesState::Store;
+    mGameViewControllers.SetActiveController(GameViewControllers::None);
+    mStoreController.StartPurchaseFlow(StoreController::TriggerProduct::Moves);
 }
 
 void GameController::GoToGameOverStateGameOverDialog() {

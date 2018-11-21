@@ -178,7 +178,7 @@ void MapController::UpdateStore() {
     switch (mStoreController.Update()) {
         case StoreController::Result::None:
             break;
-        case StoreController::Result::Close:
+        case StoreController::Result::Done:
             GoToMapState();
             break;
     }
