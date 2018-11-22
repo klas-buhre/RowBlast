@@ -7,6 +7,7 @@
 // Game includes.
 #include "GuiViewManager.hpp"
 #include "StoreMenuController.hpp"
+#include "PurchaseUnsuccessfulDialogController.hpp"
 
 namespace Pht {
     class IEngine;
@@ -43,14 +44,19 @@ namespace RowBlast {
     private:
         enum class ViewController {
             StoreMenu,
+            PurchaseUnsuccessfulDialog,
             None
         };
 
         Result UpdateStoreMenu();
+        void UpdatePurchaseUnsuccessfulDialog();
         void SetActiveViewController(ViewController viewController);
+        void GoToStoreMenuState(SlidingMenuAnimation::UpdateFade updateFade);
+        void GoToPurchaseUnsuccessfulDialogState();
         
         enum class State {
             StoreMenu,
+            PurchaseUnsuccessfulDialog,
             Idle
         };
 
@@ -59,6 +65,7 @@ namespace RowBlast {
         Pht::FadeEffect mFadeEffect;
         GuiViewManager mViewManager;
         StoreMenuController mStoreMenuController;
+        PurchaseUnsuccessfulDialogController mPurchaseUnsuccessfulDialogController;
     };
 }
 

@@ -172,7 +172,7 @@ namespace {
     const std::vector<BackgroundLight> backgroundLights {
         BackgroundLight {
             .mDirection = {-1.0f, 1.0f, 1.0f},
-            .mIntensity = 1.23f,
+            .mIntensity = 1.21f,
             .mSun = Pht::Optional<Sun>{}
         }
     };

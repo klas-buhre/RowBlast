@@ -37,8 +37,7 @@ Ongoing tasks:
     -Store GUI.
       -Store controller that controls the other store view controllers.
       -Store views.
-        -Implement Purchase Unsuccessful dialog. Says "No money was removed from your account.".
-         Blue OK button and normal close button. Goes back to store menu.
+        -Should be the same slide directions as for game menues.
         -Implement Purchase Successful dialog. Says "You have received X gold coins.". Green OK
          button and normal close button. If store opened from pressing add coins in map hud then go
          back to map. If store opened from out of moves dialog and there is enough coins then go

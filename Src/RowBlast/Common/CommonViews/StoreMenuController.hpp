@@ -17,14 +17,15 @@ namespace RowBlast {
     public:
         enum class Result {
             None,
-            Close
+            Close,
+            PurchaseCoins
         };
         
         StoreMenuController(Pht::IEngine& engine,
                             const CommonResources& commonResources,
                             PotentiallyZoomedScreen potentiallyZoomedScreen);
         
-        void SetUp();
+        void SetUp(SlidingMenuAnimation::UpdateFade updateFade);
         void SetFadeEffect(Pht::FadeEffect& fadeEffect);
         Result Update();
         

@@ -39,6 +39,8 @@
 		624C72E52177AB260006068B /* shield.png in Resources */ = {isa = PBXBuildFile; fileRef = 624C72E42177AB250006068B /* shield.png */; };
 		624C9DDE21A1A908000FB5E1 /* coin_pile_4120.obj in Resources */ = {isa = PBXBuildFile; fileRef = 624C9DDD21A1A907000FB5E1 /* coin_pile_4120.obj */; };
 		624C9DE121A47249000FB5E1 /* StoreController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 624C9DDF21A47249000FB5E1 /* StoreController.cpp */; };
+		624C9DE421A6C0FA000FB5E1 /* PurchaseUnsuccessfulDialogView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 624C9DE221A6C0FA000FB5E1 /* PurchaseUnsuccessfulDialogView.cpp */; };
+		624C9DE721A6C395000FB5E1 /* PurchaseUnsuccessfulDialogController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 624C9DE521A6C395000FB5E1 /* PurchaseUnsuccessfulDialogController.cpp */; };
 		625696332182382C003A3A9D /* TitleScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 625694872182382B003A3A9D /* TitleScene.cpp */; };
 		625696342182382C003A3A9D /* TitleController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6256948A2182382B003A3A9D /* TitleController.cpp */; };
 		625696352182382C003A3A9D /* TitleAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6256948B2182382B003A3A9D /* TitleAnimation.cpp */; };
@@ -454,6 +456,10 @@
 		624C9DDD21A1A907000FB5E1 /* coin_pile_4120.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = coin_pile_4120.obj; sourceTree = "<group>"; };
 		624C9DDF21A47249000FB5E1 /* StoreController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = StoreController.cpp; sourceTree = "<group>"; };
 		624C9DE021A47249000FB5E1 /* StoreController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = StoreController.hpp; sourceTree = "<group>"; };
+		624C9DE221A6C0FA000FB5E1 /* PurchaseUnsuccessfulDialogView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PurchaseUnsuccessfulDialogView.cpp; sourceTree = "<group>"; };
+		624C9DE321A6C0FA000FB5E1 /* PurchaseUnsuccessfulDialogView.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PurchaseUnsuccessfulDialogView.hpp; sourceTree = "<group>"; };
+		624C9DE521A6C395000FB5E1 /* PurchaseUnsuccessfulDialogController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PurchaseUnsuccessfulDialogController.cpp; sourceTree = "<group>"; };
+		624C9DE621A6C395000FB5E1 /* PurchaseUnsuccessfulDialogController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PurchaseUnsuccessfulDialogController.hpp; sourceTree = "<group>"; };
 		625694862182382B003A3A9D /* TitleAnimation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = TitleAnimation.hpp; sourceTree = "<group>"; };
 		625694872182382B003A3A9D /* TitleScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TitleScene.cpp; sourceTree = "<group>"; };
 		625694882182382B003A3A9D /* TitleController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = TitleController.hpp; sourceTree = "<group>"; };
@@ -1674,6 +1680,10 @@
 				6238F627219C89590008A0CF /* StoreMenuController.hpp */,
 				6238F623219C885B0008A0CF /* StoreMenuView.cpp */,
 				6238F624219C885B0008A0CF /* StoreMenuView.hpp */,
+				624C9DE221A6C0FA000FB5E1 /* PurchaseUnsuccessfulDialogView.cpp */,
+				624C9DE321A6C0FA000FB5E1 /* PurchaseUnsuccessfulDialogView.hpp */,
+				624C9DE521A6C395000FB5E1 /* PurchaseUnsuccessfulDialogController.cpp */,
+				624C9DE621A6C395000FB5E1 /* PurchaseUnsuccessfulDialogController.hpp */,
 			);
 			path = CommonViews;
 			sourceTree = "<group>";
@@ -2746,6 +2756,7 @@
 				625696992182382C003A3A9D /* FallingPieceAnimation.cpp in Sources */,
 				625698492182392C003A3A9D /* SceneResources.cpp in Sources */,
 				625696832182382C003A3A9D /* TPiece.cpp in Sources */,
+				624C9DE721A6C395000FB5E1 /* PurchaseUnsuccessfulDialogController.cpp in Sources */,
 				625696AE2182382C003A3A9D /* NoLivesDialogController.cpp in Sources */,
 				625696632182382C003A3A9D /* PieceResources.cpp in Sources */,
 				625698062182392C003A3A9D /* CylinderMesh.cpp in Sources */,
@@ -2881,6 +2892,7 @@
 				625696B22182382C003A3A9D /* SettingsMenuView.cpp in Sources */,
 				625696672182382C003A3A9D /* GameScene.cpp in Sources */,
 				625696662182382C003A3A9D /* GameController.cpp in Sources */,
+				624C9DE421A6C0FA000FB5E1 /* PurchaseUnsuccessfulDialogView.cpp in Sources */,
 				625696872182382C003A3A9D /* FPiece.cpp in Sources */,
 				625696AA2182382C003A3A9D /* MenuWindow.cpp in Sources */,
 				625698072182392C003A3A9D /* BoxMesh.cpp in Sources */,

@@ -15,10 +15,9 @@ StoreMenuController::StoreMenuController(Pht::IEngine& engine,
     mView {engine, commonResources, potentiallyZoomedScreen},
     mSlidingMenuAnimation {engine, mView} {}
 
-void StoreMenuController::SetUp() {
+void StoreMenuController::SetUp(SlidingMenuAnimation::UpdateFade updateFade) {
     mView.SetUp();
-    mSlidingMenuAnimation.SetUp(SlidingMenuAnimation::UpdateFade::Yes,
-                                SlidingMenuAnimation::SlideDirection::Left);
+    mSlidingMenuAnimation.SetUp(updateFade, SlidingMenuAnimation::SlideDirection::Left);
 }
 
 void StoreMenuController::SetFadeEffect(Pht::FadeEffect& fadeEffect) {
@@ -59,7 +58,10 @@ StoreMenuController::Result StoreMenuController::OnTouch(const Pht::TouchEvent& 
     
     for (auto& product: mView.GetProducts()) {
         if (product.mButton->IsClicked(touchEvent)) {
-        
+            mDeferredResult = Result::PurchaseCoins;
+            mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::No,
+                                                SlidingMenuAnimation::SlideDirection::Right);
+            return Result::None;
         }
     }
     
