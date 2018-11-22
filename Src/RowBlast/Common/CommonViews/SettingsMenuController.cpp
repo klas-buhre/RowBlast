@@ -28,14 +28,8 @@ void SettingsMenuController::SetUp(SlidingMenuAnimation::UpdateFade updateFade,
     } else {
         mView.DisableControlsButton();
     }
-    
-    auto slideInDirection {
-        updateFade == SlidingMenuAnimation::UpdateFade::Yes ?
-            SlidingMenuAnimation::SlideDirection::Right :
-            SlidingMenuAnimation::SlideDirection::Left
-    };
 
-    mSlidingMenuAnimation.SetUp(updateFade, slideInDirection);
+    mSlidingMenuAnimation.SetUp(updateFade, SlidingMenuAnimation::SlideDirection::Left);
     UpdateViewToReflectSettings(isGestureControlsAllowed);
 }
 
@@ -91,14 +85,9 @@ SettingsMenuController::Result SettingsMenuController::OnTouch(const Pht::TouchE
     }
 
     if (mView.GetBackButton().IsClicked(touchEvent)) {
-        auto slideOutDirection {
-            mUpdateFade == SlidingMenuAnimation::UpdateFade::Yes ?
-                SlidingMenuAnimation::SlideDirection::Left :
-                SlidingMenuAnimation::SlideDirection::Right
-        };
-
         mDeferredResult = Result::GoBack;
-        mSlidingMenuAnimation.StartSlideOut(mUpdateFade, slideOutDirection);
+        mSlidingMenuAnimation.StartSlideOut(mUpdateFade,
+                                            SlidingMenuAnimation::SlideDirection::Right);
     }
     
     return Result::None;

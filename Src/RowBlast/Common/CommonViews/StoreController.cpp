@@ -51,7 +51,8 @@ void StoreController::Init(Pht::SceneObject& parentObject) {
 
 void StoreController::StartPurchaseFlow(TriggerProduct triggerProduct) {
     mTriggerProduct = triggerProduct;
-    GoToStoreMenuState(SlidingMenuAnimation::UpdateFade::Yes);
+    GoToStoreMenuState(SlidingMenuAnimation::UpdateFade::Yes,
+                       SlidingMenuAnimation::SlideDirection::Left);
 }
 
 StoreController::Result StoreController::Update() {
@@ -97,7 +98,8 @@ void StoreController::UpdatePurchaseUnsuccessfulDialog() {
         case PurchaseUnsuccessfulDialogController::Result::None:
             break;
         case PurchaseUnsuccessfulDialogController::Result::Close:
-            GoToStoreMenuState(SlidingMenuAnimation::UpdateFade::No);
+            GoToStoreMenuState(SlidingMenuAnimation::UpdateFade::No,
+                               SlidingMenuAnimation::SlideDirection::Right);
             break;
     }
 }
@@ -110,10 +112,11 @@ void StoreController::SetActiveViewController(ViewController viewController) {
     }
 }
 
-void StoreController::GoToStoreMenuState(SlidingMenuAnimation::UpdateFade updateFade) {
+void StoreController::GoToStoreMenuState(SlidingMenuAnimation::UpdateFade updateFade,
+                                         SlidingMenuAnimation::SlideDirection slideDirection) {
     mState = State::StoreMenu;
     SetActiveViewController(ViewController::StoreMenu);
-    mStoreMenuController.SetUp(updateFade);
+    mStoreMenuController.SetUp(updateFade, slideDirection);
 }
 
 void StoreController::GoToPurchaseUnsuccessfulDialogState() {

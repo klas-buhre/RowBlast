@@ -55,7 +55,7 @@ RestartConfirmationDialogController::OnTouch(const Pht::TouchEvent& touchEvent) 
         if (mUserServices.GetLifeService().GetNumLives() == 0) {
             mDeferredResult = Result::RestartLevel;
             mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::Yes,
-                                                SlidingMenuAnimation::SlideDirection::Right);
+                                                SlidingMenuAnimation::SlideDirection::Left);
         } else {
             return Result::RestartLevel;
         }

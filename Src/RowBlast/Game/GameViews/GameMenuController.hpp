@@ -28,7 +28,9 @@ namespace RowBlast {
         
         GameMenuController(Pht::IEngine& engine, const CommonResources& commonResources);
         
-        void SetUp(SlidingMenuAnimation::UpdateFade updateFade, bool isUndoMovePossible);
+        void SetUp(SlidingMenuAnimation::UpdateFade updateFade,
+                   SlidingMenuAnimation::SlideDirection slideDirection,
+                   bool isUndoMovePossible);
         void SetFadeEffect(Pht::FadeEffect& fadeEffect);
         Result Update();
         

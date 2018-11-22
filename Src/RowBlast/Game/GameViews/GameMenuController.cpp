@@ -20,8 +20,9 @@ void GameMenuController::SetFadeEffect(Pht::FadeEffect& fadeEffect) {
 }
 
 void GameMenuController::SetUp(SlidingMenuAnimation::UpdateFade updateFade,
+                               SlidingMenuAnimation::SlideDirection slideDirection,
                                bool isUndoMovePossible) {
-    mSlidingMenuAnimation.SetUp(updateFade, SlidingMenuAnimation::SlideDirection::Right);
+    mSlidingMenuAnimation.SetUp(updateFade, slideDirection);
     
     if (isUndoMovePossible) {
         mView.EnableUndoButton();
@@ -55,14 +56,16 @@ GameMenuController::Result GameMenuController::HandleInput() {
 GameMenuController::Result GameMenuController::OnTouch(const Pht::TouchEvent& touchEvent) {
     if (mView.GetResumeButton().IsClicked(touchEvent)) {
         mDeferredResult = Result::ResumeGame;
-        mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::Yes);
+        mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::Yes,
+                                            SlidingMenuAnimation::SlideDirection::Right);
         return Result::None;
     }
 
     if (mView.IsUndoButtonEnabled()) {
         if (mView.GetUndoButton().IsClicked(touchEvent)) {
             mDeferredResult = Result::ResumeGame;
-            mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::Yes);
+            mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::Yes,
+                                                SlidingMenuAnimation::SlideDirection::Right);
             return Result::UndoMove;
         }
     }

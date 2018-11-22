@@ -51,7 +51,8 @@ namespace RowBlast {
         Result UpdateStoreMenu();
         void UpdatePurchaseUnsuccessfulDialog();
         void SetActiveViewController(ViewController viewController);
-        void GoToStoreMenuState(SlidingMenuAnimation::UpdateFade updateFade);
+        void GoToStoreMenuState(SlidingMenuAnimation::UpdateFade updateFade,
+                                SlidingMenuAnimation::SlideDirection slideDirection);
         void GoToPurchaseUnsuccessfulDialogState();
         
         enum class State {

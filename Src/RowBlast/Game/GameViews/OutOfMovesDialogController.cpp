@@ -14,9 +14,8 @@ OutOfMovesDialogController::OutOfMovesDialogController(Pht::IEngine& engine,
     mView {engine, commonResources},
     mSlidingMenuAnimation {engine, mView} {}
 
-void OutOfMovesDialogController::SetUp() {
-    mSlidingMenuAnimation.SetUp(SlidingMenuAnimation::UpdateFade::No,
-                                SlidingMenuAnimation::SlideDirection::Up);
+void OutOfMovesDialogController::SetUp(SlidingMenuAnimation::SlideDirection slideDirection) {
+    mSlidingMenuAnimation.SetUp(SlidingMenuAnimation::UpdateFade::No, slideDirection);
 }
 
 OutOfMovesDialogController::Result OutOfMovesDialogController::Update() {
@@ -49,7 +48,7 @@ OutOfMovesDialogController::Result OutOfMovesDialogController::OnTouch(const Pht
     if (mView.GetPlayOnButton().IsClicked(touchEvent)) {
         mDeferredResult = Result::PlayOn;
         mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::No,
-                                            SlidingMenuAnimation::SlideDirection::Down);
+                                            SlidingMenuAnimation::SlideDirection::Left);
     }
     
     return Result::None;

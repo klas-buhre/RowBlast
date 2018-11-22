@@ -23,7 +23,7 @@ namespace RowBlast {
         
         OutOfMovesDialogController(Pht::IEngine& engine, const CommonResources& commonResources);
         
-        void SetUp();
+        void SetUp(SlidingMenuAnimation::SlideDirection slideDirection);
         Result Update();
 
         Pht::GuiView& GetView() {

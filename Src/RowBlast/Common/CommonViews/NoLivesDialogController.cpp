@@ -20,7 +20,7 @@ NoLivesDialogController::NoLivesDialogController(Pht::IEngine& engine,
 
 void NoLivesDialogController::SetUp(bool shouldSlideOut) {
     mSlidingMenuAnimation.SetUp(SlidingMenuAnimation::UpdateFade::No,
-                                SlidingMenuAnimation::SlideDirection::Up);
+                                SlidingMenuAnimation::SlideDirection::Left);
     mShouldSlideOut = shouldSlideOut;
 }
 
@@ -37,7 +37,7 @@ NoLivesDialogController::Result NoLivesDialogController::Update() {
             if (mUserServices.GetLifeService().GetNumLives() > 0) {
                 mDeferredResult = Result::Close;
                 mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::No,
-                                                    SlidingMenuAnimation::SlideDirection::Down);
+                                                    SlidingMenuAnimation::SlideDirection::Left);
             }
             return HandleInput();
         case SlidingMenuAnimation::State::Done:
@@ -57,7 +57,7 @@ NoLivesDialogController::Result NoLivesDialogController::OnTouch(const Pht::Touc
         if (mShouldSlideOut) {
             mDeferredResult = Result::Close;
             mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::No,
-                                                SlidingMenuAnimation::SlideDirection::Down);
+                                                SlidingMenuAnimation::SlideDirection::Right);
             return Result::None;
         }
         
@@ -68,7 +68,7 @@ NoLivesDialogController::Result NoLivesDialogController::OnTouch(const Pht::Touc
         if (mShouldSlideOut) {
             mDeferredResult = Result::RefillLives;
             mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::No,
-                                                SlidingMenuAnimation::SlideDirection::Down);
+                                                SlidingMenuAnimation::SlideDirection::Left);
             return Result::None;
         }
         

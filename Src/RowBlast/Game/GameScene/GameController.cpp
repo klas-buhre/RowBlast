@@ -222,11 +222,12 @@ void GameController::ChangeGameState(GameLogic::Result gameLogicResult) {
     switch (gameLogicResult) {
         case GameLogic::Result::Pause:
             mState = GameState::Paused;
-            GoToPausedStateGameMenu(SlidingMenuAnimation::UpdateFade::Yes);
+            GoToPausedStateGameMenu(SlidingMenuAnimation::UpdateFade::Yes,
+                                    SlidingMenuAnimation::SlideDirection::Left);
             break;
         case GameLogic::Result::OutOfMoves:
             mState = GameState::OutOfMoves;
-            GoToOutOfMovesStateOutOfMovesDialog();
+            GoToOutOfMovesStateOutOfMovesDialog(SlidingMenuAnimation::SlideDirection::Left);
             break;
         case GameLogic::Result::GameOver:
             mState = GameState::GameOver;
@@ -307,7 +308,8 @@ void GameController::UpdateLevelGoalDialog() {
             assert(!"Unexpected result");
             break;
         case LevelGoalDialogController::Result::Close:
-            GoToPausedStateGameMenu(SlidingMenuAnimation::UpdateFade::No);
+            GoToPausedStateGameMenu(SlidingMenuAnimation::UpdateFade::No,
+                                    SlidingMenuAnimation::SlideDirection::Right);
             break;
     }
 }
@@ -317,7 +319,8 @@ void GameController::UpdateSettingsMenu() {
         case SettingsMenuController::Result::None:
             break;
         case SettingsMenuController::Result::GoBack:
-            GoToPausedStateGameMenu(SlidingMenuAnimation::UpdateFade::No);
+            GoToPausedStateGameMenu(SlidingMenuAnimation::UpdateFade::No,
+                                    SlidingMenuAnimation::SlideDirection::Right);
             break;
     }
 }
@@ -361,7 +364,8 @@ GameController::Command GameController::UpdateRestartConfirmationDialog() {
             break;
         }
         case RestartConfirmationDialogController::Result::DoNotRestartGame:
-            GoToPausedStateGameMenu(SlidingMenuAnimation::UpdateFade::No);
+            GoToPausedStateGameMenu(SlidingMenuAnimation::UpdateFade::No,
+                                    SlidingMenuAnimation::SlideDirection::Right);
             break;
     }
     
@@ -380,7 +384,8 @@ GameController::Command GameController::UpdateMapConfirmationDialog() {
             break;
         }
         case MapConfirmationDialogController::Result::DoNotGoToMap:
-            GoToPausedStateGameMenu(SlidingMenuAnimation::UpdateFade::No);
+            GoToPausedStateGameMenu(SlidingMenuAnimation::UpdateFade::No,
+                                    SlidingMenuAnimation::SlideDirection::Right);
             break;
     }
     
@@ -517,7 +522,7 @@ void GameController::UpdateStore() {
         case StoreController::Result::None:
             break;
         case StoreController::Result::Done:
-            GoToOutOfMovesStateOutOfMovesDialog();
+            GoToOutOfMovesStateOutOfMovesDialog(SlidingMenuAnimation::SlideDirection::Right);
             break;
     }
 }
@@ -600,18 +605,23 @@ void GameController::GoToPausedStateLevelGoalDialog() {
     mGameViewControllers.GetLevelGoalDialogController().SetUp(*levelInfo);
 }
 
-void GameController::GoToPausedStateGameMenu(SlidingMenuAnimation::UpdateFade updateFade) {
+void GameController::GoToPausedStateGameMenu(SlidingMenuAnimation::UpdateFade updateFade,
+                                             SlidingMenuAnimation::SlideDirection slideDirection) {
     mPausedState = PausedState::GameMenu;
     mGameViewControllers.SetActiveController(GameViewControllers::GameMenu);
+    
     auto isUndoMovePossible {mShouldUpdateGameLogic && mGameLogic.IsUndoMovePossible()};
-    mGameViewControllers.GetGameMenuController().SetUp(updateFade, isUndoMovePossible);
+    
+    mGameViewControllers.GetGameMenuController().SetUp(updateFade,
+                                                       slideDirection,
+                                                       isUndoMovePossible);
     mTutorial.OnPause();
 }
 
-void GameController::GoToOutOfMovesStateOutOfMovesDialog() {
+void GameController::GoToOutOfMovesStateOutOfMovesDialog(SlidingMenuAnimation::SlideDirection slideDirection) {
     mOutOfMovesState = OutOfMovesState::OutOfMovesDialog;
     mGameViewControllers.SetActiveController(GameViewControllers::OutOfMovesDialog);
-    mGameViewControllers.GetOutOfMovesDialogController().SetUp();
+    mGameViewControllers.GetOutOfMovesDialogController().SetUp(slideDirection);
 }
 
 void GameController::GoToOutOfMovesStateStore() {

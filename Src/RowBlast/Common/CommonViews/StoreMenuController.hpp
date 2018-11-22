@@ -25,7 +25,8 @@ namespace RowBlast {
                             const CommonResources& commonResources,
                             PotentiallyZoomedScreen potentiallyZoomedScreen);
         
-        void SetUp(SlidingMenuAnimation::UpdateFade updateFade);
+        void SetUp(SlidingMenuAnimation::UpdateFade updateFade,
+                   SlidingMenuAnimation::SlideDirection slideDirection);
         void SetFadeEffect(Pht::FadeEffect& fadeEffect);
         Result Update();
         

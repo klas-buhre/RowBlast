@@ -17,7 +17,7 @@ PurchaseUnsuccessfulDialogController::PurchaseUnsuccessfulDialogController(Pht::
 
 void PurchaseUnsuccessfulDialogController::SetUp() {
     mSlidingMenuAnimation.SetUp(SlidingMenuAnimation::UpdateFade::No,
-                                SlidingMenuAnimation::SlideDirection::Right);
+                                SlidingMenuAnimation::SlideDirection::Scale);
 }
 
 PurchaseUnsuccessfulDialogController::Result PurchaseUnsuccessfulDialogController::Update() {
@@ -46,7 +46,8 @@ PurchaseUnsuccessfulDialogController::Result
 PurchaseUnsuccessfulDialogController::OnTouch(const Pht::TouchEvent& touchEvent) {
     if (mView.GetCloseButton().IsClicked(touchEvent) || mView.GetOkButton().IsClicked(touchEvent)) {
         mDeferredResult = Result::Close;
-        mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::No);
+        mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::No,
+                                            SlidingMenuAnimation::SlideDirection::Right);
     }
 
     return Result::None;

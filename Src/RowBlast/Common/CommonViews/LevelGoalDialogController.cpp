@@ -81,7 +81,7 @@ LevelGoalDialogController::OnTouchInMapScene(const Pht::TouchEvent& touchEvent) 
     if (mView.GetCloseButton().IsClicked(touchEvent)) {
         mDeferredResult = Result::Close;
         mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::Yes,
-                                            SlidingMenuAnimation::SlideDirection::Left);
+                                            SlidingMenuAnimation::SlideDirection::Right);
         return Result::None;
     }
 

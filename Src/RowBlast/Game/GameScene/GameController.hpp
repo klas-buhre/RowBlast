@@ -95,8 +95,9 @@ namespace RowBlast {
         void GoToPausedStateMapConfirmationDialog();
         void GoToPausedStateSettingsMenu();
         void GoToPausedStateLevelGoalDialog();
-        void GoToPausedStateGameMenu(SlidingMenuAnimation::UpdateFade updateFade);
-        void GoToOutOfMovesStateOutOfMovesDialog();
+        void GoToPausedStateGameMenu(SlidingMenuAnimation::UpdateFade updateFade,
+                                     SlidingMenuAnimation::SlideDirection slideDirection);
+        void GoToOutOfMovesStateOutOfMovesDialog(SlidingMenuAnimation::SlideDirection slideDirection);
         void GoToOutOfMovesStateStore();
         void GoToGameOverStateGameOverDialog();
         void GoToGameOverStateNoLivesDialog();
