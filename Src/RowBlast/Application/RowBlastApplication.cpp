@@ -16,7 +16,6 @@ Backlog:
      convenient to go back to the state before the move and not the initial state.
   -Rendering:
   -GUI:
-    -Store.
     -Menu window that displays 3rd party lib credits.
   -Purchases:
   -Back end:
@@ -41,6 +40,8 @@ Ongoing tasks:
     -Store GUI.
       -Store controller that controls the other store view controllers.
       -Store views.
+        -Fix number of coins in Purchase Successful dialog by letting the store controller
+         quering the purchase service.
         -Implement Purchase Successful dialog. Says "You have received X gold coins.". Green OK
          button and normal close button. If store opened from pressing add coins in map hud then go
          back to map. If store opened from out of moves dialog and there is enough coins then go

@@ -95,7 +95,8 @@ StoreMenuView::StoreMenuView(Pht::IEngine& engine,
                   commonResources,
                   zoom);
     CreateProduct({productXPosition, 4.45f, UiLayer::root},
-                  1.0f, 50,
+                  1.0f,
+                  50,
                   "85,00 kr",
                   {1.5f, 1.25f, 0.0f},
                   {11.25f, 11.25f},
@@ -187,6 +188,8 @@ void StoreMenuView::CreateProduct(const Pht::Vec3& position,
     container.AddChild(panelSceneObject);
 
     Product product;
+    product.mNumCoins = numCoins;
+
     CreateGlowEffect(engine, container, product, glowSize);
     CreateTwinklesEffect(engine, container, product, twinklesVolume);
     CreateCoinPilesAndStacks(container, product, numCoins, scale);

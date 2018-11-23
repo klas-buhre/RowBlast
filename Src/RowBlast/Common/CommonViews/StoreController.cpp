@@ -28,6 +28,11 @@ StoreController::StoreController(Pht::IEngine& engine,
         commonResources,
         sceneId == SceneId::Map ? PotentiallyZoomedScreen::No : PotentiallyZoomedScreen::Yes
     },
+    mPurchaseSuccessfulDialogController {
+        engine,
+        commonResources,
+        sceneId == SceneId::Map ? PotentiallyZoomedScreen::No : PotentiallyZoomedScreen::Yes
+    },
     mPurchaseUnsuccessfulDialogController {
         engine,
         commonResources,
@@ -35,6 +40,7 @@ StoreController::StoreController(Pht::IEngine& engine,
     } {
 
     mViewManager.AddView(static_cast<int>(ViewController::StoreMenu), mStoreMenuController.GetView());
+    mViewManager.AddView(static_cast<int>(ViewController::PurchaseSuccessfulDialog), mPurchaseSuccessfulDialogController.GetView());
     mViewManager.AddView(static_cast<int>(ViewController::PurchaseUnsuccessfulDialog), mPurchaseUnsuccessfulDialogController.GetView());
 }
 
@@ -43,6 +49,7 @@ void StoreController::Init(Pht::SceneObject& parentObject) {
     
     mFadeEffect.Reset();
     mStoreMenuController.SetFadeEffect(mFadeEffect);
+    mPurchaseSuccessfulDialogController.SetFadeEffect(mFadeEffect);
     parentObject.AddChild(mFadeEffect.GetSceneObject());
  
     mViewManager.Init(parentObject);
@@ -62,6 +69,9 @@ StoreController::Result StoreController::Update() {
         case State::StoreMenu:
             result = UpdateStoreMenu();
             break;
+        case State::PurchaseSuccessfulDialog:
+            result = UpdatePurchaseSuccessfulDialog();
+            break;
         case State::PurchaseUnsuccessfulDialog:
             UpdatePurchaseUnsuccessfulDialog();
             break;
@@ -70,7 +80,7 @@ StoreController::Result StoreController::Update() {
     }
     
     if (result == Result::Done) {
-        SetActiveViewController(ViewController::None);
+        GoToIdleState();
     }
 
     return result;
@@ -85,8 +95,28 @@ StoreController::Result StoreController::UpdateStoreMenu() {
         case StoreMenuController::Result::Close:
             result = Result::Done;
             break;
-        case StoreMenuController::Result::PurchaseCoins:
+        case StoreMenuController::Result::Purchase10Coins:
             GoToPurchaseUnsuccessfulDialogState();
+            break;
+        case StoreMenuController::Result::Purchase50Coins:
+        case StoreMenuController::Result::Purchase100Coins:
+        case StoreMenuController::Result::Purchase250Coins:
+        case StoreMenuController::Result::Purchase500Coins:
+            GoToPurchaseSuccessfulDialogState();
+            break;
+    }
+    
+    return result;
+}
+
+StoreController::Result StoreController::UpdatePurchaseSuccessfulDialog() {
+    StoreController::Result result {Result::None};
+
+    switch (mPurchaseSuccessfulDialogController.Update()) {
+        case PurchaseSuccessfulDialogController::Result::None:
+            break;
+        case PurchaseSuccessfulDialogController::Result::Close:
+            result = Result::Done;
             break;
     }
     
@@ -119,8 +149,19 @@ void StoreController::GoToStoreMenuState(SlidingMenuAnimation::UpdateFade update
     mStoreMenuController.SetUp(updateFade, slideDirection);
 }
 
+void StoreController::GoToPurchaseSuccessfulDialogState() {
+    mState = State::PurchaseSuccessfulDialog;
+    SetActiveViewController(ViewController::PurchaseSuccessfulDialog);
+    mPurchaseSuccessfulDialogController.SetUp(50);
+}
+
 void StoreController::GoToPurchaseUnsuccessfulDialogState() {
     mState = State::PurchaseUnsuccessfulDialog;
     SetActiveViewController(ViewController::PurchaseUnsuccessfulDialog);
     mPurchaseUnsuccessfulDialogController.SetUp();
+}
+
+void StoreController::GoToIdleState() {
+    mState = State::Idle;
+    SetActiveViewController(ViewController::None);
 }

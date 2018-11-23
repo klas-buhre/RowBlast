@@ -18,7 +18,11 @@ namespace RowBlast {
         enum class Result {
             None,
             Close,
-            PurchaseCoins
+            Purchase10Coins,
+            Purchase50Coins,
+            Purchase100Coins,
+            Purchase250Coins,
+            Purchase500Coins
         };
         
         StoreMenuController(Pht::IEngine& engine,

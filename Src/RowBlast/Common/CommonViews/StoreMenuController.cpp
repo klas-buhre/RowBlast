@@ -8,6 +8,25 @@
 
 using namespace RowBlast;
 
+namespace {
+    StoreMenuController::Result ToResult(int numCoins) {
+        switch (numCoins) {
+            case 10:
+                return StoreMenuController::Result::Purchase10Coins;
+            case 50:
+                return StoreMenuController::Result::Purchase50Coins;
+            case 100:
+                return StoreMenuController::Result::Purchase100Coins;
+            case 250:
+                return StoreMenuController::Result::Purchase250Coins;
+            case 500:
+                return StoreMenuController::Result::Purchase500Coins;
+            default:
+                assert(false);
+        }
+    }
+}
+
 StoreMenuController::StoreMenuController(Pht::IEngine& engine,
                                          const CommonResources& commonResources,
                                          PotentiallyZoomedScreen potentiallyZoomedScreen) :
@@ -59,7 +78,7 @@ StoreMenuController::Result StoreMenuController::OnTouch(const Pht::TouchEvent& 
     
     for (auto& product: mView.GetProducts()) {
         if (product.mButton->IsClicked(touchEvent)) {
-            mDeferredResult = Result::PurchaseCoins;
+            mDeferredResult = ToResult(product.mNumCoins);
             mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::No,
                                                 SlidingMenuAnimation::SlideDirection::Left);
             return Result::None;

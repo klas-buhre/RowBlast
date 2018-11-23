@@ -30,6 +30,7 @@ namespace RowBlast {
         }
         
         struct Product {
+            int mNumCoins {0};
             std::unique_ptr<MenuButton> mButton;
             Pht::SceneObject* mCoinPilesAndStacks {nullptr};
             std::unique_ptr<Pht::SceneObject> mGlowEffect;

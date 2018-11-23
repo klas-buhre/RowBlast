@@ -41,6 +41,8 @@
 		624C9DE121A47249000FB5E1 /* StoreController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 624C9DDF21A47249000FB5E1 /* StoreController.cpp */; };
 		624C9DE421A6C0FA000FB5E1 /* PurchaseUnsuccessfulDialogView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 624C9DE221A6C0FA000FB5E1 /* PurchaseUnsuccessfulDialogView.cpp */; };
 		624C9DE721A6C395000FB5E1 /* PurchaseUnsuccessfulDialogController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 624C9DE521A6C395000FB5E1 /* PurchaseUnsuccessfulDialogController.cpp */; };
+		624C9DEA21A6FEAF000FB5E1 /* PurchaseSuccessfulDialogView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 624C9DE821A6FEAF000FB5E1 /* PurchaseSuccessfulDialogView.cpp */; };
+		624C9DED21A6FF82000FB5E1 /* PurchaseSuccessfulDialogController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 624C9DEB21A6FF82000FB5E1 /* PurchaseSuccessfulDialogController.cpp */; };
 		625696332182382C003A3A9D /* TitleScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 625694872182382B003A3A9D /* TitleScene.cpp */; };
 		625696342182382C003A3A9D /* TitleController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6256948A2182382B003A3A9D /* TitleController.cpp */; };
 		625696352182382C003A3A9D /* TitleAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6256948B2182382B003A3A9D /* TitleAnimation.cpp */; };
@@ -460,6 +462,10 @@
 		624C9DE321A6C0FA000FB5E1 /* PurchaseUnsuccessfulDialogView.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PurchaseUnsuccessfulDialogView.hpp; sourceTree = "<group>"; };
 		624C9DE521A6C395000FB5E1 /* PurchaseUnsuccessfulDialogController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PurchaseUnsuccessfulDialogController.cpp; sourceTree = "<group>"; };
 		624C9DE621A6C395000FB5E1 /* PurchaseUnsuccessfulDialogController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PurchaseUnsuccessfulDialogController.hpp; sourceTree = "<group>"; };
+		624C9DE821A6FEAF000FB5E1 /* PurchaseSuccessfulDialogView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PurchaseSuccessfulDialogView.cpp; sourceTree = "<group>"; };
+		624C9DE921A6FEAF000FB5E1 /* PurchaseSuccessfulDialogView.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PurchaseSuccessfulDialogView.hpp; sourceTree = "<group>"; };
+		624C9DEB21A6FF82000FB5E1 /* PurchaseSuccessfulDialogController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PurchaseSuccessfulDialogController.cpp; sourceTree = "<group>"; };
+		624C9DEC21A6FF82000FB5E1 /* PurchaseSuccessfulDialogController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PurchaseSuccessfulDialogController.hpp; sourceTree = "<group>"; };
 		625694862182382B003A3A9D /* TitleAnimation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = TitleAnimation.hpp; sourceTree = "<group>"; };
 		625694872182382B003A3A9D /* TitleScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TitleScene.cpp; sourceTree = "<group>"; };
 		625694882182382B003A3A9D /* TitleController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = TitleController.hpp; sourceTree = "<group>"; };
@@ -1684,6 +1690,10 @@
 				624C9DE321A6C0FA000FB5E1 /* PurchaseUnsuccessfulDialogView.hpp */,
 				624C9DE521A6C395000FB5E1 /* PurchaseUnsuccessfulDialogController.cpp */,
 				624C9DE621A6C395000FB5E1 /* PurchaseUnsuccessfulDialogController.hpp */,
+				624C9DE821A6FEAF000FB5E1 /* PurchaseSuccessfulDialogView.cpp */,
+				624C9DE921A6FEAF000FB5E1 /* PurchaseSuccessfulDialogView.hpp */,
+				624C9DEB21A6FF82000FB5E1 /* PurchaseSuccessfulDialogController.cpp */,
+				624C9DEC21A6FF82000FB5E1 /* PurchaseSuccessfulDialogController.hpp */,
 			);
 			path = CommonViews;
 			sourceTree = "<group>";
@@ -2769,6 +2779,7 @@
 				6256967A2182382C003A3A9D /* DPiece.cpp in Sources */,
 				625696462182382C003A3A9D /* LaserDialogController.cpp in Sources */,
 				625696C42182382C003A3A9D /* World.cpp in Sources */,
+				624C9DEA21A6FEAF000FB5E1 /* PurchaseSuccessfulDialogView.cpp in Sources */,
 				625698362182392C003A3A9D /* SwipeGestureRecognizer.cpp in Sources */,
 				625698522182392C003A3A9D /* ParticleEffect.cpp in Sources */,
 				624C9DE121A47249000FB5E1 /* StoreController.cpp in Sources */,
@@ -2874,6 +2885,7 @@
 				625696C12182382C003A3A9D /* World2.cpp in Sources */,
 				625696C72182382C003A3A9D /* NextLevelParticleEffect.cpp in Sources */,
 				625696C62182382C003A3A9D /* MapScene.cpp in Sources */,
+				624C9DED21A6FF82000FB5E1 /* PurchaseSuccessfulDialogController.cpp in Sources */,
 				625696762182382C003A3A9D /* FieldGravity.cpp in Sources */,
 				625696692182382C003A3A9D /* FieldGrid.cpp in Sources */,
 				625696482182382C003A3A9D /* PlacePieceWindowView.cpp in Sources */,

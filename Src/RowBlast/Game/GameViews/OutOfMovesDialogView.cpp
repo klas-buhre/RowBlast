@@ -68,7 +68,7 @@ OutOfMovesDialogView::OutOfMovesDialogView(Pht::IEngine& engine,
 
     mPlayOnButton = std::make_unique<MenuButton>(engine,
                                                  *this,
-                                                 Pht::Vec3 {0.0f, -3.5f, UiLayer::textRectangle},
+                                                 Pht::Vec3 {0.0f, -3.45f, UiLayer::textRectangle},
                                                  playOnButtonInputSize,
                                                  playOnButtonStyle);
 
