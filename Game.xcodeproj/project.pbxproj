@@ -43,6 +43,7 @@
 		624C9DE721A6C395000FB5E1 /* PurchaseUnsuccessfulDialogController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 624C9DE521A6C395000FB5E1 /* PurchaseUnsuccessfulDialogController.cpp */; };
 		624C9DEA21A6FEAF000FB5E1 /* PurchaseSuccessfulDialogView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 624C9DE821A6FEAF000FB5E1 /* PurchaseSuccessfulDialogView.cpp */; };
 		624C9DED21A6FF82000FB5E1 /* PurchaseSuccessfulDialogController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 624C9DEB21A6FF82000FB5E1 /* PurchaseSuccessfulDialogController.cpp */; };
+		624C9DF021A81E6C000FB5E1 /* PurchasingService.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 624C9DEE21A81E6C000FB5E1 /* PurchasingService.cpp */; };
 		625696332182382C003A3A9D /* TitleScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 625694872182382B003A3A9D /* TitleScene.cpp */; };
 		625696342182382C003A3A9D /* TitleController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6256948A2182382B003A3A9D /* TitleController.cpp */; };
 		625696352182382C003A3A9D /* TitleAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6256948B2182382B003A3A9D /* TitleAnimation.cpp */; };
@@ -466,6 +467,8 @@
 		624C9DE921A6FEAF000FB5E1 /* PurchaseSuccessfulDialogView.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PurchaseSuccessfulDialogView.hpp; sourceTree = "<group>"; };
 		624C9DEB21A6FF82000FB5E1 /* PurchaseSuccessfulDialogController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PurchaseSuccessfulDialogController.cpp; sourceTree = "<group>"; };
 		624C9DEC21A6FF82000FB5E1 /* PurchaseSuccessfulDialogController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PurchaseSuccessfulDialogController.hpp; sourceTree = "<group>"; };
+		624C9DEE21A81E6C000FB5E1 /* PurchasingService.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PurchasingService.cpp; sourceTree = "<group>"; };
+		624C9DEF21A81E6C000FB5E1 /* PurchasingService.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PurchasingService.hpp; sourceTree = "<group>"; };
 		625694862182382B003A3A9D /* TitleAnimation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = TitleAnimation.hpp; sourceTree = "<group>"; };
 		625694872182382B003A3A9D /* TitleScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TitleScene.cpp; sourceTree = "<group>"; };
 		625694882182382B003A3A9D /* TitleController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = TitleController.hpp; sourceTree = "<group>"; };
@@ -1268,6 +1271,8 @@
 				6238F5E1218B60FE0008A0CF /* LifeService.hpp */,
 				6238F5E3218B60FE0008A0CF /* ProgressService.cpp */,
 				6238F5DF218B60FE0008A0CF /* ProgressService.hpp */,
+				624C9DEE21A81E6C000FB5E1 /* PurchasingService.cpp */,
+				624C9DEF21A81E6C000FB5E1 /* PurchasingService.hpp */,
 				6238F5E2218B60FE0008A0CF /* UserServices.cpp */,
 				6238F5DE218B60FE0008A0CF /* UserServices.hpp */,
 			);
@@ -2949,6 +2954,7 @@
 				625698352182392C003A3A9D /* InputEvent.cpp in Sources */,
 				6256964E2182382C003A3A9D /* SlidingFieldAnimation.cpp in Sources */,
 				6256968A2182382C003A3A9D /* LPiece.cpp in Sources */,
+				624C9DF021A81E6C000FB5E1 /* PurchasingService.cpp in Sources */,
 				625698382182392C003A3A9D /* FileStorage.cpp in Sources */,
 				625696842182382C003A3A9D /* PyramidPiece.cpp in Sources */,
 				625696492182382C003A3A9D /* OtherMovesWindowView.cpp in Sources */,

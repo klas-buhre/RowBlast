@@ -22,7 +22,7 @@ namespace RowBlast {
         
     private:
         void IncreaseNumLives();
-        void StartCountDown(std::chrono::steady_clock::time_point lifeLostTimePoint);
+        void StartCountDown(std::chrono::system_clock::time_point lifeLostTimePoint);
         void SaveState();
         bool LoadState();
         
@@ -35,7 +35,7 @@ namespace RowBlast {
         
         State mState {State::Idle};
         int mNumLives;
-        std::chrono::steady_clock::time_point mLifeLostTimePoint;
+        std::chrono::system_clock::time_point mLifeLostTimePoint;
     };
 }
 

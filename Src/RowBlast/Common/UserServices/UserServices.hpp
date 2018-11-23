@@ -3,6 +3,7 @@
 
 #include "LifeService.hpp"
 #include "ProgressService.hpp"
+#include "PurchasingService.hpp"
 
 namespace RowBlast {
     class UserServices {
@@ -10,6 +11,14 @@ namespace RowBlast {
         void Update();
         void StartLevel(int levelId);
         void CompleteLevel(int levelId, int numStars);
+        
+        const PurchasingService& GetPurchasingService() const {
+            return mPurchasingService;
+        }
+
+        PurchasingService& GetPurchasingService() {
+            return mPurchasingService;
+        }
         
         const LifeService& GetLifeService() const {
             return mLifeService;
@@ -28,6 +37,7 @@ namespace RowBlast {
         }
         
     private:
+        PurchasingService mPurchasingService;
         LifeService mLifeService;
         ProgressService mProgressService;
     };

@@ -32,7 +32,7 @@ void LifeService::Update() {
         mState = State::CountingDown;
     }
     
-    auto now {std::chrono::steady_clock::now()};
+    auto now {std::chrono::system_clock::now()};
     
     if (now > mLifeLostTimePoint + lifeWaitDuration) {
         auto waitedDuration {
@@ -57,7 +57,7 @@ void LifeService::Update() {
 
 void LifeService::StartLevel() {
     if (mState == State::Idle) {
-        mLifeLostTimePoint = std::chrono::steady_clock::now();
+        mLifeLostTimePoint = std::chrono::system_clock::now();
         mState = State::StartedPlayingWithFullLives;
     }
     
@@ -80,7 +80,7 @@ void LifeService::CompleteLevel() {
 
 void LifeService::FailLevel() {
     if (mState == State::StartedPlayingWithFullLives) {
-        StartCountDown(std::chrono::steady_clock::now());
+        StartCountDown(std::chrono::system_clock::now());
     }
     
     SaveState();
@@ -96,12 +96,19 @@ bool LifeService::HasFullNumLives() const {
     return mNumLives >= fullNumLives;
 }
 
+//
+// Cannot prevent against time cheats since the the system_clock is affected by the user changing
+// the time in the OS. One solution that was tested was to use the steady_clock, which is not
+// affected by changing the time. However, the steady_clock resets at each reboot on iOS. Probably
+// need to get the time from a server for reliably protecting against time cheats. For more info,
+// see: https://aaltodoc.aalto.fi/bitstream/123456789/32484/1/master_Teittinen_Oskari_2018.pdf
+//
 std::chrono::seconds LifeService::GetDurationUntilNewLife() const {
     if (HasFullNumLives()) {
         return std::chrono::seconds {0};
     }
     
-    auto duration {mLifeLostTimePoint + lifeWaitDuration - std::chrono::steady_clock::now()};
+    auto duration {mLifeLostTimePoint + lifeWaitDuration - std::chrono::system_clock::now()};
     return std::chrono::duration_cast<std::chrono::seconds>(duration);
 }
 
@@ -111,7 +118,7 @@ void LifeService::IncreaseNumLives() {
     }
 }
 
-void LifeService::StartCountDown(std::chrono::steady_clock::time_point lifeLostTimePoint) {
+void LifeService::StartCountDown(std::chrono::system_clock::time_point lifeLostTimePoint) {
     mLifeLostTimePoint = lifeLostTimePoint;
     mState = State::CountingDown;
 }
@@ -149,9 +156,9 @@ bool LifeService::LoadState() {
     mState = static_cast<State>(Pht::Json::ReadInt(document, stateMember));
     mNumLives = Pht::Json::ReadInt(document, numLivesMember);
     auto lifeLostTimePointInSeconds {Pht::Json::ReadUInt64(document, lifeLostTimePointMember)};
-    mLifeLostTimePoint = std::chrono::steady_clock::now(); /*std::chrono::steady_clock::time_point {
+    mLifeLostTimePoint = std::chrono::system_clock::time_point {
         std::chrono::seconds(lifeLostTimePointInSeconds)
     };
-*/
+
     return true;
 }
