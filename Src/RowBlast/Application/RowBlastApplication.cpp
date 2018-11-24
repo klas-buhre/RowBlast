@@ -25,7 +25,6 @@ Backlog:
   -Make ready for release:
     -Do a soft launch in a couple of countries? Maybe the nordic countris and UK? Only english
      localization is needed for that.
-    -Store settings in file.
     -Make launch screens for all supported device resulutions. Should say Teleporter Studios.
     -Make icons and launch screens for all supported device resulutions.
     -Credit the icon creator: <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
@@ -33,6 +32,8 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
+    -Decide the sky color for the second world.
+    -Add a settings service that stores the settings in a file.
     -Maybe it is enough with one single version of the windows and buttons instead of the
      potationally zoomed and the normal one. That single version should be the potentially
      zoomed version. Test with iPhone XR to see if the zoomed textures look good in non-zoomed
@@ -40,6 +41,8 @@ Ongoing tasks:
     -Store GUI.
       -Store controller that controls the other store view controllers.
       -Store views.
+        -Add Purchase Canceled dialog.
+        -Hide store menu and show an animation during pending purchase.
         -Fix number of coins in Purchase Successful dialog by letting the store controller
          quering the purchasing service.
         -Implement Purchase Successful dialog. Says "You have received X gold coins.". Green OK
@@ -402,7 +405,7 @@ RowBlastApplication::RowBlastApplication(Pht::IEngine& engine) :
     mEngine {engine},
     mCommonResources {engine},
     mSettings {},
-    mUserServices {},
+    mUserServices {engine},
     mUniverse {},
     mTitleController {engine, mCommonResources, mUserServices, mUniverse},
     mGameController {engine, mCommonResources, mUserServices, mSettings},

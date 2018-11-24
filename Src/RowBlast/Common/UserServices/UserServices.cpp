@@ -2,7 +2,11 @@
 
 using namespace RowBlast;
 
+UserServices::UserServices(Pht::IEngine& engine) :
+    mPurchasingService {engine} {}
+
 void UserServices::Update() {
+    mPurchasingService.Update();
     mLifeService.Update();
 }
 
