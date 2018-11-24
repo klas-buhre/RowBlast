@@ -52,7 +52,7 @@ LaserDialogView::LaserDialogView(Pht::IEngine& engine, const CommonResources& co
 
     mPlayButton = std::make_unique<MenuButton>(engine,
                                                *this,
-                                               Pht::Vec3 {0.0f, -7.5f, UiLayer::textRectangle},
+                                               Pht::Vec3 {0.0f, -8.0f, UiLayer::textRectangle},
                                                playButtonInputSize,
                                                playButtonStyle);
     mPlayButton->CreateText({-0.9f, -0.23f, UiLayer::buttonText},

@@ -30,7 +30,7 @@ namespace RowBlast {
                 None
             };
             
-            Command(Kind kind, int level = 0);
+            explicit Command(Kind kind, int level = 0);
             
             int GetLevel() const;
             

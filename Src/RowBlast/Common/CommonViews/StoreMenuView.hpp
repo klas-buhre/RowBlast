@@ -10,16 +10,21 @@
 // Game includes.
 #include "MenuButton.hpp"
 #include "CommonResources.hpp"
+#include "PurchasingService.hpp"
 
 namespace Pht {
     class IEngine;
+    class TextComponent;
 }
 
 namespace RowBlast {
+    class UserServices;
+    
     class StoreMenuView: public Pht::GuiView {
     public:
         StoreMenuView(Pht::IEngine& engine,
                       const CommonResources& commonResources,
+                      const UserServices& userServices,
                       PotentiallyZoomedScreen potentiallyZoomedScreen);
         
         void SetUp();
@@ -29,33 +34,31 @@ namespace RowBlast {
             return *mCloseButton;
         }
         
-        struct Product {
-            int mNumCoins {0};
-            std::unique_ptr<MenuButton> mButton;
+        struct ProductSection {
+            ProductId mProductId;
+            std::unique_ptr<MenuButton> mPurchaseButton;
             Pht::SceneObject* mCoinPilesAndStacks {nullptr};
             std::unique_ptr<Pht::SceneObject> mGlowEffect;
             std::unique_ptr<Pht::SceneObject> mTwinklesEffect;
         };
         
-        const std::vector<Product>& GetProducts() const {
-            return mProducts;
+        const std::vector<ProductSection>& GetProductSections() const {
+            return mProductSections;
         }
         
     private:
         void CreateRenderables(Pht::IEngine& engine,
                                const CommonResources& commonResources);
-        void CreateProduct(const Pht::Vec3& position,
-                           float scale,
-                           int numCoins,
-                           const std::string& price,
-                           const Pht::Vec3& twinklesVolume,
-                           const Pht::Vec2& glowSize,
-                           Pht::IEngine& engine,
-                           const CommonResources& commonResources,
-                           PotentiallyZoomedScreen zoom);
+        void CreateProductSection(const Pht::Vec3& position,
+                                  float scale,
+                                  ProductId productId,
+                                  const Pht::Vec3& twinklesVolume,
+                                  const Pht::Vec2& glowSize,
+                                  Pht::IEngine& engine,
+                                  const CommonResources& commonResources,
+                                  PotentiallyZoomedScreen zoom);
         void CreateCoinPilesAndStacks(Pht::SceneObject& parentObject,
-                                      Product& product,
-                                      int numCoins,
+                                      ProductSection& productSection,
                                       float scale);
         void CreateCoinsFor10CoinsProduct(Pht::SceneObject& parentObject);
         void CreateCoinsFor50CoinsProduct(Pht::SceneObject& parentObject);
@@ -68,14 +71,17 @@ namespace RowBlast {
         void CreateTallerCoinStack(const Pht::Vec3& position, Pht::SceneObject& parentObject);
         void CreateGlowEffect(Pht::IEngine& engine,
                               Pht::SceneObject& parentObject,
-                              Product& product,
+                              ProductSection& productSection,
                               const Pht::Vec2& size);
         void CreateTwinklesEffect(Pht::IEngine& engine,
                                   Pht::SceneObject& parentObject,
-                                  Product& product,
+                                  ProductSection& productSection,
                                   const Pht::Vec3& twinklesVolume);
+        void UpdateAnimations();
+        void UpdateCoinBalanceText();
 
         Pht::IEngine& mEngine;
+        const UserServices& mUserServices;
         std::unique_ptr<Pht::RenderableObject> mCoinRenderable;
         std::unique_ptr<Pht::RenderableObject> mLightCoinRenderable;
         std::unique_ptr<Pht::RenderableObject> mShortCoinStackRenderable;
@@ -83,8 +89,10 @@ namespace RowBlast {
         std::unique_ptr<Pht::RenderableObject> mTallerCoinStackRenderable;
         std::unique_ptr<Pht::RenderableObject> mCoinPileRenderable;
         std::unique_ptr<MenuButton> mCloseButton;
-        std::vector<Product> mProducts;
+        std::vector<ProductSection> mProductSections;
         float mAnimationTime {0.0f};
+        int mCoinBalance {0};
+        Pht::TextComponent* mCoinBalanceText {nullptr};
     };
 }
 

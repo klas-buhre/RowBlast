@@ -48,7 +48,7 @@ MapController::MapController(Pht::IEngine& engine,
     mUfo {engine, commonResources, 1.0f},
     mUfoAnimation {engine, mUfo},
     mMapViewControllers {engine, mScene, commonResources, userServices, settings, pieceResources},
-    mStoreController {engine, commonResources, StoreController::SceneId::Map} {}
+    mStoreController {engine, commonResources, userServices, StoreController::SceneId::Map} {}
 
 void MapController::Init() {
     mScene.Init();
@@ -394,7 +394,7 @@ void MapController::GoToSettingsMenuState() {
 
 void MapController::GoToStoreState(StoreController::TriggerProduct triggerProduct) {
     mMapViewControllers.SetActiveController(MapViewControllers::None);
-    mStoreController.StartPurchaseFlow(triggerProduct);
+    mStoreController.StartStore(triggerProduct);
     mState = State::Store;
 }
 

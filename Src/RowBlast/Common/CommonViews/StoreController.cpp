@@ -15,7 +15,9 @@ namespace {
 
 StoreController::StoreController(Pht::IEngine& engine,
                                  const CommonResources& commonResources,
+                                 UserServices& userServices,
                                  SceneId sceneId) :
+    mUserServices {userServices},
     mFadeEffect {
         engine.GetSceneManager(),
         engine.GetRenderer(),
@@ -26,6 +28,7 @@ StoreController::StoreController(Pht::IEngine& engine,
     mStoreMenuController {
         engine,
         commonResources,
+        userServices,
         sceneId == SceneId::Map ? PotentiallyZoomedScreen::No : PotentiallyZoomedScreen::Yes
     },
     mPurchaseSuccessfulDialogController {
@@ -56,7 +59,7 @@ void StoreController::Init(Pht::SceneObject& parentObject) {
     SetActiveViewController(ViewController::None);
 }
 
-void StoreController::StartPurchaseFlow(TriggerProduct triggerProduct) {
+void StoreController::StartStore(TriggerProduct triggerProduct) {
     mTriggerProduct = triggerProduct;
     GoToStoreMenuState(SlidingMenuAnimation::UpdateFade::Yes,
                        SlidingMenuAnimation::SlideDirection::Left);
@@ -88,25 +91,41 @@ StoreController::Result StoreController::Update() {
 
 StoreController::Result StoreController::UpdateStoreMenu() {
     StoreController::Result result {Result::None};
+    auto menuControllerResult {mStoreMenuController.Update()};
 
-    switch (mStoreMenuController.Update()) {
+    switch (menuControllerResult.GetKind()) {
         case StoreMenuController::Result::None:
             break;
         case StoreMenuController::Result::Close:
             result = Result::Done;
             break;
-        case StoreMenuController::Result::Purchase10Coins:
-            GoToPurchaseUnsuccessfulDialogState();
-            break;
-        case StoreMenuController::Result::Purchase50Coins:
-        case StoreMenuController::Result::Purchase100Coins:
-        case StoreMenuController::Result::Purchase250Coins:
-        case StoreMenuController::Result::Purchase500Coins:
-            GoToPurchaseSuccessfulDialogState();
+        case StoreMenuController::Result::PurchaseProduct:
+            StartPurchase(menuControllerResult.GetProductId());
             break;
     }
     
     return result;
+}
+
+void StoreController::StartPurchase(ProductId productId) {
+    auto& purchasingService {mUserServices.GetPurchasingService()};
+    
+    purchasingService.StartPurchase(productId,
+                                    [this] (const GoldCoinProduct& product) {
+                                        GoToPurchaseSuccessfulDialogState(product);
+                                    },
+                                    [this] (PurchaseFailureReason purchaseFailureReason) {
+                                        OnPurchaseFailed(purchaseFailureReason);
+                                    });
+}
+
+void StoreController::OnPurchaseFailed(PurchaseFailureReason purchaseFailureReason) {
+    switch (purchaseFailureReason) {
+        case PurchaseFailureReason::UserCancelled:
+        case PurchaseFailureReason::Other:
+            GoToPurchaseUnsuccessfulDialogState();
+            break;
+    }
 }
 
 StoreController::Result StoreController::UpdatePurchaseSuccessfulDialog() {
@@ -149,10 +168,10 @@ void StoreController::GoToStoreMenuState(SlidingMenuAnimation::UpdateFade update
     mStoreMenuController.SetUp(updateFade, slideDirection);
 }
 
-void StoreController::GoToPurchaseSuccessfulDialogState() {
+void StoreController::GoToPurchaseSuccessfulDialogState(const GoldCoinProduct& product) {
     mState = State::PurchaseSuccessfulDialog;
     SetActiveViewController(ViewController::PurchaseSuccessfulDialog);
-    mPurchaseSuccessfulDialogController.SetUp(50);
+    mPurchaseSuccessfulDialogController.SetUp(product.mNumCoins);
 }
 
 void StoreController::GoToPurchaseUnsuccessfulDialogState() {

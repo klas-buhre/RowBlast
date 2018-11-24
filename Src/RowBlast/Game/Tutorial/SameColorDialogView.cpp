@@ -49,7 +49,7 @@ SameColorDialogView::SameColorDialogView(Pht::IEngine& engine,
 
     mPlayButton = std::make_unique<MenuButton>(engine,
                                                *this,
-                                               Pht::Vec3 {0.0f, -3.3f, UiLayer::textRectangle},
+                                               Pht::Vec3 {0.0f, -3.4f, UiLayer::textRectangle},
                                                playButtonInputSize,
                                                playButtonStyle);
     mPlayButton->CreateText({-0.9f, -0.23f, UiLayer::buttonText},

@@ -15,18 +15,34 @@ namespace Pht {
 namespace RowBlast {
     class StoreMenuController {
     public:
-        enum class Result {
-            None,
-            Close,
-            Purchase10Coins,
-            Purchase50Coins,
-            Purchase100Coins,
-            Purchase250Coins,
-            Purchase500Coins
+        class Result {
+        public:
+            enum Kind {
+                None,
+                Close,
+                PurchaseProduct
+            };
+            
+            Result();
+            explicit Result(Kind kind);
+            explicit Result(ProductId productId);
+            
+            bool operator==(const Result& other) const;
+            bool operator!=(const Result& other) const;
+            ProductId GetProductId() const;
+            
+            Kind GetKind() const {
+                return mKind;
+            }
+
+        private:
+            Kind mKind {None};
+            ProductId mProductId;
         };
         
         StoreMenuController(Pht::IEngine& engine,
                             const CommonResources& commonResources,
+                            const UserServices& userServices,
                             PotentiallyZoomedScreen potentiallyZoomedScreen);
         
         void SetUp(SlidingMenuAnimation::UpdateFade updateFade,
@@ -45,7 +61,7 @@ namespace RowBlast {
         Pht::IEngine& mEngine;
         StoreMenuView mView;
         SlidingMenuAnimation mSlidingMenuAnimation;
-        Result mDeferredResult {Result::None};
+        Result mDeferredResult;
     };
 }
 

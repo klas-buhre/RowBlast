@@ -114,7 +114,7 @@ LevelGoalDialogView::LevelGoalDialogView(Pht::IEngine& engine,
         
         mBackButton = std::make_unique<MenuButton>(engine,
                                                    *this,
-                                                   Pht::Vec3 {0.0f, -7.7f, UiLayer::textRectangle},
+                                                   Pht::Vec3 {0.0f, -8.0f, UiLayer::textRectangle},
                                                    backButtonInputSize,
                                                    backButtonStyle);
         mBackButton->CreateText({-0.81f, -0.23f, UiLayer::buttonText},

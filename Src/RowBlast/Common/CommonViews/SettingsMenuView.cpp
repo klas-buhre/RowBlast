@@ -87,7 +87,7 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine,
     
     mBackButton = std::make_unique<MenuButton>(engine,
                                                *this,
-                                               Pht::Vec3 {0.0f, -4.5f, UiLayer::textRectangle},
+                                               Pht::Vec3 {0.0f, -4.6f, UiLayer::textRectangle},
                                                backButtonInputSize,
                                                backButtonStyle);
     mBackButton->CreateText({-0.85f, -0.23f, UiLayer::buttonText}, "Back", buttonTextProperties);

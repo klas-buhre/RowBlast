@@ -45,7 +45,7 @@ GameController::GameController(Pht::IEngine& engine,
         mPieceResources,
         mHudRectangles
     },
-    mStoreController {engine, commonResources, StoreController::SceneId::Game},
+    mStoreController {engine, commonResources, userServices, StoreController::SceneId::Game},
     mField {},
     mCollapsingFieldAnimation {mField},
     mFlashingBlocksAnimation {mField, mPieceResources},
@@ -627,7 +627,7 @@ void GameController::GoToOutOfMovesStateOutOfMovesDialog(SlidingMenuAnimation::S
 void GameController::GoToOutOfMovesStateStore() {
     mOutOfMovesState = OutOfMovesState::Store;
     mGameViewControllers.SetActiveController(GameViewControllers::None);
-    mStoreController.StartPurchaseFlow(StoreController::TriggerProduct::Moves);
+    mStoreController.StartStore(StoreController::TriggerProduct::Moves);
 }
 
 void GameController::GoToGameOverStateGameOverDialog() {

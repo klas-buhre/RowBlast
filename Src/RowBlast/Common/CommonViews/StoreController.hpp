@@ -9,6 +9,7 @@
 #include "StoreMenuController.hpp"
 #include "PurchaseSuccessfulDialogController.hpp"
 #include "PurchaseUnsuccessfulDialogController.hpp"
+#include "UserServices.hpp"
 
 namespace Pht {
     class IEngine;
@@ -36,10 +37,11 @@ namespace RowBlast {
         
         StoreController(Pht::IEngine& engine,
                         const CommonResources& commonResources,
+                        UserServices& userServices,
                         SceneId sceneId);
         
         void Init(Pht::SceneObject& parentObject);
-        void StartPurchaseFlow(TriggerProduct triggerProduct);
+        void StartStore(TriggerProduct triggerProduct);
         Result Update();
 
     private:
@@ -51,12 +53,14 @@ namespace RowBlast {
         };
 
         Result UpdateStoreMenu();
+        void StartPurchase(ProductId productId);
+        void OnPurchaseFailed(PurchaseFailureReason purchaseFailureReason);
         Result UpdatePurchaseSuccessfulDialog();
         void UpdatePurchaseUnsuccessfulDialog();
         void SetActiveViewController(ViewController viewController);
         void GoToStoreMenuState(SlidingMenuAnimation::UpdateFade updateFade,
                                 SlidingMenuAnimation::SlideDirection slideDirection);
-        void GoToPurchaseSuccessfulDialogState();
+        void GoToPurchaseSuccessfulDialogState(const GoldCoinProduct& product);
         void GoToPurchaseUnsuccessfulDialogState();
         void GoToIdleState();
         
@@ -67,6 +71,7 @@ namespace RowBlast {
             Idle
         };
 
+        UserServices& mUserServices;
         State mState {State::Idle};
         TriggerProduct mTriggerProduct;
         Pht::FadeEffect mFadeEffect;

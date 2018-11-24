@@ -8,30 +8,45 @@
 
 using namespace RowBlast;
 
-namespace {
-    StoreMenuController::Result ToResult(int numCoins) {
-        switch (numCoins) {
-            case 10:
-                return StoreMenuController::Result::Purchase10Coins;
-            case 50:
-                return StoreMenuController::Result::Purchase50Coins;
-            case 100:
-                return StoreMenuController::Result::Purchase100Coins;
-            case 250:
-                return StoreMenuController::Result::Purchase250Coins;
-            case 500:
-                return StoreMenuController::Result::Purchase500Coins;
-            default:
-                assert(false);
+StoreMenuController::Result::Result() :
+    mKind {None} {}
+
+StoreMenuController::Result::Result(Kind kind) :
+    mKind {kind} {}
+
+StoreMenuController::Result::Result(ProductId productId) :
+    mKind {PurchaseProduct},
+    mProductId {productId} {}
+
+bool StoreMenuController::Result::operator==(const Result& other) const {
+    if (mKind != other.mKind) {
+        return false;
+    }
+    
+    if (mKind == PurchaseProduct) {
+        if (mProductId != other.mProductId) {
+            return false;
         }
     }
+    
+    return true;
+}
+
+bool StoreMenuController::Result::operator!=(const Result& other) const {
+    return !(*this == other);
+}
+
+ProductId StoreMenuController::Result::GetProductId() const {
+    assert(mKind == PurchaseProduct);
+    return mProductId;
 }
 
 StoreMenuController::StoreMenuController(Pht::IEngine& engine,
                                          const CommonResources& commonResources,
+                                         const UserServices& userServices,
                                          PotentiallyZoomedScreen potentiallyZoomedScreen) :
     mEngine {engine},
-    mView {engine, commonResources, potentiallyZoomedScreen},
+    mView {engine, commonResources, userServices, potentiallyZoomedScreen},
     mSlidingMenuAnimation {engine, mView} {}
 
 void StoreMenuController::SetUp(SlidingMenuAnimation::UpdateFade updateFade,
@@ -60,30 +75,31 @@ StoreMenuController::Result StoreMenuController::Update() {
             return mDeferredResult;
     }
     
-    return Result::None;
+    return Result {Result::None};
 }
 
 StoreMenuController::Result StoreMenuController::HandleInput() {
-    return InputUtil::HandleInput<Result, Result::None>(
-        mEngine.GetInput(), [this] (const Pht::TouchEvent& touch) { return OnTouch(touch); });
+    return InputUtil::HandleInput<Result>(mEngine.GetInput(),
+                                          Result {Result::None},
+                                          [this] (const Pht::TouchEvent& touch) { return OnTouch(touch); });
 }
 
 StoreMenuController::Result StoreMenuController::OnTouch(const Pht::TouchEvent& touchEvent) {
     if (mView.GetCloseButton().IsClicked(touchEvent)) {
-        mDeferredResult = Result::Close;
+        mDeferredResult = Result {Result::Close};
         mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::Yes,
                                             SlidingMenuAnimation::SlideDirection::Right);
-        return Result::None;
+        return Result {Result::None};
     }
     
-    for (auto& product: mView.GetProducts()) {
-        if (product.mButton->IsClicked(touchEvent)) {
-            mDeferredResult = ToResult(product.mNumCoins);
+    for (auto& productSection: mView.GetProductSections()) {
+        if (productSection.mPurchaseButton->IsClicked(touchEvent)) {
+            mDeferredResult = Result {productSection.mProductId};
             mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::No,
                                                 SlidingMenuAnimation::SlideDirection::Left);
-            return Result::None;
+            return Result {Result::None};
         }
     }
     
-    return Result::None;
+    return Result {Result::None};
 }
