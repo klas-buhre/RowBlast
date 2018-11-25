@@ -5,7 +5,7 @@
 #include <vector>
 
 // Engine includes.
-#include "OfflineRasterizer.hpp"
+#include "SoftwareRasterizer.hpp"
 #include "Vector.hpp"
 
 namespace Pht {
@@ -86,7 +86,7 @@ namespace RowBlast {
         Pht::IEngine& mEngine;
         float mCellSize;
         Pht::Vec2 mCoordinateSystemSize;
-        std::unique_ptr<Pht::OfflineRasterizer> mRasterizer;
+        std::unique_ptr<Pht::SoftwareRasterizer> mRasterizer;
         Pht::Vec2 mSegmentStartPosition {0.0f, 0.0f};
         Pht::Vec4 mBorderColor;
     };

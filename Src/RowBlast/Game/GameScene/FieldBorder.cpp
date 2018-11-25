@@ -5,7 +5,7 @@
 #include "IRenderer.hpp"
 #include "QuadMesh.hpp"
 #include "Material.hpp"
-#include "OfflineRasterizer.hpp"
+#include "SoftwareRasterizer.hpp"
 #include "IImage.hpp"
 #include "ISceneManager.hpp"
 
@@ -22,9 +22,9 @@ namespace {
     const Pht::Vec4 blueDarkerBorderColor {0.4f, 0.6f, 1.0f, 0.25f};
     constexpr auto defaultNumRows {19};
 
-    std::unique_ptr<Pht::OfflineRasterizer> CreateRasterizer(Pht::IEngine& engine,
-                                                             const Pht::Vec2& coordinateSystemSize,
-                                                             const CommonResources& commonResources) {
+    std::unique_ptr<Pht::SoftwareRasterizer> CreateRasterizer(Pht::IEngine& engine,
+                                                              const Pht::Vec2& coordinateSystemSize,
+                                                              const CommonResources& commonResources) {
         auto& renderer {engine.GetRenderer()};
         auto& renderBufferSize {renderer.GetRenderBufferSize()};
         auto& frustumSize {commonResources.GetOrthographicFrustumSizePotentiallyZoomedScreen()};
@@ -42,7 +42,7 @@ namespace {
             static_cast<int>(coordinateSystemSize.y * yScaleFactor)
         };
 
-        return std::make_unique<Pht::OfflineRasterizer>(coordinateSystemSize, imageSize);
+        return std::make_unique<Pht::SoftwareRasterizer>(coordinateSystemSize, imageSize);
     }
 }
 
@@ -78,12 +78,12 @@ void FieldBorder::CreateLeftBorder(Pht::IEngine& engine,
     Pht::Vec2 borderSize {borderThickness, defaultHeight};
     auto rasterizer {CreateRasterizer(engine, borderSize, commonResources)};
     
-    Pht::OfflineRasterizer::VerticalGradientColors borderColors {blueBorderColor, redBorderColor};
+    Pht::SoftwareRasterizer::VerticalGradientColors borderColors {blueBorderColor, redBorderColor};
     Pht::Vec2 lowerLeft {0.0f, 0.0f};
     Pht::Vec2 upperRight {brightBorderThickness, borderSize.y};
     rasterizer->DrawGradientRectangle(upperRight, lowerLeft, borderColors, Pht::DrawOver::Yes);
 
-    Pht::OfflineRasterizer::VerticalGradientColors darkerBorderColors {
+    Pht::SoftwareRasterizer::VerticalGradientColors darkerBorderColors {
         blueDarkerBorderColor,
         redDarkerBorderColor
     };
@@ -105,7 +105,7 @@ void FieldBorder::CreateRightBorder(Pht::IEngine& engine,
     Pht::Vec2 borderSize {borderThickness, defaultHeight};
     auto rasterizer {CreateRasterizer(engine, borderSize, commonResources)};
     
-    Pht::OfflineRasterizer::VerticalGradientColors darkerBorderColors {
+    Pht::SoftwareRasterizer::VerticalGradientColors darkerBorderColors {
         redDarkerBorderColor,
         blueDarkerBorderColor
     };
@@ -116,7 +116,7 @@ void FieldBorder::CreateRightBorder(Pht::IEngine& engine,
                                       darkerBorderColors,
                                       Pht::DrawOver::Yes);
 
-    Pht::OfflineRasterizer::VerticalGradientColors borderColors {redBorderColor, blueBorderColor};
+    Pht::SoftwareRasterizer::VerticalGradientColors borderColors {redBorderColor, blueBorderColor};
     Pht::Vec2 lowerLeft2 {darkerBorderThickness, 0.0f};
     Pht::Vec2 upperRight2 {borderThickness, borderSize.y};
     rasterizer->DrawGradientRectangle(upperRight2, lowerLeft2, borderColors, Pht::DrawOver::Yes);

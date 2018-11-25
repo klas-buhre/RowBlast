@@ -7,7 +7,7 @@
 #include "IRenderer.hpp"
 #include "QuadMesh.hpp"
 #include "Material.hpp"
-#include "OfflineRasterizer.hpp"
+#include "SoftwareRasterizer.hpp"
 #include "IImage.hpp"
 #include "ISceneManager.hpp"
 #include "Vector.hpp"
@@ -23,7 +23,7 @@ namespace {
     constexpr auto lineWidth {0.07f};
     const Pht::Vec4 lineColor {1.0f, 1.0f, 1.0f, 0.045f};
 
-    std::unique_ptr<Pht::OfflineRasterizer>
+    std::unique_ptr<Pht::SoftwareRasterizer>
     CreateRasterizer(Pht::IEngine& engine,
                      const Pht::Vec2& coordinateSystemSize,
                      const CommonResources& commonResources) {
@@ -44,7 +44,7 @@ namespace {
             static_cast<int>(coordinateSystemSize.y * yScaleFactor * 2.0f)
         };
 
-        return std::make_unique<Pht::OfflineRasterizer>(coordinateSystemSize, imageSize);
+        return std::make_unique<Pht::SoftwareRasterizer>(coordinateSystemSize, imageSize);
     }
     
     std::unique_ptr<Pht::RenderableObject>

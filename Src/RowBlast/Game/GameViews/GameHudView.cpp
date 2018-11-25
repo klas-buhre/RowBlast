@@ -6,7 +6,7 @@
 #include "IEngine.hpp"
 #include "IRenderer.hpp"
 #include "SceneObject.hpp"
-#include "OfflineRasterizer.hpp"
+#include "SoftwareRasterizer.hpp"
 #include "IImage.hpp"
 #include "ISceneManager.hpp"
 #include "UiLayer.hpp"
@@ -50,7 +50,9 @@ namespace {
             static_cast<int>(coordinateSystemSize.y * yScaleFactor) * 2
         };
         
-        auto rasterizer {std::make_unique<Pht::OfflineRasterizer>(coordinateSystemSize, imageSize)};
+        auto rasterizer {
+            std::make_unique<Pht::SoftwareRasterizer>(coordinateSystemSize, imageSize)
+        };
 
         Pht::Vec4 barColor {0.3f, 0.15f, 0.355f, 0.65f};
         Pht::Vec4 barBorderColor {1.0f, 1.0f, 1.0f, 1.0f};

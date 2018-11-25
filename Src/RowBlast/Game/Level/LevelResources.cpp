@@ -6,7 +6,7 @@
 #include "ObjMesh.hpp"
 #include "QuadMesh.hpp"
 #include "Material.hpp"
-#include "OfflineRasterizer.hpp"
+#include "SoftwareRasterizer.hpp"
 #include "IImage.hpp"
 #include "ISceneManager.hpp"
 
@@ -110,7 +110,7 @@ void LevelResources::CreateBlueprintRenderables(Pht::IEngine& engine,
         static_cast<int>(squareSide * yScaleFactor) * 2
     };
     
-    auto rasterizer {std::make_unique<Pht::OfflineRasterizer>(coordinateSystemSize, imageSize)};
+    auto rasterizer {std::make_unique<Pht::SoftwareRasterizer>(coordinateSystemSize, imageSize)};
     
     Pht::Vec4 fillColor {1.0f, 1.0f, 1.0f, 0.192f};
     

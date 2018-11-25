@@ -4,7 +4,7 @@
 #include "IEngine.hpp"
 #include "IRenderer.hpp"
 #include "ISceneManager.hpp"
-#include "OfflineRasterizer.hpp"
+#include "SoftwareRasterizer.hpp"
 #include "IImage.hpp"
 #include "QuadMesh.hpp"
 
@@ -90,7 +90,7 @@ MenuWindow::MenuWindow(Pht::IEngine& engine,
         static_cast<int>(mSize.y * yScaleFactor)
     };
     
-    auto rasterizer {std::make_unique<Pht::OfflineRasterizer>(mSize, imageSize)};
+    auto rasterizer {std::make_unique<Pht::SoftwareRasterizer>(mSize, imageSize)};
 
     switch (style) {
         case Style::Bright: {
@@ -124,7 +124,7 @@ MenuWindow::MenuWindow(Pht::IEngine& engine,
                                                             imageMaterial);
 }
 
-void MenuWindow::FillStencilBuffer(Pht::OfflineRasterizer& rasterizer,
+void MenuWindow::FillStencilBuffer(Pht::SoftwareRasterizer& rasterizer,
                                    float cornerRadius,
                                    float padding) {
     rasterizer.SetStencilBufferFillMode();
@@ -161,8 +161,8 @@ void MenuWindow::FillStencilBuffer(Pht::OfflineRasterizer& rasterizer,
     rasterizer.EnableStencilTest();
 }
 
-void MenuWindow::DrawBrightCaptionBar(Pht::OfflineRasterizer& rasterizer, float captionBarHeight) {
-    Pht::OfflineRasterizer::HorizontalGradientColors rectangleColors {blueColor, lightBlueColor};
+void MenuWindow::DrawBrightCaptionBar(Pht::SoftwareRasterizer& rasterizer, float captionBarHeight) {
+    Pht::SoftwareRasterizer::HorizontalGradientColors rectangleColors {blueColor, lightBlueColor};
     Pht::Vec2 lowerLeft1 {0.0f, mSize.y - captionBarHeight};
     Pht::Vec2 upperRight1 {mSize.x, mSize.y};
     rasterizer.DrawGradientRectangle(upperRight1, lowerLeft1, rectangleColors, Pht::DrawOver::Yes);
@@ -183,8 +183,8 @@ void MenuWindow::DrawBrightCaptionBar(Pht::OfflineRasterizer& rasterizer, float 
     }
 }
 
-void MenuWindow::DrawBrightMainArea(Pht::OfflineRasterizer& rasterizer, float captionBarHeight) {
-    Pht::OfflineRasterizer::HorizontalGradientColors rectangleColors {darkerGrayColor, grayColor};
+void MenuWindow::DrawBrightMainArea(Pht::SoftwareRasterizer& rasterizer, float captionBarHeight) {
+    Pht::SoftwareRasterizer::HorizontalGradientColors rectangleColors {darkerGrayColor, grayColor};
     Pht::Vec2 lowerLeft1 {0.0f, 0.0f};
     Pht::Vec2 upperRight1 {mSize.x, mSize.y - captionBarHeight};
     rasterizer.DrawGradientRectangle(upperRight1, lowerLeft1, rectangleColors, Pht::DrawOver::Yes);
@@ -205,7 +205,7 @@ void MenuWindow::DrawBrightMainArea(Pht::OfflineRasterizer& rasterizer, float ca
     }
 }
 
-void MenuWindow::DrawDarkBorder(Pht::OfflineRasterizer& rasterizer) {
+void MenuWindow::DrawDarkBorder(Pht::SoftwareRasterizer& rasterizer) {
     FillStencilBuffer(rasterizer, outerCornerRadius, 0.0f);
     
     Pht::Vec2 lowerLeft {0.0f, 0.0f};
@@ -221,12 +221,12 @@ void MenuWindow::DrawDarkBorder(Pht::OfflineRasterizer& rasterizer) {
     rasterizer.DrawRectangle(upperRight2, lowerLeft2, innerBorderColor, Pht::DrawOver::Yes);
 }
 
-void MenuWindow::DrawDarkMainArea(Pht::OfflineRasterizer& rasterizer) {
+void MenuWindow::DrawDarkMainArea(Pht::SoftwareRasterizer& rasterizer) {
     Pht::Vec2 lowerLeft {0.0f, 0.0f};
     Pht::Vec2 upperRight {mSize.x, mSize.y};
     rasterizer.DrawRectangle(upperRight, lowerLeft, darkerBlueColor, Pht::DrawOver::Yes);
     
-    Pht::OfflineRasterizer::VerticalGradientColors upperRectangleColors {
+    Pht::SoftwareRasterizer::VerticalGradientColors upperRectangleColors {
         darkerBlueColor,
         innerBorderColor
     };
@@ -237,7 +237,7 @@ void MenuWindow::DrawDarkMainArea(Pht::OfflineRasterizer& rasterizer) {
                                      upperRectangleColors,
                                      Pht::DrawOver::Yes);
 
-    Pht::OfflineRasterizer::VerticalGradientColors lowerRectangleColors {
+    Pht::SoftwareRasterizer::VerticalGradientColors lowerRectangleColors {
         innerBorderColor,
         darkerBlueColor
     };

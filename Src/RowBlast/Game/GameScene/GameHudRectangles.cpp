@@ -4,7 +4,7 @@
 #include "IEngine.hpp"
 #include "IRenderer.hpp"
 #include "ISceneManager.hpp"
-#include "OfflineRasterizer.hpp"
+#include "SoftwareRasterizer.hpp"
 #include "IImage.hpp"
 #include "QuadMesh.hpp"
 
@@ -33,9 +33,9 @@ namespace {
     constexpr auto piecesRectangleTilt {0.6f};
     constexpr auto pauseButtonRectangleTilt {0.375f};
 
-    std::unique_ptr<Pht::OfflineRasterizer> CreateRasterizer(Pht::IEngine& engine,
-                                                             const CommonResources& commonResources,
-                                                             const Pht::Vec2 size) {
+    std::unique_ptr<Pht::SoftwareRasterizer> CreateRasterizer(Pht::IEngine& engine,
+                                                              const CommonResources& commonResources,
+                                                              const Pht::Vec2 size) {
         auto& renderer {engine.GetRenderer()};
         auto& renderBufferSize {renderer.GetRenderBufferSize()};
         auto& frustumSize {commonResources.GetHudFrustumSizePotentiallyZoomedScreen()};
@@ -53,7 +53,7 @@ namespace {
             static_cast<int>(size.y * yScaleFactor)
         };
     
-        return std::make_unique<Pht::OfflineRasterizer>(size, imageSize);
+        return std::make_unique<Pht::SoftwareRasterizer>(size, imageSize);
     }
     
     Pht::Vec4 PositiveSubtract(const Pht::Vec4& a, const Pht::Vec4& b) {
@@ -127,7 +127,7 @@ GameHudRectangles::CreateRectangle(Pht::IEngine& engine,
     return engine.GetSceneManager().CreateRenderableObject(quadMesh, imageMaterial);
 }
 
-void GameHudRectangles::FillStencilBuffer(Pht::OfflineRasterizer& rasterizer,
+void GameHudRectangles::FillStencilBuffer(Pht::SoftwareRasterizer& rasterizer,
                                           const Pht::Vec2& size,
                                           float cornerRadius,
                                           float padding) {
@@ -165,12 +165,12 @@ void GameHudRectangles::FillStencilBuffer(Pht::OfflineRasterizer& rasterizer,
     rasterizer.EnableStencilTest();
 }
 
-void GameHudRectangles::DrawRectangleBorder(Pht::OfflineRasterizer& rasterizer,
+void GameHudRectangles::DrawRectangleBorder(Pht::SoftwareRasterizer& rasterizer,
                                             const Pht::Vec2& size,
                                             const Pht::Vec4& colorSubtract) {
     FillStencilBuffer(rasterizer, size, piecesRectangleOuterCornerRadius, 0.0f);
     
-    Pht::OfflineRasterizer::VerticalGradientColors outerBorderColors {
+    Pht::SoftwareRasterizer::VerticalGradientColors outerBorderColors {
         PositiveSubtract(lowerOuterBorderColor, colorSubtract),
         PositiveSubtract(outerBorderColor, colorSubtract)
     };
@@ -183,7 +183,7 @@ void GameHudRectangles::DrawRectangleBorder(Pht::OfflineRasterizer& rasterizer,
                       piecesRectangleOuterCornerRadius - borderThickness,
                       borderThickness);
 
-    Pht::OfflineRasterizer::VerticalGradientColors borderColors {
+    Pht::SoftwareRasterizer::VerticalGradientColors borderColors {
         PositiveSubtract(lowerBorderColor, colorSubtract),
         PositiveSubtract(borderColor, colorSubtract)
     };
@@ -192,10 +192,10 @@ void GameHudRectangles::DrawRectangleBorder(Pht::OfflineRasterizer& rasterizer,
     rasterizer.DrawGradientRectangle(upperRight2, lowerLeft2, borderColors, Pht::DrawOver::Yes);
 }
 
-void GameHudRectangles::DrawRectangleMainArea(Pht::OfflineRasterizer& rasterizer,
+void GameHudRectangles::DrawRectangleMainArea(Pht::SoftwareRasterizer& rasterizer,
                                               const Pht::Vec2& size,
                                               const Pht::Vec4& colorSubtract) {
-    Pht::OfflineRasterizer::VerticalGradientColors upperRectangleColors {
+    Pht::SoftwareRasterizer::VerticalGradientColors upperRectangleColors {
         PositiveSubtract(lowerInnerColor, colorSubtract),
         PositiveSubtract(innerColor, colorSubtract)
     };
@@ -207,14 +207,14 @@ void GameHudRectangles::DrawRectangleMainArea(Pht::OfflineRasterizer& rasterizer
                                      Pht::DrawOver::Yes);
 }
 
-void GameHudRectangles::DrawLine(Pht::OfflineRasterizer& rasterizer,
+void GameHudRectangles::DrawLine(Pht::SoftwareRasterizer& rasterizer,
                                  const Pht::Vec4& colorSubtract) {
     FillStencilBuffer(rasterizer,
                       selectablePiecesRectangleSize,
                       piecesRectangleOuterCornerRadius,
                       0.0f);
 
-    Pht::OfflineRasterizer::VerticalGradientColors outerLineColors {
+    Pht::SoftwareRasterizer::VerticalGradientColors outerLineColors {
         PositiveSubtract(lowerBorderColor, colorSubtract),
         PositiveSubtract(borderColor, colorSubtract)
     };
@@ -224,7 +224,7 @@ void GameHudRectangles::DrawLine(Pht::OfflineRasterizer& rasterizer,
         selectablePiecesRectangleSize.y - borderThickness};
     rasterizer.DrawGradientRectangle(upperRight1, lowerLeft1, outerLineColors, Pht::DrawOver::Yes);
     
-    Pht::OfflineRasterizer::VerticalGradientColors innerLineColors {
+    Pht::SoftwareRasterizer::VerticalGradientColors innerLineColors {
         PositiveSubtract(lowerOuterBorderColor, colorSubtract),
         PositiveSubtract(outerBorderColor, colorSubtract)
     };

@@ -51,7 +51,7 @@ GhostPieceProducer::GhostPieceProducer(Pht::IEngine& engine,
         static_cast<int>(static_cast<float>(pieceGridSize.y) * yScaleFactor) * 2
     };
     
-    mRasterizer = std::make_unique<Pht::OfflineRasterizer>(mCoordinateSystemSize, imageSize);
+    mRasterizer = std::make_unique<Pht::SoftwareRasterizer>(mCoordinateSystemSize, imageSize);
 }
 
 void GhostPieceProducer::Clear() {

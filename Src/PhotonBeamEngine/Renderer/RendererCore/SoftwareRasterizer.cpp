@@ -1,4 +1,4 @@
-#include "OfflineRasterizer.hpp"
+#include "SoftwareRasterizer.hpp"
 
 #include <assert.h>
 
@@ -66,7 +66,7 @@ namespace {
     };
 }
 
-OfflineRasterizer::OfflineRasterizer(const Vec2& coordinateSystemSize, const IVec2& imageSize) :
+SoftwareRasterizer::SoftwareRasterizer(const Vec2& coordinateSystemSize, const IVec2& imageSize) :
     mCoordSystemSize {coordinateSystemSize},
     mImageSize {imageSize} {
     
@@ -74,7 +74,7 @@ OfflineRasterizer::OfflineRasterizer(const Vec2& coordinateSystemSize, const IVe
     ClearBuffer();
 }
 
-void OfflineRasterizer::ClearBuffer() {
+void SoftwareRasterizer::ClearBuffer() {
     for (auto& pixel: mBuffer) {
         pixel = transparentPixel;
     }
@@ -82,24 +82,24 @@ void OfflineRasterizer::ClearBuffer() {
     ClearStencilBuffer();
 }
 
-void OfflineRasterizer::SetStencilBufferFillMode() {
+void SoftwareRasterizer::SetStencilBufferFillMode() {
     mDrawMode = DrawMode::StencilBufferFill;
     mStencilBuffer.resize(mImageSize.x * mImageSize.y);
     ClearStencilBuffer();
 }
 
-void OfflineRasterizer::ClearStencilBuffer() {
+void SoftwareRasterizer::ClearStencilBuffer() {
     for (auto& pixel: mStencilBuffer) {
         pixel = transparentPixel;
     }
 }
 
-void OfflineRasterizer::EnableStencilTest() {
+void SoftwareRasterizer::EnableStencilTest() {
     assert(mStencilBuffer.size() == mBuffer.size());
     mDrawMode = DrawMode::StencilTest;
 }
 
-IVec2 OfflineRasterizer::ToPixelCoordinates(const Vec2& point) const {
+IVec2 SoftwareRasterizer::ToPixelCoordinates(const Vec2& point) const {
     auto xScaleFactor {static_cast<float>(mImageSize.x) / mCoordSystemSize.x};
     auto yScaleFactor {static_cast<float>(mImageSize.y) / mCoordSystemSize.y};
     
@@ -109,7 +109,7 @@ IVec2 OfflineRasterizer::ToPixelCoordinates(const Vec2& point) const {
     };
 }
 
-void OfflineRasterizer::SetPixel(int x, int y, const Vec4& color, DrawOver drawOver) {
+void SoftwareRasterizer::SetPixel(int x, int y, const Vec4& color, DrawOver drawOver) {
     if (x < 0 || x >= mImageSize.x || y < 0 || y >= mImageSize.y) {
         return;
     }
@@ -131,7 +131,9 @@ void OfflineRasterizer::SetPixel(int x, int y, const Vec4& color, DrawOver drawO
     }
 }
 
-void OfflineRasterizer::SetPixelInNormalDrawMode(const Vec4& color, DrawOver drawOver, int offset) {
+void SoftwareRasterizer::SetPixelInNormalDrawMode(const Vec4& color,
+                                                  DrawOver drawOver,
+                                                  int offset) {
     switch (drawOver) {
         case DrawOver::Yes:
             mBuffer[offset] = color;
@@ -144,9 +146,9 @@ void OfflineRasterizer::SetPixelInNormalDrawMode(const Vec4& color, DrawOver dra
     }
 }
 
-void OfflineRasterizer::SetPixelInStencilBufferFillMode(const Vec4& color,
-                                                        DrawOver drawOver,
-                                                        int offset) {
+void SoftwareRasterizer::SetPixelInStencilBufferFillMode(const Vec4& color,
+                                                         DrawOver drawOver,
+                                                         int offset) {
     switch (drawOver) {
         case DrawOver::Yes:
             mStencilBuffer[offset] = color;
@@ -159,17 +161,17 @@ void OfflineRasterizer::SetPixelInStencilBufferFillMode(const Vec4& color,
     }
 }
 
-const Vec4& OfflineRasterizer::GetPixel(int x, int y) const {
+const Vec4& SoftwareRasterizer::GetPixel(int x, int y) const {
     auto offset {(mImageSize.y - y - 1) * mImageSize.x + x};
     assert(offset >= 0 && offset < mImageSize.x * mImageSize.y);
     
     return mBuffer[offset];
 }
 
-void OfflineRasterizer::DrawRectangle(const Vec2& upperRight,
-                                      const Vec2& lowerLeft,
-                                      const Vec4& color,
-                                      DrawOver drawOver) {
+void SoftwareRasterizer::DrawRectangle(const Vec2& upperRight,
+                                       const Vec2& lowerLeft,
+                                       const Vec4& color,
+                                       DrawOver drawOver) {
     auto upperRightPixelCoord {ToPixelCoordinates(upperRight)};
     auto lowerLeftPixelCoord {ToPixelCoordinates(lowerLeft)};
     
@@ -180,10 +182,10 @@ void OfflineRasterizer::DrawRectangle(const Vec2& upperRight,
     }
 }
 
-void OfflineRasterizer::DrawGradientRectangle(const Vec2& upperRight,
-                                              const Vec2& lowerLeft,
-                                              const HorizontalGradientColors& colors,
-                                              DrawOver drawOver) {
+void SoftwareRasterizer::DrawGradientRectangle(const Vec2& upperRight,
+                                               const Vec2& lowerLeft,
+                                               const HorizontalGradientColors& colors,
+                                               DrawOver drawOver) {
     auto upperRightPixelCoord {ToPixelCoordinates(upperRight)};
     auto lowerLeftPixelCoord {ToPixelCoordinates(lowerLeft)};
     
@@ -199,10 +201,10 @@ void OfflineRasterizer::DrawGradientRectangle(const Vec2& upperRight,
     }
 }
 
-void OfflineRasterizer::DrawGradientRectangle(const Vec2& upperRight,
-                                              const Vec2& lowerLeft,
-                                              const VerticalGradientColors& colors,
-                                              DrawOver drawOver) {
+void SoftwareRasterizer::DrawGradientRectangle(const Vec2& upperRight,
+                                               const Vec2& lowerLeft,
+                                               const VerticalGradientColors& colors,
+                                               DrawOver drawOver) {
     auto upperRightPixelCoord {ToPixelCoordinates(upperRight)};
     auto lowerLeftPixelCoord {ToPixelCoordinates(lowerLeft)};
     
@@ -220,11 +222,11 @@ void OfflineRasterizer::DrawGradientRectangle(const Vec2& upperRight,
     }
 }
 
-void OfflineRasterizer::DrawTiltedTrapezoid45(const Vec2& upperRight,
-                                              const Vec2& lowerLeft,
-                                              float width,
-                                              const Vec4& color,
-                                              DrawOver drawOver) {
+void SoftwareRasterizer::DrawTiltedTrapezoid45(const Vec2& upperRight,
+                                               const Vec2& lowerLeft,
+                                               float width,
+                                               const Vec4& color,
+                                               DrawOver drawOver) {
     auto upperRightPixelCoord {ToPixelCoordinates(upperRight)};
     auto lowerLeftPixelCoord {ToPixelCoordinates(lowerLeft)};
     auto yScaleFactor {static_cast<float>(mImageSize.y) / mCoordSystemSize.y};
@@ -245,11 +247,11 @@ void OfflineRasterizer::DrawTiltedTrapezoid45(const Vec2& upperRight,
     }
 }
 
-void OfflineRasterizer::DrawTiltedTrapezoid135(const Vec2& upperLeft,
-                                               const Vec2& lowerRight,
-                                               float width,
-                                               const Vec4& color,
-                                               DrawOver drawOver) {
+void SoftwareRasterizer::DrawTiltedTrapezoid135(const Vec2& upperLeft,
+                                                const Vec2& lowerRight,
+                                                float width,
+                                                const Vec4& color,
+                                                DrawOver drawOver) {
     auto upperLeftPixelCoord {ToPixelCoordinates(upperLeft)};
     auto lowerRightPixelCoord {ToPixelCoordinates(lowerRight)};
     auto yScaleFactor {static_cast<float>(mImageSize.y) / mCoordSystemSize.y};
@@ -270,11 +272,11 @@ void OfflineRasterizer::DrawTiltedTrapezoid135(const Vec2& upperLeft,
     }
 }
 
-void OfflineRasterizer::DrawTiltedTrapezoid225(const Vec2& upperLeft,
-                                               const Vec2& lowerRight,
-                                               float width,
-                                               const Vec4& color,
-                                               DrawOver drawOver) {
+void SoftwareRasterizer::DrawTiltedTrapezoid225(const Vec2& upperLeft,
+                                                const Vec2& lowerRight,
+                                                float width,
+                                                const Vec4& color,
+                                                DrawOver drawOver) {
     auto upperLeftPixelCoord {ToPixelCoordinates(upperLeft)};
     auto lowerRightPixelCoord {ToPixelCoordinates(lowerRight)};
     auto yScaleFactor {static_cast<float>(mImageSize.y) / mCoordSystemSize.y};
@@ -295,11 +297,11 @@ void OfflineRasterizer::DrawTiltedTrapezoid225(const Vec2& upperLeft,
     }
 }
 
-void OfflineRasterizer::DrawTiltedTrapezoid315(const Vec2& upperRight,
-                                               const Vec2& lowerLeft,
-                                               float width,
-                                               const Vec4& color,
-                                               DrawOver drawOver) {
+void SoftwareRasterizer::DrawTiltedTrapezoid315(const Vec2& upperRight,
+                                                const Vec2& lowerLeft,
+                                                float width,
+                                                const Vec4& color,
+                                                DrawOver drawOver) {
     auto upperRightPixelCoord {ToPixelCoordinates(upperRight)};
     auto lowerLeftPixelCoord {ToPixelCoordinates(lowerLeft)};
     auto yScaleFactor {static_cast<float>(mImageSize.y) / mCoordSystemSize.y};
@@ -320,11 +322,11 @@ void OfflineRasterizer::DrawTiltedTrapezoid315(const Vec2& upperRight,
     }
 }
 
-void OfflineRasterizer::DrawCircle(const Vec2& center,
-                                   float radius,
-                                   float width,
-                                   const Vec4& color,
-                                   DrawOver drawOver) {
+void SoftwareRasterizer::DrawCircle(const Vec2& center,
+                                    float radius,
+                                    float width,
+                                    const Vec4& color,
+                                    DrawOver drawOver) {
     auto centerPixelCoord {ToPixelCoordinates(center)};
     auto scaleFactor {static_cast<float>(mImageSize.y) / mCoordSystemSize.y};
     auto radiusInPixels {radius * scaleFactor};
@@ -352,7 +354,7 @@ void OfflineRasterizer::DrawCircle(const Vec2& center,
     }
 }
 
-void OfflineRasterizer::FillEnclosedArea(const Vec4& color) {
+void SoftwareRasterizer::FillEnclosedArea(const Vec4& color) {
     for (auto y {0}; y < mImageSize.y; ++y) {
         if (ShouldSkipLine(y)) {
             continue;
@@ -370,7 +372,7 @@ void OfflineRasterizer::FillEnclosedArea(const Vec4& color) {
     }
 }
 
-bool OfflineRasterizer::ShouldSkipLine(int y) const {
+bool SoftwareRasterizer::ShouldSkipLine(int y) const {
     auto state {ScanlineState::Outside};
 
     for (auto x {0}; x < mImageSize.x; ++x) {
@@ -384,9 +386,9 @@ bool OfflineRasterizer::ShouldSkipLine(int y) const {
     return false;
 }
 
-OfflineRasterizer::ScanlineState OfflineRasterizer::UpdateScanlineFsm(int x,
-                                                                      int y,
-                                                                      ScanlineState state) const {
+SoftwareRasterizer::ScanlineState SoftwareRasterizer::UpdateScanlineFsm(int x,
+                                                                        int y,
+                                                                        ScanlineState state) const {
     switch (state) {
         case ScanlineState::Outside:
             if (GetPixel(x, y) != transparentPixel) {
@@ -413,6 +415,6 @@ OfflineRasterizer::ScanlineState OfflineRasterizer::UpdateScanlineFsm(int x,
     return state;
 }
 
-std::unique_ptr<IImage> OfflineRasterizer::ProduceImage() const {
+std::unique_ptr<IImage> SoftwareRasterizer::ProduceImage() const {
     return std::make_unique<RgbaImage>(mImageSize, mBuffer);
 }

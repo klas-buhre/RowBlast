@@ -4,7 +4,7 @@
 #include "IEngine.hpp"
 #include "IRenderer.hpp"
 #include "ISceneManager.hpp"
-#include "OfflineRasterizer.hpp"
+#include "SoftwareRasterizer.hpp"
 #include "IImage.hpp"
 #include "QuadMesh.hpp"
 
@@ -19,7 +19,7 @@ namespace {
     constexpr auto padding {0.01f};
     constexpr auto crossSize {0.55f};
     
-    void DrawButton(Pht::OfflineRasterizer& rasterizer) {
+    void DrawButton(Pht::SoftwareRasterizer& rasterizer) {
         Pht::Vec4 fillColor {0.5f, 0.5f, 0.5f, 1.0f};
         Pht::Vec4 whiteColor {1.0f, 1.0f, 1.0f, 0.8f};
         
@@ -91,7 +91,7 @@ RowBlast::CreateCloseButton(Pht::IEngine& engine,
         static_cast<int>(coordinateSystemSize.y * yScaleFactor) * 3
     };
     
-    auto rasterizer {std::make_unique<Pht::OfflineRasterizer>(coordinateSystemSize, imageSize)};
+    auto rasterizer {std::make_unique<Pht::SoftwareRasterizer>(coordinateSystemSize, imageSize)};
 
     DrawButton(*rasterizer);
 

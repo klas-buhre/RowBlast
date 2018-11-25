@@ -1,5 +1,5 @@
-#ifndef OfflineRasterizer_hpp
-#define OfflineRasterizer_hpp
+#ifndef SoftwareRasterizer_hpp
+#define SoftwareRasterizer_hpp
 
 #include <memory>
 #include <vector>
@@ -14,7 +14,7 @@ namespace Pht {
         No
     };
     
-    class OfflineRasterizer {
+    class SoftwareRasterizer {
     public:
         struct HorizontalGradientColors {
             const Vec4 mLeft;
@@ -26,7 +26,7 @@ namespace Pht {
             const Vec4 mTop;
         };
 
-        OfflineRasterizer(const Vec2& coordinateSystemSize, const IVec2& imageSize);
+        SoftwareRasterizer(const Vec2& coordinateSystemSize, const IVec2& imageSize);
         
         void ClearBuffer();
         void SetStencilBufferFillMode();

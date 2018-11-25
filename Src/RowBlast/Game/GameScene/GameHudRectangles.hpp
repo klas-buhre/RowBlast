@@ -9,7 +9,7 @@
 
 namespace Pht {
     class IEngine;
-    class OfflineRasterizer;
+    class SoftwareRasterizer;
 }
 
 namespace RowBlast {
@@ -47,17 +47,17 @@ namespace RowBlast {
                         float tilt,
                         const Pht::Vec4& colorSubtract,
                         bool drawDividerLine);
-        void FillStencilBuffer(Pht::OfflineRasterizer& rasterizer,
+        void FillStencilBuffer(Pht::SoftwareRasterizer& rasterizer,
                                const Pht::Vec2& size,
                                float cornerRadius,
                                float padding);
-        void DrawRectangleBorder(Pht::OfflineRasterizer& rasterizer,
+        void DrawRectangleBorder(Pht::SoftwareRasterizer& rasterizer,
                                  const Pht::Vec2& size,
                                  const Pht::Vec4& colorSubtract);
-        void DrawRectangleMainArea(Pht::OfflineRasterizer& rasterizer,
+        void DrawRectangleMainArea(Pht::SoftwareRasterizer& rasterizer,
                                    const Pht::Vec2& size,
                                    const Pht::Vec4& colorSubtract);
-        void DrawLine(Pht::OfflineRasterizer& rasterizer, const Pht::Vec4& colorSubtract);
+        void DrawLine(Pht::SoftwareRasterizer& rasterizer, const Pht::Vec4& colorSubtract);
         
         std::unique_ptr<Pht::RenderableObject> mPauseButtonRectangle;
         std::unique_ptr<Pht::RenderableObject> mPressedPauseButtonRectangle;

@@ -9,7 +9,7 @@
 
 namespace Pht {
     class IEngine;
-    class OfflineRasterizer;
+    class SoftwareRasterizer;
 }
 
 namespace RowBlast {
@@ -49,13 +49,13 @@ namespace RowBlast {
         }
         
     private:
-        void FillStencilBuffer(Pht::OfflineRasterizer& rasterizer,
+        void FillStencilBuffer(Pht::SoftwareRasterizer& rasterizer,
                                float cornerRadius,
                                float padding);
-        void DrawBrightCaptionBar(Pht::OfflineRasterizer& rasterizer, float captionBarHeight);
-        void DrawBrightMainArea(Pht::OfflineRasterizer& rasterizer, float captionBarHeight);
-        void DrawDarkBorder(Pht::OfflineRasterizer& rasterizer);
-        void DrawDarkMainArea(Pht::OfflineRasterizer& rasterizer);
+        void DrawBrightCaptionBar(Pht::SoftwareRasterizer& rasterizer, float captionBarHeight);
+        void DrawBrightMainArea(Pht::SoftwareRasterizer& rasterizer, float captionBarHeight);
+        void DrawDarkBorder(Pht::SoftwareRasterizer& rasterizer);
+        void DrawDarkMainArea(Pht::SoftwareRasterizer& rasterizer);
         
         std::unique_ptr<Pht::RenderableObject> mRenderableObject;
         Pht::Vec2 mSize;

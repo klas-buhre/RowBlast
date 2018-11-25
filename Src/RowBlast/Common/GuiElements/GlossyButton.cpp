@@ -4,7 +4,7 @@
 #include "IEngine.hpp"
 #include "IRenderer.hpp"
 #include "ISceneManager.hpp"
-#include "OfflineRasterizer.hpp"
+#include "SoftwareRasterizer.hpp"
 #include "IImage.hpp"
 #include "QuadMesh.hpp"
 
@@ -140,7 +140,7 @@ namespace {
         }
     }
 
-    void FillStencilBuffer(Pht::OfflineRasterizer& rasterizer,
+    void FillStencilBuffer(Pht::SoftwareRasterizer& rasterizer,
                            const Pht::Vec2& size,
                            float cornerRadius,
                            float xPadding,
@@ -180,7 +180,7 @@ namespace {
         rasterizer.EnableStencilTest();
     }
     
-    void DrawShadedArea(Pht::OfflineRasterizer& rasterizer,
+    void DrawShadedArea(Pht::SoftwareRasterizer& rasterizer,
                         ButtonSize buttonSize,
                         const ButtonColors& buttonColors) {
         auto size {GetSize(buttonSize)};
@@ -197,7 +197,7 @@ namespace {
         rasterizer.DrawRectangle(upperRight, lowerLeft, buttonColors.mShadeColor, Pht::DrawOver::Yes);
     }
     
-    void DrawGlossyArea(Pht::OfflineRasterizer& rasterizer,
+    void DrawGlossyArea(Pht::SoftwareRasterizer& rasterizer,
                         ButtonSize buttonSize,
                         const ButtonColors& buttonColors) {
         auto size {GetSize(buttonSize)};
@@ -214,7 +214,7 @@ namespace {
         rasterizer.DrawRectangle(upperRight, lowerLeft, buttonColors.mGlossColor, Pht::DrawOver::Yes);
     }
 
-    void DrawGradientArea(Pht::OfflineRasterizer& rasterizer,
+    void DrawGradientArea(Pht::SoftwareRasterizer& rasterizer,
                           ButtonSize buttonSize,
                           const ButtonColors& buttonColors) {
         auto size {GetSize(buttonSize)};
@@ -228,7 +228,7 @@ namespace {
                           glossyAreaHeight,
                           shadedAreaHeight);
 
-        Pht::OfflineRasterizer::VerticalGradientColors gradientColors {
+        Pht::SoftwareRasterizer::VerticalGradientColors gradientColors {
             buttonColors.mLowerGradientColor,
             buttonColors.mUpperGradientColor
         };
@@ -237,7 +237,7 @@ namespace {
         rasterizer.DrawGradientRectangle(upperRight, lowerLeft, gradientColors, Pht::DrawOver::Yes);
     }
 
-    void DrawButton(Pht::OfflineRasterizer& rasterizer,
+    void DrawButton(Pht::SoftwareRasterizer& rasterizer,
                     ButtonSize buttonSize,
                     ButtonColor buttonColor) {
         auto buttonColors {GetButtonColors(buttonColor)};
@@ -271,7 +271,7 @@ RowBlast::CreateGlossyButton(Pht::IEngine& engine,
         static_cast<int>(coordinateSystemSize.y * yScaleFactor)
     };
     
-    auto rasterizer {std::make_unique<Pht::OfflineRasterizer>(coordinateSystemSize, imageSize)};
+    auto rasterizer {std::make_unique<Pht::SoftwareRasterizer>(coordinateSystemSize, imageSize)};
 
     DrawButton(*rasterizer, size, color);
 

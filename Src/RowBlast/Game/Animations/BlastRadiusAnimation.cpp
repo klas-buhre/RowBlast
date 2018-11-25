@@ -5,7 +5,7 @@
 #include "IRenderer.hpp"
 #include "QuadMesh.hpp"
 #include "Material.hpp"
-#include "OfflineRasterizer.hpp"
+#include "SoftwareRasterizer.hpp"
 #include "IImage.hpp"
 #include "ISceneManager.hpp"
 #include "MathUtils.hpp"
@@ -43,7 +43,7 @@ namespace {
         {1.0f, 1.0f},
     };
 
-    void DrawEdgeBigBlast(Pht::OfflineRasterizer& rasterizer, float squareSide, float cellSize) {
+    void DrawEdgeBigBlast(Pht::SoftwareRasterizer& rasterizer, float squareSide, float cellSize) {
         const auto edgeLength {cellSize * 1.1f};
         const auto edgeWidth {0.09f};
         const Pht::Vec4 edgeColor {1.0f, 1.0f, 1.0f, 1.0f};
@@ -81,7 +81,7 @@ namespace {
         rasterizer.DrawRectangle(upperRight8, lowerLeft8, edgeColor, Pht::DrawOver::Yes);
     }
 
-    void DrawEdge(Pht::OfflineRasterizer& rasterizer, float squareSide, float cellSize) {
+    void DrawEdge(Pht::SoftwareRasterizer& rasterizer, float squareSide, float cellSize) {
         const auto edgeLength {cellSize * 0.5f};
         const auto edgeWidth {0.09f};
         const Pht::Vec4 edgeColor {1.0f, 1.0f, 1.0f, 1.0f};
@@ -151,7 +151,7 @@ namespace {
         rasterizer.DrawRectangle(upperRight16, lowerLeft16, edgeColor, Pht::DrawOver::Yes);
     }
     
-    void DrawStripes(Pht::OfflineRasterizer& rasterizer, float squareSide) {
+    void DrawStripes(Pht::SoftwareRasterizer& rasterizer, float squareSide) {
         const Pht::Vec4 fillColor {1.0f, 1.0f, 1.0f, 0.15f};
         const auto numStripes {3.5f};
         const auto stripeStep {squareSide / numStripes};
@@ -176,7 +176,7 @@ namespace {
         }
     }
     
-    void EraseCornersFromStripes(Pht::OfflineRasterizer& rasterizer,
+    void EraseCornersFromStripes(Pht::SoftwareRasterizer& rasterizer,
                                  float squareSide,
                                  float cellSize) {
         const Pht::Vec4 fillColor {0.0f, 0.0f, 0.0f, 0.0f};
@@ -220,7 +220,7 @@ BlastRadiusAnimation::BlastRadiusAnimation(Pht::IEngine& engine,
         static_cast<int>(squareSide * yScaleFactor)
     };
     
-    auto rasterizer {std::make_unique<Pht::OfflineRasterizer>(coordinateSystemSize, imageSize)};
+    auto rasterizer {std::make_unique<Pht::SoftwareRasterizer>(coordinateSystemSize, imageSize)};
     
     DrawStripes(*rasterizer, squareSide);
     DrawEdgeBigBlast(*rasterizer, squareSide, cellSize);
