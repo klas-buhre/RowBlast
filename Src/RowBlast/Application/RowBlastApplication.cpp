@@ -41,7 +41,6 @@ Ongoing tasks:
     -Store GUI.
       -Store controller that controls the other store view controllers.
       -Store views.
-        -Remove the first InputUtil::HandleInput().
         -Purchase Successful dialog window should probably be of medium size instead of small.
         -Add Purchase Canceled dialog.
         -Hide store menu and show an animation during pending purchase.

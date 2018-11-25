@@ -45,8 +45,11 @@ LevelBombDialogController::Result LevelBombDialogController::Update() {
 }
 
 LevelBombDialogController::Result LevelBombDialogController::HandleInput() {
-    return InputUtil::HandleInput<Result, Result::None>(
-        mInput, [this] (const Pht::TouchEvent& touch) { return OnTouch(touch); });
+    return InputUtil::HandleInput<Result>(mInput,
+                                          Result::None,
+                                          [this] (const Pht::TouchEvent& touch) {
+                                              return OnTouch(touch);
+                                          });
 }
 
 LevelBombDialogController::Result LevelBombDialogController::OnTouch(const Pht::TouchEvent& touchEvent) {

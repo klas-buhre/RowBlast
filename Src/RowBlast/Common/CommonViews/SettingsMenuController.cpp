@@ -55,8 +55,11 @@ SettingsMenuController::Result SettingsMenuController::Update() {
 }
 
 SettingsMenuController::Result SettingsMenuController::HandleInput() {
-    return InputUtil::HandleInput<Result, Result::None>(
-        mEngine.GetInput(), [this] (const Pht::TouchEvent& touch) { return OnTouch(touch); });
+    return InputUtil::HandleInput<Result>(mEngine.GetInput(),
+                                          Result::None,
+                                          [this] (const Pht::TouchEvent& touch) {
+                                              return OnTouch(touch);
+                                          });
 }
 
 SettingsMenuController::Result SettingsMenuController::OnTouch(const Pht::TouchEvent& touchEvent) {

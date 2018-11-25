@@ -40,8 +40,11 @@ GameOverDialogController::Result GameOverDialogController::Update() {
 }
 
 GameOverDialogController::Result GameOverDialogController::HandleInput() {
-    return InputUtil::HandleInput<Result, Result::None>(
-        mInput, [this] (const Pht::TouchEvent& touch) { return OnTouch(touch); });
+    return InputUtil::HandleInput<Result>(mInput,
+                                          Result::None,
+                                          [this] (const Pht::TouchEvent& touch) {
+                                              return OnTouch(touch);
+                                          });
 }
 
 GameOverDialogController::Result

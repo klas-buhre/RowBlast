@@ -8,6 +8,7 @@
 
 namespace Pht {
     class IEngine;
+    class IInput;
     class TouchEvent;
     class FadeEffect;
 }
@@ -58,7 +59,7 @@ namespace RowBlast {
         Result HandleInput();
         Result OnTouch(const Pht::TouchEvent& touchEvent);
         
-        Pht::IEngine& mEngine;
+        Pht::IInput& mInput;
         StoreMenuView mView;
         SlidingMenuAnimation mSlidingMenuAnimation;
         Result mDeferredResult;

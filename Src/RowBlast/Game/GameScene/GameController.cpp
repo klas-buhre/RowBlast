@@ -481,6 +481,8 @@ GameController::Command GameController::UpdateInLevelCompletedState() {
 GameController::Command GameController::UpdateInOutOfMovesState() {
     auto command {Command::None};
     
+    mUserServices.Update();
+    
     switch (mOutOfMovesState) {
         case OutOfMovesState::OutOfMovesDialog:
             command = UpdateOutOfMovesDialog();
@@ -495,8 +497,6 @@ GameController::Command GameController::UpdateInOutOfMovesState() {
 
 GameController::Command GameController::UpdateOutOfMovesDialog() {
     auto command {Command::None};
-    
-    mUserServices.Update();
     
     switch (mGameViewControllers.GetOutOfMovesDialogController().Update()) {
         case OutOfMovesDialogController::Result::None:

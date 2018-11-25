@@ -45,7 +45,7 @@ StoreMenuController::StoreMenuController(Pht::IEngine& engine,
                                          const CommonResources& commonResources,
                                          const UserServices& userServices,
                                          PotentiallyZoomedScreen potentiallyZoomedScreen) :
-    mEngine {engine},
+    mInput {engine.GetInput()},
     mView {engine, commonResources, userServices, potentiallyZoomedScreen},
     mSlidingMenuAnimation {engine, mView} {}
 
@@ -79,9 +79,11 @@ StoreMenuController::Result StoreMenuController::Update() {
 }
 
 StoreMenuController::Result StoreMenuController::HandleInput() {
-    return InputUtil::HandleInput<Result>(mEngine.GetInput(),
+    return InputUtil::HandleInput<Result>(mInput,
                                           Result {Result::None},
-                                          [this] (const Pht::TouchEvent& touch) { return OnTouch(touch); });
+                                          [this] (const Pht::TouchEvent& touch) {
+                                              return OnTouch(touch);
+                                          });
 }
 
 StoreMenuController::Result StoreMenuController::OnTouch(const Pht::TouchEvent& touchEvent) {

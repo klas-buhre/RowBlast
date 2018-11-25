@@ -45,8 +45,11 @@ LaserDialogController::Result LaserDialogController::Update() {
 }
 
 LaserDialogController::Result LaserDialogController::HandleInput() {
-    return InputUtil::HandleInput<Result, Result::None>(
-        mInput, [this] (const Pht::TouchEvent& touch) { return OnTouch(touch); });
+    return InputUtil::HandleInput<Result>(mInput,
+                                          Result::None,
+                                          [this] (const Pht::TouchEvent& touch) {
+                                              return OnTouch(touch);
+                                          });
 }
 
 LaserDialogController::Result LaserDialogController::OnTouch(const Pht::TouchEvent& touchEvent) {

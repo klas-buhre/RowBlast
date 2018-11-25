@@ -42,8 +42,11 @@ CascadingDialogController::Result CascadingDialogController::Update() {
 }
 
 CascadingDialogController::Result CascadingDialogController::HandleInput() {
-    return InputUtil::HandleInput<Result, Result::None>(
-        mInput, [this] (const Pht::TouchEvent& touch) { return OnTouch(touch); });
+    return InputUtil::HandleInput<Result>(mInput,
+                                          Result::None,
+                                          [this] (const Pht::TouchEvent& touch) {
+                                              return OnTouch(touch);
+                                          });
 }
 
 CascadingDialogController::Result CascadingDialogController::OnTouch(const Pht::TouchEvent& touchEvent) {

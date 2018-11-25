@@ -49,8 +49,11 @@ GameMenuController::Result GameMenuController::Update() {
 }
 
 GameMenuController::Result GameMenuController::HandleInput() {
-    return InputUtil::HandleInput<Result, Result::None>(
-        mInput, [this] (const Pht::TouchEvent& touch) { return OnTouch(touch); });
+    return InputUtil::HandleInput<Result>(mInput,
+                                          Result::None,
+                                          [this] (const Pht::TouchEvent& touch) {
+                                              return OnTouch(touch);
+                                          });
 }
 
 GameMenuController::Result GameMenuController::OnTouch(const Pht::TouchEvent& touchEvent) {
