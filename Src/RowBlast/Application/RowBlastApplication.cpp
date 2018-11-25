@@ -21,7 +21,7 @@ Backlog:
   -Back end:
   -Levels:
   -Sound:
-    -Buy sounds and music.
+    -Buy sounds and music. And try https://freesound.org
   -Make ready for release:
     -Do a soft launch in a couple of countries? Maybe the nordic countris and UK? Only english
      localization is needed for that.
