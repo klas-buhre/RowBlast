@@ -9,8 +9,17 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto fade {0.5f};
+    constexpr auto fade {0.72f};
     constexpr auto fadeTime {0.3f};
+    
+    PotentiallyZoomedScreen ToPotentiallyZoomedScreen(StoreController::SceneId sceneId) {
+        switch (sceneId) {
+            case StoreController::SceneId::Map:
+                return PotentiallyZoomedScreen::No;
+            case StoreController::SceneId::Game:
+                return PotentiallyZoomedScreen::Yes;
+        }
+    }
 }
 
 StoreController::StoreController(Pht::IEngine& engine,
@@ -29,22 +38,28 @@ StoreController::StoreController(Pht::IEngine& engine,
         engine,
         commonResources,
         userServices,
-        sceneId == SceneId::Map ? PotentiallyZoomedScreen::No : PotentiallyZoomedScreen::Yes
+        ToPotentiallyZoomedScreen(sceneId)
     },
     mPurchaseSuccessfulDialogController {
         engine,
         commonResources,
-        sceneId == SceneId::Map ? PotentiallyZoomedScreen::No : PotentiallyZoomedScreen::Yes
+        ToPotentiallyZoomedScreen(sceneId)
     },
     mPurchaseUnsuccessfulDialogController {
         engine,
         commonResources,
-        sceneId == SceneId::Map ? PotentiallyZoomedScreen::No : PotentiallyZoomedScreen::Yes
+        ToPotentiallyZoomedScreen(sceneId)
+    },
+    mPurchaseCanceledDialogController {
+        engine,
+        commonResources,
+        ToPotentiallyZoomedScreen(sceneId)
     } {
 
     mViewManager.AddView(static_cast<int>(ViewController::StoreMenu), mStoreMenuController.GetView());
     mViewManager.AddView(static_cast<int>(ViewController::PurchaseSuccessfulDialog), mPurchaseSuccessfulDialogController.GetView());
     mViewManager.AddView(static_cast<int>(ViewController::PurchaseUnsuccessfulDialog), mPurchaseUnsuccessfulDialogController.GetView());
+    mViewManager.AddView(static_cast<int>(ViewController::PurchaseCanceledDialog), mPurchaseCanceledDialogController.GetView());
 }
 
 void StoreController::Init(Pht::SceneObject& parentObject) {
@@ -72,11 +87,16 @@ StoreController::Result StoreController::Update() {
         case State::StoreMenu:
             result = UpdateStoreMenu();
             break;
+        case State::PurchasePending:
+            break;
         case State::PurchaseSuccessfulDialog:
             result = UpdatePurchaseSuccessfulDialog();
             break;
         case State::PurchaseUnsuccessfulDialog:
             UpdatePurchaseUnsuccessfulDialog();
+            break;
+        case State::PurchaseCanceledDialog:
+            UpdatePurchaseCanceledDialog();
             break;
         case State::Idle:
             break;
@@ -117,11 +137,14 @@ void StoreController::StartPurchase(ProductId productId) {
                                     [this] (PurchaseFailureReason purchaseFailureReason) {
                                         OnPurchaseFailed(purchaseFailureReason);
                                     });
+    GoToPurchasePendingState();
 }
 
 void StoreController::OnPurchaseFailed(PurchaseFailureReason purchaseFailureReason) {
     switch (purchaseFailureReason) {
         case PurchaseFailureReason::UserCancelled:
+            GoToPurchaseCanceledDialogState();
+            break;
         case PurchaseFailureReason::Other:
             GoToPurchaseUnsuccessfulDialogState();
             break;
@@ -147,6 +170,17 @@ void StoreController::UpdatePurchaseUnsuccessfulDialog() {
         case PurchaseUnsuccessfulDialogController::Result::None:
             break;
         case PurchaseUnsuccessfulDialogController::Result::Close:
+            GoToStoreMenuState(SlidingMenuAnimation::UpdateFade::No,
+                               SlidingMenuAnimation::SlideDirection::Right);
+            break;
+    }
+}
+
+void StoreController::UpdatePurchaseCanceledDialog() {
+    switch (mPurchaseCanceledDialogController.Update()) {
+        case PurchaseCanceledDialogController::Result::None:
+            break;
+        case PurchaseCanceledDialogController::Result::Close:
             GoToStoreMenuState(SlidingMenuAnimation::UpdateFade::No,
                                SlidingMenuAnimation::SlideDirection::Right);
             break;
@@ -180,7 +214,18 @@ void StoreController::GoToPurchaseUnsuccessfulDialogState() {
     mPurchaseUnsuccessfulDialogController.SetUp();
 }
 
+void StoreController::GoToPurchaseCanceledDialogState() {
+    mState = State::PurchaseCanceledDialog;
+    SetActiveViewController(ViewController::PurchaseCanceledDialog);
+    mPurchaseCanceledDialogController.SetUp();
+}
+
 void StoreController::GoToIdleState() {
     mState = State::Idle;
+    SetActiveViewController(ViewController::None);
+}
+
+void StoreController::GoToPurchasePendingState() {
+    mState = State::PurchasePending;
     SetActiveViewController(ViewController::None);
 }

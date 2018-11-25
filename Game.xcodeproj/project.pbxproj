@@ -346,6 +346,8 @@
 		627A12A121AAFB5A00EECA3B /* ProgressService.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 627A127B21AAFB5900EECA3B /* ProgressService.cpp */; };
 		627A12A221AAFB5A00EECA3B /* PurchasingService.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 627A127E21AAFB5900EECA3B /* PurchasingService.cpp */; };
 		627A12A321AAFB5A00EECA3B /* LifeService.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 627A127F21AAFB5900EECA3B /* LifeService.cpp */; };
+		627A12A621AB150D00EECA3B /* PurchaseCanceledDialogView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 627A12A421AB150D00EECA3B /* PurchaseCanceledDialogView.cpp */; };
+		627A12A921AB154400EECA3B /* PurchaseCanceledDialogController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 627A12A721AB154400EECA3B /* PurchaseCanceledDialogController.cpp */; };
 		628EC29A207D24090071F368 /* level30.json in Resources */ = {isa = PBXBuildFile; fileRef = 628EC299207D24080071F368 /* level30.json */; };
 		628EC2AC2080C4880071F368 /* level31.json in Resources */ = {isa = PBXBuildFile; fileRef = 628EC2AB2080C4880071F368 /* level31.json */; };
 		6299915E2117374C00C845D1 /* laser_frame2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6299915D2117374B00C845D1 /* laser_frame2.jpg */; };
@@ -1123,6 +1125,10 @@
 		627A127F21AAFB5900EECA3B /* LifeService.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LifeService.cpp; sourceTree = "<group>"; };
 		627A128021AAFB5900EECA3B /* UserServices.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = UserServices.hpp; sourceTree = "<group>"; };
 		627A128121AAFB5900EECA3B /* ProgressService.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ProgressService.hpp; sourceTree = "<group>"; };
+		627A12A421AB150D00EECA3B /* PurchaseCanceledDialogView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PurchaseCanceledDialogView.cpp; sourceTree = "<group>"; };
+		627A12A521AB150D00EECA3B /* PurchaseCanceledDialogView.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PurchaseCanceledDialogView.hpp; sourceTree = "<group>"; };
+		627A12A721AB154400EECA3B /* PurchaseCanceledDialogController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PurchaseCanceledDialogController.cpp; sourceTree = "<group>"; };
+		627A12A821AB154400EECA3B /* PurchaseCanceledDialogController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PurchaseCanceledDialogController.hpp; sourceTree = "<group>"; };
 		628EC299207D24080071F368 /* level30.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level30.json; sourceTree = "<group>"; };
 		628EC2AB2080C4880071F368 /* level31.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level31.json; sourceTree = "<group>"; };
 		6299915D2117374B00C845D1 /* laser_frame2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = laser_frame2.jpg; sourceTree = "<group>"; };
@@ -2371,6 +2377,10 @@
 				627A125E21AAFB5900EECA3B /* NoLivesDialogController.hpp */,
 				627A124C21AAFB5900EECA3B /* NoLivesDialogView.cpp */,
 				627A125F21AAFB5900EECA3B /* NoLivesDialogView.hpp */,
+				627A12A721AB154400EECA3B /* PurchaseCanceledDialogController.cpp */,
+				627A12A821AB154400EECA3B /* PurchaseCanceledDialogController.hpp */,
+				627A12A421AB150D00EECA3B /* PurchaseCanceledDialogView.cpp */,
+				627A12A521AB150D00EECA3B /* PurchaseCanceledDialogView.hpp */,
 				627A126021AAFB5900EECA3B /* PurchaseSuccessfulDialogController.cpp */,
 				627A124B21AAFB5900EECA3B /* PurchaseSuccessfulDialogController.hpp */,
 				627A125A21AAFB5900EECA3B /* PurchaseSuccessfulDialogView.cpp */,
@@ -2868,6 +2878,7 @@
 				6256984C2182392C003A3A9D /* CameraComponent.cpp in Sources */,
 				625698372182392C003A3A9D /* JsonUtil.cpp in Sources */,
 				625696522182382C003A3A9D /* GameHudView.cpp in Sources */,
+				627A12A921AB154400EECA3B /* PurchaseCanceledDialogController.cpp in Sources */,
 				6256984F2182392C003A3A9D /* SceneObjectUtils.cpp in Sources */,
 				625696982182382C003A3A9D /* FlashingBlocksAnimation.cpp in Sources */,
 				625698082182392C003A3A9D /* SphereMesh.cpp in Sources */,
@@ -2888,6 +2899,7 @@
 				625696912182382C003A3A9D /* LevelLoader.cpp in Sources */,
 				6256968F2182382C003A3A9D /* Ai.cpp in Sources */,
 				625696C12182382C003A3A9D /* World2.cpp in Sources */,
+				627A12A621AB150D00EECA3B /* PurchaseCanceledDialogView.cpp in Sources */,
 				625696C72182382C003A3A9D /* NextLevelParticleEffect.cpp in Sources */,
 				625696C62182382C003A3A9D /* MapScene.cpp in Sources */,
 				625696762182382C003A3A9D /* FieldGravity.cpp in Sources */,

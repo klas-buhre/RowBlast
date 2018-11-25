@@ -9,6 +9,7 @@
 #include "StoreMenuController.hpp"
 #include "PurchaseSuccessfulDialogController.hpp"
 #include "PurchaseUnsuccessfulDialogController.hpp"
+#include "PurchaseCanceledDialogController.hpp"
 #include "UserServices.hpp"
 
 namespace Pht {
@@ -49,6 +50,7 @@ namespace RowBlast {
             StoreMenu,
             PurchaseSuccessfulDialog,
             PurchaseUnsuccessfulDialog,
+            PurchaseCanceledDialog,
             None
         };
 
@@ -57,17 +59,22 @@ namespace RowBlast {
         void OnPurchaseFailed(PurchaseFailureReason purchaseFailureReason);
         Result UpdatePurchaseSuccessfulDialog();
         void UpdatePurchaseUnsuccessfulDialog();
+        void UpdatePurchaseCanceledDialog();
         void SetActiveViewController(ViewController viewController);
         void GoToStoreMenuState(SlidingMenuAnimation::UpdateFade updateFade,
                                 SlidingMenuAnimation::SlideDirection slideDirection);
         void GoToPurchaseSuccessfulDialogState(const GoldCoinProduct& product);
         void GoToPurchaseUnsuccessfulDialogState();
+        void GoToPurchaseCanceledDialogState();
         void GoToIdleState();
+        void GoToPurchasePendingState();
         
         enum class State {
             StoreMenu,
+            PurchasePending,
             PurchaseSuccessfulDialog,
             PurchaseUnsuccessfulDialog,
+            PurchaseCanceledDialog,
             Idle
         };
 
@@ -79,6 +86,7 @@ namespace RowBlast {
         StoreMenuController mStoreMenuController;
         PurchaseSuccessfulDialogController mPurchaseSuccessfulDialogController;
         PurchaseUnsuccessfulDialogController mPurchaseUnsuccessfulDialogController;
+        PurchaseCanceledDialogController mPurchaseCanceledDialogController;
     };
 }
 
