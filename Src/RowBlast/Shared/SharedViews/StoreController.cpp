@@ -34,6 +34,7 @@ StoreController::StoreController(Pht::IEngine& engine,
         fade,
         UiLayer::backgroundFade
     },
+    mSpinningWheelEffect {engine},
     mStoreMenuController {
         engine,
         commonResources,
@@ -69,7 +70,8 @@ void StoreController::Init(Pht::SceneObject& parentObject) {
     mStoreMenuController.SetFadeEffect(mFadeEffect);
     mPurchaseSuccessfulDialogController.SetFadeEffect(mFadeEffect);
     parentObject.AddChild(mFadeEffect.GetSceneObject());
- 
+    
+    mSpinningWheelEffect.Init(parentObject);
     mViewManager.Init(parentObject);
     SetActiveViewController(ViewController::None);
 }
@@ -88,6 +90,7 @@ StoreController::Result StoreController::Update() {
             result = UpdateStoreMenu();
             break;
         case State::PurchasePending:
+            mSpinningWheelEffect.Update();
             break;
         case State::PurchaseSuccessfulDialog:
             result = UpdatePurchaseSuccessfulDialog();
@@ -128,13 +131,16 @@ StoreController::Result StoreController::UpdateStoreMenu() {
 }
 
 void StoreController::StartPurchase(ProductId productId) {
-    auto& purchasingService {mUserServices.GetPurchasingService()};
+    mSpinningWheelEffect.Start();
     
+    auto& purchasingService {mUserServices.GetPurchasingService()};
     purchasingService.StartPurchase(productId,
                                     [this] (const GoldCoinProduct& product) {
+                                        mSpinningWheelEffect.Stop();
                                         GoToPurchaseSuccessfulDialogState(product);
                                     },
                                     [this] (PurchaseFailureReason purchaseFailureReason) {
+                                        mSpinningWheelEffect.Stop();
                                         OnPurchaseFailed(purchaseFailureReason);
                                     });
     GoToPurchasePendingState();

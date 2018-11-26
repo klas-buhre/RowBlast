@@ -11,6 +11,7 @@
 #include "PurchaseUnsuccessfulDialogController.hpp"
 #include "PurchaseCanceledDialogController.hpp"
 #include "UserServices.hpp"
+#include "SpinningWheelEffect.hpp"
 
 namespace Pht {
     class IEngine;
@@ -82,6 +83,7 @@ namespace RowBlast {
         State mState {State::Idle};
         TriggerProduct mTriggerProduct;
         Pht::FadeEffect mFadeEffect;
+        SpinningWheelEffect mSpinningWheelEffect;
         GuiViewManager mViewManager;
         StoreMenuController mStoreMenuController;
         PurchaseSuccessfulDialogController mPurchaseSuccessfulDialogController;

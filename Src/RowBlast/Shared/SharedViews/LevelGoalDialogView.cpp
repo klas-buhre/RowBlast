@@ -97,7 +97,7 @@ LevelGoalDialogView::LevelGoalDialogView(Pht::IEngine& engine,
 
         mPlayButton = std::make_unique<MenuButton>(engine,
                                                    *this,
-                                                   Pht::Vec3 {0.0f, -7.6f, UiLayer::textRectangle},
+                                                   Pht::Vec3 {0.0f, -7.7f, UiLayer::textRectangle},
                                                    playButtonInputSize,
                                                    playButtonStyle);
         mPlayButton->CreateText({-1.1f, -0.31f, UiLayer::buttonText},
