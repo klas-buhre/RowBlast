@@ -39,25 +39,53 @@ Ongoing tasks:
      zoomed version. Test with iPhone XR to see if the zoomed textures look good in non-zoomed
      scenes.
     -Store GUI.
-      -Store controller that controls the other store view controllers.
+      -No lives dialog should only be possible to open from map hud add lives button if number of
+       lives is zero. If number of lives is non-zero then the button should be gray.
+      -No moves dialog and no lives dialog should probably have a fade effect.
       -Store views.
-        -Implement Purchase Successful dialog. Says "You have received X gold coins.". Green OK
-         button and normal close button. If store opened from pressing add coins in map hud then go
-         back to map. If store opened from out of moves dialog and there is enough coins then go
-         back to game with extra moves. If store was opened from out of moves dialog but there is
-         not enough coins then go back to store menu. If store was opened from no lives dialog which
-         was triggered from map hud add lives and there is enough coins then go back to map. If
-         store was opened from no lives dialog which was triggered from a map start level click or
-         level restart and there is enough coins then go to to the level goal dialog for that level.
-         If store was opened from no lives dialog but there is not enough coins then go back to
-         store menu.
-        -Out of moves dialog, clicking on continue button: If having enough coins then go back to
-         game with extra moves. If not enough coins then go to store.
-        -No lives dialog, clicking continue button: If having enough coins and no lives dialog was
-         triggered from a map start level click or level restart then go to to the level goal dialog
-         for that level. If having enough coins and no lives dialog was triggered from pressing add
-         lives in the map hud when lives was zero then go back to map. If not enough coins then go
-         to store.
+        -Purchase Successful dialog:
+             If store opened from pressing add coins in map hud then
+                Go back to map.
+             End
+             If store was opened from out of moves dialog
+                If there is enough coins for more moves then
+                    Go back to game with extra moves.
+                Else
+                    Go back to store menu.
+                End
+             End
+             If store was opened from no lives dialog
+                If there is enough coins for refilling lives then
+                    If no lives dialog was opened from map hud add lives button
+                        Go back to map.
+                    End
+                    If no lives dialog was opened from a map start level click or level restart
+                        Go to to the level goal dialog for that level.
+                    End
+                Else
+                    Go back to store menu.
+                End
+             End
+        -Out of moves dialog, clicking on continue button:
+             If having enough coins then
+                Go back to game with extra moves.
+             Else
+                Go to store.
+             End
+        -Out of moves dialog, clicking on close button:
+             Go to to the level goal dialog for that level.
+        -No lives dialog, clicking continue button:
+             If having enough coins for refilling lives then
+                If no lives dialog was opened from a map start level click or level restart then
+                    Go to to the level goal dialog for that level.
+                End
+                If no lives dialog was opened from map hud add lives button then
+                    Go back to map.
+                End
+             Else
+                Go to store.
+             End
+
 
 
 
