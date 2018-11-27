@@ -9,6 +9,7 @@
 // Game includes.
 #include "CommonResources.hpp"
 #include "UiLayer.hpp"
+#include "IGuiLightProvider.hpp"
 
 using namespace RowBlast;
 
@@ -95,6 +96,12 @@ GameMenuView::GameMenuView(Pht::IEngine& engine, const CommonResources& commonRe
     mMapButton->CreateText({-0.8f, -0.23f, UiLayer::buttonText},
                            "Map",
                            guiResources.GetWhiteButtonTextWithShadowPropertiesPotentiallyZoomedScreen());
+}
+
+void GameMenuView::SetUp() {
+    if (mGuiLightProvider) {
+        mGuiLightProvider->SetDefaultGuiLightDirections();
+    }
 }
 
 void GameMenuView::EnableUndoButton() {

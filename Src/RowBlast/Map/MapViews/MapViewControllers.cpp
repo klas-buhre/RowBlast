@@ -42,13 +42,15 @@ MapViewControllers::MapViewControllers(Pht::IEngine& engine,
     mViewManager.AddView(static_cast<int>(LevelGoalDialog), mLevelGoalDialogController.GetView());
     mViewManager.AddView(static_cast<int>(NoLivesDialog), mNoLivesDialogController.GetView());
     mViewManager.AddView(static_cast<int>(SettingsMenu), mSettingsMenuController.GetView());
+    
+    mLevelGoalDialogController.SetFadeEffect(mFadeEffect);
+    mSettingsMenuController.SetFadeEffect(mFadeEffect);
+    
+    mLevelGoalDialogController.SetGuiLightProvider(scene);
 }
 
 void MapViewControllers::Init() {
     mFadeEffect.Reset();
-
-    mLevelGoalDialogController.SetFadeEffect(mFadeEffect);
-    mSettingsMenuController.SetFadeEffect(mFadeEffect);
 
     auto& uiViewContainer {mScene.GetUiViewsContainer()};
     uiViewContainer.AddChild(mFadeEffect.GetSceneObject());

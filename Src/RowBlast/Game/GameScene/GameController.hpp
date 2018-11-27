@@ -146,7 +146,6 @@ namespace RowBlast {
         PieceResources mPieceResources;
         GameHudRectangles mHudRectangles;
         GameViewControllers mGameViewControllers;
-        StoreController mStoreController;
         Field mField;
         CollapsingFieldAnimation mCollapsingFieldAnimation;
         FlashingBlocksAnimation mFlashingBlocksAnimation;
@@ -154,6 +153,7 @@ namespace RowBlast {
         ScrollController mScrollController;
         Pht::CameraShake mCameraShake;
         GameScene mScene;
+        StoreController mStoreController;
         EffectManager mEffectManager;
         PieceDropParticleEffect mPieceDropParticleEffect;
         BlastRadiusAnimation mBlastRadiusAnimation;

@@ -32,6 +32,7 @@ namespace RowBlast {
                    SlidingMenuAnimation::SlideDirection slideDirection,
                    bool isUndoMovePossible);
         void SetFadeEffect(Pht::FadeEffect& fadeEffect);
+        void SetGuiLightProvider(IGuiLightProvider& guiLightProvider);
         Result Update();
         
         Pht::GuiView& GetView() {

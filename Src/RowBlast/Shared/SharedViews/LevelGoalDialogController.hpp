@@ -29,6 +29,7 @@ namespace RowBlast {
         
         void SetUp(const LevelInfo& levelInfo);
         void SetFadeEffect(Pht::FadeEffect& fadeEffect);
+        void SetGuiLightProvider(IGuiLightProvider& guiLightProvider);
         Result Update();
         
         LevelGoalDialogView& GetView() {

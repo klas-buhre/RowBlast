@@ -23,6 +23,7 @@ namespace RowBlast {
     class CommonResources;
     class LevelInfo;
     class PieceResources;
+    class IGuiLightProvider;
     
     class LevelGoalDialogView: public Pht::GuiView {
     public:
@@ -39,6 +40,11 @@ namespace RowBlast {
         void SetUp(const LevelInfo& levelInfo);
         void StartEffects();
         void Update();
+        void RestoreGuiLight();
+        
+        void SetGuiLightProvider(IGuiLightProvider& guiLightProvider) {
+            mGuiLightProvider = &guiLightProvider;
+        }
         
         MenuButton& GetCloseButton() {
             assert(mCloseButton);
@@ -87,6 +93,7 @@ namespace RowBlast {
 
         Pht::IEngine& mEngine;
         const PieceResources& mPieceResources;
+        IGuiLightProvider* mGuiLightProvider {nullptr};
         std::unique_ptr<MenuButton> mCloseButton;
         std::unique_ptr<MenuButton> mPlayButton;
         std::unique_ptr<MenuButton> mBackButton;

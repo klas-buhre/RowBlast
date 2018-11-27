@@ -19,9 +19,14 @@ void GameMenuController::SetFadeEffect(Pht::FadeEffect& fadeEffect) {
     mSlidingMenuAnimation.SetFadeEffect(fadeEffect);
 }
 
+void GameMenuController::SetGuiLightProvider(IGuiLightProvider& guiLightProvider) {
+    mView.SetGuiLightProvider(guiLightProvider);
+}
+
 void GameMenuController::SetUp(SlidingMenuAnimation::UpdateFade updateFade,
                                SlidingMenuAnimation::SlideDirection slideDirection,
                                bool isUndoMovePossible) {
+    mView.SetUp();
     mSlidingMenuAnimation.SetUp(updateFade, slideDirection);
     
     if (isUndoMovePossible) {

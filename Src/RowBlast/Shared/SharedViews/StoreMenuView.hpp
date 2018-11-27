@@ -19,12 +19,14 @@ namespace Pht {
 
 namespace RowBlast {
     class UserServices;
+    class IGuiLightProvider;
     
     class StoreMenuView: public Pht::GuiView {
     public:
         StoreMenuView(Pht::IEngine& engine,
                       const CommonResources& commonResources,
                       const UserServices& userServices,
+                      IGuiLightProvider& guiLightProvider,
                       PotentiallyZoomedScreen potentiallyZoomedScreen);
         
         void SetUp();
@@ -82,6 +84,7 @@ namespace RowBlast {
 
         Pht::IEngine& mEngine;
         const UserServices& mUserServices;
+        IGuiLightProvider& mGuiLightProvider;
         std::unique_ptr<Pht::RenderableObject> mCoinRenderable;
         std::unique_ptr<Pht::RenderableObject> mLightCoinRenderable;
         std::unique_ptr<Pht::RenderableObject> mShortCoinStackRenderable;

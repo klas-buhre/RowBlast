@@ -37,6 +37,10 @@ void LevelGoalDialogController::SetFadeEffect(Pht::FadeEffect& fadeEffect) {
     mSlidingMenuAnimation.SetFadeEffect(fadeEffect);
 }
 
+void LevelGoalDialogController::SetGuiLightProvider(IGuiLightProvider& guiLightProvider) {
+    mView.SetGuiLightProvider(guiLightProvider);
+}
+
 LevelGoalDialogController::Result LevelGoalDialogController::Update() {
     mView.Update();
     
@@ -55,6 +59,7 @@ LevelGoalDialogController::Result LevelGoalDialogController::Update() {
             }
             return HandleInput();
         case SlidingMenuAnimation::State::Done:
+            mView.RestoreGuiLight();
             return mDeferredResult;
     }
     

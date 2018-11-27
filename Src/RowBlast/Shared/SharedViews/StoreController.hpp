@@ -19,6 +19,8 @@ namespace Pht {
 }
 
 namespace RowBlast {
+    class IGuiLightProvider;
+    
     class StoreController {
     public:
         enum class SceneId {
@@ -40,6 +42,7 @@ namespace RowBlast {
         StoreController(Pht::IEngine& engine,
                         const CommonResources& commonResources,
                         UserServices& userServices,
+                        IGuiLightProvider& guiLightProvider,
                         SceneId sceneId);
         
         void Init(Pht::SceneObject& parentObject);

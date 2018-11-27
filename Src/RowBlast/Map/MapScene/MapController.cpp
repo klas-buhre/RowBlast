@@ -48,7 +48,13 @@ MapController::MapController(Pht::IEngine& engine,
     mUfo {engine, commonResources, 1.0f},
     mUfoAnimation {engine, mUfo},
     mMapViewControllers {engine, mScene, commonResources, userServices, settings, pieceResources},
-    mStoreController {engine, commonResources, userServices, StoreController::SceneId::Map} {}
+    mStoreController {
+        engine,
+        commonResources,
+        userServices,
+        mScene,
+        StoreController::SceneId::Map
+    } {}
 
 void MapController::Init() {
     mScene.Init();

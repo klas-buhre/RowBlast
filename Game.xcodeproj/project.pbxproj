@@ -1134,6 +1134,7 @@
 		627A12B121AC4CBE00EECA3B /* SpinningWheelEffect.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SpinningWheelEffect.cpp; sourceTree = "<group>"; };
 		627A12B221AC4CBE00EECA3B /* SpinningWheelEffect.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SpinningWheelEffect.hpp; sourceTree = "<group>"; };
 		627A12B821AC593900EECA3B /* spinning_wheel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spinning_wheel.png; sourceTree = "<group>"; };
+		627A12BB21AD59A900EECA3B /* IGuiLightProvider.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = IGuiLightProvider.hpp; sourceTree = "<group>"; };
 		628EC299207D24080071F368 /* level30.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level30.json; sourceTree = "<group>"; };
 		628EC2AB2080C4880071F368 /* level31.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level31.json; sourceTree = "<group>"; };
 		6299915D2117374B00C845D1 /* laser_frame2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = laser_frame2.jpg; sourceTree = "<group>"; };
@@ -2360,6 +2361,7 @@
 				627A123921AAFB5900EECA3B /* GuiResources.hpp */,
 				627A123C21AAFB5900EECA3B /* GuiViewManager.cpp */,
 				627A124521AAFB5900EECA3B /* GuiViewManager.hpp */,
+				627A12BB21AD59A900EECA3B /* IGuiLightProvider.hpp */,
 				627A124121AAFB5900EECA3B /* MenuButton.cpp */,
 				627A123721AAFB5900EECA3B /* MenuButton.hpp */,
 				627A123F21AAFB5900EECA3B /* MenuWindow.cpp */,

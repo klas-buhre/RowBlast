@@ -27,8 +27,8 @@ using namespace RowBlast;
 namespace {
     const auto halfMapWidth {22.0f};
     constexpr auto lightAnimationDuration {5.0f};
-    const Pht::Vec3 lightDirectionA {0.785f, 1.0f, 0.67f};
-    const Pht::Vec3 lightDirectionB {1.0f, 1.0f, 0.74f};
+    const Pht::Vec3 defaultUiLightDirectionA {0.785f, 1.0f, 0.67f};
+    const Pht::Vec3 defaultUiLightDirectionB {1.0f, 1.0f, 0.74f};
     
     enum class Layer {
         Space,
@@ -91,6 +91,8 @@ void MapScene::Init() {
     mUiLight = uiLightComponent.get();
     uiViewsRenderPass.SetLight(mUiLight);
     uiLightSceneObject.SetComponent<Pht::LightComponent>(std::move(uiLightComponent));
+    
+    SetDefaultGuiLightDirections();
 
     auto& uiCameraSceneObject {scene->CreateSceneObject()};
     uiCameraSceneObject.SetIsVisible(false);
@@ -307,7 +309,17 @@ void MapScene::UpdateUiLightAnimation() {
     }
     
     auto t {(cos(mLightAnimationTime * 2.0f * 3.1415f / lightAnimationDuration) + 1.0f) / 2.0f};
-    mUiLight->SetDirection(lightDirectionA.Lerp(t, lightDirectionB));
+    mUiLight->SetDirection(mUiLightDirectionA.Lerp(t, mUiLightDirectionB));
+}
+
+void MapScene::SetGuiLightDirections(const Pht::Vec3& directionA, const Pht::Vec3& directionB) {
+    mUiLightDirectionA = directionA;
+    mUiLightDirectionB = directionB;
+}
+
+void MapScene::SetDefaultGuiLightDirections() {
+    mUiLightDirectionA = defaultUiLightDirectionA;
+    mUiLightDirectionB = defaultUiLightDirectionB;
 }
 
 void MapScene::SetCameraXPosition(float xPosition) {

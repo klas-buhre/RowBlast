@@ -55,6 +55,12 @@ Tutorial::Tutorial(Pht::IEngine& engine, GameScene& scene, const CommonResources
     mViewManager.AddView(static_cast<int>(Controller::LaserDialog), mLaserDialogController.GetView());
     mViewManager.AddView(static_cast<int>(Controller::BombDialog), mBombDialogController.GetView());
     mViewManager.AddView(static_cast<int>(Controller::LevelBombDialog), mLevelBombDialogController.GetView());
+
+    mCascadingDialogController.SetFadeEffect(mFadeEffect);
+    mSameColorDialogController.SetFadeEffect(mFadeEffect);
+    mLaserDialogController.SetFadeEffect(mFadeEffect);
+    mBombDialogController.SetFadeEffect(mFadeEffect);
+    mLevelBombDialogController.SetFadeEffect(mFadeEffect);
 }
 
 void Tutorial::Init(const Level& level) {
@@ -65,13 +71,7 @@ void Tutorial::Init(const Level& level) {
     }
 
     mHandAnimation.Init();
-    
     mFadeEffect.Reset();
-    mCascadingDialogController.SetFadeEffect(mFadeEffect);
-    mSameColorDialogController.SetFadeEffect(mFadeEffect);
-    mLaserDialogController.SetFadeEffect(mFadeEffect);
-    mBombDialogController.SetFadeEffect(mFadeEffect);
-    mLevelBombDialogController.SetFadeEffect(mFadeEffect);
     
     auto& uiViewContainer {mScene.GetUiViewsContainer()};
     uiViewContainer.AddChild(mFadeEffect.GetSceneObject());

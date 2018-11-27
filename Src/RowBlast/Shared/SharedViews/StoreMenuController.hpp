@@ -14,6 +14,8 @@ namespace Pht {
 }
 
 namespace RowBlast {
+    class IGuiLightProvider;
+
     class StoreMenuController {
     public:
         class Result {
@@ -44,6 +46,7 @@ namespace RowBlast {
         StoreMenuController(Pht::IEngine& engine,
                             const CommonResources& commonResources,
                             const UserServices& userServices,
+                            IGuiLightProvider& guiLightProvider,
                             PotentiallyZoomedScreen potentiallyZoomedScreen);
         
         void SetUp(SlidingMenuAnimation::UpdateFade updateFade,

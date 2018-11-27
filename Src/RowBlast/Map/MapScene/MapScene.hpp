@@ -14,6 +14,7 @@
 #include "FloatingBlocks.hpp"
 #include "MapPin.hpp"
 #include "MapHud.hpp"
+#include "IGuiLightProvider.hpp"
 
 namespace Pht {
     class IEngine;
@@ -31,12 +32,16 @@ namespace RowBlast {
     class Universe;
     class BackgroundLight;
 
-    class MapScene {
+    class MapScene: public IGuiLightProvider {
     public:
         MapScene(Pht::IEngine& engine,
                  const CommonResources& commonResources,
                  UserServices& userServices,
                  const Universe& universe);
+
+        void SetGuiLightDirections(const Pht::Vec3& directionA,
+                                   const Pht::Vec3& directionB) override;
+        void SetDefaultGuiLightDirections() override;
         
         void Init();
         void Update();
@@ -89,6 +94,8 @@ namespace RowBlast {
         Pht::Scene* mScene {nullptr};
         Pht::CameraComponent* mCamera {nullptr};
         Pht::LightComponent* mUiLight {nullptr};
+        Pht::Vec3 mUiLightDirectionA;
+        Pht::Vec3 mUiLightDirectionB;
         float mLightAnimationTime {0.0f};
         std::unique_ptr<Planets> mPlanets;
         std::unique_ptr<Clouds> mClouds;

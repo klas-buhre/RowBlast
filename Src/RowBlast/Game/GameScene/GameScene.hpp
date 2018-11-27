@@ -15,6 +15,7 @@
 #include "FieldBorder.hpp"
 #include "FieldGrid.hpp"
 #include "UiLayer.hpp"
+#include "IGuiLightProvider.hpp"
 
 namespace Pht {
     class IEngine;
@@ -35,7 +36,7 @@ namespace RowBlast {
     class GameHudController;
     class GameHudRectangles;
     
-    class GameScene {
+    class GameScene: public IGuiLightProvider {
     public:
         enum class Layer {
             Background,
@@ -59,7 +60,11 @@ namespace RowBlast {
                   GameHudController& gameHudController,
                   const Pht::CameraShake& cameraShake,
                   const GameHudRectangles& hudRectangles);
-        
+
+        void SetGuiLightDirections(const Pht::Vec3& directionA,
+                                   const Pht::Vec3& directionB) override;
+        void SetDefaultGuiLightDirections() override;
+
         void Init(const Level& level,
                   const LevelResources& levelResources,
                   const PieceResources& pieceResources,
@@ -247,6 +252,9 @@ namespace RowBlast {
         Pht::Scene* mScene {nullptr};
         Pht::CameraComponent* mCamera {nullptr};
         Pht::LightComponent* mLight {nullptr};
+        Pht::LightComponent* mUiLight {nullptr};
+        Pht::Vec3 mUiLightDirectionA;
+        Pht::Vec3 mUiLightDirectionB;
         float mLightAnimationTime {0.0f};
         std::unique_ptr<FloatingBlocks> mFloatingBlocks;
         std::unique_ptr<SceneObjectPool> mFieldBlocks;

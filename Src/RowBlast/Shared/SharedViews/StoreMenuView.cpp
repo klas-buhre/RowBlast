@@ -13,6 +13,7 @@
 // Game includes.
 #include "UiLayer.hpp"
 #include "UserServices.hpp"
+#include "IGuiLightProvider.hpp"
 
 using namespace RowBlast;
 
@@ -25,9 +26,11 @@ namespace {
 StoreMenuView::StoreMenuView(Pht::IEngine& engine,
                              const CommonResources& commonResources,
                              const UserServices& userServices,
+                             IGuiLightProvider& guiLightProvider,
                              PotentiallyZoomedScreen zoom) :
     mEngine {engine},
-    mUserServices {userServices} {
+    mUserServices {userServices},
+    mGuiLightProvider {guiLightProvider} {
     
     CreateRenderables(engine, commonResources);
 
@@ -443,6 +446,8 @@ void StoreMenuView::SetUp() {
         productSection.mGlowEffect->GetComponent<Pht::ParticleEffect>()->Start();
         productSection.mTwinklesEffect->GetComponent<Pht::ParticleEffect>()->Start();
     }
+    
+    mGuiLightProvider.SetDefaultGuiLightDirections();
 }
 
 void StoreMenuView::Update() {

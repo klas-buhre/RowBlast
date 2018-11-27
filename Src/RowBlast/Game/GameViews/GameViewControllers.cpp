@@ -53,21 +53,24 @@ GameViewControllers::GameViewControllers(Pht::IEngine& engine,
     mViewManager.AddView(static_cast<int>(LevelGoalDialog), mLevelGoalDialogController.GetView());
     mViewManager.AddView(static_cast<int>(RestartConfirmationDialog), mRestartConfirmationDialogController.GetView());
     mViewManager.AddView(static_cast<int>(MapConfirmationDialog), mMapConfirmationDialogController.GetView());
-}
-
-void GameViewControllers::Init(GameScene& scene) {
-    mFadeEffect.Reset();
     
     mGameMenuController.SetFadeEffect(mFadeEffect);
     mSettingsMenuController.SetFadeEffect(mFadeEffect);
     mRestartConfirmationDialogController.SetFadeEffect(mFadeEffect);
     mMapConfirmationDialogController.SetFadeEffect(mFadeEffect);
+}
+
+void GameViewControllers::Init(GameScene& scene) {
+    mFadeEffect.Reset();
     
     auto& uiViewContainer {scene.GetUiViewsContainer()};
     uiViewContainer.AddChild(mFadeEffect.GetSceneObject());
  
     mViewManager.Init(uiViewContainer);
     SetActiveController(None);
+    
+    mGameMenuController.SetGuiLightProvider(scene);
+    mLevelGoalDialogController.SetGuiLightProvider(scene);
 }
 
 void GameViewControllers::SetActiveController(Controller controller) {

@@ -13,6 +13,7 @@
 #include "PieceResources.hpp"
 #include "UiLayer.hpp"
 #include "GradientRectangle.hpp"
+#include "IGuiLightProvider.hpp"
 
 using namespace RowBlast;
 
@@ -28,6 +29,7 @@ namespace {
     constexpr auto asteroidRotationSpeed {35.0f};
     constexpr auto grayCubeRotationSpeed {16.0f};
     const Pht::Vec3 captionPosition {-1.7f, 8.25f, UiLayer::text};
+    const Pht::Vec3 uiLightDirection {0.83f, 1.0f, 1.0f};
 }
 
 LevelGoalDialogView::LevelGoalDialogView(Pht::IEngine& engine,
@@ -376,6 +378,10 @@ void LevelGoalDialogView::CreateGlowEffectsBehindGoal(Pht::SceneObject& parentOb
 }
 
 void LevelGoalDialogView::SetUp(const LevelInfo& levelInfo) {
+    if (mGuiLightProvider) {
+        mGuiLightProvider->SetGuiLightDirections(uiLightDirection, uiLightDirection);
+    }
+
     mCaption->GetText() = "LEVEL " + std::to_string(levelInfo.mId);
     
     auto adjustedCaptionPosition {captionPosition};
@@ -609,4 +615,10 @@ void LevelGoalDialogView::AnimateAsteroidRotation(float dt) {
     }
     
     mAsteroidSceneObject->GetTransform().SetRotation(mAsteroidRotation);
+}
+
+void LevelGoalDialogView::RestoreGuiLight() {
+    if (mGuiLightProvider) {
+        mGuiLightProvider->SetDefaultGuiLightDirections();
+    }
 }

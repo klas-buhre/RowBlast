@@ -25,6 +25,7 @@ namespace {
 StoreController::StoreController(Pht::IEngine& engine,
                                  const CommonResources& commonResources,
                                  UserServices& userServices,
+                                 IGuiLightProvider& guiLightProvider,
                                  SceneId sceneId) :
     mUserServices {userServices},
     mFadeEffect {
@@ -39,6 +40,7 @@ StoreController::StoreController(Pht::IEngine& engine,
         engine,
         commonResources,
         userServices,
+        guiLightProvider,
         ToPotentiallyZoomedScreen(sceneId)
     },
     mPurchaseSuccessfulDialogController {
@@ -61,14 +63,15 @@ StoreController::StoreController(Pht::IEngine& engine,
     mViewManager.AddView(static_cast<int>(ViewController::PurchaseSuccessfulDialog), mPurchaseSuccessfulDialogController.GetView());
     mViewManager.AddView(static_cast<int>(ViewController::PurchaseFailedDialog), mPurchaseFailedDialogController.GetView());
     mViewManager.AddView(static_cast<int>(ViewController::PurchaseCanceledDialog), mPurchaseCanceledDialogController.GetView());
+    
+    mStoreMenuController.SetFadeEffect(mFadeEffect);
+    mPurchaseSuccessfulDialogController.SetFadeEffect(mFadeEffect);
 }
 
 void StoreController::Init(Pht::SceneObject& parentObject) {
     mState = State::Idle;
     
     mFadeEffect.Reset();
-    mStoreMenuController.SetFadeEffect(mFadeEffect);
-    mPurchaseSuccessfulDialogController.SetFadeEffect(mFadeEffect);
     parentObject.AddChild(mFadeEffect.GetSceneObject());
     
     mSpinningWheelEffect.Init(parentObject);

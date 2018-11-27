@@ -15,13 +15,19 @@ namespace Pht {
 
 namespace RowBlast {
     class CommonResources;
+    class IGuiLightProvider;
     
     class GameMenuView: public Pht::GuiView {
     public:
         GameMenuView(Pht::IEngine& engine, const CommonResources& commonResources);
         
+        void SetUp();
         void EnableUndoButton();
         void DisableUndoButton();
+        
+        void SetGuiLightProvider(IGuiLightProvider& guiLightProvider) {
+            mGuiLightProvider = &guiLightProvider;
+        }
         
         bool IsUndoButtonEnabled() const {
             return mIsUndoButtonEnabled;
@@ -52,6 +58,7 @@ namespace RowBlast {
         }
         
     private:
+        IGuiLightProvider* mGuiLightProvider {nullptr};
         std::unique_ptr<MenuButton> mResumeButton;
         std::unique_ptr<MenuButton> mUndoButton;
         std::unique_ptr<MenuButton> mGoalButton;

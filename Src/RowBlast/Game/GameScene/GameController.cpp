@@ -45,7 +45,6 @@ GameController::GameController(Pht::IEngine& engine,
         mPieceResources,
         mHudRectangles
     },
-    mStoreController {engine, commonResources, userServices, StoreController::SceneId::Game},
     mField {},
     mCollapsingFieldAnimation {mField},
     mFlashingBlocksAnimation {mField, mPieceResources},
@@ -59,6 +58,13 @@ GameController::GameController(Pht::IEngine& engine,
         mGameViewControllers.GetGameHudController(),
         mCameraShake,
         mHudRectangles
+    },
+    mStoreController {
+        engine,
+        commonResources,
+        userServices,
+        mScene,
+        StoreController::SceneId::Game
     },
     mEffectManager {engine, mScene, mCameraShake},
     mPieceDropParticleEffect {engine, mScene},

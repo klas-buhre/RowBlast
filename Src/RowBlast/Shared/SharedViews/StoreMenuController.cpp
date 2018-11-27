@@ -44,9 +44,10 @@ ProductId StoreMenuController::Result::GetProductId() const {
 StoreMenuController::StoreMenuController(Pht::IEngine& engine,
                                          const CommonResources& commonResources,
                                          const UserServices& userServices,
+                                         IGuiLightProvider& guiLightProvider,
                                          PotentiallyZoomedScreen potentiallyZoomedScreen) :
     mInput {engine.GetInput()},
-    mView {engine, commonResources, userServices, potentiallyZoomedScreen},
+    mView {engine, commonResources, userServices, guiLightProvider, potentiallyZoomedScreen},
     mSlidingMenuAnimation {engine, mView} {}
 
 void StoreMenuController::SetUp(SlidingMenuAnimation::UpdateFade updateFade,

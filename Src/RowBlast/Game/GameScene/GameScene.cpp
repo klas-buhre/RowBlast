@@ -421,6 +421,16 @@ void GameScene::CreateUiViewsContainer() {
     
     uiCameraSceneObject.SetComponent<Pht::CameraComponent>(std::move(uiCameraComponent));
     mUiViewsContainer->AddChild(uiCameraSceneObject);
+    
+    auto& uiLightSceneObject {mScene->CreateSceneObject()};
+    uiLightSceneObject.SetIsVisible(false);
+    auto uiLightComponent {std::make_unique<Pht::LightComponent>(uiLightSceneObject)};
+    mUiLight = uiLightComponent.get();
+    uiRenderPass->SetLight(mUiLight);
+    uiLightSceneObject.SetComponent<Pht::LightComponent>(std::move(uiLightComponent));
+    mUiViewsContainer->AddChild(uiLightSceneObject);
+    
+    SetDefaultGuiLightDirections();
 }
 
 void GameScene::CreateStarsContainer() {
@@ -545,6 +555,17 @@ void GameScene::UpdateLightAnimation() {
     
     auto t {(cos(mLightAnimationTime * 2.0f * 3.1415f / lightAnimationDuration) + 1.0f) / 2.0f};
     mLight->SetDirection(lightDirectionA.Lerp(t, lightDirectionB));
+    mUiLight->SetDirection(mUiLightDirectionA.Lerp(t, mUiLightDirectionB));
+}
+
+void GameScene::SetGuiLightDirections(const Pht::Vec3& directionA, const Pht::Vec3& directionB) {
+    mUiLightDirectionA = directionA;
+    mUiLightDirectionB = directionB;
+}
+
+void GameScene::SetDefaultGuiLightDirections() {
+    mUiLightDirectionA = lightDirectionA;
+    mUiLightDirectionB = lightDirectionB;
 }
 
 const Pht::Material& GameScene::GameScene::GetGrayMaterial() const {
