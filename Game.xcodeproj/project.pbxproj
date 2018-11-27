@@ -326,11 +326,11 @@
 		627A128D21AAFB5A00EECA3B /* LevelGoalDialogView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 627A125021AAFB5900EECA3B /* LevelGoalDialogView.cpp */; };
 		627A128E21AAFB5A00EECA3B /* SettingsMenuController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 627A125121AAFB5900EECA3B /* SettingsMenuController.cpp */; };
 		627A128F21AAFB5A00EECA3B /* StoreMenuView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 627A125521AAFB5900EECA3B /* StoreMenuView.cpp */; };
-		627A129021AAFB5A00EECA3B /* PurchaseUnsuccessfulDialogView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 627A125621AAFB5900EECA3B /* PurchaseUnsuccessfulDialogView.cpp */; };
+		627A129021AAFB5A00EECA3B /* PurchaseFailedDialogView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 627A125621AAFB5900EECA3B /* PurchaseFailedDialogView.cpp */; };
 		627A129121AAFB5A00EECA3B /* StoreController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 627A125921AAFB5900EECA3B /* StoreController.cpp */; };
 		627A129221AAFB5A00EECA3B /* PurchaseSuccessfulDialogView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 627A125A21AAFB5900EECA3B /* PurchaseSuccessfulDialogView.cpp */; };
 		627A129321AAFB5A00EECA3B /* SettingsMenuView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 627A125B21AAFB5900EECA3B /* SettingsMenuView.cpp */; };
-		627A129421AAFB5A00EECA3B /* PurchaseUnsuccessfulDialogController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 627A125D21AAFB5900EECA3B /* PurchaseUnsuccessfulDialogController.cpp */; };
+		627A129421AAFB5A00EECA3B /* PurchaseFailedDialogController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 627A125D21AAFB5900EECA3B /* PurchaseFailedDialogController.cpp */; };
 		627A129521AAFB5A00EECA3B /* PurchaseSuccessfulDialogController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 627A126021AAFB5900EECA3B /* PurchaseSuccessfulDialogController.cpp */; };
 		627A129621AAFB5A00EECA3B /* UfoAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 627A126221AAFB5900EECA3B /* UfoAnimation.cpp */; };
 		627A129721AAFB5A00EECA3B /* Materials.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 627A126321AAFB5900EECA3B /* Materials.cpp */; };
@@ -1073,27 +1073,27 @@
 		627A124521AAFB5900EECA3B /* GuiViewManager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GuiViewManager.hpp; sourceTree = "<group>"; };
 		627A124721AAFB5900EECA3B /* SettingsMenuView.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SettingsMenuView.hpp; sourceTree = "<group>"; };
 		627A124821AAFB5900EECA3B /* LevelGoalDialogController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelGoalDialogController.cpp; sourceTree = "<group>"; };
-		627A124921AAFB5900EECA3B /* PurchaseUnsuccessfulDialogController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PurchaseUnsuccessfulDialogController.hpp; sourceTree = "<group>"; };
+		627A124921AAFB5900EECA3B /* PurchaseFailedDialogController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PurchaseFailedDialogController.hpp; sourceTree = "<group>"; };
 		627A124A21AAFB5900EECA3B /* NoLivesDialogController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NoLivesDialogController.cpp; sourceTree = "<group>"; };
 		627A124B21AAFB5900EECA3B /* PurchaseSuccessfulDialogController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PurchaseSuccessfulDialogController.hpp; sourceTree = "<group>"; };
 		627A124C21AAFB5900EECA3B /* NoLivesDialogView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NoLivesDialogView.cpp; sourceTree = "<group>"; };
 		627A124D21AAFB5900EECA3B /* StoreMenuController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StoreMenuController.cpp; sourceTree = "<group>"; };
 		627A124E21AAFB5900EECA3B /* StoreMenuView.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = StoreMenuView.hpp; sourceTree = "<group>"; };
-		627A124F21AAFB5900EECA3B /* PurchaseUnsuccessfulDialogView.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PurchaseUnsuccessfulDialogView.hpp; sourceTree = "<group>"; };
+		627A124F21AAFB5900EECA3B /* PurchaseFailedDialogView.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PurchaseFailedDialogView.hpp; sourceTree = "<group>"; };
 		627A125021AAFB5900EECA3B /* LevelGoalDialogView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelGoalDialogView.cpp; sourceTree = "<group>"; };
 		627A125121AAFB5900EECA3B /* SettingsMenuController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SettingsMenuController.cpp; sourceTree = "<group>"; };
 		627A125221AAFB5900EECA3B /* StoreController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = StoreController.hpp; sourceTree = "<group>"; };
 		627A125321AAFB5900EECA3B /* PurchaseSuccessfulDialogView.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PurchaseSuccessfulDialogView.hpp; sourceTree = "<group>"; };
 		627A125421AAFB5900EECA3B /* StoreMenuController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = StoreMenuController.hpp; sourceTree = "<group>"; };
 		627A125521AAFB5900EECA3B /* StoreMenuView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StoreMenuView.cpp; sourceTree = "<group>"; };
-		627A125621AAFB5900EECA3B /* PurchaseUnsuccessfulDialogView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PurchaseUnsuccessfulDialogView.cpp; sourceTree = "<group>"; };
+		627A125621AAFB5900EECA3B /* PurchaseFailedDialogView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PurchaseFailedDialogView.cpp; sourceTree = "<group>"; };
 		627A125721AAFB5900EECA3B /* LevelGoalDialogView.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LevelGoalDialogView.hpp; sourceTree = "<group>"; };
 		627A125821AAFB5900EECA3B /* SettingsMenuController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SettingsMenuController.hpp; sourceTree = "<group>"; };
 		627A125921AAFB5900EECA3B /* StoreController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StoreController.cpp; sourceTree = "<group>"; };
 		627A125A21AAFB5900EECA3B /* PurchaseSuccessfulDialogView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PurchaseSuccessfulDialogView.cpp; sourceTree = "<group>"; };
 		627A125B21AAFB5900EECA3B /* SettingsMenuView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SettingsMenuView.cpp; sourceTree = "<group>"; };
 		627A125C21AAFB5900EECA3B /* LevelGoalDialogController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LevelGoalDialogController.hpp; sourceTree = "<group>"; };
-		627A125D21AAFB5900EECA3B /* PurchaseUnsuccessfulDialogController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PurchaseUnsuccessfulDialogController.cpp; sourceTree = "<group>"; };
+		627A125D21AAFB5900EECA3B /* PurchaseFailedDialogController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PurchaseFailedDialogController.cpp; sourceTree = "<group>"; };
 		627A125E21AAFB5900EECA3B /* NoLivesDialogController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = NoLivesDialogController.hpp; sourceTree = "<group>"; };
 		627A125F21AAFB5900EECA3B /* NoLivesDialogView.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = NoLivesDialogView.hpp; sourceTree = "<group>"; };
 		627A126021AAFB5900EECA3B /* PurchaseSuccessfulDialogController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PurchaseSuccessfulDialogController.cpp; sourceTree = "<group>"; };
@@ -2392,10 +2392,10 @@
 				627A124B21AAFB5900EECA3B /* PurchaseSuccessfulDialogController.hpp */,
 				627A125A21AAFB5900EECA3B /* PurchaseSuccessfulDialogView.cpp */,
 				627A125321AAFB5900EECA3B /* PurchaseSuccessfulDialogView.hpp */,
-				627A125D21AAFB5900EECA3B /* PurchaseUnsuccessfulDialogController.cpp */,
-				627A124921AAFB5900EECA3B /* PurchaseUnsuccessfulDialogController.hpp */,
-				627A125621AAFB5900EECA3B /* PurchaseUnsuccessfulDialogView.cpp */,
-				627A124F21AAFB5900EECA3B /* PurchaseUnsuccessfulDialogView.hpp */,
+				627A125D21AAFB5900EECA3B /* PurchaseFailedDialogController.cpp */,
+				627A124921AAFB5900EECA3B /* PurchaseFailedDialogController.hpp */,
+				627A125621AAFB5900EECA3B /* PurchaseFailedDialogView.cpp */,
+				627A124F21AAFB5900EECA3B /* PurchaseFailedDialogView.hpp */,
 				627A125121AAFB5900EECA3B /* SettingsMenuController.cpp */,
 				627A125821AAFB5900EECA3B /* SettingsMenuController.hpp */,
 				627A125B21AAFB5900EECA3B /* SettingsMenuView.cpp */,
@@ -2858,7 +2858,7 @@
 				625698052182392C003A3A9D /* ParametricSurface.cpp in Sources */,
 				6256969A2182382C003A3A9D /* BlastRadiusAnimation.cpp in Sources */,
 				6256984D2182392C003A3A9D /* SceneObject.cpp in Sources */,
-				627A129021AAFB5A00EECA3B /* PurchaseUnsuccessfulDialogView.cpp in Sources */,
+				627A129021AAFB5A00EECA3B /* PurchaseFailedDialogView.cpp in Sources */,
 				6256967E2182382C003A3A9D /* MiddleIPiece.cpp in Sources */,
 				625698042182392C003A3A9D /* MeshUtils.cpp in Sources */,
 				625698122182392C003A3A9D /* TextRenderer.cpp in Sources */,
@@ -2900,7 +2900,7 @@
 				627A123421AAC7C000EECA3B /* SoftwareRasterizer.cpp in Sources */,
 				6256965C2182382C003A3A9D /* MapConfirmationDialogController.cpp in Sources */,
 				625696542182382C003A3A9D /* LevelCompletedDialogController.cpp in Sources */,
-				627A129421AAFB5A00EECA3B /* PurchaseUnsuccessfulDialogController.cpp in Sources */,
+				627A129421AAFB5A00EECA3B /* PurchaseFailedDialogController.cpp in Sources */,
 				625698532182392C003A3A9D /* ParticleEmitter.cpp in Sources */,
 				627A129C21AAFB5A00EECA3B /* GradientRectangle.cpp in Sources */,
 				625698342182392C003A3A9D /* InputHandler.cpp in Sources */,

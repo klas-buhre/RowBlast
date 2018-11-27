@@ -1,8 +1,8 @@
-#ifndef PurchaseUnsuccessfulDialogController_hpp
-#define PurchaseUnsuccessfulDialogController_hpp
+#ifndef PurchaseFailedDialogController_hpp
+#define PurchaseFailedDialogController_hpp
 
 // Game includes.
-#include "PurchaseUnsuccessfulDialogView.hpp"
+#include "PurchaseFailedDialogView.hpp"
 #include "SlidingMenuAnimation.hpp"
 #include "CommonResources.hpp"
 
@@ -12,16 +12,16 @@ namespace Pht {
 }
 
 namespace RowBlast {
-    class PurchaseUnsuccessfulDialogController {
+    class PurchaseFailedDialogController {
     public:
         enum class Result {
             None,
             Close
         };
         
-        PurchaseUnsuccessfulDialogController(Pht::IEngine& engine,
-                                             const CommonResources& commonResources,
-                                             PotentiallyZoomedScreen potentiallyZoomedScreen);
+        PurchaseFailedDialogController(Pht::IEngine& engine,
+                                       const CommonResources& commonResources,
+                                       PotentiallyZoomedScreen potentiallyZoomedScreen);
         
         void SetUp();
         Result Update();
@@ -35,7 +35,7 @@ namespace RowBlast {
         Result OnTouch(const Pht::TouchEvent& touchEvent);
         
         Pht::IInput& mInput;
-        PurchaseUnsuccessfulDialogView mView;
+        PurchaseFailedDialogView mView;
         SlidingMenuAnimation mSlidingMenuAnimation;
         Result mDeferredResult {Result::None};
     };

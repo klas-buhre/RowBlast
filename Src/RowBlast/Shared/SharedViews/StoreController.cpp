@@ -46,7 +46,7 @@ StoreController::StoreController(Pht::IEngine& engine,
         commonResources,
         ToPotentiallyZoomedScreen(sceneId)
     },
-    mPurchaseUnsuccessfulDialogController {
+    mPurchaseFailedDialogController {
         engine,
         commonResources,
         ToPotentiallyZoomedScreen(sceneId)
@@ -59,7 +59,7 @@ StoreController::StoreController(Pht::IEngine& engine,
 
     mViewManager.AddView(static_cast<int>(ViewController::StoreMenu), mStoreMenuController.GetView());
     mViewManager.AddView(static_cast<int>(ViewController::PurchaseSuccessfulDialog), mPurchaseSuccessfulDialogController.GetView());
-    mViewManager.AddView(static_cast<int>(ViewController::PurchaseUnsuccessfulDialog), mPurchaseUnsuccessfulDialogController.GetView());
+    mViewManager.AddView(static_cast<int>(ViewController::PurchaseFailedDialog), mPurchaseFailedDialogController.GetView());
     mViewManager.AddView(static_cast<int>(ViewController::PurchaseCanceledDialog), mPurchaseCanceledDialogController.GetView());
 }
 
@@ -95,8 +95,8 @@ StoreController::Result StoreController::Update() {
         case State::PurchaseSuccessfulDialog:
             result = UpdatePurchaseSuccessfulDialog();
             break;
-        case State::PurchaseUnsuccessfulDialog:
-            UpdatePurchaseUnsuccessfulDialog();
+        case State::PurchaseFailedDialog:
+            UpdatePurchaseFailedDialog();
             break;
         case State::PurchaseCanceledDialog:
             UpdatePurchaseCanceledDialog();
@@ -152,7 +152,7 @@ void StoreController::OnPurchaseFailed(PurchaseFailureReason purchaseFailureReas
             GoToPurchaseCanceledDialogState();
             break;
         case PurchaseFailureReason::Other:
-            GoToPurchaseUnsuccessfulDialogState();
+            GoToPurchaseFailedDialogState();
             break;
     }
 }
@@ -171,11 +171,11 @@ StoreController::Result StoreController::UpdatePurchaseSuccessfulDialog() {
     return result;
 }
 
-void StoreController::UpdatePurchaseUnsuccessfulDialog() {
-    switch (mPurchaseUnsuccessfulDialogController.Update()) {
-        case PurchaseUnsuccessfulDialogController::Result::None:
+void StoreController::UpdatePurchaseFailedDialog() {
+    switch (mPurchaseFailedDialogController.Update()) {
+        case PurchaseFailedDialogController::Result::None:
             break;
-        case PurchaseUnsuccessfulDialogController::Result::Close:
+        case PurchaseFailedDialogController::Result::Close:
             GoToStoreMenuState(SlidingMenuAnimation::UpdateFade::No,
                                SlidingMenuAnimation::SlideDirection::Right);
             break;
@@ -214,10 +214,10 @@ void StoreController::GoToPurchaseSuccessfulDialogState(const GoldCoinProduct& p
     mPurchaseSuccessfulDialogController.SetUp(product.mNumCoins);
 }
 
-void StoreController::GoToPurchaseUnsuccessfulDialogState() {
-    mState = State::PurchaseUnsuccessfulDialog;
-    SetActiveViewController(ViewController::PurchaseUnsuccessfulDialog);
-    mPurchaseUnsuccessfulDialogController.SetUp();
+void StoreController::GoToPurchaseFailedDialogState() {
+    mState = State::PurchaseFailedDialog;
+    SetActiveViewController(ViewController::PurchaseFailedDialog);
+    mPurchaseFailedDialogController.SetUp();
 }
 
 void StoreController::GoToPurchaseCanceledDialogState() {

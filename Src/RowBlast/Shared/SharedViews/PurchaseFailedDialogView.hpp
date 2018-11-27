@@ -1,5 +1,5 @@
-#ifndef PurchaseUnsuccessfulDialogView_hpp
-#define PurchaseUnsuccessfulDialogView_hpp
+#ifndef PurchaseFailedDialogView_hpp
+#define PurchaseFailedDialogView_hpp
 
 #include <memory>
 
@@ -15,11 +15,11 @@ namespace Pht {
 }
 
 namespace RowBlast {
-    class PurchaseUnsuccessfulDialogView: public Pht::GuiView {
+    class PurchaseFailedDialogView: public Pht::GuiView {
     public:
-        PurchaseUnsuccessfulDialogView(Pht::IEngine& engine,
-                                       const CommonResources& commonResources,
-                                       PotentiallyZoomedScreen potentiallyZoomedScreen);
+        PurchaseFailedDialogView(Pht::IEngine& engine,
+                                 const CommonResources& commonResources,
+                                 PotentiallyZoomedScreen potentiallyZoomedScreen);
 
         const MenuButton& GetCloseButton() const {
             return *mCloseButton;

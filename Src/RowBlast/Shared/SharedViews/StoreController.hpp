@@ -8,7 +8,7 @@
 #include "GuiViewManager.hpp"
 #include "StoreMenuController.hpp"
 #include "PurchaseSuccessfulDialogController.hpp"
-#include "PurchaseUnsuccessfulDialogController.hpp"
+#include "PurchaseFailedDialogController.hpp"
 #include "PurchaseCanceledDialogController.hpp"
 #include "UserServices.hpp"
 #include "SpinningWheelEffect.hpp"
@@ -50,7 +50,7 @@ namespace RowBlast {
         enum class ViewController {
             StoreMenu,
             PurchaseSuccessfulDialog,
-            PurchaseUnsuccessfulDialog,
+            PurchaseFailedDialog,
             PurchaseCanceledDialog,
             None
         };
@@ -59,13 +59,13 @@ namespace RowBlast {
         void StartPurchase(ProductId productId);
         void OnPurchaseFailed(PurchaseFailureReason purchaseFailureReason);
         Result UpdatePurchaseSuccessfulDialog();
-        void UpdatePurchaseUnsuccessfulDialog();
+        void UpdatePurchaseFailedDialog();
         void UpdatePurchaseCanceledDialog();
         void SetActiveViewController(ViewController viewController);
         void GoToStoreMenuState(SlidingMenuAnimation::UpdateFade updateFade,
                                 SlidingMenuAnimation::SlideDirection slideDirection);
         void GoToPurchaseSuccessfulDialogState(const GoldCoinProduct& product);
-        void GoToPurchaseUnsuccessfulDialogState();
+        void GoToPurchaseFailedDialogState();
         void GoToPurchaseCanceledDialogState();
         void GoToIdleState();
         void GoToPurchasePendingState();
@@ -74,7 +74,7 @@ namespace RowBlast {
             StoreMenu,
             PurchasePending,
             PurchaseSuccessfulDialog,
-            PurchaseUnsuccessfulDialog,
+            PurchaseFailedDialog,
             PurchaseCanceledDialog,
             Idle
         };
@@ -87,7 +87,7 @@ namespace RowBlast {
         GuiViewManager mViewManager;
         StoreMenuController mStoreMenuController;
         PurchaseSuccessfulDialogController mPurchaseSuccessfulDialogController;
-        PurchaseUnsuccessfulDialogController mPurchaseUnsuccessfulDialogController;
+        PurchaseFailedDialogController mPurchaseFailedDialogController;
         PurchaseCanceledDialogController mPurchaseCanceledDialogController;
     };
 }

@@ -10,7 +10,7 @@ Backlog:
     -The UFO could be booster. It could clear 3 rows.
     -Maybe blocks in the visible part of the field could disappear on some levels. For each move a
      random block disappears.
-    -Maybe a sensitivity setting. Tetris Blitz has lower sensitility on iPad but not on iPhone.
+    -Maybe a sensitivity setting. Tetris Blitz has lower sensitivity on iPad but not on iPhone.
     -Undo to the previous move initial state or the the previous move last state before move? Should
      not really matter since the user can select any piece from the selectables but maybe it is most 
      convenient to go back to the state before the move and not the initial state.

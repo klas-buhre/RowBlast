@@ -1,4 +1,4 @@
-#include "PurchaseUnsuccessfulDialogController.hpp"
+#include "PurchaseFailedDialogController.hpp"
 
 // Engine includes.
 #include "IEngine.hpp"
@@ -8,19 +8,19 @@
 
 using namespace RowBlast;
 
-PurchaseUnsuccessfulDialogController::PurchaseUnsuccessfulDialogController(Pht::IEngine& engine,
-                                                                           const CommonResources& commonResources,
-                                                                           PotentiallyZoomedScreen zoom) :
+PurchaseFailedDialogController::PurchaseFailedDialogController(Pht::IEngine& engine,
+                                                               const CommonResources& commonResources,
+                                                               PotentiallyZoomedScreen zoom) :
     mInput {engine.GetInput()},
     mView {engine, commonResources, zoom},
     mSlidingMenuAnimation {engine, mView} {}
 
-void PurchaseUnsuccessfulDialogController::SetUp() {
+void PurchaseFailedDialogController::SetUp() {
     mSlidingMenuAnimation.SetUp(SlidingMenuAnimation::UpdateFade::No,
                                 SlidingMenuAnimation::SlideDirection::Scale);
 }
 
-PurchaseUnsuccessfulDialogController::Result PurchaseUnsuccessfulDialogController::Update() {
+PurchaseFailedDialogController::Result PurchaseFailedDialogController::Update() {
     switch (mSlidingMenuAnimation.Update()) {
         case SlidingMenuAnimation::State::Idle:
             mSlidingMenuAnimation.StartSlideIn();
@@ -37,7 +37,7 @@ PurchaseUnsuccessfulDialogController::Result PurchaseUnsuccessfulDialogControlle
     return Result::None;
 }
 
-PurchaseUnsuccessfulDialogController::Result PurchaseUnsuccessfulDialogController::HandleInput() {
+PurchaseFailedDialogController::Result PurchaseFailedDialogController::HandleInput() {
     return InputUtil::HandleInput<Result>(mInput,
                                           Result::None,
                                           [this] (const Pht::TouchEvent& touch) {
@@ -45,8 +45,8 @@ PurchaseUnsuccessfulDialogController::Result PurchaseUnsuccessfulDialogControlle
                                           });
 }
 
-PurchaseUnsuccessfulDialogController::Result
-PurchaseUnsuccessfulDialogController::OnTouch(const Pht::TouchEvent& touchEvent) {
+PurchaseFailedDialogController::Result
+PurchaseFailedDialogController::OnTouch(const Pht::TouchEvent& touchEvent) {
     if (mView.GetCloseButton().IsClicked(touchEvent) || mView.GetOkButton().IsClicked(touchEvent)) {
         mDeferredResult = Result::Close;
         mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::No,

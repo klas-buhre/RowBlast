@@ -1,4 +1,4 @@
-#include "PurchaseUnsuccessfulDialogView.hpp"
+#include "PurchaseFailedDialogView.hpp"
 
 // Engine includes.
 #include "IEngine.hpp"
@@ -9,9 +9,9 @@
 
 using namespace RowBlast;
 
-PurchaseUnsuccessfulDialogView::PurchaseUnsuccessfulDialogView(Pht::IEngine& engine,
-                                                               const CommonResources& commonResources,
-                                                               PotentiallyZoomedScreen zoom) {
+PurchaseFailedDialogView::PurchaseFailedDialogView(Pht::IEngine& engine,
+                                                   const CommonResources& commonResources,
+                                                   PotentiallyZoomedScreen zoom) {
     auto& guiResources {commonResources.GetGuiResources()};
     auto& menuWindow {guiResources.GetSmallDarkMenuWindowPotentiallyZoomedScreen()};
     
@@ -23,7 +23,7 @@ PurchaseUnsuccessfulDialogView::PurchaseUnsuccessfulDialogView(Pht::IEngine& eng
     
     auto& textProperties {guiResources.GetSmallWhiteTextProperties(zoom)};
     
-    CreateText({-5.15f, 3.825f, UiLayer::text}, "PURCHASE UNSUCCESSFUL", textProperties);
+    CreateText({-3.0f, 3.825f, UiLayer::text}, "PURCHASE FAILED", textProperties);
     
     Pht::Vec3 closeButtonPosition {
         GetSize().x / 2.0f - 1.3f,
