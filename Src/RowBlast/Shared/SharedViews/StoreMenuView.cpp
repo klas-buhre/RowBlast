@@ -247,13 +247,16 @@ void StoreMenuView::CreateProductSection(const Pht::Vec3& position,
 void StoreMenuView::CreateCoinPilesAndStacks(Pht::SceneObject& parentObject,
                                              ProductSection& productSection,
                                              float scale) {
-    auto& container {CreateSceneObject()};
-    auto& transform {container.GetTransform()};
+    auto& stationaryContainer {CreateSceneObject()};
+    auto& transform {stationaryContainer.GetTransform()};
     transform.SetPosition({0.0f, 0.7f, UiLayer::textRectangle});
     transform.SetRotation({coinPilesXAngle, 0.0f, 0.0f});
-    transform.SetScale(scale);
-    parentObject.AddChild(container);
-    
+    parentObject.AddChild(stationaryContainer);
+
+    auto& container {CreateSceneObject()};
+    container.GetTransform().SetScale(scale);
+    stationaryContainer.AddChild(container);
+
     productSection.mCoinPilesAndStacks = &container;
 
     switch (productSection.mProductId) {
@@ -459,7 +462,7 @@ void StoreMenuView::UpdateAnimations() {
         auto t {mAnimationTime * 2.0f * 3.1415f / animationDuration};
         auto yAngle {rotationAmplitude * sin(t)};
         
-        productSection.mCoinPilesAndStacks->GetTransform().SetRotation({coinPilesXAngle, yAngle, 0.0f});
+        productSection.mCoinPilesAndStacks->GetTransform().SetRotation({0.0f, yAngle, 0.0f});
 
         productSection.mGlowEffect->GetComponent<Pht::ParticleEffect>()->Update(dt);
         productSection.mTwinklesEffect->GetComponent<Pht::ParticleEffect>()->Update(dt);
