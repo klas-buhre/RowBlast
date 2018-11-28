@@ -21,7 +21,7 @@ namespace {
     
     void DrawButton(Pht::SoftwareRasterizer& rasterizer) {
         Pht::Vec4 fillColor {0.27f, 0.57f, 1.0f, 0.27f};
-        Pht::Vec4 whiteColor {0.6f, 0.85f, 1.0f, 1.0};
+        Pht::Vec4 whiteColor {0.66f, 0.83f, 1.0f, 1.0};
         
         rasterizer.DrawCircle({circleRadius, circleRadius},
                               circleRadius - padding,
