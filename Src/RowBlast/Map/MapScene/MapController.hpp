@@ -48,6 +48,7 @@ namespace RowBlast {
             UfoAnimation,
             LevelGoalDialog,
             NoLivesDialog,
+            LivesDialog,
             SettingsMenu,
             Store
         };
@@ -78,6 +79,7 @@ namespace RowBlast {
         void UpdateUfoAnimation();
         Command UpdateLevelGoalDialog();
         void UpdateNoLivesDialog();
+        void UpdateLivesDialog();
         void UpdateSettingsMenu();
         void UpdateStore();
         Command HandleInput();
@@ -87,6 +89,8 @@ namespace RowBlast {
         void Pan(const Pht::TouchEvent& touch);
         void StartPan(const Pht::TouchEvent& touch);
         void UpdateCamera();
+        void GoToNoLivesDialogState();
+        void GoToLivesDialogState();
         void GoToSettingsMenuState();
         void GoToStoreState(StoreController::TriggerProduct triggerProduct);
         void GoToMapState();

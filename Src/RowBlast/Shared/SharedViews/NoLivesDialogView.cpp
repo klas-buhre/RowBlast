@@ -10,6 +10,7 @@
 #include "UserServices.hpp"
 #include "StringUtils.hpp"
 #include "UiLayer.hpp"
+#include "IGuiLightProvider.hpp"
 
 using namespace RowBlast;
 
@@ -132,6 +133,12 @@ NoLivesDialogView::NoLivesDialogView(Pht::IEngine& engine,
     coinTransform.SetRotation({0.0f, 40.0f, 0.0f});
     coinTransform.SetScale(0.9f);
     mRefillLivesButton->GetSceneObject().AddChild(coin);
+}
+
+void NoLivesDialogView::SetUp() {
+    if (mGuiLightProvider) {
+        mGuiLightProvider->SetDefaultGuiLightDirections();
+    }
 }
 
 void NoLivesDialogView::Update() {

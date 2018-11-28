@@ -18,7 +18,12 @@ NoLivesDialogController::NoLivesDialogController(Pht::IEngine& engine,
     mView {engine, commonResources, userServices, potentiallyZoomedScreen},
     mSlidingMenuAnimation {engine, mView} {}
 
+void NoLivesDialogController::SetGuiLightProvider(IGuiLightProvider& guiLightProvider) {
+    mView.SetGuiLightProvider(guiLightProvider);
+}
+
 void NoLivesDialogController::SetUp(bool shouldSlideOut) {
+    mView.SetUp();
     mSlidingMenuAnimation.SetUp(SlidingMenuAnimation::UpdateFade::No,
                                 SlidingMenuAnimation::SlideDirection::Left);
     mShouldSlideOut = shouldSlideOut;

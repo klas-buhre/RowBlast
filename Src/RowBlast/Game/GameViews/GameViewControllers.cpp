@@ -70,6 +70,7 @@ void GameViewControllers::Init(GameScene& scene) {
     SetActiveController(None);
     
     mGameMenuController.SetGuiLightProvider(scene);
+    mNoLivesDialogController.SetGuiLightProvider(scene);
     mLevelGoalDialogController.SetGuiLightProvider(scene);
 }
 

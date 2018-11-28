@@ -17,6 +17,7 @@ namespace Pht {
 
 namespace RowBlast {
     class UserServices;
+    class IGuiLightProvider;
     
     class NoLivesDialogView: public Pht::GuiView {
     public:
@@ -25,7 +26,12 @@ namespace RowBlast {
                           const UserServices& userServices,
                           PotentiallyZoomedScreen potentiallyZoomedScreen);
 
+        void SetUp();
         void Update();
+        
+        void SetGuiLightProvider(IGuiLightProvider& guiLightProvider) {
+            mGuiLightProvider = &guiLightProvider;
+        }
         
         const MenuButton& GetCloseButton() const {
             return *mCloseButton;
@@ -37,6 +43,7 @@ namespace RowBlast {
         
     private:
         const UserServices& mUserServices;
+        IGuiLightProvider* mGuiLightProvider {nullptr};
         std::unique_ptr<MenuButton> mCloseButton;
         std::unique_ptr<MenuButton> mRefillLivesButton;
         std::chrono::seconds mSecondsUntilNewLife;

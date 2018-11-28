@@ -91,6 +91,9 @@ MapController::Command MapController::Update() {
         case State::NoLivesDialog:
             UpdateNoLivesDialog();
             break;
+        case State::LivesDialog:
+            UpdateLivesDialog();
+            break;
         case State::SettingsMenu:
             UpdateSettingsMenu();
             break;
@@ -170,6 +173,16 @@ void MapController::UpdateNoLivesDialog() {
     }
 }
 
+void MapController::UpdateLivesDialog() {
+    switch (mMapViewControllers.GetLivesDialogController().Update()) {
+        case LivesDialogController::Result::None:
+            break;
+        case LivesDialogController::Result::Close:
+            GoToMapState();
+            break;
+    }
+}
+
 void MapController::UpdateSettingsMenu() {
     switch (mMapViewControllers.GetSettingsMenuController().Update()) {
         case SettingsMenuController::Result::None:
@@ -210,6 +223,8 @@ MapController::Command MapController::HandleInput() {
                         GoToStoreState(StoreController::TriggerProduct::Coins);
                         break;
                     case MapHudController::Result::ClickedLivesButton:
+                        GoToLivesDialogState();
+                        break;
                     case MapHudController::Result::TouchStartedOverButton:
                         break;
                 }
@@ -276,9 +291,7 @@ MapController::Command MapController::HandlePinClick(const MapPin& pin) {
             if (mUserServices.GetLifeService().GetNumLives() > 0) {
                 GoToLevelGoalDialogState(pin.GetLevel());
             } else {
-                mState = State::NoLivesDialog;
-                mMapViewControllers.SetActiveController(MapViewControllers::NoLivesDialog);
-                mMapViewControllers.GetNoLivesDialogController().SetUp(true);
+                GoToNoLivesDialogState();
             }
             break;
         case MapPlace::Kind::Portal: {
@@ -389,6 +402,18 @@ void MapController::GoToLevelGoalDialogState(int levelToStart) {
 
     auto levelInfo {LevelLoader::LoadInfo(levelToStart, mLevelResources)};
     mMapViewControllers.GetLevelGoalDialogController().SetUp(*levelInfo);
+}
+
+void MapController::GoToNoLivesDialogState() {
+    mState = State::NoLivesDialog;
+    mMapViewControllers.SetActiveController(MapViewControllers::NoLivesDialog);
+    mMapViewControllers.GetNoLivesDialogController().SetUp(true);
+}
+
+void MapController::GoToLivesDialogState() {
+    mState = State::LivesDialog;
+    mMapViewControllers.SetActiveController(MapViewControllers::LivesDialog);
+    mMapViewControllers.GetLivesDialogController().SetUp();
 }
 
 void MapController::GoToSettingsMenuState() {

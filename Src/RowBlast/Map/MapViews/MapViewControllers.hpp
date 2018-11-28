@@ -9,6 +9,7 @@
 #include "LevelGoalDialogController.hpp"
 #include "SettingsMenuController.hpp"
 #include "NoLivesDialogController.hpp"
+#include "LivesDialogController.hpp"
 #include "GuiViewManager.hpp"
 
 namespace Pht {
@@ -27,6 +28,7 @@ namespace RowBlast {
             MapHud,
             LevelGoalDialog,
             NoLivesDialog,
+            LivesDialog,
             SettingsMenu,
             None
         };
@@ -52,7 +54,11 @@ namespace RowBlast {
         NoLivesDialogController& GetNoLivesDialogController() {
             return mNoLivesDialogController;
         }
-        
+
+        LivesDialogController& GetLivesDialogController() {
+            return mLivesDialogController;
+        }
+
         SettingsMenuController& GetSettingsMenuController() {
             return mSettingsMenuController;
         }
@@ -64,6 +70,7 @@ namespace RowBlast {
         MapHudController mMapHudController;
         LevelGoalDialogController mLevelGoalDialogController;
         NoLivesDialogController mNoLivesDialogController;
+        LivesDialogController mLivesDialogController;
         SettingsMenuController mSettingsMenuController;
     };
 }

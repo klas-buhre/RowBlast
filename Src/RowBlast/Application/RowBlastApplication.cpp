@@ -40,7 +40,8 @@ Ongoing tasks:
      scenes.
     -Store GUI.
       -No lives dialog should only be possible to open from map hud add lives button if number of
-       lives is zero. If number of lives is non-zero then the button should be gray.
+       lives is zero. If number of lives is non-zero then the lives dialog is opened instead.
+      -No lives dialog could have a large window.
       -No moves dialog and no lives dialog should probably have a fade effect.
       -Store views.
         -Purchase Successful dialog:

@@ -350,6 +350,8 @@
 		627A12A921AB154400EECA3B /* PurchaseCanceledDialogController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 627A12A721AB154400EECA3B /* PurchaseCanceledDialogController.cpp */; };
 		627A12B321AC4CBE00EECA3B /* SpinningWheelEffect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 627A12B121AC4CBE00EECA3B /* SpinningWheelEffect.cpp */; };
 		627A12B921AC593900EECA3B /* spinning_wheel.png in Resources */ = {isa = PBXBuildFile; fileRef = 627A12B821AC593900EECA3B /* spinning_wheel.png */; };
+		627A12BF21AEB1C400EECA3B /* LivesDialogView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 627A12BD21AEB1C400EECA3B /* LivesDialogView.cpp */; };
+		627A12C221AEB1DF00EECA3B /* LivesDialogController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 627A12C021AEB1DF00EECA3B /* LivesDialogController.cpp */; };
 		628EC29A207D24090071F368 /* level30.json in Resources */ = {isa = PBXBuildFile; fileRef = 628EC299207D24080071F368 /* level30.json */; };
 		628EC2AC2080C4880071F368 /* level31.json in Resources */ = {isa = PBXBuildFile; fileRef = 628EC2AB2080C4880071F368 /* level31.json */; };
 		6299915E2117374C00C845D1 /* laser_frame2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6299915D2117374B00C845D1 /* laser_frame2.jpg */; };
@@ -1135,6 +1137,10 @@
 		627A12B221AC4CBE00EECA3B /* SpinningWheelEffect.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SpinningWheelEffect.hpp; sourceTree = "<group>"; };
 		627A12B821AC593900EECA3B /* spinning_wheel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spinning_wheel.png; sourceTree = "<group>"; };
 		627A12BB21AD59A900EECA3B /* IGuiLightProvider.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = IGuiLightProvider.hpp; sourceTree = "<group>"; };
+		627A12BD21AEB1C400EECA3B /* LivesDialogView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LivesDialogView.cpp; sourceTree = "<group>"; };
+		627A12BE21AEB1C400EECA3B /* LivesDialogView.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = LivesDialogView.hpp; sourceTree = "<group>"; };
+		627A12C021AEB1DF00EECA3B /* LivesDialogController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LivesDialogController.cpp; sourceTree = "<group>"; };
+		627A12C121AEB1DF00EECA3B /* LivesDialogController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = LivesDialogController.hpp; sourceTree = "<group>"; };
 		628EC299207D24080071F368 /* level30.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level30.json; sourceTree = "<group>"; };
 		628EC2AB2080C4880071F368 /* level31.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level31.json; sourceTree = "<group>"; };
 		6299915D2117374B00C845D1 /* laser_frame2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = laser_frame2.jpg; sourceTree = "<group>"; };
@@ -1684,12 +1690,16 @@
 		625695D22182382B003A3A9D /* MapViews */ = {
 			isa = PBXGroup;
 			children = (
-				625695D72182382B003A3A9D /* MapViewControllers.cpp */,
-				625695D52182382B003A3A9D /* MapViewControllers.hpp */,
+				627A12C021AEB1DF00EECA3B /* LivesDialogController.cpp */,
+				627A12C121AEB1DF00EECA3B /* LivesDialogController.hpp */,
+				627A12BD21AEB1C400EECA3B /* LivesDialogView.cpp */,
+				627A12BE21AEB1C400EECA3B /* LivesDialogView.hpp */,
 				625695D42182382B003A3A9D /* MapHudController.cpp */,
 				625695D62182382B003A3A9D /* MapHudController.hpp */,
 				625695D32182382B003A3A9D /* MapHudView.cpp */,
 				625695D82182382B003A3A9D /* MapHudView.hpp */,
+				625695D72182382B003A3A9D /* MapViewControllers.cpp */,
+				625695D52182382B003A3A9D /* MapViewControllers.hpp */,
 			);
 			path = MapViews;
 			sourceTree = "<group>";
@@ -2801,6 +2811,7 @@
 				625696582182382C003A3A9D /* OutOfMovesDialogView.cpp in Sources */,
 				625696882182382C003A3A9D /* LongIPiece.cpp in Sources */,
 				6256967A2182382C003A3A9D /* DPiece.cpp in Sources */,
+				627A12BF21AEB1C400EECA3B /* LivesDialogView.cpp in Sources */,
 				625696462182382C003A3A9D /* LaserDialogController.cpp in Sources */,
 				627A128621AAFB5A00EECA3B /* MenuButton.cpp in Sources */,
 				625696C42182382C003A3A9D /* World.cpp in Sources */,
@@ -2993,6 +3004,7 @@
 				625696442182382C003A3A9D /* CascadingDialogController.cpp in Sources */,
 				625696902182382C003A3A9D /* FieldAnalyzer.cpp in Sources */,
 				6256984A2182392C003A3A9D /* ObjMeshLoader.cpp in Sources */,
+				627A12C221AEB1DF00EECA3B /* LivesDialogController.cpp in Sources */,
 				6256964C2182382C003A3A9D /* LevelCompletedController.cpp in Sources */,
 				6256967F2182382C003A3A9D /* SmallTrianglePiece.cpp in Sources */,
 				625698542182392C003A3A9D /* CameraShake.cpp in Sources */,

@@ -1,8 +1,8 @@
-#ifndef NoLivesDialogController_hpp
-#define NoLivesDialogController_hpp
+#ifndef LivesDialogController_hpp
+#define LivesDialogController_hpp
 
 // Game includes.
-#include "NoLivesDialogView.hpp"
+#include "LivesDialogView.hpp"
 #include "SlidingMenuAnimation.hpp"
 #include "CommonResources.hpp"
 
@@ -15,21 +15,20 @@ namespace Pht {
 namespace RowBlast {
     class UserServices;
     
-    class NoLivesDialogController {
+    class LivesDialogController {
     public:
         enum class Result {
             None,
-            RefillLives,
             Close
         };
         
-        NoLivesDialogController(Pht::IEngine& engine,
-                                const CommonResources& commonResources,
-                                const UserServices& userServices,
-                                PotentiallyZoomedScreen potentiallyZoomedScreen);
+        LivesDialogController(Pht::IEngine& engine,
+                              const CommonResources& commonResources,
+                              const UserServices& userServices,
+                              IGuiLightProvider& guiLightProvider);
         
-        void SetGuiLightProvider(IGuiLightProvider& guiLightProvider);
-        void SetUp(bool shouldSlideOut);
+        void SetUp();
+        void SetFadeEffect(Pht::FadeEffect& fadeEffect);
         Result Update();
         
         Pht::GuiView& GetView() {
@@ -41,10 +40,8 @@ namespace RowBlast {
         Result OnTouch(const Pht::TouchEvent& touchEvent);
         
         Pht::IInput& mInput;
-        const UserServices& mUserServices;
-        NoLivesDialogView mView;
+        LivesDialogView mView;
         SlidingMenuAnimation mSlidingMenuAnimation;
-        bool mShouldSlideOut {true};
         Result mDeferredResult {Result::None};
     };
 }
