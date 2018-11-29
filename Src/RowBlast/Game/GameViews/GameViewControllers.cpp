@@ -30,7 +30,7 @@ GameViewControllers::GameViewControllers(Pht::IEngine& engine,
     mGameHudController {engine, commonResources, hudRectangles},
     mGameMenuController {engine, commonResources},
     mGameOverDialogController {engine, commonResources, userServices},
-    mOutOfMovesDialogController {engine, commonResources},
+    mOutOfMovesDialogController {engine, commonResources, userServices},
     mLevelCompletedDialogController {engine, commonResources},
     mRestartConfirmationDialogController {engine, commonResources, userServices},
     mMapConfirmationDialogController {engine, commonResources},
@@ -58,9 +58,10 @@ GameViewControllers::GameViewControllers(Pht::IEngine& engine,
     mSettingsMenuController.SetFadeEffect(mFadeEffect);
     mRestartConfirmationDialogController.SetFadeEffect(mFadeEffect);
     mMapConfirmationDialogController.SetFadeEffect(mFadeEffect);
+    mGameOverDialogController.SetFadeEffect(mFadeEffect);
 }
 
-void GameViewControllers::Init(GameScene& scene) {
+void GameViewControllers::Init(GameScene& scene, Pht::FadeEffect& storeFadeEffect) {
     mFadeEffect.Reset();
     
     auto& uiViewContainer {scene.GetUiViewsContainer()};
@@ -68,6 +69,9 @@ void GameViewControllers::Init(GameScene& scene) {
  
     mViewManager.Init(uiViewContainer);
     SetActiveController(None);
+    
+    mNoLivesDialogController.SetFadeEffect(storeFadeEffect);
+    mOutOfMovesDialogController.SetFadeEffect(storeFadeEffect);
     
     mGameMenuController.SetGuiLightProvider(scene);
     mNoLivesDialogController.SetGuiLightProvider(scene);

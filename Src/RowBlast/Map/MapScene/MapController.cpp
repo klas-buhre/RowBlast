@@ -60,7 +60,7 @@ void MapController::Init() {
     mScene.Init();
     mUfo.Init(mScene.GetUfoContainer());
     mUfoAnimation.Init();
-    mMapViewControllers.Init();
+    mMapViewControllers.Init(mStoreController.GetFadeEffect());
     mStoreController.Init(mScene.GetUiViewsContainer());
     
     mState = State::Map;
@@ -407,7 +407,8 @@ void MapController::GoToLevelGoalDialogState(int levelToStart) {
 void MapController::GoToNoLivesDialogState() {
     mState = State::NoLivesDialog;
     mMapViewControllers.SetActiveController(MapViewControllers::NoLivesDialog);
-    mMapViewControllers.GetNoLivesDialogController().SetUp(true);
+    mMapViewControllers.GetNoLivesDialogController().SetUp(NoLivesDialogController::ShouldSlideOut::Yes,
+                                                           NoLivesDialogController::ShouldSlideOut::Yes);
 }
 
 void MapController::GoToLivesDialogState() {
@@ -425,7 +426,9 @@ void MapController::GoToSettingsMenuState() {
 
 void MapController::GoToStoreState(StoreController::TriggerProduct triggerProduct) {
     mMapViewControllers.SetActiveController(MapViewControllers::None);
-    mStoreController.StartStore(triggerProduct);
+    mStoreController.StartStore(triggerProduct,
+                                SlidingMenuAnimation::UpdateFade::Yes,
+                                SlidingMenuAnimation::UpdateFade::Yes);
     mState = State::Store;
 }
 

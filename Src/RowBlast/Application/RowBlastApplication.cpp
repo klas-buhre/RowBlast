@@ -39,10 +39,10 @@ Ongoing tasks:
      zoomed version. Test with iPhone XR to see if the zoomed textures look good in non-zoomed
      scenes.
     -Store GUI.
+      -No lives dialog could have a large window and add lives effect/icon.
+      -Out of moves dialog could have a medium window and add moves effect/icon.
       -No lives dialog should only be possible to open from map hud add lives button if number of
        lives is zero. If number of lives is non-zero then the lives dialog is opened instead.
-      -No lives dialog could have a large window.
-      -No moves dialog and no lives dialog should probably have a fade effect.
       -Store views.
         -Purchase Successful dialog:
              If store opened from pressing add coins in map hud then

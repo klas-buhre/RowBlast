@@ -8,6 +8,7 @@
 // Game includes.
 #include "CommonResources.hpp"
 #include "UiLayer.hpp"
+#include "UserServices.hpp"
 
 using namespace RowBlast;
 
@@ -79,7 +80,7 @@ OutOfMovesDialogView::OutOfMovesDialogView(Pht::IEngine& engine,
     };
 
     mPlayOnButton->CreateText({-3.1f, -0.24f, UiLayer::buttonText},
-                              "CONTINUE           10",
+                              "CONTINUE           " + std::to_string(PurchasingService::addMovesPriceInCoins),
                               buttonTextProperties);
 
     auto& coin {

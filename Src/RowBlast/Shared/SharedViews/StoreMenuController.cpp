@@ -51,7 +51,9 @@ StoreMenuController::StoreMenuController(Pht::IEngine& engine,
     mSlidingMenuAnimation {engine, mView} {}
 
 void StoreMenuController::SetUp(SlidingMenuAnimation::UpdateFade updateFade,
+                                SlidingMenuAnimation::UpdateFade updateFadeOnClose,
                                 SlidingMenuAnimation::SlideDirection slideDirection) {
+    mUpdateFadeOnClose = updateFadeOnClose;
     mView.SetUp();
     mSlidingMenuAnimation.SetUp(updateFade, slideDirection);
 }
@@ -90,7 +92,7 @@ StoreMenuController::Result StoreMenuController::HandleInput() {
 StoreMenuController::Result StoreMenuController::OnTouch(const Pht::TouchEvent& touchEvent) {
     if (mView.GetCloseButton().IsClicked(touchEvent)) {
         mDeferredResult = Result {Result::Close};
-        mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::Yes,
+        mSlidingMenuAnimation.StartSlideOut(mUpdateFadeOnClose,
                                             SlidingMenuAnimation::SlideDirection::Right);
         return Result {Result::None};
     }

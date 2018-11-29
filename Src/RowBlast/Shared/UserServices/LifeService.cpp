@@ -104,7 +104,9 @@ bool LifeService::HasFullNumLives() const {
 // see: https://aaltodoc.aalto.fi/bitstream/123456789/32484/1/master_Teittinen_Oskari_2018.pdf
 //
 std::chrono::seconds LifeService::GetDurationUntilNewLife() const {
-    if (HasFullNumLives()) {
+    if (HasFullNumLives() ||
+        std::chrono::system_clock::now() > mLifeLostTimePoint + lifeWaitDuration) {
+
         return std::chrono::seconds {0};
     }
     

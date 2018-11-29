@@ -147,7 +147,7 @@ void GameController::StartLevel(int levelId) {
     mBombsAnimation.Init();
     mAsteroidAnimation.Init();
     mFallingPieceScaleAnimation.Init();
-    mGameViewControllers.Init(mScene);
+    mGameViewControllers.Init(mScene, mStoreController.GetFadeEffect());
     mLevelCompletedController.Init(*mLevel);
     
     mState = GameState::LevelIntro;
@@ -233,7 +233,8 @@ void GameController::ChangeGameState(GameLogic::Result gameLogicResult) {
             break;
         case GameLogic::Result::OutOfMoves:
             mState = GameState::OutOfMoves;
-            GoToOutOfMovesStateOutOfMovesDialog(SlidingMenuAnimation::SlideDirection::Left);
+            GoToOutOfMovesStateOutOfMovesDialog(SlidingMenuAnimation::SlideDirection::Left,
+                                                SlidingMenuAnimation::UpdateFade::Yes);
             break;
         case GameLogic::Result::GameOver:
             mState = GameState::GameOver;
@@ -251,6 +252,8 @@ void GameController::ChangeGameState(GameLogic::Result gameLogicResult) {
 
 GameController::Command GameController::UpdateInPausedState() {
     auto command {Command::None};
+    
+    mUserServices.Update();
     
     switch (mPausedState) {
         case PausedState::GameMenu:
@@ -274,7 +277,6 @@ GameController::Command GameController::UpdateInPausedState() {
     }
     
     mScene.UpdateLightAnimation();
-    mUserServices.Update();
 
     return command;
 }
@@ -528,7 +530,8 @@ void GameController::UpdateStore() {
         case StoreController::Result::None:
             break;
         case StoreController::Result::Done:
-            GoToOutOfMovesStateOutOfMovesDialog(SlidingMenuAnimation::SlideDirection::Right);
+            GoToOutOfMovesStateOutOfMovesDialog(SlidingMenuAnimation::SlideDirection::Right,
+                                                SlidingMenuAnimation::UpdateFade::No);
             break;
     }
 }
@@ -581,7 +584,8 @@ void GameController::GoToPlayingState() {
 void GameController::GoToPausedStateNoLivesDialog() {
     mPausedState = PausedState::NoLivesDialog;
     mGameViewControllers.SetActiveController(GameViewControllers::NoLivesDialog);
-    mGameViewControllers.GetNoLivesDialogController().SetUp(true);
+    mGameViewControllers.GetNoLivesDialogController().SetUp(NoLivesDialogController::ShouldSlideOut::Yes,
+                                                            NoLivesDialogController::ShouldSlideOut::No);
 }
 
 void GameController::GoToPausedStateRestartConfirmationDialog() {
@@ -624,16 +628,19 @@ void GameController::GoToPausedStateGameMenu(SlidingMenuAnimation::UpdateFade up
     mTutorial.OnPause();
 }
 
-void GameController::GoToOutOfMovesStateOutOfMovesDialog(SlidingMenuAnimation::SlideDirection slideDirection) {
+void GameController::GoToOutOfMovesStateOutOfMovesDialog(SlidingMenuAnimation::SlideDirection slideDirection,
+                                                         SlidingMenuAnimation::UpdateFade updateFade) {
     mOutOfMovesState = OutOfMovesState::OutOfMovesDialog;
     mGameViewControllers.SetActiveController(GameViewControllers::OutOfMovesDialog);
-    mGameViewControllers.GetOutOfMovesDialogController().SetUp(slideDirection);
+    mGameViewControllers.GetOutOfMovesDialogController().SetUp(slideDirection, updateFade);
 }
 
 void GameController::GoToOutOfMovesStateStore() {
     mOutOfMovesState = OutOfMovesState::Store;
     mGameViewControllers.SetActiveController(GameViewControllers::None);
-    mStoreController.StartStore(StoreController::TriggerProduct::Moves);
+    mStoreController.StartStore(StoreController::TriggerProduct::Moves,
+                                SlidingMenuAnimation::UpdateFade::No,
+                                SlidingMenuAnimation::UpdateFade::No);
 }
 
 void GameController::GoToGameOverStateGameOverDialog() {
@@ -645,5 +652,6 @@ void GameController::GoToGameOverStateGameOverDialog() {
 void GameController::GoToGameOverStateNoLivesDialog() {
     mGameOverState = GameOverState::NoLivesDialog;
     mGameViewControllers.SetActiveController(GameViewControllers::NoLivesDialog);
-    mGameViewControllers.GetNoLivesDialogController().SetUp(false);
+    mGameViewControllers.GetNoLivesDialogController().SetUp(NoLivesDialogController::ShouldSlideOut::No,
+                                                            NoLivesDialogController::ShouldSlideOut::No);
 }

@@ -26,6 +26,7 @@ namespace RowBlast {
                                  const CommonResources& commonResources,
                                  const UserServices& userServices);
         
+        void SetFadeEffect(Pht::FadeEffect& fadeEffect);
         void SetUp();
         Result Update();
         

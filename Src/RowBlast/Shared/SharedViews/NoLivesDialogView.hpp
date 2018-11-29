@@ -28,6 +28,7 @@ namespace RowBlast {
 
         void SetUp();
         void Update();
+        void RestoreGuiLight();
         
         void SetGuiLightProvider(IGuiLightProvider& guiLightProvider) {
             mGuiLightProvider = &guiLightProvider;

@@ -15,7 +15,9 @@ PurchaseSuccessfulDialogController::PurchaseSuccessfulDialogController(Pht::IEng
     mView {engine, commonResources, zoom},
     mSlidingMenuAnimation {engine, mView} {}
 
-void PurchaseSuccessfulDialogController::SetUp(int numCoins) {
+void PurchaseSuccessfulDialogController::SetUp(int numCoins,
+                                               SlidingMenuAnimation::UpdateFade updateFadeOnClose) {
+    mUpdateFadeOnClose = updateFadeOnClose;
     mView.SetUp(numCoins);
     mSlidingMenuAnimation.SetUp(SlidingMenuAnimation::UpdateFade::No,
                                 SlidingMenuAnimation::SlideDirection::Scale);
@@ -54,7 +56,7 @@ PurchaseSuccessfulDialogController::Result
 PurchaseSuccessfulDialogController::OnTouch(const Pht::TouchEvent& touchEvent) {
     if (mView.GetCloseButton().IsClicked(touchEvent) || mView.GetOkButton().IsClicked(touchEvent)) {
         mDeferredResult = Result::Close;
-        mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::Yes,
+        mSlidingMenuAnimation.StartSlideOut(mUpdateFadeOnClose,
                                             SlidingMenuAnimation::SlideDirection::Right);
     }
 

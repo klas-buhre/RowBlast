@@ -23,13 +23,20 @@ namespace RowBlast {
             Close
         };
         
+        enum class ShouldSlideOut {
+            Yes,
+            No
+        };
+        
         NoLivesDialogController(Pht::IEngine& engine,
                                 const CommonResources& commonResources,
                                 const UserServices& userServices,
                                 PotentiallyZoomedScreen potentiallyZoomedScreen);
         
         void SetGuiLightProvider(IGuiLightProvider& guiLightProvider);
-        void SetUp(bool shouldSlideOut);
+        void SetFadeEffect(Pht::FadeEffect& fadeEffect);
+        void SetUp(ShouldSlideOut shouldSlideOutOnClose,
+                   ShouldSlideOut shouldSlideOutOnRefillLives);
         Result Update();
         
         Pht::GuiView& GetView() {
@@ -39,13 +46,17 @@ namespace RowBlast {
     private:
         Result HandleInput();
         Result OnTouch(const Pht::TouchEvent& touchEvent);
+        Result ReturnResult(Result result);
+        void SetDeferredResult(Result result);
         
         Pht::IInput& mInput;
         const UserServices& mUserServices;
         NoLivesDialogView mView;
         SlidingMenuAnimation mSlidingMenuAnimation;
-        bool mShouldSlideOut {true};
+        ShouldSlideOut mShouldSlideOutOnClose;
+        ShouldSlideOut mShouldSlideOutOnRefillLives;
         Result mDeferredResult {Result::None};
+        bool mHasResult {false};
     };
 }
 

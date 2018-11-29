@@ -51,7 +51,7 @@ namespace RowBlast {
                             const PieceResources& pieceResources,
                             const GameHudRectangles& hudRectangles);
         
-        void Init(GameScene& scene);
+        void Init(GameScene& scene, Pht::FadeEffect& storeFadeEffect);
         void SetActiveController(Controller controller);
         
         GameHudController& GetGameHudController() {

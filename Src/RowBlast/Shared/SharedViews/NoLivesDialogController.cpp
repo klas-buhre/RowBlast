@@ -22,11 +22,18 @@ void NoLivesDialogController::SetGuiLightProvider(IGuiLightProvider& guiLightPro
     mView.SetGuiLightProvider(guiLightProvider);
 }
 
-void NoLivesDialogController::SetUp(bool shouldSlideOut) {
+void NoLivesDialogController::SetFadeEffect(Pht::FadeEffect& fadeEffect) {
+    mSlidingMenuAnimation.SetFadeEffect(fadeEffect);
+}
+
+void NoLivesDialogController::SetUp(ShouldSlideOut shouldSlideOutOnClose,
+                                    ShouldSlideOut shouldSlideOutOnRefillLives) {
     mView.SetUp();
-    mSlidingMenuAnimation.SetUp(SlidingMenuAnimation::UpdateFade::No,
+    mSlidingMenuAnimation.SetUp(SlidingMenuAnimation::UpdateFade::Yes,
                                 SlidingMenuAnimation::SlideDirection::Left);
-    mShouldSlideOut = shouldSlideOut;
+    mShouldSlideOutOnClose = shouldSlideOutOnClose;
+    mShouldSlideOutOnRefillLives = shouldSlideOutOnRefillLives;
+    mHasResult = false;
 }
 
 NoLivesDialogController::Result NoLivesDialogController::Update() {
@@ -37,15 +44,26 @@ NoLivesDialogController::Result NoLivesDialogController::Update() {
         case SlidingMenuAnimation::State::SlidingIn:
         case SlidingMenuAnimation::State::SlidingOut:
             break;
-        case SlidingMenuAnimation::State::ShowingMenu:
+        case SlidingMenuAnimation::State::ShowingMenu: {
             mView.Update();
-            if (mUserServices.GetLifeService().GetNumLives() > 0) {
-                mDeferredResult = Result::Close;
-                mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::No,
-                                                    SlidingMenuAnimation::SlideDirection::Left);
+            if (!mHasResult && mUserServices.GetLifeService().GetNumLives() > 0) {
+                if (mShouldSlideOutOnClose == ShouldSlideOut::Yes) {
+                    SetDeferredResult(Result::Close);
+                    mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::Yes,
+                                                        SlidingMenuAnimation::SlideDirection::Right);
+                    return Result::None;
+                }
+                mView.RestoreGuiLight();
+                return ReturnResult(Result::Close);
             }
-            return HandleInput();
+            auto result {HandleInput()};
+            if (result != Result::None) {
+                mView.RestoreGuiLight();
+            }
+            return result;
+        }
         case SlidingMenuAnimation::State::Done:
+            mView.RestoreGuiLight();
             return mDeferredResult;
     }
     
@@ -62,26 +80,43 @@ NoLivesDialogController::Result NoLivesDialogController::HandleInput() {
 
 NoLivesDialogController::Result NoLivesDialogController::OnTouch(const Pht::TouchEvent& touchEvent) {
     if (mView.GetCloseButton().IsClicked(touchEvent)) {
-        if (mShouldSlideOut) {
-            mDeferredResult = Result::Close;
-            mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::No,
+        if (mShouldSlideOutOnClose == ShouldSlideOut::Yes) {
+            SetDeferredResult(Result::Close);
+            mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::Yes,
                                                 SlidingMenuAnimation::SlideDirection::Right);
             return Result::None;
         }
         
-        return Result::Close;
+        return ReturnResult(Result::Close);
     }
 
     if (mView.GetRefillLivesButton().IsClicked(touchEvent)) {
-        if (mShouldSlideOut) {
-            mDeferredResult = Result::RefillLives;
+        if (mUserServices.GetPurchasingService().CanAfford(PurchasingService::refillLivesPriceInCoins)) {
+            if (mShouldSlideOutOnRefillLives == ShouldSlideOut::Yes) {
+                SetDeferredResult(Result::RefillLives);
+                mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::Yes,
+                                                    SlidingMenuAnimation::SlideDirection::Right);
+                return Result::None;
+            }
+        
+            return ReturnResult(Result::RefillLives);
+        } else {
+            SetDeferredResult(Result::RefillLives);
             mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::No,
                                                 SlidingMenuAnimation::SlideDirection::Left);
             return Result::None;
         }
-        
-        return Result::RefillLives;
     }
     
     return Result::None;
+}
+
+NoLivesDialogController::Result NoLivesDialogController::ReturnResult(Result result) {
+    mHasResult = true;
+    return result;
+}
+
+void NoLivesDialogController::SetDeferredResult(Result result) {
+    mHasResult = true;
+    mDeferredResult = result;
 }

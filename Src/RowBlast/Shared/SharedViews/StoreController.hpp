@@ -46,8 +46,14 @@ namespace RowBlast {
                         SceneId sceneId);
         
         void Init(Pht::SceneObject& parentObject);
-        void StartStore(TriggerProduct triggerProduct);
+        void StartStore(TriggerProduct triggerProduct,
+                        SlidingMenuAnimation::UpdateFade updateFadeOnStartAndClose,
+                        SlidingMenuAnimation::UpdateFade updateFadeOnCanAffordTriggerProduct);
         Result Update();
+        
+        Pht::FadeEffect& GetFadeEffect() {
+            return mFadeEffect;
+        }
 
     private:
         enum class ViewController {
@@ -86,6 +92,8 @@ namespace RowBlast {
         State mState {State::Idle};
         TriggerProduct mTriggerProduct;
         Pht::FadeEffect mFadeEffect;
+        SlidingMenuAnimation::UpdateFade mUpdateFadeOnClose;
+        SlidingMenuAnimation::UpdateFade mUpdateFadeOnCanAffordTriggerProduct;
         SpinningWheelEffect mSpinningWheelEffect;
         GuiViewManager mViewManager;
         StoreMenuController mStoreMenuController;

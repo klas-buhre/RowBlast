@@ -12,6 +12,7 @@ namespace Pht {
 
 namespace RowBlast {
     class CommonResources;
+    class UserServices;
     
     class OutOfMovesDialogController {
     public:
@@ -21,9 +22,13 @@ namespace RowBlast {
             BackToMap
         };
         
-        OutOfMovesDialogController(Pht::IEngine& engine, const CommonResources& commonResources);
+        OutOfMovesDialogController(Pht::IEngine& engine,
+                                   const CommonResources& commonResources,
+                                   const UserServices& userServices);
         
-        void SetUp(SlidingMenuAnimation::SlideDirection slideDirection);
+        void SetFadeEffect(Pht::FadeEffect& fadeEffect);
+        void SetUp(SlidingMenuAnimation::SlideDirection slideDirection,
+                   SlidingMenuAnimation::UpdateFade updateFade);
         Result Update();
 
         Pht::GuiView& GetView() {
@@ -35,6 +40,7 @@ namespace RowBlast {
         Result OnTouch(const Pht::TouchEvent& touchEvent);
         
         Pht::IInput& mInput;
+        const UserServices& mUserServices;
         OutOfMovesDialogView mView;
         SlidingMenuAnimation mSlidingMenuAnimation;
         Result mDeferredResult {Result::None};

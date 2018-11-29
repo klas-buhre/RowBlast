@@ -39,6 +39,7 @@ namespace RowBlast {
                            const std::function<void(PurchaseFailureReason)>& onPurchaseFailed);
         const GoldCoinProduct* GetGoldCoinProduct(ProductId productId) const;
         void WithdrawCoins(int numCoinsToWithdraw);
+        bool CanAfford(int priceInCoins) const;
         
         int GetCoinBalance() const {
             return mCoinBalance;

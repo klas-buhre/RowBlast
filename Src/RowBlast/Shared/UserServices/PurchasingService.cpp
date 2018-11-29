@@ -106,6 +106,10 @@ void PurchasingService::WithdrawCoins(int numCoinsToWithdraw) {
     SaveState();
 }
 
+bool PurchasingService::CanAfford(int priceInCoins) const {
+    return mCoinBalance >= priceInCoins;
+}
+
 void PurchasingService::SaveState() {
     rapidjson::Document document;
     auto& allocator = document.GetAllocator();

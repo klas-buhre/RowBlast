@@ -50,6 +50,7 @@ namespace RowBlast {
                             PotentiallyZoomedScreen potentiallyZoomedScreen);
         
         void SetUp(SlidingMenuAnimation::UpdateFade updateFade,
+                   SlidingMenuAnimation::UpdateFade updateFadeOnClose,
                    SlidingMenuAnimation::SlideDirection slideDirection);
         void SetFadeEffect(Pht::FadeEffect& fadeEffect);
         Result Update();
@@ -65,6 +66,7 @@ namespace RowBlast {
         Pht::IInput& mInput;
         StoreMenuView mView;
         SlidingMenuAnimation mSlidingMenuAnimation;
+        SlidingMenuAnimation::UpdateFade mUpdateFadeOnClose;
         Result mDeferredResult;
     };
 }

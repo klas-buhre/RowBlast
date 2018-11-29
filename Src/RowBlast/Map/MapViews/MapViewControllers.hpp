@@ -40,7 +40,7 @@ namespace RowBlast {
                            Settings& settings,
                            PieceResources& pieceResources);
 
-        void Init();
+        void Init(Pht::FadeEffect& storeFadeEffect);
         void SetActiveController(Controller controller);
     
         MapHudController& GetMapHudController() {

@@ -5,17 +5,25 @@
 
 // Game includes.
 #include "InputUtil.hpp"
+#include "UserServices.hpp"
 
 using namespace RowBlast;
 
 OutOfMovesDialogController::OutOfMovesDialogController(Pht::IEngine& engine,
-                                                       const CommonResources& commonResources) :
+                                                       const CommonResources& commonResources,
+                                                       const UserServices& userServices) :
     mInput {engine.GetInput()},
+    mUserServices {userServices},
     mView {engine, commonResources},
     mSlidingMenuAnimation {engine, mView} {}
 
-void OutOfMovesDialogController::SetUp(SlidingMenuAnimation::SlideDirection slideDirection) {
-    mSlidingMenuAnimation.SetUp(SlidingMenuAnimation::UpdateFade::No, slideDirection);
+void OutOfMovesDialogController::SetFadeEffect(Pht::FadeEffect& fadeEffect) {
+    mSlidingMenuAnimation.SetFadeEffect(fadeEffect);
+}
+
+void OutOfMovesDialogController::SetUp(SlidingMenuAnimation::SlideDirection slideDirection,
+                                       SlidingMenuAnimation::UpdateFade updateFade) {
+    mSlidingMenuAnimation.SetUp(updateFade, slideDirection);
 }
 
 OutOfMovesDialogController::Result OutOfMovesDialogController::Update() {
@@ -50,8 +58,14 @@ OutOfMovesDialogController::Result OutOfMovesDialogController::OnTouch(const Pht
 
     if (mView.GetPlayOnButton().IsClicked(touchEvent)) {
         mDeferredResult = Result::PlayOn;
-        mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::No,
-                                            SlidingMenuAnimation::SlideDirection::Left);
+        
+        if (mUserServices.GetPurchasingService().CanAfford(PurchasingService::addMovesPriceInCoins)) {
+            mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::Yes,
+                                                SlidingMenuAnimation::SlideDirection::Right);
+        } else {
+            mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::No,
+                                                SlidingMenuAnimation::SlideDirection::Left);
+        }
     }
     
     return Result::None;

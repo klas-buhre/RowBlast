@@ -79,10 +79,13 @@ void StoreController::Init(Pht::SceneObject& parentObject) {
     SetActiveViewController(ViewController::None);
 }
 
-void StoreController::StartStore(TriggerProduct triggerProduct) {
+void StoreController::StartStore(TriggerProduct triggerProduct,
+                                 SlidingMenuAnimation::UpdateFade updateFadeOnStartAndClose,
+                                 SlidingMenuAnimation::UpdateFade updateFadeOnCanAffordTriggerProduct) {
     mTriggerProduct = triggerProduct;
-    GoToStoreMenuState(SlidingMenuAnimation::UpdateFade::Yes,
-                       SlidingMenuAnimation::SlideDirection::Left);
+    mUpdateFadeOnClose = updateFadeOnStartAndClose;
+    mUpdateFadeOnCanAffordTriggerProduct = updateFadeOnCanAffordTriggerProduct;
+    GoToStoreMenuState(updateFadeOnStartAndClose, SlidingMenuAnimation::SlideDirection::Left);
 }
 
 StoreController::Result StoreController::Update() {
@@ -208,13 +211,14 @@ void StoreController::GoToStoreMenuState(SlidingMenuAnimation::UpdateFade update
                                          SlidingMenuAnimation::SlideDirection slideDirection) {
     mState = State::StoreMenu;
     SetActiveViewController(ViewController::StoreMenu);
-    mStoreMenuController.SetUp(updateFade, slideDirection);
+    mStoreMenuController.SetUp(updateFade, mUpdateFadeOnClose, slideDirection);
 }
 
 void StoreController::GoToPurchaseSuccessfulDialogState(const GoldCoinProduct& product) {
     mState = State::PurchaseSuccessfulDialog;
     SetActiveViewController(ViewController::PurchaseSuccessfulDialog);
-    mPurchaseSuccessfulDialogController.SetUp(product.mNumCoins);
+    mPurchaseSuccessfulDialogController.SetUp(product.mNumCoins,
+                                              mUpdateFadeOnCanAffordTriggerProduct);
 }
 
 void StoreController::GoToPurchaseFailedDialogState() {

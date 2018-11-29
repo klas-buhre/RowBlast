@@ -204,8 +204,6 @@ GameLogic::Result GameLogic::SpawnFallingPiece(FallingPieceSpawnReason fallingPi
     }
     
     if (mControlType == ControlType::Click) {
-        std::cout << "Calculating moves" << std::endl;
-        
         mClickInputHandler.CalculateMoves(*mFallingPiece, GetMovesUsedIncludingCurrent() - 1);
         mClickInputHandler.CreateNewSetOfVisibleMoves();
     }

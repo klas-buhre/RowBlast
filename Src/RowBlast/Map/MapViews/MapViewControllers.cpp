@@ -53,8 +53,10 @@ MapViewControllers::MapViewControllers(Pht::IEngine& engine,
     mNoLivesDialogController.SetGuiLightProvider(scene);
 }
 
-void MapViewControllers::Init() {
+void MapViewControllers::Init(Pht::FadeEffect& storeFadeEffect) {
     mFadeEffect.Reset();
+    
+    mNoLivesDialogController.SetFadeEffect(storeFadeEffect);
 
     auto& uiViewContainer {mScene.GetUiViewsContainer()};
     uiViewContainer.AddChild(mFadeEffect.GetSceneObject());
