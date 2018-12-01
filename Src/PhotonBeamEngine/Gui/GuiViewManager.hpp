@@ -6,18 +6,16 @@
 namespace Pht {
     class GuiView;
     class SceneObject;
-}
 
-namespace RowBlast {
     class GuiViewManager {
     public:
-        void Init(Pht::SceneObject& parentObject);
-        void AddView(int viewId, Pht::GuiView& view);
+        void Init(SceneObject& parentObject);
+        void AddView(int viewId, GuiView& view);
         void ActivateView(int viewId);
         void DeactivateAllViews();
         
     private:
-        std::map<int, Pht::GuiView*> mViews;
+        std::map<int, GuiView*> mViews;
     };
 }
 

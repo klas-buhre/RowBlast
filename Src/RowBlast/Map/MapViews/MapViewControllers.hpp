@@ -3,6 +3,7 @@
 
 // Engine includes.
 #include "FadeEffect.hpp"
+#include "GuiViewManager.hpp"
 
 // Game includes.
 #include "MapHudController.hpp"
@@ -10,7 +11,6 @@
 #include "SettingsMenuController.hpp"
 #include "NoLivesDialogController.hpp"
 #include "LivesDialogController.hpp"
-#include "GuiViewManager.hpp"
 
 namespace Pht {
     class IEngine;
@@ -66,7 +66,7 @@ namespace RowBlast {
     private:
         MapScene& mScene;
         Pht::FadeEffect mFadeEffect;
-        GuiViewManager mViewManager;
+        Pht::GuiViewManager mViewManager;
         MapHudController mMapHudController;
         LevelGoalDialogController mLevelGoalDialogController;
         NoLivesDialogController mNoLivesDialogController;

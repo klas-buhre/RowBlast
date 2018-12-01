@@ -3,9 +3,9 @@
 
 // Engine includes.
 #include "FadeEffect.hpp"
+#include "GuiViewManager.hpp"
 
 // Game includes.
-#include "GuiViewManager.hpp"
 #include "StoreMenuController.hpp"
 #include "PurchaseSuccessfulDialogController.hpp"
 #include "PurchaseFailedDialogController.hpp"
@@ -95,7 +95,7 @@ namespace RowBlast {
         SlidingMenuAnimation::UpdateFade mUpdateFadeOnClose;
         SlidingMenuAnimation::UpdateFade mUpdateFadeOnCanAffordTriggerProduct;
         SpinningWheelEffect mSpinningWheelEffect;
-        GuiViewManager mViewManager;
+        Pht::GuiViewManager mViewManager;
         StoreMenuController mStoreMenuController;
         PurchaseSuccessfulDialogController mPurchaseSuccessfulDialogController;
         PurchaseFailedDialogController mPurchaseFailedDialogController;

@@ -6,9 +6,9 @@
 #include "GuiView.hpp"
 #include "SceneObject.hpp"
 
-using namespace RowBlast;
+using namespace Pht;
 
-void GuiViewManager::Init(Pht::SceneObject& parentObject) {
+void GuiViewManager::Init(SceneObject& parentObject) {
     for (auto& viewEntry: mViews) {
         auto* view {viewEntry.second};
         view->SetIsActive(false);
@@ -16,7 +16,7 @@ void GuiViewManager::Init(Pht::SceneObject& parentObject) {
     }
 }
 
-void GuiViewManager::AddView(int viewId, Pht::GuiView& view) {
+void GuiViewManager::AddView(int viewId, GuiView& view) {
     mViews[viewId] = &view;
 }
 

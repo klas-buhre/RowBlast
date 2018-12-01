@@ -3,9 +3,9 @@
 
 // Engine includes.
 #include "FadeEffect.hpp"
+#include "GuiViewManager.hpp"
 
 // Game includes.
-#include "GuiViewManager.hpp"
 #include "GameHudController.hpp"
 #include "GameMenuController.hpp"
 #include "GameOverDialogController.hpp"
@@ -96,7 +96,7 @@ namespace RowBlast {
 
     private:
         Pht::FadeEffect mFadeEffect;
-        GuiViewManager mViewManager;
+        Pht::GuiViewManager mViewManager;
         GameHudController mGameHudController;
         GameMenuController mGameMenuController;
         GameOverDialogController mGameOverDialogController;
