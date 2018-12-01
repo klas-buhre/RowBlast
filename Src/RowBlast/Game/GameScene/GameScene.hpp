@@ -75,6 +75,8 @@ namespace RowBlast {
         void SetScissorBox(const Pht::ScissorBox& scissorBox);
         const Pht::Material& GetGrayMaterial() const;
         const Pht::ScissorBox& GetFieldScissorBox() const;
+        void SetUiCameraPosition(const Pht::Vec3& position);
+        void SetDefaultUiCameraPosition();
         
         const CommonResources& GetCommonResources() const {
             return mCommonResources;
@@ -252,6 +254,7 @@ namespace RowBlast {
         Pht::Scene* mScene {nullptr};
         Pht::CameraComponent* mCamera {nullptr};
         Pht::LightComponent* mLight {nullptr};
+        Pht::CameraComponent* mUiCamera {nullptr};
         Pht::LightComponent* mUiLight {nullptr};
         Pht::Vec3 mUiLightDirectionA;
         Pht::Vec3 mUiLightDirectionB;

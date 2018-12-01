@@ -77,6 +77,11 @@ namespace RowBlast {
         const SelectablePreviewPiecesRelativePositions& GetSelectablePreviewPiecesRelativePositions() const {
             return mSelectablePreviewPiecesRelativePositions;
         }
+        
+        Pht::SceneObject& GetUpperContainer() {
+            assert(mUpperContainer);
+            return *mUpperContainer;
+        }
 
         Pht::SceneObject& GetProgressContainer() {
             assert(mProgressContainer);
@@ -153,6 +158,7 @@ namespace RowBlast {
         float mLightAnimationTime {0.0f};
         Pht::SceneObject* mSelectablePiecesRectangle {nullptr};
         Pht::SceneObject* mPressedSelectablePiecesRectangle {nullptr};
+        Pht::SceneObject* mUpperContainer {nullptr};
         Pht::SceneObject* mProgressContainer {nullptr};
         Pht::SceneObject* mMovesContainer {nullptr};
         Pht::SceneObject* mNextPiecesContainer {nullptr};

@@ -124,11 +124,11 @@ LevelGoalDialogView::LevelGoalDialogView(Pht::IEngine& engine,
                                 guiResources.GetWhiteButtonTextProperties(zoom));
     }
 
-    CreatePreviewPiecesContainer(engine);
-    CreateGoalContainer(engine, commonResources, zoom);
+    CreatePreviewPiecesContainer();
+    CreateGoalContainer(commonResources, zoom);
 }
 
-void LevelGoalDialogView::CreatePreviewPiecesContainer(Pht::IEngine& engine) {
+void LevelGoalDialogView::CreatePreviewPiecesContainer() {
     auto& container {CreateSceneObject()};
     container.GetTransform().SetPosition({0.0f, 3.3f, UiLayer::block});
     
@@ -144,12 +144,11 @@ void LevelGoalDialogView::CreatePreviewPiecesContainer(Pht::IEngine& engine) {
         blocksTransform.SetRotation({-30.0f, -30.0f, 0.0f});
     }
     
-    CreateGlowEffectsBehindPieces(container, engine);
+    CreateGlowEffectsBehindPieces(container);
     GetRoot().AddChild(container);
 }
 
-void LevelGoalDialogView::CreateGlowEffectsBehindPieces(Pht::SceneObject& parentObject,
-                                                        Pht::IEngine& engine) {
+void LevelGoalDialogView::CreateGlowEffectsBehindPieces(Pht::SceneObject& parentObject) {
     Pht::EmitterSettings particleEmitterSettings {
         .mPosition = Pht::Vec3{0.0f, 0.0f, 0.0f},
         .mSize = Pht::Vec3{0.0f, 0.0f, 0.0f},
@@ -174,7 +173,7 @@ void LevelGoalDialogView::CreateGlowEffectsBehindPieces(Pht::SceneObject& parent
         .mGrowDuration = 0.75f
     };
     
-    auto& particleSystem {engine.GetParticleSystem()};
+    auto& particleSystem {mEngine.GetParticleSystem()};
     mGlowEffect = particleSystem.CreateParticleEffectSceneObject(particleSettings,
                                                                  particleEmitterSettings,
                                                                  Pht::RenderMode::Triangles);
@@ -210,8 +209,7 @@ void LevelGoalDialogView::CreateGlowEffectsBehindPieces(Pht::SceneObject& parent
     parentObject.AddChild(*mRoundGlowEffect);
 }
 
-void LevelGoalDialogView::CreateGoalContainer(Pht::IEngine& engine,
-                                              const CommonResources& commonResources,
+void LevelGoalDialogView::CreateGoalContainer(const CommonResources& commonResources,
                                               PotentiallyZoomedScreen zoom) {
     auto& container {CreateSceneObject()};
     container.GetTransform().SetPosition({0.0f, -3.0f, 0.0f});
@@ -229,7 +227,7 @@ void LevelGoalDialogView::CreateGoalContainer(Pht::IEngine& engine,
                "Clear all gray blocks",
                smallTextProperties,
                *mClearObjectiveSceneObject);
-    CreateGrayCube(engine, commonResources, *mClearObjectiveSceneObject);
+    CreateGrayCube(commonResources, *mClearObjectiveSceneObject);
     mClearObjectiveSceneObject->SetIsVisible(false);
     container.AddChild(*mClearObjectiveSceneObject);
 
@@ -238,7 +236,7 @@ void LevelGoalDialogView::CreateGoalContainer(Pht::IEngine& engine,
                "Bring down the asteroid",
                smallTextProperties,
                *mAsteroidObjectiveSceneObject);
-    CreateAsteroid(engine, *mAsteroidObjectiveSceneObject);
+    CreateAsteroid(*mAsteroidObjectiveSceneObject);
     mAsteroidObjectiveSceneObject->SetIsVisible(false);
     container.AddChild(*mAsteroidObjectiveSceneObject);
 
@@ -247,18 +245,17 @@ void LevelGoalDialogView::CreateGoalContainer(Pht::IEngine& engine,
                "Fill all gray slots",
                smallTextProperties,
                *mBuildObjectiveSceneObject);
-    CreateBlueprintSlot(engine, *mBuildObjectiveSceneObject);
+    CreateBlueprintSlot(*mBuildObjectiveSceneObject);
     mBuildObjectiveSceneObject->SetIsVisible(false);
     container.AddChild(*mBuildObjectiveSceneObject);
     
-    CreateGlowEffectsBehindGoal(container, engine);
+    CreateGlowEffectsBehindGoal(container);
     GetRoot().AddChild(container);
 }
 
-void LevelGoalDialogView::CreateGrayCube(Pht::IEngine& engine,
-                                         const CommonResources& commonResources,
+void LevelGoalDialogView::CreateGrayCube(const CommonResources& commonResources,
                                          Pht::SceneObject& parent) {
-    auto& sceneManager {engine.GetSceneManager()};
+    auto& sceneManager {mEngine.GetSceneManager()};
     
     mGrayCubeSceneObject =
         &CreateSceneObject(Pht::ObjMesh {"cube_428.obj", 1.25f},
@@ -272,11 +269,11 @@ void LevelGoalDialogView::CreateGrayCube(Pht::IEngine& engine,
     parent.AddChild(*mGrayCubeSceneObject);
 }
 
-void LevelGoalDialogView::CreateAsteroid(Pht::IEngine& engine, Pht::SceneObject& parent) {
+void LevelGoalDialogView::CreateAsteroid(Pht::SceneObject& parent) {
     Pht::Material asteroidMaterial {"gray_asteroid.jpg", 0.84f, 1.23f, 0.0f, 1.0f};
     asteroidMaterial.GetDepthState().mDepthTestAllowedOverride = true;
     
-    auto& sceneManager {engine.GetSceneManager()};
+    auto& sceneManager {mEngine.GetSceneManager()};
     
     mAsteroidSceneObject =
         &CreateSceneObject(Pht::ObjMesh {"asteroid_2000.obj", 19.0f, Pht::MoveMeshToOrigin::Yes},
@@ -290,7 +287,7 @@ void LevelGoalDialogView::CreateAsteroid(Pht::IEngine& engine, Pht::SceneObject&
     parent.AddChild(*mAsteroidSceneObject);
 }
 
-void LevelGoalDialogView::CreateBlueprintSlot(Pht::IEngine& engine, Pht::SceneObject& parent) {
+void LevelGoalDialogView::CreateBlueprintSlot(Pht::SceneObject& parent) {
     auto& blueprintSlotContainer {CreateSceneObject()};
     auto& transform {blueprintSlotContainer.GetTransform()};
     transform.SetPosition({-0.05f, -1.0f, UiLayer::block});
@@ -300,7 +297,7 @@ void LevelGoalDialogView::CreateBlueprintSlot(Pht::IEngine& engine, Pht::SceneOb
     auto squareSide {1.25f};
     auto slotSide {squareSide + 0.125f};
     Pht::Vec4 slotFillColor {1.0f, 1.0f, 1.0f, 0.192f};
-    auto& sceneManager {engine.GetSceneManager()};
+    auto& sceneManager {mEngine.GetSceneManager()};
     
     Pht::QuadMesh::Vertices blueprintSlotVertices  {
         {{-slotSide / 2.0f, -slotSide / 2.0f, 0.0f}, slotFillColor},
@@ -339,8 +336,7 @@ void LevelGoalDialogView::CreateBlueprintSlot(Pht::IEngine& engine, Pht::SceneOb
     blueprintSlotContainer.AddChild(fieldCell);
 }
 
-void LevelGoalDialogView::CreateGlowEffectsBehindGoal(Pht::SceneObject& parentObject,
-                                                      Pht::IEngine& engine) {
+void LevelGoalDialogView::CreateGlowEffectsBehindGoal(Pht::SceneObject& parentObject) {
     Pht::EmitterSettings particleEmitterSettings {
         .mPosition = Pht::Vec3{0.0f, 0.0f, 0.0f},
         .mSize = Pht::Vec3{0.0f, 0.0f, 0.0f},
@@ -366,7 +362,7 @@ void LevelGoalDialogView::CreateGlowEffectsBehindGoal(Pht::SceneObject& parentOb
         .mGrowDuration = 0.5f
     };
     
-    auto& particleSystem {engine.GetParticleSystem()};
+    auto& particleSystem {mEngine.GetParticleSystem()};
     mGoalRoundGlowEffect = particleSystem.CreateParticleEffectSceneObject(particleSettings,
                                                                           particleEmitterSettings,
                                                                           Pht::RenderMode::Triangles);

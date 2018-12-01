@@ -15,6 +15,10 @@ Backlog:
      not really matter since the user can select any piece from the selectables but maybe it is most 
      convenient to go back to the state before the move and not the initial state.
   -Rendering:
+    -Animation that moves the map hud out of the screen when clicking buttons in the hud. Could work
+     in a similar way as the SlidingFieldAnimation.
+    -Animation that moves the paus button out of the screen.
+    -Number of moves left could start flashing like in Candy Crush or scale up/down like in Soda.
   -GUI:
     -Menu window that displays 3rd party lib credits.
   -Purchases:
@@ -39,8 +43,14 @@ Ongoing tasks:
      zoomed version. Test with iPhone XR to see if the zoomed textures look good in non-zoomed
      scenes.
     -Store GUI.
-      -No lives dialog could have a large window and add lives effect/icon.
       -Out of moves dialog could have a medium window and add moves effect/icon.
+        -Could move GuiViewManager to Pht and notify GuiViews when they become deactivated.
+         Out of Moves dialog DetachChildren-stuff should still be handled without the new
+         notification mechanism since that mechanism will not notify when scenes are switched. But
+         light settings could be handled by the new notify.
+        -The add moves icon could have the non-field green material and rotate back-and forth
+         slightly. There could also be particles coming out behind the piece.
+      -No lives dialog could have a large window and add lives effect/icon.
       -No lives dialog should only be possible to open from map hud add lives button if number of
        lives is zero. If number of lives is non-zero then the lives dialog is opened instead.
       -Store views.

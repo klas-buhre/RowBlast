@@ -43,12 +43,20 @@ void SceneObject::AddChild(SceneObject& child) {
     mChildren.push_back(&child);
 }
 
+void SceneObject::DetachChildren() {
+    for (auto* child: mChildren) {
+        child->mParent = nullptr;
+    }
+    
+    mChildren.clear();
+}
+
 SceneObject* SceneObject::Find(Name name) {
     if (name == mName) {
         return this;
     }
     
-    for (auto& child: mChildren) {
+    for (auto* child: mChildren) {
         auto* foundChild {child->Find(name)};
         
         if (foundChild) {

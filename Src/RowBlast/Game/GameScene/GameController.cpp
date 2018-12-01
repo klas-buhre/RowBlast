@@ -632,7 +632,7 @@ void GameController::GoToOutOfMovesStateOutOfMovesDialog(SlidingMenuAnimation::S
                                                          SlidingMenuAnimation::UpdateFade updateFade) {
     mOutOfMovesState = OutOfMovesState::OutOfMovesDialog;
     mGameViewControllers.SetActiveController(GameViewControllers::OutOfMovesDialog);
-    mGameViewControllers.GetOutOfMovesDialogController().SetUp(slideDirection, updateFade);
+    mGameViewControllers.GetOutOfMovesDialogController().SetUp(mScene, slideDirection, updateFade);
 }
 
 void GameController::GoToOutOfMovesStateStore() {

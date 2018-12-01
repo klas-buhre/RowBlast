@@ -32,6 +32,7 @@ namespace {
     constexpr auto sunsetLightIntensity {0.94f};
     constexpr auto darkLightIntensity {0.78f};
     constexpr auto fieldQuadBrightness {0.9f};
+    const Pht::Vec3 defaultUiCameraPosition {0.0f, 0.0f, 300.0f};
 
     const std::vector<BlockPathVolume> standardFloatingBlockPaths {
         BlockPathVolume {
@@ -412,12 +413,13 @@ void GameScene::CreateUiViewsContainer() {
     
     auto& uiCameraSceneObject {mScene->CreateSceneObject()};
     uiCameraSceneObject.SetIsVisible(false);
-    uiCameraSceneObject.GetTransform().SetPosition({0.0f, 0.0f, 300.0f});
     auto uiCameraComponent {std::make_unique<Pht::CameraComponent>(uiCameraSceneObject)};
     
     auto* uiRenderPass {mScene->GetRenderPass(static_cast<int>(Layer::UiViews))};
     assert(uiRenderPass);
-    uiRenderPass->SetCamera(uiCameraComponent.get());
+    mUiCamera = uiCameraComponent.get();
+    SetDefaultUiCameraPosition();
+    uiRenderPass->SetCamera(mUiCamera);
     
     uiCameraSceneObject.SetComponent<Pht::CameraComponent>(std::move(uiCameraComponent));
     mUiViewsContainer->AddChild(uiCameraSceneObject);
@@ -570,4 +572,12 @@ void GameScene::SetDefaultGuiLightDirections() {
 
 const Pht::Material& GameScene::GameScene::GetGrayMaterial() const {
     return mCommonResources.GetMaterials().GetGrayFieldBlockMaterial();
+}
+
+void GameScene::SetUiCameraPosition(const Pht::Vec3& position) {
+    mUiCamera->GetSceneObject().GetTransform().SetPosition(position);
+}
+
+void GameScene::SetDefaultUiCameraPosition() {
+    mUiCamera->GetSceneObject().GetTransform().SetPosition(defaultUiCameraPosition);
 }

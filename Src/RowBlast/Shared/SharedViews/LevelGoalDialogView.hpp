@@ -68,17 +68,15 @@ namespace RowBlast {
             Pht::SceneObject* mRowBombSceneObject {nullptr};
         };
 
-        void CreatePreviewPiecesContainer(Pht::IEngine& engine);
-        void CreateGlowEffectsBehindPieces(Pht::SceneObject& parentObject, Pht::IEngine& engine);
-        void CreateGoalContainer(Pht::IEngine& engine,
-                                 const CommonResources& commonResources,
+        void CreatePreviewPiecesContainer();
+        void CreateGlowEffectsBehindPieces(Pht::SceneObject& parentObject);
+        void CreateGoalContainer(const CommonResources& commonResources,
                                  PotentiallyZoomedScreen zoom);
-        void CreateGrayCube(Pht::IEngine& engine,
-                            const CommonResources& commonResources,
+        void CreateGrayCube(const CommonResources& commonResources,
                             Pht::SceneObject& parent);
-        void CreateAsteroid(Pht::IEngine& engine, Pht::SceneObject& parent);
-        void CreateBlueprintSlot(Pht::IEngine& engine, Pht::SceneObject& parent);
-        void CreateGlowEffectsBehindGoal(Pht::SceneObject& parentObject, Pht::IEngine& engine);
+        void CreateAsteroid(Pht::SceneObject& parent);
+        void CreateBlueprintSlot(Pht::SceneObject& parent);
+        void CreateGlowEffectsBehindGoal(Pht::SceneObject& parentObject);
         void SetUpPreviewPiece(LevelStartPreviewPiece& previewPiece,
                                const Piece& pieceType,
                                const Pht::Vec3& position);

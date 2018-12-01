@@ -114,8 +114,11 @@ GameHud::GameHud(Pht::IEngine& engine,
 
     CreateLightAndCamera(scene, parentObject, hudLayer);
 
-    CreateProgressObject(scene, parentObject, field, commonResources, levelResources);
-    CreateMovesObject(scene, parentObject, commonResources);
+    mUpperContainer = &scene.CreateSceneObject();
+    parentObject.AddChild(*mUpperContainer);
+    
+    CreateProgressObject(scene, *mUpperContainer, field, commonResources, levelResources);
+    CreateMovesObject(scene, *mUpperContainer, commonResources);
     CreateNextPiecesObject(scene, parentObject, hudRectangles);
     CreateSelectablePiecesObject(scene, parentObject, hudRectangles);
 }

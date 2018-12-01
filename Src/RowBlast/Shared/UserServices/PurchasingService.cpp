@@ -23,7 +23,7 @@ PurchasingService::PurchasingService(Pht::IEngine& engine) :
         {ProductId::Currency500Coins, 500, "595,00 kr"}
     } {
 
-    LoadState();
+    // LoadState();
 }
 
 void PurchasingService::Update() {

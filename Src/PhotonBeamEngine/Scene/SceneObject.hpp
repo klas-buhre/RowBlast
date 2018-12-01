@@ -20,6 +20,7 @@ namespace Pht {
         Vec3 GetWorldSpacePosition() const;
         void Update(bool parentMatrixChanged);
         void AddChild(SceneObject& child);
+        void DetachChildren();
         SceneObject* Find(Name name);
         void SetLayer(int layerIndex);
         

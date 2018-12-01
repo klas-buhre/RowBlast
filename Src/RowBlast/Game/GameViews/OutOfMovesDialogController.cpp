@@ -11,22 +11,31 @@ using namespace RowBlast;
 
 OutOfMovesDialogController::OutOfMovesDialogController(Pht::IEngine& engine,
                                                        const CommonResources& commonResources,
-                                                       const UserServices& userServices) :
+                                                       const UserServices& userServices,
+                                                       const PieceResources& pieceResources) :
     mInput {engine.GetInput()},
     mUserServices {userServices},
-    mView {engine, commonResources},
+    mView {engine, commonResources, pieceResources},
     mSlidingMenuAnimation {engine, mView} {}
 
 void OutOfMovesDialogController::SetFadeEffect(Pht::FadeEffect& fadeEffect) {
     mSlidingMenuAnimation.SetFadeEffect(fadeEffect);
 }
 
-void OutOfMovesDialogController::SetUp(SlidingMenuAnimation::SlideDirection slideDirection,
+void OutOfMovesDialogController::SetGuiLightProvider(IGuiLightProvider& guiLightProvider) {
+    mView.SetGuiLightProvider(guiLightProvider);
+}
+
+void OutOfMovesDialogController::SetUp(GameScene& scene,
+                                       SlidingMenuAnimation::SlideDirection slideDirection,
                                        SlidingMenuAnimation::UpdateFade updateFade) {
+    mView.SetUp(scene);
     mSlidingMenuAnimation.SetUp(updateFade, slideDirection);
 }
 
 OutOfMovesDialogController::Result OutOfMovesDialogController::Update() {
+    mView.Update();
+
     switch (mSlidingMenuAnimation.Update()) {
         case SlidingMenuAnimation::State::Idle:
             mSlidingMenuAnimation.StartSlideIn();
@@ -34,9 +43,15 @@ OutOfMovesDialogController::Result OutOfMovesDialogController::Update() {
         case SlidingMenuAnimation::State::SlidingIn:
         case SlidingMenuAnimation::State::SlidingOut:
             break;
-        case SlidingMenuAnimation::State::ShowingMenu:
-            return HandleInput();
+        case SlidingMenuAnimation::State::ShowingMenu: {
+            auto result {HandleInput()};
+            if (result != Result::None) {
+                mView.OnDeactivate();
+            }
+            return result;
+        }
         case SlidingMenuAnimation::State::Done:
+            mView.OnDeactivate();
             return mDeferredResult;
     }
     

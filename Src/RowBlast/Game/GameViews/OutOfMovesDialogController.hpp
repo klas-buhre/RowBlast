@@ -24,10 +24,13 @@ namespace RowBlast {
         
         OutOfMovesDialogController(Pht::IEngine& engine,
                                    const CommonResources& commonResources,
-                                   const UserServices& userServices);
+                                   const UserServices& userServices,
+                                   const PieceResources& pieceResources);
         
         void SetFadeEffect(Pht::FadeEffect& fadeEffect);
-        void SetUp(SlidingMenuAnimation::SlideDirection slideDirection,
+        void SetGuiLightProvider(IGuiLightProvider& guiLightProvider);
+        void SetUp(GameScene& scene,
+                   SlidingMenuAnimation::SlideDirection slideDirection,
                    SlidingMenuAnimation::UpdateFade updateFade);
         Result Update();
 

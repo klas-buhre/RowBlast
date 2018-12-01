@@ -30,7 +30,7 @@ GameViewControllers::GameViewControllers(Pht::IEngine& engine,
     mGameHudController {engine, commonResources, hudRectangles},
     mGameMenuController {engine, commonResources},
     mGameOverDialogController {engine, commonResources, userServices},
-    mOutOfMovesDialogController {engine, commonResources, userServices},
+    mOutOfMovesDialogController {engine, commonResources, userServices, pieceResources},
     mLevelCompletedDialogController {engine, commonResources},
     mRestartConfirmationDialogController {engine, commonResources, userServices},
     mMapConfirmationDialogController {engine, commonResources},
@@ -75,6 +75,7 @@ void GameViewControllers::Init(GameScene& scene, Pht::FadeEffect& storeFadeEffec
     
     mGameMenuController.SetGuiLightProvider(scene);
     mNoLivesDialogController.SetGuiLightProvider(scene);
+    mOutOfMovesDialogController.SetGuiLightProvider(scene);
     mLevelGoalDialogController.SetGuiLightProvider(scene);
 }
 
