@@ -186,6 +186,6 @@ void LivesDialogView::UpdateHeart() {
     mHeartSceneObject->GetTransform().SetScale(heartScale + heartBeatAmplitude * std::sin(t));
 }
 
-void LivesDialogView::RestoreGuiLight() {
+void LivesDialogView::OnDeactivate() {
     mGuiLightProvider.SetDefaultGuiLightDirections();
 }

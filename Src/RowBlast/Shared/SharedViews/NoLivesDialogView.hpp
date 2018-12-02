@@ -26,9 +26,10 @@ namespace RowBlast {
                           const UserServices& userServices,
                           PotentiallyZoomedScreen potentiallyZoomedScreen);
 
+        void OnDeactivate() override;
+
         void SetUp();
         void Update();
-        void RestoreGuiLight();
         
         void SetGuiLightProvider(IGuiLightProvider& guiLightProvider) {
             mGuiLightProvider = &guiLightProvider;

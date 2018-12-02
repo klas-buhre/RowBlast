@@ -232,15 +232,17 @@ void OutOfMovesDialogView::Update() {
 void OutOfMovesDialogView::OnDeactivate() {
     if (mScene) {
         mScene->SetDefaultUiCameraPosition();
-        
-        auto& hud {mScene->GetHud()};
-        mUpperHudSceneObject->DetachChildren();
-        hud.GetUpperContainer().DetachChildren();
-        hud.GetUpperContainer().AddChild(hud.GetProgressContainer());
-        hud.GetUpperContainer().AddChild(hud.GetMovesContainer());
     }
     
     if (mGuiLightProvider) {
         mGuiLightProvider->SetDefaultGuiLightDirections();
     }
+}
+
+void OutOfMovesDialogView::HandOverHudObjects() {
+    auto& hud {mScene->GetHud()};
+    mUpperHudSceneObject->DetachChildren();
+    hud.GetUpperContainer().DetachChildren();
+    hud.GetUpperContainer().AddChild(hud.GetProgressContainer());
+    hud.GetUpperContainer().AddChild(hud.GetMovesContainer());
 }

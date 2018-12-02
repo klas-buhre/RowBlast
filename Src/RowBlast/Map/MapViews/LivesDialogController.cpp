@@ -39,7 +39,6 @@ LivesDialogController::Result LivesDialogController::Update() {
             mView.Update();
             return HandleInput();
         case SlidingMenuAnimation::State::Done:
-            mView.RestoreGuiLight();
             return mDeferredResult;
     }
     

@@ -44,10 +44,6 @@ Ongoing tasks:
      scenes.
     -Store GUI.
       -Out of moves dialog could have a medium window and add moves effect/icon.
-        -Could move GuiViewManager to Pht and notify GuiViews when they become deactivated.
-         Out of Moves dialog DetachChildren-stuff should still be handled without the new
-         notification mechanism since that mechanism will not notify when scenes are switched. But
-         light settings could be handled by the new notify.
         -The add moves icon could have the non-field green material and rotate back-and forth
          slightly. There could also be particles coming out behind the piece.
       -No lives dialog could have a large window and add lives effect/icon.

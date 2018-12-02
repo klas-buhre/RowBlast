@@ -613,7 +613,7 @@ void LevelGoalDialogView::AnimateAsteroidRotation(float dt) {
     mAsteroidSceneObject->GetTransform().SetRotation(mAsteroidRotation);
 }
 
-void LevelGoalDialogView::RestoreGuiLight() {
+void LevelGoalDialogView::OnDeactivate() {
     if (mGuiLightProvider) {
         mGuiLightProvider->SetDefaultGuiLightDirections();
     }

@@ -130,7 +130,6 @@ void GameController::StartLevel(int levelId) {
     mScene.Init(*mLevel, mLevelResources, mPieceResources, mGameLogic, mField);
     mTutorial.Init(*mLevel);
     mGameLogic.Init(*mLevel);
-    mGameViewControllers.SetActiveController(GameViewControllers::None);
     mStoreController.Init(mScene.GetUiViewsContainer());
     mBlueprintSlotsFilledAnimation.Init();
     mPieceDropParticleEffect.Init();
@@ -509,13 +508,17 @@ GameController::Command GameController::UpdateOutOfMovesDialog() {
     switch (mGameViewControllers.GetOutOfMovesDialogController().Update()) {
         case OutOfMovesDialogController::Result::None:
             break;
-        case OutOfMovesDialogController::Result::PlayOn:
-            GoToOutOfMovesStateStore();
-        /*
-            mGameLogic.SetMovesLeft(5);
-            GoToPlayingState();
-        */
+        case OutOfMovesDialogController::Result::PlayOn: {
+            auto& purchasingService {mUserServices.GetPurchasingService()};
+            if (purchasingService.CanAfford(PurchasingService::addMovesPriceInCoins)) {
+                purchasingService.WithdrawCoins(PurchasingService::addMovesPriceInCoins);
+                mGameLogic.SetMovesLeft(5);
+                GoToPlayingState();
+            } else {
+                GoToOutOfMovesStateStore();
+            }
             break;
+        }
         case OutOfMovesDialogController::Result::BackToMap:
             mUserServices.GetLifeService().FailLevel();
             command = Command::GoToMap;

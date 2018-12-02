@@ -9,6 +9,8 @@
 using namespace Pht;
 
 void GuiViewManager::Init(SceneObject& parentObject) {
+    mActiveView = nullptr;
+
     for (auto& viewEntry: mViews) {
         auto* view {viewEntry.second};
         view->SetIsActive(false);
@@ -29,10 +31,16 @@ void GuiViewManager::ActivateView(int viewIndex) {
         assert(!"View not found");
     }
     
-    viewEntry->second->SetIsActive(true);
+    mActiveView = viewEntry->second;
+    mActiveView->SetIsActive(true);
 }
 
 void GuiViewManager::DeactivateAllViews() {
+    if (mActiveView) {
+        mActiveView->OnDeactivate();
+        mActiveView = nullptr;
+    }
+
     for (auto& viewEntry: mViews) {
         auto* view {viewEntry.second};
         view->SetIsActive(false);

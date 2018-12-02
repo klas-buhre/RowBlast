@@ -37,10 +37,11 @@ namespace RowBlast {
                             const PieceResources& pieceResources,
                             SceneId sceneId);
         
+        void OnDeactivate() override;
+        
         void SetUp(const LevelInfo& levelInfo);
         void StartEffects();
         void Update();
-        void RestoreGuiLight();
         
         void SetGuiLightProvider(IGuiLightProvider& guiLightProvider) {
             mGuiLightProvider = &guiLightProvider;

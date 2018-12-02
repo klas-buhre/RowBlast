@@ -26,9 +26,10 @@ namespace RowBlast {
                         const UserServices& userServices,
                         IGuiLightProvider& guiLightProvider);
 
+        void OnDeactivate() override;
+        
         void SetUp();
         void Update();
-        void RestoreGuiLight();
         
         const MenuButton& GetCloseButton() const {
             return *mCloseButton;

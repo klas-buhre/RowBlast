@@ -46,12 +46,12 @@ OutOfMovesDialogController::Result OutOfMovesDialogController::Update() {
         case SlidingMenuAnimation::State::ShowingMenu: {
             auto result {HandleInput()};
             if (result != Result::None) {
-                mView.OnDeactivate();
+                mView.HandOverHudObjects();
             }
             return result;
         }
         case SlidingMenuAnimation::State::Done:
-            mView.OnDeactivate();
+            mView.HandOverHudObjects();
             return mDeferredResult;
     }
     

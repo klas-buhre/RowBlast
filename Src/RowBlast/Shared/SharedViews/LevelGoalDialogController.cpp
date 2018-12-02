@@ -59,7 +59,6 @@ LevelGoalDialogController::Result LevelGoalDialogController::Update() {
             }
             return HandleInput();
         case SlidingMenuAnimation::State::Done:
-            mView.RestoreGuiLight();
             return mDeferredResult;
     }
     

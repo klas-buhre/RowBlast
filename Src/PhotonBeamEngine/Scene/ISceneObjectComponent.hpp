@@ -4,8 +4,6 @@
 #include <cstdint>
 
 namespace Pht {
-    class SceneObject;
-    
     using ComponentId = uint32_t;
     
     class ISceneObjectComponent {

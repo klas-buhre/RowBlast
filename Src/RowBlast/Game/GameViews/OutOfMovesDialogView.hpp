@@ -26,10 +26,12 @@ namespace RowBlast {
         OutOfMovesDialogView(Pht::IEngine& engine,
                              const CommonResources& commonResources,
                              const PieceResources& pieceResources);
-
+        
+        void OnDeactivate() override;
+        
         void SetUp(GameScene& scene);
         void Update();
-        void OnDeactivate();
+        void HandOverHudObjects();
         
         void SetGuiLightProvider(IGuiLightProvider& guiLightProvider) {
             mGuiLightProvider = &guiLightProvider;

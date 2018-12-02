@@ -15,6 +15,7 @@ namespace Pht {
         void DeactivateAllViews();
         
     private:
+        GuiView* mActiveView {nullptr};
         std::map<int, GuiView*> mViews;
     };
 }

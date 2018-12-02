@@ -162,7 +162,7 @@ void NoLivesDialogView::Update() {
     }
 }
 
-void NoLivesDialogView::RestoreGuiLight() {
+void NoLivesDialogView::OnDeactivate() {
     if (mGuiLightProvider) {
         mGuiLightProvider->SetDefaultGuiLightDirections();
     }

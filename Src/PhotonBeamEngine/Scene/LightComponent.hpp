@@ -5,6 +5,8 @@
 #include "Vector.hpp"
 
 namespace Pht {
+    class SceneObject;
+    
     class LightComponent: public ISceneObjectComponent {
     public:
         static const ComponentId id;

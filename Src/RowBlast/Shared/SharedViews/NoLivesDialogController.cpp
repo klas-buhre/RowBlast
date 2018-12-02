@@ -53,17 +53,11 @@ NoLivesDialogController::Result NoLivesDialogController::Update() {
                                                         SlidingMenuAnimation::SlideDirection::Right);
                     return Result::None;
                 }
-                mView.RestoreGuiLight();
                 return ReturnResult(Result::Close);
             }
-            auto result {HandleInput()};
-            if (result != Result::None) {
-                mView.RestoreGuiLight();
-            }
-            return result;
+            return HandleInput();
         }
         case SlidingMenuAnimation::State::Done:
-            mView.RestoreGuiLight();
             return mDeferredResult;
     }
     

@@ -5,6 +5,8 @@
 #include "Font.hpp"
 
 namespace Pht {
+    class SceneObject;
+
     class TextComponent: public ISceneObjectComponent {
     public:
         static const ComponentId id;

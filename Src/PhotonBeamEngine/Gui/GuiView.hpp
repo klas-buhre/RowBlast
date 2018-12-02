@@ -18,6 +18,8 @@ namespace Pht {
         GuiView();
         virtual ~GuiView() {}
         
+        virtual void OnDeactivate() {}
+        
         void SetPosition(const Vec2& position);
         void SetPosition(const Vec3& position);
         void SetIsActive(bool isActive);
