@@ -83,7 +83,7 @@ namespace RowBlast {
                                const Pht::Vec3& position);
         void UpdateAnimations(float dt);
         void AnimateEmissive(float dt);
-        void AnimateBombRotation(float dt);
+        void AnimateBombRotation();
         void AnimateRowBombRotation(float dt);
         void AnimateGrayCubeRotation(float dt);
         void AnimateAsteroidRotation(float dt);

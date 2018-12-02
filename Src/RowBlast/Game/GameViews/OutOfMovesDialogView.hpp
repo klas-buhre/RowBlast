@@ -49,12 +49,13 @@ namespace RowBlast {
         void CreateAddMovesIcon(const Pht::Vec3& position,
                                 const CommonResources& commonResources,
                                 const PieceResources& pieceResources);
-        void CreateLPiece(Pht::SceneObject& parentObject,
-                          const PieceResources& pieceResources);
+        void CreateLPiece(Pht::SceneObject& parentObject, const PieceResources& pieceResources);
         void CreateGreenBlock(const Pht::Vec3& position,
                               Pht::RenderableObject& blockRenderable,
                               Pht::SceneObject& lPiece);
         void CreateGlowEffect(Pht::SceneObject& parentObject);
+        void CreateParticles(Pht::SceneObject& parentObject);
+        void AnimateLPieceRotation(float dt);
 
         Pht::IEngine& mEngine;
         GameScene* mScene {nullptr};
@@ -62,7 +63,10 @@ namespace RowBlast {
         std::unique_ptr<MenuButton> mCloseButton;
         std::unique_ptr<MenuButton> mPlayOnButton;
         std::unique_ptr<Pht::SceneObject> mGlowEffect;
+        std::unique_ptr<Pht::SceneObject> mParticles;
         Pht::SceneObject* mUpperHudSceneObject {nullptr};
+        Pht::SceneObject* mLPieceSceneObject {nullptr};
+        float mAnimationTime {0.0f};
     };
 }
 

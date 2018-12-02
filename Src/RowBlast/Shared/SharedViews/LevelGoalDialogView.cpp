@@ -550,7 +550,7 @@ void LevelGoalDialogView::UpdateAnimations(float dt) {
     }
 
     AnimateEmissive(dt);
-    AnimateBombRotation(dt);
+    AnimateBombRotation();
     AnimateRowBombRotation(dt);
     AnimateGrayCubeRotation(dt);
     AnimateAsteroidRotation(dt);
@@ -572,7 +572,7 @@ void LevelGoalDialogView::AnimateEmissive(float dt) {
                                                    emissive);
 }
 
-void LevelGoalDialogView::AnimateBombRotation(float dt) {
+void LevelGoalDialogView::AnimateBombRotation() {
     auto t {mAnimationTime * 2.0f * 3.1415f / bombAnimationDuration};
     auto xAngle {bombRotationAmplitude * sin(t) + 90.0f};
     auto yAngle {bombRotationAmplitude * cos(t)};

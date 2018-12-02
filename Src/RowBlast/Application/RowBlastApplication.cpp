@@ -43,9 +43,6 @@ Ongoing tasks:
      zoomed version. Test with iPhone XR to see if the zoomed textures look good in non-zoomed
      scenes.
     -Store GUI.
-      -Out of moves dialog could have a medium window and add moves effect/icon.
-        -The add moves icon could have the non-field green material and rotate back-and forth
-         slightly. There could also be particles coming out behind the piece.
       -No lives dialog could have a large window and add lives effect/icon.
       -No lives dialog should only be possible to open from map hud add lives button if number of
        lives is zero. If number of lives is non-zero then the lives dialog is opened instead.
