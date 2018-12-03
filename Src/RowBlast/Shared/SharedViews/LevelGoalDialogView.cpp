@@ -49,8 +49,8 @@ LevelGoalDialogView::LevelGoalDialogView(Pht::IEngine& engine,
 
     SetSize(menuWindow.GetSize());
     
-    auto& largeTextProperties {guiResources.GetLargeWhiteTextProperties(zoom)};
-    mCaption = &CreateText(captionPosition, "LEVEL 1", largeTextProperties);
+    auto& captionTextProperties {guiResources.GetLargeWhiteTextProperties(zoom)};
+    mCaption = &CreateText(captionPosition, "LEVEL 1", captionTextProperties);
     
     if (sceneId == SceneId::Map) {
         Pht::Vec3 closeButtonPosition {
@@ -80,6 +80,12 @@ LevelGoalDialogView::LevelGoalDialogView(Pht::IEngine& engine,
     };
     lineSceneObject.GetTransform().SetPosition({0.0f, GetSize().y / 2.0f - 2.6f, UiLayer::textRectangle});
     GetRoot().AddChild(lineSceneObject);
+    
+    Pht::TextProperties largeTextProperties {
+        commonResources.GetHussarFontSize35(zoom),
+        1.0f,
+        {0.95f, 0.95f, 0.95f, 1.0f}
+    };
 
     CreateText({-1.45f, 5.9f, UiLayer::text}, "PIECES", largeTextProperties);
     
@@ -217,10 +223,13 @@ void LevelGoalDialogView::CreateGoalContainer(const CommonResources& commonResou
     auto& guiResources {commonResources.GetGuiResources()};
     auto& smallTextProperties {guiResources.GetSmallWhiteTextProperties(zoom)};
 
-    CreateText({-1.3f, 2.0f, UiLayer::text},
-               "GOAL",
-               guiResources.GetLargeWhiteTextProperties(zoom),
-               container);
+    Pht::TextProperties largeTextProperties {
+        commonResources.GetHussarFontSize35(zoom),
+        1.0f,
+        {0.95f, 0.95f, 0.95f, 1.0f}
+    };
+
+    CreateText({-1.3f, 2.0f, UiLayer::text}, "GOAL", largeTextProperties, container);
 
     mClearObjectiveSceneObject = &CreateSceneObject();
     CreateText({-3.6f, 0.8f, UiLayer::text},

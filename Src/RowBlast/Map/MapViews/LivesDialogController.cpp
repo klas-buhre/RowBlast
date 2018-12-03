@@ -28,6 +28,8 @@ void LivesDialogController::SetUp() {
 }
 
 LivesDialogController::Result LivesDialogController::Update() {
+    mView.Update();
+
     switch (mSlidingMenuAnimation.Update()) {
         case SlidingMenuAnimation::State::Idle:
             mSlidingMenuAnimation.StartSlideIn();
@@ -36,7 +38,6 @@ LivesDialogController::Result LivesDialogController::Update() {
         case SlidingMenuAnimation::State::SlidingOut:
             break;
         case SlidingMenuAnimation::State::ShowingMenu:
-            mView.Update();
             return HandleInput();
         case SlidingMenuAnimation::State::Done:
             return mDeferredResult;

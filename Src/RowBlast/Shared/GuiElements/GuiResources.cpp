@@ -59,7 +59,7 @@ GuiResources::GuiResources(Pht::IEngine& engine, const CommonResources& commonRe
     mLargeWhiteTextProperties {
         commonResources.GetHussarFontSize35(PotentiallyZoomedScreen::No),
         1.0f,
-        {0.95f, 0.95f, 0.95f, 1.0f}
+        {1.0f, 1.0f, 1.0f, 1.0f}
     },
     mSmallWhiteTextProperties {
         commonResources.GetHussarFontSize27(PotentiallyZoomedScreen::No),
@@ -152,7 +152,7 @@ GuiResources::GuiResources(Pht::IEngine& engine, const CommonResources& commonRe
     mLargeWhiteTextPropertiesPotentiallyZoomedScreen {
         commonResources.GetHussarFontSize35(PotentiallyZoomedScreen::Yes),
         1.0f,
-        {0.95f, 0.95f, 0.95f, 1.0f}
+        {1.0f, 1.0f, 1.0f, 1.0f}
     },
     mCloseButton {CreateCloseButton(engine, commonResources, PotentiallyZoomedScreen::No)},
     mCloseButtonPotentiallyZoomedScreen {

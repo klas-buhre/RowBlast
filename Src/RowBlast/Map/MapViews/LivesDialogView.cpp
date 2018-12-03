@@ -5,6 +5,8 @@
 #include "TextComponent.hpp"
 #include "QuadMesh.hpp"
 #include "ObjMesh.hpp"
+#include "IParticleSystem.hpp"
+#include "ParticleEffect.hpp"
 
 // Game includes.
 #include "UserServices.hpp"
@@ -17,7 +19,6 @@ using namespace RowBlast;
 
 namespace {
     constexpr auto countdownNumChars {5};
-    const Pht::Vec3 uiLightDirection {0.9f, 1.0f, 1.0f};
     constexpr auto heartScale {3.0f};
     constexpr auto animationDuration {1.0f};
     constexpr auto heartBeatAmplitude {0.1f};
@@ -92,11 +93,13 @@ LivesDialogView::LivesDialogView(Pht::IEngine& engine,
     
     mNumLivesText = &CreateText({-0.4, 1.2f, UiLayer::text}, "0", zeroTextProperties);
     
+    CreateGlowEffect({0.0f, 1.5f, UiLayer::panel}, GetRoot(), 1.35f);
+    
     auto& textProperties {guiResources.GetSmallWhiteTextProperties(zoom)};
     
-    CreateText({-4.5f, -1.5f, UiLayer::text}, "Time until next life:", textProperties);
-    mCountdownText = &CreateText({2.3f, -1.5f, UiLayer::text}, "00:00", textProperties);
-    mFullText = &CreateText({2.3f, -1.5f, UiLayer::text}, "full", textProperties);
+    CreateText({-4.4f, -1.5f, UiLayer::text}, "Time until next life:", textProperties);
+    mCountdownText = &CreateText({2.4f, -1.5f, UiLayer::text}, "00:00", textProperties);
+    mFullText = &CreateText({2.5f, -1.5f, UiLayer::text}, "full", textProperties);
 
     Pht::Vec2 okButtonInputSize {194.0f, 43.0f};
 
@@ -115,15 +118,60 @@ LivesDialogView::LivesDialogView(Pht::IEngine& engine,
                           guiResources.GetWhiteButtonTextProperties(zoom));
 }
 
+void LivesDialogView::CreateGlowEffect(const Pht::Vec3& position,
+                                       Pht::SceneObject& parentObject,
+                                       float scale) {
+    Pht::EmitterSettings particleEmitterSettings {
+        .mPosition = Pht::Vec3{0.0f, 0.0f, 0.0f},
+        .mSize = Pht::Vec3{0.0f, 0.0f, 0.0f},
+        .mTimeToLive = 0.0f,
+        .mFrequency = 0.0f,
+        .mBurst = 2
+    };
+    
+    Pht::ParticleSettings particleSettings {
+        .mVelocity = Pht::Vec3{0.0f, 0.0f, 0.0f},
+        .mVelocityRandomPart = Pht::Vec3{0.0f, 0.0f, 0.0f},
+        .mColor = Pht::Vec4{0.46f, 0.2f, 0.65f, 1.0f},
+        .mColorRandomPart = Pht::Vec4{0.0f, 0.0f, 0.0f, 0.0f},
+        .mTextureFilename = "flare24.png",
+        .mTimeToLive = std::numeric_limits<float>::infinity(),
+        .mTimeToLiveRandomPart = 0.0f,
+        .mFadeOutDuration = 0.5f,
+        .mZAngularVelocity = 20.0f,
+        .mZAngularVelocityRandomPart = 10.0f,
+        .mSize = Pht::Vec2{11.25f, 11.25f},
+        .mSizeRandomPart = 0.0f,
+        .mShrinkDuration = 0.0f,
+        .mGrowDuration = 0.5f
+    };
+    
+    auto& particleSystem {mEngine.GetParticleSystem()};
+    mGlowEffect = particleSystem.CreateParticleEffectSceneObject(particleSettings,
+                                                                 particleEmitterSettings,
+                                                                 Pht::RenderMode::Triangles);
+    
+    auto& material {mGlowEffect->GetRenderable()->GetMaterial()};
+    material.SetShaderType(Pht::ShaderType::ParticleNoAlphaTexture);
+    
+    auto& transform {mGlowEffect->GetTransform()};
+    transform.SetPosition(position);
+    transform.SetScale(scale);
+    parentObject.AddChild(*mGlowEffect);
+}
+
 void LivesDialogView::SetUp() {
-    mGuiLightProvider.SetGuiLightDirections(uiLightDirection, uiLightDirection);
-    Update();
+    mGuiLightProvider.SetDefaultGuiLightDirections();
+    mGlowEffect->GetComponent<Pht::ParticleEffect>()->Start();
 }
 
 void LivesDialogView::Update() {
+    auto dt {mEngine.GetLastFrameSeconds()};
+    mGlowEffect->GetComponent<Pht::ParticleEffect>()->Update(dt);
+    
     UpdateNumLivesTexts();
     UpdateCountdownText();
-    UpdateHeart();
+    UpdateHeart(dt);
 }
 
 void LivesDialogView::UpdateNumLivesTexts() {
@@ -175,8 +223,8 @@ void LivesDialogView::UpdateCountdownText() {
     }
 }
 
-void LivesDialogView::UpdateHeart() {
-    mAnimationTime += mEngine.GetLastFrameSeconds();
+void LivesDialogView::UpdateHeart(float dt) {
+    mAnimationTime += dt;
     
     if (mAnimationTime > animationDuration) {
         mAnimationTime = 0.0f;
@@ -184,8 +232,4 @@ void LivesDialogView::UpdateHeart() {
     
     auto t {mAnimationTime * 2.0f * 3.1415f / animationDuration};
     mHeartSceneObject->GetTransform().SetScale(heartScale + heartBeatAmplitude * std::sin(t));
-}
-
-void LivesDialogView::OnDeactivate() {
-    mGuiLightProvider.SetDefaultGuiLightDirections();
 }

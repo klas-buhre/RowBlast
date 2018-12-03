@@ -25,8 +25,6 @@ namespace RowBlast {
                         const CommonResources& commonResources,
                         const UserServices& userServices,
                         IGuiLightProvider& guiLightProvider);
-
-        void OnDeactivate() override;
         
         void SetUp();
         void Update();
@@ -40,9 +38,12 @@ namespace RowBlast {
         }
         
     private:
+        void CreateGlowEffect(const Pht::Vec3& position,
+                              Pht::SceneObject& parentObject,
+                              float scale);
         void UpdateNumLivesTexts();
         void UpdateCountdownText();
-        void UpdateHeart();
+        void UpdateHeart(float dt);
         
         Pht::IEngine& mEngine;
         const UserServices& mUserServices;
@@ -51,6 +52,7 @@ namespace RowBlast {
         std::unique_ptr<MenuButton> mOkButton;
         std::chrono::seconds mSecondsUntilNewLife;
         int mNumLives {0};
+        std::unique_ptr<Pht::SceneObject> mGlowEffect;
         Pht::TextComponent* mCaptionText {nullptr};
         Pht::TextComponent* mNumLivesText {nullptr};
         Pht::TextComponent* mCountdownText {nullptr};

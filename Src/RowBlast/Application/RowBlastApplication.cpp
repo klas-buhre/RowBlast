@@ -43,8 +43,6 @@ Ongoing tasks:
      zoomed version. Test with iPhone XR to see if the zoomed textures look good in non-zoomed
      scenes.
     -Store GUI.
-      -Try pink glow effect to the lives dialog.
-      -Fix light direction in the lives dialog.
       -Try glow lines to the purchase complete dialog.
       -No lives dialog should only be possible to open from map hud add lives button if number of
        lives is zero. If number of lives is non-zero then the lives dialog is opened instead.
