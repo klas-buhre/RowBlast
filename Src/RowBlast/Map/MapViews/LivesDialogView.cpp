@@ -73,7 +73,7 @@ LivesDialogView::LivesDialogView(Pht::IEngine& engine,
     lineSceneObject.GetTransform().SetPosition({0.0f, GetSize().y / 2.0f - 2.6f, UiLayer::textRectangle});
     GetRoot().AddChild(lineSceneObject);
     
-    mHeartSceneObject = &CreateSceneObject(Pht::ObjMesh {"heart_112.obj", 3.25f},
+    mHeartSceneObject = &CreateSceneObject(Pht::ObjMesh {"heart_392.obj", 3.25f},
                                            commonResources.GetMaterials().GetRedMaterial(),
                                            sceneManager);
     auto& heartTransform {mHeartSceneObject->GetTransform()};

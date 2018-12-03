@@ -3,6 +3,7 @@
 
 #include <memory>
 #include <chrono>
+#include <vector>
 
 // Engine includes.
 #include "GuiView.hpp"
@@ -26,8 +27,6 @@ namespace RowBlast {
                           const UserServices& userServices,
                           PotentiallyZoomedScreen potentiallyZoomedScreen);
 
-        void OnDeactivate() override;
-
         void SetUp();
         void Update();
         
@@ -44,12 +43,29 @@ namespace RowBlast {
         }
         
     private:
+        void CreateNoLivesIcon(const Pht::Vec3& position,
+                               const CommonResources& commonResources,
+                               PotentiallyZoomedScreen zoom);
+        void CreateAddLivesIcon(const Pht::Vec3& position,
+                                const CommonResources& commonResources,
+                                PotentiallyZoomedScreen zoom);
+        void CreateGlowEffect(Pht::SceneObject& parentObject, float scale);
+        void CreateParticles(Pht::SceneObject& parentObject, float scale);
+        void UpdateCountdownText();
+        void UpdateHeartAnimation(float dt);
+        void UpdateHeartBeatAnimation(float dt);
+
+        Pht::IEngine& mEngine;
         const UserServices& mUserServices;
         IGuiLightProvider* mGuiLightProvider {nullptr};
         std::unique_ptr<MenuButton> mCloseButton;
         std::unique_ptr<MenuButton> mRefillLivesButton;
         std::chrono::seconds mSecondsUntilNewLife;
         Pht::TextComponent* mCountdownText {nullptr};
+        Pht::SceneObject* mHeartSceneObject {nullptr};
+        std::vector<std::unique_ptr<Pht::SceneObject>> mParticleEffects;
+        float mAnimationTime {0.0f};
+        float mHeartBeatAnimationTime {0.0f};
     };
 }
 

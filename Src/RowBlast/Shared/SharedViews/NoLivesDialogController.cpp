@@ -37,6 +37,8 @@ void NoLivesDialogController::SetUp(ShouldSlideOut shouldSlideOutOnClose,
 }
 
 NoLivesDialogController::Result NoLivesDialogController::Update() {
+    mView.Update();
+    
     switch (mSlidingMenuAnimation.Update()) {
         case SlidingMenuAnimation::State::Idle:
             mSlidingMenuAnimation.StartSlideIn();
@@ -45,7 +47,6 @@ NoLivesDialogController::Result NoLivesDialogController::Update() {
         case SlidingMenuAnimation::State::SlidingOut:
             break;
         case SlidingMenuAnimation::State::ShowingMenu: {
-            mView.Update();
             if (!mHasResult && mUserServices.GetLifeService().GetNumLives() > 0) {
                 if (mShouldSlideOutOnClose == ShouldSlideOut::Yes) {
                     SetDeferredResult(Result::Close);
