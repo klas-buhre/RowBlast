@@ -201,7 +201,7 @@ void MapHud::CreateCoinsObject(Pht::Scene& scene,
     // Warning! Must be five spaces to fit digits.
     mCoinsText = &scene.CreateText("   45", textProperties);
     auto& coinsTextSceneObject {mCoinsText->GetSceneObject()};
-    coinsTextSceneObject.GetTransform().SetPosition({-0.7f, -0.215f, UiLayer::text});
+    coinsTextSceneObject.GetTransform().SetPosition({-0.65f, -0.215f, UiLayer::text});
     coinsContainer.AddChild(coinsTextSceneObject);
     
     mCoinSceneObject = &scene.CreateSceneObject(Pht::ObjMesh {"coin_852.obj", 3.15f},
@@ -212,6 +212,7 @@ void MapHud::CreateCoinsObject(Pht::Scene& scene,
 
 void MapHud::Update() {
     UpdateLivesText();
+    UpdateCoinsText();
     UpdateCountdown();
     AnimateCoinRotation();
     
@@ -238,6 +239,27 @@ void MapHud::UpdateLivesText() {
         text[0] = buffer[0];
         
         mNumLives = lives;
+    }
+}
+
+void MapHud::UpdateCoinsText() {
+    auto numCoins {mUserServices.GetPurchasingService().GetCoinBalance()};
+    
+    if (numCoins != mNumCoins) {
+        const auto bufSize {64};
+        char buffer[bufSize];
+        std::snprintf(buffer, bufSize, "%5d", numCoins);
+        auto numDigits {std::strlen(buffer)};
+        assert(numDigits <= 5);
+        
+        auto& text {mCoinsText->GetText()};
+        auto textLength {text.size()};
+        assert(textLength == 5);
+        for (auto i {0}; i < 5; ++i) {
+             text[i] = buffer[i];
+        }
+        
+        mNumCoins = numCoins;
     }
 }
 

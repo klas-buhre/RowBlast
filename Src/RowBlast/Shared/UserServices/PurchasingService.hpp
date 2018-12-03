@@ -57,6 +57,7 @@ namespace RowBlast {
         
         enum class State {
             PurchasePending,
+            PurchaseFailure,
             Idle
         };
         

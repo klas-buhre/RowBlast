@@ -9,6 +9,7 @@ using namespace RowBlast;
 
 namespace {
     constexpr auto transactionTimeout {2.0f};
+    constexpr auto maxCoinBalance {99500};
     const std::string filename {"purchasing.dat"};
     const std::string coinBalanceMember {"coinBalance"};
 }
@@ -30,6 +31,9 @@ void PurchasingService::Update() {
     switch (mState) {
         case State::PurchasePending:
             UpdateInPurchasePendingState();
+            break;
+        case State::PurchaseFailure:
+            OnPurchaseFailed(PurchaseFailureReason::Other);
             break;
         case State::Idle:
             break;
@@ -73,12 +77,11 @@ void PurchasingService::StartPurchase(ProductId productId,
                                       const std::function<void(PurchaseFailureReason)>& onPurchaseFailed) {
     auto* product {GetGoldCoinProduct(productId)};
     
-    if (product == nullptr || mState != State::Idle) {
-        onPurchaseFailed(PurchaseFailureReason::Other);
-        return;
+    if (product == nullptr || mState != State::Idle || mCoinBalance >= maxCoinBalance) {
+        mState = State::PurchaseFailure;
+    } else {
+        mState = State::PurchasePending;
     }
-
-    mState = State::PurchasePending;
     
     mTransaction.mProduct = product;
     mTransaction.mOnPurchaseSucceeded = onPurchaseSucceeded;

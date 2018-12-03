@@ -44,7 +44,6 @@ Ongoing tasks:
      scenes.
     -Store GUI.
       -Store views.
-        -Coin balance should be correct in the map hud.
         -Purchase Successful dialog:
              If store opened from pressing add coins in map hud then
                 Go back to map.

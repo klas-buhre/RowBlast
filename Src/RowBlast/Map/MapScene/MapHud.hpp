@@ -42,6 +42,7 @@ namespace RowBlast {
                                Pht::SceneObject& hudObject,
                                const CommonResources& commonResources);
         void UpdateLivesText();
+        void UpdateCoinsText();
         void UpdateCountdown();
         void AnimateCoinRotation();
         
@@ -53,6 +54,7 @@ namespace RowBlast {
         Pht::SceneObject* mNewLifeCountdownContainer {nullptr};
         Pht::SceneObject* mCoinSceneObject {nullptr};
         int mNumLives {-1};
+        int mNumCoins {-1};
         std::chrono::seconds mSecondsUntilNewLife;
         Pht::Vec3 mCoinRotation;
     };
