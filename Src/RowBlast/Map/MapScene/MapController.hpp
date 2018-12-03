@@ -89,6 +89,7 @@ namespace RowBlast {
         void Pan(const Pht::TouchEvent& touch);
         void StartPan(const Pht::TouchEvent& touch);
         void UpdateCamera();
+        void HandleLivesButtonClick();
         void GoToNoLivesDialogState();
         void GoToLivesDialogState();
         void GoToSettingsMenuState();

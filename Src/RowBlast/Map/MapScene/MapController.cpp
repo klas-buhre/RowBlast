@@ -223,7 +223,7 @@ MapController::Command MapController::HandleInput() {
                         GoToStoreState(StoreController::TriggerProduct::Coins);
                         break;
                     case MapHudController::Result::ClickedLivesButton:
-                        GoToLivesDialogState();
+                        HandleLivesButtonClick();
                         break;
                     case MapHudController::Result::TouchStartedOverButton:
                         break;
@@ -388,6 +388,14 @@ void MapController::GoToUfoAnimationState(int levelToStart) {
         mCameraShouldFollowUfo = false;
     } else {
         mHideUfoOnAnimationFinished = false;
+    }
+}
+
+void MapController::HandleLivesButtonClick() {
+    if (mUserServices.GetLifeService().GetNumLives() == 0) {
+        GoToNoLivesDialogState();
+    } else {
+        GoToLivesDialogState();
     }
 }
 

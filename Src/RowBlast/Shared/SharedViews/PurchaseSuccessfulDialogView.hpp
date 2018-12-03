@@ -24,6 +24,7 @@ namespace RowBlast {
                                      PotentiallyZoomedScreen potentiallyZoomedScreen);
 
         void SetUp(int numCoins);
+        void Update();
 
         const MenuButton& GetCloseButton() const {
             return *mCloseButton;
@@ -34,9 +35,15 @@ namespace RowBlast {
         }
         
     private:
+        void CreateGlowEffect(const Pht::Vec3& position,
+                              Pht::SceneObject& parentObject,
+                              float scale);
+
+        Pht::IEngine& mEngine;
         std::unique_ptr<MenuButton> mCloseButton;
         std::unique_ptr<MenuButton> mOkButton;
         Pht::TextComponent* mConfirmationText {nullptr};
+        std::unique_ptr<Pht::SceneObject> mGlowEffect;
     };
 }
 

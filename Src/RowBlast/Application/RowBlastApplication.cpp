@@ -43,10 +43,8 @@ Ongoing tasks:
      zoomed version. Test with iPhone XR to see if the zoomed textures look good in non-zoomed
      scenes.
     -Store GUI.
-      -Try glow lines to the purchase complete dialog.
-      -No lives dialog should only be possible to open from map hud add lives button if number of
-       lives is zero. If number of lives is non-zero then the lives dialog is opened instead.
       -Store views.
+        -Coin balance should be correct in the map hud.
         -Purchase Successful dialog:
              If store opened from pressing add coins in map hud then
                 Go back to map.

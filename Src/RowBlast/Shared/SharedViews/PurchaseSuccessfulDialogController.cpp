@@ -28,6 +28,8 @@ void PurchaseSuccessfulDialogController::SetFadeEffect(Pht::FadeEffect& fadeEffe
 }
 
 PurchaseSuccessfulDialogController::Result PurchaseSuccessfulDialogController::Update() {
+    mView.Update();
+
     switch (mSlidingMenuAnimation.Update()) {
         case SlidingMenuAnimation::State::Idle:
             mSlidingMenuAnimation.StartSlideIn();
