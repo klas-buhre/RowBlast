@@ -12,6 +12,17 @@ namespace {
     constexpr auto fade {0.72f};
     constexpr auto fadeTime {0.3f};
     
+    int ToExitCriteriaInCoins(StoreController::TriggerProduct triggerProduct) {
+        switch (triggerProduct) {
+            case StoreController::TriggerProduct::Moves:
+                return PurchasingService::addMovesPriceInCoins;
+            case StoreController::TriggerProduct::Lives:
+                return PurchasingService::refillLivesPriceInCoins;
+            case StoreController::TriggerProduct::Coins:
+                return 0;
+        }
+    }
+    
     PotentiallyZoomedScreen ToPotentiallyZoomedScreen(StoreController::SceneId sceneId) {
         switch (sceneId) {
             case StoreController::SceneId::Map:
@@ -170,7 +181,12 @@ StoreController::Result StoreController::UpdatePurchaseSuccessfulDialog() {
         case PurchaseSuccessfulDialogController::Result::None:
             break;
         case PurchaseSuccessfulDialogController::Result::Close:
-            result = Result::Done;
+            if (mUserServices.GetPurchasingService().CanAfford(ToExitCriteriaInCoins(mTriggerProduct))) {
+                result = Result::Done;
+            } else {
+                GoToStoreMenuState(SlidingMenuAnimation::UpdateFade::No,
+                                   SlidingMenuAnimation::SlideDirection::Right);
+            }
             break;
     }
     
@@ -217,8 +233,14 @@ void StoreController::GoToStoreMenuState(SlidingMenuAnimation::UpdateFade update
 void StoreController::GoToPurchaseSuccessfulDialogState(const GoldCoinProduct& product) {
     mState = State::PurchaseSuccessfulDialog;
     SetActiveViewController(ViewController::PurchaseSuccessfulDialog);
-    mPurchaseSuccessfulDialogController.SetUp(product.mNumCoins,
-                                              mUpdateFadeOnCanAffordTriggerProduct);
+
+    if (mUserServices.GetPurchasingService().CanAfford(ToExitCriteriaInCoins(mTriggerProduct))) {
+        mPurchaseSuccessfulDialogController.SetUp(product.mNumCoins,
+                                                  mUpdateFadeOnCanAffordTriggerProduct);
+    } else {
+        mPurchaseSuccessfulDialogController.SetUp(product.mNumCoins,
+                                                  SlidingMenuAnimation::UpdateFade::No);
+    }
 }
 
 void StoreController::GoToPurchaseFailedDialogState() {

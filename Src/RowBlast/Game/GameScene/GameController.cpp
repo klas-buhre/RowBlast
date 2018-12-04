@@ -495,7 +495,7 @@ GameController::Command GameController::UpdateInOutOfMovesState() {
             command = UpdateOutOfMovesDialog();
             break;
         case OutOfMovesState::Store:
-            UpdateStore();
+            UpdateOutOfMovesStateStore();
             break;
     }
     
@@ -509,11 +509,8 @@ GameController::Command GameController::UpdateOutOfMovesDialog() {
         case OutOfMovesDialogController::Result::None:
             break;
         case OutOfMovesDialogController::Result::PlayOn: {
-            auto& purchasingService {mUserServices.GetPurchasingService()};
-            if (purchasingService.CanAfford(PurchasingService::addMovesPriceInCoins)) {
-                purchasingService.WithdrawCoins(PurchasingService::addMovesPriceInCoins);
-                mGameLogic.SetMovesLeft(5);
-                GoToPlayingState();
+            if (mUserServices.GetPurchasingService().CanAfford(PurchasingService::addMovesPriceInCoins)) {
+                AddMovesAndGoToPlayingState();
             } else {
                 GoToOutOfMovesStateStore();
             }
@@ -534,15 +531,25 @@ GameController::Command GameController::UpdateOutOfMovesDialog() {
     return command;
 }
 
-void GameController::UpdateStore() {
+void GameController::UpdateOutOfMovesStateStore() {
     switch (mStoreController.Update()) {
         case StoreController::Result::None:
             break;
         case StoreController::Result::Done:
-            GoToOutOfMovesStateOutOfMovesDialog(SlidingMenuAnimation::SlideDirection::Right,
-                                                SlidingMenuAnimation::UpdateFade::No);
+            if (mUserServices.GetPurchasingService().CanAfford(PurchasingService::addMovesPriceInCoins)) {
+                AddMovesAndGoToPlayingState();
+            } else {
+                GoToOutOfMovesStateOutOfMovesDialog(SlidingMenuAnimation::SlideDirection::Right,
+                                                    SlidingMenuAnimation::UpdateFade::No);
+            }
             break;
     }
+}
+
+void GameController::AddMovesAndGoToPlayingState() {
+    mUserServices.GetPurchasingService().WithdrawCoins(PurchasingService::addMovesPriceInCoins);
+    mGameLogic.SetMovesLeft(5);
+    GoToPlayingState();
 }
 
 GameController::Command GameController::UpdateInGameOverState() {
@@ -649,7 +656,7 @@ void GameController::GoToOutOfMovesStateStore() {
     mGameViewControllers.SetActiveController(GameViewControllers::None);
     mStoreController.StartStore(StoreController::TriggerProduct::Moves,
                                 SlidingMenuAnimation::UpdateFade::No,
-                                SlidingMenuAnimation::UpdateFade::No);
+                                SlidingMenuAnimation::UpdateFade::Yes);
 }
 
 void GameController::GoToGameOverStateGameOverDialog() {

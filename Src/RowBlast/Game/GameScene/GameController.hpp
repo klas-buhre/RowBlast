@@ -85,9 +85,10 @@ namespace RowBlast {
         Command UpdateInLevelCompletedState();
         Command UpdateInOutOfMovesState();
         Command UpdateOutOfMovesDialog();
-        void UpdateStore();
+        void UpdateOutOfMovesStateStore();
         Command UpdateInGameOverState();
         Command UpdateGameOverDialog();
+        void AddMovesAndGoToPlayingState();
         void ChangeGameState(GameLogic::Result gameLogicResult);
         void GoToPlayingState();
         void GoToPausedStateNoLivesDialog();

@@ -49,9 +49,9 @@ Ongoing tasks:
              End
              If store was opened from out of moves dialog
                 If there is enough coins for more moves then
-                    Go back to game with extra moves.
+                    Go back to game with extra moves.           [OK]
                 Else
-                    Go back to store menu.
+                    Go back to store menu.                      [OK]
                 End
              End
              If store was opened from no lives dialog
