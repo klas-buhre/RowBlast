@@ -45,7 +45,7 @@ Ongoing tasks:
       -Store views.
         -Purchase Successful dialog:
              If store opened from pressing add coins in map hud then
-                Go back to map.
+                Go back to map.                                 [OK]
              End
              If store was opened from out of moves dialog
                 If there is enough coins for more moves then
@@ -68,12 +68,16 @@ Ongoing tasks:
              End
         -Out of moves dialog, clicking on continue button:
              If having enough coins then
-                Go back to game with extra moves.
+                Go back to game with extra moves.               [OK]
              Else
-                Go to store.
+                Go to store.                                    [OK]
              End
         -Out of moves dialog, clicking on close button:
-             Go to to the level goal dialog for that level.
+             If having lives
+                Go to the level goal dialog for that level.     [OK]
+             Else
+                Go back to map.                                 [OK]
+             End
         -No lives dialog, clicking continue button:
              If having enough coins for refilling lives then
                 If no lives dialog was opened from a map start level click or level restart then

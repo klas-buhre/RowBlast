@@ -363,10 +363,10 @@ GameController::Command GameController::UpdateRestartConfirmationDialog() {
         case RestartConfirmationDialogController::Result::RestartLevel: {
             auto& lifeService {mUserServices.GetLifeService()};
             lifeService.FailLevel();
-            if (lifeService.GetNumLives() == 0) {
-                GoToPausedStateNoLivesDialog();
-            } else {
+            if (lifeService.GetNumLives() > 0) {
                 command = Command::RestartLevel;
+            } else {
+                GoToPausedStateNoLivesDialog();
             }
             break;
         }
@@ -519,10 +519,16 @@ GameController::Command GameController::UpdateOutOfMovesDialog() {
             }
             break;
         }
-        case OutOfMovesDialogController::Result::BackToMap:
-            mUserServices.GetLifeService().FailLevel();
-            command = Command::GoToMap;
+        case OutOfMovesDialogController::Result::BackToMap: {
+            auto& lifeService {mUserServices.GetLifeService()};
+            lifeService.FailLevel();
+            if (lifeService.GetNumLives() > 0) {
+                command = Command::RestartLevel;
+            } else {
+                command = Command::GoToMap;
+            }
             break;
+        }
     }
     
     return command;
@@ -563,10 +569,10 @@ GameController::Command GameController::UpdateGameOverDialog() {
         case GameOverDialogController::Result::None:
             break;
         case GameOverDialogController::Result::Retry:
-            if (mUserServices.GetLifeService().GetNumLives() == 0) {
-                GoToGameOverStateNoLivesDialog();
-            } else {
+            if (mUserServices.GetLifeService().GetNumLives() > 0) {
                 command = Command::RestartLevel;
+            } else {
+                GoToGameOverStateNoLivesDialog();
             }
             break;
         case GameOverDialogController::Result::BackToMap:
