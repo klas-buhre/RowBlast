@@ -436,7 +436,8 @@ void MapController::GoToStoreState(StoreController::TriggerProduct triggerProduc
     mMapViewControllers.SetActiveController(MapViewControllers::None);
     mStoreController.StartStore(triggerProduct,
                                 SlidingMenuAnimation::UpdateFade::Yes,
-                                SlidingMenuAnimation::UpdateFade::Yes);
+                                SlidingMenuAnimation::UpdateFade::Yes,
+                                PurchaseSuccessfulDialogController::ShouldSlideOut::Yes);
     mState = State::Store;
 }
 

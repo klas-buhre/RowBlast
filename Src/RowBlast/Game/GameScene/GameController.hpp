@@ -75,9 +75,11 @@ namespace RowBlast {
         void UpdateGameMenu();
         void UpdateLevelGoalDialog();
         void UpdateSettingsMenu();
-        Command UpdateNoLivesDialog();
+        Command UpdateInPausedStateNoLivesDialog();
+        Command UpdateInGameOverStateNoLivesDialog();
         Command UpdateRestartConfirmationDialog();
         Command UpdateMapConfirmationDialog();
+        Command UpdateInPausedStateStore();
         Command UpdateSubState();
         void UpdateInLevelIntroState();
         void UpdateTutorialDialogs();
@@ -89,11 +91,13 @@ namespace RowBlast {
         Command UpdateInGameOverState();
         Command UpdateGameOverDialog();
         void AddMovesAndGoToPlayingState();
+        void RefillLives();
         void ChangeGameState(GameLogic::Result gameLogicResult);
         void GoToPlayingState();
         void GoToPausedStateNoLivesDialog();
         void GoToPausedStateRestartConfirmationDialog();
         void GoToPausedStateMapConfirmationDialog();
+        void GoToPausedStateStore();
         void GoToPausedStateSettingsMenu();
         void GoToPausedStateLevelGoalDialog();
         void GoToPausedStateGameMenu(SlidingMenuAnimation::UpdateFade updateFade,
@@ -125,7 +129,8 @@ namespace RowBlast {
             SettingsMenu,
             NoLivesDialog,
             RestartConfirmationDialog,
-            MapConfirmationDialog
+            MapConfirmationDialog,
+            Store
         };
         
         enum class OutOfMovesState {

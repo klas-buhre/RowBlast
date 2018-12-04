@@ -92,10 +92,12 @@ void StoreController::Init(Pht::SceneObject& parentObject) {
 
 void StoreController::StartStore(TriggerProduct triggerProduct,
                                  SlidingMenuAnimation::UpdateFade updateFadeOnStartAndClose,
-                                 SlidingMenuAnimation::UpdateFade updateFadeOnCanAffordTriggerProduct) {
+                                 SlidingMenuAnimation::UpdateFade updateFadeOnCanAffordTriggerProduct,
+                                 PurchaseSuccessfulDialogController::ShouldSlideOut slideOutOnCanAffordTriggerProduct) {
     mTriggerProduct = triggerProduct;
     mUpdateFadeOnClose = updateFadeOnStartAndClose;
     mUpdateFadeOnCanAffordTriggerProduct = updateFadeOnCanAffordTriggerProduct;
+    mSlideOutOnCanAffordTriggerProduct = slideOutOnCanAffordTriggerProduct;
     GoToStoreMenuState(updateFadeOnStartAndClose, SlidingMenuAnimation::SlideDirection::Left);
 }
 
@@ -123,7 +125,14 @@ StoreController::Result StoreController::Update() {
     }
     
     if (result == Result::Done) {
-        GoToIdleState();
+        if (mState == State::PurchaseSuccessfulDialog &&
+            mSlideOutOnCanAffordTriggerProduct == PurchaseSuccessfulDialogController::ShouldSlideOut::No) {
+            
+            // Don't hide the purchase successful dialog if the dialog should not slide out when the
+            // store is done.
+        } else {
+            GoToIdleState();
+        }
     }
 
     return result;
@@ -236,9 +245,11 @@ void StoreController::GoToPurchaseSuccessfulDialogState(const GoldCoinProduct& p
 
     if (mUserServices.GetPurchasingService().CanAfford(ToExitCriteriaInCoins(mTriggerProduct))) {
         mPurchaseSuccessfulDialogController.SetUp(product.mNumCoins,
+                                                  mSlideOutOnCanAffordTriggerProduct,
                                                   mUpdateFadeOnCanAffordTriggerProduct);
     } else {
         mPurchaseSuccessfulDialogController.SetUp(product.mNumCoins,
+                                                  PurchaseSuccessfulDialogController::ShouldSlideOut::Yes,
                                                   SlidingMenuAnimation::UpdateFade::No);
     }
 }

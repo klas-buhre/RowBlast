@@ -48,7 +48,8 @@ namespace RowBlast {
         void Init(Pht::SceneObject& parentObject);
         void StartStore(TriggerProduct triggerProduct,
                         SlidingMenuAnimation::UpdateFade updateFadeOnStartAndClose,
-                        SlidingMenuAnimation::UpdateFade updateFadeOnCanAffordTriggerProduct);
+                        SlidingMenuAnimation::UpdateFade updateFadeOnCanAffordTriggerProduct,
+                        PurchaseSuccessfulDialogController::ShouldSlideOut slideOutOnCanAffordTriggerProduct);
         Result Update();
         
         Pht::FadeEffect& GetFadeEffect() {
@@ -94,6 +95,7 @@ namespace RowBlast {
         Pht::FadeEffect mFadeEffect;
         SlidingMenuAnimation::UpdateFade mUpdateFadeOnClose;
         SlidingMenuAnimation::UpdateFade mUpdateFadeOnCanAffordTriggerProduct;
+        PurchaseSuccessfulDialogController::ShouldSlideOut mSlideOutOnCanAffordTriggerProduct;
         SpinningWheelEffect mSpinningWheelEffect;
         Pht::GuiViewManager mViewManager;
         StoreMenuController mStoreMenuController;

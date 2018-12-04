@@ -265,13 +265,16 @@ GameController::Command GameController::UpdateInPausedState() {
             UpdateSettingsMenu();
             break;
         case PausedState::NoLivesDialog:
-            command = UpdateNoLivesDialog();
+            command = UpdateInPausedStateNoLivesDialog();
             break;
         case PausedState::RestartConfirmationDialog:
             command = UpdateRestartConfirmationDialog();
             break;
         case PausedState::MapConfirmationDialog:
             command = UpdateMapConfirmationDialog();
+            break;
+        case PausedState::Store:
+            command = UpdateInPausedStateStore();
             break;
     }
     
@@ -332,7 +335,34 @@ void GameController::UpdateSettingsMenu() {
     }
 }
 
-GameController::Command GameController::UpdateNoLivesDialog() {
+GameController::Command GameController::UpdateInPausedStateNoLivesDialog() {
+    auto command {Command::None};
+
+    switch (mGameViewControllers.GetNoLivesDialogController().Update()) {
+        case NoLivesDialogController::Result::None:
+            break;
+        case NoLivesDialogController::Result::RefillLives:
+            if (mUserServices.GetPurchasingService().CanAfford(PurchasingService::refillLivesPriceInCoins)) {
+                RefillLives();
+                command = Command::RestartLevel;
+            } else {
+                GoToPausedStateStore();
+            }
+            break;
+        case NoLivesDialogController::Result::Close:
+            GoToPlayingState();
+            break;
+    }
+    
+    return command;
+}
+
+void GameController::RefillLives() {
+    mUserServices.GetPurchasingService().WithdrawCoins(PurchasingService::refillLivesPriceInCoins);
+    mUserServices.GetLifeService().RefillLives();
+}
+
+GameController::Command GameController::UpdateInGameOverStateNoLivesDialog() {
     auto command {Command::None};
 
     switch (mGameViewControllers.GetNoLivesDialogController().Update()) {
@@ -362,9 +392,9 @@ GameController::Command GameController::UpdateRestartConfirmationDialog() {
             break;
         case RestartConfirmationDialogController::Result::RestartLevel: {
             auto& lifeService {mUserServices.GetLifeService()};
-            lifeService.FailLevel();
             if (lifeService.GetNumLives() > 0) {
                 command = Command::RestartLevel;
+                lifeService.FailLevel();
             } else {
                 GoToPausedStateNoLivesDialog();
             }
@@ -393,6 +423,25 @@ GameController::Command GameController::UpdateMapConfirmationDialog() {
         case MapConfirmationDialogController::Result::DoNotGoToMap:
             GoToPausedStateGameMenu(SlidingMenuAnimation::UpdateFade::No,
                                     SlidingMenuAnimation::SlideDirection::Right);
+            break;
+    }
+    
+    return command;
+}
+
+GameController::Command GameController::UpdateInPausedStateStore() {
+    auto command {Command::None};
+
+    switch (mStoreController.Update()) {
+        case StoreController::Result::None:
+            break;
+        case StoreController::Result::Done:
+            if (mUserServices.GetPurchasingService().CanAfford(PurchasingService::refillLivesPriceInCoins)) {
+                RefillLives();
+                command = Command::RestartLevel;
+            } else {
+                GoToPausedStateRestartConfirmationDialog();
+            }
             break;
     }
     
@@ -562,7 +611,7 @@ GameController::Command GameController::UpdateInGameOverState() {
             command = UpdateGameOverDialog();
             break;
         case GameOverState::NoLivesDialog:
-            command = UpdateNoLivesDialog();
+            command = UpdateInGameOverStateNoLivesDialog();
             break;
     }
     
@@ -616,6 +665,15 @@ void GameController::GoToPausedStateMapConfirmationDialog() {
     mGameViewControllers.GetMapConfirmationDialogController().SetUp();
 }
 
+void GameController::GoToPausedStateStore() {
+    mPausedState = PausedState::Store;
+    mGameViewControllers.SetActiveController(GameViewControllers::None);
+    mStoreController.StartStore(StoreController::TriggerProduct::Lives,
+                                SlidingMenuAnimation::UpdateFade::No,
+                                SlidingMenuAnimation::UpdateFade::No,
+                                PurchaseSuccessfulDialogController::ShouldSlideOut::No);
+}
+
 void GameController::GoToPausedStateSettingsMenu() {
     mPausedState = PausedState::SettingsMenu;
     mGameViewControllers.SetActiveController(GameViewControllers::SettingsMenu);
@@ -656,7 +714,8 @@ void GameController::GoToOutOfMovesStateStore() {
     mGameViewControllers.SetActiveController(GameViewControllers::None);
     mStoreController.StartStore(StoreController::TriggerProduct::Moves,
                                 SlidingMenuAnimation::UpdateFade::No,
-                                SlidingMenuAnimation::UpdateFade::Yes);
+                                SlidingMenuAnimation::UpdateFade::Yes,
+                                PurchaseSuccessfulDialogController::ShouldSlideOut::Yes);
 }
 
 void GameController::GoToGameOverStateGameOverDialog() {

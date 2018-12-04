@@ -19,11 +19,18 @@ namespace RowBlast {
             Close
         };
         
+        enum class ShouldSlideOut {
+            Yes,
+            No
+        };
+        
         PurchaseSuccessfulDialogController(Pht::IEngine& engine,
                                            const CommonResources& commonResources,
                                            PotentiallyZoomedScreen potentiallyZoomedScreen);
         
-        void SetUp(int numCoins, SlidingMenuAnimation::UpdateFade updateFadeOnClose);
+        void SetUp(int numCoins,
+                   ShouldSlideOut slideOutOnClose,
+                   SlidingMenuAnimation::UpdateFade updateFadeOnClose);
         void SetFadeEffect(Pht::FadeEffect& fadeEffect);
         Result Update();
         
@@ -39,6 +46,7 @@ namespace RowBlast {
         PurchaseSuccessfulDialogView mView;
         SlidingMenuAnimation mSlidingMenuAnimation;
         Result mDeferredResult {Result::None};
+        ShouldSlideOut mSlideOutOnClose;
         SlidingMenuAnimation::UpdateFade mUpdateFadeOnClose;
     };
 }
