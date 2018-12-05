@@ -52,7 +52,7 @@ namespace RowBlast {
                       PieceResources& pieceResources);
     
         void Init();
-        void GoToLevelGoalDialogState(int levelToStart);
+        void GoToStartLevelStateLevelGoalDialog(int levelToStart);
         void GoToUfoAnimationState(int levelToStart);
         Command Update();
         
@@ -67,15 +67,17 @@ namespace RowBlast {
     private:
         Command UpdateMap();
         void UpdateUfoAnimation();
-        Command UpdateLevelGoalDialog();
-        void UpdateNoLivesDialog();
+        Command UpdateInStartLevelState();
+        Command UpdateInStartLevelStateLevelGoalDialog();
+        void UpdateInStartLevelStateNoLivesDialog();
+        void UpdateInStartLevelStateStore();
         void UpdateLivesDialog();
         void UpdateInAddLivesState();
         void UpdateInAddLivesStateNoLivesDialog();
         void UpdateInAddLivesStateStore();
         void RefillLives();
         void UpdateSettingsMenu();
-        void UpdateStore();
+        void UpdateInAddCoinsStoreState();
         Command HandleInput();
         void UpdateTouchingState(const Pht::TouchEvent& touch);
         Command HandleTouch(const Pht::TouchEvent& touch);
@@ -84,23 +86,23 @@ namespace RowBlast {
         void StartPan(const Pht::TouchEvent& touch);
         void UpdateCamera();
         void HandleLivesButtonClick();
-        void GoToNoLivesDialogState();
+        void GoToStartLevelStateNoLivesDialog(int levelToStart);
+        void GoToStartLevelStateStore();
         void GoToLivesDailogState();
         void GoToAddLivesStateNoLivesDialog();
         void GoToAddLivesStateStore();
         void GoToSettingsMenuState();
-        void GoToStoreState(StoreController::TriggerProduct triggerProduct);
+        void GoToAddCoinsStoreState();
         void GoToMapState();
         
         enum class State {
             Map,
             UfoAnimation,
-            LevelGoalDialog,
-            NoLivesDialog,
+            StartLevel,
             LivesDialog,
             AddLives,
             SettingsMenu,
-            Store
+            AddCoinsStore
         };
         
         enum class StartLevelState {

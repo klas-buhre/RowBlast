@@ -43,65 +43,8 @@ Ongoing tasks:
      zoomed version. Test with iPhone XR to see if the zoomed textures look good in non-zoomed
      scenes.
     -Store GUI.
-      -Store views.
-        -Purchase Successful dialog:
-             If store opened from pressing add coins in map hud then
-                Go back to map.                                         [OK]
-             End
-             If store was opened from out of moves dialog
-                If there is enough coins for more moves then
-                    Go back to game with extra moves.                   [OK]
-                Else
-                    Go back to store menu.                              [OK]
-                End
-             End
-             If store was opened from no lives dialog
-                If there is enough coins for refilling lives then
-                    If no lives dialog was opened from map hud add lives button
-                        Go back to map.                                 [OK]
-                    End
-                    If no lives dialog was opened from a map start level
-                        Go to to the level goal dialog for that level.
-                    End
-                    If no lives dialog was opened from a level restart
-                        Go to to the level goal dialog for that level.  [OK]
-                    End
-                    If no lives dialog was opened from a game over retry
-                        Go to to the level goal dialog for that level.  [OK]
-                    End
-                Else
-                    Go back to store menu.                              [OK]
-                End
-             End
-        -Out of moves dialog, clicking on continue button:
-             If having enough coins then
-                Go back to game with extra moves.                       [OK]
-             Else
-                Go to store.                                            [OK]
-             End
-        -Out of moves dialog, clicking on close button:
-             If having lives
-                Go to the level goal dialog for that level.             [OK]
-             Else
-                Go back to map.                                         [OK]
-             End
-        -No lives dialog, clicking continue button:
-             If having enough coins for refilling lives then
-                If no lives dialog was opened from a level restart then
-                    Go to to the level goal dialog for that level.      [OK]
-                End
-                If no lives dialog was opened from a game over retry then
-                    Go to to the level goal dialog for that level.      [OK]
-                End
-                If no lives dialog was opened from a map start level then
-                    Go to to the level goal dialog for that level.
-                End
-                If no lives dialog was opened from map hud add lives button then
-                    Go back to map.                                     [OK]
-                End
-             Else
-                Go to store.
-             End
+      -Test everything.
+      -Redesign the store menu view?
 
 
 
@@ -358,6 +301,70 @@ Decision notes on level bombs:
              land on by piece blocks. The Field then adds that event to GameLogic which will
              detonate the level bomb once it is Updated again (after the CollapsingFieldAnimation is
              done with dragging down the piece blocks position).
+
+Store GUI:
+        -Purchase Successful dialog:
+             If store opened from pressing add coins in map hud then
+                Go back to map.                                         [OK]
+             End
+             If store was opened from out of moves dialog
+                If there is enough coins for more moves then
+                    Go back to game with extra moves.                   [OK]
+                Else
+                    Go back to store menu.                              [OK]
+                End
+             End
+             If store was opened from no lives dialog
+                If there is enough coins for refilling lives then
+                    If no lives dialog was opened from map hud add lives button
+                        Go back to map.                                 [OK]
+                    End
+                    If no lives dialog was opened from a map start level
+                        Go to to the level goal dialog for that level.  [OK]
+                    End
+                    If no lives dialog was opened from a level restart
+                        Go to to the level goal dialog for that level.  [OK]
+                    End
+                    If no lives dialog was opened from a game over retry
+                        Go to to the level goal dialog for that level.  [OK]
+                    End
+                Else
+                    Go back to store menu.                              [OK]
+                End
+             End
+        -Out of moves dialog, clicking on continue button:
+             If having enough coins then
+                Go back to game with extra moves.                       [OK]
+             Else
+                Go to store.                                            [OK]
+             End
+        -Out of moves dialog, clicking on close button:
+             If having lives
+                Go to the level goal dialog for that level.             [OK]
+             Else
+                Go back to map.                                         [OK]
+             End
+        -No lives dialog, clicking continue button:
+             If having enough coins for refilling lives then
+                If no lives dialog was opened from a level restart then
+                    Go to to the level goal dialog for that level.      [OK]
+                End
+                If no lives dialog was opened from a game over retry then
+                    Go to to the level goal dialog for that level.      [OK]
+                End
+                If no lives dialog was opened from a map start level then
+                    Go to to the level goal dialog for that level.      [OK]
+                End
+                If no lives dialog was opened from map hud add lives button then
+                    Go back to map.                                     [OK]
+                End
+             Else
+                Go to store.                                            [OK]
+             End
+
+
+
+
 
 
 Do this before making tutorial slides:

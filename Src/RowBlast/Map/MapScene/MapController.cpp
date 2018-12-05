@@ -85,11 +85,8 @@ MapController::Command MapController::Update() {
         case State::UfoAnimation:
             command = UpdateMap();
             break;
-        case State::LevelGoalDialog:
-            command = UpdateLevelGoalDialog();
-            break;
-        case State::NoLivesDialog:
-            UpdateNoLivesDialog();
+        case State::StartLevel:
+            command = UpdateInStartLevelState();
             break;
         case State::LivesDialog:
             UpdateLivesDialog();
@@ -100,8 +97,8 @@ MapController::Command MapController::Update() {
         case State::SettingsMenu:
             UpdateSettingsMenu();
             break;
-        case State::Store:
-            UpdateStore();
+        case State::AddCoinsStore:
+            UpdateInAddCoinsStoreState();
             break;
     }
 
@@ -133,7 +130,7 @@ void MapController::UpdateUfoAnimation() {
             }
             if (mState == State::UfoAnimation) {
                 if (mStartLevelDialogOnAnimationFinished) {
-                    GoToLevelGoalDialogState(mLevelToStart);
+                    GoToStartLevelStateLevelGoalDialog(mLevelToStart);
                 }
                 if (mHideUfoOnAnimationFinished) {
                     mUfo.Hide();
@@ -145,7 +142,25 @@ void MapController::UpdateUfoAnimation() {
     }
 }
 
-MapController::Command MapController::UpdateLevelGoalDialog() {
+MapController::Command MapController::UpdateInStartLevelState() {
+    auto command {Command{Command::None}};
+
+    switch (mStartLevelState) {
+        case StartLevelState::LevelGoalDialog:
+            command = UpdateInStartLevelStateLevelGoalDialog();
+            break;
+        case StartLevelState::NoLivesDialog:
+            UpdateInStartLevelStateNoLivesDialog();
+            break;
+        case StartLevelState::Store:
+            UpdateInStartLevelStateStore();
+            break;
+    }
+    
+    return command;
+}
+
+MapController::Command MapController::UpdateInStartLevelStateLevelGoalDialog() {
     auto command {Command{Command::None}};
 
     switch (mMapViewControllers.GetLevelGoalDialogController().Update()) {
@@ -162,16 +177,35 @@ MapController::Command MapController::UpdateLevelGoalDialog() {
     return command;
 }
 
-void MapController::UpdateNoLivesDialog() {
+void MapController::UpdateInStartLevelStateNoLivesDialog() {
     switch (mMapViewControllers.GetNoLivesDialogController().Update()) {
         case NoLivesDialogController::Result::None:
             break;
         case NoLivesDialogController::Result::RefillLives:
-            mUserServices.GetLifeService().RefillLives();
-            GoToMapState();
+            if (mUserServices.GetPurchasingService().CanAfford(PurchasingService::refillLivesPriceInCoins)) {
+                RefillLives();
+                GoToStartLevelStateLevelGoalDialog(mLevelToStart);
+            } else {
+                GoToStartLevelStateStore();
+            }
             break;
         case NoLivesDialogController::Result::Close:
             GoToMapState();
+            break;
+    }
+}
+
+void MapController::UpdateInStartLevelStateStore() {
+    switch (mStoreController.Update()) {
+        case StoreController::Result::None:
+            break;
+        case StoreController::Result::Done:
+            if (mUserServices.GetPurchasingService().CanAfford(PurchasingService::refillLivesPriceInCoins)) {
+                RefillLives();
+                GoToStartLevelStateLevelGoalDialog(mLevelToStart);
+            } else {
+                GoToMapState();
+            }
             break;
     }
 }
@@ -243,7 +277,7 @@ void MapController::UpdateSettingsMenu() {
     }
 }
 
-void MapController::UpdateStore() {
+void MapController::UpdateInAddCoinsStoreState() {
     switch (mStoreController.Update()) {
         case StoreController::Result::None:
             break;
@@ -270,7 +304,7 @@ MapController::Command MapController::HandleInput() {
                         GoToSettingsMenuState();
                         break;
                     case MapHudController::Result::ClickedCoinsButton:
-                        GoToStoreState(StoreController::TriggerProduct::Coins);
+                        GoToAddCoinsStoreState();
                         break;
                     case MapHudController::Result::ClickedLivesButton:
                         HandleLivesButtonClick();
@@ -339,9 +373,9 @@ MapController::Command MapController::HandlePinClick(const MapPin& pin) {
     switch (mapPlace.GetKind()) {
         case MapPlace::Kind::MapLevel:
             if (mUserServices.GetLifeService().GetNumLives() > 0) {
-                GoToLevelGoalDialogState(pin.GetLevel());
+                GoToStartLevelStateLevelGoalDialog(pin.GetLevel());
             } else {
-                GoToNoLivesDialogState();
+                GoToStartLevelStateNoLivesDialog(pin.GetLevel());
             }
             break;
         case MapPlace::Kind::Portal: {
@@ -441,17 +475,39 @@ void MapController::GoToUfoAnimationState(int levelToStart) {
     }
 }
 
-void MapController::GoToLevelGoalDialogState(int levelToStart) {
+void MapController::GoToStartLevelStateLevelGoalDialog(int levelToStart) {
     if (mScene.GetWorldId() != mUniverse.CalcWorldId(levelToStart)) {
         return;
     }
 
-    mState = State::LevelGoalDialog;
+    mState = State::StartLevel;
+    mStartLevelState = StartLevelState::LevelGoalDialog;
     mLevelToStart = levelToStart;
     mMapViewControllers.SetActiveController(MapViewControllers::LevelGoalDialog);
 
     auto levelInfo {LevelLoader::LoadInfo(levelToStart, mLevelResources)};
     mMapViewControllers.GetLevelGoalDialogController().SetUp(*levelInfo);
+}
+
+void MapController::GoToStartLevelStateNoLivesDialog(int levelToStart) {
+    mState = State::StartLevel;
+    mStartLevelState = StartLevelState::NoLivesDialog;
+    mLevelToStart = levelToStart;
+    mMapViewControllers.SetActiveController(MapViewControllers::NoLivesDialog);
+    mMapViewControllers.GetNoLivesDialogController().SetUp(SlidingMenuAnimation::UpdateFade::Yes,
+                                                           NoLivesDialogController::ShouldSlideOut::Yes,
+                                                           NoLivesDialogController::ShouldSlideOut::Yes);
+}
+
+void MapController::GoToStartLevelStateStore() {
+    mState = State::StartLevel;
+    mStartLevelState = StartLevelState::Store;
+    mMapViewControllers.SetActiveController(MapViewControllers::None);
+    mStoreController.StartStore(StoreController::TriggerProduct::Lives,
+                                SlidingMenuAnimation::UpdateFade::No,
+                                SlidingMenuAnimation::UpdateFade::Yes,
+                                SlidingMenuAnimation::UpdateFade::Yes,
+                                PurchaseSuccessfulDialogController::ShouldSlideOut::Yes);
 }
 
 void MapController::HandleLivesButtonClick() {
@@ -488,15 +544,6 @@ void MapController::GoToAddLivesStateStore() {
                                 PurchaseSuccessfulDialogController::ShouldSlideOut::Yes);
 }
 
-
-void MapController::GoToNoLivesDialogState() {
-    mState = State::NoLivesDialog;
-    mMapViewControllers.SetActiveController(MapViewControllers::NoLivesDialog);
-    mMapViewControllers.GetNoLivesDialogController().SetUp(SlidingMenuAnimation::UpdateFade::Yes,
-                                                           NoLivesDialogController::ShouldSlideOut::Yes,
-                                                           NoLivesDialogController::ShouldSlideOut::Yes);
-}
-
 void MapController::GoToSettingsMenuState() {
     mMapViewControllers.SetActiveController(MapViewControllers::SettingsMenu);
     mMapViewControllers.GetSettingsMenuController().SetUp(SlidingMenuAnimation::UpdateFade::Yes,
@@ -504,14 +551,14 @@ void MapController::GoToSettingsMenuState() {
     mState = State::SettingsMenu;
 }
 
-void MapController::GoToStoreState(StoreController::TriggerProduct triggerProduct) {
+void MapController::GoToAddCoinsStoreState() {
+    mState = State::AddCoinsStore;
     mMapViewControllers.SetActiveController(MapViewControllers::None);
-    mStoreController.StartStore(triggerProduct,
+    mStoreController.StartStore(StoreController::TriggerProduct::Coins,
                                 SlidingMenuAnimation::UpdateFade::Yes,
                                 SlidingMenuAnimation::UpdateFade::Yes,
                                 SlidingMenuAnimation::UpdateFade::Yes,
                                 PurchaseSuccessfulDialogController::ShouldSlideOut::Yes);
-    mState = State::Store;
 }
 
 void MapController::GoToMapState() {

@@ -186,7 +186,7 @@ void RowBlastApplication::StartMap() {
             break;
         case MapInitialState::LevelGoalDialog:
             mMapController.GetScene().SetCameraAtLevel(mLevelToStart);
-            mMapController.GoToLevelGoalDialogState(mLevelToStart);
+            mMapController.GoToStartLevelStateLevelGoalDialog(mLevelToStart);
             break;
         case MapInitialState::UfoAnimation:
             mMapController.GoToUfoAnimationState(mLevelToStart);
