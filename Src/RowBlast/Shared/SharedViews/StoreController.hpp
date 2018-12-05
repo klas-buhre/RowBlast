@@ -47,7 +47,8 @@ namespace RowBlast {
         
         void Init(Pht::SceneObject& parentObject);
         void StartStore(TriggerProduct triggerProduct,
-                        SlidingMenuAnimation::UpdateFade updateFadeOnStartAndClose,
+                        SlidingMenuAnimation::UpdateFade updateFadeOnStart,
+                        SlidingMenuAnimation::UpdateFade updateFadeOnClose,
                         SlidingMenuAnimation::UpdateFade updateFadeOnCanAffordTriggerProduct,
                         PurchaseSuccessfulDialogController::ShouldSlideOut slideOutOnCanAffordTriggerProduct);
         Result Update();

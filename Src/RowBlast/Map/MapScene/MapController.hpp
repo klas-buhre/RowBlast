@@ -42,16 +42,6 @@ namespace RowBlast {
             Kind mKind {None};
             int mLevel;
         };
-        
-        enum class State {
-            Map,
-            UfoAnimation,
-            LevelGoalDialog,
-            NoLivesDialog,
-            LivesDialog,
-            SettingsMenu,
-            Store
-        };
     
         MapController(Pht::IEngine& engine,
                       const CommonResources& commonResources,
@@ -80,6 +70,10 @@ namespace RowBlast {
         Command UpdateLevelGoalDialog();
         void UpdateNoLivesDialog();
         void UpdateLivesDialog();
+        void UpdateInAddLivesState();
+        void UpdateInAddLivesStateNoLivesDialog();
+        void UpdateInAddLivesStateStore();
+        void RefillLives();
         void UpdateSettingsMenu();
         void UpdateStore();
         Command HandleInput();
@@ -91,16 +85,42 @@ namespace RowBlast {
         void UpdateCamera();
         void HandleLivesButtonClick();
         void GoToNoLivesDialogState();
-        void GoToLivesDialogState();
+        void GoToLivesDailogState();
+        void GoToAddLivesStateNoLivesDialog();
+        void GoToAddLivesStateStore();
         void GoToSettingsMenuState();
         void GoToStoreState(StoreController::TriggerProduct triggerProduct);
         void GoToMapState();
+        
+        enum class State {
+            Map,
+            UfoAnimation,
+            LevelGoalDialog,
+            NoLivesDialog,
+            LivesDialog,
+            AddLives,
+            SettingsMenu,
+            Store
+        };
+        
+        enum class StartLevelState {
+            LevelGoalDialog,
+            NoLivesDialog,
+            Store
+        };
+        
+        enum class AddLivesState {
+            NoLivesDialog,
+            Store
+        };
         
         Pht::IEngine& mEngine;
         UserServices& mUserServices;
         const LevelResources& mLevelResources;
         const Universe& mUniverse;
         State mState {State::Map};
+        StartLevelState mStartLevelState {StartLevelState::LevelGoalDialog};
+        AddLivesState mAddLivesState {AddLivesState::NoLivesDialog};
         MapScene mScene;
         Ufo mUfo;
         UfoAnimation mUfoAnimation;

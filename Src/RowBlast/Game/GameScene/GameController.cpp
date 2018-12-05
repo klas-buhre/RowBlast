@@ -694,6 +694,7 @@ void GameController::GoToPausedStateStore() {
     mStoreController.StartStore(StoreController::TriggerProduct::Lives,
                                 SlidingMenuAnimation::UpdateFade::No,
                                 SlidingMenuAnimation::UpdateFade::No,
+                                SlidingMenuAnimation::UpdateFade::No,
                                 PurchaseSuccessfulDialogController::ShouldSlideOut::No);
 }
 
@@ -737,6 +738,7 @@ void GameController::GoToOutOfMovesStateStore() {
     mGameViewControllers.SetActiveController(GameViewControllers::None);
     mStoreController.StartStore(StoreController::TriggerProduct::Moves,
                                 SlidingMenuAnimation::UpdateFade::No,
+                                SlidingMenuAnimation::UpdateFade::No,
                                 SlidingMenuAnimation::UpdateFade::Yes,
                                 PurchaseSuccessfulDialogController::ShouldSlideOut::Yes);
 }
@@ -759,6 +761,7 @@ void GameController::GoToGameOverStateStore() {
     mGameOverState = GameOverState::Store;
     mGameViewControllers.SetActiveController(GameViewControllers::None);
     mStoreController.StartStore(StoreController::TriggerProduct::Lives,
+                                SlidingMenuAnimation::UpdateFade::No,
                                 SlidingMenuAnimation::UpdateFade::No,
                                 SlidingMenuAnimation::UpdateFade::No,
                                 PurchaseSuccessfulDialogController::ShouldSlideOut::No);

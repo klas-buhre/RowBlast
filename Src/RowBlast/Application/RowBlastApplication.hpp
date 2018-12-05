@@ -27,13 +27,19 @@ namespace RowBlast {
         void OnUpdate() override;
         
     private:
+        enum class MapInitialState {
+            Map,
+            UfoAnimation,
+            LevelGoalDialog
+        };
+
         void UpdateScene();
         void UpdateTitleScene();
         void UpdateMapScene();
         void UpdateGameScene();
         void HandleTransitions();
         void InsertFadeEffectInActiveScene();
-        void BeginFadeToMap(MapController::State mapControllerInitialState);
+        void BeginFadeToMap(MapInitialState mapInitialState);
         void BeginFadeToGame(int level);
         void StartMap();
         void StartGame();
@@ -56,7 +62,7 @@ namespace RowBlast {
         MapController mMapController;
         Pht::FadeEffect mFadeEffect;
         int mLevelToStart;
-        MapController::State mMapControllerInitialState {MapController::State::Map};
+        MapInitialState mMapInitialState {MapInitialState::Map};
     };
 }
 

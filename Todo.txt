@@ -35,7 +35,8 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-    -Decide the sky color for the second world.
+    -Decide the sky color for the second world. Maybe more of a yellow color like in Tetris Blitz
+     app store page.
     -Add a settings service that stores the settings in a file.
     -Maybe it is enough with one single version of the windows and buttons instead of the
      potationally zoomed and the normal one. That single version should be the potentially
@@ -57,7 +58,7 @@ Ongoing tasks:
              If store was opened from no lives dialog
                 If there is enough coins for refilling lives then
                     If no lives dialog was opened from map hud add lives button
-                        Go back to map.
+                        Go back to map.                                 [OK]
                     End
                     If no lives dialog was opened from a map start level
                         Go to to the level goal dialog for that level.
@@ -96,7 +97,7 @@ Ongoing tasks:
                     Go to to the level goal dialog for that level.
                 End
                 If no lives dialog was opened from map hud add lives button then
-                    Go back to map.
+                    Go back to map.                                     [OK]
                 End
              Else
                 Go to store.
