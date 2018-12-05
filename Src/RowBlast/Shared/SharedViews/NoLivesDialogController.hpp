@@ -35,7 +35,8 @@ namespace RowBlast {
         
         void SetGuiLightProvider(IGuiLightProvider& guiLightProvider);
         void SetFadeEffect(Pht::FadeEffect& fadeEffect);
-        void SetUp(ShouldSlideOut shouldSlideOutOnClose,
+        void SetUp(SlidingMenuAnimation::UpdateFade updateFadeOnStart,
+                   ShouldSlideOut shouldSlideOutOnClose,
                    ShouldSlideOut shouldSlideOutOnRefillLives);
         Result Update();
         

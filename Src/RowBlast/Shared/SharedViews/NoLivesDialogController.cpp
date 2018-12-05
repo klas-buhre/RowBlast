@@ -26,11 +26,12 @@ void NoLivesDialogController::SetFadeEffect(Pht::FadeEffect& fadeEffect) {
     mSlidingMenuAnimation.SetFadeEffect(fadeEffect);
 }
 
-void NoLivesDialogController::SetUp(ShouldSlideOut shouldSlideOutOnClose,
+void NoLivesDialogController::SetUp(SlidingMenuAnimation::UpdateFade updateFadeOnStart,
+                                    ShouldSlideOut shouldSlideOutOnClose,
                                     ShouldSlideOut shouldSlideOutOnRefillLives) {
     mView.SetUp();
-    mSlidingMenuAnimation.SetUp(SlidingMenuAnimation::UpdateFade::Yes,
-                                SlidingMenuAnimation::SlideDirection::Left);
+    mSlidingMenuAnimation.SetUp(updateFadeOnStart, SlidingMenuAnimation::SlideDirection::Left);
+
     mShouldSlideOutOnClose = shouldSlideOutOnClose;
     mShouldSlideOutOnRefillLives = shouldSlideOutOnRefillLives;
     mHasResult = false;

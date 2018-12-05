@@ -58,7 +58,6 @@ GameViewControllers::GameViewControllers(Pht::IEngine& engine,
     mSettingsMenuController.SetFadeEffect(mFadeEffect);
     mRestartConfirmationDialogController.SetFadeEffect(mFadeEffect);
     mMapConfirmationDialogController.SetFadeEffect(mFadeEffect);
-    mGameOverDialogController.SetFadeEffect(mFadeEffect);
 }
 
 void GameViewControllers::Init(GameScene& scene, Pht::FadeEffect& storeFadeEffect) {
@@ -72,6 +71,7 @@ void GameViewControllers::Init(GameScene& scene, Pht::FadeEffect& storeFadeEffec
     
     mNoLivesDialogController.SetFadeEffect(storeFadeEffect);
     mOutOfMovesDialogController.SetFadeEffect(storeFadeEffect);
+    mGameOverDialogController.SetFadeEffect(storeFadeEffect);
     
     mGameMenuController.SetGuiLightProvider(scene);
     mNoLivesDialogController.SetGuiLightProvider(scene);

@@ -415,7 +415,8 @@ void MapController::GoToLevelGoalDialogState(int levelToStart) {
 void MapController::GoToNoLivesDialogState() {
     mState = State::NoLivesDialog;
     mMapViewControllers.SetActiveController(MapViewControllers::NoLivesDialog);
-    mMapViewControllers.GetNoLivesDialogController().SetUp(NoLivesDialogController::ShouldSlideOut::Yes,
+    mMapViewControllers.GetNoLivesDialogController().SetUp(SlidingMenuAnimation::UpdateFade::Yes,
+                                                           NoLivesDialogController::ShouldSlideOut::Yes,
                                                            NoLivesDialogController::ShouldSlideOut::Yes);
 }
 

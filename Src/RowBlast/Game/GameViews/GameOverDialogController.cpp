@@ -60,7 +60,7 @@ GameOverDialogController::OnTouch(const Pht::TouchEvent& touchEvent) {
     if (mView.GetRetryButton().IsClicked(touchEvent)) {
         if (mUserServices.GetLifeService().GetNumLives() == 0) {
             mDeferredResult = Result::Retry;
-            mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::Yes);
+            mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::No);
             return Result::None;
         }
         
