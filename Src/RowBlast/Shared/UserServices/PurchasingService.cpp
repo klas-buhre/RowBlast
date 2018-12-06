@@ -45,7 +45,7 @@ void PurchasingService::UpdateInPurchasePendingState() {
     
     if (mTransaction.mElapsedTime > transactionTimeout) {
         switch (mTransaction.mProduct->mId) {
-            case ProductId::Currency10Coins:
+            case ProductId::Currency100Coins:
                 OnPurchaseFailed(PurchaseFailureReason::Other);
                 break;
             case ProductId::Currency50Coins:

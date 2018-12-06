@@ -43,7 +43,6 @@ Ongoing tasks:
      zoomed version. Test with iPhone XR to see if the zoomed textures look good in non-zoomed
      scenes.
     -Store GUI.
-      -Test everything.
       -Redesign the store menu view?
 
 
@@ -133,7 +132,7 @@ Ordered Backlog:
         Cost: 4
         Done
     -Store GUI.
-        Cost: 5
+        Cost: 15
     -Analytics.
         Cost: 5
     -Levels for the space world.
@@ -155,7 +154,7 @@ Ordered Backlog:
     -Back end.
         Cost: ?
 
-        Total cost: 235
+        Total cost: 245
 
 
 Comomon piece type sets:
