@@ -97,7 +97,7 @@ StoreMenuView::StoreMenuView(Pht::IEngine& engine,
                          1.15f,
                          ProductId::Currency10Coins,
                          {0.75f, 0.75f, 0.0f},
-                         {9.0f, 9.0f},
+                         {7.0f, 7.0f},
                          engine,
                          commonResources,
                          zoom);
@@ -105,7 +105,7 @@ StoreMenuView::StoreMenuView(Pht::IEngine& engine,
                          1.0f,
                          ProductId::Currency50Coins,
                          {1.5f, 1.25f, 0.0f},
-                         {11.25f, 11.25f},
+                         {9.0f, 9.0f},
                          engine,
                          commonResources,
                          zoom);
@@ -113,7 +113,7 @@ StoreMenuView::StoreMenuView(Pht::IEngine& engine,
                          1.0f,
                          ProductId::Currency100Coins,
                          {1.5f, 1.25f, 0.0f},
-                         {11.25f, 11.25f},
+                         {11.0f, 11.0f},
                          engine,
                          commonResources,
                          zoom);
@@ -121,7 +121,7 @@ StoreMenuView::StoreMenuView(Pht::IEngine& engine,
                          1.0f,
                          ProductId::Currency250Coins,
                          {1.5f, 1.25f, 0.0f},
-                         {11.25f, 11.25f},
+                         {11.0f, 11.0f},
                          engine,
                          commonResources,
                          zoom);
@@ -129,7 +129,7 @@ StoreMenuView::StoreMenuView(Pht::IEngine& engine,
                          1.0f,
                          ProductId::Currency500Coins,
                          {1.5f, 1.25f, 0.0f},
-                         {12.0f, 12.0f},
+                         {11.0f, 11.0f},
                          engine,
                          commonResources,
                          zoom);
@@ -401,7 +401,7 @@ void StoreMenuView::CreateGlowEffect(Pht::IEngine& engine,
     auto& material {productSection.mGlowEffect->GetRenderable()->GetMaterial()};
     material.SetShaderType(Pht::ShaderType::ParticleNoAlphaTexture);
     
-    productSection.mGlowEffect->GetTransform().SetPosition({0.0f, 0.9f, -1.9f});
+    productSection.mGlowEffect->GetTransform().SetPosition({0.0f, 0.9f, -1.49f});
     parentObject.AddChild(*productSection.mGlowEffect);
 }
 

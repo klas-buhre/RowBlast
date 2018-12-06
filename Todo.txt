@@ -42,8 +42,6 @@ Ongoing tasks:
      potationally zoomed and the normal one. That single version should be the potentially
      zoomed version. Test with iPhone XR to see if the zoomed textures look good in non-zoomed
      scenes.
-    -Store GUI.
-      -Redesign the store menu view?
 
 
 
@@ -133,6 +131,7 @@ Ordered Backlog:
         Done
     -Store GUI.
         Cost: 15
+        Done
     -Analytics.
         Cost: 5
     -Levels for the space world.

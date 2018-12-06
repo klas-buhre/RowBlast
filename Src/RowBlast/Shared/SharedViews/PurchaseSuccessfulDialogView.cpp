@@ -73,7 +73,7 @@ PurchaseSuccessfulDialogView::PurchaseSuccessfulDialogView(Pht::IEngine& engine,
     coinTransform.SetScale(3.1f);
     GetRoot().AddChild(coin);
     
-    CreateGlowEffect({0.0f, 1.5f, UiLayer::panel}, GetRoot(), 1.1f);
+    CreateGlowEffect({0.0f, 1.5f, UiLayer::panel}, GetRoot(), 1.45f);
 
     mConfirmationText = &CreateText({-5.5f, -1.75f, UiLayer::text}, "", textProperties);
 
@@ -108,9 +108,9 @@ void PurchaseSuccessfulDialogView::CreateGlowEffect(const Pht::Vec3& position,
     Pht::ParticleSettings particleSettings {
         .mVelocity = Pht::Vec3{0.0f, 0.0f, 0.0f},
         .mVelocityRandomPart = Pht::Vec3{0.0f, 0.0f, 0.0f},
-        .mColor = Pht::Vec4{0.8f, 0.8f, 1.0f, 0.8f},
+        .mColor = Pht::Vec4{0.43f, 0.43f, 0.43f, 1.0f},
         .mColorRandomPart = Pht::Vec4{0.0f, 0.0f, 0.0f, 0.0f},
-        .mTextureFilename = "glow_lines.png",
+        .mTextureFilename = "flare24.png",
         .mTimeToLive = std::numeric_limits<float>::infinity(),
         .mTimeToLiveRandomPart = 0.0f,
         .mFadeOutDuration = 0.0f,
@@ -125,6 +125,9 @@ void PurchaseSuccessfulDialogView::CreateGlowEffect(const Pht::Vec3& position,
     mGlowEffect = particleSystem.CreateParticleEffectSceneObject(particleSettings,
                                                                  particleEmitterSettings,
                                                                  Pht::RenderMode::Triangles);
+    auto& material {mGlowEffect->GetRenderable()->GetMaterial()};
+    material.SetShaderType(Pht::ShaderType::ParticleNoAlphaTexture);
+
     auto& transform {mGlowEffect->GetTransform()};
     transform.SetPosition(position);
     transform.SetScale(scale);
