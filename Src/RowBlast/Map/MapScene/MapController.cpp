@@ -36,7 +36,6 @@ int MapController::Command::GetLevel() const {
 MapController::MapController(Pht::IEngine& engine,
                              const CommonResources& commonResources,
                              UserServices& userServices,
-                             Settings& settings,
                              const Universe& universe,
                              const LevelResources& levelResources,
                              PieceResources& pieceResources) :
@@ -47,7 +46,7 @@ MapController::MapController(Pht::IEngine& engine,
     mScene {engine, commonResources, userServices, universe},
     mUfo {engine, commonResources, 1.0f},
     mUfoAnimation {engine, mUfo},
-    mMapViewControllers {engine, mScene, commonResources, userServices, settings, pieceResources},
+    mMapViewControllers {engine, mScene, commonResources, userServices, pieceResources},
     mStoreController {
         engine,
         commonResources,

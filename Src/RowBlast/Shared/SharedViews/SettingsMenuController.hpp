@@ -13,7 +13,7 @@ namespace Pht {
 }
 
 namespace RowBlast {
-    class Settings;
+    class UserServices;
     
     class SettingsMenuController {
     public:
@@ -24,7 +24,7 @@ namespace RowBlast {
         
         SettingsMenuController(Pht::IEngine& engine,
                                const CommonResources& commonResources,
-                               Settings& settings,
+                               UserServices& userServices,
                                PotentiallyZoomedScreen potentiallyZoomedScreen);
         
         void SetUp(SlidingMenuAnimation::UpdateFade updateFade, bool isGestureControlsAllowed);
@@ -41,7 +41,7 @@ namespace RowBlast {
         void UpdateViewToReflectSettings(bool isGestureControlsAllowed);
         
         Pht::IEngine& mEngine;
-        Settings& mSettings;
+        UserServices& mUserServices;
         SettingsMenuView mView;
         SlidingMenuAnimation mSlidingMenuAnimation;
         Result mDeferredResult {Result::None};

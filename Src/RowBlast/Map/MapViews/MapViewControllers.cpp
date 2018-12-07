@@ -17,8 +17,7 @@ namespace {
 MapViewControllers::MapViewControllers(Pht::IEngine& engine,
                                        MapScene& scene,
                                        const CommonResources& commonResources,
-                                       const UserServices& userServices,
-                                       Settings& settings,
+                                       UserServices& userServices,
                                        PieceResources& pieceResources) :
     mScene {scene},
     mFadeEffect {
@@ -37,7 +36,7 @@ MapViewControllers::MapViewControllers(Pht::IEngine& engine,
     },
     mNoLivesDialogController {engine, commonResources, userServices, PotentiallyZoomedScreen::No},
     mLivesDialogController {engine, commonResources, userServices, scene},
-    mSettingsMenuController {engine, commonResources, settings, PotentiallyZoomedScreen::No} {
+    mSettingsMenuController {engine, commonResources, userServices, PotentiallyZoomedScreen::No} {
     
     mViewManager.AddView(static_cast<int>(MapHud), mMapHudController.GetView());
     mViewManager.AddView(static_cast<int>(LevelGoalDialog), mLevelGoalDialogController.GetView());

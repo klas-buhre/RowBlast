@@ -4,6 +4,7 @@
 #include "LifeService.hpp"
 #include "ProgressService.hpp"
 #include "PurchasingService.hpp"
+#include "SettingsService.hpp"
 
 namespace Pht {
     class IEngine;
@@ -42,10 +43,19 @@ namespace RowBlast {
             return mProgressService;
         }
         
+        const SettingsService& GetSettingsService() const {
+            return mSettingsService;
+        }
+
+        SettingsService& GetSettingsService() {
+            return mSettingsService;
+        }
+
     private:
         PurchasingService mPurchasingService;
         LifeService mLifeService;
         ProgressService mProgressService;
+        SettingsService mSettingsService;
     };
 }
 

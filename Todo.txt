@@ -11,7 +11,7 @@ Backlog:
      random block disappears.
     -Maybe a sensitivity setting. Tetris Blitz has lower sensitivity on iPad but not on iPhone.
     -Undo to the previous move initial state or the the previous move last state before move? Should
-     not really matter since the user can select any piece from the selectables but maybe it is most
+     not really matter since the user can select any piece from the selectebles but maybe it is most
      convenient to go back to the state before the move and not the initial state.
   -Rendering:
     -Animation that moves the map hud out of the screen when clicking buttons in the hud. Could work
@@ -26,10 +26,10 @@ Backlog:
   -Sound:
     -Buy sounds and music. And try https://freesound.org
   -Make ready for release:
-    -Do a soft launch in a couple of countries? Maybe the nordic countris and UK? Only english
+    -Do a soft launch in a couple of countries? Maybe the nordic countries and UK? Only english
      localization is needed for that.
-    -Make launch screens for all supported device resulutions. Should say Teleporter Studios.
-    -Make icons and launch screens for all supported device resulutions.
+    -Make launch screens for all supported device resolutions. Should say Teleporter Studios.
+    -Make icons and launch screens for all supported device resolutions.
     -Credit the icon creator: <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
     -Credit FastNoise, MIT license: https://github.com/Auburns/FastNoise/
     -Maybe support for different languages.
@@ -37,9 +37,8 @@ Backlog:
 Ongoing tasks:
     -Decide the sky color for the second world. Maybe more of a yellow color like in Tetris Blitz
      app store page.
-    -Add a settings service that stores the settings in a file.
     -Maybe it is enough with one single version of the windows and buttons instead of the
-     potationally zoomed and the normal one. That single version should be the potentially
+     potetionally zoomed and the normal one. That single version should be the potentially
      zoomed version. Test with iPhone XR to see if the zoomed textures look good in non-zoomed
      scenes.
 

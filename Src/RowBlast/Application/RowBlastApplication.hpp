@@ -11,7 +11,6 @@
 #include "TitleController.hpp"
 #include "MapController.hpp"
 #include "GameController.hpp"
-#include "Settings.hpp"
 #include "Universe.hpp"
 
 namespace Pht {
@@ -54,7 +53,6 @@ namespace RowBlast {
         State mState {State::TitleScene};
         State mNextState {State::TitleScene};
         CommonResources mCommonResources;
-        Settings mSettings;
         UserServices mUserServices;
         Universe mUniverse;
         TitleController mTitleController;

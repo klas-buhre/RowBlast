@@ -15,7 +15,6 @@ namespace Pht {
 namespace RowBlast {
     class CommonResources;
     class UserServices;
-    class Settings;
     class LevelResources;
     class PieceResources;
     class Universe;
@@ -46,7 +45,6 @@ namespace RowBlast {
         MapController(Pht::IEngine& engine,
                       const CommonResources& commonResources,
                       UserServices& userServices,
-                      Settings& settings,
                       const Universe& universe,
                       const LevelResources& levelResources,
                       PieceResources& pieceResources);

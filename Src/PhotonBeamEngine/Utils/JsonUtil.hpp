@@ -19,6 +19,14 @@ namespace Pht {
         uint64_t ReadUInt64(const rapidjson::Value& object, const std::string& name);
         float ReadFloat(const rapidjson::Value& object, const std::string& name);
         IVec2 ReadIVec2(const rapidjson::Value& object, const std::string& name);
+        void AddString(rapidjson::Value& object,
+                       const std::string& name,
+                       const std::string& value,
+                       rapidjson::Document::AllocatorType& allocator);
+        void AddBool(rapidjson::Value& object,
+                     const std::string& name,
+                     bool value,
+                     rapidjson::Document::AllocatorType& allocator);
         void AddInt(rapidjson::Value& object,
                     const std::string& name,
                     int value,

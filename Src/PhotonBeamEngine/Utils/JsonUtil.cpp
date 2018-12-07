@@ -93,6 +93,32 @@ IVec2 Json::ReadIVec2(const rapidjson::Value& object, const std::string& name) {
     return {array[0].GetInt(), array[1].GetInt()};
 }
 
+void Json::AddString(rapidjson::Value& object,
+                     const std::string& name,
+                     const std::string& value,
+                     rapidjson::Document::AllocatorType& allocator) {
+    rapidjson::Value v;
+    v.SetString(value.c_str(), static_cast<unsigned int>(value.size()));
+
+    rapidjson::Value n;
+    n.SetString(name.c_str(), static_cast<unsigned int>(name.size()));
+    
+    object.AddMember(n, v, allocator);
+}
+
+void Json::AddBool(rapidjson::Value& object,
+                   const std::string& name,
+                   bool value,
+                   rapidjson::Document::AllocatorType& allocator) {
+    rapidjson::Value v;
+    v.SetBool(value);
+
+    rapidjson::Value n;
+    n.SetString(name.c_str(), static_cast<unsigned int>(name.size()));
+    
+    object.AddMember(n, v, allocator);
+}
+
 void Json::AddInt(rapidjson::Value& object,
                   const std::string& name,
                   int value,

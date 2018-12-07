@@ -24,7 +24,6 @@ namespace Pht {
 namespace RowBlast {
     class UserServices;
     class GameScene;
-    class Settings;
     class PieceResources;
     class GameHudRectangles;
     
@@ -46,8 +45,7 @@ namespace RowBlast {
         
         GameViewControllers(Pht::IEngine& engine,
                             const CommonResources& commonResources,
-                            const UserServices& userServices,
-                            Settings& settings,
+                            UserServices& userServices,
                             const PieceResources& pieceResources,
                             const GameHudRectangles& hudRectangles);
         

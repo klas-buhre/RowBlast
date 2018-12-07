@@ -16,8 +16,7 @@ namespace {
 
 GameViewControllers::GameViewControllers(Pht::IEngine& engine,
                                          const CommonResources& commonResources,
-                                         const UserServices& userServices,
-                                         Settings& settings,
+                                         UserServices& userServices,
                                          const PieceResources& pieceResources,
                                          const GameHudRectangles& hudRectangles) :
     mFadeEffect {
@@ -34,7 +33,7 @@ GameViewControllers::GameViewControllers(Pht::IEngine& engine,
     mLevelCompletedDialogController {engine, commonResources},
     mRestartConfirmationDialogController {engine, commonResources, userServices},
     mMapConfirmationDialogController {engine, commonResources},
-    mSettingsMenuController {engine, commonResources, settings, PotentiallyZoomedScreen::Yes},
+    mSettingsMenuController {engine, commonResources, userServices, PotentiallyZoomedScreen::Yes},
     mNoLivesDialogController {engine, commonResources, userServices, PotentiallyZoomedScreen::Yes},
     mLevelGoalDialogController {
         engine,

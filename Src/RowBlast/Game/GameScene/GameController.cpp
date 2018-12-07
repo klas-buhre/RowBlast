@@ -31,20 +31,12 @@ namespace {
 
 GameController::GameController(Pht::IEngine& engine,
                                const CommonResources& commonResources,
-                               UserServices& userServices,
-                               Settings& settings) :
+                               UserServices& userServices) :
     mEngine {engine},
     mUserServices {userServices},
     mPieceResources {engine, commonResources},
     mHudRectangles {engine, commonResources},
-    mGameViewControllers {
-        engine,
-        commonResources,
-        mUserServices,
-        settings,
-        mPieceResources,
-        mHudRectangles
-    },
+    mGameViewControllers {engine, commonResources, mUserServices, mPieceResources, mHudRectangles},
     mField {},
     mCollapsingFieldAnimation {mField},
     mFlashingBlocksAnimation {mField, mPieceResources},
@@ -90,7 +82,7 @@ GameController::GameController(Pht::IEngine& engine,
         mComboTextAnimation,
         mGameViewControllers.GetGameHudController(),
         mTutorial,
-        settings
+        userServices.GetSettingsService()
     },
     mFallingPieceAnimation {mGameLogic.GetFallingPieceAnimation()},
     mLevelResources {engine, mScene, commonResources},

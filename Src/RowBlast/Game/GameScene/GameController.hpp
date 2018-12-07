@@ -41,7 +41,6 @@ namespace Pht {
 namespace RowBlast {
     class CommonResources;
     class UserServices;
-    class Settings;
     class FallingPieceAnimation;
     
     class GameController {
@@ -55,8 +54,7 @@ namespace RowBlast {
 
         GameController(Pht::IEngine& engine,
                        const CommonResources& commonResources,
-                       UserServices& userServices,
-                       Settings& settings);
+                       UserServices& userServices);
     
         void StartLevel(int levelId);
         Command Update();

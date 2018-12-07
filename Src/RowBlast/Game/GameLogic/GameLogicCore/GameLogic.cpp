@@ -67,7 +67,7 @@ GameLogic::GameLogic(Pht::IEngine& engine,
                      ComboTextAnimation& comboTextAnimation,
                      GameHudController& gameHudController,
                      Tutorial& tutorial,
-                     const Settings& settings) :
+                     const SettingsService& settingsService) :
     mEngine {engine},
     mField {field},
     mScrollController {scrollController},
@@ -81,8 +81,8 @@ GameLogic::GameLogic(Pht::IEngine& engine,
     mShieldAnimation {shieldAnimation},
     mGameHudController {gameHudController},
     mTutorial {tutorial},
-    mSettings {settings},
-    mControlType {mSettings.mControlType},
+    mSettingsService {settingsService},
+    mControlType {settingsService.GetControlType()},
     mFieldGravity {field},
     mFieldExplosionsStates {engine, field, mFieldGravity, effectManager, flyingBlocksAnimation},
     mFallingPieceAnimation {*this, mFallingPieceStorage},
@@ -96,7 +96,7 @@ GameLogic::GameLogic(Pht::IEngine& engine,
 
 void GameLogic::Init(const Level& level) {
     mLevel = &level;
-    mControlType = mTutorial.IsGestureControlsAllowed() ? mSettings.mControlType : ControlType::Click;
+    mControlType = mTutorial.IsGestureControlsAllowed() ? mSettingsService.GetControlType() : ControlType::Click;
     mGestureInputHandler.Init(level);
     mClickInputHandler.Init(level);
     mComboDetector.Init();
@@ -358,8 +358,8 @@ void GameLogic::HandleControlTypeChange() {
         return;
     }
     
-    if (mSettings.mControlType != mControlType && mTutorial.IsGestureControlsAllowed()) {
-        switch (mSettings.mControlType) {
+    if (mSettingsService.GetControlType() != mControlType && mTutorial.IsGestureControlsAllowed()) {
+        switch (mSettingsService.GetControlType()) {
             case ControlType::Click:
                 if (mCurrentMove.mPieceType->IsBomb()) {
                     mBlastRadiusAnimation.Stop();
@@ -375,7 +375,7 @@ void GameLogic::HandleControlTypeChange() {
                 break;
         }
         
-        mControlType = mSettings.mControlType;
+        mControlType = mSettingsService.GetControlType();
     }
 }
 

@@ -4,6 +4,7 @@
 #include "IEngine.hpp"
 #include "IRenderer.hpp"
 #include "IInput.hpp"
+#include "IAudio.hpp"
 #include "ISceneManager.hpp"
 
 // Game includes.
@@ -23,16 +24,14 @@ std::unique_ptr<Pht::IApplication> CreateApplication(Pht::IEngine& engine) {
 RowBlastApplication::RowBlastApplication(Pht::IEngine& engine) :
     mEngine {engine},
     mCommonResources {engine},
-    mSettings {},
     mUserServices {engine},
     mUniverse {},
     mTitleController {engine, mCommonResources, mUserServices, mUniverse},
-    mGameController {engine, mCommonResources, mUserServices, mSettings},
+    mGameController {engine, mCommonResources, mUserServices},
     mMapController {
         engine,
         mCommonResources,
         mUserServices,
-        mSettings,
         mUniverse,
         mGameController.GetLevelResources(),
         mGameController.GetPieceResources()
@@ -40,6 +39,14 @@ RowBlastApplication::RowBlastApplication(Pht::IEngine& engine) :
     mFadeEffect {engine.GetSceneManager(), engine.GetRenderer(), titleFadeInDuration, 1.0f, 0.0f} {
 
     engine.GetInput().SetUseGestureRecognizers(false);
+    
+    auto& audio {engine.GetAudio()};
+    
+    if (mUserServices.GetSettingsService().IsSoundEnabled()) {
+        audio.EnableSound();
+    } else {
+        audio.DisableSound();
+    }
     
     auto& renderer {engine.GetRenderer()};
     renderer.DisableShader(Pht::ShaderType::PixelLighting);

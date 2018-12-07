@@ -6,16 +6,16 @@
 
 // Game includes.
 #include "InputUtil.hpp"
-#include "Settings.hpp"
+#include "UserServices.hpp"
 
 using namespace RowBlast;
 
 SettingsMenuController::SettingsMenuController(Pht::IEngine& engine,
                                                const CommonResources& commonResources,
-                                               Settings& settings,
+                                               UserServices& userServices,
                                                PotentiallyZoomedScreen potentiallyZoomedScreen) :
     mEngine {engine},
-    mSettings {settings},
+    mUserServices {userServices},
     mView {engine, commonResources, potentiallyZoomedScreen},
     mSlidingMenuAnimation {engine, mView} {}
 
@@ -65,10 +65,12 @@ SettingsMenuController::Result SettingsMenuController::HandleInput() {
 SettingsMenuController::Result SettingsMenuController::OnTouch(const Pht::TouchEvent& touchEvent) {
     if (mView.IsControlsButtonEnabled()) {
         if (mView.GetControlsButton().IsClicked(touchEvent)) {
-            if (mSettings.mControlType == ControlType::Click) {
-                mSettings.mControlType = ControlType::Gesture;
+            auto& settingsService {mUserServices.GetSettingsService()};
+
+            if (settingsService.GetControlType() == ControlType::Click) {
+                settingsService.SetControlType(ControlType::Gesture);
             } else {
-                mSettings.mControlType = ControlType::Click;
+                settingsService.SetControlType(ControlType::Click);
             }
             
             UpdateViewToReflectSettings(true);
@@ -77,11 +79,14 @@ SettingsMenuController::Result SettingsMenuController::OnTouch(const Pht::TouchE
 
     if (mView.GetSoundButton().IsClicked(touchEvent)) {
         auto& audio {mEngine.GetAudio()};
+        auto& settingsService {mUserServices.GetSettingsService()};
         
         if (audio.IsSoundEnabled()) {
             audio.DisableSound();
+            settingsService.SetIsSoundEnabled(false);
         } else {
             audio.EnableSound();
+            settingsService.SetIsSoundEnabled(true);
         }
         
         UpdateViewToReflectSettings(true);
@@ -97,7 +102,9 @@ SettingsMenuController::Result SettingsMenuController::OnTouch(const Pht::TouchE
 }
 
 void SettingsMenuController::UpdateViewToReflectSettings(bool isGestureControlsAllowed) {
-    if (mSettings.mControlType == ControlType::Click || !isGestureControlsAllowed) {
+    auto& settingsService {mUserServices.GetSettingsService()};
+    
+    if (settingsService.GetControlType() == ControlType::Click || !isGestureControlsAllowed) {
         mView.GetControlsClickText().SetIsVisible(true);
         mView.GetControlsSwipeText().SetIsVisible(false);
     } else {

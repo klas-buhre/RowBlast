@@ -11,11 +11,11 @@
 #include "GestureInputHandler.hpp"
 #include "ClickInputHandler.hpp"
 #include "FallingPieceAnimation.hpp"
-#include "Settings.hpp"
 #include "FieldGravity.hpp"
 #include "FieldExplosionsStates.hpp"
 #include "BlastRadiusAnimation.hpp"
 #include "ComboDetector.hpp"
+#include "SettingsService.hpp"
 
 namespace Pht {
     class IEngine;
@@ -32,6 +32,7 @@ namespace RowBlast {
     class IInputHandler;
     class GameScene;
     class Tutorial;
+    class UserServices;
     class FlashingBlocksAnimation;
     class FallingPieceScaleAnimation;
     class ShieldAnimation;
@@ -69,7 +70,7 @@ namespace RowBlast {
                   ComboTextAnimation& comboTextAnimation,
                   GameHudController& gameHudController,
                   Tutorial& tutorial,
-                  const Settings& settings);
+                  const SettingsService& settingsService);
         
         void DropFallingPiece() override;
         void SelectMove(const Move& move) override;
@@ -209,7 +210,7 @@ namespace RowBlast {
         ShieldAnimation& mShieldAnimation;
         GameHudController& mGameHudController;
         Tutorial& mTutorial;
-        const Settings& mSettings;
+        const SettingsService& mSettingsService;
         ControlType mControlType;
         State mState {State::LogicUpdate};
         CascadeState mCascadeState {CascadeState::NotCascading};
