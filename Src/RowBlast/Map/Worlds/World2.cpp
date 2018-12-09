@@ -131,7 +131,9 @@ namespace {
         }
     };
 
-#if 0
+#if 1
+    // Pink:
+/*
     const std::vector<HazeLayer> hazeLayers {
         HazeLayer {
             .mPosition = {0.0f, 0.0f, -370.0f},
@@ -153,30 +155,62 @@ namespace {
             .mLowerColor = {0.8225, 0.50375, 0.6475, 0.35f}
         }
     };
-#endif
+ 
+    const Pht::Color cloudColor {1.04f, 0.965f, 0.975f};
+*/
 
     const std::vector<HazeLayer> hazeLayers {
         HazeLayer {
             .mPosition = {0.0f, 0.0f, -370.0f},
             .mSize = {1000.0f, 700.0f},
             .mUpperColor = {0.29f, 0.215f, 0.79f, 0.0f},
-            .mLowerColor = {0.745f, 0.50375f, 0.7f, 1.0f},
+            .mLowerColor = {0.8f, 0.50375f, 0.67f, 1.0f},
             .mUpperScale = 0.5f
         },
         HazeLayer {
             .mPosition = {0.0f, 0.0f, -350.0f},
             .mSize = {500.0f, 650.0f},
             .mUpperColor = {0.29f, 0.215f, 0.79f, 0.35f},
-            .mLowerColor = {0.745f, 0.50375f, 0.7f, 0.35f}
+            .mLowerColor = {0.8f, 0.50375f, 0.67f, 0.35f}
         },
         HazeLayer {
             .mPosition = {0.0f, 0.0f, -250.0f},
             .mSize = {380.0f, 480.0f},
             .mUpperColor = {0.29f, 0.215f, 0.79f, 0.35f},
-            .mLowerColor = {0.745f, 0.50375f, 0.7f, 0.35f}
+            .mLowerColor = {0.8f, 0.50375f, 0.67f, 0.35f}
         }
     };
 
+    const Pht::Color cloudColor {1.04f, 0.965f, 0.975f};
+    // const Pht::Color cloudColor {1.02f, 0.92f, 0.97f};
+
+#endif
+#if 0
+    // Yellow:
+    const std::vector<HazeLayer> hazeLayers {
+        HazeLayer {
+            .mPosition = {0.0f, 0.0f, -370.0f},
+            .mSize = {1000.0f, 700.0f},
+            .mUpperColor = {0.65f, 0.1f, 0.1f, 0.0f},
+            .mLowerColor = {0.817f, 0.633f, 0.435f, 1.0f},
+            .mUpperScale = 0.5f
+        },
+        HazeLayer {
+            .mPosition = {0.0f, 0.0f, -350.0f},
+            .mSize = {500.0f, 650.0f},
+            .mUpperColor = {0.65f, 0.1f, 0.1f, 0.35f},
+            .mLowerColor = {0.817f, 0.633f, 0.435f, 0.35f}
+        },
+        HazeLayer {
+            .mPosition = {0.0f, 0.0f, -250.0f},
+            .mSize = {380.0f, 480.0f},
+            .mUpperColor = {0.65f, 0.1f, 0.1f, 0.35f},
+            .mLowerColor = {0.817f, 0.633f, 0.435f, 0.35f}
+        }
+    };
+
+    const Pht::Color cloudColor {0.99f, 0.94f, 0.84f};
+#endif
     const std::vector<PlanetConfig> planets {
         PlanetConfig {
             .mPosition = {0.0f, 200.0f, -550.0f},
@@ -210,7 +244,6 @@ namespace {
     };
 
     constexpr auto lightIntensity {0.895f};
-    const Pht::Color cloudColor {1.04f, 0.965f, 0.975f};
 }
 
 World RowBlast::GetWorld2() {
