@@ -44,7 +44,7 @@ MapController::MapController(Pht::IEngine& engine,
     mLevelResources {levelResources},
     mUniverse {universe},
     mScene {engine, commonResources, userServices, universe},
-    mUfo {engine, commonResources, 1.0f},
+    mUfo {engine, commonResources, 1.17f},
     mUfoAnimation {engine, mUfo},
     mMapViewControllers {engine, mScene, commonResources, userServices, pieceResources},
     mStoreController {
