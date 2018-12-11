@@ -4,25 +4,25 @@ using namespace RowBlast;
 
 namespace {
     const std::vector<MapPlace> places {
-        MapPlace {Portal {2, 40, {-24.0f, -3.0f, 10.0f}}},
-        MapPlace {MapLevel {40, {-21.5f, -1.2f, 9.0f}}},
-        MapPlace {MapLevel {41, {-18.0f, -1.2f, 9.0f}}},
-        MapPlace {MapLevel {42, {-16.0f, -2.5f, 10.0f}}},
-        MapPlace {MapLevel {43, {-13.0f, -4.0f, 10.0f}}},
-        MapPlace {MapLevel {44, {-10.0f, -3.0f, 10.0f}}},
-        MapPlace {MapLevel {45, {-8.0f, -1.0f, 9.0f}}},
-        MapPlace {MapLevel {46, {-6.0f, 0.5f, 9.0f}}},
-        MapPlace {MapLevel {47, {-3.0f, 1.0f, 9.0f}}},
-        MapPlace {MapLevel {48, {-0.5f, -1.0f, 9.5f}}},
-        MapPlace {MapLevel {49, {1.0f, -3.5f, 9.5f}}},
-        MapPlace {MapLevel {50, {4.0f, -4.0f, 10.0f}}},
-        MapPlace {MapLevel {51, {7.0f, -3.0f, 10.0f}}},
-        MapPlace {MapLevel {52, {9.0f, -0.5f, 10.0f}}},
-        MapPlace {MapLevel {53, {11.5f, 1.5f, 10.0f}}},
-        MapPlace {MapLevel {54, {14.5f, 2.0f, 10.0f}}},
-        MapPlace {MapLevel {55, {17.5f, 1.0f, 10.0f}}},
-        MapPlace {MapLevel {56, {20.0f, -1.0f, 10.0f}}},
-        MapPlace {Portal {4, 57, {23.0f, -1.5f, 10.0f}}}
+        MapPlace {Portal {2, 34, {-24.0f, -3.0f, 10.0f}}},
+        MapPlace {MapLevel {34, {-21.5f, -1.2f, 9.0f}}},
+        MapPlace {MapLevel {35, {-18.0f, -1.2f, 9.0f}}},
+        MapPlace {MapLevel {36, {-16.0f, -2.5f, 10.0f}}},
+        MapPlace {MapLevel {37, {-13.0f, -4.0f, 10.0f}}},
+        MapPlace {MapLevel {38, {-10.0f, -3.0f, 10.0f}}},
+        MapPlace {MapLevel {39, {-8.0f, -1.0f, 9.0f}}},
+        MapPlace {MapLevel {40, {-6.0f, 0.5f, 9.0f}}},
+        MapPlace {MapLevel {41, {-3.0f, 1.0f, 9.0f}}},
+        MapPlace {MapLevel {42, {-0.5f, -1.0f, 9.5f}}},
+        MapPlace {MapLevel {43, {1.0f, -3.5f, 9.5f}}},
+        MapPlace {MapLevel {44, {4.0f, -4.0f, 10.0f}}},
+        MapPlace {MapLevel {45, {7.0f, -3.0f, 10.0f}}},
+        MapPlace {MapLevel {46, {9.0f, -0.5f, 10.0f}}},
+        MapPlace {MapLevel {47, {11.5f, 1.5f, 10.0f}}},
+        MapPlace {MapLevel {48, {14.5f, 2.0f, 10.0f}}},
+        MapPlace {MapLevel {49, {17.5f, 1.0f, 10.0f}}},
+        MapPlace {MapLevel {50, {20.0f, -1.0f, 10.0f}}},
+        MapPlace {Portal {4, 51, {23.0f, -1.5f, 10.0f}}}
     };
 
     const std::vector<BlockPathVolume> blockPaths {
@@ -31,6 +31,7 @@ namespace {
         BlockPathVolume {{-20.5f, -3.0f, 13.7f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::Asteroid},
         BlockPathVolume {{-17.0f, -4.0f, 12.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::L},
         BlockPathVolume {{-17.0f, 2.0f, 7.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::Asteroid},
+        BlockPathVolume {{-13.0f, -1.0f, 10.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::SingleBlock},
         BlockPathVolume {{-12.0f, -4.0f, 13.7f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::SingleBlock},
         BlockPathVolume {{-9.0f, 0.5f, 5.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::SingleBlock},
         BlockPathVolume {{-5.0f, -4.0f, 3.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::ShortI},
@@ -42,9 +43,8 @@ namespace {
         BlockPathVolume {{6.0f, 4.0f, 3.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::BigAsteroid},
         BlockPathVolume {{10.0f, -3.5f, 12.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::L},
         BlockPathVolume {{13.0f, -10.0f, 4.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::SingleBlock},
-        BlockPathVolume {{14.0f, -3.0f, 2.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::BigAsteroid},
         BlockPathVolume {{14.5f, -3.0f, 10.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::B},
-        BlockPathVolume {{18.5f, -3.0f, 4.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::L},
+        BlockPathVolume {{17.0f, -3.0f, 2.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::BigAsteroid},
         BlockPathVolume {{20.0f, -3.5f, 12.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::I},
         BlockPathVolume {{23.0f, 3.5f, 3.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::SingleBlock},
         BlockPathVolume {{27.0f, -7.5f, 4.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::L},
@@ -79,7 +79,7 @@ namespace {
 
     const std::vector<BackgroundLight> backgroundLights {
         BackgroundLight {
-            .mDirection = {-1.0f, 1.0f, 0.85f},
+            .mDirection = {-1.0f, 1.0f, 0.25f},
             .mIntensity = 1.15f,
             .mSun = Sun {.mPosition = {-20.0f, 440.0f, -720.0f}, .mSize = {580.0f, 580.0f}}
         },

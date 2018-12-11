@@ -37,7 +37,6 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-    -Reduce the second world with 6 levels.
     -Add the yellow (4th) world.
     -Maybe it is enough with one single version of the windows and buttons instead of the
      potetionally zoomed and the normal one. That single version should be the potentially

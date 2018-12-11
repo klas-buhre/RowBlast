@@ -3,9 +3,9 @@
     "moves": 30,
     "twoStars": 27,
     "threeStars": 22,
-    "floatingBlocksSet": "Standard",
-    "background": "sky4.jpg",
-    "lightIntensity": "Sunset",
+    "floatingBlocksSet": "Asteroid",
+    "background": "space1.jpg",
+    "lightIntensity": "Dark",
     "pieces": [
         "L",
         "SmallTriangle",
