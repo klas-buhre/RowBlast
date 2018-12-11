@@ -25,7 +25,18 @@ GameMenuView::GameMenuView(Pht::IEngine& engine, const CommonResources& commonRe
     SetSize(menuWindow.GetSize());
     SetPosition({0.0f, 0.0f});
     
-    CreateText({-1.71f, 8.05f, UiLayer::text}, "PAUSED", guiResources.GetCaptionTextProperties(zoom));
+    Pht::TextProperties captionTextProperties {
+        commonResources.GetHussarFontSize35(zoom),
+        1.2f,
+        {0.23f, 0.23f, 0.23f, 1.0f},
+        Pht::TextShadow::Yes,
+        {0.05f, 0.05f},
+        {0.4f, 0.4f, 0.4f, 0.5f},
+        Pht::SnapToPixel::Yes,
+        0.125f
+    };
+    
+    CreateText({-1.85f, 8.0f, UiLayer::text}, "PAUSE", captionTextProperties);
 
     MenuButton::Style yellowButtonStyle;
     yellowButtonStyle.mMeshFilename = GuiResources::mMediumButtonSkewedMeshFilename;

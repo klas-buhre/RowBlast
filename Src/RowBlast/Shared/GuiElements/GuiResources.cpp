@@ -49,7 +49,9 @@ GuiResources::GuiResources(Pht::IEngine& engine, const CommonResources& commonRe
         {0.23f, 0.23f, 0.23f, 1.0f},
         Pht::TextShadow::Yes,
         {0.05f, 0.05f},
-        {0.4f, 0.4f, 0.4f, 0.5f}
+        {0.4f, 0.4f, 0.4f, 0.5f},
+        Pht::SnapToPixel::Yes,
+        0.125f
     },
     mSmallTextProperties {
         commonResources.GetHussarFontSize27(PotentiallyZoomedScreen::No),
@@ -137,7 +139,9 @@ GuiResources::GuiResources(Pht::IEngine& engine, const CommonResources& commonRe
         {0.23f, 0.23f, 0.23f, 1.0f},
         Pht::TextShadow::Yes,
         {0.05f, 0.05f},
-        {0.4f, 0.4f, 0.4f, 0.5f}
+        {0.4f, 0.4f, 0.4f, 0.5f},
+        Pht::SnapToPixel::Yes,
+        0.125f
     },
     mSmallTextPropertiesPotentiallyZoomedScreen {
         commonResources.GetHussarFontSize27(PotentiallyZoomedScreen::Yes),

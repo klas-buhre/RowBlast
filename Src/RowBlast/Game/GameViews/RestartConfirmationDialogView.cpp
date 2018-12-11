@@ -24,7 +24,7 @@ RestartConfirmationDialogView::RestartConfirmationDialogView(Pht::IEngine& engin
 
     SetSize(menuWindow.GetSize());
 
-    CreateText({-1.85f, 4.25f, UiLayer::text}, "RESTART", guiResources.GetCaptionTextProperties(zoom));
+    CreateText({-2.0f, 4.25f, UiLayer::text}, "RESTART", guiResources.GetCaptionTextProperties(zoom));
     
     auto& textProperties {guiResources.GetSmallTextProperties(zoom)};
     CreateText({-5.4f, 1.9f, UiLayer::text}, "Are you sure you want to restart", textProperties);
