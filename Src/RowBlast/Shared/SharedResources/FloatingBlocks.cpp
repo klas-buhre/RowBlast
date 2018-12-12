@@ -120,6 +120,13 @@ void FloatingBlocks::CreateBigAsteroid(Pht::ISceneManager& sceneManager, float s
 }
 
 void FloatingBlocks::InitBlocks(Pht::Scene& scene, float scale, float angularVelocity) {
+    std::vector<FloatingBlockColor> colors {
+        FloatingBlockColor::Red,
+        FloatingBlockColor::Green,
+        FloatingBlockColor::Blue,
+        FloatingBlockColor::Gold
+    };
+
     for (auto i {0}; i < mBlocks.size(); ++i) {
         const auto& volume {mVolumes[i]};
     
@@ -151,7 +158,7 @@ void FloatingBlocks::InitBlocks(Pht::Scene& scene, float scale, float angularVel
         block.mVelocity = velocity;
         block.mAngularVelocity = blockAngularVelocity;
         
-        auto& renderable {CalcBlockRenderable(volume)};
+        auto& renderable {CalcBlockRenderable(volume, colors)};
         
         switch (volume.mPieceType) {
             case FloatingPieceType::BigSingleBlock:
@@ -189,7 +196,8 @@ void FloatingBlocks::InitBlocks(Pht::Scene& scene, float scale, float angularVel
     }
 }
 
-Pht::RenderableObject& FloatingBlocks::CalcBlockRenderable(const BlockPathVolume& volume) {
+Pht::RenderableObject& FloatingBlocks::CalcBlockRenderable(const BlockPathVolume& volume,
+                                                           std::vector<FloatingBlockColor>& colors) {
     switch (volume.mPieceType) {
         case FloatingPieceType::Bomb:
             return *mBombRenderable;
@@ -214,6 +222,13 @@ Pht::RenderableObject& FloatingBlocks::CalcBlockRenderable(const BlockPathVolume
             return *mBlockRenderables[std::rand() % numBlockRenderables];
         case FloatingBlockColor::RandomExceptGray:
             return *mBlockRenderables[std::rand() % (numBlockRenderables - 1)];
+        case FloatingBlockColor::RandomOneOfEachColorExceptGray: {
+            assert(!colors.empty());
+            auto colorIndex {std::rand() % colors.size()};
+            auto& renderable {*mBlockRenderables[static_cast<int>(colors[colorIndex])]};
+            colors.erase(std::begin(colors) + colorIndex);
+            return renderable;
+        }
     }
 }
 

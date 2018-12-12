@@ -39,23 +39,23 @@ namespace {
             .mPosition = {-11.0f, 15.0f, -15.0f},
             .mSize = {0.0f, 0.0f, 0.0f},
             .mPieceType = FloatingPieceType::L,
-            .mBlockColor = FloatingBlockColor::RandomExceptGray
+            .mBlockColor = FloatingBlockColor::RandomOneOfEachColorExceptGray
         },
         BlockPathVolume {
             .mPosition = {12.0f, 22.0f, -20.0f},
             .mSize = {0.0f, 0.0f, 0.0f},
-            .mBlockColor = FloatingBlockColor::RandomExceptGray
+            .mBlockColor = FloatingBlockColor::RandomOneOfEachColorExceptGray
         },
         BlockPathVolume {
             .mPosition = {-11.0f, 0.0f, -15.0f},
             .mSize = {0.0f, 0.0f, 0.0f},
-            .mBlockColor = FloatingBlockColor::RandomExceptGray
+            .mBlockColor = FloatingBlockColor::RandomOneOfEachColorExceptGray
         },
         BlockPathVolume {
             .mPosition = {13.0f, 0.0f, -20.0f},
             .mSize = {0.0f, 0.0f, 0.0f},
             .mPieceType = FloatingPieceType::L,
-            .mBlockColor = FloatingBlockColor::RandomExceptGray
+            .mBlockColor = FloatingBlockColor::RandomOneOfEachColorExceptGray
         },
         BlockPathVolume {
             .mPosition = {-7.0f, -20.0f, -12.0f},
@@ -74,13 +74,13 @@ namespace {
             .mPosition = {-11.0f, 15.0f, -15.0f},
             .mSize = {0.0f, 0.0f, 0.0f},
             .mPieceType = FloatingPieceType::L,
-            .mBlockColor = FloatingBlockColor::RandomExceptGray
+            .mBlockColor = FloatingBlockColor::RandomOneOfEachColorExceptGray
         },
         BlockPathVolume {
             .mPosition = {-11.0f, 0.0f, -15.0f},
             .mSize = {0.0f, 0.0f, 0.0f},
             .mPieceType = FloatingPieceType::L,
-            .mBlockColor = FloatingBlockColor::RandomExceptGray
+            .mBlockColor = FloatingBlockColor::RandomOneOfEachColorExceptGray
         },
         BlockPathVolume {
             .mPosition = {-7.0f, -20.0f, -12.0f},

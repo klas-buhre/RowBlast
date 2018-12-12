@@ -14,6 +14,8 @@ Backlog:
      not really matter since the user can select any piece from the selectebles but maybe it is most
      convenient to go back to the state before the move and not the initial state.
   -Rendering:
+    -The floating blocks in the title scene could be slightly smaller and always have a good preset
+     rotation.
     -Animation that moves the map hud out of the screen when clicking buttons in the hud. Could work
      in a similar way as the SlidingFieldAnimation.
     -Animation that moves the paus button out of the screen.

@@ -38,7 +38,8 @@ namespace RowBlast {
         Gold,
         Gray,
         Random,
-        RandomExceptGray
+        RandomExceptGray,
+        RandomOneOfEachColorExceptGray
     };
 
     struct BlockPathVolume {
@@ -72,7 +73,8 @@ namespace RowBlast {
         void CreateAsteroid(Pht::ISceneManager& sceneManager, float scale);
         void CreateBigAsteroid(Pht::ISceneManager& sceneManager, float scale);
         void InitBlocks(Pht::Scene& scene, float scale, float angularVelocity);
-        Pht::RenderableObject& CalcBlockRenderable(const BlockPathVolume& volume);
+        Pht::RenderableObject& CalcBlockRenderable(const BlockPathVolume& volume,
+                                                   std::vector<FloatingBlockColor>& colors);
         void CreateLPiece(FloatingBlock& block,
                           float scale,
                           Pht::RenderableObject& renderable,
