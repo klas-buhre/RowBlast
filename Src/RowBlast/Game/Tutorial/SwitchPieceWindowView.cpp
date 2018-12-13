@@ -9,7 +9,7 @@ using namespace RowBlast;
 SwitchPieceWindowView::SwitchPieceWindowView(const CommonResources& commonResources) {
     PotentiallyZoomedScreen zoom {PotentiallyZoomedScreen::Yes};
     auto& guiResources {commonResources.GetGuiResources()};
-    auto& menuWindow {guiResources.GetSmallestDarkMenuWindowPotentiallyZoomedScreen()};
+    auto& menuWindow {guiResources.GetSmallestDarkMenuWindow()};
     
     auto menuWindowSceneObject {std::make_unique<Pht::SceneObject>(&menuWindow.GetRenderable())};
     menuWindowSceneObject->GetTransform().SetPosition({0.0f, 0.0f, UiLayer::background});

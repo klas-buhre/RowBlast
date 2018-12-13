@@ -35,7 +35,7 @@ StoreMenuView::StoreMenuView(Pht::IEngine& engine,
     CreateRenderables(engine, commonResources);
 
     auto& guiResources {commonResources.GetGuiResources()};
-    auto& menuWindow {guiResources.GetLargeDarkMenuWindow(zoom)};
+    auto& menuWindow {guiResources.GetLargeDarkMenuWindow()};
     
     auto menuWindowSceneObject {std::make_unique<Pht::SceneObject>(&menuWindow.GetRenderable())};
     menuWindowSceneObject->GetTransform().SetPosition({0.0f, 0.0f, UiLayer::background});

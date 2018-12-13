@@ -18,8 +18,6 @@ namespace RowBlast {
     class GuiResources {
     public:
         GuiResources(Pht::IEngine& engine, const CommonResources& commonResources);
-        const MenuWindow& GetMediumDarkMenuWindow(PotentiallyZoomedScreen potentiallyZoomed) const;
-        const MenuWindow& GetLargeDarkMenuWindow(PotentiallyZoomedScreen potentiallyZoomed) const;
         const Pht::TextProperties& GetBlackButtonTextProperties(PotentiallyZoomedScreen potentiallyZoomed) const;
         const Pht::TextProperties& GetLargeWhiteButtonTextProperties(PotentiallyZoomedScreen potentiallyZoomed) const;
         const Pht::TextProperties& GetWhiteButtonTextProperties(PotentiallyZoomedScreen potentiallyZoomed) const;
@@ -41,22 +39,30 @@ namespace RowBlast {
         Pht::RenderableObject& GetThinBlueGlossyButton(PotentiallyZoomedScreen potentiallyZoomed) const;
         Pht::RenderableObject& GetThinDarkBlueGlossyButton(PotentiallyZoomedScreen potentiallyZoomed) const;
 
-        const MenuWindow& GetMediumMenuWindowPotentiallyZoomedScreen() const {
-            return mMediumMenuWindowPotentiallyZoomedScreen;
+        const MenuWindow& GetMediumMenuWindow() const {
+            return mMediumMenuWindow;
         }
         
-        const MenuWindow& GetLargeMenuWindowPotentiallyZoomedScreen() const {
-            return mLargeMenuWindowPotentiallyZoomedScreen;
+        const MenuWindow& GetLargeMenuWindow() const {
+            return mLargeMenuWindow;
         }
 
-        const MenuWindow& GetSmallDarkMenuWindowPotentiallyZoomedScreen() const {
-            return mSmallDarkMenuWindowPotentiallyZoomedScreen;
+        const MenuWindow& GetSmallDarkMenuWindow() const {
+            return mSmallDarkMenuWindow;
         }
         
-        const MenuWindow& GetSmallestDarkMenuWindowPotentiallyZoomedScreen() const {
-            return mSmallestDarkMenuWindowPotentiallyZoomedScreen;
+        const MenuWindow& GetSmallestDarkMenuWindow() const {
+            return mSmallestDarkMenuWindow;
         }
-        
+
+        const MenuWindow& GetMediumDarkMenuWindow() const {
+            return mMediumDarkMenuWindow;
+        }
+    
+        const MenuWindow& GetLargeDarkMenuWindow() const {
+            return mLargeDarkMenuWindow;
+        }
+
         const Pht::TextProperties& GetWhiteButtonTextWithShadowPropertiesPotentiallyZoomedScreen() const {
             return mWhiteButtonTextWithShadowPropertiesPotentiallyZoomedScreen;
         }
@@ -89,8 +95,6 @@ namespace RowBlast {
         static const std::string mMediumButtonSkewedMeshFilename;
 
     private:
-        MenuWindow mMediumDarkMenuWindow;
-        MenuWindow mLargeDarkMenuWindow;
         Pht::TextProperties mBlackButtonTextProperties;
         Pht::TextProperties mLargeWhiteButtonTextProperties;
         Pht::TextProperties mWhiteButtonTextProperties;
@@ -98,12 +102,12 @@ namespace RowBlast {
         Pht::TextProperties mSmallTextProperties;
         Pht::TextProperties mSmallWhiteTextProperties;
         Pht::TextProperties mLargeWhiteTextProperties;
-        MenuWindow mLargeMenuWindowPotentiallyZoomedScreen;
-        MenuWindow mMediumMenuWindowPotentiallyZoomedScreen;
-        MenuWindow mLargeDarkMenuWindowPotentiallyZoomedScreen;
-        MenuWindow mMediumDarkMenuWindowPotentiallyZoomedScreen;
-        MenuWindow mSmallDarkMenuWindowPotentiallyZoomedScreen;
-        MenuWindow mSmallestDarkMenuWindowPotentiallyZoomedScreen;
+        MenuWindow mLargeMenuWindow;
+        MenuWindow mMediumMenuWindow;
+        MenuWindow mLargeDarkMenuWindow;
+        MenuWindow mMediumDarkMenuWindow;
+        MenuWindow mSmallDarkMenuWindow;
+        MenuWindow mSmallestDarkMenuWindow;
         Pht::TextProperties mBlackButtonTextPropertiesPotentiallyZoomedScreen;
         Pht::TextProperties mLargeWhiteButtonTextPropertiesPotentiallyZoomedScreen;
         Pht::TextProperties mWhiteButtonTextPropertiesPotentiallyZoomedScreen;

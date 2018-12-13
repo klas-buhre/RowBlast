@@ -40,10 +40,6 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-    -Maybe it is enough with one single version of the windows and buttons instead of the
-     potetionally zoomed and the normal one. That single version should be the potentially
-     zoomed version. Test with iPhone XR to see if the zoomed textures look good in non-zoomed
-     scenes.
 
 
 

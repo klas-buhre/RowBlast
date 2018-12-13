@@ -37,8 +37,7 @@ namespace RowBlast {
         MenuWindow(Pht::IEngine& engine,
                    const CommonResources& commonResources,
                    Size size,
-                   Style style,
-                   PotentiallyZoomedScreen potentiallyZoomed);
+                   Style style);
 
         Pht::RenderableObject& GetRenderable() const {
             return *mRenderableObject;

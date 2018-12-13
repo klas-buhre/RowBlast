@@ -14,20 +14,6 @@ const Pht::Color GuiResources::mYellowSelectedButtonColor {0.52f, 0.41f, 0.0f};
 const std::string GuiResources::mMediumButtonSkewedMeshFilename {"medium_button_skewed_0385.obj"};
 
 GuiResources::GuiResources(Pht::IEngine& engine, const CommonResources& commonResources) :
-    mMediumDarkMenuWindow {
-        engine,
-        commonResources,
-        MenuWindow::Size::Medium,
-        MenuWindow::Style::Dark,
-        PotentiallyZoomedScreen::No
-    },
-    mLargeDarkMenuWindow {
-        engine,
-        commonResources,
-        MenuWindow::Size::Large,
-        MenuWindow::Style::Dark,
-        PotentiallyZoomedScreen::No
-    },
     mBlackButtonTextProperties {
         commonResources.GetHussarFontSize27(PotentiallyZoomedScreen::No),
         1.0f,
@@ -68,47 +54,41 @@ GuiResources::GuiResources(Pht::IEngine& engine, const CommonResources& commonRe
         1.0f,
         {0.95f, 0.95f, 0.95f, 1.0f}
     },
-    mLargeMenuWindowPotentiallyZoomedScreen {
+    mLargeMenuWindow {
         engine,
         commonResources,
         MenuWindow::Size::Large,
-        MenuWindow::Style::Bright,
-        PotentiallyZoomedScreen::Yes
+        MenuWindow::Style::Bright
     },
-    mMediumMenuWindowPotentiallyZoomedScreen {
+    mMediumMenuWindow {
         engine,
         commonResources,
         MenuWindow::Size::Medium,
         MenuWindow::Style::Bright,
-        PotentiallyZoomedScreen::Yes
     },
-    mLargeDarkMenuWindowPotentiallyZoomedScreen {
+    mLargeDarkMenuWindow {
         engine,
         commonResources,
         MenuWindow::Size::Large,
         MenuWindow::Style::Dark,
-        PotentiallyZoomedScreen::Yes
     },
-    mMediumDarkMenuWindowPotentiallyZoomedScreen {
+    mMediumDarkMenuWindow {
         engine,
         commonResources,
         MenuWindow::Size::Medium,
         MenuWindow::Style::Dark,
-        PotentiallyZoomedScreen::Yes
     },
-    mSmallDarkMenuWindowPotentiallyZoomedScreen {
+    mSmallDarkMenuWindow {
         engine,
         commonResources,
         MenuWindow::Size::Small,
         MenuWindow::Style::Dark,
-        PotentiallyZoomedScreen::Yes
     },
-    mSmallestDarkMenuWindowPotentiallyZoomedScreen {
+    mSmallestDarkMenuWindow {
         engine,
         commonResources,
         MenuWindow::Size::Smallest,
         MenuWindow::Style::Dark,
-        PotentiallyZoomedScreen::Yes
     },
     mBlackButtonTextPropertiesPotentiallyZoomedScreen {
         commonResources.GetHussarFontSize27(PotentiallyZoomedScreen::Yes),
@@ -365,26 +345,6 @@ GuiResources::GuiResources(Pht::IEngine& engine, const CommonResources& commonRe
                            ButtonColor::DarkBlue,
                            PotentiallyZoomedScreen::Yes)
     } {}
-
-const MenuWindow&
-GuiResources::GetMediumDarkMenuWindow(PotentiallyZoomedScreen potentiallyZoomed) const {
-    switch (potentiallyZoomed) {
-        case PotentiallyZoomedScreen::Yes:
-            return mMediumDarkMenuWindowPotentiallyZoomedScreen;
-        case PotentiallyZoomedScreen::No:
-            return mMediumDarkMenuWindow;
-    }
-}
-
-const MenuWindow&
-GuiResources::GetLargeDarkMenuWindow(PotentiallyZoomedScreen potentiallyZoomed) const {
-    switch (potentiallyZoomed) {
-        case PotentiallyZoomedScreen::Yes:
-            return mLargeDarkMenuWindowPotentiallyZoomedScreen;
-        case PotentiallyZoomedScreen::No:
-            return mLargeDarkMenuWindow;
-    }
-}
 
 const Pht::TextProperties&
 GuiResources::GetBlackButtonTextProperties(PotentiallyZoomedScreen potentiallyZoomed) const {

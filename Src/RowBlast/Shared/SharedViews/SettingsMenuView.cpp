@@ -18,7 +18,7 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine,
     mZoom {zoom} {
 
     auto& guiResources {commonResources.GetGuiResources()};
-    auto& menuWindow {guiResources.GetMediumDarkMenuWindow(zoom)};
+    auto& menuWindow {guiResources.GetMediumDarkMenuWindow()};
     
     auto menuWindowSceneObject {std::make_unique<Pht::SceneObject>(&menuWindow.GetRenderable())};
     menuWindowSceneObject->GetTransform().SetPosition({0.0f, 0.0f, UiLayer::background});

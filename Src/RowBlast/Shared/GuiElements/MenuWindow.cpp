@@ -70,16 +70,11 @@ namespace {
 MenuWindow::MenuWindow(Pht::IEngine& engine,
                        const CommonResources& commonResources,
                        Size size,
-                       Style style,
-                       PotentiallyZoomedScreen potentiallyZoomed) {
+                       Style style) {
     auto& renderer {engine.GetRenderer()};
     auto& renderBufferSize {renderer.GetRenderBufferSize()};
-    
-    auto& frustumSize {
-        potentiallyZoomed == PotentiallyZoomedScreen::Yes ?
-        commonResources.GetHudFrustumSizePotentiallyZoomedScreen() : renderer.GetHudFrustumSize()
-    };
-    
+    auto& frustumSize {commonResources.GetHudFrustumSizePotentiallyZoomedScreen()};
+
     auto xScaleFactor {static_cast<float>(renderBufferSize.x) / static_cast<float>(frustumSize.x)};
     auto yScaleFactor {static_cast<float>(renderBufferSize.y) / static_cast<float>(frustumSize.y)};
     

@@ -23,7 +23,7 @@ PurchaseSuccessfulDialogView::PurchaseSuccessfulDialogView(Pht::IEngine& engine,
     mEngine {engine} {
 
     auto& guiResources {commonResources.GetGuiResources()};
-    auto& menuWindow {guiResources.GetMediumDarkMenuWindow(zoom)};
+    auto& menuWindow {guiResources.GetMediumDarkMenuWindow()};
     
     auto menuWindowSceneObject {std::make_unique<Pht::SceneObject>(&menuWindow.GetRenderable())};
     menuWindowSceneObject->GetTransform().SetPosition({0.0f, 0.0f, UiLayer::background});

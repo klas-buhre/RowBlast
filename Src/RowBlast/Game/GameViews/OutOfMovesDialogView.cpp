@@ -54,7 +54,7 @@ OutOfMovesDialogView::OutOfMovesDialogView(Pht::IEngine& engine,
 
     PotentiallyZoomedScreen zoom {PotentiallyZoomedScreen::Yes};
     auto& guiResources {commonResources.GetGuiResources()};
-    auto& menuWindow {guiResources.GetMediumDarkMenuWindow(PotentiallyZoomedScreen::Yes)};
+    auto& menuWindow {guiResources.GetMediumDarkMenuWindow()};
     
     auto menuWindowSceneObject {std::make_unique<Pht::SceneObject>(&menuWindow.GetRenderable())};
     menuWindowSceneObject->GetTransform().SetPosition({0.0f, 0.0f, UiLayer::background});
