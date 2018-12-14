@@ -40,7 +40,7 @@ MapConfirmationDialogView::MapConfirmationDialogView(Pht::IEngine& engine,
 
     mYesButton = std::make_unique<MenuButton>(engine,
                                               *this,
-                                              Pht::Vec3 {0.0f, -1.3f, UiLayer::textRectangle},
+                                              Pht::Vec3 {0.0f, -1.375f, UiLayer::textRectangle},
                                               buttonInputSize,
                                               yellowButtonStyle);
     mYesButton->CreateText({-0.6f, -0.23f, UiLayer::buttonText},
@@ -56,7 +56,7 @@ MapConfirmationDialogView::MapConfirmationDialogView(Pht::IEngine& engine,
 
     mNoButton = std::make_unique<MenuButton>(engine,
                                              *this,
-                                             Pht::Vec3 {0.0f, -3.9f, UiLayer::textRectangle},
+                                             Pht::Vec3 {0.0f, -3.975f, UiLayer::textRectangle},
                                              buttonInputSize,
                                              blueButtonStyle);
     mNoButton->CreateText({-0.5f, -0.23f, UiLayer::buttonText},

@@ -17,7 +17,7 @@
 
 - (void)prepareToPlay: (NSURL*) url {
     AVAsset* asset = [AVAsset assetWithURL:url];
-    NSArray *assetKeys = @[@"playable"];
+    NSArray* assetKeys = @[@"playable"];
  
     // Create a new AVPlayerItem with the asset and an
     // array of asset keys to be automatically loaded.
@@ -68,7 +68,7 @@ public:
     }
 
 private:
-    AudioPlayer *mAudioPlayer;
+    AudioPlayer* mAudioPlayer;
 };
 
 std::unique_ptr<Pht::ISound> Pht::LoadSound(const std::string& filename) {
