@@ -34,17 +34,17 @@ void Audio::PlaySound(const std::string& filename) {
     }
 }
 
-void Audio::AddMusic(const std::string& filename) {
-    auto track {LoadSound(filename)};
-    
-    if (track) {
-        track->SetLoop(true);
-        mTracks[filename] = std::move(track);
-    }
+void Audio::LoadMusicTrack(const std::string& filename, AudioResourceId resourceId) {
+    auto track {Pht::LoadMusicTrack(filename)};
+    mTracks[resourceId] = std::move(track);
 }
 
-ISound* Audio::GetMusic(const std::string& filename) const {
-    auto i {mTracks.find(filename)};
+void Audio::FreeMusicTrack(AudioResourceId resourceId) {
+    mTracks.erase(resourceId);
+}
+
+IMusicTrack* Audio::GetMusicTrack(AudioResourceId resourceId) const {
+    auto i {mTracks.find(resourceId)};
     
     if (i != std::end(mTracks)) {
         return i->second.get();
@@ -53,23 +53,24 @@ ISound* Audio::GetMusic(const std::string& filename) const {
     return nullptr;
 }
 
-void Audio::PlayMusic(const std::string& filename) {
-    if (!mIsMusicEnabled) {
-        return;
-    }
-    
-    auto* track {GetMusic(filename)};
+void Audio::PlayMusicTrack(AudioResourceId resourceId) {
+    auto* track {GetMusicTrack(resourceId)};
     
     if (track == nullptr) {
         return;
     }
-    
+
     if (mActiveTrack) {
         mActiveTrack->Stop();
     }
-    
+
     mActiveTrack = track;
-    mActiveTrack->Play();
+
+    if (mIsMusicEnabled) {
+        track->SetVolume(0.0f);
+        track->Play();
+        track->SetVolume(1.0f, 4.0f);
+    }
 }
 
 void Audio::EnableSound() {

@@ -48,6 +48,9 @@ RowBlastApplication::RowBlastApplication(Pht::IEngine& engine) :
         audio.DisableSound();
     }
     
+    audio.LoadMusicTrack("map.mp4", 1);
+    audio.PlayMusicTrack(1);
+    
     auto& renderer {engine.GetRenderer()};
     renderer.DisableShader(Pht::ShaderType::PixelLighting);
     renderer.DisableShader(Pht::ShaderType::PointParticle);

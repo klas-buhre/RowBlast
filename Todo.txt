@@ -37,38 +37,46 @@ Backlog:
     -Make icons and launch screens for all supported device resolutions.
     -Credit the icon creator: <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
     -Credit FastNoise, MIT license: https://github.com/Auburns/FastNoise/
+    -Credit the music creators. Check the license files in the music packs in Unity.
     -Maybe support for different languages.
 
 Ongoing tasks:
+    -Fade music between scenes.
+    -Enable/disable music from the settings menu.
+    -Find music for the game scene.
     -Completely redesign the audio system.
       -IAudio is still the public API.
-        -Load/add sounds using filenames and ResourceIds.
+        -Load/add sound using filenames and ResourceIds.
         -Load/add music track using filenames and ResourceIds.
         -Unload/remove music track using ResourceIds.
-        -Play sounds using ResourceIds.
-        -Play music tracks using ResourceIds.
+        -Play sound using ResourceIds.
+        -Play music track using ResourceIds.
         -Fade in/out music tracks.
         -Enable/disable sound/music.
-      -Classes in cross-platform AudioApi directory:
+      -Classes in cross-platform Audio/AudioApi directory:
         -IAudio (public)
         -ISound (public)
         -IMusicTrack (public)
         -Audio (private)
+        -AudioFileDecoder (private)
       -Make a MusicPlayer that plays music tracks using a AVAudioPlayer.
-        -It can then play compressed audio files such as mp3/ogg(?).
-        -Should be possible to fade between tracks.
+        -It can then play compressed audio files such as mp4/ogg(?).
+        -Should be possible to fade between tracks. Seems to be supported in AVAudioPlayer.
         -The latency in the AVAudioPlayer is ok for playing music.
-        -Classes in cross-platform AudioApi directory (not intended for external use):
+        -Classes in cross-platform Audio/AudioApi directory (not intended for external use):
           -MusicPlayer
-        -Classes in AudioBackEnd directory.
+        -Classes in Audio/iOS directory.
           -MusicTrackIOS
+          -AudioFileDecoderIOS
       -Make an AudioEngine that plays sound effects with minimal latency.
         -Uses OpenAL as back-end.
         -Can have a similar design as the Finch audio engine.
         -Should handle audio interruptions.
         -Classes in cross-platform AudioApi directory (not intended for external use):
           -IAudioEngine
-        -Classes in AudioBackEnd directory:
+        -Classes in Audio/iOS directory.
+          -AudioFileDecoderIOS
+        -Classes in Audio/OpenAlBackEnd directory:
           -Sound
           -SoundBuffer
           -SoundSource

@@ -5,6 +5,9 @@
 
 namespace Pht {
     class ISound;
+    class IMusicTrack;
+    
+    using AudioResourceId = uint32_t;
 
     class IAudio {
     public:
@@ -13,9 +16,10 @@ namespace Pht {
         virtual void AddSound(const std::string& filename) = 0;
         virtual ISound* GetSound(const std::string& filename) const = 0;
         virtual void PlaySound(const std::string& filename) = 0;
-        virtual void AddMusic(const std::string& filename) = 0;
-        virtual ISound* GetMusic(const std::string& filename) const = 0;
-        virtual void PlayMusic(const std::string& filename) = 0;
+        virtual void LoadMusicTrack(const std::string& filename, AudioResourceId resourceId) = 0;
+        virtual void FreeMusicTrack(AudioResourceId resourceId) = 0;
+        virtual IMusicTrack* GetMusicTrack(AudioResourceId resourceId) const = 0;
+        virtual void PlayMusicTrack(AudioResourceId resourceId) = 0;
         virtual void EnableSound() = 0;
         virtual void DisableSound() = 0;
         virtual void EnableMusic() = 0;
