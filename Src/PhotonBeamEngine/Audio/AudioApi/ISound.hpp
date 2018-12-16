@@ -14,7 +14,7 @@ namespace Pht {
         virtual void SetLoop(bool loop) = 0;
     };
     
-    std::unique_ptr<Pht::ISound> LoadSound(const std::string& filename);
+    std::unique_ptr<ISound> LoadSound(const std::string& filename);
 }
 
 #endif

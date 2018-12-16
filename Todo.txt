@@ -75,13 +75,12 @@ Ongoing tasks:
           -IAudioEngine
         -Classes in Audio/iOS directory.
           -AudioFileDecoderIOS
-        -Classes in Audio/OpenAlBackEnd directory:
-          -Sound
-          -SoundBuffer
-          -SoundSource
-          -SoundContext
-          -SoundDevice
-          -AudioEngine
+        -Classes in Audio/OpenAlAudioEngine directory:
+          -OpenAlSound
+          -OpenAlBuffer
+          -OpenAlSource
+          -OpenAlContext
+          -OpenAlAudioEngine
 
 
 

@@ -422,6 +422,9 @@
 		62B2BAF32134495E009C529D /* level56.json in Resources */ = {isa = PBXBuildFile; fileRef = 62B2BAF22134495D009C529D /* level56.json */; };
 		62BB35BA21C573690051AEEF /* map.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 62BB35B921C5733A0051AEEF /* map.mp4 */; };
 		62BB35BC21C6676D0051AEEF /* game.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 62BB35BB21C661060051AEEF /* game.mp4 */; };
+		62BB35C321C6B26A0051AEEF /* OpenAlAudioEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62BB35C121C6B26A0051AEEF /* OpenAlAudioEngine.cpp */; };
+		62BB35C621C6BA710051AEEF /* OpenAlContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62BB35C421C6BA710051AEEF /* OpenAlContext.cpp */; };
+		62BB35C821C6C0110051AEEF /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62BB35C721C6C0110051AEEF /* OpenAL.framework */; };
 		62BE275320B42A360014C6DD /* star_1428.obj in Resources */ = {isa = PBXBuildFile; fileRef = 62BE275220B42A360014C6DD /* star_1428.obj */; };
 		62DE641C20CE953D00A50F26 /* medium_button_skewed_0385.obj in Resources */ = {isa = PBXBuildFile; fileRef = 62DE641B20CE953C00A50F26 /* medium_button_skewed_0385.obj */; };
 		62E01BAF2153E00F009F0B99 /* planet_960.obj in Resources */ = {isa = PBXBuildFile; fileRef = 62E01BAE2153E00E009F0B99 /* planet_960.obj */; };
@@ -1222,6 +1225,11 @@
 		62B2BAF22134495D009C529D /* level56.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level56.json; sourceTree = "<group>"; };
 		62BB35B921C5733A0051AEEF /* map.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = map.mp4; sourceTree = "<group>"; };
 		62BB35BB21C661060051AEEF /* game.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = game.mp4; sourceTree = "<group>"; };
+		62BB35BF21C6AD2A0051AEEF /* IAudioEngine.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = IAudioEngine.hpp; sourceTree = "<group>"; };
+		62BB35C121C6B26A0051AEEF /* OpenAlAudioEngine.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = OpenAlAudioEngine.cpp; sourceTree = "<group>"; };
+		62BB35C421C6BA710051AEEF /* OpenAlContext.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = OpenAlContext.cpp; sourceTree = "<group>"; };
+		62BB35C521C6BA710051AEEF /* OpenAlContext.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = OpenAlContext.hpp; sourceTree = "<group>"; };
+		62BB35C721C6C0110051AEEF /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		62BE275220B42A360014C6DD /* star_1428.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = star_1428.obj; sourceTree = "<group>"; };
 		62DE641B20CE953C00A50F26 /* medium_button_skewed_0385.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = medium_button_skewed_0385.obj; sourceTree = "<group>"; };
 		62E01BAE2153E00E009F0B99 /* planet_960.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = planet_960.obj; sourceTree = "<group>"; };
@@ -1239,6 +1247,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				62BB35C821C6C0110051AEEF /* OpenAL.framework in Frameworks */,
 				620A98291EE2B5C000AD6C61 /* CoreMedia.framework in Frameworks */,
 				620A981D1EE2A3B400AD6C61 /* AVFoundation.framework in Frameworks */,
 				625698572182392C003A3A9D /* libfreetype.a in Frameworks */,
@@ -1276,6 +1285,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				62BB35C721C6C0110051AEEF /* OpenAL.framework */,
 				620A98281EE2B5C000AD6C61 /* CoreMedia.framework */,
 				620A981C1EE2A3B400AD6C61 /* AVFoundation.framework */,
 				62411A961E61E62800035D2A /* GLKit.framework */,
@@ -1306,11 +1316,12 @@
 		6242DEEF21C50E7600D17F46 /* AudioApi */ = {
 			isa = PBXGroup;
 			children = (
-				6242DEF021C50E7600D17F46 /* ISound.hpp */,
 				6242DEF121C50E7600D17F46 /* Audio.cpp */,
-				6242DEF221C50E7600D17F46 /* IAudio.hpp */,
 				6242DEF321C50E7600D17F46 /* Audio.hpp */,
+				6242DEF221C50E7600D17F46 /* IAudio.hpp */,
+				62BB35BF21C6AD2A0051AEEF /* IAudioEngine.hpp */,
 				6242DEF721C50FB900D17F46 /* IMusicTrack.hpp */,
+				6242DEF021C50E7600D17F46 /* ISound.hpp */,
 			);
 			path = AudioApi;
 			sourceTree = "<group>";
@@ -1944,6 +1955,7 @@
 			children = (
 				6242DEEF21C50E7600D17F46 /* AudioApi */,
 				6242DEF421C50E7600D17F46 /* iOS */,
+				62BB35BD21C6ACC00051AEEF /* OpenAlAudioEngine */,
 			);
 			path = Audio;
 			sourceTree = "<group>";
@@ -2610,6 +2622,16 @@
 			path = Music;
 			sourceTree = "<group>";
 		};
+		62BB35BD21C6ACC00051AEEF /* OpenAlAudioEngine */ = {
+			isa = PBXGroup;
+			children = (
+				62BB35C121C6B26A0051AEEF /* OpenAlAudioEngine.cpp */,
+				62BB35C421C6BA710051AEEF /* OpenAlContext.cpp */,
+				62BB35C521C6BA710051AEEF /* OpenAlContext.hpp */,
+			);
+			path = OpenAlAudioEngine;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -2898,6 +2920,7 @@
 				627A128521AAFB5A00EECA3B /* MenuWindow.cpp in Sources */,
 				625698142182392C003A3A9D /* RenderQueue.cpp in Sources */,
 				625696862182382C003A3A9D /* Bomb.cpp in Sources */,
+				62BB35C621C6BA710051AEEF /* OpenAlContext.cpp in Sources */,
 				625696392182382C003A3A9D /* LevelBombDialogView.cpp in Sources */,
 				6256966E2182382C003A3A9D /* Cell.cpp in Sources */,
 				625698472182392C003A3A9D /* Scene.cpp in Sources */,
@@ -3029,6 +3052,7 @@
 				627A128E21AAFB5A00EECA3B /* SettingsMenuController.cpp in Sources */,
 				625696512182382C003A3A9D /* GameMenuView.cpp in Sources */,
 				6256983E2182392C003A3A9D /* main.m in Sources */,
+				62BB35C321C6B26A0051AEEF /* OpenAlAudioEngine.cpp in Sources */,
 				627A128221AAFB5A00EECA3B /* CloseButton.cpp in Sources */,
 				625698412182392C003A3A9D /* ImageIOS.mm in Sources */,
 				625698402182392C003A3A9D /* AppDelegate.mm in Sources */,

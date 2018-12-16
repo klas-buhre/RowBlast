@@ -16,7 +16,7 @@ namespace Pht {
         virtual void SetVolume(float volume, float fadeDuration) = 0;
     };
     
-    std::unique_ptr<Pht::IMusicTrack> LoadMusicTrack(const std::string& filename);
+    std::unique_ptr<IMusicTrack> LoadMusicTrack(const std::string& filename);
 }
 
 #endif
