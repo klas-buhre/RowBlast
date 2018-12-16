@@ -36,6 +36,10 @@ namespace RowBlast {
             return *mSoundButton;
         }
 
+        const MenuButton& GetMusicButton() const {
+            return *mMusicButton;
+        }
+
         const MenuButton& GetBackButton() const {
             return *mBackButton;
         }
@@ -55,17 +59,28 @@ namespace RowBlast {
         Pht::SceneObject& GetSoundOffText() {
             return *mSoundOffText;
         }
-        
+
+        Pht::SceneObject& GetMusicOnText() {
+            return *mMusicOnText;
+        }
+
+        Pht::SceneObject& GetMusicOffText() {
+            return *mMusicOffText;
+        }
+
     private:
         const CommonResources& mCommonResources;
         PotentiallyZoomedScreen mZoom {PotentiallyZoomedScreen::Yes};
         std::unique_ptr<MenuButton> mControlsButton;
         std::unique_ptr<MenuButton> mSoundButton;
+        std::unique_ptr<MenuButton> mMusicButton;
         std::unique_ptr<MenuButton> mBackButton;
         Pht::SceneObject* mControlsClickText {nullptr};
         Pht::SceneObject* mControlsSwipeText {nullptr};
         Pht::SceneObject* mSoundOnText {nullptr};
         Pht::SceneObject* mSoundOffText {nullptr};
+        Pht::SceneObject* mMusicOnText {nullptr};
+        Pht::SceneObject* mMusicOffText {nullptr};
         bool mIsControlsButtonEnabled {true};
     };
 }

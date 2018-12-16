@@ -41,7 +41,6 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-    -Enable/disable music from the settings menu.
     -Implement AudioEngine.
     -Find music for the game scene.
     -Completely redesign the audio system.

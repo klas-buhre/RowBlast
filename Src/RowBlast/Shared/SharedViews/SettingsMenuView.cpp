@@ -41,7 +41,7 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine,
     
     auto& textProperties {guiResources.GetSmallWhiteTextProperties(zoom)};
     auto& buttonTextProperties {guiResources.GetWhiteButtonTextProperties(zoom)};
-    CreateText({-5.3f, 1.57f, UiLayer::text}, "Controls", textProperties);
+    CreateText({-5.3f, 2.47f, UiLayer::text}, "Controls", textProperties);
 
     MenuButton::Style settingsButtonStyle;
     settingsButtonStyle.mPressedScale = 1.05f;
@@ -50,7 +50,7 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine,
 
     Pht::Vec2 buttonInputSize {78.0f, 43.0f};
     
-    Pht::Vec3 controlsButtonPosition {3.45f, 1.8f, UiLayer::textRectangle};
+    Pht::Vec3 controlsButtonPosition {3.45f, 2.7f, UiLayer::textRectangle};
     mControlsButton = std::make_unique<MenuButton>(engine,
                                                    *this,
                                                    controlsButtonPosition,
@@ -63,18 +63,33 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine,
                                                        "Swipe",
                                                        buttonTextProperties).GetSceneObject());
 
-    CreateText({-5.3f, -1.03f, UiLayer::text}, "Sound", textProperties);
+    CreateText({-5.3f, 0.27f, UiLayer::text}, "Sound", textProperties);
     
-    Pht::Vec3 soundButtonPosition {3.45f, -0.8f, UiLayer::textRectangle};
+    Pht::Vec3 soundButtonPosition {3.45f, 0.5f, UiLayer::textRectangle};
     mSoundButton = std::make_unique<MenuButton>(engine,
                                                 *this,
                                                 soundButtonPosition,
                                                 buttonInputSize,
                                                 settingsButtonStyle);
-    mSoundOnText = &(mSoundButton->CreateText({-0.6f, -0.23f, UiLayer::buttonText},
+    mSoundOnText = &(mSoundButton->CreateText({-0.5f, -0.23f, UiLayer::buttonText},
                                               "On",
                                               buttonTextProperties).GetSceneObject());
-    mSoundOffText = &(mSoundButton->CreateText({-0.7f, -0.23f, UiLayer::buttonText},
+    mSoundOffText = &(mSoundButton->CreateText({-0.6f, -0.23f, UiLayer::buttonText},
+                                               "Off",
+                                               buttonTextProperties).GetSceneObject());
+
+    CreateText({-5.3f, -1.93f, UiLayer::text}, "Music", textProperties);
+
+    Pht::Vec3 musicButtonPosition {3.45f, -1.7f, UiLayer::textRectangle};
+    mMusicButton = std::make_unique<MenuButton>(engine,
+                                                *this,
+                                                musicButtonPosition,
+                                                buttonInputSize,
+                                                settingsButtonStyle);
+    mMusicOnText = &(mMusicButton->CreateText({-0.5f, -0.23f, UiLayer::buttonText},
+                                              "On",
+                                              buttonTextProperties).GetSceneObject());
+    mMusicOffText = &(mMusicButton->CreateText({-0.6f, -0.23f, UiLayer::buttonText},
                                                "Off",
                                                buttonTextProperties).GetSceneObject());
 
@@ -87,7 +102,7 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine,
     
     mBackButton = std::make_unique<MenuButton>(engine,
                                                *this,
-                                               Pht::Vec3 {0.0f, -4.7f, UiLayer::textRectangle},
+                                               Pht::Vec3 {0.0f, -4.95f, UiLayer::textRectangle},
                                                backButtonInputSize,
                                                backButtonStyle);
     mBackButton->CreateText({-0.85f, -0.23f, UiLayer::buttonText}, "Back", buttonTextProperties);

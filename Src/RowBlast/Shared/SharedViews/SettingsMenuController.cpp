@@ -63,10 +63,10 @@ SettingsMenuController::Result SettingsMenuController::HandleInput() {
 }
 
 SettingsMenuController::Result SettingsMenuController::OnTouch(const Pht::TouchEvent& touchEvent) {
+    auto& settingsService {mUserServices.GetSettingsService()};
+
     if (mView.IsControlsButtonEnabled()) {
         if (mView.GetControlsButton().IsClicked(touchEvent)) {
-            auto& settingsService {mUserServices.GetSettingsService()};
-
             if (settingsService.GetControlType() == ControlType::Click) {
                 settingsService.SetControlType(ControlType::Gesture);
             } else {
@@ -79,7 +79,6 @@ SettingsMenuController::Result SettingsMenuController::OnTouch(const Pht::TouchE
 
     if (mView.GetSoundButton().IsClicked(touchEvent)) {
         auto& audio {mEngine.GetAudio()};
-        auto& settingsService {mUserServices.GetSettingsService()};
         
         if (audio.IsSoundEnabled()) {
             audio.DisableSound();
@@ -87,6 +86,20 @@ SettingsMenuController::Result SettingsMenuController::OnTouch(const Pht::TouchE
         } else {
             audio.EnableSound();
             settingsService.SetIsSoundEnabled(true);
+        }
+        
+        UpdateViewToReflectSettings(true);
+    }
+
+    if (mView.GetMusicButton().IsClicked(touchEvent)) {
+        auto& audio {mEngine.GetAudio()};
+        
+        if (audio.IsMusicEnabled()) {
+            audio.DisableMusic();
+            settingsService.SetIsMusicEnabled(false);
+        } else {
+            audio.EnableMusic();
+            settingsService.SetIsMusicEnabled(true);
         }
         
         UpdateViewToReflectSettings(true);
@@ -120,5 +133,13 @@ void SettingsMenuController::UpdateViewToReflectSettings(bool isGestureControlsA
     } else {
         mView.GetSoundOnText().SetIsVisible(false);
         mView.GetSoundOffText().SetIsVisible(true);
+    }
+    
+    if (audio.IsMusicEnabled()) {
+        mView.GetMusicOnText().SetIsVisible(true);
+        mView.GetMusicOffText().SetIsVisible(false);
+    } else {
+        mView.GetMusicOnText().SetIsVisible(false);
+        mView.GetMusicOffText().SetIsVisible(true);
     }
 }
