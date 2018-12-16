@@ -17,7 +17,8 @@ namespace Pht {
         void LoadMusicTrack(const std::string& filename, AudioResourceId resourceId) override;
         void FreeMusicTrack(AudioResourceId resourceId) override;
         IMusicTrack* GetMusicTrack(AudioResourceId resourceId) const override;
-        void PlayMusicTrack(AudioResourceId resourceId) override;
+        void PlayMusicTrack(AudioResourceId resourceId, float fadeInDuration) override;
+        void FadeOutActiveTrack(float fadeOutDuration) override;
         void EnableSound() override;
         void DisableSound() override;
         void EnableMusic() override;

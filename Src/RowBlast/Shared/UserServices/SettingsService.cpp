@@ -9,7 +9,8 @@ using namespace RowBlast;
 namespace {
     const std::string filename {"settings.dat"};
     const std::string controlTypeMember {"controlType"};
-    const std::string iSoundEnabledMember {"iSoundEnabled"};
+    const std::string isSoundEnabledMember {"isSoundEnabled"};
+    const std::string isMusicEnabledMember {"isMusicEnabled"};
     
     std::string ToString(ControlType controlType) {
         switch (controlType) {
@@ -44,8 +45,13 @@ void SettingsService::SetControlType(ControlType controlType) {
     SaveState();
 }
 
-void SettingsService::SetIsSoundEnabled(bool iSoundEnabled) {
-    mIsSoundEnabled = iSoundEnabled;
+void SettingsService::SetIsSoundEnabled(bool isSoundEnabled) {
+    mIsSoundEnabled = isSoundEnabled;
+    SaveState();
+}
+
+void SettingsService::SetIsMusicEnabled(bool isMusicEnabled) {
+    mIsMusicEnabled = isMusicEnabled;
     SaveState();
 }
 
@@ -55,7 +61,8 @@ void SettingsService::SaveState() {
     document.SetObject();
     
     Pht::Json::AddString(document, controlTypeMember, ToString(mControlType), allocator);
-    Pht::Json::AddBool(document, iSoundEnabledMember, mIsSoundEnabled, allocator);
+    Pht::Json::AddBool(document, isSoundEnabledMember, mIsSoundEnabled, allocator);
+    Pht::Json::AddBool(document, isMusicEnabledMember, mIsMusicEnabled, allocator);
 
     std::string jsonString;
     Pht::Json::EncodeDocument(document, jsonString);
@@ -73,7 +80,8 @@ bool SettingsService::LoadState() {
     Pht::Json::ParseDocument(document, jsonString);
     
     mControlType = ReadControlType(document);
-    mIsSoundEnabled = Pht::Json::ReadBool(document, iSoundEnabledMember);
+    mIsSoundEnabled = Pht::Json::ReadBool(document, isSoundEnabledMember);
+    mIsMusicEnabled = Pht::Json::ReadBool(document, isMusicEnabledMember);
 
     return true;
 }

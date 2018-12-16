@@ -14,6 +14,7 @@ using namespace RowBlast;
 
 namespace {
     constexpr auto fadeDuration {0.22f};
+    constexpr auto musicFadeOutDuration {0.22f};
     constexpr auto titleFadeInDuration {1.0f};
 }
 
@@ -40,20 +41,11 @@ RowBlastApplication::RowBlastApplication(Pht::IEngine& engine) :
 
     engine.GetInput().SetUseGestureRecognizers(false);
     
-    auto& audio {engine.GetAudio()};
+    SetUpRenderer();
+    SetUpAudio();
     
-    if (mUserServices.GetSettingsService().IsSoundEnabled()) {
-        audio.EnableSound();
-    } else {
-        audio.DisableSound();
-    }
-    
-    audio.LoadMusicTrack("map.mp4", 1);
-    audio.PlayMusicTrack(1);
-    
-    auto& renderer {engine.GetRenderer()};
-    renderer.DisableShader(Pht::ShaderType::PixelLighting);
-    renderer.DisableShader(Pht::ShaderType::PointParticle);
+    engine.GetAudio().PlayMusicTrack(static_cast<Pht::AudioResourceId>(MusicTrackId::Map),
+                                     fadeDuration);
     
     mFadeEffect.GetSceneObject().SetLayer(GlobalLayer::sceneSwitchFadeEffect);
     InsertFadeEffectInActiveScene();
@@ -61,6 +53,32 @@ RowBlastApplication::RowBlastApplication(Pht::IEngine& engine) :
     
     auto currentLevelId {mUserServices.GetProgressService().GetCurrentLevel()};
     mMapController.GetScene().SetWorldId(mUniverse.CalcWorldId(currentLevelId));
+}
+
+void RowBlastApplication::SetUpRenderer() {
+    auto& renderer {mEngine.GetRenderer()};
+    renderer.DisableShader(Pht::ShaderType::PixelLighting);
+    renderer.DisableShader(Pht::ShaderType::PointParticle);
+}
+
+void RowBlastApplication::SetUpAudio() {
+    auto& audio {mEngine.GetAudio()};
+    auto& settingsService {mUserServices.GetSettingsService()};
+    
+    if (settingsService.IsSoundEnabled()) {
+        audio.EnableSound();
+    } else {
+        audio.DisableSound();
+    }
+
+    if (settingsService.IsMusicEnabled()) {
+        audio.EnableMusic();
+    } else {
+        audio.DisableMusic();
+    }
+
+    audio.LoadMusicTrack("map.mp4", static_cast<Pht::AudioResourceId>(MusicTrackId::Map));
+    audio.LoadMusicTrack("game.mp4", static_cast<Pht::AudioResourceId>(MusicTrackId::Game));
 }
 
 void RowBlastApplication::OnUpdate() {
@@ -95,7 +113,7 @@ void RowBlastApplication::UpdateTitleScene() {
                 break;
             case TitleController::Command::GoToMap:
                 mFadeEffect.SetDuration(fadeDuration);
-                BeginFadeToMap(MapInitialState::Map);
+                BeginFadingToMap(MapInitialState::Map);
                 break;
         }
     }
@@ -109,10 +127,10 @@ void RowBlastApplication::UpdateMapScene() {
             case MapController::Command::None:
                 break;
             case MapController::Command::StartGame:
-                BeginFadeToGame(command.GetLevel());
+                BeginFadingToGame(command.GetLevel());
                 break;
             case MapController::Command::StartMap:
-                BeginFadeToMap(MapInitialState::Map);
+                BeginFadingToMap(MapInitialState::Map);
                 break;
         }
     }
@@ -128,22 +146,22 @@ void RowBlastApplication::UpdateGameScene() {
             case GameController::Command::GoToMap:
                 mLevelToStart = mUserServices.GetProgressService().GetCurrentLevel() + 1;
                 if (mUserServices.GetProgressService().ProgressedAtPreviousGameRound()) {
-                    BeginFadeToMap(MapInitialState::UfoAnimation);
+                    BeginFadingToMap(MapInitialState::UfoAnimation);
                     mMapController.SetStartLevelDialogOnAnimationFinished(false);
                 } else {
-                    BeginFadeToMap(MapInitialState::Map);
+                    BeginFadingToMap(MapInitialState::Map);
                 }
                 break;
             case GameController::Command::RestartLevel:
-                BeginFadeToMap(MapInitialState::LevelGoalDialog);
+                BeginFadingToMap(MapInitialState::LevelGoalDialog);
                 break;
             case GameController::Command::GoToNextLevel:
                 mLevelToStart = mUserServices.GetProgressService().GetCurrentLevel() + 1;
                 if (mUserServices.GetProgressService().ProgressedAtPreviousGameRound()) {
-                    BeginFadeToMap(MapInitialState::UfoAnimation);
+                    BeginFadingToMap(MapInitialState::UfoAnimation);
                     mMapController.SetStartLevelDialogOnAnimationFinished(true);
                 } else {
-                    BeginFadeToMap(MapInitialState::LevelGoalDialog);
+                    BeginFadingToMap(MapInitialState::LevelGoalDialog);
                 }
                 break;
         }
@@ -172,21 +190,31 @@ void RowBlastApplication::InsertFadeEffectInActiveScene() {
     scene->GetRoot().AddChild(mFadeEffect.GetSceneObject());
 }
 
-void RowBlastApplication::BeginFadeToMap(MapInitialState mapInitialState) {
+void RowBlastApplication::BeginFadingToMap(MapInitialState mapInitialState) {
     mMapInitialState = mapInitialState;
     mFadeEffect.Start();
     mNextState = State::MapScene;
     mEngine.GetInput().DisableInput();
+    
+    if (mState == State::GameScene) {
+        mEngine.GetAudio().FadeOutActiveTrack(musicFadeOutDuration);
+    }
 }
 
-void RowBlastApplication::BeginFadeToGame(int level) {
+void RowBlastApplication::BeginFadingToGame(int level) {
     mLevelToStart = level;
     mFadeEffect.Start();
     mNextState = State::GameScene;
+    mEngine.GetAudio().FadeOutActiveTrack(musicFadeOutDuration);
     mEngine.GetInput().DisableInput();
 }
 
 void RowBlastApplication::StartMap() {
+    if (mState == State::GameScene) {
+        mEngine.GetAudio().PlayMusicTrack(static_cast<Pht::AudioResourceId>(MusicTrackId::Map),
+                                          fadeDuration);
+    }
+
     mState = State::MapScene;
     mEngine.GetInput().EnableInput();
     mMapController.Init();
@@ -205,6 +233,8 @@ void RowBlastApplication::StartMap() {
 }
 
 void RowBlastApplication::StartGame() {
+    mEngine.GetAudio().PlayMusicTrack(static_cast<Pht::AudioResourceId>(MusicTrackId::Game),
+                                      fadeDuration);
     mState = State::GameScene;
     mGameController.StartLevel(mLevelToStart);
 }

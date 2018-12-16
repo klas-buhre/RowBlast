@@ -53,7 +53,7 @@ IMusicTrack* Audio::GetMusicTrack(AudioResourceId resourceId) const {
     return nullptr;
 }
 
-void Audio::PlayMusicTrack(AudioResourceId resourceId) {
+void Audio::PlayMusicTrack(AudioResourceId resourceId, float fadeInDuration) {
     auto* track {GetMusicTrack(resourceId)};
     
     if (track == nullptr) {
@@ -67,9 +67,20 @@ void Audio::PlayMusicTrack(AudioResourceId resourceId) {
     mActiveTrack = track;
 
     if (mIsMusicEnabled) {
-        track->SetVolume(0.0f);
-        track->Play();
-        track->SetVolume(1.0f, 4.0f);
+        if (fadeInDuration == 0.0f) {
+            track->SetVolume(1.0f);
+            track->Play();
+        } else {
+            track->SetVolume(0.0f);
+            track->Play();
+            track->SetVolume(1.0f, fadeInDuration);
+        }
+    }
+}
+
+void Audio::FadeOutActiveTrack(float fadeOutDuration) {
+    if (mActiveTrack) {
+        mActiveTrack->SetVolume(0.0f, fadeOutDuration);
     }
 }
 

@@ -16,7 +16,12 @@ namespace Pht {
     class IAudio;
 }
 
-namespace RowBlast {    
+namespace RowBlast {
+    enum class MusicTrackId {
+        Map,
+        Game
+    };
+
     class CommonResources {
     public:
         explicit CommonResources(Pht::IEngine& engine);

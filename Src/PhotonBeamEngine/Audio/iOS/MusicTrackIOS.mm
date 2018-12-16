@@ -33,7 +33,8 @@ namespace {
         }
         
         void Stop() override {
-            [mAudioPlayer stop];
+            Pause();
+            mAudioPlayer.currentTime = 0.0f;
         }
 
         void SetVolume(float volume) override {

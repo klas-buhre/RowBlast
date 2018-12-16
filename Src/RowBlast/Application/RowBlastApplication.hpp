@@ -32,14 +32,16 @@ namespace RowBlast {
             LevelGoalDialog
         };
 
+        void SetUpRenderer();
+        void SetUpAudio();
         void UpdateScene();
         void UpdateTitleScene();
         void UpdateMapScene();
         void UpdateGameScene();
         void HandleTransitions();
         void InsertFadeEffectInActiveScene();
-        void BeginFadeToMap(MapInitialState mapInitialState);
-        void BeginFadeToGame(int level);
+        void BeginFadingToMap(MapInitialState mapInitialState);
+        void BeginFadingToGame(int level);
         void StartMap();
         void StartGame();
         
