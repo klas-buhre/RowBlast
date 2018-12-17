@@ -9,8 +9,9 @@ namespace Pht {
         virtual ~ISound() {}
 
         virtual void Play() = 0;
-        virtual void Pause() = 0;
         virtual void Stop() = 0;
+        virtual void SetGain(float gain) = 0;
+        virtual void SetPitch(float pitch) = 0;
         virtual void SetLoop(bool loop) = 0;
     };
     

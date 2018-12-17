@@ -9,8 +9,14 @@ namespace Pht {
         OpenAlContext(ALCdevice *device);
         ~OpenAlContext();
         
+        void SetIsCurrent(bool isCurrent);
+        void SetIsSuspended(bool isSuspended);
+        
     private:
+        bool IsCurrent() const;
+        
         ALCcontext *mHandle {nullptr};
+        bool mIsSuspended {false};
     };
 }
 

@@ -53,16 +53,20 @@ public:
         [avPlayer play];
     }
     
-    void Pause() override {
-        [[mAudioPlayer getAvPlayer] pause];
-    }
-    
     void Stop() override {
         AVPlayer* avPlayer = [mAudioPlayer getAvPlayer];
         avPlayer.rate = 0.0;
         [avPlayer seekToTime: CMTimeMake(0, 1)];
     }
     
+    void SetGain(float gain) override {
+    
+    }
+    
+    void SetPitch(float pitch) override {
+    
+    }
+
     void SetLoop(bool loop) override {
         // TODO: implement.
     }

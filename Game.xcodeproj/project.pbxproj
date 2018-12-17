@@ -425,6 +425,9 @@
 		62BB35C321C6B26A0051AEEF /* OpenAlAudioEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62BB35C121C6B26A0051AEEF /* OpenAlAudioEngine.cpp */; };
 		62BB35C621C6BA710051AEEF /* OpenAlContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62BB35C421C6BA710051AEEF /* OpenAlContext.cpp */; };
 		62BB35C821C6C0110051AEEF /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62BB35C721C6C0110051AEEF /* OpenAL.framework */; };
+		62BB35CB21C7BF0D0051AEEF /* OpenAlSound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62BB35C921C7BF0D0051AEEF /* OpenAlSound.cpp */; };
+		62BB35D021C7FF7F0051AEEF /* AudioFileDecoderIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 62BB35CF21C7FF7F0051AEEF /* AudioFileDecoderIOS.mm */; };
+		62BB35D221C809D20051AEEF /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62BB35D121C809D20051AEEF /* AudioToolbox.framework */; };
 		62BE275320B42A360014C6DD /* star_1428.obj in Resources */ = {isa = PBXBuildFile; fileRef = 62BE275220B42A360014C6DD /* star_1428.obj */; };
 		62DE641C20CE953D00A50F26 /* medium_button_skewed_0385.obj in Resources */ = {isa = PBXBuildFile; fileRef = 62DE641B20CE953C00A50F26 /* medium_button_skewed_0385.obj */; };
 		62E01BAF2153E00F009F0B99 /* planet_960.obj in Resources */ = {isa = PBXBuildFile; fileRef = 62E01BAE2153E00E009F0B99 /* planet_960.obj */; };
@@ -1230,6 +1233,11 @@
 		62BB35C421C6BA710051AEEF /* OpenAlContext.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = OpenAlContext.cpp; sourceTree = "<group>"; };
 		62BB35C521C6BA710051AEEF /* OpenAlContext.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = OpenAlContext.hpp; sourceTree = "<group>"; };
 		62BB35C721C6C0110051AEEF /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
+		62BB35C921C7BF0D0051AEEF /* OpenAlSound.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = OpenAlSound.cpp; sourceTree = "<group>"; };
+		62BB35CA21C7BF0D0051AEEF /* OpenAlSound.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = OpenAlSound.hpp; sourceTree = "<group>"; };
+		62BB35CD21C7F9190051AEEF /* AudioFileDecoder.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AudioFileDecoder.hpp; sourceTree = "<group>"; };
+		62BB35CF21C7FF7F0051AEEF /* AudioFileDecoderIOS.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; path = AudioFileDecoderIOS.mm; sourceTree = "<group>"; };
+		62BB35D121C809D20051AEEF /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		62BE275220B42A360014C6DD /* star_1428.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = star_1428.obj; sourceTree = "<group>"; };
 		62DE641B20CE953C00A50F26 /* medium_button_skewed_0385.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = medium_button_skewed_0385.obj; sourceTree = "<group>"; };
 		62E01BAE2153E00E009F0B99 /* planet_960.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = planet_960.obj; sourceTree = "<group>"; };
@@ -1247,6 +1255,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				62BB35D221C809D20051AEEF /* AudioToolbox.framework in Frameworks */,
 				62BB35C821C6C0110051AEEF /* OpenAL.framework in Frameworks */,
 				620A98291EE2B5C000AD6C61 /* CoreMedia.framework in Frameworks */,
 				620A981D1EE2A3B400AD6C61 /* AVFoundation.framework in Frameworks */,
@@ -1285,6 +1294,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				62BB35D121C809D20051AEEF /* AudioToolbox.framework */,
 				62BB35C721C6C0110051AEEF /* OpenAL.framework */,
 				620A98281EE2B5C000AD6C61 /* CoreMedia.framework */,
 				620A981C1EE2A3B400AD6C61 /* AVFoundation.framework */,
@@ -1318,6 +1328,7 @@
 			children = (
 				6242DEF121C50E7600D17F46 /* Audio.cpp */,
 				6242DEF321C50E7600D17F46 /* Audio.hpp */,
+				62BB35CD21C7F9190051AEEF /* AudioFileDecoder.hpp */,
 				6242DEF221C50E7600D17F46 /* IAudio.hpp */,
 				62BB35BF21C6AD2A0051AEEF /* IAudioEngine.hpp */,
 				6242DEF721C50FB900D17F46 /* IMusicTrack.hpp */,
@@ -1329,6 +1340,7 @@
 		6242DEF421C50E7600D17F46 /* iOS */ = {
 			isa = PBXGroup;
 			children = (
+				62BB35CF21C7FF7F0051AEEF /* AudioFileDecoderIOS.mm */,
 				6242DEF921C5112000D17F46 /* MusicTrackIOS.mm */,
 			);
 			path = iOS;
@@ -2628,6 +2640,8 @@
 				62BB35C121C6B26A0051AEEF /* OpenAlAudioEngine.cpp */,
 				62BB35C421C6BA710051AEEF /* OpenAlContext.cpp */,
 				62BB35C521C6BA710051AEEF /* OpenAlContext.hpp */,
+				62BB35C921C7BF0D0051AEEF /* OpenAlSound.cpp */,
+				62BB35CA21C7BF0D0051AEEF /* OpenAlSound.hpp */,
 			);
 			path = OpenAlAudioEngine;
 			sourceTree = "<group>";
@@ -3072,6 +3086,7 @@
 				625698132182392C003A3A9D /* Material.cpp in Sources */,
 				625E18C621BA880E009554AC /* SettingsService.cpp in Sources */,
 				625698352182392C003A3A9D /* InputEvent.cpp in Sources */,
+				62BB35D021C7FF7F0051AEEF /* AudioFileDecoderIOS.mm in Sources */,
 				6256964E2182382C003A3A9D /* SlidingFieldAnimation.cpp in Sources */,
 				6256968A2182382C003A3A9D /* LPiece.cpp in Sources */,
 				625698382182392C003A3A9D /* FileStorage.cpp in Sources */,
@@ -3094,6 +3109,7 @@
 				6256984A2182392C003A3A9D /* ObjMeshLoader.cpp in Sources */,
 				627A12C221AEB1DF00EECA3B /* LivesDialogController.cpp in Sources */,
 				6256964C2182382C003A3A9D /* LevelCompletedController.cpp in Sources */,
+				62BB35CB21C7BF0D0051AEEF /* OpenAlSound.cpp in Sources */,
 				6256967F2182382C003A3A9D /* SmallTrianglePiece.cpp in Sources */,
 				625698542182392C003A3A9D /* CameraShake.cpp in Sources */,
 				625696372182382C003A3A9D /* BombDialogController.cpp in Sources */,

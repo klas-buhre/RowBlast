@@ -11,8 +11,7 @@ namespace Pht {
     public:
         virtual ~IAudioEngine() {}
 
-        virtual std::unique_ptr<ISound> LoadSound(const std::string& filename,
-                                                  int maxPolyphony) = 0;
+        virtual std::unique_ptr<ISound> LoadSound(const std::string& filename, int maxSources) = 0;
         virtual void SetIsSuspended(bool isSuspended) = 0;
         virtual bool IsSuspended() const = 0;
     };

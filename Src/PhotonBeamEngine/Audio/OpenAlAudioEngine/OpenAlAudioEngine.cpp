@@ -5,6 +5,8 @@
 #include <OpenAl/al.h>
 #include <OpenAl/alc.h>
 
+#include "OpenAlContext.hpp"
+
 using namespace Pht;
 
 namespace {
@@ -32,13 +34,14 @@ namespace {
     
     class OpenAlAudioEngine: public IAudioEngine {
     public:
-        OpenAlAudioEngine() {
-            mDevice = std::make_unique<OpenAlDevice>();
+        OpenAlAudioEngine() :
+            mDevice {std::make_unique<OpenAlDevice>()},
+            mContext {std::make_unique<OpenAlContext>(mDevice->GetHandle())} {
             
-            
+            mContext->SetIsCurrent(true);
         }
         
-        std::unique_ptr<ISound> LoadSound(const std::string& filename, int maxPolyphony) override {
+        std::unique_ptr<ISound> LoadSound(const std::string& filename, int maxSources) override {
         
         }
         
@@ -52,6 +55,7 @@ namespace {
 
     private:
         std::unique_ptr<OpenAlDevice> mDevice;
+        std::unique_ptr<OpenAlContext> mContext;
     };
 }
 
