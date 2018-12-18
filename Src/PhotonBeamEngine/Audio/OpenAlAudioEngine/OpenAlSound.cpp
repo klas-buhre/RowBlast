@@ -3,7 +3,7 @@
 using namespace Pht;
 
 OpenAlSound::OpenAlSound(const std::string& filename, int maxSources) {
-    mBuffer = CreateOpenAlBuffer(filename);
+    mBuffer = OpenAlBuffer::Create(filename);
     
     if (mBuffer) {
         

@@ -96,6 +96,7 @@ void Audio::EnableMusic()  {
     mIsMusicEnabled = true;
     
     if (mActiveTrack) {
+        mActiveTrack->SetVolume(1.0f);
         mActiveTrack->Play();
     }
 }

@@ -6,7 +6,7 @@
 namespace Pht {
     class OpenAlContext {
     public:
-        OpenAlContext(ALCdevice *device);
+        explicit OpenAlContext(ALCdevice *device);
         ~OpenAlContext();
         
         void SetIsCurrent(bool isCurrent);

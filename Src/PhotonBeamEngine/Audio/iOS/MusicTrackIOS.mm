@@ -7,7 +7,7 @@
 namespace {
     class MusicTrackIOS: public Pht::IMusicTrack {
     public:
-        MusicTrackIOS(const std::string& filename) {
+        explicit MusicTrackIOS(const std::string& filename) {
             NSString* basePath = [NSString stringWithUTF8String:filename.c_str()];
             NSString* resourcePath = [[NSBundle mainBundle] resourcePath];
             NSString* fullPath = [resourcePath stringByAppendingPathComponent:basePath];

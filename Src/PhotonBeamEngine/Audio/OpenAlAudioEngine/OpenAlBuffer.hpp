@@ -8,18 +8,19 @@
 namespace Pht {
     class OpenAlBuffer {
     public:
-        OpenAlBuffer(ALuint handle);
+        static std::unique_ptr<OpenAlBuffer> Create(const std::string& filename);
+
         ~OpenAlBuffer();
         
         ALuint GetHandle() const {
             return mHandle;
         }
         
+        explicit OpenAlBuffer(ALuint handle);
+        
     private:
         ALuint mHandle {0};
     };
-    
-    std::unique_ptr<OpenAlBuffer> CreateOpenAlBuffer(const std::string& filename);
 }
 
 #endif

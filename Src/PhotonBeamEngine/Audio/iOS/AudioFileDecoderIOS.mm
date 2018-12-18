@@ -9,7 +9,7 @@ using namespace Pht;
 namespace {
     class AudioFileGuard {
     public:
-        AudioFileGuard(AudioFileID fileId) : mFileId {fileId} {}
+        explicit AudioFileGuard(AudioFileID fileId) : mFileId {fileId} {}
         
         ~AudioFileGuard() {
             AudioFileClose(mFileId);
