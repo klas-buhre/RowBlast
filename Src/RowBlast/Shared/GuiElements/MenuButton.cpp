@@ -13,7 +13,7 @@
 #include "SceneObjectUtils.hpp"
 
 // Game includes.
-#include "CommonResources.hpp"
+#include "AudioResources.hpp"
 
 using namespace RowBlast;
 
@@ -128,7 +128,7 @@ bool MenuButton::IsClicked(const Pht::TouchEvent& event) const {
     auto isClicked {mButton->IsClicked(event)};
     
     if (isClicked) {
-        mAudio.PlaySound(CommonResources::mBlipSound);
+        mAudio.PlaySound(static_cast<Pht::AudioResourceId>(SoundId::Blip));
     }
     
     return isClicked;

@@ -5,9 +5,9 @@
 
 #include <OpenAl/al.h>
 
-#include "OpenAlBuffer.hpp"
-
 namespace Pht {
+    class OpenAlBuffer;
+
     class OpenAlSource {
     public:
         static std::unique_ptr<OpenAlSource> Create(const OpenAlBuffer& buffer);

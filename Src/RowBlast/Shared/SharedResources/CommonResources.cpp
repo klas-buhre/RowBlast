@@ -3,13 +3,12 @@
 // Engine includes.
 #include "IEngine.hpp"
 #include "IRenderer.hpp"
-#include "IAudio.hpp"
 #include "ISceneManager.hpp"
 
-using namespace RowBlast;
+// Game includes.
+#include "AudioResources.hpp"
 
-const std::string CommonResources::mBlipSound {"Blip.wav"};
-const std::string CommonResources::mBombSound {"Bomb.wav"};
+using namespace RowBlast;
 
 CommonResources::CommonResources(Pht::IEngine& engine) :
     mMaterials {engine} {
@@ -41,14 +40,10 @@ CommonResources::CommonResources(Pht::IEngine& engine) :
     mBottomPaddingPotentiallyZoomedScreen = renderer.GetBottomPaddingHeight();
 
     sceneManager.InitSceneSystems(Pht::ISceneManager::defaultNarrowFrustumHeightFactor);
-    AddSounds(engine.GetAudio());
     
     mGuiResources = std::make_unique<GuiResources>(engine, *this);
-}
-
-void CommonResources::AddSounds(Pht::IAudio& audio) {
-    audio.AddSound(mBlipSound);
-    audio.AddSound(mBombSound);
+    
+    LoadAudioResouces(engine);
 }
 
 const Pht::Font&

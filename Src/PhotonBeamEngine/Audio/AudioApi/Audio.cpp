@@ -1,19 +1,27 @@
 #include "Audio.hpp"
 
+#include <iostream>
+
 #include "ISound.hpp"
 
 using namespace Pht;
 
-void Audio::AddSound(const std::string& filename) {
-    auto sound {LoadSound(filename)};
+Audio::Audio() {
+    std::cout << "Pht::Audio: Initializing..." << std::endl;
+    
+    mAudioEngine = CreateAudioEngine();
+}
+
+void Audio::LoadSound(const std::string& filename, int maxSources, AudioResourceId resourceId) {
+    auto sound {mAudioEngine->LoadSound(filename, maxSources)};
     
     if (sound) {
-        mSounds[filename] = std::move(sound);
+        mSounds[resourceId] = std::move(sound);
     }
 }
 
-ISound* Audio::GetSound(const std::string& filename) const {
-    auto i {mSounds.find(filename)};
+ISound* Audio::GetSound(AudioResourceId resourceId) {
+    auto i {mSounds.find(resourceId)};
     
     if (i != std::end(mSounds)) {
         return i->second.get();
@@ -22,12 +30,12 @@ ISound* Audio::GetSound(const std::string& filename) const {
     return nullptr;
 }
 
-void Audio::PlaySound(const std::string& filename) {
+void Audio::PlaySound(AudioResourceId resourceId) {
     if (!mIsSoundEnabled) {
         return;
     }
     
-    auto* sound {GetSound(filename)};
+    auto* sound {GetSound(resourceId)};
     
     if (sound) {
         sound->Play();

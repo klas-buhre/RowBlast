@@ -24,7 +24,7 @@
 #include "ComboTextAnimation.hpp"
 #include "GameHudController.hpp"
 #include "Tutorial.hpp"
-#include "CommonResources.hpp"
+#include "AudioResources.hpp"
 
 using namespace RowBlast;
 
@@ -549,7 +549,7 @@ void GameLogic::LandFallingPiece(bool finalMovementWasADrop) {
 void GameLogic::DetonateDroppedBomb() {
     GoToFieldExplosionsState();
     
-    mEngine.GetAudio().PlaySound(CommonResources::mBombSound);
+    mEngine.GetAudio().PlaySound(static_cast<Pht::AudioResourceId>(SoundId::Bomb));
     
     auto impactedLevelBombs {
         mField.DetectImpactedBombs(CreatePieceBlocks(*mFallingPiece),

@@ -33,7 +33,7 @@ bool OpenAlContext::IsCurrent() const {
 }
 
 void OpenAlContext::SetIsSuspended(bool isSuspended) {
-    if (isSuspended != mIsSuspended) {
+    if (mHandle && (isSuspended != mIsSuspended)) {
         if (isSuspended) {
             alcSuspendContext(mHandle);
         } else {

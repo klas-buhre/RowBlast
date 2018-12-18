@@ -8,6 +8,7 @@
 
 // Game includes:
 #include "CommonResources.hpp"
+#include "AudioResources.hpp"
 #include "IGameHudEventListener.hpp"
 
 using namespace RowBlast;
@@ -27,7 +28,7 @@ GameHudController::Result GameHudController::OnTouch(const Pht::TouchEvent& even
     }
 
     if (pauseButton.IsClicked(event)) {
-        mEngine.GetAudio().PlaySound(CommonResources::mBlipSound);
+        mEngine.GetAudio().PlaySound(static_cast<Pht::AudioResourceId>(SoundId::Blip));
         return Result::ClickedPause;
     }
     

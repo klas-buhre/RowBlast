@@ -13,15 +13,9 @@
 
 namespace Pht {
     class IEngine;
-    class IAudio;
 }
 
 namespace RowBlast {
-    enum class MusicTrackId {
-        Map,
-        Game
-    };
-
     class CommonResources {
     public:
         explicit CommonResources(Pht::IEngine& engine);
@@ -58,13 +52,9 @@ namespace RowBlast {
             return *mGuiResources;
         }
 
-        static const std::string mBlipSound;
-        static const std::string mBombSound;
         static constexpr auto narrowFrustumHeightFactor {1.13f};
         
     private:
-        void AddSounds(Pht::IAudio& audio);
-        
         Materials mMaterials;
         std::unique_ptr<GuiResources> mGuiResources;
         std::unique_ptr<Pht::Font> mHussarFontSize20;

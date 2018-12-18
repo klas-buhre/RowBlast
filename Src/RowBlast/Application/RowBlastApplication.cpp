@@ -9,6 +9,7 @@
 
 // Game includes.
 #include "UiLayer.hpp"
+#include "AudioResources.hpp"
 
 using namespace RowBlast;
 
@@ -76,9 +77,6 @@ void RowBlastApplication::SetUpAudio() {
     } else {
         audio.DisableMusic();
     }
-
-    audio.LoadMusicTrack("map.mp4", static_cast<Pht::AudioResourceId>(MusicTrackId::Map));
-    audio.LoadMusicTrack("game.mp4", static_cast<Pht::AudioResourceId>(MusicTrackId::Game));
 }
 
 void RowBlastApplication::OnUpdate() {

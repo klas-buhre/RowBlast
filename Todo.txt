@@ -41,7 +41,7 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-    -Implement AudioEngine.
+    -Handle audio interruptions in the AudioEngine.
     -Find music for the game scene.
     -Completely redesign the audio system.
       -IAudio is still the public API.

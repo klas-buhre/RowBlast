@@ -2,6 +2,8 @@
 
 #include <iostream>
 
+#include "OpenAlBuffer.hpp"
+
 using namespace Pht;
 
 OpenAlSource::OpenAlSource(ALuint handle) : mHandle {handle} {}

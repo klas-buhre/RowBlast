@@ -12,10 +12,14 @@ namespace Pht {
         void SetIsCurrent(bool isCurrent);
         void SetIsSuspended(bool isSuspended);
         
+        bool IsSuspended() const {
+            return mIsSuspended;
+        }
+        
     private:
         bool IsCurrent() const;
         
-        ALCcontext *mHandle {nullptr};
+        ALCcontext* mHandle {nullptr};
         bool mIsSuspended {false};
     };
 }

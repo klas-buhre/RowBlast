@@ -229,7 +229,6 @@
 		625698382182392C003A3A9D /* FileStorage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 625697292182392B003A3A9D /* FileStorage.cpp */; };
 		6256983A2182392C003A3A9D /* Transform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 625697362182392B003A3A9D /* Transform.cpp */; };
 		6256983B2182392C003A3A9D /* MathUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 625697372182392B003A3A9D /* MathUtils.cpp */; };
-		6256983C2182392C003A3A9D /* SoundIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 625697392182392B003A3A9D /* SoundIOS.mm */; };
 		6256983D2182392C003A3A9D /* GLKViewExtension.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6256973A2182392B003A3A9D /* GLKViewExtension.mm */; };
 		6256983E2182392C003A3A9D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6256973E2182392B003A3A9D /* main.m */; };
 		6256983F2182392C003A3A9D /* FileSystemIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6256973F2182392B003A3A9D /* FileSystemIOS.mm */; };
@@ -430,6 +429,7 @@
 		62BB35D221C809D20051AEEF /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62BB35D121C809D20051AEEF /* AudioToolbox.framework */; };
 		62BB35D521C8FC9A0051AEEF /* OpenAlBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62BB35D321C8FC9A0051AEEF /* OpenAlBuffer.cpp */; };
 		62BB35D821C910900051AEEF /* OpenAlSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62BB35D621C910900051AEEF /* OpenAlSource.cpp */; };
+		62BB35DB21C959650051AEEF /* AudioResources.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62BB35D921C959650051AEEF /* AudioResources.cpp */; };
 		62BE275320B42A360014C6DD /* star_1428.obj in Resources */ = {isa = PBXBuildFile; fileRef = 62BE275220B42A360014C6DD /* star_1428.obj */; };
 		62DE641C20CE953D00A50F26 /* medium_button_skewed_0385.obj in Resources */ = {isa = PBXBuildFile; fileRef = 62DE641B20CE953C00A50F26 /* medium_button_skewed_0385.obj */; };
 		62E01BAF2153E00F009F0B99 /* planet_960.obj in Resources */ = {isa = PBXBuildFile; fileRef = 62E01BAE2153E00E009F0B99 /* planet_960.obj */; };
@@ -842,7 +842,6 @@
 		625697352182392B003A3A9D /* Matrix.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Matrix.hpp; sourceTree = "<group>"; };
 		625697362182392B003A3A9D /* Transform.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Transform.cpp; sourceTree = "<group>"; };
 		625697372182392B003A3A9D /* MathUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MathUtils.cpp; sourceTree = "<group>"; };
-		625697392182392B003A3A9D /* SoundIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SoundIOS.mm; sourceTree = "<group>"; };
 		6256973A2182392B003A3A9D /* GLKViewExtension.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GLKViewExtension.mm; sourceTree = "<group>"; };
 		6256973B2182392B003A3A9D /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		6256973C2182392B003A3A9D /* GLKViewExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLKViewExtension.h; sourceTree = "<group>"; };
@@ -1244,6 +1243,8 @@
 		62BB35D421C8FC9A0051AEEF /* OpenAlBuffer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = OpenAlBuffer.hpp; sourceTree = "<group>"; };
 		62BB35D621C910900051AEEF /* OpenAlSource.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = OpenAlSource.cpp; sourceTree = "<group>"; };
 		62BB35D721C910900051AEEF /* OpenAlSource.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = OpenAlSource.hpp; sourceTree = "<group>"; };
+		62BB35D921C959650051AEEF /* AudioResources.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AudioResources.cpp; sourceTree = "<group>"; };
+		62BB35DA21C959650051AEEF /* AudioResources.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AudioResources.hpp; sourceTree = "<group>"; };
 		62BE275220B42A360014C6DD /* star_1428.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = star_1428.obj; sourceTree = "<group>"; };
 		62DE641B20CE953C00A50F26 /* medium_button_skewed_0385.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = medium_button_skewed_0385.obj; sourceTree = "<group>"; };
 		62E01BAE2153E00E009F0B99 /* planet_960.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = planet_960.obj; sourceTree = "<group>"; };
@@ -1963,7 +1964,6 @@
 				6256973A2182392B003A3A9D /* GLKViewExtension.mm */,
 				625697412182392B003A3A9D /* ImageIOS.mm */,
 				6256973E2182392B003A3A9D /* main.m */,
-				625697392182392B003A3A9D /* SoundIOS.mm */,
 			);
 			path = iOS;
 			sourceTree = "<group>";
@@ -2497,6 +2497,8 @@
 		627A126121AAFB5900EECA3B /* SharedResources */ = {
 			isa = PBXGroup;
 			children = (
+				62BB35D921C959650051AEEF /* AudioResources.cpp */,
+				62BB35DA21C959650051AEEF /* AudioResources.hpp */,
 				627A126B21AAFB5900EECA3B /* Clouds.cpp */,
 				627A126821AAFB5900EECA3B /* Clouds.hpp */,
 				627A127221AAFB5900EECA3B /* CommonResources.cpp */,
@@ -3090,7 +3092,6 @@
 				6256966D2182382C003A3A9D /* ScrollController.cpp in Sources */,
 				6256969F2182382C003A3A9D /* CollapsingFieldAnimation.cpp in Sources */,
 				6256963B2182382C003A3A9D /* SameColorDialogView.cpp in Sources */,
-				6256983C2182392C003A3A9D /* SoundIOS.mm in Sources */,
 				625696A22182382C003A3A9D /* BombsAnimation.cpp in Sources */,
 				6256964B2182382C003A3A9D /* ClearLastBlocksAnimation.cpp in Sources */,
 				625696932182382C003A3A9D /* LevelResources.cpp in Sources */,
@@ -3098,6 +3099,7 @@
 				625698132182392C003A3A9D /* Material.cpp in Sources */,
 				625E18C621BA880E009554AC /* SettingsService.cpp in Sources */,
 				625698352182392C003A3A9D /* InputEvent.cpp in Sources */,
+				62BB35DB21C959650051AEEF /* AudioResources.cpp in Sources */,
 				62BB35D021C7FF7F0051AEEF /* AudioFileDecoderIOS.mm in Sources */,
 				6256964E2182382C003A3A9D /* SlidingFieldAnimation.cpp in Sources */,
 				6256968A2182382C003A3A9D /* LPiece.cpp in Sources */,

@@ -255,7 +255,7 @@ Renderer::Renderer(bool createRenderBuffers) :
 }
 
 void Renderer::Init(bool createRenderBuffers) {
-    std::cout << "Renderer: Initializing..." << std::endl;
+    std::cout << "Pht::Renderer: Initializing..." << std::endl;
     
     InitOpenGl(createRenderBuffers);
     InitShaders();
@@ -263,7 +263,7 @@ void Renderer::Init(bool createRenderBuffers) {
 
     mTextRenderer = std::make_unique<TextRenderer>(mRenderBufferSize);
     
-    std::cout << "Renderer: Using " << mRenderBufferSize.x << "x" << mRenderBufferSize.y
+    std::cout << "Pht::Renderer: Using " << mRenderBufferSize.x << "x" << mRenderBufferSize.y
               << " resolution." << std::endl;
 }
 

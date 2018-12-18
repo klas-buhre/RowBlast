@@ -13,9 +13,11 @@ namespace Pht {
     public:
         virtual ~IAudio() {}
 
-        virtual void AddSound(const std::string& filename) = 0;
-        virtual ISound* GetSound(const std::string& filename) const = 0;
-        virtual void PlaySound(const std::string& filename) = 0;
+        virtual void LoadSound(const std::string& filename,
+                               int maxSources,
+                               AudioResourceId resourceId) = 0;
+        virtual ISound* GetSound(AudioResourceId resourceId) = 0;
+        virtual void PlaySound(AudioResourceId resourceId) = 0;
         virtual void LoadMusicTrack(const std::string& filename, AudioResourceId resourceId) = 0;
         virtual void FreeMusicTrack(AudioResourceId resourceId) = 0;
         virtual IMusicTrack* GetMusicTrack(AudioResourceId resourceId) const = 0;

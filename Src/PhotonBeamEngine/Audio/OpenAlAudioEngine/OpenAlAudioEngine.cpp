@@ -6,6 +6,7 @@
 #include <OpenAl/alc.h>
 
 #include "OpenAlContext.hpp"
+#include "OpenAlSound.hpp"
 
 using namespace Pht;
 
@@ -42,15 +43,23 @@ namespace {
         }
         
         std::unique_ptr<ISound> LoadSound(const std::string& filename, int maxSources) override {
-        
+            return OpenAlSound::Create(filename, maxSources);
         }
         
         void SetIsSuspended(bool isSuspended) override {
-        
+            if (isSuspended != mContext->IsSuspended()) {
+                mContext->SetIsCurrent(isSuspended);
+                
+                if (isSuspended) {
+                    mContext->SetIsCurrent(false);
+                } else {
+                    mContext->SetIsCurrent(true);
+                }
+            }
         }
-        
+    
         bool IsSuspended() const override {
-        
+            return mContext->IsSuspended();
         }
 
     private:
