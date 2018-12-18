@@ -428,6 +428,7 @@
 		62BB35CB21C7BF0D0051AEEF /* OpenAlSound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62BB35C921C7BF0D0051AEEF /* OpenAlSound.cpp */; };
 		62BB35D021C7FF7F0051AEEF /* AudioFileDecoderIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 62BB35CF21C7FF7F0051AEEF /* AudioFileDecoderIOS.mm */; };
 		62BB35D221C809D20051AEEF /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62BB35D121C809D20051AEEF /* AudioToolbox.framework */; };
+		62BB35D521C8FC9A0051AEEF /* OpenAlBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62BB35D321C8FC9A0051AEEF /* OpenAlBuffer.cpp */; };
 		62BE275320B42A360014C6DD /* star_1428.obj in Resources */ = {isa = PBXBuildFile; fileRef = 62BE275220B42A360014C6DD /* star_1428.obj */; };
 		62DE641C20CE953D00A50F26 /* medium_button_skewed_0385.obj in Resources */ = {isa = PBXBuildFile; fileRef = 62DE641B20CE953C00A50F26 /* medium_button_skewed_0385.obj */; };
 		62E01BAF2153E00F009F0B99 /* planet_960.obj in Resources */ = {isa = PBXBuildFile; fileRef = 62E01BAE2153E00E009F0B99 /* planet_960.obj */; };
@@ -1238,6 +1239,8 @@
 		62BB35CD21C7F9190051AEEF /* AudioFileDecoder.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AudioFileDecoder.hpp; sourceTree = "<group>"; };
 		62BB35CF21C7FF7F0051AEEF /* AudioFileDecoderIOS.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; path = AudioFileDecoderIOS.mm; sourceTree = "<group>"; };
 		62BB35D121C809D20051AEEF /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		62BB35D321C8FC9A0051AEEF /* OpenAlBuffer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = OpenAlBuffer.cpp; sourceTree = "<group>"; };
+		62BB35D421C8FC9A0051AEEF /* OpenAlBuffer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = OpenAlBuffer.hpp; sourceTree = "<group>"; };
 		62BE275220B42A360014C6DD /* star_1428.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = star_1428.obj; sourceTree = "<group>"; };
 		62DE641B20CE953C00A50F26 /* medium_button_skewed_0385.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = medium_button_skewed_0385.obj; sourceTree = "<group>"; };
 		62E01BAE2153E00E009F0B99 /* planet_960.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = planet_960.obj; sourceTree = "<group>"; };
@@ -2638,6 +2641,8 @@
 			isa = PBXGroup;
 			children = (
 				62BB35C121C6B26A0051AEEF /* OpenAlAudioEngine.cpp */,
+				62BB35D321C8FC9A0051AEEF /* OpenAlBuffer.cpp */,
+				62BB35D421C8FC9A0051AEEF /* OpenAlBuffer.hpp */,
 				62BB35C421C6BA710051AEEF /* OpenAlContext.cpp */,
 				62BB35C521C6BA710051AEEF /* OpenAlContext.hpp */,
 				62BB35C921C7BF0D0051AEEF /* OpenAlSound.cpp */,
@@ -2922,6 +2927,7 @@
 				625696572182382C003A3A9D /* GameHudController.cpp in Sources */,
 				625696702182382C003A3A9D /* FallingPiece.cpp in Sources */,
 				625696502182382C003A3A9D /* StarsAnimation.cpp in Sources */,
+				62BB35D521C8FC9A0051AEEF /* OpenAlBuffer.cpp in Sources */,
 				6256966C2182382C003A3A9D /* CollisionDetection.cpp in Sources */,
 				625696852182382C003A3A9D /* BigTrianglePiece.cpp in Sources */,
 				627A129521AAFB5A00EECA3B /* PurchaseSuccessfulDialogController.cpp in Sources */,

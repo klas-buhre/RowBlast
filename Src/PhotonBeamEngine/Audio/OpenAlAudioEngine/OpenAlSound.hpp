@@ -1,7 +1,10 @@
 #ifndef OpenAlSound_hpp
 #define OpenAlSound_hpp
 
+#include <memory>
+
 #include "ISound.hpp"
+#include "OpenAlBuffer.hpp"
 
 namespace Pht {
     class OpenAlSound: public ISound {
@@ -15,7 +18,7 @@ namespace Pht {
         void SetLoop(bool loop) override;
 
     private:
-        
+        std::unique_ptr<OpenAlBuffer> mBuffer;
     };
 }
 
