@@ -82,4 +82,8 @@
     return mContext;
 }
 
+- (Pht::Engine*) getEngine {
+    return mEngine;
+}
+
 @end

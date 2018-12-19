@@ -30,8 +30,14 @@ namespace Pht {
         void DisableMusic() override;
         bool IsSoundEnabled() override;
         bool IsMusicEnabled() override;
+        
+        void OnAudioSessionInterrupted();
+        void OnAudioSessionInterruptionEnded();
+        void OnApplicationBecameActive();
 
     private:
+        void ResumeAudio();
+        
         std::unique_ptr<IAudioEngine> mAudioEngine;
         std::unordered_map<AudioResourceId, std::unique_ptr<ISound>> mSounds;
         std::unordered_map<AudioResourceId, std::unique_ptr<IMusicTrack>> mTracks;

@@ -124,3 +124,35 @@ bool Audio::IsSoundEnabled()  {
 bool Audio::IsMusicEnabled()  {
     return mIsMusicEnabled;
 }
+
+void Audio::OnAudioSessionInterrupted() {
+    std::cout << "Pht::Audio: Session interrupted." << std::endl;
+    
+    mAudioEngine->SetIsSuspended(true);
+}
+
+void Audio::OnAudioSessionInterruptionEnded() {
+    std::cout << "Pht::Audio: Session interruption ended." << std::endl;
+    
+    ResumeAudio();
+}
+
+void Audio::OnApplicationBecameActive() {
+    if (mAudioEngine->IsSuspended()) {
+        std::cout << "Pht::Audio: Interruption ended while application was inactive." << std::endl;
+    
+        ResumeAudio();
+    }
+}
+
+void Audio::ResumeAudio() {
+    std::cout << "Pht::Audio: Resuming audio." << std::endl;
+    
+    mAudioEngine->SetIsSuspended(false);
+    
+    if (mIsMusicEnabled && mActiveTrack) {
+        mActiveTrack->SetVolume(0.0f);
+        mActiveTrack->Play();
+        mActiveTrack->SetVolume(1.0f, 1.0f);
+    }
+}

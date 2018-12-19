@@ -41,47 +41,8 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-    -Handle audio interruptions in the AudioEngine.
     -Find music for the game scene.
-    -Completely redesign the audio system.
-      -IAudio is still the public API.
-        -Load/add sound using filenames and ResourceIds.
-        -Load/add music track using filenames and ResourceIds.
-        -Unload/remove music track using ResourceIds.
-        -Play sound using ResourceIds.
-        -Play music track using ResourceIds.
-        -Fade in/out music tracks.
-        -Enable/disable sound/music.
-      -Classes in cross-platform Audio/AudioApi directory:
-        -IAudio (public)
-        -ISound (public)
-        -IMusicTrack (public)
-        -Audio (private)
-        -AudioFileDecoder (private)
-      -Make a MusicPlayer that plays music tracks using a AVAudioPlayer.
-        -It can then play compressed audio files such as mp4/ogg(?).
-        -Should be possible to fade between tracks. Seems to be supported in AVAudioPlayer.
-        -The latency in the AVAudioPlayer is ok for playing music.
-        -Classes in cross-platform Audio/AudioApi directory (not intended for external use):
-          -MusicPlayer
-        -Classes in Audio/iOS directory.
-          -MusicTrackIOS
-          -AudioFileDecoderIOS
-      -Make an AudioEngine that plays sound effects with minimal latency.
-        -Uses OpenAL as back-end.
-        -Can have a similar design as the Finch audio engine.
-        -Should handle audio interruptions.
-        -Classes in cross-platform AudioApi directory (not intended for external use):
-          -IAudioEngine
-        -Classes in Audio/iOS directory.
-          -AudioFileDecoderIOS
-        -Classes in Audio/OpenAlAudioEngine directory:
-          -OpenAlSound
-          -OpenAlBuffer
-          -OpenAlSource
-          -OpenAlContext
-          -OpenAlAudioEngine
-
+    -Sound effects.
 
 
 Ordered Backlog:

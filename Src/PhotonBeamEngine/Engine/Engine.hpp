@@ -26,7 +26,11 @@ namespace Pht {
         
         void Init(bool createRenderBuffers);
         void Update(float frameSeconds);
-
+        
+        Audio& GetAudioSystem() {
+            return mAudio;
+        }
+        
         InputHandler& GetInputHandler() {
             return mInputHandler;
         }

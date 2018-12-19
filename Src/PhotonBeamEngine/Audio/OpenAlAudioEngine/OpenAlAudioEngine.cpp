@@ -48,7 +48,7 @@ namespace {
         
         void SetIsSuspended(bool isSuspended) override {
             if (isSuspended != mContext->IsSuspended()) {
-                mContext->SetIsCurrent(isSuspended);
+                mContext->SetIsSuspended(isSuspended);
                 
                 if (isSuspended) {
                     mContext->SetIsCurrent(false);

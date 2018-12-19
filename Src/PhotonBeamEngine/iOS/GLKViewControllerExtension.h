@@ -11,5 +11,6 @@
 - (void) createGLContext;
 - (void) configureView;
 - (EAGLContext*) getContext;
+- (Pht::Engine*) getEngine;
 
 @end
