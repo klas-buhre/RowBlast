@@ -39,6 +39,11 @@ FieldExplosionsStates::FieldExplosionsStates(Pht::IEngine& engine,
     mEffectManager {effectManager},
     mFlyingBlocksAnimation {flyingBlocksAnimation} {}
 
+void FieldExplosionsStates::Init() {
+    mExplosionsStates.Clear();
+    mRowsToRemove.Clear();
+}
+
 FieldExplosionsStates::State FieldExplosionsStates::Update() {
     auto dt {mEngine.GetLastFrameSeconds()};
     

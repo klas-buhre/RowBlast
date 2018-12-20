@@ -28,6 +28,7 @@ namespace RowBlast {
                               EffectManager& effectManager,
                               FlyingBlocksAnimation& flyingBlocksAnimation);
         
+        void Init();
         State Update();
         void DetonateBomb(const Pht::IVec2& position, const Pht::Vec2& exactPosition);
         void DetonateRowBomb(const Pht::IVec2& position, const Pht::Vec2& exactPosition);
