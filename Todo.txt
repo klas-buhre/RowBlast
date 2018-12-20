@@ -14,12 +14,12 @@ Backlog:
      not really matter since the user can select any piece from the selectebles but maybe it is most
      convenient to go back to the state before the move and not the initial state.
   -Rendering:
+    -Number of moves left could start flashing like in Candy Crush or scale up/down like in Soda.
     -The floating blocks in the title scene could be slightly smaller and always have a good preset
      rotation.
     -Animation that moves the map hud out of the screen when clicking buttons in the hud. Could work
      in a similar way as the SlidingFieldAnimation.
-    -Animation that moves the paus button out of the screen.
-    -Number of moves left could start flashing like in Candy Crush or scale up/down like in Soda.
+    -Animation that moves the pause button out of the screen.
   -GUI:
     -The settings menu in the map scene could have a credits button and a how to play button.
     -Credits scene with a teleporter effect in the upper part and the credits in the lower part.
@@ -41,7 +41,15 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
+    -In FieldExplosionsStates::RemoveRows(), shifting the field down should be done after all
+     mField.RemoveRow() calls so that level lasers can be allowed in levels containing asteroids.
+     Have to calculate new rowToBeRemoved index for the rows containing asteroids since the field
+     may have changed after the normal rows have been removed.
+    -Maybe the cells above the bomb blast area should be shifted down. This is to avoid the tricky
+     situations when there is a big cavity created between gray blocks after bombs and level bombs
+     have detonated.
     -Find music for the game scene.
+      -Try to find music similar to Puzzle Star BT21.
     -Sound effects.
 
 

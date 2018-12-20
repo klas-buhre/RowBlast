@@ -44,7 +44,7 @@ namespace RowBlast {
         void ResetAllCellsTriedScanDirection();
         void ClearPieceBlockGrid();
         void LandPulledDownPieceBlocks(const PieceBlocks& pieceBlocks, const Pht::IVec2& position);
-        void ShiftGrayBlocksDown(int rowIndex);
+        bool ShiftGrayBlocksDown(int rowIndex);
         void ResetAllCellsShiftedDownFlag();
         IsFloating IsBlockStructureFloating(const Pht::IVec2& gridPosition);
         bool IsOutsideVisibleField(const Pht::IVec2& gridPosition);
@@ -55,6 +55,7 @@ namespace RowBlast {
         Field& mField;
         CellGrid mPieceBlockGrid;
         PieceBlockCoords mPieceBlockCoords;
+        bool mAnyPiecesPulledDown {false};
     };
 }
 

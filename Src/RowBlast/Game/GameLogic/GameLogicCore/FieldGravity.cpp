@@ -72,6 +72,7 @@ FieldGravity::FieldGravity(Field& field) :
 
 void FieldGravity::PullDownLoosePieces() {
     mField.SetChanged();
+    mAnyPiecesPulledDown = false;
     
     for (auto row {mField.mLowestVisibleRow}; row < mField.mNumRows; ++row) {
         for (auto column {0}; column < mField.mNumColumns; ++column) {
@@ -115,6 +116,10 @@ void FieldGravity::PullDownPiece(const SubCell& subCell,
         LandPulledDownPieceBlocks(pieceBlocks, piecePosition);
     } else {
         LandPulledDownPieceBlocks(pieceBlocks, collisionPosition + Pht::IVec2 {0, 1});
+    }
+    
+    if (piecePosition.y - collisionPosition.y > 1) {
+        mAnyPiecesPulledDown = true;
     }
 }
 
@@ -374,18 +379,23 @@ void FieldGravity::LandPulledDownPieceBlocks(const PieceBlocks& pieceBlocks,
 }
 
 void FieldGravity::ShiftFieldDown(int rowIndex) {
-    PullDownLoosePieces();
-    ShiftGrayBlocksDown(rowIndex);
+    for (;;) {
+        PullDownLoosePieces();
+        auto anyBlocksShiftedDown {ShiftGrayBlocksDown(rowIndex)};
     
-    // Need to do the same procedure again so that any blocks that were stuck the first pass can be
-    // moved in the second attempt.
-    PullDownLoosePieces();
-    ShiftGrayBlocksDown(rowIndex);
-    
+        // Need to do the same procedure again so that any blocks that were stuck the previous pass
+        // can be moved in the following attempt.
+        if (!mAnyPiecesPulledDown && !anyBlocksShiftedDown) {
+            break;
+        }
+    }
+
     ResetAllCellsShiftedDownFlag();
 }
 
-void FieldGravity::ShiftGrayBlocksDown(int rowIndex) {
+bool FieldGravity::ShiftGrayBlocksDown(int rowIndex) {
+    auto anyBlocksShiftedDown {false};
+    
     for (auto column {0}; column < mField.mNumColumns; ++column) {
         for (auto row {rowIndex}; row < mField.mNumRows - 1; ++row) {
             auto& lowerCell {mField.mGrid[row][column]};
@@ -397,9 +407,12 @@ void FieldGravity::ShiftGrayBlocksDown(int rowIndex) {
                 lowerCell = upperCell;
                 lowerCell.mIsShiftedDown = true;
                 upperCell = Cell {};
+                anyBlocksShiftedDown = true;
             }
         }
     }
+    
+    return anyBlocksShiftedDown;
 }
 
 void FieldGravity::ResetAllCellsShiftedDownFlag() {
