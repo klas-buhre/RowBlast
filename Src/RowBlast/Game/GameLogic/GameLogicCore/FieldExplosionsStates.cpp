@@ -312,21 +312,43 @@ FieldExplosionsStates::UpdateGenericBombExplosionState(BombExplosionState& explo
 }
 
 void FieldExplosionsStates::RemoveRows() {
-    mRowsToRemove.Sort(CompareRowsTopToDown);
+    Pht::StaticVector<int, Field::maxNumRows> rowsToRemoveContainingAsteroidCells;
     
-    for (auto i {0}; i < mRowsToRemove.Size(); ++i) {
+    for (auto i {0}; i < mRowsToRemove.Size();) {
         auto rowToRemove {mRowsToRemove.At(i)};
         
         if (RowContainsAsteroid(rowToRemove)) {
-            // Cannot remove the row the normal way since the asteroid is not removed. Instead,
-            // shift the field down wherever possible.
-            mFieldGravity.ShiftFieldDown(rowToRemove);
+            rowsToRemoveContainingAsteroidCells.PushBack(rowToRemove);
+            mRowsToRemove.Erase(i);
         } else {
-            mField.RemoveRow(rowToRemove);
+            ++i;
         }
     }
     
+    mRowsToRemove.Sort(CompareRowsTopToDown);
+
+    for (auto rowToRemove: mRowsToRemove) {
+        for (auto& asteroidRowToRemove: rowsToRemoveContainingAsteroidCells) {
+            if (rowToRemove < asteroidRowToRemove) {
+                --asteroidRowToRemove;
+            }
+        }
+        
+        mField.RemoveRow(rowToRemove);
+    }
+    
     mRowsToRemove.Clear();
+    rowsToRemoveContainingAsteroidCells.Sort(CompareRowsTopToDown);
+    
+    // The operation of removing (or rather shifting) the rows containing asteroid cells have to
+    // came after removing the rows not containing asteroid cells. This is because the shift
+    // operation involves pulling down pieces and that cannot be done while removing rows since
+    // that would cause some pulled down pieces to be removed unintentionally.
+    for (auto asteroidRowToRemove: rowsToRemoveContainingAsteroidCells) {
+        // Cannot remove the row the normal way since the asteroid is not removed. Instead, shift
+        // the field down wherever possible.
+        mFieldGravity.ShiftFieldDown(asteroidRowToRemove);
+    }
 }
 
 bool FieldExplosionsStates::RowContainsAsteroid(int row) {

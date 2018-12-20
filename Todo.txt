@@ -14,6 +14,8 @@ Backlog:
      not really matter since the user can select any piece from the selectebles but maybe it is most
      convenient to go back to the state before the move and not the initial state.
   -Rendering:
+    -Could have the hand animation pointing to the first level in the map when the user has zero
+     progress.
     -Number of moves left could start flashing like in Candy Crush or scale up/down like in Soda.
     -The floating blocks in the title scene could be slightly smaller and always have a good preset
      rotation.
@@ -41,10 +43,6 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-    -In FieldExplosionsStates::RemoveRows(), shifting the field down should be done after all
-     mField.RemoveRow() calls so that level lasers can be allowed in levels containing asteroids.
-     Have to calculate new rowToBeRemoved index for the rows containing asteroids since the field
-     may have changed after the normal rows have been removed.
     -Maybe the cells above the bomb blast area should be shifted down. This is to avoid the tricky
      situations when there is a big cavity created between gray blocks after bombs and level bombs
      have detonated.
@@ -138,6 +136,9 @@ Ordered Backlog:
     -Store GUI.
         Cost: 15
         Done
+    -Rewrite the audio system.
+        Cost: 5
+        Done
     -Sounds/music.
         Cost: 10
     -Levels for the space world.
@@ -163,7 +164,7 @@ Ordered Backlog:
     -Back end.
         Cost: ?
 
-        Total cost: 264
+        Total cost: 269
 
 
 Comomon piece type sets:

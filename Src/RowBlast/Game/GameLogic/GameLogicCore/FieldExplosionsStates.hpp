@@ -98,7 +98,7 @@ namespace RowBlast {
         EffectManager& mEffectManager;
         FlyingBlocksAnimation& mFlyingBlocksAnimation;
         ExplosionsStates mExplosionsStates;
-        Pht::StaticVector<int, 10> mRowsToRemove;
+        Pht::StaticVector<int, 20> mRowsToRemove;
     };
 }
 
