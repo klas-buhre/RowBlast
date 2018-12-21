@@ -53,7 +53,7 @@ namespace RowBlast {
                                          int numFieldColumns);
 
     private:
-        Pht::SceneObject& SetupBlockSceneObject(const RemovedSubCell& subCell);
+        Pht::SceneObject& SetUpBlockSceneObject(const RemovedSubCell& subCell);
         void ApplyForceToAlreadyFlyingBlocks(float explosiveForceMagnitude,
                                              const Pht::IVec2& detonationPos);
         Pht::Vec3 CalculateBlockInitialPosition(const RemovedSubCell& subCell);

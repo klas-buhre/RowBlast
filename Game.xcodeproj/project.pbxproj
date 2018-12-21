@@ -430,6 +430,7 @@
 		62BB35D821C910900051AEEF /* OpenAlSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62BB35D621C910900051AEEF /* OpenAlSource.cpp */; };
 		62BB35DB21C959650051AEEF /* AudioResources.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62BB35D921C959650051AEEF /* AudioResources.cpp */; };
 		62BB35DF21CBAC760051AEEF /* level50.json in Resources */ = {isa = PBXBuildFile; fileRef = 62BB35DE21CBAC750051AEEF /* level50.json */; };
+		62BB35E121CD59E10051AEEF /* level63.json in Resources */ = {isa = PBXBuildFile; fileRef = 62BB35E021CD59E10051AEEF /* level63.json */; };
 		62BE275320B42A360014C6DD /* star_1428.obj in Resources */ = {isa = PBXBuildFile; fileRef = 62BE275220B42A360014C6DD /* star_1428.obj */; };
 		62DE641C20CE953D00A50F26 /* medium_button_skewed_0385.obj in Resources */ = {isa = PBXBuildFile; fileRef = 62DE641B20CE953C00A50F26 /* medium_button_skewed_0385.obj */; };
 		62E01BAF2153E00F009F0B99 /* planet_960.obj in Resources */ = {isa = PBXBuildFile; fileRef = 62E01BAE2153E00E009F0B99 /* planet_960.obj */; };
@@ -1245,6 +1246,7 @@
 		62BB35D921C959650051AEEF /* AudioResources.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AudioResources.cpp; sourceTree = "<group>"; };
 		62BB35DA21C959650051AEEF /* AudioResources.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AudioResources.hpp; sourceTree = "<group>"; };
 		62BB35DE21CBAC750051AEEF /* level50.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level50.json; sourceTree = "<group>"; };
+		62BB35E021CD59E10051AEEF /* level63.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level63.json; sourceTree = "<group>"; };
 		62BE275220B42A360014C6DD /* star_1428.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = star_1428.obj; sourceTree = "<group>"; };
 		62DE641B20CE953C00A50F26 /* medium_button_skewed_0385.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = medium_button_skewed_0385.obj; sourceTree = "<group>"; };
 		62E01BAE2153E00E009F0B99 /* planet_960.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = planet_960.obj; sourceTree = "<group>"; };
@@ -2400,6 +2402,7 @@
 				625D3B4A216FB2A100D67EC2 /* level60.json */,
 				622EDD15217A42400007C652 /* level61.json */,
 				625698592184AE6B003A3A9D /* level62.json */,
+				62BB35E021CD59E10051AEEF /* level63.json */,
 			);
 			path = Levels;
 			sourceTree = "<group>";
@@ -2760,6 +2763,7 @@
 				6234618C21691DAF00ECD0DF /* asteroid_998.obj in Resources */,
 				6256981A2182392C003A3A9D /* VertexLighting.vert in Resources */,
 				62B1CB9C2110BA4600D0F195 /* laser_frame4.jpg in Resources */,
+				62BB35E121CD59E10051AEEF /* level63.json in Resources */,
 				6256982B2182392C003A3A9D /* Textured.vert in Resources */,
 				62B1CB89210F8F8600D0F195 /* laser_bomb_diffuse.jpg in Resources */,
 				625698162182392C003A3A9D /* TextMidGradient.frag in Resources */,

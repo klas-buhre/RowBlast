@@ -1165,11 +1165,14 @@ Field::RemovedSubCells Field::RemoveAreaOfSubCells(const Pht::IVec2& areaPos,
             }
             
             auto& cell {mGrid[row][column]};
+            auto& firstSubCell {cell.mFirstSubCell};
             
-            ProcessSubCell(removedSubCells, cell.mFirstSubCell, row, column);
+            ProcessSubCell(removedSubCells, firstSubCell, row, column);
             ProcessSubCell(removedSubCells, cell.mSecondSubCell, row, column);
             
-            if (!cell.mFirstSubCell.IsAsteroid()) {
+            if (!firstSubCell.IsAsteroid() &&
+                firstSubCell.mBlockKind != BlockKind::ClearedRowBlock) {
+
                 cell = Cell {};
             }
         }

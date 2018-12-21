@@ -45,7 +45,7 @@ Backlog:
 Ongoing tasks:
     -Maybe the cells above the bomb blast area should be shifted down. This is to avoid the tricky
      situations when there is a big cavity created between gray blocks after bombs and level bombs
-     have detonated.
+     have detonated. This is probably tricky to do in a consistent way.
     -Find music for the game scene.
       -Try to find music similar to Puzzle Star BT21.
     -Sound effects.

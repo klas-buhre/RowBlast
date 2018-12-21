@@ -73,7 +73,7 @@ void FlyingBlocksAnimation::AddBlockRows(const Field::RemovedSubCells& subCells)
                 720.0f * Pht::NormalizedRand() - 360.0f,
                 720.0f * Pht::NormalizedRand() - 360.0f
             },
-            .mSceneObject = &SetupBlockSceneObject(removedSubCell)
+            .mSceneObject = &SetUpBlockSceneObject(removedSubCell)
         };
         
         if (removedSubCell.mIsAsteroidFragment) {
@@ -84,7 +84,7 @@ void FlyingBlocksAnimation::AddBlockRows(const Field::RemovedSubCells& subCells)
     }
 }
 
-Pht::SceneObject& FlyingBlocksAnimation::SetupBlockSceneObject(const RemovedSubCell& removedSubCell) {
+Pht::SceneObject& FlyingBlocksAnimation::SetUpBlockSceneObject(const RemovedSubCell& removedSubCell) {
     auto& sceneObject {AccuireSceneObject()};
     sceneObject.SetRenderable(&GetBlockRenderableObject(removedSubCell));
     auto& transform {sceneObject.GetTransform()};
@@ -213,7 +213,7 @@ void FlyingBlocksAnimation::AddBlocksRemovedByTheShield(const Field::RemovedSubC
                 720.0f * Pht::NormalizedRand() - 360.0f,
                 720.0f * Pht::NormalizedRand() - 360.0f
             },
-            .mSceneObject = &SetupBlockSceneObject(removedSubCell)
+            .mSceneObject = &SetUpBlockSceneObject(removedSubCell)
         };
 
         mFlyingBlocks.PushBack(flyingBlock);

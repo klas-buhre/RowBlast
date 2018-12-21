@@ -17,7 +17,8 @@ namespace {
     constexpr auto bombExplosiveForceMagnitude {30.0f};
     constexpr auto laserCuttingSpeed {39.0f};
     constexpr auto levelBombExplosionMaxReach {1};
-    constexpr auto levelBombExplosionForceSpeed {12.0f};
+    // constexpr auto levelBombExplosionForceSpeed {12.0f};
+    constexpr auto levelBombExplosionForceSpeed {8.0f};
     constexpr auto levelBombExplosiveForceMagnitude {20.0f};
     constexpr auto bigBombExplosionMaxReach {2};
     constexpr auto bigBombExplosionForceSpeed {50.0f};
