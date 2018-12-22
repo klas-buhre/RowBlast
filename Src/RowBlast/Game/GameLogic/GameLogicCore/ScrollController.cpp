@@ -43,6 +43,10 @@ void ScrollController::Init(Level::Objective levelObjective) {
     }
 }
 
+void ScrollController::GoToIdleState() {
+    mState = State::Idle;
+}
+
 ScrollController::State ScrollController::Update() {
     switch (mState) {
         case State::BeforeLevelOverviewScroll:

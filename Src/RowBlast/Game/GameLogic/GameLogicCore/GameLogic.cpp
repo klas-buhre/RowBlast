@@ -79,6 +79,7 @@ GameLogic::GameLogic(Pht::IEngine& engine,
     mBlastRadiusAnimation {blastRadiusAnimation},
     mFallingPieceScaleAnimation {fallingPieceScaleAnimation},
     mShieldAnimation {shieldAnimation},
+    mSmallTextAnimation {smallTextAnimation},
     mGameHudController {gameHudController},
     mTutorial {tutorial},
     mSettingsService {settingsService},
@@ -128,6 +129,7 @@ void GameLogic::Init(const Level& level) {
     mCurrentMove.mSelectablePieces[0] = &nextPieceGenerator.GetNext();
     mCurrentMoveInitialState = mCurrentMove;
     mPreviousMoveInitialState = mCurrentMoveInitialState;
+    mShouldUndoMove = false;
     
     mPreviewPieceAnimationToStart = PreviewPieceAnimationToStart::None;
     
@@ -136,7 +138,11 @@ void GameLogic::Init(const Level& level) {
     UpdateLevelProgress();
 }
 
-GameLogic::Result GameLogic::Update(bool shouldUpdateLogic) {
+GameLogic::Result GameLogic::Update(bool shouldUpdateLogic, bool shouldUndoMove) {
+    if (shouldUndoMove) {
+        mShouldUndoMove = true;
+    }
+
     if (mLevel->GetObjective() == Level::Objective::BringDownTheAsteroid &&
         mScrollController.IsScrollingDownInClearMode()) {
         
@@ -157,6 +163,11 @@ GameLogic::Result GameLogic::Update(bool shouldUpdateLogic) {
                     if (result != Result::None) {
                         return result;
                     }
+                }
+                if (mShouldUndoMove) {
+                    mSmallTextAnimation.StartUndoingMessage();
+                    UndoMove();
+                    return Result::None;
                 }
                 mFallingPiece->UpdateTime(mEngine.GetLastFrameSeconds());
                 UpdateFallingPieceYpos();
@@ -416,12 +427,16 @@ bool GameLogic::IsUndoMovePossible() const {
 }
 
 void GameLogic::UndoMove() {
+    mShouldUndoMove = false;
+
     if (!IsUndoMovePossible()) {
         return;
     }
     
     mField.RestorePreviousState();
     mField.SetLowestVisibleRow(mScrollController.CalculatePreferredLowestVisibleRow());
+    
+    mScrollController.GoToIdleState();
     
     mCurrentMove = mPreviousMoveInitialState;
     mFallingPieceSpawnType = mPreviousMoveInitialState.mPieceType;

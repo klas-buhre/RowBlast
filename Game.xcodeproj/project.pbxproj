@@ -1688,8 +1688,6 @@
 				625695722182382B003A3A9D /* BombsAnimation.hpp */,
 				625695672182382B003A3A9D /* CollapsingFieldAnimation.cpp */,
 				6256956F2182382B003A3A9D /* CollapsingFieldAnimation.hpp */,
-				625695642182382B003A3A9D /* SmallTextAnimation.cpp */,
-				6256957B2182382B003A3A9D /* SmallTextAnimation.hpp */,
 				625695602182382B003A3A9D /* FallingPieceAnimation.cpp */,
 				625695772182382B003A3A9D /* FallingPieceAnimation.hpp */,
 				625695662182382B003A3A9D /* FallingPieceScaleAnimation.cpp */,
@@ -1706,6 +1704,8 @@
 				625695652182382B003A3A9D /* ShieldAnimation.hpp */,
 				625695752182382B003A3A9D /* SlidingTextAnimation.cpp */,
 				6256955E2182382B003A3A9D /* SlidingTextAnimation.hpp */,
+				625695642182382B003A3A9D /* SmallTextAnimation.cpp */,
+				6256957B2182382B003A3A9D /* SmallTextAnimation.hpp */,
 				625695632182382B003A3A9D /* WeldsAnimation.cpp */,
 				6256957A2182382B003A3A9D /* WeldsAnimation.hpp */,
 			);

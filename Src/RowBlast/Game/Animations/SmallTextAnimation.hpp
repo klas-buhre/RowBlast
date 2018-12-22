@@ -28,6 +28,7 @@ namespace RowBlast {
         void StartComboMessage(int numCombos);
         void StartAwesomeMessage();
         void StartFantasticMessage();
+        void StartWillUndoMessage();
         void StartUndoingMessage();
         void Update(float dt);
         
@@ -61,6 +62,7 @@ namespace RowBlast {
         Pht::SceneObject* mAwesomeTextSceneObject {nullptr};
         Pht::SceneObject* mFantasticTextSceneObject {nullptr};
         Pht::SceneObject* mUndoingTextSceneObject {nullptr};
+        Pht::SceneObject* mWillUndoTextSceneObject {nullptr};
         std::unique_ptr<Pht::SceneObject> mTwinkleParticleEffect;
     };
 }

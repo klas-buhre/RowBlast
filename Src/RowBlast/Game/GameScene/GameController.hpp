@@ -91,6 +91,7 @@ namespace RowBlast {
         Command UpdateInGameOverStateStore();
         void AddMovesAndGoToPlayingState();
         void RefillLives();
+        bool ShouldUndoMove(bool isInBetweenMoves);
         void ChangeGameState(GameLogic::Result gameLogicResult);
         void GoToPlayingState();
         void GoToPausedStateNoLivesDialog();
@@ -181,7 +182,8 @@ namespace RowBlast {
         GameSceneRenderer mRenderer;
         LevelCompletedController mLevelCompletedController;
         std::unique_ptr<Level> mLevel;
-        bool mShouldUpdateGameLogic {false};
+        bool mIsInBetweenMoves {false};
+        bool mUndoMovePending {false};
     };
 }
 

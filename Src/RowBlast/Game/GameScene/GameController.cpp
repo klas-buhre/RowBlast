@@ -143,6 +143,8 @@ void GameController::StartLevel(int levelId) {
     
     mState = GameState::LevelIntro;
     mLevelIntroState = LevelIntroState::Overview;
+    mIsInBetweenMoves = false;
+    mUndoMovePending = false;
     
     mUserServices.StartLevel(levelId);
     
@@ -179,11 +181,16 @@ GameController::Command GameController::UpdateGame() {
     auto fallingPieceAnimationState {mFallingPieceAnimation.Update(dt)};
     
     if (mState == GameState::Playing) {
-        mShouldUpdateGameLogic = ShouldUpdateGameLogic(fieldAnimationState,
-                                                       fallingPieceAnimationState,
-                                                       effectsState,
-                                                       scrollState);
-        auto result {mGameLogic.Update(mShouldUpdateGameLogic)};
+        auto shouldUpdateGameLogic {
+            ShouldUpdateGameLogic(fieldAnimationState,
+                                  fallingPieceAnimationState,
+                                  effectsState,
+                                  scrollState)
+        };
+        
+        auto isInBetweenMoves {!shouldUpdateGameLogic};
+        mIsInBetweenMoves = isInBetweenMoves;
+        auto result {mGameLogic.Update(shouldUpdateGameLogic, ShouldUndoMove(isInBetweenMoves))};
 
         if (result != GameLogic::Result::None) {
             ChangeGameState(result);
@@ -213,6 +220,16 @@ GameController::Command GameController::UpdateGame() {
     mAsteroidAnimation.Update(dt);
 
     return command;
+}
+
+bool GameController::ShouldUndoMove(bool isInBetweenMoves) {
+    auto shouldUndoMove {mUndoMovePending && !isInBetweenMoves};
+    
+    if (shouldUndoMove) {
+        mUndoMovePending = false;
+    }
+    
+    return shouldUndoMove;
 }
 
 void GameController::ChangeGameState(GameLogic::Result gameLogicResult) {
@@ -309,12 +326,19 @@ void GameController::UpdateGameMenu() {
             GoToPlayingState();
             break;
         case GameMenuController::Result::UndoMove:
-            mGameLogic.UndoMove();
-            mRenderer.Render();
-            mField.OnEndOfFrame();
+            if (!mIsInBetweenMoves) {
+                mGameLogic.UndoMove();
+                mRenderer.Render();
+                mField.OnEndOfFrame();
+            }
             break;
         case GameMenuController::Result::ResumeGameAfterUndo:
-            mSmallTextAnimation.StartUndoingMessage();
+            if (mIsInBetweenMoves) {
+                mUndoMovePending = true;
+                mSmallTextAnimation.StartWillUndoMessage();
+            } else {
+                mSmallTextAnimation.StartUndoingMessage();
+            }
             GoToPlayingState();
             break;
         case GameMenuController::Result::GoToLevelGoalDialog:
@@ -714,7 +738,10 @@ void GameController::GoToPausedStateGameMenu(SlidingMenuAnimation::UpdateFade up
     mPausedState = PausedState::GameMenu;
     mGameViewControllers.SetActiveController(GameViewControllers::GameMenu);
     
-    auto isUndoMovePossible {mShouldUpdateGameLogic && mGameLogic.IsUndoMovePossible()};
+    auto isUndoMovePossible {
+        !mUndoMovePending && mTutorial.IsUndoMoveAllowed(mGameLogic.GetMovesUsedIncludingCurrent()) &&
+        (mIsInBetweenMoves || mGameLogic.IsUndoMovePossible())
+    };
     
     mGameViewControllers.GetGameMenuController().SetUp(updateFade,
                                                        slideDirection,

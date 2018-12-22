@@ -46,8 +46,6 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-    -Should be possible to undo move even when the game logic is busy. It should finish the current
-     move and then undo.
     -Decide the level bomb force speed. Probably good with 8.
     -Find music for the game scene.
       -Try to find music similar to Puzzle Star BT21.

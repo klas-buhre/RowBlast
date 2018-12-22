@@ -84,7 +84,7 @@ namespace RowBlast {
         void StopBlastRadiusAnimation() override;
         
         void Init(const Level& level);
-        Result Update(bool shouldUpdateLogic);
+        Result Update(bool shouldUpdateLogic, bool shouldUndoMove);
         bool IsUndoMovePossible() const;
         void UndoMove();
         int GetMovesUsedIncludingCurrent() const;
@@ -199,7 +199,7 @@ namespace RowBlast {
         
         Pht::IEngine& mEngine;
         Field& mField;
-        const ScrollController& mScrollController;
+        ScrollController& mScrollController;
         FlyingBlocksAnimation& mFlyingBlocksAnimation;
         FlashingBlocksAnimation& mFlashingBlocksAnimation;
         CollapsingFieldAnimation& mCollapsingFieldAnimation;
@@ -208,6 +208,7 @@ namespace RowBlast {
         BlastRadiusAnimation& mBlastRadiusAnimation;
         FallingPieceScaleAnimation& mFallingPieceScaleAnimation;
         ShieldAnimation& mShieldAnimation;
+        SmallTextAnimation& mSmallTextAnimation;
         GameHudController& mGameHudController;
         Tutorial& mTutorial;
         const SettingsService& mSettingsService;
@@ -237,6 +238,7 @@ namespace RowBlast {
         int mMovesUsed {0};
         int mMovesLeft {0};
         int mNumObjectsLeftToClear {0};
+        bool mShouldUndoMove {false};
     };
 }
 

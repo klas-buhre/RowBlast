@@ -32,6 +32,7 @@ namespace RowBlast {
         
         void Init(Level::Objective levelObjective);
         State Update();
+        void GoToIdleState();
         int CalculatePreferredLowestVisibleRow() const;
         bool IsScrolling() const;
         bool IsScrollingDownInClearMode() const;

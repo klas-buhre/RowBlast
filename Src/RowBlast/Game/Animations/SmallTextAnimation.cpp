@@ -61,6 +61,7 @@ SmallTextAnimation::SmallTextAnimation(Pht::IEngine& engine,
     mAwesomeTextSceneObject = &CreateText(font, {-3.8f, -0.5f}, "AWESOME!");
     mFantasticTextSceneObject = &CreateText(font, {-3.9f, -0.5f}, "FANTASTIC!");
     mUndoingTextSceneObject = &CreateText(font, {-3.3f, -0.5f}, "UNDOING");
+    mWillUndoTextSceneObject = &CreateText(font, {-3.8f, -0.5f}, "WILL UNDO");
     
     CreateTwinkleParticleEffect(engine);
 }
@@ -167,6 +168,11 @@ void SmallTextAnimation::StartAwesomeMessage() {
 
 void SmallTextAnimation::StartFantasticMessage() {
     Start(*mFantasticTextSceneObject);
+    mTwinkleParticleEffect->GetTransform().SetPosition({-3.6f, 0.55f, UiLayer::text});
+}
+
+void SmallTextAnimation::StartWillUndoMessage() {
+    Start(*mWillUndoTextSceneObject);
     mTwinkleParticleEffect->GetTransform().SetPosition({-3.6f, 0.55f, UiLayer::text});
 }
 
