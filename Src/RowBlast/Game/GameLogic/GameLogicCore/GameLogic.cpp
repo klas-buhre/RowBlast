@@ -21,7 +21,7 @@
 #include "BlastRadiusAnimation.hpp"
 #include "FallingPieceScaleAnimation.hpp"
 #include "ShieldAnimation.hpp"
-#include "ComboTextAnimation.hpp"
+#include "SmallTextAnimation.hpp"
 #include "GameHudController.hpp"
 #include "Tutorial.hpp"
 #include "AudioResources.hpp"
@@ -64,7 +64,7 @@ GameLogic::GameLogic(Pht::IEngine& engine,
                      BlastRadiusAnimation& blastRadiusAnimation,
                      FallingPieceScaleAnimation& fallingPieceScaleAnimation,
                      ShieldAnimation& shieldAnimation,
-                     ComboTextAnimation& comboTextAnimation,
+                     SmallTextAnimation& smallTextAnimation,
                      GameHudController& gameHudController,
                      Tutorial& tutorial,
                      const SettingsService& settingsService) :
@@ -86,7 +86,7 @@ GameLogic::GameLogic(Pht::IEngine& engine,
     mFieldGravity {field},
     mFieldExplosionsStates {engine, field, mFieldGravity, effectManager, flyingBlocksAnimation},
     mFallingPieceAnimation {*this, mFallingPieceStorage},
-    mComboDetector {comboTextAnimation, effectManager},
+    mComboDetector {smallTextAnimation, effectManager},
     mGestureInputHandler {*this, mFallingPieceStorage},
     mClickInputHandler {engine, field, gameScene, *this, tutorial},
     mFallingPiece {&mFallingPieceStorage} {
@@ -422,7 +422,7 @@ void GameLogic::UndoMove() {
     
     mField.RestorePreviousState();
     mField.SetLowestVisibleRow(mScrollController.CalculatePreferredLowestVisibleRow());
-
+    
     mCurrentMove = mPreviousMoveInitialState;
     mFallingPieceSpawnType = mPreviousMoveInitialState.mPieceType;
     mFallingPieceSpawnReason = FallingPieceSpawnReason::UndoMove;

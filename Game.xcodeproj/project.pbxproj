@@ -148,7 +148,7 @@
 		6256969A2182382C003A3A9D /* BlastRadiusAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 625695612182382B003A3A9D /* BlastRadiusAnimation.cpp */; };
 		6256969B2182382C003A3A9D /* PreviewPiecesAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 625695622182382B003A3A9D /* PreviewPiecesAnimation.cpp */; };
 		6256969C2182382C003A3A9D /* WeldsAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 625695632182382B003A3A9D /* WeldsAnimation.cpp */; };
-		6256969D2182382C003A3A9D /* ComboTextAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 625695642182382B003A3A9D /* ComboTextAnimation.cpp */; };
+		6256969D2182382C003A3A9D /* SmallTextAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 625695642182382B003A3A9D /* SmallTextAnimation.cpp */; };
 		6256969E2182382C003A3A9D /* FallingPieceScaleAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 625695662182382B003A3A9D /* FallingPieceScaleAnimation.cpp */; };
 		6256969F2182382C003A3A9D /* CollapsingFieldAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 625695672182382B003A3A9D /* CollapsingFieldAnimation.cpp */; };
 		625696A02182382C003A3A9D /* AsteroidAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 625695682182382B003A3A9D /* AsteroidAnimation.cpp */; };
@@ -695,7 +695,7 @@
 		625695612182382B003A3A9D /* BlastRadiusAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BlastRadiusAnimation.cpp; sourceTree = "<group>"; };
 		625695622182382B003A3A9D /* PreviewPiecesAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PreviewPiecesAnimation.cpp; sourceTree = "<group>"; };
 		625695632182382B003A3A9D /* WeldsAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WeldsAnimation.cpp; sourceTree = "<group>"; };
-		625695642182382B003A3A9D /* ComboTextAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ComboTextAnimation.cpp; sourceTree = "<group>"; };
+		625695642182382B003A3A9D /* SmallTextAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SmallTextAnimation.cpp; sourceTree = "<group>"; };
 		625695652182382B003A3A9D /* ShieldAnimation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ShieldAnimation.hpp; sourceTree = "<group>"; };
 		625695662182382B003A3A9D /* FallingPieceScaleAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FallingPieceScaleAnimation.cpp; sourceTree = "<group>"; };
 		625695672182382B003A3A9D /* CollapsingFieldAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CollapsingFieldAnimation.cpp; sourceTree = "<group>"; };
@@ -718,7 +718,7 @@
 		625695782182382B003A3A9D /* BlastRadiusAnimation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = BlastRadiusAnimation.hpp; sourceTree = "<group>"; };
 		625695792182382B003A3A9D /* PreviewPiecesAnimation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PreviewPiecesAnimation.hpp; sourceTree = "<group>"; };
 		6256957A2182382B003A3A9D /* WeldsAnimation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = WeldsAnimation.hpp; sourceTree = "<group>"; };
-		6256957B2182382B003A3A9D /* ComboTextAnimation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ComboTextAnimation.hpp; sourceTree = "<group>"; };
+		6256957B2182382B003A3A9D /* SmallTextAnimation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SmallTextAnimation.hpp; sourceTree = "<group>"; };
 		625695B92182382B003A3A9D /* World3.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = World3.cpp; sourceTree = "<group>"; };
 		625695BA2182382B003A3A9D /* World2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = World2.cpp; sourceTree = "<group>"; };
 		625695BB2182382B003A3A9D /* World1.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = World1.cpp; sourceTree = "<group>"; };
@@ -1688,8 +1688,8 @@
 				625695722182382B003A3A9D /* BombsAnimation.hpp */,
 				625695672182382B003A3A9D /* CollapsingFieldAnimation.cpp */,
 				6256956F2182382B003A3A9D /* CollapsingFieldAnimation.hpp */,
-				625695642182382B003A3A9D /* ComboTextAnimation.cpp */,
-				6256957B2182382B003A3A9D /* ComboTextAnimation.hpp */,
+				625695642182382B003A3A9D /* SmallTextAnimation.cpp */,
+				6256957B2182382B003A3A9D /* SmallTextAnimation.hpp */,
 				625695602182382B003A3A9D /* FallingPieceAnimation.cpp */,
 				625695772182382B003A3A9D /* FallingPieceAnimation.hpp */,
 				625695662182382B003A3A9D /* FallingPieceScaleAnimation.cpp */,
@@ -2968,7 +2968,7 @@
 				625696422182382C003A3A9D /* SlideAnimation.cpp in Sources */,
 				625696A12182382C003A3A9D /* PreviewPieceGroupAnimation.cpp in Sources */,
 				625696952182382C003A3A9D /* LaserParticleEffect.cpp in Sources */,
-				6256969D2182382C003A3A9D /* ComboTextAnimation.cpp in Sources */,
+				6256969D2182382C003A3A9D /* SmallTextAnimation.cpp in Sources */,
 				625696592182382C003A3A9D /* MapConfirmationDialogView.cpp in Sources */,
 				625696A62182382C003A3A9D /* SlidingTextAnimation.cpp in Sources */,
 				6256980C2182392C003A3A9D /* VboCache.cpp in Sources */,

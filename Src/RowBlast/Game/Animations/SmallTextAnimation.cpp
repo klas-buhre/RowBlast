@@ -1,4 +1,4 @@
-#include "ComboTextAnimation.hpp"
+#include "SmallTextAnimation.hpp"
 
 // Engine includes.
 #include "IEngine.hpp"
@@ -51,7 +51,7 @@ namespace {
     };
 }
 
-ComboTextAnimation::ComboTextAnimation(Pht::IEngine& engine,
+SmallTextAnimation::SmallTextAnimation(Pht::IEngine& engine,
                                        GameScene& scene,
                                        const CommonResources& commonResources) :
     mScene {scene} {
@@ -60,11 +60,12 @@ ComboTextAnimation::ComboTextAnimation(Pht::IEngine& engine,
     mComboTextSceneObject = &CreateText(font, {-3.4f, -0.5f}, comboString + comboDigits);
     mAwesomeTextSceneObject = &CreateText(font, {-3.8f, -0.5f}, "AWESOME!");
     mFantasticTextSceneObject = &CreateText(font, {-3.9f, -0.5f}, "FANTASTIC!");
+    mUndoingTextSceneObject = &CreateText(font, {-3.3f, -0.5f}, "UNDOING");
     
     CreateTwinkleParticleEffect(engine);
 }
 
-Pht::SceneObject& ComboTextAnimation::CreateText(const Pht::Font& font,
+Pht::SceneObject& SmallTextAnimation::CreateText(const Pht::Font& font,
                                                  const Pht::Vec2& position,
                                                  const std::string& text) {
     Pht::TextProperties textProperties {
@@ -98,7 +99,7 @@ Pht::SceneObject& ComboTextAnimation::CreateText(const Pht::Font& font,
     return retval;
 }
 
-void ComboTextAnimation::CreateTwinkleParticleEffect(Pht::IEngine& engine) {
+void SmallTextAnimation::CreateTwinkleParticleEffect(Pht::IEngine& engine) {
     Pht::EmitterSettings particleEmitterSettings {
         .mPosition = Pht::Vec3{0.0f, 0.0f, 0.0f},
         .mSize = Pht::Vec3{0.0f, 0.0f, 0.0f},
@@ -128,7 +129,7 @@ void ComboTextAnimation::CreateTwinkleParticleEffect(Pht::IEngine& engine) {
                                                                             Pht::RenderMode::Triangles);
 }
 
-void ComboTextAnimation::Init() {
+void SmallTextAnimation::Init() {
     mContainerSceneObject = &mScene.GetScene().CreateSceneObject();
     mScene.GetHudContainer().AddChild(*mContainerSceneObject);
     
@@ -141,7 +142,7 @@ void ComboTextAnimation::Init() {
     HideAllTextObjects();
 }
 
-void ComboTextAnimation::StartComboMessage(int numCombos) {
+void SmallTextAnimation::StartComboMessage(int numCombos) {
     Start(*mComboTextSceneObject);
     mTwinkleParticleEffect->GetTransform().SetPosition({-3.15f, 0.3f, UiLayer::text});
     
@@ -159,17 +160,22 @@ void ComboTextAnimation::StartComboMessage(int numCombos) {
     text[comboStringSize + 3] = buffer[3];
 }
 
-void ComboTextAnimation::StartAwesomeMessage() {
+void SmallTextAnimation::StartAwesomeMessage() {
     Start(*mAwesomeTextSceneObject);
     mTwinkleParticleEffect->GetTransform().SetPosition({-3.25f, 0.55f, UiLayer::text});
 }
 
-void ComboTextAnimation::StartFantasticMessage() {
+void SmallTextAnimation::StartFantasticMessage() {
     Start(*mFantasticTextSceneObject);
     mTwinkleParticleEffect->GetTransform().SetPosition({-3.6f, 0.55f, UiLayer::text});
 }
 
-void ComboTextAnimation::Start(Pht::SceneObject& textSceneObject) {
+void SmallTextAnimation::StartUndoingMessage() {
+    Start(*mUndoingTextSceneObject);
+    mTwinkleParticleEffect->GetTransform().SetPosition({-3.0f, 0.55f, UiLayer::text});
+}
+
+void SmallTextAnimation::Start(Pht::SceneObject& textSceneObject) {
     HideAllTextObjects();
     
     mActiveTextSceneObject = &textSceneObject;
@@ -187,9 +193,10 @@ void ComboTextAnimation::Start(Pht::SceneObject& textSceneObject) {
     mState = State::ScalingIn;
     mElapsedTime = 0.0f;
     mContainerSceneObject->GetTransform().SetPosition(startPosition);
+    Pht::SceneObjectUtils::ScaleRecursively(*mContainerSceneObject, 0.0f);
 }
 
-void ComboTextAnimation::Update(float dt) {
+void SmallTextAnimation::Update(float dt) {
     switch (mState) {
         case State::ScalingIn:
             UpdateInScalingInState(dt);
@@ -205,7 +212,7 @@ void ComboTextAnimation::Update(float dt) {
     }
 }
 
-void ComboTextAnimation::UpdateInScalingInState(float dt) {
+void SmallTextAnimation::UpdateInScalingInState(float dt) {
     mElapsedTime += dt;
     
     if (mElapsedTime > scaleInDuration) {
@@ -222,7 +229,7 @@ void ComboTextAnimation::UpdateInScalingInState(float dt) {
     }
 }
 
-void ComboTextAnimation::UpdateInDisplayingTextState(float dt) {
+void SmallTextAnimation::UpdateInDisplayingTextState(float dt) {
     mElapsedTime += dt;
     
     mTwinkleParticleEffect->GetComponent<Pht::ParticleEffect>()->Update(dt);
@@ -237,7 +244,7 @@ void ComboTextAnimation::UpdateInDisplayingTextState(float dt) {
     }
 }
 
-void ComboTextAnimation::UpdateInSlidingOutState(float dt) {
+void SmallTextAnimation::UpdateInSlidingOutState(float dt) {
     mElapsedTime += dt;
     
     if (mElapsedTime > slideOutDuration) {
@@ -261,7 +268,7 @@ void ComboTextAnimation::UpdateInSlidingOutState(float dt) {
     }
 }
 
-void ComboTextAnimation::HideAllTextObjects() {
+void SmallTextAnimation::HideAllTextObjects() {
     for (auto& textSceneObject: mTextSceneObjects) {
         textSceneObject->SetIsVisible(false);
         textSceneObject->SetIsStatic(true);

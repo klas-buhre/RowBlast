@@ -71,7 +71,7 @@ GameMenuController::Result GameMenuController::OnTouch(const Pht::TouchEvent& to
 
     if (mView.IsUndoButtonEnabled()) {
         if (mView.GetUndoButton().IsClicked(touchEvent)) {
-            mDeferredResult = Result::ResumeGame;
+            mDeferredResult = Result::ResumeGameAfterUndo;
             mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::Yes,
                                                 SlidingMenuAnimation::SlideDirection::Right);
             return Result::UndoMove;

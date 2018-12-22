@@ -63,7 +63,7 @@ GameController::GameController(Pht::IEngine& engine,
     mBlastRadiusAnimation {engine, mScene, commonResources},
     mShieldAnimation {engine, mScene, mScrollController},
     mSlidingTextAnimation {engine, mScene, commonResources},
-    mComboTextAnimation {engine, mScene, commonResources},
+    mSmallTextAnimation {engine, mScene, commonResources},
     mFallingPieceScaleAnimation {mScene},
     mTutorial {engine, mScene, commonResources},
     mGameLogic {
@@ -79,7 +79,7 @@ GameController::GameController(Pht::IEngine& engine,
         mBlastRadiusAnimation,
         mFallingPieceScaleAnimation,
         mShieldAnimation,
-        mComboTextAnimation,
+        mSmallTextAnimation,
         mGameViewControllers.GetGameHudController(),
         mTutorial,
         userServices.GetSettingsService()
@@ -134,7 +134,7 @@ void GameController::StartLevel(int levelId) {
     mFlashingBlocksAnimation.Init();
     mFallingPieceAnimation.Init();
     mSlidingTextAnimation.Init();
-    mComboTextAnimation.Init();
+    mSmallTextAnimation.Init();
     mBombsAnimation.Init();
     mAsteroidAnimation.Init();
     mFallingPieceScaleAnimation.Init();
@@ -204,7 +204,7 @@ GameController::Command GameController::UpdateGame() {
     mScene.Update();
     mPreviewPiecesAnimation.Update(dt);
     mBombsAnimation.Update(dt);
-    mComboTextAnimation.Update(dt);
+    mSmallTextAnimation.Update(dt);
     mTutorial.Update();
     
     mRenderer.Render();
@@ -312,6 +312,10 @@ void GameController::UpdateGameMenu() {
             mGameLogic.UndoMove();
             mRenderer.Render();
             mField.OnEndOfFrame();
+            break;
+        case GameMenuController::Result::ResumeGameAfterUndo:
+            mSmallTextAnimation.StartUndoingMessage();
+            GoToPlayingState();
             break;
         case GameMenuController::Result::GoToLevelGoalDialog:
             GoToPausedStateLevelGoalDialog();

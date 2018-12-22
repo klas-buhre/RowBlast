@@ -1,5 +1,5 @@
-#ifndef ComboTextAnimation_hpp
-#define ComboTextAnimation_hpp
+#ifndef SmallTextAnimation_hpp
+#define SmallTextAnimation_hpp
 
 #include <vector>
 #include <memory>
@@ -18,9 +18,9 @@ namespace RowBlast {
     class GameScene;
     class CommonResources;
     
-    class ComboTextAnimation {
+    class SmallTextAnimation {
     public:
-        ComboTextAnimation(Pht::IEngine& engine,
+        SmallTextAnimation(Pht::IEngine& engine,
                            GameScene& scene,
                            const CommonResources& commonResources);
         
@@ -28,6 +28,7 @@ namespace RowBlast {
         void StartComboMessage(int numCombos);
         void StartAwesomeMessage();
         void StartFantasticMessage();
+        void StartUndoingMessage();
         void Update(float dt);
         
     private:
@@ -59,6 +60,7 @@ namespace RowBlast {
         Pht::SceneObject* mComboTextSceneObject {nullptr};
         Pht::SceneObject* mAwesomeTextSceneObject {nullptr};
         Pht::SceneObject* mFantasticTextSceneObject {nullptr};
+        Pht::SceneObject* mUndoingTextSceneObject {nullptr};
         std::unique_ptr<Pht::SceneObject> mTwinkleParticleEffect;
     };
 }

@@ -4,7 +4,7 @@
 #include "Optional.hpp"
 
 // Game includes.
-#include "ComboTextAnimation.hpp"
+#include "SmallTextAnimation.hpp"
 #include "EffectManager.hpp"
 
 using namespace RowBlast;
@@ -32,8 +32,8 @@ namespace {
     }
 }
 
-ComboDetector::ComboDetector(ComboTextAnimation& comboTextAnimation, EffectManager& effectManager) :
-    mComboTextAnimation {comboTextAnimation},
+ComboDetector::ComboDetector(SmallTextAnimation& smallTextAnimation, EffectManager& effectManager) :
+    mSmallTextAnimation {smallTextAnimation},
     mEffectManager {effectManager} {}
 
 void ComboDetector::Init() {
@@ -68,13 +68,13 @@ void ComboDetector::OnClearedFilledRowsInPieceSpawnedState(const Field::RemovedS
     auto numRemovedRows {CalcNumRemovedRows(removedSubCells)};
 
     if (numRemovedRows >= 5) {
-        mComboTextAnimation.StartFantasticMessage();
+        mSmallTextAnimation.StartFantasticMessage();
         mEffectManager.StartSmallCameraShake();
     } else if (numRemovedRows >= 4) {
-        mComboTextAnimation.StartAwesomeMessage();
+        mSmallTextAnimation.StartAwesomeMessage();
     } else if (mNumConsecutiveRowClearMoves >= 2) {
         auto numCombos {mNumConsecutiveRowClearMoves - 1};
-        mComboTextAnimation.StartComboMessage(numCombos);
+        mSmallTextAnimation.StartComboMessage(numCombos);
     }
     
     GoToCascadingState();
@@ -82,9 +82,9 @@ void ComboDetector::OnClearedFilledRowsInPieceSpawnedState(const Field::RemovedS
 
 void ComboDetector::DetectCascade() {
     if (mNumCascades >= 3) {
-        mComboTextAnimation.StartFantasticMessage();
+        mSmallTextAnimation.StartFantasticMessage();
     } else if (mNumCascades >= 2) {
-        mComboTextAnimation.StartAwesomeMessage();
+        mSmallTextAnimation.StartAwesomeMessage();
     }
 }
 

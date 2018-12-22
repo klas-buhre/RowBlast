@@ -24,7 +24,7 @@
 #include "StoreController.hpp"
 #include "PreviewPiecesAnimation.hpp"
 #include "SlidingTextAnimation.hpp"
-#include "ComboTextAnimation.hpp"
+#include "SmallTextAnimation.hpp"
 #include "BlastRadiusAnimation.hpp"
 #include "ShieldAnimation.hpp"
 #include "BombsAnimation.hpp"
@@ -167,7 +167,7 @@ namespace RowBlast {
         BlastRadiusAnimation mBlastRadiusAnimation;
         ShieldAnimation mShieldAnimation;
         SlidingTextAnimation mSlidingTextAnimation;
-        ComboTextAnimation mComboTextAnimation;
+        SmallTextAnimation mSmallTextAnimation;
         FallingPieceScaleAnimation mFallingPieceScaleAnimation;
         Tutorial mTutorial;
         GameLogic mGameLogic;

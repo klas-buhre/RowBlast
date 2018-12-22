@@ -5,12 +5,12 @@
 #include "Field.hpp"
 
 namespace RowBlast {
-    class ComboTextAnimation;
+    class SmallTextAnimation;
     class EffectManager;
 
     class ComboDetector {
     public:
-        ComboDetector(ComboTextAnimation& comboTextAnimation, EffectManager& effectManager);
+        ComboDetector(SmallTextAnimation& smallTextAnimation, EffectManager& effectManager);
         
         void Init();
         void OnSpawnPiece();
@@ -29,7 +29,7 @@ namespace RowBlast {
             Inactive
         };
 
-        ComboTextAnimation& mComboTextAnimation;
+        SmallTextAnimation& mSmallTextAnimation;
         EffectManager& mEffectManager;
         State mState {State::Inactive};
         int mNumConsecutiveRowClearMoves {0};
