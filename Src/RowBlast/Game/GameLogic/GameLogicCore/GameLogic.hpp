@@ -227,8 +227,8 @@ namespace RowBlast {
         FallingPieceSpawnReason mFallingPieceSpawnReason {FallingPieceSpawnReason::None};
         const Piece* mFallingPieceSpawnType {nullptr};
         MoveData mCurrentMove;
-        MoveData mCurrentMoveInitialState;
-        MoveData mPreviousMoveInitialState;
+        MoveData mCurrentMoveTmp;
+        MoveData mPreviousMove;
         PreviewPieceAnimationToStart mPreviewPieceAnimationToStart {PreviewPieceAnimationToStart::None};
         const Level* mLevel {nullptr};
         IInputHandler* mInputHandler {nullptr};

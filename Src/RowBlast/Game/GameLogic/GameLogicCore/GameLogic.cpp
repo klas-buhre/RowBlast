@@ -127,8 +127,8 @@ void GameLogic::Init(const Level& level) {
     nextPieceGenerator.Init(mLevel->GetPieceTypes(), mLevel->GetPieceSequence());
     mCurrentMove.mSelectablePieces[1] = &nextPieceGenerator.GetNext();
     mCurrentMove.mSelectablePieces[0] = &nextPieceGenerator.GetNext();
-    mCurrentMoveInitialState = mCurrentMove;
-    mPreviousMoveInitialState = mCurrentMoveInitialState;
+    mCurrentMoveTmp = mCurrentMove;
+    mPreviousMove = mCurrentMove;
     mShouldUndoMove = false;
     
     mPreviewPieceAnimationToStart = PreviewPieceAnimationToStart::None;
@@ -257,17 +257,17 @@ void GameLogic::ManageMoveHistory(FallingPieceSpawnReason fallingPieceSpawnReaso
         case FallingPieceSpawnReason::NextMove:
             ++mMovesUsed;
             if (GetMovesUsedIncludingCurrent() > 1) {
-                mPreviousMoveInitialState = mCurrentMoveInitialState;
+                mPreviousMove = mCurrentMoveTmp;
             }
-            mCurrentMoveInitialState = mCurrentMove;
+            mCurrentMoveTmp = mCurrentMove;
             if (GetMovesUsedIncludingCurrent() == 1) {
-                mPreviousMoveInitialState = mCurrentMoveInitialState;
+                mPreviousMove = mCurrentMoveTmp;
             }
             mTutorial.OnNewMove(GetMovesUsedIncludingCurrent());
             break;
         case FallingPieceSpawnReason::UndoMove:
-            mCurrentMoveInitialState = mCurrentMove;
-            mPreviousMoveInitialState = mCurrentMoveInitialState;
+            mCurrentMoveTmp = mCurrentMove;
+            mPreviousMove = mCurrentMove;
             mComboDetector.OnUndoMove();
             mTutorial.OnNewMove(GetMovesUsedIncludingCurrent());
             break;
@@ -414,15 +414,20 @@ void GameLogic::UpdateLevelProgress() {
 }
 
 void GameLogic::NextMove() {
+    mCurrentMoveTmp.mPieceType = mCurrentMove.mPieceType;
+    mCurrentMoveTmp.mSelectablePieces = mCurrentMove.mSelectablePieces;
+    
     RemoveFallingPiece();
+    
     mFallingPieceSpawnReason = FallingPieceSpawnReason::NextMove;
     mPreviewPieceAnimationToStart = PreviewPieceAnimationToStart::RemoveActivePiece;
     --mMovesLeft;
+    
     UpdateLevelProgress();
 }
 
 bool GameLogic::IsUndoMovePossible() const {
-    return mCurrentMove.mId != mPreviousMoveInitialState.mId && mMovesUsed > 1 &&
+    return mCurrentMove.mId != mPreviousMove.mId && mMovesUsed > 1 &&
            mTutorial.IsUndoMoveAllowed(GetMovesUsedIncludingCurrent());
 }
 
@@ -438,8 +443,8 @@ void GameLogic::UndoMove() {
     
     mScrollController.GoToIdleState();
     
-    mCurrentMove = mPreviousMoveInitialState;
-    mFallingPieceSpawnType = mPreviousMoveInitialState.mPieceType;
+    mCurrentMove = mPreviousMove;
+    mFallingPieceSpawnType = mPreviousMove.mPieceType;
     mFallingPieceSpawnReason = FallingPieceSpawnReason::UndoMove;
     RemoveFallingPiece();
     ++mMovesLeft;
