@@ -60,10 +60,20 @@ namespace RowBlast {
             assert(mUfoContainer);
             return *mUfoContainer;
         }
+        
+        Pht::SceneObject& GetTutorialContainer() {
+            assert(mTutorialContainer);
+            return *mTutorialContainer;
+        }
 
         Pht::SceneObject& GetUiViewsContainer() {
             assert(mUiViewsContainer);
             return *mUiViewsContainer;
+        }
+        
+        Pht::Scene& GetScene() {
+            assert(mScene);
+            return *mScene;
         }
         
         void SetWorldId(int worldId) {
@@ -106,6 +116,7 @@ namespace RowBlast {
         Pht::Font mFont;
         std::unique_ptr<MapHud> mHud;
         Pht::SceneObject* mUfoContainer {nullptr};
+        Pht::SceneObject* mTutorialContainer {nullptr};
         Pht::SceneObject* mUiViewsContainer {nullptr};
         int mWorldId {1};
         Pht::Optional<int> mClickedPortalNextLevelId;

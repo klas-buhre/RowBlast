@@ -44,6 +44,7 @@ MapController::MapController(Pht::IEngine& engine,
     mLevelResources {levelResources},
     mUniverse {universe},
     mScene {engine, commonResources, userServices, universe},
+    mTutorial {engine, mScene, userServices},
     mUfo {engine, commonResources, 1.17f},
     mUfoAnimation {engine, mUfo},
     mMapViewControllers {engine, mScene, commonResources, userServices, pieceResources},
@@ -57,6 +58,7 @@ MapController::MapController(Pht::IEngine& engine,
 
 void MapController::Init() {
     mScene.Init();
+    mTutorial.Init(mScene.GetWorldId());
     mUfo.Init(mScene.GetUfoContainer());
     mUfoAnimation.Init();
     mMapViewControllers.Init(mStoreController.GetFadeEffect());
@@ -102,6 +104,7 @@ MapController::Command MapController::Update() {
     }
 
     mScene.Update();
+    mTutorial.Update();
     
     return command;
 }

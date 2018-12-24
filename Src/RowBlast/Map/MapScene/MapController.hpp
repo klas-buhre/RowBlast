@@ -5,6 +5,7 @@
 #include "MapScene.hpp"
 #include "MapViewControllers.hpp"
 #include "StoreController.hpp"
+#include "MapTutorial.hpp"
 #include "Ufo.hpp"
 #include "UfoAnimation.hpp"
 
@@ -122,6 +123,7 @@ namespace RowBlast {
         StartLevelState mStartLevelState {StartLevelState::LevelGoalDialog};
         AddLivesState mAddLivesState {AddLivesState::NoLivesDialog};
         MapScene mScene;
+        MapTutorial mTutorial;
         Ufo mUfo;
         UfoAnimation mUfoAnimation;
         MapViewControllers mMapViewControllers;

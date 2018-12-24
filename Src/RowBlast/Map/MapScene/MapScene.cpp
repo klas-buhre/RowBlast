@@ -34,6 +34,7 @@ namespace {
         Space,
         Map,
         Ufo,
+        Tutorial,
         SunEffect,
         Hud,
         UiViews,
@@ -74,6 +75,7 @@ void MapScene::Init() {
     scene->AddRenderPass(Pht::RenderPass {static_cast<int>(Layer::Space)});
     scene->AddRenderPass(Pht::RenderPass {static_cast<int>(Layer::Map)});
     scene->AddRenderPass(Pht::RenderPass {static_cast<int>(Layer::Ufo)});
+    scene->AddRenderPass(Pht::RenderPass {static_cast<int>(Layer::Tutorial)});
     scene->AddRenderPass(Pht::RenderPass {static_cast<int>(Layer::SunEffect)});
 
     Pht::RenderPass hudRenderPass {static_cast<int>(Layer::Hud)};
@@ -131,6 +133,10 @@ void MapScene::Init() {
     mUfoContainer = &scene->CreateSceneObject();
     mUfoContainer->SetLayer(static_cast<int>(Layer::Ufo));
     scene->GetRoot().AddChild(*mUfoContainer);
+
+    mTutorialContainer = &scene->CreateSceneObject();
+    mTutorialContainer->SetLayer(static_cast<int>(Layer::Tutorial));
+    scene->GetRoot().AddChild(*mTutorialContainer);
 
     mHud = std::make_unique<MapHud>(mEngine,
                                     mUserServices,

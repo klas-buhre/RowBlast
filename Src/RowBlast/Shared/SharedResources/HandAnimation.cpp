@@ -7,9 +7,7 @@
 #include "ParticleEffect.hpp"
 #include "IParticleSystem.hpp"
 #include "MathUtils.hpp"
-
-// Game includes.
-#include "GameScene.hpp"
+#include "QuadMesh.hpp"
 
 namespace {
     constexpr auto moveTime {0.19f};
@@ -40,32 +38,38 @@ namespace {
 
 using namespace RowBlast;
 
-HandAnimation::HandAnimation(Pht::IEngine& engine, GameScene& scene) :
-    mEngine {engine},
-    mScene {scene} {}
+HandAnimation::HandAnimation(Pht::IEngine& engine) :
+    mEngine {engine} {}
 
-void HandAnimation::Init() {
-    mContainerSceneObject = &mScene.GetScene().CreateSceneObject();
-    mScene.GetUiViewsContainer().AddChild(*mContainerSceneObject);
-    
+void HandAnimation::Init(Pht::Scene& scene,
+                         Pht::SceneObject& parentObject,
+                         float scale,
+                         bool useShadow) {
+    mContainerSceneObject = &scene.CreateSceneObject();
+    mContainerSceneObject->GetTransform().SetScale(scale);
+    parentObject.AddChild(*mContainerSceneObject);
+
     Pht::Material handMaterial {"hand48.png"};
     handMaterial.SetBlend(Pht::Blend::Yes);
-    mHandSceneObject = &mScene.GetScene().CreateSceneObject(Pht::QuadMesh {handSize, handSize},
-                                                            handMaterial);
+    mHandSceneObject = &scene.CreateSceneObject(Pht::QuadMesh {handSize, handSize}, handMaterial);
     mContainerSceneObject->AddChild(*mHandSceneObject);
 
-    Pht::Material handShadowMaterial {"hand48.png", 0.0f, 0.0f, 0.0f, 0.0f};
-    handShadowMaterial.SetOpacity(0.29f);
-    handShadowMaterial.SetBlend(Pht::Blend::Yes);
-    mHandShadowSceneObject = &mScene.GetScene().CreateSceneObject(Pht::QuadMesh {handShadowSize, handShadowSize},
-                                                                  handShadowMaterial);
-    mContainerSceneObject->AddChild(*mHandShadowSceneObject);
+    mHandShadowSceneObject = nullptr;
+    
+    if (useShadow) {
+        Pht::Material handShadowMaterial {"hand48.png", 0.0f, 0.0f, 0.0f, 0.0f};
+        handShadowMaterial.SetOpacity(0.29f);
+        handShadowMaterial.SetBlend(Pht::Blend::Yes);
+        mHandShadowSceneObject = &scene.CreateSceneObject(Pht::QuadMesh {handShadowSize, handShadowSize},
+                                                          handShadowMaterial);
+        mContainerSceneObject->AddChild(*mHandShadowSceneObject);
+    }
 
-    CreateCircleParticleEffect();
+    CreateCircleParticleEffect(scene);
     Stop();
 }
 
-void HandAnimation::CreateCircleParticleEffect() {
+void HandAnimation::CreateCircleParticleEffect(Pht::Scene& scene) {
     Pht::EmitterSettings particleEmitterSettings {
         .mPosition = Pht::Vec3{0.0f, 0.0f, 0.0f},
         .mSize = Pht::Vec3{0.0f, 0.0f, 0.0f},
@@ -95,7 +99,7 @@ void HandAnimation::CreateCircleParticleEffect() {
     circleEffect->GetTransform().SetPosition(circlePosition);
     mCircleEffect = circleEffect->GetComponent<Pht::ParticleEffect>();
     mContainerSceneObject->AddChild(*circleEffect);
-    mScene.GetScene().AddSceneObject(std::move(circleEffect));
+    scene.AddSceneObject(std::move(circleEffect));
 }
 
 void HandAnimation::Start(const Pht::Vec3& position, float angle) {
@@ -138,14 +142,20 @@ void HandAnimation::UpdateInGoingForwardState() {
     transform.SetPosition(backwardPosition.Lerp(t, forwardPosition));
     transform.SetScale(1.0f + handUpScaleAdd * (1.0f - t));
     
-    auto handShadowPosition {mHandShadowBackwardPosition.Lerp(t, mHandShadowForwardPosition)};
-    mHandShadowSceneObject->GetTransform().SetPosition(handShadowPosition);
+    if (mHandShadowSceneObject) {
+        auto handShadowPosition {mHandShadowBackwardPosition.Lerp(t, mHandShadowForwardPosition)};
+        mHandShadowSceneObject->GetTransform().SetPosition(handShadowPosition);
+    }
     
     if (mElapsedTime > moveTime) {
         mState = State::GoingBackward;
         transform.SetPosition(forwardPosition);
         transform.SetScale(1.0f);
-        mHandShadowSceneObject->GetTransform().SetPosition(mHandShadowForwardPosition);
+        
+        if (mHandShadowSceneObject) {
+            mHandShadowSceneObject->GetTransform().SetPosition(mHandShadowForwardPosition);
+        }
+        
         mElapsedTime = 0.0f;
         
         mCircleEffect->Start();
@@ -160,14 +170,19 @@ void HandAnimation::UpdateInGoingBackwardState() {
     transform.SetPosition(forwardPosition.Lerp(t, backwardPosition));
     transform.SetScale(1.0f + handUpScaleAdd * t);
     
-    auto handShadowPosition {mHandShadowForwardPosition.Lerp(t, mHandShadowBackwardPosition)};
-    mHandShadowSceneObject->GetTransform().SetPosition(handShadowPosition);
-    
+    if (mHandShadowSceneObject) {
+        auto handShadowPosition {mHandShadowForwardPosition.Lerp(t, mHandShadowBackwardPosition)};
+        mHandShadowSceneObject->GetTransform().SetPosition(handShadowPosition);
+    }
+
     if (mElapsedTime > moveTime) {
         mState = State::Still;
         transform.SetPosition(backwardPosition);
         transform.SetScale(1.0 + handUpScaleAdd);
-        mHandShadowSceneObject->GetTransform().SetPosition(mHandShadowBackwardPosition);
+        
+        if (mHandShadowSceneObject) {
+            mHandShadowSceneObject->GetTransform().SetPosition(mHandShadowBackwardPosition);
+        }
         
         mElapsedTime = 0.0f;
     }
@@ -189,7 +204,9 @@ void HandAnimation::GoToForwardState() {
     transform.SetPosition(backwardPosition);
     transform.SetScale(1.0 + handUpScaleAdd);
     
-    mHandShadowSceneObject->GetTransform().SetPosition(mHandShadowBackwardPosition);
+    if (mHandShadowSceneObject) {
+        mHandShadowSceneObject->GetTransform().SetPosition(mHandShadowBackwardPosition);
+    }
 }
 
 void HandAnimation::Stop() {

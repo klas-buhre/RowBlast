@@ -18,9 +18,9 @@ ProgressService::ProgressService() {
     if (!LoadState()) {
         mNumStars = {0};
     }
-    mNumStars = {2, 3, 1, 3, 2, 2, 2, 1, 1, 1, 1, 1, 3, 2, 2, 1, 2, 2, 1, 3, 2, 2, 1, 3, 1, 3, 2, 1, 3, 1, 2, 3, 2, 1, 3, 2, 1, 3, 2, 2, 3, 1, 1, 2, 3, 3, 2, 2, 3, 3, 2, 3, 2, 3, 0};
+    // mNumStars = {2, 3, 1, 3, 2, 2, 2, 1, 1, 1, 1, 1, 3, 2, 2, 1, 2, 2, 1, 3, 2, 2, 1, 3, 1, 3, 2, 1, 3, 1, 2, 3, 2, 1, 3, 2, 1, 3, 2, 2, 3, 1, 1, 2, 3, 3, 2, 2, 3, 3, 2, 3, 2, 3, 0};
     // mNumStars = {2, 3, 1, 3, 2, 2, 2, 1, 1, 1, 1, 1, 3, 2, 3, 1, 3, 2, 2, 2, 1, 1, 1, 1, 1, 2, 3, 1, 3, 2, 2, 0};
-    // mNumStars = {2, 3, 1, 3, 2, 2, 2, 1, 1, 1, 1, 1, 3, 2, 3, 0};
+    mNumStars = {2, 3, 1, 3, 2, 2, 2, 1, 1, 1, 1, 1, 3, 2, 3, 3, 2, 0};
     // mNumStars = {2, 3, 1, 3, 2, 0};
     // mNumStars = {0};
 }
@@ -63,7 +63,7 @@ void ProgressService::CompleteLevel(int levelId, int numStars) {
     SaveState();
 }
 
-int ProgressService::GetNumStars(int levelId) {
+int ProgressService::GetNumStars(int levelId) const {
     assert(levelId > 0);
     
     if (levelId <= GetProgress()) {
@@ -73,7 +73,7 @@ int ProgressService::GetNumStars(int levelId) {
     return 0;
 }
 
-int ProgressService::GetProgress() {
+int ProgressService::GetProgress() const {
     return static_cast<int>(mNumStars.size());
 }
 

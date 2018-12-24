@@ -35,7 +35,7 @@ Tutorial::Tutorial(Pht::IEngine& engine, GameScene& scene, const CommonResources
         fade,
         UiLayer::backgroundFade
     },
-    mHandAnimation {engine, scene},
+    mHandAnimation {engine},
     mPlacePieceWindowController {engine, commonResources},
     mFillRowsWindowController {engine, commonResources},
     mSwitchPieceWindowController {engine, commonResources},
@@ -70,7 +70,7 @@ void Tutorial::Init(const Level& level) {
         return;
     }
 
-    mHandAnimation.Init();
+    mHandAnimation.Init(mScene.GetScene(), mScene.GetUiViewsContainer(), 1.0f, true);
     mFadeEffect.Reset();
     
     auto& uiViewContainer {mScene.GetUiViewsContainer()};

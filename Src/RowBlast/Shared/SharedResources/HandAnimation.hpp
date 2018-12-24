@@ -1,11 +1,12 @@
 #ifndef HandAnimation_hpp
-#define Hand_hpp
+#define HandAnimation_hpp
 
 // Engine includes.
 #include "Vector.hpp"
 
 namespace Pht {
     class IEngine;
+    class Scene;
     class SceneObject;
     class ParticleEffect;
 }
@@ -15,9 +16,9 @@ namespace RowBlast {
 
     class HandAnimation {
     public:
-        HandAnimation(Pht::IEngine& engine, GameScene& scene);
+        HandAnimation(Pht::IEngine& engine);
         
-        void Init();
+        void Init(Pht::Scene& scene, Pht::SceneObject& parentObject, float scale, bool useShadow);
         void Start(const Pht::Vec3& position, float angle);
         void Update();
         void Stop();
@@ -32,14 +33,13 @@ namespace RowBlast {
             Still
         };
         
-        void CreateCircleParticleEffect();
+        void CreateCircleParticleEffect(Pht::Scene& scene);
         void UpdateInGoingForwardState();
         void UpdateInGoingBackwardState();
         void UpdateInStillState();
         void GoToForwardState();
         
         Pht::IEngine& mEngine;
-        GameScene& mScene;
         State mState {State::Inactive};
         Pht::SceneObject* mContainerSceneObject {nullptr};
         Pht::SceneObject* mHandSceneObject {nullptr};
