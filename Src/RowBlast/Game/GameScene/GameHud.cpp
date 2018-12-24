@@ -295,18 +295,24 @@ void GameHud::CreateMovesObject(Pht::Scene& scene,
         Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f},
         Pht::TextShadow::Yes,
         {0.05f, 0.05f},
-        {0.27f, 0.27f, 0.27f, 0.5f}
+        {0.27f, 0.27f, 0.27f, 0.5f},
+        Pht::SnapToPixel::No
     };
     
     std::string text {"   "};   // Warning! Must be three spaces to fit digits.
     mMovesText = &scene.CreateText(text, textProperties);
     auto& movesTextSceneobject {mMovesText->GetSceneObject()};
-    movesTextSceneobject.GetTransform().SetPosition({-0.05f, -0.29f, UiLayer::text});
-    movesContainer.AddChild(movesTextSceneobject);
+    movesTextSceneobject.GetTransform().SetPosition({-0.55f, -0.285f, UiLayer::text});
+    
+    mMovesTextContainer = &scene.CreateSceneObject();
+    mMovesTextContainer->GetTransform().SetPosition({0.5f, 0.0f, UiLayer::root});
+    mMovesTextContainer->AddChild(movesTextSceneobject);
+    
+    movesContainer.AddChild(*mMovesTextContainer);
     
     CreateLPiece(scene, movesContainer);
     
-    Pht::SceneObjectUtils::ScaleRecursively(*mMovesContainer, 1.1f);
+    Pht::SceneObjectUtils::ScaleRecursively(*mMovesContainer, movesTextScale);
 }
 
 void GameHud::CreateLPiece(Pht::Scene& scene, Pht::SceneObject& movesContainer) {

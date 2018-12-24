@@ -103,6 +103,13 @@ namespace RowBlast {
             return *mSelectablePiecesContainer;
         }
         
+        Pht::SceneObject& GetMovesTextContainer() {
+            assert(mMovesTextContainer);
+            return *mMovesTextContainer;
+        }
+        
+        static constexpr auto movesTextScale {1.1f};
+
     private:
         void CreateLightAndCamera(Pht::Scene& scene, Pht::SceneObject& parentObject, int hudLayer);
         void CreateProgressObject(Pht::Scene& scene,
@@ -154,6 +161,7 @@ namespace RowBlast {
         int mProgressGoal {0};
         Pht::TextComponent* mProgressText {nullptr};
         Pht::TextComponent* mMovesText {nullptr};
+        Pht::SceneObject* mMovesTextContainer {nullptr};
         Pht::LightComponent* mLight {nullptr};
         float mLightAnimationTime {0.0f};
         Pht::SceneObject* mSelectablePiecesRectangle {nullptr};

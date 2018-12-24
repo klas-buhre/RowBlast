@@ -15,6 +15,7 @@
 		6205F93220F519CF00716574 /* level41.json in Resources */ = {isa = PBXBuildFile; fileRef = 6205F93120F519CE00716574 /* level41.json */; };
 		620A981D1EE2A3B400AD6C61 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 620A981C1EE2A3B400AD6C61 /* AVFoundation.framework */; };
 		620A98291EE2B5C000AD6C61 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 620A98281EE2B5C000AD6C61 /* CoreMedia.framework */; };
+		621F887121D0212D00F276C2 /* FewMovesAlertAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 621F886F21D0212D00F276C2 /* FewMovesAlertAnimation.cpp */; };
 		62204EE421BD7A1800A035C0 /* sky7.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62204EE321BD7A1800A035C0 /* sky7.jpg */; };
 		62204EE621BD7BFD00A035C0 /* sky8.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62204EE521BD7BFC00A035C0 /* sky8.jpg */; };
 		62204EE821BD7F5200A035C0 /* sky9.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62204EE721BD7F5100A035C0 /* sky9.jpg */; };
@@ -453,6 +454,8 @@
 		6205F93120F519CE00716574 /* level41.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level41.json; sourceTree = "<group>"; };
 		620A981C1EE2A3B400AD6C61 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		620A98281EE2B5C000AD6C61 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		621F886F21D0212D00F276C2 /* FewMovesAlertAnimation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FewMovesAlertAnimation.cpp; sourceTree = "<group>"; };
+		621F887021D0212D00F276C2 /* FewMovesAlertAnimation.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = FewMovesAlertAnimation.hpp; sourceTree = "<group>"; };
 		62204EE321BD7A1800A035C0 /* sky7.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sky7.jpg; sourceTree = "<group>"; };
 		62204EE521BD7BFC00A035C0 /* sky8.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sky8.jpg; sourceTree = "<group>"; };
 		62204EE721BD7F5100A035C0 /* sky9.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sky9.jpg; sourceTree = "<group>"; };
@@ -1692,6 +1695,8 @@
 				625695772182382B003A3A9D /* FallingPieceAnimation.hpp */,
 				625695662182382B003A3A9D /* FallingPieceScaleAnimation.cpp */,
 				6256956D2182382B003A3A9D /* FallingPieceScaleAnimation.hpp */,
+				621F886F21D0212D00F276C2 /* FewMovesAlertAnimation.cpp */,
+				621F887021D0212D00F276C2 /* FewMovesAlertAnimation.hpp */,
 				6256955F2182382B003A3A9D /* FlashingBlocksAnimation.cpp */,
 				625695762182382B003A3A9D /* FlashingBlocksAnimation.hpp */,
 				6256956C2182382B003A3A9D /* FlyingBlocksAnimation.cpp */,
@@ -2957,6 +2962,7 @@
 				625698472182392C003A3A9D /* Scene.cpp in Sources */,
 				6256984B2182392C003A3A9D /* LightComponent.cpp in Sources */,
 				625698032182392C003A3A9D /* VertexBuffer.cpp in Sources */,
+				621F887121D0212D00F276C2 /* FewMovesAlertAnimation.cpp in Sources */,
 				6256968B2182382C003A3A9D /* DiamondPiece.cpp in Sources */,
 				6256969B2182382C003A3A9D /* PreviewPiecesAnimation.cpp in Sources */,
 				625696752182382C003A3A9D /* ComboDetector.cpp in Sources */,
