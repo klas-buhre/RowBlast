@@ -15,6 +15,8 @@ namespace RowBlast {
         constexpr auto lowerTextRectangle {-3.0f};
         constexpr auto tutorialWindow {-4.0f};
         constexpr auto backgroundFade {-3.5f};
+        constexpr auto slidingTextUfo {-4.4f};
+        constexpr auto slidingTextRectangle {-4.5f};
     }
     
     namespace GlobalLayer {

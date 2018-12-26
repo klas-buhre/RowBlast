@@ -26,6 +26,7 @@ namespace RowBlast {
         void Start(const Pht::Vec3& destinationPosition);
         void StartHighSpeed(const Pht::Vec3& destinationPosition);
         void StartWarpSpeed(const Pht::Vec3& destinationPosition);
+        void StartShortWarpSpeed(const Pht::Vec3& destinationPosition);
         State Update();
         bool IsActive() const;
         

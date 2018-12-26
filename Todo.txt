@@ -41,7 +41,6 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-    -The UFO could appear in the level completed subscene.
     -Find music for the game scene.
       -Try to find music similar to Puzzle Star BT21.
     -Sound effects.

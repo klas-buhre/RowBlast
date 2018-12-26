@@ -35,6 +35,8 @@ Ufo::Ufo(Pht::IEngine& engine, const CommonResources& commonResources, float sca
         reflectivity
     };
     
+    ufoMaterial.GetDepthState().mDepthTestAllowedOverride = true;
+    
     mUfoSceneObject = sceneManager.CreateSceneObject(Pht::ObjMesh {"ufo_3620.obj", 0.76f * scale},
                                                      ufoMaterial,
                                                      mSceneResources);

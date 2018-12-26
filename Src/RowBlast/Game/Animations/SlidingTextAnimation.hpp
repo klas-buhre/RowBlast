@@ -8,6 +8,10 @@
 #include "Vector.hpp"
 #include "SceneObject.hpp"
 
+// Game includes.
+#include "Ufo.hpp"
+#include "UfoAnimation.hpp"
+
 namespace Pht {
     class IEngine;
     class Font;
@@ -74,6 +78,8 @@ namespace RowBlast {
     
         Pht::IEngine& mEngine;
         GameScene& mScene;
+        Ufo mUfo;
+        UfoAnimation mUfoAnimation;
         State mState {State::Inactive};
         float mElapsedTime {0.0f};
         const Text* mText {nullptr};

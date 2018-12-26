@@ -12,6 +12,7 @@ namespace {
     constexpr auto animationDuration {2.0f};
     constexpr auto highSpeedDuration {7.5f};
     constexpr auto warpSpeedDuration {1.0f};
+    constexpr auto shortWarpSpeedDuration {0.25f};
     constexpr auto tiltDuration {3.6f};
     constexpr auto maxTiltAngle {4.0f};
     constexpr auto rotationSpeed {100.0f};
@@ -52,6 +53,14 @@ void UfoAnimation::StartWarpSpeed(const Pht::Vec3& destinationPosition) {
     mDestinationPosition = destinationPosition;
     mElapsedTime = 0.0f;
     mAnimationDuration = warpSpeedDuration;
+}
+
+void UfoAnimation::StartShortWarpSpeed(const Pht::Vec3& destinationPosition) {
+    mState = State::Active;
+    mStartPosition = mUfo.GetPosition();
+    mDestinationPosition = destinationPosition;
+    mElapsedTime = 0.0f;
+    mAnimationDuration = shortWarpSpeedDuration;
 }
 
 UfoAnimation::State UfoAnimation::Update() {

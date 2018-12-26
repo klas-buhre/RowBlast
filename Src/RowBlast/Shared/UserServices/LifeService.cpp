@@ -9,8 +9,7 @@
 using namespace RowBlast;
 
 namespace {
-    // constexpr auto fullNumLives {5};
-    constexpr auto fullNumLives {2};
+    constexpr auto fullNumLives {5};
     constexpr std::chrono::seconds lifeWaitDuration {180};
     const std::string filename {"lives.dat"};
     const std::string stateMember {"state"};

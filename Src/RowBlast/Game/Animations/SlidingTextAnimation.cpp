@@ -22,9 +22,13 @@ using namespace RowBlast;
 namespace {
     constexpr auto rectangleFadeInTime {0.3f};
     constexpr auto slideTime {0.2f};
+    constexpr auto ufoHeadStartTime {0.2f};
     constexpr auto displayDistance {0.65f};
     constexpr auto textWidth {8.8f};
     const Pht::Vec3 centerPosition {0.0f, 1.0f, 0.0f};
+    const Pht::Vec3 leftUfoPosition {-13.0f, 4.6f, UiLayer::slidingTextUfo};
+    const Pht::Vec3 centerUfoPosition {0.0f, 4.6f, UiLayer::slidingTextUfo};
+    const Pht::Vec3 rightUfoPosition {13.0f, 4.6f, UiLayer::slidingTextUfo};
     
     Pht::StaticVector<Pht::Vec2, 20> scalePoints {
         {0.0f, 0.0f},
@@ -52,7 +56,9 @@ SlidingTextAnimation::SlidingTextAnimation(Pht::IEngine& engine,
                                            GameScene& scene,
                                            const CommonResources& commonResources) :
     mEngine {engine},
-    mScene {scene} {
+    mScene {scene},
+    mUfo {engine, commonResources, 3.2f},
+    mUfoAnimation {engine, mUfo} {
     
     auto& font {commonResources.GetHussarFontSize52PotentiallyZoomedScreen()};
 
@@ -160,6 +166,10 @@ void SlidingTextAnimation::Init() {
     CreateGradientRectangles(containerSceneObject);
     
     containerSceneObject.AddChild(*mTwinkleParticleEffect);
+    
+    mUfo.Init(mScene.GetUiViewsContainer());
+    mUfo.Hide();
+    mEngine.GetRenderer().DisableShader(Pht::ShaderType::TexturedEnvMapLighting);
 
     auto& frustumSize {mEngine.GetRenderer().GetHudFrustumSize()};
     mLeftPosition = {-frustumSize.x / 2.0f - textWidth / 2.0f, 0.0f, 0.0f};
@@ -189,7 +199,7 @@ void SlidingTextAnimation::CreateGradientRectangles(Pht::SceneObject& containerS
 
     CreateGradientRectangle(scene,
                             *mGradientRectanglesSceneObject,
-                            {0.0f, 0.0f, UiLayer::textRectangle},
+                            {0.0f, 0.0f, UiLayer::slidingTextRectangle},
                             size,
                             0.0f,
                             leftQuadWidth,
@@ -206,7 +216,7 @@ void SlidingTextAnimation::CreateGradientRectangles(Pht::SceneObject& containerS
     Pht::Vec2 stripeSize {frustumSize.x, stripeHeight};
     CreateGradientRectangle(scene,
                             *mGradientRectanglesSceneObject,
-                            {0.0f, height / 2.0f + stripeOffset, UiLayer::textRectangle},
+                            {0.0f, height / 2.0f + stripeOffset, UiLayer::slidingTextRectangle},
                             stripeSize,
                             0.0f,
                             leftQuadWidth,
@@ -215,7 +225,7 @@ void SlidingTextAnimation::CreateGradientRectangles(Pht::SceneObject& containerS
                             stripeColors);
     CreateGradientRectangle(scene,
                             *mGradientRectanglesSceneObject,
-                            {0.0f, -height / 2.0f - stripeOffset, UiLayer::textRectangle},
+                            {0.0f, -height / 2.0f - stripeOffset, UiLayer::slidingTextRectangle},
                             stripeSize,
                             0.0f,
                             leftQuadWidth,
@@ -244,6 +254,11 @@ void SlidingTextAnimation::Start(Message message) {
     mGradientRectanglesSceneObject->SetIsStatic(false);
     mGradientRectanglesSceneObject->GetTransform().SetPosition({0.0f, 0.0f, 0.0f});
     Pht::SceneObjectUtils::SetAlphaRecursively(*mGradientRectanglesSceneObject, 0.0f);
+    
+    mUfo.SetPosition(rightUfoPosition);
+    mUfo.Show();
+    mUfoAnimation.Init();
+    mEngine.GetRenderer().EnableShader(Pht::ShaderType::TexturedEnvMapLighting);
 }
 
 SlidingTextAnimation::State SlidingTextAnimation::Update() {
@@ -307,6 +322,8 @@ void SlidingTextAnimation::UpdateInSlidingInState() {
         mEngine.GetInput().EnableInput();
         
         mTwinkleParticleEffect->GetComponent<Pht::ParticleEffect>()->Start();
+        
+        mUfoAnimation.StartShortWarpSpeed(centerUfoPosition);
     }
     
     UpdateTextLineSceneObjectPositions();
@@ -326,11 +343,20 @@ void SlidingTextAnimation::UpdateInDisplayingTextState() {
     mElapsedTime += dt;
     
     mTwinkleParticleEffect->GetComponent<Pht::ParticleEffect>()->Update(dt);
+    mUfoAnimation.Update();
     
     if (mElapsedTime > mText->mDisplayTime || mEngine.GetInput().ConsumeWholeTouch()) {
         mState = State::SlidingOut;
         mElapsedTime = 0.0f;
         mVelocity = mDisplayVelocity;
+        
+        if (!mUfoAnimation.IsActive()) {
+            mUfoAnimation.StartShortWarpSpeed(leftUfoPosition);
+        }
+    }
+    
+    if (mElapsedTime > mText->mDisplayTime - ufoHeadStartTime && !mUfoAnimation.IsActive()) {
+        mUfoAnimation.StartShortWarpSpeed(leftUfoPosition);
     }
     
     UpdateTextLineSceneObjectPositions();
@@ -346,6 +372,7 @@ void SlidingTextAnimation::UpdateInSlidingOutState() {
     UpdateTextLineSceneObjectPositions();
     
     mTwinkleParticleEffect->GetComponent<Pht::ParticleEffect>()->Update(dt);
+    mUfoAnimation.Update();
 
     if (mTextPosition.x >= mRightPosition.x * 2.0f) {
         mState = State::RectangleDisappearing;
@@ -364,10 +391,13 @@ void SlidingTextAnimation::UpdateInRectangleDisappearingState() {
     
     Pht::SceneObjectUtils::SetAlphaRecursively(*mGradientRectanglesSceneObject,
                                                (rectangleFadeInTime - mElapsedTime) / rectangleFadeInTime);
+    mUfoAnimation.Update();
 
     if (mElapsedTime > rectangleFadeInTime) {
         mState = State::Inactive;
         mGradientRectanglesSceneObject->SetIsVisible(false);
         mGradientRectanglesSceneObject->SetIsStatic(true);
+        mUfo.Hide();
+        mEngine.GetRenderer().DisableShader(Pht::ShaderType::TexturedEnvMapLighting);
     }
 }
