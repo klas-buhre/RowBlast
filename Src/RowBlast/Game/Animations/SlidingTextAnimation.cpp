@@ -255,9 +255,11 @@ void SlidingTextAnimation::Start(Message message) {
     mGradientRectanglesSceneObject->GetTransform().SetPosition({0.0f, 0.0f, 0.0f});
     Pht::SceneObjectUtils::SetAlphaRecursively(*mGradientRectanglesSceneObject, 0.0f);
     
+    mUfoState = UfoState::Inactive;
     mUfo.SetPosition(rightUfoPosition);
     mUfo.Show();
     mUfoAnimation.Init();
+    
     mEngine.GetRenderer().EnableShader(Pht::ShaderType::TexturedEnvMapLighting);
 }
 
@@ -323,7 +325,7 @@ void SlidingTextAnimation::UpdateInSlidingInState() {
         
         mTwinkleParticleEffect->GetComponent<Pht::ParticleEffect>()->Start();
         
-        mUfoAnimation.StartShortWarpSpeed(centerUfoPosition);
+        FlyInUfo();
     }
     
     UpdateTextLineSceneObjectPositions();
@@ -343,20 +345,18 @@ void SlidingTextAnimation::UpdateInDisplayingTextState() {
     mElapsedTime += dt;
     
     mTwinkleParticleEffect->GetComponent<Pht::ParticleEffect>()->Update(dt);
-    mUfoAnimation.Update();
+    UpdateUfo();
     
     if (mElapsedTime > mText->mDisplayTime || mEngine.GetInput().ConsumeWholeTouch()) {
         mState = State::SlidingOut;
         mElapsedTime = 0.0f;
         mVelocity = mDisplayVelocity;
         
-        if (!mUfoAnimation.IsActive()) {
-            mUfoAnimation.StartShortWarpSpeed(leftUfoPosition);
-        }
+        FlyOutUfo();
     }
     
-    if (mElapsedTime > mText->mDisplayTime - ufoHeadStartTime && !mUfoAnimation.IsActive()) {
-        mUfoAnimation.StartShortWarpSpeed(leftUfoPosition);
+    if (mElapsedTime > mText->mDisplayTime - ufoHeadStartTime) {
+        FlyOutUfo();
     }
     
     UpdateTextLineSceneObjectPositions();
@@ -372,7 +372,7 @@ void SlidingTextAnimation::UpdateInSlidingOutState() {
     UpdateTextLineSceneObjectPositions();
     
     mTwinkleParticleEffect->GetComponent<Pht::ParticleEffect>()->Update(dt);
-    mUfoAnimation.Update();
+    UpdateUfo();
 
     if (mTextPosition.x >= mRightPosition.x * 2.0f) {
         mState = State::RectangleDisappearing;
@@ -391,7 +391,7 @@ void SlidingTextAnimation::UpdateInRectangleDisappearingState() {
     
     Pht::SceneObjectUtils::SetAlphaRecursively(*mGradientRectanglesSceneObject,
                                                (rectangleFadeInTime - mElapsedTime) / rectangleFadeInTime);
-    mUfoAnimation.Update();
+    UpdateUfo();
 
     if (mElapsedTime > rectangleFadeInTime) {
         mState = State::Inactive;
@@ -399,5 +399,43 @@ void SlidingTextAnimation::UpdateInRectangleDisappearingState() {
         mGradientRectanglesSceneObject->SetIsStatic(true);
         mUfo.Hide();
         mEngine.GetRenderer().DisableShader(Pht::ShaderType::TexturedEnvMapLighting);
+    }
+}
+
+void SlidingTextAnimation::UpdateUfo() {
+    mUfoAnimation.Update();
+    
+    switch (mUfoState) {
+        case UfoState::FlyingIn:
+            if (!mUfoAnimation.IsActive()) {
+                mUfoState = UfoState::Hovering;
+            }
+            break;
+        default:
+            break;
+    }
+}
+
+void SlidingTextAnimation::FlyInUfo() {
+    switch (mUfoState) {
+        case UfoState::Inactive:
+            mUfoAnimation.StartShortWarpSpeed(centerUfoPosition);
+            mUfoState = UfoState::FlyingIn;
+            break;
+        default:
+            break;
+    }
+}
+
+void SlidingTextAnimation::FlyOutUfo() {
+    switch (mUfoState) {
+        case UfoState::FlyingIn:
+        case UfoState::Hovering:
+            mUfoAnimation.StartShortWarpSpeed(leftUfoPosition);
+            mUfoState = UfoState::FlyingOut;
+            break;
+        case UfoState::FlyingOut:
+        case UfoState::Inactive:
+            break;
     }
 }

@@ -75,11 +75,22 @@ namespace RowBlast {
         void UpdateInDisplayingTextState();
         void UpdateInSlidingOutState();
         void UpdateInRectangleDisappearingState();
+        void UpdateUfo();
+        void FlyInUfo();
+        void FlyOutUfo();
+        
+        enum class UfoState {
+            FlyingIn,
+            Hovering,
+            FlyingOut,
+            Inactive
+        };
     
         Pht::IEngine& mEngine;
         GameScene& mScene;
         Ufo mUfo;
         UfoAnimation mUfoAnimation;
+        UfoState mUfoState {UfoState::Inactive};
         State mState {State::Inactive};
         float mElapsedTime {0.0f};
         const Text* mText {nullptr};

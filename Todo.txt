@@ -41,6 +41,9 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
+    -Buy sounds and music.
+      -Try Bensound
+      -Try https://freesound.org
     -Find music for the game scene.
       -Try to find music similar to Puzzle Star BT21.
     -Sound effects.
