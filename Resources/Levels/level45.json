@@ -4,6 +4,7 @@
     "twoStars": 20,
     "threeStars": 15,
     "floatingBlocksSet": "Asteroid",
+    "musicTrack": 1,
     "background": "space1.jpg",
     "lightIntensity": "Dark",
     "pieces": [

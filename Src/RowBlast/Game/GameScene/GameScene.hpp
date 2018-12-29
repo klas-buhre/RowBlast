@@ -216,6 +216,7 @@ namespace RowBlast {
 
     private:
         void UpdateCameraPosition();
+        void LoadMusic(const Level& level);
         void CreateRenderPasses();
         void CreateLightAndCamera();
         void CreateBackground(const Level& level);

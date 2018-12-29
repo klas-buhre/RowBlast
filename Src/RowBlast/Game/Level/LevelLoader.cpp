@@ -340,6 +340,7 @@ std::unique_ptr<Level> LevelLoader::Load(int levelId, const LevelResources& leve
     
     auto& pieceTypes {levelResources.GetPieceTypes()};
     
+    auto musicTrack {Pht::Json::ReadInt(document, "musicTrack")};
     auto backgroundTextureFilename {Pht::Json::ReadString(document, "background")};
     auto floatingBlocksSet {ReadFloatingBlocksSet(document)};
     auto lightIntensity {ReadLightIntensity(document)};
@@ -405,6 +406,7 @@ std::unique_ptr<Level> LevelLoader::Load(int levelId, const LevelResources& leve
                                 pieceSequence,
                                 predeterminedMoves,
                                 suggestedMoves,
+                                musicTrack,
                                 backgroundTextureFilename,
                                 floatingBlocksSet,
                                 lightIntensity,

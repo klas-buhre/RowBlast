@@ -15,6 +15,7 @@
 #include "ScrollController.hpp"
 #include "CommonResources.hpp"
 #include "LevelResources.hpp"
+#include "AudioResources.hpp"
 
 using namespace RowBlast;
 
@@ -120,6 +121,8 @@ void GameScene::Init(const Level& level,
                      const PieceResources& pieceResources,
                      const GameLogic& gameLogic,
                      const Field& field) {
+    LoadMusic(level);
+    
     auto& sceneManager {mEngine.GetSceneManager()};
     auto scene {sceneManager.CreateScene(Pht::Hash::Fnv1a("gameScene"))};
     mScene = scene.get();
@@ -154,6 +157,20 @@ void GameScene::Init(const Level& level,
     sceneManager.SetLoadedScene(std::move(scene));
     
     UpdateCameraPosition();
+}
+
+void GameScene::LoadMusic(const Level& level) {
+    switch (level.GetMusicTrack()) {
+        case 1:
+            LoadAndPlayGameMusicTrack1(mEngine);
+            break;
+        case 2:
+            LoadAndPlayGameMusicTrack2(mEngine);
+            break;
+        default:
+            assert("Illegal music track.");
+            break;
+    }
 }
 
 void GameScene::CreateRenderPasses() {

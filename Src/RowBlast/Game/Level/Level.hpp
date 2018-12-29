@@ -46,6 +46,7 @@ namespace RowBlast {
               const std::vector<const Piece*>& pieceSequence,
               const std::vector<TutorialMove>& predeterminedMoves,
               const std::vector<TutorialMove>& suggestedMoves,
+              int musicTrack,
               const std::string& backgroundTextureFilename,
               FloatingBlocksSet floatingBlocksSet,
               LightIntensity lightIntensity,
@@ -111,6 +112,10 @@ namespace RowBlast {
             return mBlueprintGrid.get();
         }
         
+        int GetMusicTrack() const {
+            return mMusicTrack;
+        }
+        
         const std::string& GetBackgroundTextureFilename() const {
             return mBackgroundTextureFilename;
         }
@@ -143,6 +148,7 @@ namespace RowBlast {
         std::vector<TutorialMove> mSuggestedMoves;
         std::unique_ptr<CellGrid> mClearGrid;
         std::unique_ptr<BlueprintCellGrid> mBlueprintGrid;
+        int mMusicTrack {1};
         std::string mBackgroundTextureFilename;
         FloatingBlocksSet mFloatingBlocksSet {FloatingBlocksSet::Standard};
         LightIntensity mLightIntensity {LightIntensity::Daylight};

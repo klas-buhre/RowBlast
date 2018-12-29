@@ -8,7 +8,8 @@ namespace Pht {
 namespace RowBlast {
     enum class MusicTrackId {
         Map,
-        Game
+        Game1,
+        Game2
     };
     
     enum class SoundId {
@@ -17,6 +18,8 @@ namespace RowBlast {
     };
     
     void LoadAudioResouces(Pht::IEngine& engine);
+    void LoadAndPlayGameMusicTrack1(Pht::IEngine& engine);
+    void LoadAndPlayGameMusicTrack2(Pht::IEngine& engine);
 }
 
 #endif

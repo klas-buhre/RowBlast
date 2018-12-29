@@ -231,8 +231,6 @@ void RowBlastApplication::StartMap() {
 }
 
 void RowBlastApplication::StartGame() {
-    mEngine.GetAudio().PlayMusicTrack(static_cast<Pht::AudioResourceId>(MusicTrackId::Game),
-                                      fadeDuration);
     mState = State::GameScene;
     mGameController.StartLevel(mLevelToStart);
 }
