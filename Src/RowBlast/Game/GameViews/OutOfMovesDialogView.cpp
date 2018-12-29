@@ -61,11 +61,11 @@ OutOfMovesDialogView::OutOfMovesDialogView(Pht::IEngine& engine,
     AddSceneObject(std::move(menuWindowSceneObject));
 
     SetSize(menuWindow.GetSize());
-    
-    CreateText({-3.4f, 4.95f, UiLayer::text},
-               "OUT OF MOVES",
+
+    CreateText({-2.6f, 4.95f, UiLayer::text},
+               "CONTINUE?",
                guiResources.GetLargeWhiteTextProperties(zoom));
-    
+
     Pht::Vec3 closeButtonPosition {
         GetSize().x / 2.0f - 1.3f,
         GetSize().y / 2.0f - 1.3f,

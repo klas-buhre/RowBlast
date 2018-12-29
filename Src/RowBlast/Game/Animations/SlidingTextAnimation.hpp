@@ -38,7 +38,8 @@ namespace RowBlast {
             FillSlots,
             SlotsFilled,
             BringDownTheAsteroid,
-            TheAsteroidIsDown
+            TheAsteroidIsDown,
+            OutOfMoves
         };
         
         SlidingTextAnimation(Pht::IEngine& engine,
@@ -57,6 +58,7 @@ namespace RowBlast {
 
         struct Text {
             float mDisplayTime {1.0f};
+            bool mIsUfoVisible {true};
             Pht::Vec3 mUpperTextLinePosition;
             std::unique_ptr<Pht::SceneObject> mUpperTextLineSceneObject;
             Pht::Vec3 mLowerTextLinePosition;
@@ -65,6 +67,7 @@ namespace RowBlast {
         
         void CreateText(const Pht::Font& font,
                         float displayTime,
+                        bool isUfoVisible,
                         const TextLine& upperTextLine,
                         const TextLine& lowerTextLine);
         void CreateTwinkleParticleEffect();

@@ -41,12 +41,21 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-    -Buy sounds and music.
+    -Music.
       -Try Bensound
       -Try https://freesound.org
+    -Music for the title scene:
+      -Light Latt by Biare Studio. Credit them.
+    -Music for the map scene:
+      -Light Latt
     -Find music for the game scene.
-      -Try to find music similar to Puzzle Star BT21.
+      -Main track during gameplay:
+        -Tidal Glide by Zircon
+        -Stone Clockwise by Zircon
+      -Short jingle/fanfare (like in Stellar) that starts when completing the level.
+      -When out of moves, just continue the main track.
     -Sound effects.
+      -Try audiojungle.net
 
 
 Ordered Backlog:

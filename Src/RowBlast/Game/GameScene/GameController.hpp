@@ -84,6 +84,7 @@ namespace RowBlast {
         void StartLevelObjectiveAnimation();
         Command UpdateInLevelCompletedState();
         Command UpdateInOutOfMovesState();
+        void UpdateInOutOfMovesStateOutOfMovesAnimation();
         Command UpdateOutOfMovesDialog();
         void UpdateInOutOfMovesStateStore();
         Command UpdateInGameOverState();
@@ -103,6 +104,7 @@ namespace RowBlast {
         void GoToPausedStateLevelGoalDialog();
         void GoToPausedStateGameMenu(SlidingMenuAnimation::UpdateFade updateFade,
                                      SlidingMenuAnimation::SlideDirection slideDirection);
+        void GoToOutOfMovesStateOutOfMovesAnimation();
         void GoToOutOfMovesStateOutOfMovesDialog(SlidingMenuAnimation::SlideDirection slideDirection,
                                                  SlidingMenuAnimation::UpdateFade updateFade);
         void GoToOutOfMovesStateStore();
@@ -136,6 +138,7 @@ namespace RowBlast {
         };
         
         enum class OutOfMovesState {
+            OutOfMovesAnimation,
             OutOfMovesDialog,
             Store
         };

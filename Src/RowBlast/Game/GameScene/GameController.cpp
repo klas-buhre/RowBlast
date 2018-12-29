@@ -244,8 +244,7 @@ void GameController::ChangeGameState(GameLogic::Result gameLogicResult) {
             break;
         case GameLogic::Result::OutOfMoves:
             mState = GameState::OutOfMoves;
-            GoToOutOfMovesStateOutOfMovesDialog(SlidingMenuAnimation::SlideDirection::Left,
-                                                SlidingMenuAnimation::UpdateFade::Yes);
+            GoToOutOfMovesStateOutOfMovesAnimation();
             break;
         case GameLogic::Result::GameOver:
             mState = GameState::GameOver;
@@ -541,6 +540,9 @@ GameController::Command GameController::UpdateInOutOfMovesState() {
     mUserServices.Update();
     
     switch (mOutOfMovesState) {
+        case OutOfMovesState::OutOfMovesAnimation:
+            UpdateInOutOfMovesStateOutOfMovesAnimation();
+            break;
         case OutOfMovesState::OutOfMovesDialog:
             command = UpdateOutOfMovesDialog();
             break;
@@ -550,6 +552,13 @@ GameController::Command GameController::UpdateInOutOfMovesState() {
     }
     
     return command;
+}
+
+void GameController::UpdateInOutOfMovesStateOutOfMovesAnimation() {
+    if (mSlidingTextAnimation.Update() == SlidingTextAnimation::State::Inactive) {
+        GoToOutOfMovesStateOutOfMovesDialog(SlidingMenuAnimation::SlideDirection::Left,
+                                            SlidingMenuAnimation::UpdateFade::Yes);
+    }
 }
 
 GameController::Command GameController::UpdateOutOfMovesDialog() {
@@ -750,6 +759,11 @@ void GameController::GoToPausedStateGameMenu(SlidingMenuAnimation::UpdateFade up
                                                        slideDirection,
                                                        isUndoMovePossible);
     mTutorial.OnPause();
+}
+
+void GameController::GoToOutOfMovesStateOutOfMovesAnimation() {
+    mOutOfMovesState = OutOfMovesState::OutOfMovesAnimation;
+    mSlidingTextAnimation.Start(SlidingTextAnimation::Message::OutOfMoves);
 }
 
 void GameController::GoToOutOfMovesStateOutOfMovesDialog(SlidingMenuAnimation::SlideDirection slideDirection,

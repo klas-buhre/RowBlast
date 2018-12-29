@@ -62,19 +62,21 @@ SlidingTextAnimation::SlidingTextAnimation(Pht::IEngine& engine,
     
     auto& font {commonResources.GetHussarFontSize52PotentiallyZoomedScreen()};
 
-    mTexts.reserve(6);
-    CreateText(font, 2.5f, {{-3.96f, 0.33f}, "CLEAR ALL"}, {{-5.17f, -1.58f}, "GRAY BLOCKS"});
-    CreateText(font, 1.6f, {{-1.21f, 0.33f}, "ALL"}, {{-3.3f, -1.58f}, "CLEARED!"});
-    CreateText(font, 2.5f, {{-2.97f, 0.33f}, "FILL ALL"}, {{-4.73f, -1.58f}, "GRAY SLOTS"});
-    CreateText(font, 2.5f, {{-3.85f, 0.33f}, "ALL SLOTS"}, {{-2.31f, -1.58f}, "FILLED!"});
-    CreateText(font, 2.5f, {{-5.0f, 0.33f}, "BRING DOWN"}, {{-5.2f, -1.58f}, "THE ASTEROID"});
-    CreateText(font, 2.5f, {{-5.1f, 0.33f}, "THE ASTEROID"}, {{-3.6f, -1.58f}, "IS DOWN!"});
+    mTexts.reserve(7);
+    CreateText(font, 2.5f, true, {{-3.96f, 0.33f}, "CLEAR ALL"}, {{-5.17f, -1.58f}, "GRAY BLOCKS"});
+    CreateText(font, 1.6f, true, {{-1.21f, 0.33f}, "ALL"}, {{-3.3f, -1.58f}, "CLEARED!"});
+    CreateText(font, 2.5f, true, {{-2.97f, 0.33f}, "FILL ALL"}, {{-4.73f, -1.58f}, "GRAY SLOTS"});
+    CreateText(font, 2.5f, true, {{-3.85f, 0.33f}, "ALL SLOTS"}, {{-2.31f, -1.58f}, "FILLED!"});
+    CreateText(font, 2.5f, true, {{-5.0f, 0.33f}, "BRING DOWN"}, {{-5.2f, -1.58f}, "THE ASTEROID"});
+    CreateText(font, 2.5f, true, {{-5.1f, 0.33f}, "THE ASTEROID"}, {{-3.6f, -1.58f}, "IS DOWN!"});
+    CreateText(font, 2.5f, false, {{-2.8f, 0.33f}, "OUT OF"}, {{-2.9f, -1.58f}, "MOVES!"});
 
     CreateTwinkleParticleEffect();
 }
 
 void SlidingTextAnimation::CreateText(const Pht::Font& font,
                                       float displayTime,
+                                      bool isUfoVisible,
                                       const TextLine& upperTextLine,
                                       const TextLine& lowerTextLine) {
     Pht::TextProperties textProperties {
@@ -113,6 +115,7 @@ void SlidingTextAnimation::CreateText(const Pht::Font& font,
     mTexts.push_back(
         Text {
             displayTime,
+            isUfoVisible,
             Pht::Vec3{upperTextLine.mPosition.x, upperTextLine.mPosition.y, 0.5f},
             std::move(upperTextLineSceneObject),
             Pht::Vec3{lowerTextLine.mPosition.x, lowerTextLine.mPosition.y, 0.5f},
@@ -257,8 +260,11 @@ void SlidingTextAnimation::Start(Message message) {
     
     mUfoState = UfoState::Inactive;
     mUfo.SetPosition(rightUfoPosition);
-    mUfo.Show();
     mUfoAnimation.Init();
+    
+    if (mText->mIsUfoVisible) {
+        mUfo.Show();
+    }
     
     mEngine.GetRenderer().EnableShader(Pht::ShaderType::TexturedEnvMapLighting);
 }
