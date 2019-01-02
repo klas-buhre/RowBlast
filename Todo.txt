@@ -112,8 +112,24 @@ Ongoing tasks:
            Candidate: https://assetstore.unity.com/packages/audio/sound-fx/universal-sound-fx-17256  time 27:08
         -Sound from the stars going into position (Maybe sound like in Puzzle Star).
            Candidate: https://assetstore.unity.com/packages/audio/sound-fx/67-coins-and-items-sounds-collectables-92693  time 00:47 or 00:50 or 01:01
-           Or: https://assetstore.unity.com/packages/audio/sound-fx/interface-and-item-sounds-89646  time 00:38
-           Or: https://assetstore.unity.com/packages/audio/sound-fx/interface-and-item-sounds-89646  time 04:32
+           Or: https://assetstore.unity.com/packages/audio/sound-fx/interface-and-item-sounds-89646  time 00:38 or 04:32
+
+
+#Candidates: Cost:  Buy:   Sound Pack:
+9            17.86  Yes    https://assetstore.unity.com/packages/audio/sound-fx/universal-sound-fx-17256
+4            43.77  Yes    https://assetstore.unity.com/packages/audio/sound-fx/mobile-game-82136
+4             7.15  Yes    https://assetstore.unity.com/packages/audio/sound-fx/interface-and-item-sounds-89646
+3             4.46  Yes    https://assetstore.unity.com/packages/audio/sound-fx/ui-item-sound-effect-jingles-30508
+2             4.47  Yes    https://assetstore.unity.com/packages/audio/sound-fx/interface-sound-effects-84577
+2            43.77  Maybe  https://assetstore.unity.com/packages/audio/sound-fx/pro-sound-collection-50235
+1            FREE   Yes    https://assetstore.unity.com/packages/audio/sound-fx/ui-sfx-36989
+1             4.47  Yes    https://assetstore.unity.com/packages/audio/sound-fx/ui-item-sound-effects-2-130792
+1            17.78  Maybe  https://assetstore.unity.com/packages/audio/sound-fx/objects-destruction-sfx-109183
+1             8.89  Maybe  https://assetstore.unity.com/packages/audio/sound-fx/weapons/blasters-small-83107
+1             4.47  Maybe  https://assetstore.unity.com/packages/audio/sound-fx/67-coins-and-items-sounds-collectables-92693
+
+             Cost all Yes:
+            ~104
 
 
 Ordered Backlog:
