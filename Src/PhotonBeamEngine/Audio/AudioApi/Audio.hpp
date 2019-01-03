@@ -45,7 +45,7 @@ namespace Pht {
         std::unordered_map<AudioResourceId, std::unique_ptr<IMusicTrack>> mTracks;
         IMusicTrack* mActiveTrack {nullptr};
         float mMusicVolume {1.0f};
-        bool mIsSoundEnabled {false};
+        bool mIsSoundEnabled {true};
         bool mIsMusicEnabled {true};
     };
 }

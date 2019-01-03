@@ -45,7 +45,7 @@ namespace RowBlast {
         }
 
         const Materials& GetMaterials() const {
-            return mMaterials;
+            return *mMaterials;
         }
         
         const GuiResources& GetGuiResources() const {
@@ -55,7 +55,7 @@ namespace RowBlast {
         static constexpr auto narrowFrustumHeightFactor {1.13f};
         
     private:
-        Materials mMaterials;
+        std::unique_ptr<Materials> mMaterials;
         std::unique_ptr<GuiResources> mGuiResources;
         std::unique_ptr<Pht::Font> mHussarFontSize20;
         std::unique_ptr<Pht::Font> mHussarFontSize27;

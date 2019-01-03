@@ -28,7 +28,7 @@ GameHudController::Result GameHudController::OnTouch(const Pht::TouchEvent& even
     }
 
     if (pauseButton.IsClicked(event)) {
-        mEngine.GetAudio().PlaySound(static_cast<Pht::AudioResourceId>(SoundId::Blip));
+        mEngine.GetAudio().PlaySound(static_cast<Pht::AudioResourceId>(SoundId::ButtonClick));
         return Result::ClickedPause;
     }
     

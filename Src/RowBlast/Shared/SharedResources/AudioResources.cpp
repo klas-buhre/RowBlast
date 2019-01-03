@@ -16,11 +16,15 @@ namespace {
 void RowBlast::LoadAudioResouces(Pht::IEngine& engine) {
     auto& audio {engine.GetAudio()};
     
+    audio.LoadSound("logo.wav", 1, maxSoundGain, static_cast<Pht::AudioResourceId>(SoundId::Logo));
+    audio.PlaySound(static_cast<Pht::AudioResourceId>(SoundId::Logo));
+    
     audio.LoadMusicTrack("map.mp4", static_cast<Pht::AudioResourceId>(MusicTrackId::Map));
     audio.LoadMusicTrack("game_track1.mp4", static_cast<Pht::AudioResourceId>(MusicTrackId::Game1));
     
-    audio.LoadSound("Blip.wav", 3, maxSoundGain, static_cast<Pht::AudioResourceId>(SoundId::Blip));
     audio.LoadSound("Bomb.wav", 10, maxSoundGain, static_cast<Pht::AudioResourceId>(SoundId::Bomb));
+    audio.LoadSound("button_click.wav", 1, maxSoundGain, static_cast<Pht::AudioResourceId>(SoundId::ButtonClick));
+    audio.LoadSound("start_game.wav", 1, maxSoundGain, static_cast<Pht::AudioResourceId>(SoundId::StartGame));
     audio.LoadSound("leave_title.wav", 1, 0.65f, static_cast<Pht::AudioResourceId>(SoundId::LeaveTitle));
 }
 

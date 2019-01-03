@@ -6,6 +6,7 @@
 #include "IEngine.hpp"
 #include "IRenderer.hpp"
 #include "IInput.hpp"
+#include "IAudio.hpp"
 #include "InputEvent.hpp"
 #include "MathUtils.hpp"
 #include "ISceneManager.hpp"
@@ -16,6 +17,7 @@
 #include "UserServices.hpp"
 #include "LevelLoader.hpp"
 #include "Universe.hpp"
+#include "AudioResources.hpp"
 
 using namespace RowBlast;
 
@@ -369,6 +371,8 @@ MapController::Command MapController::HandleTouch(const Pht::TouchEvent& touch) 
 }
 
 MapController::Command MapController::HandlePinClick(const MapPin& pin) {
+    mEngine.GetAudio().PlaySound(static_cast<Pht::AudioResourceId>(SoundId::ButtonClick));
+    
     auto command {Command{Command::None}};
     auto& mapPlace {pin.GetPlace()};
     

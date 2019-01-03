@@ -2,10 +2,12 @@
 
 // Engine includes.
 #include "IEngine.hpp"
+#include "IAudio.hpp"
 
 // Game includes.
 #include "InputUtil.hpp"
 #include "CommonResources.hpp"
+#include "AudioResources.hpp"
 
 using namespace RowBlast;
 
@@ -13,7 +15,7 @@ LevelGoalDialogController::LevelGoalDialogController(Pht::IEngine& engine,
                                                      const CommonResources& commonResources,
                                                      const PieceResources& pieceResources,
                                                      LevelGoalDialogView::SceneId sceneId) :
-    mInput {engine.GetInput()},
+    mEngine {engine},
     mView {engine, commonResources, pieceResources, sceneId},
     mSlidingMenuAnimation {engine, mView},
     mSceneId {sceneId} {}
@@ -66,7 +68,7 @@ LevelGoalDialogController::Result LevelGoalDialogController::Update() {
 }
 
 LevelGoalDialogController::Result LevelGoalDialogController::HandleInput() {
-    return InputUtil::HandleInput<Result>(mInput,
+    return InputUtil::HandleInput<Result>(mEngine.GetInput(),
                                           Result::None,
                                           [this] (const Pht::TouchEvent& touch) {
                                               return OnTouch(touch);
@@ -93,6 +95,7 @@ LevelGoalDialogController::OnTouchInMapScene(const Pht::TouchEvent& touchEvent) 
     }
 
     if (mView.GetPlayButton().IsClicked(touchEvent)) {
+        mEngine.GetAudio().PlaySound(static_cast<Pht::AudioResourceId>(SoundId::StartGame));
         return Result::Play;
     }
     

@@ -13,8 +13,10 @@ namespace RowBlast {
     };
     
     enum class SoundId {
-        Blip,
         Bomb,
+        Logo,
+        ButtonClick,
+        StartGame,
         LeaveTitle
     };
     

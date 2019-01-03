@@ -10,8 +10,10 @@
 
 using namespace RowBlast;
 
-CommonResources::CommonResources(Pht::IEngine& engine) :
-    mMaterials {engine} {
+CommonResources::CommonResources(Pht::IEngine& engine) {
+    LoadAudioResouces(engine);
+    
+    mMaterials = std::make_unique<Materials>(engine);
 
     auto& renderer {engine.GetRenderer()};
     auto& sceneManager {engine.GetSceneManager()};
@@ -42,8 +44,6 @@ CommonResources::CommonResources(Pht::IEngine& engine) :
     sceneManager.InitSceneSystems(Pht::ISceneManager::defaultNarrowFrustumHeightFactor);
     
     mGuiResources = std::make_unique<GuiResources>(engine, *this);
-    
-    LoadAudioResouces(engine);
 }
 
 const Pht::Font&

@@ -6,7 +6,6 @@
 #include "SlidingMenuAnimation.hpp"
 
 namespace Pht {
-    class IInput;
     class TouchEvent;
 }
 
@@ -42,7 +41,7 @@ namespace RowBlast {
         Result OnTouchInMapScene(const Pht::TouchEvent& touchEvent);
         Result OnTouchInGameScene(const Pht::TouchEvent& touchEvent);
 
-        Pht::IInput& mInput;
+        Pht::IEngine& mEngine;
         LevelGoalDialogView mView;
         SlidingMenuAnimation mSlidingMenuAnimation;
         Result mDeferredResult {Result::None};

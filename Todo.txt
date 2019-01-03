@@ -41,13 +41,11 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-    -Find music for the game scene.
-      -When out of moves, just continue the main track.
+    -TODO: Cut the button_click.wav to get rid of the weird sound at the end.
+    -When out of moves, just continue the main track.
     -Sound effects.
-      -Try audiojungle.net
-      -Try https://freesound.org
       -Title scene:
-        -Jingle sound when tapping the screen to continue.
+DONE     -Jingle sound when tapping the screen to continue.
           Candidate: https://assetstore.unity.com/packages/audio/sound-fx/ui-item-sound-effect-jingles-30508  time 00:02
       -Map scene:
         -Button click (only when clicked, not when pressed). Could sound like in Tetris Blitz or
@@ -58,11 +56,12 @@ Ongoing tasks:
            Or: https://assetstore.unity.com/packages/audio/sound-fx/ui-item-sound-effect-jingles-30508  time 00:15
            Or: https://assetstore.unity.com/packages/audio/sound-fx/universal-sound-fx-17256  time around 11:50
            Or: https://assetstore.unity.com/packages/audio/sound-fx/mobile-game-82136   Menu & UI time 00:10
-        -Map level click: use button click sound.
+DONE    -Map level click: use button click sound.
         -Low prio: Some bling/cash sounds when entering the store or purchasing products.
            Candidate: https://assetstore.unity.com/packages/audio/sound-fx/interface-and-item-sounds-89646  time 4:37 and a few later ones
         -Low prio: Maybe a wooshing sound when a menu slides in.
            Candidate: https://assetstore.unity.com/packages/audio/sound-fx/universal-sound-fx-17256  time around 27:35
+           Or: Quick Transition (4).wav in https://assetstore.unity.com/packages/audio/sound-fx/interface-and-item-sounds-89646.
         -In other games, music seems to be muted when when starting a purchase.
       -Game scene:
         -Maybe a shwooshing sound for the sliding text animation:
@@ -71,6 +70,7 @@ Ongoing tasks:
            Candidate: https://assetstore.unity.com/packages/audio/sound-fx/universal-sound-fx-17256  time 15:48
         -Click sound when clicking a move using click controls.
            Candidate: https://assetstore.unity.com/packages/audio/sound-fx/interface-sound-effects-84577  time 00:12
+           Or: Click (8).wav in https://assetstore.unity.com/packages/audio/sound-fx/interface-and-item-sounds-89646 or the version with reverb in Futuristic.
            Or: any of the button click candidates.
         -Some thump sound when landing a piece (Or woosh?). Could sound like in Tetris Ultimate.
            Candidate: https://assetstore.unity.com/packages/audio/sound-fx/mobile-game-82136  Movements 00:48
@@ -122,9 +122,9 @@ Ongoing tasks:
 4            43.77  Done   https://assetstore.unity.com/packages/audio/sound-fx/mobile-game-82136
 4             7.15  Done   https://assetstore.unity.com/packages/audio/sound-fx/interface-and-item-sounds-89646
 3             4.46  Done   https://assetstore.unity.com/packages/audio/sound-fx/ui-item-sound-effect-jingles-30508
-2             4.47  Yes    https://assetstore.unity.com/packages/audio/sound-fx/interface-sound-effects-84577
+2             4.47  Done   https://assetstore.unity.com/packages/audio/sound-fx/interface-sound-effects-84577
 2            43.77  Maybe  https://assetstore.unity.com/packages/audio/sound-fx/pro-sound-collection-50235
-1            FREE   Yes    https://assetstore.unity.com/packages/audio/sound-fx/ui-sfx-36989
+1            FREE   Done   https://assetstore.unity.com/packages/audio/sound-fx/ui-sfx-36989
 1             4.47  Yes    https://assetstore.unity.com/packages/audio/sound-fx/ui-item-sound-effects-2-130792
 1            17.78  Maybe  https://assetstore.unity.com/packages/audio/sound-fx/objects-destruction-sfx-109183
 1             8.89  Maybe  https://assetstore.unity.com/packages/audio/sound-fx/weapons/blasters-small-83107

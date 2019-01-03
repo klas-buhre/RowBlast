@@ -128,7 +128,7 @@ bool MenuButton::IsClicked(const Pht::TouchEvent& event) const {
     auto isClicked {mButton->IsClicked(event)};
     
     if (isClicked) {
-        mAudio.PlaySound(static_cast<Pht::AudioResourceId>(SoundId::Blip));
+        mAudio.PlaySound(static_cast<Pht::AudioResourceId>(SoundId::ButtonClick));
     }
     
     return isClicked;
