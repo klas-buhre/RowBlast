@@ -14,12 +14,14 @@ namespace RowBlast {
     
     enum class SoundId {
         Blip,
-        Bomb
+        Bomb,
+        LeaveTitle
     };
     
     void LoadAudioResouces(Pht::IEngine& engine);
     void LoadAndPlayGameMusicTrack1(Pht::IEngine& engine);
     void LoadAndPlayGameMusicTrack2(Pht::IEngine& engine);
+    void PlayMapMusicTrack(Pht::IEngine& engine);
 }
 
 #endif

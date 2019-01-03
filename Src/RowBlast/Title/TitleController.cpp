@@ -6,6 +6,10 @@
 #include "IEngine.hpp"
 #include "IInput.hpp"
 #include "InputEvent.hpp"
+#include "IAudio.hpp"
+
+// Game includes.
+#include "AudioResources.hpp"
 
 using namespace RowBlast;
 
@@ -34,6 +38,7 @@ TitleController::Command TitleController::Update() {
     
     if (mEngine.GetInput().ConsumeWholeTouch()) {
         command = Command::GoToMap;
+        mEngine.GetAudio().PlaySound(static_cast<Pht::AudioResourceId>(SoundId::LeaveTitle));
     }
     
     mScene.Update();

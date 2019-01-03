@@ -12,10 +12,14 @@ Audio::Audio() {
     mAudioEngine = CreateAudioEngine();
 }
 
-void Audio::LoadSound(const std::string& filename, int maxSources, AudioResourceId resourceId) {
+void Audio::LoadSound(const std::string& filename,
+                      int maxSources,
+                      float gain,
+                      AudioResourceId resourceId) {
     auto sound {mAudioEngine->LoadSound(filename, maxSources)};
     
     if (sound) {
+        sound->SetGain(gain);
         mSounds[resourceId] = std::move(sound);
     }
 }
@@ -76,13 +80,21 @@ void Audio::PlayMusicTrack(AudioResourceId resourceId, float fadeInDuration) {
 
     if (mIsMusicEnabled) {
         if (fadeInDuration == 0.0f) {
-            track->SetVolume(1.0f);
+            track->SetVolume(mMusicVolume);
             track->Play();
         } else {
             track->SetVolume(0.0f);
             track->Play();
-            track->SetVolume(1.0f, fadeInDuration);
+            track->SetVolume(mMusicVolume, fadeInDuration);
         }
+    }
+}
+
+void Audio::SetMusicVolume(float volume) {
+    mMusicVolume = volume;
+    
+    if (mActiveTrack) {
+        mActiveTrack->SetVolume(volume);
     }
 }
 
@@ -104,7 +116,7 @@ void Audio::EnableMusic()  {
     mIsMusicEnabled = true;
     
     if (mActiveTrack) {
-        mActiveTrack->SetVolume(1.0f);
+        mActiveTrack->SetVolume(mMusicVolume);
         mActiveTrack->Play();
     }
 }
@@ -153,6 +165,6 @@ void Audio::ResumeAudio() {
     if (mIsMusicEnabled && mActiveTrack) {
         mActiveTrack->SetVolume(0.0f);
         mActiveTrack->Play();
-        mActiveTrack->SetVolume(1.0f, 1.0f);
+        mActiveTrack->SetVolume(mMusicVolume, 1.0f);
     }
 }

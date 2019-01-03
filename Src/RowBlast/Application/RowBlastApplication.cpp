@@ -45,8 +45,7 @@ RowBlastApplication::RowBlastApplication(Pht::IEngine& engine) :
     SetUpRenderer();
     SetUpAudio();
     
-    engine.GetAudio().PlayMusicTrack(static_cast<Pht::AudioResourceId>(MusicTrackId::Map),
-                                     fadeDuration);
+    PlayMapMusicTrack(engine);
     
     mFadeEffect.GetSceneObject().SetLayer(GlobalLayer::sceneSwitchFadeEffect);
     InsertFadeEffectInActiveScene();
@@ -209,8 +208,7 @@ void RowBlastApplication::BeginFadingToGame(int level) {
 
 void RowBlastApplication::StartMap() {
     if (mState == State::GameScene) {
-        mEngine.GetAudio().PlayMusicTrack(static_cast<Pht::AudioResourceId>(MusicTrackId::Map),
-                                          fadeDuration);
+        PlayMapMusicTrack(mEngine);
     }
 
     mState = State::MapScene;

@@ -27,6 +27,7 @@
 		62204EFA21BEC79C00A035C0 /* sky5.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62204EF921BEC79C00A035C0 /* sky5.jpg */; };
 		62204EFC21BEC98700A035C0 /* sky6.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62204EFB21BEC98700A035C0 /* sky6.jpg */; };
 		62204EFF21C015FA00A035C0 /* World4.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62204EFD21C015FA00A035C0 /* World4.cpp */; };
+		6221699821DE1B9B001CB9A1 /* leave_title.wav in Resources */ = {isa = PBXBuildFile; fileRef = 6221699721DE1B9B001CB9A1 /* leave_title.wav */; };
 		6227D4F5206CFD25008EA77D /* bomb_798.obj in Resources */ = {isa = PBXBuildFile; fileRef = 6227D4F4206CFD25008EA77D /* bomb_798.obj */; };
 		622EDD16217A42410007C652 /* level61.json in Resources */ = {isa = PBXBuildFile; fileRef = 622EDD15217A42400007C652 /* level61.json */; };
 		623326732073D69500AC505A /* level29.json in Resources */ = {isa = PBXBuildFile; fileRef = 623326722073D69400AC505A /* level29.json */; };
@@ -472,6 +473,7 @@
 		62204EFB21BEC98700A035C0 /* sky6.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sky6.jpg; sourceTree = "<group>"; };
 		62204EFD21C015FA00A035C0 /* World4.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = World4.cpp; sourceTree = "<group>"; };
 		62204EFE21C015FA00A035C0 /* World4.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = World4.hpp; sourceTree = "<group>"; };
+		6221699721DE1B9B001CB9A1 /* leave_title.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = leave_title.wav; sourceTree = "<group>"; };
 		6227D4F4206CFD25008EA77D /* bomb_798.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bomb_798.obj; sourceTree = "<group>"; };
 		622EDD15217A42400007C652 /* level61.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level61.json; sourceTree = "<group>"; };
 		623326722073D69400AC505A /* level29.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level29.json; sourceTree = "<group>"; };
@@ -2303,6 +2305,7 @@
 		6270DC521FCB212B00FB457D /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
+				6221699721DE1B9B001CB9A1 /* leave_title.wav */,
 				6270DC531FCB212B00FB457D /* Blip.wav */,
 				6270DC541FCB212B00FB457D /* Bomb.wav */,
 			);
@@ -2876,6 +2879,7 @@
 				62204EFA21BEC79C00A035C0 /* sky5.jpg in Resources */,
 				6270DC911FCB23D800FB457D /* level18.json in Resources */,
 				62B1CB86210F8F8600D0F195 /* particle_sprite_point_blurred.png in Resources */,
+				6221699821DE1B9B001CB9A1 /* leave_title.wav in Resources */,
 				62B1CB8D210F8F8600D0F195 /* cloud_B_envmap.jpg in Resources */,
 				62B1CBA82110D46E00D0F195 /* bomb_frame3.jpg in Resources */,
 				6238F618218F0CEC0008A0CF /* sky_upside_down_patched_mirrored.jpg in Resources */,

@@ -16,6 +16,7 @@ namespace Pht {
 
         void LoadSound(const std::string& filename,
                        int maxSources,
+                       float gain,
                        AudioResourceId resourceId) override;
         ISound* GetSound(AudioResourceId resourceId) override;
         void PlaySound(AudioResourceId resourceId) override;
@@ -23,6 +24,7 @@ namespace Pht {
         void FreeMusicTrack(AudioResourceId resourceId) override;
         IMusicTrack* GetMusicTrack(AudioResourceId resourceId) const override;
         void PlayMusicTrack(AudioResourceId resourceId, float fadeInDuration) override;
+        void SetMusicVolume(float volume) override;
         void FadeOutActiveTrack(float fadeOutDuration) override;
         void EnableSound() override;
         void DisableSound() override;
@@ -42,6 +44,7 @@ namespace Pht {
         std::unordered_map<AudioResourceId, std::unique_ptr<ISound>> mSounds;
         std::unordered_map<AudioResourceId, std::unique_ptr<IMusicTrack>> mTracks;
         IMusicTrack* mActiveTrack {nullptr};
+        float mMusicVolume {1.0f};
         bool mIsSoundEnabled {false};
         bool mIsMusicEnabled {true};
     };

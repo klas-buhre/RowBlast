@@ -15,6 +15,7 @@ namespace Pht {
 
         virtual void LoadSound(const std::string& filename,
                                int maxSources,
+                               float gain,
                                AudioResourceId resourceId) = 0;
         virtual ISound* GetSound(AudioResourceId resourceId) = 0;
         virtual void PlaySound(AudioResourceId resourceId) = 0;
@@ -22,6 +23,7 @@ namespace Pht {
         virtual void FreeMusicTrack(AudioResourceId resourceId) = 0;
         virtual IMusicTrack* GetMusicTrack(AudioResourceId resourceId) const = 0;
         virtual void PlayMusicTrack(AudioResourceId resourceId, float fadeInDuration) = 0;
+        virtual void SetMusicVolume(float volume) = 0;
         virtual void FadeOutActiveTrack(float fadeOutDuration) = 0;
         virtual void EnableSound() = 0;
         virtual void DisableSound() = 0;
