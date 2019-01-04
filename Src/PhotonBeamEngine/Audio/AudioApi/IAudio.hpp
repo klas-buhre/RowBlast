@@ -19,6 +19,7 @@ namespace Pht {
                                AudioResourceId resourceId) = 0;
         virtual ISound* GetSound(AudioResourceId resourceId) = 0;
         virtual void PlaySound(AudioResourceId resourceId) = 0;
+        virtual void PlaySoundWithDelay(AudioResourceId resourceId, float delay) = 0;
         virtual void LoadMusicTrack(const std::string& filename, AudioResourceId resourceId) = 0;
         virtual void FreeMusicTrack(AudioResourceId resourceId) = 0;
         virtual IMusicTrack* GetMusicTrack(AudioResourceId resourceId) const = 0;

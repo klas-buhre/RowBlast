@@ -47,7 +47,7 @@ Ongoing tasks:
 DONE     -Jingle sound when tapping the screen to continue.
           Candidate: https://assetstore.unity.com/packages/audio/sound-fx/ui-item-sound-effect-jingles-30508  time 00:02
       -Map scene:
-        -Button click (only when clicked, not when pressed). Could sound like in Tetris Blitz or
+DONE   -Button click (only when clicked, not when pressed). Could sound like in Tetris Blitz or
          possibly Soda.
            Candidate: https://assetstore.unity.com/packages/audio/sound-fx/interface-sound-effects-84577  some of the ones in the beginning
            Or: https://assetstore.unity.com/packages/audio/sound-fx/ui-sfx-36989  free so try it
@@ -58,16 +58,13 @@ DONE     -Jingle sound when tapping the screen to continue.
 DONE    -Map level click: use button click sound.
         -Low prio: Some bling/cash sounds when entering the store or purchasing products.
            Candidate: https://assetstore.unity.com/packages/audio/sound-fx/interface-and-item-sounds-89646  time 4:37 and a few later ones
-        -Low prio: Maybe a wooshing sound when a menu slides in.
-           Candidate: https://assetstore.unity.com/packages/audio/sound-fx/universal-sound-fx-17256  time around 27:35
-           Or: Quick Transition (4).wav in https://assetstore.unity.com/packages/audio/sound-fx/interface-and-item-sounds-89646.
         -In other games, music seems to be muted when when starting a purchase.
       -Game scene:
-        -Maybe a shwooshing sound for the sliding text animation:
+DONE    -Maybe a shwooshing sound for the sliding text animation:
            Candidate: https://assetstore.unity.com/packages/audio/sound-fx/universal-sound-fx-17256  time around 27:35
         -Humming sound from the UFO:
            Candidate: https://assetstore.unity.com/packages/audio/sound-fx/universal-sound-fx-17256  time 15:48
-        -Click sound when clicking a move using click controls.
+Continue>-Click sound when clicking a move using click controls.
            Candidate: https://assetstore.unity.com/packages/audio/sound-fx/interface-sound-effects-84577  time 00:12
            Or: Click (8).wav in https://assetstore.unity.com/packages/audio/sound-fx/interface-and-item-sounds-89646 or the version with reverb in Futuristic.
            Or: any of the button click candidates.

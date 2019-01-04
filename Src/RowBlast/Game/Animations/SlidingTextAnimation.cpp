@@ -4,6 +4,7 @@
 #include "IEngine.hpp"
 #include "IRenderer.hpp"
 #include "IInput.hpp"
+#include "IAudio.hpp"
 #include "TextComponent.hpp"
 #include "MathUtils.hpp"
 #include "Scene.hpp"
@@ -16,12 +17,14 @@
 #include "CommonResources.hpp"
 #include "GradientRectangle.hpp"
 #include "UiLayer.hpp"
+#include "AudioResources.hpp"
 
 using namespace RowBlast;
 
 namespace {
     constexpr auto rectangleFadeInTime {0.3f};
     constexpr auto slideTime {0.2f};
+    constexpr auto whooshDelay {0.05f};
     constexpr auto ufoHeadStartTime {0.2f};
     constexpr auto displayDistance {0.65f};
     constexpr auto textWidth {8.8f};
@@ -312,6 +315,10 @@ void SlidingTextAnimation::UpdateInRectangleAppearingState() {
         
         mText->mUpperTextLineSceneObject->SetIsVisible(true);
         mText->mLowerTextLineSceneObject->SetIsVisible(true);
+        
+        auto& audio {mEngine.GetAudio()};
+        audio.PlaySoundWithDelay(static_cast<Pht::AudioResourceId>(SoundId::SlidingTextAnimation),
+                                 whooshDelay);
     }
 }
 
@@ -358,6 +365,9 @@ void SlidingTextAnimation::UpdateInDisplayingTextState() {
         mElapsedTime = 0.0f;
         mVelocity = mDisplayVelocity;
         
+        auto& audio {mEngine.GetAudio()};
+        audio.PlaySoundWithDelay(static_cast<Pht::AudioResourceId>(SoundId::SlidingTextAnimation),
+                                 whooshDelay);
         FlyOutUfo();
     }
     

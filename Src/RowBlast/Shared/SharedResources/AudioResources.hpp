@@ -17,7 +17,8 @@ namespace RowBlast {
         Logo,
         ButtonClick,
         StartGame,
-        LeaveTitle
+        LeaveTitle,
+        SlidingTextAnimation
     };
     
     void LoadAudioResouces(Pht::IEngine& engine);

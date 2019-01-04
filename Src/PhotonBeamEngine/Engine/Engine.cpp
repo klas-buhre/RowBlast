@@ -44,6 +44,7 @@ void Engine::Update(float frameSeconds) {
     }
     
     mParticleSystem.Update(mLastFrameSeconds);
+    mAudio.Update(mLastFrameSeconds);
     
     if (scene) {
         mRenderer.ClearBuffers();

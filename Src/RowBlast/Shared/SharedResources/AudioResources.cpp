@@ -26,6 +26,7 @@ void RowBlast::LoadAudioResouces(Pht::IEngine& engine) {
     audio.LoadSound("button_click.wav", 1, maxSoundGain, static_cast<Pht::AudioResourceId>(SoundId::ButtonClick));
     audio.LoadSound("start_game.wav", 1, maxSoundGain, static_cast<Pht::AudioResourceId>(SoundId::StartGame));
     audio.LoadSound("leave_title.wav", 1, 0.65f, static_cast<Pht::AudioResourceId>(SoundId::LeaveTitle));
+    audio.LoadSound("sliding_text_animation.wav", 1, maxSoundGain, static_cast<Pht::AudioResourceId>(SoundId::SlidingTextAnimation));
 }
 
 void RowBlast::PlayMapMusicTrack(Pht::IEngine& engine) {

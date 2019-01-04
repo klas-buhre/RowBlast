@@ -46,6 +46,11 @@ void Audio::PlaySound(AudioResourceId resourceId) {
     }
 }
 
+void Audio::PlaySoundWithDelay(AudioResourceId resourceId, float delay) {
+    DelayedSoundJob job {.mElapsedTime = 0.0f, .mDelay = delay, .mAudioResourceId = resourceId};
+    mDelayedSoundJobs.PushBack(job);
+}
+
 void Audio::LoadMusicTrack(const std::string& filename, AudioResourceId resourceId) {
     auto track {Pht::LoadMusicTrack(filename)};
     mTracks[resourceId] = std::move(track);
@@ -135,6 +140,21 @@ bool Audio::IsSoundEnabled()  {
 
 bool Audio::IsMusicEnabled()  {
     return mIsMusicEnabled;
+}
+
+void Audio::Update(float dt) {
+    for (auto i {0}; i < mDelayedSoundJobs.Size();) {
+        auto& job {mDelayedSoundJobs.At(i)};
+        
+        job.mElapsedTime += dt;
+        
+        if (job.mElapsedTime >= job.mDelay) {
+            PlaySound(job.mAudioResourceId);
+            mDelayedSoundJobs.Erase(i);
+        } else {
+            ++i;
+        }
+    }
 }
 
 void Audio::OnAudioSessionInterrupted() {

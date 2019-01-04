@@ -8,6 +8,7 @@
 #include "ISound.hpp"
 #include "IMusicTrack.hpp"
 #include "IAudioEngine.hpp"
+#include "StaticVector.hpp"
 
 namespace Pht {
     class Audio: public IAudio {
@@ -20,6 +21,7 @@ namespace Pht {
                        AudioResourceId resourceId) override;
         ISound* GetSound(AudioResourceId resourceId) override;
         void PlaySound(AudioResourceId resourceId) override;
+        void PlaySoundWithDelay(AudioResourceId resourceId, float delay) override;
         void LoadMusicTrack(const std::string& filename, AudioResourceId resourceId) override;
         void FreeMusicTrack(AudioResourceId resourceId) override;
         IMusicTrack* GetMusicTrack(AudioResourceId resourceId) const override;
@@ -33,12 +35,19 @@ namespace Pht {
         bool IsSoundEnabled() override;
         bool IsMusicEnabled() override;
         
+        void Update(float dt);
         void OnAudioSessionInterrupted();
         void OnAudioSessionInterruptionEnded();
         void OnApplicationBecameActive();
 
     private:
         void ResumeAudio();
+        
+        struct DelayedSoundJob {
+            float mElapsedTime {0.0f};
+            float mDelay {0.0f};
+            AudioResourceId mAudioResourceId;
+        };
         
         std::unique_ptr<IAudioEngine> mAudioEngine;
         std::unordered_map<AudioResourceId, std::unique_ptr<ISound>> mSounds;
@@ -47,6 +56,7 @@ namespace Pht {
         float mMusicVolume {1.0f};
         bool mIsSoundEnabled {true};
         bool mIsMusicEnabled {true};
+        StaticVector<DelayedSoundJob, 100> mDelayedSoundJobs;
     };
 }
 
