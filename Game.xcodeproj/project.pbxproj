@@ -32,6 +32,13 @@
 		622169A021DE7EF6001CB9A1 /* logo.wav in Resources */ = {isa = PBXBuildFile; fileRef = 6221699F21DE7EF5001CB9A1 /* logo.wav */; };
 		622169B621DF6FCE001CB9A1 /* button_click.wav in Resources */ = {isa = PBXBuildFile; fileRef = 622169B521DF6FCE001CB9A1 /* button_click.wav */; };
 		622169BE21DF78F0001CB9A1 /* sliding_text_animation.wav in Resources */ = {isa = PBXBuildFile; fileRef = 622169BD21DF78F0001CB9A1 /* sliding_text_animation.wav */; };
+		622169C821DFE8EB001CB9A1 /* combo2.wav in Resources */ = {isa = PBXBuildFile; fileRef = 622169C721DFE8EB001CB9A1 /* combo2.wav */; };
+		622169DE21E0CADE001CB9A1 /* clear_blocks_brick_impact1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 622169D521E0CADC001CB9A1 /* clear_blocks_brick_impact1.wav */; };
+		622169DF21E0CADE001CB9A1 /* clear_blocks_brick_impact2.wav in Resources */ = {isa = PBXBuildFile; fileRef = 622169D621E0CADC001CB9A1 /* clear_blocks_brick_impact2.wav */; };
+		622169E221E0CADE001CB9A1 /* clear_blocks_brick_impact3.wav in Resources */ = {isa = PBXBuildFile; fileRef = 622169D921E0CADD001CB9A1 /* clear_blocks_brick_impact3.wav */; };
+		622169E621E120F8001CB9A1 /* fantastic.wav in Resources */ = {isa = PBXBuildFile; fileRef = 622169E521E120F8001CB9A1 /* fantastic.wav */; };
+		622169E821E136E7001CB9A1 /* awesome.wav in Resources */ = {isa = PBXBuildFile; fileRef = 622169E721E136E7001CB9A1 /* awesome.wav */; };
+		622169EC21E13AEA001CB9A1 /* combo1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 622169EA21E13AEA001CB9A1 /* combo1.wav */; };
 		6227D4F5206CFD25008EA77D /* bomb_798.obj in Resources */ = {isa = PBXBuildFile; fileRef = 6227D4F4206CFD25008EA77D /* bomb_798.obj */; };
 		622EDD16217A42410007C652 /* level61.json in Resources */ = {isa = PBXBuildFile; fileRef = 622EDD15217A42400007C652 /* level61.json */; };
 		623326732073D69500AC505A /* level29.json in Resources */ = {isa = PBXBuildFile; fileRef = 623326722073D69400AC505A /* level29.json */; };
@@ -292,7 +299,6 @@
 		626940CF21625E7400D9857A /* sky2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 626940CE21625E7400D9857A /* sky2.jpg */; };
 		626940D32162641900D9857A /* sky3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 626940D22162641900D9857A /* sky3.jpg */; };
 		626E08EC216BC0B800D1B70B /* space1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 626E08EB216BC0B800D1B70B /* space1.jpg */; };
-		6270DC561FCB212B00FB457D /* Bomb.wav in Resources */ = {isa = PBXBuildFile; fileRef = 6270DC541FCB212B00FB457D /* Bomb.wav */; };
 		6270DC621FCB22AE00FB457D /* cube_554.obj in Resources */ = {isa = PBXBuildFile; fileRef = 6270DC591FCB22AE00FB457D /* cube_554.obj */; };
 		6270DC631FCB22AE00FB457D /* star.obj in Resources */ = {isa = PBXBuildFile; fileRef = 6270DC5A1FCB22AE00FB457D /* star.obj */; };
 		6270DC6D1FCB231B00FB457D /* ethnocentric_rg_it.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6270DC6B1FCB231B00FB457D /* ethnocentric_rg_it.ttf */; };
@@ -481,6 +487,13 @@
 		6221699F21DE7EF5001CB9A1 /* logo.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = logo.wav; sourceTree = "<group>"; };
 		622169B521DF6FCE001CB9A1 /* button_click.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = button_click.wav; sourceTree = "<group>"; };
 		622169BD21DF78F0001CB9A1 /* sliding_text_animation.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = sliding_text_animation.wav; sourceTree = "<group>"; };
+		622169C721DFE8EB001CB9A1 /* combo2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = combo2.wav; sourceTree = "<group>"; };
+		622169D521E0CADC001CB9A1 /* clear_blocks_brick_impact1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = clear_blocks_brick_impact1.wav; sourceTree = "<group>"; };
+		622169D621E0CADC001CB9A1 /* clear_blocks_brick_impact2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = clear_blocks_brick_impact2.wav; sourceTree = "<group>"; };
+		622169D921E0CADD001CB9A1 /* clear_blocks_brick_impact3.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = clear_blocks_brick_impact3.wav; sourceTree = "<group>"; };
+		622169E521E120F8001CB9A1 /* fantastic.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = fantastic.wav; sourceTree = "<group>"; };
+		622169E721E136E7001CB9A1 /* awesome.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = awesome.wav; sourceTree = "<group>"; };
+		622169EA21E13AEA001CB9A1 /* combo1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = combo1.wav; sourceTree = "<group>"; };
 		6227D4F4206CFD25008EA77D /* bomb_798.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bomb_798.obj; sourceTree = "<group>"; };
 		622EDD15217A42400007C652 /* level61.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level61.json; sourceTree = "<group>"; };
 		623326722073D69400AC505A /* level29.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level29.json; sourceTree = "<group>"; };
@@ -1067,7 +1080,6 @@
 		626940CE21625E7400D9857A /* sky2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sky2.jpg; sourceTree = "<group>"; };
 		626940D22162641900D9857A /* sky3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sky3.jpg; sourceTree = "<group>"; };
 		626E08EB216BC0B800D1B70B /* space1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = space1.jpg; sourceTree = "<group>"; };
-		6270DC541FCB212B00FB457D /* Bomb.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Bomb.wav; sourceTree = "<group>"; };
 		6270DC591FCB22AE00FB457D /* cube_554.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cube_554.obj; sourceTree = "<group>"; };
 		6270DC5A1FCB22AE00FB457D /* star.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = star.obj; sourceTree = "<group>"; };
 		6270DC6B1FCB231B00FB457D /* ethnocentric_rg_it.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ethnocentric_rg_it.ttf; sourceTree = "<group>"; };
@@ -2311,12 +2323,18 @@
 		6270DC521FCB212B00FB457D /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
-				622169BD21DF78F0001CB9A1 /* sliding_text_animation.wav */,
+				622169E721E136E7001CB9A1 /* awesome.wav */,
 				622169B521DF6FCE001CB9A1 /* button_click.wav */,
-				6221699F21DE7EF5001CB9A1 /* logo.wav */,
-				6221699D21DE73E5001CB9A1 /* start_game.wav */,
+				622169D521E0CADC001CB9A1 /* clear_blocks_brick_impact1.wav */,
+				622169D621E0CADC001CB9A1 /* clear_blocks_brick_impact2.wav */,
+				622169D921E0CADD001CB9A1 /* clear_blocks_brick_impact3.wav */,
+				622169EA21E13AEA001CB9A1 /* combo1.wav */,
+				622169C721DFE8EB001CB9A1 /* combo2.wav */,
+				622169E521E120F8001CB9A1 /* fantastic.wav */,
 				6221699721DE1B9B001CB9A1 /* leave_title.wav */,
-				6270DC541FCB212B00FB457D /* Bomb.wav */,
+				6221699F21DE7EF5001CB9A1 /* logo.wav */,
+				622169BD21DF78F0001CB9A1 /* sliding_text_animation.wav */,
+				6221699D21DE73E5001CB9A1 /* start_game.wav */,
 			);
 			path = Sounds;
 			sourceTree = "<group>";
@@ -2735,11 +2753,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				622169C821DFE8EB001CB9A1 /* combo2.wav in Resources */,
 				625698262182392C003A3A9D /* Particle.vert in Resources */,
 				626722E42127656F0058528D /* Icon.png in Resources */,
 				62B1CBAC2110E9C400D0F195 /* bomb_frame2.jpg in Resources */,
 				629B839420CADA7B00DD2D0E /* triangle_320_r270.obj in Resources */,
 				6227D4F5206CFD25008EA77D /* bomb_798.obj in Resources */,
+				622169DF21E0CADE001CB9A1 /* clear_blocks_brick_impact2.wav in Resources */,
 				629B839220CAD94700DD2D0E /* triangle_320_r180.obj in Resources */,
 				62B1CBA72110D46E00D0F195 /* bomb_frame4.jpg in Resources */,
 				62E01BB12153E2A6009F0B99 /* planet_ogma.jpg in Resources */,
@@ -2784,6 +2804,7 @@
 				629B837C20C544F000DD2D0E /* level35.json in Resources */,
 				629B838020C58B8100DD2D0E /* level37.json in Resources */,
 				6238F620219A097A0008A0CF /* coin_852.obj in Resources */,
+				622169E221E0CADE001CB9A1 /* clear_blocks_brick_impact3.wav in Resources */,
 				6269408F2154F94300D9857A /* planet_ring.obj in Resources */,
 				6234618C21691DAF00ECD0DF /* asteroid_998.obj in Resources */,
 				6256981A2182392C003A3A9D /* VertexLighting.vert in Resources */,
@@ -2797,6 +2818,7 @@
 				6270DC8D1FCB23D800FB457D /* level14.json in Resources */,
 				6270DC881FCB23D800FB457D /* level1.json in Resources */,
 				6270DC981FCB23D800FB457D /* level3.json in Resources */,
+				622169EC21E13AEA001CB9A1 /* combo1.wav in Resources */,
 				62B2BAE9212C2830009C529D /* level51.json in Resources */,
 				628EC2AC2080C4880071F368 /* level31.json in Resources */,
 				625D3B5E2174B12500D67EC2 /* asteroid_fragment_500.obj in Resources */,
@@ -2806,6 +2828,7 @@
 				62B1CB60210F8EE500D0F195 /* portal.png in Resources */,
 				62B2BAF32134495E009C529D /* level56.json in Resources */,
 				62B1CB62210F8EE500D0F195 /* cloud_D_512.png in Resources */,
+				622169E621E120F8001CB9A1 /* fantastic.wav in Resources */,
 				62A729E12143DDD600255BF7 /* level57.json in Resources */,
 				62E335E01FD2F4EE0069B6CF /* level26.json in Resources */,
 				62B2BAED212D9B4F009C529D /* level53.json in Resources */,
@@ -2818,6 +2841,7 @@
 				62B1CB992110BA4600D0F195 /* laser_frame5.jpg in Resources */,
 				62346192216B6FE900ECD0DF /* planet_wadow.jpg in Resources */,
 				62B1CB7F210F8F8600D0F195 /* bomb_798.jpg in Resources */,
+				622169DE21E0CADE001CB9A1 /* clear_blocks_brick_impact1.wav in Resources */,
 				62BE275320B42A360014C6DD /* star_1428.obj in Resources */,
 				62B1CB81210F8F8600D0F195 /* particle_sprite_twinkle_blurred.png in Resources */,
 				6261FFD720FCC912008F1619 /* level43.json in Resources */,
@@ -2857,7 +2881,6 @@
 				6270DC9E1FCB23D800FB457D /* level9.json in Resources */,
 				62B1CB7D210F8F8600D0F195 /* bomb_798_emission.jpg in Resources */,
 				6276B7102040297E0075C468 /* weld_76.obj in Resources */,
-				6270DC561FCB212B00FB457D /* Bomb.wav in Resources */,
 				62B1CBA62110D46E00D0F195 /* bomb_frame1.jpg in Resources */,
 				625698322182392C003A3A9D /* VertexColor.vert in Resources */,
 				625D3B49216FABDC00D67EC2 /* level59.json in Resources */,
@@ -2870,6 +2893,7 @@
 				6270DC8A1FCB23D800FB457D /* level11.json in Resources */,
 				6270DC891FCB23D800FB457D /* level10.json in Resources */,
 				623326732073D69500AC505A /* level29.json in Resources */,
+				622169E821E136E7001CB9A1 /* awesome.wav in Resources */,
 				6256982C2182392C003A3A9D /* TexturedEmissiveLighting.vert in Resources */,
 				627A12CA21B5379F00EECA3B /* heart_392.obj in Resources */,
 				6278591C203AFB7C00494A4D /* Images.xcassets in Resources */,

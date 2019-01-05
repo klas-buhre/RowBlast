@@ -13,18 +13,25 @@ namespace RowBlast {
     };
     
     enum class SoundId {
-        Bomb,
         Logo,
         ButtonClick,
         StartGame,
         LeaveTitle,
-        SlidingTextAnimation
+        SlidingTextAnimation,
+        ClearBlocksBrickImpact1,
+        ClearBlocksBrickImpact2,
+        ClearBlocksBrickImpact3,
+        Fantastic,
+        Awesome,
+        Combo1,
+        Combo2
     };
     
     void LoadAudioResouces(Pht::IEngine& engine);
     void LoadAndPlayGameMusicTrack1(Pht::IEngine& engine);
     void LoadAndPlayGameMusicTrack2(Pht::IEngine& engine);
     void PlayMapMusicTrack(Pht::IEngine& engine);
+    void PlayClearBlocksSound(Pht::IEngine& engine);
 }
 
 #endif

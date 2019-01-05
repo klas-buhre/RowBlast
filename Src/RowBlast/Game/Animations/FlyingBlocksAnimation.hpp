@@ -12,10 +12,6 @@
 // Game includes.
 #include "Field.hpp"
 
-namespace Pht {
-    class IEngine;
-}
-
 namespace RowBlast {
     class GameScene;
     class LevelResources;

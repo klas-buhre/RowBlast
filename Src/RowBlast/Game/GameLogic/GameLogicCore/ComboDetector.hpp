@@ -4,13 +4,19 @@
 // Game includes.
 #include "Field.hpp"
 
+namespace Pht {
+    class IEngine;
+}
+
 namespace RowBlast {
     class SmallTextAnimation;
     class EffectManager;
 
     class ComboDetector {
     public:
-        ComboDetector(SmallTextAnimation& smallTextAnimation, EffectManager& effectManager);
+        ComboDetector(Pht::IEngine& engine,
+                      SmallTextAnimation& smallTextAnimation,
+                      EffectManager& effectManager);
         
         void Init();
         void OnSpawnPiece();
@@ -29,6 +35,7 @@ namespace RowBlast {
             Inactive
         };
 
+        Pht::IEngine& mEngine;
         SmallTextAnimation& mSmallTextAnimation;
         EffectManager& mEffectManager;
         State mState {State::Inactive};

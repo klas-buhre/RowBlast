@@ -2,10 +2,13 @@
 
 // Engine includes.
 #include "Optional.hpp"
+#include "IEngine.hpp"
+#include "IAudio.hpp"
 
 // Game includes.
 #include "SmallTextAnimation.hpp"
 #include "EffectManager.hpp"
+#include "AudioResources.hpp"
 
 using namespace RowBlast;
 
@@ -32,7 +35,10 @@ namespace {
     }
 }
 
-ComboDetector::ComboDetector(SmallTextAnimation& smallTextAnimation, EffectManager& effectManager) :
+ComboDetector::ComboDetector(Pht::IEngine& engine,
+                             SmallTextAnimation& smallTextAnimation,
+                             EffectManager& effectManager) :
+    mEngine {engine},
     mSmallTextAnimation {smallTextAnimation},
     mEffectManager {effectManager} {}
 
@@ -50,6 +56,8 @@ void ComboDetector::OnSpawnPiece() {
 }
 
 void ComboDetector::OnClearedFilledRows(const Field::RemovedSubCells& removedSubCells) {
+    PlayClearBlocksSound(mEngine);
+
     switch (mState) {
         case State::PieceSpawned:
             OnClearedFilledRowsInPieceSpawnedState(removedSubCells);
@@ -66,14 +74,28 @@ void ComboDetector::OnClearedFilledRowsInPieceSpawnedState(const Field::RemovedS
     ++mNumConsecutiveRowClearMoves;
     
     auto numRemovedRows {CalcNumRemovedRows(removedSubCells)};
+    auto& audio {mEngine.GetAudio()};
 
     if (numRemovedRows >= 5) {
+        audio.PlaySound(static_cast<Pht::AudioResourceId>(SoundId::Fantastic));
         mSmallTextAnimation.StartFantasticMessage();
         mEffectManager.StartSmallCameraShake();
     } else if (numRemovedRows >= 4) {
+        audio.PlaySound(static_cast<Pht::AudioResourceId>(SoundId::Awesome));
         mSmallTextAnimation.StartAwesomeMessage();
     } else if (mNumConsecutiveRowClearMoves >= 2) {
         auto numCombos {mNumConsecutiveRowClearMoves - 1};
+
+        if (numCombos >= 9) {
+            audio.PlaySound(static_cast<Pht::AudioResourceId>(SoundId::Fantastic));
+        } else if (numCombos >= 7) {
+            audio.PlaySound(static_cast<Pht::AudioResourceId>(SoundId::Awesome));
+        } else if (numCombos >= 5) {
+            audio.PlaySound(static_cast<Pht::AudioResourceId>(SoundId::Combo2));
+        } else if (numCombos >= 3) {
+            audio.PlaySound(static_cast<Pht::AudioResourceId>(SoundId::Combo1));
+        }
+        
         mSmallTextAnimation.StartComboMessage(numCombos);
     }
     
@@ -82,8 +104,10 @@ void ComboDetector::OnClearedFilledRowsInPieceSpawnedState(const Field::RemovedS
 
 void ComboDetector::DetectCascade() {
     if (mNumCascades >= 3) {
+        mEngine.GetAudio().PlaySound(static_cast<Pht::AudioResourceId>(SoundId::Fantastic));
         mSmallTextAnimation.StartFantasticMessage();
     } else if (mNumCascades >= 2) {
+        mEngine.GetAudio().PlaySound(static_cast<Pht::AudioResourceId>(SoundId::Awesome));
         mSmallTextAnimation.StartAwesomeMessage();
     }
 }

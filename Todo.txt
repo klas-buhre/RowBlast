@@ -41,6 +41,8 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
+TODO: review previous commit.
+TODO: fix so that awesome/fantastic/combo sounds don't play at the same time.
     -When out of moves, just continue the main track.
     -Sound effects.
       -Title scene:
@@ -84,9 +86,7 @@ Continue>-Click sound when clicking a move using click controls.
          sound from landing a piece as well like in Tetris Blitz.
            Candidate: Any of the woshes from https://assetstore.unity.com/packages/audio/sound-fx/universal-sound-fx-17256 time around 27:35
            Or: the same sound as when clicking a move using click controls.
-        -Sound like bricks are shattered when clearing blocks.
-           Candidate: https://assetstore.unity.com/packages/audio/sound-fx/mobile-game-82136  Movements 00:35 or 01:00
-           Or: https://assetstore.unity.com/packages/audio/sound-fx/objects-destruction-sfx-109183
+DONE    -Sound from brick impacts when clearing blocks.
         -Laser.
            Candidate: https://assetstore.unity.com/packages/audio/sound-fx/weapons/blasters-small-83107  time 00:22
            Or: https://assetstore.unity.com/packages/audio/sound-fx/universal-sound-fx-17256  time 07:39
@@ -96,10 +96,8 @@ Continue>-Click sound when clicking a move using click controls.
            Candidate: https://assetstore.unity.com/packages/audio/sound-fx/pro-sound-collection-50235  time some of the explosions.   Can buy the sub pack https://assetstore.unity.com/packages/audio/sound-fx/explosion-sound-pack-70695
         -Sound when filling a gray slot.
            Candidate: ?
-        -Voices saying "Awesome" with reverb effect.
-        -Voices saying "Fantastic" with reverb effect.
-        -Maybe a crowd instead of the voices in no good voices can be found.
-           Candidate: https://assetstore.unity.com/packages/audio/sound-fx/universal-sound-fx-17256  time 18:09
+DONE    -Sound during "Awesome" animation.
+DONE    -Sound during "Fantastic" animation.
         -Short positive sound when sliding text animation that says all cleared.
            Candidate: https://assetstore.unity.com/packages/audio/sound-fx/ui-item-sound-effect-jingles-30508  time 00:04 0r 00:12
         -Short jingle/fanfare when starting the confetti. Stop the music after that.

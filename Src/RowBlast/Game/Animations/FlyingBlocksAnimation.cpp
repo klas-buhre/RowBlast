@@ -1,7 +1,6 @@
 #include "FlyingBlocksAnimation.hpp"
 
 // Engine includes.
-#include "IEngine.hpp"
 #include "MathUtils.hpp"
 #include "CameraComponent.hpp"
 

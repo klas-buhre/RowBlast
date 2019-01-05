@@ -87,7 +87,7 @@ GameLogic::GameLogic(Pht::IEngine& engine,
     mFieldGravity {field},
     mFieldExplosionsStates {engine, field, mFieldGravity, effectManager, flyingBlocksAnimation},
     mFallingPieceAnimation {*this, mFallingPieceStorage},
-    mComboDetector {smallTextAnimation, effectManager},
+    mComboDetector {engine, smallTextAnimation, effectManager},
     mGestureInputHandler {*this, mFallingPieceStorage},
     mClickInputHandler {engine, field, gameScene, *this, tutorial},
     mFallingPiece {&mFallingPieceStorage} {
@@ -570,8 +570,6 @@ void GameLogic::LandFallingPiece(bool finalMovementWasADrop) {
 
 void GameLogic::DetonateDroppedBomb() {
     GoToFieldExplosionsState();
-    
-    mEngine.GetAudio().PlaySound(static_cast<Pht::AudioResourceId>(SoundId::Bomb));
     
     auto impactedLevelBombs {
         mField.DetectImpactedBombs(CreatePieceBlocks(*mFallingPiece),

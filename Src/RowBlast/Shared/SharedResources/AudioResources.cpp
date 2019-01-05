@@ -1,5 +1,7 @@
 #include "AudioResources.hpp"
 
+#include <iostream>
+
 // Engine includes.
 #include "IEngine.hpp"
 #include "IAudio.hpp"
@@ -11,6 +13,7 @@ namespace {
     constexpr auto mapMusicVolume {0.55f};
     constexpr auto fadeInDuration {0.22f};
     constexpr auto maxSoundGain {1.0f};
+    constexpr auto clearBlocksGain {1.0f};
 }
 
 void RowBlast::LoadAudioResouces(Pht::IEngine& engine) {
@@ -22,11 +25,19 @@ void RowBlast::LoadAudioResouces(Pht::IEngine& engine) {
     audio.LoadMusicTrack("map.mp4", static_cast<Pht::AudioResourceId>(MusicTrackId::Map));
     audio.LoadMusicTrack("game_track1.mp4", static_cast<Pht::AudioResourceId>(MusicTrackId::Game1));
     
-    audio.LoadSound("Bomb.wav", 10, maxSoundGain, static_cast<Pht::AudioResourceId>(SoundId::Bomb));
     audio.LoadSound("button_click.wav", 1, maxSoundGain, static_cast<Pht::AudioResourceId>(SoundId::ButtonClick));
     audio.LoadSound("start_game.wav", 1, maxSoundGain, static_cast<Pht::AudioResourceId>(SoundId::StartGame));
     audio.LoadSound("leave_title.wav", 1, 0.65f, static_cast<Pht::AudioResourceId>(SoundId::LeaveTitle));
     audio.LoadSound("sliding_text_animation.wav", 1, maxSoundGain, static_cast<Pht::AudioResourceId>(SoundId::SlidingTextAnimation));
+    
+    audio.LoadSound("clear_blocks_brick_impact1.wav", 3, clearBlocksGain, static_cast<Pht::AudioResourceId>(SoundId::ClearBlocksBrickImpact1));
+    audio.LoadSound("clear_blocks_brick_impact2.wav", 3, clearBlocksGain, static_cast<Pht::AudioResourceId>(SoundId::ClearBlocksBrickImpact2));
+    audio.LoadSound("clear_blocks_brick_impact3.wav", 3, clearBlocksGain, static_cast<Pht::AudioResourceId>(SoundId::ClearBlocksBrickImpact3));
+    
+    audio.LoadSound("fantastic.wav", 1, 0.8f, static_cast<Pht::AudioResourceId>(SoundId::Fantastic));
+    audio.LoadSound("awesome.wav", 1, 0.8f, static_cast<Pht::AudioResourceId>(SoundId::Awesome));
+    audio.LoadSound("combo1.wav", 1, maxSoundGain, static_cast<Pht::AudioResourceId>(SoundId::Combo1));
+    audio.LoadSound("combo2.wav", 1, maxSoundGain, static_cast<Pht::AudioResourceId>(SoundId::Combo2));
 }
 
 void RowBlast::PlayMapMusicTrack(Pht::IEngine& engine) {
@@ -61,4 +72,23 @@ void RowBlast::LoadAndPlayGameMusicTrack2(Pht::IEngine& engine) {
     }
 
     audio.PlayMusicTrack(track2AudioResourceId, fadeInDuration);
+}
+
+void RowBlast::PlayClearBlocksSound(Pht::IEngine& engine) {
+    auto& audio {engine.GetAudio()};
+    
+    switch (std::rand() % 3) {
+        case 0:
+            audio.PlaySound(static_cast<Pht::AudioResourceId>(SoundId::ClearBlocksBrickImpact1));
+            break;
+        case 1:
+            audio.PlaySound(static_cast<Pht::AudioResourceId>(SoundId::ClearBlocksBrickImpact2));
+            break;
+        case 2:
+            audio.PlaySound(static_cast<Pht::AudioResourceId>(SoundId::ClearBlocksBrickImpact3));
+            break;
+        default:
+            assert(false);
+            break;
+    }
 }
