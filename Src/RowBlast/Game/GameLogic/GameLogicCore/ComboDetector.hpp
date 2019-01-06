@@ -27,6 +27,7 @@ namespace RowBlast {
         
     private:
         void OnClearedFilledRowsInPieceSpawnedState(const Field::RemovedSubCells& removedSubCells);
+        void OnClearedFilledRowsInCascadingState(const Field::RemovedSubCells& removedSubCells);
         void DetectCascade();
         
         enum class State {

@@ -3,6 +3,7 @@
 // Engine includes.
 #include "IEngine.hpp"
 #include "IRenderer.hpp"
+#include "IAudio.hpp"
 #include "TextComponent.hpp"
 #include "MathUtils.hpp"
 #include "Scene.hpp"
@@ -14,6 +15,7 @@
 #include "GameScene.hpp"
 #include "CommonResources.hpp"
 #include "UiLayer.hpp"
+#include "AudioResources.hpp"
 
 using namespace RowBlast;
 
@@ -54,6 +56,7 @@ namespace {
 SmallTextAnimation::SmallTextAnimation(Pht::IEngine& engine,
                                        GameScene& scene,
                                        const CommonResources& commonResources) :
+    mEngine {engine},
     mScene {scene} {
     
     auto& font {commonResources.GetHussarFontSize52PotentiallyZoomedScreen()};
@@ -144,6 +147,22 @@ void SmallTextAnimation::Init() {
 }
 
 void SmallTextAnimation::StartComboMessage(int numCombos) {
+    if (IsFantasticTextActive() || IsAwesomeTextActive()) {
+        return;
+    }
+    
+    auto& audio {mEngine.GetAudio()};
+    
+    if (numCombos >= 9) {
+        audio.PlaySound(static_cast<Pht::AudioResourceId>(SoundId::Fantastic));
+    } else if (numCombos >= 7) {
+        audio.PlaySound(static_cast<Pht::AudioResourceId>(SoundId::Awesome));
+    } else if (numCombos >= 5) {
+        audio.PlaySound(static_cast<Pht::AudioResourceId>(SoundId::Combo2));
+    } else if (numCombos >= 3) {
+        audio.PlaySound(static_cast<Pht::AudioResourceId>(SoundId::Combo1));
+    }
+
     Start(*mComboTextSceneObject);
     mTwinkleParticleEffect->GetTransform().SetPosition({-3.15f, 0.3f, UiLayer::text});
     
@@ -162,11 +181,25 @@ void SmallTextAnimation::StartComboMessage(int numCombos) {
 }
 
 void SmallTextAnimation::StartAwesomeMessage() {
+    if (IsFantasticTextActive() || IsAwesomeTextActive()) {
+        return;
+    }
+    
+    mEngine.GetAudio().PlaySound(static_cast<Pht::AudioResourceId>(SoundId::Awesome));
+
     Start(*mAwesomeTextSceneObject);
     mTwinkleParticleEffect->GetTransform().SetPosition({-3.25f, 0.55f, UiLayer::text});
 }
 
 void SmallTextAnimation::StartFantasticMessage() {
+    if (IsFantasticTextActive()) {
+        return;
+    }
+    
+    if (!IsAwesomeTextActive()) {
+        mEngine.GetAudio().PlaySound(static_cast<Pht::AudioResourceId>(SoundId::Fantastic));
+    }
+    
     Start(*mFantasticTextSceneObject);
     mTwinkleParticleEffect->GetTransform().SetPosition({-3.6f, 0.55f, UiLayer::text});
 }
@@ -279,4 +312,12 @@ void SmallTextAnimation::HideAllTextObjects() {
         textSceneObject->SetIsVisible(false);
         textSceneObject->SetIsStatic(true);
     }
+}
+
+bool SmallTextAnimation::IsAwesomeTextActive() const {
+    return mState != State::Inactive && mActiveTextSceneObject == mAwesomeTextSceneObject;
+}
+
+bool SmallTextAnimation::IsFantasticTextActive() const {
+    return mState != State::Inactive && mActiveTextSceneObject == mFantasticTextSceneObject;
 }

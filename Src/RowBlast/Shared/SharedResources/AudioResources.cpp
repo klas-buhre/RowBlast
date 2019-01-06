@@ -1,7 +1,5 @@
 #include "AudioResources.hpp"
 
-#include <iostream>
-
 // Engine includes.
 #include "IEngine.hpp"
 #include "IAudio.hpp"

@@ -42,6 +42,8 @@ namespace RowBlast {
         void UpdateInDisplayingTextState(float dt);
         void UpdateInSlidingOutState(float dt);
         void HideAllTextObjects();
+        bool IsAwesomeTextActive() const;
+        bool IsFantasticTextActive() const;
     
         enum class State {
             ScalingIn,
@@ -50,6 +52,7 @@ namespace RowBlast {
             Inactive
         };
 
+        Pht::IEngine& mEngine;
         GameScene& mScene;
         State mState {State::Inactive};
         float mElapsedTime {0.0f};

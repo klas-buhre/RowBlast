@@ -41,8 +41,6 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-TODO: review previous commit.
-TODO: fix so that awesome/fantastic/combo sounds don't play at the same time.
     -When out of moves, just continue the main track.
     -Sound effects.
       -Title scene:
