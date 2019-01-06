@@ -26,7 +26,9 @@ void RowBlast::LoadAudioResouces(Pht::IEngine& engine) {
     audio.LoadSound("button_click.wav", 1, maxSoundGain, static_cast<Pht::AudioResourceId>(SoundId::ButtonClick));
     audio.LoadSound("start_game.wav", 1, maxSoundGain, static_cast<Pht::AudioResourceId>(SoundId::StartGame));
     audio.LoadSound("leave_title.wav", 1, 0.65f, static_cast<Pht::AudioResourceId>(SoundId::LeaveTitle));
-    audio.LoadSound("sliding_text_animation.wav", 1, maxSoundGain, static_cast<Pht::AudioResourceId>(SoundId::SlidingTextAnimation));
+    audio.LoadSound("sliding_text_whoosh1.wav", 1, maxSoundGain, static_cast<Pht::AudioResourceId>(SoundId::SlidingTextWhoosh1));
+    audio.LoadSound("sliding_text_whoosh2.wav", 1, maxSoundGain, static_cast<Pht::AudioResourceId>(SoundId::SlidingTextWhoosh2));
+    audio.LoadSound("whoosh.wav", 1, maxSoundGain, static_cast<Pht::AudioResourceId>(SoundId::Whoosh));
     
     audio.LoadSound("clear_blocks_brick_impact1.wav", 3, clearBlocksGain, static_cast<Pht::AudioResourceId>(SoundId::ClearBlocksBrickImpact1));
     audio.LoadSound("clear_blocks_brick_impact2.wav", 3, clearBlocksGain, static_cast<Pht::AudioResourceId>(SoundId::ClearBlocksBrickImpact2));

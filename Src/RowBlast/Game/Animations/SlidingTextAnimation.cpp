@@ -24,7 +24,6 @@ using namespace RowBlast;
 namespace {
     constexpr auto rectangleFadeInTime {0.3f};
     constexpr auto slideTime {0.2f};
-    constexpr auto whooshDelay {0.05f};
     constexpr auto ufoHeadStartTime {0.2f};
     constexpr auto displayDistance {0.65f};
     constexpr auto textWidth {8.8f};
@@ -315,10 +314,9 @@ void SlidingTextAnimation::UpdateInRectangleAppearingState() {
         
         mText->mUpperTextLineSceneObject->SetIsVisible(true);
         mText->mLowerTextLineSceneObject->SetIsVisible(true);
-        
+
         auto& audio {mEngine.GetAudio()};
-        audio.PlaySoundWithDelay(static_cast<Pht::AudioResourceId>(SoundId::SlidingTextAnimation),
-                                 whooshDelay);
+        audio.PlaySound(static_cast<Pht::AudioResourceId>(SoundId::SlidingTextWhoosh1));
     }
 }
 
@@ -335,9 +333,7 @@ void SlidingTextAnimation::UpdateInSlidingInState() {
         mTextPosition.x = mRightPosition.x - displayDistance / 2.0f;
         
         mEngine.GetInput().EnableInput();
-        
         mTwinkleParticleEffect->GetComponent<Pht::ParticleEffect>()->Start();
-        
         FlyInUfo();
     }
     
@@ -366,8 +362,8 @@ void SlidingTextAnimation::UpdateInDisplayingTextState() {
         mVelocity = mDisplayVelocity;
         
         auto& audio {mEngine.GetAudio()};
-        audio.PlaySoundWithDelay(static_cast<Pht::AudioResourceId>(SoundId::SlidingTextAnimation),
-                                 whooshDelay);
+        audio.PlaySound(static_cast<Pht::AudioResourceId>(SoundId::SlidingTextWhoosh2));
+    
         FlyOutUfo();
     }
     

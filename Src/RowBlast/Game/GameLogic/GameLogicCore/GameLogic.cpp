@@ -36,6 +36,7 @@ namespace {
     constexpr auto landingMovementDurationFalling {4.0f};
     constexpr auto cascadeWaitTime {0.23f};
     constexpr auto shieldHeight {6};
+    constexpr auto whooshDelay {0.05f};
 
     PieceBlocks CreatePieceBlocks(const FallingPiece& fallingPiece) {
         auto& pieceType {fallingPiece.GetPieceType()};
@@ -494,11 +495,14 @@ void GameLogic::UpdateFallingPieceYpos() {
 void GameLogic::DropFallingPiece() {
     bool finalMovementWasADrop {mFallingPiece->GetPosition().y > mGhostPieceRow};
     mFallingPiece->SetY(mGhostPieceRow);
+    mEngine.GetAudio().PlaySound(static_cast<Pht::AudioResourceId>(SoundId::Whoosh));
     LandFallingPiece(finalMovementWasADrop);
 }
 
 void GameLogic::SelectMove(const Move& move) {
     mTutorial.OnSelectMove();
+    mEngine.GetAudio().PlaySoundWithDelay(static_cast<Pht::AudioResourceId>(SoundId::Whoosh),
+                                          whooshDelay);
     mFallingPieceAnimation.Start(*move.mLastMovement);
 }
 

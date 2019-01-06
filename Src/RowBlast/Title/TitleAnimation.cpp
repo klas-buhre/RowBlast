@@ -5,6 +5,7 @@
 // Engine includes.
 #include "IEngine.hpp"
 #include "IRenderer.hpp"
+#include "IAudio.hpp"
 #include "TextComponent.hpp"
 #include "Scene.hpp"
 #include "IParticleSystem.hpp"
@@ -13,6 +14,7 @@
 
 // Game includes.
 #include "UiLayer.hpp"
+#include "AudioResources.hpp"
 
 using namespace RowBlast;
 
@@ -162,6 +164,9 @@ void TitleAnimation::UpdateInWaitingState() {
         mElapsedTime = 0.0f;
         mText.mUpperTextLineSceneObject->SetIsVisible(true);
         mText.mLowerTextLineSceneObject->SetIsVisible(true);
+        
+        auto& audio {mEngine.GetAudio()};
+        audio.PlaySound(static_cast<Pht::AudioResourceId>(SoundId::SlidingTextWhoosh1));
     }
 }
 

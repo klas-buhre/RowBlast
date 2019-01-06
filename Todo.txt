@@ -62,13 +62,13 @@ DONE    -Map level click: use button click sound.
       -Game scene:
 DONE    -Maybe a shwooshing sound for the sliding text animation:
            Candidate: https://assetstore.unity.com/packages/audio/sound-fx/universal-sound-fx-17256  time around 27:35
-        -Humming sound from the UFO:
+NO      -Humming sound from the UFO:
            Candidate: https://assetstore.unity.com/packages/audio/sound-fx/universal-sound-fx-17256  time 15:48
-Continue>-Click sound when clicking a move using click controls.
+NO      -Click sound when clicking a move using click controls.
            Candidate: https://assetstore.unity.com/packages/audio/sound-fx/interface-sound-effects-84577  time 00:12
            Or: Click (8).wav in https://assetstore.unity.com/packages/audio/sound-fx/interface-and-item-sounds-89646 or the version with reverb in Futuristic.
            Or: any of the button click candidates.
-        -Some thump sound when landing a piece (Or woosh?). Could sound like in Tetris Ultimate.
+DONE    -Some whoosh sound when landing a piece. Could sound like in Tetris Ultimate.
            Candidate: https://assetstore.unity.com/packages/audio/sound-fx/mobile-game-82136  Movements 00:48
            Or: the same sound as when clicking a move using click controls.
         -Some blip sound when tapping the screen to see other move alternatives using click controls.
@@ -80,7 +80,7 @@ Continue>-Click sound when clicking a move using click controls.
          tapping the screen when using click controls.
         -Some blip sound when sliding the piece one cell to the side using swipe controls.
            Candidate: any of the button click candidates? Probably not.
-        -Some speed/woosh sound when dropping the piece using swipe controls. Could play the thump
+DONE    -Some speed/woosh sound when dropping the piece using swipe controls. Could play the thump
          sound from landing a piece as well like in Tetris Blitz.
            Candidate: Any of the woshes from https://assetstore.unity.com/packages/audio/sound-fx/universal-sound-fx-17256 time around 27:35
            Or: the same sound as when clicking a move using click controls.
