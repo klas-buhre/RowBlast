@@ -36,7 +36,8 @@ namespace {
     constexpr auto landingMovementDurationFalling {4.0f};
     constexpr auto cascadeWaitTime {0.23f};
     constexpr auto shieldHeight {6};
-    constexpr auto whooshDelay {0.05f};
+    constexpr auto whooshSoundDelay {0.05f};
+    constexpr auto landingSoundDelay {0.1f};
 
     PieceBlocks CreatePieceBlocks(const FallingPiece& fallingPiece) {
         auto& pieceType {fallingPiece.GetPieceType()};
@@ -502,7 +503,7 @@ void GameLogic::DropFallingPiece() {
 void GameLogic::SelectMove(const Move& move) {
     mTutorial.OnSelectMove();
     mEngine.GetAudio().PlaySoundWithDelay(static_cast<Pht::AudioResourceId>(SoundId::Whoosh),
-                                          whooshDelay);
+                                          whooshSoundDelay);
     mFallingPieceAnimation.Start(*move.mLastMovement);
 }
 
@@ -567,6 +568,7 @@ void GameLogic::LandFallingPiece(bool finalMovementWasADrop) {
     
     if (mState != State::FieldExplosions && mCascadeState == CascadeState::NotCascading) {
         mField.ManageWelds();
+        PlayLandPieceSound();
     }
     
     NextMove();
@@ -700,6 +702,20 @@ bool GameLogic::LevelAllowsClearingFilledRows() const {
             return true;
         case Level::Objective::Build:
             return false;
+    }
+}
+
+void GameLogic::PlayLandPieceSound() {
+    auto& audio {mEngine.GetAudio()};
+    auto landingSoundResourceId {static_cast<Pht::AudioResourceId>(SoundId::LandPiece)};
+
+    switch (mControlType) {
+        case ControlType::Click:
+            audio.PlaySound(landingSoundResourceId);
+            break;
+        case ControlType::Gesture:
+            audio.PlaySoundWithDelay(landingSoundResourceId, landingSoundDelay);
+            break;
     }
 }
 
@@ -852,6 +868,8 @@ void GameLogic::SwitchPiece() {
 
         return;
     }
+    
+    mEngine.GetAudio().PlaySound(static_cast<Pht::AudioResourceId>(SoundId::ButtonClick));
     
     auto* previousActivePieceType {mCurrentMove.mPieceType};
     

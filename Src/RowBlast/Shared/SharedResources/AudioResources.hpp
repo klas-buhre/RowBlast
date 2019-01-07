@@ -20,6 +20,7 @@ namespace RowBlast {
         SlidingTextWhoosh1,
         SlidingTextWhoosh2,
         Whoosh,
+        LandPiece,
         ClearBlocksBrickImpact1,
         ClearBlocksBrickImpact2,
         ClearBlocksBrickImpact3,

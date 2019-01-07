@@ -29,6 +29,7 @@ void RowBlast::LoadAudioResouces(Pht::IEngine& engine) {
     audio.LoadSound("sliding_text_whoosh1.wav", 1, maxSoundGain, static_cast<Pht::AudioResourceId>(SoundId::SlidingTextWhoosh1));
     audio.LoadSound("sliding_text_whoosh2.wav", 1, maxSoundGain, static_cast<Pht::AudioResourceId>(SoundId::SlidingTextWhoosh2));
     audio.LoadSound("whoosh.wav", 1, maxSoundGain, static_cast<Pht::AudioResourceId>(SoundId::Whoosh));
+    audio.LoadSound("land_piece.wav", 1, 0.6f, static_cast<Pht::AudioResourceId>(SoundId::LandPiece));
     
     audio.LoadSound("clear_blocks_brick_impact1.wav", 3, clearBlocksGain, static_cast<Pht::AudioResourceId>(SoundId::ClearBlocksBrickImpact1));
     audio.LoadSound("clear_blocks_brick_impact2.wav", 3, clearBlocksGain, static_cast<Pht::AudioResourceId>(SoundId::ClearBlocksBrickImpact2));

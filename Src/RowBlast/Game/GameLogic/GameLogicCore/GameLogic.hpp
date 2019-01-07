@@ -174,6 +174,7 @@ namespace RowBlast {
                                        Direction collisionDirection);
         BlastRadiusAnimation::Kind CalculateBlastRadiusKind(const Pht::IVec2& position);
         bool LevelAllowsClearingFilledRows() const;
+        void PlayLandPieceSound();
         void RemoveBlocksInsideTheShield();
         bool IsThereRoomToSwitchPiece();
         Result HandleInput();
