@@ -74,12 +74,17 @@ DONE    -Some whoosh sound when landing a piece. Could sound like in Tetris Ulti
         -Some blip sound when tapping the screen to see other move alternatives using click controls.
            Candidate: any of the button click candidates.
            Or: https://assetstore.unity.com/packages/audio/sound-fx/ui-item-sound-effects-2-130792  time 00:13
-        -Some blip sound when switching the active piece.
-           Candidate: any of the button click candidates.
+           Or: Interface and Item Sounds: Future Sounds (6).wav
+           Or: Interface and Item Sounds: Future Sounds (14).wav  or  Click (8).wav
+DONE    -Some blip sound when switching the active piece.
+           Candidate: Universal Sound FX/UI_Click_Distinct_mono.wav
+           Or: Universal Sound FX/UI_Click_Metallic_mono.wav
+           Or: Cafofo: Click (6).wav
         -Sound blip sound when rotating the piece using swipe controls. Could be the same as when
          tapping the screen when using click controls.
         -Some blip sound when sliding the piece one cell to the side using swipe controls.
-           Candidate: any of the button click candidates? Probably not.
+           Or: Cafofo: Future Sounds (13).wav
+           Or: Universal Sound FX/UI_Click_Cut_mono.wav
 DONE    -Some speed/woosh sound when dropping the piece using swipe controls. Could play the thump
          sound from landing a piece as well like in Tetris Blitz.
            Candidate: Any of the woshes from https://assetstore.unity.com/packages/audio/sound-fx/universal-sound-fx-17256 time around 27:35

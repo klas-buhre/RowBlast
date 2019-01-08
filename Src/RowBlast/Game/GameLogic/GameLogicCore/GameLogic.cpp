@@ -869,7 +869,7 @@ void GameLogic::SwitchPiece() {
         return;
     }
     
-    mEngine.GetAudio().PlaySound(static_cast<Pht::AudioResourceId>(SoundId::ButtonClick));
+    mEngine.GetAudio().PlaySound(static_cast<Pht::AudioResourceId>(SoundId::SwitchPiece));
     
     auto* previousActivePieceType {mCurrentMove.mPieceType};
     

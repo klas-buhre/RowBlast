@@ -22,7 +22,7 @@ void RowBlast::LoadAudioResouces(Pht::IEngine& engine) {
     
     audio.LoadMusicTrack("map.mp4", static_cast<Pht::AudioResourceId>(MusicTrackId::Map));
     audio.LoadMusicTrack("game_track1.mp4", static_cast<Pht::AudioResourceId>(MusicTrackId::Game1));
-    
+
     audio.LoadSound("button_click.wav", 1, maxSoundGain, static_cast<Pht::AudioResourceId>(SoundId::ButtonClick));
     audio.LoadSound("start_game.wav", 1, maxSoundGain, static_cast<Pht::AudioResourceId>(SoundId::StartGame));
     audio.LoadSound("leave_title.wav", 1, 0.65f, static_cast<Pht::AudioResourceId>(SoundId::LeaveTitle));
@@ -30,11 +30,10 @@ void RowBlast::LoadAudioResouces(Pht::IEngine& engine) {
     audio.LoadSound("sliding_text_whoosh2.wav", 1, maxSoundGain, static_cast<Pht::AudioResourceId>(SoundId::SlidingTextWhoosh2));
     audio.LoadSound("whoosh.wav", 1, maxSoundGain, static_cast<Pht::AudioResourceId>(SoundId::Whoosh));
     audio.LoadSound("land_piece.wav", 1, 0.6f, static_cast<Pht::AudioResourceId>(SoundId::LandPiece));
-    
+    audio.LoadSound("switch_piece.wav", 1, 0.8f, static_cast<Pht::AudioResourceId>(SoundId::SwitchPiece));
     audio.LoadSound("clear_blocks_brick_impact1.wav", 3, clearBlocksGain, static_cast<Pht::AudioResourceId>(SoundId::ClearBlocksBrickImpact1));
     audio.LoadSound("clear_blocks_brick_impact2.wav", 3, clearBlocksGain, static_cast<Pht::AudioResourceId>(SoundId::ClearBlocksBrickImpact2));
     audio.LoadSound("clear_blocks_brick_impact3.wav", 3, clearBlocksGain, static_cast<Pht::AudioResourceId>(SoundId::ClearBlocksBrickImpact3));
-    
     audio.LoadSound("fantastic.wav", 1, 0.8f, static_cast<Pht::AudioResourceId>(SoundId::Fantastic));
     audio.LoadSound("awesome.wav", 1, 0.8f, static_cast<Pht::AudioResourceId>(SoundId::Awesome));
     audio.LoadSound("combo1.wav", 1, maxSoundGain, static_cast<Pht::AudioResourceId>(SoundId::Combo1));
