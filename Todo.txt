@@ -71,19 +71,19 @@ NO      -Click sound when clicking a move using click controls.
 DONE    -Some whoosh sound when landing a piece. Could sound like in Tetris Ultimate.
            Candidate: https://assetstore.unity.com/packages/audio/sound-fx/mobile-game-82136  Movements 00:48
            Or: the same sound as when clicking a move using click controls.
-        -Some blip sound when tapping the screen to see other move alternatives using click controls.
-           Candidate: any of the button click candidates.
-           Or: https://assetstore.unity.com/packages/audio/sound-fx/ui-item-sound-effects-2-130792  time 00:13
+DONE    -Some blip sound when tapping the screen to see other move alternatives using click controls.
            Or: Interface and Item Sounds: Future Sounds (6).wav
-           Or: Interface and Item Sounds: Future Sounds (14).wav  or  Click (8).wav
+           Or: Interface and Item Sounds: Future Sounds (8).wav
+           Or: Interface and Item Sounds: Click (8).wav
+           Or: Interface and Item Sounds: Click (6).wav
 DONE    -Some blip sound when switching the active piece.
            Candidate: Universal Sound FX/UI_Click_Distinct_mono.wav
            Or: Universal Sound FX/UI_Click_Metallic_mono.wav
            Or: Cafofo: Click (6).wav
         -Sound blip sound when rotating the piece using swipe controls. Could be the same as when
          tapping the screen when using click controls.
+           Or: A whoosh.
         -Some blip sound when sliding the piece one cell to the side using swipe controls.
-           Or: Cafofo: Future Sounds (13).wav
            Or: Universal Sound FX/UI_Click_Cut_mono.wav
 DONE    -Some speed/woosh sound when dropping the piece using swipe controls. Could play the thump
          sound from landing a piece as well like in Tetris Blitz.
@@ -122,7 +122,7 @@ DONE    -Sound during "Fantastic" animation.
 2             4.47  Done   https://assetstore.unity.com/packages/audio/sound-fx/interface-sound-effects-84577
 2            43.77  Maybe  https://assetstore.unity.com/packages/audio/sound-fx/pro-sound-collection-50235
 1            FREE   Done   https://assetstore.unity.com/packages/audio/sound-fx/ui-sfx-36989
-1             4.47  Yes    https://assetstore.unity.com/packages/audio/sound-fx/ui-item-sound-effects-2-130792
+1             4.47  Done   https://assetstore.unity.com/packages/audio/sound-fx/ui-item-sound-effects-2-130792
 1            17.78  Maybe  https://assetstore.unity.com/packages/audio/sound-fx/objects-destruction-sfx-109183
 1             8.89  Maybe  https://assetstore.unity.com/packages/audio/sound-fx/weapons/blasters-small-83107
 1             4.47  Maybe  https://assetstore.unity.com/packages/audio/sound-fx/67-coins-and-items-sounds-collectables-92693
@@ -223,7 +223,7 @@ Ordered Backlog:
         Cost: 4
         Done
     -Sounds.
-        Cost: 6
+        Cost: 10
     -Levels for the space world.
         Cost: 7
     -Analytics.
@@ -247,7 +247,7 @@ Ordered Backlog:
     -Back end.
         Cost: ?
 
-        Total cost: 269
+        Total cost: 273
 
 
 Comomon piece type sets:

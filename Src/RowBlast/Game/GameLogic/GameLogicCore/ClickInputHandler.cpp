@@ -5,6 +5,7 @@
 #include "IRenderer.hpp"
 #include "IInput.hpp"
 #include "InputEvent.hpp"
+#include "IAudio.hpp"
 
 // Game includes.
 #include "FallingPiece.hpp"
@@ -12,6 +13,7 @@
 #include "GameScene.hpp"
 #include "IGameLogic.hpp"
 #include "Tutorial.hpp"
+#include "AudioResources.hpp"
 
 using namespace RowBlast;
 
@@ -291,6 +293,7 @@ void ClickInputHandler::HandleTouch(const Pht::TouchEvent& touchEvent, int moves
                 mGameLogic.SwitchPiece();
             } else {
                 CreateNewSetOfVisibleMoves();
+                mEngine.GetAudio().PlaySound(static_cast<Pht::AudioResourceId>(SoundId::OtherMoves));
                 assert(!mVisibleMoves.IsEmpty());
                 mTutorial.OnChangeVisibleMoves(movesUsed, mVisibleMoves.Front());
             }
