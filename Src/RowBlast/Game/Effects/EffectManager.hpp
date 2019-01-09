@@ -42,6 +42,7 @@ namespace RowBlast {
         }
 
     private:
+        Pht::IEngine& mEngine;
         Pht::CameraShake& mCameraShake;
         State mState {State::Inactive};
         ExplosionParticleEffect mExplosionEffect;

@@ -27,6 +27,8 @@ namespace RowBlast {
         ClearBlocksBrickImpact1,
         ClearBlocksBrickImpact2,
         ClearBlocksBrickImpact3,
+        Laser,
+        LaserBass,
         Fantastic,
         Awesome,
         Combo1,
@@ -38,6 +40,7 @@ namespace RowBlast {
     void LoadAndPlayGameMusicTrack2(Pht::IEngine& engine);
     void PlayMapMusicTrack(Pht::IEngine& engine);
     void PlayClearBlocksSound(Pht::IEngine& engine);
+    void PlayLaserSound(Pht::IEngine& engine);
 }
 
 #endif

@@ -3,6 +3,9 @@
 // Engine includes.
 #include "CameraShake.hpp"
 
+// Game includes.
+#include "AudioResources.hpp"
+
 using namespace RowBlast;
 
 namespace {
@@ -16,6 +19,7 @@ namespace {
 EffectManager::EffectManager(Pht::IEngine& engine,
                              GameScene& scene,
                              Pht::CameraShake& cameraShake) :
+    mEngine {engine},
     mCameraShake {cameraShake},
     mExplosionEffect {engine, scene, ExplosionParticleEffect::Kind::Bomb},
     mBigExplosionEffect {engine, scene, ExplosionParticleEffect::Kind::BigBomb} {
@@ -71,6 +75,7 @@ void EffectManager::StartLaser(const Pht::Vec2& position)  {
         }
     }
     
+    PlayLaserSound(mEngine);
     mCameraShake.StartShake(cameraShakeTime, cameraShakeMagnitude);
 }
 

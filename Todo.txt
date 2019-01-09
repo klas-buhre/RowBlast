@@ -80,18 +80,16 @@ DONE    -Some blip sound when switching the active piece.
            Candidate: Universal Sound FX/UI_Click_Distinct_mono.wav
            Or: Universal Sound FX/UI_Click_Metallic_mono.wav
            Or: Cafofo: Click (6).wav
-        -Sound blip sound when rotating the piece using swipe controls. Could be the same as when
-         tapping the screen when using click controls.
-           Or: A whoosh.
-        -Some blip sound when sliding the piece one cell to the side using swipe controls.
+DONE    -Sound whoosh sound when rotating the piece using swipe controls.
+NO      -Some blip sound when sliding the piece one cell to the side using swipe controls.
            Or: Universal Sound FX/UI_Click_Cut_mono.wav
 DONE    -Some speed/woosh sound when dropping the piece using swipe controls. Could play the thump
          sound from landing a piece as well like in Tetris Blitz.
            Candidate: Any of the woshes from https://assetstore.unity.com/packages/audio/sound-fx/universal-sound-fx-17256 time around 27:35
            Or: the same sound as when clicking a move using click controls.
 DONE    -Sound from brick impacts when clearing blocks.
-        -Laser.
-           Candidate: https://assetstore.unity.com/packages/audio/sound-fx/weapons/blasters-small-83107  time 00:22
+DONE    -Laser.
+           Candidate: https://assetstore.unity.com/packages/audio/sound-fx/weapons/blasters-small-83107  time 00:22 or 01:04 or 02:34
            Or: https://assetstore.unity.com/packages/audio/sound-fx/universal-sound-fx-17256  time 07:39
            Or (not that great): https://assetstore.unity.com/packages/audio/sound-fx/weapons/sci-fi-sounds-and-sci-fi-weapons-97274  time 1:16 or 00:25
              -this is part of https://assetstore.unity.com/packages/audio/sound-fx/pro-sound-collection-50235
