@@ -31,7 +31,7 @@
 		6221699E21DE73E5001CB9A1 /* start_game.wav in Resources */ = {isa = PBXBuildFile; fileRef = 6221699D21DE73E5001CB9A1 /* start_game.wav */; };
 		622169A021DE7EF6001CB9A1 /* logo.wav in Resources */ = {isa = PBXBuildFile; fileRef = 6221699F21DE7EF5001CB9A1 /* logo.wav */; };
 		622169B621DF6FCE001CB9A1 /* button_click.wav in Resources */ = {isa = PBXBuildFile; fileRef = 622169B521DF6FCE001CB9A1 /* button_click.wav */; };
-		622169BE21DF78F0001CB9A1 /* whoosh.wav in Resources */ = {isa = PBXBuildFile; fileRef = 622169BD21DF78F0001CB9A1 /* whoosh.wav */; };
+		622169BE21DF78F0001CB9A1 /* drop_whoosh.wav in Resources */ = {isa = PBXBuildFile; fileRef = 622169BD21DF78F0001CB9A1 /* drop_whoosh.wav */; };
 		622169C821DFE8EB001CB9A1 /* combo2.wav in Resources */ = {isa = PBXBuildFile; fileRef = 622169C721DFE8EB001CB9A1 /* combo2.wav */; };
 		622169DE21E0CADE001CB9A1 /* clear_blocks_brick_impact1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 622169D521E0CADC001CB9A1 /* clear_blocks_brick_impact1.wav */; };
 		622169DF21E0CADE001CB9A1 /* clear_blocks_brick_impact2.wav in Resources */ = {isa = PBXBuildFile; fileRef = 622169D621E0CADC001CB9A1 /* clear_blocks_brick_impact2.wav */; };
@@ -44,6 +44,7 @@
 		622169F421E36503001CB9A1 /* land_piece.wav in Resources */ = {isa = PBXBuildFile; fileRef = 622169F321E36503001CB9A1 /* land_piece.wav */; };
 		622169F821E3C011001CB9A1 /* switch_piece.wav in Resources */ = {isa = PBXBuildFile; fileRef = 622169F521E3C010001CB9A1 /* switch_piece.wav */; };
 		622169FF21E60503001CB9A1 /* other_moves.wav in Resources */ = {isa = PBXBuildFile; fileRef = 622169FB21E60502001CB9A1 /* other_moves.wav */; };
+		62216A0421E61722001CB9A1 /* rotate_whoosh.wav in Resources */ = {isa = PBXBuildFile; fileRef = 62216A0321E61722001CB9A1 /* rotate_whoosh.wav */; };
 		6227D4F5206CFD25008EA77D /* bomb_798.obj in Resources */ = {isa = PBXBuildFile; fileRef = 6227D4F4206CFD25008EA77D /* bomb_798.obj */; };
 		622EDD16217A42410007C652 /* level61.json in Resources */ = {isa = PBXBuildFile; fileRef = 622EDD15217A42400007C652 /* level61.json */; };
 		623326732073D69500AC505A /* level29.json in Resources */ = {isa = PBXBuildFile; fileRef = 623326722073D69400AC505A /* level29.json */; };
@@ -491,7 +492,7 @@
 		6221699D21DE73E5001CB9A1 /* start_game.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = start_game.wav; sourceTree = "<group>"; };
 		6221699F21DE7EF5001CB9A1 /* logo.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = logo.wav; sourceTree = "<group>"; };
 		622169B521DF6FCE001CB9A1 /* button_click.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = button_click.wav; sourceTree = "<group>"; };
-		622169BD21DF78F0001CB9A1 /* whoosh.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = whoosh.wav; sourceTree = "<group>"; };
+		622169BD21DF78F0001CB9A1 /* drop_whoosh.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = drop_whoosh.wav; sourceTree = "<group>"; };
 		622169C721DFE8EB001CB9A1 /* combo2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = combo2.wav; sourceTree = "<group>"; };
 		622169D521E0CADC001CB9A1 /* clear_blocks_brick_impact1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = clear_blocks_brick_impact1.wav; sourceTree = "<group>"; };
 		622169D621E0CADC001CB9A1 /* clear_blocks_brick_impact2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = clear_blocks_brick_impact2.wav; sourceTree = "<group>"; };
@@ -504,6 +505,7 @@
 		622169F321E36503001CB9A1 /* land_piece.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = land_piece.wav; sourceTree = "<group>"; };
 		622169F521E3C010001CB9A1 /* switch_piece.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = switch_piece.wav; sourceTree = "<group>"; };
 		622169FB21E60502001CB9A1 /* other_moves.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = other_moves.wav; sourceTree = "<group>"; };
+		62216A0321E61722001CB9A1 /* rotate_whoosh.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = rotate_whoosh.wav; sourceTree = "<group>"; };
 		6227D4F4206CFD25008EA77D /* bomb_798.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bomb_798.obj; sourceTree = "<group>"; };
 		622EDD15217A42400007C652 /* level61.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level61.json; sourceTree = "<group>"; };
 		623326722073D69400AC505A /* level29.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level29.json; sourceTree = "<group>"; };
@@ -2333,6 +2335,7 @@
 		6270DC521FCB212B00FB457D /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
+				62216A0321E61722001CB9A1 /* rotate_whoosh.wav */,
 				622169FB21E60502001CB9A1 /* other_moves.wav */,
 				622169F521E3C010001CB9A1 /* switch_piece.wav */,
 				622169F321E36503001CB9A1 /* land_piece.wav */,
@@ -2348,7 +2351,7 @@
 				622169E521E120F8001CB9A1 /* fantastic.wav */,
 				6221699721DE1B9B001CB9A1 /* leave_title.wav */,
 				6221699F21DE7EF5001CB9A1 /* logo.wav */,
-				622169BD21DF78F0001CB9A1 /* whoosh.wav */,
+				622169BD21DF78F0001CB9A1 /* drop_whoosh.wav */,
 				6221699D21DE73E5001CB9A1 /* start_game.wav */,
 			);
 			path = Sounds;
@@ -2886,6 +2889,7 @@
 				62203F0B21D7D84C00BEB3E9 /* game_track1.mp4 in Resources */,
 				6256981E2182392C003A3A9D /* Particle.frag in Resources */,
 				6256982E2182392C003A3A9D /* ParticleTextureColor.vert in Resources */,
+				62216A0421E61722001CB9A1 /* rotate_whoosh.wav in Resources */,
 				6238F61C2191FCB40008A0CF /* TextDoubleGradient.frag in Resources */,
 				62B1CB87210F8F8600D0F195 /* particle_sprite_halo.png in Resources */,
 				625698242182392C003A3A9D /* ParticleTextureColor.frag in Resources */,
@@ -2916,7 +2920,7 @@
 				627A12CA21B5379F00EECA3B /* heart_392.obj in Resources */,
 				6278591C203AFB7C00494A4D /* Images.xcassets in Resources */,
 				6256981F2182392C003A3A9D /* VertexColor.frag in Resources */,
-				622169BE21DF78F0001CB9A1 /* whoosh.wav in Resources */,
+				622169BE21DF78F0001CB9A1 /* drop_whoosh.wav in Resources */,
 				625698272182392C003A3A9D /* PointParticle.frag in Resources */,
 				625B02CD21386AC3000744F2 /* level_bomb_frame4.jpg in Resources */,
 				62B2BAF12133FE61009C529D /* level55.json in Resources */,

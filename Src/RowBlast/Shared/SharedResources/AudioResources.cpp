@@ -28,7 +28,8 @@ void RowBlast::LoadAudioResouces(Pht::IEngine& engine) {
     audio.LoadSound("leave_title.wav", 1, 0.65f, static_cast<Pht::AudioResourceId>(SoundId::LeaveTitle));
     audio.LoadSound("sliding_text_whoosh1.wav", 1, maxSoundGain, static_cast<Pht::AudioResourceId>(SoundId::SlidingTextWhoosh1));
     audio.LoadSound("sliding_text_whoosh2.wav", 1, maxSoundGain, static_cast<Pht::AudioResourceId>(SoundId::SlidingTextWhoosh2));
-    audio.LoadSound("whoosh.wav", 1, maxSoundGain, static_cast<Pht::AudioResourceId>(SoundId::Whoosh));
+    audio.LoadSound("drop_whoosh.wav", 1, maxSoundGain, static_cast<Pht::AudioResourceId>(SoundId::DropWhoosh));
+    audio.LoadSound("rotate_whoosh.wav", 5, 0.53f, static_cast<Pht::AudioResourceId>(SoundId::RotateWhoosh));
     audio.LoadSound("land_piece.wav", 1, 0.6f, static_cast<Pht::AudioResourceId>(SoundId::LandPiece));
     audio.LoadSound("switch_piece.wav", 1, 0.8f, static_cast<Pht::AudioResourceId>(SoundId::SwitchPiece));
     audio.LoadSound("other_moves.wav", 1, 0.475f, static_cast<Pht::AudioResourceId>(SoundId::OtherMoves));

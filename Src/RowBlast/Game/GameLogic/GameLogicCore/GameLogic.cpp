@@ -496,13 +496,13 @@ void GameLogic::UpdateFallingPieceYpos() {
 void GameLogic::DropFallingPiece() {
     bool finalMovementWasADrop {mFallingPiece->GetPosition().y > mGhostPieceRow};
     mFallingPiece->SetY(mGhostPieceRow);
-    mEngine.GetAudio().PlaySound(static_cast<Pht::AudioResourceId>(SoundId::Whoosh));
+    mEngine.GetAudio().PlaySound(static_cast<Pht::AudioResourceId>(SoundId::DropWhoosh));
     LandFallingPiece(finalMovementWasADrop);
 }
 
 void GameLogic::SelectMove(const Move& move) {
     mTutorial.OnSelectMove();
-    mEngine.GetAudio().PlaySoundWithDelay(static_cast<Pht::AudioResourceId>(SoundId::Whoosh),
+    mEngine.GetAudio().PlaySoundWithDelay(static_cast<Pht::AudioResourceId>(SoundId::DropWhoosh),
                                           whooshSoundDelay);
     mFallingPieceAnimation.Start(*move.mLastMovement);
 }
@@ -751,6 +751,8 @@ void GameLogic::RotatePiece(const Pht::TouchEvent& touchEvent) {
     if (!pieceType.CanRotateAroundZ()) {
         return;
     }
+    
+    mEngine.GetAudio().PlaySound(static_cast<Pht::AudioResourceId>(SoundId::RotateWhoosh));
     
     auto newRotation {CalculateNewRotation(touchEvent)};
     
