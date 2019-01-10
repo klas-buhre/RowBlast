@@ -93,9 +93,11 @@ DONE    -Laser.
            Or: https://assetstore.unity.com/packages/audio/sound-fx/universal-sound-fx-17256  time 07:39
            Or (not that great): https://assetstore.unity.com/packages/audio/sound-fx/weapons/sci-fi-sounds-and-sci-fi-weapons-97274  time 1:16 or 00:25
              -this is part of https://assetstore.unity.com/packages/audio/sound-fx/pro-sound-collection-50235
-        -Bomb (Could sound like the bomb in Soda).
-           Candidate: https://assetstore.unity.com/packages/audio/sound-fx/pro-sound-collection-50235  time some of the explosions.   Can buy the sub pack https://assetstore.unity.com/packages/audio/sound-fx/explosion-sound-pack-70695
-        -Sound when filling a gray slot.
+DONE    -Bomb (Could sound like the bomb in Soda).
+           Candidate: EXPLOSION_Recorded_02_sterio.wav
+           Or: EXPLOSION_Medium_Bang_Smooth_tail_stereo.wav + bass
+           Or: https://assetstore.unity.com/packages/audio/sound-fx/explosion-sound-pack-70695
+NO      -Sound when filling a gray slot.
            Candidate: ?
 DONE    -Sound during "Awesome" animation.
 DONE    -Sound during "Fantastic" animation.
@@ -225,7 +227,7 @@ Ordered Backlog:
     -Levels for the space world.
         Cost: 7
     -Analytics.
-        Cost: 5
+        Cost: 10
     -Levels for the 4th world.
         Cost: 7
     -Playtest.
@@ -245,7 +247,7 @@ Ordered Backlog:
     -Back end.
         Cost: ?
 
-        Total cost: 273
+        Total cost: 278
 
 
 Comomon piece type sets:

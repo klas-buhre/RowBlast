@@ -56,12 +56,14 @@ void EffectManager::Init() {
 void EffectManager::StartExplosion(const Pht::Vec2& position) {
     mState = State::OngoingEffects;
     mExplosionEffect.StartExplosion(position);
+    PlayExplosionSound(mEngine);
     mCameraShake.StartShake(cameraShakeTime, cameraShakeMagnitude);
 }
 
 void EffectManager::StartBigExplosion(const Pht::Vec2& position) {
     mState = State::OngoingEffects;
     mBigExplosionEffect.StartExplosion(position);
+    PlayExplosionSound(mEngine);
     mCameraShake.StartShake(cameraShakeTime, cameraShakeMagnitude);
 }
 
@@ -89,6 +91,7 @@ void EffectManager::StartLevelBombExplosion(const Pht::Vec2& position) {
         }
     }
     
+    PlayExplosionSound(mEngine);
     mCameraShake.StartShake(cameraShakeTime, cameraShakeMagnitude);
 }
 

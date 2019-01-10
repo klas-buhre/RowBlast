@@ -46,7 +46,8 @@
 		622169FF21E60503001CB9A1 /* other_moves.wav in Resources */ = {isa = PBXBuildFile; fileRef = 622169FB21E60502001CB9A1 /* other_moves.wav */; };
 		62216A0421E61722001CB9A1 /* rotate_whoosh.wav in Resources */ = {isa = PBXBuildFile; fileRef = 62216A0321E61722001CB9A1 /* rotate_whoosh.wav */; };
 		62216A0821E655B0001CB9A1 /* laser.wav in Resources */ = {isa = PBXBuildFile; fileRef = 62216A0721E655AF001CB9A1 /* laser.wav */; };
-		62216A0A21E66038001CB9A1 /* laser_bass.wav in Resources */ = {isa = PBXBuildFile; fileRef = 62216A0921E66038001CB9A1 /* laser_bass.wav */; };
+		62216A0A21E66038001CB9A1 /* blast_bass.wav in Resources */ = {isa = PBXBuildFile; fileRef = 62216A0921E66038001CB9A1 /* blast_bass.wav */; };
+		62216A0F21E756E4001CB9A1 /* explosion.wav in Resources */ = {isa = PBXBuildFile; fileRef = 62216A0D21E756E4001CB9A1 /* explosion.wav */; };
 		6227D4F5206CFD25008EA77D /* bomb_798.obj in Resources */ = {isa = PBXBuildFile; fileRef = 6227D4F4206CFD25008EA77D /* bomb_798.obj */; };
 		622EDD16217A42410007C652 /* level61.json in Resources */ = {isa = PBXBuildFile; fileRef = 622EDD15217A42400007C652 /* level61.json */; };
 		623326732073D69500AC505A /* level29.json in Resources */ = {isa = PBXBuildFile; fileRef = 623326722073D69400AC505A /* level29.json */; };
@@ -509,7 +510,8 @@
 		622169FB21E60502001CB9A1 /* other_moves.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = other_moves.wav; sourceTree = "<group>"; };
 		62216A0321E61722001CB9A1 /* rotate_whoosh.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = rotate_whoosh.wav; sourceTree = "<group>"; };
 		62216A0721E655AF001CB9A1 /* laser.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = laser.wav; sourceTree = "<group>"; };
-		62216A0921E66038001CB9A1 /* laser_bass.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = laser_bass.wav; sourceTree = "<group>"; };
+		62216A0921E66038001CB9A1 /* blast_bass.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = blast_bass.wav; sourceTree = "<group>"; };
+		62216A0D21E756E4001CB9A1 /* explosion.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = explosion.wav; sourceTree = "<group>"; };
 		6227D4F4206CFD25008EA77D /* bomb_798.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bomb_798.obj; sourceTree = "<group>"; };
 		622EDD15217A42400007C652 /* level61.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level61.json; sourceTree = "<group>"; };
 		623326722073D69400AC505A /* level29.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level29.json; sourceTree = "<group>"; };
@@ -2339,6 +2341,7 @@
 		6270DC521FCB212B00FB457D /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
+				62216A0D21E756E4001CB9A1 /* explosion.wav */,
 				622169E721E136E7001CB9A1 /* awesome.wav */,
 				622169B521DF6FCE001CB9A1 /* button_click.wav */,
 				622169D521E0CADC001CB9A1 /* clear_blocks_brick_impact1.wav */,
@@ -2349,7 +2352,7 @@
 				622169BD21DF78F0001CB9A1 /* drop_whoosh.wav */,
 				622169E521E120F8001CB9A1 /* fantastic.wav */,
 				622169F321E36503001CB9A1 /* land_piece.wav */,
-				62216A0921E66038001CB9A1 /* laser_bass.wav */,
+				62216A0921E66038001CB9A1 /* blast_bass.wav */,
 				62216A0721E655AF001CB9A1 /* laser.wav */,
 				6221699721DE1B9B001CB9A1 /* leave_title.wav */,
 				6221699F21DE7EF5001CB9A1 /* logo.wav */,
@@ -2778,7 +2781,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				622169C821DFE8EB001CB9A1 /* combo2.wav in Resources */,
-				62216A0A21E66038001CB9A1 /* laser_bass.wav in Resources */,
+				62216A0A21E66038001CB9A1 /* blast_bass.wav in Resources */,
 				625698262182392C003A3A9D /* Particle.vert in Resources */,
 				626722E42127656F0058528D /* Icon.png in Resources */,
 				62B1CBAC2110E9C400D0F195 /* bomb_frame2.jpg in Resources */,
@@ -2838,6 +2841,7 @@
 				62BB35E121CD59E10051AEEF /* level63.json in Resources */,
 				6256982B2182392C003A3A9D /* Textured.vert in Resources */,
 				62B1CB89210F8F8600D0F195 /* laser_bomb_diffuse.jpg in Resources */,
+				62216A0F21E756E4001CB9A1 /* explosion.wav in Resources */,
 				622169FF21E60503001CB9A1 /* other_moves.wav in Resources */,
 				625698162182392C003A3A9D /* TextMidGradient.frag in Resources */,
 				625D3B4B216FB2A200D67EC2 /* level60.json in Resources */,

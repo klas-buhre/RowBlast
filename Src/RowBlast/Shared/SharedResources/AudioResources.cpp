@@ -37,7 +37,8 @@ void RowBlast::LoadAudioResouces(Pht::IEngine& engine) {
     audio.LoadSound("clear_blocks_brick_impact2.wav", 3, clearBlocksGain, static_cast<Pht::AudioResourceId>(SoundId::ClearBlocksBrickImpact2));
     audio.LoadSound("clear_blocks_brick_impact3.wav", 3, clearBlocksGain, static_cast<Pht::AudioResourceId>(SoundId::ClearBlocksBrickImpact3));
     audio.LoadSound("laser.wav", 5, 0.35f, static_cast<Pht::AudioResourceId>(SoundId::Laser));
-    audio.LoadSound("laser_bass.wav", 5, 0.5f, static_cast<Pht::AudioResourceId>(SoundId::LaserBass));
+    audio.LoadSound("blast_bass.wav", 5, 0.5f, static_cast<Pht::AudioResourceId>(SoundId::BlastBass));
+    audio.LoadSound("explosion.wav", 5, 0.51f, static_cast<Pht::AudioResourceId>(SoundId::Explosion));
     audio.LoadSound("fantastic.wav", 1, 0.8f, static_cast<Pht::AudioResourceId>(SoundId::Fantastic));
     audio.LoadSound("awesome.wav", 1, 0.8f, static_cast<Pht::AudioResourceId>(SoundId::Awesome));
     audio.LoadSound("combo1.wav", 1, maxSoundGain, static_cast<Pht::AudioResourceId>(SoundId::Combo1));
@@ -100,5 +101,11 @@ void RowBlast::PlayClearBlocksSound(Pht::IEngine& engine) {
 void RowBlast::PlayLaserSound(Pht::IEngine& engine) {
     auto& audio {engine.GetAudio()};
     audio.PlaySound(static_cast<Pht::AudioResourceId>(SoundId::Laser));
-    audio.PlaySound(static_cast<Pht::AudioResourceId>(SoundId::LaserBass));
+    audio.PlaySound(static_cast<Pht::AudioResourceId>(SoundId::BlastBass));
+}
+
+void RowBlast::PlayExplosionSound(Pht::IEngine& engine) {
+    auto& audio {engine.GetAudio()};
+    audio.PlaySound(static_cast<Pht::AudioResourceId>(SoundId::Explosion));
+    audio.PlaySound(static_cast<Pht::AudioResourceId>(SoundId::BlastBass));
 }
