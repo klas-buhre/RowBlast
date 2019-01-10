@@ -12,78 +12,6 @@ namespace {
         return {v.x * cosTheta - v.y * sinTheta, v.x * sinTheta + v.y * cosTheta, 0.0f};
     }
     
-    bool UpdateParticle(Particle& particle, float dt, const ParticleSettings& particleSettings) {
-        particle.mAge += dt;
-        
-        if (particle.mAge > particle.mTimeToLive) {
-            particle.mIsActive = false;
-            return false;
-        }
-        
-        particle.mVelocity += particleSettings.mAcceleration * dt;
-        
-        if (particleSettings.mDragCoefficient.HasValue()) {
-            auto dragCoeff {particleSettings.mDragCoefficient.GetValue()};
-            particle.mVelocity -= particle.mVelocity * dragCoeff * dt;
-        }
-
-        particle.mPosition += particle.mVelocity * dt;
-        particle.mZAngle += particle.mZAngularVelocity * dt;
-        
-        if (particle.mAge < particleSettings.mGrowDuration) {
-            if (particleSettings.mInitialSize.HasValue()) {
-                particle.mSize += (particle.mFullSize - particleSettings.mInitialSize.GetValue()) *
-                                  dt / particleSettings.mGrowDuration;
-            } else if (particleSettings.mInitialPointSize.HasValue()) {
-                auto deltaSize {
-                    (particle.mFullSize.x - particleSettings.mInitialPointSize.GetValue()) *
-                    dt / particleSettings.mGrowDuration
-                };
-                
-                particle.mSize += {deltaSize, deltaSize};
-            } else {
-                particle.mSize += particle.mFullSize * dt / particleSettings.mGrowDuration;
-            }
-            
-            if (particle.mSize.x > particle.mFullSize.x) {
-                particle.mSize.x = particle.mFullSize.x;
-            }
-            
-            if (particle.mSize.y > particle.mFullSize.y) {
-                particle.mSize.y = particle.mFullSize.y;
-            }
-        } else if (particle.mAge > particle.mTimeToLive - particleSettings.mShrinkDuration) {
-            auto deltaSize {particle.mFullSize * dt / particleSettings.mShrinkDuration};
-            
-            Vec2 scaledDeltaSize {
-                deltaSize.x * particleSettings.mShrinkScale.x,
-                deltaSize.y * particleSettings.mShrinkScale.y
-            };
-            
-            particle.mSize -= scaledDeltaSize;
-            
-            if (particle.mSize.x < 0.0f) {
-                particle.mSize.x = 0.0f;
-            }
-            
-            if (particle.mSize.y < 0.0f) {
-                particle.mSize.y = 0.0f;
-            }
-        } else {
-            particle.mSize = particle.mFullSize;
-        }
-
-        if (particle.mAge > particle.mTimeToLive - particleSettings.mFadeOutDuration) {
-            particle.mColor.w -= dt / particleSettings.mFadeOutDuration;
-            
-            if (particle.mColor.w < 0.0f) {
-                particle.mColor.w = 0.0f;
-            }
-        }
-
-        return true;
-    }
-    
     int CalculateNumParticles(const EmitterSettings& emitterSettings,
                               const ParticleSettings& particleSettings) {
         if (emitterSettings.mFrequency > 0.0f) {
@@ -170,14 +98,13 @@ void ParticleEffect::Update(float dt) {
 
     mEmitter.Update(dt, mParticles);
     auto anyActiveParticles {false};
-    auto& particleSettings {mEmitter.GetParticleSettings()};
     
     for (auto& particle: mParticles) {
         if (!particle.mIsActive) {
             continue;
         }
         
-        if (UpdateParticle(particle, dt, particleSettings)) {
+        if (UpdateParticle(particle, dt)) {
             anyActiveParticles = true;
         }
     }
@@ -187,6 +114,80 @@ void ParticleEffect::Update(float dt) {
     } else {
         WriteVertexBuffer();
     }
+}
+
+bool ParticleEffect::UpdateParticle(Particle& particle, float dt) {
+    particle.mAge += dt;
+    
+    if (particle.mAge > particle.mTimeToLive) {
+        particle.mIsActive = false;
+        return false;
+    }
+    
+    auto& particleSettings {mEmitter.GetParticleSettings()};
+    
+    particle.mVelocity += particleSettings.mAcceleration * dt;
+    
+    if (particleSettings.mDragCoefficient.HasValue()) {
+        auto dragCoeff {particleSettings.mDragCoefficient.GetValue()};
+        particle.mVelocity -= particle.mVelocity * dragCoeff * dt;
+    }
+
+    particle.mPosition += particle.mVelocity * dt;
+    particle.mZAngle += particle.mZAngularVelocity * dt;
+    
+    if (particle.mAge < particleSettings.mGrowDuration) {
+        if (particleSettings.mInitialSize.HasValue()) {
+            particle.mSize += (particle.mFullSize - particleSettings.mInitialSize.GetValue()) *
+                              dt / particleSettings.mGrowDuration;
+        } else if (particleSettings.mInitialPointSize.HasValue()) {
+            auto deltaSize {
+                (particle.mFullSize.x - particleSettings.mInitialPointSize.GetValue()) *
+                dt / particleSettings.mGrowDuration
+            };
+            
+            particle.mSize += {deltaSize, deltaSize};
+        } else {
+            particle.mSize += particle.mFullSize * dt / particleSettings.mGrowDuration;
+        }
+        
+        if (particle.mSize.x > particle.mFullSize.x) {
+            particle.mSize.x = particle.mFullSize.x;
+        }
+        
+        if (particle.mSize.y > particle.mFullSize.y) {
+            particle.mSize.y = particle.mFullSize.y;
+        }
+    } else if (particle.mAge > particle.mTimeToLive - particleSettings.mShrinkDuration) {
+        auto deltaSize {particle.mFullSize * dt / particleSettings.mShrinkDuration};
+        
+        Vec2 scaledDeltaSize {
+            deltaSize.x * particleSettings.mShrinkScale.x,
+            deltaSize.y * particleSettings.mShrinkScale.y
+        };
+        
+        particle.mSize -= scaledDeltaSize;
+        
+        if (particle.mSize.x < 0.0f) {
+            particle.mSize.x = 0.0f;
+        }
+        
+        if (particle.mSize.y < 0.0f) {
+            particle.mSize.y = 0.0f;
+        }
+    } else {
+        particle.mSize = particle.mFullSize;
+    }
+
+    if (particle.mAge > particle.mTimeToLive - particleSettings.mFadeOutDuration) {
+        particle.mColor.w -= dt / particleSettings.mFadeOutDuration;
+        
+        if (particle.mColor.w < 0.0f) {
+            particle.mColor.w = 0.0f;
+        }
+    }
+
+    return true;
 }
 
 void ParticleEffect::WriteVertexBuffer() {

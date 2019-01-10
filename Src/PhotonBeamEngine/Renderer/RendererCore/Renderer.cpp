@@ -376,12 +376,128 @@ void Renderer::InitRenderQueue(const Scene& scene) {
     mRenderQueue.Init(scene.GetRoot());
 }
 
+std::unique_ptr<RenderableObject> Renderer::CreateRenderableObject(const IMesh& mesh,
+                                                                   const Material& material) {
+    auto shaderProgram {GetShaderProgram(material.GetShaderType())};
+    return std::make_unique<RenderableObject>(material, mesh, shaderProgram.GetVertexFlags());
+}
+
 void Renderer::ClearBuffers() {
     if (mClearColorBuffer) {
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     } else {
         glClear(GL_DEPTH_BUFFER_BIT);
+    }
+}
+
+void Renderer::RenderScene(const Scene& scene) {
+    const CameraComponent* previousCamera {nullptr};
+    const LightComponent* previousLight {nullptr};
+    
+    for (auto& renderPass: scene.GetRenderPasses()) {
+        if (!renderPass.IsEnabled()) {
+            continue;
+        }
+
+        // Setup camera.
+        auto* cameraOverride {renderPass.GetCamera()};
+        auto* camera {cameraOverride ? cameraOverride : scene.GetCamera()};
+        assert(camera);
+        
+        if (camera != previousCamera) {
+            auto cameraPositionWorldSpace {camera->GetSceneObject().GetWorldSpacePosition()};
+            
+            if (renderPass.IsHudMode()) {
+                mHudCameraPosition = cameraPositionWorldSpace;
+            } else {
+                mCamera.LookAt(cameraPositionWorldSpace, camera->GetTarget(), camera->GetUp());
+            }
+            
+            SetLightDirectionInShaders();
+            previousCamera = camera;
+        }
+
+        // Setup the lighting.
+        auto* lightOverride {renderPass.GetLight()};
+        auto* light {lightOverride ? lightOverride : scene.GetGlobalLight()};
+        assert(light);
+        
+        if (light != previousLight) {
+            SetLightDirection(light->GetDirection());
+            mGlobalLight.mDirectionalIntensity = light->GetDirectionalIntensity();
+            mGlobalLight.mAmbientIntensity = light->GetAmbientIntensity();
+            previousLight = light;
+        }
+        
+        // Render the pass.
+        Render(renderPass, scene.GetDistanceFunction());
+    }
+}
+
+void Renderer::Render(const RenderPass& renderPass, DistanceFunction distanceFunction) {
+    auto isHudMode {renderPass.IsHudMode()};
+    auto projectionMode {renderPass.GetProjectionMode()};
+    
+    if (isHudMode != mHudMode || projectionMode != mProjectionMode) {
+        SetHudMode(isHudMode);
+        SetProjectionMode(projectionMode);
+        SetupProjectionInShaders();
+    }
+    
+    auto& scissorBox {renderPass.GetScissorBox()};
+    
+    if (scissorBox.HasValue()) {
+        auto& scissorBoxValue {scissorBox.GetValue()};
+        SetScissorBox(scissorBoxValue.mLowerLeft, scissorBoxValue.mSize);
+        SetScissorTest(true);
+    }
+    
+    mIsDepthTestAllowed = renderPass.IsDepthTestAllowed();
+    
+    // Build the render queue.
+    mRenderQueue.Build(GetViewMatrix(),
+                       renderPass.GetRenderOrder(),
+                       distanceFunction,
+                       renderPass.GetLayerMask());
+    
+    if (renderPass.GetRenderOrder() == RenderOrder::Optimized) {
+        // Start by rendering the opaque objects and enable depth write for those.
+        SetDepthWrite(true);
+    }
+    
+    RenderQueue::Entry* previousEntry {nullptr};
+    
+    for (auto& renderEntry: mRenderQueue) {
+        if (renderPass.GetRenderOrder() == RenderOrder::Optimized) {
+            if (!renderEntry.mDepthWrite) {
+                if (previousEntry == nullptr || previousEntry->mDepthWrite) {
+                    // Transition into rendering the transparent objects.
+                    SetDepthWrite(false);
+                }
+            }
+        } else {
+            SetDepthWrite(renderEntry.mDepthWrite);
+        }
+        
+        auto* sceneObject {renderEntry.mSceneObject};
+        
+        if (auto* renderable {sceneObject->GetRenderable()}) {
+            RenderObject(*renderable, sceneObject->GetMatrix());
+        }
+        
+        if (auto* textComponent {sceneObject->GetComponent<TextComponent>()}) {
+            auto textPosition {CalculateTextHudPosition(*textComponent)};
+            RenderText(textComponent->GetText(), textPosition, textComponent->GetProperties());
+        }
+        
+        previousEntry = &renderEntry;
+    }
+    
+    SetDepthWrite(true);
+    
+    if (scissorBox.HasValue()) {
+        SetScissorTest(false);
     }
 }
 
@@ -484,12 +600,6 @@ void Renderer::SetScissorTest(bool scissorTest) {
     } else {
         glDisable(GL_SCISSOR_TEST);
     }
-}
-
-std::unique_ptr<RenderableObject> Renderer::CreateRenderableObject(const IMesh& mesh,
-                                                                   const Material& material) {
-    auto shaderProgram {GetShaderProgram(material.GetShaderType())};
-    return std::make_unique<RenderableObject>(material, mesh, shaderProgram.GetVertexFlags());
 }
 
 void Renderer::RenderObject(const RenderableObject& object, const Mat4& modelTransform) {
@@ -727,116 +837,6 @@ void Renderer::RenderTextImpl(const std::string& text,
     };
     
     mTextRenderer->RenderText(text, pixelPosition, italicSlant, properties);
-}
-
-void Renderer::RenderScene(const Scene& scene) {
-    const CameraComponent* previousCamera {nullptr};
-    const LightComponent* previousLight {nullptr};
-    
-    for (auto& renderPass: scene.GetRenderPasses()) {
-        if (!renderPass.IsEnabled()) {
-            continue;
-        }
-
-        // Setup camera.
-        auto* cameraOverride {renderPass.GetCamera()};
-        auto* camera {cameraOverride ? cameraOverride : scene.GetCamera()};
-        assert(camera);
-        
-        if (camera != previousCamera) {
-            auto cameraPositionWorldSpace {camera->GetSceneObject().GetWorldSpacePosition()};
-            
-            if (renderPass.IsHudMode()) {
-                mHudCameraPosition = cameraPositionWorldSpace;
-            } else {
-                mCamera.LookAt(cameraPositionWorldSpace, camera->GetTarget(), camera->GetUp());
-            }
-            
-            SetLightDirectionInShaders();
-            previousCamera = camera;
-        }
-
-        // Setup the lighting.
-        auto* lightOverride {renderPass.GetLight()};
-        auto* light {lightOverride ? lightOverride : scene.GetGlobalLight()};
-        assert(light);
-        
-        if (light != previousLight) {
-            SetLightDirection(light->GetDirection());
-            mGlobalLight.mDirectionalIntensity = light->GetDirectionalIntensity();
-            mGlobalLight.mAmbientIntensity = light->GetAmbientIntensity();
-            previousLight = light;
-        }
-        
-        // Render the pass.
-        Render(renderPass, scene.GetDistanceFunction());
-    }
-}
-
-void Renderer::Render(const RenderPass& renderPass, DistanceFunction distanceFunction) {
-    auto isHudMode {renderPass.IsHudMode()};
-    auto projectionMode {renderPass.GetProjectionMode()};
-    
-    if (isHudMode != mHudMode || projectionMode != mProjectionMode) {
-        SetHudMode(isHudMode);
-        SetProjectionMode(projectionMode);
-        SetupProjectionInShaders();
-    }
-    
-    auto& scissorBox {renderPass.GetScissorBox()};
-    
-    if (scissorBox.HasValue()) {
-        auto& scissorBoxValue {scissorBox.GetValue()};
-        SetScissorBox(scissorBoxValue.mLowerLeft, scissorBoxValue.mSize);
-        SetScissorTest(true);
-    }
-    
-    mIsDepthTestAllowed = renderPass.IsDepthTestAllowed();
-    
-    // Build the render queue.
-    mRenderQueue.Build(GetViewMatrix(),
-                       renderPass.GetRenderOrder(),
-                       distanceFunction,
-                       renderPass.GetLayerMask());
-    
-    if (renderPass.GetRenderOrder() == RenderOrder::Optimized) {
-        // Start by rendering the opaque objects and enable depth write for those.
-        SetDepthWrite(true);
-    }
-    
-    RenderQueue::Entry* previousEntry {nullptr};
-    
-    for (auto& renderEntry: mRenderQueue) {
-        if (renderPass.GetRenderOrder() == RenderOrder::Optimized) {
-            if (!renderEntry.mDepthWrite) {
-                if (previousEntry == nullptr || previousEntry->mDepthWrite) {
-                    // Transition into rendering the transparent objects.
-                    SetDepthWrite(false);
-                }
-            }
-        } else {
-            SetDepthWrite(renderEntry.mDepthWrite);
-        }
-        
-        auto* sceneObject {renderEntry.mSceneObject};
-        
-        if (auto* renderable {sceneObject->GetRenderable()}) {
-            RenderObject(*renderable, sceneObject->GetMatrix());
-        }
-        
-        if (auto* textComponent {sceneObject->GetComponent<TextComponent>()}) {
-            auto textPosition {CalculateTextHudPosition(*textComponent)};
-            RenderText(textComponent->GetText(), textPosition, textComponent->GetProperties());
-        }
-        
-        previousEntry = &renderEntry;
-    }
-    
-    SetDepthWrite(true);
-    
-    if (scissorBox.HasValue()) {
-        SetScissorTest(false);
-    }
 }
 
 Vec2 Renderer::CalculateTextHudPosition(const TextComponent& textComponent) {

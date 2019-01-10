@@ -45,6 +45,7 @@ namespace Pht {
         }
 
     private:
+        bool UpdateParticle(Particle& particle, float dt);
         void ResetParticles();
         void WriteVertexBuffer();
         void WritePoints();
