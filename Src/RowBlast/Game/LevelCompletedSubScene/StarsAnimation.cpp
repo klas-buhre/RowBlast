@@ -9,10 +9,12 @@
 #include "IParticleSystem.hpp"
 #include "ParticleEffect.hpp"
 #include "CameraShake.hpp"
+#include "IAudio.hpp"
 
 // Game includes.
 #include "GameScene.hpp"
 #include "CommonResources.hpp"
+#include "AudioResources.hpp"
 
 using namespace RowBlast;
 
@@ -104,6 +106,7 @@ void StarsAnimation::MoveToFront() {
 StarsAnimation::StarAnimation::StarAnimation(Pht::IEngine& engine,
                                              const CommonResources& commonResources,
                                              Pht::CameraShake& cameraShake) :
+    mEngine {engine},
     mCameraShake {cameraShake},
     mGoldStarMaterial {commonResources.GetMaterials().GetGoldMaterial()} {
 
@@ -247,6 +250,7 @@ void StarsAnimation::StarAnimation::UpdateInScalingInState(float dt) {
         material.SetOpacity(1.0f);
         material.GetDepthState().mDepthWrite = true;
         
+        mEngine.GetAudio().PlaySound(static_cast<Pht::AudioResourceId>(SoundId::Star));
         mCameraShake.StartShake(cameraShakeTime, cameraShakeMagnitude);
     }
 }

@@ -61,9 +61,10 @@ namespace RowBlast {
             void UpdateInRotatingState(float dt);
             void SetIsFlashing(bool isFlashing);
             
-            State mState {State::Waiting};
+            Pht::IEngine& mEngine;
             Pht::CameraShake& mCameraShake;
             const Pht::Material& mGoldStarMaterial;
+            State mState {State::Waiting};
             std::unique_ptr<Pht::RenderableObject> mStarRenderable;
             std::unique_ptr<Pht::SceneObject> mStar;
             std::unique_ptr<Pht::SceneObject> mGlowEffect;

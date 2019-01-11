@@ -109,9 +109,8 @@ DONE    -Short jingle/fanfare when starting the level complete dialog.
            Or: Mobile Game: Military Drums Level Complete 1.wav
         -Explosion sound for fireworks.
            Candidate: https://assetstore.unity.com/packages/audio/sound-fx/universal-sound-fx-17256  time 27:08
-        -Sound from the stars going into position (Maybe sound like in Puzzle Star).
-           Candidate: https://assetstore.unity.com/packages/audio/sound-fx/67-coins-and-items-sounds-collectables-92693  time 00:47 or 00:50 or 01:01
-           Or: https://assetstore.unity.com/packages/audio/sound-fx/interface-and-item-sounds-89646  time 00:38 or 04:32
+DONE    -Sound from the stars going into position (Maybe sound like in Puzzle Star).
+           Or: interface-and-item-sounds: Special & Powerup (4).wav  or  Special & Powerup (6).wav   or  Special & Powerup (28).wav
 
 
 #Candidates: Cost:  Buy:   Sound Pack:

@@ -50,6 +50,7 @@
 		62216A0F21E756E4001CB9A1 /* explosion.wav in Resources */ = {isa = PBXBuildFile; fileRef = 62216A0D21E756E4001CB9A1 /* explosion.wav */; };
 		62216A1221E8A718001CB9A1 /* all_cleared.wav in Resources */ = {isa = PBXBuildFile; fileRef = 62216A1121E8A718001CB9A1 /* all_cleared.wav */; };
 		62216A1421E8E47F001CB9A1 /* level_completed.wav in Resources */ = {isa = PBXBuildFile; fileRef = 62216A1321E8E47F001CB9A1 /* level_completed.wav */; };
+		62216A1621E8F03D001CB9A1 /* star.wav in Resources */ = {isa = PBXBuildFile; fileRef = 62216A1521E8F03C001CB9A1 /* star.wav */; };
 		6227D4F5206CFD25008EA77D /* bomb_798.obj in Resources */ = {isa = PBXBuildFile; fileRef = 6227D4F4206CFD25008EA77D /* bomb_798.obj */; };
 		622EDD16217A42410007C652 /* level61.json in Resources */ = {isa = PBXBuildFile; fileRef = 622EDD15217A42400007C652 /* level61.json */; };
 		623326732073D69500AC505A /* level29.json in Resources */ = {isa = PBXBuildFile; fileRef = 623326722073D69400AC505A /* level29.json */; };
@@ -516,6 +517,7 @@
 		62216A0D21E756E4001CB9A1 /* explosion.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = explosion.wav; sourceTree = "<group>"; };
 		62216A1121E8A718001CB9A1 /* all_cleared.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = all_cleared.wav; sourceTree = "<group>"; };
 		62216A1321E8E47F001CB9A1 /* level_completed.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = level_completed.wav; sourceTree = "<group>"; };
+		62216A1521E8F03C001CB9A1 /* star.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = star.wav; sourceTree = "<group>"; };
 		6227D4F4206CFD25008EA77D /* bomb_798.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bomb_798.obj; sourceTree = "<group>"; };
 		622EDD15217A42400007C652 /* level61.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level61.json; sourceTree = "<group>"; };
 		623326722073D69400AC505A /* level29.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level29.json; sourceTree = "<group>"; };
@@ -2345,6 +2347,7 @@
 		6270DC521FCB212B00FB457D /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
+				62216A1521E8F03C001CB9A1 /* star.wav */,
 				62216A1321E8E47F001CB9A1 /* level_completed.wav */,
 				62216A1121E8A718001CB9A1 /* all_cleared.wav */,
 				62216A0D21E756E4001CB9A1 /* explosion.wav */,
@@ -2839,6 +2842,7 @@
 				629B837C20C544F000DD2D0E /* level35.json in Resources */,
 				629B838020C58B8100DD2D0E /* level37.json in Resources */,
 				6238F620219A097A0008A0CF /* coin_852.obj in Resources */,
+				62216A1621E8F03D001CB9A1 /* star.wav in Resources */,
 				622169E221E0CADE001CB9A1 /* clear_blocks_brick_impact3.wav in Resources */,
 				6269408F2154F94300D9857A /* planet_ring.obj in Resources */,
 				62216A1221E8A718001CB9A1 /* all_cleared.wav in Resources */,
