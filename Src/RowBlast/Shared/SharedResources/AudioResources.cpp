@@ -115,6 +115,14 @@ void RowBlast::LoadAudioResouces(Pht::IEngine& engine) {
                     3,
                     maxSoundGain,
                     static_cast<Pht::AudioResourceId>(SoundId::Star));
+    audio.LoadSound("fireworks1.wav",
+                    5,
+                    maxSoundGain,
+                    static_cast<Pht::AudioResourceId>(SoundId::Fireworks1));
+    audio.LoadSound("fireworks2.wav",
+                    5,
+                    maxSoundGain,
+                    static_cast<Pht::AudioResourceId>(SoundId::Fireworks2));
 }
 
 void RowBlast::PlayMapMusicTrack(Pht::IEngine& engine) {
@@ -180,4 +188,20 @@ void RowBlast::PlayExplosionSound(Pht::IEngine& engine) {
     auto& audio {engine.GetAudio()};
     audio.PlaySound(static_cast<Pht::AudioResourceId>(SoundId::Explosion));
     audio.PlaySound(static_cast<Pht::AudioResourceId>(SoundId::BlastBass));
+}
+
+void RowBlast::PlayFireworksSound(Pht::IEngine& engine) {
+    auto& audio {engine.GetAudio()};
+    
+    switch (std::rand() % 2) {
+        case 0:
+            audio.PlaySound(static_cast<Pht::AudioResourceId>(SoundId::Fireworks1));
+            break;
+        case 1:
+            audio.PlaySound(static_cast<Pht::AudioResourceId>(SoundId::Fireworks2));
+            break;
+        default:
+            assert(false);
+            break;
+    }
 }

@@ -43,6 +43,7 @@ namespace RowBlast {
                 Inactive
             };
             
+            Pht::IEngine& mEngine;
             State mState {State::Waiting};
             std::unique_ptr<Pht::SceneObject> mExplosion;
             float mElapsedTime {0.0f};

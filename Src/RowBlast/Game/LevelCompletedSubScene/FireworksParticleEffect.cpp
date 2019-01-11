@@ -10,6 +10,7 @@
 
 // Game includes.
 #include "GameScene.hpp"
+#include "AudioResources.hpp"
 
 using namespace RowBlast;
 
@@ -98,7 +99,9 @@ FireworksParticleEffect::State FireworksParticleEffect::Update() {
     return mState;
 }
 
-FireworksParticleEffect::Firework::Firework(Pht::IEngine& engine) {
+FireworksParticleEffect::Firework::Firework(Pht::IEngine& engine) :
+    mEngine {engine} {
+
     Pht::ParticleSettings particleSettings {
         .mVelocityFunction = ParticleVelocityFunction,
         .mAcceleration = Pht::Vec3{0.0f, -11.0f, 0.0f},
@@ -155,6 +158,7 @@ void FireworksParticleEffect::Firework::Update(float dt) {
             if (mElapsedTime > mWaitTime) {
                 mState = State::Exploding;
                 mExplosion->GetComponent<Pht::ParticleEffect>()->Start();
+                PlayFireworksSound(mEngine);
             }
             break;
         case State::Exploding: {

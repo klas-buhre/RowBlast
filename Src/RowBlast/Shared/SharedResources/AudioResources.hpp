@@ -36,7 +36,9 @@ namespace RowBlast {
         Combo2,
         AllCleared,
         LevelCompleted,
-        Star
+        Star,
+        Fireworks1,
+        Fireworks2
     };
     
     void LoadAudioResouces(Pht::IEngine& engine);
@@ -46,6 +48,7 @@ namespace RowBlast {
     void PlayClearBlocksSound(Pht::IEngine& engine);
     void PlayLaserSound(Pht::IEngine& engine);
     void PlayExplosionSound(Pht::IEngine& engine);
+    void PlayFireworksSound(Pht::IEngine& engine);
 }
 
 #endif

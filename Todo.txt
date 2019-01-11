@@ -41,93 +41,8 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-    -When out of moves, just continue the main track.
-    -Sound effects.
-      -Title scene:
-DONE     -Jingle sound when tapping the screen to continue.
-          Candidate: https://assetstore.unity.com/packages/audio/sound-fx/ui-item-sound-effect-jingles-30508  time 00:02
-      -Map scene:
-DONE   -Button click (only when clicked, not when pressed). Could sound like in Tetris Blitz or
-         possibly Soda.
-           Candidate: https://assetstore.unity.com/packages/audio/sound-fx/interface-sound-effects-84577  some of the ones in the beginning
-           Or: https://assetstore.unity.com/packages/audio/sound-fx/ui-sfx-36989  free so try it
-           Or: https://assetstore.unity.com/packages/audio/sound-fx/interface-and-item-sounds-89646  time 04:15
-           Or: https://assetstore.unity.com/packages/audio/sound-fx/ui-item-sound-effect-jingles-30508  time 00:15
-           Or: https://assetstore.unity.com/packages/audio/sound-fx/universal-sound-fx-17256  time around 11:50
-           Or: https://assetstore.unity.com/packages/audio/sound-fx/mobile-game-82136   Menu & UI time 00:10
-DONE    -Map level click: use button click sound.
-        -Low prio: Some bling/cash sounds when entering the store or purchasing products.
-           Candidate: https://assetstore.unity.com/packages/audio/sound-fx/interface-and-item-sounds-89646  time 4:37 and a few later ones
-        -In other games, music seems to be muted when when starting a purchase.
-      -Game scene:
-DONE    -Maybe a shwooshing sound for the sliding text animation:
-           Candidate: https://assetstore.unity.com/packages/audio/sound-fx/universal-sound-fx-17256  time around 27:35
-NO      -Humming sound from the UFO:
-           Candidate: https://assetstore.unity.com/packages/audio/sound-fx/universal-sound-fx-17256  time 15:48
-NO      -Click sound when clicking a move using click controls.
-           Candidate: https://assetstore.unity.com/packages/audio/sound-fx/interface-sound-effects-84577  time 00:12
-           Or: Click (8).wav in https://assetstore.unity.com/packages/audio/sound-fx/interface-and-item-sounds-89646 or the version with reverb in Futuristic.
-           Or: any of the button click candidates.
-DONE    -Some whoosh sound when landing a piece. Could sound like in Tetris Ultimate.
-           Candidate: https://assetstore.unity.com/packages/audio/sound-fx/mobile-game-82136  Movements 00:48
-           Or: the same sound as when clicking a move using click controls.
-DONE    -Some blip sound when tapping the screen to see other move alternatives using click controls.
-           Or: Interface and Item Sounds: Future Sounds (6).wav
-           Or: Interface and Item Sounds: Future Sounds (8).wav
-           Or: Interface and Item Sounds: Click (8).wav
-           Or: Interface and Item Sounds: Click (6).wav
-DONE    -Some blip sound when switching the active piece.
-           Candidate: Universal Sound FX/UI_Click_Distinct_mono.wav
-           Or: Universal Sound FX/UI_Click_Metallic_mono.wav
-           Or: Cafofo: Click (6).wav
-DONE    -Sound whoosh sound when rotating the piece using swipe controls.
-NO      -Some blip sound when sliding the piece one cell to the side using swipe controls.
-           Or: Universal Sound FX/UI_Click_Cut_mono.wav
-DONE    -Some speed/woosh sound when dropping the piece using swipe controls. Could play the thump
-         sound from landing a piece as well like in Tetris Blitz.
-           Candidate: Any of the woshes from https://assetstore.unity.com/packages/audio/sound-fx/universal-sound-fx-17256 time around 27:35
-           Or: the same sound as when clicking a move using click controls.
-DONE    -Sound from brick impacts when clearing blocks.
-DONE    -Laser.
-           Candidate: https://assetstore.unity.com/packages/audio/sound-fx/weapons/blasters-small-83107  time 00:22 or 01:04 or 02:34
-           Or: https://assetstore.unity.com/packages/audio/sound-fx/universal-sound-fx-17256  time 07:39
-           Or (not that great): https://assetstore.unity.com/packages/audio/sound-fx/weapons/sci-fi-sounds-and-sci-fi-weapons-97274  time 1:16 or 00:25
-             -this is part of https://assetstore.unity.com/packages/audio/sound-fx/pro-sound-collection-50235
-DONE    -Bomb (Could sound like the bomb in Soda).
-           Candidate: EXPLOSION_Recorded_02_sterio.wav
-           Or: EXPLOSION_Medium_Bang_Smooth_tail_stereo.wav + bass
-           Or: https://assetstore.unity.com/packages/audio/sound-fx/explosion-sound-pack-70695
-NO      -Sound when filling a gray slot.
-           Candidate: ?
-DONE    -Sound during "Awesome" animation.
-DONE    -Sound during "Fantastic" animation.
-DONE    -Short positive jingle/sound when sliding text animation that says all cleared. Stop the
-         game music before playing the jingle.
-           Candidate: ui-item-sound-effect-jingles: Item1A.wav or Item5A.wav
-           Or: UI Item SFX 2: Jingle 07.wav  or  Jingle 16.wav
-DONE    -Short jingle/fanfare when starting the level complete dialog.
-           Or: Mobile Game: Military Drums Level Complete 1.wav
-        -Explosion sound for fireworks.
-           Candidate: https://assetstore.unity.com/packages/audio/sound-fx/universal-sound-fx-17256  time 27:08
-DONE    -Sound from the stars going into position (Maybe sound like in Puzzle Star).
-           Or: interface-and-item-sounds: Special & Powerup (4).wav  or  Special & Powerup (6).wav   or  Special & Powerup (28).wav
 
 
-#Candidates: Cost:  Buy:   Sound Pack:
-9            35.73  Done   https://assetstore.unity.com/packages/audio/sound-fx/universal-sound-fx-17256
-4            43.77  Done   https://assetstore.unity.com/packages/audio/sound-fx/mobile-game-82136
-4             7.15  Done   https://assetstore.unity.com/packages/audio/sound-fx/interface-and-item-sounds-89646
-3             4.46  Done   https://assetstore.unity.com/packages/audio/sound-fx/ui-item-sound-effect-jingles-30508
-2             4.47  Done   https://assetstore.unity.com/packages/audio/sound-fx/interface-sound-effects-84577
-2            43.77  Maybe  https://assetstore.unity.com/packages/audio/sound-fx/pro-sound-collection-50235
-1            FREE   Done   https://assetstore.unity.com/packages/audio/sound-fx/ui-sfx-36989
-1             4.47  Done   https://assetstore.unity.com/packages/audio/sound-fx/ui-item-sound-effects-2-130792
-1            17.78  Maybe  https://assetstore.unity.com/packages/audio/sound-fx/objects-destruction-sfx-109183
-1             8.89  Maybe  https://assetstore.unity.com/packages/audio/sound-fx/weapons/blasters-small-83107
-1             4.47  Maybe  https://assetstore.unity.com/packages/audio/sound-fx/67-coins-and-items-sounds-collectables-92693
-
-             Cost all Yes:
-            ~120
 
 
 Ordered Backlog:
@@ -223,10 +138,13 @@ Ordered Backlog:
         Done
     -Sounds.
         Cost: 10
-    -Levels for the space world.
-        Cost: 7
+        Done
     -Analytics.
         Cost: 10
+    -Levels for the space world.
+        Cost: 7
+    -Credits scene
+        Cost: 2
     -Levels for the 4th world.
         Cost: 7
     -Playtest.
@@ -246,7 +164,7 @@ Ordered Backlog:
     -Back end.
         Cost: ?
 
-        Total cost: 278
+        Total cost: 280
 
 
 Comomon piece type sets:

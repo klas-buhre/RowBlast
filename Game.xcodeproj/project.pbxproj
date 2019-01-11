@@ -51,6 +51,8 @@
 		62216A1221E8A718001CB9A1 /* all_cleared.wav in Resources */ = {isa = PBXBuildFile; fileRef = 62216A1121E8A718001CB9A1 /* all_cleared.wav */; };
 		62216A1421E8E47F001CB9A1 /* level_completed.wav in Resources */ = {isa = PBXBuildFile; fileRef = 62216A1321E8E47F001CB9A1 /* level_completed.wav */; };
 		62216A1621E8F03D001CB9A1 /* star.wav in Resources */ = {isa = PBXBuildFile; fileRef = 62216A1521E8F03C001CB9A1 /* star.wav */; };
+		62216A1B21E901E1001CB9A1 /* fireworks2.wav in Resources */ = {isa = PBXBuildFile; fileRef = 62216A1921E901E0001CB9A1 /* fireworks2.wav */; };
+		62216A1C21E901E1001CB9A1 /* fireworks1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 62216A1A21E901E1001CB9A1 /* fireworks1.wav */; };
 		6227D4F5206CFD25008EA77D /* bomb_798.obj in Resources */ = {isa = PBXBuildFile; fileRef = 6227D4F4206CFD25008EA77D /* bomb_798.obj */; };
 		622EDD16217A42410007C652 /* level61.json in Resources */ = {isa = PBXBuildFile; fileRef = 622EDD15217A42400007C652 /* level61.json */; };
 		623326732073D69500AC505A /* level29.json in Resources */ = {isa = PBXBuildFile; fileRef = 623326722073D69400AC505A /* level29.json */; };
@@ -518,6 +520,8 @@
 		62216A1121E8A718001CB9A1 /* all_cleared.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = all_cleared.wav; sourceTree = "<group>"; };
 		62216A1321E8E47F001CB9A1 /* level_completed.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = level_completed.wav; sourceTree = "<group>"; };
 		62216A1521E8F03C001CB9A1 /* star.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = star.wav; sourceTree = "<group>"; };
+		62216A1921E901E0001CB9A1 /* fireworks2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = fireworks2.wav; sourceTree = "<group>"; };
+		62216A1A21E901E1001CB9A1 /* fireworks1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = fireworks1.wav; sourceTree = "<group>"; };
 		6227D4F4206CFD25008EA77D /* bomb_798.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bomb_798.obj; sourceTree = "<group>"; };
 		622EDD15217A42400007C652 /* level61.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level61.json; sourceTree = "<group>"; };
 		623326722073D69400AC505A /* level29.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level29.json; sourceTree = "<group>"; };
@@ -2347,11 +2351,11 @@
 		6270DC521FCB212B00FB457D /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
-				62216A1521E8F03C001CB9A1 /* star.wav */,
-				62216A1321E8E47F001CB9A1 /* level_completed.wav */,
+				62216A1A21E901E1001CB9A1 /* fireworks1.wav */,
+				62216A1921E901E0001CB9A1 /* fireworks2.wav */,
 				62216A1121E8A718001CB9A1 /* all_cleared.wav */,
-				62216A0D21E756E4001CB9A1 /* explosion.wav */,
 				622169E721E136E7001CB9A1 /* awesome.wav */,
+				62216A0921E66038001CB9A1 /* blast_bass.wav */,
 				622169B521DF6FCE001CB9A1 /* button_click.wav */,
 				622169D521E0CADC001CB9A1 /* clear_blocks_brick_impact1.wav */,
 				622169D621E0CADC001CB9A1 /* clear_blocks_brick_impact2.wav */,
@@ -2359,16 +2363,18 @@
 				622169EA21E13AEA001CB9A1 /* combo1.wav */,
 				622169C721DFE8EB001CB9A1 /* combo2.wav */,
 				622169BD21DF78F0001CB9A1 /* drop_whoosh.wav */,
+				62216A0D21E756E4001CB9A1 /* explosion.wav */,
 				622169E521E120F8001CB9A1 /* fantastic.wav */,
 				622169F321E36503001CB9A1 /* land_piece.wav */,
-				62216A0921E66038001CB9A1 /* blast_bass.wav */,
 				62216A0721E655AF001CB9A1 /* laser.wav */,
 				6221699721DE1B9B001CB9A1 /* leave_title.wav */,
+				62216A1321E8E47F001CB9A1 /* level_completed.wav */,
 				6221699F21DE7EF5001CB9A1 /* logo.wav */,
 				622169FB21E60502001CB9A1 /* other_moves.wav */,
 				62216A0321E61722001CB9A1 /* rotate_whoosh.wav */,
 				622169EF21E27ECA001CB9A1 /* sliding_text_whoosh1.wav */,
 				622169F021E27ECB001CB9A1 /* sliding_text_whoosh2.wav */,
+				62216A1521E8F03C001CB9A1 /* star.wav */,
 				6221699D21DE73E5001CB9A1 /* start_game.wav */,
 				622169F521E3C010001CB9A1 /* switch_piece.wav */,
 			);
@@ -2825,6 +2831,7 @@
 				629B837820C4470300DD2D0E /* level33.json in Resources */,
 				6270DC901FCB23D800FB457D /* level17.json in Resources */,
 				625698212182392C003A3A9D /* TexturedEnvMapLighting.vert in Resources */,
+				62216A1B21E901E1001CB9A1 /* fireworks2.wav in Resources */,
 				629B837A20C458F700DD2D0E /* level34.json in Resources */,
 				6256985A2184AE6C003A3A9D /* level62.json in Resources */,
 				625698282182392C003A3A9D /* TexturedLighting.frag in Resources */,
@@ -2946,6 +2953,7 @@
 				625698272182392C003A3A9D /* PointParticle.frag in Resources */,
 				625B02CD21386AC3000744F2 /* level_bomb_frame4.jpg in Resources */,
 				62B2BAF12133FE61009C529D /* level55.json in Resources */,
+				62216A1C21E901E1001CB9A1 /* fireworks1.wav in Resources */,
 				62216A0821E655B0001CB9A1 /* laser.wav in Resources */,
 				625D3B59217251BD00D67EC2 /* brown_asteroid.jpg in Resources */,
 				6270DC621FCB22AE00FB457D /* cube_554.obj in Resources */,
