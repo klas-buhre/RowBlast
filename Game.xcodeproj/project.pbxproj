@@ -49,6 +49,7 @@
 		62216A0A21E66038001CB9A1 /* blast_bass.wav in Resources */ = {isa = PBXBuildFile; fileRef = 62216A0921E66038001CB9A1 /* blast_bass.wav */; };
 		62216A0F21E756E4001CB9A1 /* explosion.wav in Resources */ = {isa = PBXBuildFile; fileRef = 62216A0D21E756E4001CB9A1 /* explosion.wav */; };
 		62216A1221E8A718001CB9A1 /* all_cleared.wav in Resources */ = {isa = PBXBuildFile; fileRef = 62216A1121E8A718001CB9A1 /* all_cleared.wav */; };
+		62216A1421E8E47F001CB9A1 /* level_completed.wav in Resources */ = {isa = PBXBuildFile; fileRef = 62216A1321E8E47F001CB9A1 /* level_completed.wav */; };
 		6227D4F5206CFD25008EA77D /* bomb_798.obj in Resources */ = {isa = PBXBuildFile; fileRef = 6227D4F4206CFD25008EA77D /* bomb_798.obj */; };
 		622EDD16217A42410007C652 /* level61.json in Resources */ = {isa = PBXBuildFile; fileRef = 622EDD15217A42400007C652 /* level61.json */; };
 		623326732073D69500AC505A /* level29.json in Resources */ = {isa = PBXBuildFile; fileRef = 623326722073D69400AC505A /* level29.json */; };
@@ -514,6 +515,7 @@
 		62216A0921E66038001CB9A1 /* blast_bass.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = blast_bass.wav; sourceTree = "<group>"; };
 		62216A0D21E756E4001CB9A1 /* explosion.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = explosion.wav; sourceTree = "<group>"; };
 		62216A1121E8A718001CB9A1 /* all_cleared.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = all_cleared.wav; sourceTree = "<group>"; };
+		62216A1321E8E47F001CB9A1 /* level_completed.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = level_completed.wav; sourceTree = "<group>"; };
 		6227D4F4206CFD25008EA77D /* bomb_798.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bomb_798.obj; sourceTree = "<group>"; };
 		622EDD15217A42400007C652 /* level61.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level61.json; sourceTree = "<group>"; };
 		623326722073D69400AC505A /* level29.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level29.json; sourceTree = "<group>"; };
@@ -2343,6 +2345,7 @@
 		6270DC521FCB212B00FB457D /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
+				62216A1321E8E47F001CB9A1 /* level_completed.wav */,
 				62216A1121E8A718001CB9A1 /* all_cleared.wav */,
 				62216A0D21E756E4001CB9A1 /* explosion.wav */,
 				622169E721E136E7001CB9A1 /* awesome.wav */,
@@ -2986,6 +2989,7 @@
 				6256982A2182392C003A3A9D /* PixelLighting.frag in Resources */,
 				622169B621DF6FCE001CB9A1 /* button_click.wav in Resources */,
 				6256982F2182392C003A3A9D /* Text.frag in Resources */,
+				62216A1421E8E47F001CB9A1 /* level_completed.wav in Resources */,
 				62BB35BA21C573690051AEEF /* map.mp4 in Resources */,
 				626940C1216115E300D9857A /* sky1.jpg in Resources */,
 				62B1CB61210F8EE500D0F195 /* cloud_F_512.png in Resources */,

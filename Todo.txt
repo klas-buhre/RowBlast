@@ -105,7 +105,7 @@ DONE    -Short positive jingle/sound when sliding text animation that says all c
          game music before playing the jingle.
            Candidate: ui-item-sound-effect-jingles: Item1A.wav or Item5A.wav
            Or: UI Item SFX 2: Jingle 07.wav  or  Jingle 16.wav
-        -Short jingle/fanfare when starting the level complete dialog.
+DONE    -Short jingle/fanfare when starting the level complete dialog.
            Or: Mobile Game: Military Drums Level Complete 1.wav
         -Explosion sound for fireworks.
            Candidate: https://assetstore.unity.com/packages/audio/sound-fx/universal-sound-fx-17256  time 27:08

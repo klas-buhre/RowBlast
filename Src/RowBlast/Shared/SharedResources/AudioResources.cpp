@@ -107,6 +107,10 @@ void RowBlast::LoadAudioResouces(Pht::IEngine& engine) {
                     1,
                     maxSoundGain,
                     static_cast<Pht::AudioResourceId>(SoundId::AllCleared));
+    audio.LoadSound("level_completed.wav",
+                    1,
+                    maxSoundGain,
+                    static_cast<Pht::AudioResourceId>(SoundId::LevelCompleted));
 }
 
 void RowBlast::PlayMapMusicTrack(Pht::IEngine& engine) {

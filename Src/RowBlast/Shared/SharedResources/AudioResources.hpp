@@ -34,7 +34,8 @@ namespace RowBlast {
         Awesome,
         Combo1,
         Combo2,
-        AllCleared
+        AllCleared,
+        LevelCompleted
     };
     
     void LoadAudioResouces(Pht::IEngine& engine);

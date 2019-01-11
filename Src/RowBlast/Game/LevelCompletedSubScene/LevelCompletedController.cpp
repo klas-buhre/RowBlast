@@ -25,7 +25,7 @@ namespace {
     constexpr auto fadeTime {0.3f};
     constexpr auto effectsVolumeDepth {20.0f};
     constexpr auto fireworksDuration {2.0f};
-    constexpr auto smallTextAnimationWaintTime {1.4f};
+    constexpr auto smallTextAnimationWaintTime {1.35f};
     constexpr auto waitTime {0.55f};
     constexpr auto confettiWaitTime {0.85f};
 }
@@ -269,6 +269,7 @@ void LevelCompletedController::UpdateInStarsAppearingAnimationState() {
         mGameViewControllers.SetActiveController(GameViewControllers::LevelCompletedDialog);
         mGameViewControllers.GetLevelCompletedDialogController().SetUp();
         mStarsAnimation.MoveToFront();
+        mEngine.GetAudio().PlaySound(static_cast<Pht::AudioResourceId>(SoundId::LevelCompleted));
     }
 }
 
