@@ -63,7 +63,7 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine,
                                                        "Swipe",
                                                        buttonTextProperties).GetSceneObject());
 
-    CreateText({-5.3f, 0.27f, UiLayer::text}, "Sound", textProperties);
+    CreateText({-5.3f, 0.27f, UiLayer::text}, "Sound Effects", textProperties);
     
     Pht::Vec3 soundButtonPosition {3.45f, 0.5f, UiLayer::textRectangle};
     mSoundButton = std::make_unique<MenuButton>(engine,

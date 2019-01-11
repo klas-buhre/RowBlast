@@ -101,12 +101,12 @@ NO      -Sound when filling a gray slot.
            Candidate: ?
 DONE    -Sound during "Awesome" animation.
 DONE    -Sound during "Fantastic" animation.
-        -Short positive sound when sliding text animation that says all cleared.
-           Candidate: https://assetstore.unity.com/packages/audio/sound-fx/ui-item-sound-effect-jingles-30508  time 00:04 0r 00:12
-        -Short jingle/fanfare when starting the confetti. Stop the music after that.
-           Candidate: https://assetstore.unity.com/packages/audio/sound-fx/universal-sound-fx-17256  time 14:24
-           Or: https://assetstore.unity.com/packages/audio/sound-fx/interface-and-item-sounds-89646  time 00:19
-           Or: https://assetstore.unity.com/packages/audio/sound-fx/mobile-game-82136  Musical Themes time 00:15
+DONE    -Short positive jingle/sound when sliding text animation that says all cleared. Stop the
+         game music before playing the jingle.
+           Candidate: ui-item-sound-effect-jingles: Item1A.wav or Item5A.wav
+           Or: UI Item SFX 2: Jingle 07.wav  or  Jingle 16.wav
+        -Short jingle/fanfare when starting the level complete dialog.
+           Or: Mobile Game: Military Drums Level Complete 1.wav
         -Explosion sound for fireworks.
            Candidate: https://assetstore.unity.com/packages/audio/sound-fx/universal-sound-fx-17256  time 27:08
         -Sound from the stars going into position (Maybe sound like in Puzzle Star).

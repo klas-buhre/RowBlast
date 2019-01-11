@@ -31,6 +31,9 @@ namespace RowBlast {
         void StartWillUndoMessage();
         void StartUndoingMessage();
         void Update(float dt);
+        bool IsAwesomeTextActive() const;
+        bool IsFantasticTextActive() const;
+
         
     private:
         Pht::SceneObject& CreateText(const Pht::Font& font,
@@ -42,8 +45,6 @@ namespace RowBlast {
         void UpdateInDisplayingTextState(float dt);
         void UpdateInSlidingOutState(float dt);
         void HideAllTextObjects();
-        bool IsAwesomeTextActive() const;
-        bool IsFantasticTextActive() const;
     
         enum class State {
             ScalingIn,

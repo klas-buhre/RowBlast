@@ -6,14 +6,17 @@
 #include "IInput.hpp"
 #include "Scene.hpp"
 #include "CameraComponent.hpp"
+#include "IAudio.hpp"
 
 // Game includes.
 #include "GameViewControllers.hpp"
 #include "SlidingTextAnimation.hpp"
+#include "SmallTextAnimation.hpp"
 #include "GameLogic.hpp"
 #include "UserServices.hpp"
 #include "Level.hpp"
 #include "GameScene.hpp"
+#include "AudioResources.hpp"
 
 using namespace RowBlast;
 
@@ -22,6 +25,8 @@ namespace {
     constexpr auto fadeTime {0.3f};
     constexpr auto effectsVolumeDepth {20.0f};
     constexpr auto fireworksDuration {2.0f};
+    constexpr auto smallTextAnimationWaintTime {1.4f};
+    constexpr auto waitTime {0.55f};
     constexpr auto confettiWaitTime {0.85f};
 }
 
@@ -29,6 +34,7 @@ LevelCompletedController::LevelCompletedController(Pht::IEngine& engine,
                                                    GameScene& gameScene,
                                                    GameViewControllers& gameViewControllers,
                                                    SlidingTextAnimation& slidingTextAnimation,
+                                                   SmallTextAnimation& smallTextAnimation,
                                                    GameLogic& gameLogic,
                                                    UserServices& userServices,
                                                    const CommonResources& commonResources,
@@ -39,6 +45,7 @@ LevelCompletedController::LevelCompletedController(Pht::IEngine& engine,
     mGameScene {gameScene},
     mGameViewControllers {gameViewControllers},
     mSlidingTextAnimation {slidingTextAnimation},
+    mSmallTextAnimation {smallTextAnimation},
     mGameLogic {gameLogic},
     mUserServices {userServices},
     mFadeEffect {
@@ -79,6 +86,18 @@ void LevelCompletedController::Init(const Level& level) {
 }
 
 void LevelCompletedController::Start() {
+    mGameViewControllers.SetActiveController(GameViewControllers::None);
+    mElapsedTime = 0.0f;
+    mState = State::Waiting;
+    
+    if (mSmallTextAnimation.IsAwesomeTextActive() || mSmallTextAnimation.IsFantasticTextActive()) {
+        mWaitTime = smallTextAnimationWaintTime;
+    } else {
+        mWaitTime = waitTime;
+    }
+}
+
+void LevelCompletedController::GoToObjectiveAchievedAnimationState() {
     mState = State::ObjectiveAchievedAnimation;
     mElapsedTime = 0.0f;
 
@@ -89,8 +108,11 @@ void LevelCompletedController::Start() {
     container.GetTransform().SetPosition(containerPosition);
     container.SetIsStatic(false);
     container.SetIsVisible(true);
-
-    mGameViewControllers.SetActiveController(GameViewControllers::None);
+ 
+    auto& audio {mEngine.GetAudio()};
+    audio.FadeOutActiveTrack(0.2f);
+    audio.PlaySound(static_cast<Pht::AudioResourceId>(SoundId::AllCleared));
+    
     StartLevelCompletedTextAnimation();
     
     auto& scene {mGameScene.GetScene()};
@@ -116,6 +138,9 @@ LevelCompletedDialogController::Result LevelCompletedController::Update() {
     auto result {LevelCompletedDialogController::Result::None};
     
     switch (mState) {
+        case State::Waiting:
+            UpdateInWaitingState();
+            break;
         case State::ObjectiveAchievedAnimation:
             UpdateInObjectiveAchievedAnimationState();
             break;
@@ -140,6 +165,14 @@ LevelCompletedDialogController::Result LevelCompletedController::Update() {
     }
     
     return result;
+}
+
+void LevelCompletedController::UpdateInWaitingState() {
+    mElapsedTime += mEngine.GetLastFrameSeconds();
+    
+    if (mElapsedTime > mWaitTime) {
+        GoToObjectiveAchievedAnimationState();
+    }
 }
 
 void LevelCompletedController::UpdateInObjectiveAchievedAnimationState() {

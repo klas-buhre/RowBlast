@@ -23,26 +23,90 @@ void RowBlast::LoadAudioResouces(Pht::IEngine& engine) {
     audio.LoadMusicTrack("map.mp4", static_cast<Pht::AudioResourceId>(MusicTrackId::Map));
     audio.LoadMusicTrack("game_track1.mp4", static_cast<Pht::AudioResourceId>(MusicTrackId::Game1));
 
-    audio.LoadSound("button_click.wav", 1, maxSoundGain, static_cast<Pht::AudioResourceId>(SoundId::ButtonClick));
-    audio.LoadSound("start_game.wav", 1, maxSoundGain, static_cast<Pht::AudioResourceId>(SoundId::StartGame));
-    audio.LoadSound("leave_title.wav", 1, 0.65f, static_cast<Pht::AudioResourceId>(SoundId::LeaveTitle));
-    audio.LoadSound("sliding_text_whoosh1.wav", 1, maxSoundGain, static_cast<Pht::AudioResourceId>(SoundId::SlidingTextWhoosh1));
-    audio.LoadSound("sliding_text_whoosh2.wav", 1, maxSoundGain, static_cast<Pht::AudioResourceId>(SoundId::SlidingTextWhoosh2));
-    audio.LoadSound("drop_whoosh.wav", 1, maxSoundGain, static_cast<Pht::AudioResourceId>(SoundId::DropWhoosh));
-    audio.LoadSound("rotate_whoosh.wav", 5, 0.53f, static_cast<Pht::AudioResourceId>(SoundId::RotateWhoosh));
-    audio.LoadSound("land_piece.wav", 1, 0.6f, static_cast<Pht::AudioResourceId>(SoundId::LandPiece));
-    audio.LoadSound("switch_piece.wav", 1, 0.8f, static_cast<Pht::AudioResourceId>(SoundId::SwitchPiece));
-    audio.LoadSound("other_moves.wav", 1, 0.475f, static_cast<Pht::AudioResourceId>(SoundId::OtherMoves));
-    audio.LoadSound("clear_blocks_brick_impact1.wav", 3, clearBlocksGain, static_cast<Pht::AudioResourceId>(SoundId::ClearBlocksBrickImpact1));
-    audio.LoadSound("clear_blocks_brick_impact2.wav", 3, clearBlocksGain, static_cast<Pht::AudioResourceId>(SoundId::ClearBlocksBrickImpact2));
-    audio.LoadSound("clear_blocks_brick_impact3.wav", 3, clearBlocksGain, static_cast<Pht::AudioResourceId>(SoundId::ClearBlocksBrickImpact3));
-    audio.LoadSound("laser.wav", 5, 0.35f, static_cast<Pht::AudioResourceId>(SoundId::Laser));
-    audio.LoadSound("blast_bass.wav", 5, 0.5f, static_cast<Pht::AudioResourceId>(SoundId::BlastBass));
-    audio.LoadSound("explosion.wav", 5, 0.51f, static_cast<Pht::AudioResourceId>(SoundId::Explosion));
-    audio.LoadSound("fantastic.wav", 1, 0.8f, static_cast<Pht::AudioResourceId>(SoundId::Fantastic));
-    audio.LoadSound("awesome.wav", 1, 0.8f, static_cast<Pht::AudioResourceId>(SoundId::Awesome));
-    audio.LoadSound("combo1.wav", 1, maxSoundGain, static_cast<Pht::AudioResourceId>(SoundId::Combo1));
-    audio.LoadSound("combo2.wav", 1, maxSoundGain, static_cast<Pht::AudioResourceId>(SoundId::Combo2));
+    audio.LoadSound("button_click.wav",
+                    1,
+                    maxSoundGain,
+                    static_cast<Pht::AudioResourceId>(SoundId::ButtonClick));
+    audio.LoadSound("start_game.wav",
+                    1,
+                    maxSoundGain,
+                    static_cast<Pht::AudioResourceId>(SoundId::StartGame));
+    audio.LoadSound("leave_title.wav",
+                    1,
+                    0.65f,
+                    static_cast<Pht::AudioResourceId>(SoundId::LeaveTitle));
+    audio.LoadSound("sliding_text_whoosh1.wav",
+                    1,
+                    maxSoundGain,
+                    static_cast<Pht::AudioResourceId>(SoundId::SlidingTextWhoosh1));
+    audio.LoadSound("sliding_text_whoosh2.wav",
+                    1,
+                    maxSoundGain,
+                    static_cast<Pht::AudioResourceId>(SoundId::SlidingTextWhoosh2));
+    audio.LoadSound("drop_whoosh.wav",
+                    1,
+                    maxSoundGain,
+                    static_cast<Pht::AudioResourceId>(SoundId::DropWhoosh));
+    audio.LoadSound("rotate_whoosh.wav",
+                    5,
+                    0.53f,
+                    static_cast<Pht::AudioResourceId>(SoundId::RotateWhoosh));
+    audio.LoadSound("land_piece.wav",
+                    1,
+                    0.6f,
+                    static_cast<Pht::AudioResourceId>(SoundId::LandPiece));
+    audio.LoadSound("switch_piece.wav",
+                    1,
+                    0.8f,
+                    static_cast<Pht::AudioResourceId>(SoundId::SwitchPiece));
+    audio.LoadSound("other_moves.wav",
+                    1,
+                    0.475f,
+                    static_cast<Pht::AudioResourceId>(SoundId::OtherMoves));
+    audio.LoadSound("clear_blocks_brick_impact1.wav",
+                    3,
+                    clearBlocksGain,
+                    static_cast<Pht::AudioResourceId>(SoundId::ClearBlocksBrickImpact1));
+    audio.LoadSound("clear_blocks_brick_impact2.wav",
+                    3,
+                    clearBlocksGain,
+                    static_cast<Pht::AudioResourceId>(SoundId::ClearBlocksBrickImpact2));
+    audio.LoadSound("clear_blocks_brick_impact3.wav",
+                    3,
+                    clearBlocksGain,
+                    static_cast<Pht::AudioResourceId>(SoundId::ClearBlocksBrickImpact3));
+    audio.LoadSound("laser.wav",
+                    5,
+                    0.35f,
+                    static_cast<Pht::AudioResourceId>(SoundId::Laser));
+    audio.LoadSound("blast_bass.wav",
+                    5,
+                    0.5f,
+                    static_cast<Pht::AudioResourceId>(SoundId::BlastBass));
+    audio.LoadSound("explosion.wav",
+                    5,
+                    0.51f,
+                    static_cast<Pht::AudioResourceId>(SoundId::Explosion));
+    audio.LoadSound("fantastic.wav",
+                    1,
+                    0.8f,
+                    static_cast<Pht::AudioResourceId>(SoundId::Fantastic));
+    audio.LoadSound("awesome.wav",
+                    1,
+                    0.8f,
+                    static_cast<Pht::AudioResourceId>(SoundId::Awesome));
+    audio.LoadSound("combo1.wav",
+                    1,
+                    maxSoundGain,
+                    static_cast<Pht::AudioResourceId>(SoundId::Combo1));
+    audio.LoadSound("combo2.wav",
+                    1,
+                    maxSoundGain,
+                    static_cast<Pht::AudioResourceId>(SoundId::Combo2));
+    audio.LoadSound("all_cleared.wav",
+                    1,
+                    maxSoundGain,
+                    static_cast<Pht::AudioResourceId>(SoundId::AllCleared));
 }
 
 void RowBlast::PlayMapMusicTrack(Pht::IEngine& engine) {

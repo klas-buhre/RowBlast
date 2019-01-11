@@ -21,6 +21,7 @@ namespace RowBlast {
     class GameScene;
     class GameViewControllers;
     class SlidingTextAnimation;
+    class SmallTextAnimation;
     class ClearLastBlocksAnimation;
     class GameLogic;
     class UserServices;
@@ -35,6 +36,7 @@ namespace RowBlast {
                                  GameScene& gameScene,
                                  GameViewControllers& gameViewControllers,
                                  SlidingTextAnimation& slidingTextAnimation,
+                                 SmallTextAnimation& smallTextAnimation,
                                  GameLogic& gameLogic,
                                  UserServices& userServices,
                                  const CommonResources& commonResources,
@@ -47,7 +49,9 @@ namespace RowBlast {
         LevelCompletedDialogController::Result Update();
         
     private:
+        void GoToObjectiveAchievedAnimationState();
         void StartLevelCompletedTextAnimation();
+        void UpdateInWaitingState();
         void UpdateInObjectiveAchievedAnimationState();
         void UpdateObjectiveAchievedAnimation();
         void UpdateInConfettiState();
@@ -59,6 +63,7 @@ namespace RowBlast {
         LevelCompletedDialogController::Result UpdateLevelCompletedDialog();
         
         enum class State {
+            Waiting,
             ObjectiveAchievedAnimation,
             Confetti,
             ClearingLastBlocks,
@@ -73,6 +78,7 @@ namespace RowBlast {
         GameScene& mGameScene;
         GameViewControllers& mGameViewControllers;
         SlidingTextAnimation& mSlidingTextAnimation;
+        SmallTextAnimation& mSmallTextAnimation;
         GameLogic& mGameLogic;
         UserServices& mUserServices;
         const Level* mLevel {nullptr};
@@ -83,6 +89,7 @@ namespace RowBlast {
         ConfettiParticleEffect mConfettiParticleEffect;
         StarsAnimation mStarsAnimation;
         float mElapsedTime {0.0f};
+        float mWaitTime {0.0f};
     };
 }
 
