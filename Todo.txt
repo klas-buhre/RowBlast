@@ -41,6 +41,18 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
+    -Analytics
+      -GDPR:
+        -When the users start the app for the first time they need to accept the privacy policies
+         and terms of service that can be reviewed by users. See: https://gameanalytics.com/gdpr-faq
+         This means:
+          -The AcceptTerms scene needs to start before the title scene. Only initiate analytics
+           after proceeding to the title scene. Not allowed to send events before the user has
+           agreed.
+          -TermsOfService scene. Accessable from AcceptTerms scene and settings menu in map scene.
+          -PrivacyPolicy scene. Accessable from AcceptTerms scene and settings menu in map scene.
+          -Where to get those terms?
+
 
 
 
@@ -140,7 +152,7 @@ Ordered Backlog:
         Cost: 10
         Done
     -Analytics.
-        Cost: 10
+        Cost: 15
     -Levels for the space world.
         Cost: 7
     -Credits scene
@@ -164,7 +176,7 @@ Ordered Backlog:
     -Back end.
         Cost: ?
 
-        Total cost: 280
+        Total cost: 285
 
 
 Comomon piece type sets:
