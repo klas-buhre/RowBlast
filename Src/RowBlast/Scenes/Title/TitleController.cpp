@@ -5,7 +5,6 @@
 // Engine includes.
 #include "IEngine.hpp"
 #include "IInput.hpp"
-#include "InputEvent.hpp"
 #include "IAudio.hpp"
 
 // Game includes.
@@ -25,23 +24,32 @@ TitleController::TitleController(Pht::IEngine& engine,
     mEngine {engine},
     mScene {engine, commonResources, userServices, universe},
     mUfo {engine, commonResources, 2.0f},
-    mUfoAnimation {engine, mUfo} {
-    
+    mUfoAnimation {engine, mUfo},
+    mTitleAnimation {engine} {}
+
+void TitleController::Init() {
+    mScene.Init();
     mUfo.Init(mScene.GetUfoContainer());
     mUfoAnimation.Init();
     mUfo.SetPosition(distantUfoPosition);
     mUfoAnimation.StartWarpSpeed(ufoPosition);
+    mTitleAnimation.Init(mScene.GetScene(), mScene.GetUiContainer());
 }
 
 TitleController::Command TitleController::Update() {
     auto command {Command::None};
     
-    if (mEngine.GetInput().ConsumeWholeTouch()) {
-        command = Command::GoToMap;
-        mEngine.GetAudio().PlaySound(static_cast<Pht::AudioResourceId>(SoundId::LeaveTitle));
+    if (mTitleAnimation.IsDone()) {
+        mScene.GetTapTextSceneObject().SetIsVisible(true);
+    
+        if (mEngine.GetInput().ConsumeWholeTouch()) {
+            command = Command::GoToMap;
+            mEngine.GetAudio().PlaySound(static_cast<Pht::AudioResourceId>(SoundId::LeaveTitle));
+        }
     }
     
     mScene.Update();
+    mTitleAnimation.Update();
     mUfoAnimation.Update();
     
     return command;

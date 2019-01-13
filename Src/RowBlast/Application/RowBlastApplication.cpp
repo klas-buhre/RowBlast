@@ -16,7 +16,7 @@ using namespace RowBlast;
 namespace {
     constexpr auto fadeDuration {0.22f};
     constexpr auto musicFadeOutDuration {0.22f};
-    constexpr auto titleFadeInDuration {1.0f};
+    constexpr auto firstSceneFadeInDuration {1.0f};
 }
 
 std::unique_ptr<Pht::IApplication> CreateApplication(Pht::IEngine& engine) {
@@ -28,6 +28,7 @@ RowBlastApplication::RowBlastApplication(Pht::IEngine& engine) :
     mCommonResources {engine},
     mUserServices {engine},
     mUniverse {},
+    mAcceptTermsController {engine},
     mTitleController {engine, mCommonResources, mUserServices, mUniverse},
     mGameController {engine, mCommonResources, mUserServices},
     mMapController {
@@ -38,14 +39,24 @@ RowBlastApplication::RowBlastApplication(Pht::IEngine& engine) :
         mGameController.GetLevelResources(),
         mGameController.GetPieceResources()
     },
-    mFadeEffect {engine.GetSceneManager(), engine.GetRenderer(), titleFadeInDuration, 1.0f, 0.0f} {
+    mFadeEffect {
+        engine.GetSceneManager(),
+        engine.GetRenderer(),
+        firstSceneFadeInDuration,
+        1.0f,
+        0.0f
+    } {
 
     engine.GetInput().SetUseGestureRecognizers(false);
     
     SetUpRenderer();
     SetUpAudio();
     
-    PlayMapMusicTrack(engine);
+    if (mAcceptTermsController.IsTermsAccepted()) {
+        StartTitleScene();
+    } else {
+        StartAcceptTermsScene();
+    }
     
     mFadeEffect.GetSceneObject().SetLayer(GlobalLayer::sceneSwitchFadeEffect);
     InsertFadeEffectInActiveScene();
@@ -89,6 +100,9 @@ void RowBlastApplication::OnUpdate() {
 
 void RowBlastApplication::UpdateScene() {
     switch (mState) {
+        case State::AcceptTermsScene:
+            UpdateAcceptTermsScene();
+            break;
         case State::TitleScene:
             UpdateTitleScene();
             break;
@@ -98,6 +112,23 @@ void RowBlastApplication::UpdateScene() {
         case State::GameScene:
             UpdateGameScene();
             break;
+    }
+}
+
+void RowBlastApplication::UpdateAcceptTermsScene() {
+    auto command {mAcceptTermsController.Update()};
+    
+    if (!mFadeEffect.IsFadingOut()) {
+        switch (command) {
+            case AcceptTermsController::Command::None:
+                break;
+            case AcceptTermsController::Command::GoToTitle:
+                mFadeEffect.SetDuration(fadeDuration);
+                mFadeEffect.Start();
+                mEngine.GetInput().DisableInput();
+                mNextState = State::TitleScene;
+                break;
+        }
     }
 }
 
@@ -168,11 +199,14 @@ void RowBlastApplication::UpdateGameScene() {
 void RowBlastApplication::HandleTransitions() {
     if (mFadeEffect.Update(mEngine.GetLastFrameSeconds()) == Pht::FadeEffect::State::Transition) {
         switch (mNextState) {
+            case State::TitleScene:
+                StartTitleScene();
+                break;
             case State::MapScene:
-                StartMap();
+                StartMapScene();
                 break;
             case State::GameScene:
-                StartGame();
+                StartGameScene();
                 break;
             default:
                 break;
@@ -206,7 +240,18 @@ void RowBlastApplication::BeginFadingToGame(int level) {
     mEngine.GetInput().DisableInput();
 }
 
-void RowBlastApplication::StartMap() {
+void RowBlastApplication::StartAcceptTermsScene() {
+    mState = State::AcceptTermsScene;
+    mAcceptTermsController.Init();
+}
+
+void RowBlastApplication::StartTitleScene() {
+    mState = State::TitleScene;
+    PlayMapMusicTrack(mEngine);
+    mTitleController.Init();
+}
+
+void RowBlastApplication::StartMapScene() {
     if (mState == State::GameScene) {
         PlayMapMusicTrack(mEngine);
     }
@@ -228,7 +273,7 @@ void RowBlastApplication::StartMap() {
     }
 }
 
-void RowBlastApplication::StartGame() {
+void RowBlastApplication::StartGameScene() {
     mState = State::GameScene;
     mGameController.StartLevel(mLevelToStart);
 }

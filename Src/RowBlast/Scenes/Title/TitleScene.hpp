@@ -10,10 +10,10 @@
 #include "FloatingBlocks.hpp"
 #include "Clouds.hpp"
 #include "Planets.hpp"
-#include "TitleAnimation.hpp"
 
 namespace Pht {
     class IEngine;
+    class Scene;
     class SceneObject;
 }
 
@@ -29,21 +29,42 @@ namespace RowBlast {
                    const UserServices& userServices,
                    const Universe& universe);
         
+        void Init();
         void Update();
         
         Pht::SceneObject& GetUfoContainer() {
             assert(mUfoContainer);
             return *mUfoContainer;
         }
+        
+        Pht::SceneObject& GetUiContainer() {
+            assert(mUiContainer);
+            return *mUiContainer;
+        }
 
+        Pht::SceneObject& GetTapTextSceneObject() {
+            assert(mTapTextSceneObject);
+            return *mTapTextSceneObject;
+        }
+
+        Pht::Scene& GetScene() {
+            assert(mScene);
+            return *mScene;
+        }
+        
     private:
+        Pht::IEngine& mEngine;
+        const CommonResources& mCommonResources;
+        const UserServices& mUserServices;
+        const Universe& mUniverse;
         std::unique_ptr<Planets> mPlanets;
         std::unique_ptr<Clouds> mClouds;
         std::unique_ptr<FloatingBlocks> mFloatingBlocks;
-        std::unique_ptr<TitleAnimation> mTitleAnimation;
         Pht::Font mTapFont;
         Pht::SceneObject* mTapTextSceneObject {nullptr};
         Pht::SceneObject* mUfoContainer {nullptr};
+        Pht::SceneObject* mUiContainer {nullptr};
+        Pht::Scene* mScene {nullptr};
     };
 }
 

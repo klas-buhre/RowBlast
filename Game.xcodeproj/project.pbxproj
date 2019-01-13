@@ -223,6 +223,9 @@
 		62216C4121EB377F001CB9A1 /* LivesDialogController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216BB721EB377E001CB9A1 /* LivesDialogController.cpp */; };
 		62216C4221EB377F001CB9A1 /* MapViewControllers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216BB921EB377E001CB9A1 /* MapViewControllers.cpp */; };
 		62216C4321EB377F001CB9A1 /* LivesDialogView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216BBC21EB377E001CB9A1 /* LivesDialogView.cpp */; };
+		62216C4721EB41AF001CB9A1 /* AcceptTermsScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216C4521EB41AF001CB9A1 /* AcceptTermsScene.cpp */; };
+		62216C4A21EB41C5001CB9A1 /* AcceptTermsController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216C4821EB41C5001CB9A1 /* AcceptTermsController.cpp */; };
+		62216C4D21EB41F1001CB9A1 /* AcceptTermsDialogView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216C4B21EB41F1001CB9A1 /* AcceptTermsDialogView.cpp */; };
 		6227D4F5206CFD25008EA77D /* bomb_798.obj in Resources */ = {isa = PBXBuildFile; fileRef = 6227D4F4206CFD25008EA77D /* bomb_798.obj */; };
 		622EDD16217A42410007C652 /* level61.json in Resources */ = {isa = PBXBuildFile; fileRef = 622EDD15217A42400007C652 /* level61.json */; };
 		623326732073D69500AC505A /* level29.json in Resources */ = {isa = PBXBuildFile; fileRef = 623326722073D69400AC505A /* level29.json */; };
@@ -867,6 +870,12 @@
 		62216BBA21EB377E001CB9A1 /* LivesDialogController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LivesDialogController.hpp; sourceTree = "<group>"; };
 		62216BBB21EB377E001CB9A1 /* MapHudController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MapHudController.hpp; sourceTree = "<group>"; };
 		62216BBC21EB377E001CB9A1 /* LivesDialogView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LivesDialogView.cpp; sourceTree = "<group>"; };
+		62216C4521EB41AF001CB9A1 /* AcceptTermsScene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AcceptTermsScene.cpp; sourceTree = "<group>"; };
+		62216C4621EB41AF001CB9A1 /* AcceptTermsScene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AcceptTermsScene.hpp; sourceTree = "<group>"; };
+		62216C4821EB41C5001CB9A1 /* AcceptTermsController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AcceptTermsController.cpp; sourceTree = "<group>"; };
+		62216C4921EB41C5001CB9A1 /* AcceptTermsController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AcceptTermsController.hpp; sourceTree = "<group>"; };
+		62216C4B21EB41F1001CB9A1 /* AcceptTermsDialogView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AcceptTermsDialogView.cpp; sourceTree = "<group>"; };
+		62216C4C21EB41F1001CB9A1 /* AcceptTermsDialogView.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AcceptTermsDialogView.hpp; sourceTree = "<group>"; };
 		6227D4F4206CFD25008EA77D /* bomb_798.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bomb_798.obj; sourceTree = "<group>"; };
 		622EDD15217A42400007C652 /* level61.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level61.json; sourceTree = "<group>"; };
 		623326722073D69400AC505A /* level29.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level29.json; sourceTree = "<group>"; };
@@ -1519,6 +1528,7 @@
 		62216A9B21EB377E001CB9A1 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				62216C4421EB415C001CB9A1 /* AcceptTerms */,
 				62216AA321EB377E001CB9A1 /* Game */,
 				62216B9321EB377E001CB9A1 /* Map */,
 				62216A9C21EB377E001CB9A1 /* Title */,
@@ -1529,12 +1539,12 @@
 		62216A9C21EB377E001CB9A1 /* Title */ = {
 			isa = PBXGroup;
 			children = (
-				62216A9D21EB377E001CB9A1 /* TitleAnimation.hpp */,
-				62216A9E21EB377E001CB9A1 /* TitleScene.cpp */,
-				62216A9F21EB377E001CB9A1 /* TitleController.hpp */,
-				62216AA021EB377E001CB9A1 /* TitleScene.hpp */,
-				62216AA121EB377E001CB9A1 /* TitleController.cpp */,
 				62216AA221EB377E001CB9A1 /* TitleAnimation.cpp */,
+				62216A9D21EB377E001CB9A1 /* TitleAnimation.hpp */,
+				62216AA121EB377E001CB9A1 /* TitleController.cpp */,
+				62216A9F21EB377E001CB9A1 /* TitleController.hpp */,
+				62216A9E21EB377E001CB9A1 /* TitleScene.cpp */,
+				62216AA021EB377E001CB9A1 /* TitleScene.hpp */,
 			);
 			path = Title;
 			sourceTree = "<group>";
@@ -1661,26 +1671,26 @@
 		62216AFA21EB377E001CB9A1 /* GameScene */ = {
 			isa = PBXGroup;
 			children = (
-				62216AFB21EB377E001CB9A1 /* GameHudRectangles.hpp */,
-				62216AFC21EB377E001CB9A1 /* GhostPieceProducer.cpp */,
-				62216AFD21EB377E001CB9A1 /* FieldGrid.hpp */,
-				62216AFE21EB377E001CB9A1 /* GameSceneRenderer.cpp */,
-				62216AFF21EB377E001CB9A1 /* GameHud.cpp */,
-				62216B0021EB377E001CB9A1 /* PieceResources.cpp */,
 				62216B0121EB377E001CB9A1 /* FieldBorder.cpp */,
-				62216B0221EB377E001CB9A1 /* SceneObjectPool.cpp */,
-				62216B0321EB377E001CB9A1 /* GameController.hpp */,
-				62216B0421EB377E001CB9A1 /* GameScene.hpp */,
 				62216B0521EB377E001CB9A1 /* FieldBorder.hpp */,
-				62216B0621EB377E001CB9A1 /* SceneObjectPool.hpp */,
-				62216B0721EB377E001CB9A1 /* GameController.cpp */,
-				62216B0821EB377E001CB9A1 /* GameScene.cpp */,
-				62216B0921EB377E001CB9A1 /* GameHudRectangles.cpp */,
-				62216B0A21EB377E001CB9A1 /* GhostPieceProducer.hpp */,
-				62216B0B21EB377E001CB9A1 /* GameSceneRenderer.hpp */,
 				62216B0C21EB377E001CB9A1 /* FieldGrid.cpp */,
+				62216AFD21EB377E001CB9A1 /* FieldGrid.hpp */,
+				62216B0721EB377E001CB9A1 /* GameController.cpp */,
+				62216B0321EB377E001CB9A1 /* GameController.hpp */,
+				62216AFF21EB377E001CB9A1 /* GameHud.cpp */,
 				62216B0D21EB377E001CB9A1 /* GameHud.hpp */,
+				62216B0921EB377E001CB9A1 /* GameHudRectangles.cpp */,
+				62216AFB21EB377E001CB9A1 /* GameHudRectangles.hpp */,
+				62216B0821EB377E001CB9A1 /* GameScene.cpp */,
+				62216B0421EB377E001CB9A1 /* GameScene.hpp */,
+				62216AFE21EB377E001CB9A1 /* GameSceneRenderer.cpp */,
+				62216B0B21EB377E001CB9A1 /* GameSceneRenderer.hpp */,
+				62216AFC21EB377E001CB9A1 /* GhostPieceProducer.cpp */,
+				62216B0A21EB377E001CB9A1 /* GhostPieceProducer.hpp */,
+				62216B0021EB377E001CB9A1 /* PieceResources.cpp */,
 				62216B0E21EB377E001CB9A1 /* PieceResources.hpp */,
+				62216B0221EB377E001CB9A1 /* SceneObjectPool.cpp */,
+				62216B0621EB377E001CB9A1 /* SceneObjectPool.hpp */,
 			);
 			path = GameScene;
 			sourceTree = "<group>";
@@ -1894,22 +1904,22 @@
 		62216BA121EB377E001CB9A1 /* MapScene */ = {
 			isa = PBXGroup;
 			children = (
-				62216BA221EB377E001CB9A1 /* MapPin.hpp */,
-				62216BA321EB377E001CB9A1 /* PortalParticleEffect.hpp */,
-				62216BA421EB377E001CB9A1 /* MapHud.hpp */,
-				62216BA521EB377E001CB9A1 /* MapTutorial.cpp */,
-				62216BA621EB377E001CB9A1 /* NextLevelParticleEffect.hpp */,
 				62216BA721EB377E001CB9A1 /* MapController.cpp */,
-				62216BA821EB377E001CB9A1 /* SunParticleEffect.hpp */,
-				62216BA921EB377E001CB9A1 /* MapScene.cpp */,
-				62216BAA21EB377E001CB9A1 /* NextLevelParticleEffect.cpp */,
 				62216BAB21EB377E001CB9A1 /* MapController.hpp */,
-				62216BAC21EB377E001CB9A1 /* SunParticleEffect.cpp */,
-				62216BAD21EB377E001CB9A1 /* MapScene.hpp */,
-				62216BAE21EB377E001CB9A1 /* MapPin.cpp */,
-				62216BAF21EB377E001CB9A1 /* PortalParticleEffect.cpp */,
 				62216BB021EB377E001CB9A1 /* MapHud.cpp */,
+				62216BA421EB377E001CB9A1 /* MapHud.hpp */,
+				62216BAE21EB377E001CB9A1 /* MapPin.cpp */,
+				62216BA221EB377E001CB9A1 /* MapPin.hpp */,
+				62216BA921EB377E001CB9A1 /* MapScene.cpp */,
+				62216BAD21EB377E001CB9A1 /* MapScene.hpp */,
+				62216BA521EB377E001CB9A1 /* MapTutorial.cpp */,
 				62216BB121EB377E001CB9A1 /* MapTutorial.hpp */,
+				62216BAA21EB377E001CB9A1 /* NextLevelParticleEffect.cpp */,
+				62216BA621EB377E001CB9A1 /* NextLevelParticleEffect.hpp */,
+				62216BAF21EB377E001CB9A1 /* PortalParticleEffect.cpp */,
+				62216BA321EB377E001CB9A1 /* PortalParticleEffect.hpp */,
+				62216BAC21EB377E001CB9A1 /* SunParticleEffect.cpp */,
+				62216BA821EB377E001CB9A1 /* SunParticleEffect.hpp */,
 			);
 			path = MapScene;
 			sourceTree = "<group>";
@@ -1929,6 +1939,19 @@
 				62216BBC21EB377E001CB9A1 /* LivesDialogView.cpp */,
 			);
 			path = MapViews;
+			sourceTree = "<group>";
+		};
+		62216C4421EB415C001CB9A1 /* AcceptTerms */ = {
+			isa = PBXGroup;
+			children = (
+				62216C4821EB41C5001CB9A1 /* AcceptTermsController.cpp */,
+				62216C4921EB41C5001CB9A1 /* AcceptTermsController.hpp */,
+				62216C4B21EB41F1001CB9A1 /* AcceptTermsDialogView.cpp */,
+				62216C4C21EB41F1001CB9A1 /* AcceptTermsDialogView.hpp */,
+				62216C4521EB41AF001CB9A1 /* AcceptTermsScene.cpp */,
+				62216C4621EB41AF001CB9A1 /* AcceptTermsScene.hpp */,
+			);
+			path = AcceptTerms;
 			sourceTree = "<group>";
 		};
 		6242DEEF21C50E7600D17F46 /* AudioApi */ = {
@@ -3074,6 +3097,7 @@
 				625698452182392C003A3A9D /* Font.cpp in Sources */,
 				62216A9A21EB376E001CB9A1 /* FloatingBlocks.cpp in Sources */,
 				62216A8221EB376E001CB9A1 /* SettingsMenuController.cpp in Sources */,
+				62216C4D21EB41F1001CB9A1 /* AcceptTermsDialogView.cpp in Sources */,
 				625698142182392C003A3A9D /* RenderQueue.cpp in Sources */,
 				62216A8821EB376E001CB9A1 /* SettingsMenuView.cpp in Sources */,
 				62BB35C621C6BA710051AEEF /* OpenAlContext.cpp in Sources */,
@@ -3134,6 +3158,7 @@
 				6256980B2182392C003A3A9D /* TorusMesh.cpp in Sources */,
 				6256984C2182392C003A3A9D /* CameraComponent.cpp in Sources */,
 				62216BF021EB377E001CB9A1 /* GameScene.cpp in Sources */,
+				62216C4A21EB41C5001CB9A1 /* AcceptTermsController.cpp in Sources */,
 				625698372182392C003A3A9D /* JsonUtil.cpp in Sources */,
 				62216A8321EB376E001CB9A1 /* PurchaseCanceledDialogController.cpp in Sources */,
 				62216A7621EB376E001CB9A1 /* SlidingMenuAnimation.cpp in Sources */,
@@ -3162,6 +3187,7 @@
 				625698342182392C003A3A9D /* InputHandler.cpp in Sources */,
 				625696CF2182382C003A3A9D /* RowBlastApplication.cpp in Sources */,
 				62216A9521EB376E001CB9A1 /* Planets.cpp in Sources */,
+				62216C4721EB41AF001CB9A1 /* AcceptTermsScene.cpp in Sources */,
 				62216C0321EB377F001CB9A1 /* DPiece.cpp in Sources */,
 				62216C0121EB377F001CB9A1 /* MirroredSevenPiece.cpp in Sources */,
 				62216BDE21EB377E001CB9A1 /* LevelCompletedDialogController.cpp in Sources */,

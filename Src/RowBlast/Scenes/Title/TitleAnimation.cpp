@@ -6,6 +6,7 @@
 #include "IEngine.hpp"
 #include "IRenderer.hpp"
 #include "IAudio.hpp"
+#include "IInput.hpp"
 #include "TextComponent.hpp"
 #include "Scene.hpp"
 #include "IParticleSystem.hpp"
@@ -33,16 +34,16 @@ namespace {
     };
 }
 
-TitleAnimation::TitleAnimation(Pht::IEngine& engine,
-                               Pht::Scene& scene,
-                               Pht::SceneObject& parentObject) :
+TitleAnimation::TitleAnimation(Pht::IEngine& engine) :
     mEngine {engine},
     mFont {"ethnocentric_rg_it.ttf", engine.GetRenderer().GetAdjustedNumPixels(100)},
     mTextPosition {0.0f, 0.0f, 0.0f} {
     
     CreateText();
     CreateTwinkleParticleEffect(engine);
-    
+}
+
+void TitleAnimation::Init(Pht::Scene& scene, Pht::SceneObject& parentObject) {
     auto& containerSceneObject {scene.CreateSceneObject()};
     containerSceneObject.GetTransform().SetPosition(centerPosition);
     parentObject.AddChild(containerSceneObject);
@@ -181,6 +182,7 @@ void TitleAnimation::UpdateInSlidingInState() {
 
         mState = State::SlidingSlowly;
         mTextPosition.x = mRightPosition.x - displayDistance / 2.0f;
+        mEngine.GetInput().EnableInput();
     }
     
     UpdateTextLineSceneObjectPositions();
@@ -224,6 +226,7 @@ void TitleAnimation::UpdateInTwinklesState() {
 bool TitleAnimation::IsDone() const {
     switch (mState) {
         case State::Twinkles:
+        case State::SlidingSlowly:
             return true;
         default:
             return false;

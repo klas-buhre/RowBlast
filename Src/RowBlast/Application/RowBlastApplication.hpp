@@ -11,6 +11,7 @@
 #include "TitleController.hpp"
 #include "MapController.hpp"
 #include "GameController.hpp"
+#include "AcceptTermsController.hpp"
 #include "Universe.hpp"
 
 namespace Pht {
@@ -35,6 +36,7 @@ namespace RowBlast {
         void SetUpRenderer();
         void SetUpAudio();
         void UpdateScene();
+        void UpdateAcceptTermsScene();
         void UpdateTitleScene();
         void UpdateMapScene();
         void UpdateGameScene();
@@ -42,10 +44,13 @@ namespace RowBlast {
         void InsertFadeEffectInActiveScene();
         void BeginFadingToMap(MapInitialState mapInitialState);
         void BeginFadingToGame(int level);
-        void StartMap();
-        void StartGame();
+        void StartAcceptTermsScene();
+        void StartTitleScene();
+        void StartMapScene();
+        void StartGameScene();
         
         enum class State {
+            AcceptTermsScene,
             TitleScene,
             MapScene,
             GameScene
@@ -57,6 +62,7 @@ namespace RowBlast {
         CommonResources mCommonResources;
         UserServices mUserServices;
         Universe mUniverse;
+        AcceptTermsController mAcceptTermsController;
         TitleController mTitleController;
         GameController mGameController;
         MapController mMapController;

@@ -248,10 +248,16 @@ TitleScene::TitleScene(Pht::IEngine& engine,
                        const CommonResources& commonResources,
                        const UserServices& userServices,
                        const Universe& universe) :
-    mTapFont {"HussarBoldWeb.otf", engine.GetRenderer().GetAdjustedNumPixels(35)} {
+    mEngine {engine},
+    mCommonResources {commonResources},
+    mUserServices {userServices},
+    mUniverse {universe},
+    mTapFont {"HussarBoldWeb.otf", engine.GetRenderer().GetAdjustedNumPixels(35)} {}
     
-    auto& sceneManager {engine.GetSceneManager()};
+void TitleScene::Init() {
+    auto& sceneManager {mEngine.GetSceneManager()};
     auto scene {sceneManager.CreateScene(Pht::Hash::Fnv1a("titleScene"))};
+    mScene = scene.get();
     
     sceneManager.InitSceneSystems(Pht::ISceneManager::defaultNarrowFrustumHeightFactor);
     
@@ -266,7 +272,7 @@ TitleScene::TitleScene(Pht::IEngine& engine,
     fadeEffectRenderPass.SetHudMode(true);
     scene->AddRenderPass(fadeEffectRenderPass);
 
-    auto worldId {CalculateWorldId(userServices, universe)};
+    auto worldId {CalculateWorldId(mUserServices, mUniverse)};
 
     auto& light {scene->CreateGlobalLight()};
     light.SetDirection({1.0f, 1.0f, 1.0f});
@@ -283,18 +289,18 @@ TitleScene::TitleScene(Pht::IEngine& engine,
     camera.SetTarget(target, up);
     scene->GetRoot().AddChild(camera.GetSceneObject());
     
-    auto& uiContainer {scene->CreateSceneObject()};
-    uiContainer.SetLayer(static_cast<int>(Layer::Ui));
-    scene->GetRoot().AddChild(uiContainer);
+    mUiContainer = &scene->CreateSceneObject();
+    mUiContainer->SetLayer(static_cast<int>(Layer::Ui));
+    scene->GetRoot().AddChild(*mUiContainer);
     
-    mPlanets = std::make_unique<Planets>(engine,
+    mPlanets = std::make_unique<Planets>(mEngine,
                                          *scene,
                                          static_cast<int>(Layer::Planets),
                                          planets,
                                          Pht::Vec3{-1.0f, 1.0f, 1.0f},
                                          1.24f);
 
-    mClouds = std::make_unique<Clouds>(engine,
+    mClouds = std::make_unique<Clouds>(mEngine,
                                        *scene,
                                        static_cast<int>(Layer::Background),
                                        cloudPaths,
@@ -302,19 +308,17 @@ TitleScene::TitleScene(Pht::IEngine& engine,
                                        2.1f,
                                        CalculateCloudColor(worldId));
 
-    mFloatingBlocks = std::make_unique<FloatingBlocks>(engine,
+    mFloatingBlocks = std::make_unique<FloatingBlocks>(mEngine,
                                                        *scene,
                                                        static_cast<int>(Layer::Background),
                                                        floatingBlockPaths,
-                                                       commonResources,
+                                                       mCommonResources,
                                                        7.7f,
                                                        20.0f);
 
     mUfoContainer = &scene->CreateSceneObject();
     mUfoContainer->SetLayer(static_cast<int>(Layer::Background));
     scene->GetRoot().AddChild(*mUfoContainer);
-
-    mTitleAnimation = std::make_unique<TitleAnimation>(engine, *scene, uiContainer);
     
     Pht::TextProperties tapTextProperties {
         mTapFont,
@@ -330,7 +334,7 @@ TitleScene::TitleScene(Pht::IEngine& engine,
     mTapTextSceneObject->GetTransform().SetPosition({-3.6f, -9.0f, UiLayer::text});
     mTapTextSceneObject->SetLayer(static_cast<int>(Layer::Ui));
     mTapTextSceneObject->SetIsVisible(false);
-    uiContainer.AddChild(*mTapTextSceneObject);
+    mUiContainer->AddChild(*mTapTextSceneObject);
     
     scene->SetDistanceFunction(Pht::DistanceFunction::WorldSpaceNegativeZ);
     
@@ -341,9 +345,4 @@ void TitleScene::Update() {
     mPlanets->Update();
     mClouds->Update();
     mFloatingBlocks->Update();
-    mTitleAnimation->Update();
-    
-    if (mTitleAnimation->IsDone()) {
-        mTapTextSceneObject->SetIsVisible(true);
-    }
 }

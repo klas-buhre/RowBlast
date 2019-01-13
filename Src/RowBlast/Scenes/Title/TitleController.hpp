@@ -5,6 +5,7 @@
 #include "TitleScene.hpp"
 #include "Ufo.hpp"
 #include "UfoAnimation.hpp"
+#include "TitleAnimation.hpp"
 
 namespace Pht {
     class IEngine;
@@ -27,6 +28,7 @@ namespace RowBlast {
                         const UserServices& userServices,
                         const Universe& universe);
     
+        void Init();
         Command Update();
     
     private:
@@ -34,6 +36,7 @@ namespace RowBlast {
         TitleScene mScene;
         Ufo mUfo;
         UfoAnimation mUfoAnimation;
+        TitleAnimation mTitleAnimation;
     };
 }
 

@@ -16,8 +16,9 @@ namespace Pht {
 namespace RowBlast {
     class TitleAnimation {
     public:
-        TitleAnimation(Pht::IEngine& engine, Pht::Scene& scene, Pht::SceneObject& parentObject);
+        TitleAnimation(Pht::IEngine& engine);
         
+        void Init(Pht::Scene& scene, Pht::SceneObject& parentObject);
         void Update();
         bool IsDone() const;
 
