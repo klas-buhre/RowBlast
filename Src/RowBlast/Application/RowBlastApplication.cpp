@@ -28,7 +28,7 @@ RowBlastApplication::RowBlastApplication(Pht::IEngine& engine) :
     mCommonResources {engine},
     mUserServices {engine},
     mUniverse {},
-    mAcceptTermsController {engine},
+    mAcceptTermsController {engine, mCommonResources},
     mTitleController {engine, mCommonResources, mUserServices, mUniverse},
     mGameController {engine, mCommonResources, mUserServices},
     mMapController {
@@ -122,7 +122,9 @@ void RowBlastApplication::UpdateAcceptTermsScene() {
         switch (command) {
             case AcceptTermsController::Command::None:
                 break;
-            case AcceptTermsController::Command::GoToTitle:
+            case AcceptTermsController::Command::ViewTermsOfService:
+            case AcceptTermsController::Command::ViewPrivacyPolicy:
+            case AcceptTermsController::Command::Accept:
                 mFadeEffect.SetDuration(fadeDuration);
                 mFadeEffect.Start();
                 mEngine.GetInput().DisableInput();

@@ -227,6 +227,7 @@
 		62216C4A21EB41C5001CB9A1 /* AcceptTermsController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216C4821EB41C5001CB9A1 /* AcceptTermsController.cpp */; };
 		62216C4D21EB41F1001CB9A1 /* AcceptTermsDialogView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216C4B21EB41F1001CB9A1 /* AcceptTermsDialogView.cpp */; };
 		62216C5021ECDBAE001CB9A1 /* privacy_policy_english.txt in Resources */ = {isa = PBXBuildFile; fileRef = 62216C4F21ECDBAD001CB9A1 /* privacy_policy_english.txt */; };
+		62216C5221ECE594001CB9A1 /* terms_of_service_english.txt in Resources */ = {isa = PBXBuildFile; fileRef = 62216C5121ECE594001CB9A1 /* terms_of_service_english.txt */; };
 		6227D4F5206CFD25008EA77D /* bomb_798.obj in Resources */ = {isa = PBXBuildFile; fileRef = 6227D4F4206CFD25008EA77D /* bomb_798.obj */; };
 		622EDD16217A42410007C652 /* level61.json in Resources */ = {isa = PBXBuildFile; fileRef = 622EDD15217A42400007C652 /* level61.json */; };
 		623326732073D69500AC505A /* level29.json in Resources */ = {isa = PBXBuildFile; fileRef = 623326722073D69400AC505A /* level29.json */; };
@@ -878,6 +879,7 @@
 		62216C4B21EB41F1001CB9A1 /* AcceptTermsDialogView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AcceptTermsDialogView.cpp; sourceTree = "<group>"; };
 		62216C4C21EB41F1001CB9A1 /* AcceptTermsDialogView.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AcceptTermsDialogView.hpp; sourceTree = "<group>"; };
 		62216C4F21ECDBAD001CB9A1 /* privacy_policy_english.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = privacy_policy_english.txt; sourceTree = "<group>"; };
+		62216C5121ECE594001CB9A1 /* terms_of_service_english.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = terms_of_service_english.txt; sourceTree = "<group>"; };
 		6227D4F4206CFD25008EA77D /* bomb_798.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bomb_798.obj; sourceTree = "<group>"; };
 		622EDD15217A42400007C652 /* level61.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level61.json; sourceTree = "<group>"; };
 		623326722073D69400AC505A /* level29.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level29.json; sourceTree = "<group>"; };
@@ -1960,6 +1962,7 @@
 		62216C4E21ECDBAD001CB9A1 /* LegalDocuments */ = {
 			isa = PBXGroup;
 			children = (
+				62216C5121ECE594001CB9A1 /* terms_of_service_english.txt */,
 				62216C4F21ECDBAD001CB9A1 /* privacy_policy_english.txt */,
 			);
 			path = LegalDocuments;
@@ -3004,6 +3007,7 @@
 				6270DC8F1FCB23D800FB457D /* level16.json in Resources */,
 				6261FFD920FD2C29008F1619 /* level44.json in Resources */,
 				622169F221E27ECB001CB9A1 /* sliding_text_whoosh2.wav in Resources */,
+				62216C5221ECE594001CB9A1 /* terms_of_service_english.txt in Resources */,
 				6270DC921FCB23D800FB457D /* level19.json in Resources */,
 				62204EFA21BEC79C00A035C0 /* sky5.jpg in Resources */,
 				6270DC911FCB23D800FB457D /* level18.json in Resources */,

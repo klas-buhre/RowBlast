@@ -3,27 +3,60 @@
 // Engine includes.
 #include "IEngine.hpp"
 #include "IInput.hpp"
+#include "ISceneManager.hpp"
+#include "InputUtil.hpp"
+#include "FileStorage.hpp"
 
 using namespace RowBlast;
 
-AcceptTermsController::AcceptTermsController(Pht::IEngine& engine) :
+namespace {
+    const std::string termsAcceptedFilename {"terms_accepted.dat"};
+}
+
+AcceptTermsController::AcceptTermsController(Pht::IEngine& engine,
+                                             const CommonResources& commonResources) :
     mEngine {engine},
-    mScene {engine} {}
+    mScene {engine},
+    mDialogView {engine, commonResources} {}
 
 bool AcceptTermsController::IsTermsAccepted() const {
+    // TODO: remove
     return false;
+#if 0
+    std::string data;
+    return Pht::FileStorage::Load(termsAcceptedFilename, data);
+#endif
 }
 
 void AcceptTermsController::Init() {
     mScene.Init();
+    mScene.GetUiViewsContainer().AddChild(mDialogView.GetRoot());
+    
+    mEngine.GetSceneManager().InitRenderer();
 }
 
 AcceptTermsController::Command AcceptTermsController::Update() {
-    auto command {Command::None};
-    
-    if (mEngine.GetInput().ConsumeWholeTouch()) {
-        command = Command::GoToTitle;
+    return InputUtil::HandleInput<Command>(mEngine.GetInput(),
+                                           Command::None,
+                                           [this] (const Pht::TouchEvent& touch) {
+                                               return OnTouch(touch);
+                                           });
+}
+
+AcceptTermsController::Command
+AcceptTermsController::OnTouch(const Pht::TouchEvent& touchEvent) {
+    if (mDialogView.GetTermsOfServiceButton().IsClicked(touchEvent)) {
+        return Command::ViewTermsOfService;
+    }
+
+    if (mDialogView.GetPrivacyPolicyButton().IsClicked(touchEvent)) {
+        return Command::ViewPrivacyPolicy;
     }
     
-    return command;
+    if (mDialogView.GetAgreeButton().IsClicked(touchEvent)) {
+        Pht::FileStorage::Save(termsAcceptedFilename, "termsAccepted");
+        return Command::Accept;
+    }
+
+    return Command::None;
 }

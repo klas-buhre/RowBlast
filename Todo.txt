@@ -51,8 +51,6 @@ Ongoing tasks:
            agreed.
           -TermsOfService scene. Accessable from AcceptTerms scene and settings menu in map scene.
           -PrivacyPolicy scene. Accessable from AcceptTerms scene and settings menu in map scene.
-          -Where to get those terms?
-            -Use and tweak these Terms of Service: https://termly.io/resources/templates/mobile-app-terms-and-conditions-template/
 
 
 

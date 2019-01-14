@@ -30,6 +30,7 @@ namespace RowBlast {
             bool mHasShadow {false};
             Pht::RenderableObject* mRenderableObject {nullptr};
             Pht::RenderableObject* mSelectedRenderableObject {nullptr};
+            Pht::SceneObject* mSceneObject {nullptr};
             float mTextScale {1.0f};
         };
         

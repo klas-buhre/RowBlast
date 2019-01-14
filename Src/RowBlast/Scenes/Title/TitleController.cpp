@@ -6,6 +6,7 @@
 #include "IEngine.hpp"
 #include "IInput.hpp"
 #include "IAudio.hpp"
+#include "ISceneManager.hpp"
 
 // Game includes.
 #include "AudioResources.hpp"
@@ -34,6 +35,8 @@ void TitleController::Init() {
     mUfo.SetPosition(distantUfoPosition);
     mUfoAnimation.StartWarpSpeed(ufoPosition);
     mTitleAnimation.Init(mScene.GetScene(), mScene.GetUiContainer());
+    
+    mEngine.GetSceneManager().InitRenderer();
 }
 
 TitleController::Command TitleController::Update() {

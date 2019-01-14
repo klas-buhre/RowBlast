@@ -50,14 +50,18 @@ MenuButton::MenuButton(Pht::IEngine& engine,
     mStyle {style} {
     
     auto& sceneManager {engine.GetSceneManager()};
-    auto sceneObject {CreateMainSceneObject(sceneManager, view, style)};
-    sceneObject->GetTransform().SetPosition(position);
     
-    mButton = std::make_unique<Pht::Button>(*sceneObject, inputSize, engine);
-    
-    mSceneObject = sceneObject.get();
-    parent.AddChild(*mSceneObject);
-    mView.GetSceneResources().AddSceneObject(std::move(sceneObject));
+    if (style.mSceneObject) {
+        mSceneObject = style.mSceneObject;
+    } else {
+        auto sceneObject {CreateMainSceneObject(sceneManager, view, style)};
+        mSceneObject = sceneObject.get();
+        mView.GetSceneResources().AddSceneObject(std::move(sceneObject));
+        parent.AddChild(*mSceneObject);
+    }
+
+    mSceneObject->GetTransform().SetPosition(position);
+    mButton = std::make_unique<Pht::Button>(*mSceneObject, inputSize, engine);
     
     if (style.mHasShadow) {
         Pht::Material shaddowMaterial {Pht::Color{0.4f, 0.4f, 0.4f}};
