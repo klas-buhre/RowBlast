@@ -29,6 +29,7 @@ RowBlastApplication::RowBlastApplication(Pht::IEngine& engine) :
     mUserServices {engine},
     mUniverse {},
     mAcceptTermsController {engine, mCommonResources},
+    mDocumentViewerController {engine, mCommonResources},
     mTitleController {engine, mCommonResources, mUserServices, mUniverse},
     mGameController {engine, mCommonResources, mUserServices},
     mMapController {
@@ -103,6 +104,9 @@ void RowBlastApplication::UpdateScene() {
         case State::AcceptTermsScene:
             UpdateAcceptTermsScene();
             break;
+        case State::DocumentViewerScene:
+            UpdateDocumentViewerScene();
+            break;
         case State::TitleScene:
             UpdateTitleScene();
             break;
@@ -123,12 +127,31 @@ void RowBlastApplication::UpdateAcceptTermsScene() {
             case AcceptTermsController::Command::None:
                 break;
             case AcceptTermsController::Command::ViewTermsOfService:
+                BeginFadingToDocumentViewerScene();
+                break;
             case AcceptTermsController::Command::ViewPrivacyPolicy:
+                BeginFadingToDocumentViewerScene();
+                break;
             case AcceptTermsController::Command::Accept:
                 mFadeEffect.SetDuration(fadeDuration);
                 mFadeEffect.Start();
                 mEngine.GetInput().DisableInput();
                 mNextState = State::TitleScene;
+                break;
+        }
+    }
+}
+
+void RowBlastApplication::UpdateDocumentViewerScene() {
+    auto command {mDocumentViewerController.Update()};
+    
+    if (!mFadeEffect.IsFadingOut()) {
+        switch (command) {
+            case DocumentViewerController::Command::None:
+                break;
+            case DocumentViewerController::Command::Close:
+                mFadeEffect.Start();
+                mNextState = State::AcceptTermsScene;
                 break;
         }
     }
@@ -201,6 +224,12 @@ void RowBlastApplication::UpdateGameScene() {
 void RowBlastApplication::HandleTransitions() {
     if (mFadeEffect.Update(mEngine.GetLastFrameSeconds()) == Pht::FadeEffect::State::Transition) {
         switch (mNextState) {
+            case State::AcceptTermsScene:
+                StartAcceptTermsScene();
+                break;
+            case State::DocumentViewerScene:
+                StartDocumentViewerScene();
+                break;
             case State::TitleScene:
                 StartTitleScene();
                 break;
@@ -221,6 +250,12 @@ void RowBlastApplication::HandleTransitions() {
 void RowBlastApplication::InsertFadeEffectInActiveScene() {
     auto* scene {mEngine.GetSceneManager().GetActiveScene()};
     scene->GetRoot().AddChild(mFadeEffect.GetSceneObject());
+}
+
+void RowBlastApplication::BeginFadingToDocumentViewerScene() {
+    mFadeEffect.SetDuration(fadeDuration);
+    mFadeEffect.Start();
+    mNextState = State::DocumentViewerScene;
 }
 
 void RowBlastApplication::BeginFadingToMap(MapInitialState mapInitialState) {
@@ -245,6 +280,11 @@ void RowBlastApplication::BeginFadingToGame(int level) {
 void RowBlastApplication::StartAcceptTermsScene() {
     mState = State::AcceptTermsScene;
     mAcceptTermsController.Init();
+}
+
+void RowBlastApplication::StartDocumentViewerScene() {
+    mState = State::DocumentViewerScene;
+    mDocumentViewerController.Init();
 }
 
 void RowBlastApplication::StartTitleScene() {

@@ -228,6 +228,9 @@
 		62216C4D21EB41F1001CB9A1 /* AcceptTermsDialogView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216C4B21EB41F1001CB9A1 /* AcceptTermsDialogView.cpp */; };
 		62216C5021ECDBAE001CB9A1 /* privacy_policy_english.txt in Resources */ = {isa = PBXBuildFile; fileRef = 62216C4F21ECDBAD001CB9A1 /* privacy_policy_english.txt */; };
 		62216C5221ECE594001CB9A1 /* terms_of_service_english.txt in Resources */ = {isa = PBXBuildFile; fileRef = 62216C5121ECE594001CB9A1 /* terms_of_service_english.txt */; };
+		62216C5621ED0BFC001CB9A1 /* DocumentViewerScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216C5421ED0BFC001CB9A1 /* DocumentViewerScene.cpp */; };
+		62216C5921ED0C16001CB9A1 /* DocumentViewerDialogView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216C5721ED0C16001CB9A1 /* DocumentViewerDialogView.cpp */; };
+		62216C5C21ED0C39001CB9A1 /* DocumentViewerController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216C5A21ED0C39001CB9A1 /* DocumentViewerController.cpp */; };
 		6227D4F5206CFD25008EA77D /* bomb_798.obj in Resources */ = {isa = PBXBuildFile; fileRef = 6227D4F4206CFD25008EA77D /* bomb_798.obj */; };
 		622EDD16217A42410007C652 /* level61.json in Resources */ = {isa = PBXBuildFile; fileRef = 622EDD15217A42400007C652 /* level61.json */; };
 		623326732073D69500AC505A /* level29.json in Resources */ = {isa = PBXBuildFile; fileRef = 623326722073D69400AC505A /* level29.json */; };
@@ -880,6 +883,12 @@
 		62216C4C21EB41F1001CB9A1 /* AcceptTermsDialogView.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AcceptTermsDialogView.hpp; sourceTree = "<group>"; };
 		62216C4F21ECDBAD001CB9A1 /* privacy_policy_english.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = privacy_policy_english.txt; sourceTree = "<group>"; };
 		62216C5121ECE594001CB9A1 /* terms_of_service_english.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = terms_of_service_english.txt; sourceTree = "<group>"; };
+		62216C5421ED0BFC001CB9A1 /* DocumentViewerScene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DocumentViewerScene.cpp; sourceTree = "<group>"; };
+		62216C5521ED0BFC001CB9A1 /* DocumentViewerScene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = DocumentViewerScene.hpp; sourceTree = "<group>"; };
+		62216C5721ED0C16001CB9A1 /* DocumentViewerDialogView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DocumentViewerDialogView.cpp; sourceTree = "<group>"; };
+		62216C5821ED0C16001CB9A1 /* DocumentViewerDialogView.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = DocumentViewerDialogView.hpp; sourceTree = "<group>"; };
+		62216C5A21ED0C39001CB9A1 /* DocumentViewerController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DocumentViewerController.cpp; sourceTree = "<group>"; };
+		62216C5B21ED0C39001CB9A1 /* DocumentViewerController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = DocumentViewerController.hpp; sourceTree = "<group>"; };
 		6227D4F4206CFD25008EA77D /* bomb_798.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bomb_798.obj; sourceTree = "<group>"; };
 		622EDD15217A42400007C652 /* level61.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level61.json; sourceTree = "<group>"; };
 		623326722073D69400AC505A /* level29.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level29.json; sourceTree = "<group>"; };
@@ -1534,6 +1543,7 @@
 			isa = PBXGroup;
 			children = (
 				62216C4421EB415C001CB9A1 /* AcceptTerms */,
+				62216C5321ED0AF7001CB9A1 /* DocumentViewer */,
 				62216AA321EB377E001CB9A1 /* Game */,
 				62216B9321EB377E001CB9A1 /* Map */,
 				62216A9C21EB377E001CB9A1 /* Title */,
@@ -1966,6 +1976,19 @@
 				62216C4F21ECDBAD001CB9A1 /* privacy_policy_english.txt */,
 			);
 			path = LegalDocuments;
+			sourceTree = "<group>";
+		};
+		62216C5321ED0AF7001CB9A1 /* DocumentViewer */ = {
+			isa = PBXGroup;
+			children = (
+				62216C5A21ED0C39001CB9A1 /* DocumentViewerController.cpp */,
+				62216C5B21ED0C39001CB9A1 /* DocumentViewerController.hpp */,
+				62216C5721ED0C16001CB9A1 /* DocumentViewerDialogView.cpp */,
+				62216C5821ED0C16001CB9A1 /* DocumentViewerDialogView.hpp */,
+				62216C5421ED0BFC001CB9A1 /* DocumentViewerScene.cpp */,
+				62216C5521ED0BFC001CB9A1 /* DocumentViewerScene.hpp */,
+			);
+			path = DocumentViewer;
 			sourceTree = "<group>";
 		};
 		6242DEEF21C50E7600D17F46 /* AudioApi */ = {
@@ -3151,6 +3174,7 @@
 				62216BCD21EB377E001CB9A1 /* CascadingDialogController.cpp in Sources */,
 				62216BE121EB377E001CB9A1 /* OutOfMovesDialogView.cpp in Sources */,
 				62216BC021EB377E001CB9A1 /* PlacePieceWindowController.cpp in Sources */,
+				62216C5621ED0BFC001CB9A1 /* DocumentViewerScene.cpp in Sources */,
 				62216C2621EB377F001CB9A1 /* FallingPieceScaleAnimation.cpp in Sources */,
 				62216C3D21EB377F001CB9A1 /* PortalParticleEffect.cpp in Sources */,
 				6256980A2182392C003A3A9D /* QuadMesh.cpp in Sources */,
@@ -3171,6 +3195,7 @@
 				62216C1821EB377F001CB9A1 /* Ai.cpp in Sources */,
 				62216C0221EB377F001CB9A1 /* BPiece.cpp in Sources */,
 				6256980F2182392C003A3A9D /* RenderableObject.cpp in Sources */,
+				62216C5921ED0C16001CB9A1 /* DocumentViewerDialogView.cpp in Sources */,
 				6256980B2182392C003A3A9D /* TorusMesh.cpp in Sources */,
 				6256984C2182392C003A3A9D /* CameraComponent.cpp in Sources */,
 				62216BF021EB377E001CB9A1 /* GameScene.cpp in Sources */,
@@ -3252,6 +3277,7 @@
 				62216A9721EB376E001CB9A1 /* Clouds.cpp in Sources */,
 				62216BF521EB377E001CB9A1 /* CollisionDetection.cpp in Sources */,
 				62216C3321EB377F001CB9A1 /* World1.cpp in Sources */,
+				62216C5C21ED0C39001CB9A1 /* DocumentViewerController.cpp in Sources */,
 				62216C1621EB377F001CB9A1 /* MoveDefinitions.cpp in Sources */,
 				62216BF321EB377E001CB9A1 /* Piece.cpp in Sources */,
 				62216C0521EB377F001CB9A1 /* ZPiece.cpp in Sources */,

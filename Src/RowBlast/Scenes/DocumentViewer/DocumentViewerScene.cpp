@@ -1,4 +1,4 @@
-#include "AcceptTermsScene.hpp"
+#include "DocumentViewerScene.hpp"
 
 // Engine includes.
 #include "IEngine.hpp"
@@ -20,12 +20,12 @@ namespace {
     };
 }
 
-AcceptTermsScene::AcceptTermsScene(Pht::IEngine& engine) :
+DocumentViewerScene::DocumentViewerScene(Pht::IEngine& engine) :
     mEngine {engine} {}
-    
-void AcceptTermsScene::Init() {
+
+void DocumentViewerScene::Init() {
     auto& sceneManager {mEngine.GetSceneManager()};
-    auto scene {sceneManager.CreateScene(Pht::Hash::Fnv1a("acceptTermsScene"))};
+    auto scene {sceneManager.CreateScene(Pht::Hash::Fnv1a("documentViewerScene"))};
     
     sceneManager.InitSceneSystems(Pht::ISceneManager::defaultNarrowFrustumHeightFactor);
     
