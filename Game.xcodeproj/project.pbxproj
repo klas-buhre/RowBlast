@@ -226,6 +226,7 @@
 		62216C4721EB41AF001CB9A1 /* AcceptTermsScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216C4521EB41AF001CB9A1 /* AcceptTermsScene.cpp */; };
 		62216C4A21EB41C5001CB9A1 /* AcceptTermsController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216C4821EB41C5001CB9A1 /* AcceptTermsController.cpp */; };
 		62216C4D21EB41F1001CB9A1 /* AcceptTermsDialogView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216C4B21EB41F1001CB9A1 /* AcceptTermsDialogView.cpp */; };
+		62216C5021ECDBAE001CB9A1 /* privacy_policy_english.txt in Resources */ = {isa = PBXBuildFile; fileRef = 62216C4F21ECDBAD001CB9A1 /* privacy_policy_english.txt */; };
 		6227D4F5206CFD25008EA77D /* bomb_798.obj in Resources */ = {isa = PBXBuildFile; fileRef = 6227D4F4206CFD25008EA77D /* bomb_798.obj */; };
 		622EDD16217A42410007C652 /* level61.json in Resources */ = {isa = PBXBuildFile; fileRef = 622EDD15217A42400007C652 /* level61.json */; };
 		623326732073D69500AC505A /* level29.json in Resources */ = {isa = PBXBuildFile; fileRef = 623326722073D69400AC505A /* level29.json */; };
@@ -876,6 +877,7 @@
 		62216C4921EB41C5001CB9A1 /* AcceptTermsController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AcceptTermsController.hpp; sourceTree = "<group>"; };
 		62216C4B21EB41F1001CB9A1 /* AcceptTermsDialogView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AcceptTermsDialogView.cpp; sourceTree = "<group>"; };
 		62216C4C21EB41F1001CB9A1 /* AcceptTermsDialogView.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AcceptTermsDialogView.hpp; sourceTree = "<group>"; };
+		62216C4F21ECDBAD001CB9A1 /* privacy_policy_english.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = privacy_policy_english.txt; sourceTree = "<group>"; };
 		6227D4F4206CFD25008EA77D /* bomb_798.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bomb_798.obj; sourceTree = "<group>"; };
 		622EDD15217A42400007C652 /* level61.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level61.json; sourceTree = "<group>"; };
 		623326722073D69400AC505A /* level29.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level29.json; sourceTree = "<group>"; };
@@ -1388,6 +1390,7 @@
 				6270DC6A1FCB231B00FB457D /* Fonts */,
 				626722E22127656F0058528D /* Icons */,
 				6278591A203AFB7C00494A4D /* LaunchScreens */,
+				62216C4E21ECDBAD001CB9A1 /* LegalDocuments */,
 				6270DC6F1FCB23D800FB457D /* Levels */,
 				6270DC571FCB22AE00FB457D /* Models */,
 				62BB35B621C55A150051AEEF /* Music */,
@@ -1412,22 +1415,22 @@
 		62216A1E21EB376E001CB9A1 /* GuiElements */ = {
 			isa = PBXGroup;
 			children = (
-				62216A1F21EB376E001CB9A1 /* MenuButton.hpp */,
-				62216A2021EB376E001CB9A1 /* IGuiLightProvider.hpp */,
-				62216A2121EB376E001CB9A1 /* UiLayer.hpp */,
-				62216A2221EB376E001CB9A1 /* GuiResources.hpp */,
-				62216A2321EB376E001CB9A1 /* GlossyButton.hpp */,
 				62216A2421EB376E001CB9A1 /* CloseButton.cpp */,
-				62216A2521EB376E001CB9A1 /* MenuWindow.hpp */,
-				62216A2621EB376E001CB9A1 /* SpinningWheelEffect.cpp */,
-				62216A2721EB376E001CB9A1 /* SlidingMenuAnimation.cpp */,
-				62216A2821EB376E001CB9A1 /* MenuWindow.cpp */,
-				62216A2921EB376E001CB9A1 /* SpinningWheelEffect.hpp */,
-				62216A2A21EB376E001CB9A1 /* SlidingMenuAnimation.hpp */,
-				62216A2B21EB376E001CB9A1 /* MenuButton.cpp */,
-				62216A2C21EB376E001CB9A1 /* GuiResources.cpp */,
-				62216A2D21EB376E001CB9A1 /* GlossyButton.cpp */,
 				62216A2E21EB376E001CB9A1 /* CloseButton.hpp */,
+				62216A2D21EB376E001CB9A1 /* GlossyButton.cpp */,
+				62216A2321EB376E001CB9A1 /* GlossyButton.hpp */,
+				62216A2C21EB376E001CB9A1 /* GuiResources.cpp */,
+				62216A2221EB376E001CB9A1 /* GuiResources.hpp */,
+				62216A2021EB376E001CB9A1 /* IGuiLightProvider.hpp */,
+				62216A2B21EB376E001CB9A1 /* MenuButton.cpp */,
+				62216A1F21EB376E001CB9A1 /* MenuButton.hpp */,
+				62216A2821EB376E001CB9A1 /* MenuWindow.cpp */,
+				62216A2521EB376E001CB9A1 /* MenuWindow.hpp */,
+				62216A2721EB376E001CB9A1 /* SlidingMenuAnimation.cpp */,
+				62216A2A21EB376E001CB9A1 /* SlidingMenuAnimation.hpp */,
+				62216A2621EB376E001CB9A1 /* SpinningWheelEffect.cpp */,
+				62216A2921EB376E001CB9A1 /* SpinningWheelEffect.hpp */,
+				62216A2121EB376E001CB9A1 /* UiLayer.hpp */,
 			);
 			path = GuiElements;
 			sourceTree = "<group>";
@@ -1435,36 +1438,36 @@
 		62216A2F21EB376E001CB9A1 /* CommonViews */ = {
 			isa = PBXGroup;
 			children = (
-				62216A3021EB376E001CB9A1 /* PurchaseCanceledDialogView.hpp */,
-				62216A3121EB376E001CB9A1 /* SettingsMenuView.hpp */,
 				62216A3221EB376E001CB9A1 /* LevelGoalDialogController.cpp */,
-				62216A3321EB376E001CB9A1 /* NoLivesDialogController.cpp */,
-				62216A3421EB376E001CB9A1 /* PurchaseSuccessfulDialogController.hpp */,
-				62216A3521EB376E001CB9A1 /* NoLivesDialogView.cpp */,
-				62216A3621EB376E001CB9A1 /* PurchaseCanceledDialogController.hpp */,
-				62216A3721EB376E001CB9A1 /* StoreMenuController.cpp */,
-				62216A3821EB376E001CB9A1 /* StoreMenuView.hpp */,
-				62216A3921EB376E001CB9A1 /* PurchaseFailedDialogView.cpp */,
+				62216A4A21EB376E001CB9A1 /* LevelGoalDialogController.hpp */,
 				62216A3A21EB376E001CB9A1 /* LevelGoalDialogView.cpp */,
-				62216A3B21EB376E001CB9A1 /* PurchaseFailedDialogController.cpp */,
-				62216A3C21EB376E001CB9A1 /* SettingsMenuController.cpp */,
-				62216A3D21EB376E001CB9A1 /* StoreController.hpp */,
-				62216A3E21EB376E001CB9A1 /* PurchaseSuccessfulDialogView.hpp */,
+				62216A4421EB376E001CB9A1 /* LevelGoalDialogView.hpp */,
+				62216A3321EB376E001CB9A1 /* NoLivesDialogController.cpp */,
+				62216A4B21EB376E001CB9A1 /* NoLivesDialogController.hpp */,
+				62216A3521EB376E001CB9A1 /* NoLivesDialogView.cpp */,
+				62216A4C21EB376E001CB9A1 /* NoLivesDialogView.hpp */,
 				62216A3F21EB376E001CB9A1 /* PurchaseCanceledDialogController.cpp */,
+				62216A3621EB376E001CB9A1 /* PurchaseCanceledDialogController.hpp */,
+				62216A4821EB376E001CB9A1 /* PurchaseCanceledDialogView.cpp */,
+				62216A3021EB376E001CB9A1 /* PurchaseCanceledDialogView.hpp */,
+				62216A3B21EB376E001CB9A1 /* PurchaseFailedDialogController.cpp */,
+				62216A4321EB376E001CB9A1 /* PurchaseFailedDialogController.hpp */,
+				62216A3921EB376E001CB9A1 /* PurchaseFailedDialogView.cpp */,
+				62216A4221EB376E001CB9A1 /* PurchaseFailedDialogView.hpp */,
+				62216A4D21EB376E001CB9A1 /* PurchaseSuccessfulDialogController.cpp */,
+				62216A3421EB376E001CB9A1 /* PurchaseSuccessfulDialogController.hpp */,
+				62216A4721EB376E001CB9A1 /* PurchaseSuccessfulDialogView.cpp */,
+				62216A3E21EB376E001CB9A1 /* PurchaseSuccessfulDialogView.hpp */,
+				62216A3C21EB376E001CB9A1 /* SettingsMenuController.cpp */,
+				62216A4521EB376E001CB9A1 /* SettingsMenuController.hpp */,
+				62216A4921EB376E001CB9A1 /* SettingsMenuView.cpp */,
+				62216A3121EB376E001CB9A1 /* SettingsMenuView.hpp */,
+				62216A4621EB376E001CB9A1 /* StoreController.cpp */,
+				62216A3D21EB376E001CB9A1 /* StoreController.hpp */,
+				62216A3721EB376E001CB9A1 /* StoreMenuController.cpp */,
 				62216A4021EB376E001CB9A1 /* StoreMenuController.hpp */,
 				62216A4121EB376E001CB9A1 /* StoreMenuView.cpp */,
-				62216A4221EB376E001CB9A1 /* PurchaseFailedDialogView.hpp */,
-				62216A4321EB376E001CB9A1 /* PurchaseFailedDialogController.hpp */,
-				62216A4421EB376E001CB9A1 /* LevelGoalDialogView.hpp */,
-				62216A4521EB376E001CB9A1 /* SettingsMenuController.hpp */,
-				62216A4621EB376E001CB9A1 /* StoreController.cpp */,
-				62216A4721EB376E001CB9A1 /* PurchaseSuccessfulDialogView.cpp */,
-				62216A4821EB376E001CB9A1 /* PurchaseCanceledDialogView.cpp */,
-				62216A4921EB376E001CB9A1 /* SettingsMenuView.cpp */,
-				62216A4A21EB376E001CB9A1 /* LevelGoalDialogController.hpp */,
-				62216A4B21EB376E001CB9A1 /* NoLivesDialogController.hpp */,
-				62216A4C21EB376E001CB9A1 /* NoLivesDialogView.hpp */,
-				62216A4D21EB376E001CB9A1 /* PurchaseSuccessfulDialogController.cpp */,
+				62216A3821EB376E001CB9A1 /* StoreMenuView.hpp */,
 			);
 			path = CommonViews;
 			sourceTree = "<group>";
@@ -1499,28 +1502,28 @@
 		62216A5D21EB376E001CB9A1 /* CommonResources */ = {
 			isa = PBXGroup;
 			children = (
-				62216A5E21EB376E001CB9A1 /* UfoAnimation.cpp */,
-				62216A5F21EB376E001CB9A1 /* Materials.cpp */,
-				62216A6021EB376E001CB9A1 /* RoundedCylinder.cpp */,
 				62216A6121EB376E001CB9A1 /* AudioResources.cpp */,
-				62216A6221EB376E001CB9A1 /* GradientRectangle.hpp */,
-				62216A6321EB376E001CB9A1 /* CommonResources.hpp */,
-				62216A6421EB376E001CB9A1 /* FloatingBlocks.hpp */,
-				62216A6521EB376E001CB9A1 /* HandAnimation.cpp */,
-				62216A6621EB376E001CB9A1 /* Clouds.hpp */,
-				62216A6721EB376E001CB9A1 /* Planets.cpp */,
-				62216A6821EB376E001CB9A1 /* Ufo.cpp */,
-				62216A6921EB376E001CB9A1 /* HandAnimation.hpp */,
-				62216A6A21EB376E001CB9A1 /* Clouds.cpp */,
-				62216A6B21EB376E001CB9A1 /* Planets.hpp */,
-				62216A6C21EB376E001CB9A1 /* Ufo.hpp */,
-				62216A6D21EB376E001CB9A1 /* UfoAnimation.hpp */,
-				62216A6E21EB376E001CB9A1 /* Materials.hpp */,
 				62216A6F21EB376E001CB9A1 /* AudioResources.hpp */,
-				62216A7021EB376E001CB9A1 /* RoundedCylinder.hpp */,
-				62216A7121EB376E001CB9A1 /* GradientRectangle.cpp */,
+				62216A6A21EB376E001CB9A1 /* Clouds.cpp */,
+				62216A6621EB376E001CB9A1 /* Clouds.hpp */,
 				62216A7221EB376E001CB9A1 /* CommonResources.cpp */,
+				62216A6321EB376E001CB9A1 /* CommonResources.hpp */,
 				62216A7321EB376E001CB9A1 /* FloatingBlocks.cpp */,
+				62216A6421EB376E001CB9A1 /* FloatingBlocks.hpp */,
+				62216A7121EB376E001CB9A1 /* GradientRectangle.cpp */,
+				62216A6221EB376E001CB9A1 /* GradientRectangle.hpp */,
+				62216A6521EB376E001CB9A1 /* HandAnimation.cpp */,
+				62216A6921EB376E001CB9A1 /* HandAnimation.hpp */,
+				62216A5F21EB376E001CB9A1 /* Materials.cpp */,
+				62216A6E21EB376E001CB9A1 /* Materials.hpp */,
+				62216A6721EB376E001CB9A1 /* Planets.cpp */,
+				62216A6B21EB376E001CB9A1 /* Planets.hpp */,
+				62216A6021EB376E001CB9A1 /* RoundedCylinder.cpp */,
+				62216A7021EB376E001CB9A1 /* RoundedCylinder.hpp */,
+				62216A6821EB376E001CB9A1 /* Ufo.cpp */,
+				62216A6C21EB376E001CB9A1 /* Ufo.hpp */,
+				62216A5E21EB376E001CB9A1 /* UfoAnimation.cpp */,
+				62216A6D21EB376E001CB9A1 /* UfoAnimation.hpp */,
 			);
 			path = CommonResources;
 			sourceTree = "<group>";
@@ -1567,46 +1570,46 @@
 		62216AA421EB377E001CB9A1 /* Tutorial */ = {
 			isa = PBXGroup;
 			children = (
-				62216AA521EB377E001CB9A1 /* PlacePieceWindowController.cpp */,
 				62216AA621EB377E001CB9A1 /* BombDialogController.cpp */,
-				62216AA721EB377E001CB9A1 /* CascadingDialogController.hpp */,
-				62216AA821EB377E001CB9A1 /* LaserDialogController.hpp */,
-				62216AA921EB377E001CB9A1 /* LevelBombDialogController.hpp */,
-				62216AAA21EB377E001CB9A1 /* LaserDialogView.cpp */,
-				62216AAB21EB377E001CB9A1 /* SameColorDialogController.hpp */,
-				62216AAC21EB377E001CB9A1 /* LevelBombDialogView.cpp */,
-				62216AAD21EB377E001CB9A1 /* PlacePieceWindowView.hpp */,
-				62216AAE21EB377E001CB9A1 /* OtherMovesWindowView.hpp */,
-				62216AAF21EB377E001CB9A1 /* FillRowsWindowView.hpp */,
-				62216AB021EB377E001CB9A1 /* SlideAnimation.hpp */,
-				62216AB121EB377E001CB9A1 /* SameColorDialogView.cpp */,
-				62216AB221EB377E001CB9A1 /* OtherMovesWindowController.cpp */,
-				62216AB321EB377E001CB9A1 /* SwitchPieceWindowView.cpp */,
-				62216AB421EB377E001CB9A1 /* CascadingDialogView.cpp */,
-				62216AB521EB377E001CB9A1 /* SwitchPieceWindowController.cpp */,
-				62216AB621EB377E001CB9A1 /* Tutorial.hpp */,
-				62216AB721EB377E001CB9A1 /* FillRowsWindowController.cpp */,
-				62216AB821EB377E001CB9A1 /* BombDialogView.cpp */,
-				62216AB921EB377E001CB9A1 /* SlideAnimation.cpp */,
-				62216ABA21EB377E001CB9A1 /* SameColorDialogView.hpp */,
-				62216ABB21EB377E001CB9A1 /* SwitchPieceWindowView.hpp */,
-				62216ABC21EB377E001CB9A1 /* OtherMovesWindowController.hpp */,
-				62216ABD21EB377E001CB9A1 /* SwitchPieceWindowController.hpp */,
-				62216ABE21EB377E001CB9A1 /* CascadingDialogView.hpp */,
-				62216ABF21EB377E001CB9A1 /* Tutorial.cpp */,
-				62216AC021EB377E001CB9A1 /* FillRowsWindowController.hpp */,
-				62216AC121EB377E001CB9A1 /* BombDialogView.hpp */,
-				62216AC221EB377E001CB9A1 /* PlacePieceWindowController.hpp */,
 				62216AC321EB377E001CB9A1 /* BombDialogController.hpp */,
+				62216AB821EB377E001CB9A1 /* BombDialogView.cpp */,
+				62216AC121EB377E001CB9A1 /* BombDialogView.hpp */,
 				62216AC421EB377E001CB9A1 /* CascadingDialogController.cpp */,
+				62216AA721EB377E001CB9A1 /* CascadingDialogController.hpp */,
+				62216AB421EB377E001CB9A1 /* CascadingDialogView.cpp */,
+				62216ABE21EB377E001CB9A1 /* CascadingDialogView.hpp */,
+				62216AB721EB377E001CB9A1 /* FillRowsWindowController.cpp */,
+				62216AC021EB377E001CB9A1 /* FillRowsWindowController.hpp */,
+				62216ACC21EB377E001CB9A1 /* FillRowsWindowView.cpp */,
+				62216AAF21EB377E001CB9A1 /* FillRowsWindowView.hpp */,
+				62216AC721EB377E001CB9A1 /* LaserDialogController.cpp */,
+				62216AA821EB377E001CB9A1 /* LaserDialogController.hpp */,
+				62216AAA21EB377E001CB9A1 /* LaserDialogView.cpp */,
 				62216AC521EB377E001CB9A1 /* LaserDialogView.hpp */,
 				62216AC621EB377E001CB9A1 /* LevelBombDialogController.cpp */,
-				62216AC721EB377E001CB9A1 /* LaserDialogController.cpp */,
-				62216AC821EB377E001CB9A1 /* SameColorDialogController.cpp */,
+				62216AA921EB377E001CB9A1 /* LevelBombDialogController.hpp */,
+				62216AAC21EB377E001CB9A1 /* LevelBombDialogView.cpp */,
 				62216AC921EB377E001CB9A1 /* LevelBombDialogView.hpp */,
-				62216ACA21EB377E001CB9A1 /* PlacePieceWindowView.cpp */,
+				62216AB221EB377E001CB9A1 /* OtherMovesWindowController.cpp */,
+				62216ABC21EB377E001CB9A1 /* OtherMovesWindowController.hpp */,
 				62216ACB21EB377E001CB9A1 /* OtherMovesWindowView.cpp */,
-				62216ACC21EB377E001CB9A1 /* FillRowsWindowView.cpp */,
+				62216AAE21EB377E001CB9A1 /* OtherMovesWindowView.hpp */,
+				62216AA521EB377E001CB9A1 /* PlacePieceWindowController.cpp */,
+				62216AC221EB377E001CB9A1 /* PlacePieceWindowController.hpp */,
+				62216ACA21EB377E001CB9A1 /* PlacePieceWindowView.cpp */,
+				62216AAD21EB377E001CB9A1 /* PlacePieceWindowView.hpp */,
+				62216AC821EB377E001CB9A1 /* SameColorDialogController.cpp */,
+				62216AAB21EB377E001CB9A1 /* SameColorDialogController.hpp */,
+				62216AB121EB377E001CB9A1 /* SameColorDialogView.cpp */,
+				62216ABA21EB377E001CB9A1 /* SameColorDialogView.hpp */,
+				62216AB921EB377E001CB9A1 /* SlideAnimation.cpp */,
+				62216AB021EB377E001CB9A1 /* SlideAnimation.hpp */,
+				62216AB521EB377E001CB9A1 /* SwitchPieceWindowController.cpp */,
+				62216ABD21EB377E001CB9A1 /* SwitchPieceWindowController.hpp */,
+				62216AB321EB377E001CB9A1 /* SwitchPieceWindowView.cpp */,
+				62216ABB21EB377E001CB9A1 /* SwitchPieceWindowView.hpp */,
+				62216ABF21EB377E001CB9A1 /* Tutorial.cpp */,
+				62216AB621EB377E001CB9A1 /* Tutorial.hpp */,
 			);
 			path = Tutorial;
 			sourceTree = "<group>";
@@ -1952,6 +1955,14 @@
 				62216C4621EB41AF001CB9A1 /* AcceptTermsScene.hpp */,
 			);
 			path = AcceptTerms;
+			sourceTree = "<group>";
+		};
+		62216C4E21ECDBAD001CB9A1 /* LegalDocuments */ = {
+			isa = PBXGroup;
+			children = (
+				62216C4F21ECDBAD001CB9A1 /* privacy_policy_english.txt */,
+			);
+			path = LegalDocuments;
 			sourceTree = "<group>";
 		};
 		6242DEEF21C50E7600D17F46 /* AudioApi */ = {
@@ -3014,6 +3025,7 @@
 				622169A021DE7EF6001CB9A1 /* logo.wav in Resources */,
 				62BB35DF21CBAC760051AEEF /* level50.json in Resources */,
 				625698312182392C003A3A9D /* TexturedEnvMapLighting.frag in Resources */,
+				62216C5021ECDBAE001CB9A1 /* privacy_policy_english.txt in Resources */,
 				6256981C2182392C003A3A9D /* PointParticle.vert in Resources */,
 				62B1CB8C210F8F8600D0F195 /* flare24.png in Resources */,
 				629B838220C6E06500DD2D0E /* level38.json in Resources */,
