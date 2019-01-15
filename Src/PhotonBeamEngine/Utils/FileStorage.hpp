@@ -7,6 +7,7 @@ namespace Pht {
     namespace FileStorage {
         bool Load(const std::string& filename, std::string& data);
         bool Save(const std::string& filename, const std::string& data);
+        bool LoadCleartextFile(const std::string& fullPathFilename, std::string& data);
     }
 }
 

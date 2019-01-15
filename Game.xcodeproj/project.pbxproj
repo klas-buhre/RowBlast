@@ -231,6 +231,8 @@
 		62216C5621ED0BFC001CB9A1 /* DocumentViewerScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216C5421ED0BFC001CB9A1 /* DocumentViewerScene.cpp */; };
 		62216C5921ED0C16001CB9A1 /* DocumentViewerDialogView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216C5721ED0C16001CB9A1 /* DocumentViewerDialogView.cpp */; };
 		62216C5C21ED0C39001CB9A1 /* DocumentViewerController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216C5A21ED0C39001CB9A1 /* DocumentViewerController.cpp */; };
+		62216C5F21EDDA7E001CB9A1 /* ScrollPanel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216C5D21EDDA7E001CB9A1 /* ScrollPanel.cpp */; };
+		62216C6221EDDF36001CB9A1 /* TextDocumentLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216C6021EDDF36001CB9A1 /* TextDocumentLoader.cpp */; };
 		6227D4F5206CFD25008EA77D /* bomb_798.obj in Resources */ = {isa = PBXBuildFile; fileRef = 6227D4F4206CFD25008EA77D /* bomb_798.obj */; };
 		622EDD16217A42410007C652 /* level61.json in Resources */ = {isa = PBXBuildFile; fileRef = 622EDD15217A42400007C652 /* level61.json */; };
 		623326732073D69500AC505A /* level29.json in Resources */ = {isa = PBXBuildFile; fileRef = 623326722073D69400AC505A /* level29.json */; };
@@ -889,6 +891,10 @@
 		62216C5821ED0C16001CB9A1 /* DocumentViewerDialogView.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = DocumentViewerDialogView.hpp; sourceTree = "<group>"; };
 		62216C5A21ED0C39001CB9A1 /* DocumentViewerController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DocumentViewerController.cpp; sourceTree = "<group>"; };
 		62216C5B21ED0C39001CB9A1 /* DocumentViewerController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = DocumentViewerController.hpp; sourceTree = "<group>"; };
+		62216C5D21EDDA7E001CB9A1 /* ScrollPanel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ScrollPanel.cpp; sourceTree = "<group>"; };
+		62216C5E21EDDA7E001CB9A1 /* ScrollPanel.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ScrollPanel.hpp; sourceTree = "<group>"; };
+		62216C6021EDDF36001CB9A1 /* TextDocumentLoader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TextDocumentLoader.cpp; sourceTree = "<group>"; };
+		62216C6121EDDF36001CB9A1 /* TextDocumentLoader.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TextDocumentLoader.hpp; sourceTree = "<group>"; };
 		6227D4F4206CFD25008EA77D /* bomb_798.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bomb_798.obj; sourceTree = "<group>"; };
 		622EDD15217A42400007C652 /* level61.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level61.json; sourceTree = "<group>"; };
 		623326722073D69400AC505A /* level29.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level29.json; sourceTree = "<group>"; };
@@ -1496,16 +1502,16 @@
 		62216A5221EB376E001CB9A1 /* UserServices */ = {
 			isa = PBXGroup;
 			children = (
+				62216A5921EB376E001CB9A1 /* LifeService.cpp */,
+				62216A5721EB376E001CB9A1 /* LifeService.hpp */,
+				62216A5521EB376E001CB9A1 /* ProgressService.cpp */,
+				62216A5B21EB376E001CB9A1 /* ProgressService.hpp */,
+				62216A5821EB376E001CB9A1 /* PurchasingService.cpp */,
+				62216A5621EB376E001CB9A1 /* PurchasingService.hpp */,
+				62216A5C21EB376E001CB9A1 /* SettingsService.cpp */,
 				62216A5321EB376E001CB9A1 /* SettingsService.hpp */,
 				62216A5421EB376E001CB9A1 /* UserServices.cpp */,
-				62216A5521EB376E001CB9A1 /* ProgressService.cpp */,
-				62216A5621EB376E001CB9A1 /* PurchasingService.hpp */,
-				62216A5721EB376E001CB9A1 /* LifeService.hpp */,
-				62216A5821EB376E001CB9A1 /* PurchasingService.cpp */,
-				62216A5921EB376E001CB9A1 /* LifeService.cpp */,
 				62216A5A21EB376E001CB9A1 /* UserServices.hpp */,
-				62216A5B21EB376E001CB9A1 /* ProgressService.hpp */,
-				62216A5C21EB376E001CB9A1 /* SettingsService.cpp */,
 			);
 			path = UserServices;
 			sourceTree = "<group>";
@@ -1823,12 +1829,12 @@
 		62216B6221EB377E001CB9A1 /* Level */ = {
 			isa = PBXGroup;
 			children = (
-				62216B6321EB377E001CB9A1 /* LevelResources.hpp */,
-				62216B6421EB377E001CB9A1 /* LevelLoader.cpp */,
 				62216B6521EB377E001CB9A1 /* Level.cpp */,
 				62216B6621EB377E001CB9A1 /* Level.hpp */,
-				62216B6721EB377E001CB9A1 /* LevelResources.cpp */,
+				62216B6421EB377E001CB9A1 /* LevelLoader.cpp */,
 				62216B6821EB377E001CB9A1 /* LevelLoader.hpp */,
+				62216B6721EB377E001CB9A1 /* LevelResources.cpp */,
+				62216B6321EB377E001CB9A1 /* LevelResources.hpp */,
 			);
 			path = Level;
 			sourceTree = "<group>";
@@ -1942,16 +1948,16 @@
 		62216BB221EB377E001CB9A1 /* MapViews */ = {
 			isa = PBXGroup;
 			children = (
-				62216BB321EB377E001CB9A1 /* MapHudController.cpp */,
-				62216BB421EB377E001CB9A1 /* LivesDialogView.hpp */,
-				62216BB521EB377E001CB9A1 /* MapHudView.cpp */,
-				62216BB621EB377E001CB9A1 /* MapViewControllers.hpp */,
 				62216BB721EB377E001CB9A1 /* LivesDialogController.cpp */,
+				62216BBA21EB377E001CB9A1 /* LivesDialogController.hpp */,
+				62216BBC21EB377E001CB9A1 /* LivesDialogView.cpp */,
+				62216BB421EB377E001CB9A1 /* LivesDialogView.hpp */,
+				62216BB321EB377E001CB9A1 /* MapHudController.cpp */,
+				62216BBB21EB377E001CB9A1 /* MapHudController.hpp */,
+				62216BB521EB377E001CB9A1 /* MapHudView.cpp */,
 				62216BB821EB377E001CB9A1 /* MapHudView.hpp */,
 				62216BB921EB377E001CB9A1 /* MapViewControllers.cpp */,
-				62216BBA21EB377E001CB9A1 /* LivesDialogController.hpp */,
-				62216BBB21EB377E001CB9A1 /* MapHudController.hpp */,
-				62216BBC21EB377E001CB9A1 /* LivesDialogView.cpp */,
+				62216BB621EB377E001CB9A1 /* MapViewControllers.hpp */,
 			);
 			path = MapViews;
 			sourceTree = "<group>";
@@ -1987,6 +1993,8 @@
 				62216C5821ED0C16001CB9A1 /* DocumentViewerDialogView.hpp */,
 				62216C5421ED0BFC001CB9A1 /* DocumentViewerScene.cpp */,
 				62216C5521ED0BFC001CB9A1 /* DocumentViewerScene.hpp */,
+				62216C6021EDDF36001CB9A1 /* TextDocumentLoader.cpp */,
+				62216C6121EDDF36001CB9A1 /* TextDocumentLoader.hpp */,
 			);
 			path = DocumentViewer;
 			sourceTree = "<group>";
@@ -2245,6 +2253,8 @@
 				625697492182392B003A3A9D /* GuiView.hpp */,
 				627A12C421B3085100EECA3B /* GuiViewManager.cpp */,
 				627A12C321B3085000EECA3B /* GuiViewManager.hpp */,
+				62216C5D21EDDA7E001CB9A1 /* ScrollPanel.cpp */,
+				62216C5E21EDDA7E001CB9A1 /* ScrollPanel.hpp */,
 			);
 			path = Gui;
 			sourceTree = "<group>";
@@ -3252,6 +3262,7 @@
 				6242DEFA21C5112000D17F46 /* MusicTrackIOS.mm in Sources */,
 				62216C1F21EB377F001CB9A1 /* ExplosionParticleEffect.cpp in Sources */,
 				6256983F2182392C003A3A9D /* FileSystemIOS.mm in Sources */,
+				62216C6221EDDF36001CB9A1 /* TextDocumentLoader.cpp in Sources */,
 				62216BD821EB377E001CB9A1 /* FireworksParticleEffect.cpp in Sources */,
 				62216A8721EB376E001CB9A1 /* PurchaseCanceledDialogView.cpp in Sources */,
 				62216C1421EB377F001CB9A1 /* DiamondPiece.cpp in Sources */,
@@ -3331,6 +3342,7 @@
 				62216C0B21EB377F001CB9A1 /* PlusPiece.cpp in Sources */,
 				62216BDB21EB377E001CB9A1 /* GameMenuView.cpp in Sources */,
 				62216C2C21EB377F001CB9A1 /* FlyingBlocksAnimation.cpp in Sources */,
+				62216C5F21EDDA7E001CB9A1 /* ScrollPanel.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

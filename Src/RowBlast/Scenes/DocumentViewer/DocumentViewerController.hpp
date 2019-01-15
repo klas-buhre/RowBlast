@@ -1,6 +1,9 @@
 #ifndef DocumentViewerController_hpp
 #define DocumentViewerController_hpp
 
+// Engine includes.
+#include "ScrollPanel.hpp"
+
 // Game includes.
 #include "DocumentViewerScene.hpp"
 #include "DocumentViewerDialogView.hpp"
@@ -29,8 +32,10 @@ namespace RowBlast {
         Command OnTouch(const Pht::TouchEvent& touchEvent);
 
         Pht::IEngine& mEngine;
+        const CommonResources& mCommonResources;
         DocumentViewerScene mScene;
         DocumentViewerDialogView mDialogView;
+        std::unique_ptr<Pht::ScrollPanel> mScrollPanel;
     };
 }
 

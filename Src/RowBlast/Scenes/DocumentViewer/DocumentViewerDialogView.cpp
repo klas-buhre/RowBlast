@@ -15,7 +15,6 @@ DocumentViewerDialogView::DocumentViewerDialogView(Pht::IEngine& engine,
                                                    const CommonResources& commonResources) {
     PotentiallyZoomedScreen zoom {PotentiallyZoomedScreen::No};
     auto& guiResources {commonResources.GetGuiResources()};
-    // auto& textProperties {guiResources.GetSmallWhiteTextProperties(zoom)};
     
     SetSize({engine.GetRenderer().GetHudFrustumSize().x, 26.0f});
 
@@ -37,7 +36,7 @@ DocumentViewerDialogView::DocumentViewerDialogView(Pht::IEngine& engine,
                                                 closeButtonStyle);
 
     Pht::Material lineMaterial {Pht::Color{0.6f, 0.8f, 1.0f}};
-    lineMaterial.SetOpacity(0.3f);
+    lineMaterial.SetOpacity(0.6f);
     auto& sceneManager {engine.GetSceneManager()};
     auto& lineSceneObject {
         CreateSceneObject(Pht::QuadMesh {GetSize().x - 1.5f, 0.06f}, lineMaterial, sceneManager)

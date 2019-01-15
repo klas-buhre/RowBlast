@@ -52,7 +52,13 @@ Ongoing tasks:
           -TermsOfService scene. Accessable from AcceptTerms scene and settings menu in map scene.
           -PrivacyPolicy scene. Accessable from AcceptTerms scene and settings menu in map scene.
 
-
+          -Add ScollPanel to Pht/Gui. Has root objec that is moved while scrolling. It handles which
+           objects gets visible and static. Has to receive touch events to move
+           so the Controller cant use the InputUtil. Do as in map scene with the map hud instead.
+          -Add a renderpass to the scene that has a scissor box around the ScrollPanel.
+          -Add a DocumentReader that reads the text file and creats text objects just long enough
+           to fit the view. Those text objects are inserted in to the ScrollPanel.
+          -The ScrollPanel can be owned by the Controller.
 
 
 Ordered Backlog:

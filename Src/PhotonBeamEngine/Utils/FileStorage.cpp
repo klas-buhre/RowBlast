@@ -31,8 +31,8 @@ bool FileStorage::Load(const std::string& filename, std::string& data) {
     
     std::stringstream stream;
     stream << file.rdbuf();
-    
     Xor(stream.str(), data);
+    
     return true;
 }
 
@@ -46,7 +46,21 @@ bool FileStorage::Save(const std::string& filename, const std::string& data) {
     
     std::string xoredData;
     Xor(data, xoredData);
-    
     file << xoredData;
+    
+    return true;
+}
+
+bool FileStorage::LoadCleartextFile(const std::string& fullPathFilename, std::string& data) {
+    std::ifstream file {fullPathFilename};
+    
+    if (!file.is_open()) {
+        return false;
+    }
+    
+    std::stringstream stream;
+    stream << file.rdbuf();
+    data = stream.str();
+
     return true;
 }

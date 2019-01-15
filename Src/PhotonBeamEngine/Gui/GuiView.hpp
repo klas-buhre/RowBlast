@@ -4,7 +4,6 @@
 #include <memory>
 
 #include "Vector.hpp"
-#include "Matrix.hpp"
 #include "SceneObject.hpp"
 #include "SceneResources.hpp"
 #include "Font.hpp"

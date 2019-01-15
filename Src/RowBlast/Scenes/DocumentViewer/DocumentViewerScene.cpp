@@ -16,6 +16,7 @@ using namespace RowBlast;
 namespace {
     enum class Layer {
         Ui,
+        ScrollPanel,
         SceneSwitchFadeEffect = GlobalLayer::sceneSwitchFadeEffect
     };
 }
@@ -26,6 +27,7 @@ DocumentViewerScene::DocumentViewerScene(Pht::IEngine& engine) :
 void DocumentViewerScene::Init() {
     auto& sceneManager {mEngine.GetSceneManager()};
     auto scene {sceneManager.CreateScene(Pht::Hash::Fnv1a("documentViewerScene"))};
+    mScene = scene.get();
     
     sceneManager.InitSceneSystems(Pht::ISceneManager::defaultNarrowFrustumHeightFactor);
     
@@ -34,7 +36,15 @@ void DocumentViewerScene::Init() {
     uiRenderPass.SetIsDepthTestAllowed(false);
     uiRenderPass.SetRenderOrder(Pht::RenderOrder::BackToFront);
     scene->AddRenderPass(uiRenderPass);
-    
+
+    Pht::RenderPass scrollPanelRenderPass {static_cast<int>(Layer::ScrollPanel)};
+    scrollPanelRenderPass.SetHudMode(true);
+    scrollPanelRenderPass.SetIsDepthTestAllowed(false);
+    scrollPanelRenderPass.SetRenderOrder(Pht::RenderOrder::BackToFront);
+    Pht::ScissorBox scissorBox {{-6.9f, -9.3f}, {15.0f, 19.0}};
+    scrollPanelRenderPass.SetScissorBox(scissorBox);
+    scene->AddRenderPass(scrollPanelRenderPass);
+
     Pht::RenderPass fadeEffectRenderPass {static_cast<int>(Layer::SceneSwitchFadeEffect)};
     fadeEffectRenderPass.SetHudMode(true);
     scene->AddRenderPass(fadeEffectRenderPass);
@@ -53,6 +63,10 @@ void DocumentViewerScene::Init() {
     mUiViewsContainer = &scene->CreateSceneObject();
     mUiViewsContainer->SetLayer(static_cast<int>(Layer::Ui));
     scene->GetRoot().AddChild(*mUiViewsContainer);
+    
+    mScrollPanelContainer = &scene->CreateSceneObject();
+    mScrollPanelContainer->SetLayer(static_cast<int>(Layer::ScrollPanel));
+    scene->GetRoot().AddChild(*mScrollPanelContainer);
     
     scene->SetDistanceFunction(Pht::DistanceFunction::WorldSpaceNegativeZ);
     
