@@ -105,7 +105,7 @@ void RowBlast::LoadAudioResouces(Pht::IEngine& engine) {
                     static_cast<Pht::AudioResourceId>(SoundId::Combo2));
     audio.LoadSound("all_cleared.wav",
                     1,
-                    maxSoundGain,
+                    0.82f,
                     static_cast<Pht::AudioResourceId>(SoundId::AllCleared));
     audio.LoadSound("level_completed.wav",
                     1,
@@ -113,7 +113,7 @@ void RowBlast::LoadAudioResouces(Pht::IEngine& engine) {
                     static_cast<Pht::AudioResourceId>(SoundId::LevelCompleted));
     audio.LoadSound("star.wav",
                     3,
-                    maxSoundGain,
+                    0.75f,
                     static_cast<Pht::AudioResourceId>(SoundId::Star));
     audio.LoadSound("fireworks1.wav",
                     5,

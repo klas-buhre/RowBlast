@@ -242,7 +242,8 @@ We may use third-party Service Providers to monitor and analyse the use of our S
     [https://gameanalytics.com/privacy)
 
 Marketing
-~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~
+
 Your data may be used for marketing purposes.
 
     For more information on marketing, please
