@@ -6,8 +6,12 @@
 
 using namespace Pht;
 
-ScrollPanel::ScrollPanel(IEngine& engine, float dampingCoefficient, float cutoffVelocity) :
+ScrollPanel::ScrollPanel(IEngine& engine,
+                         const Vec2& size,
+                         float dampingCoefficient,
+                         float cutoffVelocity) :
     mEngine {engine},
+    mSize {size},
     mDampingCoefficient {dampingCoefficient},
     mCutoffVelocity {cutoffVelocity},
     mRoot {std::make_unique<Pht::SceneObject>()},
@@ -22,6 +26,16 @@ void ScrollPanel::SetPosition(const Vec3& position) {
 
 void ScrollPanel::AddSceneObject(SceneObject& sceneObject) {
     mPanel->AddChild(sceneObject);
+    
+    auto sceneObjectYPosition {sceneObject.GetTransform().GetPosition().y};
+    
+    if (sceneObjectYPosition < mSceneObjectsYMin) {
+        mSceneObjectsYMin = sceneObjectYPosition;
+    }
+}
+
+void ScrollPanel::Init() {
+    HideObjectsOutsideView();
 }
 
 void ScrollPanel::OnTouch(const TouchEvent& touch) {
@@ -39,7 +53,7 @@ void ScrollPanel::OnTouch(const TouchEvent& touch) {
             mPanelYVelocity = (newPanelYPosition - mPanel->GetTransform().GetPosition().y) /
                                mEngine.GetLastFrameSeconds();
             
-            SetYPosition(newPanelYPosition);
+            SetYScrollPosition(newPanelYPosition);
             break;
         }
         default:
@@ -77,10 +91,37 @@ void ScrollPanel::Update() {
     }
 
     panelYPosition += mPanelYVelocity * dt;
-    SetYPosition(panelYPosition);
+    SetYScrollPosition(panelYPosition);
 }
 
-void ScrollPanel::SetYPosition(float yPosition) {
+void ScrollPanel::SetYScrollPosition(float yPosition) {
+    auto yMin {0.0f};
+    auto yMax {-mSceneObjectsYMin - mSize.y / 2.0f};
+    
+    if (yPosition < yMin) {
+        yPosition = yMin;
+    } else if (yPosition > yMax) {
+        yPosition = yMax;
+    }
+
     Pht::Vec3 position {0.0f, yPosition, 0.0f};
     mPanel->GetTransform().SetPosition(position);
+    
+    HideObjectsOutsideView();
+}
+
+void ScrollPanel::HideObjectsOutsideView() {
+    auto panelPosition {mPanel->GetTransform().GetPosition().y};
+    auto visibleYMin {-panelPosition - mSize.y / 2.0f};
+    auto visibleYMax {-panelPosition + mSize.y / 2.0f};
+    
+    for (auto* sceneObject: mPanel->GetChildren()) {
+        auto sceneObjectYPosition {sceneObject->GetTransform().GetPosition().y};
+        
+        if (sceneObjectYPosition < visibleYMin || sceneObjectYPosition > visibleYMax) {
+            sceneObject->SetIsVisible(false);
+        } else {
+            sceneObject->SetIsVisible(true);
+        }
+    }
 }

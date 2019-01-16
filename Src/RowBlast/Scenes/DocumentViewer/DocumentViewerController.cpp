@@ -17,8 +17,9 @@ namespace {
     constexpr auto lineSpacing {0.65f};
     constexpr auto maxLineWidth {49};
     const Pht::Vec3 upperLeft {-7.1f, 9.0f, UiLayer::text};
+    const Pht::Vec2 scrollPanelSize {15.0f, 22.0};
     constexpr auto panelCutoffVelocity {0.1f};
-    constexpr auto dampingCoefficient {5.0f};
+    constexpr auto dampingCoefficient {2.2f};
     
     std::string ToFilename(DocumentId document) {
         switch (document) {
@@ -41,10 +42,6 @@ void DocumentViewerController::Init(DocumentId document) {
     mScene.Init();
     mScene.GetUiViewsContainer().AddChild(mDialogView.GetRoot());
 
-    mScrollPanel = std::make_unique<Pht::ScrollPanel>(mEngine,
-                                                      dampingCoefficient,
-                                                      panelCutoffVelocity);
-    
     Pht::TextProperties textProperties {
         mCommonResources.GetHussarFontSize20(PotentiallyZoomedScreen::No),
         1.0f,
@@ -53,6 +50,10 @@ void DocumentViewerController::Init(DocumentId document) {
     
     textProperties.mSnapToPixel = Pht::SnapToPixel::No;
 
+    mScrollPanel = std::make_unique<Pht::ScrollPanel>(mEngine,
+                                                      scrollPanelSize,
+                                                      dampingCoefficient,
+                                                      panelCutoffVelocity);
     TextDocumentLoader::Load(mScene.GetScene(),
                              *mScrollPanel,
                              ToFilename(document),
@@ -60,7 +61,7 @@ void DocumentViewerController::Init(DocumentId document) {
                              upperLeft,
                              lineSpacing,
                              maxLineWidth);
-    
+    mScrollPanel->Init();
     mScene.GetScrollPanelContainer().AddChild(mScrollPanel->GetRoot());
     
     mEngine.GetSceneManager().InitRenderer();
