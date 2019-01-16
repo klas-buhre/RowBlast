@@ -15,6 +15,11 @@ namespace Pht {
 
 namespace RowBlast {
     class CommonResources;
+    
+    enum class DocumentId {
+        TermsOfService,
+        PrivacyPolicy
+    };
 
     class DocumentViewerController {
     public:
@@ -25,7 +30,7 @@ namespace RowBlast {
         
         DocumentViewerController(Pht::IEngine& engine, const CommonResources& commonResources);
     
-        void Init();
+        void Init(DocumentId document);
         Command Update();
     
     private:

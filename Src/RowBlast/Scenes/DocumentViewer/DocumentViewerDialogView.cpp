@@ -39,7 +39,7 @@ DocumentViewerDialogView::DocumentViewerDialogView(Pht::IEngine& engine,
     lineMaterial.SetOpacity(0.6f);
     auto& sceneManager {engine.GetSceneManager()};
     auto& lineSceneObject {
-        CreateSceneObject(Pht::QuadMesh {GetSize().x - 1.5f, 0.06f}, lineMaterial, sceneManager)
+        CreateSceneObject(Pht::QuadMesh {GetSize().x - 0.8f, 0.06f}, lineMaterial, sceneManager)
     };
     lineSceneObject.GetTransform().SetPosition({0.0f, GetSize().y / 2.0f - 2.6f, UiLayer::textRectangle});
     GetRoot().AddChild(lineSceneObject);

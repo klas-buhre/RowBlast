@@ -124,6 +124,10 @@ namespace Pht {
         T* end() {
             return &mData[mSize];
         }
+        
+        int GetCapacity() const {
+            return Capacity;
+        }
 
     private:
         int mSize {0};

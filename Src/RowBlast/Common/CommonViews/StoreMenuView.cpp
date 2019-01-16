@@ -217,7 +217,7 @@ void StoreMenuView::CreateProductSection(const Pht::Vec3& position,
     buttonStyle.mSelectedRenderableObject = &guiResources.GetThinDarkBlueGlossyButton(zoom);
 
     Pht::Vec2 buttonInputSize {78.0f, 43.0f};
-    Pht::Vec3 buttonPosition {0.0f, -2.05f, UiLayer::textRectangle};
+    Pht::Vec3 buttonPosition {0.0f, -1.99f, UiLayer::textRectangle};
     
     auto button {
         std::make_unique<MenuButton>(engine,

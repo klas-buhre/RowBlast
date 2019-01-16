@@ -15,8 +15,17 @@ using namespace RowBlast;
 
 namespace {
     constexpr auto lineSpacing {0.65f};
-    constexpr auto maxLineWidth {46};
-    const Pht::Vec3 upperLeft {-6.7f, 9.0f, UiLayer::text};
+    constexpr auto maxLineWidth {49};
+    const Pht::Vec3 upperLeft {-7.1f, 9.0f, UiLayer::text};
+    
+    std::string ToFilename(DocumentId document) {
+        switch (document) {
+            case DocumentId::TermsOfService:
+                return "terms_of_service_english.txt";
+            case DocumentId::PrivacyPolicy:
+                return "privacy_policy_english.txt";
+        }
+    }
 }
 
 DocumentViewerController::DocumentViewerController(Pht::IEngine& engine,
@@ -26,7 +35,7 @@ DocumentViewerController::DocumentViewerController(Pht::IEngine& engine,
     mScene {engine},
     mDialogView {engine, commonResources} {}
 
-void DocumentViewerController::Init() {
+void DocumentViewerController::Init(DocumentId document) {
     mScene.Init();
     mScene.GetUiViewsContainer().AddChild(mDialogView.GetRoot());
 
@@ -40,8 +49,7 @@ void DocumentViewerController::Init() {
 
     TextDocumentLoader::Load(mScene.GetScene(),
                              mScrollPanel->GetPanel(),
-                             // "privacy_policy_english.txt",
-                             "terms_of_service_english.txt",
+                             ToFilename(document),
                              textProperties,
                              upperLeft,
                              lineSpacing,

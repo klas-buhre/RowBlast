@@ -127,10 +127,10 @@ void RowBlastApplication::UpdateAcceptTermsScene() {
             case AcceptTermsController::Command::None:
                 break;
             case AcceptTermsController::Command::ViewTermsOfService:
-                BeginFadingToDocumentViewerScene();
+                BeginFadingToDocumentViewerScene(DocumentId::TermsOfService);
                 break;
             case AcceptTermsController::Command::ViewPrivacyPolicy:
-                BeginFadingToDocumentViewerScene();
+                BeginFadingToDocumentViewerScene(DocumentId::PrivacyPolicy);
                 break;
             case AcceptTermsController::Command::Accept:
                 mFadeEffect.SetDuration(fadeDuration);
@@ -252,10 +252,11 @@ void RowBlastApplication::InsertFadeEffectInActiveScene() {
     scene->GetRoot().AddChild(mFadeEffect.GetSceneObject());
 }
 
-void RowBlastApplication::BeginFadingToDocumentViewerScene() {
+void RowBlastApplication::BeginFadingToDocumentViewerScene(DocumentId documentToView) {
     mFadeEffect.SetDuration(fadeDuration);
     mFadeEffect.Start();
     mNextState = State::DocumentViewerScene;
+    mDocumentToView = documentToView;
 }
 
 void RowBlastApplication::BeginFadingToMap(MapInitialState mapInitialState) {
@@ -284,7 +285,7 @@ void RowBlastApplication::StartAcceptTermsScene() {
 
 void RowBlastApplication::StartDocumentViewerScene() {
     mState = State::DocumentViewerScene;
-    mDocumentViewerController.Init();
+    mDocumentViewerController.Init(mDocumentToView);
 }
 
 void RowBlastApplication::StartTitleScene() {

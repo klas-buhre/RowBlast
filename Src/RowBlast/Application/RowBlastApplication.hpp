@@ -44,7 +44,7 @@ namespace RowBlast {
         void UpdateGameScene();
         void HandleTransitions();
         void InsertFadeEffectInActiveScene();
-        void BeginFadingToDocumentViewerScene();
+        void BeginFadingToDocumentViewerScene(DocumentId documentToView);
         void BeginFadingToMap(MapInitialState mapInitialState);
         void BeginFadingToGame(int level);
         void StartAcceptTermsScene();
@@ -75,6 +75,7 @@ namespace RowBlast {
         Pht::FadeEffect mFadeEffect;
         int mLevelToStart;
         MapInitialState mMapInitialState {MapInitialState::Map};
+        DocumentId mDocumentToView {DocumentId::PrivacyPolicy};
     };
 }
 

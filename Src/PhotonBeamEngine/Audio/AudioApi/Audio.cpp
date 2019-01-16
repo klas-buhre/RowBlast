@@ -47,6 +47,10 @@ void Audio::PlaySound(AudioResourceId resourceId) {
 }
 
 void Audio::PlaySoundWithDelay(AudioResourceId resourceId, float delay) {
+    if (mDelayedSoundJobs.Size() >= mDelayedSoundJobs.GetCapacity()) {
+        return;
+    }
+
     DelayedSoundJob job {.mElapsedTime = 0.0f, .mDelay = delay, .mAudioResourceId = resourceId};
     mDelayedSoundJobs.PushBack(job);
 }

@@ -9,6 +9,19 @@
 
 using namespace RowBlast;
 
+namespace {
+    bool IsCharacterDelimiter(char character) {
+        switch (character) {
+            case ' ':
+            case '\n':
+            case '\t':
+                return true;
+            default:
+                return false;
+        }
+    }
+}
+
 void TextDocumentLoader::Load(Pht::Scene& scene,
                               Pht::SceneObject& container,
                               const std::string& filename,
@@ -25,23 +38,53 @@ void TextDocumentLoader::Load(Pht::Scene& scene,
     
     auto textLinePosition {upperLeft};
     auto currentLineStartIndex {0};
+    auto currentWordStartIndex {0};
+    
+    enum class ScanState {
+        Word,
+        Delimiter
+    };
+    
+    auto scanState {ScanState::Delimiter};
     
     for (auto i {0}; i < fileData.size(); ++i) {
         auto character {fileData[i]};
         auto currentLineWidth {i - currentLineStartIndex + 1};
         
+        switch (scanState) {
+            case ScanState::Delimiter:
+                if (!IsCharacterDelimiter(character)) {
+                    scanState = ScanState::Word;
+                    currentWordStartIndex = i;
+                }
+                break;
+            case ScanState::Word:
+                if (IsCharacterDelimiter(character)) {
+                    scanState = ScanState::Delimiter;
+                }
+                break;
+        }
+        
         if (character == '\n' || currentLineWidth >= maxLineWidth) {
-            auto textLine {
-                character == '\n' ? fileData.substr(currentLineStartIndex, currentLineWidth - 1) :
-                fileData.substr(currentLineStartIndex, currentLineWidth)
-            };
+            std::string textLine;
+            
+            if (character == '\n') {
+                textLine = fileData.substr(currentLineStartIndex, currentLineWidth - 1);
+                currentLineStartIndex = i + 1;
+            } else if (scanState == ScanState::Word) {
+                auto lineWidthExludingLastWord {currentWordStartIndex - currentLineStartIndex - 1};
+                textLine = fileData.substr(currentLineStartIndex, lineWidthExludingLastWord);
+                currentLineStartIndex = currentWordStartIndex;
+            } else {
+                textLine = fileData.substr(currentLineStartIndex, currentLineWidth);
+                currentLineStartIndex = i + 1;
+            }
             
             auto& textLineSceneObject {scene.CreateText(textLine, textProperties).GetSceneObject()};
             textLineSceneObject.GetTransform().SetPosition(textLinePosition);
             container.AddChild(textLineSceneObject);
             
             textLinePosition.y -= lineSpacing;
-            currentLineStartIndex = i + 1;
         }
     }
 }
