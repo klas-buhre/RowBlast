@@ -3,6 +3,7 @@
 // Engine includes.
 #include "Scene.hpp"
 #include "SceneObject.hpp"
+#include "ScrollPanel.hpp"
 #include "FileSystem.hpp"
 #include "FileStorage.hpp"
 #include "TextComponent.hpp"
@@ -23,7 +24,7 @@ namespace {
 }
 
 void TextDocumentLoader::Load(Pht::Scene& scene,
-                              Pht::SceneObject& container,
+                              Pht::ScrollPanel& panel,
                               const std::string& filename,
                               const Pht::TextProperties& textProperties,
                               const Pht::Vec3& upperLeft,
@@ -82,7 +83,7 @@ void TextDocumentLoader::Load(Pht::Scene& scene,
             
             auto& textLineSceneObject {scene.CreateText(textLine, textProperties).GetSceneObject()};
             textLineSceneObject.GetTransform().SetPosition(textLinePosition);
-            container.AddChild(textLineSceneObject);
+            panel.AddSceneObject(textLineSceneObject);
             
             textLinePosition.y -= lineSpacing;
         }

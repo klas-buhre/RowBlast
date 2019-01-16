@@ -8,14 +8,14 @@
 
 namespace Pht {
     class Scene;
-    class SceneObject;
+    class ScrollPanel;
     class TextProperties;
 }
 
 namespace RowBlast {
     namespace TextDocumentLoader {
         void Load(Pht::Scene& scene,
-                  Pht::SceneObject& container,
+                  Pht::ScrollPanel& panel,
                   const std::string& filename,
                   const Pht::TextProperties& textProperties,
                   const Pht::Vec3& upperLeft,

@@ -3,8 +3,8 @@
 // Engine includes.
 #include "IEngine.hpp"
 #include "IInput.hpp"
+#include "InputEvent.hpp"
 #include "ISceneManager.hpp"
-#include "InputUtil.hpp"
 
 // Game includes.
 #include "TextDocumentLoader.hpp"
@@ -17,6 +17,8 @@ namespace {
     constexpr auto lineSpacing {0.65f};
     constexpr auto maxLineWidth {49};
     const Pht::Vec3 upperLeft {-7.1f, 9.0f, UiLayer::text};
+    constexpr auto panelCutoffVelocity {0.1f};
+    constexpr auto dampingCoefficient {5.0f};
     
     std::string ToFilename(DocumentId document) {
         switch (document) {
@@ -39,16 +41,20 @@ void DocumentViewerController::Init(DocumentId document) {
     mScene.Init();
     mScene.GetUiViewsContainer().AddChild(mDialogView.GetRoot());
 
-    mScrollPanel = std::make_unique<Pht::ScrollPanel>();
+    mScrollPanel = std::make_unique<Pht::ScrollPanel>(mEngine,
+                                                      dampingCoefficient,
+                                                      panelCutoffVelocity);
     
     Pht::TextProperties textProperties {
         mCommonResources.GetHussarFontSize20(PotentiallyZoomedScreen::No),
         1.0f,
         Pht::Vec4{0.95f, 0.95f, 0.95f, 1.0f}
     };
+    
+    textProperties.mSnapToPixel = Pht::SnapToPixel::No;
 
     TextDocumentLoader::Load(mScene.GetScene(),
-                             mScrollPanel->GetPanel(),
+                             *mScrollPanel,
                              ToFilename(document),
                              textProperties,
                              upperLeft,
@@ -61,20 +67,53 @@ void DocumentViewerController::Init(DocumentId document) {
 }
 
 DocumentViewerController::Command DocumentViewerController::Update() {
-    return InputUtil::HandleInput<Command>(mEngine.GetInput(),
-                                           Command::None,
-                                           [this] (const Pht::TouchEvent& touch) {
-                                               return OnTouch(touch);
-                                           });
+    auto command {Command::None};
+    auto& input {mEngine.GetInput()};
+    
+    while (input.HasEvents()) {
+        auto& event {input.GetNextEvent()};
+        switch (event.GetKind()) {
+            case Pht::InputKind::Touch: {
+                auto& touchEvent {event.GetTouchEvent()};
+                switch (OnTouch(touchEvent)) {
+                    case Result::None:
+                        mScrollPanel->OnTouch(touchEvent);
+                        break;
+                    case Result::Close:
+                        command = Command::Close;
+                        break;
+                    case Result::TouchStartedOverButton:
+                        break;
+                }
+                break;
+            }
+            default:
+                assert(false);
+                break;
+        }
+        
+        input.PopNextEvent();
+    }
+    
+    mScrollPanel->Update();
+    
+    return command;
 }
 
-DocumentViewerController::Command
+DocumentViewerController::Result
 DocumentViewerController::OnTouch(const Pht::TouchEvent& touchEvent) {
-    if (mDialogView.GetCloseButton().IsClicked(touchEvent) ||
-        mDialogView.GetBackButton().IsClicked(touchEvent)) {
+    auto& closeButton {mDialogView.GetCloseButton()};
+    auto& backButton {mDialogView.GetBackButton()};
+    
+    if (closeButton.IsClicked(touchEvent) || backButton.IsClicked(touchEvent)) {
+        return Result::Close;
+    }
+    
+    if (closeButton.GetButton().StateIsDownOrMovedOutside() ||
+        backButton.GetButton().StateIsDownOrMovedOutside()) {
 
-        return Command::Close;
+        return Result::TouchStartedOverButton;
     }
 
-    return Command::None;
+    return Result::None;
 }

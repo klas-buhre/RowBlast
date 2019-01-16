@@ -41,7 +41,7 @@ void DocumentViewerScene::Init() {
     scrollPanelRenderPass.SetHudMode(true);
     scrollPanelRenderPass.SetIsDepthTestAllowed(false);
     scrollPanelRenderPass.SetRenderOrder(Pht::RenderOrder::BackToFront);
-    Pht::ScissorBox scissorBox {{-7.5f, -9.3f}, {15.0f, 19.0}};
+    Pht::ScissorBox scissorBox {{-7.5f, -10.0f}, {15.0f, 20.0}};
     scrollPanelRenderPass.SetScissorBox(scissorBox);
     scene->AddRenderPass(scrollPanelRenderPass);
 

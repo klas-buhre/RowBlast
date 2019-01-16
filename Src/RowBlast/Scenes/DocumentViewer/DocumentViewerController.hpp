@@ -34,7 +34,13 @@ namespace RowBlast {
         Command Update();
     
     private:
-        Command OnTouch(const Pht::TouchEvent& touchEvent);
+        enum class Result {
+            Close,
+            TouchStartedOverButton,
+            None
+        };
+        
+        Result OnTouch(const Pht::TouchEvent& touchEvent);
 
         Pht::IEngine& mEngine;
         const CommonResources& mCommonResources;
