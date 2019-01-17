@@ -12,9 +12,7 @@
 
 using namespace RowBlast;
 
-OptionsMenuView::OptionsMenuView(Pht::IEngine& engine, const CommonResources& commonResources) :
-    mCommonResources {commonResources} {
-
+OptionsMenuView::OptionsMenuView(Pht::IEngine& engine, const CommonResources& commonResources) {
     auto zoom {PotentiallyZoomedScreen::No};
     auto& guiResources {commonResources.GetGuiResources()};
     auto& menuWindow {guiResources.GetLargeDarkMenuWindow()};

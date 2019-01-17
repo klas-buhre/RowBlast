@@ -27,6 +27,9 @@ namespace RowBlast {
             enum Kind {
                 StartGame,
                 StartMap,
+                ViewTermsOfService,
+                ViewPrivacyPolicy,
+                ViewCredits,
                 None
             };
             
@@ -52,6 +55,7 @@ namespace RowBlast {
     
         void Init();
         void GoToStartLevelStateLevelGoalDialog(int levelToStart);
+        void GoToAboutMenuState(SlidingMenuAnimation::UpdateFade updateFade);
         void GoToUfoAnimationState(int levelToStart);
         Command Update();
         
@@ -76,6 +80,7 @@ namespace RowBlast {
         void UpdateInAddLivesStateStore();
         void RefillLives();
         void UpdateOptionsMenu();
+        Command UpdateAboutMenu();
         void UpdateInAddCoinsStoreState();
         Command HandleInput();
         void UpdateTouchingState(const Pht::TouchEvent& touch);
@@ -101,6 +106,7 @@ namespace RowBlast {
             LivesDialog,
             AddLives,
             OptionsMenu,
+            AboutMenu,
             AddCoinsStore
         };
         

@@ -100,6 +100,9 @@ MapController::Command MapController::Update() {
         case State::OptionsMenu:
             UpdateOptionsMenu();
             break;
+        case State::AboutMenu:
+            command = UpdateAboutMenu();
+            break;
         case State::AddCoinsStore:
             UpdateInAddCoinsStoreState();
             break;
@@ -276,10 +279,35 @@ void MapController::UpdateOptionsMenu() {
         case OptionsMenuController::Result::None:
             break;
         case OptionsMenuController::Result::GoToAboutMenu:
+            GoToAboutMenuState(SlidingMenuAnimation::UpdateFade::No);
+            break;
         case OptionsMenuController::Result::GoBack:
             GoToMapState();
             break;
     }
+}
+
+MapController::Command MapController::UpdateAboutMenu() {
+    auto command {Command{Command::None}};
+    
+    switch (mMapViewControllers.GetAboutMenuController().Update()) {
+        case AboutMenuController::Result::None:
+            break;
+        case AboutMenuController::Result::ViewTermsOfService:
+            command = Command {Command::ViewTermsOfService};
+            break;
+        case AboutMenuController::Result::ViewPrivacyPolicy:
+            command = Command {Command::ViewPrivacyPolicy};
+            break;
+        case AboutMenuController::Result::ViewCredits:
+            command = Command {Command::ViewCredits};
+            break;
+        case AboutMenuController::Result::GoBack:
+            GoToMapState();
+            break;
+    }
+    
+    return command;
 }
 
 void MapController::UpdateInAddCoinsStoreState() {
@@ -555,6 +583,12 @@ void MapController::GoToOptionsMenuState() {
     mMapViewControllers.SetActiveController(MapViewControllers::OptionsMenu);
     mMapViewControllers.GetOptionsMenuController().SetUp();
     mState = State::OptionsMenu;
+}
+
+void MapController::GoToAboutMenuState(SlidingMenuAnimation::UpdateFade updateFade) {
+    mMapViewControllers.SetActiveController(MapViewControllers::AboutMenu);
+    mMapViewControllers.GetAboutMenuController().SetUp(updateFade);
+    mState = State::AboutMenu;
 }
 
 void MapController::GoToAddCoinsStoreState() {

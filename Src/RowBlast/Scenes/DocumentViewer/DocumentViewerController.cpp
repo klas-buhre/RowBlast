@@ -27,6 +27,8 @@ namespace {
                 return "terms_of_service_english.txt";
             case DocumentId::PrivacyPolicy:
                 return "privacy_policy_english.txt";
+            case DocumentId::Credits:
+                return "credits_english.txt";
         }
     }
 }

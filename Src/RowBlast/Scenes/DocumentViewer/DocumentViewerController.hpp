@@ -18,7 +18,8 @@ namespace RowBlast {
     
     enum class DocumentId {
         TermsOfService,
-        PrivacyPolicy
+        PrivacyPolicy,
+        Credits
     };
 
     class DocumentViewerController {

@@ -31,7 +31,8 @@ namespace RowBlast {
         enum class MapInitialState {
             Map,
             UfoAnimation,
-            LevelGoalDialog
+            LevelGoalDialog,
+            AboutMenu
         };
 
         void SetUpRenderer();
@@ -62,6 +63,7 @@ namespace RowBlast {
         };
         
         Pht::IEngine& mEngine;
+        State mPreviousState {State::TitleScene};
         State mState {State::TitleScene};
         State mNextState {State::TitleScene};
         CommonResources mCommonResources;

@@ -4,6 +4,7 @@ Backlog:
     -Purchases.
     -Net/HTTP.
     -Metal.
+    -Android.
 
   -Gameplay:
     -Maybe the Sticky Blocks tutorial message is confusing.
@@ -35,13 +36,8 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-    -Add SettingsMenu to game scene and OptionsMenu to map scene.
-      -SettingsMenu is as before.
-      -OptionsMenu is big and has an About button and the gear as caption.
-    -Add AboutMenu
-      -Terms of Service button
-      -Privacy Policy button
-      -Credits button
+    -Credits document
+    -Captions in the document viewer
     -Analytics
       -GDPR:
         -When the users start the app for the first time they need to accept the privacy policies
@@ -50,8 +46,7 @@ Ongoing tasks:
           -The AcceptTerms scene needs to start before the title scene. Only initiate analytics
            after proceeding to the title scene. Not allowed to send events before the user has
            agreed.
-          -TermsOfService scene. Accessable from AcceptTerms scene and About menu in map scene.
-          -PrivacyPolicy scene. Accessable from AcceptTerms scene and About menu in map scene.
+
 
 
 Ordered Backlog:

@@ -73,7 +73,6 @@ namespace RowBlast {
         }
 
     private:
-        const CommonResources& mCommonResources;
         std::unique_ptr<MenuButton> mCloseButton;
         std::unique_ptr<MenuButton> mControlsButton;
         std::unique_ptr<MenuButton> mSoundButton;

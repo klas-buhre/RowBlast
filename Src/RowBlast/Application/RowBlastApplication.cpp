@@ -150,8 +150,12 @@ void RowBlastApplication::UpdateDocumentViewerScene() {
             case DocumentViewerController::Command::None:
                 break;
             case DocumentViewerController::Command::Close:
-                mFadeEffect.Start();
-                mNextState = State::AcceptTermsScene;
+                if (mPreviousState == State::MapScene) {
+                    BeginFadingToMap(MapInitialState::AboutMenu);
+                } else {
+                    mFadeEffect.Start();
+                    mNextState = State::AcceptTermsScene;
+                }
                 break;
         }
     }
@@ -184,6 +188,15 @@ void RowBlastApplication::UpdateMapScene() {
                 break;
             case MapController::Command::StartMap:
                 BeginFadingToMap(MapInitialState::Map);
+                break;
+            case MapController::Command::ViewTermsOfService:
+                BeginFadingToDocumentViewerScene(DocumentId::TermsOfService);
+                break;
+            case MapController::Command::ViewPrivacyPolicy:
+                BeginFadingToDocumentViewerScene(DocumentId::PrivacyPolicy);
+                break;
+            case MapController::Command::ViewCredits:
+                BeginFadingToDocumentViewerScene(DocumentId::Credits);
                 break;
         }
     }
@@ -284,6 +297,7 @@ void RowBlastApplication::StartAcceptTermsScene() {
 }
 
 void RowBlastApplication::StartDocumentViewerScene() {
+    mPreviousState = mState;
     mState = State::DocumentViewerScene;
     mDocumentViewerController.Init(mDocumentToView);
 }
@@ -312,6 +326,9 @@ void RowBlastApplication::StartMapScene() {
             break;
         case MapInitialState::UfoAnimation:
             mMapController.GoToUfoAnimationState(mLevelToStart);
+            break;
+        case MapInitialState::AboutMenu:
+            mMapController.GoToAboutMenuState(SlidingMenuAnimation::UpdateFade::Yes);
             break;
     }
 }

@@ -9,6 +9,7 @@
 #include "MapHudController.hpp"
 #include "LevelGoalDialogController.hpp"
 #include "OptionsMenuController.hpp"
+#include "AboutMenuController.hpp"
 #include "NoLivesDialogController.hpp"
 #include "LivesDialogController.hpp"
 
@@ -29,6 +30,7 @@ namespace RowBlast {
             NoLivesDialog,
             LivesDialog,
             OptionsMenu,
+            AboutMenu,
             None
         };
         
@@ -60,6 +62,10 @@ namespace RowBlast {
         OptionsMenuController& GetOptionsMenuController() {
             return mOptionsMenuController;
         }
+        
+        AboutMenuController& GetAboutMenuController() {
+            return mAboutMenuController;
+        }
 
     private:
         MapScene& mScene;
@@ -70,6 +76,7 @@ namespace RowBlast {
         NoLivesDialogController mNoLivesDialogController;
         LivesDialogController mLivesDialogController;
         OptionsMenuController mOptionsMenuController;
+        AboutMenuController mAboutMenuController;
     };
 }
 
