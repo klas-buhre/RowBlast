@@ -8,15 +8,14 @@
 
 // Game includes.
 #include "UiLayer.hpp"
+#include "CommonResources.hpp"
 
 using namespace RowBlast;
 
-SettingsMenuView::SettingsMenuView(Pht::IEngine& engine,
-                                   const CommonResources& commonResources,
-                                   PotentiallyZoomedScreen zoom) :
-    mCommonResources {commonResources},
-    mZoom {zoom} {
+SettingsMenuView::SettingsMenuView(Pht::IEngine& engine, const CommonResources& commonResources) :
+    mCommonResources {commonResources} {
 
+    auto zoom {PotentiallyZoomedScreen::Yes};
     auto& guiResources {commonResources.GetGuiResources()};
     auto& menuWindow {guiResources.GetMediumDarkMenuWindow()};
     
@@ -29,6 +28,24 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine,
     CreateText({-2.2f, 5.05f, UiLayer::text},
                "SETTINGS",
                guiResources.GetLargeWhiteTextProperties(zoom));
+        
+    Pht::Vec3 closeButtonPosition {
+        GetSize().x / 2.0f - 1.3f,
+        GetSize().y / 2.0f - 1.25f,
+        UiLayer::textRectangle
+    };
+    
+    Pht::Vec2 closeButtonInputSize {55.0f, 55.0f};
+
+    MenuButton::Style closeButtonStyle;
+    closeButtonStyle.mPressedScale = 1.05f;
+    closeButtonStyle.mRenderableObject = &guiResources.GetCloseButton(zoom);
+    
+    mCloseButton = std::make_unique<MenuButton>(engine,
+                                                *this,
+                                                closeButtonPosition,
+                                                closeButtonInputSize,
+                                                closeButtonStyle);
     
     Pht::Material lineMaterial {Pht::Color{0.6f, 0.8f, 1.0f}};
     lineMaterial.SetOpacity(0.3f);
@@ -111,7 +128,10 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine,
 void SettingsMenuView::EnableControlsButton() {
     mIsControlsButtonEnabled = true;
     
-    auto& blueButtonRenderable {mCommonResources.GetGuiResources().GetSmallBlueGlossyButton(mZoom)};
+    auto& blueButtonRenderable {
+        mCommonResources.GetGuiResources().GetSmallBlueGlossyButton(PotentiallyZoomedScreen::Yes)
+    };
+    
     mControlsButton->GetSceneObject().SetRenderable(&blueButtonRenderable);
 }
 

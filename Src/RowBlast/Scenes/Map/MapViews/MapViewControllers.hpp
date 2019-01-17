@@ -8,7 +8,7 @@
 // Game includes.
 #include "MapHudController.hpp"
 #include "LevelGoalDialogController.hpp"
-#include "SettingsMenuController.hpp"
+#include "OptionsMenuController.hpp"
 #include "NoLivesDialogController.hpp"
 #include "LivesDialogController.hpp"
 
@@ -28,7 +28,7 @@ namespace RowBlast {
             LevelGoalDialog,
             NoLivesDialog,
             LivesDialog,
-            SettingsMenu,
+            OptionsMenu,
             None
         };
         
@@ -57,8 +57,8 @@ namespace RowBlast {
             return mLivesDialogController;
         }
 
-        SettingsMenuController& GetSettingsMenuController() {
-            return mSettingsMenuController;
+        OptionsMenuController& GetOptionsMenuController() {
+            return mOptionsMenuController;
         }
 
     private:
@@ -69,7 +69,7 @@ namespace RowBlast {
         LevelGoalDialogController mLevelGoalDialogController;
         NoLivesDialogController mNoLivesDialogController;
         LivesDialogController mLivesDialogController;
-        SettingsMenuController mSettingsMenuController;
+        OptionsMenuController mOptionsMenuController;
     };
 }
 

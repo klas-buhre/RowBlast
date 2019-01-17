@@ -66,8 +66,10 @@ namespace {
                 return {9.0f, 2.3f};
             case ButtonSize::Medium:
                 return {9.0f, 2.1f};
+            case ButtonSize::MediumThin:
+                return {9.0f, 1.71f};
             case ButtonSize::Small:
-                return {3.6f, 1.8f};
+                return {3.6f, 1.71f};
             case ButtonSize::Smaller:
                 return {1.9f, 1.9f};
             case ButtonSize::Smallest:
@@ -84,9 +86,11 @@ namespace {
             case ButtonSize::Large:
                 return 0.325f;
             case ButtonSize::Medium:
-            case ButtonSize::Small:
             case ButtonSize::Smaller:
                 return 0.3f;
+            case ButtonSize::MediumThin:
+            case ButtonSize::Small:
+                return 0.26f;
             case ButtonSize::Thin:
             case ButtonSize::Smallest:
                 return 0.23f;
@@ -99,6 +103,7 @@ namespace {
             case ButtonSize::Large:
                 return 0.1f;
             case ButtonSize::Medium:
+            case ButtonSize::MediumThin:
             case ButtonSize::Small:
             case ButtonSize::Smaller:
             case ButtonSize::Smallest:
@@ -115,8 +120,9 @@ namespace {
                 return 0.97f;
             case ButtonSize::Medium:
                 return 0.89f;
+            case ButtonSize::MediumThin:
             case ButtonSize::Small:
-                return 0.75f;
+                return 0.63f;
             case ButtonSize::Smaller:
                 return 0.79f;
             case ButtonSize::Thin:

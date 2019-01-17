@@ -4,7 +4,6 @@
 // Game includes.
 #include "SettingsMenuView.hpp"
 #include "SlidingMenuAnimation.hpp"
-#include "CommonResources.hpp"
 
 namespace Pht {
     class IEngine;
@@ -14,6 +13,7 @@ namespace Pht {
 
 namespace RowBlast {
     class UserServices;
+    class CommonResources;
     
     class SettingsMenuController {
     public:
@@ -24,10 +24,9 @@ namespace RowBlast {
         
         SettingsMenuController(Pht::IEngine& engine,
                                const CommonResources& commonResources,
-                               UserServices& userServices,
-                               PotentiallyZoomedScreen potentiallyZoomedScreen);
+                               UserServices& userServices);
         
-        void SetUp(SlidingMenuAnimation::UpdateFade updateFade, bool isGestureControlsAllowed);
+        void SetUp(bool isGestureControlsAllowed);
         void SetFadeEffect(Pht::FadeEffect& fadeEffect);
         Result Update();
         
@@ -45,7 +44,6 @@ namespace RowBlast {
         SettingsMenuView mView;
         SlidingMenuAnimation mSlidingMenuAnimation;
         Result mDeferredResult {Result::None};
-        SlidingMenuAnimation::UpdateFade mUpdateFade {SlidingMenuAnimation::UpdateFade::Yes};
     };
 }
 

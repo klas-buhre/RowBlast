@@ -15,7 +15,7 @@ namespace RowBlast {
         enum class Result {
             None,
             TouchStartedOverButton,
-            ClickedSettingsButton,
+            ClickedOptionsButton,
             ClickedCoinsButton,
             ClickedLivesButton
         };

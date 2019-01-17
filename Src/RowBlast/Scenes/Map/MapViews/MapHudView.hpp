@@ -20,8 +20,8 @@ namespace RowBlast {
     public:
         explicit MapHudView(Pht::IEngine& engine, const CommonResources& commonResources);
         
-        const MenuButton& GetSettingsButton() const {
-            return *mSettingsButton;
+        const MenuButton& GetOptionsButton() const {
+            return *mOptionsButton;
         }
 
         const MenuButton& GetCoinsButton() const {
@@ -33,7 +33,7 @@ namespace RowBlast {
         }
 
     private:
-        std::unique_ptr<MenuButton> mSettingsButton;
+        std::unique_ptr<MenuButton> mOptionsButton;
         std::unique_ptr<MenuButton> mCoinsButton;
         std::unique_ptr<MenuButton> mLivesButton;
     };

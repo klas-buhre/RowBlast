@@ -9,13 +9,13 @@ MapHudController::MapHudController(Pht::IEngine& engine, const CommonResources& 
     mView {engine, commonResources} {}
 
 MapHudController::Result MapHudController::OnTouch(const Pht::TouchEvent& event) {
-    auto& settingsButton {mView.GetSettingsButton()};
+    auto& optionsButton {mView.GetOptionsButton()};
 
-    if (settingsButton.IsClicked(event)) {
-        return Result::ClickedSettingsButton;
+    if (optionsButton.IsClicked(event)) {
+        return Result::ClickedOptionsButton;
     }
     
-    if (settingsButton.GetButton().StateIsDownOrMovedOutside()) {
+    if (optionsButton.GetButton().StateIsDownOrMovedOutside()) {
         return Result::TouchStartedOverButton;
     }
 

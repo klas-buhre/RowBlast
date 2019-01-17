@@ -734,8 +734,7 @@ void GameController::GoToPausedStateStore() {
 void GameController::GoToPausedStateSettingsMenu() {
     mPausedState = PausedState::SettingsMenu;
     mGameViewControllers.SetActiveController(GameViewControllers::SettingsMenu);
-    mGameViewControllers.GetSettingsMenuController().SetUp(SlidingMenuAnimation::UpdateFade::No,
-                                                           mTutorial.IsGestureControlsAllowed());
+    mGameViewControllers.GetSettingsMenuController().SetUp(mTutorial.IsGestureControlsAllowed());
 }
 
 void GameController::GoToPausedStateLevelGoalDialog() {

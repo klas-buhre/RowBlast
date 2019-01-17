@@ -1,5 +1,5 @@
-#ifndef SettingsMenuView_hpp
-#define SettingsMenuView_hpp
+#ifndef OptionsMenuView_hpp
+#define OptionsMenuView_hpp
 
 #include <memory>
 
@@ -8,24 +8,20 @@
 
 // Game includes.
 #include "MenuButton.hpp"
-#include "CommonResources.hpp"
 
 namespace Pht {
     class IEngine;
 }
 
 namespace RowBlast {
-    class SettingsMenuView: public Pht::GuiView {
-    public:
-        SettingsMenuView(Pht::IEngine& engine,
-                         const CommonResources& commonResources,
-                         PotentiallyZoomedScreen potentiallyZoomedScreen);
+    class CommonResources;
 
-        void EnableControlsButton();
-        void DisableControlsButton();
+    class OptionsMenuView: public Pht::GuiView {
+    public:
+        OptionsMenuView(Pht::IEngine& engine, const CommonResources& commonResources);
         
-        bool IsControlsButtonEnabled() const {
-            return mIsControlsButtonEnabled;
+        const MenuButton& GetCloseButton() const {
+            return *mCloseButton;
         }
 
         const MenuButton& GetControlsButton() const {
@@ -38,6 +34,14 @@ namespace RowBlast {
 
         const MenuButton& GetMusicButton() const {
             return *mMusicButton;
+        }
+
+        const MenuButton& GetHowToPlayButton() const {
+            return *mHowToPlayButton;
+        }
+
+        const MenuButton& GetAboutButton() const {
+            return *mAboutButton;
         }
 
         const MenuButton& GetBackButton() const {
@@ -70,10 +74,12 @@ namespace RowBlast {
 
     private:
         const CommonResources& mCommonResources;
-        PotentiallyZoomedScreen mZoom {PotentiallyZoomedScreen::Yes};
+        std::unique_ptr<MenuButton> mCloseButton;
         std::unique_ptr<MenuButton> mControlsButton;
         std::unique_ptr<MenuButton> mSoundButton;
         std::unique_ptr<MenuButton> mMusicButton;
+        std::unique_ptr<MenuButton> mHowToPlayButton;
+        std::unique_ptr<MenuButton> mAboutButton;
         std::unique_ptr<MenuButton> mBackButton;
         Pht::SceneObject* mControlsClickText {nullptr};
         Pht::SceneObject* mControlsSwipeText {nullptr};
@@ -81,7 +87,6 @@ namespace RowBlast {
         Pht::SceneObject* mSoundOffText {nullptr};
         Pht::SceneObject* mMusicOnText {nullptr};
         Pht::SceneObject* mMusicOffText {nullptr};
-        bool mIsControlsButtonEnabled {true};
     };
 }
 

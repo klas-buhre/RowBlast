@@ -20,6 +20,7 @@ namespace RowBlast {
         Larger,
         Large,
         Medium,
+        MediumThin,
         Small,
         Smaller,
         Smallest,

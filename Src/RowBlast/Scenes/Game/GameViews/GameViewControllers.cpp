@@ -33,7 +33,7 @@ GameViewControllers::GameViewControllers(Pht::IEngine& engine,
     mLevelCompletedDialogController {engine, commonResources},
     mRestartConfirmationDialogController {engine, commonResources, userServices},
     mMapConfirmationDialogController {engine, commonResources},
-    mSettingsMenuController {engine, commonResources, userServices, PotentiallyZoomedScreen::Yes},
+    mSettingsMenuController {engine, commonResources, userServices},
     mNoLivesDialogController {engine, commonResources, userServices, PotentiallyZoomedScreen::Yes},
     mLevelGoalDialogController {
         engine,

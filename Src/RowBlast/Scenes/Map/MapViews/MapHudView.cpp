@@ -17,33 +17,33 @@ using namespace RowBlast;
 MapHudView::MapHudView(Pht::IEngine& engine, const CommonResources& commonResources) {
     auto& renderer {engine.GetRenderer()};
     auto& hudFrustumSize {renderer.GetHudFrustumSize()};
-    auto& sceneManger {engine.GetSceneManager()};
+    auto& sceneManager {engine.GetSceneManager()};
     auto& guiResources {commonResources.GetGuiResources()};
 
     SetPosition({0.0f, 0.0f});
 
-    Pht::Vec3 settingsButtonPosition {
+    Pht::Vec3 optionsButtonPosition {
         -hudFrustumSize.x / 2.0f + 1.5f,
         -hudFrustumSize.y / 2.0f + 1.5f + renderer.GetBottomPaddingHeight(),
         UiLayer::background
     };
 
-    MenuButton::Style settingsButtonStyle;
-    settingsButtonStyle.mPressedScale = 1.05f;
-    settingsButtonStyle.mRenderableObject = &guiResources.GetSmallerBlueGlossyButton();
-    settingsButtonStyle.mSelectedRenderableObject = &guiResources.GetSmallerDarkBlueGlossyButton();
+    MenuButton::Style optionsButtonStyle;
+    optionsButtonStyle.mPressedScale = 1.05f;
+    optionsButtonStyle.mRenderableObject = &guiResources.GetSmallerBlueGlossyButton();
+    optionsButtonStyle.mSelectedRenderableObject = &guiResources.GetSmallerDarkBlueGlossyButton();
 
-    Pht::Vec2 settingsButtonInputSize {60.0f, 60.0f};
-    mSettingsButton = std::make_unique<MenuButton>(engine,
-                                                   *this,
-                                                   settingsButtonPosition,
-                                                   settingsButtonInputSize,
-                                                   settingsButtonStyle);
+    Pht::Vec2 optionsButtonInputSize {60.0f, 60.0f};
+    mOptionsButton = std::make_unique<MenuButton>(engine,
+                                                  *this,
+                                                  optionsButtonPosition,
+                                                  optionsButtonInputSize,
+                                                  optionsButtonStyle);
 
     Pht::Material gearIconMaterial {"settings.png"};
     gearIconMaterial.SetBlend(Pht::Blend::Yes);
-    auto& gearIcon {CreateSceneObject(Pht::QuadMesh {1.35f, 1.35f}, gearIconMaterial, sceneManger)};
-    mSettingsButton->GetSceneObject().AddChild(gearIcon);
+    auto& gearIcon {CreateSceneObject(Pht::QuadMesh {1.35f, 1.35f}, gearIconMaterial, sceneManager)};
+    mOptionsButton->GetSceneObject().AddChild(gearIcon);
     
     MenuButton::Style plusButtonStyle;
     plusButtonStyle.mPressedScale = 1.05f;

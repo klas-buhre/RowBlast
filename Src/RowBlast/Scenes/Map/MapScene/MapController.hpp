@@ -75,7 +75,7 @@ namespace RowBlast {
         void UpdateInAddLivesStateNoLivesDialog();
         void UpdateInAddLivesStateStore();
         void RefillLives();
-        void UpdateSettingsMenu();
+        void UpdateOptionsMenu();
         void UpdateInAddCoinsStoreState();
         Command HandleInput();
         void UpdateTouchingState(const Pht::TouchEvent& touch);
@@ -90,7 +90,7 @@ namespace RowBlast {
         void GoToLivesDailogState();
         void GoToAddLivesStateNoLivesDialog();
         void GoToAddLivesStateStore();
-        void GoToSettingsMenuState();
+        void GoToOptionsMenuState();
         void GoToAddCoinsStoreState();
         void GoToMapState();
         
@@ -100,7 +100,7 @@ namespace RowBlast {
             StartLevel,
             LivesDialog,
             AddLives,
-            SettingsMenu,
+            OptionsMenu,
             AddCoinsStore
         };
         

@@ -70,6 +70,14 @@ namespace RowBlast {
         Pht::RenderableObject& GetSmallGrayGlossyButtonPotentiallyZoomedScreen() const {
             return *mSmallGrayGlossyButtonPotentiallyZoomedScreen;
         }
+        
+        Pht::RenderableObject& GetMediumThinBlueGlossyButton() const {
+            return *mMediumThinBlueGlossyButton;
+        }
+
+        Pht::RenderableObject& GetMediumThinDarkBlueGlossyButton() const {
+            return *mMediumThinDarkBlueGlossyButton;
+        }
 
         Pht::RenderableObject& GetSmallerBlueGlossyButton() const {
             return *mSmallerBlueGlossyButton;
@@ -139,6 +147,8 @@ namespace RowBlast {
         std::unique_ptr<Pht::RenderableObject> mMediumGreenGlossyButtonPotentiallyZoomedScreen;
         std::unique_ptr<Pht::RenderableObject> mMediumDarkGreenGlossyButton;
         std::unique_ptr<Pht::RenderableObject> mMediumDarkGreenGlossyButtonPotentiallyZoomedScreen;
+        std::unique_ptr<Pht::RenderableObject> mMediumThinBlueGlossyButton;
+        std::unique_ptr<Pht::RenderableObject> mMediumThinDarkBlueGlossyButton;
         std::unique_ptr<Pht::RenderableObject> mSmallerBlueGlossyButton;
         std::unique_ptr<Pht::RenderableObject> mSmallerDarkBlueGlossyButton;
         std::unique_ptr<Pht::RenderableObject> mSmallestBlueGlossyButton;

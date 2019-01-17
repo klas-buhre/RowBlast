@@ -36,17 +36,17 @@ MapViewControllers::MapViewControllers(Pht::IEngine& engine,
     },
     mNoLivesDialogController {engine, commonResources, userServices, PotentiallyZoomedScreen::No},
     mLivesDialogController {engine, commonResources, userServices, scene},
-    mSettingsMenuController {engine, commonResources, userServices, PotentiallyZoomedScreen::No} {
+    mOptionsMenuController {engine, commonResources, userServices} {
     
     mViewManager.AddView(static_cast<int>(MapHud), mMapHudController.GetView());
     mViewManager.AddView(static_cast<int>(LevelGoalDialog), mLevelGoalDialogController.GetView());
     mViewManager.AddView(static_cast<int>(NoLivesDialog), mNoLivesDialogController.GetView());
     mViewManager.AddView(static_cast<int>(LivesDialog), mLivesDialogController.GetView());
-    mViewManager.AddView(static_cast<int>(SettingsMenu), mSettingsMenuController.GetView());
+    mViewManager.AddView(static_cast<int>(OptionsMenu), mOptionsMenuController.GetView());
     
     mLevelGoalDialogController.SetFadeEffect(mFadeEffect);
     mLivesDialogController.SetFadeEffect(mFadeEffect);
-    mSettingsMenuController.SetFadeEffect(mFadeEffect);
+    mOptionsMenuController.SetFadeEffect(mFadeEffect);
     
     mLevelGoalDialogController.SetGuiLightProvider(scene);
     mNoLivesDialogController.SetGuiLightProvider(scene);

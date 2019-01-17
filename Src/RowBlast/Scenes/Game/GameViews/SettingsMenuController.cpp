@@ -12,24 +12,21 @@ using namespace RowBlast;
 
 SettingsMenuController::SettingsMenuController(Pht::IEngine& engine,
                                                const CommonResources& commonResources,
-                                               UserServices& userServices,
-                                               PotentiallyZoomedScreen potentiallyZoomedScreen) :
+                                               UserServices& userServices) :
     mEngine {engine},
     mUserServices {userServices},
-    mView {engine, commonResources, potentiallyZoomedScreen},
+    mView {engine, commonResources},
     mSlidingMenuAnimation {engine, mView} {}
 
-void SettingsMenuController::SetUp(SlidingMenuAnimation::UpdateFade updateFade,
-                                   bool isGestureControlsAllowed) {
-    mUpdateFade = updateFade;
-
+void SettingsMenuController::SetUp(bool isGestureControlsAllowed) {
     if (isGestureControlsAllowed) {
         mView.EnableControlsButton();
     } else {
         mView.DisableControlsButton();
     }
 
-    mSlidingMenuAnimation.SetUp(updateFade, SlidingMenuAnimation::SlideDirection::Left);
+    mSlidingMenuAnimation.SetUp(SlidingMenuAnimation::UpdateFade::No,
+                                SlidingMenuAnimation::SlideDirection::Left);
     UpdateViewToReflectSettings(isGestureControlsAllowed);
 }
 
@@ -105,9 +102,11 @@ SettingsMenuController::Result SettingsMenuController::OnTouch(const Pht::TouchE
         UpdateViewToReflectSettings(true);
     }
 
-    if (mView.GetBackButton().IsClicked(touchEvent)) {
+    if (mView.GetBackButton().IsClicked(touchEvent) ||
+        mView.GetCloseButton().IsClicked(touchEvent)) {
+
         mDeferredResult = Result::GoBack;
-        mSlidingMenuAnimation.StartSlideOut(mUpdateFade,
+        mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::No,
                                             SlidingMenuAnimation::SlideDirection::Right);
     }
     

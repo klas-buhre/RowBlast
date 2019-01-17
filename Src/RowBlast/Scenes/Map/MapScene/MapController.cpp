@@ -97,8 +97,8 @@ MapController::Command MapController::Update() {
         case State::AddLives:
             UpdateInAddLivesState();
             break;
-        case State::SettingsMenu:
-            UpdateSettingsMenu();
+        case State::OptionsMenu:
+            UpdateOptionsMenu();
             break;
         case State::AddCoinsStore:
             UpdateInAddCoinsStoreState();
@@ -271,11 +271,12 @@ void MapController::UpdateLivesDialog() {
     }
 }
 
-void MapController::UpdateSettingsMenu() {
-    switch (mMapViewControllers.GetSettingsMenuController().Update()) {
-        case SettingsMenuController::Result::None:
+void MapController::UpdateOptionsMenu() {
+    switch (mMapViewControllers.GetOptionsMenuController().Update()) {
+        case OptionsMenuController::Result::None:
             break;
-        case SettingsMenuController::Result::GoBack:
+        case OptionsMenuController::Result::GoToAboutMenu:
+        case OptionsMenuController::Result::GoBack:
             GoToMapState();
             break;
     }
@@ -304,8 +305,8 @@ MapController::Command MapController::HandleInput() {
                     case MapHudController::Result::None:
                         command = HandleTouch(touchEvent);
                         break;
-                    case MapHudController::Result::ClickedSettingsButton:
-                        GoToSettingsMenuState();
+                    case MapHudController::Result::ClickedOptionsButton:
+                        GoToOptionsMenuState();
                         break;
                     case MapHudController::Result::ClickedCoinsButton:
                         GoToAddCoinsStoreState();
@@ -550,11 +551,10 @@ void MapController::GoToAddLivesStateStore() {
                                 PurchaseSuccessfulDialogController::ShouldSlideOut::Yes);
 }
 
-void MapController::GoToSettingsMenuState() {
-    mMapViewControllers.SetActiveController(MapViewControllers::SettingsMenu);
-    mMapViewControllers.GetSettingsMenuController().SetUp(SlidingMenuAnimation::UpdateFade::Yes,
-                                                          true);
-    mState = State::SettingsMenu;
+void MapController::GoToOptionsMenuState() {
+    mMapViewControllers.SetActiveController(MapViewControllers::OptionsMenu);
+    mMapViewControllers.GetOptionsMenuController().SetUp();
+    mState = State::OptionsMenu;
 }
 
 void MapController::GoToAddCoinsStoreState() {
