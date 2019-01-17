@@ -21,18 +21,12 @@ Backlog:
      in a similar way as the SlidingFieldAnimation.
     -Animation that moves the pause button out of the screen.
   -GUI:
-    -The settings menu in the map scene could have a credits button and a how to play button.
-    -Credits scene with a teleporter effect in the upper part and the credits in the lower part.
-  -Purchases:
-  -Back end:
-  -Levels:
-  -Sound:
-    -Buy sounds and music. And try https://freesound.org
+    -How to play dialog.
   -Make ready for release:
     -Do a soft launch in a couple of countries? Maybe the nordic countries and UK? Only english
      localization is needed for that.
     -Make launch screens for all supported device resolutions. Should say Teleporter Studios. The
-     launch screen should contain e screenshot of the teleporter effect from the credits scene.
+     logo could contain some simple teleporter texture.
      Font: maybe ".Damascus PUA Bold"
     -Make icons and launch screens for all supported device resolutions.
     -Credit the icon creator: <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
@@ -41,6 +35,13 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
+    -Add SettingsMenu to game scene and OptionsMenu to map scene.
+      -SettingsMenu is as before.
+      -OptionsMenu is big and has an About button and the gear as caption.
+    -Add AboutMenu
+      -Terms of Service button
+      -Privacy Policy button
+      -Credits button
     -Analytics
       -GDPR:
         -When the users start the app for the first time they need to accept the privacy policies
@@ -49,8 +50,8 @@ Ongoing tasks:
           -The AcceptTerms scene needs to start before the title scene. Only initiate analytics
            after proceeding to the title scene. Not allowed to send events before the user has
            agreed.
-          -TermsOfService scene. Accessable from AcceptTerms scene and settings menu in map scene.
-          -PrivacyPolicy scene. Accessable from AcceptTerms scene and settings menu in map scene.
+          -TermsOfService scene. Accessable from AcceptTerms scene and About menu in map scene.
+          -PrivacyPolicy scene. Accessable from AcceptTerms scene and About menu in map scene.
 
 
 Ordered Backlog:
@@ -148,19 +149,17 @@ Ordered Backlog:
         Cost: 10
         Done
     -Analytics.
-        Cost: 15
+        Cost: 17
     -Levels for the space world.
         Cost: 7
-    -Credits scene
-        Cost: 2
+    -Purchases.
+        Cost: 10
     -Levels for the 4th world.
         Cost: 7
     -Playtest.
         Cost: 5
     -Fix all bugs.
         Cost: 4
-    -Purchases.
-        Cost: 10
     -Release-related tasks.
         Cost: 7
     -Soft launch.
