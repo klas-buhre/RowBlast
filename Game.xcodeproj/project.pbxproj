@@ -250,6 +250,7 @@
 		6238F622219AEC640008A0CF /* heart_112.obj in Resources */ = {isa = PBXBuildFile; fileRef = 6238F621219AEC640008A0CF /* heart_112.obj */; };
 		623B949821F0E60D00B62D9B /* AboutMenuView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623B949621F0E60D00B62D9B /* AboutMenuView.cpp */; };
 		623B949B21F0E62700B62D9B /* AboutMenuController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623B949921F0E62700B62D9B /* AboutMenuController.cpp */; };
+		623B949D21F1FD6700B62D9B /* credits_english.txt in Resources */ = {isa = PBXBuildFile; fileRef = 623B949C21F1FD6600B62D9B /* credits_english.txt */; };
 		6240508620FF69C00077A454 /* level46.json in Resources */ = {isa = PBXBuildFile; fileRef = 6240508520FF69C00077A454 /* level46.json */; };
 		6240508820FF82A10077A454 /* level47.json in Resources */ = {isa = PBXBuildFile; fileRef = 6240508720FF82A10077A454 /* level47.json */; };
 		62411A971E61E62800035D2A /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62411A961E61E62800035D2A /* GLKit.framework */; };
@@ -920,6 +921,7 @@
 		623B949721F0E60D00B62D9B /* AboutMenuView.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AboutMenuView.hpp; sourceTree = "<group>"; };
 		623B949921F0E62700B62D9B /* AboutMenuController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AboutMenuController.cpp; sourceTree = "<group>"; };
 		623B949A21F0E62700B62D9B /* AboutMenuController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AboutMenuController.hpp; sourceTree = "<group>"; };
+		623B949C21F1FD6600B62D9B /* credits_english.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = credits_english.txt; sourceTree = "<group>"; };
 		6240508520FF69C00077A454 /* level46.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level46.json; sourceTree = "<group>"; };
 		6240508720FF82A10077A454 /* level47.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level47.json; sourceTree = "<group>"; };
 		62411A961E61E62800035D2A /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
@@ -1998,8 +2000,9 @@
 		62216C4E21ECDBAD001CB9A1 /* LegalDocuments */ = {
 			isa = PBXGroup;
 			children = (
-				62216C5121ECE594001CB9A1 /* terms_of_service_english.txt */,
+				623B949C21F1FD6600B62D9B /* credits_english.txt */,
 				62216C4F21ECDBAD001CB9A1 /* privacy_policy_english.txt */,
+				62216C5121ECE594001CB9A1 /* terms_of_service_english.txt */,
 			);
 			path = LegalDocuments;
 			sourceTree = "<group>";
@@ -3053,6 +3056,7 @@
 				62B2BAF12133FE61009C529D /* level55.json in Resources */,
 				62216A1C21E901E1001CB9A1 /* fireworks1.wav in Resources */,
 				62216A0821E655B0001CB9A1 /* laser.wav in Resources */,
+				623B949D21F1FD6700B62D9B /* credits_english.txt in Resources */,
 				625D3B59217251BD00D67EC2 /* brown_asteroid.jpg in Resources */,
 				6270DC621FCB22AE00FB457D /* cube_554.obj in Resources */,
 				625B02CC21386AC3000744F2 /* level_bomb_frame2.jpg in Resources */,
