@@ -4,6 +4,7 @@
 #include "IEngine.hpp"
 #include "QuadMesh.hpp"
 #include "IRenderer.hpp"
+#include "TextComponent.hpp"
 
 // Game includes.
 #include "UiLayer.hpp"
@@ -15,8 +16,28 @@ DocumentViewerDialogView::DocumentViewerDialogView(Pht::IEngine& engine,
                                                    const CommonResources& commonResources) {
     PotentiallyZoomedScreen zoom {PotentiallyZoomedScreen::No};
     auto& guiResources {commonResources.GetGuiResources()};
+    auto& sceneManager {engine.GetSceneManager()};
     
     SetSize({engine.GetRenderer().GetHudFrustumSize().x, 26.0f});
+    
+    Pht::Material backgroundMaterial {"space.jpg"};
+    auto& backgroundSceneObject {
+        CreateSceneObject(Pht::QuadMesh {53.0f, 53.0f}, backgroundMaterial, sceneManager)
+    };
+    backgroundSceneObject.GetTransform().SetPosition({0.0f, 0.0f, UiLayer::background});
+    GetRoot().AddChild(backgroundSceneObject);
+
+    Pht::Vec3 captionPosition {-7.1f, 11.1f, UiLayer::text};
+    auto& largeTextProperties {guiResources.GetLargeWhiteTextProperties(zoom)};
+    mTermsOfServiceCaption = &CreateText(captionPosition,
+                                         "TERMS OF SERVICE",
+                                         largeTextProperties).GetSceneObject();
+    mPrivacyPolicyCaption = &CreateText(captionPosition,
+                                        "PRIVACY POLICY",
+                                        largeTextProperties).GetSceneObject();
+    mCreditsCaption = &CreateText(captionPosition,
+                                  "CREDITS",
+                                  largeTextProperties).GetSceneObject();
 
     Pht::Vec3 closeButtonPosition {
         GetSize().x / 2.0f - 1.3f,
@@ -37,7 +58,6 @@ DocumentViewerDialogView::DocumentViewerDialogView(Pht::IEngine& engine,
 
     Pht::Material lineMaterial {Pht::Color{0.6f, 0.8f, 1.0f}};
     lineMaterial.SetOpacity(0.6f);
-    auto& sceneManager {engine.GetSceneManager()};
     auto& lineSceneObject {
         CreateSceneObject(Pht::QuadMesh {GetSize().x - 0.8f, 0.06f}, lineMaterial, sceneManager)
     };
@@ -59,4 +79,25 @@ DocumentViewerDialogView::DocumentViewerDialogView(Pht::IEngine& engine,
     mBackButton->CreateText({-0.85f, -0.23f, UiLayer::buttonText},
                             "Back",
                             guiResources.GetWhiteButtonTextProperties(zoom));
+}
+
+void DocumentViewerDialogView::SetTermsOfServiceCaption() {
+    HideAllCaptions();
+    mTermsOfServiceCaption->SetIsVisible(true);
+}
+
+void DocumentViewerDialogView::SetPrivacyPolicyCaption() {
+    HideAllCaptions();
+    mPrivacyPolicyCaption->SetIsVisible(true);
+}
+
+void DocumentViewerDialogView::SetCreditsCaption() {
+    HideAllCaptions();
+    mCreditsCaption->SetIsVisible(true);
+}
+
+void DocumentViewerDialogView::HideAllCaptions() {
+    mTermsOfServiceCaption->SetIsVisible(false);
+    mPrivacyPolicyCaption->SetIsVisible(false);
+    mCreditsCaption->SetIsVisible(false);
 }

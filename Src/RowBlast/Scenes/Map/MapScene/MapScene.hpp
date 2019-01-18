@@ -51,6 +51,7 @@ namespace RowBlast {
         void SetCameraBetweenLevels(int levelIdA, int levelIdB);
         const MapPin* GetPin(int id) const;
         const MapPin* GetLevelPin(int levelId) const;
+        void SaveCameraXPosition();
         
         const std::vector<std::unique_ptr<MapPin>>& GetPins() const {
             return mPins;
@@ -120,6 +121,7 @@ namespace RowBlast {
         Pht::SceneObject* mUiViewsContainer {nullptr};
         int mWorldId {1};
         Pht::Optional<int> mClickedPortalNextLevelId;
+        Pht::Optional<float> mSavedCameraXPosition;
     };
 }
 

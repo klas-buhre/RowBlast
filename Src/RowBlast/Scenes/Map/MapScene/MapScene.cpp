@@ -126,6 +126,8 @@ void MapScene::Init() {
     
     if (mClickedPortalNextLevelId.HasValue()) {
         SetCameraAtPortal(mClickedPortalNextLevelId.GetValue());
+    } else if (mSavedCameraXPosition.HasValue()) {
+        SetCameraXPosition(mSavedCameraXPosition.GetValue());
     } else {
         SetCameraAtLevel(mUserServices.GetProgressService().GetCurrentLevel());
     }
@@ -154,6 +156,7 @@ void MapScene::Init() {
     sceneManager.SetLoadedScene(std::move(scene));
     
     mClickedPortalNextLevelId = Pht::Optional<int> {};
+    mSavedCameraXPosition = Pht::Optional<float> {};
 }
 
 void MapScene::CreateWorld(const World& world, const BackgroundLight& backgroundLight) {
@@ -366,6 +369,10 @@ void MapScene::SetCameraAtPortal(int portalNextLevelId) {
 
 float MapScene::GetCameraXPosition() const {
     return mCamera->GetSceneObject().GetTransform().GetPosition().x;
+}
+
+void MapScene::SaveCameraXPosition() {
+    mSavedCameraXPosition = GetCameraXPosition();
 }
 
 const MapPin* MapScene::GetPin(int id) const {

@@ -11,6 +11,7 @@
 
 namespace Pht {
     class IEngine;
+    class SceneObject;
 }
 
 namespace RowBlast {
@@ -19,7 +20,11 @@ namespace RowBlast {
     class DocumentViewerDialogView: public Pht::GuiView {
     public:
         DocumentViewerDialogView(Pht::IEngine& engine, const CommonResources& commonResources);
-    
+
+        void SetTermsOfServiceCaption();
+        void SetPrivacyPolicyCaption();
+        void SetCreditsCaption();
+        
         const MenuButton& GetCloseButton() const {
             return *mCloseButton;
         }
@@ -29,8 +34,13 @@ namespace RowBlast {
         }
 
     private:
+        void HideAllCaptions();
+        
         std::unique_ptr<MenuButton> mCloseButton;
         std::unique_ptr<MenuButton> mBackButton;
+        Pht::SceneObject* mTermsOfServiceCaption {nullptr};
+        Pht::SceneObject* mPrivacyPolicyCaption {nullptr};
+        Pht::SceneObject* mCreditsCaption {nullptr};
     };
 }
         

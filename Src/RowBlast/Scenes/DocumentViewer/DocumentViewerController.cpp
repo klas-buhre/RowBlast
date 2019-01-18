@@ -21,8 +21,8 @@ namespace {
     constexpr auto panelCutoffVelocity {0.1f};
     constexpr auto dampingCoefficient {2.2f};
     
-    std::string ToFilename(DocumentId document) {
-        switch (document) {
+    std::string ToFilename(DocumentId documentId) {
+        switch (documentId) {
             case DocumentId::TermsOfService:
                 return "terms_of_service_english.txt";
             case DocumentId::PrivacyPolicy:
@@ -40,14 +40,14 @@ DocumentViewerController::DocumentViewerController(Pht::IEngine& engine,
     mScene {engine},
     mDialogView {engine, commonResources} {}
 
-void DocumentViewerController::Init(DocumentId document) {
+void DocumentViewerController::Init(DocumentId documentId) {
     mScene.Init();
     mScene.GetUiViewsContainer().AddChild(mDialogView.GetRoot());
-
+    
     Pht::TextProperties textProperties {
         mCommonResources.GetHussarFontSize20(PotentiallyZoomedScreen::No),
         1.0f,
-        Pht::Vec4{0.95f, 0.95f, 0.95f, 1.0f}
+        Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f}
     };
     
     textProperties.mSnapToPixel = Pht::SnapToPixel::No;
@@ -58,15 +58,30 @@ void DocumentViewerController::Init(DocumentId document) {
                                                       panelCutoffVelocity);
     TextDocumentLoader::Load(mScene.GetScene(),
                              *mScrollPanel,
-                             ToFilename(document),
+                             ToFilename(documentId),
                              textProperties,
                              upperLeft,
                              lineSpacing,
                              maxLineWidth);
     mScrollPanel->Init();
     mScene.GetScrollPanelContainer().AddChild(mScrollPanel->GetRoot());
+    SetDialogCaption(documentId);
     
     mEngine.GetSceneManager().InitRenderer();
+}
+
+void DocumentViewerController::SetDialogCaption(DocumentId documentId) {
+    switch (documentId) {
+        case DocumentId::TermsOfService:
+            mDialogView.SetTermsOfServiceCaption();
+            break;
+        case DocumentId::PrivacyPolicy:
+            mDialogView.SetPrivacyPolicyCaption();
+            break;
+        case DocumentId::Credits:
+            mDialogView.SetCreditsCaption();
+            break;
+    }
 }
 
 DocumentViewerController::Command DocumentViewerController::Update() {

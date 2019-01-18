@@ -37,7 +37,6 @@ Backlog:
 
 Ongoing tasks:
     -Credits document
-    -Captions in the document viewer
     -Analytics
       -GDPR:
         -When the users start the app for the first time they need to accept the privacy policies

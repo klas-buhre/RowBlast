@@ -294,12 +294,15 @@ MapController::Command MapController::UpdateAboutMenu() {
         case AboutMenuController::Result::None:
             break;
         case AboutMenuController::Result::ViewTermsOfService:
+            mScene.SaveCameraXPosition();
             command = Command {Command::ViewTermsOfService};
             break;
         case AboutMenuController::Result::ViewPrivacyPolicy:
+            mScene.SaveCameraXPosition();
             command = Command {Command::ViewPrivacyPolicy};
             break;
         case AboutMenuController::Result::ViewCredits:
+            mScene.SaveCameraXPosition();
             command = Command {Command::ViewCredits};
             break;
         case AboutMenuController::Result::GoBack:

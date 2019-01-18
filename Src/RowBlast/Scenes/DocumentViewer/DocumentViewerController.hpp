@@ -31,7 +31,7 @@ namespace RowBlast {
         
         DocumentViewerController(Pht::IEngine& engine, const CommonResources& commonResources);
     
-        void Init(DocumentId document);
+        void Init(DocumentId documentId);
         Command Update();
     
     private:
@@ -41,6 +41,7 @@ namespace RowBlast {
             None
         };
         
+        void SetDialogCaption(DocumentId documentId);
         Result OnTouch(const Pht::TouchEvent& touchEvent);
 
         Pht::IEngine& mEngine;
