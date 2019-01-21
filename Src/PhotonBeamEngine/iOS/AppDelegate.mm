@@ -2,9 +2,11 @@
 
 #import <AVFoundation/AVFoundation.h>
 
+#include "Analytics.hpp"
+
 @implementation AppDelegate
 
-- (void) applicationDidFinishLaunching: (UIApplication*) application {
+- (BOOL) application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     CGRect screenBounds = [[UIScreen mainScreen] bounds];
     mWindow = [[UIWindow alloc] initWithFrame: screenBounds];
     
@@ -25,9 +27,13 @@
                                           selector:@selector(handleAudioSessionInterruption:)
                                           name:AVAudioSessionInterruptionNotification
                                           object:[AVAudioSession sharedInstance]];
+    
+    Pht::InitAnalytics();
+    
+    return YES;
 }
 
-- (void) handleAudioSessionInterruption: (NSNotification*) event
+- (void) handleAudioSessionInterruption:(NSNotification*)event
 {
     Pht::Engine* engine = [mViewController getEngine];
     NSUInteger type = [[[event userInfo] objectForKey:AVAudioSessionInterruptionTypeKey] unsignedIntegerValue];
@@ -51,7 +57,7 @@
     }
 }
 
-- (void) applicationDidBecomeActive: (UIApplication*) application
+- (void) applicationDidBecomeActive:(UIApplication*)application
 {
     Pht::Engine* engine = [mViewController getEngine];
     

@@ -6,6 +6,7 @@
 #include "ISceneManager.hpp"
 #include "InputUtil.hpp"
 #include "FileStorage.hpp"
+#include "IAnalytics.hpp"
 
 using namespace RowBlast;
 
@@ -20,11 +21,11 @@ AcceptTermsController::AcceptTermsController(Pht::IEngine& engine,
     mDialogView {engine, commonResources} {}
 
 bool AcceptTermsController::IsTermsAccepted() const {
-    // TODO: remove
-    return false;
-#if 0
+#ifdef ANALYTICS_ENABLED
     std::string data;
     return Pht::FileStorage::Load(termsAcceptedFilename, data);
+#else
+    return false;
 #endif
 }
 
@@ -55,6 +56,7 @@ AcceptTermsController::OnTouch(const Pht::TouchEvent& touchEvent) {
     
     if (mDialogView.GetAgreeButton().IsClicked(touchEvent)) {
         Pht::FileStorage::Save(termsAcceptedFilename, "termsAccepted");
+        mEngine.GetAnalytics().EnableEventSubmission();
         return Command::Accept;
     }
 

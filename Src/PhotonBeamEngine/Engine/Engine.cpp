@@ -5,6 +5,7 @@
 #include "IApplication.hpp"
 #include "RenderableObject.hpp"
 #include "SceneObject.hpp"
+#include "Analytics.hpp"
 
 using namespace Pht;
 
@@ -15,7 +16,8 @@ namespace {
 Engine::Engine(bool createRenderBuffers, const Vec2& screenInputSize) :
     mRenderer {createRenderBuffers},
     mInputHandler {screenInputSize},
-    mSceneManager {mRenderer, mInputHandler} {
+    mSceneManager {mRenderer, mInputHandler},
+    mAnalytics {CreateAnalyticsApi()} {
     
     std::srand(static_cast<int>(std::time(0)));
 }
@@ -70,6 +72,10 @@ ISceneManager& Engine::GetSceneManager() {
 
 IParticleSystem& Engine::GetParticleSystem() {
     return mParticleSystem;
+}
+
+IAnalytics& Engine::GetAnalytics() {
+    return *mAnalytics;
 }
 
 float Engine::GetLastFrameSeconds() const {

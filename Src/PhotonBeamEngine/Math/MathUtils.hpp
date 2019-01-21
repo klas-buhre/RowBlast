@@ -11,7 +11,7 @@ namespace Pht {
     float ToRadians(float degrees);
     
     template<int N>
-    float Lerp(float x, const StaticVector<Pht::Vec2, N>& points) {
+    float Lerp(float x, const StaticVector<Vec2, N>& points) {
         auto& back {points.Back()};
         
         if (x == back.x) {
@@ -24,8 +24,8 @@ namespace Pht {
             return front.y;
         }
         
-        Pht::Vec2 leftPoint;
-        Pht::Vec2 rightPoint;
+        Vec2 leftPoint;
+        Vec2 rightPoint;
         auto numPoints {points.Size()};
         auto* previousPoint {&points.Front()};
         
@@ -44,7 +44,6 @@ namespace Pht {
         auto diff {rightPoint - leftPoint};
         return diff.y * (x - leftPoint.x) / (rightPoint.x - leftPoint.x) + leftPoint.y;
     }
-
 }
 
 #endif

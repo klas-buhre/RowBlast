@@ -9,6 +9,7 @@
 #include "Audio.hpp"
 #include "SceneManager.hpp"
 #include "ParticleSystem.hpp"
+#include "IAnalytics.hpp"
 
 namespace Pht {
     class IApplication;
@@ -22,6 +23,7 @@ namespace Pht {
         IAudio& GetAudio() override;
         ISceneManager& GetSceneManager() override;
         IParticleSystem& GetParticleSystem() override;
+        IAnalytics& GetAnalytics() override;
         float GetLastFrameSeconds() const override;
         
         void Init(bool createRenderBuffers);
@@ -41,6 +43,7 @@ namespace Pht {
         Audio mAudio;
         SceneManager mSceneManager;
         ParticleSystem mParticleSystem;
+        std::unique_ptr<IAnalytics> mAnalytics;
         std::unique_ptr<IApplication> mApplication;
         float mLastFrameSeconds {0.0f};
     };

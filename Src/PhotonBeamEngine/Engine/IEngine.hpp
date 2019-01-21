@@ -7,6 +7,7 @@ namespace Pht {
     class IAudio;
     class ISceneManager;
     class IParticleSystem;
+    class IAnalytics;
 
     class IEngine {
     public:
@@ -17,6 +18,7 @@ namespace Pht {
         virtual IAudio& GetAudio() = 0;
         virtual ISceneManager& GetSceneManager() = 0;
         virtual IParticleSystem& GetParticleSystem() = 0;
+        virtual IAnalytics& GetAnalytics() = 0;
         virtual float GetLastFrameSeconds() const = 0;
     };
 }

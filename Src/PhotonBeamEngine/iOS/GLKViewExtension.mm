@@ -17,7 +17,7 @@ namespace {
 
 @implementation GLKViewExtension
 
-- (void) touchesBegan: (NSSet*) touches withEvent: (UIEvent*) event {
+- (void) touchesBegan:(NSSet*)touches withEvent:(UIEvent*)event {
     UITouch* touch = [touches anyObject];
     CGPoint location = [touch locationInView:self];
     
@@ -32,7 +32,7 @@ namespace {
     mEngine->GetInputHandler().PushToQueue(inputEvent);
 }
 
-- (void) touchesEnded: (NSSet*) touches withEvent: (UIEvent*) event {
+- (void) touchesEnded:(NSSet*)touches withEvent:(UIEvent*)event {
     UITouch* touch = [touches anyObject];
     CGPoint location = [touch locationInView:self];
     
@@ -47,7 +47,7 @@ namespace {
     mEngine->GetInputHandler().PushToQueue(inputEvent);
 }
 
-- (void) touchesMoved: (NSSet*) touches withEvent: (UIEvent*) event {
+- (void) touchesMoved:(NSSet*)touches withEvent:(UIEvent*)event {
     UITouch* touch = [touches anyObject];
     CGPoint current = [touch locationInView:self];
     
@@ -62,7 +62,7 @@ namespace {
     mEngine->GetInputHandler().PushToQueue(inputEvent);
 }
 
-- (void) handleTap: (UITapGestureRecognizer *) recognizer {
+- (void) handleTap:(UITapGestureRecognizer *)recognizer {
     CGPoint location = [recognizer locationInView:self];
     
     Pht::TapGestureEvent tap {
@@ -73,7 +73,7 @@ namespace {
     mEngine->GetInputHandler().PushToQueue(event);
 }
 
-- (void) handlePan: (UIPanGestureRecognizer *) recognizer {
+- (void) handlePan:(UIPanGestureRecognizer *)recognizer {
     CGPoint translation = [recognizer translationInView:self];
     CGPoint velocity = [recognizer velocityInView:self];
     Pht::TouchState state = toTouchState(recognizer.state);
@@ -90,7 +90,7 @@ namespace {
     }
 }
 
-- (void) setEngine: (Pht::Engine*) engine {
+- (void) setEngine:(Pht::Engine*)engine {
     mEngine = engine;
 }
 

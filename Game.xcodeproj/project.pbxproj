@@ -251,6 +251,14 @@
 		623B949821F0E60D00B62D9B /* AboutMenuView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623B949621F0E60D00B62D9B /* AboutMenuView.cpp */; };
 		623B949B21F0E62700B62D9B /* AboutMenuController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623B949921F0E62700B62D9B /* AboutMenuController.cpp */; };
 		623B949D21F1FD6700B62D9B /* credits_english.txt in Resources */ = {isa = PBXBuildFile; fileRef = 623B949C21F1FD6600B62D9B /* credits_english.txt */; };
+		623B94A221F4826F00B62D9B /* libGameAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 623B94A121F4826E00B62D9B /* libGameAnalytics.a */; };
+		623B94A721F4855D00B62D9B /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 623B94A621F4855C00B62D9B /* AdSupport.framework */; };
+		623B94A921F4856F00B62D9B /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 623B94A821F4856F00B62D9B /* SystemConfiguration.framework */; };
+		623B94AB21F4858E00B62D9B /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 623B94AA21F4858D00B62D9B /* libsqlite3.tbd */; };
+		623B94AD21F4859E00B62D9B /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 623B94AC21F4859E00B62D9B /* libz.tbd */; };
+		623B94AF21F4862800B62D9B /* GameAnalyticsIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 623B94AE21F4862800B62D9B /* GameAnalyticsIOS.mm */; };
+		623B94BB21F5D13700B62D9B /* RowBlastAnalyticsConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623B94B921F5D13700B62D9B /* RowBlastAnalyticsConfig.cpp */; };
+		623B94BE21F60DF200B62D9B /* AnalyticsEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623B94BC21F60DF200B62D9B /* AnalyticsEvent.cpp */; };
 		6240508620FF69C00077A454 /* level46.json in Resources */ = {isa = PBXBuildFile; fileRef = 6240508520FF69C00077A454 /* level46.json */; };
 		6240508820FF82A10077A454 /* level47.json in Resources */ = {isa = PBXBuildFile; fileRef = 6240508720FF82A10077A454 /* level47.json */; };
 		62411A971E61E62800035D2A /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62411A961E61E62800035D2A /* GLKit.framework */; };
@@ -338,7 +346,6 @@
 		625698532182392C003A3A9D /* ParticleEmitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6256976E2182392B003A3A9D /* ParticleEmitter.cpp */; };
 		625698542182392C003A3A9D /* CameraShake.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6256976F2182392B003A3A9D /* CameraShake.cpp */; };
 		625698552182392C003A3A9D /* Engine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 625697742182392B003A3A9D /* Engine.cpp */; };
-		625698562182392C003A3A9D /* build_freetype.sh in Resources */ = {isa = PBXBuildFile; fileRef = 625697772182392B003A3A9D /* build_freetype.sh */; };
 		625698572182392C003A3A9D /* libfreetype.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 625697D72182392B003A3A9D /* libfreetype.a */; };
 		625698582182392C003A3A9D /* FastNoise.cc in Sources */ = {isa = PBXBuildFile; fileRef = 625698012182392B003A3A9D /* FastNoise.cc */; };
 		6256985A2184AE6C003A3A9D /* level62.json in Resources */ = {isa = PBXBuildFile; fileRef = 625698592184AE6B003A3A9D /* level62.json */; };
@@ -922,6 +929,19 @@
 		623B949921F0E62700B62D9B /* AboutMenuController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AboutMenuController.cpp; sourceTree = "<group>"; };
 		623B949A21F0E62700B62D9B /* AboutMenuController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AboutMenuController.hpp; sourceTree = "<group>"; };
 		623B949C21F1FD6600B62D9B /* credits_english.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = credits_english.txt; sourceTree = "<group>"; };
+		623B94A021F4826E00B62D9B /* GameAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameAnalytics.h; sourceTree = "<group>"; };
+		623B94A121F4826E00B62D9B /* libGameAnalytics.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGameAnalytics.a; sourceTree = "<group>"; };
+		623B94A621F4855C00B62D9B /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
+		623B94A821F4856F00B62D9B /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		623B94AA21F4858D00B62D9B /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		623B94AC21F4859E00B62D9B /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		623B94AE21F4862800B62D9B /* GameAnalyticsIOS.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; path = GameAnalyticsIOS.mm; sourceTree = "<group>"; };
+		623B94B121F5BBE500B62D9B /* Analytics.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Analytics.hpp; sourceTree = "<group>"; };
+		623B94B421F5C14800B62D9B /* IAnalytics.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = IAnalytics.hpp; sourceTree = "<group>"; };
+		623B94B721F5CEFA00B62D9B /* AnalyticsConfig.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AnalyticsConfig.hpp; sourceTree = "<group>"; };
+		623B94B921F5D13700B62D9B /* RowBlastAnalyticsConfig.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = RowBlastAnalyticsConfig.cpp; sourceTree = "<group>"; };
+		623B94BC21F60DF200B62D9B /* AnalyticsEvent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AnalyticsEvent.cpp; sourceTree = "<group>"; };
+		623B94BD21F60DF200B62D9B /* AnalyticsEvent.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AnalyticsEvent.hpp; sourceTree = "<group>"; };
 		6240508520FF69C00077A454 /* level46.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level46.json; sourceTree = "<group>"; };
 		6240508720FF82A10077A454 /* level47.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level47.json; sourceTree = "<group>"; };
 		62411A961E61E62800035D2A /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
@@ -1362,12 +1382,17 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				623B94AD21F4859E00B62D9B /* libz.tbd in Frameworks */,
+				623B94AB21F4858E00B62D9B /* libsqlite3.tbd in Frameworks */,
+				623B94A921F4856F00B62D9B /* SystemConfiguration.framework in Frameworks */,
+				623B94A721F4855D00B62D9B /* AdSupport.framework in Frameworks */,
 				62BB35D221C809D20051AEEF /* AudioToolbox.framework in Frameworks */,
 				62BB35C821C6C0110051AEEF /* OpenAL.framework in Frameworks */,
 				620A98291EE2B5C000AD6C61 /* CoreMedia.framework in Frameworks */,
 				620A981D1EE2A3B400AD6C61 /* AVFoundation.framework in Frameworks */,
 				625698572182392C003A3A9D /* libfreetype.a in Frameworks */,
 				62411A971E61E62800035D2A /* GLKit.framework in Frameworks */,
+				623B94A221F4826F00B62D9B /* libGameAnalytics.a in Frameworks */,
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
 				288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */,
@@ -1401,6 +1426,10 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				623B94AC21F4859E00B62D9B /* libz.tbd */,
+				623B94AA21F4858D00B62D9B /* libsqlite3.tbd */,
+				623B94A821F4856F00B62D9B /* SystemConfiguration.framework */,
+				623B94A621F4855C00B62D9B /* AdSupport.framework */,
 				62BB35D121C809D20051AEEF /* AudioToolbox.framework */,
 				62BB35C721C6C0110051AEEF /* OpenAL.framework */,
 				620A98281EE2B5C000AD6C61 /* CoreMedia.framework */,
@@ -1777,50 +1806,50 @@
 		62216B2C21EB377E001CB9A1 /* Pieces */ = {
 			isa = PBXGroup;
 			children = (
+				62216B3921EB377E001CB9A1 /* BigLPiece.cpp */,
+				62216B4421EB377E001CB9A1 /* BigLPiece.hpp */,
+				62216B4F21EB377E001CB9A1 /* BigTrianglePiece.cpp */,
 				62216B2D21EB377E001CB9A1 /* BigTrianglePiece.hpp */,
+				62216B5021EB377E001CB9A1 /* Bomb.cpp */,
 				62216B2E21EB377E001CB9A1 /* Bomb.hpp */,
-				62216B2F21EB377E001CB9A1 /* ShortIPiece.cpp */,
-				62216B3021EB377E001CB9A1 /* MirroredSevenPiece.cpp */,
-				62216B3121EB377E001CB9A1 /* LongIPiece.hpp */,
-				62216B3221EB377E001CB9A1 /* FPiece.hpp */,
-				62216B3321EB377E001CB9A1 /* RowBomb.hpp */,
 				62216B3421EB377E001CB9A1 /* BPiece.cpp */,
-				62216B3521EB377E001CB9A1 /* LPiece.hpp */,
-				62216B3621EB377E001CB9A1 /* MirroredZPiece.hpp */,
+				62216B5521EB377E001CB9A1 /* BPiece.hpp */,
+				62216B5721EB377E001CB9A1 /* DiamondPiece.cpp */,
 				62216B3721EB377E001CB9A1 /* DiamondPiece.hpp */,
 				62216B3821EB377E001CB9A1 /* DPiece.cpp */,
-				62216B3921EB377E001CB9A1 /* BigLPiece.cpp */,
+				62216B4321EB377E001CB9A1 /* DPiece.hpp */,
+				62216B5221EB377E001CB9A1 /* FPiece.cpp */,
+				62216B3221EB377E001CB9A1 /* FPiece.hpp */,
+				62216B5321EB377E001CB9A1 /* LongIPiece.cpp */,
+				62216B3121EB377E001CB9A1 /* LongIPiece.hpp */,
+				62216B5621EB377E001CB9A1 /* LPiece.cpp */,
+				62216B3521EB377E001CB9A1 /* LPiece.hpp */,
+				62216B4521EB377E001CB9A1 /* MiddleIPiece.cpp */,
 				62216B3A21EB377E001CB9A1 /* MiddleIPiece.hpp */,
-				62216B3B21EB377E001CB9A1 /* SmallTrianglePiece.hpp */,
+				62216B4221EB377E001CB9A1 /* MirroredFPiece.cpp */,
+				62216B4C21EB377E001CB9A1 /* MirroredFPiece.hpp */,
+				62216B3021EB377E001CB9A1 /* MirroredSevenPiece.cpp */,
+				62216B5121EB377E001CB9A1 /* MirroredSevenPiece.hpp */,
+				62216B5821EB377E001CB9A1 /* MirroredZPiece.cpp */,
+				62216B3621EB377E001CB9A1 /* MirroredZPiece.hpp */,
+				62216B4921EB377E001CB9A1 /* PlusPiece.cpp */,
+				62216B3F21EB377E001CB9A1 /* PlusPiece.hpp */,
+				62216B4D21EB377E001CB9A1 /* PyramidPiece.cpp */,
+				62216B4121EB377E001CB9A1 /* PyramidPiece.hpp */,
+				62216B5421EB377E001CB9A1 /* RowBomb.cpp */,
+				62216B3321EB377E001CB9A1 /* RowBomb.hpp */,
+				62216B4821EB377E001CB9A1 /* SevenPiece.cpp */,
 				62216B3C21EB377E001CB9A1 /* SevenPiece.hpp */,
+				62216B2F21EB377E001CB9A1 /* ShortIPiece.cpp */,
+				62216B4E21EB377E001CB9A1 /* ShortIPiece.hpp */,
+				62216B4621EB377E001CB9A1 /* SmallTrianglePiece.cpp */,
+				62216B3B21EB377E001CB9A1 /* SmallTrianglePiece.hpp */,
+				62216B4B21EB377E001CB9A1 /* TPiece.cpp */,
+				62216B4021EB377E001CB9A1 /* TPiece.hpp */,
+				62216B4721EB377E001CB9A1 /* TrianglePiece.cpp */,
 				62216B3D21EB377E001CB9A1 /* TrianglePiece.hpp */,
 				62216B3E21EB377E001CB9A1 /* ZPiece.cpp */,
-				62216B3F21EB377E001CB9A1 /* PlusPiece.hpp */,
-				62216B4021EB377E001CB9A1 /* TPiece.hpp */,
-				62216B4121EB377E001CB9A1 /* PyramidPiece.hpp */,
-				62216B4221EB377E001CB9A1 /* MirroredFPiece.cpp */,
-				62216B4321EB377E001CB9A1 /* DPiece.hpp */,
-				62216B4421EB377E001CB9A1 /* BigLPiece.hpp */,
-				62216B4521EB377E001CB9A1 /* MiddleIPiece.cpp */,
-				62216B4621EB377E001CB9A1 /* SmallTrianglePiece.cpp */,
-				62216B4721EB377E001CB9A1 /* TrianglePiece.cpp */,
-				62216B4821EB377E001CB9A1 /* SevenPiece.cpp */,
-				62216B4921EB377E001CB9A1 /* PlusPiece.cpp */,
 				62216B4A21EB377E001CB9A1 /* ZPiece.hpp */,
-				62216B4B21EB377E001CB9A1 /* TPiece.cpp */,
-				62216B4C21EB377E001CB9A1 /* MirroredFPiece.hpp */,
-				62216B4D21EB377E001CB9A1 /* PyramidPiece.cpp */,
-				62216B4E21EB377E001CB9A1 /* ShortIPiece.hpp */,
-				62216B4F21EB377E001CB9A1 /* BigTrianglePiece.cpp */,
-				62216B5021EB377E001CB9A1 /* Bomb.cpp */,
-				62216B5121EB377E001CB9A1 /* MirroredSevenPiece.hpp */,
-				62216B5221EB377E001CB9A1 /* FPiece.cpp */,
-				62216B5321EB377E001CB9A1 /* LongIPiece.cpp */,
-				62216B5421EB377E001CB9A1 /* RowBomb.cpp */,
-				62216B5521EB377E001CB9A1 /* BPiece.hpp */,
-				62216B5621EB377E001CB9A1 /* LPiece.cpp */,
-				62216B5721EB377E001CB9A1 /* DiamondPiece.cpp */,
-				62216B5821EB377E001CB9A1 /* MirroredZPiece.cpp */,
 			);
 			path = Pieces;
 			sourceTree = "<group>";
@@ -1828,14 +1857,14 @@
 		62216B5921EB377E001CB9A1 /* Ai */ = {
 			isa = PBXGroup;
 			children = (
-				62216B5A21EB377E001CB9A1 /* MoveDefinitions.cpp */,
-				62216B5B21EB377E001CB9A1 /* ValidMovesSearch.cpp */,
 				62216B5C21EB377E001CB9A1 /* Ai.cpp */,
+				62216B6121EB377E001CB9A1 /* Ai.hpp */,
 				62216B5D21EB377E001CB9A1 /* FieldAnalyzer.cpp */,
 				62216B5E21EB377E001CB9A1 /* FieldAnalyzer.hpp */,
+				62216B5A21EB377E001CB9A1 /* MoveDefinitions.cpp */,
 				62216B5F21EB377E001CB9A1 /* MoveDefinitions.hpp */,
+				62216B5B21EB377E001CB9A1 /* ValidMovesSearch.cpp */,
 				62216B6021EB377E001CB9A1 /* ValidMovesSearch.hpp */,
-				62216B6121EB377E001CB9A1 /* Ai.hpp */,
 			);
 			path = Ai;
 			sourceTree = "<group>";
@@ -1856,13 +1885,13 @@
 		62216B6921EB377E001CB9A1 /* Effects */ = {
 			isa = PBXGroup;
 			children = (
-				62216B6A21EB377E001CB9A1 /* EffectManager.hpp */,
-				62216B6B21EB377E001CB9A1 /* PieceDropParticleEffect.cpp */,
-				62216B6C21EB377E001CB9A1 /* LaserParticleEffect.cpp */,
-				62216B6D21EB377E001CB9A1 /* ExplosionParticleEffect.cpp */,
-				62216B6E21EB377E001CB9A1 /* LaserParticleEffect.hpp */,
-				62216B6F21EB377E001CB9A1 /* ExplosionParticleEffect.hpp */,
 				62216B7021EB377E001CB9A1 /* EffectManager.cpp */,
+				62216B6A21EB377E001CB9A1 /* EffectManager.hpp */,
+				62216B6D21EB377E001CB9A1 /* ExplosionParticleEffect.cpp */,
+				62216B6F21EB377E001CB9A1 /* ExplosionParticleEffect.hpp */,
+				62216B6C21EB377E001CB9A1 /* LaserParticleEffect.cpp */,
+				62216B6E21EB377E001CB9A1 /* LaserParticleEffect.hpp */,
+				62216B6B21EB377E001CB9A1 /* PieceDropParticleEffect.cpp */,
 				62216B7121EB377E001CB9A1 /* PieceDropParticleEffect.hpp */,
 			);
 			path = Effects;
@@ -1871,37 +1900,37 @@
 		62216B7221EB377E001CB9A1 /* Animations */ = {
 			isa = PBXGroup;
 			children = (
-				62216B7321EB377E001CB9A1 /* SlidingTextAnimation.hpp */,
-				62216B7421EB377E001CB9A1 /* FlashingBlocksAnimation.cpp */,
-				62216B7521EB377E001CB9A1 /* SmallTextAnimation.hpp */,
-				62216B7621EB377E001CB9A1 /* FallingPieceAnimation.cpp */,
-				62216B7721EB377E001CB9A1 /* BlastRadiusAnimation.cpp */,
-				62216B7821EB377E001CB9A1 /* PreviewPiecesAnimation.cpp */,
-				62216B7921EB377E001CB9A1 /* WeldsAnimation.cpp */,
-				62216B7A21EB377E001CB9A1 /* ShieldAnimation.hpp */,
-				62216B7B21EB377E001CB9A1 /* FallingPieceScaleAnimation.cpp */,
-				62216B7C21EB377E001CB9A1 /* CollapsingFieldAnimation.cpp */,
 				62216B7D21EB377E001CB9A1 /* AsteroidAnimation.cpp */,
-				62216B7E21EB377E001CB9A1 /* PreviewPieceGroupAnimation.cpp */,
-				62216B7F21EB377E001CB9A1 /* BombsAnimation.cpp */,
-				62216B8021EB377E001CB9A1 /* BlueprintSlotsFilledAnimation.cpp */,
-				62216B8121EB377E001CB9A1 /* FlyingBlocksAnimation.cpp */,
-				62216B8221EB377E001CB9A1 /* FewMovesAlertAnimation.cpp */,
-				62216B8321EB377E001CB9A1 /* FallingPieceScaleAnimation.hpp */,
-				62216B8421EB377E001CB9A1 /* ShieldAnimation.cpp */,
-				62216B8521EB377E001CB9A1 /* CollapsingFieldAnimation.hpp */,
 				62216B8621EB377E001CB9A1 /* AsteroidAnimation.hpp */,
-				62216B8721EB377E001CB9A1 /* PreviewPieceGroupAnimation.hpp */,
-				62216B8821EB377E001CB9A1 /* BombsAnimation.hpp */,
-				62216B8921EB377E001CB9A1 /* BlueprintSlotsFilledAnimation.hpp */,
-				62216B8A21EB377E001CB9A1 /* FewMovesAlertAnimation.hpp */,
-				62216B8B21EB377E001CB9A1 /* FlyingBlocksAnimation.hpp */,
-				62216B8C21EB377E001CB9A1 /* SlidingTextAnimation.cpp */,
-				62216B8D21EB377E001CB9A1 /* SmallTextAnimation.cpp */,
-				62216B8E21EB377E001CB9A1 /* FlashingBlocksAnimation.hpp */,
-				62216B8F21EB377E001CB9A1 /* FallingPieceAnimation.hpp */,
+				62216B7721EB377E001CB9A1 /* BlastRadiusAnimation.cpp */,
 				62216B9021EB377E001CB9A1 /* BlastRadiusAnimation.hpp */,
+				62216B8021EB377E001CB9A1 /* BlueprintSlotsFilledAnimation.cpp */,
+				62216B8921EB377E001CB9A1 /* BlueprintSlotsFilledAnimation.hpp */,
+				62216B7F21EB377E001CB9A1 /* BombsAnimation.cpp */,
+				62216B8821EB377E001CB9A1 /* BombsAnimation.hpp */,
+				62216B7C21EB377E001CB9A1 /* CollapsingFieldAnimation.cpp */,
+				62216B8521EB377E001CB9A1 /* CollapsingFieldAnimation.hpp */,
+				62216B7621EB377E001CB9A1 /* FallingPieceAnimation.cpp */,
+				62216B8F21EB377E001CB9A1 /* FallingPieceAnimation.hpp */,
+				62216B7B21EB377E001CB9A1 /* FallingPieceScaleAnimation.cpp */,
+				62216B8321EB377E001CB9A1 /* FallingPieceScaleAnimation.hpp */,
+				62216B8221EB377E001CB9A1 /* FewMovesAlertAnimation.cpp */,
+				62216B8A21EB377E001CB9A1 /* FewMovesAlertAnimation.hpp */,
+				62216B7421EB377E001CB9A1 /* FlashingBlocksAnimation.cpp */,
+				62216B8E21EB377E001CB9A1 /* FlashingBlocksAnimation.hpp */,
+				62216B8121EB377E001CB9A1 /* FlyingBlocksAnimation.cpp */,
+				62216B8B21EB377E001CB9A1 /* FlyingBlocksAnimation.hpp */,
+				62216B7E21EB377E001CB9A1 /* PreviewPieceGroupAnimation.cpp */,
+				62216B8721EB377E001CB9A1 /* PreviewPieceGroupAnimation.hpp */,
+				62216B7821EB377E001CB9A1 /* PreviewPiecesAnimation.cpp */,
 				62216B9121EB377E001CB9A1 /* PreviewPiecesAnimation.hpp */,
+				62216B8421EB377E001CB9A1 /* ShieldAnimation.cpp */,
+				62216B7A21EB377E001CB9A1 /* ShieldAnimation.hpp */,
+				62216B8C21EB377E001CB9A1 /* SlidingTextAnimation.cpp */,
+				62216B7321EB377E001CB9A1 /* SlidingTextAnimation.hpp */,
+				62216B8D21EB377E001CB9A1 /* SmallTextAnimation.cpp */,
+				62216B7521EB377E001CB9A1 /* SmallTextAnimation.hpp */,
+				62216B7921EB377E001CB9A1 /* WeldsAnimation.cpp */,
 				62216B9221EB377E001CB9A1 /* WeldsAnimation.hpp */,
 			);
 			path = Animations;
@@ -2022,6 +2051,52 @@
 			path = DocumentViewer;
 			sourceTree = "<group>";
 		};
+		623B949E21F4826E00B62D9B /* GameAnalytics */ = {
+			isa = PBXGroup;
+			children = (
+				623B949F21F4826E00B62D9B /* iOS */,
+			);
+			path = GameAnalytics;
+			sourceTree = "<group>";
+		};
+		623B949F21F4826E00B62D9B /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				623B94A021F4826E00B62D9B /* GameAnalytics.h */,
+				623B94A121F4826E00B62D9B /* libGameAnalytics.a */,
+			);
+			path = iOS;
+			sourceTree = "<group>";
+		};
+		623B94A321F4828100B62D9B /* Analytics */ = {
+			isa = PBXGroup;
+			children = (
+				623B94A421F4828100B62D9B /* AnalyticsApi */,
+				623B94A521F4828100B62D9B /* iOS */,
+			);
+			path = Analytics;
+			sourceTree = "<group>";
+		};
+		623B94A421F4828100B62D9B /* AnalyticsApi */ = {
+			isa = PBXGroup;
+			children = (
+				623B94B121F5BBE500B62D9B /* Analytics.hpp */,
+				623B94B721F5CEFA00B62D9B /* AnalyticsConfig.hpp */,
+				623B94BC21F60DF200B62D9B /* AnalyticsEvent.cpp */,
+				623B94BD21F60DF200B62D9B /* AnalyticsEvent.hpp */,
+				623B94B421F5C14800B62D9B /* IAnalytics.hpp */,
+			);
+			path = AnalyticsApi;
+			sourceTree = "<group>";
+		};
+		623B94A521F4828100B62D9B /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				623B94AE21F4862800B62D9B /* GameAnalyticsIOS.mm */,
+			);
+			path = iOS;
+			sourceTree = "<group>";
+		};
 		6242DEEF21C50E7600D17F46 /* AudioApi */ = {
 			isa = PBXGroup;
 			children = (
@@ -2069,6 +2144,7 @@
 			children = (
 				625695DB2182382B003A3A9D /* RowBlastApplication.cpp */,
 				625695DA2182382B003A3A9D /* RowBlastApplication.hpp */,
+				623B94B921F5D13700B62D9B /* RowBlastAnalyticsConfig.cpp */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -2076,6 +2152,7 @@
 		625696D02182392B003A3A9D /* PhotonBeamEngine */ = {
 			isa = PBXGroup;
 			children = (
+				623B94A321F4828100B62D9B /* Analytics */,
 				625697432182392B003A3A9D /* Audio */,
 				625697642182392B003A3A9D /* Effects */,
 				625697702182392B003A3A9D /* Engine */,
@@ -2341,9 +2418,10 @@
 		625697752182392B003A3A9D /* ThirdParty */ = {
 			isa = PBXGroup;
 			children = (
-				625697762182392B003A3A9D /* FreeType */,
-				625697D82182392B003A3A9D /* RapidJson */,
 				625697FF2182392B003A3A9D /* FastNoise */,
+				625697762182392B003A3A9D /* FreeType */,
+				623B949E21F4826E00B62D9B /* GameAnalytics */,
+				625697D82182392B003A3A9D /* RapidJson */,
 			);
 			path = ThirdParty;
 			sourceTree = "<group>";
@@ -3011,7 +3089,6 @@
 				62B1CB5B210F8EE500D0F195 /* cloud_A_512.png in Resources */,
 				622169F121E27ECB001CB9A1 /* sliding_text_whoosh1.wav in Resources */,
 				625698202182392C003A3A9D /* EnvMap.frag in Resources */,
-				625698562182392C003A3A9D /* build_freetype.sh in Resources */,
 				6256982D2182392C003A3A9D /* TextMidGradient.vert in Resources */,
 				629B838620C9694E00DD2D0E /* level40.json in Resources */,
 				624C9DDE21A1A908000FB5E1 /* coin_pile_4120.obj in Resources */,
@@ -3151,6 +3228,7 @@
 				62216C3C21EB377F001CB9A1 /* MapPin.cpp in Sources */,
 				62216BC221EB377E001CB9A1 /* LaserDialogView.cpp in Sources */,
 				62216C3921EB377F001CB9A1 /* MapScene.cpp in Sources */,
+				623B94BE21F60DF200B62D9B /* AnalyticsEvent.cpp in Sources */,
 				62216C0021EB377F001CB9A1 /* ShortIPiece.cpp in Sources */,
 				62216BD521EB377E001CB9A1 /* LevelCompletedController.cpp in Sources */,
 				62216BE021EB377E001CB9A1 /* GameOverDialogController.cpp in Sources */,
@@ -3297,6 +3375,7 @@
 				62216C1A21EB377F001CB9A1 /* LevelLoader.cpp in Sources */,
 				62216BE621EB377E001CB9A1 /* MapConfirmationDialogController.cpp in Sources */,
 				62216A8A21EB376E001CB9A1 /* StringUtils.cpp in Sources */,
+				623B94BB21F5D13700B62D9B /* RowBlastAnalyticsConfig.cpp in Sources */,
 				62216BDA21EB377E001CB9A1 /* OutOfMovesDialogController.cpp in Sources */,
 				62216BC821EB377E001CB9A1 /* SwitchPieceWindowController.cpp in Sources */,
 				62216C3221EB377F001CB9A1 /* World2.cpp in Sources */,
@@ -3370,6 +3449,7 @@
 				62216C0B21EB377F001CB9A1 /* PlusPiece.cpp in Sources */,
 				62216BDB21EB377E001CB9A1 /* GameMenuView.cpp in Sources */,
 				62216C2C21EB377F001CB9A1 /* FlyingBlocksAnimation.cpp in Sources */,
+				623B94AF21F4862800B62D9B /* GameAnalyticsIOS.mm in Sources */,
 				62216C5F21EDDA7E001CB9A1 /* ScrollPanel.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3396,6 +3476,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Src/PhotonBeamEngine/ThirdParty/FreeType/lib",
+					"$(PROJECT_DIR)/Src/PhotonBeamEngine/ThirdParty/GameAnalytics/iOS",
 				);
 				OTHER_CPLUSPLUSFLAGS = "-ISrc/PhotonBeamEngine/ThirdParty/FreeType/include/";
 				PRODUCT_BUNDLE_IDENTIFIER = com.BuhreIndustries.Engine;
@@ -3423,6 +3504,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Src/PhotonBeamEngine/ThirdParty/FreeType/lib",
+					"$(PROJECT_DIR)/Src/PhotonBeamEngine/ThirdParty/GameAnalytics/iOS",
 				);
 				OTHER_CPLUSPLUSFLAGS = "-ISrc/PhotonBeamEngine/ThirdParty/FreeType/include/";
 				PRODUCT_BUNDLE_IDENTIFIER = com.BuhreIndustries.Engine;

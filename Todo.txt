@@ -1,7 +1,7 @@
 Backlog:
   -Engine:
     -Analytics.
-    -Purchases.
+    -Purchasing.
     -Net/HTTP.
     -Metal.
     -Android.
@@ -29,18 +29,12 @@ Backlog:
     -Make launch screens for all supported device resolutions. Should say Teleporter Studios. The
      logo could contain some simple teleporter texture.
      Font: maybe ".Damascus PUA Bold"
-    -Make icons and launch screens for all supported device resolutions.
+    -Make icon.
     -Maybe support for different languages.
 
 Ongoing tasks:
     -Analytics
-      -GDPR:
-        -When the users start the app for the first time they need to accept the privacy policies
-         and terms of service that can be reviewed by users. See: https://gameanalytics.com/gdpr-faq
-         This means:
-          -The AcceptTerms scene needs to start before the title scene. Only initiate analytics
-           after proceeding to the title scene. Not allowed to send events before the user has
-           agreed.
+      -Call AddEvent at all the proper places.
 
 
 
@@ -142,7 +136,7 @@ Ordered Backlog:
         Cost: 17
     -Levels for the space world.
         Cost: 7
-    -Purchases.
+    -Purchasing.
         Cost: 10
     -Levels for the 4th world.
         Cost: 7
