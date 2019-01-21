@@ -259,6 +259,12 @@
 		623B94AF21F4862800B62D9B /* GameAnalyticsIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 623B94AE21F4862800B62D9B /* GameAnalyticsIOS.mm */; };
 		623B94BB21F5D13700B62D9B /* RowBlastAnalyticsConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623B94B921F5D13700B62D9B /* RowBlastAnalyticsConfig.cpp */; };
 		623B94BE21F60DF200B62D9B /* AnalyticsEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623B94BC21F60DF200B62D9B /* AnalyticsEvent.cpp */; };
+		623B94CD21F6357400B62D9B /* GLKViewExtension.mm in Sources */ = {isa = PBXBuildFile; fileRef = 623B94C421F6357400B62D9B /* GLKViewExtension.mm */; };
+		623B94CE21F6357400B62D9B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 623B94C821F6357400B62D9B /* main.m */; };
+		623B94CF21F6357400B62D9B /* FileSystemIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 623B94C921F6357400B62D9B /* FileSystemIOS.mm */; };
+		623B94D021F6357400B62D9B /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 623B94CA21F6357400B62D9B /* AppDelegate.mm */; };
+		623B94D121F6357400B62D9B /* ImageIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 623B94CB21F6357400B62D9B /* ImageIOS.mm */; };
+		623B94D221F6357400B62D9B /* GLKViewControllerExtension.mm in Sources */ = {isa = PBXBuildFile; fileRef = 623B94CC21F6357400B62D9B /* GLKViewControllerExtension.mm */; };
 		6240508620FF69C00077A454 /* level46.json in Resources */ = {isa = PBXBuildFile; fileRef = 6240508520FF69C00077A454 /* level46.json */; };
 		6240508820FF82A10077A454 /* level47.json in Resources */ = {isa = PBXBuildFile; fileRef = 6240508720FF82A10077A454 /* level47.json */; };
 		62411A971E61E62800035D2A /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62411A961E61E62800035D2A /* GLKit.framework */; };
@@ -322,12 +328,6 @@
 		625698382182392C003A3A9D /* FileStorage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 625697292182392B003A3A9D /* FileStorage.cpp */; };
 		6256983A2182392C003A3A9D /* Transform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 625697362182392B003A3A9D /* Transform.cpp */; };
 		6256983B2182392C003A3A9D /* MathUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 625697372182392B003A3A9D /* MathUtils.cpp */; };
-		6256983D2182392C003A3A9D /* GLKViewExtension.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6256973A2182392B003A3A9D /* GLKViewExtension.mm */; };
-		6256983E2182392C003A3A9D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6256973E2182392B003A3A9D /* main.m */; };
-		6256983F2182392C003A3A9D /* FileSystemIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6256973F2182392B003A3A9D /* FileSystemIOS.mm */; };
-		625698402182392C003A3A9D /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 625697402182392B003A3A9D /* AppDelegate.mm */; };
-		625698412182392C003A3A9D /* ImageIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 625697412182392B003A3A9D /* ImageIOS.mm */; };
-		625698422182392C003A3A9D /* GLKViewControllerExtension.mm in Sources */ = {isa = PBXBuildFile; fileRef = 625697422182392B003A3A9D /* GLKViewControllerExtension.mm */; };
 		625698442182392C003A3A9D /* Button.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6256974A2182392B003A3A9D /* Button.cpp */; };
 		625698452182392C003A3A9D /* Font.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6256974B2182392B003A3A9D /* Font.cpp */; };
 		625698462182392C003A3A9D /* GuiView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6256974D2182392B003A3A9D /* GuiView.cpp */; };
@@ -942,6 +942,17 @@
 		623B94B921F5D13700B62D9B /* RowBlastAnalyticsConfig.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = RowBlastAnalyticsConfig.cpp; sourceTree = "<group>"; };
 		623B94BC21F60DF200B62D9B /* AnalyticsEvent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AnalyticsEvent.cpp; sourceTree = "<group>"; };
 		623B94BD21F60DF200B62D9B /* AnalyticsEvent.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AnalyticsEvent.hpp; sourceTree = "<group>"; };
+		623B94C121F6357400B62D9B /* FileSystem.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FileSystem.hpp; sourceTree = "<group>"; };
+		623B94C221F6357400B62D9B /* IImage.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = IImage.hpp; sourceTree = "<group>"; };
+		623B94C421F6357400B62D9B /* GLKViewExtension.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GLKViewExtension.mm; sourceTree = "<group>"; };
+		623B94C521F6357400B62D9B /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		623B94C621F6357400B62D9B /* GLKViewExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLKViewExtension.h; sourceTree = "<group>"; };
+		623B94C721F6357400B62D9B /* GLKViewControllerExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLKViewControllerExtension.h; sourceTree = "<group>"; };
+		623B94C821F6357400B62D9B /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		623B94C921F6357400B62D9B /* FileSystemIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = FileSystemIOS.mm; sourceTree = "<group>"; };
+		623B94CA21F6357400B62D9B /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
+		623B94CB21F6357400B62D9B /* ImageIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ImageIOS.mm; sourceTree = "<group>"; };
+		623B94CC21F6357400B62D9B /* GLKViewControllerExtension.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GLKViewControllerExtension.mm; sourceTree = "<group>"; };
 		6240508520FF69C00077A454 /* level46.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level46.json; sourceTree = "<group>"; };
 		6240508720FF82A10077A454 /* level47.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level47.json; sourceTree = "<group>"; };
 		62411A961E61E62800035D2A /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
@@ -1033,13 +1044,11 @@
 		625697232182392B003A3A9D /* InputHandler.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = InputHandler.hpp; sourceTree = "<group>"; };
 		625697242182392B003A3A9D /* IInput.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = IInput.hpp; sourceTree = "<group>"; };
 		625697262182392B003A3A9D /* JsonUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JsonUtil.cpp; sourceTree = "<group>"; };
-		625697272182392B003A3A9D /* FileSystem.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FileSystem.hpp; sourceTree = "<group>"; };
 		625697282182392B003A3A9D /* StaticVector.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = StaticVector.hpp; sourceTree = "<group>"; };
 		625697292182392B003A3A9D /* FileStorage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FileStorage.cpp; sourceTree = "<group>"; };
 		6256972B2182392B003A3A9D /* Optional.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Optional.hpp; sourceTree = "<group>"; };
 		6256972C2182392B003A3A9D /* Fnv1Hash.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Fnv1Hash.hpp; sourceTree = "<group>"; };
 		6256972D2182392B003A3A9D /* FileStorage.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FileStorage.hpp; sourceTree = "<group>"; };
-		6256972F2182392B003A3A9D /* IImage.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = IImage.hpp; sourceTree = "<group>"; };
 		625697302182392B003A3A9D /* JsonUtil.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = JsonUtil.hpp; sourceTree = "<group>"; };
 		625697322182392B003A3A9D /* MathUtils.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MathUtils.hpp; sourceTree = "<group>"; };
 		625697332182392B003A3A9D /* Vector.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Vector.hpp; sourceTree = "<group>"; };
@@ -1047,15 +1056,6 @@
 		625697352182392B003A3A9D /* Matrix.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Matrix.hpp; sourceTree = "<group>"; };
 		625697362182392B003A3A9D /* Transform.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Transform.cpp; sourceTree = "<group>"; };
 		625697372182392B003A3A9D /* MathUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MathUtils.cpp; sourceTree = "<group>"; };
-		6256973A2182392B003A3A9D /* GLKViewExtension.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GLKViewExtension.mm; sourceTree = "<group>"; };
-		6256973B2182392B003A3A9D /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		6256973C2182392B003A3A9D /* GLKViewExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLKViewExtension.h; sourceTree = "<group>"; };
-		6256973D2182392B003A3A9D /* GLKViewControllerExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLKViewControllerExtension.h; sourceTree = "<group>"; };
-		6256973E2182392B003A3A9D /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		6256973F2182392B003A3A9D /* FileSystemIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = FileSystemIOS.mm; sourceTree = "<group>"; };
-		625697402182392B003A3A9D /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
-		625697412182392B003A3A9D /* ImageIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ImageIOS.mm; sourceTree = "<group>"; };
-		625697422182392B003A3A9D /* GLKViewControllerExtension.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GLKViewControllerExtension.mm; sourceTree = "<group>"; };
 		625697492182392B003A3A9D /* GuiView.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GuiView.hpp; sourceTree = "<group>"; };
 		6256974A2182392B003A3A9D /* Button.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Button.cpp; sourceTree = "<group>"; };
 		6256974B2182392B003A3A9D /* Font.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Font.cpp; sourceTree = "<group>"; };
@@ -1674,18 +1674,18 @@
 		62216ACD21EB377E001CB9A1 /* LevelCompletedSubScene */ = {
 			isa = PBXGroup;
 			children = (
-				62216ACE21EB377E001CB9A1 /* FireworksParticleEffect.hpp */,
-				62216ACF21EB377E001CB9A1 /* StarsAnimation.hpp */,
 				62216AD021EB377E001CB9A1 /* ClearLastBlocksAnimation.cpp */,
-				62216AD121EB377E001CB9A1 /* LevelCompletedController.cpp */,
-				62216AD221EB377E001CB9A1 /* ConfettiParticleEffect.cpp */,
-				62216AD321EB377E001CB9A1 /* SlidingFieldAnimation.cpp */,
-				62216AD421EB377E001CB9A1 /* ConfettiParticleEffect.hpp */,
-				62216AD521EB377E001CB9A1 /* SlidingFieldAnimation.hpp */,
-				62216AD621EB377E001CB9A1 /* FireworksParticleEffect.cpp */,
-				62216AD721EB377E001CB9A1 /* StarsAnimation.cpp */,
 				62216AD821EB377E001CB9A1 /* ClearLastBlocksAnimation.hpp */,
+				62216AD221EB377E001CB9A1 /* ConfettiParticleEffect.cpp */,
+				62216AD421EB377E001CB9A1 /* ConfettiParticleEffect.hpp */,
+				62216AD621EB377E001CB9A1 /* FireworksParticleEffect.cpp */,
+				62216ACE21EB377E001CB9A1 /* FireworksParticleEffect.hpp */,
+				62216AD121EB377E001CB9A1 /* LevelCompletedController.cpp */,
 				62216AD921EB377E001CB9A1 /* LevelCompletedController.hpp */,
+				62216AD321EB377E001CB9A1 /* SlidingFieldAnimation.cpp */,
+				62216AD521EB377E001CB9A1 /* SlidingFieldAnimation.hpp */,
+				62216AD721EB377E001CB9A1 /* StarsAnimation.cpp */,
+				62216ACF21EB377E001CB9A1 /* StarsAnimation.hpp */,
 			);
 			path = LevelCompletedSubScene;
 			sourceTree = "<group>";
@@ -2097,6 +2097,40 @@
 			path = iOS;
 			sourceTree = "<group>";
 		};
+		623B94BF21F6357400B62D9B /* Platform */ = {
+			isa = PBXGroup;
+			children = (
+				623B94C021F6357400B62D9B /* PlatformApi */,
+				623B94C321F6357400B62D9B /* iOS */,
+			);
+			path = Platform;
+			sourceTree = "<group>";
+		};
+		623B94C021F6357400B62D9B /* PlatformApi */ = {
+			isa = PBXGroup;
+			children = (
+				623B94C121F6357400B62D9B /* FileSystem.hpp */,
+				623B94C221F6357400B62D9B /* IImage.hpp */,
+			);
+			path = PlatformApi;
+			sourceTree = "<group>";
+		};
+		623B94C321F6357400B62D9B /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				623B94C521F6357400B62D9B /* AppDelegate.h */,
+				623B94CA21F6357400B62D9B /* AppDelegate.mm */,
+				623B94C921F6357400B62D9B /* FileSystemIOS.mm */,
+				623B94C721F6357400B62D9B /* GLKViewControllerExtension.h */,
+				623B94CC21F6357400B62D9B /* GLKViewControllerExtension.mm */,
+				623B94C621F6357400B62D9B /* GLKViewExtension.h */,
+				623B94C421F6357400B62D9B /* GLKViewExtension.mm */,
+				623B94CB21F6357400B62D9B /* ImageIOS.mm */,
+				623B94C821F6357400B62D9B /* main.m */,
+			);
+			path = iOS;
+			sourceTree = "<group>";
+		};
 		6242DEEF21C50E7600D17F46 /* AudioApi */ = {
 			isa = PBXGroup;
 			children = (
@@ -2158,9 +2192,9 @@
 				625697702182392B003A3A9D /* Engine */,
 				625697482182392B003A3A9D /* Gui */,
 				6256971D2182392B003A3A9D /* Input */,
-				625697382182392B003A3A9D /* iOS */,
 				625697312182392B003A3A9D /* Math */,
 				625696D12182392B003A3A9D /* Mesh */,
+				623B94BF21F6357400B62D9B /* Platform */,
 				625696E72182392B003A3A9D /* Renderer */,
 				6256974F2182392B003A3A9D /* Scene */,
 				625697752182392B003A3A9D /* ThirdParty */,
@@ -2292,9 +2326,7 @@
 			children = (
 				625697292182392B003A3A9D /* FileStorage.cpp */,
 				6256972D2182392B003A3A9D /* FileStorage.hpp */,
-				625697272182392B003A3A9D /* FileSystem.hpp */,
 				6256972C2182392B003A3A9D /* Fnv1Hash.hpp */,
-				6256972F2182392B003A3A9D /* IImage.hpp */,
 				625697262182392B003A3A9D /* JsonUtil.cpp */,
 				625697302182392B003A3A9D /* JsonUtil.hpp */,
 				6256972B2182392B003A3A9D /* Optional.hpp */,
@@ -2314,22 +2346,6 @@
 				625697332182392B003A3A9D /* Vector.hpp */,
 			);
 			path = Math;
-			sourceTree = "<group>";
-		};
-		625697382182392B003A3A9D /* iOS */ = {
-			isa = PBXGroup;
-			children = (
-				6256973B2182392B003A3A9D /* AppDelegate.h */,
-				625697402182392B003A3A9D /* AppDelegate.mm */,
-				6256973F2182392B003A3A9D /* FileSystemIOS.mm */,
-				6256973D2182392B003A3A9D /* GLKViewControllerExtension.h */,
-				625697422182392B003A3A9D /* GLKViewControllerExtension.mm */,
-				6256973C2182392B003A3A9D /* GLKViewExtension.h */,
-				6256973A2182392B003A3A9D /* GLKViewExtension.mm */,
-				625697412182392B003A3A9D /* ImageIOS.mm */,
-				6256973E2182392B003A3A9D /* main.m */,
-			);
-			path = iOS;
 			sourceTree = "<group>";
 		};
 		625697432182392B003A3A9D /* Audio */ = {
@@ -3222,6 +3238,7 @@
 				625698092182392C003A3A9D /* ObjMesh.cpp in Sources */,
 				6256980E2182392C003A3A9D /* Camera.cpp in Sources */,
 				62216BCC21EB377E001CB9A1 /* Tutorial.cpp in Sources */,
+				623B94D121F6357400B62D9B /* ImageIOS.mm in Sources */,
 				62216C2421EB377F001CB9A1 /* PreviewPiecesAnimation.cpp in Sources */,
 				62216C4121EB377F001CB9A1 /* LivesDialogController.cpp in Sources */,
 				62216A8121EB376E001CB9A1 /* PurchaseFailedDialogController.cpp in Sources */,
@@ -3322,7 +3339,6 @@
 				62216C3421EB377F001CB9A1 /* World4.cpp in Sources */,
 				62216BE321EB377E001CB9A1 /* MapConfirmationDialogView.cpp in Sources */,
 				62216BCE21EB377E001CB9A1 /* LevelBombDialogController.cpp in Sources */,
-				6256983D2182392C003A3A9D /* GLKViewExtension.mm in Sources */,
 				62216BCF21EB377E001CB9A1 /* LaserDialogController.cpp in Sources */,
 				62216C2821EB377F001CB9A1 /* AsteroidAnimation.cpp in Sources */,
 				62216BD621EB377E001CB9A1 /* ConfettiParticleEffect.cpp in Sources */,
@@ -3358,6 +3374,7 @@
 				62216BFD21EB377E001CB9A1 /* Field.cpp in Sources */,
 				62216C6B21F08B2A001CB9A1 /* OptionsMenuView.cpp in Sources */,
 				62216C4021EB377F001CB9A1 /* MapHudView.cpp in Sources */,
+				623B94D021F6357400B62D9B /* AppDelegate.mm in Sources */,
 				62216BFC21EB377E001CB9A1 /* NextPieceGenerator.cpp in Sources */,
 				62216A7C21EB376E001CB9A1 /* NoLivesDialogController.cpp in Sources */,
 				625698512182392C003A3A9D /* ParticleSystem.cpp in Sources */,
@@ -3365,12 +3382,10 @@
 				62216BEF21EB377E001CB9A1 /* GameController.cpp in Sources */,
 				6242DEFA21C5112000D17F46 /* MusicTrackIOS.mm in Sources */,
 				62216C1F21EB377F001CB9A1 /* ExplosionParticleEffect.cpp in Sources */,
-				6256983F2182392C003A3A9D /* FileSystemIOS.mm in Sources */,
 				62216C6221EDDF36001CB9A1 /* TextDocumentLoader.cpp in Sources */,
 				62216BD821EB377E001CB9A1 /* FireworksParticleEffect.cpp in Sources */,
 				62216A8721EB376E001CB9A1 /* PurchaseCanceledDialogView.cpp in Sources */,
 				62216C1421EB377F001CB9A1 /* DiamondPiece.cpp in Sources */,
-				6256983E2182392C003A3A9D /* main.m in Sources */,
 				62216BFF21EB377E001CB9A1 /* FieldGravity.cpp in Sources */,
 				62216C1A21EB377F001CB9A1 /* LevelLoader.cpp in Sources */,
 				62216BE621EB377E001CB9A1 /* MapConfirmationDialogController.cpp in Sources */,
@@ -3387,7 +3402,6 @@
 				62216BBD21EB377E001CB9A1 /* TitleScene.cpp in Sources */,
 				62216C3821EB377F001CB9A1 /* MapController.cpp in Sources */,
 				62216BF621EB377E001CB9A1 /* ScrollController.cpp in Sources */,
-				625698412182392C003A3A9D /* ImageIOS.mm in Sources */,
 				62216C1221EB377F001CB9A1 /* RowBomb.cpp in Sources */,
 				62216BCA21EB377E001CB9A1 /* BombDialogView.cpp in Sources */,
 				62216A9721EB376E001CB9A1 /* Clouds.cpp in Sources */,
@@ -3399,7 +3413,6 @@
 				62216C0521EB377F001CB9A1 /* ZPiece.cpp in Sources */,
 				62216BE421EB377E001CB9A1 /* RestartConfirmationDialogView.cpp in Sources */,
 				62216BBF21EB377E001CB9A1 /* TitleAnimation.cpp in Sources */,
-				625698402182392C003A3A9D /* AppDelegate.mm in Sources */,
 				62216C2A21EB377F001CB9A1 /* BombsAnimation.cpp in Sources */,
 				62216A7421EB376E001CB9A1 /* CloseButton.cpp in Sources */,
 				62216C6721F08A85001CB9A1 /* SettingsMenuController.cpp in Sources */,
@@ -3421,6 +3434,7 @@
 				6256984E2182392C003A3A9D /* SceneManager.cpp in Sources */,
 				62216C2721EB377F001CB9A1 /* CollapsingFieldAnimation.cpp in Sources */,
 				62216C3B21EB377F001CB9A1 /* SunParticleEffect.cpp in Sources */,
+				623B94CD21F6357400B62D9B /* GLKViewExtension.mm in Sources */,
 				62216BF921EB377E001CB9A1 /* FallingPiece.cpp in Sources */,
 				62216C1D21EB377F001CB9A1 /* PieceDropParticleEffect.cpp in Sources */,
 				62216C2321EB377F001CB9A1 /* BlastRadiusAnimation.cpp in Sources */,
@@ -3433,12 +3447,13 @@
 				62216BED21EB377E001CB9A1 /* FieldBorder.cpp in Sources */,
 				625698542182392C003A3A9D /* CameraShake.cpp in Sources */,
 				6256983A2182392C003A3A9D /* Transform.cpp in Sources */,
+				623B94CE21F6357400B62D9B /* main.m in Sources */,
 				62216BBE21EB377E001CB9A1 /* TitleController.cpp in Sources */,
 				62216A8D21EB376E001CB9A1 /* PurchasingService.cpp in Sources */,
 				623B949B21F0E62700B62D9B /* AboutMenuController.cpp in Sources */,
 				62216A8021EB376E001CB9A1 /* LevelGoalDialogView.cpp in Sources */,
-				625698422182392C003A3A9D /* GLKViewControllerExtension.mm in Sources */,
 				62216C3721EB377F001CB9A1 /* MapTutorial.cpp in Sources */,
+				623B94CF21F6357400B62D9B /* FileSystemIOS.mm in Sources */,
 				62216C2B21EB377F001CB9A1 /* BlueprintSlotsFilledAnimation.cpp in Sources */,
 				62216A8421EB376E001CB9A1 /* StoreMenuView.cpp in Sources */,
 				62216A9321EB376E001CB9A1 /* AudioResources.cpp in Sources */,
@@ -3451,6 +3466,7 @@
 				62216C2C21EB377F001CB9A1 /* FlyingBlocksAnimation.cpp in Sources */,
 				623B94AF21F4862800B62D9B /* GameAnalyticsIOS.mm in Sources */,
 				62216C5F21EDDA7E001CB9A1 /* ScrollPanel.cpp in Sources */,
+				623B94D221F6357400B62D9B /* GLKViewControllerExtension.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

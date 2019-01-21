@@ -18,6 +18,7 @@ namespace RowBlast {
     class GuiResources {
     public:
         GuiResources(Pht::IEngine& engine, const CommonResources& commonResources);
+
         const Pht::TextProperties& GetBlackButtonTextProperties(PotentiallyZoomedScreen potentiallyZoomed) const;
         const Pht::TextProperties& GetLargeWhiteButtonTextProperties(PotentiallyZoomedScreen potentiallyZoomed) const;
         const Pht::TextProperties& GetWhiteButtonTextProperties(PotentiallyZoomedScreen potentiallyZoomed) const;
