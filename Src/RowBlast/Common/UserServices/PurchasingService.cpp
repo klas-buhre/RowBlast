@@ -4,6 +4,8 @@
 #include "IEngine.hpp"
 #include "JsonUtil.hpp"
 #include "FileStorage.hpp"
+#include "IAnalytics.hpp"
+#include "AnalyticsEvent.hpp"
 
 using namespace RowBlast;
 
@@ -12,6 +14,41 @@ namespace {
     constexpr auto maxCoinBalance {99500};
     const std::string filename {"purchasing.dat"};
     const std::string coinBalanceMember {"coinBalance"};
+    
+    std::string ToItemId(ProductId productId) {
+        switch (productId) {
+            case ProductId::Currency10Coins:
+                return "10Coins";
+            case ProductId::Currency50Coins:
+                return "50Coins";
+            case ProductId::Currency100Coins:
+                return "100Coins";
+            case ProductId::Currency250Coins:
+                return "250Coins";
+            case ProductId::Currency500Coins:
+                return "500Coins";
+        }
+    }
+    
+    std::string ToCartType(TriggerProduct triggerProduct) {
+        switch (triggerProduct) {
+            case TriggerProduct::Coins:
+                return "Coins";
+            case TriggerProduct::Moves:
+                return "Moves";
+            case TriggerProduct::Lives:
+                return "Lives";
+        }
+    }
+    
+    std::string ToErrorMessage(PurchaseFailureReason reason) {
+        switch (reason) {
+            case PurchaseFailureReason::UserCancelled:
+                return "UserCancelledCoinPurchase";
+            case PurchaseFailureReason::Other:
+                return "CoinPurchaseFailed";
+        }
+    }
 }
 
 PurchasingService::PurchasingService(Pht::IEngine& engine) :
@@ -60,19 +97,32 @@ void PurchasingService::UpdateInPurchasePendingState() {
 
 void PurchasingService::OnPurchaseSucceeded() {
     mState = State::Idle;
-    
     mCoinBalance += mTransaction.mProduct->mNumCoins;
     SaveState();
-    
+
+    Pht::BusinessAnalyticsEvent analyticsEvent {
+        "USD",
+        200,
+        "GoldCoins",
+        ToItemId(mTransaction.mProduct->mId),
+        ToCartType(mTransaction.mTriggerProduct)
+    };
+    mEngine.GetAnalytics().AddEvent(analyticsEvent);
+
     mTransaction.mOnPurchaseSucceeded(*mTransaction.mProduct);
 }
 
 void PurchasingService::OnPurchaseFailed(PurchaseFailureReason reason) {
     mState = State::Idle;
+    
+    Pht::ErrorAnalyticsEvent analyticsEvent {Pht::ErrorSeverity::Info, ToErrorMessage(reason)};
+    mEngine.GetAnalytics().AddEvent(analyticsEvent);
+    
     mTransaction.mOnPurchaseFailed(reason);
 }
 
 void PurchasingService::StartPurchase(ProductId productId,
+                                      TriggerProduct triggerProduct,
                                       const std::function<void(const GoldCoinProduct&)>& onPurchaseSucceeded,
                                       const std::function<void(PurchaseFailureReason)>& onPurchaseFailed) {
     auto* product {GetGoldCoinProduct(productId)};
@@ -84,6 +134,7 @@ void PurchasingService::StartPurchase(ProductId productId,
     }
     
     mTransaction.mProduct = product;
+    mTransaction.mTriggerProduct = triggerProduct;
     mTransaction.mOnPurchaseSucceeded = onPurchaseSucceeded;
     mTransaction.mOnPurchaseFailed = onPurchaseFailed;
     mTransaction.mElapsedTime = 0.0f;

@@ -8,6 +8,8 @@
 #include "AnalyticsEvent.hpp"
 #include "FileStorage.hpp"
 
+#define DEBUG
+
 using namespace Pht;
 
 namespace {
@@ -42,6 +44,21 @@ namespace {
         }
     }
     
+    GAErrorSeverity ToGAErrorSeverity(ErrorSeverity severity) {
+        switch (severity) {
+            case Pht::ErrorSeverity::Debug:
+                return GAErrorSeverityDebug;
+            case Pht::ErrorSeverity::Info:
+                return GAErrorSeverityInfo;
+            case Pht::ErrorSeverity::Warning:
+                return GAErrorSeverityWarning;
+            case Pht::ErrorSeverity::Error:
+                return GAErrorSeverityError;
+            case Pht::ErrorSeverity::Critical:
+                return GAErrorSeverityCritical;
+        }
+    }
+
     class GameAnalyticsIOS: public IAnalytics {
     public:
         void EnableEventSubmission() override {
@@ -54,19 +71,22 @@ namespace {
         void AddEvent(const AnalyticsEvent& event) override {
             switch (event.GetKind()) {
                 case AnalyticsEvent::Kind::Business:
-                    AddBusenessEvent(static_cast<const BusinessEvent&>(event));
+                    AddBusenessEvent(static_cast<const BusinessAnalyticsEvent&>(event));
                     break;
                 case AnalyticsEvent::Kind::Resource:
-                    AddResourceEvent(static_cast<const ResourceEvent&>(event));
+                    AddResourceEvent(static_cast<const ResourceAnalyticsEvent&>(event));
                     break;
                 case AnalyticsEvent::Kind::Progression:
-                    AddProgressionEvent(static_cast<const ProgressionEvent&>(event));
+                    AddProgressionEvent(static_cast<const ProgressionAnalyticsEvent&>(event));
+                    break;
+                case AnalyticsEvent::Kind::Error:
+                    AddErrorEvent(static_cast<const ErrorAnalyticsEvent&>(event));
                     break;
             }
         }
         
     private:
-        void AddBusenessEvent(const BusinessEvent& event) {
+        void AddBusenessEvent(const BusinessAnalyticsEvent& event) {
             [GameAnalytics addBusinessEventWithCurrency:[NSString stringWithUTF8String:event.mCurrency.c_str()]
                            amount:event.mAmount
                            itemType:[NSString stringWithUTF8String:event.mItemType.c_str()]
@@ -75,7 +95,7 @@ namespace {
                            receipt:nil];
         }
         
-        void AddResourceEvent(const ResourceEvent& event) {
+        void AddResourceEvent(const ResourceAnalyticsEvent& event) {
             [GameAnalytics addResourceEventWithFlowType:ToGAResourceFlowType(event.mResourceFlow)
                            currency:[NSString stringWithUTF8String:event.mCurrency.c_str()]
                            amount:@(event.mAmount)
@@ -83,12 +103,17 @@ namespace {
                            itemId:[NSString stringWithUTF8String:event.mItemId.c_str()]];
         }
 
-        void AddProgressionEvent(const ProgressionEvent& event) {
+        void AddProgressionEvent(const ProgressionAnalyticsEvent& event) {
             [GameAnalytics addProgressionEventWithProgressionStatus:ToGAProgressionStatus(event.mProgressionStatus)
                            progression01:[NSString stringWithUTF8String:event.mProgression.c_str()]
                            progression02:nil
                            progression03:nil
                            score:event.mScore];
+        }
+        
+        void AddErrorEvent(const ErrorAnalyticsEvent& event) {
+            [GameAnalytics addErrorEventWithSeverity:ToGAErrorSeverity(event.mSeverity)
+                           message:[NSString stringWithUTF8String:event.mMessage.c_str()]];
         }
     };
 }
@@ -101,6 +126,8 @@ void Pht::InitAnalytics() {
 
     if (!IsEventSubmissionEnabled()) {
         [GameAnalytics setEnabledEventSubmission:NO];
+    } else {
+        [GameAnalytics setEnabledEventSubmission:YES];
     }
 
     NSString* buildVersion = [NSString stringWithUTF8String:GetBuildVersion().c_str()];

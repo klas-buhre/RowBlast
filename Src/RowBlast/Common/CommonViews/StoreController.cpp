@@ -12,13 +12,13 @@ namespace {
     constexpr auto fade {0.72f};
     constexpr auto fadeTime {0.3f};
     
-    int ToExitCriteriaInCoins(StoreController::TriggerProduct triggerProduct) {
+    int ToExitCriteriaInCoins(TriggerProduct triggerProduct) {
         switch (triggerProduct) {
-            case StoreController::TriggerProduct::Moves:
+            case TriggerProduct::Moves:
                 return PurchasingService::addMovesPriceInCoins;
-            case StoreController::TriggerProduct::Lives:
+            case TriggerProduct::Lives:
                 return PurchasingService::refillLivesPriceInCoins;
-            case StoreController::TriggerProduct::Coins:
+            case TriggerProduct::Coins:
                 return 0;
         }
     }
@@ -162,6 +162,7 @@ void StoreController::StartPurchase(ProductId productId) {
     
     auto& purchasingService {mUserServices.GetPurchasingService()};
     purchasingService.StartPurchase(productId,
+                                    mTriggerProduct,
                                     [this] (const GoldCoinProduct& product) {
                                         mSpinningWheelEffect.Stop();
                                         GoToPurchaseSuccessfulDialogState(product);

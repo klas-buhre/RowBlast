@@ -24,6 +24,9 @@ Backlog:
   -GUI:
     -How to play dialog.
   -Make ready for release:
+    -Go through all user services and check that all state store/load is enabled.
+    -Make sure analytics is enabled and that user terms accept is saved and checked.
+    -Make sure the correct product price in cents and receipt is sent to analytics.
     -Do a soft launch in a couple of countries? Maybe the nordic countries and UK? Only english
      localization is needed for that.
     -Make launch screens for all supported device resolutions. Should say Teleporter Studios. The
@@ -35,6 +38,11 @@ Backlog:
 Ongoing tasks:
     -Analytics
       -Call AddEvent at all the proper places.
+      -Maybe use progression02 in addProgressionEventWithProgressionStatus for adding progress
+       through the tutorial?
+      -Could maybe use [GameAnalytics addDesignEventWithEventId:@"BoughtLives:Level3" value:@]; and
+       [GameAnalytics addDesignEventWithEventId:@"BoughtMoves:Level3" value:@totalMovesUsed];
+
 
 
 

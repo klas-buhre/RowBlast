@@ -17,7 +17,7 @@ namespace RowBlast {
         Currency250Coins,
         Currency500Coins
     };
-    
+
     struct GoldCoinProduct {
         ProductId mId {ProductId::Currency10Coins};
         int mNumCoins {0};
@@ -29,12 +29,19 @@ namespace RowBlast {
         Other
     };
     
+    enum class TriggerProduct {
+        Coins,
+        Moves,
+        Lives
+    };
+    
     class PurchasingService {
     public:
         PurchasingService(Pht::IEngine& engine);
         
         void Update();
         void StartPurchase(ProductId productId,
+                           TriggerProduct triggerProduct,
                            const std::function<void(const GoldCoinProduct&)>& onPurchaseSucceeded,
                            const std::function<void(PurchaseFailureReason)>& onPurchaseFailed);
         const GoldCoinProduct* GetGoldCoinProduct(ProductId productId) const;
@@ -63,6 +70,7 @@ namespace RowBlast {
         
         struct Transaction {
             const GoldCoinProduct* mProduct {nullptr};
+            TriggerProduct mTriggerProduct {TriggerProduct::Coins};
             std::function<void(const GoldCoinProduct&)> mOnPurchaseSucceeded;
             std::function<void(PurchaseFailureReason)> mOnPurchaseFailed;
             float mElapsedTime {0.0f};

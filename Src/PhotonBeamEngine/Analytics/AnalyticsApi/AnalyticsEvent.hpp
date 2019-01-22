@@ -9,7 +9,8 @@ namespace Pht {
         enum class Kind {
             Business,
             Resource,
-            Progression
+            Progression,
+            Error
         };
         
         AnalyticsEvent(Kind kind);
@@ -22,13 +23,13 @@ namespace Pht {
         Kind mKind;
     };
 
-    class BusinessEvent: public AnalyticsEvent {
+    class BusinessAnalyticsEvent: public AnalyticsEvent {
     public:
-        BusinessEvent(const std::string& currency,
-                      int amount, // In cents.
-                      const std::string& itemType,
-                      const std::string& itemId,
-                      const std::string& cartType);
+        BusinessAnalyticsEvent(const std::string& currency,
+                               int amount, // In cents.
+                               const std::string& itemType,
+                               const std::string& itemId,
+                               const std::string& cartType);
         
         std::string mCurrency;
         int mAmount;
@@ -42,13 +43,13 @@ namespace Pht {
         Sink
     };
     
-    class ResourceEvent: public AnalyticsEvent {
+    class ResourceAnalyticsEvent: public AnalyticsEvent {
     public:
-        ResourceEvent(ResourceFlow resourceFlow,
-                      const std::string& currency,
-                      float amount,
-                      const std::string& itemType,
-                      const std::string& itemId);
+        ResourceAnalyticsEvent(ResourceFlow resourceFlow,
+                               const std::string& currency,
+                               float amount,
+                               const std::string& itemType,
+                               const std::string& itemId);
         
         ResourceFlow mResourceFlow;
         std::string mCurrency;
@@ -63,15 +64,31 @@ namespace Pht {
         Complete
     };
     
-    class ProgressionEvent: public AnalyticsEvent {
+    class ProgressionAnalyticsEvent: public AnalyticsEvent {
     public:
-        ProgressionEvent(ProgressionStatus progressionStatus,
-                         const std::string& progression,
-                         int score);
+        ProgressionAnalyticsEvent(ProgressionStatus progressionStatus,
+                                  const std::string& progression,
+                                  int score);
         
         ProgressionStatus mProgressionStatus;
         std::string mProgression;
         int mScore;
+    };
+    
+    enum class ErrorSeverity {
+        Debug,
+        Info,
+        Warning,
+        Error,
+        Critical
+    };
+
+    class ErrorAnalyticsEvent: public AnalyticsEvent {
+    public:
+        ErrorAnalyticsEvent(ErrorSeverity severity, const std::string& message);
+        
+        ErrorSeverity mSeverity;
+        std::string mMessage;
     };
 }
 

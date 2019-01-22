@@ -32,13 +32,7 @@ namespace RowBlast {
             None,
             Done
         };
-        
-        enum class TriggerProduct {
-            Coins,
-            Moves,
-            Lives
-        };
-        
+                
         StoreController(Pht::IEngine& engine,
                         const CommonResources& commonResources,
                         UserServices& userServices,

@@ -5,11 +5,11 @@ using namespace Pht;
 AnalyticsEvent::AnalyticsEvent(Kind kind) :
     mKind {kind} {}
 
-BusinessEvent::BusinessEvent(const std::string& currency,
-                             int amount,
-                             const std::string& itemType,
-                             const std::string& itemId,
-                             const std::string& cartType) :
+BusinessAnalyticsEvent::BusinessAnalyticsEvent(const std::string& currency,
+                                               int amount,
+                                               const std::string& itemType,
+                                               const std::string& itemId,
+                                               const std::string& cartType) :
     AnalyticsEvent {AnalyticsEvent::Kind::Business},
     mCurrency {currency},
     mAmount {amount},
@@ -17,11 +17,11 @@ BusinessEvent::BusinessEvent(const std::string& currency,
     mItemId {itemId},
     mCartType {cartType} {}
 
-ResourceEvent::ResourceEvent(ResourceFlow resourceFlow,
-                             const std::string& currency,
-                             float amount,
-                             const std::string& itemType,
-                             const std::string& itemId) :
+ResourceAnalyticsEvent::ResourceAnalyticsEvent(ResourceFlow resourceFlow,
+                                               const std::string& currency,
+                                               float amount,
+                                               const std::string& itemType,
+                                               const std::string& itemId) :
     AnalyticsEvent {AnalyticsEvent::Kind::Resource},
     mResourceFlow {resourceFlow},
     mCurrency {currency},
@@ -29,10 +29,15 @@ ResourceEvent::ResourceEvent(ResourceFlow resourceFlow,
     mItemType {itemType},
     mItemId {itemId} {}
 
-ProgressionEvent::ProgressionEvent(ProgressionStatus progressionStatus,
-                                   const std::string& progression,
-                                   int score) :
+ProgressionAnalyticsEvent::ProgressionAnalyticsEvent(ProgressionStatus progressionStatus,
+                                                     const std::string& progression,
+                                                     int score) :
     AnalyticsEvent {AnalyticsEvent::Kind::Progression},
     mProgressionStatus {progressionStatus},
     mProgression {progression},
     mScore {score} {}
+
+ErrorAnalyticsEvent::ErrorAnalyticsEvent(ErrorSeverity severity, const std::string& message) :
+    AnalyticsEvent {AnalyticsEvent::Kind::Error},
+    mSeverity {severity},
+    mMessage {message} {}
