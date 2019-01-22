@@ -4,6 +4,8 @@
 #include "IEngine.hpp"
 #include "IInput.hpp"
 #include "ISceneManager.hpp"
+#include "IAnalytics.hpp"
+#include "AnalyticsEvent.hpp"
 
 // Game includes.
 #include "LevelLoader.hpp"
@@ -407,8 +409,13 @@ GameController::Command GameController::UpdateInPausedStateNoLivesDialog() {
 }
 
 void GameController::RefillLives() {
-    mUserServices.GetPurchasingService().WithdrawCoins(PurchasingService::refillLivesPriceInCoins);
+    mUserServices.GetPurchasingService().WithdrawCoins(CoinWithdrawReason::RefillLives);
     mUserServices.GetLifeService().RefillLives();
+    
+    Pht::CustomAnalyticsEvent analyticsEvent {
+        "BoughtLives:Level" + std::to_string(mLevel->GetId())
+    };
+    mEngine.GetAnalytics().AddEvent(analyticsEvent);
 }
 
 GameController::Command GameController::UpdateRestartConfirmationDialog() {
@@ -607,8 +614,14 @@ void GameController::UpdateInOutOfMovesStateStore() {
 }
 
 void GameController::AddMovesAndGoToPlayingState() {
-    mUserServices.GetPurchasingService().WithdrawCoins(PurchasingService::addMovesPriceInCoins);
+    mUserServices.GetPurchasingService().WithdrawCoins(CoinWithdrawReason::AddMoves);
     mGameLogic.SetMovesLeft(5);
+    
+    Pht::CustomAnalyticsEvent analyticsEvent {
+        "BoughtMoves:Level" + std::to_string(mLevel->GetId())
+    };
+    mEngine.GetAnalytics().AddEvent(analyticsEvent);
+    
     GoToPlayingState();
 }
 

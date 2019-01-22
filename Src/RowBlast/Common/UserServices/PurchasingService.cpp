@@ -49,6 +49,24 @@ namespace {
                 return "CoinPurchaseFailed";
         }
     }
+    
+    int CalcNumCoinsToWithdraw(CoinWithdrawReason coinWithdrawReason) {
+        switch (coinWithdrawReason) {
+            case CoinWithdrawReason::AddMoves:
+                return PurchasingService::addMovesPriceInCoins;
+            case CoinWithdrawReason::RefillLives:
+                return PurchasingService::refillLivesPriceInCoins;
+        }
+    }
+    
+    std::string ToItemType(CoinWithdrawReason coinWithdrawReason) {
+        switch (coinWithdrawReason) {
+            case CoinWithdrawReason::AddMoves:
+                return "moves";
+            case CoinWithdrawReason::RefillLives:
+                return "lives";
+        }
+    }
 }
 
 PurchasingService::PurchasingService(Pht::IEngine& engine) :
@@ -100,15 +118,27 @@ void PurchasingService::OnPurchaseSucceeded() {
     mCoinBalance += mTransaction.mProduct->mNumCoins;
     SaveState();
 
-    Pht::BusinessAnalyticsEvent analyticsEvent {
+    Pht::BusinessAnalyticsEvent businessAnalyticsEvent {
         "USD",
         200,
         "GoldCoins",
         ToItemId(mTransaction.mProduct->mId),
         ToCartType(mTransaction.mTriggerProduct)
     };
-    mEngine.GetAnalytics().AddEvent(analyticsEvent);
-
+    
+    auto& analytics {mEngine.GetAnalytics()};
+    analytics.AddEvent(businessAnalyticsEvent);
+    
+    Pht::ResourceAnalyticsEvent resourceAnalyticsEvent {
+        Pht::ResourceFlow::Source,
+        "coins",
+        static_cast<float>(mTransaction.mProduct->mNumCoins),
+        "coins",
+        ToItemId(mTransaction.mProduct->mId)
+    };
+    
+    analytics.AddEvent(resourceAnalyticsEvent);
+    
     mTransaction.mOnPurchaseSucceeded(*mTransaction.mProduct);
 }
 
@@ -150,7 +180,9 @@ const GoldCoinProduct* PurchasingService::GetGoldCoinProduct(ProductId productId
     return nullptr;
 }
 
-void PurchasingService::WithdrawCoins(int numCoinsToWithdraw) {
+void PurchasingService::WithdrawCoins(CoinWithdrawReason coinWithdrawReason) {
+    auto numCoinsToWithdraw {CalcNumCoinsToWithdraw(coinWithdrawReason)};
+    
     mCoinBalance -= numCoinsToWithdraw;
     
     if (mCoinBalance < 0) {
@@ -158,6 +190,15 @@ void PurchasingService::WithdrawCoins(int numCoinsToWithdraw) {
     }
 
     SaveState();
+    
+    Pht::ResourceAnalyticsEvent resourceAnalyticsEvent {
+        Pht::ResourceFlow::Sink,
+        "coins",
+        static_cast<float>(numCoinsToWithdraw),
+        ToItemType(coinWithdrawReason),
+        "Consumed"
+    };
+    mEngine.GetAnalytics().AddEvent(resourceAnalyticsEvent);
 }
 
 bool PurchasingService::CanAfford(int priceInCoins) const {

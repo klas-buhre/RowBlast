@@ -10,6 +10,8 @@
 #include "InputEvent.hpp"
 #include "MathUtils.hpp"
 #include "ISceneManager.hpp"
+#include "IAnalytics.hpp"
+#include "AnalyticsEvent.hpp"
 
 // Game includes.
 #include "SettingsMenuController.hpp"
@@ -260,8 +262,11 @@ void MapController::UpdateInAddLivesStateStore() {
 }
 
 void MapController::RefillLives() {
-    mUserServices.GetPurchasingService().WithdrawCoins(PurchasingService::refillLivesPriceInCoins);
+    mUserServices.GetPurchasingService().WithdrawCoins(CoinWithdrawReason::RefillLives);
     mUserServices.GetLifeService().RefillLives();
+    
+    Pht::CustomAnalyticsEvent analyticsEvent {"BoughtLives:Map"};
+    mEngine.GetAnalytics().AddEvent(analyticsEvent);
 }
 
 void MapController::UpdateLivesDialog() {

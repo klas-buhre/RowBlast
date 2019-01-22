@@ -37,11 +37,9 @@ Backlog:
 
 Ongoing tasks:
     -Analytics
-      -Call AddEvent at all the proper places.
+      -Do analytics/tracking for progress.
       -Maybe use progression02 in addProgressionEventWithProgressionStatus for adding progress
        through the tutorial?
-      -Could maybe use [GameAnalytics addDesignEventWithEventId:@"BoughtLives:Level3" value:@]; and
-       [GameAnalytics addDesignEventWithEventId:@"BoughtMoves:Level3" value:@totalMovesUsed];
 
 
 

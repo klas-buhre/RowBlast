@@ -35,6 +35,11 @@ namespace RowBlast {
         Lives
     };
     
+    enum class CoinWithdrawReason {
+        AddMoves,
+        RefillLives
+    };
+    
     class PurchasingService {
     public:
         PurchasingService(Pht::IEngine& engine);
@@ -45,7 +50,7 @@ namespace RowBlast {
                            const std::function<void(const GoldCoinProduct&)>& onPurchaseSucceeded,
                            const std::function<void(PurchaseFailureReason)>& onPurchaseFailed);
         const GoldCoinProduct* GetGoldCoinProduct(ProductId productId) const;
-        void WithdrawCoins(int numCoinsToWithdraw);
+        void WithdrawCoins(CoinWithdrawReason coinWithdrawReason);
         bool CanAfford(int priceInCoins) const;
         
         int GetCoinBalance() const {

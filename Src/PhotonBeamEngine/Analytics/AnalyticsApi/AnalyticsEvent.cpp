@@ -41,3 +41,7 @@ ErrorAnalyticsEvent::ErrorAnalyticsEvent(ErrorSeverity severity, const std::stri
     AnalyticsEvent {AnalyticsEvent::Kind::Error},
     mSeverity {severity},
     mMessage {message} {}
+
+CustomAnalyticsEvent::CustomAnalyticsEvent(const std::string& id) :
+    AnalyticsEvent {AnalyticsEvent::Kind::Custom},
+    mId {id} {}

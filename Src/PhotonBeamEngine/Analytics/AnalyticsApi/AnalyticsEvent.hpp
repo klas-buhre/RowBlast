@@ -10,7 +10,8 @@ namespace Pht {
             Business,
             Resource,
             Progression,
-            Error
+            Error,
+            Custom
         };
         
         AnalyticsEvent(Kind kind);
@@ -89,6 +90,13 @@ namespace Pht {
         
         ErrorSeverity mSeverity;
         std::string mMessage;
+    };
+    
+    class CustomAnalyticsEvent: public AnalyticsEvent {
+    public:
+        CustomAnalyticsEvent(const std::string& id);
+        
+        std::string mId;
     };
 }
 

@@ -82,6 +82,9 @@ namespace {
                 case AnalyticsEvent::Kind::Error:
                     AddErrorEvent(static_cast<const ErrorAnalyticsEvent&>(event));
                     break;
+                case AnalyticsEvent::Kind::Custom:
+                    AddCustomEvent(static_cast<const CustomAnalyticsEvent&>(event));
+                    break;
             }
         }
         
@@ -115,6 +118,10 @@ namespace {
             [GameAnalytics addErrorEventWithSeverity:ToGAErrorSeverity(event.mSeverity)
                            message:[NSString stringWithUTF8String:event.mMessage.c_str()]];
         }
+        
+        void AddCustomEvent(const CustomAnalyticsEvent& event) {
+            [GameAnalytics addDesignEventWithEventId:[NSString stringWithUTF8String:event.mId.c_str()]];
+        }
     };
 }
 
@@ -133,7 +140,7 @@ void Pht::InitAnalytics() {
     NSString* buildVersion = [NSString stringWithUTF8String:GetBuildVersion().c_str()];
     [GameAnalytics configureBuild:buildVersion];
     [GameAnalytics configureAvailableResourceCurrencies:@[@"coins"]];
-    [GameAnalytics configureAvailableResourceItemTypes:@[@"moves", @"lives"]];
+    [GameAnalytics configureAvailableResourceItemTypes:@[@"moves", @"lives", @"coins"]];
     
     NSString* analyticsGameKey = [NSString stringWithUTF8String:GetAnalyticsGameKey().c_str()];
     NSString* analyticsGameSecret = [NSString stringWithUTF8String:GetAnalyticsGameSecret().c_str()];
