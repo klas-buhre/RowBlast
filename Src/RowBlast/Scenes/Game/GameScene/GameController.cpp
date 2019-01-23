@@ -413,7 +413,7 @@ void GameController::RefillLives() {
     mUserServices.GetLifeService().RefillLives();
     
     Pht::CustomAnalyticsEvent analyticsEvent {
-        "BoughtLives:Level" + std::to_string(mLevel->GetId())
+        "Purchases:BoughtLives:Level" + std::to_string(mLevel->GetId())
     };
     mEngine.GetAnalytics().AddEvent(analyticsEvent);
 }
@@ -626,7 +626,7 @@ void GameController::AddMovesAndGoToPlayingState() {
     mGameLogic.SetMovesLeft(5);
     
     Pht::CustomAnalyticsEvent analyticsEvent {
-        "BoughtMoves:Level" + std::to_string(mLevel->GetId())
+        "Purchases:BoughtMoves:Level" + std::to_string(mLevel->GetId())
     };
     mEngine.GetAnalytics().AddEvent(analyticsEvent);
     

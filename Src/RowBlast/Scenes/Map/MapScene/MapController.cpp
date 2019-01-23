@@ -265,7 +265,7 @@ void MapController::RefillLives() {
     mUserServices.GetPurchasingService().WithdrawCoins(CoinWithdrawReason::RefillLives);
     mUserServices.GetLifeService().RefillLives();
     
-    Pht::CustomAnalyticsEvent analyticsEvent {"BoughtLives:Map"};
+    Pht::CustomAnalyticsEvent analyticsEvent {"Purchases:BoughtLives:Map"};
     mEngine.GetAnalytics().AddEvent(analyticsEvent);
 }
 

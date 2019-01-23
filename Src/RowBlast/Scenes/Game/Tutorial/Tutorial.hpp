@@ -43,7 +43,7 @@ namespace RowBlast {
         void OnPause();
         void OnResumePlaying();
         void OnNewMove(int numMovesUsedIncludingCurrent);
-        void OnSelectMove();
+        void OnSelectMove(int numMovesUsedIncludingCurrent);
         void OnSwitchPiece(int numMovesUsedIncludingCurrent, const Piece& pieceType);
         void OnChangeVisibleMoves(int numMovesUsedIncludingCurrent, const Move& firstMove);
         bool IsSwitchPieceAllowed(int numMovesUsedIncludingCurrent) const;
@@ -70,7 +70,9 @@ namespace RowBlast {
         void OnNewMoveFirstLevel(int numMovesUsedIncludingCurrent);
         void OnNewMoveSecondLevel(int numMovesUsedIncludingCurrent);
         void SetActiveViewController(Controller controller);
+        void SendAnayticsEvent(const std::string& id);
         
+        Pht::IEngine& mEngine;
         GameScene& mScene;
         const Level* mLevel {nullptr};
         Controller mActiveViewController {Controller::None};

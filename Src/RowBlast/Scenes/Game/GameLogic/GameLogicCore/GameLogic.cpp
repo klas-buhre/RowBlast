@@ -501,7 +501,7 @@ void GameLogic::DropFallingPiece() {
 }
 
 void GameLogic::SelectMove(const Move& move) {
-    mTutorial.OnSelectMove();
+    mTutorial.OnSelectMove(GetMovesUsedIncludingCurrent());
     mEngine.GetAudio().PlaySoundWithDelay(static_cast<Pht::AudioResourceId>(SoundId::DropWhoosh),
                                           whooshSoundDelay);
     mFallingPieceAnimation.Start(*move.mLastMovement);

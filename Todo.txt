@@ -38,7 +38,6 @@ Backlog:
 
 Ongoing tasks:
     -Analytics
-      -Use custom event for tracking progress through the tutorial. Should work with funnel.
       -Use custom event for tracking switching control type.
 
 

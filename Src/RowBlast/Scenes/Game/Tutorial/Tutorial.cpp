@@ -4,6 +4,8 @@
 
 // Engine includes.
 #include "IEngine.hpp"
+#include "IAnalytics.hpp"
+#include "AnalyticsEvent.hpp"
 
 // Game includes.
 #include "GameScene.hpp"
@@ -27,6 +29,7 @@ namespace {
 }
 
 Tutorial::Tutorial(Pht::IEngine& engine, GameScene& scene, const CommonResources& commonResources) :
+    mEngine {engine},
     mScene {scene},
     mFadeEffect {
         engine.GetSceneManager(),
@@ -133,45 +136,58 @@ void Tutorial::Update() {
 }
 
 Tutorial::Result Tutorial::UpdateDialogs() {
+    auto result {Result::TutorialHasFocus};
+    
     switch (mActiveViewController) {
         case Controller::CascadingDialog:
             if (mCascadingDialogController.Update() == CascadingDialogController::Result::Play) {
                 SetActiveViewController(Controller::None);
-                return Result::Play;
+                result = Result::Play;
             }
             break;
         case Controller::SameColorDialog:
             if (mSameColorDialogController.Update() == SameColorDialogController::Result::Play) {
                 SetActiveViewController(Controller::None);
-                return Result::Play;
+                result = Result::Play;
             }
             break;
         case Controller::LaserDialog:
             if (mLaserDialogController.Update() == LaserDialogController::Result::Play) {
                 SetActiveViewController(Controller::None);
-                return Result::Play;
+                result = Result::Play;
             }
             break;
         case Controller::BombDialog:
             if (mBombDialogController.Update() == BombDialogController::Result::Play) {
                 SetActiveViewController(Controller::None);
-                return Result::Play;
+                result = Result::Play;
             }
             break;
         case Controller::LevelBombDialog:
             if (mLevelBombDialogController.Update() == LevelBombDialogController::Result::Play) {
                 SetActiveViewController(Controller::None);
-                return Result::Play;
+                result = Result::Play;
             }
             break;
         default:
             assert(!"Unsupported dialog");
+            break;
     }
     
-    return Result::TutorialHasFocus;
+    if (result == Result::Play) {
+        SendAnayticsEvent("Step1Complete");
+    }
+    
+    return result;
 }
 
 Tutorial::Result Tutorial::OnLevelStart() {
+    if (!mLevel->IsPartOfTutorial()) {
+        return Result::Play;
+    }
+
+    SendAnayticsEvent("Start");
+    
     switch (mLevel->GetId()) {
         case 3:
             SetActiveViewController(Controller::CascadingDialog);
@@ -242,17 +258,21 @@ void Tutorial::OnNewMoveFirstLevel(int numMovesUsedIncludingCurrent) {
             break;
         case 2:
             mPlacePieceWindowController.Close();
+            SendAnayticsEvent("Step1Complete");
             break;
         case 3:
             mFillRowsWindowController.Close();
+            SendAnayticsEvent("Step2Complete");
             break;
         case 4:
             SetActiveViewController(Controller::SwitchPieceWindow);
             mSwitchPieceWindowController.SetUp();
             mHandAnimation.Start(switchPieceHandPosition, -180.0f);
+            SendAnayticsEvent("Step3Complete");
             break;
         default:
             assert(!"Unsupported number of used moves");
+            break;
     }
 }
 
@@ -267,15 +287,29 @@ void Tutorial::OnNewMoveSecondLevel(int numMovesUsedIncludingCurrent) {
             SetActiveViewController(Controller::OtherMovesWindow);
             mOtherMovesWindowController.SetUp();
             mHandAnimation.Start(otherMovesHandPosition2, 90.0f);
+            SendAnayticsEvent("Step1Complete");
             break;
         default:
             break;
     }
 }
 
-void Tutorial::OnSelectMove() {
+void Tutorial::OnSelectMove(int numMovesUsedIncludingCurrent) {
     if (!mLevel->IsPartOfTutorial()) {
         return;
+    }
+    
+    switch (mLevel->GetId()) {
+        case 1:
+            if (numMovesUsedIncludingCurrent == 4) {
+                SendAnayticsEvent("Step4Complete");
+            }
+            break;
+        case 2:
+            if (numMovesUsedIncludingCurrent == 2) {
+                SendAnayticsEvent("Step2Complete");
+            }
+            break;
     }
     
     mHandAnimation.Stop();
@@ -438,4 +472,12 @@ bool Tutorial::IsUndoMoveAllowed(int numMovesUsedIncludingCurrent) const {
         default:
             return true;
     }
+}
+
+void Tutorial::SendAnayticsEvent(const std::string& id) {
+    Pht::CustomAnalyticsEvent analyticsEvent {
+        "Tutorial:Level" + std::to_string(mLevel->GetId()) + ":" + id
+    };
+    
+    mEngine.GetAnalytics().AddEvent(analyticsEvent);
 }
