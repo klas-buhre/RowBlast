@@ -107,11 +107,18 @@ namespace {
         }
 
         void AddProgressionEvent(const ProgressionAnalyticsEvent& event) {
-            [GameAnalytics addProgressionEventWithProgressionStatus:ToGAProgressionStatus(event.mProgressionStatus)
-                           progression01:[NSString stringWithUTF8String:event.mProgression.c_str()]
-                           progression02:nil
-                           progression03:nil
-                           score:event.mScore];
+            if (event.mScore.HasValue()) {
+                [GameAnalytics addProgressionEventWithProgressionStatus:ToGAProgressionStatus(event.mProgressionStatus)
+                               progression01:[NSString stringWithUTF8String:event.mProgression.c_str()]
+                               progression02:nil
+                               progression03:nil
+                               score:event.mScore.GetValue()];
+            } else {
+                [GameAnalytics addProgressionEventWithProgressionStatus:ToGAProgressionStatus(event.mProgressionStatus)
+                               progression01:[NSString stringWithUTF8String:event.mProgression.c_str()]
+                               progression02:nil
+                               progression03:nil];
+            }
         }
         
         void AddErrorEvent(const ErrorAnalyticsEvent& event) {

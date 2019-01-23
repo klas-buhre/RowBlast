@@ -95,6 +95,11 @@ void LevelCompletedController::Start() {
     } else {
         mWaitTime = waitTime;
     }
+    
+    auto totalNumMovesUsed {mGameLogic.GetMovesUsedIncludingCurrent()};
+    auto numStars {ProgressService::CalculateNumStars(totalNumMovesUsed, mLevel->GetStarLimits())};
+
+    mUserServices.CompleteLevel(mLevel->GetId(), totalNumMovesUsed, numStars);
 }
 
 void LevelCompletedController::GoToObjectiveAchievedAnimationState() {
@@ -276,19 +281,7 @@ void LevelCompletedController::UpdateInStarsAppearingAnimationState() {
 LevelCompletedDialogController::Result LevelCompletedController::UpdateLevelCompletedDialog() {
     UpdateFireworksAndConfetti();
     mStarsAnimation.Update();
-    
     mFadeEffect.Update(mEngine.GetLastFrameSeconds());
 
-    auto result {mGameViewControllers.GetLevelCompletedDialogController().Update()};
-    
-    if (result != LevelCompletedDialogController::Result::None) {
-        auto numStars {
-            ProgressService::CalculateNumStars(mGameLogic.GetMovesUsedIncludingCurrent(),
-                                               mLevel->GetStarLimits())
-        };
-        
-        mUserServices.CompleteLevel(mLevel->GetId(), numStars);
-    }
-    
-    return result;
+    return mGameViewControllers.GetLevelCompletedDialogController().Update();
 }

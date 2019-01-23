@@ -252,7 +252,7 @@ void GameController::ChangeGameState(GameLogic::Result gameLogicResult) {
         case GameLogic::Result::GameOver:
             mState = GameState::GameOver;
             GoToGameOverStateGameOverDialog();
-            mUserServices.GetLifeService().FailLevel();
+            mUserServices.FailLevel(mLevel->GetId());
             break;
         case GameLogic::Result::LevelCompleted:
             mState = GameState::LevelCompleted;
@@ -424,16 +424,14 @@ GameController::Command GameController::UpdateRestartConfirmationDialog() {
     switch (mGameViewControllers.GetRestartConfirmationDialogController().Update()) {
         case RestartConfirmationDialogController::Result::None:
             break;
-        case RestartConfirmationDialogController::Result::RestartLevel: {
-            auto& lifeService {mUserServices.GetLifeService()};
-            if (lifeService.GetNumLives() > 0) {
+        case RestartConfirmationDialogController::Result::RestartLevel:
+            if (mUserServices.GetLifeService().GetNumLives() > 0) {
                 command = Command::RestartLevel;
-                lifeService.FailLevel();
+                mUserServices.FailLevel(mLevel->GetId());
             } else {
                 GoToPausedStateNoLivesDialog();
             }
             break;
-        }
         case RestartConfirmationDialogController::Result::DoNotRestartGame:
             GoToPausedStateGameMenu(SlidingMenuAnimation::UpdateFade::No,
                                     SlidingMenuAnimation::SlideDirection::Right);
@@ -450,7 +448,7 @@ GameController::Command GameController::UpdateMapConfirmationDialog() {
         case MapConfirmationDialogController::Result::None:
             break;
         case MapConfirmationDialogController::Result::GoToMap: {
-            mUserServices.GetLifeService().FailLevel();
+            mUserServices.FailLevel(mLevel->GetId());
             command = Command::GoToMap;
             break;
         }
@@ -575,27 +573,37 @@ GameController::Command GameController::UpdateOutOfMovesDialog() {
     switch (mGameViewControllers.GetOutOfMovesDialogController().Update()) {
         case OutOfMovesDialogController::Result::None:
             break;
-        case OutOfMovesDialogController::Result::PlayOn: {
+        case OutOfMovesDialogController::Result::PlayOn:
             if (mUserServices.GetPurchasingService().CanAfford(PurchasingService::addMovesPriceInCoins)) {
                 AddMovesAndGoToPlayingState();
             } else {
                 GoToOutOfMovesStateStore();
             }
             break;
-        }
-        case OutOfMovesDialogController::Result::BackToMap: {
-            auto& lifeService {mUserServices.GetLifeService()};
-            lifeService.FailLevel();
-            if (lifeService.GetNumLives() > 0) {
+        case OutOfMovesDialogController::Result::BackToMap:
+            mUserServices.FailLevel(mLevel->GetId(), CalculateProgressForAnalytics());
+            if (mUserServices.GetLifeService().GetNumLives() > 0) {
                 command = Command::RestartLevel;
             } else {
                 command = Command::GoToMap;
             }
             break;
-        }
     }
     
     return command;
+}
+
+int GameController::CalculateProgressForAnalytics() {
+    switch (mLevel->GetObjective()) {
+        case Level::Objective::Clear:
+        case Level::Objective::Build:
+            return mGameLogic.GetNumObjectsLeftToClear();
+        case Level::Objective::BringDownTheAsteroid: {
+            auto asteroidRow {mField.CalculateAsteroidRow()};
+            assert(asteroidRow.HasValue());
+            return asteroidRow.GetValue();
+        }
+    }
 }
 
 void GameController::UpdateInOutOfMovesStateStore() {

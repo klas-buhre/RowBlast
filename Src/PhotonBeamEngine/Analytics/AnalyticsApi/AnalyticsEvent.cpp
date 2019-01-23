@@ -31,7 +31,7 @@ ResourceAnalyticsEvent::ResourceAnalyticsEvent(ResourceFlow resourceFlow,
 
 ProgressionAnalyticsEvent::ProgressionAnalyticsEvent(ProgressionStatus progressionStatus,
                                                      const std::string& progression,
-                                                     int score) :
+                                                     Pht::Optional<int> score) :
     AnalyticsEvent {AnalyticsEvent::Kind::Progression},
     mProgressionStatus {progressionStatus},
     mProgression {progression},

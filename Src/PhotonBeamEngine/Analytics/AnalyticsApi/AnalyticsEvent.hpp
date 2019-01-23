@@ -3,6 +3,8 @@
 
 #include <string>
 
+#include "Optional.hpp"
+
 namespace Pht {
     class AnalyticsEvent {
     public:
@@ -69,11 +71,11 @@ namespace Pht {
     public:
         ProgressionAnalyticsEvent(ProgressionStatus progressionStatus,
                                   const std::string& progression,
-                                  int score);
+                                  Pht::Optional<int> score = Pht::Optional<int> {});
         
         ProgressionStatus mProgressionStatus;
         std::string mProgression;
-        int mScore;
+        Pht::Optional<int> mScore;
     };
     
     enum class ErrorSeverity {

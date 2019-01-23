@@ -97,7 +97,7 @@ bool LifeService::HasFullNumLives() const {
 }
 
 //
-// Cannot prevent against time cheats since the the system_clock is affected by the user changing
+// Cannot prevent time cheats since the the system_clock is affected by the user changing
 // the time in the OS. One solution that was tested was to use the steady_clock, which is not
 // affected by changing the time. However, the steady_clock resets at each reboot on iOS. Probably
 // need to get the time from a server for reliably protecting against time cheats. For more info,

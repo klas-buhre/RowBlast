@@ -24,6 +24,7 @@ Backlog:
   -GUI:
     -How to play dialog.
   -Make ready for release:
+    -Update mail address in legal documents.
     -Go through all user services and check that all state store/load is enabled.
     -Make sure analytics is enabled and that user terms accept is saved and checked.
     -Make sure the correct product price in cents and receipt is sent to analytics.
@@ -37,9 +38,8 @@ Backlog:
 
 Ongoing tasks:
     -Analytics
-      -Do analytics/tracking for progress.
-      -Maybe use progression02 in addProgressionEventWithProgressionStatus for adding progress
-       through the tutorial?
+      -Use custom event for tracking progress through the tutorial. Should work with funnel.
+      -Use custom event for tracking switching control type.
 
 
 
