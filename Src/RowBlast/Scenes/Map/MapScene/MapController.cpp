@@ -415,6 +415,7 @@ MapController::Command MapController::HandlePinClick(const MapPin& pin) {
     
     switch (mapPlace.GetKind()) {
         case MapPlace::Kind::MapLevel:
+            mTutorial.OnLevelClick();
             if (mUserServices.GetLifeService().GetNumLives() > 0) {
                 GoToStartLevelStateLevelGoalDialog(pin.GetLevel());
             } else {
@@ -422,6 +423,7 @@ MapController::Command MapController::HandlePinClick(const MapPin& pin) {
             }
             break;
         case MapPlace::Kind::Portal: {
+            mTutorial.OnPortalClick();
             auto& portal {mapPlace.GetPortal()};
             mScene.SetWorldId(portal.mDestinationWorldId);
             mScene.SetClickedPortalNextLevelId(portal.mNextLevelId);

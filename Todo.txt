@@ -1,9 +1,8 @@
 Backlog:
   -Engine:
-    -Analytics.
     -Purchasing.
-    -Net/HTTP.
     -Metal.
+    -Net/HTTP.
     -Android.
 
   -Gameplay:
@@ -39,10 +38,6 @@ Backlog:
 Ongoing tasks:
     -The title scene could say "Tap to begin!" instead, and the text should be flashing like in
      Super Mario Run.
-    -Analytics
-      -Track map tutorial.
-        -MapTutorial::StartLevel1:Start/Complete
-        -MapTutorial::GoToWorld2:Start/Complete
 
 
 
@@ -143,6 +138,7 @@ Ordered Backlog:
         Done
     -Analytics.
         Cost: 17
+        Done
     -Levels for the space world.
         Cost: 7
     -Purchasing.

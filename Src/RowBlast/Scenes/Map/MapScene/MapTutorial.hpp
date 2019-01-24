@@ -18,13 +18,21 @@ namespace RowBlast {
         
         void Init(int worldId);
         void Update();
+        void OnLevelClick();
+        void OnPortalClick();
 
     private:
+        void SendAnalyticsEvent(const std::string& step, const std::string& status);
+
         enum class State {
-            Active,
+            StartLevel1StepStart,
+            StartLevel1StepComplete,
+            GoToWorld2StepStart,
+            GoToWorld2StepComplete,
             Inactive
         };
 
+        Pht::IEngine& mEngine;
         MapScene& mScene;
         const UserServices& mUserServices;
         State mState {State::Inactive};
