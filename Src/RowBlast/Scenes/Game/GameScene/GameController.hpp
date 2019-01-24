@@ -86,7 +86,7 @@ namespace RowBlast {
         Command UpdateInOutOfMovesState();
         void UpdateInOutOfMovesStateOutOfMovesAnimation();
         Command UpdateOutOfMovesDialog();
-        int CalculateProgressForAnalytics();
+        int CalculateProgressInLevelForAnalytics();
         void UpdateInOutOfMovesStateStore();
         Command UpdateInGameOverState();
         Command UpdateGameOverDialog();

@@ -7,6 +7,17 @@
 
 using namespace RowBlast;
 
+namespace {
+    std::string ToControlTypeString(ControlType controlType) {
+        switch (controlType) {
+            case ControlType::Click:
+                return "Click";
+            case ControlType::Gesture:
+                return "Gesture";
+        }
+    }
+}
+
 UserServices::UserServices(Pht::IEngine& engine) :
     mEngine {engine},
     mPurchasingService {engine} {}
@@ -20,11 +31,19 @@ void UserServices::StartLevel(int levelId) {
     mProgressService.StartLevel(levelId);
     mLifeService.StartLevel();
     
-    Pht::ProgressionAnalyticsEvent analyticsEvent {
+    auto& analytics {mEngine.GetAnalytics()};
+    
+    Pht::ProgressionAnalyticsEvent progressionAnalyticsEvent {
         Pht::ProgressionStatus::Start, std::to_string(levelId)
     };
     
-    mEngine.GetAnalytics().AddEvent(analyticsEvent);
+    analytics.AddEvent(progressionAnalyticsEvent);
+    
+    Pht::CustomAnalyticsEvent startLevelAnalyticsEvent {
+        "StartLevel:ControlType:" + ToControlTypeString(mSettingsService.GetControlType())
+    };
+    
+    analytics.AddEvent(startLevelAnalyticsEvent);
 }
 
 void UserServices::CompleteLevel(int levelId, int totalNumMovesUsed, int numStars) {
@@ -38,12 +57,12 @@ void UserServices::CompleteLevel(int levelId, int totalNumMovesUsed, int numStar
     mEngine.GetAnalytics().AddEvent(analyticsEvent);
 }
 
-void UserServices::FailLevel(int levelId, Pht::Optional<int> progress) {
+void UserServices::FailLevel(int levelId, Pht::Optional<int> progressInLevel) {
     mLifeService.FailLevel();
     
-    if (progress.HasValue()) {
+    if (progressInLevel.HasValue()) {
         Pht::ProgressionAnalyticsEvent analyticsEvent {
-            Pht::ProgressionStatus::Fail, std::to_string(levelId), progress.GetValue()
+            Pht::ProgressionStatus::Fail, std::to_string(levelId), progressInLevel.GetValue()
         };
         
         mEngine.GetAnalytics().AddEvent(analyticsEvent);

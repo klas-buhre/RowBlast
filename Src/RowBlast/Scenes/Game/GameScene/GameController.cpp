@@ -581,7 +581,7 @@ GameController::Command GameController::UpdateOutOfMovesDialog() {
             }
             break;
         case OutOfMovesDialogController::Result::BackToMap:
-            mUserServices.FailLevel(mLevel->GetId(), CalculateProgressForAnalytics());
+            mUserServices.FailLevel(mLevel->GetId(), CalculateProgressInLevelForAnalytics());
             if (mUserServices.GetLifeService().GetNumLives() > 0) {
                 command = Command::RestartLevel;
             } else {
@@ -593,7 +593,7 @@ GameController::Command GameController::UpdateOutOfMovesDialog() {
     return command;
 }
 
-int GameController::CalculateProgressForAnalytics() {
+int GameController::CalculateProgressInLevelForAnalytics() {
     switch (mLevel->GetObjective()) {
         case Level::Objective::Clear:
         case Level::Objective::Build:

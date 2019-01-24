@@ -19,7 +19,7 @@ namespace RowBlast {
         void Update();
         void StartLevel(int levelId);
         void CompleteLevel(int levelId, int totalNumMovesUsed, int numStars);
-        void FailLevel(int levelId, Pht::Optional<int> progress = Pht::Optional<int> {});
+        void FailLevel(int levelId, Pht::Optional<int> progressInLevel = Pht::Optional<int> {});
         
         const PurchasingService& GetPurchasingService() const {
             return mPurchasingService;

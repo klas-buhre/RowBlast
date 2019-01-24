@@ -37,8 +37,12 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
+    -The title scene could say "Tap to begin!" instead, and the text should be flashing like in
+     Super Mario Run.
     -Analytics
-      -Use custom event for tracking switching control type.
+      -Track map tutorial.
+        -MapTutorial::StartLevel1:Start/Complete
+        -MapTutorial::GoToWorld2:Start/Complete
 
 
 
