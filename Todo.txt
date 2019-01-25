@@ -36,8 +36,6 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-    -The title scene could say "Tap to begin!" instead, and the text should be flashing like in
-     Super Mario Run.
 
 
 
@@ -153,6 +151,8 @@ Ordered Backlog:
         Cost: 7
     -Soft launch.
         Cost: 5
+    -Metal.
+        Cost: 30
     -Net/HTTP.
         Cost: 10
     -Login/sign up account.
@@ -160,7 +160,7 @@ Ordered Backlog:
     -Back end.
         Cost: ?
 
-        Total cost: 285
+        Total cost: 315
 
 
 Comomon piece type sets:

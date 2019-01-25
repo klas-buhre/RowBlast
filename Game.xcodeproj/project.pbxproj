@@ -265,6 +265,7 @@
 		623B94D021F6357400B62D9B /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 623B94CA21F6357400B62D9B /* AppDelegate.mm */; };
 		623B94D121F6357400B62D9B /* ImageIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 623B94CB21F6357400B62D9B /* ImageIOS.mm */; };
 		623B94D221F6357400B62D9B /* GLKViewControllerExtension.mm in Sources */ = {isa = PBXBuildFile; fileRef = 623B94CC21F6357400B62D9B /* GLKViewControllerExtension.mm */; };
+		623B94D521FA0AEB00B62D9B /* BeginTextAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623B94D321FA0AEB00B62D9B /* BeginTextAnimation.cpp */; };
 		6240508620FF69C00077A454 /* level46.json in Resources */ = {isa = PBXBuildFile; fileRef = 6240508520FF69C00077A454 /* level46.json */; };
 		6240508820FF82A10077A454 /* level47.json in Resources */ = {isa = PBXBuildFile; fileRef = 6240508720FF82A10077A454 /* level47.json */; };
 		62411A971E61E62800035D2A /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62411A961E61E62800035D2A /* GLKit.framework */; };
@@ -953,6 +954,8 @@
 		623B94CA21F6357400B62D9B /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
 		623B94CB21F6357400B62D9B /* ImageIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ImageIOS.mm; sourceTree = "<group>"; };
 		623B94CC21F6357400B62D9B /* GLKViewControllerExtension.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GLKViewControllerExtension.mm; sourceTree = "<group>"; };
+		623B94D321FA0AEB00B62D9B /* BeginTextAnimation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = BeginTextAnimation.cpp; sourceTree = "<group>"; };
+		623B94D421FA0AEB00B62D9B /* BeginTextAnimation.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = BeginTextAnimation.hpp; sourceTree = "<group>"; };
 		6240508520FF69C00077A454 /* level46.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level46.json; sourceTree = "<group>"; };
 		6240508720FF82A10077A454 /* level47.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level47.json; sourceTree = "<group>"; };
 		62411A961E61E62800035D2A /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
@@ -1599,6 +1602,8 @@
 		62216A9C21EB377E001CB9A1 /* Title */ = {
 			isa = PBXGroup;
 			children = (
+				623B94D321FA0AEB00B62D9B /* BeginTextAnimation.cpp */,
+				623B94D421FA0AEB00B62D9B /* BeginTextAnimation.hpp */,
 				62216AA221EB377E001CB9A1 /* TitleAnimation.cpp */,
 				62216A9D21EB377E001CB9A1 /* TitleAnimation.hpp */,
 				62216AA121EB377E001CB9A1 /* TitleController.cpp */,
@@ -3220,6 +3225,7 @@
 				62216C2121EB377F001CB9A1 /* FlashingBlocksAnimation.cpp in Sources */,
 				62216A8621EB376E001CB9A1 /* PurchaseSuccessfulDialogView.cpp in Sources */,
 				62216A7821EB376E001CB9A1 /* MenuButton.cpp in Sources */,
+				623B94D521FA0AEB00B62D9B /* BeginTextAnimation.cpp in Sources */,
 				62216BFE21EB377E001CB9A1 /* ComboDetector.cpp in Sources */,
 				625698492182392C003A3A9D /* SceneResources.cpp in Sources */,
 				62216A7721EB376E001CB9A1 /* MenuWindow.cpp in Sources */,

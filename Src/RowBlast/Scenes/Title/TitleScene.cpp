@@ -10,7 +10,6 @@
 #include "Fnv1Hash.hpp"
 #include "LightComponent.hpp"
 #include "CameraComponent.hpp"
-#include "TextComponent.hpp"
 
 // Game includes.
 #include "CommonResources.hpp"
@@ -251,8 +250,7 @@ TitleScene::TitleScene(Pht::IEngine& engine,
     mEngine {engine},
     mCommonResources {commonResources},
     mUserServices {userServices},
-    mUniverse {universe},
-    mTapFont {"HussarBoldWeb.otf", engine.GetRenderer().GetAdjustedNumPixels(35)} {}
+    mUniverse {universe} {}
     
 void TitleScene::Init() {
     auto& sceneManager {mEngine.GetSceneManager()};
@@ -320,24 +318,7 @@ void TitleScene::Init() {
     mUfoContainer->SetLayer(static_cast<int>(Layer::Background));
     scene->GetRoot().AddChild(*mUfoContainer);
     
-    Pht::TextProperties tapTextProperties {
-        mTapFont,
-        1.0f,
-        {1.0f, 1.0f, 1.0f, 1.0f},
-        Pht::TextShadow::Yes,
-        {0.05f, 0.05f},
-        {0.35f, 0.35f, 0.35f, 0.75f}
-    };
-
-    auto& tapText {scene->CreateText("Tap to continue...", tapTextProperties)};
-    mTapTextSceneObject = &tapText.GetSceneObject();
-    mTapTextSceneObject->GetTransform().SetPosition({-3.6f, -9.0f, UiLayer::text});
-    mTapTextSceneObject->SetLayer(static_cast<int>(Layer::Ui));
-    mTapTextSceneObject->SetIsVisible(false);
-    mUiContainer->AddChild(*mTapTextSceneObject);
-    
     scene->SetDistanceFunction(Pht::DistanceFunction::WorldSpaceNegativeZ);
-    
     sceneManager.SetLoadedScene(std::move(scene));
 }
 

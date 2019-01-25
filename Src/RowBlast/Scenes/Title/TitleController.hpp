@@ -6,6 +6,7 @@
 #include "Ufo.hpp"
 #include "UfoAnimation.hpp"
 #include "TitleAnimation.hpp"
+#include "BeginTextAnimation.hpp"
 
 namespace Pht {
     class IEngine;
@@ -37,6 +38,7 @@ namespace RowBlast {
         Ufo mUfo;
         UfoAnimation mUfoAnimation;
         TitleAnimation mTitleAnimation;
+        BeginTextAnimation mBeginTextAnimation;
     };
 }
 

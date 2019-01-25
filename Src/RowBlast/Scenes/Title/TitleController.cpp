@@ -26,7 +26,8 @@ TitleController::TitleController(Pht::IEngine& engine,
     mScene {engine, commonResources, userServices, universe},
     mUfo {engine, commonResources, 2.0f},
     mUfoAnimation {engine, mUfo},
-    mTitleAnimation {engine} {}
+    mTitleAnimation {engine},
+    mBeginTextAnimation {engine, commonResources} {}
 
 void TitleController::Init() {
     mScene.Init();
@@ -35,6 +36,7 @@ void TitleController::Init() {
     mUfo.SetPosition(distantUfoPosition);
     mUfoAnimation.StartWarpSpeed(ufoPosition);
     mTitleAnimation.Init(mScene.GetScene(), mScene.GetUiContainer());
+    mBeginTextAnimation.Init(mScene.GetScene(), mScene.GetUiContainer());
     
     mEngine.GetSceneManager().InitRenderer();
 }
@@ -43,7 +45,9 @@ TitleController::Command TitleController::Update() {
     auto command {Command::None};
     
     if (mTitleAnimation.IsDone()) {
-        mScene.GetTapTextSceneObject().SetIsVisible(true);
+        if (!mBeginTextAnimation.IsActive()) {
+            mBeginTextAnimation.Start();
+        }
     
         if (mEngine.GetInput().ConsumeWholeTouch()) {
             command = Command::GoToMap;
@@ -53,6 +57,7 @@ TitleController::Command TitleController::Update() {
     
     mScene.Update();
     mTitleAnimation.Update();
+    mBeginTextAnimation.Update();
     mUfoAnimation.Update();
     
     return command;

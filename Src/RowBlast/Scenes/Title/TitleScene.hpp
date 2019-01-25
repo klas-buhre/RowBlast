@@ -3,9 +3,6 @@
 
 #include <memory>
 
-// Engine includes.
-#include "Font.hpp"
-
 // Game includes.
 #include "FloatingBlocks.hpp"
 #include "Clouds.hpp"
@@ -42,11 +39,6 @@ namespace RowBlast {
             return *mUiContainer;
         }
 
-        Pht::SceneObject& GetTapTextSceneObject() {
-            assert(mTapTextSceneObject);
-            return *mTapTextSceneObject;
-        }
-
         Pht::Scene& GetScene() {
             assert(mScene);
             return *mScene;
@@ -60,8 +52,6 @@ namespace RowBlast {
         std::unique_ptr<Planets> mPlanets;
         std::unique_ptr<Clouds> mClouds;
         std::unique_ptr<FloatingBlocks> mFloatingBlocks;
-        Pht::Font mTapFont;
-        Pht::SceneObject* mTapTextSceneObject {nullptr};
         Pht::SceneObject* mUfoContainer {nullptr};
         Pht::SceneObject* mUiContainer {nullptr};
         Pht::Scene* mScene {nullptr};
