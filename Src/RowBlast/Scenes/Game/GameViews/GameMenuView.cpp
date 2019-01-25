@@ -77,8 +77,8 @@ GameMenuView::GameMenuView(Pht::IEngine& engine, const CommonResources& commonRe
                                                Pht::Vec3 {0.0f, -0.1f, UiLayer::textRectangle},
                                                buttonInputSize,
                                                blueButtonStyle);
-    mGoalButton->CreateText({-1.0f, -0.23f, UiLayer::buttonText},
-                            "Goal",
+    mGoalButton->CreateText({-1.7f, -0.23f, UiLayer::buttonText},
+                            "Level Info",
                             guiResources.GetWhiteButtonTextWithShadowPropertiesPotentiallyZoomedScreen());
 
     mSettingsButton = std::make_unique<MenuButton>(engine,

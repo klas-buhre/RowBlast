@@ -26,6 +26,7 @@ Backlog:
     -Update mail address in legal documents.
     -Go through all user services and check that all state store/load is enabled.
     -Make sure analytics is enabled and that user terms accept is saved and checked.
+    -Make sure analytics debug log is disabled.
     -Make sure the correct product price in cents and receipt is sent to analytics.
     -Do a soft launch in a couple of countries? Maybe the nordic countries and UK? Only english
      localization is needed for that.
@@ -36,6 +37,9 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
+    -Should give free gold coins after a new install.
+    -Maybe move most the triangle levels to the 4th world and maybe keep one in the 3rd world.
+     Instead of the early triangle levels, there could be asteroid levels.
 
 
 
