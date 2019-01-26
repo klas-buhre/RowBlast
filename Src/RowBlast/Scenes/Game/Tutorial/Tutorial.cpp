@@ -22,7 +22,7 @@ namespace {
     const Pht::Vec3 switchPieceHandPosition {3.3f, -10.6f, 0.0f};
     const Pht::Vec3 bPieceHandPosition {3.1f, -4.3f, 0.0f};
     const Pht::Vec3 longIPieceHandPosition {0.6f, -7.1f, 0.0f};
-    const Pht::Vec3 otherMovesHandPosition1 {3.5f, -7.7f, 0.0f};
+    const Pht::Vec3 otherMovesHandPosition1 {4.7f, -7.4f, 0.0f};
     const Pht::Vec3 otherMovesHandPosition2 {1.8f, -8.3f, 0.0f};
     const Pht::Vec3 iPieceHandPosition {-0.8f, -4.5f, 0.0f};
     const Pht::Vec3 secondLevelBPieceHandPosition {-2.5f, -4.4f, 0.0f};
@@ -281,7 +281,7 @@ void Tutorial::OnNewMoveSecondLevel(int numMovesUsedIncludingCurrent) {
         case 1:
             SetActiveViewController(Controller::OtherMovesWindow);
             mOtherMovesWindowController.SetUp();
-            mHandAnimation.Start(otherMovesHandPosition1, 45.0f);
+            mHandAnimation.Start(otherMovesHandPosition1, 270.0f);
             break;
         case 2:
             SetActiveViewController(Controller::OtherMovesWindow);
@@ -394,10 +394,10 @@ void Tutorial::OnChangeVisibleMoves(int numMovesUsedIncludingCurrent, const Move
                     
                     switch (numMovesUsedIncludingCurrent) {
                         case 1:
-                            mHandAnimation.Start(otherMovesHandPosition1, 45.0f);
+                            mHandAnimation.Start(otherMovesHandPosition1, 270.0f);
                             break;
                         case 2:
-                            mHandAnimation.Start(otherMovesHandPosition2, 45.0f);
+                            mHandAnimation.Start(otherMovesHandPosition2, 90.0f);
                             break;
                         default:
                             break;

@@ -37,10 +37,20 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-    -Should give free gold coins after a new install.
+    -The hand could be outside the field so that it is
+     clear that we are not clicking where we want new moves to appear.
+    -Since both SwitchPieceWindow and OtherMovesWindow appear at least twice, they should have a slightly
+     different text the second time to convey a more precise message. For example, OtherMovesWindow
+     can say the first time that you can tap anywhere except the moves or buttons. The second time
+     it can be the existing message.
+     The SwitchPieceWindow can suggest to tap switch twice if the SevenPiece is active to find the
+     best piece.
+    -Maybe switch level 5 to a simpler level shaped like a big hole with sloping walls:
+     G   G
+     GG GG
     -Maybe move most the triangle levels to the 4th world and maybe keep one in the 3rd world.
      Instead of the early triangle levels, there could be asteroid levels.
-
+    -Should give free gold coins after a new install.
 
 
 
