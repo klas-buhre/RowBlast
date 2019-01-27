@@ -10,6 +10,7 @@
 #include "PlacePieceWindowController.hpp"
 #include "FillRowsWindowController.hpp"
 #include "SwitchPieceWindowController.hpp"
+#include "SwitchPiece2WindowController.hpp"
 #include "OtherMovesWindowController.hpp"
 #include "CascadingDialogController.hpp"
 #include "SameColorDialogController.hpp"
@@ -58,6 +59,7 @@ namespace RowBlast {
             PlacePieceWindow,
             FillRowsWindow,
             SwitchPieceWindow,
+            SwitchPiece2Window,
             OtherMovesWindow,
             CascadingDialog,
             SameColorDialog,
@@ -82,6 +84,7 @@ namespace RowBlast {
         PlacePieceWindowController mPlacePieceWindowController;
         FillRowsWindowController mFillRowsWindowController;
         SwitchPieceWindowController mSwitchPieceWindowController;
+        SwitchPiece2WindowController mSwitchPiece2WindowController;
         OtherMovesWindowController mOtherMovesWindowController;
         CascadingDialogController mCascadingDialogController;
         SameColorDialogController mSameColorDialogController;

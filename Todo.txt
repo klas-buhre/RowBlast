@@ -34,17 +34,15 @@ Backlog:
      logo could contain some simple teleporter texture.
      Font: maybe ".Damascus PUA Bold"
     -Make icon.
+    -Make sure that creation dates for the resource files that I have created are not too old.
     -Maybe support for different languages.
 
 Ongoing tasks:
-    -The hand could be outside the field so that it is
-     clear that we are not clicking where we want new moves to appear.
     -Since both SwitchPieceWindow and OtherMovesWindow appear at least twice, they should have a slightly
      different text the second time to convey a more precise message. For example, OtherMovesWindow
      can say the first time that you can tap anywhere except the moves or buttons. The second time
      it can be the existing message.
-     The SwitchPieceWindow can suggest to tap switch twice if the SevenPiece is active to find the
-     best piece.
+    -Maybe the other moves should be visible in the first steps of the turoial.
     -Maybe switch level 5 to a simpler level shaped like a big hole with sloping walls:
      G   G
      GG GG

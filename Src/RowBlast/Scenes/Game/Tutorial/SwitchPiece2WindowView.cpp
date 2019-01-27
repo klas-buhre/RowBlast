@@ -1,4 +1,4 @@
-#include "SwitchPieceWindowView.hpp"
+#include "SwitchPiece2WindowView.hpp"
 
 // Game includes.
 #include "CommonResources.hpp"
@@ -6,7 +6,7 @@
 
 using namespace RowBlast;
 
-SwitchPieceWindowView::SwitchPieceWindowView(const CommonResources& commonResources) {
+SwitchPiece2WindowView::SwitchPiece2WindowView(const CommonResources& commonResources) {
     PotentiallyZoomedScreen zoom {PotentiallyZoomedScreen::Yes};
     auto& guiResources {commonResources.GetGuiResources()};
     auto& menuWindow {guiResources.GetSmallestDarkMenuWindow()};
@@ -19,7 +19,6 @@ SwitchPieceWindowView::SwitchPieceWindowView(const CommonResources& commonResour
     SetSize(menuWindow.GetSize());
 
     auto& textProperties {guiResources.GetSmallWhiteTextProperties(zoom)};
-    CreateText({-5.4f, 0.9075f, UiLayer::text}, "You always have three pieces to", textProperties);
-    CreateText({-5.15f, -0.1675f, UiLayer::text}, "choose from at the bottom. Try", textProperties);
-    CreateText({-5.55f, -1.2425f, UiLayer::text}, "switching to a better fitting piece", textProperties);
+    CreateText({-5.25f, 0.30f, UiLayer::text}, "Try the yellow piece by tapping", textProperties);
+    CreateText({-2.1f, -0.775f, UiLayer::text}, "switch again", textProperties);
 }
