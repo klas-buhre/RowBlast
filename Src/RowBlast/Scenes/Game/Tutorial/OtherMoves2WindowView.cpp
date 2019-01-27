@@ -1,4 +1,4 @@
-#include "OtherMovesWindowView.hpp"
+#include "OtherMoves2WindowView.hpp"
 
 // Game includes.
 #include "CommonResources.hpp"
@@ -6,7 +6,7 @@
 
 using namespace RowBlast;
 
-OtherMovesWindowView::OtherMovesWindowView(const CommonResources& commonResources) {
+OtherMoves2WindowView::OtherMoves2WindowView(const CommonResources& commonResources) {
     PotentiallyZoomedScreen zoom {PotentiallyZoomedScreen::Yes};
     auto& guiResources {commonResources.GetGuiResources()};
     auto& menuWindow {guiResources.GetSmallestDarkMenuWindow()};
@@ -19,7 +19,7 @@ OtherMovesWindowView::OtherMovesWindowView(const CommonResources& commonResource
     SetSize(menuWindow.GetSize());
 
     auto& textProperties {guiResources.GetSmallWhiteTextProperties(zoom)};
-    CreateText({-5.75f, 0.9075f, UiLayer::text}, "Tap anywhere to find other moves", textProperties);
-    CreateText({-4.8f, -0.1675f, UiLayer::text}, "without switching piece. Tap", textProperties);
-    CreateText({-6.1f, -1.2425f, UiLayer::text}, "anywhere except buttons and moves", textProperties);
+    CreateText({-5.05f, 0.9075f, UiLayer::text}, "Tap again to find other moves", textProperties);
+    CreateText({-5.35f, -0.1675f, UiLayer::text}, "using the same piece. Remember", textProperties);
+    CreateText({-5.6f, -1.2425f, UiLayer::text}, "not to press any moves or buttons", textProperties);
 }

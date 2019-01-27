@@ -44,6 +44,7 @@ Tutorial::Tutorial(Pht::IEngine& engine, GameScene& scene, const CommonResources
     mSwitchPieceWindowController {engine, commonResources},
     mSwitchPiece2WindowController {engine, commonResources},
     mOtherMovesWindowController {engine, commonResources},
+    mOtherMoves2WindowController {engine, commonResources},
     mCascadingDialogController {engine, commonResources},
     mSameColorDialogController {engine, commonResources},
     mLaserDialogController {engine, commonResources},
@@ -55,6 +56,7 @@ Tutorial::Tutorial(Pht::IEngine& engine, GameScene& scene, const CommonResources
     mViewManager.AddView(static_cast<int>(Controller::SwitchPieceWindow), mSwitchPieceWindowController.GetView());
     mViewManager.AddView(static_cast<int>(Controller::SwitchPiece2Window), mSwitchPiece2WindowController.GetView());
     mViewManager.AddView(static_cast<int>(Controller::OtherMovesWindow), mOtherMovesWindowController.GetView());
+    mViewManager.AddView(static_cast<int>(Controller::OtherMoves2Window), mOtherMoves2WindowController.GetView());
     mViewManager.AddView(static_cast<int>(Controller::CascadingDialog), mCascadingDialogController.GetView());
     mViewManager.AddView(static_cast<int>(Controller::SameColorDialog), mSameColorDialogController.GetView());
     mViewManager.AddView(static_cast<int>(Controller::LaserDialog), mLaserDialogController.GetView());
@@ -129,6 +131,11 @@ void Tutorial::Update() {
             break;
         case Controller::OtherMovesWindow:
             if (mOtherMovesWindowController.Update() == OtherMovesWindowController::Result::Done) {
+                SetActiveViewController(Controller::None);
+            }
+            break;
+        case Controller::OtherMoves2Window:
+            if (mOtherMoves2WindowController.Update() == OtherMoves2WindowController::Result::Done) {
                 SetActiveViewController(Controller::None);
             }
             break;
@@ -291,8 +298,8 @@ void Tutorial::OnNewMoveSecondLevel(int numMovesUsedIncludingCurrent) {
             mHandAnimation.Start(otherMovesHandPosition1, 270.0f);
             break;
         case 2:
-            SetActiveViewController(Controller::OtherMovesWindow);
-            mOtherMovesWindowController.SetUp();
+            SetActiveViewController(Controller::OtherMoves2Window);
+            mOtherMoves2WindowController.SetUp();
             mHandAnimation.Start(otherMovesHandPosition2, 90.0f);
             SendAnayticsEvent("Step1Complete");
             break;
@@ -382,8 +389,7 @@ void Tutorial::OnChangeVisibleMoves(int numMovesUsedIncludingCurrent, const Move
 
     if (mLevel->GetId() == 2) {
         switch (numMovesUsedIncludingCurrent) {
-            case 1:
-            case 2: {
+            case 1: {
                 auto& predeterminedMoves {mLevel->GetPredeterminedMoves()};
                 assert(numMovesUsedIncludingCurrent <= predeterminedMoves.size());
                 auto& predeterminedMove {predeterminedMoves[numMovesUsedIncludingCurrent - 1]};
@@ -393,31 +399,29 @@ void Tutorial::OnChangeVisibleMoves(int numMovesUsedIncludingCurrent, const Move
                     
                     mOtherMovesWindowController.Close();
                     mHandAnimation.Stop();
-                    
-                    switch (numMovesUsedIncludingCurrent) {
-                        case 1:
-                            mHandAnimation.Start(iPieceHandPosition, -90.0f);
-                            break;
-                        case 2:
-                            mHandAnimation.Start(secondLevelBPieceHandPosition, 45.0f);
-                            break;
-                        default:
-                            break;
-                    }
+                    mHandAnimation.Start(iPieceHandPosition, -90.0f);
                 } else {
                     SetActiveViewController(Controller::OtherMovesWindow);
                     mOtherMovesWindowController.SetUp();
+                    mHandAnimation.Start(otherMovesHandPosition1, 270.0f);
+                }
+                break;
+            }
+            case 2: {
+                auto& predeterminedMoves {mLevel->GetPredeterminedMoves()};
+                assert(numMovesUsedIncludingCurrent <= predeterminedMoves.size());
+                auto& predeterminedMove {predeterminedMoves[numMovesUsedIncludingCurrent - 1]};
+                
+                if (predeterminedMove.mPosition == firstMove.mPosition &&
+                    predeterminedMove.mRotation == firstMove.mRotation) {
                     
-                    switch (numMovesUsedIncludingCurrent) {
-                        case 1:
-                            mHandAnimation.Start(otherMovesHandPosition1, 270.0f);
-                            break;
-                        case 2:
-                            mHandAnimation.Start(otherMovesHandPosition2, 90.0f);
-                            break;
-                        default:
-                            break;
-                    }
+                    mOtherMoves2WindowController.Close();
+                    mHandAnimation.Stop();
+                    mHandAnimation.Start(secondLevelBPieceHandPosition, 45.0f);
+                } else {
+                    SetActiveViewController(Controller::OtherMoves2Window);
+                    mOtherMoves2WindowController.SetUp();
+                    mHandAnimation.Start(otherMovesHandPosition2, 90.0f);
                 }
                 break;
             }
