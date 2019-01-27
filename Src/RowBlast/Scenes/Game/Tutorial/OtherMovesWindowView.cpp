@@ -19,7 +19,7 @@ OtherMovesWindowView::OtherMovesWindowView(const CommonResources& commonResource
     SetSize(menuWindow.GetSize());
 
     auto& textProperties {guiResources.GetSmallWhiteTextProperties(zoom)};
-    CreateText({-5.75f, 0.9075f, UiLayer::text}, "Tap anywhere to find other moves", textProperties);
+    CreateText({-5.75f, 0.9075f, UiLayer::text}, "Tap anywhere to find more moves", textProperties);
     CreateText({-4.8f, -0.1675f, UiLayer::text}, "without switching piece. Tap", textProperties);
     CreateText({-6.1f, -1.2425f, UiLayer::text}, "anywhere except buttons and moves", textProperties);
 }

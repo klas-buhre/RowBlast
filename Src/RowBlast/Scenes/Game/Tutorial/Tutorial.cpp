@@ -450,6 +450,18 @@ bool Tutorial::IsSwitchPieceAllowed(int numMovesUsedIncludingCurrent) const {
     return true;
 }
 
+bool Tutorial::IsSeeMoreMovesAllowed() const {
+    if (!mLevel->IsPartOfTutorial()) {
+        return true;
+    }
+    
+    if (mLevel->GetId() == 1) {
+        return false;
+    }
+
+    return true;
+}
+
 bool Tutorial::IsMoveAllowed(int numMovesUsedIncludingCurrent,
                              const Piece& pieceType,
                              const Move& move) const {

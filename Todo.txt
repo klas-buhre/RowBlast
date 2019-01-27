@@ -38,7 +38,9 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-    -Maybe more than one move should be visible in the first steps of the turoial.
+    -Maybe more than one move should be visible in the first steps of the second level tutorial.
+     Add a list of suggested moves for each numMovesUsed in level2.
+    -Maybe the first move in level 3 should be a predetermined move.
     -Maybe switch level 5 to a simpler level shaped like a big hole with sloping walls:
      G   G
      GG GG

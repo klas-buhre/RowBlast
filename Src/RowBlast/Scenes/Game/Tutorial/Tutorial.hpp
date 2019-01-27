@@ -49,6 +49,7 @@ namespace RowBlast {
         void OnSwitchPiece(int numMovesUsedIncludingCurrent, const Piece& pieceType);
         void OnChangeVisibleMoves(int numMovesUsedIncludingCurrent, const Move& firstMove);
         bool IsSwitchPieceAllowed(int numMovesUsedIncludingCurrent) const;
+        bool IsSeeMoreMovesAllowed() const;
         bool IsMoveAllowed(int numMovesUsedIncludingCurrent,
                            const Piece& pieceType,
                            const Move& move) const;

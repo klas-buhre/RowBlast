@@ -55,7 +55,7 @@ const Level::TutorialMove* Ai::GetPredeterminedMove(const FallingPiece& fallingP
             return &predeterminedMove;
         }
     }
-    
+
     return nullptr;
 }
 

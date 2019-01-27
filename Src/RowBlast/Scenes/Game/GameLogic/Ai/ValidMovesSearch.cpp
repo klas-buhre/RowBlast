@@ -523,18 +523,11 @@ void ValidMovesSearch::SaveMove(ValidMoves& validMoves,
 }
 
 bool ValidMovesSearch::IsMoveDiscardedByTutorial(const MovingPiece& piece) const {
-    if (mPredeterminedMove) {
-        if (mSuggestedMove) {
-            if (!piece.IsAtTutorialMove(*mPredeterminedMove) &&
-                !piece.IsAtTutorialMove(*mSuggestedMove)) {
-                
-                return true;
-            }
-
-        } else {
-            if (!piece.IsAtTutorialMove(*mPredeterminedMove)) {
-                return true;
-            }
+    if (mPredeterminedMove && mSuggestedMove) {
+        if (!piece.IsAtTutorialMove(*mPredeterminedMove) &&
+            !piece.IsAtTutorialMove(*mSuggestedMove)) {
+            
+            return true;
         }
     }
     
