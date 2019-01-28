@@ -6,7 +6,6 @@ Backlog:
     -Android.
 
   -Gameplay:
-    -Maybe the Sticky Blocks tutorial message is confusing.
     -The UFO could be booster. It could clear 3 rows.
     -Maybe blocks in the visible part of the field could disappear on some levels. For each move a
      random block disappears.
@@ -38,7 +37,6 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-    -Maybe the first move in level 3 should be a predetermined move.
     -Maybe switch level 5 to a simpler level shaped like a big hole with sloping walls:
      G   G
      GG GG
