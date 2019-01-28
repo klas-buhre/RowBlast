@@ -13,7 +13,7 @@ namespace RowBlast {
         void FindValidMoves(ValidMoves& validMoves,
                             MovingPiece piece,
                             const Level::TutorialMove* predeterminedMove,
-                            const Level::TutorialMove* suggestedMove);
+                            const std::vector<Level::TutorialMove>* suggestedMoves);
         
     private:
         enum class SearchDirection {
@@ -138,7 +138,7 @@ namespace RowBlast {
         SearchGrid mSearchGrid;
         mutable Field::CollisionResult mCollisionResult;
         const Level::TutorialMove* mPredeterminedMove {nullptr};
-        const Level::TutorialMove* mSuggestedMove {nullptr};
+        const std::vector<Level::TutorialMove>* mSuggestedMoves {nullptr};
     };
 }
 

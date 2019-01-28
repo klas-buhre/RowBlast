@@ -9,6 +9,19 @@ namespace {
     bool CompareMoves(const Move* a, const Move* b) {
         return a->mScore > b->mScore;
     }
+    
+    const Level::TutorialMove*
+    FindTutorialMove(const std::vector<Level::TutorialMove>& tutorialMoves, const Move& move) {
+        for (auto& tutorialMove: tutorialMoves) {
+            if (tutorialMove.mPosition == move.mPosition &&
+                tutorialMove.mRotation == move.mRotation) {
+                
+                return &tutorialMove;
+            }
+        }
+        
+        return nullptr;
+    }
 }
 
 Ai::Ai(Field& field) :
@@ -31,9 +44,9 @@ Ai::MovePtrs& Ai::CalculateMoves(const FallingPiece& fallingPiece, int movesUsed
     };
     
     auto* predeterminedMove {GetPredeterminedMove(fallingPiece, movesUsed)};
-    auto* suggestedMove {GetSuggestedMove(fallingPiece, movesUsed)};
+    auto* suggestedMoves {GetSuggestedMoves(fallingPiece, movesUsed)};
     
-    mValidMovesSearch.FindValidMoves(mValidMoves, piece, predeterminedMove, suggestedMove);
+    mValidMovesSearch.FindValidMoves(mValidMoves, piece, predeterminedMove, suggestedMoves);
     EvaluateMoves(fallingPiece, movesUsed);
     SortMoves();
     
@@ -59,18 +72,20 @@ const Level::TutorialMove* Ai::GetPredeterminedMove(const FallingPiece& fallingP
     return nullptr;
 }
 
-const Level::TutorialMove* Ai::GetSuggestedMove(const FallingPiece& fallingPiece, int movesUsed) {
-    auto& suggestedMoves {mLevel->GetSuggestedMoves()};
+const std::vector<Level::TutorialMove>* Ai::GetSuggestedMoves(const FallingPiece& fallingPiece,
+                                                              int movesUsed) {
+    auto& allSuggestedMoves {mLevel->GetSuggestedMoves()};
     
-    if (suggestedMoves.empty()) {
+    if (allSuggestedMoves.empty()) {
         return nullptr;
     }
 
-    if (movesUsed < suggestedMoves.size()) {
-        auto& suggestedMove {suggestedMoves[movesUsed]};
+    if (movesUsed < allSuggestedMoves.size()) {
+        auto& suggestedMoves {allSuggestedMoves[movesUsed]};
         
-        if (&suggestedMove.mPieceType == &fallingPiece.GetPieceType()) {
-            return &suggestedMove;
+        assert(!suggestedMoves.empty());
+        if (&suggestedMoves.front().mPieceType == &fallingPiece.GetPieceType()) {
+            return &suggestedMoves;
         }
     }
     
@@ -84,15 +99,18 @@ void Ai::EvaluateMoves(const FallingPiece& fallingPiece, int movesUsed) {
     auto pieceNumcolumns {pieceType.GetGridNumColumns()};
     auto& moves {mValidMoves.mMoves};
     auto numMoves {moves.Size()};
-    auto* suggestedMove {GetSuggestedMove(fallingPiece, movesUsed)};
+    auto* suggestedTutorialMoves {GetSuggestedMoves(fallingPiece, movesUsed)};
     
     for (auto i {0}; i < numMoves; ++i) {
         auto& move {moves.At(i)};
         
-        if (suggestedMove && suggestedMove->mPosition == move.mPosition &&
-            suggestedMove->mRotation == move.mRotation) {
-            
-            move.mScore = std::numeric_limits<float>::max();
+        auto* suggestedTutorialMove {
+            suggestedTutorialMoves ? FindTutorialMove(*suggestedTutorialMoves, move) : nullptr
+        };
+        
+        if (suggestedTutorialMove) {
+            assert(suggestedTutorialMove->mScore.HasValue());
+            move.mScore = suggestedTutorialMove->mScore.GetValue();
         } else {
             PieceBlocks pieceBlocks {
                 pieceType.GetGrid(move.mRotation),
@@ -218,8 +236,8 @@ ValidMoves& Ai::FindValidMoves(const FallingPiece& fallingPiece, int movesUsed) 
     };
     
     auto* predeterminedMove {GetPredeterminedMove(fallingPiece, movesUsed)};
-    auto* suggestedMove {GetSuggestedMove(fallingPiece, movesUsed)};
+    auto* suggestedMoves {GetSuggestedMoves(fallingPiece, movesUsed)};
     
-    mValidMovesSearch.FindValidMoves(mUpdatedValidMoves, piece, predeterminedMove, suggestedMove);
+    mValidMovesSearch.FindValidMoves(mUpdatedValidMoves, piece, predeterminedMove, suggestedMoves);
     return mUpdatedValidMoves;
 }

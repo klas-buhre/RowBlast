@@ -95,13 +95,15 @@ namespace {
         }
     }
     
-    std::vector<Level::TutorialMove> ReadTutorialMoves(const rapidjson::Document& document,
-                                                       const std::string& memberName,
-                                                       const PieceTypes& pieceTypes) {
-        assert(document.HasMember(memberName.c_str()));
-        
+    std::vector<Level::TutorialMove> ReadPredeterminedMoves(const rapidjson::Document& document,
+                                                            const PieceTypes& pieceTypes) {
         std::vector<Level::TutorialMove> tutorialMoves;
-        const auto& tutorialMovesArray {document[memberName.c_str()]};
+        
+        if (!document.HasMember("predeterminedMoves")) {
+            return tutorialMoves;
+        }
+        
+        const auto& tutorialMovesArray {document["predeterminedMoves"]};
         assert(tutorialMovesArray.IsArray());
         
         for (const auto& tutorialMoveObject: tutorialMovesArray.GetArray()) {
@@ -125,7 +127,58 @@ namespace {
         
         return tutorialMoves;
     }
+
+    std::vector<Level::TutorialMove>
+    ReadSuggestedMovesAlternatives(const rapidjson::Value& suggestedMoveAlternativesObject,
+                                   const PieceTypes& pieceTypes) {
+        std::vector<Level::TutorialMove> tutorialMoves;
+        
+        auto pieceStr {Pht::Json::ReadString(suggestedMoveAlternativesObject, "piece")};
+        auto i {pieceTypes.find(pieceStr)};
+        assert(i != std::end(pieceTypes));
+        auto& piece {*(i->second.get())};
+
+        const auto& alternativesArray {suggestedMoveAlternativesObject["alternatives"]};
+        assert(alternativesArray.IsArray());
+
+        for (const auto& alternativeObject: alternativesArray.GetArray()) {
+            assert(alternativeObject.IsObject());
+            
+            auto position {Pht::Json::ReadIVec2(alternativeObject, "position")};
+            auto rotationDeg {Pht::Json::ReadInt(alternativeObject, "rotation")};
+            auto score {Pht::Json::ReadFloat(alternativeObject, "score")};
+
+            Level::TutorialMove tutorialMove {position, DegToRotation(rotationDeg), piece, score};
+            tutorialMoves.push_back(tutorialMove);
+        }
+
+        return tutorialMoves;
+    }
     
+    std::vector<std::vector<Level::TutorialMove>>
+    ReadSuggestedMoves(const rapidjson::Document& document, const PieceTypes& pieceTypes) {
+        std::vector<std::vector<Level::TutorialMove>> tutorialMoves;
+        
+        if (!document.HasMember("suggestedMoves")) {
+            return tutorialMoves;
+        }
+        
+        const auto& suggestedMovesArray {document["suggestedMoves"]};
+        assert(suggestedMovesArray.IsArray());
+        
+        for (const auto& suggestedMoveAlternativesObject: suggestedMovesArray.GetArray()) {
+            assert(suggestedMoveAlternativesObject.IsObject());
+            
+            auto suggestedMoveAlternatives {
+                ReadSuggestedMovesAlternatives(suggestedMoveAlternativesObject, pieceTypes)
+            };
+            
+            tutorialMoves.push_back(suggestedMoveAlternatives);
+        }
+        
+        return tutorialMoves;
+    }
+
     Fill CellFill(char c) {
         switch (c) {
             case ' ':
@@ -358,18 +411,8 @@ std::unique_ptr<Level> LevelLoader::Load(int levelId, const LevelResources& leve
         pieceSequence = ReadPieceTypes(document, "pieceSequence", pieceTypes);
     }
     
-    std::vector<Level::TutorialMove> predeterminedMoves;
-    
-    if (document.HasMember("predeterminedMoves")) {
-        predeterminedMoves = ReadTutorialMoves(document, "predeterminedMoves", pieceTypes);
-    }
-
-    std::vector<Level::TutorialMove> suggestedMoves;
-    
-    if (document.HasMember("suggestedMoves")) {
-        suggestedMoves = ReadTutorialMoves(document, "suggestedMoves", pieceTypes);
-    }
-
+    auto predeterminedMoves {ReadPredeterminedMoves(document, pieceTypes)};
+    auto suggestedMoves {ReadSuggestedMoves(document, pieceTypes)};
     auto clearGrid {ReadClearGrid(document)};
     auto blueprintGrid {ReadBlueprintGrid(document)};
     

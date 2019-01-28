@@ -70,9 +70,9 @@ void ValidMovesSearch::Init() {
 void ValidMovesSearch::FindValidMoves(ValidMoves& validMoves,
                                       MovingPiece piece,
                                       const Level::TutorialMove* predeterminedMove,
-                                      const Level::TutorialMove* suggestedMove) {
+                                      const std::vector<Level::TutorialMove>* suggestedMoves) {
     mPredeterminedMove = predeterminedMove;
-    mSuggestedMove = suggestedMove;
+    mSuggestedMoves = suggestedMoves;
 
     InitSearchGrid();
     FindMostValidMovesWithHumanLikeSearch(validMoves, piece);
@@ -523,12 +523,18 @@ void ValidMovesSearch::SaveMove(ValidMoves& validMoves,
 }
 
 bool ValidMovesSearch::IsMoveDiscardedByTutorial(const MovingPiece& piece) const {
-    if (mPredeterminedMove && mSuggestedMove) {
-        if (!piece.IsAtTutorialMove(*mPredeterminedMove) &&
-            !piece.IsAtTutorialMove(*mSuggestedMove)) {
-            
-            return true;
+    if (mPredeterminedMove && mSuggestedMoves) {
+        if (piece.IsAtTutorialMove(*mPredeterminedMove)) {
+            return false;
         }
+        
+        for (auto& suggestedMove: *mSuggestedMoves) {
+            if (piece.IsAtTutorialMove(suggestedMove)) {
+                return false;
+            }
+        }
+        
+        return true;
     }
     
     return false;

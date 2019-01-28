@@ -18,6 +18,7 @@
 #include "LaserDialogController.hpp"
 #include "BombDialogController.hpp"
 #include "LevelBombDialogController.hpp"
+#include "ClickInputHandler.hpp"
 
 namespace Pht {
     class IEngine;
@@ -47,7 +48,8 @@ namespace RowBlast {
         void OnNewMove(int numMovesUsedIncludingCurrent);
         void OnSelectMove(int numMovesUsedIncludingCurrent);
         void OnSwitchPiece(int numMovesUsedIncludingCurrent, const Piece& pieceType);
-        void OnChangeVisibleMoves(int numMovesUsedIncludingCurrent, const Move& firstMove);
+        void OnChangeVisibleMoves(int numMovesUsedIncludingCurrent,
+                                  const ClickInputHandler::VisibleMoves& visibleMoves);
         bool IsSwitchPieceAllowed(int numMovesUsedIncludingCurrent) const;
         bool IsSeeMoreMovesAllowed() const;
         bool IsMoveAllowed(int numMovesUsedIncludingCurrent,

@@ -24,8 +24,8 @@ namespace RowBlast {
     private:
         const Level::TutorialMove* GetPredeterminedMove(const FallingPiece& fallingPiece,
                                                         int movesUsed);
-        const Level::TutorialMove* GetSuggestedMove(const FallingPiece& fallingPiece,
-                                                    int movesUsed);
+        const std::vector<Level::TutorialMove>* GetSuggestedMoves(const FallingPiece& fallingPiece,
+                                                                  int movesUsed);
         void EvaluateMoves(const FallingPiece& fallingPiece, int movesUsed);
         void EvaluateMove(Move& move, const FallingPiece& fallingPiece);
         void EvaluateMoveForClearObjective(Move& move, const FallingPiece& fallingPiece);

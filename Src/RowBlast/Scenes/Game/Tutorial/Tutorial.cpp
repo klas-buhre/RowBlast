@@ -26,6 +26,19 @@ namespace {
     const Pht::Vec3 otherMovesHandPosition2 {1.8f, -8.3f, 0.0f};
     const Pht::Vec3 iPieceHandPosition {-0.8f, -4.5f, 0.0f};
     const Pht::Vec3 secondLevelBPieceHandPosition {-2.5f, -4.4f, 0.0f};
+    
+    bool FindMove(const ClickInputHandler::VisibleMoves& moves,
+                  const Level::TutorialMove& tutorialMove) {
+        for (auto& move: moves) {
+            if (tutorialMove.mPosition == move.mPosition &&
+                tutorialMove.mRotation == move.mRotation) {
+                
+                return true;
+            }
+        }
+        
+        return false;
+    }
 }
 
 Tutorial::Tutorial(Pht::IEngine& engine, GameScene& scene, const CommonResources& commonResources) :
@@ -382,7 +395,8 @@ void Tutorial::OnSwitchPiece(int numMovesUsedIncludingCurrent, const Piece& piec
     }
 }
 
-void Tutorial::OnChangeVisibleMoves(int numMovesUsedIncludingCurrent, const Move& firstMove) {
+void Tutorial::OnChangeVisibleMoves(int numMovesUsedIncludingCurrent,
+                                    const ClickInputHandler::VisibleMoves& visibleMoves) {
     if (!mLevel->IsPartOfTutorial()) {
         return;
     }
@@ -394,9 +408,7 @@ void Tutorial::OnChangeVisibleMoves(int numMovesUsedIncludingCurrent, const Move
                 assert(numMovesUsedIncludingCurrent <= predeterminedMoves.size());
                 auto& predeterminedMove {predeterminedMoves[numMovesUsedIncludingCurrent - 1]};
                 
-                if (predeterminedMove.mPosition == firstMove.mPosition &&
-                    predeterminedMove.mRotation == firstMove.mRotation) {
-                    
+                if (FindMove(visibleMoves, predeterminedMove)) {
                     mOtherMovesWindowController.Close();
                     mHandAnimation.Stop();
                     mHandAnimation.Start(iPieceHandPosition, -90.0f);
@@ -412,9 +424,7 @@ void Tutorial::OnChangeVisibleMoves(int numMovesUsedIncludingCurrent, const Move
                 assert(numMovesUsedIncludingCurrent <= predeterminedMoves.size());
                 auto& predeterminedMove {predeterminedMoves[numMovesUsedIncludingCurrent - 1]};
                 
-                if (predeterminedMove.mPosition == firstMove.mPosition &&
-                    predeterminedMove.mRotation == firstMove.mRotation) {
-                    
+                if (FindMove(visibleMoves, predeterminedMove)) {
                     mOtherMoves2WindowController.Close();
                     mHandAnimation.Stop();
                     mHandAnimation.Start(secondLevelBPieceHandPosition, 45.0f);

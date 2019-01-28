@@ -32,14 +32,69 @@
     ],
     "suggestedMoves": [
         {
-            "position": [0, 11],
-            "rotation": 0,
-            "piece": "I"
+            "piece": "I",
+            "alternatives": [
+                {
+                    "position": [0, 11],
+                    "rotation": 0,
+                    "score": 200.0
+                },
+                {
+                    "position": [4, 11],
+                    "rotation": 0,
+                    "score": 200.0
+                },
+                {
+                    "position": [-1, 12],
+                    "rotation": 90,
+                    "score": 0.0
+                },
+                {
+                    "position": [1, 12],
+                    "rotation": 90,
+                    "score": 0.0
+                },
+                {
+                    "position": [5, 12],
+                    "rotation": 90,
+                    "score": 0.0
+                },
+                {
+                    "position": [3, 12],
+                    "rotation": 90,
+                    "score": 0.0
+                }
+            ]
         },
         {
-            "position": [0, 9],
-            "rotation": 180,
-            "piece": "B"
+            "piece": "B",
+            "alternatives": [
+                {
+                    "position": [0, 9],
+                    "rotation": 180,
+                    "score": 200.0
+                },
+                {
+                    "position": [4, 10],
+                    "rotation": 90,
+                    "score": 200.0
+                },
+                {
+                    "position": [3, 10],
+                    "rotation": 270,
+                    "score": 200.0
+                },
+                {
+                    "position": [1, 10],
+                    "rotation": 90,
+                    "score": 0.0
+                },
+                {
+                    "position": [4, 9],
+                    "rotation": 0,
+                    "score": 0.0
+                }
+            ]
         }
     ],
     "clearGrid": [

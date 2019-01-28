@@ -295,7 +295,7 @@ void ClickInputHandler::HandleTouch(const Pht::TouchEvent& touchEvent, int moves
                 CreateNewSetOfVisibleMoves();
                 mEngine.GetAudio().PlaySound(static_cast<Pht::AudioResourceId>(SoundId::OtherMoves));
                 assert(!mVisibleMoves.IsEmpty());
-                mTutorial.OnChangeVisibleMoves(movesUsed, mVisibleMoves.Front());
+                mTutorial.OnChangeVisibleMoves(movesUsed, mVisibleMoves);
             }
             return;
         case Pht::TouchState::Other:

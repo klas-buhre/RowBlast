@@ -4,6 +4,9 @@
 #include <memory>
 #include <string>
 
+// Engine includes.
+#include "Optional.hpp"
+
 // Game includes.
 #include "Cell.hpp"
 #include "Piece.hpp"
@@ -33,6 +36,7 @@ namespace RowBlast {
             Pht::IVec2 mPosition;
             Rotation mRotation;
             const Piece& mPieceType;
+            Pht::Optional<float> mScore;
         };
         
         Level(int id,
@@ -45,7 +49,7 @@ namespace RowBlast {
               const std::vector<const Piece*>& pieceTypes,
               const std::vector<const Piece*>& pieceSequence,
               const std::vector<TutorialMove>& predeterminedMoves,
-              const std::vector<TutorialMove>& suggestedMoves,
+              const std::vector<std::vector<TutorialMove>>& suggestedMoves,
               int musicTrack,
               const std::string& backgroundTextureFilename,
               FloatingBlocksSet floatingBlocksSet,
@@ -100,7 +104,7 @@ namespace RowBlast {
             return mPredeterminedMoves;
         }
 
-        const std::vector<TutorialMove>& GetSuggestedMoves() const {
+        const std::vector<std::vector<TutorialMove>>& GetSuggestedMoves() const {
             return mSuggestedMoves;
         }
 
@@ -145,7 +149,7 @@ namespace RowBlast {
         std::vector<const Piece*> mPieceTypes;
         std::vector<const Piece*> mPieceSequence;
         std::vector<TutorialMove> mPredeterminedMoves;
-        std::vector<TutorialMove> mSuggestedMoves;
+        std::vector<std::vector<TutorialMove>> mSuggestedMoves;
         std::unique_ptr<CellGrid> mClearGrid;
         std::unique_ptr<BlueprintCellGrid> mBlueprintGrid;
         int mMusicTrack {1};
