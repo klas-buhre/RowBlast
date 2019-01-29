@@ -136,6 +136,13 @@ namespace {
             .mUpperScale = 0.5f
         },
         HazeLayer {
+            .mPosition = {0.0f, 0.0f, -369.0f},
+            .mSize = {1000.0f, 100.0f},
+            .mUpperColor = {0.65f, 0.1f, 0.1f, 0.0f},
+            .mLowerColor = {0.817f, 0.633f, 0.435f, 0.0f},
+            .mMidColor = Pht::Vec4{1.0f, 0.9f, 0.8f, 0.8f}
+        },
+        HazeLayer {
             .mPosition = {0.0f, 0.0f, -350.0f},
             .mSize = {500.0f, 650.0f},
             .mUpperColor = {0.65f, 0.1f, 0.1f, 0.35f},

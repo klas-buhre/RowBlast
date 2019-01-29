@@ -31,6 +31,7 @@ namespace RowBlast {
         Pht::Vec2 mSize;
         Pht::Vec4 mUpperColor;
         Pht::Vec4 mLowerColor;
+        Pht::Optional<Pht::Vec4> mMidColor;
         float mUpperScale {1.0f};
     };
     

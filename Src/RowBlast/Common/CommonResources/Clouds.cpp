@@ -182,11 +182,15 @@ void Clouds::InitHazeLayers(const std::vector<HazeLayer>& hazeLayers,
         auto& size {hazeLayer.mSize};
         auto quarterYSize {size.y / 4.0f};
         
+        auto midColor {
+            hazeLayer.mMidColor.HasValue() ? hazeLayer.mMidColor.GetValue() : hazeLayer.mLowerColor
+        };
+        
         Pht::QuadMesh::Vertices lowerVertices {
             {{-size.x / 2.0f, -quarterYSize, 0.0f}, hazeLayer.mLowerColor},
             {{size.x / 2.0f, -quarterYSize, 0.0f}, hazeLayer.mLowerColor},
-            {{size.x / 2.0f, quarterYSize, 0.0f}, hazeLayer.mLowerColor},
-            {{-size.x / 2.0f, quarterYSize, 0.0f}, hazeLayer.mLowerColor},
+            {{size.x / 2.0f, quarterYSize, 0.0f}, midColor},
+            {{-size.x / 2.0f, quarterYSize, 0.0f}, midColor},
         };
         
         Pht::Material lowerMaterial;
@@ -206,8 +210,8 @@ void Clouds::InitHazeLayers(const std::vector<HazeLayer>& hazeLayers,
         auto scale {hazeLayer.mUpperScale};
         
         Pht::QuadMesh::Vertices upperVertices {
-            {{-size.x / 2.0f, -quarterYSize * scale, 0.0f}, hazeLayer.mLowerColor},
-            {{size.x / 2.0f, -quarterYSize * scale, 0.0f}, hazeLayer.mLowerColor},
+            {{-size.x / 2.0f, -quarterYSize * scale, 0.0f}, midColor},
+            {{size.x / 2.0f, -quarterYSize * scale, 0.0f}, midColor},
             {{size.x / 2.0f, quarterYSize * scale, 0.0f}, hazeLayer.mUpperColor},
             {{-size.x / 2.0f, quarterYSize * scale, 0.0f}, hazeLayer.mUpperColor},
         };
