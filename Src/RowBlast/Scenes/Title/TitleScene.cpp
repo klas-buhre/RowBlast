@@ -103,7 +103,7 @@ namespace {
         },
         HazeLayer {
             .mPosition = {0.0f, 0.0f, -369.0f},
-            .mSize = {1000.0f, 125.0f},
+            .mSize = {1000.0f, 105.0f},
             .mUpperColor = {0.17f, 0.38f, 0.89f, 0.0f},
             .mLowerColor = {0.455f, 0.7625f, 0.9725f, 0.0f},
             .mMidColor = Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f}

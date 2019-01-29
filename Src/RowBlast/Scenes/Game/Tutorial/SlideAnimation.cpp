@@ -32,9 +32,9 @@ SlideAnimation::SlideAnimation(Pht::IEngine& engine,
     view.GetRoot().AddChild(container);
     
     container.AddChild(mSlideSceneObject);
-    
-    Pht::Material lineMaterial {Pht::Color{0.6f, 0.8f, 1.0f}};
-    lineMaterial.SetOpacity(0.6f);
+
+    Pht::Material lineMaterial {Pht::Color{0.0f, 0.0f, 0.0f}};
+    lineMaterial.SetOpacity(0.5f);
     auto& sceneManager {engine.GetSceneManager()};
     
     auto& lineSceneObject {

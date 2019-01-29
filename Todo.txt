@@ -37,9 +37,10 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-    -Maybe switch level 5 to a simpler level shaped like a big hole with sloping walls:
-     G   G
-     GG GG
+    -A game objective could be to clear all blue or yellow blocks. In that case I guess pieces of
+     that color is not available.
+    -Levels up to 24 are ok. But add one asteroid level in the first world and maybe 2 or 3 in the
+     second world.
     -Maybe move most the triangle levels to the 4th world and maybe keep one in the 3rd world.
      Instead of the early triangle levels, there could be asteroid levels.
     -Should give free gold coins after a new install.
