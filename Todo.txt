@@ -39,8 +39,13 @@ Backlog:
 Ongoing tasks:
     -A game objective could be to clear all blue or yellow blocks. In that case I guess pieces of
      that color is not available.
-    -Levels up to 24 are ok. But add one asteroid level in the first world and maybe 2 or 3 in the
-     second world.
+    -Can have a tutorial window showing the asteroid go to the end of the level.
+    -Can have a tutorial window recommending click controls that pops up on every asteroid level if
+     using gesture controls.
+    -Maybe the game hud should say the percentage of how far down the asteroid is instead of just
+     0/1. Could also have a down arrow: [asteroid] [arrow] 84%
+    -Levels up to 24 are ok (before added new levels), the one shaped like a man. But add one
+     asteroid level in the first world and maybe 2 or 3 in the second world.
     -Maybe move most the triangle levels to the 4th world and maybe keep one in the 3rd world.
      Instead of the early triangle levels, there could be asteroid levels.
     -Should give free gold coins after a new install.

@@ -17,6 +17,7 @@
 		620A98291EE2B5C000AD6C61 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 620A98281EE2B5C000AD6C61 /* CoreMedia.framework */; };
 		621F715521FDD9D700232B83 /* OtherMoves2WindowView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 621F715321FDD9D700232B83 /* OtherMoves2WindowView.cpp */; };
 		621F715821FDD9EA00232B83 /* OtherMoves2WindowController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 621F715621FDD9EA00232B83 /* OtherMoves2WindowController.cpp */; };
+		621F715B2201AD1200232B83 /* FieldBottomGlowAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 621F71592201AD1200232B83 /* FieldBottomGlowAnimation.cpp */; };
 		62203F0B21D7D84C00BEB3E9 /* game_track1.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 62203F0A21D7D71000BEB3E9 /* game_track1.mp4 */; };
 		62203F0D21D7D9DE00BEB3E9 /* game_track2.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 62203F0C21D7D9D100BEB3E9 /* game_track2.mp4 */; };
 		62204EE421BD7A1800A035C0 /* sky7.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62204EE321BD7A1800A035C0 /* sky7.jpg */; };
@@ -511,6 +512,8 @@
 		621F715421FDD9D700232B83 /* OtherMoves2WindowView.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = OtherMoves2WindowView.hpp; sourceTree = "<group>"; };
 		621F715621FDD9EA00232B83 /* OtherMoves2WindowController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = OtherMoves2WindowController.cpp; sourceTree = "<group>"; };
 		621F715721FDD9EA00232B83 /* OtherMoves2WindowController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = OtherMoves2WindowController.hpp; sourceTree = "<group>"; };
+		621F71592201AD1200232B83 /* FieldBottomGlowAnimation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FieldBottomGlowAnimation.cpp; sourceTree = "<group>"; };
+		621F715A2201AD1200232B83 /* FieldBottomGlowAnimation.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = FieldBottomGlowAnimation.hpp; sourceTree = "<group>"; };
 		62203F0A21D7D71000BEB3E9 /* game_track1.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = game_track1.mp4; sourceTree = "<group>"; };
 		62203F0C21D7D9D100BEB3E9 /* game_track2.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = game_track2.mp4; sourceTree = "<group>"; };
 		62204EE321BD7A1800A035C0 /* sky7.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sky7.jpg; sourceTree = "<group>"; };
@@ -1941,6 +1944,8 @@
 				62216B8321EB377E001CB9A1 /* FallingPieceScaleAnimation.hpp */,
 				62216B8221EB377E001CB9A1 /* FewMovesAlertAnimation.cpp */,
 				62216B8A21EB377E001CB9A1 /* FewMovesAlertAnimation.hpp */,
+				621F71592201AD1200232B83 /* FieldBottomGlowAnimation.cpp */,
+				621F715A2201AD1200232B83 /* FieldBottomGlowAnimation.hpp */,
 				62216B7421EB377E001CB9A1 /* FlashingBlocksAnimation.cpp */,
 				62216B8E21EB377E001CB9A1 /* FlashingBlocksAnimation.hpp */,
 				62216B8121EB377E001CB9A1 /* FlyingBlocksAnimation.cpp */,
@@ -3325,6 +3330,7 @@
 				62216C3E21EB377F001CB9A1 /* MapHud.cpp in Sources */,
 				62216C3021EB377F001CB9A1 /* SmallTextAnimation.cpp in Sources */,
 				62216BE821EB377E001CB9A1 /* LevelCompletedDialogView.cpp in Sources */,
+				621F715B2201AD1200232B83 /* FieldBottomGlowAnimation.cpp in Sources */,
 				6256983B2182392C003A3A9D /* MathUtils.cpp in Sources */,
 				62216BCD21EB377E001CB9A1 /* CascadingDialogController.cpp in Sources */,
 				62216BE121EB377E001CB9A1 /* OutOfMovesDialogView.cpp in Sources */,

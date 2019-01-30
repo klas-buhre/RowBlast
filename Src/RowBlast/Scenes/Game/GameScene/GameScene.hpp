@@ -209,6 +209,10 @@ namespace RowBlast {
         float GetShieldAnimationZ() const {
             return mShieldAnimationZ;
         }
+        
+        float GetFieldBottomGlowZ() const {
+            return mFieldBottomGlowZ;
+        }
 
         const Pht::Vec2& GetFieldLoweLeft() const {
             return mFieldLoweLeft;
@@ -277,6 +281,7 @@ namespace RowBlast {
         const Pht::Vec3 mFieldPosition;
         const float mBlastRadiusAnimationZ {mCellSize / 2.0f + 0.15f};
         const float mShieldAnimationZ {mCellSize / 2.0f + 0.1f};
+        const float mFieldBottomGlowZ {mCellSize / 2.0f + 0.1f};
         const float mGhostPieceZ {-0.2f};
         const float mPressedGhostPieceZ {mCellSize / 2.0f + 0.2f};
         const float mBlueprintAnimationZ {-0.6f};

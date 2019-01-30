@@ -28,6 +28,7 @@
 #include "SmallTextAnimation.hpp"
 #include "BlastRadiusAnimation.hpp"
 #include "ShieldAnimation.hpp"
+#include "FieldBottomGlowAnimation.hpp"
 #include "BombsAnimation.hpp"
 #include "AsteroidAnimation.hpp"
 #include "FallingPieceScaleAnimation.hpp"
@@ -172,6 +173,7 @@ namespace RowBlast {
         PieceDropParticleEffect mPieceDropParticleEffect;
         BlastRadiusAnimation mBlastRadiusAnimation;
         ShieldAnimation mShieldAnimation;
+        FieldBottomGlowAnimation mFieldBottomGlowAnimation;
         SlidingTextAnimation mSlidingTextAnimation;
         SmallTextAnimation mSmallTextAnimation;
         FallingPieceScaleAnimation mFallingPieceScaleAnimation;

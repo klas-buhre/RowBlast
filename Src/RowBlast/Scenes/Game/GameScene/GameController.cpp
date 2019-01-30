@@ -64,6 +64,7 @@ GameController::GameController(Pht::IEngine& engine,
     mPieceDropParticleEffect {engine, mScene},
     mBlastRadiusAnimation {engine, mScene, commonResources},
     mShieldAnimation {engine, mScene, mScrollController},
+    mFieldBottomGlowAnimation {engine, mScene, mScrollController},
     mSlidingTextAnimation {engine, mScene, commonResources},
     mSmallTextAnimation {engine, mScene, commonResources},
     mFallingPieceScaleAnimation {mScene},
@@ -131,6 +132,7 @@ void GameController::StartLevel(int levelId) {
     mPieceDropParticleEffect.Init();
     mBlastRadiusAnimation.Init();
     mShieldAnimation.Init(*mLevel);
+    mFieldBottomGlowAnimation.Init();
     mEffectManager.Init();
     mCameraShake.Init();
     mPreviewPiecesAnimation.Init();
@@ -209,6 +211,7 @@ GameController::Command GameController::UpdateGame() {
     mPieceDropParticleEffect.Update(dt);
     mBlastRadiusAnimation.Update(dt);
     mShieldAnimation.Update(dt);
+    mFieldBottomGlowAnimation.Update(dt);
     mEffectManager.Update(dt);
     mCameraShake.Update(dt);
     mFlyingBlocksAnimation.Update(dt);
