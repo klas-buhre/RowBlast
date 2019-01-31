@@ -1,7 +1,7 @@
 #include "MapHudView.hpp"
 
 // Engine includes.
-#include "QuadMesh.hpp"
+#include "ObjMesh.hpp"
 #include "Material.hpp"
 #include "IEngine.hpp"
 #include "IRenderer.hpp"
@@ -40,11 +40,12 @@ MapHudView::MapHudView(Pht::IEngine& engine, const CommonResources& commonResour
                                                   optionsButtonInputSize,
                                                   optionsButtonStyle);
 
-    Pht::Material gearIconMaterial {"settings.png"};
-    gearIconMaterial.SetBlend(Pht::Blend::Yes);
-    auto& gearIcon {CreateSceneObject(Pht::QuadMesh {1.35f, 1.35f}, gearIconMaterial, sceneManager)};
+    Pht::Color gearColor {0.67, 0.67, 0.67f};
+    Pht::Material gearMaterial {gearColor, gearColor, gearColor, 10.0f};
+    auto& gearIcon {CreateSceneObject(Pht::ObjMesh {"gear_192.obj", 3.75f}, gearMaterial, sceneManager)};
+    gearIcon.GetTransform().SetRotation({20.0f, 10.0f, 0.0f});
     mOptionsButton->GetSceneObject().AddChild(gearIcon);
-    
+
     MenuButton::Style plusButtonStyle;
     plusButtonStyle.mPressedScale = 1.05f;
     plusButtonStyle.mTextScale = 1.4f;

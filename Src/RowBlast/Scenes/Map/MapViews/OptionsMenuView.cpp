@@ -3,6 +3,7 @@
 // Engine includes.
 #include "IEngine.hpp"
 #include "QuadMesh.hpp"
+#include "ObjMesh.hpp"
 #include "ISceneManager.hpp"
 #include "TextComponent.hpp"
 
@@ -24,11 +25,12 @@ OptionsMenuView::OptionsMenuView(Pht::IEngine& engine, const CommonResources& co
     SetSize(menuWindow.GetSize());
     
     auto& sceneManager {engine.GetSceneManager()};
-    
-    Pht::Material gearIconMaterial {"settings.png"};
-    gearIconMaterial.SetBlend(Pht::Blend::Yes);
-    auto& gearIcon {CreateSceneObject(Pht::QuadMesh {1.65f, 1.65f}, gearIconMaterial, sceneManager)};
-    gearIcon.GetTransform().SetPosition({0.0f, GetSize().y / 2.0f - 1.3f, UiLayer::textRectangle});
+
+    Pht::Color gearColor {0.57f, 0.57f, 0.57f};
+    Pht::Material gearMaterial {gearColor, gearColor, gearColor, 10.0f};
+    auto& gearIcon {CreateSceneObject(Pht::ObjMesh {"gear_192.obj", 5.1f}, gearMaterial, sceneManager)};
+    gearIcon.GetTransform().SetRotation({20.0f, 10.0f, 0.0f});
+    gearIcon.GetTransform().SetPosition({0.0f, GetSize().y / 2.0f - 1.4f, UiLayer::textRectangle});
     GetRoot().AddChild(gearIcon);
     
     Pht::Vec3 closeButtonPosition {

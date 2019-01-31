@@ -37,7 +37,6 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-    -Change the gear icon to the gear mesh and remove the icon creators from the credits.
     -Can have a tutorial window showing the asteroid go to the bottom of the level.
     -Can have a tutorial window recommending click controls that pops up on every asteroid level if
      using gesture controls.
