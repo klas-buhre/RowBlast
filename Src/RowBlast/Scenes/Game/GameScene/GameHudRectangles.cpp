@@ -35,7 +35,7 @@ namespace {
 
     std::unique_ptr<Pht::SoftwareRasterizer> CreateRasterizer(Pht::IEngine& engine,
                                                               const CommonResources& commonResources,
-                                                              const Pht::Vec2 size) {
+                                                              const Pht::Vec2& size) {
         auto& renderer {engine.GetRenderer()};
         auto& renderBufferSize {renderer.GetRenderBufferSize()};
         auto& frustumSize {commonResources.GetHudFrustumSizePotentiallyZoomedScreen()};

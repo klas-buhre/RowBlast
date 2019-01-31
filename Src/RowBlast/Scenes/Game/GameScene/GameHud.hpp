@@ -25,6 +25,7 @@ namespace RowBlast {
     class LevelResources;
     class PieceResources;
     class GameHudRectangles;
+    class GameHudArrow;
     class GameHudController;
     class CommonResources;
     
@@ -48,6 +49,7 @@ namespace RowBlast {
                 const LevelResources& levelResources,
                 const PieceResources& pieceResources,
                 const GameHudRectangles& hudRectangles,
+                const GameHudArrow& hudArrow,
                 GameHudController& gameHudController,
                 const CommonResources& commonResources,
                 Pht::Scene& scene,
@@ -114,15 +116,18 @@ namespace RowBlast {
         void CreateLightAndCamera(Pht::Scene& scene, Pht::SceneObject& parentObject, int hudLayer);
         void CreateProgressObject(Pht::Scene& scene,
                                   Pht::SceneObject& parentObject,
-                                  const Field& field,
                                   const CommonResources& commonResources,
-                                  const LevelResources& levelResources);
+                                  const LevelResources& levelResources,
+                                  const GameHudArrow& hudArrow);
         void CreateGrayBlock(Pht::Scene& scene,
                              Pht::SceneObject& progressContainer,
                              const CommonResources& commonResources);
         void CreateAsteroid(Pht::Scene& scene,
                             Pht::SceneObject& progressContainer,
                             const LevelResources& levelResources);
+        void CreateArrow(Pht::Scene& scene,
+                         Pht::SceneObject& progressContainer,
+                         const GameHudArrow& hudArrow);
         void CreateBlueprintSlot(Pht::Scene& scene,
                                  Pht::SceneObject& progressContainer,
                                  const LevelResources& levelResources);
@@ -154,6 +159,7 @@ namespace RowBlast {
         
         Pht::IEngine& mEngine;
         const GameLogic& mGameLogic;
+        const Field& mField;
         const PieceResources& mPieceResources;
         Level::Objective mLevelObjective {Level::Objective::Clear};
         int mMovesLeft {0};

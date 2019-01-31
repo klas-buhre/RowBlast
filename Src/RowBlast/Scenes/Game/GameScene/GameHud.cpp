@@ -19,6 +19,7 @@
 #include "LevelResources.hpp"
 #include "PieceResources.hpp"
 #include "GameHudRectangles.hpp"
+#include "GameHudArrow.hpp"
 #include "GameHudController.hpp"
 #include "UiLayer.hpp"
 #include "CommonResources.hpp"
@@ -83,6 +84,7 @@ GameHud::GameHud(Pht::IEngine& engine,
                  const LevelResources& levelResources,
                  const PieceResources& pieceResources,
                  const GameHudRectangles& hudRectangles,
+                 const GameHudArrow& hudArrow,
                  GameHudController& gameHudController,
                  const CommonResources& commonResources,
                  Pht::Scene& scene,
@@ -91,6 +93,7 @@ GameHud::GameHud(Pht::IEngine& engine,
                  const Level& level) :
     mEngine {engine},
     mGameLogic {gameLogic},
+    mField {field},
     mPieceResources {pieceResources},
     mLevelObjective {level.GetObjective()},
     mNextPreviewPiecesRelativePositions {
@@ -117,7 +120,7 @@ GameHud::GameHud(Pht::IEngine& engine,
     mUpperContainer = &scene.CreateSceneObject();
     parentObject.AddChild(*mUpperContainer);
     
-    CreateProgressObject(scene, *mUpperContainer, field, commonResources, levelResources);
+    CreateProgressObject(scene, *mUpperContainer, commonResources, levelResources, hudArrow);
     CreateMovesObject(scene, *mUpperContainer, commonResources);
     CreateNextPiecesObject(scene, parentObject, hudRectangles);
     CreateSelectablePiecesObject(scene, parentObject, hudRectangles);
@@ -149,9 +152,9 @@ void GameHud::CreateLightAndCamera(Pht::Scene& scene,
 
 void GameHud::CreateProgressObject(Pht::Scene& scene,
                                    Pht::SceneObject& parentObject,
-                                   const Field& field,
                                    const CommonResources& commonResources,
-                                   const LevelResources& levelResources) {
+                                   const LevelResources& levelResources,
+                                   const GameHudArrow& hudArrow) {
     auto& progressContainer {scene.CreateSceneObject()};
     auto& renderer {mEngine.GetRenderer()};
     
@@ -190,24 +193,30 @@ void GameHud::CreateProgressObject(Pht::Scene& scene,
         case Level::Objective::Clear:
             CreateGrayBlock(scene, progressContainer, commonResources);
             progressTextSceneobject.GetTransform().SetPosition({-0.48f, -0.215f, UiLayer::text});
-            mProgressGoal = field.CalculateNumLevelBlocks();
+            mProgressGoal = mField.CalculateNumLevelBlocks();
             break;
         case Level::Objective::BringDownTheAsteroid:
             CreateAsteroid(scene, progressContainer, levelResources);
-            progressTextSceneobject.GetTransform().SetPosition({-0.21f, -0.215f, UiLayer::text});
-            mProgressGoal = 1;
+            CreateArrow(scene, progressContainer, hudArrow);
+            progressTextSceneobject.GetTransform().SetPosition({0.2f, -0.215f, UiLayer::text});
+            mProgressGoal = mField.CalculateAsteroidRow().GetValue();
             break;
         case Level::Objective::Build:
             CreateBlueprintSlot(scene, progressContainer, levelResources);
             progressTextSceneobject.GetTransform().SetPosition({-0.48f, -0.215f, UiLayer::text});
-            mProgressGoal = field.CalculateNumEmptyBlueprintSlots();
+            mProgressGoal = mField.CalculateNumEmptyBlueprintSlots();
             break;
     }
     
     auto* textComponent {progressTextSceneobject.GetComponent<Pht::TextComponent>()};
     assert(textComponent);
     std::string digitsPlaceholder {"   "}; // Warning! Must be three spaces to fit digits.
-    textComponent->GetText() = digitsPlaceholder + "/" + std::to_string(mProgressGoal);
+    
+    if (mLevelObjective == Level::Objective::BringDownTheAsteroid) {
+        textComponent->GetText() = digitsPlaceholder + "%";
+    } else {
+        textComponent->GetText() = digitsPlaceholder + "/" + std::to_string(mProgressGoal);
+    }
     
     progressContainer.AddChild(progressTextSceneobject);
     
@@ -242,6 +251,15 @@ void GameHud::CreateAsteroid(Pht::Scene& scene,
     transform.SetScale(2.4f);
     
     progressContainer.AddChild(asteroid);
+}
+
+void GameHud::CreateArrow(Pht::Scene& scene,
+                          Pht::SceneObject& progressContainer,
+                          const GameHudArrow& hudArrow) {
+    auto& arrow {scene.CreateSceneObject()};
+    arrow.SetRenderable(&hudArrow.GetArrowRenderable());
+    arrow.GetTransform().SetPosition({-0.2f, 0.0f, UiLayer::text});
+    progressContainer.AddChild(arrow);
 }
 
 void GameHud::CreateBlueprintSlot(Pht::Scene& scene,
@@ -422,7 +440,11 @@ void GameHud::UpdateLightAnimation() {
 }
 
 void GameHud::UpdateProgress() {
-    auto progress {mProgressGoal - mGameLogic.GetNumObjectsLeftToClear()};
+    auto progress {
+        mLevelObjective == Level::Objective::BringDownTheAsteroid ?
+        ((mProgressGoal - mField.CalculateAsteroidRow().GetValue()) * 100) / mProgressGoal :
+        mProgressGoal - mGameLogic.GetNumObjectsLeftToClear()
+    };
 
     if (progress != mProgress) {
         WriteIntegerAtBeginningOfString(progress, mProgressText->GetText());

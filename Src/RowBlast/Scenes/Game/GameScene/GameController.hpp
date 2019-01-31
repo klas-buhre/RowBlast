@@ -20,6 +20,8 @@
 #include "LevelResources.hpp"
 #include "Level.hpp"
 #include "PieceResources.hpp"
+#include "GameHudRectangles.hpp"
+#include "GameHudArrow.hpp"
 #include "GameViewControllers.hpp"
 #include "StoreController.hpp"
 #include "PreviewPiecesAnimation.hpp"
@@ -34,7 +36,6 @@
 #include "FallingPieceScaleAnimation.hpp"
 #include "LevelCompletedController.hpp"
 #include "Tutorial.hpp"
-#include "GameHudRectangles.hpp"
 
 namespace Pht {
     class IEngine;
@@ -160,6 +161,7 @@ namespace RowBlast {
         UserServices& mUserServices;
         PieceResources mPieceResources;
         GameHudRectangles mHudRectangles;
+        GameHudArrow mHudArrow;
         GameViewControllers mGameViewControllers;
         Field mField;
         CollapsingFieldAnimation mCollapsingFieldAnimation;

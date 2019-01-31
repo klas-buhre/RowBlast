@@ -417,6 +417,7 @@
 		627A12CA21B5379F00EECA3B /* heart_392.obj in Resources */ = {isa = PBXBuildFile; fileRef = 627A12C921B5379E00EECA3B /* heart_392.obj */; };
 		628EC29A207D24090071F368 /* level30.json in Resources */ = {isa = PBXBuildFile; fileRef = 628EC299207D24080071F368 /* level30.json */; };
 		628EC2AC2080C4880071F368 /* level31.json in Resources */ = {isa = PBXBuildFile; fileRef = 628EC2AB2080C4880071F368 /* level31.json */; };
+		6298ED4F220200A100FFAC36 /* GameHudArrow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6298ED4D220200A100FFAC36 /* GameHudArrow.cpp */; };
 		6299915E2117374C00C845D1 /* laser_frame2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6299915D2117374B00C845D1 /* laser_frame2.jpg */; };
 		629991662118A12200C845D1 /* level48.json in Resources */ = {isa = PBXBuildFile; fileRef = 629991652118A12200C845D1 /* level48.json */; };
 		6299DD82208E39C1001F74E2 /* level32.json in Resources */ = {isa = PBXBuildFile; fileRef = 6299DD81208E39C0001F74E2 /* level32.json */; };
@@ -1308,6 +1309,8 @@
 		627A12C921B5379E00EECA3B /* heart_392.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = heart_392.obj; sourceTree = "<group>"; };
 		628EC299207D24080071F368 /* level30.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level30.json; sourceTree = "<group>"; };
 		628EC2AB2080C4880071F368 /* level31.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level31.json; sourceTree = "<group>"; };
+		6298ED4D220200A100FFAC36 /* GameHudArrow.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameHudArrow.cpp; sourceTree = "<group>"; };
+		6298ED4E220200A100FFAC36 /* GameHudArrow.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = GameHudArrow.hpp; sourceTree = "<group>"; };
 		6299915D2117374B00C845D1 /* laser_frame2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = laser_frame2.jpg; sourceTree = "<group>"; };
 		629991652118A12200C845D1 /* level48.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level48.json; sourceTree = "<group>"; };
 		6299DD81208E39C0001F74E2 /* level32.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level32.json; sourceTree = "<group>"; };
@@ -1771,6 +1774,8 @@
 				62216B0321EB377E001CB9A1 /* GameController.hpp */,
 				62216AFF21EB377E001CB9A1 /* GameHud.cpp */,
 				62216B0D21EB377E001CB9A1 /* GameHud.hpp */,
+				6298ED4D220200A100FFAC36 /* GameHudArrow.cpp */,
+				6298ED4E220200A100FFAC36 /* GameHudArrow.hpp */,
 				62216B0921EB377E001CB9A1 /* GameHudRectangles.cpp */,
 				62216AFB21EB377E001CB9A1 /* GameHudRectangles.hpp */,
 				62216B0821EB377E001CB9A1 /* GameScene.cpp */,
@@ -3485,6 +3490,7 @@
 				62216BBE21EB377E001CB9A1 /* TitleController.cpp in Sources */,
 				62216A8D21EB376E001CB9A1 /* PurchasingService.cpp in Sources */,
 				623B949B21F0E62700B62D9B /* AboutMenuController.cpp in Sources */,
+				6298ED4F220200A100FFAC36 /* GameHudArrow.cpp in Sources */,
 				62216A8021EB376E001CB9A1 /* LevelGoalDialogView.cpp in Sources */,
 				62216C3721EB377F001CB9A1 /* MapTutorial.cpp in Sources */,
 				623B94CF21F6357400B62D9B /* FileSystemIOS.mm in Sources */,
