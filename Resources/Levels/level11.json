@@ -1,12 +1,13 @@
 {
     "speed": 0.0,
-    "moves": 40,
-    "twoStars": 25,
-    "threeStars": 15,
+    "moves": 43,
+    "twoStars": 30,
+    "threeStars": 18,
     "floatingBlocksSet": "Standard",
     "musicTrack": 1,
     "background": "sky2.jpg",
     "lightIntensity": "Daylight",
+    "partOfTutorial": true,
     "pieces": [
         "LongI",
         "I",
@@ -15,7 +16,12 @@
         "D",
         "Seven",
         "MirroredSeven",
-        "RowBomb"
+        "F",
+        "MirroredF",
+        "Bomb"
+    ],
+    "pieceSequence": [
+        "L"
     ],
     "clearGrid": [
         "       ",
@@ -31,19 +37,26 @@
         "       ",
         "       ",
         "       ",
+        "G  GGG ",
+        "GBBBBBG",
+        "GBBBBBG",
+        " GGGGG ",
+        "    GGG",
+        "    GGG",
+        "    GGG",
+        "GGGG   ",
+        "BBBB   ",
+        "GGGGGG ",
+        " G G   ",
+        "G G GGG",
         "GGG GGG",
         "GGG GGG",
         "GGG GGG",
-        "GGG GGG",
-        "GGG  GG",
-        "GGG  GG",
-        "GG   GG",
-        "GG   GG",
-        "GG   GG",
-        "GG   GG",
-        "G    GG",
-        "G     G",
-        "G     G",
-        "G     G"
+        "     BG",
+        "GGGGGB ",
+        "GGGG BG",
+        "GGGGGB ",
+        "GGGG BG",
+        "GGGGGB "
     ]
 }

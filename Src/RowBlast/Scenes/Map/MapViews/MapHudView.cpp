@@ -42,6 +42,7 @@ MapHudView::MapHudView(Pht::IEngine& engine, const CommonResources& commonResour
 
     Pht::Color gearColor {0.67, 0.67, 0.67f};
     Pht::Material gearMaterial {gearColor, gearColor, gearColor, 10.0f};
+    gearMaterial.GetDepthState().mDepthTestAllowedOverride = true;
     auto& gearIcon {CreateSceneObject(Pht::ObjMesh {"gear_192.obj", 3.75f}, gearMaterial, sceneManager)};
     gearIcon.GetTransform().SetRotation({20.0f, 10.0f, 0.0f});
     mOptionsButton->GetSceneObject().AddChild(gearIcon);

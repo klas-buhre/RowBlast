@@ -43,8 +43,8 @@ Ongoing tasks:
     -Maybe all tutorial dialogs with slide animations should have clips for gesture controls also.
     -A game objective could be to clear all blue or yellow blocks. In that case I guess pieces of
      that color is not available.
-    -Levels up to 24 are ok (before added new levels), the one shaped like a man. But add one
-     asteroid level in the first world and maybe 2 or 3 in the second world.
+    -Levels up to 24 are ok (before added new levels), the one shaped like a man. But add maybe 2 or
+     3 asteroid levels in the second world.
     -Maybe move most the triangle levels to the 4th world and maybe keep one in the 3rd world.
      Instead of the early triangle levels, there could be asteroid levels.
     -Should give free gold coins after a new install.

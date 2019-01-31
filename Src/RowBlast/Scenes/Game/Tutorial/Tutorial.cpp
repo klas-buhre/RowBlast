@@ -232,7 +232,7 @@ Tutorial::Result Tutorial::OnLevelStart() {
             SetActiveViewController(Controller::BombDialog);
             mBombDialogController.SetUp(mScene.GetScene());
             return Result::TutorialHasFocus;
-        case 14:
+        case 11:
             SetActiveViewController(Controller::LevelBombDialog);
             mLevelBombDialogController.SetUp(mScene.GetScene());
             return Result::TutorialHasFocus;
