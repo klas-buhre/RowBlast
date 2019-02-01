@@ -16,9 +16,13 @@ PieceDropParticleEffect::PieceDropParticleEffect(Pht::IEngine& engine, GameScene
     mScene {scene},
     mContainerSceneObject {std::make_unique<Pht::SceneObject>()} {
     
+    CreateParticleEffects(engine);
+}
+
+void PieceDropParticleEffect::CreateParticleEffects(Pht::IEngine& engine) {
     Pht::EmitterSettings particleEmitterSettings {
         .mPosition = Pht::Vec3{0.0f, 1.0f, 0.0f},
-        .mSize = Pht::Vec3{scene.GetCellSize(), 2.0f, 1.0f},
+        .mSize = Pht::Vec3{mScene.GetCellSize(), 2.0f, 0.0f},
         .mTimeToLive = 0.0f,
         .mBurst = 3
     };
@@ -70,14 +74,14 @@ void PieceDropParticleEffect::StartEffect(const FallingPiece& fallingPiece) {
                     cellZPos
                 };
                 
-                StartEffect(fieldPosition);
+                StartParticleEffect(fieldPosition);
                 break;
             }
         }
     }
 }
 
-void PieceDropParticleEffect::StartEffect(const Pht::Vec3& fieldPosition) {
+void PieceDropParticleEffect::StartParticleEffect(const Pht::Vec3& fieldPosition) {
     for (auto& effectSceneObject: mParticleEffects) {
         auto* effect {effectSceneObject->GetComponent<Pht::ParticleEffect>()};
         

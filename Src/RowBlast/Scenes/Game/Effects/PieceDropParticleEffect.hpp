@@ -28,7 +28,8 @@ namespace RowBlast {
         void Update(float dt);
         
     private:
-        void StartEffect(const Pht::Vec3& scenePosition);
+        void CreateParticleEffects(Pht::IEngine& engine);
+        void StartParticleEffect(const Pht::Vec3& scenePosition);
         
         GameScene& mScene;
         std::unique_ptr<Pht::SceneObject> mContainerSceneObject;

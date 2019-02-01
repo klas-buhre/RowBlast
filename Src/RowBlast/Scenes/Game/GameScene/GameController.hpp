@@ -17,6 +17,7 @@
 #include "BlueprintSlotsFilledAnimation.hpp"
 #include "EffectManager.hpp"
 #include "PieceDropParticleEffect.hpp"
+#include "PieceTrailParticleEffect.hpp"
 #include "LevelResources.hpp"
 #include "Level.hpp"
 #include "PieceResources.hpp"
@@ -173,6 +174,7 @@ namespace RowBlast {
         StoreController mStoreController;
         EffectManager mEffectManager;
         PieceDropParticleEffect mPieceDropParticleEffect;
+        PieceTrailParticleEffect mPieceTrailParticleEffect;
         BlastRadiusAnimation mBlastRadiusAnimation;
         ShieldAnimation mShieldAnimation;
         FieldBottomGlowAnimation mFieldBottomGlowAnimation;

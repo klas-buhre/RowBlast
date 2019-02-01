@@ -15,6 +15,8 @@
 		6205F93220F519CF00716574 /* level41.json in Resources */ = {isa = PBXBuildFile; fileRef = 6205F93120F519CE00716574 /* level41.json */; };
 		620A981D1EE2A3B400AD6C61 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 620A981C1EE2A3B400AD6C61 /* AVFoundation.framework */; };
 		620A98291EE2B5C000AD6C61 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 620A98281EE2B5C000AD6C61 /* CoreMedia.framework */; };
+		621D867C22045D3C00E505AE /* block_trail_blue.png in Resources */ = {isa = PBXBuildFile; fileRef = 621D867B22045D3C00E505AE /* block_trail_blue.png */; };
+		621D867F2204694D00E505AE /* PieceTrailParticleEffect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 621D867D2204694D00E505AE /* PieceTrailParticleEffect.cpp */; };
 		621F715521FDD9D700232B83 /* OtherMoves2WindowView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 621F715321FDD9D700232B83 /* OtherMoves2WindowView.cpp */; };
 		621F715821FDD9EA00232B83 /* OtherMoves2WindowController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 621F715621FDD9EA00232B83 /* OtherMoves2WindowController.cpp */; };
 		621F715B2201AD1200232B83 /* FieldBottomGlowAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 621F71592201AD1200232B83 /* FieldBottomGlowAnimation.cpp */; };
@@ -497,6 +499,9 @@
 		62E335DC1FD2EF600069B6CF /* level24.json in Resources */ = {isa = PBXBuildFile; fileRef = 62E335DB1FD2EF600069B6CF /* level24.json */; };
 		62E335DE1FD2F31E0069B6CF /* level25.json in Resources */ = {isa = PBXBuildFile; fileRef = 62E335DD1FD2F31E0069B6CF /* level25.json */; };
 		62E335E01FD2F4EE0069B6CF /* level26.json in Resources */ = {isa = PBXBuildFile; fileRef = 62E335DF1FD2F4EE0069B6CF /* level26.json */; };
+		62E6DAC8220477BE00EA9D3A /* block_trail_green.png in Resources */ = {isa = PBXBuildFile; fileRef = 62E6DAC7220477BD00EA9D3A /* block_trail_green.png */; };
+		62E6DACA2204A94200EA9D3A /* block_trail_red.png in Resources */ = {isa = PBXBuildFile; fileRef = 62E6DAC92204A94200EA9D3A /* block_trail_red.png */; };
+		62E6DACC2204A9E100EA9D3A /* block_trail_yellow.png in Resources */ = {isa = PBXBuildFile; fileRef = 62E6DACB2204A9E000EA9D3A /* block_trail_yellow.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -509,6 +514,9 @@
 		6205F93120F519CE00716574 /* level41.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level41.json; sourceTree = "<group>"; };
 		620A981C1EE2A3B400AD6C61 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		620A98281EE2B5C000AD6C61 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		621D867B22045D3C00E505AE /* block_trail_blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = block_trail_blue.png; sourceTree = "<group>"; };
+		621D867D2204694D00E505AE /* PieceTrailParticleEffect.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PieceTrailParticleEffect.cpp; sourceTree = "<group>"; };
+		621D867E2204694D00E505AE /* PieceTrailParticleEffect.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PieceTrailParticleEffect.hpp; sourceTree = "<group>"; };
 		621F715321FDD9D700232B83 /* OtherMoves2WindowView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = OtherMoves2WindowView.cpp; sourceTree = "<group>"; };
 		621F715421FDD9D700232B83 /* OtherMoves2WindowView.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = OtherMoves2WindowView.hpp; sourceTree = "<group>"; };
 		621F715621FDD9EA00232B83 /* OtherMoves2WindowController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = OtherMoves2WindowController.cpp; sourceTree = "<group>"; };
@@ -1396,6 +1404,9 @@
 		62E335DB1FD2EF600069B6CF /* level24.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level24.json; sourceTree = "<group>"; };
 		62E335DD1FD2F31E0069B6CF /* level25.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level25.json; sourceTree = "<group>"; };
 		62E335DF1FD2F4EE0069B6CF /* level26.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level26.json; sourceTree = "<group>"; };
+		62E6DAC7220477BD00EA9D3A /* block_trail_green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = block_trail_green.png; sourceTree = "<group>"; };
+		62E6DAC92204A94200EA9D3A /* block_trail_red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = block_trail_red.png; sourceTree = "<group>"; };
+		62E6DACB2204A9E000EA9D3A /* block_trail_yellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = block_trail_yellow.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1926,6 +1937,8 @@
 				62216B6E21EB377E001CB9A1 /* LaserParticleEffect.hpp */,
 				62216B6B21EB377E001CB9A1 /* PieceDropParticleEffect.cpp */,
 				62216B7121EB377E001CB9A1 /* PieceDropParticleEffect.hpp */,
+				621D867D2204694D00E505AE /* PieceTrailParticleEffect.cpp */,
+				621D867E2204694D00E505AE /* PieceTrailParticleEffect.hpp */,
 			);
 			path = Effects;
 			sourceTree = "<group>";
@@ -2918,6 +2931,10 @@
 		62B1CB64210F8F8500D0F195 /* Game */ = {
 			isa = PBXGroup;
 			children = (
+				62E6DACB2204A9E000EA9D3A /* block_trail_yellow.png */,
+				62E6DAC92204A94200EA9D3A /* block_trail_red.png */,
+				62E6DAC7220477BD00EA9D3A /* block_trail_green.png */,
+				621D867B22045D3C00E505AE /* block_trail_blue.png */,
 				62B1CB65210F8F8500D0F195 /* bomb_798_emission.jpg */,
 				62B1CB67210F8F8500D0F195 /* bomb_798.jpg */,
 				62B1CB75210F8F8500D0F195 /* cloud_B_envmap.jpg */,
@@ -3053,6 +3070,7 @@
 				629B837E20C587A100DD2D0E /* level36.json in Resources */,
 				6299DD82208E39C1001F74E2 /* level32.json in Resources */,
 				626E08EC216BC0B800D1B70B /* space1.jpg in Resources */,
+				621D867C22045D3C00E505AE /* block_trail_blue.png in Resources */,
 				62204EE421BD7A1800A035C0 /* sky7.jpg in Resources */,
 				626940A5215932C800D9857A /* ufo_3620.obj in Resources */,
 				6270DC9B1FCB23D800FB457D /* level6.json in Resources */,
@@ -3180,6 +3198,7 @@
 				622169BE21DF78F0001CB9A1 /* drop_whoosh.wav in Resources */,
 				625698272182392C003A3A9D /* PointParticle.frag in Resources */,
 				625B02CD21386AC3000744F2 /* level_bomb_frame4.jpg in Resources */,
+				62E6DACC2204A9E100EA9D3A /* block_trail_yellow.png in Resources */,
 				62B2BAF12133FE61009C529D /* level55.json in Resources */,
 				62216A1C21E901E1001CB9A1 /* fireworks1.wav in Resources */,
 				62216A0821E655B0001CB9A1 /* laser.wav in Resources */,
@@ -3205,6 +3224,7 @@
 				629B838820CA940E00DD2D0E /* cube_428.obj in Resources */,
 				6270DC9C1FCB23D800FB457D /* level7.json in Resources */,
 				62DE641C20CE953D00A50F26 /* medium_button_skewed_0385.obj in Resources */,
+				62E6DAC8220477BE00EA9D3A /* block_trail_green.png in Resources */,
 				6238F622219AEC640008A0CF /* heart_112.obj in Resources */,
 				6270DC941FCB23D800FB457D /* level20.json in Resources */,
 				62B1CB85210F8F8600D0F195 /* laser_beam_red.png in Resources */,
@@ -3219,6 +3239,7 @@
 				62B1CB8C210F8F8600D0F195 /* flare24.png in Resources */,
 				629B838220C6E06500DD2D0E /* level38.json in Resources */,
 				6261FFD520FB969B008F1619 /* level42.json in Resources */,
+				62E6DACA2204A94200EA9D3A /* block_trail_red.png in Resources */,
 				6240508620FF69C00077A454 /* level46.json in Resources */,
 				6270DC8B1FCB23D800FB457D /* level12.json in Resources */,
 				62E01BAF2153E00F009F0B99 /* planet_960.obj in Resources */,
@@ -3370,6 +3391,7 @@
 				62216A8321EB376E001CB9A1 /* PurchaseCanceledDialogController.cpp in Sources */,
 				62216A7621EB376E001CB9A1 /* SlidingMenuAnimation.cpp in Sources */,
 				62216C0621EB377F001CB9A1 /* MirroredFPiece.cpp in Sources */,
+				621D867F2204694D00E505AE /* PieceTrailParticleEffect.cpp in Sources */,
 				6256984F2182392C003A3A9D /* SceneObjectUtils.cpp in Sources */,
 				62216A9121EB376E001CB9A1 /* Materials.cpp in Sources */,
 				625698082182392C003A3A9D /* SphereMesh.cpp in Sources */,

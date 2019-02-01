@@ -18,6 +18,7 @@
 #include "CollapsingFieldAnimation.hpp"
 #include "EffectManager.hpp"
 #include "PieceDropParticleEffect.hpp"
+#include "PieceTrailParticleEffect.hpp"
 #include "BlastRadiusAnimation.hpp"
 #include "FallingPieceScaleAnimation.hpp"
 #include "ShieldAnimation.hpp"
@@ -63,6 +64,7 @@ GameLogic::GameLogic(Pht::IEngine& engine,
                      FlashingBlocksAnimation& flashingBlocksAnimation,
                      CollapsingFieldAnimation& collapsingFieldAnimation,
                      PieceDropParticleEffect& pieceDropParticleEffect,
+                     PieceTrailParticleEffect& pieceTrailParticleEffect,
                      BlastRadiusAnimation& blastRadiusAnimation,
                      FallingPieceScaleAnimation& fallingPieceScaleAnimation,
                      ShieldAnimation& shieldAnimation,
@@ -78,6 +80,7 @@ GameLogic::GameLogic(Pht::IEngine& engine,
     mCollapsingFieldAnimation {collapsingFieldAnimation},
     mEffectManager {effectManager},
     mPieceDropParticleEffect {pieceDropParticleEffect},
+    mPieceTrailParticleEffect {pieceTrailParticleEffect},
     mBlastRadiusAnimation {blastRadiusAnimation},
     mFallingPieceScaleAnimation {fallingPieceScaleAnimation},
     mShieldAnimation {shieldAnimation},
@@ -560,6 +563,10 @@ void GameLogic::LandFallingPiece(bool finalMovementWasADrop) {
     
     if (!clearedAnyFilledRows) {
         mComboDetector.OnClearedNoFilledRows();
+
+        if (!IsBomb(pieceType) && mState != State::FieldExplosions && finalMovementWasADrop) {
+            mPieceTrailParticleEffect.StartEffect(*mFallingPiece);
+        }
     }
     
     if (mLevel->GetObjective() == Level::Objective::BringDownTheAsteroid) {
