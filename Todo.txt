@@ -38,10 +38,7 @@ Backlog:
 
 Ongoing tasks:
     -Maybe test trail lines after a piece has landed.
-      -Try have an upside down trail below the normal trail so that there can be trail effects also
-       when clearing rows and when in field explosion state.
-      -Tune the size, time to live and opacity.
-      -Make a single texture for the normal and upside down trail.
+      -Tune the size.
     -Can have a tutorial window showing the asteroid go to the bottom of the level.
     -Can have a tutorial window recommending click controls that pops up on every asteroid level if
      using gesture controls.

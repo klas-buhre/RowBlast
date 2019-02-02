@@ -517,12 +517,16 @@ void GameLogic::OnFallingPieceAnimationFinished(bool finalMovementWasADrop) {
 void GameLogic::LandFallingPiece(bool finalMovementWasADrop) {
     mField.SaveState();
     
-    if (finalMovementWasADrop) {
-        mPieceDropParticleEffect.StartEffect(*mFallingPiece);
-    }
-    
     auto clearedAnyFilledRows {false};
     auto& pieceType {mFallingPiece->GetPieceType()};
+
+    if (finalMovementWasADrop) {
+        mPieceDropParticleEffect.StartEffect(*mFallingPiece);
+        
+        if (!IsBomb(pieceType)) {
+            mPieceTrailParticleEffect.StartEffect(*mFallingPiece);
+        }
+    }
     
     if (IsBomb(pieceType)) {
         DetonateDroppedBomb();
@@ -563,10 +567,6 @@ void GameLogic::LandFallingPiece(bool finalMovementWasADrop) {
     
     if (!clearedAnyFilledRows) {
         mComboDetector.OnClearedNoFilledRows();
-
-        if (!IsBomb(pieceType) && mState != State::FieldExplosions && finalMovementWasADrop) {
-            mPieceTrailParticleEffect.StartEffect(*mFallingPiece);
-        }
     }
     
     if (mLevel->GetObjective() == Level::Objective::BringDownTheAsteroid) {

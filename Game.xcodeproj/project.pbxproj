@@ -15,7 +15,6 @@
 		6205F93220F519CF00716574 /* level41.json in Resources */ = {isa = PBXBuildFile; fileRef = 6205F93120F519CE00716574 /* level41.json */; };
 		620A981D1EE2A3B400AD6C61 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 620A981C1EE2A3B400AD6C61 /* AVFoundation.framework */; };
 		620A98291EE2B5C000AD6C61 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 620A98281EE2B5C000AD6C61 /* CoreMedia.framework */; };
-		621D867C22045D3C00E505AE /* block_trail_blue.png in Resources */ = {isa = PBXBuildFile; fileRef = 621D867B22045D3C00E505AE /* block_trail_blue.png */; };
 		621D867F2204694D00E505AE /* PieceTrailParticleEffect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 621D867D2204694D00E505AE /* PieceTrailParticleEffect.cpp */; };
 		621F715521FDD9D700232B83 /* OtherMoves2WindowView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 621F715321FDD9D700232B83 /* OtherMoves2WindowView.cpp */; };
 		621F715821FDD9EA00232B83 /* OtherMoves2WindowController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 621F715621FDD9EA00232B83 /* OtherMoves2WindowController.cpp */; };
@@ -499,9 +498,10 @@
 		62E335DC1FD2EF600069B6CF /* level24.json in Resources */ = {isa = PBXBuildFile; fileRef = 62E335DB1FD2EF600069B6CF /* level24.json */; };
 		62E335DE1FD2F31E0069B6CF /* level25.json in Resources */ = {isa = PBXBuildFile; fileRef = 62E335DD1FD2F31E0069B6CF /* level25.json */; };
 		62E335E01FD2F4EE0069B6CF /* level26.json in Resources */ = {isa = PBXBuildFile; fileRef = 62E335DF1FD2F4EE0069B6CF /* level26.json */; };
-		62E6DAC8220477BE00EA9D3A /* block_trail_green.png in Resources */ = {isa = PBXBuildFile; fileRef = 62E6DAC7220477BD00EA9D3A /* block_trail_green.png */; };
-		62E6DACA2204A94200EA9D3A /* block_trail_red.png in Resources */ = {isa = PBXBuildFile; fileRef = 62E6DAC92204A94200EA9D3A /* block_trail_red.png */; };
-		62E6DACC2204A9E100EA9D3A /* block_trail_yellow.png in Resources */ = {isa = PBXBuildFile; fileRef = 62E6DACB2204A9E000EA9D3A /* block_trail_yellow.png */; };
+		62E6DAD02205D26F00EA9D3A /* block_trail_blue.png in Resources */ = {isa = PBXBuildFile; fileRef = 62E6DACF2205D26F00EA9D3A /* block_trail_blue.png */; };
+		62E6DAD2220602CD00EA9D3A /* block_trail_green.png in Resources */ = {isa = PBXBuildFile; fileRef = 62E6DAD1220602CD00EA9D3A /* block_trail_green.png */; };
+		62E6DAD422060AEE00EA9D3A /* block_trail_red.png in Resources */ = {isa = PBXBuildFile; fileRef = 62E6DAD322060AEE00EA9D3A /* block_trail_red.png */; };
+		62E6DAD622060DDA00EA9D3A /* block_trail_yellow.png in Resources */ = {isa = PBXBuildFile; fileRef = 62E6DAD522060DD900EA9D3A /* block_trail_yellow.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -514,7 +514,6 @@
 		6205F93120F519CE00716574 /* level41.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level41.json; sourceTree = "<group>"; };
 		620A981C1EE2A3B400AD6C61 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		620A98281EE2B5C000AD6C61 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
-		621D867B22045D3C00E505AE /* block_trail_blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = block_trail_blue.png; sourceTree = "<group>"; };
 		621D867D2204694D00E505AE /* PieceTrailParticleEffect.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PieceTrailParticleEffect.cpp; sourceTree = "<group>"; };
 		621D867E2204694D00E505AE /* PieceTrailParticleEffect.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PieceTrailParticleEffect.hpp; sourceTree = "<group>"; };
 		621F715321FDD9D700232B83 /* OtherMoves2WindowView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = OtherMoves2WindowView.cpp; sourceTree = "<group>"; };
@@ -1404,9 +1403,10 @@
 		62E335DB1FD2EF600069B6CF /* level24.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level24.json; sourceTree = "<group>"; };
 		62E335DD1FD2F31E0069B6CF /* level25.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level25.json; sourceTree = "<group>"; };
 		62E335DF1FD2F4EE0069B6CF /* level26.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level26.json; sourceTree = "<group>"; };
-		62E6DAC7220477BD00EA9D3A /* block_trail_green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = block_trail_green.png; sourceTree = "<group>"; };
-		62E6DAC92204A94200EA9D3A /* block_trail_red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = block_trail_red.png; sourceTree = "<group>"; };
-		62E6DACB2204A9E000EA9D3A /* block_trail_yellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = block_trail_yellow.png; sourceTree = "<group>"; };
+		62E6DACF2205D26F00EA9D3A /* block_trail_blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = block_trail_blue.png; sourceTree = "<group>"; };
+		62E6DAD1220602CD00EA9D3A /* block_trail_green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = block_trail_green.png; sourceTree = "<group>"; };
+		62E6DAD322060AEE00EA9D3A /* block_trail_red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = block_trail_red.png; sourceTree = "<group>"; };
+		62E6DAD522060DD900EA9D3A /* block_trail_yellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = block_trail_yellow.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2931,10 +2931,10 @@
 		62B1CB64210F8F8500D0F195 /* Game */ = {
 			isa = PBXGroup;
 			children = (
-				62E6DACB2204A9E000EA9D3A /* block_trail_yellow.png */,
-				62E6DAC92204A94200EA9D3A /* block_trail_red.png */,
-				62E6DAC7220477BD00EA9D3A /* block_trail_green.png */,
-				621D867B22045D3C00E505AE /* block_trail_blue.png */,
+				62E6DAD522060DD900EA9D3A /* block_trail_yellow.png */,
+				62E6DAD322060AEE00EA9D3A /* block_trail_red.png */,
+				62E6DAD1220602CD00EA9D3A /* block_trail_green.png */,
+				62E6DACF2205D26F00EA9D3A /* block_trail_blue.png */,
 				62B1CB65210F8F8500D0F195 /* bomb_798_emission.jpg */,
 				62B1CB67210F8F8500D0F195 /* bomb_798.jpg */,
 				62B1CB75210F8F8500D0F195 /* cloud_B_envmap.jpg */,
@@ -3070,7 +3070,6 @@
 				629B837E20C587A100DD2D0E /* level36.json in Resources */,
 				6299DD82208E39C1001F74E2 /* level32.json in Resources */,
 				626E08EC216BC0B800D1B70B /* space1.jpg in Resources */,
-				621D867C22045D3C00E505AE /* block_trail_blue.png in Resources */,
 				62204EE421BD7A1800A035C0 /* sky7.jpg in Resources */,
 				626940A5215932C800D9857A /* ufo_3620.obj in Resources */,
 				6270DC9B1FCB23D800FB457D /* level6.json in Resources */,
@@ -3090,6 +3089,7 @@
 				62B1CBAA2110D46E00D0F195 /* bomb_frame5.jpg in Resources */,
 				62B2BAEF2130089D009C529D /* level54.json in Resources */,
 				6234617921668D1E00ECD0DF /* planet_rayeon.jpg in Resources */,
+				62E6DAD2220602CD00EA9D3A /* block_trail_green.png in Resources */,
 				625698232182392C003A3A9D /* ParticleNoAlphaTexture.frag in Resources */,
 				62B1CB84210F8F8600D0F195 /* cloud_C_envmap.jpg in Resources */,
 				626940992157F31500D9857A /* ogma_rings.png in Resources */,
@@ -3121,6 +3121,7 @@
 				62B1CB5D210F8EE500D0F195 /* cloud_C_512.png in Resources */,
 				62B1CB80210F8F8600D0F195 /* confetti.png in Resources */,
 				625D3B55217249EC00D67EC2 /* asteroid_2000.obj in Resources */,
+				62E6DAD02205D26F00EA9D3A /* block_trail_blue.png in Resources */,
 				62B1CB60210F8EE500D0F195 /* portal.png in Resources */,
 				62B2BAF32134495E009C529D /* level56.json in Resources */,
 				62B1CB62210F8EE500D0F195 /* cloud_D_512.png in Resources */,
@@ -3128,6 +3129,7 @@
 				62A729E12143DDD600255BF7 /* level57.json in Resources */,
 				62E335E01FD2F4EE0069B6CF /* level26.json in Resources */,
 				62B2BAED212D9B4F009C529D /* level53.json in Resources */,
+				62E6DAD622060DDA00EA9D3A /* block_trail_yellow.png in Resources */,
 				6270DC931FCB23D800FB457D /* level2.json in Resources */,
 				625B02CF21386AC3000744F2 /* level_bomb_frame1.jpg in Resources */,
 				625698192182392C003A3A9D /* TexturedEmissiveLighting.frag in Resources */,
@@ -3198,7 +3200,6 @@
 				622169BE21DF78F0001CB9A1 /* drop_whoosh.wav in Resources */,
 				625698272182392C003A3A9D /* PointParticle.frag in Resources */,
 				625B02CD21386AC3000744F2 /* level_bomb_frame4.jpg in Resources */,
-				62E6DACC2204A9E100EA9D3A /* block_trail_yellow.png in Resources */,
 				62B2BAF12133FE61009C529D /* level55.json in Resources */,
 				62216A1C21E901E1001CB9A1 /* fireworks1.wav in Resources */,
 				62216A0821E655B0001CB9A1 /* laser.wav in Resources */,
@@ -3224,7 +3225,6 @@
 				629B838820CA940E00DD2D0E /* cube_428.obj in Resources */,
 				6270DC9C1FCB23D800FB457D /* level7.json in Resources */,
 				62DE641C20CE953D00A50F26 /* medium_button_skewed_0385.obj in Resources */,
-				62E6DAC8220477BE00EA9D3A /* block_trail_green.png in Resources */,
 				6238F622219AEC640008A0CF /* heart_112.obj in Resources */,
 				6270DC941FCB23D800FB457D /* level20.json in Resources */,
 				62B1CB85210F8F8600D0F195 /* laser_beam_red.png in Resources */,
@@ -3239,7 +3239,6 @@
 				62B1CB8C210F8F8600D0F195 /* flare24.png in Resources */,
 				629B838220C6E06500DD2D0E /* level38.json in Resources */,
 				6261FFD520FB969B008F1619 /* level42.json in Resources */,
-				62E6DACA2204A94200EA9D3A /* block_trail_red.png in Resources */,
 				6240508620FF69C00077A454 /* level46.json in Resources */,
 				6270DC8B1FCB23D800FB457D /* level12.json in Resources */,
 				62E01BAF2153E00F009F0B99 /* planet_960.obj in Resources */,
@@ -3251,6 +3250,7 @@
 				626940D32162641900D9857A /* sky3.jpg in Resources */,
 				6234616221653F9900ECD0DF /* space.jpg in Resources */,
 				62B1CB4C210F8DAF00D0F195 /* hand48.png in Resources */,
+				62E6DAD422060AEE00EA9D3A /* block_trail_red.png in Resources */,
 				6256982A2182392C003A3A9D /* PixelLighting.frag in Resources */,
 				622169B621DF6FCE001CB9A1 /* button_click.wav in Resources */,
 				6256982F2182392C003A3A9D /* Text.frag in Resources */,

@@ -13,8 +13,11 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto trailHeightInCells {4.0f};
-    constexpr auto trailWidthInCells {1.0f};
+    constexpr auto trailYScale {1.5f};
+    // constexpr auto trailYScale {2.5f};
+    constexpr auto trailHeightInCells {4.5f * trailYScale};
+    constexpr auto lowerTrailHeightInCells {1.0f * trailYScale};
+    constexpr auto trailWidthInCells {1.075f};
     constexpr auto trailDuration {0.7f};
 }
 
@@ -33,8 +36,12 @@ void PieceTrailParticleEffect::CreateTrailEffects(Pht::IEngine& engine,
                                                   TrailEffects& trailEffects) {
     auto cellSize {mScene.GetCellSize()};
     
+    Pht::Vec3 emitterPosition {
+        0.0f, trailHeightInCells * cellSize / 2.0f - lowerTrailHeightInCells * cellSize, -0.1f
+    };
+    
     Pht::EmitterSettings particleEmitterSettings {
-        .mPosition = Pht::Vec3{0.0f, trailHeightInCells * cellSize / 2.0f - 0.085f, -0.1f},
+        .mPosition = emitterPosition,
         .mSize = Pht::Vec3{0.0f, 0.0f, 0.0f},
         .mTimeToLive = 0.0f,
         .mFrequency = 0.0f,
