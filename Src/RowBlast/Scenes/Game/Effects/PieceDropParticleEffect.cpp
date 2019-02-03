@@ -12,6 +12,11 @@
 
 using namespace RowBlast;
 
+namespace {
+    constexpr auto emitterHeightInCells {3.0f};
+    constexpr auto emitterWidthInCells {0.5f};
+}
+
 PieceDropParticleEffect::PieceDropParticleEffect(Pht::IEngine& engine, GameScene& scene) :
     mScene {scene},
     mContainerSceneObject {std::make_unique<Pht::SceneObject>()} {
@@ -20,11 +25,13 @@ PieceDropParticleEffect::PieceDropParticleEffect(Pht::IEngine& engine, GameScene
 }
 
 void PieceDropParticleEffect::CreateParticleEffects(Pht::IEngine& engine) {
+    auto cellSize {mScene.GetCellSize()};
+    
     Pht::EmitterSettings particleEmitterSettings {
-        .mPosition = Pht::Vec3{0.0f, 1.0f, 0.0f},
-        .mSize = Pht::Vec3{mScene.GetCellSize(), 2.0f, 0.0f},
+        .mPosition = Pht::Vec3{0.0f, emitterHeightInCells * cellSize / 2.0f + cellSize / 2.0f, 0.0f},
+        .mSize = Pht::Vec3{emitterWidthInCells * cellSize, emitterHeightInCells * cellSize, 0.0f},
         .mTimeToLive = 0.0f,
-        .mBurst = 3
+        .mBurst = 5
     };
     
     Pht::ParticleSettings particleSettings {
@@ -36,8 +43,8 @@ void PieceDropParticleEffect::CreateParticleEffects(Pht::IEngine& engine) {
         .mTimeToLive = 0.7f,
         .mTimeToLiveRandomPart = 0.4f,
         .mFadeOutDuration = 0.0f,
-        .mZAngularVelocityRandomPart = 400.0f,
-        .mSize = Pht::Vec2{2.42f, 2.42f},
+        .mZAngularVelocityRandomPart = 800.0f,
+        .mSize = Pht::Vec2{1.42f, 1.42f},
         .mSizeRandomPart = 0.0f,
         .mShrinkDuration = 0.4f
     };
@@ -70,7 +77,7 @@ void PieceDropParticleEffect::StartEffect(const FallingPiece& fallingPiece) {
             if (!pieceGrid[row][column].IsEmpty()) {
                 Pht::Vec3 fieldPosition {
                     column * cellSize + cellSize / 2.0f + pieceFieldPos.x,
-                    row * cellSize + cellSize + pieceFieldPos.y,
+                    row * cellSize + pieceFieldPos.y,
                     cellZPos
                 };
                 

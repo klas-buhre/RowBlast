@@ -14,7 +14,6 @@ using namespace RowBlast;
 
 namespace {
     constexpr auto trailYScale {1.5f};
-    // constexpr auto trailYScale {2.5f};
     constexpr auto trailHeightInCells {4.5f * trailYScale};
     constexpr auto lowerTrailHeightInCells {1.0f * trailYScale};
     constexpr auto trailWidthInCells {1.075f};
@@ -95,6 +94,12 @@ void PieceTrailParticleEffect::StartEffect(const FallingPiece& fallingPiece) {
                     row * cellSize + cellSize + pieceFieldPos.y,
                     cellZPos
                 };
+                
+                auto fill {cell.mFirstSubCell.mFill};
+                
+                if (fill == Fill::LowerLeftHalf || fill == Fill::LowerRightHalf) {
+                    fieldPosition.y -= cellSize;
+                }
                 
                 switch (cell.mFirstSubCell.mColor) {
                     case BlockColor::Blue:

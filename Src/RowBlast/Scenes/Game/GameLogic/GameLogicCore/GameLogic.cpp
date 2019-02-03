@@ -520,15 +520,11 @@ void GameLogic::LandFallingPiece(bool finalMovementWasADrop) {
     auto clearedAnyFilledRows {false};
     auto& pieceType {mFallingPiece->GetPieceType()};
 
-    if (finalMovementWasADrop) {
-        mPieceDropParticleEffect.StartEffect(*mFallingPiece);
-        
-        if (!IsBomb(pieceType)) {
-            mPieceTrailParticleEffect.StartEffect(*mFallingPiece);
-        }
-    }
-    
     if (IsBomb(pieceType)) {
+        if (finalMovementWasADrop) {
+            mPieceDropParticleEffect.StartEffect(*mFallingPiece);
+        }
+
         DetonateDroppedBomb();
     } else {
         auto impactedLevelBombs {
@@ -541,6 +537,7 @@ void GameLogic::LandFallingPiece(bool finalMovementWasADrop) {
         if (finalMovementWasADrop) {
             startBounceAnimation = true;
             mCollapsingFieldAnimation.GoToBlocksBouncingState();
+            mPieceTrailParticleEffect.StartEffect(*mFallingPiece);
         }
         
         mField.LandFallingPiece(*mFallingPiece, startBounceAnimation);

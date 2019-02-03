@@ -37,8 +37,6 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-    -Maybe test trail lines after a piece has landed.
-      -Tune the size.
     -Can have a tutorial window showing the asteroid go to the bottom of the level.
     -Can have a tutorial window recommending click controls that pops up on every asteroid level if
      using gesture controls.
