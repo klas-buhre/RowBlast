@@ -400,7 +400,7 @@ void Renderer::RenderScene(const Scene& scene) {
             continue;
         }
 
-        // Setup camera.
+        // Set up camera.
         auto* cameraOverride {renderPass.GetCamera()};
         auto* camera {cameraOverride ? cameraOverride : scene.GetCamera()};
         assert(camera);
@@ -418,7 +418,7 @@ void Renderer::RenderScene(const Scene& scene) {
             previousCamera = camera;
         }
 
-        // Setup the lighting.
+        // Set up the lighting.
         auto* lightOverride {renderPass.GetLight()};
         auto* light {lightOverride ? lightOverride : scene.GetGlobalLight()};
         assert(light);

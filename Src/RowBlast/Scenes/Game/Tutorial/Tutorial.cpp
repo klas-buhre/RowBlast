@@ -62,7 +62,8 @@ Tutorial::Tutorial(Pht::IEngine& engine, GameScene& scene, const CommonResources
     mSameColorDialogController {engine, commonResources},
     mLaserDialogController {engine, commonResources},
     mBombDialogController {engine, commonResources},
-    mLevelBombDialogController {engine, commonResources} {
+    mLevelBombDialogController {engine, commonResources},
+    mAsteroidDialogController {engine, commonResources} {
     
     mViewManager.AddView(static_cast<int>(Controller::PlacePieceWindow), mPlacePieceWindowController.GetView());
     mViewManager.AddView(static_cast<int>(Controller::FillRowsWindow), mFillRowsWindowController.GetView());
@@ -75,12 +76,14 @@ Tutorial::Tutorial(Pht::IEngine& engine, GameScene& scene, const CommonResources
     mViewManager.AddView(static_cast<int>(Controller::LaserDialog), mLaserDialogController.GetView());
     mViewManager.AddView(static_cast<int>(Controller::BombDialog), mBombDialogController.GetView());
     mViewManager.AddView(static_cast<int>(Controller::LevelBombDialog), mLevelBombDialogController.GetView());
+    mViewManager.AddView(static_cast<int>(Controller::AsteroidDialog), mAsteroidDialogController.GetView());
 
     mCascadingDialogController.SetFadeEffect(mFadeEffect);
     mSameColorDialogController.SetFadeEffect(mFadeEffect);
     mLaserDialogController.SetFadeEffect(mFadeEffect);
     mBombDialogController.SetFadeEffect(mFadeEffect);
     mLevelBombDialogController.SetFadeEffect(mFadeEffect);
+    mAsteroidDialogController.SetFadeEffect(mFadeEffect);
 }
 
 void Tutorial::Init(const Level& level) {
@@ -157,6 +160,7 @@ void Tutorial::Update() {
         case Controller::LaserDialog:
         case Controller::BombDialog:
         case Controller::LevelBombDialog:
+        case Controller::AsteroidDialog:
         case Controller::None:
             break;
     }
@@ -192,6 +196,12 @@ Tutorial::Result Tutorial::UpdateDialogs() {
             break;
         case Controller::LevelBombDialog:
             if (mLevelBombDialogController.Update() == LevelBombDialogController::Result::Play) {
+                SetActiveViewController(Controller::None);
+                result = Result::Play;
+            }
+            break;
+        case Controller::AsteroidDialog:
+            if (mAsteroidDialogController.Update() == AsteroidDialogController::Result::Play) {
                 SetActiveViewController(Controller::None);
                 result = Result::Play;
             }
@@ -235,6 +245,10 @@ Tutorial::Result Tutorial::OnLevelStart() {
         case 11:
             SetActiveViewController(Controller::LevelBombDialog);
             mLevelBombDialogController.SetUp(mScene.GetScene());
+            return Result::TutorialHasFocus;
+        case 14:
+            SetActiveViewController(Controller::AsteroidDialog);
+            mAsteroidDialogController.SetUp(mScene.GetScene());
             return Result::TutorialHasFocus;
         default:
             break;

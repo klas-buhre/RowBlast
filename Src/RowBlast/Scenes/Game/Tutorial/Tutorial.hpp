@@ -18,6 +18,7 @@
 #include "LaserDialogController.hpp"
 #include "BombDialogController.hpp"
 #include "LevelBombDialogController.hpp"
+#include "AsteroidDialogController.hpp"
 #include "ClickInputHandler.hpp"
 
 namespace Pht {
@@ -71,6 +72,7 @@ namespace RowBlast {
             LaserDialog,
             BombDialog,
             LevelBombDialog,
+            AsteroidDialog,
             None
         };
 
@@ -97,6 +99,7 @@ namespace RowBlast {
         LaserDialogController mLaserDialogController;
         BombDialogController mBombDialogController;
         LevelBombDialogController mLevelBombDialogController;
+        AsteroidDialogController mAsteroidDialogController;
     };
 }
 

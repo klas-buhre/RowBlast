@@ -12,6 +12,8 @@
 		288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
 		4D27E4840F9AD71900447247 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D27E4830F9AD71900447247 /* OpenGLES.framework */; };
 		4D27E4B50F9AD7D600447247 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D27E4B40F9AD7D600447247 /* QuartzCore.framework */; };
+		6205E8282207532600EFCC6B /* AsteroidDialogView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6205E8262207532600EFCC6B /* AsteroidDialogView.cpp */; };
+		6205E82B2207533F00EFCC6B /* AsteroidDialogController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6205E8292207533F00EFCC6B /* AsteroidDialogController.cpp */; };
 		6205F93220F519CF00716574 /* level41.json in Resources */ = {isa = PBXBuildFile; fileRef = 6205F93120F519CE00716574 /* level41.json */; };
 		620A981D1EE2A3B400AD6C61 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 620A981C1EE2A3B400AD6C61 /* AVFoundation.framework */; };
 		620A98291EE2B5C000AD6C61 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 620A98281EE2B5C000AD6C61 /* CoreMedia.framework */; };
@@ -511,6 +513,10 @@
 		288765FC0DF74451002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		4D27E4830F9AD71900447247 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		4D27E4B40F9AD7D600447247 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		6205E8262207532600EFCC6B /* AsteroidDialogView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AsteroidDialogView.cpp; sourceTree = "<group>"; };
+		6205E8272207532600EFCC6B /* AsteroidDialogView.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AsteroidDialogView.hpp; sourceTree = "<group>"; };
+		6205E8292207533F00EFCC6B /* AsteroidDialogController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AsteroidDialogController.cpp; sourceTree = "<group>"; };
+		6205E82A2207533F00EFCC6B /* AsteroidDialogController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AsteroidDialogController.hpp; sourceTree = "<group>"; };
 		6205F93120F519CE00716574 /* level41.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level41.json; sourceTree = "<group>"; };
 		620A981C1EE2A3B400AD6C61 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		620A98281EE2B5C000AD6C61 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
@@ -1661,6 +1667,10 @@
 		62216AA421EB377E001CB9A1 /* Tutorial */ = {
 			isa = PBXGroup;
 			children = (
+				6205E8292207533F00EFCC6B /* AsteroidDialogController.cpp */,
+				6205E82A2207533F00EFCC6B /* AsteroidDialogController.hpp */,
+				6205E8262207532600EFCC6B /* AsteroidDialogView.cpp */,
+				6205E8272207532600EFCC6B /* AsteroidDialogView.hpp */,
 				62216AA621EB377E001CB9A1 /* BombDialogController.cpp */,
 				62216AC321EB377E001CB9A1 /* BombDialogController.hpp */,
 				62216AB821EB377E001CB9A1 /* BombDialogView.cpp */,
@@ -3374,6 +3384,7 @@
 				62216C0821EB377F001CB9A1 /* SmallTrianglePiece.cpp in Sources */,
 				62216BEE21EB377E001CB9A1 /* SceneObjectPool.cpp in Sources */,
 				62216C0D21EB377F001CB9A1 /* PyramidPiece.cpp in Sources */,
+				6205E8282207532600EFCC6B /* AsteroidDialogView.cpp in Sources */,
 				62216C1C21EB377F001CB9A1 /* LevelResources.cpp in Sources */,
 				62216C2F21EB377F001CB9A1 /* SlidingTextAnimation.cpp in Sources */,
 				62216A8F21EB376E001CB9A1 /* SettingsService.cpp in Sources */,
@@ -3436,6 +3447,7 @@
 				62216C4021EB377F001CB9A1 /* MapHudView.cpp in Sources */,
 				623B94D021F6357400B62D9B /* AppDelegate.mm in Sources */,
 				62216BFC21EB377E001CB9A1 /* NextPieceGenerator.cpp in Sources */,
+				6205E82B2207533F00EFCC6B /* AsteroidDialogController.cpp in Sources */,
 				62216A7C21EB376E001CB9A1 /* NoLivesDialogController.cpp in Sources */,
 				625698512182392C003A3A9D /* ParticleSystem.cpp in Sources */,
 				625698072182392C003A3A9D /* BoxMesh.cpp in Sources */,

@@ -6,6 +6,8 @@ Backlog:
     -Android.
 
   -Gameplay:
+    -A game objective could be to clear all purple blocks. Purple blocks are affected by gravity
+     like the other colored blocks.
     -The UFO could be booster. It could clear 3 rows.
     -Maybe blocks in the visible part of the field could disappear on some levels. For each move a
      random block disappears.
@@ -38,11 +40,11 @@ Backlog:
 
 Ongoing tasks:
     -Can have a tutorial window showing the asteroid go to the bottom of the level.
-    -Can have a tutorial window recommending click controls that pops up on every asteroid level if
-     using gesture controls.
-    -Maybe all tutorial dialogs with slide animations should have clips for gesture controls also.
-    -A game objective could be to clear all blue or yellow blocks. In that case I guess pieces of
-     that color is not available.
+    -Maybe all tutorial dialogs with slide animations should not have the move alternative frame and
+     hand click frames in their slide animations if using gesture controls. So just don't load those
+     frames if using gesture controls.
+    -Can have a dialog window recommending click controls that pops up if changing to swipe controls
+     in the settings menu or options menu.
     -Levels up to 24 are ok (before added new levels), the one shaped like a man. But add maybe 2 or
      3 asteroid levels in the second world.
     -Maybe move most the triangle levels to the 4th world and maybe keep one in the 3rd world.

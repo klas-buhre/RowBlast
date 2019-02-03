@@ -7,6 +7,7 @@
     "musicTrack": 1,
     "background": "sky3.jpg",
     "lightIntensity": "Daylight",
+    "partOfTutorial": true,
     "pieces": [
         "LongI",
         "B",

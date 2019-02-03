@@ -63,8 +63,7 @@ OptionsMenuView::OptionsMenuView(Pht::IEngine& engine, const CommonResources& co
     auto& textProperties {guiResources.GetSmallWhiteTextProperties(zoom)};
     auto& buttonTextProperties {guiResources.GetWhiteButtonTextProperties(zoom)};
     auto settingsY {3.0f};
-    CreateText({-5.3f, 2.47f + settingsY, UiLayer::text}, "Controls", textProperties);
-
+    
     MenuButton::Style settingsButtonStyle;
     settingsButtonStyle.mPressedScale = 1.05f;
     settingsButtonStyle.mRenderableObject = &guiResources.GetSmallBlueGlossyButton(zoom);
@@ -72,22 +71,24 @@ OptionsMenuView::OptionsMenuView(Pht::IEngine& engine, const CommonResources& co
 
     Pht::Vec2 settingsButtonInputSize {78.0f, 43.0f};
     
-    Pht::Vec3 controlsButtonPosition {3.45f, 2.7f + settingsY, UiLayer::textRectangle};
-    mControlsButton = std::make_unique<MenuButton>(engine,
-                                                   *this,
-                                                   controlsButtonPosition,
-                                                   settingsButtonInputSize,
-                                                   settingsButtonStyle);
-    mControlsClickText = &(mControlsButton->CreateText({-0.85f, -0.23f, UiLayer::buttonText},
-                                                       "Click",
-                                                       buttonTextProperties).GetSceneObject());
-    mControlsSwipeText = &(mControlsButton->CreateText({-1.05f, -0.23f, UiLayer::buttonText},
-                                                       "Swipe",
-                                                       buttonTextProperties).GetSceneObject());
+    CreateText({-5.3f, 2.47f + settingsY, UiLayer::text}, "Music", textProperties);
+
+    Pht::Vec3 musicButtonPosition {3.35f, 2.7f + settingsY, UiLayer::textRectangle};
+    mMusicButton = std::make_unique<MenuButton>(engine,
+                                                *this,
+                                                musicButtonPosition,
+                                                settingsButtonInputSize,
+                                                settingsButtonStyle);
+    mMusicOnText = &(mMusicButton->CreateText({-0.5f, -0.23f, UiLayer::buttonText},
+                                              "On",
+                                              buttonTextProperties).GetSceneObject());
+    mMusicOffText = &(mMusicButton->CreateText({-0.6f, -0.23f, UiLayer::buttonText},
+                                               "Off",
+                                               buttonTextProperties).GetSceneObject());
 
     CreateText({-5.3f, 0.27f + settingsY, UiLayer::text}, "Sound Effects", textProperties);
     
-    Pht::Vec3 soundButtonPosition {3.45f, 0.5f + settingsY, UiLayer::textRectangle};
+    Pht::Vec3 soundButtonPosition {3.35f, 0.5f + settingsY, UiLayer::textRectangle};
     mSoundButton = std::make_unique<MenuButton>(engine,
                                                 *this,
                                                 soundButtonPosition,
@@ -100,20 +101,20 @@ OptionsMenuView::OptionsMenuView(Pht::IEngine& engine, const CommonResources& co
                                                "Off",
                                                buttonTextProperties).GetSceneObject());
 
-    CreateText({-5.3f, -1.93f + settingsY, UiLayer::text}, "Music", textProperties);
+    CreateText({-5.3f, -1.93f + settingsY, UiLayer::text}, "Controls", textProperties);
 
-    Pht::Vec3 musicButtonPosition {3.45f, -1.7f + settingsY, UiLayer::textRectangle};
-    mMusicButton = std::make_unique<MenuButton>(engine,
-                                                *this,
-                                                musicButtonPosition,
-                                                settingsButtonInputSize,
-                                                settingsButtonStyle);
-    mMusicOnText = &(mMusicButton->CreateText({-0.5f, -0.23f, UiLayer::buttonText},
-                                              "On",
-                                              buttonTextProperties).GetSceneObject());
-    mMusicOffText = &(mMusicButton->CreateText({-0.6f, -0.23f, UiLayer::buttonText},
-                                               "Off",
-                                               buttonTextProperties).GetSceneObject());
+    Pht::Vec3 controlsButtonPosition {3.35f, -1.7f + settingsY, UiLayer::textRectangle};
+    mControlsButton = std::make_unique<MenuButton>(engine,
+                                                   *this,
+                                                   controlsButtonPosition,
+                                                   settingsButtonInputSize,
+                                                   settingsButtonStyle);
+    mControlsClickText = &(mControlsButton->CreateText({-1.7f, -0.23f, UiLayer::buttonText},
+                                                       "SingleTap",
+                                                       buttonTextProperties).GetSceneObject());
+    mControlsSwipeText = &(mControlsButton->CreateText({-1.05f, -0.23f, UiLayer::buttonText},
+                                                       "Swipe",
+                                                       buttonTextProperties).GetSceneObject());
 
     MenuButton::Style buttonStyle;
     buttonStyle.mPressedScale = 1.05f;
