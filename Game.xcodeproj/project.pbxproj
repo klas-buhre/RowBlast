@@ -14,6 +14,13 @@
 		4D27E4B50F9AD7D600447247 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D27E4B40F9AD7D600447247 /* QuartzCore.framework */; };
 		6205E8282207532600EFCC6B /* AsteroidDialogView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6205E8262207532600EFCC6B /* AsteroidDialogView.cpp */; };
 		6205E82B2207533F00EFCC6B /* AsteroidDialogController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6205E8292207533F00EFCC6B /* AsteroidDialogController.cpp */; };
+		6205E8332208A1DD00EFCC6B /* asteroid_frame7.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6205E82C2208A1D900EFCC6B /* asteroid_frame7.jpg */; };
+		6205E8342208A1DD00EFCC6B /* asteroid_frame2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6205E82D2208A1DA00EFCC6B /* asteroid_frame2.jpg */; };
+		6205E8352208A1DD00EFCC6B /* asteroid_frame1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6205E82E2208A1DA00EFCC6B /* asteroid_frame1.jpg */; };
+		6205E8362208A1DD00EFCC6B /* asteroid_frame5.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6205E82F2208A1DB00EFCC6B /* asteroid_frame5.jpg */; };
+		6205E8372208A1DD00EFCC6B /* asteroid_frame6.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6205E8302208A1DC00EFCC6B /* asteroid_frame6.jpg */; };
+		6205E8382208A1DD00EFCC6B /* asteroid_frame4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6205E8312208A1DC00EFCC6B /* asteroid_frame4.jpg */; };
+		6205E8392208A1DD00EFCC6B /* asteroid_frame3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6205E8322208A1DD00EFCC6B /* asteroid_frame3.jpg */; };
 		6205F93220F519CF00716574 /* level41.json in Resources */ = {isa = PBXBuildFile; fileRef = 6205F93120F519CE00716574 /* level41.json */; };
 		620A981D1EE2A3B400AD6C61 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 620A981C1EE2A3B400AD6C61 /* AVFoundation.framework */; };
 		620A98291EE2B5C000AD6C61 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 620A98281EE2B5C000AD6C61 /* CoreMedia.framework */; };
@@ -517,6 +524,13 @@
 		6205E8272207532600EFCC6B /* AsteroidDialogView.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AsteroidDialogView.hpp; sourceTree = "<group>"; };
 		6205E8292207533F00EFCC6B /* AsteroidDialogController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AsteroidDialogController.cpp; sourceTree = "<group>"; };
 		6205E82A2207533F00EFCC6B /* AsteroidDialogController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AsteroidDialogController.hpp; sourceTree = "<group>"; };
+		6205E82C2208A1D900EFCC6B /* asteroid_frame7.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = asteroid_frame7.jpg; sourceTree = "<group>"; };
+		6205E82D2208A1DA00EFCC6B /* asteroid_frame2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = asteroid_frame2.jpg; sourceTree = "<group>"; };
+		6205E82E2208A1DA00EFCC6B /* asteroid_frame1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = asteroid_frame1.jpg; sourceTree = "<group>"; };
+		6205E82F2208A1DB00EFCC6B /* asteroid_frame5.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = asteroid_frame5.jpg; sourceTree = "<group>"; };
+		6205E8302208A1DC00EFCC6B /* asteroid_frame6.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = asteroid_frame6.jpg; sourceTree = "<group>"; };
+		6205E8312208A1DC00EFCC6B /* asteroid_frame4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = asteroid_frame4.jpg; sourceTree = "<group>"; };
+		6205E8322208A1DD00EFCC6B /* asteroid_frame3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = asteroid_frame3.jpg; sourceTree = "<group>"; };
 		6205F93120F519CE00716574 /* level41.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level41.json; sourceTree = "<group>"; };
 		620A981C1EE2A3B400AD6C61 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		620A98281EE2B5C000AD6C61 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
@@ -2892,6 +2906,13 @@
 		62B1CB46210F8DAF00D0F195 /* Tutorial */ = {
 			isa = PBXGroup;
 			children = (
+				6205E82E2208A1DA00EFCC6B /* asteroid_frame1.jpg */,
+				6205E82D2208A1DA00EFCC6B /* asteroid_frame2.jpg */,
+				6205E8322208A1DD00EFCC6B /* asteroid_frame3.jpg */,
+				6205E8312208A1DC00EFCC6B /* asteroid_frame4.jpg */,
+				6205E82F2208A1DB00EFCC6B /* asteroid_frame5.jpg */,
+				6205E8302208A1DC00EFCC6B /* asteroid_frame6.jpg */,
+				6205E82C2208A1D900EFCC6B /* asteroid_frame7.jpg */,
 				62B1CBA12110D46C00D0F195 /* bomb_frame1.jpg */,
 				62B1CBAB2110E9C300D0F195 /* bomb_frame2.jpg */,
 				62B1CBA32110D46D00D0F195 /* bomb_frame3.jpg */,
@@ -3064,11 +3085,13 @@
 				62B1CBA72110D46E00D0F195 /* bomb_frame4.jpg in Resources */,
 				62E01BB12153E2A6009F0B99 /* planet_ogma.jpg in Resources */,
 				6270DC9D1FCB23D800FB457D /* level8.json in Resources */,
+				6205E8352208A1DD00EFCC6B /* asteroid_frame1.jpg in Resources */,
 				6240508820FF82A10077A454 /* level47.json in Resources */,
 				622169F421E36503001CB9A1 /* land_piece.wav in Resources */,
 				62E01BC02154210A009F0B99 /* moon.jpg in Resources */,
 				6270DC6E1FCB231B00FB457D /* HussarBoldWeb.otf in Resources */,
 				6270DC991FCB23D800FB457D /* level4.json in Resources */,
+				6205E8362208A1DD00EFCC6B /* asteroid_frame5.jpg in Resources */,
 				62E335DE1FD2F31E0069B6CF /* level25.json in Resources */,
 				628EC29A207D24090071F368 /* level30.json in Resources */,
 				626451DD206FA93200E304F2 /* laser_bomb_224.obj in Resources */,
@@ -3098,6 +3121,7 @@
 				6270DC8C1FCB23D800FB457D /* level13.json in Resources */,
 				62B1CBAA2110D46E00D0F195 /* bomb_frame5.jpg in Resources */,
 				62B2BAEF2130089D009C529D /* level54.json in Resources */,
+				6205E8382208A1DD00EFCC6B /* asteroid_frame4.jpg in Resources */,
 				6234617921668D1E00ECD0DF /* planet_rayeon.jpg in Resources */,
 				62E6DAD2220602CD00EA9D3A /* block_trail_green.png in Resources */,
 				625698232182392C003A3A9D /* ParticleNoAlphaTexture.frag in Resources */,
@@ -3143,6 +3167,7 @@
 				6270DC931FCB23D800FB457D /* level2.json in Resources */,
 				625B02CF21386AC3000744F2 /* level_bomb_frame1.jpg in Resources */,
 				625698192182392C003A3A9D /* TexturedEmissiveLighting.frag in Resources */,
+				6205E8372208A1DD00EFCC6B /* asteroid_frame6.jpg in Resources */,
 				62204EE821BD7F5200A035C0 /* sky9.jpg in Resources */,
 				6261FFDB20FE06CA008F1619 /* level45.json in Resources */,
 				6270DC9A1FCB23D800FB457D /* level5.json in Resources */,
@@ -3196,12 +3221,14 @@
 				62B1CB82210F8F8600D0F195 /* glow_lines.png in Resources */,
 				625698182182392C003A3A9D /* Textured.frag in Resources */,
 				629B838E20CAD34100DD2D0E /* triangle_320.obj in Resources */,
+				6205E8342208A1DD00EFCC6B /* asteroid_frame2.jpg in Resources */,
 				629B838420C81D1700DD2D0E /* level39.json in Resources */,
 				62204EF821BEC41C00A035C0 /* sky4.jpg in Resources */,
 				629B839020CAD7C500DD2D0E /* triangle_320_r90.obj in Resources */,
 				6270DC8A1FCB23D800FB457D /* level11.json in Resources */,
 				6270DC891FCB23D800FB457D /* level10.json in Resources */,
 				623326732073D69500AC505A /* level29.json in Resources */,
+				6205E8332208A1DD00EFCC6B /* asteroid_frame7.jpg in Resources */,
 				622169E821E136E7001CB9A1 /* awesome.wav in Resources */,
 				6256982C2182392C003A3A9D /* TexturedEmissiveLighting.vert in Resources */,
 				627A12CA21B5379F00EECA3B /* heart_392.obj in Resources */,
@@ -3216,6 +3243,7 @@
 				623B949D21F1FD6700B62D9B /* credits_english.txt in Resources */,
 				625D3B59217251BD00D67EC2 /* brown_asteroid.jpg in Resources */,
 				6270DC621FCB22AE00FB457D /* cube_554.obj in Resources */,
+				6205E8392208A1DD00EFCC6B /* asteroid_frame3.jpg in Resources */,
 				625B02CC21386AC3000744F2 /* level_bomb_frame2.jpg in Resources */,
 				622EDD16217A42410007C652 /* level61.json in Resources */,
 				6270DC8F1FCB23D800FB457D /* level16.json in Resources */,

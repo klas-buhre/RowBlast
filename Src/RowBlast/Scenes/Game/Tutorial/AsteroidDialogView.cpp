@@ -42,8 +42,8 @@ AsteroidDialogView::AsteroidDialogView(Pht::IEngine& engine,
                                                        0.5f);
 
     auto& textProperties {guiResources.GetSmallWhiteTextProperties(zoom)};
-    CreateText({-4.25f, -4.4f, UiLayer::text}, "Bring down the asteroid bla", textProperties);
-    CreateText({-2.4f, -5.475f, UiLayer::text}, "bla bla", textProperties);
+    CreateText({-4.4f, -4.4f, UiLayer::text}, "Bring the asteroid down to", textProperties);
+    CreateText({-3.8f, -5.475f, UiLayer::text}, "the bottom of the field", textProperties);
     
     Pht::Vec2 playButtonInputSize {194.0f, 43.0f};
 
@@ -64,11 +64,14 @@ AsteroidDialogView::AsteroidDialogView(Pht::IEngine& engine,
 
 void AsteroidDialogView::SetUp(Pht::Scene& scene) {
     std::vector<std::string> frameFilenames {
-        "bomb_frame1.jpg",
-        "bomb_frame2.jpg",
-        "bomb_frame3.jpg",
-        "bomb_frame4.jpg",
-        "bomb_frame5.jpg"
+        "asteroid_frame1.jpg",
+        "asteroid_frame2.jpg",
+        "asteroid_frame3.jpg",
+        "asteroid_frame4.jpg",
+        "asteroid_frame5.jpg",
+        "asteroid_frame6.jpg",
+        "asteroid_frame7.jpg",
+        "asteroid_frame7.jpg"
     };
 
     mSlideAnimation->Init(frameFilenames, scene);

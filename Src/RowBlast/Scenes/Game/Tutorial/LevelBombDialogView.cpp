@@ -42,9 +42,9 @@ LevelBombDialogView::LevelBombDialogView(Pht::IEngine& engine,
                                                        0.5f);
 
     auto& textProperties {guiResources.GetSmallWhiteTextProperties(zoom)};
-    CreateText({-4.25f, -4.4f, UiLayer::text}, "Land a piece on bombs to", textProperties);
-    CreateText({-2.4f, -5.475f, UiLayer::text}, "detonate them", textProperties);
-    
+    CreateText({-4.85f, -4.4f, UiLayer::text}, "Detonate bombs by placing a", textProperties);
+    CreateText({-2.3f, -5.475f, UiLayer::text}, "piece on them", textProperties);
+
     Pht::Vec2 playButtonInputSize {194.0f, 43.0f};
 
     MenuButton::Style playButtonStyle;

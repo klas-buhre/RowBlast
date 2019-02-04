@@ -39,7 +39,6 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-    -Can have a tutorial window showing the asteroid go to the bottom of the level.
     -Maybe all tutorial dialogs with slide animations should not have the move alternative frame and
      hand click frames in their slide animations if using gesture controls. So just don't load those
      frames if using gesture controls.
