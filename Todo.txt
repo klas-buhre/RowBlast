@@ -39,9 +39,6 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-    -Maybe all tutorial dialogs with slide animations should not have the move alternative frame and
-     hand click frames in their slide animations if using gesture controls. So just don't load those
-     frames if using gesture controls.
     -Can have a dialog window recommending click controls that pops up if changing to swipe controls
      in the settings menu or options menu.
     -Levels up to 24 are ok (before added new levels), the one shaped like a man. But add maybe 2 or

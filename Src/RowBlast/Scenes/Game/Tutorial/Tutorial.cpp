@@ -41,7 +41,10 @@ namespace {
     }
 }
 
-Tutorial::Tutorial(Pht::IEngine& engine, GameScene& scene, const CommonResources& commonResources) :
+Tutorial::Tutorial(Pht::IEngine& engine,
+                   GameScene& scene,
+                   const CommonResources& commonResources,
+                   const UserServices& userServices) :
     mEngine {engine},
     mScene {scene},
     mFadeEffect {
@@ -60,10 +63,10 @@ Tutorial::Tutorial(Pht::IEngine& engine, GameScene& scene, const CommonResources
     mOtherMoves2WindowController {engine, commonResources},
     mCascadingDialogController {engine, commonResources},
     mSameColorDialogController {engine, commonResources},
-    mLaserDialogController {engine, commonResources},
-    mBombDialogController {engine, commonResources},
-    mLevelBombDialogController {engine, commonResources},
-    mAsteroidDialogController {engine, commonResources} {
+    mLaserDialogController {engine, commonResources, userServices},
+    mBombDialogController {engine, commonResources, userServices},
+    mLevelBombDialogController {engine, commonResources, userServices},
+    mAsteroidDialogController {engine, commonResources, userServices} {
     
     mViewManager.AddView(static_cast<int>(Controller::PlacePieceWindow), mPlacePieceWindowController.GetView());
     mViewManager.AddView(static_cast<int>(Controller::FillRowsWindow), mFillRowsWindowController.GetView());

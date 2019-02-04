@@ -9,9 +9,10 @@
 using namespace RowBlast;
 
 BombDialogController::BombDialogController(Pht::IEngine& engine,
-                                           const CommonResources& commonResources) :
+                                           const CommonResources& commonResources,
+                                           const UserServices& userServices) :
     mInput {engine.GetInput()},
-    mView {engine, commonResources},
+    mView {engine, commonResources, userServices},
     mSlidingMenuAnimation {engine, mView} {}
 
 void BombDialogController::SetUp(Pht::Scene& scene) {

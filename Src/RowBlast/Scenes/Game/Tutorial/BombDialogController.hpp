@@ -12,6 +12,7 @@ namespace Pht {
 
 namespace RowBlast {
     class CommonResources;
+    class UserServices;
     
     class BombDialogController {
     public:
@@ -20,7 +21,9 @@ namespace RowBlast {
             Play
         };
         
-        BombDialogController(Pht::IEngine& engine, const CommonResources& commonResources);
+        BombDialogController(Pht::IEngine& engine,
+                             const CommonResources& commonResources,
+                             const UserServices& userServices);
         
         void SetUp(Pht::Scene& scene);
         void SetFadeEffect(Pht::FadeEffect& fadeEffect);

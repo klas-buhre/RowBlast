@@ -8,11 +8,36 @@
 // Game includes.
 #include "CommonResources.hpp"
 #include "UiLayer.hpp"
+#include "UserServices.hpp"
 
 using namespace RowBlast;
 
+namespace {
+    std::vector<std::string> ToFrameFilenames(ControlType controlType) {
+        switch (controlType) {
+            case ControlType::Click:
+                return {
+                    "level_bomb_frame1.jpg",
+                    "level_bomb_frame2.jpg",
+                    "level_bomb_frame3.jpg",
+                    "level_bomb_frame4.jpg",
+                    "level_bomb_frame5.jpg"
+                };
+            case ControlType::Gesture:
+                return {
+                    "level_bomb_frame3.jpg",
+                    "level_bomb_frame4.jpg",
+                    "level_bomb_frame5.jpg"
+                };
+        }
+    }
+}
+
 LevelBombDialogView::LevelBombDialogView(Pht::IEngine& engine,
-                                         const CommonResources& commonResources) {
+                                         const CommonResources& commonResources,
+                                         const UserServices& userServices) :
+    mUserServices {userServices} {
+
     PotentiallyZoomedScreen zoom {PotentiallyZoomedScreen::Yes};
     auto& guiResources {commonResources.GetGuiResources()};
     auto& menuWindow {guiResources.GetLargeDarkMenuWindow()};
@@ -63,14 +88,7 @@ LevelBombDialogView::LevelBombDialogView(Pht::IEngine& engine,
 }
 
 void LevelBombDialogView::SetUp(Pht::Scene& scene) {
-    std::vector<std::string> frameFilenames {
-        "level_bomb_frame1.jpg",
-        "level_bomb_frame2.jpg",
-        "level_bomb_frame3.jpg",
-        "level_bomb_frame4.jpg",
-        "level_bomb_frame5.jpg"
-    };
-
+    auto frameFilenames {ToFrameFilenames(mUserServices.GetSettingsService().GetControlType())};
     mSlideAnimation->Init(frameFilenames, scene);
 }
 

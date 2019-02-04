@@ -8,10 +8,36 @@
 // Game includes.
 #include "CommonResources.hpp"
 #include "UiLayer.hpp"
+#include "UserServices.hpp"
 
 using namespace RowBlast;
 
-LaserDialogView::LaserDialogView(Pht::IEngine& engine, const CommonResources& commonResources) {
+namespace {
+    std::vector<std::string> ToFrameFilenames(ControlType controlType) {
+        switch (controlType) {
+            case ControlType::Click:
+                return {
+                    "laser_frame1.jpg",
+                    "laser_frame2.jpg",
+                    "laser_frame3.jpg",
+                    "laser_frame4.jpg",
+                    "laser_frame5.jpg"
+                };
+            case ControlType::Gesture:
+                return {
+                    "laser_frame3.jpg",
+                    "laser_frame4.jpg",
+                    "laser_frame5.jpg"
+                };
+        }
+    }
+}
+
+LaserDialogView::LaserDialogView(Pht::IEngine& engine,
+                                 const CommonResources& commonResources,
+                                 const UserServices& userServices) :
+    mUserServices {userServices} {
+
     PotentiallyZoomedScreen zoom {PotentiallyZoomedScreen::Yes};
     auto& guiResources {commonResources.GetGuiResources()};
     auto& menuWindow {guiResources.GetLargeDarkMenuWindow()};
@@ -61,14 +87,7 @@ LaserDialogView::LaserDialogView(Pht::IEngine& engine, const CommonResources& co
 }
 
 void LaserDialogView::SetUp(Pht::Scene& scene) {
-    std::vector<std::string> frameFilenames {
-        "laser_frame1.jpg",
-        "laser_frame2.jpg",
-        "laser_frame3.jpg",
-        "laser_frame4.jpg",
-        "laser_frame5.jpg"
-    };
-
+    auto frameFilenames {ToFrameFilenames(mUserServices.GetSettingsService().GetControlType())};
     mSlideAnimation->Init(frameFilenames, scene);
 }
 

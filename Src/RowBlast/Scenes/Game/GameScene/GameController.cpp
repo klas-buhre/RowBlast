@@ -71,7 +71,7 @@ GameController::GameController(Pht::IEngine& engine,
     mSlidingTextAnimation {engine, mScene, commonResources},
     mSmallTextAnimation {engine, mScene, commonResources},
     mFallingPieceScaleAnimation {mScene},
-    mTutorial {engine, mScene, commonResources},
+    mTutorial {engine, mScene, commonResources, userServices},
     mGameLogic {
         engine,
         mField,

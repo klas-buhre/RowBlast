@@ -8,11 +8,42 @@
 // Game includes.
 #include "CommonResources.hpp"
 #include "UiLayer.hpp"
+#include "UserServices.hpp"
 
 using namespace RowBlast;
 
+namespace {
+    std::vector<std::string> ToFrameFilenames(ControlType controlType) {
+        switch (controlType) {
+            case ControlType::Click:
+                return {
+                    "asteroid_frame1.jpg",
+                    "asteroid_frame2.jpg",
+                    "asteroid_frame3.jpg",
+                    "asteroid_frame4.jpg",
+                    "asteroid_frame5.jpg",
+                    "asteroid_frame6.jpg",
+                    "asteroid_frame7.jpg",
+                    "asteroid_frame7.jpg"
+                };
+            case ControlType::Gesture:
+                return {
+                    "asteroid_frame3.jpg",
+                    "asteroid_frame4.jpg",
+                    "asteroid_frame5.jpg",
+                    "asteroid_frame6.jpg",
+                    "asteroid_frame7.jpg",
+                    "asteroid_frame7.jpg"
+                };
+        }
+    }
+}
+
 AsteroidDialogView::AsteroidDialogView(Pht::IEngine& engine,
-                                       const CommonResources& commonResources) {
+                                       const CommonResources& commonResources,
+                                       const UserServices& userServices) :
+    mUserServices {userServices} {
+
     PotentiallyZoomedScreen zoom {PotentiallyZoomedScreen::Yes};
     auto& guiResources {commonResources.GetGuiResources()};
     auto& menuWindow {guiResources.GetLargeDarkMenuWindow()};
@@ -63,17 +94,7 @@ AsteroidDialogView::AsteroidDialogView(Pht::IEngine& engine,
 }
 
 void AsteroidDialogView::SetUp(Pht::Scene& scene) {
-    std::vector<std::string> frameFilenames {
-        "asteroid_frame1.jpg",
-        "asteroid_frame2.jpg",
-        "asteroid_frame3.jpg",
-        "asteroid_frame4.jpg",
-        "asteroid_frame5.jpg",
-        "asteroid_frame6.jpg",
-        "asteroid_frame7.jpg",
-        "asteroid_frame7.jpg"
-    };
-
+    auto frameFilenames {ToFrameFilenames(mUserServices.GetSettingsService().GetControlType())};
     mSlideAnimation->Init(frameFilenames, scene);
 }
 

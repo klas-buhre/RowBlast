@@ -30,6 +30,7 @@ namespace RowBlast {
     class Level;
     class Piece;
     class Move;
+    class UserServices;
     
     class Tutorial {
     public:
@@ -38,7 +39,10 @@ namespace RowBlast {
             TutorialHasFocus
         };
         
-        Tutorial(Pht::IEngine& engine, GameScene& scene, const CommonResources& commonResources);
+        Tutorial(Pht::IEngine& engine,
+                 GameScene& scene,
+                 const CommonResources& commonResources,
+                 const UserServices& userServices);
         
         void Init(const Level& level);
         void Update();

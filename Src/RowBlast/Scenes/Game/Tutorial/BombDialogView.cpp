@@ -8,10 +8,36 @@
 // Game includes.
 #include "CommonResources.hpp"
 #include "UiLayer.hpp"
+#include "UserServices.hpp"
 
 using namespace RowBlast;
 
-BombDialogView::BombDialogView(Pht::IEngine& engine, const CommonResources& commonResources) {
+namespace {
+    std::vector<std::string> ToFrameFilenames(ControlType controlType) {
+        switch (controlType) {
+            case ControlType::Click:
+                return {
+                    "bomb_frame1.jpg",
+                    "bomb_frame2.jpg",
+                    "bomb_frame3.jpg",
+                    "bomb_frame4.jpg",
+                    "bomb_frame5.jpg"
+                };
+            case ControlType::Gesture:
+                return {
+                    "bomb_frame3.jpg",
+                    "bomb_frame4.jpg",
+                    "bomb_frame5.jpg"
+                };
+        }
+    }
+}
+
+BombDialogView::BombDialogView(Pht::IEngine& engine,
+                               const CommonResources& commonResources,
+                               const UserServices& userServices) :
+    mUserServices {userServices} {
+
     PotentiallyZoomedScreen zoom {PotentiallyZoomedScreen::Yes};
     auto& guiResources {commonResources.GetGuiResources()};
     auto& menuWindow {guiResources.GetLargeDarkMenuWindow()};
@@ -61,14 +87,7 @@ BombDialogView::BombDialogView(Pht::IEngine& engine, const CommonResources& comm
 }
 
 void BombDialogView::SetUp(Pht::Scene& scene) {
-    std::vector<std::string> frameFilenames {
-        "bomb_frame1.jpg",
-        "bomb_frame2.jpg",
-        "bomb_frame3.jpg",
-        "bomb_frame4.jpg",
-        "bomb_frame5.jpg"
-    };
-
+    auto frameFilenames {ToFrameFilenames(mUserServices.GetSettingsService().GetControlType())};
     mSlideAnimation->Init(frameFilenames, scene);
 }
 
