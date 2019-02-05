@@ -39,7 +39,7 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-    -Move level 20 to world 4. Replace with asteroid.
+    -Tune the number of moves in level 20.
     -Move level 28 to end of world 3. Replace with asteroid.
     -Move level 31 to end of world 3. Replace with asteroid.
     -Move level 35 to world 4. Replace with asteroid.
@@ -48,6 +48,9 @@ Ongoing tasks:
      in the settings menu or options menu. Can explain how swipe controls work and say it is a bit
      harder to use or say that it is for experienced players.
     -Should give free gold coins after a new install.
+    -Levels moved to world 4:
+      -Level 65.
+
 
 
 
