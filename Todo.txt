@@ -39,12 +39,14 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
+    -Move level 20 to world 4. Replace with asteroid.
+    -Move level 28 to end of world 3. Replace with asteroid.
+    -Move level 31 to end of world 3. Replace with asteroid.
+    -Move level 35 to world 4. Replace with asteroid.
+    -Move level 37 to end of world 4. Replace with asteroid.
     -Can have a dialog window recommending click controls that pops up if changing to swipe controls
-     in the settings menu or options menu.
-    -Levels up to 24 are ok (before added new levels), the one shaped like a man. But add maybe 2 or
-     3 asteroid levels in the second world.
-    -Maybe move most the triangle levels to the 4th world and maybe keep one in the 3rd world.
-     Instead of the early triangle levels, there could be asteroid levels.
+     in the settings menu or options menu. Can explain how swipe controls work and say it is a bit
+     harder to use or say that it is for experienced players.
     -Should give free gold coins after a new install.
 
 
