@@ -43,10 +43,12 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-    -Move level 28 to end of world 3. Replace with asteroid.
+    -Tune number of moves in level 28.
     -Move level 31 to end of world 3. Replace with asteroid.
     -Move level 35 to world 4. Replace with asteroid.
     -Move level 37 to end of world 4. Replace with asteroid.
+    -Levels moved to world 3:
+      -Level 48.
     -Levels moved to world 4:
       -Level 65.
 
