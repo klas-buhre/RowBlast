@@ -23,7 +23,11 @@ Backlog:
     -Animation that moves the pause button out of the screen.
   -GUI:
     -How to play dialog.
+    -Can have a dialog window recommending click controls that pops up if changing to swipe controls
+     in the settings menu or options menu. Can explain how swipe controls work and say it is a bit
+     harder to use or say that it is for experienced players.
   -Make ready for release:
+    -Should give free gold coins after a new install?
     -Update mail address in legal documents.
     -Go through all user services and check that all state store/load is enabled.
     -Make sure analytics is enabled and that user terms accept is saved and checked.
@@ -39,18 +43,12 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-    -Tune the number of moves in level 20.
     -Move level 28 to end of world 3. Replace with asteroid.
     -Move level 31 to end of world 3. Replace with asteroid.
     -Move level 35 to world 4. Replace with asteroid.
     -Move level 37 to end of world 4. Replace with asteroid.
-    -Can have a dialog window recommending click controls that pops up if changing to swipe controls
-     in the settings menu or options menu. Can explain how swipe controls work and say it is a bit
-     harder to use or say that it is for experienced players.
-    -Should give free gold coins after a new install.
     -Levels moved to world 4:
       -Level 65.
-
 
 
 
