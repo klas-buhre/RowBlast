@@ -733,6 +733,7 @@ void GameLogic::RemoveBlocksInsideTheShield() {
     if (removedSubCells.Size() > 0) {
         mFlyingBlocksAnimation.AddBlocksRemovedByTheShield(removedSubCells, mField.GetNumColumns());
         mShieldAnimation.StartFlash();
+        PlayClearBlocksSound(mEngine);
         
         if (mState != State::FieldExplosions) {
             // It is not safe to pull down pieces while in FieldExplosions state.
