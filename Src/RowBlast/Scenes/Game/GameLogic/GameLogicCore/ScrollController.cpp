@@ -12,7 +12,7 @@ using namespace RowBlast;
 
 namespace {
     const auto numVisibleLevelRows {6};
-    const auto numVisibleRowsBelowAsteroid {6};
+    const auto numVisibleRowsBelowAsteroid {7};
     const auto scrollTime {0.72f};
     const auto deaccelerationStartTime {0.36f};
     const auto waitTimeClearObjective {1.0f};
