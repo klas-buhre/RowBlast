@@ -104,9 +104,7 @@ LevelGoalDialogController::OnTouchInMapScene(const Pht::TouchEvent& touchEvent) 
 
 LevelGoalDialogController::Result
 LevelGoalDialogController::OnTouchInGameScene(const Pht::TouchEvent& touchEvent) {
-    if (mView.GetBackButton().IsClicked(touchEvent) ||
-        mView.GetCloseButton().IsClicked(touchEvent)) {
-
+    if (mView.GetOkButton().IsClicked(touchEvent) || mView.GetCloseButton().IsClicked(touchEvent)) {
         mDeferredResult = Result::Close;
         mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::No,
                                             SlidingMenuAnimation::SlideDirection::Right);

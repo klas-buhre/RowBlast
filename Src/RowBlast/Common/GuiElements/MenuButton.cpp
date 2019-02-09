@@ -132,7 +132,17 @@ bool MenuButton::IsClicked(const Pht::TouchEvent& event) const {
     auto isClicked {mButton->IsClicked(event)};
     
     if (isClicked) {
+        auto shouldToggleSound {mPlaySoundIfAudioDisabled && !mAudio.IsSoundEnabled()};
+        
+        if (shouldToggleSound) {
+            mAudio.EnableSound();
+        }
+            
         mAudio.PlaySound(static_cast<Pht::AudioResourceId>(SoundId::ButtonClick));
+        
+        if (shouldToggleSound) {
+            mAudio.DisableSound();
+        }
     }
     
     return isClicked;

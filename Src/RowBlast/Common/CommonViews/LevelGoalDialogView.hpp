@@ -57,9 +57,9 @@ namespace RowBlast {
             return *mPlayButton;
         }
 
-        MenuButton& GetBackButton() {
-            assert(mBackButton);
-            return *mBackButton;
+        MenuButton& GetOkButton() {
+            assert(mOkButton);
+            return *mOkButton;
         }
 
     private:
@@ -95,7 +95,7 @@ namespace RowBlast {
         IGuiLightProvider* mGuiLightProvider {nullptr};
         std::unique_ptr<MenuButton> mCloseButton;
         std::unique_ptr<MenuButton> mPlayButton;
-        std::unique_ptr<MenuButton> mBackButton;
+        std::unique_ptr<MenuButton> mOkButton;
         Pht::TextComponent* mCaption {nullptr};
         Pht::SceneObject* mClearObjectiveSceneObject {nullptr};
         Pht::SceneObject* mAsteroidObjectiveSceneObject {nullptr};

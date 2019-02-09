@@ -110,22 +110,22 @@ LevelGoalDialogView::LevelGoalDialogView(Pht::IEngine& engine,
                                 "PLAY",
                                 guiResources.GetLargeWhiteButtonTextProperties(zoom));
     } else {
-        Pht::Vec2 backButtonInputSize {194.0f, 43.0f};
+        Pht::Vec2 okButtonInputSize {194.0f, 43.0f};
         
-        MenuButton::Style backButtonStyle;
-        backButtonStyle.mPressedScale = 1.05f;
-        backButtonStyle.mRenderableObject = &guiResources.GetMediumBlueGlossyButton(zoom);
-        backButtonStyle.mSelectedRenderableObject = &guiResources.GetMediumDarkBlueGlossyButton(zoom);
+        MenuButton::Style okButtonStyle;
+        okButtonStyle.mPressedScale = 1.05f;
+        okButtonStyle.mRenderableObject = &guiResources.GetMediumBlueGlossyButton(zoom);
+        okButtonStyle.mSelectedRenderableObject = &guiResources.GetMediumDarkBlueGlossyButton(zoom);
 
         
-        mBackButton = std::make_unique<MenuButton>(engine,
-                                                   *this,
-                                                   Pht::Vec3 {0.0f, -8.0f, UiLayer::textRectangle},
-                                                   backButtonInputSize,
-                                                   backButtonStyle);
-        mBackButton->CreateText({-0.81f, -0.23f, UiLayer::buttonText},
-                                "Back",
-                                guiResources.GetWhiteButtonTextProperties(zoom));
+        mOkButton = std::make_unique<MenuButton>(engine,
+                                                 *this,
+                                                 Pht::Vec3 {0.0f, -8.0f, UiLayer::textRectangle},
+                                                 okButtonInputSize,
+                                                 okButtonStyle);
+        mOkButton->CreateText({-0.5f, -0.23f, UiLayer::buttonText},
+                              "OK",
+                              guiResources.GetWhiteButtonTextProperties(zoom));
     }
 
     CreatePreviewPiecesContainer();

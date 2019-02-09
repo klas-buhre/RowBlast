@@ -59,6 +59,10 @@ namespace RowBlast {
         const Pht::Button& GetButton() const {
             return *mButton;
         }
+        
+        void SetPlaySoundIfAudioDisabled(bool playSoundIfAudioDisabled) {
+            mPlaySoundIfAudioDisabled = playSoundIfAudioDisabled;
+        }
 
     private:
         Pht::GuiView& mView;
@@ -67,6 +71,7 @@ namespace RowBlast {
         Pht::SceneObject* mSceneObject {nullptr};
         Pht::TextComponent* mText {nullptr};
         Style mStyle;
+        bool mPlaySoundIfAudioDisabled {false};
     };
 }
 

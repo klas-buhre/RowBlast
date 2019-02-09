@@ -94,6 +94,7 @@ OptionsMenuView::OptionsMenuView(Pht::IEngine& engine, const CommonResources& co
                                                 soundButtonPosition,
                                                 settingsButtonInputSize,
                                                 settingsButtonStyle);
+    mSoundButton->SetPlaySoundIfAudioDisabled(true);
     mSoundOnText = &(mSoundButton->CreateText({-0.5f, -0.23f, UiLayer::buttonText},
                                               "On",
                                               buttonTextProperties).GetSceneObject());
