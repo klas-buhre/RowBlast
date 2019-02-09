@@ -1,8 +1,8 @@
 {
     "speed": 0.0,
-    "moves": 27,
-    "twoStars": 22,
-    "threeStars": 16,
+    "moves": 34,
+    "twoStars": 27,
+    "threeStars": 22,
     "floatingBlocksSet": "Standard",
     "musicTrack": 2,
     "background": "sky5.jpg",
@@ -47,10 +47,17 @@
         "   lll   ",
         "   yyy   ",
         "r  rrr   ",
-        "g gggg g ",
-        "l llll l ",
-        "y yyyy y ",
-        "r rrrrrr ",
-        "g ggggggg"
+        "gggggg g ",
+        "llllll l ",
+        "yyyyyy yy",
+        "rrrrrrrr ",
+        "lllyrg   ",
+        "yyyyrg   ",
+        "rrryrg   ",
+        "gggyrg   ",
+        "lllyrg   ",
+        "yyyyrg   ",
+        "rrryrgl  ",
+        "gggyrgly "
     ]
 }
