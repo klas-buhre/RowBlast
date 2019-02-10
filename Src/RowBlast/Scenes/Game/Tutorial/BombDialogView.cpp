@@ -18,6 +18,7 @@ namespace {
             case ControlType::Click:
                 return {
                     "bomb_frame1.jpg",
+                    "bomb_frame1.jpg",
                     "bomb_frame2.jpg",
                     "bomb_frame3.jpg",
                     "bomb_frame4.jpg",

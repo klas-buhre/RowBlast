@@ -26,6 +26,12 @@ Backlog:
      for "Back". Maybe icons for controls as well. Not good if the user changes the controls by
      mistake just because they don't know english.
     -Can have icons in the game menu also.
+    -Maybe make a more clear laser dialog slide animation with the laser piece at the top of the
+     frame in the beginning and it falls all the way down and then detonates. Then the yellow and
+     blue blocks fall down.
+    -Maybe make a more clear bomb dialog slide animation with the bomb piece at the top of the
+     frame in the beginning and it falls all the way down and then detonates.
+    -Maybe a new level bomb slide animation just to be consistent with the look.
     -How to play dialog.
     -Can have a dialog window recommending click controls that pops up if changing to swipe controls
      in the settings menu or options menu. Can explain how swipe controls work and say it is a bit
@@ -47,7 +53,6 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-    -Should have a configureable frame time in the slide animation.
     -Move level 35 to world 4. Replace with asteroid.
     -Move level 37 to end of world 4. Replace with asteroid.
     -Levels moved to world 3:

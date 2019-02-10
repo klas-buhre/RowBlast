@@ -18,6 +18,7 @@ namespace {
             case ControlType::Click:
                 return {
                     "laser_frame1.jpg",
+                    "laser_frame1.jpg",
                     "laser_frame2.jpg",
                     "laser_frame3.jpg",
                     "laser_frame4.jpg",

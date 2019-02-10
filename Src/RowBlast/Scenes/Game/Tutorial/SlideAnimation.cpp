@@ -78,8 +78,7 @@ void SlideAnimation::Init(const std::vector<std::string>& frameFilenames, Pht::S
         Pht::Material frameMaterial {frameFilename};
         
         auto frameRenderable {
-            sceneManager.CreateRenderableObject(Pht::QuadMesh {mSize, mSize, frameFilename},
-                                                frameMaterial)
+            sceneManager.CreateRenderableObject(Pht::QuadMesh {mSize, mSize}, frameMaterial)
         };
         
         mFrameRenderables.push_back(frameRenderable.get());
