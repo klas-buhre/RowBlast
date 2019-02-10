@@ -25,6 +25,7 @@ Backlog:
     -In the options menu and settings menu: should have icons for music, sound effects and a house
      for "Back". Maybe icons for controls as well. Not good if the user changes the controls by
      mistake just because they don't know english.
+    -Can have icons in the game menu also.
     -How to play dialog.
     -Can have a dialog window recommending click controls that pops up if changing to swipe controls
      in the settings menu or options menu. Can explain how swipe controls work and say it is a bit
@@ -46,6 +47,7 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
+    -Should have a configureable frame time in the slide animation.
     -Move level 35 to world 4. Replace with asteroid.
     -Move level 37 to end of world 4. Replace with asteroid.
     -Levels moved to world 3:
@@ -157,8 +159,6 @@ Ordered Backlog:
         Cost: 7
     -Purchasing.
         Cost: 10
-    -Levels for the 4th world.
-        Cost: 7
     -Playtest.
         Cost: 5
     -Fix all bugs.
@@ -167,6 +167,8 @@ Ordered Backlog:
         Cost: 7
     -Soft launch.
         Cost: 5
+    -Levels for the 4th world.
+        Cost: 7
     -Metal.
         Cost: 30
     -Net/HTTP.

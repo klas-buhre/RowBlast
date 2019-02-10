@@ -237,7 +237,7 @@ Tutorial::Result Tutorial::OnLevelStart() {
             SetActiveViewController(Controller::SameColorDialog);
             mSameColorDialogController.SetUp();
             return Result::TutorialHasFocus;
-        case 6:
+        case 5:
             SetActiveViewController(Controller::LaserDialog);
             mLaserDialogController.SetUp(mScene.GetScene());
             return Result::TutorialHasFocus;
