@@ -53,13 +53,15 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-    -Move level 35 to world 4. Replace with asteroid.
+    -Finish level 35.
     -Move level 37 to end of world 4. Replace with asteroid.
+    -Buy icons.
     -Levels moved to world 3:
       -Level 48.
       -Level 49.
     -Levels moved to world 4:
       -Level 65.
+      -Level 66.
 
 
 
@@ -160,6 +162,8 @@ Ordered Backlog:
     -Analytics.
         Cost: 17
         Done
+    -Finish the most important GUI tasks.
+        Cost: 5
     -Levels for the space world.
         Cost: 7
     -Purchasing.
@@ -183,7 +187,7 @@ Ordered Backlog:
     -Back end.
         Cost: ?
 
-        Total cost: 315
+        Total cost: 320
 
 
 Comomon piece type sets:
