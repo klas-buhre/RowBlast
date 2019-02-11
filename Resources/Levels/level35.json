@@ -50,9 +50,17 @@
         "BBB      ",
         "BBB      ",
         "BBBB     ",
-        "gggB     ",
-        "lllB     ",
-        "yyyB     ",
-        "rrrB     "
+        "gggg     ",
+        "llll     ",
+        "yyyy     ",
+        "rrrr     ",
+        "gggg     ",
+        "llll     ",
+        "yyyy yy  ",
+        "rrrr yy  ",
+        "gggg ll  ",
+        "llll ll  ",
+        "BBByyyyy ",
+        "BBBBBBBBB"
     ]
 }

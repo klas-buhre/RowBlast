@@ -38,6 +38,7 @@ Backlog:
      harder to use or say that it is for experienced players.
   -Make ready for release:
     -Should give free gold coins after a new install?
+    -Limit the number of undo move to one or two per game round.
     -Update mail address in legal documents.
     -Go through all user services and check that all state store/load is enabled.
     -Make sure analytics is enabled and that user terms accept is saved and checked.
@@ -55,6 +56,9 @@ Backlog:
 Ongoing tasks:
     -Finish level 35.
     -Move level 37 to end of world 4. Replace with asteroid.
+    -In release builds: Maybe it should not be possible to switch control type while playing a level
+     so that some levels start with more moves when playing gesture controls. It should still be
+     possible in non-release builds.
     -Buy icons.
     -Levels moved to world 3:
       -Level 48.
