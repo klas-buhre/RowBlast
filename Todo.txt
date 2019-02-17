@@ -16,6 +16,7 @@ Backlog:
      situations when there is a big cavity created between gray blocks after bombs and level bombs
      have detonated. This is probably tricky to do in a consistent way.
   -Rendering:
+    -maybe brighten and smooth the mid left side of the field envmap texture.
     -The floating blocks in the title scene could be slightly smaller and always have a good preset
      rotation.
     -Animation that moves the map hud out of the screen when clicking buttons in the hud. Could work
@@ -45,7 +46,9 @@ Backlog:
     -Make sure analytics debug log is disabled.
     -Make sure the correct product price in cents and receipt is sent to analytics.
     -Do a soft launch in a couple of countries? Maybe the nordic countries and UK? Only english
-     localization is needed for that.
+     localization is needed for that. And/or, before that, a small soft launch only in one country
+     instead of a playtest since that may give bettar data than a playtest since the players will
+     mostly be the target audince and in the playtest they are not.
     -Make launch screens for all supported device resolutions. Should say Teleporter Studios. The
      logo could contain some simple teleporter texture.
      Font: maybe ".Damascus PUA Bold"
@@ -54,11 +57,16 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
+    -Go through the new notes.
+      -Maybe the floating island in mid level 19 is a bit tricky.
+      -Maybe in level 31 it is too high risk of getting into in a state where the asteroid blocks
+       rows that need to be cleared.
+    -Go through the asteroid levels to see that there is not too much sticking to the sides. If so,
+     solve by adding green walls like in level 35.
     -Move level 37 to end of world 4. Replace with asteroid.
     -In release builds: Maybe it should not be possible to switch control type while playing a level
      so that some levels start with more moves when playing gesture controls. It should still be
      possible in non-release builds.
-    -Buy icons.
     -Levels moved to world 3:
       -Level 48.
       -Level 49.
@@ -159,7 +167,7 @@ Ordered Backlog:
     -Music.
         Cost: 4
         Done
-    -Sounds effects.
+    -Sound effects.
         Cost: 10
         Done
     -Analytics.
@@ -167,16 +175,16 @@ Ordered Backlog:
         Done
     -Finish the most important GUI tasks.
         Cost: 5
+    -Finish the top two rendering tasks.
+        Cost: 2
     -Levels for the space world.
         Cost: 7
     -Purchasing.
         Cost: 10
-    -Playtest.
-        Cost: 5
-    -Fix all bugs.
-        Cost: 4
     -Release-related tasks.
         Cost: 7
+    -Small soft launch.
+        Cost: 5
     -Soft launch.
         Cost: 5
     -Levels for the 4th world.
@@ -190,7 +198,7 @@ Ordered Backlog:
     -Back end.
         Cost: ?
 
-        Total cost: 320
+        Total cost: 318
 
 
 Comomon piece type sets:
