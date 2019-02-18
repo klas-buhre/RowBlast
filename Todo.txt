@@ -57,11 +57,9 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-    -Go through the new notes.
-      -Maybe in level 31 it is too high risk of getting into in a state where the asteroid blocks
-       rows that need to be cleared.
     -Go through the asteroid levels to see that there is not too much sticking to the sides. If so,
      solve by adding green walls like in level 35.
+      -Continue from level 28.
     -Move level 37 to end of world 4. Replace with asteroid.
     -In release builds: Maybe it should not be possible to switch control type while playing a level
      so that some levels start with more moves when playing gesture controls. It should still be
