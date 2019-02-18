@@ -58,7 +58,6 @@ Backlog:
 
 Ongoing tasks:
     -Go through the new notes.
-      -Maybe the floating island in mid level 19 is a bit tricky.
       -Maybe in level 31 it is too high risk of getting into in a state where the asteroid blocks
        rows that need to be cleared.
     -Go through the asteroid levels to see that there is not too much sticking to the sides. If so,
