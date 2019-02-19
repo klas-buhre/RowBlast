@@ -1,8 +1,8 @@
 {
     "speed": 0.0,
-    "moves": 27,
-    "twoStars": 22,
-    "threeStars": 16,
+    "moves": 21,
+    "twoStars": 18,
+    "threeStars": 15,
     "floatingBlocksSet": "Standard",
     "musicTrack": 2,
     "background": "sky5.jpg",
@@ -52,15 +52,15 @@
         "ygrr rrr",
         "ygyyy yy",
         "ylllll l",
-        "gr     y",
-        "gr    ly",
-        "gr    ly",
-        "gr    ly",
-        "gr    ly",
-        "gr    ly",
-        "gr    ly",
-        "gr   lyr",
-        "gr  lyrg",
-        "gr lyrgg"
+        "rg     y",
+        "rg    gy",
+        "rg    gy",
+        "rg    gy",
+        "rg    gy",
+        "rg    gy",
+        "rg    gy",
+        "rg   lyr",
+        "rg  lyrg",
+        "rg lyrgg"
     ]
 }
