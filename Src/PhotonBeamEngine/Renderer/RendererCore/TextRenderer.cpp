@@ -78,7 +78,7 @@ void TextRenderer::RenderText(const std::string& text,
         GLfloat w {glyph.mSize.x * properties.mScale};
         GLfloat h {glyph.mSize.y * properties.mScale};
         
-        GLfloat vertices[6][4] = {
+        GLfloat vertices[6][4] {
             {xPos + slant,     yPos + h, 0.0f, 0.0f},
             {xPos,             yPos,     0.0f, 1.0f},
             {xPos + w,         yPos,     1.0f, 1.0f},

@@ -419,6 +419,7 @@
 		6270DC9D1FCB23D800FB457D /* level8.json in Resources */ = {isa = PBXBuildFile; fileRef = 6270DC851FCB23D800FB457D /* level8.json */; };
 		6270DC9E1FCB23D800FB457D /* level9.json in Resources */ = {isa = PBXBuildFile; fileRef = 6270DC861FCB23D800FB457D /* level9.json */; };
 		6276B7102040297E0075C468 /* weld_76.obj in Resources */ = {isa = PBXBuildFile; fileRef = 6276B70F2040297D0075C468 /* weld_76.obj */; };
+		62780A87221C68130089BDE5 /* PortalCameraMovement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62780A85221C68130089BDE5 /* PortalCameraMovement.cpp */; };
 		6278590620375DBF00494A4D /* level27.json in Resources */ = {isa = PBXBuildFile; fileRef = 6278590520375DBF00494A4D /* level27.json */; };
 		6278591C203AFB7C00494A4D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6278591B203AFB7C00494A4D /* Images.xcassets */; };
 		6278591E203B309A00494A4D /* level28.json in Resources */ = {isa = PBXBuildFile; fileRef = 6278591D203B309900494A4D /* level28.json */; };
@@ -1326,6 +1327,8 @@
 		6270DC851FCB23D800FB457D /* level8.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level8.json; sourceTree = "<group>"; };
 		6270DC861FCB23D800FB457D /* level9.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level9.json; sourceTree = "<group>"; };
 		6276B70F2040297D0075C468 /* weld_76.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = weld_76.obj; sourceTree = "<group>"; };
+		62780A85221C68130089BDE5 /* PortalCameraMovement.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PortalCameraMovement.cpp; sourceTree = "<group>"; };
+		62780A86221C68130089BDE5 /* PortalCameraMovement.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PortalCameraMovement.hpp; sourceTree = "<group>"; };
 		6278590520375DBF00494A4D /* level27.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level27.json; sourceTree = "<group>"; };
 		6278591B203AFB7C00494A4D /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		6278591D203B309900494A4D /* level28.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level28.json; sourceTree = "<group>"; };
@@ -2056,6 +2059,8 @@
 				62216BA321EB377E001CB9A1 /* PortalParticleEffect.hpp */,
 				62216BAC21EB377E001CB9A1 /* SunParticleEffect.cpp */,
 				62216BA821EB377E001CB9A1 /* SunParticleEffect.hpp */,
+				62780A85221C68130089BDE5 /* PortalCameraMovement.cpp */,
+				62780A86221C68130089BDE5 /* PortalCameraMovement.hpp */,
 			);
 			path = MapScene;
 			sourceTree = "<group>";
@@ -3485,6 +3490,7 @@
 				62216C6221EDDF36001CB9A1 /* TextDocumentLoader.cpp in Sources */,
 				62216BD821EB377E001CB9A1 /* FireworksParticleEffect.cpp in Sources */,
 				62216A8721EB376E001CB9A1 /* PurchaseCanceledDialogView.cpp in Sources */,
+				62780A87221C68130089BDE5 /* PortalCameraMovement.cpp in Sources */,
 				62216C1421EB377F001CB9A1 /* DiamondPiece.cpp in Sources */,
 				62216BFF21EB377E001CB9A1 /* FieldGravity.cpp in Sources */,
 				62216C1A21EB377F001CB9A1 /* LevelLoader.cpp in Sources */,

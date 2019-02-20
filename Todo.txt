@@ -57,9 +57,6 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-    -Go through the asteroid levels to see that there is not too much sticking to the sides. If so,
-     solve by adding green walls like in level 35.
-      -Continue from level 28.
     -Move level 37 to end of world 4. Replace with asteroid.
     -In release builds: Maybe it should not be possible to switch control type while playing a level
      so that some levels start with more moves when playing gesture controls. It should still be
@@ -70,6 +67,7 @@ Ongoing tasks:
     -Levels moved to world 4:
       -Level 65.
       -Level 66.
+      -Level 67.
 
 
 

@@ -40,6 +40,7 @@ namespace RowBlast {
         void SetIsSelected(bool isSelected);
         const Pht::Vec3& GetPosition() const;
         Pht::Vec3 GetUfoPosition() const;
+        void HideText();
 
         Pht::Button& GetButton() {
             return *mButton;
@@ -63,6 +64,7 @@ namespace RowBlast {
         
         const Pht::Material& mBlueMaterial;
         Pht::SceneObject* mSceneObject {nullptr};
+        Pht::SceneObject* mTextSceneObject {nullptr};
         std::unique_ptr<Pht::Button> mButton;
         int mLevel;
         bool mIsClickable {false};

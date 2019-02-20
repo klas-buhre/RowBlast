@@ -346,6 +346,22 @@ void MapScene::SetCameraXPosition(float xPosition) {
     mCamera->SetTarget(target, up);
 }
 
+void MapScene::SetCameraZPosition(float zPosition) {
+    auto& transform {mCamera->GetSceneObject().GetTransform()};
+    auto position {transform.GetPosition()};
+    
+    position.z = zPosition;
+    transform.SetPosition(position);
+
+    Pht::Vec3 target {position.x, position.y, zPosition - 20.0f};
+    Pht::Vec3 up {0.0f, 1.0f, 0.0f};
+    mCamera->SetTarget(target, up);
+}
+
+float MapScene::GetCameraZPosition() const {
+    return mCamera->GetSceneObject().GetTransform().GetPosition().z;
+}
+
 void MapScene::SetCameraAtLevel(int levelId) {
     if (auto* pin {GetLevelPin(levelId)}) {
         SetCameraXPosition(pin->GetPosition().x);
@@ -373,6 +389,12 @@ float MapScene::GetCameraXPosition() const {
 
 void MapScene::SaveCameraXPosition() {
     mSavedCameraXPosition = GetCameraXPosition();
+}
+
+void MapScene::HideAllLevelPinTexts() {
+    for (auto& pin: mPins) {
+        pin->HideText();
+    }
 }
 
 const MapPin* MapScene::GetPin(int id) const {

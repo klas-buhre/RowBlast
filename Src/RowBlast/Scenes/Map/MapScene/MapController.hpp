@@ -8,6 +8,7 @@
 #include "MapTutorial.hpp"
 #include "Ufo.hpp"
 #include "UfoAnimation.hpp"
+#include "PortalCameraMovement.hpp"
 
 namespace Pht {
     class IEngine;
@@ -68,8 +69,9 @@ namespace RowBlast {
         }
 
     private:
-        Command UpdateMap();
+        void UpdateMap();
         void UpdateUfoAnimation();
+        Command UpdateInPortalCameraMovementState();
         Command UpdateInStartLevelState();
         Command UpdateInStartLevelStateLevelGoalDialog();
         void UpdateInStartLevelStateNoLivesDialog();
@@ -82,14 +84,15 @@ namespace RowBlast {
         void UpdateOptionsMenu();
         Command UpdateAboutMenu();
         void UpdateInAddCoinsStoreState();
-        Command HandleInput();
+        void HandleInput();
         void UpdateTouchingState(const Pht::TouchEvent& touch);
-        Command HandleTouch(const Pht::TouchEvent& touch);
-        Command HandlePinClick(const MapPin& pin);
+        void HandleTouch(const Pht::TouchEvent& touch);
+        void HandlePinClick(const MapPin& pin);
         void Pan(const Pht::TouchEvent& touch);
         void StartPan(const Pht::TouchEvent& touch);
         void UpdateCamera();
         void HandleLivesButtonClick();
+        void GoToPortalCameraMovementState();
         void GoToStartLevelStateNoLivesDialog(int levelToStart);
         void GoToStartLevelStateStore();
         void GoToLivesDailogState();
@@ -102,6 +105,7 @@ namespace RowBlast {
         enum class State {
             Map,
             UfoAnimation,
+            PortalCameraMovement,
             StartLevel,
             LivesDialog,
             AddLives,
@@ -132,6 +136,7 @@ namespace RowBlast {
         MapTutorial mTutorial;
         Ufo mUfo;
         UfoAnimation mUfoAnimation;
+        PortalCameraMovement mPortalCameraMovement;
         MapViewControllers mMapViewControllers;
         StoreController mStoreController;
         float mCameraXPositionAtPanBegin {0.0f};

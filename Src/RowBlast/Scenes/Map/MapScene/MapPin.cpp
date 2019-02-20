@@ -98,9 +98,9 @@ void MapPin::CreateText(int level, const Pht::Font& font, Pht::Scene& scene) {
         adjustedTextOffset.x -= 0.17f;
     }
 
-    auto& textSceneObject {text.GetSceneObject()};
-    textSceneObject.GetTransform().SetPosition(adjustedTextOffset);
-    mSceneObject->AddChild(textSceneObject);
+    mTextSceneObject = &text.GetSceneObject();
+    mTextSceneObject->GetTransform().SetPosition(adjustedTextOffset);
+    mSceneObject->AddChild(*mTextSceneObject);
 }
 
 void MapPin::SetIsSelected(bool isSelected) {
@@ -130,5 +130,11 @@ Pht::Vec3 MapPin::GetUfoPosition() const {
             return mPlace.GetMapLevel().mUfoOffset + GetPosition();
         case MapPlace::Kind::Portal:
             return GetPosition();
+    }
+}
+
+void MapPin::HideText() {
+    if (mTextSceneObject) {
+        mTextSceneObject->SetIsVisible(false);
     }
 }

@@ -51,6 +51,7 @@ MapController::MapController(Pht::IEngine& engine,
     mTutorial {engine, mScene, userServices},
     mUfo {engine, commonResources, 1.17f},
     mUfoAnimation {engine, mUfo},
+    mPortalCameraMovement {engine, mScene},
     mMapViewControllers {engine, mScene, commonResources, userServices, pieceResources},
     mStoreController {
         engine,
@@ -88,7 +89,10 @@ MapController::Command MapController::Update() {
     switch (mState) {
         case State::Map:
         case State::UfoAnimation:
-            command = UpdateMap();
+            UpdateMap();
+            break;
+        case State::PortalCameraMovement:
+            command = UpdateInPortalCameraMovementState();
             break;
         case State::StartLevel:
             command = UpdateInStartLevelState();
@@ -116,14 +120,12 @@ MapController::Command MapController::Update() {
     return command;
 }
 
-MapController::Command MapController::UpdateMap() {
-    auto command {HandleInput()};
+void MapController::UpdateMap() {
+    HandleInput();
     
     if (!mIsTouching) {
         UpdateCamera();
     }
-    
-    return command;
 }
 
 void MapController::UpdateUfoAnimation() {
@@ -149,6 +151,21 @@ void MapController::UpdateUfoAnimation() {
         default:
             break;
     }
+}
+
+MapController::Command MapController::UpdateInPortalCameraMovementState() {
+    auto command {Command{Command::None}};
+    
+    switch (mPortalCameraMovement.Update()) {
+        case PortalCameraMovement::State::Active:
+        case PortalCameraMovement::State::Inactive:
+            break;
+        case PortalCameraMovement::State::StartFadeOut:
+            command = Command {Command::StartMap};
+            break;
+    }
+    
+    return command;
 }
 
 MapController::Command MapController::UpdateInStartLevelState() {
@@ -328,8 +345,7 @@ void MapController::UpdateInAddCoinsStoreState() {
     }
 }
 
-MapController::Command MapController::HandleInput() {
-    auto command {Command{Command::None}};
+void MapController::HandleInput() {
     auto& input {mEngine.GetInput()};
     
     while (input.HasEvents()) {
@@ -339,7 +355,7 @@ MapController::Command MapController::HandleInput() {
                 auto& touchEvent {event.GetTouchEvent()};
                 switch (mMapViewControllers.GetMapHudController().OnTouch(touchEvent)) {
                     case MapHudController::Result::None:
-                        command = HandleTouch(touchEvent);
+                        HandleTouch(touchEvent);
                         break;
                     case MapHudController::Result::ClickedOptionsButton:
                         GoToOptionsMenuState();
@@ -362,12 +378,9 @@ MapController::Command MapController::HandleInput() {
         
         input.PopNextEvent();
     }
-    
-    return command;
 }
 
-MapController::Command MapController::HandleTouch(const Pht::TouchEvent& touch) {
-    auto command {Command{Command::None}};
+void MapController::HandleTouch(const Pht::TouchEvent& touch) {
     UpdateTouchingState(touch);
     
     auto& renderer {mEngine.GetRenderer()};
@@ -384,16 +397,17 @@ MapController::Command MapController::HandleTouch(const Pht::TouchEvent& touch) 
         switch (pin->GetButton().OnTouch(touch)) {
             case Pht::Button::Result::Down:
                 pin->SetIsSelected(true);
-                return command;
+                return;
             case Pht::Button::Result::MoveInside:
-                return command;
+                return;
             case Pht::Button::Result::MoveOutside:
                 pin->SetIsSelected(false);
                 StartPan(touch);
                 break;
             case Pht::Button::Result::UpInside:
                 pin->SetIsSelected(false);
-                return HandlePinClick(*pin);
+                HandlePinClick(*pin);
+                return;
             default:
                 pin->SetIsSelected(false);
                 break;
@@ -403,14 +417,11 @@ MapController::Command MapController::HandleTouch(const Pht::TouchEvent& touch) 
     if (!mUfoAnimation.IsActive()) {
         Pan(touch);
     }
-
-    return command;
 }
 
-MapController::Command MapController::HandlePinClick(const MapPin& pin) {
+void MapController::HandlePinClick(const MapPin& pin) {
     mEngine.GetAudio().PlaySound(static_cast<Pht::AudioResourceId>(SoundId::ButtonClick));
     
-    auto command {Command{Command::None}};
     auto& mapPlace {pin.GetPlace()};
     
     switch (mapPlace.GetKind()) {
@@ -427,12 +438,10 @@ MapController::Command MapController::HandlePinClick(const MapPin& pin) {
             auto& portal {mapPlace.GetPortal()};
             mScene.SetWorldId(portal.mDestinationWorldId);
             mScene.SetClickedPortalNextLevelId(portal.mNextLevelId);
-            command = Command {Command::StartMap};
+            GoToPortalCameraMovementState();
             break;
         }
     }
-    
-    return command;
 }
 
 void MapController::UpdateTouchingState(const Pht::TouchEvent& touch) {
@@ -518,6 +527,11 @@ void MapController::GoToUfoAnimationState(int levelToStart) {
     } else {
         mHideUfoOnAnimationFinished = false;
     }
+}
+
+void MapController::GoToPortalCameraMovementState() {
+    mState = State::PortalCameraMovement;
+    mPortalCameraMovement.Start();
 }
 
 void MapController::GoToStartLevelStateLevelGoalDialog(int levelToStart) {
