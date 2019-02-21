@@ -15,10 +15,11 @@ namespace RowBlast {
             bool mIsFirstSubCell {true};
         };
 
-        using PieceBlockCoords = Pht::StaticVector<PieceBlockCoord, Field::maxNumColumns * Field::maxNumRows * 2>;
+        using PieceBlockCoords = Pht::StaticVector<PieceBlockCoord, Field::maxNumColumns * Field::maxNumRows * 4>;
 
         FieldGravity(Field& field);
         
+        void Init();
         void PullDownLoosePieces();
         void ShiftFieldDown(int rowIndex);
         void DetectBlocksThatShouldNotBounce();
@@ -54,6 +55,7 @@ namespace RowBlast {
 
         Field& mField;
         CellGrid mPieceBlockGrid;
+        int mNumDirtyPieceBlockGridRows {0};
         PieceBlockCoords mPieceBlockCoords;
         bool mAnyPiecesPulledDown {false};
     };

@@ -104,6 +104,7 @@ void GameLogic::Init(const Level& level) {
     mLevel = &level;
     mControlType = mTutorial.IsGestureControlsAllowed() ? mSettingsService.GetControlType() : ControlType::Click;
 
+    mFieldGravity.Init();
     mFieldExplosionsStates.Init();
     mGestureInputHandler.Init(level);
     mClickInputHandler.Init(level);

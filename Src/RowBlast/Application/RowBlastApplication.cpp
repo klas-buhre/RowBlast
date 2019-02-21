@@ -335,5 +335,5 @@ void RowBlastApplication::StartMapScene() {
 
 void RowBlastApplication::StartGameScene() {
     mState = State::GameScene;
-    mGameController.StartLevel(mLevelToStart);
+    mGameController.Init(mLevelToStart);
 }

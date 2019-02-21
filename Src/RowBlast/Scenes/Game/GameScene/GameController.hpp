@@ -60,7 +60,7 @@ namespace RowBlast {
                        const CommonResources& commonResources,
                        UserServices& userServices);
     
-        void StartLevel(int levelId);
+        void Init(int levelId);
         Command Update();
         
         const LevelResources& GetLevelResources() const {

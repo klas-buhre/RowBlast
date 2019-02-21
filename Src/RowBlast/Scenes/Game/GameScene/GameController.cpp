@@ -123,7 +123,7 @@ GameController::GameController(Pht::IEngine& engine,
         mFlyingBlocksAnimation
     } {}
 
-void GameController::StartLevel(int levelId) {
+void GameController::Init(int levelId) {
     mLevel = LevelLoader::Load(levelId, mLevelResources);
 
     mField.Init(*mLevel);

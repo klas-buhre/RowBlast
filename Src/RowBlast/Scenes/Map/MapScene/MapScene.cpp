@@ -25,7 +25,7 @@
 using namespace RowBlast;
 
 namespace {
-    const auto halfMapWidth {22.0f};
+    constexpr auto halfMapWidth {22.0f};
     constexpr auto lightAnimationDuration {5.0f};
     const Pht::Vec3 defaultUiLightDirectionA {0.785f, 1.0f, 0.67f};
     const Pht::Vec3 defaultUiLightDirectionB {1.0f, 1.0f, 0.74f};

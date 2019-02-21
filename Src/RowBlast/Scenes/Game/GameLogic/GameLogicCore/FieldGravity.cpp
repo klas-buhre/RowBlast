@@ -61,13 +61,18 @@ namespace {
 }
 
 FieldGravity::FieldGravity(Field& field) :
-    mField {field} {
+    mField {field} {}
+
+void FieldGravity::Init() {
+    mPieceBlockGrid.clear();
     
-    std::vector<Cell> emptyRow(Field::maxNumColumns);
+    std::vector<Cell> emptyRow(mField.GetNumColumns());
     
-    for (auto i {0}; i < Field::maxNumRows; ++i) {
+    for (auto i {0}; i < mField.GetNumRows(); ++i) {
         mPieceBlockGrid.push_back(emptyRow);
     }
+    
+    mNumDirtyPieceBlockGridRows = 0;
 }
 
 void FieldGravity::PullDownLoosePieces() {
@@ -135,11 +140,17 @@ PieceBlocks FieldGravity::ExtractPieceBlocks(Pht::IVec2& piecePosition,
 
     ClearPieceBlockGrid();
     
+    auto pieceRowMax {0};
+    
     for (auto i {0}; i < mPieceBlockCoords.Size(); ++i) {
         auto& coord {mPieceBlockCoords.At(i)};
         auto& position {coord.mPosition};
         auto pieceRow {position.y - piecePosition.y};
         auto pieceColumn {position.x - piecePosition.x};
+        
+        if (pieceRow > pieceRowMax) {
+            pieceRowMax = pieceRow;
+        }
         
         auto& cell {mField.mGrid[position.y][position.x]};
         auto& fieldSubCell {coord.mIsFirstSubCell ? cell.mFirstSubCell : cell.mSecondSubCell};
@@ -157,6 +168,8 @@ PieceBlocks FieldGravity::ExtractPieceBlocks(Pht::IVec2& piecePosition,
         
         fieldSubCell = SubCell {};
     }
+    
+    mNumDirtyPieceBlockGridRows = pieceRowMax + 1;
 
     return PieceBlocks {
         mPieceBlockGrid,
@@ -343,8 +356,8 @@ void FieldGravity::ResetAllCellsTriedScanDirection() {
 }
 
 void FieldGravity::ClearPieceBlockGrid() {
-    for (auto row {0}; row < Field::maxNumRows; ++row) {
-        for (auto column {0}; column < Field::maxNumColumns; ++column) {
+    for (auto row {0}; row < mNumDirtyPieceBlockGridRows; ++row) {
+        for (auto column {0}; column < mField.GetNumColumns(); ++column) {
             mPieceBlockGrid[row][column] = Cell {};
         }
     }

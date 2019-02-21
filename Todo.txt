@@ -57,7 +57,7 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-    -Move level 37 to end of world 4. Replace with asteroid.
+    -Finish level 37.
     -In release builds: Maybe it should not be possible to switch control type while playing a level
      so that some levels start with more moves when playing gesture controls. It should still be
      possible in non-release builds.
