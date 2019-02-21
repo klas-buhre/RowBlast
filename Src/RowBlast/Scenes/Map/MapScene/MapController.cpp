@@ -82,7 +82,7 @@ void MapController::Init() {
 }
 
 MapController::Command MapController::Update() {
-    auto command {Command{Command::None}};
+    Command command {Command::None};
     
     UpdateUfoAnimation();
     
@@ -154,7 +154,7 @@ void MapController::UpdateUfoAnimation() {
 }
 
 MapController::Command MapController::UpdateInPortalCameraMovementState() {
-    auto command {Command{Command::None}};
+    Command command {Command::None};
     
     switch (mPortalCameraMovement.Update()) {
         case PortalCameraMovement::State::Active:
@@ -169,7 +169,7 @@ MapController::Command MapController::UpdateInPortalCameraMovementState() {
 }
 
 MapController::Command MapController::UpdateInStartLevelState() {
-    auto command {Command{Command::None}};
+    Command command {Command::None};
 
     switch (mStartLevelState) {
         case StartLevelState::LevelGoalDialog:
@@ -187,7 +187,7 @@ MapController::Command MapController::UpdateInStartLevelState() {
 }
 
 MapController::Command MapController::UpdateInStartLevelStateLevelGoalDialog() {
-    auto command {Command{Command::None}};
+    Command command {Command::None};
 
     switch (mMapViewControllers.GetLevelGoalDialogController().Update()) {
         case LevelGoalDialogController::Result::None:
@@ -310,7 +310,7 @@ void MapController::UpdateOptionsMenu() {
 }
 
 MapController::Command MapController::UpdateAboutMenu() {
-    auto command {Command{Command::None}};
+    Command command {Command::None};
     
     switch (mMapViewControllers.GetAboutMenuController().Update()) {
         case AboutMenuController::Result::None:
