@@ -57,7 +57,6 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-    -Finish level 37.
     -In release builds: Maybe it should not be possible to switch control type while playing a level
      so that some levels start with more moves when playing gesture controls. It should still be
      possible in non-release builds.
