@@ -14,6 +14,7 @@
 using namespace RowBlast;
 
 namespace {
+/*
     const Pht::Vec4 stencilColor {1.0f, 1.0f, 1.0f, 1.0f};
     const Pht::Vec4 outerBorderColor {0.6f, 0.3f, 0.75f, 0.7f};
     const Pht::Vec4 lowerOuterBorderColor {0.6f, 0.3f, 0.75f, 0.1f};
@@ -21,6 +22,24 @@ namespace {
     const Pht::Vec4 lowerBorderColor {0.725f, 0.35f, 0.85f, 0.1f};
     const Pht::Vec4 innerColor {0.85f, 0.4f, 0.95f, 0.93f};
     const Pht::Vec4 lowerInnerColor {0.9f, 0.9f, 1.0f, 0.0f};
+*/
+/*
+    const Pht::Vec4 stencilColor {1.0f, 1.0f, 1.0f, 1.0f};
+    const Pht::Vec4 outerBorderColor {0.4f, 0.3f, 0.55f, 0.7f};
+    const Pht::Vec4 lowerOuterBorderColor {0.4f, 0.3f, 0.55f, 0.1f};
+    const Pht::Vec4 borderColor {0.525f, 0.35f, 0.65f, 0.75f};
+    const Pht::Vec4 lowerBorderColor {0.525f, 0.35f, 0.65f, 0.1f};
+    const Pht::Vec4 innerColor {0.65f, 0.4f, 0.75f, 0.93f};
+    const Pht::Vec4 lowerInnerColor {0.9f, 0.9f, 1.0f, 0.0f};
+*/
+    const Pht::Vec4 stencilColor {1.0f, 1.0f, 1.0f, 1.0f};
+    const Pht::Vec4 outerBorderColor {0.5f, 0.3f, 0.65f, 0.7f};
+    const Pht::Vec4 lowerOuterBorderColor {0.5f, 0.3f, 0.65f, 0.1f};
+    const Pht::Vec4 borderColor {0.625f, 0.35f, 0.75f, 0.75f};
+    const Pht::Vec4 lowerBorderColor {0.625f, 0.35f, 0.75f, 0.1f};
+    const Pht::Vec4 innerColor {0.75f, 0.4f, 0.85f, 0.93f};
+    const Pht::Vec4 lowerInnerColor {0.9f, 0.9f, 1.0f, 0.0f};
+
     const Pht::Vec4 pressedColorSubtract {0.1f, 0.1f, 0.1f, 0.0f};
 
     const Pht::Vec2 pauseButtonRectangleSize {1.5f, 1.5f};

@@ -11,6 +11,7 @@
 #include "Cell.hpp"
 #include "Piece.hpp"
 #include "ProgressService.hpp"
+#include "SettingsService.hpp"
 
 namespace RowBlast {
     class Level {
@@ -45,6 +46,7 @@ namespace RowBlast {
               int numRows,
               float speed,
               int numMoves,
+              float gestureMovesFactor,
               const StarLimits& starLimits,
               const std::vector<const Piece*>& pieceTypes,
               const std::vector<const Piece*>& pieceSequence,
@@ -55,6 +57,9 @@ namespace RowBlast {
               FloatingBlocksSet floatingBlocksSet,
               LightIntensity lightIntensity,
               bool isPartOfTutorial);
+        
+        int GetNumMoves(ControlType controlType) const;
+        const StarLimits& GetStarLimits(ControlType controlType) const;
         
         void SetClearGrid(std::unique_ptr<CellGrid> clearGrid) {
             mClearGrid = std::move(clearGrid);
@@ -82,14 +87,6 @@ namespace RowBlast {
         
         float GetSpeed() const {
             return mSpeed;
-        }
-        
-        float GetNumMoves() const {
-            return mNumMoves;
-        }
-        
-        const StarLimits& GetStarLimits() const {
-            return mStarLimits;
         }
         
         const std::vector<const Piece*>& GetPieceTypes() const {
@@ -144,8 +141,10 @@ namespace RowBlast {
         int mNumColumns {0};
         int mNumRows {0};
         float mSpeed {0.0f};
-        int mNumMoves {0};
-        StarLimits mStarLimits;
+        int mNumMovesClickControls {0};
+        int mNumMovesGestureControls {0};
+        StarLimits mStarLimitsClickControls;
+        StarLimits mStarLimitsGestureControls;
         std::vector<const Piece*> mPieceTypes;
         std::vector<const Piece*> mPieceSequence;
         std::vector<TutorialMove> mPredeterminedMoves;

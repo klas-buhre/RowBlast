@@ -23,6 +23,9 @@ Backlog:
      in a similar way as the SlidingFieldAnimation.
     -Animation that moves the pause button out of the screen.
   -GUI:
+    -In release builds: It should not be possible to switch control type while playing a level
+     so that some levels start with more moves when playing gesture controls. It should still be
+     possible in non-release builds.
     -In the options menu and settings menu: should have icons for music, sound effects and a house
      for "Back". Maybe icons for controls as well. Not good if the user changes the controls by
      mistake just because they don't know english.
@@ -57,9 +60,22 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-    -In release builds: Maybe it should not be possible to switch control type while playing a level
-     so that some levels start with more moves when playing gesture controls. It should still be
-     possible in non-release builds.
+      -Levels that should get extra moves with gesture controls:
+        -Level 8.
+        -Level 11. <--- Continue from here.
+        -Level 14.
+        -Level 16.
+        -Level 18.
+        -Level 20.
+        -Level 21.
+        -Level 23.
+        -Level 24.
+        -Level 26.
+        -Level 27.
+        -And the rest.
+
+    -Finish the game hud rectangles color calibration.
+    
     -Levels moved to world 3:
       -Level 48.
       -Level 49.

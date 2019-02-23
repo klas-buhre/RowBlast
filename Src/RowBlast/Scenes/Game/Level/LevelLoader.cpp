@@ -386,6 +386,12 @@ std::unique_ptr<Level> LevelLoader::Load(int levelId, const LevelResources& leve
     auto speed {Pht::Json::ReadFloat(document, "speed")};
     auto moves {Pht::Json::ReadInt(document, "moves")};
     
+    auto gestureMovesFactor {1.0f};
+    
+    if (document.HasMember("gestureMovesFactor")) {
+        gestureMovesFactor = Pht::Json::ReadFloat(document, "gestureMovesFactor");
+    }
+    
     StarLimits starLimits {
         .mTwo = Pht::Json::ReadInt(document, "twoStars"),
         .mThree = Pht::Json::ReadInt(document, "threeStars")
@@ -444,6 +450,7 @@ std::unique_ptr<Level> LevelLoader::Load(int levelId, const LevelResources& leve
                                 numRows,
                                 speed,
                                 moves,
+                                gestureMovesFactor,
                                 starLimits,
                                 levelPieces,
                                 pieceSequence,

@@ -125,7 +125,7 @@ void GameLogic::Init(const Level& level) {
     mFallingPieceSpawnReason = FallingPieceSpawnReason::NextMove;
     mFallingPieceSpawnType = nullptr;
     
-    mMovesLeft = mLevel->GetNumMoves();
+    mMovesLeft = mLevel->GetNumMoves(mControlType);
     mMovesUsed = 0;
     
     mCurrentMove = MoveData {};

@@ -97,7 +97,14 @@ void LevelCompletedController::Start() {
     }
     
     auto totalNumMovesUsed {mGameLogic.GetMovesUsedIncludingCurrent()};
-    auto numStars {ProgressService::CalculateNumStars(totalNumMovesUsed, mLevel->GetStarLimits())};
+    
+    auto controlType {
+        mGameLogic.IsUsingClickControls() ? ControlType::Click : ControlType::Gesture
+    };
+    
+    auto numStars {
+        ProgressService::CalculateNumStars(totalNumMovesUsed, mLevel->GetStarLimits(controlType))
+    };
 
     mUserServices.CompleteLevel(mLevel->GetId(), totalNumMovesUsed, numStars);
 }
@@ -253,10 +260,14 @@ void LevelCompletedController::UpdateFireworksAndConfetti() {
         
         if (effectsAreDone || mElapsedTime > fireworksDuration ||
             mEngine.GetInput().ConsumeWholeTouch()) {
-
+            
+            auto controlType {
+                mGameLogic.IsUsingClickControls() ? ControlType::Click : ControlType::Gesture
+            };
+            
             auto numStars {
                 ProgressService::CalculateNumStars(mGameLogic.GetMovesUsedIncludingCurrent(),
-                                                   mLevel->GetStarLimits())
+                                                   mLevel->GetStarLimits(controlType))
             };
 
             mStarsAnimation.Start(numStars);
