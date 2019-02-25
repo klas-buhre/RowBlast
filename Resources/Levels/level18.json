@@ -1,6 +1,7 @@
 {
     "speed": 0.0,
     "moves": 55,
+    "gestureMovesFactor": 1.04,
     "twoStars": 45,
     "threeStars": 35,
     "floatingBlocksSet": "Standard",
@@ -14,7 +15,9 @@
         "B",
         "D",
         "Seven",
-        "MirroredSeven"
+        "MirroredSeven",
+        "Bomb",
+        "RowBomb"
     ],
     "clearGrid": [
         "       ",

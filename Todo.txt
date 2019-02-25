@@ -60,12 +60,27 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
+     level 18:
+     gesture:
+        21
+        24
+        19
+        20
+        14
+        9
+        14
+     click:
+        22
+        12
+        2
+
+
       -Levels that should get extra moves with gesture controls:
         -Level 8.
-        -Level 11. <--- Continue from here.
+        -Level 11.
         -Level 14.
         -Level 16.
-        -Level 18.
+        -Level 18. <--- Continue from here.
         -Level 20.
         -Level 21.
         -Level 23.
@@ -75,7 +90,7 @@ Ongoing tasks:
         -And the rest.
 
     -Finish the game hud rectangles color calibration.
-    
+
     -Levels moved to world 3:
       -Level 48.
       -Level 49.
