@@ -1,6 +1,7 @@
 {
     "speed": 0.0,
     "moves": 43,
+    "gestureMovesFactor": 1.04,
     "twoStars": 38,
     "threeStars": 28,
     "floatingBlocksSet": "Standard",
