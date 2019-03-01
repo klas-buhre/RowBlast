@@ -60,9 +60,6 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-      -Levels that should get extra moves with gesture controls:
-        -And the rest.
-
     -Finish the game hud rectangles color calibration.
 
     -Levels moved to world 3:

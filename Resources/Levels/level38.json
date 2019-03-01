@@ -1,6 +1,7 @@
 {
     "speed": 0.0,
-    "moves": 22,
+    "moves": 23,
+    "gestureMovesFactor": 1.02,
     "twoStars": 19,
     "threeStars": 17,
     "floatingBlocksSet": "Asteroid",
