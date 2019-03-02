@@ -7,6 +7,7 @@
 // Engine includes.
 #include "Vector.hpp"
 #include "RenderableObject.hpp"
+#include "Optional.hpp"
 
 namespace Pht {
     class IEngine;
@@ -47,6 +48,7 @@ namespace RowBlast {
         Pht::Vec3 mSize {0.0f, 0.0f, 0.0f};
         FloatingPieceType mPieceType {FloatingPieceType::BigSingleBlock};
         FloatingBlockColor mBlockColor {FloatingBlockColor::RandomExceptGray};
+        Pht::Optional<Pht::Vec3> mBlockRotation;
     };
     
     class FloatingBlocks {
@@ -66,6 +68,7 @@ namespace RowBlast {
             Pht::Vec3 mVelocity;
             Pht::Vec3 mAngularVelocity;
             Pht::SceneObject* mSceneObject;
+            float mElapsedTime {0.0f};
         };
 
         void CreateBomb(Pht::ISceneManager& sceneManager, float scale);

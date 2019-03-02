@@ -176,19 +176,22 @@ namespace {
             .mPosition = {-8.0f, 8.0f, -22.0f},
             .mSize = {0.0f, 0.0f, 0.0f},
             .mPieceType = FloatingPieceType::B,
-            .mBlockColor = FloatingBlockColor::Blue
+            .mBlockColor = FloatingBlockColor::Blue,
+            .mBlockRotation = Pht::Vec3{45.0f, -20.0f, 90.0f}
         },
         BlockPathVolume {
-            .mPosition = {10.0f, 7.0f, -20.0f},
+            .mPosition = {10.0f, 5.0f, -20.0f},
             .mSize = {0.0f, 0.0f, 0.0f},
             .mPieceType = FloatingPieceType::I,
-            .mBlockColor = FloatingBlockColor::Green
+            .mBlockColor = FloatingBlockColor::Green,
+            .mBlockRotation = Pht::Vec3{50.0f, -60.0f, -30.0f}
         },
         BlockPathVolume {
             .mPosition = {-5.0f, -3.0f, -10.0f},
             .mSize = {0.0f, 0.0f, 0.0f},
             .mPieceType = FloatingPieceType::L,
-            .mBlockColor = FloatingBlockColor::Gold
+            .mBlockColor = FloatingBlockColor::Gold,
+            .mBlockRotation = Pht::Vec3{-10.0f, 60.0f, 40.0f}
         },
         BlockPathVolume {
             .mPosition = {5.0f, -4.0f, -5.0f},
@@ -325,7 +328,7 @@ void TitleScene::Init() {
                                                        static_cast<int>(Layer::Background),
                                                        floatingBlockPaths,
                                                        mCommonResources,
-                                                       7.7f,
+                                                       7.43f,
                                                        20.0f);
 
     mUfoContainer = &scene->CreateSceneObject();

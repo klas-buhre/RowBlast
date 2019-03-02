@@ -16,9 +16,6 @@ Backlog:
      situations when there is a big cavity created between gray blocks after bombs and level bombs
      have detonated. This is probably tricky to do in a consistent way.
   -Rendering:
-    -maybe brighten and smooth the mid left side of the field envmap texture.
-    -The floating blocks in the title scene could be slightly smaller and always have a good preset
-     rotation.
     -Animation that moves the map hud out of the screen when clicking buttons in the hud. Could work
      in a similar way as the SlidingFieldAnimation.
     -Animation that moves the pause button out of the screen.
@@ -61,14 +58,8 @@ Backlog:
 
 Ongoing tasks:
     -Finish the game hud rectangles color calibration.
+    -Maybe brighten and smooth the mid left side of the field envmap texture.
 
-    -Levels moved to world 3:
-      -Level 48.
-      -Level 49.
-    -Levels moved to world 4:
-      -Level 65.
-      -Level 66.
-      -Level 67.
 
 
 
@@ -169,10 +160,10 @@ Ordered Backlog:
     -Analytics.
         Cost: 17
         Done
-    -Finish the most important GUI tasks.
-        Cost: 5
     -Finish the top two rendering tasks.
         Cost: 2
+    -Finish the most important GUI tasks.
+        Cost: 5
     -Levels for the space world.
         Cost: 7
     -Purchasing.
@@ -195,6 +186,16 @@ Ordered Backlog:
         Cost: ?
 
         Total cost: 318
+
+
+Levels:
+    -Levels moved to world 3:
+      -Level 48.
+      -Level 49.
+    -Levels moved to world 4:
+      -Level 65.
+      -Level 66.
+      -Level 67.
 
 
 Comomon piece type sets:

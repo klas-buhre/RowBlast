@@ -14,6 +14,8 @@
 using namespace RowBlast;
 
 namespace {
+    constexpr auto rotationDuration {6.0f};
+    constexpr auto rotationAmplitude {5.5f};
     constexpr auto emissiveAnimationDuration {1.5f};
     constexpr auto emissiveAmplitude {1.7f};
 
@@ -142,21 +144,28 @@ void FloatingBlocks::InitBlocks(Pht::Scene& scene, float scale, float angularVel
             0.0f
         };
         
-        Pht::Vec3 rotation {
-            Pht::NormalizedRand() * 360.0f,
-            Pht::NormalizedRand() * 360.0f,
-            Pht::NormalizedRand() * 360.0f,
+        auto rotation {
+            volume.mBlockRotation.HasValue() ? volume.mBlockRotation.GetValue() :
+            Pht::Vec3 {
+                Pht::NormalizedRand() * 360.0f,
+                Pht::NormalizedRand() * 360.0f,
+                Pht::NormalizedRand() * 360.0f,
+            }
         };
-        
-        Pht::Vec3 blockAngularVelocity {
-            (Pht::NormalizedRand() - 0.5f) * angularVelocity,
-            (Pht::NormalizedRand() - 0.5f) * angularVelocity,
-            (Pht::NormalizedRand() - 0.5f) * angularVelocity
+
+        auto blockAngularVelocity {
+            volume.mBlockRotation.HasValue() ? Pht::Vec3{0.0f, 0.0f, 0.0f} :
+            Pht::Vec3 {
+                (Pht::NormalizedRand() - 0.5f) * angularVelocity,
+                (Pht::NormalizedRand() - 0.5f) * angularVelocity,
+                (Pht::NormalizedRand() - 0.5f) * angularVelocity
+            }
         };
         
         auto& block {mBlocks[i]};
         block.mVelocity = velocity;
         block.mAngularVelocity = blockAngularVelocity;
+        block.mElapsedTime = Pht::NormalizedRand() * rotationDuration;
         
         auto& renderable {CalcBlockRenderable(volume, colors)};
         
@@ -355,6 +364,24 @@ void FloatingBlocks::Update() {
         
         if (position.x < leftLimit && block.mVelocity.x < 0.0f) {
             block.mVelocity.x = -block.mVelocity.x;
+        }
+        
+        if (volume.mBlockRotation.HasValue()) {
+            block.mElapsedTime += dt;
+            
+            if (block.mElapsedTime > rotationDuration) {
+                block.mElapsedTime = 0.0f;
+            }
+            
+            auto t {block.mElapsedTime * 2.0f * 3.1415f / rotationDuration};
+            
+            Pht::Vec3 rotation {
+                rotationAmplitude * std::sin(t),
+                rotationAmplitude * std::cos(t),
+                0.0f
+            };
+            
+            transform.SetRotation(rotation + volume.mBlockRotation.GetValue());
         }
     }
 }
