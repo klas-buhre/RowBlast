@@ -57,7 +57,6 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-    -Maybe brighten and smooth the mid left side of the field envmap texture.
 
 
 
@@ -161,6 +160,7 @@ Ordered Backlog:
         Done
     -Finish the top two rendering tasks.
         Cost: 2
+        Done
     -Finish the most important GUI tasks.
         Cost: 5
     -Levels for the space world.

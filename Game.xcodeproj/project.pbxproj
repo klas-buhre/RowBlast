@@ -257,7 +257,6 @@
 		6234617921668D1E00ECD0DF /* planet_rayeon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6234617821668D1E00ECD0DF /* planet_rayeon.jpg */; };
 		6234618C21691DAF00ECD0DF /* asteroid_998.obj in Resources */ = {isa = PBXBuildFile; fileRef = 6234618B21691DAE00ECD0DF /* asteroid_998.obj */; };
 		62346192216B6FE900ECD0DF /* planet_wadow.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62346191216B6FE900ECD0DF /* planet_wadow.jpg */; };
-		6238F618218F0CEC0008A0CF /* sky_upside_down_patched_mirrored.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6238F617218F0CEB0008A0CF /* sky_upside_down_patched_mirrored.jpg */; };
 		6238F61B2191FCB40008A0CF /* TextDoubleGradient.vert in Resources */ = {isa = PBXBuildFile; fileRef = 6238F6192191FCB30008A0CF /* TextDoubleGradient.vert */; };
 		6238F61C2191FCB40008A0CF /* TextDoubleGradient.frag in Resources */ = {isa = PBXBuildFile; fileRef = 6238F61A2191FCB40008A0CF /* TextDoubleGradient.frag */; };
 		6238F620219A097A0008A0CF /* coin_852.obj in Resources */ = {isa = PBXBuildFile; fileRef = 6238F61F219A09790008A0CF /* coin_852.obj */; };
@@ -487,6 +486,7 @@
 		62B2BAEF2130089D009C529D /* level54.json in Resources */ = {isa = PBXBuildFile; fileRef = 62B2BAEE2130089C009C529D /* level54.json */; };
 		62B2BAF12133FE61009C529D /* level55.json in Resources */ = {isa = PBXBuildFile; fileRef = 62B2BAF02133FE60009C529D /* level55.json */; };
 		62B2BAF32134495E009C529D /* level56.json in Resources */ = {isa = PBXBuildFile; fileRef = 62B2BAF22134495D009C529D /* level56.json */; };
+		62B50A49222C4E1900536E0E /* sky_upside_down_patched_mirrored.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62B50A48222C4E1800536E0E /* sky_upside_down_patched_mirrored.jpg */; };
 		62BB35BA21C573690051AEEF /* map.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 62BB35B921C5733A0051AEEF /* map.mp4 */; };
 		62BB35C321C6B26A0051AEEF /* OpenAlAudioEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62BB35C121C6B26A0051AEEF /* OpenAlAudioEngine.cpp */; };
 		62BB35C621C6BA710051AEEF /* OpenAlContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62BB35C421C6BA710051AEEF /* OpenAlContext.cpp */; };
@@ -961,7 +961,6 @@
 		6234617821668D1E00ECD0DF /* planet_rayeon.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = planet_rayeon.jpg; sourceTree = "<group>"; };
 		6234618B21691DAE00ECD0DF /* asteroid_998.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = asteroid_998.obj; sourceTree = "<group>"; };
 		62346191216B6FE900ECD0DF /* planet_wadow.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = planet_wadow.jpg; sourceTree = "<group>"; };
-		6238F617218F0CEB0008A0CF /* sky_upside_down_patched_mirrored.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sky_upside_down_patched_mirrored.jpg; sourceTree = "<group>"; };
 		6238F6192191FCB30008A0CF /* TextDoubleGradient.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = TextDoubleGradient.vert; sourceTree = "<group>"; };
 		6238F61A2191FCB40008A0CF /* TextDoubleGradient.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = TextDoubleGradient.frag; sourceTree = "<group>"; };
 		6238F61F219A09790008A0CF /* coin_852.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = coin_852.obj; sourceTree = "<group>"; };
@@ -1399,6 +1398,7 @@
 		62B2BAEE2130089C009C529D /* level54.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level54.json; sourceTree = "<group>"; };
 		62B2BAF02133FE60009C529D /* level55.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level55.json; sourceTree = "<group>"; };
 		62B2BAF22134495D009C529D /* level56.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level56.json; sourceTree = "<group>"; };
+		62B50A48222C4E1800536E0E /* sky_upside_down_patched_mirrored.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sky_upside_down_patched_mirrored.jpg; sourceTree = "<group>"; };
 		62BB35B921C5733A0051AEEF /* map.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = map.mp4; sourceTree = "<group>"; };
 		62BB35BF21C6AD2A0051AEEF /* IAudioEngine.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = IAudioEngine.hpp; sourceTree = "<group>"; };
 		62BB35C121C6B26A0051AEEF /* OpenAlAudioEngine.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = OpenAlAudioEngine.cpp; sourceTree = "<group>"; };
@@ -2967,10 +2967,10 @@
 		62B1CB64210F8F8500D0F195 /* Game */ = {
 			isa = PBXGroup;
 			children = (
-				62E6DAD522060DD900EA9D3A /* block_trail_yellow.png */,
-				62E6DAD322060AEE00EA9D3A /* block_trail_red.png */,
-				62E6DAD1220602CD00EA9D3A /* block_trail_green.png */,
 				62E6DACF2205D26F00EA9D3A /* block_trail_blue.png */,
+				62E6DAD1220602CD00EA9D3A /* block_trail_green.png */,
+				62E6DAD322060AEE00EA9D3A /* block_trail_red.png */,
+				62E6DAD522060DD900EA9D3A /* block_trail_yellow.png */,
 				62B1CB65210F8F8500D0F195 /* bomb_798_emission.jpg */,
 				62B1CB67210F8F8500D0F195 /* bomb_798.jpg */,
 				62B1CB75210F8F8500D0F195 /* cloud_B_envmap.jpg */,
@@ -2987,7 +2987,7 @@
 				62B1CB6E210F8F8500D0F195 /* particle_sprite_point_blurred.png */,
 				62B1CB69210F8F8500D0F195 /* particle_sprite_twinkle_blurred.png */,
 				624C72E42177AB250006068B /* shield.png */,
-				6238F617218F0CEB0008A0CF /* sky_upside_down_patched_mirrored.jpg */,
+				62B50A48222C4E1800536E0E /* sky_upside_down_patched_mirrored.jpg */,
 				62B1CB73210F8F8500D0F195 /* sky_upside_down.jpg */,
 				626940C0216115E300D9857A /* sky1.jpg */,
 				626940CE21625E7400D9857A /* sky2.jpg */,
@@ -3183,6 +3183,7 @@
 				62BE275320B42A360014C6DD /* star_1428.obj in Resources */,
 				62B1CB81210F8F8600D0F195 /* particle_sprite_twinkle_blurred.png in Resources */,
 				6261FFD720FCC912008F1619 /* level43.json in Resources */,
+				62B50A49222C4E1900536E0E /* sky_upside_down_patched_mirrored.jpg in Resources */,
 				62B1CB83210F8F8600D0F195 /* flare03.png in Resources */,
 				6270DC6D1FCB231B00FB457D /* ethnocentric_rg_it.ttf in Resources */,
 				62B1CB88210F8F8600D0F195 /* laser_bomb_emission.png in Resources */,
@@ -3263,7 +3264,6 @@
 				6221699821DE1B9B001CB9A1 /* leave_title.wav in Resources */,
 				62B1CB8D210F8F8600D0F195 /* cloud_B_envmap.jpg in Resources */,
 				62B1CBA82110D46E00D0F195 /* bomb_frame3.jpg in Resources */,
-				6238F618218F0CEC0008A0CF /* sky_upside_down_patched_mirrored.jpg in Resources */,
 				624C72E52177AB260006068B /* shield.png in Resources */,
 				629B838820CA940E00DD2D0E /* cube_428.obj in Resources */,
 				6270DC9C1FCB23D800FB457D /* level7.json in Resources */,
