@@ -57,7 +57,6 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-    -Finish the game hud rectangles color calibration.
     -Maybe brighten and smooth the mid left side of the field envmap texture.
 
 
