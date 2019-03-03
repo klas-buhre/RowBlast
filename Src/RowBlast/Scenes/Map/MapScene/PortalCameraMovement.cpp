@@ -45,7 +45,13 @@ void PortalCameraMovement::UpdateInActiveState() {
     mElapsedTime += dt;
     
     if (mElapsedTime >= duration) {
-        mState = State::Inactive;
+        if (!mHasBeenInStartFadeOutState) {
+            mState = State::StartFadeOut;
+            mHasBeenInStartFadeOutState = true;
+        } else {
+            mState = State::Inactive;
+        }
+
         return;
     }
     
