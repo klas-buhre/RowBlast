@@ -53,6 +53,11 @@ GameMenuView::GameMenuView(Pht::IEngine& engine, const CommonResources& commonRe
     blueButtonStyle.mHasShadow = true;
     
     Pht::Vec2 buttonInputSize {194.0f, 45.0f};
+    
+    Pht::Vec2 iconSize {0.65f, 0.65f};
+    Pht::Vec4 iconColor {1.0f, 1.0f, 1.0f, 1.0f};
+    Pht::Vec4 iconShadowColor {0.2f, 0.2f, 0.2f, 0.5f};
+    Pht::Vec3 iconShadowOffset {-0.05f, -0.05f, -0.1f};
 
     mResumeButton = std::make_unique<MenuButton>(engine,
                                                  *this,
@@ -104,7 +109,13 @@ GameMenuView::GameMenuView(Pht::IEngine& engine, const CommonResources& commonRe
                                               Pht::Vec3 {0.0f, -7.9f, UiLayer::textRectangle},
                                               buttonInputSize,
                                               blueButtonStyle);
-    mMapButton->CreateText({-0.8f, -0.23f, UiLayer::buttonText},
+    mMapButton->CreateIcon("home.png",
+                           {-1.15f, 0.07f, UiLayer::buttonText},
+                           iconSize,
+                           iconColor,
+                           iconShadowColor,
+                           iconShadowOffset);
+    mMapButton->CreateText({-0.5f, -0.23f, UiLayer::buttonText},
                            "Map",
                            guiResources.GetWhiteButtonTextWithShadowPropertiesPotentiallyZoomedScreen());
 }

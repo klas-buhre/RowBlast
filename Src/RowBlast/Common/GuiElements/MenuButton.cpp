@@ -45,8 +45,8 @@ MenuButton::MenuButton(Pht::IEngine& engine,
                        const Pht::Vec3& position,
                        const Pht::Vec2& inputSize,
                        const Style& style) :
+    mEngine {engine},
     mView {view},
-    mAudio {engine.GetAudio()},
     mStyle {style} {
     
     auto& sceneManager {engine.GetSceneManager()};
@@ -128,20 +128,63 @@ Pht::TextComponent& MenuButton::CreateText(const Pht::Vec3& position,
     return *mText;
 }
 
+void MenuButton::CreateIcon(const std::string& filename,
+                            const Pht::Vec3& position,
+                            const Pht::Vec2& size,
+                            const Pht::Vec4& color,
+                            const Pht::Optional<Pht::Vec4>& shadowColor,
+                            const Pht::Optional<Pht::Vec3>& shadowOffset) {
+    auto& sceneManager {mEngine.GetSceneManager()};
+
+    Pht::Material iconMaterial {filename, 0.0f, 0.0f, 0.0f, 0.0f};
+    iconMaterial.SetBlend(Pht::Blend::Yes);
+    iconMaterial.SetOpacity(color.w);
+    iconMaterial.SetAmbient(Pht::Color{color.x, color.y, color.z});
+    
+    auto iconSceneObject {
+        sceneManager.CreateSceneObject(Pht::QuadMesh {size.x, size.y},
+                                       iconMaterial,
+                                       mView.GetSceneResources())
+    };
+    
+    iconSceneObject->GetTransform().SetPosition(position);
+    mSceneObject->AddChild(*iconSceneObject);
+    mView.GetSceneResources().AddSceneObject(std::move(iconSceneObject));
+
+    if (shadowColor.HasValue()) {
+        auto& shadowColorValue {shadowColor.GetValue()};
+        Pht::Material shadowMaterial {filename, 0.0f, 0.0f, 0.0f, 0.0f};
+        shadowMaterial.SetBlend(Pht::Blend::Yes);
+        shadowMaterial.SetOpacity(shadowColorValue.w);
+        shadowMaterial.SetAmbient(Pht::Color{shadowColorValue.x, shadowColorValue.y, shadowColorValue.z});
+        
+        auto shadowSceneObject {
+            sceneManager.CreateSceneObject(Pht::QuadMesh {size.x, size.y},
+                                           shadowMaterial,
+                                           mView.GetSceneResources())
+        };
+        
+        shadowSceneObject->GetTransform().SetPosition(position + shadowOffset.GetValue());
+        mSceneObject->AddChild(*shadowSceneObject);
+        mView.GetSceneResources().AddSceneObject(std::move(shadowSceneObject));
+    }
+}
+
 bool MenuButton::IsClicked(const Pht::TouchEvent& event) const {
     auto isClicked {mButton->IsClicked(event)};
     
     if (isClicked) {
-        auto shouldToggleSound {mPlaySoundIfAudioDisabled && !mAudio.IsSoundEnabled()};
+        auto& audio {mEngine.GetAudio()};
+        auto shouldToggleSound {mPlaySoundIfAudioDisabled && !audio.IsSoundEnabled()};
         
         if (shouldToggleSound) {
-            mAudio.EnableSound();
+            audio.EnableSound();
         }
             
-        mAudio.PlaySound(static_cast<Pht::AudioResourceId>(SoundId::ButtonClick));
+        audio.PlaySound(static_cast<Pht::AudioResourceId>(SoundId::ButtonClick));
         
         if (shouldToggleSound) {
-            mAudio.DisableSound();
+            audio.DisableSound();
         }
     }
     

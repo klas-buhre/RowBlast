@@ -20,23 +20,19 @@ Backlog:
      in a similar way as the SlidingFieldAnimation.
     -Animation that moves the pause button out of the screen.
   -GUI:
-    -In release builds: It should not be possible to switch control type while playing a level
-     so that some levels start with more moves when playing gesture controls. It should still be
-     possible in non-release builds.
     -In the options menu and settings menu: should have icons for music, sound effects and a house
      for "Back". Maybe icons for controls as well. Not good if the user changes the controls by
      mistake just because they don't know english.
-    -Can have icons in the game menu also.
+    -In release builds: It should not be possible to switch control type while playing a level
+     so that some levels start with more moves when playing gesture controls. It should still be
+     possible in non-release builds.
+    -How to play dialog.
     -Maybe make a more clear laser dialog slide animation with the laser piece at the top of the
      frame in the beginning and it falls all the way down and then detonates. Then the yellow and
      blue blocks fall down.
     -Maybe make a more clear bomb dialog slide animation with the bomb piece at the top of the
      frame in the beginning and it falls all the way down and then detonates.
     -Maybe a new level bomb slide animation just to be consistent with the look.
-    -How to play dialog.
-    -Can have a dialog window recommending click controls that pops up if changing to swipe controls
-     in the settings menu or options menu. Can explain how swipe controls work and say it is a bit
-     harder to use or say that it is for experienced players.
   -Make ready for release:
     -Should give free gold coins after a new install?
     -Limit the number of undo move to one or two per game round.
@@ -57,6 +53,19 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
+    -Icons:                 flat-buttons-icons-pack:
+        -Music              X
+        -Sound effects      X
+        -Back/Home/Map      X
+        -Controls           X
+        -Resume/Play        X
+        -Undo Move (+ "X")  X
+        -Info               X
+        -Settings           X
+        -How to play/"?"    X
+        -Restart            X
+    -Can have icons in the game menu and confirmation menus also.
+
 
 
 

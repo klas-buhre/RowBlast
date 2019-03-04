@@ -7,10 +7,10 @@
 #include "Button.hpp"
 #include "Vector.hpp"
 #include "Material.hpp"
+#include "Optional.hpp"
 
 namespace Pht {
     class IEngine;
-    class IAudio;
     class GuiView;
     class TouchEvent;
     class SceneObject;
@@ -50,6 +50,12 @@ namespace RowBlast {
         Pht::TextComponent& CreateText(const Pht::Vec3& position,
                                        const std::string& text,
                                        const Pht::TextProperties& properties);
+        void CreateIcon(const std::string& filename,
+                        const Pht::Vec3& position,
+                        const Pht::Vec2& size,
+                        const Pht::Vec4& color,
+                        const Pht::Optional<Pht::Vec4>& shadowColor,
+                        const Pht::Optional<Pht::Vec3>& shadowOffset);
         bool IsClicked(const Pht::TouchEvent& event) const;
         
         Pht::SceneObject& GetSceneObject() {
@@ -65,8 +71,8 @@ namespace RowBlast {
         }
 
     private:
+        Pht::IEngine& mEngine;
         Pht::GuiView& mView;
-        Pht::IAudio& mAudio;
         std::unique_ptr<Pht::Button> mButton;
         Pht::SceneObject* mSceneObject {nullptr};
         Pht::TextComponent* mText {nullptr};
