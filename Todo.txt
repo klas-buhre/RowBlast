@@ -65,6 +65,8 @@ Ongoing tasks:
         -How to play/"?"    X
         -Restart            X
     -Can have icons in the game menu and confirmation menus also.
+    -Change the gear icon in the options button in the map hud.
+    -Should have a back icon in the settings menu.
 
 
 

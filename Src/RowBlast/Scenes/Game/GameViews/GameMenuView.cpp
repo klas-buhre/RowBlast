@@ -54,7 +54,6 @@ GameMenuView::GameMenuView(Pht::IEngine& engine, const CommonResources& commonRe
     
     Pht::Vec2 buttonInputSize {194.0f, 45.0f};
     
-    Pht::Vec2 iconSize {0.65f, 0.65f};
     Pht::Vec4 iconColor {1.0f, 1.0f, 1.0f, 1.0f};
     Pht::Vec4 iconShadowColor {0.2f, 0.2f, 0.2f, 0.5f};
     Pht::Vec3 iconShadowOffset {-0.05f, -0.05f, -0.1f};
@@ -64,7 +63,13 @@ GameMenuView::GameMenuView(Pht::IEngine& engine, const CommonResources& commonRe
                                                  Pht::Vec3 {0.0f, 5.1f, UiLayer::textRectangle},
                                                  buttonInputSize,
                                                  yellowButtonStyle);
-    mResumeButton->CreateText({-1.25f, -0.23f, UiLayer::buttonText},
+    mResumeButton->CreateIcon("play.png",
+                              {-1.57f, 0.03f, UiLayer::buttonText},
+                              {0.65f, 0.65f},
+                              {0.3f, 0.3f, 0.3f, 1.0f},
+                              Pht::Optional<Pht::Vec4> {},
+                              Pht::Optional<Pht::Vec3> {});
+    mResumeButton->CreateText({-1.02f, -0.23f, UiLayer::buttonText},
                               "Resume",
                               guiResources.GetBlackButtonTextProperties(zoom));
     
@@ -73,7 +78,13 @@ GameMenuView::GameMenuView(Pht::IEngine& engine, const CommonResources& commonRe
                                                Pht::Vec3 {0.0f, 2.5f, UiLayer::textRectangle},
                                                buttonInputSize,
                                                blueButtonStyle);
-    mUndoButton->CreateText({-1.9f, -0.23f, UiLayer::buttonText},
+    mUndoButton->CreateIcon("undo.png",
+                            {-2.2f, 0.07f, UiLayer::buttonText},
+                            {0.82f, 0.82f},
+                            iconColor,
+                            iconShadowColor,
+                            iconShadowOffset);
+    mUndoButton->CreateText({-1.55f, -0.23f, UiLayer::buttonText},
                             "Undo Move",
                             guiResources.GetWhiteButtonTextWithShadowPropertiesPotentiallyZoomedScreen());
 
@@ -82,7 +93,13 @@ GameMenuView::GameMenuView(Pht::IEngine& engine, const CommonResources& commonRe
                                                Pht::Vec3 {0.0f, -0.1f, UiLayer::textRectangle},
                                                buttonInputSize,
                                                blueButtonStyle);
-    mGoalButton->CreateText({-1.7f, -0.23f, UiLayer::buttonText},
+    mGoalButton->CreateIcon("info.png",
+                            {-2.0f, 0.08f, UiLayer::buttonText},
+                            {0.82f, 0.82f},
+                            iconColor,
+                            iconShadowColor,
+                            iconShadowOffset);
+    mGoalButton->CreateText({-1.3f, -0.23f, UiLayer::buttonText},
                             "Level Info",
                             guiResources.GetWhiteButtonTextWithShadowPropertiesPotentiallyZoomedScreen());
 
@@ -91,7 +108,13 @@ GameMenuView::GameMenuView(Pht::IEngine& engine, const CommonResources& commonRe
                                                    Pht::Vec3 {0.0f, -2.7f, UiLayer::textRectangle},
                                                    buttonInputSize,
                                                    blueButtonStyle);
-    mSettingsButton->CreateText({-1.4f, -0.23f, UiLayer::buttonText},
+    mSettingsButton->CreateIcon("settings.png",
+                                {-1.7f, 0.09f, UiLayer::buttonText},
+                                {0.75f, 0.75f},
+                                iconColor,
+                                iconShadowColor,
+                                iconShadowOffset);
+    mSettingsButton->CreateText({-1.05f, -0.23f, UiLayer::buttonText},
                                 "Settings",
                                 guiResources.GetWhiteButtonTextWithShadowPropertiesPotentiallyZoomedScreen());
 
@@ -100,7 +123,13 @@ GameMenuView::GameMenuView(Pht::IEngine& engine, const CommonResources& commonRe
                                                   Pht::Vec3 {0.0f, -5.3f, UiLayer::textRectangle},
                                                   buttonInputSize,
                                                   blueButtonStyle);
-    mRestartButton->CreateText({-1.3f, -0.23f, UiLayer::buttonText},
+    mRestartButton->CreateIcon("restart.png",
+                               {-1.6f, 0.1f, UiLayer::buttonText},
+                               {0.82f, 0.82f},
+                               iconColor,
+                               iconShadowColor,
+                               iconShadowOffset);
+    mRestartButton->CreateText({-0.95f, -0.23f, UiLayer::buttonText},
                                "Restart",
                                guiResources.GetWhiteButtonTextWithShadowPropertiesPotentiallyZoomedScreen());
 
@@ -111,7 +140,7 @@ GameMenuView::GameMenuView(Pht::IEngine& engine, const CommonResources& commonRe
                                               blueButtonStyle);
     mMapButton->CreateIcon("home.png",
                            {-1.15f, 0.07f, UiLayer::buttonText},
-                           iconSize,
+                           {0.65f, 0.65f},
                            iconColor,
                            iconShadowColor,
                            iconShadowOffset);
