@@ -2,11 +2,8 @@
 
 // Engine includes.
 #include "ObjMesh.hpp"
-#include "Material.hpp"
 #include "IEngine.hpp"
 #include "IRenderer.hpp"
-#include "SceneObject.hpp"
-#include "ISceneManager.hpp"
 #include "UiLayer.hpp"
 
 // Game includes.
@@ -17,7 +14,6 @@ using namespace RowBlast;
 MapHudView::MapHudView(Pht::IEngine& engine, const CommonResources& commonResources) {
     auto& renderer {engine.GetRenderer()};
     auto& hudFrustumSize {renderer.GetHudFrustumSize()};
-    auto& sceneManager {engine.GetSceneManager()};
     auto& guiResources {commonResources.GetGuiResources()};
 
     SetPosition({0.0f, 0.0f});
@@ -39,13 +35,12 @@ MapHudView::MapHudView(Pht::IEngine& engine, const CommonResources& commonResour
                                                   optionsButtonPosition,
                                                   optionsButtonInputSize,
                                                   optionsButtonStyle);
-
-    Pht::Color gearColor {0.67, 0.67, 0.67f};
-    Pht::Material gearMaterial {gearColor, gearColor, gearColor, 10.0f};
-    gearMaterial.GetDepthState().mDepthTestAllowedOverride = true;
-    auto& gearIcon {CreateSceneObject(Pht::ObjMesh {"gear_192.obj", 3.75f}, gearMaterial, sceneManager)};
-    gearIcon.GetTransform().SetRotation({20.0f, 10.0f, 0.0f});
-    mOptionsButton->GetSceneObject().AddChild(gearIcon);
+    mOptionsButton->CreateIcon("settings.png",
+                               {0.0f, 0.0f, UiLayer::buttonText},
+                               {1.35f, 1.35f},
+                               {1.0f, 1.0f, 1.0f, 1.0f},
+                               Pht::Vec4 {0.2f, 0.2f, 0.2f, 0.5f},
+                               Pht::Vec3 {-0.05f, -0.05f, -0.1f});
 
     MenuButton::Style plusButtonStyle;
     plusButtonStyle.mPressedScale = 1.05f;

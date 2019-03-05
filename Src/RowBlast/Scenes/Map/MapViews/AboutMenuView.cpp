@@ -94,5 +94,11 @@ AboutMenuView::AboutMenuView(Pht::IEngine& engine, const CommonResources& common
                                                Pht::Vec3 {0.0f, -5.0f, UiLayer::textRectangle},
                                                buttonInputSize,
                                                buttonStyle);
-    mBackButton->CreateText({-0.85f, -0.23f, UiLayer::buttonText}, "Back", buttonTextProperties);
+    mBackButton->CreateIcon("home.png",
+                            {-1.17f, 0.06f, UiLayer::buttonText},
+                            {0.7f, 0.7f},
+                            {1.0f, 1.0f, 1.0f, 1.0f},
+                            Pht::Vec4 {0.2f, 0.2f, 0.2f, 0.5f},
+                            Pht::Vec3 {-0.05f, -0.05f, -0.1f});
+    mBackButton->CreateText({-0.46f, -0.23f, UiLayer::buttonText}, "Back", buttonTextProperties);
 }

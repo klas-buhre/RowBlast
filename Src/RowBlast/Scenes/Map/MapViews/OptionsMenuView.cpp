@@ -71,6 +71,10 @@ OptionsMenuView::OptionsMenuView(Pht::IEngine& engine, const CommonResources& co
 
     Pht::Vec2 settingsButtonInputSize {78.0f, 43.0f};
     
+    Pht::Vec4 iconColor {1.0f, 1.0f, 1.0f, 1.0f};
+    Pht::Vec4 iconShadowColor {0.2f, 0.2f, 0.2f, 0.5f};
+    Pht::Vec3 iconShadowOffset {-0.05f, -0.05f, -0.1f};
+    
     CreateText({-5.3f, 2.47f + settingsY, UiLayer::text}, "Music", textProperties);
 
     Pht::Vec3 musicButtonPosition {3.35f, 2.7f + settingsY, UiLayer::textRectangle};
@@ -145,5 +149,11 @@ OptionsMenuView::OptionsMenuView(Pht::IEngine& engine, const CommonResources& co
                                                Pht::Vec3 {0.0f, -8.25f, UiLayer::textRectangle},
                                                buttonInputSize,
                                                buttonStyle);
-    mBackButton->CreateText({-0.85f, -0.23f, UiLayer::buttonText}, "Back", buttonTextProperties);
+    mBackButton->CreateIcon("home.png",
+                            {-1.17f, 0.06f, UiLayer::buttonText},
+                            {0.7f, 0.7f},
+                            iconColor,
+                            iconShadowColor,
+                            iconShadowOffset);
+    mBackButton->CreateText({-0.46f, -0.23f, UiLayer::buttonText}, "Back", buttonTextProperties);
 }

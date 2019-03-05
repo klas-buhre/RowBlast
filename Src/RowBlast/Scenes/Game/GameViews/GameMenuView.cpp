@@ -110,7 +110,7 @@ GameMenuView::GameMenuView(Pht::IEngine& engine, const CommonResources& commonRe
                                                    blueButtonStyle);
     mSettingsButton->CreateIcon("settings.png",
                                 {-1.7f, 0.09f, UiLayer::buttonText},
-                                {0.75f, 0.75f},
+                                {0.77f, 0.77f},
                                 iconColor,
                                 iconShadowColor,
                                 iconShadowOffset);

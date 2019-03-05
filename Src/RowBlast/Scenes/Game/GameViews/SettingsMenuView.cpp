@@ -124,7 +124,13 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine, const CommonResources& 
                                                Pht::Vec3 {0.0f, -4.95f, UiLayer::textRectangle},
                                                backButtonInputSize,
                                                backButtonStyle);
-    mBackButton->CreateText({-0.85f, -0.23f, UiLayer::buttonText}, "Back", buttonTextProperties);
+    mBackButton->CreateIcon("back.png",
+                            {-1.17f, 0.0f, UiLayer::buttonText},
+                            {0.7f, 0.7f},
+                            {1.0f, 1.0f, 1.0f, 1.0f},
+                            Pht::Vec4 {0.2f, 0.2f, 0.2f, 0.5f},
+                            Pht::Vec3 {-0.05f, -0.05f, -0.1f});
+    mBackButton->CreateText({-0.46f, -0.23f, UiLayer::buttonText}, "Back", buttonTextProperties);
 }
 
 void SettingsMenuView::EnableControlsButton() {
