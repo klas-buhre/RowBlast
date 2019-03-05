@@ -284,7 +284,6 @@
 		623B94D521FA0AEB00B62D9B /* BeginTextAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623B94D321FA0AEB00B62D9B /* BeginTextAnimation.cpp */; };
 		623B94D821FCC5E700B62D9B /* SwitchPiece2WindowView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623B94D621FCC5E700B62D9B /* SwitchPiece2WindowView.cpp */; };
 		623B94DE21FCC63700B62D9B /* SwitchPiece2WindowController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623B94DC21FCC63700B62D9B /* SwitchPiece2WindowController.cpp */; };
-		623EB0C6222EC06000E41F92 /* info.png in Resources */ = {isa = PBXBuildFile; fileRef = 623EB0C5222EC06000E41F92 /* info.png */; };
 		623EB0C8222EC49A00E41F92 /* undo.png in Resources */ = {isa = PBXBuildFile; fileRef = 623EB0C7222EC49A00E41F92 /* undo.png */; };
 		6240508620FF69C00077A454 /* level46.json in Resources */ = {isa = PBXBuildFile; fileRef = 6240508520FF69C00077A454 /* level46.json */; };
 		6240508820FF82A10077A454 /* level47.json in Resources */ = {isa = PBXBuildFile; fileRef = 6240508720FF82A10077A454 /* level47.json */; };
@@ -453,6 +452,8 @@
 		62A729E12143DDD600255BF7 /* level57.json in Resources */ = {isa = PBXBuildFile; fileRef = 62A729E02143DDD500255BF7 /* level57.json */; };
 		62A729E32144170D00255BF7 /* level58.json in Resources */ = {isa = PBXBuildFile; fileRef = 62A729E22144170D00255BF7 /* level58.json */; };
 		62A8E335222EC73300F1BF73 /* play.png in Resources */ = {isa = PBXBuildFile; fileRef = 62A8E334222EC73300F1BF73 /* play.png */; };
+		62A8E337222EDBDE00F1BF73 /* info.png in Resources */ = {isa = PBXBuildFile; fileRef = 62A8E336222EDBDE00F1BF73 /* info.png */; };
+		62A8E339222EDFE300F1BF73 /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = 62A8E338222EDFE300F1BF73 /* back.png */; };
 		62B1CB4C210F8DAF00D0F195 /* hand48.png in Resources */ = {isa = PBXBuildFile; fileRef = 62B1CB47210F8DAF00D0F195 /* hand48.png */; };
 		62B1CB5B210F8EE500D0F195 /* cloud_A_512.png in Resources */ = {isa = PBXBuildFile; fileRef = 62B1CB52210F8EE500D0F195 /* cloud_A_512.png */; };
 		62B1CB5D210F8EE500D0F195 /* cloud_C_512.png in Resources */ = {isa = PBXBuildFile; fileRef = 62B1CB54210F8EE500D0F195 /* cloud_C_512.png */; };
@@ -1009,7 +1010,6 @@
 		623B94D721FCC5E700B62D9B /* SwitchPiece2WindowView.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SwitchPiece2WindowView.hpp; sourceTree = "<group>"; };
 		623B94DC21FCC63700B62D9B /* SwitchPiece2WindowController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SwitchPiece2WindowController.cpp; sourceTree = "<group>"; };
 		623B94DD21FCC63700B62D9B /* SwitchPiece2WindowController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SwitchPiece2WindowController.hpp; sourceTree = "<group>"; };
-		623EB0C5222EC06000E41F92 /* info.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = info.png; sourceTree = "<group>"; };
 		623EB0C7222EC49A00E41F92 /* undo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = undo.png; sourceTree = "<group>"; };
 		6240508520FF69C00077A454 /* level46.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level46.json; sourceTree = "<group>"; };
 		6240508720FF82A10077A454 /* level47.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level47.json; sourceTree = "<group>"; };
@@ -1371,6 +1371,8 @@
 		62A729E02143DDD500255BF7 /* level57.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level57.json; sourceTree = "<group>"; };
 		62A729E22144170D00255BF7 /* level58.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level58.json; sourceTree = "<group>"; };
 		62A8E334222EC73300F1BF73 /* play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = play.png; sourceTree = "<group>"; };
+		62A8E336222EDBDE00F1BF73 /* info.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = info.png; sourceTree = "<group>"; };
+		62A8E338222EDFE300F1BF73 /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back.png; sourceTree = "<group>"; };
 		62B1CB47210F8DAF00D0F195 /* hand48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hand48.png; sourceTree = "<group>"; };
 		62B1CB52210F8EE500D0F195 /* cloud_A_512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cloud_A_512.png; sourceTree = "<group>"; };
 		62B1CB54210F8EE500D0F195 /* cloud_C_512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cloud_C_512.png; sourceTree = "<group>"; };
@@ -2143,9 +2145,10 @@
 		62298337222D8E9C001A7E1C /* Gui */ = {
 			isa = PBXGroup;
 			children = (
+				62A8E338222EDFE300F1BF73 /* back.png */,
+				62A8E336222EDBDE00F1BF73 /* info.png */,
 				62A8E334222EC73300F1BF73 /* play.png */,
 				623EB0C7222EC49A00E41F92 /* undo.png */,
-				623EB0C5222EC06000E41F92 /* info.png */,
 				62524BC6222EBCC000AFF469 /* settings.png */,
 				6229833C222E9761001A7E1C /* restart.png */,
 				6229833A222D8F1D001A7E1C /* home.png */,
@@ -3204,6 +3207,7 @@
 				6261FFDB20FE06CA008F1619 /* level45.json in Resources */,
 				6270DC9A1FCB23D800FB457D /* level5.json in Resources */,
 				62B1CB992110BA4600D0F195 /* laser_frame5.jpg in Resources */,
+				62A8E339222EDFE300F1BF73 /* back.png in Resources */,
 				62346192216B6FE900ECD0DF /* planet_wadow.jpg in Resources */,
 				62B1CB7F210F8F8600D0F195 /* bomb_798.jpg in Resources */,
 				622169DE21E0CADE001CB9A1 /* clear_blocks_brick_impact1.wav in Resources */,
@@ -3286,7 +3290,6 @@
 				6270DC8F1FCB23D800FB457D /* level16.json in Resources */,
 				6261FFD920FD2C29008F1619 /* level44.json in Resources */,
 				622169F221E27ECB001CB9A1 /* sliding_text_whoosh2.wav in Resources */,
-				623EB0C6222EC06000E41F92 /* info.png in Resources */,
 				62216C5221ECE594001CB9A1 /* terms_of_service_english.txt in Resources */,
 				6270DC921FCB23D800FB457D /* level19.json in Resources */,
 				62204EFA21BEC79C00A035C0 /* sky5.jpg in Resources */,
@@ -3296,6 +3299,7 @@
 				62B1CB8D210F8F8600D0F195 /* cloud_B_envmap.jpg in Resources */,
 				62B1CBA82110D46E00D0F195 /* bomb_frame3.jpg in Resources */,
 				624C72E52177AB260006068B /* shield.png in Resources */,
+				62A8E337222EDBDE00F1BF73 /* info.png in Resources */,
 				629B838820CA940E00DD2D0E /* cube_428.obj in Resources */,
 				6270DC9C1FCB23D800FB457D /* level7.json in Resources */,
 				62DE641C20CE953D00A50F26 /* medium_button_skewed_0385.obj in Resources */,

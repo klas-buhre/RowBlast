@@ -43,7 +43,13 @@ MapConfirmationDialogView::MapConfirmationDialogView(Pht::IEngine& engine,
                                               Pht::Vec3 {0.0f, -1.375f, UiLayer::textRectangle},
                                               buttonInputSize,
                                               yellowButtonStyle);
-    mYesButton->CreateText({-0.6f, -0.23f, UiLayer::buttonText},
+    mYesButton->CreateIcon("home.png",
+                           {-0.9f, 0.05f, UiLayer::buttonText},
+                           {0.65f, 0.65f},
+                           {0.3f, 0.3f, 0.3f, 1.0f},
+                           Pht::Optional<Pht::Vec4> {},
+                           Pht::Optional<Pht::Vec3> {});
+    mYesButton->CreateText({-0.25f, -0.23f, UiLayer::buttonText},
                            "Yes",
                            guiResources.GetBlackButtonTextProperties(zoom));
     
@@ -59,7 +65,13 @@ MapConfirmationDialogView::MapConfirmationDialogView(Pht::IEngine& engine,
                                              Pht::Vec3 {0.0f, -3.975f, UiLayer::textRectangle},
                                              buttonInputSize,
                                              blueButtonStyle);
-    mNoButton->CreateText({-0.5f, -0.23f, UiLayer::buttonText},
+    mNoButton->CreateIcon("play.png",
+                          {-0.75f, 0.07f, UiLayer::buttonText},
+                          {0.65f, 0.65f},
+                          {1.0f, 1.0f, 1.0f, 1.0f},
+                          Pht::Vec4 {0.2f, 0.2f, 0.2f, 0.5f},
+                          Pht::Vec3 {-0.05f, -0.05f, -0.1f});
+    mNoButton->CreateText({-0.2f, -0.23f, UiLayer::buttonText},
                           "No",
                           guiResources.GetWhiteButtonTextWithShadowPropertiesPotentiallyZoomedScreen());
 }

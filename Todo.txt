@@ -20,8 +20,8 @@ Backlog:
      in a similar way as the SlidingFieldAnimation.
     -Animation that moves the pause button out of the screen.
   -GUI:
-    -In the options menu and settings menu: should have icons for music, sound effects and a house
-     for "Back". Maybe icons for controls as well. Not good if the user changes the controls by
+    -In the options menu and settings menu: should have icons for music, sound effects.
+     Maybe icons for controls as well. Not good if the user changes the controls by
      mistake just because they don't know english.
     -In release builds: It should not be possible to switch control type while playing a level
      so that some levels start with more moves when playing gesture controls. It should still be
@@ -64,9 +64,9 @@ Ongoing tasks:
         -Settings           X
         -How to play/"?"    X
         -Restart            X
-    -Can have icons in the game menu and confirmation menus also.
     -Change the gear icon in the options button in the map hud.
-    -Should have a back icon in the settings menu.
+    -Should have a back icon in the settings menu and document viewer.
+    -Should have a house icon in options menu and about menu.
 
 
 
