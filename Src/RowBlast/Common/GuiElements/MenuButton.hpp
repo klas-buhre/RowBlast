@@ -50,12 +50,12 @@ namespace RowBlast {
         Pht::TextComponent& CreateText(const Pht::Vec3& position,
                                        const std::string& text,
                                        const Pht::TextProperties& properties);
-        void CreateIcon(const std::string& filename,
-                        const Pht::Vec3& position,
-                        const Pht::Vec2& size,
-                        const Pht::Vec4& color,
-                        const Pht::Optional<Pht::Vec4>& shadowColor,
-                        const Pht::Optional<Pht::Vec3>& shadowOffset);
+        Pht::SceneObject& CreateIcon(const std::string& filename,
+                                     const Pht::Vec3& position,
+                                     const Pht::Vec2& size,
+                                     const Pht::Vec4& color,
+                                     const Pht::Optional<Pht::Vec4>& shadowColor,
+                                     const Pht::Optional<Pht::Vec3>& shadowOffset);
         bool IsClicked(const Pht::TouchEvent& event) const;
         
         Pht::SceneObject& GetSceneObject() {

@@ -128,12 +128,18 @@ Pht::TextComponent& MenuButton::CreateText(const Pht::Vec3& position,
     return *mText;
 }
 
-void MenuButton::CreateIcon(const std::string& filename,
-                            const Pht::Vec3& position,
-                            const Pht::Vec2& size,
-                            const Pht::Vec4& color,
-                            const Pht::Optional<Pht::Vec4>& shadowColor,
-                            const Pht::Optional<Pht::Vec3>& shadowOffset) {
+Pht::SceneObject& MenuButton::CreateIcon(const std::string& filename,
+                                         const Pht::Vec3& position,
+                                         const Pht::Vec2& size,
+                                         const Pht::Vec4& color,
+                                         const Pht::Optional<Pht::Vec4>& shadowColor,
+                                         const Pht::Optional<Pht::Vec3>& shadowOffset) {
+    auto containerSceneObject {std::make_unique<Pht::SceneObject>()};
+    auto& container {*containerSceneObject};
+    containerSceneObject->GetTransform().SetPosition(position);
+    mSceneObject->AddChild(*containerSceneObject);
+    mView.GetSceneResources().AddSceneObject(std::move(containerSceneObject));
+    
     auto& sceneManager {mEngine.GetSceneManager()};
 
     Pht::Material iconMaterial {filename, 0.0f, 0.0f, 0.0f, 0.0f};
@@ -147,8 +153,7 @@ void MenuButton::CreateIcon(const std::string& filename,
                                        mView.GetSceneResources())
     };
     
-    iconSceneObject->GetTransform().SetPosition(position);
-    mSceneObject->AddChild(*iconSceneObject);
+    container.AddChild(*iconSceneObject);
     mView.GetSceneResources().AddSceneObject(std::move(iconSceneObject));
 
     if (shadowColor.HasValue()) {
@@ -164,10 +169,12 @@ void MenuButton::CreateIcon(const std::string& filename,
                                            mView.GetSceneResources())
         };
         
-        shadowSceneObject->GetTransform().SetPosition(position + shadowOffset.GetValue());
-        mSceneObject->AddChild(*shadowSceneObject);
+        shadowSceneObject->GetTransform().SetPosition(shadowOffset.GetValue());
+        container.AddChild(*shadowSceneObject);
         mView.GetSceneResources().AddSceneObject(std::move(shadowSceneObject));
     }
+    
+    return container;
 }
 
 bool MenuButton::IsClicked(const Pht::TouchEvent& event) const {

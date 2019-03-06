@@ -117,28 +117,28 @@ void SettingsMenuController::UpdateViewToReflectSettings(bool isGestureControlsA
     auto& settingsService {mUserServices.GetSettingsService()};
     
     if (settingsService.GetControlType() == ControlType::Click || !isGestureControlsAllowed) {
-        mView.GetControlsClickText().SetIsVisible(true);
-        mView.GetControlsSwipeText().SetIsVisible(false);
+        mView.SetControlsClickIsVisible(true);
+        mView.SetControlsSwipeIsVisible(false);
     } else {
-        mView.GetControlsClickText().SetIsVisible(false);
-        mView.GetControlsSwipeText().SetIsVisible(true);
+        mView.SetControlsClickIsVisible(false);
+        mView.SetControlsSwipeIsVisible(true);
     }
     
     auto& audio {mEngine.GetAudio()};
 
     if (audio.IsSoundEnabled()) {
-        mView.GetSoundOnText().SetIsVisible(true);
-        mView.GetSoundOffText().SetIsVisible(false);
+        mView.SetSoundOnIsVisible(true);
+        mView.SetSoundOffIsVisible(false);
     } else {
-        mView.GetSoundOnText().SetIsVisible(false);
-        mView.GetSoundOffText().SetIsVisible(true);
+        mView.SetSoundOnIsVisible(false);
+        mView.SetSoundOffIsVisible(true);
     }
     
     if (audio.IsMusicEnabled()) {
-        mView.GetMusicOnText().SetIsVisible(true);
-        mView.GetMusicOffText().SetIsVisible(false);
+        mView.SetMusicOnIsVisible(true);
+        mView.SetMusicOffIsVisible(false);
     } else {
-        mView.GetMusicOnText().SetIsVisible(false);
-        mView.GetMusicOffText().SetIsVisible(true);
+        mView.SetMusicOnIsVisible(false);
+        mView.SetMusicOffIsVisible(true);
     }
 }

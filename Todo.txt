@@ -20,7 +20,7 @@ Backlog:
      in a similar way as the SlidingFieldAnimation.
     -Animation that moves the pause button out of the screen.
   -GUI:
-    -How to play dialog.
+    -How to play dialog. Can be like in Tetris Blitz or like Tetris Free.
     -Maybe make a more clear laser dialog slide animation with the laser piece at the top of the
      frame in the beginning and it falls all the way down and then detonates. Then the yellow and
      blue blocks fall down.
@@ -48,8 +48,8 @@ Backlog:
 
 Ongoing tasks:
     -In the options menu and settings menu: should have icons for music, sound effects.
-     Maybe icons for controls as well. Not good if the user changes the controls by
-     mistake just because they don't know english.
+     Maybe icons for controls as well.
+    -Maybe the controls button should be disbled if progress is less than 2.
     -In release builds: It should not be possible to switch control type while playing a level
      so that some levels start with more moves when playing gesture controls. It should still be
      possible in non-release builds.

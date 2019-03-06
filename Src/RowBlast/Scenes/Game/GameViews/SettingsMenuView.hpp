@@ -22,7 +22,13 @@ namespace RowBlast {
 
         void EnableControlsButton();
         void DisableControlsButton();
-        
+        void SetMusicOnIsVisible(bool isVisible);
+        void SetMusicOffIsVisible(bool isVisible);
+        void SetSoundOnIsVisible(bool isVisible);
+        void SetSoundOffIsVisible(bool isVisible);
+        void SetControlsClickIsVisible(bool isVisible);
+        void SetControlsSwipeIsVisible(bool isVisible);
+
         const MenuButton& GetCloseButton() const {
             return *mCloseButton;
         }
@@ -46,32 +52,13 @@ namespace RowBlast {
         const MenuButton& GetBackButton() const {
             return *mBackButton;
         }
-
-        Pht::SceneObject& GetControlsClickText() {
-            return *mControlsClickText;
-        }
-
-        Pht::SceneObject& GetControlsSwipeText() {
-            return *mControlsSwipeText;
-        }
         
-        Pht::SceneObject& GetSoundOnText() {
-            return *mSoundOnText;
-        }
-
-        Pht::SceneObject& GetSoundOffText() {
-            return *mSoundOffText;
-        }
-
-        Pht::SceneObject& GetMusicOnText() {
-            return *mMusicOnText;
-        }
-
-        Pht::SceneObject& GetMusicOffText() {
-            return *mMusicOffText;
-        }
-
     private:
+        void CreateIcon(const std::string& filename,
+                        const Pht::Vec3& position,
+                        const Pht::Vec2& size,
+                        Pht::IEngine& engine);
+        
         const CommonResources& mCommonResources;
         std::unique_ptr<MenuButton> mCloseButton;
         std::unique_ptr<MenuButton> mControlsButton;
@@ -79,11 +66,21 @@ namespace RowBlast {
         std::unique_ptr<MenuButton> mMusicButton;
         std::unique_ptr<MenuButton> mBackButton;
         Pht::SceneObject* mControlsClickText {nullptr};
+        Pht::SceneObject* mControlsClickIcon1 {nullptr};
+        Pht::SceneObject* mControlsClickIcon2 {nullptr};
+        Pht::SceneObject* mControlsClickIcon3 {nullptr};
         Pht::SceneObject* mControlsSwipeText {nullptr};
+        Pht::SceneObject* mControlsSwipeIcon1 {nullptr};
+        Pht::SceneObject* mControlsSwipeIcon2 {nullptr};
+        Pht::SceneObject* mControlsSwipeIcon3 {nullptr};
         Pht::SceneObject* mSoundOnText {nullptr};
+        Pht::SceneObject* mSoundOnIcon {nullptr};
         Pht::SceneObject* mSoundOffText {nullptr};
+        Pht::SceneObject* mSoundOffIcon {nullptr};
         Pht::SceneObject* mMusicOnText {nullptr};
+        Pht::SceneObject* mMusicOnIcon {nullptr};
         Pht::SceneObject* mMusicOffText {nullptr};
+        Pht::SceneObject* mMusicOffIcon {nullptr};
         bool mIsControlsButtonEnabled {true};
     };
 }

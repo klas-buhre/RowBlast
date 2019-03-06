@@ -65,8 +65,13 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine, const CommonResources& 
     settingsButtonStyle.mSelectedRenderableObject = &guiResources.GetSmallDarkBlueGlossyButton(zoom);
 
     Pht::Vec2 buttonInputSize {78.0f, 43.0f};
+    
+    Pht::Vec4 iconColor {1.0f, 1.0f, 1.0f, 1.0f};
+    Pht::Vec4 iconShadowColor {0.2f, 0.2f, 0.2f, 0.5f};
+    Pht::Vec3 iconShadowOffset {-0.05f, -0.05f, -0.1f};
 
-    CreateText({-5.3f, 2.47f, UiLayer::text}, "Music", textProperties);
+    CreateIcon("music.png", {-5.55f, 2.72f, UiLayer::text}, {0.85f, 0.85f}, engine);
+    CreateText({-4.8f, 2.47f, UiLayer::text}, "Music", textProperties);
 
     Pht::Vec3 musicButtonPosition {3.35f, 2.7f, UiLayer::textRectangle};
     mMusicButton = std::make_unique<MenuButton>(engine,
@@ -74,14 +79,27 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine, const CommonResources& 
                                                 musicButtonPosition,
                                                 buttonInputSize,
                                                 settingsButtonStyle);
-    mMusicOnText = &(mMusicButton->CreateText({-0.5f, -0.23f, UiLayer::buttonText},
+    mMusicOnIcon = &mMusicButton->CreateIcon("music.png",
+                                             {-0.75f, 0.07f, UiLayer::buttonText},
+                                             {0.85f, 0.85f},
+                                             iconColor,
+                                             iconShadowColor,
+                                             iconShadowOffset);
+    mMusicOnText = &(mMusicButton->CreateText({-0.1f, -0.23f, UiLayer::buttonText},
                                               "On",
                                               buttonTextProperties).GetSceneObject());
-    mMusicOffText = &(mMusicButton->CreateText({-0.6f, -0.23f, UiLayer::buttonText},
+    mMusicOffIcon = &mMusicButton->CreateIcon("music_off.png",
+                                              {-0.85f, 0.07f, UiLayer::buttonText},
+                                              {0.85f, 0.85f},
+                                              iconColor,
+                                              iconShadowColor,
+                                              iconShadowOffset);
+    mMusicOffText = &(mMusicButton->CreateText({-0.2f, -0.23f, UiLayer::buttonText},
                                                "Off",
                                                buttonTextProperties).GetSceneObject());
 
-    CreateText({-5.3f, 0.27f, UiLayer::text}, "Sound Effects", textProperties);
+    CreateIcon("sound.png", {-5.5f, 0.52f, UiLayer::text}, {0.85f, 0.85f}, engine);
+    CreateText({-4.8f, 0.27f, UiLayer::text}, "Sound Effects", textProperties);
     
     Pht::Vec3 soundButtonPosition {3.35f, 0.5f, UiLayer::textRectangle};
     mSoundButton = std::make_unique<MenuButton>(engine,
@@ -90,14 +108,27 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine, const CommonResources& 
                                                 buttonInputSize,
                                                 settingsButtonStyle);
     mSoundButton->SetPlaySoundIfAudioDisabled(true);
-    mSoundOnText = &(mSoundButton->CreateText({-0.5f, -0.23f, UiLayer::buttonText},
+    mSoundOnIcon = &mSoundButton->CreateIcon("sound.png",
+                                             {-0.7f, 0.07f, UiLayer::buttonText},
+                                             {0.85f, 0.85f},
+                                             iconColor,
+                                             iconShadowColor,
+                                             iconShadowOffset);
+    mSoundOnText = &(mSoundButton->CreateText({-0.05f, -0.23f, UiLayer::buttonText},
                                               "On",
                                               buttonTextProperties).GetSceneObject());
-    mSoundOffText = &(mSoundButton->CreateText({-0.6f, -0.23f, UiLayer::buttonText},
+    mSoundOffIcon = &mSoundButton->CreateIcon("sound_off.png",
+                                              {-0.8f, 0.07f, UiLayer::buttonText},
+                                              {0.85f, 0.85f},
+                                              iconColor,
+                                              iconShadowColor,
+                                              iconShadowOffset);
+    mSoundOffText = &(mSoundButton->CreateText({-0.15f, -0.23f, UiLayer::buttonText},
                                                "Off",
                                                buttonTextProperties).GetSceneObject());
 
-    CreateText({-5.3f, -1.93f, UiLayer::text}, "Controls", textProperties);
+    CreateIcon("hand.png", {-5.55f, -1.68f, UiLayer::text}, {0.9f, 0.9f}, engine);
+    CreateText({-4.8f, -1.93f, UiLayer::text}, "Controls", textProperties);
 
     Pht::Vec3 controlsButtonPosition {3.35f, -1.7f, UiLayer::textRectangle};
     mControlsButton = std::make_unique<MenuButton>(engine,
@@ -105,12 +136,50 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine, const CommonResources& 
                                                    controlsButtonPosition,
                                                    buttonInputSize,
                                                    settingsButtonStyle);
-    mControlsClickText = &(mControlsButton->CreateText({-1.7f, -0.23f, UiLayer::buttonText},
+    mControlsClickIcon1 = &mControlsButton->CreateIcon("hand.png",
+                                                       {-1.85f, 0.03f, UiLayer::buttonText},
+                                                       {0.9f, 0.9f},
+                                                       iconColor,
+                                                       iconShadowColor,
+                                                       iconShadowOffset);
+    mControlsClickIcon2 = &mControlsButton->CreateIcon("circle.png",
+                                                       {-1.88f, 0.42f, UiLayer::buttonText},
+                                                       {0.36f, 0.36f},
+                                                       iconColor,
+                                                       iconShadowColor,
+                                                       iconShadowOffset);
+    mControlsClickIcon3 = &mControlsButton->CreateIcon("circle.png",
+                                                       {-1.88f, 0.42f, UiLayer::buttonText},
+                                                       {0.42f, 0.42f},
+                                                       iconColor,
+                                                       iconShadowColor,
+                                                       iconShadowOffset);
+    mControlsClickText = &(mControlsButton->CreateText({-1.25f, -0.23f, UiLayer::buttonText},
                                                        "SingleTap",
                                                        buttonTextProperties).GetSceneObject());
-    mControlsSwipeText = &(mControlsButton->CreateText({-1.05f, -0.23f, UiLayer::buttonText},
+        
+        
+    mControlsSwipeText = &(mControlsButton->CreateText({-0.55f, -0.23f, UiLayer::buttonText},
                                                        "Swipe",
                                                        buttonTextProperties).GetSceneObject());
+    mControlsSwipeIcon1 = &mControlsButton->CreateIcon("hand.png",
+                                                       {-1.4f, 0.03f, UiLayer::buttonText},
+                                                       {0.9f, 0.9f},
+                                                       iconColor,
+                                                       iconShadowColor,
+                                                       iconShadowOffset);
+    mControlsSwipeIcon2 = &mControlsButton->CreateIcon("back.png",
+                                                       {-1.8f, 0.4f, UiLayer::buttonText},
+                                                       {0.42f, 0.42f},
+                                                       iconColor,
+                                                       iconShadowColor,
+                                                       iconShadowOffset);
+    mControlsSwipeIcon3 = &mControlsButton->CreateIcon("right_arrow.png",
+                                                       {-1.05f, 0.4f, UiLayer::buttonText},
+                                                       {0.42f, 0.42f},
+                                                       iconColor,
+                                                       iconShadowColor,
+                                                       iconShadowOffset);
 
     MenuButton::Style backButtonStyle;
     backButtonStyle.mPressedScale = 1.05f;
@@ -151,4 +220,56 @@ void SettingsMenuView::DisableControlsButton() {
     };
     
     mControlsButton->GetSceneObject().SetRenderable(&grayButtonRenderable);
+}
+
+void SettingsMenuView::SetMusicOnIsVisible(bool isVisble) {
+    mMusicOnText->SetIsVisible(isVisble);
+    mMusicOnIcon->SetIsVisible(isVisble);
+}
+
+void SettingsMenuView::SetMusicOffIsVisible(bool isVisble) {
+    mMusicOffText->SetIsVisible(isVisble);
+    mMusicOffIcon->SetIsVisible(isVisble);
+}
+
+void SettingsMenuView::SetSoundOnIsVisible(bool isVisble) {
+    mSoundOnText->SetIsVisible(isVisble);
+    mSoundOnIcon->SetIsVisible(isVisble);
+}
+
+void SettingsMenuView::SetSoundOffIsVisible(bool isVisble) {
+    mSoundOffText->SetIsVisible(isVisble);
+    mSoundOffIcon->SetIsVisible(isVisble);
+}
+
+void SettingsMenuView::SetControlsClickIsVisible(bool isVisible) {
+    mControlsClickText->SetIsVisible(isVisible);
+    mControlsClickIcon1->SetIsVisible(isVisible);
+    mControlsClickIcon2->SetIsVisible(isVisible);
+    mControlsClickIcon3->SetIsVisible(isVisible);
+}
+
+void SettingsMenuView::SetControlsSwipeIsVisible(bool isVisible) {
+    mControlsSwipeText->SetIsVisible(isVisible);
+    mControlsSwipeIcon1->SetIsVisible(isVisible);
+    mControlsSwipeIcon2->SetIsVisible(isVisible);
+    mControlsSwipeIcon3->SetIsVisible(isVisible);
+}
+
+void SettingsMenuView::CreateIcon(const std::string& filename,
+                                  const Pht::Vec3& position,
+                                  const Pht::Vec2& size,
+                                  Pht::IEngine& engine) {
+    Pht::Vec4 color {0.95f, 0.95f, 0.95f, 1.0f};
+    Pht::Material iconMaterial {filename, 0.0f, 0.0f, 0.0f, 0.0f};
+    iconMaterial.SetBlend(Pht::Blend::Yes);
+    iconMaterial.SetOpacity(color.w);
+    iconMaterial.SetAmbient(Pht::Color{color.x, color.y, color.z});
+    
+    auto& iconSceneObject {
+        CreateSceneObject(Pht::QuadMesh {size.x, size.y}, iconMaterial, engine.GetSceneManager())
+    };
+    
+    iconSceneObject.GetTransform().SetPosition(position);
+    GetRoot().AddChild(iconSceneObject);
 }

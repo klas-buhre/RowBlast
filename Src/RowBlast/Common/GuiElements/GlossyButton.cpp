@@ -69,7 +69,7 @@ namespace {
             case ButtonSize::MediumThin:
                 return {9.0f, 1.71f};
             case ButtonSize::Small:
-                return {3.8f, 1.71f};
+                return {5.0f, 1.71f};
             case ButtonSize::Smaller:
                 return {1.9f, 1.9f};
             case ButtonSize::Smallest:
