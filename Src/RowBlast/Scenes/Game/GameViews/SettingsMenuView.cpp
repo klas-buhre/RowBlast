@@ -64,7 +64,7 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine, const CommonResources& 
     settingsButtonStyle.mRenderableObject = &guiResources.GetSmallBlueGlossyButton(zoom);
     settingsButtonStyle.mSelectedRenderableObject = &guiResources.GetSmallDarkBlueGlossyButton(zoom);
 
-    Pht::Vec2 buttonInputSize {78.0f, 43.0f};
+    Pht::Vec2 buttonInputSize {103.0f, 43.0f};
     
     Pht::Vec4 iconColor {1.0f, 1.0f, 1.0f, 1.0f};
     Pht::Vec4 iconShadowColor {0.2f, 0.2f, 0.2f, 0.5f};

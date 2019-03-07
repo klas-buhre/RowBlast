@@ -47,8 +47,6 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-    -In the options menu and settings menu: should have icons for music, sound effects.
-     Maybe icons for controls as well.
     -Maybe the controls button should be disbled if progress is less than 2.
     -In release builds: It should not be possible to switch control type while playing a level
      so that some levels start with more moves when playing gesture controls. It should still be
