@@ -20,7 +20,6 @@ Backlog:
      in a similar way as the SlidingFieldAnimation.
     -Animation that moves the pause button out of the screen.
   -GUI:
-    -How to play dialog. Can be like in Tetris Blitz or like Tetris Free.
     -Maybe make a more clear laser dialog slide animation with the laser piece at the top of the
      frame in the beginning and it falls all the way down and then detonates. Then the yellow and
      blue blocks fall down.
@@ -32,6 +31,7 @@ Backlog:
     -Limit the number of undo move to one or two per game round.
     -Update mail address in legal documents.
     -Go through all user services and check that all state store/load is enabled.
+    -Make sure it is not possible to switch control type while playing a level.
     -Make sure analytics is enabled and that user terms accept is saved and checked.
     -Make sure analytics debug log is disabled.
     -Make sure the correct product price in cents and receipt is sent to analytics.
@@ -47,10 +47,7 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-    -In release builds: It should not be possible to switch control type while playing a level
-     so that some levels start with more moves when playing gesture controls. It should still be
-     possible in non-release builds.
-
+    -How to play dialog. Can be like in Tetris Blitz or like Tetris Free.
 
 
 

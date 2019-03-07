@@ -127,6 +127,7 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine, const CommonResources& 
                                                "Off",
                                                buttonTextProperties).GetSceneObject());
 
+#ifndef RELEASE_BUILD
     CreateIcon("hand.png", {-5.55f, -1.68f, UiLayer::text}, {0.9f, 0.9f}, engine);
     CreateText({-4.8f, -1.93f, UiLayer::text}, "Controls", textProperties);
 
@@ -180,6 +181,7 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine, const CommonResources& 
                                                        iconColor,
                                                        iconShadowColor,
                                                        iconShadowOffset);
+#endif
 
     MenuButton::Style backButtonStyle;
     backButtonStyle.mPressedScale = 1.05f;

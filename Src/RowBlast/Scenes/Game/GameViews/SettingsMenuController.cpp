@@ -19,11 +19,13 @@ SettingsMenuController::SettingsMenuController(Pht::IEngine& engine,
     mSlidingMenuAnimation {engine, mView} {}
 
 void SettingsMenuController::SetUp(bool isGestureControlsAllowed) {
+#ifndef RELEASE_BUILD
     if (isGestureControlsAllowed) {
         mView.EnableControlsButton();
     } else {
         mView.DisableControlsButton();
     }
+#endif
 
     mSlidingMenuAnimation.SetUp(SlidingMenuAnimation::UpdateFade::No,
                                 SlidingMenuAnimation::SlideDirection::Left);
@@ -62,6 +64,7 @@ SettingsMenuController::Result SettingsMenuController::HandleInput() {
 SettingsMenuController::Result SettingsMenuController::OnTouch(const Pht::TouchEvent& touchEvent) {
     auto& settingsService {mUserServices.GetSettingsService()};
 
+#ifndef RELEASE_BUILD
     if (mView.IsControlsButtonEnabled()) {
         if (mView.GetControlsButton().IsClicked(touchEvent)) {
             if (settingsService.GetControlType() == ControlType::Click) {
@@ -73,6 +76,7 @@ SettingsMenuController::Result SettingsMenuController::OnTouch(const Pht::TouchE
             UpdateViewToReflectSettings(true);
         }
     }
+#endif
 
     if (mView.GetSoundButton().IsClicked(touchEvent)) {
         auto& audio {mEngine.GetAudio()};
@@ -114,6 +118,7 @@ SettingsMenuController::Result SettingsMenuController::OnTouch(const Pht::TouchE
 }
 
 void SettingsMenuController::UpdateViewToReflectSettings(bool isGestureControlsAllowed) {
+#ifndef RELEASE_BUILD
     auto& settingsService {mUserServices.GetSettingsService()};
     
     if (settingsService.GetControlType() == ControlType::Click || !isGestureControlsAllowed) {
@@ -123,7 +128,8 @@ void SettingsMenuController::UpdateViewToReflectSettings(bool isGestureControlsA
         mView.SetControlsClickIsVisible(false);
         mView.SetControlsSwipeIsVisible(true);
     }
-    
+#endif
+
     auto& audio {mEngine.GetAudio()};
 
     if (audio.IsSoundEnabled()) {

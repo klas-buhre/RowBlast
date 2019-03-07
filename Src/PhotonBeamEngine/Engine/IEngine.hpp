@@ -1,6 +1,8 @@
 #ifndef IEngine_hpp
 #define IEngine_hpp
 
+// #define RELEASE_BUILD
+
 namespace Pht {
     class IRenderer;
     class IInput;
