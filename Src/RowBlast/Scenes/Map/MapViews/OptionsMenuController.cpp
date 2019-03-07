@@ -18,7 +18,13 @@ OptionsMenuController::OptionsMenuController(Pht::IEngine& engine,
     mView {engine, commonResources},
     mSlidingMenuAnimation {engine, mView} {}
 
-void OptionsMenuController::SetUp() {
+void OptionsMenuController::SetUp(bool isGestureControlsAllowed) {
+    if (isGestureControlsAllowed) {
+        mView.EnableControlsButton();
+    } else {
+        mView.DisableControlsButton();
+    }
+
     mSlidingMenuAnimation.SetUp(SlidingMenuAnimation::UpdateFade::Yes,
                                 SlidingMenuAnimation::SlideDirection::Left);
     UpdateViewToReflectSettings();
@@ -56,14 +62,16 @@ OptionsMenuController::Result OptionsMenuController::HandleInput() {
 OptionsMenuController::Result OptionsMenuController::OnTouch(const Pht::TouchEvent& touchEvent) {
     auto& settingsService {mUserServices.GetSettingsService()};
 
-    if (mView.GetControlsButton().IsClicked(touchEvent)) {
-        if (settingsService.GetControlType() == ControlType::Click) {
-            settingsService.SetControlType(ControlType::Gesture);
-        } else {
-            settingsService.SetControlType(ControlType::Click);
+    if (mView.IsControlsButtonEnabled()) {
+        if (mView.GetControlsButton().IsClicked(touchEvent)) {
+            if (settingsService.GetControlType() == ControlType::Click) {
+                settingsService.SetControlType(ControlType::Gesture);
+            } else {
+                settingsService.SetControlType(ControlType::Click);
+            }
+            
+            UpdateViewToReflectSettings();
         }
-        
-        UpdateViewToReflectSettings();
     }
 
     if (mView.GetSoundButton().IsClicked(touchEvent)) {

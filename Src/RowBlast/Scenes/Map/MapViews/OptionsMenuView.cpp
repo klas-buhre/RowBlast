@@ -13,7 +13,9 @@
 
 using namespace RowBlast;
 
-OptionsMenuView::OptionsMenuView(Pht::IEngine& engine, const CommonResources& commonResources) {
+OptionsMenuView::OptionsMenuView(Pht::IEngine& engine, const CommonResources& commonResources) :
+    mCommonResources {commonResources} {
+
     auto zoom {PotentiallyZoomedScreen::No};
     auto& guiResources {commonResources.GetGuiResources()};
     auto& menuWindow {guiResources.GetLargeDarkMenuWindow()};
@@ -221,6 +223,26 @@ OptionsMenuView::OptionsMenuView(Pht::IEngine& engine, const CommonResources& co
                             iconShadowColor,
                             iconShadowOffset);
     mBackButton->CreateText({-0.46f, -0.23f, UiLayer::buttonText}, "Back", buttonTextProperties);
+}
+
+void OptionsMenuView::EnableControlsButton() {
+    mIsControlsButtonEnabled = true;
+    
+    auto& blueButtonRenderable {
+        mCommonResources.GetGuiResources().GetSmallBlueGlossyButton(PotentiallyZoomedScreen::Yes)
+    };
+    
+    mControlsButton->GetSceneObject().SetRenderable(&blueButtonRenderable);
+}
+
+void OptionsMenuView::DisableControlsButton() {
+    mIsControlsButtonEnabled = false;
+
+    auto& grayButtonRenderable {
+        mCommonResources.GetGuiResources().GetSmallGrayGlossyButtonPotentiallyZoomedScreen()
+    };
+    
+    mControlsButton->GetSceneObject().SetRenderable(&grayButtonRenderable);
 }
 
 void OptionsMenuView::SetMusicOnIsVisible(bool isVisble) {

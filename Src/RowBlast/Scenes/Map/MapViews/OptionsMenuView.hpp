@@ -20,12 +20,18 @@ namespace RowBlast {
     public:
         OptionsMenuView(Pht::IEngine& engine, const CommonResources& commonResources);
         
+        void EnableControlsButton();
+        void DisableControlsButton();
         void SetMusicOnIsVisible(bool isVisible);
         void SetMusicOffIsVisible(bool isVisible);
         void SetSoundOnIsVisible(bool isVisible);
         void SetSoundOffIsVisible(bool isVisible);
         void SetControlsClickIsVisible(bool isVisible);
         void SetControlsSwipeIsVisible(bool isVisible);
+
+        bool IsControlsButtonEnabled() const {
+            return mIsControlsButtonEnabled;
+        }
 
         const MenuButton& GetCloseButton() const {
             return *mCloseButton;
@@ -61,6 +67,7 @@ namespace RowBlast {
                         const Pht::Vec2& size,
                         Pht::IEngine& engine);
         
+        const CommonResources& mCommonResources;
         std::unique_ptr<MenuButton> mCloseButton;
         std::unique_ptr<MenuButton> mControlsButton;
         std::unique_ptr<MenuButton> mSoundButton;
@@ -84,6 +91,7 @@ namespace RowBlast {
         Pht::SceneObject* mMusicOnIcon {nullptr};
         Pht::SceneObject* mMusicOffText {nullptr};
         Pht::SceneObject* mMusicOffIcon {nullptr};
+        bool mIsControlsButtonEnabled {true};
     };
 }
 

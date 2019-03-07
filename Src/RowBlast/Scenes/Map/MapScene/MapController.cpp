@@ -604,8 +604,10 @@ void MapController::GoToAddLivesStateStore() {
 }
 
 void MapController::GoToOptionsMenuState() {
+    auto isGestureControlsAllowed {mUserServices.GetProgressService().GetProgress() > 2};
+    
     mMapViewControllers.SetActiveController(MapViewControllers::OptionsMenu);
-    mMapViewControllers.GetOptionsMenuController().SetUp();
+    mMapViewControllers.GetOptionsMenuController().SetUp(isGestureControlsAllowed);
     mState = State::OptionsMenu;
 }
 

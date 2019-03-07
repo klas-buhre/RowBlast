@@ -27,7 +27,7 @@ namespace RowBlast {
                               const CommonResources& commonResources,
                               UserServices& userServices);
         
-        void SetUp();
+        void SetUp(bool isGestureControlsAllowed);
         void SetFadeEffect(Pht::FadeEffect& fadeEffect);
         Result Update();
         
