@@ -8,14 +8,14 @@
 
 - (BOOL) application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     CGRect screenBounds = [[UIScreen mainScreen] bounds];
-    mWindow = [[UIWindow alloc] initWithFrame: screenBounds];
+    mWindow = [[UIWindow alloc] initWithFrame:screenBounds];
     
     mViewController = [[GLKViewControllerExtension alloc] initWithNibName:nil bundle:nil];
     [mViewController createGLContext];
     [mWindow setRootViewController:mViewController];
     
-    mView = [[GLKViewExtension alloc] initWithFrame: screenBounds 
-                                      context: [mViewController getContext]];
+    mView = [[GLKViewExtension alloc] initWithFrame:screenBounds
+                                      context:[mViewController getContext]];
     mView.userInteractionEnabled = YES;
     
     mViewController.view = mView;
@@ -33,8 +33,7 @@
     return YES;
 }
 
-- (void) handleAudioSessionInterruption:(NSNotification*)event
-{
+- (void) handleAudioSessionInterruption:(NSNotification*)event {
     Pht::Engine* engine = [mViewController getEngine];
     NSUInteger type = [[[event userInfo] objectForKey:AVAudioSessionInterruptionTypeKey] unsignedIntegerValue];
     
@@ -57,8 +56,7 @@
     }
 }
 
-- (void) applicationDidBecomeActive:(UIApplication*)application
-{
+- (void) applicationDidBecomeActive:(UIApplication*)application {
     Pht::Engine* engine = [mViewController getEngine];
     
     if (engine) {

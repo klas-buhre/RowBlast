@@ -47,9 +47,37 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-    -How to play dialog. Can be like in Tetris Blitz or like Tetris Free.
-
-
+    -How to play dialog.
+      -1. Pieces:
+          The goal is usually to clear blocks by filling horizontal rows.
+          Show clip animation of a piece filling rows and clearing them.
+      -2. Controls:
+          The game can be played either by SingleTap controls or Swipe controls.
+          The control type can be changed in the options menu from the map.
+          Show icons of both control types.
+      -3. SingleTap Controls:
+          Tap moves to place pieces.
+          Clip animation of placing a piece.
+      -4. SingleTap Controls:
+          You always have three pieces to choose from at the bottom of the screen. Tap the switch
+          button to switch piece. Can also flick up to switch piece.
+          Clip animation of switching piece.
+      -5. SingleTap Controls:
+          Tap anywhere to find more moves without switching piece. Tap anywhere except buttons and
+          moves.
+          Clip animation of finding more moves.
+      -6. Swipe Controls:
+          Swipe the screen to move the piece left or right.
+          Clip animation of draging the piece left and right.
+      -7. Swipe Controls:
+          Tap the screen to rotate the piece.
+          Clip animation of rotating the piece.
+      -8. Swipe Controls:
+          Flick down to drop the piece.
+          Clip animation of dropping the piece.
+      -9. Swipe Controls:
+          Drag down slowly with an up movement at the end to move the piece down.
+          Clip animation of dragging the piece down.
 
 
 Ordered Backlog:
