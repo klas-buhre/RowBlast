@@ -200,7 +200,13 @@ OptionsMenuView::OptionsMenuView(Pht::IEngine& engine, const CommonResources& co
                                                     Pht::Vec3 {0.0f, -1.6f, UiLayer::textRectangle},
                                                     buttonInputSize,
                                                     buttonStyle);
-    mHowToPlayButton->CreateText({-2.2f, -0.23f, UiLayer::buttonText},
+    mHowToPlayButton->CreateIcon("help.png",
+                                 {-2.55f, 0.05f, UiLayer::buttonText},
+                                 {0.82f, 0.82f},
+                                 iconColor,
+                                 iconShadowColor,
+                                 iconShadowOffset);
+    mHowToPlayButton->CreateText({-1.85f, -0.23f, UiLayer::buttonText},
                                  "How To Play",
                                  buttonTextProperties);
 

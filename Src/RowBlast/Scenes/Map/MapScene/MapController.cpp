@@ -106,6 +106,9 @@ MapController::Command MapController::Update() {
         case State::OptionsMenu:
             UpdateOptionsMenu();
             break;
+        case State::HowToPlayDialog:
+            UpdateHowToPlayDialog();
+            break;
         case State::AboutMenu:
             command = UpdateAboutMenu();
             break;
@@ -300,10 +303,23 @@ void MapController::UpdateOptionsMenu() {
     switch (mMapViewControllers.GetOptionsMenuController().Update()) {
         case OptionsMenuController::Result::None:
             break;
+        case OptionsMenuController::Result::GoToHowToPlayDialog:
+            GoToHowToPlayDialogState();
+            break;
         case OptionsMenuController::Result::GoToAboutMenu:
             GoToAboutMenuState(SlidingMenuAnimation::UpdateFade::No);
             break;
         case OptionsMenuController::Result::GoBack:
+            GoToMapState();
+            break;
+    }
+}
+
+void MapController::UpdateHowToPlayDialog() {
+    switch (mMapViewControllers.GetHowToPlayDialogController().Update()) {
+        case HowToPlayDialogController::Result::None:
+            break;
+        case HowToPlayDialogController::Result::Close:
             GoToMapState();
             break;
     }
@@ -609,6 +625,12 @@ void MapController::GoToOptionsMenuState() {
     mMapViewControllers.SetActiveController(MapViewControllers::OptionsMenu);
     mMapViewControllers.GetOptionsMenuController().SetUp(isGestureControlsAllowed);
     mState = State::OptionsMenu;
+}
+
+void MapController::GoToHowToPlayDialogState() {
+    mMapViewControllers.SetActiveController(MapViewControllers::HowToPlayDialog);
+    mMapViewControllers.GetHowToPlayDialogController().SetUp();
+    mState = State::HowToPlayDialog;
 }
 
 void MapController::GoToAboutMenuState(SlidingMenuAnimation::UpdateFade updateFade) {

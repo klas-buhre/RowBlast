@@ -37,7 +37,13 @@ MapViewControllers::MapViewControllers(Pht::IEngine& engine,
     mNoLivesDialogController {engine, commonResources, userServices, PotentiallyZoomedScreen::No},
     mLivesDialogController {engine, commonResources, userServices, scene},
     mOptionsMenuController {engine, commonResources, userServices},
-    mAboutMenuController {engine, commonResources} {
+    mAboutMenuController {engine, commonResources},
+    mHowToPlayDialogController {
+        engine,
+        commonResources,
+        pieceResources,
+        HowToPlayDialogView::SceneId::Map
+    } {
     
     mViewManager.AddView(static_cast<int>(MapHud), mMapHudController.GetView());
     mViewManager.AddView(static_cast<int>(LevelGoalDialog), mLevelGoalDialogController.GetView());
@@ -45,14 +51,17 @@ MapViewControllers::MapViewControllers(Pht::IEngine& engine,
     mViewManager.AddView(static_cast<int>(LivesDialog), mLivesDialogController.GetView());
     mViewManager.AddView(static_cast<int>(OptionsMenu), mOptionsMenuController.GetView());
     mViewManager.AddView(static_cast<int>(AboutMenu), mAboutMenuController.GetView());
+    mViewManager.AddView(static_cast<int>(HowToPlayDialog), mHowToPlayDialogController.GetView());
     
     mLevelGoalDialogController.SetFadeEffect(mFadeEffect);
     mLivesDialogController.SetFadeEffect(mFadeEffect);
     mOptionsMenuController.SetFadeEffect(mFadeEffect);
     mAboutMenuController.SetFadeEffect(mFadeEffect);
+    mHowToPlayDialogController.SetFadeEffect(mFadeEffect);
     
     mLevelGoalDialogController.SetGuiLightProvider(scene);
     mNoLivesDialogController.SetGuiLightProvider(scene);
+    mHowToPlayDialogController.SetGuiLightProvider(scene);
 }
 
 void MapViewControllers::Init(Pht::FadeEffect& storeFadeEffect) {

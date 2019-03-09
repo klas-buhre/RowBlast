@@ -101,7 +101,13 @@ OptionsMenuController::Result OptionsMenuController::OnTouch(const Pht::TouchEve
         
         UpdateViewToReflectSettings();
     }
-    
+
+    if (mView.GetHowToPlayButton().IsClicked(touchEvent)) {
+        mDeferredResult = Result::GoToHowToPlayDialog;
+        mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::No,
+                                            SlidingMenuAnimation::SlideDirection::Left);
+    }
+
     if (mView.GetAboutButton().IsClicked(touchEvent)) {
         mDeferredResult = Result::GoToAboutMenu;
         mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::No,

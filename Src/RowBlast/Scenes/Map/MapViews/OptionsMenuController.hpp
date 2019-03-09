@@ -19,6 +19,7 @@ namespace RowBlast {
     public:
         enum class Result {
             None,
+            GoToHowToPlayDialog,
             GoToAboutMenu,
             GoBack
         };

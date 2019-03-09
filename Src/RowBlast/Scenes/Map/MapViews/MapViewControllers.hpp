@@ -12,6 +12,7 @@
 #include "AboutMenuController.hpp"
 #include "NoLivesDialogController.hpp"
 #include "LivesDialogController.hpp"
+#include "HowToPlayDialogController.hpp"
 
 namespace Pht {
     class IEngine;
@@ -31,6 +32,7 @@ namespace RowBlast {
             LivesDialog,
             OptionsMenu,
             AboutMenu,
+            HowToPlayDialog,
             None
         };
         
@@ -66,6 +68,10 @@ namespace RowBlast {
         AboutMenuController& GetAboutMenuController() {
             return mAboutMenuController;
         }
+        
+        HowToPlayDialogController& GetHowToPlayDialogController() {
+            return mHowToPlayDialogController;
+        }
 
     private:
         MapScene& mScene;
@@ -77,6 +83,7 @@ namespace RowBlast {
         LivesDialogController mLivesDialogController;
         OptionsMenuController mOptionsMenuController;
         AboutMenuController mAboutMenuController;
+        HowToPlayDialogController mHowToPlayDialogController;
     };
 }
 
