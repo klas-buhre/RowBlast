@@ -40,6 +40,9 @@
 		6220AF3022342B5900D66C76 /* HowToPlayDialogView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6220AF2E22342B5900D66C76 /* HowToPlayDialogView.cpp */; };
 		6220AF3322342B7400D66C76 /* HowToPlayDialogController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6220AF3122342B7400D66C76 /* HowToPlayDialogController.cpp */; };
 		6220AF3522343D2B00D66C76 /* help.png in Resources */ = {isa = PBXBuildFile; fileRef = 6220AF3422343D2A00D66C76 /* help.png */; };
+		6220AF39223522DA00D66C76 /* Keyframe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6220AF37223522DA00D66C76 /* Keyframe.cpp */; };
+		6220AF3C223527AC00D66C76 /* Animation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6220AF3A223527AC00D66C76 /* Animation.cpp */; };
+		6220AF4222352BE300D66C76 /* AnimationSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6220AF4022352BE300D66C76 /* AnimationSystem.cpp */; };
 		6221699821DE1B9B001CB9A1 /* leave_title.wav in Resources */ = {isa = PBXBuildFile; fileRef = 6221699721DE1B9B001CB9A1 /* leave_title.wav */; };
 		6221699E21DE73E5001CB9A1 /* start_game.wav in Resources */ = {isa = PBXBuildFile; fileRef = 6221699D21DE73E5001CB9A1 /* start_game.wav */; };
 		622169A021DE7EF6001CB9A1 /* logo.wav in Resources */ = {isa = PBXBuildFile; fileRef = 6221699F21DE7EF5001CB9A1 /* logo.wav */; };
@@ -574,6 +577,13 @@
 		6220AF3122342B7400D66C76 /* HowToPlayDialogController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = HowToPlayDialogController.cpp; sourceTree = "<group>"; };
 		6220AF3222342B7400D66C76 /* HowToPlayDialogController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = HowToPlayDialogController.hpp; sourceTree = "<group>"; };
 		6220AF3422343D2A00D66C76 /* help.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = help.png; sourceTree = "<group>"; };
+		6220AF37223522DA00D66C76 /* Keyframe.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Keyframe.cpp; sourceTree = "<group>"; };
+		6220AF38223522DA00D66C76 /* Keyframe.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Keyframe.hpp; sourceTree = "<group>"; };
+		6220AF3A223527AC00D66C76 /* Animation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Animation.cpp; sourceTree = "<group>"; };
+		6220AF3B223527AC00D66C76 /* Animation.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Animation.hpp; sourceTree = "<group>"; };
+		6220AF3E22352A1B00D66C76 /* IAnimationSystem.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = IAnimationSystem.hpp; sourceTree = "<group>"; };
+		6220AF4022352BE300D66C76 /* AnimationSystem.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AnimationSystem.cpp; sourceTree = "<group>"; };
+		6220AF4122352BE300D66C76 /* AnimationSystem.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AnimationSystem.hpp; sourceTree = "<group>"; };
 		6221699721DE1B9B001CB9A1 /* leave_title.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = leave_title.wav; sourceTree = "<group>"; };
 		6221699D21DE73E5001CB9A1 /* start_game.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = start_game.wav; sourceTree = "<group>"; };
 		6221699F21DE7EF5001CB9A1 /* logo.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = logo.wav; sourceTree = "<group>"; };
@@ -1551,6 +1561,20 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		6220AF362235229E00D66C76 /* Animation */ = {
+			isa = PBXGroup;
+			children = (
+				6220AF3A223527AC00D66C76 /* Animation.cpp */,
+				6220AF3B223527AC00D66C76 /* Animation.hpp */,
+				6220AF4022352BE300D66C76 /* AnimationSystem.cpp */,
+				6220AF4122352BE300D66C76 /* AnimationSystem.hpp */,
+				6220AF3E22352A1B00D66C76 /* IAnimationSystem.hpp */,
+				6220AF37223522DA00D66C76 /* Keyframe.cpp */,
+				6220AF38223522DA00D66C76 /* Keyframe.hpp */,
+			);
+			path = Animation;
+			sourceTree = "<group>";
+		};
 		62216A1D21EB376E001CB9A1 /* Common */ = {
 			isa = PBXGroup;
 			children = (
@@ -2327,6 +2351,7 @@
 			isa = PBXGroup;
 			children = (
 				623B94A321F4828100B62D9B /* Analytics */,
+				6220AF362235229E00D66C76 /* Animation */,
 				625697432182392B003A3A9D /* Audio */,
 				625697642182392B003A3A9D /* Effects */,
 				625697702182392B003A3A9D /* Engine */,
@@ -3421,6 +3446,7 @@
 				62216C4121EB377F001CB9A1 /* LivesDialogController.cpp in Sources */,
 				62216A8121EB376E001CB9A1 /* PurchaseFailedDialogController.cpp in Sources */,
 				62216C3C21EB377F001CB9A1 /* MapPin.cpp in Sources */,
+				6220AF3C223527AC00D66C76 /* Animation.cpp in Sources */,
 				62216BC221EB377E001CB9A1 /* LaserDialogView.cpp in Sources */,
 				62216C3921EB377F001CB9A1 /* MapScene.cpp in Sources */,
 				623B94BE21F60DF200B62D9B /* AnalyticsEvent.cpp in Sources */,
@@ -3445,6 +3471,7 @@
 				62216C6821F08A85001CB9A1 /* SettingsMenuView.cpp in Sources */,
 				62216A9A21EB376E001CB9A1 /* FloatingBlocks.cpp in Sources */,
 				62216C4D21EB41F1001CB9A1 /* AcceptTermsDialogView.cpp in Sources */,
+				6220AF39223522DA00D66C76 /* Keyframe.cpp in Sources */,
 				625698142182392C003A3A9D /* RenderQueue.cpp in Sources */,
 				62BB35C621C6BA710051AEEF /* OpenAlContext.cpp in Sources */,
 				6220AF3322342B7400D66C76 /* HowToPlayDialogController.cpp in Sources */,
@@ -3611,6 +3638,7 @@
 				62216BC121EB377E001CB9A1 /* BombDialogController.cpp in Sources */,
 				62BB35D021C7FF7F0051AEEF /* AudioFileDecoderIOS.mm in Sources */,
 				62216BD221EB377E001CB9A1 /* OtherMovesWindowView.cpp in Sources */,
+				6220AF4222352BE300D66C76 /* AnimationSystem.cpp in Sources */,
 				6220AF3022342B5900D66C76 /* HowToPlayDialogView.cpp in Sources */,
 				62216A9021EB376E001CB9A1 /* UfoAnimation.cpp in Sources */,
 				625698382182392C003A3A9D /* FileStorage.cpp in Sources */,

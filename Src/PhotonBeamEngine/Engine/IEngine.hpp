@@ -8,6 +8,7 @@ namespace Pht {
     class IInput;
     class IAudio;
     class ISceneManager;
+    class IAnimationSystem;
     class IParticleSystem;
     class IAnalytics;
 
@@ -19,6 +20,7 @@ namespace Pht {
         virtual IInput& GetInput() = 0;
         virtual IAudio& GetAudio() = 0;
         virtual ISceneManager& GetSceneManager() = 0;
+        virtual IAnimationSystem& GetAnimationSystem() = 0;
         virtual IParticleSystem& GetParticleSystem() = 0;
         virtual IAnalytics& GetAnalytics() = 0;
         virtual float GetLastFrameSeconds() const = 0;

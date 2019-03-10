@@ -45,6 +45,7 @@ void Engine::Update(float frameSeconds) {
         scene->GetRoot().Update(false);
     }
     
+    mAnimationSystem.Update(mLastFrameSeconds);
     mParticleSystem.Update(mLastFrameSeconds);
     mAudio.Update(mLastFrameSeconds);
     
@@ -68,6 +69,10 @@ IAudio& Engine::GetAudio() {
 
 ISceneManager& Engine::GetSceneManager() {
     return mSceneManager;
+}
+
+IAnimationSystem& Engine::GetAnimationSystem() {
+    return mAnimationSystem;
 }
 
 IParticleSystem& Engine::GetParticleSystem() {

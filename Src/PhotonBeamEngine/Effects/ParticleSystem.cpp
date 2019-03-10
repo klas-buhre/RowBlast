@@ -8,6 +8,7 @@ using namespace Pht;
 void ParticleSystem::AddParticleEffect(ParticleEffect& effect) {
     if (std::find(std::begin(mParticleEffects), std::end(mParticleEffects), &effect) ==
         std::end(mParticleEffects)) {
+
         mParticleEffects.push_back(&effect);
     }
 }
