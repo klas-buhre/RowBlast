@@ -13,13 +13,11 @@ namespace Pht {
     template<int N>
     float Lerp(float x, const StaticVector<Vec2, N>& points) {
         auto& back {points.Back()};
-        
         if (x == back.x) {
             return back.y;
         }
         
         auto& front {points.Front()};
-        
         if (x == front.x) {
             return front.y;
         }
@@ -31,7 +29,6 @@ namespace Pht {
         
         for (auto i {1}; i < numPoints; ++i) {
             auto& point {points.At(i)};
-            
             if (x >= previousPoint->x && x <= point.x) {
                 leftPoint = *previousPoint;
                 rightPoint = point;

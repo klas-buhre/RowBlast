@@ -32,6 +32,10 @@ namespace Pht {
             mInterpolation = interpolation;
         }
         
+        bool IsPlaying() const {
+            return mIsPlaying;
+        }
+        
         SceneObject& GetSceneObject() {
             return mSceneObject;
         }
@@ -48,12 +52,17 @@ namespace Pht {
             Stop
         };
         
+        void CalculateKeyframe(float dt);
+        void HandleKeyframeTransition();
         void PerformActionOnChildAnimations(Action action, SceneObject& sceneObject, float dt = 0.0f);
         
         SceneObject& mSceneObject;
         IAnimationSystem& mAnimationSystem;
         Interpolation mInterpolation {Interpolation::Linear};
         std::vector<Keyframe> mKeyframes;
+        Keyframe* mPreviousKeyframe {nullptr};
+        Keyframe* mKeyframe {nullptr};
+        Keyframe* mNextKeyframe {nullptr};
         float mElapsedTime {0.0f};
         bool mIsPlaying {false};
     };

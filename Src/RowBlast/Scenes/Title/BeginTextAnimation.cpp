@@ -5,6 +5,8 @@
 #include "Scene.hpp"
 #include "SceneObject.hpp"
 #include "TextComponent.hpp"
+#include "IAnimationSystem.hpp"
+#include "Animation.hpp"
 
 // Game includes.
 #include "CommonResources.hpp"
@@ -37,53 +39,30 @@ void BeginTextAnimation::Init(Pht::Scene& scene, Pht::SceneObject& parentObject)
     mSceneObject->GetTransform().SetPosition({-2.9f, -9.0f, UiLayer::text});
     mSceneObject->SetIsVisible(false);
     parentObject.AddChild(*mSceneObject);
+    
+    auto& animationSystem {mEngine.GetAnimationSystem()};
+    auto& animation {animationSystem.CreateAnimation(*mSceneObject)};
+    animation.SetInterpolation(Pht::Interpolation::None);
+    
+    Pht::Keyframe keyframe1 {0.0f};
+    keyframe1.SetIsVisible(true);
+    animation.AddKeyframe(keyframe1);
+    
+    Pht::Keyframe keyframe2 {textVisibleDuration};
+    keyframe2.SetIsVisible(false);
+    animation.AddKeyframe(keyframe2);
+
+    Pht::Keyframe keyframe3 {textVisibleDuration + textInvisibleDuration};
+    keyframe3.SetIsVisible(true);
+    animation.AddKeyframe(keyframe3);
+
+    animationSystem.AddAnimation(animation);
 }
 
 void BeginTextAnimation::Start() {
-    GoToTextVisibleState();
-}
-
-void BeginTextAnimation::Update() {
-    switch (mState) {
-        case State::TextVisible:
-            UpdateInTextVisibleState();
-            break;
-        case State::TextInvisible:
-            UpdateInTextInvisibleState();
-            break;
-        case State::Inactive:
-            break;
-    }
+    mSceneObject->GetComponent<Pht::Animation>()->Play();
 }
 
 bool BeginTextAnimation::IsActive() const {
-    return mState != State::Inactive;
-}
-
-void BeginTextAnimation::UpdateInTextVisibleState() {
-    mElapsedTime += mEngine.GetLastFrameSeconds();
-    
-    if (mElapsedTime >= textVisibleDuration) {
-        GoToTextInvisibleState();
-    }
-}
-
-void BeginTextAnimation::UpdateInTextInvisibleState() {
-    mElapsedTime += mEngine.GetLastFrameSeconds();
-    
-    if (mElapsedTime >= textInvisibleDuration) {
-        GoToTextVisibleState();
-    }
-}
-
-void BeginTextAnimation::GoToTextVisibleState() {
-    mState = State::TextVisible;
-    mElapsedTime = 0.0f;
-    mSceneObject->SetIsVisible(true);
-}
-
-void BeginTextAnimation::GoToTextInvisibleState() {
-    mState = State::TextInvisible;
-    mElapsedTime = 0.0f;
-    mSceneObject->SetIsVisible(false);
+    return mSceneObject->GetComponent<Pht::Animation>()->IsPlaying();
 }

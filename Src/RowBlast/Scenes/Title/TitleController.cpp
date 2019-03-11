@@ -57,7 +57,6 @@ TitleController::Command TitleController::Update() {
     
     mScene.Update();
     mTitleAnimation.Update();
-    mBeginTextAnimation.Update();
     mUfoAnimation.Update();
     
     return command;
