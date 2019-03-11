@@ -33,7 +33,6 @@ void LifeService::Update() {
     }
     
     auto now {std::chrono::system_clock::now()};
-    
     if (now > mLifeLostTimePoint + lifeWaitDuration) {
         auto waitedDuration {
             std::chrono::duration_cast<std::chrono::seconds>(now - mLifeLostTimePoint)
@@ -147,7 +146,6 @@ void LifeService::SaveState() {
 
 bool LifeService::LoadState() {
     std::string jsonString;
-    
     if (!Pht::FileStorage::Load(filename, jsonString)) {
         return false;
     }

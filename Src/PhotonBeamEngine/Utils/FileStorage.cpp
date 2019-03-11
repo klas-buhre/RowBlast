@@ -24,7 +24,6 @@ namespace {
 bool FileStorage::Load(const std::string& filename, std::string& data) {
     auto fullPath {FileSystem::GetSyncedAppHomeDirectory() + "/" + filename};
     std::ifstream file {fullPath};
-    
     if (!file.is_open()) {
         return false;
     }
@@ -39,7 +38,6 @@ bool FileStorage::Load(const std::string& filename, std::string& data) {
 bool FileStorage::Save(const std::string& filename, const std::string& data) {
     auto fullPath {FileSystem::GetSyncedAppHomeDirectory() + "/" + filename};
     std::ofstream file {fullPath};
-    
     if (!file.is_open()) {
         return false;
     }
@@ -53,7 +51,6 @@ bool FileStorage::Save(const std::string& filename, const std::string& data) {
 
 bool FileStorage::LoadCleartextFile(const std::string& fullPathFilename, std::string& data) {
     std::ifstream file {fullPathFilename};
-    
     if (!file.is_open()) {
         return false;
     }

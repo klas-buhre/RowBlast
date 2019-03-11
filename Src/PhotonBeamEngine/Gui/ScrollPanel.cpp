@@ -28,7 +28,6 @@ void ScrollPanel::AddSceneObject(SceneObject& sceneObject) {
     mPanel->AddChild(sceneObject);
     
     auto sceneObjectYPosition {sceneObject.GetTransform().GetPosition().y};
-    
     if (sceneObjectYPosition < mSceneObjectsYMin) {
         mSceneObjectsYMin = sceneObjectYPosition;
     }

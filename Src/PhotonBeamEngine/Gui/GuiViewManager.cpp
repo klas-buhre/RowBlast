@@ -26,7 +26,6 @@ void GuiViewManager::ActivateView(int viewIndex) {
     DeactivateAllViews();
     
     auto viewEntry {mViews.find(viewIndex)};
-    
     if (viewEntry == std::end(mViews)) {
         assert(!"View not found");
     }

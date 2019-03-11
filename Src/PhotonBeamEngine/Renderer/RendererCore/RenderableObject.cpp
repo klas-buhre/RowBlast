@@ -33,10 +33,8 @@ RenderableObject::RenderableObject(const Material& material,
     mMaterial {material} {
 
     auto meshName {mesh.GetName()};
-    
     if (meshName.HasValue()) {
         mVbo = VboCache::Get(meshName.GetValue());
-        
         if (mVbo == nullptr) {
             CreateVboAndUploadData(mesh, flags);
             VboCache::Add(meshName.GetValue(), mVbo);

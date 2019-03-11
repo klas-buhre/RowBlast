@@ -32,7 +32,6 @@ OpenAlBuffer::~OpenAlBuffer() {
 
 std::unique_ptr<OpenAlBuffer> OpenAlBuffer::Create(const std::string& filename) {
     auto audioData {Pht::DecodeAudioFile(filename)};
-    
     if (audioData == nullptr) {
         return nullptr;
     }

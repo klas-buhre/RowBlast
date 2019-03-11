@@ -387,7 +387,6 @@ std::unique_ptr<Level> LevelLoader::Load(int levelId, const LevelResources& leve
     auto moves {Pht::Json::ReadInt(document, "moves")};
     
     auto gestureMovesFactor {1.0f};
-    
     if (document.HasMember("gestureMovesFactor")) {
         gestureMovesFactor = Pht::Json::ReadFloat(document, "gestureMovesFactor");
     }
@@ -406,13 +405,11 @@ std::unique_ptr<Level> LevelLoader::Load(int levelId, const LevelResources& leve
     auto levelPieces {ReadPieceTypes(document, "pieces", pieceTypes)};
     
     auto isPartOfTutorial {false};
-
     if (document.HasMember("partOfTutorial")) {
         isPartOfTutorial = Pht::Json::ReadBool(document, "partOfTutorial");
     }
     
     std::vector<const Piece*> pieceSequence;
-
     if (document.HasMember("pieceSequence")) {
         pieceSequence = ReadPieceTypes(document, "pieceSequence", pieceTypes);
     }
@@ -428,7 +425,6 @@ std::unique_ptr<Level> LevelLoader::Load(int levelId, const LevelResources& leve
     Level::Objective objective;
     auto numColumns {0};
     auto numRows {0};
-    
     if (clearGrid) {
         objective = Level::Objective::Clear;
         numColumns = static_cast<int>(clearGrid->front().size());
@@ -478,8 +474,8 @@ std::unique_ptr<LevelInfo> LevelLoader::LoadInfo(int levelId,
     Pht::Json::ParseFile(document, "level" + std::to_string(levelId) + ".json");
 
     auto levelPieces {ReadPieceTypes(document, "pieces", levelResources.GetPieceTypes())};
-    Level::Objective objective;
     
+    Level::Objective objective;
     if (document.HasMember("clearGrid")) {
         objective = Level::Objective::Clear;
     } else  if (document.HasMember("blueprintGrid")) {

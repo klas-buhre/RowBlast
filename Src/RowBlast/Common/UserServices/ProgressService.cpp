@@ -99,7 +99,6 @@ void ProgressService::SaveState() {
 
 bool ProgressService::LoadState() {
     std::string jsonString;
-    
     if (!Pht::FileStorage::Load(filename, jsonString)) {
         return false;
     }

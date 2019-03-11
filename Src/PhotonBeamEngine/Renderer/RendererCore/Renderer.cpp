@@ -404,7 +404,6 @@ void Renderer::RenderScene(const Scene& scene) {
         auto* cameraOverride {renderPass.GetCamera()};
         auto* camera {cameraOverride ? cameraOverride : scene.GetCamera()};
         assert(camera);
-        
         if (camera != previousCamera) {
             auto cameraPositionWorldSpace {camera->GetSceneObject().GetWorldSpacePosition()};
             
@@ -422,7 +421,6 @@ void Renderer::RenderScene(const Scene& scene) {
         auto* lightOverride {renderPass.GetLight()};
         auto* light {lightOverride ? lightOverride : scene.GetGlobalLight()};
         assert(light);
-        
         if (light != previousLight) {
             SetLightDirection(light->GetDirection());
             mGlobalLight.mDirectionalIntensity = light->GetDirectionalIntensity();
@@ -438,7 +436,6 @@ void Renderer::RenderScene(const Scene& scene) {
 void Renderer::Render(const RenderPass& renderPass, DistanceFunction distanceFunction) {
     auto isHudMode {renderPass.IsHudMode()};
     auto projectionMode {renderPass.GetProjectionMode()};
-    
     if (isHudMode != mHudMode || projectionMode != mProjectionMode) {
         SetHudMode(isHudMode);
         SetProjectionMode(projectionMode);
@@ -446,7 +443,6 @@ void Renderer::Render(const RenderPass& renderPass, DistanceFunction distanceFun
     }
     
     auto& scissorBox {renderPass.GetScissorBox()};
-    
     if (scissorBox.HasValue()) {
         auto& scissorBoxValue {scissorBox.GetValue()};
         SetScissorBox(scissorBoxValue.mLowerLeft, scissorBoxValue.mSize);

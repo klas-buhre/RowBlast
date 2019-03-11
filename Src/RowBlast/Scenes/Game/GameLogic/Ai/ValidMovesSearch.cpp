@@ -691,7 +691,7 @@ void ValidMovesSearch::SaveMoveIfNotFoundBefore(ValidMoves& validMoves,
 
 bool ValidMovesSearch::IsDuplicateMoveFoundAtDifferentLocation(const MovingPiece& piece) const {
     auto& duplicateMoveCheck {piece.mPieceType.GetDuplicateMoveCheck(piece.mRotation)};
-    
+
     if (duplicateMoveCheck.HasValue()) {
         auto& duplicateMoveCheckValue {duplicateMoveCheck.GetValue()};
         auto checkPosition {piece.mPosition + duplicateMoveCheckValue.mRelativePosition};

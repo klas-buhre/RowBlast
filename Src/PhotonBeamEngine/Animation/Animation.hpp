@@ -41,6 +41,15 @@ namespace Pht {
         }
 
     private:
+        enum class Action {
+            Update,
+            Play,
+            Pause,
+            Stop
+        };
+        
+        void PerformActionOnChildAnimations(Action action, SceneObject& sceneObject, float dt = 0.0f);
+        
         SceneObject& mSceneObject;
         IAnimationSystem& mAnimationSystem;
         Interpolation mInterpolation {Interpolation::Linear};

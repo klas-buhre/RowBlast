@@ -23,11 +23,9 @@ namespace {
     
     ControlType ReadControlType(const rapidjson::Document& document) {
         auto controlType {Pht::Json::ReadString(document, controlTypeMember)};
-        
         if (controlType == "Click") {
             return ControlType::Click;
         }
-
         if (controlType == "Gesture") {
             return ControlType::Gesture;
         }
@@ -71,7 +69,6 @@ void SettingsService::SaveState() {
 
 bool SettingsService::LoadState() {
     std::string jsonString;
-    
     if (!Pht::FileStorage::Load(filename, jsonString)) {
         return false;
     }

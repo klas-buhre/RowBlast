@@ -156,7 +156,6 @@ void PurchasingService::StartPurchase(ProductId productId,
                                       const std::function<void(const GoldCoinProduct&)>& onPurchaseSucceeded,
                                       const std::function<void(PurchaseFailureReason)>& onPurchaseFailed) {
     auto* product {GetGoldCoinProduct(productId)};
-    
     if (product == nullptr || mState != State::Idle || mCoinBalance >= maxCoinBalance) {
         mState = State::PurchaseFailure;
     } else {
@@ -219,7 +218,6 @@ void PurchasingService::SaveState() {
 
 bool PurchasingService::LoadState() {
     std::string jsonString;
-    
     if (!Pht::FileStorage::Load(filename, jsonString)) {
         return false;
     }

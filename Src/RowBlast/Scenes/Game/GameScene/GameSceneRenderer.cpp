@@ -59,14 +59,12 @@ void GameSceneRenderer::RenderFieldGrid() {
     
     for (auto i {numSegments - 1}; i >= 0; --i) {
         auto& gridSegment {gridSegments[i]};
-        
         if (gridSegment.mRow <= lowestVisibleRow) {
             for (auto visibleSegmentIndex {i};
                  visibleSegmentIndex < numSegments;
                  ++visibleSegmentIndex) {
 
                 auto& visibleGridSegment {gridSegments[visibleSegmentIndex]};
-                
                 if (visibleGridSegment.mRow >= pastHighestVisibleRow) {
                     break;
                 }
@@ -81,7 +79,6 @@ void GameSceneRenderer::RenderFieldGrid() {
 
 void GameSceneRenderer::RenderBlueprintSlots() {
     auto* blueprintGrid {mField.GetBlueprintGrid()};
-    
     if (blueprintGrid == nullptr) {
         return;
     }
@@ -307,7 +304,6 @@ void GameSceneRenderer::RenderFallingPiece() {
     mScene.GetPieceBlocks().ReclaimAll();
     
     auto* fallingPiece {mGameLogic.GetFallingPiece()};
-    
     if (fallingPiece == nullptr) {
         return;
     }
@@ -419,8 +415,8 @@ void GameSceneRenderer::RenderPieceBlocks(const CellGrid& pieceBlocks,
 
 void GameSceneRenderer::RenderGhostPieces() {
     mScene.GetGhostPieces().ReclaimAll();
-    auto* fallingPiece {mGameLogic.GetFallingPiece()};
     
+    auto* fallingPiece {mGameLogic.GetFallingPiece()};
     if (fallingPiece == nullptr) {
         return;
     }
@@ -480,7 +476,6 @@ void GameSceneRenderer::RenderGhostPiece(Pht::RenderableObject& ghostPieceRender
 
 void GameSceneRenderer::RenderClickableGhostPieces(const FallingPiece& fallingPiece) {
     auto* moveAlternatives {mGameLogic.GetClickInputHandler().GetVisibleMoves()};
-    
     if (moveAlternatives == nullptr) {
         return;
     }
@@ -498,7 +493,6 @@ void GameSceneRenderer::RenderClickableGhostPieces(const FallingPiece& fallingPi
     
     for (auto i {0}; i < moveAlternatives->Size(); ++i) {
         auto& move {moveAlternatives->At(i)};
-        
         if (move.mIsHidden) {
             continue;
         }

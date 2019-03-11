@@ -17,7 +17,6 @@ void Audio::LoadSound(const std::string& filename,
                       float gain,
                       AudioResourceId resourceId) {
     auto sound {mAudioEngine->LoadSound(filename, maxSources)};
-    
     if (sound) {
         sound->SetGain(gain);
         mSounds[resourceId] = std::move(sound);
@@ -26,7 +25,6 @@ void Audio::LoadSound(const std::string& filename,
 
 ISound* Audio::GetSound(AudioResourceId resourceId) {
     auto i {mSounds.find(resourceId)};
-    
     if (i != std::end(mSounds)) {
         return i->second.get();
     }
@@ -40,7 +38,6 @@ void Audio::PlaySound(AudioResourceId resourceId) {
     }
     
     auto* sound {GetSound(resourceId)};
-    
     if (sound) {
         sound->Play();
     }
@@ -66,7 +63,6 @@ void Audio::FreeMusicTrack(AudioResourceId resourceId) {
 
 IMusicTrack* Audio::GetMusicTrack(AudioResourceId resourceId) const {
     auto i {mTracks.find(resourceId)};
-    
     if (i != std::end(mTracks)) {
         return i->second.get();
     }
@@ -76,7 +72,6 @@ IMusicTrack* Audio::GetMusicTrack(AudioResourceId resourceId) const {
 
 void Audio::PlayMusicTrack(AudioResourceId resourceId, float fadeInDuration) {
     auto* track {GetMusicTrack(resourceId)};
-    
     if (track == nullptr) {
         return;
     }
