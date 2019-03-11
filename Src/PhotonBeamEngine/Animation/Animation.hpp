@@ -54,7 +54,11 @@ namespace Pht {
         
         void CalculateKeyframe(float dt);
         void HandleKeyframeTransition();
-        void PerformActionOnChildAnimations(Action action, SceneObject& sceneObject, float dt = 0.0f);
+        void UpdateLinearInterpolation();
+        Pht::Vec3 LerpVec3(const Pht::Vec3& keyframeValue, const Pht::Vec3& nextKeyframeValue);
+        void PerformActionOnChildAnimations(Action action,
+                                            SceneObject& sceneObject,
+                                            float dt = 0.0f);
         
         SceneObject& mSceneObject;
         IAnimationSystem& mAnimationSystem;

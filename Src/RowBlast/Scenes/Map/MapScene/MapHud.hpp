@@ -44,7 +44,6 @@ namespace RowBlast {
         void UpdateLivesText();
         void UpdateCoinsText();
         void UpdateCountdown();
-        void AnimateCoinRotation();
         
         Pht::IEngine& mEngine;
         const UserServices& mUserServices;
@@ -52,7 +51,6 @@ namespace RowBlast {
         Pht::TextComponent* mNewLifeCountdownText {nullptr};
         Pht::TextComponent* mCoinsText {nullptr};
         Pht::SceneObject* mNewLifeCountdownContainer {nullptr};
-        Pht::SceneObject* mCoinSceneObject {nullptr};
         int mNumLives {-1};
         int mNumCoins {-1};
         std::chrono::seconds mSecondsUntilNewLife;

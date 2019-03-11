@@ -9,6 +9,8 @@
 #include "TextComponent.hpp"
 #include "LightComponent.hpp"
 #include "CameraComponent.hpp"
+#include "IAnimationSystem.hpp"
+#include "Animation.hpp"
 
 // Game includes.
 #include "CommonResources.hpp"
@@ -204,17 +206,33 @@ void MapHud::CreateCoinsObject(Pht::Scene& scene,
     coinsTextSceneObject.GetTransform().SetPosition({-0.65f, -0.215f, UiLayer::text});
     coinsContainer.AddChild(coinsTextSceneObject);
     
-    mCoinSceneObject = &scene.CreateSceneObject(Pht::ObjMesh {"coin_852.obj", 3.15f},
-                                                commonResources.GetMaterials().GetGoldMaterial());
-    mCoinSceneObject->GetTransform().SetPosition({-1.5f, 0.0f, UiLayer::root});
-    coinsContainer.AddChild(*mCoinSceneObject);
+    auto& coinSceneObject {
+        scene.CreateSceneObject(Pht::ObjMesh {"coin_852.obj", 3.15f},
+                                commonResources.GetMaterials().GetGoldMaterial())
+    };
+    
+    coinSceneObject.GetTransform().SetPosition({-1.5f, 0.0f, UiLayer::root});
+    coinsContainer.AddChild(coinSceneObject);
+
+    auto& animationSystem {mEngine.GetAnimationSystem()};
+    auto& animation {animationSystem.CreateAnimation(coinSceneObject)};
+    
+    Pht::Keyframe keyframe1 {0.0f};
+    keyframe1.SetRotation({0.0f, 0.0f, 0.0f});
+    animation.AddKeyframe(keyframe1);
+    
+    Pht::Keyframe keyframe2 {360.0f / coinRotationSpeed};
+    keyframe2.SetRotation({0.0f, 360.0f, 0.0f});
+    animation.AddKeyframe(keyframe2);
+
+    animationSystem.AddAnimation(animation);
+    animation.Play();
 }
 
 void MapHud::Update() {
     UpdateLivesText();
     UpdateCoinsText();
     UpdateCountdown();
-    AnimateCoinRotation();
     
     if (mUserServices.GetLifeService().HasFullNumLives()) {
         mNewLifeCountdownContainer->SetIsVisible(false);
@@ -281,14 +299,4 @@ void MapHud::UpdateCountdown() {
         
         mSecondsUntilNewLife = secondsUntilNewLife;
     }
-}
-
-void MapHud::AnimateCoinRotation() {
-    mCoinRotation.y += coinRotationSpeed * mEngine.GetLastFrameSeconds();
-    
-    if (mCoinRotation.y > 360.0f) {
-        mCoinRotation.y -= 360.0f;
-    }
-    
-    mCoinSceneObject->GetTransform().SetRotation(mCoinRotation);
 }
