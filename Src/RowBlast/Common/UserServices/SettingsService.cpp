@@ -55,7 +55,7 @@ void SettingsService::SetIsMusicEnabled(bool isMusicEnabled) {
 
 void SettingsService::SaveState() {
     rapidjson::Document document;
-    auto& allocator = document.GetAllocator();
+    auto& allocator {document.GetAllocator()};
     document.SetObject();
     
     Pht::Json::AddString(document, controlTypeMember, ToString(mControlType), allocator);

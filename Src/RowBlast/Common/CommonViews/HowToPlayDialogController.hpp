@@ -12,6 +12,7 @@ namespace Pht {
 namespace RowBlast {
     class CommonResources;
     class PieceResources;
+    class LevelResources;
     
     class HowToPlayDialogController {
     public:
@@ -23,6 +24,7 @@ namespace RowBlast {
         HowToPlayDialogController(Pht::IEngine& engine,
                                   const CommonResources& commonResources,
                                   const PieceResources& pieceResources,
+                                  const LevelResources& levelResources,
                                   HowToPlayDialogView::SceneId sceneId);
         
         void SetUp();

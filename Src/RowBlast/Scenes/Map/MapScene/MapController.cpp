@@ -42,7 +42,7 @@ MapController::MapController(Pht::IEngine& engine,
                              UserServices& userServices,
                              const Universe& universe,
                              const LevelResources& levelResources,
-                             PieceResources& pieceResources) :
+                             const PieceResources& pieceResources) :
     mEngine {engine},
     mUserServices {userServices},
     mLevelResources {levelResources},
@@ -52,7 +52,14 @@ MapController::MapController(Pht::IEngine& engine,
     mUfo {engine, commonResources, 1.17f},
     mUfoAnimation {engine, mUfo},
     mPortalCameraMovement {engine, mScene},
-    mMapViewControllers {engine, mScene, commonResources, userServices, pieceResources},
+    mMapViewControllers {
+        engine,
+        mScene,
+        commonResources,
+        userServices,
+        pieceResources,
+        levelResources
+    },
     mStoreController {
         engine,
         commonResources,

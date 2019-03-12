@@ -22,6 +22,7 @@ namespace RowBlast {
     class MapScene;
     class UserServices;
     class PieceResources;
+    class LevelResources;
     
     class MapViewControllers {
     public:
@@ -40,7 +41,8 @@ namespace RowBlast {
                            MapScene& scene,
                            const CommonResources& commonResources,
                            UserServices& userServices,
-                           PieceResources& pieceResources);
+                           const PieceResources& pieceResources,
+                           const LevelResources& levelResources);
 
         void Init(Pht::FadeEffect& storeFadeEffect);
         void SetActiveController(Controller controller);

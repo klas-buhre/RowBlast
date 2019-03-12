@@ -126,7 +126,7 @@ void LifeService::StartCountDown(std::chrono::system_clock::time_point lifeLostT
 
 void LifeService::SaveState() {
     rapidjson::Document document;
-    auto& allocator = document.GetAllocator();
+    auto& allocator {document.GetAllocator()};
     document.SetObject();
     
     Pht::Json::AddInt(document, stateMember, static_cast<int>(mState), allocator);

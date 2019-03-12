@@ -24,7 +24,6 @@ namespace RowBlast {
                        const CommonResources& commonResources);
 
         Pht::RenderableObject& GetLevelBlockRenderable(BlockKind blockKind) const;
-        const Piece& GetLPiece() const;
         
         const PieceTypes& GetPieceTypes() const {
             return mPieceTypes;

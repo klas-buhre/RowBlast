@@ -52,7 +52,7 @@ namespace RowBlast {
                       UserServices& userServices,
                       const Universe& universe,
                       const LevelResources& levelResources,
-                      PieceResources& pieceResources);
+                      const PieceResources& pieceResources);
     
         void Init();
         void GoToStartLevelStateLevelGoalDialog(int levelToStart);

@@ -18,7 +18,8 @@ MapViewControllers::MapViewControllers(Pht::IEngine& engine,
                                        MapScene& scene,
                                        const CommonResources& commonResources,
                                        UserServices& userServices,
-                                       PieceResources& pieceResources) :
+                                       const PieceResources& pieceResources,
+                                       const LevelResources& levelResources) :
     mScene {scene},
     mFadeEffect {
         engine.GetSceneManager(),
@@ -42,6 +43,7 @@ MapViewControllers::MapViewControllers(Pht::IEngine& engine,
         engine,
         commonResources,
         pieceResources,
+        levelResources,
         HowToPlayDialogView::SceneId::Map
     } {
     

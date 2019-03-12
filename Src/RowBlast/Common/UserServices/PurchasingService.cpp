@@ -206,7 +206,7 @@ bool PurchasingService::CanAfford(int priceInCoins) const {
 
 void PurchasingService::SaveState() {
     rapidjson::Document document;
-    auto& allocator = document.GetAllocator();
+    auto& allocator {document.GetAllocator()};
     document.SetObject();
     
     Pht::Json::AddInt(document, coinBalanceMember, mCoinBalance, allocator);

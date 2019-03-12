@@ -79,7 +79,7 @@ int ProgressService::GetProgress() const {
 
 void ProgressService::SaveState() {
     rapidjson::Document document;
-    auto& allocator = document.GetAllocator();
+    auto& allocator {document.GetAllocator()};
     document.SetObject();
     
     Pht::Json::AddInt(document, currentLevelMember, mCurrentLevel, allocator);

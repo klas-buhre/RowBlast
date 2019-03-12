@@ -229,9 +229,3 @@ Pht::RenderableObject& LevelResources::GetLevelBlockRenderable(BlockKind blockKi
             break;
     }
 }
-
-const Piece& LevelResources::GetLPiece() const {
-    auto i {mPieceTypes.find("L")};
-    assert(i != std::end(mPieceTypes));
-    return *(i->second);
-}

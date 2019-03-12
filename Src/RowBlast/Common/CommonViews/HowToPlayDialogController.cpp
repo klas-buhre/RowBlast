@@ -12,9 +12,10 @@ using namespace RowBlast;
 HowToPlayDialogController::HowToPlayDialogController(Pht::IEngine& engine,
                                                      const CommonResources& commonResources,
                                                      const PieceResources& pieceResources,
+                                                     const LevelResources& levelResources,
                                                      HowToPlayDialogView::SceneId sceneId) :
     mEngine {engine},
-    mView {engine, commonResources, pieceResources, sceneId},
+    mView {engine, commonResources, pieceResources, levelResources, sceneId},
     mSlidingMenuAnimation {engine, mView},
     mSceneId {sceneId} {}
 
