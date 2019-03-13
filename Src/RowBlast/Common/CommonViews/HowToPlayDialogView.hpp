@@ -56,6 +56,7 @@ namespace RowBlast {
         }
 
     private:
+        void CreateFieldQuad(Pht::SceneObject& parent);
         Pht::SceneObject& CreateFilledCircleIcon(int index, bool isFilled);
         void CreateBlockAnimation(const PieceResources& pieceResources,
                                   const LevelResources& levelResources);

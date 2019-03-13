@@ -161,19 +161,21 @@ void HowToPlayDialogView::CreateBlockAnimation(const PieceResources& pieceResour
     
     GetRoot().AddChild(container);
     
+    CreateFieldQuad(container);
+    
     auto& animationSystem {mEngine.GetAnimationSystem()};
     auto& rootAnimation {animationSystem.CreateAnimation(container)};
     mAnimation = &rootAnimation;
     rootAnimation.AddKeyframe(Pht::Keyframe {0.0f});
     rootAnimation.AddKeyframe(Pht::Keyframe {4.0f});
     
-    Pht::Vec3 lPieceInitialPosition {-0.5f, 3.5f, UiLayer::block};
+    Pht::Vec3 lPieceInitialPosition {-0.5f, 3.3f, UiLayer::block};
     auto& lPiece {CreateLPiece(lPieceInitialPosition, container, pieceResources)};
     Pht::Vec3 remainingLPieceInitialPosition {-0.5f, -2.0f, UiLayer::block};
     auto& remainingLPiece {CreateTwoBlocks(remainingLPieceInitialPosition, BlockColor::Yellow, container, pieceResources)};
     remainingLPiece.SetIsVisible(false);
-    Pht::Vec3 redBlocksInitialPosition {2.5f, -2.0f, UiLayer::block};
-    auto& redBlocks {CreateTwoBlocks(redBlocksInitialPosition, BlockColor::Red, container, pieceResources)};
+    Pht::Vec3 greenBlocksInitialPosition {2.5f, -2.0f, UiLayer::block};
+    auto& greenBlocks {CreateTwoBlocks(greenBlocksInitialPosition, BlockColor::Green, container, pieceResources)};
     auto& leftGrayBlocks {CreateThreeGrayBlocks({-2.0f, -3.0f, UiLayer::block}, container, levelResources)};
     auto& rightGrayBlocks {CreateThreeGrayBlocks({2.0f, -3.0f, UiLayer::block}, container, levelResources)};
     CreateThreeGrayBlocksWithGap({-1.5f, -4.0f, UiLayer::block}, container, levelResources);
@@ -226,21 +228,21 @@ void HowToPlayDialogView::CreateBlockAnimation(const PieceResources& pieceResour
 
     remainingLPieceAnimation.AddKeyframe(Pht::Keyframe {animationDuration});
     
-    auto& redBlocksAnimation {animationSystem.CreateAnimation(redBlocks)};
+    auto& greenBlocksAnimation {animationSystem.CreateAnimation(greenBlocks)};
     
-    Pht::Keyframe redBlocksKeyframe1 {0.0f};
-    redBlocksKeyframe1.SetPosition(redBlocksInitialPosition);
-    redBlocksAnimation.AddKeyframe(redBlocksKeyframe1);
+    Pht::Keyframe greenBlocksKeyframe1 {0.0f};
+    greenBlocksKeyframe1.SetPosition(greenBlocksInitialPosition);
+    greenBlocksAnimation.AddKeyframe(greenBlocksKeyframe1);
 
-    Pht::Keyframe redBlocksKeyframe2 {rowClearTime + fallWaitDuration};
-    redBlocksKeyframe2.SetPosition(redBlocksInitialPosition);
-    redBlocksAnimation.AddKeyframe(redBlocksKeyframe2);
+    Pht::Keyframe greenBlocksKeyframe2 {rowClearTime + fallWaitDuration};
+    greenBlocksKeyframe2.SetPosition(greenBlocksInitialPosition);
+    greenBlocksAnimation.AddKeyframe(greenBlocksKeyframe2);
 
-    Pht::Keyframe redBlocksKeyframe3 {rowClearTime + fallWaitDuration + fallDuration};
-    redBlocksKeyframe3.SetPosition({2.5f, -3.0f, UiLayer::block});
-    redBlocksAnimation.AddKeyframe(redBlocksKeyframe3);
+    Pht::Keyframe greenBlocksKeyframe3 {rowClearTime + fallWaitDuration + fallDuration};
+    greenBlocksKeyframe3.SetPosition({2.5f, -3.0f, UiLayer::block});
+    greenBlocksAnimation.AddKeyframe(greenBlocksKeyframe3);
 
-    redBlocksAnimation.AddKeyframe(Pht::Keyframe {animationDuration});
+    greenBlocksAnimation.AddKeyframe(Pht::Keyframe {animationDuration});
 
     auto& leftGrayBlocksAnimation {animationSystem.CreateAnimation(leftGrayBlocks)};
     
@@ -267,6 +269,29 @@ void HowToPlayDialogView::CreateBlockAnimation(const PieceResources& pieceResour
     rightGrayBlocksAnimation.AddKeyframe(Pht::Keyframe {animationDuration});
 
     rootAnimation.Play();
+}
+
+void HowToPlayDialogView::CreateFieldQuad(Pht::SceneObject& parent) {
+    Pht::Material fieldMaterial;
+    fieldMaterial.SetOpacity(0.93f);
+    
+    auto width {7.0f};
+    auto height {9.0f};
+    auto f {0.9f};
+    
+    Pht::QuadMesh::Vertices vertices {
+        {{-width / 2.0f, -height / 2.0f, 0.0f}, {0.3f * f, 0.3f * f, 0.752f * f, 1.0f}},
+        {{width / 2.0f, -height / 2.0f, 0.0f}, {0.8f * f, 0.225f * f, 0.425f * f, 1.0f}},
+        {{width / 2.0f, height / 2.0f, 0.0f}, {0.3f * f, 0.3f * f, 0.752f * f, 1.0f}},
+        {{-width / 2.0f, height / 2.0f, 0.0f}, {0.81f * f, 0.225f * f, 0.425f * f, 1.0f}},
+    };
+
+    auto& fieldQuad {
+        CreateSceneObject(Pht::QuadMesh {vertices}, fieldMaterial, mEngine.GetSceneManager())
+    };
+    
+    fieldQuad.GetTransform().SetPosition({0.0f, 0.0f, UiLayer::panel});
+    parent.AddChild(fieldQuad);
 }
 
 Pht::SceneObject& HowToPlayDialogView::CreateLPiece(const Pht::Vec3& position,
