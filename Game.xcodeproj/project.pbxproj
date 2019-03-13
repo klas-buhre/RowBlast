@@ -26,6 +26,8 @@
 		620A981D1EE2A3B400AD6C61 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 620A981C1EE2A3B400AD6C61 /* AVFoundation.framework */; };
 		620A98291EE2B5C000AD6C61 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 620A98281EE2B5C000AD6C61 /* CoreMedia.framework */; };
 		621D867F2204694D00E505AE /* PieceTrailParticleEffect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 621D867D2204694D00E505AE /* PieceTrailParticleEffect.cpp */; };
+		621F145E22396CA7004165A2 /* previous.png in Resources */ = {isa = PBXBuildFile; fileRef = 621F145D22396CA7004165A2 /* previous.png */; };
+		621F1460223978CF004165A2 /* filled_circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 621F145F223978CF004165A2 /* filled_circle.png */; };
 		621F715521FDD9D700232B83 /* OtherMoves2WindowView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 621F715321FDD9D700232B83 /* OtherMoves2WindowView.cpp */; };
 		621F715821FDD9EA00232B83 /* OtherMoves2WindowController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 621F715621FDD9EA00232B83 /* OtherMoves2WindowController.cpp */; };
 		621F715B2201AD1200232B83 /* FieldBottomGlowAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 621F71592201AD1200232B83 /* FieldBottomGlowAnimation.cpp */; };
@@ -558,6 +560,8 @@
 		620A98281EE2B5C000AD6C61 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		621D867D2204694D00E505AE /* PieceTrailParticleEffect.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PieceTrailParticleEffect.cpp; sourceTree = "<group>"; };
 		621D867E2204694D00E505AE /* PieceTrailParticleEffect.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PieceTrailParticleEffect.hpp; sourceTree = "<group>"; };
+		621F145D22396CA7004165A2 /* previous.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = previous.png; sourceTree = "<group>"; };
+		621F145F223978CF004165A2 /* filled_circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = filled_circle.png; sourceTree = "<group>"; };
 		621F715321FDD9D700232B83 /* OtherMoves2WindowView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = OtherMoves2WindowView.cpp; sourceTree = "<group>"; };
 		621F715421FDD9D700232B83 /* OtherMoves2WindowView.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = OtherMoves2WindowView.hpp; sourceTree = "<group>"; };
 		621F715621FDD9EA00232B83 /* OtherMoves2WindowController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = OtherMoves2WindowController.cpp; sourceTree = "<group>"; };
@@ -2195,6 +2199,8 @@
 		62298337222D8E9C001A7E1C /* Gui */ = {
 			isa = PBXGroup;
 			children = (
+				621F145F223978CF004165A2 /* filled_circle.png */,
+				621F145D22396CA7004165A2 /* previous.png */,
 				6220AF3422343D2A00D66C76 /* help.png */,
 				6221D56F223042980098395A /* circle.png */,
 				6221D571223046E50098395A /* right_arrow.png */,
@@ -3238,6 +3244,7 @@
 				62B1CB89210F8F8600D0F195 /* laser_bomb_diffuse.jpg in Resources */,
 				62216A0F21E756E4001CB9A1 /* explosion.wav in Resources */,
 				622169FF21E60503001CB9A1 /* other_moves.wav in Resources */,
+				621F1460223978CF004165A2 /* filled_circle.png in Resources */,
 				625698162182392C003A3A9D /* TextMidGradient.frag in Resources */,
 				625D3B4B216FB2A200D67EC2 /* level60.json in Resources */,
 				6270DC631FCB22AE00FB457D /* star.obj in Resources */,
@@ -3370,6 +3377,7 @@
 				6238F622219AEC640008A0CF /* heart_112.obj in Resources */,
 				6270DC941FCB23D800FB457D /* level20.json in Resources */,
 				62B1CB85210F8F8600D0F195 /* laser_beam_red.png in Resources */,
+				621F145E22396CA7004165A2 /* previous.png in Resources */,
 				62A729E32144170D00255BF7 /* level58.json in Resources */,
 				6220AF3522343D2B00D66C76 /* help.png in Resources */,
 				626940A72159399000D9857A /* ufo.jpg in Resources */,

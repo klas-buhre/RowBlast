@@ -50,7 +50,7 @@ Ongoing tasks:
     -How to play dialog should be available from the game menu as well.
     -How to play dialog.
       -1. Pieces:
-          The goal is usually to clear blocks by filling horizontal rows.
+          Usually the goal is to clear blocks by filling horizontal rows.
           Show SceneObject animation of a piece filling rows and clearing them.
       -2. Controls:
           The game can be played either by SingleTap controls or Swipe controls.

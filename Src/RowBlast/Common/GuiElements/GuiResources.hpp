@@ -33,6 +33,8 @@ namespace RowBlast {
         Pht::RenderableObject& GetMediumDarkBlueGlossyButton(PotentiallyZoomedScreen potentiallyZoomed) const;
         Pht::RenderableObject& GetSmallBlueGlossyButton(PotentiallyZoomedScreen potentiallyZoomed) const;
         Pht::RenderableObject& GetSmallDarkBlueGlossyButton(PotentiallyZoomedScreen potentiallyZoomed) const;
+        Pht::RenderableObject& GetEvenSmallerBlueGlossyButton(PotentiallyZoomedScreen potentiallyZoomed) const;
+        Pht::RenderableObject& GetEvenSmallerDarkBlueGlossyButton(PotentiallyZoomedScreen potentiallyZoomed) const;
         Pht::RenderableObject& GetLargeGreenGlossyButton(PotentiallyZoomedScreen potentiallyZoomed) const;
         Pht::RenderableObject& GetLargeDarkGreenGlossyButton(PotentiallyZoomedScreen potentiallyZoomed) const;
         Pht::RenderableObject& GetMediumGreenGlossyButton(PotentiallyZoomedScreen potentiallyZoomed) const;
@@ -152,6 +154,10 @@ namespace RowBlast {
         std::unique_ptr<Pht::RenderableObject> mMediumThinDarkBlueGlossyButton;
         std::unique_ptr<Pht::RenderableObject> mSmallerBlueGlossyButton;
         std::unique_ptr<Pht::RenderableObject> mSmallerDarkBlueGlossyButton;
+        std::unique_ptr<Pht::RenderableObject> mEvenSmallerBlueGlossyButton;
+        std::unique_ptr<Pht::RenderableObject> mEvenSmallerBlueGlossyButtonPotentiallyZoomedScreen;
+        std::unique_ptr<Pht::RenderableObject> mEvenSmallerDarkBlueGlossyButton;
+        std::unique_ptr<Pht::RenderableObject> mEvenSmallerDarkBlueGlossyButtonPotentiallyZoomedScreen;
         std::unique_ptr<Pht::RenderableObject> mSmallestBlueGlossyButton;
         std::unique_ptr<Pht::RenderableObject> mSmallestDarkBlueGlossyButton;
         std::unique_ptr<Pht::RenderableObject> mThinBlueGlossyButton;

@@ -36,9 +36,6 @@ HowToPlayDialogView::HowToPlayDialogView(Pht::IEngine& engine,
     AddSceneObject(std::move(menuWindowSceneObject));
 
     SetSize(menuWindow.GetSize());
-    
-    auto& largeTextProperties {guiResources.GetLargeWhiteTextProperties(zoom)};
-    CreateText({-4.5f, 8.25f, UiLayer::text}, "HOW TO PLAY", largeTextProperties);
 
     Pht::Vec3 closeButtonPosition {
         GetSize().x / 2.0f - 1.3f,
@@ -67,18 +64,100 @@ HowToPlayDialogView::HowToPlayDialogView(Pht::IEngine& engine,
     lineSceneObject.GetTransform().SetPosition({0.0f, GetSize().y / 2.0f - 2.6f, UiLayer::textRectangle});
     GetRoot().AddChild(lineSceneObject);
     
+    MenuButton::Style buttonStyle;
+    buttonStyle.mPressedScale = 1.05f;
+    buttonStyle.mRenderableObject = &guiResources.GetEvenSmallerBlueGlossyButton(zoom);
+    buttonStyle.mSelectedRenderableObject = &guiResources.GetEvenSmallerDarkBlueGlossyButton(zoom);
+
+    Pht::Vec3 previousButtonPosition {
+        -GetSize().x / 2.0f + 1.6f,
+        -GetSize().y / 2.0f + 1.2f,
+        UiLayer::textRectangle
+    };
+    
+    Pht::Vec2 buttonInputSize {60.0f, 60.0f};
+    
+    mPreviousButton = std::make_unique<MenuButton>(engine,
+                                                   *this,
+                                                   previousButtonPosition,
+                                                   buttonInputSize,
+                                                   buttonStyle);
+    mPreviousButton->CreateIcon("previous.png",
+                                {0.0f, 0.0f, UiLayer::buttonText},
+                                {0.9f, 0.9f},
+                                {1.0f, 1.0f, 1.0f, 1.0f},
+                                Pht::Vec4 {0.2f, 0.2f, 0.2f, 0.5f},
+                                Pht::Vec3 {-0.05f, -0.05f, -0.1f});
+
+    Pht::Vec3 nextButtonPosition {
+        GetSize().x / 2.0f - 1.6f,
+        -GetSize().y / 2.0f + 1.2f,
+        UiLayer::textRectangle
+    };
+
+    mNextButton = std::make_unique<MenuButton>(engine,
+                                               *this,
+                                               nextButtonPosition,
+                                               buttonInputSize,
+                                               buttonStyle);
+    mNextButton->CreateIcon("play.png",
+                            {0.0f, 0.0f, UiLayer::buttonText},
+                            {0.9f, 0.9f},
+                            {1.0f, 1.0f, 1.0f, 1.0f},
+                            Pht::Vec4 {0.2f, 0.2f, 0.2f, 0.5f},
+                            Pht::Vec3 {-0.05f, -0.05f, -0.1f});
+        
+    for (auto i {0}; i < mNumPages; ++i) {
+        GetRoot().AddChild(CreateFilledCircleIcon(i, false));
+    }
+
+
+
+
+
+    auto& largeTextProperties {guiResources.GetLargeWhiteTextProperties(zoom)};
+    CreateText({-1.5f, 8.25f, UiLayer::text}, "GOAL", largeTextProperties);
+
     CreateBlockAnimation(pieceResources, levelResources);
 
     auto& textProperties {guiResources.GetSmallWhiteTextProperties(zoom)};
-    CreateText({-4.4f, -6.4f, UiLayer::text}, "Bring the asteroid down to", textProperties);
-    CreateText({-3.8f, -7.475f, UiLayer::text}, "the bottom of the field", textProperties);
+    CreateText({-5.65f, -5.4f, UiLayer::text}, "Usually the goal is to clear blocks", textProperties);
+    CreateText({-4.35f, -6.475f, UiLayer::text}, "by filling horizontal rows.", textProperties);
+    
+    GetRoot().AddChild(CreateFilledCircleIcon(0, true));
+}
+
+Pht::SceneObject& HowToPlayDialogView::CreateFilledCircleIcon(int index, bool isBright) {
+    auto indexMax {mNumPages - 1};
+    auto diff {0.75f};
+    
+    Pht::Vec3 position {
+        -indexMax * diff / 2.0f + index * diff,
+        -GetSize().y / 2.0f + 1.2f,
+        isBright ? UiLayer::root : UiLayer::textRectangle
+    };
+    
+    auto brightness {isBright ? 0.95f : 0.4f};
+    Pht::Vec4 color {brightness, brightness, brightness, 1.0f};
+    Pht::Material iconMaterial {"filled_circle.png", 0.0f, 0.0f, 0.0f, 0.0f};
+    iconMaterial.SetBlend(Pht::Blend::Yes);
+    iconMaterial.SetOpacity(color.w);
+    iconMaterial.SetAmbient(Pht::Color{color.x, color.y, color.z});
+    
+    auto& iconSceneObject {
+        CreateSceneObject(Pht::QuadMesh {0.35f, 0.35f}, iconMaterial, mEngine.GetSceneManager())
+    };
+    
+    iconSceneObject.GetTransform().SetPosition(position);
+    
+    return iconSceneObject;
 }
 
 void HowToPlayDialogView::CreateBlockAnimation(const PieceResources& pieceResources,
                                                const LevelResources& levelResources) {
     auto& container {CreateSceneObject()};
-    container.GetTransform().SetPosition({0.0f, 1.0f, 0.0f});
-    container.GetTransform().SetScale(1.25f);
+    container.GetTransform().SetPosition({0.0f, 1.5f, 0.0f});
+    container.GetTransform().SetScale(1.15f);
     
     GetRoot().AddChild(container);
     

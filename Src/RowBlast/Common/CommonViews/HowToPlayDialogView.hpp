@@ -47,7 +47,16 @@ namespace RowBlast {
             return *mCloseButton;
         }
         
+        const MenuButton& GetPreviousButton() const {
+            return *mPreviousButton;
+        }
+
+        const MenuButton& GetNextButton() const {
+            return *mNextButton;
+        }
+
     private:
+        Pht::SceneObject& CreateFilledCircleIcon(int index, bool isFilled);
         void CreateBlockAnimation(const PieceResources& pieceResources,
                                   const LevelResources& levelResources);
         Pht::SceneObject& CreateLPiece(const Pht::Vec3& position,
@@ -74,7 +83,10 @@ namespace RowBlast {
         Pht::IEngine& mEngine;
         IGuiLightProvider* mGuiLightProvider {nullptr};
         std::unique_ptr<MenuButton> mCloseButton;
+        std::unique_ptr<MenuButton> mNextButton;
+        std::unique_ptr<MenuButton> mPreviousButton;
         Pht::Animation* mAnimation {nullptr};
+        int mNumPages {9};
     };
 }
 

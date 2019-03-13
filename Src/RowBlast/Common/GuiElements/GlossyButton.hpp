@@ -23,6 +23,7 @@ namespace RowBlast {
         MediumThin,
         Small,
         Smaller,
+        EvenSmaller,
         Smallest,
         Thin
     };

@@ -74,5 +74,13 @@ HowToPlayDialogController::OnTouch(const Pht::TouchEvent& touchEvent) {
                                             SlidingMenuAnimation::SlideDirection::Right);
     }
     
+    if (mView.GetPreviousButton().IsClicked(touchEvent)) {
+    
+    }
+    
+    if (mView.GetNextButton().IsClicked(touchEvent)) {
+    
+    }
+    
     return Result::None;
 }
