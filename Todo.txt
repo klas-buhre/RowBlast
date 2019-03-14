@@ -484,3 +484,12 @@ segments: 5
 
 FreeType compilation:
 Put the build_freetype.sh script in freetype root dir then execute it.
+
+
+Did this to get around problem with app not launching on device:
+Product -> Scheme -> Edit Scheme -> Info -> Executable -> Ask on Launch
+(https://stackoverflow.com/questions/52415694/ios-12-ipad-denied-launch-request-xcode/52584195#52584195)
+
+A side effect is that the debugger does not work with this setting so can only debug in simulator
+and when setting it back the the original settings:
+Product -> Scheme -> Edit Scheme -> Info -> Executable -> Game.app

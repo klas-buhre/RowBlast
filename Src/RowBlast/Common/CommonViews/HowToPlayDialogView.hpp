@@ -59,14 +59,23 @@ namespace RowBlast {
         }
 
     private:
+        struct ClearBlocksChildAnimations {
+            bool mPlacePiece {false};
+        };
+        
         void CreateGoalPage(const GuiResources& guiResources,
                             const PieceResources& pieceResources,
                             const LevelResources& levelResources,
                             PotentiallyZoomedScreen zoom);
         void CreateControlsPage(const GuiResources& guiResources, PotentiallyZoomedScreen zoom);
+        void CreatePlacePiecePage(const GuiResources& guiResources,
+                                  const PieceResources& pieceResources,
+                                  const LevelResources& levelResources,
+                                  PotentiallyZoomedScreen zoom);
         void CreateFieldQuad(Pht::SceneObject& parent);
         Pht::SceneObject& CreateFilledCircleIcon(int index, bool isFilled);
         Pht::Animation& CreateClearBlocksAnimation(Pht::SceneObject& parent,
+                                                   const ClearBlocksChildAnimations& childAnimations,
                                                    const PieceResources& pieceResources,
                                                    const LevelResources& levelResources);
         Pht::SceneObject& CreateLPiece(const Pht::Vec3& position,
@@ -89,6 +98,10 @@ namespace RowBlast {
                         Pht::RenderableObject& weldRenderable,
                         float rotation,
                         Pht::SceneObject& parent);
+        Pht::SceneObject& CreateLPieceGhostPiece(const Pht::Vec3& position,
+                                                 float rotation,
+                                                 Pht::SceneObject& parent,
+                                                 const LevelResources& levelResources);
         void CreateIcon(const std::string& filename,
                         const Pht::Vec3& position,
                         const Pht::Vec2& size,
