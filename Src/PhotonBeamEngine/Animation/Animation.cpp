@@ -10,22 +10,31 @@ using namespace Pht;
 
 const ComponentId Animation::id {Hash::Fnv1a("Animation")};
 
-Animation::Animation(SceneObject& sceneObject, IAnimationSystem& animationSystem) :
+Animation::Animation(SceneObject& sceneObject,
+                     const std::vector<Keyframe>& keyframes,
+                     IAnimationSystem& animationSystem) :
     mSceneObject {sceneObject},
-    mAnimationSystem {animationSystem} {}
+    mAnimationSystem {animationSystem} {
+    
+    SetKeyframes(keyframes);
+}
 
 Animation::~Animation() {
     mAnimationSystem.RemoveAnimation(*this);
 }
 
-void Animation::AddKeyframe(const Keyframe& keyframe) {
-    if (mKeyframes.empty()) {
-        assert(keyframe.GetTime() == 0.0f);
-    } else {
-        assert(keyframe.GetTime() > mKeyframes.back().GetTime());
+void Animation::SetKeyframes(const std::vector<Keyframe>& keyframes) {
+    mKeyframes.clear();
+
+    for (auto& keyframe: keyframes) {
+        if (mKeyframes.empty()) {
+            assert(keyframe.mTime == 0.0f);
+        } else {
+            assert(keyframe.mTime > mKeyframes.back().mTime);
+        }
+        
+        mKeyframes.push_back(keyframe);
     }
-    
-    mKeyframes.push_back(keyframe);
 }
 
 void Animation::Update(float dt) {
@@ -54,7 +63,7 @@ void Animation::CalculateKeyframe(float dt) {
     for (auto i {1}; i < mKeyframes.size(); ++i) {
         auto& keyframe {mKeyframes[i - 1]};
         auto& nextKeyframe {mKeyframes[i]};
-        if (mElapsedTime >= keyframe.GetTime() && mElapsedTime <= nextKeyframe.GetTime()) {
+        if (mElapsedTime >= keyframe.mTime && mElapsedTime <= nextKeyframe.mTime) {
             mKeyframe = &keyframe;
             mNextKeyframe = &nextKeyframe;
             return;
@@ -72,22 +81,22 @@ void Animation::HandleKeyframeTransition() {
     }
     
     auto& transform {mSceneObject.GetTransform()};
-    auto& position {mKeyframe->GetPosition()};
+    auto& position {mKeyframe->mPosition};
     if (position.HasValue()) {
         transform.SetPosition(position.GetValue());
     }
     
-    auto& scale {mKeyframe->GetScale()};
+    auto& scale {mKeyframe->mScale};
     if (scale.HasValue()) {
         transform.SetScale(scale.GetValue());
     }
 
-    auto& rotation {mKeyframe->GetRotation()};
+    auto& rotation {mKeyframe->mRotation};
     if (rotation.HasValue()) {
         transform.SetRotation(rotation.GetValue());
     }
 
-    auto isVisible {mKeyframe->IsVisible()};
+    auto isVisible {mKeyframe->mIsVisible};
     if (isVisible.HasValue()) {
         mSceneObject.SetIsVisible(isVisible.GetValue());
     }
@@ -99,28 +108,28 @@ void Animation::UpdateLinearInterpolation() {
     }
     
     auto& transform {mSceneObject.GetTransform()};
-    auto& position {mKeyframe->GetPosition()};
-    auto& nextPosition {mNextKeyframe->GetPosition()};
+    auto& position {mKeyframe->mPosition};
+    auto& nextPosition {mNextKeyframe->mPosition};
     if (position.HasValue() && nextPosition.HasValue()) {
         transform.SetPosition(LerpVec3(position.GetValue(), nextPosition.GetValue()));
     }
 
-    auto& scale {mKeyframe->GetScale()};
-    auto& nextScale {mNextKeyframe->GetScale()};
+    auto& scale {mKeyframe->mScale};
+    auto& nextScale {mNextKeyframe->mScale};
     if (scale.HasValue() && nextScale.HasValue()) {
         transform.SetPosition(LerpVec3(scale.GetValue(), nextScale.GetValue()));
     }
 
-    auto& rotation {mKeyframe->GetRotation()};
-    auto& nextRotation {mNextKeyframe->GetRotation()};
+    auto& rotation {mKeyframe->mRotation};
+    auto& nextRotation {mNextKeyframe->mRotation};
     if (rotation.HasValue() && nextRotation.HasValue()) {
         transform.SetRotation(LerpVec3(rotation.GetValue(), nextRotation.GetValue()));
     }
 }
 
 Pht::Vec3 Animation::LerpVec3(const Pht::Vec3& keyframeValue, const Pht::Vec3& nextKeyframeValue) {
-    auto timeBetweenKeyframes {mNextKeyframe->GetTime() - mKeyframe->GetTime()};
-    auto elapsedInBetweenTime {std::fmax(mElapsedTime - mKeyframe->GetTime(), 0.0f)};
+    auto timeBetweenKeyframes {mNextKeyframe->mTime - mKeyframe->mTime};
+    auto elapsedInBetweenTime {std::fmax(mElapsedTime - mKeyframe->mTime, 0.0f)};
     auto normalizedTime {elapsedInBetweenTime / timeBetweenKeyframes};
     
     return keyframeValue + (nextKeyframeValue - keyframeValue) * normalizedTime;

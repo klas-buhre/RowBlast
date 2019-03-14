@@ -40,22 +40,16 @@ void BeginTextAnimation::Init(Pht::Scene& scene, Pht::SceneObject& parentObject)
     mSceneObject->SetIsVisible(false);
     parentObject.AddChild(*mSceneObject);
     
+    std::vector<Pht::Keyframe> keyframes {
+        {.mTime = 0.0f, .mIsVisible = true},
+        {.mTime = textVisibleDuration, .mIsVisible = false},
+        {.mTime = textVisibleDuration + textInvisibleDuration, .mIsVisible = true}
+    };
+
     auto& animationSystem {mEngine.GetAnimationSystem()};
-    auto& animation {animationSystem.CreateAnimation(*mSceneObject)};
+    auto& animation {animationSystem.CreateAnimation(*mSceneObject, keyframes)};
     animation.SetInterpolation(Pht::Interpolation::None);
     
-    Pht::Keyframe keyframe1 {0.0f};
-    keyframe1.SetIsVisible(true);
-    animation.AddKeyframe(keyframe1);
-    
-    Pht::Keyframe keyframe2 {textVisibleDuration};
-    keyframe2.SetIsVisible(false);
-    animation.AddKeyframe(keyframe2);
-
-    Pht::Keyframe keyframe3 {textVisibleDuration + textInvisibleDuration};
-    keyframe3.SetIsVisible(true);
-    animation.AddKeyframe(keyframe3);
-
     animationSystem.AddAnimation(animation);
 }
 

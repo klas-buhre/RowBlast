@@ -1,6 +1,5 @@
 #include "AnimationSystem.hpp"
 
-#include "Animation.hpp"
 #include "SceneObject.hpp"
 
 using namespace Pht;
@@ -19,8 +18,9 @@ void AnimationSystem::RemoveAnimation(Animation& animation) {
         std::end(mAnimations));
 }
 
-Animation& AnimationSystem::CreateAnimation(SceneObject& sceneObject) {
-    auto animation {std::make_unique<Animation>(sceneObject, *this)};
+Animation& AnimationSystem::CreateAnimation(SceneObject& sceneObject,
+                                            const std::vector<Keyframe>& keyframes) {
+    auto animation {std::make_unique<Animation>(sceneObject, keyframes, *this)};
     auto& retVal {*animation};
     
     sceneObject.SetComponent<Animation>(std::move(animation));

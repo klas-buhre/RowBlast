@@ -214,16 +214,13 @@ void MapHud::CreateCoinsObject(Pht::Scene& scene,
     coinSceneObject.GetTransform().SetPosition({-1.5f, 0.0f, UiLayer::root});
     coinsContainer.AddChild(coinSceneObject);
 
+    std::vector<Pht::Keyframe> keyframes {
+        {.mTime = 0.0f, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}},
+        {.mTime = 360.0f / coinRotationSpeed, .mRotation = Pht::Vec3{0.0f, 360.0f, 0.0f}}
+    };
+    
     auto& animationSystem {mEngine.GetAnimationSystem()};
-    auto& animation {animationSystem.CreateAnimation(coinSceneObject)};
-    
-    Pht::Keyframe keyframe1 {0.0f};
-    keyframe1.SetRotation({0.0f, 0.0f, 0.0f});
-    animation.AddKeyframe(keyframe1);
-    
-    Pht::Keyframe keyframe2 {360.0f / coinRotationSpeed};
-    keyframe2.SetRotation({0.0f, 360.0f, 0.0f});
-    animation.AddKeyframe(keyframe2);
+    auto& animation {animationSystem.CreateAnimation(coinSceneObject, keyframes)};
 
     animationSystem.AddAnimation(animation);
     animation.Play();

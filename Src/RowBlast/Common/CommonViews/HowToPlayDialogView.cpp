@@ -230,10 +230,15 @@ Pht::Animation& HowToPlayDialogView::CreateClearBlocksAnimation(Pht::SceneObject
     
     CreateFieldQuad(container);
     
+    auto rowClearTime {1.6f};
+    auto fallWaitDuration {0.35f};
+    auto fallDuration {0.2f};
+    auto animationDuration {4.0f};
+
     auto& animationSystem {mEngine.GetAnimationSystem()};
-    auto& rootAnimation {animationSystem.CreateAnimation(container)};
-    rootAnimation.AddKeyframe(Pht::Keyframe {0.0f});
-    rootAnimation.AddKeyframe(Pht::Keyframe {4.0f});
+    auto& rootAnimation {
+        animationSystem.CreateAnimation(container, {{.mTime = 0.0f}, {.mTime = animationDuration}})
+    };
     
     Pht::Vec3 lPieceInitialPosition {-0.5f, 3.3f, UiLayer::block};
     auto& lPiece {CreateLPiece(lPieceInitialPosition, container, pieceResources)};
@@ -247,93 +252,46 @@ Pht::Animation& HowToPlayDialogView::CreateClearBlocksAnimation(Pht::SceneObject
     CreateThreeGrayBlocksWithGap({-1.5f, -4.0f, UiLayer::block}, container, levelResources);
     CreateThreeGrayBlocks({2.0f, -4.0f, UiLayer::block}, container, levelResources);
     
-    auto rowClearTime {1.6f};
-    auto fallWaitDuration {0.35f};
-    auto fallDuration {0.2f};
-    auto animationDuration {4.0f};
-    
-    auto& lPieceAnimation {animationSystem.CreateAnimation(lPiece)};
-    
-    Pht::Keyframe lPieceAnimationKeyframe1 {0.0f};
-    lPieceAnimationKeyframe1.SetPosition(lPieceInitialPosition);
-    lPieceAnimationKeyframe1.SetIsVisible(true);
-    lPieceAnimation.AddKeyframe(lPieceAnimationKeyframe1);
+    std::vector<Pht::Keyframe> lPieceAnimationKeyframes {
+        {.mTime = 0.0f, .mPosition = lPieceInitialPosition, .mIsVisible = true},
+        {.mTime = 1.0f, .mPosition = lPieceInitialPosition},
+        {.mTime = 1.3f, .mPosition = Pht::Vec3{-0.5f, -2.5f, UiLayer::block}},
+        {.mTime = rowClearTime, .mIsVisible = false},
+        {.mTime = animationDuration}
+    };
+    animationSystem.CreateAnimation(lPiece, lPieceAnimationKeyframes);
 
-    Pht::Keyframe lPieceAnimationKeyframe2 {1.0f};
-    lPieceAnimationKeyframe2.SetPosition(lPieceInitialPosition);
-    lPieceAnimation.AddKeyframe(lPieceAnimationKeyframe2);
+    std::vector<Pht::Keyframe> remainingLPieceKeyframes {
+        {.mTime = 0.0f, .mPosition = remainingLPieceInitialPosition, .mIsVisible = false},
+        {.mTime = rowClearTime, .mIsVisible = true},
+        {.mTime = rowClearTime + fallWaitDuration, .mPosition = remainingLPieceInitialPosition},
+        {.mTime = rowClearTime + fallWaitDuration + fallDuration, .mPosition = Pht::Vec3{-0.5f, -3.0f, UiLayer::block}},
+        {.mTime = animationDuration}
+    };
+    animationSystem.CreateAnimation(remainingLPiece, remainingLPieceKeyframes);
 
-    Pht::Keyframe lPieceAnimationKeyframe3 {1.3f};
-    lPieceAnimationKeyframe3.SetPosition({-0.5f, -2.5f, UiLayer::block});
-    lPieceAnimation.AddKeyframe(lPieceAnimationKeyframe3);
+    std::vector<Pht::Keyframe> greenBlocksKeyframes {
+        {.mTime = 0.0f, .mPosition = greenBlocksInitialPosition},
+        {.mTime = rowClearTime + fallWaitDuration, .mPosition = greenBlocksInitialPosition},
+        {.mTime = rowClearTime + fallWaitDuration + fallDuration, .mPosition = Pht::Vec3{2.5f, -3.0f, UiLayer::block}},
+        {.mTime = animationDuration}
+    };
+    animationSystem.CreateAnimation(greenBlocks, greenBlocksKeyframes);
 
-    Pht::Keyframe lPieceAnimationKeyframe4 {rowClearTime};
-    lPieceAnimationKeyframe4.SetIsVisible(false);
-    lPieceAnimation.AddKeyframe(lPieceAnimationKeyframe4);
+    std::vector<Pht::Keyframe> leftGrayBlocksKeyframes {
+        {.mTime = 0.0f, .mIsVisible = true},
+        {.mTime = rowClearTime, .mIsVisible = false},
+        {.mTime = animationDuration}
+    };
+    animationSystem.CreateAnimation(leftGrayBlocks, leftGrayBlocksKeyframes);
 
-    lPieceAnimation.AddKeyframe(Pht::Keyframe {animationDuration});
-    
-    auto& remainingLPieceAnimation {animationSystem.CreateAnimation(remainingLPiece)};
-    
-    Pht::Keyframe remainingLPieceKeyframe1 {0.0f};
-    remainingLPieceKeyframe1.SetIsVisible(false);
-    remainingLPieceKeyframe1.SetPosition(remainingLPieceInitialPosition);
-    remainingLPieceAnimation.AddKeyframe(remainingLPieceKeyframe1);
+    std::vector<Pht::Keyframe> rightGrayBlocksKeyframes {
+        {.mTime = 0.0f, .mIsVisible = true},
+        {.mTime = rowClearTime, .mIsVisible = false},
+        {.mTime = animationDuration}
+    };
+    animationSystem.CreateAnimation(rightGrayBlocks, rightGrayBlocksKeyframes);
 
-    Pht::Keyframe remainingLPieceKeyframe2 {rowClearTime};
-    remainingLPieceKeyframe2.SetIsVisible(true);
-    remainingLPieceAnimation.AddKeyframe(remainingLPieceKeyframe2);
-
-    Pht::Keyframe remainingLPieceKeyframe3 {rowClearTime + fallWaitDuration};
-    remainingLPieceKeyframe3.SetPosition(remainingLPieceInitialPosition);
-    remainingLPieceAnimation.AddKeyframe(remainingLPieceKeyframe3);
-
-    Pht::Keyframe remainingLPieceKeyframe4 {rowClearTime + fallWaitDuration + fallDuration};
-    remainingLPieceKeyframe4.SetPosition({-0.5f, -3.0f, UiLayer::block});
-    remainingLPieceAnimation.AddKeyframe(remainingLPieceKeyframe4);
-
-    remainingLPieceAnimation.AddKeyframe(Pht::Keyframe {animationDuration});
-    
-    auto& greenBlocksAnimation {animationSystem.CreateAnimation(greenBlocks)};
-    
-    Pht::Keyframe greenBlocksKeyframe1 {0.0f};
-    greenBlocksKeyframe1.SetPosition(greenBlocksInitialPosition);
-    greenBlocksAnimation.AddKeyframe(greenBlocksKeyframe1);
-
-    Pht::Keyframe greenBlocksKeyframe2 {rowClearTime + fallWaitDuration};
-    greenBlocksKeyframe2.SetPosition(greenBlocksInitialPosition);
-    greenBlocksAnimation.AddKeyframe(greenBlocksKeyframe2);
-
-    Pht::Keyframe greenBlocksKeyframe3 {rowClearTime + fallWaitDuration + fallDuration};
-    greenBlocksKeyframe3.SetPosition({2.5f, -3.0f, UiLayer::block});
-    greenBlocksAnimation.AddKeyframe(greenBlocksKeyframe3);
-
-    greenBlocksAnimation.AddKeyframe(Pht::Keyframe {animationDuration});
-
-    auto& leftGrayBlocksAnimation {animationSystem.CreateAnimation(leftGrayBlocks)};
-    
-    Pht::Keyframe leftGrayBlocksKeyframe1 {0.0f};
-    leftGrayBlocksKeyframe1.SetIsVisible(true);
-    leftGrayBlocksAnimation.AddKeyframe(leftGrayBlocksKeyframe1);
-    
-    Pht::Keyframe leftGrayBlocksKeyframe2 {rowClearTime};
-    leftGrayBlocksKeyframe2.SetIsVisible(false);
-    leftGrayBlocksAnimation.AddKeyframe(leftGrayBlocksKeyframe2);
-    
-    leftGrayBlocksAnimation.AddKeyframe(Pht::Keyframe {animationDuration});
-
-    auto& rightGrayBlocksAnimation {animationSystem.CreateAnimation(rightGrayBlocks)};
-    
-    Pht::Keyframe rightGrayBlocksKeyframe1 {0.0f};
-    rightGrayBlocksKeyframe1.SetIsVisible(true);
-    rightGrayBlocksAnimation.AddKeyframe(rightGrayBlocksKeyframe1);
-    
-    Pht::Keyframe rightGrayBlocksKeyframe2 {rowClearTime};
-    rightGrayBlocksKeyframe2.SetIsVisible(false);
-    rightGrayBlocksAnimation.AddKeyframe(rightGrayBlocksKeyframe2);
-    
-    rightGrayBlocksAnimation.AddKeyframe(Pht::Keyframe {animationDuration});
-    
     if (childAnimations.mPlacePiece) {
         auto& ghostPieces {CreateSceneObject()};
         container.AddChild(ghostPieces);
@@ -341,18 +299,13 @@ Pht::Animation& HowToPlayDialogView::CreateClearBlocksAnimation(Pht::SceneObject
         CreateLPieceGhostPiece({-0.5f, -2.5f, UiLayer::block}, 90.0f, ghostPieces, levelResources);
         CreateLPieceGhostPiece({2.5f, -0.5f, UiLayer::block}, 0.0f, ghostPieces, levelResources);
         CreateLPieceGhostPiece({-2.5f, -1.5f, UiLayer::block}, 0.0f, ghostPieces, levelResources);
-        
-        auto& ghostPiecesAnimation {animationSystem.CreateAnimation(ghostPieces)};
-    
-        Pht::Keyframe ghostPiecesKeyframe1 {0.0f};
-        ghostPiecesKeyframe1.SetIsVisible(true);
-        ghostPiecesAnimation.AddKeyframe(ghostPiecesKeyframe1);
 
-        Pht::Keyframe ghostPiecesKeyframe2 {1.0f};
-        ghostPiecesKeyframe2.SetIsVisible(false);
-        ghostPiecesAnimation.AddKeyframe(ghostPiecesKeyframe2);
-
-        ghostPiecesAnimation.AddKeyframe(Pht::Keyframe {animationDuration});
+        std::vector<Pht::Keyframe> ghostPiecesKeyframes {
+            {.mTime = 0.0f, .mIsVisible = true},
+            {.mTime = 1.0f, .mIsVisible = false},
+            {.mTime = animationDuration}
+        };
+        animationSystem.CreateAnimation(ghostPieces, ghostPiecesKeyframes);
     }
 
     return rootAnimation;

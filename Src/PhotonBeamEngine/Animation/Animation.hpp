@@ -3,7 +3,8 @@
 
 #include <vector>
 
-#include "Keyframe.hpp"
+#include "Vector.hpp"
+#include "Optional.hpp"
 #include "ISceneObjectComponent.hpp"
 
 namespace Pht {
@@ -15,14 +16,23 @@ namespace Pht {
         Linear
     };
     
+    struct Keyframe {
+        float mTime {0.0f};
+        Optional<Vec3> mPosition;
+        Optional<Vec3> mScale;
+        Optional<Vec3> mRotation;
+        Optional<bool> mIsVisible;
+    };
+    
     class Animation: public ISceneObjectComponent {
     public:
         static const ComponentId id;
         
-        Animation(SceneObject& sceneObject, IAnimationSystem& animationSystem);
+        Animation(SceneObject& sceneObject,
+                  const std::vector<Keyframe>& keyframes,
+                  IAnimationSystem& animationSystem);
         ~Animation();
         
-        void AddKeyframe(const Keyframe& keyframe);
         void Update(float dt);
         void Play();
         void Pause();
@@ -52,6 +62,7 @@ namespace Pht {
             Stop
         };
         
+        void SetKeyframes(const std::vector<Keyframe>& keyframes);
         void CalculateKeyframe(float dt);
         void HandleKeyframeTransition();
         void UpdateLinearInterpolation();

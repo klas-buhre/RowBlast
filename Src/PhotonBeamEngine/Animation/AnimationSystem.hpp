@@ -10,7 +10,8 @@ namespace Pht {
     public:
         void AddAnimation(Animation& animation) override;
         void RemoveAnimation(Animation& animation) override;
-        Animation& CreateAnimation(SceneObject& sceneObject) override;
+        Animation& CreateAnimation(SceneObject& sceneObject,
+                                   const std::vector<Keyframe>& keyframes) override;
 
         void Update(float dt);
         
