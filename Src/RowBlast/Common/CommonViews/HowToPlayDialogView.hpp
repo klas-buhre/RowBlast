@@ -2,6 +2,7 @@
 #define HowToPlayDialogView_hpp
 
 #include <memory>
+#include <vector>
 
 // Engine includes.
 #include "GuiView.hpp"
@@ -37,6 +38,8 @@ namespace RowBlast {
         void OnDeactivate() override;
     
         void SetUp();
+        void GoToNextPage();
+        void GoToPreviousPage();
         void Update();
 
         void SetGuiLightProvider(IGuiLightProvider& guiLightProvider) {
@@ -56,10 +59,16 @@ namespace RowBlast {
         }
 
     private:
+        void CreateGoalPage(const GuiResources& guiResources,
+                            const PieceResources& pieceResources,
+                            const LevelResources& levelResources,
+                            PotentiallyZoomedScreen zoom);
+        void CreateControlsPage(const GuiResources& guiResources, PotentiallyZoomedScreen zoom);
         void CreateFieldQuad(Pht::SceneObject& parent);
         Pht::SceneObject& CreateFilledCircleIcon(int index, bool isFilled);
-        void CreateBlockAnimation(const PieceResources& pieceResources,
-                                  const LevelResources& levelResources);
+        Pht::Animation& CreateClearBlocksAnimation(Pht::SceneObject& parent,
+                                                   const PieceResources& pieceResources,
+                                                   const LevelResources& levelResources);
         Pht::SceneObject& CreateLPiece(const Pht::Vec3& position,
                                        Pht::SceneObject& parent,
                                        const PieceResources& pieceResources);
@@ -80,13 +89,26 @@ namespace RowBlast {
                         Pht::RenderableObject& weldRenderable,
                         float rotation,
                         Pht::SceneObject& parent);
+        void CreateIcon(const std::string& filename,
+                        const Pht::Vec3& position,
+                        const Pht::Vec2& size,
+                        Pht::SceneObject& parent);
+        void CreateSingleTapIcon(const Pht::Vec3& position, Pht::SceneObject& parent);
+        void CreateSwipeIcon(const Pht::Vec3& position, Pht::SceneObject& parent);
+        void SetPage(int pageIndex);
+        
+        struct Page {
+            Pht::SceneObject& mSceneObject;
+            Pht::Animation* mAnimation {nullptr};
+        };
         
         Pht::IEngine& mEngine;
         IGuiLightProvider* mGuiLightProvider {nullptr};
         std::unique_ptr<MenuButton> mCloseButton;
         std::unique_ptr<MenuButton> mNextButton;
         std::unique_ptr<MenuButton> mPreviousButton;
-        Pht::Animation* mAnimation {nullptr};
+        std::vector<Page> mPages;
+        int mPageIndex {0};
         int mNumPages {9};
     };
 }

@@ -20,12 +20,12 @@ HowToPlayDialogController::HowToPlayDialogController(Pht::IEngine& engine,
     mSceneId {sceneId} {}
 
 void HowToPlayDialogController::SetUp() {
+    mView.SetUp();
     mSlidingMenuAnimation.SetUp(SlidingMenuAnimation::UpdateFade::No,
                                 SlidingMenuAnimation::SlideDirection::Left);
 }
 
 void HowToPlayDialogController::SetFadeEffect(Pht::FadeEffect& fadeEffect) {
-    mView.SetUp();
     mSlidingMenuAnimation.SetFadeEffect(fadeEffect);
 }
 
@@ -75,11 +75,11 @@ HowToPlayDialogController::OnTouch(const Pht::TouchEvent& touchEvent) {
     }
     
     if (mView.GetPreviousButton().IsClicked(touchEvent)) {
-    
+        mView.GoToPreviousPage();
     }
     
     if (mView.GetNextButton().IsClicked(touchEvent)) {
-    
+        mView.GoToNextPage();
     }
     
     return Result::None;

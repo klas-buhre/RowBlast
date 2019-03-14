@@ -111,20 +111,53 @@ HowToPlayDialogView::HowToPlayDialogView(Pht::IEngine& engine,
         GetRoot().AddChild(CreateFilledCircleIcon(i, false));
     }
 
+    CreateGoalPage(guiResources, pieceResources, levelResources, zoom);
+    CreateControlsPage(guiResources, zoom);
+}
 
-
-
-
+void HowToPlayDialogView::CreateGoalPage(const GuiResources& guiResources,
+                                         const PieceResources& pieceResources,
+                                         const LevelResources& levelResources,
+                                         PotentiallyZoomedScreen zoom) {
+    auto& container {CreateSceneObject()};
+    GetRoot().AddChild(container);
+    
     auto& largeTextProperties {guiResources.GetLargeWhiteTextProperties(zoom)};
-    CreateText({-1.5f, 8.25f, UiLayer::text}, "GOAL", largeTextProperties);
+    CreateText({-1.5f, 8.25f, UiLayer::text}, "GOAL", largeTextProperties, container);
 
-    CreateBlockAnimation(pieceResources, levelResources);
+    auto& animation {CreateClearBlocksAnimation(container, pieceResources, levelResources)};
 
     auto& textProperties {guiResources.GetSmallWhiteTextProperties(zoom)};
-    CreateText({-5.65f, -5.4f, UiLayer::text}, "Usually the goal is to clear blocks", textProperties);
-    CreateText({-4.35f, -6.475f, UiLayer::text}, "by filling horizontal rows.", textProperties);
+    CreateText({-5.65f, -5.4f, UiLayer::text}, "Usually the goal is to clear blocks", textProperties, container);
+    CreateText({-4.35f, -6.475f, UiLayer::text}, "by filling horizontal rows.", textProperties, container);
     
-    GetRoot().AddChild(CreateFilledCircleIcon(0, true));
+    container.AddChild(CreateFilledCircleIcon(static_cast<int>(mPages.size()), true));
+    
+    mPages.push_back(Page {container, &animation});
+}
+
+void HowToPlayDialogView::CreateControlsPage(const GuiResources& guiResources,
+                                             PotentiallyZoomedScreen zoom) {
+    auto& container {CreateSceneObject()};
+    GetRoot().AddChild(container);
+    
+    auto& largeTextProperties {guiResources.GetLargeWhiteTextProperties(zoom)};
+    CreateText({-2.45f, 8.25f, UiLayer::text}, "CONTROLS", largeTextProperties, container);
+    
+    auto& textProperties {guiResources.GetSmallWhiteTextProperties(zoom)};
+    CreateText({-5.3f, 6.0f, UiLayer::text}, "The game can be played using", textProperties, container);
+    CreateText({-3.3f, 4.3f, UiLayer::text}, "SingleTap controls, or", textProperties, container);
+    CreateText({-3.3f, 2.6f, UiLayer::text}, "Swipe controls", textProperties, container);
+    
+    CreateSingleTapIcon({-4.3f, 4.5f, UiLayer::text}, container);
+    CreateSwipeIcon({-4.2f, 2.8f, UiLayer::text}, container);
+    
+    CreateText({-5.3f, 0.9f, UiLayer::text}, "The control type can be changed", textProperties, container);
+    CreateText({-5.3f, -0.175f, UiLayer::text}, "in the options menu.", textProperties, container);
+    
+    container.AddChild(CreateFilledCircleIcon(static_cast<int>(mPages.size()), true));
+    
+    mPages.push_back(Page {container, nullptr});
 }
 
 Pht::SceneObject& HowToPlayDialogView::CreateFilledCircleIcon(int index, bool isBright) {
@@ -153,19 +186,18 @@ Pht::SceneObject& HowToPlayDialogView::CreateFilledCircleIcon(int index, bool is
     return iconSceneObject;
 }
 
-void HowToPlayDialogView::CreateBlockAnimation(const PieceResources& pieceResources,
-                                               const LevelResources& levelResources) {
+Pht::Animation& HowToPlayDialogView::CreateClearBlocksAnimation(Pht::SceneObject& parent,
+                                                                const PieceResources& pieceResources,
+                                                                const LevelResources& levelResources) {
     auto& container {CreateSceneObject()};
     container.GetTransform().SetPosition({0.0f, 1.5f, 0.0f});
     container.GetTransform().SetScale(1.15f);
-    
-    GetRoot().AddChild(container);
+    parent.AddChild(container);
     
     CreateFieldQuad(container);
     
     auto& animationSystem {mEngine.GetAnimationSystem()};
     auto& rootAnimation {animationSystem.CreateAnimation(container)};
-    mAnimation = &rootAnimation;
     rootAnimation.AddKeyframe(Pht::Keyframe {0.0f});
     rootAnimation.AddKeyframe(Pht::Keyframe {4.0f});
     
@@ -268,7 +300,7 @@ void HowToPlayDialogView::CreateBlockAnimation(const PieceResources& pieceResour
     
     rightGrayBlocksAnimation.AddKeyframe(Pht::Keyframe {animationDuration});
 
-    rootAnimation.Play();
+    return rootAnimation;
 }
 
 void HowToPlayDialogView::CreateFieldQuad(Pht::SceneObject& parent) {
@@ -414,16 +446,89 @@ void HowToPlayDialogView::CreateWeld(const Pht::Vec3& position,
     parent.AddChild(weld);
 }
 
+void HowToPlayDialogView::CreateIcon(const std::string& filename,
+                                     const Pht::Vec3& position,
+                                     const Pht::Vec2& size,
+                                     Pht::SceneObject& parent) {
+    Pht::Vec4 color {0.95f, 0.95f, 0.95f, 1.0f};
+    Pht::Material iconMaterial {filename, 0.0f, 0.0f, 0.0f, 0.0f};
+    iconMaterial.SetBlend(Pht::Blend::Yes);
+    iconMaterial.SetOpacity(color.w);
+    iconMaterial.SetAmbient(Pht::Color{color.x, color.y, color.z});
+    
+    auto& iconSceneObject {
+        CreateSceneObject(Pht::QuadMesh {size.x, size.y}, iconMaterial, mEngine.GetSceneManager())
+    };
+    
+    iconSceneObject.GetTransform().SetPosition(position);
+    parent.AddChild(iconSceneObject);
+}
+
+void HowToPlayDialogView::CreateSingleTapIcon(const Pht::Vec3& position, Pht::SceneObject& parent) {
+    auto& icon {CreateSceneObject()};
+    icon.GetTransform().SetPosition(position);
+    parent.AddChild(icon);
+
+    CreateIcon("hand.png", {0.0f, 0.03f, 0.0f}, {0.9f, 0.9f}, icon);
+    CreateIcon("circle.png", {-0.03f, 0.42f, 0.0f}, {0.36f, 0.36f}, icon);
+    CreateIcon("circle.png", {-0.03f, 0.42f, 0.0f}, {0.42f, 0.42f}, icon);
+}
+
+void HowToPlayDialogView::CreateSwipeIcon(const Pht::Vec3& position, Pht::SceneObject& parent) {
+    auto& icon {CreateSceneObject()};
+    icon.GetTransform().SetPosition(position);
+    parent.AddChild(icon);
+
+    CreateIcon("hand.png", {0.0, 0.03f, 0.0f}, {0.9f, 0.9f}, icon);
+    CreateIcon("back.png", {-0.4f, 0.4f, 0.0f}, {0.42f, 0.42f}, icon);
+    CreateIcon("right_arrow.png", {0.35f, 0.4f, 0.0f}, {0.42f, 0.42f}, icon);
+}
+
 void HowToPlayDialogView::SetUp() {
     if (mGuiLightProvider) {
         mGuiLightProvider->SetGuiLightDirections(lightDirectionA, lightDirectionB);
     }
+    
+    SetPage(0);
+}
+
+void HowToPlayDialogView::GoToNextPage() {
+    if (mPageIndex < static_cast<int>(mPages.size()) - 1) {
+        mPageIndex++;
+        SetPage(mPageIndex);
+    }
+}
+
+void HowToPlayDialogView::GoToPreviousPage() {
+    if (mPageIndex > 0) {
+        mPageIndex--;
+        SetPage(mPageIndex);
+    }
+}
+
+void HowToPlayDialogView::SetPage(int pageIndex) {
+    for (auto& page: mPages) {
+        page.mSceneObject.SetIsVisible(false);
+        if (page.mAnimation) {
+            page.mAnimation->Stop();
+        }
+    }
+    
+    assert(pageIndex < mPages.size());
+    mPageIndex = pageIndex;
+    
+    auto& page {mPages[mPageIndex]};
+    page.mSceneObject.SetIsVisible(true);
+    if (page.mAnimation) {
+        page.mAnimation->Play();
+    }
 }
 
 void HowToPlayDialogView::Update() {
-    if (mAnimation) {
+    auto& page {mPages[mPageIndex]};
+    if (page.mAnimation) {
         auto dt {mEngine.GetLastFrameSeconds()};
-        mAnimation->Update(dt);
+        page.mAnimation->Update(dt);
     }
 }
 

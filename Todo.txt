@@ -62,7 +62,7 @@ Ongoing tasks:
       -4. SingleTap Controls:
           You always have three pieces to choose from at the bottom of the screen. Tap the switch
           button to switch piece. Can also flick up to switch piece.
-          SceneObject animation of switching piece. Or slide animation?
+          SceneObject animation of switching piece.
       -5. SingleTap Controls:
           Tap anywhere to find more moves without switching piece. Tap anywhere except buttons and
           moves.
