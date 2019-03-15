@@ -130,7 +130,8 @@ void HowToPlayDialogView::CreateGoalPage(const GuiResources& guiResources,
         CreateClearBlocksAnimation(container,
                                    ClearBlocksChildAnimations {},
                                    pieceResources,
-                                   levelResources)
+                                   levelResources,
+                                   nullptr)
     };
 
     auto& textProperties {guiResources.GetSmallWhiteTextProperties(zoom)};
@@ -163,7 +164,7 @@ void HowToPlayDialogView::CreateControlsPage(const GuiResources& guiResources,
     
     container.AddChild(CreateFilledCircleIcon(static_cast<int>(mPages.size()), true));
     
-    mPages.push_back(Page {container, nullptr});
+    mPages.push_back(Page {container});
 }
 
 void HowToPlayDialogView::CreatePlacePiecePage(const GuiResources& guiResources,
@@ -177,11 +178,14 @@ void HowToPlayDialogView::CreatePlacePiecePage(const GuiResources& guiResources,
     auto& largeTextProperties {guiResources.GetLargeWhiteTextProperties(zoom)};
     CreateText({-2.5f, 8.25f, UiLayer::text}, "SINGLE TAP", largeTextProperties, container);
 
+    auto handAnimation {std::make_unique<HandAnimation>(mEngine, 1.0f, true)};
+    
     auto& animation {
         CreateClearBlocksAnimation(container,
                                    ClearBlocksChildAnimations {.mPlacePiece = true},
                                    pieceResources,
-                                   levelResources)
+                                   levelResources,
+                                   handAnimation.get())
     };
 
     auto& textProperties {guiResources.GetSmallWhiteTextProperties(zoom)};
@@ -190,7 +194,7 @@ void HowToPlayDialogView::CreatePlacePiecePage(const GuiResources& guiResources,
     
     container.AddChild(CreateFilledCircleIcon(static_cast<int>(mPages.size()), true));
     
-    mPages.push_back(Page {container, &animation});
+    mPages.push_back(Page {container, &animation, std::move(handAnimation)});
 }
 
 Pht::SceneObject& HowToPlayDialogView::CreateFilledCircleIcon(int index, bool isBright) {
@@ -222,7 +226,8 @@ Pht::SceneObject& HowToPlayDialogView::CreateFilledCircleIcon(int index, bool is
 Pht::Animation& HowToPlayDialogView::CreateClearBlocksAnimation(Pht::SceneObject& parent,
                                                                 const ClearBlocksChildAnimations& childAnimations,
                                                                 const PieceResources& pieceResources,
-                                                                const LevelResources& levelResources) {
+                                                                const LevelResources& levelResources,
+                                                                HandAnimation* handAnimation) {
     auto& container {CreateSceneObject()};
     container.GetTransform().SetPosition({0.0f, 1.5f, 0.0f});
     container.GetTransform().SetScale(1.15f);
@@ -239,6 +244,10 @@ Pht::Animation& HowToPlayDialogView::CreateClearBlocksAnimation(Pht::SceneObject
     auto& rootAnimation {
         animationSystem.CreateAnimation(container, {{.mTime = 0.0f}, {.mTime = animationDuration}})
     };
+    
+    if (handAnimation) {
+        handAnimation->Init(container);
+    }
     
     Pht::Vec3 lPieceInitialPosition {-0.5f, 3.3f, UiLayer::block};
     auto& lPiece {CreateLPiece(lPieceInitialPosition, container, pieceResources)};
@@ -292,7 +301,7 @@ Pht::Animation& HowToPlayDialogView::CreateClearBlocksAnimation(Pht::SceneObject
     };
     animationSystem.CreateAnimation(rightGrayBlocks, rightGrayBlocksKeyframes);
 
-    if (childAnimations.mPlacePiece) {
+    if (childAnimations.mPlacePiece && handAnimation) {
         auto& ghostPieces {CreateSceneObject()};
         container.AddChild(ghostPieces);
         
@@ -306,6 +315,28 @@ Pht::Animation& HowToPlayDialogView::CreateClearBlocksAnimation(Pht::SceneObject
             {.mTime = animationDuration}
         };
         animationSystem.CreateAnimation(ghostPieces, ghostPiecesKeyframes);
+        
+        std::vector<Pht::Keyframe> handAnimationKeyframes {
+            {
+                .mTime = 0.0f,
+                .mCallback = [handAnimation] () {
+                    handAnimation->StartInNotTouchingScreenState({0.5f, -2.5f, UiLayer::root},
+                                                                 45.0f,
+                                                                 10.0f);
+                }
+            },
+            {
+                .mTime = 0.8f,
+                .mCallback = [handAnimation] () {
+                    handAnimation->BeginTouch(0.0f);
+                }
+            },
+            {
+                .mTime = animationDuration
+            }
+        };
+        
+        animationSystem.CreateAnimation(handAnimation->GetSceneObject(), handAnimationKeyframes);
     }
 
     return rootAnimation;
@@ -560,6 +591,10 @@ void HowToPlayDialogView::Update() {
     if (page.mAnimation) {
         auto dt {mEngine.GetLastFrameSeconds()};
         page.mAnimation->Update(dt);
+    }
+    
+    if (page.mHandAnimation) {
+        page.mHandAnimation->Update();
     }
 }
 

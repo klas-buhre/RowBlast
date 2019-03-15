@@ -2,6 +2,7 @@
 #define Animation_hpp
 
 #include <vector>
+#include <functional>
 
 #include "Vector.hpp"
 #include "Optional.hpp"
@@ -22,6 +23,7 @@ namespace Pht {
         Optional<Vec3> mScale;
         Optional<Vec3> mRotation;
         Optional<bool> mIsVisible;
+        std::function<void()> mCallback;
     };
     
     class Animation: public ISceneObjectComponent {

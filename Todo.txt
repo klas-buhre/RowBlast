@@ -26,6 +26,7 @@ Backlog:
     -Maybe make a more clear bomb dialog slide animation with the bomb piece at the top of the
      frame in the beginning and it falls all the way down and then detonates.
     -Maybe a new level bomb slide animation just to be consistent with the look.
+    -Maybe seeing more moves should be introduced before switching piece in the tutorial?
   -Make ready for release:
     -Should give free gold coins after a new install?
     -Limit the number of undo move to one or two per game round.
@@ -60,13 +61,13 @@ Ongoing tasks:
           Tap a move to place the piece.
           SceneObject animation of placing a piece.
       -4. SingleTap Controls:
-          You always have three pieces to choose from at the bottom of the screen. Tap the switch
-          button to switch piece. Can also flick up to switch piece.
-          SceneObject animation of switching piece.
-      -5. SingleTap Controls:
           Tap anywhere to find more moves without switching piece. Tap anywhere except buttons and
           moves.
           SceneObject animation of finding more moves.
+      -5. SingleTap Controls:
+          You always have three pieces to choose from at the bottom of the screen. Tap the switch
+          button to switch piece. Can also flick up to switch piece.
+          SceneObject animation of switching piece.
       -6. Swipe Controls:
           Swipe the screen to move the piece left or right.
           SceneObject animation of draging the piece left and right.

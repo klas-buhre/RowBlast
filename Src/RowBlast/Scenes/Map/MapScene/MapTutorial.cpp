@@ -17,7 +17,7 @@ MapTutorial::MapTutorial(Pht::IEngine& engine, MapScene& scene, const UserServic
     mEngine {engine},
     mScene {scene},
     mUserServices {userServices},
-    mHandAnimation {engine} {}
+    mHandAnimation {engine, 0.43f, false} {}
 
 void MapTutorial::Init(int worldId) {
     auto progress {mUserServices.GetProgressService().GetProgress()};
@@ -37,7 +37,7 @@ void MapTutorial::Init(int worldId) {
         return;
     }
     
-    mHandAnimation.Init(mScene.GetScene(), mScene.GetTutorialContainer(), 0.43f, false);
+    mHandAnimation.Init(mScene.GetTutorialContainer());
     
     auto* pin {mScene.GetPin(progress)};
     assert(pin);

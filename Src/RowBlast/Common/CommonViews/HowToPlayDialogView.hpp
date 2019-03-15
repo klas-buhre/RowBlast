@@ -11,6 +11,7 @@
 #include "MenuButton.hpp"
 #include "CommonResources.hpp"
 #include "Cell.hpp"
+#include "HandAnimation.hpp"
 
 namespace Pht {
     class IEngine;
@@ -77,7 +78,8 @@ namespace RowBlast {
         Pht::Animation& CreateClearBlocksAnimation(Pht::SceneObject& parent,
                                                    const ClearBlocksChildAnimations& childAnimations,
                                                    const PieceResources& pieceResources,
-                                                   const LevelResources& levelResources);
+                                                   const LevelResources& levelResources,
+                                                   HandAnimation* handAnimation);
         Pht::SceneObject& CreateLPiece(const Pht::Vec3& position,
                                        Pht::SceneObject& parent,
                                        const PieceResources& pieceResources);
@@ -113,6 +115,7 @@ namespace RowBlast {
         struct Page {
             Pht::SceneObject& mSceneObject;
             Pht::Animation* mAnimation {nullptr};
+            std::unique_ptr<HandAnimation> mHandAnimation;
         };
         
         Pht::IEngine& mEngine;

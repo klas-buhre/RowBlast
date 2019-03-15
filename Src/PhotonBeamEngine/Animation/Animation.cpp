@@ -100,6 +100,11 @@ void Animation::HandleKeyframeTransition() {
     if (isVisible.HasValue()) {
         mSceneObject.SetIsVisible(isVisible.GetValue());
     }
+    
+    auto& callback {mKeyframe->mCallback};
+    if (callback) {
+        callback();
+    }
 }
 
 void Animation::UpdateLinearInterpolation() {
