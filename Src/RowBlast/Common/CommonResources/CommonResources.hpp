@@ -10,6 +10,7 @@
 // Game includes.
 #include "Materials.hpp"
 #include "GuiResources.hpp"
+#include "GameHudRectangles.hpp"
 
 namespace Pht {
     class IEngine;
@@ -52,11 +53,16 @@ namespace RowBlast {
             return *mGuiResources;
         }
 
+        const GameHudRectangles& GetGameHudRectangles() const {
+            return *mGameHudRectangles;
+        }
+
         static constexpr auto narrowFrustumHeightFactor {1.13f};
         
     private:
         std::unique_ptr<Materials> mMaterials;
         std::unique_ptr<GuiResources> mGuiResources;
+        std::unique_ptr<GameHudRectangles> mGameHudRectangles;
         std::unique_ptr<Pht::Font> mHussarFontSize20;
         std::unique_ptr<Pht::Font> mHussarFontSize27;
         std::unique_ptr<Pht::Font> mHussarFontSize35;

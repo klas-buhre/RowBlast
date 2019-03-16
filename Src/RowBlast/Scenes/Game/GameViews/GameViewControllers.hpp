@@ -25,7 +25,6 @@ namespace RowBlast {
     class UserServices;
     class GameScene;
     class PieceResources;
-    class GameHudRectangles;
     
     class GameViewControllers {
     public:
@@ -46,8 +45,7 @@ namespace RowBlast {
         GameViewControllers(Pht::IEngine& engine,
                             const CommonResources& commonResources,
                             UserServices& userServices,
-                            const PieceResources& pieceResources,
-                            const GameHudRectangles& hudRectangles);
+                            const PieceResources& pieceResources);
         
         void Init(GameScene& scene, Pht::FadeEffect& storeFadeEffect);
         void SetActiveController(Controller controller);

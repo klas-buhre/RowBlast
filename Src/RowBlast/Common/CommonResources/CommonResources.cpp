@@ -44,6 +44,7 @@ CommonResources::CommonResources(Pht::IEngine& engine) {
     sceneManager.InitSceneSystems(Pht::ISceneManager::defaultNarrowFrustumHeightFactor);
     
     mGuiResources = std::make_unique<GuiResources>(engine, *this);
+    mGameHudRectangles = std::make_unique<GameHudRectangles>(engine, *this);
 }
 
 const Pht::Font&

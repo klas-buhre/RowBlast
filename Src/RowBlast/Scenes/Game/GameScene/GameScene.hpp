@@ -34,7 +34,6 @@ namespace RowBlast {
     class PieceResources;
     class GameLogic;
     class GameHudController;
-    class GameHudRectangles;
     class GameHudArrow;
     
     class GameScene: public IGuiLightProvider {
@@ -60,7 +59,6 @@ namespace RowBlast {
                   const CommonResources& commonResources,
                   GameHudController& gameHudController,
                   const Pht::CameraShake& cameraShake,
-                  const GameHudRectangles& hudRectangles,
                   const GameHudArrow& hudArrow);
 
         void SetGuiLightDirections(const Pht::Vec3& directionA,
@@ -255,7 +253,6 @@ namespace RowBlast {
         const CommonResources& mCommonResources;
         GameHudController& mGameHudController;
         const Pht::CameraShake& mCameraShake;
-        const GameHudRectangles& mHudRectangles;
         const GameHudArrow& mHudArrow;
         FieldBorder mFieldBorder;
         FieldGrid mFieldGrid;

@@ -83,7 +83,6 @@ GameHud::GameHud(Pht::IEngine& engine,
                  const Field& field,
                  const LevelResources& levelResources,
                  const PieceResources& pieceResources,
-                 const GameHudRectangles& hudRectangles,
                  const GameHudArrow& hudArrow,
                  GameHudController& gameHudController,
                  const CommonResources& commonResources,
@@ -122,6 +121,8 @@ GameHud::GameHud(Pht::IEngine& engine,
     
     CreateProgressObject(scene, *mUpperContainer, commonResources, levelResources, hudArrow);
     CreateMovesObject(scene, *mUpperContainer, commonResources);
+    
+    auto& hudRectangles {commonResources.GetGameHudRectangles()};
     CreateNextPiecesObject(scene, parentObject, hudRectangles);
     CreateSelectablePiecesObject(scene, parentObject, hudRectangles);
 }

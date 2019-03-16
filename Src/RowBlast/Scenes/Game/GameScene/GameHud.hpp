@@ -48,7 +48,6 @@ namespace RowBlast {
                 const Field& field,
                 const LevelResources& levelResources,
                 const PieceResources& pieceResources,
-                const GameHudRectangles& hudRectangles,
                 const GameHudArrow& hudArrow,
                 GameHudController& gameHudController,
                 const CommonResources& commonResources,

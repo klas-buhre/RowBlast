@@ -81,6 +81,10 @@ namespace RowBlast {
                                   const PieceResources& pieceResources,
                                   const LevelResources& levelResources,
                                   PotentiallyZoomedScreen zoom);
+        void CreateSwitchPiecePage(const CommonResources& commonResources,
+                                   const PieceResources& pieceResources,
+                                   const LevelResources& levelResources,
+                                   PotentiallyZoomedScreen zoom);
         void CreateFieldQuad(Pht::SceneObject& parent);
         Pht::SceneObject& CreateFilledCircleIcon(int index, bool isFilled);
         Pht::Animation& CreateClearBlocksAnimation(Pht::SceneObject& parent,
@@ -93,6 +97,11 @@ namespace RowBlast {
                                               const PieceResources& pieceResources,
                                               const LevelResources& levelResources,
                                               HandAnimation& handAnimation);
+        Pht::Animation& CreateSwitchPieceAnimation(Pht::SceneObject& parent,
+                                                   const CommonResources& commonResources,
+                                                   const PieceResources& pieceResources,
+                                                   const LevelResources& levelResources,
+                                                   HandAnimation& handAnimation);
         Pht::SceneObject& CreateLPiece(const Pht::Vec3& position,
                                        Pht::SceneObject& parent,
                                        const PieceResources& pieceResources);

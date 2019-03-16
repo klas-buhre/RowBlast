@@ -159,7 +159,6 @@
 		62216BEE21EB377E001CB9A1 /* SceneObjectPool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216B0221EB377E001CB9A1 /* SceneObjectPool.cpp */; };
 		62216BEF21EB377E001CB9A1 /* GameController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216B0721EB377E001CB9A1 /* GameController.cpp */; };
 		62216BF021EB377E001CB9A1 /* GameScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216B0821EB377E001CB9A1 /* GameScene.cpp */; };
-		62216BF121EB377E001CB9A1 /* GameHudRectangles.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216B0921EB377E001CB9A1 /* GameHudRectangles.cpp */; };
 		62216BF221EB377E001CB9A1 /* FieldGrid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216B0C21EB377E001CB9A1 /* FieldGrid.cpp */; };
 		62216BF321EB377E001CB9A1 /* Piece.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216B1121EB377E001CB9A1 /* Piece.cpp */; };
 		62216BF421EB377E001CB9A1 /* GestureInputHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216B1421EB377E001CB9A1 /* GestureInputHandler.cpp */; };
@@ -267,6 +266,7 @@
 		62298339222D8E9C001A7E1C /* spinning_wheel.png in Resources */ = {isa = PBXBuildFile; fileRef = 62298338222D8E9C001A7E1C /* spinning_wheel.png */; };
 		6229833B222D8F1D001A7E1C /* home.png in Resources */ = {isa = PBXBuildFile; fileRef = 6229833A222D8F1D001A7E1C /* home.png */; };
 		6229833D222E9761001A7E1C /* restart.png in Resources */ = {isa = PBXBuildFile; fileRef = 6229833C222E9761001A7E1C /* restart.png */; };
+		622A6106223D656C001578FB /* GameHudRectangles.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 622A6104223D656B001578FB /* GameHudRectangles.cpp */; };
 		622EDD16217A42410007C652 /* level61.json in Resources */ = {isa = PBXBuildFile; fileRef = 622EDD15217A42400007C652 /* level61.json */; };
 		623326732073D69500AC505A /* level29.json in Resources */ = {isa = PBXBuildFile; fileRef = 623326722073D69400AC505A /* level29.json */; };
 		6234616221653F9900ECD0DF /* space.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6234616121653F9900ECD0DF /* space.jpg */; };
@@ -777,7 +777,6 @@
 		62216AF721EB377E001CB9A1 /* MapConfirmationDialogController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MapConfirmationDialogController.cpp; sourceTree = "<group>"; };
 		62216AF821EB377E001CB9A1 /* GameOverDialogView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameOverDialogView.cpp; sourceTree = "<group>"; };
 		62216AF921EB377E001CB9A1 /* LevelCompletedDialogView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelCompletedDialogView.cpp; sourceTree = "<group>"; };
-		62216AFB21EB377E001CB9A1 /* GameHudRectangles.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameHudRectangles.hpp; sourceTree = "<group>"; };
 		62216AFC21EB377E001CB9A1 /* GhostPieceProducer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GhostPieceProducer.cpp; sourceTree = "<group>"; };
 		62216AFD21EB377E001CB9A1 /* FieldGrid.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FieldGrid.hpp; sourceTree = "<group>"; };
 		62216AFE21EB377E001CB9A1 /* GameSceneRenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameSceneRenderer.cpp; sourceTree = "<group>"; };
@@ -791,7 +790,6 @@
 		62216B0621EB377E001CB9A1 /* SceneObjectPool.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SceneObjectPool.hpp; sourceTree = "<group>"; };
 		62216B0721EB377E001CB9A1 /* GameController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameController.cpp; sourceTree = "<group>"; };
 		62216B0821EB377E001CB9A1 /* GameScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameScene.cpp; sourceTree = "<group>"; };
-		62216B0921EB377E001CB9A1 /* GameHudRectangles.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameHudRectangles.cpp; sourceTree = "<group>"; };
 		62216B0A21EB377E001CB9A1 /* GhostPieceProducer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GhostPieceProducer.hpp; sourceTree = "<group>"; };
 		62216B0B21EB377E001CB9A1 /* GameSceneRenderer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameSceneRenderer.hpp; sourceTree = "<group>"; };
 		62216B0C21EB377E001CB9A1 /* FieldGrid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FieldGrid.cpp; sourceTree = "<group>"; };
@@ -997,6 +995,8 @@
 		62298338222D8E9C001A7E1C /* spinning_wheel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spinning_wheel.png; sourceTree = "<group>"; };
 		6229833A222D8F1D001A7E1C /* home.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = home.png; sourceTree = "<group>"; };
 		6229833C222E9761001A7E1C /* restart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = restart.png; sourceTree = "<group>"; };
+		622A6104223D656B001578FB /* GameHudRectangles.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameHudRectangles.cpp; sourceTree = "<group>"; };
+		622A6105223D656C001578FB /* GameHudRectangles.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameHudRectangles.hpp; sourceTree = "<group>"; };
 		622EDD15217A42400007C652 /* level61.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level61.json; sourceTree = "<group>"; };
 		623326722073D69400AC505A /* level29.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level29.json; sourceTree = "<group>"; };
 		6234616121653F9900ECD0DF /* space.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = space.jpg; sourceTree = "<group>"; };
@@ -1684,6 +1684,8 @@
 				62216A6321EB376E001CB9A1 /* CommonResources.hpp */,
 				62216A7321EB376E001CB9A1 /* FloatingBlocks.cpp */,
 				62216A6421EB376E001CB9A1 /* FloatingBlocks.hpp */,
+				622A6104223D656B001578FB /* GameHudRectangles.cpp */,
+				622A6105223D656C001578FB /* GameHudRectangles.hpp */,
 				62216A7121EB376E001CB9A1 /* GradientRectangle.cpp */,
 				62216A6221EB376E001CB9A1 /* GradientRectangle.hpp */,
 				62216A6521EB376E001CB9A1 /* HandAnimation.cpp */,
@@ -1877,8 +1879,6 @@
 				62216B0D21EB377E001CB9A1 /* GameHud.hpp */,
 				6298ED4D220200A100FFAC36 /* GameHudArrow.cpp */,
 				6298ED4E220200A100FFAC36 /* GameHudArrow.hpp */,
-				62216B0921EB377E001CB9A1 /* GameHudRectangles.cpp */,
-				62216AFB21EB377E001CB9A1 /* GameHudRectangles.hpp */,
 				62216B0821EB377E001CB9A1 /* GameScene.cpp */,
 				62216B0421EB377E001CB9A1 /* GameScene.hpp */,
 				62216AFE21EB377E001CB9A1 /* GameSceneRenderer.cpp */,
@@ -3562,7 +3562,6 @@
 				625698532182392C003A3A9D /* ParticleEmitter.cpp in Sources */,
 				62216BD421EB377E001CB9A1 /* ClearLastBlocksAnimation.cpp in Sources */,
 				62216A8921EB376E001CB9A1 /* PurchaseSuccessfulDialogController.cpp in Sources */,
-				62216BF121EB377E001CB9A1 /* GameHudRectangles.cpp in Sources */,
 				62216BF221EB377E001CB9A1 /* FieldGrid.cpp in Sources */,
 				62216C1021EB377F001CB9A1 /* FPiece.cpp in Sources */,
 				625698342182392C003A3A9D /* InputHandler.cpp in Sources */,
@@ -3655,6 +3654,7 @@
 				62216BF921EB377E001CB9A1 /* FallingPiece.cpp in Sources */,
 				62216C1D21EB377F001CB9A1 /* PieceDropParticleEffect.cpp in Sources */,
 				62216C2321EB377F001CB9A1 /* BlastRadiusAnimation.cpp in Sources */,
+				622A6106223D656C001578FB /* GameHudRectangles.cpp in Sources */,
 				6256984A2182392C003A3A9D /* ObjMeshLoader.cpp in Sources */,
 				62216C2021EB377F001CB9A1 /* EffectManager.cpp in Sources */,
 				62216BE921EB377E001CB9A1 /* GhostPieceProducer.cpp in Sources */,

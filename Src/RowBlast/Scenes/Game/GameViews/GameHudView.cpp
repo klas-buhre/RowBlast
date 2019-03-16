@@ -82,9 +82,7 @@ namespace {
     }
 }
 
-GameHudView::GameHudView(Pht::IEngine& engine,
-                         const CommonResources& commonResources,
-                         const GameHudRectangles& hudRectangles) {
+GameHudView::GameHudView(Pht::IEngine& engine, const CommonResources& commonResources) {
     Pht::Vec2 position {-6.6f, CalculateLowerHudObjectYPosition(commonResources)};
     SetPosition(position);
 
@@ -92,6 +90,8 @@ GameHudView::GameHudView(Pht::IEngine& engine,
     auto& pauseButtonSceneObject {CreateSceneObject()};
     GetRoot().AddChild(pauseButtonSceneObject);
 
+    auto& hudRectangles {commonResources.GetGameHudRectangles()};
+    
     auto& normalPauseButtonSceneObject {CreateSceneObject()};
     normalPauseButtonSceneObject.SetRenderable(&hudRectangles.GetPauseButtonRectangle());
     pauseButtonSceneObject.AddChild(normalPauseButtonSceneObject);

@@ -21,7 +21,6 @@
 #include "LevelResources.hpp"
 #include "Level.hpp"
 #include "PieceResources.hpp"
-#include "GameHudRectangles.hpp"
 #include "GameHudArrow.hpp"
 #include "GameViewControllers.hpp"
 #include "StoreController.hpp"
@@ -161,7 +160,6 @@ namespace RowBlast {
         Pht::IEngine& mEngine;
         UserServices& mUserServices;
         PieceResources mPieceResources;
-        GameHudRectangles mHudRectangles;
         GameHudArrow mHudArrow;
         GameViewControllers mGameViewControllers;
         Field mField;

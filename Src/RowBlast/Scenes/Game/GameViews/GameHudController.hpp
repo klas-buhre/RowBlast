@@ -12,7 +12,6 @@ namespace Pht {
 namespace RowBlast {
     class IGameHudEventListener;
     class CommonResources;
-    class GameHudRectangles;
     
     class GameHudController {
     public:
@@ -23,9 +22,7 @@ namespace RowBlast {
             ClickedPause
         };
         
-        GameHudController(Pht::IEngine& engine,
-                          const CommonResources& commonResources,
-                          const GameHudRectangles& hudRectangles);
+        GameHudController(Pht::IEngine& engine, const CommonResources& commonResources);
         
         Result OnTouch(const Pht::TouchEvent& event);
         
