@@ -114,6 +114,7 @@ HowToPlayDialogView::HowToPlayDialogView(Pht::IEngine& engine,
     CreateGoalPage(guiResources, pieceResources, levelResources, zoom);
     CreateControlsPage(guiResources, zoom);
     CreatePlacePiecePage(guiResources, pieceResources, levelResources, zoom);
+    CreateOtherMovesPage(guiResources, pieceResources, levelResources, zoom);
 }
 
 void HowToPlayDialogView::CreateGoalPage(const GuiResources& guiResources,
@@ -174,9 +175,9 @@ void HowToPlayDialogView::CreatePlacePiecePage(const GuiResources& guiResources,
     auto& container {CreateSceneObject()};
     GetRoot().AddChild(container);
     
-    CreateSingleTapIcon({-3.2f, 8.5f, UiLayer::text}, container);
+    CreateSingleTapIcon({-3.8f, 8.5f, UiLayer::text}, container);
     auto& largeTextProperties {guiResources.GetLargeWhiteTextProperties(zoom)};
-    CreateText({-2.5f, 8.25f, UiLayer::text}, "SINGLE TAP", largeTextProperties, container);
+    CreateText({-3.1f, 8.25f, UiLayer::text}, "SINGLE TAP (1)", largeTextProperties, container);
 
     auto handAnimation {std::make_unique<HandAnimation>(mEngine, 1.0f, true)};
     
@@ -191,6 +192,36 @@ void HowToPlayDialogView::CreatePlacePiecePage(const GuiResources& guiResources,
     auto& textProperties {guiResources.GetSmallWhiteTextProperties(zoom)};
     CreateText({-5.2f, -5.4f, UiLayer::text}, "When using SingleTap controls,", textProperties, container);
     CreateText({-5.6f, -6.475f, UiLayer::text}, "just tap a move to place the piece.", textProperties, container);
+    
+    container.AddChild(CreateFilledCircleIcon(static_cast<int>(mPages.size()), true));
+    
+    mPages.push_back(Page {container, &animation, std::move(handAnimation)});
+}
+
+void HowToPlayDialogView::CreateOtherMovesPage(const GuiResources& guiResources,
+                                               const PieceResources& pieceResources,
+                                               const LevelResources& levelResources,
+                                               PotentiallyZoomedScreen zoom) {
+    auto& container {CreateSceneObject()};
+    GetRoot().AddChild(container);
+    
+    CreateSingleTapIcon({-4.0f, 8.5f, UiLayer::text}, container);
+    auto& largeTextProperties {guiResources.GetLargeWhiteTextProperties(zoom)};
+    CreateText({-3.3f, 8.25f, UiLayer::text}, "SINGLE TAP (2)", largeTextProperties, container);
+
+    auto handAnimation {std::make_unique<HandAnimation>(mEngine, 1.0f, true)};
+    
+    auto& animation {
+        CreateBlocksAnimation(container,
+                              BlocksChildAnimations {.mOtherMoves = true},
+                              pieceResources,
+                              levelResources,
+                              *handAnimation)
+    };
+
+    auto& textProperties {guiResources.GetSmallWhiteTextProperties(zoom)};
+    CreateText({-5.45f, -5.4f, UiLayer::text}, "With SingleTap controls, just tap", textProperties, container);
+    CreateText({-5.05f, -6.475f, UiLayer::text}, "the screen to find more moves.", textProperties, container);
     
     container.AddChild(CreateFilledCircleIcon(static_cast<int>(mPages.size()), true));
     
@@ -326,7 +357,7 @@ Pht::Animation& HowToPlayDialogView::CreateClearBlocksAnimation(Pht::SceneObject
                 }
             },
             {
-                .mTime = 0.8f,
+                .mTime = 0.75f,
                 .mCallback = [handAnimation] () {
                     handAnimation->BeginTouch(0.0f);
                 }
@@ -337,6 +368,115 @@ Pht::Animation& HowToPlayDialogView::CreateClearBlocksAnimation(Pht::SceneObject
         };
         
         animationSystem.CreateAnimation(handAnimation->GetSceneObject(), handAnimationKeyframes);
+    }
+
+    return rootAnimation;
+}
+
+Pht::Animation& HowToPlayDialogView::CreateBlocksAnimation(Pht::SceneObject& parent,
+                                                           const BlocksChildAnimations& childAnimations,
+                                                           const PieceResources& pieceResources,
+                                                           const LevelResources& levelResources,
+                                                           HandAnimation& handAnimation) {
+    auto& container {CreateSceneObject()};
+    container.GetTransform().SetPosition({0.0f, 1.5f, 0.0f});
+    container.GetTransform().SetScale(1.15f);
+    parent.AddChild(container);
+    
+    CreateFieldQuad(container);
+    
+    auto animationDuration {4.0f};
+
+    auto& animationSystem {mEngine.GetAnimationSystem()};
+    auto& rootAnimation {
+        animationSystem.CreateAnimation(container, {{.mTime = 0.0f}, {.mTime = animationDuration}})
+    };
+    
+    handAnimation.Init(container);
+    
+    CreateLPiece({-0.5f, 3.3f, UiLayer::block}, container, pieceResources);
+    CreateTwoBlocks({2.5f, -2.0f, UiLayer::block}, BlockColor::Green, container, pieceResources);
+    CreateThreeGrayBlocks({-2.0f, -3.0f, UiLayer::block}, container, levelResources);
+    CreateThreeGrayBlocks({2.0f, -3.0f, UiLayer::block}, container, levelResources);
+    CreateThreeGrayBlocksWithGap({-1.5f, -4.0f, UiLayer::block}, container, levelResources);
+    CreateThreeGrayBlocks({2.0f, -4.0f, UiLayer::block}, container, levelResources);
+
+    if (childAnimations.mOtherMoves) {
+        auto& firstMovesSet {CreateSceneObject()};
+        container.AddChild(firstMovesSet);
+        
+        CreateLPieceGhostPiece({-2.5f, -1.5f, UiLayer::block}, 0.0f, firstMovesSet, levelResources);
+        CreateLPieceGhostPiece({-0.5f, -2.5f, UiLayer::block}, 90.0f, firstMovesSet, levelResources);
+        CreateLPieceGhostPiece({2.5f, -0.5f, UiLayer::block}, 0.0f, firstMovesSet, levelResources);
+
+        std::vector<Pht::Keyframe> firstMovesSetKeyframes {
+            {.mTime = 0.0f, .mIsVisible = true},
+            {.mTime = 1.0f, .mIsVisible = false},
+            {.mTime = animationDuration}
+        };
+        animationSystem.CreateAnimation(firstMovesSet, firstMovesSetKeyframes);
+
+        auto& secondMovesSet {CreateSceneObject()};
+        container.AddChild(secondMovesSet);
+        
+        CreateLPieceGhostPiece({-2.5f, -1.5f, UiLayer::block}, 270.0f, secondMovesSet, levelResources);
+        CreateLPieceGhostPiece({0.5f, -2.5f, UiLayer::block}, 180.0f, secondMovesSet, levelResources);
+        CreateLPieceGhostPiece({2.5f, -0.5f, UiLayer::block}, 270.0f, secondMovesSet, levelResources);
+
+        std::vector<Pht::Keyframe> secondMovesSetKeyframes {
+            {.mTime = 0.0f, .mIsVisible = false},
+            {.mTime = 1.0f, .mIsVisible = true},
+            {.mTime = 2.5f, .mIsVisible = false},
+            {.mTime = animationDuration}
+        };
+        animationSystem.CreateAnimation(secondMovesSet, secondMovesSetKeyframes);
+        
+        auto& thirdMovesSet {CreateSceneObject()};
+        container.AddChild(thirdMovesSet);
+        
+        CreateLPieceGhostPiece({-1.5f, -1.5f, UiLayer::block}, 270.0f, thirdMovesSet, levelResources);
+        CreateLPieceGhostPiece({1.5f, -1.5f, UiLayer::block}, 180.0f, thirdMovesSet, levelResources);
+
+        std::vector<Pht::Keyframe> thirdMovesSetKeyframes {
+            {.mTime = 0.0f, .mIsVisible = false},
+            {.mTime = 2.5f, .mIsVisible = true},
+            {.mTime = animationDuration}
+        };
+        animationSystem.CreateAnimation(thirdMovesSet, thirdMovesSetKeyframes);
+
+        std::vector<Pht::Keyframe> handAnimationKeyframes {
+            {
+                .mTime = 0.0f,
+                .mCallback = [&handAnimation] () {
+                    handAnimation.StartInNotTouchingScreenState({2.0f, 2.0f, UiLayer::root},
+                                                                 90.0f,
+                                                                 10.0f);
+                }
+            },
+            {
+                .mTime = 0.75f,
+                .mCallback = [&handAnimation] () {
+                    handAnimation.BeginTouch(0.0f);
+                }
+            },
+            {
+                .mTime = 2.25f,
+                .mCallback = [&handAnimation] () {
+                    handAnimation.BeginTouch(0.0f);
+                }
+            },
+            {
+                .mTime = animationDuration - 0.3f,
+                .mCallback = [&handAnimation] () {
+                    handAnimation.BeginTouch(0.0f);
+                }
+            },
+            {
+                .mTime = animationDuration
+            }
+        };
+        
+        animationSystem.CreateAnimation(handAnimation.GetSceneObject(), handAnimationKeyframes);
     }
 
     return rootAnimation;

@@ -64,12 +64,20 @@ namespace RowBlast {
             bool mPlacePiece {false};
         };
         
+        struct BlocksChildAnimations {
+            bool mOtherMoves {false};
+        };
+        
         void CreateGoalPage(const GuiResources& guiResources,
                             const PieceResources& pieceResources,
                             const LevelResources& levelResources,
                             PotentiallyZoomedScreen zoom);
         void CreateControlsPage(const GuiResources& guiResources, PotentiallyZoomedScreen zoom);
         void CreatePlacePiecePage(const GuiResources& guiResources,
+                                  const PieceResources& pieceResources,
+                                  const LevelResources& levelResources,
+                                  PotentiallyZoomedScreen zoom);
+        void CreateOtherMovesPage(const GuiResources& guiResources,
                                   const PieceResources& pieceResources,
                                   const LevelResources& levelResources,
                                   PotentiallyZoomedScreen zoom);
@@ -80,6 +88,11 @@ namespace RowBlast {
                                                    const PieceResources& pieceResources,
                                                    const LevelResources& levelResources,
                                                    HandAnimation* handAnimation);
+        Pht::Animation& CreateBlocksAnimation(Pht::SceneObject& parent,
+                                              const BlocksChildAnimations& childAnimations,
+                                              const PieceResources& pieceResources,
+                                              const LevelResources& levelResources,
+                                              HandAnimation& handAnimation);
         Pht::SceneObject& CreateLPiece(const Pht::Vec3& position,
                                        Pht::SceneObject& parent,
                                        const PieceResources& pieceResources);
