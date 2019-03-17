@@ -552,11 +552,11 @@ Pht::Animation& HowToPlayDialogView::CreateSwitchPieceAnimation(Pht::SceneObject
     selectablePieces.GetTransform().SetScale(0.71f);
     container.AddChild(selectablePieces);
     
-    Pht::Vec3 slot1Pos {-2.0f, 0.0f, UiLayer::buttonText};
-    Pht::Vec3 slot2Pos {0.0f, 0.0f, UiLayer::buttonText};
+    Pht::Vec3 slot1Pos {-1.95f, 0.0f, UiLayer::buttonText};
+    Pht::Vec3 slot2Pos {0.05f, 0.0f, UiLayer::buttonText};
     Pht::Vec3 slot3Pos {2.4f, 0.0f, UiLayer::buttonText};
-    auto& iPreviewPiece {CreateIPreviewPiece(slot1Pos, selectablePieces, pieceResources)};
-    auto& dPreviewPiece {CreateDPreviewPiece(slot2Pos, selectablePieces, pieceResources)};
+    auto& dPreviewPiece {CreateDPreviewPiece(slot1Pos, selectablePieces, pieceResources)};
+    auto& iPreviewPiece {CreateIPreviewPiece(slot2Pos, selectablePieces, pieceResources)};
     auto& lPreviewPiece {CreateLPreviewPiece(slot3Pos, selectablePieces, pieceResources)};
 
     auto& nextPieces {CreateSceneObject()};
@@ -568,20 +568,20 @@ Pht::Animation& HowToPlayDialogView::CreateSwitchPieceAnimation(Pht::SceneObject
     auto switch1Time {1.2f};
     auto switch2Time {3.05f};
     
-    std::vector<Pht::Keyframe> iPieceKeyframes {
+    std::vector<Pht::Keyframe> dPieceKeyframes {
         {.mTime = 0.0f, .mIsVisible = false},
         {.mTime = switch2Time, .mIsVisible = true},
         {.mTime = animationDuration}
     };
-    animationSystem.CreateAnimation(iPiece, iPieceKeyframes);
+    animationSystem.CreateAnimation(dPiece, dPieceKeyframes);
 
-    std::vector<Pht::Keyframe> dPieceKeyframes {
+    std::vector<Pht::Keyframe> iPieceKeyframes {
         {.mTime = 0.0f, .mIsVisible = false},
         {.mTime = switch1Time, .mIsVisible = true},
         {.mTime = switch2Time, .mIsVisible = false},
         {.mTime = animationDuration}
     };
-    animationSystem.CreateAnimation(dPiece, dPieceKeyframes);
+    animationSystem.CreateAnimation(iPiece, iPieceKeyframes);
 
     std::vector<Pht::Keyframe> lPieceKeyframes {
         {.mTime = 0.0f, .mIsVisible = true},
@@ -590,27 +590,27 @@ Pht::Animation& HowToPlayDialogView::CreateSwitchPieceAnimation(Pht::SceneObject
     };
     animationSystem.CreateAnimation(lPiece, lPieceKeyframes);
 
-    std::vector<Pht::Keyframe> iPreviewPieceKeyframes {
+    std::vector<Pht::Keyframe> dPreviewPieceKeyframes {
         {.mTime = 0.0f, .mPosition = slot1Pos},
         {.mTime = switch1Time, .mPosition = slot2Pos},
         {.mTime = switch2Time, .mPosition = slot3Pos},
-        {.mTime = animationDuration}
-    };
-    auto& iPreviewPieceAnimation {
-        animationSystem.CreateAnimation(iPreviewPiece, iPreviewPieceKeyframes)
-    };
-    iPreviewPieceAnimation.SetInterpolation(Pht::Interpolation::None);
-    
-    std::vector<Pht::Keyframe> dPreviewPieceKeyframes {
-        {.mTime = 0.0f, .mPosition = slot2Pos},
-        {.mTime = switch1Time, .mPosition = slot3Pos},
-        {.mTime = switch2Time, .mPosition = slot1Pos},
         {.mTime = animationDuration}
     };
     auto& dPreviewPieceAnimation {
         animationSystem.CreateAnimation(dPreviewPiece, dPreviewPieceKeyframes)
     };
     dPreviewPieceAnimation.SetInterpolation(Pht::Interpolation::None);
+    
+    std::vector<Pht::Keyframe> iPreviewPieceKeyframes {
+        {.mTime = 0.0f, .mPosition = slot2Pos},
+        {.mTime = switch1Time, .mPosition = slot3Pos},
+        {.mTime = switch2Time, .mPosition = slot1Pos},
+        {.mTime = animationDuration}
+    };
+    auto& iPreviewPieceAnimation {
+        animationSystem.CreateAnimation(iPreviewPiece, iPreviewPieceKeyframes)
+    };
+    iPreviewPieceAnimation.SetInterpolation(Pht::Interpolation::None);
 
     std::vector<Pht::Keyframe> lPreviewPieceKeyframes {
         {.mTime = 0.0f, .mPosition = slot3Pos},
@@ -624,8 +624,8 @@ Pht::Animation& HowToPlayDialogView::CreateSwitchPieceAnimation(Pht::SceneObject
     lPreviewPieceAnimation.SetInterpolation(Pht::Interpolation::None);
 
     Pht::Vec3 handInitialPosition {2.5f, -4.7f, UiLayer::root};
-    Pht::Vec3 handBeforeSwipePosition {3.0f, -3.3f, UiLayer::root};
-    Pht::Vec3 handAfterSwipePosition {3.2f, -1.3f, UiLayer::root};
+    Pht::Vec3 handBeforeSwipePosition {2.8f, -3.3f, UiLayer::root};
+    Pht::Vec3 handAfterSwipePosition {3.0f, -1.0f, UiLayer::root};
     
     std::vector<Pht::Keyframe> handAnimationKeyframes {
         {
@@ -644,17 +644,19 @@ Pht::Animation& HowToPlayDialogView::CreateSwitchPieceAnimation(Pht::SceneObject
         },
         {
             .mTime = 1.4f,
-            .mPosition = handInitialPosition
+            .mPosition = handInitialPosition,
+            .mRotation = Pht::Vec3{0.0f, 0.0f, 145.0f}
         },
         {
             .mTime = 2.25f,
             .mPosition = handBeforeSwipePosition,
+            .mRotation = Pht::Vec3{0.0f, 0.0f, 90.0f}
         },
         {
             .mTime = 2.5f,
             .mPosition = handBeforeSwipePosition,
             .mCallback = [&handAnimation] () {
-                handAnimation.BeginTouch(0.4f);
+                handAnimation.BeginTouch(0.45f);
             }
         },
         {
@@ -662,16 +664,18 @@ Pht::Animation& HowToPlayDialogView::CreateSwitchPieceAnimation(Pht::SceneObject
             .mPosition = handBeforeSwipePosition,
         },
         {
-            .mTime = 3.05f,
+            .mTime = 3.1f,
             .mPosition = handAfterSwipePosition,
         },
         {
             .mTime = 3.4f,
             .mPosition = handAfterSwipePosition,
+            .mRotation = Pht::Vec3{0.0f, 0.0f, 90.0f}
         },
         {
             .mTime = 4.0f,
             .mPosition = handInitialPosition,
+            .mRotation = Pht::Vec3{0.0f, 0.0f, 145.0f}
         },
         {
             .mTime = animationDuration - 0.3f,
@@ -684,7 +688,10 @@ Pht::Animation& HowToPlayDialogView::CreateSwitchPieceAnimation(Pht::SceneObject
         }
     };
     
-    animationSystem.CreateAnimation(handAnimation.GetSceneObject(), handAnimationKeyframes);
+    auto& handPhtAnimation {
+        animationSystem.CreateAnimation(handAnimation.GetSceneObject(), handAnimationKeyframes)
+    };
+    handPhtAnimation.SetInterpolation(Pht::Interpolation::Cosine);
 
     return rootAnimation;
 }

@@ -14,7 +14,8 @@ namespace Pht {
 
     enum class Interpolation {
         None,
-        Linear
+        Linear,
+        Cosine
     };
     
     struct Keyframe {
@@ -67,8 +68,12 @@ namespace Pht {
         void SetKeyframes(const std::vector<Keyframe>& keyframes);
         void CalculateKeyframe(float dt);
         void HandleKeyframeTransition();
-        void UpdateLinearInterpolation();
+        void UpdateInterpolation();
+        Pht::Vec3 InterpolateVec3(const Pht::Vec3& keyframeValue,
+                                  const Pht::Vec3& nextKeyframeValue);
         Pht::Vec3 LerpVec3(const Pht::Vec3& keyframeValue, const Pht::Vec3& nextKeyframeValue);
+        Pht::Vec3 CosineInterpolateVec3(const Pht::Vec3& keyframeValue,
+                                        const Pht::Vec3& nextKeyframeValue);
         void PerformActionOnChildAnimations(Action action,
                                             SceneObject& sceneObject,
                                             float dt = 0.0f);

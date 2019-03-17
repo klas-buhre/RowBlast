@@ -48,8 +48,8 @@ void Animation::Update(float dt) {
         HandleKeyframeTransition();
     }
     
-    if (mInterpolation == Interpolation::Linear) {
-        UpdateLinearInterpolation();
+    if (mInterpolation != Interpolation::None) {
+        UpdateInterpolation();
     }
     
     PerformActionOnChildAnimations(Action::Update, mSceneObject, dt);
@@ -107,7 +107,7 @@ void Animation::HandleKeyframeTransition() {
     }
 }
 
-void Animation::UpdateLinearInterpolation() {
+void Animation::UpdateInterpolation() {
     if (mKeyframe == nullptr || mNextKeyframe == nullptr) {
         return;
     }
@@ -116,19 +116,32 @@ void Animation::UpdateLinearInterpolation() {
     auto& position {mKeyframe->mPosition};
     auto& nextPosition {mNextKeyframe->mPosition};
     if (position.HasValue() && nextPosition.HasValue()) {
-        transform.SetPosition(LerpVec3(position.GetValue(), nextPosition.GetValue()));
+        transform.SetPosition(InterpolateVec3(position.GetValue(), nextPosition.GetValue()));
     }
 
     auto& scale {mKeyframe->mScale};
     auto& nextScale {mNextKeyframe->mScale};
     if (scale.HasValue() && nextScale.HasValue()) {
-        transform.SetPosition(LerpVec3(scale.GetValue(), nextScale.GetValue()));
+        transform.SetPosition(InterpolateVec3(scale.GetValue(), nextScale.GetValue()));
     }
 
     auto& rotation {mKeyframe->mRotation};
     auto& nextRotation {mNextKeyframe->mRotation};
     if (rotation.HasValue() && nextRotation.HasValue()) {
-        transform.SetRotation(LerpVec3(rotation.GetValue(), nextRotation.GetValue()));
+        transform.SetRotation(InterpolateVec3(rotation.GetValue(), nextRotation.GetValue()));
+    }
+}
+
+Pht::Vec3 Animation::InterpolateVec3(const Pht::Vec3& keyframeValue,
+                                     const Pht::Vec3& nextKeyframeValue) {
+    switch (mInterpolation) {
+        case Interpolation::Linear:
+            return LerpVec3(keyframeValue, nextKeyframeValue);
+        case Interpolation::Cosine:
+            return CosineInterpolateVec3(keyframeValue, nextKeyframeValue);
+        case Interpolation::None:
+            assert(false);
+            break;
     }
 }
 
@@ -138,6 +151,16 @@ Pht::Vec3 Animation::LerpVec3(const Pht::Vec3& keyframeValue, const Pht::Vec3& n
     auto normalizedTime {elapsedInBetweenTime / timeBetweenKeyframes};
     
     return keyframeValue + (nextKeyframeValue - keyframeValue) * normalizedTime;
+}
+
+Pht::Vec3 Animation::CosineInterpolateVec3(const Pht::Vec3& keyframeValue,
+                                           const Pht::Vec3& nextKeyframeValue) {
+    auto timeBetweenKeyframes {mNextKeyframe->mTime - mKeyframe->mTime};
+    auto elapsedInBetweenTime {std::fmax(mElapsedTime - mKeyframe->mTime, 0.0f)};
+    auto normalizedTime {elapsedInBetweenTime / timeBetweenKeyframes};
+    auto t {std::cos(3.1415f + normalizedTime * 3.1415f) * 0.5f + 0.5f};
+    
+    return keyframeValue + (nextKeyframeValue - keyframeValue) * t;
 }
 
 void Animation::Play() {
