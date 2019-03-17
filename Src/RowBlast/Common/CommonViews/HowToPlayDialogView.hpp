@@ -105,6 +105,12 @@ namespace RowBlast {
         Pht::SceneObject& CreateLPiece(const Pht::Vec3& position,
                                        Pht::SceneObject& parent,
                                        const PieceResources& pieceResources);
+        Pht::SceneObject& CreateIPiece(const Pht::Vec3& position,
+                                       Pht::SceneObject& parent,
+                                       const PieceResources& pieceResources);
+        Pht::SceneObject& CreateDPiece(const Pht::Vec3& position,
+                                       Pht::SceneObject& parent,
+                                       const PieceResources& pieceResources);
         Pht::SceneObject& CreateTwoBlocks(const Pht::Vec3& position,
                                           BlockColor color,
                                           Pht::SceneObject& parent,
@@ -115,6 +121,15 @@ namespace RowBlast {
         Pht::SceneObject& CreateThreeGrayBlocksWithGap(const Pht::Vec3& position,
                                                        Pht::SceneObject& parent,
                                                        const LevelResources& levelResources);
+        Pht::SceneObject& CreateLPreviewPiece(const Pht::Vec3& position,
+                                              Pht::SceneObject& parent,
+                                              const PieceResources& pieceResources);
+        Pht::SceneObject& CreateIPreviewPiece(const Pht::Vec3& position,
+                                              Pht::SceneObject& parent,
+                                              const PieceResources& pieceResources);
+        Pht::SceneObject& CreateDPreviewPiece(const Pht::Vec3& position,
+                                              Pht::SceneObject& parent,
+                                              const PieceResources& pieceResources);
         void CreateBlock(const Pht::Vec3& position,
                          Pht::RenderableObject& blockRenderable,
                          Pht::SceneObject& parent);

@@ -251,8 +251,8 @@ void HowToPlayDialogView::CreateSwitchPiecePage(const CommonResources& commonRes
     };
 
     auto& textProperties {guiResources.GetSmallWhiteTextProperties(zoom)};
-    CreateText({-5.45f, -5.4f, UiLayer::text}, "With SingleTap controls, just tap", textProperties, container);
-    CreateText({-5.05f, -6.475f, UiLayer::text}, "the screen to find more moves.", textProperties, container);
+    CreateText({-4.05f, -5.4f, UiLayer::text}, "Tap the switch button or", textProperties, container);
+    CreateText({-4.05f, -6.475f, UiLayer::text}, "swipe up to switch piece.", textProperties, container);
     
     container.AddChild(CreateFilledCircleIcon(static_cast<int>(mPages.size()), true));
     
@@ -525,7 +525,7 @@ Pht::Animation& HowToPlayDialogView::CreateSwitchPieceAnimation(Pht::SceneObject
     
     CreateFieldQuad(container);
     
-    auto animationDuration {4.0f};
+    auto animationDuration {6.0f};
 
     auto& animationSystem {mEngine.GetAnimationSystem()};
     auto& rootAnimation {
@@ -534,7 +534,10 @@ Pht::Animation& HowToPlayDialogView::CreateSwitchPieceAnimation(Pht::SceneObject
     
     handAnimation.Init(container);
     
-    CreateLPiece({-0.5f, 3.3f, UiLayer::block}, container, pieceResources);
+    auto& iPiece {CreateIPiece({0.0f, 3.3f, UiLayer::block}, container, pieceResources)};
+    auto& dPiece {CreateDPiece({0.0f, 3.3f, UiLayer::block}, container, pieceResources)};
+    auto& lPiece {CreateLPiece({-0.5f, 3.3f, UiLayer::block}, container, pieceResources)};
+    
     CreateTwoBlocks({2.5f, -2.0f, UiLayer::block}, BlockColor::Green, container, pieceResources);
     CreateThreeGrayBlocks({-2.0f, -3.0f, UiLayer::block}, container, levelResources);
     CreateThreeGrayBlocks({2.0f, -3.0f, UiLayer::block}, container, levelResources);
@@ -548,33 +551,127 @@ Pht::Animation& HowToPlayDialogView::CreateSwitchPieceAnimation(Pht::SceneObject
     selectablePieces.GetTransform().SetPosition({2.0f, -5.775f, UiLayer::panel});
     selectablePieces.GetTransform().SetScale(0.71f);
     container.AddChild(selectablePieces);
+    
+    Pht::Vec3 slot1Pos {-2.0f, 0.0f, UiLayer::buttonText};
+    Pht::Vec3 slot2Pos {0.0f, 0.0f, UiLayer::buttonText};
+    Pht::Vec3 slot3Pos {2.4f, 0.0f, UiLayer::buttonText};
+    auto& iPreviewPiece {CreateIPreviewPiece(slot1Pos, selectablePieces, pieceResources)};
+    auto& dPreviewPiece {CreateDPreviewPiece(slot2Pos, selectablePieces, pieceResources)};
+    auto& lPreviewPiece {CreateLPreviewPiece(slot3Pos, selectablePieces, pieceResources)};
 
     auto& nextPieces {CreateSceneObject()};
     nextPieces.SetRenderable(&gameHudRectangles.GetNextPiecesRectangle());
     nextPieces.GetTransform().SetPosition({-2.6f, -5.775f, UiLayer::panel});
     nextPieces.GetTransform().SetScale(0.71f);
     container.AddChild(nextPieces);
+    
+    auto switch1Time {1.2f};
+    auto switch2Time {3.05f};
+    
+    std::vector<Pht::Keyframe> iPieceKeyframes {
+        {.mTime = 0.0f, .mIsVisible = false},
+        {.mTime = switch2Time, .mIsVisible = true},
+        {.mTime = animationDuration}
+    };
+    animationSystem.CreateAnimation(iPiece, iPieceKeyframes);
 
+    std::vector<Pht::Keyframe> dPieceKeyframes {
+        {.mTime = 0.0f, .mIsVisible = false},
+        {.mTime = switch1Time, .mIsVisible = true},
+        {.mTime = switch2Time, .mIsVisible = false},
+        {.mTime = animationDuration}
+    };
+    animationSystem.CreateAnimation(dPiece, dPieceKeyframes);
+
+    std::vector<Pht::Keyframe> lPieceKeyframes {
+        {.mTime = 0.0f, .mIsVisible = true},
+        {.mTime = switch1Time, .mIsVisible = false},
+        {.mTime = animationDuration}
+    };
+    animationSystem.CreateAnimation(lPiece, lPieceKeyframes);
+
+    std::vector<Pht::Keyframe> iPreviewPieceKeyframes {
+        {.mTime = 0.0f, .mPosition = slot1Pos},
+        {.mTime = switch1Time, .mPosition = slot2Pos},
+        {.mTime = switch2Time, .mPosition = slot3Pos},
+        {.mTime = animationDuration}
+    };
+    auto& iPreviewPieceAnimation {
+        animationSystem.CreateAnimation(iPreviewPiece, iPreviewPieceKeyframes)
+    };
+    iPreviewPieceAnimation.SetInterpolation(Pht::Interpolation::None);
+    
+    std::vector<Pht::Keyframe> dPreviewPieceKeyframes {
+        {.mTime = 0.0f, .mPosition = slot2Pos},
+        {.mTime = switch1Time, .mPosition = slot3Pos},
+        {.mTime = switch2Time, .mPosition = slot1Pos},
+        {.mTime = animationDuration}
+    };
+    auto& dPreviewPieceAnimation {
+        animationSystem.CreateAnimation(dPreviewPiece, dPreviewPieceKeyframes)
+    };
+    dPreviewPieceAnimation.SetInterpolation(Pht::Interpolation::None);
+
+    std::vector<Pht::Keyframe> lPreviewPieceKeyframes {
+        {.mTime = 0.0f, .mPosition = slot3Pos},
+        {.mTime = switch1Time, .mPosition = slot1Pos},
+        {.mTime = switch2Time, .mPosition = slot2Pos},
+        {.mTime = animationDuration}
+    };
+    auto& lPreviewPieceAnimation {
+        animationSystem.CreateAnimation(lPreviewPiece, lPreviewPieceKeyframes)
+    };
+    lPreviewPieceAnimation.SetInterpolation(Pht::Interpolation::None);
+
+    Pht::Vec3 handInitialPosition {2.5f, -4.7f, UiLayer::root};
+    Pht::Vec3 handBeforeSwipePosition {3.0f, -3.3f, UiLayer::root};
+    Pht::Vec3 handAfterSwipePosition {3.2f, -1.3f, UiLayer::root};
+    
     std::vector<Pht::Keyframe> handAnimationKeyframes {
         {
             .mTime = 0.0f,
-            .mCallback = [&handAnimation] () {
-                handAnimation.StartInNotTouchingScreenState({2.0f, 2.0f, UiLayer::root},
-                                                             90.0f,
-                                                             10.0f);
+            .mPosition = handInitialPosition,
+            .mCallback = [&handAnimation, &handInitialPosition] () {
+                handAnimation.StartInNotTouchingScreenState(handInitialPosition, 145.0f, 10.0f);
             }
         },
         {
-            .mTime = 0.75f,
+            .mTime = 1.0f,
+            .mPosition = handInitialPosition,
             .mCallback = [&handAnimation] () {
                 handAnimation.BeginTouch(0.0f);
             }
+        },
+        {
+            .mTime = 1.4f,
+            .mPosition = handInitialPosition
         },
         {
             .mTime = 2.25f,
+            .mPosition = handBeforeSwipePosition,
+        },
+        {
+            .mTime = 2.5f,
+            .mPosition = handBeforeSwipePosition,
             .mCallback = [&handAnimation] () {
-                handAnimation.BeginTouch(0.0f);
+                handAnimation.BeginTouch(0.4f);
             }
+        },
+        {
+            .mTime = 2.7f,
+            .mPosition = handBeforeSwipePosition,
+        },
+        {
+            .mTime = 3.05f,
+            .mPosition = handAfterSwipePosition,
+        },
+        {
+            .mTime = 3.4f,
+            .mPosition = handAfterSwipePosition,
+        },
+        {
+            .mTime = 4.0f,
+            .mPosition = handInitialPosition,
         },
         {
             .mTime = animationDuration - 0.3f,
@@ -646,6 +743,74 @@ Pht::SceneObject& HowToPlayDialogView::CreateLPiece(const Pht::Vec3& position,
     return lPiece;
 }
 
+Pht::SceneObject& HowToPlayDialogView::CreateIPiece(const Pht::Vec3& position,
+                                                    Pht::SceneObject& parent,
+                                                    const PieceResources& pieceResources) {
+    auto& iPiece {CreateSceneObject()};
+    parent.AddChild(iPiece);
+    
+    iPiece.GetTransform().SetPosition(position);
+    
+    auto& blockRenderable {
+        pieceResources.GetBlockRenderableObject(BlockKind::Full,
+                                                BlockColor::Green,
+                                                BlockBrightness::Normal)
+    };
+
+    auto halfCellSize {0.5f};
+    CreateBlock({-halfCellSize * 2.0f, 0.0f, 0.0f}, blockRenderable, iPiece);
+    CreateBlock({0.0f, 0.0f, 0.0f}, blockRenderable, iPiece);
+    CreateBlock({halfCellSize * 2.0f, 0.0f, 0.0f}, blockRenderable, iPiece);
+    
+    auto& weldRenderable {
+        pieceResources.GetWeldRenderableObject(WeldRenderableKind::Normal,
+                                               BlockColor::Green,
+                                               BlockBrightness::Normal)
+    };
+
+    CreateWeld({-halfCellSize, 0.0f, halfCellSize}, weldRenderable, 0.0f, iPiece);
+    CreateWeld({halfCellSize, 0.0f, halfCellSize}, weldRenderable, 0.0f, iPiece);
+    
+    return iPiece;
+}
+
+Pht::SceneObject& HowToPlayDialogView::CreateDPiece(const Pht::Vec3& position,
+                                                    Pht::SceneObject& parent,
+                                                    const PieceResources& pieceResources) {
+    auto& dPiece {CreateSceneObject()};
+    parent.AddChild(dPiece);
+    
+    dPiece.GetTransform().SetPosition(position);
+    
+    auto& blockRenderable {
+        pieceResources.GetBlockRenderableObject(BlockKind::Full,
+                                                BlockColor::Red,
+                                                BlockBrightness::Normal)
+    };
+
+    auto halfCellSize {0.5f};
+    CreateBlock({-halfCellSize * 2.0f, halfCellSize, 0.0f}, blockRenderable, dPiece);
+    CreateBlock({0.0f, halfCellSize, 0.0f}, blockRenderable, dPiece);
+    CreateBlock({halfCellSize * 2.0f, halfCellSize, 0.0f}, blockRenderable, dPiece);
+    CreateBlock({0.0f, -halfCellSize, 0.0f}, blockRenderable, dPiece);
+    CreateBlock({halfCellSize * 2.0f, -halfCellSize, 0.0f}, blockRenderable, dPiece);
+
+
+    auto& weldRenderable {
+        pieceResources.GetWeldRenderableObject(WeldRenderableKind::Normal,
+                                               BlockColor::Red,
+                                               BlockBrightness::Normal)
+    };
+
+    CreateWeld({-halfCellSize, halfCellSize, halfCellSize}, weldRenderable, 0.0f, dPiece);
+    CreateWeld({halfCellSize, halfCellSize, halfCellSize}, weldRenderable, 0.0f, dPiece);
+    CreateWeld({halfCellSize, -halfCellSize, halfCellSize}, weldRenderable, 0.0f, dPiece);
+    CreateWeld({0.0f, 0.0f, halfCellSize}, weldRenderable, 90.0f, dPiece);
+    CreateWeld({halfCellSize * 2.0f, 0.0f, halfCellSize}, weldRenderable, 90.0f, dPiece);
+    
+    return dPiece;
+}
+
 Pht::SceneObject& HowToPlayDialogView::CreateTwoBlocks(const Pht::Vec3& position,
                                                        BlockColor color,
                                                        Pht::SceneObject& parent,
@@ -709,6 +874,83 @@ HowToPlayDialogView::CreateThreeGrayBlocksWithGap(const Pht::Vec3& position,
     CreateBlock({halfCellSize * 3.0f, 0.0f, 0.0f}, blockRenderable, blocks);
     
     return blocks;
+}
+
+Pht::SceneObject& HowToPlayDialogView::CreateLPreviewPiece(const Pht::Vec3& position,
+                                                           Pht::SceneObject& parent,
+                                                           const PieceResources& pieceResources) {
+    auto& lPiece {CreateSceneObject()};
+    parent.AddChild(lPiece);
+    
+    auto& transform {lPiece.GetTransform()};
+    transform.SetPosition(position);
+    transform.SetRotation({-30.0f, -30.0f, 0.0f});
+    transform.SetScale(0.60f);
+    
+    auto& blockRenderable {
+        pieceResources.GetBlockRenderableObject(BlockKind::Full,
+                                                BlockColor::Yellow,
+                                                BlockBrightness::Normal)
+    };
+
+    auto halfCellSize {0.5f};
+    CreateBlock({-halfCellSize, halfCellSize, 0.0f}, blockRenderable, lPiece);
+    CreateBlock({halfCellSize, -halfCellSize, 0.0f}, blockRenderable, lPiece);
+    CreateBlock({halfCellSize, halfCellSize, 0.0f}, blockRenderable, lPiece);
+    
+    return lPiece;
+}
+
+Pht::SceneObject& HowToPlayDialogView::CreateDPreviewPiece(const Pht::Vec3& position,
+                                                           Pht::SceneObject& parent,
+                                                           const PieceResources& pieceResources) {
+    auto& dPiece {CreateSceneObject()};
+    parent.AddChild(dPiece);
+    
+    auto& transform {dPiece.GetTransform()};
+    transform.SetPosition(position);
+    transform.SetRotation({-30.0f, -30.0f, 0.0f});
+    transform.SetScale(0.6f);
+    
+    auto& blockRenderable {
+        pieceResources.GetBlockRenderableObject(BlockKind::Full,
+                                                BlockColor::Red,
+                                                BlockBrightness::Normal)
+    };
+
+    auto halfCellSize {0.5f};
+    CreateBlock({-halfCellSize * 2.0f, halfCellSize, 0.0f}, blockRenderable, dPiece);
+    CreateBlock({0.0f, halfCellSize, 0.0f}, blockRenderable, dPiece);
+    CreateBlock({halfCellSize * 2.0f, halfCellSize, 0.0f}, blockRenderable, dPiece);
+    CreateBlock({0.0f, -halfCellSize, 0.0f}, blockRenderable, dPiece);
+    CreateBlock({halfCellSize * 2.0f, -halfCellSize, 0.0f}, blockRenderable, dPiece);
+
+    return dPiece;
+}
+
+Pht::SceneObject& HowToPlayDialogView::CreateIPreviewPiece(const Pht::Vec3& position,
+                                                           Pht::SceneObject& parent,
+                                                           const PieceResources& pieceResources) {
+    auto& iPiece {CreateSceneObject()};
+    parent.AddChild(iPiece);
+    
+    auto& transform {iPiece.GetTransform()};
+    transform.SetPosition(position);
+    transform.SetRotation({-30.0f, -30.0f, 0.0f});
+    transform.SetScale(0.6f);
+    
+    auto& blockRenderable {
+        pieceResources.GetBlockRenderableObject(BlockKind::Full,
+                                                BlockColor::Green,
+                                                BlockBrightness::Normal)
+    };
+
+    auto halfCellSize {0.5f};
+    CreateBlock({-halfCellSize * 2.0f, 0.0f, 0.0f}, blockRenderable, iPiece);
+    CreateBlock({0.0f, 0.0f, 0.0f}, blockRenderable, iPiece);
+    CreateBlock({halfCellSize * 2.0f, 0.0f, 0.0f}, blockRenderable, iPiece);
+    
+    return iPiece;
 }
 
 void HowToPlayDialogView::CreateBlock(const Pht::Vec3& position,
