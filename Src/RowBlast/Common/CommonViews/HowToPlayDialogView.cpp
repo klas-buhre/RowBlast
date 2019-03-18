@@ -116,6 +116,7 @@ HowToPlayDialogView::HowToPlayDialogView(Pht::IEngine& engine,
     CreatePlacePiecePage(guiResources, pieceResources, levelResources, zoom);
     CreateOtherMovesPage(guiResources, pieceResources, levelResources, zoom);
     CreateSwitchPiecePage(commonResources, pieceResources, levelResources, zoom);
+    CreateMovePiecePage(guiResources, pieceResources, levelResources, zoom);
 }
 
 void HowToPlayDialogView::CreateGoalPage(const GuiResources& guiResources,
@@ -217,7 +218,8 @@ void HowToPlayDialogView::CreateOtherMovesPage(const GuiResources& guiResources,
                               BlocksChildAnimations {.mOtherMoves = true},
                               pieceResources,
                               levelResources,
-                              *handAnimation)
+                              *handAnimation,
+                              4.0f)
     };
 
     auto& textProperties {guiResources.GetSmallWhiteTextProperties(zoom)};
@@ -253,6 +255,37 @@ void HowToPlayDialogView::CreateSwitchPiecePage(const CommonResources& commonRes
     auto& textProperties {guiResources.GetSmallWhiteTextProperties(zoom)};
     CreateText({-4.05f, -5.4f, UiLayer::text}, "Tap the switch button or", textProperties, container);
     CreateText({-4.05f, -6.475f, UiLayer::text}, "swipe up to switch piece.", textProperties, container);
+    
+    container.AddChild(CreateFilledCircleIcon(static_cast<int>(mPages.size()), true));
+    
+    mPages.push_back(Page {container, &animation, std::move(handAnimation)});
+}
+
+void HowToPlayDialogView::CreateMovePiecePage(const GuiResources& guiResources,
+                                              const PieceResources& pieceResources,
+                                              const LevelResources& levelResources,
+                                              PotentiallyZoomedScreen zoom) {
+    auto& container {CreateSceneObject()};
+    GetRoot().AddChild(container);
+    
+    CreateSwipeIcon({-2.8f, 8.5f, UiLayer::text}, container);
+    auto& largeTextProperties {guiResources.GetLargeWhiteTextProperties(zoom)};
+    CreateText({-1.9f, 8.25f, UiLayer::text}, "SWIPE (1)", largeTextProperties, container);
+
+    auto handAnimation {std::make_unique<HandAnimation>(mEngine, 1.0f, true)};
+    
+    auto& animation {
+        CreateBlocksAnimation(container,
+                              BlocksChildAnimations {.mMovePieceSideways = true},
+                              pieceResources,
+                              levelResources,
+                              *handAnimation,
+                              6.0f)
+    };
+
+    auto& textProperties {guiResources.GetSmallWhiteTextProperties(zoom)};
+    CreateText({-5.1f, -5.4f, UiLayer::text}, "With swipe controls, slide your", textProperties, container);
+    CreateText({-5.6f, -6.475f, UiLayer::text}, "finger to move the piece sideways.", textProperties, container);
     
     container.AddChild(CreateFilledCircleIcon(static_cast<int>(mPages.size()), true));
     
@@ -408,15 +441,14 @@ Pht::Animation& HowToPlayDialogView::CreateBlocksAnimation(Pht::SceneObject& par
                                                            const BlocksChildAnimations& childAnimations,
                                                            const PieceResources& pieceResources,
                                                            const LevelResources& levelResources,
-                                                           HandAnimation& handAnimation) {
+                                                           HandAnimation& handAnimation,
+                                                           float animationDuration) {
     auto& container {CreateSceneObject()};
     container.GetTransform().SetPosition({0.0f, 1.5f, 0.0f});
     container.GetTransform().SetScale(1.15f);
     parent.AddChild(container);
     
     CreateFieldQuad(container);
-    
-    auto animationDuration {4.0f};
 
     auto& animationSystem {mEngine.GetAnimationSystem()};
     auto& rootAnimation {
@@ -425,7 +457,9 @@ Pht::Animation& HowToPlayDialogView::CreateBlocksAnimation(Pht::SceneObject& par
     
     handAnimation.Init(container);
     
-    CreateLPiece({-0.5f, 3.3f, UiLayer::block}, container, pieceResources);
+    Pht::Vec3 lPieceInitialPosition {-0.5f, 3.3f, UiLayer::block};
+    
+    auto& lPiece {CreateLPiece(lPieceInitialPosition, container, pieceResources)};
     CreateTwoBlocks({2.5f, -2.0f, UiLayer::block}, BlockColor::Green, container, pieceResources);
     CreateThreeGrayBlocks({-2.0f, -3.0f, UiLayer::block}, container, levelResources);
     CreateThreeGrayBlocks({2.0f, -3.0f, UiLayer::block}, container, levelResources);
@@ -508,6 +542,69 @@ Pht::Animation& HowToPlayDialogView::CreateBlocksAnimation(Pht::SceneObject& par
         };
         
         animationSystem.CreateAnimation(handAnimation.GetSceneObject(), handAnimationKeyframes);
+    }
+    
+    if (childAnimations.mMovePieceSideways) {
+        std::vector<Pht::Keyframe> lPieceAnimationKeyframes {
+            {.mTime = 0.0f, .mPosition = lPieceInitialPosition},
+            {.mTime = 1.0f, .mPosition = lPieceInitialPosition},
+            {.mTime = 1.75f, .mPosition = Pht::Vec3{-1.5f, 3.3f, UiLayer::block}},
+            {.mTime = 2.5f, .mPosition = Pht::Vec3{-2.5f, 3.3f, UiLayer::block}},
+            {.mTime = 2.9f, .mPosition = Pht::Vec3{-1.5f, 3.3f, UiLayer::block}},
+            {.mTime = 3.3f, .mPosition = Pht::Vec3{-0.5f, 3.3f, UiLayer::block}},
+            {.mTime = 3.8f, .mPosition = Pht::Vec3{0.5f, 3.3f, UiLayer::block}},
+            {.mTime = 4.5f, .mPosition = Pht::Vec3{1.5f, 3.3f, UiLayer::block}},
+            {.mTime = 5.0f, .mPosition = Pht::Vec3{0.5f, 3.3f, UiLayer::block}},
+            {.mTime = 5.5f, .mPosition = lPieceInitialPosition},
+            {.mTime = animationDuration}
+        };
+        auto& lPieceAnimation {animationSystem.CreateAnimation(lPiece, lPieceAnimationKeyframes)};
+        lPieceAnimation.SetInterpolation(Pht::Interpolation::None);
+
+        Pht::Vec3 handInitialPosition {1.5f, -1.5f, UiLayer::root};
+        Pht::Vec3 handLeftPosition {-1.0f, -1.5f, UiLayer::root};
+        Pht::Vec3 handRightPosition {3.5f, -1.5f, UiLayer::root};
+        
+        std::vector<Pht::Keyframe> handAnimationKeyframes {
+            {
+                .mTime = 0.0f,
+                .mPosition = handInitialPosition,
+                .mCallback = [&handAnimation, &handInitialPosition] () {
+                    handAnimation.StartInNotTouchingScreenState(handInitialPosition, 45.0f, 10.0f);
+                }
+            },
+            {
+                .mTime = 0.75f,
+                .mPosition = handInitialPosition,
+                .mCallback = [&handAnimation] () {
+                    handAnimation.BeginTouch(4.5f);
+                }
+            },
+            {
+                .mTime = 1.0f,
+                .mPosition = handInitialPosition
+            },
+            {
+                .mTime = 2.5f,
+                .mPosition = handLeftPosition
+            },
+            {
+                .mTime = 4.5f,
+                .mPosition = handRightPosition
+            },
+            {
+                .mTime = 5.5f,
+                .mPosition = handInitialPosition
+            },
+            {
+                .mTime = animationDuration
+            }
+        };
+        
+        auto& handPhtAnimation {
+            animationSystem.CreateAnimation(handAnimation.GetSceneObject(), handAnimationKeyframes)
+        };
+        handPhtAnimation.SetInterpolation(Pht::Interpolation::Cosine);
     }
 
     return rootAnimation;
@@ -673,7 +770,7 @@ Pht::Animation& HowToPlayDialogView::CreateSwitchPieceAnimation(Pht::SceneObject
             .mRotation = Pht::Vec3{0.0f, 0.0f, 90.0f}
         },
         {
-            .mTime = 4.0f,
+            .mTime = 4.8f,
             .mPosition = handInitialPosition,
             .mRotation = Pht::Vec3{0.0f, 0.0f, 145.0f}
         },

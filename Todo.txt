@@ -68,7 +68,7 @@ Ongoing tasks:
           Tap the switch button or swipe up to switch piece.
           SceneObject animation of switching piece.
       -6. Swipe Controls:
-          Swipe the screen to move the piece left or right.
+          Slide your finger to move the piece left or right.
           SceneObject animation of draging the piece left and right.
       -7. Swipe Controls:
           Tap the screen to rotate the piece.
