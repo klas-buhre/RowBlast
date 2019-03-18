@@ -49,36 +49,7 @@ Backlog:
 
 Ongoing tasks:
     -How to play dialog should be available from the game menu as well.
-    -How to play dialog.
-      -1. Pieces:
-          Usually the goal is to clear blocks by filling horizontal rows.
-          Show SceneObject animation of a piece filling rows and clearing them.
-      -2. Controls:
-          The game can be played either by SingleTap controls or Swipe controls.
-          The control type can be changed in the options menu from the map.
-          Show icons of both control types.
-      -3. SingleTap Controls:
-          Tap a move to place the piece.
-          SceneObject animation of placing a piece.
-      -4. SingleTap Controls:
-          Tap anywhere to find more moves without switching piece. Tap anywhere except buttons and
-          moves.
-          SceneObject animation of finding more moves.
-      -5. Switch Piece:
-          Tap the switch button or swipe up to switch piece.
-          SceneObject animation of switching piece.
-      -6. Swipe Controls:
-          Slide your finger to move the piece left or right.
-          SceneObject animation of draging the piece left and right.
-      -7. Swipe Controls:
-          Tap the screen to rotate the piece.
-          SceneObject animation of rotating the piece.
-      -8. Swipe Controls:
-          Swipe down to drop the piece.
-          SceneObject animation of dropping the piece.
-      -9. Swipe Controls:
-          Drag down slowly with an up movement at the end to move the piece down.
-          SceneObject animation of dragging the piece down.
+
 
 
 Ordered Backlog:
