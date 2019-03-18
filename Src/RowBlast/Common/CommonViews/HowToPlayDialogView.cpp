@@ -118,6 +118,7 @@ HowToPlayDialogView::HowToPlayDialogView(Pht::IEngine& engine,
     CreateSwitchPiecePage(commonResources, pieceResources, levelResources, zoom);
     CreateMovePiecePage(guiResources, pieceResources, levelResources, zoom);
     CreateRotatePiecePage(guiResources, pieceResources, levelResources, zoom);
+    CreateDropPiecePage(guiResources, pieceResources, levelResources, zoom);
 }
 
 void HowToPlayDialogView::CreateGoalPage(const GuiResources& guiResources,
@@ -324,6 +325,36 @@ void HowToPlayDialogView::CreateRotatePiecePage(const GuiResources& guiResources
     mPages.push_back(Page {container, &animation, std::move(handAnimation)});
 }
 
+void HowToPlayDialogView::CreateDropPiecePage(const GuiResources& guiResources,
+                                              const PieceResources& pieceResources,
+                                              const LevelResources& levelResources,
+                                              PotentiallyZoomedScreen zoom) {
+    auto& container {CreateSceneObject()};
+    GetRoot().AddChild(container);
+    
+    CreateSwipeIcon({-2.8f, 8.5f, UiLayer::text}, container);
+    auto& largeTextProperties {guiResources.GetLargeWhiteTextProperties(zoom)};
+    CreateText({-1.9f, 8.25f, UiLayer::text}, "SWIPE (3)", largeTextProperties, container);
+
+    auto handAnimation {std::make_unique<HandAnimation>(mEngine, 1.0f, true)};
+    
+    auto& animation {
+        CreateClearBlocksAnimation(container,
+                                   ClearBlocksChildAnimations {.mDropPiece = true},
+                                   pieceResources,
+                                   levelResources,
+                                   handAnimation.get())
+    };
+
+    auto& textProperties {guiResources.GetSmallWhiteTextProperties(zoom)};
+    CreateText({-4.4f, -5.4f, UiLayer::text}, "With swipe controls, swipe", textProperties, container);
+    CreateText({-3.9f, -6.475f, UiLayer::text}, "down to drop the piece.", textProperties, container);
+    
+    container.AddChild(CreateFilledCircleIcon(static_cast<int>(mPages.size()), true));
+    
+    mPages.push_back(Page {container, &animation, std::move(handAnimation)});
+}
+
 Pht::SceneObject& HowToPlayDialogView::CreateFilledCircleIcon(int index, bool isBright) {
     auto indexMax {mNumPages - 1};
     auto diff {0.75f};
@@ -464,6 +495,52 @@ Pht::Animation& HowToPlayDialogView::CreateClearBlocksAnimation(Pht::SceneObject
         };
         
         animationSystem.CreateAnimation(handAnimation->GetSceneObject(), handAnimationKeyframes);
+    }
+    
+    if (childAnimations.mDropPiece && handAnimation) {
+        Pht::Vec3 handInitialPosition {2.25f, 1.0f, UiLayer::root};
+        Pht::Vec3 handAfterSwipePosition {2.25f, -1.3f, UiLayer::root};
+        
+        std::vector<Pht::Keyframe> handAnimationKeyframes {
+            {
+                .mTime = 0.0f,
+                .mPosition = handInitialPosition,
+                .mCallback = [handAnimation, &handInitialPosition] () {
+                    handAnimation->StartInNotTouchingScreenState(handInitialPosition, 45.0f, 10.0f);
+                }
+            },
+            {
+                .mTime = 0.4f,
+                .mPosition = handInitialPosition,
+                .mCallback = [handAnimation] () {
+                    handAnimation->BeginTouch(0.45f);
+                }
+            },
+            {
+                .mTime = 0.6f,
+                .mPosition = handInitialPosition
+            },
+            {
+                .mTime = 1.0f,
+                .mPosition = handAfterSwipePosition
+            },
+            {
+                .mTime = 1.5f,
+                .mPosition = handAfterSwipePosition
+            },
+            {
+                .mTime = 3.0f,
+                .mPosition = handInitialPosition
+            },
+            {
+                .mTime = animationDuration
+            }
+        };
+        
+        auto& handPhtAnimation {
+            animationSystem.CreateAnimation(handAnimation->GetSceneObject(), handAnimationKeyframes)
+        };
+        handPhtAnimation.SetInterpolation(Pht::Interpolation::Cosine);
     }
 
     return rootAnimation;

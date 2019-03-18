@@ -62,6 +62,7 @@ namespace RowBlast {
     private:
         struct ClearBlocksChildAnimations {
             bool mPlacePiece {false};
+            bool mDropPiece {false};
         };
         
         struct BlocksChildAnimations {
@@ -95,6 +96,10 @@ namespace RowBlast {
                                    const PieceResources& pieceResources,
                                    const LevelResources& levelResources,
                                    PotentiallyZoomedScreen zoom);
+        void CreateDropPiecePage(const GuiResources& guiResources,
+                                 const PieceResources& pieceResources,
+                                 const LevelResources& levelResources,
+                                 PotentiallyZoomedScreen zoom);
         void CreateFieldQuad(Pht::SceneObject& parent);
         Pht::SceneObject& CreateFilledCircleIcon(int index, bool isFilled);
         Pht::Animation& CreateClearBlocksAnimation(Pht::SceneObject& parent,
