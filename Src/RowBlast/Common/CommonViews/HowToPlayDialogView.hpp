@@ -67,6 +67,7 @@ namespace RowBlast {
         struct BlocksChildAnimations {
             bool mOtherMoves {false};
             bool mMovePieceSideways {false};
+            bool mRotatePiece {false};
         };
         
         void CreateGoalPage(const GuiResources& guiResources,
@@ -90,6 +91,10 @@ namespace RowBlast {
                                  const PieceResources& pieceResources,
                                  const LevelResources& levelResources,
                                  PotentiallyZoomedScreen zoom);
+        void CreateRotatePiecePage(const GuiResources& guiResources,
+                                   const PieceResources& pieceResources,
+                                   const LevelResources& levelResources,
+                                   PotentiallyZoomedScreen zoom);
         void CreateFieldQuad(Pht::SceneObject& parent);
         Pht::SceneObject& CreateFilledCircleIcon(int index, bool isFilled);
         Pht::Animation& CreateClearBlocksAnimation(Pht::SceneObject& parent,
