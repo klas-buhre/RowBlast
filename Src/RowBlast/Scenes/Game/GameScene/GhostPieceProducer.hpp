@@ -55,7 +55,6 @@ namespace RowBlast {
     class GhostPieceProducer {
     public:
         GhostPieceProducer(Pht::IEngine& engine,
-                           float cellSize,
                            const Pht::IVec2& pieceGridSize,
                            const CommonResources& commonResources);
         

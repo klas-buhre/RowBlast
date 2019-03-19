@@ -78,8 +78,15 @@ GameMenuController::Result GameMenuController::OnTouch(const Pht::TouchEvent& to
         }
     }
 
-    if (mView.GetGoalButton().IsClicked(touchEvent)) {
-        mDeferredResult = Result::GoToLevelGoalDialog;
+    if (mView.GetHowToPlayButton().IsClicked(touchEvent)) {
+        mDeferredResult = Result::GoToHowToPlayDialog;
+        mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::No,
+                                            SlidingMenuAnimation::SlideDirection::Left);
+        return Result::None;
+    }
+
+    if (mView.GetLevelInfoButton().IsClicked(touchEvent)) {
+        mDeferredResult = Result::GoToLevelInfoDialog;
         mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::No,
                                             SlidingMenuAnimation::SlideDirection::Left);
         return Result::None;

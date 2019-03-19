@@ -16,6 +16,7 @@
 #include "SettingsMenuController.hpp"
 #include "NoLivesDialogController.hpp"
 #include "LevelGoalDialogController.hpp"
+#include "HowToPlayDialogController.hpp"
 
 namespace Pht {
     class IEngine;
@@ -25,6 +26,7 @@ namespace RowBlast {
     class UserServices;
     class GameScene;
     class PieceResources;
+    class LevelResources;
     
     class GameViewControllers {
     public:
@@ -39,13 +41,15 @@ namespace RowBlast {
             LevelGoalDialog,
             RestartConfirmationDialog,
             MapConfirmationDialog,
+            HowToPlayDialog,
             None
         };
         
         GameViewControllers(Pht::IEngine& engine,
                             const CommonResources& commonResources,
                             UserServices& userServices,
-                            const PieceResources& pieceResources);
+                            const PieceResources& pieceResources,
+                            const LevelResources& levelResources);
         
         void Init(GameScene& scene, Pht::FadeEffect& storeFadeEffect);
         void SetActiveController(Controller controller);
@@ -89,6 +93,10 @@ namespace RowBlast {
         LevelGoalDialogController& GetLevelGoalDialogController() {
             return mLevelGoalDialogController;
         }
+        
+        HowToPlayDialogController& GetHowToPlayDialogController() {
+            return mHowToPlayDialogController;
+        }
 
     private:
         Pht::FadeEffect mFadeEffect;
@@ -103,6 +111,7 @@ namespace RowBlast {
         SettingsMenuController mSettingsMenuController;
         NoLivesDialogController mNoLivesDialogController;
         LevelGoalDialogController mLevelGoalDialogController;
+        HowToPlayDialogController mHowToPlayDialogController;
     };
 }
 

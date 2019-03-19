@@ -11,7 +11,6 @@
 #include "ISceneManager.hpp"
 
 // Game includes.
-#include "GameScene.hpp"
 #include "CommonResources.hpp"
 #include "SmallTrianglePiece.hpp"
 #include "TrianglePiece.hpp"
@@ -38,63 +37,62 @@
 
 using namespace RowBlast;
 
-LevelResources::LevelResources(Pht::IEngine& engine,
-                               const GameScene& scene,
-                               const CommonResources& commonResources) {
-    CreatePieceTypes(engine, scene);
-    CreateCellRenderables(engine.GetSceneManager(), scene);
-    CreateBlueprintRenderables(engine, scene, commonResources);
+LevelResources::LevelResources(Pht::IEngine& engine, const CommonResources& commonResources) {
+    CreatePieceTypes(engine, commonResources);
+    CreateCellRenderables(engine.GetSceneManager(), commonResources);
+    CreateBlueprintRenderables(engine, commonResources);
     CreateLevelBombRenderable(engine);
     CreateBigAsteroidRenderable(engine);
     CreateSmallAsteroidRenderable(engine);
     CreateAsteroidFragmentRenderable(engine);
 }
 
-void LevelResources::CreatePieceTypes(Pht::IEngine& engine, const GameScene& scene) {
-    mPieceTypes["LongI"] = std::make_unique<LongIPiece>(engine, scene);
-    mPieceTypes["I"] = std::make_unique<MiddleIPiece>(engine, scene);
-    mPieceTypes["ShortI"] = std::make_unique<ShortIPiece>(engine, scene);
-    mPieceTypes["L"] = std::make_unique<LPiece>(engine, scene);
-    mPieceTypes["B"] = std::make_unique<BPiece>(engine, scene);
-    mPieceTypes["D"] = std::make_unique<DPiece>(engine, scene);
-    mPieceTypes["Seven"] = std::make_unique<SevenPiece>(engine, scene);
-    mPieceTypes["MirroredSeven"] = std::make_unique<MirroredSevenPiece>(engine, scene);
-    mPieceTypes["F"] = std::make_unique<FPiece>(engine, scene);
-    mPieceTypes["MirroredF"] = std::make_unique<MirroredFPiece>(engine, scene);
-    mPieceTypes["BigL"] = std::make_unique<BigLPiece>(engine, scene);
-    mPieceTypes["Z"] = std::make_unique<ZPiece>(engine, scene);
-    mPieceTypes["MirroredZ"] = std::make_unique<MirroredZPiece>(engine, scene);
-    mPieceTypes["T"] = std::make_unique<TPiece>(engine, scene);
-    mPieceTypes["Plus"] = std::make_unique<PlusPiece>(engine, scene);
-    mPieceTypes["SmallTriangle"] = std::make_unique<SmallTrianglePiece>(engine, scene);
-    mPieceTypes["Triangle"] = std::make_unique<TrianglePiece>(engine, scene);
-    mPieceTypes["BigTriangle"] = std::make_unique<BigTrianglePiece>(engine, scene);
-    mPieceTypes["Diamond"] = std::make_unique<DiamondPiece>(engine, scene);
-    mPieceTypes["Pyramid"] = std::make_unique<PyramidPiece>(engine, scene);
+void LevelResources::CreatePieceTypes(Pht::IEngine& engine,
+                                      const CommonResources& commonResources) {
+    mPieceTypes["LongI"] = std::make_unique<LongIPiece>(engine, commonResources);
+    mPieceTypes["I"] = std::make_unique<MiddleIPiece>(engine, commonResources);
+    mPieceTypes["ShortI"] = std::make_unique<ShortIPiece>(engine, commonResources);
+    mPieceTypes["L"] = std::make_unique<LPiece>(engine, commonResources);
+    mPieceTypes["B"] = std::make_unique<BPiece>(engine, commonResources);
+    mPieceTypes["D"] = std::make_unique<DPiece>(engine, commonResources);
+    mPieceTypes["Seven"] = std::make_unique<SevenPiece>(engine, commonResources);
+    mPieceTypes["MirroredSeven"] = std::make_unique<MirroredSevenPiece>(engine, commonResources);
+    mPieceTypes["F"] = std::make_unique<FPiece>(engine, commonResources);
+    mPieceTypes["MirroredF"] = std::make_unique<MirroredFPiece>(engine, commonResources);
+    mPieceTypes["BigL"] = std::make_unique<BigLPiece>(engine, commonResources);
+    mPieceTypes["Z"] = std::make_unique<ZPiece>(engine, commonResources);
+    mPieceTypes["MirroredZ"] = std::make_unique<MirroredZPiece>(engine, commonResources);
+    mPieceTypes["T"] = std::make_unique<TPiece>(engine, commonResources);
+    mPieceTypes["Plus"] = std::make_unique<PlusPiece>(engine, commonResources);
+    mPieceTypes["SmallTriangle"] = std::make_unique<SmallTrianglePiece>(engine, commonResources);
+    mPieceTypes["Triangle"] = std::make_unique<TrianglePiece>(engine, commonResources);
+    mPieceTypes["BigTriangle"] = std::make_unique<BigTrianglePiece>(engine, commonResources);
+    mPieceTypes["Diamond"] = std::make_unique<DiamondPiece>(engine, commonResources);
+    mPieceTypes["Pyramid"] = std::make_unique<PyramidPiece>(engine, commonResources);
     mPieceTypes["Bomb"] = std::make_unique<Bomb>();
     mPieceTypes["RowBomb"] = std::make_unique<RowBomb>();
 }
 
 void LevelResources::CreateCellRenderables(Pht::ISceneManager& sceneManager,
-                                           const GameScene& scene) {
-    auto cellSize {scene.GetCellSize()};
+                                           const CommonResources& commonResources) {
+    auto cellSize {commonResources.GetCellSize()};
+    auto& grayFieldBlockMaterial {commonResources.GetMaterials().GetGrayFieldBlockMaterial()};
     
     mGrayCube = sceneManager.CreateRenderableObject(
         Pht::ObjMesh {"cube_428.obj", cellSize},
-        scene.GetGrayMaterial()
+        grayFieldBlockMaterial
     );
     
     mGrayTriangle = sceneManager.CreateRenderableObject(
         Pht::ObjMesh {"triangle_320.obj", cellSize},
-        scene.GetGrayMaterial()
+       grayFieldBlockMaterial
     );
 }
 
 void LevelResources::CreateBlueprintRenderables(Pht::IEngine& engine,
-                                                const GameScene& scene,
                                                 const CommonResources& commonResources) {
     const auto edgeWidth {0.07f};
-    auto cellSize {scene.GetCellSize()};
+    auto cellSize {commonResources.GetCellSize()};
     auto squareSide {cellSize + edgeWidth};
     Pht::Vec2 coordinateSystemSize {squareSide, squareSide};
     auto& renderer {engine.GetRenderer()};

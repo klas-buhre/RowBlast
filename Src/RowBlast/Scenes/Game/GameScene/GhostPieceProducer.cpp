@@ -23,14 +23,13 @@ namespace {
 }
 
 GhostPieceProducer::GhostPieceProducer(Pht::IEngine& engine,
-                                       float cellSize,
                                        const Pht::IVec2& pieceGridSize,
                                        const CommonResources& commonResources) :
     mEngine {engine},
-    mCellSize {cellSize},
+    mCellSize {commonResources.GetCellSize()},
     mCoordinateSystemSize {
-        static_cast<float>(pieceGridSize.x) * cellSize,
-        static_cast<float>(pieceGridSize.y) * cellSize
+        static_cast<float>(pieceGridSize.x) * mCellSize,
+        static_cast<float>(pieceGridSize.y) * mCellSize
     },
     mBorderColor {borderColor} {
     
@@ -39,11 +38,11 @@ GhostPieceProducer::GhostPieceProducer(Pht::IEngine& engine,
     auto& frustumSize {commonResources.GetOrthographicFrustumSizePotentiallyZoomedScreen()};
     
     auto xScaleFactor {
-        cellSize * static_cast<float>(renderBufferSize.x) / static_cast<float>(frustumSize.x)
+        mCellSize * static_cast<float>(renderBufferSize.x) / static_cast<float>(frustumSize.x)
     };
     
     auto yScaleFactor {
-        cellSize * static_cast<float>(renderBufferSize.y) / static_cast<float>(frustumSize.y)
+        mCellSize * static_cast<float>(renderBufferSize.y) / static_cast<float>(frustumSize.y)
     };
     
     Pht::IVec2 imageSize {

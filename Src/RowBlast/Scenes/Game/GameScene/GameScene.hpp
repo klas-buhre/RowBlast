@@ -57,6 +57,9 @@ namespace RowBlast {
         GameScene(Pht::IEngine& engine,
                   const ScrollController& scrollController,
                   const CommonResources& commonResources,
+                  const LevelResources& levelResources,
+                  const PieceResources& pieceResources,
+                  const Field& field,
                   GameHudController& gameHudController,
                   const Pht::CameraShake& cameraShake,
                   const GameHudArrow& hudArrow);
@@ -65,15 +68,10 @@ namespace RowBlast {
                                    const Pht::Vec3& directionB) override;
         void SetDefaultGuiLightDirections() override;
 
-        void Init(const Level& level,
-                  const LevelResources& levelResources,
-                  const PieceResources& pieceResources,
-                  const GameLogic& gameLogic,
-                  const Field& field);
+        void Init(const Level& level, const GameLogic& gameLogic);
         void Update();
         void UpdateLightAnimation();
         void SetScissorBox(const Pht::ScissorBox& scissorBox);
-        const Pht::Material& GetGrayMaterial() const;
         const Pht::ScissorBox& GetFieldScissorBox() const;
         void SetUiCameraPosition(const Pht::Vec3& position);
         void SetDefaultUiCameraPosition();
@@ -231,17 +229,13 @@ namespace RowBlast {
         void CreateFieldQuad();
         void CreateFieldContainer();
         Pht::QuadMesh::Vertices CreateFieldVertices();
-        void CreateBlueprintSlots(const Level& level, const LevelResources& levelResources);
+        void CreateBlueprintSlots(const Level& level);
         void CreatePieceDropEffectsContainer();
         void CreateFieldBlocksContainer();
         void CreateSceneObjectPools(const Level& level);
         void CreateEffectsContainer();
         void CreateFlyingBlocksContainer();
-        void CreateHud(const GameLogic& gameLogic,
-                       const Field& field,
-                       const LevelResources& levelResources,
-                       const PieceResources& pieceResources,
-                       const Level& level);
+        void CreateHud(const GameLogic& gameLogic, const Level& level);
         void CreateUiViewsContainer();
         void CreateStarsContainer();
         void InitFieldBorder(const Level& level);
@@ -251,6 +245,9 @@ namespace RowBlast {
         Pht::IEngine& mEngine;
         const ScrollController& mScrollController;
         const CommonResources& mCommonResources;
+        const LevelResources& mLevelResources;
+        const PieceResources& mPieceResources;
+        const Field& mField;
         GameHudController& mGameHudController;
         const Pht::CameraShake& mCameraShake;
         const GameHudArrow& mHudArrow;

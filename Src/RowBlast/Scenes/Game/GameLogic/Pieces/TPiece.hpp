@@ -9,11 +9,11 @@ namespace Pht {
 }
 
 namespace RowBlast {
-    class GameScene;
+    class CommonResources;
     
     class TPiece: public Piece {
     public:
-        TPiece(Pht::IEngine& engine, const GameScene& scene);
+        TPiece(Pht::IEngine& engine, const CommonResources& commonResources);
     };
 }
 

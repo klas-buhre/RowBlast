@@ -56,6 +56,10 @@ namespace RowBlast {
         const GameHudRectangles& GetGameHudRectangles() const {
             return *mGameHudRectangles;
         }
+        
+        float GetCellSize() const {
+            return mCellSize;
+        }
 
         static constexpr auto narrowFrustumHeightFactor {1.13f};
         
@@ -74,6 +78,7 @@ namespace RowBlast {
         Pht::Vec2 mHudFrustumSizePotentiallyZoomedScreen;
         float mTopPaddingPotentiallyZoomedScreen {0.0f};
         float mBottomPaddingPotentiallyZoomedScreen {0.0f};
+        float mCellSize {1.25f};
     };
 }
 

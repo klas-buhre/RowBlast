@@ -48,7 +48,7 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-    -How to play dialog should be available from the game menu as well.
+
 
 
 

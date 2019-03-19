@@ -9,11 +9,11 @@ namespace Pht {
 }
 
 namespace RowBlast {
-    class GameScene;
+    class CommonResources;
     
     class SmallTrianglePiece: public Piece {
     public:
-        SmallTrianglePiece(Pht::IEngine& engine, const GameScene& scene);
+        SmallTrianglePiece(Pht::IEngine& engine, const CommonResources& commonResources);
         
         bool PositionCanBeAdjusteInMovesSearch() const override;
     };

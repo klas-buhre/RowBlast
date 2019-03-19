@@ -103,12 +103,18 @@ namespace {
 GameScene::GameScene(Pht::IEngine& engine,
                      const ScrollController& scrollController,
                      const CommonResources& commonResources,
+                     const LevelResources& levelResources,
+                     const PieceResources& pieceResources,
+                     const Field& field,
                      GameHudController& gameHudController,
                      const Pht::CameraShake& cameraShake,
                      const GameHudArrow& hudArrow) :
     mEngine {engine},
     mScrollController {scrollController},
     mCommonResources {commonResources},
+    mLevelResources {levelResources},
+    mPieceResources {pieceResources},
+    mField {field},
     mGameHudController {gameHudController},
     mCameraShake {cameraShake},
     mHudArrow {hudArrow},
@@ -116,11 +122,7 @@ GameScene::GameScene(Pht::IEngine& engine,
     mFieldGrid {engine, *this, commonResources},
     mFieldPosition {0.0f, 0.0f, 0.0f} {}
 
-void GameScene::Init(const Level& level,
-                     const LevelResources& levelResources,
-                     const PieceResources& pieceResources,
-                     const GameLogic& gameLogic,
-                     const Field& field) {
+void GameScene::Init(const Level& level, const GameLogic& gameLogic) {
     LoadMusic(level);
     
     auto& sceneManager {mEngine.GetSceneManager()};
@@ -140,13 +142,13 @@ void GameScene::Init(const Level& level,
     CreateLevelCompletedEffectsContainer();
     CreateFieldQuad();
     CreateFieldContainer();
-    CreateBlueprintSlots(level, levelResources);
+    CreateBlueprintSlots(level);
     CreatePieceDropEffectsContainer();
     CreateFieldBlocksContainer();
     CreateSceneObjectPools(level);
     CreateEffectsContainer();
     CreateFlyingBlocksContainer();
-    CreateHud(gameLogic, field, levelResources, pieceResources, level);
+    CreateHud(gameLogic, level);
     CreateUiViewsContainer();
     CreateStarsContainer();
     
@@ -334,7 +336,7 @@ Pht::QuadMesh::Vertices GameScene::CreateFieldVertices() {
     };
 }
 
-void GameScene::CreateBlueprintSlots(const Level& level, const LevelResources& levelResources) {
+void GameScene::CreateBlueprintSlots(const Level& level) {
     auto* blueprintGrid {level.GetBlueprintGrid()};
     
     if (blueprintGrid == nullptr) {
@@ -351,7 +353,7 @@ void GameScene::CreateBlueprintSlots(const Level& level, const LevelResources& l
             
             if (blueprintCell.mFill != Fill::Empty) {
                 auto& blueprintSlot {mScene->CreateSceneObject()};
-                blueprintSlot.SetRenderable(&levelResources.GetBlueprintSlotRenderable());
+                blueprintSlot.SetRenderable(&mLevelResources.GetBlueprintSlotRenderable());
                 
                 Pht::Vec3 blueprintSlotPosition {
                     column * mCellSize + mCellSize / 2.0f,
@@ -400,20 +402,16 @@ void GameScene::CreateFlyingBlocksContainer() {
     mScene->GetRoot().AddChild(*mFlyingBlocksContainer);
 }
 
-void GameScene::CreateHud(const GameLogic& gameLogic,
-                          const Field& field,
-                          const LevelResources& levelResources,
-                          const PieceResources& pieceResources,
-                          const Level& level) {
+void GameScene::CreateHud(const GameLogic& gameLogic, const Level& level) {
     mHudContainer = &mScene->CreateSceneObject();
     mHudContainer->SetLayer(static_cast<int>(Layer::Hud));
     mScene->GetRoot().AddChild(*mHudContainer);
     
     mHud = std::make_unique<GameHud>(mEngine,
                                      gameLogic,
-                                     field,
-                                     levelResources,
-                                     pieceResources,
+                                     mField,
+                                     mLevelResources,
+                                     mPieceResources,
                                      mHudArrow,
                                      mGameHudController,
                                      mCommonResources,
@@ -585,10 +583,6 @@ void GameScene::SetGuiLightDirections(const Pht::Vec3& directionA, const Pht::Ve
 void GameScene::SetDefaultGuiLightDirections() {
     mUiLightDirectionA = lightDirectionA;
     mUiLightDirectionB = lightDirectionB;
-}
-
-const Pht::Material& GameScene::GameScene::GetGrayMaterial() const {
-    return mCommonResources.GetMaterials().GetGrayFieldBlockMaterial();
 }
 
 void GameScene::SetUiCameraPosition(const Pht::Vec3& position) {

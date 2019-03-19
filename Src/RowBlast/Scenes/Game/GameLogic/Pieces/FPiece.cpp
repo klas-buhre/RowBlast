@@ -4,12 +4,12 @@
 #include "IEngine.hpp"
 
 // Game includes.
-#include "GameScene.hpp"
+#include "CommonResources.hpp"
 #include "GhostPieceProducer.hpp"
 
 using namespace RowBlast;
 
-FPiece::FPiece(Pht::IEngine& engine, const GameScene& scene) {
+FPiece::FPiece(Pht::IEngine& engine, const CommonResources& commonResources) {
     FillGrid fillGrid = {
         {Fill::Empty, Fill::Empty, Fill::Empty, Fill::Empty},
         {Fill::Empty, Fill::Full,  Fill::Empty, Fill::Empty},
@@ -45,9 +45,7 @@ FPiece::FPiece(Pht::IEngine& engine, const GameScene& scene) {
         {{0, 1}, BorderSegmentKind::Left},
     };
     
-    auto cellSize {scene.GetCellSize()};
-    auto& commonResources {scene.GetCommonResources()};
-    GhostPieceProducer ghostPieceProducer {engine, cellSize, Pht::IVec2{4, 4}, commonResources};
+    GhostPieceProducer ghostPieceProducer {engine, Pht::IVec2{4, 4}, commonResources};
     
     ghostPieceProducer.DrawBorder(border, FillGhostPiece::No);
     SetGhostPieceRenderable(ghostPieceProducer.ProduceRenderable());

@@ -4,12 +4,12 @@
 #include "IEngine.hpp"
 
 // Game includes.
-#include "GameScene.hpp"
+#include "CommonResources.hpp"
 #include "GhostPieceProducer.hpp"
 
 using namespace RowBlast;
 
-DiamondPiece::DiamondPiece(Pht::IEngine& engine, const GameScene& scene) {
+DiamondPiece::DiamondPiece(Pht::IEngine& engine, const CommonResources& commonResources) {
     FillGrid fillGrid = {
         {Fill::LowerRightHalf, Fill::LowerLeftHalf},
         {Fill::UpperRightHalf, Fill::UpperLeftHalf}
@@ -34,9 +34,7 @@ DiamondPiece::DiamondPiece(Pht::IEngine& engine, const GameScene& scene) {
         {{1, 0}, BorderSegmentKind::LowerLeftTiltForDiamond},
     };
     
-    auto cellSize {scene.GetCellSize()};
-    auto& commonResources {scene.GetCommonResources()};
-    GhostPieceProducer ghostPieceProducer {engine, cellSize, Pht::IVec2{2, 2}, commonResources};
+    GhostPieceProducer ghostPieceProducer {engine, Pht::IVec2{2, 2}, commonResources};
     
     ghostPieceProducer.DrawBorder(border, FillGhostPiece::No);
     SetGhostPieceRenderable(ghostPieceProducer.ProduceRenderable());

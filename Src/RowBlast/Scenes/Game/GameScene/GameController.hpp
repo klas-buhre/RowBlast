@@ -74,7 +74,8 @@ namespace RowBlast {
         Command UpdateGame();
         Command UpdateInPausedState();
         void UpdateGameMenu();
-        void UpdateLevelGoalDialog();
+        void UpdateHowToPlayDialog();
+        void UpdateLevelInfoDialog();
         void UpdateSettingsMenu();
         Command UpdateInPausedStateNoLivesDialog();
         Command UpdateRestartConfirmationDialog();
@@ -104,7 +105,8 @@ namespace RowBlast {
         void GoToPausedStateMapConfirmationDialog();
         void GoToPausedStateStore();
         void GoToPausedStateSettingsMenu();
-        void GoToPausedStateLevelGoalDialog();
+        void GoToPausedStateLevelInfoDialog();
+        void GoToPausedStateHowToPlayDialog();
         void GoToPausedStateGameMenu(SlidingMenuAnimation::UpdateFade updateFade,
                                      SlidingMenuAnimation::SlideDirection slideDirection);
         void GoToOutOfMovesStateOutOfMovesAnimation();
@@ -132,7 +134,8 @@ namespace RowBlast {
         
         enum class PausedState {
             GameMenu,
-            LevelGoalDialog,
+            HowToPlayDialog,
+            LevelInfoDialog,
             SettingsMenu,
             NoLivesDialog,
             RestartConfirmationDialog,
@@ -160,6 +163,7 @@ namespace RowBlast {
         Pht::IEngine& mEngine;
         UserServices& mUserServices;
         PieceResources mPieceResources;
+        LevelResources mLevelResources;
         GameHudArrow mHudArrow;
         GameViewControllers mGameViewControllers;
         Field mField;
@@ -182,7 +186,6 @@ namespace RowBlast {
         Tutorial mTutorial;
         GameLogic mGameLogic;
         FallingPieceAnimation& mFallingPieceAnimation;
-        LevelResources mLevelResources;
         PreviewPiecesAnimation mPreviewPiecesAnimation;
         FewMovesAlertAnimation mFewMovesAlertAnimation;
         BlueprintSlotsFilledAnimation mBlueprintSlotsFilledAnimation;

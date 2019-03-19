@@ -17,7 +17,8 @@ namespace {
 GameViewControllers::GameViewControllers(Pht::IEngine& engine,
                                          const CommonResources& commonResources,
                                          UserServices& userServices,
-                                         const PieceResources& pieceResources) :
+                                         const PieceResources& pieceResources,
+                                         const LevelResources& levelResources) :
     mFadeEffect {
         engine.GetSceneManager(),
         engine.GetRenderer(),
@@ -39,6 +40,13 @@ GameViewControllers::GameViewControllers(Pht::IEngine& engine,
         commonResources,
         pieceResources,
         LevelGoalDialogView::SceneId::Game
+    },
+    mHowToPlayDialogController {
+        engine,
+        commonResources,
+        pieceResources,
+        levelResources,
+        HowToPlayDialogView::SceneId::Game
     } {
         
     mViewManager.AddView(static_cast<int>(GameHud), mGameHudController.GetView());
@@ -51,6 +59,7 @@ GameViewControllers::GameViewControllers(Pht::IEngine& engine,
     mViewManager.AddView(static_cast<int>(LevelGoalDialog), mLevelGoalDialogController.GetView());
     mViewManager.AddView(static_cast<int>(RestartConfirmationDialog), mRestartConfirmationDialogController.GetView());
     mViewManager.AddView(static_cast<int>(MapConfirmationDialog), mMapConfirmationDialogController.GetView());
+    mViewManager.AddView(static_cast<int>(HowToPlayDialog), mHowToPlayDialogController.GetView());
     
     mGameMenuController.SetFadeEffect(mFadeEffect);
     mSettingsMenuController.SetFadeEffect(mFadeEffect);
@@ -75,6 +84,7 @@ void GameViewControllers::Init(GameScene& scene, Pht::FadeEffect& storeFadeEffec
     mNoLivesDialogController.SetGuiLightProvider(scene);
     mOutOfMovesDialogController.SetGuiLightProvider(scene);
     mLevelGoalDialogController.SetGuiLightProvider(scene);
+    mHowToPlayDialogController.SetGuiLightProvider(scene);
 }
 
 void GameViewControllers::SetActiveController(Controller controller) {

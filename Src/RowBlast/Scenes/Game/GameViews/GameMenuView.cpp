@@ -36,7 +36,7 @@ GameMenuView::GameMenuView(Pht::IEngine& engine, const CommonResources& commonRe
         0.125f
     };
     
-    CreateText({-1.85f, 8.0f, UiLayer::text}, "PAUSE", captionTextProperties);
+    CreateText({-1.85f, 9.2f, UiLayer::text}, "PAUSE", captionTextProperties);
 
     MenuButton::Style yellowButtonStyle;
     yellowButtonStyle.mMeshFilename = GuiResources::mMediumButtonSkewedMeshFilename;
@@ -60,7 +60,7 @@ GameMenuView::GameMenuView(Pht::IEngine& engine, const CommonResources& commonRe
 
     mResumeButton = std::make_unique<MenuButton>(engine,
                                                  *this,
-                                                 Pht::Vec3 {0.0f, 5.1f, UiLayer::textRectangle},
+                                                 Pht::Vec3 {0.0f, 6.4f, UiLayer::textRectangle},
                                                  buttonInputSize,
                                                  yellowButtonStyle);
     mResumeButton->CreateIcon("play.png",
@@ -75,7 +75,7 @@ GameMenuView::GameMenuView(Pht::IEngine& engine, const CommonResources& commonRe
     
     mUndoButton = std::make_unique<MenuButton>(engine,
                                                *this,
-                                               Pht::Vec3 {0.0f, 2.5f, UiLayer::textRectangle},
+                                               Pht::Vec3 {0.0f, 3.8f, UiLayer::textRectangle},
                                                buttonInputSize,
                                                blueButtonStyle);
     mUndoButton->CreateIcon("undo.png",
@@ -88,24 +88,40 @@ GameMenuView::GameMenuView(Pht::IEngine& engine, const CommonResources& commonRe
                             "Undo Move",
                             guiResources.GetWhiteButtonTextWithShadowPropertiesPotentiallyZoomedScreen());
 
-    mGoalButton = std::make_unique<MenuButton>(engine,
-                                               *this,
-                                               Pht::Vec3 {0.0f, -0.1f, UiLayer::textRectangle},
-                                               buttonInputSize,
-                                               blueButtonStyle);
-    mGoalButton->CreateIcon("info.png",
-                            {-2.0f, 0.08f, UiLayer::buttonText},
-                            {0.82f, 0.82f},
-                            iconColor,
-                            iconShadowColor,
-                            iconShadowOffset);
-    mGoalButton->CreateText({-1.3f, -0.23f, UiLayer::buttonText},
-                            "Level Info",
-                            guiResources.GetWhiteButtonTextWithShadowPropertiesPotentiallyZoomedScreen());
+
+    mHowToPlayButton = std::make_unique<MenuButton>(engine,
+                                                    *this,
+                                                    Pht::Vec3 {0.0f, 1.2f, UiLayer::textRectangle},
+                                                    buttonInputSize,
+                                                    blueButtonStyle);
+    mHowToPlayButton->CreateIcon("help.png",
+                                 {-2.5f, 0.05f, UiLayer::buttonText},
+                                 {0.82f, 0.82f},
+                                 iconColor,
+                                 iconShadowColor,
+                                 iconShadowOffset);
+    mHowToPlayButton->CreateText({-1.8f, -0.23f, UiLayer::buttonText},
+                                 "How To Play",
+                                 guiResources.GetWhiteButtonTextWithShadowPropertiesPotentiallyZoomedScreen());
+
+    mLevelInfoButton = std::make_unique<MenuButton>(engine,
+                                                    *this,
+                                                    Pht::Vec3 {0.0f, -1.4f, UiLayer::textRectangle},
+                                                    buttonInputSize,
+                                                    blueButtonStyle);
+    mLevelInfoButton->CreateIcon("info.png",
+                                 {-2.0f, 0.08f, UiLayer::buttonText},
+                                 {0.82f, 0.82f},
+                                 iconColor,
+                                 iconShadowColor,
+                                 iconShadowOffset);
+    mLevelInfoButton->CreateText({-1.3f, -0.23f, UiLayer::buttonText},
+                                 "Level Info",
+                                 guiResources.GetWhiteButtonTextWithShadowPropertiesPotentiallyZoomedScreen());
 
     mSettingsButton = std::make_unique<MenuButton>(engine,
                                                    *this,
-                                                   Pht::Vec3 {0.0f, -2.7f, UiLayer::textRectangle},
+                                                   Pht::Vec3 {0.0f, -4.0f, UiLayer::textRectangle},
                                                    buttonInputSize,
                                                    blueButtonStyle);
     mSettingsButton->CreateIcon("settings.png",
@@ -120,7 +136,7 @@ GameMenuView::GameMenuView(Pht::IEngine& engine, const CommonResources& commonRe
 
     mRestartButton = std::make_unique<MenuButton>(engine,
                                                   *this,
-                                                  Pht::Vec3 {0.0f, -5.3f, UiLayer::textRectangle},
+                                                  Pht::Vec3 {0.0f, -6.6f, UiLayer::textRectangle},
                                                   buttonInputSize,
                                                   blueButtonStyle);
     mRestartButton->CreateIcon("restart.png",
@@ -135,7 +151,7 @@ GameMenuView::GameMenuView(Pht::IEngine& engine, const CommonResources& commonRe
 
     mMapButton = std::make_unique<MenuButton>(engine,
                                               *this,
-                                              Pht::Vec3 {0.0f, -7.9f, UiLayer::textRectangle},
+                                              Pht::Vec3 {0.0f, -9.2f, UiLayer::textRectangle},
                                               buttonInputSize,
                                               blueButtonStyle);
     mMapButton->CreateIcon("home.png",

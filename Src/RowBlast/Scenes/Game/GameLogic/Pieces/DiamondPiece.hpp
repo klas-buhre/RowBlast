@@ -9,11 +9,11 @@ namespace Pht {
 }
 
 namespace RowBlast {
-    class GameScene;
+    class CommonResources;
     
     class DiamondPiece: public Piece {
     public:
-        DiamondPiece(Pht::IEngine& engine, const GameScene& scene);
+        DiamondPiece(Pht::IEngine& engine, const CommonResources& commonResources);
         
         bool CanRotateAroundZ() const override;
     };

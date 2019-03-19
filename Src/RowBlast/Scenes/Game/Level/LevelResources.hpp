@@ -12,16 +12,13 @@ namespace Pht {
 }
 
 namespace RowBlast {
-    class GameScene;
     class CommonResources;
     
     using PieceTypes = std::map<std::string, std::unique_ptr<const Piece>>;
     
     class LevelResources {
     public:
-        LevelResources(Pht::IEngine& engine,
-                       const GameScene& scene,
-                       const CommonResources& commonResources);
+        LevelResources(Pht::IEngine& engine, const CommonResources& commonResources);
 
         Pht::RenderableObject& GetLevelBlockRenderable(BlockKind blockKind) const;
         
@@ -62,10 +59,10 @@ namespace RowBlast {
         }
 
     private:
-        void CreatePieceTypes(Pht::IEngine& engine, const GameScene& scene);
-        void CreateCellRenderables(Pht::ISceneManager& sceneManager, const GameScene& scene);
+        void CreatePieceTypes(Pht::IEngine& engine, const CommonResources& commonResources);
+        void CreateCellRenderables(Pht::ISceneManager& sceneManager,
+                                   const CommonResources& commonResources);
         void CreateBlueprintRenderables(Pht::IEngine& engine,
-                                        const GameScene& scene,
                                         const CommonResources& commonResources);
         void CreateLevelBombRenderable(Pht::IEngine& engine);
         void CreateBigAsteroidRenderable(Pht::IEngine& engine);

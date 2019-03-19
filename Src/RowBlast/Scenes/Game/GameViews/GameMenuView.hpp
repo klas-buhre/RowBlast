@@ -41,16 +41,20 @@ namespace RowBlast {
             return *mUndoButton;
         }
         
-        const MenuButton& GetGoalButton() const {
-            return *mGoalButton;
+        const MenuButton& GetLevelInfoButton() const {
+            return *mLevelInfoButton;
         }
 
-        const MenuButton& GetRestartButton() const {
-            return *mRestartButton;
+        const MenuButton& GetHowToPlayButton() const {
+            return *mHowToPlayButton;
         }
 
         const MenuButton& GetSettingsButton() const {
             return *mSettingsButton;
+        }
+
+        const MenuButton& GetRestartButton() const {
+            return *mRestartButton;
         }
 
         const MenuButton& GetMapButton() const {
@@ -61,9 +65,10 @@ namespace RowBlast {
         IGuiLightProvider* mGuiLightProvider {nullptr};
         std::unique_ptr<MenuButton> mResumeButton;
         std::unique_ptr<MenuButton> mUndoButton;
-        std::unique_ptr<MenuButton> mGoalButton;
-        std::unique_ptr<MenuButton> mRestartButton;
+        std::unique_ptr<MenuButton> mLevelInfoButton;
+        std::unique_ptr<MenuButton> mHowToPlayButton;
         std::unique_ptr<MenuButton> mSettingsButton;
+        std::unique_ptr<MenuButton> mRestartButton;
         std::unique_ptr<MenuButton> mMapButton;
         bool mIsUndoButtonEnabled {true};
     };

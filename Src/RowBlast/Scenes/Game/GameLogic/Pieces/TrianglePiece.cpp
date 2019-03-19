@@ -4,12 +4,12 @@
 #include "IEngine.hpp"
 
 // Game includes.
-#include "GameScene.hpp"
+#include "CommonResources.hpp"
 #include "GhostPieceProducer.hpp"
 
 using namespace RowBlast;
 
-TrianglePiece::TrianglePiece(Pht::IEngine& engine, const GameScene& scene) {
+TrianglePiece::TrianglePiece(Pht::IEngine& engine, const CommonResources& commonResources) {
     FillGrid fillGrid = {
         {Fill::Empty,          Fill::LowerRightHalf},
         {Fill::LowerRightHalf, Fill::Full}
@@ -32,9 +32,7 @@ TrianglePiece::TrianglePiece(Pht::IEngine& engine, const GameScene& scene) {
         {{0, 0}, BorderSegmentKind::UpperLeftTiltForTriangle},
     };
     
-    auto cellSize {scene.GetCellSize()};
-    auto& commonResources {scene.GetCommonResources()};
-    GhostPieceProducer ghostPieceProducer {engine, cellSize, Pht::IVec2{2, 2}, commonResources};
+    GhostPieceProducer ghostPieceProducer {engine, Pht::IVec2{2, 2}, commonResources};
     
     ghostPieceProducer.DrawBorder(border, FillGhostPiece::No);
     SetGhostPieceRenderable(ghostPieceProducer.ProduceRenderable());
