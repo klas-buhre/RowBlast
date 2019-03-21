@@ -26,7 +26,6 @@ Backlog:
     -Maybe make a more clear bomb dialog slide animation with the bomb piece at the top of the
      frame in the beginning and it falls all the way down and then detonates.
     -Maybe a new level bomb slide animation just to be consistent with the look.
-    -Maybe seeing more moves should be introduced before switching piece in the tutorial?
   -Make ready for release:
     -Should give free gold coins after a new install?
     -Limit the number of undo move to one or two per game round.
@@ -48,7 +47,7 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-
+    -Maybe seeing more moves should be introduced before switching piece in the tutorial?
 
 
 

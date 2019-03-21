@@ -40,12 +40,12 @@ void Engine::Update(float frameSeconds) {
 
     mApplication->OnUpdate();
     
+    mAnimationSystem.Update(mLastFrameSeconds);
     auto* scene {mSceneManager.GetActiveScene()};
     if (scene) {
         scene->GetRoot().Update(false);
     }
     
-    mAnimationSystem.Update(mLastFrameSeconds);
     mParticleSystem.Update(mLastFrameSeconds);
     mAudio.Update(mLastFrameSeconds);
     
