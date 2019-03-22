@@ -60,9 +60,9 @@ void Animation::Update(float dt) {
 void Animation::CalculateKeyframe(float dt) {
     mElapsedTime += dt;
     
-    for (auto i {1}; i < mKeyframes.size(); ++i) {
-        auto& keyframe {mKeyframes[i - 1]};
-        auto& nextKeyframe {mKeyframes[i]};
+    for (auto i = 1; i < mKeyframes.size(); ++i) {
+        auto& keyframe = mKeyframes[i - 1];
+        auto& nextKeyframe = mKeyframes[i];
         if (mElapsedTime >= keyframe.mTime && mElapsedTime <= nextKeyframe.mTime) {
             mKeyframe = &keyframe;
             mNextKeyframe = &nextKeyframe;
@@ -80,28 +80,28 @@ void Animation::HandleKeyframeTransition() {
         return;
     }
     
-    auto& transform {mSceneObject.GetTransform()};
-    auto& position {mKeyframe->mPosition};
+    auto& transform = mSceneObject.GetTransform();
+    auto& position = mKeyframe->mPosition;
     if (position.HasValue()) {
         transform.SetPosition(position.GetValue());
     }
     
-    auto& scale {mKeyframe->mScale};
+    auto& scale = mKeyframe->mScale;
     if (scale.HasValue()) {
         transform.SetScale(scale.GetValue());
     }
 
-    auto& rotation {mKeyframe->mRotation};
+    auto& rotation = mKeyframe->mRotation;
     if (rotation.HasValue()) {
         transform.SetRotation(rotation.GetValue());
     }
 
-    auto isVisible {mKeyframe->mIsVisible};
+    auto isVisible = mKeyframe->mIsVisible;
     if (isVisible.HasValue()) {
         mSceneObject.SetIsVisible(isVisible.GetValue());
     }
     
-    auto& callback {mKeyframe->mCallback};
+    auto& callback = mKeyframe->mCallback;
     if (callback) {
         callback();
     }
@@ -112,21 +112,21 @@ void Animation::UpdateInterpolation() {
         return;
     }
     
-    auto& transform {mSceneObject.GetTransform()};
-    auto& position {mKeyframe->mPosition};
-    auto& nextPosition {mNextKeyframe->mPosition};
+    auto& transform = mSceneObject.GetTransform();
+    auto& position = mKeyframe->mPosition;
+    auto& nextPosition = mNextKeyframe->mPosition;
     if (position.HasValue() && nextPosition.HasValue()) {
         transform.SetPosition(InterpolateVec3(position.GetValue(), nextPosition.GetValue()));
     }
 
-    auto& scale {mKeyframe->mScale};
-    auto& nextScale {mNextKeyframe->mScale};
+    auto& scale = mKeyframe->mScale;
+    auto& nextScale = mNextKeyframe->mScale;
     if (scale.HasValue() && nextScale.HasValue()) {
         transform.SetPosition(InterpolateVec3(scale.GetValue(), nextScale.GetValue()));
     }
 
-    auto& rotation {mKeyframe->mRotation};
-    auto& nextRotation {mNextKeyframe->mRotation};
+    auto& rotation = mKeyframe->mRotation;
+    auto& nextRotation = mNextKeyframe->mRotation;
     if (rotation.HasValue() && nextRotation.HasValue()) {
         transform.SetRotation(InterpolateVec3(rotation.GetValue(), nextRotation.GetValue()));
     }
@@ -146,19 +146,19 @@ Pht::Vec3 Animation::InterpolateVec3(const Pht::Vec3& keyframeValue,
 }
 
 Pht::Vec3 Animation::LerpVec3(const Pht::Vec3& keyframeValue, const Pht::Vec3& nextKeyframeValue) {
-    auto timeBetweenKeyframes {mNextKeyframe->mTime - mKeyframe->mTime};
-    auto elapsedInBetweenTime {std::fmax(mElapsedTime - mKeyframe->mTime, 0.0f)};
-    auto normalizedTime {elapsedInBetweenTime / timeBetweenKeyframes};
+    auto timeBetweenKeyframes = mNextKeyframe->mTime - mKeyframe->mTime;
+    auto elapsedInBetweenTime = std::fmax(mElapsedTime - mKeyframe->mTime, 0.0f);
+    auto normalizedTime = elapsedInBetweenTime / timeBetweenKeyframes;
     
     return keyframeValue + (nextKeyframeValue - keyframeValue) * normalizedTime;
 }
 
 Pht::Vec3 Animation::CosineInterpolateVec3(const Pht::Vec3& keyframeValue,
                                            const Pht::Vec3& nextKeyframeValue) {
-    auto timeBetweenKeyframes {mNextKeyframe->mTime - mKeyframe->mTime};
-    auto elapsedInBetweenTime {std::fmax(mElapsedTime - mKeyframe->mTime, 0.0f)};
-    auto normalizedTime {elapsedInBetweenTime / timeBetweenKeyframes};
-    auto t {std::cos(3.1415f + normalizedTime * 3.1415f) * 0.5f + 0.5f};
+    auto timeBetweenKeyframes = mNextKeyframe->mTime - mKeyframe->mTime;
+    auto elapsedInBetweenTime = std::fmax(mElapsedTime - mKeyframe->mTime, 0.0f);
+    auto normalizedTime = elapsedInBetweenTime / timeBetweenKeyframes;
+    auto t = std::cos(3.1415f + normalizedTime * 3.1415f) * 0.5f + 0.5f;
     
     return keyframeValue + (nextKeyframeValue - keyframeValue) * t;
 }
@@ -187,7 +187,7 @@ void Animation::Stop() {
 
 void Animation::PerformActionOnChildAnimations(Action action, SceneObject& sceneObject, float dt) {
     for (auto* childSceneObject: sceneObject.GetChildren()) {
-        auto* childAnimation {childSceneObject->GetComponent<Animation>()};
+        auto* childAnimation = childSceneObject->GetComponent<Animation>();
         if (childAnimation) {
             switch (action) {
                 case Action::Update:

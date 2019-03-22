@@ -21,10 +21,10 @@ SphereMesh::SphereMesh(float radius,
     mTranslation {translation} {}
 
 Vec3 SphereMesh::Evaluate(const Vec2& domain) const {
-    auto u {domain.x};
-    auto v {domain.y};
-    auto x {static_cast<float>(mRadius * sin(u) * cos(v)) + mTranslation.x};
-    auto y {static_cast<float>(mRadius * cos(u)) + mTranslation.y};
-    auto z {static_cast<float>(mRadius * -sin(u) * sin(v)) + mTranslation.z};
+    auto u = domain.x;
+    auto v = domain.y;
+    auto x = static_cast<float>(mRadius * sin(u) * cos(v)) + mTranslation.x;
+    auto y = static_cast<float>(mRadius * cos(u)) + mTranslation.y;
+    auto z = static_cast<float>(mRadius * -sin(u) * sin(v)) + mTranslation.z;
     return {x, y, z};
 }

@@ -36,7 +36,7 @@ ParticleEffect::ParticleEffect(SceneObject& sceneObject,
     mEmitter {particleSettings, emitterSettings},
     mRenderMode {renderMode} {
     
-    auto numParticles {CalculateNumParticles(emitterSettings, particleSettings)};
+    auto numParticles = CalculateNumParticles(emitterSettings, particleSettings);
     mParticles.resize(numParticles);
     
     Material material {particleSettings.mTextureFilename};
@@ -97,7 +97,7 @@ void ParticleEffect::Update(float dt) {
     }
 
     mEmitter.Update(dt, mParticles);
-    auto anyActiveParticles {false};
+    auto anyActiveParticles = false;
     
     for (auto& particle: mParticles) {
         if (!particle.mIsActive) {
@@ -124,7 +124,7 @@ bool ParticleEffect::UpdateParticle(Particle& particle, float dt) {
         return false;
     }
     
-    auto& particleSettings {mEmitter.GetParticleSettings()};
+    auto& particleSettings = mEmitter.GetParticleSettings();
     
     particle.mVelocity += particleSettings.mAcceleration * dt;
     
@@ -159,7 +159,7 @@ bool ParticleEffect::UpdateParticle(Particle& particle, float dt) {
             particle.mSize.y = particle.mFullSize.y;
         }
     } else if (particle.mAge > particle.mTimeToLive - particleSettings.mShrinkDuration) {
-        auto deltaSize {particle.mFullSize * dt / particleSettings.mShrinkDuration};
+        auto deltaSize = particle.mFullSize * dt / particleSettings.mShrinkDuration;
         
         Vec2 scaledDeltaSize {
             deltaSize.x * particleSettings.mShrinkScale.x,
@@ -224,8 +224,8 @@ void ParticleEffect::WriteTriangles() {
 }
 
 void ParticleEffect::WriteParticleTriangles(const Particle& particle) {
-    auto& color {particle.mColor};
-    auto halfSize {particle.mSize / 2.0f};
+    auto& color = particle.mColor;
+    auto halfSize = particle.mSize / 2.0f;
     
     Vec3 v1 {-halfSize.x, -halfSize.y, 0.0f};
     Vec3 v2 {halfSize.x, -halfSize.y, 0.0f};
@@ -233,9 +233,9 @@ void ParticleEffect::WriteParticleTriangles(const Particle& particle) {
     Vec3 v4 {-halfSize.x, halfSize.y, 0.0f};
     
     if (particle.mZAngle != 0.0f) {
-        auto thetaRadians {ToRadians(particle.mZAngle)};
-        auto sinTheta {std::sin(thetaRadians)};
-        auto cosTheta {std::cos(thetaRadians)};
+        auto thetaRadians = ToRadians(particle.mZAngle);
+        auto sinTheta = std::sin(thetaRadians);
+        auto cosTheta = std::cos(thetaRadians);
         
         v1 = RotateZ(v1, sinTheta, cosTheta);
         v2 = RotateZ(v2, sinTheta, cosTheta);
@@ -243,7 +243,7 @@ void ParticleEffect::WriteParticleTriangles(const Particle& particle) {
         v4 = RotateZ(v4, sinTheta, cosTheta);
     }
 
-    auto& position {particle.mPosition};
+    auto& position = particle.mPosition;
     
     mVertexBuffer->BeginFace();
 

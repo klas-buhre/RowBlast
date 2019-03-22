@@ -7,7 +7,7 @@
 
 namespace {
     bool StringEndsWith(const std::string& str, const std::string& with) {
-        auto pos {str.find(with)};
+        auto pos = str.find(with);
         
         if (pos == std::string::npos) {
             return false;

@@ -21,19 +21,19 @@ Optional<std::string> ParametricSurface::GetName() const {
 }
 
 VertexBuffer ParametricSurface::GetVertices(VertexFlags flags) const {
-    auto vertexCount {mDivisions.x * mDivisions.y};
-    auto triangleIndexCount {6 * mSlices.x * mSlices.y};
+    auto vertexCount = mDivisions.x * mDivisions.y;
+    auto triangleIndexCount = 6 * mSlices.x * mSlices.y;
     VertexBuffer vertexBuffer {vertexCount, triangleIndexCount, flags};
 
-    for (int j {0}; j < mDivisions.y; j++) {
-        for (int i {0}; i < mDivisions.x; i++) {
+    for (auto j = 0; j < mDivisions.y; j++) {
+        for (auto i = 0; i < mDivisions.x; i++) {
 
             // Compute Position.
             Vec2 domain {ComputeDomain(i, j)};
             Vec3 vertex {Evaluate(domain)};
 
-            auto k {static_cast<float>(i)};
-            auto l {static_cast<float>(j)};
+            auto k = static_cast<float>(i);
+            auto l = static_cast<float>(j);
 
             // Nudge the point if the normal is indeterminate.
             if (i == 0) {
@@ -58,8 +58,8 @@ VertexBuffer ParametricSurface::GetVertices(VertexFlags flags) const {
             Vec3 normal {u.Cross(v).Normalized()};
             
             // Compute Texture coord.
-            auto s {mTextureCount.x * i / mSlices.x};
-            auto t {mTextureCount.y * j / mSlices.y};
+            auto s = mTextureCount.x * i / mSlices.x;
+            auto t = mTextureCount.y * j / mSlices.y;
             Vec2 textureCoord {s, t};
             vertexBuffer.Write(vertex, normal, textureCoord);
         }
@@ -70,9 +70,9 @@ VertexBuffer ParametricSurface::GetVertices(VertexFlags flags) const {
 }
 
 void ParametricSurface::GenerateTriangleIndices(VertexBuffer& vertexBuffer) const {
-    for (int j {0}, vertex = 0; j < mSlices.y; j++) {
-        for (int i {0}; i < mSlices.x; i++) {
-            auto next {(i + 1) % mDivisions.x};
+    for (auto j = 0, vertex = 0; j < mSlices.y; j++) {
+        for (auto i = 0; i < mSlices.x; i++) {
+            auto next = (i + 1) % mDivisions.x;
             vertexBuffer.AddIndex(vertex + i);
             vertexBuffer.AddIndex(vertex + next);
             vertexBuffer.AddIndex(vertex + i + mDivisions.x);

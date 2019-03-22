@@ -12,7 +12,7 @@ void GuiViewManager::Init(SceneObject& parentObject) {
     mActiveView = nullptr;
 
     for (auto& viewEntry: mViews) {
-        auto* view {viewEntry.second};
+        auto* view = viewEntry.second;
         view->SetIsActive(false);
         parentObject.AddChild(view->GetRoot());
     }
@@ -25,7 +25,7 @@ void GuiViewManager::AddView(int viewId, GuiView& view) {
 void GuiViewManager::ActivateView(int viewIndex) {
     DeactivateAllViews();
     
-    auto viewEntry {mViews.find(viewIndex)};
+    auto viewEntry = mViews.find(viewIndex);
     if (viewEntry == std::end(mViews)) {
         assert(!"View not found");
     }
@@ -41,7 +41,7 @@ void GuiViewManager::DeactivateAllViews() {
     }
 
     for (auto& viewEntry: mViews) {
-        auto* view {viewEntry.second};
+        auto* view = viewEntry.second;
         view->SetIsActive(false);
     }
 }

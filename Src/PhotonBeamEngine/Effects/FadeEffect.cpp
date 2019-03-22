@@ -20,9 +20,9 @@ FadeEffect::FadeEffect(ISceneManager& sceneManager,
     Pht::Material quadMaterial;
     quadMaterial.GetDepthState().mDepthTest = false;
     
-    auto& hudFrustumSize {mRenderer.GetHudFrustumSize()};
-    auto width {hudFrustumSize.x + 0.1f};
-    auto height {hudFrustumSize.y + 0.1f};
+    auto& hudFrustumSize = mRenderer.GetHudFrustumSize();
+    auto width = hudFrustumSize.x + 0.1f;
+    auto height = hudFrustumSize.y + 0.1f;
     
     Vec4 color {0.0f, 0.0f, 0.0f, 1.0f};
 

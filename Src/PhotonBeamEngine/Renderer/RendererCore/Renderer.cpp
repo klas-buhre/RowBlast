@@ -46,9 +46,9 @@
 using namespace Pht;
 
 namespace {
-    constexpr auto defaultScreenHeight {1136};
-    constexpr auto topPadding {1.05f};
-    constexpr auto bottomPadding {1.67f};
+    constexpr auto defaultScreenHeight = 1136;
+    constexpr auto topPadding = 1.05f;
+    constexpr auto bottomPadding = 1.67f;
     const Mat4 identityMatrix;
     const Vec4 modelSpaceOrigin {0.0f, 0.0f, 0.0f, 1.0f};
     
@@ -116,7 +116,7 @@ namespace {
                 if (isParticleShader) {
                     glBlendFunc(GL_SRC_ALPHA, GL_ONE);
                 } else {
-                    auto* texture {material.GetTexture()};
+                    auto* texture = material.GetTexture();
                     if (texture && texture->HasPremultipliedAlpha()) {
                         glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
                     } else {
@@ -162,15 +162,15 @@ namespace {
         // Bind the vertex buffer.
         glBindBuffer(GL_ARRAY_BUFFER, vertexBufferId);
 
-        auto vertexFlags {shaderProgram.GetVertexFlags()};
-        auto stride {CalculateStride(vertexFlags)};
+        auto vertexFlags = shaderProgram.GetVertexFlags();
+        auto stride = CalculateStride(vertexFlags);
         
-        auto& attributes {shaderProgram.GetAttributes()};
+        auto& attributes = shaderProgram.GetAttributes();
         
         glEnableVertexAttribArray(attributes.mPosition);
         glVertexAttribPointer(attributes.mPosition, 3, GL_FLOAT, GL_FALSE, stride, 0);
         
-        auto offset {sizeof(Vec3)};
+        auto offset = sizeof(Vec3);
         
         if (vertexFlags.mNormals) {
             glEnableVertexAttribArray(attributes.mNormal);
@@ -324,7 +324,7 @@ void Renderer::InitCamera() {
 
 void Renderer::InitHudFrustum() {
     mHudCameraPosition = Vec3 {0.0f, 0.0f, 0.0f};
-    auto frustumHeight {hudFrustumSettings.mHeight * GetFrustumHeightFactor()};
+    auto frustumHeight = hudFrustumSettings.mHeight * GetFrustumHeightFactor();
     float frustumWidth {frustumHeight * mRenderBufferSize.x / mRenderBufferSize.y};
     mHudFrustum.mProjection = Mat4::OrthographicProjection(-frustumWidth / 2.0f,
                                                            frustumWidth / 2.0f,
@@ -365,7 +365,7 @@ void Renderer::InitShaders() {
 }
 
 void Renderer::SetupProjectionInShaders() {
-    auto& projectionMatrix {GetProjectionMatrix()};
+    auto& projectionMatrix = GetProjectionMatrix();
     
     for (auto& shader: mShaders) {
         shader.second.SetProjection(projectionMatrix);
@@ -378,7 +378,7 @@ void Renderer::InitRenderQueue(const Scene& scene) {
 
 std::unique_ptr<RenderableObject> Renderer::CreateRenderableObject(const IMesh& mesh,
                                                                    const Material& material) {
-    auto shaderProgram {GetShaderProgram(material.GetShaderType())};
+    auto shaderProgram = GetShaderProgram(material.GetShaderType());
     return std::make_unique<RenderableObject>(material, mesh, shaderProgram.GetVertexFlags());
 }
 
@@ -392,8 +392,8 @@ void Renderer::ClearBuffers() {
 }
 
 void Renderer::RenderScene(const Scene& scene) {
-    const CameraComponent* previousCamera {nullptr};
-    const LightComponent* previousLight {nullptr};
+    const CameraComponent* previousCamera = nullptr;
+    const LightComponent* previousLight = nullptr;
     
     for (auto& renderPass: scene.GetRenderPasses()) {
         if (!renderPass.IsEnabled()) {
@@ -401,11 +401,11 @@ void Renderer::RenderScene(const Scene& scene) {
         }
 
         // Set up camera.
-        auto* cameraOverride {renderPass.GetCamera()};
-        auto* camera {cameraOverride ? cameraOverride : scene.GetCamera()};
+        auto* cameraOverride = renderPass.GetCamera();
+        auto* camera = cameraOverride ? cameraOverride : scene.GetCamera();
         assert(camera);
         if (camera != previousCamera) {
-            auto cameraPositionWorldSpace {camera->GetSceneObject().GetWorldSpacePosition()};
+            auto cameraPositionWorldSpace = camera->GetSceneObject().GetWorldSpacePosition();
             
             if (renderPass.IsHudMode()) {
                 mHudCameraPosition = cameraPositionWorldSpace;
@@ -418,8 +418,8 @@ void Renderer::RenderScene(const Scene& scene) {
         }
 
         // Set up the lighting.
-        auto* lightOverride {renderPass.GetLight()};
-        auto* light {lightOverride ? lightOverride : scene.GetGlobalLight()};
+        auto* lightOverride = renderPass.GetLight();
+        auto* light = lightOverride ? lightOverride : scene.GetGlobalLight();
         assert(light);
         if (light != previousLight) {
             SetLightDirection(light->GetDirection());
@@ -434,17 +434,17 @@ void Renderer::RenderScene(const Scene& scene) {
 }
 
 void Renderer::Render(const RenderPass& renderPass, DistanceFunction distanceFunction) {
-    auto isHudMode {renderPass.IsHudMode()};
-    auto projectionMode {renderPass.GetProjectionMode()};
+    auto isHudMode = renderPass.IsHudMode();
+    auto projectionMode = renderPass.GetProjectionMode();
     if (isHudMode != mHudMode || projectionMode != mProjectionMode) {
         SetHudMode(isHudMode);
         SetProjectionMode(projectionMode);
         SetupProjectionInShaders();
     }
     
-    auto& scissorBox {renderPass.GetScissorBox()};
+    auto& scissorBox = renderPass.GetScissorBox();
     if (scissorBox.HasValue()) {
-        auto& scissorBoxValue {scissorBox.GetValue()};
+        auto& scissorBoxValue = scissorBox.GetValue();
         SetScissorBox(scissorBoxValue.mLowerLeft, scissorBoxValue.mSize);
         SetScissorTest(true);
     }
@@ -476,14 +476,13 @@ void Renderer::Render(const RenderPass& renderPass, DistanceFunction distanceFun
             SetDepthWrite(renderEntry.mDepthWrite);
         }
         
-        auto* sceneObject {renderEntry.mSceneObject};
-        
-        if (auto* renderable {sceneObject->GetRenderable()}) {
+        auto* sceneObject = renderEntry.mSceneObject;
+        if (auto* renderable = sceneObject->GetRenderable()) {
             RenderObject(*renderable, sceneObject->GetMatrix());
         }
         
-        if (auto* textComponent {sceneObject->GetComponent<TextComponent>()}) {
-            auto textPosition {CalculateTextHudPosition(*textComponent)};
+        if (auto* textComponent = sceneObject->GetComponent<TextComponent>()) {
+            auto textPosition = CalculateTextHudPosition(*textComponent);
             RenderText(textComponent->GetText(), textPosition, textComponent->GetProperties());
         }
         
@@ -504,10 +503,10 @@ void Renderer::SetLightDirection(const Vec3& lightDirection) {
 
 void Renderer::SetLightDirectionInShaders() {
     // Since the matrix is row-major it has to be transposed in order to multiply with the vector.
-    auto transposedViewMatrix {GetViewMatrix().Transposed()};
-    auto lightPosCamSpace {transposedViewMatrix * Vec4{mGlobalLight.mDirectionWorldSpace, 0.0f}};
+    auto transposedViewMatrix = GetViewMatrix().Transposed();
+    auto lightPosCamSpace = transposedViewMatrix * Vec4{mGlobalLight.mDirectionWorldSpace, 0.0f};
     Vec3 lightPosCamSpaceVec3 {lightPosCamSpace.x, lightPosCamSpace.y, lightPosCamSpace.z};
-    auto normalizedLightPosition {lightPosCamSpaceVec3.Normalized()};
+    auto normalizedLightPosition = lightPosCamSpaceVec3.Normalized();
     
     for (auto& shader: mShaders) {
         shader.second.SetLightPosition(normalizedLightPosition);
@@ -558,27 +557,25 @@ void Renderer::SetScissorBox(const Vec2& lowerLeft, const Vec2& size) {
     assert(mHudMode || mProjectionMode == ProjectionMode::Orthographic);
     
     Vec4 localOrigin {0.0f, 0.0f, 0.0f, 1.0f};
-    auto modelView {Mat4::Translate(lowerLeft.x, lowerLeft.y, 0.0f) * GetViewMatrix()};
-    auto modelViewProjection {modelView * GetProjectionMatrix()};
+    auto modelView = Mat4::Translate(lowerLeft.x, lowerLeft.y, 0.0f) * GetViewMatrix();
+    auto modelViewProjection = modelView * GetProjectionMatrix();
     
     // Since the matrix is row-major it has to be transposed in order to multiply with the vector.
-    auto clipSpacePos {modelViewProjection.Transposed() * localOrigin};
-    auto normProjPos {clipSpacePos / clipSpacePos.w};
+    auto clipSpacePos = modelViewProjection.Transposed() * localOrigin;
+    auto normProjPos = clipSpacePos / clipSpacePos.w;
     
-    auto& frustumSize {mHudMode ? GetHudFrustumSize() : GetOrthographicFrustumSize()};
+    auto& frustumSize = mHudMode ? GetHudFrustumSize() : GetOrthographicFrustumSize();
     
     Vec2 lowerLeftProjected {
         normProjPos.x * frustumSize.x / 2.0f,
         normProjPos.y * frustumSize.y / 2.0f
     };
 
-    auto pixelX {
-        mRenderBufferSize.x / 2.0f + mRenderBufferSize.x * lowerLeftProjected.x / frustumSize.x
-    };
+    auto pixelX =
+        mRenderBufferSize.x / 2.0f + mRenderBufferSize.x * lowerLeftProjected.x / frustumSize.x;
     
-    auto pixelY {
-        mRenderBufferSize.y / 2.0f + mRenderBufferSize.y * lowerLeftProjected.y / frustumSize.y
-    };
+    auto pixelY =
+        mRenderBufferSize.y / 2.0f + mRenderBufferSize.y * lowerLeftProjected.y / frustumSize.y;
     
     IVec2 lowerLeftInPixels {static_cast<int>(pixelX), static_cast<int>(pixelY)};
     
@@ -599,14 +596,14 @@ void Renderer::SetScissorTest(bool scissorTest) {
 }
 
 void Renderer::RenderObject(const RenderableObject& object, const Mat4& modelTransform) {
-    auto& material {object.GetMaterial()};
-    auto shaderType {material.GetShaderType()};
+    auto& material = object.GetMaterial();
+    auto shaderType = material.GetShaderType();
     
     // Select and use the shader.
-    auto& shaderProgram {GetShaderProgram(shaderType)};
+    auto& shaderProgram = GetShaderProgram(shaderType);
     assert(shaderProgram.IsEnabled());
     shaderProgram.Use();
-    auto& uniforms {shaderProgram.GetUniforms()};
+    auto& uniforms = shaderProgram.GetUniforms();
     
     // Set the transforms used by the shaders.
     SetTransforms(modelTransform, uniforms);
@@ -614,7 +611,7 @@ void Renderer::RenderObject(const RenderableObject& object, const Mat4& modelTra
     // Set the material properties used by the shaders.
     SetMaterialProperties(uniforms, material, shaderType, object);
 
-    auto& vbo {object.GetVbo()};
+    auto& vbo = object.GetVbo();
     
     // Enable vertex attribute arrays.
     EnableVertexAttributes(shaderProgram, material, vbo.GetVertexBufferId());
@@ -638,13 +635,13 @@ void Renderer::SetTransforms(const Mat4& modelTransform,
     // it works since all transforms are created in row-major order while OpenGL reads the matrix in
     // column-major order which transposes it. Transposing the matrix is required in order to
     // multiply with a vector: M * v.
-    auto modelview {modelTransform * GetViewMatrix()};
-    auto modelViewProjection {modelview * GetProjectionMatrix()};
+    auto modelview = modelTransform * GetViewMatrix();
+    auto modelViewProjection = modelview * GetProjectionMatrix();
     glUniformMatrix4fv(uniforms.mModelViewProjection, 1, 0, modelViewProjection.Pointer());
 
     // Set the normal matrix in camera space. Modelview is orthogonal, so its Inverse-Transpose is
     // itself.
-    auto normalMatrix {modelview.ToMat3()};
+    auto normalMatrix = modelview.ToMat3();
     glUniformMatrix3fv(uniforms.mNormalMatrix, 1, 0, normalMatrix.Pointer());
     
     // Set the model matrix.
@@ -659,27 +656,27 @@ void Renderer::SetMaterialProperties(const ShaderProgram::UniformHandles& unifor
                                      const Material& material,
                                      ShaderType shaderType,
                                      const RenderableObject& object) {
-    auto ambientlIntensity {mGlobalLight.mAmbientIntensity};
-    auto& ambient {material.GetAmbient()};
+    auto ambientlIntensity = mGlobalLight.mAmbientIntensity;
+    auto& ambient = material.GetAmbient();
     glUniform3f(uniforms.mAmbientMaterial,
                 ambient.mRed * ambientlIntensity,
                 ambient.mGreen * ambientlIntensity,
                 ambient.mBlue * ambientlIntensity);
     
-    auto directionalIntensity {mGlobalLight.mDirectionalIntensity};
-    auto& diffuse {material.GetDiffuse()};
+    auto directionalIntensity = mGlobalLight.mDirectionalIntensity;
+    auto& diffuse = material.GetDiffuse();
     glUniform3f(uniforms.mDiffuseMaterial,
                 diffuse.mRed * directionalIntensity,
                 diffuse.mGreen * directionalIntensity,
                 diffuse.mBlue * directionalIntensity);
     
-    auto& specular {material.GetSpecular()};
+    auto& specular = material.GetSpecular();
     glUniform3f(uniforms.mSpecularMaterial,
                 specular.mRed * directionalIntensity,
                 specular.mGreen * directionalIntensity,
                 specular.mBlue * directionalIntensity);
 
-    auto& emissive {material.GetEmissive()};
+    auto& emissive = material.GetEmissive();
     glUniform3f(uniforms.mEmissiveMaterial, emissive.mRed, emissive.mGreen, emissive.mBlue);
 
     glUniform1f(uniforms.mShininess, material.GetShininess());
@@ -695,7 +692,7 @@ void Renderer::SetMaterialProperties(const ShaderProgram::UniformHandles& unifor
 }
 
 ShaderProgram& Renderer::GetShaderProgram(ShaderType shaderType) {
-    auto shader {mShaders.find(shaderType)};
+    auto shader = mShaders.find(shaderType);
     assert(shader != std::end(mShaders));
     return shader->second;
 }
@@ -772,7 +769,7 @@ float Renderer::GetBottomPaddingHeight() const {
 void Renderer::RenderText(const std::string& text,
                           const Vec2& position,
                           const TextProperties& properties) {
-    auto textPosition {position};
+    auto textPosition = position;
 
     if (properties.mSecondShadow == TextShadow::Yes) {
         TextProperties shadowProperties {properties};
@@ -813,13 +810,11 @@ void Renderer::RenderText(const std::string& text,
 void Renderer::RenderTextImpl(const std::string& text,
                               const Vec2& position,
                               const TextProperties& properties) {
-    auto pixelX {
-        mRenderBufferSize.x / 2.0f + mRenderBufferSize.x * position.x / mHudFrustum.mSize.x
-    };
+    auto pixelX =
+        mRenderBufferSize.x / 2.0f + mRenderBufferSize.x * position.x / mHudFrustum.mSize.x;
     
-    auto pixelY {
-        mRenderBufferSize.y / 2.0f + mRenderBufferSize.y * position.y / mHudFrustum.mSize.y
-    };
+    auto pixelY =
+        mRenderBufferSize.y / 2.0f + mRenderBufferSize.y * position.y / mHudFrustum.mSize.y;
     
     Vec2 pixelPosition {pixelX, pixelY};
     
@@ -828,28 +823,27 @@ void Renderer::RenderTextImpl(const std::string& text,
         pixelPosition.y = std::floor(pixelPosition.y);
     }
     
-    auto italicSlant {
-        mRenderBufferSize.x * properties.mItalicSlant * properties.mScale / mHudFrustum.mSize.x
-    };
+    auto italicSlant =
+        mRenderBufferSize.x * properties.mItalicSlant * properties.mScale / mHudFrustum.mSize.x;
     
     mTextRenderer->RenderText(text, pixelPosition, italicSlant, properties);
 }
 
 Vec2 Renderer::CalculateTextHudPosition(const TextComponent& textComponent) {
-    auto& sceneObject {textComponent.GetSceneObject()};
+    auto& sceneObject = textComponent.GetSceneObject();
     
     if (mHudMode) {
-        auto sceneObjectPosition {sceneObject.GetWorldSpacePosition()};
+        auto sceneObjectPosition = sceneObject.GetWorldSpacePosition();
         return Vec2 {sceneObjectPosition.x, sceneObjectPosition.y};
     }
 
-    auto modelView {sceneObject.GetMatrix() * GetViewMatrix()};
-    auto modelViewProjection {modelView * GetProjectionMatrix()};
+    auto modelView = sceneObject.GetMatrix() * GetViewMatrix();
+    auto modelViewProjection = modelView * GetProjectionMatrix();
     
     // Since the matrix is row-major it has to be transposed in order to multiply with the vector.
-    auto clipSpacePos {modelViewProjection.Transposed() * modelSpaceOrigin};
-    auto normProjPos {clipSpacePos / clipSpacePos.w};
-    auto& hudSize {GetHudFrustumSize()};
+    auto clipSpacePos = modelViewProjection.Transposed() * modelSpaceOrigin;
+    auto normProjPos = clipSpacePos / clipSpacePos.w;
+    auto& hudSize = GetHudFrustumSize();
 
     return Pht::Vec2 {normProjPos.x * hudSize.x / 2.0f, normProjPos.y * hudSize.y / 2.0f};
 }

@@ -41,10 +41,10 @@ TextComponent& GuiView::CreateText(const Vec3& position,
                                    const std::string& text,
                                    const TextProperties& properties,
                                    Pht::SceneObject& parent) {
-    auto sceneObject {std::make_unique<SceneObject>()};
-    auto textComponent {std::make_unique<TextComponent>(*sceneObject, text, properties)};
+    auto sceneObject = std::make_unique<SceneObject>();
+    auto textComponent = std::make_unique<TextComponent>(*sceneObject, text, properties);
     
-    auto& retVal {*textComponent};
+    auto& retVal = *textComponent;
     sceneObject->SetComponent<TextComponent>(std::move(textComponent));
     sceneObject->GetTransform().SetPosition(position);
     
@@ -56,20 +56,20 @@ TextComponent& GuiView::CreateText(const Vec3& position,
 SceneObject& GuiView::CreateSceneObject(const IMesh& mesh,
                                         const Material& material,
                                         ISceneManager& sceneManager) {
-    auto sceneObject {sceneManager.CreateSceneObject(mesh, material, mSceneResources)};
-    auto& retVal {*sceneObject};
+    auto sceneObject = sceneManager.CreateSceneObject(mesh, material, mSceneResources);
+    auto& retVal = *sceneObject;
     mSceneResources.AddSceneObject(std::move(sceneObject));
     return retVal;
 }
 
 SceneObject& GuiView::CreateSceneObject() {
-    auto sceneObject {std::make_unique<SceneObject>()};
-    auto& retVal {*sceneObject};
+    auto sceneObject = std::make_unique<SceneObject>();
+    auto& retVal = *sceneObject;
     mSceneResources.AddSceneObject(std::move(sceneObject));
     return retVal;
 }
 
 Vec2 GuiView::GetPosition() const {
-    auto& position {mRoot->GetTransform().GetPosition()};
+    auto& position = mRoot->GetTransform().GetPosition();
     return {position.x, position.y};
 }

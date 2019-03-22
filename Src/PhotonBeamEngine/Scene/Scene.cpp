@@ -15,7 +15,7 @@ Scene::Scene(ISceneManager& sceneManager, Name name) :
     mSceneManager {sceneManager},
     mName {name} {
     
-    auto root {std::make_unique<SceneObject>(Hash::Fnv1a("root"))};
+    auto root = std::make_unique<SceneObject>(Hash::Fnv1a("root"));
     mRoot = root.get();
     mResources.AddSceneObject(std::move(root));
 }
@@ -33,10 +33,10 @@ const SceneObject& Scene::GetRoot() const {
 }
 
 LightComponent& Scene::CreateGlobalLight() {
-    auto sceneObject {std::make_unique<SceneObject>(Hash::Fnv1a("light"))};
+    auto sceneObject = std::make_unique<SceneObject>(Hash::Fnv1a("light"));
     sceneObject->SetIsVisible(false);
     
-    auto lightComponent {std::make_unique<LightComponent>(*sceneObject)};
+    auto lightComponent = std::make_unique<LightComponent>(*sceneObject);
     mGlobalLight = lightComponent.get();
     sceneObject->SetComponent<LightComponent>(std::move(lightComponent));
     
@@ -45,10 +45,10 @@ LightComponent& Scene::CreateGlobalLight() {
 }
 
 CameraComponent& Scene::CreateCamera() {
-    auto sceneObject {std::make_unique<SceneObject>(Hash::Fnv1a("camera"))};
+    auto sceneObject = std::make_unique<SceneObject>(Hash::Fnv1a("camera"));
     sceneObject->SetIsVisible(false);
     
-    auto cameraComponent {std::make_unique<CameraComponent>(*sceneObject)};
+    auto cameraComponent = std::make_unique<CameraComponent>(*sceneObject);
     mCamera = cameraComponent.get();
     sceneObject->SetComponent<CameraComponent>(std::move(cameraComponent));
     
@@ -57,25 +57,25 @@ CameraComponent& Scene::CreateCamera() {
 }
 
 SceneObject& Scene::CreateSceneObject(const IMesh& mesh, const Material& material) {
-    auto sceneObject {mSceneManager.CreateSceneObject(mesh, material, mResources)};
-    auto& retVal {*sceneObject};
+    auto sceneObject = mSceneManager.CreateSceneObject(mesh, material, mResources);
+    auto& retVal = *sceneObject;
     mResources.AddSceneObject(std::move(sceneObject));
     return retVal;
 }
 
 SceneObject& Scene::CreateSceneObject() {
-    auto sceneObject {std::make_unique<SceneObject>()};
-    auto& retVal {*sceneObject};
+    auto sceneObject = std::make_unique<SceneObject>();
+    auto& retVal = *sceneObject;
     mResources.AddSceneObject(std::move(sceneObject));
     return retVal;
 }
 
 TextComponent& Scene::CreateText(const std::string& text, const TextProperties& properties) {
-    auto sceneObject {std::make_unique<SceneObject>()};
+    auto sceneObject = std::make_unique<SceneObject>();
     
-    auto textComponent {std::make_unique<TextComponent>(*sceneObject, text, properties)};
+    auto textComponent = std::make_unique<TextComponent>(*sceneObject, text, properties);
     
-    auto& retVal {*textComponent};
+    auto& retVal = *textComponent;
     sceneObject->SetComponent<TextComponent>(std::move(textComponent));
     mResources.AddSceneObject(std::move(sceneObject));
     return retVal;

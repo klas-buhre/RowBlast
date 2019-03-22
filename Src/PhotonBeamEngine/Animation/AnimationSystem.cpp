@@ -20,8 +20,8 @@ void AnimationSystem::RemoveAnimation(Animation& animation) {
 
 Animation& AnimationSystem::CreateAnimation(SceneObject& sceneObject,
                                             const std::vector<Keyframe>& keyframes) {
-    auto animation {std::make_unique<Animation>(sceneObject, keyframes, *this)};
-    auto& retVal {*animation};
+    auto animation = std::make_unique<Animation>(sceneObject, keyframes, *this);
+    auto& retVal = *animation;
     
     sceneObject.SetComponent<Animation>(std::move(animation));
     

@@ -49,20 +49,20 @@ namespace {
     }
     
     void GlTexImage(GLenum target, const IImage& image) {
-        auto format {ToGlTextureFormat(image.GetFormat())};
-        auto type {ToGlType(image.GetBitsPerComponent(), format)};
-        auto* data {image.GetImageData()};
-        auto size {image.GetSize()};
+        auto format = ToGlTextureFormat(image.GetFormat());
+        auto type = ToGlType(image.GetBitsPerComponent(), format);
+        auto* data = image.GetImageData();
+        auto size = image.GetSize();
         glTexImage2D(target, 0, format, size.x, size.y, 0, format, type, data);
     }
     
     void GlTexImage(GLenum target, const std::string& filename) {
-        auto image {Pht::LoadImage(filename)};
+        auto image = Pht::LoadImage(filename);
         GlTexImage(target, *image);
     }
     
     std::shared_ptr<Texture> CreateTexture(const IImage& image, GenerateMipmap generateMipmap) {
-        auto texture {std::make_shared<Texture>(image.HasPremultipliedAlpha())};
+        auto texture = std::make_shared<Texture>(image.HasPremultipliedAlpha());
         
         glBindTexture(GL_TEXTURE_2D, texture->GetHandle());
         
@@ -84,7 +84,7 @@ namespace {
     }
     
     std::shared_ptr<Texture> CreateEnvMapTexture(const EnvMapTextureFilenames& filenames) {
-        auto texture {std::make_shared<Texture>(false)};
+        auto texture = std::make_shared<Texture>(false);
         
         glBindTexture(GL_TEXTURE_CUBE_MAP, texture->GetHandle());
         
@@ -131,8 +131,8 @@ std::shared_ptr<Texture> TextureCache::GetTexture(const std::string& textureName
         std::end(twoDTextures));
     
     for (const auto& entry: twoDTextures) {
-        if (auto texture {entry.second.lock()}) {
-            auto& key {entry.first};
+        if (auto texture = entry.second.lock()) {
+            auto& key = entry.first;
             
             if (textureName == key.mFilename && generateMipmap == key.mGenerateMipmap) {
                 return texture;
@@ -140,8 +140,8 @@ std::shared_ptr<Texture> TextureCache::GetTexture(const std::string& textureName
         }
     }
     
-    auto image {Pht::LoadImage(textureName)};
-    auto texture {CreateTexture(*image, generateMipmap)};
+    auto image = Pht::LoadImage(textureName);
+    auto texture = CreateTexture(*image, generateMipmap);
     twoDTextures.emplace_back(TwoDTextureKey{textureName, generateMipmap}, texture);
     return texture;
 }
@@ -157,8 +157,8 @@ std::shared_ptr<Texture> TextureCache::GetTexture(const EnvMapTextureFilenames& 
         std::end(envMapTextures));
     
     for (const auto& entry: envMapTextures) {
-        if (auto texture {entry.second.lock()}) {
-            auto& key {entry.first};
+        if (auto texture = entry.second.lock()) {
+            auto& key = entry.first;
             
             if (filenames == key) {
                 return texture;
@@ -166,7 +166,7 @@ std::shared_ptr<Texture> TextureCache::GetTexture(const EnvMapTextureFilenames& 
         }
     }
 
-    auto texture {CreateEnvMapTexture(filenames)};
+    auto texture = CreateEnvMapTexture(filenames);
     envMapTextures.emplace_back(filenames, texture);
     return texture;
 }

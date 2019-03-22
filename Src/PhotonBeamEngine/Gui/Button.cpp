@@ -19,8 +19,8 @@ Button::Button(SceneObject& sceneObject, const Vec2& size, IEngine& engine) :
     mSize {size} {}
 
 bool Button::IsClicked(const TouchEvent& event) {
-    auto result {false};
-    auto& renderer {mEngine.GetRenderer()};
+    auto result = false;
+    auto& renderer = mEngine.GetRenderer();
     renderer.SetHudMode(true);
     
     switch (OnTouch(event)) {
@@ -69,7 +69,7 @@ bool Button::IsDown() const {
 }
 
 Button::Result Button::OnTouch(const TouchEvent& event) {
-    auto& touchLocation {event.mLocation};
+    auto& touchLocation = event.mLocation;
     
     switch (event.mState) {
         case TouchState::Begin:
@@ -125,7 +125,7 @@ Button::Result Button::OnTouchMove(const Vec2& touchLocation) {
 }
 
 Button::Result Button::OnTouchEnd(const Vec2& touchLocation) {
-    auto result {Result::None};
+    auto result = Result::None;
 
     switch (mState) {
         case State::Up:
@@ -145,23 +145,23 @@ Button::Result Button::OnTouchEnd(const Vec2& touchLocation) {
 }
 
 bool Button::Hit(const Vec2& touch) {
-    auto& renderer {mEngine.GetRenderer()};
-    auto modelView {mSceneObject.GetMatrix() * renderer.GetViewMatrix()};
-    auto modelViewProjection {modelView * renderer.GetProjectionMatrix()};
+    auto& renderer = mEngine.GetRenderer();
+    auto modelView = mSceneObject.GetMatrix() * renderer.GetViewMatrix();
+    auto modelViewProjection = modelView * renderer.GetProjectionMatrix();
     
     // Since the matrix is row-major it has to be transposed in order to multiply with the vector.
-    auto clipSpacePos {modelViewProjection.Transposed() * modelSpaceOrigin};
-    auto normProjPos {clipSpacePos / clipSpacePos.w};
+    auto clipSpacePos = modelViewProjection.Transposed() * modelSpaceOrigin;
+    auto normProjPos = clipSpacePos / clipSpacePos.w;
     
-    auto& screenInputSize {mEngine.GetInput().GetScreenInputSize()};
+    auto& screenInputSize = mEngine.GetInput().GetScreenInputSize();
     
     Vec2 buttonPos {
         (normProjPos.x + 1.0f) / 2.0f * screenInputSize.x,
         (-normProjPos.y + 1.0f) / 2.0f * screenInputSize.y
     };
     
-    auto halfSizeX {mSize.x / 2.0f};
-    auto halfSizeY {mSize.y / 2.0f};
+    auto halfSizeX = mSize.x / 2.0f;
+    auto halfSizeY = mSize.y / 2.0f;
     
     return touch.x > buttonPos.x - halfSizeX && touch.x < buttonPos.x + halfSizeX &&
            touch.y > buttonPos.y - halfSizeY && touch.y < buttonPos.y + halfSizeY;

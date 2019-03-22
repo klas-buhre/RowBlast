@@ -18,8 +18,8 @@ InputHandler::InputHandler(const Vec2& nativeScreenInputSize) :
 }
 
 void InputHandler::Init(const IRenderer& renderer) {
-    auto nativeWhRatio {mNativeScreenInputSize.x / mNativeScreenInputSize.y};
-    auto defaultWhRatio {defaultScreenInputSize.x / defaultScreenInputSize.y};
+    auto nativeWhRatio = mNativeScreenInputSize.x / mNativeScreenInputSize.y;
+    auto defaultWhRatio = defaultScreenInputSize.x / defaultScreenInputSize.y;
     
     mScreenInputSize.x = nativeWhRatio * defaultScreenInputSize.x / defaultWhRatio;
     mScreenInputSize.y = defaultScreenInputSize.y;
@@ -70,14 +70,14 @@ void InputHandler::PopNextEvent() {
 }
 
 bool InputHandler::ConsumeWholeTouch() {
-    auto gotTouch {false};
+    auto gotTouch = false;
 
     if (!mIsInputEnabled) {
         return gotTouch;
     }
     
     while (HasEvents()) {
-        auto& event {GetNextEvent()};
+        auto& event = GetNextEvent();
         switch (event.GetKind()) {
             case Pht::InputKind::Touch:
                 if (event.GetTouchEvent().mState == Pht::TouchState::End) {
@@ -106,18 +106,18 @@ const Vec2& InputHandler::GetScreenInputSize() const {
 void InputHandler::ProcessInputEvent(InputEvent& event) {
     switch (event.GetKind()) {
         case InputKind::Touch: {
-            auto& touchEvent {event.mTouch};
+            auto& touchEvent = event.mTouch;
             touchEvent.mLocation = NativeToStandardCoordinates(touchEvent.mLocation);
             ProcessTouchEvent(touchEvent);
             break;
         }
         case InputKind::TapGesture: {
-            auto& tapEvent {event.mTap};
+            auto& tapEvent = event.mTap;
             tapEvent.mLocation = NativeToStandardCoordinates(tapEvent.mLocation);
             break;
         }
         case InputKind::PanGesture: {
-            auto& panEvent {event.mPan};
+            auto& panEvent = event.mPan;
             panEvent.mTranslation = NativeToStandardCoordinates(panEvent.mTranslation);
             break;
         }

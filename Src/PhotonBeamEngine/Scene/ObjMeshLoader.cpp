@@ -11,8 +11,8 @@
 using namespace Pht;
 
 namespace {
-    const auto maxLineSize {128};
-    const auto unknownIndex {-1};
+    constexpr auto maxLineSize = 128;
+    constexpr auto unknownIndex = -1;
     
     struct Quantities {
         int mVertexCount {0};
@@ -86,13 +86,13 @@ namespace {
     void ReadVertices(std::vector<Vec3>& vertices, const std::string& filename) {
         std::ifstream objFile {filename};
         assert(objFile.is_open());
-        auto index {0};
+        auto index = 0;
         
         while (objFile) {
             if (objFile.get() == 'v' && objFile.get() == ' ') {
                 assert(index < vertices.size());
                 
-                auto& vertex {vertices[index]};
+                auto& vertex = vertices[index];
                 objFile >> vertex.x;
                 objFile >> vertex.y;
                 objFile >> vertex.z;
@@ -107,13 +107,13 @@ namespace {
     void ReadTextureCoords(std::vector<Vec2>& textureCoords, const std::string& filename) {
         std::ifstream objFile {filename};
         assert(objFile.is_open());
-        auto index {0};
+        auto index = 0;
         
         while (objFile) {
             if (objFile.get() == 'v' && objFile.get() == 't') {
                 assert(index < textureCoords.size());
                 
-                auto& textureCoord {textureCoords[index]};
+                auto& textureCoord = textureCoords[index];
                 objFile >> textureCoord.x;
                 objFile >> textureCoord.y;
                 
@@ -129,13 +129,13 @@ namespace {
     void ReadNormals(std::vector<Vec3>& normals, const std::string& filename) {
         std::ifstream objFile {filename};
         assert(objFile.is_open());
-        auto index {0};
+        auto index = 0;
         
         while (objFile) {
             if (objFile.get() == 'v' && objFile.get() == 'n') {
                 assert(index < normals.size());
                 
-                auto& normal {normals[index]};
+                auto& normal = normals[index];
                 objFile >> normal.x;
                 objFile >> normal.y;
                 objFile >> normal.z;
@@ -212,13 +212,13 @@ namespace {
                           VertexRefs& vertexRefs) {
         InitNormals(normals, static_cast<int>(vertices.size()));
         
-        const auto& faceVertexRefs {vertexRefs.mVertexRefVector};
+        const auto& faceVertexRefs = vertexRefs.mVertexRefVector;
         assert(faceVertexRefs.size() % 3 == 0);
         
         for (auto i {0}; i < faceVertexRefs.size(); ) {
-            auto vertexIndex0 {faceVertexRefs[i].mVertexIndex};
-            auto vertexIndex1 {faceVertexRefs[i + 1].mVertexIndex};
-            auto vertexIndex2 {faceVertexRefs[i + 2].mVertexIndex};
+            auto vertexIndex0 = faceVertexRefs[i].mVertexIndex;
+            auto vertexIndex1 = faceVertexRefs[i + 1].mVertexIndex;
+            auto vertexIndex2 = faceVertexRefs[i + 2].mVertexIndex;
             
             Vec3 u {vertices[vertexIndex1] - vertices[vertexIndex0]};
             Vec3 v {vertices[vertexIndex2] - vertices[vertexIndex0]};
@@ -237,14 +237,14 @@ namespace {
     }
     
     void MoveVerticesToOrigin(std::vector<Vec3>& vertices) {
-        auto maxVal {32000.0f};
-        auto minVal {-maxVal};
-        auto xMax {minVal};
-        auto yMax {minVal};
-        auto zMax {minVal};
-        auto xMin {maxVal};
-        auto yMin {maxVal};
-        auto zMin {maxVal};
+        auto maxVal = 32000.0f;
+        auto minVal = -maxVal;
+        auto xMax = minVal;
+        auto yMax = minVal;
+        auto zMax = minVal;
+        auto xMin = maxVal;
+        auto yMin = maxVal;
+        auto zMin = maxVal;
         
         for (auto& vertex: vertices) {
             if (vertex.x > xMax) {
@@ -280,7 +280,7 @@ namespace {
     }
     
     void SetNewIndices(VertexRefs& vertexRefs) {
-        auto newIndex {0};
+        auto newIndex = 0;
         for (auto& keyValuePair: vertexRefs.mNewIndices) {
             keyValuePair.second = newIndex++;
         }
@@ -296,7 +296,7 @@ namespace {
         SetNewIndices(vertexRefs);
         
         for (auto& keyValuePair: vertexRefs.mNewIndices) {
-            auto& vertexRef {keyValuePair.first};
+            auto& vertexRef = keyValuePair.first;
             vertexBuffer.Write(vertices[vertexRef.mVertexIndex] * scale,
                                normals[vertexRef.mNormalIndex],
                                flags.mTextureCoords ? textureCoords[vertexRef.mTextureCoordIndex] :
@@ -304,7 +304,7 @@ namespace {
         }
         
         for (const auto& vertexRef: vertexRefs.mVertexRefVector) {
-            auto i {vertexRefs.mNewIndices.find(vertexRef)};
+            auto i = vertexRefs.mNewIndices.find(vertexRef);
             assert(i != vertexRefs.mNewIndices.end());
             
             vertexBuffer.AddIndex(i->second);
@@ -318,8 +318,8 @@ VertexBuffer ObjMeshLoader::Load(const std::string& filename,
                                  MoveMeshToOrigin moveMeshToOrigin) {
     assert(flags.mNormals);
 
-    auto fullPath {FileSystem::GetResourceDirectory() + "/" + filename};
-    auto quantities {GetQuantities(fullPath)};
+    auto fullPath = FileSystem::GetResourceDirectory() + "/" + filename;
+    auto quantities = GetQuantities(fullPath);
     
     std::vector<Vec3> vertices(quantities.mVertexCount);
     ReadVertices(vertices, fullPath);

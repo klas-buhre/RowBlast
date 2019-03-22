@@ -8,7 +8,7 @@
 using namespace Pht;
 
 namespace {
-    constexpr auto speed {19.0f};
+    constexpr auto speed = 19.0f;
 
     const std::array<float, 7> samplePointStart {
         90.0f,
@@ -49,7 +49,7 @@ void CameraShake::Update(float dt) {
 }
 
 void CameraShake::UpdateInShakingState(float dt) {
-    auto magnitude {mMagnitude * (mShakeTime - mElapsedTime) / mShakeTime};
+    auto magnitude = mMagnitude * (mShakeTime - mElapsedTime) / mShakeTime;
     
     switch (mShakeKind) {
         case ShakeKind::Random:

@@ -16,7 +16,7 @@ void Audio::LoadSound(const std::string& filename,
                       int maxSources,
                       float gain,
                       AudioResourceId resourceId) {
-    auto sound {mAudioEngine->LoadSound(filename, maxSources)};
+    auto sound = mAudioEngine->LoadSound(filename, maxSources);
     if (sound) {
         sound->SetGain(gain);
         mSounds[resourceId] = std::move(sound);
@@ -24,7 +24,7 @@ void Audio::LoadSound(const std::string& filename,
 }
 
 ISound* Audio::GetSound(AudioResourceId resourceId) {
-    auto i {mSounds.find(resourceId)};
+    auto i = mSounds.find(resourceId);
     if (i != std::end(mSounds)) {
         return i->second.get();
     }
@@ -37,7 +37,7 @@ void Audio::PlaySound(AudioResourceId resourceId) {
         return;
     }
     
-    auto* sound {GetSound(resourceId)};
+    auto* sound = GetSound(resourceId);
     if (sound) {
         sound->Play();
     }
@@ -53,7 +53,7 @@ void Audio::PlaySoundWithDelay(AudioResourceId resourceId, float delay) {
 }
 
 void Audio::LoadMusicTrack(const std::string& filename, AudioResourceId resourceId) {
-    auto track {Pht::LoadMusicTrack(filename)};
+    auto track = Pht::LoadMusicTrack(filename);
     mTracks[resourceId] = std::move(track);
 }
 
@@ -62,7 +62,7 @@ void Audio::FreeMusicTrack(AudioResourceId resourceId) {
 }
 
 IMusicTrack* Audio::GetMusicTrack(AudioResourceId resourceId) const {
-    auto i {mTracks.find(resourceId)};
+    auto i = mTracks.find(resourceId);
     if (i != std::end(mTracks)) {
         return i->second.get();
     }
@@ -71,7 +71,7 @@ IMusicTrack* Audio::GetMusicTrack(AudioResourceId resourceId) const {
 }
 
 void Audio::PlayMusicTrack(AudioResourceId resourceId, float fadeInDuration) {
-    auto* track {GetMusicTrack(resourceId)};
+    auto* track = GetMusicTrack(resourceId);
     if (track == nullptr) {
         return;
     }
@@ -142,8 +142,8 @@ bool Audio::IsMusicEnabled()  {
 }
 
 void Audio::Update(float dt) {
-    for (auto i {0}; i < mDelayedSoundJobs.Size();) {
-        auto& job {mDelayedSoundJobs.At(i)};
+    for (auto i = 0; i < mDelayedSoundJobs.Size();) {
+        auto& job = mDelayedSoundJobs.At(i);
         
         job.mElapsedTime += dt;
         

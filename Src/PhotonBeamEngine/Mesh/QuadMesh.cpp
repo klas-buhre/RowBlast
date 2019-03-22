@@ -35,8 +35,8 @@ VertexBuffer QuadMesh::GetVertices(VertexFlags flags) const {
     VertexBuffer vertexBuffer {4, 6, flags};
     
     if (mXSize || mYSize) {
-        auto halfX {mXSize / 2.0f};
-        auto halfY {mYSize / 2.0f};
+        auto halfX = mXSize / 2.0f;
+        auto halfY = mYSize / 2.0f;
         
         MeshUtils::QuadVertices vertices {
             {-halfX, -halfY, 0.0f},
@@ -45,7 +45,7 @@ VertexBuffer QuadMesh::GetVertices(VertexFlags flags) const {
             {-halfX + mTilt, halfY, 0.0f}
         };
 
-        auto textureCoords {MeshUtils::CreateQuadTextureCoords(mTextureCount)};
+        auto textureCoords = MeshUtils::CreateQuadTextureCoords(mTextureCount);
         MeshUtils::CreateQuad(vertexBuffer, vertices, textureCoords);
     } else {
         assert(flags.mColors);

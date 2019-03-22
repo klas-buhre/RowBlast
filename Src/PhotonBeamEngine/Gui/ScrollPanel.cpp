@@ -27,7 +27,7 @@ void ScrollPanel::SetPosition(const Vec3& position) {
 void ScrollPanel::AddSceneObject(SceneObject& sceneObject) {
     mPanel->AddChild(sceneObject);
     
-    auto sceneObjectYPosition {sceneObject.GetTransform().GetPosition().y};
+    auto sceneObjectYPosition = sceneObject.GetTransform().GetPosition().y;
     if (sceneObjectYPosition < mSceneObjectsYMin) {
         mSceneObjectsYMin = sceneObjectYPosition;
     }
@@ -47,7 +47,7 @@ void ScrollPanel::OnTouch(const TouchEvent& touch) {
             break;
         case Pht::TouchState::Ongoing: {
             auto translation = touch.mLocation - mTouchLocationAtScrollBegin;
-            auto newPanelYPosition {mPanelYPositionAtScrollBegin - translation.y * 0.047f};
+            auto newPanelYPosition = mPanelYPositionAtScrollBegin - translation.y * 0.047f;
             
             mPanelYVelocity = (newPanelYPosition - mPanel->GetTransform().GetPosition().y) /
                                mEngine.GetLastFrameSeconds();
@@ -77,10 +77,10 @@ void ScrollPanel::Update() {
         return;
     }
  
-    auto panelYPosition {mPanel->GetTransform().GetPosition().y};
-    auto deacceleration {mDampingCoefficient * mPanelYVelocity};
-    auto dt {mEngine.GetLastFrameSeconds()};
-    auto previousVelocity {mPanelYVelocity};
+    auto panelYPosition = mPanel->GetTransform().GetPosition().y;
+    auto deacceleration = mDampingCoefficient * mPanelYVelocity;
+    auto dt = mEngine.GetLastFrameSeconds();
+    auto previousVelocity = mPanelYVelocity;
     mPanelYVelocity -= deacceleration * dt;
  
     if (std::fabs(mPanelYVelocity) < mCutoffVelocity ||
@@ -94,8 +94,8 @@ void ScrollPanel::Update() {
 }
 
 void ScrollPanel::SetYScrollPosition(float yPosition) {
-    auto yMin {0.0f};
-    auto yMax {-mSceneObjectsYMin - mSize.y / 2.0f};
+    auto yMin = 0.0f;
+    auto yMax = -mSceneObjectsYMin - mSize.y / 2.0f;
     
     if (yPosition < yMin) {
         yPosition = yMin;
@@ -110,12 +110,12 @@ void ScrollPanel::SetYScrollPosition(float yPosition) {
 }
 
 void ScrollPanel::HideObjectsOutsideView() {
-    auto panelPosition {mPanel->GetTransform().GetPosition().y};
-    auto visibleYMin {-panelPosition - mSize.y / 2.0f};
-    auto visibleYMax {-panelPosition + mSize.y / 2.0f};
+    auto panelPosition = mPanel->GetTransform().GetPosition().y;
+    auto visibleYMin = -panelPosition - mSize.y / 2.0f;
+    auto visibleYMax = -panelPosition + mSize.y / 2.0f;
     
     for (auto* sceneObject: mPanel->GetChildren()) {
-        auto sceneObjectYPosition {sceneObject->GetTransform().GetPosition().y};
+        auto sceneObjectYPosition = sceneObject->GetTransform().GetPosition().y;
         
         if (sceneObjectYPosition < visibleYMin || sceneObjectYPosition > visibleYMax) {
             sceneObject->SetIsVisible(false);

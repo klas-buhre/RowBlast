@@ -14,12 +14,12 @@ SceneObject::SceneObject(RenderableObject* renderable) :
 }
 
 Vec3 SceneObject::GetWorldSpacePosition() const {
-    auto& w {mMatrix.w};
+    auto& w = mMatrix.w;
     return {w.x, w.y, w.z};
 }
 
 void SceneObject::Update(bool parentMatrixChanged) {
-    auto matrixWasChanged {false};
+    auto matrixWasChanged = false;
     
     if (mTransform.HasChanged() || parentMatrixChanged) {
         mMatrix = mTransform.ToMatrix();

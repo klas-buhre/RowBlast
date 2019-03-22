@@ -32,15 +32,15 @@ void OpenAlSound::SetLoop(bool loop) {
 }
 
 std::unique_ptr<OpenAlSound> OpenAlSound::Create(const std::string& filename, int maxSources) {
-    auto buffer {OpenAlBuffer::Create(filename)};
+    auto buffer = OpenAlBuffer::Create(filename);
     if (buffer == nullptr) {
         return nullptr;
     }
     
-    auto sound {std::make_unique<OpenAlSound>()};
+    auto sound = std::make_unique<OpenAlSound>();
 
-    for (auto i {0}; i < maxSources; ++i) {
-        auto source {OpenAlSource::Create(*buffer)};
+    for (auto i = 0; i < maxSources; ++i) {
+        auto source = OpenAlSource::Create(*buffer);
         if (source == nullptr) {
             return nullptr;
         }

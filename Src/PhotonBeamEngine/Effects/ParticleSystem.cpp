@@ -23,15 +23,13 @@ std::unique_ptr<SceneObject>
 ParticleSystem::CreateParticleEffectSceneObject(const ParticleSettings& particleSettings,
                                                 const EmitterSettings& emitterSettings,
                                                 RenderMode renderMode) {
-    auto sceneObject {std::make_unique<SceneObject>()};
+    auto sceneObject = std::make_unique<SceneObject>();
     
-    auto particleEffect {
-        std::make_unique<ParticleEffect>(*sceneObject,
-                                         *this,
-                                         particleSettings,
-                                         emitterSettings,
-                                         renderMode)
-    };
+    auto particleEffect = std::make_unique<ParticleEffect>(*sceneObject,
+                                                           *this,
+                                                           particleSettings,
+                                                           emitterSettings,
+                                                           renderMode);
     
     sceneObject->SetComponent<ParticleEffect>(std::move(particleEffect));
     return sceneObject;

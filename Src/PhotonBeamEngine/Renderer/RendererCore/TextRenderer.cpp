@@ -41,11 +41,11 @@ void TextRenderer::RenderText(const std::string& text,
                               Vec2 position,
                               float slant,
                               const TextProperties& properties) {
-    auto& shader {GetShaderProgram(properties)};
+    auto& shader = GetShaderProgram(properties);
     
     shader.Use();
-    auto& uniforms {shader.GetUniforms()};
-    auto& attributes {shader.GetAttributes()};
+    auto& uniforms = shader.GetUniforms();
+    auto& attributes = shader.GetAttributes();
     
     glUniform4fv(uniforms.mTextColor, 1, properties.mColor.Pointer());
     
@@ -71,7 +71,7 @@ void TextRenderer::RenderText(const std::string& text,
     glVertexAttribPointer(attributes.mTextCoords, 4, GL_FLOAT, GL_FALSE, 0, 0);
 
     for (auto c: text) {
-        auto& glyph {properties.mFont.GetGlyph(c)};
+        auto& glyph = properties.mFont.GetGlyph(c);
         
         GLfloat xPos {position.x + glyph.mBearing.x * properties.mScale};
         GLfloat yPos {position.y - (glyph.mSize.y - glyph.mBearing.y) * properties.mScale};

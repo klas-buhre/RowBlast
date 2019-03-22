@@ -31,10 +31,10 @@ IsSwipe SwipeGestureRecognizer::IsTouchContainingSwipe(const Pht::TouchEvent& to
 }
 
 IsSwipe SwipeGestureRecognizer::IsTouchContainingSwipeUp(const Pht::TouchEvent& touchEvent) {
-    auto result {IsSwipe::No};
+    auto result = IsSwipe::No;
     
     if (-touchEvent.mVelocity.y > std::abs(touchEvent.mVelocity.x)) {
-        auto dist {mPreviousPointY - touchEvent.mTranslation.y};
+        auto dist = mPreviousPointY - touchEvent.mTranslation.y;
         mSwipeDistance += dist;
         
         if (mSwipeDistance >= mSwipeDistanceThreshold) {
@@ -51,10 +51,10 @@ IsSwipe SwipeGestureRecognizer::IsTouchContainingSwipeUp(const Pht::TouchEvent& 
 }
 
 IsSwipe SwipeGestureRecognizer::IsTouchContainingSwipeDown(const Pht::TouchEvent& touchEvent) {
-    auto result {IsSwipe::No};
+    auto result = IsSwipe::No;
     
     if (touchEvent.mVelocity.y > std::abs(touchEvent.mVelocity.x)) {
-        auto dist {touchEvent.mTranslation.y - mPreviousPointY};
+        auto dist = touchEvent.mTranslation.y - mPreviousPointY;
         mSwipeDistance += dist;
         
         if (mSwipeDistance >= mSwipeDistanceThreshold) {
@@ -71,10 +71,10 @@ IsSwipe SwipeGestureRecognizer::IsTouchContainingSwipeDown(const Pht::TouchEvent
 }
 
 IsSwipe SwipeGestureRecognizer::IsTouchContainingSwipeLeft(const Pht::TouchEvent& touchEvent) {
-    auto result {IsSwipe::No};
+    auto result = IsSwipe::No;
     
     if (-touchEvent.mVelocity.x > std::abs(touchEvent.mVelocity.y)) {
-        auto dist {mPreviousPointX - touchEvent.mTranslation.x};
+        auto dist = mPreviousPointX - touchEvent.mTranslation.x;
         mSwipeDistance += dist;
         
         if (mSwipeDistance >= mSwipeDistanceThreshold) {
@@ -91,10 +91,10 @@ IsSwipe SwipeGestureRecognizer::IsTouchContainingSwipeLeft(const Pht::TouchEvent
 }
 
 IsSwipe SwipeGestureRecognizer::IsTouchContainingSwipeRight(const Pht::TouchEvent& touchEvent) {
-    auto result {IsSwipe::No};
+    auto result = IsSwipe::No;
     
     if (touchEvent.mVelocity.x > std::abs(touchEvent.mVelocity.y)) {
-        auto dist {touchEvent.mTranslation.x - mPreviousPointX};
+        auto dist = touchEvent.mTranslation.x - mPreviousPointX;
         mSwipeDistance += dist;
         
         if (mSwipeDistance >= mSwipeDistanceThreshold) {

@@ -41,7 +41,7 @@ void Engine::Update(float frameSeconds) {
     mApplication->OnUpdate();
     
     mAnimationSystem.Update(mLastFrameSeconds);
-    auto* scene {mSceneManager.GetActiveScene()};
+    auto* scene = mSceneManager.GetActiveScene();
     if (scene) {
         scene->GetRoot().Update(false);
     }

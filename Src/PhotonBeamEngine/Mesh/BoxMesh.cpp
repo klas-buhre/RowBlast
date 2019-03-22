@@ -19,9 +19,9 @@ Optional<std::string> BoxMesh::GetName() const {
 
 VertexBuffer BoxMesh::GetVertices(VertexFlags flags) const {
     VertexBuffer vertexBuffer {24, 36, flags};
-    auto halfX {mXSize / 2.0f};
-    auto halfY {mYSize / 2.0f};
-    auto halfZ {mZSize / 2.0f};
+    auto halfX = mXSize / 2.0f;
+    auto halfY = mYSize / 2.0f;
+    auto halfZ = mZSize / 2.0f;
     
     MeshUtils::QuadVertices frontVertices {
         {-halfX, -halfY, halfZ},
@@ -29,7 +29,7 @@ VertexBuffer BoxMesh::GetVertices(VertexFlags flags) const {
         {halfX, halfY, halfZ},
         {-halfX, halfY, halfZ}
     };
-    auto frontTextureCoords {MeshUtils::CreateQuadTextureCoords(mTextureCounts.mZSides)};
+    auto frontTextureCoords = MeshUtils::CreateQuadTextureCoords(mTextureCounts.mZSides);
     MeshUtils::CreateQuad(vertexBuffer, frontVertices, frontTextureCoords);
     
     MeshUtils::QuadVertices backVertices {
@@ -38,7 +38,7 @@ VertexBuffer BoxMesh::GetVertices(VertexFlags flags) const {
         {-halfX, halfY, -halfZ},
         {halfX, halfY, -halfZ}
     };
-    auto backTextureCoords {MeshUtils::CreateQuadTextureCoords(mTextureCounts.mZSides)};
+    auto backTextureCoords = MeshUtils::CreateQuadTextureCoords(mTextureCounts.mZSides);
     MeshUtils::CreateQuad(vertexBuffer, backVertices, backTextureCoords);
     
     MeshUtils::QuadVertices posXSideVertices {
@@ -47,7 +47,7 @@ VertexBuffer BoxMesh::GetVertices(VertexFlags flags) const {
         {halfX, halfY, -halfZ},
         {halfX, halfY, halfZ}
     };
-    auto xSideTextureCoords {MeshUtils::CreateQuadTextureCoords(mTextureCounts.mXSides)};
+    auto xSideTextureCoords = MeshUtils::CreateQuadTextureCoords(mTextureCounts.mXSides);
     MeshUtils::CreateQuad(vertexBuffer, posXSideVertices, xSideTextureCoords);
     
     MeshUtils::QuadVertices posYSideVertices {
@@ -56,7 +56,7 @@ VertexBuffer BoxMesh::GetVertices(VertexFlags flags) const {
         {halfX, halfY, -halfZ},
         {-halfX, halfY, -halfZ}
     };
-    auto ySideTextureCoords {MeshUtils::CreateQuadTextureCoords(mTextureCounts.mYSides)};
+    auto ySideTextureCoords = MeshUtils::CreateQuadTextureCoords(mTextureCounts.mYSides);
     MeshUtils::CreateQuad(vertexBuffer, posYSideVertices, ySideTextureCoords);
   
     MeshUtils::QuadVertices negXSideVertices {

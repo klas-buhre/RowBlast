@@ -56,22 +56,22 @@ VertexBuffer CylinderMesh::GetVertices(VertexFlags flags) const {
 }
 
 void CylinderMesh::GenerateBody(VertexBuffer& vertexBuffer) const {
-    auto theta {0.0f};
-    for (auto slice {0}; slice < slices; slice++) {
-        auto x {static_cast<float>(mRadius * cos(theta))};
-        auto z {static_cast<float>(mRadius * sin(theta))};
+    auto theta = 0.0f;
+    for (auto slice = 0; slice < slices; slice++) {
+        auto x = static_cast<float>(mRadius * cos(theta));
+        auto z = static_cast<float>(mRadius * sin(theta));
 
         Vec3 lowerRimVertex {x, -mHeight / 2.0f, z};
         Vec3 upperRimVertex {x, mHeight / 2.0f, z};
         Vec3 normal {x, 0, z};
         normal.Normalize();
-        auto s {(TwoPi - theta) * mTextureCounts.mBody.x / TwoPi};
+        auto s = (TwoPi - theta) * mTextureCounts.mBody.x / TwoPi;
         Vec2 upperTextureCoord {s, 0.0f};
         Vec2 lowerTextureCoord {s, mTextureCounts.mBody.y};
         vertexBuffer.Write(lowerRimVertex, normal, lowerTextureCoord);
         vertexBuffer.Write(upperRimVertex, normal, upperTextureCoord);
         
-        auto quadBegin {slice * 2};
+        auto quadBegin = slice * 2;
         vertexBuffer.AddIndex((quadBegin + 3) % bodyVertexCount);
         vertexBuffer.AddIndex((quadBegin + 2) % bodyVertexCount);
         vertexBuffer.AddIndex(quadBegin);
@@ -84,7 +84,7 @@ void CylinderMesh::GenerateBody(VertexBuffer& vertexBuffer) const {
 }
 
 void CylinderMesh::GenerateDisc(VertexBuffer& vertexBuffer, DiscType discType) const {
-    auto y {0.0f};
+    auto y = 0.0f;
     Vec3 normal;
     
     switch (discType) {
@@ -98,16 +98,16 @@ void CylinderMesh::GenerateDisc(VertexBuffer& vertexBuffer, DiscType discType) c
             break;
     }
 
-    auto centerVertexIndex {vertexBuffer.GetNumVerticesWritten()};
+    auto centerVertexIndex = vertexBuffer.GetNumVerticesWritten();
     Vec3 centerVertex {0.0f, y, 0.0f};
     Vec2 centerTextureCoord {mTextureCounts.mDiscs.x / 2.0f, mTextureCounts.mDiscs.y / 2.0f};
     vertexBuffer.Write(centerVertex, normal, centerTextureCoord);
-    auto rimBegin {vertexBuffer.GetNumVerticesWritten()};
+    auto rimBegin = vertexBuffer.GetNumVerticesWritten();
     
-    auto theta {0.0f};
-    for (auto slice {0}; slice < slices; slice++) {
-        auto x {static_cast<float>(mRadius * cos(theta))};
-        auto z {static_cast<float>(mRadius * sin(theta))};
+    auto theta = 0.0f;
+    for (auto slice = 0; slice < slices; slice++) {
+        auto x = static_cast<float>(mRadius * cos(theta));
+        auto z = static_cast<float>(mRadius * sin(theta));
         Vec3 rimVertex {x, y, z};
         Vec2 textureCoord {
             centerTextureCoord.x * cosf(theta) + centerTextureCoord.x,

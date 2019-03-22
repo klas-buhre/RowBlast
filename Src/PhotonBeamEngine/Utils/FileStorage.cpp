@@ -15,14 +15,14 @@ namespace {
     void Xor(const std::string& input, std::string& output) {
         output.resize(input.size());
         
-        for (auto i {0}; i < input.size(); ++i) {
+        for (auto i = 0; i < input.size(); ++i) {
             output[i] = input[i] ^ key[i % key.size()];
         }
     }
 }
 
 bool FileStorage::Load(const std::string& filename, std::string& data) {
-    auto fullPath {FileSystem::GetSyncedAppHomeDirectory() + "/" + filename};
+    auto fullPath = FileSystem::GetSyncedAppHomeDirectory() + "/" + filename;
     std::ifstream file {fullPath};
     if (!file.is_open()) {
         return false;
@@ -36,7 +36,7 @@ bool FileStorage::Load(const std::string& filename, std::string& data) {
 }
 
 bool FileStorage::Save(const std::string& filename, const std::string& data) {
-    auto fullPath {FileSystem::GetSyncedAppHomeDirectory() + "/" + filename};
+    auto fullPath = FileSystem::GetSyncedAppHomeDirectory() + "/" + filename;
     std::ofstream file {fullPath};
     if (!file.is_open()) {
         return false;

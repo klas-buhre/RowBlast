@@ -26,11 +26,11 @@ namespace {
         RgbaImage(const IVec2& size, const std::vector<Vec4>& buffer) :
             mSize {size} {
             
-            auto numPixels {size.x * size.y};
+            auto numPixels = size.x * size.y;
             assert(numPixels == buffer.size());
         
             mData = std::make_unique<unsigned char[]>(numPixels * 4);
-            auto* data {&mData[0]};
+            auto* data = &mData[0];
             
             for (const auto& pixel: buffer) {
                 *data++ = MapColorToUChar(pixel.x);
@@ -100,8 +100,8 @@ void SoftwareRasterizer::EnableStencilTest() {
 }
 
 IVec2 SoftwareRasterizer::ToPixelCoordinates(const Vec2& point) const {
-    auto xScaleFactor {static_cast<float>(mImageSize.x) / mCoordSystemSize.x};
-    auto yScaleFactor {static_cast<float>(mImageSize.y) / mCoordSystemSize.y};
+    auto xScaleFactor = static_cast<float>(mImageSize.x) / mCoordSystemSize.x;
+    auto yScaleFactor = static_cast<float>(mImageSize.y) / mCoordSystemSize.y;
     
     return {
         static_cast<int>(point.x * xScaleFactor),
@@ -114,7 +114,7 @@ void SoftwareRasterizer::SetPixel(int x, int y, const Vec4& color, DrawOver draw
         return;
     }
 
-    auto offset {(mImageSize.y - y - 1) * mImageSize.x + x};
+    auto offset = (mImageSize.y - y - 1) * mImageSize.x + x;
 
     switch (mDrawMode) {
         case DrawMode::Normal:
@@ -162,7 +162,7 @@ void SoftwareRasterizer::SetPixelInStencilBufferFillMode(const Vec4& color,
 }
 
 const Vec4& SoftwareRasterizer::GetPixel(int x, int y) const {
-    auto offset {(mImageSize.y - y - 1) * mImageSize.x + x};
+    auto offset = (mImageSize.y - y - 1) * mImageSize.x + x;
     assert(offset >= 0 && offset < mImageSize.x * mImageSize.y);
     
     return mBuffer[offset];
@@ -172,11 +172,11 @@ void SoftwareRasterizer::DrawRectangle(const Vec2& upperRight,
                                        const Vec2& lowerLeft,
                                        const Vec4& color,
                                        DrawOver drawOver) {
-    auto upperRightPixelCoord {ToPixelCoordinates(upperRight)};
-    auto lowerLeftPixelCoord {ToPixelCoordinates(lowerLeft)};
+    auto upperRightPixelCoord = ToPixelCoordinates(upperRight);
+    auto lowerLeftPixelCoord = ToPixelCoordinates(lowerLeft);
     
-    for (auto y {lowerLeftPixelCoord.y}; y <= upperRightPixelCoord.y; ++y) {
-        for (auto x {lowerLeftPixelCoord.x}; x <= upperRightPixelCoord.x; ++x) {
+    for (auto y = lowerLeftPixelCoord.y; y <= upperRightPixelCoord.y; ++y) {
+        for (auto x = lowerLeftPixelCoord.x; x <= upperRightPixelCoord.x; ++x) {
             SetPixel(x, y, color, drawOver);
         }
     }
@@ -186,16 +186,15 @@ void SoftwareRasterizer::DrawGradientRectangle(const Vec2& upperRight,
                                                const Vec2& lowerLeft,
                                                const HorizontalGradientColors& colors,
                                                DrawOver drawOver) {
-    auto upperRightPixelCoord {ToPixelCoordinates(upperRight)};
-    auto lowerLeftPixelCoord {ToPixelCoordinates(lowerLeft)};
+    auto upperRightPixelCoord = ToPixelCoordinates(upperRight);
+    auto lowerLeftPixelCoord = ToPixelCoordinates(lowerLeft);
     
-    for (auto x {lowerLeftPixelCoord.x}; x <= upperRightPixelCoord.x; ++x) {
-        auto normalizedX {
+    for (auto x = lowerLeftPixelCoord.x; x <= upperRightPixelCoord.x; ++x) {
+        auto normalizedX =
             static_cast<float>(x - lowerLeftPixelCoord.x) /
-            static_cast<float>(upperRightPixelCoord.x - lowerLeftPixelCoord.x)
-        };
+            static_cast<float>(upperRightPixelCoord.x - lowerLeftPixelCoord.x);
 
-        for (auto y {lowerLeftPixelCoord.y}; y <= upperRightPixelCoord.y; ++y) {
+        for (auto y = lowerLeftPixelCoord.y; y <= upperRightPixelCoord.y; ++y) {
             SetPixel(x, y, colors.mLeft.Lerp(normalizedX, colors.mRight), drawOver);
         }
     }
@@ -205,18 +204,17 @@ void SoftwareRasterizer::DrawGradientRectangle(const Vec2& upperRight,
                                                const Vec2& lowerLeft,
                                                const VerticalGradientColors& colors,
                                                DrawOver drawOver) {
-    auto upperRightPixelCoord {ToPixelCoordinates(upperRight)};
-    auto lowerLeftPixelCoord {ToPixelCoordinates(lowerLeft)};
+    auto upperRightPixelCoord = ToPixelCoordinates(upperRight);
+    auto lowerLeftPixelCoord = ToPixelCoordinates(lowerLeft);
     
     for (auto y {lowerLeftPixelCoord.y}; y <= upperRightPixelCoord.y; ++y) {
-        auto normalizedY {
+        auto normalizedY =
             static_cast<float>(y - lowerLeftPixelCoord.y) /
-            static_cast<float>(upperRightPixelCoord.y - lowerLeftPixelCoord.y)
-        };
+            static_cast<float>(upperRightPixelCoord.y - lowerLeftPixelCoord.y);
         
-        auto color {colors.mBottom.Lerp(normalizedY, colors.mTop)};
+        auto color = colors.mBottom.Lerp(normalizedY, colors.mTop);
 
-        for (auto x {lowerLeftPixelCoord.x}; x <= upperRightPixelCoord.x; ++x) {
+        for (auto x = lowerLeftPixelCoord.x; x <= upperRightPixelCoord.x; ++x) {
             SetPixel(x, y, color, drawOver);
         }
     }
@@ -227,21 +225,21 @@ void SoftwareRasterizer::DrawTiltedTrapezoid45(const Vec2& upperRight,
                                                float width,
                                                const Vec4& color,
                                                DrawOver drawOver) {
-    auto upperRightPixelCoord {ToPixelCoordinates(upperRight)};
-    auto lowerLeftPixelCoord {ToPixelCoordinates(lowerLeft)};
-    auto yScaleFactor {static_cast<float>(mImageSize.y) / mCoordSystemSize.y};
-    auto scanColumnHeight {static_cast<int>(width * yScaleFactor * std::sqrt(2.0f) + 0.5f)};
-    auto yColumnStart {lowerLeftPixelCoord.y};
+    auto upperRightPixelCoord = ToPixelCoordinates(upperRight);
+    auto lowerLeftPixelCoord = ToPixelCoordinates(lowerLeft);
+    auto yScaleFactor = static_cast<float>(mImageSize.y) / mCoordSystemSize.y;
+    auto scanColumnHeight = static_cast<int>(width * yScaleFactor * std::sqrt(2.0f) + 0.5f);
+    auto yColumnStart = lowerLeftPixelCoord.y;
 
-    for (auto x {lowerLeftPixelCoord.x}; x <= upperRightPixelCoord.x; ++x) {
+    for (auto x = lowerLeftPixelCoord.x; x <= upperRightPixelCoord.x; ++x) {
         ++yColumnStart;
-        auto yColumnEnd {yColumnStart - scanColumnHeight};
+        auto yColumnEnd = yColumnStart - scanColumnHeight;
         
         if (yColumnEnd < lowerLeftPixelCoord.y) {
             yColumnEnd = lowerLeftPixelCoord.y;
         }
         
-        for (auto y {yColumnStart}; y >= yColumnEnd; --y) {
+        for (auto y = yColumnStart; y >= yColumnEnd; --y) {
             SetPixel(x, y, color, drawOver);
         }
     }
@@ -252,21 +250,21 @@ void SoftwareRasterizer::DrawTiltedTrapezoid135(const Vec2& upperLeft,
                                                 float width,
                                                 const Vec4& color,
                                                 DrawOver drawOver) {
-    auto upperLeftPixelCoord {ToPixelCoordinates(upperLeft)};
-    auto lowerRightPixelCoord {ToPixelCoordinates(lowerRight)};
-    auto yScaleFactor {static_cast<float>(mImageSize.y) / mCoordSystemSize.y};
-    auto scanColumnHeight {static_cast<int>(width * yScaleFactor * std::sqrt(2.0f) + 0.5f)};
-    auto yColumnStart {upperLeftPixelCoord.y};
+    auto upperLeftPixelCoord = ToPixelCoordinates(upperLeft);
+    auto lowerRightPixelCoord = ToPixelCoordinates(lowerRight);
+    auto yScaleFactor = static_cast<float>(mImageSize.y) / mCoordSystemSize.y;
+    auto scanColumnHeight = static_cast<int>(width * yScaleFactor * std::sqrt(2.0f) + 0.5f);
+    auto yColumnStart = upperLeftPixelCoord.y;
 
-    for (auto x {upperLeftPixelCoord.x}; x <= lowerRightPixelCoord.x; ++x) {
+    for (auto x = upperLeftPixelCoord.x; x <= lowerRightPixelCoord.x; ++x) {
         --yColumnStart;
-        auto yColumnEnd {yColumnStart - scanColumnHeight};
+        auto yColumnEnd = yColumnStart - scanColumnHeight;
         
         if (yColumnEnd < lowerRightPixelCoord.y) {
             yColumnEnd = lowerRightPixelCoord.y;
         }
         
-        for (auto y {yColumnStart}; y >= yColumnEnd; --y) {
+        for (auto y = yColumnStart; y >= yColumnEnd; --y) {
             SetPixel(x, y, color, drawOver);
         }
     }
@@ -277,21 +275,21 @@ void SoftwareRasterizer::DrawTiltedTrapezoid225(const Vec2& upperLeft,
                                                 float width,
                                                 const Vec4& color,
                                                 DrawOver drawOver) {
-    auto upperLeftPixelCoord {ToPixelCoordinates(upperLeft)};
-    auto lowerRightPixelCoord {ToPixelCoordinates(lowerRight)};
-    auto yScaleFactor {static_cast<float>(mImageSize.y) / mCoordSystemSize.y};
-    auto scanColumnHeight {static_cast<int>(width * yScaleFactor * std::sqrt(2.0f) + 0.5f)};
-    auto yColumnEnd {upperLeftPixelCoord.y};
+    auto upperLeftPixelCoord = ToPixelCoordinates(upperLeft);
+    auto lowerRightPixelCoord = ToPixelCoordinates(lowerRight);
+    auto yScaleFactor = static_cast<float>(mImageSize.y) / mCoordSystemSize.y;
+    auto scanColumnHeight = static_cast<int>(width * yScaleFactor * std::sqrt(2.0f) + 0.5f);
+    auto yColumnEnd = upperLeftPixelCoord.y;
 
-    for (auto x {upperLeftPixelCoord.x}; x <= lowerRightPixelCoord.x; ++x) {
+    for (auto x = upperLeftPixelCoord.x; x <= lowerRightPixelCoord.x; ++x) {
         --yColumnEnd;
-        auto yColumnStart {yColumnEnd + scanColumnHeight};
+        auto yColumnStart = yColumnEnd + scanColumnHeight;
         
         if (yColumnStart > upperLeftPixelCoord.y) {
             yColumnStart = upperLeftPixelCoord.y;
         }
         
-        for (auto y {yColumnStart}; y >= yColumnEnd; --y) {
+        for (auto y = yColumnStart; y >= yColumnEnd; --y) {
             SetPixel(x, y, color, drawOver);
         }
     }
@@ -302,21 +300,21 @@ void SoftwareRasterizer::DrawTiltedTrapezoid315(const Vec2& upperRight,
                                                 float width,
                                                 const Vec4& color,
                                                 DrawOver drawOver) {
-    auto upperRightPixelCoord {ToPixelCoordinates(upperRight)};
-    auto lowerLeftPixelCoord {ToPixelCoordinates(lowerLeft)};
-    auto yScaleFactor {static_cast<float>(mImageSize.y) / mCoordSystemSize.y};
-    auto scanColumnHeight {static_cast<int>(width * yScaleFactor * std::sqrt(2.0f) + 0.5f)};
-    auto yColumnEnd {lowerLeftPixelCoord.y};
+    auto upperRightPixelCoord = ToPixelCoordinates(upperRight);
+    auto lowerLeftPixelCoord = ToPixelCoordinates(lowerLeft);
+    auto yScaleFactor = static_cast<float>(mImageSize.y) / mCoordSystemSize.y;
+    auto scanColumnHeight = static_cast<int>(width * yScaleFactor * std::sqrt(2.0f) + 0.5f);
+    auto yColumnEnd = lowerLeftPixelCoord.y;
 
-    for (auto x {lowerLeftPixelCoord.x}; x <= upperRightPixelCoord.x; ++x) {
+    for (auto x = lowerLeftPixelCoord.x; x <= upperRightPixelCoord.x; ++x) {
         ++yColumnEnd;
-        auto yColumnStart {yColumnEnd + scanColumnHeight};
+        auto yColumnStart = yColumnEnd + scanColumnHeight;
         
         if (yColumnStart > upperRightPixelCoord.y) {
             yColumnStart = upperRightPixelCoord.y;
         }
         
-        for (auto y {yColumnStart}; y >= yColumnEnd; --y) {
+        for (auto y = yColumnStart; y >= yColumnEnd; --y) {
             SetPixel(x, y, color, drawOver);
         }
     }
@@ -327,25 +325,25 @@ void SoftwareRasterizer::DrawCircle(const Vec2& center,
                                     float width,
                                     const Vec4& color,
                                     DrawOver drawOver) {
-    auto centerPixelCoord {ToPixelCoordinates(center)};
-    auto scaleFactor {static_cast<float>(mImageSize.y) / mCoordSystemSize.y};
-    auto radiusInPixels {radius * scaleFactor};
-    auto widthInPixels {width * scaleFactor};
+    auto centerPixelCoord = ToPixelCoordinates(center);
+    auto scaleFactor = static_cast<float>(mImageSize.y) / mCoordSystemSize.y;
+    auto radiusInPixels = radius * scaleFactor;
+    auto widthInPixels = width * scaleFactor;
     
     Pht::Vec2 centerPixelCoordFloat {
         static_cast<float>(centerPixelCoord.x) + 0.5f,
         static_cast<float>(centerPixelCoord.y) + 0.5f
     };
     
-    auto xBegin {centerPixelCoord.x - radiusInPixels - 1};
-    auto xEnd {centerPixelCoord.x + radiusInPixels + 1};
-    auto yBegin {centerPixelCoord.y - radiusInPixels - 1};
-    auto yEnd {centerPixelCoord.y + radiusInPixels + 1};
+    auto xBegin = centerPixelCoord.x - radiusInPixels - 1;
+    auto xEnd = centerPixelCoord.x + radiusInPixels + 1;
+    auto yBegin = centerPixelCoord.y - radiusInPixels - 1;
+    auto yEnd = centerPixelCoord.y + radiusInPixels + 1;
     
-    for (auto y {yBegin}; y < yEnd; ++y) {
-        for (auto x {xBegin}; x < xEnd; ++x) {
+    for (auto y = yBegin; y < yEnd; ++y) {
+        for (auto x = xBegin; x < xEnd; ++x) {
             Pht::Vec2 pixelCoordFloat {static_cast<float>(x) + 0.5f, static_cast<float>(y) + 0.5f};
-            auto distToCenter {(pixelCoordFloat - centerPixelCoordFloat).Length()};
+            auto distToCenter = (pixelCoordFloat - centerPixelCoordFloat).Length();
             
             if (distToCenter <= radiusInPixels && distToCenter >= radiusInPixels - widthInPixels) {
                 SetPixel(x, y, color, drawOver);
@@ -355,14 +353,14 @@ void SoftwareRasterizer::DrawCircle(const Vec2& center,
 }
 
 void SoftwareRasterizer::FillEnclosedArea(const Vec4& color) {
-    for (auto y {0}; y < mImageSize.y; ++y) {
+    for (auto y = 0; y < mImageSize.y; ++y) {
         if (ShouldSkipLine(y)) {
             continue;
         }
         
-        auto state {ScanlineState::Outside};
+        auto state = ScanlineState::Outside;
         
-        for (auto x {0}; x < mImageSize.x; ++x) {
+        for (auto x = 0; x < mImageSize.x; ++x) {
             state = UpdateScanlineFsm(x, y, state);
             
             if (state == ScanlineState::Inside) {
@@ -373,9 +371,9 @@ void SoftwareRasterizer::FillEnclosedArea(const Vec4& color) {
 }
 
 bool SoftwareRasterizer::ShouldSkipLine(int y) const {
-    auto state {ScanlineState::Outside};
+    auto state = ScanlineState::Outside;
 
-    for (auto x {0}; x < mImageSize.x; ++x) {
+    for (auto x = 0; x < mImageSize.x; ++x) {
         state = UpdateScanlineFsm(x, y, state);
     }
     

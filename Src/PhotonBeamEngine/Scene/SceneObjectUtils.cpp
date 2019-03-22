@@ -7,7 +7,7 @@ using namespace Pht;
 
 namespace {
     void ScaleTextRecursively(Pht::SceneObject& sceneObject, float scale) {
-        if (auto* textComponent {sceneObject.GetComponent<Pht::TextComponent>()}) {
+        if (auto* textComponent = sceneObject.GetComponent<Pht::TextComponent>()) {
             textComponent->GetProperties().mScale = scale;
         }
 
@@ -27,7 +27,7 @@ void SceneObjectUtils::SetAlphaRecursively(Pht::SceneObject& sceneObject, float 
         SetAlphaRecursively(*child, alpha);
     }
     
-    if (auto* renderable {sceneObject.GetRenderable()}) {
+    if (auto* renderable = sceneObject.GetRenderable()) {
         renderable->GetMaterial().SetOpacity(alpha);
     }
 }

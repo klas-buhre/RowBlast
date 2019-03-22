@@ -19,9 +19,8 @@ namespace {
     }
     
     std::shared_ptr<Vbo> CreateVbo(RenderMode renderMode) {
-        auto generateIndexBuffer {
-            renderMode == RenderMode::Triangles ? GenerateIndexBuffer::Yes : GenerateIndexBuffer::No
-        };
+        auto generateIndexBuffer =
+            renderMode == RenderMode::Triangles ? GenerateIndexBuffer::Yes : GenerateIndexBuffer::No;
     
         return std::make_shared<Vbo>(generateIndexBuffer);
     }
@@ -32,7 +31,7 @@ RenderableObject::RenderableObject(const Material& material,
                                    const VertexFlags& flags) :
     mMaterial {material} {
 
-    auto meshName {mesh.GetName()};
+    auto meshName = mesh.GetName();
     if (meshName.HasValue()) {
         mVbo = VboCache::Get(meshName.GetValue());
         if (mVbo == nullptr) {
@@ -61,7 +60,7 @@ void RenderableObject::CreateVboAndUploadData(const IMesh& mesh, const VertexFla
 void RenderableObject::UploadTriangles(const VertexBuffer& vertexBuffer, BufferUsage bufferUsage) {
     assert(mRenderMode == RenderMode::Triangles);
     
-    auto glBufferUsage {ToGlBufferUsage(bufferUsage)};
+    auto glBufferUsage = ToGlBufferUsage(bufferUsage);
     
     glBindBuffer(GL_ARRAY_BUFFER, mVbo->mVertexBufferId);
     glBufferData(GL_ARRAY_BUFFER,

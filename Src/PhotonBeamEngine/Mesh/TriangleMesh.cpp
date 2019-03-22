@@ -23,8 +23,8 @@ Optional<std::string> TriangleMesh::GetName() const {
 
 VertexBuffer TriangleMesh::GetVertices(VertexFlags flags) const {
     VertexBuffer vertexBuffer {18, 24, flags};
-    auto halfSize {mSize / 2.0f};
-    auto halfDepth {mDepth / 2.0f};
+    auto halfSize = mSize / 2.0f;
+    auto halfDepth = mDepth / 2.0f;
     
     MeshUtils::TriangleTextureCoords triangleTextureCoords {
         {0.0f, mTextureCounts.mZSides.y},
@@ -53,7 +53,7 @@ VertexBuffer TriangleMesh::GetVertices(VertexFlags flags) const {
             {-halfSize + mOffset.x, -halfSize + mOffset.y, halfDepth + mOffset.z},
             {-halfSize + mOffset.x, -halfSize + mOffset.y, -halfDepth + mOffset.z}
         };
-        auto ySideTextureCoords {MeshUtils::CreateQuadTextureCoords(mTextureCounts.mYSide)};
+        auto ySideTextureCoords = MeshUtils::CreateQuadTextureCoords(mTextureCounts.mYSide);
         MeshUtils::CreateQuad(vertexBuffer, ySideVertices, ySideTextureCoords);
         
         MeshUtils::QuadVertices xSideVertices {
@@ -62,7 +62,7 @@ VertexBuffer TriangleMesh::GetVertices(VertexFlags flags) const {
             {halfSize + mOffset.x, -halfSize + mOffset.y, halfDepth + mOffset.z},
             {halfSize + mOffset.x, -halfSize + mOffset.y, -halfDepth + mOffset.z}
         };
-        auto xSideTextureCoords {MeshUtils::CreateQuadTextureCoords(mTextureCounts.mXSide)};
+        auto xSideTextureCoords = MeshUtils::CreateQuadTextureCoords(mTextureCounts.mXSide);
         MeshUtils::CreateQuad(vertexBuffer, xSideVertices, xSideTextureCoords);
         
         MeshUtils::QuadVertices tiltedSideVertices {
@@ -71,7 +71,7 @@ VertexBuffer TriangleMesh::GetVertices(VertexFlags flags) const {
             {halfSize + mOffset.x, halfSize + mOffset.y, halfDepth + mOffset.z},
             {halfSize + mOffset.x, halfSize + mOffset.y, -halfDepth + mOffset.z}
         };
-        auto tiltedSideTextureCoords {MeshUtils::CreateQuadTextureCoords(mTextureCounts.mTiltedSide)};
+        auto tiltedSideTextureCoords = MeshUtils::CreateQuadTextureCoords(mTextureCounts.mTiltedSide);
         MeshUtils::CreateQuad(vertexBuffer, tiltedSideVertices, tiltedSideTextureCoords);
     }
     

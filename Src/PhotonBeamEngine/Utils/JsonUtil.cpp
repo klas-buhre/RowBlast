@@ -13,7 +13,7 @@
 using namespace Pht;
 
 void Json::ParseFile(rapidjson::Document& document, const std::string& filename) {
-    auto fullPath {FileSystem::GetResourceDirectory() + "/" + filename};
+    auto fullPath = FileSystem::GetResourceDirectory() + "/" + filename;
     std::ifstream file {fullPath};
     assert(file.is_open());
     
@@ -37,7 +37,7 @@ void Json::EncodeDocument(rapidjson::Document& document, std::string& jsonString
 std::string Json::ReadString(const rapidjson::Value& object, const std::string& name) {
     assert(object.HasMember(name.c_str()));
     
-    const auto& value {object[name.c_str()]};
+    const auto& value = object[name.c_str()];
     assert(value.IsString());
     
     return value.GetString();
@@ -46,7 +46,7 @@ std::string Json::ReadString(const rapidjson::Value& object, const std::string& 
 bool Json::ReadBool(const rapidjson::Value& object, const std::string& name) {
     assert(object.HasMember(name.c_str()));
     
-    const auto& value {object[name.c_str()]};
+    const auto& value = object[name.c_str()];
     assert(value.IsBool());
     
     return value.GetBool();
@@ -55,7 +55,7 @@ bool Json::ReadBool(const rapidjson::Value& object, const std::string& name) {
 int Json::ReadInt(const rapidjson::Value& object, const std::string& name) {
     assert(object.HasMember(name.c_str()));
     
-    const auto& value {object[name.c_str()]};
+    const auto& value = object[name.c_str()];
     assert(value.IsInt());
     
     return value.GetInt();
@@ -64,7 +64,7 @@ int Json::ReadInt(const rapidjson::Value& object, const std::string& name) {
 uint64_t Json::ReadUInt64(const rapidjson::Value& object, const std::string& name) {
     assert(object.HasMember(name.c_str()));
     
-    const auto& value {object[name.c_str()]};
+    const auto& value = object[name.c_str()];
     assert(value.IsUint64());
     
     return value.GetUint64();
@@ -73,7 +73,7 @@ uint64_t Json::ReadUInt64(const rapidjson::Value& object, const std::string& nam
 float Json::ReadFloat(const rapidjson::Value& object, const std::string& name) {
     assert(object.HasMember(name.c_str()));
     
-    const auto& value {object[name.c_str()]};
+    const auto& value = object[name.c_str()];
     assert(value.IsFloat());
     
     return value.GetFloat();
@@ -82,10 +82,10 @@ float Json::ReadFloat(const rapidjson::Value& object, const std::string& name) {
 IVec2 Json::ReadIVec2(const rapidjson::Value& object, const std::string& name) {
     assert(object.HasMember(name.c_str()));
 
-    const auto& value {object[name.c_str()]};
+    const auto& value = object[name.c_str()];
     assert(value.IsArray());
     
-    const auto& array {value.GetArray()};
+    const auto& array = value.GetArray();
     assert(array.Size() == 2);
     assert(array[0].IsInt());
     assert(array[1].IsInt());

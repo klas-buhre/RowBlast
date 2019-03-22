@@ -6,7 +6,7 @@ using namespace Pht;
 
 namespace {
     GLuint CompileShader(const char* source, GLenum shaderType) {
-        auto shaderHandle {glCreateShader(shaderType)};
+        auto shaderHandle = glCreateShader(shaderType);
         glShaderSource(shaderHandle, 1, &source, 0);
         glCompileShader(shaderHandle);
         
@@ -24,10 +24,10 @@ namespace {
     }
     
     GLuint BuildProgram(const char* vertexShaderSource, const char* fragmentShaderSource) {
-        auto vertexShader {CompileShader(vertexShaderSource, GL_VERTEX_SHADER)};
-        auto fragmentShader {CompileShader(fragmentShaderSource, GL_FRAGMENT_SHADER)};
+        auto vertexShader = CompileShader(vertexShaderSource, GL_VERTEX_SHADER);
+        auto fragmentShader = CompileShader(fragmentShaderSource, GL_FRAGMENT_SHADER);
         
-        auto programHandle {glCreateProgram()};
+        auto programHandle = glCreateProgram();
         glAttachShader(programHandle, vertexShader);
         glAttachShader(programHandle, fragmentShader);
         glLinkProgram(programHandle);

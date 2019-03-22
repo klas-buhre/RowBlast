@@ -47,8 +47,8 @@ std::unique_ptr<RenderableObject> SceneManager::CreateRenderableObject(const IMe
 std::unique_ptr<SceneObject> SceneManager::CreateSceneObject(const IMesh& mesh,
                                                              const Material& material,
                                                              SceneResources& sceneResources) {
-    auto renderableObject {mRenderer.CreateRenderableObject(mesh, material)};
-    auto sceneObject {std::make_unique<SceneObject>(renderableObject.get())};
+    auto renderableObject = mRenderer.CreateRenderableObject(mesh, material);
+    auto sceneObject = std::make_unique<SceneObject>(renderableObject.get());
     
     sceneResources.AddRenderableObject(std::move(renderableObject));
     

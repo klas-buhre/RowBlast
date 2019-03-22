@@ -96,7 +96,7 @@ std::unique_ptr<DecodedAudioData> Pht::DecodeAudioFile(const std::string& filena
         return nullptr;
     }
 
-    auto dataSize {static_cast<UInt32>(fileSize)};
+    auto dataSize = static_cast<UInt32>(fileSize);
     decodedAudioData->mSampleData.resize(dataSize);
 
     error = AudioFileReadBytes(fileId, false, 0, &dataSize, &decodedAudioData->mSampleData[0]);

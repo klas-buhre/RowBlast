@@ -11,7 +11,7 @@ namespace {
     const Vec4 modelSpaceOrigin {0.0f, 0.0f, 0.0f, 1.0f};
 
     int CalcNumSceneObjects(const SceneObject& sceneObject) {
-        auto numObjects {1};
+        auto numObjects = 1;
         
         for (auto& child: sceneObject.GetChildren()) {
             numObjects += CalcNumSceneObjects(*child);
@@ -21,7 +21,7 @@ namespace {
     }
     
     bool IsDepthWriting(const SceneObject& sceneObject) {
-        if (auto renderable {sceneObject.GetRenderable()}) {
+        if (auto renderable = sceneObject.GetRenderable()) {
             return renderable->GetMaterial().GetDepthState().mDepthWrite;
         }
         
@@ -85,8 +85,8 @@ void RenderQueue::AddSceneObject(const SceneObject& sceneObject,
         return;
     }
     
-    auto thisObjectOrAncestorMatchedLayerMask {ancestorMatchedLayerMask};
-    auto sceneObjectLayerMask {sceneObject.GetLayerMask()};
+    auto thisObjectOrAncestorMatchedLayerMask = ancestorMatchedLayerMask;
+    auto sceneObjectLayerMask = sceneObject.GetLayerMask();
     
     if (!ancestorMatchedLayerMask) {
         if (sceneObjectLayerMask & layerMask) {
@@ -111,15 +111,15 @@ void RenderQueue::AddSceneObject(const SceneObject& sceneObject,
 
 void RenderQueue::CalculateDistances(const Mat4& viewMatrix, DistanceFunction distanceFunction) {
     // Since the matrix is row-major it has to be transposed in order to multiply with the vector.
-    auto transposedViewMatrix {viewMatrix.Transposed()};
+    auto transposedViewMatrix = viewMatrix.Transposed();
     
     for (auto i {0}; i < mSize; ++i) {
-        auto& renderEntry {mQueue[i]};
-        auto sceneObjectPos {renderEntry.mSceneObject->GetWorldSpacePosition()};
+        auto& renderEntry = mQueue[i];
+        auto sceneObjectPos = renderEntry.mSceneObject->GetWorldSpacePosition();
         
         switch (distanceFunction) {
             case DistanceFunction::CameraSpaceZ: {
-                auto sceneObjectPosCamSpace {transposedViewMatrix * Vec4{sceneObjectPos, 1.0f}};
+                auto sceneObjectPosCamSpace = transposedViewMatrix * Vec4{sceneObjectPos, 1.0f};
                 renderEntry.mDistance = -sceneObjectPosCamSpace.z;
                 break;
             }
