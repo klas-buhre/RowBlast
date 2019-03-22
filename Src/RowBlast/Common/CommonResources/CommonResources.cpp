@@ -15,8 +15,8 @@ CommonResources::CommonResources(Pht::IEngine& engine) {
     
     mMaterials = std::make_unique<Materials>(engine);
 
-    auto& renderer {engine.GetRenderer()};
-    auto& sceneManager {engine.GetSceneManager()};
+    auto& renderer = engine.GetRenderer();
+    auto& sceneManager = engine.GetSceneManager();
     
     sceneManager.InitSceneSystems(Pht::ISceneManager::defaultNarrowFrustumHeightFactor);
     mHussarFontSize20 = std::make_unique<Pht::Font>("HussarBoldWeb.otf",

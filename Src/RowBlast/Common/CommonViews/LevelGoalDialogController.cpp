@@ -46,7 +46,7 @@ void LevelGoalDialogController::SetGuiLightProvider(IGuiLightProvider& guiLightP
 LevelGoalDialogController::Result LevelGoalDialogController::Update() {
     mView.Update();
     
-    auto previousSlidingMenuAnimationState {mSlidingMenuAnimation.GetState()};
+    auto previousSlidingMenuAnimationState = mSlidingMenuAnimation.GetState();
     
     switch (mSlidingMenuAnimation.Update()) {
         case SlidingMenuAnimation::State::Idle:

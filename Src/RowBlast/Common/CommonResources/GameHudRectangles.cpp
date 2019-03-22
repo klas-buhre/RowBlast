@@ -14,7 +14,7 @@
 using namespace RowBlast;
 
 namespace {
-    auto rbAdd {0.025f};
+    constexpr auto rbAdd = 0.025f;
     const Pht::Vec4 stencilColor {1.0f, 1.0f, 1.0f, 1.0f};
     const Pht::Vec4 outerBorderColor {0.4f + rbAdd, 0.3f, 0.55f + rbAdd, 0.7f};
     const Pht::Vec4 lowerOuterBorderColor {0.4f + rbAdd, 0.3f, 0.55f + rbAdd, 0.1f};
@@ -27,27 +27,25 @@ namespace {
     const Pht::Vec2 pauseButtonRectangleSize {1.5f, 1.5f};
     const Pht::Vec2 nextPiecesRectangleSize {4.5f, 2.4f};
     const Pht::Vec2 selectablePiecesRectangleSize {6.8f, 2.4f};
-    constexpr auto dividerLineXPosition {4.35f};
-    constexpr auto dividerLineThickness {0.02f};
-    constexpr auto borderThickness {0.055f};
-    constexpr auto piecesRectangleOuterCornerRadius {0.25f};
-    constexpr auto piecesRectangleTilt {0.6f};
-    constexpr auto pauseButtonRectangleTilt {0.375f};
+    constexpr auto dividerLineXPosition = 4.35f;
+    constexpr auto dividerLineThickness = 0.02f;
+    constexpr auto borderThickness = 0.055f;
+    constexpr auto piecesRectangleOuterCornerRadius = 0.25f;
+    constexpr auto piecesRectangleTilt = 0.6f;
+    constexpr auto pauseButtonRectangleTilt = 0.375f;
 
     std::unique_ptr<Pht::SoftwareRasterizer> CreateRasterizer(Pht::IEngine& engine,
                                                               const CommonResources& commonResources,
                                                               const Pht::Vec2& size) {
-        auto& renderer {engine.GetRenderer()};
-        auto& renderBufferSize {renderer.GetRenderBufferSize()};
-        auto& frustumSize {commonResources.GetHudFrustumSizePotentiallyZoomedScreen()};
+        auto& renderer = engine.GetRenderer();
+        auto& renderBufferSize = renderer.GetRenderBufferSize();
+        auto& frustumSize = commonResources.GetHudFrustumSizePotentiallyZoomedScreen();
         
-        auto xScaleFactor {
-            static_cast<float>(renderBufferSize.x) / static_cast<float>(frustumSize.x)
-        };
+        auto xScaleFactor =
+            static_cast<float>(renderBufferSize.x) / static_cast<float>(frustumSize.x);
 
-        auto yScaleFactor {
-            static_cast<float>(renderBufferSize.y) / static_cast<float>(frustumSize.y)
-        };
+        auto yScaleFactor =
+            static_cast<float>(renderBufferSize.y) / static_cast<float>(frustumSize.y);
         
         Pht::IVec2 imageSize {
             static_cast<int>(size.x * xScaleFactor),
@@ -107,7 +105,7 @@ GameHudRectangles::CreateRectangle(Pht::IEngine& engine,
                                    float tilt,
                                    const Pht::Vec4& colorSubtract,
                                    bool drawDividerLine) {
-    auto rasterizer {CreateRasterizer(engine, commonResources, size)};
+    auto rasterizer = CreateRasterizer(engine, commonResources, size);
 
     DrawRectangleBorder(*rasterizer, size, colorSubtract);
     FillStencilBuffer(*rasterizer,
@@ -120,7 +118,7 @@ GameHudRectangles::CreateRectangle(Pht::IEngine& engine,
         DrawLine(*rasterizer, colorSubtract);
     }
 
-    auto image {rasterizer->ProduceImage()};
+    auto image = rasterizer->ProduceImage();
     Pht::Material imageMaterial {*image, Pht::GenerateMipmap::Yes};
     imageMaterial.SetBlend(Pht::Blend::Yes);
     

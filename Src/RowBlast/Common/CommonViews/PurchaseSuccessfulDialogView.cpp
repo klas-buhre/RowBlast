@@ -22,16 +22,16 @@ PurchaseSuccessfulDialogView::PurchaseSuccessfulDialogView(Pht::IEngine& engine,
                                                            PotentiallyZoomedScreen zoom) :
     mEngine {engine} {
 
-    auto& guiResources {commonResources.GetGuiResources()};
-    auto& menuWindow {guiResources.GetMediumDarkMenuWindow()};
+    auto& guiResources = commonResources.GetGuiResources();
+    auto& menuWindow = guiResources.GetMediumDarkMenuWindow();
     
-    auto menuWindowSceneObject {std::make_unique<Pht::SceneObject>(&menuWindow.GetRenderable())};
+    auto menuWindowSceneObject = std::make_unique<Pht::SceneObject>(&menuWindow.GetRenderable());
     menuWindowSceneObject->GetTransform().SetPosition({0.0f, 0.0f, UiLayer::background});
     AddSceneObject(std::move(menuWindowSceneObject));
 
     SetSize(menuWindow.GetSize());
     
-    auto& textProperties {guiResources.GetSmallWhiteTextProperties(zoom)};
+    auto& textProperties = guiResources.GetSmallWhiteTextProperties(zoom);
     
     CreateText({-4.2f, 5.05f, UiLayer::text}, "PURCHASE SUCCESSFUL", textProperties);
     
@@ -55,19 +55,17 @@ PurchaseSuccessfulDialogView::PurchaseSuccessfulDialogView(Pht::IEngine& engine,
 
     Pht::Material lineMaterial {Pht::Color{0.6f, 0.8f, 1.0f}};
     lineMaterial.SetOpacity(0.3f);
-    auto& sceneManager {engine.GetSceneManager()};
-    auto& lineSceneObject {
-        CreateSceneObject(Pht::QuadMesh {GetSize().x - 1.5f, 0.06f}, lineMaterial, sceneManager)
-    };
+    auto& sceneManager = engine.GetSceneManager();
+    auto& lineSceneObject =
+        CreateSceneObject(Pht::QuadMesh {GetSize().x - 1.5f, 0.06f}, lineMaterial, sceneManager);
     lineSceneObject.GetTransform().SetPosition({0.0f, GetSize().y / 2.0f - 2.6f, UiLayer::textRectangle});
     GetRoot().AddChild(lineSceneObject);
 
-    auto& coin {
+    auto& coin =
         CreateSceneObject(Pht::ObjMesh {"coin_852.obj", 3.15f},
                           commonResources.GetMaterials().GetLightGoldMaterial(),
-                          engine.GetSceneManager())
-    };
-    auto& coinTransform {coin.GetTransform()};
+                          engine.GetSceneManager());
+    auto& coinTransform = coin.GetTransform();
     coinTransform.SetPosition({0.0f, 1.5f, UiLayer::block});
     coinTransform.SetRotation({0.0f, 45.0f, 0.0f});
     coinTransform.SetScale(3.1f);
@@ -121,14 +119,14 @@ void PurchaseSuccessfulDialogView::CreateGlowEffect(const Pht::Vec3& position,
         .mShrinkDuration = 0.0f
     };
     
-    auto& particleSystem {mEngine.GetParticleSystem()};
+    auto& particleSystem = mEngine.GetParticleSystem();
     mGlowEffect = particleSystem.CreateParticleEffectSceneObject(particleSettings,
                                                                  particleEmitterSettings,
                                                                  Pht::RenderMode::Triangles);
-    auto& material {mGlowEffect->GetRenderable()->GetMaterial()};
+    auto& material = mGlowEffect->GetRenderable()->GetMaterial();
     material.SetShaderType(Pht::ShaderType::ParticleNoAlphaTexture);
 
-    auto& transform {mGlowEffect->GetTransform()};
+    auto& transform = mGlowEffect->GetTransform();
     transform.SetPosition(position);
     transform.SetScale(scale);
     parentObject.AddChild(*mGlowEffect);
@@ -140,6 +138,6 @@ void PurchaseSuccessfulDialogView::SetUp(int numCoins) {
 }
 
 void PurchaseSuccessfulDialogView::Update() {
-    auto dt {mEngine.GetLastFrameSeconds()};
+    auto dt = mEngine.GetLastFrameSeconds();
     mGlowEffect->GetComponent<Pht::ParticleEffect>()->Update(dt);
 }

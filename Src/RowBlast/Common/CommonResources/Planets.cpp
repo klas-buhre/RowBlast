@@ -16,23 +16,21 @@ namespace {
                                             Pht::SceneObject& containerSceneObject,
                                             const PlanetConfig& planetConfig) {
         Pht::Material ogmaMaterial {"planet_ogma.jpg", 0.02f, 1.0f, 0.0f, 1.0f};
-        auto& ogmaPlanet {
+        auto& ogmaPlanet =
             scene.CreateSceneObject(Pht::ObjMesh {planetMeshName, planetConfig.mSize},
-                                    ogmaMaterial)
-        };
+                                    ogmaMaterial);
         
         Pht::Material ringMaterial {"ogma_rings.png", 1.0f, 1.0f, 0.0f, 1.0f};
         ringMaterial.SetBlend(Pht::Blend::Yes);
-        auto& rings {
+        auto& rings =
             scene.CreateSceneObject(Pht::ObjMesh {"planet_ring.obj", planetConfig.mSize * 3.0f},
-                                    ringMaterial)
-        };
+                                    ringMaterial);
         
-        auto& ogmaPlanetSystem {scene.CreateSceneObject()};
+        auto& ogmaPlanetSystem = scene.CreateSceneObject();
         ogmaPlanetSystem.AddChild(ogmaPlanet);
         ogmaPlanetSystem.AddChild(rings);
         
-        auto& transform {ogmaPlanetSystem.GetTransform()};
+        auto& transform = ogmaPlanetSystem.GetTransform();
         transform.SetPosition(planetConfig.mPosition);
         transform.SetRotation(planetConfig.mOrientation);
         
@@ -45,30 +43,27 @@ namespace {
                                                Pht::SceneObject& containerSceneObject,
                                                const PlanetConfig& planetConfig) {
         Pht::Material titawinMaterial {"planet_titawin.jpg", 0.02f, 1.0f, 0.00f, 1.0f};
-        auto& titawinPlanet {
+        auto& titawinPlanet =
             scene.CreateSceneObject(Pht::ObjMesh {planetMeshName, planetConfig.mSize},
-                                    titawinMaterial)
-        };
+                                    titawinMaterial);
 
         Pht::Material titawinCloudMaterial {"titawin_clouds.png", 0.05f, 1.0f, 0.00f, 1.0f};
         titawinCloudMaterial.SetBlend(Pht::Blend::Yes);
-        auto& clouds1 {
+        auto& clouds1 =
             scene.CreateSceneObject(Pht::ObjMesh {planetMeshName, planetConfig.mSize * 1.03f},
-                                    titawinCloudMaterial)
-        };
+                                    titawinCloudMaterial);
         clouds1.GetTransform().SetRotation({0.0f, 220.0f, 0.0f});
-        auto& clouds2 {
+        auto& clouds2 =
             scene.CreateSceneObject(Pht::ObjMesh {planetMeshName, planetConfig.mSize * 1.03f},
-                                    titawinCloudMaterial)
-        };
+                                    titawinCloudMaterial);
         clouds2.GetTransform().SetRotation({0.0f, 260.0f, 0.0f});
 
-        auto& titawinPlanetSystem {scene.CreateSceneObject()};
+        auto& titawinPlanetSystem = scene.CreateSceneObject();
         titawinPlanetSystem.AddChild(titawinPlanet);
         titawinPlanetSystem.AddChild(clouds1);
         titawinPlanetSystem.AddChild(clouds2);
         
-        auto& transform {titawinPlanetSystem.GetTransform()};
+        auto& transform = titawinPlanetSystem.GetTransform();
         transform.SetPosition(planetConfig.mPosition);
         transform.SetRotation(planetConfig.mOrientation);
         
@@ -82,12 +77,11 @@ namespace {
                                             const PlanetConfig& planetConfig) {
         Pht::Material moonMaterial {"moon.jpg", 0.05f, 1.0f, 0.0f, 1.0f};
     
-        auto& moon {
+        auto& moon =
             scene.CreateSceneObject(Pht::ObjMesh {planetMeshName, planetConfig.mSize},
-                                    moonMaterial)
-        };
+                                    moonMaterial);
         
-        auto& transform {moon.GetTransform()};
+        auto& transform = moon.GetTransform();
         transform.SetPosition(planetConfig.mPosition);
         transform.SetRotation(planetConfig.mOrientation);
         
@@ -101,12 +95,11 @@ namespace {
                                              const PlanetConfig& planetConfig) {
         Pht::Material rayeonMaterial {"planet_rayeon.jpg", 0.0f, 0.75f, 0.0f, 1.0f};
     
-        auto& rayeonPlanet {
+        auto& rayeonPlanet =
             scene.CreateSceneObject(Pht::ObjMesh {planetMeshName, planetConfig.mSize},
-                                    rayeonMaterial)
-        };
+                                    rayeonMaterial);
         
-        auto& transform {rayeonPlanet.GetTransform()};
+        auto& transform = rayeonPlanet.GetTransform();
         transform.SetPosition(planetConfig.mPosition);
         transform.SetRotation(planetConfig.mOrientation);
         
@@ -119,23 +112,21 @@ namespace {
                                              Pht::SceneObject& containerSceneObject,
                                              const PlanetConfig& planetConfig) {
         Pht::Material wadowMaterial {"planet_wadow.jpg", 0.125f, 0.98f, 0.6f, 70.0f};
-        auto& wadowPlanet {
+        auto& wadowPlanet =
             scene.CreateSceneObject(Pht::ObjMesh {planetMeshName, planetConfig.mSize},
-                                    wadowMaterial)
-        };
+                                    wadowMaterial);
         
         Pht::Material ringMaterial {"wadow_rings.png", 0.9f, 1.0f, 0.0f, 1.0f};
         ringMaterial.SetBlend(Pht::Blend::Yes);
-        auto& rings {
+        auto& rings =
             scene.CreateSceneObject(Pht::ObjMesh {"planet_ring.obj", planetConfig.mSize * 3.0f},
-                                    ringMaterial)
-        };
+                                    ringMaterial);
         
-        auto& wadowPlanetSystem {scene.CreateSceneObject()};
+        auto& wadowPlanetSystem = scene.CreateSceneObject();
         wadowPlanetSystem.AddChild(wadowPlanet);
         wadowPlanetSystem.AddChild(rings);
         
-        auto& transform {wadowPlanetSystem.GetTransform()};
+        auto& transform = wadowPlanetSystem.GetTransform();
         transform.SetPosition(planetConfig.mPosition);
         transform.SetRotation(planetConfig.mOrientation);
         
@@ -170,16 +161,16 @@ Planets::Planets(Pht::IEngine& engine,
                  float lightIntensity) :
     mEngine {engine} {
 
-    auto& containerSceneObject {scene.CreateSceneObject()};
+    auto& containerSceneObject = scene.CreateSceneObject();
     containerSceneObject.SetLayer(layerIndex);
     scene.GetRoot().AddChild(containerSceneObject);
     
-    auto& lightSceneObject {scene.CreateSceneObject()};
+    auto& lightSceneObject = scene.CreateSceneObject();
     lightSceneObject.SetIsVisible(false);
-    auto lightComponent {std::make_unique<Pht::LightComponent>(lightSceneObject)};
+    auto lightComponent = std::make_unique<Pht::LightComponent>(lightSceneObject);
     lightComponent->SetDirection(lightDirection);
     lightComponent->SetDirectionalIntensity(lightIntensity);
-    auto* planetsRenderPass {scene.GetRenderPass(layerIndex)};
+    auto* planetsRenderPass = scene.GetRenderPass(layerIndex);
     planetsRenderPass->SetLight(lightComponent.get());
     lightSceneObject.SetComponent<Pht::LightComponent>(std::move(lightComponent));
     containerSceneObject.AddChild(lightSceneObject);
@@ -187,9 +178,8 @@ Planets::Planets(Pht::IEngine& engine,
     mPlanets.reserve(planetConfigs.size());
     
     for (auto& planetConfig: planetConfigs) {
-        auto& planetSceneObject {
-            CreatePlanetSceneObject(scene, containerSceneObject, planetConfig)
-        };
+        auto& planetSceneObject =
+            CreatePlanetSceneObject(scene, containerSceneObject, planetConfig);
         
         Planet planet {planetConfig.mAngularVelocity, planetSceneObject};
         mPlanets.push_back(planet);
@@ -197,7 +187,7 @@ Planets::Planets(Pht::IEngine& engine,
 }
 
 void Planets::Update() {
-    auto dt {mEngine.GetLastFrameSeconds()};
+    auto dt = mEngine.GetLastFrameSeconds();
     
     for (auto& planet: mPlanets) {
         Pht::Vec3 rotation {0.0f, planet.mAngularVelocity * dt, 0.0f};

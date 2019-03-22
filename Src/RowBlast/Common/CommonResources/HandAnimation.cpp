@@ -10,10 +10,10 @@
 #include "QuadMesh.hpp"
 
 namespace {
-    constexpr auto moveDuration {0.19f};
-    constexpr auto handSize {1.65f};
-    constexpr auto handUpScaleAdd {0.5f};
-    constexpr auto handShadowSize {2.15f};
+    constexpr auto moveDuration = 0.19f;
+    constexpr auto handSize = 1.65f;
+    constexpr auto handUpScaleAdd = 0.5f;
+    constexpr auto handShadowSize = 2.15f;
     const Pht::Vec3 backwardPosition {0.2f, -1.3f, 0.0f};
     const Pht::Vec3 forwardPosition {0.1f, 0.05f, 0.0f};
     const Pht::Vec3 circlePosition {-0.17f, 0.75f, -0.1f};
@@ -27,9 +27,9 @@ namespace {
     };
     
     Pht::Vec3 RotateZ(const Pht::Vec3& v, float theta) {
-        auto thetaRadians {Pht::ToRadians(theta)};
-        auto sinTheta {std::sin(thetaRadians)};
-        auto cosTheta {std::cos(thetaRadians)};
+        auto thetaRadians = Pht::ToRadians(theta);
+        auto sinTheta = std::sin(thetaRadians);
+        auto cosTheta = std::cos(thetaRadians);
 
         return {v.x * cosTheta - v.y * sinTheta, v.x * sinTheta + v.y * cosTheta, v.z};
     }
@@ -40,7 +40,7 @@ using namespace RowBlast;
 HandAnimation::HandAnimation(Pht::IEngine& engine, float scale, bool useShadow) :
     mEngine {engine} {
     
-    auto& sceneManager {mEngine.GetSceneManager()};
+    auto& sceneManager = mEngine.GetSceneManager();
     
     mContainerSceneObject = std::make_unique<Pht::SceneObject>();
     mContainerSceneObject->GetTransform().SetScale(scale);
@@ -88,7 +88,7 @@ void HandAnimation::CreateCircleParticleEffect() {
         .mShrinkDuration = 0.0f
     };
 
-    auto& particleSystem {mEngine.GetParticleSystem()};
+    auto& particleSystem = mEngine.GetParticleSystem();
     mCircleEffect = particleSystem.CreateParticleEffectSceneObject(particleSettings,
                                                                    particleEmitterSettings,
                                                                    Pht::RenderMode::Triangles);
@@ -100,7 +100,7 @@ void HandAnimation::Start(const Pht::Vec3& position, float angle, State initialS
     mContainerSceneObject->SetIsVisible(true);
     mContainerSceneObject->SetIsStatic(false);
     
-    auto& transform {mContainerSceneObject->GetTransform()};
+    auto& transform = mContainerSceneObject->GetTransform();
     transform.SetPosition(position);
     transform.SetRotation({0.0f, 0.0f, angle});
     
@@ -160,13 +160,13 @@ void HandAnimation::Update() {
 void HandAnimation::UpdateInGoingForwardState() {
     mElapsedTime += mEngine.GetLastFrameSeconds();
     
-    auto t {mElapsedTime / moveDuration};
-    auto& transform {mHandSceneObject->GetTransform()};
+    auto t = mElapsedTime / moveDuration;
+    auto& transform = mHandSceneObject->GetTransform();
     transform.SetPosition(backwardPosition.Lerp(t, forwardPosition));
     transform.SetScale(1.0f + handUpScaleAdd * (1.0f - t));
     
     if (mHandShadowSceneObject) {
-        auto handShadowPosition {mHandShadowBackwardPosition.Lerp(t, mHandShadowForwardPosition)};
+        auto handShadowPosition = mHandShadowBackwardPosition.Lerp(t, mHandShadowForwardPosition);
         mHandShadowSceneObject->GetTransform().SetPosition(handShadowPosition);
     }
     
@@ -188,7 +188,7 @@ void HandAnimation::UpdateInGoingForwardState() {
 void HandAnimation::UpdateInTouchingScreenState() {
     mElapsedTime += mEngine.GetLastFrameSeconds();
     
-    auto& circleEffect {*mCircleEffect->GetComponent<Pht::ParticleEffect>()};
+    auto& circleEffect = *mCircleEffect->GetComponent<Pht::ParticleEffect>();
     if (!circleEffect.IsActive()) {
         circleEffect.Start();
     }
@@ -202,13 +202,13 @@ void HandAnimation::UpdateInTouchingScreenState() {
 void HandAnimation::UpdateInGoingBackwardState() {
     mElapsedTime += mEngine.GetLastFrameSeconds();
     
-    auto t {mElapsedTime / moveDuration};
-    auto& transform {mHandSceneObject->GetTransform()};
+    auto t = mElapsedTime / moveDuration;
+    auto& transform = mHandSceneObject->GetTransform();
     transform.SetPosition(forwardPosition.Lerp(t, backwardPosition));
     transform.SetScale(1.0f + handUpScaleAdd * t);
     
     if (mHandShadowSceneObject) {
-        auto handShadowPosition {mHandShadowForwardPosition.Lerp(t, mHandShadowBackwardPosition)};
+        auto handShadowPosition = mHandShadowForwardPosition.Lerp(t, mHandShadowBackwardPosition);
         mHandShadowSceneObject->GetTransform().SetPosition(handShadowPosition);
     }
 
@@ -236,7 +236,7 @@ void HandAnimation::UpdateInNotTouchingScreenState() {
 }
 
 void HandAnimation::SetHandAtBackwardPosition() {
-    auto& transform {mHandSceneObject->GetTransform()};
+    auto& transform = mHandSceneObject->GetTransform();
     transform.SetPosition(backwardPosition);
     transform.SetScale(1.0 + handUpScaleAdd);
     

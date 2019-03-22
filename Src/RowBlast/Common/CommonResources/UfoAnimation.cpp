@@ -9,16 +9,16 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto animationDuration {2.0f};
-    constexpr auto highSpeedDuration {7.5f};
-    constexpr auto warpSpeedDuration {1.0f};
-    constexpr auto shortWarpSpeedDuration {0.25f};
-    constexpr auto tiltDuration {3.6f};
-    constexpr auto maxTiltAngle {4.0f};
-    constexpr auto rotationSpeed {100.0f};
-    constexpr auto hoverDuration {4.5f};
-    constexpr auto maxHoverTranslation {0.095f};
-    constexpr auto highSpeedWaitDuration {0.5f};
+    constexpr auto animationDuration = 2.0f;
+    constexpr auto highSpeedDuration = 7.5f;
+    constexpr auto warpSpeedDuration = 1.0f;
+    constexpr auto shortWarpSpeedDuration = 0.25f;
+    constexpr auto tiltDuration = 3.6f;
+    constexpr auto maxTiltAngle = 4.0f;
+    constexpr auto rotationSpeed = 100.0f;
+    constexpr auto hoverDuration = 4.5f;
+    constexpr auto maxHoverTranslation = 0.095f;
+    constexpr auto highSpeedWaitDuration = 0.5f;
     const Pht::Vec3 distantTranslation {0.0f, 170.0f, -400.0f};
 }
 
@@ -85,7 +85,7 @@ UfoAnimation::State UfoAnimation::Update() {
 }
 
 void UfoAnimation::UpdateRotation() {
-    auto dt {mEngine.GetLastFrameSeconds()};
+    auto dt = mEngine.GetLastFrameSeconds();
     mRotation.y += dt * rotationSpeed;
     
     if (mRotation.y > 360.0f) {
@@ -98,7 +98,7 @@ void UfoAnimation::UpdateRotation() {
         mElapsedTiltTime -= tiltDuration;
     }
     
-    auto normalizedTime {mElapsedTiltTime / tiltDuration};
+    auto normalizedTime = mElapsedTiltTime / tiltDuration;
     mRotation.x = sin(normalizedTime * 2.0f * 3.1415f) * maxTiltAngle;
     mRotation.z = sin(normalizedTime * 2.0f * 3.1415f + 3.1415f) * maxTiltAngle;
 
@@ -112,8 +112,8 @@ void UfoAnimation::UpdateHoverTranslation() {
         mElapsedHoverTime -= hoverDuration;
     }
     
-    auto normalizedTime {mElapsedHoverTime / hoverDuration};
-    auto hoverTranslation {sin(normalizedTime * 2.0f * 3.1415f) * maxHoverTranslation};
+    auto normalizedTime = mElapsedHoverTime / hoverDuration;
+    auto hoverTranslation = sin(normalizedTime * 2.0f * 3.1415f) * maxHoverTranslation;
     mUfo.SetHoverTranslation(hoverTranslation);
 }
 
@@ -130,10 +130,10 @@ void UfoAnimation::UpdateInWaitingForHighSpeedState() {
 
 void UfoAnimation::UpdateInActiveState() {
     mElapsedTime += mEngine.GetLastFrameSeconds();
-    auto normalizedTime {mElapsedTime / mAnimationDuration};
-    auto t {(cos((normalizedTime * 0.5f + 0.5f) * 2.0f * 3.1415f) + 1.0f) / 2.0f};
+    auto normalizedTime = mElapsedTime / mAnimationDuration;
+    auto t = (cos((normalizedTime * 0.5f + 0.5f) * 2.0f * 3.1415f) + 1.0f) / 2.0f;
     
-    auto ufoPosition {mStartPosition.Lerp(t, mDestinationPosition)};
+    auto ufoPosition = mStartPosition.Lerp(t, mDestinationPosition);
     mUfo.SetPosition(ufoPosition);
 
     if (mElapsedTime > mAnimationDuration) {

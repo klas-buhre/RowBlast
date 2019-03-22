@@ -19,20 +19,19 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto countdownNumChars {5};
-    constexpr auto animationDuration {3.8f};
-    constexpr auto rotationAmplitude {25.0f};
-    constexpr auto heartBeatAnimationDuration {1.0f};
-    constexpr auto heartBeatAmplitude {0.03f};
-    constexpr auto particleVelocity {0.6f};
-    constexpr auto particleVelocityRandomPart {0.1f};
+    constexpr auto countdownNumChars = 5;
+    constexpr auto animationDuration = 3.8f;
+    constexpr auto rotationAmplitude = 25.0f;
+    constexpr auto heartBeatAnimationDuration = 1.0f;
+    constexpr auto heartBeatAmplitude = 0.03f;
+    constexpr auto particleVelocity = 0.6f;
+    constexpr auto particleVelocityRandomPart = 0.1f;
     
     Pht::Vec3 ParticleVelocityFunction() {
-        auto phi {Pht::ToRadians(Pht::NormalizedRand() * 360.0f)};
+        auto phi = Pht::ToRadians(Pht::NormalizedRand() * 360.0f);
     
-        auto magnitude {
-            particleVelocity + (Pht::NormalizedRand() - 0.5f) * particleVelocityRandomPart
-        };
+        auto magnitude =
+            particleVelocity + (Pht::NormalizedRand() - 0.5f) * particleVelocityRandomPart;
         
         return {
             static_cast<float>(magnitude * std::cos(phi)),
@@ -50,10 +49,10 @@ NoLivesDialogView::NoLivesDialogView(Pht::IEngine& engine,
     mEngine {engine},
     mUserServices {userServices} {
     
-    auto& guiResources {commonResources.GetGuiResources()};
-    auto& menuWindow {guiResources.GetLargeDarkMenuWindow()};
+    auto& guiResources = commonResources.GetGuiResources();
+    auto& menuWindow = guiResources.GetLargeDarkMenuWindow();
     
-    auto menuWindowSceneObject {std::make_unique<Pht::SceneObject>(&menuWindow.GetRenderable())};
+    auto menuWindowSceneObject = std::make_unique<Pht::SceneObject>(&menuWindow.GetRenderable());
     menuWindowSceneObject->GetTransform().SetPosition({0.0f, 0.0f, UiLayer::background});
     AddSceneObject(std::move(menuWindowSceneObject));
 
@@ -83,23 +82,21 @@ NoLivesDialogView::NoLivesDialogView(Pht::IEngine& engine,
 
     Pht::Material lineMaterial {Pht::Color{0.6f, 0.8f, 1.0f}};
     lineMaterial.SetOpacity(0.3f);
-    auto& sceneManager {engine.GetSceneManager()};
-    auto& lineSceneObject {
-        CreateSceneObject(Pht::QuadMesh {GetSize().x - 1.5f, 0.06f}, lineMaterial, sceneManager)
-    };
+    auto& sceneManager = engine.GetSceneManager();
+    auto& lineSceneObject =
+        CreateSceneObject(Pht::QuadMesh {GetSize().x - 1.5f, 0.06f}, lineMaterial, sceneManager);
     lineSceneObject.GetTransform().SetPosition({0.0f, GetSize().y / 2.0f - 2.6f, UiLayer::textRectangle});
     GetRoot().AddChild(lineSceneObject);
     
     CreateNoLivesIcon({0.0f, 5.1f, UiLayer::root}, commonResources, zoom);
 
-    auto& textProperties {guiResources.GetSmallWhiteTextProperties(zoom)};
+    auto& textProperties = guiResources.GetSmallWhiteTextProperties(zoom);
     
     CreateText({-4.5f, 2.3f, UiLayer::text}, "Time until next life:", textProperties);
     mCountdownText = &CreateText({2.3f, 2.3f, UiLayer::text}, "00:00", textProperties);
 
-    auto& line2SceneObject {
-        CreateSceneObject(Pht::QuadMesh {GetSize().x - 1.5f, 0.06f}, lineMaterial, sceneManager)
-    };
+    auto& line2SceneObject =
+        CreateSceneObject(Pht::QuadMesh {GetSize().x - 1.5f, 0.06f}, lineMaterial, sceneManager);
     line2SceneObject.GetTransform().SetPosition({0.0f, 1.6f, UiLayer::textRectangle});
     GetRoot().AddChild(line2SceneObject);
     
@@ -132,12 +129,11 @@ NoLivesDialogView::NoLivesDialogView(Pht::IEngine& engine,
                                    "CONTINUE           " + std::to_string(PurchasingService::refillLivesPriceInCoins),
                                    buttonTextProperties);
 
-    auto& coin {
+    auto& coin =
         CreateSceneObject(Pht::ObjMesh {"coin_852.obj", 3.15f},
                           commonResources.GetMaterials().GetGoldMaterial(),
-                          engine.GetSceneManager())
-    };
-    auto& coinTransform {coin.GetTransform()};
+                          engine.GetSceneManager());
+    auto& coinTransform = coin.GetTransform();
     coinTransform.SetPosition({1.85f, 0.0f, UiLayer::buttonOverlayObject});
     coinTransform.SetRotation({0.0f, 40.0f, 0.0f});
     coinTransform.SetScale(0.9f);
@@ -147,16 +143,15 @@ NoLivesDialogView::NoLivesDialogView(Pht::IEngine& engine,
 void NoLivesDialogView::CreateNoLivesIcon(const Pht::Vec3& position,
                                           const CommonResources& commonResources,
                                           PotentiallyZoomedScreen zoom) {
-    auto& container {CreateSceneObject()};
+    auto& container = CreateSceneObject();
     container.GetTransform().SetPosition(position);
     GetRoot().AddChild(container);
 
-    auto& sceneManager {mEngine.GetSceneManager()};
-    auto& heart {
+    auto& sceneManager = mEngine.GetSceneManager();
+    auto& heart =
         CreateSceneObject(Pht::ObjMesh {"heart_392.obj", 8.5f},
                           commonResources.GetMaterials().GetRedMaterial(),
-                          sceneManager)
-    };
+                          sceneManager);
     container.AddChild(heart);
     
     CreateGlowEffect(container, 0.9f);
@@ -176,11 +171,11 @@ void NoLivesDialogView::CreateNoLivesIcon(const Pht::Vec3& position,
 void NoLivesDialogView::CreateAddLivesIcon(const Pht::Vec3& position,
                                            const CommonResources& commonResources,
                                            PotentiallyZoomedScreen zoom) {
-    auto& container {CreateSceneObject()};
+    auto& container = CreateSceneObject();
     container.GetTransform().SetPosition(position);
     GetRoot().AddChild(container);
     
-    auto& sceneManager {mEngine.GetSceneManager()};
+    auto& sceneManager = mEngine.GetSceneManager();
 
     mHeartSceneObject = &CreateSceneObject(Pht::ObjMesh {"heart_392.obj", 9.75f},
                                            commonResources.GetMaterials().GetRedMaterial(),
@@ -228,16 +223,15 @@ void NoLivesDialogView::CreateGlowEffect(Pht::SceneObject& parentObject, float s
         .mGrowDuration = 0.5f
     };
     
-    auto& particleSystem {mEngine.GetParticleSystem()};
-    auto glowEffect {
+    auto& particleSystem = mEngine.GetParticleSystem();
+    auto glowEffect =
         particleSystem.CreateParticleEffectSceneObject(particleSettings,
                                                        particleEmitterSettings,
-                                                       Pht::RenderMode::Triangles)
-    };
-    auto& material {glowEffect->GetRenderable()->GetMaterial()};
+                                                       Pht::RenderMode::Triangles);
+    auto& material = glowEffect->GetRenderable()->GetMaterial();
     material.SetShaderType(Pht::ShaderType::ParticleNoAlphaTexture);
     
-    auto& transform {glowEffect->GetTransform()};
+    auto& transform = glowEffect->GetTransform();
     transform.SetPosition({0.0f, 0.2f, UiLayer::panel});
     transform.SetScale(scale);
     parentObject.AddChild(*glowEffect);
@@ -267,13 +261,12 @@ void NoLivesDialogView::CreateParticles(Pht::SceneObject& parentObject, float sc
         .mShrinkDuration = 1.0f
     };
     
-    auto& particleSystem {mEngine.GetParticleSystem()};
-    auto particles {
+    auto& particleSystem = mEngine.GetParticleSystem();
+    auto particles =
         particleSystem.CreateParticleEffectSceneObject(particleSettings,
                                                        particleEmitterSettings,
-                                                       Pht::RenderMode::Triangles)
-    };
-    auto& transform {particles->GetTransform()};
+                                                       Pht::RenderMode::Triangles);
+    auto& transform = particles->GetTransform();
     transform.SetPosition({0.0f, 0.2f, UiLayer::panel});
     transform.SetScale(scale);
     parentObject.AddChild(*particles);
@@ -295,7 +288,7 @@ void NoLivesDialogView::SetUp() {
 }
 
 void NoLivesDialogView::Update() {
-    auto dt {mEngine.GetLastFrameSeconds()};
+    auto dt = mEngine.GetLastFrameSeconds();
     
     for (auto& particleEffect: mParticleEffects) {
         particleEffect->GetComponent<Pht::ParticleEffect>()->Update(dt);
@@ -307,17 +300,17 @@ void NoLivesDialogView::Update() {
 }
 
 void NoLivesDialogView::UpdateCountdownText() {
-    auto secondsUntilNewLife {mUserServices.GetLifeService().GetDurationUntilNewLife()};
+    auto secondsUntilNewLife = mUserServices.GetLifeService().GetDurationUntilNewLife();
     
     if (secondsUntilNewLife != mSecondsUntilNewLife) {
         StaticStringBuffer countdownBuffer;
         StringUtils::FormatToMinutesAndSeconds(countdownBuffer, secondsUntilNewLife);
         
-        auto numChars {std::strlen(countdownBuffer.data())};
+        auto numChars = std::strlen(countdownBuffer.data());
         assert(numChars == countdownNumChars);
         
-        auto& text {mCountdownText->GetText()};
-        auto textLength {text.size()};
+        auto& text = mCountdownText->GetText();
+        auto textLength = text.size();
         assert(textLength == countdownNumChars);
         
         StringUtils::StringCopy(text, 0, countdownBuffer, countdownNumChars);
@@ -333,8 +326,8 @@ void NoLivesDialogView::UpdateHeartAnimation(float dt) {
         mAnimationTime = 0.0f;
     }
 
-    auto t {mAnimationTime * 2.0f * 3.1415f / animationDuration};
-    auto yAngle {rotationAmplitude * std::sin(t)};
+    auto t = mAnimationTime * 2.0f * 3.1415f / animationDuration;
+    auto yAngle = rotationAmplitude * std::sin(t);
 
     mHeartSceneObject->GetTransform().SetRotation({0.0f, yAngle, 0.0f});
 };

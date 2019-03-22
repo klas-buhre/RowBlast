@@ -65,10 +65,9 @@ HowToPlayDialogController::OnTouch(const Pht::TouchEvent& touchEvent) {
     if (mView.GetCloseButton().IsClicked(touchEvent)) {
         mDeferredResult = Result::Close;
         
-        auto updateFade {
+        auto updateFade =
             mSceneId == HowToPlayDialogView::SceneId::Map ? SlidingMenuAnimation::UpdateFade::Yes :
-            SlidingMenuAnimation::UpdateFade::No
-        };
+            SlidingMenuAnimation::UpdateFade::No;
         
         mSlidingMenuAnimation.StartSlideOut(updateFade,
                                             SlidingMenuAnimation::SlideDirection::Right);

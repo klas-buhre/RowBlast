@@ -14,20 +14,20 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto rotationDuration {6.0f};
-    constexpr auto rotationAmplitude {5.5f};
-    constexpr auto emissiveAnimationDuration {1.5f};
-    constexpr auto emissiveAmplitude {1.7f};
+    constexpr auto rotationDuration = 6.0f;
+    constexpr auto rotationAmplitude = 5.5f;
+    constexpr auto emissiveAnimationDuration = 1.5f;
+    constexpr auto emissiveAmplitude = 1.7f;
 
     void CreateBlock(const Pht::Vec3& position,
                      float scale,
                      Pht::RenderableObject& renderable,
                      Pht::Scene& scene,
                      Pht::SceneObject& parent) {
-        auto& sceneObject {scene.CreateSceneObject()};
+        auto& sceneObject = scene.CreateSceneObject();
         sceneObject.SetRenderable(&renderable);
         
-        auto& transform {sceneObject.GetTransform()};
+        auto& transform = sceneObject.GetTransform();
         transform.SetScale(scale);
         transform.SetPosition(position);
         
@@ -48,8 +48,8 @@ FloatingBlocks::FloatingBlocks(Pht::IEngine& engine,
     mBlocks.resize(mVolumes.size());
     
     Pht::ObjMesh cubeMesh {"cube_554.obj", scale};
-    auto& materials {commonResources.GetMaterials()};
-    auto& sceneManager {engine.GetSceneManager()};
+    auto& materials = commonResources.GetMaterials();
+    auto& sceneManager = engine.GetSceneManager();
     
     mBlockRenderables = {
         sceneManager.CreateRenderableObject(cubeMesh, materials.GetRedMaterial()),
@@ -64,7 +64,7 @@ FloatingBlocks::FloatingBlocks(Pht::IEngine& engine,
     CreateAsteroid(sceneManager, scale);
     CreateBigAsteroid(sceneManager, scale);
     
-    auto& sceneObject {scene.CreateSceneObject()};
+    auto& sceneObject = scene.CreateSceneObject();
     sceneObject.SetLayer(layerIndex);
     scene.GetRoot().AddChild(sceneObject);
     
@@ -129,8 +129,8 @@ void FloatingBlocks::InitBlocks(Pht::Scene& scene, float scale, float angularVel
         FloatingBlockColor::Gold
     };
 
-    for (auto i {0}; i < mBlocks.size(); ++i) {
-        const auto& volume {mVolumes[i]};
+    for (auto i = 0; i < mBlocks.size(); ++i) {
+        const auto& volume = mVolumes[i];
     
         Pht::Vec3 position {
             Pht::NormalizedRand() * volume.mSize.x - volume.mSize.x / 2.0f + volume.mPosition.x,
@@ -144,38 +144,36 @@ void FloatingBlocks::InitBlocks(Pht::Scene& scene, float scale, float angularVel
             0.0f
         };
         
-        auto rotation {
+        auto rotation =
             volume.mBlockRotation.HasValue() ? volume.mBlockRotation.GetValue() :
             Pht::Vec3 {
                 Pht::NormalizedRand() * 360.0f,
                 Pht::NormalizedRand() * 360.0f,
                 Pht::NormalizedRand() * 360.0f,
-            }
-        };
+            };
 
-        auto blockAngularVelocity {
+        auto blockAngularVelocity =
             volume.mBlockRotation.HasValue() ? Pht::Vec3{0.0f, 0.0f, 0.0f} :
             Pht::Vec3 {
                 (Pht::NormalizedRand() - 0.5f) * angularVelocity,
                 (Pht::NormalizedRand() - 0.5f) * angularVelocity,
                 (Pht::NormalizedRand() - 0.5f) * angularVelocity
-            }
-        };
+            };
         
-        auto& block {mBlocks[i]};
+        auto& block = mBlocks[i];
         block.mVelocity = velocity;
         block.mAngularVelocity = blockAngularVelocity;
         block.mElapsedTime = Pht::NormalizedRand() * rotationDuration;
         
-        auto& renderable {CalcBlockRenderable(volume, colors)};
+        auto& renderable = CalcBlockRenderable(volume, colors);
         
         switch (volume.mPieceType) {
             case FloatingPieceType::BigSingleBlock:
                 block.mSceneObject->SetRenderable(&renderable);
                 break;
             case FloatingPieceType::SingleBlock: {
-                auto blockSize {scale / 1.7f};
-                auto blockScale {blockSize / scale};
+                auto blockSize = scale / 1.7f;
+                auto blockScale = blockSize / scale;
                 CreateBlock({0.0f, 0.0f, 0.0f}, blockScale, renderable, scene, *block.mSceneObject);
                 break;
             }
@@ -199,7 +197,7 @@ void FloatingBlocks::InitBlocks(Pht::Scene& scene, float scale, float angularVel
                 break;
         }
         
-        auto& transform {block.mSceneObject->GetTransform()};
+        auto& transform = block.mSceneObject->GetTransform();
         transform.SetPosition(position);
         transform.SetRotation(rotation);
     }
@@ -233,8 +231,8 @@ Pht::RenderableObject& FloatingBlocks::CalcBlockRenderable(const BlockPathVolume
             return *mBlockRenderables[std::rand() % (numBlockRenderables - 1)];
         case FloatingBlockColor::RandomOneOfEachColorExceptGray: {
             assert(!colors.empty());
-            auto colorIndex {std::rand() % colors.size()};
-            auto& renderable {*mBlockRenderables[static_cast<int>(colors[colorIndex])]};
+            auto colorIndex = std::rand() % colors.size();
+            auto& renderable = *mBlockRenderables[static_cast<int>(colors[colorIndex])];
             colors.erase(std::begin(colors) + colorIndex);
             return renderable;
         }
@@ -245,8 +243,8 @@ void FloatingBlocks::CreateLPiece(FloatingBlock& block,
                                   float scale,
                                   Pht::RenderableObject& renderable,
                                   Pht::Scene& scene) {
-    auto blockSize {scale / 1.7f};
-    auto blockScale {blockSize / scale};
+    auto blockSize = scale / 1.7f;
+    auto blockScale = blockSize / scale;
 
     CreateBlock({-blockSize / 2.0f, blockSize / 2.0f, 0.0f},
                 blockScale,
@@ -269,8 +267,8 @@ void FloatingBlocks::CreateIPiece(FloatingBlock& block,
                                   float scale,
                                   Pht::RenderableObject& renderable,
                                   Pht::Scene& scene) {
-    auto blockSize {scale / 1.7f};
-    auto blockScale {blockSize / scale};
+    auto blockSize = scale / 1.7f;
+    auto blockScale = blockSize / scale;
 
     CreateBlock({-blockSize, 0.0f, 0.0f},
                 blockScale,
@@ -293,8 +291,8 @@ void FloatingBlocks::CreateShortIPiece(FloatingBlock& block,
                                        float scale,
                                        Pht::RenderableObject& renderable,
                                        Pht::Scene& scene) {
-    auto blockSize {scale / 1.7f};
-    auto blockScale {blockSize / scale};
+    auto blockSize = scale / 1.7f;
+    auto blockScale = blockSize / scale;
     
     CreateBlock({-blockSize / 2.0f, 0.0f, 0.0f},
                 blockScale,
@@ -312,8 +310,8 @@ void FloatingBlocks::CreateBPiece(FloatingBlock& block,
                                   float scale,
                                   Pht::RenderableObject& renderable,
                                   Pht::Scene& scene) {
-    auto blockSize {scale / 1.7f};
-    auto blockScale {blockSize / scale};
+    auto blockSize = scale / 1.7f;
+    auto blockScale = blockSize / scale;
 
     CreateBlock({-blockSize / 2.0f, -blockSize, 0.0f},
                 blockScale,
@@ -343,20 +341,20 @@ void FloatingBlocks::CreateBPiece(FloatingBlock& block,
 }
 
 void FloatingBlocks::Update() {
-    auto dt {mEngine.GetLastFrameSeconds()};
+    auto dt = mEngine.GetLastFrameSeconds();
     
     AnimateEmissive(dt);
 
-    for (auto i {0}; i < mBlocks.size(); ++i) {
-        auto& block {mBlocks[i]};
-        auto& transform {block.mSceneObject->GetTransform()};
+    for (auto i = 0; i < mBlocks.size(); ++i) {
+        auto& block = mBlocks[i];
+        auto& transform = block.mSceneObject->GetTransform();
         transform.Translate(block.mVelocity * dt);
         transform.Rotate(block.mAngularVelocity * dt);
         
-        const auto& volume {mVolumes[i]};
-        auto rightLimit {volume.mPosition.x + volume.mSize.x / 2.0f};
-        auto leftLimit {volume.mPosition.x - volume.mSize.x / 2.0f};
-        auto position {block.mSceneObject->GetWorldSpacePosition()};
+        const auto& volume = mVolumes[i];
+        auto rightLimit = volume.mPosition.x + volume.mSize.x / 2.0f;
+        auto leftLimit = volume.mPosition.x - volume.mSize.x / 2.0f;
+        auto position = block.mSceneObject->GetWorldSpacePosition();
         
         if (position.x > rightLimit && block.mVelocity.x > 0.0f) {
             block.mVelocity.x = -block.mVelocity.x;
@@ -373,7 +371,7 @@ void FloatingBlocks::Update() {
                 block.mElapsedTime = 0.0f;
             }
             
-            auto t {block.mElapsedTime * 2.0f * 3.1415f / rotationDuration};
+            auto t = block.mElapsedTime * 2.0f * 3.1415f / rotationDuration;
             
             Pht::Vec3 rotation {
                 rotationAmplitude * std::sin(t),
@@ -393,8 +391,8 @@ void FloatingBlocks::AnimateEmissive(float dt) {
         mEmissiveAnimationTime = 0.0f;
     }
 
-    auto sineOfT {sin(mEmissiveAnimationTime * 2.0f * 3.1415f / emissiveAnimationDuration)};
-    auto emissive {emissiveAmplitude * (sineOfT + 1.0f) / 2.0f};
+    auto sineOfT = sin(mEmissiveAnimationTime * 2.0f * 3.1415f / emissiveAnimationDuration);
+    auto emissive = emissiveAmplitude * (sineOfT + 1.0f) / 2.0f;
     
     Pht::SceneObjectUtils::SetEmissiveInRenderable(*mBombRenderable, emissive);
     Pht::SceneObjectUtils::SetEmissiveInRenderable(*mRowBombRenderable, emissive);

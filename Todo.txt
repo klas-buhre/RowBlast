@@ -49,6 +49,9 @@ Backlog:
 Ongoing tasks:
     -Maybe seeing more moves should be introduced before switching piece in the tutorial?
 
+    -Removing the braced initialization for auto declarations:
+       Finished CommonViews.
+
 
 
 Ordered Backlog:

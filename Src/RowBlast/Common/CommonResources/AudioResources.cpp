@@ -7,15 +7,15 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto gameMusicVolume {0.36f};
-    constexpr auto mapMusicVolume {0.55f};
-    constexpr auto fadeInDuration {0.22f};
-    constexpr auto maxSoundGain {1.0f};
-    constexpr auto clearBlocksGain {1.0f};
+    constexpr auto gameMusicVolume = 0.36f;
+    constexpr auto mapMusicVolume = 0.55f;
+    constexpr auto fadeInDuration = 0.22f;
+    constexpr auto maxSoundGain = 1.0f;
+    constexpr auto clearBlocksGain = 1.0f;
 }
 
 void RowBlast::LoadAudioResouces(Pht::IEngine& engine) {
-    auto& audio {engine.GetAudio()};
+    auto& audio = engine.GetAudio();
     
     audio.LoadSound("logo.wav", 1, maxSoundGain, static_cast<Pht::AudioResourceId>(SoundId::Logo));
     audio.PlaySound(static_cast<Pht::AudioResourceId>(SoundId::Logo));
@@ -126,16 +126,16 @@ void RowBlast::LoadAudioResouces(Pht::IEngine& engine) {
 }
 
 void RowBlast::PlayMapMusicTrack(Pht::IEngine& engine) {
-    auto& audio {engine.GetAudio()};
+    auto& audio = engine.GetAudio();
     audio.SetMusicVolume(mapMusicVolume);
     audio.PlayMusicTrack(static_cast<Pht::AudioResourceId>(MusicTrackId::Map), fadeInDuration);
 }
 
 void RowBlast::LoadAndPlayGameMusicTrack1(Pht::IEngine& engine) {
-    auto& audio {engine.GetAudio()};
+    auto& audio = engine.GetAudio();
     audio.SetMusicVolume(gameMusicVolume);
     
-    auto track1AudioResourceId {static_cast<Pht::AudioResourceId>(MusicTrackId::Game1)};
+    auto track1AudioResourceId = static_cast<Pht::AudioResourceId>(MusicTrackId::Game1);
     
     if (audio.GetMusicTrack(track1AudioResourceId) == nullptr) {
         audio.FreeMusicTrack(static_cast<Pht::AudioResourceId>(MusicTrackId::Game2));
@@ -146,7 +146,7 @@ void RowBlast::LoadAndPlayGameMusicTrack1(Pht::IEngine& engine) {
 }
 
 void RowBlast::LoadAndPlayGameMusicTrack2(Pht::IEngine& engine) {
-    auto& audio {engine.GetAudio()};
+    auto& audio = engine.GetAudio();
     audio.SetMusicVolume(gameMusicVolume);
 
     auto track2AudioResourceId {static_cast<Pht::AudioResourceId>(MusicTrackId::Game2)};
@@ -160,7 +160,7 @@ void RowBlast::LoadAndPlayGameMusicTrack2(Pht::IEngine& engine) {
 }
 
 void RowBlast::PlayClearBlocksSound(Pht::IEngine& engine) {
-    auto& audio {engine.GetAudio()};
+    auto& audio = engine.GetAudio();
     
     switch (std::rand() % 3) {
         case 0:
@@ -179,19 +179,19 @@ void RowBlast::PlayClearBlocksSound(Pht::IEngine& engine) {
 }
 
 void RowBlast::PlayLaserSound(Pht::IEngine& engine) {
-    auto& audio {engine.GetAudio()};
+    auto& audio = engine.GetAudio();
     audio.PlaySound(static_cast<Pht::AudioResourceId>(SoundId::Laser));
     audio.PlaySound(static_cast<Pht::AudioResourceId>(SoundId::BlastBass));
 }
 
 void RowBlast::PlayExplosionSound(Pht::IEngine& engine) {
-    auto& audio {engine.GetAudio()};
+    auto& audio = engine.GetAudio();
     audio.PlaySound(static_cast<Pht::AudioResourceId>(SoundId::Explosion));
     audio.PlaySound(static_cast<Pht::AudioResourceId>(SoundId::BlastBass));
 }
 
 void RowBlast::PlayFireworksSound(Pht::IEngine& engine) {
-    auto& audio {engine.GetAudio()};
+    auto& audio = engine.GetAudio();
     
     switch (std::rand() % 2) {
         case 0:

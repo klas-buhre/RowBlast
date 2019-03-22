@@ -19,8 +19,8 @@ namespace {
         Pht::SphereMesh sphereMesh {radius};
         sphereMesh.SetUpperBound({Pht::Pi / 2.0f, Pht::TwoPi});
         
-        auto& sphere {scene.CreateSceneObject(sphereMesh, material)};
-        auto& transform {sphere.GetTransform()};
+        auto& sphere = scene.CreateSceneObject(sphereMesh, material);
+        auto& transform = sphere.GetTransform();
         transform.SetPosition(position);
         transform.SetRotation({0.0f, 0.0f, angle});
         parentObject.AddChild(sphere);
@@ -34,7 +34,7 @@ Pht::SceneObject& RowBlast::CreateRoundedCylinder(Pht::Scene& scene,
                                                   float opacity,
                                                   const Pht::Color& ambient,
                                                   const Pht::Color& diffuse) {
-    auto& sceneObject {scene.CreateSceneObject()};
+    auto& sceneObject = scene.CreateSceneObject();
     sceneObject.GetTransform().SetPosition(position);
     parentObject.AddChild(sceneObject);
     
@@ -48,8 +48,8 @@ Pht::SceneObject& RowBlast::CreateRoundedCylinder(Pht::Scene& scene,
     };
 
     Pht::Color specular {1.0f, 1.0f, 1.0f};
-    const auto shininess {30.0f};
-    const auto reflectivity {0.84f};
+    const auto shininess = 30.0f;
+    const auto reflectivity = 0.84f;
     Pht::Material material {
         envMapTextures,
         ambient,
@@ -60,10 +60,9 @@ Pht::SceneObject& RowBlast::CreateRoundedCylinder(Pht::Scene& scene,
     };
     material.SetOpacity(opacity);
     
-    auto& cylinder {
-        scene.CreateSceneObject(Pht::CylinderMesh {size.y / 2.0f, size.x, false}, material)
-    };
-    auto& cylinderTransform {cylinder.GetTransform()};
+    auto& cylinder = scene.CreateSceneObject(Pht::CylinderMesh {size.y / 2.0f, size.x, false},
+                                             material);
+    auto& cylinderTransform = cylinder.GetTransform();
     cylinderTransform.SetRotation({0.0f, 0.0f, 90.0f});
     sceneObject.AddChild(cylinder);
     

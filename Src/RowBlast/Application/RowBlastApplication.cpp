@@ -14,9 +14,9 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto fadeDuration {0.22f};
-    constexpr auto musicFadeOutDuration {0.22f};
-    constexpr auto firstSceneFadeInDuration {1.0f};
+    constexpr auto fadeDuration = 0.22f;
+    constexpr auto musicFadeOutDuration = 0.22f;
+    constexpr auto firstSceneFadeInDuration = 1.0f;
 }
 
 std::unique_ptr<Pht::IApplication> CreateApplication(Pht::IEngine& engine) {
@@ -63,20 +63,20 @@ RowBlastApplication::RowBlastApplication(Pht::IEngine& engine) :
     InsertFadeEffectInActiveScene();
     mFadeEffect.StartInMidFade();
     
-    auto currentLevelId {mUserServices.GetProgressService().GetCurrentLevel()};
+    auto currentLevelId = mUserServices.GetProgressService().GetCurrentLevel();
     mMapController.GetScene().SetWorldId(mUniverse.CalcWorldId(currentLevelId));
 }
 
 void RowBlastApplication::SetUpRenderer() {
-    auto& renderer {mEngine.GetRenderer()};
+    auto& renderer = mEngine.GetRenderer();
     renderer.DisableShader(Pht::ShaderType::PixelLighting);
     renderer.DisableShader(Pht::ShaderType::PointParticle);
 }
 
 void RowBlastApplication::SetUpAudio() {
-    auto& audio {mEngine.GetAudio()};
-    auto& settingsService {mUserServices.GetSettingsService()};
-    
+    auto& audio = mEngine.GetAudio();
+    auto& settingsService = mUserServices.GetSettingsService();
+
     if (settingsService.IsSoundEnabled()) {
         audio.EnableSound();
     } else {
@@ -120,7 +120,7 @@ void RowBlastApplication::UpdateScene() {
 }
 
 void RowBlastApplication::UpdateAcceptTermsScene() {
-    auto command {mAcceptTermsController.Update()};
+    auto command = mAcceptTermsController.Update();
     
     if (!mFadeEffect.IsFadingOut()) {
         switch (command) {
@@ -143,7 +143,7 @@ void RowBlastApplication::UpdateAcceptTermsScene() {
 }
 
 void RowBlastApplication::UpdateDocumentViewerScene() {
-    auto command {mDocumentViewerController.Update()};
+    auto command = mDocumentViewerController.Update();
     
     if (!mFadeEffect.IsFadingOut()) {
         switch (command) {
@@ -162,7 +162,7 @@ void RowBlastApplication::UpdateDocumentViewerScene() {
 }
 
 void RowBlastApplication::UpdateTitleScene() {
-    auto command {mTitleController.Update()};
+    auto command = mTitleController.Update();
     
     if (!mFadeEffect.IsFadingOut()) {
         switch (command) {
@@ -177,7 +177,7 @@ void RowBlastApplication::UpdateTitleScene() {
 }
 
 void RowBlastApplication::UpdateMapScene() {
-    auto command {mMapController.Update()};
+    auto command = mMapController.Update();
     
     if (!mFadeEffect.IsFadingOut()) {
         switch (command.GetKind()) {
@@ -203,7 +203,7 @@ void RowBlastApplication::UpdateMapScene() {
 }
 
 void RowBlastApplication::UpdateGameScene() {
-    auto command {mGameController.Update()};
+    auto command = mGameController.Update();
     
     if (!mFadeEffect.IsFadingOut()) {
         switch (command) {
@@ -261,7 +261,7 @@ void RowBlastApplication::HandleTransitions() {
 }
 
 void RowBlastApplication::InsertFadeEffectInActiveScene() {
-    auto* scene {mEngine.GetSceneManager().GetActiveScene()};
+    auto* scene = mEngine.GetSceneManager().GetActiveScene();
     scene->GetRoot().AddChild(mFadeEffect.GetSceneObject());
 }
 

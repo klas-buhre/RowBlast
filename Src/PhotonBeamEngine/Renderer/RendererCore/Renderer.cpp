@@ -222,7 +222,7 @@ namespace {
     }
     
     void DisableVertexAttributes(const ShaderProgram& shaderProgram) {
-        auto& attributes {shaderProgram.GetAttributes()};
+        auto& attributes = shaderProgram.GetAttributes();
     
         glDisableVertexAttribArray(attributes.mPosition);
         glDisableVertexAttribArray(attributes.mNormal);

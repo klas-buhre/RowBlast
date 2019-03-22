@@ -18,16 +18,16 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto cellSize {1.25f};
-    constexpr auto previewPieceSpacing {2.0f};
-    constexpr auto numPieceTypeRows {2};
-    constexpr auto bombAnimationDuration {4.5f};
-    constexpr auto bombRotationAmplitude {22.0f};
-    constexpr auto rowBombRotationSpeed {35.0f};
-    constexpr auto emissiveAnimationDuration {1.5f};
-    constexpr auto emissiveAmplitude {1.7f};
-    constexpr auto asteroidRotationSpeed {35.0f};
-    constexpr auto grayCubeRotationSpeed {16.0f};
+    constexpr auto cellSize = 1.25f;
+    constexpr auto previewPieceSpacing = 2.0f;
+    constexpr auto numPieceTypeRows = 2;
+    constexpr auto bombAnimationDuration = 4.5f;
+    constexpr auto bombRotationAmplitude = 22.0f;
+    constexpr auto rowBombRotationSpeed = 35.0f;
+    constexpr auto emissiveAnimationDuration = 1.5f;
+    constexpr auto emissiveAmplitude = 1.7f;
+    constexpr auto asteroidRotationSpeed = 35.0f;
+    constexpr auto grayCubeRotationSpeed = 16.0f;
     const Pht::Vec3 captionPosition {-1.7f, 8.25f, UiLayer::text};
     const Pht::Vec3 uiLightDirection {0.83f, 1.0f, 1.0f};
 }
@@ -39,9 +39,9 @@ LevelGoalDialogView::LevelGoalDialogView(Pht::IEngine& engine,
     mEngine {engine},
     mPieceResources {pieceResources} {
     
-    auto zoom {sceneId == SceneId::Game ? PotentiallyZoomedScreen::Yes : PotentiallyZoomedScreen::No};
-    auto& guiResources {commonResources.GetGuiResources()};
-    auto& menuWindow {guiResources.GetLargeDarkMenuWindow()};
+    auto zoom = (sceneId == SceneId::Game ? PotentiallyZoomedScreen::Yes : PotentiallyZoomedScreen::No);
+    auto& guiResources = commonResources.GetGuiResources();
+    auto& menuWindow = guiResources.GetLargeDarkMenuWindow();
     
     auto menuWindowSceneObject {std::make_unique<Pht::SceneObject>(&menuWindow.GetRenderable())};
     menuWindowSceneObject->GetTransform().SetPosition({0.0f, 0.0f, UiLayer::background});
@@ -49,7 +49,7 @@ LevelGoalDialogView::LevelGoalDialogView(Pht::IEngine& engine,
 
     SetSize(menuWindow.GetSize());
     
-    auto& captionTextProperties {guiResources.GetLargeWhiteTextProperties(zoom)};
+    auto& captionTextProperties = guiResources.GetLargeWhiteTextProperties(zoom);
     mCaption = &CreateText(captionPosition, "LEVEL 1", captionTextProperties);
     
     Pht::Vec3 closeButtonPosition {
@@ -72,10 +72,9 @@ LevelGoalDialogView::LevelGoalDialogView(Pht::IEngine& engine,
     
     Pht::Material lineMaterial {Pht::Color{0.6f, 0.8f, 1.0f}};
     lineMaterial.SetOpacity(0.3f);
-    auto& sceneManager {engine.GetSceneManager()};
-    auto& lineSceneObject {
-        CreateSceneObject(Pht::QuadMesh {GetSize().x - 1.5f, 0.06f}, lineMaterial, sceneManager)
-    };
+    auto& sceneManager = engine.GetSceneManager();
+    auto& lineSceneObject =
+        CreateSceneObject(Pht::QuadMesh {GetSize().x - 1.5f, 0.06f}, lineMaterial, sceneManager);
     lineSceneObject.GetTransform().SetPosition({0.0f, GetSize().y / 2.0f - 2.6f, UiLayer::textRectangle});
     GetRoot().AddChild(lineSceneObject);
     
@@ -87,9 +86,8 @@ LevelGoalDialogView::LevelGoalDialogView(Pht::IEngine& engine,
 
     CreateText({-1.45f, 5.9f, UiLayer::text}, "PIECES", largeTextProperties);
     
-    auto& lineSceneObject2 {
-        CreateSceneObject(Pht::QuadMesh {GetSize().x - 1.5f, 0.06f}, lineMaterial, sceneManager)
-    };
+    auto& lineSceneObject2 =
+        CreateSceneObject(Pht::QuadMesh {GetSize().x - 1.5f, 0.06f}, lineMaterial, sceneManager);
     lineSceneObject2.GetTransform().SetPosition({0.0f, 0.5f, UiLayer::textRectangle});
     GetRoot().AddChild(lineSceneObject2);
 
@@ -133,7 +131,7 @@ LevelGoalDialogView::LevelGoalDialogView(Pht::IEngine& engine,
 }
 
 void LevelGoalDialogView::CreatePreviewPiecesContainer() {
-    auto& container {CreateSceneObject()};
+    auto& container = CreateSceneObject();
     container.GetTransform().SetPosition({0.0f, 3.3f, UiLayer::block});
     
     for (auto& previewPiece: mPreviewPieces) {
@@ -141,9 +139,8 @@ void LevelGoalDialogView::CreatePreviewPiecesContainer() {
             std::make_unique<SceneObjectPool>(SceneObjectPoolKind::PreviewPieceBlocks, container);
         previewPiece.mBlockSceneObjects->SetIsActive(false);
         
-        auto& blocksTransform {
-            previewPiece.mBlockSceneObjects->GetContainerSceneObject().GetTransform()
-        };
+        auto& blocksTransform =
+            previewPiece.mBlockSceneObjects->GetContainerSceneObject().GetTransform();
 
         blocksTransform.SetRotation({-30.0f, -30.0f, 0.0f});
     }
@@ -177,11 +174,11 @@ void LevelGoalDialogView::CreateGlowEffectsBehindPieces(Pht::SceneObject& parent
         .mGrowDuration = 0.75f
     };
     
-    auto& particleSystem {mEngine.GetParticleSystem()};
+    auto& particleSystem = mEngine.GetParticleSystem();
     mGlowEffect = particleSystem.CreateParticleEffectSceneObject(particleSettings,
                                                                  particleEmitterSettings,
                                                                  Pht::RenderMode::Triangles);
-    auto& material {mGlowEffect->GetRenderable()->GetMaterial()};
+    auto& material = mGlowEffect->GetRenderable()->GetMaterial();
     material.SetShaderType(Pht::ShaderType::ParticleNoAlphaTexture);
     
     mGlowEffect->GetTransform().SetPosition({0.0f, 0.1f, UiLayer::buttonText});
@@ -206,7 +203,7 @@ void LevelGoalDialogView::CreateGlowEffectsBehindPieces(Pht::SceneObject& parent
     mRoundGlowEffect = particleSystem.CreateParticleEffectSceneObject(particleSettings2,
                                                                       particleEmitterSettings,
                                                                       Pht::RenderMode::Triangles);
-    auto& material2 {mRoundGlowEffect->GetRenderable()->GetMaterial()};
+    auto& material2 = mRoundGlowEffect->GetRenderable()->GetMaterial();
     material2.SetShaderType(Pht::ShaderType::ParticleNoAlphaTexture);
     
     mRoundGlowEffect->GetTransform().SetPosition({0.0f, 0.1f, -0.9f});
@@ -215,11 +212,11 @@ void LevelGoalDialogView::CreateGlowEffectsBehindPieces(Pht::SceneObject& parent
 
 void LevelGoalDialogView::CreateGoalContainer(const CommonResources& commonResources,
                                               PotentiallyZoomedScreen zoom) {
-    auto& container {CreateSceneObject()};
+    auto& container = CreateSceneObject();
     container.GetTransform().SetPosition({0.0f, -3.0f, 0.0f});
 
-    auto& guiResources {commonResources.GetGuiResources()};
-    auto& smallTextProperties {guiResources.GetSmallWhiteTextProperties(zoom)};
+    auto& guiResources = commonResources.GetGuiResources();
+    auto& smallTextProperties = guiResources.GetSmallWhiteTextProperties(zoom);
 
     Pht::TextProperties largeTextProperties {
         commonResources.GetHussarFontSize35(zoom),
@@ -262,14 +259,14 @@ void LevelGoalDialogView::CreateGoalContainer(const CommonResources& commonResou
 
 void LevelGoalDialogView::CreateGrayCube(const CommonResources& commonResources,
                                          Pht::SceneObject& parent) {
-    auto& sceneManager {mEngine.GetSceneManager()};
+    auto& sceneManager = mEngine.GetSceneManager();
     
     mGrayCubeSceneObject =
         &CreateSceneObject(Pht::ObjMesh {"cube_428.obj", 1.25f},
                            commonResources.GetMaterials().GetLightGrayMaterial(),
                            sceneManager);
 
-    auto& transform {mGrayCubeSceneObject->GetTransform()};
+    auto& transform = mGrayCubeSceneObject->GetTransform();
     transform.SetPosition({0.0f, -1.0f, UiLayer::block});
     transform.SetScale(1.3f);
     
@@ -280,14 +277,14 @@ void LevelGoalDialogView::CreateAsteroid(Pht::SceneObject& parent) {
     Pht::Material asteroidMaterial {"gray_asteroid.jpg", 0.84f, 1.23f, 0.0f, 1.0f};
     asteroidMaterial.GetDepthState().mDepthTestAllowedOverride = true;
     
-    auto& sceneManager {mEngine.GetSceneManager()};
+    auto& sceneManager = mEngine.GetSceneManager();
     
     mAsteroidSceneObject =
         &CreateSceneObject(Pht::ObjMesh {"asteroid_2000.obj", 19.0f, Pht::MoveMeshToOrigin::Yes},
                            asteroidMaterial,
                            sceneManager);
     
-    auto& transform {mAsteroidSceneObject->GetTransform()};
+    auto& transform = mAsteroidSceneObject->GetTransform();
     transform.SetPosition({0.0f, -1.0f, UiLayer::block});
     transform.SetScale(1.95f);
     
@@ -295,16 +292,16 @@ void LevelGoalDialogView::CreateAsteroid(Pht::SceneObject& parent) {
 }
 
 void LevelGoalDialogView::CreateBlueprintSlot(Pht::SceneObject& parent) {
-    auto& blueprintSlotContainer {CreateSceneObject()};
-    auto& transform {blueprintSlotContainer.GetTransform()};
+    auto& blueprintSlotContainer = CreateSceneObject();
+    auto& transform = blueprintSlotContainer.GetTransform();
     transform.SetPosition({-0.05f, -1.0f, UiLayer::block});
     transform.SetRotation({-30.0f, -30.0f, 0.0f});
     parent.AddChild(blueprintSlotContainer);
 
-    auto squareSide {1.25f};
-    auto slotSide {squareSide + 0.125f};
+    auto squareSide = 1.25f;
+    auto slotSide = squareSide + 0.125f;
     Pht::Vec4 slotFillColor {1.0f, 1.0f, 1.0f, 0.192f};
-    auto& sceneManager {mEngine.GetSceneManager()};
+    auto& sceneManager = mEngine.GetSceneManager();
     
     Pht::QuadMesh::Vertices blueprintSlotVertices  {
         {{-slotSide / 2.0f, -slotSide / 2.0f, 0.0f}, slotFillColor},
@@ -316,13 +313,12 @@ void LevelGoalDialogView::CreateBlueprintSlot(Pht::SceneObject& parent) {
     Pht::Material slotMaterial;
     slotMaterial.SetBlend(Pht::Blend::Yes);
     
-    auto& blueprintSlot {
-        CreateSceneObject(Pht::QuadMesh {blueprintSlotVertices}, slotMaterial, sceneManager)
-    };
+    auto& blueprintSlot =
+        CreateSceneObject(Pht::QuadMesh {blueprintSlotVertices}, slotMaterial, sceneManager);
     
     blueprintSlotContainer.AddChild(blueprintSlot);
 
-    auto f {0.9125f};
+    auto f = 0.9125f;
     Pht::Vec4 fieldColor {0.3f * f, 0.3f * f, 0.752f * f, 1.0f};
 
     Pht::QuadMesh::Vertices fieldCellVertices  {
@@ -335,9 +331,8 @@ void LevelGoalDialogView::CreateBlueprintSlot(Pht::SceneObject& parent) {
     Pht::Material fieldMaterial;
     fieldMaterial.SetOpacity(0.96f);
     
-    auto& fieldCell {
-        CreateSceneObject(Pht::QuadMesh {fieldCellVertices}, fieldMaterial, sceneManager)
-    };
+    auto& fieldCell =
+        CreateSceneObject(Pht::QuadMesh {fieldCellVertices}, fieldMaterial, sceneManager);
     
     fieldCell.GetTransform().SetPosition({0.0f, 0.0f, -0.005f});
     blueprintSlotContainer.AddChild(fieldCell);
@@ -369,11 +364,11 @@ void LevelGoalDialogView::CreateGlowEffectsBehindGoal(Pht::SceneObject& parentOb
         .mGrowDuration = 0.5f
     };
     
-    auto& particleSystem {mEngine.GetParticleSystem()};
+    auto& particleSystem = mEngine.GetParticleSystem();
     mGoalRoundGlowEffect = particleSystem.CreateParticleEffectSceneObject(particleSettings,
                                                                           particleEmitterSettings,
                                                                           Pht::RenderMode::Triangles);
-    auto& material {mGoalRoundGlowEffect->GetRenderable()->GetMaterial()};
+    auto& material = mGoalRoundGlowEffect->GetRenderable()->GetMaterial();
     material.SetShaderType(Pht::ShaderType::ParticleNoAlphaTexture);
     
     mGoalRoundGlowEffect->GetTransform().SetPosition({0.0f, -1.0, -1.9f});
@@ -387,7 +382,7 @@ void LevelGoalDialogView::SetUp(const LevelInfo& levelInfo) {
 
     mCaption->GetText() = "LEVEL " + std::to_string(levelInfo.mId);
     
-    auto adjustedCaptionPosition {captionPosition};
+    auto adjustedCaptionPosition = captionPosition;
     
     if (levelInfo.mId > 19) {
         adjustedCaptionPosition.x -= 0.31f;
@@ -421,11 +416,10 @@ void LevelGoalDialogView::SetUp(const LevelInfo& levelInfo) {
         previewPiece.mBlockSceneObjects->SetIsActive(false);
     }
     
-    auto numPieceTypes {levelInfo.mPieceTypes.size()};
-    auto numPieceTypesUpperRow {
+    auto numPieceTypes = levelInfo.mPieceTypes.size();
+    auto numPieceTypesUpperRow =
         static_cast<int>(std::ceil(static_cast<float>(numPieceTypes) /
-                                   static_cast<float>(numPieceTypeRows)))
-    };
+                                   static_cast<float>(numPieceTypeRows)));
     
     Pht::Vec3 previewPiecePosition {
         -previewPieceSpacing * numPieceTypesUpperRow / 2.0f + previewPieceSpacing / 2.0f,
@@ -433,14 +427,14 @@ void LevelGoalDialogView::SetUp(const LevelInfo& levelInfo) {
         0.0f
     };
     
-    for (auto i {0}; i < numPieceTypesUpperRow; ++i) {
-        auto& previewPiece {mPreviewPieces[i]};
-        auto* pieceType {levelInfo.mPieceTypes[i]};
+    for (auto i = 0; i < numPieceTypesUpperRow; ++i) {
+        auto& previewPiece = mPreviewPieces[i];
+        auto* pieceType = levelInfo.mPieceTypes[i];
         SetUpPreviewPiece(previewPiece, *pieceType, previewPiecePosition);
         previewPiecePosition.x += previewPieceSpacing;
     }
     
-    auto numPieceTypesLowerRow {numPieceTypes - numPieceTypesUpperRow};
+    auto numPieceTypesLowerRow = numPieceTypes - numPieceTypesUpperRow;
 
     previewPiecePosition = {
         -previewPieceSpacing * numPieceTypesLowerRow / 2.0f + previewPieceSpacing / 2.0f,
@@ -448,9 +442,9 @@ void LevelGoalDialogView::SetUp(const LevelInfo& levelInfo) {
         0.0f
     };
 
-    for (auto i {numPieceTypesUpperRow}; i < numPieceTypes; ++i) {
-        auto& previewPiece {mPreviewPieces[i]};
-        auto* pieceType {levelInfo.mPieceTypes[i]};
+    for (auto i = numPieceTypesUpperRow; i < numPieceTypes; ++i) {
+        auto& previewPiece = mPreviewPieces[i];
+        auto* pieceType = levelInfo.mPieceTypes[i];
         SetUpPreviewPiece(previewPiece, *pieceType, previewPiecePosition);
         previewPiecePosition.x += previewPieceSpacing;
     }
@@ -468,22 +462,22 @@ void LevelGoalDialogView::SetUpPreviewPiece(LevelStartPreviewPiece& previewPiece
     previewPiece.mBombSceneObject = nullptr;
     previewPiece.mRowBombSceneObject = nullptr;
 
-    auto& containerObject {previewPiece.mBlockSceneObjects->GetContainerSceneObject()};
-    auto& baseTransform {containerObject.GetTransform()};
+    auto& containerObject = previewPiece.mBlockSceneObjects->GetContainerSceneObject();
+    auto& baseTransform = containerObject.GetTransform();
     baseTransform.SetPosition(position);
 
     previewPiece.mBlockSceneObjects->SetIsActive(true);
     
-    auto scale {pieceType.GetPreviewCellSize() / cellSize};
+    auto scale = pieceType.GetPreviewCellSize() / cellSize;
     
     baseTransform.SetScale(scale);
     previewPiece.mBlockSceneObjects->ReclaimAll();
     
-    auto pieceNumRows {pieceType.GetGridNumRows()};
-    auto pieceNumColumns {pieceType.GetGridNumColumns()};
-    auto& grid {pieceType.GetGrid(Rotation::Deg0)};
-    auto isBomb {pieceType.IsBomb()};
-    auto isRowBomb {pieceType.IsRowBomb()};
+    auto pieceNumRows = pieceType.GetGridNumRows();
+    auto pieceNumColumns = pieceType.GetGridNumColumns();
+    auto& grid = pieceType.GetGrid(Rotation::Deg0);
+    auto isBomb = pieceType.IsBomb();
+    auto isRowBomb = pieceType.IsRowBomb();
     
     Pht::Vec3 lowerLeft {
         -static_cast<float>(pieceNumColumns) * cellSize / 2.0f + cellSize / 2.0f,
@@ -497,13 +491,13 @@ void LevelGoalDialogView::SetUpPreviewPiece(LevelStartPreviewPiece& previewPiece
         lowerLeft.y -= cellSize / 2.0f;
     }
     
-    for (auto row {0}; row < pieceNumRows; row++) {
-        for (auto column {0}; column < pieceNumColumns; column++) {
-            auto& subCell {grid[row][column].mFirstSubCell};
-            auto blockKind {subCell.mBlockKind};
+    for (auto row = 0; row < pieceNumRows; row++) {
+        for (auto column = 0; column < pieceNumColumns; column++) {
+            auto& subCell = grid[row][column].mFirstSubCell;
+            auto blockKind = subCell.mBlockKind;
  
             if (blockKind != BlockKind::None) {
-                auto& blockSceneObject {previewPiece.mBlockSceneObjects->AccuireSceneObject()};
+                auto& blockSceneObject = previewPiece.mBlockSceneObjects->AccuireSceneObject();
                 
                 if (isBomb) {
                     blockSceneObject.SetRenderable(&mPieceResources.GetBombRenderableObject());
@@ -512,11 +506,10 @@ void LevelGoalDialogView::SetUpPreviewPiece(LevelStartPreviewPiece& previewPiece
                     blockSceneObject.SetRenderable(&mPieceResources.GetRowBombRenderableObject());
                     previewPiece.mRowBombSceneObject = &blockSceneObject;
                 } else {
-                    auto& blockRenderable {
+                    auto& blockRenderable =
                         mPieceResources.GetBlockRenderableObject(blockKind,
                                                                  subCell.mColor,
-                                                                 BlockBrightness::Normal)
-                    };
+                                                                 BlockBrightness::Normal);
                     
                     blockSceneObject.SetRenderable(&blockRenderable);
                 }
@@ -570,8 +563,8 @@ void LevelGoalDialogView::AnimateEmissive(float dt) {
         mEmissiveAnimationTime = 0.0f;
     }
 
-    auto sineOfT {sin(mEmissiveAnimationTime * 2.0f * 3.1415f / emissiveAnimationDuration)};
-    auto emissive {emissiveAmplitude * (sineOfT + 1.0f) / 2.0f};
+    auto sineOfT = sin(mEmissiveAnimationTime * 2.0f * 3.1415f / emissiveAnimationDuration);
+    auto emissive = emissiveAmplitude * (sineOfT + 1.0f) / 2.0f;
     
     Pht::SceneObjectUtils::SetEmissiveInRenderable(mPieceResources.GetBombRenderableObject(),
                                                    emissive);
@@ -580,9 +573,9 @@ void LevelGoalDialogView::AnimateEmissive(float dt) {
 }
 
 void LevelGoalDialogView::AnimateBombRotation() {
-    auto t {mAnimationTime * 2.0f * 3.1415f / bombAnimationDuration};
-    auto xAngle {bombRotationAmplitude * sin(t) + 90.0f};
-    auto yAngle {bombRotationAmplitude * cos(t)};
+    auto t = mAnimationTime * 2.0f * 3.1415f / bombAnimationDuration;
+    auto xAngle = bombRotationAmplitude * sin(t) + 90.0f;
+    auto yAngle = bombRotationAmplitude * cos(t);
     
     for (auto& previewPiece: mPreviewPieces) {
         if (previewPiece.mBlockSceneObjects->IsActive() && previewPiece.mBombSceneObject) {

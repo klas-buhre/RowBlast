@@ -12,16 +12,16 @@ using namespace RowBlast;
 PurchaseCanceledDialogView::PurchaseCanceledDialogView(Pht::IEngine& engine,
                                                        const CommonResources& commonResources,
                                                        PotentiallyZoomedScreen zoom) {
-    auto& guiResources {commonResources.GetGuiResources()};
-    auto& menuWindow {guiResources.GetSmallDarkMenuWindow()};
+    auto& guiResources = commonResources.GetGuiResources();
+    auto& menuWindow = guiResources.GetSmallDarkMenuWindow();
     
-    auto menuWindowSceneObject {std::make_unique<Pht::SceneObject>(&menuWindow.GetRenderable())};
+    auto menuWindowSceneObject = std::make_unique<Pht::SceneObject>(&menuWindow.GetRenderable());
     menuWindowSceneObject->GetTransform().SetPosition({0.0f, 0.0f, UiLayer::background});
     AddSceneObject(std::move(menuWindowSceneObject));
 
     SetSize(menuWindow.GetSize());
     
-    auto& textProperties {guiResources.GetSmallWhiteTextProperties(zoom)};
+    auto& textProperties = guiResources.GetSmallWhiteTextProperties(zoom);
     
     CreateText({-3.6f, 3.825f, UiLayer::text}, "PURCHASE CANCELED", textProperties);
     
@@ -45,10 +45,9 @@ PurchaseCanceledDialogView::PurchaseCanceledDialogView(Pht::IEngine& engine,
 
     Pht::Material lineMaterial {Pht::Color{0.6f, 0.8f, 1.0f}};
     lineMaterial.SetOpacity(0.3f);
-    auto& sceneManager {engine.GetSceneManager()};
-    auto& lineSceneObject {
-        CreateSceneObject(Pht::QuadMesh {GetSize().x - 1.5f, 0.06f}, lineMaterial, sceneManager)
-    };
+    auto& sceneManager = engine.GetSceneManager();
+    auto& lineSceneObject =
+        CreateSceneObject(Pht::QuadMesh {GetSize().x - 1.5f, 0.06f}, lineMaterial, sceneManager);
     lineSceneObject.GetTransform().SetPosition({0.0f, GetSize().y / 2.0f - 2.6f, UiLayer::textRectangle});
     GetRoot().AddChild(lineSceneObject);
 

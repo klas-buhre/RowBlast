@@ -27,11 +27,11 @@ HowToPlayDialogView::HowToPlayDialogView(Pht::IEngine& engine,
                                          SceneId sceneId) :
     mEngine {engine} {
 
-    auto zoom {sceneId == SceneId::Game ? PotentiallyZoomedScreen::Yes : PotentiallyZoomedScreen::No};
-    auto& guiResources {commonResources.GetGuiResources()};
-    auto& menuWindow {guiResources.GetLargeDarkMenuWindow()};
+    auto zoom = (sceneId == SceneId::Game ? PotentiallyZoomedScreen::Yes : PotentiallyZoomedScreen::No);
+    auto& guiResources = commonResources.GetGuiResources();
+    auto& menuWindow = guiResources.GetLargeDarkMenuWindow();
     
-    auto menuWindowSceneObject {std::make_unique<Pht::SceneObject>(&menuWindow.GetRenderable())};
+    auto menuWindowSceneObject = std::make_unique<Pht::SceneObject>(&menuWindow.GetRenderable());
     menuWindowSceneObject->GetTransform().SetPosition({0.0f, 0.0f, UiLayer::background});
     AddSceneObject(std::move(menuWindowSceneObject));
 
@@ -57,10 +57,10 @@ HowToPlayDialogView::HowToPlayDialogView(Pht::IEngine& engine,
 
     Pht::Material lineMaterial {Pht::Color{0.6f, 0.8f, 1.0f}};
     lineMaterial.SetOpacity(0.3f);
-    auto& sceneManager {engine.GetSceneManager()};
-    auto& lineSceneObject {
-        CreateSceneObject(Pht::QuadMesh {GetSize().x - 1.5f, 0.06f}, lineMaterial, sceneManager)
-    };
+    auto& sceneManager = engine.GetSceneManager();
+    auto& lineSceneObject = CreateSceneObject(Pht::QuadMesh {GetSize().x - 1.5f, 0.06f},
+                                              lineMaterial,
+                                              sceneManager);
     lineSceneObject.GetTransform().SetPosition({0.0f, GetSize().y / 2.0f - 2.6f, UiLayer::textRectangle});
     GetRoot().AddChild(lineSceneObject);
     
@@ -126,21 +126,19 @@ void HowToPlayDialogView::CreateGoalPage(const GuiResources& guiResources,
                                          const PieceResources& pieceResources,
                                          const LevelResources& levelResources,
                                          PotentiallyZoomedScreen zoom) {
-    auto& container {CreateSceneObject()};
+    auto& container = CreateSceneObject();
     GetRoot().AddChild(container);
     
-    auto& largeTextProperties {guiResources.GetLargeWhiteTextProperties(zoom)};
+    auto& largeTextProperties = guiResources.GetLargeWhiteTextProperties(zoom);
     CreateText({-1.5f, 8.25f, UiLayer::text}, "GOAL", largeTextProperties, container);
 
-    auto& animation {
-        CreateClearBlocksAnimation(container,
-                                   ClearBlocksChildAnimations {},
-                                   pieceResources,
-                                   levelResources,
-                                   nullptr)
-    };
+    auto& animation = CreateClearBlocksAnimation(container,
+                                                 ClearBlocksChildAnimations {},
+                                                 pieceResources,
+                                                 levelResources,
+                                                 nullptr);
 
-    auto& textProperties {guiResources.GetSmallWhiteTextProperties(zoom)};
+    auto& textProperties = guiResources.GetSmallWhiteTextProperties(zoom);
     CreateText({-5.65f, -5.4f, UiLayer::text}, "Usually the goal is to clear blocks", textProperties, container);
     CreateText({-4.35f, -6.475f, UiLayer::text}, "by filling horizontal rows.", textProperties, container);
     
@@ -151,13 +149,13 @@ void HowToPlayDialogView::CreateGoalPage(const GuiResources& guiResources,
 
 void HowToPlayDialogView::CreateControlsPage(const GuiResources& guiResources,
                                              PotentiallyZoomedScreen zoom) {
-    auto& container {CreateSceneObject()};
+    auto& container = CreateSceneObject();
     GetRoot().AddChild(container);
     
-    auto& largeTextProperties {guiResources.GetLargeWhiteTextProperties(zoom)};
+    auto& largeTextProperties = guiResources.GetLargeWhiteTextProperties(zoom);
     CreateText({-2.45f, 8.25f, UiLayer::text}, "CONTROLS", largeTextProperties, container);
     
-    auto& textProperties {guiResources.GetSmallWhiteTextProperties(zoom)};
+    auto& textProperties = guiResources.GetSmallWhiteTextProperties(zoom);
     CreateText({-5.3f, 6.0f, UiLayer::text}, "The game can be played using", textProperties, container);
     CreateText({-3.3f, 4.3f, UiLayer::text}, "SingleTap controls, or", textProperties, container);
     CreateText({-3.3f, 2.6f, UiLayer::text}, "Swipe controls", textProperties, container);
@@ -177,24 +175,23 @@ void HowToPlayDialogView::CreatePlacePiecePage(const GuiResources& guiResources,
                                                const PieceResources& pieceResources,
                                                const LevelResources& levelResources,
                                                PotentiallyZoomedScreen zoom) {
-    auto& container {CreateSceneObject()};
+    auto& container = CreateSceneObject();
     GetRoot().AddChild(container);
     
     CreateSingleTapIcon({-3.8f, 8.5f, UiLayer::text}, container);
-    auto& largeTextProperties {guiResources.GetLargeWhiteTextProperties(zoom)};
+    auto& largeTextProperties = guiResources.GetLargeWhiteTextProperties(zoom);
     CreateText({-3.1f, 8.25f, UiLayer::text}, "SINGLE TAP (1)", largeTextProperties, container);
 
-    auto handAnimation {std::make_unique<HandAnimation>(mEngine, 1.0f, true)};
+    auto handAnimation = std::make_unique<HandAnimation>(mEngine, 1.0f, true);
     
-    auto& animation {
+    auto& animation =
         CreateClearBlocksAnimation(container,
                                    ClearBlocksChildAnimations {.mPlacePiece = true},
                                    pieceResources,
                                    levelResources,
-                                   handAnimation.get())
-    };
+                                   handAnimation.get());
 
-    auto& textProperties {guiResources.GetSmallWhiteTextProperties(zoom)};
+    auto& textProperties = guiResources.GetSmallWhiteTextProperties(zoom);
     CreateText({-5.2f, -5.4f, UiLayer::text}, "When using SingleTap controls,", textProperties, container);
     CreateText({-5.6f, -6.475f, UiLayer::text}, "just tap a move to place the piece.", textProperties, container);
     
@@ -207,25 +204,23 @@ void HowToPlayDialogView::CreateOtherMovesPage(const GuiResources& guiResources,
                                                const PieceResources& pieceResources,
                                                const LevelResources& levelResources,
                                                PotentiallyZoomedScreen zoom) {
-    auto& container {CreateSceneObject()};
+    auto& container = CreateSceneObject();
     GetRoot().AddChild(container);
     
     CreateSingleTapIcon({-4.0f, 8.5f, UiLayer::text}, container);
-    auto& largeTextProperties {guiResources.GetLargeWhiteTextProperties(zoom)};
+    auto& largeTextProperties = guiResources.GetLargeWhiteTextProperties(zoom);
     CreateText({-3.3f, 8.25f, UiLayer::text}, "SINGLE TAP (2)", largeTextProperties, container);
 
-    auto handAnimation {std::make_unique<HandAnimation>(mEngine, 1.0f, true)};
+    auto handAnimation = std::make_unique<HandAnimation>(mEngine, 1.0f, true);
     
-    auto& animation {
-        CreateBlocksAnimation(container,
-                              BlocksChildAnimations {.mOtherMoves = true},
-                              pieceResources,
-                              levelResources,
-                              *handAnimation,
-                              4.0f)
-    };
+    auto& animation = CreateBlocksAnimation(container,
+                                            BlocksChildAnimations {.mOtherMoves = true},
+                                            pieceResources,
+                                            levelResources,
+                                            *handAnimation,
+                                            4.0f);
 
-    auto& textProperties {guiResources.GetSmallWhiteTextProperties(zoom)};
+    auto& textProperties = guiResources.GetSmallWhiteTextProperties(zoom);
     CreateText({-5.45f, -5.4f, UiLayer::text}, "With SingleTap controls, just tap", textProperties, container);
     CreateText({-5.05f, -6.475f, UiLayer::text}, "the screen to find more moves.", textProperties, container);
     
@@ -238,24 +233,22 @@ void HowToPlayDialogView::CreateSwitchPiecePage(const CommonResources& commonRes
                                                 const PieceResources& pieceResources,
                                                 const LevelResources& levelResources,
                                                 PotentiallyZoomedScreen zoom) {
-    auto& container {CreateSceneObject()};
+    auto& container = CreateSceneObject();
     GetRoot().AddChild(container);
     
-    auto& guiResources {commonResources.GetGuiResources()};
-    auto& largeTextProperties {guiResources.GetLargeWhiteTextProperties(zoom)};
+    auto& guiResources = commonResources.GetGuiResources();
+    auto& largeTextProperties = guiResources.GetLargeWhiteTextProperties(zoom);
     CreateText({-3.2f, 8.25f, UiLayer::text}, "SWITCH PIECE", largeTextProperties, container);
 
-    auto handAnimation {std::make_unique<HandAnimation>(mEngine, 1.0f, true)};
+    auto handAnimation = std::make_unique<HandAnimation>(mEngine, 1.0f, true);
     
-    auto& animation {
-        CreateSwitchPieceAnimation(container,
-                                   commonResources,
-                                   pieceResources,
-                                   levelResources,
-                                   *handAnimation)
-    };
+    auto& animation = CreateSwitchPieceAnimation(container,
+                                                 commonResources,
+                                                 pieceResources,
+                                                 levelResources,
+                                                 *handAnimation);
 
-    auto& textProperties {guiResources.GetSmallWhiteTextProperties(zoom)};
+    auto& textProperties = guiResources.GetSmallWhiteTextProperties(zoom);
     CreateText({-4.05f, -5.4f, UiLayer::text}, "Tap the switch button or", textProperties, container);
     CreateText({-4.05f, -6.475f, UiLayer::text}, "swipe up to switch piece.", textProperties, container);
     
@@ -268,25 +261,23 @@ void HowToPlayDialogView::CreateMovePiecePage(const GuiResources& guiResources,
                                               const PieceResources& pieceResources,
                                               const LevelResources& levelResources,
                                               PotentiallyZoomedScreen zoom) {
-    auto& container {CreateSceneObject()};
+    auto& container = CreateSceneObject();
     GetRoot().AddChild(container);
     
     CreateSwipeIcon({-2.65f, 8.5f, UiLayer::text}, container);
-    auto& largeTextProperties {guiResources.GetLargeWhiteTextProperties(zoom)};
+    auto& largeTextProperties = guiResources.GetLargeWhiteTextProperties(zoom);
     CreateText({-1.75f, 8.25f, UiLayer::text}, "SWIPE (1)", largeTextProperties, container);
 
-    auto handAnimation {std::make_unique<HandAnimation>(mEngine, 1.0f, true)};
+    auto handAnimation = std::make_unique<HandAnimation>(mEngine, 1.0f, true);
     
-    auto& animation {
-        CreateBlocksAnimation(container,
-                              BlocksChildAnimations {.mMovePieceSideways = true},
-                              pieceResources,
-                              levelResources,
-                              *handAnimation,
-                              6.0f)
-    };
+    auto& animation = CreateBlocksAnimation(container,
+                                            BlocksChildAnimations {.mMovePieceSideways = true},
+                                            pieceResources,
+                                            levelResources,
+                                            *handAnimation,
+                                            6.0f);
 
-    auto& textProperties {guiResources.GetSmallWhiteTextProperties(zoom)};
+    auto& textProperties = guiResources.GetSmallWhiteTextProperties(zoom);
     CreateText({-5.1f, -5.4f, UiLayer::text}, "With swipe controls, slide your", textProperties, container);
     CreateText({-5.6f, -6.475f, UiLayer::text}, "finger to move the piece sideways.", textProperties, container);
     
@@ -299,25 +290,23 @@ void HowToPlayDialogView::CreateRotatePiecePage(const GuiResources& guiResources
                                                 const PieceResources& pieceResources,
                                                 const LevelResources& levelResources,
                                                 PotentiallyZoomedScreen zoom) {
-    auto& container {CreateSceneObject()};
+    auto& container = CreateSceneObject();
     GetRoot().AddChild(container);
     
     CreateSwipeIcon({-2.8f, 8.5f, UiLayer::text}, container);
-    auto& largeTextProperties {guiResources.GetLargeWhiteTextProperties(zoom)};
+    auto& largeTextProperties = guiResources.GetLargeWhiteTextProperties(zoom);
     CreateText({-1.9f, 8.25f, UiLayer::text}, "SWIPE (2)", largeTextProperties, container);
 
-    auto handAnimation {std::make_unique<HandAnimation>(mEngine, 1.0f, true)};
+    auto handAnimation = std::make_unique<HandAnimation>(mEngine, 1.0f, true);
     
-    auto& animation {
-        CreateBlocksAnimation(container,
-                              BlocksChildAnimations {.mRotatePiece = true},
-                              pieceResources,
-                              levelResources,
-                              *handAnimation,
-                              6.0f)
-    };
+    auto& animation = CreateBlocksAnimation(container,
+                                            BlocksChildAnimations {.mRotatePiece = true},
+                                            pieceResources,
+                                            levelResources,
+                                            *handAnimation,
+                                            6.0f);
 
-    auto& textProperties {guiResources.GetSmallWhiteTextProperties(zoom)};
+    auto& textProperties = guiResources.GetSmallWhiteTextProperties(zoom);
     CreateText({-4.65f, -5.4f, UiLayer::text}, "With swipe controls, tap the", textProperties, container);
     CreateText({-4.2f, -6.475f, UiLayer::text}, "screen to rotate the piece.", textProperties, container);
     
@@ -330,24 +319,23 @@ void HowToPlayDialogView::CreateDropPiecePage(const GuiResources& guiResources,
                                               const PieceResources& pieceResources,
                                               const LevelResources& levelResources,
                                               PotentiallyZoomedScreen zoom) {
-    auto& container {CreateSceneObject()};
+    auto& container = CreateSceneObject();
     GetRoot().AddChild(container);
     
     CreateSwipeIcon({-2.8f, 8.5f, UiLayer::text}, container);
-    auto& largeTextProperties {guiResources.GetLargeWhiteTextProperties(zoom)};
+    auto& largeTextProperties = guiResources.GetLargeWhiteTextProperties(zoom);
     CreateText({-1.9f, 8.25f, UiLayer::text}, "SWIPE (3)", largeTextProperties, container);
 
-    auto handAnimation {std::make_unique<HandAnimation>(mEngine, 1.0f, true)};
+    auto handAnimation = std::make_unique<HandAnimation>(mEngine, 1.0f, true);
     
-    auto& animation {
+    auto& animation =
         CreateClearBlocksAnimation(container,
                                    ClearBlocksChildAnimations {.mDropPiece = true},
                                    pieceResources,
                                    levelResources,
-                                   handAnimation.get())
-    };
+                                   handAnimation.get());
 
-    auto& textProperties {guiResources.GetSmallWhiteTextProperties(zoom)};
+    auto& textProperties = guiResources.GetSmallWhiteTextProperties(zoom);
     CreateText({-4.4f, -5.4f, UiLayer::text}, "With swipe controls, swipe", textProperties, container);
     CreateText({-3.9f, -6.475f, UiLayer::text}, "down to drop the piece.", textProperties, container);
     
@@ -360,20 +348,19 @@ void HowToPlayDialogView::CreateDragPieceDownPage(const GuiResources& guiResourc
                                                   const PieceResources& pieceResources,
                                                   const LevelResources& levelResources,
                                                   PotentiallyZoomedScreen zoom) {
-    auto& container {CreateSceneObject()};
+    auto& container = CreateSceneObject();
     GetRoot().AddChild(container);
     
     CreateSwipeIcon({-2.8f, 8.5f, UiLayer::text}, container);
-    auto& largeTextProperties {guiResources.GetLargeWhiteTextProperties(zoom)};
+    auto& largeTextProperties = guiResources.GetLargeWhiteTextProperties(zoom);
     CreateText({-1.9f, 8.25f, UiLayer::text}, "SWIPE (4)", largeTextProperties, container);
 
-    auto handAnimation {std::make_unique<HandAnimation>(mEngine, 1.0f, true)};
+    auto handAnimation = std::make_unique<HandAnimation>(mEngine, 1.0f, true);
     
-    auto& animation {
-        CreateMovePieceDownAnimation(container, pieceResources, levelResources, *handAnimation)
-    };
+    auto& animation =
+        CreateMovePieceDownAnimation(container, pieceResources, levelResources, *handAnimation);
 
-    auto& textProperties {guiResources.GetSmallWhiteTextProperties(zoom)};
+    auto& textProperties = guiResources.GetSmallWhiteTextProperties(zoom);
     CreateText({-4.85f, -4.7f, UiLayer::text}, "To move the piece down a bit,", textProperties, container);
     CreateText({-5.35f, -5.775f, UiLayer::text}, "slide the finger down and swipe", textProperties, container);
     CreateText({-5.35f, -6.85f, UiLayer::text}, "up without releasing the screen.", textProperties, container);
@@ -384,8 +371,8 @@ void HowToPlayDialogView::CreateDragPieceDownPage(const GuiResources& guiResourc
 }
 
 Pht::SceneObject& HowToPlayDialogView::CreateFilledCircleIcon(int index, bool isBright) {
-    auto indexMax {mNumPages - 1};
-    auto diff {0.75f};
+    auto indexMax = mNumPages - 1;
+    auto diff = 0.75f;
     
     Pht::Vec3 position {
         -indexMax * diff / 2.0f + index * diff,
@@ -393,16 +380,15 @@ Pht::SceneObject& HowToPlayDialogView::CreateFilledCircleIcon(int index, bool is
         isBright ? UiLayer::root : UiLayer::textRectangle
     };
     
-    auto brightness {isBright ? 0.95f : 0.4f};
+    auto brightness = isBright ? 0.95f : 0.4f;
     Pht::Vec4 color {brightness, brightness, brightness, 1.0f};
     Pht::Material iconMaterial {"filled_circle.png", 0.0f, 0.0f, 0.0f, 0.0f};
     iconMaterial.SetBlend(Pht::Blend::Yes);
     iconMaterial.SetOpacity(color.w);
     iconMaterial.SetAmbient(Pht::Color{color.x, color.y, color.z});
     
-    auto& iconSceneObject {
-        CreateSceneObject(Pht::QuadMesh {0.35f, 0.35f}, iconMaterial, mEngine.GetSceneManager())
-    };
+    auto& iconSceneObject =
+        CreateSceneObject(Pht::QuadMesh {0.35f, 0.35f}, iconMaterial, mEngine.GetSceneManager());
     
     iconSceneObject.GetTransform().SetPosition(position);
     
@@ -414,36 +400,35 @@ Pht::Animation& HowToPlayDialogView::CreateClearBlocksAnimation(Pht::SceneObject
                                                                 const PieceResources& pieceResources,
                                                                 const LevelResources& levelResources,
                                                                 HandAnimation* handAnimation) {
-    auto& container {CreateSceneObject()};
+    auto& container = CreateSceneObject();
     container.GetTransform().SetPosition({0.0f, 1.5f, 0.0f});
     container.GetTransform().SetScale(1.15f);
     parent.AddChild(container);
     
     CreateFieldQuad(container);
     
-    auto rowClearTime {1.6f};
-    auto fallWaitDuration {0.35f};
-    auto fallDuration {0.2f};
-    auto animationDuration {4.0f};
+    auto rowClearTime = 1.6f;
+    auto fallWaitDuration = 0.35f;
+    auto fallDuration = 0.2f;
+    auto animationDuration = 4.0f;
 
-    auto& animationSystem {mEngine.GetAnimationSystem()};
-    auto& rootAnimation {
-        animationSystem.CreateAnimation(container, {{.mTime = 0.0f}, {.mTime = animationDuration}})
-    };
+    auto& animationSystem = mEngine.GetAnimationSystem();
+    auto& rootAnimation =
+        animationSystem.CreateAnimation(container, {{.mTime = 0.0f}, {.mTime = animationDuration}});
     
     if (handAnimation) {
         handAnimation->Init(container);
     }
     
     Pht::Vec3 lPieceInitialPosition {-0.5f, 3.3f, UiLayer::block};
-    auto& lPiece {CreateLPiece(lPieceInitialPosition, container, pieceResources)};
+    auto& lPiece = CreateLPiece(lPieceInitialPosition, container, pieceResources);
     Pht::Vec3 remainingLPieceInitialPosition {-0.5f, -2.0f, UiLayer::block};
-    auto& remainingLPiece {CreateTwoBlocks(remainingLPieceInitialPosition, BlockColor::Yellow, container, pieceResources)};
+    auto& remainingLPiece = CreateTwoBlocks(remainingLPieceInitialPosition, BlockColor::Yellow, container, pieceResources);
     remainingLPiece.SetIsVisible(false);
     Pht::Vec3 greenBlocksInitialPosition {2.5f, -2.0f, UiLayer::block};
-    auto& greenBlocks {CreateTwoBlocks(greenBlocksInitialPosition, BlockColor::Green, container, pieceResources)};
-    auto& leftGrayBlocks {CreateThreeGrayBlocks({-2.0f, -3.0f, UiLayer::block}, container, levelResources)};
-    auto& rightGrayBlocks {CreateThreeGrayBlocks({2.0f, -3.0f, UiLayer::block}, container, levelResources)};
+    auto& greenBlocks = CreateTwoBlocks(greenBlocksInitialPosition, BlockColor::Green, container, pieceResources);
+    auto& leftGrayBlocks = CreateThreeGrayBlocks({-2.0f, -3.0f, UiLayer::block}, container, levelResources);
+    auto& rightGrayBlocks = CreateThreeGrayBlocks({2.0f, -3.0f, UiLayer::block}, container, levelResources);
     CreateThreeGrayBlocksWithGap({-1.5f, -4.0f, UiLayer::block}, container, levelResources);
     CreateThreeGrayBlocks({2.0f, -4.0f, UiLayer::block}, container, levelResources);
     
@@ -488,7 +473,7 @@ Pht::Animation& HowToPlayDialogView::CreateClearBlocksAnimation(Pht::SceneObject
     animationSystem.CreateAnimation(rightGrayBlocks, rightGrayBlocksKeyframes);
 
     if (childAnimations.mPlacePiece && handAnimation) {
-        auto& ghostPieces {CreateSceneObject()};
+        auto& ghostPieces = CreateSceneObject();
         container.AddChild(ghostPieces);
         
         CreateLPieceGhostPiece({-0.5f, -2.5f, UiLayer::block}, 90.0f, ghostPieces, levelResources);
@@ -565,9 +550,8 @@ Pht::Animation& HowToPlayDialogView::CreateClearBlocksAnimation(Pht::SceneObject
             }
         };
         
-        auto& handPhtAnimation {
-            animationSystem.CreateAnimation(handAnimation->GetSceneObject(), handAnimationKeyframes)
-        };
+        auto& handPhtAnimation =
+            animationSystem.CreateAnimation(handAnimation->GetSceneObject(), handAnimationKeyframes);
         handPhtAnimation.SetInterpolation(Pht::Interpolation::Cosine);
     }
 
@@ -580,23 +564,22 @@ Pht::Animation& HowToPlayDialogView::CreateBlocksAnimation(Pht::SceneObject& par
                                                            const LevelResources& levelResources,
                                                            HandAnimation& handAnimation,
                                                            float animationDuration) {
-    auto& container {CreateSceneObject()};
+    auto& container = CreateSceneObject();
     container.GetTransform().SetPosition({0.0f, 1.5f, 0.0f});
     container.GetTransform().SetScale(1.15f);
     parent.AddChild(container);
     
     CreateFieldQuad(container);
 
-    auto& animationSystem {mEngine.GetAnimationSystem()};
-    auto& rootAnimation {
-        animationSystem.CreateAnimation(container, {{.mTime = 0.0f}, {.mTime = animationDuration}})
-    };
+    auto& animationSystem = mEngine.GetAnimationSystem();
+    auto& rootAnimation =
+        animationSystem.CreateAnimation(container, {{.mTime = 0.0f}, {.mTime = animationDuration}});
     
     handAnimation.Init(container);
     
     Pht::Vec3 lPieceInitialPosition {-0.5f, 3.3f, UiLayer::block};
     
-    auto& lPiece {CreateLPiece(lPieceInitialPosition, container, pieceResources)};
+    auto& lPiece = CreateLPiece(lPieceInitialPosition, container, pieceResources);
     CreateTwoBlocks({2.5f, -2.0f, UiLayer::block}, BlockColor::Green, container, pieceResources);
     CreateThreeGrayBlocks({-2.0f, -3.0f, UiLayer::block}, container, levelResources);
     CreateThreeGrayBlocks({2.0f, -3.0f, UiLayer::block}, container, levelResources);
@@ -604,7 +587,7 @@ Pht::Animation& HowToPlayDialogView::CreateBlocksAnimation(Pht::SceneObject& par
     CreateThreeGrayBlocks({2.0f, -4.0f, UiLayer::block}, container, levelResources);
 
     if (childAnimations.mOtherMoves) {
-        auto& firstMovesSet {CreateSceneObject()};
+        auto& firstMovesSet = CreateSceneObject();
         container.AddChild(firstMovesSet);
         
         CreateLPieceGhostPiece({-2.5f, -1.5f, UiLayer::block}, 0.0f, firstMovesSet, levelResources);
@@ -619,7 +602,7 @@ Pht::Animation& HowToPlayDialogView::CreateBlocksAnimation(Pht::SceneObject& par
         };
         animationSystem.CreateAnimation(firstMovesSet, firstMovesSetKeyframes);
 
-        auto& secondMovesSet {CreateSceneObject()};
+        auto& secondMovesSet = CreateSceneObject();
         container.AddChild(secondMovesSet);
         
         CreateLPieceGhostPiece({-2.5f, -1.5f, UiLayer::block}, 270.0f, secondMovesSet, levelResources);
@@ -634,7 +617,7 @@ Pht::Animation& HowToPlayDialogView::CreateBlocksAnimation(Pht::SceneObject& par
         };
         animationSystem.CreateAnimation(secondMovesSet, secondMovesSetKeyframes);
         
-        auto& thirdMovesSet {CreateSceneObject()};
+        auto& thirdMovesSet = CreateSceneObject();
         container.AddChild(thirdMovesSet);
         
         CreateLPieceGhostPiece({-1.5f, -1.5f, UiLayer::block}, 270.0f, thirdMovesSet, levelResources);
@@ -697,7 +680,7 @@ Pht::Animation& HowToPlayDialogView::CreateBlocksAnimation(Pht::SceneObject& par
             {.mTime = 5.5f, .mPosition = lPieceInitialPosition},
             {.mTime = animationDuration}
         };
-        auto& lPieceAnimation {animationSystem.CreateAnimation(lPiece, lPieceAnimationKeyframes)};
+        auto& lPieceAnimation = animationSystem.CreateAnimation(lPiece, lPieceAnimationKeyframes);
         lPieceAnimation.SetInterpolation(Pht::Interpolation::None);
 
         Pht::Vec3 handInitialPosition {1.5f, -1.5f, UiLayer::root};
@@ -740,9 +723,8 @@ Pht::Animation& HowToPlayDialogView::CreateBlocksAnimation(Pht::SceneObject& par
             }
         };
         
-        auto& handPhtAnimation {
-            animationSystem.CreateAnimation(handAnimation.GetSceneObject(), handAnimationKeyframes)
-        };
+        auto& handPhtAnimation =
+            animationSystem.CreateAnimation(handAnimation.GetSceneObject(), handAnimationKeyframes);
         handPhtAnimation.SetInterpolation(Pht::Interpolation::Cosine);
     }
     
@@ -755,7 +737,7 @@ Pht::Animation& HowToPlayDialogView::CreateBlocksAnimation(Pht::SceneObject& par
             {.mTime = 5.2f, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}},
             {.mTime = animationDuration}
         };
-        auto& lPieceAnimation {animationSystem.CreateAnimation(lPiece, lPieceAnimationKeyframes)};
+        auto& lPieceAnimation = animationSystem.CreateAnimation(lPiece, lPieceAnimationKeyframes);
         lPieceAnimation.SetInterpolation(Pht::Interpolation::None);
 
         std::vector<Pht::Keyframe> handAnimationKeyframes {
@@ -805,25 +787,24 @@ Pht::Animation& HowToPlayDialogView::CreateMovePieceDownAnimation(Pht::SceneObje
                                                                   const PieceResources& pieceResources,
                                                                   const LevelResources& levelResources,
                                                                   HandAnimation& handAnimation) {
-    auto& container {CreateSceneObject()};
+    auto& container = CreateSceneObject();
     container.GetTransform().SetPosition({0.0f, 1.5f, 0.0f});
     container.GetTransform().SetScale(1.15f);
     parent.AddChild(container);
     
     CreateFieldQuad(container);
     
-    auto animationDuration {6.0f};
+    auto animationDuration = 6.0f;
 
-    auto& animationSystem {mEngine.GetAnimationSystem()};
-    auto& rootAnimation {
-        animationSystem.CreateAnimation(container, {{.mTime = 0.0f}, {.mTime = animationDuration}})
-    };
+    auto& animationSystem = mEngine.GetAnimationSystem();
+    auto& rootAnimation =
+        animationSystem.CreateAnimation(container, {{.mTime = 0.0f}, {.mTime = animationDuration}});
     
     handAnimation.Init(container);
     
     Pht::Vec3 lPieceInitialPosition {-0.5f, 3.0f, UiLayer::block};
     
-    auto& lPiece {CreateLPiece(lPieceInitialPosition, container, pieceResources)};
+    auto& lPiece = CreateLPiece(lPieceInitialPosition, container, pieceResources);
     CreateTwoBlocks({2.5f, -2.0f, UiLayer::block}, BlockColor::Green, container, pieceResources);
     CreateThreeGrayBlocks({-2.0f, -3.0f, UiLayer::block}, container, levelResources);
     CreateThreeGrayBlocks({2.0f, -3.0f, UiLayer::block}, container, levelResources);
@@ -837,7 +818,7 @@ Pht::Animation& HowToPlayDialogView::CreateMovePieceDownAnimation(Pht::SceneObje
         {.mTime = 2.4f, .mPosition = Pht::Vec3{-0.5f, 0.0f, UiLayer::block}},
         {.mTime = animationDuration}
     };
-    auto& lPieceAnimation {animationSystem.CreateAnimation(lPiece, lPieceAnimationKeyframes)};
+    auto& lPieceAnimation = animationSystem.CreateAnimation(lPiece, lPieceAnimationKeyframes);
     lPieceAnimation.SetInterpolation(Pht::Interpolation::None);
 
     Pht::Vec3 handInitialPosition {2.25f, 1.5f, UiLayer::root};
@@ -884,9 +865,8 @@ Pht::Animation& HowToPlayDialogView::CreateMovePieceDownAnimation(Pht::SceneObje
         }
     };
 
-    auto& handPhtAnimation {
-        animationSystem.CreateAnimation(handAnimation.GetSceneObject(), handAnimationKeyframes)
-    };
+    auto& handPhtAnimation =
+        animationSystem.CreateAnimation(handAnimation.GetSceneObject(), handAnimationKeyframes);
     handPhtAnimation.SetInterpolation(Pht::Interpolation::Cosine);
 
     return rootAnimation;
@@ -897,25 +877,24 @@ Pht::Animation& HowToPlayDialogView::CreateSwitchPieceAnimation(Pht::SceneObject
                                                                 const PieceResources& pieceResources,
                                                                 const LevelResources& levelResources,
                                                                 HandAnimation& handAnimation) {
-    auto& container {CreateSceneObject()};
+    auto& container = CreateSceneObject();
     container.GetTransform().SetPosition({0.0f, 2.5f, 0.0f});
     container.GetTransform().SetScale(1.0f);
     parent.AddChild(container);
     
     CreateFieldQuad(container);
     
-    auto animationDuration {6.0f};
+    auto animationDuration = 6.0f;
 
-    auto& animationSystem {mEngine.GetAnimationSystem()};
-    auto& rootAnimation {
-        animationSystem.CreateAnimation(container, {{.mTime = 0.0f}, {.mTime = animationDuration}})
-    };
+    auto& animationSystem = mEngine.GetAnimationSystem();
+    auto& rootAnimation =
+        animationSystem.CreateAnimation(container, {{.mTime = 0.0f}, {.mTime = animationDuration}});
     
     handAnimation.Init(container);
     
-    auto& iPiece {CreateIPiece({0.0f, 3.3f, UiLayer::block}, container, pieceResources)};
-    auto& dPiece {CreateDPiece({0.0f, 3.3f, UiLayer::block}, container, pieceResources)};
-    auto& lPiece {CreateLPiece({-0.5f, 3.3f, UiLayer::block}, container, pieceResources)};
+    auto& iPiece = CreateIPiece({0.0f, 3.3f, UiLayer::block}, container, pieceResources);
+    auto& dPiece = CreateDPiece({0.0f, 3.3f, UiLayer::block}, container, pieceResources);
+    auto& lPiece = CreateLPiece({-0.5f, 3.3f, UiLayer::block}, container, pieceResources);
     
     CreateTwoBlocks({2.5f, -2.0f, UiLayer::block}, BlockColor::Green, container, pieceResources);
     CreateThreeGrayBlocks({-2.0f, -3.0f, UiLayer::block}, container, levelResources);
@@ -923,9 +902,9 @@ Pht::Animation& HowToPlayDialogView::CreateSwitchPieceAnimation(Pht::SceneObject
     CreateThreeGrayBlocksWithGap({-1.5f, -4.0f, UiLayer::block}, container, levelResources);
     CreateThreeGrayBlocks({2.0f, -4.0f, UiLayer::block}, container, levelResources);
 
-    auto& gameHudRectangles {commonResources.GetGameHudRectangles()};
+    auto& gameHudRectangles = commonResources.GetGameHudRectangles();
     
-    auto& selectablePieces {CreateSceneObject()};
+    auto& selectablePieces = CreateSceneObject();
     selectablePieces.SetRenderable(&gameHudRectangles.GetSelectablePiecesRectangle());
     selectablePieces.GetTransform().SetPosition({2.0f, -5.775f, UiLayer::panel});
     selectablePieces.GetTransform().SetScale(0.71f);
@@ -934,18 +913,18 @@ Pht::Animation& HowToPlayDialogView::CreateSwitchPieceAnimation(Pht::SceneObject
     Pht::Vec3 slot1Pos {-1.95f, 0.0f, UiLayer::buttonText};
     Pht::Vec3 slot2Pos {0.05f, 0.0f, UiLayer::buttonText};
     Pht::Vec3 slot3Pos {2.4f, 0.0f, UiLayer::buttonText};
-    auto& dPreviewPiece {CreateDPreviewPiece(slot1Pos, selectablePieces, pieceResources)};
-    auto& iPreviewPiece {CreateIPreviewPiece(slot2Pos, selectablePieces, pieceResources)};
-    auto& lPreviewPiece {CreateLPreviewPiece(slot3Pos, selectablePieces, pieceResources)};
+    auto& dPreviewPiece = CreateDPreviewPiece(slot1Pos, selectablePieces, pieceResources);
+    auto& iPreviewPiece = CreateIPreviewPiece(slot2Pos, selectablePieces, pieceResources);
+    auto& lPreviewPiece = CreateLPreviewPiece(slot3Pos, selectablePieces, pieceResources);
 
-    auto& nextPieces {CreateSceneObject()};
+    auto& nextPieces = CreateSceneObject();
     nextPieces.SetRenderable(&gameHudRectangles.GetNextPiecesRectangle());
     nextPieces.GetTransform().SetPosition({-2.6f, -5.775f, UiLayer::panel});
     nextPieces.GetTransform().SetScale(0.71f);
     container.AddChild(nextPieces);
     
-    auto switch1Time {1.2f};
-    auto switch2Time {3.05f};
+    auto switch1Time = 1.2f;
+    auto switch2Time = 3.05f;
     
     std::vector<Pht::Keyframe> dPieceKeyframes {
         {.mTime = 0.0f, .mIsVisible = false},
@@ -978,9 +957,8 @@ Pht::Animation& HowToPlayDialogView::CreateSwitchPieceAnimation(Pht::SceneObject
         {.mTime = animationDuration - 0.2f, .mPosition = slot1Pos},
         {.mTime = animationDuration}
     };
-    auto& dPreviewPieceAnimation {
-        animationSystem.CreateAnimation(dPreviewPiece, dPreviewPieceKeyframes)
-    };
+    auto& dPreviewPieceAnimation =
+        animationSystem.CreateAnimation(dPreviewPiece, dPreviewPieceKeyframes);
     dPreviewPieceAnimation.SetInterpolation(Pht::Interpolation::None);
     
     std::vector<Pht::Keyframe> iPreviewPieceKeyframes {
@@ -990,9 +968,8 @@ Pht::Animation& HowToPlayDialogView::CreateSwitchPieceAnimation(Pht::SceneObject
         {.mTime = animationDuration - 0.2f, .mPosition = slot2Pos},
         {.mTime = animationDuration}
     };
-    auto& iPreviewPieceAnimation {
-        animationSystem.CreateAnimation(iPreviewPiece, iPreviewPieceKeyframes)
-    };
+    auto& iPreviewPieceAnimation =
+        animationSystem.CreateAnimation(iPreviewPiece, iPreviewPieceKeyframes);
     iPreviewPieceAnimation.SetInterpolation(Pht::Interpolation::None);
 
     std::vector<Pht::Keyframe> lPreviewPieceKeyframes {
@@ -1002,9 +979,8 @@ Pht::Animation& HowToPlayDialogView::CreateSwitchPieceAnimation(Pht::SceneObject
         {.mTime = animationDuration - 0.2f, .mPosition = slot3Pos},
         {.mTime = animationDuration}
     };
-    auto& lPreviewPieceAnimation {
-        animationSystem.CreateAnimation(lPreviewPiece, lPreviewPieceKeyframes)
-    };
+    auto& lPreviewPieceAnimation =
+        animationSystem.CreateAnimation(lPreviewPiece, lPreviewPieceKeyframes);
     lPreviewPieceAnimation.SetInterpolation(Pht::Interpolation::None);
 
     Pht::Vec3 handInitialPosition {2.5f, -4.7f, UiLayer::root};
@@ -1072,9 +1048,8 @@ Pht::Animation& HowToPlayDialogView::CreateSwitchPieceAnimation(Pht::SceneObject
         }
     };
     
-    auto& handPhtAnimation {
-        animationSystem.CreateAnimation(handAnimation.GetSceneObject(), handAnimationKeyframes)
-    };
+    auto& handPhtAnimation =
+        animationSystem.CreateAnimation(handAnimation.GetSceneObject(), handAnimationKeyframes);
     handPhtAnimation.SetInterpolation(Pht::Interpolation::Cosine);
 
     return rootAnimation;
@@ -1084,9 +1059,9 @@ void HowToPlayDialogView::CreateFieldQuad(Pht::SceneObject& parent) {
     Pht::Material fieldMaterial;
     fieldMaterial.SetOpacity(0.93f);
     
-    auto width {7.0f};
-    auto height {9.0f};
-    auto f {0.9f};
+    auto width = 7.0f;
+    auto height = 9.0f;
+    auto f = 0.9f;
     
     Pht::QuadMesh::Vertices vertices {
         {{-width / 2.0f, -height / 2.0f, 0.0f}, {0.3f * f, 0.3f * f, 0.752f * f, 1.0f}},
@@ -1095,9 +1070,8 @@ void HowToPlayDialogView::CreateFieldQuad(Pht::SceneObject& parent) {
         {{-width / 2.0f, height / 2.0f, 0.0f}, {0.81f * f, 0.225f * f, 0.425f * f, 1.0f}},
     };
 
-    auto& fieldQuad {
-        CreateSceneObject(Pht::QuadMesh {vertices}, fieldMaterial, mEngine.GetSceneManager())
-    };
+    auto& fieldQuad =
+        CreateSceneObject(Pht::QuadMesh {vertices}, fieldMaterial, mEngine.GetSceneManager());
     
     fieldQuad.GetTransform().SetPosition({0.0f, 0.0f, UiLayer::panel});
     parent.AddChild(fieldQuad);
@@ -1106,27 +1080,23 @@ void HowToPlayDialogView::CreateFieldQuad(Pht::SceneObject& parent) {
 Pht::SceneObject& HowToPlayDialogView::CreateLPiece(const Pht::Vec3& position,
                                                     Pht::SceneObject& parent,
                                                     const PieceResources& pieceResources) {
-    auto& lPiece {CreateSceneObject()};
+    auto& lPiece = CreateSceneObject();
     parent.AddChild(lPiece);
     
     lPiece.GetTransform().SetPosition(position);
     
-    auto& blockRenderable {
-        pieceResources.GetBlockRenderableObject(BlockKind::Full,
-                                                BlockColor::Yellow,
-                                                BlockBrightness::Normal)
-    };
+    auto& blockRenderable = pieceResources.GetBlockRenderableObject(BlockKind::Full,
+                                                                    BlockColor::Yellow,
+                                                                    BlockBrightness::Normal);
 
-    auto halfCellSize {0.5f};
+    auto halfCellSize = 0.5f;
     CreateBlock({-halfCellSize, halfCellSize, 0.0f}, blockRenderable, lPiece);
     CreateBlock({halfCellSize, -halfCellSize, 0.0f}, blockRenderable, lPiece);
     CreateBlock({halfCellSize, halfCellSize, 0.0f}, blockRenderable, lPiece);
     
-    auto& weldRenderable {
-        pieceResources.GetWeldRenderableObject(WeldRenderableKind::Normal,
-                                               BlockColor::Yellow,
-                                               BlockBrightness::Normal)
-    };
+    auto& weldRenderable = pieceResources.GetWeldRenderableObject(WeldRenderableKind::Normal,
+                                                                  BlockColor::Yellow,
+                                                                  BlockBrightness::Normal);
 
     CreateWeld({0.0f, halfCellSize, halfCellSize}, weldRenderable, 0.0f, lPiece);
     CreateWeld({halfCellSize, 0.0f, halfCellSize}, weldRenderable, 90.0f, lPiece);
@@ -1137,27 +1107,23 @@ Pht::SceneObject& HowToPlayDialogView::CreateLPiece(const Pht::Vec3& position,
 Pht::SceneObject& HowToPlayDialogView::CreateIPiece(const Pht::Vec3& position,
                                                     Pht::SceneObject& parent,
                                                     const PieceResources& pieceResources) {
-    auto& iPiece {CreateSceneObject()};
+    auto& iPiece = CreateSceneObject();
     parent.AddChild(iPiece);
     
     iPiece.GetTransform().SetPosition(position);
     
-    auto& blockRenderable {
-        pieceResources.GetBlockRenderableObject(BlockKind::Full,
-                                                BlockColor::Green,
-                                                BlockBrightness::Normal)
-    };
+    auto& blockRenderable = pieceResources.GetBlockRenderableObject(BlockKind::Full,
+                                                                    BlockColor::Green,
+                                                                    BlockBrightness::Normal);
 
-    auto halfCellSize {0.5f};
+    auto halfCellSize = 0.5f;
     CreateBlock({-halfCellSize * 2.0f, 0.0f, 0.0f}, blockRenderable, iPiece);
     CreateBlock({0.0f, 0.0f, 0.0f}, blockRenderable, iPiece);
     CreateBlock({halfCellSize * 2.0f, 0.0f, 0.0f}, blockRenderable, iPiece);
     
-    auto& weldRenderable {
-        pieceResources.GetWeldRenderableObject(WeldRenderableKind::Normal,
-                                               BlockColor::Green,
-                                               BlockBrightness::Normal)
-    };
+    auto& weldRenderable = pieceResources.GetWeldRenderableObject(WeldRenderableKind::Normal,
+                                                                  BlockColor::Green,
+                                                                  BlockBrightness::Normal);
 
     CreateWeld({-halfCellSize, 0.0f, halfCellSize}, weldRenderable, 0.0f, iPiece);
     CreateWeld({halfCellSize, 0.0f, halfCellSize}, weldRenderable, 0.0f, iPiece);
@@ -1168,18 +1134,16 @@ Pht::SceneObject& HowToPlayDialogView::CreateIPiece(const Pht::Vec3& position,
 Pht::SceneObject& HowToPlayDialogView::CreateDPiece(const Pht::Vec3& position,
                                                     Pht::SceneObject& parent,
                                                     const PieceResources& pieceResources) {
-    auto& dPiece {CreateSceneObject()};
+    auto& dPiece = CreateSceneObject();
     parent.AddChild(dPiece);
     
     dPiece.GetTransform().SetPosition(position);
     
-    auto& blockRenderable {
-        pieceResources.GetBlockRenderableObject(BlockKind::Full,
-                                                BlockColor::Red,
-                                                BlockBrightness::Normal)
-    };
+    auto& blockRenderable = pieceResources.GetBlockRenderableObject(BlockKind::Full,
+                                                                    BlockColor::Red,
+                                                                    BlockBrightness::Normal);
 
-    auto halfCellSize {0.5f};
+    auto halfCellSize = 0.5f;
     CreateBlock({-halfCellSize * 2.0f, halfCellSize, 0.0f}, blockRenderable, dPiece);
     CreateBlock({0.0f, halfCellSize, 0.0f}, blockRenderable, dPiece);
     CreateBlock({halfCellSize * 2.0f, halfCellSize, 0.0f}, blockRenderable, dPiece);
@@ -1187,11 +1151,9 @@ Pht::SceneObject& HowToPlayDialogView::CreateDPiece(const Pht::Vec3& position,
     CreateBlock({halfCellSize * 2.0f, -halfCellSize, 0.0f}, blockRenderable, dPiece);
 
 
-    auto& weldRenderable {
-        pieceResources.GetWeldRenderableObject(WeldRenderableKind::Normal,
-                                               BlockColor::Red,
-                                               BlockBrightness::Normal)
-    };
+    auto& weldRenderable = pieceResources.GetWeldRenderableObject(WeldRenderableKind::Normal,
+                                                                  BlockColor::Red,
+                                                                  BlockBrightness::Normal);
 
     CreateWeld({-halfCellSize, halfCellSize, halfCellSize}, weldRenderable, 0.0f, dPiece);
     CreateWeld({halfCellSize, halfCellSize, halfCellSize}, weldRenderable, 0.0f, dPiece);
@@ -1206,24 +1168,21 @@ Pht::SceneObject& HowToPlayDialogView::CreateTwoBlocks(const Pht::Vec3& position
                                                        BlockColor color,
                                                        Pht::SceneObject& parent,
                                                        const PieceResources& pieceResources) {
-    auto& blocks {CreateSceneObject()};
+    auto& blocks = CreateSceneObject();
     parent.AddChild(blocks);
     
     blocks.GetTransform().SetPosition(position);
     
-    auto& blockRenderable {
-        pieceResources.GetBlockRenderableObject(BlockKind::Full, color, BlockBrightness::Normal)
-    };
+    auto& blockRenderable =
+        pieceResources.GetBlockRenderableObject(BlockKind::Full, color, BlockBrightness::Normal);
 
-    auto halfCellSize {0.5f};
+    auto halfCellSize = 0.5f;
     CreateBlock({-halfCellSize, 0.0f, 0.0f}, blockRenderable, blocks);
     CreateBlock({halfCellSize, 0.0f, 0.0f}, blockRenderable, blocks);
     
-    auto& weldRenderable {
-        pieceResources.GetWeldRenderableObject(WeldRenderableKind::Normal,
-                                               color,
-                                               BlockBrightness::Normal)
-    };
+    auto& weldRenderable = pieceResources.GetWeldRenderableObject(WeldRenderableKind::Normal,
+                                                                  color,
+                                                                  BlockBrightness::Normal);
 
     CreateWeld({0.0f, 0.0f, halfCellSize}, weldRenderable, 0.0f, blocks);
     
@@ -1233,14 +1192,14 @@ Pht::SceneObject& HowToPlayDialogView::CreateTwoBlocks(const Pht::Vec3& position
 Pht::SceneObject& HowToPlayDialogView::CreateThreeGrayBlocks(const Pht::Vec3& position,
                                                              Pht::SceneObject& parent,
                                                              const LevelResources& levelResources) {
-    auto& blocks {CreateSceneObject()};
+    auto& blocks = CreateSceneObject();
     parent.AddChild(blocks);
     
     blocks.GetTransform().SetPosition(position);
     
-    auto& blockRenderable {levelResources.GetLevelBlockRenderable(BlockKind::Full)};
+    auto& blockRenderable = levelResources.GetLevelBlockRenderable(BlockKind::Full);
 
-    auto halfCellSize {0.5f};
+    auto halfCellSize = 0.5f;
     CreateBlock({-halfCellSize * 2.0f, 0.0f, 0.0f}, blockRenderable, blocks);
     CreateBlock({0.0f, 0.0f, 0.0f}, blockRenderable, blocks);
     CreateBlock({halfCellSize * 2.0f, 0.0f, 0.0f}, blockRenderable, blocks);
@@ -1252,14 +1211,14 @@ Pht::SceneObject&
 HowToPlayDialogView::CreateThreeGrayBlocksWithGap(const Pht::Vec3& position,
                                                   Pht::SceneObject& parent,
                                                   const LevelResources& levelResources) {
-    auto& blocks {CreateSceneObject()};
+    auto& blocks = CreateSceneObject();
     parent.AddChild(blocks);
     
     blocks.GetTransform().SetPosition(position);
     
-    auto& blockRenderable {levelResources.GetLevelBlockRenderable(BlockKind::Full)};
+    auto& blockRenderable = levelResources.GetLevelBlockRenderable(BlockKind::Full);
 
-    auto halfCellSize {0.5f};
+    auto halfCellSize = 0.5f;
     CreateBlock({-halfCellSize * 3.0f, 0.0f, 0.0f}, blockRenderable, blocks);
     CreateBlock({halfCellSize, 0.0f, 0.0f}, blockRenderable, blocks);
     CreateBlock({halfCellSize * 3.0f, 0.0f, 0.0f}, blockRenderable, blocks);
@@ -1270,21 +1229,19 @@ HowToPlayDialogView::CreateThreeGrayBlocksWithGap(const Pht::Vec3& position,
 Pht::SceneObject& HowToPlayDialogView::CreateLPreviewPiece(const Pht::Vec3& position,
                                                            Pht::SceneObject& parent,
                                                            const PieceResources& pieceResources) {
-    auto& lPiece {CreateSceneObject()};
+    auto& lPiece = CreateSceneObject();
     parent.AddChild(lPiece);
     
-    auto& transform {lPiece.GetTransform()};
+    auto& transform = lPiece.GetTransform();
     transform.SetPosition(position);
     transform.SetRotation({-30.0f, -30.0f, 0.0f});
     transform.SetScale(0.60f);
     
-    auto& blockRenderable {
-        pieceResources.GetBlockRenderableObject(BlockKind::Full,
-                                                BlockColor::Yellow,
-                                                BlockBrightness::Normal)
-    };
+    auto& blockRenderable = pieceResources.GetBlockRenderableObject(BlockKind::Full,
+                                                                    BlockColor::Yellow,
+                                                                    BlockBrightness::Normal);
 
-    auto halfCellSize {0.5f};
+    auto halfCellSize = 0.5f;
     CreateBlock({-halfCellSize, halfCellSize, 0.0f}, blockRenderable, lPiece);
     CreateBlock({halfCellSize, -halfCellSize, 0.0f}, blockRenderable, lPiece);
     CreateBlock({halfCellSize, halfCellSize, 0.0f}, blockRenderable, lPiece);
@@ -1295,21 +1252,19 @@ Pht::SceneObject& HowToPlayDialogView::CreateLPreviewPiece(const Pht::Vec3& posi
 Pht::SceneObject& HowToPlayDialogView::CreateDPreviewPiece(const Pht::Vec3& position,
                                                            Pht::SceneObject& parent,
                                                            const PieceResources& pieceResources) {
-    auto& dPiece {CreateSceneObject()};
+    auto& dPiece = CreateSceneObject();
     parent.AddChild(dPiece);
     
-    auto& transform {dPiece.GetTransform()};
+    auto& transform = dPiece.GetTransform();
     transform.SetPosition(position);
     transform.SetRotation({-30.0f, -30.0f, 0.0f});
     transform.SetScale(0.6f);
     
-    auto& blockRenderable {
-        pieceResources.GetBlockRenderableObject(BlockKind::Full,
-                                                BlockColor::Red,
-                                                BlockBrightness::Normal)
-    };
+    auto& blockRenderable = pieceResources.GetBlockRenderableObject(BlockKind::Full,
+                                                                    BlockColor::Red,
+                                                                    BlockBrightness::Normal);
 
-    auto halfCellSize {0.5f};
+    auto halfCellSize = 0.5f;
     CreateBlock({-halfCellSize * 2.0f, halfCellSize, 0.0f}, blockRenderable, dPiece);
     CreateBlock({0.0f, halfCellSize, 0.0f}, blockRenderable, dPiece);
     CreateBlock({halfCellSize * 2.0f, halfCellSize, 0.0f}, blockRenderable, dPiece);
@@ -1322,21 +1277,19 @@ Pht::SceneObject& HowToPlayDialogView::CreateDPreviewPiece(const Pht::Vec3& posi
 Pht::SceneObject& HowToPlayDialogView::CreateIPreviewPiece(const Pht::Vec3& position,
                                                            Pht::SceneObject& parent,
                                                            const PieceResources& pieceResources) {
-    auto& iPiece {CreateSceneObject()};
+    auto& iPiece = CreateSceneObject();
     parent.AddChild(iPiece);
     
-    auto& transform {iPiece.GetTransform()};
+    auto& transform = iPiece.GetTransform();
     transform.SetPosition(position);
     transform.SetRotation({-30.0f, -30.0f, 0.0f});
     transform.SetScale(0.6f);
     
-    auto& blockRenderable {
-        pieceResources.GetBlockRenderableObject(BlockKind::Full,
-                                                BlockColor::Green,
-                                                BlockBrightness::Normal)
-    };
+    auto& blockRenderable = pieceResources.GetBlockRenderableObject(BlockKind::Full,
+                                                                    BlockColor::Green,
+                                                                    BlockBrightness::Normal);
 
-    auto halfCellSize {0.5f};
+    auto halfCellSize = 0.5f;
     CreateBlock({-halfCellSize * 2.0f, 0.0f, 0.0f}, blockRenderable, iPiece);
     CreateBlock({0.0f, 0.0f, 0.0f}, blockRenderable, iPiece);
     CreateBlock({halfCellSize * 2.0f, 0.0f, 0.0f}, blockRenderable, iPiece);
@@ -1347,8 +1300,8 @@ Pht::SceneObject& HowToPlayDialogView::CreateIPreviewPiece(const Pht::Vec3& posi
 void HowToPlayDialogView::CreateBlock(const Pht::Vec3& position,
                                       Pht::RenderableObject& blockRenderable,
                                       Pht::SceneObject& parent) {
-    auto& block {CreateSceneObject()};
-    auto& transform {block.GetTransform()};
+    auto& block = CreateSceneObject();
+    auto& transform = block.GetTransform();
     transform.SetPosition(position);
     transform.SetScale(0.8f);
     block.SetRenderable(&blockRenderable);
@@ -1359,8 +1312,8 @@ void HowToPlayDialogView::CreateWeld(const Pht::Vec3& position,
                                      Pht::RenderableObject& weldRenderable,
                                      float rotation,
                                      Pht::SceneObject& parent) {
-    auto& weld {CreateSceneObject()};
-    auto& transform {weld.GetTransform()};
+    auto& weld = CreateSceneObject();
+    auto& transform = weld.GetTransform();
     transform.SetPosition(position);
     transform.SetScale(0.8f);
     transform.SetRotation({0.0f, 0.0f, rotation});
@@ -1372,16 +1325,16 @@ Pht::SceneObject& HowToPlayDialogView::CreateLPieceGhostPiece(const Pht::Vec3& p
                                                               float rotation,
                                                               Pht::SceneObject& parent,
                                                               const LevelResources& levelResources) {
-    auto& ghostPiece {CreateSceneObject()};
+    auto& ghostPiece = CreateSceneObject();
     parent.AddChild(ghostPiece);
     
-    auto& transform {ghostPiece.GetTransform()};
+    auto& transform = ghostPiece.GetTransform();
     transform.SetPosition(position);
     transform.SetScale(0.8f);
     transform.SetRotation({0.0f, 0.0f, rotation});
     
-    auto& pieceTypes {levelResources.GetPieceTypes()};
-    auto i {pieceTypes.find("L")};
+    auto& pieceTypes = levelResources.GetPieceTypes();
+    auto i = pieceTypes.find("L");
     if (i != std::end(pieceTypes)) {
         ghostPiece.SetRenderable(i->second->GetGhostPieceRenderable());
     }
@@ -1399,16 +1352,15 @@ void HowToPlayDialogView::CreateIcon(const std::string& filename,
     iconMaterial.SetOpacity(color.w);
     iconMaterial.SetAmbient(Pht::Color{color.x, color.y, color.z});
     
-    auto& iconSceneObject {
-        CreateSceneObject(Pht::QuadMesh {size.x, size.y}, iconMaterial, mEngine.GetSceneManager())
-    };
+    auto& iconSceneObject =
+        CreateSceneObject(Pht::QuadMesh {size.x, size.y}, iconMaterial, mEngine.GetSceneManager());
     
     iconSceneObject.GetTransform().SetPosition(position);
     parent.AddChild(iconSceneObject);
 }
 
 void HowToPlayDialogView::CreateSingleTapIcon(const Pht::Vec3& position, Pht::SceneObject& parent) {
-    auto& icon {CreateSceneObject()};
+    auto& icon = CreateSceneObject();
     icon.GetTransform().SetPosition(position);
     icon.GetTransform().SetScale(1.1f);
     parent.AddChild(icon);
@@ -1419,7 +1371,7 @@ void HowToPlayDialogView::CreateSingleTapIcon(const Pht::Vec3& position, Pht::Sc
 }
 
 void HowToPlayDialogView::CreateSwipeIcon(const Pht::Vec3& position, Pht::SceneObject& parent) {
-    auto& icon {CreateSceneObject()};
+    auto& icon = CreateSceneObject();
     icon.GetTransform().SetPosition(position);
     icon.GetTransform().SetScale(1.1f);
     parent.AddChild(icon);
@@ -1462,7 +1414,7 @@ void HowToPlayDialogView::SetPage(int pageIndex) {
     assert(pageIndex < mPages.size());
     mPageIndex = pageIndex;
     
-    auto& page {mPages[mPageIndex]};
+    auto& page = mPages[mPageIndex];
     page.mSceneObject.SetIsVisible(true);
     if (page.mAnimation) {
         page.mAnimation->Play();
@@ -1470,9 +1422,9 @@ void HowToPlayDialogView::SetPage(int pageIndex) {
 }
 
 void HowToPlayDialogView::Update() {
-    auto& page {mPages[mPageIndex]};
+    auto& page = mPages[mPageIndex];
     if (page.mAnimation) {
-        auto dt {mEngine.GetLastFrameSeconds()};
+        auto dt = mEngine.GetLastFrameSeconds();
         page.mAnimation->Update(dt);
     }
     

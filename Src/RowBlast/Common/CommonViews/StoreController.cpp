@@ -9,8 +9,8 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto fade {0.72f};
-    constexpr auto fadeTime {0.3f};
+    constexpr auto fade = 0.72f;
+    constexpr auto fadeTime = 0.3f;
     
     int ToExitCriteriaInCoins(TriggerProduct triggerProduct) {
         switch (triggerProduct) {
@@ -141,7 +141,7 @@ StoreController::Result StoreController::Update() {
 
 StoreController::Result StoreController::UpdateStoreMenu() {
     StoreController::Result result {Result::None};
-    auto menuControllerResult {mStoreMenuController.Update()};
+    auto menuControllerResult = mStoreMenuController.Update();
 
     switch (menuControllerResult.GetKind()) {
         case StoreMenuController::Result::None:
@@ -160,7 +160,7 @@ StoreController::Result StoreController::UpdateStoreMenu() {
 void StoreController::StartPurchase(ProductId productId) {
     mSpinningWheelEffect.Start();
     
-    auto& purchasingService {mUserServices.GetPurchasingService()};
+    auto& purchasingService = mUserServices.GetPurchasingService();
     purchasingService.StartPurchase(productId,
                                     mTriggerProduct,
                                     [this] (const GoldCoinProduct& product) {

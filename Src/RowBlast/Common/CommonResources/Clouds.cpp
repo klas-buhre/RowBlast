@@ -14,8 +14,8 @@
 using namespace RowBlast;
 
 namespace {
-    const auto averageCloudBrightness {0.9f};
-    const auto maxCloudBrightness {0.95f};
+    constexpr auto averageCloudBrightness = 0.9f;
+    constexpr auto maxCloudBrightness = 0.95f;
     
     const std::vector<std::string> textureFilenames {
         "cloud_A_512.png",
@@ -27,7 +27,7 @@ namespace {
     };
     
     int CalcNumClouds(const std::vector<CloudPathVolume>& volumes) {
-        auto result {0};
+        auto result = 0;
         
         for (auto& volume: volumes) {
             result += volume.mNumClouds;
@@ -72,7 +72,7 @@ namespace {
                               const Pht::Vec3& clusterPosition,
                               const Pht::Vec2& clusterSize,
                               const CloudPathVolume& volume) {
-        auto localCloudPosition {cloudPosition - clusterPosition};
+        auto localCloudPosition = cloudPosition - clusterPosition;
 
         if (localCloudPosition.y > clusterSize.y / 2.0f) {
             localCloudPosition.y = clusterSize.y / 2.0f;
@@ -80,11 +80,10 @@ namespace {
             localCloudPosition.y = -clusterSize.y / 2.0f;
         }
 
-        auto brightnessFactor {
+        auto brightnessFactor =
             (localCloudPosition.y + localCloudPosition.z) * 2.0f /
-            (clusterSize.y + volume.mSize.z)
-        };
-        auto brightness {averageCloudBrightness + brightnessFactor * 0.2f};
+            (clusterSize.y + volume.mSize.z);
+        auto brightness = averageCloudBrightness + brightnessFactor * 0.2f;
 
         if (brightness > maxCloudBrightness) {
             brightness = maxCloudBrightness;
@@ -106,11 +105,11 @@ Clouds::Clouds(Pht::IEngine& engine,
     
     mClouds.reserve(CalcNumClouds(mPathVolumes));
     
-    auto& sceneObject {scene.CreateSceneObject()};
+    auto& sceneObject = scene.CreateSceneObject();
     sceneObject.SetLayer(layerIndex);
     scene.GetRoot().AddChild(sceneObject);
     
-    auto seed {static_cast<unsigned>(std::chrono::system_clock::now().time_since_epoch().count())};
+    auto seed = static_cast<unsigned>(std::chrono::system_clock::now().time_since_epoch().count());
     std::default_random_engine randomGenerator {seed};
 
     for (auto& volume: mPathVolumes) {
@@ -118,47 +117,44 @@ Clouds::Clouds(Pht::IEngine& engine,
         std::normal_distribution<float> yDistribution {0.0, volume.mClusterSize.y / 4.0f};
         Pht::Vec3 clusterPosition;
         
-        for (auto i {0}; i < volume.mNumClouds; ++i) {
+        for (auto i = 0; i < volume.mNumClouds; ++i) {
             if (volume.mNumCloudsPerCluster.HasValue()) {
                 if (i % volume.mNumCloudsPerCluster.GetValue() == 0) {
                     clusterPosition = CalcRandomPositionInVolume(volume);
                 }
             }
             
-            auto cloudSizeRandPart {
+            auto cloudSizeRandPart =
                 volume.mCloudSizeRandPart > 0.0f ?
                 Pht::NormalizedRand() * volume.mCloudSizeRandPart - volume.mCloudSizeRandPart / 2.0f :
-                0.0f
-            };
+                0.0f;
             
             Pht::Vec2 cloudSize {
                 volume.mCloudSize.x + cloudSizeRandPart,
                 volume.mCloudSize.y + cloudSizeRandPart
             };
             
-            auto cloudPosition {
+            auto cloudPosition =
                 volume.mNumCloudsPerCluster.HasValue() ?
                     CalcCloudPosition(clusterPosition,
                                       volume,
                                       xDistribution,
                                       yDistribution,
                                       randomGenerator) :
-                    CalcRandomPositionInVolume(volume)
-            };
+                    CalcRandomPositionInVolume(volume);
             
-            auto cloudBrightness {
+            auto cloudBrightness =
                 volume.mNumCloudsPerCluster.HasValue() ?
                     CalcCloudBrightness(cloudPosition, clusterPosition, volume.mClusterSize, volume) :
-                    averageCloudBrightness
-            };
+                    averageCloudBrightness;
             
-            auto& textureFilename {textureFilenames[std::rand() % textureFilenames.size()]};
+            auto& textureFilename = textureFilenames[std::rand() % textureFilenames.size()];
             Pht::Material cloudMaterial {textureFilename, cloudBrightness, 0.0f, 0.0f, 0.0f};
             cloudMaterial.SetAmbient(color * cloudBrightness);
             cloudMaterial.SetBlend(Pht::Blend::Yes);
 
-            auto& cloudSceneObject = scene.CreateSceneObject(Pht::QuadMesh {cloudSize.x, cloudSize.y},
-                                                             cloudMaterial);
+            auto& cloudSceneObject =
+                scene.CreateSceneObject(Pht::QuadMesh {cloudSize.x, cloudSize.y}, cloudMaterial);
             sceneObject.AddChild(cloudSceneObject);
             cloudSceneObject.GetTransform().SetPosition(cloudPosition);
             
@@ -174,17 +170,16 @@ Clouds::Clouds(Pht::IEngine& engine,
 void Clouds::InitHazeLayers(const std::vector<HazeLayer>& hazeLayers,
                             Pht::Scene& scene,
                             int sceneLayerIndex) {
-    auto& sceneObject {scene.CreateSceneObject()};
+    auto& sceneObject = scene.CreateSceneObject();
     sceneObject.SetLayer(sceneLayerIndex);
     scene.GetRoot().AddChild(sceneObject);
 
     for (auto& hazeLayer: hazeLayers) {
-        auto& size {hazeLayer.mSize};
-        auto quarterYSize {size.y / 4.0f};
+        auto& size = hazeLayer.mSize;
+        auto quarterYSize = size.y / 4.0f;
         
-        auto midColor {
-            hazeLayer.mMidColor.HasValue() ? hazeLayer.mMidColor.GetValue() : hazeLayer.mLowerColor
-        };
+        auto midColor =
+            hazeLayer.mMidColor.HasValue() ? hazeLayer.mMidColor.GetValue() : hazeLayer.mLowerColor;
         
         Pht::QuadMesh::Vertices lowerVertices {
             {{-size.x / 2.0f, -quarterYSize, 0.0f}, hazeLayer.mLowerColor},
@@ -199,15 +194,14 @@ void Clouds::InitHazeLayers(const std::vector<HazeLayer>& hazeLayers,
             lowerMaterial.SetBlend(Pht::Blend::Yes);
         }
         
-        auto& lowerHazeSceneObject {
-            scene.CreateSceneObject(Pht::QuadMesh {lowerVertices}, lowerMaterial)
-        };
-        auto lowerPosition {hazeLayer.mPosition - Pht::Vec3{0.0f, quarterYSize, 0.0f}};
+        auto& lowerHazeSceneObject =
+            scene.CreateSceneObject(Pht::QuadMesh {lowerVertices}, lowerMaterial);
+        auto lowerPosition = hazeLayer.mPosition - Pht::Vec3{0.0f, quarterYSize, 0.0f};
         lowerHazeSceneObject.GetTransform().SetPosition(lowerPosition);
         lowerHazeSceneObject.SetLayer(sceneLayerIndex);
         sceneObject.AddChild(lowerHazeSceneObject);
         
-        auto scale {hazeLayer.mUpperScale};
+        auto scale = hazeLayer.mUpperScale;
         
         Pht::QuadMesh::Vertices upperVertices {
             {{-size.x / 2.0f, -quarterYSize * scale, 0.0f}, midColor},
@@ -222,10 +216,9 @@ void Clouds::InitHazeLayers(const std::vector<HazeLayer>& hazeLayers,
             upperMaterial.SetBlend(Pht::Blend::Yes);
         }
         
-        auto& upperHazeSceneObject {
-            scene.CreateSceneObject(Pht::QuadMesh {upperVertices}, upperMaterial)
-        };
-        auto upperPosition {hazeLayer.mPosition + Pht::Vec3{0.0f, quarterYSize * scale, 0.0f}};
+        auto& upperHazeSceneObject =
+            scene.CreateSceneObject(Pht::QuadMesh {upperVertices}, upperMaterial);
+        auto upperPosition = hazeLayer.mPosition + Pht::Vec3{0.0f, quarterYSize * scale, 0.0f};
         upperHazeSceneObject.GetTransform().SetPosition(upperPosition);
         upperHazeSceneObject.SetLayer(sceneLayerIndex);
         sceneObject.AddChild(upperHazeSceneObject);
@@ -233,16 +226,16 @@ void Clouds::InitHazeLayers(const std::vector<HazeLayer>& hazeLayers,
 }
 
 void Clouds::Update() {
-    auto dt {mEngine.GetLastFrameSeconds()};
+    auto dt = mEngine.GetLastFrameSeconds();
     
     for (auto& cloud: mClouds) {
-        auto& transform {cloud.mSceneObject.GetTransform()};
+        auto& transform = cloud.mSceneObject.GetTransform();
         transform.Translate(cloud.mVelocity * dt);
         
-        const auto& volume {cloud.mPathVolume};
-        auto rightLimit {volume.mPosition.x + volume.mSize.x / 2.0f};
-        auto leftLimit {volume.mPosition.x - volume.mSize.x / 2.0f};
-        auto position {cloud.mSceneObject.GetWorldSpacePosition()};
+        const auto& volume = cloud.mPathVolume;
+        auto rightLimit = volume.mPosition.x + volume.mSize.x / 2.0f;
+        auto leftLimit = volume.mPosition.x - volume.mSize.x / 2.0f;
+        auto position = cloud.mSceneObject.GetWorldSpacePosition();
         
         if (position.x > rightLimit) {
             transform.Translate({-volume.mSize.x, 0.0f, 0.0f});

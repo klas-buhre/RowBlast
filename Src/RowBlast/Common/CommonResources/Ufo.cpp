@@ -17,13 +17,13 @@ namespace {
 Ufo::Ufo(Pht::IEngine& engine, const CommonResources& commonResources, float scale) :
     mSceneObject {std::make_unique<Pht::SceneObject>()} {
 
-    auto& sceneManager {engine.GetSceneManager()};
+    auto& sceneManager = engine.GetSceneManager();
 
     Pht::Color ambient {0.78f, 0.78f, 0.78f};
     Pht::Color diffuse {0.78f, 0.78f, 0.78f};
     Pht::Color specular {1.0f, 1.0f, 1.0f};
-    const auto shininess {15.0f};
-    const auto reflectivity {0.84f};
+    const auto shininess = 15.0f;
+    const auto reflectivity = 0.84f;
     
     Pht::Material ufoMaterial {
         "ufo.jpg",
@@ -63,7 +63,7 @@ void Ufo::SetRotation(const Pht::Vec3& rotation) {
 }
 
 void Ufo::SetHoverTranslation(float hoverTranslation) {
-    auto& transform {mUfoSceneObject->GetTransform()};
+    auto& transform = mUfoSceneObject->GetTransform();
     transform.SetPosition(ufoOffset + Pht::Vec3{0.0f, hoverTranslation, 0.0f});
 }
 

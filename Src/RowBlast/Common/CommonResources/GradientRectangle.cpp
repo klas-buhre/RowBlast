@@ -37,50 +37,44 @@ Pht::SceneObject& RowBlast::CreateGradientRectangle(Pht::Scene& scene,
                                                     float rightQuadWidth,
                                                     const GradientRectangleColors& upperColors,
                                                     const GradientRectangleColors& lowerColors) {
-    auto& sceneObject {scene.CreateSceneObject()};
+    auto& sceneObject = scene.CreateSceneObject();
     parentObject.AddChild(sceneObject);
     
     Pht::Material material;
-    float midQuadWidth {size.x - leftQuadWidth - rightQuadWidth};
+    float midQuadWidth = size.x - leftQuadWidth - rightQuadWidth;
 
-    auto& midQuad {
-        CreateGradientQuad({midQuadWidth, size.y},
-                           tilt,
-                           upperColors.mMid,
-                           upperColors.mMid,
-                           lowerColors.mMid,
-                           lowerColors.mMid,
-                           material,
-                           scene)
-    };
+    auto& midQuad = CreateGradientQuad({midQuadWidth, size.y},
+                                       tilt,
+                                       upperColors.mMid,
+                                       upperColors.mMid,
+                                       lowerColors.mMid,
+                                       lowerColors.mMid,
+                                       material,
+                                       scene);
     midQuad.GetTransform().SetPosition({position.x, position.y, position.z});
     sceneObject.AddChild(midQuad);
     
-    auto& leftQuad {
-        CreateGradientQuad({leftQuadWidth, size.y},
-                           tilt,
-                           upperColors.mLeft,
-                           upperColors.mMid,
-                           lowerColors.mLeft,
-                           lowerColors.mMid,
-                           material,
-                           scene)
-    };
+    auto& leftQuad = CreateGradientQuad({leftQuadWidth, size.y},
+                                        tilt,
+                                        upperColors.mLeft,
+                                        upperColors.mMid,
+                                        lowerColors.mLeft,
+                                        lowerColors.mMid,
+                                        material,
+                                        scene);
     leftQuad.GetTransform().SetPosition({position.x - size.x / 2.0f + leftQuadWidth / 2.0f,
                                          position.y,
                                          position.z});
     sceneObject.AddChild(leftQuad);
     
-    auto& rightQuad {
-        CreateGradientQuad({rightQuadWidth, size.y},
-                           tilt,
-                           upperColors.mMid,
-                           upperColors.mRight,
-                           lowerColors.mMid,
-                           lowerColors.mRight,
-                           material,
-                           scene)
-    };
+    auto& rightQuad = CreateGradientQuad({rightQuadWidth, size.y},
+                                         tilt,
+                                         upperColors.mMid,
+                                         upperColors.mRight,
+                                         lowerColors.mMid,
+                                         lowerColors.mRight,
+                                         material,
+                                         scene);
     rightQuad.GetTransform().SetPosition({position.x + size.x / 2.0f - rightQuadWidth / 2.0f,
                                           position.y,
                                           position.z});

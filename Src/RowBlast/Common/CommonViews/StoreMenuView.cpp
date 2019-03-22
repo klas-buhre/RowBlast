@@ -18,9 +18,9 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto animationDuration {6.0f};
-    constexpr auto rotationAmplitude {17.5f};
-    constexpr auto coinPilesXAngle {30.0f};
+    constexpr auto animationDuration = 6.0f;
+    constexpr auto rotationAmplitude = 17.5f;
+    constexpr auto coinPilesXAngle = 30.0f;
 }
 
 StoreMenuView::StoreMenuView(Pht::IEngine& engine,
@@ -34,17 +34,17 @@ StoreMenuView::StoreMenuView(Pht::IEngine& engine,
     
     CreateRenderables(engine, commonResources);
 
-    auto& guiResources {commonResources.GetGuiResources()};
-    auto& menuWindow {guiResources.GetLargeDarkMenuWindow()};
+    auto& guiResources = commonResources.GetGuiResources();
+    auto& menuWindow = guiResources.GetLargeDarkMenuWindow();
     
-    auto menuWindowSceneObject {std::make_unique<Pht::SceneObject>(&menuWindow.GetRenderable())};
+    auto menuWindowSceneObject = std::make_unique<Pht::SceneObject>(&menuWindow.GetRenderable());
     menuWindowSceneObject->GetTransform().SetPosition({0.0f, 0.0f, UiLayer::background});
     AddSceneObject(std::move(menuWindowSceneObject));
 
-    auto windowSize {menuWindow.GetSize()};
+    auto windowSize = menuWindow.GetSize();
     SetSize(windowSize);
     
-    auto& largeTextProperties {guiResources.GetLargeWhiteTextProperties(zoom)};
+    auto& largeTextProperties = guiResources.GetLargeWhiteTextProperties(zoom);
     CreateText({-1.2f, 8.25f, UiLayer::text}, "SHOP", largeTextProperties);
     
     Pht::Vec3 closeButtonPosition {
@@ -65,9 +65,9 @@ StoreMenuView::StoreMenuView(Pht::IEngine& engine,
                                                 closeButtonInputSize,
                                                 closeButtonStyle);
 
-    auto& coin {CreateSceneObject()};
+    auto& coin = CreateSceneObject();
     coin.SetRenderable(mCoinRenderable.get());
-    auto& coinTransform {coin.GetTransform()};
+    auto& coinTransform = coin.GetTransform();
     coinTransform.SetPosition({-GetSize().x / 2.0f + 0.8f, 8.55f, UiLayer::root});
     coinTransform.SetRotation({0.0f, 40.0f, 0.0f});
     coinTransform.SetScale(0.7f);
@@ -84,14 +84,13 @@ StoreMenuView::StoreMenuView(Pht::IEngine& engine,
     
     Pht::Material lineMaterial {Pht::Color{0.6f, 0.8f, 1.0f}};
     lineMaterial.SetOpacity(0.3f);
-    auto& sceneManager {engine.GetSceneManager()};
-    auto& lineSceneObject {
-        CreateSceneObject(Pht::QuadMesh {GetSize().x - 0.6f, 0.06f}, lineMaterial, sceneManager)
-    };
+    auto& sceneManager = engine.GetSceneManager();
+    auto& lineSceneObject =
+        CreateSceneObject(Pht::QuadMesh {GetSize().x - 0.6f, 0.06f}, lineMaterial, sceneManager);
     lineSceneObject.GetTransform().SetPosition({0.0f, GetSize().y / 2.0f - 2.6f, UiLayer::textRectangle});
     GetRoot().AddChild(lineSceneObject);
     
-    auto productXPosition {windowSize.x / 4.0f - 0.125f};
+    auto productXPosition = windowSize.x / 4.0f - 0.125f;
     
     CreateProductSection({-productXPosition, 4.45f, UiLayer::root},
                          1.15f,
@@ -137,10 +136,10 @@ StoreMenuView::StoreMenuView(Pht::IEngine& engine,
 
 void StoreMenuView::CreateRenderables(Pht::IEngine& engine,
                                       const CommonResources& commonResources) {
-    auto& sceneManager {engine.GetSceneManager()};
-    auto& goldMaterial {commonResources.GetMaterials().GetGoldMaterial()};
-    auto& lightGoldMaterial {commonResources.GetMaterials().GetLightGoldMaterial()};
-    auto& lighterGoldMaterial {commonResources.GetMaterials().GetLighterGoldMaterial()};
+    auto& sceneManager = engine.GetSceneManager();
+    auto& goldMaterial = commonResources.GetMaterials().GetGoldMaterial();
+    auto& lightGoldMaterial = commonResources.GetMaterials().GetLightGoldMaterial();
+    auto& lighterGoldMaterial = commonResources.GetMaterials().GetLighterGoldMaterial();
     
     mCoinRenderable = sceneManager.CreateRenderableObject(Pht::ObjMesh {"coin_852.obj", 3.15f},
                                                           goldMaterial);
@@ -164,21 +163,21 @@ void StoreMenuView::CreateProductSection(const Pht::Vec3& position,
                                          Pht::IEngine& engine,
                                          const CommonResources& commonResources,
                                          PotentiallyZoomedScreen zoom) {
-    auto* product {mUserServices.GetPurchasingService().GetGoldCoinProduct(productId)};
+    auto* product = mUserServices.GetPurchasingService().GetGoldCoinProduct(productId);
     
     if (product == nullptr) {
         return;
     }
     
-    auto& guiResources {commonResources.GetGuiResources()};
+    auto& guiResources = commonResources.GetGuiResources();
     
-    auto& container {CreateSceneObject()};
+    auto& container = CreateSceneObject();
     container.GetTransform().SetPosition(position);
     GetRoot().AddChild(container);
     
-    auto productWidth {GetSize().x / 2.0f - 0.19f};
-    auto productHeight {5.6f};
-    auto& sceneManager {engine.GetSceneManager()};
+    auto productWidth = GetSize().x / 2.0f - 0.19f;
+    auto productHeight = 5.6f;
+    auto& sceneManager = engine.GetSceneManager();
 
     Pht::QuadMesh::Vertices panelVertices  {
         {{-productWidth / 2.0f, -productHeight / 2.0f, 0.0f}, {0.5f, 0.5f, 0.6f, 0.3f}},
@@ -189,9 +188,8 @@ void StoreMenuView::CreateProductSection(const Pht::Vec3& position,
 
     Pht::Material panelMaterial;
     panelMaterial.SetBlend(Pht::Blend::Yes);
-    auto& panelSceneObject {
-        CreateSceneObject(Pht::QuadMesh {panelVertices}, panelMaterial, sceneManager)
-    };
+    auto& panelSceneObject =
+        CreateSceneObject(Pht::QuadMesh {panelVertices}, panelMaterial, sceneManager);
     panelSceneObject.GetTransform().SetPosition({0.0f, 0.0f, UiLayer::panel});
     container.AddChild(panelSceneObject);
 
@@ -202,9 +200,9 @@ void StoreMenuView::CreateProductSection(const Pht::Vec3& position,
     CreateTwinklesEffect(engine, container, productSection, twinklesVolume);
     CreateCoinPilesAndStacks(container, productSection, scale);
 
-    auto& coin {CreateSceneObject()};
+    auto& coin = CreateSceneObject();
     coin.SetRenderable(mCoinRenderable.get());
-    auto& coinTransform {coin.GetTransform()};
+    auto& coinTransform = coin.GetTransform();
     coinTransform.SetPosition({-0.6f, -0.7f, UiLayer::root});
     coinTransform.SetRotation({0.0f, 40.0f, 0.0f});
     coinTransform.SetScale(0.7f);
@@ -219,14 +217,12 @@ void StoreMenuView::CreateProductSection(const Pht::Vec3& position,
     Pht::Vec2 buttonInputSize {78.0f, 43.0f};
     Pht::Vec3 buttonPosition {0.0f, -1.99f, UiLayer::textRectangle};
     
-    auto button {
-        std::make_unique<MenuButton>(engine,
-                                     *this,
-                                     container,
-                                     buttonPosition,
-                                     buttonInputSize,
-                                     buttonStyle)
-    };
+    auto button = std::make_unique<MenuButton>(engine,
+                                               *this,
+                                               container,
+                                               buttonPosition,
+                                               buttonInputSize,
+                                               buttonStyle);
     
     Pht::TextProperties textProperties {
         commonResources.GetHussarFontSize20(PotentiallyZoomedScreen::No),
@@ -250,13 +246,13 @@ void StoreMenuView::CreateProductSection(const Pht::Vec3& position,
 void StoreMenuView::CreateCoinPilesAndStacks(Pht::SceneObject& parentObject,
                                              ProductSection& productSection,
                                              float scale) {
-    auto& stationaryContainer {CreateSceneObject()};
-    auto& transform {stationaryContainer.GetTransform()};
+    auto& stationaryContainer = CreateSceneObject();
+    auto& transform = stationaryContainer.GetTransform();
     transform.SetPosition({0.0f, 0.7f, UiLayer::textRectangle});
     transform.SetRotation({coinPilesXAngle, 0.0f, 0.0f});
     parentObject.AddChild(stationaryContainer);
 
-    auto& container {CreateSceneObject()};
+    auto& container = CreateSceneObject();
     container.GetTransform().SetScale(scale);
     stationaryContainer.AddChild(container);
 
@@ -299,16 +295,16 @@ void StoreMenuView::CreateCoinsFor50CoinsProduct(Pht::SceneObject& parentObject)
 }
 
 void StoreMenuView::CreateCoinsFor100CoinsProduct(Pht::SceneObject& parentObject) {
-    auto& coinPile {CreateSceneObject()};
+    auto& coinPile = CreateSceneObject();
     coinPile.SetRenderable(mCoinPileRenderable.get());
     coinPile.GetTransform().SetScale(1.1f);
     parentObject.AddChild(coinPile);
 }
 
 void StoreMenuView::CreateCoinsFor250CoinsProduct(Pht::SceneObject& parentObject) {
-    auto& coinPile {CreateSceneObject()};
+    auto& coinPile = CreateSceneObject();
     coinPile.SetRenderable(mCoinPileRenderable.get());
-    auto& transform {coinPile.GetTransform()};
+    auto& transform = coinPile.GetTransform();
     transform.SetPosition({0.0f, 0.0f, 0.3f});
     transform.SetScale(1.1f);
     parentObject.AddChild(coinPile);
@@ -318,9 +314,9 @@ void StoreMenuView::CreateCoinsFor250CoinsProduct(Pht::SceneObject& parentObject
 }
 
 void StoreMenuView::CreateCoinsFor500CoinsProduct(Pht::SceneObject& parentObject) {
-    auto& coinPile {CreateSceneObject()};
+    auto& coinPile = CreateSceneObject();
     coinPile.SetRenderable(mCoinPileRenderable.get());
-    auto& transform {coinPile.GetTransform()};
+    auto& transform = coinPile.GetTransform();
     transform.SetPosition({0.0f, 0.0f, 0.3f});
     transform.SetScale(1.1f);
     parentObject.AddChild(coinPile);
@@ -333,9 +329,9 @@ void StoreMenuView::CreateCoinsFor500CoinsProduct(Pht::SceneObject& parentObject
 }
 
 void StoreMenuView::CreateCoin(const Pht::Vec3& position, Pht::SceneObject& parentObject) {
-    auto& coin {CreateSceneObject()};
+    auto& coin = CreateSceneObject();
     coin.SetRenderable(mLightCoinRenderable.get());
-    auto& transform {coin.GetTransform()};
+    auto& transform = coin.GetTransform();
     transform.SetPosition(position);
     transform.SetRotation({-90.0f, 0.0f, 0.0f});
     transform.SetScale(0.7f);
@@ -343,7 +339,7 @@ void StoreMenuView::CreateCoin(const Pht::Vec3& position, Pht::SceneObject& pare
 }
 
 void StoreMenuView::CreateShortCoinStack(const Pht::Vec3& position, Pht::SceneObject& parentObject) {
-    auto& coinStack {CreateSceneObject()};
+    auto& coinStack = CreateSceneObject();
     coinStack.SetRenderable(mShortCoinStackRenderable.get());
     coinStack.GetTransform().SetPosition(position);
     parentObject.AddChild(coinStack);
@@ -351,7 +347,7 @@ void StoreMenuView::CreateShortCoinStack(const Pht::Vec3& position, Pht::SceneOb
 }
 
 void StoreMenuView::CreateTallCoinStack(const Pht::Vec3& position, Pht::SceneObject& parentObject) {
-    auto& coinStack {CreateSceneObject()};
+    auto& coinStack = CreateSceneObject();
     coinStack.SetRenderable(mTallCoinStackRenderable.get());
     coinStack.GetTransform().SetPosition(position);
     parentObject.AddChild(coinStack);
@@ -359,7 +355,7 @@ void StoreMenuView::CreateTallCoinStack(const Pht::Vec3& position, Pht::SceneObj
 }
 
 void StoreMenuView::CreateTallerCoinStack(const Pht::Vec3& position, Pht::SceneObject& parentObject) {
-    auto& coinStack {CreateSceneObject()};
+    auto& coinStack = CreateSceneObject();
     coinStack.SetRenderable(mTallerCoinStackRenderable.get());
     coinStack.GetTransform().SetPosition(position);
     parentObject.AddChild(coinStack);
@@ -394,11 +390,11 @@ void StoreMenuView::CreateGlowEffect(Pht::IEngine& engine,
         .mGrowDuration = 0.1f
     };
     
-    auto& particleSystem {engine.GetParticleSystem()};
+    auto& particleSystem = engine.GetParticleSystem();
     productSection.mGlowEffect = particleSystem.CreateParticleEffectSceneObject(particleSettings,
                                                                                 particleEmitterSettings,
                                                                                 Pht::RenderMode::Triangles);
-    auto& material {productSection.mGlowEffect->GetRenderable()->GetMaterial()};
+    auto& material = productSection.mGlowEffect->GetRenderable()->GetMaterial();
     material.SetShaderType(Pht::ShaderType::ParticleNoAlphaTexture);
     
     productSection.mGlowEffect->GetTransform().SetPosition({0.0f, 0.9f, -1.49f});
@@ -431,7 +427,7 @@ void StoreMenuView::CreateTwinklesEffect(Pht::IEngine& engine,
         .mShrinkDuration = 0.4f
     };
     
-    auto& particleSystem {engine.GetParticleSystem()};
+    auto& particleSystem = engine.GetParticleSystem();
     productSection.mTwinklesEffect = particleSystem.CreateParticleEffectSceneObject(particleSettings,
                                                                                     particleEmitterSettings,
                                                                                     Pht::RenderMode::Triangles);
@@ -456,7 +452,7 @@ void StoreMenuView::Update() {
 }
 
 void StoreMenuView::UpdateAnimations() {
-    auto dt {mEngine.GetLastFrameSeconds()};
+    auto dt = mEngine.GetLastFrameSeconds();
     mAnimationTime += dt;
     
     if (mAnimationTime > animationDuration) {
@@ -464,19 +460,17 @@ void StoreMenuView::UpdateAnimations() {
     }
     
     for (auto& productSection: mProductSections) {
-        auto t {mAnimationTime * 2.0f * 3.1415f / animationDuration};
-        auto yAngle {rotationAmplitude * sin(t)};
+        auto t = mAnimationTime * 2.0f * 3.1415f / animationDuration;
+        auto yAngle = rotationAmplitude * sin(t);
         
         productSection.mCoinPilesAndStacks->GetTransform().SetRotation({0.0f, yAngle, 0.0f});
-
         productSection.mGlowEffect->GetComponent<Pht::ParticleEffect>()->Update(dt);
         productSection.mTwinklesEffect->GetComponent<Pht::ParticleEffect>()->Update(dt);
     }
 }
 
 void StoreMenuView::UpdateCoinBalanceText() {
-    auto coinBalance {mUserServices.GetPurchasingService().GetCoinBalance()};
-    
+    auto coinBalance = mUserServices.GetPurchasingService().GetCoinBalance();
     if (coinBalance != mCoinBalance) {
         mCoinBalanceText->GetText() = std::to_string(coinBalance);
         mCoinBalance = coinBalance;

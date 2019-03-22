@@ -54,7 +54,7 @@ namespace {
 
 void RenderQueue::Init(const SceneObject& rootSceneObject) {
     mRootSceneObject = &rootSceneObject;
-    auto numSceneObjects {CalcNumSceneObjects(rootSceneObject)};
+    auto numSceneObjects = CalcNumSceneObjects(rootSceneObject);
     mQueue.resize(numSceneObjects);
 }
 
@@ -113,7 +113,7 @@ void RenderQueue::CalculateDistances(const Mat4& viewMatrix, DistanceFunction di
     // Since the matrix is row-major it has to be transposed in order to multiply with the vector.
     auto transposedViewMatrix = viewMatrix.Transposed();
     
-    for (auto i {0}; i < mSize; ++i) {
+    for (auto i = 0; i < mSize; ++i) {
         auto& renderEntry = mQueue[i];
         auto sceneObjectPos = renderEntry.mSceneObject->GetWorldSpacePosition();
         
