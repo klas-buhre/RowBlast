@@ -47,7 +47,7 @@ void ProgressService::CompleteLevel(int levelId, int numStars) {
     assert(levelId > 0);
     assert(numStars > 0 && numStars <= 3);
     
-    auto progress {GetProgress()};
+    auto progress = GetProgress();
     if (levelId == progress) {
         mNumStars[progress - 1] = numStars;
         mNumStars.push_back(0);
@@ -79,7 +79,7 @@ int ProgressService::GetProgress() const {
 
 void ProgressService::SaveState() {
     rapidjson::Document document;
-    auto& allocator {document.GetAllocator()};
+    auto& allocator = document.GetAllocator();
     document.SetObject();
     
     Pht::Json::AddInt(document, currentLevelMember, mCurrentLevel, allocator);
@@ -110,7 +110,7 @@ bool ProgressService::LoadState() {
     
     assert(document.HasMember(numStarsMember.c_str()));
     
-    const auto& numStarsArray {document[numStarsMember.c_str()]};
+    const auto& numStarsArray = document[numStarsMember.c_str()];
     assert(numStarsArray.IsArray());
     
     for (const auto& numStarsForLevel: numStarsArray.GetArray()) {

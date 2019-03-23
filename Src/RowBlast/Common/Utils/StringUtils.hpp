@@ -16,7 +16,7 @@ namespace RowBlast {
             assert(a.size() >= aOffset + numChars);
             assert(b.size() >= numChars);
             
-            for (auto i {0}; i < numChars; ++i) {
+            for (auto i = 0; i < numChars; ++i) {
                 a[i + aOffset] = b[i];
             }
         }

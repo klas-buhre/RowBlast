@@ -22,19 +22,19 @@ namespace {
     const Pht::Vec4 borderColor {0.3f, 0.6f, 1.0f, 1.0};
     const Pht::Vec4 innerBorderColor {0.2f, 0.35f, 0.5f, 1.0};
     const Pht::Vec4 darkerBlueColor {0.04f, 0.07f, 0.2f, 1.0};
-    constexpr auto xBorder {0.45f};
-    constexpr auto darkBorderThickness {0.09f};
-    constexpr auto outerCornerRadius {0.29f};
-    constexpr auto largeCaptionBarHeight {3.0f};
-    constexpr auto smallCaptionBarHeight {2.5f};
-    constexpr auto squareSide {0.5f};
+    constexpr auto xBorder = 0.45f;
+    constexpr auto darkBorderThickness = 0.09f;
+    constexpr auto outerCornerRadius = 0.29f;
+    constexpr auto largeCaptionBarHeight = 3.0f;
+    constexpr auto smallCaptionBarHeight = 2.5f;
+    constexpr auto squareSide = 0.5f;
     
     Pht::Vec2 CalcSize(MenuWindow::Size size,
                        MenuWindow::Style style,
                        const Pht::Vec2& frustumSize) {
         switch (style) {
             case MenuWindow::Style::Bright: {
-                auto sizeX {std::min(frustumSize.x - xBorder * 2.0f, 13.5f - xBorder * 2.0f)};
+                auto sizeX = std::min(frustumSize.x - xBorder * 2.0f, 13.5f - xBorder * 2.0f);
                 switch (size) {
                     case MenuWindow::Size::Large:
                         return {sizeX, 22.4f};
@@ -48,7 +48,7 @@ namespace {
                 break;
             }
             case MenuWindow::Style::Dark: {
-                auto sizeX {std::min(frustumSize.x - xBorder * 2.0f, 14.0f - xBorder * 2.0f)};
+                auto sizeX = std::min(frustumSize.x - xBorder * 2.0f, 14.0f - xBorder * 2.0f);
                 switch (size) {
                     case MenuWindow::Size::Large:
                         return {sizeX, 20.0f};
@@ -71,12 +71,12 @@ MenuWindow::MenuWindow(Pht::IEngine& engine,
                        const CommonResources& commonResources,
                        Size size,
                        Style style) {
-    auto& renderer {engine.GetRenderer()};
-    auto& renderBufferSize {renderer.GetRenderBufferSize()};
-    auto& frustumSize {commonResources.GetHudFrustumSizePotentiallyZoomedScreen()};
+    auto& renderer = engine.GetRenderer();
+    auto& renderBufferSize = renderer.GetRenderBufferSize();
+    auto& frustumSize = commonResources.GetHudFrustumSizePotentiallyZoomedScreen();
 
-    auto xScaleFactor {static_cast<float>(renderBufferSize.x) / static_cast<float>(frustumSize.x)};
-    auto yScaleFactor {static_cast<float>(renderBufferSize.y) / static_cast<float>(frustumSize.y)};
+    auto xScaleFactor = static_cast<float>(renderBufferSize.x) / static_cast<float>(frustumSize.x);
+    auto yScaleFactor = static_cast<float>(renderBufferSize.y) / static_cast<float>(frustumSize.y);
     
     mSize = CalcSize(size, style, frustumSize);
     
@@ -85,14 +85,13 @@ MenuWindow::MenuWindow(Pht::IEngine& engine,
         static_cast<int>(mSize.y * yScaleFactor)
     };
     
-    auto rasterizer {std::make_unique<Pht::SoftwareRasterizer>(mSize, imageSize)};
+    auto rasterizer = std::make_unique<Pht::SoftwareRasterizer>(mSize, imageSize);
 
     switch (style) {
         case Style::Bright: {
             FillStencilBuffer(*rasterizer, outerCornerRadius, 0.0f);
-            auto captionBarHeight {
-                size == Size::Large ? largeCaptionBarHeight : smallCaptionBarHeight
-            };
+            auto captionBarHeight =
+                size == Size::Large ? largeCaptionBarHeight : smallCaptionBarHeight;
             DrawBrightCaptionBar(*rasterizer, captionBarHeight);
             DrawBrightMainArea(*rasterizer, captionBarHeight);
             break;
@@ -106,7 +105,7 @@ MenuWindow::MenuWindow(Pht::IEngine& engine,
             break;
     }
 
-    auto image {rasterizer->ProduceImage()};
+    auto image = rasterizer->ProduceImage();
     Pht::Material imageMaterial {*image, Pht::GenerateMipmap::Yes};
     imageMaterial.SetBlend(Pht::Blend::Yes);
     
@@ -114,7 +113,7 @@ MenuWindow::MenuWindow(Pht::IEngine& engine,
         imageMaterial.SetOpacity(0.95f);
     }
 
-    auto& sceneManager {engine.GetSceneManager()};
+    auto& sceneManager = engine.GetSceneManager();
     mRenderableObject = sceneManager.CreateRenderableObject(Pht::QuadMesh {mSize.x, mSize.y},
                                                             imageMaterial);
 }
@@ -162,15 +161,15 @@ void MenuWindow::DrawBrightCaptionBar(Pht::SoftwareRasterizer& rasterizer, float
     Pht::Vec2 upperRight1 {mSize.x, mSize.y};
     rasterizer.DrawGradientRectangle(upperRight1, lowerLeft1, rectangleColors, Pht::DrawOver::Yes);
     
-    auto xStart {-squareSide / 2.0f};
+    auto xStart = -squareSide / 2.0f;
     
-    for (auto y {mSize.y - captionBarHeight + squareSide / 2.0f};
+    for (auto y = mSize.y - captionBarHeight + squareSide / 2.0f;
          y < mSize.y + squareSide;
          y += squareSide) {
         
         xStart -= squareSide;
         
-        for (auto x {xStart}; x < mSize.x + squareSide; x += squareSide * 2.0f) {
+        for (auto x = xStart; x < mSize.x + squareSide; x += squareSide * 2.0f) {
             Pht::Vec2 lowerLeft {x - squareSide / 2.0f, y -  squareSide / 2.0f};
             Pht::Vec2 upperRight {x + squareSide / 2.0f, y +  squareSide / 2.0f};
             rasterizer.DrawRectangle(upperRight, lowerLeft, lightBlueColor, Pht::DrawOver::Yes);
@@ -184,15 +183,15 @@ void MenuWindow::DrawBrightMainArea(Pht::SoftwareRasterizer& rasterizer, float c
     Pht::Vec2 upperRight1 {mSize.x, mSize.y - captionBarHeight};
     rasterizer.DrawGradientRectangle(upperRight1, lowerLeft1, rectangleColors, Pht::DrawOver::Yes);
     
-    auto xStart {-squareSide - squareSide / 2.0f};
+    auto xStart = -squareSide - squareSide / 2.0f;
     
-    for (auto y {mSize.y - captionBarHeight - squareSide / 2.0f};
+    for (auto y = mSize.y - captionBarHeight - squareSide / 2.0f;
          y > -squareSide;
          y -= squareSide) {
 
         xStart -= squareSide;
         
-        for (auto x {xStart}; x < mSize.x + squareSide; x += squareSide * 2.0f) {
+        for (auto x = xStart; x < mSize.x + squareSide; x += squareSide * 2.0f) {
             Pht::Vec2 lowerLeft {x - squareSide / 2.0f, y -  squareSide / 2.0f};
             Pht::Vec2 upperRight {x + squareSide / 2.0f, y +  squareSide / 2.0f};
             rasterizer.DrawRectangle(upperRight, lowerLeft, grayColor, Pht::DrawOver::Yes);

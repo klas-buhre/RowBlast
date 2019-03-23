@@ -10,8 +10,8 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto transactionTimeout {2.0f};
-    constexpr auto maxCoinBalance {99500};
+    constexpr auto transactionTimeout = 2.0f;
+    constexpr auto maxCoinBalance = 99500;
     const std::string filename {"purchasing.dat"};
     const std::string coinBalanceMember {"coinBalance"};
     
@@ -126,7 +126,7 @@ void PurchasingService::OnPurchaseSucceeded() {
         ToCartType(mTransaction.mTriggerProduct)
     };
     
-    auto& analytics {mEngine.GetAnalytics()};
+    auto& analytics = mEngine.GetAnalytics();
     analytics.AddEvent(businessAnalyticsEvent);
     
     Pht::ResourceAnalyticsEvent resourceAnalyticsEvent {
@@ -155,7 +155,7 @@ void PurchasingService::StartPurchase(ProductId productId,
                                       TriggerProduct triggerProduct,
                                       const std::function<void(const GoldCoinProduct&)>& onPurchaseSucceeded,
                                       const std::function<void(PurchaseFailureReason)>& onPurchaseFailed) {
-    auto* product {GetGoldCoinProduct(productId)};
+    auto* product = GetGoldCoinProduct(productId);
     if (product == nullptr || mState != State::Idle || mCoinBalance >= maxCoinBalance) {
         mState = State::PurchaseFailure;
     } else {
@@ -180,7 +180,7 @@ const GoldCoinProduct* PurchasingService::GetGoldCoinProduct(ProductId productId
 }
 
 void PurchasingService::WithdrawCoins(CoinWithdrawReason coinWithdrawReason) {
-    auto numCoinsToWithdraw {CalcNumCoinsToWithdraw(coinWithdrawReason)};
+    auto numCoinsToWithdraw = CalcNumCoinsToWithdraw(coinWithdrawReason);
     
     mCoinBalance -= numCoinsToWithdraw;
     
@@ -206,7 +206,7 @@ bool PurchasingService::CanAfford(int priceInCoins) const {
 
 void PurchasingService::SaveState() {
     rapidjson::Document document;
-    auto& allocator {document.GetAllocator()};
+    auto& allocator = document.GetAllocator();
     document.SetObject();
     
     Pht::Json::AddInt(document, coinBalanceMember, mCoinBalance, allocator);

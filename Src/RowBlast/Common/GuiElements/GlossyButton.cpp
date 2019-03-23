@@ -196,7 +196,7 @@ namespace {
     void DrawShadedArea(Pht::SoftwareRasterizer& rasterizer,
                         ButtonSize buttonSize,
                         const ButtonColors& buttonColors) {
-        auto size {GetSize(buttonSize)};
+        auto size = GetSize(buttonSize);
         
         FillStencilBuffer(rasterizer,
                           size,
@@ -213,7 +213,7 @@ namespace {
     void DrawGlossyArea(Pht::SoftwareRasterizer& rasterizer,
                         ButtonSize buttonSize,
                         const ButtonColors& buttonColors) {
-        auto size {GetSize(buttonSize)};
+        auto size = GetSize(buttonSize);
         
         FillStencilBuffer(rasterizer,
                           size,
@@ -230,9 +230,9 @@ namespace {
     void DrawGradientArea(Pht::SoftwareRasterizer& rasterizer,
                           ButtonSize buttonSize,
                           const ButtonColors& buttonColors) {
-        auto size {GetSize(buttonSize)};
-        auto shadedAreaHeight {GetShadedAreaHeight(buttonSize)};
-        auto glossyAreaHeight {GetGlossyAreaHeight(buttonSize)};
+        auto size = GetSize(buttonSize);
+        auto shadedAreaHeight = GetShadedAreaHeight(buttonSize);
+        auto glossyAreaHeight = GetGlossyAreaHeight(buttonSize);
         
         FillStencilBuffer(rasterizer,
                           size,
@@ -253,7 +253,7 @@ namespace {
     void DrawButton(Pht::SoftwareRasterizer& rasterizer,
                     ButtonSize buttonSize,
                     ButtonColor buttonColor) {
-        auto buttonColors {GetButtonColors(buttonColor)};
+        auto buttonColors = GetButtonColors(buttonColor);
         
         DrawShadedArea(rasterizer, buttonSize, buttonColors);
         DrawGlossyArea(rasterizer, buttonSize, buttonColors);
@@ -267,31 +267,30 @@ RowBlast::CreateGlossyButton(Pht::IEngine& engine,
                              ButtonSize size,
                              ButtonColor color,
                              PotentiallyZoomedScreen potentiallyZoomed) {
-    auto& renderer {engine.GetRenderer()};
-    auto& renderBufferSize {renderer.GetRenderBufferSize()};
+    auto& renderer = engine.GetRenderer();
+    auto& renderBufferSize = renderer.GetRenderBufferSize();
     
-    auto& frustumSize {
+    auto& frustumSize =
         potentiallyZoomed == PotentiallyZoomedScreen::Yes ?
-        commonResources.GetHudFrustumSizePotentiallyZoomedScreen() : renderer.GetHudFrustumSize()
-    };
+        commonResources.GetHudFrustumSizePotentiallyZoomedScreen() : renderer.GetHudFrustumSize();
     
-    auto xScaleFactor {static_cast<float>(renderBufferSize.x) / static_cast<float>(frustumSize.x)};
-    auto yScaleFactor {static_cast<float>(renderBufferSize.y) / static_cast<float>(frustumSize.y)};
-    auto coordinateSystemSize {GetSize(size)};
+    auto xScaleFactor = static_cast<float>(renderBufferSize.x) / static_cast<float>(frustumSize.x);
+    auto yScaleFactor = static_cast<float>(renderBufferSize.y) / static_cast<float>(frustumSize.y);
+    auto coordinateSystemSize = GetSize(size);
 
     Pht::IVec2 imageSize {
         static_cast<int>(coordinateSystemSize.x * xScaleFactor),
         static_cast<int>(coordinateSystemSize.y * yScaleFactor)
     };
     
-    auto rasterizer {std::make_unique<Pht::SoftwareRasterizer>(coordinateSystemSize, imageSize)};
+    auto rasterizer = std::make_unique<Pht::SoftwareRasterizer>(coordinateSystemSize, imageSize);
 
     DrawButton(*rasterizer, size, color);
 
-    auto image {rasterizer->ProduceImage()};
+    auto image = rasterizer->ProduceImage();
     Pht::Material imageMaterial {*image, Pht::GenerateMipmap::No};
     imageMaterial.SetBlend(Pht::Blend::Yes);
-    auto& sceneManager {engine.GetSceneManager()};
+    auto& sceneManager = engine.GetSceneManager();
     return sceneManager.CreateRenderableObject(Pht::QuadMesh {coordinateSystemSize.x, coordinateSystemSize.y},
                                                imageMaterial);
 }

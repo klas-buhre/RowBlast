@@ -14,10 +14,10 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto circleRadius {0.87f};
-    constexpr auto width {0.072f};
-    constexpr auto padding {0.01f};
-    constexpr auto crossSize {0.55f};
+    constexpr auto circleRadius = 0.87f;
+    constexpr auto width = 0.072f;
+    constexpr auto padding = 0.01f;
+    constexpr auto crossSize = 0.55f;
     
     void DrawButton(Pht::SoftwareRasterizer& rasterizer) {
         Pht::Vec4 fillColor {0.27f, 0.57f, 1.0f, 0.27f};
@@ -33,7 +33,7 @@ namespace {
                               whiteColor,
                               Pht::DrawOver::Yes);
 
-        auto quarterWidth {width / 4.0f};
+        auto quarterWidth = width / 4.0f;
         
         Pht::Vec2 lowerLeft {
             circleRadius - crossSize / 2.0f + quarterWidth,
@@ -73,16 +73,15 @@ std::unique_ptr<Pht::RenderableObject>
 RowBlast::CreateCloseButton(Pht::IEngine& engine,
                             const CommonResources& commonResources,
                             PotentiallyZoomedScreen potentiallyZoomed) {
-    auto& renderer {engine.GetRenderer()};
-    auto& renderBufferSize {renderer.GetRenderBufferSize()};
+    auto& renderer = engine.GetRenderer();
+    auto& renderBufferSize = renderer.GetRenderBufferSize();
     
-    auto& frustumSize {
+    auto& frustumSize =
         potentiallyZoomed == PotentiallyZoomedScreen::Yes ?
-        commonResources.GetHudFrustumSizePotentiallyZoomedScreen() : renderer.GetHudFrustumSize()
-    };
+        commonResources.GetHudFrustumSizePotentiallyZoomedScreen() : renderer.GetHudFrustumSize();
     
-    auto xScaleFactor {static_cast<float>(renderBufferSize.x) / static_cast<float>(frustumSize.x)};
-    auto yScaleFactor {static_cast<float>(renderBufferSize.y) / static_cast<float>(frustumSize.y)};
+    auto xScaleFactor = static_cast<float>(renderBufferSize.x) / static_cast<float>(frustumSize.x);
+    auto yScaleFactor = static_cast<float>(renderBufferSize.y) / static_cast<float>(frustumSize.y);
 
     Pht::Vec2 coordinateSystemSize {circleRadius * 2.0f, circleRadius * 2.0f};
 
@@ -91,14 +90,14 @@ RowBlast::CreateCloseButton(Pht::IEngine& engine,
         static_cast<int>(coordinateSystemSize.y * yScaleFactor) * 3
     };
     
-    auto rasterizer {std::make_unique<Pht::SoftwareRasterizer>(coordinateSystemSize, imageSize)};
+    auto rasterizer = std::make_unique<Pht::SoftwareRasterizer>(coordinateSystemSize, imageSize);
 
     DrawButton(*rasterizer);
 
-    auto image {rasterizer->ProduceImage()};
+    auto image = rasterizer->ProduceImage();
     Pht::Material imageMaterial {*image, Pht::GenerateMipmap::Yes};
     imageMaterial.SetBlend(Pht::Blend::Yes);
-    auto& sceneManager {engine.GetSceneManager()};
+    auto& sceneManager = engine.GetSceneManager();
     return sceneManager.CreateRenderableObject(Pht::QuadMesh {coordinateSystemSize.x, coordinateSystemSize.y},
                                                imageMaterial);
 }

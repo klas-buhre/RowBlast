@@ -15,7 +15,7 @@
 using namespace RowBlast;
 
 namespace {
-    const auto slideTime {0.22f};
+    constexpr auto slideTime = 0.22f;
     const Pht::Vec2 centerPosition {0.0f, 0.0f};
     
     Pht::StaticVector<Pht::Vec2, 20> slidePoints {
@@ -52,7 +52,7 @@ void SlidingMenuAnimation::SetUp(UpdateFade updateFade,
     mUpdatePosition = updatePosition;
     mSlideInDirection = slideInDirection;
     
-    auto& frustumSize {mEngine.GetRenderer().GetHudFrustumSize()};
+    auto& frustumSize = mEngine.GetRenderer().GetHudFrustumSize();
     
     switch (mSlideInDirection) {
         case SlideDirection::Right:
@@ -101,7 +101,7 @@ void SlidingMenuAnimation::StartSlideOut(UpdateFade updateFade,
                                          SlideDirection slideOutDirection,
                                          UpdatePosition updatePosition) {
     mSlideOutDirection = slideOutDirection;
-    auto& frustumSize {mEngine.GetRenderer().GetHudFrustumSize()};
+    auto& frustumSize = mEngine.GetRenderer().GetHudFrustumSize();
     
     switch (mSlideOutDirection) {
         case SlideDirection::Right:
@@ -172,10 +172,10 @@ void SlidingMenuAnimation::UpdateInSlidingInState() {
 }
 
 void SlidingMenuAnimation::UpdateInSlidingInStateLeftOrRight() {
-    auto dt {mEngine.GetLastFrameSeconds()};
-    auto position {mView.GetPosition()};
+    auto dt = mEngine.GetLastFrameSeconds();
+    auto position = mView.GetPosition();
     auto distance = centerPosition.x - mSlideInStartPosition.x;
-    auto normalizedTime {(slideTime - mElapsedTime) / slideTime};
+    auto normalizedTime = (slideTime - mElapsedTime) / slideTime;
     
     position.x = centerPosition.x - distance * Pht::Lerp(normalizedTime, slidePoints);
     mElapsedTime += dt;
@@ -196,10 +196,10 @@ void SlidingMenuAnimation::UpdateInSlidingInStateLeftOrRight() {
 }
 
 void SlidingMenuAnimation::UpdateInSlidingInStateUpOrDown() {
-    auto dt {mEngine.GetLastFrameSeconds()};
-    auto position {mView.GetPosition()};
+    auto dt = mEngine.GetLastFrameSeconds();
+    auto position = mView.GetPosition();
     auto distance = centerPosition.y - mSlideInStartPosition.y;
-    auto normalizedTime {(slideTime - mElapsedTime) / slideTime};
+    auto normalizedTime = (slideTime - mElapsedTime) / slideTime;
     
     position.y = centerPosition.y - distance * Pht::Lerp(normalizedTime, slidePoints);
     mElapsedTime += dt;
@@ -220,7 +220,7 @@ void SlidingMenuAnimation::UpdateInSlidingInStateUpOrDown() {
 }
 
 void SlidingMenuAnimation::UpdateInSlidingInStateScaling() {
-    auto dt {mEngine.GetLastFrameSeconds()};
+    auto dt = mEngine.GetLastFrameSeconds();
     
     mElapsedTime += dt;
     Pht::SceneObjectUtils::ScaleRecursively(mView.GetRoot(), mElapsedTime / slideTime);
@@ -297,10 +297,10 @@ void SlidingMenuAnimation::UpdateInSlidingOutState() {
 }
 
 void SlidingMenuAnimation::UpdateInSlidingOutStateLeftOrRight() {
-    auto dt {mEngine.GetLastFrameSeconds()};
-    auto position {mView.GetPosition()};
+    auto dt = mEngine.GetLastFrameSeconds();
+    auto position = mView.GetPosition();
     auto distance = mSlideOutFinalPosition.x - centerPosition.x;
-    auto normalizedTime {mElapsedTime / slideTime};
+    auto normalizedTime = mElapsedTime / slideTime;
     
     position.x = centerPosition.x + distance * normalizedTime * normalizedTime * normalizedTime;
     mElapsedTime += dt;
@@ -321,10 +321,10 @@ void SlidingMenuAnimation::UpdateInSlidingOutStateLeftOrRight() {
 }
 
 void SlidingMenuAnimation::UpdateInSlidingOutStateUpOrDown() {
-    auto dt {mEngine.GetLastFrameSeconds()};
-    auto position {mView.GetPosition()};
+    auto dt = mEngine.GetLastFrameSeconds();
+    auto position = mView.GetPosition();
     auto distance = mSlideOutFinalPosition.y - centerPosition.y;
-    auto normalizedTime {mElapsedTime / slideTime};
+    auto normalizedTime = mElapsedTime / slideTime;
     
     position.y = centerPosition.y + distance * normalizedTime * normalizedTime * normalizedTime;
     mElapsedTime += dt;
@@ -345,7 +345,7 @@ void SlidingMenuAnimation::UpdateInSlidingOutStateUpOrDown() {
 }
 
 void SlidingMenuAnimation::UpdateInSlidingOutStateScaling() {
-    auto dt {mEngine.GetLastFrameSeconds()};
+    auto dt = mEngine.GetLastFrameSeconds();
     
     mElapsedTime += dt;
     Pht::SceneObjectUtils::ScaleRecursively(mView.GetRoot(),

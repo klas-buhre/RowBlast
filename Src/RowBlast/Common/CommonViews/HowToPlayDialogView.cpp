@@ -107,7 +107,7 @@ HowToPlayDialogView::HowToPlayDialogView(Pht::IEngine& engine,
                             Pht::Vec4 {0.2f, 0.2f, 0.2f, 0.5f},
                             Pht::Vec3 {-0.05f, -0.05f, -0.1f});
         
-    for (auto i {0}; i < mNumPages; ++i) {
+    for (auto i = 0; i < mNumPages; ++i) {
         GetRoot().AddChild(CreateFilledCircleIcon(i, false));
     }
 

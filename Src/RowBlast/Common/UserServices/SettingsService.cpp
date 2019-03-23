@@ -22,7 +22,7 @@ namespace {
     }
     
     ControlType ReadControlType(const rapidjson::Document& document) {
-        auto controlType {Pht::Json::ReadString(document, controlTypeMember)};
+        auto controlType = Pht::Json::ReadString(document, controlTypeMember);
         if (controlType == "Click") {
             return ControlType::Click;
         }
@@ -55,7 +55,7 @@ void SettingsService::SetIsMusicEnabled(bool isMusicEnabled) {
 
 void SettingsService::SaveState() {
     rapidjson::Document document;
-    auto& allocator {document.GetAllocator()};
+    auto& allocator = document.GetAllocator();
     document.SetObject();
     
     Pht::Json::AddString(document, controlTypeMember, ToString(mControlType), allocator);

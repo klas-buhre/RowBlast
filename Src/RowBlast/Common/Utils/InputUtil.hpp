@@ -16,7 +16,7 @@ namespace RowBlast {
             Result result {defaultResult};
             
             while (input.HasEvents()) {
-                auto& event {input.GetNextEvent()};
+                auto& event = input.GetNextEvent();
                 switch (event.GetKind()) {
                     case Pht::InputKind::Touch: {
                         result = onTouch(event.GetTouchEvent());

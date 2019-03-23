@@ -9,7 +9,7 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto fullNumLives {5};
+    constexpr auto fullNumLives = 5;
     constexpr std::chrono::seconds lifeWaitDuration {180};
     const std::string filename {"lives.dat"};
     const std::string stateMember {"state"};
@@ -32,15 +32,14 @@ void LifeService::Update() {
         mState = State::CountingDown;
     }
     
-    auto now {std::chrono::system_clock::now()};
+    auto now = std::chrono::system_clock::now();
     if (now > mLifeLostTimePoint + lifeWaitDuration) {
-        auto waitedDuration {
-            std::chrono::duration_cast<std::chrono::seconds>(now - mLifeLostTimePoint)
-        };
+        auto waitedDuration =
+            std::chrono::duration_cast<std::chrono::seconds>(now - mLifeLostTimePoint);
         
-        auto numNewLives {static_cast<int>(waitedDuration.count() / lifeWaitDuration.count())};
+        auto numNewLives = static_cast<int>(waitedDuration.count() / lifeWaitDuration.count());
         
-        for (auto i {0}; i < std::min(numNewLives, fullNumLives); ++i) {
+        for (auto i = 0; i < std::min(numNewLives, fullNumLives); ++i) {
             IncreaseNumLives();
         }
         
@@ -109,7 +108,7 @@ std::chrono::seconds LifeService::GetDurationUntilNewLife() const {
         return std::chrono::seconds {0};
     }
     
-    auto duration {mLifeLostTimePoint + lifeWaitDuration - std::chrono::system_clock::now()};
+    auto duration = mLifeLostTimePoint + lifeWaitDuration - std::chrono::system_clock::now();
     return std::chrono::duration_cast<std::chrono::seconds>(duration);
 }
 
@@ -126,16 +125,15 @@ void LifeService::StartCountDown(std::chrono::system_clock::time_point lifeLostT
 
 void LifeService::SaveState() {
     rapidjson::Document document;
-    auto& allocator {document.GetAllocator()};
+    auto& allocator = document.GetAllocator();
     document.SetObject();
     
     Pht::Json::AddInt(document, stateMember, static_cast<int>(mState), allocator);
     Pht::Json::AddInt(document, numLivesMember, mNumLives, allocator);
     
-    auto lifeLostTimePointInSeconds {
+    auto lifeLostTimePointInSeconds =
         std::chrono::duration_cast<std::chrono::seconds>(mLifeLostTimePoint.time_since_epoch()).
-        count()
-    };
+        count();
     
     Pht::Json::AddUInt64(document, lifeLostTimePointMember, lifeLostTimePointInSeconds, allocator);
 

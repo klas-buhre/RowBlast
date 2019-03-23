@@ -31,7 +31,7 @@ void UserServices::StartLevel(int levelId) {
     mProgressService.StartLevel(levelId);
     mLifeService.StartLevel();
     
-    auto& analytics {mEngine.GetAnalytics()};
+    auto& analytics = mEngine.GetAnalytics();
     
     Pht::ProgressionAnalyticsEvent progressionAnalyticsEvent {
         Pht::ProgressionStatus::Start, std::to_string(levelId)

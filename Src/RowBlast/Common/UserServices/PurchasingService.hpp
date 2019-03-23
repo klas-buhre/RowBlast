@@ -57,8 +57,8 @@ namespace RowBlast {
             return mCoinBalance;
         }
         
-        static constexpr auto addMovesPriceInCoins {10};
-        static constexpr auto refillLivesPriceInCoins {12};
+        static constexpr auto addMovesPriceInCoins = 10;
+        static constexpr auto refillLivesPriceInCoins = 12;
         
     private:
         void UpdateInPurchasePendingState();

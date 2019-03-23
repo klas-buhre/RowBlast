@@ -34,7 +34,7 @@ SpinningWheelEffect::SpinningWheelEffect(Pht::IEngine& engine) :
         .mShrinkDuration = 0.0f
     };
     
-    auto& particleSystem {engine.GetParticleSystem()};
+    auto& particleSystem = engine.GetParticleSystem();
     mSceneObject = particleSystem.CreateParticleEffectSceneObject(particleSettings,
                                                                   particleEmitterSettings,
                                                                   Pht::RenderMode::Triangles);
