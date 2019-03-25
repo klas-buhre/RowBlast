@@ -48,6 +48,26 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
+    -Levels for the space world.
+        Moves left in sloppy play:
+        Level 34: 6
+        Level 35: 10
+        Level 36: 12
+        Level 37: 6
+        Level 38: 5
+        Level 39: 5
+        Level 40: 5
+
+
+
+
+    -Levels moved to world 3:
+      -Level 48.
+      -Level 49.
+    -Levels moved to world 4:
+      -Level 65.
+      -Level 66.
+      -Level 67.
     -Removing the curly brace initialization for auto declarations:
        Finished Common.
 
