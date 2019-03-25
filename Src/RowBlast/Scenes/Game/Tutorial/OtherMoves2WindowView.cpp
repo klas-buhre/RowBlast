@@ -19,7 +19,7 @@ OtherMoves2WindowView::OtherMoves2WindowView(const CommonResources& commonResour
     SetSize(menuWindow.GetSize());
 
     auto& textProperties {guiResources.GetSmallWhiteTextProperties(zoom)};
-    CreateText({-5.05f, 0.9075f, UiLayer::text}, "Tap again to find more moves", textProperties);
-    CreateText({-5.35f, -0.1675f, UiLayer::text}, "using the same piece. Remember", textProperties);
-    CreateText({-5.6f, -1.2425f, UiLayer::text}, "not to press any moves or buttons", textProperties);
+    CreateText({-4.7f, 0.9075f, UiLayer::text}, "Tap anywhere again to find", textProperties);
+    CreateText({-5.05f, -0.1675f, UiLayer::text}, "more moves. Remember not to", textProperties);
+    CreateText({-4.6f, -1.2425f, UiLayer::text}, "press any moves or buttons", textProperties);
 }

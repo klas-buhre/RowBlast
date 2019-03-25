@@ -82,9 +82,9 @@ const std::vector<Level::TutorialMove>* Ai::GetSuggestedMoves(const FallingPiece
 
     if (movesUsed < allSuggestedMoves.size()) {
         auto& suggestedMoves {allSuggestedMoves[movesUsed]};
-        
-        assert(!suggestedMoves.empty());
-        if (&suggestedMoves.front().mPieceType == &fallingPiece.GetPieceType()) {
+        if (!suggestedMoves.empty() &&
+            &suggestedMoves.front().mPieceType == &fallingPiece.GetPieceType()) {
+            
             return &suggestedMoves;
         }
     }

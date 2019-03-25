@@ -133,6 +133,10 @@ namespace {
                                    const PieceTypes& pieceTypes) {
         std::vector<Level::TutorialMove> tutorialMoves;
         
+        if (!suggestedMoveAlternativesObject.HasMember("piece")) {
+            return tutorialMoves;
+        }
+        
         auto pieceStr {Pht::Json::ReadString(suggestedMoveAlternativesObject, "piece")};
         auto i {pieceTypes.find(pieceStr)};
         assert(i != std::end(pieceTypes));

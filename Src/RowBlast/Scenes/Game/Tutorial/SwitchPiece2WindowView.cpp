@@ -19,6 +19,6 @@ SwitchPiece2WindowView::SwitchPiece2WindowView(const CommonResources& commonReso
     SetSize(menuWindow.GetSize());
 
     auto& textProperties {guiResources.GetSmallWhiteTextProperties(zoom)};
-    CreateText({-5.25f, 0.30f, UiLayer::text}, "Try the yellow piece by tapping", textProperties);
+    CreateText({-4.85f, 0.30f, UiLayer::text}, "Try the blue piece by tapping", textProperties);
     CreateText({-4.0f, -0.775f, UiLayer::text}, "the switch button again", textProperties);
 }

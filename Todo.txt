@@ -20,12 +20,13 @@ Backlog:
      in a similar way as the SlidingFieldAnimation.
     -Animation that moves the pause button out of the screen.
   -GUI:
-    -Maybe make a more clear laser dialog slide animation with the laser piece at the top of the
-     frame in the beginning and it falls all the way down and then detonates. Then the yellow and
-     blue blocks fall down.
-    -Maybe make a more clear bomb dialog slide animation with the bomb piece at the top of the
-     frame in the beginning and it falls all the way down and then detonates.
-    -Maybe a new level bomb slide animation just to be consistent with the look.
+    -Tutorial: Maybe make a more clear laser dialog Pht animation with the laser piece at the top of
+     the frame in the beginning and it falls all the way down and then detonates. Then the yellow
+     and blue blocks fall down.
+    -Tutorial: Maybe make a more clear bomb dialog Pht animation with the bomb piece at the top of
+     the frame in the beginning and it falls all the way down and then detonates.
+    -Tutorial: Maybe a new level bomb Pht animation just to be consistent with the look.
+    -Tutorial: Maybe a new asteroid Pht animation just to be consistent with the look.
   -Make ready for release:
     -Should give free gold coins after a new install?
     -Limit the number of undo move to one or two per game round.
@@ -47,8 +48,6 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-    -Maybe seeing more moves should be introduced before switching piece in the tutorial?
-
     -Removing the curly brace initialization for auto declarations:
        Finished Common.
 
@@ -156,10 +155,13 @@ Ordered Backlog:
         Done
     -Finish the most important GUI tasks.
         Cost: 5
+        Done
     -Levels for the space world.
         Cost: 7
     -Purchasing.
         Cost: 10
+    -Replace the tutorial slide animations with Pht animations.
+        Cost: 4
     -Release-related tasks.
         Cost: 7
     -Small soft launch.
@@ -177,7 +179,7 @@ Ordered Backlog:
     -Back end.
         Cost: ?
 
-        Total cost: 318
+        Total cost: 322
 
 
 Levels:

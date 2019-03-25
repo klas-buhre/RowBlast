@@ -291,7 +291,7 @@ void ClickInputHandler::HandleTouch(const Pht::TouchEvent& touchEvent, int moves
         case Pht::TouchState::End:
             if (mTouchContainsSwipeUp) {
                 mGameLogic.SwitchPiece();
-            } else if (mTutorial.IsSeeMoreMovesAllowed()) {
+            } else if (mTutorial.IsSeeMoreMovesAllowed(movesUsed)) {
                 CreateNewSetOfVisibleMoves();
                 mEngine.GetAudio().PlaySound(static_cast<Pht::AudioResourceId>(SoundId::OtherMoves));
                 assert(!mVisibleMoves.IsEmpty());

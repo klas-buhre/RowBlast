@@ -1,6 +1,6 @@
 {
     "speed": 0.0,
-    "moves": 45,
+    "moves": 50,
     "twoStars": 25,
     "threeStars": 15,
     "floatingBlocksSet": "Standard",
@@ -15,8 +15,13 @@
         "I"
     ],
     "pieceSequence": [
+        "L",
         "I",
-        "B"
+        "D",
+        "B",
+        "D",
+        "L",
+        "I"
     ],
     "predeterminedMoves": [
         {
@@ -28,73 +33,6 @@
             "position": [0, 7],
             "rotation": 270,
             "piece": "B"
-        }
-    ],
-    "suggestedMoves": [
-        {
-            "piece": "I",
-            "alternatives": [
-                {
-                    "position": [0, 11],
-                    "rotation": 0,
-                    "score": 200.0
-                },
-                {
-                    "position": [4, 11],
-                    "rotation": 0,
-                    "score": 200.0
-                },
-                {
-                    "position": [-1, 12],
-                    "rotation": 90,
-                    "score": 0.0
-                },
-                {
-                    "position": [1, 12],
-                    "rotation": 90,
-                    "score": 0.0
-                },
-                {
-                    "position": [5, 12],
-                    "rotation": 90,
-                    "score": 0.0
-                },
-                {
-                    "position": [3, 12],
-                    "rotation": 90,
-                    "score": 0.0
-                }
-            ]
-        },
-        {
-            "piece": "B",
-            "alternatives": [
-                {
-                    "position": [0, 9],
-                    "rotation": 180,
-                    "score": 200.0
-                },
-                {
-                    "position": [4, 10],
-                    "rotation": 90,
-                    "score": 200.0
-                },
-                {
-                    "position": [3, 10],
-                    "rotation": 270,
-                    "score": 200.0
-                },
-                {
-                    "position": [1, 10],
-                    "rotation": 90,
-                    "score": 0.0
-                },
-                {
-                    "position": [4, 9],
-                    "rotation": 0,
-                    "score": 0.0
-                }
-            ]
         }
     ],
     "clearGrid": [
@@ -116,10 +54,10 @@
         "  G GGG",
         "  GGGGG",
         "G GGGGG",
-        "GGGGG  ",
-        "GGGGG  ",
-        "GGGGG G",
-        "   G GG",
+        "  GGG  ",
+        "  GGG  ",
+        "  GGG G",
+        "GGG  GG",
         "GGGG GG",
         "GGGG GG",
         "GGGG GG"

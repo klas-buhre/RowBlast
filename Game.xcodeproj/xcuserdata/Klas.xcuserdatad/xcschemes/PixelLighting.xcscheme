@@ -55,7 +55,7 @@
       <RemoteRunnable
          runnableDebuggingMode = "1"
          BundleIdentifier = "com.BuhreIndustries.Engine"
-         RemotePath = "/var/containers/Bundle/Application/E684E25F-91BA-436F-90AB-B95FA56B2F23/Game.app">
+         RemotePath = "/Users/klas/Library/Developer/CoreSimulator/Devices/08BA6486-AC6C-425A-BC02-C5AB3464B0DF/data/Containers/Bundle/Application/699B9AEE-4E55-446A-8F22-F3236EEB8916/Game.app">
       </RemoteRunnable>
       <MacroExpansion>
          <BuildableReference

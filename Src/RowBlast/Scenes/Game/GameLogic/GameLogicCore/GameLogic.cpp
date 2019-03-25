@@ -871,9 +871,7 @@ void GameLogic::RotatateAndAdjustPosition(Rotation newRotation,
 }
 
 void GameLogic::SwitchPiece() {
-    if (!IsThereRoomToSwitchPiece() ||
-        !mTutorial.IsSwitchPieceAllowed(GetMovesUsedIncludingCurrent())) {
-
+    if (!IsThereRoomToSwitchPiece() || !mTutorial.IsSwitchPieceAllowed()) {
         return;
     }
     
