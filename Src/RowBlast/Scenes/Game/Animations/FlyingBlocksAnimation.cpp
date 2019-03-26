@@ -13,12 +13,12 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto subCellMass {1.0f};
-    constexpr auto rowExplosionForceMagnitude {12.0f};
-    constexpr auto shieldForceMagnitude {13.0f};
+    constexpr auto subCellMass = 1.0f;
+    constexpr auto rowExplosionForceMagnitude = 12.0f;
+    constexpr auto shieldForceMagnitude = 13.0f;
     const Pht::Vec3 gravitationalAcceleration {0.0f, -65.0f, 0.0f};
     const Pht::Vec3 explosionGravitationalAcceleration {0.0f, -40.0f, 0.0f};
-    constexpr auto eraseLimit {20.0f};
+    constexpr auto eraseLimit = 20.0f;
 }
 
 FlyingBlocksAnimation::FlyingBlocksAnimation(GameScene& scene,
@@ -36,7 +36,7 @@ FlyingBlocksAnimation::FlyingBlocksAnimation(GameScene& scene,
         sceneObject = std::make_unique<Pht::SceneObject>();
     }
     
-    auto blockSize {scene.GetCellSize()};
+    auto blockSize = scene.GetCellSize();
     mIntersectionDistanceSquared = blockSize * blockSize;
 }
 
@@ -44,7 +44,7 @@ void FlyingBlocksAnimation::Init() {
     mFlyingBlocks.Clear();
     mFreeSceneObjects.Clear();
     
-    auto& containerObject {mScene.GetFlyingBlocksContainer()};
+    auto& containerObject = mScene.GetFlyingBlocksContainer();
     
     for (auto& sceneObject: mSceneObjects) {
         mFreeSceneObjects.PushBack(sceneObject.get());
@@ -63,7 +63,7 @@ void FlyingBlocksAnimation::AddBlockRows(const Field::RemovedSubCells& subCells)
         };
 
         explosiveForceDirecton.Normalize();
-        auto force {explosiveForceDirecton * rowExplosionForceMagnitude};
+        auto force = explosiveForceDirecton * rowExplosionForceMagnitude;
 
         FlyingBlock flyingBlock {
             .mVelocity = force / subCellMass,
@@ -84,9 +84,9 @@ void FlyingBlocksAnimation::AddBlockRows(const Field::RemovedSubCells& subCells)
 }
 
 Pht::SceneObject& FlyingBlocksAnimation::SetUpBlockSceneObject(const RemovedSubCell& removedSubCell) {
-    auto& sceneObject {AccuireSceneObject()};
+    auto& sceneObject = AccuireSceneObject();
     sceneObject.SetRenderable(&GetBlockRenderableObject(removedSubCell));
-    auto& transform {sceneObject.GetTransform()};
+    auto& transform = sceneObject.GetTransform();
     transform.SetPosition(CalculateBlockInitialPosition(removedSubCell));
 
     switch (removedSubCell.mBlockKind) {
@@ -113,8 +113,8 @@ void FlyingBlocksAnimation::AddBlocksRemovedByExplosion(const Field::RemovedSubC
     }
 
     for (auto& removedSubCell: subCells) {
-        auto dx {removedSubCell.mExactPosition.x - static_cast<float>(detonationPos.x)};
-        auto dy {removedSubCell.mExactPosition.y - static_cast<float>(detonationPos.y)};
+        auto dx = removedSubCell.mExactPosition.x - static_cast<float>(detonationPos.x);
+        auto dy = removedSubCell.mExactPosition.y - static_cast<float>(detonationPos.y);
         
         if (dx == 0.0f) {
             dx = dy * (Pht::NormalizedRand() * 0.2f - 0.1f);
@@ -127,20 +127,20 @@ void FlyingBlocksAnimation::AddBlocksRemovedByExplosion(const Field::RemovedSubC
         Pht::Vec3 explosiveForceDirection {dx, dy, 1.0f};
         explosiveForceDirection.Normalize();
         
-        auto forceMagnitude {0.0f};
-        auto distSquare {dx * dx + dy * dy};
+        auto forceMagnitude = 0.0f;
+        auto distSquare = dx * dx + dy * dy;
         if (distSquare == 0.0f) {
             forceMagnitude = explosiveForceMagnitude;
         } else {
             forceMagnitude = explosiveForceMagnitude / distSquare;
         }
         
-        auto force {explosiveForceDirection * forceMagnitude};
-        auto angularVelocity {forceMagnitude * 50.0f};
+        auto force = explosiveForceDirection * forceMagnitude;
+        auto angularVelocity = forceMagnitude * 50.0f;
         
-        auto& sceneObject {AccuireSceneObject()};
+        auto& sceneObject = AccuireSceneObject();
         sceneObject.SetRenderable(&GetBlockRenderableObject(removedSubCell));
-        auto& transform {sceneObject.GetTransform()};
+        auto& transform = sceneObject.GetTransform();
         transform.SetPosition(CalculateBlockInitialPosition(removedSubCell));
         transform.SetRotation({0.0f, 0.0f, RotationToDeg(removedSubCell.mRotation)});
     
@@ -161,8 +161,8 @@ void FlyingBlocksAnimation::AddBlocksRemovedByExplosion(const Field::RemovedSubC
 
 void FlyingBlocksAnimation::ApplyForceToAlreadyFlyingBlocks(float explosiveForceMagnitude,
                                                             const Pht::IVec2& detonationPos) {
-    auto cellSize {mScene.GetCellSize()};
-    auto& fieldLowerLeft {mScene.GetFieldLoweLeft()};
+    auto cellSize = mScene.GetCellSize();
+    auto& fieldLowerLeft = mScene.GetFieldLoweLeft();
 
     Pht::Vec3 detonationPosWorldSpace {
         static_cast<float>(detonationPos.x) * cellSize + cellSize / 2.0f + fieldLowerLeft.x,
@@ -171,22 +171,22 @@ void FlyingBlocksAnimation::ApplyForceToAlreadyFlyingBlocks(float explosiveForce
     };
     
     for (auto& block: mFlyingBlocks) {
-        auto& blockPosition {block.mSceneObject->GetTransform().GetPosition()};
-        auto dx {(blockPosition.x - static_cast<float>(detonationPosWorldSpace.x)) / cellSize};
-        auto dy {(blockPosition.y - static_cast<float>(detonationPosWorldSpace.y)) / cellSize};
+        auto& blockPosition = block.mSceneObject->GetTransform().GetPosition();
+        auto dx = (blockPosition.x - static_cast<float>(detonationPosWorldSpace.x)) / cellSize;
+        auto dy = (blockPosition.y - static_cast<float>(detonationPosWorldSpace.y)) / cellSize;
 
         Pht::Vec3 explosiveForceDirecton {dx, dy, 1.0f};
         explosiveForceDirecton.Normalize();
         
-        auto forceMagnitude {0.0f};
-        auto distSquare {dx * dx + dy * dy};
+        auto forceMagnitude = 0.0f;
+        auto distSquare = dx * dx + dy * dy;
         if (distSquare == 0.0f) {
             forceMagnitude = explosiveForceMagnitude;
         } else {
             forceMagnitude = explosiveForceMagnitude / distSquare;
         }
         
-        auto force {explosiveForceDirecton * forceMagnitude};
+        auto force = explosiveForceDirecton * forceMagnitude;
         block.mVelocity += force / subCellMass;
     }
 }
@@ -203,7 +203,7 @@ void FlyingBlocksAnimation::AddBlocksRemovedByTheShield(const Field::RemovedSubC
         };
 
         shieldForceDirecton.Normalize();
-        auto force {shieldForceDirecton * shieldForceMagnitude};
+        auto force = shieldForceDirecton * shieldForceMagnitude;
 
         FlyingBlock flyingBlock {
             .mVelocity = force / subCellMass,
@@ -225,11 +225,10 @@ void FlyingBlocksAnimation::Update(float dt) {
 }
 
 void FlyingBlocksAnimation::UpdateBlocks(float dt) {
-    auto i {0};
+    auto i = 0;
 
     while (i < mFlyingBlocks.Size()) {
-        auto& flyingBlock {mFlyingBlocks.At(i)};
-        
+        auto& flyingBlock = mFlyingBlocks.At(i);
         switch (flyingBlock.mAppliedForce) {
             case FlyingBlock::AppliedForce::ClearedLine:
             case FlyingBlock::AppliedForce::RowExplosion:
@@ -240,12 +239,12 @@ void FlyingBlocksAnimation::UpdateBlocks(float dt) {
                 break;
         }
         
-        auto& transform {flyingBlock.mSceneObject->GetTransform()};
+        auto& transform = flyingBlock.mSceneObject->GetTransform();
         transform.Translate(flyingBlock.mVelocity * dt);
         transform.Rotate(flyingBlock.mAngularVelocity * dt);
         
-        auto position {transform.GetPosition()};
-        auto& cameraPosition {mScene.GetCamera().GetSceneObject().GetTransform().GetPosition()};
+        auto position = transform.GetPosition();
+        auto& cameraPosition = mScene.GetCamera().GetSceneObject().GetTransform().GetPosition();
         
         if (position.z > cameraPosition.z - 4.0f) {
             position.z = cameraPosition.z - 4.0f;
@@ -262,18 +261,17 @@ void FlyingBlocksAnimation::UpdateBlocks(float dt) {
 }
 
 void FlyingBlocksAnimation::HandleCollisions(float dt) {
-    auto numBlocks {mFlyingBlocks.Size()};
+    auto numBlocks = mFlyingBlocks.Size();
     
-    for (auto i {0}; i < numBlocks; ++i) {
-        for (auto j {i + 1}; j < numBlocks; ++j) {
-            auto& block1 {mFlyingBlocks.At(i)};
-            auto& block2 {mFlyingBlocks.At(j)};
-            auto& block1Position {block1.mSceneObject->GetTransform().GetPosition()};
-            auto& block2Position {block2.mSceneObject->GetTransform().GetPosition()};
+    for (auto i = 0; i < numBlocks; ++i) {
+        for (auto j = i + 1; j < numBlocks; ++j) {
+            auto& block1 = mFlyingBlocks.At(i);
+            auto& block2 = mFlyingBlocks.At(j);
+            auto& block1Position = block1.mSceneObject->GetTransform().GetPosition();
+            auto& block2Position = block2.mSceneObject->GetTransform().GetPosition();
             
             Pht::Vec3 pos1MinusPos2 {block1Position - block2Position};
-            auto distSquared {pos1MinusPos2.LengthSquared()};
-            
+            auto distSquared = pos1MinusPos2.LengthSquared();
             if (distSquared > mIntersectionDistanceSquared) {
                 continue;
             }
@@ -283,17 +281,17 @@ void FlyingBlocksAnimation::HandleCollisions(float dt) {
             }
             
             Pht::Vec3 pos2MinusPos1 {block2Position - block1Position};
-            auto v1MinusV2 {block1.mVelocity - block2.mVelocity};
-            auto v2MinusV1 {block2.mVelocity - block1.mVelocity};
+            auto v1MinusV2 = block1.mVelocity - block2.mVelocity;
+            auto v2MinusV1 = block2.mVelocity - block1.mVelocity;
             
             // Equations from wikipedia: https://en.wikipedia.org/wiki/Elastic_collision
             // section "Two-dimensional collision with two moving objects". Used in 3d space here.
-            auto dv1 {-pos1MinusPos2 * v1MinusV2.Dot(pos1MinusPos2) / distSquared};
-            auto dv2 {-pos2MinusPos1 * v2MinusV1.Dot(pos2MinusPos1) / distSquared};
+            auto dv1 = -pos1MinusPos2 * v1MinusV2.Dot(pos1MinusPos2) / distSquared;
+            auto dv2 = -pos2MinusPos1 * v2MinusV1.Dot(pos2MinusPos1) / distSquared;
 
-            auto newPos1 {block1Position + (block1.mVelocity + dv1) * dt};
-            auto newPos2 {block2Position + (block2.mVelocity + dv2) * dt};
-            auto newDistSquared {(newPos1 - newPos2).LengthSquared()};
+            auto newPos1 = block1Position + (block1.mVelocity + dv1) * dt;
+            auto newPos2 = block2Position + (block2.mVelocity + dv2) * dt;
+            auto newDistSquared = (newPos1 - newPos2).LengthSquared();
             
             if (newDistSquared > distSquared) {
                 block1.mVelocity += dv1;
@@ -304,8 +302,8 @@ void FlyingBlocksAnimation::HandleCollisions(float dt) {
 }
 
 Pht::Vec3 FlyingBlocksAnimation::CalculateBlockInitialPosition(const RemovedSubCell& subCell) {
-    auto cellSize {mScene.GetCellSize()};
-    auto& fieldLowerLeft {mScene.GetFieldLoweLeft()};
+    auto cellSize = mScene.GetCellSize();
+    auto& fieldLowerLeft = mScene.GetFieldLoweLeft();
 
     Pht::Vec3 position {
         subCell.mExactPosition.x * cellSize + cellSize / 2.0f + fieldLowerLeft.x,
@@ -334,7 +332,7 @@ Pht::RenderableObject& FlyingBlocksAnimation::GetBlockRenderableObject(const Rem
 
 Pht::SceneObject& FlyingBlocksAnimation::AccuireSceneObject() {
     assert(mFreeSceneObjects.Size() >= 1);
-    auto* sceneObject {mFreeSceneObjects.Back()};
+    auto* sceneObject = mFreeSceneObjects.Back();
     mFreeSceneObjects.PopBack();
     sceneObject->SetIsVisible(true);
     sceneObject->SetIsStatic(false);

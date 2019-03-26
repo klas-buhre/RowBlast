@@ -7,7 +7,7 @@
 #include "GameScene.hpp"
 
 namespace {
-    constexpr auto scaleDuration {0.27f};
+    constexpr auto scaleDuration = 0.27f;
     
     Pht::StaticVector<Pht::Vec2, 20> scalePoints {
         {0.0f, 0.0f},
@@ -58,14 +58,14 @@ void FallingPieceScaleAnimation::Update(float dt) {
 void FallingPieceScaleAnimation::UpdateInActiveState(float dt) {
     mElapsedTime += dt;
     
-    auto& transform {mScene.GetPieceBlocks().GetContainerSceneObject().GetTransform()};
+    auto& transform = mScene.GetPieceBlocks().GetContainerSceneObject().GetTransform();
 
     if (mElapsedTime > scaleDuration) {
         mState = State::Inactive;
         transform.SetScale(1.0f);
     } else {
-        auto reversedNormalizedTime {1.0f - (mElapsedTime / scaleDuration)};
-        auto scale {1.0f - Pht::Lerp(reversedNormalizedTime, scalePoints)};
+        auto reversedNormalizedTime = 1.0f - (mElapsedTime / scaleDuration);
+        auto scale = 1.0f - Pht::Lerp(reversedNormalizedTime, scalePoints);
 
         transform.SetScale(scale);
     }

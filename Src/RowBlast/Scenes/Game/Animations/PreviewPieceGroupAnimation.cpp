@@ -65,8 +65,8 @@ void PreviewPieceGroupAnimation::StartRemoveActivePieceAnimation(
 }
 
 void PreviewPieceGroupAnimation::Update(float normalizedElapsedTime) {
-    auto reversedTime {1.0f - normalizedElapsedTime};
-    auto slideValue {Pht::Lerp(reversedTime, slidePoints)};
+    auto reversedTime = 1.0f - normalizedElapsedTime;
+    auto slideValue = Pht::Lerp(reversedTime, slidePoints);
     
     switch (mKind) {
         case Kind::NextPiece:
@@ -159,23 +159,23 @@ void PreviewPieceGroupAnimation::AnimatePiece(PreviewPiece& previewPiece,
                                               float xStop,
                                               float slideFunctionValue,
                                               Scaling scaling) {
-    auto distance {xStop - xStart};
-    auto& transform {previewPiece.mSceneObjects->GetContainerSceneObject().GetTransform()};
-    auto position {transform.GetPosition()};
+    auto distance = xStop - xStart;
+    auto& transform = previewPiece.mSceneObjects->GetContainerSceneObject().GetTransform();
+    auto position = transform.GetPosition();
     
     position.x = xStop - distance * slideFunctionValue;
     transform.SetPosition(position);
     
     switch (scaling) {
         case Scaling::ScaleUp: {
-            auto finalScale {previewPiece.mScale};
-            auto scale {(1.0f - slideFunctionValue) * finalScale};
+            auto finalScale = previewPiece.mScale;
+            auto scale = (1.0f - slideFunctionValue) * finalScale;
             transform.SetScale(scale);
             break;
         }
         case Scaling::ScaleDown: {
-            auto initialScale {previewPiece.mScale};
-            auto scale {slideFunctionValue * initialScale};
+            auto initialScale = previewPiece.mScale;
+            auto scale = slideFunctionValue * initialScale;
             transform.SetScale(scale);
             break;
         }

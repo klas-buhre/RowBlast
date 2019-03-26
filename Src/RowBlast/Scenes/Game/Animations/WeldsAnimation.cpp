@@ -6,17 +6,15 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto scaleSpeed {3.2f};
+    constexpr auto scaleSpeed = 3.2f;
     
     bool IsSubCellOrNeighbourBouncing(const SubCell& subCell, const Cell& neighbour) {
-        auto subCellIsBouncing {
-            subCell.mFallingBlockAnimation.mState == FallingBlockAnimation::State::Bouncing
-        };
+        auto subCellIsBouncing =
+            subCell.mFallingBlockAnimation.mState == FallingBlockAnimation::State::Bouncing;
 
-        auto neighbourIsBouncing {
+        auto neighbourIsBouncing =
             neighbour.mFirstSubCell.mFallingBlockAnimation.mState == FallingBlockAnimation::State::Bouncing ||
-            neighbour.mSecondSubCell.mFallingBlockAnimation.mState == FallingBlockAnimation::State::Bouncing
-        };
+            neighbour.mSecondSubCell.mFallingBlockAnimation.mState == FallingBlockAnimation::State::Bouncing;
 
         return subCellIsBouncing || neighbourIsBouncing;
     }
@@ -30,10 +28,9 @@ WeldsAnimation::WeldsAnimation(Field& field) :
     mField {field} {}
 
 void WeldsAnimation::Update(float dt) {
-    for (auto row {0}; row < mField.GetNumRows(); ++row) {
-        for (auto column {0}; column < mField.GetNumColumns(); ++column) {
-            auto& cell {mField.GetCell(row, column)};
-            
+    for (auto row = 0; row < mField.GetNumRows(); ++row) {
+        for (auto column = 0; column < mField.GetNumColumns(); ++column) {
+            auto& cell = mField.GetCell(row, column);
             if (cell.IsEmpty()) {
                 continue;
             }
@@ -43,8 +40,7 @@ void WeldsAnimation::Update(float dt) {
             AnimateBlockWelds(cell.mFirstSubCell, position, dt);
             AnimateBlockWelds(cell.mSecondSubCell, position, dt);
             
-            auto& diagonalAnimation {cell.mSecondSubCell.mWelds.mAnimations.mDiagonal};
-            
+            auto& diagonalAnimation = cell.mSecondSubCell.mWelds.mAnimations.mDiagonal;
             if (diagonalAnimation.IsActive() && !IsSubCellBouncing(cell.mFirstSubCell) &&
                 !IsSubCellBouncing(cell.mSecondSubCell)) {
                 
@@ -53,10 +49,9 @@ void WeldsAnimation::Update(float dt) {
                     mField.MergeTriangleBlocksIntoCube(position);
                     mField.SetChanged();
                 } else {
-                    auto cellIsFlashing {
+                    auto cellIsFlashing =
                         cell.mFirstSubCell.mFlashingBlockAnimation.IsActive() ||
-                        cell.mSecondSubCell.mFlashingBlockAnimation.IsActive()
-                    };
+                        cell.mSecondSubCell.mFlashingBlockAnimation.IsActive();
                     
                     AnimateWeld(diagonalAnimation, cellIsFlashing, false, dt);
                 }
@@ -66,8 +61,7 @@ void WeldsAnimation::Update(float dt) {
 }
 
 void WeldsAnimation::AnimateBlockWelds(SubCell& subCell, const Pht::IVec2& position, float dt) {
-    auto& animations {subCell.mWelds.mAnimations};
-    
+    auto& animations = subCell.mWelds.mAnimations;
     if (animations.mUp.IsActive()) {
         AnimateUpWeld(subCell, position, dt);
     }
@@ -76,18 +70,18 @@ void WeldsAnimation::AnimateBlockWelds(SubCell& subCell, const Pht::IVec2& posit
         AnimateRightWeld(subCell, position, dt);
     }
     
-    auto isThisOrUpRightBouncing {false};
-    auto isThisOrUpLeftBouncing {false};
+    auto isThisOrUpRightBouncing = false;
+    auto isThisOrUpLeftBouncing = false;
     
     if (position.y + 1 < mField.GetNumRows() && position.x + 1 < mField.GetNumColumns()) {
-        auto& upperRightCell {mField.GetCell(position + Pht::IVec2{1, 1})};
+        auto& upperRightCell = mField.GetCell(position + Pht::IVec2{1, 1});
         isThisOrUpRightBouncing = IsSubCellOrNeighbourBouncing(subCell, upperRightCell);
     } else {
         isThisOrUpRightBouncing = IsSubCellBouncing(subCell);
     }
 
     if (position.y + 1 < mField.GetNumRows() && position.x - 1 >= 0) {
-        auto& upperLeftCell {mField.GetCell(position + Pht::IVec2{-1, 1})};
+        auto& upperLeftCell = mField.GetCell(position + Pht::IVec2{-1, 1});
         isThisOrUpLeftBouncing = IsSubCellOrNeighbourBouncing(subCell, upperLeftCell);
     } else {
         isThisOrUpLeftBouncing = IsSubCellBouncing(subCell);
@@ -98,15 +92,14 @@ void WeldsAnimation::AnimateBlockWelds(SubCell& subCell, const Pht::IVec2& posit
 }
 
 void WeldsAnimation::AnimateUpWeld(SubCell& subCell, const Pht::IVec2& position, float dt) {
-    auto subCellIsFlashing {subCell.mFlashingBlockAnimation.IsActive()};
+    auto subCellIsFlashing = subCell.mFlashingBlockAnimation.IsActive();
     
     if (position.y + 1 < mField.GetNumRows()) {
         auto& upperCell {mField.GetCell(position + Pht::IVec2{0, 1})};
 
-        auto upperCellIsFlashing {
+        auto upperCellIsFlashing =
             upperCell.mFirstSubCell.mFlashingBlockAnimation.IsActive() ||
-            upperCell.mSecondSubCell.mFlashingBlockAnimation.IsActive()
-        };
+            upperCell.mSecondSubCell.mFlashingBlockAnimation.IsActive();
         
         AnimateWeld(subCell.mWelds.mAnimations.mUp,
                     subCellIsFlashing || upperCellIsFlashing,
@@ -121,15 +114,14 @@ void WeldsAnimation::AnimateUpWeld(SubCell& subCell, const Pht::IVec2& position,
 }
 
 void WeldsAnimation::AnimateRightWeld(SubCell& subCell, const Pht::IVec2& position, float dt) {
-    auto subCellIsFlashing {subCell.mFlashingBlockAnimation.IsActive()};
+    auto subCellIsFlashing = subCell.mFlashingBlockAnimation.IsActive();
     
     if (position.x + 1 < mField.GetNumColumns()) {
-        auto& cellToTheRight {mField.GetCell(position + Pht::IVec2{1, 0})};
+        auto& cellToTheRight = mField.GetCell(position + Pht::IVec2{1, 0});
         
-        auto cellToTheRightIsFlashing {
+        auto cellToTheRightIsFlashing =
             cellToTheRight.mFirstSubCell.mFlashingBlockAnimation.IsActive() ||
-            cellToTheRight.mSecondSubCell.mFlashingBlockAnimation.IsActive()
-        };
+            cellToTheRight.mSecondSubCell.mFlashingBlockAnimation.IsActive();
         
         AnimateWeld(subCell.mWelds.mAnimations.mRight,
                     subCellIsFlashing || cellToTheRightIsFlashing,
@@ -145,7 +137,6 @@ void WeldsAnimation::AnimateRightWeld(SubCell& subCell, const Pht::IVec2& positi
 
 void WeldsAnimation::AnimateWeldAppearing(WeldAnimation& animation, float dt) {
     animation.mScale += scaleSpeed * dt;
-    
     if (animation.mScale > 1.0f) {
         animation.mScale = 1.0f;
         animation.mState = WeldAnimation::State::WeldAtFullScale;
@@ -156,7 +147,6 @@ void WeldsAnimation::AnimateWeldAppearing(WeldAnimation& animation, float dt) {
 
 void WeldsAnimation::AnimateWeldDisappearing(WeldAnimation& animation, float dt) {
     animation.mScale -= scaleSpeed * dt;
-    
     if (animation.mScale < 0.0f) {
         animation.mScale = 0.0f;
         animation.mState = WeldAnimation::State::Inactive;

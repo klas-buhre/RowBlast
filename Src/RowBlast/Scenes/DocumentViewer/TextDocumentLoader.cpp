@@ -30,27 +30,26 @@ void TextDocumentLoader::Load(Pht::Scene& scene,
                               const Pht::Vec3& upperLeft,
                               float lineSpacing,
                               int maxLineWidth) {
-    auto fullPath {Pht::FileSystem::GetResourceDirectory() + "/" + filename};
+    auto fullPath = Pht::FileSystem::GetResourceDirectory() + "/" + filename;
     std::string fileData;
-    
     if (!Pht::FileStorage::LoadCleartextFile(fullPath, fileData)) {
         return;
     }
     
-    auto textLinePosition {upperLeft};
-    auto currentLineStartIndex {0};
-    auto currentWordStartIndex {0};
+    auto textLinePosition = upperLeft;
+    auto currentLineStartIndex = 0;
+    auto currentWordStartIndex = 0;
     
     enum class ScanState {
         Word,
         Delimiter
     };
     
-    auto scanState {ScanState::Delimiter};
+    auto scanState = ScanState::Delimiter;
     
-    for (auto i {0}; i < fileData.size(); ++i) {
-        auto character {fileData[i]};
-        auto currentLineWidth {i - currentLineStartIndex + 1};
+    for (auto i = 0; i < fileData.size(); ++i) {
+        auto character = fileData[i];
+        auto currentLineWidth = i - currentLineStartIndex + 1;
         
         switch (scanState) {
             case ScanState::Delimiter:
@@ -73,7 +72,7 @@ void TextDocumentLoader::Load(Pht::Scene& scene,
                 textLine = fileData.substr(currentLineStartIndex, currentLineWidth - 1);
                 currentLineStartIndex = i + 1;
             } else if (scanState == ScanState::Word) {
-                auto lineWidthExludingLastWord {currentWordStartIndex - currentLineStartIndex - 1};
+                auto lineWidthExludingLastWord = currentWordStartIndex - currentLineStartIndex - 1;
                 textLine = fileData.substr(currentLineStartIndex, lineWidthExludingLastWord);
                 currentLineStartIndex = currentWordStartIndex;
             } else {
@@ -81,7 +80,7 @@ void TextDocumentLoader::Load(Pht::Scene& scene,
                 currentLineStartIndex = i + 1;
             }
             
-            auto& textLineSceneObject {scene.CreateText(textLine, textProperties).GetSceneObject()};
+            auto& textLineSceneObject = scene.CreateText(textLine, textProperties).GetSceneObject();
             textLineSceneObject.GetTransform().SetPosition(textLinePosition);
             panel.AddSceneObject(textLineSceneObject);
             

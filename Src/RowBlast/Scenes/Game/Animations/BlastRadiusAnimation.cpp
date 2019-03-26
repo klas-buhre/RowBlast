@@ -17,10 +17,10 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto opacityCurveAmplitude {0.2f};
-    constexpr auto frequency {0.7f};
-    constexpr auto opacityTarget {1.0f - opacityCurveAmplitude};
-    constexpr auto fadeInTime {0.23f};
+    constexpr auto opacityCurveAmplitude = 0.2f;
+    constexpr auto frequency = 0.7f;
+    constexpr auto opacityTarget = 1.0f - opacityCurveAmplitude;
+    constexpr auto fadeInTime = 0.23f;
     
     Pht::StaticVector<Pht::Vec2, 20> scalePoints {
         {0.0f, 0.0f},
@@ -44,8 +44,8 @@ namespace {
     };
 
     void DrawEdgeBigBlast(Pht::SoftwareRasterizer& rasterizer, float squareSide, float cellSize) {
-        const auto edgeLength {cellSize * 1.1f};
-        const auto edgeWidth {0.09f};
+        const auto edgeLength = cellSize * 1.1f;
+        const auto edgeWidth = 0.09f;
         const Pht::Vec4 edgeColor {1.0f, 1.0f, 1.0f, 1.0f};
         
         Pht::Vec2 lowerLeft1 {squareSide - edgeLength, 0.0f};
@@ -82,8 +82,8 @@ namespace {
     }
 
     void DrawEdge(Pht::SoftwareRasterizer& rasterizer, float squareSide, float cellSize) {
-        const auto edgeLength {cellSize * 0.5f};
-        const auto edgeWidth {0.09f};
+        const auto edgeLength = cellSize * 0.5f;
+        const auto edgeWidth = 0.09f;
         const Pht::Vec4 edgeColor {1.0f, 1.0f, 1.0f, 1.0f};
         
         Pht::Vec2 lowerLeft1 {squareSide - edgeLength - cellSize, 0.0f};
@@ -153,11 +153,11 @@ namespace {
     
     void DrawStripes(Pht::SoftwareRasterizer& rasterizer, float squareSide) {
         const Pht::Vec4 fillColor {1.0f, 1.0f, 1.0f, 0.15f};
-        const auto numStripes {3.5f};
-        const auto stripeStep {squareSide / numStripes};
-        const auto stripeWidth {(stripeStep / 2.0f) / std::sqrt(2.0f)};
+        const auto numStripes = 3.5f;
+        const auto stripeStep = squareSide / numStripes;
+        const auto stripeWidth = (stripeStep / 2.0f) / std::sqrt(2.0f);
         
-        for (auto pos {0.0f}; pos < squareSide; pos += stripeStep) {
+        for (auto pos = 0.0f; pos < squareSide; pos += stripeStep) {
             Pht::Vec2 trapezoidLowerLeft {0.0f, squareSide - pos};
             Pht::Vec2 trapezoidUpperRight {pos, squareSide};
             rasterizer.DrawTiltedTrapezoid315(trapezoidUpperRight,
@@ -166,7 +166,7 @@ namespace {
                                               fillColor);
         }
 
-        for (auto pos {0.0f}; pos < squareSide; pos += stripeStep) {
+        for (auto pos = 0.0f; pos < squareSide; pos += stripeStep) {
             Pht::Vec2 trapezoidLowerLeft {pos, 0.0f};
             Pht::Vec2 trapezoidUpperRight {squareSide, squareSide - pos};
             rasterizer.DrawTiltedTrapezoid45(trapezoidUpperRight,
@@ -204,23 +204,23 @@ BlastRadiusAnimation::BlastRadiusAnimation(Pht::IEngine& engine,
                                            const CommonResources& commonResources) :
     mScene {scene} {
     
-    auto cellSize {scene.GetCellSize()};
-    auto squareSide {cellSize * 5.0f};
+    auto cellSize = scene.GetCellSize();
+    auto squareSide = cellSize * 5.0f;
     Pht::Vec2 coordinateSystemSize {squareSide, squareSide};
-    auto& renderer {engine.GetRenderer()};
+    auto& renderer = engine.GetRenderer();
 
-    auto& renderBufferSize {renderer.GetRenderBufferSize()};
-    auto& frustumSize {commonResources.GetOrthographicFrustumSizePotentiallyZoomedScreen()};
+    auto& renderBufferSize = renderer.GetRenderBufferSize();
+    auto& frustumSize = commonResources.GetOrthographicFrustumSizePotentiallyZoomedScreen();
     
-    auto xScaleFactor {static_cast<float>(renderBufferSize.x) / static_cast<float>(frustumSize.x)};
-    auto yScaleFactor {static_cast<float>(renderBufferSize.y) / static_cast<float>(frustumSize.y)};
+    auto xScaleFactor = static_cast<float>(renderBufferSize.x) / static_cast<float>(frustumSize.x);
+    auto yScaleFactor = static_cast<float>(renderBufferSize.y) / static_cast<float>(frustumSize.y);
     
     Pht::IVec2 imageSize {
         static_cast<int>(squareSide * xScaleFactor),
         static_cast<int>(squareSide * yScaleFactor)
     };
     
-    auto rasterizer {std::make_unique<Pht::SoftwareRasterizer>(coordinateSystemSize, imageSize)};
+    auto rasterizer = std::make_unique<Pht::SoftwareRasterizer>(coordinateSystemSize, imageSize);
     
     DrawStripes(*rasterizer, squareSide);
     DrawEdgeBigBlast(*rasterizer, squareSide, cellSize);
@@ -241,7 +241,7 @@ std::unique_ptr<Pht::SceneObject> BlastRadiusAnimation::CreateSceneObject(const 
     imageMaterial.SetBlend(Pht::Blend::Yes);
     imageMaterial.GetDepthState().mDepthTest = false;
     
-    auto& sceneManager {engine.GetSceneManager()};
+    auto& sceneManager = engine.GetSceneManager();
     return sceneManager.CreateSceneObject(Pht::QuadMesh {squareSide, squareSide},
                                           imageMaterial,
                                           mSceneResources);
@@ -279,7 +279,7 @@ void BlastRadiusAnimation::Stop() {
 }
 
 void BlastRadiusAnimation::SetPosition(const Pht::Vec2& position) {
-    const auto cellSize {mScene.GetCellSize()};
+    const auto cellSize = mScene.GetCellSize();
 
     Pht::Vec3 positionInField {
         position.x * cellSize + cellSize / 2.0f,
@@ -309,8 +309,8 @@ void BlastRadiusAnimation::UpdateInFadingInState(float dt) {
     
     SetOpacity(opacityTarget * mTime / fadeInTime);
     
-    auto normalizedTime {(fadeInTime - mTime) / fadeInTime};
-    auto scale {1.0f + 1.0f * Pht::Lerp(normalizedTime, scalePoints)};
+    auto normalizedTime = (fadeInTime - mTime) / fadeInTime;
+    auto scale = 1.0f + 1.0f * Pht::Lerp(normalizedTime, scalePoints);
 
     SetScale(scale);
 
@@ -324,9 +324,8 @@ void BlastRadiusAnimation::UpdateInFadingInState(float dt) {
 void BlastRadiusAnimation::UpdateInActiveState(float dt) {
     mTime += dt;
     
-    auto opacity {
-        1.0f - opacityCurveAmplitude + opacityCurveAmplitude * std::sin(2.0f * 3.1415f * frequency * mTime)
-    };
+    auto opacity =
+        1.0f - opacityCurveAmplitude + opacityCurveAmplitude * std::sin(2.0f * 3.1415f * frequency * mTime);
     
     SetOpacity(opacity);
 }

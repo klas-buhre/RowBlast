@@ -10,10 +10,10 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto fewMovesAlertLimit {5};
-    constexpr auto animationDuration {0.75f};
-    constexpr auto animationScaleAmplitude {0.3f};
-    constexpr auto animationScaleAdd {0.3f};
+    constexpr auto fewMovesAlertLimit = 5;
+    constexpr auto animationDuration = 0.75f;
+    constexpr auto animationScaleAmplitude = 0.3f;
+    constexpr auto animationScaleAdd = 0.3f;
 }
 
 FewMovesAlertAnimation::FewMovesAlertAnimation(GameScene& scene, const GameLogic& gameLogic) :
@@ -45,24 +45,21 @@ void FewMovesAlertAnimation::UpdateInInactiveState() {
 }
 
 void FewMovesAlertAnimation::UpdateInActiveState(float dt) {
-    auto movesLeft {mGameLogic.GetMovesLeft()};
-    
+    auto movesLeft = mGameLogic.GetMovesLeft();
     if (movesLeft > fewMovesAlertLimit || movesLeft <= 0) {
         mState = State::Inactive;
         Pht::SceneObjectUtils::ScaleRecursively(*mMovesTextContainerSceneObject,
                                                 GameHud::movesTextScale);
     } else {
         mElapsedTime += dt;
-        
         if (mElapsedTime > animationDuration) {
             mElapsedTime = 0.0f;
         }
         
-        auto t {mElapsedTime * 2.0f * 3.1415f / animationDuration};
+        auto t = mElapsedTime * 2.0f * 3.1415f / animationDuration;
         
-        auto scale {
-            GameHud::movesTextScale + animationScaleAdd + animationScaleAmplitude * std::sin(t)
-        };
+        auto scale =
+            GameHud::movesTextScale + animationScaleAdd + animationScaleAmplitude * std::sin(t);
         
         Pht::SceneObjectUtils::ScaleRecursively(*mMovesTextContainerSceneObject, scale);
     }

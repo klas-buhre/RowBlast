@@ -14,21 +14,20 @@ using namespace RowBlast;
 
 DocumentViewerDialogView::DocumentViewerDialogView(Pht::IEngine& engine,
                                                    const CommonResources& commonResources) {
-    PotentiallyZoomedScreen zoom {PotentiallyZoomedScreen::No};
-    auto& guiResources {commonResources.GetGuiResources()};
-    auto& sceneManager {engine.GetSceneManager()};
+    auto zoom = PotentiallyZoomedScreen::No;
+    auto& guiResources = commonResources.GetGuiResources();
+    auto& sceneManager = engine.GetSceneManager();
     
     SetSize({engine.GetRenderer().GetHudFrustumSize().x, 26.0f});
     
     Pht::Material backgroundMaterial {"space.jpg"};
-    auto& backgroundSceneObject {
-        CreateSceneObject(Pht::QuadMesh {53.0f, 53.0f}, backgroundMaterial, sceneManager)
-    };
+    auto& backgroundSceneObject =
+        CreateSceneObject(Pht::QuadMesh {53.0f, 53.0f}, backgroundMaterial, sceneManager);
     backgroundSceneObject.GetTransform().SetPosition({0.0f, 0.0f, UiLayer::background});
     GetRoot().AddChild(backgroundSceneObject);
 
     Pht::Vec3 captionPosition {-7.1f, 11.1f, UiLayer::text};
-    auto& largeTextProperties {guiResources.GetLargeWhiteTextProperties(zoom)};
+    auto& largeTextProperties = guiResources.GetLargeWhiteTextProperties(zoom);
     mTermsOfServiceCaption = &CreateText(captionPosition,
                                          "TERMS OF SERVICE",
                                          largeTextProperties).GetSceneObject();
@@ -58,9 +57,8 @@ DocumentViewerDialogView::DocumentViewerDialogView(Pht::IEngine& engine,
 
     Pht::Material lineMaterial {Pht::Color{0.6f, 0.8f, 1.0f}};
     lineMaterial.SetOpacity(0.6f);
-    auto& lineSceneObject {
-        CreateSceneObject(Pht::QuadMesh {GetSize().x - 0.8f, 0.06f}, lineMaterial, sceneManager)
-    };
+    auto& lineSceneObject =
+        CreateSceneObject(Pht::QuadMesh {GetSize().x - 0.8f, 0.06f}, lineMaterial, sceneManager);
     lineSceneObject.GetTransform().SetPosition({0.0f, GetSize().y / 2.0f - 2.6f, UiLayer::textRectangle});
     GetRoot().AddChild(lineSceneObject);
 

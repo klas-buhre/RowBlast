@@ -22,11 +22,11 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto rectangleFadeInTime {0.3f};
-    constexpr auto slideTime {0.2f};
-    constexpr auto ufoHeadStartTime {0.2f};
-    constexpr auto displayDistance {0.65f};
-    constexpr auto textWidth {8.8f};
+    constexpr auto rectangleFadeInTime = 0.3f;
+    constexpr auto slideTime = 0.2f;
+    constexpr auto ufoHeadStartTime = 0.2f;
+    constexpr auto displayDistance = 0.65f;
+    constexpr auto textWidth = 8.8f;
     const Pht::Vec3 centerPosition {0.0f, 1.0f, 0.0f};
     const Pht::Vec3 leftUfoPosition {-13.0f, 4.6f, UiLayer::slidingTextUfo};
     const Pht::Vec3 centerUfoPosition {0.0f, 4.6f, UiLayer::slidingTextUfo};
@@ -62,7 +62,7 @@ SlidingTextAnimation::SlidingTextAnimation(Pht::IEngine& engine,
     mUfo {engine, commonResources, 3.2f},
     mUfoAnimation {engine, mUfo} {
     
-    auto& font {commonResources.GetHussarFontSize52PotentiallyZoomedScreen()};
+    auto& font = commonResources.GetHussarFontSize52PotentiallyZoomedScreen();
 
     mTexts.reserve(7);
     CreateText(font, 2.5f, true, {{-3.96f, 0.33f}, "CLEAR ALL"}, {{-5.17f, -1.58f}, "GRAY BLOCKS"});
@@ -98,20 +98,18 @@ void SlidingTextAnimation::CreateText(const Pht::Font& font,
     textProperties.mSecondShadowColor = Pht::Vec4 {0.2f, 0.2f, 0.2f, 0.5f};
     textProperties.mSecondShadowOffset = Pht::Vec2 {0.075f, 0.075f};
 
-    auto upperTextLineSceneObject {std::make_unique<Pht::SceneObject>()};
-    auto upperTextComponent {
+    auto upperTextLineSceneObject = std::make_unique<Pht::SceneObject>();
+    auto upperTextComponent =
         std::make_unique<Pht::TextComponent>(*upperTextLineSceneObject,
                                              upperTextLine.mText,
-                                             textProperties)
-    };
+                                             textProperties);
     upperTextLineSceneObject->SetComponent<Pht::TextComponent>(std::move(upperTextComponent));
     
-    auto lowerTextLineSceneObject {std::make_unique<Pht::SceneObject>()};
-    auto lowerTextComponent {
+    auto lowerTextLineSceneObject = std::make_unique<Pht::SceneObject>();
+    auto lowerTextComponent =
         std::make_unique<Pht::TextComponent>(*lowerTextLineSceneObject,
                                              lowerTextLine.mText,
-                                             textProperties)
-    };
+                                             textProperties);
     lowerTextLineSceneObject->SetComponent<Pht::TextComponent>(std::move(lowerTextComponent));
     
     mTexts.push_back(
@@ -150,14 +148,14 @@ void SlidingTextAnimation::CreateTwinkleParticleEffect() {
         .mShrinkDuration = 0.5f
     };
     
-    auto& particleSystem {mEngine.GetParticleSystem()};
+    auto& particleSystem = mEngine.GetParticleSystem();
     mTwinkleParticleEffect = particleSystem.CreateParticleEffectSceneObject(particleSettings,
                                                                             particleEmitterSettings,
                                                                             Pht::RenderMode::Triangles);
 }
 
 void SlidingTextAnimation::Init() {
-    auto& containerSceneObject {mScene.GetScene().CreateSceneObject()};
+    auto& containerSceneObject = mScene.GetScene().CreateSceneObject();
     containerSceneObject.GetTransform().SetPosition(centerPosition);
     mScene.GetHudContainer().AddChild(containerSceneObject);
     
@@ -176,25 +174,25 @@ void SlidingTextAnimation::Init() {
     mUfo.Hide();
     mEngine.GetRenderer().DisableShader(Pht::ShaderType::TexturedEnvMapLighting);
 
-    auto& frustumSize {mEngine.GetRenderer().GetHudFrustumSize()};
+    auto& frustumSize = mEngine.GetRenderer().GetHudFrustumSize();
     mLeftPosition = {-frustumSize.x / 2.0f - textWidth / 2.0f, 0.0f, 0.0f};
     mRightPosition = {frustumSize.x / 2.0f + textWidth / 2.0f, 0.0f, 0.0f};
 }
 
 void SlidingTextAnimation::CreateGradientRectangles(Pht::SceneObject& containerSceneObject) {
-    auto& scene {mScene.GetScene()};
+    auto& scene = mScene.GetScene();
     mGradientRectanglesSceneObject = &scene.CreateSceneObject();
     containerSceneObject.AddChild(*mGradientRectanglesSceneObject);
     mGradientRectanglesSceneObject->SetIsVisible(false);
     
-    auto& frustumSize {mEngine.GetRenderer().GetHudFrustumSize()};
+    auto& frustumSize = mEngine.GetRenderer().GetHudFrustumSize();
     
-    auto height {4.1f};
-    auto stripeHeight {0.09f};
-    auto stripeOffset {stripeHeight / 2.0f};
+    auto height = 4.1f;
+    auto stripeHeight = 0.09f;
+    auto stripeOffset = stripeHeight / 2.0f;
     Pht::Vec2 size {frustumSize.x, height};
-    auto leftQuadWidth {frustumSize.x / 3.0f};
-    auto rightQuadWidth {frustumSize.x / 3.0f};
+    auto leftQuadWidth = frustumSize.x / 3.0f;
+    auto rightQuadWidth = frustumSize.x / 3.0f;
 
     GradientRectangleColors colors {
         .mLeft = {0.93f, 0.5f, 0.0f, 0.8f},
@@ -296,14 +294,14 @@ SlidingTextAnimation::State SlidingTextAnimation::Update() {
 }
 
 void SlidingTextAnimation::UpdateInRectangleAppearingState() {
-    auto dt {mEngine.GetLastFrameSeconds()};
+    auto dt = mEngine.GetLastFrameSeconds();
     mElapsedTime += dt;
     
     Pht::SceneObjectUtils::SetAlphaRecursively(*mGradientRectanglesSceneObject,
                                                mElapsedTime / rectangleFadeInTime);
 
-    auto normalizedTime {(rectangleFadeInTime - mElapsedTime) / rectangleFadeInTime};
-    auto scale {1.0f + 3.0f * Pht::Lerp(normalizedTime, scalePoints)};
+    auto normalizedTime = (rectangleFadeInTime - mElapsedTime) / rectangleFadeInTime;
+    auto scale = 1.0f + 3.0f * Pht::Lerp(normalizedTime, scalePoints);
     
     mGradientRectanglesSceneObject->GetTransform().SetScale(scale);
     
@@ -315,13 +313,13 @@ void SlidingTextAnimation::UpdateInRectangleAppearingState() {
         mText->mUpperTextLineSceneObject->SetIsVisible(true);
         mText->mLowerTextLineSceneObject->SetIsVisible(true);
 
-        auto& audio {mEngine.GetAudio()};
+        auto& audio = mEngine.GetAudio();
         audio.PlaySound(static_cast<Pht::AudioResourceId>(SoundId::SlidingTextWhoosh1));
     }
 }
 
 void SlidingTextAnimation::UpdateInSlidingInState() {
-    auto dt {mEngine.GetLastFrameSeconds()};
+    auto dt = mEngine.GetLastFrameSeconds();
     
     mTextPosition.x += mVelocity * dt;
     mVelocity -= dt * (mInitialVelocity - mDisplayVelocity) / slideTime;
@@ -341,15 +339,15 @@ void SlidingTextAnimation::UpdateInSlidingInState() {
 }
 
 void SlidingTextAnimation::UpdateTextLineSceneObjectPositions() {
-    auto upperTextLinePosition {mLeftPosition + mTextPosition + mText->mUpperTextLinePosition};
+    auto upperTextLinePosition = mLeftPosition + mTextPosition + mText->mUpperTextLinePosition;
     mText->mUpperTextLineSceneObject->GetTransform().SetPosition(upperTextLinePosition);
     
-    auto lowerTextLinePosition {mRightPosition - mTextPosition + mText->mLowerTextLinePosition};
+    auto lowerTextLinePosition = mRightPosition - mTextPosition + mText->mLowerTextLinePosition;
     mText->mLowerTextLineSceneObject->GetTransform().SetPosition(lowerTextLinePosition);
 }
 
 void SlidingTextAnimation::UpdateInDisplayingTextState() {
-    auto dt {mEngine.GetLastFrameSeconds()};
+    auto dt = mEngine.GetLastFrameSeconds();
     mTextPosition.x += mDisplayVelocity * dt;
     mElapsedTime += dt;
     
@@ -361,7 +359,7 @@ void SlidingTextAnimation::UpdateInDisplayingTextState() {
         mElapsedTime = 0.0f;
         mVelocity = mDisplayVelocity;
         
-        auto& audio {mEngine.GetAudio()};
+        auto& audio = mEngine.GetAudio();
         audio.PlaySound(static_cast<Pht::AudioResourceId>(SoundId::SlidingTextWhoosh2));
     
         FlyOutUfo();
@@ -375,7 +373,7 @@ void SlidingTextAnimation::UpdateInDisplayingTextState() {
 }
 
 void SlidingTextAnimation::UpdateInSlidingOutState() {
-    auto dt {mEngine.GetLastFrameSeconds()};
+    auto dt = mEngine.GetLastFrameSeconds();
     
     mTextPosition.x += mVelocity * dt;
     mVelocity += dt * (mInitialVelocity - mDisplayVelocity) / slideTime;
@@ -398,7 +396,7 @@ void SlidingTextAnimation::UpdateInSlidingOutState() {
 }
 
 void SlidingTextAnimation::UpdateInRectangleDisappearingState() {
-    auto dt {mEngine.GetLastFrameSeconds()};
+    auto dt = mEngine.GetLastFrameSeconds();
     mElapsedTime += dt;
     
     Pht::SceneObjectUtils::SetAlphaRecursively(*mGradientRectanglesSceneObject,

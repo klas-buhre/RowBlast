@@ -21,13 +21,13 @@ using namespace RowBlast;
 
 namespace {
     const Pht::Vec3 startPosition {0.0f, 5.5f, 0.0f};
-    constexpr auto scaleInDuration {0.27f};
-    constexpr auto displayTextDuration {0.6f};
-    constexpr auto slideOutDuration {0.25f};
-    constexpr auto slideDistance {12.0f};
-    constexpr auto acceleration {2.0f * slideDistance / (slideOutDuration * slideOutDuration)};
-    constexpr auto textShadowAlpha {0.5f};
-    constexpr auto textScale {0.83f};
+    constexpr auto scaleInDuration = 0.27f;
+    constexpr auto displayTextDuration = 0.6f;
+    constexpr auto slideOutDuration = 0.25f;
+    constexpr auto slideDistance = 12.0f;
+    constexpr auto acceleration = 2.0f * slideDistance / (slideOutDuration * slideOutDuration);
+    constexpr auto textShadowAlpha = 0.5f;
+    constexpr auto textScale = 0.83f;
     const std::string comboString {"COMBO "};
     const std::string comboDigits {"     "}; // Warning! Must be five spaces to fit digits.
     
@@ -59,7 +59,7 @@ SmallTextAnimation::SmallTextAnimation(Pht::IEngine& engine,
     mEngine {engine},
     mScene {scene} {
     
-    auto& font {commonResources.GetHussarFontSize52PotentiallyZoomedScreen()};
+    auto& font = commonResources.GetHussarFontSize52PotentiallyZoomedScreen();
     mComboTextSceneObject = &CreateText(font, {-3.4f, -0.5f}, comboString + comboDigits);
     mAwesomeTextSceneObject = &CreateText(font, {-3.8f, -0.5f}, "AWESOME!");
     mFantasticTextSceneObject = &CreateText(font, {-3.9f, -0.5f}, "FANTASTIC!");
@@ -89,15 +89,14 @@ Pht::SceneObject& SmallTextAnimation::CreateText(const Pht::Font& font,
     textProperties.mSecondShadowColor = Pht::Vec4 {0.2f, 0.2f, 0.2f, textShadowAlpha};
     textProperties.mSecondShadowOffset = Pht::Vec2 {0.075f, 0.075f};
 
-    auto textSceneObject {std::make_unique<Pht::SceneObject>()};
+    auto textSceneObject = std::make_unique<Pht::SceneObject>();
     textSceneObject->GetTransform().SetPosition({position.x, position.y, UiLayer::text});
     
-    auto textComponent {
-        std::make_unique<Pht::TextComponent>(*textSceneObject, text, textProperties)
-    };
+    auto textComponent =
+        std::make_unique<Pht::TextComponent>(*textSceneObject, text, textProperties);
     textSceneObject->SetComponent(std::move(textComponent));
     
-    auto& retval {*textSceneObject};
+    auto& retval = *textSceneObject;
     mTextSceneObjects.push_back(std::move(textSceneObject));
     
     return retval;
@@ -127,7 +126,7 @@ void SmallTextAnimation::CreateTwinkleParticleEffect(Pht::IEngine& engine) {
         .mShrinkDuration = 0.3f
     };
     
-    auto& particleSystem {engine.GetParticleSystem()};
+    auto& particleSystem = engine.GetParticleSystem();
     mTwinkleParticleEffect = particleSystem.CreateParticleEffectSceneObject(particleSettings,
                                                                             particleEmitterSettings,
                                                                             Pht::RenderMode::Triangles);
@@ -151,7 +150,7 @@ void SmallTextAnimation::StartComboMessage(int numCombos) {
         return;
     }
     
-    auto& audio {mEngine.GetAudio()};
+    auto& audio = mEngine.GetAudio();
     
     if (numCombos >= 9) {
         audio.PlaySound(static_cast<Pht::AudioResourceId>(SoundId::Fantastic));
@@ -166,13 +165,13 @@ void SmallTextAnimation::StartComboMessage(int numCombos) {
     Start(*mComboTextSceneObject);
     mTwinkleParticleEffect->GetTransform().SetPosition({-3.15f, 0.3f, UiLayer::text});
     
-    const auto bufSize {64};
+    const auto bufSize = 64;
     char buffer[bufSize];
     std::snprintf(buffer, bufSize, "%d!  ", numCombos);
     
-    auto& text {mComboTextSceneObject->GetComponent<Pht::TextComponent>()->GetText()};
-    auto textLength {text.size()};
-    auto comboStringSize {comboString.size()};
+    auto& text = mComboTextSceneObject->GetComponent<Pht::TextComponent>()->GetText();
+    auto textLength = text.size();
+    auto comboStringSize = comboString.size();
     assert(textLength >= comboStringSize + comboDigits.size());
     text[comboStringSize] = buffer[0];
     text[comboStringSize + 1] = buffer[1];
@@ -221,9 +220,8 @@ void SmallTextAnimation::Start(Pht::SceneObject& textSceneObject) {
     mActiveTextSceneObject->SetIsVisible(true);
     mActiveTextSceneObject->SetIsStatic(false);
     
-    auto& textProperties {
-        mActiveTextSceneObject->GetComponent<Pht::TextComponent>()->GetProperties()
-    };
+    auto& textProperties =
+        mActiveTextSceneObject->GetComponent<Pht::TextComponent>()->GetProperties();
     textProperties.mColor.w = 1.0f;
     textProperties.mSpecularColor.w = 1.0f;
     textProperties.mShadowColor.w = 1.0f;
@@ -253,7 +251,6 @@ void SmallTextAnimation::Update(float dt) {
 
 void SmallTextAnimation::UpdateInScalingInState(float dt) {
     mElapsedTime += dt;
-    
     if (mElapsedTime > scaleInDuration) {
         mState = State::DisplayingText;
         mElapsedTime = 0.0f;
@@ -261,8 +258,8 @@ void SmallTextAnimation::UpdateInScalingInState(float dt) {
         
         mTwinkleParticleEffect->GetComponent<Pht::ParticleEffect>()->Start();
     } else {
-        auto reversedNormalizedTime {1.0f - (mElapsedTime / scaleInDuration)};
-        auto scale {(1.0f - Pht::Lerp(reversedNormalizedTime, scalePoints)) * textScale};
+        auto reversedNormalizedTime = 1.0f - (mElapsedTime / scaleInDuration);
+        auto scale = (1.0f - Pht::Lerp(reversedNormalizedTime, scalePoints)) * textScale;
 
         Pht::SceneObjectUtils::ScaleRecursively(*mContainerSceneObject, scale);
     }
@@ -285,7 +282,6 @@ void SmallTextAnimation::UpdateInDisplayingTextState(float dt) {
 
 void SmallTextAnimation::UpdateInSlidingOutState(float dt) {
     mElapsedTime += dt;
-    
     if (mElapsedTime > slideOutDuration) {
         mState = State::Inactive;
         HideAllTextObjects();
@@ -296,10 +292,9 @@ void SmallTextAnimation::UpdateInSlidingOutState(float dt) {
         Pht::Vec3 position {startPosition.x, startPosition.y + mTextSlide, startPosition.z};
         mContainerSceneObject->GetTransform().SetPosition(position);
         
-        auto alpha {(slideOutDuration - mElapsedTime) / slideOutDuration};
-        auto& textProperties {
-            mActiveTextSceneObject->GetComponent<Pht::TextComponent>()->GetProperties()
-        };
+        auto alpha = (slideOutDuration - mElapsedTime) / slideOutDuration;
+        auto& textProperties =
+            mActiveTextSceneObject->GetComponent<Pht::TextComponent>()->GetProperties();
         textProperties.mColor.w = alpha;
         textProperties.mSpecularColor.w = alpha;
         textProperties.mShadowColor.w = alpha;

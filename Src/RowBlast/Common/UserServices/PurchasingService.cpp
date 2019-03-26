@@ -97,7 +97,7 @@ void PurchasingService::Update() {
 
 void PurchasingService::UpdateInPurchasePendingState() {
     mTransaction.mElapsedTime += mEngine.GetLastFrameSeconds();
-    
+
     if (mTransaction.mElapsedTime > transactionTimeout) {
         switch (mTransaction.mProduct->mId) {
             case ProductId::Currency100Coins:
@@ -183,7 +183,6 @@ void PurchasingService::WithdrawCoins(CoinWithdrawReason coinWithdrawReason) {
     auto numCoinsToWithdraw = CalcNumCoinsToWithdraw(coinWithdrawReason);
     
     mCoinBalance -= numCoinsToWithdraw;
-    
     if (mCoinBalance < 0) {
         mCoinBalance = 0;
     }

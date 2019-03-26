@@ -7,7 +7,7 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto animationDuration {0.28f};
+    constexpr auto animationDuration = 0.28f;
     
     class ResetPreviewPieceAnimationToStartGuard {
     public:
@@ -54,7 +54,7 @@ void PreviewPiecesAnimation::Update(float dt) {
     switch (mState) {
         case State::SwitchingPiece:
         case State::RemovingActivePiece: {
-            auto normalizedTime {UpdateTime(dt)};
+            auto normalizedTime = UpdateTime(dt);
             if (normalizedTime > 1.0f) {
                 mState = State::Inactive;
                 mScene.GetHud().OnSwitchPieceAnimationFinished();
@@ -64,10 +64,10 @@ void PreviewPiecesAnimation::Update(float dt) {
             break;
         }
         case State::NextPieceAndSwitch: {
-            auto normalizedTime {UpdateTime(dt)};
+            auto normalizedTime = UpdateTime(dt);
             if (normalizedTime > 1.0f) {
                 mState = State::Inactive;
-                auto& hud {mScene.GetHud()};
+                auto& hud = mScene.GetHud();
                 hud.OnNextPieceAnimationFinished();
                 hud.OnSwitchPieceAnimationFinished();
             } else {
@@ -82,14 +82,13 @@ void PreviewPiecesAnimation::Update(float dt) {
 }
 
 void PreviewPiecesAnimation::StartNextPieceAndSwitchingAnimation() {
-    auto& hud {mScene.GetHud()};
-    auto& nextPiecesPositionsInHud {hud.GetNextPreviewPiecesRelativePositions()};
-    auto& selectablePiecesPositionsInHud {hud.GetSelectablePreviewPiecesRelativePositions()};
-    auto& nextPiecesContainerPos {hud.GetNextPiecesContainer().GetTransform().GetPosition()};
+    auto& hud = mScene.GetHud();
+    auto& nextPiecesPositionsInHud = hud.GetNextPreviewPiecesRelativePositions();
+    auto& selectablePiecesPositionsInHud = hud.GetSelectablePreviewPiecesRelativePositions();
+    auto& nextPiecesContainerPos = hud.GetNextPiecesContainer().GetTransform().GetPosition();
     
-    auto& selectablePiecesContainerPos {
-        hud.GetSelectablePiecesContainer().GetTransform().GetPosition()
-    };
+    auto& selectablePiecesContainerPos =
+        hud.GetSelectablePiecesContainer().GetTransform().GetPosition();
     
     Pht::Vec3 nextPieceRightPosition {
         selectablePiecesContainerPos - nextPiecesContainerPos + selectablePiecesPositionsInHud[1]
@@ -118,8 +117,8 @@ void PreviewPiecesAnimation::StartNextPieceAndSwitchingAnimation() {
 }
 
 void PreviewPiecesAnimation::StartSwitchingPiecesAnimation() {
-    auto& hud {mScene.GetHud()};
-    auto& piecePositionsInHud {hud.GetSelectablePreviewPiecesRelativePositions()};
+    auto& hud = mScene.GetHud();
+    auto& piecePositionsInHud = hud.GetSelectablePreviewPiecesRelativePositions();
     
     SelectablePreviewPiecesPositionsConfig piecePositions {
         .mLeft = piecePositionsInHud[0],
@@ -135,8 +134,8 @@ void PreviewPiecesAnimation::StartSwitchingPiecesAnimation() {
 }
 
 void PreviewPiecesAnimation::StartRemoveActivePieceAnimation() {
-    auto& hud {mScene.GetHud()};
-    auto& piecePositionsInHud {hud.GetSelectablePreviewPiecesRelativePositions()};
+    auto& hud = mScene.GetHud();
+    auto& piecePositionsInHud = hud.GetSelectablePreviewPiecesRelativePositions();
 
     SelectablePreviewPiecesPositionsConfig piecePositions {
         .mLeft = piecePositionsInHud[0],

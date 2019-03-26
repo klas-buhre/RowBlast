@@ -14,12 +14,12 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto lineSpacing {0.65f};
-    constexpr auto maxLineWidth {49};
+    constexpr auto lineSpacing = 0.65f;
+    constexpr auto maxLineWidth = 49;
     const Pht::Vec3 upperLeft {-7.1f, 9.0f, UiLayer::text};
     const Pht::Vec2 scrollPanelSize {15.0f, 22.0};
-    constexpr auto panelCutoffVelocity {0.1f};
-    constexpr auto dampingCoefficient {2.2f};
+    constexpr auto panelCutoffVelocity = 0.1f;
+    constexpr auto dampingCoefficient = 2.2f;
     
     std::string ToFilename(DocumentId documentId) {
         switch (documentId) {
@@ -85,14 +85,14 @@ void DocumentViewerController::SetDialogCaption(DocumentId documentId) {
 }
 
 DocumentViewerController::Command DocumentViewerController::Update() {
-    auto command {Command::None};
-    auto& input {mEngine.GetInput()};
+    auto command = Command::None;
+    auto& input = mEngine.GetInput();
     
     while (input.HasEvents()) {
-        auto& event {input.GetNextEvent()};
+        auto& event = input.GetNextEvent();
         switch (event.GetKind()) {
             case Pht::InputKind::Touch: {
-                auto& touchEvent {event.GetTouchEvent()};
+                auto& touchEvent = event.GetTouchEvent();
                 switch (OnTouch(touchEvent)) {
                     case Result::None:
                         mScrollPanel->OnTouch(touchEvent);
@@ -120,8 +120,8 @@ DocumentViewerController::Command DocumentViewerController::Update() {
 
 DocumentViewerController::Result
 DocumentViewerController::OnTouch(const Pht::TouchEvent& touchEvent) {
-    auto& closeButton {mDialogView.GetCloseButton()};
-    auto& backButton {mDialogView.GetBackButton()};
+    auto& closeButton = mDialogView.GetCloseButton();
+    auto& backButton = mDialogView.GetBackButton();
     
     if (closeButton.IsClicked(touchEvent) || backButton.IsClicked(touchEvent)) {
         return Result::Close;

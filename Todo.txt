@@ -68,8 +68,9 @@ Ongoing tasks:
       -Level 65.
       -Level 66.
       -Level 67.
+
     -Removing the curly brace initialization for auto declarations:
-       Finished Common.
+       Finished Animations directory.
 
 
 

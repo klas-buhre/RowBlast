@@ -12,15 +12,15 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto shieldWidthInCells {9.2f};
-    constexpr auto shieldHeightInCells {2.5f};
-    constexpr auto shieldOpacity {0.275f};
-    constexpr auto flashOpacity {1.0f};
-    constexpr auto flashDuration {0.57f};
-    constexpr auto pulseAmplitude {0.05f};
-    constexpr auto pulseDuration {1.25f};
-    constexpr auto appearTime {0.4f};
-    constexpr auto inactiveRelativeYPosition {13.3f};
+    constexpr auto shieldWidthInCells = 9.2f;
+    constexpr auto shieldHeightInCells = 2.5f;
+    constexpr auto shieldOpacity = 0.275f;
+    constexpr auto flashOpacity = 1.0f;
+    constexpr auto flashDuration = 0.57f;
+    constexpr auto pulseAmplitude = 0.05f;
+    constexpr auto pulseDuration = 1.25f;
+    constexpr auto appearTime = 0.4f;
+    constexpr auto inactiveRelativeYPosition = 13.3f;
 }
 
 ShieldAnimation::ShieldAnimation(Pht::IEngine& engine,
@@ -34,10 +34,10 @@ ShieldAnimation::ShieldAnimation(Pht::IEngine& engine,
     shieldMaterial.GetDepthState().mDepthTest = false;
     shieldMaterial.SetOpacity(shieldOpacity);
     
-    auto& sceneManager {engine.GetSceneManager()};
-    auto cellSize {scene.GetCellSize()};
-    auto shieldWidth {cellSize * shieldWidthInCells};
-    auto shieldHeight {cellSize * shieldHeightInCells};
+    auto& sceneManager = engine.GetSceneManager();
+    auto cellSize = scene.GetCellSize();
+    auto shieldWidth = cellSize * shieldWidthInCells;
+    auto shieldHeight = cellSize * shieldHeightInCells;
     mShieldRenderable = sceneManager.CreateRenderableObject(Pht::QuadMesh {shieldWidth, shieldHeight},
                                                             shieldMaterial);
 
@@ -90,12 +90,12 @@ void ShieldAnimation::Update(float dt) {
 void ShieldAnimation::UpdateInAppearingState(float dt) {
     mElapsedTime += dt;
 
-    auto normalizedTime {mElapsedTime / appearTime};
+    auto normalizedTime = mElapsedTime / appearTime;
     mShieldRenderable->GetMaterial().SetOpacity(normalizedTime * shieldOpacity);
     
-    auto yDiff {inactiveRelativeYPosition - shieldRelativeYPosition};
+    auto yDiff = inactiveRelativeYPosition - shieldRelativeYPosition;
     mShieldRelativeYPosition = shieldRelativeYPosition + (1.0f - normalizedTime) * yDiff;
-    auto& transform {mShieldSceneObject->GetTransform()};
+    auto& transform = mShieldSceneObject->GetTransform();
     transform.SetScale({1.0f, normalizedTime, 1.0f});
     
     if (mElapsedTime > appearTime) {
@@ -109,8 +109,8 @@ void ShieldAnimation::UpdateInAppearingState(float dt) {
 }
 
 void ShieldAnimation::UpdatePosition() {
-    auto cellSize {mScene.GetCellSize()};
-    auto lowestVisibleRow {mScrollController.GetLowestVisibleRow()};
+    auto cellSize = mScene.GetCellSize();
+    auto lowestVisibleRow = mScrollController.GetLowestVisibleRow();
     
     Pht::Vec3 positionInField {
         mScene.GetFieldWidth() / 2.0f,
@@ -123,13 +123,12 @@ void ShieldAnimation::UpdatePosition() {
 
 void ShieldAnimation::UpdateInPulsatingState(float dt) {
     mElapsedTime += dt;
-    
     if (mElapsedTime > pulseDuration) {
         mElapsedTime = 0.0f;
     }
 
-    auto sineOfT {std::sin(mElapsedTime * 2.0f * 3.1415f / pulseDuration)};
-    auto opactiy {shieldOpacity + pulseAmplitude * sineOfT};
+    auto sineOfT = std::sin(mElapsedTime * 2.0f * 3.1415f / pulseDuration);
+    auto opactiy = shieldOpacity + pulseAmplitude * sineOfT;
     mShieldRenderable->GetMaterial().SetOpacity(opactiy);
     
     UpdatePosition();
@@ -137,14 +136,13 @@ void ShieldAnimation::UpdateInPulsatingState(float dt) {
 
 void ShieldAnimation::UpdateInFlashingState(float dt) {
     mElapsedTime += dt;
-    
     if (mElapsedTime > flashDuration) {
         mShieldRenderable->GetMaterial().SetOpacity(shieldOpacity);
         GoToPulsatingState();
     } else {
-        auto normalizedTime {(flashDuration - mElapsedTime) / flashDuration};
-        auto opacityDiff {flashOpacity - shieldOpacity};
-        auto opacity {shieldOpacity + normalizedTime * opacityDiff};
+        auto normalizedTime = (flashDuration - mElapsedTime) / flashDuration;
+        auto opacityDiff = flashOpacity - shieldOpacity;
+        auto opacity = shieldOpacity + normalizedTime * opacityDiff;
         
         mShieldRenderable->GetMaterial().SetOpacity(opacity);
     }

@@ -11,9 +11,9 @@
 using namespace RowBlast;
 
 namespace {
-    const auto duration {0.35f};
-    const auto scaleUpSpeed {3.2f};
-    const auto fadeSpeed {BlueprintSlotFillAnimation::mInitialOpacity / duration};
+    const auto duration = 0.35f;
+    const auto scaleUpSpeed = 3.2f;
+    const auto fadeSpeed = BlueprintSlotFillAnimation::mInitialOpacity / duration;
 }
 
 BlueprintSlotsFilledAnimation::BlueprintSlotsFilledAnimation(Field& field,
@@ -26,11 +26,11 @@ BlueprintSlotsFilledAnimation::BlueprintSlotsFilledAnimation(Field& field,
     mContainerSceneObject = containerSceneObject.get();
     mSceneResources.AddSceneObject(std::move(containerSceneObject));
     
-    auto& animationRenderable {levelResources.GetBlueprintSlotAnimationRenderable()};
+    auto& animationRenderable = levelResources.GetBlueprintSlotAnimationRenderable();
     
-    for (auto i {0}; i < numSceneObjects; ++i) {
-        auto sceneObject {std::make_unique<Pht::SceneObject>()};
-        auto renderable {std::make_unique<Pht::RenderableObject>(animationRenderable)};
+    for (auto i = 0; i < numSceneObjects; ++i) {
+        auto sceneObject = std::make_unique<Pht::SceneObject>();
+        auto renderable = std::make_unique<Pht::RenderableObject>(animationRenderable);
         
         sceneObject->SetRenderable(renderable.get());
         mContainerSceneObject->AddChild(*sceneObject);
@@ -52,15 +52,14 @@ void BlueprintSlotsFilledAnimation::Init() {
 }
 
 void BlueprintSlotsFilledAnimation::Update(float dt) {
-    auto* blueprintGrid {mField.GetBlueprintGrid()};
-    
+    auto* blueprintGrid = mField.GetBlueprintGrid();
     if (blueprintGrid == nullptr) {
         return;
     }
     
-    for (auto row {0}; row < mField.GetNumRows(); ++row) {
-        for (auto column {0}; column < mField.GetNumColumns(); ++column) {
-            auto& slotFilledAnimation {(*blueprintGrid)[row][column].mAnimation};
+    for (auto row = 0; row < mField.GetNumRows(); ++row) {
+        for (auto column = 0; column < mField.GetNumColumns(); ++column) {
+            auto& slotFilledAnimation = (*blueprintGrid)[row][column].mAnimation;
             
             if (slotFilledAnimation.mIsActive) {
                 AnimateSlot(row, column, slotFilledAnimation, dt);
@@ -77,7 +76,7 @@ void BlueprintSlotsFilledAnimation::AnimateSlot(int row,
         animation.mSceneObject = mSceneObjects[mNextAvailableSceneObject % numSceneObjects];
         ++mNextAvailableSceneObject;
         
-        auto cellSize {mScene.GetCellSize()};
+        auto cellSize = mScene.GetCellSize();
         
         Pht::Vec3 slotPosition {
             column * cellSize + cellSize / 2.0f,
@@ -96,7 +95,7 @@ void BlueprintSlotsFilledAnimation::AnimateSlot(int row,
     animation.mSceneObject->GetTransform().SetScale(scale);
     
     animation.mOpacity -= fadeSpeed * dt;
-    auto& material {animation.mSceneObject->GetRenderable()->GetMaterial()};
+    auto& material = animation.mSceneObject->GetRenderable()->GetMaterial();
     material.SetOpacity(animation.mOpacity);
     material.GetDepthState().mDepthWrite = true;
     

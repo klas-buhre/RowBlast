@@ -11,11 +11,11 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto bombAnimationDuration {4.5f};
-    constexpr auto bombRotationAmplitude {22.0f};
-    constexpr auto rowBombRotationSpeed {35.0f};
-    constexpr auto emissiveAnimationDuration {1.5f};
-    constexpr auto emissiveAmplitude {1.7f};
+    constexpr auto bombAnimationDuration = 4.5f;
+    constexpr auto bombRotationAmplitude = 22.0f;
+    constexpr auto rowBombRotationSpeed = 35.0f;
+    constexpr auto emissiveAnimationDuration = 1.5f;
+    constexpr auto emissiveAmplitude = 1.7f;
     
     template <typename T>
     void AnimateBombPreviewPieces(T& previewPieces, const Pht::Vec3& bombRotation) {
@@ -52,7 +52,6 @@ void BombsAnimation::Init() {
 
 void BombsAnimation::Update(float dt) {
     mAnimationTime += dt;
-    
     if (mAnimationTime > bombAnimationDuration) {
         mAnimationTime = 0.0f;
     }
@@ -64,13 +63,12 @@ void BombsAnimation::Update(float dt) {
 
 void BombsAnimation::AnimateEmissive(float dt) {
     mEmissiveAnimationTime += dt;
-    
     if (mEmissiveAnimationTime > emissiveAnimationDuration) {
         mEmissiveAnimationTime = 0.0f;
     }
 
-    auto sineOfT {sin(mEmissiveAnimationTime * 2.0f * 3.1415f / emissiveAnimationDuration)};
-    auto emissive {emissiveAmplitude * (sineOfT + 1.0f) / 2.0f};
+    auto sineOfT = sin(mEmissiveAnimationTime * 2.0f * 3.1415f / emissiveAnimationDuration);
+    auto emissive = emissiveAmplitude * (sineOfT + 1.0f) / 2.0f;
     
     Pht::SceneObjectUtils::SetEmissiveInRenderable(mPieceResources.GetBombRenderableObject(),
                                                    emissive);
@@ -85,9 +83,9 @@ void BombsAnimation::AnimateEmissive(float dt) {
 }
 
 void BombsAnimation::AnimateBombRotation(float dt) {
-    auto t {mAnimationTime * 2.0f * 3.1415f / bombAnimationDuration};
-    auto xAngle {bombRotationAmplitude * sin(t) + 90.0f};
-    auto yAngle {bombRotationAmplitude * cos(t)};
+    auto t = mAnimationTime * 2.0f * 3.1415f / bombAnimationDuration;
+    auto xAngle = bombRotationAmplitude * sin(t) + 90.0f;
+    auto yAngle = bombRotationAmplitude * cos(t);
     
     mBombRotation = {xAngle, yAngle, 0.0f};
     

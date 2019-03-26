@@ -11,11 +11,11 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto glowWidthInCells {9.2f};
-    constexpr auto glowHeightInCells {1.0f};
-    constexpr auto glowOpacity {0.275f};
-    constexpr auto pulseAmplitude {0.435f};
-    constexpr auto pulseDuration {1.25f};
+    constexpr auto glowWidthInCells = 9.2f;
+    constexpr auto glowHeightInCells = 1.0f;
+    constexpr auto glowOpacity = 0.275f;
+    constexpr auto pulseAmplitude = 0.435f;
+    constexpr auto pulseDuration = 1.25f;
 }
 
 FieldBottomGlowAnimation::FieldBottomGlowAnimation(Pht::IEngine& engine,
@@ -29,11 +29,11 @@ FieldBottomGlowAnimation::FieldBottomGlowAnimation(Pht::IEngine& engine,
     glowMaterial.GetDepthState().mDepthTest = false;
     glowMaterial.SetOpacity(glowOpacity);
     
-    auto& sceneManager {engine.GetSceneManager()};
-    auto cellSize {scene.GetCellSize()};
-    auto halfWidth {cellSize * glowWidthInCells / 2.0f};
-    auto halfHeight {cellSize * glowHeightInCells / 2.0f};
-    auto f {0.9f};
+    auto& sceneManager = engine.GetSceneManager();
+    auto cellSize = scene.GetCellSize();
+    auto halfWidth = cellSize * glowWidthInCells / 2.0f;
+    auto halfHeight = cellSize * glowHeightInCells / 2.0f;
+    auto f = 0.9f;
 
     Pht::QuadMesh::Vertices vertices {
         {{-halfWidth, -halfHeight, 0.0f}, {0.3f * f, 0.3f * f, 0.752f * f, 1.0f}},
@@ -50,7 +50,7 @@ void FieldBottomGlowAnimation::Init() {
     mScene.GetFieldBlocksContainer().AddChild(*mGlowSceneObject);
     GoToInactiveState();
     
-    auto cellSize {mScene.GetCellSize()};
+    auto cellSize = mScene.GetCellSize();
     
     Pht::Vec3 positionInField {
         mScene.GetFieldWidth() / 2.0f,
@@ -74,14 +74,12 @@ void FieldBottomGlowAnimation::Update(float dt) {
 
 void FieldBottomGlowAnimation::UpdateInActiveState(float dt) {
     mElapsedTime += dt;
-    
     if (mElapsedTime > pulseDuration) {
         mElapsedTime = 0.0f;
     }
 
-    auto sineOfT {std::sin(mElapsedTime * 2.0f * 3.1415f / pulseDuration)};
-    auto opactiy {glowOpacity + pulseAmplitude * sineOfT};
-    
+    auto sineOfT = std::sin(mElapsedTime * 2.0f * 3.1415f / pulseDuration);
+    auto opactiy = glowOpacity + pulseAmplitude * sineOfT;
     if (opactiy < 0.0f) {
         opactiy = 0.0f;
     }

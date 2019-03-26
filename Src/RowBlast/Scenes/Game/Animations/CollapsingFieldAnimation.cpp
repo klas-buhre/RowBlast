@@ -6,25 +6,24 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto gravitationalAcceleration {-55.0f};
-    constexpr auto springCoefficient {5000.0f};
-    constexpr auto dampingCoefficient {55.75f};
-    constexpr auto waitTime {0.18f};
-    constexpr auto fallingStateFixedTimeStep {0.016f};
-    constexpr auto bouncingStateFixedTimeStep {0.002f};
+    constexpr auto gravitationalAcceleration = -55.0f;
+    constexpr auto springCoefficient = 5000.0f;
+    constexpr auto dampingCoefficient = 55.75f;
+    constexpr auto waitTime = 0.18f;
+    constexpr auto fallingStateFixedTimeStep = 0.016f;
+    constexpr auto bouncingStateFixedTimeStep = 0.002f;
     
     void UpdateBlockWhileTouchingSpring(SubCell& subCell, int row, float dt) {
-        auto springBoundry {static_cast<float>(row)};
-        auto& blockPosition {subCell.mPosition};
-        auto& animation {subCell.mFallingBlockAnimation};
-        auto springDisplacement {springBoundry - blockPosition.y};
+        auto springBoundry = static_cast<float>(row);
+        auto& blockPosition = subCell.mPosition;
+        auto& animation = subCell.mFallingBlockAnimation;
+        auto springDisplacement = springBoundry - blockPosition.y;
         
-        auto acceleration {
+        auto acceleration =
             springCoefficient * springDisplacement + gravitationalAcceleration -
-            dampingCoefficient * animation.mVelocity
-        };
+            dampingCoefficient * animation.mVelocity;
         
-        auto previousVelocity {animation.mVelocity};
+        auto previousVelocity = animation.mVelocity;
         
         animation.mVelocity += acceleration * dt;
         blockPosition.y += animation.mVelocity * dt;
@@ -38,13 +37,13 @@ namespace {
     }
 
     void UpdateBlockInBouncingStateFixedTimeStep(SubCell& subCell, int row, float dt) {
-        auto springBoundry {static_cast<float>(row)};
-        auto& blockPosition {subCell.mPosition};
+        auto springBoundry = static_cast<float>(row);
+        auto& blockPosition = subCell.mPosition;
 
         if (blockPosition.y <= springBoundry) {
             UpdateBlockWhileTouchingSpring(subCell, row, dt);
         } else {
-            auto& animation {subCell.mFallingBlockAnimation};
+            auto& animation = subCell.mFallingBlockAnimation;
             
             animation.mVelocity += gravitationalAcceleration * dt;
             blockPosition.y += animation.mVelocity * dt;
@@ -62,13 +61,12 @@ namespace {
             return;
         }
         
-        auto frameTimeLeft {frameDuration};
+        auto frameTimeLeft = frameDuration;
         
         for (;;) {
-            auto timeStep {
+            auto timeStep =
                 frameTimeLeft > bouncingStateFixedTimeStep ? bouncingStateFixedTimeStep :
-                frameTimeLeft
-            };
+                frameTimeLeft;
             
             UpdateBlockInBouncingStateFixedTimeStep(subCell, row, timeStep);
             frameTimeLeft -= bouncingStateFixedTimeStep;
@@ -81,21 +79,21 @@ namespace {
     }
 
     void UpdateBlockInFallingStateFixedTimeStep(SubCell& subCell, int row, float dt) {
-        auto& blockPosition {subCell.mPosition};
-        auto& animation {subCell.mFallingBlockAnimation};
-        auto newVelocity {gravitationalAcceleration * dt + animation.mVelocity};
-        auto dy {newVelocity * dt};
-        auto newYPosition {blockPosition.y + dy};
+        auto& blockPosition = subCell.mPosition;
+        auto& animation = subCell.mFallingBlockAnimation;
+        auto newVelocity = gravitationalAcceleration * dt + animation.mVelocity;
+        auto dy = newVelocity * dt;
+        auto newYPosition = blockPosition.y + dy;
         
         if (newYPosition < row) {
             if (animation.mShouldBounce) {
                 animation.mState = FallingBlockAnimation::State::Bouncing;
                 
-                auto springBoundry {static_cast<float>(row)};
-                auto frameTimeNotTouchingSpring {dt * (blockPosition.y - springBoundry) / -dy};
+                auto springBoundry = static_cast<float>(row);
+                auto frameTimeNotTouchingSpring = dt * (blockPosition.y - springBoundry) / -dy;
                 animation.mVelocity += gravitationalAcceleration * frameTimeNotTouchingSpring;
                 
-                auto frameTimeTouchingSpring {dt * (springBoundry - newYPosition) / -dy};
+                auto frameTimeTouchingSpring = dt * (springBoundry - newYPosition) / -dy;
                 blockPosition.y = row;
                 UpdateBlockInBouncingState(subCell, row, frameTimeTouchingSpring);
             } else {
@@ -114,13 +112,12 @@ namespace {
             return;
         }
         
-        auto frameTimeLeft {frameDuration};
+        auto frameTimeLeft = frameDuration;
         
         for (;;) {
-            auto timeStep {
+            auto timeStep =
                 frameTimeLeft > fallingStateFixedTimeStep ? fallingStateFixedTimeStep :
-                frameTimeLeft
-            };
+                frameTimeLeft;
             
             UpdateBlockInFallingStateFixedTimeStep(subCell, row, timeStep);
             frameTimeLeft -= fallingStateFixedTimeStep;
@@ -154,7 +151,7 @@ namespace {
     }
     
     void TransitionWronglyBouncingBlockToFalling(SubCell& subCell, int row) {
-        auto& animation {subCell.mFallingBlockAnimation};
+        auto& animation = subCell.mFallingBlockAnimation;
         
         if (animation.mState == FallingBlockAnimation::State::Bouncing &&
             animation.mVelocity == FallingBlockAnimation::fallingPieceBounceVelocity &&
@@ -188,20 +185,18 @@ CollapsingFieldAnimation::State CollapsingFieldAnimation::Update(float dt) {
 
 void CollapsingFieldAnimation::UpdateInWaitingState(float dt) {
     mWaitedTime += dt;
-
     if (mWaitedTime > waitTime) {
         mState = State::Active;
     }
 }
 
 void CollapsingFieldAnimation::UpdateInActiveState(float dt) {
-    auto anyFallingBlocks {false};
-    auto anyBouncingBlocks {false};
+    auto anyFallingBlocks = false;
+    auto anyBouncingBlocks = false;
     
-    for (auto row {0}; row < mField.GetNumRows(); ++row) {
-        for (auto column {0}; column < mField.GetNumColumns(); ++column) {
-            auto& cell {mField.GetCell(row, column)};
-            
+    for (auto row = 0; row < mField.GetNumRows(); ++row) {
+        for (auto column = 0; column < mField.GetNumColumns(); ++column) {
+            auto& cell = mField.GetCell(row, column);
             if (cell.IsEmpty()) {
                 continue;
             }
@@ -242,10 +237,9 @@ void CollapsingFieldAnimation::UpdateInActiveState(float dt) {
 }
 
 void CollapsingFieldAnimation::UpdateInInactiveState() {
-    for (auto row {0}; row < mField.GetNumRows(); ++row) {
-        for (auto column {0}; column < mField.GetNumColumns(); ++column) {
-            auto& cell {mField.GetCell(row, column)};
-            
+    for (auto row = 0; row < mField.GetNumRows(); ++row) {
+        for (auto column = 0; column < mField.GetNumColumns(); ++column) {
+            auto& cell = mField.GetCell(row, column);
             if (cell.IsEmpty()) {
                 continue;
             }
@@ -264,9 +258,9 @@ void CollapsingFieldAnimation::GoToWaitingState() {
 }
 
 void CollapsingFieldAnimation::ResetBlockAnimations() {
-    for (auto row {0}; row < mField.GetNumRows(); ++row) {
-        for (auto column {0}; column < mField.GetNumColumns(); ++column) {
-            auto& cell {mField.GetCell(row, column)};
+    for (auto row = 0; row < mField.GetNumRows(); ++row) {
+        for (auto column = 0; column < mField.GetNumColumns(); ++column) {
+            auto& cell = mField.GetCell(row, column);
             cell.mFirstSubCell.mFallingBlockAnimation = FallingBlockAnimation {};
             cell.mSecondSubCell.mFallingBlockAnimation = FallingBlockAnimation {};
         }
@@ -274,9 +268,9 @@ void CollapsingFieldAnimation::ResetBlockAnimations() {
 }
 
 void CollapsingFieldAnimation::TransitionWronglyBouncingBlocksToFalling() {
-    for (auto row {0}; row < mField.GetNumRows(); ++row) {
-        for (auto column {0}; column < mField.GetNumColumns(); ++column) {
-            auto& cell {mField.GetCell(row, column)};
+    for (auto row = 0; row < mField.GetNumRows(); ++row) {
+        for (auto column = 0; column < mField.GetNumColumns(); ++column) {
+            auto& cell = mField.GetCell(row, column);
             TransitionWronglyBouncingBlockToFalling(cell.mFirstSubCell, row);
             TransitionWronglyBouncingBlockToFalling(cell.mSecondSubCell, row);
         }

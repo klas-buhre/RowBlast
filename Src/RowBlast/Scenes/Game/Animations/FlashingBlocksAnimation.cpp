@@ -6,7 +6,7 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto flashDuration {0.32f};
+    constexpr auto flashDuration = 0.32f;
 }
 
 const Pht::Color FlashingBlocksAnimation::colorAdd {0.32f, 0.32f, 0.32f};
@@ -42,10 +42,9 @@ void FlashingBlocksAnimation::Update(float dt) {
 }
 
 void FlashingBlocksAnimation::UpdateInWaitingState() {
-    for (auto row {0}; row < mField.GetNumRows(); ++row) {
-        for (auto column {0}; column < mField.GetNumColumns(); ++column) {
-            auto& cell {mField.GetCell(row, column)};
-            
+    for (auto row = 0; row < mField.GetNumRows(); ++row) {
+        for (auto column = 0; column < mField.GetNumColumns(); ++column) {
+            auto& cell = mField.GetCell(row, column);
             if (cell.IsEmpty()) {
                 continue;
             }
@@ -61,8 +60,7 @@ void FlashingBlocksAnimation::UpdateInWaitingState() {
 }
 
 void FlashingBlocksAnimation::ActivateWaitingBlock(SubCell& subCell, int row, int column) {
-    auto& flashingBlockAnimation {subCell.mFlashingBlockAnimation};
-    
+    auto& flashingBlockAnimation = subCell.mFlashingBlockAnimation;
     if (flashingBlockAnimation.mState == FlashingBlockAnimation::State::Waiting) {
         if (mState == State::Waiting) {
             mState = State::Active;
@@ -80,10 +78,9 @@ void FlashingBlocksAnimation::ActivateWaitingBlock(SubCell& subCell, int row, in
 }
 
 void FlashingBlocksAnimation::UpdateInActiveState(float dt) {
-    for (auto row {0}; row < mField.GetNumRows(); ++row) {
-        for (auto column {0}; column < mField.GetNumColumns(); ++column) {
-            auto& cell {mField.GetCell(row, column)};
-            
+    for (auto row = 0; row < mField.GetNumRows(); ++row) {
+        for (auto column = 0; column < mField.GetNumColumns(); ++column) {
+            auto& cell = mField.GetCell(row, column);
             if (cell.IsEmpty()) {
                 continue;
             }
@@ -94,8 +91,8 @@ void FlashingBlocksAnimation::UpdateInActiveState(float dt) {
     }
     
     mField.SetChanged();
-    mElapsedTime += dt;
     
+    mElapsedTime += dt;
     if (mElapsedTime > flashDuration) {
         mState = State::Inactive;
         mField.ResetFlashingBlockAnimations();
@@ -105,14 +102,12 @@ void FlashingBlocksAnimation::UpdateInActiveState(float dt) {
 }
 
 bool FlashingBlocksAnimation::IsBlockAccordingToBlueprint(SubCell& subCell, int row, int column) {
-    auto* blueprintGrid {mField.GetBlueprintGrid()};
-    
+    auto* blueprintGrid = mField.GetBlueprintGrid();
     if (blueprintGrid == nullptr) {
         return false;
     }
     
-    auto blueprintFill {(*blueprintGrid)[row][column].mFill};
-    
+    auto blueprintFill = (*blueprintGrid)[row][column].mFill;
     switch (blueprintFill) {
         case Fill::Full:
             return true;
@@ -127,9 +122,9 @@ bool FlashingBlocksAnimation::IsBlockAccordingToBlueprint(SubCell& subCell, int 
 }
 
 void FlashingBlocksAnimation::UpdateRenderables() {
-    auto flashColorAdd {CalculateFlashColorAdd(colorAdd)};
-    auto brightFlashColorAdd {CalculateFlashColorAdd(brightColorAdd)};
-    auto semiFlashColorAdd {CalculateFlashColorAdd(semiFlashingColorAdd)};
+    auto flashColorAdd = CalculateFlashColorAdd(colorAdd);
+    auto brightFlashColorAdd = CalculateFlashColorAdd(brightColorAdd);
+    auto semiFlashColorAdd = CalculateFlashColorAdd(semiFlashingColorAdd);
     
     UpdateBlockRenderables(flashColorAdd, BlockBrightness::Flashing);
     UpdateBlockRenderables(brightFlashColorAdd, BlockBrightness::BlueprintFillFlashing);
@@ -153,7 +148,7 @@ Pht::Color FlashingBlocksAnimation::CalculateFlashColorAdd(const Pht::Color& fla
         return Pht::Color {};
     }
     
-    auto factor {(flashDuration - mElapsedTime) / flashDuration};
+    auto factor = (flashDuration - mElapsedTime) / flashDuration;
     
     return {
         flashMaxColorAdd.mRed * factor,
@@ -165,16 +160,14 @@ Pht::Color FlashingBlocksAnimation::CalculateFlashColorAdd(const Pht::Color& fla
 void FlashingBlocksAnimation::UpdateBlockRenderable(const Pht::Color& flashColorAdd,
                                                     BlockBrightness flashingBlockBrightness,
                                                     BlockKind blockKind) {
-    auto& normalRenderable {
-        mPieceResources.GetBlockRenderableObject(blockKind, mColor, BlockBrightness::Normal)
-    };
+    auto& normalRenderable =
+        mPieceResources.GetBlockRenderableObject(blockKind, mColor, BlockBrightness::Normal);
     
-    auto& flashingRenderable {
-        mPieceResources.GetBlockRenderableObject(blockKind, mColor, flashingBlockBrightness)
-    };
+    auto& flashingRenderable =
+        mPieceResources.GetBlockRenderableObject(blockKind, mColor, flashingBlockBrightness);
     
-    auto& normalMaterial {normalRenderable.GetMaterial()};
-    auto& flashingMaterial {flashingRenderable.GetMaterial()};
+    auto& normalMaterial = normalRenderable.GetMaterial();
+    auto& flashingMaterial = flashingRenderable.GetMaterial();
     
     flashingMaterial.SetAmbient(normalMaterial.GetAmbient() + flashColorAdd);
     flashingMaterial.SetDiffuse(normalMaterial.GetDiffuse() + flashColorAdd);
@@ -191,16 +184,14 @@ void FlashingBlocksAnimation::UpdateWeldRenderables(const Pht::Color& flashColor
 void FlashingBlocksAnimation::UpdateWeldRenderable(const Pht::Color& flashColorAdd,
                                                    BlockBrightness flashingWeldBrightness,
                                                    WeldRenderableKind weldKind) {
-    auto& normalRenderable {
-        mPieceResources.GetWeldRenderableObject(weldKind, mColor, BlockBrightness::Normal)
-    };
+    auto& normalRenderable =
+        mPieceResources.GetWeldRenderableObject(weldKind, mColor, BlockBrightness::Normal);
     
-    auto& flashingRenderable {
-        mPieceResources.GetWeldRenderableObject(weldKind, mColor, flashingWeldBrightness)
-    };
+    auto& flashingRenderable =
+        mPieceResources.GetWeldRenderableObject(weldKind, mColor, flashingWeldBrightness);
     
-    auto& normalMaterial {normalRenderable.GetMaterial()};
-    auto& flashingMaterial {flashingRenderable.GetMaterial()};
+    auto& normalMaterial = normalRenderable.GetMaterial();
+    auto& flashingMaterial = flashingRenderable.GetMaterial();
     
     flashingMaterial.SetAmbient(normalMaterial.GetAmbient() + flashColorAdd);
     flashingMaterial.SetDiffuse(normalMaterial.GetDiffuse() + flashColorAdd);
