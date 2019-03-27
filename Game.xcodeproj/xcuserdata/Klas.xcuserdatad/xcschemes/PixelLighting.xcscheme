@@ -52,11 +52,10 @@
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES"
       launchAutomaticallySubstyle = "2">
-      <RemoteRunnable
-         runnableDebuggingMode = "1"
-         BundleIdentifier = "com.BuhreIndustries.Engine"
-         RemotePath = "/Users/klas/Library/Developer/CoreSimulator/Devices/08BA6486-AC6C-425A-BC02-C5AB3464B0DF/data/Containers/Bundle/Application/8069C4F8-EA44-4E0E-80A3-39D6586B7859/Game.app">
-      </RemoteRunnable>
+      <PathRunnable
+         runnableDebuggingMode = "0"
+         FilePath = "/&lt;placeholder&gt;">
+      </PathRunnable>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"

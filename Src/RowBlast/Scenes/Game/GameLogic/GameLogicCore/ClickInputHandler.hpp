@@ -19,7 +19,7 @@ namespace RowBlast {
     
     class MoveButton {
     public:
-        MoveButton(Pht::IEngine& engine);
+        explicit MoveButton(Pht::IEngine& engine);
         
         void SetPosition(const Pht::Vec3& position);
         void SetSize(const Pht::Vec2& size);

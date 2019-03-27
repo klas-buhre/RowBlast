@@ -670,16 +670,19 @@ void GameLogic::RemoveClearedRowsAndPullDownLoosePieces(bool doBounceCalculation
 }
 
 void GameLogic::PullDownLoosePiecesClearObjective() {
-    mField.SetLowestVisibleRow(mScrollController.CalculatePreferredLowestVisibleRow());
-    mFieldGravity.PullDownLoosePieces();
-
-    // A second calculation of the lowest visible row and pulling down pieces is needed because the
-    // first calculation of lowest visible row could be too high if some piece blocks are remaining
-    // inside the spawning area since they have not been pulled down yet at the time of calculating
-    // the lowest visible row. The correct lowest visible row can be calculated after those piece
-    // blocks have been pulled down.
-    mField.SetLowestVisibleRow(mScrollController.CalculatePreferredLowestVisibleRow());
-    mFieldGravity.PullDownLoosePieces();
+    // Several calculations of the lowest visible row and pulling down pieces may be needed because
+    // the first calculations of lowest visible row could be too high if some piece blocks are
+    // remaining inside the spawning area since they have not been pulled down yet at the time of
+    // calculating the lowest visible row. The correct lowest visible row can be calculated after
+    // those piece blocks have been pulled down.
+    for (;;) {
+        mField.SetLowestVisibleRow(mScrollController.CalculatePreferredLowestVisibleRow());
+        mFieldGravity.PullDownLoosePieces();
+        
+        if (!mFieldGravity.AnyPiecesPulledDown()) {
+            break;
+        }
+    }
 }
 
 void GameLogic::PullDownLoosePiecesAsteroidObjective() {

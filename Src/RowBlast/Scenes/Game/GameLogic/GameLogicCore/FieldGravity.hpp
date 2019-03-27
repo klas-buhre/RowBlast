@@ -17,12 +17,16 @@ namespace RowBlast {
 
         using PieceBlockCoords = Pht::StaticVector<PieceBlockCoord, Field::maxNumColumns * Field::maxNumRows * 4>;
 
-        FieldGravity(Field& field);
+        explicit FieldGravity(Field& field);
         
         void Init();
         void PullDownLoosePieces();
         void ShiftFieldDown(int rowIndex);
         void DetectBlocksThatShouldNotBounce();
+        
+        bool AnyPiecesPulledDown() const {
+            return mAnyPiecesPulledDown;
+        }
 
     private:
         enum class IsFloating {

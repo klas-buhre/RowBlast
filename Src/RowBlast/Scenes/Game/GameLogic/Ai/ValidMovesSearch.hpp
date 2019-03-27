@@ -90,7 +90,7 @@ namespace RowBlast {
                          MovingPiece piece,
                          const Movement* previousMovement,
                          AllowRecursion allowRecursion,
-                        PositionAdjustment positionAdjustment);
+                         PositionAdjustment positionAdjustment);
         void SearchDown(ValidMoves& validMoves,
                         MovingPiece piece,
                         const Movement* previousMovement,
