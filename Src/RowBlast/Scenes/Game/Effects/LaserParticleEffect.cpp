@@ -14,7 +14,7 @@ using namespace RowBlast;
 
 namespace {
     Pht::Vec3 ParticleVelocity() {
-        auto theta {Pht::NormalizedRand() * 2.0f * 3.1415f};
+        auto theta = Pht::NormalizedRand() * 2.0f * 3.1415f;
         return {0.0f, std::cos(theta), 0.0f};
     }
 }
@@ -51,7 +51,7 @@ void LaserParticleEffect::CreateThickBeam(Pht::IEngine& engine) {
         .mShrinkScale = Pht::Vec2{0.0f, 1.0f}
     };
 
-    auto& particleSystem {engine.GetParticleSystem()};
+    auto& particleSystem = engine.GetParticleSystem();
     mThickBeam = particleSystem.CreateParticleEffectSceneObject(particleSettings,
                                                                 particleEmitterSettings,
                                                                 Pht::RenderMode::Triangles);
@@ -81,7 +81,7 @@ void LaserParticleEffect::CreateThinBeam(Pht::IEngine& engine) {
         .mShrinkScale = Pht::Vec2{0.0f, 1.0f}
     };
 
-    auto& particleSystem {engine.GetParticleSystem()};
+    auto& particleSystem = engine.GetParticleSystem();
     mThinBeam = particleSystem.CreateParticleEffectSceneObject(particleSettings,
                                                                particleEmitterSettings,
                                                                Pht::RenderMode::Triangles);
@@ -110,7 +110,7 @@ void LaserParticleEffect::CreateFlare(Pht::IEngine& engine) {
         .mShrinkDuration = 0.0f
     };
     
-    auto& particleSystem {engine.GetParticleSystem()};
+    auto& particleSystem = engine.GetParticleSystem();
     mFlare = particleSystem.CreateParticleEffectSceneObject(particleSettings,
                                                             particleEmitterSettings,
                                                             Pht::RenderMode::Triangles);
@@ -139,7 +139,7 @@ void LaserParticleEffect::CreateParticles(Pht::IEngine& engine) {
         .mShrinkDuration = 0.2f
     };
     
-    auto& particleSystem {engine.GetParticleSystem()};
+    auto& particleSystem = engine.GetParticleSystem();
     mParticles = particleSystem.CreateParticleEffectSceneObject(particleSettings,
                                                                 particleEmitterSettings,
                                                                 Pht::RenderMode::Triangles);
@@ -153,16 +153,16 @@ void LaserParticleEffect::Init() {
     
     mScene.GetEffectsContainer().AddChild(*mThinBeam);
 
-    auto& container {mScene.GetFlyingBlocksContainer()};
+    auto& container = mScene.GetFlyingBlocksContainer();
     container.AddChild(*mThickBeam);
     container.AddChild(*mFlare);
     container.AddChild(*mParticles);
 }
 
 void LaserParticleEffect::StartLaser(const Pht::Vec2& position) {
-    const auto cellSize {mScene.GetCellSize()};
-    auto& fieldLowerLeft {mScene.GetFieldLoweLeft()};
-    auto fieldWidth {mScene.GetFieldWidth()};
+    const auto cellSize = mScene.GetCellSize();
+    auto& fieldLowerLeft = mScene.GetFieldLoweLeft();
+    auto fieldWidth = mScene.GetFieldWidth();
 
     Pht::Vec3 beamCenterPositionInScene {
         fieldWidth / 2.0f + fieldLowerLeft.x,

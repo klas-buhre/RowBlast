@@ -8,12 +8,12 @@ Movement::Movement(const Pht::Vec2& position, Rotation rotation, const Movement*
     mPrevious {previous} {}
 
 void MovingPiece::RotateClockwise() {
-    auto numRotations {mPieceType.GetNumRotations()};
+    auto numRotations = mPieceType.GetNumRotations();
     mRotation = static_cast<Rotation>((static_cast<int>(mRotation) + 1) % numRotations);
 }
 
 void MovingPiece::RotateAntiClockwise() {
-    auto newRotation {static_cast<int>(mRotation) - 1};
+    auto newRotation = static_cast<int>(mRotation) - 1;
     
     if (newRotation < 0) {
         newRotation += mPieceType.GetNumRotations();

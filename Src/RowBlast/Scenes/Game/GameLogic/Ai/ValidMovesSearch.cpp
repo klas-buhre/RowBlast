@@ -13,7 +13,7 @@ namespace {
     const Movement* AddMovement(ValidMoves& validMoves,
                                 const MovingPiece& piece,
                                 const Movement* previousMovement) {
-        auto& position {piece.mPosition};
+        auto& position = piece.mPosition;
         
         Pht::Vec2 floatPosition {static_cast<float>(position.x), static_cast<float>(position.y)};
         Movement movement {floatPosition, piece.mRotation, previousMovement};
@@ -22,9 +22,9 @@ namespace {
     }
     
     int CalcNumMovements(const Movement& finalMovement) {
-        auto numMovements {0};
+        auto numMovements = 0;
         
-        for (auto* movement {&finalMovement}; movement; movement = movement->GetPrevious()) {
+        for (auto* movement = &finalMovement; movement; movement = movement->GetPrevious()) {
             ++numMovements;
         }
         
@@ -32,7 +32,7 @@ namespace {
     }
     
     PieceBlocks CreatePieceBlocks(const MovingPiece& piece) {
-        auto& pieceType {piece.mPieceType};
+        auto& pieceType = piece.mPieceType;
         
         return PieceBlocks {
             pieceType.GetGrid(piece.mRotation),
@@ -54,15 +54,15 @@ ValidMovesSearch::ValidMovesSearch(Field& field) :
     mField {field} {}
 
 void ValidMovesSearch::Init() {
-    auto numRows {mField.GetNumRows()};
-    auto numColumns {mField.GetNumColumns()};
+    auto numRows = mField.GetNumRows();
+    auto numColumns = mField.GetNumColumns();
     
     mSearchGrid.clear();
     mSearchGrid.reserve(numRows);
         
     std::vector<CellSearchData> row(numColumns);
         
-    for (auto rowIndex {0}; rowIndex < numRows; ++rowIndex) {
+    for (auto rowIndex = 0; rowIndex < numRows; ++rowIndex) {
         mSearchGrid.push_back(row);
     }
 }
@@ -81,20 +81,20 @@ void ValidMovesSearch::FindValidMoves(ValidMoves& validMoves,
 }
 
 void ValidMovesSearch::InitSearchGrid() {
-    auto numRows {mField.GetNumRows()};
-    auto numColumns {mField.GetNumColumns()};
+    auto numRows = mField.GetNumRows();
+    auto numColumns = mField.GetNumColumns();
 
     enum class OverhangScanState {
         FreeSpace,
         OccupiedSpace
     };
     
-    for (auto column {0}; column < numColumns; ++column) {
-        auto overhangScanState {OverhangScanState::FreeSpace};
+    for (auto column = 0; column < numColumns; ++column) {
+        auto overhangScanState = OverhangScanState::FreeSpace;
         
-        for (auto row {numRows - 1}; row >= 0; --row) {
-            auto& cellSearchData {mSearchGrid[row][column]};
-            auto& searchDataForRotations {cellSearchData.mData};
+        for (auto row = numRows - 1; row >= 0; --row) {
+            auto& cellSearchData = mSearchGrid[row][column];
+            auto& searchDataForRotations = cellSearchData.mData;
             
             for (auto& searchData: searchDataForRotations) {
                 searchData = SearchDataForOneRotation {};
@@ -103,15 +103,15 @@ void ValidMovesSearch::InitSearchGrid() {
             cellSearchData.mFirstMovementAtLocation = nullptr;
             cellSearchData.mUnderOverhangTip = false;
             
-            auto& fieldCell {mField.GetCell(row, column)};
+            auto& fieldCell = mField.GetCell(row, column);
             
             switch (overhangScanState) {
                 case OverhangScanState::FreeSpace:
                     if (!fieldCell.IsEmpty()) {
-                        auto& firstSubCell {fieldCell.mFirstSubCell};
-                        auto& secondSubCell {fieldCell.mSecondSubCell};
-                        auto leftColumn {column - 1};
-                        auto rightColumn {column + 1};
+                        auto& firstSubCell = fieldCell.mFirstSubCell;
+                        auto& secondSubCell = fieldCell.mSecondSubCell;
+                        auto leftColumn = column - 1;
+                        auto rightColumn = column + 1;
                         
                         if (firstSubCell.mFill == Fill::UpperRightHalf && secondSubCell.IsEmpty() &&
                             leftColumn >= 0 && mField.GetCell(row, leftColumn).IsEmpty()) {
@@ -140,10 +140,10 @@ void ValidMovesSearch::InitSearchGrid() {
                     break;
                 case OverhangScanState::OccupiedSpace:
                     if (!fieldCell.IsFull()) {
-                        auto rowAbove {row + 1};
+                        auto rowAbove = row + 1;
                         
                         if (rowAbove < numRows) {
-                            auto leftColumn {column - 1};
+                            auto leftColumn = column - 1;
                             
                             if (leftColumn >= 0 && mField.GetCell(rowAbove, leftColumn).IsEmpty() &&
                                 !CellFillsLeftSide(fieldCell) &&
@@ -151,7 +151,7 @@ void ValidMovesSearch::InitSearchGrid() {
                                 cellSearchData.mUnderOverhangTip = true;
                             }
                             
-                            auto rightColumn {column + 1};
+                            auto rightColumn = column + 1;
                             
                             if (rightColumn < numColumns &&
                                 mField.GetCell(rowAbove, rightColumn).IsEmpty() &&
@@ -172,13 +172,12 @@ void ValidMovesSearch::InitSearchGrid() {
 }
 
 void ValidMovesSearch::ResetVisitedLocations() {
-    auto numRows {mField.GetNumRows()};
-    auto numColumns {mField.GetNumColumns()};
+    auto numRows = mField.GetNumRows();
+    auto numColumns = mField.GetNumColumns();
 
-    for (auto row {0}; row < numRows; ++row) {
-        for (auto column {0}; column < numColumns; ++column) {
-            auto& searchDataForRotations {mSearchGrid[row][column].mData};
-            
+    for (auto row = 0; row < numRows; ++row) {
+        for (auto column = 0; column < numColumns; ++column) {
+            auto& searchDataForRotations = mSearchGrid[row][column].mData;
             for (auto& searchData: searchDataForRotations) {
                 searchData.mIsVisited = false;
             }
@@ -191,44 +190,43 @@ void ValidMovesSearch::AdjustPosition(MovingPiece& piece) {
         return;
     }
 
-    const auto& position {piece.mPosition};
-    auto pieceBlocks {CreatePieceBlocks(piece)};
+    const auto& position = piece.mPosition;
+    auto pieceBlocks = CreatePieceBlocks(piece);
     
     mField.CheckCollision(mCollisionResult, pieceBlocks, position, Pht::IVec2{0, 0}, false);
     
     if (mCollisionResult.mIsCollision == IsCollision::Yes) {
-        auto collisionDirection {
+        auto collisionDirection =
             CollisionDetection::CalculateCollisionDirection(mCollisionResult.mCollisionPoints,
                                                             pieceBlocks,
                                                             piece.mRotation,
                                                             position,
-                                                            mField)
-        };
+                                                            mField);
         
         switch (collisionDirection) {
             case Direction::Right: {
-                auto freeXPos {mField.DetectFreeSpaceLeft(pieceBlocks, position)};
+                auto freeXPos = mField.DetectFreeSpaceLeft(pieceBlocks, position);
                 if (position.x - freeXPos <= maxRotateAdjustment) {
                     piece.mPosition.x = freeXPos;
                 }
                 break;
             }
             case Direction::Left: {
-                auto freeXPos {mField.DetectFreeSpaceRight(pieceBlocks, position)};
+                auto freeXPos = mField.DetectFreeSpaceRight(pieceBlocks, position);
                 if (freeXPos - position.x <= maxRotateAdjustment) {
                     piece.mPosition.x = freeXPos;
                 }
                 break;
             }
             case Direction::Up: {
-                auto freeYPos {mField.DetectFreeSpaceDown(pieceBlocks, position)};
+                auto freeYPos = mField.DetectFreeSpaceDown(pieceBlocks, position);
                 if (position.y - freeYPos <= maxRotateAdjustment) {
                     piece.mPosition.y = freeYPos;
                 }
                 break;
             }
             case Direction::Down: {
-                auto freeYPos {mField.DetectFreeSpaceUp(pieceBlocks, position)};
+                auto freeYPos = mField.DetectFreeSpaceUp(pieceBlocks, position);
                 if (freeYPos - position.y <= maxRotateAdjustment) {
                     piece.mPosition.y = freeYPos;
                 }
@@ -255,9 +253,9 @@ void ValidMovesSearch::FindMostValidMovesWithHumanLikeSearch(ValidMoves& validMo
                    AllowRecursion::Yes,
                    PositionAdjustment::Yes);
     
-    auto numRotations {piece.mPieceType.GetNumRotations()};
+    auto numRotations = piece.mPieceType.GetNumRotations();
     
-    for (auto rotation {0}; rotation < numRotations; ++rotation) {
+    for (auto rotation = 0; rotation < numRotations; ++rotation) {
         // TODO: Try anti-clockwise also?
         piece.RotateClockwise();
         AdjustPosition(piece);
@@ -266,7 +264,7 @@ void ValidMovesSearch::FindMostValidMovesWithHumanLikeSearch(ValidMoves& validMo
             continue;
         }
         
-        auto* rotationMovement {AddMovement(validMoves, piece, nullptr)};
+        auto* rotationMovement = AddMovement(validMoves, piece, nullptr);
         
         SearchDown(validMoves,
                    piece,
@@ -291,10 +289,10 @@ void ValidMovesSearch::FindValidMoves(ValidMoves& validMoves,
             break;
     }
     
-    auto numRotations {piece.mPieceType.GetNumRotations()};
-    auto rotationAtEntry {piece.mRotation};
+    auto numRotations = piece.mPieceType.GetNumRotations();
+    auto rotationAtEntry = piece.mRotation;
     
-    for (auto rotation {0}; rotation < numRotations; ++rotation) {
+    for (auto rotation = 0; rotation < numRotations; ++rotation) {
         if (!FindValidMovesForRotation(validMoves,
                                        piece,
                                        searchDirection,
@@ -309,7 +307,7 @@ void ValidMovesSearch::FindValidMoves(ValidMoves& validMoves,
     
     piece.mRotation = rotationAtEntry;
     
-    for (auto rotation {0}; rotation < numRotations; ++rotation) {
+    for (auto rotation = 0; rotation < numRotations; ++rotation) {
         if (!FindValidMovesForRotation(validMoves,
                                        piece,
                                        searchDirection,
@@ -339,7 +337,7 @@ bool ValidMovesSearch::FindValidMovesForRotation(ValidMoves& validMoves,
         return true;
     }
 
-    auto* rotationMovement {AddMovement(validMoves, piece, previousMovement)};
+    auto* rotationMovement = AddMovement(validMoves, piece, previousMovement);
 
     switch (searchDirection) {
         case SearchDirection::Left:
@@ -363,13 +361,12 @@ void ValidMovesSearch::SearchLeft(ValidMoves& validMoves,
         return;
     }
     
-    auto xBegin {piece.mPosition.x};
-    auto xEnd {HandleCollisionLeft(piece)};
+    auto xBegin = piece.mPosition.x;
+    auto xEnd = HandleCollisionLeft(piece);
     
-    for (auto x {xBegin}; x >= xEnd; --x) {
+    for (auto x = xBegin; x >= xEnd; --x) {
         piece.mPosition.x = x;
-
-        auto* newPositionMovement {AddMovement(validMoves, piece, previousMovement)};
+        auto* newPositionMovement = AddMovement(validMoves, piece, previousMovement);
         
         SearchDown(validMoves, piece, newPositionMovement, allowRecursion, positionAdjustment);
     }
@@ -384,13 +381,12 @@ void ValidMovesSearch::SearchRight(ValidMoves& validMoves,
         return;
     }
     
-    auto xBegin {piece.mPosition.x};
-    auto xEnd {HandleCollisionRight(piece)};
+    auto xBegin = piece.mPosition.x;
+    auto xEnd = HandleCollisionRight(piece);
     
-    for (auto x {xBegin}; x <= xEnd; ++x) {
+    for (auto x = xBegin; x <= xEnd; ++x) {
         piece.mPosition.x = x;
-
-        auto* newPositionMovement {AddMovement(validMoves, piece, previousMovement)};
+        auto* newPositionMovement = AddMovement(validMoves, piece, previousMovement);
         
         SearchDown(validMoves, piece, newPositionMovement, allowRecursion, positionAdjustment);
     }
@@ -402,26 +398,22 @@ void ValidMovesSearch::SearchDown(ValidMoves& validMoves,
                                   AllowRecursion allowRecursion,
                                   PositionAdjustment positionAdjustment) {
     
-    auto yBegin {piece.mPosition.y};
-    auto yEnd {HandleCollisionDown(piece)};
+    auto yBegin = piece.mPosition.y;
+    auto yEnd = HandleCollisionDown(piece);
     
-    auto pieceTypeRightOverhangCheckPos {
-        piece.mPieceType.GetRightOverhangCheckPosition(piece.mRotation)
-    };
+    auto pieceTypeRightOverhangCheckPos =
+        piece.mPieceType.GetRightOverhangCheckPosition(piece.mRotation);
     
-    auto pieceTypeLeftOverhangCheckPos {
-        piece.mPieceType.GetLeftOverhangCheckPosition(piece.mRotation)
-    };
+    auto pieceTypeLeftOverhangCheckPos =
+        piece.mPieceType.GetLeftOverhangCheckPosition(piece.mRotation);
     
-    auto pieceTypeRightExtremityCheckPos {
-        piece.mPieceType.GetRightExtremityCheckPosition(piece.mRotation)
-    };
+    auto pieceTypeRightExtremityCheckPos =
+        piece.mPieceType.GetRightExtremityCheckPosition(piece.mRotation);
 
-    auto pieceTypeLeftExtremityCheckPos {
-        piece.mPieceType.GetLeftExtremityCheckPosition(piece.mRotation)
-    };
+    auto pieceTypeLeftExtremityCheckPos =
+        piece.mPieceType.GetLeftExtremityCheckPosition(piece.mRotation);
     
-    for (auto y {yBegin}; y >= yEnd; --y) {
+    for (auto y = yBegin; y >= yEnd; --y) {
         piece.mPosition.y = y;
         
         if (allowRecursion == AllowRecursion::Yes) {
@@ -505,16 +497,16 @@ void ValidMovesSearch::SaveMove(ValidMoves& validMoves,
         return;
     }
     
-    if (auto* foundMove {GetFoundMove(piece)}) {
-        auto foundMoveNumMovements {CalcNumMovements(*foundMove->mLastMovement)};
-        auto thisMoveNumMovements {CalcNumMovements(*previousMovement) + 1};
-        
+    if (auto* foundMove = GetFoundMove(piece)) {
+        auto foundMoveNumMovements = CalcNumMovements(*foundMove->mLastMovement);
+        auto thisMoveNumMovements = CalcNumMovements(*previousMovement) + 1;
+
         if (thisMoveNumMovements < foundMoveNumMovements) {
-            auto* lastMovement {AddMovement(validMoves, piece, previousMovement)};
+            auto* lastMovement = AddMovement(validMoves, piece, previousMovement);
             *foundMove = Move {piece.mPosition, piece.mRotation, lastMovement};
         }
     } else {
-        auto* lastMovement {AddMovement(validMoves, piece, previousMovement)};
+        auto* lastMovement = AddMovement(validMoves, piece, previousMovement);
         Move move {piece.mPosition, piece.mRotation, lastMovement};
     
         validMoves.mMoves.PushBack(move);
@@ -581,7 +573,7 @@ bool ValidMovesSearch::MovePieceAndCheckEdges(MovingPiece& piece, SearchMovement
     switch (searchMovement) {
         case SearchMovement::Down: {
             piece.mPosition.y--;
-            auto& pieceDimensions {piece.mPieceType.GetDimensions(piece.mRotation)};
+            auto& pieceDimensions = piece.mPieceType.GetDimensions(piece.mRotation);
             if (piece.mPosition.y + pieceDimensions.mYmin < mField.GetLowestVisibleRow()) {
                 return false;
             }
@@ -589,7 +581,7 @@ bool ValidMovesSearch::MovePieceAndCheckEdges(MovingPiece& piece, SearchMovement
         }
         case SearchMovement::Right: {
             piece.mPosition.x++;
-            auto& pieceDimensions {piece.mPieceType.GetDimensions(piece.mRotation)};
+            auto& pieceDimensions = piece.mPieceType.GetDimensions(piece.mRotation);
             if (piece.mPosition.x + pieceDimensions.mXmax >= mField.GetNumColumns()) {
                 return false;
             }
@@ -597,7 +589,7 @@ bool ValidMovesSearch::MovePieceAndCheckEdges(MovingPiece& piece, SearchMovement
         }
         case SearchMovement::Left: {
             piece.mPosition.x--;
-            auto& pieceDimensions {piece.mPieceType.GetDimensions(piece.mRotation)};
+            auto& pieceDimensions = piece.mPieceType.GetDimensions(piece.mRotation);
             if (piece.mPosition.x + pieceDimensions.mXmin < 0) {
                 return false;
             }
@@ -620,9 +612,9 @@ ValidMovesSearch::SearchCollisionResult
 ValidMovesSearch::HandleCollision(const MovingPiece& piece, SearchMovement searchMovement) {
     switch (searchMovement) {
         case SearchMovement::Down: {
-            auto piecePreviousState {piece};
+            auto piecePreviousState = piece;
             piecePreviousState.mPosition.y++;
-            auto collisionRow {HandleCollisionDown(piecePreviousState)};
+            auto collisionRow = HandleCollisionDown(piecePreviousState);
             if (collisionRow == piece.mPosition.y) {
                 return SearchCollisionResult::FoundMove;
             } else if (collisionRow == piecePreviousState.mPosition.y) {
@@ -631,7 +623,7 @@ ValidMovesSearch::HandleCollision(const MovingPiece& piece, SearchMovement searc
             break;
         }
         case SearchMovement::Right: {
-            auto piecePreviousState {piece};
+            auto piecePreviousState = piece;
             piecePreviousState.mPosition.x--;
             if (HandleCollisionRight(piecePreviousState) == piecePreviousState.mPosition.x) {
                 return SearchCollisionResult::Collision;
@@ -642,7 +634,7 @@ ValidMovesSearch::HandleCollision(const MovingPiece& piece, SearchMovement searc
             break;
         }
         case SearchMovement::Left: {
-            auto piecePreviousState {piece};
+            auto piecePreviousState = piece;
             piecePreviousState.mPosition.x++;
             if (HandleCollisionLeft(piecePreviousState) == piecePreviousState.mPosition.x) {
                 return SearchCollisionResult::Collision;
@@ -682,7 +674,7 @@ void ValidMovesSearch::SaveMoveIfNotFoundBefore(ValidMoves& validMoves,
         return;
     }
 
-    auto* lastMovement {AddMovement(validMoves, piece, previousMovement)};
+    auto* lastMovement = AddMovement(validMoves, piece, previousMovement);
     Move move {piece.mPosition, piece.mRotation, lastMovement};
 
     validMoves.mMoves.PushBack(move);
@@ -690,15 +682,13 @@ void ValidMovesSearch::SaveMoveIfNotFoundBefore(ValidMoves& validMoves,
 }
 
 bool ValidMovesSearch::IsDuplicateMoveFoundAtDifferentLocation(const MovingPiece& piece) const {
-    auto& duplicateMoveCheck {piece.mPieceType.GetDuplicateMoveCheck(piece.mRotation)};
-
+    auto& duplicateMoveCheck = piece.mPieceType.GetDuplicateMoveCheck(piece.mRotation);
     if (duplicateMoveCheck.HasValue()) {
-        auto& duplicateMoveCheckValue {duplicateMoveCheck.GetValue()};
-        auto checkPosition {piece.mPosition + duplicateMoveCheckValue.mRelativePosition};
+        auto& duplicateMoveCheckValue = duplicateMoveCheck.GetValue();
+        auto checkPosition = piece.mPosition + duplicateMoveCheckValue.mRelativePosition;
         
-        auto& searchData {
-            GetSearchDataForOneRotation(checkPosition, duplicateMoveCheckValue.mRotation)
-        };
+        auto& searchData =
+            GetSearchDataForOneRotation(checkPosition, duplicateMoveCheckValue.mRotation);
         
         if (searchData.mFoundMove) {
             return true;
@@ -711,53 +701,52 @@ bool ValidMovesSearch::IsDuplicateMoveFoundAtDifferentLocation(const MovingPiece
 const Movement* ValidMovesSearch::AddMovementAndRemoveDetour(ValidMoves& validMoves,
                                                              const MovingPiece& piece,
                                                              const Movement* previousMovement) {
-    auto gridPosition {CalculateSearchGridPosition(piece.mPosition)};
-    auto& cellSearchData {mSearchGrid[gridPosition.y][gridPosition.x]};
-    
+    auto gridPosition = CalculateSearchGridPosition(piece.mPosition);
+    auto& cellSearchData = mSearchGrid[gridPosition.y][gridPosition.x];
     if (cellSearchData.mFirstMovementAtLocation) {
         return AddMovement(validMoves, piece, cellSearchData.mFirstMovementAtLocation);
     }
     
-    auto* movement {AddMovement(validMoves, piece, previousMovement)};
+    auto* movement = AddMovement(validMoves, piece, previousMovement);
     cellSearchData.mFirstMovementAtLocation = movement;
     return movement;
 }
 
 bool ValidMovesSearch::IsLocationVisited(const MovingPiece& piece) const {
-    auto gridPosition {CalculateSearchGridPosition(piece.mPosition)};
+    auto gridPosition = CalculateSearchGridPosition(piece.mPosition);
     return mSearchGrid[gridPosition.y][gridPosition.x].mData[static_cast<int>(piece.mRotation)].mIsVisited;
 }
 
 void ValidMovesSearch::MarkLocationAsVisited(const MovingPiece& piece) {
-    auto gridPosition {CalculateSearchGridPosition(piece.mPosition)};
+    auto gridPosition = CalculateSearchGridPosition(piece.mPosition);
     mSearchGrid[gridPosition.y][gridPosition.x].mData[static_cast<int>(piece.mRotation)].mIsVisited = true;
 }
 
 Move* ValidMovesSearch::GetFoundMove(const MovingPiece& piece) const {
-    auto gridPosition {CalculateSearchGridPosition(piece.mPosition)};
+    auto gridPosition = CalculateSearchGridPosition(piece.mPosition);
     return mSearchGrid[gridPosition.y][gridPosition.x].mData[static_cast<int>(piece.mRotation)].mFoundMove;
 }
 
 void ValidMovesSearch::SetFoundMove(const MovingPiece& piece, Move& move) {
-    auto gridPosition {CalculateSearchGridPosition(piece.mPosition)};
+    auto gridPosition = CalculateSearchGridPosition(piece.mPosition);
     mSearchGrid[gridPosition.y][gridPosition.x].mData[static_cast<int>(piece.mRotation)].mFoundMove = &move;
 }
 
 ValidMovesSearch::SearchDataForOneRotation&
 ValidMovesSearch::GetSearchDataForOneRotation(const MovingPiece& piece) {
-    auto gridPosition {CalculateSearchGridPosition(piece.mPosition)};
+    auto gridPosition = CalculateSearchGridPosition(piece.mPosition);
     return mSearchGrid[gridPosition.y][gridPosition.x].mData[static_cast<int>(piece.mRotation)];
 }
 
 ValidMovesSearch::SearchDataForOneRotation&
 ValidMovesSearch::GetSearchDataForOneRotation(const Pht::IVec2& position, Rotation rotation) {
-    auto gridPosition {CalculateSearchGridPosition(position)};
+    auto gridPosition = CalculateSearchGridPosition(position);
     return mSearchGrid[gridPosition.y][gridPosition.x].mData[static_cast<int>(rotation)];
 }
 
 const ValidMovesSearch::SearchDataForOneRotation&
 ValidMovesSearch::GetSearchDataForOneRotation(const Pht::IVec2& position, Rotation rotation) const {
-    auto gridPosition {CalculateSearchGridPosition(position)};
+    auto gridPosition = CalculateSearchGridPosition(position);
     return mSearchGrid[gridPosition.y][gridPosition.x].mData[static_cast<int>(rotation)];
 }
 
@@ -769,8 +758,8 @@ Pht::IVec2 ValidMovesSearch::CalculateSearchGridPosition(const Pht::IVec2& posit
 }
 
 bool ValidMovesSearch::IsCollision(const MovingPiece& piece) const {
-    const auto& position {piece.mPosition};
-    auto pieceBlocks {CreatePieceBlocks(piece)};
+    const auto& position = piece.mPosition;
+    auto pieceBlocks = CreatePieceBlocks(piece);
     
     mField.CheckCollision(mCollisionResult, pieceBlocks, position, Pht::IVec2{0, 0}, false);
     
@@ -778,15 +767,13 @@ bool ValidMovesSearch::IsCollision(const MovingPiece& piece) const {
 }
 
 int ValidMovesSearch::HandleCollisionLeft(const MovingPiece& piece) {
-    auto& cellSearchData {GetSearchDataForOneRotation(piece)};
-    
+    auto& cellSearchData = GetSearchDataForOneRotation(piece);
     if (cellSearchData.mCollisionColumnLeft == collisionNotCalculated) {
-        auto collisionColumn {DetectCollisionLeft(piece)};
+        auto collisionColumn = DetectCollisionLeft(piece);
         
-        for (auto column {piece.mPosition.x}; column >= collisionColumn; --column) {
-            auto& cellSearchDataToTheLeft {
-                GetSearchDataForOneRotation({column, piece.mPosition.y}, piece.mRotation)
-            };
+        for (auto column = piece.mPosition.x; column >= collisionColumn; --column) {
+            auto& cellSearchDataToTheLeft =
+                GetSearchDataForOneRotation({column, piece.mPosition.y}, piece.mRotation);
             
             cellSearchDataToTheLeft.mCollisionColumnLeft = collisionColumn;
         }
@@ -796,15 +783,13 @@ int ValidMovesSearch::HandleCollisionLeft(const MovingPiece& piece) {
 }
 
 int ValidMovesSearch::HandleCollisionRight(const MovingPiece& piece) {
-    auto& cellSearchData {GetSearchDataForOneRotation(piece)};
-    
+    auto& cellSearchData = GetSearchDataForOneRotation(piece);
     if (cellSearchData.mCollisionColumnRight == collisionNotCalculated) {
-        auto collisionColumn {DetectCollisionRight(piece)};
+        auto collisionColumn = DetectCollisionRight(piece);
         
-        for (auto column {piece.mPosition.x}; column <= collisionColumn; ++column) {
-            auto& cellSearchDataToTheRight {
-                GetSearchDataForOneRotation({column, piece.mPosition.y}, piece.mRotation)
-            };
+        for (auto column = piece.mPosition.x; column <= collisionColumn; ++column) {
+            auto& cellSearchDataToTheRight =
+                GetSearchDataForOneRotation({column, piece.mPosition.y}, piece.mRotation);
             
             cellSearchDataToTheRight.mCollisionColumnRight = collisionColumn;
         }
@@ -814,15 +799,13 @@ int ValidMovesSearch::HandleCollisionRight(const MovingPiece& piece) {
 }
 
 int ValidMovesSearch::HandleCollisionDown(const MovingPiece& piece) {
-    auto& cellSearchData {GetSearchDataForOneRotation(piece)};
-    
+    auto& cellSearchData = GetSearchDataForOneRotation(piece);
     if (cellSearchData.mCollisionRow == collisionNotCalculated) {
         auto collisionRow {DetectCollisionDown(piece)};
         
-        for (auto row {piece.mPosition.y}; row >= collisionRow; --row) {
-            auto& downwardCellSearchData {
-                GetSearchDataForOneRotation({piece.mPosition.x, row}, piece.mRotation)
-            };
+        for (auto row = piece.mPosition.y; row >= collisionRow; --row) {
+            auto& downwardCellSearchData =
+                GetSearchDataForOneRotation({piece.mPosition.x, row}, piece.mRotation);
             
             downwardCellSearchData.mCollisionRow = collisionRow;
         }
@@ -832,16 +815,16 @@ int ValidMovesSearch::HandleCollisionDown(const MovingPiece& piece) {
 }
 
 int ValidMovesSearch::DetectCollisionLeft(const MovingPiece& piece) const {
-    auto pieceBlocks {CreatePieceBlocks(piece)};
+    auto pieceBlocks = CreatePieceBlocks(piece);
     return mField.DetectCollisionLeft(pieceBlocks, piece.mPosition);
 }
 
 int ValidMovesSearch::DetectCollisionRight(const MovingPiece& piece) const {
-    auto pieceBlocks {CreatePieceBlocks(piece)};
+    auto pieceBlocks = CreatePieceBlocks(piece);
     return mField.DetectCollisionRight(pieceBlocks, piece.mPosition);
 }
 
 int ValidMovesSearch::DetectCollisionDown(const MovingPiece& piece) const {
-    auto pieceBlocks {CreatePieceBlocks(piece)};
+    auto pieceBlocks = CreatePieceBlocks(piece);
     return mField.DetectCollisionDown(pieceBlocks, piece.mPosition);
 }

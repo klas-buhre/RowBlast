@@ -13,11 +13,11 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto trailYScale {1.5f};
-    constexpr auto trailHeightInCells {4.5f * trailYScale};
-    constexpr auto lowerTrailHeightInCells {1.0f * trailYScale};
-    constexpr auto trailWidthInCells {1.075f};
-    constexpr auto trailDuration {0.7f};
+    constexpr auto trailYScale = 1.5f;
+    constexpr auto trailHeightInCells = 4.5f * trailYScale;
+    constexpr auto lowerTrailHeightInCells = 1.0f * trailYScale;
+    constexpr auto trailWidthInCells = 1.075f;
+    constexpr auto trailDuration = 0.7f;
 }
 
 PieceTrailParticleEffect::PieceTrailParticleEffect(Pht::IEngine& engine, GameScene& scene) :
@@ -33,7 +33,7 @@ PieceTrailParticleEffect::PieceTrailParticleEffect(Pht::IEngine& engine, GameSce
 void PieceTrailParticleEffect::CreateTrailEffects(Pht::IEngine& engine,
                                                   const std::string& textureFilename,
                                                   TrailEffects& trailEffects) {
-    auto cellSize {mScene.GetCellSize()};
+    auto cellSize = mScene.GetCellSize();
     
     Pht::Vec3 emitterPosition {
         0.0f, trailHeightInCells * cellSize / 2.0f - lowerTrailHeightInCells * cellSize, -0.1f
@@ -60,7 +60,7 @@ void PieceTrailParticleEffect::CreateTrailEffects(Pht::IEngine& engine,
         .mShrinkDuration = 0.0f
     };
     
-    auto& particleSystem {engine.GetParticleSystem()};
+    auto& particleSystem = engine.GetParticleSystem();
     
     for (auto& effect: trailEffects) {
         effect = particleSystem.CreateParticleEffectSceneObject(particleSettings,
@@ -76,18 +76,18 @@ void PieceTrailParticleEffect::Init() {
 }
 
 void PieceTrailParticleEffect::StartEffect(const FallingPiece& fallingPiece) {
-    auto& pieceType {fallingPiece.GetPieceType()};
-    auto pieceNumRows {pieceType.GetGridNumRows()};
-    auto pieceNumColumns {pieceType.GetGridNumColumns()};
-    auto cellSize {mScene.GetCellSize()};
-    auto pieceFieldPos {fallingPiece.GetRenderablePosition() * cellSize};
-    auto& pieceGrid {pieceType.GetGrid(fallingPiece.GetRotation())};
-    auto cellZPos {mScene.GetFieldPosition().z};
+    auto& pieceType = fallingPiece.GetPieceType();
+    auto pieceNumRows = pieceType.GetGridNumRows();
+    auto pieceNumColumns = pieceType.GetGridNumColumns();
+    auto cellSize = mScene.GetCellSize();
+    auto pieceFieldPos = fallingPiece.GetRenderablePosition() * cellSize;
+    auto& pieceGrid = pieceType.GetGrid(fallingPiece.GetRotation());
+    auto cellZPos = mScene.GetFieldPosition().z;
     
-    for (auto column {0}; column < pieceNumColumns; ++column) {
-        for (auto row {pieceNumRows - 1}; row >= 0; --row) {
-            auto& cell {pieceGrid[row][column]};
-            
+    for (auto column = 0; column < pieceNumColumns; ++column) {
+        for (auto row = pieceNumRows - 1; row >= 0; --row) {
+            auto& cell = pieceGrid[row][column];
+
             if (!cell.IsEmpty()) {
                 Pht::Vec3 fieldPosition {
                     column * cellSize + cellSize / 2.0f + pieceFieldPos.x,
@@ -95,7 +95,7 @@ void PieceTrailParticleEffect::StartEffect(const FallingPiece& fallingPiece) {
                     cellZPos
                 };
                 
-                auto fill {cell.mFirstSubCell.mFill};
+                auto fill = cell.mFirstSubCell.mFill;
                 
                 if (fill == Fill::LowerLeftHalf || fill == Fill::LowerRightHalf) {
                     fieldPosition.y -= cellSize;
@@ -127,8 +127,7 @@ void PieceTrailParticleEffect::StartEffect(const FallingPiece& fallingPiece) {
 void PieceTrailParticleEffect::StartTrailEffect(const Pht::Vec3& fieldPosition,
                                                 TrailEffects& trailEffects) {
     for (auto& effectSceneObject: trailEffects) {
-        auto* effect {effectSceneObject->GetComponent<Pht::ParticleEffect>()};
-        
+        auto* effect = effectSceneObject->GetComponent<Pht::ParticleEffect>();
         if (!effect->IsActive()) {
             effect->Start();
             effectSceneObject->GetTransform().SetPosition(fieldPosition);

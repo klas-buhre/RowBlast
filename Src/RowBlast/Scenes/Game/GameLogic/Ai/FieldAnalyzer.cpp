@@ -37,9 +37,8 @@ namespace {
             return 0.0f;
         }
         
-        auto fill {
-            cell.mSecondSubCell.IsEmpty() ? cell.mFirstSubCell.mFill : cell.mSecondSubCell.mFill
-        };
+        auto fill =
+            cell.mSecondSubCell.IsEmpty() ? cell.mFirstSubCell.mFill : cell.mSecondSubCell.mFill;
     
         switch (fill) {
             case Fill::UpperLeftHalf:
@@ -59,9 +58,8 @@ namespace {
             return 0.0f;
         }
         
-        auto fill {
-            cell.mSecondSubCell.IsEmpty() ? cell.mFirstSubCell.mFill : cell.mSecondSubCell.mFill
-        };
+        auto fill =
+            cell.mSecondSubCell.IsEmpty() ? cell.mFirstSubCell.mFill : cell.mSecondSubCell.mFill;
         
         switch (fill) {
             case Fill::UpperLeftHalf:
@@ -96,18 +94,17 @@ FieldAnalyzer::FieldAnalyzer(const Field& field) :
     mField {field} {}
 
 float FieldAnalyzer::CalculateBurriedHolesAreaInVisibleRows() const {
-    auto area {0.0f};
-    auto numColumns {mField.GetNumColumns()};
-    auto lowestVisibleRow {mField.GetLowestVisibleRow()};
+    auto area = 0.0f;
+    auto numColumns = mField.GetNumColumns();
+    auto lowestVisibleRow = mField.GetLowestVisibleRow();
     
-    for (auto column {0}; column < numColumns; ++column) {
-        auto aboveIsFilled {false};
+    for (auto column = 0; column < numColumns; ++column) {
+        auto aboveIsFilled = false;
         
-        for (auto row {lowestVisibleRow + mField.GetNumRowsInOneScreen() - 1};
+        for (auto row = lowestVisibleRow + mField.GetNumRowsInOneScreen() - 1;
              row >= lowestVisibleRow;
              --row) {
-            auto& cell {mField.mGrid[row][column]};
-            
+            auto& cell = mField.mGrid[row][column];
             if (cell.mIsInFilledRow) {
                 continue;
             }
@@ -125,9 +122,8 @@ float FieldAnalyzer::CalculateBurriedHolesAreaInVisibleRows() const {
                 continue;
             }
             
-            auto fill {
-                cell.mSecondSubCell.IsEmpty() ? cell.mFirstSubCell.mFill : cell.mSecondSubCell.mFill
-            };
+            auto fill =
+                cell.mSecondSubCell.IsEmpty() ? cell.mFirstSubCell.mFill : cell.mSecondSubCell.mFill;
             
             switch (fill) {
                 case Fill::UpperLeftHalf:
@@ -154,17 +150,17 @@ float FieldAnalyzer::CalculateBurriedHolesAreaInVisibleRows() const {
 }
 
 float FieldAnalyzer::CalculateBurriedHolesAreaInVisibleRowsWithGravity(int landedPieceId) const {
-    auto area {0.0f};
-    auto numColumns {mField.GetNumColumns()};
-    auto lowestVisibleRow {mField.GetLowestVisibleRow()};
+    auto area = 0.0f;
+    auto numColumns = mField.GetNumColumns();
+    auto lowestVisibleRow = mField.GetLowestVisibleRow();
     
-    for (auto column {0}; column < numColumns; ++column) {
+    for (auto column = 0; column < numColumns; ++column) {
         BurriedHoleScanStates states;
         
-        for (auto row {lowestVisibleRow + mField.GetNumRowsInOneScreen() - 1};
+        for (auto row = lowestVisibleRow + mField.GetNumRowsInOneScreen() - 1;
              row >= lowestVisibleRow;
              --row) {
-            auto& cell {mField.mGrid[row][column]};
+            auto& cell = mField.mGrid[row][column];
             
             switch (states.mState) {
                 case HoleScanState::Idle:
@@ -247,29 +243,26 @@ float FieldAnalyzer::CalculateBurriedHolesAreaInVisibleRowsWithGravity(int lande
 }
 
 float FieldAnalyzer::CalculateWellsAreaInVisibleRows() const {
-    auto area {0.0f};
-    auto lowestVisibleRow {mField.GetLowestVisibleRow()};
-    auto pastHighestVisibleRow {lowestVisibleRow + mField.GetNumRowsInOneScreen()};
-    auto numColumns {mField.GetNumColumns()};
+    auto area = 0.0f;
+    auto lowestVisibleRow = mField.GetLowestVisibleRow();
+    auto pastHighestVisibleRow = lowestVisibleRow + mField.GetNumRowsInOneScreen();
+    auto numColumns = mField.GetNumColumns();
     
-    for (auto column {0}; column < numColumns; ++column) {
-        auto leftColumnIndex {column - 1};
-        auto rightColumnIndex {column + 1};
+    for (auto column = 0; column < numColumns; ++column) {
+        auto leftColumnIndex = column - 1;
+        auto rightColumnIndex = column + 1;
         
-        for (auto row {lowestVisibleRow}; row < pastHighestVisibleRow; ++row) {
-            auto& cell {mField.mGrid[row][column]};
-            
+        for (auto row = lowestVisibleRow; row < pastHighestVisibleRow; ++row) {
+            auto& cell = mField.mGrid[row][column];
             if (!cell.IsEmpty() || cell.mIsInFilledRow) {
                 continue;
             }
             
-            auto leftIsEmpty {
-                leftColumnIndex >= 0 ? mField.mGrid[row][leftColumnIndex].IsEmpty() : false
-            };
+            auto leftIsEmpty =
+                leftColumnIndex >= 0 ? mField.mGrid[row][leftColumnIndex].IsEmpty() : false;
             
-            auto rightIsEmpty {
-                rightColumnIndex < numColumns ? mField.mGrid[row][rightColumnIndex].IsEmpty() : false
-            };
+            auto rightIsEmpty =
+                rightColumnIndex < numColumns ? mField.mGrid[row][rightColumnIndex].IsEmpty() : false;
             
             if (!leftIsEmpty && !rightIsEmpty) {
                 area += 1.0f;
@@ -285,23 +278,21 @@ int FieldAnalyzer::CalculateNumTransitionsInVisibleRows() const {
 }
 
 int FieldAnalyzer::CalculateNumTransitionsInColumns() const {
-    auto numTransitions {0};
-    auto lowestVisibleRow {mField.GetLowestVisibleRow()};
-    auto pastHighestVisibleRow {lowestVisibleRow + mField.GetNumRowsInOneScreen()};
-    auto numColumns {mField.GetNumColumns()};
+    auto numTransitions = 0;
+    auto lowestVisibleRow = mField.GetLowestVisibleRow();
+    auto pastHighestVisibleRow = lowestVisibleRow + mField.GetNumRowsInOneScreen();
+    auto numColumns = mField.GetNumColumns();
     
-    for (auto column {0}; column < numColumns; ++column) {
-        auto previousCellIsEmpty {false};
+    for (auto column = 0; column < numColumns; ++column) {
+        auto previousCellIsEmpty = false;
         
-        for (auto row {lowestVisibleRow}; row < pastHighestVisibleRow - 1; ++row) {
-            auto& cell {mField.mGrid[row][column]};
-            
+        for (auto row = lowestVisibleRow; row < pastHighestVisibleRow - 1; ++row) {
+            auto& cell = mField.mGrid[row][column];
             if (cell.mIsInFilledRow) {
                 continue;
             }
             
-            auto thisCellIsEmpty {cell.IsEmpty()};
-            
+            auto thisCellIsEmpty = cell.IsEmpty();
             if (thisCellIsEmpty != previousCellIsEmpty) {
                 ++numTransitions;
             }
@@ -314,33 +305,30 @@ int FieldAnalyzer::CalculateNumTransitionsInColumns() const {
 }
 
 int FieldAnalyzer::CalculateNumTransitionsInRows() const {
-    auto numTransitions {0};
-    auto lowestVisibleRow {mField.GetLowestVisibleRow()};
-    auto pastHighestVisibleRow {lowestVisibleRow + mField.GetNumRowsInOneScreen()};
-    auto numColumns {mField.GetNumColumns()};
+    auto numTransitions = 0;
+    auto lowestVisibleRow = mField.GetLowestVisibleRow();
+    auto pastHighestVisibleRow = lowestVisibleRow + mField.GetNumRowsInOneScreen();
+    auto numColumns = mField.GetNumColumns();
     
-    for (auto row {lowestVisibleRow}; row < pastHighestVisibleRow; ++row) {
+    for (auto row = lowestVisibleRow; row < pastHighestVisibleRow; ++row) {
         if (mField.mGrid[row][0].mIsInFilledRow) {
             continue;
         }
         
-        for (auto column {0}; column < numColumns - 1; ++column) {
-            auto thisCellIsEmpty {mField.mGrid[row][column].IsEmpty()};
-            auto nextCellIsEmpty {mField.mGrid[row][column + 1].IsEmpty()};
-            
+        for (auto column = 0; column < numColumns - 1; ++column) {
+            auto thisCellIsEmpty = mField.mGrid[row][column].IsEmpty();
+            auto nextCellIsEmpty = mField.mGrid[row][column + 1].IsEmpty();
             if (thisCellIsEmpty != nextCellIsEmpty) {
                 ++numTransitions;
             }
         }
         
-        auto leftCellIsEmpty {mField.mGrid[row][0].IsEmpty()};
-        
+        auto leftCellIsEmpty = mField.mGrid[row][0].IsEmpty();
         if (leftCellIsEmpty) {
             ++numTransitions;
         }
         
-        auto rightCellIsEmpty {mField.mGrid[row][numColumns - 1].IsEmpty()};
-        
+        auto rightCellIsEmpty = mField.mGrid[row][numColumns - 1].IsEmpty();
         if (rightCellIsEmpty) {
             ++numTransitions;
         }
@@ -352,13 +340,13 @@ int FieldAnalyzer::CalculateNumTransitionsInRows() const {
 int FieldAnalyzer::CalculateNumCellsAccordingToBlueprintInVisibleRows() const {
     assert(mField.mBlueprintGrid);
     
-    auto result {0};
-    auto lowestVisibleRow {mField.GetLowestVisibleRow()};
-    auto pastHighestVisibleRow {lowestVisibleRow + mField.GetNumRowsInOneScreen()};
-    auto numColumns {mField.GetNumColumns()};
+    auto result = 0;
+    auto lowestVisibleRow = mField.GetLowestVisibleRow();
+    auto pastHighestVisibleRow = lowestVisibleRow + mField.GetNumRowsInOneScreen();
+    auto numColumns = mField.GetNumColumns();
     
-    for (auto row {lowestVisibleRow}; row < pastHighestVisibleRow; ++row) {
-        for (auto column {0}; column < numColumns; ++column) {
+    for (auto row = lowestVisibleRow; row < pastHighestVisibleRow; ++row) {
+        for (auto column = 0; column < numColumns; ++column) {
             if (mField.mGrid[row][column].mIsInFilledRow) {
                 continue;
             }
@@ -375,25 +363,23 @@ int FieldAnalyzer::CalculateNumCellsAccordingToBlueprintInVisibleRows() const {
 float FieldAnalyzer::CalculateBuildHolesAreaInVisibleRows() const {
     assert(mField.mBlueprintGrid);
     
-    auto area {0.0f};
-    auto lowestVisibleRow {mField.GetLowestVisibleRow()};
-    auto numColumns {mField.GetNumColumns()};
+    auto area = 0.0f;
+    auto lowestVisibleRow = mField.GetLowestVisibleRow();
+    auto numColumns = mField.GetNumColumns();
     
-    for (auto column {0}; column < numColumns; ++column) {
-        auto aboveIsFilled {false};
+    for (auto column = 0; column < numColumns; ++column) {
+        auto aboveIsFilled = false;
         
-        for (auto row {lowestVisibleRow + mField.GetNumRowsInOneScreen() - 1};
+        for (auto row = lowestVisibleRow + mField.GetNumRowsInOneScreen() - 1;
              row >= lowestVisibleRow;
              --row) {
-            auto& cell {mField.mGrid[row][column]};
-            
+            auto& cell = mField.mGrid[row][column];
             if (cell.mIsInFilledRow) {
                 continue;
             }
             
-            auto thisCellShouldBeFilled {
-                (*mField.mBlueprintGrid)[row][column].mFill != Fill::Empty
-            };
+            auto thisCellShouldBeFilled =
+                (*mField.mBlueprintGrid)[row][column].mFill != Fill::Empty;
             
             if (cell.IsEmpty()) {
                 if (aboveIsFilled && thisCellShouldBeFilled) {
@@ -408,9 +394,8 @@ float FieldAnalyzer::CalculateBuildHolesAreaInVisibleRows() const {
                 continue;
             }
             
-            auto cellFill {
-                cell.mSecondSubCell.IsEmpty() ? cell.mFirstSubCell.mFill : cell.mSecondSubCell.mFill
-            };
+            auto cellFill =
+                cell.mSecondSubCell.IsEmpty() ? cell.mFirstSubCell.mFill : cell.mSecondSubCell.mFill;
             
             switch (cellFill) {
                 case Fill::UpperLeftHalf:
@@ -440,33 +425,30 @@ float FieldAnalyzer::CalculateBuildHolesAreaInVisibleRows() const {
 float FieldAnalyzer::CalculateBuildWellsAreaInVisibleRows() const {
     assert(mField.mBlueprintGrid);
     
-    auto area {0.0f};
-    auto lowestVisibleRow {mField.GetLowestVisibleRow()};
-    auto numColumns {mField.GetNumColumns()};
-    auto pastHighestVisibleRow {lowestVisibleRow + mField.GetNumRowsInOneScreen()};
+    auto area = 0.0f;
+    auto lowestVisibleRow = mField.GetLowestVisibleRow();
+    auto numColumns = mField.GetNumColumns();
+    auto pastHighestVisibleRow = lowestVisibleRow + mField.GetNumRowsInOneScreen();
     
-    for (auto column {0}; column < numColumns; ++column) {
-        auto leftColumnIndex {column - 1};
-        auto rightColumnIndex {column + 1};
+    for (auto column = 0; column < numColumns; ++column) {
+        auto leftColumnIndex = column - 1;
+        auto rightColumnIndex = column + 1;
         
-        for (auto row {lowestVisibleRow}; row < pastHighestVisibleRow; ++row) {
-            auto& cell {mField.mGrid[row][column]};
+        for (auto row = lowestVisibleRow; row < pastHighestVisibleRow; ++row) {
+            auto& cell = mField.mGrid[row][column];
             
-            auto thisCellShouldBeFilled {
-                (*mField.mBlueprintGrid)[row][column].mFill != Fill::Empty
-            };
+            auto thisCellShouldBeFilled =
+                (*mField.mBlueprintGrid)[row][column].mFill != Fill::Empty;
             
             if (!thisCellShouldBeFilled || !cell.IsEmpty() || cell.mIsInFilledRow) {
                 continue;
             }
             
-            auto leftIsEmpty {
-                leftColumnIndex >= 0 ? mField.mGrid[row][leftColumnIndex].IsEmpty() : false
-            };
+            auto leftIsEmpty =
+                leftColumnIndex >= 0 ? mField.mGrid[row][leftColumnIndex].IsEmpty() : false;
             
-            auto rightIsEmpty {
-                rightColumnIndex < numColumns ? mField.mGrid[row][rightColumnIndex].IsEmpty() : false
-            };
+            auto rightIsEmpty =
+                rightColumnIndex < numColumns ? mField.mGrid[row][rightColumnIndex].IsEmpty() : false;
             
             if (!leftIsEmpty && !rightIsEmpty) {
                 area += 1.0f;

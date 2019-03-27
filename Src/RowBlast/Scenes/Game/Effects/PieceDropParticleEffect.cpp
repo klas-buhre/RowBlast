@@ -13,8 +13,8 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto emitterHeightInCells {3.0f};
-    constexpr auto emitterWidthInCells {0.5f};
+    constexpr auto emitterHeightInCells = 3.0f;
+    constexpr auto emitterWidthInCells = 0.5f;
 }
 
 PieceDropParticleEffect::PieceDropParticleEffect(Pht::IEngine& engine, GameScene& scene) :
@@ -25,7 +25,7 @@ PieceDropParticleEffect::PieceDropParticleEffect(Pht::IEngine& engine, GameScene
 }
 
 void PieceDropParticleEffect::CreateParticleEffects(Pht::IEngine& engine) {
-    auto cellSize {mScene.GetCellSize()};
+    auto cellSize = mScene.GetCellSize();
     
     Pht::EmitterSettings particleEmitterSettings {
         .mPosition = Pht::Vec3{0.0f, emitterHeightInCells * cellSize / 2.0f + cellSize / 2.0f, 0.0f},
@@ -49,7 +49,7 @@ void PieceDropParticleEffect::CreateParticleEffects(Pht::IEngine& engine) {
         .mShrinkDuration = 0.4f
     };
     
-    auto& particleSystem {engine.GetParticleSystem()};
+    auto& particleSystem = engine.GetParticleSystem();
     
     for (auto& effect: mParticleEffects) {
         effect = particleSystem.CreateParticleEffectSceneObject(particleSettings,
@@ -64,16 +64,16 @@ void PieceDropParticleEffect::Init() {
 }
 
 void PieceDropParticleEffect::StartEffect(const FallingPiece& fallingPiece) {
-    auto& pieceType {fallingPiece.GetPieceType()};
-    auto pieceNumRows {pieceType.GetGridNumRows()};
-    auto pieceNumColumns {pieceType.GetGridNumColumns()};
-    auto cellSize {mScene.GetCellSize()};
-    auto pieceFieldPos {fallingPiece.GetRenderablePosition() * cellSize};
-    auto& pieceGrid {pieceType.GetGrid(fallingPiece.GetRotation())};
-    auto cellZPos {mScene.GetFieldPosition().z};
+    auto& pieceType = fallingPiece.GetPieceType();
+    auto pieceNumRows = pieceType.GetGridNumRows();
+    auto pieceNumColumns = pieceType.GetGridNumColumns();
+    auto cellSize = mScene.GetCellSize();
+    auto pieceFieldPos = fallingPiece.GetRenderablePosition() * cellSize;
+    auto& pieceGrid = pieceType.GetGrid(fallingPiece.GetRotation());
+    auto cellZPos = mScene.GetFieldPosition().z;
     
-    for (auto column {0}; column < pieceNumColumns; ++column) {
-        for (auto row {pieceNumRows - 1}; row >= 0; --row) {
+    for (auto column = 0; column < pieceNumColumns; ++column) {
+        for (auto row = pieceNumRows - 1; row >= 0; --row) {
             if (!pieceGrid[row][column].IsEmpty()) {
                 Pht::Vec3 fieldPosition {
                     column * cellSize + cellSize / 2.0f + pieceFieldPos.x,
@@ -90,8 +90,7 @@ void PieceDropParticleEffect::StartEffect(const FallingPiece& fallingPiece) {
 
 void PieceDropParticleEffect::StartParticleEffect(const Pht::Vec3& fieldPosition) {
     for (auto& effectSceneObject: mParticleEffects) {
-        auto* effect {effectSceneObject->GetComponent<Pht::ParticleEffect>()};
-        
+        auto* effect = effectSceneObject->GetComponent<Pht::ParticleEffect>();
         if (!effect->IsActive()) {
             effect->Start();
             effectSceneObject->GetTransform().SetPosition(fieldPosition);

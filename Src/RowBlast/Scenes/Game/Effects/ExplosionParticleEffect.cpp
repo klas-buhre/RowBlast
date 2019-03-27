@@ -120,11 +120,11 @@ void ExplosionParticleEffect::CreateInnerEffect(Pht::IEngine& engine,
         .mBurst = 1
     };
     
-    auto& particleSystem {engine.GetParticleSystem()};
+    auto& particleSystem = engine.GetParticleSystem();
     mInnerParticleEffect = particleSystem.CreateParticleEffectSceneObject(particleSettings,
                                                                           particleEmitterSettings,
                                                                           Pht::RenderMode::Triangles);
-    auto& material {mInnerParticleEffect->GetRenderable()->GetMaterial()};
+    auto& material = mInnerParticleEffect->GetRenderable()->GetMaterial();
     material.SetShaderType(Pht::ShaderType::ParticleNoAlphaTexture);
 }
 
@@ -138,7 +138,7 @@ void ExplosionParticleEffect::CreateShockWave(Pht::IEngine& engine,
         .mBurst = 1
     };
 
-    auto& particleSystem {engine.GetParticleSystem()};
+    auto& particleSystem = engine.GetParticleSystem();
     mShockWave = particleSystem.CreateParticleEffectSceneObject(particleSettings,
                                                                 particleEmitterSettings,
                                                                 Pht::RenderMode::Triangles);
@@ -158,8 +158,8 @@ void ExplosionParticleEffect::StartExplosion(const Pht::Vec2& position) {
     mInnerParticleEffect->SetIsStatic(false);
     mShockWave->SetIsStatic(false);
 
-    const auto cellSize {mScene.GetCellSize()};
-    auto& fieldLowerLeft {mScene.GetFieldLoweLeft()};
+    const auto cellSize = mScene.GetCellSize();
+    auto& fieldLowerLeft = mScene.GetFieldLoweLeft();
 
     Pht::Vec3 positionInScene {
         position.x * cellSize + cellSize / 2.0f + fieldLowerLeft.x,
@@ -181,8 +181,8 @@ void ExplosionParticleEffect::StartExplosion(const Pht::Vec2& position) {
 }
 
 void ExplosionParticleEffect::Update(float dt) {
-    auto* shockWave {mShockWave->GetComponent<Pht::ParticleEffect>()};
-    auto* innerEffect {mInnerParticleEffect->GetComponent<Pht::ParticleEffect>()};
+    auto* shockWave = mShockWave->GetComponent<Pht::ParticleEffect>();
+    auto* innerEffect = mInnerParticleEffect->GetComponent<Pht::ParticleEffect>();
 
     shockWave->Update(dt);
     innerEffect->Update(dt);
@@ -197,8 +197,8 @@ void ExplosionParticleEffect::Update(float dt) {
 }
 
 ExplosionParticleEffect::State ExplosionParticleEffect::GetState() const {
-    auto* shockWave {mShockWave->GetComponent<Pht::ParticleEffect>()};
-    auto* innerEffect {mInnerParticleEffect->GetComponent<Pht::ParticleEffect>()};
+    auto* shockWave = mShockWave->GetComponent<Pht::ParticleEffect>();
+    auto* innerEffect = mInnerParticleEffect->GetComponent<Pht::ParticleEffect>();
     
     if (shockWave->IsActive() || innerEffect->IsActive()) {
         return State::Ongoing;

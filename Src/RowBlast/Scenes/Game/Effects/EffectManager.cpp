@@ -9,11 +9,11 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto numLevelBombEffects {30};
-    constexpr auto numLaserEffects {8};
-    constexpr auto cameraShakeTime {0.25f};
-    constexpr auto cameraShakeMagnitude {0.41f};
-    constexpr auto smallCameraShakeMagnitude {0.25f};
+    constexpr auto numLevelBombEffects = 30;
+    constexpr auto numLaserEffects = 8;
+    constexpr auto cameraShakeTime = 0.25f;
+    constexpr auto cameraShakeMagnitude = 0.41f;
+    constexpr auto smallCameraShakeMagnitude = 0.25f;
 }
 
 EffectManager::EffectManager(Pht::IEngine& engine,
@@ -107,8 +107,8 @@ void EffectManager::Update(float dt) {
     mExplosionEffect.Update(dt);
     mBigExplosionEffect.Update(dt);
 
-    auto anyActiveEffects {false};
-    auto onlyParticlesAcitveInLaser {false};
+    auto anyActiveEffects = false;
+    auto onlyParticlesAcitveInLaser = false;
 
     if (mExplosionEffect.GetState() == ExplosionParticleEffect::State::Ongoing ||
         mBigExplosionEffect.GetState() == ExplosionParticleEffect::State::Ongoing) {

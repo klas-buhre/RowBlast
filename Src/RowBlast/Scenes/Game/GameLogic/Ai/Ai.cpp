@@ -43,8 +43,8 @@ Ai::MovePtrs& Ai::CalculateMoves(const FallingPiece& fallingPiece, int movesUsed
         fallingPiece.GetPieceType()
     };
     
-    auto* predeterminedMove {GetPredeterminedMove(fallingPiece, movesUsed)};
-    auto* suggestedMoves {GetSuggestedMoves(fallingPiece, movesUsed)};
+    auto* predeterminedMove = GetPredeterminedMove(fallingPiece, movesUsed);
+    auto* suggestedMoves = GetSuggestedMoves(fallingPiece, movesUsed);
     
     mValidMovesSearch.FindValidMoves(mValidMoves, piece, predeterminedMove, suggestedMoves);
     EvaluateMoves(fallingPiece, movesUsed);
@@ -55,15 +55,13 @@ Ai::MovePtrs& Ai::CalculateMoves(const FallingPiece& fallingPiece, int movesUsed
 
 const Level::TutorialMove* Ai::GetPredeterminedMove(const FallingPiece& fallingPiece,
                                                     int movesUsed) {
-    auto& predeterminedMoves {mLevel->GetPredeterminedMoves()};
-    
+    auto& predeterminedMoves = mLevel->GetPredeterminedMoves();
     if (predeterminedMoves.empty()) {
         return nullptr;
     }
 
     if (movesUsed < predeterminedMoves.size()) {
-        auto& predeterminedMove {predeterminedMoves[movesUsed]};
-        
+        auto& predeterminedMove = predeterminedMoves[movesUsed];
         if (&predeterminedMove.mPieceType == &fallingPiece.GetPieceType()) {
             return &predeterminedMove;
         }
@@ -74,14 +72,13 @@ const Level::TutorialMove* Ai::GetPredeterminedMove(const FallingPiece& fallingP
 
 const std::vector<Level::TutorialMove>* Ai::GetSuggestedMoves(const FallingPiece& fallingPiece,
                                                               int movesUsed) {
-    auto& allSuggestedMoves {mLevel->GetSuggestedMoves()};
-    
+    auto& allSuggestedMoves = mLevel->GetSuggestedMoves();
     if (allSuggestedMoves.empty()) {
         return nullptr;
     }
 
     if (movesUsed < allSuggestedMoves.size()) {
-        auto& suggestedMoves {allSuggestedMoves[movesUsed]};
+        auto& suggestedMoves = allSuggestedMoves[movesUsed];
         if (!suggestedMoves.empty() &&
             &suggestedMoves.front().mPieceType == &fallingPiece.GetPieceType()) {
             
@@ -93,20 +90,19 @@ const std::vector<Level::TutorialMove>* Ai::GetSuggestedMoves(const FallingPiece
 }
 
 void Ai::EvaluateMoves(const FallingPiece& fallingPiece, int movesUsed) {
-    auto& pieceType {fallingPiece.GetPieceType()};
-    auto pieceId {fallingPiece.GetId()};
-    auto pieceNumRows {pieceType.GetGridNumRows()};
-    auto pieceNumcolumns {pieceType.GetGridNumColumns()};
-    auto& moves {mValidMoves.mMoves};
-    auto numMoves {moves.Size()};
-    auto* suggestedTutorialMoves {GetSuggestedMoves(fallingPiece, movesUsed)};
+    auto& pieceType = fallingPiece.GetPieceType();
+    auto pieceId = fallingPiece.GetId();
+    auto pieceNumRows = pieceType.GetGridNumRows();
+    auto pieceNumcolumns = pieceType.GetGridNumColumns();
+    auto& moves = mValidMoves.mMoves;
+    auto numMoves = moves.Size();
+    auto* suggestedTutorialMoves = GetSuggestedMoves(fallingPiece, movesUsed);
     
-    for (auto i {0}; i < numMoves; ++i) {
-        auto& move {moves.At(i)};
+    for (auto i = 0; i < numMoves; ++i) {
+        auto& move = moves.At(i);
         
-        auto* suggestedTutorialMove {
-            suggestedTutorialMoves ? FindTutorialMove(*suggestedTutorialMoves, move) : nullptr
-        };
+        auto* suggestedTutorialMove =
+            suggestedTutorialMoves ? FindTutorialMove(*suggestedTutorialMoves, move) : nullptr;
         
         if (suggestedTutorialMove) {
             assert(suggestedTutorialMove->mScore.HasValue());
@@ -140,16 +136,15 @@ void Ai::EvaluateMove(Move& move, const FallingPiece& fallingPiece) {
 }
 
 void Ai::EvaluateMoveForClearObjective(Move& move, const FallingPiece& fallingPiece) {
-    auto landingHeight {
+    auto landingHeight =
         static_cast<float>(move.mPosition.y - mField.GetLowestVisibleRow()) +
-        fallingPiece.GetPieceType().GetCenterPosition(move.mRotation).y
-    };
+        fallingPiece.GetPieceType().GetCenterPosition(move.mRotation).y;
 
-    auto filledRowsResult {mField.MarkFilledRowsAndCountGrayLevelCellsInFilledRows()};
-    auto numFilledRows {filledRowsResult.mFilledRowIndices.Size()};
-    auto burriedHolesArea {CalculateBurriedHolesArea(numFilledRows, fallingPiece)};
-    auto wellsArea {mFieldAnalyzer.CalculateWellsAreaInVisibleRows()};
-    auto numTransitions {static_cast<float>(mFieldAnalyzer.CalculateNumTransitionsInVisibleRows())};
+    auto filledRowsResult = mField.MarkFilledRowsAndCountGrayLevelCellsInFilledRows();
+    auto numFilledRows = filledRowsResult.mFilledRowIndices.Size();
+    auto burriedHolesArea = CalculateBurriedHolesArea(numFilledRows, fallingPiece);
+    auto wellsArea = mFieldAnalyzer.CalculateWellsAreaInVisibleRows();
+    auto numTransitions = static_cast<float>(mFieldAnalyzer.CalculateNumTransitionsInVisibleRows());
     
     move.mScore = -landingHeight
                   + 2.0f * numFilledRows
@@ -170,19 +165,17 @@ float Ai::CalculateBurriedHolesArea(int numFilledRows, const FallingPiece& falli
 }
 
 void Ai::EvaluateMoveForAsteroidObjective(Move& move, const FallingPiece& fallingPiece) {
-    auto landingHeight {
+    auto landingHeight =
         static_cast<float>(move.mPosition.y - mField.GetLowestVisibleRow()) +
-        fallingPiece.GetPieceType().GetCenterPosition(move.mRotation).y
-    };
+        fallingPiece.GetPieceType().GetCenterPosition(move.mRotation).y;
 
-    auto filledRowsResult {
-        mField.MarkFilledRowsAndCountPieceCellsInFilledRows(fallingPiece.GetId())
-    };
+    auto filledRowsResult =
+        mField.MarkFilledRowsAndCountPieceCellsInFilledRows(fallingPiece.GetId());
     
-    auto numFilledRows {filledRowsResult.mFilledRowIndices.Size()};
-    auto burriedHolesArea {CalculateBurriedHolesArea(numFilledRows, fallingPiece)};
-    auto wellsArea {mFieldAnalyzer.CalculateWellsAreaInVisibleRows()};
-    auto numTransitions {static_cast<float>(mFieldAnalyzer.CalculateNumTransitionsInVisibleRows())};
+    auto numFilledRows = filledRowsResult.mFilledRowIndices.Size();
+    auto burriedHolesArea = CalculateBurriedHolesArea(numFilledRows, fallingPiece);
+    auto wellsArea = mFieldAnalyzer.CalculateWellsAreaInVisibleRows();
+    auto numTransitions = static_cast<float>(mFieldAnalyzer.CalculateNumTransitionsInVisibleRows());
     
     move.mScore = -landingHeight
                   + 2.0f * numFilledRows
@@ -195,17 +188,15 @@ void Ai::EvaluateMoveForAsteroidObjective(Move& move, const FallingPiece& fallin
 }
 
 void Ai::EvaluateMoveForBuildObjective(Move& move, const FallingPiece& fallingPiece) {
-    auto landingHeight {
+    auto landingHeight =
         static_cast<float>(move.mPosition.y - mField.GetLowestVisibleRow()) +
-        fallingPiece.GetPieceType().GetCenterPosition(move.mRotation).y
-    };
+        fallingPiece.GetPieceType().GetCenterPosition(move.mRotation).y;
     
-    auto numCellsAccordingToBlueprint {
-        static_cast<float>(mFieldAnalyzer.CalculateNumCellsAccordingToBlueprintInVisibleRows())
-    };
+    auto numCellsAccordingToBlueprint =
+        static_cast<float>(mFieldAnalyzer.CalculateNumCellsAccordingToBlueprintInVisibleRows());
 
-    auto buildHolesArea {mFieldAnalyzer.CalculateBuildHolesAreaInVisibleRows()};
-    auto buildWellsArea {mFieldAnalyzer.CalculateBuildWellsAreaInVisibleRows()};
+    auto buildHolesArea = mFieldAnalyzer.CalculateBuildHolesAreaInVisibleRows();
+    auto buildWellsArea = mFieldAnalyzer.CalculateBuildWellsAreaInVisibleRows();
     
     move.mScore = -landingHeight
                   + 2.0f * numCellsAccordingToBlueprint
@@ -216,10 +207,10 @@ void Ai::EvaluateMoveForBuildObjective(Move& move, const FallingPiece& fallingPi
 void Ai::SortMoves() {
     mSortedMoves.Clear();
     
-    auto& moves {mValidMoves.mMoves};
-    auto numMoves {moves.Size()};
+    auto& moves = mValidMoves.mMoves;
+    auto numMoves = moves.Size();
     
-    for (auto i {0}; i < numMoves; ++i) {
+    for (auto i = 0; i < numMoves; ++i) {
         mSortedMoves.PushBack(&moves.At(i));
     }
 
@@ -235,8 +226,8 @@ ValidMoves& Ai::FindValidMoves(const FallingPiece& fallingPiece, int movesUsed) 
         fallingPiece.GetPieceType()
     };
     
-    auto* predeterminedMove {GetPredeterminedMove(fallingPiece, movesUsed)};
-    auto* suggestedMoves {GetSuggestedMoves(fallingPiece, movesUsed)};
+    auto* predeterminedMove = GetPredeterminedMove(fallingPiece, movesUsed);
+    auto* suggestedMoves = GetSuggestedMoves(fallingPiece, movesUsed);
     
     mValidMovesSearch.FindValidMoves(mUpdatedValidMoves, piece, predeterminedMove, suggestedMoves);
     return mUpdatedValidMoves;
