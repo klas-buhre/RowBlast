@@ -215,7 +215,7 @@ namespace {
         const auto& faceVertexRefs = vertexRefs.mVertexRefVector;
         assert(faceVertexRefs.size() % 3 == 0);
         
-        for (auto i {0}; i < faceVertexRefs.size(); ) {
+        for (auto i = 0; i < faceVertexRefs.size(); ) {
             auto vertexIndex0 = faceVertexRefs[i].mVertexIndex;
             auto vertexIndex1 = faceVertexRefs[i + 1].mVertexIndex;
             auto vertexIndex2 = faceVertexRefs[i + 2].mVertexIndex;

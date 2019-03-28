@@ -21,7 +21,7 @@ namespace {
     }
     
     bool IsDepthWriting(const SceneObject& sceneObject) {
-        if (auto renderable = sceneObject.GetRenderable()) {
+        if (auto* renderable = sceneObject.GetRenderable()) {
             return renderable->GetMaterial().GetDepthState().mDepthWrite;
         }
         

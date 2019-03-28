@@ -57,6 +57,7 @@ Ongoing tasks:
         Level 38: 5
         Level 39: 5
         Level 40: 5
+        Level 41: 5
 
 
 
@@ -70,7 +71,7 @@ Ongoing tasks:
       -Level 67.
 
     -Removing the curly brace initialization for auto declarations:
-       Finished Animations directory.
+       Finished Ai directory.
 
 
 
