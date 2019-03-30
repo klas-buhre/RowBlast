@@ -59,6 +59,19 @@ Ongoing tasks:
         Level 40: 5
         Level 41: 5
 
+        Level 42:
+        16
+        12
+        8
+        15
+        10
+        11
+        12
+        11
+        17
+        5
+
+
 
 
 
