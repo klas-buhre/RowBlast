@@ -60,6 +60,13 @@ Ongoing tasks:
         Level 41: 5
         Level 42: 4
 
+    -Level ideas:
+       -Large pieces/sections cascading.
+       -Fill all gray slots. Change back clear filled row.
+       -Level with mostly level bombs and lasers. Make them fall to good places.
+       -Triangle level 48.
+
+
 
 
     -Levels moved to world 3:
@@ -71,7 +78,7 @@ Ongoing tasks:
       -Level 67.
 
     -Removing the curly brace initialization for auto declarations:
-       Finished Ai directory.
+       Finished GameLogicCore directory.
 
 
 

@@ -15,7 +15,7 @@ void NextPieceGenerator::Init(const std::vector<const Piece*>& pieceTypes,
 }
 
 const Piece& NextPieceGenerator::GetNext() {
-    auto* next {mNext2Pieces[1]};
+    auto* next = mNext2Pieces[1];
     
     mNext2Pieces[1] = mNext2Pieces[0];
     mNext2Pieces[0] = GetNextFromSequence();
@@ -37,10 +37,10 @@ void NextPieceGenerator::GenerateSequence(const std::vector<const Piece*>& initi
         bag.EraseValue(piece);
     }
     
-    auto numPieceTypes {bag.Size()};
+    auto numPieceTypes = bag.Size();
     
     for (auto i {0}; i < numPieceTypes; ++i) {
-        auto pieceIndex {std::rand() % bag.Size()};
+        auto pieceIndex = std::rand() % bag.Size();
         mSequence.PushBack(bag.At(pieceIndex));
         bag.Erase(pieceIndex);
     }
@@ -53,7 +53,7 @@ const Piece* NextPieceGenerator::GetNextFromSequence() {
         GenerateSequence({});
     }
     
-    auto* next {mSequence.At(mIndexInSequence)};
+    auto* next = mSequence.At(mIndexInSequence);
     ++mIndexInSequence;
     
     return next;

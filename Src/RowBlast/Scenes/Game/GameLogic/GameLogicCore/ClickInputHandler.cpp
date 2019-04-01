@@ -46,7 +46,7 @@ ClickInputHandler::ClickInputHandler(Pht::IEngine& engine,
     mAi {field},
     mSwipeUpRecognizer {Pht::SwipeDirection::Up, inputUnitsPerColumn} {
 
-    for (auto i {0}; i < maxNumVisibleMoves; ++i) {
+    for (auto i = 0; i < maxNumVisibleMoves; ++i) {
         mMoveButtons.push_back(std::make_unique<MoveButton>(engine));
     }
 }
@@ -64,7 +64,7 @@ void ClickInputHandler::Init(const Level& level) {
         
     std::vector<int> row(mNumClickGridColumns);
         
-    for (auto rowIndex {0}; rowIndex < mNumClickGridRows; ++rowIndex) {
+    for (auto rowIndex = 0; rowIndex < mNumClickGridRows; ++rowIndex) {
         mClickGrid.push_back(row);
     }
 }
@@ -77,8 +77,8 @@ void ClickInputHandler::CalculateMoves(const FallingPiece& fallingPiece, int mov
 void ClickInputHandler::UpdateMoves(const FallingPiece& fallingPiece, int movesUsed) {
     assert(mAllValidMoves);
     
-    auto& updatedMoves {mAi.FindValidMoves(fallingPiece, movesUsed)};
-    auto& previousMoves {*mAllValidMoves};
+    auto& updatedMoves = mAi.FindValidMoves(fallingPiece, movesUsed);
+    auto& previousMoves = *mAllValidMoves;
     
     for (auto* move: previousMoves) {
         if (updatedMoves.mMoves.Find(*move) == nullptr) {
@@ -86,7 +86,7 @@ void ClickInputHandler::UpdateMoves(const FallingPiece& fallingPiece, int movesU
         }
     }
     
-    for (auto i {0}; i < mVisibleMoves.Size();) {
+    for (auto i = 0; i < mVisibleMoves.Size();) {
         if (updatedMoves.mMoves.Find(mVisibleMoves.At(i)) == nullptr) {
             mVisibleMoves.Erase(i);
         } else {
@@ -114,8 +114,8 @@ void ClickInputHandler::CreateNewSetOfVisibleMoves() {
 }
 
 void ClickInputHandler::ClearClickGrid() {
-    for (auto row {0}; row < mNumClickGridRows; ++row) {
-        for (auto column {0}; column < mNumClickGridColumns; ++column) {
+    for (auto row = 0; row < mNumClickGridRows; ++row) {
+        for (auto column = 0; column < mNumClickGridColumns; ++column) {
             mClickGrid[row][column] = 0;
         }
     }
@@ -140,21 +140,20 @@ void ClickInputHandler::PopulateSetOfVisibleMoves() {
 bool ClickInputHandler::IsRoomForMove(const Move& move) const {
     assert(mPieceType);
 
-    auto pieceNumRows {mPieceType->GetClickGridNumRows()};
-    auto pieceNumColumns {mPieceType->GetClickGridNumColumns()};
-    const auto& pieceClickGrid {mPieceType->GetClickGrid(move.mRotation)};
-    auto position {move.mPosition * 2};
+    auto pieceNumRows = mPieceType->GetClickGridNumRows();
+    auto pieceNumColumns = mPieceType->GetClickGridNumColumns();
+    const auto& pieceClickGrid = mPieceType->GetClickGrid(move.mRotation);
+    auto position = move.mPosition * 2;
     
-    for (auto pieceRow {0}; pieceRow < pieceNumRows; ++pieceRow) {
-        for (auto pieceColumn {0}; pieceColumn < pieceNumColumns; ++pieceColumn) {
-            auto cell {pieceClickGrid[pieceRow][pieceColumn]};
-            
+    for (auto pieceRow = 0; pieceRow < pieceNumRows; ++pieceRow) {
+        for (auto pieceColumn = 0; pieceColumn < pieceNumColumns; ++pieceColumn) {
+            auto cell = pieceClickGrid[pieceRow][pieceColumn];
             if (cell == 0) {
                 continue;
             }
         
-            auto row {position.y + pieceRow + 1};
-            auto column {position.x + pieceColumn + 1};
+            auto row = position.y + pieceRow + 1;
+            auto column = position.x + pieceColumn + 1;
             
             if (mClickGrid[row][column] != 0) {
                 return false;
@@ -168,21 +167,20 @@ bool ClickInputHandler::IsRoomForMove(const Move& move) const {
 void ClickInputHandler::InsertMoveInClickGrid(const Move& move) {
     assert(mPieceType);
 
-    auto pieceNumRows {mPieceType->GetClickGridNumRows()};
-    auto pieceNumColumns {mPieceType->GetClickGridNumColumns()};
-    const auto& pieceClickGrid {mPieceType->GetClickGrid(move.mRotation)};
-    auto position {move.mPosition * 2};
+    auto pieceNumRows = mPieceType->GetClickGridNumRows();
+    auto pieceNumColumns = mPieceType->GetClickGridNumColumns();
+    const auto& pieceClickGrid = mPieceType->GetClickGrid(move.mRotation);
+    auto position = move.mPosition * 2;
     
-    for (auto pieceRow {0}; pieceRow < pieceNumRows; ++pieceRow) {
-        for (auto pieceColumn {0}; pieceColumn < pieceNumColumns; ++pieceColumn) {
-            auto cell {pieceClickGrid[pieceRow][pieceColumn]};
-            
+    for (auto pieceRow = 0; pieceRow < pieceNumRows; ++pieceRow) {
+        for (auto pieceColumn = 0; pieceColumn < pieceNumColumns; ++pieceColumn) {
+            auto cell = pieceClickGrid[pieceRow][pieceColumn];
             if (cell == 0) {
                 continue;
             }
         
-            auto row {position.y + pieceRow + 1};
-            auto column {position.x + pieceColumn + 1};
+            auto row = position.y + pieceRow + 1;
+            auto column = position.x + pieceColumn + 1;
             
             mClickGrid[row][column] = 1;
         }
@@ -194,27 +192,25 @@ void ClickInputHandler::SetupButton(MoveButton& moveButton, Move& move) {
     
     move.mButton = &moveButton;
     
-    auto cellSize {mGameScene.GetCellSize()};
-    auto buttonSizeSceneCoords {mPieceType->GetButtonSize(move.mRotation) * cellSize / 2.0f};
+    auto cellSize = mGameScene.GetCellSize();
+    auto buttonSizeSceneCoords = mPieceType->GetButtonSize(move.mRotation) * cellSize / 2.0f;
     
-    auto inputScaleFactor {
+    auto inputScaleFactor =
         mEngine.GetInput().GetScreenInputSize().y /
-        mEngine.GetRenderer().GetOrthographicFrustumSize().y
-    };
+        mEngine.GetRenderer().GetOrthographicFrustumSize().y;
     
     moveButton.SetSize(buttonSizeSceneCoords * inputScaleFactor);
     
-    auto buttonCenterLocalCoords {
-        mPieceType->GetButtonCenterPosition(move.mRotation) * cellSize / 2.0f
-    };
+    auto buttonCenterLocalCoords =
+        mPieceType->GetButtonCenterPosition(move.mRotation) * cellSize / 2.0f;
     
     Pht::Vec2 piecePosition {
         static_cast<float>(move.mPosition.x) * cellSize,
         static_cast<float>(move.mPosition.y) * cellSize,
     };
     
-    const auto& fieldLowerLeft {mGameScene.GetFieldLoweLeft()};
-    auto buttonPosition2d {fieldLowerLeft + piecePosition + buttonCenterLocalCoords};
+    const auto& fieldLowerLeft = mGameScene.GetFieldLoweLeft();
+    auto buttonPosition2d = fieldLowerLeft + piecePosition + buttonCenterLocalCoords;
     
     Pht::Vec3 buttonPosition3d {buttonPosition2d.x, buttonPosition2d.y, 0.0f};
     moveButton.SetPosition(buttonPosition3d);

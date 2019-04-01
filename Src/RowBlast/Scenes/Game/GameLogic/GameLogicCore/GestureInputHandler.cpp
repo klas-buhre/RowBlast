@@ -11,9 +11,9 @@
 using namespace RowBlast;
 
 namespace {
-    const float halfColumn {0.5f};
-    const float inputUnitsPerColumn {41.5f};
-    const float dropOnTouchEndMaxTime {1.2f};
+    constexpr float halfColumn {0.5f};
+    constexpr float inputUnitsPerColumn {41.5f};
+    constexpr float dropOnTouchEndMaxTime {1.2f};
 }
 
 GestureInputHandler::GestureInputHandler(IGameLogic& gameLogic, FallingPiece& fallingPiece) :
@@ -95,8 +95,7 @@ void GestureInputHandler::HandleTouchBegin() {
 }
 
 Pht::IsSwipe GestureInputHandler::HandleSwipeDownOrUp(const Pht::TouchEvent& touchEvent) {
-    auto isSwipeDown {mSwipeDownRecognizer.IsTouchContainingSwipe(touchEvent)};
-    
+    auto isSwipeDown = mSwipeDownRecognizer.IsTouchContainingSwipe(touchEvent);
     switch (isSwipeDown) {
         case Pht::IsSwipe::Yes:
             EnsureBeingDraggedDownState(touchEvent);
@@ -107,8 +106,7 @@ Pht::IsSwipe GestureInputHandler::HandleSwipeDownOrUp(const Pht::TouchEvent& tou
             break;
     }
     
-    auto isSwipeUp {mSwipeUpRecognizer.IsTouchContainingSwipe(touchEvent)};
-    
+    auto isSwipeUp = mSwipeUpRecognizer.IsTouchContainingSwipe(touchEvent);
     switch (isSwipeUp) {
         case Pht::IsSwipe::Yes:
             mTouchContainsSwipeUp = true;
@@ -168,9 +166,8 @@ void GestureInputHandler::HandleDraggingDown(const Pht::TouchEvent& touchEvent) 
         return;
     }
     
-    auto fallingPieceNewY {mFallingPiece.GetPosition().y - diff};
-    auto ghostPieceRow {mGameLogic.GetGhostPieceRow()};
-    
+    auto fallingPieceNewY = mFallingPiece.GetPosition().y - diff;
+    auto ghostPieceRow = mGameLogic.GetGhostPieceRow();
     if (fallingPieceNewY < ghostPieceRow) {
         mFallingPiece.GoToLandingState(ghostPieceRow);
     } else {
@@ -182,7 +179,7 @@ void GestureInputHandler::HandleDraggingDown(const Pht::TouchEvent& touchEvent) 
 
 void GestureInputHandler::HandleDraggingSideways(const Pht::TouchEvent& touchEvent) {
     float diff {(touchEvent.mTranslation.x - mPreviousTranslationX) / inputUnitsPerColumn};
-    auto diffSign {Pht::Sign(diff)};
+    auto diffSign = Pht::Sign(diff);
     
     switch (mDiffState) {
         case DiffState::Accumulating:
@@ -194,7 +191,6 @@ void GestureInputHandler::HandleDraggingSideways(const Pht::TouchEvent& touchEve
 
             if (std::fabs(mAccumulatedDiff) > halfColumn) {
                 float fallingPieceNewX {mFallingPiece.GetPosition().x + mAccumulatedDiff};
-                
                 if (mAccumulatedDiff > 0.0f) {
                     fallingPieceNewX -= halfColumn;
                 } else {
@@ -221,7 +217,7 @@ void GestureInputHandler::HandleDraggingSideways(const Pht::TouchEvent& touchEve
                 mAccumulatedDiff = diff;
                 mFallingPiece.SetX(mFallingPiece.GetIntPosition().x + halfColumn);
             } else {
-                auto fallingPieceNewX {mFallingPiece.GetPosition().x + diff};
+                auto fallingPieceNewX = mFallingPiece.GetPosition().x + diff;
                 mGameLogic.SetFallingPieceXPosWithCollisionDetection(fallingPieceNewX);
             }
             break;
@@ -250,8 +246,7 @@ void GestureInputHandler::EnsureBeingDraggedDownState(const Pht::TouchEvent& tou
 }
 
 void GestureInputHandler::MaybeExitBeingDraggedDownState() {
-    auto diff {std::fabs(mFallingPiece.GetPosition().x - mFallingPieceXAtDragDown)};
-    
+    auto diff = std::fabs(mFallingPiece.GetPosition().x - mFallingPieceXAtDragDown);
     if (mDiffStateAtDragDown == DiffState::Accumulating) {
         diff += halfColumn;
     }

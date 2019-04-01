@@ -11,14 +11,14 @@
 using namespace RowBlast;
 
 namespace {
-    const auto numVisibleLevelRows {6};
-    const auto numVisibleRowsBelowAsteroid {7};
-    const auto scrollTime {0.72f};
-    const auto deaccelerationStartTime {0.36f};
-    const auto waitTimeClearObjective {1.0f};
-    const auto waitTimeBuildObjective {0.5f};
-    const auto overviewScrollSpeed {11.0f};
-    const auto overviewDeaccelerationDuration {1.0f};
+    constexpr auto numVisibleLevelRows = 6;
+    constexpr auto numVisibleRowsBelowAsteroid = 7;
+    constexpr auto scrollTime = 0.72f;
+    constexpr auto deaccelerationStartTime = 0.36f;
+    constexpr auto waitTimeClearObjective = 1.0f;
+    constexpr auto waitTimeBuildObjective = 0.5f;
+    constexpr auto overviewScrollSpeed = 11.0f;
+    constexpr auto overviewDeaccelerationDuration = 1.0f;
 }
 
 ScrollController::ScrollController(Pht::IEngine& engine, Field& field) :
@@ -98,7 +98,7 @@ void ScrollController::UpdateInBeforeLevelOverviewScrollState() {
 }
 
 void ScrollController::UpdateInLevelOverviewScrollState() {
-    auto dt {mEngine.GetLastFrameSeconds()};
+    auto dt = mEngine.GetLastFrameSeconds();
     mScrollTime += dt;
     
     switch (mLevelObjective) {
@@ -117,7 +117,6 @@ void ScrollController::UpdateInLevelOverviewScrollStateClearObjective(float dt) 
     
     if (mScrollTime > mStartDeaccelerationTime) {
         mScrollSpeed -= mScrollDeacceleration * dt;
-        
         if (mScrollSpeed < 0.0f) {
             mScrollSpeed = 0.0f;
         }
@@ -135,7 +134,6 @@ void ScrollController::UpdateInLevelOverviewScrollStateBuildObjective(float dt) 
     
     if (mScrollTime > mStartDeaccelerationTime) {
         mScrollSpeed -= mScrollDeacceleration * dt;
-        
         if (mScrollSpeed < 0.0f) {
             mScrollSpeed = 0.0f;
         }
@@ -153,8 +151,7 @@ void ScrollController::UpdateInIdleState() {
         return;
     }
 
-    auto preferredLowestVisibleRow {static_cast<float>(CalculatePreferredLowestVisibleRow())};
-    
+    auto preferredLowestVisibleRow = static_cast<float>(CalculatePreferredLowestVisibleRow());
     if (preferredLowestVisibleRow < mLowestVisibleRow) {
         StartScrollingDown(preferredLowestVisibleRow);
     } else if (preferredLowestVisibleRow > mLowestVisibleRow) {
@@ -174,22 +171,19 @@ int ScrollController::CalculatePreferredLowestVisibleRow() const {
 }
 
 int ScrollController::CalculatePreferredLowestVisibleRowClearObjective() const {
-    auto highestLevelBlock {mField.CalculateHighestLevelBlock()};
-    
-    auto lowestVisibleRowBasedOnLevelBlocks {
-        highestLevelBlock.HasValue() ? highestLevelBlock.GetValue() + 1 - numVisibleLevelRows : 0
-    };
-    
+    auto highestLevelBlock = mField.CalculateHighestLevelBlock();
+    auto lowestVisibleRowBasedOnLevelBlocks =
+        highestLevelBlock.HasValue() ? highestLevelBlock.GetValue() + 1 - numVisibleLevelRows : 0;
+
     if (lowestVisibleRowBasedOnLevelBlocks < 0) {
         lowestVisibleRowBasedOnLevelBlocks = 0;
     }
     
-    auto lowestVisibleRowBasedOnBlocksInSpawningArea {lowestVisibleRowBasedOnLevelBlocks};
+    auto lowestVisibleRowBasedOnBlocksInSpawningArea = lowestVisibleRowBasedOnLevelBlocks;
     
     for (;;) {
-        auto highestBlockInSpawningArea {
-            mField.CalculateHighestBlockInSpawningArea(lowestVisibleRowBasedOnBlocksInSpawningArea)
-        };
+        auto highestBlockInSpawningArea =
+            mField.CalculateHighestBlockInSpawningArea(lowestVisibleRowBasedOnBlocksInSpawningArea);
         
         if (highestBlockInSpawningArea.HasValue()) {
             lowestVisibleRowBasedOnBlocksInSpawningArea = highestBlockInSpawningArea.GetValue() +
@@ -199,8 +193,7 @@ int ScrollController::CalculatePreferredLowestVisibleRowClearObjective() const {
         }
     }
     
-    auto highestPossibleLowestVisibleRow {mField.GetNumRows() - mField.GetNumRowsInOneScreen()};
-    
+    auto highestPossibleLowestVisibleRow = mField.GetNumRows() - mField.GetNumRowsInOneScreen();
     if (lowestVisibleRowBasedOnBlocksInSpawningArea > highestPossibleLowestVisibleRow) {
         lowestVisibleRowBasedOnBlocksInSpawningArea = highestPossibleLowestVisibleRow;
     }
@@ -213,11 +206,9 @@ int ScrollController::CalculatePreferredLowestVisibleRowClearObjective() const {
 }
 
 int ScrollController::CalculatePreferredLowestVisibleRowAsteroidObjective() const {
-    auto asteroidRow {mField.CalculateAsteroidRow()};
-
-    auto lowestVisibleRow {
-        asteroidRow.HasValue() ? asteroidRow.GetValue() - numVisibleRowsBelowAsteroid : 0
-    };
+    auto asteroidRow = mField.CalculateAsteroidRow();
+    auto lowestVisibleRow =
+        asteroidRow.HasValue() ? asteroidRow.GetValue() - numVisibleRowsBelowAsteroid : 0;
     
     if (lowestVisibleRow < 0) {
         lowestVisibleRow = 0;
@@ -227,9 +218,8 @@ int ScrollController::CalculatePreferredLowestVisibleRowAsteroidObjective() cons
 }
 
 int ScrollController::CalculatePreferredLowestVisibleRowBuildObjective() const {
-    auto preferredLowestVisibleRow {mField.AccordingToBlueprintHeight()};
-    auto lowestVisibleRowMax {mField.GetNumRows() - mField.GetNumRowsInOneScreen()};
-    
+    auto preferredLowestVisibleRow = mField.AccordingToBlueprintHeight();
+    auto lowestVisibleRowMax = mField.GetNumRows() - mField.GetNumRowsInOneScreen();
     if (preferredLowestVisibleRow > lowestVisibleRowMax) {
         preferredLowestVisibleRow = lowestVisibleRowMax;
     }
@@ -258,7 +248,7 @@ void ScrollController::StartScrollingUp(float preferredLowestVisibleRow) {
 }
 
 void ScrollController::UpdateInScrollingState() {
-    auto dt {mEngine.GetLastFrameSeconds()};
+    auto dt = mEngine.GetLastFrameSeconds();
     mScrollTime += dt;
     
     switch (mScrollDirection) {
@@ -276,7 +266,6 @@ void ScrollController::UpdateInScrollingStateDownDirection(float dt) {
 
     if (mScrollTime > deaccelerationStartTime) {
         mScrollSpeed -= mScrollDeacceleration * dt;
-        
         if (mScrollSpeed < 0.0f) {
             mScrollSpeed = 0.0f;
         }
@@ -299,7 +288,6 @@ void ScrollController::UpdateInScrollingStateUpDirection(float dt) {
 
     if (mScrollTime > deaccelerationStartTime) {
         mScrollSpeed -= mScrollDeacceleration * dt;
-        
         if (mScrollSpeed < 0.0f) {
             mScrollSpeed = 0.0f;
         }

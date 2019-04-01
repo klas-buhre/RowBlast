@@ -87,7 +87,7 @@ void TitleAnimation::CreateText() {
     mText.mUpperTextLineSceneObject = std::make_unique<Pht::SceneObject>();
     auto upperTextComponent {
         std::make_unique<Pht::TextComponent>(*mText.mUpperTextLineSceneObject,
-                                             "ROW",
+                                             "RAD4", // "ROW",
                                              textProperties)
     };
     mText.mUpperTextLineSceneObject->SetComponent<Pht::TextComponent>(std::move(upperTextComponent));

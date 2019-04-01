@@ -12,8 +12,8 @@
 using namespace RowBlast;
 
 namespace {
-    const auto maxNumScanTries {Field::maxNumRows};
-    const auto maxNumRowsInOneScreen {19};
+    constexpr auto maxNumScanTries = Field::maxNumRows;
+    constexpr auto maxNumRowsInOneScreen = 19;
     const SubCell fullSubCell {Fill::Full};
 
     bool RowIsFull(const std::vector<Cell>& row) {
@@ -96,7 +96,7 @@ namespace {
     }
     
     PieceBlocks CreatePieceBlocks(const FallingPiece& fallingPiece) {
-        auto& pieceType {fallingPiece.GetPieceType()};
+        auto& pieceType = fallingPiece.GetPieceType();
     
         return {
             pieceType.GetGrid(fallingPiece.GetRotation()),
@@ -113,21 +113,21 @@ void Field::Init(const Level& level) {
     
     switch (level.GetObjective()) {
         case Level::Objective::Clear: {
-            auto* clearGrid {level.GetClearGrid()};
+            auto* clearGrid = level.GetClearGrid();
             assert(clearGrid);
             mGrid = *clearGrid;
             assert(mNumRows - CalculateHighestLevelBlock().GetValue() >= 14);
             break;
         }
         case Level::Objective::BringDownTheAsteroid: {
-            auto* clearGrid {level.GetClearGrid()};
+            auto* clearGrid = level.GetClearGrid();
             assert(clearGrid);
             mGrid = *clearGrid;
             assert(mNumRows - CalculateAsteroidRow().GetValue() >= 13);
             break;
         }
         case Level::Objective::Build: {
-            auto* blueprintGrid {level.GetBlueprintGrid()};
+            auto* blueprintGrid = level.GetBlueprintGrid();
             assert(blueprintGrid);
             mBlueprintGrid = std::make_unique<BlueprintCellGrid>(*blueprintGrid);
             mGrid.clear();
@@ -175,8 +175,8 @@ void Field::RestoreFromTempGrid() {
 }
 
 void Field::CopyGridNoAlloc(CellGrid& to, const CellGrid& from) {
-    for (auto row {0}; row < mNumRows; ++row) {
-        for (auto column {0}; column < mNumColumns; ++column) {
+    for (auto row = 0; row < mNumRows; ++row) {
+        for (auto column = 0; column < mNumColumns; ++column) {
             to[row][column] = from[row][column];
         }
     }
@@ -191,9 +191,9 @@ int Field::GetNumRowsInOneScreen() const {
 }
 
 bool Field::AnyFilledRows() const {
-    auto pastHighestVisibleRow {mLowestVisibleRow + GetNumRowsInOneScreen()};
+    auto pastHighestVisibleRow = mLowestVisibleRow + GetNumRowsInOneScreen();
     
-    for (auto rowIndex {mLowestVisibleRow}; rowIndex < pastHighestVisibleRow; ++rowIndex) {
+    for (auto rowIndex = mLowestVisibleRow; rowIndex < pastHighestVisibleRow; ++rowIndex) {
         if (RowIsFull(mGrid[rowIndex])) {
             return true;
         }
@@ -203,12 +203,11 @@ bool Field::AnyFilledRows() const {
 }
 
 int Field::CalculateNumLevelBlocks() const {
-    auto result {0};
+    auto result = 0;
     
-    for (auto row {0}; row < mNumRows; ++row) {
-        for (auto column {0}; column < mNumColumns; ++column) {
-            auto& cell {mGrid[row][column]};
-            
+    for (auto row = 0; row < mNumRows; ++row) {
+        for (auto column = 0; column < mNumColumns; ++column) {
+            auto& cell = mGrid[row][column];
             if (cell.mFirstSubCell.mIsGrayLevelBlock || cell.mSecondSubCell.mIsGrayLevelBlock) {
                 ++result;
             }
@@ -220,10 +219,10 @@ int Field::CalculateNumLevelBlocks() const {
 
 int Field::CalculateNumEmptyBlueprintSlots() const {
     assert(mBlueprintGrid);
-    auto result {0};
+    auto result = 0;
     
-    for (auto row {0}; row < mNumRows; ++row) {
-        for (auto column {0}; column < mNumColumns; ++column) {
+    for (auto row = 0; row < mNumRows; ++row) {
+        for (auto column = 0; column < mNumColumns; ++column) {
             if ((*mBlueprintGrid)[row][column].mFill != Fill::Empty &&
                 !IsCellAccordingToBlueprint(row, column)) {
                 ++result;
@@ -235,8 +234,8 @@ int Field::CalculateNumEmptyBlueprintSlots() const {
 }
 
 Pht::Optional<int> Field::CalculateHighestLevelBlock() const {
-    for (auto row {mNumRows - 1}; row >= 0; --row) {
-        for (auto column {0}; column < mNumColumns; ++column) {
+    for (auto row = mNumRows - 1; row >= 0; --row) {
+        for (auto column = 0; column < mNumColumns; ++column) {
             if (mGrid[row][column].mFirstSubCell.mIsGrayLevelBlock) {
                 return row;
             }
@@ -247,11 +246,11 @@ Pht::Optional<int> Field::CalculateHighestLevelBlock() const {
 }
 
 Pht::Optional<int> Field::CalculateHighestBlockInSpawningArea(int lowestVisibleRow) const {
-    auto spawningAreaBottomRow {lowestVisibleRow + numRowsUpToSpawningArea};
-    auto spawningAreaTopRow {spawningAreaBottomRow + Piece::maxRows - 1};
+    auto spawningAreaBottomRow = lowestVisibleRow + numRowsUpToSpawningArea;
+    auto spawningAreaTopRow = spawningAreaBottomRow + Piece::maxRows - 1;
     
-    for (auto row {spawningAreaTopRow}; row >= spawningAreaBottomRow; --row) {
-        for (auto column {0}; column < mNumColumns; ++column) {
+    for (auto row = spawningAreaTopRow; row >= spawningAreaBottomRow; --row) {
+        for (auto column = 0; column < mNumColumns; ++column) {
             if (row <= mNumRows - 1 && !mGrid[row][column].IsEmpty()) {
                 return row;
             }
@@ -262,8 +261,8 @@ Pht::Optional<int> Field::CalculateHighestBlockInSpawningArea(int lowestVisibleR
 }
 
 Pht::Optional<int> Field::CalculateAsteroidRow() const {
-    for (auto row {0}; row < mNumRows; ++row) {
-        for (auto column {0}; column < mNumColumns; ++column) {
+    for (auto row = 0; row < mNumRows; ++row) {
+        for (auto column = 0; column < mNumColumns; ++column) {
             if (mGrid[row][column].mFirstSubCell.IsAsteroid()) {
                 return row;
             }
@@ -276,8 +275,8 @@ Pht::Optional<int> Field::CalculateAsteroidRow() const {
 int Field::AccordingToBlueprintHeight() const {
     assert(mBlueprintGrid);
     
-    for (auto row {0}; row < mNumRows; ++row) {
-        for (auto column {0}; column < mNumColumns; ++column) {
+    for (auto row = 0; row < mNumRows; ++row) {
+        for (auto column = 0; column < mNumColumns; ++column) {
             if (!IsCellAccordingToBlueprint(row, column)) {
                 return row;
             }
@@ -288,8 +287,8 @@ int Field::AccordingToBlueprintHeight() const {
 }
 
 bool Field::IsCellAccordingToBlueprint(int row, int column) const {
-    auto& cell {mGrid[row][column]};
-    auto blueprintFill {(*mBlueprintGrid)[row][column].mFill};
+    auto& cell = mGrid[row][column];
+    auto blueprintFill = (*mBlueprintGrid)[row][column].mFill;
     
     if (cell.mFirstSubCell.IsNonBlockObject()) {
         return false;
@@ -318,26 +317,26 @@ bool Field::IsCellAccordingToBlueprint(int row, int column) const {
 
 int Field::DetectCollisionDown(const PieceBlocks& pieceBlocks, const Pht::IVec2& position) const {
     Pht::IVec2 step {0, -1};
-    auto collisionPosition {ScanUntilCollision(pieceBlocks, position, step)};
+    auto collisionPosition = ScanUntilCollision(pieceBlocks, position, step);
     return collisionPosition.y + 1;
 }
 
 int Field::DetectCollisionRight(const PieceBlocks& pieceBlocks, const Pht::IVec2& position) const {
     Pht::IVec2 step {1, 0};
-    auto collisionPosition {ScanUntilCollision(pieceBlocks, position, step)};
+    auto collisionPosition = ScanUntilCollision(pieceBlocks, position, step);
     return collisionPosition.x - 1;
 }
 
 int Field::DetectCollisionLeft(const PieceBlocks& pieceBlocks, const Pht::IVec2& position) const {
     Pht::IVec2 step {-1, 0};
-    auto collisionPosition {ScanUntilCollision(pieceBlocks, position, step)};
+    auto collisionPosition = ScanUntilCollision(pieceBlocks, position, step);
     return collisionPosition.x + 1;
 }
 
 Pht::IVec2 Field::ScanUntilCollision(const PieceBlocks& pieceBlocks,
                                      Pht::IVec2 position,
                                      const Pht::IVec2& step) const {
-    auto isScanStart {true};
+    auto isScanStart = true;
     
     for (;;) {
         CheckCollision(mCollisionResult, pieceBlocks, position, step, isScanStart);
@@ -369,24 +368,23 @@ void Field::CheckCollision(CollisionResult& result,
     result.mIsCollision = IsCollision::No;
     result.mCollisionPoints.Clear();
     
-    auto pieceNumRows {pieceBlocks.mNumRows};
-    auto pieceNumColumns {pieceBlocks.mNumColumns};
-    auto& pieceGrid {pieceBlocks.mGrid};
+    auto pieceNumRows = pieceBlocks.mNumRows;
+    auto pieceNumColumns = pieceBlocks.mNumColumns;
+    auto& pieceGrid = pieceBlocks.mGrid;
 
-    for (auto pieceRow {0}; pieceRow < pieceNumRows; ++pieceRow) {
-        for (auto pieceColumn {0}; pieceColumn < pieceNumColumns; ++pieceColumn) {
-            auto& pieceCell {pieceGrid[pieceRow][pieceColumn]};
+    for (auto pieceRow = 0; pieceRow < pieceNumRows; ++pieceRow) {
+        for (auto pieceColumn = 0; pieceColumn < pieceNumColumns; ++pieceColumn) {
+            auto& pieceCell = pieceGrid[pieceRow][pieceColumn];
             
-            auto& pieceSubCell {
-                pieceCell.mSecondSubCell.IsEmpty() ? pieceCell.mFirstSubCell : fullSubCell
-            };
+            auto& pieceSubCell =
+                pieceCell.mSecondSubCell.IsEmpty() ? pieceCell.mFirstSubCell : fullSubCell;
             
             if (pieceSubCell.IsEmpty()) {
                 continue;
             }
 
-            auto fieldRow {position.y + pieceRow};
-            auto fieldColumn {position.x + pieceColumn};
+            auto fieldRow = position.y + pieceRow;
+            auto fieldColumn = position.x + pieceColumn;
 
             if (fieldRow < mLowestVisibleRow || fieldRow >= mNumRows || fieldColumn < 0 ||
                 fieldColumn >= mNumColumns) {
@@ -395,21 +393,19 @@ void Field::CheckCollision(CollisionResult& result,
                 continue;
             }
 
-            auto& fieldCell {mGrid[fieldRow][fieldColumn]};
+            auto& fieldCell = mGrid[fieldRow][fieldColumn];
             
-            auto firstSubCellIntersects {
+            auto firstSubCellIntersects =
                 CollisionDetection::SubCellsIntersect(fieldCell.mFirstSubCell,
                                                       pieceSubCell,
                                                       scanDirection,
-                                                      isScanStart)
-            };
+                                                      isScanStart);
             
-            auto secondSubCellIntersects {
+            auto secondSubCellIntersects =
                 CollisionDetection::SubCellsIntersect(fieldCell.mSecondSubCell,
                                                       pieceSubCell,
                                                       scanDirection,
-                                                      isScanStart)
-            };
+                                                      isScanStart);
             
             if (firstSubCellIntersects == Intersection::Yes ||
                 secondSubCellIntersects == Intersection::Yes) {
@@ -430,33 +426,33 @@ void Field::CheckCollision(CollisionResult& result,
 
 int Field::DetectFreeSpaceUp(const PieceBlocks& pieceBlocks, const Pht::IVec2& position) const {
     Pht::IVec2 step {0, 1};
-    auto freePosition {ScanUntilNoCollision(pieceBlocks, position, step)};
+    auto freePosition = ScanUntilNoCollision(pieceBlocks, position, step);
     return freePosition.y;
 }
 
 int Field::DetectFreeSpaceDown(const PieceBlocks& pieceBlocks, const Pht::IVec2& position) const {
     Pht::IVec2 step {0, -1};
-    auto freePosition {ScanUntilNoCollision(pieceBlocks, position, step)};
+    auto freePosition = ScanUntilNoCollision(pieceBlocks, position, step);
     return freePosition.y;
 }
 
 int Field::DetectFreeSpaceRight(const PieceBlocks& pieceBlocks, const Pht::IVec2& position) const {
     Pht::IVec2 step {1, 0};
-    auto freePosition {ScanUntilNoCollision(pieceBlocks, position, step)};
+    auto freePosition = ScanUntilNoCollision(pieceBlocks, position, step);
     return freePosition.x;
 }
 
 int Field::DetectFreeSpaceLeft(const PieceBlocks& pieceBlocks, const Pht::IVec2& position) const {
     Pht::IVec2 step {-1, 0};
-    auto freePosition {ScanUntilNoCollision(pieceBlocks, position, step)};
+    auto freePosition = ScanUntilNoCollision(pieceBlocks, position, step);
     return freePosition.x;
 }
 
 Pht::IVec2 Field::ScanUntilNoCollision(const PieceBlocks& pieceBlocks,
                                        Pht::IVec2 position,
                                        const Pht::IVec2& step) const {
-    auto numTries {0};
-    auto isScanStart {true};
+    auto numTries = 0;
+    auto isScanStart = true;
     
     for (;;) {
         CheckCollision(mCollisionResult, pieceBlocks, position, step, isScanStart);
@@ -482,13 +478,13 @@ Pht::IVec2 Field::ScanUntilNoCollision(const PieceBlocks& pieceBlocks,
 Field::CollisionPoints Field::GetOccupiedArea(const PieceBlocks& pieceBlocks,
                                               const Pht::IVec2& position) const {
     CollisionPoints collisions;
-    auto pieceNumRows {pieceBlocks.mNumRows};
-    auto pieceNumColumns {pieceBlocks.mNumColumns};
+    auto pieceNumRows = pieceBlocks.mNumRows;
+    auto pieceNumColumns = pieceBlocks.mNumColumns;
 
-    for (auto pieceRow {0}; pieceRow < pieceNumRows; ++pieceRow) {
-        for (auto pieceColumn {0}; pieceColumn < pieceNumColumns; ++pieceColumn) {
-            auto fieldRow {position.y + pieceRow};
-            auto fieldColumn {position.x + pieceColumn};
+    for (auto pieceRow = 0; pieceRow < pieceNumRows; ++pieceRow) {
+        for (auto pieceColumn = 0; pieceColumn < pieceNumColumns; ++pieceColumn) {
+            auto fieldRow = position.y + pieceRow;
+            auto fieldColumn = position.x + pieceColumn;
 
             if (fieldRow < 0 || fieldRow >= mNumRows || fieldColumn < 0 ||
                 fieldColumn >= mNumColumns) {
@@ -496,8 +492,7 @@ Field::CollisionPoints Field::GetOccupiedArea(const PieceBlocks& pieceBlocks,
                 continue;
             }
 
-            auto& fieldCell {mGrid[fieldRow][fieldColumn]};
-            
+            auto& fieldCell = mGrid[fieldRow][fieldColumn];
             if (!fieldCell.IsEmpty()) {
                 collisions.PushBack(Pht::IVec2{pieceColumn, pieceRow});
             }
@@ -510,7 +505,7 @@ Field::CollisionPoints Field::GetOccupiedArea(const PieceBlocks& pieceBlocks,
 Field::ImpactedBombs Field::DetectImpactedBombs(const PieceBlocks& pieceBlocks,
                                                 const Pht::IVec2& position) const {
     ImpactedBombs impactedBombs;
-    auto lowerPosition {position - Pht::IVec2{0, 1}};
+    auto lowerPosition = position - Pht::IVec2{0, 1};
     
     CheckCollision(mCollisionResult, pieceBlocks, lowerPosition, Pht::IVec2{0, 0}, false);
 
@@ -523,7 +518,7 @@ Field::ImpactedBombs Field::DetectImpactedBombs(const PieceBlocks& pieceBlocks,
             continue;
         }
         
-        auto blockKind {mGrid[collisionPoint.y][collisionPoint.x].mFirstSubCell.mBlockKind};
+        auto blockKind = mGrid[collisionPoint.y][collisionPoint.x].mFirstSubCell.mBlockKind;
         
         switch (blockKind) {
             case BlockKind::Bomb:
@@ -542,7 +537,7 @@ void Field::LandFallingPiece(const FallingPiece& fallingPiece, bool startBounceA
     SetChanged();
     ResetFlashingBlockAnimations();
     
-    auto pieceBlocks {CreatePieceBlocks(fallingPiece)};
+    auto pieceBlocks = CreatePieceBlocks(fallingPiece);
     LandPieceBlocks(pieceBlocks,
                     fallingPiece.GetId(),
                     fallingPiece.GetIntPosition(),
@@ -557,22 +552,20 @@ void Field::LandPieceBlocks(const PieceBlocks& pieceBlocks,
                             bool updateCellPosition,
                             bool startBlueprintCellAnimation,
                             bool startBounceAnimation) {
-    for (auto pieceRow {0}; pieceRow < pieceBlocks.mNumRows; ++pieceRow) {
-        for (auto pieceColumn {0}; pieceColumn < pieceBlocks.mNumColumns; ++pieceColumn) {
-            auto& pieceCell {pieceBlocks.mGrid[pieceRow][pieceColumn]};
-            auto& pieceSubCell {pieceCell.mFirstSubCell};
-            
+    for (auto pieceRow = 0; pieceRow < pieceBlocks.mNumRows; ++pieceRow) {
+        for (auto pieceColumn = 0; pieceColumn < pieceBlocks.mNumColumns; ++pieceColumn) {
+            auto& pieceCell = pieceBlocks.mGrid[pieceRow][pieceColumn];
+            auto& pieceSubCell = pieceCell.mFirstSubCell;
             if (pieceSubCell.IsEmpty()) {
                 continue;
             }
 
-            auto row {position.y + pieceRow};
-            auto column {position.x + pieceColumn};
-            auto& fieldCell {mGrid[row][column]};
+            auto row = position.y + pieceRow;
+            auto column = position.x + pieceColumn;
+            auto& fieldCell = mGrid[row][column];
             
-            auto& fieldSubCell {
-                fieldCell.mFirstSubCell.IsEmpty() ? fieldCell.mFirstSubCell : fieldCell.mSecondSubCell
-            };
+            auto& fieldSubCell =
+                fieldCell.mFirstSubCell.IsEmpty() ? fieldCell.mFirstSubCell : fieldCell.mSecondSubCell;
             
             fieldSubCell = pieceSubCell;
             fieldSubCell.mPieceId = pieceId;
@@ -585,14 +578,14 @@ void Field::LandPieceBlocks(const PieceBlocks& pieceBlocks,
             }
             
             if (startBlueprintCellAnimation && mBlueprintGrid) {
-                auto& blueprintCell {(*mBlueprintGrid)[row][column]};
+                auto& blueprintCell = (*mBlueprintGrid)[row][column];
                 if (blueprintCell.mFill != Fill::Empty && IsCellAccordingToBlueprint(row, column)) {
                     blueprintCell.mAnimation.mIsActive = true;
                 }
             }
             
             if (startBounceAnimation) {
-                auto& fallingBlockAnimation {fieldSubCell.mFallingBlockAnimation};
+                auto& fallingBlockAnimation = fieldSubCell.mFallingBlockAnimation;
                 fallingBlockAnimation.mState = FallingBlockAnimation::State::Bouncing;
                 fallingBlockAnimation.mVelocity = FallingBlockAnimation::fallingPieceBounceVelocity;
             }
@@ -601,9 +594,9 @@ void Field::LandPieceBlocks(const PieceBlocks& pieceBlocks,
 }
 
 void Field::ResetFlashingBlockAnimations() {
-    for (auto row {0}; row < mNumRows; ++row) {
-        for (auto column {0}; column < mNumColumns; ++column) {
-            auto& cell {mGrid[row][column]};
+    for (auto row = 0; row < mNumRows; ++row) {
+        for (auto column = 0; column < mNumColumns; ++column) {
+            auto& cell = mGrid[row][column];
             cell.mFirstSubCell.mFlashingBlockAnimation = FlashingBlockAnimation {};
             cell.mSecondSubCell.mFlashingBlockAnimation = FlashingBlockAnimation {};
         }
@@ -611,15 +604,14 @@ void Field::ResetFlashingBlockAnimations() {
 }
 
 void Field::ManageWelds() {
-    auto lowestVisibleRow {mLowestVisibleRow - 1};
-    
+    auto lowestVisibleRow = mLowestVisibleRow - 1;
     if (lowestVisibleRow < 0) {
         lowestVisibleRow = 0;
     }
     
-    for (auto row {lowestVisibleRow}; row < mNumRows; ++row) {
-        for (auto column {0}; column < mNumColumns; ++column) {
-            auto& cell {mGrid[row][column]};
+    for (auto row = lowestVisibleRow; row < mNumRows; ++row) {
+        for (auto column = 0; column < mNumColumns; ++column) {
+            auto& cell = mGrid[row][column];
             Pht::IVec2 position {column, row};
             
             MakeDiagonalWeld(cell);
@@ -628,9 +620,9 @@ void Field::ManageWelds() {
         }
     }
     
-    for (auto row {lowestVisibleRow}; row < mNumRows; ++row) {
-        for (auto column {0}; column < mNumColumns; ++column) {
-            auto& cell {mGrid[row][column]};
+    for (auto row = lowestVisibleRow; row < mNumRows; ++row) {
+        for (auto column = 0; column < mNumColumns; ++column) {
+            auto& cell = mGrid[row][column];
             Pht::IVec2 position {column, row};
             
             BreakRedundantWelds(cell.mFirstSubCell, position);
@@ -639,8 +631,8 @@ void Field::ManageWelds() {
 }
 
 void Field::MakeDiagonalWeld(Cell& cell) {
-    auto& firstSubCell {cell.mFirstSubCell};
-    auto& secondSubCell {cell.mSecondSubCell};
+    auto& firstSubCell = cell.mFirstSubCell;
+    auto& secondSubCell = cell.mSecondSubCell;
     
     if (!firstSubCell.IsEmpty() && !secondSubCell.IsEmpty() &&
         firstSubCell.mColor == secondSubCell.mColor && !firstSubCell.mWelds.mDiagonal &&
@@ -656,8 +648,7 @@ void Field::MakeWelds(SubCell& subCell, const Pht::IVec2& position) {
         return;
     }
     
-    auto& welds {subCell.mWelds};
-
+    auto& welds = subCell.mWelds;
     if (!welds.mUp && ShouldBeUpWeld(subCell, position)) {
         welds.mUp = true;
         WeldsAnimation::StartWeldAppearingAnimation(welds.mAnimations.mUp);
@@ -682,16 +673,15 @@ bool Field::ShouldBeUpWeld(const SubCell& subCell, const Pht::IVec2& position) c
         return false;
     }
     
-    auto upperRow {position.y + 1};
-    
+    auto upperRow = position.y + 1;
     if (upperRow >= mNumRows) {
         return false;
     }
     
-    auto& upperCell {mGrid[upperRow][position.x]};
-    auto& firstUpperSubCell {upperCell.mFirstSubCell};
-    auto& secondUpperSubCell {upperCell.mSecondSubCell};
-    auto color {subCell.mColor};
+    auto& upperCell = mGrid[upperRow][position.x];
+    auto& firstUpperSubCell = upperCell.mFirstSubCell;
+    auto& secondUpperSubCell = upperCell.mSecondSubCell;
+    auto color = subCell.mColor;
     
     if (firstUpperSubCell.mColor == color && firstUpperSubCell.FillsLowerCellSide()) {
         return true;
@@ -709,16 +699,15 @@ bool Field::ShouldBeRightWeld(const SubCell& subCell, const Pht::IVec2& position
         return false;
     }
     
-    auto rightColumn {position.x + 1};
-    
+    auto rightColumn = position.x + 1;
     if (rightColumn >= mNumColumns) {
         return false;
     }
     
-    auto& cellToTheRight {mGrid[position.y][rightColumn]};
-    auto& firstRightSubCell {cellToTheRight.mFirstSubCell};
-    auto& secondRightSubCell {cellToTheRight.mSecondSubCell};
-    auto color {subCell.mColor};
+    auto& cellToTheRight = mGrid[position.y][rightColumn];
+    auto& firstRightSubCell = cellToTheRight.mFirstSubCell;
+    auto& secondRightSubCell = cellToTheRight.mSecondSubCell;
+    auto color = subCell.mColor;
 
     if (firstRightSubCell.mColor == color && firstRightSubCell.FillsLeftCellSide()) {
         return true;
@@ -736,16 +725,15 @@ bool Field::ShouldBeDownWeld(const SubCell& subCell, const Pht::IVec2& position)
         return false;
     }
     
-    auto lowerRow {position.y - 1};
-    
+    auto lowerRow = position.y - 1;
     if (lowerRow < 0) {
         return false;
     }
     
-    auto& lowerCell {mGrid[lowerRow][position.x]};
-    auto& firstLowerSubCell {lowerCell.mFirstSubCell};
-    auto& secondLowerSubCell {lowerCell.mSecondSubCell};
-    auto color {subCell.mColor};
+    auto& lowerCell = mGrid[lowerRow][position.x];
+    auto& firstLowerSubCell = lowerCell.mFirstSubCell;
+    auto& secondLowerSubCell = lowerCell.mSecondSubCell;
+    auto color = subCell.mColor;
 
     if (firstLowerSubCell.mColor == color && firstLowerSubCell.FillsUpperCellSide()) {
         return true;
@@ -763,16 +751,15 @@ bool Field::ShouldBeLeftWeld(const SubCell& subCell, const Pht::IVec2& position)
         return false;
     }
     
-    auto leftColumn {position.x - 1};
-    
+    auto leftColumn = position.x - 1;
     if (leftColumn < 0) {
         return false;
     }
     
-    auto& cellToTheLeft {mGrid[position.y][leftColumn]};
-    auto& firstLeftSubCell {cellToTheLeft.mFirstSubCell};
-    auto& secondLeftSubCell {cellToTheLeft.mSecondSubCell};
-    auto color {subCell.mColor};
+    auto& cellToTheLeft = mGrid[position.y][leftColumn];
+    auto& firstLeftSubCell = cellToTheLeft.mFirstSubCell;
+    auto& secondLeftSubCell = cellToTheLeft.mSecondSubCell;
+    auto color = subCell.mColor;
     
     if (firstLeftSubCell.mColor == color && firstLeftSubCell.FillsRightCellSide()) {
         return true;
@@ -790,8 +777,7 @@ void Field::BreakRedundantWelds(SubCell& subCell, const Pht::IVec2& position) {
         return;
     }
 
-    auto& welds {subCell.mWelds};
-    
+    auto& welds = subCell.mWelds;
     if (welds.mUpRight && UpRightWeldWouldBeRedundant(subCell, position)) {
         welds.mUpRight = false;
         WeldsAnimation::StartWeldDisappearingAnimation(welds.mAnimations.mUpRight);
@@ -813,16 +799,14 @@ void Field::BreakRedundantWelds(SubCell& subCell, const Pht::IVec2& position) {
 
 bool Field::UpRightWeldWouldBeRedundant(const SubCell& subCell, const Pht::IVec2& position) const {
     if (subCell.mWelds.mUp) {
-        auto& upperSubCell {mGrid[position.y + 1][position.x].mFirstSubCell};
-        
+        auto& upperSubCell = mGrid[position.y + 1][position.x].mFirstSubCell;
         if (upperSubCell.mWelds.mRight) {
             return true;
         }
     }
 
     if (subCell.mWelds.mRight) {
-        auto& subCellToTheRight {mGrid[position.y][position.x + 1].mFirstSubCell};
-        
+        auto& subCellToTheRight = mGrid[position.y][position.x + 1].mFirstSubCell;
         if (subCellToTheRight.mWelds.mUp) {
             return true;
         }
@@ -833,16 +817,14 @@ bool Field::UpRightWeldWouldBeRedundant(const SubCell& subCell, const Pht::IVec2
 
 bool Field::DownRightWeldWouldBeRedundant(const SubCell& subCell, const Pht::IVec2& position) const {
     if (subCell.mWelds.mDown) {
-        auto& lowerSubCell {mGrid[position.y - 1][position.x].mFirstSubCell};
-        
+        auto& lowerSubCell = mGrid[position.y - 1][position.x].mFirstSubCell;
         if (lowerSubCell.mWelds.mRight) {
             return true;
         }
     }
 
     if (subCell.mWelds.mRight) {
-        auto& subCellToTheRight {mGrid[position.y][position.x + 1].mFirstSubCell};
-        
+        auto& subCellToTheRight = mGrid[position.y][position.x + 1].mFirstSubCell;
         if (subCellToTheRight.mWelds.mDown) {
             return true;
         }
@@ -853,16 +835,14 @@ bool Field::DownRightWeldWouldBeRedundant(const SubCell& subCell, const Pht::IVe
 
 bool Field::DownLeftWeldWouldBeRedundant(const SubCell& subCell, const Pht::IVec2& position) const {
     if (subCell.mWelds.mDown) {
-        auto& lowerSubCell {mGrid[position.y - 1][position.x].mFirstSubCell};
-        
+        auto& lowerSubCell = mGrid[position.y - 1][position.x].mFirstSubCell;
         if (lowerSubCell.mWelds.mLeft) {
             return true;
         }
     }
 
     if (subCell.mWelds.mLeft) {
-        auto& subCellToTheLeft {mGrid[position.y][position.x - 1].mFirstSubCell};
-        
+        auto& subCellToTheLeft = mGrid[position.y][position.x - 1].mFirstSubCell;
         if (subCellToTheLeft.mWelds.mDown) {
             return true;
         }
@@ -873,16 +853,14 @@ bool Field::DownLeftWeldWouldBeRedundant(const SubCell& subCell, const Pht::IVec
 
 bool Field::UpLeftWeldWouldBeRedundant(const SubCell& subCell, const Pht::IVec2& position) const {
     if (subCell.mWelds.mUp) {
-        auto& upperSubCell {mGrid[position.y + 1][position.x].mFirstSubCell};
-        
+        auto& upperSubCell = mGrid[position.y + 1][position.x].mFirstSubCell;
         if (upperSubCell.mWelds.mLeft) {
             return true;
         }
     }
 
     if (subCell.mWelds.mLeft) {
-        auto& subCellToTheLeft {mGrid[position.y][position.x - 1].mFirstSubCell};
-        
+        auto& subCellToTheLeft = mGrid[position.y][position.x - 1].mFirstSubCell;
         if (subCellToTheLeft.mWelds.mUp) {
             return true;
         }
@@ -892,14 +870,14 @@ bool Field::UpLeftWeldWouldBeRedundant(const SubCell& subCell, const Pht::IVec2&
 }
 
 void Field::MergeTriangleBlocksIntoCube(const Pht::IVec2& position) {
-    auto& cell {GetCell(position)};
-    auto& firstSubCell {cell.mFirstSubCell};
+    auto& cell = GetCell(position);
+    auto& firstSubCell = cell.mFirstSubCell;
     
     firstSubCell.mFill = Fill::Full;
     firstSubCell.mBlockKind = BlockKind::Full;
     
-    auto& firstSubCellWelds {firstSubCell.mWelds};
-    auto& secondSubCellWelds {cell.mSecondSubCell.mWelds};
+    auto& firstSubCellWelds = firstSubCell.mWelds;
+    auto& secondSubCellWelds = cell.mSecondSubCell.mWelds;
     firstSubCellWelds.mDiagonal = false;
     
     if (secondSubCellWelds.mRight) {
@@ -934,8 +912,8 @@ void Field::MergeTriangleBlocksIntoCube(const Pht::IVec2& position) {
         firstSubCellWelds.mUpRight = true;
     }
     
-    auto& firstSubCellWeldAnimations {firstSubCellWelds.mAnimations};
-    auto& secondSubCellWeldAnimations {secondSubCellWelds.mAnimations};
+    auto& firstSubCellWeldAnimations = firstSubCellWelds.mAnimations;
+    auto& secondSubCellWeldAnimations = secondSubCellWelds.mAnimations;
 
     if (secondSubCellWeldAnimations.mUpLeft.IsActive()) {
         firstSubCellWeldAnimations.mUpLeft = secondSubCellWeldAnimations.mUpLeft;
@@ -957,15 +935,15 @@ void Field::MergeTriangleBlocksIntoCube(const Pht::IVec2& position) {
 }
 
 void Field::SetBlocksYPositionAndBounceFlag() {
-    for (auto row {mLowestVisibleRow}; row < mNumRows; ++row) {
-        for (auto column {0}; column < mNumColumns; ++column) {
-            auto& cell {mGrid[row][column]};
+    for (auto row = mLowestVisibleRow; row < mNumRows; ++row) {
+        for (auto column = 0; column < mNumColumns; ++column) {
+            auto& cell = mGrid[row][column];
             
-            auto& firstSubCell {cell.mFirstSubCell};
+            auto& firstSubCell = cell.mFirstSubCell;
             firstSubCell.mPosition.y = row;
             firstSubCell.mFallingBlockAnimation.mShouldBounce = true;
 
-            auto& secondSubCell {cell.mSecondSubCell};
+            auto& secondSubCell = cell.mSecondSubCell;
             secondSubCell.mPosition.y = row;
             secondSubCell.mFallingBlockAnimation.mShouldBounce = true;
         }
@@ -979,12 +957,12 @@ Field::RemovedSubCells Field::ClearFilledRows() {
     RemovedSubCells removedSubCells;
     auto pastHighestVisibleRow {mLowestVisibleRow + GetNumRowsInOneScreen()};
     
-    for (auto rowIndex {mLowestVisibleRow}; rowIndex < pastHighestVisibleRow; ++rowIndex) {
+    for (auto rowIndex = mLowestVisibleRow; rowIndex < pastHighestVisibleRow; ++rowIndex) {
         if (RowIsFull(mGrid[rowIndex])) {
-            for (auto column {0}; column < mNumColumns; ++column) {
-                auto& cell {mGrid[rowIndex][column]};
-                auto& firstSubCell {cell.mFirstSubCell};
-                auto& secondSubCell {cell.mSecondSubCell};
+            for (auto column = 0; column < mNumColumns; ++column) {
+                auto& cell = mGrid[rowIndex][column];
+                auto& firstSubCell = cell.mFirstSubCell;
+                auto& secondSubCell = cell.mSecondSubCell;
                 
                 ProcessSubCell(removedSubCells, firstSubCell, rowIndex, column);
                 ProcessSubCell(removedSubCells, secondSubCell, rowIndex, column);
@@ -1007,9 +985,9 @@ void Field::RemoveClearedRows() {
     SetChanged();
     
     RemovedSubCells removedSubCells;
-    auto pastHighestVisibleRow {mLowestVisibleRow + GetNumRowsInOneScreen()};
+    auto pastHighestVisibleRow = mLowestVisibleRow + GetNumRowsInOneScreen();
     
-    for (auto rowIndex {mLowestVisibleRow}; rowIndex < pastHighestVisibleRow;) {
+    for (auto rowIndex = mLowestVisibleRow; rowIndex < pastHighestVisibleRow;) {
         if (mGrid[rowIndex][0].mFirstSubCell.mBlockKind == BlockKind::ClearedRowBlock) {
             RemoveRowImpl(rowIndex, removedSubCells);
         } else {
@@ -1019,8 +997,8 @@ void Field::RemoveClearedRows() {
 }
 
 void Field::RemoveRowImpl(int rowIndex, Field::RemovedSubCells& removedSubCells) {
-    for (auto column {0}; column < mNumColumns; ++column) {
-        auto& cell {mGrid[rowIndex][column]};
+    for (auto column = 0; column < mNumColumns; ++column) {
+        auto& cell = mGrid[rowIndex][column];
         
         ProcessSubCell(removedSubCells, cell.mFirstSubCell, rowIndex, column);
         ProcessSubCell(removedSubCells, cell.mSecondSubCell, rowIndex, column);
@@ -1028,7 +1006,7 @@ void Field::RemoveRowImpl(int rowIndex, Field::RemovedSubCells& removedSubCells)
         BreakCellDownWelds(rowIndex + 1, column);
         BreakCellUpWelds(rowIndex - 1, column);
         
-        for (auto row {rowIndex}; row < mNumRows - 1; ++row) {
+        for (auto row = rowIndex; row < mNumRows - 1; ++row) {
             mGrid[row][column] = mGrid[row + 1][column];
         }
         
@@ -1038,7 +1016,7 @@ void Field::RemoveRowImpl(int rowIndex, Field::RemovedSubCells& removedSubCells)
 
 void Field::BreakCellDownWelds(int row, int column) {
     if (row < mNumRows) {
-        auto& cell {mGrid[row][column]};
+        auto& cell = mGrid[row][column];
         BreakDownWelds(cell.mFirstSubCell.mWelds);
         BreakDownWelds(cell.mSecondSubCell.mWelds);
     }
@@ -1046,7 +1024,7 @@ void Field::BreakCellDownWelds(int row, int column) {
 
 void Field::BreakCellUpWelds(int row, int column) {
     if (row >= 0) {
-        auto& cell {mGrid[row][column]};
+        auto& cell = mGrid[row][column];
         BreakUpWelds(cell.mFirstSubCell.mWelds);
         BreakUpWelds(cell.mSecondSubCell.mWelds);
     }
@@ -1054,7 +1032,7 @@ void Field::BreakCellUpWelds(int row, int column) {
 
 void Field::BreakCellRightWelds(int row, int column) {
     if (column >= 0) {
-        auto& cell {mGrid[row][column]};
+        auto& cell = mGrid[row][column];
         BreakRightWelds(cell.mFirstSubCell.mWelds);
         BreakRightWelds(cell.mSecondSubCell.mWelds);
     }
@@ -1062,7 +1040,7 @@ void Field::BreakCellRightWelds(int row, int column) {
 
 void Field::BreakCellLeftWelds(int row, int column) {
     if (column < mNumColumns) {
-        auto& cell {mGrid[row][column]};
+        auto& cell = mGrid[row][column];
         BreakLeftWelds(cell.mFirstSubCell.mWelds);
         BreakLeftWelds(cell.mSecondSubCell.mWelds);
     }
@@ -1070,7 +1048,7 @@ void Field::BreakCellLeftWelds(int row, int column) {
 
 void Field::BreakLowerLeftWeld(int row, int column) {
     if (column < mNumColumns && row < mNumRows) {
-        auto& cell {mGrid[row][column]};
+        auto& cell = mGrid[row][column];
         cell.mFirstSubCell.mWelds.mDownLeft = false;
         cell.mSecondSubCell.mWelds.mDownLeft = false;
     }
@@ -1078,7 +1056,7 @@ void Field::BreakLowerLeftWeld(int row, int column) {
 
 void Field::BreakUpperLeftWeld(int row, int column) {
     if (column < mNumColumns && row >= 0) {
-        auto& cell {mGrid[row][column]};
+        auto& cell = mGrid[row][column];
         cell.mFirstSubCell.mWelds.mUpLeft = false;
         cell.mSecondSubCell.mWelds.mUpLeft = false;
     }
@@ -1086,7 +1064,7 @@ void Field::BreakUpperLeftWeld(int row, int column) {
 
 void Field::BreakUpperRightWeld(int row, int column) {
     if (column >= 0 && row >= 0) {
-        auto& cell {mGrid[row][column]};
+        auto& cell = mGrid[row][column];
         cell.mFirstSubCell.mWelds.mUpRight = false;
         cell.mSecondSubCell.mWelds.mUpRight = false;
     }
@@ -1094,7 +1072,7 @@ void Field::BreakUpperRightWeld(int row, int column) {
 
 void Field::BreakLowerRightWeld(int row, int column) {
     if (column >= 0 && row < mNumRows) {
-        auto& cell {mGrid[row][column]};
+        auto& cell = mGrid[row][column];
         cell.mFirstSubCell.mWelds.mDownRight = false;
         cell.mSecondSubCell.mWelds.mDownRight = false;
     }
@@ -1116,8 +1094,8 @@ Field::RemovedSubCells Field::RemoveAreaOfSubCells(const Pht::IVec2& areaPos,
     
     RemovedSubCells removedSubCells;
     
-    for (auto row {areaPos.y}; row < areaPos.y + areaSize.y; ++row) {
-        for (auto column {areaPos.x}; column < areaPos.x + areaSize.x; ++column) {
+    for (auto row = areaPos.y; row < areaPos.y + areaSize.y; ++row) {
+        for (auto column = areaPos.x; column < areaPos.x + areaSize.x; ++column) {
             if (row < mLowestVisibleRow || row >= mNumRows || column < 0 || column >= mNumColumns) {
                 continue;
             }
@@ -1164,8 +1142,8 @@ Field::RemovedSubCells Field::RemoveAreaOfSubCells(const Pht::IVec2& areaPos,
                 BreakCellDownWelds(row + 1, column);
             }
             
-            auto& cell {mGrid[row][column]};
-            auto& firstSubCell {cell.mFirstSubCell};
+            auto& cell = mGrid[row][column];
+            auto& firstSubCell = cell.mFirstSubCell;
             
             ProcessSubCell(removedSubCells, firstSubCell, row, column);
             ProcessSubCell(removedSubCells, cell.mSecondSubCell, row, column);
@@ -1201,10 +1179,9 @@ Field::RemovedSubCells Field::RemoveAllNonEmptySubCells() {
     SetChanged();
     RemovedSubCells removedSubCells;
 
-    for (auto row {0}; row < mNumRows; ++row) {
-        for (auto column {0}; column < mNumColumns; ++column) {
-            auto& cell {mGrid[row][column]};
-            
+    for (auto row = 0; row < mNumRows; ++row) {
+        for (auto column = 0; column < mNumColumns; ++column) {
+            auto& cell = mGrid[row][column];
             if (cell.IsEmpty()) {
                 continue;
             }
@@ -1219,10 +1196,9 @@ Field::RemovedSubCells Field::RemoveAllNonEmptySubCells() {
 }
 
 void Field::RemoveWholePiece(int pieceId, Field::RemovedSubCells& removedSubCells) {
-    for (auto row {0}; row < mNumRows; ++row) {
-        for (auto column {0}; column < mNumColumns; ++column) {
-            auto& cell {mGrid[row][column]};
-            
+    for (auto row = 0; row < mNumRows; ++row) {
+        for (auto column = 0; column < mNumColumns; ++column) {
+            auto& cell = mGrid[row][column];
             if (cell.IsEmpty()) {
                 continue;
             }
@@ -1260,7 +1236,7 @@ void Field::SaveSubCellAndCancelFill(Field::RemovedSubCells& removedSubCells,
                                      const SubCell& subCell,
                                      int row,
                                      int column) {
-    auto position {subCell.mPosition};
+    auto position = subCell.mPosition;
     
     if (subCell.mBlockKind != BlockKind::None && subCell.mBlockKind != BlockKind::ClearedRowBlock &&
         row >= mLowestVisibleRow) {
@@ -1279,9 +1255,8 @@ void Field::SaveSubCellAndCancelFill(Field::RemovedSubCells& removedSubCells,
     }
     
     if (mBlueprintGrid) {
-        auto& blueprintSlotFillAnimation {
-            (*mBlueprintGrid)[static_cast<int>(position.y)][static_cast<int>(position.x)].mAnimation
-        };
+        auto& blueprintSlotFillAnimation =
+            (*mBlueprintGrid)[static_cast<int>(position.y)][static_cast<int>(position.x)].mAnimation;
         
         if (blueprintSlotFillAnimation.mIsActive) {
             blueprintSlotFillAnimation = BlueprintSlotFillAnimation {};
@@ -1293,24 +1268,21 @@ void Field::RemovePiece(int pieceId,
                         const Pht::IVec2& position,
                         int pieceNumRows,
                         int pieceNumColumns) {
-    auto xBegin {position.x >= 0 ? position.x : 0};
-    auto xEnd {position.x + pieceNumColumns};
-    
+    auto xBegin = position.x >= 0 ? position.x : 0;
+    auto xEnd = position.x + pieceNumColumns;
     if (xEnd > mNumColumns) {
         xEnd = mNumColumns;
     }
 
-    auto yBegin {position.y >= 0 ? position.y : 0};
-    auto yEnd {position.y + pieceNumRows};
-    
+    auto yBegin = position.y >= 0 ? position.y : 0;
+    auto yEnd = position.y + pieceNumRows;
     if (yEnd >= mNumRows) {
         yEnd = mNumRows;
     }
 
-    for (auto row {yBegin}; row < yEnd; ++row) {
-        for (auto column {xBegin}; column < xEnd; ++column) {
-            auto& cell {mGrid[row][column]};
-            
+    for (auto row = yBegin; row < yEnd; ++row) {
+        for (auto column = xBegin; column < xEnd; ++column) {
+            auto& cell = mGrid[row][column];
             if (cell.IsEmpty()) {
                 continue;
             }
@@ -1328,10 +1300,10 @@ void Field::RemovePiece(int pieceId,
 
 FilledRowsResultWithPieceCells Field::MarkFilledRowsAndCountPieceCellsInFilledRows(int pieceId) {
     FilledRowsResultWithPieceCells result;
-    auto pastHighestVisibleRow {mLowestVisibleRow + GetNumRowsInOneScreen()};
+    auto pastHighestVisibleRow = mLowestVisibleRow + GetNumRowsInOneScreen();
     
-    for (auto rowIndex {mLowestVisibleRow}; rowIndex < pastHighestVisibleRow; ++rowIndex) {
-        auto& row {mGrid[rowIndex]};
+    for (auto rowIndex = mLowestVisibleRow; rowIndex < pastHighestVisibleRow; ++rowIndex) {
+        auto& row = mGrid[rowIndex];
         
         if (RowIsFull(row)) {
             result.mFilledRowIndices.PushBack(rowIndex);
@@ -1351,10 +1323,10 @@ FilledRowsResultWithPieceCells Field::MarkFilledRowsAndCountPieceCellsInFilledRo
 
 FilledRowsResultWithGrayLevelCells Field::MarkFilledRowsAndCountGrayLevelCellsInFilledRows() {
     FilledRowsResultWithGrayLevelCells result;
-    auto pastHighestVisibleRow {mLowestVisibleRow + GetNumRowsInOneScreen()};
+    auto pastHighestVisibleRow = mLowestVisibleRow + GetNumRowsInOneScreen();
     
-    for (auto rowIndex {mLowestVisibleRow}; rowIndex < pastHighestVisibleRow; ++rowIndex) {
-        auto& row {mGrid[rowIndex]};
+    for (auto rowIndex = mLowestVisibleRow; rowIndex < pastHighestVisibleRow; ++rowIndex) {
+        auto& row = mGrid[rowIndex];
         
         if (RowIsFull(row)) {
             result.mFilledRowIndices.PushBack(rowIndex);
@@ -1371,8 +1343,8 @@ FilledRowsResultWithGrayLevelCells Field::MarkFilledRowsAndCountGrayLevelCellsIn
 }
 
 void Field::UnmarkFilledRows(const FilledRowIndices& filledRowIndices) {
-    for (auto i {0}; i < filledRowIndices.Size(); ++i) {
-        auto& row {mGrid[filledRowIndices.At(i)]};
+    for (auto i = 0; i < filledRowIndices.Size(); ++i) {
+        auto& row = mGrid[filledRowIndices.At(i)];
 
         for (auto& cell: row) {
             cell.mIsInFilledRow = false;

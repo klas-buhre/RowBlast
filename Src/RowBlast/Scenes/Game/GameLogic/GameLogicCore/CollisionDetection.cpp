@@ -9,8 +9,8 @@ namespace {
     Pht::Vec2 CalculateCenter(const Field::CollisionPoints& collisionPoints) {
         Pht::Vec2 center {0.0f, 0.0f};
         
-        for (auto i {0}; i < collisionPoints.Size(); ++i) {
-            auto& iVec {collisionPoints.At(i)};
+        for (auto i = 0; i < collisionPoints.Size(); ++i) {
+            auto& iVec = collisionPoints.At(i);
             Pht::Vec2 vec {iVec.x + 0.5f, iVec.y + 0.5f};
             center += vec;
         }
@@ -125,18 +125,18 @@ CollisionDetection::CalculateCollisionDirection(const Field::CollisionPoints& co
                                                 Rotation pieceRotation,
                                                 const Pht::IVec2& position,
                                                 const Field& field) {
-    auto collisionCenter {CalculateCenter(collisionPoints)};
+    auto collisionCenter = CalculateCenter(collisionPoints);
     
     Pht::Vec2 pieceCenter {
         pieceBlocks.mNumColumns / 2.0f,
         pieceBlocks.mNumRows / 2.0f
     };
     
-    auto directionFromCenter {collisionCenter - pieceCenter};
+    auto directionFromCenter = collisionCenter - pieceCenter;
     
     if (std::fabs(directionFromCenter.x) == std::fabs(directionFromCenter.y)) {
-        auto occupiedPoints {field.GetOccupiedArea(pieceBlocks, position)};
-        auto occupiedPointsDirectionFromCenter {CalculateCenter(occupiedPoints) - pieceCenter};
+        auto occupiedPoints = field.GetOccupiedArea(pieceBlocks, position);
+        auto occupiedPointsDirectionFromCenter = CalculateCenter(occupiedPoints) - pieceCenter;
         return VectorToDirection(occupiedPointsDirectionFromCenter);
     }
     
@@ -170,14 +170,13 @@ bool CollisionDetection::IsIllegalTiltedWeldPosition(const Field& field,
                                                      const Pht::IVec2& piecePosition,
                                                      Rotation pieceRotation,
                                                      const Piece& pieceType) {
-    auto& tiltedWeldCheck {pieceType.GetTiltedWeldCheck(pieceRotation)};
-    
+    auto& tiltedWeldCheck = pieceType.GetTiltedWeldCheck(pieceRotation);
     if (!tiltedWeldCheck.HasValue()) {
         return false;
     }
     
-    auto& tiltedWeldCheckValue {tiltedWeldCheck.GetValue()};
-    auto checkPosition {piecePosition + tiltedWeldCheckValue.mPosition};
+    auto& tiltedWeldCheckValue = tiltedWeldCheck.GetValue();
+    auto checkPosition = piecePosition + tiltedWeldCheckValue.mPosition;
     
     switch (tiltedWeldCheckValue.mKind) {
         case Piece::TiltedWeldCheck::Kind::DownLeftToUpRight:

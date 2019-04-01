@@ -4,11 +4,10 @@ using namespace RowBlast;
 
 namespace {
     int XMin(const FieldGravity::PieceBlockCoords& pieceBlockCoords) {
-        auto xMin {Field::maxNumColumns - 1};
+        auto xMin = Field::maxNumColumns - 1;
         
-        for (auto i {0}; i < pieceBlockCoords.Size(); ++i) {
-            auto x {pieceBlockCoords.At(i).mPosition.x};
-            
+        for (auto i = 0; i < pieceBlockCoords.Size(); ++i) {
+            auto x = pieceBlockCoords.At(i).mPosition.x;
             if (x < xMin) {
                 xMin = x;
             }
@@ -18,11 +17,10 @@ namespace {
     }
     
     int XMax(const FieldGravity::PieceBlockCoords& pieceBlockCoords) {
-        auto xMax {0};
+        auto xMax = 0;
         
-        for (auto i {0}; i < pieceBlockCoords.Size(); ++i) {
-            auto x {pieceBlockCoords.At(i).mPosition.x};
-            
+        for (auto i = 0; i < pieceBlockCoords.Size(); ++i) {
+            auto x = pieceBlockCoords.At(i).mPosition.x;
             if (x > xMax) {
                 xMax = x;
             }
@@ -32,11 +30,10 @@ namespace {
     }
 
     int YMin(const FieldGravity::PieceBlockCoords& pieceBlockCoords) {
-        auto yMin {10000};
+        auto yMin = 10000;
         
-        for (auto i {0}; i < pieceBlockCoords.Size(); ++i) {
-            auto y {pieceBlockCoords.At(i).mPosition.y};
-            
+        for (auto i = 0; i < pieceBlockCoords.Size(); ++i) {
+            auto y = pieceBlockCoords.At(i).mPosition.y;
             if (y < yMin) {
                 yMin = y;
             }
@@ -46,11 +43,10 @@ namespace {
     }
     
     int YMax(const FieldGravity::PieceBlockCoords& pieceBlockCoords) {
-        auto yMax {0};
+        auto yMax = 0;
         
-        for (auto i {0}; i < pieceBlockCoords.Size(); ++i) {
-            auto y {pieceBlockCoords.At(i).mPosition.y};
-            
+        for (auto i = 0; i < pieceBlockCoords.Size(); ++i) {
+            auto y = pieceBlockCoords.At(i).mPosition.y;
             if (y > yMax) {
                 yMax = y;
             }
@@ -68,7 +64,7 @@ void FieldGravity::Init() {
     
     std::vector<Cell> emptyRow(mField.GetNumColumns());
     
-    for (auto i {0}; i < mField.GetNumRows(); ++i) {
+    for (auto i = 0; i < mField.GetNumRows(); ++i) {
         mPieceBlockGrid.push_back(emptyRow);
     }
     
@@ -79,12 +75,12 @@ void FieldGravity::PullDownLoosePieces() {
     mField.SetChanged();
     mAnyPiecesPulledDown = false;
     
-    for (auto row {mField.mLowestVisibleRow}; row < mField.mNumRows; ++row) {
-        for (auto column {0}; column < mField.mNumColumns; ++column) {
+    for (auto row = mField.mLowestVisibleRow; row < mField.mNumRows; ++row) {
+        for (auto column = 0; column < mField.mNumColumns; ++column) {
             PullDownPiece(row, column, ScanDirection::Right);
         }
         
-        for (auto column {mField.mNumColumns - 1}; column >= 0; --column) {
+        for (auto column = mField.mNumColumns - 1; column >= 0; --column) {
             PullDownPiece(row, column, ScanDirection::Left);
         }
     }
@@ -93,7 +89,7 @@ void FieldGravity::PullDownLoosePieces() {
 }
 
 void FieldGravity::PullDownPiece(int row, int column, ScanDirection scanDirection) {
-    auto& cell {mField.mGrid[row][column]};
+    auto& cell = mField.mGrid[row][column];
     Pht::IVec2 position {column, row};
     
     PullDownPiece(cell.mFirstSubCell, position, scanDirection);
@@ -110,13 +106,11 @@ void FieldGravity::PullDownPiece(const SubCell& subCell,
     }
     
     Pht::IVec2 piecePosition {0, 0};
-    auto pieceBlocks {
-        ExtractPieceBlocks(piecePosition, subCell.mColor, scanPosition, scanDirection)
-    };
+    auto pieceBlocks =
+        ExtractPieceBlocks(piecePosition, subCell.mColor, scanPosition, scanDirection);
 
     Pht::IVec2 step {0, -1};
-    auto collisionPosition {mField.ScanUntilCollision(pieceBlocks, piecePosition, step)};
-  
+    auto collisionPosition = mField.ScanUntilCollision(pieceBlocks, piecePosition, step);
     if (collisionPosition.y >= piecePosition.y) {
         LandPulledDownPieceBlocks(pieceBlocks, piecePosition);
     } else {
@@ -140,26 +134,25 @@ PieceBlocks FieldGravity::ExtractPieceBlocks(Pht::IVec2& piecePosition,
 
     ClearPieceBlockGrid();
     
-    auto pieceRowMax {0};
+    auto pieceRowMax = 0;
     
-    for (auto i {0}; i < mPieceBlockCoords.Size(); ++i) {
-        auto& coord {mPieceBlockCoords.At(i)};
-        auto& position {coord.mPosition};
-        auto pieceRow {position.y - piecePosition.y};
-        auto pieceColumn {position.x - piecePosition.x};
+    for (auto i = 0; i < mPieceBlockCoords.Size(); ++i) {
+        auto& coord = mPieceBlockCoords.At(i);
+        auto& position = coord.mPosition;
+        auto pieceRow = position.y - piecePosition.y;
+        auto pieceColumn = position.x - piecePosition.x;
         
         if (pieceRow > pieceRowMax) {
             pieceRowMax = pieceRow;
         }
         
-        auto& cell {mField.mGrid[position.y][position.x]};
-        auto& fieldSubCell {coord.mIsFirstSubCell ? cell.mFirstSubCell : cell.mSecondSubCell};
+        auto& cell = mField.mGrid[position.y][position.x];
+        auto& fieldSubCell = coord.mIsFirstSubCell ? cell.mFirstSubCell : cell.mSecondSubCell;
         
         fieldSubCell.mIsFound = false;
         fieldSubCell.mTriedScanDirection = scanDirection;
         
-        auto& pieceBlockCell {mPieceBlockGrid[pieceRow][pieceColumn]};
-        
+        auto& pieceBlockCell = mPieceBlockGrid[pieceRow][pieceColumn];
         if (pieceBlockCell.mFirstSubCell.IsEmpty()) {
             pieceBlockCell.mFirstSubCell = fieldSubCell;
         } else {
@@ -179,8 +172,7 @@ PieceBlocks FieldGravity::ExtractPieceBlocks(Pht::IVec2& piecePosition,
 }
 
 void FieldGravity::FindPieceClusterBlocks(BlockColor color, const Pht::IVec2& position) {
-    auto& firstSubCell {mField.mGrid[position.y][position.x].mFirstSubCell};
-    
+    auto& firstSubCell = mField.mGrid[position.y][position.x].mFirstSubCell;
     if (firstSubCell.IsNonBlockObject()) {
         if (firstSubCell.IsBigAsteroid()) {
             FindAsteroidCells(position);
@@ -195,10 +187,10 @@ void FieldGravity::FindPieceClusterBlocks(BlockColor color, const Pht::IVec2& po
     
     FindPieceBlocks(color, position);
     
-    auto xMin {XMin(mPieceBlockCoords)};
-    auto yMin {YMin(mPieceBlockCoords)};
-    auto xMax {XMax(mPieceBlockCoords)};
-    auto yMax {YMax(mPieceBlockCoords)};
+    auto xMin = XMin(mPieceBlockCoords);
+    auto yMin = YMin(mPieceBlockCoords);
+    auto xMax = XMax(mPieceBlockCoords);
+    auto yMax = YMax(mPieceBlockCoords);
     
     enum class ColumnScanState {
         Idle,
@@ -206,14 +198,14 @@ void FieldGravity::FindPieceClusterBlocks(BlockColor color, const Pht::IVec2& po
         AboveFoundPiece
     };
     
-    for (auto column {xMin}; column <= xMax; ++column) {
-        auto state {ColumnScanState::Idle};
-        auto aboveFoundPieceRow {0};
+    for (auto column = xMin; column <= xMax; ++column) {
+        auto state = ColumnScanState::Idle;
+        auto aboveFoundPieceRow = 0;
 
-        for (auto row {yMin}; row <= yMax; ++row) {
-            auto& cell {mField.mGrid[row][column]};
-            auto& firstSubCell {cell.mFirstSubCell};
-            auto& secondSubCell {cell.mSecondSubCell};
+        for (auto row = yMin; row <= yMax; ++row) {
+            auto& cell = mField.mGrid[row][column];
+            auto& firstSubCell = cell.mFirstSubCell;
+            auto& secondSubCell = cell.mSecondSubCell;
             
             switch (state) {
                 case ColumnScanState::Idle:
@@ -237,12 +229,12 @@ void FieldGravity::FindPieceClusterBlocks(BlockColor color, const Pht::IVec2& po
                         // the case when any piece is locked in two concave areas in two other
                         // pieces.
                         state = ColumnScanState::InsideFoundPiece;
-                        for (auto undiscoveredCellRow {aboveFoundPieceRow};
+                        for (auto undiscoveredCellRow = aboveFoundPieceRow;
                              undiscoveredCellRow < row;
                              ++undiscoveredCellRow) {
-                            auto& undiscoveredCell {mField.mGrid[undiscoveredCellRow][column]};
-                            auto& firstUndiscoveredSubCell {undiscoveredCell.mFirstSubCell};
-                            auto& secondUndiscoveredSubCell {undiscoveredCell.mSecondSubCell};
+                            auto& undiscoveredCell = mField.mGrid[undiscoveredCellRow][column];
+                            auto& firstUndiscoveredSubCell = undiscoveredCell.mFirstSubCell;
+                            auto& secondUndiscoveredSubCell = undiscoveredCell.mSecondSubCell;
                             Pht::IVec2 undiscoveredCellPosition {column, undiscoveredCellRow};
                             if (!firstUndiscoveredSubCell.IsEmpty() &&
                                 !firstUndiscoveredSubCell.mIsFound) {
@@ -263,11 +255,11 @@ void FieldGravity::FindPieceClusterBlocks(BlockColor color, const Pht::IVec2& po
 }
 
 void FieldGravity::FindPieceBlocks(BlockColor color, const Pht::IVec2& position) {
-    auto& cell {mField.mGrid[position.y][position.x]};
-    auto& firstSubCell {cell.mFirstSubCell};
-    auto& secondSubCell {cell.mSecondSubCell};
+    auto& cell = mField.mGrid[position.y][position.x];
+    auto& firstSubCell = cell.mFirstSubCell;
+    auto& secondSubCell = cell.mSecondSubCell;
     SubCell* subCell {nullptr};
-    auto isFirstSubCell {true};
+    auto isFirstSubCell = true;
     
     if (firstSubCell.mColor == color && !firstSubCell.mIsFound) {
         subCell = &firstSubCell;
@@ -282,8 +274,8 @@ void FieldGravity::FindPieceBlocks(BlockColor color, const Pht::IVec2& position)
     mPieceBlockCoords.PushBack(coord);
     
     subCell->mIsFound = true;
-    auto& welds {subCell->mWelds};
-    
+    auto& welds = subCell->mWelds;
+
     if (welds.mDiagonal) {
         FindPieceBlocks(color, position);
     }
@@ -328,8 +320,7 @@ void FieldGravity::FindAsteroidCells(const Pht::IVec2& position) {
         return;
     }
     
-    auto& subCell {mField.mGrid[position.y][position.x].mFirstSubCell};
-    
+    auto& subCell = mField.mGrid[position.y][position.x].mFirstSubCell;
     if (!subCell.IsBigAsteroid() || subCell.mIsFound) {
         return;
     }
@@ -346,9 +337,9 @@ void FieldGravity::FindAsteroidCells(const Pht::IVec2& position) {
 }
 
 void FieldGravity::ResetAllCellsTriedScanDirection() {
-    for (auto row {0}; row < mField.mNumRows; ++row) {
-        for (auto column {0}; column < mField.mNumColumns; ++column) {
-            auto& cell {mField.mGrid[row][column]};
+    for (auto row = 0; row < mField.mNumRows; ++row) {
+        for (auto column = 0; column < mField.mNumColumns; ++column) {
+            auto& cell = mField.mGrid[row][column];
             cell.mFirstSubCell.mTriedScanDirection = ScanDirection::None;
             cell.mSecondSubCell.mTriedScanDirection = ScanDirection::None;
         }
@@ -356,8 +347,8 @@ void FieldGravity::ResetAllCellsTriedScanDirection() {
 }
 
 void FieldGravity::ClearPieceBlockGrid() {
-    for (auto row {0}; row < mNumDirtyPieceBlockGridRows; ++row) {
-        for (auto column {0}; column < mField.GetNumColumns(); ++column) {
+    for (auto row = 0; row < mNumDirtyPieceBlockGridRows; ++row) {
+        for (auto column = 0; column < mField.GetNumColumns(); ++column) {
             mPieceBlockGrid[row][column] = Cell {};
         }
     }
@@ -365,23 +356,21 @@ void FieldGravity::ClearPieceBlockGrid() {
 
 void FieldGravity::LandPulledDownPieceBlocks(const PieceBlocks& pieceBlocks,
                                              const Pht::IVec2& position) {
-    for (auto pieceRow {0}; pieceRow < pieceBlocks.mNumRows; ++pieceRow) {
-        for (auto pieceColumn {0}; pieceColumn < pieceBlocks.mNumColumns; ++pieceColumn) {
-            auto& pieceCell {pieceBlocks.mGrid[pieceRow][pieceColumn]};
-            
+    for (auto pieceRow = 0; pieceRow < pieceBlocks.mNumRows; ++pieceRow) {
+        for (auto pieceColumn = 0; pieceColumn < pieceBlocks.mNumColumns; ++pieceColumn) {
+            auto& pieceCell = pieceBlocks.mGrid[pieceRow][pieceColumn];
             if (pieceCell.IsEmpty()) {
                 continue;
             }
             
-            auto row {position.y + pieceRow};
-            auto column {position.x + pieceColumn};
-            auto& fieldCell {mField.mGrid[row][column]};
+            auto row = position.y + pieceRow;
+            auto column = position.x + pieceColumn;
+            auto& fieldCell = mField.mGrid[row][column];
             
             if (pieceCell.mSecondSubCell.IsEmpty()) {
-                auto& fieldSubCell {
+                auto& fieldSubCell =
                     fieldCell.mFirstSubCell.IsEmpty() ?
-                    fieldCell.mFirstSubCell : fieldCell.mSecondSubCell
-                };
+                    fieldCell.mFirstSubCell : fieldCell.mSecondSubCell;
                 
                 fieldSubCell = pieceCell.mFirstSubCell;
             } else {
@@ -394,7 +383,7 @@ void FieldGravity::LandPulledDownPieceBlocks(const PieceBlocks& pieceBlocks,
 void FieldGravity::ShiftFieldDown(int rowIndex) {
     for (;;) {
         PullDownLoosePieces();
-        auto anyBlocksShiftedDown {ShiftGrayBlocksDown(rowIndex)};
+        auto anyBlocksShiftedDown = ShiftGrayBlocksDown(rowIndex);
     
         // Need to do the same procedure again so that any blocks that were stuck the previous pass
         // can be moved in the following attempt.
@@ -407,13 +396,13 @@ void FieldGravity::ShiftFieldDown(int rowIndex) {
 }
 
 bool FieldGravity::ShiftGrayBlocksDown(int rowIndex) {
-    auto anyBlocksShiftedDown {false};
+    auto anyBlocksShiftedDown = false;
     
-    for (auto column {0}; column < mField.mNumColumns; ++column) {
-        for (auto row {rowIndex}; row < mField.mNumRows - 1; ++row) {
-            auto& lowerCell {mField.mGrid[row][column]};
-            auto& upperCell {mField.mGrid[row + 1][column]};
-            
+    for (auto column = 0; column < mField.mNumColumns; ++column) {
+        for (auto row = rowIndex; row < mField.mNumRows - 1; ++row) {
+            auto& lowerCell = mField.mGrid[row][column];
+            auto& upperCell = mField.mGrid[row + 1][column];
+
             if (upperCell.mFirstSubCell.mIsGrayLevelBlock && !upperCell.mIsShiftedDown &&
                 lowerCell.IsEmpty()) {
                 
@@ -429,23 +418,21 @@ bool FieldGravity::ShiftGrayBlocksDown(int rowIndex) {
 }
 
 void FieldGravity::ResetAllCellsShiftedDownFlag() {
-    for (auto row {0}; row < mField.mNumRows; ++row) {
-        for (auto column {0}; column < mField.mNumColumns; ++column) {
+    for (auto row = 0; row < mField.mNumRows; ++row) {
+        for (auto column = 0; column < mField.mNumColumns; ++column) {
             mField.mGrid[row][column].mIsShiftedDown = false;
         }
     }
 }
 
 void FieldGravity::DetectBlocksThatShouldNotBounce() {
-    for (auto row {mField.mNumRows - 1}; row >= mField.mLowestVisibleRow; --row) {
-        for (auto column {0}; column < mField.mNumColumns; ++column) {
-            auto& subCell {mField.mGrid[row][column].mFirstSubCell};
-            
+    for (auto row = mField.mNumRows - 1; row >= mField.mLowestVisibleRow; --row) {
+        for (auto column = 0; column < mField.mNumColumns; ++column) {
+            auto& subCell = mField.mGrid[row][column].mFirstSubCell;
             if (subCell.mIsGrayLevelBlock && subCell.mFallingBlockAnimation.mShouldBounce &&
                 subCell.mTriedScanDirection == ScanDirection::None && subCell.mPosition.y > row) {
                 
                 Pht::IVec2 gridPosition {column, row};
-                
                 if (IsBlockStructureFloating(gridPosition) == IsFloating::Yes) {
                     SetShouldNotBounce(gridPosition);
                 }
@@ -464,8 +451,7 @@ FieldGravity::IsFloating FieldGravity::IsBlockStructureFloating(const Pht::IVec2
         return IsFloating::Unknown;
     }
     
-    auto& subCell {mField.mGrid[gridPosition.y][gridPosition.x].mFirstSubCell};
-    
+    auto& subCell = mField.mGrid[gridPosition.y][gridPosition.x].mFirstSubCell;
     if (!subCell.mIsGrayLevelBlock || !subCell.mFallingBlockAnimation.mShouldBounce ||
         subCell.mIsFound || subCell.mTriedScanDirection != ScanDirection::None) {
         
@@ -479,11 +465,9 @@ FieldGravity::IsFloating FieldGravity::IsBlockStructureFloating(const Pht::IVec2
     }
     
     if (gridPosition.y - 1 >= mField.mLowestVisibleRow) {
-        auto& lowerCell {mField.mGrid[gridPosition.y - 1][gridPosition.x]};
-        
+        auto& lowerCell = mField.mGrid[gridPosition.y - 1][gridPosition.x];
         if (!lowerCell.IsEmpty()) {
-            auto& firstLowerSubCell {lowerCell.mFirstSubCell};
-            
+            auto& firstLowerSubCell = lowerCell.mFirstSubCell;
             if (subCell.mPosition.y - firstLowerSubCell.mPosition.y >= 2.0f) {
                 return IsFloating::No;
             }
@@ -492,8 +476,7 @@ FieldGravity::IsFloating FieldGravity::IsBlockStructureFloating(const Pht::IVec2
                 return IsFloating::No;
             }
             
-            auto& secondLowerSubCell {lowerCell.mSecondSubCell};
-            
+            auto& secondLowerSubCell = lowerCell.mSecondSubCell;
             if (!secondLowerSubCell.IsEmpty() && !secondLowerSubCell.mIsGrayLevelBlock) {
                 return IsFloating::No;
             }
@@ -534,8 +517,7 @@ void FieldGravity::SetShouldNotBounce(const Pht::IVec2& gridPosition) {
         return;
     }
     
-    auto& subCell {mField.mGrid[gridPosition.y][gridPosition.x].mFirstSubCell};
-    
+    auto& subCell = mField.mGrid[gridPosition.y][gridPosition.x].mFirstSubCell;
     if (!subCell.mIsGrayLevelBlock || !subCell.mFallingBlockAnimation.mShouldBounce ||
         subCell.mTriedScanDirection != ScanDirection::None) {
         
@@ -555,8 +537,7 @@ void FieldGravity::SetIsScanned(const Pht::IVec2& gridPosition) {
         return;
     }
     
-    auto& subCell {mField.mGrid[gridPosition.y][gridPosition.x].mFirstSubCell};
-    
+    auto& subCell = mField.mGrid[gridPosition.y][gridPosition.x].mFirstSubCell;
     if (!subCell.mIsGrayLevelBlock || subCell.mTriedScanDirection != ScanDirection::None) {
         return;
     }
@@ -568,8 +549,7 @@ void FieldGravity::SetIsScanned(const Pht::IVec2& gridPosition) {
     SetIsScanned(gridPosition + Pht::IVec2 {1, 0});
     
     if (gridPosition.y - 1 >= mField.mLowestVisibleRow) {
-        auto& lowerCell {mField.mGrid[gridPosition.y - 1][gridPosition.x]};
-        
+        auto& lowerCell = mField.mGrid[gridPosition.y - 1][gridPosition.x];
         if (!lowerCell.IsEmpty() &&
             subCell.mPosition.y - lowerCell.mFirstSubCell.mPosition.y >= 2.0f) {
             
@@ -581,9 +561,9 @@ void FieldGravity::SetIsScanned(const Pht::IVec2& gridPosition) {
 }
 
 void FieldGravity::ResetAllCellsFoundFlag() {
-    for (auto row {0}; row < mField.mNumRows; ++row) {
-        for (auto column {0}; column < mField.mNumColumns; ++column) {
-            auto& cell {mField.mGrid[row][column]};
+    for (auto row = 0; row < mField.mNumRows; ++row) {
+        for (auto column = 0; column < mField.mNumColumns; ++column) {
+            auto& cell = mField.mGrid[row][column];
             cell.mFirstSubCell.mIsFound = false;
             cell.mSecondSubCell.mIsFound = false;
         }

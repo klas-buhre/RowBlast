@@ -15,10 +15,10 @@ using namespace RowBlast;
 namespace {
     int CalcNumRemovedRows(const Field::RemovedSubCells& removedSubCells) {
         Pht::Optional<int> previousRowIndex;
-        auto numRemovedRows {0};
+        auto numRemovedRows = 0;
         
         for (auto& subCell: removedSubCells) {
-            auto rowIndex {subCell.mGridPosition.y};
+            auto rowIndex = subCell.mGridPosition.y;
             
             if (previousRowIndex.HasValue()) {
                 if (previousRowIndex.GetValue() != rowIndex) {
@@ -74,7 +74,7 @@ void ComboDetector::OnClearedFilledRows(const Field::RemovedSubCells& removedSub
 void ComboDetector::OnClearedFilledRowsInPieceSpawnedState(const Field::RemovedSubCells& removedSubCells) {
     ++mNumConsecutiveRowClearMoves;
     
-    auto numRemovedRows {CalcNumRemovedRows(removedSubCells)};
+    auto numRemovedRows = CalcNumRemovedRows(removedSubCells);
 
     if (numRemovedRows >= 5) {
         mSmallTextAnimation.StartFantasticMessage();
@@ -90,7 +90,7 @@ void ComboDetector::OnClearedFilledRowsInPieceSpawnedState(const Field::RemovedS
 }
 
 void ComboDetector::OnClearedFilledRowsInCascadingState(const Field::RemovedSubCells& removedSubCells) {
-    auto numRemovedRows {CalcNumRemovedRows(removedSubCells)};
+    auto numRemovedRows = CalcNumRemovedRows(removedSubCells);
 
     if (numRemovedRows >= 5) {
         mSmallTextAnimation.StartFantasticMessage();

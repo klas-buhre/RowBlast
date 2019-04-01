@@ -199,21 +199,19 @@ void Piece::InitGrids(const FillGrid& fillGrid,
 void Piece::InitCellGrids(const Piece::FillGrid& fillGrid,
                           BlockColor blockColor,
                           bool isIndivisible) {
-    auto reversedFillGrid {fillGrid};
+    auto reversedFillGrid = fillGrid;
     std::reverse(reversedFillGrid.begin(), reversedFillGrid.end());
     
-    auto deg0Grid {
-        InitCellGrid(reversedFillGrid, blockColor, isIndivisible)
-    };
+    auto deg0Grid = InitCellGrid(reversedFillGrid, blockColor, isIndivisible);
     mGrids.push_back(deg0Grid);
     
-    auto deg90Grid {RotateGridClockwise90Deg(deg0Grid, Rotation::Deg90)};
+    auto deg90Grid = RotateGridClockwise90Deg(deg0Grid, Rotation::Deg90);
     mGrids.push_back(deg90Grid);
     
-    auto deg180Grid {RotateGridClockwise90Deg(deg90Grid, Rotation::Deg180)};
+    auto deg180Grid = RotateGridClockwise90Deg(deg90Grid, Rotation::Deg180);
     mGrids.push_back(deg180Grid);
     
-    auto deg270Grid {RotateGridClockwise90Deg(deg180Grid, Rotation::Deg270)};
+    auto deg270Grid = RotateGridClockwise90Deg(deg180Grid, Rotation::Deg270);
     mGrids.push_back(deg270Grid);
 }
 
@@ -225,9 +223,9 @@ CellGrid Piece::InitCellGrid(const Piece::FillGrid& fillGrid,
         row.resize(mGridNumColumns);
     }
     
-    for (auto row {0}; row < mGridNumRows; row++) {
-        for (auto column {0}; column < mGridNumColumns; column++) {
-            auto& subCell {result[row][column].mFirstSubCell};
+    for (auto row = 0; row < mGridNumRows; row++) {
+        for (auto column = 0; column < mGridNumColumns; column++) {
+            auto& subCell = result[row][column].mFirstSubCell;
             subCell.mFill = fillGrid[row][column];
             subCell.mWelds = MakeWelds(row, column, fillGrid);
             subCell.mBlockKind = ToBlockKind(subCell.mFill);
@@ -241,13 +239,13 @@ CellGrid Piece::InitCellGrid(const Piece::FillGrid& fillGrid,
 }
 
 CellGrid Piece::RotateGridClockwise90Deg(const CellGrid& grid, Rotation newRotation) {
-    auto result {grid};
+    auto result = grid;
     
-    for (auto row {0}; row < mGridNumRows; row++) {
-        for (auto column {0}; column < mGridNumColumns; column++) {
-            auto& resultCell {result[mGridNumColumns - 1 - column][row]};
+    for (auto row = 0; row < mGridNumRows; row++) {
+        for (auto column = 0; column < mGridNumColumns; column++) {
+            auto& resultCell = result[mGridNumColumns - 1 - column][row];
             resultCell = grid[row][column];
-            auto& subCell {resultCell.mFirstSubCell};
+            auto& subCell = resultCell.mFirstSubCell;
             subCell.mRotation = newRotation;
             subCell.mFill = RotateCellFillClockwise90Deg(subCell.mFill);
             subCell.mWelds = RotateWeldsClockwise90Deg(subCell.mWelds);
@@ -258,27 +256,26 @@ CellGrid Piece::RotateGridClockwise90Deg(const CellGrid& grid, Rotation newRotat
 }
 
 void Piece::InitClickGrids(const ClickGrid& clickGrid) {
-    auto deg0Grid {clickGrid};
+    auto deg0Grid = clickGrid;
     std::reverse(deg0Grid.begin(), deg0Grid.end());
-    
     mClickGrids.push_back(deg0Grid);
     
-    auto deg90Grid {RotateClickGridClockwise90Deg(deg0Grid, Rotation::Deg90)};
+    auto deg90Grid = RotateClickGridClockwise90Deg(deg0Grid, Rotation::Deg90);
     mClickGrids.push_back(deg90Grid);
     
-    auto deg180Grid {RotateClickGridClockwise90Deg(deg90Grid, Rotation::Deg180)};
+    auto deg180Grid = RotateClickGridClockwise90Deg(deg90Grid, Rotation::Deg180);
     mClickGrids.push_back(deg180Grid);
     
-    auto deg270Grid {RotateClickGridClockwise90Deg(deg180Grid, Rotation::Deg270)};
+    auto deg270Grid = RotateClickGridClockwise90Deg(deg180Grid, Rotation::Deg270);
     mClickGrids.push_back(deg270Grid);
 }
 
 ClickGrid Piece::RotateClickGridClockwise90Deg(const ClickGrid& grid, Rotation newRotation) {
-    auto result {grid};
+    auto result = grid;
     
-    for (auto row {0}; row < mClickGridNumRows; row++) {
-        for (auto column {0}; column < mClickGridNumColumns; column++) {
-            auto& resultCell {result[mClickGridNumColumns - 1 - column][row]};
+    for (auto row = 0; row < mClickGridNumRows; row++) {
+        for (auto column = 0; column < mClickGridNumColumns; column++) {
+            auto& resultCell = result[mClickGridNumColumns - 1 - column][row];
             resultCell = grid[row][column];
         }
     }
@@ -365,8 +362,8 @@ void Piece::CalculateMinMax(int& yMax, int& xMin, int& xMax, const CellGrid& gri
     xMin = mGridNumColumns - 1;
     xMax = 0;
     
-    for (auto row {0}; row < mGridNumRows; ++row) {
-        for (auto column {0}; column < mGridNumColumns; ++column) {
+    for (auto row = 0; row < mGridNumRows; ++row) {
+        for (auto column = 0; column < mGridNumColumns; ++column) {
             if (!grid[row][column].IsEmpty()) {
                 if (row > yMax) {
                     yMax = row;
@@ -385,24 +382,24 @@ void Piece::CalculateMinMax(int& yMax, int& xMin, int& xMax, const CellGrid& gri
 }
 
 void Piece::AddOverhangCheckPositions(Rotation rotation) {
-    const auto& grid {GetGrid(rotation)};
-    auto yMax {0};
-    auto xMin {0};
-    auto xMax {0};
+    const auto& grid = GetGrid(rotation);
+    auto yMax = 0;
+    auto xMin = 0;
+    auto xMax = 0;
     
     CalculateMinMax(yMax, xMin, xMax, grid);
     
-    auto index {static_cast<int>(rotation)};
+    auto index = static_cast<int>(rotation);
     
     mRightOverhangCheckPositions[index] = Pht::IVec2 {xMax + 1, yMax};
     mLeftOverhangCheckPositions[index] = Pht::IVec2 {xMin - 1, yMax};
 }
 
 void Piece::AddExtremityCheckPositions(Rotation rotation) {
-    const auto& grid {GetGrid(rotation)};
-    auto yMax {0};
-    auto xMin {0};
-    auto xMax {0};
+    const auto& grid = GetGrid(rotation);
+    auto yMax = 0;
+    auto xMin = 0;
+    auto xMax = 0;
     
     CalculateMinMax(yMax, xMin, xMax, grid);
     
@@ -428,17 +425,17 @@ void Piece::AddExtremityCheckPositions(Rotation rotation) {
         }
     }
     
-    auto index {static_cast<int>(rotation)};
+    auto index = static_cast<int>(rotation);
     
     mRightExtremityCheckPositions[index] = rightExtremityCheckPosition;
     mLeftExtremityCheckPositions[index] = leftExtremityCheckPosition;
 }
 
 void Piece::AddTiltedWeldCheck(Rotation rotation) {
-    const auto& grid {GetGrid(rotation)};
+    const auto& grid = GetGrid(rotation);
     
-    for (auto row {0}; row < mGridNumRows; ++row) {
-        for (auto column {0}; column < mGridNumColumns; ++column) {
+    for (auto row = 0; row < mGridNumRows; ++row) {
+        for (auto column = 0; column < mGridNumColumns; ++column) {
             if (grid[row][column].mFirstSubCell.mWelds.mUpRight) {
                 TiltedWeldCheck tiltedWeldCheckValue {
                     TiltedWeldCheck::Kind::DownLeftToUpRight,
@@ -465,7 +462,7 @@ void Piece::AddTiltedWeldCheck(Rotation rotation) {
 }
 
 void Piece::AddDimensions(Rotation rotation) {
-    const auto& grid {GetGrid(rotation)};
+    const auto& grid = GetGrid(rotation);
     
     Dimensions dimensions {
         .mXmin = mGridNumColumns - 1,
@@ -474,8 +471,8 @@ void Piece::AddDimensions(Rotation rotation) {
         .mYmax = 0
     };
     
-    for (auto row {0}; row < mGridNumRows; ++row) {
-        for (auto column {0}; column < mGridNumColumns; ++column) {
+    for (auto row = 0; row < mGridNumRows; ++row) {
+        for (auto column = 0; column < mGridNumColumns; ++column) {
             if (!grid[row][column].IsEmpty()) {
                 if (row < dimensions.mYmin) {
                     dimensions.mYmin = row;
@@ -500,14 +497,14 @@ void Piece::AddDimensions(Rotation rotation) {
 }
 
 void Piece::AddButtonPositionAndSize(Rotation rotation) {
-    const auto& grid {GetClickGrid(rotation)};
-    auto yMin {mClickGridNumRows - 1};
-    auto yMax {0};
-    auto xMin {mClickGridNumColumns - 1};
-    auto xMax {0};
+    const auto& grid = GetClickGrid(rotation);
+    auto yMin = mClickGridNumRows - 1;
+    auto yMax = 0;
+    auto xMin = mClickGridNumColumns - 1;
+    auto xMax = 0;
     
-    for (auto row {0}; row < mClickGridNumRows; ++row) {
-        for (auto column {0}; column < mClickGridNumColumns; ++column) {
+    for (auto row = 0; row < mClickGridNumRows; ++row) {
+        for (auto column = 0; column < mClickGridNumColumns; ++column) {
             if (grid[row][column] > 0) {
                 if (row < yMin) {
                     yMin = row;
@@ -528,7 +525,7 @@ void Piece::AddButtonPositionAndSize(Rotation rotation) {
         }
     }
     
-    auto index {static_cast<int>(rotation)};
+    auto index = static_cast<int>(rotation);
     Pht::Vec2 buttonSize {static_cast<float>(xMax - xMin + 1), static_cast<float>(yMax - yMin + 1)};
     
     Pht::Vec2 centerPosition {

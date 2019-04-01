@@ -30,18 +30,18 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto maxRotateAdjustment {2};
+    constexpr auto maxRotateAdjustment = 2;
     const Pht::IVec2 bombDetonationAreaSize {5, 5};
-    constexpr float halfColumn {0.5f};
-    constexpr auto landingNoMovementDurationFalling {1.0f};
-    constexpr auto landingMovementDurationFalling {4.0f};
-    constexpr auto cascadeWaitTime {0.23f};
-    constexpr auto shieldHeight {6};
-    constexpr auto whooshSoundDelay {0.05f};
-    constexpr auto landingSoundDelay {0.1f};
+    constexpr float halfColumn = 0.5f;
+    constexpr auto landingNoMovementDurationFalling = 1.0f;
+    constexpr auto landingMovementDurationFalling = 4.0f;
+    constexpr auto cascadeWaitTime = 0.23f;
+    constexpr auto shieldHeight = 6;
+    constexpr auto whooshSoundDelay = 0.05f;
+    constexpr auto landingSoundDelay = 0.1f;
 
     PieceBlocks CreatePieceBlocks(const FallingPiece& fallingPiece) {
-        auto& pieceType {fallingPiece.GetPieceType()};
+        auto& pieceType = fallingPiece.GetPieceType();
     
         return {
             pieceType.GetGrid(fallingPiece.GetRotation()),
@@ -129,7 +129,7 @@ void GameLogic::Init(const Level& level) {
     mMovesUsed = 0;
     
     mCurrentMove = MoveData {};
-    auto& nextPieceGenerator {mCurrentMove.mNextPieceGenerator};
+    auto& nextPieceGenerator = mCurrentMove.mNextPieceGenerator;
     nextPieceGenerator.Init(mLevel->GetPieceTypes(), mLevel->GetPieceSequence());
     mCurrentMove.mSelectablePieces[1] = &nextPieceGenerator.GetNext();
     mCurrentMove.mSelectablePieces[0] = &nextPieceGenerator.GetNext();
@@ -164,7 +164,7 @@ GameLogic::Result GameLogic::Update(bool shouldUpdateLogic, bool shouldUndoMove)
                 }
                 HandleControlTypeChange();
                 if (mFallingPieceSpawnReason != FallingPieceSpawnReason::None) {
-                    auto result {SpawnFallingPiece(mFallingPieceSpawnReason)};
+                    auto result = SpawnFallingPiece(mFallingPieceSpawnReason);
                     mFallingPieceSpawnReason = FallingPieceSpawnReason::None;
                     if (result != Result::None) {
                         return result;
@@ -291,25 +291,22 @@ void GameLogic::RemoveFallingPiece() {
 
 Pht::Vec2 GameLogic::CalculateFallingPieceSpawnPos(const Piece& pieceType,
                                                    FallingPieceSpawnReason fallingPieceSpawnReason) {
-    auto startXPos {mField.GetNumColumns() / 2 - pieceType.GetGridNumColumns() / 2};
+    auto startXPos = mField.GetNumColumns() / 2 - pieceType.GetGridNumColumns() / 2;
     
     if (fallingPieceSpawnReason == FallingPieceSpawnReason::Switch && mLevel->GetSpeed() > 0.0f) {
-        auto pieceNumEmptyBottompRows {pieceType.GetDimensions(Rotation::Deg0).mYmin};
+        auto pieceNumEmptyBottompRows = pieceType.GetDimensions(Rotation::Deg0).mYmin;
         
-        auto previousPieceNumEmptyBottomRows {
-            mFallingPiece->GetPieceType().GetDimensions(Rotation::Deg0).mYmin
-        };
+        auto previousPieceNumEmptyBottomRows =
+            mFallingPiece->GetPieceType().GetDimensions(Rotation::Deg0).mYmin;
         
-        auto yAdjust {
-            static_cast<float>(previousPieceNumEmptyBottomRows - pieceNumEmptyBottompRows)
-        };
+        auto yAdjust =
+            static_cast<float>(previousPieceNumEmptyBottomRows - pieceNumEmptyBottompRows);
         
         return Pht::Vec2 {startXPos + halfColumn, mFallingPiece->GetPosition().y + yAdjust};
     }
     
-    auto topRowInScreen {
-        static_cast<int>(mScrollController.GetLowestVisibleRow()) + mField.GetNumRowsInOneScreen() - 1
-    };
+    auto topRowInScreen =
+        static_cast<int>(mScrollController.GetLowestVisibleRow()) + mField.GetNumRowsInOneScreen() - 1;
     
     switch (mScrollController.GetState()) {
         case ScrollController::State::ScrollingSlowly:
@@ -322,15 +319,15 @@ Pht::Vec2 GameLogic::CalculateFallingPieceSpawnPos(const Piece& pieceType,
             break;
     }
     
-    auto& pieceDimensions {pieceType.GetDimensions(Rotation::Deg0)};
-    auto pieceNumEmptyTopRows {pieceType.GetGridNumRows() - pieceDimensions.mYmax - 1};
-    auto desiredUpperPos {topRowInScreen - 3 + pieceNumEmptyTopRows};
+    auto& pieceDimensions = pieceType.GetDimensions(Rotation::Deg0);
+    auto pieceNumEmptyTopRows = pieceType.GetGridNumRows() - pieceDimensions.mYmax - 1;
+    auto desiredUpperPos = topRowInScreen - 3 + pieceNumEmptyTopRows;
     
     if (mLevel->GetSpeed() > 0.0f) {
         ++desiredUpperPos;
     }
 
-    auto startYPos {desiredUpperPos - pieceType.GetGridNumRows() + 1};
+    auto startYPos = desiredUpperPos - pieceType.GetGridNumRows() + 1;
     return Pht::Vec2 {startXPos + halfColumn, static_cast<float>(startYPos)};
 }
 
@@ -350,7 +347,7 @@ void GameLogic::HandleCascading() {
             if ((mCascadeWaitTime > cascadeWaitTime || mCollapsingFieldAnimation.IsInactive())
                 && !mScrollController.IsScrolling()) {
 
-                auto removedSubCells {mField.ClearFilledRows()};
+                auto removedSubCells = mField.ClearFilledRows();
                 mComboDetector.OnClearedFilledRows(removedSubCells);
                 mFlyingBlocksAnimation.AddBlockRows(removedSubCells);
                 UpdateLevelProgress();
@@ -404,7 +401,7 @@ void GameLogic::UpdateLevelProgress() {
             mNumObjectsLeftToClear = mField.CalculateNumLevelBlocks();
             break;
         case Level::Objective::BringDownTheAsteroid: {
-            auto asteroidRow {mField.CalculateAsteroidRow()};
+            auto asteroidRow = mField.CalculateAsteroidRow();
             assert(asteroidRow.HasValue());
             if (asteroidRow.GetValue() == 0) {
                 mNumObjectsLeftToClear = 0;
@@ -463,8 +460,8 @@ int GameLogic::GetMovesUsedIncludingCurrent() const {
 }
 
 void GameLogic::UpdateFallingPieceYpos() {
-    auto newYPosition {mFallingPiece->GetPosition().y -
-                       mFallingPiece->GetSpeed() * mEngine.GetLastFrameSeconds()};
+    auto newYPosition =
+        mFallingPiece->GetPosition().y - mFallingPiece->GetSpeed() * mEngine.GetLastFrameSeconds();
 
     switch (mFallingPiece->GetState()) {
         case FallingPiece::State::Falling:
@@ -498,7 +495,7 @@ void GameLogic::UpdateFallingPieceYpos() {
 }
 
 void GameLogic::DropFallingPiece() {
-    bool finalMovementWasADrop {mFallingPiece->GetPosition().y > mGhostPieceRow};
+    bool finalMovementWasADrop = mFallingPiece->GetPosition().y > mGhostPieceRow;
     mFallingPiece->SetY(mGhostPieceRow);
     mEngine.GetAudio().PlaySound(static_cast<Pht::AudioResourceId>(SoundId::DropWhoosh));
     LandFallingPiece(finalMovementWasADrop);
@@ -518,9 +515,8 @@ void GameLogic::OnFallingPieceAnimationFinished(bool finalMovementWasADrop) {
 void GameLogic::LandFallingPiece(bool finalMovementWasADrop) {
     mField.SaveState();
     
-    auto clearedAnyFilledRows {false};
-    auto& pieceType {mFallingPiece->GetPieceType()};
-
+    auto clearedAnyFilledRows = false;
+    auto& pieceType = mFallingPiece->GetPieceType();
     if (IsBomb(pieceType)) {
         if (finalMovementWasADrop) {
             mPieceDropParticleEffect.StartEffect(*mFallingPiece);
@@ -528,12 +524,10 @@ void GameLogic::LandFallingPiece(bool finalMovementWasADrop) {
 
         DetonateDroppedBomb();
     } else {
-        auto impactedLevelBombs {
+        auto impactedLevelBombs =
             mField.DetectImpactedBombs(CreatePieceBlocks(*mFallingPiece),
-                                       mFallingPiece->GetIntPosition())
-        };
-        
-        auto startBounceAnimation {false};
+                                       mFallingPiece->GetIntPosition());
+        auto startBounceAnimation = false;
         
         if (finalMovementWasADrop) {
             startBounceAnimation = true;
@@ -546,8 +540,7 @@ void GameLogic::LandFallingPiece(bool finalMovementWasADrop) {
         DetonateImpactedLevelBombs(impactedLevelBombs);
         
         if (LevelAllowsClearingFilledRows()) {
-            auto removedSubCells {mField.ClearFilledRows()};
-
+            auto removedSubCells = mField.ClearFilledRows();
             if (!removedSubCells.IsEmpty()) {
                 clearedAnyFilledRows = true;
                 mComboDetector.OnClearedFilledRows(removedSubCells);
@@ -582,18 +575,16 @@ void GameLogic::LandFallingPiece(bool finalMovementWasADrop) {
 void GameLogic::DetonateDroppedBomb() {
     GoToFieldExplosionsState();
     
-    auto impactedLevelBombs {
+    auto impactedLevelBombs =
         mField.DetectImpactedBombs(CreatePieceBlocks(*mFallingPiece),
-                                   mFallingPiece->GetIntPosition())
-    };
+                                   mFallingPiece->GetIntPosition());
     
-    auto intPieceDetonationPos {mFallingPiece->GetIntPosition() + Pht::IVec2{1, 1}};
-    auto pieceDetonationPos {mFallingPiece->GetRenderablePosition() + Pht::Vec2{1.0f, 1.0f}};
+    auto intPieceDetonationPos = mFallingPiece->GetIntPosition() + Pht::IVec2{1, 1};
+    auto pieceDetonationPos = mFallingPiece->GetRenderablePosition() + Pht::Vec2{1.0f, 1.0f};
     
     if (mFallingPiece->GetPieceType().IsRowBomb()) {
         if (!impactedLevelBombs.IsEmpty()) {
-            auto& impactedLevelBomb {impactedLevelBombs.Front()};
-            
+            auto& impactedLevelBomb = impactedLevelBombs.Front();
             switch (impactedLevelBomb.mKind) {
                 case BlockKind::Bomb:
                     mFieldExplosionsStates.DetonateLevelBomb(impactedLevelBomb.mPosition);
@@ -694,7 +685,7 @@ void GameLogic::PullDownLoosePiecesAsteroidObjective() {
     mField.SetLowestVisibleRow(0);
     mFieldGravity.PullDownLoosePieces();
     
-    auto lowestVisibleRow {mScrollController.CalculatePreferredLowestVisibleRow()};
+    auto lowestVisibleRow = mScrollController.CalculatePreferredLowestVisibleRow();
     
     // Now that we have the correct lowest visible row, we can restore the field and do the proper
     // pull down of the pieces.
@@ -714,8 +705,8 @@ bool GameLogic::LevelAllowsClearingFilledRows() const {
 }
 
 void GameLogic::PlayLandPieceSound() {
-    auto& audio {mEngine.GetAudio()};
-    auto landingSoundResourceId {static_cast<Pht::AudioResourceId>(SoundId::LandPiece)};
+    auto& audio = mEngine.GetAudio();
+    auto landingSoundResourceId = static_cast<Pht::AudioResourceId>(SoundId::LandPiece);
 
     switch (mControlType) {
         case ControlType::Click:
@@ -728,12 +719,12 @@ void GameLogic::PlayLandPieceSound() {
 }
 
 void GameLogic::RemoveBlocksInsideTheShield() {
-    auto lowestVisibleRow {static_cast<int>(mScrollController.GetLowestVisibleRow())};
+    auto lowestVisibleRow = static_cast<int>(mScrollController.GetLowestVisibleRow());
     Pht::IVec2 areaPosition {0, lowestVisibleRow + ShieldAnimation::shieldRelativeYPosition};
     Pht::IVec2 areaSize {mField.GetNumColumns(), shieldHeight};
-    auto removeCorners {true};
-    auto removedSubCells {mField.RemoveAreaOfSubCells(areaPosition, areaSize, removeCorners)};
-
+    auto removeCorners = true;
+    auto removedSubCells = mField.RemoveAreaOfSubCells(areaPosition, areaSize, removeCorners);
+    
     if (removedSubCells.Size() > 0) {
         mFlyingBlocksAnimation.AddBlocksRemovedByTheShield(removedSubCells, mField.GetNumColumns());
         mShieldAnimation.StartFlash();
@@ -741,7 +732,7 @@ void GameLogic::RemoveBlocksInsideTheShield() {
         
         if (mState != State::FieldExplosions) {
             // It is not safe to pull down pieces while in FieldExplosions state.
-            auto doBounceCalculations {false};
+            auto doBounceCalculations = false;
             RemoveClearedRowsAndPullDownLoosePieces(doBounceCalculations);
             
             // Blocks that have just landed are in bouncing state. Some of those recently landed
@@ -755,15 +746,14 @@ void GameLogic::RemoveBlocksInsideTheShield() {
 }
 
 void GameLogic::RotatePiece(const Pht::TouchEvent& touchEvent) {
-    auto& pieceType {mFallingPiece->GetPieceType()};
-    
+    auto& pieceType = mFallingPiece->GetPieceType();
     if (!pieceType.CanRotateAroundZ()) {
         return;
     }
     
     mEngine.GetAudio().PlaySound(static_cast<Pht::AudioResourceId>(SoundId::RotateWhoosh));
     
-    auto newRotation {CalculateNewRotation(touchEvent)};
+    auto newRotation = CalculateNewRotation(touchEvent);
     
     PieceBlocks pieceBlocks {
         pieceType.GetGrid(newRotation),
@@ -771,18 +761,17 @@ void GameLogic::RotatePiece(const Pht::TouchEvent& touchEvent) {
         pieceType.GetGridNumColumns()
     };
     
-    auto position {mFallingPiece->GetIntPosition()};
+    auto position = mFallingPiece->GetIntPosition();
     Field::CollisionResult collisionResult;
     mField.CheckCollision(collisionResult, pieceBlocks, position, Pht::IVec2{0, 0}, false);
 
     if (collisionResult.mIsCollision == IsCollision::Yes) {
-        auto collisionDirection {
+        auto collisionDirection =
             CollisionDetection::CalculateCollisionDirection(collisionResult.mCollisionPoints,
                                                             pieceBlocks,
                                                             newRotation,
                                                             position,
-                                                            mField)
-        };
+                                                            mField);
         
         RotatateAndAdjustPosition(newRotation, pieceBlocks, position, collisionDirection);
     } else {
@@ -799,15 +788,14 @@ void GameLogic::RotatePiece(const Pht::TouchEvent& touchEvent) {
 }
 
 Rotation GameLogic::CalculateNewRotation(const Pht::TouchEvent& touchEvent) {
-    auto numRotations {mFallingPiece->GetPieceType().GetNumRotations()};
-    auto rotationInt {static_cast<int>(mFallingPiece->GetRotation())};
+    auto numRotations = mFallingPiece->GetPieceType().GetNumRotations();
+    auto rotationInt = static_cast<int>(mFallingPiece->GetRotation());
     
     if (touchEvent.mLocation.x >= mEngine.GetInput().GetScreenInputSize().x / 2.0f) {
         return static_cast<Rotation>((rotationInt + 1) % numRotations);
     }
     
-    auto newRotation {rotationInt - 1};
-    
+    auto newRotation = rotationInt - 1;
     if (newRotation < 0) {
         newRotation += numRotations;
     }
@@ -821,7 +809,7 @@ void GameLogic::RotatateAndAdjustPosition(Rotation newRotation,
                                           Direction collisionDirection) {
     switch (collisionDirection) {
         case Direction::Right: {
-            auto freeXPos {mField.DetectFreeSpaceLeft(pieceBlocks, position)};
+            auto freeXPos = mField.DetectFreeSpaceLeft(pieceBlocks, position);
             if (position.x - freeXPos <= maxRotateAdjustment &&
                 !CollisionDetection::IsIllegalTiltedWeldPosition(mField,
                                                                  Pht::IVec2{freeXPos, position.y},
@@ -833,7 +821,7 @@ void GameLogic::RotatateAndAdjustPosition(Rotation newRotation,
             break;
         }
         case Direction::Left: {
-            auto freeXPos {mField.DetectFreeSpaceRight(pieceBlocks, position)};
+            auto freeXPos = mField.DetectFreeSpaceRight(pieceBlocks, position);
             if (freeXPos - position.x <= maxRotateAdjustment &&
                 !CollisionDetection::IsIllegalTiltedWeldPosition(mField,
                                                                  Pht::IVec2{freeXPos, position.y},
@@ -845,7 +833,7 @@ void GameLogic::RotatateAndAdjustPosition(Rotation newRotation,
             break;
         }
         case Direction::Up: {
-            auto freeYPos {mField.DetectFreeSpaceDown(pieceBlocks, position)};
+            auto freeYPos = mField.DetectFreeSpaceDown(pieceBlocks, position);
             if (position.y - freeYPos <= maxRotateAdjustment &&
                 !CollisionDetection::IsIllegalTiltedWeldPosition(mField,
                                                                  Pht::IVec2{position.x, freeYPos},
@@ -857,7 +845,7 @@ void GameLogic::RotatateAndAdjustPosition(Rotation newRotation,
             break;
         }
         case Direction::Down: {
-            auto freeYPos {mField.DetectFreeSpaceUp(pieceBlocks, position)};
+            auto freeYPos = mField.DetectFreeSpaceUp(pieceBlocks, position);
             if (freeYPos - position.y <= maxRotateAdjustment &&
                 !CollisionDetection::IsIllegalTiltedWeldPosition(mField,
                                                                  Pht::IVec2{position.x, freeYPos},
@@ -880,7 +868,7 @@ void GameLogic::SwitchPiece() {
     
     mEngine.GetAudio().PlaySound(static_cast<Pht::AudioResourceId>(SoundId::SwitchPiece));
     
-    auto* previousActivePieceType {mCurrentMove.mPieceType};
+    auto* previousActivePieceType = mCurrentMove.mPieceType;
     
     mFallingPieceSpawnType = mCurrentMove.mSelectablePieces[1];
     mCurrentMove.mPieceType = mCurrentMove.mSelectablePieces[1];
@@ -892,7 +880,7 @@ void GameLogic::SwitchPiece() {
 }
 
 bool GameLogic::IsThereRoomToSwitchPiece() {
-    auto& pieceType {*mCurrentMove.mSelectablePieces[1]};
+    auto& pieceType = *mCurrentMove.mSelectablePieces[1];
     
     PieceBlocks pieceBlocks {
         pieceType.GetGrid(Rotation::Deg0),
@@ -900,7 +888,7 @@ bool GameLogic::IsThereRoomToSwitchPiece() {
         pieceType.GetGridNumColumns()
     };
  
-    auto position {CalculateFallingPieceSpawnPos(pieceType, FallingPieceSpawnReason::Switch)};
+    auto position = CalculateFallingPieceSpawnPos(pieceType, FallingPieceSpawnReason::Switch);
     
     Pht::IVec2 intPosition {
         static_cast<int>(std::floor(position.x)),
@@ -914,20 +902,18 @@ bool GameLogic::IsThereRoomToSwitchPiece() {
 }
 
 void GameLogic::SetFallingPieceXPosWithCollisionDetection(float fallingPieceNewX) {
-    auto pieceBlocks {CreatePieceBlocks(*mFallingPiece)};
+    auto pieceBlocks = CreatePieceBlocks(*mFallingPiece);
 
     if (fallingPieceNewX - mFallingPiece->GetPosition().x > 0.0f) {
-        auto collisionRight {
+        auto collisionRight =
             mField.DetectCollisionRight(pieceBlocks, mFallingPiece->GetIntPosition()) +
-            halfColumn
-        };
+            halfColumn;
         
         mFallingPiece->SetX(std::fmin(collisionRight, fallingPieceNewX));
     } else {
-        auto collisionLeft {
+        auto collisionLeft =
             mField.DetectCollisionLeft(pieceBlocks, mFallingPiece->GetIntPosition()) +
-            halfColumn
-        };
+            halfColumn;
         
         mFallingPiece->SetX(std::fmax(collisionLeft, fallingPieceNewX));
     }
@@ -937,8 +923,7 @@ void GameLogic::SetFallingPieceXPosWithCollisionDetection(float fallingPieceNewX
     if (mBlastRadiusAnimation.IsActive()) {
         SetBlastRadiusAnimationPositionAtGhostPiece();
         Pht::IVec2 ghostPiecePosition {mFallingPiece->GetIntPosition().x, mGhostPieceRow};
-        auto blastRadiusKind {CalculateBlastRadiusKind(ghostPiecePosition)};
-        
+        auto blastRadiusKind = CalculateBlastRadiusKind(ghostPiecePosition);
         if (blastRadiusKind != mBlastRadiusAnimation.GetActiveKind()) {
             mBlastRadiusAnimation.Start(blastRadiusKind);
         }
@@ -985,9 +970,8 @@ void GameLogic::StopBlastRadiusAnimation() {
 }
 
 BlastRadiusAnimation::Kind GameLogic::CalculateBlastRadiusKind(const Pht::IVec2& position) {
-    auto impactedLevelBombsIfDropped {
-        mField.DetectImpactedBombs(CreatePieceBlocks(*mFallingPiece), position)
-    };
+    auto impactedLevelBombsIfDropped =
+        mField.DetectImpactedBombs(CreatePieceBlocks(*mFallingPiece), position);
     
     if (!impactedLevelBombsIfDropped.IsEmpty() &&
         impactedLevelBombsIfDropped.Front().mKind == BlockKind::Bomb) {
@@ -999,14 +983,14 @@ BlastRadiusAnimation::Kind GameLogic::CalculateBlastRadiusKind(const Pht::IVec2&
 }
 
 GameLogic::Result GameLogic::HandleInput() {
-    auto result {Result::None};
-    auto& input {mEngine.GetInput()};
+    auto result = Result::None;
+    auto& input = mEngine.GetInput();
     
     while (input.HasEvents()) {
-        auto& event {input.GetNextEvent()};
+        auto& event = input.GetNextEvent();
         switch (event.GetKind()) {
             case Pht::InputKind::Touch: {
-                auto& touchEvent {event.GetTouchEvent()};
+                auto& touchEvent = event.GetTouchEvent();
                 switch (mGameHudController.OnTouch(touchEvent)) {
                     case GameHudController::Result::None:
                         ForwardTouchToInputHandler(touchEvent);

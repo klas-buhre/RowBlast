@@ -12,16 +12,16 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto bombExplosionMaxReach {2};
-    constexpr auto bombExplosionForceSpeed {50.0f};
-    constexpr auto bombExplosiveForceMagnitude {30.0f};
-    constexpr auto laserCuttingSpeed {39.0f};
-    constexpr auto levelBombExplosionMaxReach {1};
-    constexpr auto levelBombExplosionForceSpeed {8.0f};
-    constexpr auto levelBombExplosiveForceMagnitude {20.0f};
-    constexpr auto bigBombExplosionMaxReach {2};
-    constexpr auto bigBombExplosionForceSpeed {50.0f};
-    constexpr auto bigBombExplosiveForceMagnitude {40.0f};
+    constexpr auto bombExplosionMaxReach = 2;
+    constexpr auto bombExplosionForceSpeed = 50.0f;
+    constexpr auto bombExplosiveForceMagnitude = 30.0f;
+    constexpr auto laserCuttingSpeed = 39.0f;
+    constexpr auto levelBombExplosionMaxReach = 1;
+    constexpr auto levelBombExplosionForceSpeed = 8.0f;
+    constexpr auto levelBombExplosiveForceMagnitude = 20.0f;
+    constexpr auto bigBombExplosionMaxReach = 2;
+    constexpr auto bigBombExplosionForceSpeed = 50.0f;
+    constexpr auto bigBombExplosiveForceMagnitude = 40.0f;
 
     bool CompareRowsTopToDown(int rowIndexA, int rowIndexB) {
         return rowIndexA > rowIndexB;
@@ -45,9 +45,9 @@ void FieldExplosionsStates::Init() {
 }
 
 FieldExplosionsStates::State FieldExplosionsStates::Update() {
-    auto dt {mEngine.GetLastFrameSeconds()};
+    auto dt = mEngine.GetLastFrameSeconds();
     
-    for (auto i {0}; i < mExplosionsStates.Size();) {
+    for (auto i = 0; i < mExplosionsStates.Size();) {
         if (UpdateExplosionState(mExplosionsStates.At(i), dt) == State::Active) {
             ++i;
         } else {
@@ -79,7 +79,7 @@ FieldExplosionsStates::UpdateExplosionState(ExplosionState& explosionState, floa
 
 FieldExplosionsStates::State
 FieldExplosionsStates::UpdateBombExplosionState(BombExplosionState& bombExplosionState, float dt) {
-    auto removeCorners {false};
+    auto removeCorners = false;
     return UpdateGenericBombExplosionState(bombExplosionState,
                                            bombExplosiveForceMagnitude,
                                            bombExplosionForceSpeed,
@@ -90,15 +90,15 @@ FieldExplosionsStates::UpdateBombExplosionState(BombExplosionState& bombExplosio
 
 FieldExplosionsStates::State
 FieldExplosionsStates::UpdateRowBombLaserState(LaserState& laserState, float dt) {
-    auto previousLeftColumn {static_cast<int>(laserState.mLeftCuttingProgress.mXPosition)};
-    auto previousRightColumn {static_cast<int>(laserState.mRightCuttingProgress.mXPosition)};
+    auto previousLeftColumn = static_cast<int>(laserState.mLeftCuttingProgress.mXPosition);
+    auto previousRightColumn = static_cast<int>(laserState.mRightCuttingProgress.mXPosition);
     
     UpdateLeftCuttingProgress(laserState, dt);
     UpdateRightCuttingProgress(laserState, dt);
 
-    auto leftColumn {static_cast<int>(laserState.mLeftCuttingProgress.mXPosition)};
-    auto rightColumn {static_cast<int>(laserState.mRightCuttingProgress.mXPosition)};
-    auto row {laserState.mCuttingPositionY};
+    auto leftColumn = static_cast<int>(laserState.mLeftCuttingProgress.mXPosition);
+    auto rightColumn = static_cast<int>(laserState.mRightCuttingProgress.mXPosition);
+    auto row = laserState.mCuttingPositionY;
     
     if (previousLeftColumn != leftColumn || previousRightColumn != rightColumn) {
         RemoveBlocksHitByLaser(previousLeftColumn, previousRightColumn, row);
@@ -117,12 +117,12 @@ FieldExplosionsStates::UpdateRowBombLaserState(LaserState& laserState, float dt)
 void FieldExplosionsStates::RemoveBlocksHitByLaser(int leftColumn, int rightColumn, int row) {
     Pht::IVec2 areaPosition {leftColumn, row};
     Pht::IVec2 areaSize {rightColumn - leftColumn + 1, 1};
-    auto removeCorners {true};
-    auto removedSubCells {mField.RemoveAreaOfSubCells(areaPosition, areaSize, removeCorners)};
+    auto removeCorners = true;
+    auto removedSubCells = mField.RemoveAreaOfSubCells(areaPosition, areaSize, removeCorners);
 
     if (removedSubCells.Size() > 0) {
-        for (auto i {0}; i < removedSubCells.Size();) {
-            auto& subCell {removedSubCells.At(i)};
+        for (auto i = 0; i < removedSubCells.Size();) {
+            auto& subCell = removedSubCells.At(i);
             
             switch (subCell.mBlockKind) {
                 case BlockKind::Bomb:
@@ -140,12 +140,12 @@ void FieldExplosionsStates::RemoveBlocksHitByLaser(int leftColumn, int rightColu
 }
 
 void FieldExplosionsStates::UpdateLeftCuttingProgress(LaserState& laserState, float dt) {
-    auto row {laserState.mCuttingPositionY};
-    auto& cuttingProgress {laserState.mLeftCuttingProgress};
+    auto row = laserState.mCuttingPositionY;
+    auto& cuttingProgress = laserState.mLeftCuttingProgress;
 
     switch (cuttingProgress.mState) {
         case LaserState::CuttingState::FreeSpace: {
-            for (auto column {static_cast<int>(cuttingProgress.mXPosition)};;) {
+            for (auto column = static_cast<int>(cuttingProgress.mXPosition);;) {
                 if (column < 0) {
                     cuttingProgress.mState = LaserState::CuttingState::Done;
                     break;
@@ -161,7 +161,7 @@ void FieldExplosionsStates::UpdateLeftCuttingProgress(LaserState& laserState, fl
         }
         case LaserState::CuttingState::Cutting: {
             cuttingProgress.mXPosition -= laserCuttingSpeed * dt;
-            auto column {static_cast<int>(cuttingProgress.mXPosition)};
+            auto column = static_cast<int>(cuttingProgress.mXPosition);
             if (column < 0) {
                 cuttingProgress.mState = LaserState::CuttingState::Done;
                 return;
@@ -177,12 +177,12 @@ void FieldExplosionsStates::UpdateLeftCuttingProgress(LaserState& laserState, fl
 }
 
 void FieldExplosionsStates::UpdateRightCuttingProgress(LaserState& laserState, float dt) {
-    auto row {laserState.mCuttingPositionY};
-    auto& cuttingProgress {laserState.mRightCuttingProgress};
+    auto row = laserState.mCuttingPositionY;
+    auto& cuttingProgress = laserState.mRightCuttingProgress;
 
     switch (cuttingProgress.mState) {
         case LaserState::CuttingState::FreeSpace: {
-            for (auto column {static_cast<int>(cuttingProgress.mXPosition)};;) {
+            for (auto column = static_cast<int>(cuttingProgress.mXPosition);;) {
                 if (column >= mField.GetNumColumns()) {
                     cuttingProgress.mState = LaserState::CuttingState::Done;
                     break;
@@ -198,7 +198,7 @@ void FieldExplosionsStates::UpdateRightCuttingProgress(LaserState& laserState, f
         }
         case LaserState::CuttingState::Cutting: {
             cuttingProgress.mXPosition += laserCuttingSpeed * dt;
-            auto column {static_cast<int>(cuttingProgress.mXPosition)};
+            auto column = static_cast<int>(cuttingProgress.mXPosition);
             if (column >= mField.GetNumColumns()) {
                 cuttingProgress.mState = LaserState::CuttingState::Done;
                 return;
@@ -216,7 +216,7 @@ void FieldExplosionsStates::UpdateRightCuttingProgress(LaserState& laserState, f
 FieldExplosionsStates::State
 FieldExplosionsStates::UpdateLevelBombExplosionState(BombExplosionState& levelBombExplosionState,
                                                      float dt) {
-    auto removeCorners {true};
+    auto removeCorners = true;
     return UpdateGenericBombExplosionState(levelBombExplosionState,
                                            levelBombExplosiveForceMagnitude,
                                            levelBombExplosionForceSpeed,
@@ -228,7 +228,7 @@ FieldExplosionsStates::UpdateLevelBombExplosionState(BombExplosionState& levelBo
 FieldExplosionsStates::State
 FieldExplosionsStates::UpdateBigBombExplosionState(BombExplosionState& bigBombExplosionState,
                                                    float dt) {
-    auto removeCorners {true};
+    auto removeCorners = true;
     return UpdateGenericBombExplosionState(bigBombExplosionState,
                                            bigBombExplosiveForceMagnitude,
                                            bigBombExplosionForceSpeed,
@@ -244,16 +244,14 @@ FieldExplosionsStates::UpdateGenericBombExplosionState(BombExplosionState& explo
                                                        float explosionMaxReach,
                                                        bool removeCorners,
                                                        float dt) {
-    auto previousElapsedTime {explosionState.mElapsedTime};
+    auto previousElapsedTime = explosionState.mElapsedTime;
     explosionState.mElapsedTime += dt;
     
-    auto explosionForceReach {
-        static_cast<int>(explosionState.mElapsedTime * explosionForceSpeed)
-    };
+    auto explosionForceReach =
+        static_cast<int>(explosionState.mElapsedTime * explosionForceSpeed);
     
-    auto previousExplosionForceReach {
-        static_cast<int>(previousElapsedTime * explosionForceSpeed)
-    };
+    auto previousExplosionForceReach =
+        static_cast<int>(previousElapsedTime * explosionForceSpeed);
     
     if (explosionForceReach != previousExplosionForceReach && explosionForceReach > 0) {
         if (explosionForceReach > explosionMaxReach) {
@@ -266,11 +264,11 @@ FieldExplosionsStates::UpdateGenericBombExplosionState(BombExplosionState& explo
         };
         
         Pht::IVec2 areaSize {explosionForceReach * 2 + 1, explosionForceReach * 2 + 1};
-        auto removedSubCells {mField.RemoveAreaOfSubCells(areaPosition, areaSize, removeCorners)};
+        auto removedSubCells = mField.RemoveAreaOfSubCells(areaPosition, areaSize, removeCorners);
         
         if (removedSubCells.Size() > 0) {
-            for (auto i {0}; i < removedSubCells.Size();) {
-                auto& subCell {removedSubCells.At(i)};
+            for (auto i = 0; i < removedSubCells.Size();) {
+                auto& subCell = removedSubCells.At(i);
                 
                 switch (subCell.mBlockKind) {
                     case BlockKind::Bomb:
@@ -292,9 +290,8 @@ FieldExplosionsStates::UpdateGenericBombExplosionState(BombExplosionState& explo
                 }
             }
             
-            auto shouldApplyForceToAlreadyFlyingBlocks {
-                explosionState.mShouldApplyForceToAlreadyFlyingBlocks
-            };
+            auto shouldApplyForceToAlreadyFlyingBlocks =
+                explosionState.mShouldApplyForceToAlreadyFlyingBlocks;
             
             mFlyingBlocksAnimation.AddBlocksRemovedByExplosion(removedSubCells,
                                                                explosionState.mPosition,
@@ -314,9 +311,8 @@ FieldExplosionsStates::UpdateGenericBombExplosionState(BombExplosionState& explo
 void FieldExplosionsStates::RemoveRows() {
     Pht::StaticVector<int, Field::maxNumRows> rowsToRemoveContainingAsteroidCells;
     
-    for (auto i {0}; i < mRowsToRemove.Size();) {
-        auto rowToRemove {mRowsToRemove.At(i)};
-        
+    for (auto i = 0; i < mRowsToRemove.Size();) {
+        auto rowToRemove = mRowsToRemove.At(i);
         if (RowContainsAsteroid(rowToRemove)) {
             rowsToRemoveContainingAsteroidCells.PushBack(rowToRemove);
             mRowsToRemove.Erase(i);
@@ -352,7 +348,7 @@ void FieldExplosionsStates::RemoveRows() {
 }
 
 bool FieldExplosionsStates::RowContainsAsteroid(int row) {
-    for (auto column {0}; column < mField.GetNumColumns(); ++column) {
+    for (auto column = 0; column < mField.GetNumColumns(); ++column) {
         if (mField.GetCell(row, column).mFirstSubCell.IsAsteroid()) {
             return true;
         }
@@ -365,7 +361,7 @@ void FieldExplosionsStates::DetonateBomb(const Pht::IVec2& position,
                                          const Pht::Vec2& exactPosition) {
     mEffectManager.StartExplosion(exactPosition);
     
-    auto removeCorners {true};
+    auto removeCorners = true;
     mField.RemoveAreaOfSubCells(position, {1, 1}, removeCorners);
     
     BombExplosionState bombExplosionState {position};
@@ -380,10 +376,10 @@ void FieldExplosionsStates::DetonateRowBomb(const Pht::IVec2& position,
                                             const Pht::Vec2& exactPosition) {
     mEffectManager.StartLaser(exactPosition);
     
-    auto removeCorners {true};
+    auto removeCorners = true;
     mField.RemoveAreaOfSubCells(position, {1, 1}, removeCorners);
     
-    auto cuttingPositionX {static_cast<float>(position.x) + 0.5f};
+    auto cuttingPositionX = static_cast<float>(position.x) + 0.5f;
     LaserState laserState {
         .mLeftCuttingProgress = LaserState::CuttingProgress{cuttingPositionX},
         .mRightCuttingProgress = LaserState::CuttingProgress{cuttingPositionX},
@@ -407,7 +403,7 @@ void FieldExplosionsStates::DetonateLevelBomb(const Pht::IVec2& position) {
     Pht::Vec2 effectPosition {static_cast<float>(position.x), static_cast<float>(position.y)};
     mEffectManager.StartLevelBombExplosion(effectPosition);
     
-    auto removeCorners {true};
+    auto removeCorners = true;
     mField.RemoveAreaOfSubCells(position, {1, 1}, removeCorners);
     
     BombExplosionState bombExplosionState {position};
@@ -422,7 +418,7 @@ void FieldExplosionsStates::DetonateBigBomb(const Pht::IVec2& position) {
     Pht::Vec2 effectPosition {static_cast<float>(position.x), static_cast<float>(position.y)};
     mEffectManager.StartBigExplosion(effectPosition);
     
-    auto removeCorners {true};
+    auto removeCorners = true;
     mField.RemoveAreaOfSubCells(position, {1, 1}, removeCorners);
     mField.RemoveAreaOfSubCells(position - Pht::IVec2{0, 1}, {1, 1}, removeCorners);
     
