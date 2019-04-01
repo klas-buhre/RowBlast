@@ -124,11 +124,13 @@ bool GestureInputHandler::ShouldDropFallingPieceOnTouchEnd() {
     if (mFallingPiece.IsBeingDraggedDown() &&
         mFallingPiece.GetTimeInDraggedDownState() < dropOnTouchEndMaxTime &&
         !mDragDownContainedUpMovement) {
+
         return true;
     }
     
     if (mFallingPiece.IsLanding() &&
         mFallingPiece.GetPreviousState() == FallingPiece::State::BeingDraggedDown) {
+
         return true;
     }
     

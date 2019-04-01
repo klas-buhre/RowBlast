@@ -73,7 +73,7 @@ namespace {
         welds.mUp = false;
         welds.mUpLeft = false;
         
-        auto& animations {welds.mAnimations};
+        auto& animations = welds.mAnimations;
         animations.mUp = WeldAnimation {};
         animations.mUpRight = WeldAnimation {};
         animations.mUpLeft = WeldAnimation {};
@@ -84,7 +84,7 @@ namespace {
         welds.mRight = false;
         welds.mDownRight = false;
         
-        auto& animations {welds.mAnimations};
+        auto& animations = welds.mAnimations;
         animations.mUpRight = WeldAnimation {};
         animations.mRight = WeldAnimation {};
     }
@@ -133,7 +133,7 @@ void Field::Init(const Level& level) {
             mGrid.clear();
             mGrid.reserve(mNumRows);
             std::vector<Cell> emptyRow(mNumColumns);
-            for (auto rowIndex {0}; rowIndex < mNumRows; ++rowIndex) {
+            for (auto rowIndex = 0; rowIndex < mNumRows; ++rowIndex) {
                 mGrid.push_back(emptyRow);
             }
             break;
