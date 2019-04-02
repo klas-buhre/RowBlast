@@ -29,33 +29,33 @@ using namespace RowBlast;
 namespace {
     const Pht::Vec3 lightDirectionA {0.6f, 1.0f, 1.0f};
     const Pht::Vec3 lightDirectionB {0.4f, 1.0f, 1.0f};
-    constexpr auto lightAnimationDuration {5.0f};
+    constexpr auto lightAnimationDuration = 5.0f;
     const Pht::Color roundedCylinderAmbient {0.49f, 0.49f, 0.49f};
     const Pht::Color roundedCylinderDiffuse {0.62f, 0.62f, 0.62f};
-    constexpr auto roundedCylinderOpacity {0.45f};
-    constexpr auto cellSize {1.25f};
+    constexpr auto roundedCylinderOpacity = 0.45f;
+    constexpr auto cellSize = 1.25f;
     
     template <typename T, typename U>
     void CreatePreviewPieces(T& previewPieces,
                              U& previewPieceRelativePositions,
                              Pht::SceneObject& parentObject) {
-        for (auto i {0}; i < previewPieces.size(); ++i) {
-            auto& piece {previewPieces[i]};
+        for (auto i = 0; i < previewPieces.size(); ++i) {
+            auto& piece = previewPieces[i];
             
             piece.mSceneObjects = std::make_unique<SceneObjectPool>(SceneObjectPoolKind::PreviewPieceBlocks,
                                                                     parentObject);
             piece.mSceneObjects->SetIsActive(false);
             
-            auto& transform {piece.mSceneObjects->GetContainerSceneObject().GetTransform()};
+            auto& transform = piece.mSceneObjects->GetContainerSceneObject().GetTransform();
             transform.SetPosition(previewPieceRelativePositions[i]);
             transform.SetRotation({-30.0f, -30.0f, 0.0f});
         }
     }
     
     float CalculateLowerHudObjectYPosition(Pht::IEngine& engine) {
-        auto& renderer {engine.GetRenderer()};
-        auto bottomPadding {renderer.GetBottomPaddingHeight()};
-        auto yPosition {-renderer.GetHudFrustumSize().y / 2.0f + bottomPadding + 1.35f};
+        auto& renderer = engine.GetRenderer();
+        auto bottomPadding = renderer.GetBottomPaddingHeight();
+        auto yPosition = -renderer.GetHudFrustumSize().y / 2.0f + bottomPadding + 1.35f;
         
         if (bottomPadding != 0.0f) {
             yPosition += 0.19f;
@@ -65,7 +65,7 @@ namespace {
     }
     
     void WriteIntegerAtBeginningOfString(int value, std::string& str) {
-        constexpr auto bufSize {64};
+        constexpr auto bufSize = 64;
         char buffer[bufSize];
         std::snprintf(buffer, bufSize, "%3d", value);
         
@@ -122,7 +122,7 @@ GameHud::GameHud(Pht::IEngine& engine,
     CreateProgressObject(scene, *mUpperContainer, commonResources, levelResources, hudArrow);
     CreateMovesObject(scene, *mUpperContainer, commonResources);
     
-    auto& hudRectangles {commonResources.GetGameHudRectangles()};
+    auto& hudRectangles = commonResources.GetGameHudRectangles();
     CreateNextPiecesObject(scene, parentObject, hudRectangles);
     CreateSelectablePiecesObject(scene, parentObject, hudRectangles);
 }
@@ -130,22 +130,22 @@ GameHud::GameHud(Pht::IEngine& engine,
 void GameHud::CreateLightAndCamera(Pht::Scene& scene,
                                    Pht::SceneObject& parentObject,
                                    int hudLayer) {
-    auto& lightSceneObject {scene.CreateSceneObject()};
+    auto& lightSceneObject = scene.CreateSceneObject();
     lightSceneObject.SetIsVisible(false);
-    auto lightComponent {std::make_unique<Pht::LightComponent>(lightSceneObject)};
+    auto lightComponent = std::make_unique<Pht::LightComponent>(lightSceneObject);
     mLight = lightComponent.get();
     lightSceneObject.SetComponent<Pht::LightComponent>(std::move(lightComponent));
     parentObject.AddChild(lightSceneObject);
     
-    auto& cameraSceneObject {scene.CreateSceneObject()};
+    auto& cameraSceneObject = scene.CreateSceneObject();
     cameraSceneObject.SetIsVisible(false);
     cameraSceneObject.GetTransform().SetPosition({0.0f, 0.0f, 15.5f});
-    auto cameraComponent {std::make_unique<Pht::CameraComponent>(cameraSceneObject)};
-    auto* camera {cameraComponent.get()};
+    auto cameraComponent = std::make_unique<Pht::CameraComponent>(cameraSceneObject);
+    auto* camera = cameraComponent.get();
     cameraSceneObject.SetComponent<Pht::CameraComponent>(std::move(cameraComponent));
     parentObject.AddChild(cameraSceneObject);
     
-    auto* hudRenderPass {scene.GetRenderPass(hudLayer)};
+    auto* hudRenderPass = scene.GetRenderPass(hudLayer);
     assert(hudRenderPass);
     hudRenderPass->SetLight(mLight);
     hudRenderPass->SetCamera(camera);
@@ -156,8 +156,8 @@ void GameHud::CreateProgressObject(Pht::Scene& scene,
                                    const CommonResources& commonResources,
                                    const LevelResources& levelResources,
                                    const GameHudArrow& hudArrow) {
-    auto& progressContainer {scene.CreateSceneObject()};
-    auto& renderer {mEngine.GetRenderer()};
+    auto& progressContainer = scene.CreateSceneObject();
+    auto& renderer = mEngine.GetRenderer();
     
     Pht::Vec3 position {
         -3.4f,
@@ -188,7 +188,7 @@ void GameHud::CreateProgressObject(Pht::Scene& scene,
     };
     
     mProgressText = &scene.CreateText("", textProperties);
-    auto& progressTextSceneobject {mProgressText->GetSceneObject()};
+    auto& progressTextSceneobject = mProgressText->GetSceneObject();
     
     switch (mLevelObjective) {
         case Level::Objective::Clear:
@@ -209,7 +209,7 @@ void GameHud::CreateProgressObject(Pht::Scene& scene,
             break;
     }
     
-    auto* textComponent {progressTextSceneobject.GetComponent<Pht::TextComponent>()};
+    auto* textComponent = progressTextSceneobject.GetComponent<Pht::TextComponent>();
     assert(textComponent);
     std::string digitsPlaceholder {"   "}; // Warning! Must be three spaces to fit digits.
     
@@ -227,12 +227,11 @@ void GameHud::CreateProgressObject(Pht::Scene& scene,
 void GameHud::CreateGrayBlock(Pht::Scene& scene,
                               Pht::SceneObject& progressContainer,
                               const CommonResources& commonResources) {
-    auto& grayBlock {
+    auto& grayBlock =
         scene.CreateSceneObject(Pht::ObjMesh {"cube_428.obj", 1.25f},
-                                commonResources.GetMaterials().GetGrayYellowMaterial())
-    };
+                                commonResources.GetMaterials().GetGrayYellowMaterial());
     
-    auto& transform {grayBlock.GetTransform()};
+    auto& transform = grayBlock.GetTransform();
     transform.SetPosition({-1.05f, 0.0f, UiLayer::block});
     transform.SetRotation({-30.0f, -30.0f, 0.0f});
     transform.SetScale(0.505f);
@@ -243,10 +242,10 @@ void GameHud::CreateGrayBlock(Pht::Scene& scene,
 void GameHud::CreateAsteroid(Pht::Scene& scene,
                              Pht::SceneObject& progressContainer,
                              const LevelResources& levelResources) {
-    auto& asteroid {scene.CreateSceneObject()};
+    auto& asteroid = scene.CreateSceneObject();
     asteroid.SetRenderable(&levelResources.GetAsteroidFragmentRenderable());
     
-    auto& transform {asteroid.GetTransform()};
+    auto& transform = asteroid.GetTransform();
     transform.SetPosition({-0.95f, 0.0f, UiLayer::block});
     transform.SetRotation({-25.0f, 45.0f, -12.0f});
     transform.SetScale(2.4f);
@@ -257,7 +256,7 @@ void GameHud::CreateAsteroid(Pht::Scene& scene,
 void GameHud::CreateArrow(Pht::Scene& scene,
                           Pht::SceneObject& progressContainer,
                           const GameHudArrow& hudArrow) {
-    auto& arrow {scene.CreateSceneObject()};
+    auto& arrow = scene.CreateSceneObject();
     arrow.SetRenderable(&hudArrow.GetArrowRenderable());
     arrow.GetTransform().SetPosition({-0.2f, 0.0f, UiLayer::text});
     progressContainer.AddChild(arrow);
@@ -266,18 +265,18 @@ void GameHud::CreateArrow(Pht::Scene& scene,
 void GameHud::CreateBlueprintSlot(Pht::Scene& scene,
                                   Pht::SceneObject& progressContainer,
                                   const LevelResources& levelResources) {
-    auto& blueprintSlotContainer {scene.CreateSceneObject()};
-    auto& transform {blueprintSlotContainer.GetTransform()};
+    auto& blueprintSlotContainer = scene.CreateSceneObject();
+    auto& transform = blueprintSlotContainer.GetTransform();
     transform.SetPosition({-1.0f, 0.0f, UiLayer::block});
     transform.SetRotation({-30.0f, -30.0f, 0.0f});
     transform.SetScale(0.56f);
     progressContainer.AddChild(blueprintSlotContainer);
     
-    auto& blueprintSlot {scene.CreateSceneObject()};
+    auto& blueprintSlot = scene.CreateSceneObject();
     blueprintSlot.SetRenderable(&levelResources.GetBlueprintSlotNonDepthWritingRenderable());
     blueprintSlotContainer.AddChild(blueprintSlot);
     
-    auto& fieldCell {scene.CreateSceneObject()};
+    auto& fieldCell = scene.CreateSceneObject();
     fieldCell.SetRenderable(&levelResources.GetFieldCellRenderable());
     fieldCell.GetTransform().SetPosition({0.0f, 0.0f, -0.005f});
     blueprintSlotContainer.AddChild(fieldCell);
@@ -286,8 +285,8 @@ void GameHud::CreateBlueprintSlot(Pht::Scene& scene,
 void GameHud::CreateMovesObject(Pht::Scene& scene,
                                 Pht::SceneObject& parentObject,
                                 const CommonResources& commonResources) {
-    auto& movesContainer {scene.CreateSceneObject()};
-    auto& renderer {mEngine.GetRenderer()};
+    auto& movesContainer = scene.CreateSceneObject();
+    auto& renderer = mEngine.GetRenderer();
     
     Pht::Vec3 position {
         3.4f,
@@ -320,7 +319,7 @@ void GameHud::CreateMovesObject(Pht::Scene& scene,
     
     std::string text {"   "};   // Warning! Must be three spaces to fit digits.
     mMovesText = &scene.CreateText(text, textProperties);
-    auto& movesTextSceneobject {mMovesText->GetSceneObject()};
+    auto& movesTextSceneobject = mMovesText->GetSceneObject();
     movesTextSceneobject.GetTransform().SetPosition({-0.55f, -0.285f, UiLayer::text});
     
     mMovesTextContainer = &scene.CreateSceneObject();
@@ -335,22 +334,21 @@ void GameHud::CreateMovesObject(Pht::Scene& scene,
 }
 
 void GameHud::CreateLPiece(Pht::Scene& scene, Pht::SceneObject& movesContainer) {
-    auto& lPiece {scene.CreateSceneObject()};
+    auto& lPiece = scene.CreateSceneObject();
     movesContainer.AddChild(lPiece);
     
-    auto& baseTransform {lPiece.GetTransform()};
+    auto& baseTransform = lPiece.GetTransform();
     baseTransform.SetPosition({-0.95f, 0.05f, UiLayer::root});
     baseTransform.SetRotation({-30.0f, -30.0f, 0.0f});
-    auto scale {0.32f};
+    auto scale = 0.32f;
     baseTransform.SetScale(scale);
     
-    auto& blockRenderable {
+    auto& blockRenderable =
         mPieceResources.GetBlockRenderableObject(BlockKind::Full,
                                                  BlockColor::Green,
-                                                 BlockBrightness::Normal)
-    };
+                                                 BlockBrightness::Normal);
     
-    auto halfCellSize {0.625f};
+    auto halfCellSize = 0.625f;
     CreateGreenBlock({-halfCellSize, -halfCellSize, -scale}, blockRenderable, scene, lPiece);
     CreateGreenBlock({halfCellSize, -halfCellSize, -scale}, blockRenderable, scene, lPiece);
     CreateGreenBlock({halfCellSize, halfCellSize, -scale}, blockRenderable, scene, lPiece);
@@ -360,7 +358,7 @@ void GameHud::CreateGreenBlock(const Pht::Vec3& position,
                                Pht::RenderableObject& blockRenderable,
                                Pht::Scene& scene,
                                Pht::SceneObject& lPiece) {
-    auto& block {scene.CreateSceneObject()};
+    auto& block = scene.CreateSceneObject();
     block.GetTransform().SetPosition(position);
     block.SetRenderable(&blockRenderable);
     lPiece.AddChild(block);
@@ -369,14 +367,14 @@ void GameHud::CreateGreenBlock(const Pht::Vec3& position,
 void GameHud::CreateNextPiecesObject(Pht::Scene& scene,
                                      Pht::SceneObject& parentObject,
                                      const GameHudRectangles& hudRectangles) {
-    auto& nextPiecesContainer {scene.CreateSceneObject()};
+    auto& nextPiecesContainer = scene.CreateSceneObject();
     Pht::Vec3 position {-3.65f, CalculateLowerHudObjectYPosition(mEngine), UiLayer::root};
 
     mNextPiecesContainer = &nextPiecesContainer;
     nextPiecesContainer.GetTransform().SetPosition(position);
     parentObject.AddChild(nextPiecesContainer);
 
-    auto& nextPiecesRectangle {scene.CreateSceneObject()};
+    auto& nextPiecesRectangle = scene.CreateSceneObject();
     nextPiecesRectangle.SetRenderable(&hudRectangles.GetNextPiecesRectangle());
     nextPiecesRectangle.GetTransform().SetPosition({0.15f, 0.0f, UiLayer::piecesRectangle});
     nextPiecesContainer.AddChild(nextPiecesRectangle);
@@ -389,7 +387,7 @@ void GameHud::CreateNextPiecesObject(Pht::Scene& scene,
 void GameHud::CreateSelectablePiecesObject(Pht::Scene& scene,
                                            Pht::SceneObject& parentObject,
                                            const GameHudRectangles& hudRectangles) {
-    auto& selectablePiecesContainer {scene.CreateSceneObject()};
+    auto& selectablePiecesContainer = scene.CreateSceneObject();
     Pht::Vec3 position {2.65f, CalculateLowerHudObjectYPosition(mEngine), UiLayer::root};
     
     mSelectablePiecesContainer = &selectablePiecesContainer;
@@ -431,21 +429,19 @@ void GameHud::Update() {
 
 void GameHud::UpdateLightAnimation() {
     mLightAnimationTime += mEngine.GetLastFrameSeconds();
-    
     if (mLightAnimationTime > lightAnimationDuration) {
         mLightAnimationTime = 0.0f;
     }
     
-    auto t {(sin(mLightAnimationTime * 2.0f * 3.1415f / lightAnimationDuration) + 1.0f) / 2.0f};
+    auto t = (sin(mLightAnimationTime * 2.0f * 3.1415f / lightAnimationDuration) + 1.0f) / 2.0f;
     mLight->SetDirection(lightDirectionA.Lerp(t, lightDirectionB));
 }
 
 void GameHud::UpdateProgress() {
-    auto progress {
+    auto progress =
         mLevelObjective == Level::Objective::BringDownTheAsteroid ?
         ((mProgressGoal - mField.CalculateAsteroidRow().GetValue()) * 100) / mProgressGoal :
-        mProgressGoal - mGameLogic.GetNumObjectsLeftToClear()
-    };
+        mProgressGoal - mGameLogic.GetNumObjectsLeftToClear();
 
     if (progress != mProgress) {
         WriteIntegerAtBeginningOfString(progress, mProgressText->GetText());
@@ -454,8 +450,7 @@ void GameHud::UpdateProgress() {
 }
 
 void GameHud::UpdateMovesLeft() {
-    auto movesLeft {mGameLogic.GetMovesLeft()};
-    
+    auto movesLeft = mGameLogic.GetMovesLeft();
     if (movesLeft != mMovesLeft) {
         WriteIntegerAtBeginningOfString(movesLeft, mMovesText->GetText());
         mMovesLeft = movesLeft;
@@ -463,20 +458,17 @@ void GameHud::UpdateMovesLeft() {
 }
 
 void GameHud::UpdatePreviewPieces() {
-    auto previewPieceAnimationToStart {mGameLogic.GetPreviewPieceAnimationToStart()};
+    auto previewPieceAnimationToStart = mGameLogic.GetPreviewPieceAnimationToStart();
     
-    auto shouldStartNextPieceAndSwitchAnimation {
-        previewPieceAnimationToStart == PreviewPieceAnimationToStart::NextPieceAndSwitch
-    };
+    auto shouldStartNextPieceAndSwitchAnimation =
+        previewPieceAnimationToStart == PreviewPieceAnimationToStart::NextPieceAndSwitch;
     
-    auto shouldStartSwitchPieceAnimation {
+    auto shouldStartSwitchPieceAnimation =
         previewPieceAnimationToStart == PreviewPieceAnimationToStart::SwitchPiece ||
-        shouldStartNextPieceAndSwitchAnimation
-    };
+        shouldStartNextPieceAndSwitchAnimation;
     
-    auto shouldStartRemoveActivePieceAnimation {
-        previewPieceAnimationToStart == PreviewPieceAnimationToStart::RemoveActivePiece
-    };
+    auto shouldStartRemoveActivePieceAnimation =
+        previewPieceAnimationToStart == PreviewPieceAnimationToStart::RemoveActivePiece;
     
     UpdateNextPreviewPieceGroup(shouldStartNextPieceAndSwitchAnimation);
     UpdateSelectablePreviewPieceGroup(shouldStartSwitchPieceAnimation,
@@ -485,8 +477,8 @@ void GameHud::UpdatePreviewPieces() {
 }
 
 void GameHud::UpdateNextPreviewPieceGroup(bool shouldStartPreviewPieceAnimation) {
-    auto& next2Pieces {mGameLogic.GetNextPieceGenerator().GetNext2Pieces()};
-    auto& positions {mNextPreviewPiecesRelativePositions};
+    auto& next2Pieces = mGameLogic.GetNextPieceGenerator().GetNext2Pieces();
+    auto& positions = mNextPreviewPiecesRelativePositions;
     
     if (shouldStartPreviewPieceAnimation) {
         if (mNextPreviewPieces[0].mSceneObjects->IsActive()) {
@@ -507,9 +499,9 @@ void GameHud::UpdateNextPreviewPieceGroup(bool shouldStartPreviewPieceAnimation)
 void GameHud::UpdateSelectablePreviewPieceGroup(bool shouldStartPreviewPieceAnimation,
                                                 bool shouldDeactivateSlotZero,
                                                 bool shouldStartRemoveActivePieceAnimation) {
-    auto& selectablePieces {mGameLogic.GetSelectablePieces()};
-    auto* activePiece {mGameLogic.GetPieceType()};
-    auto& positions {mSelectablePreviewPiecesRelativePositions};
+    auto& selectablePieces = mGameLogic.GetSelectablePieces();
+    auto* activePiece = mGameLogic.GetPieceType();
+    auto& positions = mSelectablePreviewPiecesRelativePositions;
 
     if (shouldStartPreviewPieceAnimation) {
         if (mSelectablePreviewPieces[0].mSceneObjects->IsActive()) {
@@ -549,8 +541,8 @@ void GameHud::UpdatePreviewPiece(PreviewPiece& previewPiece,
     previewPiece.mBombSceneObject = nullptr;
     previewPiece.mRowBombSceneObject = nullptr;
     
-    auto& containerObject {previewPiece.mSceneObjects->GetContainerSceneObject()};
-    auto& baseTransform {containerObject.GetTransform()};
+    auto& containerObject = previewPiece.mSceneObjects->GetContainerSceneObject();
+    auto& baseTransform = containerObject.GetTransform();
     baseTransform.SetPosition(position);
 
     if (pieceType == nullptr) {
@@ -560,17 +552,17 @@ void GameHud::UpdatePreviewPiece(PreviewPiece& previewPiece,
     
     previewPiece.mSceneObjects->SetIsActive(true);
     
-    auto scale {pieceType->GetPreviewCellSize() / cellSize};
+    auto scale = pieceType->GetPreviewCellSize() / cellSize;
     
     baseTransform.SetScale(scale);
     previewPiece.mScale = scale;
     previewPiece.mSceneObjects->ReclaimAll();
     
-    auto pieceNumRows {pieceType->GetGridNumRows()};
-    auto pieceNumColumns {pieceType->GetGridNumColumns()};
-    auto& grid {pieceType->GetGrid(Rotation::Deg0)};
-    auto isBomb {pieceType->IsBomb()};
-    auto isRowBomb {pieceType->IsRowBomb()};
+    auto pieceNumRows = pieceType->GetGridNumRows();
+    auto pieceNumColumns = pieceType->GetGridNumColumns();
+    auto& grid = pieceType->GetGrid(Rotation::Deg0);
+    auto isBomb = pieceType->IsBomb();
+    auto isRowBomb = pieceType->IsRowBomb();
     
     Pht::Vec3 lowerLeft {
         -static_cast<float>(pieceNumColumns) * cellSize / 2.0f + cellSize / 2.0f,
@@ -584,13 +576,12 @@ void GameHud::UpdatePreviewPiece(PreviewPiece& previewPiece,
         lowerLeft.y -= cellSize / 2.0f;
     }
     
-    for (auto row {0}; row < pieceNumRows; row++) {
-        for (auto column {0}; column < pieceNumColumns; column++) {
-            auto& subCell {grid[row][column].mFirstSubCell};
-            auto blockKind {subCell.mBlockKind};
- 
+    for (auto row = 0; row < pieceNumRows; row++) {
+        for (auto column = 0; column < pieceNumColumns; column++) {
+            auto& subCell = grid[row][column].mFirstSubCell;
+            auto blockKind = subCell.mBlockKind;
             if (blockKind != BlockKind::None) {
-                auto& blockSceneObject {previewPiece.mSceneObjects->AccuireSceneObject()};
+                auto& blockSceneObject = previewPiece.mSceneObjects->AccuireSceneObject();
                 
                 if (isBomb) {
                     blockSceneObject.SetRenderable(&mPieceResources.GetBombRenderableObject());
@@ -599,11 +590,10 @@ void GameHud::UpdatePreviewPiece(PreviewPiece& previewPiece,
                     blockSceneObject.SetRenderable(&mPieceResources.GetRowBombRenderableObject());
                     previewPiece.mRowBombSceneObject = &blockSceneObject;
                 } else {
-                    auto& blockRenderable {
+                    auto& blockRenderable =
                         mPieceResources.GetBlockRenderableObject(blockKind,
                                                                  subCell.mColor,
-                                                                 BlockBrightness::Normal)
-                    };
+                                                                 BlockBrightness::Normal);
                     
                     blockSceneObject.SetRenderable(&blockRenderable);
                 }
@@ -621,8 +611,8 @@ void GameHud::UpdatePreviewPiece(PreviewPiece& previewPiece,
 }
 
 void GameHud::OnSwitchPieceAnimationFinished() {
-    auto& selectablePieces {mGameLogic.GetSelectablePieces()};
-    auto& positions {mSelectablePreviewPiecesRelativePositions};
+    auto& selectablePieces = mGameLogic.GetSelectablePieces();
+    auto& positions = mSelectablePreviewPiecesRelativePositions;
 
     UpdatePreviewPiece(mSelectablePreviewPieces[0], nullptr, positions[0]);
     UpdatePreviewPiece(mSelectablePreviewPieces[1], selectablePieces[0], positions[1]);
@@ -631,8 +621,8 @@ void GameHud::OnSwitchPieceAnimationFinished() {
 }
 
 void GameHud::OnNextPieceAnimationFinished() {
-    auto& next2Pieces {mGameLogic.GetNextPieceGenerator().GetNext2Pieces()};
-    auto& positions {mNextPreviewPiecesRelativePositions};
+    auto& next2Pieces = mGameLogic.GetNextPieceGenerator().GetNext2Pieces();
+    auto& positions = mNextPreviewPiecesRelativePositions;
 
     UpdatePreviewPiece(mNextPreviewPieces[0], nullptr, positions[0]);
     UpdatePreviewPiece(mNextPreviewPieces[1], next2Pieces[0], positions[1]);

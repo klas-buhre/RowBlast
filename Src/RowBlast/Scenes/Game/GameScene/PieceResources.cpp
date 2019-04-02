@@ -16,10 +16,10 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto numWeldRenderables {3};
-    constexpr auto diagonalWeldAlpha {0.5f};
-    constexpr auto ghostPieceOpacity {0.5f};
-    constexpr auto cellSize {1.25f};
+    constexpr auto numWeldRenderables = 3;
+    constexpr auto diagonalWeldAlpha = 0.5f;
+    constexpr auto ghostPieceOpacity = 0.5f;
+    constexpr auto cellSize = 1.25f;
     
     std::string ToMeshName(BlockKind blockKind) {
         switch (blockKind) {
@@ -64,7 +64,7 @@ namespace {
     Pht::Material ToMaterial(BlockColor color,
                              BlockBrightness brightness,
                              const CommonResources& commonResources) {
-        auto material {ToMaterial(color, commonResources)};
+        auto material = ToMaterial(color, commonResources);
         
         switch (brightness) {
             case BlockBrightness::Normal:
@@ -106,7 +106,7 @@ namespace {
 }
 
 PieceResources::PieceResources(Pht::IEngine& engine, const CommonResources& commonResources) {
-    auto& sceneManager {engine.GetSceneManager()};
+    auto& sceneManager = engine.GetSceneManager();
     
     CreateBlocks(sceneManager, commonResources);
     CreateWelds(sceneManager, commonResources);
@@ -122,18 +122,17 @@ Pht::RenderableObject& PieceResources::GetBlockRenderableObject(BlockKind blockK
 int PieceResources::CalcBlockIndex(BlockKind blockKind,
                                    BlockColor color,
                                    BlockBrightness brightness) const {
-    auto blockKindIndex {static_cast<int>(blockKind)};
-    auto colorIndex {static_cast<int>(color)};
-    auto brightnessIndex {static_cast<int>(brightness)};
+    auto blockKindIndex = static_cast<int>(blockKind);
+    auto colorIndex = static_cast<int>(color);
+    auto brightnessIndex = static_cast<int>(brightness);
     
     assert(blockKindIndex >= 0 && blockKindIndex < Quantities::numBlockRenderables &&
            colorIndex >= 0 && colorIndex < Quantities::numBlockColors &&
            brightnessIndex >= 0 && brightnessIndex < Quantities::numBlockBrightness);
 
-    auto index {
+    auto index =
         brightnessIndex * Quantities::numBlockRenderables * Quantities::numBlockColors +
-        colorIndex * Quantities::numBlockRenderables + blockKindIndex
-    };
+        colorIndex * Quantities::numBlockRenderables + blockKindIndex;
     
     assert(index < mBlocks.size());
     return index;
@@ -148,18 +147,17 @@ Pht::RenderableObject& PieceResources::GetWeldRenderableObject(WeldRenderableKin
 int PieceResources::CalcWeldIndex(WeldRenderableKind weldRenderable,
                                   BlockColor color,
                                   BlockBrightness brightness) const {
-    auto weldRenderableIndex {static_cast<int>(weldRenderable)};
-    auto colorIndex {static_cast<int>(color)};
-    auto brightnessIndex {static_cast<int>(brightness)};
+    auto weldRenderableIndex = static_cast<int>(weldRenderable);
+    auto colorIndex = static_cast<int>(color);
+    auto brightnessIndex = static_cast<int>(brightness);
     
     assert(weldRenderableIndex >= 0 && weldRenderableIndex < numWeldRenderables &&
            colorIndex >= 0 && colorIndex < Quantities::numBlockColors &&
            brightnessIndex >= 0 && brightnessIndex < Quantities::numWeldBrightness);
 
-    auto index {
+    auto index =
         brightnessIndex * numWeldRenderables * Quantities::numBlockColors +
-        colorIndex * numWeldRenderables + weldRenderableIndex
-    };
+        colorIndex * numWeldRenderables + weldRenderableIndex;
     
     assert(index < mWelds.size());
     return index;
@@ -167,30 +165,31 @@ int PieceResources::CalcWeldIndex(WeldRenderableKind weldRenderable,
 
 void PieceResources::CreateBlocks(Pht::ISceneManager& sceneManager,
                                   const CommonResources& commonResources) {
-    auto numBlocks {
-        Quantities::numBlockRenderables * Quantities::numBlockColors * Quantities::numBlockBrightness
-    };
+    auto numBlocks =
+        Quantities::numBlockRenderables * Quantities::numBlockColors * Quantities::numBlockBrightness;
     
     mBlocks.resize(numBlocks);
     
-    for (auto blockKindIndex {0};
+    for (auto blockKindIndex = 0;
          blockKindIndex < Quantities::numBlockRenderables;
          ++blockKindIndex) {
-        for (auto colorIndex {0}; colorIndex < Quantities::numBlockColors; ++colorIndex) {
-            for (auto brightnessIndex {0};
+        
+        for (auto colorIndex = 0; colorIndex < Quantities::numBlockColors; ++colorIndex) {
+        
+            for (auto brightnessIndex = 0;
                  brightnessIndex < Quantities::numBlockBrightness;
                  ++brightnessIndex) {
-                auto blockKind {static_cast<BlockKind>(blockKindIndex)};
-                auto color {static_cast<BlockColor>(colorIndex)};
-                auto brightness {static_cast<BlockBrightness>(brightnessIndex)};
                 
-                auto meshName {ToMeshName(blockKind)};
-                auto material {ToMaterial(color, brightness, commonResources)};
-                auto blockIndex {CalcBlockIndex(blockKind, color, brightness)};
+                auto blockKind = static_cast<BlockKind>(blockKindIndex);
+                auto color = static_cast<BlockColor>(colorIndex);
+                auto brightness = static_cast<BlockBrightness>(brightnessIndex);
                 
-                auto renderableObject {
-                    sceneManager.CreateRenderableObject(Pht::ObjMesh {meshName, cellSize}, material)
-                };
+                auto meshName = ToMeshName(blockKind);
+                auto material = ToMaterial(color, brightness, commonResources);
+                auto blockIndex = CalcBlockIndex(blockKind, color, brightness);
+                
+                auto renderableObject =
+                    sceneManager.CreateRenderableObject(Pht::ObjMesh {meshName, cellSize}, material);
                 
                 mBlocks[blockIndex] = std::move(renderableObject);
             }
@@ -200,27 +199,30 @@ void PieceResources::CreateBlocks(Pht::ISceneManager& sceneManager,
 
 void PieceResources::CreateWelds(Pht::ISceneManager& sceneManager,
                                  const CommonResources& commonResources) {
-    auto numWelds {numWeldRenderables * Quantities::numBlockColors * Quantities::numWeldBrightness};
+    auto numWelds = numWeldRenderables * Quantities::numBlockColors * Quantities::numWeldBrightness;
     mWelds.resize(numWelds);
     
-    for (auto weldRenderableIndex {0};
+    for (auto weldRenderableIndex = 0;
          weldRenderableIndex < numWeldRenderables;
          ++weldRenderableIndex) {
-        for (auto colorIndex {0}; colorIndex < Quantities::numBlockColors; ++colorIndex) {
-            for (auto brightnessIndex {0};
+        
+        for (auto colorIndex = 0; colorIndex < Quantities::numBlockColors; ++colorIndex) {
+        
+            for (auto brightnessIndex = 0;
                  brightnessIndex < Quantities::numWeldBrightness;
                  ++brightnessIndex) {
-                auto weldRenderableKind {static_cast<WeldRenderableKind>(weldRenderableIndex)};
-                auto color {static_cast<BlockColor>(colorIndex)};
-                auto brightness {static_cast<BlockBrightness>(brightnessIndex)};
                 
-                auto material {ToMaterial(color, brightness, commonResources)};
+                auto weldRenderableKind = static_cast<WeldRenderableKind>(weldRenderableIndex);
+                auto color = static_cast<BlockColor>(colorIndex);
+                auto brightness = static_cast<BlockBrightness>(brightnessIndex);
+                
+                auto material = ToMaterial(color, brightness, commonResources);
                 
                 if (weldRenderableKind == WeldRenderableKind::Diagonal) {
                     material.SetOpacity(diagonalWeldAlpha);
                 }
                 
-                auto weldIndex {CalcWeldIndex(weldRenderableKind, color, brightness)};
+                auto weldIndex = CalcWeldIndex(weldRenderableKind, color, brightness);
                 mWelds[weldIndex] = ToWeldRenderableObject(weldRenderableKind,
                                                            material,
                                                            sceneManager);

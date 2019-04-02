@@ -22,9 +22,9 @@ namespace RowBlast {
     
         void Init(const Pht::Vec3& leftPosition, const Pht::Vec3& rightPosition, int numRows);
         
-        static constexpr auto brightBorderThickness {0.055f};
-        static constexpr auto darkerBorderThickness {0.045f};
-        static constexpr auto borderThickness {brightBorderThickness + darkerBorderThickness};
+        static constexpr float brightBorderThickness {0.055f};
+        static constexpr float darkerBorderThickness {0.045f};
+        static constexpr float borderThickness {brightBorderThickness + darkerBorderThickness};
 
     private:
         void CreateLeftBorder(Pht::IEngine& engine,

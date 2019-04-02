@@ -15,8 +15,8 @@
 using namespace RowBlast;
 
 namespace {
-    const auto borderWidth {0.09f};
-    const auto borderOffset {0.04f};
+    constexpr auto borderWidth = 0.09f;
+    constexpr auto borderOffset = 0.04f;
     const Pht::Vec4 borderColor {1.0f, 1.0f, 1.0f, 0.82f};
     const Pht::Vec4 brightBorderColor {1.0f, 1.0f, 1.0f, 1.0f};
     const Pht::Vec4 fillColor {1.0f, 1.0f, 1.0f, 0.42f};
@@ -33,17 +33,15 @@ GhostPieceProducer::GhostPieceProducer(Pht::IEngine& engine,
     },
     mBorderColor {borderColor} {
     
-    auto& renderer {engine.GetRenderer()};
-    auto& renderBufferSize {renderer.GetRenderBufferSize()};
-    auto& frustumSize {commonResources.GetOrthographicFrustumSizePotentiallyZoomedScreen()};
+    auto& renderer = engine.GetRenderer();
+    auto& renderBufferSize = renderer.GetRenderBufferSize();
+    auto& frustumSize = commonResources.GetOrthographicFrustumSizePotentiallyZoomedScreen();
     
-    auto xScaleFactor {
-        mCellSize * static_cast<float>(renderBufferSize.x) / static_cast<float>(frustumSize.x)
-    };
+    auto xScaleFactor =
+        mCellSize * static_cast<float>(renderBufferSize.x) / static_cast<float>(frustumSize.x);
     
-    auto yScaleFactor {
-        mCellSize * static_cast<float>(renderBufferSize.y) / static_cast<float>(frustumSize.y)
-    };
+    auto yScaleFactor =
+        mCellSize * static_cast<float>(renderBufferSize.y) / static_cast<float>(frustumSize.y);
     
     Pht::IVec2 imageSize {
         static_cast<int>(static_cast<float>(pieceGridSize.x) * xScaleFactor) * 2,
@@ -149,9 +147,8 @@ void GhostPieceProducer::DrawUpperBorder(const Pht::IVec2& segmentEndPosition) {
 
 void GhostPieceProducer::DrawRightBorder(const Pht::IVec2& segmentEndPosition,
                                          BorderSegmentKind segmentKind) {
-    auto extraOffset {
-        segmentKind == BorderSegmentKind::RightForTriangle ? borderWidth + borderOffset : 0.0f
-    };
+    auto extraOffset =
+        segmentKind == BorderSegmentKind::RightForTriangle ? borderWidth + borderOffset : 0.0f;
     
     Pht::Vec2 lowerLeft {
         mSegmentStartPosition.x * mCellSize - borderOffset - borderWidth,
@@ -168,14 +165,12 @@ void GhostPieceProducer::DrawRightBorder(const Pht::IVec2& segmentEndPosition,
 
 void GhostPieceProducer::DrawLowerBorder(const Pht::IVec2& segmentEndPosition,
                                          BorderSegmentKind segmentKind) {
-    auto extraOffsetLeft {
+    auto extraOffsetLeft =
         (segmentKind == BorderSegmentKind::LowerForTriangle ||
-         segmentKind == BorderSegmentKind::LowerForPyramid) ? borderWidth + borderOffset : 0.0f
-    };
+         segmentKind == BorderSegmentKind::LowerForPyramid) ? borderWidth + borderOffset : 0.0f;
 
-    auto extraOffsetRight {
-        segmentKind == BorderSegmentKind::LowerForPyramid ? borderWidth + borderOffset : 0.0f
-    };
+    auto extraOffsetRight =
+        segmentKind == BorderSegmentKind::LowerForPyramid ? borderWidth + borderOffset : 0.0f;
     
     Pht::Vec2 lowerLeft {
         mSegmentStartPosition.x * mCellSize + borderOffset + extraOffsetLeft,
@@ -309,7 +304,7 @@ void GhostPieceProducer::DrawLowerRightConcaveCornerBorder(const Pht::IVec2& seg
 }
 
 void GhostPieceProducer::DrawConnectionForSeven(const Pht::IVec2& segmentPosition) {
-    auto tiltedHalfBorderWidth {std::sqrt(2.0f) * (borderWidth / 2.0f)};
+    auto tiltedHalfBorderWidth = std::sqrt(2.0f) * (borderWidth / 2.0f);
     
     Pht::Vec2 lowerLeft1 {
         segmentPosition.x * mCellSize - borderOffset - tiltedHalfBorderWidth,
@@ -337,7 +332,7 @@ void GhostPieceProducer::DrawConnectionForSeven(const Pht::IVec2& segmentPositio
 }
 
 void GhostPieceProducer::DrawConnectionForMirroredSeven(const Pht::IVec2& segmentPosition) {
-    auto tiltedHalfBorderWidth {std::sqrt(2.0f) * (borderWidth / 2.0f)};
+    auto tiltedHalfBorderWidth = std::sqrt(2.0f) * (borderWidth / 2.0f);
     
     Pht::Vec2 upperLeft1 {
         segmentPosition.x * mCellSize - borderOffset - tiltedHalfBorderWidth,
@@ -463,12 +458,12 @@ void GhostPieceProducer::DrawLowerLeftTiltedBorderForDiamond(const Pht::IVec2& s
 }
 
 std::unique_ptr<Pht::RenderableObject> GhostPieceProducer::ProduceRenderable() const {
-    auto image {mRasterizer->ProduceImage()};
+    auto image = mRasterizer->ProduceImage();
     
     Pht::Material imageMaterial {*image, Pht::GenerateMipmap::Yes};
     imageMaterial.SetBlend(Pht::Blend::Yes);
     
-    auto& sceneManager {mEngine.GetSceneManager()};
+    auto& sceneManager = mEngine.GetSceneManager();
     return sceneManager.CreateRenderableObject(Pht::QuadMesh {mCoordinateSystemSize.x,
                                                               mCoordinateSystemSize.y},
                                                imageMaterial);

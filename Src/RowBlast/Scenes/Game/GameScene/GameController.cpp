@@ -165,7 +165,7 @@ void GameController::Init(int levelId) {
 }
 
 GameController::Command GameController::Update() {
-    auto command {Command::None};
+    auto command = Command::None;
     
     switch (mState) {
         case GameState::LevelIntro:
@@ -185,32 +185,30 @@ GameController::Command GameController::Update() {
 }
 
 GameController::Command GameController::UpdateGame() {
-    auto dt {mEngine.GetLastFrameSeconds()};
+    auto dt = mEngine.GetLastFrameSeconds();
     
-    auto scrollState {mScrollController.Update()};
-    auto fieldAnimationState {mCollapsingFieldAnimation.Update(dt)};
+    auto scrollState = mScrollController.Update();
+    auto fieldAnimationState = mCollapsingFieldAnimation.Update(dt);
     mBlueprintSlotsFilledAnimation.Update(dt);
-    auto effectsState {mEffectManager.GetState()};
-    auto fallingPieceAnimationState {mFallingPieceAnimation.Update(dt)};
+    auto effectsState = mEffectManager.GetState();
+    auto fallingPieceAnimationState = mFallingPieceAnimation.Update(dt);
     
     if (mState == GameState::Playing) {
-        auto shouldUpdateGameLogic {
+        auto shouldUpdateGameLogic =
             ShouldUpdateGameLogic(fieldAnimationState,
                                   fallingPieceAnimationState,
                                   effectsState,
-                                  scrollState)
-        };
-        
-        auto isInBetweenMoves {!shouldUpdateGameLogic};
+                                  scrollState);
+        auto isInBetweenMoves = !shouldUpdateGameLogic;
         mIsInBetweenMoves = isInBetweenMoves;
-        auto result {mGameLogic.Update(shouldUpdateGameLogic, ShouldUndoMove(isInBetweenMoves))};
-
+        
+        auto result = mGameLogic.Update(shouldUpdateGameLogic, ShouldUndoMove(isInBetweenMoves));
         if (result != GameLogic::Result::None) {
             ChangeGameState(result);
         }
     }
     
-    auto command {UpdateSubState()};
+    auto command = UpdateSubState();
     
     mFlashingBlocksAnimation.Update(dt);
     mWeldsAnimation.Update(dt);
@@ -239,8 +237,7 @@ GameController::Command GameController::UpdateGame() {
 }
 
 bool GameController::ShouldUndoMove(bool isInBetweenMoves) {
-    auto shouldUndoMove {mUndoMovePending && !isInBetweenMoves};
-    
+    auto shouldUndoMove = mUndoMovePending && !isInBetweenMoves;
     if (shouldUndoMove) {
         mUndoMovePending = false;
     }
@@ -274,7 +271,7 @@ void GameController::ChangeGameState(GameLogic::Result gameLogicResult) {
 }
 
 GameController::Command GameController::UpdateSubState() {
-    auto command {Command::None};
+    auto command = Command::None;
     
     switch (mState) {
         case GameState::LevelIntro:
@@ -300,7 +297,7 @@ GameController::Command GameController::UpdateSubState() {
 }
 
 GameController::Command GameController::UpdateInPausedState() {
-    auto command {Command::None};
+    auto command = Command::None;
     
     mUserServices.Update();
     
@@ -414,7 +411,7 @@ void GameController::UpdateSettingsMenu() {
 }
 
 GameController::Command GameController::UpdateInPausedStateNoLivesDialog() {
-    auto command {Command::None};
+    auto command = Command::None;
 
     switch (mGameViewControllers.GetNoLivesDialogController().Update()) {
         case NoLivesDialogController::Result::None:
@@ -446,7 +443,7 @@ void GameController::RefillLives() {
 }
 
 GameController::Command GameController::UpdateRestartConfirmationDialog() {
-    auto command {Command::None};
+    auto command = Command::None;
     
     switch (mGameViewControllers.GetRestartConfirmationDialogController().Update()) {
         case RestartConfirmationDialogController::Result::None:
@@ -469,7 +466,7 @@ GameController::Command GameController::UpdateRestartConfirmationDialog() {
 }
 
 GameController::Command GameController::UpdateMapConfirmationDialog() {
-    auto command {Command::None};
+    auto command = Command::None;
     
     switch (mGameViewControllers.GetMapConfirmationDialogController().Update()) {
         case MapConfirmationDialogController::Result::None:
@@ -489,7 +486,7 @@ GameController::Command GameController::UpdateMapConfirmationDialog() {
 }
 
 GameController::Command GameController::UpdateInPausedStateStore() {
-    auto command {Command::None};
+    auto command = Command::None;
 
     switch (mStoreController.Update()) {
         case StoreController::Result::None:
@@ -551,7 +548,7 @@ void GameController::StartLevelObjectiveAnimation() {
 }
 
 GameController::Command GameController::UpdateInLevelCompletedState() {
-    auto command {Command::None};
+    auto command = Command::None;
     
     switch (mLevelCompletedController.Update()) {
         case LevelCompletedDialogController::Result::None:
@@ -568,7 +565,7 @@ GameController::Command GameController::UpdateInLevelCompletedState() {
 }
 
 GameController::Command GameController::UpdateInOutOfMovesState() {
-    auto command {Command::None};
+    auto command = Command::None;
     
     mUserServices.Update();
     
@@ -595,7 +592,7 @@ void GameController::UpdateInOutOfMovesStateOutOfMovesAnimation() {
 }
 
 GameController::Command GameController::UpdateOutOfMovesDialog() {
-    auto command {Command::None};
+    auto command = Command::None;
     
     switch (mGameViewControllers.GetOutOfMovesDialogController().Update()) {
         case OutOfMovesDialogController::Result::None:
@@ -626,7 +623,7 @@ int GameController::CalculateProgressInLevelForAnalytics() {
         case Level::Objective::Build:
             return mGameLogic.GetNumObjectsLeftToClear();
         case Level::Objective::BringDownTheAsteroid: {
-            auto asteroidRow {mField.CalculateAsteroidRow()};
+            auto asteroidRow = mField.CalculateAsteroidRow();
             assert(asteroidRow.HasValue());
             return asteroidRow.GetValue();
         }
@@ -661,7 +658,7 @@ void GameController::AddMovesAndGoToPlayingState() {
 }
 
 GameController::Command GameController::UpdateInGameOverState() {
-    auto command {Command::None};
+    auto command = Command::None;
     
     mUserServices.Update();
     
@@ -681,7 +678,7 @@ GameController::Command GameController::UpdateInGameOverState() {
 }
 
 GameController::Command GameController::UpdateGameOverDialog() {
-    auto command {Command::None};
+    auto command = Command::None;
     
     switch (mGameViewControllers.GetGameOverDialogController().Update()) {
         case GameOverDialogController::Result::None:
@@ -702,7 +699,7 @@ GameController::Command GameController::UpdateGameOverDialog() {
 }
 
 GameController::Command GameController::UpdateInGameOverStateNoLivesDialog() {
-    auto command {Command::None};
+    auto command = Command::None;
 
     switch (mGameViewControllers.GetNoLivesDialogController().Update()) {
         case NoLivesDialogController::Result::None:
@@ -724,7 +721,7 @@ GameController::Command GameController::UpdateInGameOverStateNoLivesDialog() {
 }
 
 GameController::Command GameController::UpdateInGameOverStateStore() {
-    auto command {Command::None};
+    auto command = Command::None;
 
     switch (mStoreController.Update()) {
         case StoreController::Result::None:
@@ -789,7 +786,7 @@ void GameController::GoToPausedStateLevelInfoDialog() {
     mPausedState = PausedState::LevelInfoDialog;
     mGameViewControllers.SetActiveController(GameViewControllers::LevelGoalDialog);
     
-    auto levelInfo {LevelLoader::LoadInfo(mLevel->GetId(), mLevelResources)};
+    auto levelInfo = LevelLoader::LoadInfo(mLevel->GetId(), mLevelResources);
     mGameViewControllers.GetLevelGoalDialogController().SetUp(*levelInfo);
 }
 
@@ -804,10 +801,9 @@ void GameController::GoToPausedStateGameMenu(SlidingMenuAnimation::UpdateFade up
     mPausedState = PausedState::GameMenu;
     mGameViewControllers.SetActiveController(GameViewControllers::GameMenu);
     
-    auto isUndoMovePossible {
+    auto isUndoMovePossible =
         !mUndoMovePending && mTutorial.IsUndoMoveAllowed(mGameLogic.GetMovesUsedIncludingCurrent()) &&
-        (mIsInBetweenMoves || mGameLogic.IsUndoMovePossible())
-    };
+        (mIsInBetweenMoves || mGameLogic.IsUndoMovePossible());
     
     mGameViewControllers.GetGameMenuController().SetUp(updateFade,
                                                        slideDirection,

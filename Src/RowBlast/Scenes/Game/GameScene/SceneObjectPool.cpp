@@ -14,8 +14,8 @@ namespace {
     int CalcPoolSize(SceneObjectPoolKind poolKind, int numFieldColumns) {
         switch (poolKind) {
             case SceneObjectPoolKind::FieldBlocks: {
-                auto visibleRows {Field::maxNumRows};
-                auto visibleColumns {numFieldColumns};
+                auto visibleRows = Field::maxNumRows;
+                auto visibleColumns = numFieldColumns;
                 return 3 * visibleRows * visibleColumns - visibleRows - visibleColumns;
             }
             case SceneObjectPoolKind::PieceBlocks:
@@ -56,7 +56,7 @@ void SceneObjectPool::ReclaimAll() {
 Pht::SceneObject& SceneObjectPool::AccuireSceneObject() {
     assert(mNextAvailableIndex < mSceneObjects.size());
     
-    auto& sceneObject {*mSceneObjects[mNextAvailableIndex]};
+    auto& sceneObject = *mSceneObjects[mNextAvailableIndex];
     sceneObject.SetIsVisible(true);
     sceneObject.SetIsStatic(false);
     sceneObject.GetTransform().Reset();

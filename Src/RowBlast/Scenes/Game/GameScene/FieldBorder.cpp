@@ -20,22 +20,20 @@ namespace {
     const Pht::Vec4 redDarkerBorderColor {1.0f, 0.45f, 0.65f, 0.25f};
     const Pht::Vec4 blueBorderColor {0.4f, 0.6f, 1.0f, 0.85f};
     const Pht::Vec4 blueDarkerBorderColor {0.4f, 0.6f, 1.0f, 0.25f};
-    constexpr auto defaultNumRows {19};
+    constexpr auto defaultNumRows = 19;
 
     std::unique_ptr<Pht::SoftwareRasterizer> CreateRasterizer(Pht::IEngine& engine,
                                                               const Pht::Vec2& coordinateSystemSize,
                                                               const CommonResources& commonResources) {
-        auto& renderer {engine.GetRenderer()};
-        auto& renderBufferSize {renderer.GetRenderBufferSize()};
-        auto& frustumSize {commonResources.GetOrthographicFrustumSizePotentiallyZoomedScreen()};
+        auto& renderer = engine.GetRenderer();
+        auto& renderBufferSize = renderer.GetRenderBufferSize();
+        auto& frustumSize = commonResources.GetOrthographicFrustumSizePotentiallyZoomedScreen();
 
-        auto xScaleFactor {
-            static_cast<float>(renderBufferSize.x) / static_cast<float>(frustumSize.x)
-        };
+        auto xScaleFactor =
+            static_cast<float>(renderBufferSize.x) / static_cast<float>(frustumSize.x);
     
-        auto yScaleFactor {
-            static_cast<float>(renderBufferSize.y) / static_cast<float>(frustumSize.y)
-        };
+        auto yScaleFactor =
+            static_cast<float>(renderBufferSize.y) / static_cast<float>(frustumSize.y);
 
         Pht::IVec2 imageSize {
             static_cast<int>(coordinateSystemSize.x * xScaleFactor),
@@ -51,22 +49,22 @@ FieldBorder::FieldBorder(Pht::IEngine& engine,
                          const CommonResources& commonResources) :
     mScene {scene} {
     
-    auto defaultHeight {static_cast<float>(defaultNumRows) * scene.GetCellSize()};
+    auto defaultHeight = static_cast<float>(defaultNumRows) * scene.GetCellSize();
     CreateLeftBorder(engine, scene, commonResources, defaultHeight);
     CreateRightBorder(engine, scene, commonResources, defaultHeight);
 }
 
 void FieldBorder::Init(const Pht::Vec3& leftPosition, const Pht::Vec3& rightPosition, int numRows) {
-    auto& container {mScene.GetFieldQuadContainer()};
+    auto& container = mScene.GetFieldQuadContainer();
     container.AddChild(*mLeftBorder);
     container.AddChild(*mRightBorder);
     
-    auto scale {static_cast<float>(numRows) / static_cast<float>(defaultNumRows)};
-    auto& leftTransform {mLeftBorder->GetTransform()};
+    auto scale = static_cast<float>(numRows) / static_cast<float>(defaultNumRows);
+    auto& leftTransform = mLeftBorder->GetTransform();
     leftTransform.SetScale({1.0f, scale, 1.0f});
     leftTransform.SetPosition(leftPosition);
     
-    auto& rightTransform {mRightBorder->GetTransform()};
+    auto& rightTransform = mRightBorder->GetTransform();
     rightTransform.SetScale({1.0f, scale, 1.0f});
     rightTransform.SetPosition(rightPosition);
 }
@@ -76,7 +74,7 @@ void FieldBorder::CreateLeftBorder(Pht::IEngine& engine,
                                    const CommonResources& commonResources,
                                    float defaultHeight) {
     Pht::Vec2 borderSize {borderThickness, defaultHeight};
-    auto rasterizer {CreateRasterizer(engine, borderSize, commonResources)};
+    auto rasterizer = CreateRasterizer(engine, borderSize, commonResources);
     
     Pht::SoftwareRasterizer::VerticalGradientColors borderColors {blueBorderColor, redBorderColor};
     Pht::Vec2 lowerLeft {0.0f, 0.0f};
@@ -94,7 +92,7 @@ void FieldBorder::CreateLeftBorder(Pht::IEngine& engine,
                                       darkerBorderColors,
                                       Pht::DrawOver::Yes);
 
-    auto image {rasterizer->ProduceImage()};
+    auto image = rasterizer->ProduceImage();
     mLeftBorder = CreateSceneObject(*image, borderSize, engine);
 }
 
@@ -103,7 +101,7 @@ void FieldBorder::CreateRightBorder(Pht::IEngine& engine,
                                     const CommonResources& commonResources,
                                     float defaultHeight) {
     Pht::Vec2 borderSize {borderThickness, defaultHeight};
-    auto rasterizer {CreateRasterizer(engine, borderSize, commonResources)};
+    auto rasterizer = CreateRasterizer(engine, borderSize, commonResources);
     
     Pht::SoftwareRasterizer::VerticalGradientColors darkerBorderColors {
         redDarkerBorderColor,
@@ -121,7 +119,7 @@ void FieldBorder::CreateRightBorder(Pht::IEngine& engine,
     Pht::Vec2 upperRight2 {borderThickness, borderSize.y};
     rasterizer->DrawGradientRectangle(upperRight2, lowerLeft2, borderColors, Pht::DrawOver::Yes);
 
-    auto image {rasterizer->ProduceImage()};
+    auto image = rasterizer->ProduceImage();
     mRightBorder = CreateSceneObject(*image, borderSize, engine);
 }
 
@@ -131,7 +129,7 @@ std::unique_ptr<Pht::SceneObject> FieldBorder::CreateSceneObject(const Pht::IIma
     Pht::Material imageMaterial {image, Pht::GenerateMipmap::Yes};
     imageMaterial.SetBlend(Pht::Blend::Yes);
     
-    auto& sceneManager {engine.GetSceneManager()};
+    auto& sceneManager = engine.GetSceneManager();
     return sceneManager.CreateSceneObject(Pht::QuadMesh {size.x, size.y},
                                           imageMaterial,
                                           mSceneResources);

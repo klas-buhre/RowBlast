@@ -20,19 +20,19 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto fieldQuadZ {-2.0f};
-    constexpr auto blueprintZ {-0.7f};
-    constexpr auto fieldBorderZ {-0.5f};
-    constexpr auto lowerClipAreaHeightInCells {2.15f};
-    constexpr auto fieldPadding {0.1f};
-    constexpr auto scissorBoxPadding {0.01f};
-    constexpr auto lightAnimationDuration {5.0f};
+    constexpr auto fieldQuadZ = -2.0f;
+    constexpr auto blueprintZ = -0.7f;
+    constexpr auto fieldBorderZ = -0.5f;
+    constexpr auto lowerClipAreaHeightInCells = 2.15f;
+    constexpr auto fieldPadding = 0.1f;
+    constexpr auto scissorBoxPadding = 0.01f;
+    constexpr auto lightAnimationDuration = 5.0f;
     const Pht::Vec3 lightDirectionA {0.785f, 1.0f, 0.67f};
     const Pht::Vec3 lightDirectionB {1.0f, 1.0f, 0.74f};
-    constexpr auto daylightLightIntensity {0.985f};
-    constexpr auto sunsetLightIntensity {0.94f};
-    constexpr auto darkLightIntensity {0.78f};
-    constexpr auto fieldQuadBrightness {0.9f};
+    constexpr auto daylightLightIntensity = 0.985f;
+    constexpr auto sunsetLightIntensity = 0.94f;
+    constexpr auto darkLightIntensity = 0.78f;
+    constexpr auto fieldQuadBrightness = 0.9f;
     const Pht::Vec3 defaultUiCameraPosition {0.0f, 0.0f, 300.0f};
 
     const std::vector<BlockPathVolume> standardFloatingBlockPaths {
@@ -125,8 +125,8 @@ GameScene::GameScene(Pht::IEngine& engine,
 void GameScene::Init(const Level& level, const GameLogic& gameLogic) {
     LoadMusic(level);
     
-    auto& sceneManager {mEngine.GetSceneManager()};
-    auto scene {sceneManager.CreateScene(Pht::Hash::Fnv1a("gameScene"))};
+    auto& sceneManager = mEngine.GetSceneManager();
+    auto scene = sceneManager.CreateScene(Pht::Hash::Fnv1a("gameScene"));
     mScene = scene.get();
     
     mEngine.GetRenderer().DisableShader(Pht::ShaderType::TexturedEnvMapLighting);
@@ -241,16 +241,16 @@ void GameScene::CreateLightAndCamera() {
 
 void GameScene::CreateBackground(const Level& level) {
     Pht::Material backgroundMaterial {level.GetBackgroundTextureFilename()};
-    auto& background {mScene->CreateSceneObject(Pht::QuadMesh {227.3f, 300.0f}, backgroundMaterial)};
+    auto& background = mScene->CreateSceneObject(Pht::QuadMesh {227.3f, 300.0f}, backgroundMaterial);
     background.GetTransform().SetPosition({0.0f, -10.0f, -115.0f});
     background.SetLayer(static_cast<int>(Layer::Background));
     mScene->GetRoot().AddChild(background);
 }
 
 void GameScene::CreateBackgroundLayerLight(const Level& level) {
-    auto& lightSceneObject {mScene->CreateSceneObject()};
+    auto& lightSceneObject = mScene->CreateSceneObject();
     lightSceneObject.SetIsVisible(false);
-    auto lightComponent {std::make_unique<Pht::LightComponent>(lightSceneObject)};
+    auto lightComponent = std::make_unique<Pht::LightComponent>(lightSceneObject);
     lightComponent->SetDirection(lightDirectionB);
     
     switch (level.GetLightIntensity()) {
@@ -268,7 +268,7 @@ void GameScene::CreateBackgroundLayerLight(const Level& level) {
             break;
     }
 
-    auto* backgroundRenderPass {mScene->GetRenderPass(static_cast<int>(Layer::Background))};
+    auto* backgroundRenderPass = mScene->GetRenderPass(static_cast<int>(Layer::Background));
     assert(backgroundRenderPass);
     backgroundRenderPass->SetLight(lightComponent.get());
     
@@ -310,8 +310,8 @@ void GameScene::CreateFieldQuad() {
     Pht::Material fieldMaterial;
     fieldMaterial.SetOpacity(0.96f);
 
-    auto vertices {CreateFieldVertices()};
-    auto& fieldQuad {mScene->CreateSceneObject(Pht::QuadMesh {vertices}, fieldMaterial)};
+    auto vertices = CreateFieldVertices();
+    auto& fieldQuad = mScene->CreateSceneObject(Pht::QuadMesh {vertices}, fieldMaterial);
     Pht::Vec3 quadPosition {mFieldPosition.x, mFieldPosition.y, mFieldPosition.z + fieldQuadZ};
     fieldQuad.GetTransform().SetPosition(quadPosition);
     mFieldQuadContainer->AddChild(fieldQuad);
@@ -324,9 +324,9 @@ void GameScene::CreateFieldContainer() {
 }
 
 Pht::QuadMesh::Vertices GameScene::CreateFieldVertices() {
-    auto width {mFieldWidth + fieldPadding};
-    auto height {mFieldHeight + fieldPadding};
-    auto f {fieldQuadBrightness};
+    auto width = mFieldWidth + fieldPadding;
+    auto height = mFieldHeight + fieldPadding;
+    auto f = fieldQuadBrightness;
 
     return {
         {{-width / 2.0f, -height / 2.0f, 0.0f}, {0.3f * f, 0.3f * f, 0.752f * f, 1.0f}},
@@ -337,22 +337,20 @@ Pht::QuadMesh::Vertices GameScene::CreateFieldVertices() {
 }
 
 void GameScene::CreateBlueprintSlots(const Level& level) {
-    auto* blueprintGrid {level.GetBlueprintGrid()};
-    
+    auto* blueprintGrid = level.GetBlueprintGrid();
     if (blueprintGrid == nullptr) {
         return;
     }
     
-    auto& blueprintSlotsContainer {mScene->CreateSceneObject()};
+    auto& blueprintSlotsContainer = mScene->CreateSceneObject();
     blueprintSlotsContainer.SetLayer(static_cast<int>(Layer::FieldBlueprintSlots));
     mFieldContainer->AddChild(blueprintSlotsContainer);
 
-    for (auto row {0}; row < level.GetNumRows(); ++row) {
-        for (auto column {0}; column < level.GetNumColumns(); ++column) {
-            auto& blueprintCell {(*blueprintGrid)[row][column]};
-            
+    for (auto row = 0; row < level.GetNumRows(); ++row) {
+        for (auto column = 0; column < level.GetNumColumns(); ++column) {
+            auto& blueprintCell = (*blueprintGrid)[row][column];
             if (blueprintCell.mFill != Fill::Empty) {
-                auto& blueprintSlot {mScene->CreateSceneObject()};
+                auto& blueprintSlot = mScene->CreateSceneObject();
                 blueprintSlot.SetRenderable(&mLevelResources.GetBlueprintSlotRenderable());
                 
                 Pht::Vec3 blueprintSlotPosition {
@@ -426,11 +424,11 @@ void GameScene::CreateUiViewsContainer() {
     mUiViewsContainer->SetLayer(static_cast<int>(Layer::UiViews));
     mScene->GetRoot().AddChild(*mUiViewsContainer);
     
-    auto& uiCameraSceneObject {mScene->CreateSceneObject()};
+    auto& uiCameraSceneObject = mScene->CreateSceneObject();
     uiCameraSceneObject.SetIsVisible(false);
-    auto uiCameraComponent {std::make_unique<Pht::CameraComponent>(uiCameraSceneObject)};
+    auto uiCameraComponent = std::make_unique<Pht::CameraComponent>(uiCameraSceneObject);
     
-    auto* uiRenderPass {mScene->GetRenderPass(static_cast<int>(Layer::UiViews))};
+    auto* uiRenderPass = mScene->GetRenderPass(static_cast<int>(Layer::UiViews));
     assert(uiRenderPass);
     mUiCamera = uiCameraComponent.get();
     SetDefaultUiCameraPosition();
@@ -439,9 +437,9 @@ void GameScene::CreateUiViewsContainer() {
     uiCameraSceneObject.SetComponent<Pht::CameraComponent>(std::move(uiCameraComponent));
     mUiViewsContainer->AddChild(uiCameraSceneObject);
     
-    auto& uiLightSceneObject {mScene->CreateSceneObject()};
+    auto& uiLightSceneObject = mScene->CreateSceneObject();
     uiLightSceneObject.SetIsVisible(false);
-    auto uiLightComponent {std::make_unique<Pht::LightComponent>(uiLightSceneObject)};
+    auto uiLightComponent = std::make_unique<Pht::LightComponent>(uiLightSceneObject);
     mUiLight = uiLightComponent.get();
     uiRenderPass->SetLight(mUiLight);
     uiLightSceneObject.SetComponent<Pht::LightComponent>(std::move(uiLightComponent));
@@ -455,23 +453,23 @@ void GameScene::CreateStarsContainer() {
     mStarsContainer->SetLayer(static_cast<int>(Layer::Stars));
     mScene->GetRoot().AddChild(*mStarsContainer);
     
-    auto& lightSceneObject {mScene->CreateSceneObject()};
+    auto& lightSceneObject = mScene->CreateSceneObject();
     lightSceneObject.SetIsVisible(false);
-    auto lightComponent {std::make_unique<Pht::LightComponent>(lightSceneObject)};
+    auto lightComponent = std::make_unique<Pht::LightComponent>(lightSceneObject);
     lightComponent->SetDirection({0.8f, 0.8f, 1.0f});
     lightComponent->SetDirectionalIntensity(0.75f);
     
-    auto* starsRenderPass {mScene->GetRenderPass(static_cast<int>(Layer::Stars))};
+    auto* starsRenderPass = mScene->GetRenderPass(static_cast<int>(Layer::Stars));
     assert(starsRenderPass);
     starsRenderPass->SetLight(lightComponent.get());
     
     lightSceneObject.SetComponent<Pht::LightComponent>(std::move(lightComponent));
     mStarsContainer->AddChild(lightSceneObject);
     
-    auto& cameraSceneObject {mScene->CreateSceneObject()};
+    auto& cameraSceneObject = mScene->CreateSceneObject();
     cameraSceneObject.SetIsVisible(false);
     cameraSceneObject.GetTransform().SetPosition({0.0f, -20.5f, 20.5f});
-    auto cameraComponent {std::make_unique<Pht::CameraComponent>(cameraSceneObject)};
+    auto cameraComponent = std::make_unique<Pht::CameraComponent>(cameraSceneObject);
     starsRenderPass->SetCamera(cameraComponent.get());
     cameraSceneObject.SetComponent<Pht::CameraComponent>(std::move(cameraComponent));
     mStarsContainer->AddChild(cameraSceneObject);
@@ -504,16 +502,15 @@ void GameScene::Update() {
 }
 
 void GameScene::UpdateCameraPosition() {
-    auto& renderer {mEngine.GetRenderer()};
-    auto& frustumSize {renderer.GetOrthographicFrustumSize()};
-    auto bottomPadding {renderer.GetBottomPaddingHeight()};
+    auto& renderer = mEngine.GetRenderer();
+    auto& frustumSize = renderer.GetOrthographicFrustumSize();
+    auto bottomPadding = renderer.GetBottomPaddingHeight();
     
-    auto cameraYPosition {
+    auto cameraYPosition =
         mFieldLoweLeft.y + mScrollController.GetLowestVisibleRow() * mCellSize +
-        frustumSize.y / 2.0f - mCellSize * lowerClipAreaHeightInCells - bottomPadding
-    };
+        frustumSize.y / 2.0f - mCellSize * lowerClipAreaHeightInCells - bottomPadding;
 
-    auto& cameraShakeTranslation {mCameraShake.GetCameraTranslation()};
+    auto& cameraShakeTranslation = mCameraShake.GetCameraTranslation();
     Pht::Vec3 cameraPosition {0.0f, cameraYPosition, 20.5f};
     cameraPosition += cameraShakeTranslation;
     mCamera->GetSceneObject().GetTransform().SetPosition(cameraPosition);
@@ -547,17 +544,17 @@ void GameScene::SetScissorBox(const Pht::ScissorBox& scissorBox) {
 }
 
 void GameScene::SetScissorBox(const Pht::ScissorBox& scissorBox, int layer) {
-    auto* renderPass {mScene->GetRenderPass(layer)};
+    auto* renderPass = mScene->GetRenderPass(layer);
     assert(renderPass);
     
     renderPass->SetScissorBox(scissorBox);
 }
 
 const Pht::ScissorBox& GameScene::GetFieldScissorBox() const {
-    auto* fieldQuadRenderPass {mScene->GetRenderPass(static_cast<int>(Layer::FieldQuad))};
+    auto* fieldQuadRenderPass = mScene->GetRenderPass(static_cast<int>(Layer::FieldQuad));
     assert(fieldQuadRenderPass);
     
-    auto& scissorBox {fieldQuadRenderPass->GetScissorBox()};
+    auto& scissorBox = fieldQuadRenderPass->GetScissorBox();
     assert(scissorBox.HasValue());
     
     return scissorBox.GetValue();
@@ -565,12 +562,11 @@ const Pht::ScissorBox& GameScene::GetFieldScissorBox() const {
 
 void GameScene::UpdateLightAnimation() {
     mLightAnimationTime += mEngine.GetLastFrameSeconds();
-    
     if (mLightAnimationTime > lightAnimationDuration) {
         mLightAnimationTime = 0.0f;
     }
     
-    auto t {(cos(mLightAnimationTime * 2.0f * 3.1415f / lightAnimationDuration) + 1.0f) / 2.0f};
+    auto t = (cos(mLightAnimationTime * 2.0f * 3.1415f / lightAnimationDuration) + 1.0f) / 2.0f;
     mLight->SetDirection(lightDirectionA.Lerp(t, lightDirectionB));
     mUiLight->SetDirection(mUiLightDirectionA.Lerp(t, mUiLightDirectionB));
 }

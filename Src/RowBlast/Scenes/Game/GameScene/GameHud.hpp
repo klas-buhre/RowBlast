@@ -109,7 +109,7 @@ namespace RowBlast {
             return *mMovesTextContainer;
         }
         
-        static constexpr auto movesTextScale {1.1f};
+        static constexpr float movesTextScale {1.1f};
 
     private:
         void CreateLightAndCamera(Pht::Scene& scene, Pht::SceneObject& parentObject, int hudLayer);

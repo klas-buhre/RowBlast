@@ -19,22 +19,20 @@ namespace {
     const Pht::Vec2 arrowRenderableSize {0.6f, 0.6f};
     const Pht::Vec2 shadowOffset {0.05f, 0.05f};
     const Pht::Vec2 arrowLineSize {0.13f, 0.3f};
-    constexpr auto arrowTriangleHeight {0.195f};
+    constexpr auto arrowTriangleHeight = 0.195f;
     
     std::unique_ptr<Pht::SoftwareRasterizer> CreateRasterizer(Pht::IEngine& engine,
                                                               const CommonResources& commonResources,
                                                               const Pht::Vec2& size) {
-        auto& renderer {engine.GetRenderer()};
-        auto& renderBufferSize {renderer.GetRenderBufferSize()};
-        auto& frustumSize {commonResources.GetHudFrustumSizePotentiallyZoomedScreen()};
+        auto& renderer = engine.GetRenderer();
+        auto& renderBufferSize = renderer.GetRenderBufferSize();
+        auto& frustumSize = commonResources.GetHudFrustumSizePotentiallyZoomedScreen();
         
-        auto xScaleFactor {
-            static_cast<float>(renderBufferSize.x) / static_cast<float>(frustumSize.x)
-        };
+        auto xScaleFactor =
+            static_cast<float>(renderBufferSize.x) / static_cast<float>(frustumSize.x);
 
-        auto yScaleFactor {
-            static_cast<float>(renderBufferSize.y) / static_cast<float>(frustumSize.y)
-        };
+        auto yScaleFactor =
+            static_cast<float>(renderBufferSize.y) / static_cast<float>(frustumSize.y);
         
         Pht::IVec2 imageSize {
             static_cast<int>(size.x * xScaleFactor) * 2,
@@ -88,7 +86,7 @@ namespace {
 }
 
 GameHudArrow::GameHudArrow(Pht::IEngine& engine, const CommonResources& commonResources) {
-    auto rasterizer {CreateRasterizer(engine, commonResources, arrowRenderableSize)};
+    auto rasterizer = CreateRasterizer(engine, commonResources, arrowRenderableSize);
     
     DrawArrow(*rasterizer,
               arrowRenderableSize / 2.0f - shadowOffset + Pht::Vec2{0.0f, arrowTriangleHeight / 2.0f},
@@ -97,7 +95,7 @@ GameHudArrow::GameHudArrow(Pht::IEngine& engine, const CommonResources& commonRe
               arrowRenderableSize / 2.0f + Pht::Vec2{0.0f, arrowTriangleHeight / 2.0f},
               arrowColor);
     
-    auto image {rasterizer->ProduceImage()};
+    auto image = rasterizer->ProduceImage();
     Pht::Material imageMaterial {*image, Pht::GenerateMipmap::Yes};
     imageMaterial.SetBlend(Pht::Blend::Yes);
     

@@ -17,8 +17,8 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto dz {0.05f};
-    constexpr auto numVisibleGridRows {17};
+    constexpr auto dz = 0.05f;
+    constexpr auto numVisibleGridRows = 17;
 }
 
 GameSceneRenderer::GameSceneRenderer(GameScene& scene,
@@ -47,24 +47,23 @@ void GameSceneRenderer::Render() {
 }
 
 void GameSceneRenderer::RenderFieldGrid() {
-    auto& gridSegments {mScene.GetFieldGrid().GetSegments()};
-    
+    auto& gridSegments = mScene.GetFieldGrid().GetSegments();
     for (auto& gridSegment: gridSegments) {
         gridSegment.mSceneObject.SetIsVisible(false);
     }
     
-    auto lowestVisibleRow {static_cast<int>(mScrollController.GetLowestVisibleRow())};
-    auto pastHighestVisibleRow {lowestVisibleRow + numVisibleGridRows};
-    auto numSegments {static_cast<int>(gridSegments.size())};
+    auto lowestVisibleRow = static_cast<int>(mScrollController.GetLowestVisibleRow());
+    auto pastHighestVisibleRow = lowestVisibleRow + numVisibleGridRows;
+    auto numSegments = static_cast<int>(gridSegments.size());
     
-    for (auto i {numSegments - 1}; i >= 0; --i) {
-        auto& gridSegment {gridSegments[i]};
+    for (auto i = numSegments - 1; i >= 0; --i) {
+        auto& gridSegment = gridSegments[i];
         if (gridSegment.mRow <= lowestVisibleRow) {
-            for (auto visibleSegmentIndex {i};
+            for (auto visibleSegmentIndex = i;
                  visibleSegmentIndex < numSegments;
                  ++visibleSegmentIndex) {
 
-                auto& visibleGridSegment {gridSegments[visibleSegmentIndex]};
+                auto& visibleGridSegment = gridSegments[visibleSegmentIndex];
                 if (visibleGridSegment.mRow >= pastHighestVisibleRow) {
                     break;
                 }
@@ -78,18 +77,17 @@ void GameSceneRenderer::RenderFieldGrid() {
 }
 
 void GameSceneRenderer::RenderBlueprintSlots() {
-    auto* blueprintGrid {mField.GetBlueprintGrid()};
+    auto* blueprintGrid = mField.GetBlueprintGrid();
     if (blueprintGrid == nullptr) {
         return;
     }
     
-    auto lowestVisibleRow {static_cast<int>(mScrollController.GetLowestVisibleRow())};
-    auto pastHighestVisibleRow {lowestVisibleRow + mField.GetNumRowsInOneScreen()};
+    auto lowestVisibleRow = static_cast<int>(mScrollController.GetLowestVisibleRow());
+    auto pastHighestVisibleRow = lowestVisibleRow + mField.GetNumRowsInOneScreen();
     
-    for (auto row {0}; row < pastHighestVisibleRow; row++) {
-        for (auto column {0}; column < mField.GetNumColumns(); column++) {
-            auto& blueprintCell {(*blueprintGrid)[row][column]};
-            
+    for (auto row = 0; row < pastHighestVisibleRow; row++) {
+        for (auto column = 0; column < mField.GetNumColumns(); column++) {
+            auto& blueprintCell = (*blueprintGrid)[row][column];
             if (blueprintCell.mSceneObject == nullptr) {
                 continue;
             }
@@ -120,11 +118,11 @@ void GameSceneRenderer::RenderFieldBlocks() {
         lowestVisibleRow = 0;
     }
     
-    auto pastHighestVisibleRow {lowestVisibleRow + mField.GetNumRowsInOneScreen()};
+    auto pastHighestVisibleRow = lowestVisibleRow + mField.GetNumRowsInOneScreen();
     
-    for (auto row {lowestVisibleRow}; row < pastHighestVisibleRow; row++) {
-        for (auto column {0}; column < mField.GetNumColumns(); column++) {
-            auto& cell {mField.GetCell(row, column)};
+    for (auto row = lowestVisibleRow; row < pastHighestVisibleRow; row++) {
+        for (auto column = 0; column < mField.GetNumColumns(); column++) {
+            auto& cell = mField.GetCell(row, column);
             RenderFieldBlock(cell.mFirstSubCell, false);
             RenderFieldBlock(cell.mSecondSubCell, true);
         }
@@ -132,8 +130,7 @@ void GameSceneRenderer::RenderFieldBlocks() {
 }
 
 void GameSceneRenderer::RenderFieldBlock(const SubCell& subCell, bool isSecondSubCell) {
-    auto blockKind {subCell.mBlockKind};
-    
+    auto blockKind = subCell.mBlockKind;
     switch (blockKind) {
         case BlockKind::None:
         case BlockKind::ClearedRowBlock:
@@ -143,8 +140,8 @@ void GameSceneRenderer::RenderFieldBlock(const SubCell& subCell, bool isSecondSu
             break;
     }
     
-    auto& sceneObject {mScene.GetFieldBlocks().AccuireSceneObject()};
-    const auto cellSize {mScene.GetCellSize()};
+    auto& sceneObject = mScene.GetFieldBlocks().AccuireSceneObject();
+    const auto cellSize = mScene.GetCellSize();
     
     Pht::Vec3 blockPosition {
         subCell.mPosition.x * cellSize + cellSize / 2.0f,
@@ -153,7 +150,7 @@ void GameSceneRenderer::RenderFieldBlock(const SubCell& subCell, bool isSecondSu
         mScene.GetBouncingBlockZ() : 0.0f
     };
 
-    auto& transform {sceneObject.GetTransform()};
+    auto& transform = sceneObject.GetTransform();
     transform.SetPosition(blockPosition);
     
     switch (blockKind) {
@@ -184,11 +181,10 @@ void GameSceneRenderer::RenderFieldBlock(const SubCell& subCell, bool isSecondSu
             if (subCell.mIsGrayLevelBlock) {
                 sceneObject.SetRenderable(&mLevelResources.GetLevelBlockRenderable(blockKind));
             } else {
-                auto color {subCell.mColor};
-                auto brightness {subCell.mFlashingBlockAnimation.mBrightness};
-                auto& renderableObject {
-                    mPieceResources.GetBlockRenderableObject(blockKind, color, brightness)
-                };
+                auto color = subCell.mColor;
+                auto brightness = subCell.mFlashingBlockAnimation.mBrightness;
+                auto& renderableObject =
+                    mPieceResources.GetBlockRenderableObject(blockKind, color, brightness);
                 sceneObject.SetRenderable(&renderableObject);
                 RenderBlockWelds(subCell, blockPosition, mScene.GetFieldBlocks(), isSecondSubCell);
             }
@@ -200,10 +196,10 @@ void GameSceneRenderer::RenderBlockWelds(const SubCell& subCell,
                                          const Pht::Vec3& blockPos,
                                          SceneObjectPool& pool,
                                          bool isSecondSubCell) {
-    auto& welds {subCell.mWelds};
-    auto& weldAnimations {welds.mAnimations};
-    const auto cellSize {mScene.GetCellSize()};
-    auto weldZ {blockPos.z + cellSize / 2.0f};
+    auto& welds = subCell.mWelds;
+    auto& weldAnimations = welds.mAnimations;
+    const auto cellSize = mScene.GetCellSize();
+    auto weldZ = blockPos.z + cellSize / 2.0f;
     
     if (welds.mUpLeft || weldAnimations.mUpLeft.IsActive()) {
         RenderBlockWeld({blockPos.x - cellSize / 2.0f, blockPos.y + cellSize / 2.0f, weldZ},
@@ -238,16 +234,15 @@ void GameSceneRenderer::RenderBlockWelds(const SubCell& subCell,
     }
 
     if (welds.mDiagonal && isSecondSubCell) {
-        auto& diagonalAnimation {weldAnimations.mDiagonal};
-        auto color {subCell.mColor};
-        auto brightness {
-            diagonalAnimation.IsSemiFlashing() ?
-            BlockBrightness::SemiFlashing : subCell.mFlashingBlockAnimation.mBrightness
-        };
+        auto& diagonalAnimation = weldAnimations.mDiagonal;
+        auto color = subCell.mColor;
         
-        auto& diagonalWeldRenderable {
-            mPieceResources.GetWeldRenderableObject(WeldRenderableKind::Diagonal, color, brightness)
-        };
+        auto brightness =
+            diagonalAnimation.IsSemiFlashing() ?
+            BlockBrightness::SemiFlashing : subCell.mFlashingBlockAnimation.mBrightness;
+        
+        auto& diagonalWeldRenderable =
+            mPieceResources.GetWeldRenderableObject(WeldRenderableKind::Diagonal, color, brightness);
         
         auto weldScale {weldAnimations.mDiagonal.mScale};
         
@@ -279,8 +274,8 @@ void GameSceneRenderer::RenderBlockWeld(const Pht::Vec3& weldPosition,
                                         float scale,
                                         Pht::RenderableObject& weldRenderableObject,
                                         SceneObjectPool& pool) {
-    auto& sceneObject {pool.AccuireSceneObject()};
-    auto& transform {sceneObject.GetTransform()};
+    auto& sceneObject = pool.AccuireSceneObject();
+    auto& transform = sceneObject.GetTransform();
     transform.SetRotation({0.0f, 0.0f, rotation});
     transform.SetScale({scale, 1.0f, 1.0f});
     transform.SetPosition(weldPosition);
@@ -290,12 +285,11 @@ void GameSceneRenderer::RenderBlockWeld(const Pht::Vec3& weldPosition,
 Pht::RenderableObject& GameSceneRenderer::GetWeldRenderable(WeldRenderableKind renderableKind,
                                                             const SubCell& subCell,
                                                             const WeldAnimation& weldAnimation) {
-    auto color {subCell.mColor};
+    auto color = subCell.mColor;
     
-    auto brightness {
+    auto brightness =
         weldAnimation.IsSemiFlashing() ?
-        BlockBrightness::SemiFlashing : subCell.mFlashingBlockAnimation.mBrightness
-    };
+        BlockBrightness::SemiFlashing : subCell.mFlashingBlockAnimation.mBrightness;
     
     return mPieceResources.GetWeldRenderableObject(renderableKind, color, brightness);
 }
@@ -303,22 +297,21 @@ Pht::RenderableObject& GameSceneRenderer::GetWeldRenderable(WeldRenderableKind r
 void GameSceneRenderer::RenderFallingPiece() {
     mScene.GetPieceBlocks().ReclaimAll();
     
-    auto* fallingPiece {mGameLogic.GetFallingPiece()};
+    auto* fallingPiece = mGameLogic.GetFallingPiece();
     if (fallingPiece == nullptr) {
         return;
     }
     
-    auto pieceGridPos {
+    auto pieceGridPos =
         mGameLogic.IsUsingClickControls() ? fallingPiece->GetRenderablePositionSmoothY() :
-                                            fallingPiece->GetRenderablePosition()
-    };
+                                            fallingPiece->GetRenderablePosition();
     
-    const auto cellSize {mScene.GetCellSize()};
+    const auto cellSize = mScene.GetCellSize();
     Pht::Vec3 pieceFieldPos {pieceGridPos.x * cellSize, pieceGridPos.y * cellSize, 0.0f};
-    auto& pieceGrid {fallingPiece->GetPieceType().GetGrid(fallingPiece->GetRotation())};
+    auto& pieceGrid = fallingPiece->GetPieceType().GetGrid(fallingPiece->GetRotation());
     
-    auto isTransparent {false};
-    auto isGhostPiece {false};
+    auto isTransparent = false;
+    auto isGhostPiece = false;
     RenderPieceBlocks(pieceGrid,
                       pieceFieldPos,
                       isTransparent,
@@ -331,32 +324,31 @@ void GameSceneRenderer::RenderPieceBlocks(const CellGrid& pieceBlocks,
                                           bool isTransparent,
                                           bool isGhostPiece,
                                           SceneObjectPool& pool) {
-    auto* fallingPiece {mGameLogic.GetFallingPiece()};
+    auto* fallingPiece = mGameLogic.GetFallingPiece();
     assert(fallingPiece);
     
-    auto& pieceType {fallingPiece->GetPieceType()};
-    auto pieceNumRows {pieceType.GetGridNumRows()};
-    auto pieceNumColumns {pieceType.GetGridNumColumns()};
-    const auto cellSize {mScene.GetCellSize()};
-    auto isBomb {pieceType.IsBomb()};
-    auto isRowBomb {pieceType.IsRowBomb()};
+    auto& pieceType = fallingPiece->GetPieceType();
+    auto pieceNumRows = pieceType.GetGridNumRows();
+    auto pieceNumColumns = pieceType.GetGridNumColumns();
+    const auto cellSize = mScene.GetCellSize();
+    auto isBomb = pieceType.IsBomb();
+    auto isRowBomb = pieceType.IsRowBomb();
     const Pht::Vec3 pieceGridSize {pieceNumColumns * cellSize, pieceNumRows * cellSize, 0.0f};
     
     if (!isGhostPiece) {
-        auto& containerObject {pool.GetContainerSceneObject()};
+        auto& containerObject = pool.GetContainerSceneObject();
         containerObject.GetTransform().SetPosition(pieceFieldPos + pieceGridSize / 2.0f);
     }
     
-    for (auto row {0}; row < pieceNumRows; row++) {
-        for (auto column {0}; column < pieceNumColumns; column++) {
-            auto& subCell {pieceBlocks[row][column].mFirstSubCell};
-            auto blockKind {subCell.mBlockKind};
-            
+    for (auto row = 0; row < pieceNumRows; row++) {
+        for (auto column = 0; column < pieceNumColumns; column++) {
+            auto& subCell = pieceBlocks[row][column].mFirstSubCell;
+            auto blockKind = subCell.mBlockKind;
             if (blockKind == BlockKind::None) {
                 continue;
             }
             
-            auto blockPosition {
+            auto blockPosition =
                 isGhostPiece ?
                 Pht::Vec3 {
                     pieceFieldPos.x + column * cellSize + cellSize / 2.0f,
@@ -367,11 +359,10 @@ void GameSceneRenderer::RenderPieceBlocks(const CellGrid& pieceBlocks,
                     column * cellSize + cellSize / 2.0f - pieceGridSize.x / 2.0f,
                     row * cellSize + cellSize / 2.0f - pieceGridSize.y / 2.0f,
                     0.0f
-                }
-            };
+                };
             
-            auto& sceneObject {pool.AccuireSceneObject()};
-            auto& transform {sceneObject.GetTransform()};
+            auto& sceneObject = pool.AccuireSceneObject();
+            auto& transform = sceneObject.GetTransform();
             transform.SetPosition(blockPosition);
 
             if (blockKind != BlockKind::Full) {
@@ -383,7 +374,6 @@ void GameSceneRenderer::RenderPieceBlocks(const CellGrid& pieceBlocks,
             
             if (isBomb) {
                 sceneObject.GetTransform().SetRotation(mBombsAnimation.GetBombRotation());
-                
                 if (isTransparent) {
                     sceneObject.SetRenderable(&mPieceResources.GetTransparentBombRenderableObject());
                 } else {
@@ -391,19 +381,17 @@ void GameSceneRenderer::RenderPieceBlocks(const CellGrid& pieceBlocks,
                 }
             } else if (isRowBomb) {
                 sceneObject.GetTransform().SetRotation(mBombsAnimation.GetRowBombRotation());
-                
                 if (isTransparent) {
                     sceneObject.SetRenderable(&mPieceResources.GetTransparentRowBombRenderableObject());
                 } else {
                     sceneObject.SetRenderable(&mPieceResources.GetRowBombRenderableObject());
                 }
             } else {
-                auto color {subCell.mColor};
-                auto brightness {BlockBrightness::Normal};
+                auto color = subCell.mColor;
+                auto brightness = BlockBrightness::Normal;
 
-                auto& blockRenderableObject {
-                    mPieceResources.GetBlockRenderableObject(blockKind, color, brightness)
-                };
+                auto& blockRenderableObject =
+                    mPieceResources.GetBlockRenderableObject(blockKind, color, brightness);
                 
                 sceneObject.SetRenderable(&blockRenderableObject);
 
@@ -416,7 +404,7 @@ void GameSceneRenderer::RenderPieceBlocks(const CellGrid& pieceBlocks,
 void GameSceneRenderer::RenderGhostPieces() {
     mScene.GetGhostPieces().ReclaimAll();
     
-    auto* fallingPiece {mGameLogic.GetFallingPiece()};
+    auto* fallingPiece = mGameLogic.GetFallingPiece();
     if (fallingPiece == nullptr) {
         return;
     }
@@ -429,8 +417,8 @@ void GameSceneRenderer::RenderGhostPieces() {
 }
 
 void GameSceneRenderer::RenderGhostPieceForGestureControls(const FallingPiece& fallingPiece) {
-    const auto cellSize {mScene.GetCellSize()};
-    auto& pieceType {fallingPiece.GetPieceType()};
+    const auto cellSize = mScene.GetCellSize();
+    auto& pieceType = fallingPiece.GetPieceType();
     
     Pht::Vec3 ghostPieceFieldPos {
         fallingPiece.GetRenderablePosition().x * cellSize,
@@ -438,7 +426,7 @@ void GameSceneRenderer::RenderGhostPieceForGestureControls(const FallingPiece& f
         mScene.GetGhostPieceZ()
     };
     
-    if (auto* ghostPieceRenderable {pieceType.GetGhostPieceRenderable()}) {
+    if (auto* ghostPieceRenderable = pieceType.GetGhostPieceRenderable()) {
         Pht::Vec3 ghostPieceCenterLocalCoords {
             cellSize * static_cast<float>(pieceType.GetGridNumColumns()) / 2.0f,
             cellSize * static_cast<float>(pieceType.GetGridNumRows()) / 2.0f,
@@ -451,9 +439,9 @@ void GameSceneRenderer::RenderGhostPieceForGestureControls(const FallingPiece& f
     } else {
         Pht::Vec3 position {ghostPieceFieldPos};
         position.z = mScene.GetPressedGhostPieceZ();
-        auto& pieceGrid {pieceType.GetGrid(fallingPiece.GetRotation())};
-        auto isTransparent {true};
-        auto isGhostPiece {true};
+        auto& pieceGrid = pieceType.GetGrid(fallingPiece.GetRotation());
+        auto isTransparent = true;
+        auto isGhostPiece = true;
         RenderPieceBlocks(pieceGrid,
                           position,
                           isTransparent,
@@ -465,9 +453,9 @@ void GameSceneRenderer::RenderGhostPieceForGestureControls(const FallingPiece& f
 void GameSceneRenderer::RenderGhostPiece(Pht::RenderableObject& ghostPieceRenderable,
                                          const Pht::Vec3& position,
                                          Rotation rotation) {
-    auto& sceneObject {mScene.GetGhostPieces().AccuireSceneObject()};
+    auto& sceneObject = mScene.GetGhostPieces().AccuireSceneObject();
     
-    auto& transform {sceneObject.GetTransform()};
+    auto& transform = sceneObject.GetTransform();
     transform.SetPosition(position);
     transform.SetRotation({0.0f, 0.0f, RotationToDeg(rotation)});
     
@@ -475,15 +463,15 @@ void GameSceneRenderer::RenderGhostPiece(Pht::RenderableObject& ghostPieceRender
 }
 
 void GameSceneRenderer::RenderClickableGhostPieces(const FallingPiece& fallingPiece) {
-    auto* moveAlternatives {mGameLogic.GetClickInputHandler().GetVisibleMoves()};
+    auto* moveAlternatives = mGameLogic.GetClickInputHandler().GetVisibleMoves();
     if (moveAlternatives == nullptr) {
         return;
     }
     
-    const auto cellSize {mScene.GetCellSize()};
-    auto ghostPieceZ {mScene.GetGhostPieceZ()};
-    auto& pieceType {fallingPiece.GetPieceType()};
-    auto* ghostPieceRenderable {pieceType.GetGhostPieceRenderable()};
+    const auto cellSize = mScene.GetCellSize();
+    auto ghostPieceZ = mScene.GetGhostPieceZ();
+    auto& pieceType = fallingPiece.GetPieceType();
+    auto* ghostPieceRenderable = pieceType.GetGhostPieceRenderable();
     
     Pht::Vec3 ghostPieceCenterLocalCoords {
         cellSize * static_cast<float>(pieceType.GetGridNumColumns()) / 2.0f,
@@ -491,8 +479,8 @@ void GameSceneRenderer::RenderClickableGhostPieces(const FallingPiece& fallingPi
         0.0f
     };
     
-    for (auto i {0}; i < moveAlternatives->Size(); ++i) {
-        auto& move {moveAlternatives->At(i)};
+    for (auto i = 0; i < moveAlternatives->Size(); ++i) {
+        auto& move = moveAlternatives->At(i);
         if (move.mIsHidden) {
             continue;
         }
@@ -503,11 +491,11 @@ void GameSceneRenderer::RenderClickableGhostPieces(const FallingPiece& fallingPi
             ghostPieceZ + static_cast<float>(i) * dz
         };
         
-        auto isMoveButtonDown {move.mButton->GetButton().IsDown()};
+        auto isMoveButtonDown = move.mButton->GetButton().IsDown();
         
         if (ghostPieceRenderable) {
             Pht::Vec3 postion {ghostPieceFieldPos + ghostPieceCenterLocalCoords};
-            auto rotation {move.mRotation};
+            auto rotation = move.mRotation;
             
             if (isMoveButtonDown) {
                 RenderGhostPiece(*pieceType.GetPressedGhostPieceRenderable(), postion, rotation);
@@ -515,17 +503,17 @@ void GameSceneRenderer::RenderClickableGhostPieces(const FallingPiece& fallingPi
                 RenderGhostPiece(*ghostPieceRenderable, postion, rotation);
             }
         } else {
-            auto& pieceGrid {pieceType.GetGrid(move.mRotation)};
-            auto& pool {mScene.GetGhostPieces()};
-            auto isGhostPiece {true};
+            auto& pieceGrid = pieceType.GetGrid(move.mRotation);
+            auto& pool = mScene.GetGhostPieces();
+            auto isGhostPiece = true;
             
             if (isMoveButtonDown) {
                 Pht::Vec3 position {ghostPieceFieldPos};
                 position.z = mScene.GetPressedGhostPieceZ();
-                auto isTransparent {false};
+                auto isTransparent = false;
                 RenderPieceBlocks(pieceGrid, position, isTransparent, isGhostPiece, pool);
             } else {
-                auto isTransparent {true};
+                auto isTransparent = true;
                 RenderPieceBlocks(pieceGrid, ghostPieceFieldPos, isTransparent, isGhostPiece, pool);
             }
         }
