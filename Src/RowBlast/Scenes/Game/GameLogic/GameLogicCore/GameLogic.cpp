@@ -203,9 +203,8 @@ GameLogic::Result GameLogic::SpawnFallingPiece(FallingPieceSpawnReason fallingPi
     
     mFallingPiece = &mFallingPieceStorage;
     SetPieceType();
-    auto spawnPosition {
-        CalculateFallingPieceSpawnPos(*mCurrentMove.mPieceType, fallingPieceSpawnReason)
-    };
+    auto spawnPosition =
+        CalculateFallingPieceSpawnPos(*mCurrentMove.mPieceType, fallingPieceSpawnReason);
     mFallingPiece->Spawn(*mCurrentMove.mPieceType, spawnPosition, mLevel->GetSpeed());
     
     ManageMoveHistory(fallingPieceSpawnReason);
@@ -495,7 +494,7 @@ void GameLogic::UpdateFallingPieceYpos() {
 }
 
 void GameLogic::DropFallingPiece() {
-    bool finalMovementWasADrop = mFallingPiece->GetPosition().y > mGhostPieceRow;
+    bool finalMovementWasADrop {mFallingPiece->GetPosition().y > mGhostPieceRow};
     mFallingPiece->SetY(mGhostPieceRow);
     mEngine.GetAudio().PlaySound(static_cast<Pht::AudioResourceId>(SoundId::DropWhoosh));
     LandFallingPiece(finalMovementWasADrop);

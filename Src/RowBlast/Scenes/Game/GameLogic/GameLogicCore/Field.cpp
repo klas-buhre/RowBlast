@@ -385,7 +385,6 @@ void Field::CheckCollision(CollisionResult& result,
 
             auto fieldRow = position.y + pieceRow;
             auto fieldColumn = position.x + pieceColumn;
-
             if (fieldRow < mLowestVisibleRow || fieldRow >= mNumRows || fieldColumn < 0 ||
                 fieldColumn >= mNumColumns) {
 
@@ -456,7 +455,6 @@ Pht::IVec2 Field::ScanUntilNoCollision(const PieceBlocks& pieceBlocks,
     
     for (;;) {
         CheckCollision(mCollisionResult, pieceBlocks, position, step, isScanStart);
-        
         if (mCollisionResult.mIsCollision != IsCollision::Yes) {
             break;
         }
@@ -485,7 +483,6 @@ Field::CollisionPoints Field::GetOccupiedArea(const PieceBlocks& pieceBlocks,
         for (auto pieceColumn = 0; pieceColumn < pieceNumColumns; ++pieceColumn) {
             auto fieldRow = position.y + pieceRow;
             auto fieldColumn = position.x + pieceColumn;
-
             if (fieldRow < 0 || fieldRow >= mNumRows || fieldColumn < 0 ||
                 fieldColumn >= mNumColumns) {
                 collisions.PushBack(Pht::IVec2{pieceColumn, pieceRow});
@@ -511,7 +508,6 @@ Field::ImpactedBombs Field::DetectImpactedBombs(const PieceBlocks& pieceBlocks,
 
     for (auto& collisionPointPieceCoord: mCollisionResult.mCollisionPoints) {
         Pht::IVec2 collisionPoint {collisionPointPieceCoord + lowerPosition};
-        
         if (collisionPoint.x < 0 || collisionPoint.x >= mNumColumns ||
             collisionPoint.y >= mNumRows || collisionPoint.y < mLowestVisibleRow) {
             
@@ -519,7 +515,6 @@ Field::ImpactedBombs Field::DetectImpactedBombs(const PieceBlocks& pieceBlocks,
         }
         
         auto blockKind = mGrid[collisionPoint.y][collisionPoint.x].mFirstSubCell.mBlockKind;
-        
         switch (blockKind) {
             case BlockKind::Bomb:
             case BlockKind::RowBomb:
@@ -633,10 +628,11 @@ void Field::ManageWelds() {
 void Field::MakeDiagonalWeld(Cell& cell) {
     auto& firstSubCell = cell.mFirstSubCell;
     auto& secondSubCell = cell.mSecondSubCell;
-    
+
     if (!firstSubCell.IsEmpty() && !secondSubCell.IsEmpty() &&
         firstSubCell.mColor == secondSubCell.mColor && !firstSubCell.mWelds.mDiagonal &&
         !secondSubCell.mWelds.mDiagonal) {
+
         firstSubCell.mWelds.mDiagonal = true;
         secondSubCell.mWelds.mDiagonal = true;
         WeldsAnimation::StartWeldAppearingAnimation(secondSubCell.mWelds.mAnimations.mDiagonal);
@@ -1304,7 +1300,6 @@ FilledRowsResultWithPieceCells Field::MarkFilledRowsAndCountPieceCellsInFilledRo
     
     for (auto rowIndex = mLowestVisibleRow; rowIndex < pastHighestVisibleRow; ++rowIndex) {
         auto& row = mGrid[rowIndex];
-        
         if (RowIsFull(row)) {
             result.mFilledRowIndices.PushBack(rowIndex);
             
@@ -1327,7 +1322,6 @@ FilledRowsResultWithGrayLevelCells Field::MarkFilledRowsAndCountGrayLevelCellsIn
     
     for (auto rowIndex = mLowestVisibleRow; rowIndex < pastHighestVisibleRow; ++rowIndex) {
         auto& row = mGrid[rowIndex];
-        
         if (RowIsFull(row)) {
             result.mFilledRowIndices.PushBack(rowIndex);
             
@@ -1345,7 +1339,6 @@ FilledRowsResultWithGrayLevelCells Field::MarkFilledRowsAndCountGrayLevelCellsIn
 void Field::UnmarkFilledRows(const FilledRowIndices& filledRowIndices) {
     for (auto i = 0; i < filledRowIndices.Size(); ++i) {
         auto& row = mGrid[filledRowIndices.At(i)];
-
         for (auto& cell: row) {
             cell.mIsInFilledRow = false;
         }

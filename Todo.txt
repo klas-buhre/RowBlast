@@ -59,13 +59,16 @@ Ongoing tasks:
         Level 40: 5
         Level 41: 5
         Level 42: 4
+        Level 43: 4
 
-    -Level ideas:
-       -Large pieces/sections cascading.
-       -Fill all gray slots. Change back clear filled row.
-       -Level with mostly level bombs and lasers. Make them fall to good places.
-       -Triangle level 48.
-
+    -Level plan:
+       -44: Normal like 8 or 42.
+       -45: Fill all gray slots. Change back clear filled row.
+       -46: Normal like 8 or 42.
+       -47: Level with mostly level bombs and lasers. Make them fall to good places.
+       -48: Normal like 8 or 42.
+       -49: Triangle level 48.
+       -50: Normal like 8 or 42.
 
 
 
@@ -78,7 +81,7 @@ Ongoing tasks:
       -Level 67.
 
     -Removing the curly brace initialization for auto declarations:
-       Finished GameLogicCore directory.
+       Finished GameLogic directory.
 
 
 
