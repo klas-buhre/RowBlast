@@ -13,7 +13,7 @@ PurchaseCanceledDialogView::PurchaseCanceledDialogView(Pht::IEngine& engine,
                                                        const CommonResources& commonResources,
                                                        PotentiallyZoomedScreen zoom) {
     auto& guiResources = commonResources.GetGuiResources();
-    auto& menuWindow = guiResources.GetSmallDarkMenuWindow();
+    auto& menuWindow = guiResources.GetMediumDarkMenuWindow();
     
     auto menuWindowSceneObject = std::make_unique<Pht::SceneObject>(&menuWindow.GetRenderable());
     menuWindowSceneObject->GetTransform().SetPosition({0.0f, 0.0f, UiLayer::background});
@@ -22,12 +22,20 @@ PurchaseCanceledDialogView::PurchaseCanceledDialogView(Pht::IEngine& engine,
     SetSize(menuWindow.GetSize());
     
     auto& textProperties = guiResources.GetSmallWhiteTextProperties(zoom);
-    CreateText({-3.6f, 3.825f, UiLayer::text}, "PURCHASE CANCELED", textProperties);
+    CreateText({-3.6f, 5.05f, UiLayer::text}, "PURCHASE CANCELED", textProperties);
     
     mCloseButton = GuiUtils::CreateCloseButton(engine, *this, guiResources, zoom);
     GuiUtils::CreateTitleBarLine(engine, *this);
+    
+    GuiUtils::CreateIcon(engine,
+                         *this,
+                         "cancel.png",
+                         {0.0f, 1.6f, UiLayer::text},
+                         {3.8f, 3.8f},
+                         GetRoot(),
+                         {1.0f, 0.43f, 0.43f, 1.0f});
 
-    CreateText({-5.6f, 0.2f, UiLayer::text}, "You have canceled your purchase.", textProperties);
+    CreateText({-5.6f, -1.65f, UiLayer::text}, "You have canceled your purchase.", textProperties);
 
     Pht::Vec2 okButtonInputSize {194.0f, 43.0f};
 
@@ -38,7 +46,7 @@ PurchaseCanceledDialogView::PurchaseCanceledDialogView(Pht::IEngine& engine,
 
     mOkButton = std::make_unique<MenuButton>(engine,
                                              *this,
-                                             Pht::Vec3 {0.0f, -3.5f, UiLayer::textRectangle},
+                                             Pht::Vec3 {0.0f, -4.75f, UiLayer::textRectangle},
                                              okButtonInputSize,
                                              okButtonStyle);
     mOkButton->CreateText({-0.5f, -0.23f, UiLayer::buttonText},

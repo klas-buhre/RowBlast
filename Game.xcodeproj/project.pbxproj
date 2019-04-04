@@ -535,6 +535,7 @@
 		62E6DAD622060DDA00EA9D3A /* block_trail_yellow.png in Resources */ = {isa = PBXBuildFile; fileRef = 62E6DAD522060DD900EA9D3A /* block_trail_yellow.png */; };
 		62F0445D22550E8C00BD5A4C /* error.png in Resources */ = {isa = PBXBuildFile; fileRef = 62F0445C22550E8C00BD5A4C /* error.png */; };
 		62F044602255116900BD5A4C /* GuiUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62F0445E2255116900BD5A4C /* GuiUtils.cpp */; };
+		62F0446222560ED900BD5A4C /* cancel.png in Resources */ = {isa = PBXBuildFile; fileRef = 62F0446122560ED800BD5A4C /* cancel.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -1482,6 +1483,7 @@
 		62F0445C22550E8C00BD5A4C /* error.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = error.png; sourceTree = "<group>"; };
 		62F0445E2255116900BD5A4C /* GuiUtils.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GuiUtils.cpp; sourceTree = "<group>"; };
 		62F0445F2255116900BD5A4C /* GuiUtils.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = GuiUtils.hpp; sourceTree = "<group>"; };
+		62F0446122560ED800BD5A4C /* cancel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cancel.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2201,6 +2203,7 @@
 		62298337222D8E9C001A7E1C /* Gui */ = {
 			isa = PBXGroup;
 			children = (
+				62F0446122560ED800BD5A4C /* cancel.png */,
 				62F0445C22550E8C00BD5A4C /* error.png */,
 				621F145F223978CF004165A2 /* filled_circle.png */,
 				621F145D22396CA7004165A2 /* previous.png */,
@@ -3338,6 +3341,7 @@
 				629B838420C81D1700DD2D0E /* level39.json in Resources */,
 				62204EF821BEC41C00A035C0 /* sky4.jpg in Resources */,
 				6221D56A2230314A0098395A /* hand.png in Resources */,
+				62F0446222560ED900BD5A4C /* cancel.png in Resources */,
 				629B839020CAD7C500DD2D0E /* triangle_320_r90.obj in Resources */,
 				6270DC8A1FCB23D800FB457D /* level11.json in Resources */,
 				6270DC891FCB23D800FB457D /* level10.json in Resources */,

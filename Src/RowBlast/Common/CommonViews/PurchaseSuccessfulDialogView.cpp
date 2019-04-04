@@ -60,7 +60,7 @@ PurchaseSuccessfulDialogView::PurchaseSuccessfulDialogView(Pht::IEngine& engine,
 
     mOkButton = std::make_unique<MenuButton>(engine,
                                              *this,
-                                             Pht::Vec3 {0.0f, -4.7f, UiLayer::textRectangle},
+                                             Pht::Vec3 {0.0f, -4.75f, UiLayer::textRectangle},
                                              okButtonInputSize,
                                              okButtonStyle);
     mOkButton->CreateText({-0.5f, -0.23f, UiLayer::buttonText},

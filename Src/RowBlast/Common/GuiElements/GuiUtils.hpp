@@ -25,7 +25,8 @@ namespace RowBlast {
                         const std::string& filename,
                         const Pht::Vec3& position,
                         const Pht::Vec2& size,
-                        Pht::SceneObject& parent);
+                        Pht::SceneObject& parent,
+                        const Pht::Vec4& color = {0.95f, 0.95f, 0.95f, 1.0f});
         void CreateTitleBarLine(Pht::IEngine& engine, Pht::GuiView& view);
     }
 }

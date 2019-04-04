@@ -40,8 +40,8 @@ void GuiUtils::CreateIcon(Pht::IEngine& engine,
                           const std::string& filename,
                           const Pht::Vec3& position,
                           const Pht::Vec2& size,
-                          Pht::SceneObject& parent) {
-    Pht::Vec4 color {0.95f, 0.95f, 0.95f, 1.0f};
+                          Pht::SceneObject& parent,
+                          const Pht::Vec4& color) {
     Pht::Material iconMaterial {filename, 0.0f, 0.0f, 0.0f, 0.0f};
     iconMaterial.SetBlend(Pht::Blend::Yes);
     iconMaterial.SetOpacity(color.w);
@@ -69,4 +69,3 @@ void GuiUtils::CreateTitleBarLine(Pht::IEngine& engine, Pht::GuiView& view) {
     lineSceneObject.GetTransform().SetPosition(position);
     view.GetRoot().AddChild(lineSceneObject);
 }
-
