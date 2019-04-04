@@ -165,10 +165,6 @@ namespace RowBlast {
                                                  float rotation,
                                                  Pht::SceneObject& parent,
                                                  const LevelResources& levelResources);
-        void CreateIcon(const std::string& filename,
-                        const Pht::Vec3& position,
-                        const Pht::Vec2& size,
-                        Pht::SceneObject& parent);
         void CreateSingleTapIcon(const Pht::Vec3& position, Pht::SceneObject& parent);
         void CreateSwipeIcon(const Pht::Vec3& position, Pht::SceneObject& parent);
         void SetPage(int pageIndex);

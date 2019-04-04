@@ -3,7 +3,6 @@
 // Engine includes.
 #include "IEngine.hpp"
 #include "TextComponent.hpp"
-#include "QuadMesh.hpp"
 #include "ObjMesh.hpp"
 #include "IParticleSystem.hpp"
 #include "ParticleEffect.hpp"
@@ -14,6 +13,7 @@
 #include "StringUtils.hpp"
 #include "UiLayer.hpp"
 #include "IGuiLightProvider.hpp"
+#include "GuiUtils.hpp"
 
 using namespace RowBlast;
 
@@ -46,34 +46,11 @@ LivesDialogView::LivesDialogView(Pht::IEngine& engine,
     mCaptionText = &CreateText({-1.7f, 4.95f, UiLayer::text},
                                "0 LIVES",
                                guiResources.GetLargeWhiteTextProperties(zoom));
-    
-    Pht::Vec3 closeButtonPosition {
-        GetSize().x / 2.0f - 1.3f,
-        GetSize().y / 2.0f - 1.3f,
-        UiLayer::textRectangle
-    };
-    
-    Pht::Vec2 closeButtonInputSize {55.0f, 55.0f};
 
-    MenuButton::Style closeButtonStyle;
-    closeButtonStyle.mPressedScale = 1.05f;
-    closeButtonStyle.mRenderableObject = &guiResources.GetCloseButton(zoom);
+    mCloseButton = GuiUtils::CreateCloseButton(engine, *this, guiResources, zoom);
+    GuiUtils::CreateTitleBarLine(engine, *this);
     
-    mCloseButton = std::make_unique<MenuButton>(engine,
-                                                *this,
-                                                closeButtonPosition,
-                                                closeButtonInputSize,
-                                                closeButtonStyle);
-
-    Pht::Material lineMaterial {Pht::Color{0.6f, 0.8f, 1.0f}};
-    lineMaterial.SetOpacity(0.3f);
     auto& sceneManager {engine.GetSceneManager()};
-    auto& lineSceneObject {
-        CreateSceneObject(Pht::QuadMesh {GetSize().x - 1.5f, 0.06f}, lineMaterial, sceneManager)
-    };
-    lineSceneObject.GetTransform().SetPosition({0.0f, GetSize().y / 2.0f - 2.6f, UiLayer::textRectangle});
-    GetRoot().AddChild(lineSceneObject);
-    
     mHeartSceneObject = &CreateSceneObject(Pht::ObjMesh {"heart_392.obj", 3.25f},
                                            commonResources.GetMaterials().GetRedMaterial(),
                                            sceneManager);

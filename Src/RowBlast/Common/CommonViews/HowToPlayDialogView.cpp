@@ -12,6 +12,7 @@
 #include "PieceResources.hpp"
 #include "LevelResources.hpp"
 #include "IGuiLightProvider.hpp"
+#include "GuiUtils.hpp"
 
 using namespace RowBlast;
 
@@ -37,33 +38,9 @@ HowToPlayDialogView::HowToPlayDialogView(Pht::IEngine& engine,
 
     SetSize(menuWindow.GetSize());
 
-    Pht::Vec3 closeButtonPosition {
-        GetSize().x / 2.0f - 1.3f,
-        GetSize().y / 2.0f - 1.3f,
-        UiLayer::textRectangle
-    };
+    mCloseButton = GuiUtils::CreateCloseButton(engine, *this, guiResources, zoom);
+    GuiUtils::CreateTitleBarLine(engine, *this);
 
-    Pht::Vec2 closeButtonInputSize {55.0f, 55.0f};
-
-    MenuButton::Style closeButtonStyle;
-    closeButtonStyle.mPressedScale = 1.05f;
-    closeButtonStyle.mRenderableObject = &guiResources.GetCloseButton(zoom);
-    
-    mCloseButton = std::make_unique<MenuButton>(engine,
-                                                *this,
-                                                closeButtonPosition,
-                                                closeButtonInputSize,
-                                                closeButtonStyle);
-
-    Pht::Material lineMaterial {Pht::Color{0.6f, 0.8f, 1.0f}};
-    lineMaterial.SetOpacity(0.3f);
-    auto& sceneManager = engine.GetSceneManager();
-    auto& lineSceneObject = CreateSceneObject(Pht::QuadMesh {GetSize().x - 1.5f, 0.06f},
-                                              lineMaterial,
-                                              sceneManager);
-    lineSceneObject.GetTransform().SetPosition({0.0f, GetSize().y / 2.0f - 2.6f, UiLayer::textRectangle});
-    GetRoot().AddChild(lineSceneObject);
-    
     MenuButton::Style buttonStyle;
     buttonStyle.mPressedScale = 1.05f;
     buttonStyle.mRenderableObject = &guiResources.GetEvenSmallerBlueGlossyButton(zoom);
@@ -1342,32 +1319,15 @@ Pht::SceneObject& HowToPlayDialogView::CreateLPieceGhostPiece(const Pht::Vec3& p
     return ghostPiece;
 }
 
-void HowToPlayDialogView::CreateIcon(const std::string& filename,
-                                     const Pht::Vec3& position,
-                                     const Pht::Vec2& size,
-                                     Pht::SceneObject& parent) {
-    Pht::Vec4 color {0.95f, 0.95f, 0.95f, 1.0f};
-    Pht::Material iconMaterial {filename, 0.0f, 0.0f, 0.0f, 0.0f};
-    iconMaterial.SetBlend(Pht::Blend::Yes);
-    iconMaterial.SetOpacity(color.w);
-    iconMaterial.SetAmbient(Pht::Color{color.x, color.y, color.z});
-    
-    auto& iconSceneObject =
-        CreateSceneObject(Pht::QuadMesh {size.x, size.y}, iconMaterial, mEngine.GetSceneManager());
-    
-    iconSceneObject.GetTransform().SetPosition(position);
-    parent.AddChild(iconSceneObject);
-}
-
 void HowToPlayDialogView::CreateSingleTapIcon(const Pht::Vec3& position, Pht::SceneObject& parent) {
     auto& icon = CreateSceneObject();
     icon.GetTransform().SetPosition(position);
     icon.GetTransform().SetScale(1.1f);
     parent.AddChild(icon);
-
-    CreateIcon("hand.png", {0.0f, 0.03f, 0.0f}, {0.9f, 0.9f}, icon);
-    CreateIcon("circle.png", {-0.03f, 0.42f, 0.0f}, {0.36f, 0.36f}, icon);
-    CreateIcon("circle.png", {-0.03f, 0.42f, 0.0f}, {0.42f, 0.42f}, icon);
+    
+    GuiUtils::CreateIcon(mEngine, *this, "hand.png", {0.0f, 0.03f, 0.0f}, {0.9f, 0.9f}, icon);
+    GuiUtils::CreateIcon(mEngine, *this, "circle.png", {-0.03f, 0.42f, 0.0f}, {0.36f, 0.36f}, icon);
+    GuiUtils::CreateIcon(mEngine, *this, "circle.png", {-0.03f, 0.42f, 0.0f}, {0.42f, 0.42f}, icon);
 }
 
 void HowToPlayDialogView::CreateSwipeIcon(const Pht::Vec3& position, Pht::SceneObject& parent) {
@@ -1376,9 +1336,9 @@ void HowToPlayDialogView::CreateSwipeIcon(const Pht::Vec3& position, Pht::SceneO
     icon.GetTransform().SetScale(1.1f);
     parent.AddChild(icon);
 
-    CreateIcon("hand.png", {0.0, 0.03f, 0.0f}, {0.9f, 0.9f}, icon);
-    CreateIcon("back.png", {-0.4f, 0.4f, 0.0f}, {0.42f, 0.42f}, icon);
-    CreateIcon("right_arrow.png", {0.35f, 0.4f, 0.0f}, {0.42f, 0.42f}, icon);
+    GuiUtils::CreateIcon(mEngine, *this, "hand.png", {0.0, 0.03f, 0.0f}, {0.9f, 0.9f}, icon);
+    GuiUtils::CreateIcon(mEngine, *this, "back.png", {-0.4f, 0.4f, 0.0f}, {0.42f, 0.42f}, icon);
+    GuiUtils::CreateIcon(mEngine, *this, "right_arrow.png", {0.35f, 0.4f, 0.0f}, {0.42f, 0.42f}, icon);
 }
 
 void HowToPlayDialogView::SetUp() {

@@ -15,6 +15,7 @@
 #include "StringUtils.hpp"
 #include "UiLayer.hpp"
 #include "IGuiLightProvider.hpp"
+#include "GuiUtils.hpp"
 
 using namespace RowBlast;
 
@@ -62,23 +63,7 @@ NoLivesDialogView::NoLivesDialogView(Pht::IEngine& engine,
                "NO LIVES",
                guiResources.GetLargeWhiteTextProperties(zoom));
     
-    Pht::Vec3 closeButtonPosition {
-        GetSize().x / 2.0f - 1.3f,
-        GetSize().y / 2.0f - 1.3f,
-        UiLayer::textRectangle
-    };
-    
-    Pht::Vec2 closeButtonInputSize {55.0f, 55.0f};
-
-    MenuButton::Style closeButtonStyle;
-    closeButtonStyle.mPressedScale = 1.05f;
-    closeButtonStyle.mRenderableObject = &guiResources.GetCloseButton(zoom);
-    
-    mCloseButton = std::make_unique<MenuButton>(engine,
-                                                *this,
-                                                closeButtonPosition,
-                                                closeButtonInputSize,
-                                                closeButtonStyle);
+    mCloseButton = GuiUtils::CreateCloseButton(engine, *this, guiResources, zoom);
 
     Pht::Material lineMaterial {Pht::Color{0.6f, 0.8f, 1.0f}};
     lineMaterial.SetOpacity(0.3f);

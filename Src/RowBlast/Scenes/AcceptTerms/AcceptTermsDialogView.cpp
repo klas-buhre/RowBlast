@@ -8,6 +8,7 @@
 // Game includes.
 #include "CommonResources.hpp"
 #include "UiLayer.hpp"
+#include "GuiUtils.hpp"
 
 using namespace RowBlast;
 
@@ -26,13 +27,7 @@ AcceptTermsDialogView::AcceptTermsDialogView(Pht::IEngine& engine,
     auto& largeTextProperties = guiResources.GetLargeWhiteTextProperties(zoom);
     CreateText({-3.0f, 8.25f, UiLayer::text}, "AGREEMENTS", largeTextProperties);
 
-    Pht::Material lineMaterial {Pht::Color{0.6f, 0.8f, 1.0f}};
-    lineMaterial.SetOpacity(0.3f);
-    auto& sceneManager = engine.GetSceneManager();
-    auto& lineSceneObject =
-        CreateSceneObject(Pht::QuadMesh {GetSize().x - 1.5f, 0.06f}, lineMaterial, sceneManager);
-    lineSceneObject.GetTransform().SetPosition({0.0f, GetSize().y / 2.0f - 2.6f, UiLayer::textRectangle});
-    GetRoot().AddChild(lineSceneObject);
+    GuiUtils::CreateTitleBarLine(engine, *this);
 
     auto& textProperties = guiResources.GetSmallWhiteTextProperties(zoom);
     CreateText({-4.6f, 5.15f, UiLayer::text},  "By clicking Agree you agree", textProperties);
@@ -40,6 +35,7 @@ AcceptTermsDialogView::AcceptTermsDialogView(Pht::IEngine& engine,
     CreateText({-4.6f, 3.0f, UiLayer::text},   "acknowledge that you have", textProperties);
     CreateText({-4.0f, 1.925f, UiLayer::text}, "read our Privacy Policy.", textProperties);
 
+    auto& sceneManager = engine.GetSceneManager();
     Pht::Material underlineMaterial {Pht::Color{0.95f, 0.95f, 0.95f}};
     auto& termsOfServiceUnderlineSceneObject =
         CreateSceneObject(Pht::QuadMesh {5.5f, 0.05f}, underlineMaterial, sceneManager);

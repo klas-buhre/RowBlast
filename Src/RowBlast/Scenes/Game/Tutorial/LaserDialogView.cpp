@@ -3,12 +3,12 @@
 // Engine includes.
 #include "IEngine.hpp"
 #include "TextComponent.hpp"
-#include "QuadMesh.hpp"
 
 // Game includes.
 #include "CommonResources.hpp"
 #include "UiLayer.hpp"
 #include "UserServices.hpp"
+#include "GuiUtils.hpp"
 
 using namespace RowBlast;
 
@@ -52,14 +52,7 @@ LaserDialogView::LaserDialogView(Pht::IEngine& engine,
     auto& largeTextProperties {guiResources.GetLargeWhiteTextProperties(zoom)};
     CreateText({-1.4f, 8.25f, UiLayer::text}, "LASER", largeTextProperties);
 
-    Pht::Material lineMaterial {Pht::Color{0.6f, 0.8f, 1.0f}};
-    lineMaterial.SetOpacity(0.3f);
-    auto& sceneManager {engine.GetSceneManager()};
-    auto& lineSceneObject {
-        CreateSceneObject(Pht::QuadMesh {GetSize().x - 1.5f, 0.06f}, lineMaterial, sceneManager)
-    };
-    lineSceneObject.GetTransform().SetPosition({0.0f, GetSize().y / 2.0f - 2.6f, UiLayer::textRectangle});
-    GetRoot().AddChild(lineSceneObject);
+    GuiUtils::CreateTitleBarLine(engine, *this);
         
     mSlideAnimation = std::make_unique<SlideAnimation>(engine,
                                                        *this,

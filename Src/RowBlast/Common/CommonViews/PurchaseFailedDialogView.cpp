@@ -2,10 +2,10 @@
 
 // Engine includes.
 #include "IEngine.hpp"
-#include "QuadMesh.hpp"
 
 // Game includes.
 #include "UiLayer.hpp"
+#include "GuiUtils.hpp"
 
 using namespace RowBlast;
 
@@ -22,35 +22,11 @@ PurchaseFailedDialogView::PurchaseFailedDialogView(Pht::IEngine& engine,
     SetSize(menuWindow.GetSize());
     
     auto& textProperties = guiResources.GetSmallWhiteTextProperties(zoom);
-    
     CreateText({-3.0f, 3.825f, UiLayer::text}, "PURCHASE FAILED", textProperties);
     
-    Pht::Vec3 closeButtonPosition {
-        GetSize().x / 2.0f - 1.3f,
-        GetSize().y / 2.0f - 1.3f,
-        UiLayer::textRectangle
-    };
+    mCloseButton = GuiUtils::CreateCloseButton(engine, *this, guiResources, zoom);
+    GuiUtils::CreateTitleBarLine(engine, *this);
     
-    Pht::Vec2 closeButtonInputSize {55.0f, 55.0f};
-    
-    MenuButton::Style closeButtonStyle;
-    closeButtonStyle.mPressedScale = 1.05f;
-    closeButtonStyle.mRenderableObject = &guiResources.GetCloseButton(zoom);
-    
-    mCloseButton = std::make_unique<MenuButton>(engine,
-                                                *this,
-                                                closeButtonPosition,
-                                                closeButtonInputSize,
-                                                closeButtonStyle);
-
-    Pht::Material lineMaterial {Pht::Color{0.6f, 0.8f, 1.0f}};
-    lineMaterial.SetOpacity(0.3f);
-    auto& sceneManager = engine.GetSceneManager();
-    auto& lineSceneObject =
-        CreateSceneObject(Pht::QuadMesh {GetSize().x - 1.5f, 0.06f}, lineMaterial, sceneManager);
-    lineSceneObject.GetTransform().SetPosition({0.0f, GetSize().y / 2.0f - 2.6f, UiLayer::textRectangle});
-    GetRoot().AddChild(lineSceneObject);
-
     CreateText({-4.95f, 0.5f, UiLayer::text}, "No money was removed from", textProperties);
     CreateText({-2.3f, -0.575f, UiLayer::text}, " your account.", textProperties);
 

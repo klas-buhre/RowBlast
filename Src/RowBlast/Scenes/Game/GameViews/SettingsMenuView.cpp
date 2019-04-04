@@ -9,6 +9,7 @@
 // Game includes.
 #include "UiLayer.hpp"
 #include "CommonResources.hpp"
+#include "GuiUtils.hpp"
 
 using namespace RowBlast;
 
@@ -28,7 +29,7 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine, const CommonResources& 
     CreateText({-2.2f, 5.05f, UiLayer::text},
                "SETTINGS",
                guiResources.GetLargeWhiteTextProperties(zoom));
-        
+
     Pht::Vec3 closeButtonPosition {
         GetSize().x / 2.0f - 1.3f,
         GetSize().y / 2.0f - 1.25f,
@@ -70,7 +71,12 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine, const CommonResources& 
     Pht::Vec4 iconShadowColor {0.2f, 0.2f, 0.2f, 0.5f};
     Pht::Vec3 iconShadowOffset {-0.05f, -0.05f, -0.1f};
 
-    CreateIcon("music.png", {-5.55f, 2.72f, UiLayer::text}, {0.85f, 0.85f}, engine);
+    GuiUtils::CreateIcon(engine,
+                         *this,
+                         "music.png",
+                         {-5.55f, 2.72f, UiLayer::text},
+                         {0.85f, 0.85f},
+                         GetRoot());
     CreateText({-4.8f, 2.47f, UiLayer::text}, "Music", textProperties);
 
     Pht::Vec3 musicButtonPosition {3.35f, 2.7f, UiLayer::textRectangle};
@@ -98,7 +104,12 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine, const CommonResources& 
                                                "Off",
                                                buttonTextProperties).GetSceneObject());
 
-    CreateIcon("sound.png", {-5.5f, 0.52f, UiLayer::text}, {0.85f, 0.85f}, engine);
+    GuiUtils::CreateIcon(engine,
+                         *this,
+                         "sound.png",
+                         {-5.5f, 0.52f, UiLayer::text},
+                         {0.85f, 0.85f},
+                         GetRoot());
     CreateText({-4.8f, 0.27f, UiLayer::text}, "Sound Effects", textProperties);
     
     Pht::Vec3 soundButtonPosition {3.35f, 0.5f, UiLayer::textRectangle};
@@ -128,7 +139,12 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine, const CommonResources& 
                                                buttonTextProperties).GetSceneObject());
 
 #ifndef RELEASE_BUILD
-    CreateIcon("hand.png", {-5.55f, -1.68f, UiLayer::text}, {0.9f, 0.9f}, engine);
+    GuiUtils::CreateIcon(engine,
+                         *this,
+                         "hand.png",
+                         {-5.55f, -1.68f, UiLayer::text},
+                         {0.9f, 0.9f},
+                         GetRoot());
     CreateText({-4.8f, -1.93f, UiLayer::text}, "Controls", textProperties);
 
     Pht::Vec3 controlsButtonPosition {3.35f, -1.7f, UiLayer::textRectangle};
@@ -256,22 +272,4 @@ void SettingsMenuView::SetControlsSwipeIsVisible(bool isVisible) {
     mControlsSwipeIcon1->SetIsVisible(isVisible);
     mControlsSwipeIcon2->SetIsVisible(isVisible);
     mControlsSwipeIcon3->SetIsVisible(isVisible);
-}
-
-void SettingsMenuView::CreateIcon(const std::string& filename,
-                                  const Pht::Vec3& position,
-                                  const Pht::Vec2& size,
-                                  Pht::IEngine& engine) {
-    Pht::Vec4 color {0.95f, 0.95f, 0.95f, 1.0f};
-    Pht::Material iconMaterial {filename, 0.0f, 0.0f, 0.0f, 0.0f};
-    iconMaterial.SetBlend(Pht::Blend::Yes);
-    iconMaterial.SetOpacity(color.w);
-    iconMaterial.SetAmbient(Pht::Color{color.x, color.y, color.z});
-    
-    auto& iconSceneObject {
-        CreateSceneObject(Pht::QuadMesh {size.x, size.y}, iconMaterial, engine.GetSceneManager())
-    };
-    
-    iconSceneObject.GetTransform().SetPosition(position);
-    GetRoot().AddChild(iconSceneObject);
 }

@@ -2,7 +2,6 @@
 
 // Engine includes.
 #include "IEngine.hpp"
-#include "QuadMesh.hpp"
 #include "ObjMesh.hpp"
 #include "TextComponent.hpp"
 #include "IParticleSystem.hpp"
@@ -10,6 +9,7 @@
 
 // Game includes.
 #include "UiLayer.hpp"
+#include "GuiUtils.hpp"
 
 using namespace RowBlast;
 
@@ -32,34 +32,10 @@ PurchaseSuccessfulDialogView::PurchaseSuccessfulDialogView(Pht::IEngine& engine,
     SetSize(menuWindow.GetSize());
     
     auto& textProperties = guiResources.GetSmallWhiteTextProperties(zoom);
-    
     CreateText({-4.2f, 5.05f, UiLayer::text}, "PURCHASE SUCCESSFUL", textProperties);
     
-    Pht::Vec3 closeButtonPosition {
-        GetSize().x / 2.0f - 1.3f,
-        GetSize().y / 2.0f - 1.3f,
-        UiLayer::textRectangle
-    };
-    
-    Pht::Vec2 closeButtonInputSize {55.0f, 55.0f};
-    
-    MenuButton::Style closeButtonStyle;
-    closeButtonStyle.mPressedScale = 1.05f;
-    closeButtonStyle.mRenderableObject = &guiResources.GetCloseButton(zoom);
-    
-    mCloseButton = std::make_unique<MenuButton>(engine,
-                                                *this,
-                                                closeButtonPosition,
-                                                closeButtonInputSize,
-                                                closeButtonStyle);
-
-    Pht::Material lineMaterial {Pht::Color{0.6f, 0.8f, 1.0f}};
-    lineMaterial.SetOpacity(0.3f);
-    auto& sceneManager = engine.GetSceneManager();
-    auto& lineSceneObject =
-        CreateSceneObject(Pht::QuadMesh {GetSize().x - 1.5f, 0.06f}, lineMaterial, sceneManager);
-    lineSceneObject.GetTransform().SetPosition({0.0f, GetSize().y / 2.0f - 2.6f, UiLayer::textRectangle});
-    GetRoot().AddChild(lineSceneObject);
+    mCloseButton = GuiUtils::CreateCloseButton(engine, *this, guiResources, zoom);
+    GuiUtils::CreateTitleBarLine(engine, *this);
 
     auto& coin =
         CreateSceneObject(Pht::ObjMesh {"coin_852.obj", 3.15f},

@@ -54,11 +54,6 @@ namespace RowBlast {
         }
         
     private:
-        void CreateIcon(const std::string& filename,
-                        const Pht::Vec3& position,
-                        const Pht::Vec2& size,
-                        Pht::IEngine& engine);
-        
         const CommonResources& mCommonResources;
         std::unique_ptr<MenuButton> mCloseButton;
         std::unique_ptr<MenuButton> mControlsButton;

@@ -14,6 +14,7 @@
 #include "UiLayer.hpp"
 #include "GradientRectangle.hpp"
 #include "IGuiLightProvider.hpp"
+#include "GuiUtils.hpp"
 
 using namespace RowBlast;
 
@@ -52,23 +53,7 @@ LevelGoalDialogView::LevelGoalDialogView(Pht::IEngine& engine,
     auto& captionTextProperties = guiResources.GetLargeWhiteTextProperties(zoom);
     mCaption = &CreateText(captionPosition, "LEVEL 1", captionTextProperties);
     
-    Pht::Vec3 closeButtonPosition {
-        GetSize().x / 2.0f - 1.3f,
-        GetSize().y / 2.0f - 1.3f,
-        UiLayer::textRectangle
-    };
-
-    Pht::Vec2 closeButtonInputSize {55.0f, 55.0f};
-
-    MenuButton::Style closeButtonStyle;
-    closeButtonStyle.mPressedScale = 1.05f;
-    closeButtonStyle.mRenderableObject = &guiResources.GetCloseButton(zoom);
-    
-    mCloseButton = std::make_unique<MenuButton>(engine,
-                                                *this,
-                                                closeButtonPosition,
-                                                closeButtonInputSize,
-                                                closeButtonStyle);
+    mCloseButton = GuiUtils::CreateCloseButton(engine, *this, guiResources, zoom);
     
     Pht::Material lineMaterial {Pht::Color{0.6f, 0.8f, 1.0f}};
     lineMaterial.SetOpacity(0.3f);

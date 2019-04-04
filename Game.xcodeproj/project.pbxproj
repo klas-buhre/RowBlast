@@ -533,6 +533,8 @@
 		62E6DAD2220602CD00EA9D3A /* block_trail_green.png in Resources */ = {isa = PBXBuildFile; fileRef = 62E6DAD1220602CD00EA9D3A /* block_trail_green.png */; };
 		62E6DAD422060AEE00EA9D3A /* block_trail_red.png in Resources */ = {isa = PBXBuildFile; fileRef = 62E6DAD322060AEE00EA9D3A /* block_trail_red.png */; };
 		62E6DAD622060DDA00EA9D3A /* block_trail_yellow.png in Resources */ = {isa = PBXBuildFile; fileRef = 62E6DAD522060DD900EA9D3A /* block_trail_yellow.png */; };
+		62F0445D22550E8C00BD5A4C /* error.png in Resources */ = {isa = PBXBuildFile; fileRef = 62F0445C22550E8C00BD5A4C /* error.png */; };
+		62F044602255116900BD5A4C /* GuiUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62F0445E2255116900BD5A4C /* GuiUtils.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -1477,6 +1479,9 @@
 		62E6DAD1220602CD00EA9D3A /* block_trail_green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = block_trail_green.png; sourceTree = "<group>"; };
 		62E6DAD322060AEE00EA9D3A /* block_trail_red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = block_trail_red.png; sourceTree = "<group>"; };
 		62E6DAD522060DD900EA9D3A /* block_trail_yellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = block_trail_yellow.png; sourceTree = "<group>"; };
+		62F0445C22550E8C00BD5A4C /* error.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = error.png; sourceTree = "<group>"; };
+		62F0445E2255116900BD5A4C /* GuiUtils.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GuiUtils.cpp; sourceTree = "<group>"; };
+		62F0445F2255116900BD5A4C /* GuiUtils.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = GuiUtils.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1595,6 +1600,8 @@
 				62216A2321EB376E001CB9A1 /* GlossyButton.hpp */,
 				62216A2C21EB376E001CB9A1 /* GuiResources.cpp */,
 				62216A2221EB376E001CB9A1 /* GuiResources.hpp */,
+				62F0445E2255116900BD5A4C /* GuiUtils.cpp */,
+				62F0445F2255116900BD5A4C /* GuiUtils.hpp */,
 				62216A2021EB376E001CB9A1 /* IGuiLightProvider.hpp */,
 				62216A2B21EB376E001CB9A1 /* MenuButton.cpp */,
 				62216A1F21EB376E001CB9A1 /* MenuButton.hpp */,
@@ -2194,6 +2201,7 @@
 		62298337222D8E9C001A7E1C /* Gui */ = {
 			isa = PBXGroup;
 			children = (
+				62F0445C22550E8C00BD5A4C /* error.png */,
 				621F145F223978CF004165A2 /* filled_circle.png */,
 				621F145D22396CA7004165A2 /* previous.png */,
 				6220AF3422343D2A00D66C76 /* help.png */,
@@ -3249,6 +3257,7 @@
 				622169EC21E13AEA001CB9A1 /* combo1.wav in Resources */,
 				62B2BAE9212C2830009C529D /* level51.json in Resources */,
 				628EC2AC2080C4880071F368 /* level31.json in Resources */,
+				62F0445D22550E8C00BD5A4C /* error.png in Resources */,
 				625D3B5E2174B12500D67EC2 /* asteroid_fragment_500.obj in Resources */,
 				62B1CB5D210F8EE500D0F195 /* cloud_C_512.png in Resources */,
 				62B1CB80210F8F8600D0F195 /* confetti.png in Resources */,
@@ -3551,6 +3560,7 @@
 				62216BE321EB377E001CB9A1 /* MapConfirmationDialogView.cpp in Sources */,
 				623B94D821FCC5E700B62D9B /* SwitchPiece2WindowView.cpp in Sources */,
 				62216BCE21EB377E001CB9A1 /* LevelBombDialogController.cpp in Sources */,
+				62F044602255116900BD5A4C /* GuiUtils.cpp in Sources */,
 				62216BCF21EB377E001CB9A1 /* LaserDialogController.cpp in Sources */,
 				62216C2821EB377F001CB9A1 /* AsteroidAnimation.cpp in Sources */,
 				62216BD621EB377E001CB9A1 /* ConfettiParticleEffect.cpp in Sources */,

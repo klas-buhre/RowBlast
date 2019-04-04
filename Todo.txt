@@ -48,6 +48,8 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
+    -Add icons to the PurchaseCancelledDialog and PurchaseFailedDialog.
+
     -Levels for the space world.
         Moves left in sloppy play:
         Level 34: 6
