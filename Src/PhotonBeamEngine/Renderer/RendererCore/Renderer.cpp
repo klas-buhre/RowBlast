@@ -366,7 +366,6 @@ void Renderer::InitShaders() {
 
 void Renderer::SetupProjectionInShaders() {
     auto& projectionMatrix = GetProjectionMatrix();
-    
     for (auto& shader: mShaders) {
         shader.second.SetProjection(projectionMatrix);
     }
@@ -378,7 +377,7 @@ void Renderer::InitRenderQueue(const Scene& scene) {
 
 std::unique_ptr<RenderableObject> Renderer::CreateRenderableObject(const IMesh& mesh,
                                                                    const Material& material) {
-    auto shaderProgram = GetShaderProgram(material.GetShaderType());
+    auto& shaderProgram = GetShaderProgram(material.GetShaderType());
     return std::make_unique<RenderableObject>(material, mesh, shaderProgram.GetVertexFlags());
 }
 

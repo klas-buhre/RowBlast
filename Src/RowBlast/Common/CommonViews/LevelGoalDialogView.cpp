@@ -368,7 +368,6 @@ void LevelGoalDialogView::SetUp(const LevelInfo& levelInfo) {
     mCaption->GetText() = "LEVEL " + std::to_string(levelInfo.mId);
     
     auto adjustedCaptionPosition = captionPosition;
-    
     if (levelInfo.mId > 19) {
         adjustedCaptionPosition.x -= 0.31f;
     } else if (levelInfo.mId > 9) {
@@ -529,7 +528,6 @@ void LevelGoalDialogView::Update() {
 
 void LevelGoalDialogView::UpdateAnimations(float dt) {
     mAnimationTime += dt;
-    
     if (mAnimationTime > bombAnimationDuration) {
         mAnimationTime = 0.0f;
     }
@@ -543,7 +541,6 @@ void LevelGoalDialogView::UpdateAnimations(float dt) {
 
 void LevelGoalDialogView::AnimateEmissive(float dt) {
     mEmissiveAnimationTime += dt;
-    
     if (mEmissiveAnimationTime > emissiveAnimationDuration) {
         mEmissiveAnimationTime = 0.0f;
     }
@@ -571,7 +568,6 @@ void LevelGoalDialogView::AnimateBombRotation() {
 
 void LevelGoalDialogView::AnimateRowBombRotation(float dt) {
     mRowBombRotation.y += rowBombRotationSpeed * dt;
-    
     if (mRowBombRotation.y > 360.0f) {
         mRowBombRotation.y -= 360.0f;
     }
@@ -590,7 +586,6 @@ void LevelGoalDialogView::AnimateGrayCubeRotation(float dt) {
 
 void LevelGoalDialogView::AnimateAsteroidRotation(float dt) {
     mAsteroidRotation.y += asteroidRotationSpeed * dt;
-    
     if (mAsteroidRotation.y > 360.0f) {
         mAsteroidRotation.y -= 360.0f;
     }

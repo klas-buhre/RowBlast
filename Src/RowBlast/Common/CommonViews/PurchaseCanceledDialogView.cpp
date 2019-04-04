@@ -30,12 +30,12 @@ PurchaseCanceledDialogView::PurchaseCanceledDialogView(Pht::IEngine& engine,
     GuiUtils::CreateIcon(engine,
                          *this,
                          "cancel.png",
-                         {0.0f, 1.6f, UiLayer::text},
-                         {3.8f, 3.8f},
+                         {0.0f, 1.9f, UiLayer::text},
+                         {3.5f, 3.5f},
                          GetRoot(),
                          {1.0f, 0.43f, 0.43f, 1.0f});
 
-    CreateText({-5.6f, -1.65f, UiLayer::text}, "You have canceled your purchase.", textProperties);
+    CreateText({-5.6f, -1.25f, UiLayer::text}, "You have canceled your purchase.", textProperties);
 
     Pht::Vec2 okButtonInputSize {194.0f, 43.0f};
 
