@@ -10,17 +10,12 @@ using namespace RowBlast;
 
 namespace {
     Level::Objective ReadObjective(const rapidjson::Document& document) {
-        auto objective {Pht::Json::ReadString(document, "objective")};
-        
+        auto objective = Pht::Json::ReadString(document, "objective");
         if (objective == "Clear") {
             return Level::Objective::Clear;
-        }
-
-        if (objective == "Build") {
+        } else if (objective == "Build") {
             return Level::Objective::Build;
-        }
-
-        if (objective == "BringDownTheAsteroid") {
+        } else if (objective == "BringDownTheAsteroid") {
             return Level::Objective::BringDownTheAsteroid;
         }
 
@@ -28,17 +23,12 @@ namespace {
     }
     
     Level::LightIntensity ReadLightIntensity(const rapidjson::Document& document) {
-        auto lightIntensity {Pht::Json::ReadString(document, "lightIntensity")};
-        
+        auto lightIntensity = Pht::Json::ReadString(document, "lightIntensity");
         if (lightIntensity == "Daylight") {
             return Level::LightIntensity::Daylight;
-        }
-
-        if (lightIntensity == "Sunset") {
+        } else if (lightIntensity == "Sunset") {
             return Level::LightIntensity::Sunset;
-        }
-
-        if (lightIntensity == "Dark") {
+        } else if (lightIntensity == "Dark") {
             return Level::LightIntensity::Dark;
         }
 
@@ -46,13 +36,10 @@ namespace {
     }
 
     Level::FloatingBlocksSet ReadFloatingBlocksSet(const rapidjson::Document& document) {
-        auto floatingBlocksSet {Pht::Json::ReadString(document, "floatingBlocksSet")};
-        
+        auto floatingBlocksSet = Pht::Json::ReadString(document, "floatingBlocksSet");
         if (floatingBlocksSet == "Standard") {
             return Level::FloatingBlocksSet::Standard;
-        }
-
-        if (floatingBlocksSet == "Asteroid") {
+        } else if (floatingBlocksSet == "Asteroid") {
             return Level::FloatingBlocksSet::Asteroid;
         }
 
@@ -65,7 +52,7 @@ namespace {
         assert(document.HasMember(memberName.c_str()));
         
         std::vector<const Piece*> levelPieceTypes;
-        const auto& piecesArray {document[memberName.c_str()]};
+        const auto& piecesArray = document[memberName.c_str()];
         assert(piecesArray.IsArray());
         
         for (const auto& pieceStr: piecesArray.GetArray()) {
@@ -103,17 +90,17 @@ namespace {
             return tutorialMoves;
         }
         
-        const auto& tutorialMovesArray {document["predeterminedMoves"]};
+        const auto& tutorialMovesArray = document["predeterminedMoves"];
         assert(tutorialMovesArray.IsArray());
         
         for (const auto& tutorialMoveObject: tutorialMovesArray.GetArray()) {
             assert(tutorialMoveObject.IsObject());
             
-            auto position {Pht::Json::ReadIVec2(tutorialMoveObject, "position")};
-            auto rotationDeg {Pht::Json::ReadInt(tutorialMoveObject, "rotation")};
+            auto position = Pht::Json::ReadIVec2(tutorialMoveObject, "position");
+            auto rotationDeg = Pht::Json::ReadInt(tutorialMoveObject, "rotation");
         
-            auto pieceStr {Pht::Json::ReadString(tutorialMoveObject, "piece")};
-            auto i {pieceTypes.find(pieceStr)};
+            auto pieceStr = Pht::Json::ReadString(tutorialMoveObject, "piece");
+            auto i = pieceTypes.find(pieceStr);
             assert(i != std::end(pieceTypes));
 
             Level::TutorialMove tutorialMove {
@@ -137,20 +124,20 @@ namespace {
             return tutorialMoves;
         }
         
-        auto pieceStr {Pht::Json::ReadString(suggestedMoveAlternativesObject, "piece")};
-        auto i {pieceTypes.find(pieceStr)};
+        auto pieceStr = Pht::Json::ReadString(suggestedMoveAlternativesObject, "piece");
+        auto i = pieceTypes.find(pieceStr);
         assert(i != std::end(pieceTypes));
-        auto& piece {*(i->second.get())};
+        auto& piece = *(i->second.get());
 
-        const auto& alternativesArray {suggestedMoveAlternativesObject["alternatives"]};
+        const auto& alternativesArray = suggestedMoveAlternativesObject["alternatives"];
         assert(alternativesArray.IsArray());
 
         for (const auto& alternativeObject: alternativesArray.GetArray()) {
             assert(alternativeObject.IsObject());
             
-            auto position {Pht::Json::ReadIVec2(alternativeObject, "position")};
-            auto rotationDeg {Pht::Json::ReadInt(alternativeObject, "rotation")};
-            auto score {Pht::Json::ReadFloat(alternativeObject, "score")};
+            auto position = Pht::Json::ReadIVec2(alternativeObject, "position");
+            auto rotationDeg = Pht::Json::ReadInt(alternativeObject, "rotation");
+            auto score = Pht::Json::ReadFloat(alternativeObject, "score");
 
             Level::TutorialMove tutorialMove {position, DegToRotation(rotationDeg), piece, score};
             tutorialMoves.push_back(tutorialMove);
@@ -167,15 +154,14 @@ namespace {
             return tutorialMoves;
         }
         
-        const auto& suggestedMovesArray {document["suggestedMoves"]};
+        const auto& suggestedMovesArray = document["suggestedMoves"];
         assert(suggestedMovesArray.IsArray());
         
         for (const auto& suggestedMoveAlternativesObject: suggestedMovesArray.GetArray()) {
             assert(suggestedMoveAlternativesObject.IsObject());
             
-            auto suggestedMoveAlternatives {
-                ReadSuggestedMovesAlternatives(suggestedMoveAlternativesObject, pieceTypes)
-            };
+            auto suggestedMoveAlternatives =
+                ReadSuggestedMovesAlternatives(suggestedMoveAlternativesObject, pieceTypes);
             
             tutorialMoves.push_back(suggestedMoveAlternatives);
         }
@@ -300,7 +286,7 @@ namespace {
     
     Cell CreateCell(char c, int column, int row) {
         Cell cell;
-        auto& firstSubCell {cell.mFirstSubCell};
+        auto& firstSubCell = cell.mFirstSubCell;
         
         firstSubCell.mPosition = Pht::Vec2 {static_cast<float>(column), static_cast<float>(row)};
         firstSubCell.mFill = CellFill(c);
@@ -317,27 +303,27 @@ namespace {
             return nullptr;
         }
         
-        const auto& rowArray {document["clearGrid"]};
+        const auto& rowArray = document["clearGrid"];
         assert(rowArray.IsArray());
         
-        auto numRows {rowArray.Size()};
-        auto previousNumColumns {0};
+        auto numRows = rowArray.Size();
+        auto previousNumColumns = 0;
         
-        auto cellGrid {std::make_unique<CellGrid>()};
+        auto cellGrid = std::make_unique<CellGrid>();
         cellGrid->resize(numRows);
         
-        for (auto rowIndex {0}; rowIndex < numRows; ++rowIndex) {
-            const auto& row {rowArray[numRows - 1 - rowIndex]};
+        for (auto rowIndex = 0; rowIndex < numRows; ++rowIndex) {
+            const auto& row = rowArray[numRows - 1 - rowIndex];
             assert(row.IsString());
             
             std::string str {row.GetString()};
-            auto numColumns {str.size()};
+            auto numColumns = str.size();
             assert(previousNumColumns == 0 || numColumns == previousNumColumns);
             
             previousNumColumns = static_cast<int>(numColumns);
             std::vector<Cell> cellRow(numColumns);
             
-            for (auto columnIndex {0}; columnIndex < numColumns; ++columnIndex) {
+            for (auto columnIndex = 0; columnIndex < numColumns; ++columnIndex) {
                 cellRow[columnIndex] = CreateCell(str[columnIndex], columnIndex, rowIndex);
             }
             
@@ -352,27 +338,27 @@ namespace {
             return nullptr;
         }
         
-        const auto& rowArray {document["blueprintGrid"]};
+        const auto& rowArray = document["blueprintGrid"];
         assert(rowArray.IsArray());
         
-        auto numRows {rowArray.Size()};
-        auto previousNumColumns {0};
+        auto numRows = rowArray.Size();
+        auto previousNumColumns = 0;
         
         auto blueprintGrid {std::make_unique<BlueprintCellGrid>()};
         blueprintGrid->resize(numRows);
         
-        for (auto rowIndex {0}; rowIndex < numRows; ++rowIndex) {
-            const auto& row {rowArray[numRows - 1 - rowIndex]};
+        for (auto rowIndex = 0; rowIndex < numRows; ++rowIndex) {
+            const auto& row = rowArray[numRows - 1 - rowIndex];
             assert(row.IsString());
             
             std::string str {row.GetString()};
-            auto numColumns {str.size()};
+            auto numColumns = str.size();
             assert(previousNumColumns == 0 || numColumns == previousNumColumns);
             
             previousNumColumns = static_cast<int>(numColumns);
             std::vector<BlueprintCell> cellRow(numColumns);
             
-            for (auto columnIndex {0}; columnIndex < numColumns; ++columnIndex) {
+            for (auto columnIndex = 0; columnIndex < numColumns; ++columnIndex) {
                 cellRow[columnIndex] = BlueprintCell {.mFill = CellFill(str[columnIndex])};
             }
             
@@ -387,10 +373,10 @@ std::unique_ptr<Level> LevelLoader::Load(int levelId, const LevelResources& leve
     rapidjson::Document document;
     Pht::Json::ParseFile(document, "level" + std::to_string(levelId) + ".json");
 
-    auto speed {Pht::Json::ReadFloat(document, "speed")};
-    auto moves {Pht::Json::ReadInt(document, "moves")};
+    auto speed = Pht::Json::ReadFloat(document, "speed");
+    auto moves = Pht::Json::ReadInt(document, "moves");
     
-    auto gestureMovesFactor {1.0f};
+    auto gestureMovesFactor = 1.0f;
     if (document.HasMember("gestureMovesFactor")) {
         gestureMovesFactor = Pht::Json::ReadFloat(document, "gestureMovesFactor");
     }
@@ -400,15 +386,15 @@ std::unique_ptr<Level> LevelLoader::Load(int levelId, const LevelResources& leve
         .mThree = Pht::Json::ReadInt(document, "threeStars")
     };
     
-    auto& pieceTypes {levelResources.GetPieceTypes()};
+    auto& pieceTypes = levelResources.GetPieceTypes();
     
-    auto musicTrack {Pht::Json::ReadInt(document, "musicTrack")};
-    auto backgroundTextureFilename {Pht::Json::ReadString(document, "background")};
-    auto floatingBlocksSet {ReadFloatingBlocksSet(document)};
-    auto lightIntensity {ReadLightIntensity(document)};
-    auto levelPieces {ReadPieceTypes(document, "pieces", pieceTypes)};
+    auto musicTrack = Pht::Json::ReadInt(document, "musicTrack");
+    auto backgroundTextureFilename = Pht::Json::ReadString(document, "background");
+    auto floatingBlocksSet = ReadFloatingBlocksSet(document);
+    auto lightIntensity = ReadLightIntensity(document);
+    auto levelPieces = ReadPieceTypes(document, "pieces", pieceTypes);
     
-    auto isPartOfTutorial {false};
+    auto isPartOfTutorial = false;
     if (document.HasMember("partOfTutorial")) {
         isPartOfTutorial = Pht::Json::ReadBool(document, "partOfTutorial");
     }
@@ -418,17 +404,17 @@ std::unique_ptr<Level> LevelLoader::Load(int levelId, const LevelResources& leve
         pieceSequence = ReadPieceTypes(document, "pieceSequence", pieceTypes);
     }
     
-    auto predeterminedMoves {ReadPredeterminedMoves(document, pieceTypes)};
-    auto suggestedMoves {ReadSuggestedMoves(document, pieceTypes)};
-    auto clearGrid {ReadClearGrid(document)};
-    auto blueprintGrid {ReadBlueprintGrid(document)};
+    auto predeterminedMoves = ReadPredeterminedMoves(document, pieceTypes);
+    auto suggestedMoves = ReadSuggestedMoves(document, pieceTypes);
+    auto clearGrid = ReadClearGrid(document);
+    auto blueprintGrid = ReadBlueprintGrid(document);
     
     assert(clearGrid || blueprintGrid);
     assert(!(clearGrid && blueprintGrid));
 
     Level::Objective objective;
-    auto numColumns {0};
-    auto numRows {0};
+    auto numColumns = 0;
+    auto numRows = 0;
     if (clearGrid) {
         objective = Level::Objective::Clear;
         numColumns = static_cast<int>(clearGrid->front().size());
@@ -443,7 +429,7 @@ std::unique_ptr<Level> LevelLoader::Load(int levelId, const LevelResources& leve
         objective = ReadObjective(document);
     }
     
-    auto level {
+    auto level =
         std::make_unique<Level>(levelId,
                                 objective,
                                 numColumns,
@@ -460,8 +446,7 @@ std::unique_ptr<Level> LevelLoader::Load(int levelId, const LevelResources& leve
                                 backgroundTextureFilename,
                                 floatingBlocksSet,
                                 lightIntensity,
-                                isPartOfTutorial)
-    };
+                                isPartOfTutorial);
     
     if (clearGrid) {
         level->SetClearGrid(std::move(clearGrid));
@@ -477,12 +462,12 @@ std::unique_ptr<LevelInfo> LevelLoader::LoadInfo(int levelId,
     rapidjson::Document document;
     Pht::Json::ParseFile(document, "level" + std::to_string(levelId) + ".json");
 
-    auto levelPieces {ReadPieceTypes(document, "pieces", levelResources.GetPieceTypes())};
+    auto levelPieces = ReadPieceTypes(document, "pieces", levelResources.GetPieceTypes());
     
     Level::Objective objective;
     if (document.HasMember("clearGrid")) {
         objective = Level::Objective::Clear;
-    } else  if (document.HasMember("blueprintGrid")) {
+    } else if (document.HasMember("blueprintGrid")) {
         objective = Level::Objective::Build;
     } else {
         assert(!"Unknown objective");

@@ -75,8 +75,8 @@ void LevelResources::CreatePieceTypes(Pht::IEngine& engine,
 
 void LevelResources::CreateCellRenderables(Pht::ISceneManager& sceneManager,
                                            const CommonResources& commonResources) {
-    auto cellSize {commonResources.GetCellSize()};
-    auto& grayFieldBlockMaterial {commonResources.GetMaterials().GetGrayFieldBlockMaterial()};
+    auto cellSize = commonResources.GetCellSize();
+    auto& grayFieldBlockMaterial = commonResources.GetMaterials().GetGrayFieldBlockMaterial();
     
     mGrayCube = sceneManager.CreateRenderableObject(
         Pht::ObjMesh {"cube_428.obj", cellSize},
@@ -91,24 +91,24 @@ void LevelResources::CreateCellRenderables(Pht::ISceneManager& sceneManager,
 
 void LevelResources::CreateBlueprintRenderables(Pht::IEngine& engine,
                                                 const CommonResources& commonResources) {
-    const auto edgeWidth {0.07f};
-    auto cellSize {commonResources.GetCellSize()};
-    auto squareSide {cellSize + edgeWidth};
+    const auto edgeWidth = 0.07f;
+    auto cellSize = commonResources.GetCellSize();
+    auto squareSide = cellSize + edgeWidth;
     Pht::Vec2 coordinateSystemSize {squareSide, squareSide};
-    auto& renderer {engine.GetRenderer()};
+    auto& renderer = engine.GetRenderer();
 
-    auto& renderBufferSize {renderer.GetRenderBufferSize()};
-    auto& frustumSize {commonResources.GetOrthographicFrustumSizePotentiallyZoomedScreen()};
+    auto& renderBufferSize = renderer.GetRenderBufferSize();
+    auto& frustumSize = commonResources.GetOrthographicFrustumSizePotentiallyZoomedScreen();
     
-    auto xScaleFactor {static_cast<float>(renderBufferSize.x) / static_cast<float>(frustumSize.x)};
-    auto yScaleFactor {static_cast<float>(renderBufferSize.y) / static_cast<float>(frustumSize.y)};
+    auto xScaleFactor = static_cast<float>(renderBufferSize.x) / static_cast<float>(frustumSize.x);
+    auto yScaleFactor = static_cast<float>(renderBufferSize.y) / static_cast<float>(frustumSize.y);
     
     Pht::IVec2 imageSize {
         static_cast<int>(squareSide * xScaleFactor) * 2,
         static_cast<int>(squareSide * yScaleFactor) * 2
     };
     
-    auto rasterizer {std::make_unique<Pht::SoftwareRasterizer>(coordinateSystemSize, imageSize)};
+    auto rasterizer = std::make_unique<Pht::SoftwareRasterizer>(coordinateSystemSize, imageSize);
     
     Pht::Vec4 fillColor {1.0f, 1.0f, 1.0f, 0.192f};
     
@@ -134,12 +134,12 @@ void LevelResources::CreateBlueprintRenderables(Pht::IEngine& engine,
     Pht::Vec2 upperRight4 {edgeWidth, squareSide};
     rasterizer->DrawRectangle(upperRight4, lowerLeft4, edgeColor, Pht::DrawOver::Yes);
 
-    auto image {rasterizer->ProduceImage()};
+    auto image = rasterizer->ProduceImage();
     
     Pht::Material imageMaterial {*image, Pht::GenerateMipmap::Yes};
     imageMaterial.SetBlend(Pht::Blend::Yes);
     imageMaterial.GetDepthState().mDepthWrite = true;
-    auto& sceneManager {engine.GetSceneManager()};
+    auto& sceneManager = engine.GetSceneManager();
     mBlueprintSquare = sceneManager.CreateRenderableObject(Pht::QuadMesh {squareSide, squareSide},
                                                            imageMaterial);
 
@@ -157,7 +157,7 @@ void LevelResources::CreateBlueprintRenderables(Pht::IEngine& engine,
         animationMaterial
     );
     
-    auto f {0.9125f};
+    auto f = 0.9125f;
     Pht::Vec4 fieldColor {0.3f * f, 0.3f * f, 0.752f * f, 1.0f};
 
     Pht::QuadMesh::Vertices fieldCellVertices  {
@@ -187,28 +187,28 @@ void LevelResources::CreateLevelBombRenderable(Pht::IEngine& engine) {
     bombMaterial.SetAmbient(Pht::Color {1.18f, 1.18f, 1.7f});
     bombMaterial.SetDiffuse(Pht::Color {0.8f, 0.8f, 1.6f});
     bombMaterial.SetEmissive(Pht::Color {3.0f, 3.0f, 3.0f});
-    auto& sceneManager {engine.GetSceneManager()};
+    auto& sceneManager = engine.GetSceneManager();
     mLevelBomb = sceneManager.CreateRenderableObject(Pht::ObjMesh {"bomb_798.obj", 16.2f},
                                                      bombMaterial);
 }
 
 void LevelResources::CreateBigAsteroidRenderable(Pht::IEngine& engine) {
     Pht::Material asteroidMaterial {"gray_asteroid.jpg", 0.84f, 1.23f, 0.0f, 1.0f};
-    auto& sceneManager {engine.GetSceneManager()};
+    auto& sceneManager = engine.GetSceneManager();
     mBigAsteroid = sceneManager.CreateRenderableObject(Pht::ObjMesh {"asteroid_2000.obj", 38.0f, Pht::MoveMeshToOrigin::Yes},
                                                        asteroidMaterial);
 }
 
 void LevelResources::CreateSmallAsteroidRenderable(Pht::IEngine& engine) {
     Pht::Material asteroidMaterial {"gray_asteroid.jpg", 0.84f, 1.23f, 0.0f, 1.0f};
-    auto& sceneManager {engine.GetSceneManager()};
+    auto& sceneManager = engine.GetSceneManager();
     mSmallAsteroid = sceneManager.CreateRenderableObject(Pht::ObjMesh {"asteroid_2000.obj", 19.0f, Pht::MoveMeshToOrigin::Yes},
                                                          asteroidMaterial);
 }
 
 void LevelResources::CreateAsteroidFragmentRenderable(Pht::IEngine& engine) {
     Pht::Material asteroidMaterial {"gray_asteroid.jpg", 0.84f, 1.23f, 0.0f, 1.0f};
-    auto& sceneManager {engine.GetSceneManager()};
+    auto& sceneManager = engine.GetSceneManager();
     mAsteroidFragment = sceneManager.CreateRenderableObject(Pht::ObjMesh {"asteroid_fragment_500.obj", 5.25f, Pht::MoveMeshToOrigin::Yes},
                                                             asteroidMaterial);
 }
