@@ -10,8 +10,8 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto fade {0.5f};
-    constexpr auto fadeTime {0.3f};
+    constexpr auto fade = 0.5f;
+    constexpr auto fadeTime = 0.3f;
 }
 
 GameViewControllers::GameViewControllers(Pht::IEngine& engine,
@@ -70,7 +70,7 @@ GameViewControllers::GameViewControllers(Pht::IEngine& engine,
 void GameViewControllers::Init(GameScene& scene, Pht::FadeEffect& storeFadeEffect) {
     mFadeEffect.Reset();
     
-    auto& uiViewContainer {scene.GetUiViewsContainer()};
+    auto& uiViewContainer = scene.GetUiViewsContainer();
     uiViewContainer.AddChild(mFadeEffect.GetSceneObject());
  
     mViewManager.Init(uiViewContainer);

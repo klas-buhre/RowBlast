@@ -15,10 +15,10 @@ using namespace RowBlast;
 RestartConfirmationDialogView::RestartConfirmationDialogView(Pht::IEngine& engine,
                                                              const CommonResources& commonResources) {
     PotentiallyZoomedScreen zoom {PotentiallyZoomedScreen::Yes};
-    auto& guiResources {commonResources.GetGuiResources()};
-    auto& menuWindow {guiResources.GetMediumMenuWindow()};
+    auto& guiResources = commonResources.GetGuiResources();
+    auto& menuWindow = guiResources.GetMediumMenuWindow();
     
-    auto menuWindowSceneObject {std::make_unique<Pht::SceneObject>(&menuWindow.GetRenderable())};
+    auto menuWindowSceneObject = std::make_unique<Pht::SceneObject>(&menuWindow.GetRenderable());
     menuWindowSceneObject->GetTransform().SetPosition({0.0f, 0.0f, UiLayer::background});
     AddSceneObject(std::move(menuWindowSceneObject));
 
@@ -26,7 +26,7 @@ RestartConfirmationDialogView::RestartConfirmationDialogView(Pht::IEngine& engin
 
     CreateText({-2.0f, 4.25f, UiLayer::text}, "RESTART", guiResources.GetCaptionTextProperties(zoom));
     
-    auto& textProperties {guiResources.GetSmallTextProperties(zoom)};
+    auto& textProperties = guiResources.GetSmallTextProperties(zoom);
     CreateText({-5.4f, 1.9f, UiLayer::text}, "Are you sure you want to restart", textProperties);
     CreateText({-1.65f, 0.9f, UiLayer::text}, "the level?", textProperties);
 

@@ -16,11 +16,11 @@ using namespace RowBlast;
 SettingsMenuView::SettingsMenuView(Pht::IEngine& engine, const CommonResources& commonResources) :
     mCommonResources {commonResources} {
 
-    auto zoom {PotentiallyZoomedScreen::Yes};
-    auto& guiResources {commonResources.GetGuiResources()};
-    auto& menuWindow {guiResources.GetMediumDarkMenuWindow()};
+    auto zoom = PotentiallyZoomedScreen::Yes;
+    auto& guiResources = commonResources.GetGuiResources();
+    auto& menuWindow = guiResources.GetMediumDarkMenuWindow();
     
-    auto menuWindowSceneObject {std::make_unique<Pht::SceneObject>(&menuWindow.GetRenderable())};
+    auto menuWindowSceneObject = std::make_unique<Pht::SceneObject>(&menuWindow.GetRenderable());
     menuWindowSceneObject->GetTransform().SetPosition({0.0f, 0.0f, UiLayer::background});
     AddSceneObject(std::move(menuWindowSceneObject));
 
@@ -50,15 +50,14 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine, const CommonResources& 
     
     Pht::Material lineMaterial {Pht::Color{0.6f, 0.8f, 1.0f}};
     lineMaterial.SetOpacity(0.3f);
-    auto& sceneManager {engine.GetSceneManager()};
-    auto& lineSceneObject {
-        CreateSceneObject(Pht::QuadMesh {GetSize().x - 1.5f, 0.06f}, lineMaterial, sceneManager)
-    };
+    auto& sceneManager = engine.GetSceneManager();
+    auto& lineSceneObject =
+        CreateSceneObject(Pht::QuadMesh {GetSize().x - 1.5f, 0.06f}, lineMaterial, sceneManager);
     lineSceneObject.GetTransform().SetPosition({0.0f, GetSize().y / 2.0f - 2.5f, UiLayer::textRectangle});
     GetRoot().AddChild(lineSceneObject);
     
-    auto& textProperties {guiResources.GetSmallWhiteTextProperties(zoom)};
-    auto& buttonTextProperties {guiResources.GetWhiteButtonTextProperties(zoom)};
+    auto& textProperties = guiResources.GetSmallWhiteTextProperties(zoom);
+    auto& buttonTextProperties = guiResources.GetWhiteButtonTextProperties(zoom);
 
     MenuButton::Style settingsButtonStyle;
     settingsButtonStyle.mPressedScale = 1.05f;
@@ -223,9 +222,8 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine, const CommonResources& 
 void SettingsMenuView::EnableControlsButton() {
     mIsControlsButtonEnabled = true;
     
-    auto& blueButtonRenderable {
-        mCommonResources.GetGuiResources().GetSmallBlueGlossyButton(PotentiallyZoomedScreen::Yes)
-    };
+    auto& blueButtonRenderable =
+        mCommonResources.GetGuiResources().GetSmallBlueGlossyButton(PotentiallyZoomedScreen::Yes);
     
     mControlsButton->GetSceneObject().SetRenderable(&blueButtonRenderable);
 }
@@ -233,9 +231,8 @@ void SettingsMenuView::EnableControlsButton() {
 void SettingsMenuView::DisableControlsButton() {
     mIsControlsButtonEnabled = false;
 
-    auto& grayButtonRenderable {
-        mCommonResources.GetGuiResources().GetSmallGrayGlossyButtonPotentiallyZoomedScreen()
-    };
+    auto& grayButtonRenderable =
+        mCommonResources.GetGuiResources().GetSmallGrayGlossyButtonPotentiallyZoomedScreen();
     
     mControlsButton->GetSceneObject().SetRenderable(&grayButtonRenderable);
 }

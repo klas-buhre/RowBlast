@@ -62,7 +62,7 @@ SettingsMenuController::Result SettingsMenuController::HandleInput() {
 }
 
 SettingsMenuController::Result SettingsMenuController::OnTouch(const Pht::TouchEvent& touchEvent) {
-    auto& settingsService {mUserServices.GetSettingsService()};
+    auto& settingsService = mUserServices.GetSettingsService();
 
 #ifndef RELEASE_BUILD
     if (mView.IsControlsButtonEnabled()) {
@@ -79,8 +79,7 @@ SettingsMenuController::Result SettingsMenuController::OnTouch(const Pht::TouchE
 #endif
 
     if (mView.GetSoundButton().IsClicked(touchEvent)) {
-        auto& audio {mEngine.GetAudio()};
-        
+        auto& audio = mEngine.GetAudio();
         if (audio.IsSoundEnabled()) {
             audio.DisableSound();
             settingsService.SetIsSoundEnabled(false);
@@ -93,8 +92,7 @@ SettingsMenuController::Result SettingsMenuController::OnTouch(const Pht::TouchE
     }
 
     if (mView.GetMusicButton().IsClicked(touchEvent)) {
-        auto& audio {mEngine.GetAudio()};
-        
+        auto& audio = mEngine.GetAudio();
         if (audio.IsMusicEnabled()) {
             audio.DisableMusic();
             settingsService.SetIsMusicEnabled(false);
@@ -119,8 +117,7 @@ SettingsMenuController::Result SettingsMenuController::OnTouch(const Pht::TouchE
 
 void SettingsMenuController::UpdateViewToReflectSettings(bool isGestureControlsAllowed) {
 #ifndef RELEASE_BUILD
-    auto& settingsService {mUserServices.GetSettingsService()};
-    
+    auto& settingsService = mUserServices.GetSettingsService();
     if (settingsService.GetControlType() == ControlType::Click || !isGestureControlsAllowed) {
         mView.SetControlsClickIsVisible(true);
         mView.SetControlsSwipeIsVisible(false);
@@ -130,8 +127,7 @@ void SettingsMenuController::UpdateViewToReflectSettings(bool isGestureControlsA
     }
 #endif
 
-    auto& audio {mEngine.GetAudio()};
-
+    auto& audio = mEngine.GetAudio();
     if (audio.IsSoundEnabled()) {
         mView.SetSoundOnIsVisible(true);
         mView.SetSoundOffIsVisible(false);

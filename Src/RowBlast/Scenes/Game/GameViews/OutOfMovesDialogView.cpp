@@ -23,17 +23,16 @@ using namespace RowBlast;
 namespace {
     const Pht::Vec3 uiLightDirection {0.6f, 1.0f, 1.0f};
     const Pht::Vec3 uiCameraPosition {0.0f, 0.0f, 15.5f};
-    constexpr auto lPieceAnimationDuration {3.8f};
-    constexpr auto lPieceRotationAmplitude {10.0f};
-    constexpr auto particleVelocity {0.6f};
-    constexpr auto particleVelocityRandomPart {0.1f};
+    constexpr auto lPieceAnimationDuration = 3.8f;
+    constexpr auto lPieceRotationAmplitude = 10.0f;
+    constexpr auto particleVelocity = 0.6f;
+    constexpr auto particleVelocityRandomPart = 0.1f;
     
     Pht::Vec3 ParticleVelocityFunction() {
-        auto phi {Pht::ToRadians(Pht::NormalizedRand() * 360.0f)};
+        auto phi = Pht::ToRadians(Pht::NormalizedRand() * 360.0f);
     
-        auto magnitude {
-            particleVelocity + (Pht::NormalizedRand() - 0.5f) * particleVelocityRandomPart
-        };
+        auto magnitude =
+            particleVelocity + (Pht::NormalizedRand() - 0.5f) * particleVelocityRandomPart;
         
         return {
             static_cast<float>(magnitude * std::cos(phi)),
@@ -53,10 +52,10 @@ OutOfMovesDialogView::OutOfMovesDialogView(Pht::IEngine& engine,
     GetRoot().AddChild(*mUpperHudSceneObject);
 
     PotentiallyZoomedScreen zoom {PotentiallyZoomedScreen::Yes};
-    auto& guiResources {commonResources.GetGuiResources()};
-    auto& menuWindow {guiResources.GetMediumDarkMenuWindow()};
+    auto& guiResources = commonResources.GetGuiResources();
+    auto& menuWindow = guiResources.GetMediumDarkMenuWindow();
     
-    auto menuWindowSceneObject {std::make_unique<Pht::SceneObject>(&menuWindow.GetRenderable())};
+    auto menuWindowSceneObject = std::make_unique<Pht::SceneObject>(&menuWindow.GetRenderable());
     menuWindowSceneObject->GetTransform().SetPosition({0.0f, 0.0f, UiLayer::background});
     AddSceneObject(std::move(menuWindowSceneObject));
 
@@ -71,7 +70,7 @@ OutOfMovesDialogView::OutOfMovesDialogView(Pht::IEngine& engine,
     
     CreateAddMovesIcon({0.0f, 2.05f, UiLayer::root}, commonResources, pieceResources);
 
-    auto& textProperties {guiResources.GetSmallWhiteTextProperties(zoom)};
+    auto& textProperties = guiResources.GetSmallWhiteTextProperties(zoom);
     CreateText({-5.1f, -0.825f, UiLayer::text}, "Get 5 more moves and continue", textProperties);
     CreateText({-1.3f, -1.9f, UiLayer::text}, "playing", textProperties);
     
@@ -99,12 +98,11 @@ OutOfMovesDialogView::OutOfMovesDialogView(Pht::IEngine& engine,
                               "CONTINUE           " + std::to_string(PurchasingService::addMovesPriceInCoins),
                               buttonTextProperties);
 
-    auto& coin {
+    auto& coin =
         CreateSceneObject(Pht::ObjMesh {"coin_852.obj", 3.15f},
                           commonResources.GetMaterials().GetGoldMaterial(),
-                          engine.GetSceneManager())
-    };
-    auto& coinTransform {coin.GetTransform()};
+                          engine.GetSceneManager());
+    auto& coinTransform = coin.GetTransform();
     coinTransform.SetPosition({1.85f, 0.0f, UiLayer::buttonOverlayObject});
     coinTransform.SetRotation({0.0f, 40.0f, 0.0f});
     coinTransform.SetScale(0.9f);
@@ -114,7 +112,7 @@ OutOfMovesDialogView::OutOfMovesDialogView(Pht::IEngine& engine,
 void OutOfMovesDialogView::CreateAddMovesIcon(const Pht::Vec3& position,
                                               const CommonResources& commonResources,
                                               const PieceResources& pieceResources) {
-    auto& container {CreateSceneObject()};
+    auto& container = CreateSceneObject();
     container.GetTransform().SetPosition(position);
     GetRoot().AddChild(container);
     
@@ -123,7 +121,7 @@ void OutOfMovesDialogView::CreateAddMovesIcon(const Pht::Vec3& position,
     CreateParticles(container);
 
     PotentiallyZoomedScreen zoom {PotentiallyZoomedScreen::Yes};
-    auto& textProperties {commonResources.GetGuiResources().GetSmallWhiteTextProperties(zoom)};
+    auto& textProperties = commonResources.GetGuiResources().GetSmallWhiteTextProperties(zoom);
     CreateText({-0.45f, -1.7f, UiLayer::buttonText}, "+5", textProperties, container);
 }
 
@@ -132,18 +130,17 @@ void OutOfMovesDialogView::CreateLPiece(Pht::SceneObject& parentObject,
     mLPieceSceneObject = &CreateSceneObject();
     parentObject.AddChild(*mLPieceSceneObject);
     
-    auto& baseTransform {mLPieceSceneObject->GetTransform()};
+    auto& baseTransform = mLPieceSceneObject->GetTransform();
     baseTransform.SetPosition({0.0f, 0.0f, UiLayer::block});
-    auto scale {0.75f};
+    auto scale = 0.75f;
     baseTransform.SetScale(scale);
 
-    auto& blockRenderable {
+    auto& blockRenderable =
         pieceResources.GetBlockRenderableObject(BlockKind::Full,
                                                 BlockColor::Green,
-                                                BlockBrightness::Normal)
-    };
+                                                BlockBrightness::Normal);
 
-    auto halfCellSize {0.625f};
+    auto halfCellSize = 0.625f;
     CreateGreenBlock({-halfCellSize, -halfCellSize, 0.0f}, blockRenderable, *mLPieceSceneObject);
     CreateGreenBlock({halfCellSize, -halfCellSize, 0.0f}, blockRenderable, *mLPieceSceneObject);
     CreateGreenBlock({halfCellSize, halfCellSize, 0.0f}, blockRenderable, *mLPieceSceneObject);
@@ -152,7 +149,7 @@ void OutOfMovesDialogView::CreateLPiece(Pht::SceneObject& parentObject,
 void OutOfMovesDialogView::CreateGreenBlock(const Pht::Vec3& position,
                                             Pht::RenderableObject& blockRenderable,
                                             Pht::SceneObject& lPiece) {
-    auto& block {CreateSceneObject()};
+    auto& block = CreateSceneObject();
     block.GetTransform().SetPosition(position);
     block.SetRenderable(&blockRenderable);
     lPiece.AddChild(block);
@@ -184,11 +181,11 @@ void OutOfMovesDialogView::CreateGlowEffect(Pht::SceneObject& parentObject) {
         .mGrowDuration = 0.5f
     };
     
-    auto& particleSystem {mEngine.GetParticleSystem()};
+    auto& particleSystem = mEngine.GetParticleSystem();
     mGlowEffect = particleSystem.CreateParticleEffectSceneObject(particleSettings,
                                                                  particleEmitterSettings,
                                                                  Pht::RenderMode::Triangles);
-    auto& material {mGlowEffect->GetRenderable()->GetMaterial()};
+    auto& material = mGlowEffect->GetRenderable()->GetMaterial();
     material.SetShaderType(Pht::ShaderType::ParticleNoAlphaTexture);
     
     mGlowEffect->GetTransform().SetPosition({0.2f, -0.2f, UiLayer::panel});
@@ -217,7 +214,7 @@ void OutOfMovesDialogView::CreateParticles(Pht::SceneObject& parentObject) {
         .mShrinkDuration = 1.0f
     };
     
-    auto& particleSystem {mEngine.GetParticleSystem()};
+    auto& particleSystem = mEngine.GetParticleSystem();
     mParticles = particleSystem.CreateParticleEffectSceneObject(particleSettings,
                                                                 particleEmitterSettings,
                                                                 Pht::RenderMode::Triangles);
@@ -236,7 +233,7 @@ void OutOfMovesDialogView::SetUp(GameScene& scene) {
     mGlowEffect->GetComponent<Pht::ParticleEffect>()->Start();
     mParticles->GetComponent<Pht::ParticleEffect>()->Start();
     
-    auto& hud {scene.GetHud()};
+    auto& hud = scene.GetHud();
     hud.GetUpperContainer().DetachChildren();
     mUpperHudSceneObject->DetachChildren();
     mUpperHudSceneObject->AddChild(hud.GetProgressContainer());
@@ -246,24 +243,22 @@ void OutOfMovesDialogView::SetUp(GameScene& scene) {
 }
 
 void OutOfMovesDialogView::Update() {
-    auto dt {mEngine.GetLastFrameSeconds()};
+    auto dt = mEngine.GetLastFrameSeconds();
+    
     mGlowEffect->GetComponent<Pht::ParticleEffect>()->Update(dt);
     mParticles->GetComponent<Pht::ParticleEffect>()->Update(dt);
-    
     AnimateLPieceRotation(dt);
 }
 
 void OutOfMovesDialogView::AnimateLPieceRotation(float dt) {
     mAnimationTime += dt;
-    
     if (mAnimationTime > lPieceAnimationDuration) {
         mAnimationTime = 0.0f;
     }
 
-    auto t {mAnimationTime * 2.0f * 3.1415f / lPieceAnimationDuration};
-    auto xAngle {lPieceRotationAmplitude * std::sin(t) - 20.0f};
-    auto yAngle {lPieceRotationAmplitude * std::cos(t) - 20.0f};
-
+    auto t = mAnimationTime * 2.0f * 3.1415f / lPieceAnimationDuration;
+    auto xAngle = lPieceRotationAmplitude * std::sin(t) - 20.0f;
+    auto yAngle = lPieceRotationAmplitude * std::cos(t) - 20.0f;
     mLPieceSceneObject->GetTransform().SetRotation({xAngle, yAngle, 0.0f});
 }
 
@@ -278,7 +273,7 @@ void OutOfMovesDialogView::OnDeactivate() {
 }
 
 void OutOfMovesDialogView::HandOverHudObjects() {
-    auto& hud {mScene->GetHud()};
+    auto& hud = mScene->GetHud();
     mUpperHudSceneObject->DetachChildren();
     hud.GetUpperContainer().DetachChildren();
     hud.GetUpperContainer().AddChild(hud.GetProgressContainer());

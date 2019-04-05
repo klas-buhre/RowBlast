@@ -15,10 +15,10 @@ using namespace RowBlast;
 
 GameMenuView::GameMenuView(Pht::IEngine& engine, const CommonResources& commonResources) {
     PotentiallyZoomedScreen zoom {PotentiallyZoomedScreen::Yes};
-    auto& guiResources {commonResources.GetGuiResources()};
-    auto& menuWindow {guiResources.GetLargeMenuWindow()};
+    auto& guiResources = commonResources.GetGuiResources();
+    auto& menuWindow = guiResources.GetLargeMenuWindow();
     
-    auto menuWindowSceneObject {std::make_unique<Pht::SceneObject>(&menuWindow.GetRenderable())};
+    auto menuWindowSceneObject = std::make_unique<Pht::SceneObject>(&menuWindow.GetRenderable());
     menuWindowSceneObject->GetTransform().SetPosition({0.0f, 0.0f, UiLayer::background});
     AddSceneObject(std::move(menuWindowSceneObject));
 
@@ -174,7 +174,7 @@ void GameMenuView::SetUp() {
 void GameMenuView::EnableUndoButton() {
     mIsUndoButtonEnabled = true;
     
-    auto& material {mUndoButton->GetSceneObject().GetRenderable()->GetMaterial()};
+    auto& material = mUndoButton->GetSceneObject().GetRenderable()->GetMaterial();
     material.SetAmbient(GuiResources::mBlueButtonColor);
     material.SetDiffuse(GuiResources::mBlueButtonColor);
 }
@@ -183,7 +183,7 @@ void GameMenuView::DisableUndoButton() {
     mIsUndoButtonEnabled = false;
     
     Pht::Color greyColor {0.4f, 0.4f, 0.4f};
-    auto& material {mUndoButton->GetSceneObject().GetRenderable()->GetMaterial()};
+    auto& material = mUndoButton->GetSceneObject().GetRenderable()->GetMaterial();
     material.SetAmbient(greyColor);
     material.SetDiffuse(greyColor);
 }

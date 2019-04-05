@@ -65,7 +65,7 @@ Ongoing tasks:
 
 
     -Level plan:
-       -45: Fill all gray slots. Change back clear filled row.
+       -45: Fill all gray slots. Change back to clearing filled rows? But can undo so maybe there could be more undos in build levels?
        -46: Normal like 8 or 42.
        -47: Level with mostly level bombs and lasers. Make them fall to good places.
        -48: Normal like 8 or 42.
@@ -83,7 +83,7 @@ Ongoing tasks:
       -Level 67.
 
     -Removing the curly brace initialization for auto declarations:
-       Finished GameScene directory.
+       Finished GameViews directory.
 
 
 

@@ -175,10 +175,10 @@ Pht::SceneObject& MenuButton::CreateIcon(const std::string& filename,
 }
 
 bool MenuButton::IsClicked(const Pht::TouchEvent& event) const {
-    auto isClicked {mButton->IsClicked(event)};
+    auto isClicked = mButton->IsClicked(event);
     if (isClicked) {
-        auto& audio {mEngine.GetAudio()};
-        auto shouldToggleSound {mPlaySoundIfAudioDisabled && !audio.IsSoundEnabled()};
+        auto& audio = mEngine.GetAudio();
+        auto shouldToggleSound = mPlaySoundIfAudioDisabled && !audio.IsSoundEnabled();
         if (shouldToggleSound) {
             audio.EnableSound();
         }

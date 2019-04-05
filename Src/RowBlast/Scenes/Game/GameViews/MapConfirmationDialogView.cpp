@@ -15,10 +15,10 @@ using namespace RowBlast;
 MapConfirmationDialogView::MapConfirmationDialogView(Pht::IEngine& engine,
                                                      const CommonResources& commonResources) {
     PotentiallyZoomedScreen zoom {PotentiallyZoomedScreen::Yes};
-    auto& guiResources {commonResources.GetGuiResources()};
-    auto& menuWindow {guiResources.GetMediumMenuWindow()};
+    auto& guiResources = commonResources.GetGuiResources();
+    auto& menuWindow = guiResources.GetMediumMenuWindow();
     
-    auto menuWindowSceneObject {std::make_unique<Pht::SceneObject>(&menuWindow.GetRenderable())};
+    auto menuWindowSceneObject = std::make_unique<Pht::SceneObject>(&menuWindow.GetRenderable());
     menuWindowSceneObject->GetTransform().SetPosition({0.0f, 0.0f, UiLayer::background});
     AddSceneObject(std::move(menuWindowSceneObject));
 
@@ -26,7 +26,7 @@ MapConfirmationDialogView::MapConfirmationDialogView(Pht::IEngine& engine,
     
     CreateText({-1.15f, 4.25f, UiLayer::text}, "MAP", guiResources.GetCaptionTextProperties(zoom));
     
-    auto& textProperties {guiResources.GetSmallTextProperties(zoom)};
+    auto& textProperties = guiResources.GetSmallTextProperties(zoom);
     CreateText({-5.5f, 1.9f, UiLayer::text}, "Are you sure you want to go back", textProperties);
     CreateText({-1.8f, 0.9f, UiLayer::text}, "to the map?", textProperties);
     

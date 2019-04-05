@@ -44,7 +44,7 @@ OutOfMovesDialogController::Result OutOfMovesDialogController::Update() {
         case SlidingMenuAnimation::State::SlidingOut:
             break;
         case SlidingMenuAnimation::State::ShowingMenu: {
-            auto result {HandleInput()};
+            auto result = HandleInput();
             if (result != Result::None) {
                 mView.HandOverHudObjects();
             }

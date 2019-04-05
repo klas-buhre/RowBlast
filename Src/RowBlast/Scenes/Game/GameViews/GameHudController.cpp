@@ -18,8 +18,8 @@ GameHudController::GameHudController(Pht::IEngine& engine, const CommonResources
     mEngine {engine} {}
 
 GameHudController::Result GameHudController::OnTouch(const Pht::TouchEvent& event) {
-    auto& pauseButton {mView.GetPauseButton()};
-    auto& switchButton {mView.GetSwitchButton()};
+    auto& pauseButton = mView.GetPauseButton();
+    auto& switchButton = mView.GetSwitchButton();
     
     if (IsSwitchButtonClicked(event)) {
         return Result::ClickedSwitch;
@@ -38,8 +38,8 @@ GameHudController::Result GameHudController::OnTouch(const Pht::TouchEvent& even
 }
 
 bool GameHudController::IsSwitchButtonClicked(const Pht::TouchEvent& event) const {
-    auto result {false};
-    auto& renderer {mEngine.GetRenderer()};
+    auto result = false;
+    auto& renderer = mEngine.GetRenderer();
     renderer.SetHudMode(true);
 
     switch (mView.GetSwitchButton().OnTouch(event)) {
