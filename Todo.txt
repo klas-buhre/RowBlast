@@ -27,6 +27,7 @@ Backlog:
      the frame in the beginning and it falls all the way down and then detonates.
     -Tutorial: Maybe a new level bomb Pht animation just to be consistent with the look.
     -Tutorial: Maybe a new asteroid Pht animation just to be consistent with the look.
+    -Tutorial: Pht animation showing how to fill gray slots.
   -Make ready for release:
     -Should give free gold coins after a new install?
     -Limit the number of undo move to one or two per game round.
@@ -61,11 +62,11 @@ Ongoing tasks:
         Level 42: 4
         Level 43: 4
         Level 44: 4
+        Level 45: 3
 
 
 
     -Level plan:
-       -45: Fill all gray slots. Change back to clearing filled rows? But can undo so maybe there could be more undos in build levels?
        -46: Normal like 8 or 42.
        -47: Level with mostly level bombs and lasers. Make them fall to good places.
        -48: Normal like 8 or 42.
@@ -195,7 +196,7 @@ Ordered Backlog:
     -Purchasing.
         Cost: 10
     -Replace the tutorial slide animations with Pht animations.
-        Cost: 4
+        Cost: 5
     -Release-related tasks.
         Cost: 7
     -Small soft launch.
@@ -213,7 +214,7 @@ Ordered Backlog:
     -Back end.
         Cost: ?
 
-        Total cost: 322
+        Total cost: 323
 
 
 Levels:
