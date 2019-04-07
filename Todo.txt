@@ -63,11 +63,9 @@ Ongoing tasks:
         Level 43: 4
         Level 44: 4
         Level 45: 3
-
-
+        Level 46: 4
 
     -Level plan:
-       -46: Normal like 8 or 42.
        -47: Level with mostly level bombs and lasers. Make them fall to good places.
        -48: Normal like 8 or 42.
        -49: Triangle level 48.
