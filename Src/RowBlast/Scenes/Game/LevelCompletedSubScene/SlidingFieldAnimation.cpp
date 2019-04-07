@@ -11,9 +11,9 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto slideTime {0.4f};
-    constexpr auto padding {1.0f};
-    constexpr auto hudYSize {3.0f};
+    constexpr auto slideTime = 0.4f;
+    constexpr auto padding = 1.0f;
+    constexpr auto hudYSize = 3.0f;
 }
 
 SlidingFieldAnimation::SlidingFieldAnimation(Pht::IEngine& engine, GameScene& scene) :
@@ -24,8 +24,8 @@ void SlidingFieldAnimation::Start() {
     mState = State::Ongoing;
     mElapsedTime = 0.0f;
     
-    auto& orthographicFrustumSize {mEngine.GetRenderer().GetOrthographicFrustumSize()};
-    auto& fieldSceneObject {mScene.GetFieldQuadContainer()};
+    auto& orthographicFrustumSize = mEngine.GetRenderer().GetOrthographicFrustumSize();
+    auto& fieldSceneObject = mScene.GetFieldQuadContainer();
     
     mFieldInitialPosition = fieldSceneObject.GetTransform().GetPosition();
     mFieldFinalPosition = Pht::Vec3 {
@@ -34,17 +34,17 @@ void SlidingFieldAnimation::Start() {
         mFieldInitialPosition.z
     };
     
-    auto& fieldContainerPosition {mScene.GetFieldContainer().GetTransform().GetPosition()};
+    auto& fieldContainerPosition = mScene.GetFieldContainer().GetTransform().GetPosition();
     mFieldContainerRelativePosition = fieldContainerPosition - mFieldInitialPosition;
     
-    auto& scissorBoxPosition {mScene.GetFieldScissorBox().mLowerLeft};
+    auto& scissorBoxPosition = mScene.GetFieldScissorBox().mLowerLeft;
     mScissorBoxRelativePosition = Pht::Vec2 {
         scissorBoxPosition.x - mFieldInitialPosition.x,
         scissorBoxPosition.y - mFieldInitialPosition.y
     };
     
-    auto& hud {mScene.GetHud()};
-    auto& hudFrustumSize {mEngine.GetRenderer().GetHudFrustumSize()};
+    auto& hud = mScene.GetHud();
+    auto& hudFrustumSize = mEngine.GetRenderer().GetHudFrustumSize();
     
     mUpperHudInitialYPosition = hud.GetProgressContainer().GetTransform().GetPosition().y;
     mUpperHudFinalYPosition = hudFrustumSize.y / 2.0f + hudYSize + padding;
@@ -67,58 +67,56 @@ SlidingFieldAnimation::State SlidingFieldAnimation::Update() {
 }
 
 void SlidingFieldAnimation::UpdateField() {
-    auto& fieldQuadTransform {mScene.GetFieldQuadContainer().GetTransform()};
-    auto fieldQuadPosition {fieldQuadTransform.GetPosition()};
+    auto& fieldQuadTransform = mScene.GetFieldQuadContainer().GetTransform();
+    auto fieldQuadPosition = fieldQuadTransform.GetPosition();
     auto distance = mFieldFinalPosition.x - mFieldInitialPosition.x;
-    auto normalizedTime {mElapsedTime / slideTime};
+    auto normalizedTime = mElapsedTime / slideTime;
     
     fieldQuadPosition.x = mFieldInitialPosition.x +
                           distance * normalizedTime * normalizedTime * normalizedTime;
     fieldQuadTransform.SetPosition(fieldQuadPosition);
     
-    auto& fieldContainerTransform {mScene.GetFieldContainer().GetTransform()};
-    auto fieldContainerPosition {fieldContainerTransform.GetPosition()};
+    auto& fieldContainerTransform = mScene.GetFieldContainer().GetTransform();
+    auto fieldContainerPosition = fieldContainerTransform.GetPosition();
     fieldContainerPosition.x = fieldQuadPosition.x + mFieldContainerRelativePosition.x;
     fieldContainerTransform.SetPosition(fieldContainerPosition);
     
-    auto scissorBox {mScene.GetFieldScissorBox()};
+    auto scissorBox = mScene.GetFieldScissorBox();
     scissorBox.mLowerLeft.x = fieldQuadPosition.x + mScissorBoxRelativePosition.x;
     mScene.SetScissorBox(scissorBox);
 }
 
 void SlidingFieldAnimation::UpdateHud() {
-    auto normalizedTime {mElapsedTime / slideTime};
-    auto& hud {mScene.GetHud()};
+    auto normalizedTime = mElapsedTime / slideTime;
+    auto& hud = mScene.GetHud();
 
     auto upperDistance = mUpperHudFinalYPosition - mUpperHudInitialYPosition;
 
-    auto upperHudYPosition {
-        mUpperHudInitialYPosition + upperDistance * normalizedTime * normalizedTime * normalizedTime
-    };
+    auto upperHudYPosition =
+        mUpperHudInitialYPosition + upperDistance * normalizedTime * normalizedTime * normalizedTime;
     
-    auto& progressTransform {hud.GetProgressContainer().GetTransform()};
-    auto progressPosition {progressTransform.GetPosition()};
+    auto& progressTransform = hud.GetProgressContainer().GetTransform();
+    auto progressPosition = progressTransform.GetPosition();
     progressPosition.y = upperHudYPosition;
     progressTransform.SetPosition(progressPosition);
 
-    auto& movesTransform {hud.GetMovesContainer().GetTransform()};
-    auto movesPosition {movesTransform.GetPosition()};
+    auto& movesTransform = hud.GetMovesContainer().GetTransform();
+    auto movesPosition = movesTransform.GetPosition();
     movesPosition.y = upperHudYPosition;
     movesTransform.SetPosition(movesPosition);
 
     auto lowerDistance = mLowerHudInitialYPosition - mLowerHudFinalYPosition;
 
-    auto lowerHudYPosition {
-        mLowerHudInitialYPosition - lowerDistance * normalizedTime * normalizedTime * normalizedTime
-    };
+    auto lowerHudYPosition =
+        mLowerHudInitialYPosition - lowerDistance * normalizedTime * normalizedTime * normalizedTime;
     
-    auto& nextTransform {hud.GetNextPiecesContainer().GetTransform()};
-    auto nextPosition {nextTransform.GetPosition()};
+    auto& nextTransform = hud.GetNextPiecesContainer().GetTransform();
+    auto nextPosition = nextTransform.GetPosition();
     nextPosition.y = lowerHudYPosition;
     nextTransform.SetPosition(nextPosition);
 
-    auto& selectablesTransform {hud.GetSelectablePiecesContainer().GetTransform()};
-    auto selectablesPosition {selectablesTransform.GetPosition()};
+    auto& selectablesTransform = hud.GetSelectablePiecesContainer().GetTransform();
+    auto selectablesPosition = selectablesTransform.GetPosition();
     selectablesPosition.y = lowerHudYPosition;
     selectablesTransform.SetPosition(selectablesPosition);
 }

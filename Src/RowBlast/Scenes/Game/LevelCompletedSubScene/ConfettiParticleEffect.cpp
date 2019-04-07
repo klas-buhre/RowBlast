@@ -12,12 +12,12 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto velocity {35.0f};
-    constexpr auto velocityRandomPart {50.0f};
+    constexpr auto velocity = 35.0f;
+    constexpr auto velocityRandomPart = 50.0f;
     
     Pht::Vec3 LeftParticleVelocityFunction() {
-        auto theta {Pht::ToRadians(55.0f + (Pht::NormalizedRand() - 0.5f) * 60.0f)};
-        auto magnitude {velocity + (Pht::NormalizedRand() - 0.5f) * velocityRandomPart};
+        auto theta = Pht::ToRadians(55.0f + (Pht::NormalizedRand() - 0.5f) * 60.0f);
+        auto magnitude = velocity + (Pht::NormalizedRand() - 0.5f) * velocityRandomPart;
         
         return {
             static_cast<float>(magnitude * cos(theta)),
@@ -27,8 +27,8 @@ namespace {
     }
 
     Pht::Vec3 RightParticleVelocityFunction() {
-        auto theta {Pht::ToRadians(125.0f + (Pht::NormalizedRand() - 0.5f) * 60.0f)};
-        auto magnitude {velocity + (Pht::NormalizedRand() - 0.5f) * velocityRandomPart};
+        auto theta = Pht::ToRadians(125.0f + (Pht::NormalizedRand() - 0.5f) * 60.0f);
+        auto magnitude = velocity + (Pht::NormalizedRand() - 0.5f) * velocityRandomPart;
         
         return {
             static_cast<float>(magnitude * cos(theta)),
@@ -67,14 +67,13 @@ namespace {
             .mBurst = 180
         };
         
-        auto& particleSystem {engine.GetParticleSystem()};
-        auto sceneObject {
+        auto& particleSystem = engine.GetParticleSystem();
+        auto sceneObject =
             particleSystem.CreateParticleEffectSceneObject(particleSettings,
                                                            particleEmitterSettings,
-                                                           Pht::RenderMode::Triangles)
-        };
+                                                           Pht::RenderMode::Triangles);
         
-        auto& material {sceneObject->GetRenderable()->GetMaterial()};
+        auto& material = sceneObject->GetRenderable()->GetMaterial();
         material.SetBlend(Pht::Blend::No);
         material.GetDepthState().mDepthWrite = false;
         return sceneObject;
@@ -128,10 +127,10 @@ void ConfettiParticleEffect::Start() {
 ConfettiParticleEffect::State ConfettiParticleEffect::Update() {
     switch (mState) {
         case State::Ongoing: {
-            auto dt {mEngine.GetLastFrameSeconds()};
-            auto* leftEffect {mLeftEffect->GetComponent<Pht::ParticleEffect>()};
+            auto dt = mEngine.GetLastFrameSeconds();
+            auto* leftEffect = mLeftEffect->GetComponent<Pht::ParticleEffect>();
             leftEffect->Update(dt);
-            auto* rightEffect {mRightEffect->GetComponent<Pht::ParticleEffect>()};
+            auto* rightEffect = mRightEffect->GetComponent<Pht::ParticleEffect>();
             rightEffect->Update(dt);
             if (!leftEffect->IsActive() && !rightEffect->IsActive()) {
                 mState = State::Inactive;

@@ -7,8 +7,8 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto beforeClearTime {0.1f};
-    constexpr auto afterClearTime {0.25f};
+    constexpr auto beforeClearTime = 0.1f;
+    constexpr auto afterClearTime = 0.25f;
 }
 
 ClearLastBlocksAnimation::ClearLastBlocksAnimation(Field& field,
@@ -38,9 +38,8 @@ ClearLastBlocksAnimation::State ClearLastBlocksAnimation::Update(float dt) {
 
 void ClearLastBlocksAnimation::UpdateInBeforeClearState(float dt) {
     mElapsedTime += dt;
-    
     if (mElapsedTime > beforeClearTime) {
-        auto removedCells {mField.RemoveAllNonEmptySubCells()};
+        auto removedCells = mField.RemoveAllNonEmptySubCells();
         mFlyingBlocksAnimation.AddBlockRows(removedCells);
         mState = State::Ongoing;
     }
@@ -48,7 +47,6 @@ void ClearLastBlocksAnimation::UpdateInBeforeClearState(float dt) {
 
 void ClearLastBlocksAnimation::UpdateInOngoingState(float dt) {
     mElapsedTime += dt;
-    
     if (mElapsedTime > beforeClearTime + afterClearTime) {
         mState = State::Inactive;
     }

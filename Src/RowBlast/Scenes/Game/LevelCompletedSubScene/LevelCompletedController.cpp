@@ -21,13 +21,13 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto fade {0.5f};
-    constexpr auto fadeTime {0.3f};
-    constexpr auto effectsVolumeDepth {20.0f};
-    constexpr auto fireworksDuration {2.0f};
-    constexpr auto smallTextAnimationWaintTime {1.35f};
-    constexpr auto waitTime {0.55f};
-    constexpr auto confettiWaitTime {0.85f};
+    constexpr auto fade = 0.5f;
+    constexpr auto fadeTime = 0.3f;
+    constexpr auto effectsVolumeDepth = 20.0f;
+    constexpr auto fireworksDuration = 2.0f;
+    constexpr auto smallTextAnimationWaintTime = 1.35f;
+    constexpr auto waitTime = 0.55f;
+    constexpr auto confettiWaitTime = 0.85f;
 }
 
 LevelCompletedController::LevelCompletedController(Pht::IEngine& engine,
@@ -67,13 +67,13 @@ LevelCompletedController::LevelCompletedController(Pht::IEngine& engine,
 void LevelCompletedController::Init(const Level& level) {
     mLevel = &level;
     
-    auto& orthographicFrustumSize {mEngine.GetRenderer().GetOrthographicFrustumSize()};
+    auto& orthographicFrustumSize = mEngine.GetRenderer().GetOrthographicFrustumSize();
 
     Pht::Vec3 effectsVolume {
         orthographicFrustumSize.x, orthographicFrustumSize.y, effectsVolumeDepth
     };
     
-    auto& container {mGameScene.GetLevelCompletedEffectsContainer()};
+    auto& container = mGameScene.GetLevelCompletedEffectsContainer();
     container.SetIsStatic(true);
     container.SetIsVisible(false);
     
@@ -96,15 +96,13 @@ void LevelCompletedController::Start() {
         mWaitTime = waitTime;
     }
     
-    auto totalNumMovesUsed {mGameLogic.GetMovesUsedIncludingCurrent()};
+    auto totalNumMovesUsed = mGameLogic.GetMovesUsedIncludingCurrent();
     
-    auto controlType {
-        mGameLogic.IsUsingClickControls() ? ControlType::Click : ControlType::Gesture
-    };
+    auto controlType =
+        mGameLogic.IsUsingClickControls() ? ControlType::Click : ControlType::Gesture;
     
-    auto numStars {
-        ProgressService::CalculateNumStars(totalNumMovesUsed, mLevel->GetStarLimits(controlType))
-    };
+    auto numStars =
+        ProgressService::CalculateNumStars(totalNumMovesUsed, mLevel->GetStarLimits(controlType));
 
     mUserServices.CompleteLevel(mLevel->GetId(), totalNumMovesUsed, numStars);
 }
@@ -113,21 +111,21 @@ void LevelCompletedController::GoToObjectiveAchievedAnimationState() {
     mState = State::ObjectiveAchievedAnimation;
     mElapsedTime = 0.0f;
 
-    auto& container {mGameScene.GetLevelCompletedEffectsContainer()};
-    auto& cameraPosition {mGameScene.GetCamera().GetSceneObject().GetTransform().GetPosition()};
-    auto containerPosition {container.GetTransform().GetPosition()};
+    auto& container = mGameScene.GetLevelCompletedEffectsContainer();
+    auto& cameraPosition = mGameScene.GetCamera().GetSceneObject().GetTransform().GetPosition();
+    auto containerPosition = container.GetTransform().GetPosition();
     containerPosition.y = cameraPosition.y;
     container.GetTransform().SetPosition(containerPosition);
     container.SetIsStatic(false);
     container.SetIsVisible(true);
  
-    auto& audio {mEngine.GetAudio()};
+    auto& audio = mEngine.GetAudio();
     audio.FadeOutActiveTrack(0.2f);
     audio.PlaySound(static_cast<Pht::AudioResourceId>(SoundId::AllCleared));
     
     StartLevelCompletedTextAnimation();
     
-    auto& scene {mGameScene.GetScene()};
+    auto& scene = mGameScene.GetScene();
     scene.GetRenderPass(static_cast<int>(GameScene::Layer::LevelCompletedFadeEffect))->SetIsEnabled(true);
     scene.GetRenderPass(static_cast<int>(GameScene::Layer::Stars))->SetIsEnabled(true);
 }
@@ -147,7 +145,7 @@ void LevelCompletedController::StartLevelCompletedTextAnimation() {
 }
 
 LevelCompletedDialogController::Result LevelCompletedController::Update() {
-    auto result {LevelCompletedDialogController::Result::None};
+    auto result = LevelCompletedDialogController::Result::None;
     
     switch (mState) {
         case State::Waiting:
@@ -181,7 +179,6 @@ LevelCompletedDialogController::Result LevelCompletedController::Update() {
 
 void LevelCompletedController::UpdateInWaitingState() {
     mElapsedTime += mEngine.GetLastFrameSeconds();
-    
     if (mElapsedTime > mWaitTime) {
         GoToObjectiveAchievedAnimationState();
     }
@@ -189,7 +186,6 @@ void LevelCompletedController::UpdateInWaitingState() {
 
 void LevelCompletedController::UpdateInObjectiveAchievedAnimationState() {
     mElapsedTime += mEngine.GetLastFrameSeconds();
-    
     if (mElapsedTime > confettiWaitTime) {
         mConfettiParticleEffect.Start();
         mState = State::Confetti;
@@ -247,28 +243,24 @@ void LevelCompletedController::UpdateInFireworksState() {
 }
 
 void LevelCompletedController::UpdateFireworksAndConfetti() {
-    auto fireworkState {mFireworksParticleEffect.Update()};
-    auto confettiState {mConfettiParticleEffect.Update()};
+    auto fireworkState = mFireworksParticleEffect.Update();
+    auto confettiState = mConfettiParticleEffect.Update();
 
     if (mState == State::Fireworks) {
-        auto effectsAreDone {
+        auto effectsAreDone =
             fireworkState == FireworksParticleEffect::State::Inactive &&
-            confettiState == ConfettiParticleEffect::State::Inactive
-        };
+            confettiState == ConfettiParticleEffect::State::Inactive;
         
         mElapsedTime += mEngine.GetLastFrameSeconds();
-        
         if (effectsAreDone || mElapsedTime > fireworksDuration ||
             mEngine.GetInput().ConsumeWholeTouch()) {
             
-            auto controlType {
-                mGameLogic.IsUsingClickControls() ? ControlType::Click : ControlType::Gesture
-            };
+            auto controlType =
+                mGameLogic.IsUsingClickControls() ? ControlType::Click : ControlType::Gesture;
             
-            auto numStars {
+            auto numStars =
                 ProgressService::CalculateNumStars(mGameLogic.GetMovesUsedIncludingCurrent(),
-                                                   mLevel->GetStarLimits(controlType))
-            };
+                                                   mLevel->GetStarLimits(controlType));
 
             mStarsAnimation.Start(numStars);
             mState = State::StarsAppearingAnimation;
