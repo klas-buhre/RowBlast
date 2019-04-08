@@ -15,8 +15,8 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto fade {0.5f};
-    constexpr auto fadeTime {0.3f};
+    constexpr auto fade = 0.5f;
+    constexpr auto fadeTime = 0.3f;
     const Pht::Vec3 placePieceHandPosition {-2.2f, -3.8f, 0.0f};
     const Pht::Vec3 fillRowsHandPosition {1.5f, -4.3f, 0.0f};
     const Pht::Vec3 switchPieceHandPosition {3.3f, -10.6f, 0.0f};
@@ -91,7 +91,6 @@ Tutorial::Tutorial(Pht::IEngine& engine,
 
 void Tutorial::Init(const Level& level) {
     mLevel = &level;
-    
     if (!level.IsPartOfTutorial()) {
         return;
     }
@@ -99,7 +98,7 @@ void Tutorial::Init(const Level& level) {
     mHandAnimation.Init(mScene.GetUiViewsContainer());
     mFadeEffect.Reset();
     
-    auto& uiViewContainer {mScene.GetUiViewsContainer()};
+    auto& uiViewContainer = mScene.GetUiViewsContainer();
     uiViewContainer.AddChild(mFadeEffect.GetSceneObject());
 
     mViewManager.Init(uiViewContainer);
@@ -108,7 +107,6 @@ void Tutorial::Init(const Level& level) {
 
 void Tutorial::SetActiveViewController(Controller controller) {
     mActiveViewController = controller;
-
     if (controller == Controller::None) {
         mViewManager.DeactivateAllViews();
     } else {
@@ -170,7 +168,7 @@ void Tutorial::Update() {
 }
 
 Tutorial::Result Tutorial::UpdateDialogs() {
-    auto result {Result::TutorialHasFocus};
+    auto result = Result::TutorialHasFocus;
     
     switch (mActiveViewController) {
         case Controller::CascadingDialog:
@@ -367,9 +365,9 @@ void Tutorial::OnSwitchPiece(int numMovesUsedIncludingCurrent, const Piece& piec
     if (mLevel->GetId() == 2) {
         switch (numMovesUsedIncludingCurrent) {
             case 1: {
-                auto& predeterminedMoves {mLevel->GetPredeterminedMoves()};
+                auto& predeterminedMoves = mLevel->GetPredeterminedMoves();
                 assert(numMovesUsedIncludingCurrent <= predeterminedMoves.size());
-                auto& predeterminedMove {predeterminedMoves[numMovesUsedIncludingCurrent - 1]};
+                auto& predeterminedMove = predeterminedMoves[numMovesUsedIncludingCurrent - 1];
 
                 if (mActiveViewController == Controller::SwitchPieceWindow) {
                     if (&predeterminedMove.mPieceType == &pieceType) {
@@ -387,9 +385,9 @@ void Tutorial::OnSwitchPiece(int numMovesUsedIncludingCurrent, const Piece& piec
                 break;
             }
             case 2: {
-                auto& predeterminedMoves {mLevel->GetPredeterminedMoves()};
+                auto& predeterminedMoves = mLevel->GetPredeterminedMoves();
                 assert(numMovesUsedIncludingCurrent <= predeterminedMoves.size());
-                auto& predeterminedMove {predeterminedMoves[numMovesUsedIncludingCurrent - 1]};
+                auto& predeterminedMove = predeterminedMoves[numMovesUsedIncludingCurrent - 1];
 
                 if (mActiveViewController == Controller::SwitchPiece2Window) {
                     if (&predeterminedMove.mPieceType == &pieceType) {
@@ -421,9 +419,9 @@ void Tutorial::OnChangeVisibleMoves(int numMovesUsedIncludingCurrent,
     if (mLevel->GetId() == 1) {
         switch (numMovesUsedIncludingCurrent) {
             case 3: {
-                auto& predeterminedMoves {mLevel->GetPredeterminedMoves()};
+                auto& predeterminedMoves = mLevel->GetPredeterminedMoves();
                 assert(numMovesUsedIncludingCurrent <= predeterminedMoves.size());
-                auto& predeterminedMove {predeterminedMoves[numMovesUsedIncludingCurrent - 1]};
+                auto& predeterminedMove = predeterminedMoves[numMovesUsedIncludingCurrent - 1];
                 
                 if (FindMove(visibleMoves, predeterminedMove)) {
                     mOtherMovesWindowController.Close();
@@ -437,9 +435,9 @@ void Tutorial::OnChangeVisibleMoves(int numMovesUsedIncludingCurrent,
                 break;
             }
             case 4: {
-                auto& predeterminedMoves {mLevel->GetPredeterminedMoves()};
+                auto& predeterminedMoves = mLevel->GetPredeterminedMoves();
                 assert(numMovesUsedIncludingCurrent <= predeterminedMoves.size());
-                auto& predeterminedMove {predeterminedMoves[numMovesUsedIncludingCurrent - 1]};
+                auto& predeterminedMove = predeterminedMoves[numMovesUsedIncludingCurrent - 1];
                 
                 if (FindMove(visibleMoves, predeterminedMove)) {
                     mOtherMoves2WindowController.Close();
@@ -491,11 +489,9 @@ bool Tutorial::IsMoveAllowed(int numMovesUsedIncludingCurrent,
         return true;
     }
 
-    auto& predeterminedMoves {mLevel->GetPredeterminedMoves()};
-    
+    auto& predeterminedMoves = mLevel->GetPredeterminedMoves();
     if (numMovesUsedIncludingCurrent <= predeterminedMoves.size()) {
-        auto& predeterminedMove {predeterminedMoves[numMovesUsedIncludingCurrent - 1]};
-    
+        auto& predeterminedMove = predeterminedMoves[numMovesUsedIncludingCurrent - 1];
         return predeterminedMove.mPosition == move.mPosition &&
                predeterminedMove.mRotation == move.mRotation &&
                &predeterminedMove.mPieceType == &pieceType;

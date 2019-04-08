@@ -82,7 +82,7 @@ Ongoing tasks:
       -Level 67.
 
     -Removing the curly brace initialization for auto declarations:
-       Finished Game/LevelCompletedSubScene directory.
+       Finished Game/Tutorial directory.
 
 
 

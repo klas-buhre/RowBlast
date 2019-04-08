@@ -46,16 +46,16 @@ AsteroidDialogView::AsteroidDialogView(Pht::IEngine& engine,
     mUserServices {userServices} {
 
     PotentiallyZoomedScreen zoom {PotentiallyZoomedScreen::Yes};
-    auto& guiResources {commonResources.GetGuiResources()};
-    auto& menuWindow {guiResources.GetLargeDarkMenuWindow()};
+    auto& guiResources = commonResources.GetGuiResources();
+    auto& menuWindow = guiResources.GetLargeDarkMenuWindow();
     
-    auto menuWindowSceneObject {std::make_unique<Pht::SceneObject>(&menuWindow.GetRenderable())};
+    auto menuWindowSceneObject = std::make_unique<Pht::SceneObject>(&menuWindow.GetRenderable());
     menuWindowSceneObject->GetTransform().SetPosition({0.0f, 0.0f, UiLayer::background});
     AddSceneObject(std::move(menuWindowSceneObject));
 
     SetSize(menuWindow.GetSize());
     
-    auto& largeTextProperties {guiResources.GetLargeWhiteTextProperties(zoom)};
+    auto& largeTextProperties = guiResources.GetLargeWhiteTextProperties(zoom);
     CreateText({-2.2f, 8.25f, UiLayer::text}, "ASTEROID", largeTextProperties);
 
     GuiUtils::CreateTitleBarLine(engine, *this);
@@ -66,7 +66,7 @@ AsteroidDialogView::AsteroidDialogView(Pht::IEngine& engine,
                                                        8.5f,
                                                        0.5f);
 
-    auto& textProperties {guiResources.GetSmallWhiteTextProperties(zoom)};
+    auto& textProperties = guiResources.GetSmallWhiteTextProperties(zoom);
     CreateText({-4.4f, -4.4f, UiLayer::text}, "Bring the asteroid down to", textProperties);
     CreateText({-3.8f, -5.475f, UiLayer::text}, "the bottom of the field", textProperties);
     
@@ -88,7 +88,7 @@ AsteroidDialogView::AsteroidDialogView(Pht::IEngine& engine,
 }
 
 void AsteroidDialogView::SetUp(Pht::Scene& scene) {
-    auto frameFilenames {ToFrameFilenames(mUserServices.GetSettingsService().GetControlType())};
+    auto frameFilenames = ToFrameFilenames(mUserServices.GetSettingsService().GetControlType());
     mSlideAnimation->Init(frameFilenames, scene);
 }
 

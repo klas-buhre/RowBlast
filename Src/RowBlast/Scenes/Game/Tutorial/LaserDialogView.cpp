@@ -40,16 +40,16 @@ LaserDialogView::LaserDialogView(Pht::IEngine& engine,
     mUserServices {userServices} {
 
     PotentiallyZoomedScreen zoom {PotentiallyZoomedScreen::Yes};
-    auto& guiResources {commonResources.GetGuiResources()};
-    auto& menuWindow {guiResources.GetLargeDarkMenuWindow()};
+    auto& guiResources = commonResources.GetGuiResources();
+    auto& menuWindow = guiResources.GetLargeDarkMenuWindow();
     
-    auto menuWindowSceneObject {std::make_unique<Pht::SceneObject>(&menuWindow.GetRenderable())};
+    auto menuWindowSceneObject = std::make_unique<Pht::SceneObject>(&menuWindow.GetRenderable());
     menuWindowSceneObject->GetTransform().SetPosition({0.0f, 0.0f, UiLayer::background});
     AddSceneObject(std::move(menuWindowSceneObject));
 
     SetSize(menuWindow.GetSize());
     
-    auto& largeTextProperties {guiResources.GetLargeWhiteTextProperties(zoom)};
+    auto& largeTextProperties = guiResources.GetLargeWhiteTextProperties(zoom);
     CreateText({-1.4f, 8.25f, UiLayer::text}, "LASER", largeTextProperties);
 
     GuiUtils::CreateTitleBarLine(engine, *this);
@@ -60,7 +60,7 @@ LaserDialogView::LaserDialogView(Pht::IEngine& engine,
                                                        9.0f,
                                                        0.5f);
 
-    auto& textProperties {guiResources.GetSmallWhiteTextProperties(zoom)};
+    auto& textProperties = guiResources.GetSmallWhiteTextProperties(zoom);
     CreateText({-3.75f, -5.1f, UiLayer::text}, "The laser clears a row", textProperties);
     
     Pht::Vec2 playButtonInputSize {194.0f, 43.0f};

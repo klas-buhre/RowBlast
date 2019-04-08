@@ -366,7 +366,6 @@ void FloatingBlocks::Update() {
         
         if (volume.mBlockRotation.HasValue()) {
             block.mElapsedTime += dt;
-            
             if (block.mElapsedTime > rotationDuration) {
                 block.mElapsedTime = 0.0f;
             }
@@ -386,7 +385,6 @@ void FloatingBlocks::Update() {
 
 void FloatingBlocks::AnimateEmissive(float dt) {
     mEmissiveAnimationTime += dt;
-    
     if (mEmissiveAnimationTime > emissiveAnimationDuration) {
         mEmissiveAnimationTime = 0.0f;
     }
