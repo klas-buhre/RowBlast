@@ -65,6 +65,8 @@ Ongoing tasks:
         Level 45: 3
         Level 46: 4
 
+    -Finish level 47.
+
     -Level plan:
        -47: Level with mostly level bombs and lasers. Make them fall to good places.
        -48: Normal like 8 or 42.
