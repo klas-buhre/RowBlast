@@ -22,8 +22,8 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto countdownNumChars {5};
-    constexpr auto coinRotationSpeed {60.0f};
+    constexpr auto countdownNumChars = 5;
+    constexpr auto coinRotationSpeed = 60.0f;
 }
 
 MapHud::MapHud(Pht::IEngine& engine,
@@ -35,7 +35,7 @@ MapHud::MapHud(Pht::IEngine& engine,
     mUserServices {userServices},
     mCoinRotation {0.0f, 0.0f, 0.0f} {
     
-    auto& hudObject {scene.CreateSceneObject()};
+    auto& hudObject = scene.CreateSceneObject();
     hudObject.SetLayer(hudLayer);
     scene.GetRoot().AddChild(hudObject);
     
@@ -48,23 +48,23 @@ MapHud::MapHud(Pht::IEngine& engine,
 void MapHud::CreateLightAndCamera(Pht::Scene& scene,
                                   Pht::SceneObject& parentObject,
                                   int hudLayer) {
-    auto& lightSceneObject {scene.CreateSceneObject()};
+    auto& lightSceneObject = scene.CreateSceneObject();
     lightSceneObject.SetIsVisible(false);
-    auto lightComponent {std::make_unique<Pht::LightComponent>(lightSceneObject)};
+    auto lightComponent = std::make_unique<Pht::LightComponent>(lightSceneObject);
     lightComponent->SetDirectionalIntensity(1.35f);
-    auto* light {lightComponent.get()};
+    auto* light = lightComponent.get();
     lightSceneObject.SetComponent<Pht::LightComponent>(std::move(lightComponent));
     parentObject.AddChild(lightSceneObject);
     
-    auto& cameraSceneObject {scene.CreateSceneObject()};
+    auto& cameraSceneObject = scene.CreateSceneObject();
     cameraSceneObject.SetIsVisible(false);
     cameraSceneObject.GetTransform().SetPosition({0.0f, 0.0f, 15.5f});
-    auto cameraComponent {std::make_unique<Pht::CameraComponent>(cameraSceneObject)};
-    auto* camera {cameraComponent.get()};
+    auto cameraComponent = std::make_unique<Pht::CameraComponent>(cameraSceneObject);
+    auto* camera = cameraComponent.get();
     cameraSceneObject.SetComponent<Pht::CameraComponent>(std::move(cameraComponent));
     parentObject.AddChild(cameraSceneObject);
     
-    auto* hudRenderPass {scene.GetRenderPass(hudLayer)};
+    auto* hudRenderPass = scene.GetRenderPass(hudLayer);
     assert(hudRenderPass);
     hudRenderPass->SetLight(light);
     hudRenderPass->SetCamera(camera);
@@ -73,9 +73,9 @@ void MapHud::CreateLightAndCamera(Pht::Scene& scene,
 void MapHud::CreateLivesObject(Pht::Scene& scene,
                                Pht::SceneObject& parentObject,
                                const CommonResources& commonResources) {
-    auto& livesContainer {scene.CreateSceneObject()};
-    auto& renderer {mEngine.GetRenderer()};
-    auto& hudFrustumSize {renderer.GetHudFrustumSize()};
+    auto& livesContainer = scene.CreateSceneObject();
+    auto& renderer = mEngine.GetRenderer();
+    auto& hudFrustumSize = renderer.GetHudFrustumSize();
     
     Pht::Vec3 position {
         -hudFrustumSize.x / 2.0f + 2.7f,
@@ -87,8 +87,8 @@ void MapHud::CreateLivesObject(Pht::Scene& scene,
     parentObject.AddChild(livesContainer);
 
     Pht::Vec2 gradientRectangleSize {3.2f, 1.0f};
-    auto leftQuadWidth {0.25f};
-    auto rightQuadWidth {0.25f};
+    auto leftQuadWidth = 0.25f;
+    auto rightQuadWidth = 0.25f;
 
     GradientRectangleColors colors {
         .mLeft = {0.175f, 0.175f, 0.175f, 0.0f},
@@ -114,15 +114,13 @@ void MapHud::CreateLivesObject(Pht::Scene& scene,
     };
     
     mLivesText = &scene.CreateText("5", textProperties);
-    auto& livesTextSceneObject {mLivesText->GetSceneObject()};
+    auto& livesTextSceneObject = mLivesText->GetSceneObject();
     livesTextSceneObject.GetTransform().SetPosition({-0.2f, -0.215f, UiLayer::text});
     livesContainer.AddChild(livesTextSceneObject);
     
-    auto& heart {
+    auto& heart =
         scene.CreateSceneObject(Pht::ObjMesh {"heart_112.obj", 3.25f},
-                                commonResources.GetMaterials().GetRedMaterial())
-    };
-        
+                                commonResources.GetMaterials().GetRedMaterial());
     heart.GetTransform().SetPosition({-1.5f, 0.0f, UiLayer::root});
     livesContainer.AddChild(heart);
 }
@@ -130,8 +128,8 @@ void MapHud::CreateLivesObject(Pht::Scene& scene,
 void MapHud::CreateNewLifeCountdownObject(Pht::Scene& scene,
                                           Pht::SceneObject& parentObject,
                                           const CommonResources& commonResources) {
-    auto& renderer {mEngine.GetRenderer()};
-    auto& hudFrustumSize {renderer.GetHudFrustumSize()};
+    auto& renderer = mEngine.GetRenderer();
+    auto& hudFrustumSize = renderer.GetHudFrustumSize();
 
     Pht::TextProperties textProperties {
         commonResources.GetHussarFontSize20(PotentiallyZoomedScreen::No),
@@ -160,9 +158,9 @@ void MapHud::CreateNewLifeCountdownObject(Pht::Scene& scene,
 void MapHud::CreateCoinsObject(Pht::Scene& scene,
                                Pht::SceneObject& parentObject,
                                const CommonResources& commonResources) {
-    auto& coinsContainer {scene.CreateSceneObject()};
-    auto& renderer {mEngine.GetRenderer()};
-    auto& hudFrustumSize {renderer.GetHudFrustumSize()};
+    auto& coinsContainer = scene.CreateSceneObject();
+    auto& renderer = mEngine.GetRenderer();
+    auto& hudFrustumSize = renderer.GetHudFrustumSize();
     
     Pht::Vec3 position {
         hudFrustumSize.x / 2.0f - 3.5f,
@@ -174,8 +172,8 @@ void MapHud::CreateCoinsObject(Pht::Scene& scene,
     parentObject.AddChild(coinsContainer);
 
     Pht::Vec2 gradientRectangleSize {3.2f, 1.0f};
-    auto leftQuadWidth {0.25f};
-    auto rightQuadWidth {0.25f};
+    auto leftQuadWidth = 0.25f;
+    auto rightQuadWidth = 0.25f;
 
     GradientRectangleColors colors {
         .mLeft = {0.175f, 0.175f, 0.175f, 0.0f},
@@ -202,15 +200,13 @@ void MapHud::CreateCoinsObject(Pht::Scene& scene,
     
     // Warning! Must be five spaces to fit digits.
     mCoinsText = &scene.CreateText("   45", textProperties);
-    auto& coinsTextSceneObject {mCoinsText->GetSceneObject()};
+    auto& coinsTextSceneObject = mCoinsText->GetSceneObject();
     coinsTextSceneObject.GetTransform().SetPosition({-0.65f, -0.215f, UiLayer::text});
     coinsContainer.AddChild(coinsTextSceneObject);
     
-    auto& coinSceneObject {
+    auto& coinSceneObject =
         scene.CreateSceneObject(Pht::ObjMesh {"coin_852.obj", 3.15f},
-                                commonResources.GetMaterials().GetGoldMaterial())
-    };
-    
+                                commonResources.GetMaterials().GetGoldMaterial());
     coinSceneObject.GetTransform().SetPosition({-1.5f, 0.0f, UiLayer::root});
     coinsContainer.AddChild(coinSceneObject);
 
@@ -219,8 +215,8 @@ void MapHud::CreateCoinsObject(Pht::Scene& scene,
         {.mTime = 360.0f / coinRotationSpeed, .mRotation = Pht::Vec3{0.0f, 360.0f, 0.0f}}
     };
     
-    auto& animationSystem {mEngine.GetAnimationSystem()};
-    auto& animation {animationSystem.CreateAnimation(coinSceneObject, keyframes)};
+    auto& animationSystem = mEngine.GetAnimationSystem();
+    auto& animation = animationSystem.CreateAnimation(coinSceneObject, keyframes);
 
     animationSystem.AddAnimation(animation);
     animation.Play();
@@ -239,17 +235,16 @@ void MapHud::Update() {
 }
 
 void MapHud::UpdateLivesText() {
-    auto lives {mUserServices.GetLifeService().GetNumLives()};
-    
+    auto lives = mUserServices.GetLifeService().GetNumLives();
     if (lives != mNumLives) {
-        const auto bufSize {64};
+        const auto bufSize = 64;
         char buffer[bufSize];
         std::snprintf(buffer, bufSize, "%1d", lives);
-        auto numDigits {std::strlen(buffer)};
+        auto numDigits = std::strlen(buffer);
         assert(numDigits <= 1);
         
-        auto& text {mLivesText->GetText()};
-        auto textLength {text.size()};
+        auto& text = mLivesText->GetText();
+        auto textLength = text.size();
         assert(textLength == 1);
         text[0] = buffer[0];
         
@@ -259,18 +254,17 @@ void MapHud::UpdateLivesText() {
 
 void MapHud::UpdateCoinsText() {
     auto numCoins {mUserServices.GetPurchasingService().GetCoinBalance()};
-    
     if (numCoins != mNumCoins) {
-        const auto bufSize {64};
+        const auto bufSize = 64;
         char buffer[bufSize];
         std::snprintf(buffer, bufSize, "%5d", numCoins);
-        auto numDigits {std::strlen(buffer)};
+        auto numDigits = std::strlen(buffer);
         assert(numDigits <= 5);
         
-        auto& text {mCoinsText->GetText()};
-        auto textLength {text.size()};
+        auto& text = mCoinsText->GetText();
+        auto textLength = text.size();
         assert(textLength == 5);
-        for (auto i {0}; i < 5; ++i) {
+        for (auto i = 0; i < 5; ++i) {
              text[i] = buffer[i];
         }
         
@@ -279,17 +273,16 @@ void MapHud::UpdateCoinsText() {
 }
 
 void MapHud::UpdateCountdown() {
-    auto secondsUntilNewLife {mUserServices.GetLifeService().GetDurationUntilNewLife()};
-
+    auto secondsUntilNewLife = mUserServices.GetLifeService().GetDurationUntilNewLife();
     if (secondsUntilNewLife != mSecondsUntilNewLife) {
         StaticStringBuffer countdownBuffer;
         StringUtils::FormatToMinutesAndSeconds(countdownBuffer, secondsUntilNewLife);
         
-        auto numChars {std::strlen(countdownBuffer.data())};
+        auto numChars = std::strlen(countdownBuffer.data());
         assert(numChars == countdownNumChars);
         
-        auto& text {mNewLifeCountdownText->GetText()};
-        auto textLength {text.size()};
+        auto& text = mNewLifeCountdownText->GetText();
+        auto textLength = text.size();
         assert(textLength == countdownNumChars);
         
         StringUtils::StringCopy(text, 0, countdownBuffer, countdownNumChars);

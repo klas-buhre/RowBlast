@@ -18,10 +18,10 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto countdownNumChars {5};
-    constexpr auto heartScale {3.0f};
-    constexpr auto animationDuration {1.0f};
-    constexpr auto heartBeatAmplitude {0.1f};
+    constexpr auto countdownNumChars = 5;
+    constexpr auto heartScale = 3.0f;
+    constexpr auto animationDuration = 1.0f;
+    constexpr auto heartBeatAmplitude = 0.1f;
 }
 
 LivesDialogView::LivesDialogView(Pht::IEngine& engine,
@@ -32,12 +32,11 @@ LivesDialogView::LivesDialogView(Pht::IEngine& engine,
     mUserServices {userServices},
     mGuiLightProvider {guiLightProvider} {
     
-    auto zoom {PotentiallyZoomedScreen::No};
+    auto zoom = PotentiallyZoomedScreen::No;
+    auto& guiResources = commonResources.GetGuiResources();
     
-    auto& guiResources {commonResources.GetGuiResources()};
-    auto& menuWindow {guiResources.GetMediumDarkMenuWindow()};
-    
-    auto menuWindowSceneObject {std::make_unique<Pht::SceneObject>(&menuWindow.GetRenderable())};
+    auto& menuWindow = guiResources.GetMediumDarkMenuWindow();
+    auto menuWindowSceneObject = std::make_unique<Pht::SceneObject>(&menuWindow.GetRenderable());
     menuWindowSceneObject->GetTransform().SetPosition({0.0f, 0.0f, UiLayer::background});
     AddSceneObject(std::move(menuWindowSceneObject));
 
@@ -50,11 +49,11 @@ LivesDialogView::LivesDialogView(Pht::IEngine& engine,
     mCloseButton = GuiUtils::CreateCloseButton(engine, *this, guiResources, zoom);
     GuiUtils::CreateTitleBarLine(engine, *this);
     
-    auto& sceneManager {engine.GetSceneManager()};
+    auto& sceneManager = engine.GetSceneManager();
     mHeartSceneObject = &CreateSceneObject(Pht::ObjMesh {"heart_392.obj", 3.25f},
                                            commonResources.GetMaterials().GetRedMaterial(),
                                            sceneManager);
-    auto& heartTransform {mHeartSceneObject->GetTransform()};
+    auto& heartTransform = mHeartSceneObject->GetTransform();
     heartTransform.SetPosition({0.0f, 1.5f, UiLayer::root});
     heartTransform.SetScale(heartScale);
     GetRoot().AddChild(*mHeartSceneObject);
@@ -72,7 +71,7 @@ LivesDialogView::LivesDialogView(Pht::IEngine& engine,
     
     CreateGlowEffect({0.0f, 1.5f, UiLayer::panel}, GetRoot(), 1.35f);
     
-    auto& textProperties {guiResources.GetSmallWhiteTextProperties(zoom)};
+    auto& textProperties = guiResources.GetSmallWhiteTextProperties(zoom);
     
     CreateText({-4.4f, -1.5f, UiLayer::text}, "Time until next life:", textProperties);
     mCountdownText = &CreateText({2.4f, -1.5f, UiLayer::text}, "00:00", textProperties);
@@ -123,15 +122,15 @@ void LivesDialogView::CreateGlowEffect(const Pht::Vec3& position,
         .mGrowDuration = 0.5f
     };
     
-    auto& particleSystem {mEngine.GetParticleSystem()};
+    auto& particleSystem = mEngine.GetParticleSystem();
     mGlowEffect = particleSystem.CreateParticleEffectSceneObject(particleSettings,
                                                                  particleEmitterSettings,
                                                                  Pht::RenderMode::Triangles);
     
-    auto& material {mGlowEffect->GetRenderable()->GetMaterial()};
+    auto& material = mGlowEffect->GetRenderable()->GetMaterial();
     material.SetShaderType(Pht::ShaderType::ParticleNoAlphaTexture);
     
-    auto& transform {mGlowEffect->GetTransform()};
+    auto& transform = mGlowEffect->GetTransform();
     transform.SetPosition(position);
     transform.SetScale(scale);
     parentObject.AddChild(*mGlowEffect);
@@ -143,21 +142,19 @@ void LivesDialogView::SetUp() {
 }
 
 void LivesDialogView::Update() {
-    auto dt {mEngine.GetLastFrameSeconds()};
-    mGlowEffect->GetComponent<Pht::ParticleEffect>()->Update(dt);
+    auto dt = mEngine.GetLastFrameSeconds();
     
+    mGlowEffect->GetComponent<Pht::ParticleEffect>()->Update(dt);
     UpdateNumLivesTexts();
     UpdateCountdownText();
     UpdateHeart(dt);
 }
 
 void LivesDialogView::UpdateNumLivesTexts() {
-    auto numLives {mUserServices.GetLifeService().GetNumLives()};
-
+    auto numLives = mUserServices.GetLifeService().GetNumLives();
     if (numLives != mNumLives) {
         mNumLives = numLives;
-        auto numLivesString {std::to_string(numLives)};
-        
+        auto numLivesString = std::to_string(numLives);
         if (numLives == 1) {
             mCaptionText->GetText() = "1 LIFE";
             mCaptionText->GetSceneObject().GetTransform().SetPosition({-1.2f, 4.95f, UiLayer::text});
@@ -171,8 +168,7 @@ void LivesDialogView::UpdateNumLivesTexts() {
 }
 
 void LivesDialogView::UpdateCountdownText() {
-    auto& lifeService {mUserServices.GetLifeService()};
-    
+    auto& lifeService = mUserServices.GetLifeService();
     if (lifeService.HasFullNumLives()) {
         mCountdownText->GetSceneObject().SetIsVisible(false);
         mFullText->GetSceneObject().SetIsVisible(true);
@@ -180,19 +176,18 @@ void LivesDialogView::UpdateCountdownText() {
         mCountdownText->GetSceneObject().SetIsVisible(true);
         mFullText->GetSceneObject().SetIsVisible(false);
         
-        auto secondsUntilNewLife {lifeService.GetDurationUntilNewLife()};
-
+        auto secondsUntilNewLife = lifeService.GetDurationUntilNewLife();
         if (secondsUntilNewLife != mSecondsUntilNewLife) {
             mSecondsUntilNewLife = secondsUntilNewLife;
             
             StaticStringBuffer countdownBuffer;
             StringUtils::FormatToMinutesAndSeconds(countdownBuffer, secondsUntilNewLife);
             
-            auto numChars {std::strlen(countdownBuffer.data())};
+            auto numChars = std::strlen(countdownBuffer.data());
             assert(numChars == countdownNumChars);
             
-            auto& text {mCountdownText->GetText()};
-            auto textLength {text.size()};
+            auto& text = mCountdownText->GetText();
+            auto textLength = text.size();
             assert(textLength == countdownNumChars);
             
             StringUtils::StringCopy(text, 0, countdownBuffer, countdownNumChars);
@@ -202,11 +197,10 @@ void LivesDialogView::UpdateCountdownText() {
 
 void LivesDialogView::UpdateHeart(float dt) {
     mAnimationTime += dt;
-    
     if (mAnimationTime > animationDuration) {
         mAnimationTime = 0.0f;
     }
     
-    auto t {mAnimationTime * 2.0f * 3.1415f / animationDuration};
+    auto t = mAnimationTime * 2.0f * 3.1415f / animationDuration;
     mHeartSceneObject->GetTransform().SetScale(heartScale + heartBeatAmplitude * std::sin(t));
 }

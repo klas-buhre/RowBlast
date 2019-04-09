@@ -24,8 +24,8 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto cameraCutoffVelocity {0.1f};
-    constexpr auto dampingCoefficient {5.0f};
+    constexpr auto cameraCutoffVelocity = 0.1f;
+    constexpr auto dampingCoefficient = 5.0f;
 }
 
 MapController::Command::Command(Kind kind, int level) :
@@ -79,7 +79,7 @@ void MapController::Init() {
     mState = State::Map;
     mCameraXVelocity = 0.0f;
     
-    if (auto* currentPin {mScene.GetLevelPin(mUserServices.GetProgressService().GetProgress())}) {
+    if (auto* currentPin = mScene.GetLevelPin(mUserServices.GetProgressService().GetProgress())) {
         mUfo.SetPosition(currentPin->GetUfoPosition());
     } else {
         mUfo.Hide();
@@ -369,13 +369,13 @@ void MapController::UpdateInAddCoinsStoreState() {
 }
 
 void MapController::HandleInput() {
-    auto& input {mEngine.GetInput()};
+    auto& input = mEngine.GetInput();
     
     while (input.HasEvents()) {
-        auto& event {input.GetNextEvent()};
+        auto& event = input.GetNextEvent();
         switch (event.GetKind()) {
             case Pht::InputKind::Touch: {
-                auto& touchEvent {event.GetTouchEvent()};
+                auto& touchEvent = event.GetTouchEvent();
                 switch (mMapViewControllers.GetMapHudController().OnTouch(touchEvent)) {
                     case MapHudController::Result::None:
                         HandleTouch(touchEvent);
@@ -406,11 +406,11 @@ void MapController::HandleInput() {
 void MapController::HandleTouch(const Pht::TouchEvent& touch) {
     UpdateTouchingState(touch);
     
-    auto& renderer {mEngine.GetRenderer()};
+    auto& renderer = mEngine.GetRenderer();
     renderer.SetProjectionMode(Pht::ProjectionMode::Perspective);
     renderer.SetHudMode(false);
 
-    auto& pins {mScene.GetPins()};
+    auto& pins = mScene.GetPins();
     
     for (const auto& pin: pins) {
         if (!pin->IsClickable()) {
@@ -445,7 +445,7 @@ void MapController::HandleTouch(const Pht::TouchEvent& touch) {
 void MapController::HandlePinClick(const MapPin& pin) {
     mEngine.GetAudio().PlaySound(static_cast<Pht::AudioResourceId>(SoundId::ButtonClick));
     
-    auto& mapPlace {pin.GetPlace()};
+    auto& mapPlace = pin.GetPlace();
     
     switch (mapPlace.GetKind()) {
         case MapPlace::Kind::MapLevel:
@@ -458,7 +458,7 @@ void MapController::HandlePinClick(const MapPin& pin) {
             break;
         case MapPlace::Kind::Portal: {
             mTutorial.OnPortalClick();
-            auto& portal {mapPlace.GetPortal()};
+            auto& portal = mapPlace.GetPortal();
             mScene.SetWorldId(portal.mDestinationWorldId);
             mScene.SetClickedPortalNextLevelId(portal.mNextLevelId);
             GoToPortalCameraMovementState();
@@ -486,7 +486,7 @@ void MapController::Pan(const Pht::TouchEvent& touch) {
             break;
         case Pht::TouchState::Ongoing: {
             auto translation = touch.mLocation - mTouchLocationAtPanBegin;
-            auto newCameraXPosition {mCameraXPositionAtPanBegin - translation.x * 0.024f};
+            auto newCameraXPosition = mCameraXPositionAtPanBegin - translation.x * 0.024f;
             
             mCameraXVelocity = (newCameraXPosition - mScene.GetCameraXPosition()) /
                                mEngine.GetLastFrameSeconds();
@@ -509,12 +509,12 @@ void MapController::UpdateCamera() {
         return;
     }
     
-    auto cameraXPosition {mScene.GetCameraXPosition()};
-    auto deacceleration {dampingCoefficient * mCameraXVelocity};
-    auto dt {mEngine.GetLastFrameSeconds()};
-    auto previousVelocity {mCameraXVelocity};
+    auto cameraXPosition = mScene.GetCameraXPosition();
+    auto deacceleration = dampingCoefficient * mCameraXVelocity;
+    auto dt = mEngine.GetLastFrameSeconds();
+    auto previousVelocity = mCameraXVelocity;
     mCameraXVelocity -= deacceleration * dt;
-    
+
     if (std::fabs(mCameraXVelocity) < cameraCutoffVelocity ||
         Pht::Sign(mCameraXVelocity) != Pht::Sign(previousVelocity)) {
 
@@ -529,10 +529,9 @@ void MapController::GoToUfoAnimationState(int levelToStart) {
     mState = State::UfoAnimation;
     mLevelToStart = levelToStart;
     
-    auto nextLevel {mUserServices.GetProgressService().GetProgress()};
-    auto* nextPin {mScene.GetPin(nextLevel)};
-    auto* currentPin {mScene.GetLevelPin(nextLevel - 1)};
-    
+    auto nextLevel = mUserServices.GetProgressService().GetProgress();
+    auto* nextPin = mScene.GetPin(nextLevel);
+    auto* currentPin = mScene.GetLevelPin(nextLevel - 1);
     if (nextPin && currentPin) {
         mUfo.Show();
         mUfo.SetPosition(currentPin->GetUfoPosition());
@@ -567,7 +566,7 @@ void MapController::GoToStartLevelStateLevelGoalDialog(int levelToStart) {
     mLevelToStart = levelToStart;
     mMapViewControllers.SetActiveController(MapViewControllers::LevelGoalDialog);
 
-    auto levelInfo {LevelLoader::LoadInfo(levelToStart, mLevelResources)};
+    auto levelInfo = LevelLoader::LoadInfo(levelToStart, mLevelResources);
     mMapViewControllers.GetLevelGoalDialogController().SetUp(*levelInfo);
 }
 
@@ -627,7 +626,7 @@ void MapController::GoToAddLivesStateStore() {
 }
 
 void MapController::GoToOptionsMenuState() {
-    auto isGestureControlsAllowed {mUserServices.GetProgressService().GetProgress() > 2};
+    auto isGestureControlsAllowed = mUserServices.GetProgressService().GetProgress() > 2;
     
     mMapViewControllers.SetActiveController(MapViewControllers::OptionsMenu);
     mMapViewControllers.GetOptionsMenuController().SetUp(isGestureControlsAllowed);

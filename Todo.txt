@@ -82,9 +82,6 @@ Ongoing tasks:
       -Level 66.
       -Level 67.
 
-    -Removing the curly brace initialization for auto declarations:
-       Finished Game/Tutorial directory.
-
 
 
 Ordered Backlog:

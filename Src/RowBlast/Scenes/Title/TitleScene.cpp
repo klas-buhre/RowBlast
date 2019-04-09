@@ -90,7 +90,7 @@ namespace {
         }
     };
 
-    constexpr auto dayLightIntensity {0.98f};
+    constexpr auto dayLightIntensity = 0.98f;
     const Pht::Color brightCloudColor {1.0f, 1.0f, 1.0f};
 
     const std::vector<HazeLayer> blueHazeLayers {
@@ -122,7 +122,7 @@ namespace {
         }
     };
 
-    constexpr auto sunsetLightIntensity {0.895f};
+    constexpr auto sunsetLightIntensity = 0.895f;
     const Pht::Color sunsetCloudColor {1.035f, 0.95f, 0.975f};
     
     const std::vector<HazeLayer> sunsetHazeLayers {
@@ -270,8 +270,8 @@ TitleScene::TitleScene(Pht::IEngine& engine,
     mUniverse {universe} {}
     
 void TitleScene::Init() {
-    auto& sceneManager {mEngine.GetSceneManager()};
-    auto scene {sceneManager.CreateScene(Pht::Hash::Fnv1a("titleScene"))};
+    auto& sceneManager = mEngine.GetSceneManager();
+    auto scene = sceneManager.CreateScene(Pht::Hash::Fnv1a("titleScene"));
     mScene = scene.get();
     
     sceneManager.InitSceneSystems(Pht::ISceneManager::defaultNarrowFrustumHeightFactor);
@@ -287,16 +287,16 @@ void TitleScene::Init() {
     fadeEffectRenderPass.SetHudMode(true);
     scene->AddRenderPass(fadeEffectRenderPass);
 
-    auto worldId {CalculateWorldId(mUserServices, mUniverse)};
+    auto worldId = CalculateWorldId(mUserServices, mUniverse);
 
-    auto& light {scene->CreateGlobalLight()};
+    auto& light = scene->CreateGlobalLight();
     light.SetDirection({1.0f, 1.0f, 1.0f});
-    auto lightIntensity {CalculateLightIntensity(worldId)};
+    auto lightIntensity = CalculateLightIntensity(worldId);
     light.SetAmbientIntensity(lightIntensity);
     light.SetDirectionalIntensity(lightIntensity);
     scene->GetRoot().AddChild(light.GetSceneObject());
 
-    auto& camera {scene->CreateCamera()};
+    auto& camera = scene->CreateCamera();
     Pht::Vec3 cameraPosition {0.0f, 0.0f, 20.5f};
     Pht::Vec3 target {0.0f, 0.0f, 0.0f};
     Pht::Vec3 up {0.0f, 1.0f, 0.0f};

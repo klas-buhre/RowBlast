@@ -44,10 +44,9 @@ MapPin::MapPin(Pht::IEngine& engine,
     mIsClickable {isClickable},
     mPlace {place} {
     
-    const auto& material {
+    const auto& material =
         isClickable ? mBlueMaterial :
-        commonResources.GetMaterials().GetLightGrayMaterial()
-    };
+        commonResources.GetMaterials().GetLightGrayMaterial();
     
     Pht::SphereMesh pinMesh {0.85f, std::string{"mapPin"}};
     
@@ -66,11 +65,11 @@ MapPin::MapPin(Pht::IEngine& engine,
 void MapPin::CreateStars(int numStars, Pht::RenderableObject& starRenderable, Pht::Scene& scene) {
     assert(numStars <= 3);
 
-    for (auto i {0}; i < numStars; ++i) {
-        auto& star {scene.CreateSceneObject()};
+    for (auto i = 0; i < numStars; ++i) {
+        auto& star = scene.CreateSceneObject();
         star.SetRenderable(&starRenderable);
         
-        auto& transform {star.GetTransform()};
+        auto& transform = star.GetTransform();
         transform.SetRotation({90.0f, 0.0f, 0.0f});
         transform.SetPosition(starOffsets[i]);
         
@@ -89,9 +88,8 @@ void MapPin::CreateText(int level, const Pht::Font& font, Pht::Scene& scene) {
         Pht::SnapToPixel::No
     };
 
-    auto& text {scene.CreateText(std::to_string(level), textProperties)};
-    auto adjustedTextOffset {textOffset};
-
+    auto& text = scene.CreateText(std::to_string(level), textProperties);
+    auto adjustedTextOffset = textOffset;
     if (mLevel > 19) {
         adjustedTextOffset.x -= 0.21f;
     } else if (mLevel > 9) {
@@ -104,10 +102,10 @@ void MapPin::CreateText(int level, const Pht::Font& font, Pht::Scene& scene) {
 }
 
 void MapPin::SetIsSelected(bool isSelected) {
-    auto& material {mSceneObject->GetRenderable()->GetMaterial()};
-    const auto& ambient {mBlueMaterial.GetAmbient()};
-    const auto& diffuse {mBlueMaterial.GetDiffuse()};
-    const auto& specular {mBlueMaterial.GetSpecular()};
+    auto& material = mSceneObject->GetRenderable()->GetMaterial();
+    const auto& ambient = mBlueMaterial.GetAmbient();
+    const auto& diffuse = mBlueMaterial.GetDiffuse();
+    const auto& specular = mBlueMaterial.GetSpecular();
     
     if (isSelected) {
         material.SetAmbient(ambient + selectedColorAdd);

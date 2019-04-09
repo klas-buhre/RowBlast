@@ -12,9 +12,9 @@
 using namespace RowBlast;
 
 MapHudView::MapHudView(Pht::IEngine& engine, const CommonResources& commonResources) {
-    auto& renderer {engine.GetRenderer()};
-    auto& hudFrustumSize {renderer.GetHudFrustumSize()};
-    auto& guiResources {commonResources.GetGuiResources()};
+    auto& renderer = engine.GetRenderer();
+    auto& hudFrustumSize = renderer.GetHudFrustumSize();
+    auto& guiResources = commonResources.GetGuiResources();
 
     SetPosition({0.0f, 0.0f});
 

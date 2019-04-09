@@ -15,8 +15,8 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto textVisibleDuration {1.0f};
-    constexpr auto textInvisibleDuration {0.5f};
+    constexpr auto textVisibleDuration = 1.0f;
+    constexpr auto textInvisibleDuration = 0.5f;
 }
 
 BeginTextAnimation::BeginTextAnimation(Pht::IEngine& engine,
@@ -34,7 +34,7 @@ void BeginTextAnimation::Init(Pht::Scene& scene, Pht::SceneObject& parentObject)
         {0.35f, 0.35f, 0.35f, 0.75f}
     };
 
-    auto& text {scene.CreateText("Tap to begin!", textProperties)};
+    auto& text = scene.CreateText("Tap to begin!", textProperties);
     mSceneObject = &text.GetSceneObject();
     mSceneObject->GetTransform().SetPosition({-2.9f, -9.0f, UiLayer::text});
     mSceneObject->SetIsVisible(false);
@@ -46,8 +46,8 @@ void BeginTextAnimation::Init(Pht::Scene& scene, Pht::SceneObject& parentObject)
         {.mTime = textVisibleDuration + textInvisibleDuration, .mIsVisible = true}
     };
 
-    auto& animationSystem {mEngine.GetAnimationSystem()};
-    auto& animation {animationSystem.CreateAnimation(*mSceneObject, keyframes)};
+    auto& animationSystem = mEngine.GetAnimationSystem();
+    auto& animation = animationSystem.CreateAnimation(*mSceneObject, keyframes);
     animation.SetInterpolation(Pht::Interpolation::None);
     
     animationSystem.AddAnimation(animation);

@@ -9,8 +9,7 @@ MapHudController::MapHudController(Pht::IEngine& engine, const CommonResources& 
     mView {engine, commonResources} {}
 
 MapHudController::Result MapHudController::OnTouch(const Pht::TouchEvent& event) {
-    auto& optionsButton {mView.GetOptionsButton()};
-
+    auto& optionsButton = mView.GetOptionsButton();
     if (optionsButton.IsClicked(event)) {
         return Result::ClickedOptionsButton;
     }
@@ -19,8 +18,7 @@ MapHudController::Result MapHudController::OnTouch(const Pht::TouchEvent& event)
         return Result::TouchStartedOverButton;
     }
 
-    auto& coinsButton {mView.GetCoinsButton()};
-
+    auto& coinsButton = mView.GetCoinsButton();
     if (coinsButton.IsClicked(event)) {
         return Result::ClickedCoinsButton;
     }
@@ -29,8 +27,7 @@ MapHudController::Result MapHudController::OnTouch(const Pht::TouchEvent& event)
         return Result::TouchStartedOverButton;
     }
 
-    auto& livesButton {mView.GetLivesButton()};
-
+    auto& livesButton = mView.GetLivesButton();
     if (livesButton.IsClicked(event)) {
         return Result::ClickedLivesButton;
     }

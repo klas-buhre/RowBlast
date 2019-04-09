@@ -9,9 +9,9 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto duration {0.9f};
-    constexpr auto targetZ {-300.0f};
-    constexpr auto fadeDuration {0.22f};
+    constexpr auto duration = 0.9f;
+    constexpr auto targetZ = -300.0f;
+    constexpr auto fadeDuration = 0.22f;
 }
 
 PortalCameraMovement::PortalCameraMovement(Pht::IEngine& engine, MapScene& scene) :
@@ -40,10 +40,9 @@ PortalCameraMovement::State PortalCameraMovement::Update() {
 }
 
 void PortalCameraMovement::UpdateInActiveState() {
-    auto dt {mEngine.GetLastFrameSeconds()};
+    auto dt = mEngine.GetLastFrameSeconds();
     
     mElapsedTime += dt;
-    
     if (mElapsedTime >= duration) {
         if (!mHasBeenInStartFadeOutState) {
             mState = State::StartFadeOut;
@@ -64,7 +63,7 @@ void PortalCameraMovement::UpdateInActiveState() {
         }
     }
     
-    auto t {mElapsedTime / duration};
-    auto cameraZPosition {mStartZ + (targetZ - mStartZ) * t * t};
+    auto t = mElapsedTime / duration;
+    auto cameraZPosition = mStartZ + (targetZ - mStartZ) * t * t;
     mScene.SetCameraZPosition(cameraZPosition);
 }

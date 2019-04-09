@@ -190,7 +190,7 @@ namespace {
         }
     };
 
-    constexpr auto lightIntensity {0.895f};
+    constexpr auto lightIntensity = 0.895f;
 }
 
 World RowBlast::GetWorld2() {

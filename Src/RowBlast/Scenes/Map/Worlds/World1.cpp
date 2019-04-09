@@ -184,7 +184,7 @@ namespace {
         }
     };
     
-    constexpr auto lightIntensity {0.98f};
+    constexpr auto lightIntensity = 0.98f;
     const Pht::Color cloudColor {1.0f, 1.0f, 1.0f};
 }
 

@@ -42,7 +42,7 @@ void TitleController::Init() {
 }
 
 TitleController::Command TitleController::Update() {
-    auto command {Command::None};
+    auto command = Command::None;
     
     if (mTitleAnimation.IsDone()) {
         if (!mBeginTextAnimation.IsActive()) {

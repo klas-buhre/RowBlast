@@ -37,19 +37,18 @@ void RowBlast::CreatePortalParticleEffect(Pht::IEngine& engine,
         .mShrinkDuration = 0.0f
     };
     
-    auto& particleSystem {engine.GetParticleSystem()};
+    auto& particleSystem = engine.GetParticleSystem();
 
-    auto sceneObject {
+    auto sceneObject =
         particleSystem.CreateParticleEffectSceneObject(particleSettings,
                                                        particleEmitterSettings,
-                                                       Pht::RenderMode::Triangles)
-    };
+                                                       Pht::RenderMode::Triangles);
 
     sceneObject->GetRenderable()->GetMaterial().SetShaderType(Pht::ShaderType::ParticleTextureColor);
     sceneObject->GetTransform().SetPosition(position);
     sceneObject->SetLayer(layer);
 
-    auto* particleEffect {sceneObject->GetComponent<Pht::ParticleEffect>()};
+    auto* particleEffect = sceneObject->GetComponent<Pht::ParticleEffect>();
     assert(particleEffect);
     particleSystem.AddParticleEffect(*particleEffect);
     particleEffect->Start();

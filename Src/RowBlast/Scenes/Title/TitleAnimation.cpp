@@ -20,11 +20,11 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto waitTime {1.0f};
-    constexpr auto slideTime {0.23f};
-    constexpr auto displayDistance {0.65f};
-    constexpr auto displayTime {1.75f};
-    constexpr auto textWidth {11.0f};
+    constexpr auto waitTime = 1.0f;
+    constexpr auto slideTime = 0.23f;
+    constexpr auto displayDistance = 0.65f;
+    constexpr auto displayTime = 1.75f;
+    constexpr auto textWidth = 11.0f;
     const Pht::Vec3 centerPosition {0.0f, 8.5f, 0.0f};
 
     const std::array<Pht::Vec3, 3> twinklePositions {
@@ -44,7 +44,7 @@ TitleAnimation::TitleAnimation(Pht::IEngine& engine) :
 }
 
 void TitleAnimation::Init(Pht::Scene& scene, Pht::SceneObject& parentObject) {
-    auto& containerSceneObject {scene.CreateSceneObject()};
+    auto& containerSceneObject = scene.CreateSceneObject();
     containerSceneObject.GetTransform().SetPosition(centerPosition);
     parentObject.AddChild(containerSceneObject);
     
@@ -53,7 +53,7 @@ void TitleAnimation::Init(Pht::Scene& scene, Pht::SceneObject& parentObject) {
     
     containerSceneObject.AddChild(*mTwinkleParticleEffect);
 
-    auto& frustumSize {mEngine.GetRenderer().GetHudFrustumSize()};
+    auto& frustumSize = mEngine.GetRenderer().GetHudFrustumSize();
     mLeftPosition = {-frustumSize.x / 2.0f - textWidth / 2.0f, 0.0f, 0.0f};
     mRightPosition = {frustumSize.x / 2.0f + textWidth / 2.0f, 0.0f, 0.0f};
     
@@ -85,19 +85,17 @@ void TitleAnimation::CreateText() {
     textProperties.mSecondShadowOffset = Pht::Vec2 {0.05f, 0.05f};
 
     mText.mUpperTextLineSceneObject = std::make_unique<Pht::SceneObject>();
-    auto upperTextComponent {
+    auto upperTextComponent =
         std::make_unique<Pht::TextComponent>(*mText.mUpperTextLineSceneObject,
                                              "ROW",
-                                             textProperties)
-    };
+                                             textProperties);
     mText.mUpperTextLineSceneObject->SetComponent<Pht::TextComponent>(std::move(upperTextComponent));
     
     mText.mLowerTextLineSceneObject = std::make_unique<Pht::SceneObject>();
-    auto lowerTextComponent {
+    auto lowerTextComponent =
         std::make_unique<Pht::TextComponent>(*mText.mLowerTextLineSceneObject,
                                              "BLAST",
-                                             textProperties)
-    };
+                                             textProperties);
     mText.mLowerTextLineSceneObject->SetComponent<Pht::TextComponent>(std::move(lowerTextComponent));
     
     mText.mUpperTextLinePosition = {-4.0f, 0.2f, UiLayer::text};
@@ -131,7 +129,7 @@ void TitleAnimation::CreateTwinkleParticleEffect(Pht::IEngine& engine) {
         .mShrinkDuration = 0.5f
     };
     
-    auto& particleSystem {engine.GetParticleSystem()};
+    auto& particleSystem = engine.GetParticleSystem();
     mTwinkleParticleEffect = particleSystem.CreateParticleEffectSceneObject(particleSettings,
                                                                             particleEmitterSettings,
                                                                             Pht::RenderMode::Triangles);
@@ -157,26 +155,25 @@ void TitleAnimation::Update() {
 }
 
 void TitleAnimation::UpdateInWaitingState() {
-    auto dt {mEngine.GetLastFrameSeconds()};
-    mElapsedTime += dt;
+    auto dt = mEngine.GetLastFrameSeconds();
     
+    mElapsedTime += dt;
     if (mElapsedTime > waitTime) {
         mState = State::SlidingIn;
         mElapsedTime = 0.0f;
         mText.mUpperTextLineSceneObject->SetIsVisible(true);
         mText.mLowerTextLineSceneObject->SetIsVisible(true);
         
-        auto& audio {mEngine.GetAudio()};
+        auto& audio = mEngine.GetAudio();
         audio.PlaySound(static_cast<Pht::AudioResourceId>(SoundId::SlidingTextWhoosh1));
     }
 }
 
 void TitleAnimation::UpdateInSlidingInState() {
-    auto dt {mEngine.GetLastFrameSeconds()};
+    auto dt = mEngine.GetLastFrameSeconds();
     
     mTextPosition.x += mVelocity * dt;
     mVelocity -= dt * (mInitialVelocity - mDisplayVelocity) / slideTime;
-    
     if (mVelocity < mDisplayVelocity ||
         mTextPosition.x >= mRightPosition.x - displayDistance / 2.0f) {
 
@@ -189,18 +186,17 @@ void TitleAnimation::UpdateInSlidingInState() {
 }
 
 void TitleAnimation::UpdateTextLineSceneObjectPositions() {
-    auto upperTextLinePosition {mLeftPosition + mTextPosition + mText.mUpperTextLinePosition};
+    auto upperTextLinePosition = mLeftPosition + mTextPosition + mText.mUpperTextLinePosition;
     mText.mUpperTextLineSceneObject->GetTransform().SetPosition(upperTextLinePosition);
     
-    auto lowerTextLinePosition {mRightPosition - mTextPosition + mText.mLowerTextLinePosition};
+    auto lowerTextLinePosition = mRightPosition - mTextPosition + mText.mLowerTextLinePosition;
     mText.mLowerTextLineSceneObject->GetTransform().SetPosition(lowerTextLinePosition);
 }
 
 void TitleAnimation::UpdateInSlidingSlowlyState() {
-    auto dt {mEngine.GetLastFrameSeconds()};
+    auto dt = mEngine.GetLastFrameSeconds();
     
     mTextPosition.x += mDisplayVelocity * dt;
-    
     if (mTextPosition.x > mRightPosition.x) {
         mState = State::Twinkles;
         mTextPosition.x = mRightPosition.x;
@@ -211,13 +207,13 @@ void TitleAnimation::UpdateInSlidingSlowlyState() {
 }
 
 void TitleAnimation::UpdateInTwinklesState() {
-    auto dt {mEngine.GetLastFrameSeconds()};
-    auto* particleEffect {mTwinkleParticleEffect->GetComponent<Pht::ParticleEffect>()};
+    auto dt = mEngine.GetLastFrameSeconds();
+    auto* particleEffect = mTwinkleParticleEffect->GetComponent<Pht::ParticleEffect>();
     
     particleEffect->Update(dt);
     
     if (!particleEffect->IsActive()) {
-        auto twinklePosition {twinklePositions[std::rand() % twinklePositions.size()]};
+        auto twinklePosition = twinklePositions[std::rand() % twinklePositions.size()];
         mTwinkleParticleEffect->GetTransform().SetPosition(twinklePosition);
         particleEffect->Start();
     }

@@ -16,22 +16,22 @@ using namespace RowBlast;
 OptionsMenuView::OptionsMenuView(Pht::IEngine& engine, const CommonResources& commonResources) :
     mCommonResources {commonResources} {
 
-    auto zoom {PotentiallyZoomedScreen::No};
-    auto& guiResources {commonResources.GetGuiResources()};
-    auto& menuWindow {guiResources.GetLargeDarkMenuWindow()};
+    auto zoom = PotentiallyZoomedScreen::No;
+    auto& guiResources = commonResources.GetGuiResources();
     
-    auto menuWindowSceneObject {std::make_unique<Pht::SceneObject>(&menuWindow.GetRenderable())};
+    auto& menuWindow = guiResources.GetLargeDarkMenuWindow();
+    auto menuWindowSceneObject = std::make_unique<Pht::SceneObject>(&menuWindow.GetRenderable());
     menuWindowSceneObject->GetTransform().SetPosition({0.0f, 0.0f, UiLayer::background});
     AddSceneObject(std::move(menuWindowSceneObject));
 
     SetSize(menuWindow.GetSize());
     
-    auto& sceneManager {engine.GetSceneManager()};
+    auto& sceneManager = engine.GetSceneManager();
 
     Pht::Color gearColor {0.57f, 0.57f, 0.57f};
     Pht::Material gearMaterial {gearColor, gearColor, gearColor, 10.0f};
     gearMaterial.GetDepthState().mDepthTestAllowedOverride = true;
-    auto& gearIcon {CreateSceneObject(Pht::ObjMesh {"gear_192.obj", 5.1f}, gearMaterial, sceneManager)};
+    auto& gearIcon = CreateSceneObject(Pht::ObjMesh {"gear_192.obj", 5.1f}, gearMaterial, sceneManager);
     gearIcon.GetTransform().SetRotation({20.0f, 10.0f, 0.0f});
     gearIcon.GetTransform().SetPosition({0.0f, GetSize().y / 2.0f - 1.4f, UiLayer::textRectangle});
     GetRoot().AddChild(gearIcon);
@@ -39,9 +39,9 @@ OptionsMenuView::OptionsMenuView(Pht::IEngine& engine, const CommonResources& co
     mCloseButton = GuiUtils::CreateCloseButton(engine, *this, guiResources, zoom);
     GuiUtils::CreateTitleBarLine(engine, *this);
     
-    auto& textProperties {guiResources.GetSmallWhiteTextProperties(zoom)};
-    auto& buttonTextProperties {guiResources.GetWhiteButtonTextProperties(zoom)};
-    auto settingsY {3.0f};
+    auto& textProperties = guiResources.GetSmallWhiteTextProperties(zoom);
+    auto& buttonTextProperties = guiResources.GetWhiteButtonTextProperties(zoom);
+    auto settingsY = 3.0f;
     
     MenuButton::Style settingsButtonStyle;
     settingsButtonStyle.mPressedScale = 1.05f;
@@ -226,9 +226,8 @@ OptionsMenuView::OptionsMenuView(Pht::IEngine& engine, const CommonResources& co
 void OptionsMenuView::EnableControlsButton() {
     mIsControlsButtonEnabled = true;
     
-    auto& blueButtonRenderable {
-        mCommonResources.GetGuiResources().GetSmallBlueGlossyButton(PotentiallyZoomedScreen::Yes)
-    };
+    auto& blueButtonRenderable =
+        mCommonResources.GetGuiResources().GetSmallBlueGlossyButton(PotentiallyZoomedScreen::Yes);
     
     mControlsButton->GetSceneObject().SetRenderable(&blueButtonRenderable);
 }
@@ -236,9 +235,8 @@ void OptionsMenuView::EnableControlsButton() {
 void OptionsMenuView::DisableControlsButton() {
     mIsControlsButtonEnabled = false;
 
-    auto& grayButtonRenderable {
-        mCommonResources.GetGuiResources().GetSmallGrayGlossyButtonPotentiallyZoomedScreen()
-    };
+    auto& grayButtonRenderable =
+        mCommonResources.GetGuiResources().GetSmallGrayGlossyButtonPotentiallyZoomedScreen();
     
     mControlsButton->GetSceneObject().SetRenderable(&grayButtonRenderable);
 }

@@ -25,8 +25,8 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto halfMapWidth {22.0f};
-    constexpr auto lightAnimationDuration {5.0f};
+    constexpr auto halfMapWidth = 22.0f;
+    constexpr auto lightAnimationDuration = 5.0f;
     const Pht::Vec3 defaultUiLightDirectionA {0.785f, 1.0f, 0.67f};
     const Pht::Vec3 defaultUiLightDirectionB {1.0f, 1.0f, 0.74f};
     
@@ -42,7 +42,7 @@ namespace {
     };
 
     const BackgroundLight& GetBackgroundLight(const World& world) {
-        auto& backgroundLights {world.mBackgroundLights};
+        auto& backgroundLights = world.mBackgroundLights;
         
         assert(!backgroundLights.empty());
         return backgroundLights[std::rand() % backgroundLights.size()];
@@ -64,9 +64,9 @@ MapScene::MapScene(Pht::IEngine& engine,
     mFont {"ethnocentric_rg_it.ttf", engine.GetRenderer().GetAdjustedNumPixels(46)} {}
 
 void MapScene::Init() {
-    auto& world {mUniverse.GetWorld(mWorldId)};
-    auto& sceneManager {mEngine.GetSceneManager()};
-    auto scene {sceneManager.CreateScene(Pht::Hash::Fnv1a("mapScene"))};
+    auto& world = mUniverse.GetWorld(mWorldId);
+    auto& sceneManager = mEngine.GetSceneManager();
+    auto scene = sceneManager.CreateScene(Pht::Hash::Fnv1a("mapScene"));
     mScene = scene.get();
     
     mEngine.GetRenderer().EnableShader(Pht::ShaderType::TexturedEnvMapLighting);
@@ -87,19 +87,19 @@ void MapScene::Init() {
     uiViewsRenderPass.SetIsDepthTestAllowed(false);
     uiViewsRenderPass.SetRenderOrder(Pht::RenderOrder::BackToFront);
 
-    auto& uiLightSceneObject {scene->CreateSceneObject()};
+    auto& uiLightSceneObject = scene->CreateSceneObject();
     uiLightSceneObject.SetIsVisible(false);
-    auto uiLightComponent {std::make_unique<Pht::LightComponent>(uiLightSceneObject)};
+    auto uiLightComponent = std::make_unique<Pht::LightComponent>(uiLightSceneObject);
     mUiLight = uiLightComponent.get();
     uiViewsRenderPass.SetLight(mUiLight);
     uiLightSceneObject.SetComponent<Pht::LightComponent>(std::move(uiLightComponent));
     
     SetDefaultGuiLightDirections();
 
-    auto& uiCameraSceneObject {scene->CreateSceneObject()};
+    auto& uiCameraSceneObject = scene->CreateSceneObject();
     uiCameraSceneObject.SetIsVisible(false);
     uiCameraSceneObject.GetTransform().SetPosition({0.0f, 0.0f, 300.0f});
-    auto uiCameraComponent {std::make_unique<Pht::CameraComponent>(uiCameraSceneObject)};
+    auto uiCameraComponent = std::make_unique<Pht::CameraComponent>(uiCameraSceneObject);
     uiViewsRenderPass.SetCamera(uiCameraComponent.get());
     uiCameraSceneObject.SetComponent<Pht::CameraComponent>(std::move(uiCameraComponent));
 
@@ -109,7 +109,7 @@ void MapScene::Init() {
     fadeEffectRenderPass.SetHudMode(true);
     scene->AddRenderPass(fadeEffectRenderPass);
 
-    auto& light {scene->CreateGlobalLight()};
+    auto& light = scene->CreateGlobalLight();
     light.SetDirection({1.0f, 1.0f, 1.0f});
     light.SetAmbientIntensity(world.mAmbientLightIntensity);
     light.SetDirectionalIntensity(world.mDirectionalLightIntensity);
@@ -118,7 +118,7 @@ void MapScene::Init() {
     mCamera = &scene->CreateCamera();
     scene->GetRoot().AddChild(mCamera->GetSceneObject());
     
-    auto& backgroundLight {GetBackgroundLight(world)};
+    auto& backgroundLight = GetBackgroundLight(world);
     
     CreateWorld(world, backgroundLight);
     CreatePins(world);
@@ -163,9 +163,8 @@ void MapScene::CreateWorld(const World& world, const BackgroundLight& background
     if (!world.mBackgroundTextureFilename.empty()) {
         Pht::Material backgroundMaterial {world.mBackgroundTextureFilename};
         
-        auto& background {
-            mScene->CreateSceneObject(Pht::QuadMesh {2400.0f, 2400.0f}, backgroundMaterial)
-        };
+        auto& background =
+            mScene->CreateSceneObject(Pht::QuadMesh {2400.0f, 2400.0f}, backgroundMaterial);
         
         background.GetTransform().SetPosition({0.0f, 0.0f, -720.0f});
         background.SetLayer(static_cast<int>(Layer::Space));
@@ -197,7 +196,7 @@ void MapScene::CreateWorld(const World& world, const BackgroundLight& background
 }
 
 void MapScene::CreatePins(const World& world) {
-    auto& pinsContainer {mScene->CreateSceneObject()};
+    auto& pinsContainer = mScene->CreateSceneObject();
     pinsContainer.SetLayer(static_cast<int>(Layer::Map));
     mScene->GetRoot().AddChild(pinsContainer);
     
@@ -210,42 +209,39 @@ void MapScene::CreatePins(const World& world) {
 }
 
 void MapScene::CreatePin(Pht::SceneObject& pinsContainerObject, const MapPlace& place) {
-    auto levelId {0};
+    auto levelId = 0;
     Pht::Vec3 position;
     
     switch (place.GetKind()) {
         case MapPlace::Kind::MapLevel: {
-            auto& mapLevel {place.GetMapLevel()};
+            auto& mapLevel = place.GetMapLevel();
             levelId = mapLevel.mLevelId;
             position = mapLevel.mPosition;
             break;
         }
         case MapPlace::Kind::Portal: {
-            auto& portal {place.GetPortal()};
+            auto& portal = place.GetPortal();
             levelId = portal.mNextLevelId;
             position = portal.mPosition;
             break;
         }
     }
     
-    auto& progressService {mUserServices.GetProgressService()};
-    auto isClickable {levelId <= progressService.GetProgress()};
+    auto& progressService = mUserServices.GetProgressService();
+    auto isClickable = levelId <= progressService.GetProgress();
     
     if (mPreviousPin) {
-        const auto& connectionMaterial {
+        const auto& connectionMaterial =
             isClickable ? mCommonResources.GetMaterials().GetBlueMaterial() :
-            mCommonResources.GetMaterials().GetLightGrayMaterial()
-        };
+            mCommonResources.GetMaterials().GetLightGrayMaterial();
         
-        auto pinPositionDiff {position - mPreviousPin->GetPosition()};
+        auto pinPositionDiff = position - mPreviousPin->GetPosition();
         
-        auto connectionZAngle {
-            Pht::ToDegrees(std::atan(pinPositionDiff.y / pinPositionDiff.x)) - 90.0f
-        };
+        auto connectionZAngle =
+            Pht::ToDegrees(std::atan(pinPositionDiff.y / pinPositionDiff.x)) - 90.0f;
 
-        auto connectionXAngle {
-            Pht::ToDegrees(std::atan(pinPositionDiff.z / pinPositionDiff.x))
-        };
+        auto connectionXAngle =
+            Pht::ToDegrees(std::atan(pinPositionDiff.z / pinPositionDiff.x));
 
         Pht::Vec3 connectionPosition {
             mPreviousPin->GetPosition().x + pinPositionDiff.x / 2.0f,
@@ -254,14 +250,14 @@ void MapScene::CreatePin(Pht::SceneObject& pinsContainerObject, const MapPlace& 
         };
         
         Pht::CylinderMesh connectionMesh {0.3f, 4.0f, false, std::string{"mapConnection"}};
-        auto& connection {mScene->CreateSceneObject(connectionMesh, connectionMaterial)};
-        auto& transform {connection.GetTransform()};
+        auto& connection = mScene->CreateSceneObject(connectionMesh, connectionMaterial);
+        auto& transform = connection.GetTransform();
         transform.SetRotation({connectionXAngle, 0.0f, connectionZAngle});
         transform.SetPosition(connectionPosition);
         pinsContainerObject.AddChild(connection);
     }
     
-    auto pin {
+    auto pin =
         std::make_unique<MapPin>(mEngine,
                                  mCommonResources,
                                  mFont,
@@ -272,16 +268,15 @@ void MapScene::CreatePin(Pht::SceneObject& pinsContainerObject, const MapPlace& 
                                  levelId,
                                  progressService.GetNumStars(levelId),
                                  isClickable,
-                                 place)
-    };
+                                 place);
     
     mPreviousPin = pin.get();
     mPins.push_back(std::move(pin));
 }
 
 void MapScene::CreateEffects(const World& world, const BackgroundLight& backgroundLight) {
-    if (auto* pin {GetLevelPin(mUserServices.GetProgressService().GetProgress())}) {
-        auto& pinPosition {pin->GetPosition()};
+    if (auto* pin = GetLevelPin(mUserServices.GetProgressService().GetProgress())) {
+        auto& pinPosition = pin->GetPosition();
         CreateNextLevelParticleEffect(mEngine, *mScene, pinPosition, static_cast<int>(Layer::Map));
     }
     
@@ -312,12 +307,11 @@ void MapScene::Update() {
 
 void MapScene::UpdateUiLightAnimation() {
     mLightAnimationTime += mEngine.GetLastFrameSeconds();
-    
     if (mLightAnimationTime > lightAnimationDuration) {
         mLightAnimationTime = 0.0f;
     }
     
-    auto t {(cos(mLightAnimationTime * 2.0f * 3.1415f / lightAnimationDuration) + 1.0f) / 2.0f};
+    auto t = (cos(mLightAnimationTime * 2.0f * 3.1415f / lightAnimationDuration) + 1.0f) / 2.0f;
     mUiLight->SetDirection(mUiLightDirectionA.Lerp(t, mUiLightDirectionB));
 }
 
@@ -347,8 +341,8 @@ void MapScene::SetCameraXPosition(float xPosition) {
 }
 
 void MapScene::SetCameraZPosition(float zPosition) {
-    auto& transform {mCamera->GetSceneObject().GetTransform()};
-    auto position {transform.GetPosition()};
+    auto& transform = mCamera->GetSceneObject().GetTransform();
+    auto position = transform.GetPosition();
     
     position.z = zPosition;
     transform.SetPosition(position);
@@ -363,22 +357,21 @@ float MapScene::GetCameraZPosition() const {
 }
 
 void MapScene::SetCameraAtLevel(int levelId) {
-    if (auto* pin {GetLevelPin(levelId)}) {
+    if (auto* pin = GetLevelPin(levelId)) {
         SetCameraXPosition(pin->GetPosition().x);
     }
 }
 
 void MapScene::SetCameraBetweenLevels(int levelIdA, int levelIdB) {
-    auto* pinA {GetPin(levelIdA)};
-    auto* pinB {GetPin(levelIdB)};
-    
+    auto* pinA = GetPin(levelIdA);
+    auto* pinB = GetPin(levelIdB);
     if (pinA && pinB) {
         SetCameraXPosition((pinA->GetPosition().x + pinB->GetPosition().x) / 2.0f);
     }
 }
 
 void MapScene::SetCameraAtPortal(int portalNextLevelId) {
-     if (auto* pin {GetPortalPin(portalNextLevelId)}) {
+     if (auto* pin = GetPortalPin(portalNextLevelId)) {
         SetCameraXPosition(pin->GetPosition().x);
     }
 }

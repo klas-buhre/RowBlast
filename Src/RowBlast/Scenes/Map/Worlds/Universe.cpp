@@ -17,7 +17,7 @@ const World& Universe::GetWorld(int worldId) const {
 }
 
 int Universe::CalcWorldId(int levelId) const {
-    for (auto worldId {1}; worldId <= mWorlds.size(); ++worldId) {
+    for (auto worldId = 1; worldId <= mWorlds.size(); ++worldId) {
         for (auto& place: GetWorld(worldId).mPlaces) {
             switch (place.GetKind()) {
                 case MapPlace::Kind::MapLevel:

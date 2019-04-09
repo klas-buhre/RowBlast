@@ -20,7 +20,7 @@ MapTutorial::MapTutorial(Pht::IEngine& engine, MapScene& scene, const UserServic
     mHandAnimation {engine, 0.43f, false} {}
 
 void MapTutorial::Init(int worldId) {
-    auto progress {mUserServices.GetProgressService().GetProgress()};
+    auto progress = mUserServices.GetProgressService().GetProgress();
 
     if (worldId == 1 && progress == 1) {
         if (mState != State::StartLevel1StepStart && mState != State::StartLevel1StepComplete) {
@@ -39,10 +39,10 @@ void MapTutorial::Init(int worldId) {
     
     mHandAnimation.Init(mScene.GetTutorialContainer());
     
-    auto* pin {mScene.GetPin(progress)};
+    auto* pin = mScene.GetPin(progress);
     assert(pin);
     
-    auto handPosition {pin->GetPosition() + Pht::Vec3{0.76f, 0.25f, 1.0f}};
+    auto handPosition = pin->GetPosition() + Pht::Vec3{0.76f, 0.25f, 1.0f};
     mHandAnimation.Start(handPosition, 90.0f);
 }
 

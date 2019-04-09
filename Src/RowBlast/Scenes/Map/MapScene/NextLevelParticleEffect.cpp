@@ -25,14 +25,14 @@ namespace {
             .mFrequency = frequency
         };
         
-        auto& particleSystem {engine.GetParticleSystem()};
+        auto& particleSystem = engine.GetParticleSystem();
         auto sceneObject = particleSystem.CreateParticleEffectSceneObject(particleSettings,
                                                                           particleEmitterSettings,
                                                                           Pht::RenderMode::Triangles);
         sceneObject->GetTransform().SetPosition(position);
         sceneObject->SetLayer(layer);
         
-        auto* particleEffect {sceneObject->GetComponent<Pht::ParticleEffect>()};
+        auto* particleEffect = sceneObject->GetComponent<Pht::ParticleEffect>();
         assert(particleEffect);
         particleSystem.AddParticleEffect(*particleEffect);
         particleEffect->Start();

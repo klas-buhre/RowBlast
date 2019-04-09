@@ -60,7 +60,7 @@ OptionsMenuController::Result OptionsMenuController::HandleInput() {
 }
 
 OptionsMenuController::Result OptionsMenuController::OnTouch(const Pht::TouchEvent& touchEvent) {
-    auto& settingsService {mUserServices.GetSettingsService()};
+    auto& settingsService = mUserServices.GetSettingsService();
 
     if (mView.IsControlsButtonEnabled()) {
         if (mView.GetControlsButton().IsClicked(touchEvent)) {
@@ -75,8 +75,7 @@ OptionsMenuController::Result OptionsMenuController::OnTouch(const Pht::TouchEve
     }
 
     if (mView.GetSoundButton().IsClicked(touchEvent)) {
-        auto& audio {mEngine.GetAudio()};
-        
+        auto& audio = mEngine.GetAudio();
         if (audio.IsSoundEnabled()) {
             audio.DisableSound();
             settingsService.SetIsSoundEnabled(false);
@@ -89,8 +88,7 @@ OptionsMenuController::Result OptionsMenuController::OnTouch(const Pht::TouchEve
     }
 
     if (mView.GetMusicButton().IsClicked(touchEvent)) {
-        auto& audio {mEngine.GetAudio()};
-        
+        auto& audio = mEngine.GetAudio();
         if (audio.IsMusicEnabled()) {
             audio.DisableMusic();
             settingsService.SetIsMusicEnabled(false);
@@ -126,8 +124,7 @@ OptionsMenuController::Result OptionsMenuController::OnTouch(const Pht::TouchEve
 }
 
 void OptionsMenuController::UpdateViewToReflectSettings() {
-    auto& settingsService {mUserServices.GetSettingsService()};
-    
+    auto& settingsService = mUserServices.GetSettingsService();
     if (settingsService.GetControlType() == ControlType::Click) {
         mView.SetControlsClickIsVisible(true);
         mView.SetControlsSwipeIsVisible(false);
@@ -136,8 +133,7 @@ void OptionsMenuController::UpdateViewToReflectSettings() {
         mView.SetControlsSwipeIsVisible(true);
     }
     
-    auto& audio {mEngine.GetAudio()};
-
+    auto& audio = mEngine.GetAudio();
     if (audio.IsSoundEnabled()) {
         mView.SetSoundOnIsVisible(true);
         mView.SetSoundOffIsVisible(false);

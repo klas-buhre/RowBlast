@@ -90,8 +90,8 @@ namespace {
         }
     };
 
-    constexpr auto ambientLightIntensity {0.81f};
-    constexpr auto directionalLightIntensity {0.81f};
+    constexpr auto ambientLightIntensity = 0.81f;
+    constexpr auto directionalLightIntensity = 0.81f;
 
     const Pht::Color cloudColor {1.0f, 1.0f, 1.0f};
     const std::string backgroundTextureFilename {"space.jpg"};
