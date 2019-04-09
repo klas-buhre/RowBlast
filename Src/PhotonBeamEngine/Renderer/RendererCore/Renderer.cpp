@@ -136,7 +136,7 @@ namespace {
 
     int CalculateStride(VertexFlags vertexFlags) {
         int stride {sizeof(Vec3)};
-        
+
         if (vertexFlags.mNormals) {
             stride += sizeof(Vec3);
         }
@@ -164,7 +164,6 @@ namespace {
 
         auto vertexFlags = shaderProgram.GetVertexFlags();
         auto stride = CalculateStride(vertexFlags);
-        
         auto& attributes = shaderProgram.GetAttributes();
         
         glEnableVertexAttribArray(attributes.mPosition);
@@ -405,7 +404,6 @@ void Renderer::RenderScene(const Scene& scene) {
         assert(camera);
         if (camera != previousCamera) {
             auto cameraPositionWorldSpace = camera->GetSceneObject().GetWorldSpacePosition();
-            
             if (renderPass.IsHudMode()) {
                 mHudCameraPosition = cameraPositionWorldSpace;
             } else {
