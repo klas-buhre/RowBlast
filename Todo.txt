@@ -67,20 +67,16 @@ Ongoing tasks:
         Level 46: 4
         Level 47: 3
         Level 48: 4
-
-
+        Level 49: 4
 
 
 
 
     -Level plan:
-       -49: Triangle level 48.
        -50: Normal like 8 or 42.
 
 
 
-    -Levels moved to world 3:
-      -Level 49.
     -Levels moved to world 4:
       -Level 65.
       -Level 66.
