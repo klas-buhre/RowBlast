@@ -116,7 +116,6 @@ void ScrollPanel::HideObjectsOutsideView() {
     
     for (auto* sceneObject: mPanel->GetChildren()) {
         auto sceneObjectYPosition = sceneObject->GetTransform().GetPosition().y;
-        
         if (sceneObjectYPosition < visibleYMin || sceneObjectYPosition > visibleYMax) {
             sceneObject->SetIsVisible(false);
         } else {

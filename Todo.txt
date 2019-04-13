@@ -37,6 +37,7 @@ Backlog:
     -Make sure analytics is enabled and that user terms accept is saved and checked.
     -Make sure analytics debug log is disabled.
     -Make sure the correct product price in cents and receipt is sent to analytics.
+    -Look into the problem of reduced framerate sometimes on iPhoneX.
     -Do a soft launch in a couple of countries? Maybe the nordic countries and UK? Only english
      localization is needed for that. And/or, before that, a small soft launch only in one country
      instead of a playtest since that may give bettar data than a playtest since the players will
@@ -65,23 +66,26 @@ Ongoing tasks:
         Level 45: 3
         Level 46: 4
         Level 47: 3
+        Level 48: 4
+
+
+
+
 
 
     -Level plan:
-       -48: Normal like 8 or 42.
        -49: Triangle level 48.
        -50: Normal like 8 or 42.
 
 
 
     -Levels moved to world 3:
-      -Level 48.
       -Level 49.
     -Levels moved to world 4:
       -Level 65.
       -Level 66.
       -Level 67.
-
+      -Level 73.
 
 
 Ordered Backlog:
@@ -189,10 +193,12 @@ Ordered Backlog:
         Done
     -Levels for the space world.
         Cost: 7
-    -Purchasing.
-        Cost: 10
     -Replace the tutorial slide animations with Pht animations.
         Cost: 5
+    -Revise some of the levels.
+        Cost: 5
+    -Purchasing.
+        Cost: 10
     -Release-related tasks.
         Cost: 7
     -Small soft launch.
@@ -210,7 +216,7 @@ Ordered Backlog:
     -Back end.
         Cost: ?
 
-        Total cost: 323
+        Total cost: 327
 
 
 Levels:
