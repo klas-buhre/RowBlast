@@ -50,8 +50,15 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-    -Levels for the space world.
-        Moves left in sloppy play:
+    -Replace the tutorial slide animations with Pht animations.
+
+
+
+
+
+
+
+    -Moves left in assumed average user strength play:
         Level 34: 6
         Level 35: 10
         Level 36: 12
@@ -68,14 +75,7 @@ Ongoing tasks:
         Level 47: 3
         Level 48: 4
         Level 49: 4
-
-
-
-
-    -Level plan:
-       -50: Normal like 8 or 42.
-
-
+        Level 50: 2
 
     -Levels moved to world 4:
       -Level 65.
@@ -189,6 +189,7 @@ Ordered Backlog:
         Done
     -Levels for the space world.
         Cost: 7
+        Done
     -Replace the tutorial slide animations with Pht animations.
         Cost: 5
     -Revise some of the levels.

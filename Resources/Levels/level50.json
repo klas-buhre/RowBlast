@@ -1,8 +1,8 @@
 {
     "speed": 0.0,
-    "moves": 60,
+    "moves": 45,
     "gestureMovesFactor": 1.05,
-    "twoStars": 44,
+    "twoStars": 43,
     "threeStars": 40,
     "floatingBlocksSet": "Asteroid",
     "musicTrack": 2,
