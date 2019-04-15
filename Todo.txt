@@ -20,14 +20,6 @@ Backlog:
      in a similar way as the SlidingFieldAnimation.
     -Animation that moves the pause button out of the screen.
   -GUI:
-    -Tutorial: Maybe make a more clear laser dialog Pht animation with the laser piece at the top of
-     the frame in the beginning and it falls all the way down and then detonates. Then the yellow
-     and blue blocks fall down.
-    -Tutorial: Maybe make a more clear bomb dialog Pht animation with the bomb piece at the top of
-     the frame in the beginning and it falls all the way down and then detonates.
-    -Tutorial: Maybe a new level bomb Pht animation just to be consistent with the look.
-    -Tutorial: Maybe a new asteroid Pht animation just to be consistent with the look.
-    -Tutorial: Pht animation showing how to fill gray slots.
   -Make ready for release:
     -Should give free gold coins after a new install?
     -Limit the number of undo move to one or two per game round.
@@ -50,7 +42,15 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-    -Replace the tutorial slide animations with Pht animations.
+    -Tutorial: Maybe make a more clear laser dialog Pht animation with the laser piece at the top of
+     the frame in the beginning and it falls all the way down and then detonates. Then the yellow
+     and blue blocks fall down.
+    -Tutorial: Maybe make a more clear bomb dialog Pht animation with the bomb piece at the top of
+     the frame in the beginning and it falls all the way down and then detonates.
+    -Tutorial: Maybe a new level bomb Pht animation just to be consistent with the look.
+    -Tutorial: Maybe a new asteroid Pht animation just to be consistent with the look.
+    -Tutorial: Pht animation showing how to fill gray slots.
+    -Tutorial: Maybe there could be a cascading/gravity animation.
 
 
 
