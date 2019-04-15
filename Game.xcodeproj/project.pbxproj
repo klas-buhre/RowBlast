@@ -304,6 +304,7 @@
 		62411A971E61E62800035D2A /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62411A961E61E62800035D2A /* GLKit.framework */; };
 		6242DEF521C50E7600D17F46 /* Audio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6242DEF121C50E7600D17F46 /* Audio.cpp */; };
 		6242DEFA21C5112000D17F46 /* MusicTrackIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6242DEF921C5112000D17F46 /* MusicTrackIOS.mm */; };
+		6246D7582264C661004B3021 /* TutorialUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6246D7562264C661004B3021 /* TutorialUtils.cpp */; };
 		624C72E52177AB260006068B /* shield.png in Resources */ = {isa = PBXBuildFile; fileRef = 624C72E42177AB250006068B /* shield.png */; };
 		624C9DDE21A1A908000FB5E1 /* coin_pile_4120.obj in Resources */ = {isa = PBXBuildFile; fileRef = 624C9DDD21A1A907000FB5E1 /* coin_pile_4120.obj */; };
 		62524BC7222EBCC000AFF469 /* settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 62524BC6222EBCC000AFF469 /* settings.png */; };
@@ -1056,6 +1057,8 @@
 		6242DEF321C50E7600D17F46 /* Audio.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Audio.hpp; sourceTree = "<group>"; };
 		6242DEF721C50FB900D17F46 /* IMusicTrack.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = IMusicTrack.hpp; sourceTree = "<group>"; };
 		6242DEF921C5112000D17F46 /* MusicTrackIOS.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; path = MusicTrackIOS.mm; sourceTree = "<group>"; };
+		6246D7562264C661004B3021 /* TutorialUtils.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TutorialUtils.cpp; sourceTree = "<group>"; };
+		6246D7572264C661004B3021 /* TutorialUtils.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TutorialUtils.hpp; sourceTree = "<group>"; };
 		624C72E42177AB250006068B /* shield.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shield.png; sourceTree = "<group>"; };
 		624C9DDD21A1A907000FB5E1 /* coin_pile_4120.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = coin_pile_4120.obj; sourceTree = "<group>"; };
 		62524BC6222EBCC000AFF469 /* settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings.png; sourceTree = "<group>"; };
@@ -1810,6 +1813,8 @@
 				62216ABB21EB377E001CB9A1 /* SwitchPieceWindowView.hpp */,
 				62216ABF21EB377E001CB9A1 /* Tutorial.cpp */,
 				62216AB621EB377E001CB9A1 /* Tutorial.hpp */,
+				6246D7562264C661004B3021 /* TutorialUtils.cpp */,
+				6246D7572264C661004B3021 /* TutorialUtils.hpp */,
 			);
 			path = Tutorial;
 			sourceTree = "<group>";
@@ -3523,6 +3528,7 @@
 				621F715B2201AD1200232B83 /* FieldBottomGlowAnimation.cpp in Sources */,
 				6256983B2182392C003A3A9D /* MathUtils.cpp in Sources */,
 				62216BCD21EB377E001CB9A1 /* CascadingDialogController.cpp in Sources */,
+				6246D7582264C661004B3021 /* TutorialUtils.cpp in Sources */,
 				62216BE121EB377E001CB9A1 /* OutOfMovesDialogView.cpp in Sources */,
 				62216BC021EB377E001CB9A1 /* PlacePieceWindowController.cpp in Sources */,
 				62216C5621ED0BFC001CB9A1 /* DocumentViewerScene.cpp in Sources */,

@@ -42,6 +42,8 @@ namespace RowBlast {
         Tutorial(Pht::IEngine& engine,
                  GameScene& scene,
                  const CommonResources& commonResources,
+                 const PieceResources& pieceResources,
+                 const LevelResources& levelResources,
                  const UserServices& userServices);
         
         void Init(const Level& level);

@@ -42,6 +42,7 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
+    -Remember to do the animations for swipe controls as well.
     -Tutorial: Maybe make a more clear laser dialog Pht animation with the laser piece at the top of
      the frame in the beginning and it falls all the way down and then detonates. Then the yellow
      and blue blocks fall down.

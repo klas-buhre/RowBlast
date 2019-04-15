@@ -44,6 +44,8 @@ namespace {
 Tutorial::Tutorial(Pht::IEngine& engine,
                    GameScene& scene,
                    const CommonResources& commonResources,
+                   const PieceResources& pieceResources,
+                   const LevelResources& levelResources,
                    const UserServices& userServices) :
     mEngine {engine},
     mScene {scene},
@@ -63,7 +65,7 @@ Tutorial::Tutorial(Pht::IEngine& engine,
     mOtherMoves2WindowController {engine, commonResources},
     mCascadingDialogController {engine, commonResources},
     mSameColorDialogController {engine, commonResources},
-    mLaserDialogController {engine, commonResources, userServices},
+    mLaserDialogController {engine, commonResources, pieceResources, levelResources, userServices},
     mBombDialogController {engine, commonResources, userServices},
     mLevelBombDialogController {engine, commonResources, userServices},
     mAsteroidDialogController {engine, commonResources, userServices} {
@@ -87,6 +89,8 @@ Tutorial::Tutorial(Pht::IEngine& engine,
     mBombDialogController.SetFadeEffect(mFadeEffect);
     mLevelBombDialogController.SetFadeEffect(mFadeEffect);
     mAsteroidDialogController.SetFadeEffect(mFadeEffect);
+    
+    mLaserDialogController.SetGuiLightProvider(scene);
 }
 
 void Tutorial::Init(const Level& level) {
@@ -237,7 +241,7 @@ Tutorial::Result Tutorial::OnLevelStart() {
             return Result::TutorialHasFocus;
         case 5:
             SetActiveViewController(Controller::LaserDialog);
-            mLaserDialogController.SetUp(mScene.GetScene());
+            mLaserDialogController.SetUp();
             return Result::TutorialHasFocus;
         case 7:
             SetActiveViewController(Controller::BombDialog);

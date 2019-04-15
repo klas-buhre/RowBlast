@@ -10,13 +10,15 @@ using namespace RowBlast;
 
 LaserDialogController::LaserDialogController(Pht::IEngine& engine,
                                              const CommonResources& commonResources,
+                                             const PieceResources& pieceResources,
+                                             const LevelResources& levelResources,
                                              const UserServices& userServices) :
     mInput {engine.GetInput()},
-    mView {engine, commonResources, userServices},
+    mView {engine, commonResources, pieceResources, levelResources, userServices},
     mSlidingMenuAnimation {engine, mView} {}
 
-void LaserDialogController::SetUp(Pht::Scene& scene) {
-    mView.SetUp(scene);
+void LaserDialogController::SetUp() {
+    mView.SetUp();
     mSlidingMenuAnimation.SetUp(SlidingMenuAnimation::UpdateFade::Yes,
                                 SlidingMenuAnimation::SlideDirection::Scale,
                                 SlidingMenuAnimation::UpdatePosition::No);
@@ -24,6 +26,10 @@ void LaserDialogController::SetUp(Pht::Scene& scene) {
 
 void LaserDialogController::SetFadeEffect(Pht::FadeEffect& fadeEffect) {
     mSlidingMenuAnimation.SetFadeEffect(fadeEffect);
+}
+
+void LaserDialogController::SetGuiLightProvider(IGuiLightProvider& guiLightProvider) {
+    mView.SetGuiLightProvider(guiLightProvider);
 }
 
 LaserDialogController::Result LaserDialogController::Update() {
