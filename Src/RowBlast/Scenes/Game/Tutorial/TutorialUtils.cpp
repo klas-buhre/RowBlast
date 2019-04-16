@@ -79,35 +79,35 @@ void TutorialUtils::CreateFieldQuadFrame(Pht::IEngine& engine,
     auto& sceneManager = engine.GetSceneManager();
     
     auto& container = view.CreateSceneObject();
-    container.GetTransform().SetPosition({0.0f, 0.0f, -0.5f});
+    container.GetTransform().SetPosition({0.0f, 0.0f, -0.1f});
     parent.AddChild(container);
     
     auto& lineSceneObject =
         view.CreateSceneObject(Pht::QuadMesh {width + borderWidth, borderWidth},
                                lineMaterial,
                                sceneManager);
-    lineSceneObject.GetTransform().SetPosition({0.0f, height / 2.0f, UiLayer::buttonText});
+    lineSceneObject.GetTransform().SetPosition({0.0f, height / 2.0f, 0.0f});
     container.AddChild(lineSceneObject);
     
     auto& lineSceneObject2 =
         view.CreateSceneObject(Pht::QuadMesh {width + borderWidth, borderWidth},
                                lineMaterial,
                                sceneManager);
-    lineSceneObject2.GetTransform().SetPosition({0.0f, -height / 2.0f, UiLayer::buttonText});
+    lineSceneObject2.GetTransform().SetPosition({0.0f, -height / 2.0f, 0.0f});
     container.AddChild(lineSceneObject2);
 
     auto& lineSceneObject3 =
         view.CreateSceneObject(Pht::QuadMesh {borderWidth, height - borderWidth},
                                lineMaterial,
                                sceneManager);
-    lineSceneObject3.GetTransform().SetPosition({-width / 2.0f, 0.0f, UiLayer::buttonText});
+    lineSceneObject3.GetTransform().SetPosition({-width / 2.0f, 0.0f, 0.0f});
     container.AddChild(lineSceneObject3);
 
     auto& lineSceneObject4 =
         view.CreateSceneObject(Pht::QuadMesh {borderWidth, height - borderWidth},
                                lineMaterial,
                                sceneManager);
-    lineSceneObject4.GetTransform().SetPosition({width / 2.0f, 0.0f, UiLayer::buttonText});
+    lineSceneObject4.GetTransform().SetPosition({width / 2.0f, 0.0f, 0.0f});
     container.AddChild(lineSceneObject4);
 }
 

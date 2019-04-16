@@ -9,6 +9,8 @@
 // Game includes.
 #include "MenuButton.hpp"
 #include "IGuiLightProvider.hpp"
+#include "HandAnimation.hpp"
+#include "TutorialLaserParticleEffect.hpp"
 
 namespace Pht {
     class IEngine;
@@ -50,6 +52,8 @@ namespace RowBlast {
         const UserServices& mUserServices;
         IGuiLightProvider* mGuiLightProvider {nullptr};
         Pht::Animation* mAnimation {nullptr};
+        std::unique_ptr<HandAnimation> mHandAnimation;
+        std::unique_ptr<TutorialLaserParticleEffect> mLaserEffect;
         std::unique_ptr<MenuButton> mPlayButton;
     };
 }

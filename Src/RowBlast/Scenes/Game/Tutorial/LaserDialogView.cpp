@@ -18,10 +18,11 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto animationDuration = 5.0f;
+    constexpr auto animationDuration = 4.5f;
     constexpr auto clickMoveTime = 1.5f;
-    constexpr auto rowBombPosition2Time = 1.7f;
-    constexpr auto detonationTime = 2.1f;
+    constexpr auto rowBombPosition2Time = 1.65f;
+    constexpr auto detonationTime = 1.95f;
+    constexpr auto blockFlyDuration = 0.5f;
     constexpr auto rowBombRotationSpeed = 35.0f;
 }
 
@@ -87,22 +88,22 @@ void LaserDialogView::CreateAnimation(const PieceResources& pieceResources,
     coloredBlocks.GetTransform().SetPosition({2.0f, 0.0f, 0.0f});
     container.AddChild(coloredBlocks);
 
-    TutorialUtils::CreateColoredBlock(*this, {1.0f, 1.0f, 0.0f}, BlockColor::Green, coloredBlocks, pieceResources);
-    TutorialUtils::CreateTwoBlocks(*this, {-1.0f, -0.5f, 0.0f}, BlockColor::Blue, 90.0f, coloredBlocks, pieceResources);
-    TutorialUtils::CreateTwoBlocks(*this, {0.0f, -0.5f, 0.0f}, BlockColor::Yellow, 90.0f, coloredBlocks, pieceResources);
-    TutorialUtils::CreateTwoBlocks(*this, {1.0f, -0.5f, 0.0f}, BlockColor::Red, 90.0f, coloredBlocks, pieceResources);
+    TutorialUtils::CreateColoredBlock(*this, {1.0f, 1.0f, UiLayer::block}, BlockColor::Green, coloredBlocks, pieceResources);
+    TutorialUtils::CreateTwoBlocks(*this, {-1.0f, -0.5f, UiLayer::block}, BlockColor::Blue, 90.0f, coloredBlocks, pieceResources);
+    TutorialUtils::CreateTwoBlocks(*this, {0.0f, -0.5f, UiLayer::block}, BlockColor::Yellow, 90.0f, coloredBlocks, pieceResources);
+    TutorialUtils::CreateTwoBlocks(*this, {1.0f, -0.5f, UiLayer::block}, BlockColor::Red, 90.0f, coloredBlocks, pieceResources);
     
-    TutorialUtils::CreateGrayBlock(*this, {-3.0f, -2.0f, 0.0f}, container, levelResources);
-    TutorialUtils::CreateGrayBlock(*this, {1.0f, -2.0f, 0.0f}, container, levelResources);
-    TutorialUtils::CreateGrayBlock(*this, {2.0f, -2.0f, 0.0f}, container, levelResources);
-    TutorialUtils::CreateGrayBlock(*this, {3.0f, -2.0f, 0.0f}, container, levelResources);
-    TutorialUtils::CreateThreeGrayBlocks(*this, {-2.0f, -3.0f, 0.0f}, container, levelResources);
-    TutorialUtils::CreateThreeGrayBlocks(*this, {-2.0f, -4.0f, 0.0f}, container, levelResources);
+    auto& grayBlock1 = TutorialUtils::CreateGrayBlock(*this, {-3.0f, -2.0f, UiLayer::block}, container, levelResources);
+    auto& grayBlock2 = TutorialUtils::CreateGrayBlock(*this, {1.0f, -2.0f, UiLayer::block}, container, levelResources);
+    auto& grayBlock3 = TutorialUtils::CreateGrayBlock(*this, {2.0f, -2.0f, UiLayer::block}, container, levelResources);
+    auto& grayBlock4 = TutorialUtils::CreateGrayBlock(*this, {3.0f, -2.0f, UiLayer::block}, container, levelResources);
+    TutorialUtils::CreateThreeGrayBlocks(*this, {-2.0f, -3.0f, UiLayer::block}, container, levelResources);
+    TutorialUtils::CreateThreeGrayBlocks(*this, {-2.0f, -4.0f, UiLayer::block}, container, levelResources);
     
-    auto& rowBombMove1 = TutorialUtils::CreateTransparentRowBomb(*this, {-2.0f, -2.0f, 0.0f}, container, pieceResources);
-    auto& rowBombMove2 = TutorialUtils::CreateTransparentRowBomb(*this, {2.0f, 1.0f, 0.0f}, container, pieceResources);
-    auto& rowBombMove3 = TutorialUtils::CreateTransparentRowBomb(*this, {1.0f, -4.0f, 0.0f}, container, pieceResources);
-    auto& rowBombMove4 = TutorialUtils::CreateTransparentRowBomb(*this, {3.0f, -4.0f, 0.0f}, container, pieceResources);
+    auto& rowBombMove1 = TutorialUtils::CreateTransparentRowBomb(*this, {-2.0f, -2.0f, UiLayer::block}, container, pieceResources);
+    auto& rowBombMove2 = TutorialUtils::CreateTransparentRowBomb(*this, {2.0f, 1.0f, UiLayer::block}, container, pieceResources);
+    auto& rowBombMove3 = TutorialUtils::CreateTransparentRowBomb(*this, {1.0f, -4.0f, UiLayer::block}, container, pieceResources);
+    auto& rowBombMove4 = TutorialUtils::CreateTransparentRowBomb(*this, {3.0f, -4.0f, UiLayer::block}, container, pieceResources);
     
     std::vector<Pht::Keyframe> rowBombMoveKeyframes {
         {.mTime = 0.0f, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
@@ -114,9 +115,9 @@ void LaserDialogView::CreateAnimation(const PieceResources& pieceResources,
     animationSystem.CreateAnimation(rowBombMove3, rowBombMoveKeyframes);
     animationSystem.CreateAnimation(rowBombMove4, rowBombMoveKeyframes);
     
-    Pht::Vec3 rowBombInitialPosition {0.0f, 3.8f, 0.0f};
-    Pht::Vec3 rowBombPosition2 {-2.0f, 3.8f, 0.0f};
-    Pht::Vec3 rowBombDetonationPosition {-2.0f, -2.0f, 0.0f};
+    Pht::Vec3 rowBombInitialPosition {0.0f, 3.8f, UiLayer::block};
+    Pht::Vec3 rowBombPosition2 {-2.0f, 3.8f, UiLayer::block};
+    Pht::Vec3 rowBombDetonationPosition {-2.0f, -2.0f, UiLayer::block};
     
     auto& rowBomb = TutorialUtils::CreateRowBomb(*this, rowBombInitialPosition, container, pieceResources);
     
@@ -128,12 +129,88 @@ void LaserDialogView::CreateAnimation(const PieceResources& pieceResources,
         {.mTime = animationDuration}
     };
     animationSystem.CreateAnimation(rowBomb, rowBombKeyframes);
+    
+    mHandAnimation = std::make_unique<HandAnimation>(mEngine, 1.0f, true);
+    mHandAnimation->Init(container);
+    
+    std::vector<Pht::Keyframe> handAnimationKeyframes {
+        {
+            .mTime = 0.0f,
+            .mCallback = [this] () {
+                mHandAnimation->StartInNotTouchingScreenState({-1.5f, -2.6f, UiLayer::root},
+                                                              30.0f,
+                                                              10.0f);
+            }
+        },
+        {
+            .mTime = clickMoveTime - 0.3f,
+            .mCallback = [this] () {
+                mHandAnimation->BeginTouch(0.0f);
+            }
+        },
+        {
+            .mTime = animationDuration
+        }
+    };
+    animationSystem.CreateAnimation(mHandAnimation->GetSceneObject(), handAnimationKeyframes);
+
+    mLaserEffect = std::make_unique<TutorialLaserParticleEffect>(mEngine, container);
+    
+    std::vector<Pht::Keyframe> laserKeyframes {
+        {
+            .mTime = 0.0f
+        },
+        {
+            .mTime = detonationTime,
+            .mCallback = [this] () {
+                mLaserEffect->StartLaser();
+            }
+        },
+        {
+            .mTime = animationDuration
+        }
+    };
+    animationSystem.CreateAnimation(mLaserEffect->GetSceneObject(), laserKeyframes);
+    
+    std::vector<Pht::Keyframe> grayBlock1Keyframes {
+        {.mTime = 0.0f, .mPosition = Pht::Vec3{-3.0f, -2.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
+        {.mTime = detonationTime + 0.1f, .mPosition = Pht::Vec3{-3.0f, -2.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}},
+        {.mTime = detonationTime + blockFlyDuration, .mPosition = Pht::Vec3{-3.0f, -5.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 100.0f, 100.0f}, .mIsVisible = false},
+        {.mTime = animationDuration}
+    };
+    animationSystem.CreateAnimation(grayBlock1, grayBlock1Keyframes);
+    
+    std::vector<Pht::Keyframe> grayBlock2Keyframes {
+        {.mTime = 0.0f, .mPosition = Pht::Vec3{1.0f, -2.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
+        {.mTime = detonationTime + 0.1f, .mPosition = Pht::Vec3{1.0f, -2.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}},
+        {.mTime = detonationTime + blockFlyDuration, .mPosition = Pht::Vec3{1.0f, -5.0f, 0.0f}, .mRotation = Pht::Vec3{50.0f, 0.0f, 100.0f}, .mIsVisible = false},
+        {.mTime = animationDuration}
+    };
+    animationSystem.CreateAnimation(grayBlock2, grayBlock2Keyframes);
+
+    std::vector<Pht::Keyframe> grayBlock3Keyframes {
+        {.mTime = 0.0f, .mPosition = Pht::Vec3{2.0f, -2.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
+        {.mTime = detonationTime + 0.1f, .mPosition = Pht::Vec3{2.0f, -2.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}},
+        {.mTime = detonationTime + blockFlyDuration, .mPosition = Pht::Vec3{2.5f, -4.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 100.0f, 100.0f}, .mIsVisible = false},
+        {.mTime = animationDuration}
+    };
+    animationSystem.CreateAnimation(grayBlock3, grayBlock3Keyframes);
+
+    std::vector<Pht::Keyframe> grayBlock4Keyframes {
+        {.mTime = 0.0f, .mPosition = Pht::Vec3{3.0f, -2.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
+        {.mTime = detonationTime + 0.1f, .mPosition = Pht::Vec3{3.0f, -2.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}},
+        {.mTime = detonationTime + blockFlyDuration, .mPosition = Pht::Vec3{4.0f, -4.5f, 0.0f}, .mRotation = Pht::Vec3{100.0f, 0.0f, 100.0f}, .mIsVisible = false},
+        {.mTime = animationDuration}
+    };
+    animationSystem.CreateAnimation(grayBlock4, grayBlock4Keyframes);
 }
 
 void LaserDialogView::SetUp() {
     if (mGuiLightProvider) {
         TutorialUtils::SetGuiLightDirections(*mGuiLightProvider);
     }
+    
+    mLaserEffect->SetUp();
     
     mAnimation->Stop();
     mAnimation->Play();
@@ -148,4 +225,6 @@ void LaserDialogView::OnDeactivate() {
 void LaserDialogView::Update() {
     auto dt = mEngine.GetLastFrameSeconds();
     mAnimation->Update(dt);
+    mLaserEffect->Update(dt);
+    mHandAnimation->Update();
 }

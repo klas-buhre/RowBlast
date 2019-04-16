@@ -118,7 +118,6 @@ void ParticleEffect::Update(float dt) {
 
 bool ParticleEffect::UpdateParticle(Particle& particle, float dt) {
     particle.mAge += dt;
-    
     if (particle.mAge > particle.mTimeToLive) {
         particle.mIsActive = false;
         return false;
@@ -141,10 +140,9 @@ bool ParticleEffect::UpdateParticle(Particle& particle, float dt) {
             particle.mSize += (particle.mFullSize - particleSettings.mInitialSize.GetValue()) *
                               dt / particleSettings.mGrowDuration;
         } else if (particleSettings.mInitialPointSize.HasValue()) {
-            auto deltaSize {
+            auto deltaSize =
                 (particle.mFullSize.x - particleSettings.mInitialPointSize.GetValue()) *
-                dt / particleSettings.mGrowDuration
-            };
+                dt / particleSettings.mGrowDuration;
             
             particle.mSize += {deltaSize, deltaSize};
         } else {
@@ -167,7 +165,6 @@ bool ParticleEffect::UpdateParticle(Particle& particle, float dt) {
         };
         
         particle.mSize -= scaledDeltaSize;
-        
         if (particle.mSize.x < 0.0f) {
             particle.mSize.x = 0.0f;
         }
@@ -181,7 +178,6 @@ bool ParticleEffect::UpdateParticle(Particle& particle, float dt) {
 
     if (particle.mAge > particle.mTimeToLive - particleSettings.mFadeOutDuration) {
         particle.mColor.w -= dt / particleSettings.mFadeOutDuration;
-        
         if (particle.mColor.w < 0.0f) {
             particle.mColor.w = 0.0f;
         }

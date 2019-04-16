@@ -474,7 +474,7 @@ Pht::Animation& HowToPlayDialogView::CreateClearBlocksAnimation(Pht::SceneObject
                 }
             },
             {
-                .mTime = 0.75f,
+                .mTime = 0.7f,
                 .mCallback = [handAnimation] () {
                     handAnimation->BeginTouch(0.0f);
                 }

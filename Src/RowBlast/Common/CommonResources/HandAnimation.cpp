@@ -160,9 +160,11 @@ void HandAnimation::Update() {
 void HandAnimation::UpdateInGoingForwardState() {
     mElapsedTime += mEngine.GetLastFrameSeconds();
     
-    auto t = mElapsedTime / moveDuration;
+    auto normalizedTime = mElapsedTime / moveDuration;
+    auto t = std::cos(3.1415f + normalizedTime * 3.1415f) * 0.5f + 0.5f;
+    auto position = backwardPosition + (forwardPosition - backwardPosition) * t;
     auto& transform = mHandSceneObject->GetTransform();
-    transform.SetPosition(backwardPosition.Lerp(t, forwardPosition));
+    transform.SetPosition(position);
     transform.SetScale(1.0f + handUpScaleAdd * (1.0f - t));
     
     if (mHandShadowSceneObject) {
@@ -202,9 +204,11 @@ void HandAnimation::UpdateInTouchingScreenState() {
 void HandAnimation::UpdateInGoingBackwardState() {
     mElapsedTime += mEngine.GetLastFrameSeconds();
     
-    auto t = mElapsedTime / moveDuration;
+    auto normalizedTime = mElapsedTime / moveDuration;
+    auto t = std::cos(3.1415f + normalizedTime * 3.1415f) * 0.5f + 0.5f;
+    auto position = forwardPosition + (backwardPosition - forwardPosition) * t;
     auto& transform = mHandSceneObject->GetTransform();
-    transform.SetPosition(forwardPosition.Lerp(t, backwardPosition));
+    transform.SetPosition(position);
     transform.SetScale(1.0f + handUpScaleAdd * t);
     
     if (mHandShadowSceneObject) {

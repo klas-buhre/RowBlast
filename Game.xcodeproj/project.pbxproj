@@ -262,6 +262,7 @@
 		6221D56E22303C070098395A /* sound_off.png in Resources */ = {isa = PBXBuildFile; fileRef = 6221D56D22303C070098395A /* sound_off.png */; };
 		6221D570223042980098395A /* circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 6221D56F223042980098395A /* circle.png */; };
 		6221D572223046E60098395A /* right_arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 6221D571223046E50098395A /* right_arrow.png */; };
+		62270D6022663000009D9625 /* TutorialLaserParticleEffect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62270D5E22663000009D9625 /* TutorialLaserParticleEffect.cpp */; };
 		6227D4F5206CFD25008EA77D /* bomb_798.obj in Resources */ = {isa = PBXBuildFile; fileRef = 6227D4F4206CFD25008EA77D /* bomb_798.obj */; };
 		62298339222D8E9C001A7E1C /* spinning_wheel.png in Resources */ = {isa = PBXBuildFile; fileRef = 62298338222D8E9C001A7E1C /* spinning_wheel.png */; };
 		6229833B222D8F1D001A7E1C /* home.png in Resources */ = {isa = PBXBuildFile; fileRef = 6229833A222D8F1D001A7E1C /* home.png */; };
@@ -995,6 +996,8 @@
 		6221D56D22303C070098395A /* sound_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sound_off.png; sourceTree = "<group>"; };
 		6221D56F223042980098395A /* circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = circle.png; sourceTree = "<group>"; };
 		6221D571223046E50098395A /* right_arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = right_arrow.png; sourceTree = "<group>"; };
+		62270D5E22663000009D9625 /* TutorialLaserParticleEffect.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TutorialLaserParticleEffect.cpp; sourceTree = "<group>"; };
+		62270D5F22663000009D9625 /* TutorialLaserParticleEffect.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TutorialLaserParticleEffect.hpp; sourceTree = "<group>"; };
 		6227D4F4206CFD25008EA77D /* bomb_798.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bomb_798.obj; sourceTree = "<group>"; };
 		62298338222D8E9C001A7E1C /* spinning_wheel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spinning_wheel.png; sourceTree = "<group>"; };
 		6229833A222D8F1D001A7E1C /* home.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = home.png; sourceTree = "<group>"; };
@@ -1813,6 +1816,8 @@
 				62216ABB21EB377E001CB9A1 /* SwitchPieceWindowView.hpp */,
 				62216ABF21EB377E001CB9A1 /* Tutorial.cpp */,
 				62216AB621EB377E001CB9A1 /* Tutorial.hpp */,
+				62270D5E22663000009D9625 /* TutorialLaserParticleEffect.cpp */,
+				62270D5F22663000009D9625 /* TutorialLaserParticleEffect.hpp */,
 				6246D7562264C661004B3021 /* TutorialUtils.cpp */,
 				6246D7572264C661004B3021 /* TutorialUtils.hpp */,
 			);
@@ -3582,6 +3587,7 @@
 				625698532182392C003A3A9D /* ParticleEmitter.cpp in Sources */,
 				62216BD421EB377E001CB9A1 /* ClearLastBlocksAnimation.cpp in Sources */,
 				62216A8921EB376E001CB9A1 /* PurchaseSuccessfulDialogController.cpp in Sources */,
+				62270D6022663000009D9625 /* TutorialLaserParticleEffect.cpp in Sources */,
 				62216BF221EB377E001CB9A1 /* FieldGrid.cpp in Sources */,
 				62216C1021EB377F001CB9A1 /* FPiece.cpp in Sources */,
 				625698342182392C003A3A9D /* InputHandler.cpp in Sources */,
