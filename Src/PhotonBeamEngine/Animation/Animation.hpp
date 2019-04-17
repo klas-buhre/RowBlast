@@ -1,31 +1,15 @@
 #ifndef Animation_hpp
 #define Animation_hpp
 
-#include <vector>
-#include <functional>
+#include <unordered_map>
 
-#include "Vector.hpp"
-#include "Optional.hpp"
 #include "ISceneObjectComponent.hpp"
+#include "AnimationClip.hpp"
+#include "Vector.hpp"
 
 namespace Pht {
     class SceneObject;
     class IAnimationSystem;
-
-    enum class Interpolation {
-        None,
-        Linear,
-        Cosine
-    };
-    
-    struct Keyframe {
-        float mTime {0.0f};
-        Optional<Vec3> mPosition;
-        Optional<Vec3> mScale;
-        Optional<Vec3> mRotation;
-        Optional<bool> mIsVisible;
-        std::function<void()> mCallback;
-    };
     
     class Animation: public ISceneObjectComponent {
     public:
@@ -36,14 +20,14 @@ namespace Pht {
                   IAnimationSystem& animationSystem);
         ~Animation();
         
+        void AddClip(const AnimationClip& clip, AnimationClipId clipId);
+        void SetActiveClip(AnimationClipId clipId);
+        void SetInterpolation(Interpolation interpolation, AnimationClipId clipId = 0);
+        AnimationClip* GetClip(AnimationClipId clipId);
         void Update(float dt);
         void Play();
         void Pause();
         void Stop();
-        
-        void SetInterpolation(Interpolation interpolation) {
-            mInterpolation = interpolation;
-        }
         
         bool IsPlaying() const {
             return mIsPlaying;
@@ -80,11 +64,11 @@ namespace Pht {
         
         SceneObject& mSceneObject;
         IAnimationSystem& mAnimationSystem;
-        Interpolation mInterpolation {Interpolation::Linear};
-        std::vector<Keyframe> mKeyframes;
-        Keyframe* mPreviousKeyframe {nullptr};
-        Keyframe* mKeyframe {nullptr};
-        Keyframe* mNextKeyframe {nullptr};
+        AnimationClip* mActiveClip {nullptr};
+        std::unordered_map<AnimationClipId, AnimationClip> mClips;
+        const Keyframe* mPreviousKeyframe {nullptr};
+        const Keyframe* mKeyframe {nullptr};
+        const Keyframe* mNextKeyframe {nullptr};
         float mElapsedTime {0.0f};
         bool mIsPlaying {false};
     };

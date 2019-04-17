@@ -263,6 +263,7 @@
 		6221D570223042980098395A /* circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 6221D56F223042980098395A /* circle.png */; };
 		6221D572223046E60098395A /* right_arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 6221D571223046E50098395A /* right_arrow.png */; };
 		62270D6022663000009D9625 /* TutorialLaserParticleEffect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62270D5E22663000009D9625 /* TutorialLaserParticleEffect.cpp */; };
+		62270D6322678B31009D9625 /* AnimationClip.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62270D6122678B31009D9625 /* AnimationClip.cpp */; };
 		6227D4F5206CFD25008EA77D /* bomb_798.obj in Resources */ = {isa = PBXBuildFile; fileRef = 6227D4F4206CFD25008EA77D /* bomb_798.obj */; };
 		62298339222D8E9C001A7E1C /* spinning_wheel.png in Resources */ = {isa = PBXBuildFile; fileRef = 62298338222D8E9C001A7E1C /* spinning_wheel.png */; };
 		6229833B222D8F1D001A7E1C /* home.png in Resources */ = {isa = PBXBuildFile; fileRef = 6229833A222D8F1D001A7E1C /* home.png */; };
@@ -998,6 +999,8 @@
 		6221D571223046E50098395A /* right_arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = right_arrow.png; sourceTree = "<group>"; };
 		62270D5E22663000009D9625 /* TutorialLaserParticleEffect.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TutorialLaserParticleEffect.cpp; sourceTree = "<group>"; };
 		62270D5F22663000009D9625 /* TutorialLaserParticleEffect.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TutorialLaserParticleEffect.hpp; sourceTree = "<group>"; };
+		62270D6122678B31009D9625 /* AnimationClip.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AnimationClip.cpp; sourceTree = "<group>"; };
+		62270D6222678B31009D9625 /* AnimationClip.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AnimationClip.hpp; sourceTree = "<group>"; };
 		6227D4F4206CFD25008EA77D /* bomb_798.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bomb_798.obj; sourceTree = "<group>"; };
 		62298338222D8E9C001A7E1C /* spinning_wheel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spinning_wheel.png; sourceTree = "<group>"; };
 		6229833A222D8F1D001A7E1C /* home.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = home.png; sourceTree = "<group>"; };
@@ -1580,6 +1583,8 @@
 			children = (
 				6220AF3A223527AC00D66C76 /* Animation.cpp */,
 				6220AF3B223527AC00D66C76 /* Animation.hpp */,
+				62270D6122678B31009D9625 /* AnimationClip.cpp */,
+				62270D6222678B31009D9625 /* AnimationClip.hpp */,
 				6220AF4022352BE300D66C76 /* AnimationSystem.cpp */,
 				6220AF4122352BE300D66C76 /* AnimationSystem.hpp */,
 				6220AF3E22352A1B00D66C76 /* IAnimationSystem.hpp */,
@@ -3462,6 +3467,7 @@
 				62216C1B21EB377F001CB9A1 /* Level.cpp in Sources */,
 				62216A9821EB376E001CB9A1 /* GradientRectangle.cpp in Sources */,
 				62216A8E21EB376E001CB9A1 /* LifeService.cpp in Sources */,
+				62270D6322678B31009D9625 /* AnimationClip.cpp in Sources */,
 				62216C2D21EB377F001CB9A1 /* FewMovesAlertAnimation.cpp in Sources */,
 				62216C1921EB377F001CB9A1 /* FieldAnalyzer.cpp in Sources */,
 				625698092182392C003A3A9D /* ObjMesh.cpp in Sources */,

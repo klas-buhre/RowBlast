@@ -16,25 +16,37 @@ Animation::Animation(SceneObject& sceneObject,
     mSceneObject {sceneObject},
     mAnimationSystem {animationSystem} {
     
-    SetKeyframes(keyframes);
+    mClips.emplace(0, keyframes);
+    SetActiveClip(0);
 }
 
 Animation::~Animation() {
     mAnimationSystem.RemoveAnimation(*this);
 }
 
-void Animation::SetKeyframes(const std::vector<Keyframe>& keyframes) {
-    mKeyframes.clear();
+void Animation::AddClip(const AnimationClip& clip, AnimationClipId clipId) {
+    mClips.insert(std::make_pair(clipId, clip));
+}
 
-    for (auto& keyframe: keyframes) {
-        if (mKeyframes.empty()) {
-            assert(keyframe.mTime == 0.0f);
-        } else {
-            assert(keyframe.mTime > mKeyframes.back().mTime);
-        }
-        
-        mKeyframes.push_back(keyframe);
+void Animation::SetActiveClip(AnimationClipId clipId) {
+    auto* clip = GetClip(clipId);
+    assert(clip);
+    mActiveClip = clip;
+}
+
+void Animation::SetInterpolation(Interpolation interpolation, AnimationClipId clipId) {
+    auto* clip = GetClip(clipId);
+    assert(clip);
+    clip->SetInterpolation(interpolation);
+}
+
+AnimationClip* Animation::GetClip(AnimationClipId clipId) {
+    auto i = mClips.find(clipId);
+    if (i != std::end(mClips)) {
+        return &i->second;
     }
+
+    return nullptr;
 }
 
 void Animation::Update(float dt) {
@@ -43,12 +55,11 @@ void Animation::Update(float dt) {
     }
     
     CalculateKeyframe(dt);
-    
     if (mKeyframe != mPreviousKeyframe) {
         HandleKeyframeTransition();
     }
     
-    if (mInterpolation != Interpolation::None) {
+    if (mActiveClip->GetInterpolation() != Interpolation::None) {
         UpdateInterpolation();
     }
     
@@ -60,9 +71,11 @@ void Animation::Update(float dt) {
 void Animation::CalculateKeyframe(float dt) {
     mElapsedTime += dt;
     
-    for (auto i = 1; i < mKeyframes.size(); ++i) {
-        auto& keyframe = mKeyframes[i - 1];
-        auto& nextKeyframe = mKeyframes[i];
+    auto& keyframes = mActiveClip->GetKeyframes();
+    
+    for (auto i = 1; i < keyframes.size(); ++i) {
+        auto& keyframe = keyframes[i - 1];
+        auto& nextKeyframe = keyframes[i];
         if (mElapsedTime >= keyframe.mTime && mElapsedTime <= nextKeyframe.mTime) {
             mKeyframe = &keyframe;
             mNextKeyframe = &nextKeyframe;
@@ -71,8 +84,8 @@ void Animation::CalculateKeyframe(float dt) {
     }
     
     mElapsedTime = 0.0f;
-    mKeyframe = &mKeyframes[0];
-    mNextKeyframe = &mKeyframes[1];
+    mKeyframe = &keyframes[0];
+    mNextKeyframe = &keyframes[1];
 }
 
 void Animation::HandleKeyframeTransition() {
@@ -134,7 +147,7 @@ void Animation::UpdateInterpolation() {
 
 Pht::Vec3 Animation::InterpolateVec3(const Pht::Vec3& keyframeValue,
                                      const Pht::Vec3& nextKeyframeValue) {
-    switch (mInterpolation) {
+    switch (mActiveClip->GetInterpolation()) {
         case Interpolation::Linear:
             return LerpVec3(keyframeValue, nextKeyframeValue);
         case Interpolation::Cosine:
@@ -164,7 +177,7 @@ Pht::Vec3 Animation::CosineInterpolateVec3(const Pht::Vec3& keyframeValue,
 }
 
 void Animation::Play() {
-    assert(mKeyframes.size() >= 2);
+    assert(mActiveClip->GetKeyframes().size() >= 2);
 
     mIsPlaying = true;
     PerformActionOnChildAnimations(Action::Play, mSceneObject);

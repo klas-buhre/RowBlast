@@ -18,7 +18,7 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto animationDuration = 4.5f;
+    constexpr auto animationDuration = 4.25f;
     constexpr auto clickMoveTime = 1.5f;
     constexpr auto rowBombPosition2Time = 1.65f;
     constexpr auto detonationTime = 1.95f;
@@ -135,7 +135,7 @@ void LaserDialogView::CreateAnimation(const PieceResources& pieceResources,
     mHandAnimation = std::make_unique<HandAnimation>(mEngine, 1.0f, true);
     mHandAnimation->Init(container);
     
-    std::vector<Pht::Keyframe> handAnimationKeyframes {
+    std::vector<Pht::Keyframe> handAnimationClickKeyframes {
         {
             .mTime = 0.0f,
             .mCallback = [this] () {
@@ -154,7 +154,49 @@ void LaserDialogView::CreateAnimation(const PieceResources& pieceResources,
             .mTime = animationDuration
         }
     };
-    animationSystem.CreateAnimation(mHandAnimation->GetSceneObject(), handAnimationKeyframes);
+    mHandPhtAnimation = &animationSystem.CreateAnimation(mHandAnimation->GetSceneObject(), handAnimationClickKeyframes);
+    
+    Pht::Vec3 handInitialPosition {2.25f, 1.0f, UiLayer::root};
+    Pht::Vec3 handAfterSwipePosition {2.25f, -1.3f, UiLayer::root};
+
+    std::vector<Pht::Keyframe> handAnimationSwipeKeyframes {
+        {
+            .mTime = 0.0f,
+            .mPosition = handInitialPosition,
+            .mCallback = [this, &handInitialPosition] () {
+                mHandAnimation->StartInNotTouchingScreenState(handInitialPosition, 45.0f, 10.0f);
+            }
+        },
+        {
+            .mTime = 0.4f,
+            .mPosition = handInitialPosition,
+            .mCallback = [this] () {
+                mHandAnimation->BeginTouch(0.45f);
+            }
+        },
+        {
+            .mTime = 0.6f,
+            .mPosition = handInitialPosition
+        },
+        {
+            .mTime = 1.0f,
+            .mPosition = handAfterSwipePosition
+        },
+        {
+            .mTime = 1.5f,
+            .mPosition = handAfterSwipePosition
+        },
+        {
+            .mTime = 3.0f,
+            .mPosition = handInitialPosition
+        },
+        {
+            .mTime = animationDuration
+        }
+    };
+    Pht::AnimationClip handAnimationSwipeClip {handAnimationSwipeKeyframes};
+    handAnimationSwipeClip.SetInterpolation(Pht::Interpolation::Cosine);
+    mHandPhtAnimation->AddClip(handAnimationSwipeClip, 1);
 
     mLaserEffect = std::make_unique<TutorialLaserParticleEffect>(mEngine, container);
     
@@ -216,6 +258,15 @@ void LaserDialogView::CreateAnimation(const PieceResources& pieceResources,
 }
 
 void LaserDialogView::SetUp() {
+    switch (mUserServices.GetSettingsService().GetControlType()) {
+        case ControlType::Click:
+            mHandPhtAnimation->SetActiveClip(0);
+            break;
+        case ControlType::Gesture:
+            mHandPhtAnimation->SetActiveClip(1);
+            break;
+    }
+
     if (mGuiLightProvider) {
         TutorialUtils::SetGuiLightDirections(*mGuiLightProvider);
     }

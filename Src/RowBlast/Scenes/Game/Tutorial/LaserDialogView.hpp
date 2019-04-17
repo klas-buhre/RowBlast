@@ -52,6 +52,7 @@ namespace RowBlast {
         const UserServices& mUserServices;
         IGuiLightProvider* mGuiLightProvider {nullptr};
         Pht::Animation* mAnimation {nullptr};
+        Pht::Animation* mHandPhtAnimation {nullptr};
         std::unique_ptr<HandAnimation> mHandAnimation;
         std::unique_ptr<TutorialLaserParticleEffect> mLaserEffect;
         std::unique_ptr<MenuButton> mPlayButton;
