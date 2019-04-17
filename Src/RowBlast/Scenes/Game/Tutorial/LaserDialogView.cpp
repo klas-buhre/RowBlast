@@ -23,6 +23,8 @@ namespace {
     constexpr auto rowBombPosition2Time = 1.65f;
     constexpr auto detonationTime = 1.95f;
     constexpr auto blockFlyDuration = 0.5f;
+    constexpr auto blockFallWaitDuration = 0.5f;
+    constexpr auto blockFallDuration = 0.5f;
     constexpr auto rowBombRotationSpeed = 35.0f;
 }
 
@@ -52,7 +54,7 @@ LaserDialogView::LaserDialogView(Pht::IEngine& engine,
     CreateAnimation(pieceResources, levelResources);
     
     auto& textProperties = guiResources.GetSmallWhiteTextProperties(zoom);
-    CreateText({-3.75f, -5.3f, UiLayer::text}, "The laser clears a row", textProperties);
+    CreateText({-3.75f, -5.5f, UiLayer::text}, "The laser clears a row", textProperties);
     
     Pht::Vec2 playButtonInputSize {194.0f, 43.0f};
 
@@ -74,8 +76,8 @@ LaserDialogView::LaserDialogView(Pht::IEngine& engine,
 void LaserDialogView::CreateAnimation(const PieceResources& pieceResources,
                                       const LevelResources& levelResources) {
     auto& container = CreateSceneObject();
-    container.GetTransform().SetPosition({0.0f, 1.5f, 0.0f});
-    container.GetTransform().SetScale(1.15f);
+    container.GetTransform().SetPosition({0.0f, 1.3f, 0.0f});
+    container.GetTransform().SetScale(1.25f);
     GetRoot().AddChild(container);
     
     auto& animationSystem = mEngine.GetAnimationSystem();
@@ -203,6 +205,14 @@ void LaserDialogView::CreateAnimation(const PieceResources& pieceResources,
         {.mTime = animationDuration}
     };
     animationSystem.CreateAnimation(grayBlock4, grayBlock4Keyframes);
+    
+    std::vector<Pht::Keyframe> coloredBlocksKeyframes {
+        {.mTime = 0.0f, .mPosition = Pht::Vec3{2.0f, 0.0f, 0.0f}},
+        {.mTime = detonationTime + blockFallWaitDuration, .mPosition = Pht::Vec3{2.0f, 0.0f, 0.0f}},
+        {.mTime = detonationTime + blockFallWaitDuration + blockFallDuration, .mPosition = Pht::Vec3{2.0f, -3.0f, 0.0f}},
+        {.mTime = animationDuration}
+    };
+    animationSystem.CreateAnimation(coloredBlocks, coloredBlocksKeyframes);
 }
 
 void LaserDialogView::SetUp() {
