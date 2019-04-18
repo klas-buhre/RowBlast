@@ -3,12 +3,12 @@
 using namespace Pht;
 
 namespace {
-    const auto slices {20};
-    const auto dTheta {TwoPi / slices};
-    const auto bodyVertexCount {slices * 2};
-    const auto bodyIndexCount {slices * 6};
-    const auto discVertexCount {slices + 1};
-    const auto discIndexCount {slices * 3};
+    const auto slices = 20;
+    const auto dTheta = TwoPi / slices;
+    const auto bodyVertexCount = slices * 2;
+    const auto bodyIndexCount = slices * 6;
+    const auto discVertexCount = slices + 1;
+    const auto discIndexCount = slices * 3;
 }
 
 CylinderMesh::CylinderMesh(float radius,

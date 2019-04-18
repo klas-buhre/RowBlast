@@ -22,6 +22,8 @@ namespace {
     constexpr auto clickMoveTime = 1.5f;
     constexpr auto rowBombPosition2Time = 1.65f;
     constexpr auto detonationTime = 1.95f;
+    constexpr auto beginSwipeLeftTime = 0.7f;
+    constexpr auto beginSwipeDownTime = 1.5f;
     constexpr auto blockFlyDuration = 0.5f;
     constexpr auto blockFallWaitDuration = 0.5f;
     constexpr auto blockFallDuration = 0.5f;
@@ -102,10 +104,12 @@ void LaserDialogView::CreateAnimation(const PieceResources& pieceResources,
     TutorialUtils::CreateThreeGrayBlocks(*this, {-2.0f, -3.0f, UiLayer::block}, container, levelResources);
     TutorialUtils::CreateThreeGrayBlocks(*this, {-2.0f, -4.0f, UiLayer::block}, container, levelResources);
     
-    auto& rowBombMove1 = TutorialUtils::CreateTransparentRowBomb(*this, {-2.0f, -2.0f, UiLayer::block}, container, pieceResources);
-    auto& rowBombMove2 = TutorialUtils::CreateTransparentRowBomb(*this, {2.0f, 1.0f, UiLayer::block}, container, pieceResources);
-    auto& rowBombMove3 = TutorialUtils::CreateTransparentRowBomb(*this, {1.0f, -4.0f, UiLayer::block}, container, pieceResources);
-    auto& rowBombMove4 = TutorialUtils::CreateTransparentRowBomb(*this, {3.0f, -4.0f, UiLayer::block}, container, pieceResources);
+    mRowBombMoves = &CreateSceneObject();
+    container.AddChild(*mRowBombMoves);
+    auto& rowBombMove1 = TutorialUtils::CreateTransparentRowBomb(*this, {-2.0f, -2.0f, UiLayer::block}, *mRowBombMoves, pieceResources);
+    auto& rowBombMove2 = TutorialUtils::CreateTransparentRowBomb(*this, {2.0f, 1.0f, UiLayer::block}, *mRowBombMoves, pieceResources);
+    auto& rowBombMove3 = TutorialUtils::CreateTransparentRowBomb(*this, {1.0f, -4.0f, UiLayer::block}, *mRowBombMoves, pieceResources);
+    auto& rowBombMove4 = TutorialUtils::CreateTransparentRowBomb(*this, {3.0f, -4.0f, UiLayer::block}, *mRowBombMoves, pieceResources);
     
     std::vector<Pht::Keyframe> rowBombMoveKeyframes {
         {.mTime = 0.0f, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
@@ -117,6 +121,25 @@ void LaserDialogView::CreateAnimation(const PieceResources& pieceResources,
     animationSystem.CreateAnimation(rowBombMove3, rowBombMoveKeyframes);
     animationSystem.CreateAnimation(rowBombMove4, rowBombMoveKeyframes);
     
+    Pht::Vec3 rowBombGhostPieceInitialPosition {0.0f, -4.0f, UiLayer::block};
+    Pht::Vec3 rowBombGhostPiecePosition2 {-1.0f, -2.0f, UiLayer::block};
+    Pht::Vec3 rowBombGhostPiecePosition3 {-2.0f, -2.0f, UiLayer::block};
+
+    mRowBombGhostPieceContainer = &CreateSceneObject();
+    container.AddChild(*mRowBombGhostPieceContainer);
+    auto& rowBombGhostPiece = TutorialUtils::CreateTransparentRowBomb(*this, rowBombGhostPieceInitialPosition, *mRowBombGhostPieceContainer, pieceResources);
+
+    std::vector<Pht::Keyframe> rowBombGhostPieceKeyframes {
+        {.mTime = 0.0f, .mPosition = rowBombGhostPieceInitialPosition, .mIsVisible = true},
+        {.mTime = beginSwipeLeftTime, .mPosition = rowBombGhostPieceInitialPosition},
+        {.mTime = beginSwipeLeftTime + (beginSwipeDownTime - beginSwipeLeftTime) / 2.0f, .mPosition = rowBombGhostPiecePosition2},
+        {.mTime = beginSwipeDownTime, .mPosition = rowBombGhostPiecePosition3},
+        {.mTime = detonationTime, .mIsVisible = false},
+        {.mTime = animationDuration}
+    };
+    auto& rowBombGhostPieceAnimation = animationSystem.CreateAnimation(rowBombGhostPiece, rowBombGhostPieceKeyframes);
+    rowBombGhostPieceAnimation.SetInterpolation(Pht::Interpolation::None);
+
     Pht::Vec3 rowBombInitialPosition {0.0f, 3.8f, UiLayer::block};
     Pht::Vec3 rowBombPosition2 {-2.0f, 3.8f, UiLayer::block};
     Pht::Vec3 rowBombDetonationPosition {-2.0f, -2.0f, UiLayer::block};
@@ -130,8 +153,20 @@ void LaserDialogView::CreateAnimation(const PieceResources& pieceResources,
         {.mTime = detonationTime, .mPosition = rowBombDetonationPosition, .mRotation = Pht::Vec3{0.0f, detonationTime * rowBombRotationSpeed, 0.0f}, .mIsVisible = false},
         {.mTime = animationDuration}
     };
-    animationSystem.CreateAnimation(rowBomb, rowBombKeyframes);
+    mRowBombAnimation = &animationSystem.CreateAnimation(rowBomb, rowBombKeyframes);
     
+    std::vector<Pht::Keyframe> rowBombSwipeKeyframes {
+        {.mTime = 0.0f, .mPosition = rowBombInitialPosition, .mIsVisible = true},
+        {.mTime = beginSwipeLeftTime, .mPosition = rowBombInitialPosition},
+        {.mTime = beginSwipeLeftTime + (beginSwipeDownTime - beginSwipeLeftTime) / 2.0f, .mPosition = Pht::Vec3{-1.0f, 3.8f, UiLayer::block}},
+        {.mTime = beginSwipeDownTime, .mPosition = rowBombPosition2},
+        {.mTime = detonationTime, .mIsVisible = false},
+        {.mTime = animationDuration}
+    };
+    Pht::AnimationClip rowBombSwipeClip {rowBombSwipeKeyframes};
+    rowBombSwipeClip.SetInterpolation(Pht::Interpolation::None);
+    mRowBombAnimation->AddClip(rowBombSwipeClip, 1);
+
     mHandAnimation = std::make_unique<HandAnimation>(mEngine, 1.0f, true);
     mHandAnimation->Init(container);
     
@@ -156,8 +191,10 @@ void LaserDialogView::CreateAnimation(const PieceResources& pieceResources,
     };
     mHandPhtAnimation = &animationSystem.CreateAnimation(mHandAnimation->GetSceneObject(), handAnimationClickKeyframes);
     
-    Pht::Vec3 handInitialPosition {2.25f, 1.0f, UiLayer::root};
-    Pht::Vec3 handAfterSwipePosition {2.25f, -1.3f, UiLayer::root};
+    Pht::Vec3 swipePos {0.5f, -2.0f, 0.0f};
+    auto handInitialPosition = swipePos + Pht::Vec3{2.25f, 1.0f, UiLayer::root};
+    auto handAfterSwipeLeftPosition = swipePos + Pht::Vec3{0.25f, 1.0f, UiLayer::root};
+    auto handAfterSwipeDownPosition = swipePos + Pht::Vec3{0.25f, -1.3f, UiLayer::root};
 
     std::vector<Pht::Keyframe> handAnimationSwipeKeyframes {
         {
@@ -168,26 +205,30 @@ void LaserDialogView::CreateAnimation(const PieceResources& pieceResources,
             }
         },
         {
-            .mTime = 0.4f,
+            .mTime = beginSwipeLeftTime - 0.2f,
             .mPosition = handInitialPosition,
             .mCallback = [this] () {
-                mHandAnimation->BeginTouch(0.45f);
+                mHandAnimation->BeginTouch(detonationTime - beginSwipeLeftTime);
             }
         },
         {
-            .mTime = 0.6f,
+            .mTime = beginSwipeLeftTime,
             .mPosition = handInitialPosition
         },
         {
-            .mTime = 1.0f,
-            .mPosition = handAfterSwipePosition
+            .mTime = beginSwipeDownTime,
+            .mPosition = handAfterSwipeLeftPosition
         },
         {
-            .mTime = 1.5f,
-            .mPosition = handAfterSwipePosition
+            .mTime = detonationTime - 0.1f,
+            .mPosition = handAfterSwipeDownPosition
         },
         {
-            .mTime = 3.0f,
+            .mTime = detonationTime + 0.5f,
+            .mPosition = handAfterSwipeDownPosition
+        },
+        {
+            .mTime = 4.0f,
             .mPosition = handInitialPosition
         },
         {
@@ -261,9 +302,15 @@ void LaserDialogView::SetUp() {
     switch (mUserServices.GetSettingsService().GetControlType()) {
         case ControlType::Click:
             mHandPhtAnimation->SetActiveClip(0);
+            mRowBombAnimation->SetActiveClip(0);
+            mRowBombMoves->SetIsVisible(true);
+            mRowBombGhostPieceContainer->SetIsVisible(false);
             break;
         case ControlType::Gesture:
             mHandPhtAnimation->SetActiveClip(1);
+            mRowBombAnimation->SetActiveClip(1);
+            mRowBombMoves->SetIsVisible(false);
+            mRowBombGhostPieceContainer->SetIsVisible(true);
             break;
     }
 

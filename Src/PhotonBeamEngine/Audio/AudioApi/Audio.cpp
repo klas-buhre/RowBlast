@@ -146,7 +146,6 @@ void Audio::Update(float dt) {
         auto& job = mDelayedSoundJobs.At(i);
         
         job.mElapsedTime += dt;
-        
         if (job.mElapsedTime >= job.mDelay) {
             PlaySound(job.mAudioResourceId);
             mDelayedSoundJobs.Erase(i);
