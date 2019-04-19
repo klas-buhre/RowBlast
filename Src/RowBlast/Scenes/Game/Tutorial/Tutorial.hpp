@@ -31,6 +31,7 @@ namespace RowBlast {
     class Piece;
     class Move;
     class UserServices;
+    class BlastRadiusAnimation;
     
     class Tutorial {
     public:
@@ -44,6 +45,7 @@ namespace RowBlast {
                  const CommonResources& commonResources,
                  const PieceResources& pieceResources,
                  const LevelResources& levelResources,
+                 const BlastRadiusAnimation& blastRadiusAnimation,
                  const UserServices& userServices);
         
         void Init(const Level& level);

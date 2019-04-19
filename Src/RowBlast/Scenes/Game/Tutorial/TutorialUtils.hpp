@@ -49,6 +49,14 @@ namespace RowBlast {
                                                    const Pht::Vec3& position,
                                                    Pht::SceneObject& parent,
                                                    const PieceResources& pieceResources);
+        Pht::SceneObject& CreateBomb(Pht::GuiView& view,
+                                     const Pht::Vec3& position,
+                                     Pht::SceneObject& parent,
+                                     const PieceResources& pieceResources);
+        Pht::SceneObject& CreateTransparentBomb(Pht::GuiView& view,
+                                                const Pht::Vec3& position,
+                                                Pht::SceneObject& parent,
+                                                const PieceResources& pieceResources);
     }
 }
 

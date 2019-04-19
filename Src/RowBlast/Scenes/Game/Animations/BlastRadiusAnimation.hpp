@@ -33,6 +33,7 @@ namespace RowBlast {
         void SetPosition(const Pht::Vec2& position);
         void Update(float dt);
         bool IsActive() const;
+        Pht::RenderableObject& GetBombRadiusRenderable() const;
 
         Kind GetActiveKind() const {
             return mActiveKind;

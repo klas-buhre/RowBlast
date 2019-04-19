@@ -10,13 +10,23 @@ using namespace RowBlast;
 
 BombDialogController::BombDialogController(Pht::IEngine& engine,
                                            const CommonResources& commonResources,
+                                           const PieceResources& pieceResources,
+                                           const LevelResources& levelResources,
+                                           const BlastRadiusAnimation& blastRadiusAnimation,
                                            const UserServices& userServices) :
     mInput {engine.GetInput()},
-    mView {engine, commonResources, userServices},
+    mView {
+        engine,
+        commonResources,
+        pieceResources,
+        levelResources,
+        blastRadiusAnimation,
+        userServices
+    },
     mSlidingMenuAnimation {engine, mView} {}
 
-void BombDialogController::SetUp(Pht::Scene& scene) {
-    mView.SetUp(scene);
+void BombDialogController::SetUp() {
+    mView.SetUp();
     mSlidingMenuAnimation.SetUp(SlidingMenuAnimation::UpdateFade::Yes,
                                 SlidingMenuAnimation::SlideDirection::Scale,
                                 SlidingMenuAnimation::UpdatePosition::No);
@@ -24,6 +34,10 @@ void BombDialogController::SetUp(Pht::Scene& scene) {
 
 void BombDialogController::SetFadeEffect(Pht::FadeEffect& fadeEffect) {
     mSlidingMenuAnimation.SetFadeEffect(fadeEffect);
+}
+
+void BombDialogController::SetGuiLightProvider(IGuiLightProvider& guiLightProvider) {
+    mView.SetGuiLightProvider(guiLightProvider);
 }
 
 BombDialogController::Result BombDialogController::Update() {

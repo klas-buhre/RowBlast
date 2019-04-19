@@ -361,3 +361,7 @@ bool BlastRadiusAnimation::IsActive() const {
             return false;
     }
 }
+
+Pht::RenderableObject& BlastRadiusAnimation::GetBombRadiusRenderable() const {
+    return *mBombRadiusSceneObject->GetRenderable();
+}

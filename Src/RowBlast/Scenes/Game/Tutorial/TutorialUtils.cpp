@@ -197,3 +197,19 @@ Pht::SceneObject& TutorialUtils::CreateTransparentRowBomb(Pht::GuiView& view,
     auto& transparentRowBombRenderable = pieceResources.GetTransparentRowBombRenderableObject();
     return CreateBlock(view, position, transparentRowBombRenderable, parent);
 }
+
+Pht::SceneObject& TutorialUtils::CreateBomb(Pht::GuiView& view,
+                                            const Pht::Vec3& position,
+                                            Pht::SceneObject& parent,
+                                            const PieceResources& pieceResources) {
+    auto& bombRenderable = pieceResources.GetBombRenderableObject();
+    return CreateBlock(view, position, bombRenderable, parent);
+}
+
+Pht::SceneObject& TutorialUtils::CreateTransparentBomb(Pht::GuiView& view,
+                                                       const Pht::Vec3& position,
+                                                       Pht::SceneObject& parent,
+                                                       const PieceResources& pieceResources) {
+    auto& transparentBombRenderable = pieceResources.GetTransparentBombRenderableObject();
+    return CreateBlock(view, position, transparentBombRenderable, parent);
+}

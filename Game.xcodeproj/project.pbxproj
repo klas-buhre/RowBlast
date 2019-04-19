@@ -276,6 +276,7 @@
 		6234617921668D1E00ECD0DF /* planet_rayeon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6234617821668D1E00ECD0DF /* planet_rayeon.jpg */; };
 		6234618C21691DAF00ECD0DF /* asteroid_998.obj in Resources */ = {isa = PBXBuildFile; fileRef = 6234618B21691DAE00ECD0DF /* asteroid_998.obj */; };
 		62346192216B6FE900ECD0DF /* planet_wadow.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62346191216B6FE900ECD0DF /* planet_wadow.jpg */; };
+		623768EC226A1117007FD5EC /* TutorialExplosionParticleEffect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623768EA226A1117007FD5EC /* TutorialExplosionParticleEffect.cpp */; };
 		6238F61B2191FCB40008A0CF /* TextDoubleGradient.vert in Resources */ = {isa = PBXBuildFile; fileRef = 6238F6192191FCB30008A0CF /* TextDoubleGradient.vert */; };
 		6238F61C2191FCB40008A0CF /* TextDoubleGradient.frag in Resources */ = {isa = PBXBuildFile; fileRef = 6238F61A2191FCB40008A0CF /* TextDoubleGradient.frag */; };
 		6238F620219A097A0008A0CF /* coin_852.obj in Resources */ = {isa = PBXBuildFile; fileRef = 6238F61F219A09790008A0CF /* coin_852.obj */; };
@@ -1014,6 +1015,9 @@
 		6234617821668D1E00ECD0DF /* planet_rayeon.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = planet_rayeon.jpg; sourceTree = "<group>"; };
 		6234618B21691DAE00ECD0DF /* asteroid_998.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = asteroid_998.obj; sourceTree = "<group>"; };
 		62346191216B6FE900ECD0DF /* planet_wadow.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = planet_wadow.jpg; sourceTree = "<group>"; };
+		623768EA226A1117007FD5EC /* TutorialExplosionParticleEffect.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TutorialExplosionParticleEffect.cpp; sourceTree = "<group>"; };
+		623768EB226A1117007FD5EC /* TutorialExplosionParticleEffect.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TutorialExplosionParticleEffect.hpp; sourceTree = "<group>"; };
+		623768F1226A36BB007FD5EC /* TutorialUiLayer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TutorialUiLayer.hpp; sourceTree = "<group>"; };
 		6238F6192191FCB30008A0CF /* TextDoubleGradient.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = TextDoubleGradient.vert; sourceTree = "<group>"; };
 		6238F61A2191FCB40008A0CF /* TextDoubleGradient.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = TextDoubleGradient.frag; sourceTree = "<group>"; };
 		6238F61F219A09790008A0CF /* coin_852.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = coin_852.obj; sourceTree = "<group>"; };
@@ -1821,8 +1825,11 @@
 				62216ABB21EB377E001CB9A1 /* SwitchPieceWindowView.hpp */,
 				62216ABF21EB377E001CB9A1 /* Tutorial.cpp */,
 				62216AB621EB377E001CB9A1 /* Tutorial.hpp */,
+				623768EA226A1117007FD5EC /* TutorialExplosionParticleEffect.cpp */,
+				623768EB226A1117007FD5EC /* TutorialExplosionParticleEffect.hpp */,
 				62270D5E22663000009D9625 /* TutorialLaserParticleEffect.cpp */,
 				62270D5F22663000009D9625 /* TutorialLaserParticleEffect.hpp */,
+				623768F1226A36BB007FD5EC /* TutorialUiLayer.hpp */,
 				6246D7562264C661004B3021 /* TutorialUtils.cpp */,
 				6246D7572264C661004B3021 /* TutorialUtils.hpp */,
 			);
@@ -3682,6 +3689,7 @@
 				621F715521FDD9D700232B83 /* OtherMoves2WindowView.cpp in Sources */,
 				62216C2721EB377F001CB9A1 /* CollapsingFieldAnimation.cpp in Sources */,
 				62216C3B21EB377F001CB9A1 /* SunParticleEffect.cpp in Sources */,
+				623768EC226A1117007FD5EC /* TutorialExplosionParticleEffect.cpp in Sources */,
 				623B94CD21F6357400B62D9B /* GLKViewExtension.mm in Sources */,
 				62216BF921EB377E001CB9A1 /* FallingPiece.cpp in Sources */,
 				62216C1D21EB377F001CB9A1 /* PieceDropParticleEffect.cpp in Sources */,
