@@ -43,11 +43,6 @@ Backlog:
 
 Ongoing tasks:
     -Remember to do the animations for swipe controls as well.
-    -Tutorial: Maybe make a more clear laser dialog Pht animation with the laser piece at the top of
-     the frame in the beginning and it falls all the way down and then detonates. Then the yellow
-     and blue blocks fall down.
-    -Tutorial: Maybe make a more clear bomb dialog Pht animation with the bomb piece at the top of
-     the frame in the beginning and it falls all the way down and then detonates.
     -Tutorial: Maybe a new level bomb Pht animation just to be consistent with the look.
     -Tutorial: Maybe a new asteroid Pht animation just to be consistent with the look.
     -Tutorial: Pht animation showing how to fill gray slots.

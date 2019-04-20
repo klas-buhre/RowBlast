@@ -20,12 +20,12 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto animationDuration = 4.25f;
+    constexpr auto animationDuration = 3.5f;
     constexpr auto clickMoveTime = 1.5f;
     constexpr auto clickMoveDuration = 0.5f;
     constexpr auto bombPosition2Time = 1.65f;
     constexpr auto detonationTime = 1.95f;
-    constexpr auto beginSwipeLeftTime = 0.7f;
+    constexpr auto beginSwipeRightTime = 1.0f;
     constexpr auto beginSwipeDownTime = 1.5f;
     constexpr auto blockFlyDuration = 0.5f;
 }
@@ -213,27 +213,31 @@ void BombDialogView::CreateAnimation(const PieceResources& pieceResources,
     
     std::vector<Pht::Keyframe> bombMoveKeyframes {
         {.mTime = 0.0f, .mRotation = Pht::Vec3{65.0f, -22.0f, 0.0f}, .mIsVisible = true},
-        {.mTime = clickMoveTime, .mRotation = Pht::Vec3{90.0f, -32.0f, 0.0f}, .mIsVisible = false},
+        {.mTime = clickMoveTime - clickMoveDuration, .mRotation = Pht::Vec3{90.0f, -32.0f, 0.0f}, .mIsVisible = false},
         {.mTime = animationDuration}
     };
     animationSystem.CreateAnimation(bombMove1, bombMoveKeyframes);
     animationSystem.CreateAnimation(bombMove2, bombMoveKeyframes);
-    animationSystem.CreateAnimation(bombMove3, bombMoveKeyframes);
     animationSystem.CreateAnimation(bombMove4, bombMoveKeyframes);
     
-    Pht::Vec3 bombGhostPieceInitialPosition {0.0f, -4.0f, UiLayer::block};
-    Pht::Vec3 bombGhostPiecePosition2 {-1.0f, -2.0f, UiLayer::block};
-    Pht::Vec3 bombGhostPiecePosition3 {-2.0f, -2.0f, UiLayer::block};
+    std::vector<Pht::Keyframe> bombMove3Keyframes {
+        {.mTime = 0.0f, .mRotation = Pht::Vec3{65.0f, -22.0f, 0.0f}, .mIsVisible = true},
+        {.mTime = clickMoveTime, .mRotation = Pht::Vec3{90.0f, -32.0f, 0.0f}, .mIsVisible = false},
+        {.mTime = animationDuration}
+    };
+    animationSystem.CreateAnimation(bombMove3, bombMove3Keyframes);
+    
+    Pht::Vec3 bombGhostPieceInitialPosition {0.0f, 1.0f, UiLayer::block};
+    Pht::Vec3 bombGhostPiecePosition2 {1.0f, -1.0f, UiLayer::block};
 
     mBombGhostPieceContainer = &CreateSceneObject();
     container.AddChild(*mBombGhostPieceContainer);
-    auto& bombGhostPiece = TutorialUtils::CreateTransparentRowBomb(*this, bombGhostPieceInitialPosition, *mBombGhostPieceContainer, pieceResources);
+    auto& bombGhostPiece = TutorialUtils::CreateTransparentBomb(*this, bombGhostPieceInitialPosition, *mBombGhostPieceContainer, pieceResources);
 
     std::vector<Pht::Keyframe> bombGhostPieceKeyframes {
-        {.mTime = 0.0f, .mPosition = bombGhostPieceInitialPosition, .mIsVisible = true},
-        {.mTime = beginSwipeLeftTime, .mPosition = bombGhostPieceInitialPosition},
-        {.mTime = beginSwipeLeftTime + (beginSwipeDownTime - beginSwipeLeftTime) / 2.0f, .mPosition = bombGhostPiecePosition2},
-        {.mTime = beginSwipeDownTime, .mPosition = bombGhostPiecePosition3},
+        {.mTime = 0.0f, .mPosition = bombGhostPieceInitialPosition, .mRotation = Pht::Vec3{75.0f, -27.0f, 0.0f}, .mIsVisible = true},
+        {.mTime = beginSwipeRightTime, .mPosition = bombGhostPieceInitialPosition},
+        {.mTime = beginSwipeDownTime, .mPosition = bombGhostPiecePosition2},
         {.mTime = detonationTime, .mIsVisible = false},
         {.mTime = animationDuration}
     };
@@ -256,9 +260,8 @@ void BombDialogView::CreateAnimation(const PieceResources& pieceResources,
     mBombAnimation = &animationSystem.CreateAnimation(bomb, bombKeyframes);
     
     std::vector<Pht::Keyframe> bombSwipeKeyframes {
-        {.mTime = 0.0f, .mPosition = bombInitialPosition, .mIsVisible = true},
-        {.mTime = beginSwipeLeftTime, .mPosition = bombInitialPosition},
-        {.mTime = beginSwipeLeftTime + (beginSwipeDownTime - beginSwipeLeftTime) / 2.0f, .mPosition = Pht::Vec3{-1.0f, 3.8f, UiLayer::block}},
+        {.mTime = 0.0f, .mPosition = bombInitialPosition, .mRotation = Pht::Vec3{75.0f, -27.0f, 0.0f}, .mIsVisible = true},
+        {.mTime = beginSwipeRightTime, .mPosition = bombInitialPosition},
         {.mTime = beginSwipeDownTime, .mPosition = bombPosition2},
         {.mTime = detonationTime, .mIsVisible = false},
         {.mTime = animationDuration}
@@ -291,10 +294,10 @@ void BombDialogView::CreateAnimation(const PieceResources& pieceResources,
     };
     mHandPhtAnimation = &animationSystem.CreateAnimation(mHandAnimation->GetSceneObject(), handAnimationClickKeyframes);
     
-    Pht::Vec3 swipePos {0.5f, -2.0f, 0.0f};
+    Pht::Vec3 swipePos {-5.0f, -2.0f, 0.0f};
     auto handInitialPosition = swipePos + Pht::Vec3{2.25f, 1.0f, UiLayer::root};
-    auto handAfterSwipeLeftPosition = swipePos + Pht::Vec3{0.25f, 1.0f, UiLayer::root};
-    auto handAfterSwipeDownPosition = swipePos + Pht::Vec3{0.25f, -1.3f, UiLayer::root};
+    auto handAfterSwipeRightPosition = swipePos + Pht::Vec3{3.25f, 1.0f, UiLayer::root};
+    auto handAfterSwipeDownPosition = swipePos + Pht::Vec3{3.25f, -1.3f, UiLayer::root};
 
     std::vector<Pht::Keyframe> handAnimationSwipeKeyframes {
         {
@@ -305,19 +308,19 @@ void BombDialogView::CreateAnimation(const PieceResources& pieceResources,
             }
         },
         {
-            .mTime = beginSwipeLeftTime - 0.2f,
+            .mTime = beginSwipeRightTime - 0.2f,
             .mPosition = handInitialPosition,
             .mCallback = [this] () {
-                mHandAnimation->BeginTouch(detonationTime - beginSwipeLeftTime);
+                mHandAnimation->BeginTouch(detonationTime - beginSwipeRightTime);
             }
         },
         {
-            .mTime = beginSwipeLeftTime,
+            .mTime = beginSwipeRightTime,
             .mPosition = handInitialPosition
         },
         {
             .mTime = beginSwipeDownTime,
-            .mPosition = handAfterSwipeLeftPosition
+            .mPosition = handAfterSwipeRightPosition
         },
         {
             .mTime = detonationTime - 0.1f,
@@ -328,7 +331,7 @@ void BombDialogView::CreateAnimation(const PieceResources& pieceResources,
             .mPosition = handAfterSwipeDownPosition
         },
         {
-            .mTime = 4.0f,
+            .mTime = animationDuration - 0.25f,
             .mPosition = handInitialPosition
         },
         {
@@ -362,7 +365,29 @@ void BombDialogView::CreateAnimation(const PieceResources& pieceResources,
             .mTime = animationDuration
         }
     };
-    animationSystem.CreateAnimation(*mBlastRadius, blastRadiusKeyframes);
+    mBlastRadiusPhtAnimation = &animationSystem.CreateAnimation(*mBlastRadius, blastRadiusKeyframes);
+    
+    std::vector<Pht::Keyframe> blastRadiusSwipeKeyframes {
+        {
+            .mTime = 0.0f,
+            .mPosition = Pht::Vec3{0.0f, 1.0f, TutorialUiLayer::blastRadius},
+            .mIsVisible = true
+        },
+        {
+            .mTime = beginSwipeDownTime,
+            .mPosition = Pht::Vec3{1.0f, -1.0f, TutorialUiLayer::blastRadius},
+        },
+        {
+            .mTime = detonationTime,
+            .mIsVisible = false
+        },
+        {
+            .mTime = animationDuration
+        }
+    };
+    Pht::AnimationClip blastRadiusSwipeClip {blastRadiusSwipeKeyframes};
+    blastRadiusSwipeClip.SetInterpolation(Pht::Interpolation::None);
+    mBlastRadiusPhtAnimation->AddClip(blastRadiusSwipeClip, 1);
     
     mExplosionEffect = std::make_unique<TutorialExplosionParticleEffect>(mEngine, TutorialExplosionParticleEffect::Kind::Bomb, container);
     
@@ -452,12 +477,14 @@ void BombDialogView::SetUp() {
         case ControlType::Click:
             mHandPhtAnimation->SetActiveClip(0);
             mBombAnimation->SetActiveClip(0);
+            mBlastRadiusPhtAnimation->SetActiveClip(0);
             mBombMoves->SetIsVisible(true);
             mBombGhostPieceContainer->SetIsVisible(false);
             break;
         case ControlType::Gesture:
             mHandPhtAnimation->SetActiveClip(1);
             mBombAnimation->SetActiveClip(1);
+            mBlastRadiusPhtAnimation->SetActiveClip(1);
             mBombMoves->SetIsVisible(false);
             mBombGhostPieceContainer->SetIsVisible(true);
             break;

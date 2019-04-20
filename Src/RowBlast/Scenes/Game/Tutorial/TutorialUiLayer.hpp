@@ -4,7 +4,7 @@
 namespace RowBlast {
     namespace TutorialUiLayer {
         constexpr auto root = 0.0f;
-        constexpr auto blastRadius = -0.2f;
+        constexpr auto blastRadius = -0.025f;
     }
 }
 

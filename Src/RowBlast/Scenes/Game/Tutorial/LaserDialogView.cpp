@@ -18,7 +18,7 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto animationDuration = 4.25f;
+    constexpr auto animationDuration = 4.1f;
     constexpr auto clickMoveTime = 1.5f;
     constexpr auto rowBombPosition2Time = 1.65f;
     constexpr auto detonationTime = 1.95f;
@@ -228,7 +228,7 @@ void LaserDialogView::CreateAnimation(const PieceResources& pieceResources,
             .mPosition = handAfterSwipeDownPosition
         },
         {
-            .mTime = 4.0f,
+            .mTime = animationDuration - 0.25f,
             .mPosition = handInitialPosition
         },
         {

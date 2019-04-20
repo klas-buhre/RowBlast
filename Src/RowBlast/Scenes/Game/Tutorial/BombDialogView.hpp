@@ -56,6 +56,7 @@ namespace RowBlast {
         IGuiLightProvider* mGuiLightProvider {nullptr};
         Pht::Animation* mAnimation {nullptr};
         Pht::Animation* mHandPhtAnimation {nullptr};
+        Pht::Animation* mBlastRadiusPhtAnimation {nullptr};
         Pht::Animation* mBombAnimation {nullptr};
         Pht::SceneObject* mBombMoves {nullptr};
         Pht::SceneObject* mBombGhostPieceContainer {nullptr};
