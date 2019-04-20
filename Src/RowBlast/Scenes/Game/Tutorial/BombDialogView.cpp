@@ -90,10 +90,103 @@ void BombDialogView::CreateAnimation(const PieceResources& pieceResources,
     TutorialUtils::CreateFieldQuad(mEngine, *this, container);
     TutorialUtils::CreateFieldQuadFrame(mEngine, *this, container);
 
-    TutorialUtils::CreateTwoBlocks(*this, {-1.0f, -0.5f, UiLayer::block}, BlockColor::Blue, 90.0f, container, pieceResources);
-    TutorialUtils::CreateTwoBlocks(*this, {0.0f, -0.5f, UiLayer::block}, BlockColor::Yellow, 90.0f, container, pieceResources);
-    TutorialUtils::CreateTwoBlocks(*this, {2.0f, -0.5f, UiLayer::block}, BlockColor::Red, 90.0f, container, pieceResources);
-    TutorialUtils::CreateTwoBlocks(*this, {3.0f, -0.5f, UiLayer::block}, BlockColor::Green, 90.0f, container, pieceResources);
+    auto& coloredPieces = CreateSceneObject();
+    container.AddChild(coloredPieces);
+
+    TutorialUtils::CreateTwoBlocks(*this, {-1.0f, -0.5f, UiLayer::block}, BlockColor::Blue, 90.0f, coloredPieces, pieceResources);
+    TutorialUtils::CreateTwoBlocks(*this, {0.0f, -0.5f, UiLayer::block}, BlockColor::Yellow, 90.0f, coloredPieces, pieceResources);
+    TutorialUtils::CreateTwoBlocks(*this, {2.0f, -0.5f, UiLayer::block}, BlockColor::Red, 90.0f, coloredPieces, pieceResources);
+    TutorialUtils::CreateTwoBlocks(*this, {3.0f, -0.5f, UiLayer::block}, BlockColor::Green, 90.0f, coloredPieces, pieceResources);
+    
+    std::vector<Pht::Keyframe> coloredPiecesKeyframes {
+        {.mTime = 0.0f, .mIsVisible = true},
+        {.mTime = detonationTime + 0.1f, .mIsVisible = false},
+        {.mTime = animationDuration}
+    };
+    animationSystem.CreateAnimation(coloredPieces, coloredPiecesKeyframes);
+
+    auto& coloredBlocks = CreateSceneObject();
+    container.AddChild(coloredBlocks);
+    
+    std::vector<Pht::Keyframe> coloredBlocksKeyframes {
+        {.mTime = 0.0f, .mIsVisible = false},
+        {.mTime = detonationTime + 0.1f, .mIsVisible = true},
+        {.mTime = animationDuration}
+    };
+    animationSystem.CreateAnimation(coloredBlocks, coloredBlocksKeyframes);
+
+    auto& blueBlock1 = TutorialUtils::CreateColoredBlock(*this, {-1.0f, 0.0f, UiLayer::block}, BlockColor::Blue, coloredBlocks, pieceResources);
+    auto& blueBlock2 = TutorialUtils::CreateColoredBlock(*this, {-1.0f, -1.0f, UiLayer::block}, BlockColor::Blue, coloredBlocks, pieceResources);
+    auto& yellowBlock1 = TutorialUtils::CreateColoredBlock(*this, {0.0f, 0.0f, UiLayer::block}, BlockColor::Yellow, coloredBlocks, pieceResources);
+    auto& yellowBlock2 = TutorialUtils::CreateColoredBlock(*this, {0.0f, -1.0f, UiLayer::block}, BlockColor::Yellow, coloredBlocks, pieceResources);
+    auto& redBlock1 = TutorialUtils::CreateColoredBlock(*this, {2.0f, 0.0f, UiLayer::block}, BlockColor::Red, coloredBlocks, pieceResources);
+    auto& redBlock2 = TutorialUtils::CreateColoredBlock(*this, {2.0f, -1.0f, UiLayer::block}, BlockColor::Red, coloredBlocks, pieceResources);
+    auto& greenBlock1 = TutorialUtils::CreateColoredBlock(*this, {3.0f, 0.0f, UiLayer::block}, BlockColor::Green, coloredBlocks, pieceResources);
+    auto& greenBlock2 = TutorialUtils::CreateColoredBlock(*this, {3.0f, -1.0f, UiLayer::block}, BlockColor::Green, coloredBlocks, pieceResources);
+
+    std::vector<Pht::Keyframe> blueBlock1Keyframes {
+        {.mTime = 0.0f, .mPosition = Pht::Vec3{-1.0f, 0.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
+        {.mTime = detonationTime + 0.1f, .mPosition = Pht::Vec3{-1.0f, 0.0f, TutorialUiLayer::root}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}},
+        {.mTime = detonationTime + blockFlyDuration, .mPosition = Pht::Vec3{-3.0f, 1.0f, 0.0f}, .mRotation = Pht::Vec3{50.0f, 100.0f, 0.0f}, .mIsVisible = false},
+        {.mTime = animationDuration}
+    };
+    animationSystem.CreateAnimation(blueBlock1, blueBlock1Keyframes);
+    
+    std::vector<Pht::Keyframe> blueBlock2Keyframes {
+        {.mTime = 0.0f, .mPosition = Pht::Vec3{-1.0f, -1.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
+        {.mTime = detonationTime + 0.1f, .mPosition = Pht::Vec3{-1.0f, -1.0f, TutorialUiLayer::root}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}},
+        {.mTime = detonationTime + blockFlyDuration, .mPosition = Pht::Vec3{-4.0f, -1.0f, 0.0f}, .mRotation = Pht::Vec3{50.0f, 0.0f, 100.0f}, .mIsVisible = false},
+        {.mTime = animationDuration}
+    };
+    animationSystem.CreateAnimation(blueBlock2, blueBlock2Keyframes);
+
+    std::vector<Pht::Keyframe> yellowBlock1Keyframes {
+        {.mTime = 0.0f, .mPosition = Pht::Vec3{0.0f, 0.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
+        {.mTime = detonationTime + 0.1f, .mPosition = Pht::Vec3{0.0f, 0.0f, TutorialUiLayer::root}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}},
+        {.mTime = detonationTime + blockFlyDuration, .mPosition = Pht::Vec3{-1.5f, 1.25f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 100.0f, 100.0f}, .mIsVisible = false},
+        {.mTime = animationDuration}
+    };
+    animationSystem.CreateAnimation(yellowBlock1, yellowBlock1Keyframes);
+    
+    std::vector<Pht::Keyframe> yellowBlock2Keyframes {
+        {.mTime = 0.0f, .mPosition = Pht::Vec3{0.0f, -1.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
+        {.mTime = detonationTime + 0.1f, .mPosition = Pht::Vec3{0.0f, -1.0f, TutorialUiLayer::root}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}},
+        {.mTime = detonationTime + blockFlyDuration, .mPosition = Pht::Vec3{-2.5f, -1.0f, 0.0f}, .mRotation = Pht::Vec3{100.0f, 100.0f, 0.0f}, .mIsVisible = false},
+        {.mTime = animationDuration}
+    };
+    animationSystem.CreateAnimation(yellowBlock2, yellowBlock2Keyframes);
+
+    std::vector<Pht::Keyframe> redBlock1Keyframes {
+        {.mTime = 0.0f, .mPosition = Pht::Vec3{2.0f, 0.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
+        {.mTime = detonationTime + 0.1f, .mPosition = Pht::Vec3{2.0f, 0.0f, TutorialUiLayer::root}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}},
+        {.mTime = detonationTime + blockFlyDuration, .mPosition = Pht::Vec3{3.5f, 1.25f, 0.0f}, .mRotation = Pht::Vec3{50.0f, 100.0f, 0.0f}, .mIsVisible = false},
+        {.mTime = animationDuration}
+    };
+    animationSystem.CreateAnimation(redBlock1, redBlock1Keyframes);
+    
+    std::vector<Pht::Keyframe> redBlock2Keyframes {
+        {.mTime = 0.0f, .mPosition = Pht::Vec3{2.0f, -1.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
+        {.mTime = detonationTime + 0.1f, .mPosition = Pht::Vec3{2.0f, -1.0f, TutorialUiLayer::root}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}},
+        {.mTime = detonationTime + blockFlyDuration, .mPosition = Pht::Vec3{4.5f, -1.0f, 0.0f}, .mRotation = Pht::Vec3{50.0f, 0.0f, 100.0f}, .mIsVisible = false},
+        {.mTime = animationDuration}
+    };
+    animationSystem.CreateAnimation(redBlock2, redBlock2Keyframes);
+
+    std::vector<Pht::Keyframe> greenBlock1Keyframes {
+        {.mTime = 0.0f, .mPosition = Pht::Vec3{3.0f, 0.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
+        {.mTime = detonationTime + 0.1f, .mPosition = Pht::Vec3{3.0f, 0.0f, TutorialUiLayer::root}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}},
+        {.mTime = detonationTime + blockFlyDuration, .mPosition = Pht::Vec3{5.0f, 1.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 100.0f, 100.0f}, .mIsVisible = false},
+        {.mTime = animationDuration}
+    };
+    animationSystem.CreateAnimation(greenBlock1, greenBlock1Keyframes);
+    
+    std::vector<Pht::Keyframe> greenBlock2Keyframes {
+        {.mTime = 0.0f, .mPosition = Pht::Vec3{3.0f, -1.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
+        {.mTime = detonationTime + 0.1f, .mPosition = Pht::Vec3{3.0f, -1.0f, TutorialUiLayer::root}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}},
+        {.mTime = detonationTime + blockFlyDuration, .mPosition = Pht::Vec3{6.0f, -1.0f, 0.0f}, .mRotation = Pht::Vec3{100.0f, 100.0f, 0.0f}, .mIsVisible = false},
+        {.mTime = animationDuration}
+    };
+    animationSystem.CreateAnimation(greenBlock2, greenBlock2Keyframes);
 
     auto& grayBlock0 = TutorialUtils::CreateGrayBlock(*this, {-1.0f, -2.0f, UiLayer::block}, container, levelResources);
     auto& grayBlock1 = TutorialUtils::CreateGrayBlock(*this, {0.0f, -2.0f, UiLayer::block}, container, levelResources);
@@ -246,10 +339,10 @@ void BombDialogView::CreateAnimation(const PieceResources& pieceResources,
     handAnimationSwipeClip.SetInterpolation(Pht::Interpolation::Cosine);
     mHandPhtAnimation->AddClip(handAnimationSwipeClip, 1);
     
-    auto& blastRadius = CreateSceneObject();
-    blastRadius.GetTransform().SetScale(0.8f);
-    blastRadius.SetRenderable(&blastRadiusAnimation.GetBombRadiusRenderable());
-    container.AddChild(blastRadius);
+    mBlastRadius = &CreateSceneObject();
+    mBlastRadius->GetTransform().SetScale(0.8f);
+    mBlastRadius->SetRenderable(&blastRadiusAnimation.GetBombRadiusRenderable());
+    container.AddChild(*mBlastRadius);
     
     std::vector<Pht::Keyframe> blastRadiusKeyframes {
         {
@@ -269,7 +362,7 @@ void BombDialogView::CreateAnimation(const PieceResources& pieceResources,
             .mTime = animationDuration
         }
     };
-    animationSystem.CreateAnimation(blastRadius, blastRadiusKeyframes);
+    animationSystem.CreateAnimation(*mBlastRadius, blastRadiusKeyframes);
     
     mExplosionEffect = std::make_unique<TutorialExplosionParticleEffect>(mEngine, TutorialExplosionParticleEffect::Kind::Bomb, container);
     
@@ -374,8 +467,8 @@ void BombDialogView::SetUp() {
         TutorialUtils::SetGuiLightDirections(*mGuiLightProvider);
     }
     
+    mBlastRadius->GetRenderable()->GetMaterial().SetOpacity(0.95f);
     mExplosionEffect->SetUp();
-    
     mAnimation->Stop();
     mAnimation->Play();
 }

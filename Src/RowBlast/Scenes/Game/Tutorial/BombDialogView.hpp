@@ -59,6 +59,7 @@ namespace RowBlast {
         Pht::Animation* mBombAnimation {nullptr};
         Pht::SceneObject* mBombMoves {nullptr};
         Pht::SceneObject* mBombGhostPieceContainer {nullptr};
+        Pht::SceneObject* mBlastRadius {nullptr};
         std::unique_ptr<HandAnimation> mHandAnimation;
         std::unique_ptr<TutorialExplosionParticleEffect> mExplosionEffect;
         std::unique_ptr<MenuButton> mPlayButton;
