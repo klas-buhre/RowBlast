@@ -449,24 +449,24 @@ void BombDialogView::CreateAnimation(const PieceResources& pieceResources,
     
     std::vector<Pht::Keyframe> grayBlock5Keyframes {
         {.mTime = 0.0f, .mPosition = Pht::Vec3{0.0f, -3.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
-        {.mTime = detonationTime + 0.1f, .mPosition = Pht::Vec3{0.0f, -3.0f, TutorialUiLayer::root}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}},
-        {.mTime = detonationTime + blockFlyDuration, .mPosition = Pht::Vec3{-1.0f, -5.5f, TutorialUiLayer::root}, .mRotation = Pht::Vec3{50.0f, 0.0f, 100.0f}, .mIsVisible = false},
+        {.mTime = detonationTime + 0.1f, .mPosition = Pht::Vec3{0.0f, -3.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}},
+        {.mTime = detonationTime + blockFlyDuration, .mPosition = Pht::Vec3{-1.0f, -5.5f, 0.0f}, .mRotation = Pht::Vec3{50.0f, 0.0f, 100.0f}, .mIsVisible = false},
         {.mTime = animationDuration}
     };
     animationSystem.CreateAnimation(grayBlock5, grayBlock5Keyframes);
 
     std::vector<Pht::Keyframe> grayBlock6Keyframes {
         {.mTime = 0.0f, .mPosition = Pht::Vec3{1.0f, -3.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
-        {.mTime = detonationTime + 0.1f, .mPosition = Pht::Vec3{1.0f, -3.0f, TutorialUiLayer::root}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}},
-        {.mTime = detonationTime + blockFlyDuration, .mPosition = Pht::Vec3{1.0, -6.0f, TutorialUiLayer::root}, .mRotation = Pht::Vec3{0.0f, 100.0f, 100.0f}, .mIsVisible = false},
+        {.mTime = detonationTime + 0.1f, .mPosition = Pht::Vec3{1.0f, -3.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}},
+        {.mTime = detonationTime + blockFlyDuration, .mPosition = Pht::Vec3{1.0, -6.25f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 100.0f, 100.0f}, .mIsVisible = false},
         {.mTime = animationDuration}
     };
     animationSystem.CreateAnimation(grayBlock6, grayBlock6Keyframes);
 
     std::vector<Pht::Keyframe> grayBlock7Keyframes {
         {.mTime = 0.0f, .mPosition = Pht::Vec3{2.0f, -3.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
-        {.mTime = detonationTime + 0.1f, .mPosition = Pht::Vec3{2.0f, -3.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}},
-        {.mTime = detonationTime + blockFlyDuration, .mPosition = Pht::Vec3{3.0f, -5.5f, TutorialUiLayer::root}, .mRotation = Pht::Vec3{0.0f, 50.0f, 100.0f}, .mIsVisible = false},
+        {.mTime = detonationTime + 0.1f, .mPosition = Pht::Vec3{2.0f, -3.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}},
+        {.mTime = detonationTime + blockFlyDuration, .mPosition = Pht::Vec3{3.0f, -5.5f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 50.0f, 100.0f}, .mIsVisible = false},
         {.mTime = animationDuration}
     };
     animationSystem.CreateAnimation(grayBlock7, grayBlock7Keyframes);

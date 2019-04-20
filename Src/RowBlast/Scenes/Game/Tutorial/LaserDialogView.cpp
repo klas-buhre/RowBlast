@@ -56,7 +56,7 @@ LaserDialogView::LaserDialogView(Pht::IEngine& engine,
     CreateAnimation(pieceResources, levelResources);
     
     auto& textProperties = guiResources.GetSmallWhiteTextProperties(zoom);
-    CreateText({-3.75f, -5.5f, UiLayer::text}, "The laser clears a row", textProperties);
+    CreateText({-3.75f, -5.5f, UiLayer::panel}, "The laser clears a row", textProperties);
     
     Pht::Vec2 playButtonInputSize {194.0f, 43.0f};
 
@@ -191,10 +191,10 @@ void LaserDialogView::CreateAnimation(const PieceResources& pieceResources,
     };
     mHandPhtAnimation = &animationSystem.CreateAnimation(mHandAnimation->GetSceneObject(), handAnimationClickKeyframes);
     
-    Pht::Vec3 swipePos {0.5f, -2.0f, 0.0f};
+    Pht::Vec3 swipePos {0.5f, -0.5f, 0.0f};
     auto handInitialPosition = swipePos + Pht::Vec3{2.25f, 1.0f, UiLayer::root};
     auto handAfterSwipeLeftPosition = swipePos + Pht::Vec3{0.25f, 1.0f, UiLayer::root};
-    auto handAfterSwipeDownPosition = swipePos + Pht::Vec3{0.25f, -1.3f, UiLayer::root};
+    auto handAfterSwipeDownPosition = swipePos + Pht::Vec3{0.25f, -2.1f, UiLayer::root};
 
     std::vector<Pht::Keyframe> handAnimationSwipeKeyframes {
         {

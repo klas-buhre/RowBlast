@@ -75,7 +75,13 @@ Tutorial::Tutorial(Pht::IEngine& engine,
         blastRadiusAnimation,
         userServices
     },
-    mLevelBombDialogController {engine, commonResources, userServices},
+    mLevelBombDialogController {
+        engine,
+        commonResources,
+        pieceResources,
+        levelResources,
+        userServices
+    },
     mAsteroidDialogController {engine, commonResources, userServices} {
     
     mViewManager.AddView(static_cast<int>(Controller::PlacePieceWindow), mPlacePieceWindowController.GetView());
@@ -100,6 +106,7 @@ Tutorial::Tutorial(Pht::IEngine& engine,
     
     mLaserDialogController.SetGuiLightProvider(scene);
     mBombDialogController.SetGuiLightProvider(scene);
+    mLevelBombDialogController.SetGuiLightProvider(scene);
 }
 
 void Tutorial::Init(const Level& level) {
@@ -258,7 +265,7 @@ Tutorial::Result Tutorial::OnLevelStart() {
             return Result::TutorialHasFocus;
         case 11:
             SetActiveViewController(Controller::LevelBombDialog);
-            mLevelBombDialogController.SetUp(mScene.GetScene());
+            mLevelBombDialogController.SetUp();
             return Result::TutorialHasFocus;
         case 14:
             SetActiveViewController(Controller::AsteroidDialog);

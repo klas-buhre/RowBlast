@@ -7,34 +7,58 @@
 #include "GuiView.hpp"
 
 // Game includes.
-#include "SlideAnimation.hpp"
 #include "MenuButton.hpp"
+#include "IGuiLightProvider.hpp"
+#include "HandAnimation.hpp"
+#include "TutorialExplosionParticleEffect.hpp"
 
 namespace Pht {
     class IEngine;
-    class Scene;
+    class Animation;
 }
 
 namespace RowBlast {
     class CommonResources;
     class UserServices;
+    class LevelResources;
+    class PieceResources;
 
     class LevelBombDialogView: public Pht::GuiView {
     public:
         LevelBombDialogView(Pht::IEngine& engine,
                             const CommonResources& commonResources,
+                            const PieceResources& pieceResources,
+                            const LevelResources& levelResources,
                             const UserServices& userServices);
 
-        void SetUp(Pht::Scene& scene);
+        void OnDeactivate() override;
+
+        void SetUp();
         void Update();
+        
+        void SetGuiLightProvider(IGuiLightProvider& guiLightProvider) {
+            mGuiLightProvider = &guiLightProvider;
+        }
         
         const MenuButton& GetPlayButton() const {
             return *mPlayButton;
         }
         
     private:
+        void CreateAnimation(const PieceResources& pieceResources,
+                             const LevelResources& levelResources);
+
+        Pht::IEngine& mEngine;
         const UserServices& mUserServices;
-        std::unique_ptr<SlideAnimation> mSlideAnimation;
+        IGuiLightProvider* mGuiLightProvider {nullptr};
+        Pht::Animation* mAnimation {nullptr};
+        Pht::Animation* mHandPhtAnimation {nullptr};
+        Pht::Animation* mPieceAnimation {nullptr};
+        Pht::SceneObject* mMoves {nullptr};
+        Pht::SceneObject* mLevelBombs {nullptr};
+        Pht::SceneObject* mGhostPieceContainer {nullptr};
+        std::unique_ptr<HandAnimation> mHandAnimation;
+        std::unique_ptr<TutorialExplosionParticleEffect> mExplosionEffect;
         std::unique_ptr<MenuButton> mPlayButton;
     };
 }

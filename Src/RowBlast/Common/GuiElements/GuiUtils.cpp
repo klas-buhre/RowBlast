@@ -55,7 +55,7 @@ void GuiUtils::CreateIcon(Pht::IEngine& engine,
     parent.AddChild(iconSceneObject);
 }
 
-void GuiUtils::CreateTitleBarLine(Pht::IEngine& engine, Pht::GuiView& view) {
+void GuiUtils::CreateTitleBarLine(Pht::IEngine& engine, Pht::GuiView& view, float titleBarHeight) {
     Pht::Material lineMaterial {Pht::Color{0.6f, 0.8f, 1.0f}};
     lineMaterial.SetOpacity(0.3f);
     
@@ -65,7 +65,7 @@ void GuiUtils::CreateTitleBarLine(Pht::IEngine& engine, Pht::GuiView& view) {
                                lineMaterial,
                                sceneManager);
     
-    Pht::Vec3 position {0.0f, view.GetSize().y / 2.0f - 2.6f, UiLayer::textRectangle};
+    Pht::Vec3 position {0.0f, view.GetSize().y / 2.0f - titleBarHeight, UiLayer::textRectangle};
     lineSceneObject.GetTransform().SetPosition(position);
     view.GetRoot().AddChild(lineSceneObject);
 }

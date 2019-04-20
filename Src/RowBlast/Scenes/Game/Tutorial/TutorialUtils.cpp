@@ -213,3 +213,13 @@ Pht::SceneObject& TutorialUtils::CreateTransparentBomb(Pht::GuiView& view,
     auto& transparentBombRenderable = pieceResources.GetTransparentBombRenderableObject();
     return CreateBlock(view, position, transparentBombRenderable, parent);
 }
+
+Pht::SceneObject& TutorialUtils::CreateLevelBomb(Pht::GuiView& view,
+                                                 const Pht::Vec3& position,
+                                                 Pht::SceneObject& parent,
+                                                 const LevelResources& levelResources) {
+    auto& levelBombRenderable = levelResources.GetLevelBombRenderable();
+    auto& sceneObject = CreateBlock(view, position, levelBombRenderable, parent);
+    sceneObject.GetTransform().SetRotation({110.0f, -20.0f, 0.0f});
+    return sceneObject;
+}

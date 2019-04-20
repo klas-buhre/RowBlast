@@ -10,13 +10,21 @@ using namespace RowBlast;
 
 LevelBombDialogController::LevelBombDialogController(Pht::IEngine& engine,
                                                      const CommonResources& commonResources,
+                                                     const PieceResources& pieceResources,
+                                                     const LevelResources& levelResources,
                                                      const UserServices& userServices) :
     mInput {engine.GetInput()},
-    mView {engine, commonResources, userServices},
+    mView {
+        engine,
+        commonResources,
+        pieceResources,
+        levelResources,
+        userServices
+    },
     mSlidingMenuAnimation {engine, mView} {}
 
-void LevelBombDialogController::SetUp(Pht::Scene& scene) {
-    mView.SetUp(scene);
+void LevelBombDialogController::SetUp() {
+    mView.SetUp();
     mSlidingMenuAnimation.SetUp(SlidingMenuAnimation::UpdateFade::Yes,
                                 SlidingMenuAnimation::SlideDirection::Scale,
                                 SlidingMenuAnimation::UpdatePosition::No);
@@ -24,6 +32,10 @@ void LevelBombDialogController::SetUp(Pht::Scene& scene) {
 
 void LevelBombDialogController::SetFadeEffect(Pht::FadeEffect& fadeEffect) {
     mSlidingMenuAnimation.SetFadeEffect(fadeEffect);
+}
+
+void LevelBombDialogController::SetGuiLightProvider(IGuiLightProvider& guiLightProvider) {
+    mView.SetGuiLightProvider(guiLightProvider);
 }
 
 LevelBombDialogController::Result LevelBombDialogController::Update() {
