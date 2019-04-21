@@ -223,3 +223,56 @@ Pht::SceneObject& TutorialUtils::CreateLevelBomb(Pht::GuiView& view,
     sceneObject.GetTransform().SetRotation({110.0f, -20.0f, 0.0f});
     return sceneObject;
 }
+
+Pht::SceneObject& TutorialUtils::CreateLPiece(Pht::GuiView& view,
+                                              const Pht::Vec3& position,
+                                              float rotation,
+                                              Pht::SceneObject& parent,
+                                              const PieceResources& pieceResources) {
+    auto& lPiece = view.CreateSceneObject();
+    parent.AddChild(lPiece);
+    
+    auto& transform = lPiece.GetTransform();
+    transform.SetPosition(position);
+    transform.SetRotation({0.0f, 0.0f, rotation});
+    
+    auto& blockRenderable = pieceResources.GetBlockRenderableObject(BlockKind::Full,
+                                                                    BlockColor::Yellow,
+                                                                    BlockBrightness::Normal);
+
+    auto halfCellSize = 0.5f;
+    CreateBlock(view, {-halfCellSize, -halfCellSize, 0.0f}, blockRenderable, lPiece);
+    CreateBlock(view, {halfCellSize, -halfCellSize, 0.0f}, blockRenderable, lPiece);
+    CreateBlock(view, {halfCellSize, halfCellSize, 0.0f}, blockRenderable, lPiece);
+    
+    auto& weldRenderable = pieceResources.GetWeldRenderableObject(WeldRenderableKind::Normal,
+                                                                  BlockColor::Yellow,
+                                                                  BlockBrightness::Normal);
+
+    CreateWeld(view, {0.0f, -halfCellSize, halfCellSize}, weldRenderable, 0.0f, lPiece);
+    CreateWeld(view, {halfCellSize, 0.0f, halfCellSize}, weldRenderable, 90.0f, lPiece);
+    
+    return lPiece;
+}
+
+Pht::SceneObject& TutorialUtils::CreateLPieceGhostPiece(Pht::GuiView& view,
+                                                        const Pht::Vec3& position,
+                                                        float rotation,
+                                                        Pht::SceneObject& parent,
+                                                        const LevelResources& levelResources) {
+    auto& ghostPiece = view.CreateSceneObject();
+    parent.AddChild(ghostPiece);
+    
+    auto& transform = ghostPiece.GetTransform();
+    transform.SetPosition(position);
+    transform.SetScale(0.8f);
+    transform.SetRotation({0.0f, 0.0f, rotation});
+    
+    auto& pieceTypes = levelResources.GetPieceTypes();
+    auto i = pieceTypes.find("L");
+    if (i != std::end(pieceTypes)) {
+        ghostPiece.SetRenderable(i->second->GetGhostPieceRenderable());
+    }
+    
+    return ghostPiece;
+}

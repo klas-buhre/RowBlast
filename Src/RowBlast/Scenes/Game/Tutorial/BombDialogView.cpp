@@ -398,7 +398,7 @@ void BombDialogView::CreateAnimation(const PieceResources& pieceResources,
         {
             .mTime = detonationTime,
             .mCallback = [this] () {
-                mExplosionEffect->StartExplosion({1.0f, -1.0f, 0.5f});
+                mExplosionEffect->StartExplosion({1.0f, -1.0f, TutorialUiLayer::bomb});
             }
         },
         {

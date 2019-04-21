@@ -7,6 +7,7 @@
 #include "SceneObject.hpp"
 #include "ParticleEffect.hpp"
 #include "IParticleSystem.hpp"
+#include "TutorialUiLayer.hpp"
 
 using namespace RowBlast;
 
@@ -156,12 +157,12 @@ void TutorialLaserParticleEffect::SetUp() {
     mFlare->GetComponent<Pht::ParticleEffect>()->Stop();
     mParticles->GetComponent<Pht::ParticleEffect>()->Stop();
     
-    Pht::Vec3 beamCenterPosition {0.0f, -2.0f, 0.5f};
+    Pht::Vec3 beamCenterPosition {0.0f, -2.0f, TutorialUiLayer::bomb};
     mThickBeam->GetTransform().SetPosition(beamCenterPosition);
     mThinBeam->GetTransform().SetPosition(beamCenterPosition);
     mParticles->GetTransform().SetPosition(beamCenterPosition);
 
-    Pht::Vec3 flarePosition {-2.0f, -2.0f, 0.5f};
+    Pht::Vec3 flarePosition {-2.0f, -2.0f, TutorialUiLayer::bomb};
     mFlare->GetTransform().SetPosition(flarePosition);
 }
 

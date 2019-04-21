@@ -61,6 +61,16 @@ namespace RowBlast {
                                           const Pht::Vec3& position,
                                           Pht::SceneObject& parent,
                                           const LevelResources& levelResources);
+        Pht::SceneObject& CreateLPiece(Pht::GuiView& view,
+                                       const Pht::Vec3& position,
+                                       float rotation,
+                                       Pht::SceneObject& parent,
+                                       const PieceResources& pieceResources);
+        Pht::SceneObject& CreateLPieceGhostPiece(Pht::GuiView& view,
+                                                 const Pht::Vec3& position,
+                                                 float rotation,
+                                                 Pht::SceneObject& parent,
+                                                 const LevelResources& levelResources);
     }
 }
 

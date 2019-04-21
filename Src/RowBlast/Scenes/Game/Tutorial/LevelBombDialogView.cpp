@@ -19,14 +19,16 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto animationDuration = 3.5f;
+    constexpr auto animationDuration = 4.25f;
     constexpr auto clickMoveTime = 1.5f;
-    constexpr auto clickMoveDuration = 0.5f;
     constexpr auto bombPosition2Time = 1.65f;
     constexpr auto detonationTime = 1.95f;
     constexpr auto beginSwipeRightTime = 1.0f;
     constexpr auto beginSwipeDownTime = 1.5f;
     constexpr auto blockFlyDuration = 0.5f;
+    constexpr auto blockFallWaitDuration = 0.75f;
+    constexpr auto blockFallDuration = 0.6f;
+    constexpr auto explosionSpreadDelay = 0.15f;
 }
 
 LevelBombDialogView::LevelBombDialogView(Pht::IEngine& engine,
@@ -105,85 +107,199 @@ void LevelBombDialogView::CreateAnimation(const PieceResources& pieceResources,
     mLevelBombs = &CreateSceneObject();
     container.AddChild(*mLevelBombs);
     
-    TutorialUtils::CreateLevelBomb(*this, {-2.0, -1.0f, UiLayer::block}, *mLevelBombs, levelResources);
-    TutorialUtils::CreateLevelBomb(*this, {-1.0, -1.0f, UiLayer::block}, *mLevelBombs, levelResources);
-    TutorialUtils::CreateLevelBomb(*this, {0.0, -1.0f, UiLayer::block}, *mLevelBombs, levelResources);
-    TutorialUtils::CreateLevelBomb(*this, {1.0, -1.0f, UiLayer::block}, *mLevelBombs, levelResources);
-    TutorialUtils::CreateLevelBomb(*this, {2.0, -1.0f, UiLayer::block}, *mLevelBombs, levelResources);
-    TutorialUtils::CreateLevelBomb(*this, {-2.0, -2.0f, UiLayer::block}, *mLevelBombs, levelResources);
-    TutorialUtils::CreateLevelBomb(*this, {-1.0, -2.0f, UiLayer::block}, *mLevelBombs, levelResources);
-    TutorialUtils::CreateLevelBomb(*this, {0.0, -2.0f, UiLayer::block}, *mLevelBombs, levelResources);
-    TutorialUtils::CreateLevelBomb(*this, {1.0, -2.0f, UiLayer::block}, *mLevelBombs, levelResources);
-    TutorialUtils::CreateLevelBomb(*this, {2.0, -2.0f, UiLayer::block}, *mLevelBombs, levelResources);
+    auto& bomb0 = TutorialUtils::CreateLevelBomb(*this, {-2.0, -1.0f, UiLayer::block}, *mLevelBombs, levelResources);
+    auto& bomb1 = TutorialUtils::CreateLevelBomb(*this, {-1.0, -1.0f, UiLayer::block}, *mLevelBombs, levelResources);
+    auto& bomb2 = TutorialUtils::CreateLevelBomb(*this, {0.0, -1.0f, UiLayer::block}, *mLevelBombs, levelResources);
+    auto& bomb3 = TutorialUtils::CreateLevelBomb(*this, {1.0, -1.0f, UiLayer::block}, *mLevelBombs, levelResources);
+    auto& bomb4 = TutorialUtils::CreateLevelBomb(*this, {2.0, -1.0f, UiLayer::block}, *mLevelBombs, levelResources);
+    auto& bomb5 = TutorialUtils::CreateLevelBomb(*this, {-2.0, -2.0f, UiLayer::block}, *mLevelBombs, levelResources);
+    auto& bomb6 = TutorialUtils::CreateLevelBomb(*this, {-1.0, -2.0f, UiLayer::block}, *mLevelBombs, levelResources);
+    auto& bomb7 = TutorialUtils::CreateLevelBomb(*this, {0.0, -2.0f, UiLayer::block}, *mLevelBombs, levelResources);
+    auto& bomb8 = TutorialUtils::CreateLevelBomb(*this, {1.0, -2.0f, UiLayer::block}, *mLevelBombs, levelResources);
+    auto& bomb9 = TutorialUtils::CreateLevelBomb(*this, {2.0, -2.0f, UiLayer::block}, *mLevelBombs, levelResources);
+    
+    std::vector<Pht::Keyframe> bombWave1Keyframes {
+        {
+            .mTime = 0.0f,
+            .mIsVisible = true
+        },
+        {
+            .mTime = detonationTime,
+            .mIsVisible = false,
+            .mCallback = [this] () {
+                mExplosionEffects[0].StartExplosion({-2.0, -1.0f, TutorialUiLayer::bomb});
+                mExplosionEffects[1].StartExplosion({-1.0, -1.0f, TutorialUiLayer::bomb});
+            }
+        },
+        {
+            .mTime = animationDuration
+        }
+    };
+    animationSystem.CreateAnimation(bomb0, bombWave1Keyframes);
+    animationSystem.CreateAnimation(bomb1, bombWave1Keyframes);
+
+    std::vector<Pht::Keyframe> bombWave2Keyframes {
+        {
+            .mTime = 0.0f,
+            .mIsVisible = true
+        },
+        {
+            .mTime = detonationTime + explosionSpreadDelay,
+            .mIsVisible = false,
+            .mCallback = [this] () {
+                mExplosionEffects[5].StartExplosion({-2.0, -2.0f, TutorialUiLayer::bomb});
+                mExplosionEffects[6].StartExplosion({-1.0, -2.0f, TutorialUiLayer::bomb});
+                mExplosionEffects[2].StartExplosion({0.0, -1.0f, TutorialUiLayer::bomb});
+                mExplosionEffects[7].StartExplosion({0.0, -2.0f, TutorialUiLayer::bomb});
+            }
+        },
+        {
+            .mTime = animationDuration
+        }
+    };
+    animationSystem.CreateAnimation(bomb5, bombWave2Keyframes);
+    animationSystem.CreateAnimation(bomb6, bombWave2Keyframes);
+    animationSystem.CreateAnimation(bomb2, bombWave2Keyframes);
+    animationSystem.CreateAnimation(bomb7, bombWave2Keyframes);
+
+    std::vector<Pht::Keyframe> bombWave3Keyframes {
+        {
+            .mTime = 0.0f,
+            .mIsVisible = true
+        },
+        {
+            .mTime = detonationTime + 2.0f * explosionSpreadDelay,
+            .mIsVisible = false,
+            .mCallback = [this] () {
+                mExplosionEffects[8].StartExplosion({1.0, -2.0f, TutorialUiLayer::bomb});
+                mExplosionEffects[3].StartExplosion({1.0, -1.0f, TutorialUiLayer::bomb});
+            }
+        },
+        {
+            .mTime = animationDuration
+        }
+    };
+    animationSystem.CreateAnimation(bomb8, bombWave3Keyframes);
+    animationSystem.CreateAnimation(bomb3, bombWave3Keyframes);
+
+    std::vector<Pht::Keyframe> bombWave4Keyframes {
+        {
+            .mTime = 0.0f,
+            .mIsVisible = true
+        },
+        {
+            .mTime = detonationTime + 3.0f * explosionSpreadDelay,
+            .mIsVisible = false,
+            .mCallback = [this] () {
+                mExplosionEffects[9].StartExplosion({2.0, -2.0f, TutorialUiLayer::bomb});
+                mExplosionEffects[4].StartExplosion({2.0, -1.0f, TutorialUiLayer::bomb});
+            }
+        },
+        {
+            .mTime = animationDuration
+        }
+    };
+    animationSystem.CreateAnimation(bomb9, bombWave4Keyframes);
+    animationSystem.CreateAnimation(bomb4, bombWave4Keyframes);
 
     TutorialUtils::CreateThreeGrayBlocks(*this, {2.0f, -4.0f, UiLayer::block}, container, levelResources);
     
     mMoves = &CreateSceneObject();
     container.AddChild(*mMoves);
-    auto& move1 = TutorialUtils::CreateTransparentBomb(*this, {-2.0f, -4.0f, UiLayer::block}, *mMoves, pieceResources);
-    auto& move2 = TutorialUtils::CreateTransparentBomb(*this, {-1.0f, 1.0f, UiLayer::block}, *mMoves, pieceResources);
-    auto& move3 = TutorialUtils::CreateTransparentBomb(*this, {1.0f, -1.0f, UiLayer::block}, *mMoves, pieceResources);
-    auto& move4 = TutorialUtils::CreateTransparentBomb(*this, {3.0f, 1.0f, UiLayer::block}, *mMoves, pieceResources);
+    auto& move1 = TutorialUtils::CreateLPieceGhostPiece(*this, {-1.5f, 0.5f, UiLayer::block}, 0.0f, *mMoves, levelResources);
+    auto& move2 = TutorialUtils::CreateLPieceGhostPiece(*this, {0.5f, 1.5f, UiLayer::block}, 0.0f, *mMoves, levelResources);
+    auto& move3 = TutorialUtils::CreateLPieceGhostPiece(*this, {2.5f, 0.5f, UiLayer::block}, 90.0f, *mMoves, levelResources);
     
     std::vector<Pht::Keyframe> moveKeyframes {
-        {.mTime = 0.0f, .mRotation = Pht::Vec3{65.0f, -22.0f, 0.0f}, .mIsVisible = true},
-        {.mTime = clickMoveTime - clickMoveDuration, .mRotation = Pht::Vec3{90.0f, -32.0f, 0.0f}, .mIsVisible = false},
+        {.mTime = 0.0f, .mIsVisible = true},
+        {.mTime = clickMoveTime, .mIsVisible = false},
         {.mTime = animationDuration}
     };
     animationSystem.CreateAnimation(move1, moveKeyframes);
     animationSystem.CreateAnimation(move2, moveKeyframes);
-    animationSystem.CreateAnimation(move4, moveKeyframes);
+    animationSystem.CreateAnimation(move3, moveKeyframes);
     
-    std::vector<Pht::Keyframe> move3Keyframes {
-        {.mTime = 0.0f, .mRotation = Pht::Vec3{65.0f, -22.0f, 0.0f}, .mIsVisible = true},
-        {.mTime = clickMoveTime, .mRotation = Pht::Vec3{90.0f, -32.0f, 0.0f}, .mIsVisible = false},
-        {.mTime = animationDuration}
-    };
-    animationSystem.CreateAnimation(move3, move3Keyframes);
-    
-    Pht::Vec3 bombGhostPieceInitialPosition {0.0f, 1.0f, UiLayer::block};
-    Pht::Vec3 bombGhostPiecePosition2 {1.0f, -1.0f, UiLayer::block};
+    Pht::Vec3 ghostPieceInitialPosition {-0.5f, 1.5f, UiLayer::block};
+    Pht::Vec3 ghostPiecePosition2 {-1.5f, 0.5f, UiLayer::block};
 
     mGhostPieceContainer = &CreateSceneObject();
     container.AddChild(*mGhostPieceContainer);
-    auto& ghostPiece = TutorialUtils::CreateTransparentBomb(*this, bombGhostPieceInitialPosition, *mGhostPieceContainer, pieceResources);
+    auto& ghostPiece = TutorialUtils::CreateLPieceGhostPiece(*this, ghostPieceInitialPosition, 0.0f, *mGhostPieceContainer, levelResources);
 
-    std::vector<Pht::Keyframe> bombGhostPieceKeyframes {
-        {.mTime = 0.0f, .mPosition = bombGhostPieceInitialPosition, .mRotation = Pht::Vec3{75.0f, -27.0f, 0.0f}, .mIsVisible = true},
-        {.mTime = beginSwipeRightTime, .mPosition = bombGhostPieceInitialPosition},
-        {.mTime = beginSwipeDownTime, .mPosition = bombGhostPiecePosition2},
+    std::vector<Pht::Keyframe> ghostPieceKeyframes {
+        {.mTime = 0.0f, .mPosition = ghostPieceInitialPosition, .mIsVisible = true},
+        {.mTime = beginSwipeRightTime, .mPosition = ghostPieceInitialPosition},
+        {.mTime = beginSwipeDownTime, .mPosition = ghostPiecePosition2},
         {.mTime = detonationTime, .mIsVisible = false},
         {.mTime = animationDuration}
     };
-    auto& bombGhostPieceAnimation = animationSystem.CreateAnimation(ghostPiece, bombGhostPieceKeyframes);
-    bombGhostPieceAnimation.SetInterpolation(Pht::Interpolation::None);
+    auto& ghostPieceAnimation = animationSystem.CreateAnimation(ghostPiece, ghostPieceKeyframes);
+    ghostPieceAnimation.SetInterpolation(Pht::Interpolation::None);
 
-    Pht::Vec3 bombInitialPosition {0.0f, 3.8f, UiLayer::block};
-    Pht::Vec3 bombPosition2 {1.0f, 3.8f, UiLayer::block};
-    Pht::Vec3 bombDetonationPosition {1.0f, -1.0f, UiLayer::block};
+    Pht::Vec3 pieceInitialPosition {-0.5f, 3.3f, UiLayer::block};
+    Pht::Vec3 piecePosition2 {-1.5f, 3.3f, UiLayer::block};
+    Pht::Vec3 pieceLandingPosition {-1.5f, 0.5f, UiLayer::block};
     
-    auto& piece = TutorialUtils::CreateBomb(*this, bombInitialPosition, container, pieceResources);
+    auto& piece = TutorialUtils::CreateLPiece(*this, pieceInitialPosition, 0.0f, container, pieceResources);
     
     std::vector<Pht::Keyframe> pieceKeyframes {
-        {.mTime = 0.0f, .mPosition = bombInitialPosition, .mRotation = Pht::Vec3{65.0f, -22.0f, 0.0f}, .mIsVisible = true},
-        {.mTime = clickMoveTime, .mPosition = bombInitialPosition, .mRotation = Pht::Vec3{90.0f, -32.0f, 0.0f}},
-        {.mTime = bombPosition2Time, .mPosition = bombPosition2, .mRotation = Pht::Vec3{90.0f, -32.0f, 0.0f}},
-        {.mTime = detonationTime, .mPosition = bombDetonationPosition, .mRotation = Pht::Vec3{90.0f, -32.0f, 0.0f}, .mIsVisible = false},
+        {.mTime = 0.0f, .mPosition = pieceInitialPosition, .mIsVisible = true},
+        {.mTime = clickMoveTime, .mPosition = pieceInitialPosition},
+        {.mTime = bombPosition2Time, .mPosition = piecePosition2},
+        {.mTime = detonationTime, .mPosition = pieceLandingPosition, .mIsVisible = false},
         {.mTime = animationDuration}
     };
     mPieceAnimation = &animationSystem.CreateAnimation(piece, pieceKeyframes);
     
     std::vector<Pht::Keyframe> pieceSwipeKeyframes {
-        {.mTime = 0.0f, .mPosition = bombInitialPosition, .mRotation = Pht::Vec3{75.0f, -27.0f, 0.0f}, .mIsVisible = true},
-        {.mTime = beginSwipeRightTime, .mPosition = bombInitialPosition},
-        {.mTime = beginSwipeDownTime, .mPosition = bombPosition2},
+        {.mTime = 0.0f, .mPosition = pieceInitialPosition, .mIsVisible = true},
+        {.mTime = beginSwipeRightTime, .mPosition = pieceInitialPosition},
+        {.mTime = beginSwipeDownTime, .mPosition = piecePosition2},
         {.mTime = detonationTime, .mIsVisible = false},
         {.mTime = animationDuration}
     };
     Pht::AnimationClip pieceSwipeClip {pieceSwipeKeyframes};
     pieceSwipeClip.SetInterpolation(Pht::Interpolation::None);
     mPieceAnimation->AddClip(pieceSwipeClip, 1);
+    
+    auto& yellowBlocks = CreateSceneObject();
+    container.AddChild(yellowBlocks);
+    
+    std::vector<Pht::Keyframe> yellowBlocksKeyframes {
+        {.mTime = 0.0f, .mIsVisible = false},
+        {.mTime = detonationTime, .mIsVisible = true},
+        {.mTime = animationDuration}
+    };
+    animationSystem.CreateAnimation(yellowBlocks, yellowBlocksKeyframes);
+    
+    auto& yellowBlock1 = TutorialUtils::CreateColoredBlock(*this, {-1.0f, 1.0f, UiLayer::block}, BlockColor::Yellow, yellowBlocks, pieceResources);
+    auto& yellowBlock2 = TutorialUtils::CreateColoredBlock(*this, {-2.0f, 0.0f, UiLayer::block}, BlockColor::Yellow, yellowBlocks, pieceResources);
+    auto& yellowBlock3 = TutorialUtils::CreateColoredBlock(*this, {-1.0f, 0.0f, UiLayer::block}, BlockColor::Yellow, yellowBlocks, pieceResources);
 
+    std::vector<Pht::Keyframe> yellowBlock1Keyframes {
+        {.mTime = 0.0f, .mPosition = Pht::Vec3{-1.0f, 1.0f, UiLayer::block}, .mIsVisible = true},
+        {.mTime = detonationTime + blockFallWaitDuration, .mPosition = Pht::Vec3{-1.0f, 1.0f, UiLayer::block}},
+        {.mTime = detonationTime + blockFallWaitDuration + blockFallDuration, .mPosition = Pht::Vec3{-1.0f, -4.0f, UiLayer::block}},
+        {.mTime = animationDuration}
+    };
+    animationSystem.CreateAnimation(yellowBlock1, yellowBlock1Keyframes);
+
+    std::vector<Pht::Keyframe> yellowBlock2Keyframes {
+        {.mTime = 0.0f, .mPosition = Pht::Vec3{-2.0f, 0.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
+        {.mTime = detonationTime + 0.1f, .mPosition = Pht::Vec3{-2.0f, 0.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}},
+        {.mTime = detonationTime + blockFlyDuration, .mPosition = Pht::Vec3{-2.5f, 2.5f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 100.0f, 100.0f}, .mIsVisible = false},
+        {.mTime = animationDuration}
+    };
+    animationSystem.CreateAnimation(yellowBlock2, yellowBlock2Keyframes);
+
+    std::vector<Pht::Keyframe> yellowBlock3Keyframes {
+        {.mTime = 0.0f, .mPosition = Pht::Vec3{-1.0f, 0.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
+        {.mTime = detonationTime + 0.1f, .mPosition = Pht::Vec3{-1.0f, 0.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}},
+        {.mTime = detonationTime + blockFlyDuration, .mPosition = Pht::Vec3{-1.0f, 3.0f, 0.0f}, .mRotation = Pht::Vec3{100.0f, 0.0f, 100.0f}, .mIsVisible = false},
+        {.mTime = animationDuration}
+    };
+    animationSystem.CreateAnimation(yellowBlock3, yellowBlock3Keyframes);
+    
     mHandAnimation = std::make_unique<HandAnimation>(mEngine, 1.0f, true);
     mHandAnimation->Init(container);
     
@@ -191,15 +307,15 @@ void LevelBombDialogView::CreateAnimation(const PieceResources& pieceResources,
         {
             .mTime = 0.0f,
             .mCallback = [this] () {
-                mHandAnimation->StartInNotTouchingScreenState({0.1f, -1.2f, UiLayer::root},
-                                                              -90.0f,
+                mHandAnimation->StartInNotTouchingScreenState({-2.4f, 0.6f, UiLayer::root},
+                                                              -120.0f,
                                                               10.0f);
             }
         },
         {
-            .mTime = clickMoveTime - 0.3f - clickMoveDuration,
+            .mTime = clickMoveTime - 0.3f,
             .mCallback = [this] () {
-                mHandAnimation->BeginTouch(clickMoveDuration);
+                mHandAnimation->BeginTouch(0.0f);
             }
         },
         {
@@ -208,10 +324,10 @@ void LevelBombDialogView::CreateAnimation(const PieceResources& pieceResources,
     };
     mHandPhtAnimation = &animationSystem.CreateAnimation(mHandAnimation->GetSceneObject(), handAnimationClickKeyframes);
     
-    Pht::Vec3 swipePos {-5.0f, -2.0f, 0.0f};
+    Pht::Vec3 swipePos {1.0f, -2.0f, 0.0f};
     auto handInitialPosition = swipePos + Pht::Vec3{2.25f, 1.0f, UiLayer::root};
-    auto handAfterSwipeRightPosition = swipePos + Pht::Vec3{3.25f, 1.0f, UiLayer::root};
-    auto handAfterSwipeDownPosition = swipePos + Pht::Vec3{3.25f, -1.3f, UiLayer::root};
+    auto handAfterSwipeLeftPosition = swipePos + Pht::Vec3{1.25f, 1.0f, UiLayer::root};
+    auto handAfterSwipeDownPosition = swipePos + Pht::Vec3{1.25f, -1.3f, UiLayer::root};
 
     std::vector<Pht::Keyframe> handAnimationSwipeKeyframes {
         {
@@ -234,7 +350,7 @@ void LevelBombDialogView::CreateAnimation(const PieceResources& pieceResources,
         },
         {
             .mTime = beginSwipeDownTime,
-            .mPosition = handAfterSwipeRightPosition
+            .mPosition = handAfterSwipeLeftPosition
         },
         {
             .mTime = detonationTime - 0.1f,
@@ -256,88 +372,113 @@ void LevelBombDialogView::CreateAnimation(const PieceResources& pieceResources,
     handAnimationSwipeClip.SetInterpolation(Pht::Interpolation::Cosine);
     mHandPhtAnimation->AddClip(handAnimationSwipeClip, 1);
     
-    mExplosionEffect = std::make_unique<TutorialExplosionParticleEffect>(mEngine, TutorialExplosionParticleEffect::Kind::Bomb, container);
+    for (auto i = 0; i < 10; ++i) {
+        mExplosionEffects.emplace_back(mEngine, TutorialExplosionParticleEffect::Kind::LevelBomb, container);
+    }
     
-    std::vector<Pht::Keyframe> explosionKeyframes {
-        {
-            .mTime = 0.0f
-        },
-        {
-            .mTime = detonationTime,
-            .mCallback = [this] () {
-                mExplosionEffect->StartExplosion({1.0f, -1.0f, 0.5f});
-            }
-        },
-        {
-            .mTime = animationDuration
-        }
-    };
-    animationSystem.CreateAnimation(mExplosionEffect->GetSceneObject(), explosionKeyframes);
-/*
     std::vector<Pht::Keyframe> grayBlock0Keyframes {
-        {.mTime = 0.0f, .mPosition = Pht::Vec3{-1.0f, -2.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
-        {.mTime = detonationTime + 0.1f, .mPosition = Pht::Vec3{-1.0f, -2.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}},
-        {.mTime = detonationTime + blockFlyDuration, .mPosition = Pht::Vec3{-3.0f, -3.0f, 0.0f}, .mRotation = Pht::Vec3{50.0f, 100.0f, 0.0f}, .mIsVisible = false},
+        {.mTime = 0.0f, .mPosition = Pht::Vec3{-3.0f, 0.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
+        {.mTime = detonationTime + 0.1f, .mPosition = Pht::Vec3{-3.0f, 0.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}},
+        {.mTime = detonationTime + blockFlyDuration, .mPosition = Pht::Vec3{-4.5f, 1.5f, -0.05f}, .mRotation = Pht::Vec3{50.0f, 100.0f, 0.0f}, .mIsVisible = false},
         {.mTime = animationDuration}
     };
     animationSystem.CreateAnimation(grayBlock0, grayBlock0Keyframes);
 
     std::vector<Pht::Keyframe> grayBlock1Keyframes {
-        {.mTime = 0.0f, .mPosition = Pht::Vec3{0.0f, -2.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
-        {.mTime = detonationTime + 0.1f, .mPosition = Pht::Vec3{0.0f, -2.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}},
-        {.mTime = detonationTime + blockFlyDuration, .mPosition = Pht::Vec3{-2.0f, -5.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 100.0f, 100.0f}, .mIsVisible = false},
+        {.mTime = 0.0f, .mPosition = Pht::Vec3{0.0f, 0.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
+        {.mTime = detonationTime + 0.1f + explosionSpreadDelay, .mPosition = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}},
+        {.mTime = detonationTime + blockFlyDuration + explosionSpreadDelay, .mPosition = Pht::Vec3{0.0f, 3.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 100.0f, 100.0f}, .mIsVisible = false},
         {.mTime = animationDuration}
     };
     animationSystem.CreateAnimation(grayBlock1, grayBlock1Keyframes);
     
     std::vector<Pht::Keyframe> grayBlock2Keyframes {
-        {.mTime = 0.0f, .mPosition = Pht::Vec3{1.0f, -2.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
-        {.mTime = detonationTime + 0.1f, .mPosition = Pht::Vec3{1.0f, -2.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}},
-        {.mTime = detonationTime + blockFlyDuration, .mPosition = Pht::Vec3{1.0f, -5.0f, 0.0f}, .mRotation = Pht::Vec3{50.0f, 0.0f, 100.0f}, .mIsVisible = false},
+        {.mTime = 0.0f, .mPosition = Pht::Vec3{1.0f, 0.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
+        {.mTime = detonationTime + 0.1f + 2.0f * explosionSpreadDelay, .mPosition = Pht::Vec3{1.0f, 0.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}},
+        {.mTime = detonationTime + blockFlyDuration + 2.0f * explosionSpreadDelay, .mPosition = Pht::Vec3{1.0f, 3.0f, 0.0f}, .mRotation = Pht::Vec3{50.0f, 0.0f, 100.0f}, .mIsVisible = false},
         {.mTime = animationDuration}
     };
     animationSystem.CreateAnimation(grayBlock2, grayBlock2Keyframes);
 
     std::vector<Pht::Keyframe> grayBlock3Keyframes {
-        {.mTime = 0.0f, .mPosition = Pht::Vec3{2.0f, -2.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
-        {.mTime = detonationTime + 0.1f, .mPosition = Pht::Vec3{2.0f, -2.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}},
-        {.mTime = detonationTime + blockFlyDuration, .mPosition = Pht::Vec3{2.5f, -4.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 100.0f, 100.0f}, .mIsVisible = false},
+        {.mTime = 0.0f, .mPosition = Pht::Vec3{2.0f, 0.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
+        {.mTime = detonationTime + 0.1f + 3.0f * explosionSpreadDelay, .mPosition = Pht::Vec3{2.0f, 0.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}},
+        {.mTime = detonationTime + blockFlyDuration + 3.0f * explosionSpreadDelay, .mPosition = Pht::Vec3{2.0f, 3.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 100.0f, 100.0f}, .mIsVisible = false},
         {.mTime = animationDuration}
     };
     animationSystem.CreateAnimation(grayBlock3, grayBlock3Keyframes);
 
     std::vector<Pht::Keyframe> grayBlock4Keyframes {
-        {.mTime = 0.0f, .mPosition = Pht::Vec3{3.0f, -2.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
-        {.mTime = detonationTime + 0.1f, .mPosition = Pht::Vec3{3.0f, -2.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}},
-        {.mTime = detonationTime + blockFlyDuration, .mPosition = Pht::Vec3{4.5f, -3.0f, 0.0f}, .mRotation = Pht::Vec3{100.0f, 0.0f, 100.0f}, .mIsVisible = false},
+        {.mTime = 0.0f, .mPosition = Pht::Vec3{-3.0f, -1.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
+        {.mTime = detonationTime + 0.1f, .mPosition = Pht::Vec3{-3.0f, -1.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}},
+        {.mTime = detonationTime + blockFlyDuration, .mPosition = Pht::Vec3{-5.5f, -1.0f, 0.0f}, .mRotation = Pht::Vec3{100.0f, 0.0f, 100.0f}, .mIsVisible = false},
         {.mTime = animationDuration}
     };
     animationSystem.CreateAnimation(grayBlock4, grayBlock4Keyframes);
-    
+
     std::vector<Pht::Keyframe> grayBlock5Keyframes {
-        {.mTime = 0.0f, .mPosition = Pht::Vec3{0.0f, -3.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
-        {.mTime = detonationTime + 0.1f, .mPosition = Pht::Vec3{0.0f, -3.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}},
-        {.mTime = detonationTime + blockFlyDuration, .mPosition = Pht::Vec3{-1.0f, -5.5f, TutorialUiLayer::root}, .mRotation = Pht::Vec3{50.0f, 0.0f, 100.0f}, .mIsVisible = false},
+        {.mTime = 0.0f, .mPosition = Pht::Vec3{3.0f, -1.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
+        {.mTime = detonationTime + 0.1f + 3.0f * explosionSpreadDelay, .mPosition = Pht::Vec3{3.0f, -1.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}},
+        {.mTime = detonationTime + blockFlyDuration + 3.0f * explosionSpreadDelay, .mPosition = Pht::Vec3{5.5f, -1.0f, TutorialUiLayer::root}, .mRotation = Pht::Vec3{50.0f, 0.0f, 100.0f}, .mIsVisible = false},
         {.mTime = animationDuration}
     };
     animationSystem.CreateAnimation(grayBlock5, grayBlock5Keyframes);
 
     std::vector<Pht::Keyframe> grayBlock6Keyframes {
-        {.mTime = 0.0f, .mPosition = Pht::Vec3{1.0f, -3.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
-        {.mTime = detonationTime + 0.1f, .mPosition = Pht::Vec3{1.0f, -3.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}},
-        {.mTime = detonationTime + blockFlyDuration, .mPosition = Pht::Vec3{1.0, -6.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 100.0f, 100.0f}, .mIsVisible = false},
+        {.mTime = 0.0f, .mPosition = Pht::Vec3{-3.0f, -2.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
+        {.mTime = detonationTime + 0.1f + 1.0f * explosionSpreadDelay, .mPosition = Pht::Vec3{-3.0f, -2.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}},
+        {.mTime = detonationTime + blockFlyDuration + 1.0f * explosionSpreadDelay, .mPosition = Pht::Vec3{-5.0f, -3.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 100.0f, 100.0f}, .mIsVisible = false},
         {.mTime = animationDuration}
     };
     animationSystem.CreateAnimation(grayBlock6, grayBlock6Keyframes);
 
     std::vector<Pht::Keyframe> grayBlock7Keyframes {
-        {.mTime = 0.0f, .mPosition = Pht::Vec3{2.0f, -3.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
-        {.mTime = detonationTime + 0.1f, .mPosition = Pht::Vec3{2.0f, -3.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}},
-        {.mTime = detonationTime + blockFlyDuration, .mPosition = Pht::Vec3{3.0f, -5.5f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 50.0f, 100.0f}, .mIsVisible = false},
+        {.mTime = 0.0f, .mPosition = Pht::Vec3{3.0f, -2.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
+        {.mTime = detonationTime + 0.1f + 3.0f * explosionSpreadDelay, .mPosition = Pht::Vec3{3.0f, -2.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}},
+        {.mTime = detonationTime + blockFlyDuration + 3.0f * explosionSpreadDelay, .mPosition = Pht::Vec3{6.0f, -3.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 50.0f, 100.0f}, .mIsVisible = false},
         {.mTime = animationDuration}
     };
     animationSystem.CreateAnimation(grayBlock7, grayBlock7Keyframes);
-*/
+
+    std::vector<Pht::Keyframe> grayBlock8Keyframes {
+        {.mTime = 0.0f, .mPosition = Pht::Vec3{-2.0f, -3.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
+        {.mTime = detonationTime + 0.1f + 1.0f * explosionSpreadDelay, .mPosition = Pht::Vec3{-2.0f, -3.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}},
+        {.mTime = detonationTime + blockFlyDuration + 1.0f * explosionSpreadDelay, .mPosition = Pht::Vec3{-3.0f, -5.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 100.0f, 100.0f}, .mIsVisible = false},
+        {.mTime = animationDuration}
+    };
+    animationSystem.CreateAnimation(grayBlock8, grayBlock8Keyframes);
+
+    std::vector<Pht::Keyframe> grayBlock9Keyframes {
+        {.mTime = 0.0f, .mPosition = Pht::Vec3{-1.0f, -3.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
+        {.mTime = detonationTime + 0.1f + 1.0f * explosionSpreadDelay, .mPosition = Pht::Vec3{-1.0f, -3.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}},
+        {.mTime = detonationTime + blockFlyDuration + 1.0f * explosionSpreadDelay, .mPosition = Pht::Vec3{-1.0f, -6.0f, 0.0f}, .mRotation = Pht::Vec3{100.0f, 0.0f, 100.0f}, .mIsVisible = false},
+        {.mTime = animationDuration}
+    };
+    animationSystem.CreateAnimation(grayBlock9, grayBlock9Keyframes);
+
+    std::vector<Pht::Keyframe> grayBlock10Keyframes {
+        {.mTime = 0.0f, .mPosition = Pht::Vec3{0.0f, -3.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
+        {.mTime = detonationTime + 0.1f + 1.0f * explosionSpreadDelay, .mPosition = Pht::Vec3{0.0f, -3.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}},
+        {.mTime = detonationTime + blockFlyDuration + 1.0f * explosionSpreadDelay, .mPosition = Pht::Vec3{0.0f, -6.0f, 0.0f}, .mRotation = Pht::Vec3{100.0f, 100.0f, 0.0f}, .mIsVisible = false},
+        {.mTime = animationDuration}
+    };
+    animationSystem.CreateAnimation(grayBlock10, grayBlock10Keyframes);
+
+    std::vector<Pht::Keyframe> grayBlock11Keyframes {
+        {.mTime = 0.0f, .mPosition = Pht::Vec3{1.0f, -3.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
+        {.mTime = detonationTime + 0.1f + 2.0f * explosionSpreadDelay, .mPosition = Pht::Vec3{1.0f, -3.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}},
+        {.mTime = detonationTime + blockFlyDuration + 2.0f * explosionSpreadDelay, .mPosition = Pht::Vec3{1.0f, -6.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 100.0f, 100.0f}, .mIsVisible = false},
+        {.mTime = animationDuration}
+    };
+    animationSystem.CreateAnimation(grayBlock11, grayBlock11Keyframes);
+
+    std::vector<Pht::Keyframe> grayBlock12Keyframes {
+        {.mTime = 0.0f, .mPosition = Pht::Vec3{2.0f, -3.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
+        {.mTime = detonationTime + 0.1f + 3.0f * explosionSpreadDelay, .mPosition = Pht::Vec3{2.0f, -3.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}},
+        {.mTime = detonationTime + blockFlyDuration + 3.0f * explosionSpreadDelay, .mPosition = Pht::Vec3{3.0f, -5.0f, 0.0f}, .mRotation = Pht::Vec3{100.0f, 0.0f, 100.0f}, .mIsVisible = false},
+        {.mTime = animationDuration}
+    };
+    animationSystem.CreateAnimation(grayBlock12, grayBlock12Keyframes);
 }
 
 void LevelBombDialogView::SetUp() {
@@ -360,7 +501,10 @@ void LevelBombDialogView::SetUp() {
         TutorialUtils::SetGuiLightDirections(*mGuiLightProvider);
     }
     
-    mExplosionEffect->SetUp();
+    for (auto& explosionEffect: mExplosionEffects) {
+        explosionEffect.SetUp();
+    }
+    
     mAnimation->Stop();
     mAnimation->Play();
 }
@@ -374,6 +518,9 @@ void LevelBombDialogView::OnDeactivate() {
 void LevelBombDialogView::Update() {
     auto dt = mEngine.GetLastFrameSeconds();
     mAnimation->Update(dt);
-    mExplosionEffect->Update(dt);
     mHandAnimation->Update();
+    
+    for (auto& explosionEffect: mExplosionEffects) {
+        explosionEffect.Update(dt);
+    }
 }

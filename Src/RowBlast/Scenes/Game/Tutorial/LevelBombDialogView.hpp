@@ -2,6 +2,7 @@
 #define LevelBombDialogView_hpp
 
 #include <memory>
+#include <vector>
 
 // Engine includes.
 #include "GuiView.hpp"
@@ -58,7 +59,7 @@ namespace RowBlast {
         Pht::SceneObject* mLevelBombs {nullptr};
         Pht::SceneObject* mGhostPieceContainer {nullptr};
         std::unique_ptr<HandAnimation> mHandAnimation;
-        std::unique_ptr<TutorialExplosionParticleEffect> mExplosionEffect;
+        std::vector<TutorialExplosionParticleEffect> mExplosionEffects;
         std::unique_ptr<MenuButton> mPlayButton;
     };
 }
