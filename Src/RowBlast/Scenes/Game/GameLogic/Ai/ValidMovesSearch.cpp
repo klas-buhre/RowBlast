@@ -14,7 +14,6 @@ namespace {
                                 const MovingPiece& piece,
                                 const Movement* previousMovement) {
         auto& position = piece.mPosition;
-        
         Pht::Vec2 floatPosition {static_cast<float>(position.x), static_cast<float>(position.y)};
         Movement movement {floatPosition, piece.mRotation, previousMovement};
         validMoves.mMovements.PushBack(movement);
@@ -23,7 +22,6 @@ namespace {
     
     int CalcNumMovements(const Movement& finalMovement) {
         auto numMovements = 0;
-        
         for (auto* movement = &finalMovement; movement; movement = movement->GetPrevious()) {
             ++numMovements;
         }

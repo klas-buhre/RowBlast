@@ -42,7 +42,6 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-    -Remove SlideAnimation and slide texture resources.
     -Tutorial: Maybe a new asteroid Pht animation just to be consistent with the look.
     -Tutorial: Pht animation showing how to fill gray slots.
     -Tutorial: Maybe there could be a cascading/gravity animation.

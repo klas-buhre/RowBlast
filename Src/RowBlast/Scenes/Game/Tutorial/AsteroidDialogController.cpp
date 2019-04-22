@@ -10,13 +10,21 @@ using namespace RowBlast;
 
 AsteroidDialogController::AsteroidDialogController(Pht::IEngine& engine,
                                                    const CommonResources& commonResources,
+                                                   const PieceResources& pieceResources,
+                                                   const LevelResources& levelResources,
                                                    const UserServices& userServices) :
     mInput {engine.GetInput()},
-    mView {engine, commonResources, userServices},
+    mView {
+        engine,
+        commonResources,
+        pieceResources,
+        levelResources,
+        userServices
+    },
     mSlidingMenuAnimation {engine, mView} {}
 
-void AsteroidDialogController::SetUp(Pht::Scene& scene) {
-    mView.SetUp(scene);
+void AsteroidDialogController::SetUp() {
+    mView.SetUp();
     mSlidingMenuAnimation.SetUp(SlidingMenuAnimation::UpdateFade::Yes,
                                 SlidingMenuAnimation::SlideDirection::Scale,
                                 SlidingMenuAnimation::UpdatePosition::No);
@@ -24,6 +32,10 @@ void AsteroidDialogController::SetUp(Pht::Scene& scene) {
 
 void AsteroidDialogController::SetFadeEffect(Pht::FadeEffect& fadeEffect) {
     mSlidingMenuAnimation.SetFadeEffect(fadeEffect);
+}
+
+void AsteroidDialogController::SetGuiLightProvider(IGuiLightProvider& guiLightProvider) {
+    mView.SetGuiLightProvider(guiLightProvider);
 }
 
 AsteroidDialogController::Result AsteroidDialogController::Update() {

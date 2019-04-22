@@ -6,6 +6,7 @@ namespace RowBlast {
         constexpr auto bomb = 0.5f;
         constexpr auto root = 0.0f;
         constexpr auto blastRadius = -0.025f;
+        constexpr auto fieldBottomGlow = -0.5f;
     }
 }
 

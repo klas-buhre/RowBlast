@@ -21,7 +21,7 @@ using namespace RowBlast;
 namespace {
     constexpr auto animationDuration = 4.25f;
     constexpr auto clickMoveTime = 1.5f;
-    constexpr auto bombPosition2Time = 1.65f;
+    constexpr auto piecePosition2Time = 1.65f;
     constexpr auto detonationTime = 1.95f;
     constexpr auto beginSwipeRightTime = 1.0f;
     constexpr auto beginSwipeDownTime = 1.5f;
@@ -206,9 +206,9 @@ void LevelBombDialogView::CreateAnimation(const PieceResources& pieceResources,
     
     mMoves = &CreateSceneObject();
     container.AddChild(*mMoves);
-    auto& move1 = TutorialUtils::CreateLPieceGhostPiece(*this, {-1.5f, 0.5f, UiLayer::block}, 0.0f, *mMoves, levelResources);
-    auto& move2 = TutorialUtils::CreateLPieceGhostPiece(*this, {0.5f, 1.5f, UiLayer::block}, 0.0f, *mMoves, levelResources);
-    auto& move3 = TutorialUtils::CreateLPieceGhostPiece(*this, {2.5f, 0.5f, UiLayer::block}, 90.0f, *mMoves, levelResources);
+    auto& move1 = TutorialUtils::CreatePieceGhostPiece(*this, "L", {-1.5f, 0.5f, UiLayer::block}, 0.0f, *mMoves, levelResources);
+    auto& move2 = TutorialUtils::CreatePieceGhostPiece(*this, "L", {0.5f, 1.5f, UiLayer::block}, 0.0f, *mMoves, levelResources);
+    auto& move3 = TutorialUtils::CreatePieceGhostPiece(*this, "L", {2.5f, 0.5f, UiLayer::block}, 90.0f, *mMoves, levelResources);
     
     std::vector<Pht::Keyframe> moveKeyframes {
         {.mTime = 0.0f, .mIsVisible = true},
@@ -224,7 +224,7 @@ void LevelBombDialogView::CreateAnimation(const PieceResources& pieceResources,
 
     mGhostPieceContainer = &CreateSceneObject();
     container.AddChild(*mGhostPieceContainer);
-    auto& ghostPiece = TutorialUtils::CreateLPieceGhostPiece(*this, ghostPieceInitialPosition, 0.0f, *mGhostPieceContainer, levelResources);
+    auto& ghostPiece = TutorialUtils::CreatePieceGhostPiece(*this, "L", ghostPieceInitialPosition, 0.0f, *mGhostPieceContainer, levelResources);
 
     std::vector<Pht::Keyframe> ghostPieceKeyframes {
         {.mTime = 0.0f, .mPosition = ghostPieceInitialPosition, .mIsVisible = true},
@@ -245,7 +245,7 @@ void LevelBombDialogView::CreateAnimation(const PieceResources& pieceResources,
     std::vector<Pht::Keyframe> pieceKeyframes {
         {.mTime = 0.0f, .mPosition = pieceInitialPosition, .mIsVisible = true},
         {.mTime = clickMoveTime, .mPosition = pieceInitialPosition},
-        {.mTime = bombPosition2Time, .mPosition = piecePosition2},
+        {.mTime = piecePosition2Time, .mPosition = piecePosition2},
         {.mTime = detonationTime, .mPosition = pieceLandingPosition, .mIsVisible = false},
         {.mTime = animationDuration}
     };

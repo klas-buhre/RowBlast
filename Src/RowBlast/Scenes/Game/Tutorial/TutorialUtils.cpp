@@ -224,6 +224,15 @@ Pht::SceneObject& TutorialUtils::CreateLevelBomb(Pht::GuiView& view,
     return sceneObject;
 }
 
+Pht::SceneObject& TutorialUtils::CreateAsteroid(Pht::GuiView& view,
+                                                const Pht::Vec3& position,
+                                                Pht::SceneObject& parent,
+                                                const LevelResources& levelResources) {
+    auto& asteroidRenderable = levelResources.GetSmallAsteroidRenderable();
+    auto& sceneObject = CreateBlock(view, position, asteroidRenderable, parent);
+    return sceneObject;
+}
+
 Pht::SceneObject& TutorialUtils::CreateLPiece(Pht::GuiView& view,
                                               const Pht::Vec3& position,
                                               float rotation,
@@ -255,11 +264,48 @@ Pht::SceneObject& TutorialUtils::CreateLPiece(Pht::GuiView& view,
     return lPiece;
 }
 
-Pht::SceneObject& TutorialUtils::CreateLPieceGhostPiece(Pht::GuiView& view,
-                                                        const Pht::Vec3& position,
-                                                        float rotation,
-                                                        Pht::SceneObject& parent,
-                                                        const LevelResources& levelResources) {
+Pht::SceneObject& TutorialUtils::CreateBPiece(Pht::GuiView& view,
+                                              const Pht::Vec3& position,
+                                              float rotation,
+                                              Pht::SceneObject& parent,
+                                              const PieceResources& pieceResources) {
+    auto& bPiece = view.CreateSceneObject();
+    parent.AddChild(bPiece);
+    
+    auto& transform = bPiece.GetTransform();
+    transform.SetPosition(position);
+    transform.SetRotation({0.0f, 0.0f, rotation});
+    
+    auto& blockRenderable = pieceResources.GetBlockRenderableObject(BlockKind::Full,
+                                                                    BlockColor::Blue,
+                                                                    BlockBrightness::Normal);
+
+    auto halfCellSize = 0.5f;
+    CreateBlock(view, {0.0f, halfCellSize, 0.0f}, blockRenderable, bPiece);
+    CreateBlock(view, {2.0f * halfCellSize, halfCellSize, 0.0f}, blockRenderable, bPiece);
+    CreateBlock(view, {-2.0f * halfCellSize, -halfCellSize, 0.0f}, blockRenderable, bPiece);
+    CreateBlock(view, {0.0f, -halfCellSize, 0.0f}, blockRenderable, bPiece);
+    CreateBlock(view, {2.0f * halfCellSize, -halfCellSize, 0.0f}, blockRenderable, bPiece);
+    
+    auto& weldRenderable = pieceResources.GetWeldRenderableObject(WeldRenderableKind::Normal,
+                                                                  BlockColor::Blue,
+                                                                  BlockBrightness::Normal);
+
+    CreateWeld(view, {halfCellSize, halfCellSize, halfCellSize}, weldRenderable, 0.0f, bPiece);
+    CreateWeld(view, {-halfCellSize, -halfCellSize, halfCellSize}, weldRenderable, 0.0f, bPiece);
+    CreateWeld(view, {halfCellSize, -halfCellSize, halfCellSize}, weldRenderable, 0.0f, bPiece);
+    CreateWeld(view, {0.0f, 0.0f, halfCellSize}, weldRenderable, 90.0f, bPiece);
+    CreateWeld(view, {2.0f * halfCellSize, 0.0f, halfCellSize}, weldRenderable, 90.0f, bPiece);
+    
+    return bPiece;
+}
+
+Pht::SceneObject& TutorialUtils::CreatePieceGhostPiece(Pht::GuiView& view,
+                                                       const std::string& pieceName,
+                                                       const Pht::Vec3& position,
+                                                       float rotation,
+                                                       Pht::SceneObject& parent,
+                                                       const LevelResources& levelResources) {
     auto& ghostPiece = view.CreateSceneObject();
     parent.AddChild(ghostPiece);
     
@@ -269,10 +315,9 @@ Pht::SceneObject& TutorialUtils::CreateLPieceGhostPiece(Pht::GuiView& view,
     transform.SetRotation({0.0f, 0.0f, rotation});
     
     auto& pieceTypes = levelResources.GetPieceTypes();
-    auto i = pieceTypes.find("L");
-    if (i != std::end(pieceTypes)) {
-        ghostPiece.SetRenderable(i->second->GetGhostPieceRenderable());
-    }
+    auto i = pieceTypes.find(pieceName);
+    assert(i != std::end(pieceTypes));
+    ghostPiece.SetRenderable(i->second->GetGhostPieceRenderable());
     
     return ghostPiece;
 }

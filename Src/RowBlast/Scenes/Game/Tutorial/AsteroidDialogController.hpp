@@ -13,6 +13,8 @@ namespace Pht {
 namespace RowBlast {
     class CommonResources;
     class UserServices;
+    class PieceResources;
+    class LevelResources;
     
     class AsteroidDialogController {
     public:
@@ -23,10 +25,13 @@ namespace RowBlast {
         
         AsteroidDialogController(Pht::IEngine& engine,
                                  const CommonResources& commonResources,
+                                 const PieceResources& pieceResources,
+                                 const LevelResources& levelResources,
                                  const UserServices& userServices);
         
-        void SetUp(Pht::Scene& scene);
+        void SetUp();
         void SetFadeEffect(Pht::FadeEffect& fadeEffect);
+        void SetGuiLightProvider(IGuiLightProvider& guiLightProvider);
         Result Update();
 
         Pht::GuiView& GetView() {
