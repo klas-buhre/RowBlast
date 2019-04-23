@@ -19,15 +19,16 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto animationDuration = 4.25f;
+    constexpr auto animationDuration = 4.5f;
     constexpr auto clickMoveTime = 1.5f;
     constexpr auto piecePosition2Time = 1.65f;
     constexpr auto pieceLandTime = 1.95f;
     constexpr auto beginSwipeRightTime = 1.0f;
     constexpr auto beginSwipeDownTime = 1.5f;
-    // constexpr auto blockFlyDuration = 0.5f;
-    constexpr auto blockFallWaitDuration = 0.75f;
+    constexpr auto blockFlyDuration = 0.5f;
+    constexpr auto blockFallWaitDuration = 0.65f;
     constexpr auto blockFallDuration = 0.4f;
+    constexpr auto asteroidScaleUpDuration = 0.4f;
 }
 
 AsteroidDialogView::AsteroidDialogView(Pht::IEngine& engine,
@@ -56,8 +57,8 @@ AsteroidDialogView::AsteroidDialogView(Pht::IEngine& engine,
     CreateAnimation(pieceResources, levelResources);
 
     auto& textProperties = guiResources.GetSmallWhiteTextProperties(zoom);
-    CreateText({-4.4f, -4.8f, UiLayer::text}, "Bring the asteroid down to", textProperties);
-    CreateText({-3.8f, -5.875f, UiLayer::text}, "the bottom of the field", textProperties);
+    CreateText({-4.4f, -4.8f, UiLayer::panel}, "Bring the asteroid down to", textProperties);
+    CreateText({-3.8f, -5.875f, UiLayer::panel}, "the bottom of the field", textProperties);
     
     Pht::Vec2 playButtonInputSize {194.0f, 43.0f};
 
@@ -97,17 +98,18 @@ void AsteroidDialogView::CreateAnimation(const PieceResources& pieceResources,
     auto& asteroid = TutorialUtils::CreateAsteroid(*this, {3.0f, -1.0f, UiLayer::block}, fallingCells, levelResources);
     
     std::vector<Pht::Keyframe> asteroidKeyframes {
-        {.mTime = 0.0f, .mRotation = Pht::Vec3{-25.0f, 64.5f, -12.0f}},
+        {.mTime = 0.0f, .mPosition = Pht::Vec3{3.0f, -1.0f, UiLayer::block}, .mRotation = Pht::Vec3{-25.0f, 64.5f, -12.0f}, .mScale = Pht::Vec3{0.8f, 0.8f, 0.8f}},
         {.mTime = animationDuration / 2.0f, .mRotation = Pht::Vec3{-25.0f, 25.5f, -12.0f}},
-        {.mTime = animationDuration, .mRotation = Pht::Vec3{-25.0f, 64.5f, -12.0f}}
+        {.mTime = animationDuration - asteroidScaleUpDuration, .mPosition = Pht::Vec3{3.0f, -1.0f, 0.0f}, .mScale = Pht::Vec3{0.8f, 0.8f, 0.8f}},
+        {.mTime = animationDuration, .mPosition = Pht::Vec3{3.0f, -1.0f, 0.0f}, .mScale = Pht::Vec3{1.5f, 1.5f, 1.5f}}
     };
     auto& asteroidAnimation = animationSystem.CreateAnimation(asteroid, asteroidKeyframes);
     asteroidAnimation.SetInterpolation(Pht::Interpolation::Cosine);
     
-    TutorialUtils::CreateColoredBlock(*this, {-3.0f, -2.0f, UiLayer::block}, BlockColor::Yellow, container, pieceResources);
-    TutorialUtils::CreateColoredBlock(*this, {-3.0f, -3.0f, UiLayer::block}, BlockColor::Red, container, pieceResources);
-    TutorialUtils::CreateColoredBlock(*this, {-3.0f, -4.0f, UiLayer::block}, BlockColor::Blue, container, pieceResources);
-    TutorialUtils::CreateColoredBlock(*this, {-2.0f, -4.0f, UiLayer::block}, BlockColor::Green, container, pieceResources);
+    auto& blockN3N2 = TutorialUtils::CreateColoredBlock(*this, {-3.0f, -2.0f, UiLayer::block}, BlockColor::Yellow, container, pieceResources);
+    auto& blockN3N3 = TutorialUtils::CreateColoredBlock(*this, {-3.0f, -3.0f, UiLayer::block}, BlockColor::Red, container, pieceResources);
+    auto& blockN3N4 = TutorialUtils::CreateColoredBlock(*this, {-3.0f, -4.0f, UiLayer::block}, BlockColor::Blue, container, pieceResources);
+    auto& blockN2N4 = TutorialUtils::CreateColoredBlock(*this, {-2.0f, -4.0f, UiLayer::block}, BlockColor::Green, container, pieceResources);
 
     auto& clearedCells = CreateSceneObject();
     container.AddChild(clearedCells);
@@ -257,111 +259,191 @@ void AsteroidDialogView::CreateAnimation(const PieceResources& pieceResources,
     handAnimationSwipeClip.SetInterpolation(Pht::Interpolation::Cosine);
     mHandPhtAnimation->AddClip(handAnimationSwipeClip, 1);
 
-/*
-    std::vector<Pht::Keyframe> grayBlock0Keyframes {
-        {.mTime = 0.0f, .mPosition = Pht::Vec3{-3.0f, 0.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
-        {.mTime = detonationTime + 0.1f, .mPosition = Pht::Vec3{-3.0f, 0.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}},
-        {.mTime = detonationTime + blockFlyDuration, .mPosition = Pht::Vec3{-4.5f, 1.5f, -0.05f}, .mRotation = Pht::Vec3{50.0f, 100.0f, 0.0f}, .mIsVisible = false},
-        {.mTime = animationDuration}
-    };
-    animationSystem.CreateAnimation(grayBlock0, grayBlock0Keyframes);
-
-    std::vector<Pht::Keyframe> grayBlock1Keyframes {
-        {.mTime = 0.0f, .mPosition = Pht::Vec3{0.0f, 0.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
-        {.mTime = detonationTime + 0.1f + explosionSpreadDelay, .mPosition = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}},
-        {.mTime = detonationTime + blockFlyDuration + explosionSpreadDelay, .mPosition = Pht::Vec3{0.0f, 3.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 100.0f, 100.0f}, .mIsVisible = false},
-        {.mTime = animationDuration}
-    };
-    animationSystem.CreateAnimation(grayBlock1, grayBlock1Keyframes);
-    
-    std::vector<Pht::Keyframe> grayBlock2Keyframes {
-        {.mTime = 0.0f, .mPosition = Pht::Vec3{1.0f, 0.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
-        {.mTime = detonationTime + 0.1f + 2.0f * explosionSpreadDelay, .mPosition = Pht::Vec3{1.0f, 0.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}},
-        {.mTime = detonationTime + blockFlyDuration + 2.0f * explosionSpreadDelay, .mPosition = Pht::Vec3{1.0f, 3.0f, 0.0f}, .mRotation = Pht::Vec3{50.0f, 0.0f, 100.0f}, .mIsVisible = false},
-        {.mTime = animationDuration}
-    };
-    animationSystem.CreateAnimation(grayBlock2, grayBlock2Keyframes);
-
-    std::vector<Pht::Keyframe> grayBlock3Keyframes {
-        {.mTime = 0.0f, .mPosition = Pht::Vec3{2.0f, 0.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
-        {.mTime = detonationTime + 0.1f + 3.0f * explosionSpreadDelay, .mPosition = Pht::Vec3{2.0f, 0.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}},
-        {.mTime = detonationTime + blockFlyDuration + 3.0f * explosionSpreadDelay, .mPosition = Pht::Vec3{2.0f, 3.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 100.0f, 100.0f}, .mIsVisible = false},
-        {.mTime = animationDuration}
-    };
-    animationSystem.CreateAnimation(grayBlock3, grayBlock3Keyframes);
-
-    std::vector<Pht::Keyframe> grayBlock4Keyframes {
-        {.mTime = 0.0f, .mPosition = Pht::Vec3{-3.0f, -1.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
-        {.mTime = detonationTime + 0.1f, .mPosition = Pht::Vec3{-3.0f, -1.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}},
-        {.mTime = detonationTime + blockFlyDuration, .mPosition = Pht::Vec3{-5.5f, -1.0f, 0.0f}, .mRotation = Pht::Vec3{100.0f, 0.0f, 100.0f}, .mIsVisible = false},
-        {.mTime = animationDuration}
-    };
-    animationSystem.CreateAnimation(grayBlock4, grayBlock4Keyframes);
-
-    std::vector<Pht::Keyframe> grayBlock5Keyframes {
-        {.mTime = 0.0f, .mPosition = Pht::Vec3{3.0f, -1.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
-        {.mTime = detonationTime + 0.1f + 3.0f * explosionSpreadDelay, .mPosition = Pht::Vec3{3.0f, -1.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}},
-        {.mTime = detonationTime + blockFlyDuration + 3.0f * explosionSpreadDelay, .mPosition = Pht::Vec3{5.5f, -1.0f, TutorialUiLayer::root}, .mRotation = Pht::Vec3{50.0f, 0.0f, 100.0f}, .mIsVisible = false},
-        {.mTime = animationDuration}
-    };
-    animationSystem.CreateAnimation(grayBlock5, grayBlock5Keyframes);
-
-    std::vector<Pht::Keyframe> grayBlock6Keyframes {
+    std::vector<Pht::Keyframe> blockN3N2Keyframes {
         {.mTime = 0.0f, .mPosition = Pht::Vec3{-3.0f, -2.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
-        {.mTime = detonationTime + 0.1f + 1.0f * explosionSpreadDelay, .mPosition = Pht::Vec3{-3.0f, -2.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}},
-        {.mTime = detonationTime + blockFlyDuration + 1.0f * explosionSpreadDelay, .mPosition = Pht::Vec3{-5.0f, -3.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 100.0f, 100.0f}, .mIsVisible = false},
+        {.mTime = pieceLandTime, .mPosition = Pht::Vec3{-3.0f, -2.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}},
+        {.mTime = pieceLandTime + blockFlyDuration, .mPosition = Pht::Vec3{-3.9f, -4.5f, 0.0f}, .mRotation = Pht::Vec3{50.0f, 100.0f, 0.0f}, .mIsVisible = false},
         {.mTime = animationDuration}
     };
-    animationSystem.CreateAnimation(grayBlock6, grayBlock6Keyframes);
+    animationSystem.CreateAnimation(blockN3N2, blockN3N2Keyframes);
 
-    std::vector<Pht::Keyframe> grayBlock7Keyframes {
-        {.mTime = 0.0f, .mPosition = Pht::Vec3{3.0f, -2.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
-        {.mTime = detonationTime + 0.1f + 3.0f * explosionSpreadDelay, .mPosition = Pht::Vec3{3.0f, -2.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}},
-        {.mTime = detonationTime + blockFlyDuration + 3.0f * explosionSpreadDelay, .mPosition = Pht::Vec3{6.0f, -3.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 50.0f, 100.0f}, .mIsVisible = false},
+    std::vector<Pht::Keyframe> blockN3N3Keyframes {
+        {.mTime = 0.0f, .mPosition = Pht::Vec3{-3.0f, -3.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
+        {.mTime = pieceLandTime, .mPosition = Pht::Vec3{-3.0f, -3.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}},
+        {.mTime = pieceLandTime + blockFlyDuration, .mPosition = Pht::Vec3{-4.2f, -6.0f, 0.0f}, .mRotation = Pht::Vec3{100.0f, 0.0f, 100.0f}, .mIsVisible = false},
         {.mTime = animationDuration}
     };
-    animationSystem.CreateAnimation(grayBlock7, grayBlock7Keyframes);
+    animationSystem.CreateAnimation(blockN3N3, blockN3N3Keyframes);
 
-    std::vector<Pht::Keyframe> grayBlock8Keyframes {
-        {.mTime = 0.0f, .mPosition = Pht::Vec3{-2.0f, -3.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
-        {.mTime = detonationTime + 0.1f + 1.0f * explosionSpreadDelay, .mPosition = Pht::Vec3{-2.0f, -3.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}},
-        {.mTime = detonationTime + blockFlyDuration + 1.0f * explosionSpreadDelay, .mPosition = Pht::Vec3{-3.0f, -5.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 100.0f, 100.0f}, .mIsVisible = false},
+    std::vector<Pht::Keyframe> blockN3N4Keyframes {
+        {.mTime = 0.0f, .mPosition = Pht::Vec3{-3.0f, -4.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
+        {.mTime = pieceLandTime, .mPosition = Pht::Vec3{-3.0f, -4.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}},
+        {.mTime = pieceLandTime + blockFlyDuration, .mPosition = Pht::Vec3{-4.0f, -7.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 100.0f, 100.0f}, .mIsVisible = false},
         {.mTime = animationDuration}
     };
-    animationSystem.CreateAnimation(grayBlock8, grayBlock8Keyframes);
+    animationSystem.CreateAnimation(blockN3N4, blockN3N4Keyframes);
+    
+    auto& blockN2N2 = TutorialUtils::CreateColoredBlock(*this, {-2.0f, -2.0f, UiLayer::block}, BlockColor::Blue, container, pieceResources);
+    auto& blockN2N3 = TutorialUtils::CreateColoredBlock(*this, {-2.0f, -3.0f, UiLayer::block}, BlockColor::Blue, container, pieceResources);
+    auto& blockN1N2 = TutorialUtils::CreateColoredBlock(*this, {-1.0f, -2.0f, UiLayer::block}, BlockColor::Blue, container, pieceResources);
+    auto& blockN1N3 = TutorialUtils::CreateColoredBlock(*this, {-1.0f, -3.0f, UiLayer::block}, BlockColor::Blue, container, pieceResources);
+    auto& blockN1N4 = TutorialUtils::CreateColoredBlock(*this, {-1.0f, -4.0f, UiLayer::block}, BlockColor::Blue, container, pieceResources);
+    auto& block0N2 = TutorialUtils::CreateColoredBlock(*this, {0.0f, -2.0f, UiLayer::block}, BlockColor::Blue, container, pieceResources);
+    auto& block0N3 = TutorialUtils::CreateColoredBlock(*this, {0.0f, -3.0f, UiLayer::block}, BlockColor::Yellow, container, pieceResources);
+    auto& block0N4 = TutorialUtils::CreateColoredBlock(*this, {0.0f, -4.0f, UiLayer::block}, BlockColor::Green, container, pieceResources);
+    auto& block1N2 = TutorialUtils::CreateColoredBlock(*this, {1.0f, -2.0f, UiLayer::block}, BlockColor::Blue, container, pieceResources);
+    auto& block1N3 = TutorialUtils::CreateColoredBlock(*this, {1.0f, -3.0f, UiLayer::block}, BlockColor::Yellow, container, pieceResources);
+    auto& block1N4 = TutorialUtils::CreateColoredBlock(*this, {1.0f, -4.0f, UiLayer::block}, BlockColor::Green, container, pieceResources);
+    auto& block2N2 = TutorialUtils::CreateColoredBlock(*this, {2.0f, -2.0f, UiLayer::block}, BlockColor::Yellow, container, pieceResources);
+    auto& block2N3 = TutorialUtils::CreateColoredBlock(*this, {2.0f, -3.0f, UiLayer::block}, BlockColor::Blue, container, pieceResources);
+    auto& block2N4 = TutorialUtils::CreateColoredBlock(*this, {2.0f, -4.0f, UiLayer::block}, BlockColor::Red, container, pieceResources);
+    auto& block3N2 = TutorialUtils::CreateColoredBlock(*this, {3.0f, -2.0f, UiLayer::block}, BlockColor::Yellow, container, pieceResources);
+    auto& block3N3 = TutorialUtils::CreateColoredBlock(*this, {3.0f, -3.0f, UiLayer::block}, BlockColor::Blue, container, pieceResources);
+    auto& block3N4 = TutorialUtils::CreateColoredBlock(*this, {3.0f, -4.0f, UiLayer::block}, BlockColor::Red, container, pieceResources);
 
-    std::vector<Pht::Keyframe> grayBlock9Keyframes {
-        {.mTime = 0.0f, .mPosition = Pht::Vec3{-1.0f, -3.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
-        {.mTime = detonationTime + 0.1f + 1.0f * explosionSpreadDelay, .mPosition = Pht::Vec3{-1.0f, -3.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}},
-        {.mTime = detonationTime + blockFlyDuration + 1.0f * explosionSpreadDelay, .mPosition = Pht::Vec3{-1.0f, -6.0f, 0.0f}, .mRotation = Pht::Vec3{100.0f, 0.0f, 100.0f}, .mIsVisible = false},
+    std::vector<Pht::Keyframe> blockN2N2Keyframes {
+        {.mTime = 0.0f, .mPosition = Pht::Vec3{-2.0f, -2.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = false},
+        {.mTime = pieceLandTime, .mPosition = Pht::Vec3{-2.0f, -2.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
+        {.mTime = pieceLandTime + blockFlyDuration, .mPosition = Pht::Vec3{-2.5f, -5.0f, 0.0f}, .mRotation = Pht::Vec3{100.0f, 0.0f, 100.0f}, .mIsVisible = false},
         {.mTime = animationDuration}
     };
-    animationSystem.CreateAnimation(grayBlock9, grayBlock9Keyframes);
+    animationSystem.CreateAnimation(blockN2N2, blockN2N2Keyframes);
 
-    std::vector<Pht::Keyframe> grayBlock10Keyframes {
-        {.mTime = 0.0f, .mPosition = Pht::Vec3{0.0f, -3.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
-        {.mTime = detonationTime + 0.1f + 1.0f * explosionSpreadDelay, .mPosition = Pht::Vec3{0.0f, -3.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}},
-        {.mTime = detonationTime + blockFlyDuration + 1.0f * explosionSpreadDelay, .mPosition = Pht::Vec3{0.0f, -6.0f, 0.0f}, .mRotation = Pht::Vec3{100.0f, 100.0f, 0.0f}, .mIsVisible = false},
+    std::vector<Pht::Keyframe> blockN2N3Keyframes {
+        {.mTime = 0.0f, .mPosition = Pht::Vec3{-2.0f, -3.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = false},
+        {.mTime = pieceLandTime, .mPosition = Pht::Vec3{-2.0f, -3.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
+        {.mTime = pieceLandTime + blockFlyDuration, .mPosition = Pht::Vec3{-2.5f, -6.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 100.0f, 100.0f}, .mIsVisible = false},
         {.mTime = animationDuration}
     };
-    animationSystem.CreateAnimation(grayBlock10, grayBlock10Keyframes);
+    animationSystem.CreateAnimation(blockN2N3, blockN2N3Keyframes);
 
-    std::vector<Pht::Keyframe> grayBlock11Keyframes {
-        {.mTime = 0.0f, .mPosition = Pht::Vec3{1.0f, -3.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
-        {.mTime = detonationTime + 0.1f + 2.0f * explosionSpreadDelay, .mPosition = Pht::Vec3{1.0f, -3.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}},
-        {.mTime = detonationTime + blockFlyDuration + 2.0f * explosionSpreadDelay, .mPosition = Pht::Vec3{1.0f, -6.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 100.0f, 100.0f}, .mIsVisible = false},
+    std::vector<Pht::Keyframe> blockN2N4Keyframes {
+        {.mTime = 0.0f, .mPosition = Pht::Vec3{-2.0f, -4.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
+        {.mTime = pieceLandTime, .mPosition = Pht::Vec3{-2.0f, -4.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}},
+        {.mTime = pieceLandTime + blockFlyDuration, .mPosition = Pht::Vec3{-2.5f, -7.0f, 0.0f}, .mRotation = Pht::Vec3{100.0f, 150.0f, 0.0f}, .mIsVisible = false},
         {.mTime = animationDuration}
     };
-    animationSystem.CreateAnimation(grayBlock11, grayBlock11Keyframes);
+    animationSystem.CreateAnimation(blockN2N4, blockN2N4Keyframes);
 
-    std::vector<Pht::Keyframe> grayBlock12Keyframes {
-        {.mTime = 0.0f, .mPosition = Pht::Vec3{2.0f, -3.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
-        {.mTime = detonationTime + 0.1f + 3.0f * explosionSpreadDelay, .mPosition = Pht::Vec3{2.0f, -3.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}},
-        {.mTime = detonationTime + blockFlyDuration + 3.0f * explosionSpreadDelay, .mPosition = Pht::Vec3{3.0f, -5.0f, 0.0f}, .mRotation = Pht::Vec3{100.0f, 0.0f, 100.0f}, .mIsVisible = false},
+    std::vector<Pht::Keyframe> blockN1N2Keyframes {
+        {.mTime = 0.0f, .mPosition = Pht::Vec3{-1.0f, -2.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = false},
+        {.mTime = pieceLandTime, .mPosition = Pht::Vec3{-1.0f, -2.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
+        {.mTime = pieceLandTime + blockFlyDuration, .mPosition = Pht::Vec3{-1.0f, -4.7f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 50.0f, 100.0f}, .mIsVisible = false},
         {.mTime = animationDuration}
     };
-    animationSystem.CreateAnimation(grayBlock12, grayBlock12Keyframes);
-*/
+    animationSystem.CreateAnimation(blockN1N2, blockN1N2Keyframes);
+
+    std::vector<Pht::Keyframe> blockN1N3Keyframes {
+        {.mTime = 0.0f, .mPosition = Pht::Vec3{-1.0f, -3.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = false},
+        {.mTime = pieceLandTime, .mPosition = Pht::Vec3{-1.0f, -3.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
+        {.mTime = pieceLandTime + blockFlyDuration, .mPosition = Pht::Vec3{-1.0f, -6.1f, 0.0f}, .mRotation = Pht::Vec3{100.0f, 100.0f, 0.0f}, .mIsVisible = false},
+        {.mTime = animationDuration}
+    };
+    animationSystem.CreateAnimation(blockN1N3, blockN1N3Keyframes);
+
+    std::vector<Pht::Keyframe> blockN1N4Keyframes {
+        {.mTime = 0.0f, .mPosition = Pht::Vec3{-1.0f, -4.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = false},
+        {.mTime = pieceLandTime, .mPosition = Pht::Vec3{-1.0f, -4.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
+        {.mTime = pieceLandTime + blockFlyDuration, .mPosition = Pht::Vec3{-1.0f, -7.2f, 0.0f}, .mRotation = Pht::Vec3{100.0f, 0.0f, 100.0f}, .mIsVisible = false},
+        {.mTime = animationDuration}
+    };
+    animationSystem.CreateAnimation(blockN1N4, blockN1N4Keyframes);
+
+    std::vector<Pht::Keyframe> block0N2Keyframes {
+        {.mTime = 0.0f, .mPosition = Pht::Vec3{0.0f, -2.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = false},
+        {.mTime = pieceLandTime, .mPosition = Pht::Vec3{0.0f, -2.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
+        {.mTime = pieceLandTime + blockFlyDuration, .mPosition = Pht::Vec3{0.0f, -5.0f, 0.0f}, .mRotation = Pht::Vec3{50.0f, 150.0f, 100.0f}, .mIsVisible = false},
+        {.mTime = animationDuration}
+    };
+    animationSystem.CreateAnimation(block0N2, block0N2Keyframes);
+
+    std::vector<Pht::Keyframe> block0N3Keyframes {
+        {.mTime = 0.0f, .mPosition = Pht::Vec3{0.0f, -3.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = false},
+        {.mTime = pieceLandTime, .mPosition = Pht::Vec3{0.0f, -3.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
+        {.mTime = pieceLandTime + blockFlyDuration, .mPosition = Pht::Vec3{0.0f, -6.0f, 0.0f}, .mRotation = Pht::Vec3{100.0f, 0.0f, 50.0f}, .mIsVisible = false},
+        {.mTime = animationDuration}
+    };
+    animationSystem.CreateAnimation(block0N3, block0N3Keyframes);
+
+    std::vector<Pht::Keyframe> block0N4Keyframes {
+        {.mTime = 0.0f, .mPosition = Pht::Vec3{0.0f, -4.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = false},
+        {.mTime = pieceLandTime, .mPosition = Pht::Vec3{0.0f, -4.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
+        {.mTime = pieceLandTime + blockFlyDuration, .mPosition = Pht::Vec3{0.0f, -7.7f, 0.0f}, .mRotation = Pht::Vec3{70.0f, 50.0f, 100.0f}, .mIsVisible = false},
+        {.mTime = animationDuration}
+    };
+    animationSystem.CreateAnimation(block0N4, block0N4Keyframes);
+
+    std::vector<Pht::Keyframe> block1N2Keyframes {
+        {.mTime = 0.0f, .mPosition = Pht::Vec3{1.0f, -2.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = false},
+        {.mTime = pieceLandTime, .mPosition = Pht::Vec3{1.0f, -2.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
+        {.mTime = pieceLandTime + blockFlyDuration, .mPosition = Pht::Vec3{1.0f, -4.4f, 0.0f}, .mRotation = Pht::Vec3{150.0f, 100.0f, 0.0f}, .mIsVisible = false},
+        {.mTime = animationDuration}
+    };
+    animationSystem.CreateAnimation(block1N2, block1N2Keyframes);
+
+    std::vector<Pht::Keyframe> block1N3Keyframes {
+        {.mTime = 0.0f, .mPosition = Pht::Vec3{1.0f, -3.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = false},
+        {.mTime = pieceLandTime, .mPosition = Pht::Vec3{1.0f, -3.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
+        {.mTime = pieceLandTime + blockFlyDuration, .mPosition = Pht::Vec3{1.0f, -6.2f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 100.0f, 150.0f}, .mIsVisible = false},
+        {.mTime = animationDuration}
+    };
+    animationSystem.CreateAnimation(block1N3, block1N3Keyframes);
+
+    std::vector<Pht::Keyframe> block1N4Keyframes {
+        {.mTime = 0.0f, .mPosition = Pht::Vec3{1.0f, -4.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = false},
+        {.mTime = pieceLandTime, .mPosition = Pht::Vec3{1.0f, -4.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
+        {.mTime = pieceLandTime + blockFlyDuration, .mPosition = Pht::Vec3{1.0f, -7.3f, 0.0f}, .mRotation = Pht::Vec3{100.0f, 150.0f, 0.0f}, .mIsVisible = false},
+        {.mTime = animationDuration}
+    };
+    animationSystem.CreateAnimation(block1N4, block1N4Keyframes);
+
+    std::vector<Pht::Keyframe> block2N2Keyframes {
+        {.mTime = 0.0f, .mPosition = Pht::Vec3{2.0f, -2.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = false},
+        {.mTime = pieceLandTime, .mPosition = Pht::Vec3{2.0f, -2.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
+        {.mTime = pieceLandTime + blockFlyDuration, .mPosition = Pht::Vec3{2.4f, -5.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 100.0f, 50.0f}, .mIsVisible = false},
+        {.mTime = animationDuration}
+    };
+    animationSystem.CreateAnimation(block2N2, block2N2Keyframes);
+
+    std::vector<Pht::Keyframe> block2N3Keyframes {
+        {.mTime = 0.0f, .mPosition = Pht::Vec3{2.0f, -3.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = false},
+        {.mTime = pieceLandTime, .mPosition = Pht::Vec3{2.0f, -3.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
+        {.mTime = pieceLandTime + blockFlyDuration, .mPosition = Pht::Vec3{2.5f, -6.0f, 0.0f}, .mRotation = Pht::Vec3{100.0f, 100.0f, 150.0f}, .mIsVisible = false},
+        {.mTime = animationDuration}
+    };
+    animationSystem.CreateAnimation(block2N3, block2N3Keyframes);
+
+    std::vector<Pht::Keyframe> block2N4Keyframes {
+        {.mTime = 0.0f, .mPosition = Pht::Vec3{2.0f, -4.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = false},
+        {.mTime = pieceLandTime, .mPosition = Pht::Vec3{2.0f, -4.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
+        {.mTime = pieceLandTime + blockFlyDuration, .mPosition = Pht::Vec3{2.5f, -6.9f, 0.0f}, .mRotation = Pht::Vec3{100.0f, 0.0f, 100.0f}, .mIsVisible = false},
+        {.mTime = animationDuration}
+    };
+    animationSystem.CreateAnimation(block2N4, block2N4Keyframes);
+
+    std::vector<Pht::Keyframe> block3N2Keyframes {
+        {.mTime = 0.0f, .mPosition = Pht::Vec3{3.0f, -2.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = false},
+        {.mTime = pieceLandTime, .mPosition = Pht::Vec3{3.0f, -2.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
+        {.mTime = pieceLandTime + blockFlyDuration, .mPosition = Pht::Vec3{3.9f, -5.0f, 0.0f}, .mRotation = Pht::Vec3{150.0f, 100.0f, 0.0f}, .mIsVisible = false},
+        {.mTime = animationDuration}
+    };
+    animationSystem.CreateAnimation(block3N2, block3N2Keyframes);
+
+    std::vector<Pht::Keyframe> block3N3Keyframes {
+        {.mTime = 0.0f, .mPosition = Pht::Vec3{3.0f, -3.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = false},
+        {.mTime = pieceLandTime, .mPosition = Pht::Vec3{3.0f, -3.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
+        {.mTime = pieceLandTime + blockFlyDuration, .mPosition = Pht::Vec3{4.0f, -6.2f, 0.0f}, .mRotation = Pht::Vec3{150.0f, 0.0f, 10.0f}, .mIsVisible = false},
+        {.mTime = animationDuration}
+    };
+    animationSystem.CreateAnimation(block3N3, block3N3Keyframes);
+
+    std::vector<Pht::Keyframe> block3N4Keyframes {
+        {.mTime = 0.0f, .mPosition = Pht::Vec3{3.0f, -4.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = false},
+        {.mTime = pieceLandTime, .mPosition = Pht::Vec3{3.0f, -4.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
+        {.mTime = pieceLandTime + blockFlyDuration, .mPosition = Pht::Vec3{4.2f, -7.5f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 150.0f, 100.0f}, .mIsVisible = false},
+        {.mTime = animationDuration}
+    };
+    animationSystem.CreateAnimation(block3N4, block3N4Keyframes);
 
     std::vector<Pht::Keyframe> fallingCellsKeyframes {
         {.mTime = 0.0f, .mPosition = Pht::Vec3{0.0f, 0.0f, 0.0f}},
