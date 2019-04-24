@@ -6,15 +6,14 @@ Backlog:
     -Android.
 
   -Gameplay:
+    -Could have ice blocks that are level blocks that can be used to fill and clear rows but they
+     shatter if landed on or if falling down in a cascade.
     -A game objective could be to clear all purple blocks. Purple blocks are affected by gravity
      like the other colored blocks.
     -The UFO could be booster. It could clear 3 rows.
     -Maybe blocks in the visible part of the field could disappear on some levels. For each move a
      random block disappears.
     -Maybe a sensitivity setting. Tetris Blitz has lower sensitivity on iPad but not on iPhone.
-    -Maybe the cells above the bomb blast area should be shifted down. This is to avoid the tricky
-     situations when there is a big cavity created between gray blocks after bombs and level bombs
-     have detonated. This is probably tricky to do in a consistent way.
   -Rendering:
     -Animation that moves the map hud out of the screen when clicking buttons in the hud. Could work
      in a similar way as the SlidingFieldAnimation.
@@ -42,7 +41,6 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-    -Tutorial: Maybe a new asteroid Pht animation just to be consistent with the look.
     -Tutorial: Pht animation showing how to fill gray slots.
     -Tutorial: Maybe there could be a cascading/gravity animation.
 

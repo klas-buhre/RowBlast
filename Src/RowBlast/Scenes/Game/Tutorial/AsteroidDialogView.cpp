@@ -26,7 +26,7 @@ namespace {
     constexpr auto beginSwipeRightTime = 1.0f;
     constexpr auto beginSwipeDownTime = 1.5f;
     constexpr auto blockFlyDuration = 0.5f;
-    constexpr auto blockFallWaitDuration = 0.65f;
+    constexpr auto blockFallWaitDuration = 0.55f;
     constexpr auto blockFallDuration = 0.4f;
     constexpr auto asteroidScaleUpDuration = 0.4f;
 }
@@ -93,15 +93,17 @@ void AsteroidDialogView::CreateAnimation(const PieceResources& pieceResources,
     auto& fallingCells = CreateSceneObject();
     container.AddChild(fallingCells);
     
-    TutorialUtils::CreateTwoBlocks(*this, {0.5f, -1.0f, UiLayer::block}, BlockColor::Red, 0.0f, fallingCells, pieceResources);
+    TutorialUtils::CreateTwoBlocks(*this, {1.0f, -0.5f, UiLayer::block}, BlockColor::Red, 90.0f, fallingCells, pieceResources);
     
     auto& asteroid = TutorialUtils::CreateAsteroid(*this, {3.0f, -1.0f, UiLayer::block}, fallingCells, levelResources);
     
     std::vector<Pht::Keyframe> asteroidKeyframes {
-        {.mTime = 0.0f, .mPosition = Pht::Vec3{3.0f, -1.0f, UiLayer::block}, .mRotation = Pht::Vec3{-25.0f, 64.5f, -12.0f}, .mScale = Pht::Vec3{0.8f, 0.8f, 0.8f}},
+        {.mTime = 0.0f, .mPosition = Pht::Vec3{3.0f, -1.0f, UiLayer::block}, .mScale = Pht::Vec3{0.8f, 0.8f, 0.8f}, .mRotation = Pht::Vec3{-25.0f, 64.5f, -12.0f}},
         {.mTime = animationDuration / 2.0f, .mRotation = Pht::Vec3{-25.0f, 25.5f, -12.0f}},
-        {.mTime = animationDuration - asteroidScaleUpDuration, .mPosition = Pht::Vec3{3.0f, -1.0f, 0.0f}, .mScale = Pht::Vec3{0.8f, 0.8f, 0.8f}},
-        {.mTime = animationDuration, .mPosition = Pht::Vec3{3.0f, -1.0f, 0.0f}, .mScale = Pht::Vec3{1.5f, 1.5f, 1.5f}}
+        {.mTime = animationDuration - asteroidScaleUpDuration * 3.0f, .mPosition = Pht::Vec3{3.0f, -1.0f, TutorialUiLayer::blastRadius}, .mScale = Pht::Vec3{0.8f, 0.8f, 0.8f}, .mRotation = Pht::Vec3{-25.0f, 64.5f, -12.0f}},
+        {.mTime = animationDuration - asteroidScaleUpDuration * 2.0f, .mScale = Pht::Vec3{1.45f, 1.45f, 1.45f}, .mRotation = Pht::Vec3{-25.0f, 244.5f, -12.0f}}, // 250
+        {.mTime = animationDuration - asteroidScaleUpDuration, .mScale = Pht::Vec3{0.8f, 0.8f, 0.8f}, .mRotation = Pht::Vec3{-25.0f, 424.5f, -12.0f}},
+        {.mTime = animationDuration},
     };
     auto& asteroidAnimation = animationSystem.CreateAnimation(asteroid, asteroidKeyframes);
     asteroidAnimation.SetInterpolation(Pht::Interpolation::Cosine);
@@ -133,7 +135,7 @@ void AsteroidDialogView::CreateAnimation(const PieceResources& pieceResources,
     container.AddChild(*mMoves);
     auto& move1 = TutorialUtils::CreatePieceGhostPiece(*this, "B", {-3.0f, 0.0f, UiLayer::block}, -90.0f, *mMoves, levelResources);
     auto& move2 = TutorialUtils::CreatePieceGhostPiece(*this, "B", {-1.0f, -3.0f, UiLayer::block}, 90.0f, *mMoves, levelResources);
-    auto& move3 = TutorialUtils::CreatePieceGhostPiece(*this, "B", {2.0f, 0.0f, UiLayer::block}, 90.0f, *mMoves, levelResources);
+    auto& move3 = TutorialUtils::CreatePieceGhostPiece(*this, "B", {2.0f, 1.0f, UiLayer::block}, 90.0f, *mMoves, levelResources);
     
     std::vector<Pht::Keyframe> moveKeyframes {
         {.mTime = 0.0f, .mIsVisible = true},
@@ -144,12 +146,12 @@ void AsteroidDialogView::CreateAnimation(const PieceResources& pieceResources,
     animationSystem.CreateAnimation(move2, moveKeyframes);
     animationSystem.CreateAnimation(move3, moveKeyframes);
     
-    Pht::Vec3 ghostPieceInitialPosition {-0.5f, 1.5f, UiLayer::block};
-    Pht::Vec3 ghostPiecePosition2 {-1.5f, 0.5f, UiLayer::block};
+    Pht::Vec3 ghostPieceInitialPosition {0.0f, 0.0f, TutorialUiLayer::ghostPiece};
+    Pht::Vec3 ghostPiecePosition2 {-1.0f, -3.0f, TutorialUiLayer::ghostPiece};
 
     mGhostPieceContainer = &CreateSceneObject();
     container.AddChild(*mGhostPieceContainer);
-    auto& ghostPiece = TutorialUtils::CreatePieceGhostPiece(*this, "B", ghostPieceInitialPosition, 0.0f, *mGhostPieceContainer, levelResources);
+    auto& ghostPiece = TutorialUtils::CreatePieceGhostPiece(*this, "B", ghostPieceInitialPosition, 90.0f, *mGhostPieceContainer, levelResources);
 
     std::vector<Pht::Keyframe> ghostPieceKeyframes {
         {.mTime = 0.0f, .mPosition = ghostPieceInitialPosition, .mIsVisible = true},
@@ -161,8 +163,8 @@ void AsteroidDialogView::CreateAnimation(const PieceResources& pieceResources,
     auto& ghostPieceAnimation = animationSystem.CreateAnimation(ghostPiece, ghostPieceKeyframes);
     ghostPieceAnimation.SetInterpolation(Pht::Interpolation::None);
 
-    Pht::Vec3 pieceInitialPosition {-0.5f, 2.8f, UiLayer::block};
-    Pht::Vec3 piecePosition2 {-1.5f, 2.8f, UiLayer::block};
+    Pht::Vec3 pieceInitialPosition {-0.5f, 3.0f, UiLayer::block};
+    Pht::Vec3 piecePosition2 {-1.5f, 3.0f, UiLayer::block};
     Pht::Vec3 pieceLandingPosition {-1.5f, -3.0f, UiLayer::block};
     
     auto& piece = TutorialUtils::CreateBPiece(*this, pieceInitialPosition, 90.0f, container, pieceResources);
@@ -211,7 +213,7 @@ void AsteroidDialogView::CreateAnimation(const PieceResources& pieceResources,
     };
     mHandPhtAnimation = &animationSystem.CreateAnimation(mHandAnimation->GetSceneObject(), handAnimationClickKeyframes);
     
-    Pht::Vec3 swipePos {1.0f, -2.0f, 0.0f};
+    Pht::Vec3 swipePos {1.0f, 2.8f, 0.0f};
     auto handInitialPosition = swipePos + Pht::Vec3{2.25f, 1.0f, UiLayer::root};
     auto handAfterSwipeLeftPosition = swipePos + Pht::Vec3{1.25f, 1.0f, UiLayer::root};
     auto handAfterSwipeDownPosition = swipePos + Pht::Vec3{1.25f, -1.3f, UiLayer::root};
@@ -221,7 +223,7 @@ void AsteroidDialogView::CreateAnimation(const PieceResources& pieceResources,
             .mTime = 0.0f,
             .mPosition = handInitialPosition,
             .mCallback = [this, &handInitialPosition] () {
-                mHandAnimation->StartInNotTouchingScreenState(handInitialPosition, 45.0f, 10.0f);
+                mHandAnimation->StartInNotTouchingScreenState(handInitialPosition, 70.0f, 10.0f);
             }
         },
         {
@@ -242,14 +244,6 @@ void AsteroidDialogView::CreateAnimation(const PieceResources& pieceResources,
         {
             .mTime = pieceLandTime - 0.1f,
             .mPosition = handAfterSwipeDownPosition
-        },
-        {
-            .mTime = pieceLandTime + 0.5f,
-            .mPosition = handAfterSwipeDownPosition
-        },
-        {
-            .mTime = animationDuration - 0.25f,
-            .mPosition = handInitialPosition
         },
         {
             .mTime = animationDuration

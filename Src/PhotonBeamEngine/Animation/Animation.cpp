@@ -135,7 +135,7 @@ void Animation::UpdateInterpolation() {
     auto& scale = mKeyframe->mScale;
     auto& nextScale = mNextKeyframe->mScale;
     if (scale.HasValue() && nextScale.HasValue()) {
-        transform.SetPosition(InterpolateVec3(scale.GetValue(), nextScale.GetValue()));
+        transform.SetScale(InterpolateVec3(scale.GetValue(), nextScale.GetValue()));
     }
 
     auto& rotation = mKeyframe->mRotation;
