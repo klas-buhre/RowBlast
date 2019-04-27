@@ -45,7 +45,12 @@ Ongoing tasks:
     -Tutorial: Maybe there could be a cascading/gravity animation.
 
 
-
+    -Going through the levels in world 2. Ok up to level 23.
+      -Redesign level 24 slightly. The wells on the sides are annoying and make it a bit longer.
+      -Level 25 is ok.
+      -Level 26?
+      -Level 27?
+      -Level 28 is ok.
 
 
 
