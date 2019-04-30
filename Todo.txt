@@ -52,10 +52,11 @@ Ongoing tasks:
       -Level 27?
       -Level 28 is ok.
 
-
-
-
-    -Moves left in assumed average user strength play:
+    -Moves left in assumed user strength play:
+      World 2:
+        Level 23: 10
+        Level 24: 9
+      World 3:
         Level 34: 6
         Level 35: 10
         Level 36: 12
