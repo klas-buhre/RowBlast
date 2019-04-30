@@ -15,6 +15,10 @@ Backlog:
      random block disappears.
     -Maybe a sensitivity setting. Tetris Blitz has lower sensitivity on iPad but not on iPhone.
   -Rendering:
+    -The glow behind the stars in the level completed scene can be almost twice a large when the
+     stars appear but then the glow shrinks to the normal size.
+    -Maybe a gray block could be in the objective animation. Also the number of blocks to clear
+     right under it. Could also have a slot and number of slots to fill or an asteroid.
     -Animation that moves the map hud out of the screen when clicking buttons in the hud. Could work
      in a similar way as the SlidingFieldAnimation.
     -Animation that moves the pause button out of the screen.
@@ -46,11 +50,12 @@ Ongoing tasks:
 
 
     -Going through the levels in world 2. Ok up to level 23.
-      -Level 24: Trim number of moves.
-      -Level 25 is ok.
       -Level 26?
       -Level 27?
       -Level 28 is ok.
+
+
+
 
     -Moves left in assumed user strength play:
       World 2:
