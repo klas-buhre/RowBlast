@@ -50,8 +50,6 @@ Ongoing tasks:
 
 
     -Going through the levels in world 2.
-      -Level 27?
-      -Level 28 is ok.
 
 
 
@@ -62,6 +60,8 @@ Ongoing tasks:
         Level 24: 9
         Level 25: 9
         Level 26: 9
+        Level 27: 9
+        Level 28:
       World 3:
         Level 34: 6
         Level 35: 10
