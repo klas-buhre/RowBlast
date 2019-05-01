@@ -53,7 +53,6 @@ Ongoing tasks:
 
 
 
-
     -Moves left in assumed user strength play:
       World 2:
         Level 23: 10
@@ -61,7 +60,12 @@ Ongoing tasks:
         Level 25: 9
         Level 26: 9
         Level 27: 9
-        Level 28:
+        Level 28: 8
+        Level 29: 8
+        Level 30:
+        Level 31:
+        Level 32:
+        Level 33:
       World 3:
         Level 34: 6
         Level 35: 10
