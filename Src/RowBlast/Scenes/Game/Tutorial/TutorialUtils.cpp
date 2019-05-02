@@ -16,7 +16,7 @@ using namespace RowBlast;
 namespace {
     const Pht::Vec3 lightDirectionA {0.785f, 1.0f, 0.67f};
     const Pht::Vec3 lightDirectionB {1.0f, 1.0f, 0.74f};
-    constexpr auto borderWidth = 0.087f;
+    constexpr auto borderWidth = 0.08f;
     constexpr auto width = 7.0f;
     constexpr auto height = 9.0f;
 
