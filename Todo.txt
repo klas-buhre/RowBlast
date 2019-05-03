@@ -51,7 +51,7 @@ Ongoing tasks:
 
     -Going through the levels in world 2.
 
-    Level 32:
+    Level 33:
 
 
     -Moves left in assumed user strength play:
@@ -65,7 +65,7 @@ Ongoing tasks:
         Level 29: 8
         Level 30: 8
         Level 31: 8
-        Level 32:
+        Level 32: 7
         Level 33:
       World 3:
         Level 34: 6

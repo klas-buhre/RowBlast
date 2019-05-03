@@ -149,7 +149,7 @@ void RowBlast::LoadAndPlayGameMusicTrack2(Pht::IEngine& engine) {
     auto& audio = engine.GetAudio();
     audio.SetMusicVolume(gameMusicVolume);
 
-    auto track2AudioResourceId {static_cast<Pht::AudioResourceId>(MusicTrackId::Game2)};
+    auto track2AudioResourceId = static_cast<Pht::AudioResourceId>(MusicTrackId::Game2);
     
     if (audio.GetMusicTrack(track2AudioResourceId) == nullptr) {
         audio.FreeMusicTrack(static_cast<Pht::AudioResourceId>(MusicTrackId::Game1));
