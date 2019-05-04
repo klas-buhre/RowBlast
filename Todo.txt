@@ -49,10 +49,6 @@ Ongoing tasks:
     -Tutorial: Maybe there could be a cascading/gravity animation.
 
 
-    -Going through the levels in world 2.
-
-    Level 33:
-
 
     -Moves left in assumed user strength play:
       World 2:
@@ -66,7 +62,7 @@ Ongoing tasks:
         Level 30: 8
         Level 31: 8
         Level 32: 7
-        Level 33:
+        Level 33: 7
       World 3:
         Level 34: 6
         Level 35: 10
