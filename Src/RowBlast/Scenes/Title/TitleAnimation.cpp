@@ -25,6 +25,7 @@ namespace {
     constexpr auto displayDistance = 0.65f;
     constexpr auto displayTime = 1.75f;
     constexpr auto textWidth = 11.0f;
+    constexpr auto textHeight = 1.65f;
     const Pht::Vec3 centerPosition {0.0f, 8.5f, 0.0f};
 
     const std::array<Pht::Vec3, 3> twinklePositions {
@@ -40,7 +41,7 @@ TitleAnimation::TitleAnimation(Pht::IEngine& engine) :
     mTextPosition {0.0f, 0.0f, 0.0f} {
     
     CreateText();
-    CreateTwinkleParticleEffect(engine);
+    CreateTwinkleParticleEffect();
 }
 
 void TitleAnimation::Init(Pht::Scene& scene, Pht::SceneObject& parentObject) {
@@ -48,8 +49,10 @@ void TitleAnimation::Init(Pht::Scene& scene, Pht::SceneObject& parentObject) {
     containerSceneObject.GetTransform().SetPosition(centerPosition);
     parentObject.AddChild(containerSceneObject);
     
-    containerSceneObject.AddChild(*(mText.mUpperTextLineSceneObject));
-    containerSceneObject.AddChild(*(mText.mLowerTextLineSceneObject));
+    containerSceneObject.AddChild(*(mUpperTextLine.mTextSceneObject));
+    containerSceneObject.AddChild(*(mUpperTextLine.mFlareEffect));
+    containerSceneObject.AddChild(*(mLowerTextLine.mTextSceneObject));
+    containerSceneObject.AddChild(*(mLowerTextLine.mFlareEffect));
     
     containerSceneObject.AddChild(*mTwinkleParticleEffect);
 
@@ -83,29 +86,65 @@ void TitleAnimation::CreateText() {
     textProperties.mSecondShadow = Pht::TextShadow::Yes;
     textProperties.mSecondShadowColor = Pht::Vec4 {0.21f, 0.21f, 0.21f, 1.0f};
     textProperties.mSecondShadowOffset = Pht::Vec2 {0.05f, 0.05f};
-
-    mText.mUpperTextLineSceneObject = std::make_unique<Pht::SceneObject>();
-    auto upperTextComponent =
-        std::make_unique<Pht::TextComponent>(*mText.mUpperTextLineSceneObject,
-                                             "ROW",
-                                             textProperties);
-    mText.mUpperTextLineSceneObject->SetComponent<Pht::TextComponent>(std::move(upperTextComponent));
     
-    mText.mLowerTextLineSceneObject = std::make_unique<Pht::SceneObject>();
-    auto lowerTextComponent =
-        std::make_unique<Pht::TextComponent>(*mText.mLowerTextLineSceneObject,
-                                             "BLAST",
-                                             textProperties);
-    mText.mLowerTextLineSceneObject->SetComponent<Pht::TextComponent>(std::move(lowerTextComponent));
-    
-    mText.mUpperTextLinePosition = {-4.0f, 0.2f, UiLayer::text};
-    mText.mLowerTextLinePosition = {-5.6f, -2.0f, UiLayer::text};
-    
-    mText.mUpperTextLineSceneObject->SetIsVisible(false);
-    mText.mLowerTextLineSceneObject->SetIsVisible(false);
+    mUpperTextLine = CreateTextLine("ROW", {-4.0f, 0.2f, UiLayer::text}, textProperties);
+    mLowerTextLine = CreateTextLine("BLAST", {-5.6f, -2.0f, UiLayer::text}, textProperties);
 }
 
-void TitleAnimation::CreateTwinkleParticleEffect(Pht::IEngine& engine) {
+TitleAnimation::TextLine TitleAnimation::CreateTextLine(const std::string& text,
+                                                        const Pht::Vec3& textPosition,
+                                                        Pht::TextProperties textProperties) {
+    TextLine textLine;
+    textLine.mTextPosition = textPosition;
+    textLine.mFlareEffect = CreateFlareParticleEffect(textPosition.y + textHeight / 2.0f);
+    textLine.mTextSceneObject = std::make_unique<Pht::SceneObject>();
+    textLine.mTextSceneObject->SetIsVisible(false);
+    
+    auto textComponent =
+        std::make_unique<Pht::TextComponent>(*textLine.mTextSceneObject, text, textProperties);
+    textLine.mTextSceneObject->SetComponent<Pht::TextComponent>(std::move(textComponent));
+    
+    return textLine;
+}
+
+std::unique_ptr<Pht::SceneObject> TitleAnimation::CreateFlareParticleEffect(float yPosition) {
+    Pht::EmitterSettings particleEmitterSettings {
+        .mPosition = Pht::Vec3{0.0f, 0.0f, 0.0f},
+        .mSize = Pht::Vec3{0.0f, 0.0f, 0.0f},
+        .mTimeToLive = 0.0f,
+        .mFrequency = 0.0f,
+        .mBurst = 1
+    };
+
+    Pht::ParticleSettings particleSettings {
+        .mVelocity = Pht::Vec3{0.0f, 0.0f, 0.0f},
+        .mVelocityRandomPart = Pht::Vec3{0.0f, 0.0f, 0.0f},
+        .mColor = Pht::Vec4{0.8f, 0.8f, 1.0f, 1.0f},
+        .mColorRandomPart = Pht::Vec4{0.0f, 0.0f, 0.0f, 0.0f},
+        .mTextureFilename = "flare03.png",
+        .mTimeToLive = 1.5f,
+        .mTimeToLiveRandomPart = 0.0f,
+        .mFadeOutDuration = 1.35f,
+        .mZAngularVelocity = 0.0f,
+        // .mSize = Pht::Vec2{25.0f, 35.0f},
+        .mSize = Pht::Vec2{25.0f, 45.0f},
+        .mSizeRandomPart = 0.0f,
+        .mShrinkDuration = 1.35f
+    };
+
+    auto& particleSystem = mEngine.GetParticleSystem();
+    auto flareEffect = particleSystem.CreateParticleEffectSceneObject(particleSettings,
+                                                                      particleEmitterSettings,
+                                                                      Pht::RenderMode::Triangles);
+    flareEffect->GetTransform().SetPosition({0.0f, yPosition, UiLayer::background});
+    
+    auto& material = flareEffect->GetRenderable()->GetMaterial();
+    material.SetShaderType(Pht::ShaderType::ParticleNoAlphaTexture);
+    
+    return flareEffect;
+}
+
+void TitleAnimation::CreateTwinkleParticleEffect() {
     Pht::EmitterSettings particleEmitterSettings {
         .mPosition = Pht::Vec3{0.0f, 0.0f, 0.0f},
         .mSize = Pht::Vec3{0.0f, 0.0f, 0.0f},
@@ -129,7 +168,7 @@ void TitleAnimation::CreateTwinkleParticleEffect(Pht::IEngine& engine) {
         .mShrinkDuration = 0.5f
     };
     
-    auto& particleSystem = engine.GetParticleSystem();
+    auto& particleSystem = mEngine.GetParticleSystem();
     mTwinkleParticleEffect = particleSystem.CreateParticleEffectSceneObject(particleSettings,
                                                                             particleEmitterSettings,
                                                                             Pht::RenderMode::Triangles);
@@ -161,8 +200,8 @@ void TitleAnimation::UpdateInWaitingState() {
     if (mElapsedTime > waitTime) {
         mState = State::SlidingIn;
         mElapsedTime = 0.0f;
-        mText.mUpperTextLineSceneObject->SetIsVisible(true);
-        mText.mLowerTextLineSceneObject->SetIsVisible(true);
+        mUpperTextLine.mTextSceneObject->SetIsVisible(true);
+        mLowerTextLine.mTextSceneObject->SetIsVisible(true);
         
         auto& audio = mEngine.GetAudio();
         audio.PlaySound(static_cast<Pht::AudioResourceId>(SoundId::SlidingTextWhoosh1));
@@ -179,6 +218,10 @@ void TitleAnimation::UpdateInSlidingInState() {
 
         mState = State::SlidingSlowly;
         mTextPosition.x = mRightPosition.x - displayDistance / 2.0f;
+        
+        mUpperTextLine.mFlareEffect->GetComponent<Pht::ParticleEffect>()->Start();
+        mLowerTextLine.mFlareEffect->GetComponent<Pht::ParticleEffect>()->Start();
+
         mEngine.GetInput().EnableInput();
     }
     
@@ -186,11 +229,11 @@ void TitleAnimation::UpdateInSlidingInState() {
 }
 
 void TitleAnimation::UpdateTextLineSceneObjectPositions() {
-    auto upperTextLinePosition = mLeftPosition + mTextPosition + mText.mUpperTextLinePosition;
-    mText.mUpperTextLineSceneObject->GetTransform().SetPosition(upperTextLinePosition);
+    auto upperTextLinePosition = mLeftPosition + mTextPosition + mUpperTextLine.mTextPosition;
+    mUpperTextLine.mTextSceneObject->GetTransform().SetPosition(upperTextLinePosition);
     
-    auto lowerTextLinePosition = mRightPosition - mTextPosition + mText.mLowerTextLinePosition;
-    mText.mLowerTextLineSceneObject->GetTransform().SetPosition(lowerTextLinePosition);
+    auto lowerTextLinePosition = mRightPosition - mTextPosition + mLowerTextLine.mTextPosition;
+    mLowerTextLine.mTextSceneObject->GetTransform().SetPosition(lowerTextLinePosition);
 }
 
 void TitleAnimation::UpdateInSlidingSlowlyState() {
@@ -203,6 +246,9 @@ void TitleAnimation::UpdateInSlidingSlowlyState() {
         mTwinkleParticleEffect->GetComponent<Pht::ParticleEffect>()->Start();
     }
     
+    mUpperTextLine.mFlareEffect->GetComponent<Pht::ParticleEffect>()->Update(dt);
+    mLowerTextLine.mFlareEffect->GetComponent<Pht::ParticleEffect>()->Update(dt);
+
     UpdateTextLineSceneObjectPositions();
 }
 
@@ -217,6 +263,9 @@ void TitleAnimation::UpdateInTwinklesState() {
         mTwinkleParticleEffect->GetTransform().SetPosition(twinklePosition);
         particleEffect->Start();
     }
+    
+    mUpperTextLine.mFlareEffect->GetComponent<Pht::ParticleEffect>()->Update(dt);
+    mLowerTextLine.mFlareEffect->GetComponent<Pht::ParticleEffect>()->Update(dt);
 }
 
 bool TitleAnimation::IsDone() const {

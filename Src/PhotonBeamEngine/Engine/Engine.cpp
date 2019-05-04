@@ -10,7 +10,7 @@
 using namespace Pht;
 
 namespace {
-    const auto maxFrameTimeSeconds {0.4f};
+    const auto maxFrameTimeSeconds = 0.4f;
 }
 
 Engine::Engine(bool createRenderBuffers, const Vec2& screenInputSize) :

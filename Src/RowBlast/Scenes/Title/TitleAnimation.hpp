@@ -23,15 +23,18 @@ namespace RowBlast {
         bool IsDone() const;
 
     private:
-        struct Text {
-            Pht::Vec3 mUpperTextLinePosition;
-            std::unique_ptr<Pht::SceneObject> mUpperTextLineSceneObject;
-            Pht::Vec3 mLowerTextLinePosition;
-            std::unique_ptr<Pht::SceneObject> mLowerTextLineSceneObject;
+        struct TextLine {
+            Pht::Vec3 mTextPosition;
+            std::unique_ptr<Pht::SceneObject> mTextSceneObject;
+            std::unique_ptr<Pht::SceneObject> mFlareEffect;
         };
         
         void CreateText();
-        void CreateTwinkleParticleEffect(Pht::IEngine& engine);
+        TextLine CreateTextLine(const std::string& text,
+                                const Pht::Vec3& textPosition,
+                                Pht::TextProperties textProperties);
+        std::unique_ptr<Pht::SceneObject> CreateFlareParticleEffect(float yPosition);
+        void CreateTwinkleParticleEffect();
         void UpdateInWaitingState();
         void UpdateInSlidingInState();
         void UpdateTextLineSceneObjectPositions();
@@ -50,7 +53,8 @@ namespace RowBlast {
         Pht::Font mFont;
         float mElapsedTime {0.0f};
         std::unique_ptr<Pht::SceneObject> mTwinkleParticleEffect;
-        Text mText;
+        TextLine mUpperTextLine;
+        TextLine mLowerTextLine;
         Pht::Vec3 mLeftPosition;
         Pht::Vec3 mRightPosition;
         Pht::Vec3 mTextPosition;
