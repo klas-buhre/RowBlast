@@ -55,6 +55,7 @@ namespace RowBlast {
             
         private:
             void CreateGlowParticleEffect(Pht::IEngine& engine);
+            void CreateFlareParticleEffect(Pht::IEngine& engine);
             void UpdateInWaitingState(float dt);
             void UpdateInScalingInState(float dt);
             void UpdateInFlashingState(float dt);
@@ -68,6 +69,7 @@ namespace RowBlast {
             std::unique_ptr<Pht::RenderableObject> mStarRenderable;
             std::unique_ptr<Pht::SceneObject> mStar;
             std::unique_ptr<Pht::SceneObject> mGlowEffect;
+            std::unique_ptr<Pht::SceneObject> mFlareEffect;
             float mElapsedTime {0.0f};
             float mWaitTime {0.0f};
             float mStarZAngle {0.0f};
