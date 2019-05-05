@@ -126,8 +126,7 @@ std::unique_ptr<Pht::SceneObject> TitleAnimation::CreateFlareParticleEffect(floa
         .mTimeToLiveRandomPart = 0.0f,
         .mFadeOutDuration = 1.35f,
         .mZAngularVelocity = 0.0f,
-        // .mSize = Pht::Vec2{25.0f, 35.0f},
-        .mSize = Pht::Vec2{25.0f, 45.0f},
+        .mSize = Pht::Vec2{35.0f, 40.0f},
         .mSizeRandomPart = 0.0f,
         .mShrinkDuration = 1.35f
     };
