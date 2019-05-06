@@ -50,7 +50,7 @@ namespace Pht {
         };
         
         void SetKeyframes(const std::vector<Keyframe>& keyframes);
-        void CalculateKeyframe(float dt);
+        bool CalculateKeyframe(float dt);
         void HandleKeyframeTransition();
         void UpdateInterpolation();
         Pht::Vec3 InterpolateVec3(const Pht::Vec3& keyframeValue,

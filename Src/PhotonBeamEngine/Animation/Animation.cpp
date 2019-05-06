@@ -54,7 +54,10 @@ void Animation::Update(float dt) {
         return;
     }
     
-    CalculateKeyframe(dt);
+    if (!CalculateKeyframe(dt)) {
+        return;
+    }
+
     if (mKeyframe != mPreviousKeyframe) {
         HandleKeyframeTransition();
     }
@@ -68,7 +71,7 @@ void Animation::Update(float dt) {
     mPreviousKeyframe = mKeyframe;
 }
 
-void Animation::CalculateKeyframe(float dt) {
+bool Animation::CalculateKeyframe(float dt) {
     mElapsedTime += dt;
     
     auto& keyframes = mActiveClip->GetKeyframes();
@@ -79,13 +82,20 @@ void Animation::CalculateKeyframe(float dt) {
         if (mElapsedTime >= keyframe.mTime && mElapsedTime <= nextKeyframe.mTime) {
             mKeyframe = &keyframe;
             mNextKeyframe = &nextKeyframe;
-            return;
+            return true;
         }
     }
     
-    mElapsedTime = 0.0f;
-    mKeyframe = &keyframes[0];
-    mNextKeyframe = &keyframes[1];
+    switch (mActiveClip->GetWrapMode()) {
+        case WrapMode::Once:
+            Stop();
+            return false;
+        case WrapMode::Loop:
+            mElapsedTime = 0.0f;
+            mKeyframe = &keyframes[0];
+            mNextKeyframe = &keyframes[1];
+            return true;
+    }
 }
 
 void Animation::HandleKeyframeTransition() {

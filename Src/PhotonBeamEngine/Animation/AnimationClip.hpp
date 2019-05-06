@@ -13,6 +13,11 @@ namespace Pht {
         Linear,
         Cosine
     };
+    
+    enum class WrapMode {
+        Once,
+        Loop
+    };
 
     struct Keyframe {
         float mTime {0.0f};
@@ -37,12 +42,21 @@ namespace Pht {
             return mInterpolation;
         }
         
+        void SetWrapMode(WrapMode wrapMode) {
+            mWrapMode = wrapMode;
+        }
+        
+        WrapMode GetWrapMode() const {
+            return mWrapMode;
+        }
+        
         const std::vector<Keyframe>& GetKeyframes() const {
             return mKeyframes;
         }
         
     private:
         Interpolation mInterpolation {Interpolation::Linear};
+        WrapMode mWrapMode {WrapMode::Loop};
         std::vector<Keyframe> mKeyframes;
     };
 }
