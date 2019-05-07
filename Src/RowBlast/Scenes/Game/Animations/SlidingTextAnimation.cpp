@@ -7,10 +7,14 @@
 #include "IAudio.hpp"
 #include "TextComponent.hpp"
 #include "MathUtils.hpp"
+#include "ObjMesh.hpp"
 #include "Scene.hpp"
 #include "IParticleSystem.hpp"
 #include "ParticleEffect.hpp"
 #include "SceneObjectUtils.hpp"
+#include "ISceneManager.hpp"
+#include "IAnimationSystem.hpp"
+#include "Animation.hpp"
 
 // Game includes.
 #include "GameScene.hpp"
@@ -31,6 +35,12 @@ namespace {
     const Pht::Vec3 leftUfoPosition {-13.0f, 4.6f, UiLayer::slidingTextUfo};
     const Pht::Vec3 centerUfoPosition {0.0f, 4.6f, UiLayer::slidingTextUfo};
     const Pht::Vec3 rightUfoPosition {13.0f, 4.6f, UiLayer::slidingTextUfo};
+    
+    enum class AnimationClip {
+        Rotate = 0,
+        ScaleUp,
+        ScaleDown
+    };
     
     Pht::StaticVector<Pht::Vec2, 20> scalePoints {
         {0.0f, 0.0f},
@@ -74,6 +84,7 @@ SlidingTextAnimation::SlidingTextAnimation(Pht::IEngine& engine,
     CreateText(font, 2.5f, false, {{-2.8f, 0.33f}, "OUT OF"}, {{-2.9f, -1.58f}, "MOVES!"});
 
     CreateTwinkleParticleEffect();
+    CreateClearObjectiveContainer(commonResources);
 }
 
 void SlidingTextAnimation::CreateText(const Pht::Font& font,
@@ -154,25 +165,68 @@ void SlidingTextAnimation::CreateTwinkleParticleEffect() {
                                                                             Pht::RenderMode::Triangles);
 }
 
-void SlidingTextAnimation::Init() {
-    auto& containerSceneObject = mScene.GetScene().CreateSceneObject();
-    containerSceneObject.GetTransform().SetPosition(centerPosition);
-    mScene.GetHudContainer().AddChild(containerSceneObject);
+void SlidingTextAnimation::CreateClearObjectiveContainer(const CommonResources& commonResources) {
+    mClearObjectiveContainer = std::make_unique<Pht::SceneObject>();
+    mClearObjectiveContainer->GetTransform().SetPosition({0.0f, -3.0f, UiLayer::root});
     
+    auto& sceneManager = mEngine.GetSceneManager();
+    auto& grayMaterial = commonResources.GetMaterials().GetGrayYellowMaterial();
+    
+    mGrayCubeSceneObject = sceneManager.CreateSceneObject(Pht::ObjMesh {"cube_428.obj", 1.25f},
+                                                          grayMaterial,
+                                                          mSceneResources);
+    mClearObjectiveContainer->AddChild(*mGrayCubeSceneObject);
+    mGrayCubeSceneObject->GetTransform().SetPosition({0.0f, 0.0f, UiLayer::block});
+    mGrayCubeSceneObject->SetIsVisible(false);
+    
+    std::vector<Pht::Keyframe> cubeKeyframes {
+        {.mTime = 0.0f, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}},
+        {.mTime = 3.0f, .mRotation = Pht::Vec3{48.0f, 48.0f, 0.0f}}
+    };
+    auto& animationSystem = mEngine.GetAnimationSystem();
+    mGreyCubeAnimation = &animationSystem.CreateAnimation(*mGrayCubeSceneObject, cubeKeyframes);
+
+    std::vector<Pht::Keyframe> cubeScaleUpKeyframes {
+        {.mTime = 0.0f, .mScale = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
+        {.mTime = slideTime, .mScale = Pht::Vec3{1.0f, 1.0f, 1.0f}},
+    };
+    Pht::AnimationClip cubeScaleUpClip {cubeScaleUpKeyframes};
+    cubeScaleUpClip.SetWrapMode(Pht::WrapMode::Once);
+    mGreyCubeAnimation->AddClip(cubeScaleUpClip, static_cast<Pht::AnimationClipId>(AnimationClip::ScaleUp));
+
+    std::vector<Pht::Keyframe> cubeScaleDownKeyframes {
+        {.mTime = 0.0f, .mScale = Pht::Vec3{1.0f, 1.0f, 1.0f}},
+        {.mTime = slideTime, .mScale = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = false},
+    };
+    Pht::AnimationClip cubeScaleDownClip {cubeScaleDownKeyframes};
+    cubeScaleDownClip.SetWrapMode(Pht::WrapMode::Once);
+    mGreyCubeAnimation->AddClip(cubeScaleDownClip, static_cast<Pht::AnimationClipId>(AnimationClip::ScaleDown));
+}
+
+void SlidingTextAnimation::Init() {
+    mContainerSceneObject = &mScene.GetScene().CreateSceneObject();
+    mContainerSceneObject->GetTransform().SetPosition(centerPosition);
+    mScene.GetHudContainer().AddChild(*mContainerSceneObject);
+    mContainerSceneObject->SetIsVisible(false);
+    mContainerSceneObject->SetIsStatic(true);
+
     for (auto& text: mTexts) {
         text.mUpperTextLineSceneObject->SetIsVisible(false);
-        containerSceneObject.AddChild(*(text.mUpperTextLineSceneObject));
+        mContainerSceneObject->AddChild(*(text.mUpperTextLineSceneObject));
         text.mLowerTextLineSceneObject->SetIsVisible(false);
-        containerSceneObject.AddChild(*(text.mLowerTextLineSceneObject));
+        mContainerSceneObject->AddChild(*(text.mLowerTextLineSceneObject));
     }
     
-    CreateGradientRectangles(containerSceneObject);
+    CreateGradientRectangles(*mContainerSceneObject);
     
-    containerSceneObject.AddChild(*mTwinkleParticleEffect);
+    mContainerSceneObject->AddChild(*mTwinkleParticleEffect);
     
     mUfo.Init(mScene.GetUiViewsContainer());
     mUfo.Hide();
     mEngine.GetRenderer().DisableShader(Pht::ShaderType::TexturedEnvMapLighting);
+    
+    mContainerSceneObject->AddChild(*mClearObjectiveContainer);
+    mClearObjectiveContainer->SetIsVisible(false);
 
     auto& frustumSize = mEngine.GetRenderer().GetHudFrustumSize();
     mLeftPosition = {-frustumSize.x / 2.0f - textWidth / 2.0f, 0.0f, 0.0f};
@@ -188,6 +242,7 @@ void SlidingTextAnimation::CreateGradientRectangles(Pht::SceneObject& containerS
     auto& frustumSize = mEngine.GetRenderer().GetHudFrustumSize();
     
     auto height = 4.1f;
+    // auto height = 5.9f;
     auto stripeHeight = 0.09f;
     auto stripeOffset = stripeHeight / 2.0f;
     Pht::Vec2 size {frustumSize.x, height};
@@ -239,13 +294,11 @@ void SlidingTextAnimation::CreateGradientRectangles(Pht::SceneObject& containerS
 
 void SlidingTextAnimation::Start(Message message) {
     mState = State::RectangleAppearing;
-    
     mText = &mTexts[static_cast<int>(message)];
-
     mElapsedTime = 0.0f;
     
     mTextPosition = {0.0f, 0.0f, 0.0f};
-    
+
     mDisplayVelocity = displayDistance / mText->mDisplayTime;
     mInitialVelocity = mRightPosition.x * 2.0f / slideTime - mDisplayVelocity -
                        mDisplayVelocity * mText->mDisplayTime / slideTime;
@@ -253,9 +306,13 @@ void SlidingTextAnimation::Start(Message message) {
     
     UpdateTextLineSceneObjectPositions();
     
+    mContainerSceneObject->SetIsVisible(true);
+    mContainerSceneObject->SetIsStatic(false);
+    
     mGradientRectanglesSceneObject->SetIsVisible(true);
     mGradientRectanglesSceneObject->SetIsStatic(false);
     mGradientRectanglesSceneObject->GetTransform().SetPosition({0.0f, 0.0f, 0.0f});
+    // mGradientRectanglesSceneObject->GetTransform().SetPosition({0.0f, -0.9f, 0.0f});
     Pht::SceneObjectUtils::SetAlphaRecursively(*mGradientRectanglesSceneObject, 0.0f);
     
     mUfoState = UfoState::Inactive;
@@ -313,6 +370,11 @@ void SlidingTextAnimation::UpdateInRectangleAppearingState() {
         mText->mUpperTextLineSceneObject->SetIsVisible(true);
         mText->mLowerTextLineSceneObject->SetIsVisible(true);
 
+        mClearObjectiveContainer->SetIsVisible(true);
+        mGreyCubeAnimation->Stop();
+        mGreyCubeAnimation->Play();
+        mGreyCubeAnimation->Play(static_cast<Pht::AnimationClipId>(AnimationClip::ScaleUp));
+        
         auto& audio = mEngine.GetAudio();
         audio.PlaySound(static_cast<Pht::AudioResourceId>(SoundId::SlidingTextWhoosh1));
     }
@@ -324,6 +386,8 @@ void SlidingTextAnimation::UpdateInSlidingInState() {
     mTextPosition.x += mVelocity * dt;
     mVelocity -= dt * (mInitialVelocity - mDisplayVelocity) / slideTime;
     mElapsedTime += dt;
+    
+    UpdatePhtAnimation();
     
     if (mVelocity < mDisplayVelocity || mTextPosition.x >= mRightPosition.x - displayDistance / 2.0f) {
         mState = State::DisplayingText;
@@ -353,6 +417,7 @@ void SlidingTextAnimation::UpdateInDisplayingTextState() {
     
     mTwinkleParticleEffect->GetComponent<Pht::ParticleEffect>()->Update(dt);
     UpdateUfo();
+    UpdatePhtAnimation();
     
     if (mElapsedTime > mText->mDisplayTime || mEngine.GetInput().ConsumeWholeTouch()) {
         mState = State::SlidingOut;
@@ -363,6 +428,7 @@ void SlidingTextAnimation::UpdateInDisplayingTextState() {
         audio.PlaySound(static_cast<Pht::AudioResourceId>(SoundId::SlidingTextWhoosh2));
     
         FlyOutUfo();
+        mGreyCubeAnimation->Play(static_cast<Pht::AnimationClipId>(AnimationClip::ScaleDown));
     }
     
     if (mElapsedTime > mText->mDisplayTime - ufoHeadStartTime) {
@@ -383,6 +449,7 @@ void SlidingTextAnimation::UpdateInSlidingOutState() {
     
     mTwinkleParticleEffect->GetComponent<Pht::ParticleEffect>()->Update(dt);
     UpdateUfo();
+    UpdatePhtAnimation();
 
     if (mTextPosition.x >= mRightPosition.x * 2.0f) {
         mState = State::RectangleDisappearing;
@@ -405,6 +472,8 @@ void SlidingTextAnimation::UpdateInRectangleDisappearingState() {
 
     if (mElapsedTime > rectangleFadeInTime) {
         mState = State::Inactive;
+        mContainerSceneObject->SetIsVisible(false);
+        mContainerSceneObject->SetIsStatic(true);
         mGradientRectanglesSceneObject->SetIsVisible(false);
         mGradientRectanglesSceneObject->SetIsStatic(true);
         mUfo.Hide();
@@ -448,4 +517,9 @@ void SlidingTextAnimation::FlyOutUfo() {
         case UfoState::Inactive:
             break;
     }
+}
+
+void SlidingTextAnimation::UpdatePhtAnimation() {
+    auto dt = mEngine.GetLastFrameSeconds();
+    mGreyCubeAnimation->Update(dt);
 }

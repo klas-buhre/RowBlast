@@ -7,6 +7,7 @@
 // Engine includes.
 #include "Vector.hpp"
 #include "SceneObject.hpp"
+#include "SceneResources.hpp"
 
 // Game includes.
 #include "Ufo.hpp"
@@ -15,6 +16,7 @@
 namespace Pht {
     class IEngine;
     class Font;
+    class Animation;
 }
 
 namespace RowBlast {
@@ -70,6 +72,7 @@ namespace RowBlast {
                         bool isUfoVisible,
                         const TextLine& upperTextLine,
                         const TextLine& lowerTextLine);
+        void CreateClearObjectiveContainer(const CommonResources& commonResources);
         void CreateTwinkleParticleEffect();
         void CreateGradientRectangles(Pht::SceneObject& containerSceneObject);
         void UpdateInRectangleAppearingState();
@@ -81,6 +84,7 @@ namespace RowBlast {
         void UpdateUfo();
         void FlyInUfo();
         void FlyOutUfo();
+        void UpdatePhtAnimation();
         
         enum class UfoState {
             FlyingIn,
@@ -97,8 +101,12 @@ namespace RowBlast {
         State mState {State::Inactive};
         float mElapsedTime {0.0f};
         const Text* mText {nullptr};
+        Pht::SceneObject* mContainerSceneObject {nullptr};
         Pht::SceneObject* mGradientRectanglesSceneObject {nullptr};
         std::unique_ptr<Pht::SceneObject> mTwinkleParticleEffect;
+        std::unique_ptr<Pht::SceneObject> mClearObjectiveContainer;
+        std::unique_ptr<Pht::SceneObject> mGrayCubeSceneObject;
+        Pht::Animation* mGreyCubeAnimation {nullptr};
         std::vector<Text> mTexts;
         Pht::Vec3 mLeftPosition;
         Pht::Vec3 mRightPosition;
@@ -106,6 +114,7 @@ namespace RowBlast {
         float mVelocity {0.0f};
         float mInitialVelocity {0.0f};
         float mDisplayVelocity {0.0f};
+        Pht::SceneResources mSceneResources;
     };
 }
 

@@ -135,6 +135,8 @@ void SmallTextAnimation::CreateTwinkleParticleEffect(Pht::IEngine& engine) {
 void SmallTextAnimation::Init() {
     mContainerSceneObject = &mScene.GetScene().CreateSceneObject();
     mScene.GetHudContainer().AddChild(*mContainerSceneObject);
+    mContainerSceneObject->SetIsVisible(false);
+    mContainerSceneObject->SetIsStatic(true);
     
     for (auto& textSceneObject: mTextSceneObjects) {
         mContainerSceneObject->AddChild(*textSceneObject);
@@ -214,6 +216,9 @@ void SmallTextAnimation::StartUndoingMessage() {
 }
 
 void SmallTextAnimation::Start(Pht::SceneObject& textSceneObject) {
+    mContainerSceneObject->SetIsVisible(true);
+    mContainerSceneObject->SetIsStatic(false);
+    
     HideAllTextObjects();
     
     mActiveTextSceneObject = &textSceneObject;
@@ -284,6 +289,8 @@ void SmallTextAnimation::UpdateInSlidingOutState(float dt) {
     mElapsedTime += dt;
     if (mElapsedTime > slideOutDuration) {
         mState = State::Inactive;
+        mContainerSceneObject->SetIsVisible(false);
+        mContainerSceneObject->SetIsStatic(true);
         HideAllTextObjects();
     } else {
         mVelocity += acceleration * dt;
