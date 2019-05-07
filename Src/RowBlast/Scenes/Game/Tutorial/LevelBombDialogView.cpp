@@ -484,14 +484,14 @@ void LevelBombDialogView::CreateAnimation(const PieceResources& pieceResources,
 void LevelBombDialogView::SetUp() {
     switch (mUserServices.GetSettingsService().GetControlType()) {
         case ControlType::Click:
-            mHandPhtAnimation->SetActiveClip(0);
-            mPieceAnimation->SetActiveClip(0);
+            mHandPhtAnimation->SetDefaultClip(0);
+            mPieceAnimation->SetDefaultClip(0);
             mMoves->SetIsVisible(true);
             mGhostPieceContainer->SetIsVisible(false);
             break;
         case ControlType::Gesture:
-            mHandPhtAnimation->SetActiveClip(1);
-            mPieceAnimation->SetActiveClip(1);
+            mHandPhtAnimation->SetDefaultClip(1);
+            mPieceAnimation->SetDefaultClip(1);
             mMoves->SetIsVisible(false);
             mGhostPieceContainer->SetIsVisible(true);
             break;

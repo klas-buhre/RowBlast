@@ -8,6 +8,8 @@
 #include "Optional.hpp"
 
 namespace Pht {
+    class SceneObject;
+
     enum class Interpolation {
         None,
         Linear,
@@ -33,31 +35,45 @@ namespace Pht {
     class AnimationClip {
     public:
         explicit AnimationClip(const std::vector<Keyframe>& keyframes);
-        
+
+        void Update(float dt);
+        void Play();
+        void Pause();
+        void Stop();
+
         void SetInterpolation(Interpolation interpolation) {
             mInterpolation = interpolation;
-        }
-        
-        Interpolation GetInterpolation() const {
-            return mInterpolation;
         }
         
         void SetWrapMode(WrapMode wrapMode) {
             mWrapMode = wrapMode;
         }
-        
-        WrapMode GetWrapMode() const {
-            return mWrapMode;
-        }
-        
-        const std::vector<Keyframe>& GetKeyframes() const {
-            return mKeyframes;
+                
+        bool IsPlaying() const {
+            return mIsPlaying;
         }
         
     private:
+        friend class Animation;
+        
+        bool CalculateKeyframe(float dt);
+        void HandleKeyframeTransition();
+        void UpdateInterpolation();
+        Pht::Vec3 InterpolateVec3(const Pht::Vec3& keyframeValue,
+                                  const Pht::Vec3& nextKeyframeValue);
+        Pht::Vec3 LerpVec3(const Pht::Vec3& keyframeValue, const Pht::Vec3& nextKeyframeValue);
+        Pht::Vec3 CosineInterpolateVec3(const Pht::Vec3& keyframeValue,
+                                        const Pht::Vec3& nextKeyframeValue);
+
+        SceneObject* mSceneObject {nullptr};
         Interpolation mInterpolation {Interpolation::Linear};
         WrapMode mWrapMode {WrapMode::Loop};
         std::vector<Keyframe> mKeyframes;
+        const Keyframe* mPreviousKeyframe {nullptr};
+        const Keyframe* mKeyframe {nullptr};
+        const Keyframe* mNextKeyframe {nullptr};
+        float mElapsedTime {0.0f};
+        bool mIsPlaying {false};
     };
 }
 

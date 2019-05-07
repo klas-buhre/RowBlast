@@ -301,14 +301,14 @@ void LaserDialogView::CreateAnimation(const PieceResources& pieceResources,
 void LaserDialogView::SetUp() {
     switch (mUserServices.GetSettingsService().GetControlType()) {
         case ControlType::Click:
-            mHandPhtAnimation->SetActiveClip(0);
-            mRowBombAnimation->SetActiveClip(0);
+            mHandPhtAnimation->SetDefaultClip(0);
+            mRowBombAnimation->SetDefaultClip(0);
             mRowBombMoves->SetIsVisible(true);
             mRowBombGhostPieceContainer->SetIsVisible(false);
             break;
         case ControlType::Gesture:
-            mHandPhtAnimation->SetActiveClip(1);
-            mRowBombAnimation->SetActiveClip(1);
+            mHandPhtAnimation->SetDefaultClip(1);
+            mRowBombAnimation->SetDefaultClip(1);
             mRowBombMoves->SetIsVisible(false);
             mRowBombGhostPieceContainer->SetIsVisible(true);
             break;

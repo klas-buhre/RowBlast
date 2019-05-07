@@ -475,16 +475,16 @@ void BombDialogView::CreateAnimation(const PieceResources& pieceResources,
 void BombDialogView::SetUp() {
     switch (mUserServices.GetSettingsService().GetControlType()) {
         case ControlType::Click:
-            mHandPhtAnimation->SetActiveClip(0);
-            mBombAnimation->SetActiveClip(0);
-            mBlastRadiusPhtAnimation->SetActiveClip(0);
+            mHandPhtAnimation->SetDefaultClip(0);
+            mBombAnimation->SetDefaultClip(0);
+            mBlastRadiusPhtAnimation->SetDefaultClip(0);
             mBombMoves->SetIsVisible(true);
             mBombGhostPieceContainer->SetIsVisible(false);
             break;
         case ControlType::Gesture:
-            mHandPhtAnimation->SetActiveClip(1);
-            mBombAnimation->SetActiveClip(1);
-            mBlastRadiusPhtAnimation->SetActiveClip(1);
+            mHandPhtAnimation->SetDefaultClip(1);
+            mBombAnimation->SetDefaultClip(1);
+            mBlastRadiusPhtAnimation->SetDefaultClip(1);
             mBombMoves->SetIsVisible(false);
             mBombGhostPieceContainer->SetIsVisible(true);
             break;

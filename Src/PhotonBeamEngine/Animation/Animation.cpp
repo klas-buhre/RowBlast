@@ -16,22 +16,23 @@ Animation::Animation(SceneObject& sceneObject,
     mSceneObject {sceneObject},
     mAnimationSystem {animationSystem} {
     
-    mClips.emplace(0, keyframes);
-    SetActiveClip(0);
+    AddClip(AnimationClip {keyframes}, 0);
+    SetDefaultClip(0);
 }
 
 Animation::~Animation() {
     mAnimationSystem.RemoveAnimation(*this);
 }
 
-void Animation::AddClip(const AnimationClip& clip, AnimationClipId clipId) {
+void Animation::AddClip(AnimationClip clip, AnimationClipId clipId) {
+    clip.mSceneObject = &mSceneObject;
     mClips.insert(std::make_pair(clipId, clip));
 }
 
-void Animation::SetActiveClip(AnimationClipId clipId) {
+void Animation::SetDefaultClip(AnimationClipId clipId) {
     auto* clip = GetClip(clipId);
     assert(clip);
-    mActiveClip = clip;
+    mDefaultClip = clip;
 }
 
 void Animation::SetInterpolation(Interpolation interpolation, AnimationClipId clipId) {
@@ -50,160 +51,41 @@ AnimationClip* Animation::GetClip(AnimationClipId clipId) {
 }
 
 void Animation::Update(float dt) {
-    if (!mIsPlaying) {
-        return;
-    }
-    
-    if (!CalculateKeyframe(dt)) {
-        return;
-    }
-
-    if (mKeyframe != mPreviousKeyframe) {
-        HandleKeyframeTransition();
-    }
-    
-    if (mActiveClip->GetInterpolation() != Interpolation::None) {
-        UpdateInterpolation();
-    }
-    
-    PerformActionOnChildAnimations(Action::Update, mSceneObject, dt);
-    
-    mPreviousKeyframe = mKeyframe;
-}
-
-bool Animation::CalculateKeyframe(float dt) {
-    mElapsedTime += dt;
-    
-    auto& keyframes = mActiveClip->GetKeyframes();
-    
-    for (auto i = 1; i < keyframes.size(); ++i) {
-        auto& keyframe = keyframes[i - 1];
-        auto& nextKeyframe = keyframes[i];
-        if (mElapsedTime >= keyframe.mTime && mElapsedTime <= nextKeyframe.mTime) {
-            mKeyframe = &keyframe;
-            mNextKeyframe = &nextKeyframe;
-            return true;
+    for (auto& entry: mClips) {
+        auto& clip = entry.second;
+        if (clip.IsPlaying()) {
+            clip.Update(dt);
         }
     }
     
-    switch (mActiveClip->GetWrapMode()) {
-        case WrapMode::Once:
-            Stop();
-            return false;
-        case WrapMode::Loop:
-            mElapsedTime = 0.0f;
-            mKeyframe = &keyframes[0];
-            mNextKeyframe = &keyframes[1];
-            return true;
-    }
-}
-
-void Animation::HandleKeyframeTransition() {
-    if (mKeyframe == nullptr) {
-        return;
-    }
-    
-    auto& transform = mSceneObject.GetTransform();
-    auto& position = mKeyframe->mPosition;
-    if (position.HasValue()) {
-        transform.SetPosition(position.GetValue());
-    }
-    
-    auto& scale = mKeyframe->mScale;
-    if (scale.HasValue()) {
-        transform.SetScale(scale.GetValue());
-    }
-
-    auto& rotation = mKeyframe->mRotation;
-    if (rotation.HasValue()) {
-        transform.SetRotation(rotation.GetValue());
-    }
-
-    auto isVisible = mKeyframe->mIsVisible;
-    if (isVisible.HasValue()) {
-        mSceneObject.SetIsVisible(isVisible.GetValue());
-    }
-    
-    auto& callback = mKeyframe->mCallback;
-    if (callback) {
-        callback();
-    }
-}
-
-void Animation::UpdateInterpolation() {
-    if (mKeyframe == nullptr || mNextKeyframe == nullptr) {
-        return;
-    }
-    
-    auto& transform = mSceneObject.GetTransform();
-    auto& position = mKeyframe->mPosition;
-    auto& nextPosition = mNextKeyframe->mPosition;
-    if (position.HasValue() && nextPosition.HasValue()) {
-        transform.SetPosition(InterpolateVec3(position.GetValue(), nextPosition.GetValue()));
-    }
-
-    auto& scale = mKeyframe->mScale;
-    auto& nextScale = mNextKeyframe->mScale;
-    if (scale.HasValue() && nextScale.HasValue()) {
-        transform.SetScale(InterpolateVec3(scale.GetValue(), nextScale.GetValue()));
-    }
-
-    auto& rotation = mKeyframe->mRotation;
-    auto& nextRotation = mNextKeyframe->mRotation;
-    if (rotation.HasValue() && nextRotation.HasValue()) {
-        transform.SetRotation(InterpolateVec3(rotation.GetValue(), nextRotation.GetValue()));
-    }
-}
-
-Pht::Vec3 Animation::InterpolateVec3(const Pht::Vec3& keyframeValue,
-                                     const Pht::Vec3& nextKeyframeValue) {
-    switch (mActiveClip->GetInterpolation()) {
-        case Interpolation::Linear:
-            return LerpVec3(keyframeValue, nextKeyframeValue);
-        case Interpolation::Cosine:
-            return CosineInterpolateVec3(keyframeValue, nextKeyframeValue);
-        case Interpolation::None:
-            assert(false);
-            break;
-    }
-}
-
-Pht::Vec3 Animation::LerpVec3(const Pht::Vec3& keyframeValue, const Pht::Vec3& nextKeyframeValue) {
-    auto timeBetweenKeyframes = mNextKeyframe->mTime - mKeyframe->mTime;
-    auto elapsedInBetweenTime = std::fmax(mElapsedTime - mKeyframe->mTime, 0.0f);
-    auto normalizedTime = elapsedInBetweenTime / timeBetweenKeyframes;
-    
-    return keyframeValue + (nextKeyframeValue - keyframeValue) * normalizedTime;
-}
-
-Pht::Vec3 Animation::CosineInterpolateVec3(const Pht::Vec3& keyframeValue,
-                                           const Pht::Vec3& nextKeyframeValue) {
-    auto timeBetweenKeyframes = mNextKeyframe->mTime - mKeyframe->mTime;
-    auto elapsedInBetweenTime = std::fmax(mElapsedTime - mKeyframe->mTime, 0.0f);
-    auto normalizedTime = elapsedInBetweenTime / timeBetweenKeyframes;
-    auto t = std::cos(3.1415f + normalizedTime * 3.1415f) * 0.5f + 0.5f;
-    
-    return keyframeValue + (nextKeyframeValue - keyframeValue) * t;
+    PerformActionOnChildAnimations(Action::Update, mSceneObject, dt);
 }
 
 void Animation::Play() {
-    assert(mActiveClip->GetKeyframes().size() >= 2);
-
-    mIsPlaying = true;
+    assert(mDefaultClip);
+    mDefaultClip->Play();
+    
     PerformActionOnChildAnimations(Action::Play, mSceneObject);
 }
 
+void Animation::Play(AnimationClipId clipId) {
+    auto* clip = GetClip(clipId);
+    assert(clip);
+    clip->Play();
+}
+
 void Animation::Pause() {
-    mIsPlaying = false;
+    for (auto& entry: mClips) {
+        entry.second.Pause();
+    }
+
     PerformActionOnChildAnimations(Action::Pause, mSceneObject);
 }
 
 void Animation::Stop() {
-    mElapsedTime = 0.0f;
-    mIsPlaying = false;
-    mPreviousKeyframe = nullptr;
-    mKeyframe = nullptr;
-    mNextKeyframe = nullptr;
+    for (auto& entry: mClips) {
+        entry.second.Stop();
+    }
     
     PerformActionOnChildAnimations(Action::Stop, mSceneObject);
 }
@@ -230,4 +112,15 @@ void Animation::PerformActionOnChildAnimations(Action action, SceneObject& scene
             PerformActionOnChildAnimations(action, *childSceneObject, dt);
         }
     }
+}
+
+bool Animation::IsPlaying() const {
+    for (auto& entry: mClips) {
+        auto& clip = entry.second;
+        if (clip.IsPlaying()) {
+            return true;
+        }
+    }
+    
+    return false;
 }
