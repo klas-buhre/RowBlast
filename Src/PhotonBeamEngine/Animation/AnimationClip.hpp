@@ -57,7 +57,7 @@ namespace Pht {
         friend class Animation;
         
         bool CalculateKeyframe(float dt);
-        void HandleKeyframeTransition();
+        void HandleKeyframeTransition(const Keyframe& newKeyframe);
         void UpdateInterpolation();
         Pht::Vec3 InterpolateVec3(const Pht::Vec3& keyframeValue,
                                   const Pht::Vec3& nextKeyframeValue);

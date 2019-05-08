@@ -28,7 +28,7 @@ void AnimationClip::Update(float dt) {
     }
 
     if (mKeyframe != mPreviousKeyframe) {
-        HandleKeyframeTransition();
+        HandleKeyframeTransition(*mKeyframe);
     }
     
     if (mInterpolation != Interpolation::None) {
@@ -51,6 +51,8 @@ bool AnimationClip::CalculateKeyframe(float dt) {
         }
     }
     
+    HandleKeyframeTransition(mKeyframes.back());
+    
     switch (mWrapMode) {
         case WrapMode::Once:
             Stop();
@@ -63,33 +65,29 @@ bool AnimationClip::CalculateKeyframe(float dt) {
     }
 }
 
-void AnimationClip::HandleKeyframeTransition() {
-    if (mKeyframe == nullptr) {
-        return;
-    }
-    
+void AnimationClip::HandleKeyframeTransition(const Keyframe& newKeyframe) {
     auto& transform = mSceneObject->GetTransform();
-    auto& position = mKeyframe->mPosition;
+    auto& position = newKeyframe.mPosition;
     if (position.HasValue()) {
         transform.SetPosition(position.GetValue());
     }
     
-    auto& scale = mKeyframe->mScale;
+    auto& scale = newKeyframe.mScale;
     if (scale.HasValue()) {
         transform.SetScale(scale.GetValue());
     }
 
-    auto& rotation = mKeyframe->mRotation;
+    auto& rotation = newKeyframe.mRotation;
     if (rotation.HasValue()) {
         transform.SetRotation(rotation.GetValue());
     }
 
-    auto isVisible = mKeyframe->mIsVisible;
+    auto isVisible = newKeyframe.mIsVisible;
     if (isVisible.HasValue()) {
         mSceneObject->SetIsVisible(isVisible.GetValue());
     }
     
-    auto& callback = mKeyframe->mCallback;
+    auto& callback = newKeyframe.mCallback;
     if (callback) {
         callback();
     }
