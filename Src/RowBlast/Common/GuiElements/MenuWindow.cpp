@@ -19,11 +19,13 @@ namespace {
     const Pht::Vec4 blueColor {0.45f, 0.75f, 1.0f, 1.0};
     const Pht::Vec4 lightBlueColor {0.5f, 0.8f, 1.0f, 1.0};
     const Pht::Vec4 stencilColor {1.0f, 1.0f, 1.0f, 1.0f};
-    const Pht::Vec4 borderColor {0.3f, 0.6f, 1.0f, 1.0};
+    const Pht::Vec4 outerBorderGlowColor {0.325f, 0.65f, 1.0f, 0.35f};
+    const Pht::Vec4 borderColor {0.325f, 0.65f, 1.0f, 1.0};
     const Pht::Vec4 innerBorderColor {0.2f, 0.35f, 0.5f, 1.0};
     const Pht::Vec4 darkerBlueColor {0.04f, 0.07f, 0.2f, 1.0};
     constexpr auto xBorder = 0.45f;
-    constexpr auto darkBorderThickness = 0.09f;
+    constexpr auto darkBorderThickness = 0.08f;
+    constexpr auto outerGlowBorderThickness = 0.09f;
     constexpr auto outerCornerRadius = 0.29f;
     constexpr auto largeCaptionBarHeight = 3.0f;
     constexpr auto smallCaptionBarHeight = 2.5f;
@@ -49,15 +51,19 @@ namespace {
             }
             case MenuWindow::Style::Dark: {
                 auto sizeX = std::min(frustumSize.x - xBorder * 2.0f, 14.0f - xBorder * 2.0f);
+                Pht::Vec2 outerBorderSize {
+                    outerGlowBorderThickness * 2.0f,
+                    outerGlowBorderThickness * 2.0f
+                };
                 switch (size) {
                     case MenuWindow::Size::Large:
-                        return {sizeX, 20.0f};
+                        return Pht::Vec2 {sizeX, 20.0f} + outerBorderSize;
                     case MenuWindow::Size::Medium:
-                        return {sizeX, 13.4f};
+                        return Pht::Vec2 {sizeX, 13.4f} + outerBorderSize;
                     case MenuWindow::Size::Small:
-                        return {sizeX, 11.0f};
+                        return Pht::Vec2 {sizeX, 11.0f} + outerBorderSize;
                     case MenuWindow::Size::Smallest:
-                        return {sizeX, 5.5f};
+                        return Pht::Vec2 {sizeX, 5.5f} + outerBorderSize;
                 }
                 break;
             }
@@ -100,7 +106,7 @@ MenuWindow::MenuWindow(Pht::IEngine& engine,
             DrawDarkBorder(*rasterizer);
             FillStencilBuffer(*rasterizer,
                               outerCornerRadius - darkBorderThickness * 2.0f,
-                              darkBorderThickness * 2.0f);
+                              darkBorderThickness * 2.0f + outerGlowBorderThickness);
             DrawDarkMainArea(*rasterizer);
             break;
     }
@@ -116,6 +122,10 @@ MenuWindow::MenuWindow(Pht::IEngine& engine,
     auto& sceneManager = engine.GetSceneManager();
     mRenderableObject = sceneManager.CreateRenderableObject(Pht::QuadMesh {mSize.x, mSize.y},
                                                             imageMaterial);
+    
+    if (style == Style::Dark) {
+        mSize -= Pht::Vec2 {outerGlowBorderThickness * 2.0f, outerGlowBorderThickness * 2.0f};
+    }
 }
 
 void MenuWindow::FillStencilBuffer(Pht::SoftwareRasterizer& rasterizer,
@@ -170,8 +180,8 @@ void MenuWindow::DrawBrightCaptionBar(Pht::SoftwareRasterizer& rasterizer, float
         xStart -= squareSide;
         
         for (auto x = xStart; x < mSize.x + squareSide; x += squareSide * 2.0f) {
-            Pht::Vec2 lowerLeft {x - squareSide / 2.0f, y -  squareSide / 2.0f};
-            Pht::Vec2 upperRight {x + squareSide / 2.0f, y +  squareSide / 2.0f};
+            Pht::Vec2 lowerLeft {x - squareSide / 2.0f, y - squareSide / 2.0f};
+            Pht::Vec2 upperRight {x + squareSide / 2.0f, y + squareSide / 2.0f};
             rasterizer.DrawRectangle(upperRight, lowerLeft, lightBlueColor, Pht::DrawOver::Yes);
         }
     }
@@ -192,27 +202,30 @@ void MenuWindow::DrawBrightMainArea(Pht::SoftwareRasterizer& rasterizer, float c
         xStart -= squareSide;
         
         for (auto x = xStart; x < mSize.x + squareSide; x += squareSide * 2.0f) {
-            Pht::Vec2 lowerLeft {x - squareSide / 2.0f, y -  squareSide / 2.0f};
-            Pht::Vec2 upperRight {x + squareSide / 2.0f, y +  squareSide / 2.0f};
+            Pht::Vec2 lowerLeft {x - squareSide / 2.0f, y - squareSide / 2.0f};
+            Pht::Vec2 upperRight {x + squareSide / 2.0f, y + squareSide / 2.0f};
             rasterizer.DrawRectangle(upperRight, lowerLeft, grayColor, Pht::DrawOver::Yes);
         }
     }
 }
 
 void MenuWindow::DrawDarkBorder(Pht::SoftwareRasterizer& rasterizer) {
-    FillStencilBuffer(rasterizer, outerCornerRadius, 0.0f);
+    FillStencilBuffer(rasterizer, outerCornerRadius + outerGlowBorderThickness, 0.0f);
+    DrawBorder(rasterizer, outerBorderGlowColor);
     
-    Pht::Vec2 lowerLeft {0.0f, 0.0f};
-    Pht::Vec2 upperRight {mSize.x, mSize.y};
-    rasterizer.DrawRectangle(upperRight, lowerLeft, borderColor, Pht::DrawOver::Yes);
+    FillStencilBuffer(rasterizer, outerCornerRadius, outerGlowBorderThickness);
+    DrawBorder(rasterizer, borderColor);
 
     FillStencilBuffer(rasterizer,
                       outerCornerRadius - darkBorderThickness,
-                      darkBorderThickness);
+                      darkBorderThickness + outerGlowBorderThickness);
+    DrawBorder(rasterizer, innerBorderColor);
+}
 
-    Pht::Vec2 lowerLeft2 {0.0f, 0.0f};
-    Pht::Vec2 upperRight2 {mSize.x, mSize.y};
-    rasterizer.DrawRectangle(upperRight2, lowerLeft2, innerBorderColor, Pht::DrawOver::Yes);
+void MenuWindow::DrawBorder(Pht::SoftwareRasterizer& rasterizer, const Pht::Vec4& color) {
+    Pht::Vec2 lowerLeft1 {0.0f, 0.0f};
+    Pht::Vec2 upperRight1 {mSize.x, mSize.y};
+    rasterizer.DrawRectangle(upperRight1, lowerLeft1, color, Pht::DrawOver::Yes);
 }
 
 void MenuWindow::DrawDarkMainArea(Pht::SoftwareRasterizer& rasterizer) {
