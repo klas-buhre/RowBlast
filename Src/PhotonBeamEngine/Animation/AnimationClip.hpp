@@ -26,6 +26,7 @@ namespace Pht {
         Optional<Vec3> mPosition;
         Optional<Vec3> mScale;
         Optional<Vec3> mRotation;
+        Optional<float> mTextScale;
         Optional<bool> mIsVisible;
         std::function<void()> mCallback;
     };
@@ -59,11 +60,15 @@ namespace Pht {
         bool CalculateKeyframe(float dt);
         void HandleKeyframeTransition(const Keyframe& newKeyframe);
         void UpdateInterpolation();
-        Pht::Vec3 InterpolateVec3(const Pht::Vec3& keyframeValue,
-                                  const Pht::Vec3& nextKeyframeValue);
-        Pht::Vec3 LerpVec3(const Pht::Vec3& keyframeValue, const Pht::Vec3& nextKeyframeValue);
-        Pht::Vec3 CosineInterpolateVec3(const Pht::Vec3& keyframeValue,
-                                        const Pht::Vec3& nextKeyframeValue);
+        
+        template<typename T>
+        T Interpolate(const T& keyframeValue, const T& nextKeyframeValue);
+        
+        template<typename T>
+        T Lerp(const T& keyframeValue, const T& nextKeyframeValue);
+        
+        template<typename T>
+        T CosineInterpolate(const T& keyframeValue, const T& nextKeyframeValue);
 
         SceneObject* mSceneObject {nullptr};
         Interpolation mInterpolation {Interpolation::Linear};

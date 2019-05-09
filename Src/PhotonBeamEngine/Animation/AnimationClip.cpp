@@ -3,6 +3,7 @@
 #include <assert.h>
 
 #include "SceneObject.hpp"
+#include "SceneObjectUtils.hpp"
 
 using namespace Pht;
 
@@ -82,6 +83,11 @@ void AnimationClip::HandleKeyframeTransition(const Keyframe& newKeyframe) {
         transform.SetRotation(rotation.GetValue());
     }
 
+    auto textScale = newKeyframe.mTextScale;
+    if (textScale.HasValue()) {
+        SceneObjectUtils::ScaleRecursively(*mSceneObject, textScale.GetValue());
+    }
+
     auto isVisible = newKeyframe.mIsVisible;
     if (isVisible.HasValue()) {
         mSceneObject->SetIsVisible(isVisible.GetValue());
@@ -102,37 +108,44 @@ void AnimationClip::UpdateInterpolation() {
     auto& position = mKeyframe->mPosition;
     auto& nextPosition = mNextKeyframe->mPosition;
     if (position.HasValue() && nextPosition.HasValue()) {
-        transform.SetPosition(InterpolateVec3(position.GetValue(), nextPosition.GetValue()));
+        transform.SetPosition(Interpolate(position.GetValue(), nextPosition.GetValue()));
     }
 
     auto& scale = mKeyframe->mScale;
     auto& nextScale = mNextKeyframe->mScale;
     if (scale.HasValue() && nextScale.HasValue()) {
-        transform.SetScale(InterpolateVec3(scale.GetValue(), nextScale.GetValue()));
+        transform.SetScale(Interpolate(scale.GetValue(), nextScale.GetValue()));
     }
 
     auto& rotation = mKeyframe->mRotation;
     auto& nextRotation = mNextKeyframe->mRotation;
     if (rotation.HasValue() && nextRotation.HasValue()) {
-        transform.SetRotation(InterpolateVec3(rotation.GetValue(), nextRotation.GetValue()));
+        transform.SetRotation(Interpolate(rotation.GetValue(), nextRotation.GetValue()));
+    }
+    
+    auto textScale = mKeyframe->mTextScale;
+    auto nextTextScale = mNextKeyframe->mTextScale;
+    if (textScale.HasValue() && nextTextScale.HasValue()) {
+        auto scale = Interpolate(textScale.GetValue(), nextTextScale.GetValue());
+        SceneObjectUtils::ScaleRecursively(*mSceneObject, scale);
     }
 }
 
-Pht::Vec3 AnimationClip::InterpolateVec3(const Pht::Vec3& keyframeValue,
-                                         const Pht::Vec3& nextKeyframeValue) {
+template<typename T>
+T AnimationClip::Interpolate(const T& keyframeValue, const T& nextKeyframeValue) {
     switch (mInterpolation) {
         case Interpolation::Linear:
-            return LerpVec3(keyframeValue, nextKeyframeValue);
+            return Lerp(keyframeValue, nextKeyframeValue);
         case Interpolation::Cosine:
-            return CosineInterpolateVec3(keyframeValue, nextKeyframeValue);
+            return CosineInterpolate(keyframeValue, nextKeyframeValue);
         case Interpolation::None:
             assert(false);
             break;
     }
 }
 
-Pht::Vec3 AnimationClip::LerpVec3(const Pht::Vec3& keyframeValue,
-                                  const Pht::Vec3& nextKeyframeValue) {
+template<typename T>
+T AnimationClip::Lerp(const T& keyframeValue, const T& nextKeyframeValue) {
     auto timeBetweenKeyframes = mNextKeyframe->mTime - mKeyframe->mTime;
     auto elapsedInBetweenTime = std::fmax(mElapsedTime - mKeyframe->mTime, 0.0f);
     auto normalizedTime = elapsedInBetweenTime / timeBetweenKeyframes;
@@ -140,8 +153,8 @@ Pht::Vec3 AnimationClip::LerpVec3(const Pht::Vec3& keyframeValue,
     return keyframeValue + (nextKeyframeValue - keyframeValue) * normalizedTime;
 }
 
-Pht::Vec3 AnimationClip::CosineInterpolateVec3(const Pht::Vec3& keyframeValue,
-                                               const Pht::Vec3& nextKeyframeValue) {
+template<typename T>
+T AnimationClip::CosineInterpolate(const T& keyframeValue, const T& nextKeyframeValue) {
     auto timeBetweenKeyframes = mNextKeyframe->mTime - mKeyframe->mTime;
     auto elapsedInBetweenTime = std::fmax(mElapsedTime - mKeyframe->mTime, 0.0f);
     auto normalizedTime = elapsedInBetweenTime / timeBetweenKeyframes;
