@@ -72,7 +72,8 @@ namespace RowBlast {
                         bool isUfoVisible,
                         const TextLine& upperTextLine,
                         const TextLine& lowerTextLine);
-        void CreateClearObjectiveContainer(const CommonResources& commonResources);
+        void CreateClearObjectiveContainer(const CommonResources& commonResources,
+                                           const Pht::Font& font);
         void CreateTwinkleParticleEffect();
         void CreateGradientRectangles(Pht::SceneObject& containerSceneObject);
         void UpdateInRectangleAppearingState();
@@ -105,8 +106,8 @@ namespace RowBlast {
         Pht::SceneObject* mGradientRectanglesSceneObject {nullptr};
         std::unique_ptr<Pht::SceneObject> mTwinkleParticleEffect;
         std::unique_ptr<Pht::SceneObject> mClearObjectiveContainer;
-        std::unique_ptr<Pht::SceneObject> mGrayCubeSceneObject;
         Pht::Animation* mGreyCubeAnimation {nullptr};
+        Pht::Animation* mNumObjectsTextAnimation {nullptr};
         std::vector<Text> mTexts;
         Pht::Vec3 mLeftPosition;
         Pht::Vec3 mRightPosition;

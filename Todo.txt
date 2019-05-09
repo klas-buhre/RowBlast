@@ -41,6 +41,8 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
+    -The twinkle in the sliding text animation should be small and come from a letter like in the
+     small text animation.
     -Maybe a gray block could be in the objective animation. Also the number of blocks to clear
      right under it. Could also have a slot and number of slots to fill or an asteroid with a down
      arrow. Could also have that in the objective cleared animation but with a green checkmark
