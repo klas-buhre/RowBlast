@@ -74,7 +74,7 @@ namespace RowBlast {
                         const TextLine& lowerTextLine);
         void CreateClearObjectiveContainer(const CommonResources& commonResources,
                                            const Pht::Font& font);
-        void CreateTwinkleParticleEffect();
+        void CreateTwinkleParticleEffects();
         void CreateGradientRectangles(Pht::SceneObject& containerSceneObject);
         void UpdateInRectangleAppearingState();
         void UpdateInSlidingInState();
@@ -104,7 +104,8 @@ namespace RowBlast {
         const Text* mText {nullptr};
         Pht::SceneObject* mContainerSceneObject {nullptr};
         Pht::SceneObject* mGradientRectanglesSceneObject {nullptr};
-        std::unique_ptr<Pht::SceneObject> mTwinkleParticleEffect;
+        std::unique_ptr<Pht::SceneObject> mUpperTwinkleParticleEffect;
+        std::unique_ptr<Pht::SceneObject> mLowerTwinkleParticleEffect;
         std::unique_ptr<Pht::SceneObject> mClearObjectiveContainer;
         Pht::Animation* mGreyCubeAnimation {nullptr};
         Pht::Animation* mNumObjectsTextAnimation {nullptr};

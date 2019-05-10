@@ -57,7 +57,7 @@ SceneObject* SceneObject::Find(Name name) {
     }
     
     for (auto* child: mChildren) {
-        auto* foundChild {child->Find(name)};
+        auto* foundChild = child->Find(name);
         if (foundChild) {
             return foundChild;
         }

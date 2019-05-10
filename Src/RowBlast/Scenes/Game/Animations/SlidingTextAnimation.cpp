@@ -76,15 +76,15 @@ SlidingTextAnimation::SlidingTextAnimation(Pht::IEngine& engine,
     auto upperY = 0.43f;
     auto lowerY = -1.28f;
     mTexts.reserve(7);
-    CreateText(font, 3.5f, true, {{-3.96f, upperY}, "CLEAR ALL"}, {{-5.17f, lowerY}, "GRAY BLOCKS"});
+    CreateText(font, 4.0f, true, {{-3.96f, upperY}, "CLEAR ALL"}, {{-5.17f, lowerY}, "GRAY BLOCKS"});
     CreateText(font, 1.6f, true, {{-1.21f, upperY}, "ALL"}, {{-3.3f, lowerY}, "CLEARED!"});
-    CreateText(font, 3.5f, true, {{-2.97f, upperY}, "FILL ALL"}, {{-4.73f, lowerY}, "GRAY SLOTS"});
+    CreateText(font, 4.0f, true, {{-2.97f, upperY}, "FILL ALL"}, {{-4.73f, lowerY}, "GRAY SLOTS"});
     CreateText(font, 2.5f, true, {{-3.85f, upperY}, "ALL SLOTS"}, {{-2.31f, lowerY}, "FILLED!"});
-    CreateText(font, 3.5f, true, {{-5.0f, upperY}, "BRING DOWN"}, {{-5.2f, lowerY}, "THE ASTEROID"});
+    CreateText(font, 4.0f, true, {{-5.0f, upperY}, "BRING DOWN"}, {{-5.2f, lowerY}, "THE ASTEROID"});
     CreateText(font, 2.5f, true, {{-5.1f, upperY}, "THE ASTEROID"}, {{-3.6f, lowerY}, "IS DOWN!"});
     CreateText(font, 3.5f, false, {{-2.8f, upperY}, "OUT OF"}, {{-2.9f, lowerY}, "MOVES!"});
 
-    CreateTwinkleParticleEffect();
+    CreateTwinkleParticleEffects();
     CreateClearObjectiveContainer(commonResources, font);
 }
 
@@ -136,7 +136,7 @@ void SlidingTextAnimation::CreateText(const Pht::Font& font,
     );
 }
 
-void SlidingTextAnimation::CreateTwinkleParticleEffect() {
+void SlidingTextAnimation::CreateTwinkleParticleEffects() {
     Pht::EmitterSettings particleEmitterSettings {
         .mPosition = Pht::Vec3{0.0f, 0.0f, 0.0f},
         .mSize = Pht::Vec3{0.0f, 0.0f, 0.0f},
@@ -144,27 +144,44 @@ void SlidingTextAnimation::CreateTwinkleParticleEffect() {
         .mFrequency = 0.0f,
         .mBurst = 1
     };
-    
-    Pht::ParticleSettings particleSettings {
+
+    Pht::ParticleSettings upperParticleSettings {
         .mVelocity = Pht::Vec3{0.0f, 0.0f, 0.0f},
         .mVelocityRandomPart = Pht::Vec3{0.0f, 0.0f, 0.0f},
         .mColor = Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f},
         .mColorRandomPart = Pht::Vec4{0.0f, 0.0f, 0.0f, 0.0f},
         .mTextureFilename = "particle_sprite_twinkle_blurred.png",
-        .mTimeToLive = 1.2f,
+        .mTimeToLive = 1.0f,
         .mTimeToLiveRandomPart = 0.0f,
         .mFadeOutDuration = 0.0f,
         .mZAngularVelocity = 100.0f,
-        .mSize = Pht::Vec2{5.5f, 5.5f},
+        .mSize = Pht::Vec2{4.6f, 4.6f},
         .mSizeRandomPart = 0.0f,
         .mShrinkDuration = 0.5f
     };
     
     auto& particleSystem = mEngine.GetParticleSystem();
-    mTwinkleParticleEffect = particleSystem.CreateParticleEffectSceneObject(particleSettings,
-                                                                            particleEmitterSettings,
-                                                                            Pht::RenderMode::Triangles);
-    mTwinkleParticleEffect->GetTransform().SetPosition({0.0f, 0.125f, UiLayer::root});
+    mUpperTwinkleParticleEffect = particleSystem.CreateParticleEffectSceneObject(upperParticleSettings,
+                                                                                 particleEmitterSettings,
+                                                                                 Pht::RenderMode::Triangles);
+    Pht::ParticleSettings lowerParticleSettings {
+        .mVelocity = Pht::Vec3{0.0f, 0.0f, 0.0f},
+        .mVelocityRandomPart = Pht::Vec3{0.0f, 0.0f, 0.0f},
+        .mColor = Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f},
+        .mColorRandomPart = Pht::Vec4{0.0f, 0.0f, 0.0f, 0.0f},
+        .mTextureFilename = "particle_sprite_twinkle_blurred.png",
+        .mTimeToLive = 1.0f,
+        .mTimeToLiveRandomPart = 0.0f,
+        .mFadeOutDuration = 0.0f,
+        .mZAngularVelocity = -100.0f,
+        .mSize = Pht::Vec2{4.3f, 4.3f},
+        .mSizeRandomPart = 0.0f,
+        .mShrinkDuration = 0.5f
+    };
+
+    mLowerTwinkleParticleEffect = particleSystem.CreateParticleEffectSceneObject(lowerParticleSettings,
+                                                                                 particleEmitterSettings,
+                                                                                 Pht::RenderMode::Triangles);
 }
 
 void SlidingTextAnimation::CreateClearObjectiveContainer(const CommonResources& commonResources,
@@ -276,7 +293,8 @@ void SlidingTextAnimation::Init() {
     
     CreateGradientRectangles(*mContainerSceneObject);
     
-    mContainerSceneObject->AddChild(*mTwinkleParticleEffect);
+    mContainerSceneObject->AddChild(*mUpperTwinkleParticleEffect);
+    mContainerSceneObject->AddChild(*mLowerTwinkleParticleEffect);
     
     mUfo.Init(mScene.GetUiViewsContainer());
     mUfo.Hide();
@@ -451,7 +469,8 @@ void SlidingTextAnimation::UpdateInSlidingInState() {
         mTextPosition.x = mRightPosition.x - displayDistance / 2.0f;
         
         mEngine.GetInput().EnableInput();
-        mTwinkleParticleEffect->GetComponent<Pht::ParticleEffect>()->Start();
+        mUpperTwinkleParticleEffect->GetComponent<Pht::ParticleEffect>()->Start();
+        mLowerTwinkleParticleEffect->GetComponent<Pht::ParticleEffect>()->Start();
         FlyInUfo();
     }
     
@@ -464,6 +483,22 @@ void SlidingTextAnimation::UpdateTextLineSceneObjectPositions() {
     
     auto lowerTextLinePosition = mRightPosition - mTextPosition + mText->mLowerTextLinePosition;
     mText->mLowerTextLineSceneObject->GetTransform().SetPosition(lowerTextLinePosition);
+
+    Pht::Vec3 upperTwinkleRelativePosition {0.25f, 0.85f, UiLayer::buttonText};
+    Pht::Vec3 upperTwinklePosition {
+        upperTextLinePosition.x + upperTwinkleRelativePosition.x,
+        upperTextLinePosition.y + upperTwinkleRelativePosition.y,
+        UiLayer::buttonText
+    };
+    mUpperTwinkleParticleEffect->GetTransform().SetPosition(upperTwinklePosition);
+
+    Pht::Vec3 lowerTwinkleRelativePosition {4.9f, 1.15f, UiLayer::buttonText};
+    Pht::Vec3 lowerTwinklePosition {
+        lowerTextLinePosition.x + lowerTwinkleRelativePosition.x,
+        lowerTextLinePosition.y + lowerTwinkleRelativePosition.y,
+        UiLayer::buttonText
+    };
+    mLowerTwinkleParticleEffect->GetTransform().SetPosition(lowerTwinklePosition);
 }
 
 void SlidingTextAnimation::UpdateInDisplayingTextState() {
@@ -471,7 +506,8 @@ void SlidingTextAnimation::UpdateInDisplayingTextState() {
     mTextPosition.x += mDisplayVelocity * dt;
     mElapsedTime += dt;
     
-    mTwinkleParticleEffect->GetComponent<Pht::ParticleEffect>()->Update(dt);
+    mUpperTwinkleParticleEffect->GetComponent<Pht::ParticleEffect>()->Update(dt);
+    mLowerTwinkleParticleEffect->GetComponent<Pht::ParticleEffect>()->Update(dt);
     UpdateUfo();
     UpdatePhtAnimation();
     
@@ -482,6 +518,9 @@ void SlidingTextAnimation::UpdateInDisplayingTextState() {
         
         auto& audio = mEngine.GetAudio();
         audio.PlaySound(static_cast<Pht::AudioResourceId>(SoundId::SlidingTextWhoosh2));
+        
+        mUpperTwinkleParticleEffect->GetComponent<Pht::ParticleEffect>()->Stop();
+        mLowerTwinkleParticleEffect->GetComponent<Pht::ParticleEffect>()->Stop();
     
         FlyOutUfo();
         mGreyCubeAnimation->Play(static_cast<Pht::AnimationClipId>(AnimationClip::ScaleDown));
@@ -503,8 +542,6 @@ void SlidingTextAnimation::UpdateInSlidingOutState() {
     mElapsedTime += dt;
 
     UpdateTextLineSceneObjectPositions();
-    
-    mTwinkleParticleEffect->GetComponent<Pht::ParticleEffect>()->Update(dt);
     UpdateUfo();
     UpdatePhtAnimation();
 
@@ -514,8 +551,6 @@ void SlidingTextAnimation::UpdateInSlidingOutState() {
 
         mText->mUpperTextLineSceneObject->SetIsVisible(false);
         mText->mLowerTextLineSceneObject->SetIsVisible(false);
-        
-        mTwinkleParticleEffect->GetComponent<Pht::ParticleEffect>()->Stop();
     }
 }
 
