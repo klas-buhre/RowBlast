@@ -31,6 +31,16 @@ void OpenAlSound::SetLoop(bool loop) {
     }
 }
 
+bool OpenAlSound::IsPlaying() const {
+    for (auto& source: mSources) {
+        if (source->IsPlaying()) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 std::unique_ptr<OpenAlSound> OpenAlSound::Create(const std::string& filename, int maxSources) {
     auto buffer = OpenAlBuffer::Create(filename);
     if (buffer == nullptr) {

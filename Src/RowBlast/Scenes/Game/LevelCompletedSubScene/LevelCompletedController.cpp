@@ -277,7 +277,9 @@ void LevelCompletedController::UpdateInStarsAppearingAnimationState() {
         mGameViewControllers.SetActiveController(GameViewControllers::LevelCompletedDialog);
         mGameViewControllers.GetLevelCompletedDialogController().SetUp();
         mStarsAnimation.MoveToFront();
-        mEngine.GetAudio().PlaySound(static_cast<Pht::AudioResourceId>(SoundId::LevelCompleted));
+        
+        auto& audio = mEngine.GetAudio();
+        audio.PlaySoundWithDelay(static_cast<Pht::AudioResourceId>(SoundId::LevelCompleted), 0.25f);
     }
 }
 

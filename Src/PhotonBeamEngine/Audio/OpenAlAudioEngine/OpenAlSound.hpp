@@ -18,6 +18,7 @@ namespace Pht {
         void SetGain(float gain) override;
         void SetPitch(float pitch) override;
         void SetLoop(bool loop) override;
+        bool IsPlaying() const override;
 
     private:
         std::unique_ptr<OpenAlBuffer> mBuffer;

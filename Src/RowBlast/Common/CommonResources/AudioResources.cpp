@@ -3,6 +3,7 @@
 // Engine includes.
 #include "IEngine.hpp"
 #include "IAudio.hpp"
+#include "ISound.hpp"
 
 using namespace RowBlast;
 
@@ -192,6 +193,10 @@ void RowBlast::PlayExplosionSound(Pht::IEngine& engine) {
 
 void RowBlast::PlayFireworksSound(Pht::IEngine& engine) {
     auto& audio = engine.GetAudio();
+    
+    if (audio.GetSound(static_cast<Pht::AudioResourceId>(SoundId::Star))->IsPlaying()) {
+        return;
+    }
     
     switch (std::rand() % 2) {
         case 0:

@@ -19,6 +19,7 @@ namespace Pht {
         void SetGain(float gain);
         void SetPitch(float pitch);
         void SetLoop(bool loop);
+        bool IsPlaying() const;
         
         ALuint GetHandle() const {
             return mHandle;
@@ -27,8 +28,6 @@ namespace Pht {
         explicit OpenAlSource(ALuint handle);
         
     private:
-        bool IsPlaying() const;
-        
         ALuint mHandle {0};
     };
 }
