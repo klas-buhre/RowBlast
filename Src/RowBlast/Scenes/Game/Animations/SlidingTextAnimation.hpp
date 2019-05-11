@@ -17,6 +17,7 @@ namespace Pht {
     class IEngine;
     class Font;
     class Animation;
+    class TextProperties;
 }
 
 namespace RowBlast {
@@ -53,25 +54,38 @@ namespace RowBlast {
         State Update();
         
     private:
-        struct TextLine {
+        struct TextLineConfig {
             Pht::Vec2 mPosition;
             const std::string mText;
-        };
-
-        struct Text {
-            float mDisplayTime {1.0f};
-            bool mIsUfoVisible {true};
-            Pht::Vec3 mUpperTextLinePosition;
-            std::unique_ptr<Pht::SceneObject> mUpperTextLineSceneObject;
-            Pht::Vec3 mLowerTextLinePosition;
-            std::unique_ptr<Pht::SceneObject> mLowerTextLineSceneObject;
+            Pht::Vec2 mTwinkleRelativePosition;
         };
         
-        void CreateText(const Pht::Font& font,
-                        float displayTime,
-                        bool isUfoVisible,
-                        const TextLine& upperTextLine,
-                        const TextLine& lowerTextLine);
+        struct ExtraAnimations {
+            bool mUfo {true};
+            bool mGrayCube {false};
+            bool mNumObjects {false};
+        };
+        
+        struct TextLine {
+            Pht::Vec3 mPosition;
+            std::unique_ptr<Pht::SceneObject> mSceneObject;
+            Pht::Vec3 mTwinkleRelativePosition;
+        };
+
+        struct TextMessage {
+            TextLine mUpperTextLine;
+            TextLine mLowerTextLine;
+            ExtraAnimations mExtraAnimations;
+            float mDisplayTime {1.0f};
+        };
+        
+        TextMessage& CreateText(const Pht::Font& font,
+                                float displayTime,
+                                const TextLineConfig& upperTextLineConfig,
+                                const TextLineConfig& lowerTextLineConfig,
+                                const ExtraAnimations& extraAnimations);
+        TextLine CreateTextLine(const TextLineConfig& textLineConfig,
+                                const Pht::TextProperties textProperties);
         void CreateClearObjectiveContainer(const CommonResources& commonResources,
                                            const Pht::Font& font);
         void CreateTwinkleParticleEffects();
@@ -101,7 +115,7 @@ namespace RowBlast {
         UfoState mUfoState {UfoState::Inactive};
         State mState {State::Inactive};
         float mElapsedTime {0.0f};
-        const Text* mText {nullptr};
+        const TextMessage* mTextMessage {nullptr};
         Pht::SceneObject* mContainerSceneObject {nullptr};
         Pht::SceneObject* mGradientRectanglesSceneObject {nullptr};
         std::unique_ptr<Pht::SceneObject> mUpperTwinkleParticleEffect;
@@ -109,13 +123,20 @@ namespace RowBlast {
         std::unique_ptr<Pht::SceneObject> mClearObjectiveContainer;
         Pht::Animation* mGreyCubeAnimation {nullptr};
         Pht::Animation* mNumObjectsTextAnimation {nullptr};
-        std::vector<Text> mTexts;
+        std::vector<TextMessage> mTextMessages;
         Pht::Vec3 mLeftPosition;
         Pht::Vec3 mRightPosition;
         Pht::Vec3 mTextPosition;
         float mVelocity {0.0f};
         float mInitialVelocity {0.0f};
         float mDisplayVelocity {0.0f};
+        TextMessage* mClearBlocksMessage;
+        TextMessage* mBlocksClearedMessage;
+        TextMessage* mFillSlotsMessage;
+        TextMessage* mSlotsFilledMessage;
+        TextMessage* mBringDownTheAsteroidMessage;
+        TextMessage* mTheAsteroidIsDownMessage;
+        TextMessage* mOutOfMovesMessage;
         Pht::SceneResources mSceneResources;
     };
 }

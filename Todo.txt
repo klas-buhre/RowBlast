@@ -48,7 +48,8 @@ Ongoing tasks:
      animation.
 
 
-    -Tutorial: Pht animation showing how to fill gray slots.
+    -Tutorial: Pht animation showing how to fill gray slots. It should show the field scroll up
+     after filling all slots in a row.
     -Tutorial: Maybe there could be a cascading/gravity animation.
 
 

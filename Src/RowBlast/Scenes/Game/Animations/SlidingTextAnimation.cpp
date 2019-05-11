@@ -75,24 +75,54 @@ SlidingTextAnimation::SlidingTextAnimation(Pht::IEngine& engine,
     auto& font = commonResources.GetHussarFontSize52PotentiallyZoomedScreen();
     auto upperY = 0.43f;
     auto lowerY = -1.28f;
-    mTexts.reserve(7);
-    CreateText(font, 4.0f, true, {{-3.96f, upperY}, "CLEAR ALL"}, {{-5.17f, lowerY}, "GRAY BLOCKS"});
-    CreateText(font, 1.6f, true, {{-1.21f, upperY}, "ALL"}, {{-3.3f, lowerY}, "CLEARED!"});
-    CreateText(font, 4.0f, true, {{-2.97f, upperY}, "FILL ALL"}, {{-4.73f, lowerY}, "GRAY SLOTS"});
-    CreateText(font, 2.5f, true, {{-3.85f, upperY}, "ALL SLOTS"}, {{-2.31f, lowerY}, "FILLED!"});
-    CreateText(font, 4.0f, true, {{-5.0f, upperY}, "BRING DOWN"}, {{-5.2f, lowerY}, "THE ASTEROID"});
-    CreateText(font, 2.5f, true, {{-5.1f, upperY}, "THE ASTEROID"}, {{-3.6f, lowerY}, "IS DOWN!"});
-    CreateText(font, 3.5f, false, {{-2.8f, upperY}, "OUT OF"}, {{-2.9f, lowerY}, "MOVES!"});
+    mTextMessages.reserve(7);
+    
+    mClearBlocksMessage = &CreateText(font,
+                                      4.0f,
+                                      {{-3.96f, upperY}, "CLEAR ALL", {0.25f, 0.85f}},
+                                      {{-5.17f, lowerY}, "GRAY BLOCKS", {4.9f, 1.15f}},
+                                      ExtraAnimations{.mUfo = true});
+    mBlocksClearedMessage = &CreateText(font,
+                                        1.6f,
+                                        {{-1.21f, upperY}, "ALL", {0.25f, 0.85f}},
+                                        {{-3.3f, lowerY}, "CLEARED!", {4.9f, 1.15f}},
+                                        ExtraAnimations{.mUfo = true});
+    mFillSlotsMessage = &CreateText(font,
+                                    4.0f,
+                                    {{-2.97f, upperY}, "FILL ALL", {0.25f, 0.85f}},
+                                    {{-4.73f, lowerY}, "GRAY SLOTS", {4.9f, 1.15f}},
+                                    ExtraAnimations{.mUfo = true});
+    mSlotsFilledMessage = &CreateText(font,
+                                      2.5f,
+                                      {{-3.85f, upperY}, "ALL SLOTS", {0.25f, 0.85f}},
+                                      {{-2.31f, lowerY}, "FILLED!", {4.9f, 1.15f}},
+                                      ExtraAnimations{.mUfo = true});
+    mBringDownTheAsteroidMessage = &CreateText(font,
+                                               4.0f,
+                                               {{-5.0f, upperY}, "BRING DOWN", {0.25f, 0.85f}},
+                                               {{-5.2f, lowerY}, "THE ASTEROID", {4.9f, 1.15f}},
+                                               ExtraAnimations{.mUfo = true});
+    mTheAsteroidIsDownMessage = &CreateText(font,
+                                            2.5f,
+                                            {{-5.1f, upperY}, "THE ASTEROID", {0.25f, 0.85f}},
+                                            {{-3.6f, lowerY}, "IS DOWN!", {4.9f, 1.15f}},
+                                            ExtraAnimations{.mUfo = true});
+    mOutOfMovesMessage = &CreateText(font,
+                                     3.5f,
+                                     {{-2.8f, upperY}, "OUT OF", {0.25f, 0.85f}},
+                                     {{-2.9f, lowerY}, "MOVES!", {4.9f, 1.15f}},
+                                     ExtraAnimations{});
 
     CreateTwinkleParticleEffects();
     CreateClearObjectiveContainer(commonResources, font);
 }
 
-void SlidingTextAnimation::CreateText(const Pht::Font& font,
-                                      float displayTime,
-                                      bool isUfoVisible,
-                                      const TextLine& upperTextLine,
-                                      const TextLine& lowerTextLine) {
+SlidingTextAnimation::TextMessage&
+SlidingTextAnimation::CreateText(const Pht::Font& font,
+                                 float displayTime,
+                                 const TextLineConfig& upperTextLineConfig,
+                                 const TextLineConfig& lowerTextLineConfig,
+                                 const ExtraAnimations& extraAnimations) {
     Pht::TextProperties textProperties {
         font,
         1.1f,
@@ -110,30 +140,37 @@ void SlidingTextAnimation::CreateText(const Pht::Font& font,
     textProperties.mSecondShadowColor = Pht::Vec4 {0.2f, 0.2f, 0.2f, 0.5f};
     textProperties.mSecondShadowOffset = Pht::Vec2 {0.075f, 0.075f};
 
-    auto upperTextLineSceneObject = std::make_unique<Pht::SceneObject>();
-    auto upperTextComponent =
-        std::make_unique<Pht::TextComponent>(*upperTextLineSceneObject,
-                                             upperTextLine.mText,
-                                             textProperties);
-    upperTextLineSceneObject->SetComponent<Pht::TextComponent>(std::move(upperTextComponent));
-    
-    auto lowerTextLineSceneObject = std::make_unique<Pht::SceneObject>();
-    auto lowerTextComponent =
-        std::make_unique<Pht::TextComponent>(*lowerTextLineSceneObject,
-                                             lowerTextLine.mText,
-                                             textProperties);
-    lowerTextLineSceneObject->SetComponent<Pht::TextComponent>(std::move(lowerTextComponent));
-    
-    mTexts.push_back(
-        Text {
-            displayTime,
-            isUfoVisible,
-            Pht::Vec3{upperTextLine.mPosition.x, upperTextLine.mPosition.y, 0.5f},
-            std::move(upperTextLineSceneObject),
-            Pht::Vec3{lowerTextLine.mPosition.x, lowerTextLine.mPosition.y, 0.5f},
-            std::move(lowerTextLineSceneObject)
+    mTextMessages.push_back(
+        TextMessage {
+            CreateTextLine(upperTextLineConfig, textProperties),
+            CreateTextLine(lowerTextLineConfig, textProperties),
+            extraAnimations,
+            displayTime
         }
     );
+    
+    return mTextMessages.back();
+}
+
+SlidingTextAnimation::TextLine
+SlidingTextAnimation::CreateTextLine(const TextLineConfig& textLineConfig,
+                                     const Pht::TextProperties textProperties) {
+    TextLine textLine {
+        .mPosition = {textLineConfig.mPosition.x, textLineConfig.mPosition.y, 0.5f},
+        .mSceneObject = std::make_unique<Pht::SceneObject>(),
+        .mTwinkleRelativePosition = Pht::Vec3{
+            textLineConfig.mTwinkleRelativePosition.x,
+            textLineConfig.mTwinkleRelativePosition.y,
+            UiLayer::buttonText
+        }
+    };
+
+    auto textComponent =
+        std::make_unique<Pht::TextComponent>(*textLine.mSceneObject,
+                                             textLineConfig.mText,
+                                             textProperties);
+    textLine.mSceneObject->SetComponent<Pht::TextComponent>(std::move(textComponent));
+    return textLine;
 }
 
 void SlidingTextAnimation::CreateTwinkleParticleEffects() {
@@ -155,7 +192,7 @@ void SlidingTextAnimation::CreateTwinkleParticleEffects() {
         .mTimeToLiveRandomPart = 0.0f,
         .mFadeOutDuration = 0.0f,
         .mZAngularVelocity = 100.0f,
-        .mSize = Pht::Vec2{4.6f, 4.6f},
+        .mSize = Pht::Vec2{4.5f, 4.5f},
         .mSizeRandomPart = 0.0f,
         .mShrinkDuration = 0.5f
     };
@@ -174,7 +211,7 @@ void SlidingTextAnimation::CreateTwinkleParticleEffects() {
         .mTimeToLiveRandomPart = 0.0f,
         .mFadeOutDuration = 0.0f,
         .mZAngularVelocity = -100.0f,
-        .mSize = Pht::Vec2{4.3f, 4.3f},
+        .mSize = Pht::Vec2{4.2f, 4.2f},
         .mSizeRandomPart = 0.0f,
         .mShrinkDuration = 0.5f
     };
@@ -284,11 +321,11 @@ void SlidingTextAnimation::Init() {
     mContainerSceneObject->SetIsVisible(false);
     mContainerSceneObject->SetIsStatic(true);
 
-    for (auto& text: mTexts) {
-        text.mUpperTextLineSceneObject->SetIsVisible(false);
-        mContainerSceneObject->AddChild(*(text.mUpperTextLineSceneObject));
-        text.mLowerTextLineSceneObject->SetIsVisible(false);
-        mContainerSceneObject->AddChild(*(text.mLowerTextLineSceneObject));
+    for (auto& textMessage: mTextMessages) {
+        textMessage.mUpperTextLine.mSceneObject->SetIsVisible(false);
+        mContainerSceneObject->AddChild(*(textMessage.mUpperTextLine.mSceneObject));
+        textMessage.mLowerTextLine.mSceneObject->SetIsVisible(false);
+        mContainerSceneObject->AddChild(*(textMessage.mLowerTextLine.mSceneObject));
     }
     
     CreateGradientRectangles(*mContainerSceneObject);
@@ -367,14 +404,14 @@ void SlidingTextAnimation::CreateGradientRectangles(Pht::SceneObject& containerS
 
 void SlidingTextAnimation::Start(Message message) {
     mState = State::RectangleAppearing;
-    mText = &mTexts[static_cast<int>(message)];
+    mTextMessage = &mTextMessages[static_cast<int>(message)];
     mElapsedTime = 0.0f;
     
     mTextPosition = {0.0f, 0.0f, 0.0f};
 
-    mDisplayVelocity = displayDistance / mText->mDisplayTime;
+    mDisplayVelocity = displayDistance / mTextMessage->mDisplayTime;
     mInitialVelocity = mRightPosition.x * 2.0f / slideTime - mDisplayVelocity -
-                       mDisplayVelocity * mText->mDisplayTime / slideTime;
+                       mDisplayVelocity * mTextMessage->mDisplayTime / slideTime;
     mVelocity = mInitialVelocity;
     
     UpdateTextLineSceneObjectPositions();
@@ -391,7 +428,7 @@ void SlidingTextAnimation::Start(Message message) {
     mUfo.SetPosition(rightUfoPosition);
     mUfoAnimation.Init();
     
-    if (mText->mIsUfoVisible) {
+    if (mTextMessage->mExtraAnimations.mUfo) {
         mUfo.Show();
     }
     
@@ -439,8 +476,8 @@ void SlidingTextAnimation::UpdateInRectangleAppearingState() {
         Pht::SceneObjectUtils::SetAlphaRecursively(*mGradientRectanglesSceneObject, 1.0f);
         mGradientRectanglesSceneObject->GetTransform().SetScale(1.0f);
         
-        mText->mUpperTextLineSceneObject->SetIsVisible(true);
-        mText->mLowerTextLineSceneObject->SetIsVisible(true);
+        mTextMessage->mUpperTextLine.mSceneObject->SetIsVisible(true);
+        mTextMessage->mLowerTextLine.mSceneObject->SetIsVisible(true);
 
         mClearObjectiveContainer->SetIsVisible(true);
         mGreyCubeAnimation->Stop();
@@ -478,24 +515,22 @@ void SlidingTextAnimation::UpdateInSlidingInState() {
 }
 
 void SlidingTextAnimation::UpdateTextLineSceneObjectPositions() {
-    auto upperTextLinePosition = mLeftPosition + mTextPosition + mText->mUpperTextLinePosition;
-    mText->mUpperTextLineSceneObject->GetTransform().SetPosition(upperTextLinePosition);
+    auto upperTextLinePosition = mLeftPosition + mTextPosition + mTextMessage->mUpperTextLine.mPosition;
+    mTextMessage->mUpperTextLine.mSceneObject->GetTransform().SetPosition(upperTextLinePosition);
     
-    auto lowerTextLinePosition = mRightPosition - mTextPosition + mText->mLowerTextLinePosition;
-    mText->mLowerTextLineSceneObject->GetTransform().SetPosition(lowerTextLinePosition);
+    auto lowerTextLinePosition = mRightPosition - mTextPosition + mTextMessage->mLowerTextLine.mPosition;
+    mTextMessage->mLowerTextLine.mSceneObject->GetTransform().SetPosition(lowerTextLinePosition);
 
-    Pht::Vec3 upperTwinkleRelativePosition {0.25f, 0.85f, UiLayer::buttonText};
     Pht::Vec3 upperTwinklePosition {
-        upperTextLinePosition.x + upperTwinkleRelativePosition.x,
-        upperTextLinePosition.y + upperTwinkleRelativePosition.y,
+        upperTextLinePosition.x + mTextMessage->mUpperTextLine.mTwinkleRelativePosition.x,
+        upperTextLinePosition.y + mTextMessage->mUpperTextLine.mTwinkleRelativePosition.y,
         UiLayer::buttonText
     };
     mUpperTwinkleParticleEffect->GetTransform().SetPosition(upperTwinklePosition);
 
-    Pht::Vec3 lowerTwinkleRelativePosition {4.9f, 1.15f, UiLayer::buttonText};
     Pht::Vec3 lowerTwinklePosition {
-        lowerTextLinePosition.x + lowerTwinkleRelativePosition.x,
-        lowerTextLinePosition.y + lowerTwinkleRelativePosition.y,
+        lowerTextLinePosition.x + mTextMessage->mLowerTextLine.mTwinkleRelativePosition.x,
+        lowerTextLinePosition.y + mTextMessage->mLowerTextLine.mTwinkleRelativePosition.y,
         UiLayer::buttonText
     };
     mLowerTwinkleParticleEffect->GetTransform().SetPosition(lowerTwinklePosition);
@@ -511,7 +546,7 @@ void SlidingTextAnimation::UpdateInDisplayingTextState() {
     UpdateUfo();
     UpdatePhtAnimation();
     
-    if (mElapsedTime > mText->mDisplayTime || mEngine.GetInput().ConsumeWholeTouch()) {
+    if (mElapsedTime > mTextMessage->mDisplayTime || mEngine.GetInput().ConsumeWholeTouch()) {
         mState = State::SlidingOut;
         mElapsedTime = 0.0f;
         mVelocity = mDisplayVelocity;
@@ -527,7 +562,7 @@ void SlidingTextAnimation::UpdateInDisplayingTextState() {
         mNumObjectsTextAnimation->Play(static_cast<Pht::AnimationClipId>(AnimationClip::ScaleDown));
     }
     
-    if (mElapsedTime > mText->mDisplayTime - ufoHeadStartTime) {
+    if (mElapsedTime > mTextMessage->mDisplayTime - ufoHeadStartTime) {
         FlyOutUfo();
     }
     
@@ -549,8 +584,8 @@ void SlidingTextAnimation::UpdateInSlidingOutState() {
         mState = State::RectangleDisappearing;
         mElapsedTime = 0.0f;
 
-        mText->mUpperTextLineSceneObject->SetIsVisible(false);
-        mText->mLowerTextLineSceneObject->SetIsVisible(false);
+        mTextMessage->mUpperTextLine.mSceneObject->SetIsVisible(false);
+        mTextMessage->mLowerTextLine.mSceneObject->SetIsVisible(false);
     }
 }
 
