@@ -79,7 +79,7 @@ void TutorialUtils::CreateFieldQuadFrame(Pht::IEngine& engine,
     auto& sceneManager = engine.GetSceneManager();
     
     auto& container = view.CreateSceneObject();
-    container.GetTransform().SetPosition({0.0f, 0.0f, -0.1f});
+    container.GetTransform().SetPosition({0.0f, 0.0f, UiLayer::textShadow});
     parent.AddChild(container);
     
     auto& lineSceneObject =

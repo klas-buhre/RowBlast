@@ -133,13 +133,13 @@ void LevelCompletedController::GoToObjectiveAchievedAnimationState() {
 void LevelCompletedController::StartLevelCompletedTextAnimation() {
     switch (mLevel->GetObjective()) {
         case Level::Objective::Clear:
-            mSlidingTextAnimation.Start(SlidingTextAnimation::Message::BlocksCleared);
+            mSlidingTextAnimation.StartBlocksClearedMessage();
             break;
         case Level::Objective::Build:
-            mSlidingTextAnimation.Start(SlidingTextAnimation::Message::SlotsFilled);
+            mSlidingTextAnimation.StartSlotsFilledMessage();
             break;
         case Level::Objective::BringDownTheAsteroid:
-            mSlidingTextAnimation.Start(SlidingTextAnimation::Message::TheAsteroidIsDown);
+            mSlidingTextAnimation.StartTheAsteroidIsDownMessage();
             break;
     }
 }

@@ -544,13 +544,13 @@ void GameController::StartLevelObjectiveAnimation() {
 
     switch (mLevel->GetObjective()) {
         case Level::Objective::Clear:
-            mSlidingTextAnimation.Start(SlidingTextAnimation::Message::ClearBlocks);
+            mSlidingTextAnimation.StartClearBlocksMessage(mField.CalculateNumLevelBlocks());
             break;
         case Level::Objective::Build:
-            mSlidingTextAnimation.Start(SlidingTextAnimation::Message::FillSlots);
+            mSlidingTextAnimation.StartFillSlotsMessage(mField.CalculateNumEmptyBlueprintSlots());
             break;
         case Level::Objective::BringDownTheAsteroid:
-            mSlidingTextAnimation.Start(SlidingTextAnimation::Message::BringDownTheAsteroid);
+            mSlidingTextAnimation.StartBringDownTheAsteroidMessage();
             break;
     }
 }
@@ -821,7 +821,7 @@ void GameController::GoToPausedStateGameMenu(SlidingMenuAnimation::UpdateFade up
 
 void GameController::GoToOutOfMovesStateOutOfMovesAnimation() {
     mOutOfMovesState = OutOfMovesState::OutOfMovesAnimation;
-    mSlidingTextAnimation.Start(SlidingTextAnimation::Message::OutOfMoves);
+    mSlidingTextAnimation.StartOutOfMovesMessage();
 }
 
 void GameController::GoToOutOfMovesStateOutOfMovesDialog(SlidingMenuAnimation::SlideDirection slideDirection,

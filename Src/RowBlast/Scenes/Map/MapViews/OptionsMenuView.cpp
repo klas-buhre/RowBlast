@@ -52,7 +52,7 @@ OptionsMenuView::OptionsMenuView(Pht::IEngine& engine, const CommonResources& co
     
     Pht::Vec4 iconColor {1.0f, 1.0f, 1.0f, 1.0f};
     Pht::Vec4 iconShadowColor {0.2f, 0.2f, 0.2f, 0.5f};
-    Pht::Vec3 iconShadowOffset {-0.05f, -0.05f, -0.1f};
+    Pht::Vec3 iconShadowOffset {-0.05f, -0.05f, UiLayer::textShadow};
     
     GuiUtils::CreateIcon(engine,
                          *this,

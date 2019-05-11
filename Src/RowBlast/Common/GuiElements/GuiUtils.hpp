@@ -10,6 +10,7 @@
 namespace Pht {
     class IEngine;
     class GuiView;
+    class SceneResources;
 }
 
 namespace RowBlast {
@@ -27,6 +28,15 @@ namespace RowBlast {
                         const Pht::Vec2& size,
                         Pht::SceneObject& parent,
                         const Pht::Vec4& color = {0.95f, 0.95f, 0.95f, 1.0f});
+        Pht::SceneObject& CreateIconWithShadow(Pht::IEngine& engine,
+                                               Pht::SceneResources& sceneResources,
+                                               const std::string& filename,
+                                               const Pht::Vec3& position,
+                                               const Pht::Vec2& size,
+                                               Pht::SceneObject& parent,
+                                               const Pht::Vec4& color,
+                                               const Pht::Optional<Pht::Vec4>& shadowColor,
+                                               const Pht::Optional<Pht::Vec3>& shadowOffset);
         void CreateTitleBarLine(Pht::IEngine& engine,
                                 Pht::GuiView& view,
                                 float titleBarHeight = 2.6f);

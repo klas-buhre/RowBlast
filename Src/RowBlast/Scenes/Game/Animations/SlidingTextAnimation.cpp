@@ -1,5 +1,7 @@
 #include "SlidingTextAnimation.hpp"
 
+#include <assert.h>
+
 // Engine includes.
 #include "IEngine.hpp"
 #include "IRenderer.hpp"
@@ -22,6 +24,7 @@
 #include "GradientRectangle.hpp"
 #include "UiLayer.hpp"
 #include "AudioResources.hpp"
+#include "GuiUtils.hpp"
 
 using namespace RowBlast;
 
@@ -62,6 +65,18 @@ namespace {
         {0.95f, 0.87f},
         {1.0f, 1.0f},
     };
+    
+    void WriteIntegerAtBeginningOfStringNoPadding(int value, std::string& str) {
+        constexpr auto bufSize = 64;
+        char buffer[bufSize];
+        
+        std::snprintf(buffer, bufSize, "%d   ", value); // Warning: Must be three spaces at the end.
+        
+        assert(str.size() >= 3);
+        str[0] = buffer[0];
+        str[1] = buffer[1];
+        str[2] = buffer[2];
+    }
 }
 
 SlidingTextAnimation::SlidingTextAnimation(Pht::IEngine& engine,
@@ -81,22 +96,36 @@ SlidingTextAnimation::SlidingTextAnimation(Pht::IEngine& engine,
                                       4.0f,
                                       {{-3.96f, upperY}, "CLEAR ALL", {0.25f, 0.85f}},
                                       {{-5.17f, lowerY}, "GRAY BLOCKS", {4.9f, 1.15f}},
-                                      ExtraAnimations{.mUfo = true});
+                                      ExtraAnimations{
+                                          .mUfo = true,
+                                          .mGrayCube = true,
+                                          .mNumObjects = true
+                                      });
     mBlocksClearedMessage = &CreateText(font,
                                         1.6f,
                                         {{-1.21f, upperY}, "ALL", {0.25f, 0.85f}},
                                         {{-3.3f, lowerY}, "CLEARED!", {4.9f, 1.15f}},
-                                        ExtraAnimations{.mUfo = true});
+                                        ExtraAnimations{
+                                            .mUfo = true,
+                                            .mGrayCube = true,
+                                            .mCheckMark = true
+                                        });
     mFillSlotsMessage = &CreateText(font,
                                     4.0f,
                                     {{-2.97f, upperY}, "FILL ALL", {0.25f, 0.85f}},
                                     {{-4.73f, lowerY}, "GRAY SLOTS", {4.9f, 1.15f}},
-                                    ExtraAnimations{.mUfo = true});
+                                    ExtraAnimations{
+                                        .mUfo = true,
+                                        .mNumObjects = true
+                                    });
     mSlotsFilledMessage = &CreateText(font,
                                       2.5f,
                                       {{-3.85f, upperY}, "ALL SLOTS", {0.25f, 0.85f}},
                                       {{-2.31f, lowerY}, "FILLED!", {4.9f, 1.15f}},
-                                      ExtraAnimations{.mUfo = true});
+                                      ExtraAnimations{
+                                          .mUfo = true,
+                                          .mCheckMark = true
+                                      });
     mBringDownTheAsteroidMessage = &CreateText(font,
                                                4.0f,
                                                {{-5.0f, upperY}, "BRING DOWN", {0.25f, 0.85f}},
@@ -106,15 +135,20 @@ SlidingTextAnimation::SlidingTextAnimation(Pht::IEngine& engine,
                                             2.5f,
                                             {{-5.1f, upperY}, "THE ASTEROID", {0.25f, 0.85f}},
                                             {{-3.6f, lowerY}, "IS DOWN!", {4.9f, 1.15f}},
-                                            ExtraAnimations{.mUfo = true});
+                                            ExtraAnimations{
+                                                .mUfo = true,
+                                                .mCheckMark = true
+                                            });
     mOutOfMovesMessage = &CreateText(font,
                                      3.5f,
                                      {{-2.8f, upperY}, "OUT OF", {0.25f, 0.85f}},
                                      {{-2.9f, lowerY}, "MOVES!", {4.9f, 1.15f}},
-                                     ExtraAnimations{});
+                                     ExtraAnimations{
+                                         .mNumObjects = true
+                                     });
 
     CreateTwinkleParticleEffects();
-    CreateClearObjectiveContainer(commonResources, font);
+    CreateExtraAnimationsContainer(commonResources, font);
 }
 
 SlidingTextAnimation::TextMessage&
@@ -221,21 +255,27 @@ void SlidingTextAnimation::CreateTwinkleParticleEffects() {
                                                                                  Pht::RenderMode::Triangles);
 }
 
-void SlidingTextAnimation::CreateClearObjectiveContainer(const CommonResources& commonResources,
-                                                         const Pht::Font& font) {
-    mClearObjectiveContainer = std::make_unique<Pht::SceneObject>();
-    mClearObjectiveContainer->GetTransform().SetPosition({0.0f, -2.65f, UiLayer::root});
+void SlidingTextAnimation::CreateExtraAnimationsContainer(const CommonResources& commonResources,
+                                                          const Pht::Font& font) {
+    mExtraAnimationsContainer = std::make_unique<Pht::SceneObject>();
+    mExtraAnimationsContainer->GetTransform().SetPosition({0.0f, -2.65f, UiLayer::root});
     
+    CreateGreyCubeAnimation(commonResources);
+    CreateNumObjectsTextAnimation(font);
+    CreateCheckMarkAnimation();
+}
+
+void SlidingTextAnimation::CreateGreyCubeAnimation(const CommonResources& commonResources) {
     auto& sceneManager = mEngine.GetSceneManager();
     auto& grayMaterial = commonResources.GetMaterials().GetGrayYellowMaterial();
-    
+
     auto grayCubeSceneObject = sceneManager.CreateSceneObject(Pht::ObjMesh {"cube_428.obj", 1.25f},
                                                               grayMaterial,
                                                               mSceneResources);
-    mClearObjectiveContainer->AddChild(*grayCubeSceneObject);
+    mExtraAnimationsContainer->AddChild(*grayCubeSceneObject);
     grayCubeSceneObject->GetTransform().SetPosition({-0.7f, 0.0f, UiLayer::block});
     grayCubeSceneObject->SetIsVisible(false);
-    
+
     std::vector<Pht::Keyframe> cubeScaleUpKeyframes {
         {.mTime = 0.0f, .mScale = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
         {.mTime = slideTime, .mScale = Pht::Vec3{1.0f, 1.0f, 1.0f}},
@@ -259,9 +299,13 @@ void SlidingTextAnimation::CreateClearObjectiveContainer(const CommonResources& 
     };
     Pht::AnimationClip cubeRotationClip {cubeRotationKeyframes};
     mGreyCubeAnimation->AddClip(cubeRotationClip, static_cast<Pht::AnimationClipId>(AnimationClip::Rotation));
-
-    auto numObjectsTextScale = 0.72f;
     
+    mSceneResources.AddSceneObject(std::move(grayCubeSceneObject));
+}
+
+void SlidingTextAnimation::CreateNumObjectsTextAnimation(const Pht::Font& font) {
+    auto numObjectsTextScale = 0.72f;
+
     Pht::TextProperties textProperties {
         font,
         numObjectsTextScale,
@@ -286,17 +330,19 @@ void SlidingTextAnimation::CreateClearObjectiveContainer(const CommonResources& 
     textSceneObject->GetTransform().SetPosition({-0.65f / numObjectsTextScale, -0.4f / numObjectsTextScale, UiLayer::text});
     auto textComponent =
         std::make_unique<Pht::TextComponent>(*textSceneObject,
-                                             "56",
+                                             "   ", // Warning! Must be three spaces to fit digits.
                                              textProperties);
+    mNumObjectsText = textComponent.get();
     textSceneObject->SetComponent<Pht::TextComponent>(std::move(textComponent));
-    
+
     numObjectsSceneObject->AddChild(*textSceneObject);
-    mClearObjectiveContainer->AddChild(*numObjectsSceneObject);
-    
+    mExtraAnimationsContainer->AddChild(*numObjectsSceneObject);
+
     std::vector<Pht::Keyframe> textScaleUpKeyframes {
         {.mTime = 0.0f, .mTextScale = 0.0f, .mIsVisible = true},
         {.mTime = slideTime, .mTextScale = numObjectsTextScale},
     };
+    auto& animationSystem = mEngine.GetAnimationSystem();
     mNumObjectsTextAnimation = &animationSystem.CreateAnimation(*numObjectsSceneObject, textScaleUpKeyframes);
     auto* textScaleUpClip = mNumObjectsTextAnimation->GetClip(static_cast<Pht::AnimationClipId>(AnimationClip::ScaleUp));
     textScaleUpClip->SetWrapMode(Pht::WrapMode::Once);
@@ -309,9 +355,38 @@ void SlidingTextAnimation::CreateClearObjectiveContainer(const CommonResources& 
     textScaleDownClip.SetWrapMode(Pht::WrapMode::Once);
     mNumObjectsTextAnimation->AddClip(textScaleDownClip, static_cast<Pht::AnimationClipId>(AnimationClip::ScaleDown));
     
-    mSceneResources.AddSceneObject(std::move(grayCubeSceneObject));
     mSceneResources.AddSceneObject(std::move(numObjectsSceneObject));
     mSceneResources.AddSceneObject(std::move(textSceneObject));
+}
+
+void SlidingTextAnimation::CreateCheckMarkAnimation() {
+    auto& icon = GuiUtils::CreateIconWithShadow(mEngine,
+                                                mSceneResources,
+                                                "checkmark.png",
+                                                {1.1f, 0.0f, UiLayer::root},
+                                                {1.325f, 1.325f},
+                                                *mExtraAnimationsContainer,
+                                                {0.4f, 0.82f, 0.4f, 1.0f},
+                                                Pht::Vec4{0.1f, 0.1f, 0.1f, 0.55f},
+                                                Pht::Vec3{-0.075f, -0.075f, UiLayer::textShadow});
+    icon.SetIsVisible(false);
+
+    std::vector<Pht::Keyframe> scaleUpKeyframes {
+        {.mTime = 0.0f, .mScale = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
+        {.mTime = slideTime, .mScale = Pht::Vec3{1.0f, 1.0f, 1.0f}},
+    };
+    auto& animationSystem = mEngine.GetAnimationSystem();
+    mCheckMarkAnimation = &animationSystem.CreateAnimation(icon, scaleUpKeyframes);
+    auto* scaleUpClip = mCheckMarkAnimation->GetClip(static_cast<Pht::AnimationClipId>(AnimationClip::ScaleUp));
+    scaleUpClip->SetWrapMode(Pht::WrapMode::Once);
+
+    std::vector<Pht::Keyframe> scaleDownKeyframes {
+        {.mTime = 0.0f, .mScale = Pht::Vec3{1.0f, 1.0f, 1.0f}},
+        {.mTime = slideTime, .mScale = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = false},
+    };
+    Pht::AnimationClip scaleDownClip {scaleDownKeyframes};
+    scaleDownClip.SetWrapMode(Pht::WrapMode::Once);
+    mCheckMarkAnimation->AddClip(scaleDownClip, static_cast<Pht::AnimationClipId>(AnimationClip::ScaleDown));
 }
 
 void SlidingTextAnimation::Init() {
@@ -337,8 +412,8 @@ void SlidingTextAnimation::Init() {
     mUfo.Hide();
     mEngine.GetRenderer().DisableShader(Pht::ShaderType::TexturedEnvMapLighting);
     
-    mContainerSceneObject->AddChild(*mClearObjectiveContainer);
-    mClearObjectiveContainer->SetIsVisible(false);
+    mContainerSceneObject->AddChild(*mExtraAnimationsContainer);
+    mExtraAnimationsContainer->SetIsVisible(false);
 
     auto& frustumSize = mEngine.GetRenderer().GetHudFrustumSize();
     mLeftPosition = {-frustumSize.x / 2.0f - textWidth / 2.0f, 0.0f, 0.0f};
@@ -402,9 +477,40 @@ void SlidingTextAnimation::CreateGradientRectangles(Pht::SceneObject& containerS
                             stripeColors);
 }
 
-void SlidingTextAnimation::Start(Message message) {
+void SlidingTextAnimation::StartClearBlocksMessage(int numBlocks) {
+    WriteIntegerAtBeginningOfStringNoPadding(numBlocks, mNumObjectsText->GetText());
+    Start(*mClearBlocksMessage);
+}
+
+void SlidingTextAnimation::StartBlocksClearedMessage() {
+    Start(*mBlocksClearedMessage);
+}
+
+void SlidingTextAnimation::StartFillSlotsMessage(int numSlots) {
+    WriteIntegerAtBeginningOfStringNoPadding(numSlots, mNumObjectsText->GetText());
+    Start(*mFillSlotsMessage);
+}
+
+void SlidingTextAnimation::StartSlotsFilledMessage() {
+    Start(*mSlotsFilledMessage);
+}
+
+void SlidingTextAnimation::StartBringDownTheAsteroidMessage() {
+    Start(*mBringDownTheAsteroidMessage);
+}
+
+void SlidingTextAnimation::StartTheAsteroidIsDownMessage() {
+    Start(*mTheAsteroidIsDownMessage);
+}
+
+void SlidingTextAnimation::StartOutOfMovesMessage() {
+    WriteIntegerAtBeginningOfStringNoPadding(0, mNumObjectsText->GetText());
+    Start(*mOutOfMovesMessage);
+}
+
+void SlidingTextAnimation::Start(const TextMessage& textMessage) {
+    mTextMessage = &textMessage;
     mState = State::RectangleAppearing;
-    mTextMessage = &mTextMessages[static_cast<int>(message)];
     mElapsedTime = 0.0f;
     
     mTextPosition = {0.0f, 0.0f, 0.0f};
@@ -479,12 +585,8 @@ void SlidingTextAnimation::UpdateInRectangleAppearingState() {
         mTextMessage->mUpperTextLine.mSceneObject->SetIsVisible(true);
         mTextMessage->mLowerTextLine.mSceneObject->SetIsVisible(true);
 
-        mClearObjectiveContainer->SetIsVisible(true);
-        mGreyCubeAnimation->Stop();
-        mGreyCubeAnimation->Play(static_cast<Pht::AnimationClipId>(AnimationClip::ScaleUp));
-        mGreyCubeAnimation->Play(static_cast<Pht::AnimationClipId>(AnimationClip::Rotation));
-        mNumObjectsTextAnimation->Stop();
-        mNumObjectsTextAnimation->Play(static_cast<Pht::AnimationClipId>(AnimationClip::ScaleUp));
+        mExtraAnimationsContainer->SetIsVisible(true);
+        StartPlayingExtraAnimations();
         
         auto& audio = mEngine.GetAudio();
         audio.PlaySound(static_cast<Pht::AudioResourceId>(SoundId::SlidingTextWhoosh1));
@@ -498,7 +600,7 @@ void SlidingTextAnimation::UpdateInSlidingInState() {
     mVelocity -= dt * (mInitialVelocity - mDisplayVelocity) / slideTime;
     mElapsedTime += dt;
     
-    UpdatePhtAnimation();
+    UpdateExtraAnimations();
     
     if (mVelocity < mDisplayVelocity || mTextPosition.x >= mRightPosition.x - displayDistance / 2.0f) {
         mState = State::DisplayingText;
@@ -544,7 +646,7 @@ void SlidingTextAnimation::UpdateInDisplayingTextState() {
     mUpperTwinkleParticleEffect->GetComponent<Pht::ParticleEffect>()->Update(dt);
     mLowerTwinkleParticleEffect->GetComponent<Pht::ParticleEffect>()->Update(dt);
     UpdateUfo();
-    UpdatePhtAnimation();
+    UpdateExtraAnimations();
     
     if (mElapsedTime > mTextMessage->mDisplayTime || mEngine.GetInput().ConsumeWholeTouch()) {
         mState = State::SlidingOut;
@@ -558,8 +660,7 @@ void SlidingTextAnimation::UpdateInDisplayingTextState() {
         mLowerTwinkleParticleEffect->GetComponent<Pht::ParticleEffect>()->Stop();
     
         FlyOutUfo();
-        mGreyCubeAnimation->Play(static_cast<Pht::AnimationClipId>(AnimationClip::ScaleDown));
-        mNumObjectsTextAnimation->Play(static_cast<Pht::AnimationClipId>(AnimationClip::ScaleDown));
+        StartScalingDownExtraAnimations();
     }
     
     if (mElapsedTime > mTextMessage->mDisplayTime - ufoHeadStartTime) {
@@ -578,7 +679,7 @@ void SlidingTextAnimation::UpdateInSlidingOutState() {
 
     UpdateTextLineSceneObjectPositions();
     UpdateUfo();
-    UpdatePhtAnimation();
+    UpdateExtraAnimations();
 
     if (mTextPosition.x >= mRightPosition.x * 2.0f) {
         mState = State::RectangleDisappearing;
@@ -596,7 +697,7 @@ void SlidingTextAnimation::UpdateInRectangleDisappearingState() {
     Pht::SceneObjectUtils::SetAlphaRecursively(*mGradientRectanglesSceneObject,
                                                (rectangleFadeInTime - mElapsedTime) / rectangleFadeInTime);
     UpdateUfo();
-    UpdatePhtAnimation();
+    UpdateExtraAnimations();
 
     if (mElapsedTime > rectangleFadeInTime) {
         mState = State::Inactive;
@@ -604,6 +705,7 @@ void SlidingTextAnimation::UpdateInRectangleDisappearingState() {
         mContainerSceneObject->SetIsStatic(true);
         mGradientRectanglesSceneObject->SetIsVisible(false);
         mGradientRectanglesSceneObject->SetIsStatic(true);
+        mExtraAnimationsContainer->SetIsVisible(false);
         mUfo.Hide();
         mEngine.GetRenderer().DisableShader(Pht::ShaderType::TexturedEnvMapLighting);
     }
@@ -647,8 +749,41 @@ void SlidingTextAnimation::FlyOutUfo() {
     }
 }
 
-void SlidingTextAnimation::UpdatePhtAnimation() {
+void SlidingTextAnimation::StartPlayingExtraAnimations() {
+    if (mTextMessage->mExtraAnimations.mGrayCube) {
+        mGreyCubeAnimation->Stop();
+        mGreyCubeAnimation->Play(static_cast<Pht::AnimationClipId>(AnimationClip::ScaleUp));
+        mGreyCubeAnimation->Play(static_cast<Pht::AnimationClipId>(AnimationClip::Rotation));
+    }
+
+    if (mTextMessage->mExtraAnimations.mNumObjects) {
+        mNumObjectsTextAnimation->Stop();
+        mNumObjectsTextAnimation->Play(static_cast<Pht::AnimationClipId>(AnimationClip::ScaleUp));
+    }
+    
+    if (mTextMessage->mExtraAnimations.mCheckMark) {
+        mCheckMarkAnimation->Stop();
+        mCheckMarkAnimation->Play(static_cast<Pht::AnimationClipId>(AnimationClip::ScaleUp));
+    }
+}
+
+void SlidingTextAnimation::UpdateExtraAnimations() {
     auto dt = mEngine.GetLastFrameSeconds();
     mGreyCubeAnimation->Update(dt);
     mNumObjectsTextAnimation->Update(dt);
+    mCheckMarkAnimation->Update(dt);
+}
+
+void SlidingTextAnimation::StartScalingDownExtraAnimations() {
+    if (mTextMessage->mExtraAnimations.mGrayCube) {
+        mGreyCubeAnimation->Play(static_cast<Pht::AnimationClipId>(AnimationClip::ScaleDown));
+    }
+    
+    if (mTextMessage->mExtraAnimations.mNumObjects) {
+        mNumObjectsTextAnimation->Play(static_cast<Pht::AnimationClipId>(AnimationClip::ScaleDown));
+    }
+    
+    if (mTextMessage->mExtraAnimations.mCheckMark) {
+        mCheckMarkAnimation->Play(static_cast<Pht::AnimationClipId>(AnimationClip::ScaleDown));
+    }
 }

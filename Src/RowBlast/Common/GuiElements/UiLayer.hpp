@@ -7,6 +7,7 @@ namespace RowBlast {
         constexpr auto buttonOverlayObject = 0.1f;
         constexpr auto root = 0.0f;
         constexpr auto text = 0.0f;
+        constexpr auto textShadow = -0.1f;
         constexpr auto textRectangle = -1.0f;
         constexpr auto block = -1.0f;
         constexpr auto panel = -1.5f;

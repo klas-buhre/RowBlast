@@ -18,6 +18,7 @@ namespace Pht {
     class Font;
     class Animation;
     class TextProperties;
+    class TextComponent;
 }
 
 namespace RowBlast {
@@ -35,22 +36,18 @@ namespace RowBlast {
             Inactive
         };
         
-        enum class Message {
-            ClearBlocks,
-            BlocksCleared,
-            FillSlots,
-            SlotsFilled,
-            BringDownTheAsteroid,
-            TheAsteroidIsDown,
-            OutOfMoves
-        };
-        
         SlidingTextAnimation(Pht::IEngine& engine,
                              GameScene& scene,
                              const CommonResources& commonResources);
         
         void Init();
-        void Start(Message message);
+        void StartClearBlocksMessage(int numBlocks);
+        void StartBlocksClearedMessage();
+        void StartFillSlotsMessage(int numSlots);
+        void StartSlotsFilledMessage();
+        void StartBringDownTheAsteroidMessage();
+        void StartTheAsteroidIsDownMessage();
+        void StartOutOfMovesMessage();
         State Update();
         
     private:
@@ -64,6 +61,7 @@ namespace RowBlast {
             bool mUfo {true};
             bool mGrayCube {false};
             bool mNumObjects {false};
+            bool mCheckMark {false};
         };
         
         struct TextLine {
@@ -86,10 +84,14 @@ namespace RowBlast {
                                 const ExtraAnimations& extraAnimations);
         TextLine CreateTextLine(const TextLineConfig& textLineConfig,
                                 const Pht::TextProperties textProperties);
-        void CreateClearObjectiveContainer(const CommonResources& commonResources,
-                                           const Pht::Font& font);
+        void CreateExtraAnimationsContainer(const CommonResources& commonResources,
+                                            const Pht::Font& font);
+        void CreateGreyCubeAnimation(const CommonResources& commonResources);
+        void CreateNumObjectsTextAnimation(const Pht::Font& font);
+        void CreateCheckMarkAnimation();
         void CreateTwinkleParticleEffects();
         void CreateGradientRectangles(Pht::SceneObject& containerSceneObject);
+        void Start(const TextMessage& textMessage);
         void UpdateInRectangleAppearingState();
         void UpdateInSlidingInState();
         void UpdateTextLineSceneObjectPositions();
@@ -99,7 +101,9 @@ namespace RowBlast {
         void UpdateUfo();
         void FlyInUfo();
         void FlyOutUfo();
-        void UpdatePhtAnimation();
+        void StartPlayingExtraAnimations();
+        void UpdateExtraAnimations();
+        void StartScalingDownExtraAnimations();
         
         enum class UfoState {
             FlyingIn,
@@ -120,9 +124,11 @@ namespace RowBlast {
         Pht::SceneObject* mGradientRectanglesSceneObject {nullptr};
         std::unique_ptr<Pht::SceneObject> mUpperTwinkleParticleEffect;
         std::unique_ptr<Pht::SceneObject> mLowerTwinkleParticleEffect;
-        std::unique_ptr<Pht::SceneObject> mClearObjectiveContainer;
+        std::unique_ptr<Pht::SceneObject> mExtraAnimationsContainer;
         Pht::Animation* mGreyCubeAnimation {nullptr};
         Pht::Animation* mNumObjectsTextAnimation {nullptr};
+        Pht::TextComponent* mNumObjectsText {nullptr};
+        Pht::Animation* mCheckMarkAnimation {nullptr};
         std::vector<TextMessage> mTextMessages;
         Pht::Vec3 mLeftPosition;
         Pht::Vec3 mRightPosition;

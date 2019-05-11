@@ -14,6 +14,8 @@
 
 // Game includes.
 #include "AudioResources.hpp"
+#include "GuiUtils.hpp"
+#include "UiLayer.hpp"
 
 using namespace RowBlast;
 
@@ -72,7 +74,7 @@ MenuButton::MenuButton(Pht::IEngine& engine,
                                            shaddowMaterial,
                                            view.GetSceneResources());
 
-        shadowSceneObject->GetTransform().SetPosition(Pht::Vec3{-0.15f, -0.15f, -0.1f});
+        shadowSceneObject->GetTransform().SetPosition(Pht::Vec3{-0.15f, -0.15f, UiLayer::textShadow});
         mSceneObject->AddChild(*shadowSceneObject);
         mView.GetSceneResources().AddSceneObject(std::move(shadowSceneObject));
     }
@@ -133,45 +135,15 @@ Pht::SceneObject& MenuButton::CreateIcon(const std::string& filename,
                                          const Pht::Vec4& color,
                                          const Pht::Optional<Pht::Vec4>& shadowColor,
                                          const Pht::Optional<Pht::Vec3>& shadowOffset) {
-    auto containerSceneObject = std::make_unique<Pht::SceneObject>();
-    auto& container = *containerSceneObject;
-    containerSceneObject->GetTransform().SetPosition(position);
-    mSceneObject->AddChild(*containerSceneObject);
-    mView.GetSceneResources().AddSceneObject(std::move(containerSceneObject));
-    
-    auto& sceneManager = mEngine.GetSceneManager();
-
-    Pht::Material iconMaterial {filename, 0.0f, 0.0f, 0.0f, 0.0f};
-    iconMaterial.SetBlend(Pht::Blend::Yes);
-    iconMaterial.SetOpacity(color.w);
-    iconMaterial.SetAmbient(Pht::Color{color.x, color.y, color.z});
-    
-    auto iconSceneObject =
-        sceneManager.CreateSceneObject(Pht::QuadMesh {size.x, size.y},
-                                       iconMaterial,
-                                       mView.GetSceneResources());
-    
-    container.AddChild(*iconSceneObject);
-    mView.GetSceneResources().AddSceneObject(std::move(iconSceneObject));
-
-    if (shadowColor.HasValue()) {
-        auto& shadowColorValue = shadowColor.GetValue();
-        Pht::Material shadowMaterial {filename, 0.0f, 0.0f, 0.0f, 0.0f};
-        shadowMaterial.SetBlend(Pht::Blend::Yes);
-        shadowMaterial.SetOpacity(shadowColorValue.w);
-        shadowMaterial.SetAmbient(Pht::Color{shadowColorValue.x, shadowColorValue.y, shadowColorValue.z});
-        
-        auto shadowSceneObject =
-            sceneManager.CreateSceneObject(Pht::QuadMesh {size.x, size.y},
-                                           shadowMaterial,
-                                           mView.GetSceneResources());
-        
-        shadowSceneObject->GetTransform().SetPosition(shadowOffset.GetValue());
-        container.AddChild(*shadowSceneObject);
-        mView.GetSceneResources().AddSceneObject(std::move(shadowSceneObject));
-    }
-    
-    return container;
+    return GuiUtils::CreateIconWithShadow(mEngine,
+                                          mView.GetSceneResources(),
+                                          filename,
+                                          position,
+                                          size,
+                                          *mSceneObject,
+                                          color,
+                                          shadowColor,
+                                          shadowOffset);
 }
 
 bool MenuButton::IsClicked(const Pht::TouchEvent& event) const {

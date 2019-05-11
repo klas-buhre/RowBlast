@@ -340,6 +340,7 @@
 		62346192216B6FE900ECD0DF /* planet_wadow.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62346191216B6FE900ECD0DF /* planet_wadow.jpg */; };
 		6234C161226DD1A500711420 /* hand48.png in Resources */ = {isa = PBXBuildFile; fileRef = 6234C160226DD1A500711420 /* hand48.png */; };
 		6234C164226E34F000711420 /* TutorialFieldBottomGlowAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6234C162226E34F000711420 /* TutorialFieldBottomGlowAnimation.cpp */; };
+		62352A68228734F500F89723 /* checkmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 62352A67228734F500F89723 /* checkmark.png */; };
 		623768EC226A1117007FD5EC /* TutorialExplosionParticleEffect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623768EA226A1117007FD5EC /* TutorialExplosionParticleEffect.cpp */; };
 		6238F61B2191FCB40008A0CF /* TextDoubleGradient.vert in Resources */ = {isa = PBXBuildFile; fileRef = 6238F6192191FCB30008A0CF /* TextDoubleGradient.vert */; };
 		6238F61C2191FCB40008A0CF /* TextDoubleGradient.frag in Resources */ = {isa = PBXBuildFile; fileRef = 6238F61A2191FCB40008A0CF /* TextDoubleGradient.frag */; };
@@ -1067,6 +1068,7 @@
 		6234C160226DD1A500711420 /* hand48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hand48.png; sourceTree = "<group>"; };
 		6234C162226E34F000711420 /* TutorialFieldBottomGlowAnimation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TutorialFieldBottomGlowAnimation.cpp; sourceTree = "<group>"; };
 		6234C163226E34F000711420 /* TutorialFieldBottomGlowAnimation.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TutorialFieldBottomGlowAnimation.hpp; sourceTree = "<group>"; };
+		62352A67228734F500F89723 /* checkmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkmark.png; sourceTree = "<group>"; };
 		623768EA226A1117007FD5EC /* TutorialExplosionParticleEffect.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TutorialExplosionParticleEffect.cpp; sourceTree = "<group>"; };
 		623768EB226A1117007FD5EC /* TutorialExplosionParticleEffect.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TutorialExplosionParticleEffect.hpp; sourceTree = "<group>"; };
 		623768F1226A36BB007FD5EC /* TutorialUiLayer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TutorialUiLayer.hpp; sourceTree = "<group>"; };
@@ -2302,27 +2304,28 @@
 		62298337222D8E9C001A7E1C /* Gui */ = {
 			isa = PBXGroup;
 			children = (
-				6234C160226DD1A500711420 /* hand48.png */,
+				62352A67228734F500F89723 /* checkmark.png */,
+				62A8E338222EDFE300F1BF73 /* back.png */,
 				62F0446122560ED800BD5A4C /* cancel.png */,
+				6221D56F223042980098395A /* circle.png */,
 				62F0445C22550E8C00BD5A4C /* error.png */,
 				621F145F223978CF004165A2 /* filled_circle.png */,
-				621F145D22396CA7004165A2 /* previous.png */,
-				6220AF3422343D2A00D66C76 /* help.png */,
-				6221D56F223042980098395A /* circle.png */,
-				6221D571223046E50098395A /* right_arrow.png */,
-				6221D56D22303C070098395A /* sound_off.png */,
-				6221D56B223039590098395A /* music_off.png */,
 				6221D569223031490098395A /* hand.png */,
-				6221D567223030230098395A /* sound.png */,
-				6221D56522302E790098395A /* music.png */,
-				62A8E338222EDFE300F1BF73 /* back.png */,
-				62A8E336222EDBDE00F1BF73 /* info.png */,
-				62A8E334222EC73300F1BF73 /* play.png */,
-				623EB0C7222EC49A00E41F92 /* undo.png */,
-				62524BC6222EBCC000AFF469 /* settings.png */,
-				6229833C222E9761001A7E1C /* restart.png */,
+				6234C160226DD1A500711420 /* hand48.png */,
+				6220AF3422343D2A00D66C76 /* help.png */,
 				6229833A222D8F1D001A7E1C /* home.png */,
+				62A8E336222EDBDE00F1BF73 /* info.png */,
+				6221D56B223039590098395A /* music_off.png */,
+				6221D56522302E790098395A /* music.png */,
+				62A8E334222EC73300F1BF73 /* play.png */,
+				621F145D22396CA7004165A2 /* previous.png */,
+				6229833C222E9761001A7E1C /* restart.png */,
+				6221D571223046E50098395A /* right_arrow.png */,
+				62524BC6222EBCC000AFF469 /* settings.png */,
+				6221D56D22303C070098395A /* sound_off.png */,
+				6221D567223030230098395A /* sound.png */,
 				62298338222D8E9C001A7E1C /* spinning_wheel.png */,
+				623EB0C7222EC49A00E41F92 /* undo.png */,
 			);
 			path = Gui;
 			sourceTree = "<group>";
@@ -3223,6 +3226,7 @@
 				62E01BBC2154100B009F0B99 /* planet_titawin.jpg in Resources */,
 				625698172182392C003A3A9D /* PixelLighting.vert in Resources */,
 				6234617921668D1E00ECD0DF /* planet_rayeon.jpg in Resources */,
+				62352A68228734F500F89723 /* checkmark.png in Resources */,
 				62E6DAD2220602CD00EA9D3A /* block_trail_green.png in Resources */,
 				625698232182392C003A3A9D /* ParticleNoAlphaTexture.frag in Resources */,
 				62276E7B2274A96000679BC6 /* level67.json in Resources */,

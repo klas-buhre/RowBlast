@@ -75,6 +75,6 @@ AboutMenuView::AboutMenuView(Pht::IEngine& engine, const CommonResources& common
                             {0.7f, 0.7f},
                             {1.0f, 1.0f, 1.0f, 1.0f},
                             Pht::Vec4 {0.2f, 0.2f, 0.2f, 0.5f},
-                            Pht::Vec3 {-0.05f, -0.05f, -0.1f});
+                            Pht::Vec3 {-0.05f, -0.05f, UiLayer::textShadow});
     mBackButton->CreateText({-0.46f, -0.23f, UiLayer::buttonText}, "Back", buttonTextProperties);
 }
