@@ -102,9 +102,9 @@ SlidingTextAnimation::SlidingTextAnimation(Pht::IEngine& engine,
                                           .mNumObjects = true
                                       });
     mBlocksClearedMessage = &CreateText(font,
-                                        1.6f,
-                                        {{-1.21f, upperY}, "ALL", {0.25f, 0.85f}},
-                                        {{-3.3f, lowerY}, "CLEARED!", {4.9f, 1.15f}},
+                                        1.8f,
+                                        {{-1.21f, upperY}, "ALL", {0.65f, 1.15f}},
+                                        {{-3.3f, lowerY}, "CLEARED!", {4.85f, 1.15f}},
                                         ExtraAnimations{
                                             .mUfo = true,
                                             .mGrayCube = true,
@@ -262,7 +262,11 @@ void SlidingTextAnimation::CreateExtraAnimationsContainer(const CommonResources&
     
     CreateGreyCubeAnimation(commonResources);
     CreateNumObjectsTextAnimation(font);
-    CreateCheckMarkAnimation();
+    
+    mCheckMarkAnimation = &CreateIconAnimation("checkmark.png",
+                                               {1.1f, 0.0f, UiLayer::root},
+                                               {1.325f, 1.325f},
+                                               {0.41f, 0.82f, 0.41f, 1.0f});
 }
 
 void SlidingTextAnimation::CreateGreyCubeAnimation(const CommonResources& commonResources) {
@@ -276,31 +280,43 @@ void SlidingTextAnimation::CreateGreyCubeAnimation(const CommonResources& common
     grayCubeSceneObject->GetTransform().SetPosition({-0.7f, 0.0f, UiLayer::block});
     grayCubeSceneObject->SetIsVisible(false);
 
-    std::vector<Pht::Keyframe> cubeScaleUpKeyframes {
+    mGreyCubeAnimation = &CreateScalingAndRotationAnimation(*grayCubeSceneObject,
+                                                            1.0f,
+                                                            Pht::Vec3{48.0f, 48.0f, 0.0f});
+    mSceneResources.AddSceneObject(std::move(grayCubeSceneObject));
+}
+
+Pht::Animation&
+SlidingTextAnimation::CreateScalingAndRotationAnimation(Pht::SceneObject& sceneObject,
+                                                        float scale,
+                                                        const Pht::Optional<Pht::Vec3>& rotation) {
+    std::vector<Pht::Keyframe> scaleUpKeyframes {
         {.mTime = 0.0f, .mScale = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
-        {.mTime = slideTime, .mScale = Pht::Vec3{1.0f, 1.0f, 1.0f}},
+        {.mTime = slideTime, .mScale = Pht::Vec3{scale, scale, scale}},
     };
     auto& animationSystem = mEngine.GetAnimationSystem();
-    mGreyCubeAnimation = &animationSystem.CreateAnimation(*grayCubeSceneObject, cubeScaleUpKeyframes);
-    auto* scaleUpClip = mGreyCubeAnimation->GetClip(static_cast<Pht::AnimationClipId>(AnimationClip::ScaleUp));
+    auto& animation = animationSystem.CreateAnimation(sceneObject, scaleUpKeyframes);
+    auto* scaleUpClip = animation.GetClip(static_cast<Pht::AnimationClipId>(AnimationClip::ScaleUp));
     scaleUpClip->SetWrapMode(Pht::WrapMode::Once);
 
-    std::vector<Pht::Keyframe> cubeScaleDownKeyframes {
-        {.mTime = 0.0f, .mScale = Pht::Vec3{1.0f, 1.0f, 1.0f}},
+    std::vector<Pht::Keyframe> scaleDownKeyframes {
+        {.mTime = 0.0f, .mScale = Pht::Vec3{scale, scale, scale}},
         {.mTime = slideTime, .mScale = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = false},
     };
-    Pht::AnimationClip cubeScaleDownClip {cubeScaleDownKeyframes};
-    cubeScaleDownClip.SetWrapMode(Pht::WrapMode::Once);
-    mGreyCubeAnimation->AddClip(cubeScaleDownClip, static_cast<Pht::AnimationClipId>(AnimationClip::ScaleDown));
+    Pht::AnimationClip scaleDownClip {scaleDownKeyframes};
+    scaleDownClip.SetWrapMode(Pht::WrapMode::Once);
+    animation.AddClip(scaleDownClip, static_cast<Pht::AnimationClipId>(AnimationClip::ScaleDown));
     
-    std::vector<Pht::Keyframe> cubeRotationKeyframes {
-        {.mTime = 0.0f, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}},
-        {.mTime = 6.0f, .mRotation = Pht::Vec3{48.0f, 48.0f, 0.0f}}
-    };
-    Pht::AnimationClip cubeRotationClip {cubeRotationKeyframes};
-    mGreyCubeAnimation->AddClip(cubeRotationClip, static_cast<Pht::AnimationClipId>(AnimationClip::Rotation));
+    if (rotation.HasValue()) {
+        std::vector<Pht::Keyframe> rotationKeyframes {
+            {.mTime = 0.0f, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}},
+            {.mTime = 6.0f, .mRotation = rotation.GetValue()}
+        };
+        Pht::AnimationClip rotationClip {rotationKeyframes};
+        animation.AddClip(rotationClip, static_cast<Pht::AnimationClipId>(AnimationClip::Rotation));
+    }
     
-    mSceneResources.AddSceneObject(std::move(grayCubeSceneObject));
+    return animation;
 }
 
 void SlidingTextAnimation::CreateNumObjectsTextAnimation(const Pht::Font& font) {
@@ -359,14 +375,17 @@ void SlidingTextAnimation::CreateNumObjectsTextAnimation(const Pht::Font& font) 
     mSceneResources.AddSceneObject(std::move(textSceneObject));
 }
 
-void SlidingTextAnimation::CreateCheckMarkAnimation() {
+Pht::Animation& SlidingTextAnimation::CreateIconAnimation(const std::string& filename,
+                                                          const Pht::Vec3& position,
+                                                          const Pht::Vec2& size,
+                                                          const Pht::Vec4& color) {
     auto& icon = GuiUtils::CreateIconWithShadow(mEngine,
                                                 mSceneResources,
-                                                "checkmark.png",
-                                                {1.1f, 0.0f, UiLayer::root},
-                                                {1.325f, 1.325f},
+                                                filename,
+                                                position,
+                                                size,
                                                 *mExtraAnimationsContainer,
-                                                {0.4f, 0.82f, 0.4f, 1.0f},
+                                                color,
                                                 Pht::Vec4{0.1f, 0.1f, 0.1f, 0.55f},
                                                 Pht::Vec3{-0.075f, -0.075f, UiLayer::textShadow});
     icon.SetIsVisible(false);
@@ -376,8 +395,8 @@ void SlidingTextAnimation::CreateCheckMarkAnimation() {
         {.mTime = slideTime, .mScale = Pht::Vec3{1.0f, 1.0f, 1.0f}},
     };
     auto& animationSystem = mEngine.GetAnimationSystem();
-    mCheckMarkAnimation = &animationSystem.CreateAnimation(icon, scaleUpKeyframes);
-    auto* scaleUpClip = mCheckMarkAnimation->GetClip(static_cast<Pht::AnimationClipId>(AnimationClip::ScaleUp));
+    auto& animation = animationSystem.CreateAnimation(icon, scaleUpKeyframes);
+    auto* scaleUpClip = animation.GetClip(static_cast<Pht::AnimationClipId>(AnimationClip::ScaleUp));
     scaleUpClip->SetWrapMode(Pht::WrapMode::Once);
 
     std::vector<Pht::Keyframe> scaleDownKeyframes {
@@ -386,7 +405,9 @@ void SlidingTextAnimation::CreateCheckMarkAnimation() {
     };
     Pht::AnimationClip scaleDownClip {scaleDownKeyframes};
     scaleDownClip.SetWrapMode(Pht::WrapMode::Once);
-    mCheckMarkAnimation->AddClip(scaleDownClip, static_cast<Pht::AnimationClipId>(AnimationClip::ScaleDown));
+    animation.AddClip(scaleDownClip, static_cast<Pht::AnimationClipId>(AnimationClip::ScaleDown));
+    
+    return animation;
 }
 
 void SlidingTextAnimation::Init() {

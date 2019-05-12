@@ -8,6 +8,7 @@
 #include "Vector.hpp"
 #include "SceneObject.hpp"
 #include "SceneResources.hpp"
+#include "Optional.hpp"
 
 // Game includes.
 #include "Ufo.hpp"
@@ -88,7 +89,13 @@ namespace RowBlast {
                                             const Pht::Font& font);
         void CreateGreyCubeAnimation(const CommonResources& commonResources);
         void CreateNumObjectsTextAnimation(const Pht::Font& font);
-        void CreateCheckMarkAnimation();
+        Pht::Animation& CreateScalingAndRotationAnimation(Pht::SceneObject& sceneObject,
+                                                          float scale,
+                                                          const Pht::Optional<Pht::Vec3>& rotation);
+        Pht::Animation& CreateIconAnimation(const std::string& filename,
+                                            const Pht::Vec3& position,
+                                            const Pht::Vec2& size,
+                                            const Pht::Vec4& color);
         void CreateTwinkleParticleEffects();
         void CreateGradientRectangles(Pht::SceneObject& containerSceneObject);
         void Start(const TextMessage& textMessage);

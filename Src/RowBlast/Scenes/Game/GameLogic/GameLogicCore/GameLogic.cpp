@@ -211,7 +211,6 @@ GameLogic::Result GameLogic::SpawnFallingPiece(FallingPieceSpawnReason fallingPi
     
     mGhostPieceRow = mField.DetectCollisionDown(CreatePieceBlocks(*mFallingPiece),
                                                 mFallingPiece->GetIntPosition());
-    
     if (mGhostPieceRow > mFallingPiece->GetPosition().y) {
         RemoveFallingPiece();
         return Result::GameOver;
@@ -321,7 +320,6 @@ Pht::Vec2 GameLogic::CalculateFallingPieceSpawnPos(const Piece& pieceType,
     auto& pieceDimensions = pieceType.GetDimensions(Rotation::Deg0);
     auto pieceNumEmptyTopRows = pieceType.GetGridNumRows() - pieceDimensions.mYmax - 1;
     auto desiredUpperPos = topRowInScreen - 3 + pieceNumEmptyTopRows;
-    
     if (mLevel->GetSpeed() > 0.0f) {
         ++desiredUpperPos;
     }
@@ -577,7 +575,7 @@ void GameLogic::DetonateDroppedBomb() {
     auto impactedLevelBombs =
         mField.DetectImpactedBombs(CreatePieceBlocks(*mFallingPiece),
                                    mFallingPiece->GetIntPosition());
-    
+
     auto intPieceDetonationPos = mFallingPiece->GetIntPosition() + Pht::IVec2{1, 1};
     auto pieceDetonationPos = mFallingPiece->GetRenderablePosition() + Pht::Vec2{1.0f, 1.0f};
     
@@ -723,7 +721,7 @@ void GameLogic::RemoveBlocksInsideTheShield() {
     Pht::IVec2 areaSize {mField.GetNumColumns(), shieldHeight};
     auto removeCorners = true;
     auto removedSubCells = mField.RemoveAreaOfSubCells(areaPosition, areaSize, removeCorners);
-    
+
     if (removedSubCells.Size() > 0) {
         mFlyingBlocksAnimation.AddBlocksRemovedByTheShield(removedSubCells, mField.GetNumColumns());
         mShieldAnimation.StartFlash();
@@ -763,7 +761,6 @@ void GameLogic::RotatePiece(const Pht::TouchEvent& touchEvent) {
     auto position = mFallingPiece->GetIntPosition();
     Field::CollisionResult collisionResult;
     mField.CheckCollision(collisionResult, pieceBlocks, position, Pht::IVec2{0, 0}, false);
-
     if (collisionResult.mIsCollision == IsCollision::Yes) {
         auto collisionDirection =
             CollisionDetection::CalculateCollisionDirection(collisionResult.mCollisionPoints,
