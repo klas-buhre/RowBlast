@@ -156,10 +156,9 @@ void LevelResources::CreateBlueprintRenderables(Pht::IEngine& engine,
         Pht::QuadMesh {cellSize, cellSize},
         animationMaterial
     );
-    
-    auto f = 0.9125f;
-    Pht::Vec4 fieldColor {0.3f * f, 0.3f * f, 0.752f * f, 1.0f};
 
+    auto f = 0.9f;
+    Pht::Vec4 fieldColor {0.52f * f, 0.42f * f, 0.752f * f, 1.0f};
     Pht::QuadMesh::Vertices fieldCellVertices  {
         {{-squareSide / 2.0f, -squareSide / 2.0f, 0.0f}, fieldColor},
         {{squareSide / 2.0f, -squareSide / 2.0f, 0.0f}, fieldColor},

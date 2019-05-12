@@ -41,11 +41,7 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-    -Maybe a gray block could be in the objective animation. Also the number of blocks to clear
-     right under it. Could also have a slot and number of slots to fill or an asteroid with a down
-     arrow. Could also have that in the objective cleared animation but with a green checkmark
-     instead of the number. The green L piece with a zero could be shown in the out of moves
-     animation.
+    -The green L piece with a zero could be shown in the out of moves animation.
 
 
     -Tutorial: Pht animation showing how to fill gray slots. It should show the field scroll up

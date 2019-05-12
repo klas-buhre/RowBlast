@@ -70,7 +70,7 @@ GameController::GameController(Pht::IEngine& engine,
     mBlastRadiusAnimation {engine, mScene, commonResources},
     mShieldAnimation {engine, mScene, mScrollController},
     mFieldBottomGlowAnimation {engine, mScene, mScrollController},
-    mSlidingTextAnimation {engine, mScene, commonResources},
+    mSlidingTextAnimation {engine, mScene, commonResources, mLevelResources},
     mSmallTextAnimation {engine, mScene, commonResources},
     mFallingPieceScaleAnimation {mScene},
     mTutorial {

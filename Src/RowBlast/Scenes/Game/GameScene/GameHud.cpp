@@ -271,11 +271,11 @@ void GameHud::CreateBlueprintSlot(Pht::Scene& scene,
     transform.SetRotation({-30.0f, -30.0f, 0.0f});
     transform.SetScale(0.56f);
     progressContainer.AddChild(blueprintSlotContainer);
-    
+
     auto& blueprintSlot = scene.CreateSceneObject();
     blueprintSlot.SetRenderable(&levelResources.GetBlueprintSlotNonDepthWritingRenderable());
     blueprintSlotContainer.AddChild(blueprintSlot);
-    
+
     auto& fieldCell = scene.CreateSceneObject();
     fieldCell.SetRenderable(&levelResources.GetFieldCellRenderable());
     fieldCell.GetTransform().SetPosition({0.0f, 0.0f, -0.005f});

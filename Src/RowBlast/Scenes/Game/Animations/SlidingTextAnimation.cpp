@@ -25,6 +25,7 @@
 #include "UiLayer.hpp"
 #include "AudioResources.hpp"
 #include "GuiUtils.hpp"
+#include "LevelResources.hpp"
 
 using namespace RowBlast;
 
@@ -81,7 +82,8 @@ namespace {
 
 SlidingTextAnimation::SlidingTextAnimation(Pht::IEngine& engine,
                                            GameScene& scene,
-                                           const CommonResources& commonResources) :
+                                           const CommonResources& commonResources,
+                                           const LevelResources& levelResources) :
     mEngine {engine},
     mScene {scene},
     mUfo {engine, commonResources, 3.2f},
@@ -112,18 +114,20 @@ SlidingTextAnimation::SlidingTextAnimation(Pht::IEngine& engine,
                                         });
     mFillSlotsMessage = &CreateText(font,
                                     4.0f,
-                                    {{-2.97f, upperY}, "FILL ALL", {0.25f, 0.85f}},
-                                    {{-4.73f, lowerY}, "GRAY SLOTS", {4.9f, 1.15f}},
+                                    {{-2.97f, upperY}, "FILL ALL", {0.35f, 1.15f}},
+                                    {{-4.73f, lowerY}, "GRAY SLOTS", {5.25f, 1.15f}},
                                     ExtraAnimations{
                                         .mUfo = true,
+                                        .mBlueprintSlot = true,
                                         .mNumObjects = true
                                     });
     mSlotsFilledMessage = &CreateText(font,
                                       2.5f,
-                                      {{-3.85f, upperY}, "ALL SLOTS", {0.25f, 0.85f}},
+                                      {{-3.85f, upperY}, "ALL SLOTS", {0.65f, 1.15f}},
                                       {{-2.31f, lowerY}, "FILLED!", {4.9f, 1.15f}},
                                       ExtraAnimations{
                                           .mUfo = true,
+                                          .mBlueprintSlot = true,
                                           .mCheckMark = true
                                       });
     mBringDownTheAsteroidMessage = &CreateText(font,
@@ -146,14 +150,14 @@ SlidingTextAnimation::SlidingTextAnimation(Pht::IEngine& engine,
                                             });
     mOutOfMovesMessage = &CreateText(font,
                                      3.5f,
-                                     {{-2.8f, upperY}, "OUT OF", {0.25f, 0.85f}},
+                                     {{-2.8f, upperY}, "OUT OF", {0.25f, 1.15f}},
                                      {{-2.9f, lowerY}, "MOVES!", {4.9f, 1.15f}},
                                      ExtraAnimations{
                                          .mNumObjects = true
                                      });
 
     CreateTwinkleParticleEffects();
-    CreateExtraAnimationsContainer(commonResources, font);
+    CreateExtraAnimationsContainer(commonResources, levelResources, font);
 }
 
 SlidingTextAnimation::TextMessage&
@@ -261,12 +265,14 @@ void SlidingTextAnimation::CreateTwinkleParticleEffects() {
 }
 
 void SlidingTextAnimation::CreateExtraAnimationsContainer(const CommonResources& commonResources,
+                                                          const LevelResources& levelResources,
                                                           const Pht::Font& font) {
     mExtraAnimationsContainer = std::make_unique<Pht::SceneObject>();
     mExtraAnimationsContainer->GetTransform().SetPosition({0.0f, -2.65f, UiLayer::root});
     
     CreateGreyCubeAnimation(commonResources);
     CreateAsteroidAnimation();
+    CreateBlueprintSlotAnimation(levelResources);
     CreateNumObjectsTextAnimation(font);
     
     mCheckMarkAnimation = &CreateIconAnimation("checkmark.png",
@@ -275,7 +281,7 @@ void SlidingTextAnimation::CreateExtraAnimationsContainer(const CommonResources&
                                                {0.41f, 0.82f, 0.41f, 1.0f});
     mDownArrowAnimation = &CreateIconAnimation("down_arrow.png",
                                                {1.1f, 0.0f, UiLayer::root},
-                                               {1.1f, 1.45f},
+                                               {1.05f, 1.4f},
                                                {1.0f, 0.95f, 0.9f, 1.0f});
 }
 
@@ -319,6 +325,30 @@ void SlidingTextAnimation::CreateAsteroidAnimation() {
                                                             Pht::Vec3{-25.0f, 15.0f, -12.0f},
                                                             Pht::Vec3{-25.0f, 100.0f, -12.0f});
     mSceneResources.AddSceneObject(std::move(asteroidSceneObject));
+}
+
+void SlidingTextAnimation::CreateBlueprintSlotAnimation(const LevelResources& levelResources) {
+    auto& blueprintSlotContainer = mSceneResources.CreateSceneObject();
+    auto& transform = blueprintSlotContainer.GetTransform();
+    transform.SetPosition({-0.6f, 0.0f, UiLayer::block});
+    auto scale = 1.0f;
+    transform.SetScale(scale);
+    mExtraAnimationsContainer->AddChild(blueprintSlotContainer);
+    blueprintSlotContainer.SetIsVisible(false);
+
+    auto& blueprintSlot = mSceneResources.CreateSceneObject();
+    blueprintSlot.SetRenderable(&levelResources.GetBlueprintSlotNonDepthWritingRenderable());
+    blueprintSlotContainer.AddChild(blueprintSlot);
+
+    auto& fieldCell = mSceneResources.CreateSceneObject();
+    fieldCell.SetRenderable(&levelResources.GetFieldCellRenderable());
+    fieldCell.GetTransform().SetPosition({0.0f, 0.0f, -0.005f});
+    blueprintSlotContainer.AddChild(fieldCell);
+    
+    mBlueprintSlotAnimation = &CreateScalingAndRotationAnimation(blueprintSlotContainer,
+                                                                 scale,
+                                                                 Pht::Optional<Pht::Vec3>{},
+                                                                 Pht::Optional<Pht::Vec3>{});
 }
 
 Pht::Animation&
@@ -375,27 +405,27 @@ void SlidingTextAnimation::CreateNumObjectsTextAnimation(const Pht::Font& font) 
     textProperties.mSecondShadowColor = Pht::Vec4 {0.2f, 0.2f, 0.2f, 0.5f};
     textProperties.mSecondShadowOffset = Pht::Vec2 {0.075f, 0.075f};
 
-    auto numObjectsSceneObject = std::make_unique<Pht::SceneObject>();
-    numObjectsSceneObject->GetTransform().SetPosition({1.1f, 0.0f, UiLayer::root});
-    numObjectsSceneObject->SetIsVisible(false);
-    auto textSceneObject = std::make_unique<Pht::SceneObject>();
-    textSceneObject->GetTransform().SetPosition({-0.65f / numObjectsTextScale, -0.4f / numObjectsTextScale, UiLayer::text});
+    auto& numObjectsSceneObject = mSceneResources.CreateSceneObject();
+    numObjectsSceneObject.GetTransform().SetPosition({1.1f, 0.0f, UiLayer::root});
+    numObjectsSceneObject.SetIsVisible(false);
+    auto& textSceneObject = mSceneResources.CreateSceneObject();
+    textSceneObject.GetTransform().SetPosition({-0.65f / numObjectsTextScale, -0.4f / numObjectsTextScale, UiLayer::text});
     auto textComponent =
-        std::make_unique<Pht::TextComponent>(*textSceneObject,
+        std::make_unique<Pht::TextComponent>(textSceneObject,
                                              "   ", // Warning! Must be three spaces to fit digits.
                                              textProperties);
     mNumObjectsText = textComponent.get();
-    textSceneObject->SetComponent<Pht::TextComponent>(std::move(textComponent));
+    textSceneObject.SetComponent<Pht::TextComponent>(std::move(textComponent));
 
-    numObjectsSceneObject->AddChild(*textSceneObject);
-    mExtraAnimationsContainer->AddChild(*numObjectsSceneObject);
+    numObjectsSceneObject.AddChild(textSceneObject);
+    mExtraAnimationsContainer->AddChild(numObjectsSceneObject);
 
     std::vector<Pht::Keyframe> textScaleUpKeyframes {
         {.mTime = 0.0f, .mTextScale = 0.0f, .mIsVisible = true},
         {.mTime = slideTime, .mTextScale = numObjectsTextScale},
     };
     auto& animationSystem = mEngine.GetAnimationSystem();
-    mNumObjectsTextAnimation = &animationSystem.CreateAnimation(*numObjectsSceneObject, textScaleUpKeyframes);
+    mNumObjectsTextAnimation = &animationSystem.CreateAnimation(numObjectsSceneObject, textScaleUpKeyframes);
     auto* textScaleUpClip = mNumObjectsTextAnimation->GetClip(static_cast<Pht::AnimationClipId>(AnimationClip::ScaleUp));
     textScaleUpClip->SetWrapMode(Pht::WrapMode::Once);
 
@@ -406,9 +436,6 @@ void SlidingTextAnimation::CreateNumObjectsTextAnimation(const Pht::Font& font) 
     Pht::AnimationClip textScaleDownClip {textScaleDownKeyframes};
     textScaleDownClip.SetWrapMode(Pht::WrapMode::Once);
     mNumObjectsTextAnimation->AddClip(textScaleDownClip, static_cast<Pht::AnimationClipId>(AnimationClip::ScaleDown));
-    
-    mSceneResources.AddSceneObject(std::move(numObjectsSceneObject));
-    mSceneResources.AddSceneObject(std::move(textSceneObject));
 }
 
 Pht::Animation& SlidingTextAnimation::CreateIconAnimation(const std::string& filename,
@@ -819,6 +846,11 @@ void SlidingTextAnimation::StartPlayingExtraAnimations() {
         mAsteroidAnimation->Play(static_cast<Pht::AnimationClipId>(AnimationClip::Rotation));
     }
 
+    if (mTextMessage->mExtraAnimations.mBlueprintSlot) {
+        mBlueprintSlotAnimation->Stop();
+        mBlueprintSlotAnimation->Play(static_cast<Pht::AnimationClipId>(AnimationClip::ScaleUp));
+    }
+
     if (mTextMessage->mExtraAnimations.mNumObjects) {
         mNumObjectsTextAnimation->Stop();
         mNumObjectsTextAnimation->Play(static_cast<Pht::AnimationClipId>(AnimationClip::ScaleUp));
@@ -839,6 +871,7 @@ void SlidingTextAnimation::UpdateExtraAnimations() {
     auto dt = mEngine.GetLastFrameSeconds();
     mGreyCubeAnimation->Update(dt);
     mAsteroidAnimation->Update(dt);
+    mBlueprintSlotAnimation->Update(dt);
     mNumObjectsTextAnimation->Update(dt);
     mCheckMarkAnimation->Update(dt);
     mDownArrowAnimation->Update(dt);
@@ -851,6 +884,10 @@ void SlidingTextAnimation::StartScalingDownExtraAnimations() {
 
     if (mTextMessage->mExtraAnimations.mAsteroid) {
         mAsteroidAnimation->Play(static_cast<Pht::AnimationClipId>(AnimationClip::ScaleDown));
+    }
+
+    if (mTextMessage->mExtraAnimations.mBlueprintSlot) {
+        mBlueprintSlotAnimation->Play(static_cast<Pht::AnimationClipId>(AnimationClip::ScaleDown));
     }
 
     if (mTextMessage->mExtraAnimations.mNumObjects) {

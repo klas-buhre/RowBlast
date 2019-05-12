@@ -25,6 +25,7 @@ namespace Pht {
 namespace RowBlast {
     class GameScene;
     class CommonResources;
+    class LevelResources;
     
     class SlidingTextAnimation {
     public:
@@ -39,7 +40,8 @@ namespace RowBlast {
         
         SlidingTextAnimation(Pht::IEngine& engine,
                              GameScene& scene,
-                             const CommonResources& commonResources);
+                             const CommonResources& commonResources,
+                             const LevelResources& levelResources);
         
         void Init();
         void StartClearBlocksMessage(int numBlocks);
@@ -62,6 +64,7 @@ namespace RowBlast {
             bool mUfo {true};
             bool mGrayCube {false};
             bool mAsteroid {false};
+            bool mBlueprintSlot {false};
             bool mNumObjects {false};
             bool mCheckMark {false};
             bool mDownArrow {false};
@@ -88,9 +91,11 @@ namespace RowBlast {
         TextLine CreateTextLine(const TextLineConfig& textLineConfig,
                                 const Pht::TextProperties textProperties);
         void CreateExtraAnimationsContainer(const CommonResources& commonResources,
+                                            const LevelResources& levelResources,
                                             const Pht::Font& font);
         void CreateGreyCubeAnimation(const CommonResources& commonResources);
         void CreateAsteroidAnimation();
+        void CreateBlueprintSlotAnimation(const LevelResources& levelResources);
         void CreateNumObjectsTextAnimation(const Pht::Font& font);
         Pht::Animation& CreateScalingAndRotationAnimation(Pht::SceneObject& sceneObject,
                                                           float scale,
@@ -138,6 +143,7 @@ namespace RowBlast {
         std::unique_ptr<Pht::SceneObject> mExtraAnimationsContainer;
         Pht::Animation* mGreyCubeAnimation {nullptr};
         Pht::Animation* mAsteroidAnimation {nullptr};
+        Pht::Animation* mBlueprintSlotAnimation {nullptr};
         Pht::Animation* mNumObjectsTextAnimation {nullptr};
         Pht::TextComponent* mNumObjectsText {nullptr};
         Pht::Animation* mCheckMarkAnimation {nullptr};

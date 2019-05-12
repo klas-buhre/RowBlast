@@ -10,6 +10,7 @@
 namespace Pht {
     class SceneResources {
     public:
+        SceneObject& CreateSceneObject();
         void AddSceneObject(std::unique_ptr<SceneObject> sceneObject);
         void AddRenderableObject(std::unique_ptr<RenderableObject> renderableObject);
         
