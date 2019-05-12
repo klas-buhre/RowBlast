@@ -19,8 +19,8 @@ namespace {
     const Pht::Vec4 blueColor {0.45f, 0.75f, 1.0f, 1.0};
     const Pht::Vec4 lightBlueColor {0.5f, 0.8f, 1.0f, 1.0};
     const Pht::Vec4 stencilColor {1.0f, 1.0f, 1.0f, 1.0f};
-    const Pht::Vec4 outerBorderGlowColor {0.325f, 0.65f, 1.0f, 0.32f};
-    const Pht::Vec4 borderColor {0.325f, 0.65f, 1.0f, 1.0};
+    const Pht::Vec4 outerBorderGlowColor {0.325f, 0.65f, 0.99f, 0.32f};
+    const Pht::Vec4 borderColor {0.325f, 0.65f, 0.995f, 1.0};
     const Pht::Vec4 innerBorderColor {0.2f, 0.35f, 0.5f, 1.0};
     const Pht::Vec4 darkerBlueColor {0.04f, 0.07f, 0.2f, 1.0};
     constexpr auto xBorder = 0.45f;

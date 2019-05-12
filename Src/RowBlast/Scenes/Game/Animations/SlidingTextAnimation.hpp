@@ -61,8 +61,10 @@ namespace RowBlast {
         struct ExtraAnimations {
             bool mUfo {true};
             bool mGrayCube {false};
+            bool mAsteroid {false};
             bool mNumObjects {false};
             bool mCheckMark {false};
+            bool mDownArrow {false};
         };
         
         struct TextLine {
@@ -88,10 +90,12 @@ namespace RowBlast {
         void CreateExtraAnimationsContainer(const CommonResources& commonResources,
                                             const Pht::Font& font);
         void CreateGreyCubeAnimation(const CommonResources& commonResources);
+        void CreateAsteroidAnimation();
         void CreateNumObjectsTextAnimation(const Pht::Font& font);
         Pht::Animation& CreateScalingAndRotationAnimation(Pht::SceneObject& sceneObject,
                                                           float scale,
-                                                          const Pht::Optional<Pht::Vec3>& rotation);
+                                                          const Pht::Optional<Pht::Vec3>& rotationA,
+                                                          const Pht::Optional<Pht::Vec3>& rotationB);
         Pht::Animation& CreateIconAnimation(const std::string& filename,
                                             const Pht::Vec3& position,
                                             const Pht::Vec2& size,
@@ -133,9 +137,11 @@ namespace RowBlast {
         std::unique_ptr<Pht::SceneObject> mLowerTwinkleParticleEffect;
         std::unique_ptr<Pht::SceneObject> mExtraAnimationsContainer;
         Pht::Animation* mGreyCubeAnimation {nullptr};
+        Pht::Animation* mAsteroidAnimation {nullptr};
         Pht::Animation* mNumObjectsTextAnimation {nullptr};
         Pht::TextComponent* mNumObjectsText {nullptr};
         Pht::Animation* mCheckMarkAnimation {nullptr};
+        Pht::Animation* mDownArrowAnimation {nullptr};
         std::vector<TextMessage> mTextMessages;
         Pht::Vec3 mLeftPosition;
         Pht::Vec3 mRightPosition;

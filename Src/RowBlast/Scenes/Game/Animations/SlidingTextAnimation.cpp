@@ -128,15 +128,20 @@ SlidingTextAnimation::SlidingTextAnimation(Pht::IEngine& engine,
                                       });
     mBringDownTheAsteroidMessage = &CreateText(font,
                                                4.0f,
-                                               {{-5.0f, upperY}, "BRING DOWN", {0.25f, 0.85f}},
-                                               {{-5.2f, lowerY}, "THE ASTEROID", {4.9f, 1.15f}},
-                                               ExtraAnimations{.mUfo = true});
+                                               {{-5.0f, upperY}, "BRING DOWN", {0.35f, 1.15f}},
+                                               {{-5.2f, lowerY}, "THE ASTEROID", {5.1f, 1.15f}},
+                                               ExtraAnimations{
+                                                   .mUfo = true,
+                                                   .mAsteroid = true,
+                                                   .mDownArrow = true
+                                               });
     mTheAsteroidIsDownMessage = &CreateText(font,
                                             2.5f,
-                                            {{-5.1f, upperY}, "THE ASTEROID", {0.25f, 0.85f}},
-                                            {{-3.6f, lowerY}, "IS DOWN!", {4.9f, 1.15f}},
+                                            {{-5.1f, upperY}, "THE ASTEROID", {0.2f, 1.15f}},
+                                            {{-3.6f, lowerY}, "IS DOWN!", {1.95f, 1.15f}},
                                             ExtraAnimations{
                                                 .mUfo = true,
+                                                .mAsteroid = true,
                                                 .mCheckMark = true
                                             });
     mOutOfMovesMessage = &CreateText(font,
@@ -261,18 +266,22 @@ void SlidingTextAnimation::CreateExtraAnimationsContainer(const CommonResources&
     mExtraAnimationsContainer->GetTransform().SetPosition({0.0f, -2.65f, UiLayer::root});
     
     CreateGreyCubeAnimation(commonResources);
+    CreateAsteroidAnimation();
     CreateNumObjectsTextAnimation(font);
     
     mCheckMarkAnimation = &CreateIconAnimation("checkmark.png",
                                                {1.1f, 0.0f, UiLayer::root},
                                                {1.325f, 1.325f},
                                                {0.41f, 0.82f, 0.41f, 1.0f});
+    mDownArrowAnimation = &CreateIconAnimation("down_arrow.png",
+                                               {1.1f, 0.0f, UiLayer::root},
+                                               {1.1f, 1.45f},
+                                               {1.0f, 0.95f, 0.9f, 1.0f});
 }
 
 void SlidingTextAnimation::CreateGreyCubeAnimation(const CommonResources& commonResources) {
     auto& sceneManager = mEngine.GetSceneManager();
     auto& grayMaterial = commonResources.GetMaterials().GetGrayYellowMaterial();
-
     auto grayCubeSceneObject = sceneManager.CreateSceneObject(Pht::ObjMesh {"cube_428.obj", 1.25f},
                                                               grayMaterial,
                                                               mSceneResources);
@@ -282,17 +291,44 @@ void SlidingTextAnimation::CreateGreyCubeAnimation(const CommonResources& common
 
     mGreyCubeAnimation = &CreateScalingAndRotationAnimation(*grayCubeSceneObject,
                                                             1.0f,
+                                                            Pht::Vec3{0.0f, 0.0f, 0.0f},
                                                             Pht::Vec3{48.0f, 48.0f, 0.0f});
     mSceneResources.AddSceneObject(std::move(grayCubeSceneObject));
+}
+
+void SlidingTextAnimation::CreateAsteroidAnimation() {
+    auto& sceneManager = mEngine.GetSceneManager();
+    Pht::Material asteroidMaterial {"gray_asteroid.jpg", 0.865f, 1.23f, 0.0f, 1.0f};
+    asteroidMaterial.GetDepthState().mDepthTestAllowedOverride = true;
+    
+    auto asteroidSceneObject =
+        sceneManager.CreateSceneObject(Pht::ObjMesh {"asteroid_2000.obj", 19.0f, Pht::MoveMeshToOrigin::Yes},
+                                       asteroidMaterial,
+                                       mSceneResources);
+    
+    mExtraAnimationsContainer->AddChild(*asteroidSceneObject);
+    asteroidSceneObject->SetIsVisible(false);
+    
+    auto scale = 1.48f;
+    auto& transform = asteroidSceneObject->GetTransform();
+    transform.SetPosition({-0.6f, 0.0f, UiLayer::block});
+    transform.SetScale(scale);
+    
+    mAsteroidAnimation = &CreateScalingAndRotationAnimation(*asteroidSceneObject,
+                                                            scale,
+                                                            Pht::Vec3{-25.0f, 15.0f, -12.0f},
+                                                            Pht::Vec3{-25.0f, 100.0f, -12.0f});
+    mSceneResources.AddSceneObject(std::move(asteroidSceneObject));
 }
 
 Pht::Animation&
 SlidingTextAnimation::CreateScalingAndRotationAnimation(Pht::SceneObject& sceneObject,
                                                         float scale,
-                                                        const Pht::Optional<Pht::Vec3>& rotation) {
+                                                        const Pht::Optional<Pht::Vec3>& rotationA,
+                                                        const Pht::Optional<Pht::Vec3>& rotationB) {
     std::vector<Pht::Keyframe> scaleUpKeyframes {
         {.mTime = 0.0f, .mScale = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
-        {.mTime = slideTime, .mScale = Pht::Vec3{scale, scale, scale}},
+        {.mTime = slideTime, .mScale = Pht::Vec3{scale, scale, scale}}
     };
     auto& animationSystem = mEngine.GetAnimationSystem();
     auto& animation = animationSystem.CreateAnimation(sceneObject, scaleUpKeyframes);
@@ -307,10 +343,10 @@ SlidingTextAnimation::CreateScalingAndRotationAnimation(Pht::SceneObject& sceneO
     scaleDownClip.SetWrapMode(Pht::WrapMode::Once);
     animation.AddClip(scaleDownClip, static_cast<Pht::AnimationClipId>(AnimationClip::ScaleDown));
     
-    if (rotation.HasValue()) {
+    if (rotationA.HasValue() && rotationB.HasValue()) {
         std::vector<Pht::Keyframe> rotationKeyframes {
-            {.mTime = 0.0f, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}},
-            {.mTime = 6.0f, .mRotation = rotation.GetValue()}
+            {.mTime = 0.0f, .mRotation = rotationA.GetValue()},
+            {.mTime = 6.0f, .mRotation = rotationB.GetValue()}
         };
         Pht::AnimationClip rotationClip {rotationKeyframes};
         animation.AddClip(rotationClip, static_cast<Pht::AnimationClipId>(AnimationClip::Rotation));
@@ -776,6 +812,12 @@ void SlidingTextAnimation::StartPlayingExtraAnimations() {
         mGreyCubeAnimation->Play(static_cast<Pht::AnimationClipId>(AnimationClip::ScaleUp));
         mGreyCubeAnimation->Play(static_cast<Pht::AnimationClipId>(AnimationClip::Rotation));
     }
+    
+    if (mTextMessage->mExtraAnimations.mAsteroid) {
+        mAsteroidAnimation->Stop();
+        mAsteroidAnimation->Play(static_cast<Pht::AnimationClipId>(AnimationClip::ScaleUp));
+        mAsteroidAnimation->Play(static_cast<Pht::AnimationClipId>(AnimationClip::Rotation));
+    }
 
     if (mTextMessage->mExtraAnimations.mNumObjects) {
         mNumObjectsTextAnimation->Stop();
@@ -786,25 +828,40 @@ void SlidingTextAnimation::StartPlayingExtraAnimations() {
         mCheckMarkAnimation->Stop();
         mCheckMarkAnimation->Play(static_cast<Pht::AnimationClipId>(AnimationClip::ScaleUp));
     }
+    
+    if (mTextMessage->mExtraAnimations.mDownArrow) {
+        mDownArrowAnimation->Stop();
+        mDownArrowAnimation->Play(static_cast<Pht::AnimationClipId>(AnimationClip::ScaleUp));
+    }
 }
 
 void SlidingTextAnimation::UpdateExtraAnimations() {
     auto dt = mEngine.GetLastFrameSeconds();
     mGreyCubeAnimation->Update(dt);
+    mAsteroidAnimation->Update(dt);
     mNumObjectsTextAnimation->Update(dt);
     mCheckMarkAnimation->Update(dt);
+    mDownArrowAnimation->Update(dt);
 }
 
 void SlidingTextAnimation::StartScalingDownExtraAnimations() {
     if (mTextMessage->mExtraAnimations.mGrayCube) {
         mGreyCubeAnimation->Play(static_cast<Pht::AnimationClipId>(AnimationClip::ScaleDown));
     }
-    
+
+    if (mTextMessage->mExtraAnimations.mAsteroid) {
+        mAsteroidAnimation->Play(static_cast<Pht::AnimationClipId>(AnimationClip::ScaleDown));
+    }
+
     if (mTextMessage->mExtraAnimations.mNumObjects) {
         mNumObjectsTextAnimation->Play(static_cast<Pht::AnimationClipId>(AnimationClip::ScaleDown));
     }
     
     if (mTextMessage->mExtraAnimations.mCheckMark) {
         mCheckMarkAnimation->Play(static_cast<Pht::AnimationClipId>(AnimationClip::ScaleDown));
+    }
+    
+    if (mTextMessage->mExtraAnimations.mDownArrow) {
+        mDownArrowAnimation->Play(static_cast<Pht::AnimationClipId>(AnimationClip::ScaleDown));
     }
 }

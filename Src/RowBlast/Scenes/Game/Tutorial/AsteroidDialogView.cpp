@@ -101,7 +101,7 @@ void AsteroidDialogView::CreateAnimation(const PieceResources& pieceResources,
         {.mTime = 0.0f, .mPosition = Pht::Vec3{3.0f, -1.0f, UiLayer::block}, .mScale = Pht::Vec3{0.8f, 0.8f, 0.8f}, .mRotation = Pht::Vec3{-25.0f, 64.5f, -12.0f}},
         {.mTime = animationDuration / 2.0f, .mRotation = Pht::Vec3{-25.0f, 25.5f, -12.0f}},
         {.mTime = animationDuration - asteroidScaleUpDuration * 3.0f, .mPosition = Pht::Vec3{3.0f, -1.0f, TutorialUiLayer::blastRadius}, .mScale = Pht::Vec3{0.8f, 0.8f, 0.8f}, .mRotation = Pht::Vec3{-25.0f, 64.5f, -12.0f}},
-        {.mTime = animationDuration - asteroidScaleUpDuration * 2.0f, .mScale = Pht::Vec3{1.45f, 1.45f, 1.45f}, .mRotation = Pht::Vec3{-25.0f, 244.5f, -12.0f}}, // 250
+        {.mTime = animationDuration - asteroidScaleUpDuration * 2.0f, .mScale = Pht::Vec3{1.45f, 1.45f, 1.45f}, .mRotation = Pht::Vec3{-25.0f, 244.5f, -12.0f}},
         {.mTime = animationDuration - asteroidScaleUpDuration, .mScale = Pht::Vec3{0.8f, 0.8f, 0.8f}, .mRotation = Pht::Vec3{-25.0f, 424.5f, -12.0f}},
         {.mTime = animationDuration},
     };
