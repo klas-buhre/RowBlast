@@ -7,7 +7,8 @@ Backlog:
 
   -Gameplay:
     -Could have ice blocks that are level blocks that can be used to fill and clear rows but they
-     shatter if landed on or if falling down in a cascade.
+     shatter if landed on or if falling down in a cascade. Or, they could turn into a normal grey
+     level block if the ice is cleared which it will be by filling the row or explosion/laser.
     -A game objective could be to clear all purple blocks. Purple blocks are affected by gravity
      like the other colored blocks.
     -The UFO could be booster. It could clear 3 rows.
@@ -41,8 +42,12 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-    -The green L piece with a zero could be shown in the out of moves animation.
-
+    -Tune the menu window border thickness.
+    -It should be a moves icon with arrows in the out of moves animation in the sliding text anim.
+    -Moves icon in the out of moves dialog.
+    -Maybe a sliding text animation for when adding moves?
+    -Add a play icon to the next button in the level completed dialog.
+    -Maybe the whole moves object should expand/shrink when low on moves, not just the text.
 
     -Tutorial: Pht animation showing how to fill gray slots. It should show the field scroll up
      after filling all slots in a row.

@@ -21,7 +21,7 @@
 #include "LevelResources.hpp"
 #include "Level.hpp"
 #include "PieceResources.hpp"
-#include "GameHudArrow.hpp"
+#include "GameHudResources.hpp"
 #include "GameViewControllers.hpp"
 #include "StoreController.hpp"
 #include "PreviewPiecesAnimation.hpp"
@@ -164,7 +164,7 @@ namespace RowBlast {
         UserServices& mUserServices;
         PieceResources mPieceResources;
         LevelResources mLevelResources;
-        GameHudArrow mHudArrow;
+        GameHudResources mGameHudResources;
         GameViewControllers mGameViewControllers;
         Field mField;
         CollapsingFieldAnimation mCollapsingFieldAnimation;

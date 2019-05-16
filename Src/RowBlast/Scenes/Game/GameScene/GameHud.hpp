@@ -25,7 +25,7 @@ namespace RowBlast {
     class LevelResources;
     class PieceResources;
     class GameHudRectangles;
-    class GameHudArrow;
+    class GameHudResources;
     class GameHudController;
     class CommonResources;
     
@@ -48,7 +48,7 @@ namespace RowBlast {
                 const Field& field,
                 const LevelResources& levelResources,
                 const PieceResources& pieceResources,
-                const GameHudArrow& hudArrow,
+                const GameHudResources& gameHudResources,
                 GameHudController& gameHudController,
                 const CommonResources& commonResources,
                 Pht::Scene& scene,
@@ -117,27 +117,31 @@ namespace RowBlast {
                                   Pht::SceneObject& parentObject,
                                   const CommonResources& commonResources,
                                   const LevelResources& levelResources,
-                                  const GameHudArrow& hudArrow);
+                                  const GameHudResources& gameHudResources);
         void CreateGrayBlock(Pht::Scene& scene,
                              Pht::SceneObject& progressContainer,
                              const CommonResources& commonResources);
         void CreateAsteroid(Pht::Scene& scene,
                             Pht::SceneObject& progressContainer,
                             const LevelResources& levelResources);
-        void CreateArrow(Pht::Scene& scene,
-                         Pht::SceneObject& progressContainer,
-                         const GameHudArrow& hudArrow);
+        void CreateDownArrow(Pht::Scene& scene,
+                             Pht::SceneObject& progressContainer,
+                             const GameHudResources& gameHudResources);
         void CreateBlueprintSlot(Pht::Scene& scene,
                                  Pht::SceneObject& progressContainer,
                                  const LevelResources& levelResources);
         void CreateMovesObject(Pht::Scene& scene,
                                Pht::SceneObject& parentObject,
-                               const CommonResources& commonResources);
-        void CreateLPiece(Pht::Scene& scene, Pht::SceneObject& movesContainer);
-        void CreateGreenBlock(const Pht::Vec3& position,
-                              Pht::RenderableObject& blockRenderable,
-                              Pht::Scene& scene,
-                              Pht::SceneObject& lPiece);
+                               const CommonResources& commonResources,
+                               const GameHudResources& gameHudResources);
+        void CreateMovesIcon(Pht::Scene& scene,
+                             Pht::SceneObject& movesContainer,
+                             const GameHudResources& gameHudResources);
+        void CreateArrow(const Pht::Vec3& position,
+                         const Pht::Vec3& rotation,
+                         Pht::RenderableObject& renderable,
+                         Pht::Scene& scene,
+                         Pht::SceneObject& parent);
         void CreateNextPiecesObject(Pht::Scene& scene,
                                     Pht::SceneObject& parentObject,
                                     const GameHudRectangles& hudRectangles);

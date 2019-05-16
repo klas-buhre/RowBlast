@@ -38,7 +38,7 @@ GameController::GameController(Pht::IEngine& engine,
     mUserServices {userServices},
     mPieceResources {engine, commonResources},
     mLevelResources {engine, commonResources},
-    mHudArrow {engine, commonResources},
+    mGameHudResources {engine, commonResources},
     mGameViewControllers {engine, commonResources, mUserServices, mPieceResources, mLevelResources},
     mField {},
     mCollapsingFieldAnimation {mField},
@@ -55,7 +55,7 @@ GameController::GameController(Pht::IEngine& engine,
         mField,
         mGameViewControllers.GetGameHudController(),
         mCameraShake,
-        mHudArrow
+        mGameHudResources
     },
     mStoreController {
         engine,

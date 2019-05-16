@@ -35,6 +35,7 @@ Materials::Materials(Pht::IEngine& engine) :
         "sky_upside_down.jpg"
     };
     
+    CreateBlueArrowMaterial(fieldBlockEnvMapTextures);
     CreateRedFieldBlockMaterial(fieldBlockEnvMapTextures);
     CreateBlueFieldBlockMaterial(fieldBlockEnvMapTextures);
     CreateGreenFieldBlockMaterial(fieldBlockEnvMapTextures);
@@ -148,6 +149,20 @@ void Materials::CreateGrayYellowMaterial() {
                                                           specular,
                                                           shininess,
                                                           reflectivity);
+}
+
+void Materials::CreateBlueArrowMaterial(const Pht::EnvMapTextureFilenames& envMapTextures) {
+    Pht::Color ambient {0.0f, 0.4f, 1.0f};
+    Pht::Color diffuse {0.0f, 0.77f, 1.0f};
+    Pht::Color specular {1.0f, 1.0f, 1.0f};
+    auto shininess = 20.0f;
+    mBlueArrowMaterial = std::make_unique<Pht::Material>(envMapTextures,
+                                                         ambient,
+                                                         diffuse,
+                                                         specular,
+                                                         shininess,
+                                                         fieldBlockReflectivity);
+    mBlueArrowMaterial->GetDepthState().mDepthTestAllowedOverride = true;
 }
 
 void Materials::CreateRedFieldBlockMaterial(const Pht::EnvMapTextureFilenames& envMapTextures) {

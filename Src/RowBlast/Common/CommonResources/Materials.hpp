@@ -50,6 +50,10 @@ namespace RowBlast {
         const Pht::Material& GetGrayYellowMaterial() const {
             return *mGrayYellowMaterial;
         }
+        
+        const Pht::Material& GetBlueArrowMaterial() const {
+            return *mBlueArrowMaterial;
+        }
 
         const Pht::Material& GetRedFieldBlockMaterial() const {
             return *mRedFieldBlockMaterial;
@@ -80,6 +84,7 @@ namespace RowBlast {
         void CreateGreenMaterial();
         void CreateLightGrayMaterial();
         void CreateGrayYellowMaterial();
+        void CreateBlueArrowMaterial(const Pht::EnvMapTextureFilenames& envMapTextures);
         void CreateRedFieldBlockMaterial(const Pht::EnvMapTextureFilenames& envMapTextures);
         void CreateBlueFieldBlockMaterial(const Pht::EnvMapTextureFilenames& envMapTextures);
         void CreateGreenFieldBlockMaterial(const Pht::EnvMapTextureFilenames& envMapTextures);
@@ -95,6 +100,7 @@ namespace RowBlast {
         std::unique_ptr<Pht::Material> mGreenMaterial;
         std::unique_ptr<Pht::Material> mLightGrayMaterial;
         std::unique_ptr<Pht::Material> mGrayYellowMaterial;
+        std::unique_ptr<Pht::Material> mBlueArrowMaterial;
         std::unique_ptr<Pht::Material> mRedFieldBlockMaterial;
         std::unique_ptr<Pht::Material> mBlueFieldBlockMaterial;
         std::unique_ptr<Pht::Material> mGreenFieldBlockMaterial;

@@ -19,7 +19,7 @@
 #include "LevelResources.hpp"
 #include "PieceResources.hpp"
 #include "GameHudRectangles.hpp"
-#include "GameHudArrow.hpp"
+#include "GameHudResources.hpp"
 #include "GameHudController.hpp"
 #include "UiLayer.hpp"
 #include "CommonResources.hpp"
@@ -83,7 +83,7 @@ GameHud::GameHud(Pht::IEngine& engine,
                  const Field& field,
                  const LevelResources& levelResources,
                  const PieceResources& pieceResources,
-                 const GameHudArrow& hudArrow,
+                 const GameHudResources& gameHudResources,
                  GameHudController& gameHudController,
                  const CommonResources& commonResources,
                  Pht::Scene& scene,
@@ -119,8 +119,8 @@ GameHud::GameHud(Pht::IEngine& engine,
     mUpperContainer = &scene.CreateSceneObject();
     parentObject.AddChild(*mUpperContainer);
     
-    CreateProgressObject(scene, *mUpperContainer, commonResources, levelResources, hudArrow);
-    CreateMovesObject(scene, *mUpperContainer, commonResources);
+    CreateProgressObject(scene, *mUpperContainer, commonResources, levelResources, gameHudResources);
+    CreateMovesObject(scene, *mUpperContainer, commonResources, gameHudResources);
     
     auto& hudRectangles = commonResources.GetGameHudRectangles();
     CreateNextPiecesObject(scene, parentObject, hudRectangles);
@@ -155,7 +155,7 @@ void GameHud::CreateProgressObject(Pht::Scene& scene,
                                    Pht::SceneObject& parentObject,
                                    const CommonResources& commonResources,
                                    const LevelResources& levelResources,
-                                   const GameHudArrow& hudArrow) {
+                                   const GameHudResources& gameHudResources) {
     auto& progressContainer = scene.CreateSceneObject();
     auto& renderer = mEngine.GetRenderer();
     
@@ -198,7 +198,7 @@ void GameHud::CreateProgressObject(Pht::Scene& scene,
             break;
         case Level::Objective::BringDownTheAsteroid:
             CreateAsteroid(scene, progressContainer, levelResources);
-            CreateArrow(scene, progressContainer, hudArrow);
+            CreateDownArrow(scene, progressContainer, gameHudResources);
             progressTextSceneobject.GetTransform().SetPosition({0.2f, -0.215f, UiLayer::text});
             mProgressGoal = mField.CalculateAsteroidRow().GetValue();
             break;
@@ -253,11 +253,11 @@ void GameHud::CreateAsteroid(Pht::Scene& scene,
     progressContainer.AddChild(asteroid);
 }
 
-void GameHud::CreateArrow(Pht::Scene& scene,
-                          Pht::SceneObject& progressContainer,
-                          const GameHudArrow& hudArrow) {
+void GameHud::CreateDownArrow(Pht::Scene& scene,
+                              Pht::SceneObject& progressContainer,
+                              const GameHudResources& gameHudResources) {
     auto& arrow = scene.CreateSceneObject();
-    arrow.SetRenderable(&hudArrow.GetArrowRenderable());
+    arrow.SetRenderable(&gameHudResources.GetDownArrowRenderable());
     arrow.GetTransform().SetPosition({-0.2f, 0.0f, UiLayer::text});
     progressContainer.AddChild(arrow);
 }
@@ -284,7 +284,8 @@ void GameHud::CreateBlueprintSlot(Pht::Scene& scene,
 
 void GameHud::CreateMovesObject(Pht::Scene& scene,
                                 Pht::SceneObject& parentObject,
-                                const CommonResources& commonResources) {
+                                const CommonResources& commonResources,
+                                const GameHudResources& gameHudResources) {
     auto& movesContainer = scene.CreateSceneObject();
     auto& renderer = mEngine.GetRenderer();
     
@@ -297,7 +298,7 @@ void GameHud::CreateMovesObject(Pht::Scene& scene,
     mMovesContainer = &movesContainer;
     movesContainer.GetTransform().SetPosition(position);
     parentObject.AddChild(movesContainer);
-    
+
     Pht::Vec3 cylinderPosition {0.0f, 0.0f, UiLayer::lowerTextRectangle};
     CreateRoundedCylinder(scene,
                           movesContainer,
@@ -306,7 +307,7 @@ void GameHud::CreateMovesObject(Pht::Scene& scene,
                           roundedCylinderOpacity,
                           roundedCylinderAmbient,
                           roundedCylinderDiffuse);
-    
+
     Pht::TextProperties textProperties {
         commonResources.GetHussarFontSize27(PotentiallyZoomedScreen::Yes),
         1.0f,
@@ -328,40 +329,35 @@ void GameHud::CreateMovesObject(Pht::Scene& scene,
     
     movesContainer.AddChild(*mMovesTextContainer);
     
-    CreateLPiece(scene, movesContainer);
-    
+    CreateMovesIcon(scene, movesContainer, gameHudResources);
     Pht::SceneObjectUtils::ScaleRecursively(*mMovesContainer, movesTextScale);
 }
 
-void GameHud::CreateLPiece(Pht::Scene& scene, Pht::SceneObject& movesContainer) {
-    auto& lPiece = scene.CreateSceneObject();
-    movesContainer.AddChild(lPiece);
-    
-    auto& baseTransform = lPiece.GetTransform();
-    baseTransform.SetPosition({-0.95f, 0.05f, UiLayer::root});
-    baseTransform.SetRotation({-30.0f, -30.0f, 0.0f});
-    auto scale = 0.32f;
-    baseTransform.SetScale(scale);
-    
-    auto& blockRenderable =
-        mPieceResources.GetBlockRenderableObject(BlockKind::Full,
-                                                 BlockColor::Green,
-                                                 BlockBrightness::Normal);
-    
-    auto halfCellSize = 0.625f;
-    CreateGreenBlock({-halfCellSize, -halfCellSize, -scale}, blockRenderable, scene, lPiece);
-    CreateGreenBlock({halfCellSize, -halfCellSize, -scale}, blockRenderable, scene, lPiece);
-    CreateGreenBlock({halfCellSize, halfCellSize, -scale}, blockRenderable, scene, lPiece);
+void GameHud::CreateMovesIcon(Pht::Scene& scene,
+                              Pht::SceneObject& movesContainer,
+                              const GameHudResources& gameHudResources) {
+    auto& movesIcon = scene.CreateSceneObject();
+    movesContainer.AddChild(movesIcon);
+
+    auto& baseTransform = movesIcon.GetTransform();
+    baseTransform.SetPosition({-0.95f, 0.0f, UiLayer::root});
+    baseTransform.SetRotation({-29.1f, -29.1f, 0.0f});
+
+    auto& arrowRenderable = gameHudResources.GetArrowMeshRenderable();
+    CreateArrow({0.0f, 0.27f, 0.0f}, {90.0f, 0.0f, 90.0f}, arrowRenderable, scene, movesIcon);
+    CreateArrow({0.05f, -0.27f, 0.0f}, {270.0f, 0.0f, 90.0f}, arrowRenderable, scene, movesIcon);
 }
 
-void GameHud::CreateGreenBlock(const Pht::Vec3& position,
-                               Pht::RenderableObject& blockRenderable,
-                               Pht::Scene& scene,
-                               Pht::SceneObject& lPiece) {
-    auto& block = scene.CreateSceneObject();
-    block.GetTransform().SetPosition(position);
-    block.SetRenderable(&blockRenderable);
-    lPiece.AddChild(block);
+void GameHud::CreateArrow(const Pht::Vec3& position,
+                          const Pht::Vec3& rotation,
+                          Pht::RenderableObject& renderable,
+                          Pht::Scene& scene,
+                          Pht::SceneObject& parent) {
+    auto& arrow = scene.CreateSceneObject();
+    arrow.GetTransform().SetPosition(position);
+    arrow.GetTransform().SetRotation(rotation);
+    arrow.SetRenderable(&renderable);
+    parent.AddChild(arrow);
 }
 
 void GameHud::CreateNextPiecesObject(Pht::Scene& scene,
