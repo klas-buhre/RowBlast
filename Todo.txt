@@ -42,12 +42,12 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
+    -Moves icon in the out of moves dialog.
     -Tune the menu window border thickness.
     -It should be a moves icon with arrows in the out of moves animation in the sliding text anim.
-    -Moves icon in the out of moves dialog.
     -Maybe a sliding text animation for when adding moves?
-    -Add a play icon to the next button in the level completed dialog.
-    -Maybe the whole moves object should expand/shrink when low on moves, not just the text.
+    -Maybe the whole moves object should expand/shrink when low on moves, not just the text. And the
+     icon can become yellow when low on moves.
 
     -Tutorial: Pht animation showing how to fill gray slots. It should show the field scroll up
      after filling all slots in a row.

@@ -61,7 +61,7 @@ namespace RowBlast {
         };
         
         struct ExtraAnimations {
-            bool mUfo {true};
+            bool mUfo {false};
             bool mGrayCube {false};
             bool mAsteroid {false};
             bool mBlueprintSlot {false};

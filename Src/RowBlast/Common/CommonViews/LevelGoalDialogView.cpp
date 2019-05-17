@@ -89,7 +89,13 @@ LevelGoalDialogView::LevelGoalDialogView(Pht::IEngine& engine,
                                                    Pht::Vec3 {0.0f, -7.7f, UiLayer::textRectangle},
                                                    playButtonInputSize,
                                                    playButtonStyle);
-        mPlayButton->CreateText({-1.1f, -0.31f, UiLayer::buttonText},
+        mPlayButton->CreateIcon("play.png",
+                                {-1.42f, 0.0f, UiLayer::buttonText},
+                                {0.8f, 0.8f},
+                                {1.0f, 1.0f, 1.0f, 1.0f},
+                                Pht::Vec4 {0.2f, 0.2f, 0.2f, 0.5f},
+                                Pht::Vec3 {-0.05f, -0.05f, UiLayer::textShadow});        
+        mPlayButton->CreateText({-0.8f, -0.31f, UiLayer::buttonText},
                                 "PLAY",
                                 guiResources.GetLargeWhiteButtonTextProperties(zoom));
     } else {

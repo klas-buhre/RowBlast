@@ -41,7 +41,13 @@ LevelCompletedDialogView::LevelCompletedDialogView(Pht::IEngine& engine,
                                                Pht::Vec3 {0.0f, -4.3f, UiLayer::textRectangle},
                                                nextButtonInputSize,
                                                nextButtonStyle);
-    mNextButton->CreateText({-1.1f, -0.31f, UiLayer::buttonText},
+    mNextButton->CreateIcon("play.png",
+                            {-1.42f, 0.0f, UiLayer::buttonText},
+                            {0.8f, 0.8f},
+                            {1.0f, 1.0f, 1.0f, 1.0f},
+                            Pht::Vec4 {0.2f, 0.2f, 0.2f, 0.5f},
+                            Pht::Vec3 {-0.05f, -0.05f, UiLayer::textShadow});
+    mNextButton->CreateText({-0.8f, -0.31f, UiLayer::buttonText},
                             "NEXT",
                             guiResources.GetLargeWhiteButtonTextProperties(zoom));
 }
