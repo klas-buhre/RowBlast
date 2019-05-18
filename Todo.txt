@@ -42,9 +42,8 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-    -It should be a moves icon with arrows in the out of moves animation in the sliding text anim.
-    -Tune the menu window border thickness.
     -Maybe a sliding text animation for when adding moves?
+    -Tune the menu window border thickness.
     -Maybe the whole moves object should expand/shrink when low on moves, not just the text. And the
      icon can become yellow when low on moves.
 

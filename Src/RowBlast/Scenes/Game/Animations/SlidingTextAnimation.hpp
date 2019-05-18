@@ -65,6 +65,7 @@ namespace RowBlast {
             bool mGrayCube {false};
             bool mAsteroid {false};
             bool mBlueprintSlot {false};
+            bool mMoves {false};
             bool mNumObjects {false};
             bool mCheckMark {false};
             bool mDownArrow {false};
@@ -96,6 +97,14 @@ namespace RowBlast {
         void CreateGreyCubeAnimation(const CommonResources& commonResources);
         void CreateAsteroidAnimation();
         void CreateBlueprintSlotAnimation(const LevelResources& levelResources);
+        void CreateMovesAnimation(const CommonResources& commonResources);
+        Pht::SceneObject& CreateMovesIcon(Pht::SceneObject& parent,
+                                          const CommonResources& commonResources,
+                                          float scale);
+        void CreateArrow(const Pht::Vec3& position,
+                         const Pht::Vec3& rotation,
+                         Pht::RenderableObject& renderable,
+                         Pht::SceneObject& parent);
         void CreateNumObjectsTextAnimation(const Pht::Font& font);
         Pht::Animation& CreateScalingAndRotationAnimation(Pht::SceneObject& sceneObject,
                                                           float scale,
@@ -144,6 +153,7 @@ namespace RowBlast {
         Pht::Animation* mGreyCubeAnimation {nullptr};
         Pht::Animation* mAsteroidAnimation {nullptr};
         Pht::Animation* mBlueprintSlotAnimation {nullptr};
+        Pht::Animation* mMovesAnimation {nullptr};
         Pht::Animation* mNumObjectsTextAnimation {nullptr};
         Pht::TextComponent* mNumObjectsText {nullptr};
         Pht::Animation* mCheckMarkAnimation {nullptr};

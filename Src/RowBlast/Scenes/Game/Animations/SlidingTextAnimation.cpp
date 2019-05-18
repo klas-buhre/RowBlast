@@ -149,10 +149,11 @@ SlidingTextAnimation::SlidingTextAnimation(Pht::IEngine& engine,
                                                 .mCheckMark = true
                                             });
     mOutOfMovesMessage = &CreateText(font,
-                                     3.5f,
+                                     3.0f,
                                      {{-2.8f, upperY}, "OUT OF", {0.25f, 1.15f}},
                                      {{-2.9f, lowerY}, "MOVES!", {4.9f, 1.15f}},
                                      ExtraAnimations{
+                                         .mMoves = true,
                                          .mNumObjects = true
                                      });
 
@@ -273,6 +274,7 @@ void SlidingTextAnimation::CreateExtraAnimationsContainer(const CommonResources&
     CreateGreyCubeAnimation(commonResources);
     CreateAsteroidAnimation();
     CreateBlueprintSlotAnimation(levelResources);
+    CreateMovesAnimation(commonResources);
     CreateNumObjectsTextAnimation(font);
     
     mCheckMarkAnimation = &CreateIconAnimation("checkmark.png",
@@ -349,6 +351,49 @@ void SlidingTextAnimation::CreateBlueprintSlotAnimation(const LevelResources& le
                                                                  scale,
                                                                  Pht::Optional<Pht::Vec3>{},
                                                                  Pht::Optional<Pht::Vec3>{});
+}
+
+void SlidingTextAnimation::CreateMovesAnimation(const CommonResources& commonResources) {
+    auto iconScale = 1.85f;
+    auto& movesIcon = CreateMovesIcon(*mExtraAnimationsContainer, commonResources, iconScale);
+    movesIcon.SetIsVisible(false);
+
+    mMovesAnimation = &CreateScalingAndRotationAnimation(movesIcon,
+                                                         iconScale,
+                                                         Pht::Vec3{0.0f, -25.0f, 0.0f},
+                                                         Pht::Vec3{-50.0f, -35.0f, 0.0f});
+}
+
+Pht::SceneObject& SlidingTextAnimation::CreateMovesIcon(Pht::SceneObject& parent,
+                                                        const CommonResources& commonResources,
+                                                        float scale) {
+    auto& movesIconSceneObject = mSceneResources.CreateSceneObject();
+    parent.AddChild(movesIconSceneObject);
+
+    auto& baseTransform = movesIconSceneObject.GetTransform();
+    baseTransform.SetPosition({-0.6f, 0.0f, UiLayer::block});
+    baseTransform.SetScale(scale);
+
+    Pht::ObjMesh mesh {"arrow_428_seg3_w001.obj", 3.2f};
+    auto& material = commonResources.GetMaterials().GetBlueArrowMaterial();
+    auto arrowRenderable = mEngine.GetSceneManager().CreateRenderableObject(mesh, material);
+
+    CreateArrow({0.0f, 0.25f, 0.0f}, {90.0f, 0.0f, 90.0f}, *arrowRenderable, movesIconSceneObject);
+    CreateArrow({0.0f, -0.25f, 0.0f}, {270.0f, 0.0f, 90.0f}, *arrowRenderable, movesIconSceneObject);
+    
+    mSceneResources.AddRenderableObject(std::move(arrowRenderable));
+    return movesIconSceneObject;
+}
+
+void SlidingTextAnimation::CreateArrow(const Pht::Vec3& position,
+                                       const Pht::Vec3& rotation,
+                                       Pht::RenderableObject& renderable,
+                                       Pht::SceneObject& parent) {
+    auto& arrow = mSceneResources.CreateSceneObject();
+    arrow.GetTransform().SetPosition(position);
+    arrow.GetTransform().SetRotation(rotation);
+    arrow.SetRenderable(&renderable);
+    parent.AddChild(arrow);
 }
 
 Pht::Animation&
@@ -851,6 +896,12 @@ void SlidingTextAnimation::StartPlayingExtraAnimations() {
         mBlueprintSlotAnimation->Play(static_cast<Pht::AnimationClipId>(AnimationClip::ScaleUp));
     }
 
+    if (mTextMessage->mExtraAnimations.mMoves) {
+        mMovesAnimation->Stop();
+        mMovesAnimation->Play(static_cast<Pht::AnimationClipId>(AnimationClip::ScaleUp));
+        mMovesAnimation->Play(static_cast<Pht::AnimationClipId>(AnimationClip::Rotation));
+    }
+
     if (mTextMessage->mExtraAnimations.mNumObjects) {
         mNumObjectsTextAnimation->Stop();
         mNumObjectsTextAnimation->Play(static_cast<Pht::AnimationClipId>(AnimationClip::ScaleUp));
@@ -872,6 +923,7 @@ void SlidingTextAnimation::UpdateExtraAnimations() {
     mGreyCubeAnimation->Update(dt);
     mAsteroidAnimation->Update(dt);
     mBlueprintSlotAnimation->Update(dt);
+    mMovesAnimation->Update(dt);
     mNumObjectsTextAnimation->Update(dt);
     mCheckMarkAnimation->Update(dt);
     mDownArrowAnimation->Update(dt);
@@ -888,6 +940,10 @@ void SlidingTextAnimation::StartScalingDownExtraAnimations() {
 
     if (mTextMessage->mExtraAnimations.mBlueprintSlot) {
         mBlueprintSlotAnimation->Play(static_cast<Pht::AnimationClipId>(AnimationClip::ScaleDown));
+    }
+
+    if (mTextMessage->mExtraAnimations.mMoves) {
+        mMovesAnimation->Play(static_cast<Pht::AnimationClipId>(AnimationClip::ScaleDown));
     }
 
     if (mTextMessage->mExtraAnimations.mNumObjects) {
