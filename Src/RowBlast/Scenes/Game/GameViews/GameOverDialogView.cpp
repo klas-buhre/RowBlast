@@ -35,8 +35,8 @@ GameOverDialogView::GameOverDialogView(Pht::IEngine& engine,
     Pht::Vec2 retryButtonInputSize {205.0f, 59.0f};
     
     MenuButton::Style retryButtonStyle;
-    retryButtonStyle.mRenderableObject = &guiResources.GetLargeGreenGlossyButton(zoom);
-    retryButtonStyle.mSelectedRenderableObject = &guiResources.GetLargeDarkGreenGlossyButton(zoom);
+    retryButtonStyle.mRenderableObject = &guiResources.GetLargeBlueGlossyButton(zoom);
+    retryButtonStyle.mSelectedRenderableObject = &guiResources.GetLargeDarkBlueGlossyButton(zoom);
     retryButtonStyle.mPressedScale = 1.05f;
     retryButtonStyle.mTextScale = 1.1f;
 

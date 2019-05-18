@@ -17,15 +17,12 @@ namespace Pht {
 
 namespace RowBlast {
     class CommonResources;
-    class PieceResources;
     class IGuiLightProvider;
     class GameScene;
     
     class OutOfMovesDialogView: public Pht::GuiView {
     public:
-        OutOfMovesDialogView(Pht::IEngine& engine,
-                             const CommonResources& commonResources,
-                             const PieceResources& pieceResources);
+        OutOfMovesDialogView(Pht::IEngine& engine, const CommonResources& commonResources);
         
         void OnDeactivate() override;
         
@@ -46,16 +43,15 @@ namespace RowBlast {
         }
         
     private:
-        void CreateAddMovesIcon(const Pht::Vec3& position,
-                                const CommonResources& commonResources,
-                                const PieceResources& pieceResources);
-        void CreateLPiece(Pht::SceneObject& parentObject, const PieceResources& pieceResources);
-        void CreateGreenBlock(const Pht::Vec3& position,
-                              Pht::RenderableObject& blockRenderable,
-                              Pht::SceneObject& lPiece);
+        void CreateAddMovesIcon(const Pht::Vec3& position, const CommonResources& commonResources);
+        void CreateMovesIcon(Pht::SceneObject& parent, const CommonResources& commonResources);
+        void CreateArrow(const Pht::Vec3& position,
+                         const Pht::Vec3& rotation,
+                         Pht::RenderableObject& renderable,
+                         Pht::SceneObject& parent);
         void CreateGlowEffect(Pht::SceneObject& parentObject);
         void CreateParticles(Pht::SceneObject& parentObject);
-        void AnimateLPieceRotation(float dt);
+        void AnimateIconRotation(float dt);
 
         Pht::IEngine& mEngine;
         GameScene* mScene {nullptr};
@@ -64,9 +60,11 @@ namespace RowBlast {
         std::unique_ptr<MenuButton> mPlayOnButton;
         std::unique_ptr<Pht::SceneObject> mGlowEffect;
         std::unique_ptr<Pht::SceneObject> mParticles;
+        std::unique_ptr<Pht::RenderableObject> mArrowRenderable;
         Pht::SceneObject* mUpperHudSceneObject {nullptr};
-        Pht::SceneObject* mLPieceSceneObject {nullptr};
-        float mAnimationTime {0.0f};
+        Pht::SceneObject* mMovesIconSceneObject {nullptr};
+        float mRotationAnimationTime {0.0f};
+        float mScaleAnimationTime {0.0f};
     };
 }
 

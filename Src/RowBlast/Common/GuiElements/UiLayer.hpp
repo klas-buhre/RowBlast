@@ -4,7 +4,8 @@
 namespace RowBlast {
     namespace UiLayer {
         constexpr auto buttonText = 1.0f;
-        constexpr auto buttonOverlayObject = 0.1f;
+        constexpr auto buttonOverlayObject2 = 0.2f;
+        constexpr auto buttonOverlayObject1 = 0.1f;
         constexpr auto root = 0.0f;
         constexpr auto text = 0.0f;
         constexpr auto textShadow = -0.1f;

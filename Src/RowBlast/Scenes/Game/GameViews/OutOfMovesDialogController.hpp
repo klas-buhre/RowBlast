@@ -24,8 +24,7 @@ namespace RowBlast {
         
         OutOfMovesDialogController(Pht::IEngine& engine,
                                    const CommonResources& commonResources,
-                                   const UserServices& userServices,
-                                   const PieceResources& pieceResources);
+                                   const UserServices& userServices);
         
         void SetFadeEffect(Pht::FadeEffect& fadeEffect);
         void SetGuiLightProvider(IGuiLightProvider& guiLightProvider);

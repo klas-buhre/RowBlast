@@ -11,11 +11,10 @@ using namespace RowBlast;
 
 OutOfMovesDialogController::OutOfMovesDialogController(Pht::IEngine& engine,
                                                        const CommonResources& commonResources,
-                                                       const UserServices& userServices,
-                                                       const PieceResources& pieceResources) :
+                                                       const UserServices& userServices) :
     mInput {engine.GetInput()},
     mUserServices {userServices},
-    mView {engine, commonResources, pieceResources},
+    mView {engine, commonResources},
     mSlidingMenuAnimation {engine, mView} {}
 
 void OutOfMovesDialogController::SetFadeEffect(Pht::FadeEffect& fadeEffect) {

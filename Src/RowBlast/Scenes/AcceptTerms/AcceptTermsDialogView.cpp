@@ -83,8 +83,8 @@ AcceptTermsDialogView::AcceptTermsDialogView(Pht::IEngine& engine,
     Pht::Vec2 agreeButtonInputSize {194.0f, 50.0f};
 
     MenuButton::Style agreeButtonStyle;
-    agreeButtonStyle.mRenderableObject = &guiResources.GetLargeGreenGlossyButton(zoom);
-    agreeButtonStyle.mSelectedRenderableObject = &guiResources.GetLargeDarkGreenGlossyButton(zoom);
+    agreeButtonStyle.mRenderableObject = &guiResources.GetLargeGreenGlossyButton();
+    agreeButtonStyle.mSelectedRenderableObject = &guiResources.GetLargeDarkGreenGlossyButton();
     agreeButtonStyle.mPressedScale = 1.05f;
 
     mAgreeButton = std::make_unique<MenuButton>(engine,

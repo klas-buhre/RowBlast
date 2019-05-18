@@ -95,14 +95,20 @@ NoLivesDialogView::NoLivesDialogView(Pht::IEngine& engine,
     MenuButton::Style refillLivesButtonStyle;
     refillLivesButtonStyle.mPressedScale = 1.05f;
     refillLivesButtonStyle.mTextScale = 1.05f;
-    refillLivesButtonStyle.mRenderableObject = &guiResources.GetLargeGreenGlossyButton(zoom);
-    refillLivesButtonStyle.mSelectedRenderableObject = &guiResources.GetLargeDarkGreenGlossyButton(zoom);
+    refillLivesButtonStyle.mRenderableObject = &guiResources.GetLargeBlueGlossyButton(zoom);
+    refillLivesButtonStyle.mSelectedRenderableObject = &guiResources.GetLargeDarkBlueGlossyButton(zoom);
 
     mRefillLivesButton = std::make_unique<MenuButton>(engine,
                                                       *this,
                                                       Pht::Vec3 {0.0f, -7.9f, UiLayer::textRectangle},
                                                       refillLivesInputSize,
                                                       refillLivesButtonStyle);
+    mRefillLivesButton->CreateIcon("play.png",
+                                   {-3.3f, 0.0f, UiLayer::buttonText},
+                                   {0.7f, 0.7f},
+                                   {1.0f, 1.0f, 1.0f, 1.0f},
+                                   Pht::Vec4 {0.2f, 0.2f, 0.2f, 0.5f},
+                                   Pht::Vec3 {-0.05f, -0.05f, UiLayer::textShadow});
 
     Pht::TextProperties buttonTextProperties {
         commonResources.GetHussarFontSize27(zoom),
@@ -110,7 +116,7 @@ NoLivesDialogView::NoLivesDialogView(Pht::IEngine& engine,
         Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f}
     };
 
-    mRefillLivesButton->CreateText({-3.1f, -0.24f, UiLayer::buttonText},
+    mRefillLivesButton->CreateText({-2.7f, -0.24f, UiLayer::buttonText},
                                    "CONTINUE           " + std::to_string(PurchasingService::refillLivesPriceInCoins),
                                    buttonTextProperties);
 
@@ -119,10 +125,23 @@ NoLivesDialogView::NoLivesDialogView(Pht::IEngine& engine,
                           commonResources.GetMaterials().GetGoldMaterial(),
                           engine.GetSceneManager());
     auto& coinTransform = coin.GetTransform();
-    coinTransform.SetPosition({1.85f, 0.0f, UiLayer::buttonOverlayObject});
+    coinTransform.SetPosition({2.25f, 0.0f, UiLayer::buttonOverlayObject2});
     coinTransform.SetRotation({0.0f, 40.0f, 0.0f});
     coinTransform.SetScale(0.9f);
     mRefillLivesButton->GetSceneObject().AddChild(coin);
+    
+    Pht::Material shaddowMaterial {Pht::Color{0.05f, 0.05f, 0.05f}};
+    shaddowMaterial.SetOpacity(0.14f);
+    shaddowMaterial.GetDepthState().mDepthTestAllowedOverride = true;
+    auto& coinShaddow =
+        CreateSceneObject(Pht::ObjMesh {"coin_852.obj", 3.15f},
+                          shaddowMaterial,
+                          engine.GetSceneManager());
+    auto& coinShaddowTransform = coinShaddow.GetTransform();
+    coinShaddowTransform.SetPosition({2.12f, -0.12f, UiLayer::buttonOverlayObject1});
+    coinShaddowTransform.SetRotation({0.0f, 40.0f, 0.0f});
+    coinShaddowTransform.SetScale(0.9f);
+    mRefillLivesButton->GetSceneObject().AddChild(coinShaddow);
 }
 
 void NoLivesDialogView::CreateNoLivesIcon(const Pht::Vec3& position,
@@ -324,6 +343,6 @@ void NoLivesDialogView::UpdateHeartBeatAnimation(float dt) {
         mHeartBeatAnimationTime = 0.0f;
     }
     
-    auto t {mHeartBeatAnimationTime * 2.0f * 3.1415f / heartBeatAnimationDuration};
+    auto t = mHeartBeatAnimationTime * 2.0f * 3.1415f / heartBeatAnimationDuration;
     mHeartSceneObject->GetTransform().SetScale(1.0f + heartBeatAmplitude * std::sin(t));
 }
