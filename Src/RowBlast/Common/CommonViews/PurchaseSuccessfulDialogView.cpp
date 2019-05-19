@@ -37,17 +37,29 @@ PurchaseSuccessfulDialogView::PurchaseSuccessfulDialogView(Pht::IEngine& engine,
     mCloseButton = GuiUtils::CreateCloseButton(engine, *this, guiResources, zoom);
     GuiUtils::CreateTitleBarLine(engine, *this);
 
+    auto coinXPosition = -0.45f;
     auto& coin =
         CreateSceneObject(Pht::ObjMesh {"coin_852.obj", 3.15f},
                           commonResources.GetMaterials().GetLightGoldMaterial(),
                           engine.GetSceneManager());
     auto& coinTransform = coin.GetTransform();
-    coinTransform.SetPosition({0.0f, 1.5f, UiLayer::block});
+    coinTransform.SetPosition({coinXPosition, 1.5f, UiLayer::block});
     coinTransform.SetRotation({0.0f, 45.0f, 0.0f});
     coinTransform.SetScale(3.1f);
     GetRoot().AddChild(coin);
     
-    CreateGlowEffect({0.0f, 1.5f, UiLayer::panel}, GetRoot(), 1.45f);
+    CreateGlowEffect({coinXPosition, 1.5f, UiLayer::panel}, GetRoot(), 2.45f);
+    
+    auto& icon = GuiUtils::CreateIconWithShadow(engine,
+                                                GetSceneResources(),
+                                                "checkmark.png",
+                                                {2.45f, 1.5f, UiLayer::text},
+                                                {2.5f, 2.5f},
+                                                GetRoot(),
+                                                {0.325f, 0.76f, 0.325f, 1.0f},
+                                                Pht::Vec4{0.0f, 0.0f, 0.0f, 0.35f},
+                                                Pht::Vec3{-0.05f, -0.15f, UiLayer::textShadow});
+    GetRoot().AddChild(icon);
 
     mConfirmationText = &CreateText({-5.5f, -1.75f, UiLayer::text}, "", textProperties);
 

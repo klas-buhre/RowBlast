@@ -150,7 +150,7 @@ SlidingTextAnimation::SlidingTextAnimation(Pht::IEngine& engine,
                                             });
     mOutOfMovesMessage = &CreateText(font,
                                      3.0f,
-                                     {{-2.8f, upperY}, "OUT OF", {0.25f, 1.15f}},
+                                     {{-2.8f, upperY}, "OUT OF", {0.65f, 1.15f}},
                                      {{-2.9f, lowerY}, "MOVES!", {4.9f, 1.15f}},
                                      ExtraAnimations{
                                          .mMoves = true,
@@ -236,7 +236,7 @@ void SlidingTextAnimation::CreateTwinkleParticleEffects() {
         .mTimeToLiveRandomPart = 0.0f,
         .mFadeOutDuration = 0.0f,
         .mZAngularVelocity = 100.0f,
-        .mSize = Pht::Vec2{4.5f, 4.5f},
+        .mSize = Pht::Vec2{6.5f, 6.5f},
         .mSizeRandomPart = 0.0f,
         .mShrinkDuration = 0.5f
     };
@@ -371,7 +371,7 @@ Pht::SceneObject& SlidingTextAnimation::CreateMovesIcon(Pht::SceneObject& parent
     parent.AddChild(movesIconSceneObject);
 
     auto& baseTransform = movesIconSceneObject.GetTransform();
-    baseTransform.SetPosition({-0.6f, 0.0f, UiLayer::block});
+    baseTransform.SetPosition({-0.5f, 0.0f, UiLayer::block});
     baseTransform.SetScale(scale);
 
     Pht::ObjMesh mesh {"arrow_428_seg3_w001.obj", 3.2f};

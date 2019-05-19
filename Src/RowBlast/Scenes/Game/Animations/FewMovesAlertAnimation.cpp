@@ -10,7 +10,7 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto fewMovesAlertLimit = 5;
+    constexpr auto fewMovesAlertLimit = 4;
     constexpr auto animationDuration = 0.75f;
     constexpr auto animationScaleAmplitude = 0.3f;
     constexpr auto animationScaleAdd = 0.3f;
