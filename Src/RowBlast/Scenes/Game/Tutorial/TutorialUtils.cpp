@@ -75,7 +75,7 @@ void TutorialUtils::CreateFieldQuadFrame(Pht::IEngine& engine,
                                          Pht::GuiView& view,
                                          Pht::SceneObject& parent) {
     Pht::Material lineMaterial {Pht::Color{0.0f, 0.0f, 0.0f}};
-    lineMaterial.SetOpacity(0.5f);
+    lineMaterial.SetOpacity(0.325f);
     auto& sceneManager = engine.GetSceneManager();
     
     auto& container = view.CreateSceneObject();

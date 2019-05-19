@@ -15,12 +15,24 @@ namespace Pht {
 
 namespace RowBlast {
     class GuiResources;
+    class CommonResources;
     
     namespace GuiUtils {
         std::unique_ptr<MenuButton> CreateCloseButton(Pht::IEngine& engine,
                                                       Pht::GuiView& view,
                                                       const GuiResources& guiResources,
                                                       PotentiallyZoomedScreen zoom);
+        std::unique_ptr<MenuButton> CreatePlayOnButton(Pht::IEngine& engine,
+                                                       Pht::GuiView& view,
+                                                       const Pht::Vec3& position,
+                                                       int priceInCoins,
+                                                       const CommonResources& commonResources,
+                                                       PotentiallyZoomedScreen zoom);
+        std::unique_ptr<MenuButton> CreateMediumPlayButton(Pht::IEngine& engine,
+                                                           Pht::GuiView& view,
+                                                           const Pht::Vec3& position,
+                                                           const GuiResources& guiResources,
+                                                           PotentiallyZoomedScreen zoom);
         void CreateIcon(Pht::IEngine& engine,
                         Pht::GuiView& view,
                         const std::string& filename,

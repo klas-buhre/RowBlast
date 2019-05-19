@@ -59,22 +59,12 @@ AsteroidDialogView::AsteroidDialogView(Pht::IEngine& engine,
     auto& textProperties = guiResources.GetSmallWhiteTextProperties(zoom);
     CreateText({-4.4f, -4.8f, UiLayer::panel}, "Bring the asteroid down to", textProperties);
     CreateText({-3.8f, -5.875f, UiLayer::panel}, "the bottom of the field", textProperties);
-    
-    Pht::Vec2 playButtonInputSize {194.0f, 43.0f};
 
-    MenuButton::Style playButtonStyle;
-    playButtonStyle.mRenderableObject = &guiResources.GetMediumBlueGlossyButton(zoom);
-    playButtonStyle.mSelectedRenderableObject = &guiResources.GetMediumDarkBlueGlossyButton(zoom);
-    playButtonStyle.mPressedScale = 1.05f;
-
-    mPlayButton = std::make_unique<MenuButton>(engine,
-                                               *this,
-                                               Pht::Vec3 {0.0f, -8.2f, UiLayer::textRectangle},
-                                               playButtonInputSize,
-                                               playButtonStyle);
-    mPlayButton->CreateText({-0.9f, -0.23f, UiLayer::buttonText},
-                            "PLAY",
-                            guiResources.GetWhiteButtonTextProperties(zoom));
+    mPlayButton = GuiUtils::CreateMediumPlayButton(engine,
+                                                   *this,
+                                                   {0.0f, -8.2f, UiLayer::textRectangle},
+                                                   guiResources,
+                                                   zoom);
 }
 
 void AsteroidDialogView::CreateAnimation(const PieceResources& pieceResources,

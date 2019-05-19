@@ -75,59 +75,13 @@ OutOfMovesDialogView::OutOfMovesDialogView(Pht::IEngine& engine,
     auto& textProperties = guiResources.GetSmallWhiteTextProperties(zoom);
     CreateText({-5.1f, -0.925f, UiLayer::text}, "Get 5 more moves and continue", textProperties);
     CreateText({-1.3f, -2.0f, UiLayer::text}, "playing", textProperties);
-    
-    Pht::Vec2 playOnButtonInputSize {194.0f, 50.0f};
 
-    MenuButton::Style playOnButtonStyle;
-    playOnButtonStyle.mPressedScale = 1.05f;
-    playOnButtonStyle.mTextScale = 1.05f;
-    playOnButtonStyle.mRenderableObject = &guiResources.GetLargeBlueGlossyButton(zoom);
-    playOnButtonStyle.mSelectedRenderableObject = &guiResources.GetLargeDarkBlueGlossyButton(zoom);
-
-    mPlayOnButton = std::make_unique<MenuButton>(engine,
+    mPlayOnButton = GuiUtils::CreatePlayOnButton(engine,
                                                  *this,
-                                                 Pht::Vec3 {0.0f, -4.8f, UiLayer::textRectangle},
-                                                 playOnButtonInputSize,
-                                                 playOnButtonStyle);
-    mPlayOnButton->CreateIcon("play.png",
-                              {-3.3f, 0.0f, UiLayer::buttonText},
-                              {0.7f, 0.7f},
-                              {1.0f, 1.0f, 1.0f, 1.0f},
-                              Pht::Vec4 {0.2f, 0.2f, 0.2f, 0.5f},
-                              Pht::Vec3 {-0.05f, -0.05f, UiLayer::textShadow});
-
-    Pht::TextProperties buttonTextProperties {
-        commonResources.GetHussarFontSize27(zoom),
-        1.05f,
-        Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f}
-    };
-
-    mPlayOnButton->CreateText({-2.7f, -0.24f, UiLayer::buttonText},
-                              "CONTINUE           " + std::to_string(PurchasingService::addMovesPriceInCoins),
-                              buttonTextProperties);
-
-    auto& coin =
-        CreateSceneObject(Pht::ObjMesh {"coin_852.obj", 3.15f},
-                          commonResources.GetMaterials().GetGoldMaterial(),
-                          engine.GetSceneManager());
-    auto& coinTransform = coin.GetTransform();
-    coinTransform.SetPosition({2.25f, 0.0f, UiLayer::buttonOverlayObject2});
-    coinTransform.SetRotation({0.0f, 40.0f, 0.0f});
-    coinTransform.SetScale(0.9f);
-    mPlayOnButton->GetSceneObject().AddChild(coin);
-    
-    Pht::Material shaddowMaterial {Pht::Color{0.05f, 0.05f, 0.05f}};
-    shaddowMaterial.SetOpacity(0.14f);
-    shaddowMaterial.GetDepthState().mDepthTestAllowedOverride = true;
-    auto& coinShaddow =
-        CreateSceneObject(Pht::ObjMesh {"coin_852.obj", 3.15f},
-                          shaddowMaterial,
-                          engine.GetSceneManager());
-    auto& coinShaddowTransform = coinShaddow.GetTransform();
-    coinShaddowTransform.SetPosition({2.12f, -0.12f, UiLayer::buttonOverlayObject1});
-    coinShaddowTransform.SetRotation({0.0f, 40.0f, 0.0f});
-    coinShaddowTransform.SetScale(0.9f);
-    mPlayOnButton->GetSceneObject().AddChild(coinShaddow);
+                                                 {0.0f, -4.8f, UiLayer::textRectangle},
+                                                 PurchasingService::addMovesPriceInCoins,
+                                                 commonResources,
+                                                 zoom);
 }
 
 void OutOfMovesDialogView::CreateAddMovesIcon(const Pht::Vec3& position,

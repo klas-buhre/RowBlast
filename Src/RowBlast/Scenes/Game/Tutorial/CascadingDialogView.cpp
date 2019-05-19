@@ -8,6 +8,7 @@
 // Game includes.
 #include "CommonResources.hpp"
 #include "UiLayer.hpp"
+#include "GuiUtils.hpp"
 
 using namespace RowBlast;
 
@@ -40,19 +41,9 @@ CascadingDialogView::CascadingDialogView(Pht::IEngine& engine,
     CreateText({-5.2f, 0.2825f, UiLayer::text}, "but colored blocks are always", textProperties);
     CreateText({-3.95f, -0.7925f, UiLayer::text}, "pulled down by gravity", textProperties);
 
-    Pht::Vec2 playButtonInputSize {194.0f, 43.0f};
-
-    MenuButton::Style playButtonStyle;
-    playButtonStyle.mRenderableObject = &guiResources.GetMediumBlueGlossyButton(zoom);
-    playButtonStyle.mSelectedRenderableObject = &guiResources.GetMediumDarkBlueGlossyButton(zoom);
-    playButtonStyle.mPressedScale = 1.05f;
-
-    mPlayButton = std::make_unique<MenuButton>(engine,
-                                               *this,
-                                               Pht::Vec3 {0.0f, -3.5f, UiLayer::textRectangle},
-                                               playButtonInputSize,
-                                               playButtonStyle);
-    mPlayButton->CreateText({-0.9f, -0.23f, UiLayer::buttonText},
-                            "PLAY",
-                            guiResources.GetWhiteButtonTextProperties(zoom));
+    mPlayButton = GuiUtils::CreateMediumPlayButton(engine,
+                                                   *this,
+                                                   {0.0f, -3.5f, UiLayer::textRectangle},
+                                                   guiResources,
+                                                   zoom);
 }

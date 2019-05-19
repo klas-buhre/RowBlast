@@ -8,6 +8,7 @@
 // Game includes.
 #include "CommonResources.hpp"
 #include "UiLayer.hpp"
+#include "GuiUtils.hpp"
 
 using namespace RowBlast;
 
@@ -39,19 +40,9 @@ SameColorDialogView::SameColorDialogView(Pht::IEngine& engine,
     CreateText({-4.9f, 0.30f + 0.45f, UiLayer::text}, "Blocks of the same color will", textProperties);
     CreateText({-3.35f, -0.775f + 0.45f, UiLayer::text}, "stick to one another", textProperties);
 
-    Pht::Vec2 playButtonInputSize {194.0f, 43.0f};
-
-    MenuButton::Style playButtonStyle;
-    playButtonStyle.mRenderableObject = &guiResources.GetMediumBlueGlossyButton(zoom);
-    playButtonStyle.mSelectedRenderableObject = &guiResources.GetMediumDarkBlueGlossyButton(zoom);
-    playButtonStyle.mPressedScale = 1.05f;
-
-    mPlayButton = std::make_unique<MenuButton>(engine,
-                                               *this,
-                                               Pht::Vec3 {0.0f, -3.5f, UiLayer::textRectangle},
-                                               playButtonInputSize,
-                                               playButtonStyle);
-    mPlayButton->CreateText({-0.9f, -0.23f, UiLayer::buttonText},
-                            "PLAY",
-                            guiResources.GetWhiteButtonTextProperties(zoom));
+    mPlayButton = GuiUtils::CreateMediumPlayButton(engine,
+                                                   *this,
+                                                   {0.0f, -3.5f, UiLayer::textRectangle},
+                                                   guiResources,
+                                                   zoom);
 }
