@@ -21,8 +21,12 @@ namespace RowBlast {
             return *mDownArrowRenderable;
         }
 
-        Pht::RenderableObject& GetArrowMeshRenderable() const {
-            return *mArrowMeshRenderable;
+        Pht::RenderableObject& GetBlueArrowMeshRenderable() const {
+            return *mBlueArrowMeshRenderable;
+        }
+
+        Pht::RenderableObject& GetYellowArrowMeshRenderable() const {
+            return *mYellowArrowMeshRenderable;
         }
 
     private:
@@ -30,7 +34,8 @@ namespace RowBlast {
         void CreateArrowMesh(Pht::IEngine& engine, const CommonResources& commonResources);
         
         std::unique_ptr<Pht::RenderableObject> mDownArrowRenderable;
-        std::unique_ptr<Pht::RenderableObject> mArrowMeshRenderable;
+        std::unique_ptr<Pht::RenderableObject> mBlueArrowMeshRenderable;
+        std::unique_ptr<Pht::RenderableObject> mYellowArrowMeshRenderable;
     };
 }
 

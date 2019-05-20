@@ -286,7 +286,7 @@ void GameHud::CreateMovesObject(Pht::Scene& scene,
                                 Pht::SceneObject& parentObject,
                                 const CommonResources& commonResources,
                                 const GameHudResources& gameHudResources) {
-    auto& movesContainer = scene.CreateSceneObject();
+    mMovesContainer = &scene.CreateSceneObject(parentObject);
     auto& renderer = mEngine.GetRenderer();
     
     Pht::Vec3 position {
@@ -295,13 +295,13 @@ void GameHud::CreateMovesObject(Pht::Scene& scene,
         UiLayer::root
     };
 
-    mMovesContainer = &movesContainer;
-    movesContainer.GetTransform().SetPosition(position);
-    parentObject.AddChild(movesContainer);
+    mMovesContainer->GetTransform().SetPosition(position);
+    
+    mMovesRoundedCylinderContainer = &scene.CreateSceneObject(*mMovesContainer);
 
     Pht::Vec3 cylinderPosition {0.0f, 0.0f, UiLayer::lowerTextRectangle};
     CreateRoundedCylinder(scene,
-                          movesContainer,
+                          *mMovesRoundedCylinderContainer,
                           cylinderPosition,
                           {2.5, 1.05f},
                           roundedCylinderOpacity,
@@ -318,24 +318,26 @@ void GameHud::CreateMovesObject(Pht::Scene& scene,
         Pht::SnapToPixel::No
     };
     
-    std::string text {"   "};   // Warning! Must be three spaces to fit digits.
-    mMovesText = &scene.CreateText(text, textProperties);
-    auto& movesTextSceneobject = mMovesText->GetSceneObject();
-    movesTextSceneobject.GetTransform().SetPosition({-0.55f, -0.285f, UiLayer::text});
-    
-    mMovesTextContainer = &scene.CreateSceneObject();
+    mMovesTextContainer = &scene.CreateSceneObject(*mMovesContainer);
     mMovesTextContainer->GetTransform().SetPosition({0.5f, 0.0f, UiLayer::root});
-    mMovesTextContainer->AddChild(movesTextSceneobject);
+
+    std::string text {"   "};   // Warning! Must be three spaces to fit digits.
+    mMovesText = &scene.CreateText(text, textProperties, *mMovesTextContainer);
+    mMovesText->GetSceneObject().GetTransform().SetPosition({-0.55f, -0.285f, UiLayer::text});
     
-    movesContainer.AddChild(*mMovesTextContainer);
+    mBlueMovesIcon = &CreateMovesIcon(scene,
+                                      *mMovesRoundedCylinderContainer,
+                                      gameHudResources.GetBlueArrowMeshRenderable());
+    mYellowMovesIcon = &CreateMovesIcon(scene,
+                                        *mMovesRoundedCylinderContainer,
+                                        gameHudResources.GetYellowArrowMeshRenderable());
     
-    CreateMovesIcon(scene, movesContainer, gameHudResources);
     Pht::SceneObjectUtils::ScaleRecursively(*mMovesContainer, movesTextScale);
 }
 
-void GameHud::CreateMovesIcon(Pht::Scene& scene,
-                              Pht::SceneObject& movesContainer,
-                              const GameHudResources& gameHudResources) {
+Pht::SceneObject& GameHud::CreateMovesIcon(Pht::Scene& scene,
+                                           Pht::SceneObject& movesContainer,
+                                           Pht::RenderableObject& arrowRenderable) {
     auto& movesIcon = scene.CreateSceneObject();
     movesContainer.AddChild(movesIcon);
 
@@ -343,9 +345,10 @@ void GameHud::CreateMovesIcon(Pht::Scene& scene,
     baseTransform.SetPosition({-0.95f, 0.0f, UiLayer::root});
     baseTransform.SetRotation({-29.1f, -29.1f, 0.0f});
 
-    auto& arrowRenderable = gameHudResources.GetArrowMeshRenderable();
     CreateArrow({0.0f, 0.27f, 0.0f}, {90.0f, 0.0f, 90.0f}, arrowRenderable, scene, movesIcon);
     CreateArrow({0.05f, -0.27f, 0.0f}, {270.0f, 0.0f, 90.0f}, arrowRenderable, scene, movesIcon);
+    
+    return movesIcon;
 }
 
 void GameHud::CreateArrow(const Pht::Vec3& position,
@@ -623,4 +626,14 @@ void GameHud::OnNextPieceAnimationFinished() {
     UpdatePreviewPiece(mNextPreviewPieces[0], nullptr, positions[0]);
     UpdatePreviewPiece(mNextPreviewPieces[1], next2Pieces[0], positions[1]);
     UpdatePreviewPiece(mNextPreviewPieces[2], next2Pieces[1], positions[2]);
+}
+
+void GameHud::ShowBlueMovesIcon() {
+    mBlueMovesIcon->SetIsVisible(true);
+    mYellowMovesIcon->SetIsVisible(false);
+}
+
+void GameHud::ShowYellowMovesIcon() {
+    mYellowMovesIcon->SetIsVisible(true);
+    mBlueMovesIcon->SetIsVisible(false);
 }

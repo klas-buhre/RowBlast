@@ -37,8 +37,12 @@ namespace Pht {
         LightComponent& CreateGlobalLight();
         CameraComponent& CreateCamera();
         SceneObject& CreateSceneObject(const IMesh& mesh, const Material& material);
+        SceneObject& CreateSceneObject(SceneObject& parent);
         SceneObject& CreateSceneObject();
         TextComponent& CreateText(const std::string& text, const TextProperties& properties);
+        TextComponent& CreateText(const std::string& text,
+                                  const TextProperties& properties,
+                                  SceneObject& parent);
         void AddSceneObject(std::unique_ptr<SceneObject> sceneObject);
         void AddRenderableObject(std::unique_ptr<RenderableObject> renderableObject);
         void AddRenderPass(const RenderPass& renderPass);

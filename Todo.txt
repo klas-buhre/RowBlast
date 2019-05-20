@@ -42,6 +42,7 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
+    -Use the 35-font for the moves text to make it sharper while low on moves.
     -Maybe an animation for when adding moves in the upper hud?
       -Candy has a HUD message saying Good Luck with Tiffi.
       -Diamond diaries has a HUD message saying +5 moves and an animation adding moves to the moves left.
@@ -49,8 +50,6 @@ Ongoing tasks:
       -Friends have no HUD message but a animation adding moves.
       -Soda have no HUD message but a animation adding moves.
     -Tune the menu window border thickness.
-    -Maybe the whole moves object should expand/shrink when low on moves, not just the text. And the
-     icon can become yellow when low on moves but go back to blue when zero.
 
     -Tutorial: Pht animation showing how to fill gray slots. It should show the field scroll up
      after filling all slots in a row.

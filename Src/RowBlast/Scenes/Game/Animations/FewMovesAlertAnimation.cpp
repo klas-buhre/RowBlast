@@ -12,8 +12,10 @@ using namespace RowBlast;
 namespace {
     constexpr auto fewMovesAlertLimit = 4;
     constexpr auto animationDuration = 0.75f;
-    constexpr auto animationScaleAmplitude = 0.3f;
-    constexpr auto animationScaleAdd = 0.3f;
+    constexpr auto animationScaleAmplitude = 0.06f;
+    constexpr auto animationScaleAdd = 0.06f;
+    constexpr auto animationTextScaleAmplitude = 0.41f;
+    constexpr auto animationTextScaleAdd = 0.41f;
 }
 
 FewMovesAlertAnimation::FewMovesAlertAnimation(GameScene& scene, const GameLogic& gameLogic) :
@@ -23,7 +25,12 @@ FewMovesAlertAnimation::FewMovesAlertAnimation(GameScene& scene, const GameLogic
 void FewMovesAlertAnimation::Init() {
     mState = State::Inactive;
     mElapsedTime = 0.0f;
-    mMovesTextContainerSceneObject = &mScene.GetHud().GetMovesTextContainer();
+    
+    auto& hud = mScene.GetHud();
+    mMovesContainerSceneObject = &hud.GetMovesRoundedCylinderContainer();
+    mMovesTextContainerSceneObject = &hud.GetMovesTextContainer();
+    
+    hud.ShowBlueMovesIcon();
 }
 
 void FewMovesAlertAnimation::Update(float dt) {
@@ -34,6 +41,9 @@ void FewMovesAlertAnimation::Update(float dt) {
         case State::Active:
             UpdateInActiveState(dt);
             break;
+        case State::ZeroMoves:
+            UpdateInZeroMovesState();
+            break;
     }
 }
 
@@ -41,15 +51,18 @@ void FewMovesAlertAnimation::UpdateInInactiveState() {
     if (mGameLogic.GetMovesLeft() <= fewMovesAlertLimit) {
         mState = State::Active;
         mElapsedTime = 0.0f;
+        mScene.GetHud().ShowYellowMovesIcon();
     }
 }
 
 void FewMovesAlertAnimation::UpdateInActiveState(float dt) {
     auto movesLeft = mGameLogic.GetMovesLeft();
-    if (movesLeft > fewMovesAlertLimit || movesLeft <= 0) {
+    if (movesLeft > fewMovesAlertLimit) {
         mState = State::Inactive;
-        Pht::SceneObjectUtils::ScaleRecursively(*mMovesTextContainerSceneObject,
-                                                GameHud::movesTextScale);
+        RestoreHud();
+    } else if (movesLeft <= 0) {
+        mState = State::ZeroMoves;
+        RestoreHud();
     } else {
         mElapsedTime += dt;
         if (mElapsedTime > animationDuration) {
@@ -57,10 +70,27 @@ void FewMovesAlertAnimation::UpdateInActiveState(float dt) {
         }
         
         auto t = mElapsedTime * 2.0f * 3.1415f / animationDuration;
+        auto sinT = std::sin(t);
+
+        auto movesContainerScale = 1.0f + animationScaleAdd + animationScaleAmplitude * sinT;
+        mMovesContainerSceneObject->GetTransform().SetScale(movesContainerScale);
         
-        auto scale =
-            GameHud::movesTextScale + animationScaleAdd + animationScaleAmplitude * std::sin(t);
-        
-        Pht::SceneObjectUtils::ScaleRecursively(*mMovesTextContainerSceneObject, scale);
+        auto textScale =
+            GameHud::movesTextScale + animationTextScaleAdd + animationTextScaleAmplitude * sinT;
+        Pht::SceneObjectUtils::ScaleRecursively(*mMovesTextContainerSceneObject, textScale);
     }
+}
+
+void FewMovesAlertAnimation::UpdateInZeroMovesState() {
+    if (mGameLogic.GetMovesLeft() > fewMovesAlertLimit) {
+        mState = State::Inactive;
+        RestoreHud();
+    }
+}
+
+void FewMovesAlertAnimation::RestoreHud() {
+    mScene.GetHud().ShowBlueMovesIcon();
+    Pht::SceneObjectUtils::ScaleRecursively(*mMovesContainerSceneObject, 1.0f);
+    Pht::SceneObjectUtils::ScaleRecursively(*mMovesTextContainerSceneObject,
+                                            GameHud::movesTextScale);
 }

@@ -62,6 +62,8 @@ namespace RowBlast {
         void OnSwitchPieceAnimationFinished();
         void OnNextPieceAnimationFinished();
         void Update();
+        void ShowBlueMovesIcon();
+        void ShowYellowMovesIcon();
         
         NextPreviewPieces& GetNextPreviewPieces() {
             return mNextPreviewPieces;
@@ -108,7 +110,12 @@ namespace RowBlast {
             assert(mMovesTextContainer);
             return *mMovesTextContainer;
         }
-        
+
+        Pht::SceneObject& GetMovesRoundedCylinderContainer() {
+            assert(mMovesRoundedCylinderContainer);
+            return *mMovesRoundedCylinderContainer;
+        }
+
         static constexpr float movesTextScale {1.1f};
 
     private:
@@ -134,9 +141,9 @@ namespace RowBlast {
                                Pht::SceneObject& parentObject,
                                const CommonResources& commonResources,
                                const GameHudResources& gameHudResources);
-        void CreateMovesIcon(Pht::Scene& scene,
-                             Pht::SceneObject& movesContainer,
-                             const GameHudResources& gameHudResources);
+        Pht::SceneObject& CreateMovesIcon(Pht::Scene& scene,
+                                          Pht::SceneObject& movesContainer,
+                                          Pht::RenderableObject& arrowRenderable);
         void CreateArrow(const Pht::Vec3& position,
                          const Pht::Vec3& rotation,
                          Pht::RenderableObject& renderable,
@@ -171,6 +178,9 @@ namespace RowBlast {
         Pht::TextComponent* mProgressText {nullptr};
         Pht::TextComponent* mMovesText {nullptr};
         Pht::SceneObject* mMovesTextContainer {nullptr};
+        Pht::SceneObject* mMovesRoundedCylinderContainer {nullptr};
+        Pht::SceneObject* mBlueMovesIcon {nullptr};
+        Pht::SceneObject* mYellowMovesIcon {nullptr};
         Pht::LightComponent* mLight {nullptr};
         float mLightAnimationTime {0.0f};
         Pht::SceneObject* mSelectablePiecesRectangle {nullptr};

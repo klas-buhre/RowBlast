@@ -63,6 +63,12 @@ SceneObject& Scene::CreateSceneObject(const IMesh& mesh, const Material& materia
     return retVal;
 }
 
+SceneObject& Scene::CreateSceneObject(SceneObject& parent) {
+    auto& sceneObject = CreateSceneObject();
+    parent.AddChild(sceneObject);
+    return sceneObject;
+}
+
 SceneObject& Scene::CreateSceneObject() {
     auto sceneObject = std::make_unique<SceneObject>();
     auto& retVal = *sceneObject;
@@ -72,13 +78,20 @@ SceneObject& Scene::CreateSceneObject() {
 
 TextComponent& Scene::CreateText(const std::string& text, const TextProperties& properties) {
     auto sceneObject = std::make_unique<SceneObject>();
-    
     auto textComponent = std::make_unique<TextComponent>(*sceneObject, text, properties);
-    
     auto& retVal = *textComponent;
+
     sceneObject->SetComponent<TextComponent>(std::move(textComponent));
     mResources.AddSceneObject(std::move(sceneObject));
     return retVal;
+}
+
+TextComponent& Scene::CreateText(const std::string& text,
+                                 const TextProperties& properties,
+                                 SceneObject& parent) {
+    auto& textComponent = CreateText(text, properties);
+    parent.AddChild(textComponent.GetSceneObject());
+    return textComponent;
 }
 
 void Scene::AddSceneObject(std::unique_ptr<SceneObject> sceneObject) {

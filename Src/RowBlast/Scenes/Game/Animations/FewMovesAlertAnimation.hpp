@@ -19,15 +19,19 @@ namespace RowBlast {
     private:
         void UpdateInInactiveState();
         void UpdateInActiveState(float dt);
+        void UpdateInZeroMovesState();
+        void RestoreHud();
 
         enum class State {
             Active,
+            ZeroMoves,
             Inactive
         };
 
         GameScene& mScene;
         const GameLogic& mGameLogic;
         State mState {State::Inactive};
+        Pht::SceneObject* mMovesContainerSceneObject {nullptr};
         Pht::SceneObject* mMovesTextContainerSceneObject {nullptr};
         float mElapsedTime {0.0f};
     };
