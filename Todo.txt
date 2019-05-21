@@ -42,7 +42,6 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-    -Use the 35-font for the moves text to make it sharper while low on moves.
     -Maybe an animation for when adding moves in the upper hud?
       -Candy has a HUD message saying Good Luck with Tiffi.
       -Diamond diaries has a HUD message saying +5 moves and an animation adding moves to the moves left.

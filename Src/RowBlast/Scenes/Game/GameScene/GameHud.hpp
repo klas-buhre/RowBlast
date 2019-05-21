@@ -105,7 +105,12 @@ namespace RowBlast {
             assert(mSelectablePiecesContainer);
             return *mSelectablePiecesContainer;
         }
-        
+
+        Pht::SceneObject& GetMovesTextSceneObject() {
+            assert(mMovesTextSceneObject);
+            return *mMovesTextSceneObject;
+        }
+
         Pht::SceneObject& GetMovesTextContainer() {
             assert(mMovesTextContainer);
             return *mMovesTextContainer;
@@ -115,8 +120,13 @@ namespace RowBlast {
             assert(mMovesRoundedCylinderContainer);
             return *mMovesRoundedCylinderContainer;
         }
+        
+        float GetMovesTextScaleFactor() const {
+            return mMovesTextScaleFactor;
+        }
 
-        static constexpr float movesTextScale {1.1f};
+        static constexpr float movesContainerScale {1.1f};
+        static constexpr float movesTextStaticScale {1.3f};
 
     private:
         void CreateLightAndCamera(Pht::Scene& scene, Pht::SceneObject& parentObject, int hudLayer);
@@ -177,6 +187,7 @@ namespace RowBlast {
         int mProgressGoal {0};
         Pht::TextComponent* mProgressText {nullptr};
         Pht::TextComponent* mMovesText {nullptr};
+        Pht::SceneObject* mMovesTextSceneObject {nullptr};
         Pht::SceneObject* mMovesTextContainer {nullptr};
         Pht::SceneObject* mMovesRoundedCylinderContainer {nullptr};
         Pht::SceneObject* mBlueMovesIcon {nullptr};
@@ -197,6 +208,7 @@ namespace RowBlast {
         const Piece* mActivePiecePreviousFrame {nullptr};
         const NextPreviewPiecesRelativePositions mNextPreviewPiecesRelativePositions;
         const SelectablePreviewPiecesRelativePositions mSelectablePreviewPiecesRelativePositions;
+        float mMovesTextScaleFactor {0.0f};
     };
 }
 

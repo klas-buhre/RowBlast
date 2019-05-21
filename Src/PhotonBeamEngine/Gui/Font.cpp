@@ -13,7 +13,9 @@ namespace {
     const char lastPrintableCharacter {127};
 }
 
-Font::Font(const std::string& filename, int size) {
+Font::Font(const std::string& filename, int size) :
+    mSize {size} {
+
     FT_Library ft;
     if (FT_Init_FreeType(&ft)) {
         std::cout << "ERROR::FREETYPE: Could not init FreeType Library" << std::endl;

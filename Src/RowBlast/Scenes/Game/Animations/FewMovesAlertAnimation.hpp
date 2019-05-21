@@ -31,8 +31,9 @@ namespace RowBlast {
         GameScene& mScene;
         const GameLogic& mGameLogic;
         State mState {State::Inactive};
-        Pht::SceneObject* mMovesContainerSceneObject {nullptr};
+        Pht::SceneObject* mMovesRoundedCylinderContainer {nullptr};
         Pht::SceneObject* mMovesTextContainerSceneObject {nullptr};
+        Pht::SceneObject* mMovesTextSceneObject {nullptr};
         float mElapsedTime {0.0f};
     };
 }

@@ -309,7 +309,7 @@ void GameHud::CreateMovesObject(Pht::Scene& scene,
                           roundedCylinderDiffuse);
 
     Pht::TextProperties textProperties {
-        commonResources.GetHussarFontSize27(PotentiallyZoomedScreen::Yes),
+        commonResources.GetHussarFontSize35(PotentiallyZoomedScreen::Yes),
         1.0f,
         Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f},
         Pht::TextShadow::Yes,
@@ -323,7 +323,8 @@ void GameHud::CreateMovesObject(Pht::Scene& scene,
 
     std::string text {"   "};   // Warning! Must be three spaces to fit digits.
     mMovesText = &scene.CreateText(text, textProperties, *mMovesTextContainer);
-    mMovesText->GetSceneObject().GetTransform().SetPosition({-0.55f, -0.285f, UiLayer::text});
+    mMovesTextSceneObject = &mMovesText->GetSceneObject();
+    mMovesTextSceneObject->GetTransform().SetPosition({-0.55f, -0.285f, UiLayer::text});
     
     mBlueMovesIcon = &CreateMovesIcon(scene,
                                       *mMovesRoundedCylinderContainer,
@@ -332,7 +333,13 @@ void GameHud::CreateMovesObject(Pht::Scene& scene,
                                         *mMovesRoundedCylinderContainer,
                                         gameHudResources.GetYellowArrowMeshRenderable());
     
-    Pht::SceneObjectUtils::ScaleRecursively(*mMovesContainer, movesTextScale);
+    mMovesTextScaleFactor =
+        static_cast<float>(commonResources.GetHussarFontSize27(PotentiallyZoomedScreen::Yes).GetSize()) /
+        static_cast<float>(commonResources.GetHussarFontSize35(PotentiallyZoomedScreen::Yes).GetSize());
+    mMovesContainer->GetTransform().SetScale(movesContainerScale);
+    mMovesTextContainer->GetTransform().SetScale(movesTextStaticScale);
+    Pht::SceneObjectUtils::ScaleRecursively(*mMovesTextSceneObject,
+                                            movesContainerScale * movesTextStaticScale * mMovesTextScaleFactor);
 }
 
 Pht::SceneObject& GameHud::CreateMovesIcon(Pht::Scene& scene,

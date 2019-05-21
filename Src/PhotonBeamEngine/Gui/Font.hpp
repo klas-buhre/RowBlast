@@ -22,8 +22,13 @@ namespace Pht {
         
         const Glyph& GetGlyph(char character) const;
         
+        int GetSize() const {
+            return mSize;
+        }
+        
     private:
         std::vector<Glyph> mGlyphs;
+        int mSize {0};
     };
     
     enum class TextShadow {

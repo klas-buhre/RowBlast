@@ -133,7 +133,6 @@ std::shared_ptr<Texture> TextureCache::GetTexture(const std::string& textureName
     for (const auto& entry: twoDTextures) {
         if (auto texture = entry.second.lock()) {
             auto& key = entry.first;
-            
             if (textureName == key.mFilename && generateMipmap == key.mGenerateMipmap) {
                 return texture;
             }
@@ -159,7 +158,6 @@ std::shared_ptr<Texture> TextureCache::GetTexture(const EnvMapTextureFilenames& 
     for (const auto& entry: envMapTextures) {
         if (auto texture = entry.second.lock()) {
             auto& key = entry.first;
-            
             if (filenames == key) {
                 return texture;
             }

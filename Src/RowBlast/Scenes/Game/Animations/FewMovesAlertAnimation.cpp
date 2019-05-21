@@ -27,8 +27,9 @@ void FewMovesAlertAnimation::Init() {
     mElapsedTime = 0.0f;
     
     auto& hud = mScene.GetHud();
-    mMovesContainerSceneObject = &hud.GetMovesRoundedCylinderContainer();
+    mMovesRoundedCylinderContainer = &hud.GetMovesRoundedCylinderContainer();
     mMovesTextContainerSceneObject = &hud.GetMovesTextContainer();
+    mMovesTextSceneObject = &hud.GetMovesTextSceneObject();
     
     hud.ShowBlueMovesIcon();
 }
@@ -73,11 +74,16 @@ void FewMovesAlertAnimation::UpdateInActiveState(float dt) {
         auto sinT = std::sin(t);
 
         auto movesContainerScale = 1.0f + animationScaleAdd + animationScaleAmplitude * sinT;
-        mMovesContainerSceneObject->GetTransform().SetScale(movesContainerScale);
+        mMovesRoundedCylinderContainer->GetTransform().SetScale(movesContainerScale);
+        
+        auto textContainerScale = 1.0f + animationTextScaleAdd + animationTextScaleAmplitude * sinT;
+        mMovesTextContainerSceneObject->GetTransform().SetScale(textContainerScale);
         
         auto textScale =
-            GameHud::movesTextScale + animationTextScaleAdd + animationTextScaleAmplitude * sinT;
-        Pht::SceneObjectUtils::ScaleRecursively(*mMovesTextContainerSceneObject, textScale);
+            GameHud::movesContainerScale + animationTextScaleAdd +
+            animationTextScaleAmplitude * sinT;
+        auto fontSizeAdjustedTextScale = textScale * mScene.GetHud().GetMovesTextScaleFactor();
+        Pht::SceneObjectUtils::ScaleRecursively(*mMovesTextSceneObject, fontSizeAdjustedTextScale);
     }
 }
 
@@ -90,7 +96,11 @@ void FewMovesAlertAnimation::UpdateInZeroMovesState() {
 
 void FewMovesAlertAnimation::RestoreHud() {
     mScene.GetHud().ShowBlueMovesIcon();
-    Pht::SceneObjectUtils::ScaleRecursively(*mMovesContainerSceneObject, 1.0f);
-    Pht::SceneObjectUtils::ScaleRecursively(*mMovesTextContainerSceneObject,
-                                            GameHud::movesTextScale);
+    mMovesRoundedCylinderContainer->GetTransform().SetScale(1.0f);
+    mMovesTextContainerSceneObject->GetTransform().SetScale(GameHud::movesTextStaticScale);
+    
+    auto textScale =
+        GameHud::movesContainerScale * GameHud::movesTextStaticScale *
+        mScene.GetHud().GetMovesTextScaleFactor();
+    Pht::SceneObjectUtils::ScaleRecursively(*mMovesTextSceneObject, textScale);
 }
