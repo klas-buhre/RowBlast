@@ -41,6 +41,7 @@ namespace Pht {
         void Play();
         void Pause();
         void Stop();
+        void Rewind();
 
         void SetInterpolation(Interpolation interpolation) {
             mInterpolation = interpolation;
@@ -57,7 +58,7 @@ namespace Pht {
     private:
         friend class Animation;
         
-        bool CalculateKeyframe(float dt);
+        bool CalculateKeyframe();
         void HandleKeyframeTransition(const Keyframe& newKeyframe);
         void UpdateInterpolation();
         
@@ -75,6 +76,7 @@ namespace Pht {
         WrapMode mWrapMode {WrapMode::Loop};
         std::vector<Keyframe> mKeyframes;
         const Keyframe* mPreviousKeyframe {nullptr};
+        int mKeyframeIndex {0};
         const Keyframe* mKeyframe {nullptr};
         const Keyframe* mNextKeyframe {nullptr};
         float mElapsedTime {0.0f};

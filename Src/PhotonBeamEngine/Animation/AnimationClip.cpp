@@ -17,6 +17,8 @@ AnimationClip::AnimationClip(const std::vector<Keyframe>& keyframes) {
         
         mKeyframes.push_back(keyframe);
     }
+    
+    Rewind();
 }
 
 void AnimationClip::Update(float dt) {
@@ -24,46 +26,50 @@ void AnimationClip::Update(float dt) {
         return;
     }
     
-    if (!CalculateKeyframe(dt)) {
-        return;
+    if (mElapsedTime == 0.0f) {
+        HandleKeyframeTransition(mKeyframes.front());
     }
-
-    if (mKeyframe != mPreviousKeyframe) {
-        HandleKeyframeTransition(*mKeyframe);
+    
+    mElapsedTime += dt;
+    if (mElapsedTime >= mNextKeyframe->mTime) {
+        if (!CalculateKeyframe()) {
+            switch (mWrapMode) {
+                case WrapMode::Once:
+                    Stop();
+                    return;
+                case WrapMode::Loop:
+                    Rewind();
+                    break;
+            }
+        }
     }
     
     if (mInterpolation != Interpolation::None) {
         UpdateInterpolation();
     }
-    
-    mPreviousKeyframe = mKeyframe;
 }
 
-bool AnimationClip::CalculateKeyframe(float dt) {
-    mElapsedTime += dt;
-    
-    for (auto i = 1; i < mKeyframes.size(); ++i) {
-        auto& keyframe = mKeyframes[i - 1];
-        auto& nextKeyframe = mKeyframes[i];
+bool AnimationClip::CalculateKeyframe() {
+    for (auto i = 0; i < mKeyframes.size() - 1; ++i) {
+        auto& keyframe = mKeyframes[i];
+        auto& nextKeyframe = mKeyframes[i + 1];
         if (mElapsedTime >= keyframe.mTime && mElapsedTime <= nextKeyframe.mTime) {
+            for (auto j = mKeyframeIndex + 1; j <= i; ++j) {
+                HandleKeyframeTransition(mKeyframes[j]);
+            }
+            
             mKeyframe = &keyframe;
             mNextKeyframe = &nextKeyframe;
+            mKeyframeIndex = i;
             return true;
         }
     }
     
-    HandleKeyframeTransition(mKeyframes.back());
-    
-    switch (mWrapMode) {
-        case WrapMode::Once:
-            Stop();
-            return false;
-        case WrapMode::Loop:
-            mElapsedTime = 0.0f;
-            mKeyframe = &mKeyframes[0];
-            mNextKeyframe = &mKeyframes[1];
-            return true;
+    for (auto j = mKeyframeIndex + 1; j < mKeyframes.size(); ++j) {
+        HandleKeyframeTransition(mKeyframes[j]);
     }
+    
+    return false;
 }
 
 void AnimationClip::HandleKeyframeTransition(const Keyframe& newKeyframe) {
@@ -173,9 +179,14 @@ void AnimationClip::Pause() {
 }
 
 void AnimationClip::Stop() {
-    mElapsedTime = 0.0f;
     mIsPlaying = false;
-    mPreviousKeyframe = nullptr;
-    mKeyframe = nullptr;
-    mNextKeyframe = nullptr;
+    Rewind();
+}
+
+void AnimationClip::Rewind() {
+    assert(mKeyframes.size() >= 2);
+    mElapsedTime = 0.0f;
+    mKeyframeIndex = 0;
+    mKeyframe = &mKeyframes[0];
+    mNextKeyframe = &mKeyframes[1];
 }
