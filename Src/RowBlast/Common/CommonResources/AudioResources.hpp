@@ -34,6 +34,7 @@ namespace RowBlast {
         Awesome,
         Combo1,
         Combo2,
+        AddMove,
         AllCleared,
         LevelCompleted,
         Star,

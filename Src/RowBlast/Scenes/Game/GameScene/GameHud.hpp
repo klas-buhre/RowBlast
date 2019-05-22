@@ -64,6 +64,16 @@ namespace RowBlast {
         void Update();
         void ShowBlueMovesIcon();
         void ShowYellowMovesIcon();
+        void SetNumMovesLeft(int movesLeft);
+        
+        enum class NumMovesLeftSource {
+            GameLogic,
+            Self
+        };
+        
+        void SetNumMovesLeftSource(NumMovesLeftSource source) {
+            mNumMovesLeftSource = source;
+        }
         
         NextPreviewPieces& GetNextPreviewPieces() {
             return mNextPreviewPieces;
@@ -176,12 +186,15 @@ namespace RowBlast {
         void UpdatePreviewPiece(PreviewPiece& previewPiece,
                                 const Piece* pieceType,
                                 const Pht::Vec3& position);
+        int GetMovesLeft() const;
         
         Pht::IEngine& mEngine;
         const GameLogic& mGameLogic;
         const Field& mField;
         const PieceResources& mPieceResources;
         Level::Objective mLevelObjective {Level::Objective::Clear};
+        NumMovesLeftSource mNumMovesLeftSource {NumMovesLeftSource::GameLogic};
+        int mMovesLeftSelf {0};
         int mMovesLeft {0};
         int mProgress {-1};
         int mProgressGoal {0};

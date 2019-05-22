@@ -371,6 +371,8 @@
 		623B94DE21FCC63700B62D9B /* SwitchPiece2WindowController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623B94DC21FCC63700B62D9B /* SwitchPiece2WindowController.cpp */; };
 		623EB0C8222EC49A00E41F92 /* undo.png in Resources */ = {isa = PBXBuildFile; fileRef = 623EB0C7222EC49A00E41F92 /* undo.png */; };
 		62411A971E61E62800035D2A /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62411A961E61E62800035D2A /* GLKit.framework */; };
+		62429F862295A16C002C08AD /* AddingMovesAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62429F842295A16C002C08AD /* AddingMovesAnimation.cpp */; };
+		62429F882295CECA002C08AD /* add_move.wav in Resources */ = {isa = PBXBuildFile; fileRef = 62429F872295CEC9002C08AD /* add_move.wav */; };
 		6242DEF521C50E7600D17F46 /* Audio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6242DEF121C50E7600D17F46 /* Audio.cpp */; };
 		6242DEFA21C5112000D17F46 /* MusicTrackIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6242DEF921C5112000D17F46 /* MusicTrackIOS.mm */; };
 		6246D7582264C661004B3021 /* TutorialUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6246D7562264C661004B3021 /* TutorialUtils.cpp */; };
@@ -1119,6 +1121,9 @@
 		623B94DD21FCC63700B62D9B /* SwitchPiece2WindowController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SwitchPiece2WindowController.hpp; sourceTree = "<group>"; };
 		623EB0C7222EC49A00E41F92 /* undo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = undo.png; sourceTree = "<group>"; };
 		62411A961E61E62800035D2A /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
+		62429F842295A16C002C08AD /* AddingMovesAnimation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AddingMovesAnimation.cpp; sourceTree = "<group>"; };
+		62429F852295A16C002C08AD /* AddingMovesAnimation.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AddingMovesAnimation.hpp; sourceTree = "<group>"; };
+		62429F872295CEC9002C08AD /* add_move.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = add_move.wav; sourceTree = "<group>"; };
 		6242DEF021C50E7600D17F46 /* ISound.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ISound.hpp; sourceTree = "<group>"; };
 		6242DEF121C50E7600D17F46 /* Audio.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Audio.cpp; sourceTree = "<group>"; };
 		6242DEF221C50E7600D17F46 /* IAudio.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = IAudio.hpp; sourceTree = "<group>"; };
@@ -2051,6 +2056,8 @@
 		62216B7221EB377E001CB9A1 /* Animations */ = {
 			isa = PBXGroup;
 			children = (
+				62429F842295A16C002C08AD /* AddingMovesAnimation.cpp */,
+				62429F852295A16C002C08AD /* AddingMovesAnimation.hpp */,
 				62216B7D21EB377E001CB9A1 /* AsteroidAnimation.cpp */,
 				62216B8621EB377E001CB9A1 /* AsteroidAnimation.hpp */,
 				62216B7721EB377E001CB9A1 /* BlastRadiusAnimation.cpp */,
@@ -2961,8 +2968,7 @@
 		6270DC521FCB212B00FB457D /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
-				62216A1A21E901E1001CB9A1 /* fireworks1.wav */,
-				62216A1921E901E0001CB9A1 /* fireworks2.wav */,
+				62429F872295CEC9002C08AD /* add_move.wav */,
 				62216A1121E8A718001CB9A1 /* all_cleared.wav */,
 				622169E721E136E7001CB9A1 /* awesome.wav */,
 				62216A0921E66038001CB9A1 /* blast_bass.wav */,
@@ -2975,6 +2981,8 @@
 				622169BD21DF78F0001CB9A1 /* drop_whoosh.wav */,
 				62216A0D21E756E4001CB9A1 /* explosion.wav */,
 				622169E521E120F8001CB9A1 /* fantastic.wav */,
+				62216A1A21E901E1001CB9A1 /* fireworks1.wav */,
+				62216A1921E901E0001CB9A1 /* fireworks2.wav */,
 				622169F321E36503001CB9A1 /* land_piece.wav */,
 				62216A0721E655AF001CB9A1 /* laser.wav */,
 				6221699721DE1B9B001CB9A1 /* leave_title.wav */,
@@ -3265,6 +3273,7 @@
 				622169EC21E13AEA001CB9A1 /* combo1.wav in Resources */,
 				62276E9F2274A96000679BC6 /* level12.json in Resources */,
 				62F0445D22550E8C00BD5A4C /* error.png in Resources */,
+				62429F882295CECA002C08AD /* add_move.wav in Resources */,
 				625D3B5E2174B12500D67EC2 /* asteroid_fragment_500.obj in Resources */,
 				62B1CB5D210F8EE500D0F195 /* cloud_C_512.png in Resources */,
 				62B1CB80210F8F8600D0F195 /* confetti.png in Resources */,
@@ -3498,6 +3507,7 @@
 				62BB35D521C8FC9A0051AEEF /* OpenAlBuffer.cpp in Sources */,
 				625698442182392C003A3A9D /* Button.cpp in Sources */,
 				625698582182392C003A3A9D /* FastNoise.cc in Sources */,
+				62429F862295A16C002C08AD /* AddingMovesAnimation.cpp in Sources */,
 				625698452182392C003A3A9D /* Font.cpp in Sources */,
 				62216C6821F08A85001CB9A1 /* SettingsMenuView.cpp in Sources */,
 				62216A9A21EB376E001CB9A1 /* FloatingBlocks.cpp in Sources */,

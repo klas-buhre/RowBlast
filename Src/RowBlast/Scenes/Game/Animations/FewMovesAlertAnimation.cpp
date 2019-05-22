@@ -1,7 +1,10 @@
 #include "FewMovesAlertAnimation.hpp"
 
 // Engine includes.
+#include "IEngine.hpp"
 #include "SceneObjectUtils.hpp"
+#include "ParticleEffect.hpp"
+#include "IParticleSystem.hpp"
 
 // Game includes.
 #include "GameScene.hpp"
@@ -16,11 +19,46 @@ namespace {
     constexpr auto animationScaleAdd = 0.06f;
     constexpr auto animationTextScaleAmplitude = 0.41f;
     constexpr auto animationTextScaleAdd = 0.41f;
+    constexpr auto particleEffectDuration = 0.35f;
 }
 
-FewMovesAlertAnimation::FewMovesAlertAnimation(GameScene& scene, const GameLogic& gameLogic) :
+FewMovesAlertAnimation::FewMovesAlertAnimation(Pht::IEngine& engine,
+                                               GameScene& scene,
+                                               const GameLogic& gameLogic) :
     mScene {scene},
-    mGameLogic {gameLogic} {}
+    mGameLogic {gameLogic} {
+    
+    CreateParticleEffect(engine);
+}
+
+void FewMovesAlertAnimation::CreateParticleEffect(Pht::IEngine& engine) {
+    Pht::EmitterSettings particleEmitterSettings {
+        .mPosition = Pht::Vec3{0.0f, 0.0f, 0.0f},
+        .mSize = Pht::Vec3{0.0f, 0.0f, 0.0f},
+        .mTimeToLive = 0.0f,
+        .mFrequency = 0.0f,
+        .mBurst = 1
+    };
+
+    Pht::ParticleSettings particleSettings {
+        .mColor = Pht::Vec4{1.0f, 1.0f, 1.0f, 0.75f},
+        .mColorRandomPart = Pht::Vec4{0.0f, 0.0f, 0.0f, 0.0f},
+        .mTextureFilename = "particle_sprite_halo.png",
+        .mTimeToLive = particleEffectDuration,
+        .mTimeToLiveRandomPart = 0.0f,
+        .mFadeOutDuration = particleEffectDuration,
+        .mSize = Pht::Vec2{2.0f, 2.0f},
+        .mSizeRandomPart = 0.0f,
+        .mInitialSize = Pht::Vec2{0.5f, 0.5f},
+        .mGrowDuration = particleEffectDuration,
+        .mShrinkDuration = 0.0f
+    };
+
+    auto& particleSystem = engine.GetParticleSystem();
+    mParticleEffect = particleSystem.CreateParticleEffectSceneObject(particleSettings,
+                                                                     particleEmitterSettings,
+                                                                     Pht::RenderMode::Triangles);
+}
 
 void FewMovesAlertAnimation::Init() {
     mState = State::Inactive;
@@ -32,6 +70,10 @@ void FewMovesAlertAnimation::Init() {
     mMovesTextSceneObject = &hud.GetMovesTextSceneObject();
     
     hud.ShowBlueMovesIcon();
+    
+    mParticleEffect->GetComponent<Pht::ParticleEffect>()->Stop();
+    hud.GetMovesTextContainer().AddChild(*mParticleEffect);
+    mParticleEffect->GetTransform().SetPosition({0.05f, 0.0f, UiLayer::root});
 }
 
 void FewMovesAlertAnimation::Update(float dt) {
@@ -53,6 +95,7 @@ void FewMovesAlertAnimation::UpdateInInactiveState() {
         mState = State::Active;
         mElapsedTime = 0.0f;
         mScene.GetHud().ShowYellowMovesIcon();
+        mParticleEffect->GetComponent<Pht::ParticleEffect>()->Start();
     }
 }
 
@@ -68,6 +111,7 @@ void FewMovesAlertAnimation::UpdateInActiveState(float dt) {
         mElapsedTime += dt;
         if (mElapsedTime > animationDuration) {
             mElapsedTime = 0.0f;
+            mParticleEffect->GetComponent<Pht::ParticleEffect>()->Start();
         }
         
         auto t = mElapsedTime * 2.0f * 3.1415f / animationDuration;
@@ -84,6 +128,8 @@ void FewMovesAlertAnimation::UpdateInActiveState(float dt) {
             animationTextScaleAmplitude * sinT;
         auto fontSizeAdjustedTextScale = textScale * mScene.GetHud().GetMovesTextScaleFactor();
         Pht::SceneObjectUtils::ScaleRecursively(*mMovesTextSceneObject, fontSizeAdjustedTextScale);
+        
+        mParticleEffect->GetComponent<Pht::ParticleEffect>()->Update(dt);
     }
 }
 
@@ -103,4 +149,6 @@ void FewMovesAlertAnimation::RestoreHud() {
         GameHud::movesContainerScale * GameHud::movesTextStaticScale *
         mScene.GetHud().GetMovesTextScaleFactor();
     Pht::SceneObjectUtils::ScaleRecursively(*mMovesTextSceneObject, textScale);
+    
+    mParticleEffect->GetComponent<Pht::ParticleEffect>()->Stop();
 }

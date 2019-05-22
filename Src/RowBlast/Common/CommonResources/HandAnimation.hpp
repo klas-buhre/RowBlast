@@ -10,7 +10,6 @@
 namespace Pht {
     class IEngine;
     class SceneObject;
-    class ParticleEffect;
 }
 
 namespace RowBlast {

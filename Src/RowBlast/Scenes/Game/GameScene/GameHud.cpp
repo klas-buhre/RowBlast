@@ -456,10 +456,19 @@ void GameHud::UpdateProgress() {
 }
 
 void GameHud::UpdateMovesLeft() {
-    auto movesLeft = mGameLogic.GetMovesLeft();
+    auto movesLeft = GetMovesLeft();
     if (movesLeft != mMovesLeft) {
         WriteIntegerAtBeginningOfString(movesLeft, mMovesText->GetText());
         mMovesLeft = movesLeft;
+    }
+}
+
+int GameHud::GetMovesLeft() const {
+    switch (mNumMovesLeftSource) {
+        case NumMovesLeftSource::GameLogic:
+            return mGameLogic.GetMovesLeft();
+        case NumMovesLeftSource::Self:
+            return mMovesLeftSelf;
     }
 }
 
@@ -643,4 +652,10 @@ void GameHud::ShowBlueMovesIcon() {
 void GameHud::ShowYellowMovesIcon() {
     mYellowMovesIcon->SetIsVisible(true);
     mBlueMovesIcon->SetIsVisible(false);
+}
+
+void GameHud::SetNumMovesLeft(int movesLeft) {
+    if (mNumMovesLeftSource == NumMovesLeftSource::Self) {
+        mMovesLeftSelf = movesLeft;
+    }
 }

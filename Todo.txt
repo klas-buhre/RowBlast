@@ -42,12 +42,9 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-    -Maybe an animation for when adding moves in the upper hud?
-      -Candy has a HUD message saying Good Luck with Tiffi.
-      -Diamond diaries has a HUD message saying +5 moves and an animation adding moves to the moves left.
-      -BW has a HUD message saying +5 with bubbles behind and an animation adding moves to the moves left.
-      -Friends have no HUD message but a animation adding moves.
-      -Soda have no HUD message but a animation adding moves.
+    -Tune the few moves particle effect.
+    -Use "UI Item SFX 2/Notification 5" for studio logo sound instead?
+    -Replace the button click sound with a more discrete click?
     -Tune the menu window border thickness.
 
     -Tutorial: Pht animation showing how to fill gray slots. It should show the field scroll up

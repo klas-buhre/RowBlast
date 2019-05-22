@@ -1,7 +1,13 @@
 #ifndef FewMovesAlertAnimation_hpp
 #define FewMovesAlertAnimation_hpp
 
+#include <memory>
+
+// Engine includes.
+#include "SceneObject.hpp"
+
 namespace Pht {
+    class IEngine;
     class SceneObject;
 }
 
@@ -11,12 +17,13 @@ namespace RowBlast {
 
     class FewMovesAlertAnimation {
     public:
-        FewMovesAlertAnimation(GameScene& scene, const GameLogic& gameLogic);
+        FewMovesAlertAnimation(Pht::IEngine& engine, GameScene& scene, const GameLogic& gameLogic);
         
         void Init();
         void Update(float dt);
         
     private:
+        void CreateParticleEffect(Pht::IEngine& engine);
         void UpdateInInactiveState();
         void UpdateInActiveState(float dt);
         void UpdateInZeroMovesState();
@@ -35,6 +42,7 @@ namespace RowBlast {
         Pht::SceneObject* mMovesTextContainerSceneObject {nullptr};
         Pht::SceneObject* mMovesTextSceneObject {nullptr};
         float mElapsedTime {0.0f};
+        std::unique_ptr<Pht::SceneObject> mParticleEffect;
     };
 }
 

@@ -26,6 +26,7 @@
 #include "StoreController.hpp"
 #include "PreviewPiecesAnimation.hpp"
 #include "FewMovesAlertAnimation.hpp"
+#include "AddingMovesAnimation.hpp"
 #include "SlidingTextAnimation.hpp"
 #include "SmallTextAnimation.hpp"
 #include "BlastRadiusAnimation.hpp"
@@ -188,6 +189,7 @@ namespace RowBlast {
         FallingPieceAnimation& mFallingPieceAnimation;
         PreviewPiecesAnimation mPreviewPiecesAnimation;
         FewMovesAlertAnimation mFewMovesAlertAnimation;
+        AddingMovesAnimation mAddingMovesAnimation;
         BlueprintSlotsFilledAnimation mBlueprintSlotsFilledAnimation;
         BombsAnimation mBombsAnimation;
         AsteroidAnimation mAsteroidAnimation;

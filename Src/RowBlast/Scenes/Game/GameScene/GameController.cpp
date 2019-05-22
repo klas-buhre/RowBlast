@@ -103,7 +103,8 @@ GameController::GameController(Pht::IEngine& engine,
     },
     mFallingPieceAnimation {mGameLogic.GetFallingPieceAnimation()},
     mPreviewPiecesAnimation {mScene, mGameLogic},
-    mFewMovesAlertAnimation {mScene, mGameLogic},
+    mFewMovesAlertAnimation {engine, mScene, mGameLogic},
+    mAddingMovesAnimation {engine, mScene},
     mBlueprintSlotsFilledAnimation {mField, mScene, mLevelResources},
     mBombsAnimation {mScene, mPieceResources, mLevelResources},
     mAsteroidAnimation {},
@@ -151,6 +152,7 @@ void GameController::Init(int levelId) {
     mCameraShake.Init();
     mPreviewPiecesAnimation.Init();
     mFewMovesAlertAnimation.Init();
+    mAddingMovesAnimation.Init();
     mFlyingBlocksAnimation.Init();
     mFlashingBlocksAnimation.Init();
     mFallingPieceAnimation.Init();
@@ -232,6 +234,7 @@ GameController::Command GameController::UpdateGame() {
     mScene.Update();
     mPreviewPiecesAnimation.Update(dt);
     mFewMovesAlertAnimation.Update(dt);
+    mAddingMovesAnimation.Update(dt);
     mBombsAnimation.Update(dt);
     mSmallTextAnimation.Update(dt);
     mTutorial.Update();
@@ -662,6 +665,7 @@ void GameController::AddMovesAndGoToPlayingState() {
     };
     mEngine.GetAnalytics().AddEvent(analyticsEvent);
     
+    mAddingMovesAnimation.Start();
     GoToPlayingState();
 }
 
