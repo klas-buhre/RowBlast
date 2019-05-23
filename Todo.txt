@@ -44,7 +44,6 @@ Backlog:
 Ongoing tasks:
     -Use "UI Item SFX 2/Notification 5" for studio logo sound instead?
     -Replace the button click sound with a more discrete click?
-    -Tune the menu window border thickness.
 
     -Tutorial: Pht animation showing how to fill gray slots. It should show the field scroll up
      after filling all slots in a row.
