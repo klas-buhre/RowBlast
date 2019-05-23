@@ -41,13 +41,13 @@ void FewMovesAlertAnimation::CreateParticleEffect(Pht::IEngine& engine) {
     };
 
     Pht::ParticleSettings particleSettings {
-        .mColor = Pht::Vec4{1.0f, 1.0f, 1.0f, 0.75f},
+        .mColor = Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f},
         .mColorRandomPart = Pht::Vec4{0.0f, 0.0f, 0.0f, 0.0f},
         .mTextureFilename = "particle_sprite_halo.png",
         .mTimeToLive = particleEffectDuration,
         .mTimeToLiveRandomPart = 0.0f,
         .mFadeOutDuration = particleEffectDuration,
-        .mSize = Pht::Vec2{2.0f, 2.0f},
+        .mSize = Pht::Vec2{1.75f, 1.75f},
         .mSizeRandomPart = 0.0f,
         .mInitialSize = Pht::Vec2{0.5f, 0.5f},
         .mGrowDuration = particleEffectDuration,
@@ -73,7 +73,7 @@ void FewMovesAlertAnimation::Init() {
     
     mParticleEffect->GetComponent<Pht::ParticleEffect>()->Stop();
     hud.GetMovesTextContainer().AddChild(*mParticleEffect);
-    mParticleEffect->GetTransform().SetPosition({0.05f, 0.0f, UiLayer::root});
+    mParticleEffect->GetTransform().SetPosition({0.025f, 0.0f, UiLayer::root});
 }
 
 void FewMovesAlertAnimation::Update(float dt) {

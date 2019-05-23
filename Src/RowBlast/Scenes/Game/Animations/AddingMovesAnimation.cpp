@@ -58,7 +58,7 @@ void AddingMovesAnimation::Init() {
     GoToInactiveState();
     mParticleEffect->GetComponent<Pht::ParticleEffect>()->Stop();
     mScene.GetHud().GetMovesTextContainer().AddChild(*mParticleEffect);
-    mParticleEffect->GetTransform().SetPosition({0.05f, 0.0f, UiLayer::root});
+    mParticleEffect->GetTransform().SetPosition({0.025f, 0.0f, UiLayer::root});
 }
 
 void AddingMovesAnimation::Start() {

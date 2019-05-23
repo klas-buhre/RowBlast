@@ -42,7 +42,6 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-    -Tune the few moves particle effect.
     -Use "UI Item SFX 2/Notification 5" for studio logo sound instead?
     -Replace the button click sound with a more discrete click?
     -Tune the menu window border thickness.
