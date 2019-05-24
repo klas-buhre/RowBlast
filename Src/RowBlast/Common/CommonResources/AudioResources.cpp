@@ -110,7 +110,7 @@ void RowBlast::LoadAudioResouces(Pht::IEngine& engine) {
                     static_cast<Pht::AudioResourceId>(SoundId::AddMove));
     audio.LoadSound("all_cleared.wav",
                     1,
-                    0.65f,
+                    maxSoundGain,
                     static_cast<Pht::AudioResourceId>(SoundId::AllCleared));
     audio.LoadSound("level_completed.wav",
                     1,

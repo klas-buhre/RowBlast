@@ -161,7 +161,7 @@ void MapScene::Init() {
 
 void MapScene::CreateWorld(const World& world, const BackgroundLight& backgroundLight) {
     if (!world.mBackgroundTextureFilename.empty()) {
-        Pht::Material backgroundMaterial {world.mBackgroundTextureFilename};
+        Pht::Material backgroundMaterial {world.mBackgroundTextureFilename, 0.97f, 0.0f, 0.0f, 1.0f};
         
         auto& background =
             mScene->CreateSceneObject(Pht::QuadMesh {2400.0f, 2400.0f}, backgroundMaterial);
