@@ -6,12 +6,6 @@ Backlog:
     -Android.
 
   -Gameplay:
-    -Maybe the active piece could be in the left-most slot in the selectables. Then the next piece
-     will always come in from the left and go right to the active slot without the other selectables
-     moving at all. Might even have a NEXT text over the next pieces to make it really clear. Might
-     even have a slightly darker fill in the active slot or some effect to set it apart from the
-     other selectables. The selectables and active could be slightly larger than the next to set
-     them apart more.
     -A third input method could be to drag pieces from the HUD into the field. If you click on one
      piece in the HUD then it rotates. The selectable pieces area (and pieces) in the HUD could be a
      bit bigger when using drag controls to reduce misclicks. Each cell that is not reachable from
@@ -21,6 +15,28 @@ Backlog:
      really quickly (preferably almost as fast as a hard drop like in swipe controls). When the
      piece har dropped, the empty slot in the selectables HUD should be taken over by the next piece
      without rearranging the selectable pieces.
+     Another version of this idea is to combine drag input with swipe input (effectively forming the
+     swipe/drag input type). So there would be drag/swipe input or click input. This could be
+     possible if (either 1.a OR 1.b OR 1.c) and 2:
+     Either (1.a): rotating pieces using drag/swipe input is only done by tapping the screen as in
+     pure swipe controls (this would then rotate all pieces in the selectables container, but they
+     could rotate back to their default rotation at the next move, switch piece or cancel drag etc.)
+     since rotating a selectable piece by clicking the piece in the selectables container would be
+     indistinguishable from switching active piece. Switching active piece in 1.a could be done by
+     tapping the selectables container.
+     Or (1.b): switching active piece using drag/swipe input is only done by swiping up since
+     switching active piece by clicking the selectables container would be indistinguishable from
+     rotating the piece in the selectables container. Rotating a piece in 1.a could be done by
+     tapping the the piece in the selectables container.
+     Or (1.c): switching active piece using drag/swipe input is only done by swiping and rotating
+     pieces using drag/swipe input is only done by tapping the screen. Touching the selectables
+     container would only be for starting a drag and the start of the touch would not be ambiguous
+     in any way (start drag or switch-piece/rotate?)
+     And 2: ther can be no traditional ghost piece present all time when using drag/swipe input
+     since it would interfere with the ghost piece being dragged in to the field. The traditional
+     constant ghost piece for swipe input could be present but removed once a drag is started and
+     it could consist of transparent normal blocks (or transparent grey quads is in Tetris Blitz,
+     or like Poyo Poyo Tetris) to set it apart from other ghost pieces.
     -Could have ice blocks that are level blocks that can be used to fill and clear rows but they
      shatter if landed on or if falling down in a cascade. Or, they could turn into a normal grey
      level block if the ice is cleared which it will be by filling the row or explosion/laser.
@@ -57,6 +73,13 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
+    -Maybe the active piece could be in the left-most slot in the selectables. Then the next piece
+     will always come in from the left and go right to the active slot without the other selectables
+     moving at all. Might even have a NEXT text over the next pieces to make it really clear. Might
+     even have a slightly darker fill in the active slot or some effect to set it apart from the
+     other selectables. The selectables and active could be slightly larger than the next to set
+     them apart more. This will affect the tutorial levels with pieceSequences.
+
     -Go through the levels in world 1.
         -Maybe introduce the laser at level 4 or 3 even.
         -Maybe introduce the bomb at level 6 or 5.
