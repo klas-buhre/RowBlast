@@ -179,10 +179,8 @@ namespace RowBlast {
         void UpdateProgress();
         void UpdateMovesLeft();
         void UpdatePreviewPieces();
-        void UpdateNextPreviewPieceGroup(bool shouldStartPreviewPieceAnimation);
-        void UpdateSelectablePreviewPieceGroup(bool shouldStartPreviewPieceAnimation,
-                                               bool shouldDeactivateSlotZero,
-                                               bool shouldStartRemoveActivePieceAnimation);
+        void UpdateNextPreviewPieceGroup();
+        void UpdateSelectablePreviewPieceGroup();
         void UpdatePreviewPiece(PreviewPiece& previewPiece,
                                 const Piece* pieceType,
                                 const Pht::Vec3& position);

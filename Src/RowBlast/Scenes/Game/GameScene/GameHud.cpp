@@ -104,7 +104,7 @@ GameHud::GameHud(Pht::IEngine& engine,
     mSelectablePreviewPiecesRelativePositions {
         Pht::Vec3{-2.96f, 0.0f, UiLayer::block},
         Pht::Vec3{-1.78f, 0.0f, UiLayer::block},
-        Pht::Vec3{0.22f, 0.0f, UiLayer::block},
+        Pht::Vec3{0.62f, 0.0f, UiLayer::block},
         Pht::Vec3{2.62f, 0.0f, UiLayer::block},
         Pht::Vec3{3.72f, 0.0f, UiLayer::block}
     } {
@@ -473,29 +473,15 @@ int GameHud::GetMovesLeft() const {
 }
 
 void GameHud::UpdatePreviewPieces() {
-    auto previewPieceAnimationToStart = mGameLogic.GetPreviewPieceAnimationToStart();
-    
-    auto shouldStartNextPieceAndSwitchAnimation =
-        previewPieceAnimationToStart == PreviewPieceAnimationToStart::NextPieceAndSwitch;
-    
-    auto shouldStartSwitchPieceAnimation =
-        previewPieceAnimationToStart == PreviewPieceAnimationToStart::SwitchPiece ||
-        shouldStartNextPieceAndSwitchAnimation;
-    
-    auto shouldStartRemoveActivePieceAnimation =
-        previewPieceAnimationToStart == PreviewPieceAnimationToStart::RemoveActivePiece;
-    
-    UpdateNextPreviewPieceGroup(shouldStartNextPieceAndSwitchAnimation);
-    UpdateSelectablePreviewPieceGroup(shouldStartSwitchPieceAnimation,
-                                      shouldStartNextPieceAndSwitchAnimation,
-                                      shouldStartRemoveActivePieceAnimation);
+    UpdateNextPreviewPieceGroup();
+    UpdateSelectablePreviewPieceGroup();
 }
 
-void GameHud::UpdateNextPreviewPieceGroup(bool shouldStartPreviewPieceAnimation) {
+void GameHud::UpdateNextPreviewPieceGroup() {
     auto& next2Pieces = mGameLogic.GetNextPieceGenerator().GetNext2Pieces();
     auto& positions = mNextPreviewPiecesRelativePositions;
     
-    if (shouldStartPreviewPieceAnimation) {
+    if (mGameLogic.GetPreviewPieceAnimationToStart() == PreviewPieceAnimationToStart::NextPiece) {
         if (mNextPreviewPieces[0].mSceneObjects->IsActive()) {
             UpdatePreviewPiece(mNextPreviewPieces[2], mNext2PiecesPreviousFrame[1], positions[2]);
         }
@@ -511,39 +497,37 @@ void GameHud::UpdateNextPreviewPieceGroup(bool shouldStartPreviewPieceAnimation)
     mNext2PiecesPreviousFrame = next2Pieces;
 }
 
-void GameHud::UpdateSelectablePreviewPieceGroup(bool shouldStartPreviewPieceAnimation,
-                                                bool shouldDeactivateSlotZero,
-                                                bool shouldStartRemoveActivePieceAnimation) {
-    auto& selectablePieces = mGameLogic.GetSelectablePieces();
+void GameHud::UpdateSelectablePreviewPieceGroup() {
     auto* activePiece = mGameLogic.GetPieceType();
+    auto& selectablePieces = mGameLogic.GetSelectablePieces();
     auto& positions = mSelectablePreviewPiecesRelativePositions;
+    auto animationToStart = mGameLogic.GetPreviewPieceAnimationToStart();
+    auto piecesChanged =
+        selectablePieces != mSelectablePiecesPreviousFrame ||
+        activePiece != mActivePiecePreviousFrame;
 
-    if (shouldStartPreviewPieceAnimation) {
-        if (mSelectablePreviewPieces[0].mSceneObjects->IsActive()) {
-            UpdatePreviewPiece(mSelectablePreviewPieces[3],
+    if (animationToStart == PreviewPieceAnimationToStart::SwitchPiece) {
+        if (mSelectablePreviewPieces[3].mSceneObjects->IsActive()) {
+            UpdatePreviewPiece(mSelectablePreviewPieces[0],
                                mActivePiecePreviousFrame,
-                               positions[3]);
+                               positions[1]);
         }
         
-        if (shouldDeactivateSlotZero) {
-            UpdatePreviewPiece(mSelectablePreviewPieces[0], nullptr, positions[0]);
+        UpdatePreviewPiece(mSelectablePreviewPieces[1], activePiece, positions[2]);
+        UpdatePreviewPiece(mSelectablePreviewPieces[2], selectablePieces[0], positions[3]);
+        UpdatePreviewPiece(mSelectablePreviewPieces[3], selectablePieces[1], positions[4]);
+    } else if (animationToStart == PreviewPieceAnimationToStart::RemoveActivePiece ||
+               (piecesChanged && animationToStart != PreviewPieceAnimationToStart::NextPiece)) {
+        
+        if (animationToStart == PreviewPieceAnimationToStart::RemoveActivePiece) {
+            UpdatePreviewPiece(mSelectablePreviewPieces[0], mActivePiecePreviousFrame, positions[1]);
         } else {
-            UpdatePreviewPiece(mSelectablePreviewPieces[0], selectablePieces[0], positions[0]);
+            UpdatePreviewPiece(mSelectablePreviewPieces[0], activePiece, positions[1]);
         }
-        
-        UpdatePreviewPiece(mSelectablePreviewPieces[1], selectablePieces[1], positions[1]);
-        UpdatePreviewPiece(mSelectablePreviewPieces[2], activePiece, positions[2]);
-    } else if (selectablePieces != mSelectablePiecesPreviousFrame ||
-               shouldStartRemoveActivePieceAnimation) {
-        UpdatePreviewPiece(mSelectablePreviewPieces[0], nullptr, positions[0]);
-        UpdatePreviewPiece(mSelectablePreviewPieces[1], selectablePieces[0], positions[1]);
-        UpdatePreviewPiece(mSelectablePreviewPieces[2], selectablePieces[1], positions[2]);
-        
-        if (shouldStartRemoveActivePieceAnimation) {
-            UpdatePreviewPiece(mSelectablePreviewPieces[3], mActivePiecePreviousFrame, positions[3]);
-        } else {
-            UpdatePreviewPiece(mSelectablePreviewPieces[3], activePiece, positions[3]);
-        }
+
+        UpdatePreviewPiece(mSelectablePreviewPieces[1], selectablePieces[0], positions[2]);
+        UpdatePreviewPiece(mSelectablePreviewPieces[2], selectablePieces[1], positions[3]);
+        UpdatePreviewPiece(mSelectablePreviewPieces[3], nullptr, positions[4]);
     }
     
     mSelectablePiecesPreviousFrame = selectablePieces;
@@ -627,21 +611,25 @@ void GameHud::UpdatePreviewPiece(PreviewPiece& previewPiece,
 
 void GameHud::OnSwitchPieceAnimationFinished() {
     auto& selectablePieces = mGameLogic.GetSelectablePieces();
-    auto& positions = mSelectablePreviewPiecesRelativePositions;
+    auto& selectablePositions = mSelectablePreviewPiecesRelativePositions;
+    auto* activePiece = mGameLogic.GetPieceType();
 
-    UpdatePreviewPiece(mSelectablePreviewPieces[0], nullptr, positions[0]);
-    UpdatePreviewPiece(mSelectablePreviewPieces[1], selectablePieces[0], positions[1]);
-    UpdatePreviewPiece(mSelectablePreviewPieces[2], selectablePieces[1], positions[2]);
-    UpdatePreviewPiece(mSelectablePreviewPieces[3], mGameLogic.GetPieceType(), positions[3]);
+    UpdatePreviewPiece(mSelectablePreviewPieces[0], activePiece, selectablePositions[1]);
+    UpdatePreviewPiece(mSelectablePreviewPieces[1], selectablePieces[0], selectablePositions[2]);
+    UpdatePreviewPiece(mSelectablePreviewPieces[2], selectablePieces[1], selectablePositions[3]);
+    UpdatePreviewPiece(mSelectablePreviewPieces[3], nullptr, selectablePositions[4]);
 }
 
 void GameHud::OnNextPieceAnimationFinished() {
     auto& next2Pieces = mGameLogic.GetNextPieceGenerator().GetNext2Pieces();
-    auto& positions = mNextPreviewPiecesRelativePositions;
+    auto& nextPositions = mNextPreviewPiecesRelativePositions;
+    auto& selectablePositions = mSelectablePreviewPiecesRelativePositions;
+    auto* activePiece = mGameLogic.GetPieceType();
 
-    UpdatePreviewPiece(mNextPreviewPieces[0], nullptr, positions[0]);
-    UpdatePreviewPiece(mNextPreviewPieces[1], next2Pieces[0], positions[1]);
-    UpdatePreviewPiece(mNextPreviewPieces[2], next2Pieces[1], positions[2]);
+    UpdatePreviewPiece(mNextPreviewPieces[0], nullptr, nextPositions[0]);
+    UpdatePreviewPiece(mNextPreviewPieces[1], next2Pieces[0], nextPositions[1]);
+    UpdatePreviewPiece(mNextPreviewPieces[2], next2Pieces[1], nextPositions[2]);
+    UpdatePreviewPiece(mSelectablePreviewPieces[0], activePiece, selectablePositions[1]);
 }
 
 void GameHud::ShowBlueMovesIcon() {

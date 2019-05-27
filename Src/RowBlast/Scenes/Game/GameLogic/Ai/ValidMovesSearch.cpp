@@ -558,7 +558,7 @@ void ValidMovesSearch::Search(ValidMoves& validMoves,
     
     MarkLocationAsVisited(piece);
 
-    auto* movement {AddMovementAndRemoveDetour(validMoves, piece, previousMovement)};
+    auto* movement = AddMovementAndRemoveDetour(validMoves, piece, previousMovement);
 
     Search(validMoves, piece, movement, SearchMovement::Down);
     Search(validMoves, piece, movement, SearchMovement::Right);

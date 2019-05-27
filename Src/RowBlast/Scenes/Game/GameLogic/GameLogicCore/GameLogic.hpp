@@ -40,7 +40,7 @@ namespace RowBlast {
     class SmallTextAnimation;
     
     enum class PreviewPieceAnimationToStart {
-        NextPieceAndSwitch,
+        NextPiece,
         SwitchPiece,
         RemoveActivePiece,
         None
@@ -181,6 +181,7 @@ namespace RowBlast {
         bool IsThereRoomToSwitchPiece();
         Result HandleInput();
         void ForwardTouchToInputHandler(const Pht::TouchEvent& touchEvent);
+        bool IsInputAllowed() const;
         
         enum class State {
             LogicUpdate,

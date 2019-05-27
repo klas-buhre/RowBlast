@@ -30,6 +30,8 @@ PreviewPiecesAnimation::PreviewPiecesAnimation(GameScene& scene, GameLogic& game
 void PreviewPiecesAnimation::Init() {
     mState = State::Inactive;
     mElapsedTime = 0.0f;
+    mNextPieceAnimation.Init();
+    mSwitchPieceAnimation.Init();
 }
 
 void PreviewPiecesAnimation::Update(float dt) {
@@ -37,8 +39,8 @@ void PreviewPiecesAnimation::Update(float dt) {
         ResetPreviewPieceAnimationToStartGuard guard {mGameLogic};
         
         switch (mGameLogic.GetPreviewPieceAnimationToStart()) {
-            case PreviewPieceAnimationToStart::NextPieceAndSwitch:
-                StartNextPieceAndSwitchingAnimation();
+            case PreviewPieceAnimationToStart::NextPiece:
+                StartNextPieceAnimation();
                 break;
             case PreviewPieceAnimationToStart::SwitchPiece:
                 StartSwitchingPiecesAnimation();
@@ -63,13 +65,12 @@ void PreviewPiecesAnimation::Update(float dt) {
             }
             break;
         }
-        case State::NextPieceAndSwitch: {
+        case State::NextPiece: {
             auto normalizedTime = UpdateTime(dt);
             if (normalizedTime > 1.0f) {
                 mState = State::Inactive;
                 auto& hud = mScene.GetHud();
                 hud.OnNextPieceAnimationFinished();
-                hud.OnSwitchPieceAnimationFinished();
             } else {
                 mNextPieceAnimation.Update(normalizedTime);
                 mSwitchPieceAnimation.Update(normalizedTime);
@@ -81,7 +82,7 @@ void PreviewPiecesAnimation::Update(float dt) {
     }
 }
 
-void PreviewPiecesAnimation::StartNextPieceAndSwitchingAnimation() {
+void PreviewPiecesAnimation::StartNextPieceAnimation() {
     auto& hud = mScene.GetHud();
     auto& nextPiecesPositionsInHud = hud.GetNextPreviewPiecesRelativePositions();
     auto& selectablePiecesPositionsInHud = hud.GetSelectablePreviewPiecesRelativePositions();
@@ -102,18 +103,7 @@ void PreviewPiecesAnimation::StartNextPieceAndSwitchingAnimation() {
     };
 
     mNextPieceAnimation.StartNextPieceAnimation(hud.GetNextPreviewPieces(), nextPiecesPositions);
-    
-    SelectablePreviewPiecesPositionsConfig selectablePiecesPositions {
-        .mLeft = selectablePiecesPositionsInHud[0],
-        .mSlot1 = selectablePiecesPositionsInHud[1],
-        .mSlot2 = selectablePiecesPositionsInHud[2],
-        .mSlot3 = selectablePiecesPositionsInHud[3],
-        .mRight = selectablePiecesPositionsInHud[4]
-    };
-
-    mSwitchPieceAnimation.StartSwitchDuringNextPieceAnimation(hud.GetSelectablePreviewPieces(),
-                                                              selectablePiecesPositions);
-    GoToNextPieceAndSwitchState();
+    GoToNextPieceState();
 }
 
 void PreviewPiecesAnimation::StartSwitchingPiecesAnimation() {
@@ -156,7 +146,7 @@ float PreviewPiecesAnimation::UpdateTime(float dt) {
 }
 
 void PreviewPiecesAnimation::GoToSwitchingPieceState() {
-    if (mState == State::NextPieceAndSwitch) {
+    if (mState == State::NextPiece) {
         mScene.GetHud().OnNextPieceAnimationFinished();
     }
     
@@ -164,13 +154,13 @@ void PreviewPiecesAnimation::GoToSwitchingPieceState() {
     mElapsedTime = 0.0f;
 }
 
-void PreviewPiecesAnimation::GoToNextPieceAndSwitchState() {
-    mState = State::NextPieceAndSwitch;
+void PreviewPiecesAnimation::GoToNextPieceState() {
+    mState = State::NextPiece;
     mElapsedTime = 0.0f;
 }
 
 void PreviewPiecesAnimation::GoToRemovingActivePieceState() {
-    if (mState == State::NextPieceAndSwitch) {
+    if (mState == State::NextPiece) {
         mScene.GetHud().OnNextPieceAnimationFinished();
     }
     

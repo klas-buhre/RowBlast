@@ -25,6 +25,7 @@ namespace RowBlast {
         void Init();
         void Start(const Movement& lastMovement);
         State Update(float dt);
+        bool IsInactive() const;
         
     private:
         void Animate(float dt);

@@ -125,3 +125,7 @@ void FallingPieceAnimation::LandFallingPiece() {
     
     mGameLogic.OnFallingPieceAnimationFinished(finalMovementWasADrop);
 }
+
+bool FallingPieceAnimation::IsInactive() const {
+    return mState == State::Inactive;
+}

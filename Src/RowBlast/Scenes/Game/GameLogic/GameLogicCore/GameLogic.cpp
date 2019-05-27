@@ -239,10 +239,8 @@ void GameLogic::SetPieceType() {
         mCurrentMove.mPieceType = mFallingPieceSpawnType;
         mFallingPieceSpawnType = nullptr;
     } else {
-        mCurrentMove.mPieceType = mCurrentMove.mSelectablePieces[1];
-        mCurrentMove.mSelectablePieces[1] = mCurrentMove.mSelectablePieces[0];
-        mCurrentMove.mSelectablePieces[0] = &mCurrentMove.mNextPieceGenerator.GetNext();
-        mPreviewPieceAnimationToStart = PreviewPieceAnimationToStart::NextPieceAndSwitch;
+        mCurrentMove.mPieceType = &mCurrentMove.mNextPieceGenerator.GetNext();
+        mPreviewPieceAnimationToStart = PreviewPieceAnimationToStart::NextPiece;
     }
 }
 
@@ -866,17 +864,17 @@ void GameLogic::SwitchPiece() {
     
     auto* previousActivePieceType = mCurrentMove.mPieceType;
     
-    mFallingPieceSpawnType = mCurrentMove.mSelectablePieces[1];
-    mCurrentMove.mPieceType = mCurrentMove.mSelectablePieces[1];
-    mCurrentMove.mSelectablePieces[1] = mCurrentMove.mSelectablePieces[0];
-    mCurrentMove.mSelectablePieces[0] = previousActivePieceType;
+    mFallingPieceSpawnType = mCurrentMove.mSelectablePieces[0];
+    mCurrentMove.mPieceType = mCurrentMove.mSelectablePieces[0];
+    mCurrentMove.mSelectablePieces[0] = mCurrentMove.mSelectablePieces[1];
+    mCurrentMove.mSelectablePieces[1] = previousActivePieceType;
     mPreviewPieceAnimationToStart = PreviewPieceAnimationToStart::SwitchPiece;
     
     SpawnFallingPiece(FallingPieceSpawnReason::Switch);
 }
 
 bool GameLogic::IsThereRoomToSwitchPiece() {
-    auto& pieceType = *mCurrentMove.mSelectablePieces[1];
+    auto& pieceType = *mCurrentMove.mSelectablePieces[0];
     
     PieceBlocks pieceBlocks {
         pieceType.GetGrid(Rotation::Deg0),
@@ -992,7 +990,7 @@ GameLogic::Result GameLogic::HandleInput() {
                         ForwardTouchToInputHandler(touchEvent);
                         break;
                     case GameHudController::Result::ClickedSwitch:
-                        if (mFallingPiece) {
+                        if (IsInputAllowed()) {
                             SwitchPiece();
                         }
                         break;
@@ -1020,7 +1018,7 @@ GameLogic::Result GameLogic::HandleInput() {
 }
 
 void GameLogic::ForwardTouchToInputHandler(const Pht::TouchEvent& touchEvent) {
-    if (mFallingPiece == nullptr) {
+    if (!IsInputAllowed()) {
         return;
     }
     
@@ -1032,4 +1030,8 @@ void GameLogic::ForwardTouchToInputHandler(const Pht::TouchEvent& touchEvent) {
             mGestureInputHandler.HandleTouch(touchEvent);
             break;
     }
+}
+
+bool GameLogic::IsInputAllowed() const {
+    return mFallingPiece && mFallingPieceAnimation.IsInactive();
 }
