@@ -30,7 +30,7 @@ namespace Pht {
         std::vector<Glyph> mGlyphs;
         int mSize {0};
     };
-    
+
     enum class TextShadow {
         Yes,
         No
@@ -44,6 +44,11 @@ namespace Pht {
     enum class SnapToPixel {
         Yes,
         No
+    };
+    
+    enum class TextAlignment {
+        Left,
+        CenterX
     };
     
     struct TextProperties {
@@ -63,6 +68,7 @@ namespace Pht {
         TextShadow mSecondShadow {TextShadow::No};
         Pht::Vec2 mSecondShadowOffset {0.0f, 0.0f};
         Vec4 mSecondShadowColor {0.0f, 0.0f, 0.0f, 1.0f};
+        TextAlignment mAlignment {TextAlignment::Left};
     };
 }
 

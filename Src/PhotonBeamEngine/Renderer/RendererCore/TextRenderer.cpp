@@ -60,6 +60,14 @@ void TextRenderer::RenderText(const std::string& text,
                      1,
                      properties.mMidGradientColorSubtraction.GetValue().Pointer());
     }
+    
+    switch (properties.mAlignment) {
+        case TextAlignment::Left:
+            break;
+        case TextAlignment::CenterX:
+            position = AdjustPositionCenterXAlignment(text, position, slant, properties);
+            break;
+    }
 
     glDisable(GL_DEPTH_TEST);
 
@@ -112,4 +120,44 @@ ShaderProgram& TextRenderer::GetShaderProgram(const TextProperties& textProperti
     }
 
     return mTextShader;
+}
+
+Vec2 TextRenderer::AdjustPositionCenterXAlignment(const std::string& text,
+                                                  Vec2 position,
+                                                  float slant,
+                                                  const TextProperties& properties) {
+    if (text.empty()) {
+        return position;
+    }
+    
+    auto textWidth = CalculateTextWidth(text, slant, properties);
+    auto& firstGlyph = properties.mFont.GetGlyph(text.front());
+    position.x = position.x - firstGlyph.mBearing.x * properties.mScale - textWidth / 2.0f;
+    return position;
+}
+
+float TextRenderer::CalculateTextWidth(const std::string& text,
+                                       float slant,
+                                       const TextProperties& properties) {
+    if (text.empty()) {
+        return 0.0f;
+    }
+    
+    auto x = 0.0f;
+    auto textStartX = x;
+    for (auto i = 0; i < text.size(); ++i) {
+        auto& glyph = properties.mFont.GetGlyph(text[i]);
+        if (i == 0) {
+            textStartX = glyph.mBearing.x;
+        }
+        
+        if (i == text.size() - 1) {
+            x += glyph.mBearing.x + glyph.mSize.x + slant;
+            break;
+        }
+        
+        x += glyph.mAdvance >> 6;
+    }
+    
+    return (x - textStartX) * properties.mScale;
 }

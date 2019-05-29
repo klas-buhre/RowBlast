@@ -23,6 +23,13 @@ namespace Pht {
         
     private:
         ShaderProgram& GetShaderProgram(const TextProperties& properties);
+        Vec2 AdjustPositionCenterXAlignment(const std::string& text,
+                                            Vec2 position,
+                                            float slant,
+                                            const TextProperties& properties);
+        float CalculateTextWidth(const std::string& text,
+                                 float slant,
+                                 const TextProperties& properties);
         
         Mat4 mProjection;
         GLuint mVbo {0};

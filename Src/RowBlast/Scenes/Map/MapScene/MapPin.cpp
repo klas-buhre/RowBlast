@@ -19,7 +19,7 @@ using namespace RowBlast;
 namespace {
     const Pht::Vec2 buttonSize {62.0f, 62.0f};
     const Pht::Color selectedColorAdd {0.3f, 0.3f, 0.3f};
-    const Pht::Vec3 textOffset {-0.33f, -0.2f, 0.4f};
+    const Pht::Vec3 textOffset {-0.025f, -0.2f, 0.4f};
     
     const std::array<Pht::Vec3, 3> starOffsets {
         Pht::Vec3{-0.75f, 0.9f, 0.5f},
@@ -87,17 +87,11 @@ void MapPin::CreateText(int level, const Pht::Font& font, Pht::Scene& scene) {
         Pht::Vec4{0.32f, 0.32f, 0.32f, 0.5f},
         Pht::SnapToPixel::No
     };
+    textProperties.mAlignment = Pht::TextAlignment::CenterX;
 
     auto& text = scene.CreateText(std::to_string(level), textProperties);
-    auto adjustedTextOffset = textOffset;
-    if (mLevel > 19) {
-        adjustedTextOffset.x -= 0.21f;
-    } else if (mLevel > 9) {
-        adjustedTextOffset.x -= 0.17f;
-    }
-
     mTextSceneObject = &text.GetSceneObject();
-    mTextSceneObject->GetTransform().SetPosition(adjustedTextOffset);
+    mTextSceneObject->GetTransform().SetPosition(textOffset);
     mSceneObject->AddChild(*mTextSceneObject);
 }
 
