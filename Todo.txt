@@ -16,7 +16,8 @@ Backlog:
      piece har dropped, the empty slot in the selectables HUD should be taken over by the next piece
      without rearranging the selectable pieces. What happens with the falling piece once one of the
      selectables (not the active piece) are being dragged in? Maybe it should only be possible to
-     drag in the active piece?
+     drag in the active piece? In that case, rotating the active piece could be done by clicking on
+     it in the hud and and clicking on the two selectables could switch piece.
      Another version of this idea is to combine drag input with swipe input (effectively forming the
      swipe/drag input type). So there would be drag/swipe input or click input. This could be
      possible if (either 1.a OR 1.b OR 1.c) and 2:
@@ -75,16 +76,28 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-    -Try combining all three input types to one. Maybe possible if the visibility of the move
-     alternatives can be toggled with a button next to the pause button. Drag and swipe can be
-     combined at least.
+    -Try to reduce the state changes in the renderer by comparing current with previous
+     shaderType, material, vbo. If the renderable is the same, only SetTransforms is needed.
+     Remember that state can only be reused if shaderType (rename to ShaderId?) is the same.
+     Set all previous material, vbo etc to null at new render pass and call to text renderer.
+    -Fix the missing coin bug in the map hud. Happens in the simulator.
+    -Make a static batcher that is accessable from the IRenderer API. Just send a SceneObject that
+     should have all its children merged into one renderable. It should detach all children
+     SceneObjects (but not delete them or their renderables since ownership of those objects is
+     unknown).
+     Then, the FloatingBlocks and preview pieces can be batched.
     -Maybe the active piece could be in the left-most slot in the selectables. Then the next piece
      will always come in from the left and go right to the active slot without the other selectables
      moving at all. Might even have a NEXT text over the next pieces to make it really clear. Might
      even make the active preview piece a bit larger and/or adding and effect/animation to set it
-     apart from the other selectables. The next pieces container should be smaller. All of this will
-     affect some tutorial levels and all levels with pieceSequences. It also affects the how to play
-     dialog.
+     apart from the other selectables. The next pieces container should be smaller.
+     All of this will affect some tutorial levels and all levels with pieceSequences.
+     It also affects the how to play dialog.
+     Also, remember to change the hud rectangle renderables size so that there is a 1-to-1
+     texel-to-pixel ratio.
+    -Try combining all three input types to one. Maybe possible if the visibility of the move
+     alternatives can be toggled with a button next to the pause button. Drag and swipe can be
+     combined at least.
 
 
     -Go through the levels in world 1.
