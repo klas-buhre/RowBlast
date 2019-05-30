@@ -187,39 +187,7 @@ void AnimationClip::UpdateInterpolation() {
         SceneObjectUtils::ScaleRecursively(*mSceneObject, interpolatedScale);
     }
 }
-/*
-template<typename T>
-T AnimationClip::Interpolate(const T& keyframeValue, const T& nextKeyframeValue) {
-    switch (mInterpolation) {
-        case Interpolation::Linear:
-            return Lerp(keyframeValue, nextKeyframeValue);
-        case Interpolation::Cosine:
-            return CosineInterpolate(keyframeValue, nextKeyframeValue);
-        case Interpolation::None:
-            assert(false);
-            break;
-    }
-}
 
-template<typename T>
-T AnimationClip::Lerp(const T& keyframeValue, const T& nextKeyframeValue) {
-    auto timeBetweenKeyframes = mNextKeyframe->mTime - mKeyframe->mTime;
-    auto elapsedInBetweenTime = std::fmax(mElapsedTime - mKeyframe->mTime, 0.0f);
-    auto normalizedTime = elapsedInBetweenTime / timeBetweenKeyframes;
-    
-    return keyframeValue + (nextKeyframeValue - keyframeValue) * normalizedTime;
-}
-
-template<typename T>
-T AnimationClip::CosineInterpolate(const T& keyframeValue, const T& nextKeyframeValue) {
-    auto timeBetweenKeyframes = mNextKeyframe->mTime - mKeyframe->mTime;
-    auto elapsedInBetweenTime = std::fmax(mElapsedTime - mKeyframe->mTime, 0.0f);
-    auto normalizedTime = elapsedInBetweenTime / timeBetweenKeyframes;
-    auto t = std::cos(3.1415f + normalizedTime * 3.1415f) * 0.5f + 0.5f;
-    
-    return keyframeValue + (nextKeyframeValue - keyframeValue) * t;
-}
-*/
 void AnimationClip::Play() {
     assert(mKeyframes.size() >= 2);
     mIsPlaying = true;

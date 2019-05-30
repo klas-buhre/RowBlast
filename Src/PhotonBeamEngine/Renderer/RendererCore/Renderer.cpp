@@ -182,6 +182,8 @@ namespace {
                                   stride,
                                   reinterpret_cast<const GLvoid*>(offset));
             offset += sizeof(Vec3);
+        } else {
+            glDisableVertexAttribArray(attributes.mNormal);
         }
         
         if (vertexFlags.mTextureCoords) {
@@ -193,6 +195,8 @@ namespace {
                                   stride,
                                   reinterpret_cast<const GLvoid*>(offset));
             offset += sizeof(Vec2);
+        } else {
+            glDisableVertexAttribArray(attributes.mTextureCoord);
         }
 
         if (vertexFlags.mColors) {
@@ -204,6 +208,8 @@ namespace {
                                   stride,
                                   reinterpret_cast<const GLvoid*>(offset));
             offset += sizeof(Vec4);
+        } else {
+            glDisableVertexAttribArray(attributes.mColor);
         }
 
         if (vertexFlags.mPointSizes) {
@@ -215,17 +221,14 @@ namespace {
                                   stride,
                                   reinterpret_cast<const GLvoid*>(offset));
             offset += sizeof(float);
+        } else {
+            glDisableVertexAttribArray(attributes.mPointSize);
         }
     }
     
-    void DisableVertexAttributes(const ShaderProgram& shaderProgram) {
+    void DisableMandatoryVertexAttributes(const ShaderProgram& shaderProgram) {
         auto& attributes = shaderProgram.GetAttributes();
-    
         glDisableVertexAttribArray(attributes.mPosition);
-        glDisableVertexAttribArray(attributes.mNormal);
-        glDisableVertexAttribArray(attributes.mTextureCoord);
-        glDisableVertexAttribArray(attributes.mColor);
-        glDisableVertexAttribArray(attributes.mPointSize);
     }
 }
 
@@ -620,7 +623,7 @@ void Renderer::RenderObject(const RenderableObject& object, const Mat4& modelTra
             break;
     }
     
-    // DisableVertexAttributes(shaderProgram);
+    DisableMandatoryVertexAttributes(shaderProgram);
 }
 
 void Renderer::SetTransforms(const Mat4& modelTransform, 

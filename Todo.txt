@@ -76,15 +76,19 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
+    -Fix the missing coin bug in the map hud. Happens in the simulator.
+    -Try to compress the lowest bouncing blocks. Compress the vertical welds on each side of the
+     compressed block as well.
     -Try to reduce the state changes in the renderer by comparing current with previous
      shaderType, material, vbo. If the renderable is the same, only SetTransforms is needed.
      Remember that state can only be reused if shaderType (rename to ShaderId?) is the same.
      Set all previous material, vbo etc to null at new render pass and call to text renderer.
-    -Fix the missing coin bug in the map hud. Happens in the simulator.
+     Also manage GL global state like GL_DEPTH_TEST.
+     Create a RenderState class that manages all state.
     -Make a static batcher that is accessable from the IRenderer API. Just send a SceneObject that
      should have all its children merged into one renderable. It should detach all children
      SceneObjects (but not delete them or their renderables since ownership of those objects is
-     unknown).
+     unknown). Create a StaticBatcher class.
      Then, the FloatingBlocks and preview pieces can be batched.
     -Maybe the active piece could be in the left-most slot in the selectables. Then the next piece
      will always come in from the left and go right to the active slot without the other selectables

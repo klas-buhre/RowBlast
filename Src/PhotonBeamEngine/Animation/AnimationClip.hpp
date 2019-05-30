@@ -61,16 +61,7 @@ namespace Pht {
         bool CalculateKeyframe();
         void HandleKeyframeTransition(const Keyframe& newKeyframe);
         void UpdateInterpolation();
-/*
-        template<typename T>
-        T Interpolate(const T& keyframeValue, const T& nextKeyframeValue);
-        
-        template<typename T>
-        T Lerp(const T& keyframeValue, const T& nextKeyframeValue);
-        
-        template<typename T>
-        T CosineInterpolate(const T& keyframeValue, const T& nextKeyframeValue);
-*/
+
         SceneObject* mSceneObject {nullptr};
         Interpolation mInterpolation {Interpolation::Linear};
         WrapMode mWrapMode {WrapMode::Loop};
