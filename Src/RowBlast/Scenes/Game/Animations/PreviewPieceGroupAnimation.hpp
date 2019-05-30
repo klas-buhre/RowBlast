@@ -34,7 +34,8 @@ namespace RowBlast {
         
         void Init();
         void StartNextPieceAnimation(NextPreviewPieces& previewPieces,
-                                     const NextPreviewPiecesPositionsConfig& piecePositionsConfig);
+                                     const NextPreviewPiecesPositionsConfig& piecePositionsConfig,
+                                     float targetChangedScale);
         void StartSwitchPieceAnimation(
             SelectablePreviewPieces& previewPieces,
             const SelectablePreviewPiecesPositionsConfig& piecePositionsConfig);
@@ -47,6 +48,7 @@ namespace RowBlast {
         enum class Scaling {
             ScaleUp,
             ScaleDown,
+            ScaleChange,
             NoScaling
         };
         
@@ -66,6 +68,8 @@ namespace RowBlast {
         NextPreviewPiecesPositionsConfig mNextPiecePositionsConfig;
         SelectablePreviewPieces* mSelectablePreviewPieces {nullptr};
         SelectablePreviewPiecesPositionsConfig mSelectablePreviewPiecesPositionsConfig;
+        float mScaleChangeInitialScale {1.0f};
+        float mScaleChangeFinalScale {1.0f};
     };
 }
 

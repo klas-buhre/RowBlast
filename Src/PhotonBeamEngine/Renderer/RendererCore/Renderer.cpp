@@ -88,13 +88,12 @@ namespace {
         }
     }
 
-    void BindSpecialTextures(ShaderType shaderType, const Material& material) {
+    void BindTextures(const Material& material,
+                      ShaderType shaderType,
+                      const ShaderProgram& shaderProgram) {
         switch (shaderType) {
             case ShaderType::EnvMap:
                 glBindTexture(GL_TEXTURE_CUBE_MAP, material.GetEnvMapTexture()->GetHandle());
-                break;
-            case ShaderType::PointParticle:
-                glBindTexture(GL_TEXTURE_2D, material.GetTexture()->GetHandle());
                 break;
             case ShaderType::TexturedEmissiveLighting:
                 glActiveTexture(GL_TEXTURE1);
@@ -106,6 +105,11 @@ namespace {
                 break;
             default:
                 break;
+        }
+        
+        if (shaderProgram.GetVertexFlags().mTextureCoords) {
+            glActiveTexture(GL_TEXTURE0);
+            glBindTexture(GL_TEXTURE_2D, material.GetTexture()->GetHandle());
         }
     }
     
@@ -156,9 +160,7 @@ namespace {
         return stride;
     }
     
-    void EnableVertexAttributes(const ShaderProgram& shaderProgram,
-                                const Material& material,
-                                GLuint vertexBufferId) {
+    void EnableVertexAttributes(const ShaderProgram& shaderProgram, GLuint vertexBufferId) {
         // Bind the vertex buffer.
         glBindBuffer(GL_ARRAY_BUFFER, vertexBufferId);
 
@@ -190,10 +192,6 @@ namespace {
                                   GL_FALSE,
                                   stride,
                                   reinterpret_cast<const GLvoid*>(offset));
-            
-            glActiveTexture(GL_TEXTURE0);
-            glBindTexture(GL_TEXTURE_2D, material.GetTexture()->GetHandle());
-            
             offset += sizeof(Vec2);
         }
 
@@ -600,18 +598,17 @@ void Renderer::RenderObject(const RenderableObject& object, const Mat4& modelTra
     auto& shaderProgram = GetShaderProgram(shaderType);
     assert(shaderProgram.IsEnabled());
     shaderProgram.Use();
-    auto& uniforms = shaderProgram.GetUniforms();
     
     // Set the transforms used by the shaders.
-    SetTransforms(modelTransform, uniforms);
+    SetTransforms(modelTransform, shaderProgram.GetUniforms());
 
     // Set the material properties used by the shaders.
-    SetMaterialProperties(uniforms, material, shaderType, object);
+    SetMaterialProperties(material, shaderType, shaderProgram);
 
     auto& vbo = object.GetVbo();
     
     // Enable vertex attribute arrays.
-    EnableVertexAttributes(shaderProgram, material, vbo.GetVertexBufferId());
+    EnableVertexAttributes(shaderProgram, vbo.GetVertexBufferId());
 
     switch (object.GetRenderMode()) {
         case RenderMode::Triangles:
@@ -623,7 +620,7 @@ void Renderer::RenderObject(const RenderableObject& object, const Mat4& modelTra
             break;
     }
     
-    DisableVertexAttributes(shaderProgram);
+    // DisableVertexAttributes(shaderProgram);
 }
 
 void Renderer::SetTransforms(const Mat4& modelTransform, 
@@ -649,10 +646,10 @@ void Renderer::SetTransforms(const Mat4& modelTransform,
     glUniform3fv(uniforms.mCameraPosition, 1, GetCameraPosition().Pointer());
 }
 
-void Renderer::SetMaterialProperties(const ShaderProgram::UniformHandles& uniforms,
-                                     const Material& material,
+void Renderer::SetMaterialProperties(const Material& material,
                                      ShaderType shaderType,
-                                     const RenderableObject& object) {
+                                     const ShaderProgram& shaderProgram) {
+    auto& uniforms = shaderProgram.GetUniforms();
     auto ambientlIntensity = mGlobalLight.mAmbientIntensity;
     auto& ambient = material.GetAmbient();
     glUniform3f(uniforms.mAmbientMaterial,
@@ -683,7 +680,7 @@ void Renderer::SetMaterialProperties(const ShaderProgram::UniformHandles& unifor
     glUniform1i(uniforms.mSampler, 0);
     glUniform1i(uniforms.mSecondSampler, 1);
     
-    BindSpecialTextures(shaderType, material);
+    BindTextures(material, shaderType, shaderProgram);
     SetupBlend(IsParticleShader(shaderType), material);
     SetDepthTest(material.GetDepthState());
 }

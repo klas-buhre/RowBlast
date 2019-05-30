@@ -374,10 +374,11 @@ void GameHud::CreateNextPiecesObject(Pht::Scene& scene,
                                      Pht::SceneObject& parentObject,
                                      const GameHudRectangles& hudRectangles) {
     auto& nextPiecesContainer = scene.CreateSceneObject();
-    Pht::Vec3 position {-3.65f, CalculateLowerHudObjectYPosition(mEngine), UiLayer::root};
+    Pht::Vec3 position {-4.0f, CalculateLowerHudObjectYPosition(mEngine), UiLayer::root};
 
     mNextPiecesContainer = &nextPiecesContainer;
     nextPiecesContainer.GetTransform().SetPosition(position);
+    nextPiecesContainer.GetTransform().SetScale(0.8f);
     parentObject.AddChild(nextPiecesContainer);
 
     auto& nextPiecesRectangle = scene.CreateSceneObject();
@@ -394,10 +395,11 @@ void GameHud::CreateSelectablePiecesObject(Pht::Scene& scene,
                                            Pht::SceneObject& parentObject,
                                            const GameHudRectangles& hudRectangles) {
     auto& selectablePiecesContainer = scene.CreateSceneObject();
-    Pht::Vec3 position {2.65f, CalculateLowerHudObjectYPosition(mEngine), UiLayer::root};
+    Pht::Vec3 position {2.3f, CalculateLowerHudObjectYPosition(mEngine), UiLayer::root};
     
     mSelectablePiecesContainer = &selectablePiecesContainer;
     selectablePiecesContainer.GetTransform().SetPosition(position);
+    selectablePiecesContainer.GetTransform().SetScale(1.1f);
     parentObject.AddChild(selectablePiecesContainer);
 
     mSelectablePiecesRectangle = &scene.CreateSceneObject();

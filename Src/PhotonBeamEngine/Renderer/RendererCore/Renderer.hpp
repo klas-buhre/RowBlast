@@ -59,10 +59,9 @@ namespace Pht {
         void RenderObject(const RenderableObject& object, const Mat4& modelTransform);
         void SetTransforms(const Mat4& modelTransform,
                            const ShaderProgram::UniformHandles& uniforms);
-        void SetMaterialProperties(const ShaderProgram::UniformHandles& uniforms,
-                                   const Material& material,
+        void SetMaterialProperties(const Material& material,
                                    ShaderType shaderType,
-                                   const RenderableObject& object);
+                                   const ShaderProgram& shaderProgram);
         ShaderProgram& GetShaderProgram(ShaderType shaderType);
         void RenderText(const std::string& text,
                         const Vec2& position,

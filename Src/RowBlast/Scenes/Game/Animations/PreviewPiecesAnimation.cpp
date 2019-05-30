@@ -86,13 +86,16 @@ void PreviewPiecesAnimation::StartNextPieceAnimation() {
     auto& hud = mScene.GetHud();
     auto& nextPiecesPositionsInHud = hud.GetNextPreviewPiecesRelativePositions();
     auto& selectablePiecesPositionsInHud = hud.GetSelectablePreviewPiecesRelativePositions();
-    auto& nextPiecesContainerPos = hud.GetNextPiecesContainer().GetTransform().GetPosition();
-    
-    auto& selectablePiecesContainerPos =
-        hud.GetSelectablePiecesContainer().GetTransform().GetPosition();
+    auto& nextContainerTransform = hud.GetNextPiecesContainer().GetTransform();
+    auto& nextContainerPos = nextContainerTransform.GetPosition();
+    auto nextContainerScale = nextContainerTransform.GetScale().x;
+    auto& selectablesContainerTransform = hud.GetSelectablePiecesContainer().GetTransform();
+    auto& selectablesContainerPos = selectablesContainerTransform.GetPosition();
+    auto& selectablesContainerScale = selectablesContainerTransform.GetScale().x;
     
     Pht::Vec3 nextPieceRightPosition {
-        selectablePiecesContainerPos - nextPiecesContainerPos + selectablePiecesPositionsInHud[1]
+        (selectablesContainerPos - nextContainerPos +
+         selectablePiecesPositionsInHud[1] * selectablesContainerScale) / nextContainerScale
     };
     
     NextPreviewPiecesPositionsConfig nextPiecesPositions {
@@ -102,7 +105,9 @@ void PreviewPiecesAnimation::StartNextPieceAnimation() {
         .mRight = nextPieceRightPosition
     };
 
-    mNextPieceAnimation.StartNextPieceAnimation(hud.GetNextPreviewPieces(), nextPiecesPositions);
+    mNextPieceAnimation.StartNextPieceAnimation(hud.GetNextPreviewPieces(),
+                                                nextPiecesPositions,
+                                                selectablesContainerScale / nextContainerScale);
     GoToNextPieceState();
 }
 

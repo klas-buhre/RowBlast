@@ -61,7 +61,7 @@ namespace Pht {
         bool CalculateKeyframe();
         void HandleKeyframeTransition(const Keyframe& newKeyframe);
         void UpdateInterpolation();
-        
+/*
         template<typename T>
         T Interpolate(const T& keyframeValue, const T& nextKeyframeValue);
         
@@ -70,12 +70,11 @@ namespace Pht {
         
         template<typename T>
         T CosineInterpolate(const T& keyframeValue, const T& nextKeyframeValue);
-
+*/
         SceneObject* mSceneObject {nullptr};
         Interpolation mInterpolation {Interpolation::Linear};
         WrapMode mWrapMode {WrapMode::Loop};
         std::vector<Keyframe> mKeyframes;
-        const Keyframe* mPreviousKeyframe {nullptr};
         int mKeyframeIndex {0};
         const Keyframe* mKeyframe {nullptr};
         const Keyframe* mNextKeyframe {nullptr};

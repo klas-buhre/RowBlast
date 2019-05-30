@@ -7,6 +7,34 @@
 
 using namespace Pht;
 
+namespace {
+    template<typename T>
+    T CosineInterpolateBetweenKeyframes(const T& keyframeValue,
+                                        const T& nextKeyframeValue,
+                                        float normalizedTime) {
+        auto t = std::cos(3.1415f + normalizedTime * 3.1415f) * 0.5f + 0.5f;
+        return keyframeValue + (nextKeyframeValue - keyframeValue) * t;
+    }
+
+    template<typename T>
+    T InterpolateBetweenKeyframes(const T& keyframeValue,
+                                  const T& nextKeyframeValue,
+                                  float normalizedTime,
+                                  Interpolation interpolation) {
+        switch (interpolation) {
+            case Interpolation::Linear:
+                return keyframeValue + (nextKeyframeValue - keyframeValue) * normalizedTime;
+            case Interpolation::Cosine:
+                return CosineInterpolateBetweenKeyframes(keyframeValue,
+                                                         nextKeyframeValue,
+                                                         normalizedTime);
+            case Interpolation::None:
+                assert(false);
+                break;
+        }
+    }
+}
+
 AnimationClip::AnimationClip(const std::vector<Keyframe>& keyframes) {
     for (auto& keyframe: keyframes) {
         if (mKeyframes.empty()) {
@@ -110,33 +138,56 @@ void AnimationClip::UpdateInterpolation() {
         return;
     }
     
+    auto timeBetweenKeyframes = mNextKeyframe->mTime - mKeyframe->mTime;
+    auto elapsedInBetweenTime = std::fmax(mElapsedTime - mKeyframe->mTime, 0.0f);
+    auto normalizedTime = elapsedInBetweenTime / timeBetweenKeyframes;
+
     auto& transform = mSceneObject->GetTransform();
     auto& position = mKeyframe->mPosition;
     auto& nextPosition = mNextKeyframe->mPosition;
     if (position.HasValue() && nextPosition.HasValue()) {
-        transform.SetPosition(Interpolate(position.GetValue(), nextPosition.GetValue()));
+        auto interpolatedPosition =
+            InterpolateBetweenKeyframes(position.GetValue(),
+                                        nextPosition.GetValue(),
+                                        normalizedTime,
+                                        mInterpolation);
+        transform.SetPosition(interpolatedPosition);
     }
 
     auto& scale = mKeyframe->mScale;
     auto& nextScale = mNextKeyframe->mScale;
     if (scale.HasValue() && nextScale.HasValue()) {
-        transform.SetScale(Interpolate(scale.GetValue(), nextScale.GetValue()));
+        auto interpolatedScale =
+            InterpolateBetweenKeyframes(scale.GetValue(),
+                                        nextScale.GetValue(),
+                                        normalizedTime,
+                                        mInterpolation);
+        transform.SetScale(interpolatedScale);
     }
 
     auto& rotation = mKeyframe->mRotation;
     auto& nextRotation = mNextKeyframe->mRotation;
     if (rotation.HasValue() && nextRotation.HasValue()) {
-        transform.SetRotation(Interpolate(rotation.GetValue(), nextRotation.GetValue()));
+        auto interpolatedRotation =
+            InterpolateBetweenKeyframes(rotation.GetValue(),
+                                        nextRotation.GetValue(),
+                                        normalizedTime,
+                                        mInterpolation);
+        transform.SetRotation(interpolatedRotation);
     }
     
     auto textScale = mKeyframe->mTextScale;
     auto nextTextScale = mNextKeyframe->mTextScale;
     if (textScale.HasValue() && nextTextScale.HasValue()) {
-        auto scale = Interpolate(textScale.GetValue(), nextTextScale.GetValue());
-        SceneObjectUtils::ScaleRecursively(*mSceneObject, scale);
+        auto interpolatedScale =
+            InterpolateBetweenKeyframes(textScale.GetValue(),
+                                        nextTextScale.GetValue(),
+                                        normalizedTime,
+                                        mInterpolation);
+        SceneObjectUtils::ScaleRecursively(*mSceneObject, interpolatedScale);
     }
 }
-
+/*
 template<typename T>
 T AnimationClip::Interpolate(const T& keyframeValue, const T& nextKeyframeValue) {
     switch (mInterpolation) {
@@ -168,7 +219,7 @@ T AnimationClip::CosineInterpolate(const T& keyframeValue, const T& nextKeyframe
     
     return keyframeValue + (nextKeyframeValue - keyframeValue) * t;
 }
-
+*/
 void AnimationClip::Play() {
     assert(mKeyframes.size() >= 2);
     mIsPlaying = true;

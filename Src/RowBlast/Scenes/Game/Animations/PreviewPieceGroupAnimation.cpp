@@ -34,11 +34,14 @@ void PreviewPieceGroupAnimation::Init() {
 
 void PreviewPieceGroupAnimation::StartNextPieceAnimation(
     NextPreviewPieces& previewPieces,
-    const NextPreviewPiecesPositionsConfig& piecePositionsConfig) {
+    const NextPreviewPiecesPositionsConfig& piecePositionsConfig,
+    float targetChangedScale) {
 
     mKind = Kind::NextPiece;
     mNextPreviewPieces = &previewPieces;
     mNextPiecePositionsConfig = piecePositionsConfig;
+    mScaleChangeInitialScale = 1.0f;
+    mScaleChangeFinalScale = targetChangedScale;
 }
 
 void PreviewPieceGroupAnimation::StartSwitchPieceAnimation(
@@ -98,7 +101,7 @@ void PreviewPieceGroupAnimation::UpdateNextPieceAnimation(float slideValue) {
                  mNextPiecePositionsConfig.mSlot2.x,
                  mNextPiecePositionsConfig.mRight.x,
                  slideValue,
-                 Scaling::NoScaling);
+                 Scaling::ScaleChange);
 }
 
 void PreviewPieceGroupAnimation::UpdateSwitchPieceAnimation(float slideValue) {
@@ -154,6 +157,13 @@ void PreviewPieceGroupAnimation::AnimatePiece(PreviewPiece& previewPiece,
         case Scaling::ScaleDown: {
             auto initialScale = previewPiece.mScale;
             auto scale = slideFunctionValue * initialScale;
+            transform.SetScale(scale);
+            break;
+        }
+        case Scaling::ScaleChange: {
+            auto initialScale = previewPiece.mScale * mScaleChangeInitialScale;
+            auto finalScale = previewPiece.mScale * mScaleChangeFinalScale;
+            auto scale = slideFunctionValue * initialScale + (1.0f - slideFunctionValue) * finalScale;
             transform.SetScale(scale);
             break;
         }
