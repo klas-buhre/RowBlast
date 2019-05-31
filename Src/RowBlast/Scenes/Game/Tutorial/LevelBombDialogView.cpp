@@ -248,9 +248,8 @@ void LevelBombDialogView::CreateAnimation(const PieceResources& pieceResources,
         {.mTime = detonationTime, .mIsVisible = false},
         {.mTime = animationDuration}
     };
-    Pht::AnimationClip pieceSwipeClip {pieceSwipeKeyframes};
+    auto& pieceSwipeClip = mPieceAnimation->CreateClip(pieceSwipeKeyframes, 1);
     pieceSwipeClip.SetInterpolation(Pht::Interpolation::None);
-    mPieceAnimation->AddClip(pieceSwipeClip, 1);
     
     auto& yellowBlocks = CreateSceneObject();
     container.AddChild(yellowBlocks);
@@ -358,9 +357,8 @@ void LevelBombDialogView::CreateAnimation(const PieceResources& pieceResources,
             .mTime = animationDuration
         }
     };
-    Pht::AnimationClip handAnimationSwipeClip {handAnimationSwipeKeyframes};
+    auto& handAnimationSwipeClip = mHandPhtAnimation->CreateClip(handAnimationSwipeKeyframes, 1);
     handAnimationSwipeClip.SetInterpolation(Pht::Interpolation::Cosine);
-    mHandPhtAnimation->AddClip(handAnimationSwipeClip, 1);
     
     for (auto i = 0; i < 10; ++i) {
         mExplosionEffects.emplace_back(mEngine, TutorialExplosionParticleEffect::Kind::LevelBomb, container);

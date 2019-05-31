@@ -35,7 +35,9 @@ namespace {
     }
 }
 
-AnimationClip::AnimationClip(const std::vector<Keyframe>& keyframes) {
+AnimationClip::AnimationClip(const std::vector<Keyframe>& keyframes, SceneObject& sceneObject) :
+    mSceneObject {sceneObject} {
+
     for (auto& keyframe: keyframes) {
         if (mKeyframes.empty()) {
             assert(keyframe.mTime == 0.0f);
@@ -101,7 +103,7 @@ bool AnimationClip::CalculateKeyframe() {
 }
 
 void AnimationClip::HandleKeyframeTransition(const Keyframe& newKeyframe) {
-    auto& transform = mSceneObject->GetTransform();
+    auto& transform = mSceneObject.GetTransform();
     auto& position = newKeyframe.mPosition;
     if (position.HasValue()) {
         transform.SetPosition(position.GetValue());
@@ -119,12 +121,12 @@ void AnimationClip::HandleKeyframeTransition(const Keyframe& newKeyframe) {
 
     auto textScale = newKeyframe.mTextScale;
     if (textScale.HasValue()) {
-        SceneObjectUtils::ScaleRecursively(*mSceneObject, textScale.GetValue());
+        SceneObjectUtils::ScaleRecursively(mSceneObject, textScale.GetValue());
     }
 
     auto isVisible = newKeyframe.mIsVisible;
     if (isVisible.HasValue()) {
-        mSceneObject->SetIsVisible(isVisible.GetValue());
+        mSceneObject.SetIsVisible(isVisible.GetValue());
     }
     
     auto& callback = newKeyframe.mCallback;
@@ -142,7 +144,7 @@ void AnimationClip::UpdateInterpolation() {
     auto elapsedInBetweenTime = std::fmax(mElapsedTime - mKeyframe->mTime, 0.0f);
     auto normalizedTime = elapsedInBetweenTime / timeBetweenKeyframes;
 
-    auto& transform = mSceneObject->GetTransform();
+    auto& transform = mSceneObject.GetTransform();
     auto& position = mKeyframe->mPosition;
     auto& nextPosition = mNextKeyframe->mPosition;
     if (position.HasValue() && nextPosition.HasValue()) {
@@ -184,7 +186,7 @@ void AnimationClip::UpdateInterpolation() {
                                         nextTextScale.GetValue(),
                                         normalizedTime,
                                         mInterpolation);
-        SceneObjectUtils::ScaleRecursively(*mSceneObject, interpolatedScale);
+        SceneObjectUtils::ScaleRecursively(mSceneObject, interpolatedScale);
     }
 }
 

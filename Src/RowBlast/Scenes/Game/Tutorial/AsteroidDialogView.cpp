@@ -175,9 +175,8 @@ void AsteroidDialogView::CreateAnimation(const PieceResources& pieceResources,
         {.mTime = pieceLandTime, .mIsVisible = false},
         {.mTime = animationDuration}
     };
-    Pht::AnimationClip pieceSwipeClip {pieceSwipeKeyframes};
+    auto& pieceSwipeClip = mPieceAnimation->CreateClip(pieceSwipeKeyframes, 1);
     pieceSwipeClip.SetInterpolation(Pht::Interpolation::None);
-    mPieceAnimation->AddClip(pieceSwipeClip, 1);
     
     mHandAnimation = std::make_unique<HandAnimation>(mEngine, 1.0f, true);
     mHandAnimation->Init(container);
@@ -239,9 +238,8 @@ void AsteroidDialogView::CreateAnimation(const PieceResources& pieceResources,
             .mTime = animationDuration
         }
     };
-    Pht::AnimationClip handAnimationSwipeClip {handAnimationSwipeKeyframes};
+    auto& handAnimationSwipeClip = mHandPhtAnimation->CreateClip(handAnimationSwipeKeyframes, 1);
     handAnimationSwipeClip.SetInterpolation(Pht::Interpolation::Cosine);
-    mHandPhtAnimation->AddClip(handAnimationSwipeClip, 1);
 
     std::vector<Pht::Keyframe> blockN3N2Keyframes {
         {.mTime = 0.0f, .mPosition = Pht::Vec3{-3.0f, -2.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},

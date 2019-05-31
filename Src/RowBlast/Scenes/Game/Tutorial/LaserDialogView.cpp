@@ -153,10 +153,9 @@ void LaserDialogView::CreateAnimation(const PieceResources& pieceResources,
         {.mTime = detonationTime, .mIsVisible = false},
         {.mTime = animationDuration}
     };
-    Pht::AnimationClip rowBombSwipeClip {rowBombSwipeKeyframes};
+    auto& rowBombSwipeClip = mRowBombAnimation->CreateClip(rowBombSwipeKeyframes, 1);
     rowBombSwipeClip.SetInterpolation(Pht::Interpolation::None);
-    mRowBombAnimation->AddClip(rowBombSwipeClip, 1);
-
+    
     mHandAnimation = std::make_unique<HandAnimation>(mEngine, 1.0f, true);
     mHandAnimation->Init(container);
     
@@ -225,9 +224,8 @@ void LaserDialogView::CreateAnimation(const PieceResources& pieceResources,
             .mTime = animationDuration
         }
     };
-    Pht::AnimationClip handAnimationSwipeClip {handAnimationSwipeKeyframes};
+    auto& handAnimationSwipeClip = mHandPhtAnimation->CreateClip(handAnimationSwipeKeyframes, 1);
     handAnimationSwipeClip.SetInterpolation(Pht::Interpolation::Cosine);
-    mHandPhtAnimation->AddClip(handAnimationSwipeClip, 1);
 
     mLaserEffect = std::make_unique<TutorialLaserParticleEffect>(mEngine, container);
     

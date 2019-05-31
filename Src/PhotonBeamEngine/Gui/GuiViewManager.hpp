@@ -3,11 +3,13 @@
 
 #include <map>
 
+#include "Noncopyable.hpp"
+
 namespace Pht {
     class GuiView;
     class SceneObject;
 
-    class GuiViewManager {
+    class GuiViewManager: public Noncopyable {
     public:
         void Init(SceneObject& parentObject);
         void AddView(int viewId, GuiView& view);

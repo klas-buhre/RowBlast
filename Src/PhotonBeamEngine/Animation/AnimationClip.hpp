@@ -6,6 +6,7 @@
 
 #include "Vector.hpp"
 #include "Optional.hpp"
+#include "Noncopyable.hpp"
 
 namespace Pht {
     class SceneObject;
@@ -33,16 +34,10 @@ namespace Pht {
 
     using AnimationClipId = uint32_t;
     
-    class AnimationClip {
+    class AnimationClip: public Noncopyable {
     public:
-        explicit AnimationClip(const std::vector<Keyframe>& keyframes);
-
-        void Update(float dt);
-        void Play();
-        void Pause();
-        void Stop();
-        void Rewind();
-
+        AnimationClip(const std::vector<Keyframe>& keyframes, SceneObject& sceneObject);
+        
         void SetInterpolation(Interpolation interpolation) {
             mInterpolation = interpolation;
         }
@@ -57,12 +52,17 @@ namespace Pht {
         
     private:
         friend class Animation;
-        
+
+        void Update(float dt);
+        void Play();
+        void Pause();
+        void Stop();
+        void Rewind();
         bool CalculateKeyframe();
         void HandleKeyframeTransition(const Keyframe& newKeyframe);
         void UpdateInterpolation();
 
-        SceneObject* mSceneObject {nullptr};
+        SceneObject& mSceneObject;
         Interpolation mInterpolation {Interpolation::Linear};
         WrapMode mWrapMode {WrapMode::Loop};
         std::vector<Keyframe> mKeyframes;

@@ -1,8 +1,9 @@
 #ifndef VertexBuffer_hpp
 #define VertexBuffer_hpp
 
-#include "Vector.hpp"
 #include <vector>
+
+#include "Vector.hpp"
 
 namespace Pht {
     struct VertexFlags {
@@ -15,6 +16,8 @@ namespace Pht {
     class VertexBuffer {
     public:
         VertexBuffer(int vertexCount, int indexCount, VertexFlags flags);
+        VertexBuffer(const VertexBuffer& other);
+        VertexBuffer& operator=(const VertexBuffer& other);
 
         void BeginFace();
         void Reset();
@@ -32,6 +35,7 @@ namespace Pht {
         }
 
     private:
+        void Copy(const VertexBuffer& other);
         void ResizeIfNeeded();
         
         VertexFlags mFlags;

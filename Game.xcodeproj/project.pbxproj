@@ -560,6 +560,7 @@
 		621F715721FDD9EA00232B83 /* OtherMoves2WindowController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = OtherMoves2WindowController.hpp; sourceTree = "<group>"; };
 		621F71592201AD1200232B83 /* FieldBottomGlowAnimation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FieldBottomGlowAnimation.cpp; sourceTree = "<group>"; };
 		621F715A2201AD1200232B83 /* FieldBottomGlowAnimation.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = FieldBottomGlowAnimation.hpp; sourceTree = "<group>"; };
+		622015C722A064990018851A /* Noncopyable.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Noncopyable.hpp; sourceTree = "<group>"; };
 		62203F0A21D7D71000BEB3E9 /* game_track1.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = game_track1.mp4; sourceTree = "<group>"; };
 		62203F0C21D7D9D100BEB3E9 /* game_track2.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = game_track2.mp4; sourceTree = "<group>"; };
 		62204EE321BD7A1800A035C0 /* sky7.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sky7.jpg; sourceTree = "<group>"; };
@@ -2623,6 +2624,7 @@
 				6256972C2182392B003A3A9D /* Fnv1Hash.hpp */,
 				625697262182392B003A3A9D /* JsonUtil.cpp */,
 				625697302182392B003A3A9D /* JsonUtil.hpp */,
+				622015C722A064990018851A /* Noncopyable.hpp */,
 				6256972B2182392B003A3A9D /* Optional.hpp */,
 				625697282182392B003A3A9D /* StaticVector.hpp */,
 			);

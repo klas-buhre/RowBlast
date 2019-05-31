@@ -76,9 +76,6 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-    -Fix the missing coin bug in the map hud. Happens in the simulator.
-    -Try to compress the lowest bouncing blocks. Compress the vertical welds on each side of the
-     compressed block as well.
     -Try to reduce the state changes in the renderer by comparing current with previous
      shaderType, material, vbo. If the renderable is the same, only SetTransforms is needed.
      Remember that state can only be reused if shaderType (rename to ShaderId?) is the same.
@@ -90,6 +87,8 @@ Ongoing tasks:
      SceneObjects (but not delete them or their renderables since ownership of those objects is
      unknown). Create a StaticBatcher class.
      Then, the FloatingBlocks and preview pieces can be batched.
+    -Try to compressing the lowest bouncing blocks. Compress the vertical welds on each side of the
+     compressed block as well.
     -Maybe the active piece could be in the left-most slot in the selectables. Then the next piece
      will always come in from the left and go right to the active slot without the other selectables
      moving at all. Might even have a NEXT text over the next pieces to make it really clear. Might

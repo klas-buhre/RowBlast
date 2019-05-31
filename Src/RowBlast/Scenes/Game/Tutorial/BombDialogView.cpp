@@ -256,9 +256,8 @@ void BombDialogView::CreateAnimation(const PieceResources& pieceResources,
         {.mTime = detonationTime, .mIsVisible = false},
         {.mTime = animationDuration}
     };
-    Pht::AnimationClip bombSwipeClip {bombSwipeKeyframes};
+    auto& bombSwipeClip = mBombAnimation->CreateClip(bombSwipeKeyframes, 1);
     bombSwipeClip.SetInterpolation(Pht::Interpolation::None);
-    mBombAnimation->AddClip(bombSwipeClip, 1);
 
     mHandAnimation = std::make_unique<HandAnimation>(mEngine, 1.0f, true);
     mHandAnimation->Init(container);
@@ -328,9 +327,8 @@ void BombDialogView::CreateAnimation(const PieceResources& pieceResources,
             .mTime = animationDuration
         }
     };
-    Pht::AnimationClip handAnimationSwipeClip {handAnimationSwipeKeyframes};
+    auto& handAnimationSwipeClip = mHandPhtAnimation->CreateClip(handAnimationSwipeKeyframes, 1);
     handAnimationSwipeClip.SetInterpolation(Pht::Interpolation::Cosine);
-    mHandPhtAnimation->AddClip(handAnimationSwipeClip, 1);
     
     mBlastRadius = &CreateSceneObject();
     mBlastRadius->GetTransform().SetScale(0.8f);
@@ -375,9 +373,8 @@ void BombDialogView::CreateAnimation(const PieceResources& pieceResources,
             .mTime = animationDuration
         }
     };
-    Pht::AnimationClip blastRadiusSwipeClip {blastRadiusSwipeKeyframes};
+    auto& blastRadiusSwipeClip = mBlastRadiusPhtAnimation->CreateClip(blastRadiusSwipeKeyframes, 1);
     blastRadiusSwipeClip.SetInterpolation(Pht::Interpolation::None);
-    mBlastRadiusPhtAnimation->AddClip(blastRadiusSwipeClip, 1);
     
     mExplosionEffect = std::make_unique<TutorialExplosionParticleEffect>(mEngine, TutorialExplosionParticleEffect::Kind::Bomb, container);
     

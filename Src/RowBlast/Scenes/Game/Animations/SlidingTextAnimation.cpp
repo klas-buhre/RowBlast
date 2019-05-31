@@ -414,17 +414,18 @@ SlidingTextAnimation::CreateScalingAndRotationAnimation(Pht::SceneObject& sceneO
         {.mTime = 0.0f, .mScale = Pht::Vec3{scale, scale, scale}},
         {.mTime = slideTime, .mScale = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = false},
     };
-    Pht::AnimationClip scaleDownClip {scaleDownKeyframes};
+    auto& scaleDownClip =
+        animation.CreateClip(scaleDownKeyframes,
+                             static_cast<Pht::AnimationClipId>(AnimationClip::ScaleDown));
     scaleDownClip.SetWrapMode(Pht::WrapMode::Once);
-    animation.AddClip(scaleDownClip, static_cast<Pht::AnimationClipId>(AnimationClip::ScaleDown));
     
     if (rotationA.HasValue() && rotationB.HasValue()) {
         std::vector<Pht::Keyframe> rotationKeyframes {
             {.mTime = 0.0f, .mRotation = rotationA.GetValue()},
             {.mTime = 6.0f, .mRotation = rotationB.GetValue()}
         };
-        Pht::AnimationClip rotationClip {rotationKeyframes};
-        animation.AddClip(rotationClip, static_cast<Pht::AnimationClipId>(AnimationClip::Rotation));
+        animation.CreateClip(rotationKeyframes,
+                             static_cast<Pht::AnimationClipId>(AnimationClip::Rotation));
     }
     
     return animation;
@@ -478,9 +479,10 @@ void SlidingTextAnimation::CreateNumObjectsTextAnimation(const Pht::Font& font) 
         {.mTime = 0.0f, .mTextScale = numObjectsTextScale},
         {.mTime = slideTime, .mTextScale = 0.0f, .mIsVisible = false},
     };
-    Pht::AnimationClip textScaleDownClip {textScaleDownKeyframes};
+    auto& textScaleDownClip =
+        mNumObjectsTextAnimation->CreateClip(textScaleDownKeyframes,
+                                             static_cast<Pht::AnimationClipId>(AnimationClip::ScaleDown));
     textScaleDownClip.SetWrapMode(Pht::WrapMode::Once);
-    mNumObjectsTextAnimation->AddClip(textScaleDownClip, static_cast<Pht::AnimationClipId>(AnimationClip::ScaleDown));
 }
 
 Pht::Animation& SlidingTextAnimation::CreateIconAnimation(const std::string& filename,
@@ -511,9 +513,10 @@ Pht::Animation& SlidingTextAnimation::CreateIconAnimation(const std::string& fil
         {.mTime = 0.0f, .mScale = Pht::Vec3{1.0f, 1.0f, 1.0f}},
         {.mTime = slideTime, .mScale = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = false},
     };
-    Pht::AnimationClip scaleDownClip {scaleDownKeyframes};
+    auto& scaleDownClip =
+        animation.CreateClip(scaleDownKeyframes,
+                             static_cast<Pht::AnimationClipId>(AnimationClip::ScaleDown));
     scaleDownClip.SetWrapMode(Pht::WrapMode::Once);
-    animation.AddClip(scaleDownClip, static_cast<Pht::AnimationClipId>(AnimationClip::ScaleDown));
     
     return animation;
 }

@@ -8,6 +8,7 @@
 #include "Vector.hpp"
 #include "RenderPass.hpp"
 #include "SceneResources.hpp"
+#include "Noncopyable.hpp"
 
 namespace Pht {
     class SceneObject;
@@ -25,7 +26,7 @@ namespace Pht {
         WorldSpaceNegativeZ
     };
     
-    class Scene {
+    class Scene: public Noncopyable {
     public:
         using Name = uint32_t;
         

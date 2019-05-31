@@ -7,9 +7,10 @@
 #include "RenderableObject.hpp"
 #include "ISceneObjectComponent.hpp"
 #include "Transform.hpp"
+#include "Noncopyable.hpp"
 
 namespace Pht {
-    class SceneObject {
+    class SceneObject: public Noncopyable {
     public:
         using Name = uint32_t;
         

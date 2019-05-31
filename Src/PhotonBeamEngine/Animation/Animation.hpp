@@ -2,16 +2,18 @@
 #define Animation_hpp
 
 #include <unordered_map>
+#include <memory>
 
 #include "ISceneObjectComponent.hpp"
 #include "AnimationClip.hpp"
 #include "Vector.hpp"
+#include "Noncopyable.hpp"
 
 namespace Pht {
     class SceneObject;
     class IAnimationSystem;
     
-    class Animation: public ISceneObjectComponent {
+    class Animation: public ISceneObjectComponent, public Noncopyable {
     public:
         static const ComponentId id;
         
@@ -20,7 +22,7 @@ namespace Pht {
                   IAnimationSystem& animationSystem);
         ~Animation();
         
-        void AddClip(AnimationClip clip, AnimationClipId clipId);
+        AnimationClip& CreateClip(const std::vector<Keyframe>& keyframes, AnimationClipId clipId);
         void SetDefaultClip(AnimationClipId clipId);
         void SetInterpolation(Interpolation interpolation, AnimationClipId clipId = 0);
         AnimationClip* GetClip(AnimationClipId clipId);
@@ -53,7 +55,7 @@ namespace Pht {
         
         SceneObject& mSceneObject;
         IAnimationSystem& mAnimationSystem;
-        std::unordered_map<AnimationClipId, AnimationClip> mClips;
+        std::unordered_map<AnimationClipId, std::unique_ptr<AnimationClip>> mClips;
         AnimationClip* mDefaultClip {nullptr};
     };
 }

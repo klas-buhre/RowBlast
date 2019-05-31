@@ -24,6 +24,30 @@ VertexBuffer::VertexBuffer(int vertexCount, int indexCount, VertexFlags flags) :
     mTriangleIndices.resize(indexCount);
 }
 
+VertexBuffer::VertexBuffer(const VertexBuffer& other) {
+    Copy(other);
+}
+
+VertexBuffer& VertexBuffer::operator=(const VertexBuffer& other) {
+    if (&other == this) {
+        return *this;
+    }
+    
+    Copy(other);
+    return *this;
+}
+
+void VertexBuffer::Copy(const VertexBuffer& other) {
+    mFlags = other.mFlags;
+    mFloatsPerVertex = other.mFloatsPerVertex;
+    mVertexBuffer = other.mVertexBuffer;
+    mTriangleIndices = other.mTriangleIndices;
+    mFaceBeginVertex = other.mFaceBeginVertex;
+    mVerticesWritten = other.mVerticesWritten;
+    mIndicesWritten = other.mIndicesWritten;
+    mVertexBufferPtr = &mVertexBuffer[0] + (mVerticesWritten * mFloatsPerVertex);
+}
+
 void VertexBuffer::BeginFace() {
     mFaceBeginVertex = mVerticesWritten;
 }

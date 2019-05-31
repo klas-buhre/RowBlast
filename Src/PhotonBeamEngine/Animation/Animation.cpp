@@ -16,7 +16,7 @@ Animation::Animation(SceneObject& sceneObject,
     mSceneObject {sceneObject},
     mAnimationSystem {animationSystem} {
     
-    AddClip(AnimationClip {keyframes}, 0);
+    CreateClip(keyframes, 0);
     SetDefaultClip(0);
 }
 
@@ -24,9 +24,12 @@ Animation::~Animation() {
     mAnimationSystem.RemoveAnimation(*this);
 }
 
-void Animation::AddClip(AnimationClip clip, AnimationClipId clipId) {
-    clip.mSceneObject = &mSceneObject;
-    mClips.insert(std::make_pair(clipId, clip));
+AnimationClip& Animation::CreateClip(const std::vector<Keyframe>& keyframes,
+                                     AnimationClipId clipId) {
+    auto clip = std::make_unique<AnimationClip>(keyframes, mSceneObject);
+    auto& retVal = *clip;
+    mClips.insert(std::make_pair(clipId, std::move(clip)));
+    return retVal;
 }
 
 void Animation::SetDefaultClip(AnimationClipId clipId) {
@@ -44,7 +47,7 @@ void Animation::SetInterpolation(Interpolation interpolation, AnimationClipId cl
 AnimationClip* Animation::GetClip(AnimationClipId clipId) {
     auto i = mClips.find(clipId);
     if (i != std::end(mClips)) {
-        return &i->second;
+        return i->second.get();
     }
 
     return nullptr;
@@ -52,9 +55,9 @@ AnimationClip* Animation::GetClip(AnimationClipId clipId) {
 
 void Animation::Update(float dt) {
     for (auto& entry: mClips) {
-        auto& clip = entry.second;
-        if (clip.IsPlaying()) {
-            clip.Update(dt);
+        auto* clip = entry.second.get();
+        if (clip->IsPlaying()) {
+            clip->Update(dt);
         }
     }
     
@@ -76,7 +79,7 @@ void Animation::Play(AnimationClipId clipId) {
 
 void Animation::Pause() {
     for (auto& entry: mClips) {
-        entry.second.Pause();
+        entry.second->Pause();
     }
 
     PerformActionOnChildAnimations(Action::Pause, mSceneObject);
@@ -84,7 +87,7 @@ void Animation::Pause() {
 
 void Animation::Stop() {
     for (auto& entry: mClips) {
-        entry.second.Stop();
+        entry.second->Stop();
     }
     
     PerformActionOnChildAnimations(Action::Stop, mSceneObject);
@@ -116,8 +119,8 @@ void Animation::PerformActionOnChildAnimations(Action action, SceneObject& scene
 
 bool Animation::IsPlaying() const {
     for (auto& entry: mClips) {
-        auto& clip = entry.second;
-        if (clip.IsPlaying()) {
+        auto* clip = entry.second.get();
+        if (clip->IsPlaying()) {
             return true;
         }
     }
