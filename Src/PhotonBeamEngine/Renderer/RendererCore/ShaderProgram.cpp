@@ -90,13 +90,26 @@ void ShaderProgram::SetProjection(const Mat4& projectionMatrix) {
     glUniformMatrix4fv(mUniforms.mProjection, 1, 0, projectionMatrix.Pointer());
 }
 
+void ShaderProgram::SetCameraPosition(const Vec3& cameraPosition) {
+    if (!mIsEnabled) {
+        return;
+    }
+    
+    if (!mCameraPosition.HasValue() || mCameraPosition.GetValue() != cameraPosition) {
+        glUniform3fv(mUniforms.mCameraPosition, 1, cameraPosition.Pointer());
+        mCameraPosition = cameraPosition;
+    }
+}
+
 void ShaderProgram::SetLightPosition(const Vec3& lightPosition) {
     if (!mIsEnabled) {
         return;
     }
-
-    glUseProgram(mProgram);
-    glUniform3fv(mUniforms.mLightPosition, 1, lightPosition.Pointer());
+    
+    if (!mLightPosition.HasValue() || mLightPosition.GetValue() != lightPosition) {
+        glUniform3fv(mUniforms.mLightPosition, 1, lightPosition.Pointer());
+        mLightPosition = lightPosition;
+    }
 }
 
 void ShaderProgram::Use() const {

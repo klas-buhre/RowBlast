@@ -160,14 +160,12 @@ namespace {
         return stride;
     }
     
-    void EnableVertexAttributes(const ShaderProgram& shaderProgram, GLuint vertexBufferId) {
-        // Bind the vertex buffer.
-        glBindBuffer(GL_ARRAY_BUFFER, vertexBufferId);
-
+    void EnableVertexAttributes(const ShaderProgram& shaderProgram) {
         auto vertexFlags = shaderProgram.GetVertexFlags();
         auto stride = CalculateStride(vertexFlags);
         auto& attributes = shaderProgram.GetAttributes();
         
+        glDisableVertexAttribArray(attributes.mTextCoords);
         glEnableVertexAttribArray(attributes.mPosition);
         glVertexAttribPointer(attributes.mPosition, 3, GL_FLOAT, GL_FALSE, stride, 0);
         
@@ -224,11 +222,6 @@ namespace {
         } else {
             glDisableVertexAttribArray(attributes.mPointSize);
         }
-    }
-    
-    void DisableMandatoryVertexAttributes(const ShaderProgram& shaderProgram) {
-        auto& attributes = shaderProgram.GetAttributes();
-        glDisableVertexAttribArray(attributes.mPosition);
     }
 }
 
@@ -364,13 +357,6 @@ void Renderer::InitShaders() {
     GetShaderProgram(ShaderType::PointParticle).Build(PointParticleVertexShader, PointParticleFragmentShader);
 }
 
-void Renderer::SetupProjectionInShaders() {
-    auto& projectionMatrix = GetProjectionMatrix();
-    for (auto& shader: mShaders) {
-        shader.second.SetProjection(projectionMatrix);
-    }
-}
-
 void Renderer::InitRenderQueue(const Scene& scene) {
     mRenderQueue.Init(scene.GetRoot());
 }
@@ -381,7 +367,7 @@ std::unique_ptr<RenderableObject> Renderer::CreateRenderableObject(const IMesh& 
     return std::make_unique<RenderableObject>(material, mesh, shaderProgram.GetVertexFlags());
 }
 
-void Renderer::ClearBuffers() {
+void Renderer::ClearFrameBuffer() {
     if (mClearColorBuffer) {
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -411,7 +397,7 @@ void Renderer::RenderScene(const Scene& scene) {
                 mCamera.LookAt(cameraPositionWorldSpace, camera->GetTarget(), camera->GetUp());
             }
             
-            SetLightDirectionInShaders();
+            CalculateCameraSpaceLightDirection();
             previousCamera = camera;
         }
 
@@ -437,7 +423,6 @@ void Renderer::Render(const RenderPass& renderPass, DistanceFunction distanceFun
     if (isHudMode != mHudMode || projectionMode != mProjectionMode) {
         SetHudMode(isHudMode);
         SetProjectionMode(projectionMode);
-        SetupProjectionInShaders();
     }
     
     auto& scissorBox = renderPass.GetScissorBox();
@@ -445,6 +430,8 @@ void Renderer::Render(const RenderPass& renderPass, DistanceFunction distanceFun
         auto& scissorBoxValue = scissorBox.GetValue();
         SetScissorBox(scissorBoxValue.mLowerLeft, scissorBoxValue.mSize);
         SetScissorTest(true);
+    } else {
+        SetScissorTest(false);
     }
     
     mIsDepthTestAllowed = renderPass.IsDepthTestAllowed();
@@ -486,29 +473,19 @@ void Renderer::Render(const RenderPass& renderPass, DistanceFunction distanceFun
         
         previousEntry = &renderEntry;
     }
-    
-    SetDepthWrite(true);
-    
-    if (scissorBox.HasValue()) {
-        SetScissorTest(false);
-    }
 }
 
 void Renderer::SetLightDirection(const Vec3& lightDirection) {
     mGlobalLight.mDirectionWorldSpace = lightDirection;
-    SetLightDirectionInShaders();
+    CalculateCameraSpaceLightDirection();
 }
 
-void Renderer::SetLightDirectionInShaders() {
+void Renderer::CalculateCameraSpaceLightDirection() {
     // Since the matrix is row-major it has to be transposed in order to multiply with the vector.
     auto transposedViewMatrix = GetViewMatrix().Transposed();
     auto lightPosCamSpace = transposedViewMatrix * Vec4{mGlobalLight.mDirectionWorldSpace, 0.0f};
     Vec3 lightPosCamSpaceVec3 {lightPosCamSpace.x, lightPosCamSpace.y, lightPosCamSpace.z};
-    auto normalizedLightPosition = lightPosCamSpaceVec3.Normalized();
-    
-    for (auto& shader: mShaders) {
-        shader.second.SetLightPosition(normalizedLightPosition);
-    }
+    mGlobalLight.mDirectionCameraSpace = lightPosCamSpaceVec3.Normalized();
 }
 
 void Renderer::EnableShader(ShaderType shaderType) {
@@ -593,8 +570,8 @@ void Renderer::SetScissorTest(bool scissorTest) {
     }
 }
 
-void Renderer::RenderObject(const RenderableObject& object, const Mat4& modelTransform) {
-    auto& material = object.GetMaterial();
+void Renderer::RenderObject(const RenderableObject& renderableObject, const Mat4& modelTransform) {
+    auto& material = renderableObject.GetMaterial();
     auto shaderType = material.GetShaderType();
     
     // Select and use the shader.
@@ -602,38 +579,30 @@ void Renderer::RenderObject(const RenderableObject& object, const Mat4& modelTra
     assert(shaderProgram.IsEnabled());
     shaderProgram.Use();
     
-    // Set the transforms used by the shaders.
-    SetTransforms(modelTransform, shaderProgram.GetUniforms());
-
-    // Set the material properties used by the shaders.
+    SetTransforms(modelTransform, shaderProgram);
     SetMaterialProperties(material, shaderType, shaderProgram);
-
-    auto& vbo = object.GetVbo();
+    SetVbo(renderableObject, shaderProgram);
     
-    // Enable vertex attribute arrays.
-    EnableVertexAttributes(shaderProgram, vbo.GetVertexBufferId());
+    auto& vbo = renderableObject.GetVbo();
 
-    switch (object.GetRenderMode()) {
+    switch (renderableObject.GetRenderMode()) {
         case RenderMode::Triangles:
-            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo.GetIndexBufferId());
             glDrawElements(GL_TRIANGLES, vbo.GetIndexCount(), GL_UNSIGNED_SHORT, 0);
             break;
         case RenderMode::Points:
             glDrawArrays(GL_POINTS, 0, vbo.GetPointCount());
             break;
     }
-    
-    DisableMandatoryVertexAttributes(shaderProgram);
 }
 
-void Renderer::SetTransforms(const Mat4& modelTransform, 
-                             const ShaderProgram::UniformHandles& uniforms) {
+void Renderer::SetTransforms(const Mat4& modelTransform, ShaderProgram& shaderProgram) {
     // Note: the matrix in the matrix lib is row-major while OpenGL expects column-major. However,
     // it works since all transforms are created in row-major order while OpenGL reads the matrix in
     // column-major order which transposes it. Transposing the matrix is required in order to
     // multiply with a vector: M * v.
     auto modelview = modelTransform * GetViewMatrix();
     auto modelViewProjection = modelview * GetProjectionMatrix();
+    auto& uniforms = shaderProgram.GetUniforms();
     glUniformMatrix4fv(uniforms.mModelViewProjection, 1, 0, modelViewProjection.Pointer());
 
     // Set the normal matrix in camera space. Modelview is orthogonal, so its Inverse-Transpose is
@@ -646,7 +615,10 @@ void Renderer::SetTransforms(const Mat4& modelTransform,
     glUniformMatrix3fv(uniforms.mModel3x3, 1, 0, modelTransform.ToMat3().Pointer());
     
     // Set the camera position in world space.
-    glUniform3fv(uniforms.mCameraPosition, 1, GetCameraPosition().Pointer());
+    shaderProgram.SetCameraPosition(GetCameraPosition());
+    
+    // Set light direction in camera space.
+    shaderProgram.SetLightPosition(mGlobalLight.mDirectionCameraSpace);
 }
 
 void Renderer::SetMaterialProperties(const Material& material,
@@ -688,6 +660,21 @@ void Renderer::SetMaterialProperties(const Material& material,
     SetDepthTest(material.GetDepthState());
 }
 
+void Renderer::SetVbo(const RenderableObject& renderableObject,
+                      const ShaderProgram& shaderProgram) {
+    auto& vbo = renderableObject.GetVbo();
+    
+    // Bind the vertex buffer.
+    glBindBuffer(GL_ARRAY_BUFFER, vbo.GetVertexBufferId());
+    
+    // Enable vertex attribute arrays.
+    EnableVertexAttributes(shaderProgram);
+    
+    if (renderableObject.GetRenderMode() == RenderMode::Triangles) {
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo.GetIndexBufferId());
+    }
+}
+
 ShaderProgram& Renderer::GetShaderProgram(ShaderType shaderType) {
     auto shader = mShaders.find(shaderType);
     assert(shader != std::end(mShaders));
@@ -711,7 +698,6 @@ void Renderer::InitCamera(float narrowFrustumHeightFactor) {
 
     InitCamera();
     InitHudFrustum();
-    SetupProjectionInShaders();
 }
 
 const Mat4& Renderer::GetViewMatrix() const {

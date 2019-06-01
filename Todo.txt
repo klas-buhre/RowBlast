@@ -76,12 +76,47 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
+    -rename shaderType to ShaderId
+
+
+     Manage this state:
+        Context global state:
+            glEnable(GL_BLEND);
+            glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+            glEnable(GL_DEPTH_TEST);
+            glEnable(GL_CULL_FACE);
+            glDepthMask(GL_TRUE);
+            glEnable(GL_SCISSOR_TEST);
+            ShaderProgram address
+            Material address
+            Vbo address
+
+
+    SetMaterialProperties() {
+      if ShaderProgram is same and Material is the same {
+        return
+      }
+      ...
+    }
+
+    SetVbo() {
+      if ShaderProgram is same and Vbo is the same {
+        return
+      }
+      ...
+    }
+
     -Try to reduce the state changes in the renderer by comparing current with previous
-     shaderType, material, vbo. If the renderable is the same, only SetTransforms is needed.
-     Remember that state can only be reused if shaderType (rename to ShaderId?) is the same.
-     Set all previous material, vbo etc to null at new render pass and call to text renderer.
+     ShaderProgram, Material, Vbo. SetTransforms is always needed.
+     Remember that some nonglobal state can only be reused if shaderId is the same.
+     Set all previous shader, material, vbo to null at new render pass or at call to text renderer.
      Also manage GL global state like GL_DEPTH_TEST.
-     Create a RenderState class that manages all state.
+     Maybe add a RenderOrder that for depth writing objects sort based on ShaderId, Material, and
+     VBO (in that priority). And apply that sorting if objects have the same distance even with the
+     RenderOrder::Optimized and RenderOrder::BackToFront.
+     Create a RenderStateManager class that manages all state.
+
+
     -Make a static batcher that is accessable from the IRenderer API. Just send a SceneObject that
      should have all its children merged into one renderable. It should detach all children
      SceneObjects (but not delete them or their renderables since ownership of those objects is

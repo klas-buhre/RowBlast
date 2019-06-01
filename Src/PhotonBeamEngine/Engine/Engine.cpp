@@ -50,7 +50,7 @@ void Engine::Update(float frameSeconds) {
     mAudio.Update(mLastFrameSeconds);
     
     if (scene) {
-        mRenderer.ClearBuffers();
+        mRenderer.ClearFrameBuffer();
         mRenderer.RenderScene(*scene);
     }
 }

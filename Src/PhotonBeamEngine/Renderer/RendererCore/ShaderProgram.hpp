@@ -5,6 +5,7 @@
 
 #include "Matrix.hpp"
 #include "VertexBuffer.hpp"
+#include "Optional.hpp"
 
 namespace Pht {
     class ShaderProgram {
@@ -44,6 +45,7 @@ namespace Pht {
         
         void Build(const char* vertexShaderSource, const char* fragmentShaderSource);
         void SetProjection(const Mat4& projectionMatrix);
+        void SetCameraPosition(const Vec3& cameraPosition);
         void SetLightPosition(const Vec3& lightPosition);
         void Use() const;
         
@@ -72,6 +74,8 @@ namespace Pht {
         UniformHandles mUniforms;
         AttributeHandles mAttributes;
         VertexFlags mVertexFlags;
+        Optional<Vec3> mLightPosition;
+        Optional<Vec3> mCameraPosition;
         bool mIsEnabled {true};
     };
 }

@@ -13,6 +13,18 @@
 
 using namespace Pht;
 
+namespace {
+    void DisableVertexAttributes(const ShaderProgram& shaderProgram) {
+        auto& attributes = shaderProgram.GetAttributes();
+    
+        glDisableVertexAttribArray(attributes.mPosition);
+        glDisableVertexAttribArray(attributes.mNormal);
+        glDisableVertexAttribArray(attributes.mTextureCoord);
+        glDisableVertexAttribArray(attributes.mColor);
+        glDisableVertexAttribArray(attributes.mPointSize);
+    }
+}
+
 TextRenderer::TextRenderer(const IVec2& screenSize) :
     mProjection {Mat4::OrthographicProjection(0.0f, screenSize.x, 0.0f, screenSize.y, -1.0f, 1.0f)},
     mTextShader {{}},
@@ -74,6 +86,8 @@ void TextRenderer::RenderText(const std::string& text,
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     
+    DisableVertexAttributes(shader);
+    
     glEnableVertexAttribArray(attributes.mTextCoords);
     glBindBuffer(GL_ARRAY_BUFFER, mVbo);
     glVertexAttribPointer(attributes.mTextCoords, 4, GL_FLOAT, GL_FALSE, 0, 0);
@@ -104,10 +118,6 @@ void TextRenderer::RenderText(const std::string& text,
         
         position.x += (glyph.mAdvance >> 6) * properties.mScale;
     }
-
-    glDisableVertexAttribArray(attributes.mTextCoords);
-    glDisable(GL_BLEND);
-    glEnable(GL_DEPTH_TEST);
 }
 
 ShaderProgram& TextRenderer::GetShaderProgram(const TextProperties& textProperties) {

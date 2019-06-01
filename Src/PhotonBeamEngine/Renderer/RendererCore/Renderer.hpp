@@ -39,7 +39,7 @@ namespace Pht {
         void InitRenderQueue(const Scene& scene);
         std::unique_ptr<RenderableObject> CreateRenderableObject(const IMesh& mesh,
                                                                  const Material& material);
-        void ClearBuffers();
+        void ClearFrameBuffer();
         void RenderScene(const Scene& scene);
         
     private:
@@ -52,16 +52,15 @@ namespace Pht {
         void SetDepthWrite(bool depthWrite);
         void SetScissorBox(const Vec2& lowerLeft, const Vec2& size);
         void SetScissorTest(bool scissorTest);
-        void SetupProjectionInShaders();
         void SetLightDirection(const Vec3& lightDirection);
-        void SetLightDirectionInShaders();
+        void CalculateCameraSpaceLightDirection();
         const Vec3& GetCameraPosition() const;
-        void RenderObject(const RenderableObject& object, const Mat4& modelTransform);
-        void SetTransforms(const Mat4& modelTransform,
-                           const ShaderProgram::UniformHandles& uniforms);
+        void RenderObject(const RenderableObject& renderableObject, const Mat4& modelTransform);
+        void SetTransforms(const Mat4& modelTransform, ShaderProgram& shaderProgram);
         void SetMaterialProperties(const Material& material,
                                    ShaderType shaderType,
                                    const ShaderProgram& shaderProgram);
+        void SetVbo(const RenderableObject& renderableObject, const ShaderProgram& shaderProgram);
         ShaderProgram& GetShaderProgram(ShaderType shaderType);
         void RenderText(const std::string& text,
                         const Vec2& position,
@@ -79,6 +78,7 @@ namespace Pht {
         
         struct GlobalLight {
             Vec3 mDirectionWorldSpace;
+            Vec3 mDirectionCameraSpace;
             float mDirectionalIntensity {1.0f};
             float mAmbientIntensity {1.0f};
         };
