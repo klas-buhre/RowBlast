@@ -22,6 +22,9 @@ namespace Pht {
                         const TextProperties& properties);
         
     private:
+        void BuildShader(ShaderProgram& shader,
+                         const char* vertexShaderSource,
+                         const char* fragmentShaderSource);
         ShaderProgram& GetShaderProgram(const TextProperties& properties);
         Vec2 AdjustPositionCenterXAlignment(const std::string& text,
                                             Vec2 position,

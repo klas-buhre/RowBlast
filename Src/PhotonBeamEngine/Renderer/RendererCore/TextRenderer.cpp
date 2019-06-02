@@ -35,18 +35,21 @@ TextRenderer::TextRenderer(const IVec2& screenSize) :
     glBindBuffer(GL_ARRAY_BUFFER, mVbo);
     glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * 6 * 4, nullptr, GL_DYNAMIC_DRAW);
     
-    mTextShader.Build(TextVertexShader, TextFragmentShader);
-    mTextShader.SetProjection(mProjection);
-
-    mTextDoubleGradientShader.Build(TextDoubleGradientVertexShader, TextDoubleGradientFragmentShader);
-    mTextDoubleGradientShader.SetProjection(mProjection);
-
-    mTextMidGradientShader.Build(TextMidGradientVertexShader, TextMidGradientFragmentShader);
-    mTextMidGradientShader.SetProjection(mProjection);
+    BuildShader(mTextShader, TextVertexShader, TextFragmentShader);
+    BuildShader(mTextDoubleGradientShader, TextDoubleGradientVertexShader, TextDoubleGradientFragmentShader);
+    BuildShader(mTextMidGradientShader, TextMidGradientVertexShader, TextMidGradientFragmentShader);
 }
 
 TextRenderer::~TextRenderer() {
     glDeleteBuffers(1, &mVbo);
+}
+
+void TextRenderer::BuildShader(ShaderProgram& shader,
+                               const char* vertexShaderSource,
+                               const char* fragmentShaderSource) {
+    shader.Build(vertexShaderSource, fragmentShaderSource);
+    shader.Use();
+    shader.SetProjection(mProjection);
 }
 
 void TextRenderer::RenderText(const std::string& text,

@@ -86,7 +86,6 @@ void ShaderProgram::SetProjection(const Mat4& projectionMatrix) {
         return;
     }
     
-    glUseProgram(mProgram);
     glUniformMatrix4fv(mUniforms.mProjection, 1, 0, projectionMatrix.Pointer());
 }
 

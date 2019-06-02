@@ -76,6 +76,7 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
+    -Review and test previous commit.
     -rename shaderType to ShaderId
 
 
