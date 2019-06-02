@@ -23,6 +23,7 @@
 		621F715521FDD9D700232B83 /* OtherMoves2WindowView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 621F715321FDD9D700232B83 /* OtherMoves2WindowView.cpp */; };
 		621F715821FDD9EA00232B83 /* OtherMoves2WindowController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 621F715621FDD9EA00232B83 /* OtherMoves2WindowController.cpp */; };
 		621F715B2201AD1200232B83 /* FieldBottomGlowAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 621F71592201AD1200232B83 /* FieldBottomGlowAnimation.cpp */; };
+		622015CB22A40F8B0018851A /* RenderStateManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 622015C922A40F8B0018851A /* RenderStateManager.cpp */; };
 		62203F0B21D7D84C00BEB3E9 /* game_track1.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 62203F0A21D7D71000BEB3E9 /* game_track1.mp4 */; };
 		62203F0D21D7D9DE00BEB3E9 /* game_track2.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 62203F0C21D7D9D100BEB3E9 /* game_track2.mp4 */; };
 		62204EE421BD7A1800A035C0 /* sky7.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62204EE321BD7A1800A035C0 /* sky7.jpg */; };
@@ -561,6 +562,8 @@
 		621F71592201AD1200232B83 /* FieldBottomGlowAnimation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FieldBottomGlowAnimation.cpp; sourceTree = "<group>"; };
 		621F715A2201AD1200232B83 /* FieldBottomGlowAnimation.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = FieldBottomGlowAnimation.hpp; sourceTree = "<group>"; };
 		622015C722A064990018851A /* Noncopyable.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Noncopyable.hpp; sourceTree = "<group>"; };
+		622015C922A40F8B0018851A /* RenderStateManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = RenderStateManager.cpp; sourceTree = "<group>"; };
+		622015CA22A40F8B0018851A /* RenderStateManager.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = RenderStateManager.hpp; sourceTree = "<group>"; };
 		62203F0A21D7D71000BEB3E9 /* game_track1.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = game_track1.mp4; sourceTree = "<group>"; };
 		62203F0C21D7D9D100BEB3E9 /* game_track2.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = game_track2.mp4; sourceTree = "<group>"; };
 		62204EE321BD7A1800A035C0 /* sky7.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sky7.jpg; sourceTree = "<group>"; };
@@ -2551,6 +2554,8 @@
 				625696F42182392B003A3A9D /* RenderPass.hpp */,
 				625696FA2182392B003A3A9D /* RenderQueue.cpp */,
 				625696EC2182392B003A3A9D /* RenderQueue.hpp */,
+				622015C922A40F8B0018851A /* RenderStateManager.cpp */,
+				622015CA22A40F8B0018851A /* RenderStateManager.hpp */,
 				625696F52182392B003A3A9D /* ShaderProgram.cpp */,
 				625696F22182392B003A3A9D /* ShaderProgram.hpp */,
 				627A123221AAC7BF00EECA3B /* SoftwareRasterizer.cpp */,
@@ -3693,6 +3698,7 @@
 				621F715521FDD9D700232B83 /* OtherMoves2WindowView.cpp in Sources */,
 				62216C2721EB377F001CB9A1 /* CollapsingFieldAnimation.cpp in Sources */,
 				62216C3B21EB377F001CB9A1 /* SunParticleEffect.cpp in Sources */,
+				622015CB22A40F8B0018851A /* RenderStateManager.cpp in Sources */,
 				623768EC226A1117007FD5EC /* TutorialExplosionParticleEffect.cpp in Sources */,
 				623B94CD21F6357400B62D9B /* GLKViewExtension.mm in Sources */,
 				62216BF921EB377E001CB9A1 /* FallingPiece.cpp in Sources */,

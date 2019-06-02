@@ -136,6 +136,7 @@ void Materials::CreateLightGrayMaterial() {
                                                          specular,
                                                          shininess,
                                                          reflectivity);
+    mLightGrayMaterial->GetDepthState().mDepthTestAllowedOverride = true;
 }
 
 void Materials::CreateGrayYellowMaterial() {

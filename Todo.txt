@@ -76,13 +76,15 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
+    -Fix the render bug by checking out earlier commits to see where it happened.
+    
      Manage this state:
         Context global state:
             glEnable(GL_BLEND);
             glBlendFunc(GL_SRC_ALPHA, GL_ONE);
             glEnable(GL_DEPTH_TEST);
-            glEnable(GL_CULL_FACE);
             glDepthMask(GL_TRUE);
+            glEnable(GL_CULL_FACE);
             glEnable(GL_SCISSOR_TEST);
             ShaderProgram address
             Material address

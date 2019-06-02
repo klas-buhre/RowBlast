@@ -13,6 +13,7 @@
 #include "Material.hpp"
 #include "TextRenderer.hpp"
 #include "RenderQueue.hpp"
+#include "RenderStateManager.hpp"
 
 namespace Pht {
     class Renderer: public IRenderer {
@@ -93,6 +94,7 @@ namespace Pht {
         float mNarrowFrustumHeightFactor {1.0f};
         IVec2 mRenderBufferSize;
         RenderQueue mRenderQueue;
+        RenderStateManager mRenderState;
         std::unordered_map<ShaderId, ShaderProgram> mShaders;
         std::unique_ptr<TextRenderer> mTextRenderer;
         bool mClearColorBuffer {true};

@@ -254,8 +254,12 @@ void Renderer::Init(bool createRenderBuffers) {
     InitShaders();
     InitCamera(ISceneManager::defaultNarrowFrustumHeightFactor);
 
+    // mRenderState.Init();
     mTextRenderer = std::make_unique<TextRenderer>(mRenderBufferSize);
     
+    // mRenderState.SetCullFace(true);
+    // glEnable(GL_CULL_FACE);
+
     std::cout << "Pht::Renderer: Using " << mRenderBufferSize.x << "x" << mRenderBufferSize.y
               << " resolution." << std::endl;
 }
