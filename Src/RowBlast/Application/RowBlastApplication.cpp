@@ -69,8 +69,8 @@ RowBlastApplication::RowBlastApplication(Pht::IEngine& engine) :
 
 void RowBlastApplication::SetUpRenderer() {
     auto& renderer = mEngine.GetRenderer();
-    renderer.DisableShader(Pht::ShaderType::PixelLighting);
-    renderer.DisableShader(Pht::ShaderType::PointParticle);
+    renderer.DisableShader(Pht::ShaderId::PixelLighting);
+    renderer.DisableShader(Pht::ShaderId::PointParticle);
 }
 
 void RowBlastApplication::SetUpAudio() {

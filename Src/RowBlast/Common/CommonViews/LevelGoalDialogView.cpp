@@ -170,7 +170,7 @@ void LevelGoalDialogView::CreateGlowEffectsBehindPieces(Pht::SceneObject& parent
                                                                  particleEmitterSettings,
                                                                  Pht::RenderMode::Triangles);
     auto& material = mGlowEffect->GetRenderable()->GetMaterial();
-    material.SetShaderType(Pht::ShaderType::ParticleNoAlphaTexture);
+    material.SetShaderId(Pht::ShaderId::ParticleNoAlphaTexture);
     
     mGlowEffect->GetTransform().SetPosition({0.0f, 0.1f, UiLayer::buttonText});
     parentObject.AddChild(*mGlowEffect);
@@ -195,7 +195,7 @@ void LevelGoalDialogView::CreateGlowEffectsBehindPieces(Pht::SceneObject& parent
                                                                       particleEmitterSettings,
                                                                       Pht::RenderMode::Triangles);
     auto& material2 = mRoundGlowEffect->GetRenderable()->GetMaterial();
-    material2.SetShaderType(Pht::ShaderType::ParticleNoAlphaTexture);
+    material2.SetShaderId(Pht::ShaderId::ParticleNoAlphaTexture);
     
     mRoundGlowEffect->GetTransform().SetPosition({0.0f, 0.1f, -0.9f});
     parentObject.AddChild(*mRoundGlowEffect);
@@ -358,7 +358,7 @@ void LevelGoalDialogView::CreateGlowEffectsBehindGoal(Pht::SceneObject& parentOb
                                                                           particleEmitterSettings,
                                                                           Pht::RenderMode::Triangles);
     auto& material = mGoalRoundGlowEffect->GetRenderable()->GetMaterial();
-    material.SetShaderType(Pht::ShaderType::ParticleNoAlphaTexture);
+    material.SetShaderId(Pht::ShaderId::ParticleNoAlphaTexture);
     
     mGoalRoundGlowEffect->GetTransform().SetPosition({0.0f, -1.0, -1.9f});
     parentObject.AddChild(*mGoalRoundGlowEffect);

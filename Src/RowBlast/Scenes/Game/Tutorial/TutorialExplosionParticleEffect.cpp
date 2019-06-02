@@ -94,7 +94,7 @@ void TutorialExplosionParticleEffect::CreateInnerEffect(Pht::IEngine& engine,
                                                                           particleEmitterSettings,
                                                                           Pht::RenderMode::Triangles);
     auto& material = mInnerParticleEffect->GetRenderable()->GetMaterial();
-    material.SetShaderType(Pht::ShaderType::ParticleNoAlphaTexture);
+    material.SetShaderId(Pht::ShaderId::ParticleNoAlphaTexture);
     mContainer->AddChild(*mInnerParticleEffect);
 }
 

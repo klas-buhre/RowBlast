@@ -180,7 +180,7 @@ void StarsAnimation::StarAnimation::CreateFlareParticleEffect(Pht::IEngine& engi
                                                                   Pht::RenderMode::Triangles);
     auto& material = mFlareEffect->GetRenderable()->GetMaterial();
     material.GetDepthState().mDepthTest = true;
-    material.SetShaderType(Pht::ShaderType::ParticleNoAlphaTexture);
+    material.SetShaderId(Pht::ShaderId::ParticleNoAlphaTexture);
 }
 
 void StarsAnimation::StarAnimation::Init(Pht::SceneObject& starsContainer) {

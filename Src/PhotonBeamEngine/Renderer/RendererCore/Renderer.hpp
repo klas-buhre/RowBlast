@@ -19,8 +19,8 @@ namespace Pht {
     public:
         Renderer(bool createRenderBuffers);
         
-        void EnableShader(ShaderType shaderType) override;
-        void DisableShader(ShaderType shaderType) override;
+        void EnableShader(ShaderId shaderId) override;
+        void DisableShader(ShaderId shaderId) override;
         void SetClearColorBuffer(bool clearColorBuffer) override;
         void SetHudMode(bool hudMode) override;
         void SetProjectionMode(ProjectionMode projectionMode) override;
@@ -58,10 +58,10 @@ namespace Pht {
         void RenderObject(const RenderableObject& renderableObject, const Mat4& modelTransform);
         void SetTransforms(const Mat4& modelTransform, ShaderProgram& shaderProgram);
         void SetMaterialProperties(const Material& material,
-                                   ShaderType shaderType,
+                                   ShaderId shaderId,
                                    const ShaderProgram& shaderProgram);
         void SetVbo(const RenderableObject& renderableObject, const ShaderProgram& shaderProgram);
-        ShaderProgram& GetShaderProgram(ShaderType shaderType);
+        ShaderProgram& GetShaderProgram(ShaderId shaderId);
         void RenderText(const std::string& text,
                         const Vec2& position,
                         const TextProperties& properties);
@@ -93,7 +93,7 @@ namespace Pht {
         float mNarrowFrustumHeightFactor {1.0f};
         IVec2 mRenderBufferSize;
         RenderQueue mRenderQueue;
-        std::unordered_map<ShaderType, ShaderProgram> mShaders;
+        std::unordered_map<ShaderId, ShaderProgram> mShaders;
         std::unique_ptr<TextRenderer> mTextRenderer;
         bool mClearColorBuffer {true};
         bool mHudMode {false};

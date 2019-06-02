@@ -5,8 +5,8 @@
 using namespace Pht;
 
 namespace {
-    GLuint CompileShader(const char* source, GLenum shaderType) {
-        auto shaderHandle = glCreateShader(shaderType);
+    GLuint CompileShader(const char* source, GLenum shaderId) {
+        auto shaderHandle = glCreateShader(shaderId);
         glShaderSource(shaderHandle, 1, &source, 0);
         glCompileShader(shaderHandle);
         

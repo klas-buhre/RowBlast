@@ -66,7 +66,7 @@ void PieceTrailParticleEffect::CreateTrailEffects(Pht::IEngine& engine,
         effect = particleSystem.CreateParticleEffectSceneObject(particleSettings,
                                                                 particleEmitterSettings,
                                                                 Pht::RenderMode::Triangles);
-        effect->GetRenderable()->GetMaterial().SetShaderType(Pht::ShaderType::ParticleTextureColor);
+        effect->GetRenderable()->GetMaterial().SetShaderId(Pht::ShaderId::ParticleTextureColor);
         mContainerSceneObject->AddChild(*effect);
     }
 }

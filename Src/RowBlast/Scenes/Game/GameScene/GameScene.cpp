@@ -129,7 +129,7 @@ void GameScene::Init(const Level& level, const GameLogic& gameLogic) {
     auto scene = sceneManager.CreateScene(Pht::Hash::Fnv1a("gameScene"));
     mScene = scene.get();
     
-    mEngine.GetRenderer().DisableShader(Pht::ShaderType::TexturedEnvMapLighting);
+    mEngine.GetRenderer().DisableShader(Pht::ShaderId::TexturedEnvMapLighting);
     sceneManager.InitSceneSystems(CommonResources::narrowFrustumHeightFactor);
     
     CreateRenderPasses();

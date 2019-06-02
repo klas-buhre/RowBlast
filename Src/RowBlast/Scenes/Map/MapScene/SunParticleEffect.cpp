@@ -32,7 +32,7 @@ namespace {
         sceneObject->SetLayer(layer);
         
         auto& material = sceneObject->GetRenderable()->GetMaterial();
-        material.SetShaderType(Pht::ShaderType::ParticleNoAlphaTexture);
+        material.SetShaderId(Pht::ShaderId::ParticleNoAlphaTexture);
 
         auto* particleEffect = sceneObject->GetComponent<Pht::ParticleEffect>();
         assert(particleEffect);

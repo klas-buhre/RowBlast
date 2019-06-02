@@ -159,7 +159,7 @@ void OutOfMovesDialogView::CreateGlowEffect(Pht::SceneObject& parentObject) {
                                                                  particleEmitterSettings,
                                                                  Pht::RenderMode::Triangles);
     auto& material = mGlowEffect->GetRenderable()->GetMaterial();
-    material.SetShaderType(Pht::ShaderType::ParticleNoAlphaTexture);
+    material.SetShaderId(Pht::ShaderId::ParticleNoAlphaTexture);
     
     mGlowEffect->GetTransform().SetPosition({0.0f, 0.0f, UiLayer::panel});
     parentObject.AddChild(*mGlowEffect);

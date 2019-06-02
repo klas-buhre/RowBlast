@@ -69,7 +69,7 @@ void MapScene::Init() {
     auto scene = sceneManager.CreateScene(Pht::Hash::Fnv1a("mapScene"));
     mScene = scene.get();
     
-    mEngine.GetRenderer().EnableShader(Pht::ShaderType::TexturedEnvMapLighting);
+    mEngine.GetRenderer().EnableShader(Pht::ShaderId::TexturedEnvMapLighting);
     sceneManager.InitSceneSystems(Pht::ISceneManager::defaultNarrowFrustumHeightFactor);
     
     scene->AddRenderPass(Pht::RenderPass {static_cast<int>(Layer::Space)});

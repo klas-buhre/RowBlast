@@ -57,7 +57,7 @@ void TutorialLaserParticleEffect::CreateThickBeam(Pht::IEngine& engine) {
     mThickBeam = particleSystem.CreateParticleEffectSceneObject(particleSettings,
                                                                 particleEmitterSettings,
                                                                 Pht::RenderMode::Triangles);
-    mThickBeam->GetRenderable()->GetMaterial().SetShaderType(Pht::ShaderType::ParticleTextureColor);
+    mThickBeam->GetRenderable()->GetMaterial().SetShaderId(Pht::ShaderId::ParticleTextureColor);
     mContainer->AddChild(*mThickBeam);
 }
 
@@ -88,7 +88,7 @@ void TutorialLaserParticleEffect::CreateThinBeam(Pht::IEngine& engine) {
     mThinBeam = particleSystem.CreateParticleEffectSceneObject(particleSettings,
                                                                particleEmitterSettings,
                                                                Pht::RenderMode::Triangles);
-    mThinBeam->GetRenderable()->GetMaterial().SetShaderType(Pht::ShaderType::ParticleTextureColor);
+    mThinBeam->GetRenderable()->GetMaterial().SetShaderId(Pht::ShaderId::ParticleTextureColor);
     mContainer->AddChild(*mThinBeam);
 }
 
@@ -118,7 +118,7 @@ void TutorialLaserParticleEffect::CreateFlare(Pht::IEngine& engine) {
     mFlare = particleSystem.CreateParticleEffectSceneObject(particleSettings,
                                                             particleEmitterSettings,
                                                             Pht::RenderMode::Triangles);
-    mFlare->GetRenderable()->GetMaterial().SetShaderType(Pht::ShaderType::ParticleNoAlphaTexture);
+    mFlare->GetRenderable()->GetMaterial().SetShaderId(Pht::ShaderId::ParticleNoAlphaTexture);
     mContainer->AddChild(*mFlare);
 }
 

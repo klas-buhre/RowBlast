@@ -112,7 +112,7 @@ void PurchaseSuccessfulDialogView::CreateGlowEffect(const Pht::Vec3& position,
                                                                  particleEmitterSettings,
                                                                  Pht::RenderMode::Triangles);
     auto& material = mGlowEffect->GetRenderable()->GetMaterial();
-    material.SetShaderType(Pht::ShaderType::ParticleNoAlphaTexture);
+    material.SetShaderId(Pht::ShaderId::ParticleNoAlphaTexture);
 
     auto& transform = mGlowEffect->GetTransform();
     transform.SetPosition(position);

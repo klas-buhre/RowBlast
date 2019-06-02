@@ -20,8 +20,8 @@ namespace Pht {
     public:
         virtual ~IRenderer() {}
         
-        virtual void DisableShader(ShaderType shaderType) = 0;
-        virtual void EnableShader(ShaderType shaderType) = 0;
+        virtual void DisableShader(ShaderId shaderId) = 0;
+        virtual void EnableShader(ShaderId shaderId) = 0;
         virtual void SetClearColorBuffer(bool clearColorBuffer) = 0;
         virtual void SetHudMode(bool hudMode) = 0;
         virtual void SetProjectionMode(ProjectionMode projectionMode) = 0;

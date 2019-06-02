@@ -138,7 +138,7 @@ std::unique_ptr<Pht::SceneObject> TitleAnimation::CreateFlareParticleEffect(floa
     flareEffect->GetTransform().SetPosition({0.0f, yPosition, UiLayer::background});
     
     auto& material = flareEffect->GetRenderable()->GetMaterial();
-    material.SetShaderType(Pht::ShaderType::ParticleNoAlphaTexture);
+    material.SetShaderId(Pht::ShaderId::ParticleNoAlphaTexture);
     
     return flareEffect;
 }

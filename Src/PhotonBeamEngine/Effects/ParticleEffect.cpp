@@ -47,7 +47,7 @@ ParticleEffect::ParticleEffect(SceneObject& sceneObject,
         case RenderMode::Points: {
             VertexFlags vertexFlags {.mColors = true, .mPointSizes = true};
             mVertexBuffer = std::make_unique<VertexBuffer>(numParticles, 0, vertexFlags);
-            material.SetShaderType(ShaderType::PointParticle);
+            material.SetShaderId(ShaderId::PointParticle);
             mRenderableObject = std::make_unique<RenderableObject>(material, RenderMode::Points);
             break;
         }
@@ -56,7 +56,7 @@ ParticleEffect::ParticleEffect(SceneObject& sceneObject,
             mVertexBuffer = std::make_unique<VertexBuffer>(numParticles * 4,
                                                            numParticles * 6,
                                                            vertexFlags);
-            material.SetShaderType(ShaderType::Particle);
+            material.SetShaderId(ShaderId::Particle);
             mRenderableObject = std::make_unique<RenderableObject>(material, RenderMode::Triangles);
             break;
         }

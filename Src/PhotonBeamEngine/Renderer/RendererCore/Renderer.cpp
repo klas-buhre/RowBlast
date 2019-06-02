@@ -76,12 +76,12 @@ namespace {
         .mZFarClip = 75.0f
     };
 
-    bool IsParticleShader(ShaderType shaderType) {
-        switch (shaderType) {
-            case ShaderType::Particle:
-            case ShaderType::ParticleTextureColor:
-            case ShaderType::ParticleNoAlphaTexture:
-            case ShaderType::PointParticle:
+    bool IsParticleShader(ShaderId shaderId) {
+        switch (shaderId) {
+            case ShaderId::Particle:
+            case ShaderId::ParticleTextureColor:
+            case ShaderId::ParticleNoAlphaTexture:
+            case ShaderId::PointParticle:
                 return true;
             default:
                 return false;
@@ -89,17 +89,17 @@ namespace {
     }
 
     void BindTextures(const Material& material,
-                      ShaderType shaderType,
+                      ShaderId shaderId,
                       const ShaderProgram& shaderProgram) {
-        switch (shaderType) {
-            case ShaderType::EnvMap:
+        switch (shaderId) {
+            case ShaderId::EnvMap:
                 glBindTexture(GL_TEXTURE_CUBE_MAP, material.GetEnvMapTexture()->GetHandle());
                 break;
-            case ShaderType::TexturedEmissiveLighting:
+            case ShaderId::TexturedEmissiveLighting:
                 glActiveTexture(GL_TEXTURE1);
                 glBindTexture(GL_TEXTURE_2D, material.GetEmissionTexture()->GetHandle());
                 break;
-            case ShaderType::TexturedEnvMapLighting:
+            case ShaderId::TexturedEnvMapLighting:
                 glActiveTexture(GL_TEXTURE1);
                 glBindTexture(GL_TEXTURE_CUBE_MAP, material.GetEnvMapTexture()->GetHandle());
                 break;
@@ -227,18 +227,18 @@ namespace {
 
 Renderer::Renderer(bool createRenderBuffers) :
     mShaders {
-        {ShaderType::PixelLighting,            {{.mNormals = true}}},
-        {ShaderType::VertexLighting,           {{.mNormals = true}}},
-        {ShaderType::TexturedLighting,         {{.mNormals = true, .mTextureCoords = true}}},
-        {ShaderType::TexturedEmissiveLighting, {{.mNormals = true, .mTextureCoords = true}}},
-        {ShaderType::TexturedEnvMapLighting,   {{.mNormals = true, .mTextureCoords = true}}},
-        {ShaderType::Textured,                 {{.mTextureCoords = true}}},
-        {ShaderType::EnvMap,                   {{.mNormals = true}}},
-        {ShaderType::VertexColor,              {{.mColors = true}}},
-        {ShaderType::Particle,                 {{.mTextureCoords = true, .mColors = true}}},
-        {ShaderType::ParticleTextureColor,     {{.mTextureCoords = true, .mColors = true}}},
-        {ShaderType::ParticleNoAlphaTexture,   {{.mTextureCoords = true, .mColors = true}}},
-        {ShaderType::PointParticle,            {{.mColors = true, .mPointSizes = true}}}
+        {ShaderId::PixelLighting,            {{.mNormals = true}}},
+        {ShaderId::VertexLighting,           {{.mNormals = true}}},
+        {ShaderId::TexturedLighting,         {{.mNormals = true, .mTextureCoords = true}}},
+        {ShaderId::TexturedEmissiveLighting, {{.mNormals = true, .mTextureCoords = true}}},
+        {ShaderId::TexturedEnvMapLighting,   {{.mNormals = true, .mTextureCoords = true}}},
+        {ShaderId::Textured,                 {{.mTextureCoords = true}}},
+        {ShaderId::EnvMap,                   {{.mNormals = true}}},
+        {ShaderId::VertexColor,              {{.mColors = true}}},
+        {ShaderId::Particle,                 {{.mTextureCoords = true, .mColors = true}}},
+        {ShaderId::ParticleTextureColor,     {{.mTextureCoords = true, .mColors = true}}},
+        {ShaderId::ParticleNoAlphaTexture,   {{.mTextureCoords = true, .mColors = true}}},
+        {ShaderId::PointParticle,            {{.mColors = true, .mPointSizes = true}}}
     } {
     
     if (createRenderBuffers) {
@@ -343,18 +343,18 @@ float Renderer::GetFrustumHeightFactor() const {
 void Renderer::InitShaders() {
     
     // Build shaders.
-    GetShaderProgram(ShaderType::PixelLighting).Build(PixelLightingVertexShader, PixelLightingFragmentShader);
-    GetShaderProgram(ShaderType::VertexLighting).Build(VertexLightingVertexShader, VertexLightingFragmentShader);
-    GetShaderProgram(ShaderType::TexturedLighting).Build(TexturedLightingVertexShader, TexturedLightingFragmentShader);
-    GetShaderProgram(ShaderType::TexturedEmissiveLighting).Build(TexturedEmissiveLightingVertexShader, TexturedEmissiveLightingFragmentShader);
-    GetShaderProgram(ShaderType::TexturedEnvMapLighting).Build(TexturedEnvMapLightingVertexShader, TexturedEnvMapLightingFragmentShader);
-    GetShaderProgram(ShaderType::Textured).Build(TexturedVertexShader, TexturedFragmentShader);
-    GetShaderProgram(ShaderType::EnvMap).Build(EnvMapVertexShader, EnvMapFragmentShader);
-    GetShaderProgram(ShaderType::VertexColor).Build(VertexColorVertexShader, VertexColorFragmentShader);
-    GetShaderProgram(ShaderType::Particle).Build(ParticleVertexShader, ParticleFragmentShader);
-    GetShaderProgram(ShaderType::ParticleTextureColor).Build(ParticleTextureColorVertexShader, ParticleTextureColorFragmentShader);
-    GetShaderProgram(ShaderType::ParticleNoAlphaTexture).Build(ParticleNoAlphaTextureVertexShader, ParticleNoAlphaTextureFragmentShader);
-    GetShaderProgram(ShaderType::PointParticle).Build(PointParticleVertexShader, PointParticleFragmentShader);
+    GetShaderProgram(ShaderId::PixelLighting).Build(PixelLightingVertexShader, PixelLightingFragmentShader);
+    GetShaderProgram(ShaderId::VertexLighting).Build(VertexLightingVertexShader, VertexLightingFragmentShader);
+    GetShaderProgram(ShaderId::TexturedLighting).Build(TexturedLightingVertexShader, TexturedLightingFragmentShader);
+    GetShaderProgram(ShaderId::TexturedEmissiveLighting).Build(TexturedEmissiveLightingVertexShader, TexturedEmissiveLightingFragmentShader);
+    GetShaderProgram(ShaderId::TexturedEnvMapLighting).Build(TexturedEnvMapLightingVertexShader, TexturedEnvMapLightingFragmentShader);
+    GetShaderProgram(ShaderId::Textured).Build(TexturedVertexShader, TexturedFragmentShader);
+    GetShaderProgram(ShaderId::EnvMap).Build(EnvMapVertexShader, EnvMapFragmentShader);
+    GetShaderProgram(ShaderId::VertexColor).Build(VertexColorVertexShader, VertexColorFragmentShader);
+    GetShaderProgram(ShaderId::Particle).Build(ParticleVertexShader, ParticleFragmentShader);
+    GetShaderProgram(ShaderId::ParticleTextureColor).Build(ParticleTextureColorVertexShader, ParticleTextureColorFragmentShader);
+    GetShaderProgram(ShaderId::ParticleNoAlphaTexture).Build(ParticleNoAlphaTextureVertexShader, ParticleNoAlphaTextureFragmentShader);
+    GetShaderProgram(ShaderId::PointParticle).Build(PointParticleVertexShader, PointParticleFragmentShader);
 }
 
 void Renderer::InitRenderQueue(const Scene& scene) {
@@ -363,7 +363,7 @@ void Renderer::InitRenderQueue(const Scene& scene) {
 
 std::unique_ptr<RenderableObject> Renderer::CreateRenderableObject(const IMesh& mesh,
                                                                    const Material& material) {
-    auto& shaderProgram = GetShaderProgram(material.GetShaderType());
+    auto& shaderProgram = GetShaderProgram(material.GetShaderId());
     return std::make_unique<RenderableObject>(material, mesh, shaderProgram.GetVertexFlags());
 }
 
@@ -488,12 +488,12 @@ void Renderer::CalculateCameraSpaceLightDirection() {
     mGlobalLight.mDirectionCameraSpace = lightPosCamSpaceVec3.Normalized();
 }
 
-void Renderer::EnableShader(ShaderType shaderType) {
-    GetShaderProgram(shaderType).SetIsEnabled(true);
+void Renderer::EnableShader(ShaderId shaderId) {
+    GetShaderProgram(shaderId).SetIsEnabled(true);
 }
 
-void Renderer::DisableShader(ShaderType shaderType) {
-    GetShaderProgram(shaderType).SetIsEnabled(false);
+void Renderer::DisableShader(ShaderId shaderId) {
+    GetShaderProgram(shaderId).SetIsEnabled(false);
 }
 
 void Renderer::SetClearColorBuffer(bool clearColorBuffer) {
@@ -572,15 +572,15 @@ void Renderer::SetScissorTest(bool scissorTest) {
 
 void Renderer::RenderObject(const RenderableObject& renderableObject, const Mat4& modelTransform) {
     auto& material = renderableObject.GetMaterial();
-    auto shaderType = material.GetShaderType();
+    auto shaderId = material.GetShaderId();
     
     // Select and use the shader.
-    auto& shaderProgram = GetShaderProgram(shaderType);
+    auto& shaderProgram = GetShaderProgram(shaderId);
     assert(shaderProgram.IsEnabled());
     shaderProgram.Use();
     
     SetTransforms(modelTransform, shaderProgram);
-    SetMaterialProperties(material, shaderType, shaderProgram);
+    SetMaterialProperties(material, shaderId, shaderProgram);
     SetVbo(renderableObject, shaderProgram);
     
     auto& vbo = renderableObject.GetVbo();
@@ -622,7 +622,7 @@ void Renderer::SetTransforms(const Mat4& modelTransform, ShaderProgram& shaderPr
 }
 
 void Renderer::SetMaterialProperties(const Material& material,
-                                     ShaderType shaderType,
+                                     ShaderId shaderId,
                                      const ShaderProgram& shaderProgram) {
     auto& uniforms = shaderProgram.GetUniforms();
     auto ambientlIntensity = mGlobalLight.mAmbientIntensity;
@@ -655,8 +655,8 @@ void Renderer::SetMaterialProperties(const Material& material,
     glUniform1i(uniforms.mSampler, 0);
     glUniform1i(uniforms.mSecondSampler, 1);
     
-    BindTextures(material, shaderType, shaderProgram);
-    SetupBlend(IsParticleShader(shaderType), material);
+    BindTextures(material, shaderId, shaderProgram);
+    SetupBlend(IsParticleShader(shaderId), material);
     SetDepthTest(material.GetDepthState());
 }
 
@@ -675,8 +675,8 @@ void Renderer::SetVbo(const RenderableObject& renderableObject,
     }
 }
 
-ShaderProgram& Renderer::GetShaderProgram(ShaderType shaderType) {
-    auto shader = mShaders.find(shaderType);
+ShaderProgram& Renderer::GetShaderProgram(ShaderId shaderId) {
+    auto shader = mShaders.find(shaderId);
     assert(shader != std::end(mShaders));
     return shader->second;
 }

@@ -7,17 +7,17 @@
 using namespace Pht;
 
 Material::Material() :
-    mShaderType {ShaderType::VertexColor} {
+    mShaderId {ShaderId::VertexColor} {
 
     mDepthState.mDepthWrite = false;
 }
 
 Material::Material(const std::string& textureName) :
-    mShaderType {ShaderType::Textured},
+    mShaderId {ShaderId::Textured},
     mTexture {TextureCache::GetTexture(textureName, GenerateMipmap::Yes)} {}
 
 Material::Material(const IImage& image, GenerateMipmap generateMipmap) :
-    mShaderType {ShaderType::Textured},
+    mShaderId {ShaderId::Textured},
     mTexture {TextureCache::InitTexture(image, generateMipmap)} {}
 
 Material::Material(const std::string& textureName,
@@ -29,7 +29,7 @@ Material::Material(const std::string& textureName,
     mDiffuse {Color{diffuse, diffuse, diffuse}},
     mSpecular {Color{specular, specular, specular}},
     mShininess {shininess},
-    mShaderType {ShaderType::TexturedLighting},
+    mShaderId {ShaderId::TexturedLighting},
     mTexture {TextureCache::GetTexture(textureName, GenerateMipmap::Yes)} {}
 
 Material::Material(const std::string& textureName,
@@ -44,7 +44,7 @@ Material::Material(const std::string& textureName,
     mSpecular {Color{specular, specular, specular}},
     mEmissive {Color{emissive, emissive, emissive}},
     mShininess {shininess},
-    mShaderType {ShaderType::TexturedEmissiveLighting},
+    mShaderId {ShaderId::TexturedEmissiveLighting},
     mTexture {TextureCache::GetTexture(textureName, GenerateMipmap::Yes)},
     mEmissionTexture {TextureCache::GetTexture(emissionTextureName, GenerateMipmap::Yes)} {}
 
@@ -59,7 +59,7 @@ Material::Material(const EnvMapTextureFilenames& envMapTextures,
     mSpecular {specular},
     mShininess {shininess},
     mReflectivity {reflectivity},
-    mShaderType {ShaderType::EnvMap},
+    mShaderId {ShaderId::EnvMap},
     mEnvMapTexture {TextureCache::GetTexture(envMapTextures)} {}
 
 Material::Material(const std::string& textureName,
@@ -74,7 +74,7 @@ Material::Material(const std::string& textureName,
     mSpecular {specular},
     mShininess {shininess},
     mReflectivity {reflectivity},
-    mShaderType {ShaderType::TexturedEnvMapLighting},
+    mShaderId {ShaderId::TexturedEnvMapLighting},
     mTexture {TextureCache::GetTexture(textureName, GenerateMipmap::Yes)},
     mEnvMapTexture {TextureCache::GetTexture(envMapTextures)} {}
 
@@ -95,7 +95,7 @@ Blend Material::GetBlend() const {
         return Blend::Additive;
     }
 
-    if (mBlend == Blend::Yes || mOpacity != 1.0f || mShaderType == ShaderType::VertexColor) {
+    if (mBlend == Blend::Yes || mOpacity != 1.0f || mShaderId == ShaderId::VertexColor) {
         return Blend::Yes;
     }
     
@@ -122,10 +122,10 @@ void Material::SetOpacity(float opacity) {
     }
 }
 
-void Material::SetShaderType(ShaderType shaderType) {
-    mShaderType = shaderType;
+void Material::SetShaderId(ShaderId shaderId) {
+    mShaderId = shaderId;
     
-    if (mShaderType == ShaderType::VertexColor) {
+    if (mShaderId == ShaderId::VertexColor) {
         mDepthState.mDepthWrite = false;
     }
 }

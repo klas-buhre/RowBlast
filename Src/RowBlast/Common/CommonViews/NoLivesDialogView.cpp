@@ -187,7 +187,7 @@ void NoLivesDialogView::CreateGlowEffect(Pht::SceneObject& parentObject, float s
                                                        particleEmitterSettings,
                                                        Pht::RenderMode::Triangles);
     auto& material = glowEffect->GetRenderable()->GetMaterial();
-    material.SetShaderType(Pht::ShaderType::ParticleNoAlphaTexture);
+    material.SetShaderId(Pht::ShaderId::ParticleNoAlphaTexture);
     
     auto& transform = glowEffect->GetTransform();
     transform.SetPosition({0.0f, 0.2f, UiLayer::panel});

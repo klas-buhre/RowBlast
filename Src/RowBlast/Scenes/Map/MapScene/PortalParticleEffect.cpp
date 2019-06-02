@@ -44,7 +44,7 @@ void RowBlast::CreatePortalParticleEffect(Pht::IEngine& engine,
                                                        particleEmitterSettings,
                                                        Pht::RenderMode::Triangles);
 
-    sceneObject->GetRenderable()->GetMaterial().SetShaderType(Pht::ShaderType::ParticleTextureColor);
+    sceneObject->GetRenderable()->GetMaterial().SetShaderId(Pht::ShaderId::ParticleTextureColor);
     sceneObject->GetTransform().SetPosition(position);
     sceneObject->SetLayer(layer);
 

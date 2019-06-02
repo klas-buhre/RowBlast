@@ -380,7 +380,7 @@ void StoreMenuView::CreateGlowEffect(Pht::IEngine& engine,
                                                                                 particleEmitterSettings,
                                                                                 Pht::RenderMode::Triangles);
     auto& material = productSection.mGlowEffect->GetRenderable()->GetMaterial();
-    material.SetShaderType(Pht::ShaderType::ParticleNoAlphaTexture);
+    material.SetShaderId(Pht::ShaderId::ParticleNoAlphaTexture);
     
     productSection.mGlowEffect->GetTransform().SetPosition({0.0f, 0.9f, -1.49f});
     parentObject.AddChild(*productSection.mGlowEffect);

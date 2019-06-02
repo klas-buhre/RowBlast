@@ -18,7 +18,7 @@ namespace Pht {
         }
     };
     
-    enum class ShaderType {
+    enum class ShaderId {
         PixelLighting,
         VertexLighting,
         TexturedLighting,
@@ -86,7 +86,7 @@ namespace Pht {
         const Texture* GetEmissionTexture() const;
         const Texture* GetEnvMapTexture() const;
         void SetOpacity(float opacity);
-        void SetShaderType(ShaderType shaderType);
+        void SetShaderId(ShaderId shaderId);
         void SetBlend(Blend blend);
 
         const Color& GetAmbient() const {
@@ -137,8 +137,8 @@ namespace Pht {
             return mOpacity;
         }
         
-        ShaderType GetShaderType() const {
-            return mShaderType;
+        ShaderId GetShaderId() const {
+            return mShaderId;
         }
         
         DepthState& GetDepthState() {
@@ -157,7 +157,7 @@ namespace Pht {
         float mShininess {0.0f};
         float mReflectivity {0.0f};
         float mOpacity {1.0f};
-        ShaderType mShaderType {ShaderType::VertexLighting};
+        ShaderId mShaderId {ShaderId::VertexLighting};
         std::shared_ptr<Texture> mTexture;
         std::shared_ptr<Texture> mEmissionTexture;
         std::shared_ptr<Texture> mEnvMapTexture;

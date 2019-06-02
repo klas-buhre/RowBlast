@@ -542,7 +542,7 @@ void SlidingTextAnimation::Init() {
     
     mUfo.Init(mScene.GetUiViewsContainer());
     mUfo.Hide();
-    mEngine.GetRenderer().DisableShader(Pht::ShaderType::TexturedEnvMapLighting);
+    mEngine.GetRenderer().DisableShader(Pht::ShaderId::TexturedEnvMapLighting);
     
     mContainerSceneObject->AddChild(*mExtraAnimationsContainer);
     mExtraAnimationsContainer->SetIsVisible(false);
@@ -670,7 +670,7 @@ void SlidingTextAnimation::Start(const TextMessage& textMessage) {
         mUfo.Show();
     }
     
-    mEngine.GetRenderer().EnableShader(Pht::ShaderType::TexturedEnvMapLighting);
+    mEngine.GetRenderer().EnableShader(Pht::ShaderId::TexturedEnvMapLighting);
 }
 
 SlidingTextAnimation::State SlidingTextAnimation::Update() {
@@ -839,7 +839,7 @@ void SlidingTextAnimation::UpdateInRectangleDisappearingState() {
         mGradientRectanglesSceneObject->SetIsStatic(true);
         mExtraAnimationsContainer->SetIsVisible(false);
         mUfo.Hide();
-        mEngine.GetRenderer().DisableShader(Pht::ShaderType::TexturedEnvMapLighting);
+        mEngine.GetRenderer().DisableShader(Pht::ShaderId::TexturedEnvMapLighting);
     }
 }
 

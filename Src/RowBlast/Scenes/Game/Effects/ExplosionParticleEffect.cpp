@@ -125,7 +125,7 @@ void ExplosionParticleEffect::CreateInnerEffect(Pht::IEngine& engine,
                                                                           particleEmitterSettings,
                                                                           Pht::RenderMode::Triangles);
     auto& material = mInnerParticleEffect->GetRenderable()->GetMaterial();
-    material.SetShaderType(Pht::ShaderType::ParticleNoAlphaTexture);
+    material.SetShaderId(Pht::ShaderId::ParticleNoAlphaTexture);
 }
 
 void ExplosionParticleEffect::CreateShockWave(Pht::IEngine& engine,
