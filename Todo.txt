@@ -50,6 +50,8 @@ Backlog:
      random block disappears.
     -Maybe a sensitivity setting. Tetris Blitz has lower sensitivity on iPad but not on iPhone.
   -Rendering:
+    -Try to compressing bouncing blocks that lands on lower blocks. Compress the vertical welds on
+     each side of the compressed block as well.
     -Animation that moves the map hud out of the screen when clicking buttons in the hud. Could work
      in a similar way as the SlidingFieldAnimation.
     -Animation that moves the pause button out of the screen.
@@ -77,7 +79,8 @@ Backlog:
 
 Ongoing tasks:
     -Fix the render bug by checking out earlier commits to see where it happened.
-    
+    -Try adding shader with pixel lighting and texturing. Use for the big planet in world 3.
+
      Manage this state:
         Context global state:
             glEnable(GL_BLEND);
@@ -121,8 +124,6 @@ Ongoing tasks:
      SceneObjects (but not delete them or their renderables since ownership of those objects is
      unknown). Create a StaticBatcher class.
      Then, the FloatingBlocks and preview pieces can be batched.
-    -Try to compressing the lowest bouncing blocks. Compress the vertical welds on each side of the
-     compressed block as well.
     -Maybe the active piece could be in the left-most slot in the selectables. Then the next piece
      will always come in from the left and go right to the active slot without the other selectables
      moving at all. Might even have a NEXT text over the next pieces to make it really clear. Might
