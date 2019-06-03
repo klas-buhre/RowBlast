@@ -10,10 +10,11 @@
 namespace Pht {
     class Font;
     class TextProperties;
+    class RenderStateManager;
     
     class TextRenderer {
     public:
-        TextRenderer(const IVec2& screenSize);
+        TextRenderer(RenderStateManager& renderState, const IVec2& screenSize);
         ~TextRenderer();
         
         void RenderText(const std::string& text,
@@ -34,6 +35,7 @@ namespace Pht {
                                  float slant,
                                  const TextProperties& properties);
         
+        RenderStateManager& mRenderState;
         Mat4 mProjection;
         GLuint mVbo {0};
         ShaderProgram mTextShader;

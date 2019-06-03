@@ -27,6 +27,10 @@ namespace Pht {
             return mValue;
         }
         
+        void Reset() {
+            mHasValue = false;
+        }
+        
     private:
         bool mHasValue {false};
         T mValue;

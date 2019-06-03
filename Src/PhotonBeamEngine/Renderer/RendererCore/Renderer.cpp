@@ -88,56 +88,6 @@ namespace {
         }
     }
 
-    void BindTextures(const Material& material,
-                      ShaderId shaderId,
-                      const ShaderProgram& shaderProgram) {
-        switch (shaderId) {
-            case ShaderId::EnvMap:
-                glBindTexture(GL_TEXTURE_CUBE_MAP, material.GetEnvMapTexture()->GetHandle());
-                break;
-            case ShaderId::TexturedEmissiveLighting:
-                glActiveTexture(GL_TEXTURE1);
-                glBindTexture(GL_TEXTURE_2D, material.GetEmissionTexture()->GetHandle());
-                break;
-            case ShaderId::TexturedEnvMapLighting:
-                glActiveTexture(GL_TEXTURE1);
-                glBindTexture(GL_TEXTURE_CUBE_MAP, material.GetEnvMapTexture()->GetHandle());
-                break;
-            default:
-                break;
-        }
-        
-        if (shaderProgram.GetVertexFlags().mTextureCoords) {
-            glActiveTexture(GL_TEXTURE0);
-            glBindTexture(GL_TEXTURE_2D, material.GetTexture()->GetHandle());
-        }
-    }
-    
-    void SetupBlend(bool isParticleShader, const Material& material) {
-        switch (material.GetBlend()) {
-            case Blend::Yes:
-                glEnable(GL_BLEND);
-                if (isParticleShader) {
-                    glBlendFunc(GL_SRC_ALPHA, GL_ONE);
-                } else {
-                    auto* texture = material.GetTexture();
-                    if (texture && texture->HasPremultipliedAlpha()) {
-                        glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
-                    } else {
-                        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-                    }
-                }
-                break;
-            case Blend::Additive:
-                glEnable(GL_BLEND);
-                glBlendFunc(GL_SRC_ALPHA, GL_ONE);
-                break;
-            case Blend::No:
-                glDisable(GL_BLEND);
-                break;
-        }
-    }
-
     int CalculateStride(VertexFlags vertexFlags) {
         int stride {sizeof(Vec3)};
 
@@ -254,11 +204,9 @@ void Renderer::Init(bool createRenderBuffers) {
     InitShaders();
     InitCamera(ISceneManager::defaultNarrowFrustumHeightFactor);
 
-    // mRenderState.Init();
-    mTextRenderer = std::make_unique<TextRenderer>(mRenderBufferSize);
-    
-    // mRenderState.SetCullFace(true);
-    // glEnable(GL_CULL_FACE);
+    mRenderState.Init();
+    mRenderState.SetCullFace(true);
+    mTextRenderer = std::make_unique<TextRenderer>(mRenderState, mRenderBufferSize);
 
     std::cout << "Pht::Renderer: Using " << mRenderBufferSize.x << "x" << mRenderBufferSize.y
               << " resolution." << std::endl;
@@ -294,8 +242,6 @@ void Renderer::InitOpenGl(bool createRenderBuffers) {
         
         glViewport(0, 0, mRenderBufferSize.x, mRenderBufferSize.y);
     }
-    
-    glEnable(GL_CULL_FACE);
 }
 
 void Renderer::InitCamera() {
@@ -372,6 +318,9 @@ std::unique_ptr<RenderableObject> Renderer::CreateRenderableObject(const IMesh& 
 }
 
 void Renderer::ClearFrameBuffer() {
+    // Depth writing has to be enabled in order to clear the depth buffer.
+    mRenderState.SetDepthWrite(true);
+
     if (mClearColorBuffer) {
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -388,6 +337,8 @@ void Renderer::RenderScene(const Scene& scene) {
         if (!renderPass.IsEnabled()) {
             continue;
         }
+        
+        mRenderState.OnBeginRenderPass();
 
         // Set up camera.
         auto* cameraOverride = renderPass.GetCamera();
@@ -433,9 +384,9 @@ void Renderer::Render(const RenderPass& renderPass, DistanceFunction distanceFun
     if (scissorBox.HasValue()) {
         auto& scissorBoxValue = scissorBox.GetValue();
         SetScissorBox(scissorBoxValue.mLowerLeft, scissorBoxValue.mSize);
-        SetScissorTest(true);
+        mRenderState.SetScissorTest(true);
     } else {
-        SetScissorTest(false);
+        mRenderState.SetScissorTest(false);
     }
     
     mIsDepthTestAllowed = renderPass.IsDepthTestAllowed();
@@ -448,7 +399,7 @@ void Renderer::Render(const RenderPass& renderPass, DistanceFunction distanceFun
     
     if (renderPass.GetRenderOrder() == RenderOrder::Optimized) {
         // Start by rendering the opaque objects and enable depth write for those.
-        SetDepthWrite(true);
+        mRenderState.SetDepthWrite(true);
     }
     
     RenderQueue::Entry* previousEntry {nullptr};
@@ -458,11 +409,11 @@ void Renderer::Render(const RenderPass& renderPass, DistanceFunction distanceFun
             if (!renderEntry.mDepthWrite) {
                 if (previousEntry == nullptr || previousEntry->mDepthWrite) {
                     // Transition into rendering the transparent objects.
-                    SetDepthWrite(false);
+                    mRenderState.SetDepthWrite(false);
                 }
             }
         } else {
-            SetDepthWrite(renderEntry.mDepthWrite);
+            mRenderState.SetDepthWrite(renderEntry.mDepthWrite);
         }
         
         auto* sceneObject = renderEntry.mSceneObject;
@@ -506,21 +457,13 @@ void Renderer::SetClearColorBuffer(bool clearColorBuffer) {
 
 void Renderer::SetDepthTest(const DepthState& depthState) {
     if (!mIsDepthTestAllowed && !depthState.mDepthTestAllowedOverride) {
-        glDisable(GL_DEPTH_TEST);
+        mRenderState.SetDepthTest(false);
     } else {
         if (depthState.mDepthTest) {
-            glEnable(GL_DEPTH_TEST);
+            mRenderState.SetDepthTest(true);
         } else {
-            glDisable(GL_DEPTH_TEST);
+            mRenderState.SetDepthTest(false);
         }
-    }
-}
-
-void Renderer::SetDepthWrite(bool depthWrite) {
-    if (depthWrite) {
-        glDepthMask(GL_TRUE);
-    } else {
-        glDepthMask(GL_FALSE);
     }
 }
 
@@ -566,28 +509,28 @@ void Renderer::SetScissorBox(const Vec2& lowerLeft, const Vec2& size) {
     glScissor(lowerLeftInPixels.x, lowerLeftInPixels.y, sizeInPixels.x, sizeInPixels.y);
 }
 
-void Renderer::SetScissorTest(bool scissorTest) {
-    if (scissorTest) {
-        glEnable(GL_SCISSOR_TEST);
-    } else {
-        glDisable(GL_SCISSOR_TEST);
-    }
-}
-
 void Renderer::RenderObject(const RenderableObject& renderableObject, const Mat4& modelTransform) {
     auto& material = renderableObject.GetMaterial();
     auto shaderId = material.GetShaderId();
-    
-    // Select and use the shader.
     auto& shaderProgram = GetShaderProgram(shaderId);
-    assert(shaderProgram.IsEnabled());
-    shaderProgram.Use();
+    
+    auto isShaderSameAsLastDraw = mRenderState.IsShaderInUse(shaderProgram);
+    if (!isShaderSameAsLastDraw) {
+        mRenderState.UseShader(shaderProgram);
+    }
     
     SetTransforms(modelTransform, shaderProgram);
-    SetMaterialProperties(material, shaderId, shaderProgram);
-    SetVbo(renderableObject, shaderProgram);
+    
+    if (!isShaderSameAsLastDraw || !mRenderState.IsMaterialInUse(material)) {
+        mRenderState.UseMaterial(material);
+        SetMaterialProperties(material, shaderId, shaderProgram);
+    }
     
     auto& vbo = renderableObject.GetVbo();
+    if (!isShaderSameAsLastDraw || !mRenderState.IsVboInUse(vbo)) {
+        mRenderState.UseVbo(vbo);
+        SetVbo(renderableObject, shaderProgram);
+    }
 
     switch (renderableObject.GetRenderMode()) {
         case RenderMode::Triangles:
@@ -660,8 +603,64 @@ void Renderer::SetMaterialProperties(const Material& material,
     glUniform1i(uniforms.mSecondSampler, 1);
     
     BindTextures(material, shaderId, shaderProgram);
-    SetupBlend(IsParticleShader(shaderId), material);
+    SetupBlend(material, shaderId);
     SetDepthTest(material.GetDepthState());
+}
+
+void Renderer::BindTextures(const Material& material,
+                            ShaderId shaderId,
+                            const ShaderProgram& shaderProgram) {
+    switch (shaderId) {
+        case ShaderId::EnvMap:
+            mRenderState.BindTexture(GL_TEXTURE0,
+                                     GL_TEXTURE_CUBE_MAP,
+                                     material.GetEnvMapTexture()->GetHandle());
+            break;
+        case ShaderId::TexturedEmissiveLighting:
+            mRenderState.BindTexture(GL_TEXTURE1,
+                                     GL_TEXTURE_2D,
+                                     material.GetEmissionTexture()->GetHandle());
+            break;
+        case ShaderId::TexturedEnvMapLighting:
+            mRenderState.BindTexture(GL_TEXTURE1,
+                                     GL_TEXTURE_CUBE_MAP,
+                                     material.GetEnvMapTexture()->GetHandle());
+            break;
+        default:
+            break;
+    }
+    
+    if (shaderProgram.GetVertexFlags().mTextureCoords) {
+        mRenderState.BindTexture(GL_TEXTURE0,
+                                 GL_TEXTURE_2D,
+                                 material.GetTexture()->GetHandle());
+    }
+}
+
+
+void Renderer::SetupBlend(const Material& material, ShaderId shaderId) {
+    switch (material.GetBlend()) {
+        case Blend::Yes:
+            mRenderState.SetBlend(true);
+            if (IsParticleShader(shaderId)) {
+                mRenderState.SetBlendFunc(GL_SRC_ALPHA, GL_ONE);
+            } else {
+                auto* texture = material.GetTexture();
+                if (texture && texture->HasPremultipliedAlpha()) {
+                    mRenderState.SetBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+                } else {
+                    mRenderState.SetBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+                }
+            }
+            break;
+        case Blend::Additive:
+            mRenderState.SetBlend(true);
+            mRenderState.SetBlendFunc(GL_SRC_ALPHA, GL_ONE);
+            break;
+        case Blend::No:
+            mRenderState.SetBlend(false);
+            break;
+    }
 }
 
 void Renderer::SetVbo(const RenderableObject& renderableObject,

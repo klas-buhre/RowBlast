@@ -50,9 +50,7 @@ namespace Pht {
         float GetAspectRatio() const;
         void InitShaders();
         void SetDepthTest(const DepthState& depthState);
-        void SetDepthWrite(bool depthWrite);
         void SetScissorBox(const Vec2& lowerLeft, const Vec2& size);
-        void SetScissorTest(bool scissorTest);
         void SetLightDirection(const Vec3& lightDirection);
         void CalculateCameraSpaceLightDirection();
         const Vec3& GetCameraPosition() const;
@@ -61,6 +59,10 @@ namespace Pht {
         void SetMaterialProperties(const Material& material,
                                    ShaderId shaderId,
                                    const ShaderProgram& shaderProgram);
+        void BindTextures(const Material& material,
+                          ShaderId shaderId,
+                          const ShaderProgram& shaderProgram);
+        void SetupBlend(const Material& material, ShaderId shaderId);
         void SetVbo(const RenderableObject& renderableObject, const ShaderProgram& shaderProgram);
         ShaderProgram& GetShaderProgram(ShaderId shaderId);
         void RenderText(const std::string& text,

@@ -58,6 +58,34 @@ void RenderStateManager::SetScissorTest(bool scissorTestEnabled) {
     }
 }
 
+void RenderStateManager::BindTexture(GLenum textureUnitIndex, GLenum target, GLuint texture) {
+    auto* unit = GetTextureUnit(textureUnitIndex);
+    if (unit == nullptr) {
+        assert(false);
+        return;
+    }
+    
+    if (!unit->HasValue() ||
+        unit->GetValue().mTarget != target || unit->GetValue().mTexture != texture) {
+        
+        *unit = TextureUnit {.mTarget = target, .mTexture = texture};
+        
+        glActiveTexture(textureUnitIndex);
+        glBindTexture(target, texture);
+    }
+}
+
+Optional<RenderStateManager::TextureUnit>* RenderStateManager::GetTextureUnit(GLenum unitIndex) {
+    switch (unitIndex) {
+        case GL_TEXTURE0:
+            return &mTextureUnit0;
+        case GL_TEXTURE1:
+            return &mTextureUnit1;
+        default:
+            return nullptr;
+    }
+}
+
 void RenderStateManager::UpdateGlBlend() {
     if (mBlendEnabled) {
         glEnable(GL_BLEND);
@@ -103,13 +131,20 @@ void RenderStateManager::UpdateGlScissorTest() {
 }
 
 void RenderStateManager::UseShader(ShaderProgram& shaderProgram) {
+    InvalidateShader();
     assert(shaderProgram.IsEnabled());
     shaderProgram.Use();
     mShaderProgram = &shaderProgram;
 }
 
+void RenderStateManager::OnBeginRenderPass() {
+    InvalidateShader();
+}
+
 void RenderStateManager::InvalidateShader() {
     mShaderProgram = nullptr;
     mMaterial = nullptr;
-    mVbo = nullptr;
+    mVbo = nullptr;    
+    mTextureUnit0.Reset();
+    mTextureUnit1.Reset();
 }

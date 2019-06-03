@@ -78,46 +78,13 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-    -Fix the render bug by checking out earlier commits to see where it happened.
-    -Try adding shader with pixel lighting and texturing. Use for the big planet in world 3.
-
-     Manage this state:
-        Context global state:
-            glEnable(GL_BLEND);
-            glBlendFunc(GL_SRC_ALPHA, GL_ONE);
-            glEnable(GL_DEPTH_TEST);
-            glDepthMask(GL_TRUE);
-            glEnable(GL_CULL_FACE);
-            glEnable(GL_SCISSOR_TEST);
-            ShaderProgram address
-            Material address
-            Vbo address
-
-
-    SetMaterialProperties() {
-      if ShaderProgram is same and Material is the same {
-        return
-      }
-      ...
-    }
-
-    SetVbo() {
-      if ShaderProgram is same and Vbo is the same {
-        return
-      }
-      ...
-    }
-
-    -Try to reduce the state changes in the renderer by comparing current with previous
-     ShaderProgram, Material, Vbo. SetTransforms is always needed.
-     Remember that some nonglobal state can only be reused if shaderId is the same.
-     Set all previous shader, material, vbo to null at new render pass or at call to text renderer.
-     Also manage GL global state like GL_DEPTH_TEST.
-     Maybe add a RenderOrder that for depth writing objects sort based on ShaderId, Material, and
+    -Review previous commit.
+    -Maybe add a RenderOrder that for depth writing objects sort based on ShaderId, Material, and
      VBO (in that priority). And apply that sorting if objects have the same distance even with the
      RenderOrder::Optimized and RenderOrder::BackToFront.
      Create a RenderStateManager class that manages all state.
 
+    -Try adding shader with pixel lighting and texturing. Use for the big planet in world 3.
 
     -Make a static batcher that is accessable from the IRenderer API. Just send a SceneObject that
      should have all its children merged into one renderable. It should detach all children

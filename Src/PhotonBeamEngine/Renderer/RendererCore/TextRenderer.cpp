@@ -10,6 +10,7 @@
 
 #include "Font.hpp"
 #include "IEngine.hpp"
+#include "RenderStateManager.hpp"
 
 using namespace Pht;
 
@@ -25,7 +26,8 @@ namespace {
     }
 }
 
-TextRenderer::TextRenderer(const IVec2& screenSize) :
+TextRenderer::TextRenderer(RenderStateManager& renderState, const IVec2& screenSize) :
+    mRenderState {renderState},
     mProjection {Mat4::OrthographicProjection(0.0f, screenSize.x, 0.0f, screenSize.y, -1.0f, 1.0f)},
     mTextShader {{}},
     mTextDoubleGradientShader {{}},
@@ -56,11 +58,22 @@ void TextRenderer::RenderText(const std::string& text,
                               Vec2 position,
                               float slant,
                               const TextProperties& properties) {
-    auto& shader = GetShaderProgram(properties);
+    auto& shaderProgram = GetShaderProgram(properties);
+    auto& uniforms = shaderProgram.GetUniforms();
+    auto& attributes = shaderProgram.GetAttributes();
     
-    shader.Use();
-    auto& uniforms = shader.GetUniforms();
-    auto& attributes = shader.GetAttributes();
+    if (!mRenderState.IsShaderInUse(shaderProgram)) {
+        mRenderState.UseShader(shaderProgram);
+        mRenderState.SetDepthTest(false);
+        mRenderState.SetBlend(true);
+        mRenderState.SetBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        
+        DisableVertexAttributes(shaderProgram);
+        
+        glEnableVertexAttribArray(attributes.mTextCoords);
+        glBindBuffer(GL_ARRAY_BUFFER, mVbo);
+        glVertexAttribPointer(attributes.mTextCoords, 4, GL_FLOAT, GL_FALSE, 0, 0);
+    }
     
     glUniform4fv(uniforms.mTextColor, 1, properties.mColor.Pointer());
     
@@ -83,17 +96,6 @@ void TextRenderer::RenderText(const std::string& text,
             position = AdjustPositionCenterXAlignment(text, position, slant, properties);
             break;
     }
-
-    glDisable(GL_DEPTH_TEST);
-
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    
-    DisableVertexAttributes(shader);
-    
-    glEnableVertexAttribArray(attributes.mTextCoords);
-    glBindBuffer(GL_ARRAY_BUFFER, mVbo);
-    glVertexAttribPointer(attributes.mTextCoords, 4, GL_FLOAT, GL_FALSE, 0, 0);
 
     for (auto c: text) {
         auto& glyph = properties.mFont.GetGlyph(c);
