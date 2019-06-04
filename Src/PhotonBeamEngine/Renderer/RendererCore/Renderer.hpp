@@ -41,7 +41,7 @@ namespace Pht {
         std::unique_ptr<RenderableObject> CreateRenderableObject(const IMesh& mesh,
                                                                  const Material& material);
         void ClearFrameBuffer();
-        void RenderScene(const Scene& scene);
+        void RenderScene(const Scene& scene, float frameSeconds);
         
     private:
         void InitOpenGl(bool createRenderBuffers);
@@ -64,7 +64,8 @@ namespace Pht {
                           const ShaderProgram& shaderProgram);
         void SetupBlend(const Material& material, ShaderId shaderId);
         void SetVbo(const RenderableObject& renderableObject, const ShaderProgram& shaderProgram);
-        ShaderProgram& GetShaderProgram(ShaderId shaderId);
+        void CreateShader(ShaderId shaderId, const VertexFlags& vertexFlags);
+        ShaderProgram& GetShader(ShaderId shaderId);
         void RenderText(const std::string& text,
                         const Vec2& position,
                         const TextProperties& properties);
@@ -97,7 +98,7 @@ namespace Pht {
         IVec2 mRenderBufferSize;
         RenderQueue mRenderQueue;
         RenderStateManager mRenderState;
-        std::unordered_map<ShaderId, ShaderProgram> mShaders;
+        std::unordered_map<ShaderId, std::unique_ptr<ShaderProgram>> mShaders;
         std::unique_ptr<TextRenderer> mTextRenderer;
         bool mClearColorBuffer {true};
         bool mHudMode {false};

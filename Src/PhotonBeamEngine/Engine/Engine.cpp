@@ -51,7 +51,7 @@ void Engine::Update(float frameSeconds) {
     
     if (scene) {
         mRenderer.ClearFrameBuffer();
-        mRenderer.RenderScene(*scene);
+        mRenderer.RenderScene(*scene, frameSeconds);
     }
 }
 

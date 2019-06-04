@@ -73,6 +73,7 @@ void TextRenderer::RenderText(const std::string& text,
         glEnableVertexAttribArray(attributes.mTextCoords);
         glBindBuffer(GL_ARRAY_BUFFER, mVbo);
         glVertexAttribPointer(attributes.mTextCoords, 4, GL_FLOAT, GL_FALSE, 0, 0);
+        IF_USING_FRAME_STATS(mRenderState.ReportVboUse());
     }
     
     glUniform4fv(uniforms.mTextColor, 1, properties.mColor.Pointer());
@@ -116,10 +117,12 @@ void TextRenderer::RenderText(const std::string& text,
         };
 
         glBindTexture(GL_TEXTURE_2D, glyph.mTexture);
+        IF_USING_FRAME_STATS(mRenderState.ReportTextureBind());
         
         // Should use glBufferSubData here but it leads to very poor performance for some reason.
         glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_DYNAMIC_DRAW);
         glDrawArrays(GL_TRIANGLES, 0, 6);
+        IF_USING_FRAME_STATS(mRenderState.ReportDrawCall());
         
         position.x += (glyph.mAdvance >> 6) * properties.mScale;
     }

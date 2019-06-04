@@ -24,7 +24,7 @@ namespace Pht {
             bool mDepthWrite;
             const SceneObject* mSceneObject;
         };
-        
+
         // For range-based for loops.
         Entry* begin() {
             return &mQueue[0];

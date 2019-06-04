@@ -72,6 +72,7 @@ void RenderStateManager::BindTexture(GLenum textureUnitIndex, GLenum target, GLu
         
         glActiveTexture(textureUnitIndex);
         glBindTexture(target, texture);
+        IF_USING_FRAME_STATS(ReportTextureBind());
     }
 }
 
@@ -135,6 +136,7 @@ void RenderStateManager::UseShader(ShaderProgram& shaderProgram) {
     assert(shaderProgram.IsEnabled());
     shaderProgram.Use();
     mShaderProgram = &shaderProgram;
+    IF_USING_FRAME_STATS(++mFrameStats.mNumShaderUses);
 }
 
 void RenderStateManager::OnBeginRenderPass() {
@@ -147,4 +149,14 @@ void RenderStateManager::InvalidateShader() {
     mVbo = nullptr;    
     mTextureUnit0.Reset();
     mTextureUnit1.Reset();
+}
+
+void RenderStateManager::LogFrameStats(float frameSeconds) {
+    std::cout << "=======================================" << std::endl
+              << " FPS: " << 1.0f / frameSeconds << std::endl
+              << " NumShaderUses: " << mFrameStats.mNumShaderUses << std::endl
+              << " NumMaterialUses: " << mFrameStats.mNumMaterialUses << std::endl
+              << " NumTextureBinds: " << mFrameStats.mNumTextureBinds << std::endl
+              << " NumVboUses: " << mFrameStats.mNumVboUses << std::endl
+              << " NumDrawCalls: " << mFrameStats.mNumDrawCalls << std::endl;
 }

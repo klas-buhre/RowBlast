@@ -45,7 +45,7 @@ namespace {
     }
 }
 
-ShaderProgram::ShaderProgram(VertexFlags vertexFlags) :
+ShaderProgram::ShaderProgram(const VertexFlags& vertexFlags) :
     mVertexFlags {vertexFlags} {}
 
 void ShaderProgram::Build(const char* vertexShaderSource, const char* fragmentShaderSource) {

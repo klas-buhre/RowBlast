@@ -6,6 +6,13 @@
 #include "Optional.hpp"
 #include "Noncopyable.hpp"
 
+#define USE_FRAME_STATS
+#ifdef USE_FRAME_STATS
+    #define IF_USING_FRAME_STATS(x) x;
+#else
+    #define IF_USING_FRAME_STATS(x)
+#endif
+
 namespace Pht {
     class ShaderProgram;
     class Material;
@@ -23,13 +30,15 @@ namespace Pht {
         void BindTexture(GLenum textureUnitIndex, GLenum target, GLuint texture);
         void UseShader(ShaderProgram& shaderProgram);
         void OnBeginRenderPass();
-        
+
         void UseMaterial(const Material& material) {
             mMaterial = &material;
+            IF_USING_FRAME_STATS(++mFrameStats.mNumMaterialUses);
         }
 
         void UseVbo(const Vbo& vbo) {
             mVbo = &vbo;
+            IF_USING_FRAME_STATS(ReportVboUse());
         }
 
         bool IsShaderInUse(const ShaderProgram& shaderProgram) const {
@@ -43,6 +52,26 @@ namespace Pht {
         bool IsVboInUse(const Vbo& vbo) const {
             return &vbo == mVbo;
         }
+        
+#ifdef USE_FRAME_STATS
+        void LogFrameStats(float frameSeconds);
+        
+        void ReportDrawCall() {
+            ++mFrameStats.mNumDrawCalls;
+        }
+        
+        void ReportTextureBind() {
+            ++mFrameStats.mNumTextureBinds;
+        }
+
+        void ReportVboUse() {
+            ++mFrameStats.mNumVboUses;
+        }
+
+        void ResetFrameStats() {
+            mFrameStats = FrameStats {};
+        }
+#endif
 
     private:
         struct TextureUnit {
@@ -58,7 +87,16 @@ namespace Pht {
         void UpdateGlScissorTest();
         Optional<TextureUnit>* GetTextureUnit(GLenum unitIndex);
         void InvalidateShader();
-
+        
+        struct FrameStats {
+            int mNumShaderUses {0};
+            int mNumMaterialUses {0};
+            int mNumTextureBinds {0};
+            int mNumVboUses {0};
+            int mNumDrawCalls {0};
+        };
+        
+        FrameStats mFrameStats;
         bool mBlendEnabled {false};
         GLenum mBlendSFactor {GL_ONE};
         GLenum mBlendDFactor {GL_ZERO};

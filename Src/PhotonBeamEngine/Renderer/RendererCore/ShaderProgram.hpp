@@ -6,9 +6,10 @@
 #include "Matrix.hpp"
 #include "VertexBuffer.hpp"
 #include "Optional.hpp"
+#include "Noncopyable.hpp"
 
 namespace Pht {
-    class ShaderProgram {
+    class ShaderProgram: public Noncopyable {
     public:
         struct UniformHandles {
             GLint mProjection {0};
@@ -41,7 +42,7 @@ namespace Pht {
             GLint mPointSize {0};
         };
         
-        ShaderProgram(VertexFlags vertexFlags);
+        ShaderProgram(const VertexFlags& vertexFlags);
         
         void Build(const char* vertexShaderSource, const char* fragmentShaderSource);
         void SetProjection(const Mat4& projectionMatrix);

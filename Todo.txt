@@ -78,11 +78,70 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-    -Review previous commit.
-    -Maybe add a RenderOrder that for depth writing objects sort based on ShaderId, Material, and
-     VBO (in that priority). And apply that sorting if objects have the same distance even with the
-     RenderOrder::Optimized and RenderOrder::BackToFront.
-     Create a RenderStateManager class that manages all state.
+    -Maybe add a RenderOrder that for depth writing objects sort based on ShaderId, MaterialId, and
+     VboId (in that priority, baked into uint64_t mSortKey). And apply that sorting if objects have
+     the same distance even with the RenderOrder::Optimized and RenderOrder::BackToFront. The sort
+     key has priority over distance in the new new render order.
+
+        struct Entry {
+            uint64_t mSortKey;
+            float mDistance;
+            const SceneObject* mSceneObject;
+
+            bool IsDepthWrite() const;
+        };
+
+        bool HasMoreElements() const;
+        const Entry& GetNextElement();
+
+        int mNumDepthWriting;
+        int mNumNonDepthWriting;
+        int mMaxSize;
+        std::vector<Entry> mQueue;
+
+Before render queue refactoring and static batching:
+
+Beginning of first world. 5 lives, 0 coins:
+=======================================
+ NumShaderUses: 19
+ NumMaterialUses: 182
+ NumTextureBinds: 135
+ NumVboUses: 136
+ NumDrawCalls: 293
+
+Beginning of level 3:
+=======================================
+ NumShaderUses: 10
+ NumMaterialUses: 65
+ NumTextureBinds: 33
+ NumVboUses: 27
+ NumDrawCalls: 114
+
+Beginning of level 11:
+ =======================================
+ NumShaderUses: 16
+ NumMaterialUses: 45
+ NumTextureBinds: 44
+ NumVboUses: 28
+ NumDrawCalls: 106
+
+Beginning of level 17:
+=======================================
+ NumShaderUses: 12
+ NumMaterialUses: 96
+ NumTextureBinds: 36
+ NumVboUses: 31
+ NumDrawCalls: 155
+
+Beginning of level 20:
+=======================================
+ NumShaderUses: 39
+ NumMaterialUses: 80
+ NumTextureBinds: 70
+ NumVboUses: 59
+ NumDrawCalls: 129
+
+
 
     -Try adding shader with pixel lighting and texturing. Use for the big planet in world 3.
 
