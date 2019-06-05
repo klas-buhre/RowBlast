@@ -33,9 +33,16 @@ namespace Pht {
             return mPointCount;
         }
         
+        uint32_t GetId() const {
+            return mId;
+        }
+
     private:
         friend class RenderableObject;
         
+        static uint32_t mIdCounter;
+        
+        uint32_t mId {mIdCounter++};
         GLuint mVertexBufferId {0};
         GLuint mIndexBufferId {0};
         int mIndexCount {0};

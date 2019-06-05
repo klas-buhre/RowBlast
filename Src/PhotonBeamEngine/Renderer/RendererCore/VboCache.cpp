@@ -10,6 +10,8 @@ namespace {
     static std::vector<std::pair<std::string, std::weak_ptr<Vbo>>> cache;
 }
 
+uint32_t Vbo::mIdCounter = 0;
+
 Vbo::Vbo(GenerateIndexBuffer generateIndexBuffer) {
     glGenBuffers(1, &mVertexBufferId);
     

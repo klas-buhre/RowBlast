@@ -399,23 +399,25 @@ void Renderer::Render(const RenderPass& renderPass, DistanceFunction distanceFun
                        distanceFunction,
                        renderPass.GetLayerMask());
     
-    if (renderPass.GetRenderOrder() == RenderOrder::Optimized) {
-        // Start by rendering the opaque objects and enable depth write for those.
+    if (renderPass.MustRenderDepthWritingObjectsFirst()) {
+        // Start by rendering the opaque objects (depth writing) and enable depth write for those.
         mRenderState.SetDepthWrite(true);
     }
     
     RenderQueue::Entry* previousEntry {nullptr};
-    
-    for (auto& renderEntry: mRenderQueue) {
-        if (renderPass.GetRenderOrder() == RenderOrder::Optimized) {
-            if (!renderEntry.mDepthWrite) {
-                if (previousEntry == nullptr || previousEntry->mDepthWrite) {
-                    // Transition into rendering the transparent objects.
+
+    for (mRenderQueue.BeginIteration(); mRenderQueue.HasMoreEntries();) {
+        auto& renderEntry = mRenderQueue.GetNextEntry();
+
+        if (renderPass.MustRenderDepthWritingObjectsFirst()) {
+            if (!renderEntry.IsDepthWriting()) {
+                if (previousEntry == nullptr || previousEntry->IsDepthWriting()) {
+                    // Transition into rendering the transparent objects (non-depth writing).
                     mRenderState.SetDepthWrite(false);
                 }
             }
         } else {
-            mRenderState.SetDepthWrite(renderEntry.mDepthWrite);
+            mRenderState.SetDepthWrite(renderEntry.IsDepthWriting());
         }
         
         auto* sceneObject = renderEntry.mSceneObject;

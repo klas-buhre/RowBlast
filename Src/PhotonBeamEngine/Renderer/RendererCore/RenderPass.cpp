@@ -13,3 +13,13 @@ void RenderPass::SetScissorBox(const ScissorBox& scissorBox) {
 void RenderPass::AddLayer(int layerIndex) {
     mLayerMask |= (1 << layerIndex);
 }
+
+bool RenderPass::MustRenderDepthWritingObjectsFirst() const {
+    switch (mRenderOrder) {
+        case RenderOrder::StateOptimized:
+        case RenderOrder::PiexelOptimized:
+            return true;
+        case RenderOrder::BackToFront:
+            return false;
+    }
+}

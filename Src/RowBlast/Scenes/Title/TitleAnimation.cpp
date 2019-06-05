@@ -29,9 +29,9 @@ namespace {
     const Pht::Vec3 centerPosition {0.0f, 8.5f, 0.0f};
 
     const std::array<Pht::Vec3, 3> twinklePositions {
-        Pht::Vec3 {-3.5f, 1.45f, UiLayer::text},
-        Pht::Vec3 {1.7f, -0.55f, UiLayer::text},
-        Pht::Vec3 {-2.85f, -0.4f, UiLayer::text}
+        Pht::Vec3 {-3.5f, 1.45f, UiLayer::buttonOverlayObject1},
+        Pht::Vec3 {1.7f, -0.55f, UiLayer::buttonOverlayObject1},
+        Pht::Vec3 {-2.85f, -0.4f, UiLayer::buttonOverlayObject1}
     };
 }
 

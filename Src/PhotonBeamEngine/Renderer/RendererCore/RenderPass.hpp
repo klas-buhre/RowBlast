@@ -9,7 +9,8 @@ namespace Pht {
     class CameraComponent;
 
     enum class RenderOrder {
-        Optimized,
+        StateOptimized,
+        PiexelOptimized,
         BackToFront
     };
 
@@ -24,6 +25,7 @@ namespace Pht {
         
         void SetScissorBox(const ScissorBox& scissorBox);
         void AddLayer(int layerIndex);
+        bool MustRenderDepthWritingObjectsFirst() const;
         
         void SetProjectionMode(ProjectionMode projectionMode) {
             mProjectionMode = projectionMode;
@@ -95,7 +97,7 @@ namespace Pht {
 
     private:
         ProjectionMode mProjectionMode {ProjectionMode::Perspective};
-        RenderOrder mRenderOrder {RenderOrder::Optimized};
+        RenderOrder mRenderOrder {RenderOrder::StateOptimized};
         bool mIsHudMode {false};
         const CameraComponent* mCamera {nullptr};
         const LightComponent* mLight {nullptr};

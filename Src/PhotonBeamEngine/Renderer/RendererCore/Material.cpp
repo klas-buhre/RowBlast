@@ -6,6 +6,8 @@
 
 using namespace Pht;
 
+uint32_t Material::mIdCounter = 0;
+
 Material::Material() :
     mShaderId {ShaderId::VertexColor} {
 

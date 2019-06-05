@@ -148,8 +148,15 @@ namespace Pht {
         const DepthState& GetDepthState() const {
             return mDepthState;
         }
+        
+        uint32_t GetId() const {
+            return mId;
+        }
 
     private:
+        static uint32_t mIdCounter;
+        
+        uint32_t mId {mIdCounter++};
         Color mAmbient;
         Color mDiffuse;
         Color mSpecular;
