@@ -4,6 +4,8 @@
 #include <algorithm>
 
 #include "SceneObject.hpp"
+#include "VboCache.hpp"
+#include "TextComponent.hpp"
 
 using namespace Pht;
 
@@ -20,44 +22,32 @@ namespace {
         return numObjects;
     }
     
-    bool IsDepthWriting(const SceneObject& sceneObject) {
-        if (auto* renderable = sceneObject.GetRenderable()) {
-            return renderable->GetMaterial().GetDepthState().mDepthWrite;
-        }
-        
-        return false;
-    }
-    
-/*
-    struct CompareEntriesOptimizedRendering {
+    struct CompareEntriesBySortKeyAndFrontToBack {
         inline bool operator() (const RenderQueue::Entry& a, const RenderQueue::Entry& b) {
-            if (a.IsDepthWrite() != b.IsDepthWrite()) {
-                if (a.IsDepthWrite()) {
-                    // Render depth writing objects first.
-                    return true;
-                }
-                
-                return false;
-            }
-            
-            if (a.IsDepthWrite() && b.IsDepthWrite()) {
-                // Both objects write depth so sort front to back.
+            if (a.mSortKey == b.mSortKey) {
                 return a.mDistance < b.mDistance;
             }
-            
-            // Both objects do not write depth sort back to front.
-            return a.mDistance > b.mDistance;
+    
+            return a.mSortKey > b.mSortKey;
         }
     };
-*/
+
     struct CompareEntriesFrontToBack {
         inline bool operator() (const RenderQueue::Entry& a, const RenderQueue::Entry& b) {
+            if (a.mDistance == b.mDistance) {
+                return a.mSortKey > b.mSortKey;
+            }
+    
             return a.mDistance < b.mDistance;
         }
     };
     
     struct CompareEntriesBackToFront {
         inline bool operator() (const RenderQueue::Entry& a, const RenderQueue::Entry& b) {
+            if (a.mDistance == b.mDistance) {
+                return a.mSortKey > b.mSortKey;
+            }
+            
             return a.mDistance > b.mDistance;
         }
     };
@@ -80,7 +70,7 @@ void RenderQueue::Build(const Mat4& viewMatrix,
     mLayerMask = layerMask;
 
     assert(mRootSceneObject);
-    AddSceneObject(*mRootSceneObject, false);
+    ScanSubtree(*mRootSceneObject, false);
     CalculateDistances(viewMatrix, distanceFunction);
     Sort();
     BeginIteration();
@@ -89,11 +79,19 @@ void RenderQueue::Build(const Mat4& viewMatrix,
 void RenderQueue::Sort() {
     switch (mRenderOrder) {
         case RenderOrder::StateOptimized:
+            // Sort depth-writing entries based on sort key and compare distances if keys are equal.
+            SortFirstPartition<CompareEntriesBySortKeyAndFrontToBack>();
+            // Sort non-depth-writing entries back to front.
+            SortSecondPartition<CompareEntriesBackToFront>();
+            break;
         case RenderOrder::PiexelOptimized:
+            // Sort depth-writing entries front to back and check sort keys if distances are equal.
             SortFirstPartition<CompareEntriesFrontToBack>();
+            // Sort non-depth-writing entries back to front.
             SortSecondPartition<CompareEntriesBackToFront>();
             break;
         case RenderOrder::BackToFront:
+            // Sort all entries back to front.
             SortFirstPartition<CompareEntriesBackToFront>();
             break;
     }
@@ -109,7 +107,7 @@ void RenderQueue::SortSecondPartition() {
     std::sort(&mQueue[mMaxSize - mSecondPartitionSize], &mQueue[mMaxSize], Comparator{});
 }
 
-void RenderQueue::AddSceneObject(const SceneObject& sceneObject, bool ancestorMatchedLayerMask) {
+void RenderQueue::ScanSubtree(const SceneObject& sceneObject, bool ancestorMatchedLayerMask) {
     if (!sceneObject.IsVisible()) {
         return;
     }
@@ -127,48 +125,65 @@ void RenderQueue::AddSceneObject(const SceneObject& sceneObject, bool ancestorMa
     }
     
     if (thisObjectOrAncestorMatchedLayerMask) {
-        auto isDepthWriting = IsDepthWriting(sceneObject);
-        
-        Entry entry {
-            .mSortKey = EncodeSortKey(isDepthWriting),
-            .mDistance = 0.0f,
-            .mSceneObject = &sceneObject
-        };
-        
-        assert(mFirstPartitionSize + mSecondPartitionSize < mMaxSize);
-        
-        switch (mRenderOrder) {
-            case RenderOrder::StateOptimized:
-            case RenderOrder::PiexelOptimized:
-                if (isDepthWriting) {
-                    mQueue[mFirstPartitionSize] = entry;
-                    ++mFirstPartitionSize;
-                } else {
-                    mQueue[mMaxSize - mSecondPartitionSize - 1] = entry;
-                    ++mSecondPartitionSize;
-                }
-                break;
-            case RenderOrder::BackToFront:
-                mQueue[mFirstPartitionSize] = entry;
-                ++mFirstPartitionSize;
-                break;
-        }
+        AddSceneObject(sceneObject);
     }
     
     for (auto& child: sceneObject.GetChildren()) {
-        AddSceneObject(*child, thisObjectOrAncestorMatchedLayerMask);
+        ScanSubtree(*child, thisObjectOrAncestorMatchedLayerMask);
     }
 }
 
-uint64_t RenderQueue::EncodeSortKey(bool isDepthWriting) {
-    uint64_t key {0};
-    if (isDepthWriting) {
-        key |= depthWriteMask;
+void RenderQueue::AddSceneObject(const SceneObject& sceneObject) {
+    uint64_t sortKey {0};
+    auto isDepthWriting = false;
+    
+    if (auto* renderable = sceneObject.GetRenderable()) {
+        auto& material = renderable->GetMaterial();
+        isDepthWriting = material.GetDepthState().mDepthWrite;
+        if (isDepthWriting) {
+            sortKey |= depthWriteShiftedMask;
+        }
+        
+        sortKey |= static_cast<uint64_t>(material.GetShaderId()) << shaderIdShift;
+        sortKey |= uint64_t{material.GetId()} << materialIdShift;
+        sortKey |= uint64_t{renderable->GetVbo().GetId()} << vboIdShift;
+
+    } else if (auto* textComponent = sceneObject.GetComponent<TextComponent>()) {
+        auto& textProperties = textComponent->GetProperties();
+        if (textProperties.mTopGradientColorSubtraction.HasValue()) {
+            sortKey |= topGradientTextShiftedMask;
+        } else if (textProperties.mMidGradientColorSubtraction.HasValue()) {
+            sortKey |= midGradientTextShiftedMask;
+        } else {
+            sortKey |= normalTextShiftedMask;
+        }
+        
+        sortKey |= static_cast<uint64_t>(ShaderId::Other) << shaderIdShift;
+    } else {
+        // Nothing to render for this scene object.
+        return;
     }
-    
-    // Other IDs...
-    
-    return key;
+
+    Entry entry {.mSortKey = sortKey, .mDistance = 0.0f, .mSceneObject = &sceneObject};
+
+    assert(mFirstPartitionSize + mSecondPartitionSize < mMaxSize);
+
+    switch (mRenderOrder) {
+        case RenderOrder::StateOptimized:
+        case RenderOrder::PiexelOptimized:
+            if (isDepthWriting) {
+                mQueue[mFirstPartitionSize] = entry;
+                ++mFirstPartitionSize;
+            } else {
+                mQueue[mMaxSize - mSecondPartitionSize - 1] = entry;
+                ++mSecondPartitionSize;
+            }
+            break;
+        case RenderOrder::BackToFront:
+            mQueue[mFirstPartitionSize] = entry;
+            ++mFirstPartitionSize;
+            break;
+    }
 }
 
 void RenderQueue::CalculateDistances(const Mat4& viewMatrix, DistanceFunction distanceFunction) {

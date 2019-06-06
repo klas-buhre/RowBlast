@@ -125,6 +125,7 @@ void Material::SetOpacity(float opacity) {
 }
 
 void Material::SetShaderId(ShaderId shaderId) {
+    assert(shaderId != ShaderId::Other);
     mShaderId = shaderId;
     
     if (mShaderId == ShaderId::VertexColor) {

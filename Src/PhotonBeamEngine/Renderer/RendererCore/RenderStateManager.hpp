@@ -6,8 +6,8 @@
 #include "Optional.hpp"
 #include "Noncopyable.hpp"
 
-#define USE_FRAME_STATS
-#ifdef USE_FRAME_STATS
+#define USE_FRAME_STATS 1
+#if USE_FRAME_STATS
     #define IF_USING_FRAME_STATS(x) x;
 #else
     #define IF_USING_FRAME_STATS(x)
@@ -53,7 +53,7 @@ namespace Pht {
             return &vbo == mVbo;
         }
         
-#ifdef USE_FRAME_STATS
+#if USE_FRAME_STATS
         void LogFrameStats(float frameSeconds);
         
         void ReportDrawCall() {

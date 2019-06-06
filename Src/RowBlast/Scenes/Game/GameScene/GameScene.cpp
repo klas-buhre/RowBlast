@@ -176,7 +176,9 @@ void GameScene::LoadMusic(const Level& level) {
 }
 
 void GameScene::CreateRenderPasses() {
-    mScene->AddRenderPass(Pht::RenderPass {static_cast<int>(Layer::Background)});
+    Pht::RenderPass backgroundRenderPass {static_cast<int>(Layer::Background)};
+    backgroundRenderPass.SetRenderOrder(Pht::RenderOrder::PiexelOptimized);
+    mScene->AddRenderPass(backgroundRenderPass);
 
     Pht::RenderPass fieldQuadRenderPass {static_cast<int>(Layer::FieldQuad)};
     fieldQuadRenderPass.SetProjectionMode(Pht::ProjectionMode::Orthographic);

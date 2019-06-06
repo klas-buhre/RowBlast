@@ -583,9 +583,11 @@ void Renderer::Render(const RenderPass& renderPass, DistanceFunction distanceFun
             RenderObject(*renderable, sceneObject->GetMatrix());
         }
         
-        if (auto* textComponent = sceneObject->GetComponent<TextComponent>()) {
-            auto textPosition = CalculateTextHudPosition(*textComponent);
-            RenderText(textComponent->GetText(), textPosition, textComponent->GetProperties());
+        if (renderEntry.HasTextComponent()) {
+            if (auto* textComponent = sceneObject->GetComponent<TextComponent>()) {
+                auto textPosition = CalculateTextHudPosition(*textComponent);
+                RenderText(textComponent->GetText(), textPosition, textComponent->GetProperties());
+            }
         }
         
         previousEntry = &renderEntry;

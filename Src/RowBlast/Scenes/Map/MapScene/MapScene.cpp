@@ -72,7 +72,10 @@ void MapScene::Init() {
     mEngine.GetRenderer().EnableShader(Pht::ShaderId::TexturedEnvMapLighting);
     sceneManager.InitSceneSystems(Pht::ISceneManager::defaultNarrowFrustumHeightFactor);
     
-    scene->AddRenderPass(Pht::RenderPass {static_cast<int>(Layer::Space)});
+    Pht::RenderPass spaceRenderPass {static_cast<int>(Layer::Space)};
+    spaceRenderPass.SetRenderOrder(Pht::RenderOrder::PiexelOptimized);
+    scene->AddRenderPass(spaceRenderPass);
+
     scene->AddRenderPass(Pht::RenderPass {static_cast<int>(Layer::Map)});
     scene->AddRenderPass(Pht::RenderPass {static_cast<int>(Layer::Ufo)});
     scene->AddRenderPass(Pht::RenderPass {static_cast<int>(Layer::Tutorial)});

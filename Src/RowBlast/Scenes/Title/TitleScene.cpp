@@ -276,7 +276,10 @@ void TitleScene::Init() {
     
     sceneManager.InitSceneSystems(Pht::ISceneManager::defaultNarrowFrustumHeightFactor);
     
-    scene->AddRenderPass(Pht::RenderPass {static_cast<int>(Layer::Planets)});
+    Pht::RenderPass planetsRenderPass {static_cast<int>(Layer::Planets)};
+    planetsRenderPass.SetRenderOrder(Pht::RenderOrder::PiexelOptimized);
+    scene->AddRenderPass(planetsRenderPass);
+    
     scene->AddRenderPass(Pht::RenderPass {static_cast<int>(Layer::Background)});
     
     Pht::RenderPass uiRenderPass {static_cast<int>(Layer::Ui)};

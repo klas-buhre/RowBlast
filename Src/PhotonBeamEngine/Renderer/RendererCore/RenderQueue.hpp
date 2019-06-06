@@ -13,15 +13,36 @@ namespace Pht {
     
     class RenderQueue {
     public:
-        // Depth write: bit 63.
-        static constexpr int depthWriteShift {63};
-        static constexpr uint64_t depthWriteMask {uint64_t{1} << depthWriteShift};
+        // Sort key bit layout.
+        // Flags: bits 59-56:
+        // Depth write flag: bit 59.
+        static constexpr int depthWriteShift {59};
+        static constexpr uint64_t depthWriteShiftedMask {uint64_t{1} << depthWriteShift};
 
-        // Shader id: bits 62-56:
+        // Normal text flag: bit 58.
+        static constexpr int normalTextShift {58};
+        static constexpr uint64_t normalTextShiftedMask {uint64_t{1} << normalTextShift};
+
+        // Top gradient text flag: bit 57.
+        static constexpr int topGradientTextShift {57};
+        static constexpr uint64_t topGradientTextShiftedMask {uint64_t{1} << topGradientTextShift};
+
+        // Mid gradient text flag: bit 56.
+        static constexpr int midGradientTextShift {56};
+        static constexpr uint64_t midGradientTextShiftedMask {uint64_t{1} << midGradientTextShift};
         
-        // Material id: bits 55-28:
+        static constexpr uint64_t textFlagsShiftedMask {
+            normalTextShiftedMask | topGradientTextShiftedMask | midGradientTextShiftedMask
+        };
+
+        // Shader id: bits 55-48:
+        static constexpr int shaderIdShift {48};
         
-        // Vbo id: bits 27-0:
+        // Material id: bits 47-24:
+        static constexpr int materialIdShift {24};
+        
+        // Vbo id: bits 23-0:
+        static constexpr int vboIdShift {0};
         
         struct Entry {
             uint64_t mSortKey;
@@ -29,7 +50,11 @@ namespace Pht {
             const SceneObject* mSceneObject;
 
             bool IsDepthWriting() const {
-                return static_cast<bool>(depthWriteMask & mSortKey);
+                return static_cast<bool>(mSortKey & depthWriteShiftedMask);
+            }
+            
+            bool HasTextComponent() const {
+                return static_cast<bool>(mSortKey & textFlagsShiftedMask);
             }
         };
 
@@ -47,8 +72,8 @@ namespace Pht {
 
     private:
         void Sort();
-        void AddSceneObject(const SceneObject& sceneObject, bool ancestorMatchedLayerMask);
-        static uint64_t EncodeSortKey(bool isDepthWriting);
+        void ScanSubtree(const SceneObject& sceneObject, bool ancestorMatchedLayerMask);
+        void AddSceneObject(const SceneObject& sceneObject);
         void CalculateDistances(const Mat4& viewMatrix, DistanceFunction distanceFunction);
         
         template<typename Comparator>

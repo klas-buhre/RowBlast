@@ -151,6 +151,7 @@ void RenderStateManager::InvalidateShader() {
     mTextureUnit1.Reset();
 }
 
+#if USE_FRAME_STATS
 void RenderStateManager::LogFrameStats(float frameSeconds) {
     std::cout << "=======================================" << std::endl
               << " FPS: " << 1.0f / frameSeconds << std::endl
@@ -160,3 +161,4 @@ void RenderStateManager::LogFrameStats(float frameSeconds) {
               << " NumVboUses: " << mFrameStats.mNumVboUses << std::endl
               << " NumDrawCalls: " << mFrameStats.mNumDrawCalls << std::endl;
 }
+#endif

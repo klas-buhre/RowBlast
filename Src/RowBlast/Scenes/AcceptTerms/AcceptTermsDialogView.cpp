@@ -39,7 +39,7 @@ AcceptTermsDialogView::AcceptTermsDialogView(Pht::IEngine& engine,
     Pht::Material underlineMaterial {Pht::Color{0.95f, 0.95f, 0.95f}};
     auto& termsOfServiceUnderlineSceneObject =
         CreateSceneObject(Pht::QuadMesh {5.5f, 0.05f}, underlineMaterial, sceneManager);
-    termsOfServiceUnderlineSceneObject.GetTransform().SetPosition({0.0f, -0.35f, UiLayer::textRectangle});
+    termsOfServiceUnderlineSceneObject.GetTransform().SetPosition({0.0f, -0.35f, UiLayer::text});
     auto& termsOfServiceButtonSceneObject = CreateSceneObject();
     termsOfServiceButtonSceneObject.AddChild(termsOfServiceUnderlineSceneObject);
     GetRoot().AddChild(termsOfServiceButtonSceneObject);
@@ -62,7 +62,7 @@ AcceptTermsDialogView::AcceptTermsDialogView(Pht::IEngine& engine,
     
     auto& privacyPolicyUnderlineSceneObject =
         CreateSceneObject(Pht::QuadMesh {4.75f, 0.05f}, underlineMaterial, sceneManager);
-    privacyPolicyUnderlineSceneObject.GetTransform().SetPosition({0.0f, -0.36f, UiLayer::textRectangle});
+    privacyPolicyUnderlineSceneObject.GetTransform().SetPosition({0.0f, -0.36f, UiLayer::text});
     auto& privacyPolicyButtonSceneObject = CreateSceneObject();
     privacyPolicyButtonSceneObject.AddChild(privacyPolicyUnderlineSceneObject);
     GetRoot().AddChild(privacyPolicyButtonSceneObject);

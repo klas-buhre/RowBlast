@@ -18,8 +18,8 @@ namespace Pht {
         }
     };
     
-    enum class ShaderId {
-        PixelLighting,
+    enum class ShaderId: uint8_t {
+        PixelLighting = 0,
         VertexLighting,
         TexturedLighting,
         TexturedEmissiveLighting,
@@ -30,7 +30,8 @@ namespace Pht {
         Particle,
         ParticleTextureColor,
         ParticleNoAlphaTexture,
-        PointParticle
+        PointParticle,
+        Other
     };
     
     enum class Blend {

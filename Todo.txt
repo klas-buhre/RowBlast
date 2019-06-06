@@ -78,15 +78,6 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-    -Maybe add a RenderOrder that for depth writing objects sort based on ShaderId, MaterialId, and
-     VboId (in that priority, baked into uint64_t mSortKey). And apply that sorting if objects have
-     the same distance even with the RenderOrder::Optimized and RenderOrder::BackToFront. The sort
-     key has priority over distance in the new new render order.
-     RenderOrder::StateOptimized should be the new default.
-     The Planets render pass in title scene can use RenderOrder::PiexelOptimized.
-     The Space render pass in maps scene can use RenderOrder::PiexelOptimized.
-     The Background render pass in game scene can use RenderOrder::PiexelOptimized.
-
 
 Before render queue refactoring and static batching:
 
@@ -139,6 +130,8 @@ Beginning of level 20:
      SceneObjects (but not delete them or their renderables since ownership of those objects is
      unknown). Create a StaticBatcher class.
      Then, the FloatingBlocks and preview pieces can be batched.
+    -Test everything in slow motion to see that the render functionality is the same as before
+     all optimizations.
     -Maybe the active piece could be in the left-most slot in the selectables. Then the next piece
      will always come in from the left and go right to the active slot without the other selectables
      moving at all. Might even have a NEXT text over the next pieces to make it really clear. Might
