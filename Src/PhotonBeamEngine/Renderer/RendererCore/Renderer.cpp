@@ -309,10 +309,168 @@ void Renderer::InitRenderQueue(const Scene& scene) {
     mRenderQueue.Init(scene.GetRoot());
 }
 
+void Renderer::CreateShader(ShaderId shaderId, const VertexFlags& vertexFlags) {
+    auto shaderProgram = std::make_unique<ShaderProgram>(vertexFlags);
+    mShaders.insert(std::make_pair(shaderId, std::move(shaderProgram)));
+}
+
+ShaderProgram& Renderer::GetShader(ShaderId shaderId) {
+    auto shader = mShaders.find(shaderId);
+    assert(shader != std::end(mShaders));
+    return *shader->second;
+}
+
+const Vec3& Renderer::GetCameraPosition() const {
+    if (mHudMode) {
+        return mHudCameraPosition;
+    }
+    
+    return mCamera.GetPosition();
+}
+
+int Renderer::GetAdjustedNumPixels(int numPixels) const {
+    return numPixels * mRenderBufferSize.y / (defaultScreenHeight * GetFrustumHeightFactor());
+}
+
+void Renderer::InitCamera(float narrowFrustumHeightFactor) {
+    mNarrowFrustumHeightFactor = narrowFrustumHeightFactor;
+
+    InitCamera();
+    InitHudFrustum();
+}
+
+const Mat4& Renderer::GetViewMatrix() const {
+    if (mHudMode) {
+        return identityMatrix;
+    }
+    
+    return mCamera.GetViewMatrix();
+}
+
+const Mat4& Renderer::GetProjectionMatrix() const {
+    if (mHudMode) {
+        return mHudFrustum.mProjection;
+    }
+    
+    switch (mProjectionMode) {
+        case ProjectionMode::Perspective:
+            return mCamera.GetProjectionMatrix();
+        case ProjectionMode::Orthographic:
+            return mCamera.GetOrthographicProjectionMatrix();
+    }
+}
+
+const Vec2& Renderer::GetHudFrustumSize() const {
+    return mHudFrustum.mSize;
+}
+
+const Vec2& Renderer::GetOrthographicFrustumSize() const {
+    return mOrthographicFrustumSize;
+}
+
+const IVec2& Renderer::GetRenderBufferSize() const {
+    return mRenderBufferSize;
+}
+
+float Renderer::GetTopPaddingHeight() const {
+    if (GetAspectRatio() >= 2.0f) {
+        return topPadding * mNarrowFrustumHeightFactor;
+    }
+    
+    return 0.0f;
+}
+
+float Renderer::GetBottomPaddingHeight() const {
+    if (GetAspectRatio() >= 2.0f) {
+        return bottomPadding * mNarrowFrustumHeightFactor;
+    }
+    
+    return 0.0f;
+}
+
 std::unique_ptr<RenderableObject> Renderer::CreateRenderableObject(const IMesh& mesh,
                                                                    const Material& material) {
     auto& shaderProgram = GetShader(material.GetShaderId());
     return std::make_unique<RenderableObject>(material, mesh, shaderProgram.GetVertexFlags());
+}
+
+void Renderer::SetLightDirection(const Vec3& lightDirection) {
+    mGlobalLight.mDirectionWorldSpace = lightDirection;
+    CalculateCameraSpaceLightDirection();
+}
+
+void Renderer::CalculateCameraSpaceLightDirection() {
+    // Since the matrix is row-major it has to be transposed in order to multiply with the vector.
+    auto transposedViewMatrix = GetViewMatrix().Transposed();
+    auto lightPosCamSpace = transposedViewMatrix * Vec4{mGlobalLight.mDirectionWorldSpace, 0.0f};
+    Vec3 lightPosCamSpaceVec3 {lightPosCamSpace.x, lightPosCamSpace.y, lightPosCamSpace.z};
+    mGlobalLight.mDirectionCameraSpace = lightPosCamSpaceVec3.Normalized();
+}
+
+void Renderer::EnableShader(ShaderId shaderId) {
+    GetShader(shaderId).SetIsEnabled(true);
+}
+
+void Renderer::DisableShader(ShaderId shaderId) {
+    GetShader(shaderId).SetIsEnabled(false);
+}
+
+void Renderer::SetClearColorBuffer(bool clearColorBuffer) {
+    mClearColorBuffer = clearColorBuffer;
+}
+
+void Renderer::SetDepthTest(const DepthState& depthState) {
+    if (!mIsDepthTestAllowed && !depthState.mDepthTestAllowedOverride) {
+        mRenderState.SetDepthTest(false);
+    } else {
+        if (depthState.mDepthTest) {
+            mRenderState.SetDepthTest(true);
+        } else {
+            mRenderState.SetDepthTest(false);
+        }
+    }
+}
+
+void Renderer::SetHudMode(bool hudMode) {
+    mHudMode = hudMode;
+}
+
+void Renderer::SetProjectionMode(ProjectionMode projectionMode) {
+    mProjectionMode = projectionMode;
+}
+
+void Renderer::SetScissorBox(const Vec2& lowerLeft, const Vec2& size) {
+    assert(mHudMode || mProjectionMode == ProjectionMode::Orthographic);
+    
+    Vec4 localOrigin {0.0f, 0.0f, 0.0f, 1.0f};
+    auto modelView = Mat4::Translate(lowerLeft.x, lowerLeft.y, 0.0f) * GetViewMatrix();
+    auto modelViewProjection = modelView * GetProjectionMatrix();
+    
+    // Since the matrix is row-major it has to be transposed in order to multiply with the vector.
+    auto clipSpacePos = modelViewProjection.Transposed() * localOrigin;
+    auto normProjPos = clipSpacePos / clipSpacePos.w;
+    
+    auto& frustumSize = mHudMode ? GetHudFrustumSize() : GetOrthographicFrustumSize();
+    
+    Vec2 lowerLeftProjected {
+        normProjPos.x * frustumSize.x / 2.0f,
+        normProjPos.y * frustumSize.y / 2.0f
+    };
+
+    auto pixelX =
+        mRenderBufferSize.x / 2.0f + mRenderBufferSize.x * lowerLeftProjected.x / frustumSize.x;
+    
+    auto pixelY =
+        mRenderBufferSize.y / 2.0f + mRenderBufferSize.y * lowerLeftProjected.y / frustumSize.y;
+    
+    IVec2 lowerLeftInPixels {static_cast<int>(pixelX), static_cast<int>(pixelY)};
+    
+    IVec2 sizeInPixels {
+        static_cast<int>(mRenderBufferSize.x * size.x / frustumSize.x),
+        static_cast<int>(mRenderBufferSize.y * size.y / frustumSize.y)
+    };
+    
+    glScissor(lowerLeftInPixels.x, lowerLeftInPixels.y, sizeInPixels.x, sizeInPixels.y);
 }
 
 void Renderer::ClearFrameBuffer() {
@@ -432,85 +590,6 @@ void Renderer::Render(const RenderPass& renderPass, DistanceFunction distanceFun
         
         previousEntry = &renderEntry;
     }
-}
-
-void Renderer::SetLightDirection(const Vec3& lightDirection) {
-    mGlobalLight.mDirectionWorldSpace = lightDirection;
-    CalculateCameraSpaceLightDirection();
-}
-
-void Renderer::CalculateCameraSpaceLightDirection() {
-    // Since the matrix is row-major it has to be transposed in order to multiply with the vector.
-    auto transposedViewMatrix = GetViewMatrix().Transposed();
-    auto lightPosCamSpace = transposedViewMatrix * Vec4{mGlobalLight.mDirectionWorldSpace, 0.0f};
-    Vec3 lightPosCamSpaceVec3 {lightPosCamSpace.x, lightPosCamSpace.y, lightPosCamSpace.z};
-    mGlobalLight.mDirectionCameraSpace = lightPosCamSpaceVec3.Normalized();
-}
-
-void Renderer::EnableShader(ShaderId shaderId) {
-    GetShader(shaderId).SetIsEnabled(true);
-}
-
-void Renderer::DisableShader(ShaderId shaderId) {
-    GetShader(shaderId).SetIsEnabled(false);
-}
-
-void Renderer::SetClearColorBuffer(bool clearColorBuffer) {
-    mClearColorBuffer = clearColorBuffer;
-}
-
-void Renderer::SetDepthTest(const DepthState& depthState) {
-    if (!mIsDepthTestAllowed && !depthState.mDepthTestAllowedOverride) {
-        mRenderState.SetDepthTest(false);
-    } else {
-        if (depthState.mDepthTest) {
-            mRenderState.SetDepthTest(true);
-        } else {
-            mRenderState.SetDepthTest(false);
-        }
-    }
-}
-
-void Renderer::SetHudMode(bool hudMode) {
-    mHudMode = hudMode;
-}
-
-void Renderer::SetProjectionMode(ProjectionMode projectionMode) {
-    mProjectionMode = projectionMode;
-}
-
-void Renderer::SetScissorBox(const Vec2& lowerLeft, const Vec2& size) {
-    assert(mHudMode || mProjectionMode == ProjectionMode::Orthographic);
-    
-    Vec4 localOrigin {0.0f, 0.0f, 0.0f, 1.0f};
-    auto modelView = Mat4::Translate(lowerLeft.x, lowerLeft.y, 0.0f) * GetViewMatrix();
-    auto modelViewProjection = modelView * GetProjectionMatrix();
-    
-    // Since the matrix is row-major it has to be transposed in order to multiply with the vector.
-    auto clipSpacePos = modelViewProjection.Transposed() * localOrigin;
-    auto normProjPos = clipSpacePos / clipSpacePos.w;
-    
-    auto& frustumSize = mHudMode ? GetHudFrustumSize() : GetOrthographicFrustumSize();
-    
-    Vec2 lowerLeftProjected {
-        normProjPos.x * frustumSize.x / 2.0f,
-        normProjPos.y * frustumSize.y / 2.0f
-    };
-
-    auto pixelX =
-        mRenderBufferSize.x / 2.0f + mRenderBufferSize.x * lowerLeftProjected.x / frustumSize.x;
-    
-    auto pixelY =
-        mRenderBufferSize.y / 2.0f + mRenderBufferSize.y * lowerLeftProjected.y / frustumSize.y;
-    
-    IVec2 lowerLeftInPixels {static_cast<int>(pixelX), static_cast<int>(pixelY)};
-    
-    IVec2 sizeInPixels {
-        static_cast<int>(mRenderBufferSize.x * size.x / frustumSize.x),
-        static_cast<int>(mRenderBufferSize.y * size.y / frustumSize.y)
-    };
-    
-    glScissor(lowerLeftInPixels.x, lowerLeftInPixels.y, sizeInPixels.x, sizeInPixels.y);
 }
 
 void Renderer::RenderObject(const RenderableObject& renderableObject, const Mat4& modelTransform) {
@@ -682,85 +761,6 @@ void Renderer::SetVbo(const RenderableObject& renderableObject,
     if (renderableObject.GetRenderMode() == RenderMode::Triangles) {
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo.GetIndexBufferId());
     }
-}
-
-void Renderer::CreateShader(ShaderId shaderId, const VertexFlags& vertexFlags) {
-    auto shaderProgram = std::make_unique<ShaderProgram>(vertexFlags);
-    mShaders.insert(std::make_pair(shaderId, std::move(shaderProgram)));
-}
-
-ShaderProgram& Renderer::GetShader(ShaderId shaderId) {
-    auto shader = mShaders.find(shaderId);
-    assert(shader != std::end(mShaders));
-    return *shader->second;
-}
-
-const Vec3& Renderer::GetCameraPosition() const {
-    if (mHudMode) {
-        return mHudCameraPosition;
-    }
-    
-    return mCamera.GetPosition();
-}
-
-int Renderer::GetAdjustedNumPixels(int numPixels) const {
-    return numPixels * mRenderBufferSize.y / (defaultScreenHeight * GetFrustumHeightFactor());
-}
-
-void Renderer::InitCamera(float narrowFrustumHeightFactor) {
-    mNarrowFrustumHeightFactor = narrowFrustumHeightFactor;
-
-    InitCamera();
-    InitHudFrustum();
-}
-
-const Mat4& Renderer::GetViewMatrix() const {
-    if (mHudMode) {
-        return identityMatrix;
-    }
-    
-    return mCamera.GetViewMatrix();
-}
-
-const Mat4& Renderer::GetProjectionMatrix() const {
-    if (mHudMode) {
-        return mHudFrustum.mProjection;
-    }
-    
-    switch (mProjectionMode) {
-        case ProjectionMode::Perspective:
-            return mCamera.GetProjectionMatrix();
-        case ProjectionMode::Orthographic:
-            return mCamera.GetOrthographicProjectionMatrix();
-    }
-}
-
-const Vec2& Renderer::GetHudFrustumSize() const {
-    return mHudFrustum.mSize;
-}
-
-const Vec2& Renderer::GetOrthographicFrustumSize() const {
-    return mOrthographicFrustumSize;
-}
-
-const IVec2& Renderer::GetRenderBufferSize() const {
-    return mRenderBufferSize;
-}
-
-float Renderer::GetTopPaddingHeight() const {
-    if (GetAspectRatio() >= 2.0f) {
-        return topPadding * mNarrowFrustumHeightFactor;
-    }
-    
-    return 0.0f;
-}
-
-float Renderer::GetBottomPaddingHeight() const {
-    if (GetAspectRatio() >= 2.0f) {
-        return bottomPadding * mNarrowFrustumHeightFactor;
-    }
-    
-    return 0.0f;
 }
 
 void Renderer::RenderText(const std::string& text,
