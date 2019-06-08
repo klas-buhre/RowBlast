@@ -6,16 +6,18 @@
 
 #include <OpenGLES/ES3/gl.h>
 
+#include "VertexBuffer.hpp"
+
 namespace Pht {
     enum class GenerateIndexBuffer {
         Yes,
         No
     };
     
-    class Vbo {
+    class GpuVbo {
     public:
-        Vbo(GenerateIndexBuffer generateIndexBuffer);
-        ~Vbo();
+        GpuVbo(GenerateIndexBuffer generateIndexBuffer);
+        ~GpuVbo();
         
         GLuint GetVertexBufferId() const {
             return mVertexBufferId;
@@ -36,6 +38,14 @@ namespace Pht {
         uint32_t GetId() const {
             return mId;
         }
+        
+        void SetCpuSideBuffer(std::unique_ptr<VertexBuffer> buffer) {
+            mCpuSideBuffer = std::move(buffer);
+        }
+        
+        const VertexBuffer* GetCpuSideBuffer() const {
+            return mCpuSideBuffer.get();
+        }
 
     private:
         friend class RenderableObject;
@@ -47,11 +57,12 @@ namespace Pht {
         GLuint mIndexBufferId {0};
         int mIndexCount {0};
         int mPointCount {0};
+        std::unique_ptr<VertexBuffer> mCpuSideBuffer;
     };
     
     namespace VboCache {
-        std::shared_ptr<Vbo> Get(const std::string& meshName);
-        void Add(const std::string& meshName, std::shared_ptr<Vbo> vbo);
+        std::shared_ptr<GpuVbo> Get(const std::string& meshName);
+        void Add(const std::string& meshName, std::shared_ptr<GpuVbo> vbo);
     }
 }
 

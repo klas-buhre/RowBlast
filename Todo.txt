@@ -123,13 +123,21 @@ Beginning of level 20:
 
 
 
-    -Try adding shader with pixel lighting and texturing. Use for the big planet in world 3.
+    -Make a render batcher that is accessable from the IRenderer API. Just send a SceneObject that
+     should have all its children merged into one renderable. The return value should be a
+     RenderableObject with a Vbo that is a combination of the vbo (if a renderable) and all Vbos of
+     the cildren. All vertices from the children will be transformed by each child transform.
+     The root/argument SceneObject transformation will not be used by the RenderBatcher, instead an
+     identity transform will be used as root transform. The operation should fail if not all child
+     renderables have the same material ID and shader ID. Different Vbos are ok but they must have
+     the same vertex flags/attributes and the Vbos must have a CPU-side vertex buffer
+     (i.e. VertexBuffer). CPU-side buffering must be specified when creating a RenderableObject by
+     the user. Invisible objects are ignored. The user could supply a key/hint for the
+     RenderBatcher to use for quering the VBO cache before creating the GpuVbo if it does not
+     exist.
 
-    -Make a static batcher that is accessable from the IRenderer API. Just send a SceneObject that
-     should have all its children merged into one renderable. It should detach all children
-     SceneObjects (but not delete them or their renderables since ownership of those objects is
-     unknown). Create a StaticBatcher class.
      Then, the FloatingBlocks and preview pieces can be batched.
+    -Try adding shader with pixel lighting and texturing. Use for the big planet in world 3.
     -Test everything in slow motion to see that the render functionality is the same as before
      all optimizations.
     -Maybe the active piece could be in the left-most slot in the selectables. Then the next piece

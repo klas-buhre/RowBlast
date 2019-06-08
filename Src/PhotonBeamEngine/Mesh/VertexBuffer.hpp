@@ -15,7 +15,7 @@ namespace Pht {
     
     class VertexBuffer {
     public:
-        VertexBuffer(int vertexCount, int indexCount, VertexFlags flags);
+        VertexBuffer(int vertexCount, int indexCount, const VertexFlags& attributeFlags);
         VertexBuffer(const VertexBuffer& other);
         VertexBuffer& operator=(const VertexBuffer& other);
 

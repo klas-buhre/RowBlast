@@ -13,6 +13,6 @@ Optional<std::string> ObjMesh::GetName() const {
     return Optional<std::string> {mFilename + std::to_string(mScale)};
 }
 
-VertexBuffer ObjMesh::GetVertices(VertexFlags flags) const {
-    return ObjMeshLoader::Load(mFilename, flags, mScale, mMoveToOrigin);
+std::unique_ptr<VertexBuffer> ObjMesh::CreateVertexBuffer(VertexFlags attributeFlags) const {
+    return ObjMeshLoader::Load(mFilename, attributeFlags, mScale, mMoveToOrigin);
 }

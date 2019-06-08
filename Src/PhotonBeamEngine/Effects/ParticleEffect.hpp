@@ -57,7 +57,7 @@ namespace Pht {
         ParticleEmitter mEmitter;
         RenderMode mRenderMode {RenderMode::Triangles};
         std::vector<Particle> mParticles;
-        std::unique_ptr<VertexBuffer> mVertexBuffer;
+        VertexBuffer* mVertexBuffer {nullptr};
         std::unique_ptr<RenderableObject> mRenderableObject;
         bool mIsActive {false};
     };

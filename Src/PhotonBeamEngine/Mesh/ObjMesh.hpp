@@ -12,7 +12,7 @@ namespace Pht {
                 MoveMeshToOrigin moveToOrigin = MoveMeshToOrigin::No);
         
         Optional<std::string> GetName() const override;
-        VertexBuffer GetVertices(VertexFlags flags) const override;
+        std::unique_ptr<VertexBuffer> CreateVertexBuffer(VertexFlags attributeFlags) const override;
         
     private:
         std::string mFilename;

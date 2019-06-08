@@ -1,6 +1,8 @@
 #ifndef ObjMeshLoader_hpp
 #define ObjMeshLoader_hpp
 
+#include <memory>
+
 #include "VertexBuffer.hpp"
 
 namespace Pht {
@@ -10,10 +12,10 @@ namespace Pht {
     };
     
     namespace ObjMeshLoader {
-        VertexBuffer Load(const std::string& filename,
-                          VertexFlags flags,
-                          float scale,
-                          MoveMeshToOrigin moveMeshToOrigin);
+        std::unique_ptr<VertexBuffer> Load(const std::string& filename,
+                                           VertexFlags attributeFlags,
+                                           float scale,
+                                           MoveMeshToOrigin moveMeshToOrigin);
     }
 }
 

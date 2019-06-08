@@ -43,25 +43,29 @@ ParticleEffect::ParticleEffect(SceneObject& sceneObject,
     material.SetBlend(Blend::Yes);
     material.GetDepthState().mDepthTest = false;
     
+    std::unique_ptr<VertexBuffer> cpuSideVertexBuffer;
+    
     switch (renderMode) {
         case RenderMode::Points: {
-            VertexFlags vertexFlags {.mColors = true, .mPointSizes = true};
-            mVertexBuffer = std::make_unique<VertexBuffer>(numParticles, 0, vertexFlags);
             material.SetShaderId(ShaderId::PointParticle);
-            mRenderableObject = std::make_unique<RenderableObject>(material, RenderMode::Points);
+            VertexFlags vertexFlags {.mColors = true, .mPointSizes = true};
+            cpuSideVertexBuffer = std::make_unique<VertexBuffer>(numParticles, 0, vertexFlags);
             break;
         }
         case RenderMode::Triangles: {
-            VertexFlags vertexFlags {.mTextureCoords = true, .mColors = true};
-            mVertexBuffer = std::make_unique<VertexBuffer>(numParticles * 4,
-                                                           numParticles * 6,
-                                                           vertexFlags);
             material.SetShaderId(ShaderId::Particle);
-            mRenderableObject = std::make_unique<RenderableObject>(material, RenderMode::Triangles);
+            VertexFlags vertexFlags {.mTextureCoords = true, .mColors = true};
+            cpuSideVertexBuffer = std::make_unique<VertexBuffer>(numParticles * 4,
+                                                                 numParticles * 6,
+                                                                 vertexFlags);
             break;
         }
     }
     
+    mVertexBuffer = cpuSideVertexBuffer.get();
+    mRenderableObject = std::make_unique<RenderableObject>(material,
+                                                           std::move(cpuSideVertexBuffer),
+                                                           renderMode);
     sceneObject.SetRenderable(mRenderableObject.get());
     mSceneObject.SetIsVisible(false);
 }
@@ -206,7 +210,7 @@ void ParticleEffect::WritePoints() {
         }
     }
     
-    mRenderableObject->UploadPoints(*mVertexBuffer, BufferUsage::DynamicDraw);
+    mRenderableObject->UploadPoints(BufferUsage::DynamicDraw);
 }
 
 void ParticleEffect::WriteTriangles() {
@@ -216,7 +220,7 @@ void ParticleEffect::WriteTriangles() {
         }
     }
     
-    mRenderableObject->UploadTriangles(*mVertexBuffer, BufferUsage::DynamicDraw);
+    mRenderableObject->UploadTriangles(BufferUsage::DynamicDraw);
 }
 
 void ParticleEffect::WriteParticleTriangles(const Particle& particle) {

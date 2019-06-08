@@ -18,43 +18,74 @@ namespace {
         }
     }
     
-    std::shared_ptr<Vbo> CreateVbo(RenderMode renderMode) {
+    std::shared_ptr<GpuVbo> CreateVbo(RenderMode renderMode) {
         auto generateIndexBuffer =
             renderMode == RenderMode::Triangles ? GenerateIndexBuffer::Yes : GenerateIndexBuffer::No;
     
-        return std::make_shared<Vbo>(generateIndexBuffer);
+        return std::make_shared<GpuVbo>(generateIndexBuffer);
     }
 }
 
 RenderableObject::RenderableObject(const Material& material,
                                    const IMesh& mesh,
-                                   const VertexFlags& flags) :
+                                   const VertexFlags& attributeFlags,
+                                   VertexBufferLocation bufferLocation) :
     mMaterial {material} {
 
     auto meshName = mesh.GetName();
     if (meshName.HasValue()) {
         mVbo = VboCache::Get(meshName.GetValue());
         if (mVbo == nullptr) {
-            CreateVboAndUploadData(mesh, flags);
+            mVbo = CreateVbo(mRenderMode);
+            UploadMeshVertexData(mesh, attributeFlags, bufferLocation);
             VboCache::Add(meshName.GetValue(), mVbo);
+        } else {
+            if (bufferLocation == VertexBufferLocation::AtGpuAndCpu &&
+                mVbo->GetCpuSideBuffer() == nullptr) {
+                
+                auto vertexBuffer = mesh.CreateVertexBuffer(attributeFlags);
+                mVbo->SetCpuSideBuffer(std::move(vertexBuffer));
+            }
         }
     } else {
-        CreateVboAndUploadData(mesh, flags);
+        mVbo = CreateVbo(mRenderMode);
+        UploadMeshVertexData(mesh, attributeFlags, bufferLocation);
     }
 }
 
-RenderableObject::RenderableObject(const Material& material, RenderMode renderMode) :
+RenderableObject::RenderableObject(const Material& material,
+                                   std::unique_ptr<VertexBuffer> cpuSideBuffer,
+                                   RenderMode renderMode) :
     mRenderMode {renderMode},
     mMaterial {material},
-    mVbo {CreateVbo(renderMode)} {}
+    mVbo {CreateVbo(renderMode)} {
+
+    mVbo->SetCpuSideBuffer(std::move(cpuSideBuffer));
+}
 
 RenderableObject::~RenderableObject() {}
 
-void RenderableObject::CreateVboAndUploadData(const IMesh& mesh, const VertexFlags& flags) {
-    mVbo = CreateVbo(mRenderMode);
+void RenderableObject::UploadMeshVertexData(const IMesh& mesh,
+                                            const VertexFlags& attributeFlags,
+                                            VertexBufferLocation bufferLocation) {
+    auto vertexBuffer = mesh.CreateVertexBuffer(attributeFlags);
+    UploadTriangles(*vertexBuffer, BufferUsage::StaticDraw);
     
-    VertexBuffer vertexBuffer {mesh.GetVertices(flags)};
-    UploadTriangles(vertexBuffer, BufferUsage::StaticDraw);
+    if (bufferLocation == VertexBufferLocation::AtGpuAndCpu) {
+        mVbo->SetCpuSideBuffer(std::move(vertexBuffer));
+    }
+}
+
+void RenderableObject::UploadTriangles(BufferUsage bufferUsage) {
+    auto* cpuSideBuffer = mVbo->GetCpuSideBuffer();
+    assert(cpuSideBuffer);
+    UploadTriangles(*cpuSideBuffer, bufferUsage);
+}
+
+void RenderableObject::UploadPoints(BufferUsage bufferUsage) {
+    auto* cpuSideBuffer = mVbo->GetCpuSideBuffer();
+    assert(cpuSideBuffer);
+    UploadPoints(*cpuSideBuffer, bufferUsage);
 }
 
 void RenderableObject::UploadTriangles(const VertexBuffer& vertexBuffer, BufferUsage bufferUsage) {
@@ -87,8 +118,4 @@ void RenderableObject::UploadPoints(const VertexBuffer& vertexBuffer, BufferUsag
                  ToGlBufferUsage(bufferUsage));
     
     mVbo->mPointCount = vertexBuffer.GetNumVerticesWritten();
-}
-
-const Vbo& RenderableObject::GetVbo() const {
-    return *mVbo;
 }

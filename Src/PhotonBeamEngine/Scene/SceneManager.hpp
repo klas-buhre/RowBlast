@@ -19,6 +19,8 @@ namespace Pht {
         Scene* GetActiveScene() override;
         std::unique_ptr<RenderableObject> CreateRenderableObject(const IMesh& mesh,
                                                                  const Material& material) override;
+        std::unique_ptr<RenderableObject> CreateBatchableRenderableObject(const IMesh& mesh,
+                                                                          const Material& material) override;
         std::unique_ptr<SceneObject> CreateSceneObject(const IMesh& mesh,
                                                        const Material& material,
                                                        SceneResources& sceneResources) override;

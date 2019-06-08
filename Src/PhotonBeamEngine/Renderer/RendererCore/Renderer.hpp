@@ -39,7 +39,8 @@ namespace Pht {
         void InitCamera(float narrowFrustumHeightFactor);
         void InitRenderQueue(const Scene& scene);
         std::unique_ptr<RenderableObject> CreateRenderableObject(const IMesh& mesh,
-                                                                 const Material& material);
+                                                                 const Material& material,
+                                                                 VertexBufferLocation bufferLocation);
         void ClearFrameBuffer();
         void RenderScene(const Scene& scene, float frameSeconds);
         

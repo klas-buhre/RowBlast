@@ -20,11 +20,13 @@ Optional<std::string> ParametricSurface::GetName() const {
     return mName;
 }
 
-VertexBuffer ParametricSurface::GetVertices(VertexFlags flags) const {
+std::unique_ptr<VertexBuffer>
+ParametricSurface::CreateVertexBuffer(VertexFlags attributeFlags) const {
     auto vertexCount = mDivisions.x * mDivisions.y;
     auto triangleIndexCount = 6 * mSlices.x * mSlices.y;
-    VertexBuffer vertexBuffer {vertexCount, triangleIndexCount, flags};
-
+    auto vertexBuffer = std::make_unique<VertexBuffer>(vertexCount,
+                                                       triangleIndexCount,
+                                                       attributeFlags);
     for (auto j = 0; j < mDivisions.y; j++) {
         for (auto i = 0; i < mDivisions.x; i++) {
 
@@ -61,11 +63,11 @@ VertexBuffer ParametricSurface::GetVertices(VertexFlags flags) const {
             auto s = mTextureCount.x * i / mSlices.x;
             auto t = mTextureCount.y * j / mSlices.y;
             Vec2 textureCoord {s, t};
-            vertexBuffer.Write(vertex, normal, textureCoord);
+            vertexBuffer->Write(vertex, normal, textureCoord);
         }
     }
     
-    GenerateTriangleIndices(vertexBuffer);
+    GenerateTriangleIndices(*vertexBuffer);
     return vertexBuffer;
 }
 

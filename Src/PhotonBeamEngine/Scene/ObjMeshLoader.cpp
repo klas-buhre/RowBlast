@@ -312,11 +312,12 @@ namespace {
     }
 }
 
-VertexBuffer ObjMeshLoader::Load(const std::string& filename,
-                                 VertexFlags flags,
-                                 float scale,
-                                 MoveMeshToOrigin moveMeshToOrigin) {
-    assert(flags.mNormals);
+
+std::unique_ptr<VertexBuffer> ObjMeshLoader::Load(const std::string& filename,
+                                                  VertexFlags attributeFlags,
+                                                  float scale,
+                                                  MoveMeshToOrigin moveMeshToOrigin) {
+    assert(attributeFlags.mNormals);
 
     auto fullPath = FileSystem::GetResourceDirectory() + "/" + filename;
     auto quantities = GetQuantities(fullPath);
@@ -337,17 +338,21 @@ VertexBuffer ObjMeshLoader::Load(const std::string& filename,
     VertexRefs vertexRefs;
     ReadFaces(vertexRefs, quantities, fullPath);
     
-    VertexBuffer vertexBuffer {
-        static_cast<int>(normals.empty() ? vertices.size() : vertexRefs.mNewIndices.size()),
-        quantities.mIndexCount,
-        flags
-    };
-    
+    auto vertexCount =
+        static_cast<int>(normals.empty() ? vertices.size() : vertexRefs.mNewIndices.size());
+    auto vertexBuffer = std::make_unique<VertexBuffer>(vertexCount,
+                                                       quantities.mIndexCount,
+                                                       attributeFlags);
     if (normals.empty()) {
         CalculateNormals(normals, vertices, vertexRefs);
     }
     
-    WriteVertices(vertexBuffer, flags, vertices, textureCoords, normals, vertexRefs, scale);
-    
+    WriteVertices(*vertexBuffer,
+                  attributeFlags,
+                  vertices,
+                  textureCoords,
+                  normals,
+                  vertexRefs,
+                  scale);
     return vertexBuffer;
 }

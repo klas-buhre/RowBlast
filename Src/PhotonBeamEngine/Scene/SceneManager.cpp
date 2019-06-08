@@ -41,16 +41,22 @@ Scene* SceneManager::GetActiveScene() {
 
 std::unique_ptr<RenderableObject> SceneManager::CreateRenderableObject(const IMesh& mesh,
                                                                        const Material& material) {
-    return mRenderer.CreateRenderableObject(mesh, material);
+    return mRenderer.CreateRenderableObject(mesh, material, VertexBufferLocation::AtGpuOnly);
+}
+
+std::unique_ptr<RenderableObject>
+SceneManager::CreateBatchableRenderableObject(const IMesh& mesh,
+                                              const Material& material) {
+    return mRenderer.CreateRenderableObject(mesh, material, VertexBufferLocation::AtGpuAndCpu);
 }
 
 std::unique_ptr<SceneObject> SceneManager::CreateSceneObject(const IMesh& mesh,
                                                              const Material& material,
                                                              SceneResources& sceneResources) {
-    auto renderableObject = mRenderer.CreateRenderableObject(mesh, material);
+    auto renderableObject = mRenderer.CreateRenderableObject(mesh,
+                                                             material,
+                                                             VertexBufferLocation::AtGpuOnly);
     auto sceneObject = std::make_unique<SceneObject>(renderableObject.get());
-    
     sceneResources.AddRenderableObject(std::move(renderableObject));
-    
     return sceneObject;
 }

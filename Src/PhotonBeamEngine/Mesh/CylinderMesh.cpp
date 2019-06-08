@@ -38,18 +38,15 @@ Optional<std::string> CylinderMesh::GetName() const {
     return mName;
 }
 
-VertexBuffer CylinderMesh::GetVertices(VertexFlags flags) const {
-    VertexBuffer vertexBuffer {
-        discVertexCount * 2 + bodyVertexCount,
-        discIndexCount * 2 + bodyIndexCount,
-        flags
-    };
-    
-    GenerateBody(vertexBuffer);
+std::unique_ptr<VertexBuffer> CylinderMesh::CreateVertexBuffer(VertexFlags attributeFlags) const {
+    auto vertexBuffer = std::make_unique<VertexBuffer>(discVertexCount * 2 + bodyVertexCount,
+                                                       discIndexCount * 2 + bodyIndexCount,
+                                                       attributeFlags);
+    GenerateBody(*vertexBuffer);
     
     if (mCreateDiscs) {
-        GenerateDisc(vertexBuffer, DiscType::Upper);
-        GenerateDisc(vertexBuffer, DiscType::Lower);
+        GenerateDisc(*vertexBuffer, DiscType::Upper);
+        GenerateDisc(*vertexBuffer, DiscType::Lower);
     }
     
     return vertexBuffer;

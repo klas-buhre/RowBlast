@@ -16,7 +16,7 @@
 namespace Pht {
     class ShaderProgram;
     class Material;
-    class Vbo;
+    class GpuVbo;
     
     class RenderStateManager: public Noncopyable {
     public:
@@ -36,7 +36,7 @@ namespace Pht {
             IF_USING_FRAME_STATS(++mFrameStats.mNumMaterialUses);
         }
 
-        void UseVbo(const Vbo& vbo) {
+        void UseVbo(const GpuVbo& vbo) {
             mVbo = &vbo;
             IF_USING_FRAME_STATS(ReportVboUse());
         }
@@ -49,7 +49,7 @@ namespace Pht {
             return &material == mMaterial;
         }
 
-        bool IsVboInUse(const Vbo& vbo) const {
+        bool IsVboInUse(const GpuVbo& vbo) const {
             return &vbo == mVbo;
         }
         
@@ -108,7 +108,7 @@ namespace Pht {
         Optional<TextureUnit> mTextureUnit1;
         const ShaderProgram* mShaderProgram {nullptr};
         const Material* mMaterial {nullptr};
-        const Vbo* mVbo {nullptr};
+        const GpuVbo* mVbo {nullptr};
     };
 }
 

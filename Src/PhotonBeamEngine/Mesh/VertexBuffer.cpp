@@ -2,8 +2,8 @@
 
 using namespace Pht;
 
-VertexBuffer::VertexBuffer(int vertexCount, int indexCount, VertexFlags flags) :
-    mFlags {flags},
+VertexBuffer::VertexBuffer(int vertexCount, int indexCount, const VertexFlags& attributeFlags) :
+    mFlags {attributeFlags},
     mFloatsPerVertex {3} {
     
     if (mFlags.mNormals) {
@@ -110,6 +110,7 @@ void VertexBuffer::Write(const Vec3& vertex, const Vec4& color, float pointSize)
 
 void VertexBuffer::AddIndex(unsigned short index) {
     if (mIndicesWritten >= mTriangleIndices.size()) {
+        assert(!"Vertex buffer realocation!");
         mTriangleIndices.resize(mTriangleIndices.size() * 2);
     }
     
@@ -135,6 +136,7 @@ int VertexBuffer::GetIndexBufferSize() const {
 
 void VertexBuffer::ResizeIfNeeded() {
     if (mVerticesWritten * mFloatsPerVertex >= mVertexBuffer.size()) {
+        assert(!"Vertex buffer realocation!");
         mVertexBuffer.resize(mVertexBuffer.size() * 2);
         mVertexBufferPtr = &mVertexBuffer[0] + (mVerticesWritten * mFloatsPerVertex);
     }

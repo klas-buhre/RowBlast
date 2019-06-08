@@ -381,7 +381,7 @@
 		624C9DDE21A1A908000FB5E1 /* coin_pile_4120.obj in Resources */ = {isa = PBXBuildFile; fileRef = 624C9DDD21A1A907000FB5E1 /* coin_pile_4120.obj */; };
 		62524BC7222EBCC000AFF469 /* settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 62524BC6222EBCC000AFF469 /* settings.png */; };
 		625696CF2182382C003A3A9D /* RowBlastApplication.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 625695DB2182382B003A3A9D /* RowBlastApplication.cpp */; };
-		625698022182392C003A3A9D /* TriangleMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 625696D22182392B003A3A9D /* TriangleMesh.cpp */; };
+		625698022182392C003A3A9D /* PrismMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 625696D22182392B003A3A9D /* PrismMesh.cpp */; };
 		625698032182392C003A3A9D /* VertexBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 625696D32182392B003A3A9D /* VertexBuffer.cpp */; };
 		625698042182392C003A3A9D /* MeshUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 625696D52182392B003A3A9D /* MeshUtils.cpp */; };
 		625698052182392C003A3A9D /* ParametricSurface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 625696D62182392B003A3A9D /* ParametricSurface.cpp */; };
@@ -1141,7 +1141,7 @@
 		62524BC6222EBCC000AFF469 /* settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings.png; sourceTree = "<group>"; };
 		625695DA2182382B003A3A9D /* RowBlastApplication.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = RowBlastApplication.hpp; sourceTree = "<group>"; };
 		625695DB2182382B003A3A9D /* RowBlastApplication.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RowBlastApplication.cpp; sourceTree = "<group>"; };
-		625696D22182392B003A3A9D /* TriangleMesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TriangleMesh.cpp; sourceTree = "<group>"; };
+		625696D22182392B003A3A9D /* PrismMesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PrismMesh.cpp; sourceTree = "<group>"; };
 		625696D32182392B003A3A9D /* VertexBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VertexBuffer.cpp; sourceTree = "<group>"; };
 		625696D42182392B003A3A9D /* IMesh.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = IMesh.hpp; sourceTree = "<group>"; };
 		625696D52182392B003A3A9D /* MeshUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MeshUtils.cpp; sourceTree = "<group>"; };
@@ -1160,7 +1160,7 @@
 		625696E22182392B003A3A9D /* TorusMesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TorusMesh.cpp; sourceTree = "<group>"; };
 		625696E32182392B003A3A9D /* SphereMesh.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SphereMesh.hpp; sourceTree = "<group>"; };
 		625696E42182392B003A3A9D /* VertexBuffer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = VertexBuffer.hpp; sourceTree = "<group>"; };
-		625696E52182392B003A3A9D /* TriangleMesh.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = TriangleMesh.hpp; sourceTree = "<group>"; };
+		625696E52182392B003A3A9D /* PrismMesh.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PrismMesh.hpp; sourceTree = "<group>"; };
 		625696E62182392B003A3A9D /* MeshUtils.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MeshUtils.hpp; sourceTree = "<group>"; };
 		625696E92182392B003A3A9D /* VboCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VboCache.cpp; sourceTree = "<group>"; };
 		625696EA2182392B003A3A9D /* TextRenderer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = TextRenderer.hpp; sourceTree = "<group>"; };
@@ -2515,14 +2515,14 @@
 				625696D72182392B003A3A9D /* ObjMesh.hpp */,
 				625696D62182392B003A3A9D /* ParametricSurface.cpp */,
 				625696DD2182392B003A3A9D /* ParametricSurface.hpp */,
+				625696D22182392B003A3A9D /* PrismMesh.cpp */,
+				625696E52182392B003A3A9D /* PrismMesh.hpp */,
 				625696E02182392B003A3A9D /* QuadMesh.cpp */,
 				625696D92182392B003A3A9D /* QuadMesh.hpp */,
 				625696DC2182392B003A3A9D /* SphereMesh.cpp */,
 				625696E32182392B003A3A9D /* SphereMesh.hpp */,
 				625696E22182392B003A3A9D /* TorusMesh.cpp */,
 				625696DB2182392B003A3A9D /* TorusMesh.hpp */,
-				625696D22182392B003A3A9D /* TriangleMesh.cpp */,
-				625696E52182392B003A3A9D /* TriangleMesh.hpp */,
 				625696D32182392B003A3A9D /* VertexBuffer.cpp */,
 				625696E42182392B003A3A9D /* VertexBuffer.hpp */,
 			);
@@ -3678,7 +3678,7 @@
 				62216A7421EB376E001CB9A1 /* CloseButton.cpp in Sources */,
 				62216C6721F08A85001CB9A1 /* SettingsMenuController.cpp in Sources */,
 				6242DEF521C50E7600D17F46 /* Audio.cpp in Sources */,
-				625698022182392C003A3A9D /* TriangleMesh.cpp in Sources */,
+				625698022182392C003A3A9D /* PrismMesh.cpp in Sources */,
 				62216C3121EB377F001CB9A1 /* World3.cpp in Sources */,
 				625698132182392C003A3A9D /* Material.cpp in Sources */,
 				625698352182392C003A3A9D /* InputEvent.cpp in Sources */,

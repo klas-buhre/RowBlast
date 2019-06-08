@@ -16,7 +16,7 @@ namespace Pht {
         BoxMesh(float xSize, float ySize, float zSize, const BoxTextureCounts& textureCounts);
         
         Optional<std::string> GetName() const override;
-        VertexBuffer GetVertices(VertexFlags flags) const override;
+        std::unique_ptr<VertexBuffer> CreateVertexBuffer(VertexFlags attributeFlags) const override;
         
     private:
         float mXSize;

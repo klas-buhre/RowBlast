@@ -389,9 +389,13 @@ float Renderer::GetBottomPaddingHeight() const {
 }
 
 std::unique_ptr<RenderableObject> Renderer::CreateRenderableObject(const IMesh& mesh,
-                                                                   const Material& material) {
+                                                                   const Material& material,
+                                                                   VertexBufferLocation bufferLocation) {
     auto& shaderProgram = GetShader(material.GetShaderId());
-    return std::make_unique<RenderableObject>(material, mesh, shaderProgram.GetVertexFlags());
+    return std::make_unique<RenderableObject>(material,
+                                              mesh,
+                                              shaderProgram.GetVertexFlags(),
+                                              bufferLocation);
 }
 
 void Renderer::SetLightDirection(const Vec3& lightDirection) {

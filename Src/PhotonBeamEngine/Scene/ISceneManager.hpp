@@ -23,6 +23,8 @@ namespace Pht {
         virtual Scene* GetActiveScene() = 0;
         virtual std::unique_ptr<RenderableObject> CreateRenderableObject(const IMesh& mesh,
                                                                          const Material& material) = 0;
+        virtual std::unique_ptr<RenderableObject> CreateBatchableRenderableObject(const IMesh& mesh,
+                                                                                  const Material& material) = 0;
         virtual std::unique_ptr<SceneObject> CreateSceneObject(const IMesh& mesh,
                                                                const Material& material,
                                                                SceneResources& sceneResources) = 0;

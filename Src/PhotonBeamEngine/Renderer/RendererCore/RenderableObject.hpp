@@ -4,7 +4,7 @@
 #include "Material.hpp"
 
 namespace Pht {
-    class Vbo;
+    class GpuVbo;
     class VertexBuffer;
     class IMesh;
     class VertexFlags;
@@ -19,15 +19,28 @@ namespace Pht {
         DynamicDraw
     };
     
+    enum class VertexBufferLocation {
+        AtGpuOnly,
+        AtGpuAndCpu
+    };
+    
     class RenderableObject {
     public:
-        RenderableObject(const Material& material, const IMesh& mesh, const VertexFlags& flags);
-        RenderableObject(const Material& material, RenderMode renderMode);
+        RenderableObject(const Material& material,
+                         const IMesh& mesh,
+                         const VertexFlags& attributeFlags,
+                         VertexBufferLocation bufferLocation);
+        RenderableObject(const Material& material,
+                         std::unique_ptr<VertexBuffer> cpuSideBuffer,
+                         RenderMode renderMode);
         ~RenderableObject();
         
-        void UploadTriangles(const VertexBuffer& vertexBuffer, BufferUsage bufferUsage);
-        void UploadPoints(const VertexBuffer& vertexBuffer, BufferUsage bufferUsage);
-        const Vbo& GetVbo() const;
+        void UploadTriangles(BufferUsage bufferUsage);
+        void UploadPoints(BufferUsage bufferUsage);
+        
+        const GpuVbo& GetVbo() const {
+            return *mVbo;
+        }
 
         RenderMode GetRenderMode() const {
             return mRenderMode;
@@ -42,11 +55,15 @@ namespace Pht {
         }
         
     private:
-        void CreateVboAndUploadData(const IMesh& mesh, const VertexFlags& flags);
+        void UploadMeshVertexData(const IMesh& mesh,
+                                  const VertexFlags& attributeFlags,
+                                  VertexBufferLocation bufferLocation);
+        void UploadTriangles(const VertexBuffer& vertexBuffer, BufferUsage bufferUsage);
+        void UploadPoints(const VertexBuffer& vertexBuffer, BufferUsage bufferUsage);
         
         RenderMode mRenderMode {RenderMode::Triangles};
         Material mMaterial;
-        std::shared_ptr<Vbo> mVbo;
+        std::shared_ptr<GpuVbo> mVbo;
     };
 }
 
