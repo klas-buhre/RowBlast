@@ -63,6 +63,23 @@ RenderableObject::RenderableObject(const Material& material,
     mVbo->SetCpuSideBuffer(std::move(cpuSideBuffer));
 }
 
+RenderableObject::RenderableObject(const Material& material,
+                                   const VertexBuffer& fromBuffer,
+                                   const Optional<std::string>& vboName) :
+    mMaterial {material} {
+    
+    mVbo = CreateVbo(mRenderMode);
+    UploadTriangles(fromBuffer, BufferUsage::StaticDraw);
+    
+    if (vboName.HasValue()) {
+        VboCache::Add(vboName.GetValue(), mVbo);
+    }
+}
+
+RenderableObject::RenderableObject(const Material& material, std::shared_ptr<GpuVbo> vbo) :
+    mMaterial {material},
+    mVbo {vbo} {}
+
 RenderableObject::~RenderableObject() {}
 
 void RenderableObject::UploadMeshVertexData(const IMesh& mesh,
@@ -117,5 +134,5 @@ void RenderableObject::UploadPoints(const VertexBuffer& vertexBuffer, BufferUsag
                  vertexBuffer.GetVertexBuffer(),
                  ToGlBufferUsage(bufferUsage));
     
-    mVbo->mPointCount = vertexBuffer.GetNumVerticesWritten();
+    mVbo->mPointCount = vertexBuffer.GetNumVertices();
 }

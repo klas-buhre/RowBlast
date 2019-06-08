@@ -11,11 +11,20 @@ namespace Pht {
         bool mTextureCoords {false};
         bool mColors {false};
         bool mPointSizes {false};
+        
+        bool operator==(const VertexFlags& other) const {
+            return mNormals == other.mNormals && mTextureCoords == other.mTextureCoords &&
+                   mColors == other.mColors && mPointSizes == other.mPointSizes;
+        }
+        
+        bool operator!=(const VertexFlags& other) const {
+            return !(*this == other);
+        }
     };
     
     class VertexBuffer {
     public:
-        VertexBuffer(int vertexCount, int indexCount, const VertexFlags& attributeFlags);
+        VertexBuffer(int vertexCapacity, int indexCapacity, const VertexFlags& attributeFlags);
         VertexBuffer(const VertexBuffer& other);
         VertexBuffer& operator=(const VertexBuffer& other);
 
@@ -30,8 +39,12 @@ namespace Pht {
         int GetVertexBufferSize() const;
         int GetIndexBufferSize() const;
         
-        int GetNumVerticesWritten() const {
-            return mVerticesWritten;
+        int GetNumVertices() const {
+            return mNumVertices;
+        }
+        
+        const VertexFlags& GetAttributeFlags() const {
+            return mFlags;
         }
 
     private:
@@ -44,8 +57,8 @@ namespace Pht {
         std::vector<float> mVertexBuffer;
         std::vector<unsigned short> mTriangleIndices;
         unsigned short mFaceBeginVertex {0};
-        unsigned short mVerticesWritten {0};
-        unsigned short mIndicesWritten {0};
+        unsigned short mNumVertices {0};
+        unsigned short mNumIndices {0};
     };
 }
 

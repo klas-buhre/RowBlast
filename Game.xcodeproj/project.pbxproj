@@ -327,6 +327,7 @@
 		62276EA02274A96000679BC6 /* level1.json in Resources */ = {isa = PBXBuildFile; fileRef = 62276E572274A96000679BC6 /* level1.json */; };
 		62276EA12274A96000679BC6 /* level13.json in Resources */ = {isa = PBXBuildFile; fileRef = 62276E582274A96000679BC6 /* level13.json */; };
 		62277D862288688B00F42C6A /* down_arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 62277D852288688A00F42C6A /* down_arrow.png */; };
+		6227B9E822ABFE1000C536D3 /* RenderBatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6227B9E622ABFE1000C536D3 /* RenderBatcher.cpp */; };
 		6227D4F5206CFD25008EA77D /* bomb_798.obj in Resources */ = {isa = PBXBuildFile; fileRef = 6227D4F4206CFD25008EA77D /* bomb_798.obj */; };
 		62291E1F2298559600D36BFB /* star.wav in Resources */ = {isa = PBXBuildFile; fileRef = 62291E1E2298559500D36BFB /* star.wav */; };
 		62291E212298598C00D36BFB /* all_cleared.wav in Resources */ = {isa = PBXBuildFile; fileRef = 62291E202298598B00D36BFB /* all_cleared.wav */; };
@@ -1061,6 +1062,8 @@
 		62276E572274A96000679BC6 /* level1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level1.json; sourceTree = "<group>"; };
 		62276E582274A96000679BC6 /* level13.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level13.json; sourceTree = "<group>"; };
 		62277D852288688A00F42C6A /* down_arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = down_arrow.png; sourceTree = "<group>"; };
+		6227B9E622ABFE1000C536D3 /* RenderBatcher.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = RenderBatcher.cpp; sourceTree = "<group>"; };
+		6227B9E722ABFE1000C536D3 /* RenderBatcher.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = RenderBatcher.hpp; sourceTree = "<group>"; };
 		6227D4F4206CFD25008EA77D /* bomb_798.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bomb_798.obj; sourceTree = "<group>"; };
 		62291E1E2298559500D36BFB /* star.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = star.wav; sourceTree = "<group>"; };
 		62291E202298598B00D36BFB /* all_cleared.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = all_cleared.wav; sourceTree = "<group>"; };
@@ -2548,6 +2551,8 @@
 				625696EB2182392B003A3A9D /* Material.hpp */,
 				625696F02182392B003A3A9D /* RenderableObject.cpp */,
 				625696F32182392B003A3A9D /* RenderableObject.hpp */,
+				6227B9E622ABFE1000C536D3 /* RenderBatcher.cpp */,
+				6227B9E722ABFE1000C536D3 /* RenderBatcher.hpp */,
 				625696FB2182392B003A3A9D /* Renderer.cpp */,
 				625696ED2182392B003A3A9D /* Renderer.hpp */,
 				625696F12182392B003A3A9D /* RenderPass.cpp */,
@@ -3628,6 +3633,7 @@
 				62216C1521EB377F001CB9A1 /* MirroredZPiece.cpp in Sources */,
 				627A12C521B3085100EECA3B /* GuiViewManager.cpp in Sources */,
 				62216C2521EB377F001CB9A1 /* WeldsAnimation.cpp in Sources */,
+				6227B9E822ABFE1000C536D3 /* RenderBatcher.cpp in Sources */,
 				62216A7A21EB376E001CB9A1 /* GlossyButton.cpp in Sources */,
 				62216BC421EB377E001CB9A1 /* SameColorDialogView.cpp in Sources */,
 				62216BFD21EB377E001CB9A1 /* Field.cpp in Sources */,

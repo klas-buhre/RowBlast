@@ -95,11 +95,11 @@ void CylinderMesh::GenerateDisc(VertexBuffer& vertexBuffer, DiscType discType) c
             break;
     }
 
-    auto centerVertexIndex = vertexBuffer.GetNumVerticesWritten();
+    auto centerVertexIndex = vertexBuffer.GetNumVertices();
     Vec3 centerVertex {0.0f, y, 0.0f};
     Vec2 centerTextureCoord {mTextureCounts.mDiscs.x / 2.0f, mTextureCounts.mDiscs.y / 2.0f};
     vertexBuffer.Write(centerVertex, normal, centerTextureCoord);
-    auto rimBegin = vertexBuffer.GetNumVerticesWritten();
+    auto rimBegin = vertexBuffer.GetNumVertices();
     
     auto theta = 0.0f;
     for (auto slice = 0; slice < slices; slice++) {

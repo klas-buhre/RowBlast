@@ -2,6 +2,7 @@
 #define RenderableObject_hpp
 
 #include "Material.hpp"
+#include "Optional.hpp"
 
 namespace Pht {
     class GpuVbo;
@@ -33,6 +34,11 @@ namespace Pht {
         RenderableObject(const Material& material,
                          std::unique_ptr<VertexBuffer> cpuSideBuffer,
                          RenderMode renderMode);
+        RenderableObject(const Material& material,
+                         const VertexBuffer& fromBuffer,
+                         const Optional<std::string>& vboName);
+        RenderableObject(const Material& material, std::shared_ptr<GpuVbo> vbo);
+
         ~RenderableObject();
         
         void UploadTriangles(BufferUsage bufferUsage);
