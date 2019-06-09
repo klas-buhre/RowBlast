@@ -122,7 +122,7 @@ Beginning of level 20:
  NumDrawCalls: 129
 
 
-    -Review the RenderBatcher file.
+    -Review the last commit.
     -Make a render batcher that is accessable from the IRenderer API. Just send a SceneObject that
      should have all its children merged into one renderable. The return value should be a
      RenderableObject with a Vbo that is a combination of all Vbos of the direct children.

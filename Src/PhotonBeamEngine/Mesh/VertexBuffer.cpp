@@ -20,7 +20,7 @@ VertexBuffer::VertexBuffer(int vertexCapacity, int indexCapacity, const VertexFl
     }
     
     mVertexBuffer.resize(vertexCapacity * mFloatsPerVertex);
-    mVertexBufferPtr = &mVertexBuffer[0];
+    mVertexWritePtr = mVertexBuffer.data();
     mTriangleIndices.resize(indexCapacity);
 }
 
@@ -42,88 +42,105 @@ void VertexBuffer::Copy(const VertexBuffer& other) {
     mFloatsPerVertex = other.mFloatsPerVertex;
     mVertexBuffer = other.mVertexBuffer;
     mTriangleIndices = other.mTriangleIndices;
-    mFaceBeginVertex = other.mFaceBeginVertex;
+    mSurfaceBeginVertex = other.mSurfaceBeginVertex;
     mNumVertices = other.mNumVertices;
     mNumIndices = other.mNumIndices;
-    mVertexBufferPtr = &mVertexBuffer[0] + (mNumVertices * mFloatsPerVertex);
+    mVertexWritePtr = mVertexBuffer.data() + (mNumVertices * mFloatsPerVertex);
 }
 
-void VertexBuffer::BeginFace() {
-    mFaceBeginVertex = mNumVertices;
+void VertexBuffer::BeginSurface() {
+    mSurfaceBeginVertex = mNumVertices;
 }
 
 void VertexBuffer::Reset() {
-    mVertexBufferPtr = &mVertexBuffer[0];
+    mVertexWritePtr = mVertexBuffer.data();
     mNumVertices = 0;
     mNumIndices = 0;
-    BeginFace();
+    BeginSurface();
 }
 
-void VertexBuffer::Write(const Vec3& vertex, const Vec3& normal, const Vec2& textureCoord) {
+void VertexBuffer::Write(const Vec3& position, const Vec3& normal, const Vec2& textureCoord) {
     ResizeIfNeeded();
     
-    mVertexBufferPtr = vertex.Write(mVertexBufferPtr);
+    mVertexWritePtr = position.Write(mVertexWritePtr);
     
     if (mFlags.mNormals) {
-        mVertexBufferPtr = normal.Write(mVertexBufferPtr);
+        mVertexWritePtr = normal.Write(mVertexWritePtr);
     }
     
     if (mFlags.mTextureCoords) {
-        mVertexBufferPtr = textureCoord.Write(mVertexBufferPtr);
+        mVertexWritePtr = textureCoord.Write(mVertexWritePtr);
     }
     
     ++mNumVertices;
 }
 
-void VertexBuffer::Write(const Vec3& vertex, const Vec2& textureCoord, const Vec4& color) {
+void VertexBuffer::Write(const Vec3& position, const Vec2& textureCoord, const Vec4& color) {
     ResizeIfNeeded();
 
-    mVertexBufferPtr = vertex.Write(mVertexBufferPtr);
+    mVertexWritePtr = position.Write(mVertexWritePtr);
 
     if (mFlags.mTextureCoords) {
-        mVertexBufferPtr = textureCoord.Write(mVertexBufferPtr);
+        mVertexWritePtr = textureCoord.Write(mVertexWritePtr);
     }
 
     if (mFlags.mColors) {
-        mVertexBufferPtr = color.Write(mVertexBufferPtr);
+        mVertexWritePtr = color.Write(mVertexWritePtr);
     }
 
     ++mNumVertices;
 }
 
-void VertexBuffer::Write(const Vec3& vertex, const Vec4& color, float pointSize) {
+void VertexBuffer::Write(const Vec3& position, const Vec4& color, float pointSize) {
     ResizeIfNeeded();
 
-    mVertexBufferPtr = vertex.Write(mVertexBufferPtr);
+    mVertexWritePtr = position.Write(mVertexWritePtr);
     
     if (mFlags.mColors) {
-        mVertexBufferPtr = color.Write(mVertexBufferPtr);
+        mVertexWritePtr = color.Write(mVertexWritePtr);
     }
     
     if (mFlags.mPointSizes) {
-        *mVertexBufferPtr = pointSize;
-        ++mVertexBufferPtr;
+        *mVertexWritePtr++ = pointSize;
     }
     
     ++mNumVertices;
 }
 
-void VertexBuffer::AddIndex(unsigned short index) {
+void VertexBuffer::AddIndex(uint16_t index) {
     if (mNumIndices >= mTriangleIndices.size()) {
         assert(!"Vertex buffer realocation!");
         mTriangleIndices.resize(mTriangleIndices.size() * 2);
     }
     
-    mTriangleIndices[mNumIndices] = mFaceBeginVertex + index;
+    mTriangleIndices[mNumIndices] = mSurfaceBeginVertex + index;
     ++mNumIndices;
 }
 
 const float* VertexBuffer::GetVertexBuffer() const {
-    return &mVertexBuffer[0];
+    return mVertexBuffer.data();
 }
 
-const unsigned short* VertexBuffer::GetIndexBuffer() const {
-    return &mTriangleIndices[0];
+const uint16_t* VertexBuffer::GetIndexBuffer() const {
+    return mTriangleIndices.data();
+}
+
+float* VertexBuffer::GetVertexBuffer() {
+    return mVertexBuffer.data();
+}
+
+uint16_t* VertexBuffer::GetIndexBuffer() {
+    return mTriangleIndices.data();
+}
+
+const float* VertexBuffer::GetPastVertexBufferCapacity() const {
+    auto* lastElement = &mVertexBuffer.back();
+    return ++lastElement;
+}
+
+const uint16_t* VertexBuffer::GetPastIndexBufferCapacity() const {
+    auto* lastElement = &mTriangleIndices.back();
+    return ++lastElement;
 }
 
 int VertexBuffer::GetVertexBufferSize() const {
@@ -138,6 +155,6 @@ void VertexBuffer::ResizeIfNeeded() {
     if (mNumVertices * mFloatsPerVertex >= mVertexBuffer.size()) {
         assert(!"Vertex buffer realocation!");
         mVertexBuffer.resize(mVertexBuffer.size() * 2);
-        mVertexBufferPtr = &mVertexBuffer[0] + (mNumVertices * mFloatsPerVertex);
+        mVertexWritePtr = mVertexBuffer.data() + (mNumVertices * mFloatsPerVertex);
     }
 }

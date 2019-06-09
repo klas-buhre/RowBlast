@@ -11,7 +11,7 @@ namespace Pht {
     
     namespace RenderBatcher {
         std::unique_ptr<RenderableObject> CreateStaticBatch(const SceneObject& sceneObject,
-                                                            const Optional<std::string>& vboName);
+                                                            const Optional<std::string>& batchVboName);
     };
 }
 #endif

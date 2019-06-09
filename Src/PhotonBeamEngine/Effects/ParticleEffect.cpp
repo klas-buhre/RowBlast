@@ -245,7 +245,7 @@ void ParticleEffect::WriteParticleTriangles(const Particle& particle) {
 
     auto& position = particle.mPosition;
     
-    mVertexBuffer->BeginFace();
+    mVertexBuffer->BeginSurface();
 
     mVertexBuffer->Write(v1 + position, Vec2 {0.0f, 1.0f}, color);
     mVertexBuffer->Write(v2 + position, Vec2 {1.0f, 1.0f}, color);

@@ -89,11 +89,10 @@ namespace Pht {
                            y * (1 - t) + v.y * t);
         }
 
-        template <typename P>
-        P* Write(P* pData) const {
-            Vector2* pVector = (Vector2*) pData;
-            *pVector++ = *this;
-            return (P*) pVector;
+        T* Write(T* ptr) const {
+            *ptr++ = x;
+            *ptr++ = y;
+            return ptr;
         }
 
         T x;
@@ -205,12 +204,12 @@ namespace Pht {
         const T* Pointer() const {
             return &x;
         }
-
-        template <typename P>
-        P* Write(P* pData) const {
-            Vector3<T>* pVector = (Vector3<T>*) pData;
-            *pVector++ = *this;
-            return (P*) pVector;
+        
+        T* Write(T* ptr) const {
+            *ptr++ = x;
+            *ptr++ = y;
+            *ptr++ = z;
+            return ptr;
         }
 
         T x;
@@ -267,11 +266,12 @@ namespace Pht {
             return &x;
         }
         
-        template <typename P>
-        P* Write(P* pData) const {
-            Vector4<T>* pVector = (Vector4<T>*) pData;
-            *pVector++ = *this;
-            return (P*) pVector;
+        T* Write(T* ptr) const {
+            *ptr++ = x;
+            *ptr++ = y;
+            *ptr++ = z;
+            *ptr++ = w;
+            return ptr;
         }
         
         void Print() const {

@@ -1,5 +1,7 @@
 #include "RenderBatcher.hpp"
 
+#include <assert.h>
+
 #include "SceneObject.hpp"
 #include "RenderableObject.hpp"
 #include "TextComponent.hpp"
@@ -8,15 +10,32 @@
 using namespace Pht;
 
 namespace {
-    using StaticBatchSetup = std::pair<std::unique_ptr<VertexBuffer>, const Material*>;
+    const static Vec3 defaultRotation {0.0f, 0.0f, 0.0f};
+    const static Vec3 defaultScale {1.0f, 1.0f, 1.0f};
     
-    StaticBatchSetup SetUpStaticBatchIfPossible(const SceneObject& fromSceneObject) {
+    struct VertexBufferPtrs {
+        float* mVertexWritePtr {nullptr};
+        const float* mPastVertexBufferCapacity {nullptr};
+        uint16_t* mIndexWritePtr {nullptr};
+        const uint16_t* mPastIndexBufferCapacity {nullptr};
+        uint16_t mNumIndices {0};
+    };
+    
+    struct StaticBatchSetup {
+        std::unique_ptr<VertexBuffer> mBatchVertexBuffer;
+        const Material* mBatchMaterial {nullptr};
+    };
+    
+    StaticBatchSetup SetUpStaticBatchIfPossible(const SceneObject& sourceSceneObject) {
+        if (sourceSceneObject.GetRenderable() || sourceSceneObject.GetComponent<TextComponent>()) {
+            return {nullptr, nullptr};
+        }
+        
         auto totalNumVertices = 0;
         auto totalNumIndices = 0;
-        const VertexFlags* attributeFlags {nullptr};
         RenderableObject* previousRenderable {nullptr};
         
-        for (auto* sceneObject: fromSceneObject.GetChildren()) {
+        for (auto* sceneObject: sourceSceneObject.GetChildren()) {
             if (sceneObject->GetComponent<TextComponent>() || !sceneObject->GetChildren().empty()) {
                 return {nullptr, nullptr};
             }
@@ -61,26 +80,174 @@ namespace {
             
             totalNumVertices += vboCpuSideBuffer->GetNumVertices();
             totalNumIndices += vboCpuSideBuffer->GetIndexBufferSize();
-            attributeFlags = &vboCpuSideBuffer->GetAttributeFlags();
             previousRenderable = renderable;
         }
 
-        if (totalNumVertices > 0 && totalNumIndices > 0 && attributeFlags && previousRenderable) {
+        if (totalNumVertices > 0 && totalNumIndices > 0 && previousRenderable) {
+            auto& batchAttributeFlags =
+                previousRenderable->GetVbo().GetCpuSideBuffer()->GetAttributeFlags();
+            auto* batchMaterial = &previousRenderable->GetMaterial();
             return {
-                std::make_unique<VertexBuffer>(totalNumVertices, totalNumIndices, *attributeFlags),
-                &previousRenderable->GetMaterial()
+                std::make_unique<VertexBuffer>(totalNumVertices, totalNumIndices, batchAttributeFlags),
+                batchMaterial
             };
         }
         
         return {nullptr, nullptr};
     }
+
+    void WriteIndicesToBatch(VertexBufferPtrs& batchBufferPtrs,
+                             const VertexBuffer& sceneObjectVertexBuffer) {
+        auto sceneObjectNumIndices = sceneObjectVertexBuffer.GetNumIndices();
+        if (sceneObjectNumIndices == 0) {
+            return;
+        }
     
+        auto batchBufferNumIndices = batchBufferPtrs.mNumIndices;
+        auto* indexWrite = batchBufferPtrs.mIndexWritePtr;
+        auto* indexRead = sceneObjectVertexBuffer.GetIndexBuffer();
+    
+        assert(indexWrite + sceneObjectVertexBuffer.GetIndexBufferSize() <
+               batchBufferPtrs.mPastIndexBufferCapacity);
+
+        for (auto i = 0; i < sceneObjectNumIndices; ++i) {
+            *indexWrite++ = batchBufferNumIndices + *indexRead++;
+        }
+    
+        batchBufferPtrs.mIndexWritePtr = indexWrite;
+        batchBufferPtrs.mNumIndices += sceneObjectNumIndices;
+    }
+
+    void TransformAndWriteVerticesToBatch(VertexBufferPtrs& batchBufferPtrs,
+                                          const VertexBuffer& sceneObjectVertexBuffer,
+                                          const Vec3& translation,
+                                          const Vec3& scale) {
+        auto attributeFlags = sceneObjectVertexBuffer.GetAttributeFlags();
+        auto sceneObjectNumVertices = sceneObjectVertexBuffer.GetNumVertices();
+        auto* vertexWrite = batchBufferPtrs.mVertexWritePtr;
+        auto* vertexRead = sceneObjectVertexBuffer.GetVertexBuffer();
+        
+        assert(vertexWrite + sceneObjectVertexBuffer.GetVertexBufferSize() <
+               batchBufferPtrs.mPastVertexBufferCapacity);
+ 
+        for (auto i = 0; i < sceneObjectNumVertices; ++i) {
+            // Vertex position is Vec3.
+            *vertexWrite++ = *vertexRead++ * scale.x + translation.x;
+            *vertexWrite++ = *vertexRead++ * scale.y + translation.y;
+            *vertexWrite++ = *vertexRead++ * scale.z + translation.z;
+            
+            if (attributeFlags.mNormals) {
+                // Vertex normal is Vec3.
+                *vertexWrite++ = *vertexRead++;
+                *vertexWrite++ = *vertexRead++;
+                *vertexWrite++ = *vertexRead++;
+            }
+            
+            if (attributeFlags.mTextureCoords) {
+                // Vertex texture coord is Vec2.
+                *vertexWrite++ = *vertexRead++;
+                *vertexWrite++ = *vertexRead++;
+            }
+            
+            if (attributeFlags.mColors) {
+                // Vertex texture coord is Vec4.
+                *vertexWrite++ = *vertexRead++;
+                *vertexWrite++ = *vertexRead++;
+                *vertexWrite++ = *vertexRead++;
+                *vertexWrite++ = *vertexRead++;
+            }
+            
+            if (attributeFlags.mPointSizes) {
+                // Vertex texture coord is float.
+                *vertexWrite++ = *vertexRead++;
+            }
+        }
+        
+        batchBufferPtrs.mVertexWritePtr = vertexWrite;
+        
+        WriteIndicesToBatch(batchBufferPtrs, sceneObjectVertexBuffer);
+    }
+
+    void TransformAndWriteVerticesToBatch(VertexBufferPtrs& batchBufferPtrs,
+                                          const VertexBuffer& sceneObjectVertexBuffer,
+                                          const Transform& sceneObjectTransform) {
+/*
+        auto attributeFlags = sceneObjectVertexBuffer.GetAttributeFlags();
+        auto sceneObjectNumVertices = sceneObjectVertexBuffer.GetNumVertices();
+        auto* vertexWrite = batchBufferPtrs.mVertexWritePtr;
+        auto* vertexRead = sceneObjectVertexBuffer.GetVertexBuffer();
+        
+        assert(vertexWrite + sceneObjectVertexBuffer.GetVertexBufferSize() <
+               batchBufferPtrs.mPastVertexBufferCapacity);
+ 
+        for (auto i = 0; i < sceneObjectNumVertices; ++i) {
+            // auto sceneObjectPosCamSpace = transposedViewMatrix * Vec4{sceneObjectPos, 1.0f};
+            // Vertex position is Vec3.
+            *vertexWrite++ = *vertexRead++ * scale.x + translation.x;
+            *vertexWrite++ = *vertexRead++ * scale.y + translation.y;
+            *vertexWrite++ = *vertexRead++ * scale.z + translation.z;
+            
+            if (attributeFlags.mNormals) {
+                // Vertex normal is Vec3.
+                *vertexWrite++ = *vertexRead++;
+                *vertexWrite++ = *vertexRead++;
+                *vertexWrite++ = *vertexRead++;
+            }
+            
+            if (attributeFlags.mTextureCoords) {
+                // Vertex texture coord is Vec2.
+                *vertexWrite++ = *vertexRead++;
+                *vertexWrite++ = *vertexRead++;
+            }
+            
+            if (attributeFlags.mColors) {
+                // Vertex texture coord is Vec4.
+                *vertexWrite++ = *vertexRead++;
+                *vertexWrite++ = *vertexRead++;
+                *vertexWrite++ = *vertexRead++;
+                *vertexWrite++ = *vertexRead++;
+            }
+            
+            if (attributeFlags.mPointSizes) {
+                // Vertex texture coord is float.
+                *vertexWrite++ = *vertexRead++;
+            }
+        }
+        
+        batchBufferPtrs.mVertexWritePtr = vertexWrite;
+        
+        WriteIndicesToBatch(batchBufferPtrs, sceneObjectVertexBuffer);
+*/
+    }
+
+    void WriteSceneObjectToBatch(VertexBufferPtrs& batchBufferPtrs,
+                                 const VertexBuffer& sceneObjectVertexBuffer,
+                                 const Transform& sceneObjectTransform) {
+        if (sceneObjectTransform.GetRotation() == defaultRotation) {
+            TransformAndWriteVerticesToBatch(batchBufferPtrs,
+                                             sceneObjectVertexBuffer,
+                                             sceneObjectTransform.GetPosition(),
+                                             sceneObjectTransform.GetScale());
+        } else {
+            TransformAndWriteVerticesToBatch(batchBufferPtrs,
+                                             sceneObjectVertexBuffer,
+                                             sceneObjectTransform);
+        }
+    }
+
     std::unique_ptr<RenderableObject>
-    CreateStaticBatchRenderable(const SceneObject& fromSceneObject,
-                                VertexBuffer& batchVertexBuffer,
+    CreateStaticBatchRenderable(VertexBuffer& batchVertexBuffer,
+                                const SceneObject& sourceSceneObject,
                                 const Material& batchMaterial,
-                                const Optional<std::string>& vboName) {
-        for (auto* sceneObject: fromSceneObject.GetChildren()) {
+                                const Optional<std::string>& batchVboName) {
+        VertexBufferPtrs batchBufferPtrs {
+            .mVertexWritePtr = batchVertexBuffer.GetVertexBuffer(),
+            .mPastVertexBufferCapacity = batchVertexBuffer.GetPastVertexBufferCapacity(),
+            .mIndexWritePtr = batchVertexBuffer.GetIndexBuffer(),
+            .mPastIndexBufferCapacity = batchVertexBuffer.GetPastIndexBufferCapacity(),
+        };
+        
+        for (auto* sceneObject: sourceSceneObject.GetChildren()) {
             if (!sceneObject->IsVisible()) {
                 continue;
             }
@@ -90,51 +257,39 @@ namespace {
                 continue;
             }
             
-            // auto& material = renderable->GetMaterial();
-            // auto& vbo = renderable->GetVbo();
-            // auto* vboCpuSideBuffer = vbo.GetCpuSideBuffer();
-            
-            
-
-
-            // Transform the vertices with the SceneObject transform matrix. Here in the static
-            // batch we can create a fresh local transform matrix from the local Transform of the
-            // SceneObject. That would not be a very good solution for aby dynamic batching though.
-            // In dynamic batching, each SceneObject should have a local transform matrix (as well
-            // as the old world transform matrix) wich would be updated when the scene is update,
-            // so that the dynamic batcher don't have to create the local matrix every frame and
-            // every object in the batch.
+            auto* sceneObjectVertexBuffer = renderable->GetVbo().GetCpuSideBuffer();
+            auto& sceneObjectTransform = sceneObject->GetTransform();
+            WriteSceneObjectToBatch(batchBufferPtrs,
+                                    *sceneObjectVertexBuffer,
+                                    sceneObjectTransform);
         }
 
-        return std::make_unique<RenderableObject>(batchMaterial, batchVertexBuffer, vboName);
+        return std::make_unique<RenderableObject>(batchMaterial, batchVertexBuffer, batchVboName);
     }
 }
 
 std::unique_ptr<RenderableObject>
-RenderBatcher::CreateStaticBatch(const SceneObject& fromSceneObject,
-                                 const Optional<std::string>& vboName) {
-    auto staticBatchSetup = SetUpStaticBatchIfPossible(fromSceneObject);
-    if (staticBatchSetup.first == nullptr || staticBatchSetup.second == nullptr) {
+RenderBatcher::CreateStaticBatch(const SceneObject& sourceSceneObject,
+                                 const Optional<std::string>& batchVboName) {
+    auto staticBatchSetup = SetUpStaticBatchIfPossible(sourceSceneObject);
+    if (staticBatchSetup.mBatchVertexBuffer == nullptr || staticBatchSetup.mBatchMaterial == nullptr) {
         return nullptr;
     }
     
-    auto& allocatedBatchVertexBuffer = *staticBatchSetup.first;
-    auto& batchMaterial = *staticBatchSetup.second;
-    
-    if (vboName.HasValue()) {
-        auto vbo = VboCache::Get(vboName.GetValue());
+    if (batchVboName.HasValue()) {
+        auto vbo = VboCache::Get(batchVboName.GetValue());
         if (vbo == nullptr) {
-            return CreateStaticBatchRenderable(fromSceneObject,
-                                               allocatedBatchVertexBuffer,
-                                               batchMaterial,
-                                               vboName);
+            return CreateStaticBatchRenderable(*staticBatchSetup.mBatchVertexBuffer,
+                                               sourceSceneObject,
+                                               *staticBatchSetup.mBatchMaterial,
+                                               batchVboName);
         } else {
-            return std::make_unique<RenderableObject>(batchMaterial, vbo);
+            return std::make_unique<RenderableObject>(*staticBatchSetup.mBatchMaterial, vbo);
         }
     }
     
-    return CreateStaticBatchRenderable(fromSceneObject,
-                                       allocatedBatchVertexBuffer,
-                                       batchMaterial,
-                                       vboName);
+    return CreateStaticBatchRenderable(*staticBatchSetup.mBatchVertexBuffer,
+                                       sourceSceneObject,
+                                       *staticBatchSetup.mBatchMaterial,
+                                       batchVboName);
 }

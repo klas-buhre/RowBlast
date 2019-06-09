@@ -11,7 +11,7 @@ void MeshUtils::CreateTriangle(VertexBuffer& vertexBuffer,
     Vec3 v {vertices.mV2 - vertices.mV0};
     Vec3 normal {u.Cross(v).Normalized()};
 
-    vertexBuffer.BeginFace();
+    vertexBuffer.BeginSurface();
     
     vertexBuffer.Write(vertices.mV0, normal, textureCoords.mV0);
     vertexBuffer.Write(vertices.mV1, normal, textureCoords.mV1);
@@ -29,7 +29,7 @@ void MeshUtils::CreateQuad(VertexBuffer& vertexBuffer,
     Vec3 v {vertices.mV3 - vertices.mV0};
     Vec3 normal {u.Cross(v).Normalized()};
     
-    vertexBuffer.BeginFace();
+    vertexBuffer.BeginSurface();
 
     vertexBuffer.Write(vertices.mV0, normal, textureCoords.mV0);
     vertexBuffer.Write(vertices.mV1, normal, textureCoords.mV1);

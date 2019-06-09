@@ -28,19 +28,27 @@ namespace Pht {
         VertexBuffer(const VertexBuffer& other);
         VertexBuffer& operator=(const VertexBuffer& other);
 
-        void BeginFace();
+        void BeginSurface();
         void Reset();
-        void Write(const Vec3& vertex, const Vec3& normal, const Vec2& textureCoord);
-        void Write(const Vec3& vertex, const Vec2& textureCoord, const Vec4& color);
-        void Write(const Vec3& vertex, const Vec4& color, float pointSize = 0);
-        void AddIndex(unsigned short index);
+        void Write(const Vec3& position, const Vec3& normal, const Vec2& textureCoord);
+        void Write(const Vec3& position, const Vec2& textureCoord, const Vec4& color);
+        void Write(const Vec3& position, const Vec4& color, float pointSize = 0);
+        void AddIndex(uint16_t index);
         const float* GetVertexBuffer() const;
-        const unsigned short* GetIndexBuffer() const;
+        const uint16_t* GetIndexBuffer() const;
+        float* GetVertexBuffer();
+        uint16_t* GetIndexBuffer();
+        const float* GetPastVertexBufferCapacity() const;
+        const uint16_t* GetPastIndexBufferCapacity() const;
         int GetVertexBufferSize() const;
         int GetIndexBufferSize() const;
         
         int GetNumVertices() const {
             return mNumVertices;
+        }
+        
+        int GetNumIndices() const {
+            return mNumIndices;
         }
         
         const VertexFlags& GetAttributeFlags() const {
@@ -53,10 +61,10 @@ namespace Pht {
         
         VertexFlags mFlags;
         int mFloatsPerVertex;
-        float* mVertexBufferPtr {nullptr};
+        float* mVertexWritePtr {nullptr};
         std::vector<float> mVertexBuffer;
-        std::vector<unsigned short> mTriangleIndices;
-        unsigned short mFaceBeginVertex {0};
+        std::vector<uint16_t> mTriangleIndices;
+        uint16_t mSurfaceBeginVertex {0};
         unsigned short mNumVertices {0};
         unsigned short mNumIndices {0};
     };

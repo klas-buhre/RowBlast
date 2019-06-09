@@ -50,7 +50,7 @@ std::unique_ptr<VertexBuffer> QuadMesh::CreateVertexBuffer(VertexFlags attribute
     } else {
         assert(attributeFlags.mColors);
 
-        vertexBuffer->BeginFace();
+        vertexBuffer->BeginSurface();
 
         vertexBuffer->Write(mVertices.mV0.mVertex, mVertices.mV0.mColor);
         vertexBuffer->Write(mVertices.mV1.mVertex, mVertices.mV1.mColor);
