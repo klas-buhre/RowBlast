@@ -307,7 +307,7 @@ void SlidingTextAnimation::CreateGreyCubeAnimation(const CommonResources& common
 void SlidingTextAnimation::CreateAsteroidAnimation() {
     auto& sceneManager = mEngine.GetSceneManager();
     Pht::Material asteroidMaterial {"gray_asteroid.jpg", 0.865f, 1.23f, 0.0f, 1.0f};
-    asteroidMaterial.GetDepthState().mDepthTestAllowedOverride = true;
+    asteroidMaterial.SetDepthTestAllowedOverride(true);
     
     auto asteroidSceneObject =
         sceneManager.CreateSceneObject(Pht::ObjMesh {"asteroid_2000.obj", 19.0f, Pht::MoveMeshToOrigin::Yes},

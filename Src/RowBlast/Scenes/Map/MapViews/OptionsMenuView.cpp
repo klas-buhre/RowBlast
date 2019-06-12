@@ -30,7 +30,7 @@ OptionsMenuView::OptionsMenuView(Pht::IEngine& engine, const CommonResources& co
 
     Pht::Color gearColor {0.57f, 0.57f, 0.57f};
     Pht::Material gearMaterial {gearColor, gearColor, gearColor, 10.0f};
-    gearMaterial.GetDepthState().mDepthTestAllowedOverride = true;
+    gearMaterial.SetDepthTestAllowedOverride(true);
     auto& gearIcon = CreateSceneObject(Pht::ObjMesh {"gear_192.obj", 5.1f}, gearMaterial, sceneManager);
     gearIcon.GetTransform().SetRotation({20.0f, 10.0f, 0.0f});
     gearIcon.GetTransform().SetPosition({0.0f, GetSize().y / 2.0f - 1.4f, UiLayer::textRectangle});

@@ -41,6 +41,8 @@ namespace Pht {
         std::unique_ptr<RenderableObject> CreateRenderableObject(const IMesh& mesh,
                                                                  const Material& material,
                                                                  VertexBufferLocation bufferLocation);
+        std::unique_ptr<RenderableObject> CreateStaticBatch(const SceneObject& sceneObject,
+                                                            const Optional<std::string>& batchVboName);
         void ClearFrameBuffer();
         void RenderScene(const Scene& scene, float frameSeconds);
         

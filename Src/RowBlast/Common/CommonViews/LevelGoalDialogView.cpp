@@ -266,7 +266,7 @@ void LevelGoalDialogView::CreateGrayCube(const CommonResources& commonResources,
 
 void LevelGoalDialogView::CreateAsteroid(Pht::SceneObject& parent) {
     Pht::Material asteroidMaterial {"gray_asteroid.jpg", 0.84f, 1.23f, 0.0f, 1.0f};
-    asteroidMaterial.GetDepthState().mDepthTestAllowedOverride = true;
+    asteroidMaterial.SetDepthTestAllowedOverride(true);
     
     auto& sceneManager = mEngine.GetSceneManager();
     

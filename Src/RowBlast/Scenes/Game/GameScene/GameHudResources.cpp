@@ -112,8 +112,10 @@ void GameHudResources::CreateDownArrow(Pht::IEngine& engine, const CommonResourc
 void GameHudResources::CreateArrowMesh(Pht::IEngine& engine, const CommonResources& commonResources) {
     Pht::ObjMesh mesh {"arrow_428.obj", 3.2f};
     auto& blueMaterial = commonResources.GetMaterials().GetBlueArrowMaterial();
-    mBlueArrowMeshRenderable = engine.GetSceneManager().CreateRenderableObject(mesh, blueMaterial);
+    mBlueArrowMeshRenderable =
+        engine.GetSceneManager().CreateBatchableRenderableObject(mesh, blueMaterial);
     
     auto& yellowMaterial = commonResources.GetMaterials().GetYellowFieldBlockMaterial();
-    mYellowArrowMeshRenderable = engine.GetSceneManager().CreateRenderableObject(mesh, yellowMaterial);
+    mYellowArrowMeshRenderable =
+        engine.GetSceneManager().CreateBatchableRenderableObject(mesh, yellowMaterial);
 }

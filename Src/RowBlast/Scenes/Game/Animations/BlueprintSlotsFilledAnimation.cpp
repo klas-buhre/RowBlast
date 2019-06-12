@@ -97,7 +97,7 @@ void BlueprintSlotsFilledAnimation::AnimateSlot(int row,
     animation.mOpacity -= fadeSpeed * dt;
     auto& material = animation.mSceneObject->GetRenderable()->GetMaterial();
     material.SetOpacity(animation.mOpacity);
-    material.GetDepthState().mDepthWrite = true;
+    material.SetDepthWrite(true);
     
     if (animation.mOpacity < 0.0f || animation.mElapsedTime > duration) {
         animation.mSceneObject->SetIsVisible(false);

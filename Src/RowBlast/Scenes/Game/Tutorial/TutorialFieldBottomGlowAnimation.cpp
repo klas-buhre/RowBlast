@@ -22,7 +22,7 @@ TutorialFieldBottomGlowAnimation::TutorialFieldBottomGlowAnimation(Pht::IEngine&
                                                                    Pht::SceneObject& parent) {
     Pht::Material glowMaterial;
     glowMaterial.SetBlend(Pht::Blend::Additive);
-    glowMaterial.GetDepthState().mDepthTest = false;
+    glowMaterial.SetDepthTest(false);
     glowMaterial.SetOpacity(glowOpacity);
     
     auto& sceneManager = engine.GetSceneManager();

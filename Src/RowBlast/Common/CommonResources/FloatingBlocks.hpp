@@ -78,19 +78,19 @@ namespace RowBlast {
         void InitBlocks(Pht::Scene& scene, float scale, float angularVelocity);
         Pht::RenderableObject& CalcBlockRenderable(const BlockPathVolume& volume,
                                                    std::vector<FloatingBlockColor>& colors);
-        void CreateLPiece(FloatingBlock& block,
+        void CreateLPiece(Pht::SceneObject& pieceSceneObject,
                           float scale,
                           Pht::RenderableObject& renderable,
                           Pht::Scene& scene);
-        void CreateIPiece(FloatingBlock& block,
+        void CreateIPiece(Pht::SceneObject& pieceSceneObject,
                           float scale,
                           Pht::RenderableObject& renderable,
                           Pht::Scene& scene);
-        void CreateShortIPiece(FloatingBlock& block,
+        void CreateShortIPiece(Pht::SceneObject& pieceSceneObject,
                                float scale,
                                Pht::RenderableObject& renderable,
                                Pht::Scene& scene);
-        void CreateBPiece(FloatingBlock& block,
+        void CreateBPiece(Pht::SceneObject& pieceSceneObject,
                           float scale,
                           Pht::RenderableObject& renderable,
                           Pht::Scene& scene);

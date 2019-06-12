@@ -243,7 +243,7 @@ void PieceResources::CreateBombs(Pht::ISceneManager& sceneManager) {
     };
 
     bombMaterial.SetEmissive(Pht::Color {3.0f, 3.0f, 3.0f});
-    bombMaterial.GetDepthState().mDepthTestAllowedOverride = true;
+    bombMaterial.SetDepthTestAllowedOverride(true);
     mBomb = sceneManager.CreateRenderableObject(Pht::ObjMesh {"bomb_798.obj", 16.2f}, bombMaterial);
     
     bombMaterial.SetOpacity(ghostPieceOpacity);
@@ -262,7 +262,7 @@ void PieceResources::CreateBombs(Pht::ISceneManager& sceneManager) {
     
     rowBombMaterial.SetAmbient(Pht::Color {0.5f, 0.5f, 0.85f});
     rowBombMaterial.SetEmissive(Pht::Color {2.0f, 2.0f, 2.0f});
-    rowBombMaterial.GetDepthState().mDepthTestAllowedOverride = true;
+    rowBombMaterial.SetDepthTestAllowedOverride(true);
     mRowBomb = sceneManager.CreateRenderableObject(Pht::ObjMesh {"laser_bomb_224.obj", 0.6f},
                                                    rowBombMaterial);
 

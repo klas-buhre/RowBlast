@@ -92,48 +92,64 @@ Material::Material(const Color& ambient,
 Material::Material(const Color& color) :
     Material {color, {0.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 0.0f}, 1.0f} {}
 
-Blend Material::GetBlend() const {
-    if (mBlend == Blend::Additive) {
-        return Blend::Additive;
-    }
+Material::Material(const Material& other) {
+    Copy(other);
+}
 
-    if (mBlend == Blend::Yes || mOpacity != 1.0f || mShaderId == ShaderId::VertexColor) {
-        return Blend::Yes;
+Material& Material::operator=(const Material& other) {
+    if (&other == this) {
+        return *this;
     }
     
-    return Blend::No;
+    Copy(other);
+    return *this;
 }
 
-const Texture* Material::GetTexture() const {
-    return mTexture.get();
+void Material::Copy(const Material& other) {
+    mId = other.mId;
+    mIsACopyOrHasBeenCopied = true;
+    other.mIsACopyOrHasBeenCopied = true;
+    mIsDirty = other.mIsDirty;
+    mAmbient = other.mAmbient;
+    mDiffuse = other.mDiffuse;
+    mSpecular = other.mSpecular;
+    mEmissive = other.mEmissive;
+    mShininess = other.mShininess;
+    mReflectivity = other.mReflectivity;
+    mOpacity = other.mOpacity;
+    mShaderId = other.mShaderId;
+    mTexture = other.mTexture;
+    mEmissionTexture = other.mEmissionTexture;
+    mEnvMapTexture = other.mEnvMapTexture;
+    mBlend = other.mBlend;
+    mDepthState = other.mDepthState;
 }
 
-const Texture* Material::GetEmissionTexture() const {
-    return mEmissionTexture.get();
-}
-
-const Texture* Material::GetEnvMapTexture() const {
-    return mEnvMapTexture.get();
+void Material::OnModifyMember() {
+    if (mIsACopyOrHasBeenCopied) {
+        mIsDirty = true;
+    }
 }
 
 void Material::SetOpacity(float opacity) {
+    OnModifyMember();
     mOpacity = opacity;
-    
     if (mOpacity != 1.0f) {
         mDepthState.mDepthWrite = false;
     }
 }
 
 void Material::SetShaderId(ShaderId shaderId) {
+    OnModifyMember();
     assert(shaderId != ShaderId::Other);
     mShaderId = shaderId;
-    
     if (mShaderId == ShaderId::VertexColor) {
         mDepthState.mDepthWrite = false;
     }
 }
 
 void Material::SetBlend(Blend blend) {
+    OnModifyMember();
     mBlend = blend;
     
     switch (blend) {
@@ -144,4 +160,56 @@ void Material::SetBlend(Blend blend) {
         case Blend::No:
             break;
     }
+}
+
+void Material::SetAmbient(const Color& ambient) {
+    OnModifyMember();
+    mAmbient = ambient;
+}
+
+void Material::SetDiffuse(const Color& diffuse) {
+    OnModifyMember();
+    mDiffuse = diffuse;
+}
+
+void Material::SetSpecular(const Color& specular) {
+    OnModifyMember();
+    mSpecular = specular;
+}
+
+void Material::SetEmissive(const Color& emissive) {
+    OnModifyMember();
+    mEmissive = emissive;
+}
+
+void Material::SetReflectivity(float reflectivity) {
+    OnModifyMember();
+    mReflectivity = reflectivity;
+}
+
+void Material::SetDepthTest(bool depthTest) {
+    OnModifyMember();
+    mDepthState.mDepthTest = depthTest;
+}
+
+void Material::SetDepthTestAllowedOverride(bool depthTestAllowedOverride) {
+    OnModifyMember();
+    mDepthState.mDepthTestAllowedOverride = depthTestAllowedOverride;
+}
+
+void Material::SetDepthWrite(bool depthWrite) {
+    OnModifyMember();
+    mDepthState.mDepthWrite = depthWrite;
+}
+
+Blend Material::GetBlend() const {
+    if (mBlend == Blend::Additive) {
+        return Blend::Additive;
+    }
+
+    if (mBlend == Blend::Yes || mOpacity != 1.0f || mShaderId == ShaderId::VertexColor) {
+        return Blend::Yes;
+    }
+    
+    return Blend::No;
 }

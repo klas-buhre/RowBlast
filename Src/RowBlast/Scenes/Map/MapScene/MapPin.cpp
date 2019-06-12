@@ -8,17 +8,12 @@
 #include "Scene.hpp"
 #include "SceneObject.hpp"
 #include "RenderableObject.hpp"
-#include "SphereMesh.hpp"
 #include "TextComponent.hpp"
-
-// Game includes.
-#include "CommonResources.hpp"
 
 using namespace RowBlast;
 
 namespace {
     const Pht::Vec2 buttonSize {62.0f, 62.0f};
-    const Pht::Color selectedColorAdd {0.3f, 0.3f, 0.3f};
     const Pht::Vec3 textOffset {-0.025f, -0.2f, 0.4f};
     
     const std::array<Pht::Vec3, 3> starOffsets {
@@ -29,30 +24,27 @@ namespace {
 }
 
 MapPin::MapPin(Pht::IEngine& engine,
-               const CommonResources& commonResources,
                const Pht::Font& font,
                Pht::Scene& scene,
-               Pht::SceneObject& containerObject,
+               Pht::SceneObject& parentObject,
                Pht::RenderableObject& starRenderable,
+               Pht::RenderableObject& pinRenderable,
+               Pht::RenderableObject& selectedPinRenderable,
                const Pht::Vec3& position,
                int level,
                int numStars,
                bool isClickable,
                const MapPlace& place) :
-    mBlueMaterial {commonResources.GetMaterials().GetBlueMaterial()},
+    mPinRenderable {pinRenderable},
+    mSelectedPinRenderable {selectedPinRenderable},
     mLevel {level},
     mIsClickable {isClickable},
     mPlace {place} {
-    
-    const auto& material =
-        isClickable ? mBlueMaterial :
-        commonResources.GetMaterials().GetLightGrayMaterial();
-    
-    Pht::SphereMesh pinMesh {0.85f, std::string{"mapPin"}};
-    
-    mSceneObject = &scene.CreateSceneObject(pinMesh, material);
+        
+    mSceneObject = &scene.CreateSceneObject();
+    mSceneObject->SetRenderable(&pinRenderable);
     mSceneObject->GetTransform().SetPosition(position);
-    containerObject.AddChild(*mSceneObject);
+    parentObject.AddChild(*mSceneObject);
     
     mButton = std::make_unique<Pht::Button>(*mSceneObject, buttonSize, engine);
     
@@ -96,19 +88,10 @@ void MapPin::CreateText(int level, const Pht::Font& font, Pht::Scene& scene) {
 }
 
 void MapPin::SetIsSelected(bool isSelected) {
-    auto& material = mSceneObject->GetRenderable()->GetMaterial();
-    const auto& ambient = mBlueMaterial.GetAmbient();
-    const auto& diffuse = mBlueMaterial.GetDiffuse();
-    const auto& specular = mBlueMaterial.GetSpecular();
-    
     if (isSelected) {
-        material.SetAmbient(ambient + selectedColorAdd);
-        material.SetDiffuse(diffuse + selectedColorAdd);
-        material.SetSpecular(specular + selectedColorAdd);
+        mSceneObject->SetRenderable(&mSelectedPinRenderable);
     } else {
-        material.SetAmbient(ambient);
-        material.SetDiffuse(diffuse);
-        material.SetSpecular(specular);
+        mSceneObject->SetRenderable(&mPinRenderable);
     }
 }
 

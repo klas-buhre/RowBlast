@@ -81,57 +81,44 @@ namespace Pht {
                  const Color& specular,
                  float shininess);
         explicit Material(const Color& color);
+        Material(const Material& other);
+        Material& operator=(const Material& other);
         
-        Blend GetBlend() const;
-        const Texture* GetTexture() const;
-        const Texture* GetEmissionTexture() const;
-        const Texture* GetEnvMapTexture() const;
         void SetOpacity(float opacity);
         void SetShaderId(ShaderId shaderId);
         void SetBlend(Blend blend);
+        void SetAmbient(const Color& ambient);
+        void SetDiffuse(const Color& diffuse);
+        void SetSpecular(const Color& specular);
+        void SetEmissive(const Color& emissive);
+        void SetReflectivity(float reflectivity);
+        void SetDepthTest(bool depthTest);
+        void SetDepthTestAllowedOverride(bool depthTestAllowedOverride);
+        void SetDepthWrite(bool depthWrite);
+        Blend GetBlend() const;
 
         const Color& GetAmbient() const {
             return mAmbient;
         }
         
-        void SetAmbient(const Color& ambient) {
-            mAmbient = ambient;
-        }
-
         const Color& GetDiffuse() const {
             return mDiffuse;
         }
         
-        void SetDiffuse(const Color& diffuse) {
-            mDiffuse = diffuse;
-        }
-
         const Color& GetSpecular() const {
             return mSpecular;
         }
         
-        void SetSpecular(const Color& specular) {
-            mSpecular = specular;
-        }
-
         const Color& GetEmissive() const {
             return mEmissive;
         }
         
-        void SetEmissive(const Color& emissive) {
-            mEmissive = emissive;
-        }
-
         float GetShininess() const {
             return mShininess;
         }
         
         float GetReflectivity() const {
             return mReflectivity;
-        }
-        
-        void SetReflectivity(float reflectivity) {
-            mReflectivity = reflectivity;
         }
         
         float GetOpacity() const {
@@ -141,23 +128,44 @@ namespace Pht {
         ShaderId GetShaderId() const {
             return mShaderId;
         }
-        
-        DepthState& GetDepthState() {
-            return mDepthState;
-        }
 
         const DepthState& GetDepthState() const {
             return mDepthState;
         }
         
+        const Texture* GetTexture() const {
+            return mTexture.get();
+        }
+
+        const Texture* GetEmissionTexture() const {
+            return mEmissionTexture.get();
+        }
+
+        const Texture* GetEnvMapTexture() const {
+            return mEnvMapTexture.get();
+        }
+        
         uint32_t GetId() const {
             return mId;
         }
+        
+        bool Equals(const Material& other) const {
+            if (this == &other) {
+                return true;
+            }
+            
+            return mId == other.mId && !mIsDirty && !other.mIsDirty;
+        }
 
     private:
+        void Copy(const Material& other);
+        void OnModifyMember();
+        
         static uint32_t mIdCounter;
         
         uint32_t mId {mIdCounter++};
+        mutable bool mIsACopyOrHasBeenCopied {false};
+        bool mIsDirty {false};
         Color mAmbient;
         Color mDiffuse;
         Color mSpecular;

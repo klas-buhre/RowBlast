@@ -44,7 +44,7 @@ void Transform::Rotate(const Vec3& rotation) {
     mHasChanged = true;
 }
 
-Mat4 Transform::ToMatrix() {
+Mat4 Transform::ToMatrix() const {
     Mat4 result;
     
     if (mRotation.x != 0.0f) {

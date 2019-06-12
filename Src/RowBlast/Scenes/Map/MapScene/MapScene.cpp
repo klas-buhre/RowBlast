@@ -12,6 +12,7 @@
 #include "Fnv1Hash.hpp"
 #include "LightComponent.hpp"
 #include "CameraComponent.hpp"
+#include "SphereMesh.hpp"
 
 // Game includes.
 #include "CommonResources.hpp"
@@ -29,6 +30,7 @@ namespace {
     constexpr auto lightAnimationDuration = 5.0f;
     const Pht::Vec3 defaultUiLightDirectionA {0.785f, 1.0f, 0.67f};
     const Pht::Vec3 defaultUiLightDirectionB {1.0f, 1.0f, 0.74f};
+    const Pht::Color selectedPinColorAdd {0.25f, 0.25f, 0.25f};
     
     enum class Layer {
         Space,
@@ -57,11 +59,30 @@ MapScene::MapScene(Pht::IEngine& engine,
     mUserServices {userServices},
     mCommonResources {commonResources},
     mUniverse {universe},
-    mStarRenderable {
-        engine.GetSceneManager().CreateRenderableObject(Pht::ObjMesh {"star.obj", 0.05f},
-                                                        commonResources.GetMaterials().GetGoldMaterial())
-    },
-    mFont {"ethnocentric_rg_it.ttf", engine.GetRenderer().GetAdjustedNumPixels(46)} {}
+    mFont {"ethnocentric_rg_it.ttf", engine.GetRenderer().GetAdjustedNumPixels(46)} {
+
+    CreateRenderables();
+}
+
+void MapScene::CreateRenderables() {
+    auto& sceneManager = mEngine.GetSceneManager();
+
+    Pht::ObjMesh starMesh {"star.obj", 0.05f};
+    auto& goldMaterial = mCommonResources.GetMaterials().GetGoldMaterial();
+    mStarRenderable = sceneManager.CreateRenderableObject(starMesh, goldMaterial);
+    
+    Pht::SphereMesh pinMesh {0.85f, std::string{"mapPin"}};
+    auto blueMaterial = mCommonResources.GetMaterials().GetBlueMaterial();
+    mBluePinRenderable = sceneManager.CreateRenderableObject(pinMesh, blueMaterial);
+    
+    blueMaterial.SetAmbient(blueMaterial.GetAmbient() + selectedPinColorAdd);
+    blueMaterial.SetDiffuse(blueMaterial.GetDiffuse() + selectedPinColorAdd);
+    blueMaterial.SetSpecular(blueMaterial.GetSpecular() + selectedPinColorAdd);
+    mSelectedPinRenderable = sceneManager.CreateRenderableObject(pinMesh, blueMaterial);
+    
+    auto& grayMaterial = mCommonResources.GetMaterials().GetLightGrayMaterial();
+    mGrayPinRenderable = sceneManager.CreateRenderableObject(pinMesh, grayMaterial);
+}
 
 void MapScene::Init() {
     auto& world = mUniverse.GetWorld(mWorldId);
@@ -262,11 +283,12 @@ void MapScene::CreatePin(Pht::SceneObject& pinsContainerObject, const MapPlace& 
     
     auto pin =
         std::make_unique<MapPin>(mEngine,
-                                 mCommonResources,
                                  mFont,
                                  *mScene,
                                  pinsContainerObject,
                                  *mStarRenderable,
+                                 isClickable ? *mBluePinRenderable : *mGrayPinRenderable,
+                                 *mSelectedPinRenderable,
                                  position,
                                  levelId,
                                  progressService.GetNumStars(levelId),

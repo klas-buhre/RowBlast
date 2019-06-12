@@ -54,7 +54,7 @@ void Materials::CreateGoldMaterial() {
                                                     specular,
                                                     shininess,
                                                     0.6f);
-    mGoldMaterial->GetDepthState().mDepthTestAllowedOverride = true;
+    mGoldMaterial->SetDepthTestAllowedOverride(true);
 }
 
 void Materials::CreateLightGoldMaterial() {
@@ -68,7 +68,7 @@ void Materials::CreateLightGoldMaterial() {
                                                          specular,
                                                          shininess,
                                                          0.6f);
-    mLightGoldMaterial->GetDepthState().mDepthTestAllowedOverride = true;
+    mLightGoldMaterial->SetDepthTestAllowedOverride(true);
 }
 
 void Materials::CreateLighterGoldMaterial() {
@@ -82,7 +82,7 @@ void Materials::CreateLighterGoldMaterial() {
                                                            specular,
                                                            shininess,
                                                            0.6f);
-    mLighterGoldMaterial->GetDepthState().mDepthTestAllowedOverride = true;
+    mLighterGoldMaterial->SetDepthTestAllowedOverride(true);
 }
 
 void Materials::CreateBlueMaterial() {
@@ -122,7 +122,7 @@ void Materials::CreateGreenMaterial() {
                                                      specular,
                                                      shininess,
                                                      reflectivity);
-    mGreenMaterial->GetDepthState().mDepthTestAllowedOverride = true;
+    mGreenMaterial->SetDepthTestAllowedOverride(true);
 }
 
 void Materials::CreateLightGrayMaterial() {
@@ -136,7 +136,7 @@ void Materials::CreateLightGrayMaterial() {
                                                          specular,
                                                          shininess,
                                                          reflectivity);
-    mLightGrayMaterial->GetDepthState().mDepthTestAllowedOverride = true;
+    mLightGrayMaterial->SetDepthTestAllowedOverride(true);
 }
 
 void Materials::CreateGrayYellowMaterial() {
@@ -163,7 +163,7 @@ void Materials::CreateBlueArrowMaterial(const Pht::EnvMapTextureFilenames& envMa
                                                          specular,
                                                          shininess,
                                                          fieldBlockReflectivity);
-    mBlueArrowMaterial->GetDepthState().mDepthTestAllowedOverride = true;
+    mBlueArrowMaterial->SetDepthTestAllowedOverride(true);
 }
 
 void Materials::CreateRedFieldBlockMaterial(const Pht::EnvMapTextureFilenames& envMapTextures) {
@@ -177,7 +177,7 @@ void Materials::CreateRedFieldBlockMaterial(const Pht::EnvMapTextureFilenames& e
                                                              specular,
                                                              shininess,
                                                              0.37f);
-    mRedFieldBlockMaterial->GetDepthState().mDepthTestAllowedOverride = true;
+    mRedFieldBlockMaterial->SetDepthTestAllowedOverride(true);
 }
 
 void Materials::CreateBlueFieldBlockMaterial(const Pht::EnvMapTextureFilenames& envMapTextures) {
@@ -191,7 +191,7 @@ void Materials::CreateBlueFieldBlockMaterial(const Pht::EnvMapTextureFilenames& 
                                                               specular,
                                                               shininess,
                                                               fieldBlockReflectivity);
-    mBlueFieldBlockMaterial->GetDepthState().mDepthTestAllowedOverride = true;
+    mBlueFieldBlockMaterial->SetDepthTestAllowedOverride(true);
 }
 
 void Materials::CreateGreenFieldBlockMaterial(const Pht::EnvMapTextureFilenames& envMapTextures) {
@@ -205,7 +205,7 @@ void Materials::CreateGreenFieldBlockMaterial(const Pht::EnvMapTextureFilenames&
                                                                specular,
                                                                shininess,
                                                                fieldBlockReflectivity);
-    mGreenFieldBlockMaterial->GetDepthState().mDepthTestAllowedOverride = true;
+    mGreenFieldBlockMaterial->SetDepthTestAllowedOverride(true);
 }
 
 void Materials::CreateGrayFieldBlockMaterial(const Pht::EnvMapTextureFilenames& envMapTextures) {
@@ -219,7 +219,7 @@ void Materials::CreateGrayFieldBlockMaterial(const Pht::EnvMapTextureFilenames& 
                                                               specular,
                                                               shininess,
                                                               fieldBlockReflectivity);
-    mGrayFieldBlockMaterial->GetDepthState().mDepthTestAllowedOverride = true;
+    mGrayFieldBlockMaterial->SetDepthTestAllowedOverride(true);
 }
 
 void Materials::CreateYellowFieldBlockMaterial(const Pht::EnvMapTextureFilenames& envMapTextures) {
@@ -233,5 +233,5 @@ void Materials::CreateYellowFieldBlockMaterial(const Pht::EnvMapTextureFilenames
                                                                 specular,
                                                                 shininess,
                                                                 fieldBlockReflectivity);
-    mYellowFieldBlockMaterial->GetDepthState().mDepthTestAllowedOverride = true;
+    mYellowFieldBlockMaterial->SetDepthTestAllowedOverride(true);
 }

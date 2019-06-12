@@ -4,6 +4,7 @@
 #include <vector>
 
 #include "Vector.hpp"
+#include "Matrix.hpp"
 
 namespace Pht {
     struct VertexFlags {
@@ -36,12 +37,14 @@ namespace Pht {
         void AddIndex(uint16_t index);
         const float* GetVertexBuffer() const;
         const uint16_t* GetIndexBuffer() const;
-        float* GetVertexBuffer();
-        uint16_t* GetIndexBuffer();
-        const float* GetPastVertexBufferCapacity() const;
-        const uint16_t* GetPastIndexBufferCapacity() const;
         int GetVertexBufferSize() const;
         int GetIndexBufferSize() const;
+        void TransformWithRotationAndAppendVertices(const VertexBuffer& sourceBuffer,
+                                                    const Mat4& localTransformMatrix,
+                                                    const Mat3& normalMatrix);
+        void TransformAndAppendVertices(const VertexBuffer& sourceBuffer,
+                                        const Vec3& translation,
+                                        const Vec3& scale);
         
         int GetNumVertices() const {
             return mNumVertices;
@@ -57,11 +60,17 @@ namespace Pht {
 
     private:
         void Copy(const VertexBuffer& other);
-        void ResizeIfNeeded();
+        void ReallocateIfNeeded();
+        void ReallocateVertexBuffer(int newCapacity);
+        void ReallocateIndexBuffer(int newCapacity);
+        void AppendIndices(const VertexBuffer& sourceBuffer);
+        int GetVertexBufferCapacity() const;
+        int GetIndexBufferCapacity() const;
         
         VertexFlags mFlags;
         int mFloatsPerVertex;
         float* mVertexWritePtr {nullptr};
+        uint16_t* mIndexWritePtr {nullptr};
         std::vector<float> mVertexBuffer;
         std::vector<uint16_t> mTriangleIndices;
         uint16_t mSurfaceBeginVertex {0};

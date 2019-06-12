@@ -18,7 +18,7 @@ FadeEffect::FadeEffect(ISceneManager& sceneManager,
     mFadeSpeed {midFade / duration} {
     
     Pht::Material quadMaterial;
-    quadMaterial.GetDepthState().mDepthTest = false;
+    quadMaterial.SetDepthTest(false);
     
     auto& hudFrustumSize = mRenderer.GetHudFrustumSize();
     auto width = hudFrustumSize.x + 0.1f;

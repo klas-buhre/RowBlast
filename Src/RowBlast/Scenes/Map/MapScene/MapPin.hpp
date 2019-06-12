@@ -26,11 +26,12 @@ namespace RowBlast {
     class MapPin {
     public:
         MapPin(Pht::IEngine& engine,
-               const CommonResources& commonResources,
                const Pht::Font& font,
                Pht::Scene& scene,
-               Pht::SceneObject& containerObject,
+               Pht::SceneObject& parentObject,
                Pht::RenderableObject& starRenderable,
+               Pht::RenderableObject& pinRenderable,
+               Pht::RenderableObject& selectedPinRenderable,
                const Pht::Vec3& position,
                int level,
                int numStars,
@@ -62,7 +63,8 @@ namespace RowBlast {
         void CreateStars(int numStars, Pht::RenderableObject& starRenderable, Pht::Scene& scene);
         void CreateText(int level, const Pht::Font& font, Pht::Scene& scene);
         
-        const Pht::Material& mBlueMaterial;
+        Pht::RenderableObject& mPinRenderable;
+        Pht::RenderableObject& mSelectedPinRenderable;
         Pht::SceneObject* mSceneObject {nullptr};
         Pht::SceneObject* mTextSceneObject {nullptr};
         std::unique_ptr<Pht::Button> mButton;

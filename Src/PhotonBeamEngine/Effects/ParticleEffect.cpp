@@ -41,7 +41,7 @@ ParticleEffect::ParticleEffect(SceneObject& sceneObject,
     
     Material material {particleSettings.mTextureFilename};
     material.SetBlend(Blend::Yes);
-    material.GetDepthState().mDepthTest = false;
+    material.SetDepthTest(false);
     
     std::unique_ptr<VertexBuffer> cpuSideVertexBuffer;
     

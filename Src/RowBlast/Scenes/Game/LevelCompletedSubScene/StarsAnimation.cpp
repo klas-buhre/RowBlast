@@ -147,7 +147,7 @@ void StarsAnimation::StarAnimation::CreateGlowParticleEffect(Pht::IEngine& engin
     mGlowEffect = particleSystem.CreateParticleEffectSceneObject(particleSettings,
                                                                  particleEmitterSettings,
                                                                  Pht::RenderMode::Triangles);
-    mGlowEffect->GetRenderable()->GetMaterial().GetDepthState().mDepthTest = true;
+    mGlowEffect->GetRenderable()->GetMaterial().SetDepthTest(true);
 }
 
 void StarsAnimation::StarAnimation::CreateFlareParticleEffect(Pht::IEngine& engine) {
@@ -179,7 +179,7 @@ void StarsAnimation::StarAnimation::CreateFlareParticleEffect(Pht::IEngine& engi
                                                                   particleEmitterSettings,
                                                                   Pht::RenderMode::Triangles);
     auto& material = mFlareEffect->GetRenderable()->GetMaterial();
-    material.GetDepthState().mDepthTest = true;
+    material.SetDepthTest(true);
     material.SetShaderId(Pht::ShaderId::ParticleNoAlphaTexture);
 }
 
@@ -286,7 +286,7 @@ void StarsAnimation::StarAnimation::UpdateInScalingInState(float dt) {
         
         auto& material = mStar->GetRenderable()->GetMaterial();
         material.SetOpacity(1.0f);
-        material.GetDepthState().mDepthWrite = true;
+        material.SetDepthWrite(true);
         
         mEngine.GetAudio().PlaySound(static_cast<Pht::AudioResourceId>(SoundId::Star));
         mCameraShake.StartShake(cameraShakeTime, cameraShakeMagnitude);

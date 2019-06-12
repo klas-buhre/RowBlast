@@ -52,10 +52,10 @@ FloatingBlocks::FloatingBlocks(Pht::IEngine& engine,
     auto& sceneManager = engine.GetSceneManager();
     
     mBlockRenderables = {
-        sceneManager.CreateRenderableObject(cubeMesh, materials.GetRedMaterial()),
-        sceneManager.CreateRenderableObject(cubeMesh, materials.GetGreenMaterial()),
-        sceneManager.CreateRenderableObject(cubeMesh, materials.GetBlueMaterial()),
-        sceneManager.CreateRenderableObject(cubeMesh, materials.GetGoldMaterial()),
+        sceneManager.CreateBatchableRenderableObject(cubeMesh, materials.GetRedMaterial()),
+        sceneManager.CreateBatchableRenderableObject(cubeMesh, materials.GetGreenMaterial()),
+        sceneManager.CreateBatchableRenderableObject(cubeMesh, materials.GetBlueMaterial()),
+        sceneManager.CreateBatchableRenderableObject(cubeMesh, materials.GetGoldMaterial()),
         sceneManager.CreateRenderableObject(cubeMesh, materials.GetLightGrayMaterial())
     };
     
@@ -178,16 +178,16 @@ void FloatingBlocks::InitBlocks(Pht::Scene& scene, float scale, float angularVel
                 break;
             }
             case FloatingPieceType::L:
-                CreateLPiece(block, scale, renderable, scene);
+                CreateLPiece(*block.mSceneObject, scale, renderable, scene);
                 break;
             case FloatingPieceType::I:
-                CreateIPiece(block, scale, renderable, scene);
+                CreateIPiece(*block.mSceneObject, scale, renderable, scene);
                 break;
             case FloatingPieceType::ShortI:
-                CreateShortIPiece(block, scale, renderable, scene);
+                CreateShortIPiece(*block.mSceneObject, scale, renderable, scene);
                 break;
             case FloatingPieceType::B:
-                CreateBPiece(block, scale, renderable, scene);
+                CreateBPiece(*block.mSceneObject, scale, renderable, scene);
                 break;
             case FloatingPieceType::Bomb:
             case FloatingPieceType::RowBomb:
@@ -239,7 +239,7 @@ Pht::RenderableObject& FloatingBlocks::CalcBlockRenderable(const BlockPathVolume
     }
 }
 
-void FloatingBlocks::CreateLPiece(FloatingBlock& block,
+void FloatingBlocks::CreateLPiece(Pht::SceneObject& pieceSceneObject,
                                   float scale,
                                   Pht::RenderableObject& renderable,
                                   Pht::Scene& scene) {
@@ -250,20 +250,23 @@ void FloatingBlocks::CreateLPiece(FloatingBlock& block,
                 blockScale,
                 renderable,
                 scene,
-                *block.mSceneObject);
+                pieceSceneObject);
     CreateBlock({blockSize / 2.0f, blockSize / 2.0f, 0.0f},
                 blockScale,
                 renderable,
                 scene,
-                *block.mSceneObject);
+                pieceSceneObject);
     CreateBlock({blockSize / 2.0f, -blockSize / 2.0f, 0.0f},
                 blockScale,
                 renderable,
                 scene,
-                *block.mSceneObject);
+                pieceSceneObject);
+    
+    scene.ConvertSceneObjectToStaticBatch(pieceSceneObject,
+                                          "FloatingBlocksLPiece" + std::to_string(scale));
 }
 
-void FloatingBlocks::CreateIPiece(FloatingBlock& block,
+void FloatingBlocks::CreateIPiece(Pht::SceneObject& pieceSceneObject,
                                   float scale,
                                   Pht::RenderableObject& renderable,
                                   Pht::Scene& scene) {
@@ -274,20 +277,23 @@ void FloatingBlocks::CreateIPiece(FloatingBlock& block,
                 blockScale,
                 renderable,
                 scene,
-                *block.mSceneObject);
+                pieceSceneObject);
     CreateBlock({0.0f, 0.0f, 0.0f},
                 blockScale,
                 renderable,
                 scene,
-                *block.mSceneObject);
+                pieceSceneObject);
     CreateBlock({blockSize, 0.0f, 0.0f},
                 blockScale,
                 renderable,
                 scene,
-                *block.mSceneObject);
+                pieceSceneObject);
+
+    scene.ConvertSceneObjectToStaticBatch(pieceSceneObject,
+                                          "FloatingBlocksIPiece" + std::to_string(scale));
 }
 
-void FloatingBlocks::CreateShortIPiece(FloatingBlock& block,
+void FloatingBlocks::CreateShortIPiece(Pht::SceneObject& pieceSceneObject,
                                        float scale,
                                        Pht::RenderableObject& renderable,
                                        Pht::Scene& scene) {
@@ -298,15 +304,18 @@ void FloatingBlocks::CreateShortIPiece(FloatingBlock& block,
                 blockScale,
                 renderable,
                 scene,
-                *block.mSceneObject);
+                pieceSceneObject);
     CreateBlock({blockSize / 2.0f, 0.0f, 0.0f},
                 blockScale,
                 renderable,
                 scene,
-                *block.mSceneObject);
+                pieceSceneObject);
+    
+    scene.ConvertSceneObjectToStaticBatch(pieceSceneObject,
+                                          "FloatingBlocksShortIPiece" + std::to_string(scale));
 }
 
-void FloatingBlocks::CreateBPiece(FloatingBlock& block,
+void FloatingBlocks::CreateBPiece(Pht::SceneObject& pieceSceneObject,
                                   float scale,
                                   Pht::RenderableObject& renderable,
                                   Pht::Scene& scene) {
@@ -317,27 +326,30 @@ void FloatingBlocks::CreateBPiece(FloatingBlock& block,
                 blockScale,
                 renderable,
                 scene,
-                *block.mSceneObject);
+                pieceSceneObject);
     CreateBlock({-blockSize / 2.0f, 0.0f, 0.0f},
                 blockScale,
                 renderable,
                 scene,
-                *block.mSceneObject);
+                pieceSceneObject);
     CreateBlock({blockSize / 2.0f, -blockSize, 0.0f},
                 blockScale,
                 renderable,
                 scene,
-                *block.mSceneObject);
+                pieceSceneObject);
     CreateBlock({blockSize / 2.0f, 0.0f, 0.0f},
                 blockScale,
                 renderable,
                 scene,
-                *block.mSceneObject);
+                pieceSceneObject);
     CreateBlock({blockSize / 2.0f, blockSize, 0.0f},
                 blockScale,
                 renderable,
                 scene,
-                *block.mSceneObject);
+                pieceSceneObject);
+    
+    scene.ConvertSceneObjectToStaticBatch(pieceSceneObject,
+                                          "FloatingBlocksBPiece" + std::to_string(scale));
 }
 
 void FloatingBlocks::Update() {

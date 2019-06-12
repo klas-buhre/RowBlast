@@ -5,8 +5,9 @@
 
 #include "Optional.hpp"
 #include "Noncopyable.hpp"
+#include "Material.hpp"
 
-#define USE_FRAME_STATS 1
+#define USE_FRAME_STATS 0
 #if USE_FRAME_STATS
     #define IF_USING_FRAME_STATS(x) x;
 #else
@@ -46,7 +47,7 @@ namespace Pht {
         }
         
         bool IsMaterialInUse(const Material& material) const {
-            return &material == mMaterial;
+            return mMaterial->Equals(material);
         }
 
         bool IsVboInUse(const GpuVbo& vbo) const {

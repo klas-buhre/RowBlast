@@ -94,6 +94,16 @@ TextComponent& Scene::CreateText(const std::string& text,
     return textComponent;
 }
 
+void Scene::ConvertSceneObjectToStaticBatch(SceneObject& sceneObject,
+                                            const Optional<std::string>& batchVboName) {
+    auto batchRenderable = mSceneManager.CreateStaticBatchRenderable(sceneObject, batchVboName);
+    if (batchRenderable) {
+        sceneObject.DetachChildren();
+        sceneObject.SetRenderable(batchRenderable.get());
+        mResources.AddRenderableObject(std::move(batchRenderable));
+    }
+}
+
 void Scene::AddSceneObject(std::unique_ptr<SceneObject> sceneObject) {
     mResources.AddSceneObject(std::move(sceneObject));
 }

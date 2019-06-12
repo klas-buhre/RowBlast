@@ -34,7 +34,6 @@
 #include "Vector.hpp"
 #include "VertexBuffer.hpp"
 #include "Font.hpp"
-#include "GuiView.hpp"
 #include "SceneObject.hpp"
 #include "Scene.hpp"
 #include "ISceneManager.hpp"
@@ -42,6 +41,7 @@
 #include "LightComponent.hpp"
 #include "TextComponent.hpp"
 #include "VboCache.hpp"
+#include "RenderBatcher.hpp"
 
 using namespace Pht;
 
@@ -388,14 +388,21 @@ float Renderer::GetBottomPaddingHeight() const {
     return 0.0f;
 }
 
-std::unique_ptr<RenderableObject> Renderer::CreateRenderableObject(const IMesh& mesh,
-                                                                   const Material& material,
-                                                                   VertexBufferLocation bufferLocation) {
+std::unique_ptr<RenderableObject>
+Renderer::CreateRenderableObject(const IMesh& mesh,
+                                 const Material& material,
+                                 VertexBufferLocation bufferLocation) {
     auto& shaderProgram = GetShader(material.GetShaderId());
     return std::make_unique<RenderableObject>(material,
                                               mesh,
                                               shaderProgram.GetVertexFlags(),
                                               bufferLocation);
+}
+
+std::unique_ptr<RenderableObject>
+Renderer::CreateStaticBatch(const SceneObject& sceneObject,
+                            const Optional<std::string>& batchVboName) {
+    return RenderBatcher::CreateStaticBatch(sceneObject, batchVboName);
 }
 
 void Renderer::SetLightDirection(const Vec3& lightDirection) {

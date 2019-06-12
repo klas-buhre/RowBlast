@@ -39,9 +39,10 @@ Optional<std::string> CylinderMesh::GetName() const {
 }
 
 std::unique_ptr<VertexBuffer> CylinderMesh::CreateVertexBuffer(VertexFlags attributeFlags) const {
-    auto vertexBuffer = std::make_unique<VertexBuffer>(discVertexCount * 2 + bodyVertexCount,
-                                                       discIndexCount * 2 + bodyIndexCount,
-                                                       attributeFlags);
+    auto numVertices = mCreateDiscs ? discVertexCount * 2 + bodyVertexCount : bodyVertexCount;
+    auto numIndices = mCreateDiscs ? discIndexCount * 2 + bodyIndexCount : bodyIndexCount;
+    auto vertexBuffer = std::make_unique<VertexBuffer>(numVertices, numIndices, attributeFlags);
+    
     GenerateBody(*vertexBuffer);
     
     if (mCreateDiscs) {

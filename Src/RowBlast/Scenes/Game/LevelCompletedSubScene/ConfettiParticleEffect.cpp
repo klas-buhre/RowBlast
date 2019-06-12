@@ -75,7 +75,7 @@ namespace {
         
         auto& material = sceneObject->GetRenderable()->GetMaterial();
         material.SetBlend(Pht::Blend::No);
-        material.GetDepthState().mDepthWrite = false;
+        material.SetDepthWrite(false);
         return sceneObject;
     }
 }

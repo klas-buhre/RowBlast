@@ -31,7 +31,7 @@ ShieldAnimation::ShieldAnimation(Pht::IEngine& engine,
 
     Pht::Material shieldMaterial {"shield.png"};
     shieldMaterial.SetBlend(Pht::Blend::Additive);
-    shieldMaterial.GetDepthState().mDepthTest = false;
+    shieldMaterial.SetDepthTest(false);
     shieldMaterial.SetOpacity(shieldOpacity);
     
     auto& sceneManager = engine.GetSceneManager();

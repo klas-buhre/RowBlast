@@ -93,6 +93,7 @@ namespace RowBlast {
         }
 
     private:
+        void CreateRenderables();
         void CreateWorld(const World& world, const BackgroundLight& backgroundLight);
         void CreatePins(const World& world);
         void CreatePin(Pht::SceneObject& pinContainerObject, const MapPlace& place);
@@ -117,6 +118,9 @@ namespace RowBlast {
         std::vector<std::unique_ptr<MapPin>> mPins;
         MapPin* mPreviousPin {nullptr};
         std::unique_ptr<Pht::RenderableObject> mStarRenderable;
+        std::unique_ptr<Pht::RenderableObject> mBluePinRenderable;
+        std::unique_ptr<Pht::RenderableObject> mSelectedPinRenderable;
+        std::unique_ptr<Pht::RenderableObject> mGrayPinRenderable;
         Pht::Font mFont;
         std::unique_ptr<MapHud> mHud;
         Pht::SceneObject* mUfoContainer {nullptr};

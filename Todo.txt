@@ -12,7 +12,9 @@ Backlog:
      the top (an illegal move) could be red. A question is if real solid pieces should be dragged in
      or ghost pieces. Real pieces will look better but it is more logical to drag in ghost pieces
      since the real piece is actially at the top and it will drop to the location of the ghost piece
-     really quickly (preferably almost as fast as a hard drop like in swipe controls). When the
+     really quickly (preferably almost as fast as a hard drop like in swipe controls). Or the real
+     faling piece at the top could disappear (scale out) when the real solid piece is being dragged
+     in and then it might be ok to drag in real pieces. When the
      piece har dropped, the empty slot in the selectables HUD should be taken over by the next piece
      without rearranging the selectable pieces. What happens with the falling piece once one of the
      selectables (not the active piece) are being dragged in? Maybe it should only be possible to
@@ -50,6 +52,7 @@ Backlog:
      random block disappears.
     -Maybe a sensitivity setting. Tetris Blitz has lower sensitivity on iPad but not on iPhone.
   -Rendering:
+    -Use a texture atlas in the Font class so that one call to text renderer is one draw call.
     -Try to compressing bouncing blocks that lands on lower blocks. Compress the vertical welds on
      each side of the compressed block as well.
     -Animation that moves the map hud out of the screen when clicking buttons in the hud. Could work
@@ -78,6 +81,34 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
+
+
+
+
+
+
+Use random seed of 12345 in Engine.cpp and Clouds.cpp to get the same numbers.
+
+With render queue refactoring and static batching:
+
+Beginning of first world. 5 lives, 0 coins:
+=======================================
+ NumShaderUses: 19
+ NumMaterialUses: 96
+ NumTextureBinds: 127
+ NumVboUses: 118
+ NumDrawCalls: 256
+
+With render queue refactoring:
+
+Beginning of first world. 5 lives, 0 coins:
+
+=======================================
+ NumShaderUses: 19
+ NumMaterialUses: 138
+ NumTextureBinds: 127
+ NumVboUses: 105
+ NumDrawCalls: 293
 
 Before render queue refactoring and static batching:
 
@@ -122,25 +153,16 @@ Beginning of level 20:
  NumDrawCalls: 129
 
 
-    -Review the last commit.
-    -Make a render batcher that is accessable from the IRenderer API. Just send a SceneObject that
-     should have all its children merged into one renderable. The return value should be a
-     RenderableObject with a Vbo that is a combination of all Vbos of the direct children.
-     All vertices from the children will be transformed by each child transform.
-     The root/argument SceneObject transformation will not be used by the RenderBatcher, instead an
-     identity transform will be used as root transform. The operation should fail if not all child
-     renderables have the same material ID and shader ID. Different Vbos are ok but they must have
-     the same vertex flags/attributes and the Vbos must have a CPU-side vertex buffer
-     (i.e. VertexBuffer). CPU-side buffering must be specified when creating a RenderableObject by
-     the user. Invisible objects are ignored. The user could supply a key/hint for the
-     RenderBatcher to use for quering the VBO cache before creating the GpuVbo if it does not
-     exist.
-
-     Then, the FloatingBlocks and preview pieces can be batched.
+    -Merge to master.
 
     -Try adding shader with pixel lighting and texturing. Use for the big planet in world 3.
+    -Add a shader with a brightness vertex attribute. Then most clouds can be batched if they use a
+     texture atlas (a TextureAtlas class can be used for the fonts later as well).
+    -Add dynamic batching of objects with very few indices and no rotation if the saved cost of
+     eliminated state changes is greater than the cost of creating the batch.
     -Test everything in slow motion to see that the render functionality is the same as before
      all optimizations.
+
     -Maybe the active piece could be in the left-most slot in the selectables. Then the next piece
      will always come in from the left and go right to the active slot without the other selectables
      moving at all. Might even have a NEXT text over the next pieces to make it really clear. Might
@@ -150,6 +172,12 @@ Beginning of level 20:
      It also affects the how to play dialog.
      Also, remember to change the hud rectangle renderables size so that there is a 1-to-1
      texel-to-pixel ratio.
+    -Maybe having the active piece to the left is not such a good idea after all. Confusing with
+     sliding the pieces one direction not next piece and another direction on switch. For example,
+     Bubble witch is more similar to how it was before. Can still have the NEXT text, different
+     sizes for next and selectables and maybe highlighting the active a bit.
+     This commit contains the change:
+     Moved the active piece to the leftmost slot in the selectables contai a0d16e8
     -Try combining all three input types to one. Maybe possible if the visibility of the move
      alternatives can be toggled with a button next to the pause button. Drag and swipe can be
      combined at least.

@@ -138,7 +138,7 @@ void LevelResources::CreateBlueprintRenderables(Pht::IEngine& engine,
     
     Pht::Material imageMaterial {*image, Pht::GenerateMipmap::Yes};
     imageMaterial.SetBlend(Pht::Blend::Yes);
-    imageMaterial.GetDepthState().mDepthWrite = true;
+    imageMaterial.SetDepthWrite(true);
     auto& sceneManager = engine.GetSceneManager();
     mBlueprintSquare = sceneManager.CreateRenderableObject(Pht::QuadMesh {squareSide, squareSide},
                                                            imageMaterial);
@@ -200,7 +200,7 @@ void LevelResources::CreateBigAsteroidRenderable(Pht::IEngine& engine) {
 
 void LevelResources::CreateSmallAsteroidRenderable(Pht::IEngine& engine) {
     Pht::Material asteroidMaterial {"gray_asteroid.jpg", 0.84f, 1.23f, 0.0f, 1.0f};
-    asteroidMaterial.GetDepthState().mDepthTestAllowedOverride = true;
+    asteroidMaterial.SetDepthTestAllowedOverride(true);
     auto& sceneManager = engine.GetSceneManager();
     mSmallAsteroid = sceneManager.CreateRenderableObject(Pht::ObjMesh {"asteroid_2000.obj", 19.0f, Pht::MoveMeshToOrigin::Yes},
                                                          asteroidMaterial);

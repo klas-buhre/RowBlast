@@ -87,7 +87,7 @@ std::unique_ptr<MenuButton> GuiUtils::CreatePlayOnButton(Pht::IEngine& engine,
 
     Pht::Material shaddowMaterial {Pht::Color{0.05f, 0.05f, 0.05f}};
     shaddowMaterial.SetOpacity(0.14f);
-    shaddowMaterial.GetDepthState().mDepthTestAllowedOverride = true;
+    shaddowMaterial.SetDepthTestAllowedOverride(true);
     auto& coinShaddow =
         view.CreateSceneObject(Pht::ObjMesh {"coin_852.obj", 3.15f},
                                shaddowMaterial,

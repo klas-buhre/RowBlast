@@ -15,7 +15,7 @@ namespace Pht {
         void Translate(const Vec3& translation);
         void Scale(const Vec3& scale);
         void Rotate(const Vec3& rotation);
-        Mat4 ToMatrix();
+        Mat4 ToMatrix() const;
         
         bool HasChanged() const {
             return mHasChanged;

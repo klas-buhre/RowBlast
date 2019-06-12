@@ -355,6 +355,7 @@ Pht::SceneObject& GameHud::CreateMovesIcon(Pht::Scene& scene,
     CreateArrow({0.0f, 0.27f, 0.0f}, {90.0f, 0.0f, 90.0f}, arrowRenderable, scene, movesIcon);
     CreateArrow({0.05f, -0.27f, 0.0f}, {270.0f, 0.0f, 90.0f}, arrowRenderable, scene, movesIcon);
     
+    scene.ConvertSceneObjectToStaticBatch(movesIcon, std::string{"GameHudMovesIcon"});
     return movesIcon;
 }
 
