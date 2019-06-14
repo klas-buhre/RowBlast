@@ -22,7 +22,7 @@ namespace Pht {
         std::unique_ptr<RenderableObject> CreateBatchableRenderableObject(const IMesh& mesh,
                                                                           const Material& material) override;
         std::unique_ptr<RenderableObject> CreateStaticBatchRenderable(const SceneObject& sceneObject,
-                                                                      const Optional<std::string>& batchVboName) override;
+                                                                      const Optional<std::string>& batchVertexBufferName) override;
         std::unique_ptr<SceneObject> CreateSceneObject(const IMesh& mesh,
                                                        const Material& material,
                                                        SceneResources& sceneResources) override;

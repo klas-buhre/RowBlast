@@ -4,25 +4,16 @@
 
 #include "VertexBuffer.hpp"
 #include "IMesh.hpp"
-#include "VboCache.hpp"
+#include "VertexBufferCache.hpp"
 
 using namespace Pht;
 
 namespace {
-    GLenum ToGlBufferUsage(BufferUsage bufferUsage) {
-        switch (bufferUsage) {
-            case BufferUsage::StaticDraw:
-                return GL_STATIC_DRAW;
-            case BufferUsage::DynamicDraw:
-                return GL_DYNAMIC_DRAW;
-        }
-    }
-    
-    std::shared_ptr<GpuVbo> CreateVbo(RenderMode renderMode) {
+    std::shared_ptr<GpuVertexBuffer> CreateGpuVertexBuffer(RenderMode renderMode) {
         auto generateIndexBuffer =
             renderMode == RenderMode::Triangles ? GenerateIndexBuffer::Yes : GenerateIndexBuffer::No;
     
-        return std::make_shared<GpuVbo>(generateIndexBuffer);
+        return std::make_shared<GpuVertexBuffer>(generateIndexBuffer);
     }
 }
 
@@ -34,21 +25,21 @@ RenderableObject::RenderableObject(const Material& material,
 
     auto meshName = mesh.GetName();
     if (meshName.HasValue()) {
-        mVbo = VboCache::Get(meshName.GetValue());
-        if (mVbo == nullptr) {
-            mVbo = CreateVbo(mRenderMode);
+        mGpuVertexBuffer = VertexBufferCache::Get(meshName.GetValue());
+        if (mGpuVertexBuffer == nullptr) {
+            mGpuVertexBuffer = CreateGpuVertexBuffer(mRenderMode);
             UploadMeshVertexData(mesh, attributeFlags, bufferLocation);
-            VboCache::Add(meshName.GetValue(), mVbo);
+            VertexBufferCache::Add(meshName.GetValue(), mGpuVertexBuffer);
         } else {
             if (bufferLocation == VertexBufferLocation::AtGpuAndCpu &&
-                mVbo->GetCpuSideBuffer() == nullptr) {
+                mGpuVertexBuffer->GetCpuSideBuffer() == nullptr) {
                 
                 auto vertexBuffer = mesh.CreateVertexBuffer(attributeFlags);
-                mVbo->SetCpuSideBuffer(std::move(vertexBuffer));
+                mGpuVertexBuffer->SetCpuSideBuffer(std::move(vertexBuffer));
             }
         }
     } else {
-        mVbo = CreateVbo(mRenderMode);
+        mGpuVertexBuffer = CreateGpuVertexBuffer(mRenderMode);
         UploadMeshVertexData(mesh, attributeFlags, bufferLocation);
     }
 }
@@ -58,27 +49,28 @@ RenderableObject::RenderableObject(const Material& material,
                                    RenderMode renderMode) :
     mRenderMode {renderMode},
     mMaterial {material},
-    mVbo {CreateVbo(renderMode)} {
+    mGpuVertexBuffer {CreateGpuVertexBuffer(renderMode)} {
 
-    mVbo->SetCpuSideBuffer(std::move(cpuSideBuffer));
+    mGpuVertexBuffer->SetCpuSideBuffer(std::move(cpuSideBuffer));
 }
 
 RenderableObject::RenderableObject(const Material& material,
                                    const VertexBuffer& fromBuffer,
-                                   const Optional<std::string>& vboName) :
+                                   const Optional<std::string>& bufferName) :
     mMaterial {material} {
     
-    mVbo = CreateVbo(mRenderMode);
-    UploadTriangles(fromBuffer, BufferUsage::StaticDraw);
+    mGpuVertexBuffer = CreateGpuVertexBuffer(mRenderMode);
+    mGpuVertexBuffer->UploadTriangles(fromBuffer, BufferUsage::StaticDraw);
     
-    if (vboName.HasValue()) {
-        VboCache::Add(vboName.GetValue(), mVbo);
+    if (bufferName.HasValue()) {
+        VertexBufferCache::Add(bufferName.GetValue(), mGpuVertexBuffer);
     }
 }
 
-RenderableObject::RenderableObject(const Material& material, std::shared_ptr<GpuVbo> vbo) :
+RenderableObject::RenderableObject(const Material& material,
+                                   std::shared_ptr<GpuVertexBuffer> buffer) :
     mMaterial {material},
-    mVbo {vbo} {}
+    mGpuVertexBuffer {buffer} {}
 
 RenderableObject::~RenderableObject() {}
 
@@ -86,53 +78,23 @@ void RenderableObject::UploadMeshVertexData(const IMesh& mesh,
                                             const VertexFlags& attributeFlags,
                                             VertexBufferLocation bufferLocation) {
     auto vertexBuffer = mesh.CreateVertexBuffer(attributeFlags);
-    UploadTriangles(*vertexBuffer, BufferUsage::StaticDraw);
+    mGpuVertexBuffer->UploadTriangles(*vertexBuffer, BufferUsage::StaticDraw);
     
     if (bufferLocation == VertexBufferLocation::AtGpuAndCpu) {
-        mVbo->SetCpuSideBuffer(std::move(vertexBuffer));
+        mGpuVertexBuffer->SetCpuSideBuffer(std::move(vertexBuffer));
     }
 }
 
 void RenderableObject::UploadTriangles(BufferUsage bufferUsage) {
-    auto* cpuSideBuffer = mVbo->GetCpuSideBuffer();
+    assert(mRenderMode == RenderMode::Triangles);
+    auto* cpuSideBuffer = mGpuVertexBuffer->GetCpuSideBuffer();
     assert(cpuSideBuffer);
-    UploadTriangles(*cpuSideBuffer, bufferUsage);
+    mGpuVertexBuffer->UploadTriangles(*cpuSideBuffer, bufferUsage);
 }
 
 void RenderableObject::UploadPoints(BufferUsage bufferUsage) {
-    auto* cpuSideBuffer = mVbo->GetCpuSideBuffer();
-    assert(cpuSideBuffer);
-    UploadPoints(*cpuSideBuffer, bufferUsage);
-}
-
-void RenderableObject::UploadTriangles(const VertexBuffer& vertexBuffer, BufferUsage bufferUsage) {
-    assert(mRenderMode == RenderMode::Triangles);
-    
-    auto glBufferUsage = ToGlBufferUsage(bufferUsage);
-    
-    glBindBuffer(GL_ARRAY_BUFFER, mVbo->mVertexBufferId);
-    glBufferData(GL_ARRAY_BUFFER,
-                 vertexBuffer.GetVertexBufferSize() * sizeof(float),
-                 vertexBuffer.GetVertexBuffer(),
-                 glBufferUsage);
-    
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mVbo->mIndexBufferId);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER,
-                 vertexBuffer.GetIndexBufferSize() * sizeof(GLushort),
-                 vertexBuffer.GetIndexBuffer(),
-                 glBufferUsage);
-    
-    mVbo->mIndexCount = vertexBuffer.GetIndexBufferSize();
-}
-
-void RenderableObject::UploadPoints(const VertexBuffer& vertexBuffer, BufferUsage bufferUsage) {
     assert(mRenderMode == RenderMode::Points);
-    
-    glBindBuffer(GL_ARRAY_BUFFER, mVbo->mVertexBufferId);
-    glBufferData(GL_ARRAY_BUFFER,
-                 vertexBuffer.GetVertexBufferSize() * sizeof(float),
-                 vertexBuffer.GetVertexBuffer(),
-                 ToGlBufferUsage(bufferUsage));
-    
-    mVbo->mPointCount = vertexBuffer.GetNumVertices();
+    auto* cpuSideBuffer = mGpuVertexBuffer->GetCpuSideBuffer();
+    assert(cpuSideBuffer);
+    mGpuVertexBuffer->UploadPoints(*cpuSideBuffer, bufferUsage);
 }

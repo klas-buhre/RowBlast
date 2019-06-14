@@ -5,7 +5,7 @@
 #include "SceneObject.hpp"
 #include "RenderableObject.hpp"
 #include "TextComponent.hpp"
-#include "VboCache.hpp"
+#include "VertexBufferCache.hpp"
 
 using namespace Pht;
 
@@ -50,9 +50,9 @@ namespace {
                 return {nullptr, nullptr};
             }
             
-            auto& vbo = renderable->GetVbo();
-            auto* vboCpuSideBuffer = vbo.GetCpuSideBuffer();
-            if (vboCpuSideBuffer == nullptr) {
+            auto& gpuVertexBuffer = renderable->GetGpuVertexBuffer();
+            auto* cpuSideBuffer = gpuVertexBuffer.GetCpuSideBuffer();
+            if (cpuSideBuffer == nullptr) {
                 return {nullptr, nullptr};
             }
             
@@ -64,16 +64,16 @@ namespace {
                     return {nullptr, nullptr};
                 }
                 
-                auto& previousVbo = previousRenderable->GetVbo();
-                if (vboCpuSideBuffer->GetAttributeFlags() !=
-                    previousVbo.GetCpuSideBuffer()->GetAttributeFlags()) {
+                auto& previousGpuVertexBuffer = previousRenderable->GetGpuVertexBuffer();
+                if (cpuSideBuffer->GetAttributeFlags() !=
+                    previousGpuVertexBuffer.GetCpuSideBuffer()->GetAttributeFlags()) {
                     
                     return {nullptr, nullptr};
                 }
             }
             
-            totalNumVertices += vboCpuSideBuffer->GetNumVertices();
-            totalNumIndices += vboCpuSideBuffer->GetIndexBufferSize();
+            totalNumVertices += cpuSideBuffer->GetNumVertices();
+            totalNumIndices += cpuSideBuffer->GetIndexBufferSize();
             ++numBatchableSceneObjects;
             previousRenderable = renderable;
         }
@@ -86,7 +86,7 @@ namespace {
 
         if (totalNumVertices > 0 && totalNumIndices > 0 && previousRenderable) {
             auto& batchAttributeFlags =
-                previousRenderable->GetVbo().GetCpuSideBuffer()->GetAttributeFlags();
+                previousRenderable->GetGpuVertexBuffer().GetCpuSideBuffer()->GetAttributeFlags();
             auto* batchMaterial = &previousRenderable->GetMaterial();
             return {
                 std::make_unique<VertexBuffer>(totalNumVertices,
@@ -103,7 +103,7 @@ namespace {
     CreateStaticBatchRenderable(VertexBuffer& batchVertexBuffer,
                                 const SceneObject& sourceSceneObject,
                                 const Material& batchMaterial,
-                                const Optional<std::string>& batchVboName) {
+                                const Optional<std::string>& batchVertexBufferName) {
         for (auto* sceneObject: sourceSceneObject.GetChildren()) {
             if (!sceneObject->IsVisible()) {
                 continue;
@@ -114,7 +114,7 @@ namespace {
                 continue;
             }
             
-            auto* sceneObjectVertexBuffer = renderable->GetVbo().GetCpuSideBuffer();
+            auto* sceneObjectVertexBuffer = renderable->GetGpuVertexBuffer().GetCpuSideBuffer();
             auto& sceneObjectTransform = sceneObject->GetTransform();
             if (sceneObjectTransform.GetRotation() == defaultRotation) {
                 batchVertexBuffer.TransformAndAppendVertices(*sceneObjectVertexBuffer,
@@ -132,13 +132,15 @@ namespace {
             }
         }
 
-        return std::make_unique<RenderableObject>(batchMaterial, batchVertexBuffer, batchVboName);
+        return std::make_unique<RenderableObject>(batchMaterial,
+                                                  batchVertexBuffer,
+                                                  batchVertexBufferName);
     }
 }
 
 std::unique_ptr<RenderableObject>
 StaticBatcher::CreateBatch(const SceneObject& sourceSceneObject,
-                           const Optional<std::string>& batchVboName) {
+                           const Optional<std::string>& batchVertexBufferName) {
     auto staticBatchSetup = SetUpStaticBatchIfPossible(sourceSceneObject);
     if (staticBatchSetup.mBatchVertexBuffer == nullptr ||
         staticBatchSetup.mBatchMaterial == nullptr) {
@@ -146,20 +148,21 @@ StaticBatcher::CreateBatch(const SceneObject& sourceSceneObject,
         return nullptr;
     }
     
-    if (batchVboName.HasValue()) {
-        auto vbo = VboCache::Get(batchVboName.GetValue());
-        if (vbo == nullptr) {
+    if (batchVertexBufferName.HasValue()) {
+        auto gpuVertexBuffer = VertexBufferCache::Get(batchVertexBufferName.GetValue());
+        if (gpuVertexBuffer == nullptr) {
             return CreateStaticBatchRenderable(*staticBatchSetup.mBatchVertexBuffer,
                                                sourceSceneObject,
                                                *staticBatchSetup.mBatchMaterial,
-                                               batchVboName);
+                                               batchVertexBufferName);
         } else {
-            return std::make_unique<RenderableObject>(*staticBatchSetup.mBatchMaterial, vbo);
+            return std::make_unique<RenderableObject>(*staticBatchSetup.mBatchMaterial,
+                                                      gpuVertexBuffer);
         }
     }
     
     return CreateStaticBatchRenderable(*staticBatchSetup.mBatchVertexBuffer,
                                        sourceSceneObject,
                                        *staticBatchSetup.mBatchMaterial,
-                                       batchVboName);
+                                       batchVertexBufferName);
 }

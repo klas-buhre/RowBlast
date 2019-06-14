@@ -42,7 +42,7 @@ namespace Pht {
                                                                  const Material& material,
                                                                  VertexBufferLocation bufferLocation);
         std::unique_ptr<RenderableObject> CreateStaticBatch(const SceneObject& sceneObject,
-                                                            const Optional<std::string>& batchVboName);
+                                                            const Optional<std::string>& batchVertexBufferName);
         void ClearFrameBuffer();
         void RenderScene(const Scene& scene, float frameSeconds);
         

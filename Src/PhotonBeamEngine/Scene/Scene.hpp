@@ -45,7 +45,7 @@ namespace Pht {
                                   const TextProperties& properties,
                                   SceneObject& parent);
         void ConvertSceneObjectToStaticBatch(SceneObject& sceneObject,
-                                             const Optional<std::string>& batchVboName);
+                                             const Optional<std::string>& batchVertexBufferName);
         void AddSceneObject(std::unique_ptr<SceneObject> sceneObject);
         void AddRenderableObject(std::unique_ptr<RenderableObject> renderableObject);
         void AddRenderPass(const RenderPass& renderPass);

@@ -41,8 +41,8 @@ namespace Pht {
         // Material id: bits 47-24:
         static constexpr int materialIdShift {24};
         
-        // Vbo id: bits 23-0:
-        static constexpr int vboIdShift {0};
+        // Vertex buffer id: bits 23-0:
+        static constexpr int vertexBufferIdShift {0};
         
         struct Entry {
             uint64_t mSortKey;

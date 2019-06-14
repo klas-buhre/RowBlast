@@ -4,21 +4,21 @@
 #include <string>
 #include <memory>
 
-#include <OpenGLES/ES3/gl.h>
-
 namespace Pht {
     enum class GenerateMipmap {
         Yes,
         No
     };
     
+    struct TextureHandles;
+    
     class Texture {
     public:
         Texture(bool hasPremultipliedAlpha);
         ~Texture();
         
-        GLuint GetHandle() const {
-            return mHandle;
+        const TextureHandles* GetHandles() const {
+            return mHandles.get();
         }
 
         bool HasPremultipliedAlpha() const {
@@ -26,7 +26,7 @@ namespace Pht {
         }
         
     private:
-        GLuint mHandle {0};
+        std::unique_ptr<TextureHandles> mHandles;
         bool mHasPremultipliedAlpha {false};
     };
     

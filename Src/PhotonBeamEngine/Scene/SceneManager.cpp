@@ -52,8 +52,8 @@ SceneManager::CreateBatchableRenderableObject(const IMesh& mesh,
 
 std::unique_ptr<RenderableObject>
 SceneManager::CreateStaticBatchRenderable(const SceneObject& sceneObject,
-                                          const Optional<std::string>& batchVboName) {
-    return mRenderer.CreateStaticBatch(sceneObject, batchVboName);
+                                          const Optional<std::string>& batchVertexBufferName) {
+    return mRenderer.CreateStaticBatch(sceneObject, batchVertexBufferName);
 }
 
 std::unique_ptr<SceneObject> SceneManager::CreateSceneObject(const IMesh& mesh,

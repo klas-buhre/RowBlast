@@ -4,7 +4,6 @@
 #include <algorithm>
 
 #include "SceneObject.hpp"
-#include "VboCache.hpp"
 #include "TextComponent.hpp"
 
 using namespace Pht;
@@ -146,7 +145,7 @@ void RenderQueue::AddSceneObject(const SceneObject& sceneObject) {
         
         sortKey |= static_cast<uint64_t>(material.GetShaderId()) << shaderIdShift;
         sortKey |= uint64_t{material.GetId()} << materialIdShift;
-        sortKey |= uint64_t{renderable->GetVbo().GetId()} << vboIdShift;
+        sortKey |= uint64_t{renderable->GetGpuVertexBuffer().GetId()} << vertexBufferIdShift;
 
     } else if (auto* textComponent = sceneObject.GetComponent<TextComponent>()) {
         auto& textProperties = textComponent->GetProperties();

@@ -3,9 +3,9 @@
 
 #include "Material.hpp"
 #include "Optional.hpp"
+#include "VertexBufferCache.hpp"
 
 namespace Pht {
-    class GpuVbo;
     class VertexBuffer;
     class IMesh;
     class VertexFlags;
@@ -14,12 +14,7 @@ namespace Pht {
         Points,
         Triangles
     };
-    
-    enum class BufferUsage {
-        StaticDraw,
-        DynamicDraw
-    };
-    
+        
     enum class VertexBufferLocation {
         AtGpuOnly,
         AtGpuAndCpu
@@ -36,16 +31,16 @@ namespace Pht {
                          RenderMode renderMode);
         RenderableObject(const Material& material,
                          const VertexBuffer& fromBuffer,
-                         const Optional<std::string>& vboName);
-        RenderableObject(const Material& material, std::shared_ptr<GpuVbo> vbo);
+                         const Optional<std::string>& bufferName);
+        RenderableObject(const Material& material, std::shared_ptr<GpuVertexBuffer> buffer);
 
         ~RenderableObject();
         
         void UploadTriangles(BufferUsage bufferUsage);
         void UploadPoints(BufferUsage bufferUsage);
         
-        const GpuVbo& GetVbo() const {
-            return *mVbo;
+        const GpuVertexBuffer& GetGpuVertexBuffer() const {
+            return *mGpuVertexBuffer;
         }
 
         RenderMode GetRenderMode() const {
@@ -64,12 +59,10 @@ namespace Pht {
         void UploadMeshVertexData(const IMesh& mesh,
                                   const VertexFlags& attributeFlags,
                                   VertexBufferLocation bufferLocation);
-        void UploadTriangles(const VertexBuffer& vertexBuffer, BufferUsage bufferUsage);
-        void UploadPoints(const VertexBuffer& vertexBuffer, BufferUsage bufferUsage);
         
         RenderMode mRenderMode {RenderMode::Triangles};
         Material mMaterial;
-        std::shared_ptr<GpuVbo> mVbo;
+        std::shared_ptr<GpuVertexBuffer> mGpuVertexBuffer;
     };
 }
 

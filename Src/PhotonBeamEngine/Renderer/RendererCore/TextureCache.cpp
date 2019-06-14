@@ -5,7 +5,10 @@
 #include <algorithm>
 #include <assert.h>
 
+#include <OpenGLES/ES3/gl.h>
+
 #include "IImage.hpp"
+#include "GLES3Handles.hpp"
 
 using namespace Pht;
 
@@ -64,7 +67,7 @@ namespace {
     std::shared_ptr<Texture> CreateTexture(const IImage& image, GenerateMipmap generateMipmap) {
         auto texture = std::make_shared<Texture>(image.HasPremultipliedAlpha());
         
-        glBindTexture(GL_TEXTURE_2D, texture->GetHandle());
+        glBindTexture(GL_TEXTURE_2D, texture->GetHandles()->mGLHandle);
         
         if (generateMipmap == GenerateMipmap::Yes) {
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
@@ -86,7 +89,7 @@ namespace {
     std::shared_ptr<Texture> CreateEnvMapTexture(const EnvMapTextureFilenames& filenames) {
         auto texture = std::make_shared<Texture>(false);
         
-        glBindTexture(GL_TEXTURE_CUBE_MAP, texture->GetHandle());
+        glBindTexture(GL_TEXTURE_CUBE_MAP, texture->GetHandles()->mGLHandle);
         
         GlTexImage(GL_TEXTURE_CUBE_MAP_POSITIVE_X, filenames.mPositiveX);
         GlTexImage(GL_TEXTURE_CUBE_MAP_NEGATIVE_X, filenames.mNegativeX);
@@ -110,13 +113,14 @@ bool EnvMapTextureFilenames::operator==(const EnvMapTextureFilenames& other) con
 }
 
 Texture::Texture(bool hasPremultipliedAlpha) :
+    mHandles {std::make_unique<TextureHandles>()},
     mHasPremultipliedAlpha {hasPremultipliedAlpha} {
     
-    glGenTextures(1, &mHandle);
+    glGenTextures(1, &mHandles->mGLHandle);
 }
 
 Texture::~Texture() {
-    glDeleteTextures(1, &mHandle);
+    glDeleteTextures(1, &mHandles->mGLHandle);
 }
 
 std::shared_ptr<Texture> TextureCache::GetTexture(const std::string& textureName,

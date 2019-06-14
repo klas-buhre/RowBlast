@@ -95,8 +95,9 @@ TextComponent& Scene::CreateText(const std::string& text,
 }
 
 void Scene::ConvertSceneObjectToStaticBatch(SceneObject& sceneObject,
-                                            const Optional<std::string>& batchVboName) {
-    auto batchRenderable = mSceneManager.CreateStaticBatchRenderable(sceneObject, batchVboName);
+                                            const Optional<std::string>& batchVertexBufferName) {
+    auto batchRenderable = mSceneManager.CreateStaticBatchRenderable(sceneObject,
+                                                                     batchVertexBufferName);
     if (batchRenderable) {
         sceneObject.DetachChildren();
         sceneObject.SetRenderable(batchRenderable.get());

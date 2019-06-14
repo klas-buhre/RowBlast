@@ -26,7 +26,7 @@ namespace Pht {
         virtual std::unique_ptr<RenderableObject> CreateBatchableRenderableObject(const IMesh& mesh,
                                                                                   const Material& material) = 0;
         virtual std::unique_ptr<RenderableObject> CreateStaticBatchRenderable(const SceneObject& sceneObject,
-                                                                              const Optional<std::string>& batchVboName) = 0;
+                                                                              const Optional<std::string>& batchVertexBufferName) = 0;
         virtual std::unique_ptr<SceneObject> CreateSceneObject(const IMesh& mesh,
                                                                const Material& material,
                                                                SceneResources& sceneResources) = 0;

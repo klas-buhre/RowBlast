@@ -394,7 +394,7 @@
 		625698092182392C003A3A9D /* ObjMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 625696DE2182392B003A3A9D /* ObjMesh.cpp */; };
 		6256980A2182392C003A3A9D /* QuadMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 625696E02182392B003A3A9D /* QuadMesh.cpp */; };
 		6256980B2182392C003A3A9D /* TorusMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 625696E22182392B003A3A9D /* TorusMesh.cpp */; };
-		6256980C2182392C003A3A9D /* VboCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 625696E92182392B003A3A9D /* VboCache.cpp */; };
+		6256980C2182392C003A3A9D /* VertexBufferCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 625696E92182392B003A3A9D /* VertexBufferCache.cpp */; };
 		6256980D2182392C003A3A9D /* TextureCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 625696EE2182392B003A3A9D /* TextureCache.cpp */; };
 		6256980E2182392C003A3A9D /* Camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 625696EF2182392B003A3A9D /* Camera.cpp */; };
 		6256980F2182392C003A3A9D /* RenderableObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 625696F02182392B003A3A9D /* RenderableObject.cpp */; };
@@ -1131,6 +1131,7 @@
 		623EB0C7222EC49A00E41F92 /* undo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = undo.png; sourceTree = "<group>"; };
 		623F5DD522B3AC2100242C10 /* TexturedPixelLighting.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = TexturedPixelLighting.frag; sourceTree = "<group>"; };
 		623F5DD622B3AC2200242C10 /* TexturedPixelLighting.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = TexturedPixelLighting.vert; sourceTree = "<group>"; };
+		623F5DDA22B42A7200242C10 /* GLES3Handles.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = GLES3Handles.hpp; sourceTree = "<group>"; };
 		62411A961E61E62800035D2A /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		62429F842295A16C002C08AD /* AddingMovesAnimation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AddingMovesAnimation.cpp; sourceTree = "<group>"; };
 		62429F852295A16C002C08AD /* AddingMovesAnimation.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AddingMovesAnimation.hpp; sourceTree = "<group>"; };
@@ -1169,7 +1170,7 @@
 		625696E42182392B003A3A9D /* VertexBuffer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = VertexBuffer.hpp; sourceTree = "<group>"; };
 		625696E52182392B003A3A9D /* PrismMesh.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PrismMesh.hpp; sourceTree = "<group>"; };
 		625696E62182392B003A3A9D /* MeshUtils.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MeshUtils.hpp; sourceTree = "<group>"; };
-		625696E92182392B003A3A9D /* VboCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VboCache.cpp; sourceTree = "<group>"; };
+		625696E92182392B003A3A9D /* VertexBufferCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VertexBufferCache.cpp; sourceTree = "<group>"; };
 		625696EA2182392B003A3A9D /* TextRenderer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = TextRenderer.hpp; sourceTree = "<group>"; };
 		625696EB2182392B003A3A9D /* Material.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Material.hpp; sourceTree = "<group>"; };
 		625696EC2182392B003A3A9D /* RenderQueue.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = RenderQueue.hpp; sourceTree = "<group>"; };
@@ -1182,7 +1183,7 @@
 		625696F32182392B003A3A9D /* RenderableObject.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = RenderableObject.hpp; sourceTree = "<group>"; };
 		625696F42182392B003A3A9D /* RenderPass.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = RenderPass.hpp; sourceTree = "<group>"; };
 		625696F52182392B003A3A9D /* ShaderProgram.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ShaderProgram.cpp; sourceTree = "<group>"; };
-		625696F62182392B003A3A9D /* VboCache.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = VboCache.hpp; sourceTree = "<group>"; };
+		625696F62182392B003A3A9D /* VertexBufferCache.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = VertexBufferCache.hpp; sourceTree = "<group>"; };
 		625696F72182392B003A3A9D /* TextRenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TextRenderer.cpp; sourceTree = "<group>"; };
 		625696F82182392B003A3A9D /* IRenderer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = IRenderer.hpp; sourceTree = "<group>"; };
 		625696F92182392B003A3A9D /* Material.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Material.cpp; sourceTree = "<group>"; };
@@ -2550,6 +2551,7 @@
 			children = (
 				625696EF2182392B003A3A9D /* Camera.cpp */,
 				625696FD2182392B003A3A9D /* Camera.hpp */,
+				623F5DDA22B42A7200242C10 /* GLES3Handles.hpp */,
 				625696F82182392B003A3A9D /* IRenderer.hpp */,
 				625696F92182392B003A3A9D /* Material.cpp */,
 				625696EB2182392B003A3A9D /* Material.hpp */,
@@ -2573,8 +2575,8 @@
 				625696EA2182392B003A3A9D /* TextRenderer.hpp */,
 				625696EE2182392B003A3A9D /* TextureCache.cpp */,
 				625696FC2182392B003A3A9D /* TextureCache.hpp */,
-				625696E92182392B003A3A9D /* VboCache.cpp */,
-				625696F62182392B003A3A9D /* VboCache.hpp */,
+				625696E92182392B003A3A9D /* VertexBufferCache.cpp */,
+				625696F62182392B003A3A9D /* VertexBufferCache.hpp */,
 			);
 			path = RendererCore;
 			sourceTree = "<group>";
@@ -3542,7 +3544,7 @@
 				6256984B2182392C003A3A9D /* LightComponent.cpp in Sources */,
 				625698032182392C003A3A9D /* VertexBuffer.cpp in Sources */,
 				62216A7921EB376E001CB9A1 /* GuiResources.cpp in Sources */,
-				6256980C2182392C003A3A9D /* VboCache.cpp in Sources */,
+				6256980C2182392C003A3A9D /* VertexBufferCache.cpp in Sources */,
 				62216C0C21EB377F001CB9A1 /* TPiece.cpp in Sources */,
 				62216BDD21EB377E001CB9A1 /* GameViewControllers.cpp in Sources */,
 				625698462182392C003A3A9D /* GuiView.cpp in Sources */,

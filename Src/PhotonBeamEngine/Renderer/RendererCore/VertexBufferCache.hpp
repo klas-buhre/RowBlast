@@ -1,10 +1,8 @@
-#ifndef VboCache_hpp
-#define VboCache_hpp
+#ifndef VertexBufferCache_hpp
+#define VertexBufferCache_hpp
 
 #include <string>
 #include <memory>
-
-#include <OpenGLES/ES3/gl.h>
 
 #include "VertexBuffer.hpp"
 
@@ -14,18 +12,20 @@ namespace Pht {
         No
     };
     
-    class GpuVbo {
+    enum class BufferUsage {
+        StaticDraw,
+        DynamicDraw
+    };
+    
+    class GpuVertexBufferHandles;
+    
+    class GpuVertexBuffer {
     public:
-        GpuVbo(GenerateIndexBuffer generateIndexBuffer);
-        ~GpuVbo();
+        GpuVertexBuffer(GenerateIndexBuffer generateIndexBuffer);
+        ~GpuVertexBuffer();
         
-        GLuint GetVertexBufferId() const {
-            return mVertexBufferId;
-        }
-        
-        GLuint GetIndexBufferId() const {
-            return mIndexBufferId;
-        }
+        void UploadTriangles(const VertexBuffer& vertexBuffer, BufferUsage bufferUsage);
+        void UploadPoints(const VertexBuffer& vertexBuffer, BufferUsage bufferUsage);
         
         int GetIndexCount() const {
             return mIndexCount;
@@ -33,6 +33,10 @@ namespace Pht {
         
         int GetPointCount() const {
             return mPointCount;
+        }
+        
+        const GpuVertexBufferHandles* GetHandles() const {
+            return mHandles.get();
         }
         
         uint32_t GetId() const {
@@ -48,21 +52,18 @@ namespace Pht {
         }
 
     private:
-        friend class RenderableObject;
-        
         static uint32_t mIdCounter;
         
         uint32_t mId {mIdCounter++};
-        GLuint mVertexBufferId {0};
-        GLuint mIndexBufferId {0};
         int mIndexCount {0};
         int mPointCount {0};
+        std::unique_ptr<GpuVertexBufferHandles> mHandles;
         std::unique_ptr<VertexBuffer> mCpuSideBuffer;
     };
     
-    namespace VboCache {
-        std::shared_ptr<GpuVbo> Get(const std::string& meshName);
-        void Add(const std::string& meshName, std::shared_ptr<GpuVbo> vbo);
+    namespace VertexBufferCache {
+        std::shared_ptr<GpuVertexBuffer> Get(const std::string& meshName);
+        void Add(const std::string& meshName, std::shared_ptr<GpuVertexBuffer> buffer);
     }
 }
 

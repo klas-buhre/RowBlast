@@ -42,8 +42,9 @@
 #include "CameraComponent.hpp"
 #include "LightComponent.hpp"
 #include "TextComponent.hpp"
-#include "VboCache.hpp"
+#include "VertexBufferCache.hpp"
 #include "StaticBatcher.hpp"
+#include "GLES3Handles.hpp"
 
 using namespace Pht;
 
@@ -405,8 +406,8 @@ Renderer::CreateRenderableObject(const IMesh& mesh,
 
 std::unique_ptr<RenderableObject>
 Renderer::CreateStaticBatch(const SceneObject& sceneObject,
-                            const Optional<std::string>& batchVboName) {
-    return StaticBatcher::CreateBatch(sceneObject, batchVboName);
+                            const Optional<std::string>& batchVertexBufferName) {
+    return StaticBatcher::CreateBatch(sceneObject, batchVertexBufferName);
 }
 
 void Renderer::SetLightDirection(const Vec3& lightDirection) {
@@ -626,7 +627,7 @@ void Renderer::RenderObject(const RenderableObject& renderableObject, const Mat4
         SetMaterialProperties(material, shaderId, shaderProgram);
     }
     
-    auto& vbo = renderableObject.GetVbo();
+    auto& vbo = renderableObject.GetGpuVertexBuffer();
     if (!isShaderSameAsLastDraw || !mRenderState.IsVboInUse(vbo)) {
         mRenderState.UseVbo(vbo);
         SetVbo(renderableObject, shaderProgram);
@@ -716,17 +717,17 @@ void Renderer::BindTextures(const Material& material,
         case ShaderId::EnvMap:
             mRenderState.BindTexture(GL_TEXTURE0,
                                      GL_TEXTURE_CUBE_MAP,
-                                     material.GetEnvMapTexture()->GetHandle());
+                                     material.GetEnvMapTexture()->GetHandles()->mGLHandle);
             break;
         case ShaderId::TexturedEmissiveLighting:
             mRenderState.BindTexture(GL_TEXTURE1,
                                      GL_TEXTURE_2D,
-                                     material.GetEmissionTexture()->GetHandle());
+                                     material.GetEmissionTexture()->GetHandles()->mGLHandle);
             break;
         case ShaderId::TexturedEnvMapLighting:
             mRenderState.BindTexture(GL_TEXTURE1,
                                      GL_TEXTURE_CUBE_MAP,
-                                     material.GetEnvMapTexture()->GetHandle());
+                                     material.GetEnvMapTexture()->GetHandles()->mGLHandle);
             break;
         default:
             break;
@@ -735,7 +736,7 @@ void Renderer::BindTextures(const Material& material,
     if (shaderProgram.GetVertexFlags().mTextureCoords) {
         mRenderState.BindTexture(GL_TEXTURE0,
                                  GL_TEXTURE_2D,
-                                 material.GetTexture()->GetHandle());
+                                 material.GetTexture()->GetHandles()->mGLHandle);
     }
 }
 
@@ -767,16 +768,16 @@ void Renderer::SetupBlend(const Material& material, ShaderId shaderId) {
 
 void Renderer::SetVbo(const RenderableObject& renderableObject,
                       const ShaderProgram& shaderProgram) {
-    auto& vbo = renderableObject.GetVbo();
+    auto& vbo = renderableObject.GetGpuVertexBuffer();
     
     // Bind the vertex buffer.
-    glBindBuffer(GL_ARRAY_BUFFER, vbo.GetVertexBufferId());
+    glBindBuffer(GL_ARRAY_BUFFER, vbo.GetHandles()->mGLVertexBufferHandle);
     
     // Enable vertex attribute arrays.
     EnableVertexAttributes(shaderProgram);
     
     if (renderableObject.GetRenderMode() == RenderMode::Triangles) {
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo.GetIndexBufferId());
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo.GetHandles()->mGLIndexBufferHandle);
     }
 }
 
