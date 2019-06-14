@@ -28,6 +28,7 @@ namespace RowBlast {
         float mSize {1.0f};
         float mAngularVelocity {1.0f};
         PlanetType mType;
+        Pht::ShaderId mShaderId {Pht::ShaderId::TexturedLighting};
     };
     
     class Planets {

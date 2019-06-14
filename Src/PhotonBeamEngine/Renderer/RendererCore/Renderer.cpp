@@ -9,6 +9,8 @@
 #include "../Shaders/VertexLighting.frag"
 #include "../Shaders/TexturedLighting.vert"
 #include "../Shaders/TexturedLighting.frag"
+#include "../Shaders/TexturedPixelLighting.vert"
+#include "../Shaders/TexturedPixelLighting.frag"
 #include "../Shaders/TexturedEmissiveLighting.vert"
 #include "../Shaders/TexturedEmissiveLighting.frag"
 #include "../Shaders/TexturedEnvMapLighting.vert"
@@ -41,7 +43,7 @@
 #include "LightComponent.hpp"
 #include "TextComponent.hpp"
 #include "VboCache.hpp"
-#include "RenderBatcher.hpp"
+#include "StaticBatcher.hpp"
 
 using namespace Pht;
 
@@ -179,6 +181,7 @@ Renderer::Renderer(bool createRenderBuffers) {
     CreateShader(ShaderId::PixelLighting,            {.mNormals = true});
     CreateShader(ShaderId::VertexLighting,           {.mNormals = true});
     CreateShader(ShaderId::TexturedLighting,         {.mNormals = true, .mTextureCoords = true});
+    CreateShader(ShaderId::TexturedPixelLighting,    {.mNormals = true, .mTextureCoords = true});
     CreateShader(ShaderId::TexturedEmissiveLighting, {.mNormals = true, .mTextureCoords = true});
     CreateShader(ShaderId::TexturedEnvMapLighting,   {.mNormals = true, .mTextureCoords = true});
     CreateShader(ShaderId::Textured,                 {.mTextureCoords = true});
@@ -294,6 +297,7 @@ void Renderer::InitShaders() {
     GetShader(ShaderId::PixelLighting).Build(PixelLightingVertexShader, PixelLightingFragmentShader);
     GetShader(ShaderId::VertexLighting).Build(VertexLightingVertexShader, VertexLightingFragmentShader);
     GetShader(ShaderId::TexturedLighting).Build(TexturedLightingVertexShader, TexturedLightingFragmentShader);
+    GetShader(ShaderId::TexturedPixelLighting).Build(TexturedPixelLightingVertexShader, TexturedPixelLightingFragmentShader);
     GetShader(ShaderId::TexturedEmissiveLighting).Build(TexturedEmissiveLightingVertexShader, TexturedEmissiveLightingFragmentShader);
     GetShader(ShaderId::TexturedEnvMapLighting).Build(TexturedEnvMapLightingVertexShader, TexturedEnvMapLightingFragmentShader);
     GetShader(ShaderId::Textured).Build(TexturedVertexShader, TexturedFragmentShader);
@@ -402,7 +406,7 @@ Renderer::CreateRenderableObject(const IMesh& mesh,
 std::unique_ptr<RenderableObject>
 Renderer::CreateStaticBatch(const SceneObject& sceneObject,
                             const Optional<std::string>& batchVboName) {
-    return RenderBatcher::CreateStaticBatch(sceneObject, batchVboName);
+    return StaticBatcher::CreateBatch(sceneObject, batchVboName);
 }
 
 void Renderer::SetLightDirection(const Vec3& lightDirection) {

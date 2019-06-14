@@ -16,6 +16,7 @@ namespace {
                                             Pht::SceneObject& containerSceneObject,
                                             const PlanetConfig& planetConfig) {
         Pht::Material ogmaMaterial {"planet_ogma.jpg", 0.02f, 1.0f, 0.0f, 1.0f};
+        ogmaMaterial.SetShaderId(planetConfig.mShaderId);
         auto& ogmaPlanet =
             scene.CreateSceneObject(Pht::ObjMesh {planetMeshName, planetConfig.mSize},
                                     ogmaMaterial);
@@ -43,6 +44,7 @@ namespace {
                                                Pht::SceneObject& containerSceneObject,
                                                const PlanetConfig& planetConfig) {
         Pht::Material titawinMaterial {"planet_titawin.jpg", 0.02f, 1.0f, 0.00f, 1.0f};
+        titawinMaterial.SetShaderId(planetConfig.mShaderId);
         auto& titawinPlanet =
             scene.CreateSceneObject(Pht::ObjMesh {planetMeshName, planetConfig.mSize},
                                     titawinMaterial);
@@ -76,7 +78,7 @@ namespace {
                                             Pht::SceneObject& containerSceneObject,
                                             const PlanetConfig& planetConfig) {
         Pht::Material moonMaterial {"moon.jpg", 0.05f, 1.0f, 0.0f, 1.0f};
-    
+        moonMaterial.SetShaderId(planetConfig.mShaderId);
         auto& moon =
             scene.CreateSceneObject(Pht::ObjMesh {planetMeshName, planetConfig.mSize},
                                     moonMaterial);
@@ -94,7 +96,8 @@ namespace {
                                              Pht::SceneObject& containerSceneObject,
                                              const PlanetConfig& planetConfig) {
         Pht::Material rayeonMaterial {"planet_rayeon.jpg", 0.0f, 0.75f, 0.0f, 1.0f};
-    
+        rayeonMaterial.SetShaderId(planetConfig.mShaderId);
+        
         auto& rayeonPlanet =
             scene.CreateSceneObject(Pht::ObjMesh {planetMeshName, planetConfig.mSize},
                                     rayeonMaterial);
@@ -112,6 +115,7 @@ namespace {
                                              Pht::SceneObject& containerSceneObject,
                                              const PlanetConfig& planetConfig) {
         Pht::Material wadowMaterial {"planet_wadow.jpg", 0.125f, 0.98f, 0.6f, 70.0f};
+        wadowMaterial.SetShaderId(planetConfig.mShaderId);
         auto& wadowPlanet =
             scene.CreateSceneObject(Pht::ObjMesh {planetMeshName, planetConfig.mSize},
                                     wadowMaterial);

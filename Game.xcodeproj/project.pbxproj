@@ -327,7 +327,7 @@
 		62276EA02274A96000679BC6 /* level1.json in Resources */ = {isa = PBXBuildFile; fileRef = 62276E572274A96000679BC6 /* level1.json */; };
 		62276EA12274A96000679BC6 /* level13.json in Resources */ = {isa = PBXBuildFile; fileRef = 62276E582274A96000679BC6 /* level13.json */; };
 		62277D862288688B00F42C6A /* down_arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 62277D852288688A00F42C6A /* down_arrow.png */; };
-		6227B9E822ABFE1000C536D3 /* RenderBatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6227B9E622ABFE1000C536D3 /* RenderBatcher.cpp */; };
+		6227B9E822ABFE1000C536D3 /* StaticBatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6227B9E622ABFE1000C536D3 /* StaticBatcher.cpp */; };
 		6227D4F5206CFD25008EA77D /* bomb_798.obj in Resources */ = {isa = PBXBuildFile; fileRef = 6227D4F4206CFD25008EA77D /* bomb_798.obj */; };
 		62291E1F2298559600D36BFB /* star.wav in Resources */ = {isa = PBXBuildFile; fileRef = 62291E1E2298559500D36BFB /* star.wav */; };
 		62291E212298598C00D36BFB /* all_cleared.wav in Resources */ = {isa = PBXBuildFile; fileRef = 62291E202298598B00D36BFB /* all_cleared.wav */; };
@@ -372,6 +372,8 @@
 		623B94D821FCC5E700B62D9B /* SwitchPiece2WindowView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623B94D621FCC5E700B62D9B /* SwitchPiece2WindowView.cpp */; };
 		623B94DE21FCC63700B62D9B /* SwitchPiece2WindowController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623B94DC21FCC63700B62D9B /* SwitchPiece2WindowController.cpp */; };
 		623EB0C8222EC49A00E41F92 /* undo.png in Resources */ = {isa = PBXBuildFile; fileRef = 623EB0C7222EC49A00E41F92 /* undo.png */; };
+		623F5DD722B3AC2200242C10 /* TexturedPixelLighting.frag in Resources */ = {isa = PBXBuildFile; fileRef = 623F5DD522B3AC2100242C10 /* TexturedPixelLighting.frag */; };
+		623F5DD822B3AC2200242C10 /* TexturedPixelLighting.vert in Resources */ = {isa = PBXBuildFile; fileRef = 623F5DD622B3AC2200242C10 /* TexturedPixelLighting.vert */; };
 		62411A971E61E62800035D2A /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62411A961E61E62800035D2A /* GLKit.framework */; };
 		62429F862295A16C002C08AD /* AddingMovesAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62429F842295A16C002C08AD /* AddingMovesAnimation.cpp */; };
 		62429F882295CECA002C08AD /* add_move.wav in Resources */ = {isa = PBXBuildFile; fileRef = 62429F872295CEC9002C08AD /* add_move.wav */; };
@@ -1062,8 +1064,8 @@
 		62276E572274A96000679BC6 /* level1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level1.json; sourceTree = "<group>"; };
 		62276E582274A96000679BC6 /* level13.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level13.json; sourceTree = "<group>"; };
 		62277D852288688A00F42C6A /* down_arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = down_arrow.png; sourceTree = "<group>"; };
-		6227B9E622ABFE1000C536D3 /* RenderBatcher.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = RenderBatcher.cpp; sourceTree = "<group>"; };
-		6227B9E722ABFE1000C536D3 /* RenderBatcher.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = RenderBatcher.hpp; sourceTree = "<group>"; };
+		6227B9E622ABFE1000C536D3 /* StaticBatcher.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = StaticBatcher.cpp; sourceTree = "<group>"; };
+		6227B9E722ABFE1000C536D3 /* StaticBatcher.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = StaticBatcher.hpp; sourceTree = "<group>"; };
 		6227D4F4206CFD25008EA77D /* bomb_798.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bomb_798.obj; sourceTree = "<group>"; };
 		62291E1E2298559500D36BFB /* star.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = star.wav; sourceTree = "<group>"; };
 		62291E202298598B00D36BFB /* all_cleared.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = all_cleared.wav; sourceTree = "<group>"; };
@@ -1127,6 +1129,8 @@
 		623B94DC21FCC63700B62D9B /* SwitchPiece2WindowController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SwitchPiece2WindowController.cpp; sourceTree = "<group>"; };
 		623B94DD21FCC63700B62D9B /* SwitchPiece2WindowController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SwitchPiece2WindowController.hpp; sourceTree = "<group>"; };
 		623EB0C7222EC49A00E41F92 /* undo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = undo.png; sourceTree = "<group>"; };
+		623F5DD522B3AC2100242C10 /* TexturedPixelLighting.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = TexturedPixelLighting.frag; sourceTree = "<group>"; };
+		623F5DD622B3AC2200242C10 /* TexturedPixelLighting.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = TexturedPixelLighting.vert; sourceTree = "<group>"; };
 		62411A961E61E62800035D2A /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		62429F842295A16C002C08AD /* AddingMovesAnimation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AddingMovesAnimation.cpp; sourceTree = "<group>"; };
 		62429F852295A16C002C08AD /* AddingMovesAnimation.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AddingMovesAnimation.hpp; sourceTree = "<group>"; };
@@ -2551,8 +2555,6 @@
 				625696EB2182392B003A3A9D /* Material.hpp */,
 				625696F02182392B003A3A9D /* RenderableObject.cpp */,
 				625696F32182392B003A3A9D /* RenderableObject.hpp */,
-				6227B9E622ABFE1000C536D3 /* RenderBatcher.cpp */,
-				6227B9E722ABFE1000C536D3 /* RenderBatcher.hpp */,
 				625696FB2182392B003A3A9D /* Renderer.cpp */,
 				625696ED2182392B003A3A9D /* Renderer.hpp */,
 				625696F12182392B003A3A9D /* RenderPass.cpp */,
@@ -2565,6 +2567,8 @@
 				625696F22182392B003A3A9D /* ShaderProgram.hpp */,
 				627A123221AAC7BF00EECA3B /* SoftwareRasterizer.cpp */,
 				627A123321AAC7BF00EECA3B /* SoftwareRasterizer.hpp */,
+				6227B9E622ABFE1000C536D3 /* StaticBatcher.cpp */,
+				6227B9E722ABFE1000C536D3 /* StaticBatcher.hpp */,
 				625696F72182392B003A3A9D /* TextRenderer.cpp */,
 				625696EA2182392B003A3A9D /* TextRenderer.hpp */,
 				625696EE2182392B003A3A9D /* TextureCache.cpp */,
@@ -2604,6 +2608,8 @@
 				6256970A2182392B003A3A9D /* TexturedEnvMapLighting.vert */,
 				625697112182392B003A3A9D /* TexturedLighting.frag */,
 				625697042182392B003A3A9D /* TexturedLighting.vert */,
+				623F5DD522B3AC2100242C10 /* TexturedPixelLighting.frag */,
+				623F5DD622B3AC2200242C10 /* TexturedPixelLighting.vert */,
 				625697082182392B003A3A9D /* VertexColor.frag */,
 				6256971B2182392B003A3A9D /* VertexColor.vert */,
 				625697122182392B003A3A9D /* VertexLighting.frag */,
@@ -3271,6 +3277,7 @@
 				6269408F2154F94300D9857A /* planet_ring.obj in Resources */,
 				6234618C21691DAF00ECD0DF /* asteroid_998.obj in Resources */,
 				62276E682274A96000679BC6 /* level48.json in Resources */,
+				623F5DD722B3AC2200242C10 /* TexturedPixelLighting.frag in Resources */,
 				6256981A2182392C003A3A9D /* VertexLighting.vert in Resources */,
 				6256982B2182392C003A3A9D /* Textured.vert in Resources */,
 				62276EA02274A96000679BC6 /* level1.json in Resources */,
@@ -3289,6 +3296,7 @@
 				62B1CB80210F8F8600D0F195 /* confetti.png in Resources */,
 				625D3B55217249EC00D67EC2 /* asteroid_2000.obj in Resources */,
 				62E6DAD02205D26F00EA9D3A /* block_trail_blue.png in Resources */,
+				623F5DD822B3AC2200242C10 /* TexturedPixelLighting.vert in Resources */,
 				62276E972274A96000679BC6 /* level17.json in Resources */,
 				62276E842274A96000679BC6 /* level55.json in Resources */,
 				62276E6B2274A96000679BC6 /* level30.json in Resources */,
@@ -3633,7 +3641,7 @@
 				62216C1521EB377F001CB9A1 /* MirroredZPiece.cpp in Sources */,
 				627A12C521B3085100EECA3B /* GuiViewManager.cpp in Sources */,
 				62216C2521EB377F001CB9A1 /* WeldsAnimation.cpp in Sources */,
-				6227B9E822ABFE1000C536D3 /* RenderBatcher.cpp in Sources */,
+				6227B9E822ABFE1000C536D3 /* StaticBatcher.cpp in Sources */,
 				62216A7A21EB376E001CB9A1 /* GlossyButton.cpp in Sources */,
 				62216BC421EB377E001CB9A1 /* SameColorDialogView.cpp in Sources */,
 				62216BFD21EB377E001CB9A1 /* Field.cpp in Sources */,

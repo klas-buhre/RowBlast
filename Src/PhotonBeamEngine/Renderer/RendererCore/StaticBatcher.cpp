@@ -1,4 +1,4 @@
-#include "RenderBatcher.hpp"
+#include "StaticBatcher.hpp"
 
 #include <assert.h>
 
@@ -137,8 +137,8 @@ namespace {
 }
 
 std::unique_ptr<RenderableObject>
-RenderBatcher::CreateStaticBatch(const SceneObject& sourceSceneObject,
-                                 const Optional<std::string>& batchVboName) {
+StaticBatcher::CreateBatch(const SceneObject& sourceSceneObject,
+                           const Optional<std::string>& batchVboName) {
     auto staticBatchSetup = SetUpStaticBatchIfPossible(sourceSceneObject);
     if (staticBatchSetup.mBatchVertexBuffer == nullptr ||
         staticBatchSetup.mBatchMaterial == nullptr) {

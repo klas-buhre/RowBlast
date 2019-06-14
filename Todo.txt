@@ -82,11 +82,6 @@ Backlog:
 
 Ongoing tasks:
 
-
-
-
-
-
 Use random seed of 12345 in Engine.cpp and Clouds.cpp to get the same numbers.
 
 With render queue refactoring and static batching:
@@ -153,11 +148,9 @@ Beginning of level 20:
  NumDrawCalls: 129
 
 
-    -Merge to master.
-
-    -Try adding shader with pixel lighting and texturing. Use for the big planet in world 3.
-    -Add a shader with a brightness vertex attribute. Then most clouds can be batched if they use a
-     texture atlas (a TextureAtlas class can be used for the fonts later as well).
+    -Add a shader with a brightness (or rather color) vertex attribute. Then most clouds can be
+     batched if they use a texture atlas (a TextureAtlas class can be used for the fonts later as
+     well).
     -Add dynamic batching of objects with very few indices and no rotation if the saved cost of
      eliminated state changes is greater than the cost of creating the batch.
     -Test everything in slow motion to see that the render functionality is the same as before

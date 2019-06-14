@@ -30,7 +30,7 @@ namespace {
     constexpr auto lightAnimationDuration = 5.0f;
     const Pht::Vec3 defaultUiLightDirectionA {0.785f, 1.0f, 0.67f};
     const Pht::Vec3 defaultUiLightDirectionB {1.0f, 1.0f, 0.74f};
-    const Pht::Color selectedPinColorAdd {0.25f, 0.25f, 0.25f};
+    const Pht::Color selectedPinColorAdd {0.2f, 0.2f, 0.2f};
     
     enum class Layer {
         Space,
@@ -75,10 +75,11 @@ void MapScene::CreateRenderables() {
     auto blueMaterial = mCommonResources.GetMaterials().GetBlueMaterial();
     mBluePinRenderable = sceneManager.CreateRenderableObject(pinMesh, blueMaterial);
     
+    Pht::SphereMesh selectedPinMesh {0.89f, std::string{"selectedMapPin"}};
     blueMaterial.SetAmbient(blueMaterial.GetAmbient() + selectedPinColorAdd);
     blueMaterial.SetDiffuse(blueMaterial.GetDiffuse() + selectedPinColorAdd);
     blueMaterial.SetSpecular(blueMaterial.GetSpecular() + selectedPinColorAdd);
-    mSelectedPinRenderable = sceneManager.CreateRenderableObject(pinMesh, blueMaterial);
+    mSelectedPinRenderable = sceneManager.CreateRenderableObject(selectedPinMesh, blueMaterial);
     
     auto& grayMaterial = mCommonResources.GetMaterials().GetLightGrayMaterial();
     mGrayPinRenderable = sceneManager.CreateRenderableObject(pinMesh, grayMaterial);

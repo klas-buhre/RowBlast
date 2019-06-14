@@ -59,7 +59,8 @@ namespace {
             .mOrientation = {15.0f, 0.0f, 35.0f},
             .mSize = 3.5f,
             .mAngularVelocity = 2.5f,
-            .mType = PlanetType::Wadow
+            .mType = PlanetType::Wadow,
+            .mShaderId = Pht::ShaderId::TexturedPixelLighting
         },
         PlanetConfig {
             .mPosition = {200.0f, -300.0f, -420.0f},
