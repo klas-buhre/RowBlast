@@ -1,15 +1,14 @@
 #include "TextRenderer.hpp"
 
 #define STRINGIFY(A)  #A
-#include "../Shaders/Text.vert"
-#include "../Shaders/Text.frag"
-#include "../Shaders/TextDoubleGradient.vert"
-#include "../Shaders/TextDoubleGradient.frag"
-#include "../Shaders/TextMidGradient.vert"
-#include "../Shaders/TextMidGradient.frag"
+#include "../GLES3Shaders/Text.vert"
+#include "../GLES3Shaders/Text.frag"
+#include "../GLES3Shaders/TextDoubleGradient.vert"
+#include "../GLES3Shaders/TextDoubleGradient.frag"
+#include "../GLES3Shaders/TextMidGradient.vert"
+#include "../GLES3Shaders/TextMidGradient.frag"
 
 #include "Font.hpp"
-#include "IEngine.hpp"
 #include "RenderStateManager.hpp"
 
 using namespace Pht;

@@ -2,7 +2,7 @@
 
 #include "Scene.hpp"
 #include "SceneObject.hpp"
-#include "Renderer.hpp"
+#include "IRenderSystem.hpp"
 #include "RenderableObject.hpp"
 #include "Fnv1Hash.hpp"
 #include "InputHandler.hpp"
