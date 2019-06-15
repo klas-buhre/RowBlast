@@ -400,19 +400,19 @@
 		623F5E3D22B55D5200242C10 /* TexturedEnvMapLighting.frag in Resources */ = {isa = PBXBuildFile; fileRef = 623F5DFE22B55D5100242C10 /* TexturedEnvMapLighting.frag */; };
 		623F5E3E22B55D5200242C10 /* VertexColor.vert in Resources */ = {isa = PBXBuildFile; fileRef = 623F5DFF22B55D5100242C10 /* VertexColor.vert */; };
 		623F5E3F22B55D5200242C10 /* EnvMap.vert in Resources */ = {isa = PBXBuildFile; fileRef = 623F5E0022B55D5100242C10 /* EnvMap.vert */; };
-		623F5E4022B55D5200242C10 /* TextureCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623F5E0422B55D5100242C10 /* TextureCache.cpp */; };
-		623F5E4122B55D5200242C10 /* RenderStateManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623F5E0522B55D5100242C10 /* RenderStateManager.cpp */; };
-		623F5E4222B55D5200242C10 /* ShaderProgram.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623F5E0922B55D5100242C10 /* ShaderProgram.cpp */; };
-		623F5E4322B55D5200242C10 /* TextRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623F5E0A22B55D5100242C10 /* TextRenderer.cpp */; };
-		623F5E4422B55D5200242C10 /* VertexBufferCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623F5E0B22B55D5100242C10 /* VertexBufferCache.cpp */; };
-		623F5E4522B55D5200242C10 /* Renderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623F5E0C22B55D5100242C10 /* Renderer.cpp */; };
-		623F5E4622B55D5200242C10 /* Camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623F5E1122B55D5100242C10 /* Camera.cpp */; };
-		623F5E4722B55D5200242C10 /* RenderableObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623F5E1222B55D5100242C10 /* RenderableObject.cpp */; };
-		623F5E4822B55D5200242C10 /* RenderPass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623F5E1422B55D5100242C10 /* RenderPass.cpp */; };
-		623F5E4922B55D5200242C10 /* StaticBatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623F5E1522B55D5100242C10 /* StaticBatcher.cpp */; };
-		623F5E4A22B55D5200242C10 /* SoftwareRasterizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623F5E1622B55D5100242C10 /* SoftwareRasterizer.cpp */; };
-		623F5E4B22B55D5200242C10 /* Material.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623F5E1C22B55D5200242C10 /* Material.cpp */; };
-		623F5E4C22B55D5200242C10 /* RenderQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623F5E1D22B55D5200242C10 /* RenderQueue.cpp */; };
+		623F5E4022B55D5200242C10 /* GLES3TextureCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623F5E0422B55D5100242C10 /* GLES3TextureCache.cpp */; };
+		623F5E4122B55D5200242C10 /* GLES3RenderStateManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623F5E0522B55D5100242C10 /* GLES3RenderStateManager.cpp */; };
+		623F5E4222B55D5200242C10 /* GLES3ShaderProgram.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623F5E0922B55D5100242C10 /* GLES3ShaderProgram.cpp */; };
+		623F5E4322B55D5200242C10 /* GLES3TextRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623F5E0A22B55D5100242C10 /* GLES3TextRenderer.cpp */; };
+		623F5E4422B55D5200242C10 /* GLES3VertexBufferCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623F5E0B22B55D5100242C10 /* GLES3VertexBufferCache.cpp */; };
+		623F5E4522B55D5200242C10 /* GLES3Renderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623F5E0C22B55D5100242C10 /* GLES3Renderer.cpp */; };
+		623F5E6022B563A900242C10 /* Camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623F5E5122B563A900242C10 /* Camera.cpp */; };
+		623F5E6122B563A900242C10 /* RenderableObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623F5E5222B563A900242C10 /* RenderableObject.cpp */; };
+		623F5E6222B563A900242C10 /* RenderPass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623F5E5422B563A900242C10 /* RenderPass.cpp */; };
+		623F5E6322B563A900242C10 /* StaticBatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623F5E5522B563A900242C10 /* StaticBatcher.cpp */; };
+		623F5E6422B563A900242C10 /* SoftwareRasterizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623F5E5622B563A900242C10 /* SoftwareRasterizer.cpp */; };
+		623F5E6522B563A900242C10 /* Material.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623F5E5C22B563A900242C10 /* Material.cpp */; };
+		623F5E6622B563A900242C10 /* RenderQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623F5E5D22B563A900242C10 /* RenderQueue.cpp */; };
 		62411A971E61E62800035D2A /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62411A961E61E62800035D2A /* GLKit.framework */; };
 		62429F862295A16C002C08AD /* AddingMovesAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62429F842295A16C002C08AD /* AddingMovesAnimation.cpp */; };
 		62429F882295CECA002C08AD /* add_move.wav in Resources */ = {isa = PBXBuildFile; fileRef = 62429F872295CEC9002C08AD /* add_move.wav */; };
@@ -1155,35 +1155,34 @@
 		623F5DFE22B55D5100242C10 /* TexturedEnvMapLighting.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = TexturedEnvMapLighting.frag; sourceTree = "<group>"; };
 		623F5DFF22B55D5100242C10 /* VertexColor.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = VertexColor.vert; sourceTree = "<group>"; };
 		623F5E0022B55D5100242C10 /* EnvMap.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = EnvMap.vert; sourceTree = "<group>"; };
-		623F5E0222B55D5100242C10 /* TextRenderer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = TextRenderer.hpp; sourceTree = "<group>"; };
-		623F5E0322B55D5100242C10 /* Renderer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Renderer.hpp; sourceTree = "<group>"; };
-		623F5E0422B55D5100242C10 /* TextureCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TextureCache.cpp; sourceTree = "<group>"; };
-		623F5E0522B55D5100242C10 /* RenderStateManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RenderStateManager.cpp; sourceTree = "<group>"; };
-		623F5E0622B55D5100242C10 /* ShaderProgram.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ShaderProgram.hpp; sourceTree = "<group>"; };
+		623F5E0222B55D5100242C10 /* GLES3TextRenderer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GLES3TextRenderer.hpp; sourceTree = "<group>"; };
+		623F5E0422B55D5100242C10 /* GLES3TextureCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GLES3TextureCache.cpp; sourceTree = "<group>"; };
+		623F5E0522B55D5100242C10 /* GLES3RenderStateManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GLES3RenderStateManager.cpp; sourceTree = "<group>"; };
+		623F5E0622B55D5100242C10 /* GLES3ShaderProgram.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GLES3ShaderProgram.hpp; sourceTree = "<group>"; };
 		623F5E0722B55D5100242C10 /* GLES3Handles.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GLES3Handles.hpp; sourceTree = "<group>"; };
-		623F5E0822B55D5100242C10 /* RenderStateManager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = RenderStateManager.hpp; sourceTree = "<group>"; };
-		623F5E0922B55D5100242C10 /* ShaderProgram.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ShaderProgram.cpp; sourceTree = "<group>"; };
-		623F5E0A22B55D5100242C10 /* TextRenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TextRenderer.cpp; sourceTree = "<group>"; };
-		623F5E0B22B55D5100242C10 /* VertexBufferCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VertexBufferCache.cpp; sourceTree = "<group>"; };
-		623F5E0C22B55D5100242C10 /* Renderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Renderer.cpp; sourceTree = "<group>"; };
-		623F5E0E22B55D5100242C10 /* Material.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Material.hpp; sourceTree = "<group>"; };
-		623F5E0F22B55D5100242C10 /* RenderQueue.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = RenderQueue.hpp; sourceTree = "<group>"; };
-		623F5E1022B55D5100242C10 /* VertexBufferCache.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = VertexBufferCache.hpp; sourceTree = "<group>"; };
-		623F5E1122B55D5100242C10 /* Camera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Camera.cpp; sourceTree = "<group>"; };
-		623F5E1222B55D5100242C10 /* RenderableObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RenderableObject.cpp; sourceTree = "<group>"; };
-		623F5E1322B55D5100242C10 /* SoftwareRasterizer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SoftwareRasterizer.hpp; sourceTree = "<group>"; };
-		623F5E1422B55D5100242C10 /* RenderPass.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RenderPass.cpp; sourceTree = "<group>"; };
-		623F5E1522B55D5100242C10 /* StaticBatcher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StaticBatcher.cpp; sourceTree = "<group>"; };
-		623F5E1622B55D5100242C10 /* SoftwareRasterizer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SoftwareRasterizer.cpp; sourceTree = "<group>"; };
-		623F5E1722B55D5100242C10 /* RenderableObject.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = RenderableObject.hpp; sourceTree = "<group>"; };
-		623F5E1822B55D5100242C10 /* IRenderSystem.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = IRenderSystem.hpp; sourceTree = "<group>"; };
-		623F5E1922B55D5100242C10 /* RenderPass.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = RenderPass.hpp; sourceTree = "<group>"; };
-		623F5E1A22B55D5100242C10 /* StaticBatcher.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = StaticBatcher.hpp; sourceTree = "<group>"; };
-		623F5E1B22B55D5200242C10 /* IRenderer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = IRenderer.hpp; sourceTree = "<group>"; };
-		623F5E1C22B55D5200242C10 /* Material.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Material.cpp; sourceTree = "<group>"; };
-		623F5E1D22B55D5200242C10 /* RenderQueue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RenderQueue.cpp; sourceTree = "<group>"; };
-		623F5E1E22B55D5200242C10 /* TextureCache.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = TextureCache.hpp; sourceTree = "<group>"; };
-		623F5E1F22B55D5200242C10 /* Camera.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Camera.hpp; sourceTree = "<group>"; };
+		623F5E0822B55D5100242C10 /* GLES3RenderStateManager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GLES3RenderStateManager.hpp; sourceTree = "<group>"; };
+		623F5E0922B55D5100242C10 /* GLES3ShaderProgram.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GLES3ShaderProgram.cpp; sourceTree = "<group>"; };
+		623F5E0A22B55D5100242C10 /* GLES3TextRenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GLES3TextRenderer.cpp; sourceTree = "<group>"; };
+		623F5E0B22B55D5100242C10 /* GLES3VertexBufferCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GLES3VertexBufferCache.cpp; sourceTree = "<group>"; };
+		623F5E0C22B55D5100242C10 /* GLES3Renderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GLES3Renderer.cpp; sourceTree = "<group>"; };
+		623F5E4E22B563A900242C10 /* Material.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Material.hpp; sourceTree = "<group>"; };
+		623F5E4F22B563A900242C10 /* RenderQueue.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = RenderQueue.hpp; sourceTree = "<group>"; };
+		623F5E5022B563A900242C10 /* VertexBufferCache.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = VertexBufferCache.hpp; sourceTree = "<group>"; };
+		623F5E5122B563A900242C10 /* Camera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Camera.cpp; sourceTree = "<group>"; };
+		623F5E5222B563A900242C10 /* RenderableObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RenderableObject.cpp; sourceTree = "<group>"; };
+		623F5E5322B563A900242C10 /* SoftwareRasterizer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SoftwareRasterizer.hpp; sourceTree = "<group>"; };
+		623F5E5422B563A900242C10 /* RenderPass.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RenderPass.cpp; sourceTree = "<group>"; };
+		623F5E5522B563A900242C10 /* StaticBatcher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StaticBatcher.cpp; sourceTree = "<group>"; };
+		623F5E5622B563A900242C10 /* SoftwareRasterizer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SoftwareRasterizer.cpp; sourceTree = "<group>"; };
+		623F5E5722B563A900242C10 /* RenderableObject.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = RenderableObject.hpp; sourceTree = "<group>"; };
+		623F5E5822B563A900242C10 /* IRenderSystem.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = IRenderSystem.hpp; sourceTree = "<group>"; };
+		623F5E5922B563A900242C10 /* RenderPass.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = RenderPass.hpp; sourceTree = "<group>"; };
+		623F5E5A22B563A900242C10 /* StaticBatcher.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = StaticBatcher.hpp; sourceTree = "<group>"; };
+		623F5E5B22B563A900242C10 /* IRenderer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = IRenderer.hpp; sourceTree = "<group>"; };
+		623F5E5C22B563A900242C10 /* Material.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Material.cpp; sourceTree = "<group>"; };
+		623F5E5D22B563A900242C10 /* RenderQueue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RenderQueue.cpp; sourceTree = "<group>"; };
+		623F5E5E22B563A900242C10 /* TextureCache.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = TextureCache.hpp; sourceTree = "<group>"; };
+		623F5E5F22B563A900242C10 /* Camera.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Camera.hpp; sourceTree = "<group>"; };
 		62411A961E61E62800035D2A /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		62429F842295A16C002C08AD /* AddingMovesAnimation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AddingMovesAnimation.cpp; sourceTree = "<group>"; };
 		62429F852295A16C002C08AD /* AddingMovesAnimation.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AddingMovesAnimation.hpp; sourceTree = "<group>"; };
@@ -2489,43 +2488,42 @@
 			isa = PBXGroup;
 			children = (
 				623F5E0722B55D5100242C10 /* GLES3Handles.hpp */,
-				623F5E0C22B55D5100242C10 /* Renderer.cpp */,
-				623F5E0322B55D5100242C10 /* Renderer.hpp */,
-				623F5E0522B55D5100242C10 /* RenderStateManager.cpp */,
-				623F5E0822B55D5100242C10 /* RenderStateManager.hpp */,
-				623F5E0922B55D5100242C10 /* ShaderProgram.cpp */,
-				623F5E0622B55D5100242C10 /* ShaderProgram.hpp */,
-				623F5E0A22B55D5100242C10 /* TextRenderer.cpp */,
-				623F5E0222B55D5100242C10 /* TextRenderer.hpp */,
-				623F5E0422B55D5100242C10 /* TextureCache.cpp */,
-				623F5E0B22B55D5100242C10 /* VertexBufferCache.cpp */,
+				623F5E0C22B55D5100242C10 /* GLES3Renderer.cpp */,
+				623F5E0522B55D5100242C10 /* GLES3RenderStateManager.cpp */,
+				623F5E0822B55D5100242C10 /* GLES3RenderStateManager.hpp */,
+				623F5E0922B55D5100242C10 /* GLES3ShaderProgram.cpp */,
+				623F5E0622B55D5100242C10 /* GLES3ShaderProgram.hpp */,
+				623F5E0A22B55D5100242C10 /* GLES3TextRenderer.cpp */,
+				623F5E0222B55D5100242C10 /* GLES3TextRenderer.hpp */,
+				623F5E0422B55D5100242C10 /* GLES3TextureCache.cpp */,
+				623F5E0B22B55D5100242C10 /* GLES3VertexBufferCache.cpp */,
 			);
 			path = GLES3Renderer;
 			sourceTree = "<group>";
 		};
-		623F5E0D22B55D5100242C10 /* RendererCommon */ = {
+		623F5E4D22B563A900242C10 /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				623F5E1122B55D5100242C10 /* Camera.cpp */,
-				623F5E1F22B55D5200242C10 /* Camera.hpp */,
-				623F5E1B22B55D5200242C10 /* IRenderer.hpp */,
-				623F5E1822B55D5100242C10 /* IRenderSystem.hpp */,
-				623F5E1C22B55D5200242C10 /* Material.cpp */,
-				623F5E0E22B55D5100242C10 /* Material.hpp */,
-				623F5E1222B55D5100242C10 /* RenderableObject.cpp */,
-				623F5E1722B55D5100242C10 /* RenderableObject.hpp */,
-				623F5E1422B55D5100242C10 /* RenderPass.cpp */,
-				623F5E1922B55D5100242C10 /* RenderPass.hpp */,
-				623F5E1D22B55D5200242C10 /* RenderQueue.cpp */,
-				623F5E0F22B55D5100242C10 /* RenderQueue.hpp */,
-				623F5E1622B55D5100242C10 /* SoftwareRasterizer.cpp */,
-				623F5E1322B55D5100242C10 /* SoftwareRasterizer.hpp */,
-				623F5E1522B55D5100242C10 /* StaticBatcher.cpp */,
-				623F5E1A22B55D5100242C10 /* StaticBatcher.hpp */,
-				623F5E1E22B55D5200242C10 /* TextureCache.hpp */,
-				623F5E1022B55D5100242C10 /* VertexBufferCache.hpp */,
+				623F5E5122B563A900242C10 /* Camera.cpp */,
+				623F5E5F22B563A900242C10 /* Camera.hpp */,
+				623F5E5B22B563A900242C10 /* IRenderer.hpp */,
+				623F5E5822B563A900242C10 /* IRenderSystem.hpp */,
+				623F5E5C22B563A900242C10 /* Material.cpp */,
+				623F5E4E22B563A900242C10 /* Material.hpp */,
+				623F5E5222B563A900242C10 /* RenderableObject.cpp */,
+				623F5E5722B563A900242C10 /* RenderableObject.hpp */,
+				623F5E5422B563A900242C10 /* RenderPass.cpp */,
+				623F5E5922B563A900242C10 /* RenderPass.hpp */,
+				623F5E5D22B563A900242C10 /* RenderQueue.cpp */,
+				623F5E4F22B563A900242C10 /* RenderQueue.hpp */,
+				623F5E5622B563A900242C10 /* SoftwareRasterizer.cpp */,
+				623F5E5322B563A900242C10 /* SoftwareRasterizer.hpp */,
+				623F5E5522B563A900242C10 /* StaticBatcher.cpp */,
+				623F5E5A22B563A900242C10 /* StaticBatcher.hpp */,
+				623F5E5E22B563A900242C10 /* TextureCache.hpp */,
+				623F5E5022B563A900242C10 /* VertexBufferCache.hpp */,
 			);
-			path = RendererCommon;
+			path = Common;
 			sourceTree = "<group>";
 		};
 		6242DEEF21C50E7600D17F46 /* AudioApi */ = {
@@ -2632,8 +2630,8 @@
 		625696E72182392B003A3A9D /* Renderer */ = {
 			isa = PBXGroup;
 			children = (
+				623F5E4D22B563A900242C10 /* Common */,
 				623F5DDF22B55D5100242C10 /* OpenGLES3 */,
-				623F5E0D22B55D5100242C10 /* RendererCommon */,
 			);
 			path = Renderer;
 			sourceTree = "<group>";
@@ -3538,7 +3536,7 @@
 				62216C0721EB377F001CB9A1 /* MiddleIPiece.cpp in Sources */,
 				62216A7521EB376E001CB9A1 /* SpinningWheelEffect.cpp in Sources */,
 				625698362182392C003A3A9D /* SwipeGestureRecognizer.cpp in Sources */,
-				623F5E4422B55D5200242C10 /* VertexBufferCache.cpp in Sources */,
+				623F5E4422B55D5200242C10 /* GLES3VertexBufferCache.cpp in Sources */,
 				62216C0E21EB377F001CB9A1 /* BigTrianglePiece.cpp in Sources */,
 				62216BF721EB377E001CB9A1 /* Cell.cpp in Sources */,
 				625698522182392C003A3A9D /* ParticleEffect.cpp in Sources */,
@@ -3550,9 +3548,9 @@
 				625698452182392C003A3A9D /* Font.cpp in Sources */,
 				62216C6821F08A85001CB9A1 /* SettingsMenuView.cpp in Sources */,
 				62216A9A21EB376E001CB9A1 /* FloatingBlocks.cpp in Sources */,
-				623F5E4322B55D5200242C10 /* TextRenderer.cpp in Sources */,
+				623F5E4322B55D5200242C10 /* GLES3TextRenderer.cpp in Sources */,
 				62216C4D21EB41F1001CB9A1 /* AcceptTermsDialogView.cpp in Sources */,
-				623F5E4B22B55D5200242C10 /* Material.cpp in Sources */,
+				623F5E6522B563A900242C10 /* Material.cpp in Sources */,
 				62BB35C621C6BA710051AEEF /* OpenAlContext.cpp in Sources */,
 				6220AF3322342B7400D66C76 /* HowToPlayDialogController.cpp in Sources */,
 				62216C3F21EB377F001CB9A1 /* MapHudController.cpp in Sources */,
@@ -3589,7 +3587,7 @@
 				62216C5621ED0BFC001CB9A1 /* DocumentViewerScene.cpp in Sources */,
 				62216C2621EB377F001CB9A1 /* FallingPieceScaleAnimation.cpp in Sources */,
 				62216C3D21EB377F001CB9A1 /* PortalParticleEffect.cpp in Sources */,
-				623F5E4522B55D5200242C10 /* Renderer.cpp in Sources */,
+				623F5E4522B55D5200242C10 /* GLES3Renderer.cpp in Sources */,
 				6256980A2182392C003A3A9D /* QuadMesh.cpp in Sources */,
 				62216BEB21EB377E001CB9A1 /* GameHud.cpp in Sources */,
 				62216A9621EB376E001CB9A1 /* Ufo.cpp in Sources */,
@@ -3599,7 +3597,7 @@
 				625698502182392C003A3A9D /* FadeEffect.cpp in Sources */,
 				62216C0821EB377F001CB9A1 /* SmallTrianglePiece.cpp in Sources */,
 				62216BEE21EB377E001CB9A1 /* SceneObjectPool.cpp in Sources */,
-				623F5E4722B55D5200242C10 /* RenderableObject.cpp in Sources */,
+				623F5E6122B563A900242C10 /* RenderableObject.cpp in Sources */,
 				62216C0D21EB377F001CB9A1 /* PyramidPiece.cpp in Sources */,
 				6205E8282207532600EFCC6B /* AsteroidDialogView.cpp in Sources */,
 				62216C1C21EB377F001CB9A1 /* LevelResources.cpp in Sources */,
@@ -3622,7 +3620,7 @@
 				6256984F2182392C003A3A9D /* SceneObjectUtils.cpp in Sources */,
 				62216A9121EB376E001CB9A1 /* Materials.cpp in Sources */,
 				625698082182392C003A3A9D /* SphereMesh.cpp in Sources */,
-				623F5E4022B55D5200242C10 /* TextureCache.cpp in Sources */,
+				623F5E4022B55D5200242C10 /* GLES3TextureCache.cpp in Sources */,
 				62216C3421EB377F001CB9A1 /* World4.cpp in Sources */,
 				62216BE321EB377E001CB9A1 /* MapConfirmationDialogView.cpp in Sources */,
 				623B94D821FCC5E700B62D9B /* SwitchPiece2WindowView.cpp in Sources */,
@@ -3632,7 +3630,7 @@
 				62216C2821EB377F001CB9A1 /* AsteroidAnimation.cpp in Sources */,
 				62216BD621EB377E001CB9A1 /* ConfettiParticleEffect.cpp in Sources */,
 				62216BFB21EB377E001CB9A1 /* GameLogic.cpp in Sources */,
-				623F5E4222B55D5200242C10 /* ShaderProgram.cpp in Sources */,
+				623F5E4222B55D5200242C10 /* GLES3ShaderProgram.cpp in Sources */,
 				62216BF821EB377E001CB9A1 /* ClickInputHandler.cpp in Sources */,
 				62216A7F21EB376E001CB9A1 /* PurchaseFailedDialogView.cpp in Sources */,
 				62216C0921EB377F001CB9A1 /* TrianglePiece.cpp in Sources */,
@@ -3660,12 +3658,12 @@
 				627A12C521B3085100EECA3B /* GuiViewManager.cpp in Sources */,
 				62216C2521EB377F001CB9A1 /* WeldsAnimation.cpp in Sources */,
 				62216A7A21EB376E001CB9A1 /* GlossyButton.cpp in Sources */,
-				623F5E4922B55D5200242C10 /* StaticBatcher.cpp in Sources */,
+				623F5E6322B563A900242C10 /* StaticBatcher.cpp in Sources */,
 				62216BC421EB377E001CB9A1 /* SameColorDialogView.cpp in Sources */,
 				62216BFD21EB377E001CB9A1 /* Field.cpp in Sources */,
 				62216C6B21F08B2A001CB9A1 /* OptionsMenuView.cpp in Sources */,
 				62216C4021EB377F001CB9A1 /* MapHudView.cpp in Sources */,
-				623F5E4C22B55D5200242C10 /* RenderQueue.cpp in Sources */,
+				623F5E6622B563A900242C10 /* RenderQueue.cpp in Sources */,
 				623B94D021F6357400B62D9B /* AppDelegate.mm in Sources */,
 				62216BFC21EB377E001CB9A1 /* NextPieceGenerator.cpp in Sources */,
 				6205E82B2207533F00EFCC6B /* AsteroidDialogController.cpp in Sources */,
@@ -3715,7 +3713,7 @@
 				62216C3121EB377F001CB9A1 /* World3.cpp in Sources */,
 				625698352182392C003A3A9D /* InputEvent.cpp in Sources */,
 				62216BDF21EB377E001CB9A1 /* GameMenuController.cpp in Sources */,
-				623F5E4122B55D5200242C10 /* RenderStateManager.cpp in Sources */,
+				623F5E4122B55D5200242C10 /* GLES3RenderStateManager.cpp in Sources */,
 				62216BF421EB377E001CB9A1 /* GestureInputHandler.cpp in Sources */,
 				62216BC121EB377E001CB9A1 /* BombDialogController.cpp in Sources */,
 				62BB35D021C7FF7F0051AEEF /* AudioFileDecoderIOS.mm in Sources */,
@@ -3728,8 +3726,8 @@
 				62216BDC21EB377E001CB9A1 /* GameHudView.cpp in Sources */,
 				6256984E2182392C003A3A9D /* SceneManager.cpp in Sources */,
 				621F715521FDD9D700232B83 /* OtherMoves2WindowView.cpp in Sources */,
-				623F5E4A22B55D5200242C10 /* SoftwareRasterizer.cpp in Sources */,
-				623F5E4822B55D5200242C10 /* RenderPass.cpp in Sources */,
+				623F5E6422B563A900242C10 /* SoftwareRasterizer.cpp in Sources */,
+				623F5E6222B563A900242C10 /* RenderPass.cpp in Sources */,
 				62216C2721EB377F001CB9A1 /* CollapsingFieldAnimation.cpp in Sources */,
 				62216C3B21EB377F001CB9A1 /* SunParticleEffect.cpp in Sources */,
 				623768EC226A1117007FD5EC /* TutorialExplosionParticleEffect.cpp in Sources */,
@@ -3760,7 +3758,7 @@
 				62216A9321EB376E001CB9A1 /* AudioResources.cpp in Sources */,
 				621F715821FDD9EA00232B83 /* OtherMoves2WindowController.cpp in Sources */,
 				62216C1121EB377F001CB9A1 /* LongIPiece.cpp in Sources */,
-				623F5E4622B55D5200242C10 /* Camera.cpp in Sources */,
+				623F5E6022B563A900242C10 /* Camera.cpp in Sources */,
 				62216BEA21EB377E001CB9A1 /* GameSceneRenderer.cpp in Sources */,
 				623B94DE21FCC63700B62D9B /* SwitchPiece2WindowController.cpp in Sources */,
 				62216C1721EB377F001CB9A1 /* ValidMovesSearch.cpp in Sources */,

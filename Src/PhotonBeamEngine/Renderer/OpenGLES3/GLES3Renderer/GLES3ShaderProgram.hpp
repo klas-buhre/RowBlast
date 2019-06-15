@@ -1,5 +1,5 @@
-#ifndef ShaderProgram_hpp
-#define ShaderProgram_hpp
+#ifndef GLES3ShaderProgram_hpp
+#define GLES3ShaderProgram_hpp
 
 #include <OpenGLES/ES3/gl.h>
 
@@ -9,7 +9,7 @@
 #include "Noncopyable.hpp"
 
 namespace Pht {
-    class ShaderProgram: public Noncopyable {
+    class GLES3ShaderProgram: public Noncopyable {
     public:
         struct UniformHandles {
             GLint mProjection {0};
@@ -42,7 +42,7 @@ namespace Pht {
             GLint mPointSize {0};
         };
         
-        ShaderProgram(const VertexFlags& vertexFlags);
+        GLES3ShaderProgram(const VertexFlags& vertexFlags);
         
         void Build(const char* vertexShaderSource, const char* fragmentShaderSource);
         void SetProjection(const Mat4& projectionMatrix);

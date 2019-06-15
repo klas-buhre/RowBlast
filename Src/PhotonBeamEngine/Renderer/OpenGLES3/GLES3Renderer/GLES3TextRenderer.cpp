@@ -1,4 +1,4 @@
-#include "TextRenderer.hpp"
+#include "GLES3TextRenderer.hpp"
 
 #define STRINGIFY(A)  #A
 #include "../GLES3Shaders/Text.vert"
@@ -9,12 +9,12 @@
 #include "../GLES3Shaders/TextMidGradient.frag"
 
 #include "Font.hpp"
-#include "RenderStateManager.hpp"
+#include "GLES3RenderStateManager.hpp"
 
 using namespace Pht;
 
 namespace {
-    void DisableVertexAttributes(const ShaderProgram& shaderProgram) {
+    void DisableVertexAttributes(const GLES3ShaderProgram& shaderProgram) {
         auto& attributes = shaderProgram.GetAttributes();
     
         glDisableVertexAttribArray(attributes.mPosition);
@@ -25,7 +25,8 @@ namespace {
     }
 }
 
-TextRenderer::TextRenderer(RenderStateManager& renderState, const IVec2& screenSize) :
+GLES3TextRenderer::GLES3TextRenderer(GLES3RenderStateManager& renderState,
+                                     const IVec2& screenSize) :
     mRenderState {renderState},
     mProjection {Mat4::OrthographicProjection(0.0f, screenSize.x, 0.0f, screenSize.y, -1.0f, 1.0f)},
     mTextShader {{}},
@@ -41,22 +42,22 @@ TextRenderer::TextRenderer(RenderStateManager& renderState, const IVec2& screenS
     BuildShader(mTextMidGradientShader, TextMidGradientVertexShader, TextMidGradientFragmentShader);
 }
 
-TextRenderer::~TextRenderer() {
+GLES3TextRenderer::~GLES3TextRenderer() {
     glDeleteBuffers(1, &mVbo);
 }
 
-void TextRenderer::BuildShader(ShaderProgram& shader,
-                               const char* vertexShaderSource,
-                               const char* fragmentShaderSource) {
+void GLES3TextRenderer::BuildShader(GLES3ShaderProgram& shader,
+                                    const char* vertexShaderSource,
+                                    const char* fragmentShaderSource) {
     shader.Build(vertexShaderSource, fragmentShaderSource);
     shader.Use();
     shader.SetProjection(mProjection);
 }
 
-void TextRenderer::RenderText(const std::string& text,
-                              Vec2 position,
-                              float slant,
-                              const TextProperties& properties) {
+void GLES3TextRenderer::RenderText(const std::string& text,
+                                   Vec2 position,
+                                   float slant,
+                                   const TextProperties& properties) {
     auto& shaderProgram = GetShaderProgram(properties);
     auto& uniforms = shaderProgram.GetUniforms();
     auto& attributes = shaderProgram.GetAttributes();
@@ -127,7 +128,7 @@ void TextRenderer::RenderText(const std::string& text,
     }
 }
 
-ShaderProgram& TextRenderer::GetShaderProgram(const TextProperties& textProperties) {
+GLES3ShaderProgram& GLES3TextRenderer::GetShaderProgram(const TextProperties& textProperties) {
     if (textProperties.mTopGradientColorSubtraction.HasValue()) {
         return mTextDoubleGradientShader;
     }
@@ -139,10 +140,10 @@ ShaderProgram& TextRenderer::GetShaderProgram(const TextProperties& textProperti
     return mTextShader;
 }
 
-Vec2 TextRenderer::AdjustPositionCenterXAlignment(const std::string& text,
-                                                  Vec2 position,
-                                                  float slant,
-                                                  const TextProperties& properties) {
+Vec2 GLES3TextRenderer::AdjustPositionCenterXAlignment(const std::string& text,
+                                                       Vec2 position,
+                                                       float slant,
+                                                       const TextProperties& properties) {
     if (text.empty()) {
         return position;
     }
@@ -153,9 +154,9 @@ Vec2 TextRenderer::AdjustPositionCenterXAlignment(const std::string& text,
     return position;
 }
 
-float TextRenderer::CalculateTextWidth(const std::string& text,
-                                       float slant,
-                                       const TextProperties& properties) {
+float GLES3TextRenderer::CalculateTextWidth(const std::string& text,
+                                            float slant,
+                                            const TextProperties& properties) {
     if (text.empty()) {
         return 0.0f;
     }

@@ -1,21 +1,21 @@
-#ifndef TextRenderer_hpp
-#define TextRenderer_hpp
+#ifndef GLES3TextRenderer_hpp
+#define GLES3TextRenderer_hpp
 
 #include <string>
 #include <OpenGLES/ES3/gl.h>
 
 #include "Matrix.hpp"
-#include "ShaderProgram.hpp"
+#include "GLES3ShaderProgram.hpp"
 
 namespace Pht {
     class Font;
     class TextProperties;
-    class RenderStateManager;
+    class GLES3RenderStateManager;
     
-    class TextRenderer {
+    class GLES3TextRenderer {
     public:
-        TextRenderer(RenderStateManager& renderState, const IVec2& screenSize);
-        ~TextRenderer();
+        GLES3TextRenderer(GLES3RenderStateManager& renderState, const IVec2& screenSize);
+        ~GLES3TextRenderer();
         
         void RenderText(const std::string& text,
                         Vec2 position,
@@ -23,10 +23,10 @@ namespace Pht {
                         const TextProperties& properties);
         
     private:
-        void BuildShader(ShaderProgram& shader,
+        void BuildShader(GLES3ShaderProgram& shader,
                          const char* vertexShaderSource,
                          const char* fragmentShaderSource);
-        ShaderProgram& GetShaderProgram(const TextProperties& properties);
+        GLES3ShaderProgram& GetShaderProgram(const TextProperties& properties);
         Vec2 AdjustPositionCenterXAlignment(const std::string& text,
                                             Vec2 position,
                                             float slant,
@@ -35,12 +35,12 @@ namespace Pht {
                                  float slant,
                                  const TextProperties& properties);
         
-        RenderStateManager& mRenderState;
+        GLES3RenderStateManager& mRenderState;
         Mat4 mProjection;
         GLuint mVbo {0};
-        ShaderProgram mTextShader;
-        ShaderProgram mTextDoubleGradientShader;
-        ShaderProgram mTextMidGradientShader;
+        GLES3ShaderProgram mTextShader;
+        GLES3ShaderProgram mTextDoubleGradientShader;
+        GLES3ShaderProgram mTextMidGradientShader;
     };
 }
 

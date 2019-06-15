@@ -1,12 +1,12 @@
-#include "RenderStateManager.hpp"
+#include "GLES3RenderStateManager.hpp"
 
 #include <assert.h>
 
-#include "ShaderProgram.hpp"
+#include "GLES3ShaderProgram.hpp"
 
 using namespace Pht;
 
-void RenderStateManager::Init() {
+void GLES3RenderStateManager::Init() {
     UpdateGlBlend();
     UpdateGlBlendFunc();
     UpdateGlDepthTest();
@@ -15,14 +15,14 @@ void RenderStateManager::Init() {
     UpdateGlScissorTest();
 }
 
-void RenderStateManager::SetBlend(bool blendEnabled) {
+void GLES3RenderStateManager::SetBlend(bool blendEnabled) {
     if (mBlendEnabled != blendEnabled) {
         mBlendEnabled = blendEnabled;
         UpdateGlBlend();
     }
 }
 
-void RenderStateManager::SetBlendFunc(GLenum sFactor, GLenum dFactor) {
+void GLES3RenderStateManager::SetBlendFunc(GLenum sFactor, GLenum dFactor) {
     if (mBlendSFactor != sFactor || mBlendDFactor != dFactor) {
         mBlendSFactor = sFactor;
         mBlendDFactor = dFactor;
@@ -30,35 +30,35 @@ void RenderStateManager::SetBlendFunc(GLenum sFactor, GLenum dFactor) {
     }
 }
 
-void RenderStateManager::SetDepthTest(bool depthTestEnabled) {
+void GLES3RenderStateManager::SetDepthTest(bool depthTestEnabled) {
     if (mDepthTestEnabled != depthTestEnabled) {
         mDepthTestEnabled = depthTestEnabled;
         UpdateGlDepthTest();
     }
 }
 
-void RenderStateManager::SetDepthWrite(bool depthWriteEnabled) {
+void GLES3RenderStateManager::SetDepthWrite(bool depthWriteEnabled) {
     if (mDepthWriteEnabled != depthWriteEnabled) {
         mDepthWriteEnabled = depthWriteEnabled;
         UpdateGlDepthWrite();
     }
 }
 
-void RenderStateManager::SetCullFace(bool cullFaceEnabled) {
+void GLES3RenderStateManager::SetCullFace(bool cullFaceEnabled) {
     if (mCullFaceEnabled != cullFaceEnabled) {
         mCullFaceEnabled = cullFaceEnabled;
         UpdateGlCullFace();
     }
 }
 
-void RenderStateManager::SetScissorTest(bool scissorTestEnabled) {
+void GLES3RenderStateManager::SetScissorTest(bool scissorTestEnabled) {
     if (mScissorTestEnabled != scissorTestEnabled) {
         mScissorTestEnabled = scissorTestEnabled;
         UpdateGlScissorTest();
     }
 }
 
-void RenderStateManager::BindTexture(GLenum textureUnitIndex, GLenum target, GLuint texture) {
+void GLES3RenderStateManager::BindTexture(GLenum textureUnitIndex, GLenum target, GLuint texture) {
     auto* unit = GetTextureUnit(textureUnitIndex);
     if (unit == nullptr) {
         assert(false);
@@ -76,7 +76,8 @@ void RenderStateManager::BindTexture(GLenum textureUnitIndex, GLenum target, GLu
     }
 }
 
-Optional<RenderStateManager::TextureUnit>* RenderStateManager::GetTextureUnit(GLenum unitIndex) {
+Optional<GLES3RenderStateManager::TextureUnit>*
+GLES3RenderStateManager::GetTextureUnit(GLenum unitIndex) {
     switch (unitIndex) {
         case GL_TEXTURE0:
             return &mTextureUnit0;
@@ -87,7 +88,7 @@ Optional<RenderStateManager::TextureUnit>* RenderStateManager::GetTextureUnit(GL
     }
 }
 
-void RenderStateManager::UpdateGlBlend() {
+void GLES3RenderStateManager::UpdateGlBlend() {
     if (mBlendEnabled) {
         glEnable(GL_BLEND);
     } else {
@@ -95,11 +96,11 @@ void RenderStateManager::UpdateGlBlend() {
     }
 }
 
-void RenderStateManager::UpdateGlBlendFunc() {
+void GLES3RenderStateManager::UpdateGlBlendFunc() {
     glBlendFunc(mBlendSFactor, mBlendDFactor);
 }
 
-void RenderStateManager::UpdateGlDepthTest() {
+void GLES3RenderStateManager::UpdateGlDepthTest() {
     if (mDepthTestEnabled) {
         glEnable(GL_DEPTH_TEST);
     } else {
@@ -107,7 +108,7 @@ void RenderStateManager::UpdateGlDepthTest() {
     }
 }
 
-void RenderStateManager::UpdateGlDepthWrite() {
+void GLES3RenderStateManager::UpdateGlDepthWrite() {
     if (mDepthWriteEnabled) {
         glDepthMask(GL_TRUE);
     } else {
@@ -115,7 +116,7 @@ void RenderStateManager::UpdateGlDepthWrite() {
     }
 }
 
-void RenderStateManager::UpdateGlCullFace() {
+void GLES3RenderStateManager::UpdateGlCullFace() {
     if (mCullFaceEnabled) {
         glEnable(GL_CULL_FACE);
     } else {
@@ -123,7 +124,7 @@ void RenderStateManager::UpdateGlCullFace() {
     }
 }
 
-void RenderStateManager::UpdateGlScissorTest() {
+void GLES3RenderStateManager::UpdateGlScissorTest() {
     if (mScissorTestEnabled) {
         glEnable(GL_SCISSOR_TEST);
     } else {
@@ -131,7 +132,7 @@ void RenderStateManager::UpdateGlScissorTest() {
     }
 }
 
-void RenderStateManager::UseShader(ShaderProgram& shaderProgram) {
+void GLES3RenderStateManager::UseShader(GLES3ShaderProgram& shaderProgram) {
     InvalidateShader();
     assert(shaderProgram.IsEnabled());
     shaderProgram.Use();
@@ -139,11 +140,11 @@ void RenderStateManager::UseShader(ShaderProgram& shaderProgram) {
     IF_USING_FRAME_STATS(++mFrameStats.mNumShaderUses);
 }
 
-void RenderStateManager::OnBeginRenderPass() {
+void GLES3RenderStateManager::OnBeginRenderPass() {
     InvalidateShader();
 }
 
-void RenderStateManager::InvalidateShader() {
+void GLES3RenderStateManager::InvalidateShader() {
     mShaderProgram = nullptr;
     mMaterial = nullptr;
     mVbo = nullptr;    
@@ -152,7 +153,7 @@ void RenderStateManager::InvalidateShader() {
 }
 
 #if USE_FRAME_STATS
-void RenderStateManager::LogFrameStats(float frameSeconds) {
+void GLES3RenderStateManager::LogFrameStats(float frameSeconds) {
     std::cout << "=======================================" << std::endl
               << " FPS: " << 1.0f / frameSeconds << std::endl
               << " NumShaderUses: " << mFrameStats.mNumShaderUses << std::endl

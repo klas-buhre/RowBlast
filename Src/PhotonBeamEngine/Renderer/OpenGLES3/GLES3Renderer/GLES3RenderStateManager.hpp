@@ -1,5 +1,5 @@
-#ifndef RenderStateManager_hpp
-#define RenderStateManager_hpp
+#ifndef GLES3RenderStateManager_hpp
+#define GLES3RenderStateManager_hpp
 
 #include <OpenGLES/ES3/gl.h>
 
@@ -15,11 +15,11 @@
 #endif
 
 namespace Pht {
-    class ShaderProgram;
+    class GLES3ShaderProgram;
     class Material;
     class GpuVertexBuffer;
     
-    class RenderStateManager: public Noncopyable {
+    class GLES3RenderStateManager: public Noncopyable {
     public:
         void Init();
         void SetBlend(bool enabled);
@@ -29,7 +29,7 @@ namespace Pht {
         void SetCullFace(bool enabled);
         void SetScissorTest(bool enabled);
         void BindTexture(GLenum textureUnitIndex, GLenum target, GLuint texture);
-        void UseShader(ShaderProgram& shaderProgram);
+        void UseShader(GLES3ShaderProgram& shaderProgram);
         void OnBeginRenderPass();
 
         void UseMaterial(const Material& material) {
@@ -42,7 +42,7 @@ namespace Pht {
             IF_USING_FRAME_STATS(ReportVboUse());
         }
 
-        bool IsShaderInUse(const ShaderProgram& shaderProgram) const {
+        bool IsShaderInUse(const GLES3ShaderProgram& shaderProgram) const {
             return &shaderProgram == mShaderProgram;
         }
         
@@ -107,7 +107,7 @@ namespace Pht {
         bool mScissorTestEnabled {false};
         Optional<TextureUnit> mTextureUnit0;
         Optional<TextureUnit> mTextureUnit1;
-        const ShaderProgram* mShaderProgram {nullptr};
+        const GLES3ShaderProgram* mShaderProgram {nullptr};
         const Material* mMaterial {nullptr};
         const GpuVertexBuffer* mVbo {nullptr};
     };

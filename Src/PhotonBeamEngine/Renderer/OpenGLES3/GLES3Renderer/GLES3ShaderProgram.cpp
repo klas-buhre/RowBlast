@@ -1,4 +1,4 @@
-#include "ShaderProgram.hpp"
+#include "GLES3ShaderProgram.hpp"
 
 #include <iostream>
 
@@ -45,10 +45,10 @@ namespace {
     }
 }
 
-ShaderProgram::ShaderProgram(const VertexFlags& vertexFlags) :
+GLES3ShaderProgram::GLES3ShaderProgram(const VertexFlags& vertexFlags) :
     mVertexFlags {vertexFlags} {}
 
-void ShaderProgram::Build(const char* vertexShaderSource, const char* fragmentShaderSource) {
+void GLES3ShaderProgram::Build(const char* vertexShaderSource, const char* fragmentShaderSource) {
     mProgram = BuildProgram(vertexShaderSource, fragmentShaderSource);
     
     // Extract the handles to attributes.
@@ -81,7 +81,7 @@ void ShaderProgram::Build(const char* vertexShaderSource, const char* fragmentSh
     mUniforms.mCameraPosition = glGetUniformLocation(mProgram, "CameraPosition");
 }
 
-void ShaderProgram::SetProjection(const Mat4& projectionMatrix) {
+void GLES3ShaderProgram::SetProjection(const Mat4& projectionMatrix) {
     if (!mIsEnabled) {
         return;
     }
@@ -89,7 +89,7 @@ void ShaderProgram::SetProjection(const Mat4& projectionMatrix) {
     glUniformMatrix4fv(mUniforms.mProjection, 1, 0, projectionMatrix.Pointer());
 }
 
-void ShaderProgram::SetCameraPosition(const Vec3& cameraPosition) {
+void GLES3ShaderProgram::SetCameraPosition(const Vec3& cameraPosition) {
     if (!mIsEnabled) {
         return;
     }
@@ -100,7 +100,7 @@ void ShaderProgram::SetCameraPosition(const Vec3& cameraPosition) {
     }
 }
 
-void ShaderProgram::SetLightPosition(const Vec3& lightPosition) {
+void GLES3ShaderProgram::SetLightPosition(const Vec3& lightPosition) {
     if (!mIsEnabled) {
         return;
     }
@@ -111,7 +111,7 @@ void ShaderProgram::SetLightPosition(const Vec3& lightPosition) {
     }
 }
 
-void ShaderProgram::Use() const {
+void GLES3ShaderProgram::Use() const {
     if (!mIsEnabled) {
         return;
     }

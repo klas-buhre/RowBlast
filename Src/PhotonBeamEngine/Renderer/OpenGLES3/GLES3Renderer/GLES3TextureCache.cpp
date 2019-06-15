@@ -22,7 +22,7 @@ namespace {
     static std::vector<std::pair<TwoDTextureKey, std::weak_ptr<Texture>>> twoDTextures;
     static std::vector<std::pair<EnvMapTextureFilenames, std::weak_ptr<Texture>>> envMapTextures;
     
-    GLenum ToGlTextureFormat(ImageFormat format) {
+    GLenum ToGLTextureFormat(ImageFormat format) {
         switch (format) {
             case ImageFormat::Gray:
                 return GL_LUMINANCE;
@@ -35,7 +35,7 @@ namespace {
         }
     }
     
-    GLenum ToGlType(int numBits, GLenum format) {
+    GLenum ToGLType(int numBits, GLenum format) {
         switch (numBits) {
             case 8:
                 return GL_UNSIGNED_BYTE;
@@ -51,17 +51,17 @@ namespace {
         }
     }
     
-    void GlTexImage(GLenum target, const IImage& image) {
-        auto format = ToGlTextureFormat(image.GetFormat());
-        auto type = ToGlType(image.GetBitsPerComponent(), format);
+    void GLTexImage(GLenum target, const IImage& image) {
+        auto format = ToGLTextureFormat(image.GetFormat());
+        auto type = ToGLType(image.GetBitsPerComponent(), format);
         auto* data = image.GetImageData();
         auto size = image.GetSize();
         glTexImage2D(target, 0, format, size.x, size.y, 0, format, type, data);
     }
     
-    void GlTexImage(GLenum target, const std::string& filename) {
+    void GLTexImage(GLenum target, const std::string& filename) {
         auto image = Pht::LoadImage(filename);
-        GlTexImage(target, *image);
+        GLTexImage(target, *image);
     }
     
     std::shared_ptr<Texture> CreateTexture(const IImage& image, GenerateMipmap generateMipmap) {
@@ -77,7 +77,7 @@ namespace {
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
         }
 
-        GlTexImage(GL_TEXTURE_2D, image);
+        GLTexImage(GL_TEXTURE_2D, image);
         
         if (generateMipmap == GenerateMipmap::Yes) {
             glGenerateMipmap(GL_TEXTURE_2D);
@@ -91,12 +91,12 @@ namespace {
         
         glBindTexture(GL_TEXTURE_CUBE_MAP, texture->GetHandles()->mGLHandle);
         
-        GlTexImage(GL_TEXTURE_CUBE_MAP_POSITIVE_X, filenames.mPositiveX);
-        GlTexImage(GL_TEXTURE_CUBE_MAP_NEGATIVE_X, filenames.mNegativeX);
-        GlTexImage(GL_TEXTURE_CUBE_MAP_POSITIVE_Y, filenames.mPositiveY);
-        GlTexImage(GL_TEXTURE_CUBE_MAP_NEGATIVE_Y, filenames.mNegativeY);
-        GlTexImage(GL_TEXTURE_CUBE_MAP_POSITIVE_Z, filenames.mPositiveZ);
-        GlTexImage(GL_TEXTURE_CUBE_MAP_NEGATIVE_Z, filenames.mNegativeZ);
+        GLTexImage(GL_TEXTURE_CUBE_MAP_POSITIVE_X, filenames.mPositiveX);
+        GLTexImage(GL_TEXTURE_CUBE_MAP_NEGATIVE_X, filenames.mNegativeX);
+        GLTexImage(GL_TEXTURE_CUBE_MAP_POSITIVE_Y, filenames.mPositiveY);
+        GLTexImage(GL_TEXTURE_CUBE_MAP_NEGATIVE_Y, filenames.mNegativeY);
+        GLTexImage(GL_TEXTURE_CUBE_MAP_POSITIVE_Z, filenames.mPositiveZ);
+        GLTexImage(GL_TEXTURE_CUBE_MAP_NEGATIVE_Z, filenames.mNegativeZ);
         
         glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
         glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);

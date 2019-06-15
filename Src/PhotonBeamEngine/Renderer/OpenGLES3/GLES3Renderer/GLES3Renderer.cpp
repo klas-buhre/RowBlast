@@ -1,6 +1,31 @@
-#include "Renderer.hpp"
-
 #include <assert.h>
+#include <memory>
+#include <unordered_map>
+
+#include <OpenGLES/ES3/gl.h>
+
+#include "RenderableObject.hpp"
+#include "Material.hpp"
+#include "IMesh.hpp"
+#include "Vector.hpp"
+#include "VertexBuffer.hpp"
+#include "Font.hpp"
+#include "SceneObject.hpp"
+#include "Scene.hpp"
+#include "ISceneManager.hpp"
+#include "CameraComponent.hpp"
+#include "LightComponent.hpp"
+#include "TextComponent.hpp"
+#include "IEngine.hpp"
+#include "IRenderSystem.hpp"
+#include "Camera.hpp"
+#include "Material.hpp"
+#include "RenderQueue.hpp"
+#include "VertexBufferCache.hpp"
+#include "GLES3Handles.hpp"
+#include "GLES3ShaderProgram.hpp"
+#include "GLES3TextRenderer.hpp"
+#include "GLES3RenderStateManager.hpp"
 
 #define STRINGIFY(A)  #A
 #include "../GLES3Shaders/PixelLighting.vert"
@@ -30,24 +55,102 @@
 #include "../GLES3Shaders/PointParticle.vert"
 #include "../GLES3Shaders/PointParticle.frag"
 
-#include "RenderableObject.hpp"
-#include "Material.hpp"
-#include "IMesh.hpp"
-#include "Vector.hpp"
-#include "VertexBuffer.hpp"
-#include "Font.hpp"
-#include "SceneObject.hpp"
-#include "Scene.hpp"
-#include "ISceneManager.hpp"
-#include "CameraComponent.hpp"
-#include "LightComponent.hpp"
-#include "TextComponent.hpp"
-#include "VertexBufferCache.hpp"
-#include "GLES3Handles.hpp"
-
 using namespace Pht;
 
 namespace {
+    class GLES3Renderer: public IRenderSystem {
+    public:
+        GLES3Renderer(bool createFrameBuffer);
+        
+        // Methods implementing IRenderer:
+        void EnableShader(ShaderId shaderId) override;
+        void DisableShader(ShaderId shaderId) override;
+        void SetClearColorBuffer(bool clearColorBuffer) override;
+        void SetHudMode(bool hudMode) override;
+        void SetProjectionMode(ProjectionMode projectionMode) override;
+        int GetAdjustedNumPixels(int numPixels) const override;
+        const Mat4& GetViewMatrix() const override;
+        const Mat4& GetProjectionMatrix() const override;
+        const Vec2& GetHudFrustumSize() const override;
+        const Vec2& GetOrthographicFrustumSize() const override;
+        float GetFrustumHeightFactor() const override;
+        const IVec2& GetRenderBufferSize() const override;
+        float GetTopPaddingHeight() const override;
+        float GetBottomPaddingHeight() const override;
+
+        // Methods implementing IRendererSystem:
+        void Init(bool createFrameBuffer) override;
+        void InitCamera(float narrowFrustumHeightFactor) override;
+        void InitRenderQueue(const Scene& scene) override;
+        std::unique_ptr<RenderableObject> CreateRenderableObject(const IMesh& mesh,
+                                                                 const Material& material,
+                                                                 VertexBufferLocation bufferLocation) override;
+        void ClearFrameBuffer() override;
+        void RenderScene(const Scene& scene, float frameSeconds) override;
+        
+    private:
+        void InitOpenGL(bool createFrameBuffer);
+        void InitCamera();
+        void InitHudFrustum();
+        float GetAspectRatio() const;
+        void InitShaders();
+        void SetDepthTest(const DepthState& depthState);
+        void SetScissorBox(const Vec2& lowerLeft, const Vec2& size);
+        void SetLightDirection(const Vec3& lightDirection);
+        void CalculateCameraSpaceLightDirection();
+        const Vec3& GetCameraPosition() const;
+        void RenderObject(const RenderableObject& renderableObject, const Mat4& modelTransform);
+        void SetTransforms(const Mat4& modelTransform, GLES3ShaderProgram& shaderProgram);
+        void SetMaterialProperties(const Material& material,
+                                   ShaderId shaderId,
+                                   const GLES3ShaderProgram& shaderProgram);
+        void BindTextures(const Material& material,
+                          ShaderId shaderId,
+                          const GLES3ShaderProgram& shaderProgram);
+        void SetupBlend(const Material& material, ShaderId shaderId);
+        void SetVbo(const RenderableObject& renderableObject,
+                    const GLES3ShaderProgram& shaderProgram);
+        void CreateShader(ShaderId shaderId, const VertexFlags& vertexFlags);
+        GLES3ShaderProgram& GetShader(ShaderId shaderId);
+        void RenderText(const std::string& text,
+                        const Vec2& position,
+                        const TextProperties& properties);
+        void RenderTextImpl(const std::string& text,
+                            const Vec2& position,
+                            const TextProperties& properties);
+        void Render(const RenderPass& renderPass, DistanceFunction distanceFunction);
+        Vec2 CalculateTextHudPosition(const TextComponent& textComponent);
+        
+        struct HudFrustum {
+            Mat4 mProjection;
+            Vec2 mSize;
+        };
+        
+        struct GlobalLight {
+            Vec3 mDirectionWorldSpace;
+            Vec3 mDirectionCameraSpace;
+            float mDirectionalIntensity {1.0f};
+            float mAmbientIntensity {1.0f};
+        };
+        
+        ProjectionMode mProjectionMode {ProjectionMode::Perspective};
+        GLuint mColorRenderbuffer {0};
+        GlobalLight mGlobalLight;
+        Camera mCamera;
+        Vec3 mHudCameraPosition;
+        HudFrustum mHudFrustum;
+        Vec2 mOrthographicFrustumSize;
+        float mNarrowFrustumHeightFactor {1.0f};
+        IVec2 mRenderBufferSize;
+        RenderQueue mRenderQueue;
+        GLES3RenderStateManager mRenderState;
+        std::unordered_map<ShaderId, std::unique_ptr<GLES3ShaderProgram>> mShaders;
+        std::unique_ptr<GLES3TextRenderer> mTextRenderer;
+        bool mClearColorBuffer {true};
+        bool mHudMode {false};
+        bool mIsDepthTestAllowed {true};
+    };
+
     constexpr auto defaultScreenHeight = 1136;
     constexpr auto topPadding = 1.05f;
     constexpr auto bottomPadding = 1.67f;
@@ -112,7 +215,7 @@ namespace {
         return stride;
     }
     
-    void EnableVertexAttributes(const ShaderProgram& shaderProgram) {
+    void EnableVertexAttributes(const GLES3ShaderProgram& shaderProgram) {
         auto vertexFlags = shaderProgram.GetVertexFlags();
         auto stride = CalculateStride(vertexFlags);
         auto& attributes = shaderProgram.GetAttributes();
@@ -178,10 +281,10 @@ namespace {
 }
 
 std::unique_ptr<IRenderSystem> Pht::CreateRenderSystem(bool createFrameBuffer) {
-    return std::make_unique<Renderer>(createFrameBuffer);
+    return std::make_unique<GLES3Renderer>(createFrameBuffer);
 }
 
-Renderer::Renderer(bool createFrameBuffer) {
+GLES3Renderer::GLES3Renderer(bool createFrameBuffer) {
     CreateShader(ShaderId::PixelLighting,            {.mNormals = true});
     CreateShader(ShaderId::VertexLighting,           {.mNormals = true});
     CreateShader(ShaderId::TexturedLighting,         {.mNormals = true, .mTextureCoords = true});
@@ -202,7 +305,7 @@ Renderer::Renderer(bool createFrameBuffer) {
     }
 }
 
-void Renderer::Init(bool createFrameBuffer) {
+void GLES3Renderer::Init(bool createFrameBuffer) {
     std::cout << "Pht::Renderer: Initializing..." << std::endl;
     
     InitOpenGL(createFrameBuffer);
@@ -211,13 +314,13 @@ void Renderer::Init(bool createFrameBuffer) {
 
     mRenderState.Init();
     mRenderState.SetCullFace(true);
-    mTextRenderer = std::make_unique<TextRenderer>(mRenderState, mRenderBufferSize);
+    mTextRenderer = std::make_unique<GLES3TextRenderer>(mRenderState, mRenderBufferSize);
 
     std::cout << "Pht::Renderer: Using " << mRenderBufferSize.x << "x" << mRenderBufferSize.y
               << " resolution." << std::endl;
 }
 
-void Renderer::InitOpenGL(bool createFrameBuffer) {
+void GLES3Renderer::InitOpenGL(bool createFrameBuffer) {
     glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_WIDTH, &mRenderBufferSize.x);
     glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_HEIGHT, &mRenderBufferSize.y);
 
@@ -249,7 +352,7 @@ void Renderer::InitOpenGL(bool createFrameBuffer) {
     }
 }
 
-void Renderer::InitCamera() {
+void GLES3Renderer::InitCamera() {
     mCamera = Camera {
         mRenderBufferSize,
         perspectiveFrustumSettings.mHeight * GetFrustumHeightFactor(),
@@ -270,7 +373,7 @@ void Renderer::InitCamera() {
                                       orthographicFrustumSettings.mZFarClip);
 }
 
-void Renderer::InitHudFrustum() {
+void GLES3Renderer::InitHudFrustum() {
     mHudCameraPosition = Vec3 {0.0f, 0.0f, 0.0f};
     auto frustumHeight = hudFrustumSettings.mHeight * GetFrustumHeightFactor();
     float frustumWidth {frustumHeight * mRenderBufferSize.x / mRenderBufferSize.y};
@@ -283,11 +386,11 @@ void Renderer::InitHudFrustum() {
     mHudFrustum.mSize = {frustumWidth, frustumHeight};
 }
 
-float Renderer::GetAspectRatio() const {
+float GLES3Renderer::GetAspectRatio() const {
     return static_cast<float>(mRenderBufferSize.y) / static_cast<float>(mRenderBufferSize.x);
 }
 
-float Renderer::GetFrustumHeightFactor() const {
+float GLES3Renderer::GetFrustumHeightFactor() const {
     if (GetAspectRatio() >= 2.0f) {
         return mNarrowFrustumHeightFactor;
     }
@@ -295,7 +398,7 @@ float Renderer::GetFrustumHeightFactor() const {
     return 1.0f;
 }
 
-void Renderer::InitShaders() {
+void GLES3Renderer::InitShaders() {
     
     // Build shaders.
     GetShader(ShaderId::PixelLighting).Build(PixelLightingVertexShader, PixelLightingFragmentShader);
@@ -313,22 +416,22 @@ void Renderer::InitShaders() {
     GetShader(ShaderId::PointParticle).Build(PointParticleVertexShader, PointParticleFragmentShader);
 }
 
-void Renderer::InitRenderQueue(const Scene& scene) {
+void GLES3Renderer::InitRenderQueue(const Scene& scene) {
     mRenderQueue.Init(scene.GetRoot());
 }
 
-void Renderer::CreateShader(ShaderId shaderId, const VertexFlags& vertexFlags) {
-    auto shaderProgram = std::make_unique<ShaderProgram>(vertexFlags);
+void GLES3Renderer::CreateShader(ShaderId shaderId, const VertexFlags& vertexFlags) {
+    auto shaderProgram = std::make_unique<GLES3ShaderProgram>(vertexFlags);
     mShaders.insert(std::make_pair(shaderId, std::move(shaderProgram)));
 }
 
-ShaderProgram& Renderer::GetShader(ShaderId shaderId) {
+GLES3ShaderProgram& GLES3Renderer::GetShader(ShaderId shaderId) {
     auto shader = mShaders.find(shaderId);
     assert(shader != std::end(mShaders));
     return *shader->second;
 }
 
-const Vec3& Renderer::GetCameraPosition() const {
+const Vec3& GLES3Renderer::GetCameraPosition() const {
     if (mHudMode) {
         return mHudCameraPosition;
     }
@@ -336,18 +439,18 @@ const Vec3& Renderer::GetCameraPosition() const {
     return mCamera.GetPosition();
 }
 
-int Renderer::GetAdjustedNumPixels(int numPixels) const {
+int GLES3Renderer::GetAdjustedNumPixels(int numPixels) const {
     return numPixels * mRenderBufferSize.y / (defaultScreenHeight * GetFrustumHeightFactor());
 }
 
-void Renderer::InitCamera(float narrowFrustumHeightFactor) {
+void GLES3Renderer::InitCamera(float narrowFrustumHeightFactor) {
     mNarrowFrustumHeightFactor = narrowFrustumHeightFactor;
 
     InitCamera();
     InitHudFrustum();
 }
 
-const Mat4& Renderer::GetViewMatrix() const {
+const Mat4& GLES3Renderer::GetViewMatrix() const {
     if (mHudMode) {
         return identityMatrix;
     }
@@ -355,7 +458,7 @@ const Mat4& Renderer::GetViewMatrix() const {
     return mCamera.GetViewMatrix();
 }
 
-const Mat4& Renderer::GetProjectionMatrix() const {
+const Mat4& GLES3Renderer::GetProjectionMatrix() const {
     if (mHudMode) {
         return mHudFrustum.mProjection;
     }
@@ -368,19 +471,19 @@ const Mat4& Renderer::GetProjectionMatrix() const {
     }
 }
 
-const Vec2& Renderer::GetHudFrustumSize() const {
+const Vec2& GLES3Renderer::GetHudFrustumSize() const {
     return mHudFrustum.mSize;
 }
 
-const Vec2& Renderer::GetOrthographicFrustumSize() const {
+const Vec2& GLES3Renderer::GetOrthographicFrustumSize() const {
     return mOrthographicFrustumSize;
 }
 
-const IVec2& Renderer::GetRenderBufferSize() const {
+const IVec2& GLES3Renderer::GetRenderBufferSize() const {
     return mRenderBufferSize;
 }
 
-float Renderer::GetTopPaddingHeight() const {
+float GLES3Renderer::GetTopPaddingHeight() const {
     if (GetAspectRatio() >= 2.0f) {
         return topPadding * mNarrowFrustumHeightFactor;
     }
@@ -388,7 +491,7 @@ float Renderer::GetTopPaddingHeight() const {
     return 0.0f;
 }
 
-float Renderer::GetBottomPaddingHeight() const {
+float GLES3Renderer::GetBottomPaddingHeight() const {
     if (GetAspectRatio() >= 2.0f) {
         return bottomPadding * mNarrowFrustumHeightFactor;
     }
@@ -397,9 +500,9 @@ float Renderer::GetBottomPaddingHeight() const {
 }
 
 std::unique_ptr<RenderableObject>
-Renderer::CreateRenderableObject(const IMesh& mesh,
-                                 const Material& material,
-                                 VertexBufferLocation bufferLocation) {
+GLES3Renderer::CreateRenderableObject(const IMesh& mesh,
+                                      const Material& material,
+                                      VertexBufferLocation bufferLocation) {
     auto& shaderProgram = GetShader(material.GetShaderId());
     return std::make_unique<RenderableObject>(material,
                                               mesh,
@@ -407,12 +510,12 @@ Renderer::CreateRenderableObject(const IMesh& mesh,
                                               bufferLocation);
 }
 
-void Renderer::SetLightDirection(const Vec3& lightDirection) {
+void GLES3Renderer::SetLightDirection(const Vec3& lightDirection) {
     mGlobalLight.mDirectionWorldSpace = lightDirection;
     CalculateCameraSpaceLightDirection();
 }
 
-void Renderer::CalculateCameraSpaceLightDirection() {
+void GLES3Renderer::CalculateCameraSpaceLightDirection() {
     // Since the matrix is row-major it has to be transposed in order to multiply with the vector.
     auto transposedViewMatrix = GetViewMatrix().Transposed();
     auto lightPosCamSpace = transposedViewMatrix * Vec4{mGlobalLight.mDirectionWorldSpace, 0.0f};
@@ -420,19 +523,19 @@ void Renderer::CalculateCameraSpaceLightDirection() {
     mGlobalLight.mDirectionCameraSpace = lightPosCamSpaceVec3.Normalized();
 }
 
-void Renderer::EnableShader(ShaderId shaderId) {
+void GLES3Renderer::EnableShader(ShaderId shaderId) {
     GetShader(shaderId).SetIsEnabled(true);
 }
 
-void Renderer::DisableShader(ShaderId shaderId) {
+void GLES3Renderer::DisableShader(ShaderId shaderId) {
     GetShader(shaderId).SetIsEnabled(false);
 }
 
-void Renderer::SetClearColorBuffer(bool clearColorBuffer) {
+void GLES3Renderer::SetClearColorBuffer(bool clearColorBuffer) {
     mClearColorBuffer = clearColorBuffer;
 }
 
-void Renderer::SetDepthTest(const DepthState& depthState) {
+void GLES3Renderer::SetDepthTest(const DepthState& depthState) {
     if (!mIsDepthTestAllowed && !depthState.mDepthTestAllowedOverride) {
         mRenderState.SetDepthTest(false);
     } else {
@@ -444,15 +547,15 @@ void Renderer::SetDepthTest(const DepthState& depthState) {
     }
 }
 
-void Renderer::SetHudMode(bool hudMode) {
+void GLES3Renderer::SetHudMode(bool hudMode) {
     mHudMode = hudMode;
 }
 
-void Renderer::SetProjectionMode(ProjectionMode projectionMode) {
+void GLES3Renderer::SetProjectionMode(ProjectionMode projectionMode) {
     mProjectionMode = projectionMode;
 }
 
-void Renderer::SetScissorBox(const Vec2& lowerLeft, const Vec2& size) {
+void GLES3Renderer::SetScissorBox(const Vec2& lowerLeft, const Vec2& size) {
     assert(mHudMode || mProjectionMode == ProjectionMode::Orthographic);
     
     Vec4 localOrigin {0.0f, 0.0f, 0.0f, 1.0f};
@@ -486,7 +589,7 @@ void Renderer::SetScissorBox(const Vec2& lowerLeft, const Vec2& size) {
     glScissor(lowerLeftInPixels.x, lowerLeftInPixels.y, sizeInPixels.x, sizeInPixels.y);
 }
 
-void Renderer::ClearFrameBuffer() {
+void GLES3Renderer::ClearFrameBuffer() {
     // Depth writing has to be enabled in order to clear the depth buffer.
     mRenderState.SetDepthWrite(true);
 
@@ -498,7 +601,7 @@ void Renderer::ClearFrameBuffer() {
     }
 }
 
-void Renderer::RenderScene(const Scene& scene, float frameSeconds) {
+void GLES3Renderer::RenderScene(const Scene& scene, float frameSeconds) {
     const CameraComponent* previousCamera = nullptr;
     const LightComponent* previousLight = nullptr;
     
@@ -545,7 +648,7 @@ void Renderer::RenderScene(const Scene& scene, float frameSeconds) {
     IF_USING_FRAME_STATS(mRenderState.LogFrameStats(frameSeconds));
 }
 
-void Renderer::Render(const RenderPass& renderPass, DistanceFunction distanceFunction) {
+void GLES3Renderer::Render(const RenderPass& renderPass, DistanceFunction distanceFunction) {
     auto isHudMode = renderPass.IsHudMode();
     auto projectionMode = renderPass.GetProjectionMode();
     if (isHudMode != mHudMode || projectionMode != mProjectionMode) {
@@ -607,7 +710,8 @@ void Renderer::Render(const RenderPass& renderPass, DistanceFunction distanceFun
     }
 }
 
-void Renderer::RenderObject(const RenderableObject& renderableObject, const Mat4& modelTransform) {
+void GLES3Renderer::RenderObject(const RenderableObject& renderableObject,
+                                 const Mat4& modelTransform) {
     auto& material = renderableObject.GetMaterial();
     auto shaderId = material.GetShaderId();
     auto& shaderProgram = GetShader(shaderId);
@@ -642,7 +746,7 @@ void Renderer::RenderObject(const RenderableObject& renderableObject, const Mat4
     IF_USING_FRAME_STATS(mRenderState.ReportDrawCall());
 }
 
-void Renderer::SetTransforms(const Mat4& modelTransform, ShaderProgram& shaderProgram) {
+void GLES3Renderer::SetTransforms(const Mat4& modelTransform, GLES3ShaderProgram& shaderProgram) {
     // Note: the matrix in the matrix lib is row-major while OpenGL expects column-major. However,
     // it works since all transforms are created in row-major order while OpenGL reads the matrix in
     // column-major order which transposes it. Transposing the matrix is required in order to
@@ -668,9 +772,9 @@ void Renderer::SetTransforms(const Mat4& modelTransform, ShaderProgram& shaderPr
     shaderProgram.SetLightPosition(mGlobalLight.mDirectionCameraSpace);
 }
 
-void Renderer::SetMaterialProperties(const Material& material,
-                                     ShaderId shaderId,
-                                     const ShaderProgram& shaderProgram) {
+void GLES3Renderer::SetMaterialProperties(const Material& material,
+                                          ShaderId shaderId,
+                                          const GLES3ShaderProgram& shaderProgram) {
     auto& uniforms = shaderProgram.GetUniforms();
     auto ambientlIntensity = mGlobalLight.mAmbientIntensity;
     auto& ambient = material.GetAmbient();
@@ -707,9 +811,9 @@ void Renderer::SetMaterialProperties(const Material& material,
     SetDepthTest(material.GetDepthState());
 }
 
-void Renderer::BindTextures(const Material& material,
-                            ShaderId shaderId,
-                            const ShaderProgram& shaderProgram) {
+void GLES3Renderer::BindTextures(const Material& material,
+                                 ShaderId shaderId,
+                                 const GLES3ShaderProgram& shaderProgram) {
     switch (shaderId) {
         case ShaderId::EnvMap:
             mRenderState.BindTexture(GL_TEXTURE0,
@@ -738,7 +842,7 @@ void Renderer::BindTextures(const Material& material,
 }
 
 
-void Renderer::SetupBlend(const Material& material, ShaderId shaderId) {
+void GLES3Renderer::SetupBlend(const Material& material, ShaderId shaderId) {
     switch (material.GetBlend()) {
         case Blend::Yes:
             mRenderState.SetBlend(true);
@@ -763,8 +867,8 @@ void Renderer::SetupBlend(const Material& material, ShaderId shaderId) {
     }
 }
 
-void Renderer::SetVbo(const RenderableObject& renderableObject,
-                      const ShaderProgram& shaderProgram) {
+void GLES3Renderer::SetVbo(const RenderableObject& renderableObject,
+                           const GLES3ShaderProgram& shaderProgram) {
     auto& vbo = renderableObject.GetGpuVertexBuffer();
     
     // Bind the vertex buffer.
@@ -778,9 +882,9 @@ void Renderer::SetVbo(const RenderableObject& renderableObject,
     }
 }
 
-void Renderer::RenderText(const std::string& text,
-                          const Vec2& position,
-                          const TextProperties& properties) {
+void GLES3Renderer::RenderText(const std::string& text,
+                               const Vec2& position,
+                               const TextProperties& properties) {
     auto textPosition = position;
 
     if (properties.mSecondShadow == TextShadow::Yes) {
@@ -819,9 +923,9 @@ void Renderer::RenderText(const std::string& text,
     RenderTextImpl(text, textPosition, properties);
 }
 
-void Renderer::RenderTextImpl(const std::string& text,
-                              const Vec2& position,
-                              const TextProperties& properties) {
+void GLES3Renderer::RenderTextImpl(const std::string& text,
+                                   const Vec2& position,
+                                   const TextProperties& properties) {
     auto pixelX =
         mRenderBufferSize.x / 2.0f + mRenderBufferSize.x * position.x / mHudFrustum.mSize.x;
     
@@ -841,7 +945,7 @@ void Renderer::RenderTextImpl(const std::string& text,
     mTextRenderer->RenderText(text, pixelPosition, italicSlant, properties);
 }
 
-Vec2 Renderer::CalculateTextHudPosition(const TextComponent& textComponent) {
+Vec2 GLES3Renderer::CalculateTextHudPosition(const TextComponent& textComponent) {
     auto& sceneObject = textComponent.GetSceneObject();
     
     if (mHudMode) {
