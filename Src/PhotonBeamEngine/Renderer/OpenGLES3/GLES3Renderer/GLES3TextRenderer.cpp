@@ -1,5 +1,8 @@
 #include "GLES3TextRenderer.hpp"
 
+#include "Font.hpp"
+#include "GLES3RenderStateManager.hpp"
+
 #define STRINGIFY(A)  #A
 #include "../GLES3Shaders/Text.vert"
 #include "../GLES3Shaders/Text.frag"
@@ -7,9 +10,6 @@
 #include "../GLES3Shaders/TextDoubleGradient.frag"
 #include "../GLES3Shaders/TextMidGradient.vert"
 #include "../GLES3Shaders/TextMidGradient.frag"
-
-#include "Font.hpp"
-#include "GLES3RenderStateManager.hpp"
 
 using namespace Pht;
 

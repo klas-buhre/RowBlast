@@ -80,12 +80,12 @@ namespace Pht {
             GLuint mTexture;
         };
 
-        void UpdateGlBlend();
-        void UpdateGlBlendFunc();
-        void UpdateGlDepthTest();
-        void UpdateGlDepthWrite();
-        void UpdateGlCullFace();
-        void UpdateGlScissorTest();
+        void UpdateGLBlend();
+        void UpdateGLBlendFunc();
+        void UpdateGLDepthTest();
+        void UpdateGLDepthWrite();
+        void UpdateGLCullFace();
+        void UpdateGLScissorTest();
         Optional<TextureUnit>* GetTextureUnit(GLenum unitIndex);
         void InvalidateShader();
         

@@ -13,7 +13,7 @@ namespace {
     static std::mutex mutex;
     static std::vector<std::pair<std::string, std::weak_ptr<GpuVertexBuffer>>> cache;
     
-    GLenum ToGlBufferUsage(BufferUsage bufferUsage) {
+    GLenum ToGLBufferUsage(BufferUsage bufferUsage) {
         switch (bufferUsage) {
             case BufferUsage::StaticDraw:
                 return GL_STATIC_DRAW;
@@ -41,7 +41,7 @@ GpuVertexBuffer::~GpuVertexBuffer() {
 }
 
 void GpuVertexBuffer::UploadTriangles(const VertexBuffer& vertexBuffer, BufferUsage bufferUsage) {
-    auto glBufferUsage = ToGlBufferUsage(bufferUsage);
+    auto glBufferUsage = ToGLBufferUsage(bufferUsage);
     
     glBindBuffer(GL_ARRAY_BUFFER, mHandles->mGLVertexBufferHandle);
     glBufferData(GL_ARRAY_BUFFER,
@@ -63,7 +63,7 @@ void GpuVertexBuffer::UploadPoints(const VertexBuffer& vertexBuffer, BufferUsage
     glBufferData(GL_ARRAY_BUFFER,
                  vertexBuffer.GetVertexBufferSize() * sizeof(float),
                  vertexBuffer.GetVertexBuffer(),
-                 ToGlBufferUsage(bufferUsage));
+                 ToGLBufferUsage(bufferUsage));
     
     mPointCount = vertexBuffer.GetNumVertices();
 }

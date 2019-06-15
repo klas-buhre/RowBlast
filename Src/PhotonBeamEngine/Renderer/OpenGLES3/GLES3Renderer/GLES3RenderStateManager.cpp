@@ -7,18 +7,18 @@
 using namespace Pht;
 
 void GLES3RenderStateManager::Init() {
-    UpdateGlBlend();
-    UpdateGlBlendFunc();
-    UpdateGlDepthTest();
-    UpdateGlDepthWrite();
-    UpdateGlCullFace();
-    UpdateGlScissorTest();
+    UpdateGLBlend();
+    UpdateGLBlendFunc();
+    UpdateGLDepthTest();
+    UpdateGLDepthWrite();
+    UpdateGLCullFace();
+    UpdateGLScissorTest();
 }
 
 void GLES3RenderStateManager::SetBlend(bool blendEnabled) {
     if (mBlendEnabled != blendEnabled) {
         mBlendEnabled = blendEnabled;
-        UpdateGlBlend();
+        UpdateGLBlend();
     }
 }
 
@@ -26,35 +26,35 @@ void GLES3RenderStateManager::SetBlendFunc(GLenum sFactor, GLenum dFactor) {
     if (mBlendSFactor != sFactor || mBlendDFactor != dFactor) {
         mBlendSFactor = sFactor;
         mBlendDFactor = dFactor;
-        UpdateGlBlendFunc();
+        UpdateGLBlendFunc();
     }
 }
 
 void GLES3RenderStateManager::SetDepthTest(bool depthTestEnabled) {
     if (mDepthTestEnabled != depthTestEnabled) {
         mDepthTestEnabled = depthTestEnabled;
-        UpdateGlDepthTest();
+        UpdateGLDepthTest();
     }
 }
 
 void GLES3RenderStateManager::SetDepthWrite(bool depthWriteEnabled) {
     if (mDepthWriteEnabled != depthWriteEnabled) {
         mDepthWriteEnabled = depthWriteEnabled;
-        UpdateGlDepthWrite();
+        UpdateGLDepthWrite();
     }
 }
 
 void GLES3RenderStateManager::SetCullFace(bool cullFaceEnabled) {
     if (mCullFaceEnabled != cullFaceEnabled) {
         mCullFaceEnabled = cullFaceEnabled;
-        UpdateGlCullFace();
+        UpdateGLCullFace();
     }
 }
 
 void GLES3RenderStateManager::SetScissorTest(bool scissorTestEnabled) {
     if (mScissorTestEnabled != scissorTestEnabled) {
         mScissorTestEnabled = scissorTestEnabled;
-        UpdateGlScissorTest();
+        UpdateGLScissorTest();
     }
 }
 
@@ -88,7 +88,7 @@ GLES3RenderStateManager::GetTextureUnit(GLenum unitIndex) {
     }
 }
 
-void GLES3RenderStateManager::UpdateGlBlend() {
+void GLES3RenderStateManager::UpdateGLBlend() {
     if (mBlendEnabled) {
         glEnable(GL_BLEND);
     } else {
@@ -96,11 +96,11 @@ void GLES3RenderStateManager::UpdateGlBlend() {
     }
 }
 
-void GLES3RenderStateManager::UpdateGlBlendFunc() {
+void GLES3RenderStateManager::UpdateGLBlendFunc() {
     glBlendFunc(mBlendSFactor, mBlendDFactor);
 }
 
-void GLES3RenderStateManager::UpdateGlDepthTest() {
+void GLES3RenderStateManager::UpdateGLDepthTest() {
     if (mDepthTestEnabled) {
         glEnable(GL_DEPTH_TEST);
     } else {
@@ -108,7 +108,7 @@ void GLES3RenderStateManager::UpdateGlDepthTest() {
     }
 }
 
-void GLES3RenderStateManager::UpdateGlDepthWrite() {
+void GLES3RenderStateManager::UpdateGLDepthWrite() {
     if (mDepthWriteEnabled) {
         glDepthMask(GL_TRUE);
     } else {
@@ -116,7 +116,7 @@ void GLES3RenderStateManager::UpdateGlDepthWrite() {
     }
 }
 
-void GLES3RenderStateManager::UpdateGlCullFace() {
+void GLES3RenderStateManager::UpdateGLCullFace() {
     if (mCullFaceEnabled) {
         glEnable(GL_CULL_FACE);
     } else {
@@ -124,7 +124,7 @@ void GLES3RenderStateManager::UpdateGlCullFace() {
     }
 }
 
-void GLES3RenderStateManager::UpdateGlScissorTest() {
+void GLES3RenderStateManager::UpdateGLScissorTest() {
     if (mScissorTestEnabled) {
         glEnable(GL_SCISSOR_TEST);
     } else {
