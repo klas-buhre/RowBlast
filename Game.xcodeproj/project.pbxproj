@@ -1132,6 +1132,7 @@
 		623F5DD522B3AC2100242C10 /* TexturedPixelLighting.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = TexturedPixelLighting.frag; sourceTree = "<group>"; };
 		623F5DD622B3AC2200242C10 /* TexturedPixelLighting.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = TexturedPixelLighting.vert; sourceTree = "<group>"; };
 		623F5DDA22B42A7200242C10 /* GLES3Handles.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = GLES3Handles.hpp; sourceTree = "<group>"; };
+		623F5DDD22B5031400242C10 /* IRenderSystem.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = IRenderSystem.hpp; sourceTree = "<group>"; };
 		62411A961E61E62800035D2A /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		62429F842295A16C002C08AD /* AddingMovesAnimation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AddingMovesAnimation.cpp; sourceTree = "<group>"; };
 		62429F852295A16C002C08AD /* AddingMovesAnimation.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AddingMovesAnimation.hpp; sourceTree = "<group>"; };
@@ -2553,6 +2554,7 @@
 				625696FD2182392B003A3A9D /* Camera.hpp */,
 				623F5DDA22B42A7200242C10 /* GLES3Handles.hpp */,
 				625696F82182392B003A3A9D /* IRenderer.hpp */,
+				623F5DDD22B5031400242C10 /* IRenderSystem.hpp */,
 				625696F92182392B003A3A9D /* Material.cpp */,
 				625696EB2182392B003A3A9D /* Material.hpp */,
 				625696F02182392B003A3A9D /* RenderableObject.cpp */,

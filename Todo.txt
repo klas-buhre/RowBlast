@@ -148,7 +148,7 @@ Beginning of level 20:
  NumDrawCalls: 129
 
 
-    -Add a shader with a brightness (or rather color) vertex attribute. Then most clouds can be
+    -Add a textured lighting shader with a color vertex attribute. Then most clouds can be
      batched if they use a texture atlas (a TextureAtlas class can be used for the fonts later as
      well).
     -Add dynamic batching of objects with very few indices and no rotation if the saved cost of

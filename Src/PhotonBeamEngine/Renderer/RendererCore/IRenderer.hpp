@@ -1,16 +1,10 @@
 #ifndef IRenderer_hpp
 #define IRenderer_hpp
 
-#include <memory>
-
 #include "Matrix.hpp"
 #include "Materials.hpp"
 
 namespace Pht {
-    class RenderableObject;
-    class GuiView;
-    class Scene;
-    
     enum class ProjectionMode {
         Perspective,
         Orthographic

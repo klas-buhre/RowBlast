@@ -6,10 +6,11 @@
 #include "RenderableObject.hpp"
 #include "Fnv1Hash.hpp"
 #include "InputHandler.hpp"
+#include "StaticBatcher.hpp"
 
 using namespace Pht;
 
-SceneManager::SceneManager(Renderer& renderer, InputHandler& inputHandler) :
+SceneManager::SceneManager(IRenderSystem& renderer, InputHandler& inputHandler) :
     mRenderer {renderer},
     mInputHandler {inputHandler} {}
 
@@ -53,7 +54,7 @@ SceneManager::CreateBatchableRenderableObject(const IMesh& mesh,
 std::unique_ptr<RenderableObject>
 SceneManager::CreateStaticBatchRenderable(const SceneObject& sceneObject,
                                           const Optional<std::string>& batchVertexBufferName) {
-    return mRenderer.CreateStaticBatch(sceneObject, batchVertexBufferName);
+    return StaticBatcher::CreateBatch(sceneObject, batchVertexBufferName);
 }
 
 std::unique_ptr<SceneObject> SceneManager::CreateSceneObject(const IMesh& mesh,

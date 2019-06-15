@@ -13,18 +13,18 @@ namespace {
     const auto maxFrameTimeSeconds = 0.4f;
 }
 
-Engine::Engine(bool createRenderBuffers, const Vec2& screenInputSize) :
-    mRenderer {createRenderBuffers},
+Engine::Engine(bool createFrameBuffer, const Vec2& screenInputSize) :
+    mRenderer {CreateRenderSystem(createFrameBuffer)},
     mInputHandler {screenInputSize},
-    mSceneManager {mRenderer, mInputHandler},
+    mSceneManager {*mRenderer, mInputHandler},
     mAnalytics {CreateAnalyticsApi()} {
     
     std::srand(static_cast<int>(std::time(0)));
 }
 
-void Engine::Init(bool createRenderBuffers) {
-    mRenderer.Init(createRenderBuffers);
-    mInputHandler.Init(mRenderer);
+void Engine::Init(bool createFrameBuffer) {
+    mRenderer->Init(createFrameBuffer);
+    mInputHandler.Init(*mRenderer);
 
     // Create and init the application.
     mApplication = CreateApplication(*this);
@@ -50,13 +50,13 @@ void Engine::Update(float frameSeconds) {
     mAudio.Update(mLastFrameSeconds);
     
     if (scene) {
-        mRenderer.ClearFrameBuffer();
-        mRenderer.RenderScene(*scene, frameSeconds);
+        mRenderer->ClearFrameBuffer();
+        mRenderer->RenderScene(*scene, frameSeconds);
     }
 }
 
 IRenderer& Engine::GetRenderer() {
-    return mRenderer;
+    return *mRenderer;
 }
 
 IInput& Engine::GetInput() {

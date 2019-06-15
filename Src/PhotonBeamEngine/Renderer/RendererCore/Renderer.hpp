@@ -7,7 +7,7 @@
 #include <OpenGLES/ES3/gl.h>
 
 #include "IEngine.hpp"
-#include "IRenderer.hpp"
+#include "IRenderSystem.hpp"
 #include "ShaderProgram.hpp"
 #include "Camera.hpp"
 #include "Material.hpp"
@@ -16,10 +16,11 @@
 #include "RenderStateManager.hpp"
 
 namespace Pht {
-    class Renderer: public IRenderer {
+    class Renderer: public IRenderSystem {
     public:
-        Renderer(bool createRenderBuffers);
+        Renderer(bool createFrameBuffer);
         
+        // Methods implementing IRenderer:
         void EnableShader(ShaderId shaderId) override;
         void DisableShader(ShaderId shaderId) override;
         void SetClearColorBuffer(bool clearColorBuffer) override;
@@ -35,19 +36,18 @@ namespace Pht {
         float GetTopPaddingHeight() const override;
         float GetBottomPaddingHeight() const override;
 
-        void Init(bool createRenderBuffers);
-        void InitCamera(float narrowFrustumHeightFactor);
-        void InitRenderQueue(const Scene& scene);
+        // Methods implementing IRendererSystem:
+        void Init(bool createFrameBuffer) override;
+        void InitCamera(float narrowFrustumHeightFactor) override;
+        void InitRenderQueue(const Scene& scene) override;
         std::unique_ptr<RenderableObject> CreateRenderableObject(const IMesh& mesh,
                                                                  const Material& material,
-                                                                 VertexBufferLocation bufferLocation);
-        std::unique_ptr<RenderableObject> CreateStaticBatch(const SceneObject& sceneObject,
-                                                            const Optional<std::string>& batchVertexBufferName);
-        void ClearFrameBuffer();
-        void RenderScene(const Scene& scene, float frameSeconds);
+                                                                 VertexBufferLocation bufferLocation) override;
+        void ClearFrameBuffer() override;
+        void RenderScene(const Scene& scene, float frameSeconds) override;
         
     private:
-        void InitOpenGl(bool createRenderBuffers);
+        void InitOpenGL(bool createFrameBuffer);
         void InitCamera();
         void InitHudFrustum();
         float GetAspectRatio() const;

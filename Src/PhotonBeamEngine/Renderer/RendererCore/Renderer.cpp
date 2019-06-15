@@ -43,7 +43,6 @@
 #include "LightComponent.hpp"
 #include "TextComponent.hpp"
 #include "VertexBufferCache.hpp"
-#include "StaticBatcher.hpp"
 #include "GLES3Handles.hpp"
 
 using namespace Pht;
@@ -178,7 +177,11 @@ namespace {
     }
 }
 
-Renderer::Renderer(bool createRenderBuffers) {
+std::unique_ptr<IRenderSystem> Pht::CreateRenderSystem(bool createFrameBuffer) {
+    return std::make_unique<Renderer>(createFrameBuffer);
+}
+
+Renderer::Renderer(bool createFrameBuffer) {
     CreateShader(ShaderId::PixelLighting,            {.mNormals = true});
     CreateShader(ShaderId::VertexLighting,           {.mNormals = true});
     CreateShader(ShaderId::TexturedLighting,         {.mNormals = true, .mTextureCoords = true});
@@ -193,16 +196,16 @@ Renderer::Renderer(bool createRenderBuffers) {
     CreateShader(ShaderId::ParticleNoAlphaTexture,   {.mTextureCoords = true, .mColors = true});
     CreateShader(ShaderId::PointParticle,            {.mColors = true, .mPointSizes = true});
     
-    if (createRenderBuffers) {
+    if (createFrameBuffer) {
         glGenRenderbuffers(1, &mColorRenderbuffer);
         glBindRenderbuffer(GL_RENDERBUFFER, mColorRenderbuffer);
     }
 }
 
-void Renderer::Init(bool createRenderBuffers) {
+void Renderer::Init(bool createFrameBuffer) {
     std::cout << "Pht::Renderer: Initializing..." << std::endl;
     
-    InitOpenGl(createRenderBuffers);
+    InitOpenGL(createFrameBuffer);
     InitShaders();
     InitCamera(ISceneManager::defaultNarrowFrustumHeightFactor);
 
@@ -214,11 +217,11 @@ void Renderer::Init(bool createRenderBuffers) {
               << " resolution." << std::endl;
 }
 
-void Renderer::InitOpenGl(bool createRenderBuffers) {
+void Renderer::InitOpenGL(bool createFrameBuffer) {
     glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_WIDTH, &mRenderBufferSize.x);
     glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_HEIGHT, &mRenderBufferSize.y);
 
-    if (createRenderBuffers) {        
+    if (createFrameBuffer) {        
         // Create a depth buffer.
         GLuint depthRenderbuffer {0};
         glGenRenderbuffers(1, &depthRenderbuffer);
@@ -402,12 +405,6 @@ Renderer::CreateRenderableObject(const IMesh& mesh,
                                               mesh,
                                               shaderProgram.GetVertexFlags(),
                                               bufferLocation);
-}
-
-std::unique_ptr<RenderableObject>
-Renderer::CreateStaticBatch(const SceneObject& sceneObject,
-                            const Optional<std::string>& batchVertexBufferName) {
-    return StaticBatcher::CreateBatch(sceneObject, batchVertexBufferName);
 }
 
 void Renderer::SetLightDirection(const Vec3& lightDirection) {

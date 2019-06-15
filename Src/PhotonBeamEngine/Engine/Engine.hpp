@@ -4,7 +4,7 @@
 #include <memory>
 
 #include "IEngine.hpp"
-#include "Renderer.hpp"
+#include "IRenderSystem.hpp"
 #include "InputHandler.hpp"
 #include "Audio.hpp"
 #include "SceneManager.hpp"
@@ -17,7 +17,7 @@ namespace Pht {
     
     class Engine: public IEngine {
     public:
-        Engine(bool createRenderBuffers, const Vec2& screenInputSize);
+        Engine(bool createFrameBuffer, const Vec2& screenInputSize);
         
         IRenderer& GetRenderer() override;
         IInput& GetInput() override;
@@ -28,7 +28,7 @@ namespace Pht {
         IAnalytics& GetAnalytics() override;
         float GetLastFrameSeconds() const override;
         
-        void Init(bool createRenderBuffers);
+        void Init(bool createFrameBuffer);
         void Update(float frameSeconds);
         
         Audio& GetAudioSystem() {
@@ -40,7 +40,7 @@ namespace Pht {
         }
         
     private:
-        Renderer mRenderer;
+        std::unique_ptr<IRenderSystem> mRenderer;
         InputHandler mInputHandler;
         Audio mAudio;
         SceneManager mSceneManager;
