@@ -147,7 +147,19 @@ Beginning of level 20:
  NumVboUses: 59
  NumDrawCalls: 129
 
-
+    -Review last commit.
+    -Create a TextureAtlas class that takes a vector of IImages to the constuctor. It calculates
+     texture coordinates for all images in the atlas. Vertical or horizontal packing can be
+     selected. Use vertical for the clouds since that may reduce risk of texture bleeding.
+     A Material can take a TextureAtlasConfig as argument. The TextureAtlasConfig has a list of
+     filenames and options (packing direction, mipmap). The Material givs the TextureAtlasConfig to
+     the texture cache and it will give back a Texture that has a TextureAtlas attached to it. The
+     texture cache uses a TextureAtlasKey as key in its texture atlas list, the key is a struct of
+     the filenames concatenated and the options. If it cannot find it in the cache, it will load
+     all IImages and create a TextureAtlas object and pass the IImages to the TextureAtlas to let it
+     create the atlas image, blitting the the sub images into it and calculate the texture
+     coordinates. When the TextureAtlas has created the atlas image, the texture cache will create
+     the Texture from that image and attach the TextureAtlas to the Texture.
     -Add a textured lighting shader with a color vertex attribute. Then most clouds can be
      batched if they use a texture atlas (a TextureAtlas class can be used for the fonts later as
      well).

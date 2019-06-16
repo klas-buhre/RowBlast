@@ -330,6 +330,7 @@
 		62291E1F2298559600D36BFB /* star.wav in Resources */ = {isa = PBXBuildFile; fileRef = 62291E1E2298559500D36BFB /* star.wav */; };
 		62291E212298598C00D36BFB /* all_cleared.wav in Resources */ = {isa = PBXBuildFile; fileRef = 62291E202298598B00D36BFB /* all_cleared.wav */; };
 		62291E2322985E3400D36BFB /* button_click.wav in Resources */ = {isa = PBXBuildFile; fileRef = 62291E2222985E3400D36BFB /* button_click.wav */; };
+		6229573522B696FA007BACE8 /* TextureAtlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6229573322B696FA007BACE8 /* TextureAtlas.cpp */; };
 		62298339222D8E9C001A7E1C /* spinning_wheel.png in Resources */ = {isa = PBXBuildFile; fileRef = 62298338222D8E9C001A7E1C /* spinning_wheel.png */; };
 		6229833B222D8F1D001A7E1C /* home.png in Resources */ = {isa = PBXBuildFile; fileRef = 6229833A222D8F1D001A7E1C /* home.png */; };
 		6229833D222E9761001A7E1C /* restart.png in Resources */ = {isa = PBXBuildFile; fileRef = 6229833C222E9761001A7E1C /* restart.png */; };
@@ -1066,6 +1067,8 @@
 		62291E1E2298559500D36BFB /* star.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = star.wav; sourceTree = "<group>"; };
 		62291E202298598B00D36BFB /* all_cleared.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = all_cleared.wav; sourceTree = "<group>"; };
 		62291E2222985E3400D36BFB /* button_click.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = button_click.wav; sourceTree = "<group>"; };
+		6229573322B696FA007BACE8 /* TextureAtlas.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TextureAtlas.cpp; sourceTree = "<group>"; };
+		6229573422B696FA007BACE8 /* TextureAtlas.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TextureAtlas.hpp; sourceTree = "<group>"; };
 		62298338222D8E9C001A7E1C /* spinning_wheel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spinning_wheel.png; sourceTree = "<group>"; };
 		6229833A222D8F1D001A7E1C /* home.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = home.png; sourceTree = "<group>"; };
 		6229833C222E9761001A7E1C /* restart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = restart.png; sourceTree = "<group>"; };
@@ -2520,6 +2523,8 @@
 				623F5E5322B563A900242C10 /* SoftwareRasterizer.hpp */,
 				623F5E5522B563A900242C10 /* StaticBatcher.cpp */,
 				623F5E5A22B563A900242C10 /* StaticBatcher.hpp */,
+				6229573322B696FA007BACE8 /* TextureAtlas.cpp */,
+				6229573422B696FA007BACE8 /* TextureAtlas.hpp */,
 				623F5E5E22B563A900242C10 /* TextureCache.hpp */,
 				623F5E5022B563A900242C10 /* VertexBufferCache.hpp */,
 			);
@@ -3517,6 +3522,7 @@
 				62216C2D21EB377F001CB9A1 /* FewMovesAlertAnimation.cpp in Sources */,
 				62216C1921EB377F001CB9A1 /* FieldAnalyzer.cpp in Sources */,
 				625698092182392C003A3A9D /* ObjMesh.cpp in Sources */,
+				6229573522B696FA007BACE8 /* TextureAtlas.cpp in Sources */,
 				62216BCC21EB377E001CB9A1 /* Tutorial.cpp in Sources */,
 				623B94D121F6357400B62D9B /* ImageIOS.mm in Sources */,
 				62216C2421EB377F001CB9A1 /* PreviewPiecesAnimation.cpp in Sources */,
