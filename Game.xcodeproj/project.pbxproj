@@ -340,6 +340,7 @@
 		6229833B222D8F1D001A7E1C /* home.png in Resources */ = {isa = PBXBuildFile; fileRef = 6229833A222D8F1D001A7E1C /* home.png */; };
 		6229833D222E9761001A7E1C /* restart.png in Resources */ = {isa = PBXBuildFile; fileRef = 6229833C222E9761001A7E1C /* restart.png */; };
 		622A6106223D656C001578FB /* GameHudRectangles.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 622A6104223D656B001578FB /* GameHudRectangles.cpp */; };
+		622A6D2D22B7E90B00C5E6DA /* BitmapImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 622A6D2B22B7E90B00C5E6DA /* BitmapImage.cpp */; };
 		6234616221653F9900ECD0DF /* space.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6234616121653F9900ECD0DF /* space.jpg */; };
 		623461662166216800ECD0DF /* wadow_rings.png in Resources */ = {isa = PBXBuildFile; fileRef = 623461642166216700ECD0DF /* wadow_rings.png */; };
 		6234617921668D1E00ECD0DF /* planet_rayeon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6234617821668D1E00ECD0DF /* planet_rayeon.jpg */; };
@@ -1083,6 +1084,8 @@
 		6229833C222E9761001A7E1C /* restart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = restart.png; sourceTree = "<group>"; };
 		622A6104223D656B001578FB /* GameHudRectangles.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameHudRectangles.cpp; sourceTree = "<group>"; };
 		622A6105223D656C001578FB /* GameHudRectangles.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameHudRectangles.hpp; sourceTree = "<group>"; };
+		622A6D2B22B7E90B00C5E6DA /* BitmapImage.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = BitmapImage.cpp; sourceTree = "<group>"; };
+		622A6D2C22B7E90B00C5E6DA /* BitmapImage.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = BitmapImage.hpp; sourceTree = "<group>"; };
 		6234616121653F9900ECD0DF /* space.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = space.jpg; sourceTree = "<group>"; };
 		623461642166216700ECD0DF /* wadow_rings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wadow_rings.png; sourceTree = "<group>"; };
 		6234617821668D1E00ECD0DF /* planet_rayeon.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = planet_rayeon.jpg; sourceTree = "<group>"; };
@@ -2677,6 +2680,8 @@
 				625697292182392B003A3A9D /* FileStorage.cpp */,
 				6256972D2182392B003A3A9D /* FileStorage.hpp */,
 				6256972C2182392B003A3A9D /* Fnv1Hash.hpp */,
+				622A6D2B22B7E90B00C5E6DA /* BitmapImage.cpp */,
+				622A6D2C22B7E90B00C5E6DA /* BitmapImage.hpp */,
 				625697262182392B003A3A9D /* JsonUtil.cpp */,
 				625697302182392B003A3A9D /* JsonUtil.hpp */,
 				622015C722A064990018851A /* Noncopyable.hpp */,
@@ -3505,6 +3510,7 @@
 				62216A8621EB376E001CB9A1 /* PurchaseSuccessfulDialogView.cpp in Sources */,
 				62216A7821EB376E001CB9A1 /* MenuButton.cpp in Sources */,
 				623B94D521FA0AEB00B62D9B /* BeginTextAnimation.cpp in Sources */,
+				622A6D2D22B7E90B00C5E6DA /* BitmapImage.cpp in Sources */,
 				62216BFE21EB377E001CB9A1 /* ComboDetector.cpp in Sources */,
 				625698492182392C003A3A9D /* SceneResources.cpp in Sources */,
 				62216A7721EB376E001CB9A1 /* MenuWindow.cpp in Sources */,

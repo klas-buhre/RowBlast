@@ -38,7 +38,7 @@ namespace {
             return mSize;
         }
 
-        void* GetImageData() const override {
+        const void* GetImageData() const override {
             return (void*) [mImageData bytes];
         }
         

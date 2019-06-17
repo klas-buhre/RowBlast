@@ -2,68 +2,12 @@
 
 #include <assert.h>
 
-#include "IImage.hpp"
+#include "BitmapImage.hpp"
 
 using namespace Pht;
 
 namespace {
     Vec4 transparentPixel {0.0f, 0.0f, 0.0f, 0.0f};
-    
-    unsigned char MapColorToUChar(float color) {
-        if (color < 0.0f) {
-            return 0;
-        }
-        
-        if (color > 1.0f) {
-            return 255;
-        }
-        
-        return static_cast<unsigned char>(color * 255.0f);
-    }
-    
-    class RgbaImage: public IImage {
-    public:
-        RgbaImage(const IVec2& size, const std::vector<Vec4>& buffer) :
-            mSize {size} {
-            
-            auto numPixels = size.x * size.y;
-            assert(numPixels == buffer.size());
-        
-            mData = std::make_unique<unsigned char[]>(numPixels * 4);
-            auto* data = &mData[0];
-            
-            for (const auto& pixel: buffer) {
-                *data++ = MapColorToUChar(pixel.x);
-                *data++ = MapColorToUChar(pixel.y);
-                *data++ = MapColorToUChar(pixel.z);
-                *data++ = MapColorToUChar(pixel.w);
-            }
-        }
-
-        ImageFormat GetFormat() const override {
-            return ImageFormat::Rgba;
-        }
-        
-        int GetBitsPerComponent() const override {
-            return 8;
-        }
-        
-        IVec2 GetSize() const override {
-            return mSize;
-        }
-        
-        void* GetImageData() const override {
-            return mData.get();
-        }
-        
-        bool HasPremultipliedAlpha() const override {
-            return false;
-        }
-        
-    private:
-        IVec2 mSize;
-        std::unique_ptr<unsigned char[]> mData;
-    };
 }
 
 SoftwareRasterizer::SoftwareRasterizer(const Vec2& coordinateSystemSize, const IVec2& imageSize) :
@@ -414,5 +358,5 @@ SoftwareRasterizer::ScanlineState SoftwareRasterizer::UpdateScanlineFsm(int x,
 }
 
 std::unique_ptr<IImage> SoftwareRasterizer::ProduceImage() const {
-    return std::make_unique<RgbaImage>(mImageSize, mBuffer);
+    return std::make_unique<BitmapImage>(mBuffer, mImageSize);
 }

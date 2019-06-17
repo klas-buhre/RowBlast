@@ -147,7 +147,7 @@ Beginning of level 20:
  NumVboUses: 59
  NumDrawCalls: 129
 
-    -Review last commit.
+    -Review TextureAtlas file plus last commit.
     -Create a TextureAtlas class that takes a vector of IImages to the constuctor. It calculates
      texture coordinates for all images in the atlas. Vertical or horizontal packing can be
      selected. Use vertical for the clouds since that may reduce risk of texture bleeding.

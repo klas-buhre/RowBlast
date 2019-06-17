@@ -24,14 +24,16 @@ namespace {
     
     GLenum ToGLTextureFormat(ImageFormat format) {
         switch (format) {
-            case ImageFormat::Gray:
-                return GL_LUMINANCE;
-            case ImageFormat::GrayAlpha:
-                return GL_LUMINANCE_ALPHA;
             case ImageFormat::Rgb:
                 return GL_RGB;
             case ImageFormat::Rgba:
                 return GL_RGBA;
+            case ImageFormat::Gray:
+                return GL_LUMINANCE;
+            case ImageFormat::GrayAlpha:
+                return GL_LUMINANCE_ALPHA;
+            case ImageFormat::Alpha:
+                return GL_ALPHA;
         }
     }
     

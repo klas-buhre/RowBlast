@@ -7,10 +7,11 @@
 
 namespace Pht {
     enum class ImageFormat {
-        Gray,
-        GrayAlpha,
         Rgb,
-        Rgba
+        Rgba,
+        GrayAlpha,
+        Gray,
+        Alpha
     };
     
     class IImage {
@@ -20,7 +21,7 @@ namespace Pht {
         virtual ImageFormat GetFormat() const = 0;
         virtual int GetBitsPerComponent() const = 0;
         virtual IVec2 GetSize() const = 0;
-        virtual void* GetImageData() const = 0;
+        virtual const void* GetImageData() const = 0;
         virtual bool HasPremultipliedAlpha() const = 0;
     };
     
