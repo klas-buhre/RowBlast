@@ -1,4 +1,4 @@
-#include "OpenAlBuffer.hpp"
+#include "OpenALBuffer.hpp"
 
 #include <iostream>
 
@@ -9,7 +9,7 @@
 using namespace Pht;
 
 namespace {
-    ALenum ToOpenAlFormat(int numberOfChannels, int bitsPerChannel) {
+    ALenum ToOpenALFormat(int numberOfChannels, int bitsPerChannel) {
         if (numberOfChannels == 1 && bitsPerChannel == 8) {
             return AL_FORMAT_MONO8;
         } else if (numberOfChannels == 1 && bitsPerChannel == 16) {
@@ -24,20 +24,20 @@ namespace {
     }
 }
 
-OpenAlBuffer::OpenAlBuffer(ALuint handle) : mHandle {handle} {}
+OpenALBuffer::OpenALBuffer(ALuint handle) : mHandle {handle} {}
 
-OpenAlBuffer::~OpenAlBuffer() {
+OpenALBuffer::~OpenALBuffer() {
     alDeleteBuffers(1, &mHandle);
 }
 
-std::unique_ptr<OpenAlBuffer> OpenAlBuffer::Create(const std::string& filename) {
+std::unique_ptr<OpenALBuffer> OpenALBuffer::Create(const std::string& filename) {
     auto audioData = Pht::DecodeAudioFile(filename);
     if (audioData == nullptr) {
         return nullptr;
     }
     
     if (!alcGetCurrentContext()) {
-        std::cout << "OpenAlBuffer: ERROR: No context." << std::endl;
+        std::cout << "OpenALBuffer: ERROR: No context." << std::endl;
         return nullptr;
     }
     
@@ -48,21 +48,21 @@ std::unique_ptr<OpenAlBuffer> OpenAlBuffer::Create(const std::string& filename) 
     alGenBuffers(1, &handle);
     error = alGetError();
     if (error) {
-        std::cout << "OpenAlBuffer: ERROR: Could not create OpenAL buffer." << std::endl;
+        std::cout << "OpenALBuffer: ERROR: Could not create OpenAL buffer." << std::endl;
         return nullptr;
     }
 
     alGetError();
     alBufferData(handle,
-                 ToOpenAlFormat(audioData->mNumberOfChannels, audioData->mBitsPerChannel),
+                 ToOpenALFormat(audioData->mNumberOfChannels, audioData->mBitsPerChannel),
                  audioData->mSampleData.data(),
                  static_cast<ALsizei>(audioData->mSampleData.size()),
                  audioData->mSampleRate);
     error = alGetError();
     if (error) {
-        std::cout << "OpenAlBuffer: ERROR: Could not copy samples to OpenAL buffer." << std::endl;
+        std::cout << "OpenALBuffer: ERROR: Could not copy samples to OpenAL buffer." << std::endl;
         return nullptr;
     }
 
-    return std::make_unique<OpenAlBuffer>(handle);
+    return std::make_unique<OpenALBuffer>(handle);
 }

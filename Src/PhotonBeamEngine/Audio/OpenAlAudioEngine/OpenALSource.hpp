@@ -1,18 +1,18 @@
-#ifndef OpenAlSource_hpp
-#define OpenAlSource_hpp
+#ifndef OpenALSource_hpp
+#define OpenALSource_hpp
 
 #include <memory>
 
 #include <OpenAl/al.h>
 
 namespace Pht {
-    class OpenAlBuffer;
+    class OpenALBuffer;
 
-    class OpenAlSource {
+    class OpenALSource {
     public:
-        static std::unique_ptr<OpenAlSource> Create(const OpenAlBuffer& buffer);
+        static std::unique_ptr<OpenALSource> Create(const OpenALBuffer& buffer);
     
-        ~OpenAlSource();
+        ~OpenALSource();
         
         void Play();
         void Stop();
@@ -25,7 +25,7 @@ namespace Pht {
             return mHandle;
         }
         
-        explicit OpenAlSource(ALuint handle);
+        explicit OpenALSource(ALuint handle);
         
     private:
         ALuint mHandle {0};

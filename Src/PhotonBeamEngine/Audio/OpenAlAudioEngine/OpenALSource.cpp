@@ -1,14 +1,14 @@
-#include "OpenAlSource.hpp"
+#include "OpenALSource.hpp"
 
 #include <iostream>
 
-#include "OpenAlBuffer.hpp"
+#include "OpenALBuffer.hpp"
 
 using namespace Pht;
 
-OpenAlSource::OpenAlSource(ALuint handle) : mHandle {handle} {}
+OpenALSource::OpenALSource(ALuint handle) : mHandle {handle} {}
 
-OpenAlSource::~OpenAlSource() {
+OpenALSource::~OpenALSource() {
     if (IsPlaying()) {
         Stop();
     }
@@ -17,7 +17,7 @@ OpenAlSource::~OpenAlSource() {
     alDeleteSources(1, &mHandle);
 }
 
-void OpenAlSource::Play() {
+void OpenALSource::Play() {
     if (IsPlaying()) {
         Stop();
     }
@@ -25,31 +25,31 @@ void OpenAlSource::Play() {
     alSourcePlay(mHandle);
 }
 
-void OpenAlSource::Stop() {
+void OpenALSource::Stop() {
     if (IsPlaying()) {
         alSourceStop(mHandle);
     }
 }
 
-bool OpenAlSource::IsPlaying() const {
+bool OpenALSource::IsPlaying() const {
     ALint state;
     alGetSourcei(mHandle, AL_SOURCE_STATE, &state);
     return state == AL_PLAYING;
 }
 
-void OpenAlSource::SetGain(float gain) {
+void OpenALSource::SetGain(float gain) {
     alSourcef(mHandle, AL_GAIN, gain);
 }
 
-void OpenAlSource::SetPitch(float pitch) {
+void OpenALSource::SetPitch(float pitch) {
     alSourcef(mHandle, AL_PITCH, pitch);
 }
 
-void OpenAlSource::SetLoop(bool loop) {
+void OpenALSource::SetLoop(bool loop) {
     alSourcei(mHandle, AL_LOOPING, loop);
 }
 
-std::unique_ptr<OpenAlSource> OpenAlSource::Create(const OpenAlBuffer& buffer) {
+std::unique_ptr<OpenALSource> OpenALSource::Create(const OpenALBuffer& buffer) {
     ALuint handle {0};
     
     alGetError();
@@ -57,9 +57,9 @@ std::unique_ptr<OpenAlSource> OpenAlSource::Create(const OpenAlBuffer& buffer) {
     alSourcei(handle, AL_BUFFER, buffer.GetHandle());
     ALenum error {alGetError()};
     if (error) {
-        std::cout << "OpenAlBuffer: ERROR: Could not create OpenAL source." << std::endl;
+        std::cout << "OpenALBuffer: ERROR: Could not create OpenAL source." << std::endl;
         return nullptr;
     }
     
-    return std::make_unique<OpenAlSource>(handle);
+    return std::make_unique<OpenALSource>(handle);
 }

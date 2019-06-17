@@ -1,20 +1,20 @@
-#include "OpenAlContext.hpp"
+#include "OpenALContext.hpp"
 
 #include <iostream>
 
 using namespace Pht;
 
-OpenAlContext::OpenAlContext(ALCdevice *device) {
+OpenALContext::OpenALContext(ALCdevice *device) {
     if (device) {
         mHandle = alcCreateContext(device, 0);
     }
     
     if (mHandle == nullptr) {
-        std::cout << "OpenAlContext: ERROR: Could not create context." << std::endl;
+        std::cout << "OpenALContext: ERROR: Could not create context." << std::endl;
     }
 }
 
-OpenAlContext::~OpenAlContext() {
+OpenALContext::~OpenALContext() {
     if (mHandle) {
         if (IsCurrent()) {
             SetIsCurrent(false);
@@ -24,15 +24,15 @@ OpenAlContext::~OpenAlContext() {
     }
 }
 
-void OpenAlContext::SetIsCurrent(bool isCurrent) {
+void OpenALContext::SetIsCurrent(bool isCurrent) {
     alcMakeContextCurrent(isCurrent ? mHandle : nullptr);
 }
 
-bool OpenAlContext::IsCurrent() const {
+bool OpenALContext::IsCurrent() const {
     return mHandle && (alcGetCurrentContext() == mHandle);
 }
 
-void OpenAlContext::SetIsSuspended(bool isSuspended) {
+void OpenALContext::SetIsSuspended(bool isSuspended) {
     if (mHandle && (isSuspended != mIsSuspended)) {
         if (isSuspended) {
             alcSuspendContext(mHandle);

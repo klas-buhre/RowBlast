@@ -1,13 +1,13 @@
-#ifndef OpenAlContext_hpp
-#define OpenAlContext_hpp
+#ifndef OpenALContext_hpp
+#define OpenALContext_hpp
 
 #include <OpenAl/alc.h>
 
 namespace Pht {
-    class OpenAlContext {
+    class OpenALContext {
     public:
-        explicit OpenAlContext(ALCdevice *device);
-        ~OpenAlContext();
+        explicit OpenALContext(ALCdevice *device);
+        ~OpenALContext();
         
         void SetIsCurrent(bool isCurrent);
         void SetIsSuspended(bool isSuspended);

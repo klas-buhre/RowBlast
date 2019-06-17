@@ -1,17 +1,17 @@
-#ifndef OpenAlSound_hpp
-#define OpenAlSound_hpp
+#ifndef OpenALSound_hpp
+#define OpenALSound_hpp
 
 #include <memory>
 #include <vector>
 
 #include "ISound.hpp"
-#include "OpenAlBuffer.hpp"
-#include "OpenAlSource.hpp"
+#include "OpenALBuffer.hpp"
+#include "OpenALSource.hpp"
 
 namespace Pht {
-    class OpenAlSound: public ISound {
+    class OpenALSound: public ISound {
     public:
-        static std::unique_ptr<OpenAlSound> Create(const std::string& filename, int maxSources);
+        static std::unique_ptr<OpenALSound> Create(const std::string& filename, int maxSources);
         
         void Play() override;
         void Stop() override;
@@ -21,8 +21,8 @@ namespace Pht {
         bool IsPlaying() const override;
 
     private:
-        std::unique_ptr<OpenAlBuffer> mBuffer;
-        std::vector<std::unique_ptr<OpenAlSource>> mSources;
+        std::unique_ptr<OpenALBuffer> mBuffer;
+        std::vector<std::unique_ptr<OpenALSource>> mSources;
         int mCurrentSourceIndex {0};
     };
 }

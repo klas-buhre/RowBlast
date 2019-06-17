@@ -250,6 +250,11 @@
 		6221D56E22303C070098395A /* sound_off.png in Resources */ = {isa = PBXBuildFile; fileRef = 6221D56D22303C070098395A /* sound_off.png */; };
 		6221D570223042980098395A /* circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 6221D56F223042980098395A /* circle.png */; };
 		6221D572223046E60098395A /* right_arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 6221D571223046E50098395A /* right_arrow.png */; };
+		62243E9422B7952500EB922F /* OpenALSound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62243E8B22B7952500EB922F /* OpenALSound.cpp */; };
+		62243E9522B7952500EB922F /* OpenALSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62243E8F22B7952500EB922F /* OpenALSource.cpp */; };
+		62243E9622B7952500EB922F /* OpenALAudioEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62243E9022B7952500EB922F /* OpenALAudioEngine.cpp */; };
+		62243E9722B7952500EB922F /* OpenALBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62243E9222B7952500EB922F /* OpenALBuffer.cpp */; };
+		62243E9822B7952500EB922F /* OpenALContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62243E9322B7952500EB922F /* OpenALContext.cpp */; };
 		62270D6022663000009D9625 /* TutorialLaserParticleEffect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62270D5E22663000009D9625 /* TutorialLaserParticleEffect.cpp */; };
 		62270D6322678B31009D9625 /* AnimationClip.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62270D6122678B31009D9625 /* AnimationClip.cpp */; };
 		62276E592274A96000679BC6 /* level47.json in Resources */ = {isa = PBXBuildFile; fileRef = 62276E0D2274A96000679BC6 /* level47.json */; };
@@ -517,14 +522,9 @@
 		62B1CB8D210F8F8600D0F195 /* cloud_B_envmap.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62B1CB75210F8F8500D0F195 /* cloud_B_envmap.jpg */; };
 		62B50A49222C4E1900536E0E /* sky_upside_down_patched_mirrored.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62B50A48222C4E1800536E0E /* sky_upside_down_patched_mirrored.jpg */; };
 		62BB35BA21C573690051AEEF /* map.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 62BB35B921C5733A0051AEEF /* map.mp4 */; };
-		62BB35C321C6B26A0051AEEF /* OpenAlAudioEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62BB35C121C6B26A0051AEEF /* OpenAlAudioEngine.cpp */; };
-		62BB35C621C6BA710051AEEF /* OpenAlContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62BB35C421C6BA710051AEEF /* OpenAlContext.cpp */; };
 		62BB35C821C6C0110051AEEF /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62BB35C721C6C0110051AEEF /* OpenAL.framework */; };
-		62BB35CB21C7BF0D0051AEEF /* OpenAlSound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62BB35C921C7BF0D0051AEEF /* OpenAlSound.cpp */; };
 		62BB35D021C7FF7F0051AEEF /* AudioFileDecoderIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 62BB35CF21C7FF7F0051AEEF /* AudioFileDecoderIOS.mm */; };
 		62BB35D221C809D20051AEEF /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62BB35D121C809D20051AEEF /* AudioToolbox.framework */; };
-		62BB35D521C8FC9A0051AEEF /* OpenAlBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62BB35D321C8FC9A0051AEEF /* OpenAlBuffer.cpp */; };
-		62BB35D821C910900051AEEF /* OpenAlSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62BB35D621C910900051AEEF /* OpenAlSource.cpp */; };
 		62BE275320B42A360014C6DD /* star_1428.obj in Resources */ = {isa = PBXBuildFile; fileRef = 62BE275220B42A360014C6DD /* star_1428.obj */; };
 		62DE641C20CE953D00A50F26 /* medium_button_skewed_0385.obj in Resources */ = {isa = PBXBuildFile; fileRef = 62DE641B20CE953C00A50F26 /* medium_button_skewed_0385.obj */; };
 		62E01BAF2153E00F009F0B99 /* planet_960.obj in Resources */ = {isa = PBXBuildFile; fileRef = 62E01BAE2153E00E009F0B99 /* planet_960.obj */; };
@@ -985,6 +985,15 @@
 		6221D56D22303C070098395A /* sound_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sound_off.png; sourceTree = "<group>"; };
 		6221D56F223042980098395A /* circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = circle.png; sourceTree = "<group>"; };
 		6221D571223046E50098395A /* right_arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = right_arrow.png; sourceTree = "<group>"; };
+		62243E8B22B7952500EB922F /* OpenALSound.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OpenALSound.cpp; sourceTree = "<group>"; };
+		62243E8C22B7952500EB922F /* OpenALBuffer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = OpenALBuffer.hpp; sourceTree = "<group>"; };
+		62243E8D22B7952500EB922F /* OpenALContext.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = OpenALContext.hpp; sourceTree = "<group>"; };
+		62243E8E22B7952500EB922F /* OpenALSource.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = OpenALSource.hpp; sourceTree = "<group>"; };
+		62243E8F22B7952500EB922F /* OpenALSource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OpenALSource.cpp; sourceTree = "<group>"; };
+		62243E9022B7952500EB922F /* OpenALAudioEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OpenALAudioEngine.cpp; sourceTree = "<group>"; };
+		62243E9122B7952500EB922F /* OpenALSound.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = OpenALSound.hpp; sourceTree = "<group>"; };
+		62243E9222B7952500EB922F /* OpenALBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OpenALBuffer.cpp; sourceTree = "<group>"; };
+		62243E9322B7952500EB922F /* OpenALContext.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OpenALContext.cpp; sourceTree = "<group>"; };
 		62270D5E22663000009D9625 /* TutorialLaserParticleEffect.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TutorialLaserParticleEffect.cpp; sourceTree = "<group>"; };
 		62270D5F22663000009D9625 /* TutorialLaserParticleEffect.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TutorialLaserParticleEffect.hpp; sourceTree = "<group>"; };
 		62270D6122678B31009D9625 /* AnimationClip.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AnimationClip.cpp; sourceTree = "<group>"; };
@@ -1473,19 +1482,10 @@
 		62B50A48222C4E1800536E0E /* sky_upside_down_patched_mirrored.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sky_upside_down_patched_mirrored.jpg; sourceTree = "<group>"; };
 		62BB35B921C5733A0051AEEF /* map.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = map.mp4; sourceTree = "<group>"; };
 		62BB35BF21C6AD2A0051AEEF /* IAudioEngine.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = IAudioEngine.hpp; sourceTree = "<group>"; };
-		62BB35C121C6B26A0051AEEF /* OpenAlAudioEngine.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = OpenAlAudioEngine.cpp; sourceTree = "<group>"; };
-		62BB35C421C6BA710051AEEF /* OpenAlContext.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = OpenAlContext.cpp; sourceTree = "<group>"; };
-		62BB35C521C6BA710051AEEF /* OpenAlContext.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = OpenAlContext.hpp; sourceTree = "<group>"; };
 		62BB35C721C6C0110051AEEF /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
-		62BB35C921C7BF0D0051AEEF /* OpenAlSound.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = OpenAlSound.cpp; sourceTree = "<group>"; };
-		62BB35CA21C7BF0D0051AEEF /* OpenAlSound.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = OpenAlSound.hpp; sourceTree = "<group>"; };
 		62BB35CD21C7F9190051AEEF /* AudioFileDecoder.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AudioFileDecoder.hpp; sourceTree = "<group>"; };
 		62BB35CF21C7FF7F0051AEEF /* AudioFileDecoderIOS.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; path = AudioFileDecoderIOS.mm; sourceTree = "<group>"; };
 		62BB35D121C809D20051AEEF /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
-		62BB35D321C8FC9A0051AEEF /* OpenAlBuffer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = OpenAlBuffer.cpp; sourceTree = "<group>"; };
-		62BB35D421C8FC9A0051AEEF /* OpenAlBuffer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = OpenAlBuffer.hpp; sourceTree = "<group>"; };
-		62BB35D621C910900051AEEF /* OpenAlSource.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = OpenAlSource.cpp; sourceTree = "<group>"; };
-		62BB35D721C910900051AEEF /* OpenAlSource.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = OpenAlSource.hpp; sourceTree = "<group>"; };
 		62BE275220B42A360014C6DD /* star_1428.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = star_1428.obj; sourceTree = "<group>"; };
 		62DE641B20CE953C00A50F26 /* medium_button_skewed_0385.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = medium_button_skewed_0385.obj; sourceTree = "<group>"; };
 		62E01BAE2153E00E009F0B99 /* planet_960.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = planet_960.obj; sourceTree = "<group>"; };
@@ -2228,6 +2228,22 @@
 			path = DocumentViewer;
 			sourceTree = "<group>";
 		};
+		62243E8A22B7952500EB922F /* OpenALAudioEngine */ = {
+			isa = PBXGroup;
+			children = (
+				62243E9022B7952500EB922F /* OpenALAudioEngine.cpp */,
+				62243E9222B7952500EB922F /* OpenALBuffer.cpp */,
+				62243E8C22B7952500EB922F /* OpenALBuffer.hpp */,
+				62243E9322B7952500EB922F /* OpenALContext.cpp */,
+				62243E8D22B7952500EB922F /* OpenALContext.hpp */,
+				62243E8B22B7952500EB922F /* OpenALSound.cpp */,
+				62243E9122B7952500EB922F /* OpenALSound.hpp */,
+				62243E8F22B7952500EB922F /* OpenALSource.cpp */,
+				62243E8E22B7952500EB922F /* OpenALSource.hpp */,
+			);
+			path = OpenALAudioEngine;
+			sourceTree = "<group>";
+		};
 		62276E0C2274A96000679BC6 /* World3 */ = {
 			isa = PBXGroup;
 			children = (
@@ -2688,7 +2704,7 @@
 			children = (
 				6242DEEF21C50E7600D17F46 /* AudioApi */,
 				6242DEF421C50E7600D17F46 /* iOS */,
-				62BB35BD21C6ACC00051AEEF /* OpenAlAudioEngine */,
+				62243E8A22B7952500EB922F /* OpenALAudioEngine */,
 			);
 			path = Audio;
 			sourceTree = "<group>";
@@ -3184,22 +3200,6 @@
 			path = Music;
 			sourceTree = "<group>";
 		};
-		62BB35BD21C6ACC00051AEEF /* OpenAlAudioEngine */ = {
-			isa = PBXGroup;
-			children = (
-				62BB35C121C6B26A0051AEEF /* OpenAlAudioEngine.cpp */,
-				62BB35D321C8FC9A0051AEEF /* OpenAlBuffer.cpp */,
-				62BB35D421C8FC9A0051AEEF /* OpenAlBuffer.hpp */,
-				62BB35C421C6BA710051AEEF /* OpenAlContext.cpp */,
-				62BB35C521C6BA710051AEEF /* OpenAlContext.hpp */,
-				62BB35C921C7BF0D0051AEEF /* OpenAlSound.cpp */,
-				62BB35CA21C7BF0D0051AEEF /* OpenAlSound.hpp */,
-				62BB35D621C910900051AEEF /* OpenAlSource.cpp */,
-				62BB35D721C910900051AEEF /* OpenAlSource.hpp */,
-			);
-			path = OpenAlAudioEngine;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -3518,6 +3518,7 @@
 				62216C1B21EB377F001CB9A1 /* Level.cpp in Sources */,
 				62216A9821EB376E001CB9A1 /* GradientRectangle.cpp in Sources */,
 				62216A8E21EB376E001CB9A1 /* LifeService.cpp in Sources */,
+				62243E9622B7952500EB922F /* OpenALAudioEngine.cpp in Sources */,
 				62270D6322678B31009D9625 /* AnimationClip.cpp in Sources */,
 				62216C2D21EB377F001CB9A1 /* FewMovesAlertAnimation.cpp in Sources */,
 				62216C1921EB377F001CB9A1 /* FieldAnalyzer.cpp in Sources */,
@@ -3540,6 +3541,7 @@
 				62216BE721EB377E001CB9A1 /* GameOverDialogView.cpp in Sources */,
 				62216A9221EB376E001CB9A1 /* RoundedCylinder.cpp in Sources */,
 				62216C0721EB377F001CB9A1 /* MiddleIPiece.cpp in Sources */,
+				62243E9722B7952500EB922F /* OpenALBuffer.cpp in Sources */,
 				62216A7521EB376E001CB9A1 /* SpinningWheelEffect.cpp in Sources */,
 				625698362182392C003A3A9D /* SwipeGestureRecognizer.cpp in Sources */,
 				623F5E4422B55D5200242C10 /* GLES3VertexBufferCache.cpp in Sources */,
@@ -3547,7 +3549,6 @@
 				62216BF721EB377E001CB9A1 /* Cell.cpp in Sources */,
 				625698522182392C003A3A9D /* ParticleEffect.cpp in Sources */,
 				62216BD021EB377E001CB9A1 /* SameColorDialogController.cpp in Sources */,
-				62BB35D521C8FC9A0051AEEF /* OpenAlBuffer.cpp in Sources */,
 				625698442182392C003A3A9D /* Button.cpp in Sources */,
 				625698582182392C003A3A9D /* FastNoise.cc in Sources */,
 				62429F862295A16C002C08AD /* AddingMovesAnimation.cpp in Sources */,
@@ -3556,8 +3557,8 @@
 				62216A9A21EB376E001CB9A1 /* FloatingBlocks.cpp in Sources */,
 				623F5E4322B55D5200242C10 /* GLES3TextRenderer.cpp in Sources */,
 				62216C4D21EB41F1001CB9A1 /* AcceptTermsDialogView.cpp in Sources */,
+				62243E9422B7952500EB922F /* OpenALSound.cpp in Sources */,
 				623F5E6522B563A900242C10 /* Material.cpp in Sources */,
-				62BB35C621C6BA710051AEEF /* OpenAlContext.cpp in Sources */,
 				6220AF3322342B7400D66C76 /* HowToPlayDialogController.cpp in Sources */,
 				62216C3F21EB377F001CB9A1 /* MapHudController.cpp in Sources */,
 				62216C2921EB377F001CB9A1 /* PreviewPieceGroupAnimation.cpp in Sources */,
@@ -3692,8 +3693,6 @@
 				62216BDA21EB377E001CB9A1 /* OutOfMovesDialogController.cpp in Sources */,
 				62216BC821EB377E001CB9A1 /* SwitchPieceWindowController.cpp in Sources */,
 				62216C3221EB377F001CB9A1 /* World2.cpp in Sources */,
-				62BB35D821C910900051AEEF /* OpenAlSource.cpp in Sources */,
-				62BB35C321C6B26A0051AEEF /* OpenAlAudioEngine.cpp in Sources */,
 				62216C3621EB377F001CB9A1 /* World.cpp in Sources */,
 				62216C2E21EB377F001CB9A1 /* ShieldAnimation.cpp in Sources */,
 				62216BD321EB377E001CB9A1 /* FillRowsWindowView.cpp in Sources */,
@@ -3745,7 +3744,6 @@
 				6256984A2182392C003A3A9D /* ObjMeshLoader.cpp in Sources */,
 				62216C2021EB377F001CB9A1 /* EffectManager.cpp in Sources */,
 				62216BE921EB377E001CB9A1 /* GhostPieceProducer.cpp in Sources */,
-				62BB35CB21C7BF0D0051AEEF /* OpenAlSound.cpp in Sources */,
 				62216A8521EB376E001CB9A1 /* StoreController.cpp in Sources */,
 				62216C1E21EB377F001CB9A1 /* LaserParticleEffect.cpp in Sources */,
 				62216BED21EB377E001CB9A1 /* FieldBorder.cpp in Sources */,
@@ -3766,10 +3764,12 @@
 				62216C1121EB377F001CB9A1 /* LongIPiece.cpp in Sources */,
 				623F5E6022B563A900242C10 /* Camera.cpp in Sources */,
 				62216BEA21EB377E001CB9A1 /* GameSceneRenderer.cpp in Sources */,
+				62243E9522B7952500EB922F /* OpenALSource.cpp in Sources */,
 				623B94DE21FCC63700B62D9B /* SwitchPiece2WindowController.cpp in Sources */,
 				62216C1721EB377F001CB9A1 /* ValidMovesSearch.cpp in Sources */,
 				62216BE521EB377E001CB9A1 /* RestartConfirmationDialogController.cpp in Sources */,
 				62216C0B21EB377F001CB9A1 /* PlusPiece.cpp in Sources */,
+				62243E9822B7952500EB922F /* OpenALContext.cpp in Sources */,
 				62216BDB21EB377E001CB9A1 /* GameMenuView.cpp in Sources */,
 				62216C2C21EB377F001CB9A1 /* FlyingBlocksAnimation.cpp in Sources */,
 				623B94AF21F4862800B62D9B /* GameAnalyticsIOS.mm in Sources */,

@@ -1,22 +1,22 @@
-#ifndef OpenAlBuffer_hpp
-#define OpenAlBuffer_hpp
+#ifndef OpenALBuffer_hpp
+#define OpenALBuffer_hpp
 
 #include <memory>
 
 #include <OpenAl/al.h>
 
 namespace Pht {
-    class OpenAlBuffer {
+    class OpenALBuffer {
     public:
-        static std::unique_ptr<OpenAlBuffer> Create(const std::string& filename);
+        static std::unique_ptr<OpenALBuffer> Create(const std::string& filename);
 
-        ~OpenAlBuffer();
+        ~OpenALBuffer();
         
         ALuint GetHandle() const {
             return mHandle;
         }
         
-        explicit OpenAlBuffer(ALuint handle);
+        explicit OpenALBuffer(ALuint handle);
         
     private:
         ALuint mHandle {0};
