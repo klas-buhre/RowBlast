@@ -37,7 +37,10 @@ GLES3TextRenderer::GLES3TextRenderer(GLES3RenderStateManager& renderState,
     
     glGenBuffers(1, &mVbo);
     glBindBuffer(GL_ARRAY_BUFFER, mVbo);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * 6 * 5, nullptr, GL_DYNAMIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER,
+                 sizeof(GLfloat) * mVertexBuffer.GetCapacity(),
+                 nullptr,
+                 GL_DYNAMIC_DRAW);
     
     BuildShader(mTextShader, TextVertexShader, TextFragmentShader);
     BuildShader(mTextDoubleGradientShader, TextDoubleGradientVertexShader, TextDoubleGradientFragmentShader);
@@ -123,8 +126,16 @@ void GLES3TextRenderer::RenderText(const std::string& text,
     }
     
     mRenderState.BindTexture(GL_TEXTURE0, GL_TEXTURE_2D, texture->GetHandles()->mGLHandle);
+    mVertexBuffer.Clear();
+    mNumVertices = 0;
+    
+    auto numCharacters = 0;
     
     for (auto c: text) {
+        if (numCharacters > maxNumCharacters) {
+            break;
+        }
+        
         auto* glyph = font.GetGlyph(c);
         if (glyph == nullptr) {
             continue;
@@ -146,22 +157,37 @@ void GLES3TextRenderer::RenderText(const std::string& text,
         if (uv == nullptr) {
             continue;
         }
-        
-        GLfloat vertices[6][5] {
-            {xPos + slant,     yPos + h, uv->mTopLeft.x,     uv->mTopLeft.y,     0.0f},
-            {xPos,             yPos,     uv->mBottomLeft.x,  uv->mBottomLeft.y,  1.0f},
-            {xPos + w,         yPos,     uv->mBottomRight.x, uv->mBottomRight.y, 1.0f},
 
-            {xPos + slant,     yPos + h, uv->mTopLeft.x,     uv->mTopLeft.y,     0.0f},
-            {xPos + w,         yPos,     uv->mBottomRight.x, uv->mBottomRight.y, 1.0f},
-            {xPos + w + slant, yPos + h, uv->mTopRight.x,    uv->mTopRight.y,    0.0f}
-        };
+        WriteVertex({xPos + slant,     yPos + h}, {uv->mTopLeft.x,     uv->mTopLeft.y},     0.0f);
+        WriteVertex({xPos,             yPos},     {uv->mBottomLeft.x,  uv->mBottomLeft.y},  1.0f);
+        WriteVertex({xPos + w,         yPos},     {uv->mBottomRight.x, uv->mBottomRight.y}, 1.0f);
         
-        // Should use glBufferSubData here but it leads to very poor performance for some reason.
-        glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_DYNAMIC_DRAW);
-        glDrawArrays(GL_TRIANGLES, 0, 6);
-        IF_USING_FRAME_STATS(mRenderState.ReportDrawCall());
+        WriteVertex({xPos + slant,     yPos + h}, {uv->mTopLeft.x,     uv->mTopLeft.y},     0.0f);
+        WriteVertex({xPos + w,         yPos},     {uv->mBottomRight.x, uv->mBottomRight.y}, 1.0f);
+        WriteVertex({xPos + w + slant, yPos + h}, {uv->mTopRight.x,    uv->mTopRight.y},    0.0f);
+
+        ++numCharacters;
     }
+    
+    // Should use glBufferSubData here but it leads to very poor performance for some reason.
+    glBufferData(GL_ARRAY_BUFFER,
+                 mVertexBuffer.Size() * sizeof(float),
+                 mVertexBuffer.GetData(),
+                 GL_DYNAMIC_DRAW);
+    glDrawArrays(GL_TRIANGLES, 0, mNumVertices);
+    IF_USING_FRAME_STATS(mRenderState.ReportDrawCall());
+}
+
+void GLES3TextRenderer::WriteVertex(const Vec2& position,
+                                    const Vec2& textureCoords,
+                                    float gradientFunction) {
+    mVertexBuffer.PushBack(position.x);
+    mVertexBuffer.PushBack(position.y);
+    mVertexBuffer.PushBack(textureCoords.x);
+    mVertexBuffer.PushBack(textureCoords.y);
+    mVertexBuffer.PushBack(gradientFunction);
+
+    ++mNumVertices;
 }
 
 GLES3ShaderProgram& GLES3TextRenderer::GetShaderProgram(const TextProperties& textProperties) {

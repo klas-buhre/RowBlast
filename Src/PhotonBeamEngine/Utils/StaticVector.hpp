@@ -32,7 +32,7 @@ namespace Pht {
             --mSize;
             assert(mSize >= 0);
             if (index < mSize) {
-                for (auto i {index}; i < mSize; ++i) {
+                for (auto i = index; i < mSize; ++i) {
                     mData[i] = mData[i + 1];
                 }
             }
@@ -105,7 +105,7 @@ namespace Pht {
         }
         
         T* GetData() {
-            return mData;
+            return &mData[0];
         }
         
         // For range-based for loops.
