@@ -1,6 +1,7 @@
 static const char* TextVertexShader = STRINGIFY(
 
 attribute vec4 TextCoords;
+attribute float TextGradientFunction;
 
 uniform mat4 Projection;
 

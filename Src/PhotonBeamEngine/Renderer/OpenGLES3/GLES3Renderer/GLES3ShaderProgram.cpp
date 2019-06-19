@@ -57,6 +57,7 @@ void GLES3ShaderProgram::Build(const char* vertexShaderSource, const char* fragm
     mAttributes.mTextureCoord = glGetAttribLocation(mProgram, "TextureCoord");
     mAttributes.mColor = glGetAttribLocation(mProgram, "Color");
     mAttributes.mTextCoords = glGetAttribLocation(mProgram, "TextCoords");
+    mAttributes.mTextGradientFunction = glGetAttribLocation(mProgram, "TextGradientFunction");
     mAttributes.mPointSize = glGetAttribLocation(mProgram, "PointSize");
     
     // Extract the handles to uniforms.

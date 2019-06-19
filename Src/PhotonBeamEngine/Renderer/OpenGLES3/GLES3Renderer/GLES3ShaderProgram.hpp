@@ -39,6 +39,7 @@ namespace Pht {
             GLint mTextureCoord {0};
             GLint mColor {0};
             GLint mTextCoords {0};
+            GLint mTextGradientFunction {0};
             GLint mPointSize {0};
         };
         

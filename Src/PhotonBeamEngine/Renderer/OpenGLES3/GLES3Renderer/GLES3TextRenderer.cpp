@@ -37,7 +37,7 @@ GLES3TextRenderer::GLES3TextRenderer(GLES3RenderStateManager& renderState,
     
     glGenBuffers(1, &mVbo);
     glBindBuffer(GL_ARRAY_BUFFER, mVbo);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * 6 * 4, nullptr, GL_DYNAMIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * 6 * 5, nullptr, GL_DYNAMIC_DRAW);
     
     BuildShader(mTextShader, TextVertexShader, TextFragmentShader);
     BuildShader(mTextDoubleGradientShader, TextDoubleGradientVertexShader, TextDoubleGradientFragmentShader);
@@ -72,10 +72,19 @@ void GLES3TextRenderer::RenderText(const std::string& text,
         
         DisableVertexAttributes(shaderProgram);
         
-        glEnableVertexAttribArray(attributes.mTextCoords);
+        auto stride = static_cast<int>(sizeof(Vec4) + sizeof(float));
         glBindBuffer(GL_ARRAY_BUFFER, mVbo);
-        glVertexAttribPointer(attributes.mTextCoords, 4, GL_FLOAT, GL_FALSE, 0, 0);
-        IF_USING_FRAME_STATS(mRenderState.ReportVboUse());
+        glEnableVertexAttribArray(attributes.mTextCoords);
+        glVertexAttribPointer(attributes.mTextCoords, 4, GL_FLOAT, GL_FALSE, stride, 0);
+        
+        auto offset = sizeof(Vec4);
+        glEnableVertexAttribArray(attributes.mTextGradientFunction);
+        glVertexAttribPointer(attributes.mTextGradientFunction,
+                              1,
+                              GL_FLOAT,
+                              GL_FALSE,
+                              stride,
+                              reinterpret_cast<const GLvoid*>(offset));
     }
     
     glUniform4fv(uniforms.mTextColor, 1, properties.mColor.Pointer());
@@ -138,14 +147,14 @@ void GLES3TextRenderer::RenderText(const std::string& text,
             continue;
         }
         
-        GLfloat vertices[6][4] {
-            {xPos + slant,     yPos + h, uv->mTopLeft.x, uv->mTopLeft.y},
-            {xPos,             yPos,     uv->mBottomLeft.x, uv->mBottomLeft.y},
-            {xPos + w,         yPos,     uv->mBottomRight.x, uv->mBottomRight.y},
+        GLfloat vertices[6][5] {
+            {xPos + slant,     yPos + h, uv->mTopLeft.x,     uv->mTopLeft.y,     0.0f},
+            {xPos,             yPos,     uv->mBottomLeft.x,  uv->mBottomLeft.y,  1.0f},
+            {xPos + w,         yPos,     uv->mBottomRight.x, uv->mBottomRight.y, 1.0f},
 
-            {xPos + slant,     yPos + h, uv->mTopLeft.x, uv->mTopLeft.y},
-            {xPos + w,         yPos,     uv->mBottomRight.x, uv->mBottomRight.y},
-            {xPos + w + slant, yPos + h, uv->mTopRight.x, uv->mTopRight.y}
+            {xPos + slant,     yPos + h, uv->mTopLeft.x,     uv->mTopLeft.y,     0.0f},
+            {xPos + w,         yPos,     uv->mBottomRight.x, uv->mBottomRight.y, 1.0f},
+            {xPos + w + slant, yPos + h, uv->mTopRight.x,    uv->mTopRight.y,    0.0f}
         };
         
         // Should use glBufferSubData here but it leads to very poor performance for some reason.
