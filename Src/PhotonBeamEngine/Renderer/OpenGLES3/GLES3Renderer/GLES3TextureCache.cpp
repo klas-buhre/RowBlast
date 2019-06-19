@@ -8,6 +8,7 @@
 #include <OpenGLES/ES3/gl.h>
 
 #include "IImage.hpp"
+#include "TextureAtlas.hpp"
 #include "GLES3Handles.hpp"
 
 using namespace Pht;
@@ -66,8 +67,40 @@ namespace {
         GLTexImage(target, *image);
     }
     
-    std::shared_ptr<Texture> CreateTexture(const IImage& image, GenerateMipmap generateMipmap) {
-        auto texture = std::make_shared<Texture>(image.HasPremultipliedAlpha());
+    std::shared_ptr<Texture>
+    CreateAtlasTextureNoMipmap(const IImage& image,
+                               std::unique_ptr<TextureAtlas> textureAtlas) {
+        if (image.GetFormat() == ImageFormat::Alpha) {
+            // Disable byte alignment restriction.
+            glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+        }
+        
+        auto texture = std::make_shared<Texture>(image.HasPremultipliedAlpha(),
+                                                 std::move(textureAtlas));
+        glBindTexture(GL_TEXTURE_2D, texture->GetHandles()->mGLHandle);
+        
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        
+        GLTexImage(GL_TEXTURE_2D, image);
+
+        glBindTexture(GL_TEXTURE_2D, 0);
+        
+        if (image.GetFormat() == ImageFormat::Alpha) {
+            // Restore byte-alignment.
+            glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
+        }
+
+        return texture;
+    }
+
+    std::shared_ptr<Texture> CreateTexture(const IImage& image,
+                                           GenerateMipmap generateMipmap,
+                                           std::unique_ptr<TextureAtlas> textureAtlas) {
+        auto texture = std::make_shared<Texture>(image.HasPremultipliedAlpha(),
+                                                 std::move(textureAtlas));
         
         glBindTexture(GL_TEXTURE_2D, texture->GetHandles()->mGLHandle);
         
@@ -89,7 +122,7 @@ namespace {
     }
     
     std::shared_ptr<Texture> CreateEnvMapTexture(const EnvMapTextureFilenames& filenames) {
-        auto texture = std::make_shared<Texture>(false);
+        auto texture = std::make_shared<Texture>(false, nullptr);
         
         glBindTexture(GL_TEXTURE_CUBE_MAP, texture->GetHandles()->mGLHandle);
         
@@ -114,10 +147,12 @@ bool EnvMapTextureFilenames::operator==(const EnvMapTextureFilenames& other) con
            mPositiveZ == other.mPositiveZ && mNegativeZ == other.mNegativeZ;
 }
 
-Texture::Texture(bool hasPremultipliedAlpha) :
+Texture::Texture(bool hasPremultipliedAlpha, std::unique_ptr<TextureAtlas> atlas) :
     mHandles {std::make_unique<TextureHandles>()},
+    mAtlas {std::move(atlas)},
     mHasPremultipliedAlpha {hasPremultipliedAlpha} {
     
+    glActiveTexture(GL_TEXTURE0);
     glGenTextures(1, &mHandles->mGLHandle);
 }
 
@@ -127,6 +162,10 @@ Texture::~Texture() {
 
 std::shared_ptr<Texture> TextureCache::GetTexture(const std::string& textureName,
                                                   GenerateMipmap generateMipmap) {
+    if (textureName.empty()) {
+        return nullptr;
+    }
+
     std::lock_guard<std::mutex> guard {mutex};
     
     twoDTextures.erase(
@@ -146,7 +185,7 @@ std::shared_ptr<Texture> TextureCache::GetTexture(const std::string& textureName
     }
     
     auto image = Pht::LoadImage(textureName);
-    auto texture = CreateTexture(*image, generateMipmap);
+    auto texture = CreateTexture(*image, generateMipmap, nullptr);
     twoDTextures.emplace_back(TwoDTextureKey{textureName, generateMipmap}, texture);
     return texture;
 }
@@ -177,5 +216,22 @@ std::shared_ptr<Texture> TextureCache::GetTexture(const EnvMapTextureFilenames& 
 
 std::shared_ptr<Texture> TextureCache::InitTexture(const IImage& image,
                                                    GenerateMipmap generateMipmap) {
-    return CreateTexture(image, generateMipmap);
+    return CreateTexture(image, generateMipmap, nullptr);
+}
+
+std::shared_ptr<Texture>
+TextureCache::GetTextureAtlas(const std::vector<std::string>& filenames,
+                              const TextureAtlasConfig& textureAtlasConfig) {
+    return nullptr;
+}
+
+std::shared_ptr<Texture>
+TextureCache::InitTextureAtlas(const std::vector<std::unique_ptr<const IImage>>& images,
+                               const TextureAtlasConfig& textureAtlasConfig) {
+    auto textureAtlas = std::make_unique<TextureAtlas>();
+    auto atlasImage = textureAtlas->CreateAtlasImage(images, textureAtlasConfig);
+    auto texture = textureAtlasConfig.mGenerateMipmap == GenerateMipmap::Yes ?
+                   CreateTexture(*atlasImage, GenerateMipmap::Yes, std::move(textureAtlas)) :
+                   CreateAtlasTextureNoMipmap(*atlasImage, std::move(textureAtlas));
+    return texture;
 }

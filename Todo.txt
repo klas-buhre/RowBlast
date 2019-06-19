@@ -52,7 +52,17 @@ Backlog:
      random block disappears.
     -Maybe a sensitivity setting. Tetris Blitz has lower sensitivity on iPad but not on iPhone.
   -Rendering:
-    -Use a texture atlas in the Font class so that one call to text renderer is one draw call.
+    -Add dynamic batching of objects with very few indices and no rotation if the saved cost of
+     eliminated state changes is greater than the cost of creating the batch. Then, the clouds can
+     be batched and drawn in one draw call instead of 100. Also, a lot of particle effects
+     (the explosions, block trails, lasers etc.) that have the same texture/material can be batched.
+     The GLES3Renderer could scan ahead in the render queue and sum up the number of future state
+     changes required to draw each consecutive batchable object of the same material and compare
+     that cost to some pseudo cast of creating the batch of that sequence of batchable objects.
+     The batch would go into a preallocated VertexBuffer with large capacity that the GLES3Renderer
+     owns. Also, the RenderObject function probably needs take Material/GpuVertexBuffer pairs rather
+     than RenderableObjects since a batch consists of a GpuVertexBuffer with CPU-side VertexBuffer
+     and a Material and not a RenderableObject.
     -Try to compressing bouncing blocks that lands on lower blocks. Compress the vertical welds on
      each side of the compressed block as well.
     -Animation that moves the map hud out of the screen when clicking buttons in the hud. Could work
@@ -61,6 +71,7 @@ Backlog:
   -GUI:
   -Make ready for release:
     -Should give free gold coins after a new install?
+    -Maybe only one or two continues per game round? Like in Dr. Mario.
     -Limit the number of undo move to one or two per game round.
     -Update mail address in legal documents.
     -Go through all user services and check that all state store/load is enabled.
@@ -147,7 +158,8 @@ Beginning of level 20:
  NumVboUses: 59
  NumDrawCalls: 129
 
-    -Review TextureAtlas file plus last commit.
+    -Fix the text grandients.
+    -Render the text in one draw call using a StaticVector.
     -Create a TextureAtlas class that takes a vector of IImages to the constuctor. It calculates
      texture coordinates for all images in the atlas. Vertical or horizontal packing can be
      selected. Use vertical for the clouds since that may reduce risk of texture bleeding.
@@ -163,8 +175,6 @@ Beginning of level 20:
     -Add a textured lighting shader with a color vertex attribute. Then most clouds can be
      batched if they use a texture atlas (a TextureAtlas class can be used for the fonts later as
      well).
-    -Add dynamic batching of objects with very few indices and no rotation if the saved cost of
-     eliminated state changes is greater than the cost of creating the batch.
     -Test everything in slow motion to see that the render functionality is the same as before
      all optimizations.
 

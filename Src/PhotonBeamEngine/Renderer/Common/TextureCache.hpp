@@ -1,8 +1,9 @@
-#ifndef Texture_hpp
-#define Texture_hpp
+#ifndef TextureCache_hpp
+#define TextureCache_hpp
 
 #include <string>
 #include <memory>
+#include <vector>
 
 namespace Pht {
     enum class GenerateMipmap {
@@ -11,14 +12,19 @@ namespace Pht {
     };
     
     struct TextureHandles;
+    class TextureAtlas;
     
     class Texture {
     public:
-        Texture(bool hasPremultipliedAlpha);
+        Texture(bool hasPremultipliedAlpha, std::unique_ptr<TextureAtlas> atlas);
         ~Texture();
         
         const TextureHandles* GetHandles() const {
             return mHandles.get();
+        }
+
+        const TextureAtlas* GetAtlas() const {
+            return mAtlas.get();
         }
 
         bool HasPremultipliedAlpha() const {
@@ -27,6 +33,7 @@ namespace Pht {
         
     private:
         std::unique_ptr<TextureHandles> mHandles;
+        std::unique_ptr<TextureAtlas> mAtlas;
         bool mHasPremultipliedAlpha {false};
     };
     
@@ -42,12 +49,17 @@ namespace Pht {
     };
     
     class IImage;
+    class TextureAtlasConfig;
     
     namespace TextureCache {
         std::shared_ptr<Texture> GetTexture(const std::string& textureName,
                                             GenerateMipmap generateMipmap);
         std::shared_ptr<Texture> GetTexture(const EnvMapTextureFilenames& filenames);
         std::shared_ptr<Texture> InitTexture(const IImage& image, GenerateMipmap generateMipmap);
+        std::shared_ptr<Texture> GetTextureAtlas(const std::vector<std::string>& filenames,
+                                                 const TextureAtlasConfig& textureAtlasConfig);
+        std::shared_ptr<Texture> InitTextureAtlas(const std::vector<std::unique_ptr<const IImage>>& images,
+                                                  const TextureAtlasConfig& textureAtlasConfig);
     }
 }
 

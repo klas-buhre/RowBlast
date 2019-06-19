@@ -1,7 +1,9 @@
 #include "GLES3TextRenderer.hpp"
 
 #include "Font.hpp"
+#include "TextureAtlas.hpp"
 #include "GLES3RenderStateManager.hpp"
+#include "GLES3Handles.hpp"
 
 #define STRINGIFY(A)  #A
 #include "../GLES3Shaders/Text.vert"
@@ -97,34 +99,59 @@ void GLES3TextRenderer::RenderText(const std::string& text,
             position = AdjustPositionCenterXAlignment(text, position, slant, properties);
             break;
     }
-
+    
+    auto& font = properties.mFont;
+    auto* texture = font.GetTexture();
+    if (texture == nullptr) {
+        assert(texture);
+        return;
+    }
+    
+    auto* textureAtlas = texture->GetAtlas();
+    if (textureAtlas == nullptr) {
+        assert(texture);
+        return;
+    }
+    
+    mRenderState.BindTexture(GL_TEXTURE0, GL_TEXTURE_2D, texture->GetHandles()->mGLHandle);
+    
     for (auto c: text) {
-        auto& glyph = properties.mFont.GetGlyph(c);
+        auto* glyph = font.GetGlyph(c);
+        if (glyph == nullptr) {
+            continue;
+        }
         
-        GLfloat xPos {position.x + glyph.mBearing.x * properties.mScale};
-        GLfloat yPos {position.y - (glyph.mSize.y - glyph.mBearing.y) * properties.mScale};
-        GLfloat w {glyph.mSize.x * properties.mScale};
-        GLfloat h {glyph.mSize.y * properties.mScale};
+        GLfloat xPos {position.x + glyph->mBearing.x * properties.mScale};
+        GLfloat yPos {position.y - (glyph->mSize.y - glyph->mBearing.y) * properties.mScale};
+        GLfloat w {glyph->mSize.x * properties.mScale};
+        GLfloat h {glyph->mSize.y * properties.mScale};
+        
+        position.x += (glyph->mAdvance >> 6) * properties.mScale;
+        
+        auto textureIndex = glyph->mSubTextureIndex;
+        if (!textureIndex.HasValue()) {
+            continue;
+        }
+        
+        auto* uv = textureAtlas->GetSubTextureUV(textureIndex.GetValue());
+        if (uv == nullptr) {
+            continue;
+        }
         
         GLfloat vertices[6][4] {
-            {xPos + slant,     yPos + h, 0.0f, 0.0f},
-            {xPos,             yPos,     0.0f, 1.0f},
-            {xPos + w,         yPos,     1.0f, 1.0f},
+            {xPos + slant,     yPos + h, uv->mTopLeft.x, uv->mTopLeft.y},
+            {xPos,             yPos,     uv->mBottomLeft.x, uv->mBottomLeft.y},
+            {xPos + w,         yPos,     uv->mBottomRight.x, uv->mBottomRight.y},
 
-            {xPos + slant,     yPos + h, 0.0f, 0.0f},
-            {xPos + w,         yPos,     1.0f, 1.0f},
-            {xPos + w + slant, yPos + h, 1.0f, 0.0f}
+            {xPos + slant,     yPos + h, uv->mTopLeft.x, uv->mTopLeft.y},
+            {xPos + w,         yPos,     uv->mBottomRight.x, uv->mBottomRight.y},
+            {xPos + w + slant, yPos + h, uv->mTopRight.x, uv->mTopRight.y}
         };
-
-        glBindTexture(GL_TEXTURE_2D, glyph.mTexture);
-        IF_USING_FRAME_STATS(mRenderState.ReportTextureBind());
         
         // Should use glBufferSubData here but it leads to very poor performance for some reason.
         glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_DYNAMIC_DRAW);
         glDrawArrays(GL_TRIANGLES, 0, 6);
         IF_USING_FRAME_STATS(mRenderState.ReportDrawCall());
-        
-        position.x += (glyph.mAdvance >> 6) * properties.mScale;
     }
 }
 
@@ -149,8 +176,11 @@ Vec2 GLES3TextRenderer::AdjustPositionCenterXAlignment(const std::string& text,
     }
     
     auto textWidth = CalculateTextWidth(text, slant, properties);
-    auto& firstGlyph = properties.mFont.GetGlyph(text.front());
-    position.x = position.x - firstGlyph.mBearing.x * properties.mScale - textWidth / 2.0f;
+    auto* firstGlyph = properties.mFont.GetGlyph(text.front());
+    if (firstGlyph) {
+        position.x = position.x - firstGlyph->mBearing.x * properties.mScale - textWidth / 2.0f;
+    }
+    
     return position;
 }
 
@@ -164,17 +194,21 @@ float GLES3TextRenderer::CalculateTextWidth(const std::string& text,
     auto x = 0.0f;
     auto textStartX = x;
     for (auto i = 0; i < text.size(); ++i) {
-        auto& glyph = properties.mFont.GetGlyph(text[i]);
+        auto* glyph = properties.mFont.GetGlyph(text[i]);
+        if (glyph == nullptr) {
+            return 0.0f;
+        }
+        
         if (i == 0) {
-            textStartX = glyph.mBearing.x;
+            textStartX = glyph->mBearing.x;
         }
         
         if (i == text.size() - 1) {
-            x += glyph.mBearing.x + glyph.mSize.x + slant;
+            x += glyph->mBearing.x + glyph->mSize.x + slant;
             break;
         }
         
-        x += glyph.mAdvance >> 6;
+        x += glyph->mAdvance >> 6;
     }
     
     return (x - textStartX) * properties.mScale;

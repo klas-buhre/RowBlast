@@ -919,7 +919,7 @@ void GLES3Renderer::RenderText(const std::string& text,
                        textPosition + properties.mSpecularOffset * properties.mScale,
                        specularProperties);
     }
-        
+
     RenderTextImpl(text, textPosition, properties);
 }
 

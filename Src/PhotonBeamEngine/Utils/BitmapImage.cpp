@@ -125,7 +125,7 @@ void BitmapImage::Insert(const IImage& subImage, const IVec2& subImagePosition) 
     const unsigned char* readPtr = static_cast<const unsigned char*>(subImage.GetImageData());
     for (auto y = subImageTopLeft.y; y >= subImageBottomRight.y; --y) {
         auto* writePtr = CalcDataPtr(subImageTopLeft.x, y, numBytesPerPixel);
-        auto* writeEnd = CalcDataPtr(subImageBottomRight.x, y, numBytesPerPixel);
+        auto* writeEnd = CalcDataPtr(subImageBottomRight.x, y, numBytesPerPixel) + numBytesPerPixel;
         while (writePtr < writeEnd) {
             *writePtr++ = *readPtr++;
         }
@@ -142,3 +142,4 @@ unsigned char* BitmapImage::CalcDataPtr(int x, int y, int numBytesPerPixel) {
     auto* data = &mData[0];
     return data + offset;
 }
+

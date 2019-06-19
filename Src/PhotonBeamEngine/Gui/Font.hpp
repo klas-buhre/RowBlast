@@ -1,32 +1,47 @@
 #ifndef Font_hpp
 #define Font_hpp
 
-#include <OpenGLES/ES3/gl.h>
+#include <assert.h>
 #include <vector>
 
 #include "Vector.hpp"
 #include "Optional.hpp"
 
 namespace Pht {
+    class Texture;
+    
     class Font {
     public:
         Font(const std::string& filename, int size);
         ~Font();
         
         struct Glyph {
-            GLuint mTexture {0};
+            Optional<int> mSubTextureIndex;
             Pht::IVec2 mSize;
             Pht::IVec2 mBearing;
             unsigned int mAdvance {0};
         };
         
-        const Glyph& GetGlyph(char character) const;
+        const Glyph* GetGlyph(char character) const {
+            if (character >= firstPrintableCharacter && character <= lastPrintableCharacter) {
+                return &mGlyphs[character - firstPrintableCharacter];
+            }
+            return nullptr;
+        }
         
+        const Texture* GetTexture() const {
+            return mTexture.get();
+        }
+
         int GetSize() const {
             return mSize;
         }
         
     private:
+        static constexpr char firstPrintableCharacter {32};
+        static constexpr char lastPrintableCharacter {127};
+
+        std::shared_ptr<Texture> mTexture;
         std::vector<Glyph> mGlyphs;
         int mSize {0};
     };

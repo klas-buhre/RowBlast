@@ -131,6 +131,12 @@ void Material::OnModifyMember() {
     }
 }
 
+void Material::SetTextureAtlas(const std::vector<std::string>& subTextureFilenames,
+                               const TextureAtlasConfig& textureAtlasConfig) {
+    OnModifyMember();
+    mTexture = TextureCache::GetTextureAtlas(subTextureFilenames, textureAtlasConfig);
+}
+
 void Material::SetOpacity(float opacity) {
     OnModifyMember();
     mOpacity = opacity;

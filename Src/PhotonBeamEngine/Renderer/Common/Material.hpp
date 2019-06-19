@@ -4,6 +4,8 @@
 #include "TextureCache.hpp"
 
 namespace Pht {
+    class TextureAtlasConfig;
+
     struct Color {
         float mRed {0.0f};
         float mGreen {0.0f};
@@ -85,6 +87,8 @@ namespace Pht {
         Material(const Material& other);
         Material& operator=(const Material& other);
         
+        void SetTextureAtlas(const std::vector<std::string>& subTextureFilenames,
+                             const TextureAtlasConfig& textureAtlasConfig);
         void SetOpacity(float opacity);
         void SetShaderId(ShaderId shaderId);
         void SetBlend(Blend blend);

@@ -2,9 +2,10 @@
 #define TextureAtlas_hpp
 
 #include <vector>
+#include <string>
 
 #include "Vector.hpp"
-#include "Optional.hpp"
+#include "TextureCache.hpp"
 
 namespace Pht {
     class IImage;
@@ -14,9 +15,15 @@ namespace Pht {
         Vertical
     };
     
+    struct TextureAtlasConfig {
+        TexturePackingDirection mPackingDirection {TexturePackingDirection::Horizontal};
+        GenerateMipmap mGenerateMipmap {GenerateMipmap::No};
+        int mPadding {0};
+    };
+    
     using SubImages = std::vector<std::unique_ptr<const IImage>>;
 
-    struct SubTextureUVs {
+    struct SubTextureUV {
         Vec2 mBottomLeft;
         Vec2 mBottomRight;
         Vec2 mTopRight;
@@ -26,12 +33,12 @@ namespace Pht {
     class TextureAtlas {
     public:
         std::unique_ptr<IImage> CreateAtlasImage(const SubImages& images,
-                                                 TexturePackingDirection packingDirection);
+                                                 const TextureAtlasConfig& textureAtlasConfig);
         
-        const SubTextureUVs* GetSubTextureUVs(int subTextureIndex) const;
+        const SubTextureUV* GetSubTextureUV(int subTextureIndex) const;
         
     private:
-        std::vector<SubTextureUVs> mSubTextureUVs;
+        std::vector<SubTextureUV> mSubTextureUVs;
     };
 }
 
