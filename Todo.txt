@@ -11,9 +11,9 @@ Backlog:
      bit bigger when using drag controls to reduce misclicks. Each cell that is not reachable from
      the top (an illegal move) could be red. A question is if real solid pieces should be dragged in
      or ghost pieces. Real pieces will look better but it is more logical to drag in ghost pieces
-     since the real piece is actially at the top and it will drop to the location of the ghost piece
+     since the real piece is actually at the top and it will drop to the location of the ghost piece
      really quickly (preferably almost as fast as a hard drop like in swipe controls). Or the real
-     faling piece at the top could disappear (scale out) when the real solid piece is being dragged
+     falling piece at the top could disappear (scale out) when the real solid piece is being dragged
      in and then it might be ok to drag in real pieces. When the
      piece har dropped, the empty slot in the selectables HUD should be taken over by the next piece
      without rearranging the selectable pieces. What happens with the falling piece once one of the
@@ -21,7 +21,7 @@ Backlog:
      drag in the active piece? In that case, rotating the active piece could be done by clicking on
      it in the hud and and clicking on the two selectables could switch piece.
      Another version of this idea is to combine drag input with swipe input (effectively forming the
-     swipe/drag input type). So there would be drag/swipe input or click input. This could be
+     swipe/drag input type). So then there would be drag/swipe input or click input. This could be
      possible if (either 1.a OR 1.b OR 1.c) and 2:
      Either (1.a): rotating pieces using drag/swipe input is only done by tapping the screen as in
      pure swipe controls (this would then rotate all pieces in the selectables container, but they
@@ -48,8 +48,8 @@ Backlog:
     -A game objective could be to clear all purple blocks. Purple blocks are affected by gravity
      like the other colored blocks.
     -The UFO could be booster. It could clear 3 rows.
-    -Maybe blocks in the visible part of the field could disappear on some levels. For each move a
-     random block disappears.
+    -Maybe blocks in the visible part of the field could disappear on some levels. For each move,
+     one of the colored blocks randomly disappears.
     -Maybe a sensitivity setting. Tetris Blitz has lower sensitivity on iPad but not on iPhone.
   -Rendering:
     -Add dynamic batching of objects with very few indices and no rotation if the saved cost of
@@ -192,8 +192,11 @@ Beginning of level 20:
      This commit contains the change:
      Moved the active piece to the leftmost slot in the selectables contai a0d16e8
     -Try combining all three input types to one. Maybe possible if the visibility of the move
-     alternatives can be toggled with a button next to the pause button. Drag and swipe can be
-     combined at least.
+     alternatives can be toggled with a button next to the pause button. Switch piece could be done
+     by swiping left or right inside the selectable cotainer. Swipe left shifts the selectables to
+     left, swipe right shifts them to the right. This way rotating a single selectable is done by
+     clicking the preview piece in the selectables container and any selectable could be dragged in,
+     not just the active one.
 
 
     -Go through the levels in world 1.
