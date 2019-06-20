@@ -16,17 +16,17 @@ namespace RowBlast {
         void Update(float dt);
         
     private:
-        void StartNextPieceAnimation();
+        void StartNextPieceAndSwitchingAnimation();
         void StartSwitchingPiecesAnimation();
         void StartRemoveActivePieceAnimation();
         float UpdateTime(float dt);
         void GoToSwitchingPieceState();
-        void GoToNextPieceState();
+        void GoToNextPieceAndSwitchState();
         void GoToRemovingActivePieceState();
         
         enum class State {
             SwitchingPiece,
-            NextPiece,
+            NextPieceAndSwitch,
             RemovingActivePiece,
             Inactive
         };

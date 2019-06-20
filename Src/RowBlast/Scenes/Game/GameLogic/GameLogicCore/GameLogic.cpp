@@ -239,8 +239,10 @@ void GameLogic::SetPieceType() {
         mCurrentMove.mPieceType = mFallingPieceSpawnType;
         mFallingPieceSpawnType = nullptr;
     } else {
-        mCurrentMove.mPieceType = &mCurrentMove.mNextPieceGenerator.GetNext();
-        mPreviewPieceAnimationToStart = PreviewPieceAnimationToStart::NextPiece;
+        mCurrentMove.mPieceType = mCurrentMove.mSelectablePieces[1];
+        mCurrentMove.mSelectablePieces[1] = mCurrentMove.mSelectablePieces[0];
+        mCurrentMove.mSelectablePieces[0] = &mCurrentMove.mNextPieceGenerator.GetNext();
+        mPreviewPieceAnimationToStart = PreviewPieceAnimationToStart::NextPieceAndSwitch;
     }
 }
 
@@ -864,17 +866,17 @@ void GameLogic::SwitchPiece() {
     
     auto* previousActivePieceType = mCurrentMove.mPieceType;
     
-    mFallingPieceSpawnType = mCurrentMove.mSelectablePieces[0];
-    mCurrentMove.mPieceType = mCurrentMove.mSelectablePieces[0];
-    mCurrentMove.mSelectablePieces[0] = mCurrentMove.mSelectablePieces[1];
-    mCurrentMove.mSelectablePieces[1] = previousActivePieceType;
+    mFallingPieceSpawnType = mCurrentMove.mSelectablePieces[1];
+    mCurrentMove.mPieceType = mCurrentMove.mSelectablePieces[1];
+    mCurrentMove.mSelectablePieces[1] = mCurrentMove.mSelectablePieces[0];
+    mCurrentMove.mSelectablePieces[0] = previousActivePieceType;
     mPreviewPieceAnimationToStart = PreviewPieceAnimationToStart::SwitchPiece;
     
     SpawnFallingPiece(FallingPieceSpawnReason::Switch);
 }
 
 bool GameLogic::IsThereRoomToSwitchPiece() {
-    auto& pieceType = *mCurrentMove.mSelectablePieces[0];
+    auto& pieceType = *mCurrentMove.mSelectablePieces[1];
     
     PieceBlocks pieceBlocks {
         pieceType.GetGrid(Rotation::Deg0),

@@ -27,7 +27,7 @@ namespace {
     const Pht::Vec2 pauseButtonRectangleSize {1.5f, 1.5f};
     const Pht::Vec2 nextPiecesRectangleSize {4.5f, 2.4f};
     const Pht::Vec2 selectablePiecesRectangleSize {6.8f, 2.4f};
-    constexpr auto dividerLineXPosition = 2.45f;
+    constexpr auto dividerLineXPosition = 4.35f;
     constexpr auto dividerLineThickness = 0.02f;
     constexpr auto borderThickness = 0.055f;
     constexpr auto piecesRectangleOuterCornerRadius = 0.25f;

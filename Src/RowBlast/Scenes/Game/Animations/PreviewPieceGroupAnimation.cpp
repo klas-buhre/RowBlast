@@ -44,6 +44,15 @@ void PreviewPieceGroupAnimation::StartNextPieceAnimation(
     mScaleChangeFinalScale = targetChangedScale;
 }
 
+void PreviewPieceGroupAnimation::StartSwitchDuringNextPieceAnimation(
+    SelectablePreviewPieces& previewPieces,
+    const SelectablePreviewPiecesPositionsConfig& piecePositionsConfig) {
+
+    mKind = Kind::SwitchDuringNextPiece;
+    mSelectablePreviewPieces = &previewPieces;
+    mSelectablePreviewPiecesPositionsConfig = piecePositionsConfig;
+}
+
 void PreviewPieceGroupAnimation::StartSwitchPieceAnimation(
     SelectablePreviewPieces& previewPieces,
     const SelectablePreviewPiecesPositionsConfig& piecePositionsConfig) {
@@ -73,6 +82,9 @@ void PreviewPieceGroupAnimation::Update(float normalizedElapsedTime) {
     switch (mKind) {
         case Kind::NextPiece:
             UpdateNextPieceAnimation(slideValue);
+            break;
+        case Kind::SwitchDuringNextPiece:
+            UpdateSwitchDuringNextPieceAnimation(slideValue);
             break;
         case Kind::Switch:
             UpdateSwitchPieceAnimation(slideValue);
@@ -104,33 +116,51 @@ void PreviewPieceGroupAnimation::UpdateNextPieceAnimation(float slideValue) {
                  Scaling::ScaleChange);
 }
 
-void PreviewPieceGroupAnimation::UpdateSwitchPieceAnimation(float slideValue) {
-    AnimatePiece(GetSelectablePreviewPiece(0),
-                 mSelectablePreviewPiecesPositionsConfig.mSlot1.x,
-                 mSelectablePreviewPiecesPositionsConfig.mLeft.x,
-                 slideValue,
-                 Scaling::ScaleDown);
+void PreviewPieceGroupAnimation::UpdateSwitchDuringNextPieceAnimation(float slideValue) {
     AnimatePiece(GetSelectablePreviewPiece(1),
-                 mSelectablePreviewPiecesPositionsConfig.mSlot2.x,
                  mSelectablePreviewPiecesPositionsConfig.mSlot1.x,
+                 mSelectablePreviewPiecesPositionsConfig.mSlot2.x,
                  slideValue,
                  Scaling::NoScaling);
     AnimatePiece(GetSelectablePreviewPiece(2),
-                 mSelectablePreviewPiecesPositionsConfig.mSlot3.x,
                  mSelectablePreviewPiecesPositionsConfig.mSlot2.x,
+                 mSelectablePreviewPiecesPositionsConfig.mSlot3.x,
                  slideValue,
                  Scaling::NoScaling);
     AnimatePiece(GetSelectablePreviewPiece(3),
-                 mSelectablePreviewPiecesPositionsConfig.mRight.x,
                  mSelectablePreviewPiecesPositionsConfig.mSlot3.x,
+                 mSelectablePreviewPiecesPositionsConfig.mRight.x,
+                 slideValue,
+                 Scaling::ScaleDown);
+}
+
+void PreviewPieceGroupAnimation::UpdateSwitchPieceAnimation(float slideValue) {
+    AnimatePiece(GetSelectablePreviewPiece(0),
+                 mSelectablePreviewPiecesPositionsConfig.mLeft.x,
+                 mSelectablePreviewPiecesPositionsConfig.mSlot1.x,
                  slideValue,
                  Scaling::ScaleUp);
+    AnimatePiece(GetSelectablePreviewPiece(1),
+                 mSelectablePreviewPiecesPositionsConfig.mSlot1.x,
+                 mSelectablePreviewPiecesPositionsConfig.mSlot2.x,
+                 slideValue,
+                 Scaling::NoScaling);
+    AnimatePiece(GetSelectablePreviewPiece(2),
+                 mSelectablePreviewPiecesPositionsConfig.mSlot2.x,
+                 mSelectablePreviewPiecesPositionsConfig.mSlot3.x,
+                 slideValue,
+                 Scaling::NoScaling);
+    AnimatePiece(GetSelectablePreviewPiece(3),
+                 mSelectablePreviewPiecesPositionsConfig.mSlot3.x,
+                 mSelectablePreviewPiecesPositionsConfig.mRight.x,
+                 slideValue,
+                 Scaling::ScaleDown);
 }
 
 void PreviewPieceGroupAnimation::UpdateRemoveActivePieceAnimation(float slideValue) {
-    AnimatePiece(GetSelectablePreviewPiece(0),
-                 mSelectablePreviewPiecesPositionsConfig.mSlot1.x,
-                 mSelectablePreviewPiecesPositionsConfig.mSlot1.x,
+    AnimatePiece(GetSelectablePreviewPiece(3),
+                 mSelectablePreviewPiecesPositionsConfig.mSlot3.x,
+                 mSelectablePreviewPiecesPositionsConfig.mSlot3.x,
                  slideValue,
                  Scaling::ScaleDown);
 }
