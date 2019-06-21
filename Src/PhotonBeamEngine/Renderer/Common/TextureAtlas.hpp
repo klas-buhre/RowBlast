@@ -19,6 +19,12 @@ namespace Pht {
         TexturePackingDirection mPackingDirection {TexturePackingDirection::Horizontal};
         GenerateMipmap mGenerateMipmap {GenerateMipmap::No};
         int mPadding {0};
+        
+        bool operator==(const TextureAtlasConfig& other) const {
+            return mPackingDirection == other.mPackingDirection &&
+                   mGenerateMipmap == other.mGenerateMipmap &&
+                   mPadding == other.mPadding;
+        }
     };
     
     using SubImages = std::vector<std::unique_ptr<const IImage>>;

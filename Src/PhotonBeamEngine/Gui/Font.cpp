@@ -70,7 +70,8 @@ Font::Font(const std::string& filename, int size) :
         .mGenerateMipmap = GenerateMipmap::No,
         .mPadding = 1
     };
-    mTexture = TextureCache::InitTextureAtlas(glyphImages, textureAtlasConfig);
+    auto textureAtlasName = filename + std::to_string(size);
+    mTexture = TextureCache::GetTextureAtlas(textureAtlasName, glyphImages, textureAtlasConfig);
     
     FT_Done_Face(face);
     FT_Done_FreeType(ft);

@@ -158,21 +158,48 @@ Beginning of level 20:
  NumVboUses: 59
  NumDrawCalls: 129
 
-    -Create a TextureAtlas class that takes a vector of IImages to the constuctor. It calculates
-     texture coordinates for all images in the atlas. Vertical or horizontal packing can be
-     selected. Use vertical for the clouds since that may reduce risk of texture bleeding.
-     A Material can take a TextureAtlasConfig as argument. The TextureAtlasConfig has a list of
-     filenames and options (packing direction, mipmap). The Material givs the TextureAtlasConfig to
-     the texture cache and it will give back a Texture that has a TextureAtlas attached to it. The
-     texture cache uses a TextureAtlasKey as key in its texture atlas list, the key is a struct of
-     the filenames concatenated and the options. If it cannot find it in the cache, it will load
-     all IImages and create a TextureAtlas object and pass the IImages to the TextureAtlas to let it
-     create the atlas image, blitting the the sub images into it and calculate the texture
-     coordinates. When the TextureAtlas has created the atlas image, the texture cache will create
-     the Texture from that image and attach the TextureAtlas to the Texture.
+
+
+
+Currently:
+Clouds:
+    cloudMaterial.SetAmbient(cloudColor * cloudBrightness);
+Renderer:
+    auto ambientlIntensity = mGlobalLight.mAmbientIntensity;
+    auto& ambient = material.GetAmbient();
+    glUniform3f(uniforms.mAmbientMaterial,
+                ambient.mRed * ambientlIntensity,
+                ambient.mGreen * ambientlIntensity,
+                ambient.mBlue * ambientlIntensity);
+Shader:
+DestinationColor = AmbientMaterial + df * DiffuseMaterial;
+gl_FragColor = vec4(texel.xyz * DestinationColor + SpecularColor, texel.w * Opacity);
+Combined:
+gl_FragColor = cloudColor * cloudBrightness * ambientlIntensity * texel.xyz
+
+
+New shader:
+Clouds:
+    Pht::Material cloudMaterial {textureFilename, 1.0f, 0.0f, 0.0f, 0.0f};
+    quad.SetVertexColor(cloudColor * cloudBrightness);
+Renderer:
+    auto ambientlIntensity = mGlobalLight.mAmbientIntensity;
+    auto& ambient = material.GetAmbient();
+    glUniform3f(uniforms.mAmbientMaterial,
+                ambient.mRed * ambientlIntensity,
+                ambient.mGreen * ambientlIntensity,
+                ambient.mBlue * ambientlIntensity);
+Shader:
+DestinationColor = VertexColor * (AmbientMaterial + df * DiffuseMaterial);
+gl_FragColor = vec4(texel.xyz * DestinationColor + SpecularColor, texel.w * Opacity);
+Combined:
+gl_FragColor = {1.0f, 1.0f, 1.0f} * ambientlIntensity * cloudColor * cloudBrightness * texel.xyz
+
+
+
     -Add a textured lighting shader with a color vertex attribute. Then most clouds can be
-     batched if they use a texture atlas (a TextureAtlas class can be used for the fonts later as
-     well).
+     batched if they use a texture atlas. Use vertical packing for the clouds since that may reduce
+     risk of texture bleeding.
     -Test everything in slow motion to see that the render functionality is the same as before
      all optimizations.
 
@@ -192,11 +219,19 @@ Beginning of level 20:
      This commit contains the change:
      Moved the active piece to the leftmost slot in the selectables contai a0d16e8
     -Try combining all three input types to one. Maybe possible if the visibility of the move
-     alternatives can be toggled with a button next to the pause button. Switch piece could be done
+     alternatives can be toggled with a button next to the pause button. Or the pause button is goes
+     to the top right corner of the screen and the toggle button takes the pause buttons old place.
+     Alt 1: Switch piece could be done
      by swiping left or right inside the selectable cotainer. Swipe left shifts the selectables to
      left, swipe right shifts them to the right. This way rotating a single selectable is done by
      clicking the preview piece in the selectables container and any selectable could be dragged in,
      not just the active one.
+     Alt 2: Switch by clicking the selectables container or swipe the container left or right.
+     Rotate by tapping the screen, this rotates all selectables in the HUD. If clickadble move
+     alternatives are active then the falling piece does not rotate. If If clickadble move
+     alternatives are not active then the falling piece also rotates. All selectables should rotate
+     back to their default rotation on switch piece or next move.
+
 
 
     -Go through the levels in world 1.

@@ -58,8 +58,9 @@ namespace Pht {
         std::shared_ptr<Texture> InitTexture(const IImage& image, GenerateMipmap generateMipmap);
         std::shared_ptr<Texture> GetTextureAtlas(const std::vector<std::string>& filenames,
                                                  const TextureAtlasConfig& textureAtlasConfig);
-        std::shared_ptr<Texture> InitTextureAtlas(const std::vector<std::unique_ptr<const IImage>>& images,
-                                                  const TextureAtlasConfig& textureAtlasConfig);
+        std::shared_ptr<Texture> GetTextureAtlas(const std::string& name,
+                                                 const std::vector<std::unique_ptr<const IImage>>& images,
+                                                 const TextureAtlasConfig& textureAtlasConfig);
     }
 }
 

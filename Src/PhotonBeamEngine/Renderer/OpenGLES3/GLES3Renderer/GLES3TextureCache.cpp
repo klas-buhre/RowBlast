@@ -17,12 +17,53 @@ namespace {
     struct TwoDTextureKey {
         std::string mFilename;
         GenerateMipmap mGenerateMipmap;
+        
+        bool operator==(const TwoDTextureKey& other) const {
+            return mFilename == other.mFilename && mGenerateMipmap == other.mGenerateMipmap;
+        }
+    };
+    
+    struct AtlasTextureKey {
+        std::string mName;
+        TextureAtlasConfig mTextureAtlasConfig;
+        
+        bool operator==(const AtlasTextureKey& other) const {
+            return mName == other.mName && mTextureAtlasConfig == other.mTextureAtlasConfig;
+        }
     };
 
     static std::mutex mutex;
     static std::vector<std::pair<TwoDTextureKey, std::weak_ptr<Texture>>> twoDTextures;
     static std::vector<std::pair<EnvMapTextureFilenames, std::weak_ptr<Texture>>> envMapTextures;
+    static std::vector<std::pair<AtlasTextureKey, std::weak_ptr<Texture>>> atlasTextures;
     
+    template<typename KeyType>
+    std::shared_ptr<Texture>
+    LookupTexture(std::vector<std::pair<KeyType, std::weak_ptr<Texture>>>& textures,
+                  const KeyType& key) {
+        std::lock_guard<std::mutex> guard {mutex};
+        
+        textures.erase(
+            std::remove_if(
+                std::begin(textures),
+                std::end(textures),
+                [] (const auto& entry) {
+                    return entry.second.lock() == std::shared_ptr<Texture>();
+                }),
+            std::end(textures));
+        
+        for (const auto& entry: textures) {
+            if (auto texture = entry.second.lock()) {
+                auto& entryKey = entry.first;
+                if (entryKey == key) {
+                    return texture;
+                }
+            }
+        }
+        
+        return nullptr;
+    }
+
     GLenum ToGLTextureFormat(ImageFormat format) {
         switch (format) {
             case ImageFormat::Rgb:
@@ -165,48 +206,23 @@ std::shared_ptr<Texture> TextureCache::GetTexture(const std::string& textureName
     if (textureName.empty()) {
         return nullptr;
     }
-
-    std::lock_guard<std::mutex> guard {mutex};
     
-    twoDTextures.erase(
-        std::remove_if(
-            std::begin(twoDTextures),
-            std::end(twoDTextures),
-            [] (const auto& entry) { return entry.second.lock() == std::shared_ptr<Texture>(); }),
-        std::end(twoDTextures));
-    
-    for (const auto& entry: twoDTextures) {
-        if (auto texture = entry.second.lock()) {
-            auto& key = entry.first;
-            if (textureName == key.mFilename && generateMipmap == key.mGenerateMipmap) {
-                return texture;
-            }
-        }
+    TwoDTextureKey key {textureName, generateMipmap};
+    auto textureFromCache = LookupTexture<TwoDTextureKey>(twoDTextures, key);
+    if (textureFromCache != nullptr) {
+        return textureFromCache;
     }
-    
+
     auto image = Pht::LoadImage(textureName);
     auto texture = CreateTexture(*image, generateMipmap, nullptr);
-    twoDTextures.emplace_back(TwoDTextureKey{textureName, generateMipmap}, texture);
+    twoDTextures.emplace_back(key, texture);
     return texture;
 }
 
 std::shared_ptr<Texture> TextureCache::GetTexture(const EnvMapTextureFilenames& filenames) {
-    std::lock_guard<std::mutex> guard {mutex};
-    
-    envMapTextures.erase(
-        std::remove_if(
-            std::begin(envMapTextures),
-            std::end(envMapTextures),
-            [] (const auto& entry) { return entry.second.lock() == std::shared_ptr<Texture>(); }),
-        std::end(envMapTextures));
-    
-    for (const auto& entry: envMapTextures) {
-        if (auto texture = entry.second.lock()) {
-            auto& key = entry.first;
-            if (filenames == key) {
-                return texture;
-            }
-        }
+    auto textureFromCache = LookupTexture<EnvMapTextureFilenames>(envMapTextures, filenames);
+    if (textureFromCache != nullptr) {
+        return textureFromCache;
     }
 
     auto texture = CreateEnvMapTexture(filenames);
@@ -222,16 +238,45 @@ std::shared_ptr<Texture> TextureCache::InitTexture(const IImage& image,
 std::shared_ptr<Texture>
 TextureCache::GetTextureAtlas(const std::vector<std::string>& filenames,
                               const TextureAtlasConfig& textureAtlasConfig) {
-    return nullptr;
-}
+    std::string name;
+    for (auto& filename: filenames) {
+        name += filename;
+    }
+    AtlasTextureKey key {name, textureAtlasConfig};
+    auto textureFromCache = LookupTexture<AtlasTextureKey>(atlasTextures, key);
+    if (textureFromCache != nullptr) {
+        return textureFromCache;
+    }
+    
+    std::vector<std::unique_ptr<const IImage>> images;
+    for (auto& filename: filenames) {
+        images.push_back(Pht::LoadImage(filename));
+    }
 
-std::shared_ptr<Texture>
-TextureCache::InitTextureAtlas(const std::vector<std::unique_ptr<const IImage>>& images,
-                               const TextureAtlasConfig& textureAtlasConfig) {
     auto textureAtlas = std::make_unique<TextureAtlas>();
     auto atlasImage = textureAtlas->CreateAtlasImage(images, textureAtlasConfig);
     auto texture = textureAtlasConfig.mGenerateMipmap == GenerateMipmap::Yes ?
                    CreateTexture(*atlasImage, GenerateMipmap::Yes, std::move(textureAtlas)) :
                    CreateAtlasTextureNoMipmap(*atlasImage, std::move(textureAtlas));
+    atlasTextures.emplace_back(key, texture);
+    return texture;
+}
+
+std::shared_ptr<Texture>
+TextureCache::GetTextureAtlas(const std::string& name,
+                              const std::vector<std::unique_ptr<const IImage>>& images,
+                              const TextureAtlasConfig& textureAtlasConfig) {
+    AtlasTextureKey key {name, textureAtlasConfig};
+    auto textureFromCache = LookupTexture<AtlasTextureKey>(atlasTextures, key);
+    if (textureFromCache != nullptr) {
+        return textureFromCache;
+    }
+    
+    auto textureAtlas = std::make_unique<TextureAtlas>();
+    auto atlasImage = textureAtlas->CreateAtlasImage(images, textureAtlasConfig);
+    auto texture = textureAtlasConfig.mGenerateMipmap == GenerateMipmap::Yes ?
+                   CreateTexture(*atlasImage, GenerateMipmap::Yes, std::move(textureAtlas)) :
+                   CreateAtlasTextureNoMipmap(*atlasImage, std::move(textureAtlas));
+    atlasTextures.emplace_back(key, texture);
     return texture;
 }
