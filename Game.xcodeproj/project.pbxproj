@@ -420,6 +420,8 @@
 		623F5E6422B563A900242C10 /* SoftwareRasterizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623F5E5622B563A900242C10 /* SoftwareRasterizer.cpp */; };
 		623F5E6522B563A900242C10 /* Material.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623F5E5C22B563A900242C10 /* Material.cpp */; };
 		623F5E6622B563A900242C10 /* RenderQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623F5E5D22B563A900242C10 /* RenderQueue.cpp */; };
+		6240E2E022BD326300CCA37A /* TexturedLightingVertexColor.vert in Resources */ = {isa = PBXBuildFile; fileRef = 6240E2DE22BD326200CCA37A /* TexturedLightingVertexColor.vert */; };
+		6240E2E122BD326300CCA37A /* TexturedLightingVertexColor.frag in Resources */ = {isa = PBXBuildFile; fileRef = 6240E2DF22BD326200CCA37A /* TexturedLightingVertexColor.frag */; };
 		62411A971E61E62800035D2A /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62411A961E61E62800035D2A /* GLKit.framework */; };
 		62429F862295A16C002C08AD /* AddingMovesAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62429F842295A16C002C08AD /* AddingMovesAnimation.cpp */; };
 		62429F882295CECA002C08AD /* add_move.wav in Resources */ = {isa = PBXBuildFile; fileRef = 62429F872295CEC9002C08AD /* add_move.wav */; };
@@ -1198,6 +1200,8 @@
 		623F5E5D22B563A900242C10 /* RenderQueue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RenderQueue.cpp; sourceTree = "<group>"; };
 		623F5E5E22B563A900242C10 /* TextureCache.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = TextureCache.hpp; sourceTree = "<group>"; };
 		623F5E5F22B563A900242C10 /* Camera.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Camera.hpp; sourceTree = "<group>"; };
+		6240E2DE22BD326200CCA37A /* TexturedLightingVertexColor.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = TexturedLightingVertexColor.vert; sourceTree = "<group>"; };
+		6240E2DF22BD326200CCA37A /* TexturedLightingVertexColor.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = TexturedLightingVertexColor.frag; sourceTree = "<group>"; };
 		62411A961E61E62800035D2A /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		62429F842295A16C002C08AD /* AddingMovesAnimation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AddingMovesAnimation.cpp; sourceTree = "<group>"; };
 		62429F852295A16C002C08AD /* AddingMovesAnimation.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AddingMovesAnimation.hpp; sourceTree = "<group>"; };
@@ -2496,6 +2500,8 @@
 				623F5DED22B55D5100242C10 /* TexturedEnvMapLighting.vert */,
 				623F5DF422B55D5100242C10 /* TexturedLighting.frag */,
 				623F5DE722B55D5100242C10 /* TexturedLighting.vert */,
+				6240E2DF22BD326200CCA37A /* TexturedLightingVertexColor.frag */,
+				6240E2DE22BD326200CCA37A /* TexturedLightingVertexColor.vert */,
 				623F5DE822B55D5100242C10 /* TexturedPixelLighting.frag */,
 				623F5DF222B55D5100242C10 /* TexturedPixelLighting.vert */,
 				623F5DEB22B55D5100242C10 /* VertexColor.frag */,
@@ -3308,6 +3314,7 @@
 				6234618C21691DAF00ECD0DF /* asteroid_998.obj in Resources */,
 				62276E682274A96000679BC6 /* level48.json in Resources */,
 				62276EA02274A96000679BC6 /* level1.json in Resources */,
+				6240E2E022BD326300CCA37A /* TexturedLightingVertexColor.vert in Resources */,
 				62B1CB89210F8F8600D0F195 /* laser_bomb_diffuse.jpg in Resources */,
 				62216A0F21E756E4001CB9A1 /* explosion.wav in Resources */,
 				622169FF21E60503001CB9A1 /* other_moves.wav in Resources */,
@@ -3375,6 +3382,7 @@
 				62276E722274A96000679BC6 /* level19.json in Resources */,
 				626940CF21625E7400D9857A /* sky2.jpg in Resources */,
 				62276E5D2274A96000679BC6 /* level41.json in Resources */,
+				6240E2E122BD326300CCA37A /* TexturedLightingVertexColor.frag in Resources */,
 				62276E892274A96000679BC6 /* level69.json in Resources */,
 				62276E642274A96000679BC6 /* level42.json in Resources */,
 				62204EFC21BEC98700A035C0 /* sky6.jpg in Resources */,

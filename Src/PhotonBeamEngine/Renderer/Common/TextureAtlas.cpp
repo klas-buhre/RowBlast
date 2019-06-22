@@ -43,8 +43,8 @@ namespace {
     bool TextureFits(const IVec2& subTexturePosition,
                      const IVec2& subTextureSize,
                      const IVec2& atlasSize) {
-        return subTexturePosition.x >= 0 && subTexturePosition.x + subTextureSize.x < atlasSize.x &&
-               subTexturePosition.y >= 0 && subTexturePosition.y + subTextureSize.y < atlasSize.y;
+        return subTexturePosition.x >= 0 && subTexturePosition.x + subTextureSize.x <= atlasSize.x &&
+               subTexturePosition.y >= 0 && subTexturePosition.y + subTextureSize.y <= atlasSize.y;
     }
     
     bool PackVertically(std::vector<SubTexture>& subTextures,

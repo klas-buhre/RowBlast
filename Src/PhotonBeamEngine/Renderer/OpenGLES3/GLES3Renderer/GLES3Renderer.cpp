@@ -34,6 +34,8 @@
 #include "../GLES3Shaders/VertexLighting.frag"
 #include "../GLES3Shaders/TexturedLighting.vert"
 #include "../GLES3Shaders/TexturedLighting.frag"
+#include "../GLES3Shaders/TexturedLightingVertexColor.vert"
+#include "../GLES3Shaders/TexturedLightingVertexColor.frag"
 #include "../GLES3Shaders/TexturedPixelLighting.vert"
 #include "../GLES3Shaders/TexturedPixelLighting.frag"
 #include "../GLES3Shaders/TexturedEmissiveLighting.vert"
@@ -285,19 +287,20 @@ std::unique_ptr<IRenderSystem> Pht::CreateRenderSystem(bool createFrameBuffer) {
 }
 
 GLES3Renderer::GLES3Renderer(bool createFrameBuffer) {
-    CreateShader(ShaderId::PixelLighting,            {.mNormals = true});
-    CreateShader(ShaderId::VertexLighting,           {.mNormals = true});
-    CreateShader(ShaderId::TexturedLighting,         {.mNormals = true, .mTextureCoords = true});
-    CreateShader(ShaderId::TexturedPixelLighting,    {.mNormals = true, .mTextureCoords = true});
-    CreateShader(ShaderId::TexturedEmissiveLighting, {.mNormals = true, .mTextureCoords = true});
-    CreateShader(ShaderId::TexturedEnvMapLighting,   {.mNormals = true, .mTextureCoords = true});
-    CreateShader(ShaderId::Textured,                 {.mTextureCoords = true});
-    CreateShader(ShaderId::EnvMap,                   {.mNormals = true});
-    CreateShader(ShaderId::VertexColor,              {.mColors = true});
-    CreateShader(ShaderId::Particle,                 {.mTextureCoords = true, .mColors = true});
-    CreateShader(ShaderId::ParticleTextureColor,     {.mTextureCoords = true, .mColors = true});
-    CreateShader(ShaderId::ParticleNoAlphaTexture,   {.mTextureCoords = true, .mColors = true});
-    CreateShader(ShaderId::PointParticle,            {.mColors = true, .mPointSizes = true});
+    CreateShader(ShaderId::PixelLighting,               {.mNormals = true});
+    CreateShader(ShaderId::VertexLighting,              {.mNormals = true});
+    CreateShader(ShaderId::TexturedLighting,            {.mNormals = true, .mTextureCoords = true});
+    CreateShader(ShaderId::TexturedLightingVertexColor, {.mNormals = true, .mTextureCoords = true, .mColors = true});
+    CreateShader(ShaderId::TexturedPixelLighting,       {.mNormals = true, .mTextureCoords = true});
+    CreateShader(ShaderId::TexturedEmissiveLighting,    {.mNormals = true, .mTextureCoords = true});
+    CreateShader(ShaderId::TexturedEnvMapLighting,      {.mNormals = true, .mTextureCoords = true});
+    CreateShader(ShaderId::Textured,                    {.mTextureCoords = true});
+    CreateShader(ShaderId::EnvMap,                      {.mNormals = true});
+    CreateShader(ShaderId::VertexColor,                 {.mColors = true});
+    CreateShader(ShaderId::Particle,                    {.mTextureCoords = true, .mColors = true});
+    CreateShader(ShaderId::ParticleTextureColor,        {.mTextureCoords = true, .mColors = true});
+    CreateShader(ShaderId::ParticleNoAlphaTexture,      {.mTextureCoords = true, .mColors = true});
+    CreateShader(ShaderId::PointParticle,               {.mColors = true, .mPointSizes = true});
     
     if (createFrameBuffer) {
         glGenRenderbuffers(1, &mColorRenderbuffer);
@@ -404,6 +407,7 @@ void GLES3Renderer::InitShaders() {
     GetShader(ShaderId::PixelLighting).Build(PixelLightingVertexShader, PixelLightingFragmentShader);
     GetShader(ShaderId::VertexLighting).Build(VertexLightingVertexShader, VertexLightingFragmentShader);
     GetShader(ShaderId::TexturedLighting).Build(TexturedLightingVertexShader, TexturedLightingFragmentShader);
+    GetShader(ShaderId::TexturedLightingVertexColor).Build(TexturedLightingVertexColorVertexShader, TexturedLightingVertexColorFragmentShader);
     GetShader(ShaderId::TexturedPixelLighting).Build(TexturedPixelLightingVertexShader, TexturedPixelLightingFragmentShader);
     GetShader(ShaderId::TexturedEmissiveLighting).Build(TexturedEmissiveLightingVertexShader, TexturedEmissiveLightingFragmentShader);
     GetShader(ShaderId::TexturedEnvMapLighting).Build(TexturedEnvMapLightingVertexShader, TexturedEnvMapLightingFragmentShader);

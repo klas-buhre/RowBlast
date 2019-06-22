@@ -48,14 +48,31 @@ std::unique_ptr<VertexBuffer> QuadMesh::CreateVertexBuffer(VertexFlags attribute
         auto textureCoords = MeshUtils::CreateQuadTextureCoords(mTextureCount);
         MeshUtils::CreateQuad(*vertexBuffer, vertices, textureCoords);
     } else {
-        assert(attributeFlags.mColors);
+        auto u = mVertices.mV1.mPosition - mVertices.mV0.mPosition;
+        auto v = mVertices.mV3.mPosition - mVertices.mV0.mPosition;
+        auto normal = u.Cross(v).Normalized();
 
         vertexBuffer->BeginSurface();
 
-        vertexBuffer->Write(mVertices.mV0.mVertex, mVertices.mV0.mColor);
-        vertexBuffer->Write(mVertices.mV1.mVertex, mVertices.mV1.mColor);
-        vertexBuffer->Write(mVertices.mV2.mVertex, mVertices.mV2.mColor);
-        vertexBuffer->Write(mVertices.mV3.mVertex, mVertices.mV3.mColor);
+        vertexBuffer->Write(mVertices.mV0.mPosition,
+                            normal,
+                            mVertices.mV0.mTextureCoord,
+                            mVertices.mV0.mColor);
+        
+        vertexBuffer->Write(mVertices.mV1.mPosition,
+                            normal,
+                            mVertices.mV1.mTextureCoord,
+                            mVertices.mV1.mColor);
+        
+        vertexBuffer->Write(mVertices.mV2.mPosition,
+                            normal,
+                            mVertices.mV2.mTextureCoord,
+                            mVertices.mV2.mColor);
+        
+        vertexBuffer->Write(mVertices.mV3.mPosition,
+                            normal,
+                            mVertices.mV3.mTextureCoord,
+                            mVertices.mV3.mColor);
 
         vertexBuffer->AddIndex(0);
         vertexBuffer->AddIndex(1);

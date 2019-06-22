@@ -24,6 +24,7 @@ namespace Pht {
         PixelLighting = 0,
         VertexLighting,
         TexturedLighting,
+        TexturedLightingVertexColor,
         TexturedPixelLighting,
         TexturedEmissiveLighting,
         TexturedEnvMapLighting,

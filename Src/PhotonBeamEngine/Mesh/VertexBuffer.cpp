@@ -62,7 +62,10 @@ void VertexBuffer::Reset() {
     BeginSurface();
 }
 
-void VertexBuffer::Write(const Vec3& position, const Vec3& normal, const Vec2& textureCoord) {
+void VertexBuffer::Write(const Vec3& position,
+                         const Vec3& normal,
+                         const Vec2& textureCoord,
+                         const Vec4& color) {
     ReallocateIfNeeded();
     
     mVertexWritePtr = position.Write(mVertexWritePtr);
@@ -74,7 +77,11 @@ void VertexBuffer::Write(const Vec3& position, const Vec3& normal, const Vec2& t
     if (mFlags.mTextureCoords) {
         mVertexWritePtr = textureCoord.Write(mVertexWritePtr);
     }
-    
+
+    if (mFlags.mColors) {
+        mVertexWritePtr = color.Write(mVertexWritePtr);
+    }
+
     ++mNumVertices;
 }
 

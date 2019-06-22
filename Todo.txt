@@ -92,116 +92,25 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-
-Use random seed of 12345 in Engine.cpp and Clouds.cpp to get the same numbers.
-
-With render queue refactoring and static batching:
-
-Beginning of first world. 5 lives, 0 coins:
-=======================================
- NumShaderUses: 19
- NumMaterialUses: 96
- NumTextureBinds: 127
- NumVboUses: 118
- NumDrawCalls: 256
-
-With render queue refactoring:
-
-Beginning of first world. 5 lives, 0 coins:
-
-=======================================
- NumShaderUses: 19
- NumMaterialUses: 138
- NumTextureBinds: 127
- NumVboUses: 105
- NumDrawCalls: 293
-
-Before render queue refactoring and static batching:
-
-Beginning of first world. 5 lives, 0 coins:
-=======================================
- NumShaderUses: 19
- NumMaterialUses: 182
- NumTextureBinds: 135
- NumVboUses: 136
- NumDrawCalls: 293
-
-Beginning of level 3:
-=======================================
- NumShaderUses: 10
- NumMaterialUses: 65
- NumTextureBinds: 33
- NumVboUses: 27
- NumDrawCalls: 114
-
-Beginning of level 11:
- =======================================
- NumShaderUses: 16
- NumMaterialUses: 45
- NumTextureBinds: 44
- NumVboUses: 28
- NumDrawCalls: 106
-
-Beginning of level 17:
-=======================================
- NumShaderUses: 12
- NumMaterialUses: 96
- NumTextureBinds: 36
- NumVboUses: 31
- NumDrawCalls: 155
-
-Beginning of level 20:
-=======================================
- NumShaderUses: 39
- NumMaterialUses: 80
- NumTextureBinds: 70
- NumVboUses: 59
- NumDrawCalls: 129
+    -Decide on scales for the next pieces and selectables containers and correct the rectangle
+     renderables size so that there is a 1-to-1 texel-to-pixel ratio.
+    -Add a NEXT text to the next pieces.
+    -Try adding a field background to the active selectable.
+    -Maybe look at sharpening the lower edge around the selectables to set them apart from the next
+     pieces. Or having a field background for the non-active selectables as well but more faded out.
+    -Try adding a preview piece rotation animation:
+     Rotate by tapping the screen, this rotates all selectables in the HUD. If clickadble move
+     alternatives are active then the falling piece does not rotate. If If clickadble move
+     alternatives are not active then the falling piece also rotates. All selectables should rotate
+     back to their default rotation on switch piece or next move.
+    -Make a new pause button at the top-right corner and make a moves toggle button at the pause
+     buttons old location. Remove the controls button in the settings menus.
+    -The ghost piece for swipe controls should either be like in Tetris Blits or just a transparant
+     real piece. That ghost piece should look the same as the ghost piece under a real piece being
+     dragged in from the HUD.
+    -Start working on the drag controls.
 
 
-
-
-Currently:
-Clouds:
-    cloudMaterial.SetAmbient(cloudColor * cloudBrightness);
-Renderer:
-    auto ambientlIntensity = mGlobalLight.mAmbientIntensity;
-    auto& ambient = material.GetAmbient();
-    glUniform3f(uniforms.mAmbientMaterial,
-                ambient.mRed * ambientlIntensity,
-                ambient.mGreen * ambientlIntensity,
-                ambient.mBlue * ambientlIntensity);
-Shader:
-DestinationColor = AmbientMaterial + df * DiffuseMaterial;
-gl_FragColor = vec4(texel.xyz * DestinationColor + SpecularColor, texel.w * Opacity);
-Combined:
-gl_FragColor = cloudColor * cloudBrightness * ambientlIntensity * texel.xyz
-
-
-New shader:
-Clouds:
-    Pht::Material cloudMaterial {textureFilename, 1.0f, 0.0f, 0.0f, 0.0f};
-    quad.SetVertexColor(cloudColor * cloudBrightness);
-Renderer:
-    auto ambientlIntensity = mGlobalLight.mAmbientIntensity;
-    auto& ambient = material.GetAmbient();
-    glUniform3f(uniforms.mAmbientMaterial,
-                ambient.mRed * ambientlIntensity,
-                ambient.mGreen * ambientlIntensity,
-                ambient.mBlue * ambientlIntensity);
-Shader:
-DestinationColor = VertexColor * (AmbientMaterial + df * DiffuseMaterial);
-gl_FragColor = vec4(texel.xyz * DestinationColor + SpecularColor, texel.w * Opacity);
-Combined:
-gl_FragColor = {1.0f, 1.0f, 1.0f} * ambientlIntensity * cloudColor * cloudBrightness * texel.xyz
-
-
-
-    -Add a textured lighting shader with a color vertex attribute. Then most clouds can be
-     batched if they use a texture atlas. Use vertical packing for the clouds since that may reduce
-     risk of texture bleeding.
-    -Test everything in slow motion to see that the render functionality is the same as before
-     all optimizations.
 
     -Maybe the active piece could be in the left-most slot in the selectables. Then the next piece
      will always come in from the left and go right to the active slot without the other selectables
@@ -231,6 +140,7 @@ gl_FragColor = {1.0f, 1.0f, 1.0f} * ambientlIntensity * cloudColor * cloudBright
      alternatives are active then the falling piece does not rotate. If If clickadble move
      alternatives are not active then the falling piece also rotates. All selectables should rotate
      back to their default rotation on switch piece or next move.
+
 
 
 
@@ -633,6 +543,71 @@ Store GUI:
 
 
 
+Frame stats:
+Use random seed of 12345 in Engine.cpp and Clouds.cpp to get the same numbers.
+
+With render queue refactoring and static batching:
+
+Beginning of first world. 5 lives, 0 coins:
+=======================================
+ NumShaderUses: 19
+ NumMaterialUses: 96
+ NumTextureBinds: 127
+ NumVboUses: 118
+ NumDrawCalls: 256
+
+With render queue refactoring:
+
+Beginning of first world. 5 lives, 0 coins:
+
+=======================================
+ NumShaderUses: 19
+ NumMaterialUses: 138
+ NumTextureBinds: 127
+ NumVboUses: 105
+ NumDrawCalls: 293
+
+Before render queue refactoring and static batching:
+
+Beginning of first world. 5 lives, 0 coins:
+=======================================
+ NumShaderUses: 19
+ NumMaterialUses: 182
+ NumTextureBinds: 135
+ NumVboUses: 136
+ NumDrawCalls: 293
+
+Beginning of level 3:
+=======================================
+ NumShaderUses: 10
+ NumMaterialUses: 65
+ NumTextureBinds: 33
+ NumVboUses: 27
+ NumDrawCalls: 114
+
+Beginning of level 11:
+ =======================================
+ NumShaderUses: 16
+ NumMaterialUses: 45
+ NumTextureBinds: 44
+ NumVboUses: 28
+ NumDrawCalls: 106
+
+Beginning of level 17:
+=======================================
+ NumShaderUses: 12
+ NumMaterialUses: 96
+ NumTextureBinds: 36
+ NumVboUses: 31
+ NumDrawCalls: 155
+
+Beginning of level 20:
+=======================================
+ NumShaderUses: 39
+ NumMaterialUses: 80
+ NumTextureBinds: 70
+ NumVboUses: 59
+ NumDrawCalls: 129
 
 
 

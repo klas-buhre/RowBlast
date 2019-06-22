@@ -43,6 +43,10 @@ namespace Pht {
         
         const SubTextureUV* GetSubTextureUV(int subTextureIndex) const;
         
+        int GetNumSubTextures() const {
+            return static_cast<int>(mSubTextureUVs.size());
+        }
+        
     private:
         std::vector<SubTextureUV> mSubTextureUVs;
     };

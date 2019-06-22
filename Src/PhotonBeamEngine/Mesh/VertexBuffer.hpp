@@ -31,7 +31,10 @@ namespace Pht {
 
         void BeginSurface();
         void Reset();
-        void Write(const Vec3& position, const Vec3& normal, const Vec2& textureCoord);
+        void Write(const Vec3& position,
+                   const Vec3& normal,
+                   const Vec2& textureCoord,
+                   const Vec4& color = Vec4{1.0f, 1.0f, 1.0f, 1.0f});
         void Write(const Vec3& position, const Vec2& textureCoord, const Vec4& color);
         void Write(const Vec3& position, const Vec4& color, float pointSize = 0);
         void AddIndex(uint16_t index);

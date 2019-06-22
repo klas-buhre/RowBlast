@@ -36,8 +36,8 @@ namespace {
     bool SubImageFits(const IVec2& subImagePosition,
                       const IVec2& subImageSize,
                       const IVec2& atlasSize) {
-        return subImagePosition.x >= 0 && subImagePosition.x + subImageSize.x < atlasSize.x &&
-               subImagePosition.y >= 0 && subImagePosition.y + subImageSize.y < atlasSize.y;
+        return subImagePosition.x >= 0 && subImagePosition.x + subImageSize.x <= atlasSize.x &&
+               subImagePosition.y >= 0 && subImagePosition.y + subImageSize.y <= atlasSize.y;
     }
 }
 

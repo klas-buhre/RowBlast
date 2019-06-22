@@ -10,6 +10,7 @@
 #include "SceneObject.hpp"
 #include "QuadMesh.hpp"
 #include "Material.hpp"
+#include "TextureAtlas.hpp"
 
 using namespace RowBlast;
 
@@ -112,11 +113,39 @@ Clouds::Clouds(Pht::IEngine& engine,
     auto seed = static_cast<unsigned>(std::chrono::system_clock::now().time_since_epoch().count());
     std::default_random_engine randomGenerator {seed};
 
+    Pht::Material cloudMaterial {
+        Pht::Color{1.0f, 1.0f, 1.0f},
+        Pht::Color{0.0f, 0.0f, 0.0f},
+        Pht::Color{0.0f, 0.0f, 0.0f},
+        0.0f
+    };
+    cloudMaterial.SetBlend(Pht::Blend::Yes);
+    cloudMaterial.SetShaderId(Pht::ShaderId::TexturedLightingVertexColor);
+    
+    Pht::TextureAtlasConfig textureAtlasConfig {
+        .mPackingDirection = Pht::TexturePackingDirection::Vertical,
+        .mGenerateMipmap = Pht::GenerateMipmap::Yes,
+        .mPadding = 0
+    };
+    cloudMaterial.SetTextureAtlas(textureFilenames, textureAtlasConfig);
+    
+    const Pht::TextureAtlas* textureAtlas {nullptr};
+    if (auto* atlasTexture = cloudMaterial.GetTexture()) {
+        textureAtlas = atlasTexture->GetAtlas();
+    } else {
+        assert(false);
+    }
+
     for (auto& volume: mPathVolumes) {
         std::normal_distribution<float> xDistribution {0.0, volume.mClusterSize.x / 4.0f};
         std::normal_distribution<float> yDistribution {0.0, volume.mClusterSize.y / 4.0f};
         Pht::Vec3 clusterPosition;
-        
+
+        if (textureAtlas == nullptr || textureAtlas->GetNumSubTextures() != textureFilenames.size()) {
+            assert(false);
+            break;
+        }
+
         for (auto i = 0; i < volume.mNumClouds; ++i) {
             if (volume.mNumCloudsPerCluster.HasValue()) {
                 if (i % volume.mNumCloudsPerCluster.GetValue() == 0) {
@@ -147,17 +176,24 @@ Clouds::Clouds(Pht::IEngine& engine,
                 volume.mNumCloudsPerCluster.HasValue() ?
                     CalcCloudBrightness(cloudPosition, clusterPosition, volume.mClusterSize, volume) :
                     averageCloudBrightness;
-            
-            auto& textureFilename = textureFilenames[std::rand() % textureFilenames.size()];
-            Pht::Material cloudMaterial {textureFilename, cloudBrightness, 0.0f, 0.0f, 0.0f};
-            cloudMaterial.SetAmbient(color * cloudBrightness);
-            cloudMaterial.SetBlend(Pht::Blend::Yes);
+
+            auto halfX = cloudSize.x / 2.0f;
+            auto halfY = cloudSize.y / 2.0f;
+            auto cloudColor = Pht::Vec4{color.mRed, color.mGreen, color.mBlue, 1.0f} * cloudBrightness;
+            auto subTextureId = static_cast<int>(std::rand() % textureFilenames.size());
+            auto* textureUV = textureAtlas->GetSubTextureUV(subTextureId);
+            Pht::QuadMesh::Vertices cloudVertices {
+                {{-halfX, -halfY, 0.0f}, cloudColor, textureUV->mBottomLeft},
+                {{halfX, -halfY, 0.0f}, cloudColor, textureUV->mBottomRight},
+                {{halfX, halfY, 0.0f}, cloudColor, textureUV->mTopRight},
+                {{-halfX, halfY, 0.0f}, cloudColor, textureUV->mTopLeft},
+            };
 
             auto& cloudSceneObject =
-                scene.CreateSceneObject(Pht::QuadMesh {cloudSize.x, cloudSize.y}, cloudMaterial);
+                scene.CreateSceneObject(Pht::QuadMesh {cloudVertices}, cloudMaterial);
             sceneObject.AddChild(cloudSceneObject);
             cloudSceneObject.GetTransform().SetPosition(cloudPosition);
-            
+
             Pht::Vec3 cloudVelocity {CalcCloudVelocity(volume, velocity)};
             Cloud cloud {cloudVelocity, cloudSceneObject, volume};
             mClouds.push_back(cloud);

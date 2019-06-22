@@ -7,8 +7,9 @@ namespace Pht {
     class QuadMesh: public IMesh {
     public:
         struct Vertex {
-            Vec3 mVertex;
+            Vec3 mPosition;
             Vec4 mColor;
+            Vec2 mTextureCoord {0.0f, 0.0f};
         };
         
         struct Vertices {
