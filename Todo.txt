@@ -93,7 +93,8 @@ Backlog:
 
 Ongoing tasks:
     -Decide on scales for the next pieces and selectables containers and correct the rectangle
-     renderables size so that there is a 1-to-1 texel-to-pixel ratio.
+     renderables size so that there is a 1-to-1 texel-to-pixel ratio. Maybe good if the selectables
+     are a bit farther apart so that it is easy to select them when dragging them out.
     -Add a NEXT text to the next pieces.
     -Try adding a field background to the active selectable.
     -Maybe look at sharpening the lower edge around the selectables to set them apart from the next
@@ -106,9 +107,14 @@ Ongoing tasks:
     -Make a new pause button at the top-right corner and make a moves toggle button at the pause
      buttons old location. Remove the controls button in the settings menus.
     -The ghost piece for swipe controls should either be like in Tetris Blits or just a transparant
-     real piece. That ghost piece should look the same as the ghost piece under a real piece being
-     dragged in from the HUD.
-    -Start working on the drag controls.
+     real piece (although transparant real pieces could be difficult if the welds should be part of
+     the ghost piece since the weld will be drawn over the blocks and cause strange blending). That
+     ghost piece should look the same as the ghost piece under a real piece being dragged in from
+     the HUD.
+    -Implement drag controls.
+    -Update the tutorial with drag controls.
+
+
 
 
 

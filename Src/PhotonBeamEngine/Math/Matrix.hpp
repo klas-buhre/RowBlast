@@ -3,6 +3,10 @@
 
 // The matrices are in row-major order.
 namespace Pht {
+    enum class MatrixInit {
+        No
+    };
+
     template <typename T>
     struct Matrix2 {
         Matrix2() {
@@ -33,20 +37,72 @@ namespace Pht {
             z.x = m[6]; z.y = m[7]; z.z = m[8];
         }
         
+        Matrix3(MatrixInit) {}
+        
+        Matrix3 operator*(const Matrix3& b) const {
+            Matrix3 m {MatrixInit::No};
+            m.x.x = x.x * b.x.x + x.y * b.y.x + x.z * b.z.x;
+            m.x.y = x.x * b.x.y + x.y * b.y.y + x.z * b.z.y;
+            m.x.z = x.x * b.x.z + x.y * b.y.z + x.z * b.z.z;
+            m.y.x = y.x * b.x.x + y.y * b.y.x + y.z * b.z.x;
+            m.y.y = y.x * b.x.y + y.y * b.y.y + y.z * b.z.y;
+            m.y.z = y.x * b.x.z + y.y * b.y.z + y.z * b.z.z;
+            m.z.x = z.x * b.x.x + z.y * b.y.x + z.z * b.z.x;
+            m.z.y = z.x * b.x.y + z.y * b.y.y + z.z * b.z.y;
+            m.z.z = z.x * b.x.z + z.y * b.y.z + z.z * b.z.z;
+            return m;
+        }
+        
         Matrix3 Transposed() const {
-            Matrix3 m;
+            Matrix3 m {MatrixInit::No};
             m.x.x = x.x; m.x.y = y.x; m.x.z = z.x;
             m.y.x = x.y; m.y.y = y.y; m.y.z = z.y;
             m.z.x = x.z; m.z.y = y.z; m.z.z = z.z;
             return m;
         }
         
-        Vector3<T> operator * (const Vector3<T>& b) const {
+        Vector3<T> operator*(const Vector3<T>& b) const {
             Vector3<T> v;
             v.x = x.x * b.x + x.y * b.y + x.z * b.z;
             v.y = y.x * b.x + y.y * b.y + y.z * b.z;
             v.z = z.x * b.x + z.y * b.y + z.z * b.z;
             return v;
+        }
+        
+        static Matrix3<T> RotateZ(T degrees) {
+            T radians = degrees * 3.14159f / 180.0f;
+            T s = std::sin(radians);
+            T c = std::cos(radians);
+            
+            Matrix3 m {MatrixInit::No};
+            m.x.x =  c; m.x.y = s; m.x.z = 0;
+            m.y.x = -s; m.y.y = c; m.y.z = 0;
+            m.z.x =  0; m.z.y = 0; m.z.z = 1;
+            return m;
+        }
+
+        static Matrix3<T> RotateY(T degrees) {
+            T radians = degrees * 3.14159f / 180.0f;
+            T s = std::sin(radians);
+            T c = std::cos(radians);
+            
+            Matrix3 m {MatrixInit::No};
+            m.x.x = c; m.x.y = 0; m.x.z = -s;
+            m.y.x = 0; m.y.y = 1; m.y.z =  0;
+            m.z.x = s; m.z.y = 0; m.z.z =  c;
+            return m;
+        }
+        
+        static Matrix3<T> RotateX(T degrees) {
+            T radians = degrees * 3.14159f / 180.0f;
+            T s = std::sin(radians);
+            T c = std::cos(radians);
+            
+            Matrix3 m {MatrixInit::No};
+            m.x.x =  1; m.x.y =  0; m.x.z = 0;
+            m.y.x =  0; m.y.y =  c; m.y.z = s;
+            m.z.x =  0; m.z.y = -s; m.z.z = c;
+            return m;
         }
         
         const T* Pointer() const {
@@ -81,8 +137,10 @@ namespace Pht {
             w.x = m[12]; w.y = m[13]; w.z = m[14]; w.w = m[15];
         }
         
-        Matrix4 operator * (const Matrix4& b) const {
-            Matrix4 m;
+        Matrix4(MatrixInit) {}
+        
+        Matrix4 operator*(const Matrix4& b) const {
+            Matrix4 m {MatrixInit::No};
             m.x.x = x.x * b.x.x + x.y * b.y.x + x.z * b.z.x + x.w * b.w.x;
             m.x.y = x.x * b.x.y + x.y * b.y.y + x.z * b.z.y + x.w * b.w.y;
             m.x.z = x.x * b.x.z + x.y * b.y.z + x.z * b.z.z + x.w * b.w.z;
@@ -102,7 +160,7 @@ namespace Pht {
             return m;
         }
         
-        Vector4<T> operator * (const Vector4<T>& b) const {
+        Vector4<T> operator*(const Vector4<T>& b) const {
             Vector4<T> v;
             v.x = x.x * b.x + x.y * b.y + x.z * b.z + x.w * b.w;
             v.y = y.x * b.x + y.y * b.y + y.z * b.z + y.w * b.w;
@@ -111,13 +169,13 @@ namespace Pht {
             return v;
         }
         
-        Matrix4& operator *= (const Matrix4& b) {
+        Matrix4& operator*=(const Matrix4& b) {
             Matrix4 m = *this * b;
             return (*this = m);
         }
         
         Matrix4 Transposed() const {
-            Matrix4 m;
+            Matrix4 m {MatrixInit::No};
             m.x.x = x.x; m.x.y = y.x; m.x.z = z.x; m.x.w = w.x;
             m.y.x = x.y; m.y.y = y.y; m.y.z = z.y; m.y.w = w.y;
             m.z.x = x.z; m.z.y = y.z; m.z.z = z.z; m.z.w = w.z;
@@ -126,7 +184,7 @@ namespace Pht {
         }
         
         Matrix3<T> ToMat3() const {
-            Matrix3<T> m;
+            Matrix3<T> m {MatrixInit::No};
             m.x.x = x.x; m.y.x = y.x; m.z.x = z.x;
             m.x.y = x.y; m.y.y = y.y; m.z.y = z.y;
             m.x.z = x.z; m.y.z = y.z; m.z.z = z.z;
@@ -142,7 +200,7 @@ namespace Pht {
         }
         
         static Matrix4<T> Translate(T x, T y, T z) {
-            Matrix4 m;
+            Matrix4 m {MatrixInit::No};
             m.x.x = 1; m.x.y = 0; m.x.z = 0; m.x.w = 0;
             m.y.x = 0; m.y.y = 1; m.y.z = 0; m.y.w = 0;
             m.z.x = 0; m.z.y = 0; m.z.z = 1; m.z.w = 0;
@@ -151,7 +209,7 @@ namespace Pht {
         }
         
         static Matrix4<T> Scale(T s) {
-            Matrix4 m;
+            Matrix4 m {MatrixInit::No};
             m.x.x = s; m.x.y = 0; m.x.z = 0; m.x.w = 0;
             m.y.x = 0; m.y.y = s; m.y.z = 0; m.y.w = 0;
             m.z.x = 0; m.z.y = 0; m.z.z = s; m.z.w = 0;
@@ -160,7 +218,7 @@ namespace Pht {
         }
         
         static Matrix4<T> Scale(T x, T y, T z) {
-            Matrix4 m;
+            Matrix4 m {MatrixInit::No};
             m.x.x = x; m.x.y = 0; m.x.z = 0; m.x.w = 0;
             m.y.x = 0; m.y.y = y; m.y.z = 0; m.y.w = 0;
             m.z.x = 0; m.z.y = 0; m.z.z = z; m.z.w = 0;
@@ -173,7 +231,7 @@ namespace Pht {
             T s = std::sin(radians);
             T c = std::cos(radians);
             
-            Matrix4 m;
+            Matrix4 m {MatrixInit::No};
             m.x.x =  c; m.x.y = s; m.x.z = 0; m.x.w = 0;
             m.y.x = -s; m.y.y = c; m.y.z = 0; m.y.w = 0;
             m.z.x =  0; m.z.y = 0; m.z.z = 1; m.z.w = 0;
@@ -186,7 +244,7 @@ namespace Pht {
             T s = std::sin(radians);
             T c = std::cos(radians);
             
-            Matrix4 m;
+            Matrix4 m {MatrixInit::No};
             m.x.x = c; m.x.y = 0; m.x.z = -s; m.x.w = 0;
             m.y.x = 0; m.y.y = 1; m.y.z =  0; m.y.w = 0;
             m.z.x = s; m.z.y = 0; m.z.z =  c; m.z.w = 0;
@@ -199,7 +257,7 @@ namespace Pht {
             T s = std::sin(radians);
             T c = std::cos(radians);
             
-            Matrix4 m;
+            Matrix4 m {MatrixInit::No};
             m.x.x =  1; m.x.y =  0; m.x.z = 0; m.x.w = 0;
             m.y.x =  0; m.y.y =  c; m.y.z = s; m.y.w = 0;
             m.z.x =  0; m.z.y = -s; m.z.z = c; m.z.w = 0;
