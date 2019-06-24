@@ -25,7 +25,7 @@ Backlog:
      possible if (either 1.a OR 1.b OR 1.c) and 2:
      Either (1.a): rotating pieces using drag/swipe input is only done by tapping the screen as in
      pure swipe controls (this would then rotate all pieces in the selectables container, but they
-     could rotate back to their default rotation at the next move, switch piece or cancel drag etc.)
+     could rotate back to their default rotation at the next move or switch piece)
      since rotating a selectable piece by clicking the piece in the selectables container would be
      indistinguishable from switching active piece. Switching active piece in 1.a could be done by
      tapping the selectables container.
@@ -92,10 +92,8 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-    -Decide on scales for the next pieces and selectables containers and correct the rectangle
-     renderables size so that there is a 1-to-1 texel-to-pixel ratio. Maybe good if the selectables
-     are a bit farther apart so that it is easy to select them when dragging them out.
-    -Add a NEXT text to the next pieces.
+    -Maybe good if the selectables are a bit farther apart so that it is easy to select them when
+     dragging them out.
     -Try adding a field background to the active selectable.
     -Maybe look at sharpening the lower edge around the selectables to set them apart from the next
      pieces. Or having a field background for the non-active selectables as well but more faded out.
@@ -104,6 +102,8 @@ Ongoing tasks:
      alternatives are active then the falling piece does not rotate. If If clickadble move
      alternatives are not active then the falling piece also rotates. All selectables should rotate
      back to their default rotation on switch piece or next move.
+    -Start implementing drag controls.
+    -Add a NEXT text to the next pieces.
     -Make a new pause button at the top-right corner and make a moves toggle button at the pause
      buttons old location. Remove the controls button in the settings menus.
     -The ghost piece for swipe controls should either be like in Tetris Blits or just a transparant
@@ -111,7 +111,7 @@ Ongoing tasks:
      the ghost piece since the weld will be drawn over the blocks and cause strange blending). That
      ghost piece should look the same as the ghost piece under a real piece being dragged in from
      the HUD.
-    -Implement drag controls.
+    -Remember to update the switch piece Pht::Button input size after the changes.
     -Update the tutorial with drag controls.
 
 
@@ -134,7 +134,7 @@ Ongoing tasks:
      This commit contains the change:
      Moved the active piece to the leftmost slot in the selectables contai a0d16e8
     -Try combining all three input types to one. Maybe possible if the visibility of the move
-     alternatives can be toggled with a button next to the pause button. Or the pause button is goes
+     alternatives can be toggled with a button next to the pause button. Or the pause button goes
      to the top right corner of the screen and the toggle button takes the pause buttons old place.
      Alt 1: Switch piece could be done
      by swiping left or right inside the selectable cotainer. Swipe left shifts the selectables to

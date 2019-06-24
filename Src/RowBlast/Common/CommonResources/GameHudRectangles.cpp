@@ -10,6 +10,7 @@
 
 // Game includes.
 #include "CommonResources.hpp"
+#include "GameHud.hpp"
 
 using namespace RowBlast;
 
@@ -23,15 +24,33 @@ namespace {
     const Pht::Vec4 innerColor {0.65f + rbAdd, 0.4f, 0.75f + rbAdd, 0.93f};
     const Pht::Vec4 lowerInnerColor {0.9f, 0.9f, 1.0f, 0.0f};
     const Pht::Vec4 pressedColorSubtract {0.1f, 0.1f, 0.1f, 0.0f};
+    
+    
+    constexpr auto f = 0.9f;
+    // constexpr auto lowerAlpha = 0.1f;
+    constexpr auto lowerAlpha = 0.25f;
+    const Pht::Vec4 activeSlotInnerColor {0.53f * f, 0.2625f * f, 0.6085f * f, 0.96f};
+    const Pht::Vec4 activeSlotLowerInnerColor {activeSlotInnerColor.ToVec3(), activeSlotInnerColor.w * lowerAlpha};
+
+    const Pht::Vec4 activeSlotOuterBorderColor {0.7f, 0.525f, 0.825f, 0.85f};
+    const Pht::Vec4 activeSlotOuterLowerBorderColor {activeSlotOuterBorderColor.ToVec3(), activeSlotOuterBorderColor.w * lowerAlpha};
+    const auto activeSlotInnerBorderColorAdd = Pht::Vec4{activeSlotOuterBorderColor.ToVec3(), 0.0f} * 0.175f;
+    const auto activeSlotInnerBorderColor = activeSlotInnerColor + activeSlotInnerBorderColorAdd;
+    const auto activeSlotInnerLowerBorderColor = activeSlotLowerInnerColor + activeSlotInnerBorderColorAdd;
+    
+    constexpr auto  gridLineWidth = 0.05f;
+    const Pht::Vec4 gridLineColor {1.0f, 1.0f, 1.0f, 0.06f};
 
     const Pht::Vec2 pauseButtonRectangleSize {1.5f, 1.5f};
-    const Pht::Vec2 nextPiecesRectangleSize {4.5f, 2.4f};
-    const Pht::Vec2 selectablePiecesRectangleSize {6.8f, 2.4f};
-    constexpr auto dividerLineXPosition = 2.45f;
+    const auto nextPiecesRectangleSize = Pht::Vec2{4.5f, 2.4f} * GameHud::nextPiecesScale;
+    constexpr auto nextPiecesRectangleTilt = 0.6f * GameHud::nextPiecesScale;
+    const auto selectablePiecesRectangleSize = Pht::Vec2{6.8f, 2.4f} * GameHud::selectablePiecesScale;
+    constexpr auto selectablePiecesRectangleTilt = 0.6f * GameHud::selectablePiecesScale;
+    constexpr auto activeSlotXPosition = 0.0f;
+    constexpr auto activeSlotXSize = 2.45f;
     constexpr auto dividerLineThickness = 0.02f;
     constexpr auto borderThickness = 0.055f;
     constexpr auto piecesRectangleOuterCornerRadius = 0.25f;
-    constexpr auto piecesRectangleTilt = 0.6f;
     constexpr auto pauseButtonRectangleTilt = 0.375f;
 
     std::unique_ptr<Pht::SoftwareRasterizer> CreateRasterizer(Pht::IEngine& engine,
@@ -70,32 +89,27 @@ GameHudRectangles::GameHudRectangles(Pht::IEngine& engine, const CommonResources
                                             commonResources,
                                             pauseButtonRectangleSize,
                                             pauseButtonRectangleTilt,
-                                            {0.0f, 0.0f, 0.0f, 0.0f},
-                                            false);
+                                            {0.0f, 0.0f, 0.0f, 0.0f});
     mPressedPauseButtonRectangle = CreateRectangle(engine,
                                                    commonResources,
                                                    pauseButtonRectangleSize,
                                                    pauseButtonRectangleTilt,
-                                                   pressedColorSubtract,
-                                                   false);
+                                                   pressedColorSubtract);
     mNextPiecesRectangle = CreateRectangle(engine,
                                            commonResources,
                                            nextPiecesRectangleSize,
-                                           piecesRectangleTilt,
-                                           {0.0f, 0.0f, 0.0f, 0.0f},
-                                           false);
-    mSelectablePiecesRectangle = CreateRectangle(engine,
-                                                 commonResources,
-                                                 selectablePiecesRectangleSize,
-                                                 piecesRectangleTilt,
-                                                 {0.0f, 0.0f, 0.0f, 0.0f},
-                                                 true);
-    mPressedSelectablePiecesRectangle = CreateRectangle(engine,
-                                                        commonResources,
-                                                        selectablePiecesRectangleSize,
-                                                        piecesRectangleTilt,
-                                                        pressedColorSubtract,
-                                                        true);
+                                           nextPiecesRectangleTilt,
+                                           {0.0f, 0.0f, 0.0f, 0.0f});
+    mSelectablePiecesRectangle = CreateSelectablesRectangle(engine,
+                                                            commonResources,
+                                                            selectablePiecesRectangleSize,
+                                                            selectablePiecesRectangleTilt,
+                                                            {0.0f, 0.0f, 0.0f, 0.0f});
+    mPressedSelectablePiecesRectangle = CreateSelectablesRectangle(engine,
+                                                                   commonResources,
+                                                                   selectablePiecesRectangleSize,
+                                                                   selectablePiecesRectangleTilt,
+                                                                   pressedColorSubtract);
 }
 
 std::unique_ptr<Pht::RenderableObject>
@@ -103,8 +117,7 @@ GameHudRectangles::CreateRectangle(Pht::IEngine& engine,
                                    const CommonResources& commonResources,
                                    const Pht::Vec2& size,
                                    float tilt,
-                                   const Pht::Vec4& colorSubtract,
-                                   bool drawDividerLine) {
+                                   const Pht::Vec4& colorSubtract) {
     auto rasterizer = CreateRasterizer(engine, commonResources, size);
 
     DrawRectangleBorder(*rasterizer, size, colorSubtract);
@@ -114,9 +127,26 @@ GameHudRectangles::CreateRectangle(Pht::IEngine& engine,
                       borderThickness * 2.0f);
     DrawRectangleMainArea(*rasterizer, size, colorSubtract);
     
-    if (drawDividerLine) {
-        DrawLine(*rasterizer, colorSubtract);
-    }
+    auto image = rasterizer->ProduceImage();
+    Pht::Material imageMaterial {*image, Pht::GenerateMipmap::Yes};
+    imageMaterial.SetBlend(Pht::Blend::Yes);
+    
+    Pht::QuadMesh quadMesh {size.x, size.y, tilt};
+    return engine.GetSceneManager().CreateRenderableObject(quadMesh, imageMaterial);
+}
+
+std::unique_ptr<Pht::RenderableObject>
+GameHudRectangles::CreateSelectablesRectangle(Pht::IEngine& engine,
+                                              const CommonResources& commonResources,
+                                              const Pht::Vec2& size,
+                                              float tilt,
+                                              const Pht::Vec4& colorSubtract) {
+    auto rasterizer = CreateRasterizer(engine, commonResources, size);
+
+    DrawSelectablesRectangleBorder(*rasterizer, size, colorSubtract);
+    DrawActiveSlotArea(*rasterizer, size, colorSubtract);
+    DrawSelectablesRectangleMainArea(*rasterizer, size, colorSubtract);
+    DrawLine(*rasterizer, colorSubtract);
 
     auto image = rasterizer->ProduceImage();
     Pht::Material imageMaterial {*image, Pht::GenerateMipmap::Yes};
@@ -191,6 +221,55 @@ void GameHudRectangles::DrawRectangleBorder(Pht::SoftwareRasterizer& rasterizer,
     rasterizer.DrawGradientRectangle(upperRight2, lowerLeft2, borderColors, Pht::DrawOver::Yes);
 }
 
+void GameHudRectangles::DrawSelectablesRectangleBorder(Pht::SoftwareRasterizer& rasterizer,
+                                                       const Pht::Vec2& size,
+                                                       const Pht::Vec4& colorSubtract) {
+    FillStencilBuffer(rasterizer, size, piecesRectangleOuterCornerRadius, 0.0f);
+    
+    Pht::SoftwareRasterizer::VerticalGradientColors outerBorderColors {
+        PositiveSubtract(lowerOuterBorderColor, colorSubtract),
+        PositiveSubtract(outerBorderColor, colorSubtract)
+    };
+    Pht::Vec2 lowerLeft {activeSlotXPosition + activeSlotXSize, 0.0f};
+    Pht::Vec2 upperRight {size.x, size.y};
+    rasterizer.DrawGradientRectangle(upperRight, lowerLeft, outerBorderColors, Pht::DrawOver::Yes);
+
+    Pht::SoftwareRasterizer::VerticalGradientColors activeSlotOuterBorderColors {
+        PositiveSubtract(activeSlotOuterLowerBorderColor, colorSubtract),
+        PositiveSubtract(activeSlotOuterBorderColor, colorSubtract)
+    };
+    Pht::Vec2 activeSlotLowerLeft {0.0f, 0.0f};
+    Pht::Vec2 activeSlotUpperRight {activeSlotXSize, size.y};
+    rasterizer.DrawGradientRectangle(activeSlotUpperRight,
+                                     activeSlotLowerLeft,
+                                     activeSlotOuterBorderColors,
+                                     Pht::DrawOver::Yes);
+    
+    FillStencilBuffer(rasterizer,
+                      size,
+                      piecesRectangleOuterCornerRadius - borderThickness,
+                      borderThickness);
+
+    Pht::SoftwareRasterizer::VerticalGradientColors borderColors {
+        PositiveSubtract(lowerBorderColor, colorSubtract),
+        PositiveSubtract(borderColor, colorSubtract)
+    };
+    Pht::Vec2 lowerLeft2 {activeSlotXPosition + activeSlotXSize, 0.0f};
+    Pht::Vec2 upperRight2 {size.x, size.y};
+    rasterizer.DrawGradientRectangle(upperRight2, lowerLeft2, borderColors, Pht::DrawOver::Yes);
+    
+    Pht::SoftwareRasterizer::VerticalGradientColors activeSlotBorderColors {
+        PositiveSubtract(activeSlotInnerLowerBorderColor, colorSubtract),
+        PositiveSubtract(activeSlotInnerBorderColor, colorSubtract)
+    };
+    Pht::Vec2 activeSlotLowerLeft2 {0.0f, 0.0f};
+    Pht::Vec2 activeSlotUpperRight2 {activeSlotXSize, size.y};
+    rasterizer.DrawGradientRectangle(activeSlotUpperRight2,
+                                     activeSlotLowerLeft2,
+                                     activeSlotBorderColors,
+                                     Pht::DrawOver::Yes);
+}
+
 void GameHudRectangles::DrawRectangleMainArea(Pht::SoftwareRasterizer& rasterizer,
                                               const Pht::Vec2& size,
                                               const Pht::Vec4& colorSubtract) {
@@ -206,6 +285,57 @@ void GameHudRectangles::DrawRectangleMainArea(Pht::SoftwareRasterizer& rasterize
                                      Pht::DrawOver::Yes);
 }
 
+void GameHudRectangles::DrawSelectablesRectangleMainArea(Pht::SoftwareRasterizer& rasterizer,
+                                                         const Pht::Vec2& size,
+                                                         const Pht::Vec4& colorSubtract) {
+    FillStencilBuffer(rasterizer,
+                      size,
+                      piecesRectangleOuterCornerRadius - borderThickness * 2.0f,
+                      borderThickness * 2.0f);
+
+    Pht::SoftwareRasterizer::VerticalGradientColors upperRectangleColors {
+        PositiveSubtract(lowerInnerColor, colorSubtract),
+        PositiveSubtract(innerColor, colorSubtract)
+    };
+    Pht::Vec2 lowerLeft2 {activeSlotXPosition + activeSlotXSize, 0.0f};
+    Pht::Vec2 upperRight2 {size.x, size.y};
+    rasterizer.DrawGradientRectangle(upperRight2,
+                                     lowerLeft2,
+                                     upperRectangleColors,
+                                     Pht::DrawOver::Yes);
+}
+
+void GameHudRectangles::DrawActiveSlotArea(Pht::SoftwareRasterizer& rasterizer,
+                                           const Pht::Vec2& size,
+                                           const Pht::Vec4& colorSubtract) {
+    FillStencilBuffer(rasterizer,
+                      size,
+                      piecesRectangleOuterCornerRadius - borderThickness * 2.0f,
+                      borderThickness * 2.0f);
+
+    Pht::SoftwareRasterizer::VerticalGradientColors upperRectangleColors {
+        PositiveSubtract(activeSlotLowerInnerColor, colorSubtract),
+        PositiveSubtract(activeSlotInnerColor, colorSubtract)
+    };
+    Pht::Vec2 lowerLeftFill {activeSlotXPosition, 0.0f};
+    Pht::Vec2 upperRightFill {activeSlotXPosition + activeSlotXSize, size.y};
+    rasterizer.DrawGradientRectangle(upperRightFill,
+                                     lowerLeftFill,
+                                     upperRectangleColors,
+                                     Pht::DrawOver::Yes);
+
+    FillStencilBuffer(rasterizer,
+                      size,
+                      piecesRectangleOuterCornerRadius - borderThickness,
+                      borderThickness);
+
+    Pht::Vec2 lowerLeft {activeSlotXPosition + 0.6f, gridLineWidth};
+    Pht::Vec2 upperRight {activeSlotXPosition + 0.6f + gridLineWidth, size.y - borderThickness};
+    rasterizer.SetBlend(Pht::Blend::Yes);
+    rasterizer.DrawRectangle(upperRight, lowerLeft, gridLineColor, Pht::DrawOver::Yes);
+    rasterizer.SetBlend(Pht::Blend::No);
+}
+
 void GameHudRectangles::DrawLine(Pht::SoftwareRasterizer& rasterizer,
                                  const Pht::Vec4& colorSubtract) {
     FillStencilBuffer(rasterizer,
@@ -213,6 +343,8 @@ void GameHudRectangles::DrawLine(Pht::SoftwareRasterizer& rasterizer,
                       piecesRectangleOuterCornerRadius,
                       0.0f);
 
+    auto dividerLineXPosition = activeSlotXPosition + activeSlotXSize;
+    
     Pht::SoftwareRasterizer::VerticalGradientColors outerLineColors {
         PositiveSubtract(lowerBorderColor, colorSubtract),
         PositiveSubtract(borderColor, colorSubtract)

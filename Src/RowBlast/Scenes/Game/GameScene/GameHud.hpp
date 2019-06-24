@@ -110,10 +110,20 @@ namespace RowBlast {
             assert(mNextPiecesContainer);
             return *mNextPiecesContainer;
         }
-        
+
+        Pht::SceneObject& GetNextPiecesSceneObject() {
+            assert(mNextPiecesSceneObject);
+            return *mNextPiecesSceneObject;
+        }
+
         Pht::SceneObject& GetSelectablePiecesContainer() {
             assert(mSelectablePiecesContainer);
             return *mSelectablePiecesContainer;
+        }
+
+        Pht::SceneObject& GetSelectablePiecesSceneObject() {
+            assert(mSelectablePiecesSceneObject);
+            return *mSelectablePiecesSceneObject;
         }
 
         Pht::SceneObject& GetMovesTextSceneObject() {
@@ -137,6 +147,8 @@ namespace RowBlast {
 
         static constexpr float movesContainerScale {1.1f};
         static constexpr float movesTextStaticScale {1.3f};
+        static constexpr float nextPiecesScale {0.8f};
+        static constexpr float selectablePiecesScale {1.1f};
 
     private:
         void CreateLightAndCamera(Pht::Scene& scene, Pht::SceneObject& parentObject, int hudLayer);
@@ -211,7 +223,9 @@ namespace RowBlast {
         Pht::SceneObject* mProgressContainer {nullptr};
         Pht::SceneObject* mMovesContainer {nullptr};
         Pht::SceneObject* mNextPiecesContainer {nullptr};
+        Pht::SceneObject* mNextPiecesSceneObject {nullptr};
         Pht::SceneObject* mSelectablePiecesContainer {nullptr};
+        Pht::SceneObject* mSelectablePiecesSceneObject {nullptr};
         NextPreviewPieces mNextPreviewPieces;
         SelectablePreviewPieces mSelectablePreviewPieces;
         TwoPieces mNext2PiecesPreviousFrame;

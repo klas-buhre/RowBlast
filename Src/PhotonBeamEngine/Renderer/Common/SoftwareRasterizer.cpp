@@ -43,6 +43,10 @@ void SoftwareRasterizer::EnableStencilTest() {
     mDrawMode = DrawMode::StencilTest;
 }
 
+void SoftwareRasterizer::SetBlend(Blend blend) {
+    mBlend = blend;
+}
+
 IVec2 SoftwareRasterizer::ToPixelCoordinates(const Vec2& point) const {
     auto xScaleFactor = static_cast<float>(mImageSize.x) / mCoordSystemSize.x;
     auto yScaleFactor = static_cast<float>(mImageSize.y) / mCoordSystemSize.y;
@@ -80,7 +84,17 @@ void SoftwareRasterizer::SetPixelInNormalDrawMode(const Vec4& color,
                                                   int offset) {
     switch (drawOver) {
         case DrawOver::Yes:
-            mBuffer[offset] = color;
+            switch (mBlend) {
+                case Blend::Yes:
+                    SetPixelNormalBlend(color, offset);
+                    break;
+                case Blend::Additive:
+                    SetPixelAdditiveBlend(color, offset);
+                    break;
+                case Blend::No:
+                    mBuffer[offset] = color;
+                    break;
+            }
             break;
         case DrawOver::No:
             if (mBuffer[offset] == transparentPixel) {
@@ -88,6 +102,33 @@ void SoftwareRasterizer::SetPixelInNormalDrawMode(const Vec4& color,
             }
             break;
     }
+}
+
+void SoftwareRasterizer::SetPixelNormalBlend(const Vec4& sourceColor, int offset) {
+    auto destinationColor = mBuffer[offset];
+    auto df = 1.0f - sourceColor.w;
+    
+    Vec4 resultingColor {
+        std::min(1.0f, sourceColor.x * sourceColor.w + destinationColor.x * df),
+        std::min(1.0f, sourceColor.y * sourceColor.w + destinationColor.y * df),
+        std::min(1.0f, sourceColor.z * sourceColor.w + destinationColor.z * df),
+        std::min(1.0f, destinationColor.w)
+    };
+    
+    mBuffer[offset] = resultingColor;
+}
+
+void SoftwareRasterizer::SetPixelAdditiveBlend(const Vec4& sourceColor, int offset) {
+    auto destinationColor = mBuffer[offset];
+    
+    Vec4 resultingColor {
+        std::min(1.0f, sourceColor.x * sourceColor.w + destinationColor.x),
+        std::min(1.0f, sourceColor.y * sourceColor.w + destinationColor.y),
+        std::min(1.0f, sourceColor.z * sourceColor.w + destinationColor.z),
+        std::min(1.0f, destinationColor.w)
+    };
+    
+    mBuffer[offset] = resultingColor;
 }
 
 void SoftwareRasterizer::SetPixelInStencilBufferFillMode(const Vec4& color,

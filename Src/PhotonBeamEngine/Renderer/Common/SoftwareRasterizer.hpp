@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "Vector.hpp"
+#include "Material.hpp"
 
 namespace Pht {
     class IImage;
@@ -30,7 +31,9 @@ namespace Pht {
         
         void ClearBuffer();
         void SetStencilBufferFillMode();
+        void ClearStencilBuffer();
         void EnableStencilTest();
+        void SetBlend(Blend blend);
         void DrawRectangle(const Vec2& upperRight,
                            const Vec2& lowerLeft,
                            const Vec4& color,
@@ -79,10 +82,11 @@ namespace Pht {
             SecondBorder
         };
         
-        void ClearStencilBuffer();
         IVec2 ToPixelCoordinates(const Vec2& point) const;
         void SetPixel(int x, int y, const Vec4& color, DrawOver drawOver = DrawOver::No);
         void SetPixelInNormalDrawMode(const Vec4& color, DrawOver drawOver, int offset);
+        void SetPixelNormalBlend(const Vec4& color, int offset);
+        void SetPixelAdditiveBlend(const Vec4& color, int offset);
         void SetPixelInStencilBufferFillMode(const Vec4& color, DrawOver drawOver, int offset);
         const Vec4& GetPixel(int x, int y) const;
         bool ShouldSkipLine(int y) const;
@@ -95,6 +99,7 @@ namespace Pht {
         };
 
         DrawMode mDrawMode {DrawMode::Normal};
+        Blend mBlend {Blend::No};
         Vec2 mCoordSystemSize;
         IVec2 mImageSize;
         std::vector<Vec4> mBuffer;

@@ -45,8 +45,13 @@ namespace RowBlast {
                         const CommonResources& commonResources,
                         const Pht::Vec2& size,
                         float tilt,
-                        const Pht::Vec4& colorSubtract,
-                        bool drawDividerLine);
+                        const Pht::Vec4& colorSubtract);
+        std::unique_ptr<Pht::RenderableObject>
+        CreateSelectablesRectangle(Pht::IEngine& engine,
+                                   const CommonResources& commonResources,
+                                   const Pht::Vec2& size,
+                                   float tilt,
+                                   const Pht::Vec4& colorSubtract);
         void FillStencilBuffer(Pht::SoftwareRasterizer& rasterizer,
                                const Pht::Vec2& size,
                                float cornerRadius,
@@ -54,9 +59,18 @@ namespace RowBlast {
         void DrawRectangleBorder(Pht::SoftwareRasterizer& rasterizer,
                                  const Pht::Vec2& size,
                                  const Pht::Vec4& colorSubtract);
+        void DrawSelectablesRectangleBorder(Pht::SoftwareRasterizer& rasterizer,
+                                            const Pht::Vec2& size,
+                                            const Pht::Vec4& colorSubtract);
         void DrawRectangleMainArea(Pht::SoftwareRasterizer& rasterizer,
                                    const Pht::Vec2& size,
                                    const Pht::Vec4& colorSubtract);
+        void DrawSelectablesRectangleMainArea(Pht::SoftwareRasterizer& rasterizer,
+                                              const Pht::Vec2& size,
+                                              const Pht::Vec4& colorSubtract);
+        void DrawActiveSlotArea(Pht::SoftwareRasterizer& rasterizer,
+                                const Pht::Vec2& size,
+                                const Pht::Vec4& colorSubtract);
         void DrawLine(Pht::SoftwareRasterizer& rasterizer, const Pht::Vec4& colorSubtract);
         
         std::unique_ptr<Pht::RenderableObject> mPauseButtonRectangle;
