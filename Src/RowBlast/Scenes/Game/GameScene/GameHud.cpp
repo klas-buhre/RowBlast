@@ -48,7 +48,10 @@ namespace {
             
             auto& transform = piece.mSceneObjects->GetContainerSceneObject().GetTransform();
             transform.SetPosition(previewPieceRelativePositions[i]);
-            transform.SetRotation({-30.0f, -30.0f, 0.0f});
+            // transform.SetRotation({-30.0f, -30.0f, 0.0f});
+            // transform.SetRotation({-28.0f, -28.0f, 0.0f});
+            // transform.SetRotation({10.0f, -5.0f, 0.0f});
+            transform.SetRotation({10.0f, 0.0f, 0.0f}); // Good!
         }
     }
     

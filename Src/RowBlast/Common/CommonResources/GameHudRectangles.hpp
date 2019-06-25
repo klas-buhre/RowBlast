@@ -71,6 +71,11 @@ namespace RowBlast {
         void DrawActiveSlotArea(Pht::SoftwareRasterizer& rasterizer,
                                 const Pht::Vec2& size,
                                 const Pht::Vec4& colorSubtract);
+        void DrawGrid(Pht::SoftwareRasterizer& rasterizer,
+                      const Pht::Vec2& rectangleSize,
+                      const Pht::Vec2& position,
+                      const Pht::Vec2& gridSize,
+                      const Pht::Vec4& colorSubtract);
         void DrawLine(Pht::SoftwareRasterizer& rasterizer, const Pht::Vec4& colorSubtract);
         
         std::unique_ptr<Pht::RenderableObject> mPauseButtonRectangle;
