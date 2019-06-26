@@ -15,57 +15,67 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto rbAdd = 0.025f;
     const Pht::Vec4 stencilColor {1.0f, 1.0f, 1.0f, 1.0f};
-    const Pht::Vec4 outerBorderColor {0.4f + rbAdd, 0.3f, 0.55f + rbAdd, 0.7f};
-    const Pht::Vec4 lowerOuterBorderColor {0.4f + rbAdd, 0.3f, 0.55f + rbAdd, 0.1f};
-    const Pht::Vec4 borderColor {0.525f + rbAdd, 0.35f, 0.65f + rbAdd, 0.75f};
-    const Pht::Vec4 lowerBorderColor {0.525f + rbAdd, 0.35f, 0.65f + rbAdd, 0.1f};
-    const Pht::Vec4 innerColor {0.65f + rbAdd, 0.4f, 0.75f + rbAdd, 0.93f};
-    const Pht::Vec4 lowerInnerColor {0.9f, 0.9f, 1.0f, 0.0f};
     const Pht::Vec4 pressedColorSubtract {0.1f, 0.1f, 0.1f, 0.0f};
-    
+    const Pht::Vec4 outerBorderColor {0.35f, 0.35f, 0.4f, 1.0f};
+    const Pht::Vec4 lowerOuterBorderColor {0.35f, 0.35f, 0.4f, 0.1f};
+    const Pht::Vec4 borderColor {0.35f, 0.35f, 0.4f, 1.0f};
+    const Pht::Vec4 lowerBorderColor {0.35f, 0.35f, 0.4f, 0.1f};
+    const Pht::Vec4 innerColor {0.35f, 0.35f, 0.4f, 1.0f};
+    const Pht::Vec4 lowerInnerColor {0.35f, 0.35f, 0.4f, 0.1f};
+
     constexpr auto f = 0.9f;
-    // constexpr auto lowerAlpha = 0.1f;
-    // constexpr auto lowerAlpha = 0.25f;
-    // constexpr auto activeSlotlowerAlpha = 0.5f;
-    constexpr auto activeSlotLowerAlpha = 0.75f;
-    const Pht::Vec4 activeSlotInnerColor {0.53f * f, 0.2625f * f, 0.6085f * f, 0.96f};
-    const Pht::Vec4 activeSlotLowerInnerColor {activeSlotInnerColor.ToVec3(), activeSlotInnerColor.w * activeSlotLowerAlpha};
+    constexpr auto activeSlotLowerAlpha = 0.66f;
+    const Pht::Vec4 activeSlotInnerColor {0.53f * f, 0.2625f * f, 0.6085f * f, 0.98f};
+    const Pht::Vec4 activeSlotLowerInnerColor {
+        activeSlotInnerColor.ToVec3(), activeSlotInnerColor.w * activeSlotLowerAlpha
+    };
     const Pht::Vec4 activeSlotOuterBorderColor {0.7f, 0.525f, 0.825f, 0.85f};
-    const Pht::Vec4 activeSlotOuterLowerBorderColor {activeSlotOuterBorderColor.ToVec3(), activeSlotOuterBorderColor.w * activeSlotLowerAlpha};
-    const auto activeSlotInnerBorderColorAdd = Pht::Vec4{activeSlotOuterBorderColor.ToVec3(), 0.0f} * 0.175f;
+    const Pht::Vec4 activeSlotOuterLowerBorderColor {
+        activeSlotOuterBorderColor.ToVec3(), activeSlotOuterBorderColor.w * activeSlotLowerAlpha
+    };
+    const auto activeSlotInnerBorderColorAdd =
+        Pht::Vec4{activeSlotOuterBorderColor.ToVec3(), 0.0f} * 0.175f;
     const auto activeSlotInnerBorderColor = activeSlotInnerColor + activeSlotInnerBorderColorAdd;
-    const auto activeSlotInnerLowerBorderColor = activeSlotLowerInnerColor + activeSlotInnerBorderColorAdd;
+    const auto activeSlotInnerLowerBorderColor =
+        activeSlotLowerInnerColor + activeSlotInnerBorderColorAdd;
 
-    constexpr auto selectablesSlotLowerAlpha = 0.1f;
-    constexpr auto selectablesSlotLowerBorderAlpha = 0.1f;
-    // constexpr auto selectablesSlotLowerBorderAlpha = 0.4f;
+    constexpr auto selectablesSlotLowerAlpha = 0.4f;
+    constexpr auto selectablesSlotLowerBorderAlpha = 0.5f;
     const Pht::Vec4 selectablesSlotInnerColor {0.53f * f, 0.2625f * f, 0.6085f * f, 0.96f};
-    const Pht::Vec4 selectablesSlotLowerInnerColor {selectablesSlotInnerColor.ToVec3(), selectablesSlotInnerColor.w * selectablesSlotLowerAlpha};
+    const Pht::Vec4 selectablesSlotLowerInnerColor {
+        selectablesSlotInnerColor.ToVec3(), selectablesSlotInnerColor.w * selectablesSlotLowerAlpha
+    };
     const Pht::Vec4 selectablesSlotOuterBorderColor {0.7f, 0.525f, 0.825f, 0.85f};
-    const Pht::Vec4 selectablesSlotOuterLowerBorderColor {selectablesSlotOuterBorderColor.ToVec3(), selectablesSlotOuterBorderColor.w * selectablesSlotLowerBorderAlpha};
-    const auto selectablesSlotInnerBorderColorAdd = Pht::Vec4{selectablesSlotOuterBorderColor.ToVec3(), 0.0f} * 0.175f;
-    const auto selectablesSlotInnerBorderColor = selectablesSlotInnerColor + selectablesSlotInnerBorderColorAdd;
-    const auto selectablesSlotInnerLowerBorderColor = selectablesSlotLowerInnerColor + selectablesSlotInnerBorderColorAdd;
+    const Pht::Vec4 selectablesSlotOuterLowerBorderColor {
+        selectablesSlotOuterBorderColor.ToVec3(),
+        selectablesSlotOuterBorderColor.w * selectablesSlotLowerBorderAlpha
+    };
+    const auto selectablesSlotInnerBorderColorAdd =
+        Pht::Vec4{selectablesSlotOuterBorderColor.ToVec3(), 0.0f} * 0.175f;
+    const auto selectablesSlotInnerBorderColor =
+        selectablesSlotInnerColor + selectablesSlotInnerBorderColorAdd;
+    const auto selectablesSlotInnerLowerBorderColor =
+        selectablesSlotLowerInnerColor + selectablesSlotInnerBorderColorAdd;
 
-    // constexpr auto gridCellSize = 0.6125f;
     constexpr auto gridCellSize = 0.66f;
     constexpr auto gridLineWidth = 0.04f;
-    const Pht::Vec4 gridLineColor {1.0f, 1.0f, 1.0f, 0.06f};
+    const Pht::Vec4 gridLineColor {1.0f, 1.0f, 1.0f, 0.05f};
 
+    constexpr auto tiltFactor = 0.9f;
     const Pht::Vec2 pauseButtonRectangleSize {1.5f, 1.5f};
     const auto nextPiecesRectangleSize = Pht::Vec2{4.5f, 2.4f} * GameHud::nextPiecesScale;
-    constexpr auto nextPiecesRectangleTilt = 0.6f * GameHud::nextPiecesScale;
-    const auto selectablePiecesRectangleSize = Pht::Vec2{6.8f, 2.4f} * GameHud::selectablePiecesScale;
-    constexpr auto selectablePiecesRectangleTilt = 0.6f * GameHud::selectablePiecesScale;
+    constexpr auto nextPiecesRectangleTilt = 0.6f * GameHud::nextPiecesScale * tiltFactor;
+    const auto selectablePiecesRectangleSize =
+        Pht::Vec2{6.8f, 2.4f} * GameHud::selectablePiecesScale;
+    constexpr auto selectablePiecesRectangleTilt =
+        0.6f * GameHud::selectablePiecesScale * tiltFactor;
     constexpr auto activeSlotXPosition = 0.0f;
-    // constexpr auto activeSlotXSize = 2.45f;
     constexpr auto activeSlotXSize = 2.64f;
     constexpr auto dividerLineThickness = 0.04f;
-    constexpr auto borderThickness = 0.055f;
+    constexpr auto borderThickness = 0.06f;
     constexpr auto piecesRectangleOuterCornerRadius = 0.25f;
-    constexpr auto pauseButtonRectangleTilt = 0.375f;
+    constexpr auto pauseButtonRectangleTilt = 0.375f * tiltFactor;
 
     std::unique_ptr<Pht::SoftwareRasterizer> CreateRasterizer(Pht::IEngine& engine,
                                                               const CommonResources& commonResources,

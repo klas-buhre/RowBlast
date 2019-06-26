@@ -50,8 +50,7 @@ namespace {
         auto rasterizer =
             std::make_unique<Pht::SoftwareRasterizer>(coordinateSystemSize, imageSize);
 
-        Pht::Vec4 barColor {0.3f, 0.15f, 0.355f, 0.65f};
-        Pht::Vec4 barBorderColor {1.0f, 1.0f, 1.0f, 1.0f};
+        Pht::Vec4 barColor {0.9f, 0.9f, 0.9f, 1.0f};
 
         Pht::Vec2 leftBarLowerLeft {pauseBarsAreaSize - 0.24f, pauseBarsAreaSize - 0.32f};
         Pht::Vec2 leftBarUpperRight {pauseBarsAreaSize - 0.10f, pauseBarsAreaSize + 0.32f};
