@@ -88,63 +88,61 @@ void PreviewPieceGroupAnimation::Update(float normalizedElapsedTime) {
 
 void PreviewPieceGroupAnimation::UpdateNextPieceAnimation(float slideValue) {
     AnimatePiece(GetNextPreviewPiece(0),
-                 mNextPiecePositionsConfig.mLeft.x,
-                 mNextPiecePositionsConfig.mSlot1.x,
+                 mNextPiecePositionsConfig.mSlot0,
+                 mNextPiecePositionsConfig.mRightSelectable,
                  slideValue,
-                 Scaling::ScaleUp);
+                 Scaling::ScaleChange);
     AnimatePiece(GetNextPreviewPiece(1),
-                 mNextPiecePositionsConfig.mSlot1.x,
-                 mNextPiecePositionsConfig.mSlot2.x,
+                 mNextPiecePositionsConfig.mSlot1,
+                 mNextPiecePositionsConfig.mSlot0,
                  slideValue,
                  Scaling::NoScaling);
     AnimatePiece(GetNextPreviewPiece(2),
-                 mNextPiecePositionsConfig.mSlot2.x,
-                 mNextPiecePositionsConfig.mRight.x,
+                 mNextPiecePositionsConfig.mLower,
+                 mNextPiecePositionsConfig.mSlot1,
                  slideValue,
-                 Scaling::ScaleChange);
+                 Scaling::ScaleUp);
 }
 
 void PreviewPieceGroupAnimation::UpdateSwitchPieceAnimation(float slideValue) {
     AnimatePiece(GetSelectablePreviewPiece(0),
-                 mSelectablePreviewPiecesPositionsConfig.mSlot1.x,
-                 mSelectablePreviewPiecesPositionsConfig.mLeft.x,
+                 mSelectablePreviewPiecesPositionsConfig.mSlot0,
+                 mSelectablePreviewPiecesPositionsConfig.mLeft,
                  slideValue,
                  Scaling::ScaleDown);
     AnimatePiece(GetSelectablePreviewPiece(1),
-                 mSelectablePreviewPiecesPositionsConfig.mSlot2.x,
-                 mSelectablePreviewPiecesPositionsConfig.mSlot1.x,
+                 mSelectablePreviewPiecesPositionsConfig.mSlot1,
+                 mSelectablePreviewPiecesPositionsConfig.mSlot0,
                  slideValue,
                  Scaling::NoScaling);
     AnimatePiece(GetSelectablePreviewPiece(2),
-                 mSelectablePreviewPiecesPositionsConfig.mSlot3.x,
-                 mSelectablePreviewPiecesPositionsConfig.mSlot2.x,
+                 mSelectablePreviewPiecesPositionsConfig.mSlot2,
+                 mSelectablePreviewPiecesPositionsConfig.mSlot1,
                  slideValue,
                  Scaling::NoScaling);
     AnimatePiece(GetSelectablePreviewPiece(3),
-                 mSelectablePreviewPiecesPositionsConfig.mRight.x,
-                 mSelectablePreviewPiecesPositionsConfig.mSlot3.x,
+                 mSelectablePreviewPiecesPositionsConfig.mRight,
+                 mSelectablePreviewPiecesPositionsConfig.mSlot2,
                  slideValue,
                  Scaling::ScaleUp);
 }
 
 void PreviewPieceGroupAnimation::UpdateRemoveActivePieceAnimation(float slideValue) {
     AnimatePiece(GetSelectablePreviewPiece(0),
-                 mSelectablePreviewPiecesPositionsConfig.mSlot1.x,
-                 mSelectablePreviewPiecesPositionsConfig.mSlot1.x,
+                 mSelectablePreviewPiecesPositionsConfig.mSlot0,
+                 mSelectablePreviewPiecesPositionsConfig.mSlot0,
                  slideValue,
                  Scaling::ScaleDown);
 }
 
 void PreviewPieceGroupAnimation::AnimatePiece(PreviewPiece& previewPiece,
-                                              float xStart,
-                                              float xStop,
+                                              const Pht::Vec3& startPosition,
+                                              const Pht::Vec3& stopPosition,
                                               float slideFunctionValue,
                                               Scaling scaling) {
-    auto distance = xStop - xStart;
+    auto diff = stopPosition - startPosition;
     auto& transform = previewPiece.mSceneObjects->GetContainerSceneObject().GetTransform();
-    auto position = transform.GetPosition();
-    
-    position.x = xStop - distance * slideFunctionValue;
+    auto position = stopPosition - diff * slideFunctionValue;
     transform.SetPosition(position);
     
     switch (scaling) {

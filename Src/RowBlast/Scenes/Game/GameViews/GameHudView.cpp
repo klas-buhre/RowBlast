@@ -12,6 +12,7 @@
 #include "UiLayer.hpp"
 #include "CommonResources.hpp"
 #include "GameHudRectangles.hpp"
+#include "GameHud.hpp"
 
 using namespace RowBlast;
 
@@ -78,11 +79,12 @@ namespace {
 }
 
 GameHudView::GameHudView(Pht::IEngine& engine, const CommonResources& commonResources) {
-    Pht::Vec2 position {-6.6f, CalculateLowerHudObjectYPosition(commonResources)};
+    Pht::Vec2 position {0.0f, CalculateLowerHudObjectYPosition(commonResources)};
     SetPosition(position);
 
     auto pauseBarsRenderable = CreatePauseBarsRenderable(engine, commonResources);
     auto& pauseButtonSceneObject = CreateSceneObject();
+    pauseButtonSceneObject.GetTransform().SetPosition( {-6.6f, 0.0f, UiLayer::root});
     GetRoot().AddChild(pauseButtonSceneObject);
 
     auto& hudRectangles = commonResources.GetGameHudRectangles();
@@ -127,12 +129,12 @@ GameHudView::GameHudView(Pht::IEngine& engine, const CommonResources& commonReso
 
     auto& switchButtonSceneObject = CreateSceneObject();
     GetRoot().AddChild(switchButtonSceneObject);
-    Pht::Vec2 switchButtonSize {158.0f, 60.0f};
+    auto switchButtonSize = Pht::Vec2{158.0f, 60.0f} * GameHud::selectablePiecesScale;
     mSwitchButton = std::make_unique<Pht::Button>(switchButtonSceneObject,
                                                   switchButtonSize,
                                                   engine);
     switchButtonSceneObject.SetIsVisible(false);
-    switchButtonSceneObject.GetTransform().SetPosition({9.8f, 0.0f, UiLayer::root});
+    switchButtonSceneObject.GetTransform().SetPosition({0.0, 0.0f, UiLayer::root});
 
     GetSceneResources().AddRenderableObject(std::move(pauseBarsRenderable));
 }

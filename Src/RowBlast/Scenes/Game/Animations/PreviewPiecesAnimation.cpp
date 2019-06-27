@@ -95,16 +95,16 @@ void PreviewPiecesAnimation::StartNextPieceAnimation() {
     auto& selectablesSceneObjectTransform = hud.GetSelectablePiecesSceneObject().GetTransform();
     auto selectablesSceneObjectScale = selectablesSceneObjectTransform.GetScale().x;
     
-    Pht::Vec3 nextPieceRightPosition {
+    Pht::Vec3 nextPiecePositionInSelectables {
         (selectablesContainerPos - nextContainerPos +
          selectablePiecesPositionsInHud[1] * selectablesSceneObjectScale) / nextSceneObjectScale
     };
     
     NextPreviewPiecesPositionsConfig nextPiecesPositions {
-        .mLeft = nextPiecesPositionsInHud[0],
+        .mRightSelectable = nextPiecePositionInSelectables,
+        .mSlot0 = nextPiecesPositionsInHud[0],
         .mSlot1 = nextPiecesPositionsInHud[1],
-        .mSlot2 = nextPiecesPositionsInHud[2],
-        .mRight = nextPieceRightPosition
+        .mLower = nextPiecesPositionsInHud[2]
     };
 
     mNextPieceAnimation.StartNextPieceAnimation(hud.GetNextPreviewPieces(),
@@ -119,9 +119,9 @@ void PreviewPiecesAnimation::StartSwitchingPiecesAnimation() {
     
     SelectablePreviewPiecesPositionsConfig piecePositions {
         .mLeft = piecePositionsInHud[0],
-        .mSlot1 = piecePositionsInHud[1],
-        .mSlot2 = piecePositionsInHud[2],
-        .mSlot3 = piecePositionsInHud[3],
+        .mSlot0 = piecePositionsInHud[1],
+        .mSlot1 = piecePositionsInHud[2],
+        .mSlot2 = piecePositionsInHud[3],
         .mRight = piecePositionsInHud[4]
     };
 
@@ -136,9 +136,9 @@ void PreviewPiecesAnimation::StartRemoveActivePieceAnimation() {
 
     SelectablePreviewPiecesPositionsConfig piecePositions {
         .mLeft = piecePositionsInHud[0],
-        .mSlot1 = piecePositionsInHud[1],
-        .mSlot2 = piecePositionsInHud[2],
-        .mSlot3 = piecePositionsInHud[3],
+        .mSlot0 = piecePositionsInHud[1],
+        .mSlot1 = piecePositionsInHud[2],
+        .mSlot2 = piecePositionsInHud[3],
         .mRight = piecePositionsInHud[4]
     };
 

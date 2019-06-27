@@ -10,15 +10,15 @@ void NextPieceGenerator::Init(const std::vector<const Piece*>& pieceTypes,
     
     GenerateSequence(initialPieceSequence);
     
-    mNext2Pieces[1] = GetNextFromSequence();
     mNext2Pieces[0] = GetNextFromSequence();
+    mNext2Pieces[1] = GetNextFromSequence();
 }
 
 const Piece& NextPieceGenerator::GetNext() {
-    auto* next = mNext2Pieces[1];
+    auto* next = mNext2Pieces[0];
     
-    mNext2Pieces[1] = mNext2Pieces[0];
-    mNext2Pieces[0] = GetNextFromSequence();
+    mNext2Pieces[0] = mNext2Pieces[1];
+    mNext2Pieces[1] = GetNextFromSequence();
     
     return *next;
 }

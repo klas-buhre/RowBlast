@@ -38,7 +38,7 @@ namespace RowBlast {
 
     using NextPreviewPieces = std::array<PreviewPiece, 3>;
     using SelectablePreviewPieces = std::array<PreviewPiece, 4>;
-    using NextPreviewPiecesRelativePositions = std::array<Pht::Vec3, 4>;
+    using NextPreviewPiecesRelativePositions = std::array<Pht::Vec3, 3>;
     using SelectablePreviewPiecesRelativePositions = std::array<Pht::Vec3, 5>;
     
     class GameHud: public IGameHudEventListener {
@@ -147,7 +147,7 @@ namespace RowBlast {
 
         static constexpr float movesContainerScale {1.1f};
         static constexpr float movesTextStaticScale {1.3f};
-        static constexpr float nextPiecesScale {0.8f};
+        static constexpr float nextPiecesScale {0.75f};
         static constexpr float selectablePiecesScale {1.1f};
 
     private:

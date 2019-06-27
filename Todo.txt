@@ -52,6 +52,7 @@ Backlog:
      one of the colored blocks randomly disappears.
     -Maybe a sensitivity setting. Tetris Blitz has lower sensitivity on iPad but not on iPhone.
   -Rendering:
+    -Maybe add an alien landscape to the sky worlds.
     -Add dynamic batching of objects with very few indices and no rotation if the saved cost of
      eliminated state changes is greater than the cost of creating the batch. Then, the clouds can
      be batched and drawn in one draw call instead of 100. Also, a lot of particle effects
@@ -92,6 +93,7 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
+    -Review the previous commit.
     -Try having the next pieces to the right of the selectables. Stack them vertically. The top one
      goes into the right selectable slot.
     -Tune the x-angle of the preview pieces.

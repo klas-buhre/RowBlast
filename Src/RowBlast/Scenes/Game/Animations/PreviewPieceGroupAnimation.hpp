@@ -9,17 +9,17 @@
 
 namespace RowBlast {
     struct NextPreviewPiecesPositionsConfig {
-        Pht::Vec3 mLeft;
+        Pht::Vec3 mRightSelectable;
+        Pht::Vec3 mSlot0;
         Pht::Vec3 mSlot1;
-        Pht::Vec3 mSlot2;
-        Pht::Vec3 mRight;
+        Pht::Vec3 mLower;
     };
 
     struct SelectablePreviewPiecesPositionsConfig {
         Pht::Vec3 mLeft;
+        Pht::Vec3 mSlot0;
         Pht::Vec3 mSlot1;
         Pht::Vec3 mSlot2;
-        Pht::Vec3 mSlot3;
         Pht::Vec3 mRight;
     };
 
@@ -56,8 +56,8 @@ namespace RowBlast {
         void UpdateSwitchPieceAnimation(float slideValue);
         void UpdateRemoveActivePieceAnimation(float slideValue);
         void AnimatePiece(PreviewPiece& previewPiece,
-                          float xStart,
-                          float xStop,
+                          const Pht::Vec3& startPosition,
+                          const Pht::Vec3& stopPosition,
                           float slideFunctionValue,
                           Scaling scaling);
         PreviewPiece& GetNextPreviewPiece(int previewPieceIndex);
