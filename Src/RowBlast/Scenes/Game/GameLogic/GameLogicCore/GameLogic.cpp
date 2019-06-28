@@ -131,8 +131,8 @@ void GameLogic::Init(const Level& level) {
     mCurrentMove = MoveData {};
     auto& nextPieceGenerator = mCurrentMove.mNextPieceGenerator;
     nextPieceGenerator.Init(mLevel->GetPieceTypes(), mLevel->GetPieceSequence());
-    mCurrentMove.mSelectablePieces[1] = &nextPieceGenerator.GetNext();
     mCurrentMove.mSelectablePieces[0] = &nextPieceGenerator.GetNext();
+    mCurrentMove.mSelectablePieces[1] = &nextPieceGenerator.GetNext();
     mCurrentMoveTmp = mCurrentMove;
     mPreviousMove = mCurrentMove;
     mShouldUndoMove = false;
@@ -239,8 +239,10 @@ void GameLogic::SetPieceType() {
         mCurrentMove.mPieceType = mFallingPieceSpawnType;
         mFallingPieceSpawnType = nullptr;
     } else {
-        mCurrentMove.mPieceType = &mCurrentMove.mNextPieceGenerator.GetNext();
-        mPreviewPieceAnimationToStart = PreviewPieceAnimationToStart::NextPiece;
+        mCurrentMove.mPieceType = mCurrentMove.mSelectablePieces[0];
+        mCurrentMove.mSelectablePieces[0] = mCurrentMove.mSelectablePieces[1];
+        mCurrentMove.mSelectablePieces[1] = &mCurrentMove.mNextPieceGenerator.GetNext();
+        mPreviewPieceAnimationToStart = PreviewPieceAnimationToStart::NextPieceAndSwitch;
     }
 }
 

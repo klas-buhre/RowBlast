@@ -27,6 +27,7 @@ namespace RowBlast {
     public:
         enum class Kind {
             NextPiece,
+            SwitchDuringNextPiece,
             Switch,
             RemoveActivePiece,
             None
@@ -36,6 +37,9 @@ namespace RowBlast {
         void StartNextPieceAnimation(NextPreviewPieces& previewPieces,
                                      const NextPreviewPiecesPositionsConfig& piecePositionsConfig,
                                      float targetChangedScale);
+        void StartSwitchDuringNextPieceAnimation(
+            SelectablePreviewPieces& previewPieces,
+            const SelectablePreviewPiecesPositionsConfig& piecePositionsConfig);
         void StartSwitchPieceAnimation(
             SelectablePreviewPieces& previewPieces,
             const SelectablePreviewPiecesPositionsConfig& piecePositionsConfig);
@@ -53,6 +57,7 @@ namespace RowBlast {
         };
         
         void UpdateNextPieceAnimation(float slideValue);
+        void UpdateSwitchDuringNextPieceAnimation(float slideValue);
         void UpdateSwitchPieceAnimation(float slideValue);
         void UpdateRemoveActivePieceAnimation(float slideValue);
         void AnimatePiece(PreviewPiece& previewPiece,

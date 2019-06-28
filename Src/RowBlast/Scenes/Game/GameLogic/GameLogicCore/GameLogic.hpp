@@ -40,7 +40,7 @@ namespace RowBlast {
     class SmallTextAnimation;
     
     enum class PreviewPieceAnimationToStart {
-        NextPiece,
+        NextPieceAndSwitch,
         SwitchPiece,
         RemoveActivePiece,
         None
