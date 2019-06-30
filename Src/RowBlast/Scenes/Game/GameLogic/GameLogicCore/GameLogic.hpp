@@ -46,6 +46,21 @@ namespace RowBlast {
         None
     };
     
+    struct PreviewPieceRotations {
+        Rotation mActive {Rotation::Deg0};
+        Rotation mSelectable0 {Rotation::Deg0};
+        Rotation mSelectable1 {Rotation::Deg0};
+        
+        bool operator==(const PreviewPieceRotations& other) const {
+            return mActive == other.mActive && mSelectable0 == other.mSelectable0 &&
+                   mSelectable1 == other.mSelectable1;
+        }
+        
+        bool operator!=(const PreviewPieceRotations& other) const {
+            return !(*this == other);
+        }
+    };
+
     class GameLogic: public IGameLogic {
     public:
         enum class Result {
@@ -77,6 +92,7 @@ namespace RowBlast {
         void DropFallingPiece() override;
         void SelectMove(const Move& move) override;
         void OnFallingPieceAnimationFinished(bool finalMovementWasADrop) override;
+        void RotatePreviewPieces() override;
         void RotatePiece(const Pht::TouchEvent& touchEvent) override;
         void SwitchPiece() override;
         void SetFallingPieceXPosWithCollisionDetection(float fallingPieceNewX) override;
@@ -118,6 +134,10 @@ namespace RowBlast {
 
         void ResetPreviewPieceAnimationToStart() {
             mPreviewPieceAnimationToStart = PreviewPieceAnimationToStart::None;
+        }
+        
+        const PreviewPieceRotations& GetPreviewPieceRotations() const {
+            return mCurrentMove.mPreviewPieceRotations;
         }
 
         int GetMovesLeft() const {
@@ -169,6 +189,7 @@ namespace RowBlast {
         void RemoveClearedRowsAndPullDownLoosePieces(bool doBounceCalculations = true);
         void PullDownLoosePiecesClearObjective();
         void PullDownLoosePiecesAsteroidObjective();
+        void RotatePreviewPiece(Rotation& previewPieceRotation, const Piece* pieceType);
         Rotation CalculateNewRotation(const Pht::TouchEvent& touchEvent);
         void RotatateAndAdjustPosition(Rotation newRotation,
                                        const PieceBlocks& pieceBlocks,
@@ -198,6 +219,7 @@ namespace RowBlast {
             NextPieceGenerator mNextPieceGenerator;
             const Piece* mPieceType {nullptr};
             TwoPieces mSelectablePieces;
+            PreviewPieceRotations mPreviewPieceRotations;
             int mId {0};
         };
         

@@ -14,7 +14,6 @@
 
 // Game includes.
 #include "RoundedCylinder.hpp"
-#include "GameLogic.hpp"
 #include "Field.hpp"
 #include "LevelResources.hpp"
 #include "PieceResources.hpp"
@@ -38,17 +37,20 @@ namespace {
     template <typename T, typename U>
     void CreatePreviewPieces(T& previewPieces,
                              U& previewPieceRelativePositions,
-                             Pht::SceneObject& parentObject) {
+                             Pht::SceneObject& parentObject,
+                             Pht::Scene& scene) {
         for (auto i = 0; i < previewPieces.size(); ++i) {
             auto& piece = previewPieces[i];
             
-            piece.mSceneObjects = std::make_unique<SceneObjectPool>(SceneObjectPoolKind::PreviewPieceBlocks,
-                                                                    parentObject);
-            piece.mSceneObjects->SetIsActive(false);
-            
-            auto& transform = piece.mSceneObjects->GetContainerSceneObject().GetTransform();
+            piece.mSceneObject = &scene.CreateSceneObject(parentObject);
+            auto& transform = piece.mSceneObject->GetTransform();
             transform.SetPosition(previewPieceRelativePositions[i]);
             transform.SetRotation({10.0f, 0.0f, 0.0f});
+
+            piece.mSceneObjectPool =
+                std::make_unique<SceneObjectPool>(SceneObjectPoolKind::PreviewPieceBlocks,
+                                                  *piece.mSceneObject);
+            piece.mSceneObjectPool->SetIsActive(false);
         }
     }
     
@@ -387,7 +389,8 @@ void GameHud::CreateNextPiecesObject(Pht::Scene& scene,
 
     CreatePreviewPieces(mNextPreviewPieces,
                         mNextPreviewPiecesRelativePositions,
-                        *mNextPiecesSceneObject);
+                        *mNextPiecesSceneObject,
+                        scene);
 }
 
 void GameHud::CreateSelectablePiecesObject(Pht::Scene& scene,
@@ -412,7 +415,8 @@ void GameHud::CreateSelectablePiecesObject(Pht::Scene& scene,
 
     CreatePreviewPieces(mSelectablePreviewPieces,
                         mSelectablePreviewPiecesRelativePositions,
-                        *mSelectablePiecesSceneObject);
+                        *mSelectablePiecesSceneObject,
+                        scene);
 }
 
 void GameHud::OnSwitchButtonDown() {
@@ -495,7 +499,7 @@ void GameHud::UpdateNextPreviewPieceGroup(bool shouldStartNextPieceAnimation) {
     auto& positions = mNextPreviewPiecesRelativePositions;
     
     if (shouldStartNextPieceAnimation) {
-        if (mNextPreviewPieces[2].mSceneObjects->IsActive()) {
+        if (mNextPreviewPieces[2].mSceneObjectPool->IsActive()) {
             // Need to shift up the piece to the top if the previous next piece animation has not
             // finished yet.
             UpdatePreviewPiece(mNextPreviewPieces[0], mNext2PiecesPreviousFrame[1], positions[0]);
@@ -518,9 +522,14 @@ void GameHud::UpdateSelectablePreviewPieceGroup(bool shouldStartSwitchPieceAnima
     auto* activePiece = mGameLogic.GetPieceType();
     auto& selectablePieces = mGameLogic.GetSelectablePieces();
     auto& positions = mSelectablePreviewPiecesRelativePositions;
+    auto piecesChanged =
+        selectablePieces != mSelectablePiecesPreviousFrame ||
+        activePiece != mActivePiecePreviousFrame;
+    auto rotationsChanged =
+        mGameLogic.GetPreviewPieceRotations() != mPreviewPieceRotationsPreviousFrame;
 
     if (shouldStartSwitchPieceAnimation) {
-        if (mSelectablePreviewPieces[3].mSceneObjects->IsActive()) {
+        if (mSelectablePreviewPieces[3].mSceneObjectPool->IsActive()) {
             UpdatePreviewPiece(mSelectablePreviewPieces[0],
                                mActivePiecePreviousFrame,
                                positions[1]);
@@ -534,8 +543,7 @@ void GameHud::UpdateSelectablePreviewPieceGroup(bool shouldStartSwitchPieceAnima
         } else {
             UpdatePreviewPiece(mSelectablePreviewPieces[3], selectablePieces[1], positions[4]);
         }
-    } else if (selectablePieces != mSelectablePiecesPreviousFrame ||
-               shouldStartRemoveActivePieceAnimation) {
+    } else if (piecesChanged || shouldStartRemoveActivePieceAnimation || rotationsChanged) {
         
         if (shouldStartRemoveActivePieceAnimation) {
             UpdatePreviewPiece(mSelectablePreviewPieces[0], mActivePiecePreviousFrame, positions[1]);
@@ -550,6 +558,7 @@ void GameHud::UpdateSelectablePreviewPieceGroup(bool shouldStartSwitchPieceAnima
     
     mSelectablePiecesPreviousFrame = selectablePieces;
     mActivePiecePreviousFrame = activePiece;
+    mPreviewPieceRotationsPreviousFrame = mGameLogic.GetPreviewPieceRotations();
 }
 
 void GameHud::UpdatePreviewPiece(PreviewPiece& previewPiece,
@@ -558,28 +567,30 @@ void GameHud::UpdatePreviewPiece(PreviewPiece& previewPiece,
     previewPiece.mBombSceneObject = nullptr;
     previewPiece.mRowBombSceneObject = nullptr;
     
-    auto& containerObject = previewPiece.mSceneObjects->GetContainerSceneObject();
-    auto& baseTransform = containerObject.GetTransform();
+    auto& baseTransform = previewPiece.mSceneObject->GetTransform();
     baseTransform.SetPosition(position);
 
     if (pieceType == nullptr) {
-        previewPiece.mSceneObjects->SetIsActive(false);
+        previewPiece.mSceneObjectPool->SetIsActive(false);
         return;
     }
     
-    previewPiece.mSceneObjects->SetIsActive(true);
+    previewPiece.mSceneObjectPool->SetIsActive(true);
     
     auto scale = pieceType->GetPreviewCellSize() / cellSize;
-    
     baseTransform.SetScale(scale);
     previewPiece.mScale = scale;
-    previewPiece.mSceneObjects->ReclaimAll();
+    previewPiece.mSceneObjectPool->ReclaimAll();
     
     auto pieceNumRows = pieceType->GetGridNumRows();
     auto pieceNumColumns = pieceType->GetGridNumColumns();
     auto& grid = pieceType->GetGrid(Rotation::Deg0);
     auto isBomb = pieceType->IsBomb();
     auto isRowBomb = pieceType->IsRowBomb();
+
+    auto& transform = previewPiece.mSceneObjectPool->GetContainerSceneObject().GetTransform();
+    Pht::Vec3 rotation {0.0f, 0.0f, RotationToDeg(mGameLogic.GetPreviewPieceRotations().mActive)};
+    transform.SetRotation(rotation);
     
     Pht::Vec3 lowerLeft {
         -static_cast<float>(pieceNumColumns) * cellSize / 2.0f + cellSize / 2.0f,
@@ -598,7 +609,7 @@ void GameHud::UpdatePreviewPiece(PreviewPiece& previewPiece,
             auto& subCell = grid[row][column].mFirstSubCell;
             auto blockKind = subCell.mBlockKind;
             if (blockKind != BlockKind::None) {
-                auto& blockSceneObject = previewPiece.mSceneObjects->AccuireSceneObject();
+                auto& blockSceneObject = previewPiece.mSceneObjectPool->AccuireSceneObject();
                 
                 if (isBomb) {
                     blockSceneObject.SetRenderable(&mPieceResources.GetBombRenderableObject());

@@ -9,6 +9,7 @@
 #include "Level.hpp"
 #include "SceneObjectPool.hpp"
 #include "NextPieceGenerator.hpp"
+#include "GameLogic.hpp"
 
 namespace Pht {
     class IEngine;
@@ -30,7 +31,8 @@ namespace RowBlast {
     class CommonResources;
     
     struct PreviewPiece {
-        std::unique_ptr<SceneObjectPool> mSceneObjects;
+        Pht::SceneObject* mSceneObject {nullptr};
+        std::unique_ptr<SceneObjectPool> mSceneObjectPool;
         float mScale {0.0f};
         Pht::SceneObject* mBombSceneObject {nullptr};
         Pht::SceneObject* mRowBombSceneObject {nullptr};
@@ -232,6 +234,7 @@ namespace RowBlast {
         SelectablePreviewPieces mSelectablePreviewPieces;
         TwoPieces mNext2PiecesPreviousFrame;
         TwoPieces mSelectablePiecesPreviousFrame;
+        PreviewPieceRotations mPreviewPieceRotationsPreviousFrame;
         const Piece* mActivePiecePreviousFrame {nullptr};
         const NextPreviewPiecesRelativePositions mNextPreviewPiecesRelativePositions;
         const SelectablePreviewPiecesRelativePositions mSelectablePreviewPiecesRelativePositions;

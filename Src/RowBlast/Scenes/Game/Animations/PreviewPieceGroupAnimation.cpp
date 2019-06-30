@@ -171,7 +171,7 @@ void PreviewPieceGroupAnimation::AnimatePiece(PreviewPiece& previewPiece,
                                               float slideFunctionValue,
                                               Scaling scaling) {
     auto diff = stopPosition - startPosition;
-    auto& transform = previewPiece.mSceneObjects->GetContainerSceneObject().GetTransform();
+    auto& transform = previewPiece.mSceneObject->GetTransform();
     auto position = stopPosition - diff * slideFunctionValue;
     transform.SetPosition(position);
     

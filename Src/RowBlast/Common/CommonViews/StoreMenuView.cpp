@@ -148,8 +148,8 @@ void StoreMenuView::CreateProductSection(const Pht::Vec3& position,
                                          Pht::IEngine& engine,
                                          const CommonResources& commonResources,
                                          PotentiallyZoomedScreen zoom) {
+
     auto* product = mUserServices.GetPurchasingService().GetGoldCoinProduct(productId);
-    
     if (product == nullptr) {
         return;
     }

@@ -93,14 +93,12 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-    -Tune the x-angle of the preview pieces.
     -Try adding a preview piece rotation animation:
      Rotate by tapping the screen, this rotates all selectables in the HUD. If clickadble move
      alternatives are active then the falling piece does not rotate. If If clickadble move
      alternatives are not active then the falling piece also rotates. All selectables should rotate
      back to their default rotation on switch piece or next move.
     -Start implementing drag controls.
-    -Maybe add a NEXT text to the next pieces?
     -Maybe good if the selectables are a bit farther apart so that it is easy to select them when
      dragging them out.
     -Make a new pause button at the top-right corner and make a moves toggle button at the pause
@@ -110,7 +108,8 @@ Ongoing tasks:
      Puyo Tetris or just a transparant real piece (although transparant real pieces could be
      difficult if the welds should be part of the ghost piece since the weld will be drawn over the
      blocks and cause strange blending). That ghost piece should look the same as the ghost piece
-     under a real piece being dragged in from the HUD.
+     under a real piece being dragged in from the HUD. The ghost piece should not be visible if the
+     dragged piece is over an illegal move.
     -Remember to update the switch piece Pht::Button input size after the changes.
     -Update the tutorial with drag controls.
 
@@ -118,21 +117,9 @@ Ongoing tasks:
 
 
 
-    -Maybe the active piece could be in the left-most slot in the selectables. Then the next piece
-     will always come in from the left and go right to the active slot without the other selectables
-     moving at all. Might even have a NEXT text over the next pieces to make it really clear. Might
+    -Maybe the active piece could be in the left-most slot in the selectables. Might
      even make the active preview piece a bit larger and/or adding and effect/animation to set it
-     apart from the other selectables. The next pieces container should be smaller.
-     All of this will affect some tutorial levels and all levels with pieceSequences.
-     It also affects the how to play dialog.
-     Also, remember to change the hud rectangle renderables size so that there is a 1-to-1
-     texel-to-pixel ratio.
-    -Maybe having the active piece to the left is not such a good idea after all. Confusing with
-     sliding the pieces one direction not next piece and another direction on switch. For example,
-     Bubble witch is more similar to how it was before. Can still have the NEXT text, different
-     sizes for next and selectables and maybe highlighting the active a bit.
-     This commit contains the change:
-     Moved the active piece to the leftmost slot in the selectables contai a0d16e8
+     apart from the other selectables.
     -Try combining all three input types to one. Maybe possible if the visibility of the move
      alternatives can be toggled with a button next to the pause button. Or the pause button goes
      to the top right corner of the screen and the toggle button takes the pause buttons old place.
@@ -146,7 +133,8 @@ Ongoing tasks:
      alternatives are active then the falling piece does not rotate. If If clickadble move
      alternatives are not active then the falling piece also rotates. All selectables should rotate
      back to their default rotation on switch piece or next move.
-
+    -Could have a falling piece animation that stops at the closest legal move and then goes back to
+     to top, if the user tries to drag in a piece to an illegal move.
 
 
 
