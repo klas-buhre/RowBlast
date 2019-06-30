@@ -84,5 +84,7 @@ IAnalytics& Engine::GetAnalytics() {
 }
 
 float Engine::GetLastFrameSeconds() const {
+    // TODO: remove
+    return 0.0166f;
     return mLastFrameSeconds;
 }

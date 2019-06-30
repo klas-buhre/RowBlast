@@ -135,9 +135,13 @@ namespace RowBlast {
         void ResetPreviewPieceAnimationToStart() {
             mPreviewPieceAnimationToStart = PreviewPieceAnimationToStart::None;
         }
-        
+
         const PreviewPieceRotations& GetPreviewPieceRotations() const {
-            return mCurrentMove.mPreviewPieceRotations;
+            return mCurrentMove.mPreviewPieceRotations.mRotations;
+        }
+
+        const PreviewPieceRotations& GetPreviewPieceHudRotations() const {
+            return mCurrentMove.mPreviewPieceRotations.mHudRotations;
         }
 
         int GetMovesLeft() const {
@@ -189,7 +193,12 @@ namespace RowBlast {
         void RemoveClearedRowsAndPullDownLoosePieces(bool doBounceCalculations = true);
         void PullDownLoosePiecesClearObjective();
         void PullDownLoosePiecesAsteroidObjective();
-        void RotatePreviewPiece(Rotation& previewPieceRotation, const Piece* pieceType);
+        void RotatePreviewPieces(PreviewPieceRotations& previewPieceRotations,
+                                 Pht::Optional<int> numRotations);
+        void RotatePreviewPiece(Rotation& previewPieceRotation,
+                                const Piece* pieceType,
+                                Pht::Optional<int> numRotations);
+        void RotateHudPreviewPiece(Rotation& previewPieceRotation, const Piece* pieceType);
         Rotation CalculateNewRotation(const Pht::TouchEvent& touchEvent);
         void RotatateAndAdjustPosition(Rotation newRotation,
                                        const PieceBlocks& pieceBlocks,
@@ -215,11 +224,16 @@ namespace RowBlast {
             WaitingToClearLine
         };
         
+        struct PieceRotations {
+            PreviewPieceRotations mRotations;
+            PreviewPieceRotations mHudRotations;
+        };
+        
         struct MoveData {
             NextPieceGenerator mNextPieceGenerator;
             const Piece* mPieceType {nullptr};
             TwoPieces mSelectablePieces;
-            PreviewPieceRotations mPreviewPieceRotations;
+            PieceRotations mPreviewPieceRotations;
             int mId {0};
         };
         

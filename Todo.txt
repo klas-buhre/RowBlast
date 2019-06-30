@@ -93,6 +93,11 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
+    -Review the last commit.
+    -Make the pieces with only 2 rotations rotate as they had 4 rotations in the HUD.
+    -Tune the rotation time.
+
+
     -Try adding a preview piece rotation animation:
      Rotate by tapping the screen, this rotates all selectables in the HUD. If clickadble move
      alternatives are active then the falling piece does not rotate. If If clickadble move

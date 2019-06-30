@@ -243,7 +243,7 @@ void GameLogic::SetPieceType() {
         mCurrentMove.mSelectablePieces[0] = mCurrentMove.mSelectablePieces[1];
         mCurrentMove.mSelectablePieces[1] = &mCurrentMove.mNextPieceGenerator.GetNext();
         mPreviewPieceAnimationToStart = PreviewPieceAnimationToStart::NextPieceAndSwitch;
-        mCurrentMove.mPreviewPieceRotations = PreviewPieceRotations {};
+        mCurrentMove.mPreviewPieceRotations = PieceRotations {};
     }
 }
 
@@ -744,18 +744,28 @@ void GameLogic::RemoveBlocksInsideTheShield() {
 }
 
 void GameLogic::RotatePreviewPieces() {
-    auto& previewPieceRotations = mCurrentMove.mPreviewPieceRotations;
-    RotatePreviewPiece(previewPieceRotations.mActive, mCurrentMove.mPieceType);
-    RotatePreviewPiece(previewPieceRotations.mSelectable0, mCurrentMove.mSelectablePieces[0]);
-    RotatePreviewPiece(previewPieceRotations.mSelectable1, mCurrentMove.mSelectablePieces[1]);
+    RotatePreviewPieces(mCurrentMove.mPreviewPieceRotations.mRotations, Pht::Optional<int> {});
+    RotatePreviewPieces(mCurrentMove.mPreviewPieceRotations.mHudRotations, 4);
 }
 
-void GameLogic::RotatePreviewPiece(Rotation& previewPieceRotation, const Piece* pieceType) {
+void GameLogic::RotatePreviewPieces(PreviewPieceRotations& previewPieceRotations,
+                                    Pht::Optional<int> numRotations) {
+    RotatePreviewPiece(previewPieceRotations.mActive, mCurrentMove.mPieceType, numRotations);
+    RotatePreviewPiece(previewPieceRotations.mSelectable0, mCurrentMove.mSelectablePieces[0],
+                       numRotations);
+    RotatePreviewPiece(previewPieceRotations.mSelectable1, mCurrentMove.mSelectablePieces[1],
+                       numRotations);
+}
+
+void GameLogic::RotatePreviewPiece(Rotation& previewPieceRotation,
+                                   const Piece* pieceType,
+                                   Pht::Optional<int> numRotationsOptional) {
     if (pieceType == nullptr || !pieceType->CanRotateAroundZ()) {
         return;
     }
 
-    auto numRotations = pieceType->GetNumRotations();
+    auto numRotations = numRotationsOptional.HasValue() ? numRotationsOptional.GetValue() :
+                        pieceType->GetNumRotations();
     auto rotationInt = static_cast<int>(previewPieceRotation);
     previewPieceRotation = static_cast<Rotation>((rotationInt + 1) % numRotations);
 }
@@ -889,7 +899,7 @@ void GameLogic::SwitchPiece() {
     mCurrentMove.mSelectablePieces[0] = mCurrentMove.mSelectablePieces[1];
     mCurrentMove.mSelectablePieces[1] = previousActivePieceType;
     mPreviewPieceAnimationToStart = PreviewPieceAnimationToStart::SwitchPiece;
-    mCurrentMove.mPreviewPieceRotations = PreviewPieceRotations {};
+    mCurrentMove.mPreviewPieceRotations = PieceRotations {};
     
     SpawnFallingPiece(FallingPieceSpawnReason::Switch);
 }

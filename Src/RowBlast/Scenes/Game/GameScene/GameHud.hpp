@@ -85,6 +85,18 @@ namespace RowBlast {
             return mSelectablePreviewPieces;
         }
         
+        Pht::SceneObject* GetActivePreviewPieceSceneObject() {
+            return mActivePreviewPiece;
+        }
+
+        Pht::SceneObject* GetSelectable0PreviewPieceSceneObject() {
+            return mSelectable0PreviewPiece;
+        }
+
+        Pht::SceneObject* GetSelectable1PreviewPieceSceneObject() {
+            return mSelectable1PreviewPiece;
+        }
+        
         const NextPreviewPiecesRelativePositions& GetNextPreviewPiecesRelativePositions() const {
             return mNextPreviewPiecesRelativePositions;
         }
@@ -197,6 +209,15 @@ namespace RowBlast {
         void UpdateSelectablePreviewPieceGroup(bool shouldStartSwitchPieceAnimation,
                                                bool shouldStartNextPieceAndSwitchAnimation,
                                                bool shouldStartRemoveActivePieceAnimation);
+        void UpdateActivePreviewPiece(PreviewPiece& previewPiece,
+                                      const Piece* pieceType,
+                                      const Pht::Vec3& position);
+        void UpdateSelectable0PreviewPiece(PreviewPiece& previewPiece,
+                                           const Piece* pieceType,
+                                           const Pht::Vec3& position);
+        void UpdateSelectable1PreviewPiece(PreviewPiece& previewPiece,
+                                           const Piece* pieceType,
+                                           const Pht::Vec3& position);
         void UpdatePreviewPiece(PreviewPiece& previewPiece,
                                 const Piece* pieceType,
                                 const Pht::Vec3& position);
@@ -234,8 +255,10 @@ namespace RowBlast {
         SelectablePreviewPieces mSelectablePreviewPieces;
         TwoPieces mNext2PiecesPreviousFrame;
         TwoPieces mSelectablePiecesPreviousFrame;
-        PreviewPieceRotations mPreviewPieceRotationsPreviousFrame;
         const Piece* mActivePiecePreviousFrame {nullptr};
+        Pht::SceneObject* mActivePreviewPiece {nullptr};
+        Pht::SceneObject* mSelectable0PreviewPiece {nullptr};
+        Pht::SceneObject* mSelectable1PreviewPiece {nullptr};
         const NextPreviewPiecesRelativePositions mNextPreviewPiecesRelativePositions;
         const SelectablePreviewPiecesRelativePositions mSelectablePreviewPiecesRelativePositions;
         float mMovesTextScaleFactor {0.0f};

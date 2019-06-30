@@ -25,6 +25,7 @@
 #include "GameViewControllers.hpp"
 #include "StoreController.hpp"
 #include "PreviewPiecesAnimation.hpp"
+#include "PreviewPiecesRotationAnimation.hpp"
 #include "FewMovesAlertAnimation.hpp"
 #include "AddingMovesAnimation.hpp"
 #include "SlidingTextAnimation.hpp"
@@ -188,6 +189,7 @@ namespace RowBlast {
         GameLogic mGameLogic;
         FallingPieceAnimation& mFallingPieceAnimation;
         PreviewPiecesAnimation mPreviewPiecesAnimation;
+        PreviewPiecesRotationAnimation mPreviewPiecesRotationAnimation;
         FewMovesAlertAnimation mFewMovesAlertAnimation;
         AddingMovesAnimation mAddingMovesAnimation;
         BlueprintSlotsFilledAnimation mBlueprintSlotsFilledAnimation;

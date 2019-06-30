@@ -529,6 +529,7 @@
 		62BB35D021C7FF7F0051AEEF /* AudioFileDecoderIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 62BB35CF21C7FF7F0051AEEF /* AudioFileDecoderIOS.mm */; };
 		62BB35D221C809D20051AEEF /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62BB35D121C809D20051AEEF /* AudioToolbox.framework */; };
 		62BE275320B42A360014C6DD /* star_1428.obj in Resources */ = {isa = PBXBuildFile; fileRef = 62BE275220B42A360014C6DD /* star_1428.obj */; };
+		62C41EDF22C8E5CE0098982F /* PreviewPiecesRotationAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62C41EDD22C8E5CE0098982F /* PreviewPiecesRotationAnimation.cpp */; };
 		62DE641C20CE953D00A50F26 /* medium_button_skewed_0385.obj in Resources */ = {isa = PBXBuildFile; fileRef = 62DE641B20CE953C00A50F26 /* medium_button_skewed_0385.obj */; };
 		62E01BAF2153E00F009F0B99 /* planet_960.obj in Resources */ = {isa = PBXBuildFile; fileRef = 62E01BAE2153E00E009F0B99 /* planet_960.obj */; };
 		62E01BB12153E2A6009F0B99 /* planet_ogma.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62E01BB02153E2A6009F0B99 /* planet_ogma.jpg */; };
@@ -1494,6 +1495,8 @@
 		62BB35CF21C7FF7F0051AEEF /* AudioFileDecoderIOS.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; path = AudioFileDecoderIOS.mm; sourceTree = "<group>"; };
 		62BB35D121C809D20051AEEF /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		62BE275220B42A360014C6DD /* star_1428.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = star_1428.obj; sourceTree = "<group>"; };
+		62C41EDD22C8E5CE0098982F /* PreviewPiecesRotationAnimation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PreviewPiecesRotationAnimation.cpp; sourceTree = "<group>"; };
+		62C41EDE22C8E5CE0098982F /* PreviewPiecesRotationAnimation.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PreviewPiecesRotationAnimation.hpp; sourceTree = "<group>"; };
 		62DE641B20CE953C00A50F26 /* medium_button_skewed_0385.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = medium_button_skewed_0385.obj; sourceTree = "<group>"; };
 		62E01BAE2153E00E009F0B99 /* planet_960.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = planet_960.obj; sourceTree = "<group>"; };
 		62E01BB02153E2A6009F0B99 /* planet_ogma.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = planet_ogma.jpg; sourceTree = "<group>"; };
@@ -2106,6 +2109,8 @@
 				62216B8721EB377E001CB9A1 /* PreviewPieceGroupAnimation.hpp */,
 				62216B7821EB377E001CB9A1 /* PreviewPiecesAnimation.cpp */,
 				62216B9121EB377E001CB9A1 /* PreviewPiecesAnimation.hpp */,
+				62C41EDD22C8E5CE0098982F /* PreviewPiecesRotationAnimation.cpp */,
+				62C41EDE22C8E5CE0098982F /* PreviewPiecesRotationAnimation.hpp */,
 				62216B8421EB377E001CB9A1 /* ShieldAnimation.cpp */,
 				62216B7A21EB377E001CB9A1 /* ShieldAnimation.hpp */,
 				62216B8C21EB377E001CB9A1 /* SlidingTextAnimation.cpp */,
@@ -3650,6 +3655,7 @@
 				62216BCF21EB377E001CB9A1 /* LaserDialogController.cpp in Sources */,
 				62216C2821EB377F001CB9A1 /* AsteroidAnimation.cpp in Sources */,
 				62216BD621EB377E001CB9A1 /* ConfettiParticleEffect.cpp in Sources */,
+				62C41EDF22C8E5CE0098982F /* PreviewPiecesRotationAnimation.cpp in Sources */,
 				62216BFB21EB377E001CB9A1 /* GameLogic.cpp in Sources */,
 				623F5E4222B55D5200242C10 /* GLES3ShaderProgram.cpp in Sources */,
 				62216BF821EB377E001CB9A1 /* ClickInputHandler.cpp in Sources */,
