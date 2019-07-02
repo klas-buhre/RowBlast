@@ -93,8 +93,6 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-    -Review the last commit.
-    -Make the pieces with only 2 rotations rotate as they had 4 rotations in the HUD.
     -Tune the rotation time.
 
 

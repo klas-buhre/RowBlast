@@ -760,7 +760,7 @@ void GameLogic::RotatePreviewPieces(PreviewPieceRotations& previewPieceRotations
 void GameLogic::RotatePreviewPiece(Rotation& previewPieceRotation,
                                    const Piece* pieceType,
                                    Pht::Optional<int> numRotationsOptional) {
-    if (pieceType == nullptr || !pieceType->CanRotateAroundZ()) {
+    if (pieceType == nullptr) {
         return;
     }
 

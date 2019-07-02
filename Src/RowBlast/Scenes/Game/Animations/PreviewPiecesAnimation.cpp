@@ -8,19 +8,6 @@ using namespace RowBlast;
 
 namespace {
     constexpr auto animationDuration = 0.28f;
-    
-    class ResetPreviewPieceAnimationToStartGuard {
-    public:
-        ResetPreviewPieceAnimationToStartGuard(GameLogic& gameLogic) :
-            mGameLogic {gameLogic} {}
-        
-        ~ResetPreviewPieceAnimationToStartGuard() {
-            mGameLogic.ResetPreviewPieceAnimationToStart();
-        }
-        
-    private:
-        GameLogic& mGameLogic;
-    };
 }
 
 PreviewPiecesAnimation::PreviewPiecesAnimation(GameScene& scene, GameLogic& gameLogic) :
@@ -35,24 +22,20 @@ void PreviewPiecesAnimation::Init() {
 }
 
 void PreviewPiecesAnimation::Update(float dt) {
-    {
-        ResetPreviewPieceAnimationToStartGuard guard {mGameLogic};
-        
-        switch (mGameLogic.GetPreviewPieceAnimationToStart()) {
-            case PreviewPieceAnimationToStart::NextPieceAndSwitch:
-                StartNextPieceAndSwitchingAnimation();
-                break;
-            case PreviewPieceAnimationToStart::SwitchPiece:
-                StartSwitchingPiecesAnimation();
-                break;
-            case PreviewPieceAnimationToStart::RemoveActivePiece:
-                StartRemoveActivePieceAnimation();
-                return;
-            case PreviewPieceAnimationToStart::None:
-                break;
-        }
+    switch (mGameLogic.GetPreviewPieceAnimationToStart()) {
+        case PreviewPieceAnimationToStart::NextPieceAndSwitch:
+            StartNextPieceAndSwitchingAnimation();
+            break;
+        case PreviewPieceAnimationToStart::SwitchPiece:
+            StartSwitchingPiecesAnimation();
+            break;
+        case PreviewPieceAnimationToStart::RemoveActivePiece:
+            StartRemoveActivePieceAnimation();
+            return;
+        case PreviewPieceAnimationToStart::None:
+            break;
     }
-    
+
     switch (mState) {
         case State::SwitchingPiece:
         case State::RemovingActivePiece: {

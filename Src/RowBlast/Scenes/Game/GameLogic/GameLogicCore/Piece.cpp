@@ -113,10 +113,6 @@ const Pht::Vec2& Piece::GetButtonSize(Rotation rotation) const {
     return mButtonSizes[static_cast<int>(rotation)];
 }
 
-bool Piece::CanRotateAroundZ() const {
-    return true;
-}
-
 bool Piece::IsBomb() const {
     return false;
 }

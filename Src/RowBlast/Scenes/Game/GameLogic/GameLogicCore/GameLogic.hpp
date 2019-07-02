@@ -136,10 +136,6 @@ namespace RowBlast {
             mPreviewPieceAnimationToStart = PreviewPieceAnimationToStart::None;
         }
 
-        const PreviewPieceRotations& GetPreviewPieceRotations() const {
-            return mCurrentMove.mPreviewPieceRotations.mRotations;
-        }
-
         const PreviewPieceRotations& GetPreviewPieceHudRotations() const {
             return mCurrentMove.mPreviewPieceRotations.mHudRotations;
         }

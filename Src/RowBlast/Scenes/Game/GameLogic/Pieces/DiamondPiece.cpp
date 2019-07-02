@@ -44,7 +44,3 @@ DiamondPiece::DiamondPiece(Pht::IEngine& engine, const CommonResources& commonRe
     ghostPieceProducer.DrawBorder(border, FillGhostPiece::Yes);
     SetPressedGhostPieceRenderable(ghostPieceProducer.ProduceRenderable());
 }
-
-bool DiamondPiece::CanRotateAroundZ() const {
-    return false;
-}

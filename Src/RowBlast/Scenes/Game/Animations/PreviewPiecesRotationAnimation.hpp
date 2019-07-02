@@ -25,6 +25,7 @@ namespace RowBlast {
         void SetActivePieceAngle(float angle);
         void SetSelectable0PieceAngle(float angle);
         void SetSelectable1PieceAngle(float angle);
+        void HandleNextPieceOrSwitch();
         void UpdateInInactiveState();
         void GoToInactiveState();
         void SetAnglesAccordingTotargets();

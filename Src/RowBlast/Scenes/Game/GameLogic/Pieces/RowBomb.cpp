@@ -27,10 +27,6 @@ bool RowBomb::IsRowBomb() const {
     return true;
 }
 
-bool RowBomb::CanRotateAroundZ() const {
-    return false;
-}
-
 bool RowBomb::PositionCanBeAdjusteInMovesSearch() const {
     return false;
 }

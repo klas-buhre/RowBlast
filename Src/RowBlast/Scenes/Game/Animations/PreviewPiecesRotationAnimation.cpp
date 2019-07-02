@@ -32,6 +32,37 @@ namespace {
         {0.95f, 0.87f},
         {1.0f, 1.0f},
     };
+    
+    class ResetPreviewPieceAnimationToStartGuard {
+    public:
+        ResetPreviewPieceAnimationToStartGuard(GameLogic& gameLogic) :
+            mGameLogic {gameLogic} {}
+        
+        ~ResetPreviewPieceAnimationToStartGuard() {
+            mGameLogic.ResetPreviewPieceAnimationToStart();
+        }
+        
+    private:
+        GameLogic& mGameLogic;
+    };
+    
+    void SetPreviewPieceAngle(Pht::SceneObject& sceneObject, const Piece* pieceType, float angle) {
+        if (pieceType) {
+            if (!pieceType->CanRotateAroundZ()) {
+                angle = 0.0f;
+            }
+        }
+        
+        sceneObject.GetTransform().SetRotation({0.0f, 0.0f, angle});
+    }
+    
+    bool ShouldResetRotation(const Piece* pieceType, Rotation rotation) {
+        if (pieceType == nullptr) {
+            return false;
+        }
+        
+        return pieceType->GetNumRotations() == 2 && rotation == Rotation::Deg180;
+    }
 }
 
 PreviewPiecesRotationAnimation::PreviewPiecesRotationAnimation(GameScene& scene,
@@ -49,6 +80,19 @@ void PreviewPiecesRotationAnimation::Init() {
 }
 
 void PreviewPiecesRotationAnimation::Update(float dt) {
+    {
+        ResetPreviewPieceAnimationToStartGuard guard {mGameLogic};
+
+        switch (mGameLogic.GetPreviewPieceAnimationToStart()) {
+            case PreviewPieceAnimationToStart::NextPieceAndSwitch:
+            case PreviewPieceAnimationToStart::SwitchPiece:
+                HandleNextPieceOrSwitch();
+                break;
+            default:
+                break;
+        }
+    }
+
     auto& rotations = mGameLogic.GetPreviewPieceHudRotations();
     if (rotations != mTargetRotations) {
         mTargetRotations = rotations;
@@ -110,33 +154,48 @@ float PreviewPiecesRotationAnimation::UpdateAngle(float startAngle,
 }
 
 void PreviewPiecesRotationAnimation::SetActivePieceAngle(float angle) {
-    auto* activePreviewPiece = mScene.GetHud().GetActivePreviewPieceSceneObject();
-    if (activePreviewPiece) {
-        auto& transform = activePreviewPiece->GetTransform();
-        transform.SetRotation({0.0f, 0.0f, angle});
+    auto* activePreviewPieceSceneObject = mScene.GetHud().GetActivePreviewPieceSceneObject();
+    if (activePreviewPieceSceneObject) {
+        SetPreviewPieceAngle(*activePreviewPieceSceneObject, mGameLogic.GetPieceType(), angle);
     }
         
     mAnglesDeg.mActive = angle;
 }
 
 void PreviewPiecesRotationAnimation::SetSelectable0PieceAngle(float angle) {
-    auto* selectable0Piece = mScene.GetHud().GetSelectable0PreviewPieceSceneObject();
-    if (selectable0Piece) {
-        auto& transform = selectable0Piece->GetTransform();
-        transform.SetRotation({0.0f, 0.0f, angle});
+    auto* selectable0PieceSceneObject = mScene.GetHud().GetSelectable0PreviewPieceSceneObject();
+    if (selectable0PieceSceneObject) {
+        SetPreviewPieceAngle(*selectable0PieceSceneObject,
+                             mGameLogic.GetSelectablePieces()[0],
+                             angle);
     }
 
     mAnglesDeg.mSelectable0 = angle;
 }
 
 void PreviewPiecesRotationAnimation::SetSelectable1PieceAngle(float angle) {
-    auto* selectable1Piece = mScene.GetHud().GetSelectable1PreviewPieceSceneObject();
-    if (selectable1Piece) {
-        auto& transform = selectable1Piece->GetTransform();
-        transform.SetRotation({0.0f, 0.0f, angle});
+    auto* selectable1PieceSceneObject = mScene.GetHud().GetSelectable1PreviewPieceSceneObject();
+    if (selectable1PieceSceneObject) {
+        SetPreviewPieceAngle(*selectable1PieceSceneObject,
+                             mGameLogic.GetSelectablePieces()[1],
+                             angle);
     }
 
     mAnglesDeg.mSelectable1 = angle;
+}
+
+void PreviewPiecesRotationAnimation::HandleNextPieceOrSwitch() {
+    if (ShouldResetRotation(mGameLogic.GetPieceType(), mTargetRotations.mActive)) {
+        SetActivePieceAngle(0.0f);
+    }
+    
+    if (ShouldResetRotation(mGameLogic.GetSelectablePieces()[0], mTargetRotations.mSelectable0)) {
+        SetSelectable0PieceAngle(0.0f);
+    }
+
+    if (ShouldResetRotation(mGameLogic.GetSelectablePieces()[1], mTargetRotations.mSelectable1)) {
+        SetSelectable1PieceAngle(0.0f);
+    }
 }
 
 void PreviewPiecesRotationAnimation::UpdateInInactiveState() {

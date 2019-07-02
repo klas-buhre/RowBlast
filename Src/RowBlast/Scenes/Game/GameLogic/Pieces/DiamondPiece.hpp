@@ -14,8 +14,6 @@ namespace RowBlast {
     class DiamondPiece: public Piece {
     public:
         DiamondPiece(Pht::IEngine& engine, const CommonResources& commonResources);
-        
-        bool CanRotateAroundZ() const override;
     };
 }
 

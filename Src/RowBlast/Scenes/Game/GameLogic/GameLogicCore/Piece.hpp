@@ -59,7 +59,6 @@ namespace RowBlast {
         Pht::RenderableObject* GetGhostPieceRenderable() const;
         Pht::RenderableObject* GetPressedGhostPieceRenderable() const;
         
-        virtual bool CanRotateAroundZ() const;
         virtual bool IsBomb() const;
         virtual bool IsRowBomb() const;
         virtual bool PositionCanBeAdjusteInMovesSearch() const;
@@ -92,6 +91,10 @@ namespace RowBlast {
         
         int GetNumRotations() const {
             return mNumRotations;
+        }
+        
+        bool CanRotateAroundZ() const {
+            return mNumRotations > 1;
         }
         
         using FillGrid = std::vector<std::vector<Fill>>;

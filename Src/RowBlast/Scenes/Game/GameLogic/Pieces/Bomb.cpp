@@ -27,10 +27,6 @@ bool Bomb::IsBomb() const {
     return true;
 }
 
-bool Bomb::CanRotateAroundZ() const {
-    return false;
-}
-
 bool Bomb::PositionCanBeAdjusteInMovesSearch() const {
     return false;
 }
