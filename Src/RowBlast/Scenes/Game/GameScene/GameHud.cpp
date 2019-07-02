@@ -103,13 +103,13 @@ GameHud::GameHud(Pht::IEngine& engine,
         Pht::Vec3{0.0f, -1.88f, UiLayer::block}
     },
     mSelectablePreviewPiecesRelativePositions {
-        Pht::Vec3{-2.96f, 0.0f, UiLayer::block},
-        Pht::Vec3{-1.78f, 0.0f, UiLayer::block},
-        Pht::Vec3{0.62f, 0.0f, UiLayer::block},
-        Pht::Vec3{2.62f, 0.0f, UiLayer::block},
-        Pht::Vec3{3.72f, 0.0f, UiLayer::block}
+        Pht::Vec3{-3.21f, 0.0f, UiLayer::block},
+        Pht::Vec3{-2.03f, 0.0f, UiLayer::block},
+        Pht::Vec3{0.39f, 0.0f, UiLayer::block},
+        Pht::Vec3{2.81f, 0.0f, UiLayer::block},
+        Pht::Vec3{4.01f, 0.0f, UiLayer::block}
     } {
-    
+
     mNext2PiecesPreviousFrame.fill(nullptr);
     mSelectablePiecesPreviousFrame.fill(nullptr);
     
