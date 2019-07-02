@@ -9,8 +9,7 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto animationDuration = 0.23f;
-    // constexpr auto animationDuration = 0.28f;
+    constexpr auto animationDuration = 0.215f;
 
     Pht::StaticVector<Pht::Vec2, 20> slidePoints {
         {0.0f, 0.0f},
