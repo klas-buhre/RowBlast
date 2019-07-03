@@ -93,7 +93,22 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-    -Start implementing drag controls.
+
+    -Maybe the drag controls should only be active with gesture controls. Drag does not add that
+     much to click controls and it is a bit confusing when the preview pieces rotate and the
+     clickable moves rotates/move in completely unrelated ways. Also, if switching piece when using
+     gesture controls is only done by swipe up, then the start of a drag and switch will not be
+     ambiguous.
+    -Maybe a transparant real piece should be dragged in with a ghost piece under it. When the piece
+     is placed, there will be a falling piece animation going from the real piece at the top down
+     to the placed transparant piece. Then it will be clear that pieces can only be placed at
+     locations that are reachable from the real piece at the top. The transparant pieces don't need
+     welds.
+    -Create a DragInputHandler that handles drag input. It has one Pht::Button per preview piece.
+
+
+
+
     -Make a new pause button at the top-right corner and make a moves toggle button at the pause
      buttons old location. Or, it might be room for both at the bottom left if the next pieces are
      vertical and to the right side of the selectables.
