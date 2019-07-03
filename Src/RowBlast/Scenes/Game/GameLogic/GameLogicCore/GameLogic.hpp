@@ -30,7 +30,6 @@ namespace RowBlast {
     class PieceDropParticleEffect;
     class PieceTrailParticleEffect;
     class GameHudController;
-    class IInputHandler;
     class GameScene;
     class Tutorial;
     class UserServices;
@@ -268,7 +267,6 @@ namespace RowBlast {
         MoveData mPreviousMove;
         PreviewPieceAnimationToStart mPreviewPieceAnimationToStart {PreviewPieceAnimationToStart::None};
         const Level* mLevel {nullptr};
-        IInputHandler* mInputHandler {nullptr};
         float mLandingNoMovementDuration {0.0f};
         float mLandingMovementDuration {0.0f};
         int mGhostPieceRow {0};

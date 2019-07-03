@@ -81,8 +81,13 @@ void PreviewPiecesRotationAnimation::Init() {
 void PreviewPiecesRotationAnimation::Update(float dt) {
     {
         ResetPreviewPieceAnimationToStartGuard guard {mGameLogic};
+        auto previewPieceAnimationToStart = mGameLogic.GetPreviewPieceAnimationToStart();
+        
+        if (mGameLogic.IsUsingClickControls()) {
+            return;
+        }
 
-        switch (mGameLogic.GetPreviewPieceAnimationToStart()) {
+        switch (previewPieceAnimationToStart) {
             case PreviewPieceAnimationToStart::NextPieceAndSwitch:
             case PreviewPieceAnimationToStart::SwitchPiece:
                 HandleNextPieceOrSwitch();
