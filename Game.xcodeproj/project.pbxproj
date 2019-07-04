@@ -431,6 +431,7 @@
 		624C72E52177AB260006068B /* shield.png in Resources */ = {isa = PBXBuildFile; fileRef = 624C72E42177AB250006068B /* shield.png */; };
 		624C9DDE21A1A908000FB5E1 /* coin_pile_4120.obj in Resources */ = {isa = PBXBuildFile; fileRef = 624C9DDD21A1A907000FB5E1 /* coin_pile_4120.obj */; };
 		62524BC7222EBCC000AFF469 /* settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 62524BC6222EBCC000AFF469 /* settings.png */; };
+		6255827422CE5B6A0060C383 /* DraggedPiece.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6255827222CE5B6A0060C383 /* DraggedPiece.cpp */; };
 		625696CF2182382C003A3A9D /* RowBlastApplication.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 625695DB2182382B003A3A9D /* RowBlastApplication.cpp */; };
 		625698022182392C003A3A9D /* PrismMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 625696D22182392B003A3A9D /* PrismMesh.cpp */; };
 		625698032182392C003A3A9D /* VertexBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 625696D32182392B003A3A9D /* VertexBuffer.cpp */; };
@@ -1218,6 +1219,8 @@
 		624C72E42177AB250006068B /* shield.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shield.png; sourceTree = "<group>"; };
 		624C9DDD21A1A907000FB5E1 /* coin_pile_4120.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = coin_pile_4120.obj; sourceTree = "<group>"; };
 		62524BC6222EBCC000AFF469 /* settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings.png; sourceTree = "<group>"; };
+		6255827222CE5B6A0060C383 /* DraggedPiece.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DraggedPiece.cpp; sourceTree = "<group>"; };
+		6255827322CE5B6A0060C383 /* DraggedPiece.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = DraggedPiece.hpp; sourceTree = "<group>"; };
 		625695DA2182382B003A3A9D /* RowBlastApplication.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = RowBlastApplication.hpp; sourceTree = "<group>"; };
 		625695DB2182382B003A3A9D /* RowBlastApplication.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RowBlastApplication.cpp; sourceTree = "<group>"; };
 		625696D22182392B003A3A9D /* PrismMesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PrismMesh.cpp; sourceTree = "<group>"; };
@@ -1959,6 +1962,8 @@
 				62216B2021EB377E001CB9A1 /* CollisionDetection.hpp */,
 				62216B2921EB377E001CB9A1 /* ComboDetector.cpp */,
 				62216B1321EB377E001CB9A1 /* ComboDetector.hpp */,
+				6255827222CE5B6A0060C383 /* DraggedPiece.cpp */,
+				6255827322CE5B6A0060C383 /* DraggedPiece.hpp */,
 				62216B1F21EB377E001CB9A1 /* FallingPiece.cpp */,
 				62216B1621EB377E001CB9A1 /* FallingPiece.hpp */,
 				62216B2621EB377E001CB9A1 /* Field.cpp */,
@@ -3733,6 +3738,7 @@
 				62216C2A21EB377F001CB9A1 /* BombsAnimation.cpp in Sources */,
 				62216A7421EB376E001CB9A1 /* CloseButton.cpp in Sources */,
 				62216C6721F08A85001CB9A1 /* SettingsMenuController.cpp in Sources */,
+				6255827422CE5B6A0060C383 /* DraggedPiece.cpp in Sources */,
 				6242DEF521C50E7600D17F46 /* Audio.cpp in Sources */,
 				625698022182392C003A3A9D /* PrismMesh.cpp in Sources */,
 				62216C3121EB377F001CB9A1 /* World3.cpp in Sources */,
