@@ -17,23 +17,29 @@ GameHudController::GameHudController(Pht::IEngine& engine, const CommonResources
     mView {engine, commonResources},
     mEngine {engine} {}
 
-GameHudController::Result GameHudController::OnTouch(const Pht::TouchEvent& event) {
+GameHudController::Result GameHudController::OnTouch(const Pht::TouchEvent& event,
+                                                     bool isSwitchButtonEnabled) {
     auto& pauseButton = mView.GetPauseButton();
-    auto& switchButton = mView.GetSwitchButton();
-    
-    if (IsSwitchButtonClicked(event)) {
-        return Result::ClickedSwitch;
-    }
-
     if (pauseButton.IsClicked(event)) {
         mEngine.GetAudio().PlaySound(static_cast<Pht::AudioResourceId>(SoundId::ButtonClick));
         return Result::ClickedPause;
     }
     
-    if (pauseButton.StateIsDownOrMovedOutside() || switchButton.StateIsDownOrMovedOutside()) {
+    if (pauseButton.StateIsDownOrMovedOutside()) {
         return Result::TouchStartedOverButton;
     }
     
+    if (isSwitchButtonEnabled) {
+        auto& switchButton = mView.GetSwitchButton();
+        if (IsSwitchButtonClicked(event)) {
+            return Result::ClickedSwitch;
+        }
+
+        if (switchButton.StateIsDownOrMovedOutside()) {
+            return Result::TouchStartedOverButton;
+        }
+    }
+
     return Result::None;
 }
 

@@ -1009,6 +1009,7 @@ BlastRadiusAnimation::Kind GameLogic::CalculateBlastRadiusKind(const Pht::IVec2&
 
 GameLogic::Result GameLogic::HandleInput() {
     auto result = Result::None;
+    auto isSwitchButtonEnabled = (mControlType == ControlType::Click);
     auto& input = mEngine.GetInput();
     
     while (input.HasEvents()) {
@@ -1016,7 +1017,7 @@ GameLogic::Result GameLogic::HandleInput() {
         switch (event.GetKind()) {
             case Pht::InputKind::Touch: {
                 auto& touchEvent = event.GetTouchEvent();
-                switch (mGameHudController.OnTouch(touchEvent)) {
+                switch (mGameHudController.OnTouch(touchEvent, isSwitchButtonEnabled)) {
                     case GameHudController::Result::None:
                         ForwardTouchToInputHandler(touchEvent);
                         break;

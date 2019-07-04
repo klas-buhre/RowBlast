@@ -24,7 +24,7 @@ namespace RowBlast {
         
         GameHudController(Pht::IEngine& engine, const CommonResources& commonResources);
         
-        Result OnTouch(const Pht::TouchEvent& event);
+        Result OnTouch(const Pht::TouchEvent& event, bool isSwitchButtonEnabled);
         
         void SetHudEventListener(IGameHudEventListener& gameHudEventListener) {
             mGameHudEventListener = &gameHudEventListener;
