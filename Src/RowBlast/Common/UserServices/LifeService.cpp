@@ -24,6 +24,7 @@ LifeService::LifeService() :
 }
 
 void LifeService::Update() {
+#if 0
     if (mState != State::CountingDown) {
         if (HasFullNumLives()) {
             return;
@@ -51,9 +52,11 @@ void LifeService::Update() {
         
         SaveState();
     }
+#endif
 }
 
 void LifeService::StartLevel() {
+#if 0
     if (mState == State::Idle) {
         mLifeLostTimePoint = std::chrono::system_clock::now();
         mState = State::StartedPlayingWithFullLives;
@@ -64,9 +67,11 @@ void LifeService::StartLevel() {
     }
     
     SaveState();
+#endif
 }
 
 void LifeService::CompleteLevel() {
+#if 0
     IncreaseNumLives();
     
     if (mState == State::StartedPlayingWithFullLives) {
@@ -74,20 +79,25 @@ void LifeService::CompleteLevel() {
     }
     
     SaveState();
+#endif
 }
 
 void LifeService::FailLevel() {
+#if 0
     if (mState == State::StartedPlayingWithFullLives) {
         StartCountDown(std::chrono::system_clock::now());
     }
     
     SaveState();
+#endif
 }
 
 void LifeService::RefillLives() {
+#if 0
     mNumLives = fullNumLives;
     mState = State::Idle;
     SaveState();
+#endif
 }
 
 bool LifeService::HasFullNumLives() const {
