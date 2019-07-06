@@ -89,7 +89,10 @@ Backlog:
 
 Ongoing tasks:
     -Test on iOS 12 on iPhoneX.
-    
+
+    -Add drag controls and release with microtransactions enabled, free to download.
+
+
     -Maybe the drag controls should only be active with gesture controls. Drag does not add that
      much to click controls and it is a bit confusing when the preview pieces rotate and the
      clickable moves rotates/move in completely unrelated ways. Also, if switching piece when using

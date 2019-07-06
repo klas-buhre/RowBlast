@@ -883,23 +883,17 @@ Pht::Animation& HowToPlayDialogView::CreateSwitchPieceAnimation(Pht::SceneObject
     
     auto& selectablePieces = CreateSceneObject();
     selectablePieces.SetRenderable(&gameHudRectangles.GetSelectablePiecesRectangle());
-    selectablePieces.GetTransform().SetPosition({2.0f, -5.775f, UiLayer::panel});
+    selectablePieces.GetTransform().SetPosition({0.0f, -5.775f, UiLayer::panel});
     selectablePieces.GetTransform().SetScale(0.71f);
     container.AddChild(selectablePieces);
     
-    Pht::Vec3 slot1Pos {-1.95f, 0.0f, UiLayer::buttonText};
-    Pht::Vec3 slot2Pos {0.05f, 0.0f, UiLayer::buttonText};
-    Pht::Vec3 slot3Pos {2.4f, 0.0f, UiLayer::buttonText};
-    auto& dPreviewPiece = CreateDPreviewPiece(slot1Pos, selectablePieces, pieceResources);
+    Pht::Vec3 slot1Pos {-2.35f, 0.0f, UiLayer::buttonText};
+    Pht::Vec3 slot2Pos {0.39f, 0.0f, UiLayer::buttonText};
+    Pht::Vec3 slot3Pos {2.81f, 0.0f, UiLayer::buttonText};
+    auto& dPreviewPiece = CreateDPreviewPiece(slot3Pos, selectablePieces, pieceResources);
     auto& iPreviewPiece = CreateIPreviewPiece(slot2Pos, selectablePieces, pieceResources);
-    auto& lPreviewPiece = CreateLPreviewPiece(slot3Pos, selectablePieces, pieceResources);
+    auto& lPreviewPiece = CreateLPreviewPiece(slot1Pos, selectablePieces, pieceResources);
 
-    auto& nextPieces = CreateSceneObject();
-    nextPieces.SetRenderable(&gameHudRectangles.GetNextPiecesRectangle());
-    nextPieces.GetTransform().SetPosition({-2.6f, -5.775f, UiLayer::panel});
-    nextPieces.GetTransform().SetScale(0.71f);
-    container.AddChild(nextPieces);
-    
     auto switch1Time = 1.2f;
     auto switch2Time = 3.05f;
     
@@ -928,10 +922,10 @@ Pht::Animation& HowToPlayDialogView::CreateSwitchPieceAnimation(Pht::SceneObject
     animationSystem.CreateAnimation(lPiece, lPieceKeyframes);
 
     std::vector<Pht::Keyframe> dPreviewPieceKeyframes {
-        {.mTime = 0.0f, .mPosition = slot1Pos},
+        {.mTime = 0.0f, .mPosition = slot3Pos},
         {.mTime = switch1Time, .mPosition = slot2Pos},
-        {.mTime = switch2Time, .mPosition = slot3Pos},
-        {.mTime = animationDuration - 0.2f, .mPosition = slot1Pos},
+        {.mTime = switch2Time, .mPosition = slot1Pos},
+        {.mTime = animationDuration - 0.2f, .mPosition = slot3Pos},
         {.mTime = animationDuration}
     };
     auto& dPreviewPieceAnimation =
@@ -940,8 +934,8 @@ Pht::Animation& HowToPlayDialogView::CreateSwitchPieceAnimation(Pht::SceneObject
     
     std::vector<Pht::Keyframe> iPreviewPieceKeyframes {
         {.mTime = 0.0f, .mPosition = slot2Pos},
-        {.mTime = switch1Time, .mPosition = slot3Pos},
-        {.mTime = switch2Time, .mPosition = slot1Pos},
+        {.mTime = switch1Time, .mPosition = slot1Pos},
+        {.mTime = switch2Time, .mPosition = slot3Pos},
         {.mTime = animationDuration - 0.2f, .mPosition = slot2Pos},
         {.mTime = animationDuration}
     };
@@ -950,10 +944,10 @@ Pht::Animation& HowToPlayDialogView::CreateSwitchPieceAnimation(Pht::SceneObject
     iPreviewPieceAnimation.SetInterpolation(Pht::Interpolation::None);
 
     std::vector<Pht::Keyframe> lPreviewPieceKeyframes {
-        {.mTime = 0.0f, .mPosition = slot3Pos},
-        {.mTime = switch1Time, .mPosition = slot1Pos},
+        {.mTime = 0.0f, .mPosition = slot1Pos},
+        {.mTime = switch1Time, .mPosition = slot3Pos},
         {.mTime = switch2Time, .mPosition = slot2Pos},
-        {.mTime = animationDuration - 0.2f, .mPosition = slot3Pos},
+        {.mTime = animationDuration - 0.2f, .mPosition = slot1Pos},
         {.mTime = animationDuration}
     };
     auto& lPreviewPieceAnimation =
@@ -1211,7 +1205,7 @@ Pht::SceneObject& HowToPlayDialogView::CreateLPreviewPiece(const Pht::Vec3& posi
     
     auto& transform = lPiece.GetTransform();
     transform.SetPosition(position);
-    transform.SetRotation({-30.0f, -30.0f, 0.0f});
+    transform.SetRotation({10.0f, 0.0f, 0.0f});
     transform.SetScale(0.60f);
     
     auto& blockRenderable = pieceResources.GetBlockRenderableObject(BlockKind::Full,
@@ -1234,7 +1228,7 @@ Pht::SceneObject& HowToPlayDialogView::CreateDPreviewPiece(const Pht::Vec3& posi
     
     auto& transform = dPiece.GetTransform();
     transform.SetPosition(position);
-    transform.SetRotation({-30.0f, -30.0f, 0.0f});
+    transform.SetRotation({10.0f, 0.0f, 0.0f});
     transform.SetScale(0.6f);
     
     auto& blockRenderable = pieceResources.GetBlockRenderableObject(BlockKind::Full,
@@ -1259,7 +1253,7 @@ Pht::SceneObject& HowToPlayDialogView::CreateIPreviewPiece(const Pht::Vec3& posi
     
     auto& transform = iPiece.GetTransform();
     transform.SetPosition(position);
-    transform.SetRotation({-30.0f, -30.0f, 0.0f});
+    transform.SetRotation({10.0f, 0.0f, 0.0f});
     transform.SetScale(0.6f);
     
     auto& blockRenderable = pieceResources.GetBlockRenderableObject(BlockKind::Full,
