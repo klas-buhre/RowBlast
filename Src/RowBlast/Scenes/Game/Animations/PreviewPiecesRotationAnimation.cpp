@@ -81,8 +81,10 @@ void PreviewPiecesRotationAnimation::Init() {
 void PreviewPiecesRotationAnimation::Update(float dt) {
     {
         ResetPreviewPieceAnimationToStartGuard guard {mGameLogic};
-        auto previewPieceAnimationToStart = mGameLogic.GetPreviewPieceAnimationToStart();
+        mGameLogic.GetPreviewPieceAnimationToStart();
         
+        return;
+#if 0
         if (mGameLogic.IsUsingClickControls()) {
             return;
         }
@@ -95,8 +97,10 @@ void PreviewPiecesRotationAnimation::Update(float dt) {
             default:
                 break;
         }
+#endif
     }
 
+#if 0
     auto& rotations = mGameLogic.GetPreviewPieceHudRotations();
     if (rotations != mTargetRotations) {
         mTargetRotations = rotations;
@@ -118,6 +122,7 @@ void PreviewPiecesRotationAnimation::Update(float dt) {
     mActivePreviewPiece = hud.GetActivePreviewPieceSceneObject();
     mSelectable0PreviewPiece = hud.GetSelectable0PreviewPieceSceneObject();
     mSelectable1PreviewPiece = hud.GetSelectable1PreviewPieceSceneObject();
+#endif
 }
 
 void PreviewPiecesRotationAnimation::UpdateInActiveState(float dt) {
