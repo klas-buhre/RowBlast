@@ -40,9 +40,11 @@ MapHud::MapHud(Pht::IEngine& engine,
     scene.GetRoot().AddChild(hudObject);
     
     CreateLightAndCamera(scene, hudObject, hudLayer);
+#if 0
     CreateLivesObject(scene, hudObject, commonResources);
     CreateNewLifeCountdownObject(scene, hudObject, commonResources);
     CreateCoinsObject(scene, hudObject, commonResources);
+#endif
 }
 
 void MapHud::CreateLightAndCamera(Pht::Scene& scene,
@@ -223,6 +225,7 @@ void MapHud::CreateCoinsObject(Pht::Scene& scene,
 }
 
 void MapHud::Update() {
+#if 0
     UpdateLivesText();
     UpdateCoinsText();
     UpdateCountdown();
@@ -232,6 +235,7 @@ void MapHud::Update() {
     } else {
         mNewLifeCountdownContainer->SetIsVisible(true);
     }
+#endif
 }
 
 void MapHud::UpdateLivesText() {

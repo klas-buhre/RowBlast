@@ -120,8 +120,6 @@ Ongoing tasks:
            they should appear and the piece gets an animated movement to the landing location.
        -(Note A) Could even have a falling piece animation that stops at the closest legal move and then goes
         back to to top, if the user tries to drag in a piece to an illegal move.
-    -Create a DraggedPieceAnimation for animating the dragged piece leaving the selectables
-     container, going back to the selectables and being placed at a legal move in the field.
 
     -Make a new pause button at the top-right corner and make a controls toggle button at the pause
      buttons old location. Or, it might be room for both at the bottom left.
@@ -129,7 +127,6 @@ Ongoing tasks:
      done by swiping left or right inside the selectable cotainer. Swipe left shifts the selectables
      to the left, swipe right shifts them to the right.
     -Update the tutorial with drag controls.
-
 
 
 
