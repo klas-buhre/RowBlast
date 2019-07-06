@@ -626,20 +626,12 @@ GameController::Command GameController::UpdateOutOfMovesDialog() {
     switch (mGameViewControllers.GetOutOfMovesDialogController().Update()) {
         case OutOfMovesDialogController::Result::None:
             break;
-        case OutOfMovesDialogController::Result::PlayOn:
-            if (mUserServices.GetPurchasingService().CanAfford(PurchasingService::addMovesPriceInCoins)) {
-                AddMovesAndGoToPlayingState();
-            } else {
-                GoToOutOfMovesStateStore();
-            }
+        case OutOfMovesDialogController::Result::Retry:
+            command = Command::RestartLevel;
             break;
         case OutOfMovesDialogController::Result::BackToMap:
             mUserServices.FailLevel(mLevel->GetId(), CalculateProgressInLevelForAnalytics());
-            if (mUserServices.GetLifeService().GetNumLives() > 0) {
-                command = Command::RestartLevel;
-            } else {
-                command = Command::GoToMap;
-            }
+            command = Command::GoToMap;
             break;
     }
     
