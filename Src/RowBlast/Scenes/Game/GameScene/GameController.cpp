@@ -170,6 +170,7 @@ void GameController::Init(int levelId) {
     mLevelIntroState = LevelIntroState::Overview;
     mIsInBetweenMoves = false;
     mUndoMovePending = false;
+    mWasUsingClickControlsAtLevelStart = mGameLogic.IsUsingClickControls();
     
     mUserServices.StartLevel(levelId);
     
@@ -786,7 +787,10 @@ void GameController::GoToPausedStateStore() {
 void GameController::GoToPausedStateSettingsMenu() {
     mPausedState = PausedState::SettingsMenu;
     mGameViewControllers.SetActiveController(GameViewControllers::SettingsMenu);
-    mGameViewControllers.GetSettingsMenuController().SetUp(mTutorial.IsGestureControlsAllowed());
+    auto isGestureControlsAllowed = mTutorial.IsGestureControlsAllowed();
+    auto isControlsSwitchAllowed = (mWasUsingClickControlsAtLevelStart && isGestureControlsAllowed);
+    mGameViewControllers.GetSettingsMenuController().SetUp(isControlsSwitchAllowed,
+                                                           isGestureControlsAllowed);
 }
 
 void GameController::GoToPausedStateLevelInfoDialog() {

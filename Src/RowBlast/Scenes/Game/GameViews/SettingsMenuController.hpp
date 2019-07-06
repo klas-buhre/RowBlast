@@ -26,7 +26,7 @@ namespace RowBlast {
                                const CommonResources& commonResources,
                                UserServices& userServices);
         
-        void SetUp(bool isGestureControlsAllowed);
+        void SetUp(bool isControlsSwitchAllowed, bool isGestureControlsAllowed);
         void SetFadeEffect(Pht::FadeEffect& fadeEffect);
         Result Update();
         
@@ -37,13 +37,14 @@ namespace RowBlast {
     private:
         Result HandleInput();
         Result OnTouch(const Pht::TouchEvent& touchEvent);
-        void UpdateViewToReflectSettings(bool isGestureControlsAllowed);
+        void UpdateViewToReflectSettings();
         
         Pht::IEngine& mEngine;
         UserServices& mUserServices;
         SettingsMenuView mView;
         SlidingMenuAnimation mSlidingMenuAnimation;
         Result mDeferredResult {Result::None};
+        bool mIsGestureControlsAllowed {false};
     };
 }
 

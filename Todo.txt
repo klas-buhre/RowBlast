@@ -94,10 +94,7 @@ Backlog:
 
 Ongoing tasks:
     -Release in current state without microtransactions, free to download.
-        -Disable preview piece rotation animation.
-        -Enable switch button for swipe controls.
         -Go through all user services and check that all state store/load is enabled.
-        -Make sure it is not possible to switch control type while playing a level.
         -Make sure analytics is enabled and that user terms accept is saved and checked.
         -Make sure analytics debug log is disabled.
         -Make launch screens for all supported device resolutions. Should say Teleporter Studios. The

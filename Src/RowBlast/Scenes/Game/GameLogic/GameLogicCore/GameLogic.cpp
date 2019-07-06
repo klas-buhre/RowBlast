@@ -1009,7 +1009,7 @@ BlastRadiusAnimation::Kind GameLogic::CalculateBlastRadiusKind(const Pht::IVec2&
 
 GameLogic::Result GameLogic::HandleInput() {
     auto result = Result::None;
-    auto isSwitchButtonEnabled = (mControlType == ControlType::Click);
+    auto isSwitchButtonEnabled = true;
     auto& input = mEngine.GetInput();
     
     while (input.HasEvents()) {

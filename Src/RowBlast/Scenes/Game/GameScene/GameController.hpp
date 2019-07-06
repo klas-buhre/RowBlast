@@ -201,6 +201,7 @@ namespace RowBlast {
         std::unique_ptr<Level> mLevel;
         bool mIsInBetweenMoves {false};
         bool mUndoMovePending {false};
+        bool mWasUsingClickControlsAtLevelStart {true};
     };
 }
 

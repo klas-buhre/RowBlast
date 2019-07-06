@@ -137,7 +137,6 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine, const CommonResources& 
                                                "Off",
                                                buttonTextProperties).GetSceneObject());
 
-#ifndef RELEASE_BUILD
     GuiUtils::CreateIcon(engine,
                          *this,
                          "hand.png",
@@ -196,7 +195,6 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine, const CommonResources& 
                                                        iconColor,
                                                        iconShadowColor,
                                                        iconShadowOffset);
-#endif
 
     MenuButton::Style backButtonStyle;
     backButtonStyle.mPressedScale = 1.05f;
