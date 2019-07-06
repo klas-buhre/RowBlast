@@ -17,6 +17,7 @@
 #include "GameScene.hpp"
 #include "GameHud.hpp"
 #include "GuiUtils.hpp"
+#include "MenuButton.hpp"
 
 using namespace RowBlast;
 
@@ -55,33 +56,62 @@ OutOfMovesDialogView::OutOfMovesDialogView(Pht::IEngine& engine,
 
     PotentiallyZoomedScreen zoom {PotentiallyZoomedScreen::Yes};
     auto& guiResources = commonResources.GetGuiResources();
-    auto& menuWindow = guiResources.GetMediumDarkMenuWindow();
+    auto& menuWindow = guiResources.GetSmallDarkMenuWindow();
     
     auto menuWindowSceneObject = std::make_unique<Pht::SceneObject>(&menuWindow.GetRenderable());
     menuWindowSceneObject->GetTransform().SetPosition({0.0f, 0.0f, UiLayer::lowerTextRectangle});
     AddSceneObject(std::move(menuWindowSceneObject));
 
     SetSize(menuWindow.GetSize());
+    
+    auto largeTextProperties = guiResources.GetLargeWhiteTextProperties(zoom);
+    largeTextProperties.mAlignment = Pht::TextAlignment::CenterX;
 
-    CreateText({-2.6f, 4.95f, UiLayer::text},
-               "CONTINUE?",
-               guiResources.GetLargeWhiteTextProperties(zoom));
+    CreateText({0.0f, 3.75f, UiLayer::text},
+               "RETRY?",
+               largeTextProperties);
 
     mCloseButton = GuiUtils::CreateCloseButton(engine, *this, guiResources, zoom);
     GuiUtils::CreateTitleBarLine(engine, *this);
     
-    CreateAddMovesIcon({0.0f, 2.25f, UiLayer::root}, commonResources);
+    CreateAddMovesIcon({0.0f, 0.8f, UiLayer::root}, commonResources);
 
+#if 0
     auto& textProperties = guiResources.GetSmallWhiteTextProperties(zoom);
     CreateText({-5.1f, -0.925f, UiLayer::text}, "Get 5 more moves and continue", textProperties);
     CreateText({-1.3f, -2.0f, UiLayer::text}, "playing", textProperties);
+#endif
 
-    mPlayOnButton = GuiUtils::CreatePlayOnButton(engine,
+    Pht::Vec2 playOnButtonInputSize {194.0f, 50.0f};
+
+    MenuButton::Style playOnButtonStyle;
+    playOnButtonStyle.mPressedScale = 1.05f;
+    playOnButtonStyle.mTextScale = 1.05f;
+    playOnButtonStyle.mRenderableObject = &guiResources.GetLargeBlueGlossyButton(zoom);
+    playOnButtonStyle.mSelectedRenderableObject = &guiResources.GetLargeDarkBlueGlossyButton(zoom);
+
+    mPlayOnButton = std::make_unique<MenuButton>(engine,
                                                  *this,
-                                                 {0.0f, -4.8f, UiLayer::textRectangle},
-                                                 PurchasingService::addMovesPriceInCoins,
-                                                 commonResources,
-                                                 zoom);
+                                                 Pht::Vec3{0.0f, -3.7f, UiLayer::textRectangle},
+                                                 playOnButtonInputSize,
+                                                 playOnButtonStyle);
+    mPlayOnButton->CreateIcon("play.png",
+                             {-1.6f, 0.0f, UiLayer::buttonText},
+                             {0.7f, 0.7f},
+                             {1.0f, 1.0f, 1.0f, 1.0f},
+                             Pht::Vec4 {0.2f, 0.2f, 0.2f, 0.5f},
+                             Pht::Vec3 {-0.05f, -0.05f, UiLayer::textShadow});
+
+    Pht::TextProperties buttonTextProperties {
+        commonResources.GetHussarFontSize27(zoom),
+        1.05f,
+        Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f}
+    };
+    buttonTextProperties.mAlignment = Pht::TextAlignment::CenterX;
+
+    mPlayOnButton->CreateText({0.0f, -0.24f, UiLayer::buttonText},
+                              "RETRY",
+                              buttonTextProperties);
 }
 
 void OutOfMovesDialogView::CreateAddMovesIcon(const Pht::Vec3& position,
@@ -95,8 +125,9 @@ void OutOfMovesDialogView::CreateAddMovesIcon(const Pht::Vec3& position,
     CreateParticles(container);
 
     PotentiallyZoomedScreen zoom {PotentiallyZoomedScreen::Yes};
-    auto& textProperties = commonResources.GetGuiResources().GetSmallWhiteTextProperties(zoom);
-    CreateText({-0.45f, -1.3f, UiLayer::buttonText}, "+5", textProperties, container);
+    auto textProperties = commonResources.GetGuiResources().GetSmallWhiteTextProperties(zoom);
+    textProperties.mAlignment = Pht::TextAlignment::CenterX;
+    CreateText({0.0f, -1.3f, UiLayer::buttonText}, "0", textProperties, container);
     Pht::SceneObjectUtils::ScaleRecursively(container, 1.5f);
 }
 

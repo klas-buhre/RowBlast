@@ -53,7 +53,6 @@ Ongoing tasks:
 
 
     -Near-term plan:
-        -Remove microtransactions.
         -Limit undos.
         -Remove a few moves for each level.
         -Release with drag controls.
