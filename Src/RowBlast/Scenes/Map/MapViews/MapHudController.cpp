@@ -18,6 +18,7 @@ MapHudController::Result MapHudController::OnTouch(const Pht::TouchEvent& event)
         return Result::TouchStartedOverButton;
     }
 
+#if 0
     auto& coinsButton = mView.GetCoinsButton();
     if (coinsButton.IsClicked(event)) {
         return Result::ClickedCoinsButton;
@@ -35,6 +36,7 @@ MapHudController::Result MapHudController::OnTouch(const Pht::TouchEvent& event)
     if (livesButton.GetButton().StateIsDownOrMovedOutside()) {
         return Result::TouchStartedOverButton;
     }
+#endif
 
     return Result::None;
 }
