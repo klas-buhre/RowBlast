@@ -94,7 +94,6 @@ Backlog:
 
 Ongoing tasks:
     -Release in current state without microtransactions, free to download.
-        -Disable all microtransactions with a flag.
         -Disable preview piece rotation animation.
         -Go through all user services and check that all state store/load is enabled.
         -Make sure it is not possible to switch control type while playing a level.

@@ -71,8 +71,8 @@ OutOfMovesDialogController::Result OutOfMovesDialogController::OnTouch(const Pht
     }
 
     if (mView.GetPlayOnButton().IsClicked(touchEvent)) {
-        mDeferredResult = Result::PlayOn;
-        
+        return Result::Retry;
+#if 0
         if (mUserServices.GetPurchasingService().CanAfford(PurchasingService::addMovesPriceInCoins)) {
             mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::Yes,
                                                 SlidingMenuAnimation::SlideDirection::Right);
@@ -80,6 +80,7 @@ OutOfMovesDialogController::Result OutOfMovesDialogController::OnTouch(const Pht
             mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::No,
                                                 SlidingMenuAnimation::SlideDirection::Left);
         }
+#endif
     }
     
     return Result::None;
