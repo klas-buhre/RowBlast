@@ -94,13 +94,12 @@ Backlog:
 
 Ongoing tasks:
     -Release in current state without microtransactions, free to download.
-        -Go through all user services and check that all state store/load is enabled.
-        -Make sure analytics is enabled and that user terms accept is saved and checked.
-        -Make sure analytics debug log is disabled.
         -Make launch screens for all supported device resolutions. Should say Teleporter Studios. The
          logo could contain some simple teleporter texture.
          Font: maybe ".Damascus PUA Bold"
-        -Make icon.
+        -Go through all user services and check that all state store/load is enabled.
+        -Make sure analytics is enabled and that user terms accept is saved and checked.
+        -Make sure analytics debug log is disabled.
 
 
 
