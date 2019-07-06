@@ -93,6 +93,22 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
+    -Release in current state without microtransactions, free to download.
+        -Disable all microtransactions with a flag.
+        -Disable preview piece rotation animation.
+        -Go through all user services and check that all state store/load is enabled.
+        -Make sure it is not possible to switch control type while playing a level.
+        -Make sure analytics is enabled and that user terms accept is saved and checked.
+        -Make sure analytics debug log is disabled.
+        -Make launch screens for all supported device resolutions. Should say Teleporter Studios. The
+         logo could contain some simple teleporter texture.
+         Font: maybe ".Damascus PUA Bold"
+        -Make icon.
+
+
+
+    -Add drag controls and release with microtransactions enabled, free to download.
+
 
     -Maybe the drag controls should only be active with gesture controls. Drag does not add that
      much to click controls and it is a bit confusing when the preview pieces rotate and the
@@ -139,24 +155,6 @@ Ongoing tasks:
 
 
 
-
-    -Might even make the active preview piece a bit larger and/or adding and effect/animation to set
-     it apart from the other selectables.
-    -Try combining all three input types to one. Maybe possible if the visibility of the move
-     alternatives can be toggled with a button next to the pause button. Or the pause button goes
-     to the top right corner of the screen and the toggle button takes the pause buttons old place.
-     Alt 1: Switch piece could be done
-     by swiping left or right inside the selectable cotainer. Swipe left shifts the selectables to
-     left, swipe right shifts them to the right. This way rotating a single selectable is done by
-     clicking the preview piece in the selectables container and any selectable could be dragged in,
-     not just the active one.
-     Alt 2: Switch by clicking the selectables container or swipe the container left or right.
-     Rotate by tapping the screen, this rotates all selectables in the HUD. If clickadble move
-     alternatives are active then the falling piece does not rotate. If If clickadble move
-     alternatives are not active then the falling piece also rotates. All selectables should rotate
-     back to their default rotation on switch piece or next move.
-    -Could have a falling piece animation that stops at the closest legal move and then goes back to
-     to top, if the user tries to drag in a piece to an illegal move.
 
 
 

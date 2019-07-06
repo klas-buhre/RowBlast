@@ -42,6 +42,7 @@ MapHudView::MapHudView(Pht::IEngine& engine, const CommonResources& commonResour
                                Pht::Vec4 {0.2f, 0.2f, 0.2f, 0.5f},
                                Pht::Vec3 {-0.05f, -0.05f, UiLayer::textShadow});
 
+#if 0
     MenuButton::Style plusButtonStyle;
     plusButtonStyle.mPressedScale = 1.05f;
     plusButtonStyle.mTextScale = 1.4f;
@@ -81,4 +82,5 @@ MapHudView::MapHudView(Pht::IEngine& engine, const CommonResources& commonResour
                                                 plusButtonInputSize,
                                                 plusButtonStyle);
     mLivesButton->CreateText({-0.35f, -0.42f, UiLayer::buttonText}, "+", plusButtonTextProperties);
+#endif
 }
