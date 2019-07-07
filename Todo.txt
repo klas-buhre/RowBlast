@@ -96,7 +96,9 @@ Ongoing tasks:
     -Release in current state without microtransactions, free to download.
         -Make launch screens for all supported device resolutions. Should say Teleporter Studios. The
          logo could contain some simple teleporter texture.
-         Font: maybe ".Damascus PUA Bold"
+         Font: maybe ".Damascus PUA Bold".
+         On master.
+        -Support iPad Pro 3 and iPhone XS Max. Do work on master, merge to this branch.
         -Go through all user services and check that all state store/load is enabled.
         -Make sure analytics is enabled and that user terms accept is saved and checked.
         -Make sure analytics debug log is disabled.
