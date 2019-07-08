@@ -88,12 +88,6 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-    -Support iPad Pro 3 and iPhone XS Max. Do work on master, merge to pre_release branch.
-
-
-
-
-
     -Maybe the drag controls should only be active with gesture controls. Drag does not add that
      much to click controls and it is a bit confusing when the preview pieces rotate and the
      clickable moves rotates/move in completely unrelated ways. Also, if switching piece when using
