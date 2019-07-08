@@ -88,10 +88,7 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-    -Make launch screens for all supported device resolutions. Should say Teleporter Studios. The
-     logo could contain some simple teleporter texture.
-     Font: maybe ".Damascus PUA Bold"
-    -Support iPad Pro 3 and iPhone XS Max. Do work on master, merge to this branch.
+    -Support iPad Pro 3 and iPhone XS Max. Do work on master, merge to pre_release branch.
 
 
 
