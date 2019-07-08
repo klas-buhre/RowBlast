@@ -76,7 +76,6 @@ Backlog:
     -Limit the number of undo move to one or two per game round.
     -Update mail address in legal documents.
     -Go through all user services and check that all state store/load is enabled.
-    -Make sure it is not possible to switch control type while playing a level.
     -Make sure analytics is enabled and that user terms accept is saved and checked.
     -Make sure analytics debug log is disabled.
     -Make sure the correct product price in cents and receipt is sent to analytics.
@@ -85,10 +84,6 @@ Backlog:
      localization is needed for that. And/or, before that, a small soft launch only in one country
      instead of a playtest since that may give bettar data than a playtest since the players will
      mostly be the target audince and in the playtest they are not.
-    -Make launch screens for all supported device resolutions. Should say Teleporter Studios. The
-     logo could contain some simple teleporter texture.
-     Font: maybe ".Damascus PUA Bold"
-    -Make icon.
     -Make sure that creation dates for the resource files that I have created are not too old.
     -Maybe support for different languages.
 
