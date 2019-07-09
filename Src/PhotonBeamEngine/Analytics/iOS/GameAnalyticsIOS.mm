@@ -8,7 +8,7 @@
 #include "AnalyticsEvent.hpp"
 #include "FileStorage.hpp"
 
-#define DEBUG
+// #define DEBUG
 
 using namespace Pht;
 

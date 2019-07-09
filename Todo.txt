@@ -89,7 +89,6 @@ Backlog:
 
 Ongoing tasks:
     -Release in current state without microtransactions, free to download.
-        -Make sure analytics debug log is disabled.
         -Go through Apples release procedure.
 
 
