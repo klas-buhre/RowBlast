@@ -89,13 +89,13 @@ Backlog:
 
 Ongoing tasks:
     -Release in current state without microtransactions, free to download.
-        -Make an end at level 50.
         -Make sure analytics debug log is disabled.
         -Go through Apples release procedure.
 
 
 
     -Add drag controls and release with microtransactions enabled, free to download.
+
 
 
     -Maybe the drag controls should only be active with gesture controls. Drag does not add that
