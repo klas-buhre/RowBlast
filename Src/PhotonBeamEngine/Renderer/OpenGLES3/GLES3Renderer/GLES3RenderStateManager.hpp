@@ -1,6 +1,8 @@
 #ifndef GLES3RenderStateManager_hpp
 #define GLES3RenderStateManager_hpp
 
+#define GLES_SILENCE_DEPRECATION
+
 #include <OpenGLES/ES3/gl.h>
 
 #include "Optional.hpp"

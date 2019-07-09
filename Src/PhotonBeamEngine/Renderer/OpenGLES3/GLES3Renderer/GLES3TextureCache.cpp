@@ -5,6 +5,8 @@
 #include <algorithm>
 #include <assert.h>
 
+#define GLES_SILENCE_DEPRECATION
+
 #include <OpenGLES/ES3/gl.h>
 
 #include "IImage.hpp"
