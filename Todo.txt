@@ -89,10 +89,9 @@ Backlog:
 
 Ongoing tasks:
     -Release in current state without microtransactions, free to download.
-        -Support iPad Pro 3 and iPhone XS Max. Do work on master, merge to this branch.
-        -Go through all user services and check that all state store/load is enabled.
-        -Make sure analytics is enabled and that user terms accept is saved and checked.
+        -Make an end at level 50.
         -Make sure analytics debug log is disabled.
+        -Go through Apples release procedure.
 
 
 
