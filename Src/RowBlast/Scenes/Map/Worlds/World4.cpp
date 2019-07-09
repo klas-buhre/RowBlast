@@ -4,6 +4,8 @@ using namespace RowBlast;
 
 namespace {
     const std::vector<MapPlace> places {
+        MapPlace {Portal {3, 51, {-20.0f, 0.0f, 10.0f}}}
+/*
         MapPlace {Portal {3, 51, {-24.0f, 3.0f, 10.0f}}},
         MapPlace {MapLevel {51, {-21.5f, 1.0f, 10.0f}, {0.0f, -0.7f, 0.0f}}},
         MapPlace {MapLevel {52, {-19.5f, -1.5f, 10.0f}}},
@@ -21,6 +23,7 @@ namespace {
         MapPlace {MapLevel {64, {16.5f, 1.0f, 10.0f}, {0.0f, -0.7f, 0.0f}}},
         MapPlace {MapLevel {65, {19.5f, 1.5f, 10.0f}, {0.0f, 1.5f, 1.0f}}},
         MapPlace {Portal {5, 66, {23.0f, 1.5f, 10.0f}}}
+*/
     };
 
     const std::vector<BlockPathVolume> blockPaths {
