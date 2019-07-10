@@ -18,8 +18,9 @@ SwitchPieceWindowView::SwitchPieceWindowView(const CommonResources& commonResour
     SetPosition({0.0f, 4.3f, UiLayer::tutorialWindow});
     SetSize(menuWindow.GetSize());
 
-    auto& textProperties = guiResources.GetSmallWhiteTextProperties(zoom);
-    CreateText({-5.4f, 0.9075f, UiLayer::text}, "You always have three pieces to", textProperties);
-    CreateText({-5.15f, -0.1675f, UiLayer::text}, "choose from at the bottom. Try", textProperties);
-    CreateText({-5.55f, -1.2425f, UiLayer::text}, "switching to a better fitting piece", textProperties);
+    auto textProperties = guiResources.GetSmallWhiteTextProperties(zoom);
+    textProperties.mAlignment = Pht::TextAlignment::CenterX;
+    CreateText({0.0f, 0.9075f, UiLayer::text}, "Try switching to a better fitting", textProperties);
+    CreateText({0.0f, -0.1675f, UiLayer::text}, "piece. The current piece is the", textProperties);
+    CreateText({0.0f, -1.2425f, UiLayer::text}, "left one of the three at the bottom", textProperties);
 }
