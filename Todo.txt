@@ -89,6 +89,10 @@ Backlog:
 
 Ongoing tasks:
     -Test on iOS 12 on iPhoneX.
+    -Remove a move from level 12 to level 15. And remove a move from level 18.
+    -All apps must include a link to their privacy policy in the App Store Connect metadata field.
+    -Remove the section about payments in the privacy policy on the pre-release branch.
+
 
     -Add drag controls and release with microtransactions enabled, free to download.
 
