@@ -1,6 +1,8 @@
 #ifndef GLES3ShaderProgram_hpp
 #define GLES3ShaderProgram_hpp
 
+#define GLES_SILENCE_DEPRECATION
+
 #include <OpenGLES/ES3/gl.h>
 
 #include "Matrix.hpp"

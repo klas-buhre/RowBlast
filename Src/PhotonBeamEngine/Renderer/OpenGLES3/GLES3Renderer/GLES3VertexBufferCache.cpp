@@ -3,6 +3,8 @@
 #include <mutex>
 #include <vector>
 
+#define GLES_SILENCE_DEPRECATION
+
 #include <OpenGLES/ES3/gl.h>
 
 #include "GLES3Handles.hpp"

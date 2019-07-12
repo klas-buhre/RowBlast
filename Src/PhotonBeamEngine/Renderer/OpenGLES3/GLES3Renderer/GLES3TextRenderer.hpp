@@ -1,6 +1,8 @@
 #ifndef GLES3TextRenderer_hpp
 #define GLES3TextRenderer_hpp
 
+#define GLES_SILENCE_DEPRECATION
+
 #include <string>
 #include <OpenGLES/ES3/gl.h>
 

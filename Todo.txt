@@ -89,12 +89,13 @@ Backlog:
 
 Ongoing tasks:
     -Release in current state without microtransactions, free to download.
-        -Go through Apples release procedure.
-
+    -Join the Apple Developer Program.
+    -Test on iOS 12 on iPhoneX.
+    -Remove the section about payments in the privacy policy on the pre-release branch.
+    -All apps must include a link to their privacy policy in the App Store Connect metadata field.
 
 
     -Add drag controls and release with microtransactions enabled, free to download.
-
 
 
     -Maybe the drag controls should only be active with gesture controls. Drag does not add that

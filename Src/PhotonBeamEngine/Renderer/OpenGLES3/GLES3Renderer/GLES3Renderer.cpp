@@ -2,6 +2,8 @@
 #include <memory>
 #include <unordered_map>
 
+#define GLES_SILENCE_DEPRECATION
+
 #include <OpenGLES/ES3/gl.h>
 
 #include "RenderableObject.hpp"

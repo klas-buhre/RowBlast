@@ -1,6 +1,8 @@
 #ifndef GLES3Handles_hpp
 #define GLES3Handles_hpp
 
+#define GLES_SILENCE_DEPRECATION
+
 #include <OpenGLES/ES3/gl.h>
 
 namespace Pht {

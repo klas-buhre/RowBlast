@@ -1,3 +1,5 @@
+#define GLES_SILENCE_DEPRECATION
+
 #import <GLKit/GLKit.h>
 
 #import "GLKViewControllerExtension.h"
