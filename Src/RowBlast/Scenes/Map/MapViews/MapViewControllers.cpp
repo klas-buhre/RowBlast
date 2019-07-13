@@ -45,7 +45,8 @@ MapViewControllers::MapViewControllers(Pht::IEngine& engine,
         pieceResources,
         levelResources,
         HowToPlayDialogView::SceneId::Map
-    } {
+    },
+    mNoMoreLevelsDialogController {engine, commonResources} {
     
     mViewManager.AddView(static_cast<int>(MapHud), mMapHudController.GetView());
     mViewManager.AddView(static_cast<int>(LevelGoalDialog), mLevelGoalDialogController.GetView());
@@ -54,12 +55,14 @@ MapViewControllers::MapViewControllers(Pht::IEngine& engine,
     mViewManager.AddView(static_cast<int>(OptionsMenu), mOptionsMenuController.GetView());
     mViewManager.AddView(static_cast<int>(AboutMenu), mAboutMenuController.GetView());
     mViewManager.AddView(static_cast<int>(HowToPlayDialog), mHowToPlayDialogController.GetView());
+    mViewManager.AddView(static_cast<int>(NoMoreLevelsDialog), mNoMoreLevelsDialogController.GetView());
     
     mLevelGoalDialogController.SetFadeEffect(mFadeEffect);
     mLivesDialogController.SetFadeEffect(mFadeEffect);
     mOptionsMenuController.SetFadeEffect(mFadeEffect);
     mAboutMenuController.SetFadeEffect(mFadeEffect);
     mHowToPlayDialogController.SetFadeEffect(mFadeEffect);
+    mNoMoreLevelsDialogController.SetFadeEffect(mFadeEffect);
     
     mLevelGoalDialogController.SetGuiLightProvider(scene);
     mNoLivesDialogController.SetGuiLightProvider(scene);

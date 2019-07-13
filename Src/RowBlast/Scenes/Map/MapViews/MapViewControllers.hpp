@@ -13,6 +13,7 @@
 #include "NoLivesDialogController.hpp"
 #include "LivesDialogController.hpp"
 #include "HowToPlayDialogController.hpp"
+#include "NoMoreLevelsDialogController.hpp"
 
 namespace Pht {
     class IEngine;
@@ -34,6 +35,7 @@ namespace RowBlast {
             OptionsMenu,
             AboutMenu,
             HowToPlayDialog,
+            NoMoreLevelsDialog,
             None
         };
         
@@ -75,6 +77,10 @@ namespace RowBlast {
             return mHowToPlayDialogController;
         }
 
+        NoMoreLevelsDialogController& GetNoMoreLevelsDialogController() {
+            return mNoMoreLevelsDialogController;
+        }
+
     private:
         MapScene& mScene;
         Pht::FadeEffect mFadeEffect;
@@ -86,6 +92,7 @@ namespace RowBlast {
         OptionsMenuController mOptionsMenuController;
         AboutMenuController mAboutMenuController;
         HowToPlayDialogController mHowToPlayDialogController;
+        NoMoreLevelsDialogController mNoMoreLevelsDialogController;
     };
 }
 

@@ -9,6 +9,7 @@
 #include "Ufo.hpp"
 #include "UfoAnimation.hpp"
 #include "PortalCameraMovement.hpp"
+#include "FireworksParticleEffect.hpp"
 
 namespace Pht {
     class IEngine;
@@ -57,6 +58,7 @@ namespace RowBlast {
         void Init();
         void GoToStartLevelStateLevelGoalDialog(int levelToStart);
         void GoToAboutMenuState(SlidingMenuAnimation::UpdateFade updateFade);
+        void GoToNoMoreLevelsDialogState();
         void GoToUfoAnimationState(int levelToStart);
         Command Update();
         
@@ -69,6 +71,7 @@ namespace RowBlast {
         }
 
     private:
+        void InitFireworks();
         void UpdateMap();
         void UpdateUfoAnimation();
         Command UpdateInPortalCameraMovementState();
@@ -85,6 +88,7 @@ namespace RowBlast {
         void UpdateHowToPlayDialog();
         Command UpdateAboutMenu();
         void UpdateInAddCoinsStoreState();
+        void UpdateNoMoreLevelsDialog();
         void HandleInput();
         void UpdateTouchingState(const Pht::TouchEvent& touch);
         void HandleTouch(const Pht::TouchEvent& touch);
@@ -114,7 +118,8 @@ namespace RowBlast {
             OptionsMenu,
             HowToPlayDialog,
             AboutMenu,
-            AddCoinsStore
+            AddCoinsStore,
+            NoMoreLevelsDialog
         };
         
         enum class StartLevelState {
@@ -140,6 +145,7 @@ namespace RowBlast {
         Ufo mUfo;
         UfoAnimation mUfoAnimation;
         PortalCameraMovement mPortalCameraMovement;
+        FireworksParticleEffect mFireworksParticleEffect;
         MapViewControllers mMapViewControllers;
         StoreController mStoreController;
         float mCameraXPositionAtPanBegin {0.0f};

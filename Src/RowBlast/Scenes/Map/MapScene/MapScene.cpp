@@ -321,6 +321,11 @@ void MapScene::CreateEffects(const World& world, const BackgroundLight& backgrou
                                 backgroundLight.mSun.GetValue(),
                                 static_cast<int>(Layer::SunEffect));
     }
+    
+    mFireworksContainer = &mScene->CreateSceneObject();
+    mFireworksContainer->SetLayer(static_cast<int>(Layer::Map));
+    mFireworksContainer->GetTransform().SetPosition({-20.0f, 0.0f, 0.0f});
+    mScene->GetRoot().AddChild(*mFireworksContainer);
 }
 
 void MapScene::Update() {

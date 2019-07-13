@@ -9,7 +9,6 @@
 #include "MathUtils.hpp"
 
 // Game includes.
-#include "GameScene.hpp"
 #include "AudioResources.hpp"
 
 using namespace RowBlast;
@@ -54,6 +53,8 @@ FireworksParticleEffect::FireworksParticleEffect(Pht::IEngine& engine) :
 }
 
 void FireworksParticleEffect::Init(Pht::SceneObject& parentObject, const Pht::Vec3& effectsVolume) {
+    mState = State::Inactive;
+    
     for (auto& firework: mFireworks) {
         Pht::Vec3 position {
             (Pht::NormalizedRand() - 0.5f) * effectsVolume.x,

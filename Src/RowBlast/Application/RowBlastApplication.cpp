@@ -187,7 +187,11 @@ void RowBlastApplication::UpdateMapScene() {
                 BeginFadingToGame(command.GetLevel());
                 break;
             case MapController::Command::StartMap:
-                BeginFadingToMap(MapInitialState::Map);
+                if (mUniverse.IsLastWorld(mMapController.GetScene().GetWorldId())) {
+                    BeginFadingToMap(MapInitialState::NoMoreLevelsDialog);
+                } else {
+                    BeginFadingToMap(MapInitialState::Map);
+                }
                 break;
             case MapController::Command::ViewTermsOfService:
                 BeginFadingToDocumentViewerScene(DocumentId::TermsOfService);
@@ -329,6 +333,9 @@ void RowBlastApplication::StartMapScene() {
             break;
         case MapInitialState::AboutMenu:
             mMapController.GoToAboutMenuState(SlidingMenuAnimation::UpdateFade::Yes);
+            break;
+        case MapInitialState::NoMoreLevelsDialog:
+            mMapController.GoToNoMoreLevelsDialogState();
             break;
     }
 }

@@ -13,6 +13,7 @@ namespace RowBlast {
         
         const World& GetWorld(int worldId) const;
         int CalcWorldId(int levelId) const;
+        bool IsLastWorld(int worldId) const;
         
     private:
         std::vector<World> mWorlds;

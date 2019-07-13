@@ -52,6 +52,7 @@ MapController::MapController(Pht::IEngine& engine,
     mUfo {engine, commonResources, 1.17f},
     mUfoAnimation {engine, mUfo},
     mPortalCameraMovement {engine, mScene},
+    mFireworksParticleEffect {engine},
     mMapViewControllers {
         engine,
         mScene,
@@ -73,19 +74,29 @@ void MapController::Init() {
     mTutorial.Init(mScene.GetWorldId());
     mUfo.Init(mScene.GetUfoContainer());
     mUfoAnimation.Init();
+    InitFireworks();
     mMapViewControllers.Init(mStoreController.GetFadeEffect());
     mStoreController.Init(mScene.GetUiViewsContainer());
     
     mState = State::Map;
     mCameraXVelocity = 0.0f;
     
-    if (auto* currentPin = mScene.GetLevelPin(mUserServices.GetProgressService().GetProgress())) {
+    auto progress = mUserServices.GetProgressService().GetProgress();
+    if (auto* currentPin = mScene.GetLevelPin(progress)) {
         mUfo.SetPosition(currentPin->GetUfoPosition());
+    } else if (auto* portalPin = mScene.GetPortalPin(progress)) {
+        mUfo.SetPosition(portalPin->GetUfoPosition());
     } else {
         mUfo.Hide();
     }
     
     mEngine.GetSceneManager().InitRenderer();
+}
+
+void MapController::InitFireworks() {
+    auto& orthographicFrustumSize = mEngine.GetRenderer().GetOrthographicFrustumSize();
+    Pht::Vec3 fireworksVolume {orthographicFrustumSize.x, orthographicFrustumSize.y, 20.0f};
+    mFireworksParticleEffect.Init(mScene.GetFireworksContainer(), fireworksVolume);
 }
 
 MapController::Command MapController::Update() {
@@ -122,10 +133,14 @@ MapController::Command MapController::Update() {
         case State::AddCoinsStore:
             UpdateInAddCoinsStoreState();
             break;
+        case State::NoMoreLevelsDialog:
+            UpdateNoMoreLevelsDialog();
+            break;
     }
 
     mScene.Update();
     mTutorial.Update();
+    mFireworksParticleEffect.Update();
     
     return command;
 }
@@ -363,6 +378,16 @@ void MapController::UpdateInAddCoinsStoreState() {
         case StoreController::Result::None:
             break;
         case StoreController::Result::Done:
+            GoToMapState();
+            break;
+    }
+}
+
+void MapController::UpdateNoMoreLevelsDialog() {
+    switch (mMapViewControllers.GetNoMoreLevelsDialogController().Update()) {
+        case NoMoreLevelsDialogController::Result::None:
+            break;
+        case NoMoreLevelsDialogController::Result::Close:
             GoToMapState();
             break;
     }
@@ -653,6 +678,14 @@ void MapController::GoToAddCoinsStoreState() {
                                 SlidingMenuAnimation::UpdateFade::Yes,
                                 SlidingMenuAnimation::UpdateFade::Yes,
                                 PurchaseSuccessfulDialogController::ShouldSlideOut::Yes);
+}
+
+void MapController::GoToNoMoreLevelsDialogState() {
+    mMapViewControllers.SetActiveController(MapViewControllers::NoMoreLevelsDialog);
+    mMapViewControllers.GetNoMoreLevelsDialogController().SetUp();
+    mState = State::NoMoreLevelsDialog;
+    
+    mFireworksParticleEffect.Start();
 }
 
 void MapController::GoToMapState() {
