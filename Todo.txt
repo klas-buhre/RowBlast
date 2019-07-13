@@ -88,8 +88,6 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-    -Fix signing.
-    -Test on iOS 12 on iPhoneX.
     -Maybe add a dialog that says "Stay tuned for more levels!".
     -Remove the section about payments in the privacy policy on the pre-release branch.
     -All apps must include a link to their privacy policy in the App Store Connect metadata field.

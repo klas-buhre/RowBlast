@@ -162,7 +162,7 @@ void GameHud::CreateProgressObject(Pht::Scene& scene,
     auto& renderer = mEngine.GetRenderer();
     
     Pht::Vec3 position {
-        -3.4f,
+        -3.4f, // -4.8f,
         renderer.GetHudFrustumSize().y / 2.0f - renderer.GetTopPaddingHeight() - 0.67f,
         UiLayer::root
     };
@@ -292,7 +292,7 @@ void GameHud::CreateMovesObject(Pht::Scene& scene,
     auto& renderer = mEngine.GetRenderer();
     
     Pht::Vec3 position {
-        3.4f,
+        3.4f, // 4.8f,
         renderer.GetHudFrustumSize().y / 2.0f - renderer.GetTopPaddingHeight() - 0.67f,
         UiLayer::root
     };
