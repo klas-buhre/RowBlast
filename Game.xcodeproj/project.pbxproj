@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1774768022DA42B800EEE97C /* NoMoreLevelsDialogView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1774767E22DA42B800EEE97C /* NoMoreLevelsDialogView.cpp */; };
+		1774768322DA42E400EEE97C /* NoMoreLevelsDialogController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1774768122DA42E400EEE97C /* NoMoreLevelsDialogController.cpp */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
@@ -547,6 +549,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1774767E22DA42B800EEE97C /* NoMoreLevelsDialogView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NoMoreLevelsDialogView.cpp; sourceTree = "<group>"; };
+		1774767F22DA42B800EEE97C /* NoMoreLevelsDialogView.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = NoMoreLevelsDialogView.hpp; sourceTree = "<group>"; };
+		1774768122DA42E400EEE97C /* NoMoreLevelsDialogController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NoMoreLevelsDialogController.cpp; sourceTree = "<group>"; };
+		1774768222DA42E400EEE97C /* NoMoreLevelsDialogController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = NoMoreLevelsDialogController.hpp; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D6058910D05DD3D006BFB54 /* Game.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Game.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -2199,6 +2205,10 @@
 				62216BB821EB377E001CB9A1 /* MapHudView.hpp */,
 				62216BB921EB377E001CB9A1 /* MapViewControllers.cpp */,
 				62216BB621EB377E001CB9A1 /* MapViewControllers.hpp */,
+				1774768122DA42E400EEE97C /* NoMoreLevelsDialogController.cpp */,
+				1774768222DA42E400EEE97C /* NoMoreLevelsDialogController.hpp */,
+				1774767E22DA42B800EEE97C /* NoMoreLevelsDialogView.cpp */,
+				1774767F22DA42B800EEE97C /* NoMoreLevelsDialogView.hpp */,
 				62216C6C21F08B7F001CB9A1 /* OptionsMenuController.cpp */,
 				62216C6D21F08B7F001CB9A1 /* OptionsMenuController.hpp */,
 				62216C6921F08B2A001CB9A1 /* OptionsMenuView.cpp */,
@@ -3538,6 +3548,7 @@
 				62216BEC21EB377E001CB9A1 /* PieceResources.cpp in Sources */,
 				62216BC621EB377E001CB9A1 /* SwitchPieceWindowView.cpp in Sources */,
 				62216BD721EB377E001CB9A1 /* SlidingFieldAnimation.cpp in Sources */,
+				1774768322DA42E400EEE97C /* NoMoreLevelsDialogController.cpp in Sources */,
 				625698062182392C003A3A9D /* CylinderMesh.cpp in Sources */,
 				62216BE221EB377E001CB9A1 /* GameHudController.cpp in Sources */,
 				62216C1B21EB377F001CB9A1 /* Level.cpp in Sources */,
@@ -3548,6 +3559,7 @@
 				62216C2D21EB377F001CB9A1 /* FewMovesAlertAnimation.cpp in Sources */,
 				62216C1921EB377F001CB9A1 /* FieldAnalyzer.cpp in Sources */,
 				625698092182392C003A3A9D /* ObjMesh.cpp in Sources */,
+				1774768022DA42B800EEE97C /* NoMoreLevelsDialogView.cpp in Sources */,
 				6229573522B696FA007BACE8 /* TextureAtlas.cpp in Sources */,
 				62216BCC21EB377E001CB9A1 /* Tutorial.cpp in Sources */,
 				623B94D121F6357400B62D9B /* ImageIOS.mm in Sources */,

@@ -53,6 +53,7 @@ namespace RowBlast {
         void SetCameraBetweenLevels(int levelIdA, int levelIdB);
         const MapPin* GetPin(int id) const;
         const MapPin* GetLevelPin(int levelId) const;
+        const MapPin* GetPortalPin(int portalNextLevelId) const;
         void SaveCameraXPosition();
         void HideAllLevelPinTexts();
         
@@ -64,7 +65,12 @@ namespace RowBlast {
             assert(mUfoContainer);
             return *mUfoContainer;
         }
-        
+
+        Pht::SceneObject& GetFireworksContainer() {
+            assert(mFireworksContainer);
+            return *mFireworksContainer;
+        }
+
         Pht::SceneObject& GetTutorialContainer() {
             assert(mTutorialContainer);
             return *mTutorialContainer;
@@ -100,7 +106,6 @@ namespace RowBlast {
         void CreateEffects(const World& world, const BackgroundLight& backgroundLight);
         void UpdateUiLightAnimation();
         void SetCameraAtPortal(int portalNextLevelId);
-        const MapPin* GetPortalPin(int portalNextLevelId) const;
         
         Pht::IEngine& mEngine;
         UserServices& mUserServices;
@@ -124,6 +129,7 @@ namespace RowBlast {
         Pht::Font mFont;
         std::unique_ptr<MapHud> mHud;
         Pht::SceneObject* mUfoContainer {nullptr};
+        Pht::SceneObject* mFireworksContainer {nullptr};
         Pht::SceneObject* mTutorialContainer {nullptr};
         Pht::SceneObject* mUiViewsContainer {nullptr};
         int mWorldId {1};

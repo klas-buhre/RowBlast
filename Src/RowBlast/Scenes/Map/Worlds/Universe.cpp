@@ -33,3 +33,8 @@ int Universe::CalcWorldId(int levelId) const {
 
     return 1;
 }
+
+bool Universe::IsLastWorld(int worldId) const {
+    assert(worldId <= mWorlds.size());
+    return worldId == mWorlds.size();
+}

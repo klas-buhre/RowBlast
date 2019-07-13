@@ -32,7 +32,8 @@ namespace RowBlast {
             Map,
             UfoAnimation,
             LevelGoalDialog,
-            AboutMenu
+            AboutMenu,
+            NoMoreLevelsDialog
         };
 
         void SetUpRenderer();
