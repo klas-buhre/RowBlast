@@ -7,10 +7,13 @@
 namespace RowBlast {
     class GameScene;
     class GameLogic;
+    class ActivePreviewPieceAnimation;
     
     class PreviewPiecesAnimation {
     public:
-        PreviewPiecesAnimation(GameScene& scene, GameLogic& gameLogic);
+        PreviewPiecesAnimation(GameScene& scene,
+                               GameLogic& gameLogic,
+                               ActivePreviewPieceAnimation& activePreviewPieceAnimation);
         
         void Init();
         void Update(float dt);
@@ -33,6 +36,7 @@ namespace RowBlast {
         
         GameScene& mScene;
         GameLogic& mGameLogic;
+        ActivePreviewPieceAnimation& mActivePreviewPieceAnimation;
         State mState {State::Inactive};
         PreviewPieceGroupAnimation mSwitchPieceAnimation;
         PreviewPieceGroupAnimation mNextPieceAnimation;

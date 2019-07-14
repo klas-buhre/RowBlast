@@ -102,7 +102,8 @@ GameController::GameController(Pht::IEngine& engine,
         userServices.GetSettingsService()
     },
     mFallingPieceAnimation {mGameLogic.GetFallingPieceAnimation()},
-    mPreviewPiecesAnimation {mScene, mGameLogic},
+    mActivePreviewPieceAnimation {mScene, mGameLogic},
+    mPreviewPiecesAnimation {mScene, mGameLogic, mActivePreviewPieceAnimation},
     mPreviewPiecesRotationAnimation {mScene, mGameLogic},
     mFewMovesAlertAnimation {engine, mScene, mGameLogic},
     mAddingMovesAnimation {engine, mScene},
@@ -152,6 +153,7 @@ void GameController::Init(int levelId) {
     mEffectManager.Init();
     mCameraShake.Init();
     mPreviewPiecesAnimation.Init();
+    mActivePreviewPieceAnimation.Init();
     mPreviewPiecesRotationAnimation.Init();
     mFewMovesAlertAnimation.Init();
     mAddingMovesAnimation.Init();
@@ -235,6 +237,7 @@ GameController::Command GameController::UpdateGame() {
     mFallingPieceScaleAnimation.Update(dt);
     mScene.Update();
     mPreviewPiecesAnimation.Update(dt);
+    mActivePreviewPieceAnimation.Update(dt);
     mPreviewPiecesRotationAnimation.Update(dt);
     mFewMovesAlertAnimation.Update(dt);
     mAddingMovesAnimation.Update(dt);

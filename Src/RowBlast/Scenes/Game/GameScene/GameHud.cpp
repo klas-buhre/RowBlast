@@ -587,6 +587,7 @@ void GameHud::UpdatePreviewPiece(PreviewPiece& previewPiece,
     
     auto& baseTransform = previewPiece.mSceneObject->GetTransform();
     baseTransform.SetPosition(position);
+    previewPiece.mSceneObjectPool->GetContainerSceneObject().GetTransform().SetScale(1.0f);
 
     if (pieceType == nullptr) {
         previewPiece.mSceneObjectPool->SetIsActive(false);
