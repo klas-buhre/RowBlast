@@ -6,6 +6,7 @@
 #include "IInput.hpp"
 #include "IAudio.hpp"
 #include "ISceneManager.hpp"
+#include "IAnalytics.hpp"
 
 // Game includes.
 #include "UiLayer.hpp"
@@ -54,6 +55,7 @@ RowBlastApplication::RowBlastApplication(Pht::IEngine& engine) :
     SetUpAudio();
     
     if (mAcceptTermsController.IsTermsAccepted()) {
+        mEngine.GetAnalytics().InitAnalytics();
         StartTitleScene();
     } else {
         StartAcceptTermsScene();
@@ -136,6 +138,7 @@ void RowBlastApplication::UpdateAcceptTermsScene() {
                 mFadeEffect.SetDuration(fadeDuration);
                 mFadeEffect.Start();
                 mEngine.GetInput().DisableInput();
+                mEngine.GetAnalytics().InitAnalytics();
                 mNextState = State::TitleScene;
                 break;
         }

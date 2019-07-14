@@ -6,7 +6,6 @@
 #import "GameAnalytics.h"
 
 #include "AnalyticsEvent.hpp"
-#include "FileStorage.hpp"
 
 #define DEBUG
 
@@ -14,16 +13,7 @@ using namespace Pht;
 
 namespace {
     const std::string eventSubmissionEnabledFilename {"event_submission_enabled.dat"};
-    
-    bool IsEventSubmissionEnabled() {
-#ifdef ANALYTICS_ENABLED
-        std::string data;
-        return Pht::FileStorage::Load(eventSubmissionEnabledFilename, data);
-#else
-        return false;
-#endif
-    }
-    
+
     GAResourceFlowType ToGAResourceFlowType(ResourceFlow resourceFlow) {
         switch (resourceFlow) {
             case ResourceFlow::Source:
@@ -59,16 +49,34 @@ namespace {
         }
     }
 
+#ifdef ANALYTICS_ENABLED
+    void InitGameAnalyticsIOS() {
+#ifdef DEBUG
+        [GameAnalytics setEnabledInfoLog:YES];
+        [GameAnalytics setEnabledVerboseLog:YES];
+#endif
+        
+        NSString* buildVersion = [NSString stringWithUTF8String:GetBuildVersion().c_str()];
+        [GameAnalytics configureBuild:buildVersion];
+        [GameAnalytics configureAvailableResourceCurrencies:@[@"coins"]];
+        [GameAnalytics configureAvailableResourceItemTypes:@[@"moves", @"lives", @"coins"]];
+        
+        NSString* analyticsGameKey = [NSString stringWithUTF8String:GetAnalyticsGameKey().c_str()];
+        NSString* analyticsGameSecret = [NSString stringWithUTF8String:GetAnalyticsGameSecret().c_str()];
+        [GameAnalytics initializeWithGameKey:analyticsGameKey gameSecret:analyticsGameSecret];
+    }
+#endif
+
     class GameAnalyticsIOS: public IAnalytics {
     public:
-        void EnableEventSubmission() override {
+        void InitAnalytics() override {
 #ifdef ANALYTICS_ENABLED
-            Pht::FileStorage::Save(eventSubmissionEnabledFilename, "eventSubmissionEnabled");
-            [GameAnalytics setEnabledEventSubmission:YES];
+            InitGameAnalyticsIOS();
 #endif
         }
-        
+    
         void AddEvent(const AnalyticsEvent& event) override {
+#ifdef ANALYTICS_ENABLED
             switch (event.GetKind()) {
                 case AnalyticsEvent::Kind::Business:
                     AddBusenessEvent(static_cast<const BusinessAnalyticsEvent&>(event));
@@ -86,6 +94,7 @@ namespace {
                     AddCustomEvent(static_cast<const CustomAnalyticsEvent&>(event));
                     break;
             }
+#endif
         }
         
     private:
@@ -130,28 +139,6 @@ namespace {
             [GameAnalytics addDesignEventWithEventId:[NSString stringWithUTF8String:event.mId.c_str()]];
         }
     };
-}
-
-void Pht::InitAnalytics() {
-#ifdef DEBUG
-    [GameAnalytics setEnabledInfoLog:YES];
-    [GameAnalytics setEnabledVerboseLog:YES];
-#endif
-
-    if (!IsEventSubmissionEnabled()) {
-        [GameAnalytics setEnabledEventSubmission:NO];
-    } else {
-        [GameAnalytics setEnabledEventSubmission:YES];
-    }
-
-    NSString* buildVersion = [NSString stringWithUTF8String:GetBuildVersion().c_str()];
-    [GameAnalytics configureBuild:buildVersion];
-    [GameAnalytics configureAvailableResourceCurrencies:@[@"coins"]];
-    [GameAnalytics configureAvailableResourceItemTypes:@[@"moves", @"lives", @"coins"]];
-    
-    NSString* analyticsGameKey = [NSString stringWithUTF8String:GetAnalyticsGameKey().c_str()];
-    NSString* analyticsGameSecret = [NSString stringWithUTF8String:GetAnalyticsGameSecret().c_str()];
-    [GameAnalytics initializeWithGameKey:analyticsGameKey gameSecret:analyticsGameSecret];
 }
 
 std::unique_ptr<IAnalytics> Pht::CreateAnalyticsApi() {

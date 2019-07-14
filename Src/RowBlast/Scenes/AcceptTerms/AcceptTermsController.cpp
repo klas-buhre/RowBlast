@@ -56,7 +56,6 @@ AcceptTermsController::OnTouch(const Pht::TouchEvent& touchEvent) {
     
     if (mDialogView.GetAgreeButton().IsClicked(touchEvent)) {
         Pht::FileStorage::Save(termsAcceptedFilename, "termsAccepted");
-        mEngine.GetAnalytics().EnableEventSubmission();
         return Command::Accept;
     }
 
