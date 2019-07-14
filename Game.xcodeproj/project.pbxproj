@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1774768022DA42B800EEE97C /* NoMoreLevelsDialogView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1774767E22DA42B800EEE97C /* NoMoreLevelsDialogView.cpp */; };
 		1774768322DA42E400EEE97C /* NoMoreLevelsDialogController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1774768122DA42E400EEE97C /* NoMoreLevelsDialogController.cpp */; };
+		17DE663422DB4703009B3E78 /* libGameAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 17DE663322DB4703009B3E78 /* libGameAnalytics.a */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
@@ -360,7 +361,6 @@
 		623B949821F0E60D00B62D9B /* AboutMenuView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623B949621F0E60D00B62D9B /* AboutMenuView.cpp */; };
 		623B949B21F0E62700B62D9B /* AboutMenuController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 623B949921F0E62700B62D9B /* AboutMenuController.cpp */; };
 		623B949D21F1FD6700B62D9B /* credits_english.txt in Resources */ = {isa = PBXBuildFile; fileRef = 623B949C21F1FD6600B62D9B /* credits_english.txt */; };
-		623B94A221F4826F00B62D9B /* libGameAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 623B94A121F4826E00B62D9B /* libGameAnalytics.a */; };
 		623B94A721F4855D00B62D9B /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 623B94A621F4855C00B62D9B /* AdSupport.framework */; };
 		623B94A921F4856F00B62D9B /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 623B94A821F4856F00B62D9B /* SystemConfiguration.framework */; };
 		623B94AB21F4858E00B62D9B /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 623B94AA21F4858D00B62D9B /* libsqlite3.tbd */; };
@@ -554,6 +554,8 @@
 		1774767F22DA42B800EEE97C /* NoMoreLevelsDialogView.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = NoMoreLevelsDialogView.hpp; sourceTree = "<group>"; };
 		1774768122DA42E400EEE97C /* NoMoreLevelsDialogController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NoMoreLevelsDialogController.cpp; sourceTree = "<group>"; };
 		1774768222DA42E400EEE97C /* NoMoreLevelsDialogController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = NoMoreLevelsDialogController.hpp; sourceTree = "<group>"; };
+		17DE663222DB4703009B3E78 /* GameAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameAnalytics.h; sourceTree = "<group>"; };
+		17DE663322DB4703009B3E78 /* libGameAnalytics.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGameAnalytics.a; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D6058910D05DD3D006BFB54 /* Game.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Game.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -1119,8 +1121,6 @@
 		623B949921F0E62700B62D9B /* AboutMenuController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AboutMenuController.cpp; sourceTree = "<group>"; };
 		623B949A21F0E62700B62D9B /* AboutMenuController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AboutMenuController.hpp; sourceTree = "<group>"; };
 		623B949C21F1FD6600B62D9B /* credits_english.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = credits_english.txt; sourceTree = "<group>"; };
-		623B94A021F4826E00B62D9B /* GameAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameAnalytics.h; sourceTree = "<group>"; };
-		623B94A121F4826E00B62D9B /* libGameAnalytics.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGameAnalytics.a; sourceTree = "<group>"; };
 		623B94A621F4855C00B62D9B /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		623B94A821F4856F00B62D9B /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		623B94AA21F4858D00B62D9B /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
@@ -1539,7 +1539,7 @@
 				620A981D1EE2A3B400AD6C61 /* AVFoundation.framework in Frameworks */,
 				625698572182392C003A3A9D /* libfreetype.a in Frameworks */,
 				62411A971E61E62800035D2A /* GLKit.framework in Frameworks */,
-				623B94A221F4826F00B62D9B /* libGameAnalytics.a in Frameworks */,
+				17DE663422DB4703009B3E78 /* libGameAnalytics.a in Frameworks */,
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
 				288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */,
@@ -2415,8 +2415,8 @@
 		623B949F21F4826E00B62D9B /* iOS */ = {
 			isa = PBXGroup;
 			children = (
-				623B94A021F4826E00B62D9B /* GameAnalytics.h */,
-				623B94A121F4826E00B62D9B /* libGameAnalytics.a */,
+				17DE663222DB4703009B3E78 /* GameAnalytics.h */,
+				17DE663322DB4703009B3E78 /* libGameAnalytics.a */,
 			);
 			path = iOS;
 			sourceTree = "<group>";
@@ -3837,7 +3837,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				INFOPLIST_FILE = Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Src/PhotonBeamEngine/ThirdParty/FreeType/lib",
@@ -3865,7 +3865,7 @@
 				DEVELOPMENT_TEAM = Y6YMYQ86S3;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				INFOPLIST_FILE = Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Src/PhotonBeamEngine/ThirdParty/FreeType/lib",
@@ -3913,7 +3913,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 			};
@@ -3951,7 +3951,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				SDKROOT = iphoneos;
 			};
 			name = Release;

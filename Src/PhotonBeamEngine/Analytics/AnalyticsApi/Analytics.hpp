@@ -6,7 +6,6 @@
 #include "IAnalytics.hpp"
 
 namespace Pht {
-    void InitAnalytics();
     std::unique_ptr<IAnalytics> CreateAnalyticsApi();
 }
 

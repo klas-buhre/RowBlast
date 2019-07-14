@@ -2,8 +2,6 @@
 
 #import <AVFoundation/AVFoundation.h>
 
-#include "Analytics.hpp"
-
 @implementation AppDelegate
 
 - (BOOL) application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
@@ -26,10 +24,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                           selector:@selector(handleAudioSessionInterruption:)
                                           name:AVAudioSessionInterruptionNotification
-                                          object:[AVAudioSession sharedInstance]];
-    
-    Pht::InitAnalytics();
-    
+                                          object:[AVAudioSession sharedInstance]];    
     return YES;
 }
 

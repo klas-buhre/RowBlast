@@ -10,7 +10,7 @@ namespace Pht {
     public:
         virtual ~IAnalytics() {}
         
-        virtual void EnableEventSubmission() = 0;
+        virtual void InitAnalytics() = 0;
         virtual void AddEvent(const AnalyticsEvent& event) = 0;
     };
 }
