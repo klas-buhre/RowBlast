@@ -9,7 +9,7 @@ using namespace RowBlast;
 namespace {
     constexpr auto animationDuration = 1.0f;
     constexpr auto scaleAmplitude = 0.07f;
-    constexpr auto positionAmplitude = 0.15f;
+    constexpr auto positionAmplitude = 0.11f;
 }
 
 ActivePreviewPieceAnimation::ActivePreviewPieceAnimation(GameScene& scene, GameLogic& gameLogic) :
