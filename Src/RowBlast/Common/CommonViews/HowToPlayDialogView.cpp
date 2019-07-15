@@ -888,8 +888,8 @@ Pht::Animation& HowToPlayDialogView::CreateSwitchPieceAnimation(Pht::SceneObject
     container.AddChild(selectablePieces);
     
     Pht::Vec3 slot1Pos {-2.35f, 0.0f, UiLayer::buttonText};
-    Pht::Vec3 slot2Pos {0.39f, 0.0f, UiLayer::buttonText};
-    Pht::Vec3 slot3Pos {2.81f, 0.0f, UiLayer::buttonText};
+    Pht::Vec3 slot2Pos {0.72f, 0.0f, UiLayer::buttonText};
+    Pht::Vec3 slot3Pos {3.14f, 0.0f, UiLayer::buttonText};
     auto& dPreviewPiece = CreateDPreviewPiece(slot3Pos, selectablePieces, pieceResources);
     auto& iPreviewPiece = CreateIPreviewPiece(slot2Pos, selectablePieces, pieceResources);
     auto& lPreviewPiece = CreateLPreviewPiece(slot1Pos, selectablePieces, pieceResources);
@@ -954,7 +954,7 @@ Pht::Animation& HowToPlayDialogView::CreateSwitchPieceAnimation(Pht::SceneObject
         animationSystem.CreateAnimation(lPreviewPiece, lPreviewPieceKeyframes);
     lPreviewPieceAnimation.SetInterpolation(Pht::Interpolation::None);
 
-    Pht::Vec3 handInitialPosition {2.5f, -4.7f, UiLayer::root};
+    Pht::Vec3 handInitialPosition {1.7f, -4.7f, UiLayer::root};
     Pht::Vec3 handBeforeSwipePosition {2.8f, -3.3f, UiLayer::root};
     Pht::Vec3 handAfterSwipePosition {3.0f, -1.0f, UiLayer::root};
     

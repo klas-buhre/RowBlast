@@ -19,7 +19,7 @@ namespace {
     constexpr auto fadeTime = 0.3f;
     const Pht::Vec3 placePieceHandPosition {-2.2f, -3.8f, 0.0f};
     const Pht::Vec3 fillRowsHandPosition {1.5f, -4.3f, 0.0f};
-    const Pht::Vec3 switchPieceHandPosition {1.3f, -10.6f, 0.0f};
+    const Pht::Vec3 switchPieceHandPosition {1.4f, -10.6f, 0.0f};
     const Pht::Vec3 bPieceHandPosition {-2.5f, -4.4f, 0.0f};
     const Pht::Vec3 longIPieceHandPosition {0.6f, -7.1f, 0.0f};
     const Pht::Vec3 otherMovesHandPosition1 {4.7f, -7.4f, 0.0f};

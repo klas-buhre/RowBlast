@@ -88,6 +88,7 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
+    -Tune the active preview piece animation.
     -Fix bug where the settings file is not read in a correct way for release builds.
     -Remove the section about payments in the privacy policy on the pre-release branch.
     -All apps must include a link to their privacy policy in the App Store Connect metadata field.
