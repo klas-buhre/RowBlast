@@ -149,6 +149,11 @@ namespace RowBlast {
             return *mGhostPieces;
         }
 
+        SceneObjectPool& GetGhostPieceBlocks() {
+            assert(mGhostPieceBlocks);
+            return *mGhostPieceBlocks;
+        }
+
         Pht::SceneObject& GetFieldQuadContainer() {
             assert(mFieldQuadContainer);
             return *mFieldQuadContainer;
@@ -265,6 +270,7 @@ namespace RowBlast {
         std::unique_ptr<SceneObjectPool> mFieldBlocks;
         std::unique_ptr<SceneObjectPool> mPieceBlocks;
         std::unique_ptr<SceneObjectPool> mGhostPieces;
+        std::unique_ptr<SceneObjectPool> mGhostPieceBlocks;
         Pht::SceneObject* mFieldQuadContainer {nullptr};
         Pht::SceneObject* mFieldContainer {nullptr};
         Pht::SceneObject* mPieceDropEffectsContainer {nullptr};

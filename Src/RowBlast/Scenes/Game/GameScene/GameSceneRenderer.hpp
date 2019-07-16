@@ -20,6 +20,7 @@ namespace RowBlast {
     class SubCell;
     class FallingPiece;
     class PieceResources;
+    class GhostPieceBlocks;
     class LevelResources;
     class BombsAnimation;
     class AsteroidAnimation;
@@ -34,6 +35,7 @@ namespace RowBlast {
                           const BombsAnimation& bombsAnimation,
                           AsteroidAnimation& asteroidAnimation,
                           const PieceResources& pieceResources,
+                          const GhostPieceBlocks& ghostPieceBlocks,
                           const LevelResources& levelResources);
         
         void Render();
@@ -67,6 +69,8 @@ namespace RowBlast {
                               const Pht::Vec3& position,
                               Rotation rotation);
         void RenderClickableGhostPieces(const FallingPiece& fallingPiece);
+        void RenderGhostPieceBlocks(const CellGrid& pieceBlocks,
+                                    const Pht::Vec3& ghostPieceFieldPos);
         
         GameScene& mScene;
         const Field& mField;
@@ -75,6 +79,7 @@ namespace RowBlast {
         const BombsAnimation& mBombsAnimation;
         AsteroidAnimation& mAsteroidAnimation;
         const PieceResources& mPieceResources;
+        const GhostPieceBlocks& mGhostPieceBlocks;
         const LevelResources& mLevelResources;
     };
 }

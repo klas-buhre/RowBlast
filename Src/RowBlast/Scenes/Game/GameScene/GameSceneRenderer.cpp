@@ -12,6 +12,7 @@
 #include "BombsAnimation.hpp"
 #include "AsteroidAnimation.hpp"
 #include "PieceResources.hpp"
+#include "GhostPieceBlocks.hpp"
 #include "LevelResources.hpp"
 
 using namespace RowBlast;
@@ -28,6 +29,7 @@ GameSceneRenderer::GameSceneRenderer(GameScene& scene,
                                      const BombsAnimation& bombsAnimation,
                                      AsteroidAnimation& asteroidAnimation,
                                      const PieceResources& pieceResources,
+                                     const GhostPieceBlocks& ghostPieceBlocks,
                                      const LevelResources& levelResources) :
     mScene {scene},
     mField {field},
@@ -36,6 +38,7 @@ GameSceneRenderer::GameSceneRenderer(GameScene& scene,
     mBombsAnimation {bombsAnimation},
     mAsteroidAnimation {asteroidAnimation},
     mPieceResources {pieceResources},
+    mGhostPieceBlocks {ghostPieceBlocks},
     mLevelResources {levelResources} {}
 
 void GameSceneRenderer::Render() {
@@ -403,6 +406,7 @@ void GameSceneRenderer::RenderPieceBlocks(const CellGrid& pieceBlocks,
 
 void GameSceneRenderer::RenderGhostPieces() {
     mScene.GetGhostPieces().ReclaimAll();
+    mScene.GetGhostPieceBlocks().ReclaimAll();
     
     auto* fallingPiece = mGameLogic.GetFallingPiece();
     if (fallingPiece == nullptr) {
@@ -426,20 +430,13 @@ void GameSceneRenderer::RenderGhostPieceForGestureControls(const FallingPiece& f
         mScene.GetGhostPieceZ()
     };
     
-    if (auto* ghostPieceRenderable = pieceType.GetGhostPieceRenderable()) {
-        Pht::Vec3 ghostPieceCenterLocalCoords {
-            cellSize * static_cast<float>(pieceType.GetGridNumColumns()) / 2.0f,
-            cellSize * static_cast<float>(pieceType.GetGridNumRows()) / 2.0f,
-            0.0f
-        };
-        
-        RenderGhostPiece(*ghostPieceRenderable,
-                         ghostPieceFieldPos + ghostPieceCenterLocalCoords,
-                         fallingPiece.GetRotation());
+    auto& pieceGrid = pieceType.GetGrid(fallingPiece.GetRotation());
+    
+    if (pieceType.GetGhostPieceRenderable()) {
+        RenderGhostPieceBlocks(pieceGrid, ghostPieceFieldPos);
     } else {
         Pht::Vec3 position {ghostPieceFieldPos};
         position.z = mScene.GetPressedGhostPieceZ();
-        auto& pieceGrid = pieceType.GetGrid(fallingPiece.GetRotation());
         auto isTransparent = true;
         auto isGhostPiece = true;
         RenderPieceBlocks(pieceGrid,
@@ -516,6 +513,54 @@ void GameSceneRenderer::RenderClickableGhostPieces(const FallingPiece& fallingPi
                 auto isTransparent = true;
                 RenderPieceBlocks(pieceGrid, ghostPieceFieldPos, isTransparent, isGhostPiece, pool);
             }
+        }
+    }
+}
+
+void GameSceneRenderer::RenderGhostPieceBlocks(const CellGrid& pieceBlocks,
+                                               const Pht::Vec3& ghostPieceFieldPos) {
+    auto* fallingPiece = mGameLogic.GetFallingPiece();
+    assert(fallingPiece);
+    
+    auto& pieceType = fallingPiece->GetPieceType();
+    auto pieceNumRows = pieceType.GetGridNumRows();
+    auto pieceNumColumns = pieceType.GetGridNumColumns();
+    const auto cellSize = mScene.GetCellSize();
+    const Pht::Vec3 pieceGridSize {pieceNumColumns * cellSize, pieceNumRows * cellSize, 0.0f};
+
+    auto& pool = mScene.GetGhostPieceBlocks();
+    auto& containerObject = pool.GetContainerSceneObject();
+    containerObject.GetTransform().SetPosition(ghostPieceFieldPos + pieceGridSize / 2.0f);
+
+    for (auto row = 0; row < pieceNumRows; row++) {
+        for (auto column = 0; column < pieceNumColumns; column++) {
+            auto& subCell = pieceBlocks[row][column].mFirstSubCell;
+            auto blockKind = subCell.mBlockKind;
+            if (blockKind == BlockKind::None) {
+                continue;
+            }
+            
+            Pht::Vec3 blockPosition {
+                column * cellSize + cellSize / 2.0f - pieceGridSize.x / 2.0f,
+                row * cellSize + cellSize / 2.0f - pieceGridSize.y / 2.0f,
+                0.0f
+            };
+            
+            auto& sceneObject = pool.AccuireSceneObject();
+            auto& transform = sceneObject.GetTransform();
+            transform.SetPosition(blockPosition);
+            
+            if (blockKind != BlockKind::Full) {
+                Pht::Vec3 blockRotation {0.0f, 0.0f, RotationToDeg(subCell.mRotation)};
+                transform.SetRotation(blockRotation);
+            } else {
+                transform.SetRotation({0.0f, 0.0f, 0.0f});
+            }
+            
+            auto color = subCell.mColor;
+            auto& blockRenderableObject = mGhostPieceBlocks.GetBlockRenderableObject(blockKind, color);
+            
+            sceneObject.SetRenderable(&blockRenderableObject);
         }
     }
 }

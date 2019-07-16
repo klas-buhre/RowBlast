@@ -88,7 +88,8 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-    -Add a ghost piece like in Poyo Poyo Tetris.
+    -Add triangle ghost pieces.
+    -Update tutorial and how to play dialog with new ghost pieces for gesture controls.
     -Remove the section about payments in the privacy policy on the pre-release branch.
     -All apps must include a link to their privacy policy in the App Store Connect metadata field.
 
