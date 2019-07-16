@@ -20,6 +20,25 @@ using namespace RowBlast;
 namespace {
     constexpr auto dz = 0.05f;
     constexpr auto numVisibleGridRows = 17;
+    
+    float GhostPieceTriangleBlockRotationToDeg(BlockKind blockKind, Rotation rotation) {
+        auto baseRotation = 0.0f;
+        switch (blockKind) {
+            case BlockKind::LowerLeftHalf:
+                baseRotation = -90.0f;
+                break;
+            case BlockKind::UpperLeftHalf:
+                baseRotation = -180.0f;
+                break;
+            case BlockKind::UpperRightHalf:
+                baseRotation = -270.0f;
+                break;
+            default:
+                break;
+        }
+        
+        return baseRotation + RotationToDeg(rotation);
+    }
 }
 
 GameSceneRenderer::GameSceneRenderer(GameScene& scene,
@@ -551,7 +570,11 @@ void GameSceneRenderer::RenderGhostPieceBlocks(const CellGrid& pieceBlocks,
             transform.SetPosition(blockPosition);
             
             if (blockKind != BlockKind::Full) {
-                Pht::Vec3 blockRotation {0.0f, 0.0f, RotationToDeg(subCell.mRotation)};
+                Pht::Vec3 blockRotation {
+                    0.0f,
+                    0.0f,
+                    GhostPieceTriangleBlockRotationToDeg(blockKind, subCell.mRotation)
+                };
                 transform.SetRotation(blockRotation);
             } else {
                 transform.SetRotation({0.0f, 0.0f, 0.0f});

@@ -40,33 +40,89 @@ namespace {
                 break;
         }
     }
+    
+    void DrawFullBlockRenderable(const Pht::Vec4& borderColor,
+                                 const Pht::Vec4& innerBorderColor,
+                                 const Pht::Vec4& innerColor,
+                                 const Pht::Vec2& size,
+                                 Pht::SoftwareRasterizer& rasterizer) {
+        Pht::Vec2 lowerLeft {padding, padding};
+        Pht::Vec2 upperRight {size.x - padding, size.y - padding};
+        rasterizer.DrawRectangle(upperRight, lowerLeft, borderColor);
+        
+        Pht::Vec2 lowerLeft2 {padding + borderWidth, padding + borderWidth};
+        Pht::Vec2 upperRight2 {size.x - borderWidth - padding, size.y - borderWidth - padding};
+        rasterizer.DrawRectangle(upperRight2, lowerLeft2, innerBorderColor, Pht::DrawOver::Yes);
+        
+        Pht::Vec2 lowerLeft3 {padding + borderWidth * 2.0f, padding + borderWidth * 2.0f};
+        Pht::Vec2 upperRight3 {size.x - borderWidth * 2.0f - padding, size.y - borderWidth * 2.0f - padding};
+        rasterizer.DrawRectangle(upperRight3, lowerLeft3, innerColor, Pht::DrawOver::Yes);
+    }
+
+    void DrawTriangleBlockRenderable(const Pht::Vec4& color,
+                                     const Pht::Vec2& size,
+                                     int i,
+                                     Pht::SoftwareRasterizer& rasterizer) {
+        Pht::Vec2 lowerLeft {padding + borderWidth * (i + 1), padding + borderWidth * i};
+        Pht::Vec2 upperRight {size.x - padding - borderWidth * i, padding + borderWidth * (i + 1)};
+        rasterizer.DrawRectangle(upperRight, lowerLeft, color);
+
+        Pht::Vec2 lowerLeft2 {size.x - padding - borderWidth * (i + 1), padding + borderWidth * i};
+        Pht::Vec2 upperRight2 {size.x - padding - borderWidth * i, size.y - padding * 2.0f - borderWidth * (i + 1)};
+        rasterizer.DrawRectangle(upperRight2, lowerLeft2, color);
+
+        Pht::Vec2 lowerLeft3 {padding * 2.0f + borderWidth * i * 2.0f, padding + borderWidth * i * 2.0f};
+        Pht::Vec2 upperRight3 {size.x - padding - borderWidth * i * 2.0f, size.y - padding * 2.0f - borderWidth * i * 2.0f};
+        rasterizer.DrawTiltedTrapezoid45(upperRight3, lowerLeft3, borderWidth, color);
+    }
+
+    void DrawTriangleBlockRenderable(const Pht::Vec4& borderColor,
+                                     const Pht::Vec4& innerBorderColor,
+                                     const Pht::Vec4& innerColor,
+                                     const Pht::Vec2& size,
+                                     Pht::SoftwareRasterizer& rasterizer) {
+        DrawTriangleBlockRenderable(borderColor, size, 0, rasterizer);
+        DrawTriangleBlockRenderable(innerBorderColor, size, 1, rasterizer);
+        rasterizer.FillEnclosedArea(innerColor);
+    }
 
     std::unique_ptr<Pht::RenderableObject>
-    CreateBlockRenderable(BlockColor blockColor,
+    CreateBlockRenderable(BlockKind blockKind,
+                          BlockColor blockColor,
                           const Pht::Vec2& size,
                           Pht::SoftwareRasterizer& rasterizer,
                           Pht::IEngine& engine) {
         rasterizer.ClearBuffer();
         
         auto borderColor = ToBorderColor(blockColor);
-        Pht::Vec2 lowerLeft {padding, padding};
-        Pht::Vec2 upperRight {size.x - padding, size.y - padding};
-        rasterizer.DrawRectangle(upperRight, lowerLeft, borderColor);
-
         auto innerBorderColor = borderColor;
         innerBorderColor.w = innerBorderColorAlpha;
-        Pht::Vec2 lowerLeft2 {padding + borderWidth, padding + borderWidth};
-        Pht::Vec2 upperRight2 {size.x - borderWidth - padding, size.y - borderWidth - padding};
-        rasterizer.DrawRectangle(upperRight2, lowerLeft2, innerBorderColor, Pht::DrawOver::Yes);
-
         auto innerColor = borderColor;
         innerColor.w = innerColorAlpha;
-        Pht::Vec2 lowerLeft3 {padding + borderWidth * 2.0f, padding + borderWidth * 2.0f};
-        Pht::Vec2 upperRight3 {size.x - borderWidth * 2.0f - padding, size.y - borderWidth * 2.0f - padding};
-        rasterizer.DrawRectangle(upperRight3, lowerLeft3, innerColor, Pht::DrawOver::Yes);
 
-        auto image = rasterizer.ProduceImage();
+        switch (blockKind) {
+            case BlockKind::Full:
+                DrawFullBlockRenderable(borderColor,
+                                        innerBorderColor,
+                                        innerColor,
+                                        size,
+                                        rasterizer);
+                break;
+            case BlockKind::LowerRightHalf:
+            case BlockKind::UpperRightHalf:
+            case BlockKind::UpperLeftHalf:
+            case BlockKind::LowerLeftHalf:
+                DrawTriangleBlockRenderable(borderColor,
+                                            innerBorderColor,
+                                            innerColor,
+                                            size,
+                                            rasterizer);
+                break;
+            default:
+                break;
+        }
         
+        auto image = rasterizer.ProduceImage();
         Pht::Material imageMaterial {*image, Pht::GenerateMipmap::Yes};
         imageMaterial.SetBlend(Pht::Blend::Yes);
         
@@ -98,15 +154,22 @@ GhostPieceBlocks::GhostPieceBlocks(Pht::IEngine& engine, const CommonResources& 
     auto rasterizer = std::make_unique<Pht::SoftwareRasterizer>(coordinateSystemSize, imageSize);
 
     for (auto colorIndex = 0; colorIndex < Quantities::numBlockColors; ++colorIndex) {
-        auto color = static_cast<BlockColor>(colorIndex);
-        auto blockIndex = CalcBlockIndex(BlockKind::Full, color);
+        auto blockColor = static_cast<BlockColor>(colorIndex);
         
-        auto renderableObject = CreateBlockRenderable(color,
-                                                      coordinateSystemSize,
-                                                      *rasterizer,
-                                                      engine);
+        for (auto blockKindIndex = 0;
+             blockKindIndex < Quantities::numBlockRenderables;
+             ++blockKindIndex) {
+            
+            auto blockKind = static_cast<BlockKind>(blockKindIndex);
+            auto blockIndex = CalcBlockIndex(blockKind, blockColor);
+            auto renderableObject = CreateBlockRenderable(blockKind,
+                                                          blockColor,
+                                                          coordinateSystemSize,
+                                                          *rasterizer,
+                                                          engine);
         
-        mBlocks[blockIndex] = std::move(renderableObject);
+            mBlocks[blockIndex] = std::move(renderableObject);
+        }
     }
 }
 
