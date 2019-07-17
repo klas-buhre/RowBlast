@@ -26,6 +26,7 @@ using namespace RowBlast;
 namespace {
     constexpr auto cameraCutoffVelocity = 0.1f;
     constexpr auto dampingCoefficient = 5.0f;
+    constexpr auto swipeControlsHintDialogLevelId = 3;
 }
 
 MapController::Command::Command(Kind kind, int level) :
@@ -165,8 +166,16 @@ void MapController::UpdateUfoAnimation() {
                 mScene.SetCameraXPosition(mUfo.GetPosition().x);
             }
             if (mState == State::UfoAnimation) {
-                if (mStartLevelDialogOnAnimationFinished) {
-                    GoToStartLevelStateLevelGoalDialog(mLevelToStart);
+                if (mLevelToStart == swipeControlsHintDialogLevelId &&
+                    mUserServices.GetSettingsService().GetControlType() == ControlType::Click) {
+                
+                    if (mStartLevelDialogOnAnimationFinished) {
+                        GoToStartLevelStateSwipeControlsHintDialog(mLevelToStart);
+                    }
+                } else {
+                    if (mStartLevelDialogOnAnimationFinished) {
+                        GoToStartLevelStateLevelGoalDialog(mLevelToStart);
+                    }
                 }
                 if (mHideUfoOnAnimationFinished) {
                     mUfo.Hide();
@@ -205,6 +214,12 @@ MapController::Command MapController::UpdateInStartLevelState() {
             break;
         case StartLevelState::Store:
             UpdateInStartLevelStateStore();
+            break;
+        case StartLevelState::SwipeControlsHintDialog:
+            UpdateInStartLevelStateSwipeControlsHintDialog();
+            break;
+        case StartLevelState::HowToPlayDialog:
+            UpdateInStartLevelStateHowToPlayDialog();
             break;
     }
     
@@ -257,6 +272,29 @@ void MapController::UpdateInStartLevelStateStore() {
             } else {
                 GoToMapState();
             }
+            break;
+    }
+}
+
+void MapController::UpdateInStartLevelStateSwipeControlsHintDialog() {
+    switch (mMapViewControllers.GetSwipeControlsHintDialogController().Update()) {
+        case SwipeControlsHintDialogController::Result::None:
+            break;
+        case SwipeControlsHintDialogController::Result::HowToPlay:
+            GoToStartLevelStateHowToPlayDialogState();
+            break;
+        case SwipeControlsHintDialogController::Result::Close:
+            GoToStartLevelStateLevelGoalDialog(mLevelToStart);
+            break;
+    }
+}
+
+void MapController::UpdateInStartLevelStateHowToPlayDialog() {
+    switch (mMapViewControllers.GetHowToPlayDialogController().Update()) {
+        case HowToPlayDialogController::Result::None:
+            break;
+        case HowToPlayDialogController::Result::Close:
+            GoToStartLevelStateLevelGoalDialog(mLevelToStart);
             break;
     }
 }
@@ -473,14 +511,25 @@ void MapController::HandlePinClick(const MapPin& pin) {
     auto& mapPlace = pin.GetPlace();
     
     switch (mapPlace.GetKind()) {
-        case MapPlace::Kind::MapLevel:
+        case MapPlace::Kind::MapLevel: {
             mTutorial.OnLevelClick();
-            if (mUserServices.GetLifeService().GetNumLives() > 0) {
-                GoToStartLevelStateLevelGoalDialog(pin.GetLevel());
+            auto levelId = pin.GetLevel();
+            auto& progressService = mUserServices.GetProgressService();
+            if (progressService.ProgressedAtPreviousGameRound() &&
+                progressService.GetProgress() == swipeControlsHintDialogLevelId &&
+                mUserServices.GetSettingsService().GetControlType() == ControlType::Click &&
+                levelId == swipeControlsHintDialogLevelId) {
+                
+                GoToStartLevelStateSwipeControlsHintDialog(levelId);
             } else {
-                GoToStartLevelStateNoLivesDialog(pin.GetLevel());
+                if (mUserServices.GetLifeService().GetNumLives() > 0) {
+                    GoToStartLevelStateLevelGoalDialog(levelId);
+                } else {
+                    GoToStartLevelStateNoLivesDialog(levelId);
+                }
             }
             break;
+        }
         case MapPlace::Kind::Portal: {
             mTutorial.OnPortalClick();
             auto& portal = mapPlace.GetPortal();
@@ -616,6 +665,21 @@ void MapController::GoToStartLevelStateStore() {
                                 PurchaseSuccessfulDialogController::ShouldSlideOut::Yes);
 }
 
+void MapController::GoToStartLevelStateSwipeControlsHintDialog(int levelToStart) {
+    mState = State::StartLevel;
+    mStartLevelState = StartLevelState::SwipeControlsHintDialog;
+    mLevelToStart = levelToStart;
+    mMapViewControllers.SetActiveController(MapViewControllers::SwipeControlsHintDialog);
+    mMapViewControllers.GetSwipeControlsHintDialogController().SetUp();
+}
+
+void MapController::GoToStartLevelStateHowToPlayDialogState() {
+    mState = State::StartLevel;
+    mStartLevelState = StartLevelState::HowToPlayDialog;
+    mMapViewControllers.SetActiveController(MapViewControllers::HowToPlayDialog);
+    mMapViewControllers.GetHowToPlayDialogController().SetUp(HowToPlayDialogController::swipePageIndex);
+}
+
 void MapController::HandleLivesButtonClick() {
     if (mUserServices.GetLifeService().GetNumLives() == 0) {
         GoToAddLivesStateNoLivesDialog();
@@ -660,7 +724,7 @@ void MapController::GoToOptionsMenuState() {
 
 void MapController::GoToHowToPlayDialogState() {
     mMapViewControllers.SetActiveController(MapViewControllers::HowToPlayDialog);
-    mMapViewControllers.GetHowToPlayDialogController().SetUp();
+    mMapViewControllers.GetHowToPlayDialogController().SetUp(0);
     mState = State::HowToPlayDialog;
 }
 

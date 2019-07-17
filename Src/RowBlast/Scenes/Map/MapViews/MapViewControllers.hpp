@@ -13,6 +13,7 @@
 #include "NoLivesDialogController.hpp"
 #include "LivesDialogController.hpp"
 #include "HowToPlayDialogController.hpp"
+#include "SwipeControlsHintDialogController.hpp"
 #include "NoMoreLevelsDialogController.hpp"
 
 namespace Pht {
@@ -35,6 +36,7 @@ namespace RowBlast {
             OptionsMenu,
             AboutMenu,
             HowToPlayDialog,
+            SwipeControlsHintDialog,
             NoMoreLevelsDialog,
             None
         };
@@ -77,10 +79,14 @@ namespace RowBlast {
             return mHowToPlayDialogController;
         }
 
+        SwipeControlsHintDialogController& GetSwipeControlsHintDialogController() {
+            return mSwipeControlsHintDialogController;
+        }
+
         NoMoreLevelsDialogController& GetNoMoreLevelsDialogController() {
             return mNoMoreLevelsDialogController;
         }
-
+        
     private:
         MapScene& mScene;
         Pht::FadeEffect mFadeEffect;
@@ -92,6 +98,7 @@ namespace RowBlast {
         OptionsMenuController mOptionsMenuController;
         AboutMenuController mAboutMenuController;
         HowToPlayDialogController mHowToPlayDialogController;
+        SwipeControlsHintDialogController mSwipeControlsHintDialogController;
         NoMoreLevelsDialogController mNoMoreLevelsDialogController;
     };
 }

@@ -104,8 +104,8 @@ SlidingTextAnimation::SlidingTextAnimation(Pht::IEngine& engine,
                                           .mNumObjects = true
                                       });
     mBlocksClearedMessage = &CreateText(font,
-                                        1.8f,
-                                        {{-1.21f, upperY}, "ALL", {0.65f, 1.15f}},
+                                        3.0f,
+                                        {{-5.17f, upperY}, "GRAY BLOCKS", {4.9f, 1.15f}},
                                         {{-3.3f, lowerY}, "CLEARED!", {4.85f, 1.15f}},
                                         ExtraAnimations{
                                             .mUfo = true,

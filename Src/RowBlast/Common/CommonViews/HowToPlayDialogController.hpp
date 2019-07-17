@@ -16,6 +16,8 @@ namespace RowBlast {
     
     class HowToPlayDialogController {
     public:
+        static constexpr auto swipePageIndex = 5;
+
         enum class Result {
             None,
             Close
@@ -27,7 +29,7 @@ namespace RowBlast {
                                   const LevelResources& levelResources,
                                   HowToPlayDialogView::SceneId sceneId);
         
-        void SetUp();
+        void SetUp(int startPage);
         void SetFadeEffect(Pht::FadeEffect& fadeEffect);
         void SetGuiLightProvider(IGuiLightProvider& guiLightProvider);
         Result Update();
