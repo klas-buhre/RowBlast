@@ -79,6 +79,7 @@ GameController::GameController(Pht::IEngine& engine,
         mScene,
         commonResources,
         mPieceResources,
+        mGhostPieceBlocks,
         mLevelResources,
         mBlastRadiusAnimation,
         userServices

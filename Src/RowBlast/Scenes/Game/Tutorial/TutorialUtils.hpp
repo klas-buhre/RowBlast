@@ -17,6 +17,7 @@ namespace RowBlast {
     class IGuiLightProvider;
     class LevelResources;
     class PieceResources;
+    class GhostPieceBlocks;
 
     namespace TutorialUtils {
         void CreateFieldQuad(Pht::IEngine& engine, Pht::GuiView& view, Pht::SceneObject& parent);
@@ -75,6 +76,16 @@ namespace RowBlast {
                                        float rotation,
                                        Pht::SceneObject& parent,
                                        const PieceResources& pieceResources);
+        Pht::SceneObject& CreateLPieceGhostPiece(Pht::GuiView& view,
+                                                 const Pht::Vec3& position,
+                                                 float rotation,
+                                                 Pht::SceneObject& parent,
+                                                 const GhostPieceBlocks& ghostPieceBlocks);
+        Pht::SceneObject& CreateBPieceGhostPiece(Pht::GuiView& view,
+                                                 const Pht::Vec3& position,
+                                                 float rotation,
+                                                 Pht::SceneObject& parent,
+                                                 const GhostPieceBlocks& ghostPieceBlocks);
         Pht::SceneObject& CreatePieceGhostPiece(Pht::GuiView& view,
                                                 const std::string& pieceName,
                                                 const Pht::Vec3& position,

@@ -45,6 +45,7 @@ Tutorial::Tutorial(Pht::IEngine& engine,
                    GameScene& scene,
                    const CommonResources& commonResources,
                    const PieceResources& pieceResources,
+                   const GhostPieceBlocks& ghostPieceBlocks,
                    const LevelResources& levelResources,
                    const BlastRadiusAnimation& blastRadiusAnimation,
                    const UserServices& userServices) :
@@ -79,6 +80,7 @@ Tutorial::Tutorial(Pht::IEngine& engine,
         engine,
         commonResources,
         pieceResources,
+        ghostPieceBlocks,
         levelResources,
         userServices
     },
@@ -86,6 +88,7 @@ Tutorial::Tutorial(Pht::IEngine& engine,
         engine,
         commonResources,
         pieceResources,
+        ghostPieceBlocks,
         levelResources,
         userServices
     } {
