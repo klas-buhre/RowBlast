@@ -98,10 +98,10 @@ void Json::AddString(rapidjson::Value& object,
                      const std::string& value,
                      rapidjson::Document::AllocatorType& allocator) {
     rapidjson::Value v;
-    v.SetString(value.c_str(), static_cast<unsigned int>(value.size()));
+    v.SetString(value.c_str(), static_cast<unsigned int>(value.size()), allocator);
 
     rapidjson::Value n;
-    n.SetString(name.c_str(), static_cast<unsigned int>(name.size()));
+    n.SetString(name.c_str(), static_cast<unsigned int>(name.size()), allocator);
     
     object.AddMember(n, v, allocator);
 }
@@ -114,7 +114,7 @@ void Json::AddBool(rapidjson::Value& object,
     v.SetBool(value);
 
     rapidjson::Value n;
-    n.SetString(name.c_str(), static_cast<unsigned int>(name.size()));
+    n.SetString(name.c_str(), static_cast<unsigned int>(name.size()), allocator);
     
     object.AddMember(n, v, allocator);
 }
@@ -127,7 +127,7 @@ void Json::AddInt(rapidjson::Value& object,
     v.SetInt(value);
 
     rapidjson::Value n;
-    n.SetString(name.c_str(), static_cast<unsigned int>(name.size()));
+    n.SetString(name.c_str(), static_cast<unsigned int>(name.size()), allocator);
     
     object.AddMember(n, v, allocator);
 }
@@ -140,7 +140,7 @@ void Json::AddUInt64(rapidjson::Value& object,
     v.SetUint64(value);
 
     rapidjson::Value n;
-    n.SetString(name.c_str(), static_cast<unsigned int>(name.size()));
+    n.SetString(name.c_str(), static_cast<unsigned int>(name.size()), allocator);
     
     object.AddMember(n, v, allocator);
 }
@@ -150,7 +150,7 @@ void Json::AddValue(rapidjson::Value& object,
                     rapidjson::Value& value,
                     rapidjson::Document::AllocatorType& allocator) {
     rapidjson::Value n;
-    n.SetString(name.c_str(), static_cast<unsigned int>(name.size()));
+    n.SetString(name.c_str(), static_cast<unsigned int>(name.size()), allocator);
 
     object.AddMember(n, value, allocator);
 }

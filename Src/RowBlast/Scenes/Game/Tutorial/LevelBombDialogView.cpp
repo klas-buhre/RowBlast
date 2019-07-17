@@ -11,6 +11,7 @@
 #include "UiLayer.hpp"
 #include "TutorialUiLayer.hpp"
 #include "PieceResources.hpp"
+#include "GhostPieceBlocks.hpp"
 #include "LevelResources.hpp"
 #include "UserServices.hpp"
 #include "GuiUtils.hpp"
@@ -34,6 +35,7 @@ namespace {
 LevelBombDialogView::LevelBombDialogView(Pht::IEngine& engine,
                                          const CommonResources& commonResources,
                                          const PieceResources& pieceResources,
+                                         const GhostPieceBlocks& ghostPieceBlocks,
                                          const LevelResources& levelResources,
                                          const UserServices& userServices) :
     mEngine {engine},
@@ -54,7 +56,7 @@ LevelBombDialogView::LevelBombDialogView(Pht::IEngine& engine,
 
     GuiUtils::CreateTitleBarLine(engine, *this, 2.2f);
     
-    CreateAnimation(pieceResources, levelResources);
+    CreateAnimation(pieceResources, levelResources, ghostPieceBlocks);
 
     auto& textProperties = guiResources.GetSmallWhiteTextProperties(zoom);
     CreateText({-4.85f, -4.8f, UiLayer::panel}, "Detonate bombs by placing a", textProperties);
@@ -68,7 +70,8 @@ LevelBombDialogView::LevelBombDialogView(Pht::IEngine& engine,
 }
 
 void LevelBombDialogView::CreateAnimation(const PieceResources& pieceResources,
-                                          const LevelResources& levelResources) {
+                                          const LevelResources& levelResources,
+                                          const GhostPieceBlocks& ghostPieceBlocks) {
     auto& container = CreateSceneObject();
     container.GetTransform().SetPosition({0.0f, 1.8f, 0.0f});
     container.GetTransform().SetScale(1.25f);
@@ -209,12 +212,12 @@ void LevelBombDialogView::CreateAnimation(const PieceResources& pieceResources,
     animationSystem.CreateAnimation(move2, moveKeyframes);
     animationSystem.CreateAnimation(move3, moveKeyframes);
     
-    Pht::Vec3 ghostPieceInitialPosition {-0.5f, 1.5f, UiLayer::block};
-    Pht::Vec3 ghostPiecePosition2 {-1.5f, 0.5f, UiLayer::block};
+    Pht::Vec3 ghostPieceInitialPosition {-0.5f, 1.5f, UiLayer::panel};
+    Pht::Vec3 ghostPiecePosition2 {-1.5f, 0.5f, UiLayer::panel};
 
     mGhostPieceContainer = &CreateSceneObject();
     container.AddChild(*mGhostPieceContainer);
-    auto& ghostPiece = TutorialUtils::CreatePieceGhostPiece(*this, "L", ghostPieceInitialPosition, 0.0f, *mGhostPieceContainer, levelResources);
+    auto& ghostPiece = TutorialUtils::CreateLPieceGhostPiece(*this, ghostPieceInitialPosition, 0.0f, *mGhostPieceContainer, ghostPieceBlocks);
 
     std::vector<Pht::Keyframe> ghostPieceKeyframes {
         {.mTime = 0.0f, .mPosition = ghostPieceInitialPosition, .mIsVisible = true},
@@ -226,8 +229,8 @@ void LevelBombDialogView::CreateAnimation(const PieceResources& pieceResources,
     auto& ghostPieceAnimation = animationSystem.CreateAnimation(ghostPiece, ghostPieceKeyframes);
     ghostPieceAnimation.SetInterpolation(Pht::Interpolation::None);
 
-    Pht::Vec3 pieceInitialPosition {-0.5f, 3.3f, UiLayer::block};
-    Pht::Vec3 piecePosition2 {-1.5f, 3.3f, UiLayer::block};
+    Pht::Vec3 pieceInitialPosition {-0.5f, 3.5f, UiLayer::block};
+    Pht::Vec3 piecePosition2 {-1.5f, 3.5f, UiLayer::block};
     Pht::Vec3 pieceLandingPosition {-1.5f, 0.5f, UiLayer::block};
     
     auto& piece = TutorialUtils::CreateLPiece(*this, pieceInitialPosition, 0.0f, container, pieceResources);
@@ -269,7 +272,7 @@ void LevelBombDialogView::CreateAnimation(const PieceResources& pieceResources,
         {.mTime = 0.0f, .mPosition = Pht::Vec3{-1.0f, 1.0f, UiLayer::block}, .mIsVisible = true},
         {.mTime = detonationTime + blockFallWaitDuration, .mPosition = Pht::Vec3{-1.0f, 1.0f, UiLayer::block}},
         {.mTime = detonationTime + blockFallWaitDuration + blockFallDuration, .mPosition = Pht::Vec3{-1.0f, -4.0f, UiLayer::block}},
-        {.mTime = animationDuration}
+        {.mTime = animationDuration, .mIsVisible = false}
     };
     animationSystem.CreateAnimation(yellowBlock1, yellowBlock1Keyframes);
 

@@ -22,12 +22,14 @@ namespace RowBlast {
     class UserServices;
     class LevelResources;
     class PieceResources;
+    class GhostPieceBlocks;
 
     class AsteroidDialogView: public Pht::GuiView {
     public:
         AsteroidDialogView(Pht::IEngine& engine,
                            const CommonResources& commonResources,
                            const PieceResources& pieceResources,
+                           const GhostPieceBlocks& ghostPieceBlocks,
                            const LevelResources& levelResources,
                            const UserServices& userServices);
 
@@ -46,7 +48,8 @@ namespace RowBlast {
         
     private:
         void CreateAnimation(const PieceResources& pieceResources,
-                             const LevelResources& levelResources);
+                             const LevelResources& levelResources,
+                             const GhostPieceBlocks& ghostPieceBlocks);
 
         Pht::IEngine& mEngine;
         const UserServices& mUserServices;

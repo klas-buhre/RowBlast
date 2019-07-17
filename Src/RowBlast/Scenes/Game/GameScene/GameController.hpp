@@ -21,11 +21,13 @@
 #include "LevelResources.hpp"
 #include "Level.hpp"
 #include "PieceResources.hpp"
+#include "GhostPieceBlocks.hpp"
 #include "GameHudResources.hpp"
 #include "GameViewControllers.hpp"
 #include "StoreController.hpp"
 #include "PreviewPiecesAnimation.hpp"
 #include "PreviewPiecesRotationAnimation.hpp"
+#include "ActivePreviewPieceAnimation.hpp"
 #include "FewMovesAlertAnimation.hpp"
 #include "AddingMovesAnimation.hpp"
 #include "SlidingTextAnimation.hpp"
@@ -165,6 +167,7 @@ namespace RowBlast {
         Pht::IEngine& mEngine;
         UserServices& mUserServices;
         PieceResources mPieceResources;
+        GhostPieceBlocks mGhostPieceBlocks;
         LevelResources mLevelResources;
         GameHudResources mGameHudResources;
         GameViewControllers mGameViewControllers;
@@ -188,6 +191,7 @@ namespace RowBlast {
         Tutorial mTutorial;
         GameLogic mGameLogic;
         FallingPieceAnimation& mFallingPieceAnimation;
+        ActivePreviewPieceAnimation mActivePreviewPieceAnimation;
         PreviewPiecesAnimation mPreviewPiecesAnimation;
         PreviewPiecesRotationAnimation mPreviewPiecesRotationAnimation;
         FewMovesAlertAnimation mFewMovesAlertAnimation;

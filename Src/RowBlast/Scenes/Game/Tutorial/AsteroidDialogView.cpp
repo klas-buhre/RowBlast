@@ -11,6 +11,7 @@
 #include "UiLayer.hpp"
 #include "TutorialUiLayer.hpp"
 #include "PieceResources.hpp"
+#include "GhostPieceBlocks.hpp"
 #include "LevelResources.hpp"
 #include "UserServices.hpp"
 #include "GuiUtils.hpp"
@@ -34,6 +35,7 @@ namespace {
 AsteroidDialogView::AsteroidDialogView(Pht::IEngine& engine,
                                        const CommonResources& commonResources,
                                        const PieceResources& pieceResources,
+                                       const GhostPieceBlocks& ghostPieceBlocks,
                                        const LevelResources& levelResources,
                                        const UserServices& userServices) :
     mEngine {engine},
@@ -54,7 +56,7 @@ AsteroidDialogView::AsteroidDialogView(Pht::IEngine& engine,
 
     GuiUtils::CreateTitleBarLine(engine, *this, 2.2f);
     
-    CreateAnimation(pieceResources, levelResources);
+    CreateAnimation(pieceResources, levelResources, ghostPieceBlocks);
 
     auto& textProperties = guiResources.GetSmallWhiteTextProperties(zoom);
     CreateText({-4.4f, -4.8f, UiLayer::panel}, "Bring the asteroid down to", textProperties);
@@ -68,7 +70,8 @@ AsteroidDialogView::AsteroidDialogView(Pht::IEngine& engine,
 }
 
 void AsteroidDialogView::CreateAnimation(const PieceResources& pieceResources,
-                                         const LevelResources& levelResources) {
+                                         const LevelResources& levelResources,
+                                         const GhostPieceBlocks& ghostPieceBlocks) {
     auto& container = CreateSceneObject();
     container.GetTransform().SetPosition({0.0f, 1.8f, 0.0f});
     container.GetTransform().SetScale(1.25f);
@@ -136,12 +139,12 @@ void AsteroidDialogView::CreateAnimation(const PieceResources& pieceResources,
     animationSystem.CreateAnimation(move2, moveKeyframes);
     animationSystem.CreateAnimation(move3, moveKeyframes);
     
-    Pht::Vec3 ghostPieceInitialPosition {0.0f, 0.0f, TutorialUiLayer::ghostPiece};
-    Pht::Vec3 ghostPiecePosition2 {-1.0f, -3.0f, TutorialUiLayer::ghostPiece};
+    Pht::Vec3 ghostPieceInitialPosition {-0.5f, 0.0f, TutorialUiLayer::ghostPiece};
+    Pht::Vec3 ghostPiecePosition2 {-1.5f, -3.0f, TutorialUiLayer::ghostPiece};
 
     mGhostPieceContainer = &CreateSceneObject();
     container.AddChild(*mGhostPieceContainer);
-    auto& ghostPiece = TutorialUtils::CreatePieceGhostPiece(*this, "B", ghostPieceInitialPosition, 90.0f, *mGhostPieceContainer, levelResources);
+    auto& ghostPiece = TutorialUtils::CreateBPieceGhostPiece(*this, ghostPieceInitialPosition, 90.0f, *mGhostPieceContainer, ghostPieceBlocks);
 
     std::vector<Pht::Keyframe> ghostPieceKeyframes {
         {.mTime = 0.0f, .mPosition = ghostPieceInitialPosition, .mIsVisible = true},

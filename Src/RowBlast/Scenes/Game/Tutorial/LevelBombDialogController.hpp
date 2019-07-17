@@ -14,6 +14,7 @@ namespace RowBlast {
     class CommonResources;
     class UserServices;
     class PieceResources;
+    class GhostPieceBlocks;
     class LevelResources;
     
     class LevelBombDialogController {
@@ -26,6 +27,7 @@ namespace RowBlast {
         LevelBombDialogController(Pht::IEngine& engine,
                                   const CommonResources& commonResources,
                                   const PieceResources& pieceResources,
+                                  const GhostPieceBlocks& ghostPieceBlocks,
                                   const LevelResources& levelResources,
                                   const UserServices& userServices);
         

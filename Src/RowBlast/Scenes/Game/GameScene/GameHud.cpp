@@ -104,11 +104,11 @@ GameHud::GameHud(Pht::IEngine& engine,
         Pht::Vec3{0.0f, -1.88f, UiLayer::block}
     },
     mSelectablePreviewPiecesRelativePositions {
-        Pht::Vec3{-3.21f, 0.0f, UiLayer::block},
-        Pht::Vec3{-2.03f, 0.0f, UiLayer::block},
-        Pht::Vec3{0.39f, 0.0f, UiLayer::block},
-        Pht::Vec3{2.81f, 0.0f, UiLayer::block},
-        Pht::Vec3{4.01f, 0.0f, UiLayer::block}
+        Pht::Vec3{-3.53f, 0.0f, UiLayer::block},
+        Pht::Vec3{-2.07f, 0.0f, UiLayer::block},
+        Pht::Vec3{0.72f, 0.0f, UiLayer::block},
+        Pht::Vec3{3.14f, 0.0f, UiLayer::block},
+        Pht::Vec3{4.34f, 0.0f, UiLayer::block}
     } {
 
     mNext2PiecesPreviousFrame.fill(nullptr);
@@ -399,7 +399,7 @@ void GameHud::CreateSelectablePiecesObject(Pht::Scene& scene,
                                            const GameHudRectangles& hudRectangles) {
     mSelectablePiecesContainer = &scene.CreateSceneObject(parentObject);
     
-    Pht::Vec3 position {-0.3f, CalculateLowerHudObjectYPosition(mEngine), UiLayer::root};
+    Pht::Vec3 position {-0.5f, CalculateLowerHudObjectYPosition(mEngine), UiLayer::root};
     mSelectablePiecesContainer->GetTransform().SetPosition(position);
     
     mSelectablePiecesSceneObject = &scene.CreateSceneObject(*mSelectablePiecesContainer);
@@ -587,6 +587,10 @@ void GameHud::UpdatePreviewPiece(PreviewPiece& previewPiece,
     
     auto& baseTransform = previewPiece.mSceneObject->GetTransform();
     baseTransform.SetPosition(position);
+    
+    auto& poolTransform = previewPiece.mSceneObjectPool->GetContainerSceneObject().GetTransform();
+    poolTransform.SetScale(1.0f);
+    poolTransform.SetPosition({0.0f, 0.0f, 0.0f});
 
     if (pieceType == nullptr) {
         previewPiece.mSceneObjectPool->SetIsActive(false);

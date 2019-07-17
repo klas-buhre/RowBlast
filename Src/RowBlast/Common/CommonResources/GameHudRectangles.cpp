@@ -68,14 +68,14 @@ namespace {
         3.0f * GameHud::nextPiecesScale, 2.5f * GameHud::selectablePiecesScale
     };
     const auto selectablePiecesRectangleSize =
-        Pht::Vec2{7.3f, 2.4f} * GameHud::selectablePiecesScale;
+        Pht::Vec2{7.96f, 2.4f} * GameHud::selectablePiecesScale;
     constexpr auto selectablePiecesRectangleTilt =
         0.6f * GameHud::selectablePiecesScale * tiltFactor;
     const auto nextPiecesRectangleTilt =
         selectablePiecesRectangleTilt * nextPiecesRectangleSize.y / selectablePiecesRectangleSize.y;
 
     constexpr auto activeSlotXPosition = 0.0f;
-    constexpr auto activeSlotXSize = 2.64f;
+    constexpr auto activeSlotXSize = 3.3f;
     constexpr auto dividerLineThickness = 0.04f;
     constexpr auto borderThickness = 0.06f;
     constexpr auto piecesRectangleOuterCornerRadius = 0.25f;

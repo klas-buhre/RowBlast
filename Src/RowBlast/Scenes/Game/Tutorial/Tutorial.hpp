@@ -44,6 +44,7 @@ namespace RowBlast {
                  GameScene& scene,
                  const CommonResources& commonResources,
                  const PieceResources& pieceResources,
+                 const GhostPieceBlocks& ghostPieceBlocks,
                  const LevelResources& levelResources,
                  const BlastRadiusAnimation& blastRadiusAnimation,
                  const UserServices& userServices);

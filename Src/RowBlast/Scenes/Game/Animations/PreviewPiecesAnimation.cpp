@@ -3,6 +3,7 @@
 // Game includes.
 #include "GameScene.hpp"
 #include "GameLogic.hpp"
+#include "ActivePreviewPieceAnimation.hpp"
 
 using namespace RowBlast;
 
@@ -10,9 +11,12 @@ namespace {
     constexpr auto animationDuration = 0.28f;
 }
 
-PreviewPiecesAnimation::PreviewPiecesAnimation(GameScene& scene, GameLogic& gameLogic) :
+PreviewPiecesAnimation::PreviewPiecesAnimation(GameScene& scene,
+                                               GameLogic& gameLogic,
+                                               ActivePreviewPieceAnimation& activePreviewPieceAnimation) :
     mScene {scene},
-    mGameLogic {gameLogic} {}
+    mGameLogic {gameLogic},
+    mActivePreviewPieceAnimation {activePreviewPieceAnimation} {}
 
 void PreviewPiecesAnimation::Init() {
     mState = State::Inactive;
@@ -43,6 +47,7 @@ void PreviewPiecesAnimation::Update(float dt) {
             if (normalizedTime > 1.0f) {
                 mState = State::Inactive;
                 mScene.GetHud().OnSwitchPieceAnimationFinished();
+                mActivePreviewPieceAnimation.Start();
             } else {
                 mSwitchPieceAnimation.Update(normalizedTime);
             }
@@ -55,6 +60,7 @@ void PreviewPiecesAnimation::Update(float dt) {
                 auto& hud = mScene.GetHud();
                 hud.OnNextPieceAnimationFinished();
                 hud.OnSwitchPieceAnimationFinished();
+                mActivePreviewPieceAnimation.Start();
             } else {
                 mNextPieceAnimation.Update(normalizedTime);
                 mSwitchPieceAnimation.Update(normalizedTime);

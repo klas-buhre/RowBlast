@@ -388,6 +388,8 @@ void GameScene::CreateSceneObjectPools(const Level& level) {
                                                      *mFieldBlocksContainer);
     mGhostPieces = std::make_unique<SceneObjectPool>(SceneObjectPoolKind::GhostPieces,
                                                      *mFieldBlocksContainer);
+    mGhostPieceBlocks = std::make_unique<SceneObjectPool>(SceneObjectPoolKind::GhostPieceBlocks,
+                                                          *mFieldBlocksContainer);
 }
 
 void GameScene::CreateEffectsContainer() {

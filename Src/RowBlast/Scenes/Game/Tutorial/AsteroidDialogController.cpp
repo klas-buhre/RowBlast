@@ -11,6 +11,7 @@ using namespace RowBlast;
 AsteroidDialogController::AsteroidDialogController(Pht::IEngine& engine,
                                                    const CommonResources& commonResources,
                                                    const PieceResources& pieceResources,
+                                                   const GhostPieceBlocks& ghostPieceBlocks,
                                                    const LevelResources& levelResources,
                                                    const UserServices& userServices) :
     mInput {engine.GetInput()},
@@ -18,6 +19,7 @@ AsteroidDialogController::AsteroidDialogController(Pht::IEngine& engine,
         engine,
         commonResources,
         pieceResources,
+        ghostPieceBlocks,
         levelResources,
         userServices
     },

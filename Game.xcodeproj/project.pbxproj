@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		174F9EA522DBCA3D0057BA7C /* ActivePreviewPieceAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 174F9EA322DBCA3D0057BA7C /* ActivePreviewPieceAnimation.cpp */; };
+		174F9EAE22DE24C10057BA7C /* GhostPieceBlocks.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 174F9EAC22DE24C10057BA7C /* GhostPieceBlocks.cpp */; };
 		1774768022DA42B800EEE97C /* NoMoreLevelsDialogView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1774767E22DA42B800EEE97C /* NoMoreLevelsDialogView.cpp */; };
 		1774768322DA42E400EEE97C /* NoMoreLevelsDialogController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1774768122DA42E400EEE97C /* NoMoreLevelsDialogController.cpp */; };
 		17DE663422DB4703009B3E78 /* libGameAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 17DE663322DB4703009B3E78 /* libGameAnalytics.a */; };
@@ -550,6 +552,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		174F9EA322DBCA3D0057BA7C /* ActivePreviewPieceAnimation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ActivePreviewPieceAnimation.cpp; sourceTree = "<group>"; };
+		174F9EA422DBCA3D0057BA7C /* ActivePreviewPieceAnimation.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ActivePreviewPieceAnimation.hpp; sourceTree = "<group>"; };
+		174F9EAC22DE24C10057BA7C /* GhostPieceBlocks.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GhostPieceBlocks.cpp; sourceTree = "<group>"; };
+		174F9EAD22DE24C10057BA7C /* GhostPieceBlocks.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = GhostPieceBlocks.hpp; sourceTree = "<group>"; };
 		1774767E22DA42B800EEE97C /* NoMoreLevelsDialogView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NoMoreLevelsDialogView.cpp; sourceTree = "<group>"; };
 		1774767F22DA42B800EEE97C /* NoMoreLevelsDialogView.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = NoMoreLevelsDialogView.hpp; sourceTree = "<group>"; };
 		1774768122DA42E400EEE97C /* NoMoreLevelsDialogController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NoMoreLevelsDialogController.cpp; sourceTree = "<group>"; };
@@ -1939,6 +1945,8 @@
 				62216B0421EB377E001CB9A1 /* GameScene.hpp */,
 				62216AFE21EB377E001CB9A1 /* GameSceneRenderer.cpp */,
 				62216B0B21EB377E001CB9A1 /* GameSceneRenderer.hpp */,
+				174F9EAC22DE24C10057BA7C /* GhostPieceBlocks.cpp */,
+				174F9EAD22DE24C10057BA7C /* GhostPieceBlocks.hpp */,
 				62216AFC21EB377E001CB9A1 /* GhostPieceProducer.cpp */,
 				62216B0A21EB377E001CB9A1 /* GhostPieceProducer.hpp */,
 				62216B0021EB377E001CB9A1 /* PieceResources.cpp */,
@@ -2094,6 +2102,8 @@
 		62216B7221EB377E001CB9A1 /* Animations */ = {
 			isa = PBXGroup;
 			children = (
+				174F9EA322DBCA3D0057BA7C /* ActivePreviewPieceAnimation.cpp */,
+				174F9EA422DBCA3D0057BA7C /* ActivePreviewPieceAnimation.hpp */,
 				62429F842295A16C002C08AD /* AddingMovesAnimation.cpp */,
 				62429F852295A16C002C08AD /* AddingMovesAnimation.hpp */,
 				62216B7D21EB377E001CB9A1 /* AsteroidAnimation.cpp */,
@@ -3749,11 +3759,13 @@
 				62216BF321EB377E001CB9A1 /* Piece.cpp in Sources */,
 				62216C0521EB377F001CB9A1 /* ZPiece.cpp in Sources */,
 				62216BE421EB377E001CB9A1 /* RestartConfirmationDialogView.cpp in Sources */,
+				174F9EA522DBCA3D0057BA7C /* ActivePreviewPieceAnimation.cpp in Sources */,
 				62216BBF21EB377E001CB9A1 /* TitleAnimation.cpp in Sources */,
 				62216C2A21EB377F001CB9A1 /* BombsAnimation.cpp in Sources */,
 				62216A7421EB376E001CB9A1 /* CloseButton.cpp in Sources */,
 				62216C6721F08A85001CB9A1 /* SettingsMenuController.cpp in Sources */,
 				6255827422CE5B6A0060C383 /* DraggedPiece.cpp in Sources */,
+				174F9EAE22DE24C10057BA7C /* GhostPieceBlocks.cpp in Sources */,
 				6242DEF521C50E7600D17F46 /* Audio.cpp in Sources */,
 				625698022182392C003A3A9D /* PrismMesh.cpp in Sources */,
 				62216C3121EB377F001CB9A1 /* World3.cpp in Sources */,

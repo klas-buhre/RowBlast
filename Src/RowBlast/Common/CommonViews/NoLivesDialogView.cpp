@@ -279,7 +279,6 @@ void NoLivesDialogView::UpdateCountdownText() {
 
 void NoLivesDialogView::UpdateHeartAnimation(float dt) {
     mAnimationTime += dt;
-
     if (mAnimationTime > animationDuration) {
         mAnimationTime = 0.0f;
     }
@@ -292,7 +291,6 @@ void NoLivesDialogView::UpdateHeartAnimation(float dt) {
 
 void NoLivesDialogView::UpdateHeartBeatAnimation(float dt) {
     mHeartBeatAnimationTime += dt;
-    
     if (mHeartBeatAnimationTime > heartBeatAnimationDuration) {
         mHeartBeatAnimationTime = 0.0f;
     }

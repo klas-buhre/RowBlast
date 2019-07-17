@@ -8,6 +8,7 @@
 // Game includes.
 #include "UiLayer.hpp"
 #include "PieceResources.hpp"
+#include "GhostPieceBlocks.hpp"
 #include "LevelResources.hpp"
 #include "IGuiLightProvider.hpp"
 
@@ -264,6 +265,28 @@ Pht::SceneObject& TutorialUtils::CreateLPiece(Pht::GuiView& view,
     return lPiece;
 }
 
+Pht::SceneObject& TutorialUtils::CreateLPieceGhostPiece(Pht::GuiView& view,
+                                                        const Pht::Vec3& position,
+                                                        float rotation,
+                                                        Pht::SceneObject& parent,
+                                                        const GhostPieceBlocks& ghostPieceBlocks) {
+    auto& lPiece = view.CreateSceneObject();
+    parent.AddChild(lPiece);
+    
+    auto& transform = lPiece.GetTransform();
+    transform.SetPosition(position);
+    transform.SetRotation({0.0f, 0.0f, rotation});
+    
+    auto& blockRenderable = ghostPieceBlocks.GetBlockRenderableObject(BlockKind::Full,
+                                                                      BlockColor::Yellow);
+    auto halfCellSize = 0.5f;
+    CreateBlock(view, {-halfCellSize, -halfCellSize, 0.0f}, blockRenderable, lPiece);
+    CreateBlock(view, {halfCellSize, -halfCellSize, 0.0f}, blockRenderable, lPiece);
+    CreateBlock(view, {halfCellSize, halfCellSize, 0.0f}, blockRenderable, lPiece);
+    
+    return lPiece;
+}
+
 Pht::SceneObject& TutorialUtils::CreateBPiece(Pht::GuiView& view,
                                               const Pht::Vec3& position,
                                               float rotation,
@@ -296,6 +319,30 @@ Pht::SceneObject& TutorialUtils::CreateBPiece(Pht::GuiView& view,
     CreateWeld(view, {halfCellSize, -halfCellSize, halfCellSize}, weldRenderable, 0.0f, bPiece);
     CreateWeld(view, {0.0f, 0.0f, halfCellSize}, weldRenderable, 90.0f, bPiece);
     CreateWeld(view, {2.0f * halfCellSize, 0.0f, halfCellSize}, weldRenderable, 90.0f, bPiece);
+    
+    return bPiece;
+}
+
+Pht::SceneObject& TutorialUtils::CreateBPieceGhostPiece(Pht::GuiView& view,
+                                                        const Pht::Vec3& position,
+                                                        float rotation,
+                                                        Pht::SceneObject& parent,
+                                                        const GhostPieceBlocks& ghostPieceBlocks) {
+    auto& bPiece = view.CreateSceneObject();
+    parent.AddChild(bPiece);
+    
+    auto& transform = bPiece.GetTransform();
+    transform.SetPosition(position);
+    transform.SetRotation({0.0f, 0.0f, rotation});
+    
+    auto& blockRenderable = ghostPieceBlocks.GetBlockRenderableObject(BlockKind::Full,
+                                                                      BlockColor::Blue);
+    auto halfCellSize = 0.5f;
+    CreateBlock(view, {0.0f, halfCellSize, 0.0f}, blockRenderable, bPiece);
+    CreateBlock(view, {2.0f * halfCellSize, halfCellSize, 0.0f}, blockRenderable, bPiece);
+    CreateBlock(view, {-2.0f * halfCellSize, -halfCellSize, 0.0f}, blockRenderable, bPiece);
+    CreateBlock(view, {0.0f, -halfCellSize, 0.0f}, blockRenderable, bPiece);
+    CreateBlock(view, {2.0f * halfCellSize, -halfCellSize, 0.0f}, blockRenderable, bPiece);
     
     return bPiece;
 }
