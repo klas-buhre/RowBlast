@@ -19,8 +19,8 @@ HowToPlayDialogController::HowToPlayDialogController(Pht::IEngine& engine,
     mSlidingMenuAnimation {engine, mView},
     mSceneId {sceneId} {}
 
-void HowToPlayDialogController::SetUp() {
-    mView.SetUp();
+void HowToPlayDialogController::SetUp(int startPage) {
+    mView.SetUp(startPage);
     mSlidingMenuAnimation.SetUp(SlidingMenuAnimation::UpdateFade::No,
                                 SlidingMenuAnimation::SlideDirection::Left);
 }

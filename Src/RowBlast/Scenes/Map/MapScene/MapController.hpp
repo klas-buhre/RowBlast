@@ -79,6 +79,8 @@ namespace RowBlast {
         Command UpdateInStartLevelStateLevelGoalDialog();
         void UpdateInStartLevelStateNoLivesDialog();
         void UpdateInStartLevelStateStore();
+        void UpdateInStartLevelStateSwipeControlsHintDialog();
+        void UpdateInStartLevelStateHowToPlayDialog();
         void UpdateLivesDialog();
         void UpdateInAddLivesState();
         void UpdateInAddLivesStateNoLivesDialog();
@@ -100,6 +102,8 @@ namespace RowBlast {
         void GoToPortalCameraMovementState();
         void GoToStartLevelStateNoLivesDialog(int levelToStart);
         void GoToStartLevelStateStore();
+        void GoToStartLevelStateSwipeControlsHintDialog(int levelToStart);
+        void GoToStartLevelStateHowToPlayDialogState();
         void GoToLivesDailogState();
         void GoToAddLivesStateNoLivesDialog();
         void GoToAddLivesStateStore();
@@ -125,7 +129,9 @@ namespace RowBlast {
         enum class StartLevelState {
             LevelGoalDialog,
             NoLivesDialog,
-            Store
+            Store,
+            SwipeControlsHintDialog,
+            HowToPlayDialog
         };
         
         enum class AddLivesState {

@@ -1,6 +1,6 @@
 {
     "speed": 0.0,
-    "moves": 50,
+    "moves": 55,
     "twoStars": 25,
     "threeStars": 15,
     "floatingBlocksSet": "Standard",
@@ -19,9 +19,9 @@
         "I",
         "D",
         "B",
-        "D",
         "L",
-        "I"
+        "I",
+        "D"
     ],
     "predeterminedMoves": [
         {
@@ -54,9 +54,9 @@
         "  G GGG",
         "  GGGGG",
         "G GGGGG",
-        "  GGG  ",
-        "  GGG  ",
-        "  GGG G",
+        "GGG    ",
+        "GGG    ",
+        "GGG   G",
         "GGG  GG",
         "GGGG GG",
         "GGGG GG",

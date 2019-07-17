@@ -810,7 +810,7 @@ void GameController::GoToPausedStateLevelInfoDialog() {
 void GameController::GoToPausedStateHowToPlayDialog() {
     mPausedState = PausedState::HowToPlayDialog;
     mGameViewControllers.SetActiveController(GameViewControllers::HowToPlayDialog);
-    mGameViewControllers.GetHowToPlayDialogController().SetUp();
+    mGameViewControllers.GetHowToPlayDialogController().SetUp(0);
 }
 
 void GameController::GoToPausedStateGameMenu(SlidingMenuAnimation::UpdateFade updateFade,

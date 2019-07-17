@@ -1335,12 +1335,12 @@ void HowToPlayDialogView::CreateSwipeIcon(const Pht::Vec3& position, Pht::SceneO
     GuiUtils::CreateIcon(mEngine, *this, "right_arrow.png", {0.35f, 0.4f, 0.0f}, {0.42f, 0.42f}, icon);
 }
 
-void HowToPlayDialogView::SetUp() {
+void HowToPlayDialogView::SetUp(int startPage) {
     if (mGuiLightProvider) {
         mGuiLightProvider->SetGuiLightDirections(lightDirectionA, lightDirectionB);
     }
     
-    SetPage(0);
+    SetPage(startPage);
 }
 
 void HowToPlayDialogView::GoToNextPage() {

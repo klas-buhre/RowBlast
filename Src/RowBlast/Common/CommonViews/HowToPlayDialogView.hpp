@@ -38,7 +38,7 @@ namespace RowBlast {
 
         void OnDeactivate() override;
     
-        void SetUp();
+        void SetUp(int startPage);
         void GoToNextPage();
         void GoToPreviousPage();
         void Update();

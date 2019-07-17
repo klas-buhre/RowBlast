@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1736707422DF67D600D8A28C /* SwipeControlsHintDialogView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1736707222DF67D600D8A28C /* SwipeControlsHintDialogView.cpp */; };
+		1736707722DF67F600D8A28C /* SwipeControlsHintDialogController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1736707522DF67F600D8A28C /* SwipeControlsHintDialogController.cpp */; };
 		174F9EA522DBCA3D0057BA7C /* ActivePreviewPieceAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 174F9EA322DBCA3D0057BA7C /* ActivePreviewPieceAnimation.cpp */; };
 		174F9EAE22DE24C10057BA7C /* GhostPieceBlocks.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 174F9EAC22DE24C10057BA7C /* GhostPieceBlocks.cpp */; };
 		1774768022DA42B800EEE97C /* NoMoreLevelsDialogView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1774767E22DA42B800EEE97C /* NoMoreLevelsDialogView.cpp */; };
@@ -552,6 +554,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1736707222DF67D600D8A28C /* SwipeControlsHintDialogView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SwipeControlsHintDialogView.cpp; sourceTree = "<group>"; };
+		1736707322DF67D600D8A28C /* SwipeControlsHintDialogView.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SwipeControlsHintDialogView.hpp; sourceTree = "<group>"; };
+		1736707522DF67F600D8A28C /* SwipeControlsHintDialogController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SwipeControlsHintDialogController.cpp; sourceTree = "<group>"; };
+		1736707622DF67F600D8A28C /* SwipeControlsHintDialogController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SwipeControlsHintDialogController.hpp; sourceTree = "<group>"; };
 		174F9EA322DBCA3D0057BA7C /* ActivePreviewPieceAnimation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ActivePreviewPieceAnimation.cpp; sourceTree = "<group>"; };
 		174F9EA422DBCA3D0057BA7C /* ActivePreviewPieceAnimation.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ActivePreviewPieceAnimation.hpp; sourceTree = "<group>"; };
 		174F9EAC22DE24C10057BA7C /* GhostPieceBlocks.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GhostPieceBlocks.cpp; sourceTree = "<group>"; };
@@ -2225,6 +2231,10 @@
 				62216C6D21F08B7F001CB9A1 /* OptionsMenuController.hpp */,
 				62216C6921F08B2A001CB9A1 /* OptionsMenuView.cpp */,
 				62216C6A21F08B2A001CB9A1 /* OptionsMenuView.hpp */,
+				1736707522DF67F600D8A28C /* SwipeControlsHintDialogController.cpp */,
+				1736707622DF67F600D8A28C /* SwipeControlsHintDialogController.hpp */,
+				1736707222DF67D600D8A28C /* SwipeControlsHintDialogView.cpp */,
+				1736707322DF67D600D8A28C /* SwipeControlsHintDialogView.hpp */,
 			);
 			path = MapViews;
 			sourceTree = "<group>";
@@ -3551,6 +3561,7 @@
 				62216A8621EB376E001CB9A1 /* PurchaseSuccessfulDialogView.cpp in Sources */,
 				62216A7821EB376E001CB9A1 /* MenuButton.cpp in Sources */,
 				623B94D521FA0AEB00B62D9B /* BeginTextAnimation.cpp in Sources */,
+				1736707422DF67D600D8A28C /* SwipeControlsHintDialogView.cpp in Sources */,
 				622A6D2D22B7E90B00C5E6DA /* BitmapImage.cpp in Sources */,
 				62216BFE21EB377E001CB9A1 /* ComboDetector.cpp in Sources */,
 				625698492182392C003A3A9D /* SceneResources.cpp in Sources */,
@@ -3753,6 +3764,7 @@
 				62216BCA21EB377E001CB9A1 /* BombDialogView.cpp in Sources */,
 				62216A9721EB376E001CB9A1 /* Clouds.cpp in Sources */,
 				62216BF521EB377E001CB9A1 /* CollisionDetection.cpp in Sources */,
+				1736707722DF67F600D8A28C /* SwipeControlsHintDialogController.cpp in Sources */,
 				62216C3321EB377F001CB9A1 /* World1.cpp in Sources */,
 				62216C5C21ED0C39001CB9A1 /* DocumentViewerController.cpp in Sources */,
 				62216C1621EB377F001CB9A1 /* MoveDefinitions.cpp in Sources */,
