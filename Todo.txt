@@ -88,8 +88,11 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-    -Remove the section about payments in the privacy policy on the pre-release branch.
     -All apps must include a link to their privacy policy in the App Store Connect metadata field.
+      -If web page is required then maybe set up a web page and see how tricky it is to change
+       apple developer account to sompany.
+    -Maybe create a mail address and add that to the privacy policy.
+    -Remove the section about payments in the privacy policy on the pre-release branch.
 
 
     -Add drag controls and release with microtransactions enabled, free to download.
