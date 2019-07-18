@@ -88,6 +88,7 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
+    -Fix bug where LevelFail is not sent to GameAnalytics on pre_release branch.
     -Remove the section about payments in the privacy policy on the pre-release branch.
     -All apps must include a link to their privacy policy in the App Store Connect metadata field.
 
