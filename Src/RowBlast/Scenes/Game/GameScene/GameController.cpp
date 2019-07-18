@@ -619,6 +619,7 @@ GameController::Command GameController::UpdateOutOfMovesDialog() {
         case OutOfMovesDialogController::Result::None:
             break;
         case OutOfMovesDialogController::Result::Retry:
+            mUserServices.FailLevel(mLevel->GetId(), CalculateProgressInLevelForAnalytics());
             command = Command::RestartLevel;
             break;
         case OutOfMovesDialogController::Result::BackToMap:
