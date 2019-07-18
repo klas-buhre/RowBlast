@@ -7,7 +7,7 @@
 // Game includes.
 #include "Field.hpp"
 #include "GameLogic.hpp"
-#include "GameSceneRenderer.hpp"
+#include "ScenePlayingField.hpp"
 #include "GameScene.hpp"
 #include "ScrollController.hpp"
 #include "FlyingBlocksAnimation.hpp"
@@ -200,7 +200,7 @@ namespace RowBlast {
         BombsAnimation mBombsAnimation;
         AsteroidAnimation mAsteroidAnimation;
         FlyingBlocksAnimation mFlyingBlocksAnimation;
-        GameSceneRenderer mRenderer;
+        ScenePlayingField mScenePlayingField;
         LevelCompletedController mLevelCompletedController;
         std::unique_ptr<Level> mLevel;
         bool mIsInBetweenMoves {false};
