@@ -254,10 +254,12 @@ void HowToPlayDialogView::CreateMovePiecePage(const GuiResources& guiResources,
                                             *handAnimation,
                                             6.0f);
 
-    auto& textProperties = guiResources.GetSmallWhiteTextProperties(zoom);
-    CreateText({-5.1f, -5.4f, UiLayer::text}, "With swipe controls, slide your", textProperties, container);
-    CreateText({-5.6f, -6.475f, UiLayer::text}, "finger to move the piece sideways.", textProperties, container);
-    
+    auto textProperties = guiResources.GetSmallWhiteTextProperties(zoom);
+    textProperties.mAlignment = Pht::TextAlignment::CenterX;
+    CreateText({0.0f, -4.7f, UiLayer::text}, "With swipe controls, slide your", textProperties, container);
+    CreateText({0.0f, -5.775f, UiLayer::text}, "finger to move sideways. Controls", textProperties, container);
+    CreateText({0.0f, -6.85f, UiLayer::text}, "are changed in the settings menu.", textProperties, container);
+
     container.AddChild(CreateFilledCircleIcon(static_cast<int>(mPages.size()), true));
     
     mPages.push_back(Page {container, &animation, std::move(handAnimation)});
