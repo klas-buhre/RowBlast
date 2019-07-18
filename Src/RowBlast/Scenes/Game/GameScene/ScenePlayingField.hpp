@@ -1,5 +1,5 @@
-#ifndef GameSceneRenderer_hpp
-#define GameSceneRenderer_hpp
+#ifndef ScenePlayingField_hpp
+#define ScenePlayingField_hpp
 
 // Engine includes.
 #include "Vector.hpp"
@@ -26,9 +26,9 @@ namespace RowBlast {
     class AsteroidAnimation;
     class SceneObjectPool;
 
-    class GameSceneRenderer {
+    class ScenePlayingField {
     public:
-        GameSceneRenderer(GameScene& scene,
+        ScenePlayingField(GameScene& scene,
                           const Field& field,
                           const GameLogic& gameLogic,
                           const ScrollController& scrollController,
@@ -38,18 +38,18 @@ namespace RowBlast {
                           const GhostPieceBlocks& ghostPieceBlocks,
                           const LevelResources& levelResources);
         
-        void Render();
+        void Update();
         
     private:
-        void RenderFieldGrid();
-        void RenderBlueprintSlots();
-        void RenderFieldBlocks();
-        void RenderFieldBlock(const SubCell& subCell, bool isSecondSubCell);
-        void RenderBlockWelds(const SubCell& subCell,
+        void UpdateFieldGrid();
+        void UpdateBlueprintSlots();
+        void UpdateFieldBlocks();
+        void UpdateFieldBlock(const SubCell& subCell, bool isSecondSubCell);
+        void UpdateBlockWelds(const SubCell& subCell,
                               const Pht::Vec3& blockPos,
                               SceneObjectPool& pool,
                               bool isSecondSubCell);
-        void RenderBlockWeld(const Pht::Vec3& weldPosition,
+        void UpdateBlockWeld(const Pht::Vec3& weldPosition,
                              float rotation,
                              float scale,
                              Pht::RenderableObject& weldRenderableObject,
@@ -57,19 +57,19 @@ namespace RowBlast {
         Pht::RenderableObject& GetWeldRenderable(WeldRenderableKind renderableKind,
                                                  const SubCell& subCell,
                                                  const WeldAnimation& weldAnimation);
-        void RenderFallingPiece();
-        void RenderPieceBlocks(const CellGrid& pieceBlocks,
+        void UpdateFallingPiece();
+        void UpdatePieceBlocks(const CellGrid& pieceBlocks,
                                const Pht::Vec3& pieceFieldPos,
                                bool isTransparent,
                                bool isGhostPiece,
                                SceneObjectPool& pool);
-        void RenderGhostPieces();
-        void RenderGhostPieceForGestureControls(const FallingPiece& fallingPiece);
-        void RenderGhostPiece(Pht::RenderableObject& ghostPieceRenderable,
+        void UpdateGhostPieces();
+        void UpdateGhostPieceForGestureControls(const FallingPiece& fallingPiece);
+        void UpdateGhostPiece(Pht::RenderableObject& ghostPieceRenderable,
                               const Pht::Vec3& position,
                               Rotation rotation);
-        void RenderClickableGhostPieces(const FallingPiece& fallingPiece);
-        void RenderGhostPieceBlocks(const CellGrid& pieceBlocks,
+        void UpdateClickableGhostPieces(const FallingPiece& fallingPiece);
+        void UpdateGhostPieceBlocks(const CellGrid& pieceBlocks,
                                     const Pht::Vec3& ghostPieceFieldPos);
         
         GameScene& mScene;

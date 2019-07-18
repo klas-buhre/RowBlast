@@ -147,7 +147,7 @@
 		62216BE721EB377E001CB9A1 /* GameOverDialogView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216AF821EB377E001CB9A1 /* GameOverDialogView.cpp */; };
 		62216BE821EB377E001CB9A1 /* LevelCompletedDialogView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216AF921EB377E001CB9A1 /* LevelCompletedDialogView.cpp */; };
 		62216BE921EB377E001CB9A1 /* GhostPieceProducer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216AFC21EB377E001CB9A1 /* GhostPieceProducer.cpp */; };
-		62216BEA21EB377E001CB9A1 /* GameSceneRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216AFE21EB377E001CB9A1 /* GameSceneRenderer.cpp */; };
+		62216BEA21EB377E001CB9A1 /* ScenePlayingField.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216AFE21EB377E001CB9A1 /* ScenePlayingField.cpp */; };
 		62216BEB21EB377E001CB9A1 /* GameHud.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216AFF21EB377E001CB9A1 /* GameHud.cpp */; };
 		62216BEC21EB377E001CB9A1 /* PieceResources.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216B0021EB377E001CB9A1 /* PieceResources.cpp */; };
 		62216BED21EB377E001CB9A1 /* FieldBorder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216B0121EB377E001CB9A1 /* FieldBorder.cpp */; };
@@ -798,7 +798,7 @@
 		62216AF921EB377E001CB9A1 /* LevelCompletedDialogView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelCompletedDialogView.cpp; sourceTree = "<group>"; };
 		62216AFC21EB377E001CB9A1 /* GhostPieceProducer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GhostPieceProducer.cpp; sourceTree = "<group>"; };
 		62216AFD21EB377E001CB9A1 /* FieldGrid.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FieldGrid.hpp; sourceTree = "<group>"; };
-		62216AFE21EB377E001CB9A1 /* GameSceneRenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameSceneRenderer.cpp; sourceTree = "<group>"; };
+		62216AFE21EB377E001CB9A1 /* ScenePlayingField.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ScenePlayingField.cpp; sourceTree = "<group>"; };
 		62216AFF21EB377E001CB9A1 /* GameHud.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameHud.cpp; sourceTree = "<group>"; };
 		62216B0021EB377E001CB9A1 /* PieceResources.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PieceResources.cpp; sourceTree = "<group>"; };
 		62216B0121EB377E001CB9A1 /* FieldBorder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FieldBorder.cpp; sourceTree = "<group>"; };
@@ -810,7 +810,7 @@
 		62216B0721EB377E001CB9A1 /* GameController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameController.cpp; sourceTree = "<group>"; };
 		62216B0821EB377E001CB9A1 /* GameScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameScene.cpp; sourceTree = "<group>"; };
 		62216B0A21EB377E001CB9A1 /* GhostPieceProducer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GhostPieceProducer.hpp; sourceTree = "<group>"; };
-		62216B0B21EB377E001CB9A1 /* GameSceneRenderer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameSceneRenderer.hpp; sourceTree = "<group>"; };
+		62216B0B21EB377E001CB9A1 /* ScenePlayingField.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ScenePlayingField.hpp; sourceTree = "<group>"; };
 		62216B0C21EB377E001CB9A1 /* FieldGrid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FieldGrid.cpp; sourceTree = "<group>"; };
 		62216B0D21EB377E001CB9A1 /* GameHud.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameHud.hpp; sourceTree = "<group>"; };
 		62216B0E21EB377E001CB9A1 /* PieceResources.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PieceResources.hpp; sourceTree = "<group>"; };
@@ -1947,14 +1947,14 @@
 				6298ED4E220200A100FFAC36 /* GameHudResources.hpp */,
 				62216B0821EB377E001CB9A1 /* GameScene.cpp */,
 				62216B0421EB377E001CB9A1 /* GameScene.hpp */,
-				62216AFE21EB377E001CB9A1 /* GameSceneRenderer.cpp */,
-				62216B0B21EB377E001CB9A1 /* GameSceneRenderer.hpp */,
 				174F9EAC22DE24C10057BA7C /* GhostPieceBlocks.cpp */,
 				174F9EAD22DE24C10057BA7C /* GhostPieceBlocks.hpp */,
 				62216AFC21EB377E001CB9A1 /* GhostPieceProducer.cpp */,
 				62216B0A21EB377E001CB9A1 /* GhostPieceProducer.hpp */,
 				62216B0021EB377E001CB9A1 /* PieceResources.cpp */,
 				62216B0E21EB377E001CB9A1 /* PieceResources.hpp */,
+				62216AFE21EB377E001CB9A1 /* ScenePlayingField.cpp */,
+				62216B0B21EB377E001CB9A1 /* ScenePlayingField.hpp */,
 				62216B0221EB377E001CB9A1 /* SceneObjectPool.cpp */,
 				62216B0621EB377E001CB9A1 /* SceneObjectPool.hpp */,
 			);
@@ -3826,7 +3826,7 @@
 				621F715821FDD9EA00232B83 /* OtherMoves2WindowController.cpp in Sources */,
 				62216C1121EB377F001CB9A1 /* LongIPiece.cpp in Sources */,
 				623F5E6022B563A900242C10 /* Camera.cpp in Sources */,
-				62216BEA21EB377E001CB9A1 /* GameSceneRenderer.cpp in Sources */,
+				62216BEA21EB377E001CB9A1 /* ScenePlayingField.cpp in Sources */,
 				62243E9522B7952500EB922F /* OpenALSource.cpp in Sources */,
 				623B94DE21FCC63700B62D9B /* SwitchPiece2WindowController.cpp in Sources */,
 				62216C1721EB377F001CB9A1 /* ValidMovesSearch.cpp in Sources */,

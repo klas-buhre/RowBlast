@@ -1,4 +1,4 @@
-#include "GameSceneRenderer.hpp"
+#include "ScenePlayingField.hpp"
 
 // Engine includes.
 #include "RenderableObject.hpp"
@@ -41,7 +41,7 @@ namespace {
     }
 }
 
-GameSceneRenderer::GameSceneRenderer(GameScene& scene,
+ScenePlayingField::ScenePlayingField(GameScene& scene,
                                      const Field& field,
                                      const GameLogic& gameLogic,
                                      const ScrollController& scrollController,
@@ -60,15 +60,15 @@ GameSceneRenderer::GameSceneRenderer(GameScene& scene,
     mGhostPieceBlocks {ghostPieceBlocks},
     mLevelResources {levelResources} {}
 
-void GameSceneRenderer::Render() {
-    RenderFieldGrid();
-    RenderBlueprintSlots();
-    RenderFieldBlocks();
-    RenderFallingPiece();
-    RenderGhostPieces();
+void ScenePlayingField::Update() {
+    UpdateFieldGrid();
+    UpdateBlueprintSlots();
+    UpdateFieldBlocks();
+    UpdateFallingPiece();
+    UpdateGhostPieces();
 }
 
-void GameSceneRenderer::RenderFieldGrid() {
+void ScenePlayingField::UpdateFieldGrid() {
     auto& gridSegments = mScene.GetFieldGrid().GetSegments();
     for (auto& gridSegment: gridSegments) {
         gridSegment.mSceneObject.SetIsVisible(false);
@@ -98,7 +98,7 @@ void GameSceneRenderer::RenderFieldGrid() {
     }
 }
 
-void GameSceneRenderer::RenderBlueprintSlots() {
+void ScenePlayingField::UpdateBlueprintSlots() {
     auto* blueprintGrid = mField.GetBlueprintGrid();
     if (blueprintGrid == nullptr) {
         return;
@@ -123,7 +123,7 @@ void GameSceneRenderer::RenderBlueprintSlots() {
     }
 }
 
-void GameSceneRenderer::RenderFieldBlocks() {
+void ScenePlayingField::UpdateFieldBlocks() {
     if (!mField.HasChanged() && !mScrollController.IsScrolling()) {
         return;
     }
@@ -145,13 +145,13 @@ void GameSceneRenderer::RenderFieldBlocks() {
     for (auto row = lowestVisibleRow; row < pastHighestVisibleRow; row++) {
         for (auto column = 0; column < mField.GetNumColumns(); column++) {
             auto& cell = mField.GetCell(row, column);
-            RenderFieldBlock(cell.mFirstSubCell, false);
-            RenderFieldBlock(cell.mSecondSubCell, true);
+            UpdateFieldBlock(cell.mFirstSubCell, false);
+            UpdateFieldBlock(cell.mSecondSubCell, true);
         }
     }
 }
 
-void GameSceneRenderer::RenderFieldBlock(const SubCell& subCell, bool isSecondSubCell) {
+void ScenePlayingField::UpdateFieldBlock(const SubCell& subCell, bool isSecondSubCell) {
     auto blockKind = subCell.mBlockKind;
     switch (blockKind) {
         case BlockKind::None:
@@ -208,13 +208,13 @@ void GameSceneRenderer::RenderFieldBlock(const SubCell& subCell, bool isSecondSu
                 auto& renderableObject =
                     mPieceResources.GetBlockRenderableObject(blockKind, color, brightness);
                 sceneObject.SetRenderable(&renderableObject);
-                RenderBlockWelds(subCell, blockPosition, mScene.GetFieldBlocks(), isSecondSubCell);
+                UpdateBlockWelds(subCell, blockPosition, mScene.GetFieldBlocks(), isSecondSubCell);
             }
             break;
     }
 }
 
-void GameSceneRenderer::RenderBlockWelds(const SubCell& subCell,
+void ScenePlayingField::UpdateBlockWelds(const SubCell& subCell,
                                          const Pht::Vec3& blockPos,
                                          SceneObjectPool& pool,
                                          bool isSecondSubCell) {
@@ -224,7 +224,7 @@ void GameSceneRenderer::RenderBlockWelds(const SubCell& subCell,
     auto weldZ = blockPos.z + cellSize / 2.0f;
     
     if (welds.mUpLeft || weldAnimations.mUpLeft.IsActive()) {
-        RenderBlockWeld({blockPos.x - cellSize / 2.0f, blockPos.y + cellSize / 2.0f, weldZ},
+        UpdateBlockWeld({blockPos.x - cellSize / 2.0f, blockPos.y + cellSize / 2.0f, weldZ},
                         45.0f,
                         weldAnimations.mUpLeft.mScale,
                         GetWeldRenderable(WeldRenderableKind::Aslope, subCell, weldAnimations.mUpLeft),
@@ -232,7 +232,7 @@ void GameSceneRenderer::RenderBlockWelds(const SubCell& subCell,
     }
     
     if (welds.mUp || weldAnimations.mUp.IsActive()) {
-        RenderBlockWeld({blockPos.x, blockPos.y + cellSize / 2.0f, weldZ},
+        UpdateBlockWeld({blockPos.x, blockPos.y + cellSize / 2.0f, weldZ},
                         -90.0f,
                         weldAnimations.mUp.mScale,
                         GetWeldRenderable(WeldRenderableKind::Normal, subCell, weldAnimations.mUp),
@@ -240,7 +240,7 @@ void GameSceneRenderer::RenderBlockWelds(const SubCell& subCell,
     }
     
     if (welds.mUpRight || weldAnimations.mUpRight.IsActive()) {
-        RenderBlockWeld({blockPos.x + cellSize / 2.0f, blockPos.y + cellSize / 2.0f, weldZ},
+        UpdateBlockWeld({blockPos.x + cellSize / 2.0f, blockPos.y + cellSize / 2.0f, weldZ},
                         -45.0f,
                         weldAnimations.mUpRight.mScale,
                         GetWeldRenderable(WeldRenderableKind::Aslope, subCell, weldAnimations.mUpRight),
@@ -248,7 +248,7 @@ void GameSceneRenderer::RenderBlockWelds(const SubCell& subCell,
     }
 
     if (welds.mRight || weldAnimations.mRight.IsActive()) {
-        RenderBlockWeld({blockPos.x + cellSize / 2.0f, blockPos.y, weldZ},
+        UpdateBlockWeld({blockPos.x + cellSize / 2.0f, blockPos.y, weldZ},
                         0.0f,
                         weldAnimations.mRight.mScale,
                         GetWeldRenderable(WeldRenderableKind::Normal, subCell, weldAnimations.mRight),
@@ -271,7 +271,7 @@ void GameSceneRenderer::RenderBlockWelds(const SubCell& subCell,
         switch (subCell.mFill) {
             case Fill::LowerRightHalf:
             case Fill::UpperLeftHalf:
-                RenderBlockWeld({blockPos.x, blockPos.y, weldZ},
+                UpdateBlockWeld({blockPos.x, blockPos.y, weldZ},
                                 -45.0f,
                                 weldScale,
                                 diagonalWeldRenderable,
@@ -279,7 +279,7 @@ void GameSceneRenderer::RenderBlockWelds(const SubCell& subCell,
                 break;
             case Fill::LowerLeftHalf:
             case Fill::UpperRightHalf:
-                RenderBlockWeld({blockPos.x, blockPos.y, weldZ},
+                UpdateBlockWeld({blockPos.x, blockPos.y, weldZ},
                                 45.0f,
                                 weldScale,
                                 diagonalWeldRenderable,
@@ -291,7 +291,7 @@ void GameSceneRenderer::RenderBlockWelds(const SubCell& subCell,
     }
 }
 
-void GameSceneRenderer::RenderBlockWeld(const Pht::Vec3& weldPosition,
+void ScenePlayingField::UpdateBlockWeld(const Pht::Vec3& weldPosition,
                                         float rotation,
                                         float scale,
                                         Pht::RenderableObject& weldRenderableObject,
@@ -304,7 +304,7 @@ void GameSceneRenderer::RenderBlockWeld(const Pht::Vec3& weldPosition,
     sceneObject.SetRenderable(&weldRenderableObject);
 }
 
-Pht::RenderableObject& GameSceneRenderer::GetWeldRenderable(WeldRenderableKind renderableKind,
+Pht::RenderableObject& ScenePlayingField::GetWeldRenderable(WeldRenderableKind renderableKind,
                                                             const SubCell& subCell,
                                                             const WeldAnimation& weldAnimation) {
     auto color = subCell.mColor;
@@ -316,7 +316,7 @@ Pht::RenderableObject& GameSceneRenderer::GetWeldRenderable(WeldRenderableKind r
     return mPieceResources.GetWeldRenderableObject(renderableKind, color, brightness);
 }
 
-void GameSceneRenderer::RenderFallingPiece() {
+void ScenePlayingField::UpdateFallingPiece() {
     mScene.GetPieceBlocks().ReclaimAll();
     
     auto* fallingPiece = mGameLogic.GetFallingPiece();
@@ -334,14 +334,14 @@ void GameSceneRenderer::RenderFallingPiece() {
     
     auto isTransparent = false;
     auto isGhostPiece = false;
-    RenderPieceBlocks(pieceGrid,
+    UpdatePieceBlocks(pieceGrid,
                       pieceFieldPos,
                       isTransparent,
                       isGhostPiece,
                       mScene.GetPieceBlocks());
 }
 
-void GameSceneRenderer::RenderPieceBlocks(const CellGrid& pieceBlocks,
+void ScenePlayingField::UpdatePieceBlocks(const CellGrid& pieceBlocks,
                                           const Pht::Vec3& pieceFieldPos,
                                           bool isTransparent,
                                           bool isGhostPiece,
@@ -417,13 +417,13 @@ void GameSceneRenderer::RenderPieceBlocks(const CellGrid& pieceBlocks,
                 
                 sceneObject.SetRenderable(&blockRenderableObject);
 
-                RenderBlockWelds(subCell, blockPosition, pool, false);
+                UpdateBlockWelds(subCell, blockPosition, pool, false);
             }
         }
     }
 }
 
-void GameSceneRenderer::RenderGhostPieces() {
+void ScenePlayingField::UpdateGhostPieces() {
     mScene.GetGhostPieces().ReclaimAll();
     mScene.GetGhostPieceBlocks().ReclaimAll();
     
@@ -433,13 +433,13 @@ void GameSceneRenderer::RenderGhostPieces() {
     }
     
     if (mGameLogic.IsUsingClickControls()) {
-        RenderClickableGhostPieces(*fallingPiece);
+        UpdateClickableGhostPieces(*fallingPiece);
     } else {
-        RenderGhostPieceForGestureControls(*fallingPiece);
+        UpdateGhostPieceForGestureControls(*fallingPiece);
     }
 }
 
-void GameSceneRenderer::RenderGhostPieceForGestureControls(const FallingPiece& fallingPiece) {
+void ScenePlayingField::UpdateGhostPieceForGestureControls(const FallingPiece& fallingPiece) {
     const auto cellSize = mScene.GetCellSize();
     auto& pieceType = fallingPiece.GetPieceType();
     
@@ -452,13 +452,13 @@ void GameSceneRenderer::RenderGhostPieceForGestureControls(const FallingPiece& f
     auto& pieceGrid = pieceType.GetGrid(fallingPiece.GetRotation());
     
     if (pieceType.GetGhostPieceRenderable()) {
-        RenderGhostPieceBlocks(pieceGrid, ghostPieceFieldPos);
+        UpdateGhostPieceBlocks(pieceGrid, ghostPieceFieldPos);
     } else {
         Pht::Vec3 position {ghostPieceFieldPos};
         position.z = mScene.GetPressedGhostPieceZ();
         auto isTransparent = true;
         auto isGhostPiece = true;
-        RenderPieceBlocks(pieceGrid,
+        UpdatePieceBlocks(pieceGrid,
                           position,
                           isTransparent,
                           isGhostPiece,
@@ -466,9 +466,9 @@ void GameSceneRenderer::RenderGhostPieceForGestureControls(const FallingPiece& f
     }
 }
 
-void GameSceneRenderer::RenderGhostPiece(Pht::RenderableObject& ghostPieceRenderable,
-                                         const Pht::Vec3& position,
-                                         Rotation rotation) {
+void ScenePlayingField::UpdateGhostPiece(Pht::RenderableObject& ghostPieceRenderable,
+                                    const Pht::Vec3& position,
+                                    Rotation rotation) {
     auto& sceneObject = mScene.GetGhostPieces().AccuireSceneObject();
     
     auto& transform = sceneObject.GetTransform();
@@ -478,7 +478,7 @@ void GameSceneRenderer::RenderGhostPiece(Pht::RenderableObject& ghostPieceRender
     sceneObject.SetRenderable(&ghostPieceRenderable);
 }
 
-void GameSceneRenderer::RenderClickableGhostPieces(const FallingPiece& fallingPiece) {
+void ScenePlayingField::UpdateClickableGhostPieces(const FallingPiece& fallingPiece) {
     auto* moveAlternatives = mGameLogic.GetClickInputHandler().GetVisibleMoves();
     if (moveAlternatives == nullptr) {
         return;
@@ -514,9 +514,9 @@ void GameSceneRenderer::RenderClickableGhostPieces(const FallingPiece& fallingPi
             auto rotation = move.mRotation;
             
             if (isMoveButtonDown) {
-                RenderGhostPiece(*pieceType.GetPressedGhostPieceRenderable(), postion, rotation);
+                UpdateGhostPiece(*pieceType.GetPressedGhostPieceRenderable(), postion, rotation);
             } else {
-                RenderGhostPiece(*ghostPieceRenderable, postion, rotation);
+                UpdateGhostPiece(*ghostPieceRenderable, postion, rotation);
             }
         } else {
             auto& pieceGrid = pieceType.GetGrid(move.mRotation);
@@ -527,16 +527,16 @@ void GameSceneRenderer::RenderClickableGhostPieces(const FallingPiece& fallingPi
                 Pht::Vec3 position {ghostPieceFieldPos};
                 position.z = mScene.GetPressedGhostPieceZ();
                 auto isTransparent = false;
-                RenderPieceBlocks(pieceGrid, position, isTransparent, isGhostPiece, pool);
+                UpdatePieceBlocks(pieceGrid, position, isTransparent, isGhostPiece, pool);
             } else {
                 auto isTransparent = true;
-                RenderPieceBlocks(pieceGrid, ghostPieceFieldPos, isTransparent, isGhostPiece, pool);
+                UpdatePieceBlocks(pieceGrid, ghostPieceFieldPos, isTransparent, isGhostPiece, pool);
             }
         }
     }
 }
 
-void GameSceneRenderer::RenderGhostPieceBlocks(const CellGrid& pieceBlocks,
+void ScenePlayingField::UpdateGhostPieceBlocks(const CellGrid& pieceBlocks,
                                                const Pht::Vec3& ghostPieceFieldPos) {
     auto* fallingPiece = mGameLogic.GetFallingPiece();
     assert(fallingPiece);
