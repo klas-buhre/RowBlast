@@ -79,7 +79,7 @@ namespace {
 #ifdef ANALYTICS_ENABLED
             switch (event.GetKind()) {
                 case AnalyticsEvent::Kind::Business:
-                    AddBusenessEvent(static_cast<const BusinessAnalyticsEvent&>(event));
+                    AddBusinessEvent(static_cast<const BusinessAnalyticsEvent&>(event));
                     break;
                 case AnalyticsEvent::Kind::Resource:
                     AddResourceEvent(static_cast<const ResourceAnalyticsEvent&>(event));
@@ -98,7 +98,7 @@ namespace {
         }
         
     private:
-        void AddBusenessEvent(const BusinessAnalyticsEvent& event) {
+        void AddBusinessEvent(const BusinessAnalyticsEvent& event) {
             [GameAnalytics addBusinessEventWithCurrency:[NSString stringWithUTF8String:event.mCurrency.c_str()]
                            amount:event.mAmount
                            itemType:[NSString stringWithUTF8String:event.mItemType.c_str()]
