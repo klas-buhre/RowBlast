@@ -73,7 +73,6 @@ Backlog:
   -Make ready for release:
     -Should give free gold coins after a new install?
     -Maybe only one or two continues per game round? Like in Dr. Mario. And you get 10 more moves.
-    -Limit the number of undo move to one or two per game round.
     -Update mail address in legal documents.
     -Go through all user services and check that all state store/load is enabled.
     -Make sure analytics is enabled and that user terms accept is saved and checked.

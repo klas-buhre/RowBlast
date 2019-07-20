@@ -39,6 +39,7 @@ namespace {
     constexpr auto shieldHeight = 6;
     constexpr auto whooshSoundDelay = 0.05f;
     constexpr auto landingSoundDelay = 0.1f;
+    constexpr auto numUndos = 1000;
 
     PieceBlocks CreatePieceBlocks(const FallingPiece& fallingPiece) {
         auto& pieceType = fallingPiece.GetPieceType();
@@ -136,6 +137,7 @@ void GameLogic::Init(const Level& level) {
     mCurrentMoveTmp = mCurrentMove;
     mPreviousMove = mCurrentMove;
     mShouldUndoMove = false;
+    mNumUndosUsed = 0;
     
     mPreviewPieceAnimationToStart = PreviewPieceAnimationToStart::None;
     
@@ -428,7 +430,7 @@ void GameLogic::NextMove() {
 }
 
 bool GameLogic::IsUndoMovePossible() const {
-    return mCurrentMove.mId != mPreviousMove.mId && mMovesUsed > 1 &&
+    return mCurrentMove.mId != mPreviousMove.mId && mMovesUsed > 1 && mNumUndosUsed < numUndos &&
            mTutorial.IsUndoMoveAllowed(GetMovesUsedIncludingCurrent());
 }
 
@@ -450,6 +452,7 @@ void GameLogic::UndoMove() {
     RemoveFallingPiece();
     ++mMovesLeft;
     --mMovesUsed;
+    ++mNumUndosUsed;
     UpdateLevelProgress();
 }
 
