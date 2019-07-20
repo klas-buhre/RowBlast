@@ -87,12 +87,26 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
+    -Upload some clips on Youtube:
+        -One clip that is the same as the one I will use on App Store.
+        -One clip of playing level 8 with click controls.
+        -One clip of playing level 20 with click controls.
+        -One clip of playing level 45 with click controls.
+        -One clip of playing level 49 with swipe controls.
     -Change my Apple Developer account to Organization so that my name is not shown.
         -Waiting for reponse from Apple.
     -Update product page.
     -Upload screenshots to App Store Connect. Upload screenshots for the new iPhone XS Max or the
      12.9-inch iPad Pro (3rd generation). Screenshots will be automatically resized for iPhone X and
      later, or for the 11-inch iPad Pro.
+        -Seems allowed to just upload screenshots from:
+            -iPhone X on device but can scale them up to iPhone X Max size just to be sure,
+            -iPhone 8Plus in simulator but then scale images to 1242 x 2208,
+            -and on whataver iPad device (1536 x 2048).
+        -Upload App previews (videos):
+            -iPhone X on device, scaled to 886 x 1920.
+            -iPhone 7 on device, native resolution 750 x 1334.
+            -and on whataver iPad device scaled to (900 x 1200).
     -All apps must include a link to their privacy policy in the App Store Connect metadata field.
 
 

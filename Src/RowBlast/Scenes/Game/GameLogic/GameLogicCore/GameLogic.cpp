@@ -39,7 +39,7 @@ namespace {
     constexpr auto shieldHeight = 6;
     constexpr auto whooshSoundDelay = 0.05f;
     constexpr auto landingSoundDelay = 0.1f;
-    constexpr auto numUndos = 1000;
+    constexpr auto numUndos = 1;
 
     PieceBlocks CreatePieceBlocks(const FallingPiece& fallingPiece) {
         auto& pieceType = fallingPiece.GetPieceType();
