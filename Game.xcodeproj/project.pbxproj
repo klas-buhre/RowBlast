@@ -536,7 +536,6 @@
 		62BB35D221C809D20051AEEF /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62BB35D121C809D20051AEEF /* AudioToolbox.framework */; };
 		62BE275320B42A360014C6DD /* star_1428.obj in Resources */ = {isa = PBXBuildFile; fileRef = 62BE275220B42A360014C6DD /* star_1428.obj */; };
 		62C41EDF22C8E5CE0098982F /* PreviewPiecesRotationAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62C41EDD22C8E5CE0098982F /* PreviewPiecesRotationAnimation.cpp */; };
-		62C6259222D1468E00FC72A5 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 62C6259122D1468E00FC72A5 /* Icon.png */; };
 		62DE641C20CE953D00A50F26 /* medium_button_skewed_0385.obj in Resources */ = {isa = PBXBuildFile; fileRef = 62DE641B20CE953C00A50F26 /* medium_button_skewed_0385.obj */; };
 		62E01BAF2153E00F009F0B99 /* planet_960.obj in Resources */ = {isa = PBXBuildFile; fileRef = 62E01BAE2153E00E009F0B99 /* planet_960.obj */; };
 		62E01BB12153E2A6009F0B99 /* planet_ogma.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62E01BB02153E2A6009F0B99 /* planet_ogma.jpg */; };
@@ -1517,7 +1516,6 @@
 		62BE275220B42A360014C6DD /* star_1428.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = star_1428.obj; sourceTree = "<group>"; };
 		62C41EDD22C8E5CE0098982F /* PreviewPiecesRotationAnimation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PreviewPiecesRotationAnimation.cpp; sourceTree = "<group>"; };
 		62C41EDE22C8E5CE0098982F /* PreviewPiecesRotationAnimation.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PreviewPiecesRotationAnimation.hpp; sourceTree = "<group>"; };
-		62C6259122D1468E00FC72A5 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		62DE641B20CE953C00A50F26 /* medium_button_skewed_0385.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = medium_button_skewed_0385.obj; sourceTree = "<group>"; };
 		62E01BAE2153E00E009F0B99 /* planet_960.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = planet_960.obj; sourceTree = "<group>"; };
 		62E01BB02153E2A6009F0B99 /* planet_ogma.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = planet_ogma.jpg; sourceTree = "<group>"; };
@@ -1605,7 +1603,6 @@
 			isa = PBXGroup;
 			children = (
 				6270DC6A1FCB231B00FB457D /* Fonts */,
-				626722E22127656F0058528D /* Icons */,
 				6278591A203AFB7C00494A4D /* LaunchScreens */,
 				62216C4E21ECDBAD001CB9A1 /* LegalDocuments */,
 				6270DC6F1FCB23D800FB457D /* Levels */,
@@ -3065,14 +3062,6 @@
 			path = FastNoise;
 			sourceTree = "<group>";
 		};
-		626722E22127656F0058528D /* Icons */ = {
-			isa = PBXGroup;
-			children = (
-				62C6259122D1468E00FC72A5 /* Icon.png */,
-			);
-			path = Icons;
-			sourceTree = "<group>";
-		};
 		6270DC521FCB212B00FB457D /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
@@ -3491,7 +3480,6 @@
 				62276E922274A96000679BC6 /* level11.json in Resources */,
 				62DE641C20CE953D00A50F26 /* medium_button_skewed_0385.obj in Resources */,
 				62276E5A2274A96000679BC6 /* level50.json in Resources */,
-				62C6259222D1468E00FC72A5 /* Icon.png in Resources */,
 				6238F622219AEC640008A0CF /* heart_112.obj in Resources */,
 				62B1CB85210F8F8600D0F195 /* laser_beam_red.png in Resources */,
 				621F145E22396CA7004165A2 /* previous.png in Resources */,
@@ -3859,7 +3847,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				INFOPLIST_FILE = Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Src/PhotonBeamEngine/ThirdParty/FreeType/lib",
@@ -3887,7 +3875,7 @@
 				DEVELOPMENT_TEAM = Y6YMYQ86S3;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				INFOPLIST_FILE = Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Src/PhotonBeamEngine/ThirdParty/FreeType/lib",
