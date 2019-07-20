@@ -274,6 +274,7 @@ namespace RowBlast {
         int mMovesLeft {0};
         int mNumObjectsLeftToClear {0};
         bool mShouldUndoMove {false};
+        int mNumUndosUsed {0};
     };
 }
 

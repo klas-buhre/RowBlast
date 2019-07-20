@@ -515,8 +515,7 @@ void MapController::HandlePinClick(const MapPin& pin) {
             mTutorial.OnLevelClick();
             auto levelId = pin.GetLevel();
             auto& progressService = mUserServices.GetProgressService();
-            if (progressService.ProgressedAtPreviousGameRound() &&
-                progressService.GetProgress() == swipeControlsHintDialogLevelId &&
+            if (progressService.GetProgress() == swipeControlsHintDialogLevelId &&
                 mUserServices.GetSettingsService().GetControlType() == ControlType::Click &&
                 levelId == swipeControlsHintDialogLevelId) {
                 
