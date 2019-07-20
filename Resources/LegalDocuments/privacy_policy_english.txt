@@ -249,25 +249,6 @@ Your data may be used for marketing purposes.
     For more information on marketing, please
     visit: [https://gameanalytics.com/privacy)
 
-Payments  
-~~~~~~~~
-
-We may provide paid products and/or services within the Service. In that case, we use third-party services for payment processing (e.g. payment processors).
-
-We will not store or collect your payment card details. That information is provided directly to our third-party payment processors whose use of your personal information is governed by their Privacy Policy. These payment processors adhere to the standards set by PCI-DSS as managed by the PCI Security Standards Council, which is a joint effort of brands like Visa, MasterCard, American Express and Discover. PCI-DSS requirements help ensure the secure handling of payment information.
-
-The payment processors we work with are:
-
-  * Apple Store In-App Payments
-
-    Their Privacy Policy can be viewed at
-    <https://www.apple.com/legal/privacy/en-ww/>
-
-  * Google Play In-App Payments
-
-    Their Privacy Policy can be viewed at
-    <https://www.google.com/policies/privacy/>
-
 Links to Other Sites  
 --------------------
 
