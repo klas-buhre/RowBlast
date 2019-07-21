@@ -87,6 +87,8 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
+    -Review previous commit.
+    -Test red/green/blue/yellow ghost pieces now that there is shadows to increase the contrast.
     -Add windows that says that you should press the recomended move or switch when there is a hand
      animation pointing to what to click.
     -Window that says that the tutorial is over and you can play on your own when the interctive

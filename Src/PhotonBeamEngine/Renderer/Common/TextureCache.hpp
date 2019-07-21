@@ -5,6 +5,8 @@
 #include <memory>
 #include <vector>
 
+#include "Optional.hpp"
+
 namespace Pht {
     enum class GenerateMipmap {
         Yes,
@@ -55,7 +57,9 @@ namespace Pht {
         std::shared_ptr<Texture> GetTexture(const std::string& textureName,
                                             GenerateMipmap generateMipmap);
         std::shared_ptr<Texture> GetTexture(const EnvMapTextureFilenames& filenames);
-        std::shared_ptr<Texture> InitTexture(const IImage& image, GenerateMipmap generateMipmap);
+        std::shared_ptr<Texture> GetTexture(const IImage& image,
+                                            GenerateMipmap generateMipmap,
+                                            const Optional<std::string>& name);
         std::shared_ptr<Texture> GetTextureAtlas(const std::vector<std::string>& filenames,
                                                  const TextureAtlasConfig& textureAtlasConfig);
         std::shared_ptr<Texture> GetTextureAtlas(const std::string& name,

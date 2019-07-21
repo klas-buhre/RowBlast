@@ -54,7 +54,9 @@ namespace Pht {
     public:
         Material();
         explicit Material(const std::string& textureName);
-        Material(const IImage& image, GenerateMipmap generateMipmap);
+        Material(const IImage& image,
+                 GenerateMipmap generateMipmap,
+                 const Optional<std::string>& imageName = {});
         Material(const std::string& textureName,
                  float ambient,
                  float diffuse,

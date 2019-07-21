@@ -17,8 +17,9 @@ using namespace RowBlast;
 namespace {
     constexpr auto borderWidth = 0.09f;
     constexpr auto borderOffset = 0.04f;
-    const Pht::Vec4 borderColor {1.0f, 1.0f, 1.0f, 0.82f};
+    const Pht::Vec4 borderColor {0.91f, 0.862f, 0.92f, 1.0f};
     const Pht::Vec4 brightBorderColor {1.0f, 1.0f, 1.0f, 1.0f};
+    const Pht::Vec4 shadowColor {0.2f, 0.2f, 0.2f, 0.5f};
     const Pht::Vec4 fillColor {1.0f, 1.0f, 1.0f, 0.42f};
 }
 
@@ -457,7 +458,7 @@ void GhostPieceProducer::DrawLowerLeftTiltedBorderForDiamond(const Pht::IVec2& s
     mRasterizer->DrawTiltedTrapezoid225(upperLeft, lowerRight, borderWidth, mBorderColor);
 }
 
-std::unique_ptr<Pht::RenderableObject> GhostPieceProducer::ProduceRenderable() const {
+std::unique_ptr<Pht::RenderableObject> GhostPieceProducer::ProducePressedRenderable() const {
     auto image = mRasterizer->ProduceImage();
     
     Pht::Material imageMaterial {*image, Pht::GenerateMipmap::Yes};
@@ -467,4 +468,31 @@ std::unique_ptr<Pht::RenderableObject> GhostPieceProducer::ProduceRenderable() c
     return sceneManager.CreateRenderableObject(Pht::QuadMesh {mCoordinateSystemSize.x,
                                                               mCoordinateSystemSize.y},
                                                imageMaterial);
+}
+
+GhostPieceProducer::GhostPieceRenderables
+GhostPieceProducer::ProduceRenderables(const std::string& pieceName) const {
+    GhostPieceRenderables renderables;
+    auto& sceneManager = mEngine.GetSceneManager();
+    auto image = mRasterizer->ProduceImage();
+
+    Pht::Material imageMaterial {*image, Pht::GenerateMipmap::Yes, pieceName};
+    imageMaterial.SetBlend(Pht::Blend::Yes);
+    renderables.mRenderable =
+        sceneManager.CreateRenderableObject(Pht::QuadMesh {mCoordinateSystemSize.x,
+                                                           mCoordinateSystemSize.y},
+                                            imageMaterial);
+
+    Pht::Material shadowImageMaterial {*image, Pht::GenerateMipmap::Yes, pieceName};
+    shadowImageMaterial.SetShaderId(Pht::ShaderId::TexturedLighting);
+    shadowImageMaterial.SetBlend(Pht::Blend::Yes);
+    shadowImageMaterial.SetOpacity(shadowColor.w);
+    shadowImageMaterial.SetAmbient(Pht::Color{shadowColor.x, shadowColor.y, shadowColor.z});
+
+    renderables.mShadowRenderable =
+        sceneManager.CreateRenderableObject(Pht::QuadMesh {mCoordinateSystemSize.x,
+                                                           mCoordinateSystemSize.y},
+                                        shadowImageMaterial);
+
+    return renderables;
 }

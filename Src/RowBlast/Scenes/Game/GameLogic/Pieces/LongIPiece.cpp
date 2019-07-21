@@ -44,12 +44,14 @@ LongIPiece::LongIPiece(Pht::IEngine& engine, const CommonResources& commonResour
     };
     
     GhostPieceProducer ghostPieceProducer {engine, Pht::IVec2{5, 1}, commonResources};
-    
     ghostPieceProducer.DrawBorder(border, FillGhostPiece::No);
-    SetGhostPieceRenderable(ghostPieceProducer.ProduceRenderable());
+    
+    auto renderables = ghostPieceProducer.ProduceRenderables("LongIPiece");
+    SetGhostPieceRenderable(std::move(renderables.mRenderable));
+    SetGhostPieceShadowRenderable(std::move(renderables.mShadowRenderable));
 
     ghostPieceProducer.Clear();
     ghostPieceProducer.SetBrightBorder();
     ghostPieceProducer.DrawBorder(border, FillGhostPiece::Yes);
-    SetPressedGhostPieceRenderable(ghostPieceProducer.ProduceRenderable());
+    SetPressedGhostPieceRenderable(ghostPieceProducer.ProducePressedRenderable());
 }

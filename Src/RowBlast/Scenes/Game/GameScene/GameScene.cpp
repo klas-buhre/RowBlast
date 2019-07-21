@@ -337,7 +337,7 @@ Pht::QuadMesh::Vertices GameScene::CreateFieldVertices() {
         {{-width / 2.0f, height / 2.0f, 0.0f}, {0.81f * f, 0.225f * f, 0.425f * f, 1.0f}},
     };
 }
-
+        
 void GameScene::CreateBlueprintSlots(const Level& level) {
     auto* blueprintGrid = level.GetBlueprintGrid();
     if (blueprintGrid == nullptr) {

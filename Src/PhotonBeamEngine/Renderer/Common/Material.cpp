@@ -18,9 +18,11 @@ Material::Material(const std::string& textureName) :
     mShaderId {ShaderId::Textured},
     mTexture {TextureCache::GetTexture(textureName, GenerateMipmap::Yes)} {}
 
-Material::Material(const IImage& image, GenerateMipmap generateMipmap) :
+Material::Material(const IImage& image,
+                   GenerateMipmap generateMipmap,
+                   const Optional<std::string>& imageName) :
     mShaderId {ShaderId::Textured},
-    mTexture {TextureCache::InitTexture(image, generateMipmap)} {}
+    mTexture {TextureCache::GetTexture(image, generateMipmap, imageName)} {}
 
 Material::Material(const std::string& textureName,
                    float ambient,

@@ -232,9 +232,22 @@ std::shared_ptr<Texture> TextureCache::GetTexture(const EnvMapTextureFilenames& 
     return texture;
 }
 
-std::shared_ptr<Texture> TextureCache::InitTexture(const IImage& image,
-                                                   GenerateMipmap generateMipmap) {
-    return CreateTexture(image, generateMipmap, nullptr);
+std::shared_ptr<Texture> TextureCache::GetTexture(const IImage& image,
+                                                  GenerateMipmap generateMipmap,
+                                                  const Optional<std::string>& name) {
+    if (!name.HasValue()) {
+        return CreateTexture(image, generateMipmap, nullptr);
+    }
+    
+    TwoDTextureKey key {name.GetValue(), generateMipmap};
+    auto textureFromCache = LookupTexture<TwoDTextureKey>(twoDTextures, key);
+    if (textureFromCache != nullptr) {
+        return textureFromCache;
+    }
+
+    auto texture = CreateTexture(image, generateMipmap, nullptr);
+    twoDTextures.emplace_back(key, texture);
+    return texture;
 }
 
 std::shared_ptr<Texture>

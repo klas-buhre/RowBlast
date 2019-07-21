@@ -54,6 +54,11 @@ namespace RowBlast {
     
     class GhostPieceProducer {
     public:
+        struct GhostPieceRenderables {
+            std::unique_ptr<Pht::RenderableObject> mRenderable;
+            std::unique_ptr<Pht::RenderableObject> mShadowRenderable;
+        };
+        
         GhostPieceProducer(Pht::IEngine& engine,
                            const Pht::IVec2& pieceGridSize,
                            const CommonResources& commonResources);
@@ -61,7 +66,8 @@ namespace RowBlast {
         void Clear();
         void DrawBorder(const GhostPieceBorder& border, FillGhostPiece fillGhostPiece);
         void SetBrightBorder();
-        std::unique_ptr<Pht::RenderableObject> ProduceRenderable() const;
+        std::unique_ptr<Pht::RenderableObject> ProducePressedRenderable() const;
+        GhostPieceRenderables ProduceRenderables(const std::string& pieceName) const;
         
     private:
         void DrawUpperBorder(const Pht::IVec2& segmentEndPosition);
