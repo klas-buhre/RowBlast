@@ -87,6 +87,12 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
+    -Add window that says that you should press the recomended move when there is a hand animation
+     pointing to a move.
+    -Window that says that the tutorial is over and you can play on your own when the interctive
+     tutorial is over in level 2.
+    -The How to play dialog that opens from the swipe controls hint dialog could close once the user
+     presse right arrow button when already at the last page so that clicking close is not needed.
     -Upload some clips on Youtube:
         -One clip that is the same as the one I will use on App Store.
     -Change my Apple Developer account to Organization so that my name is not shown.
