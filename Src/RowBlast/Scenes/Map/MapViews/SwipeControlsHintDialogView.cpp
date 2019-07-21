@@ -33,8 +33,8 @@ SwipeControlsHintDialogView::SwipeControlsHintDialogView(Pht::IEngine& engine,
     auto textProperties = guiResources.GetSmallWhiteTextProperties(zoom);
     textProperties.mAlignment = Pht::TextAlignment::CenterX;
 
-    CreateText({0.0f, 6.3f, UiLayer::text}, "So far you have been playing", textProperties);
-    CreateText({0.0f, 5.225f, UiLayer::text}, "using SingleTap controls:", textProperties);
+    CreateText({0.0f, 6.3f, UiLayer::text}, "So far you have been using SingleTap", textProperties);
+    CreateText({0.0f, 5.225f, UiLayer::text}, "controls to place pieces by clicking:", textProperties);
     
     CreateSingleTapIcon({0.0f, 3.5, UiLayer::text}, GetRoot(), engine);
 
@@ -43,12 +43,12 @@ SwipeControlsHintDialogView::SwipeControlsHintDialogView(Pht::IEngine& engine,
 
     CreateSwipeIcon({0.0f, -1.8f, UiLayer::text}, GetRoot(), engine);
     
-    CreateText({0.0f, -4.2f, UiLayer::text}, "You can change the controls in", textProperties);
-    CreateText({0.0f, -5.275f, UiLayer::text}, "the settings menu:", textProperties);
+    CreateText({0.0f, -4.2f, UiLayer::text}, "You can select SingleTap or Swipe", textProperties);
+    CreateText({0.0f, -5.275f, UiLayer::text}, "controls in the settings menu:", textProperties);
     GuiUtils::CreateIcon(engine,
                          *this,
                          "settings.png",
-                         {3.7f, -5.1f, UiLayer::text},
+                         {5.5f, -5.1f, UiLayer::text},
                          {0.9f, 0.9f},
                          GetRoot());
     

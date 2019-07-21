@@ -42,6 +42,7 @@ namespace RowBlast {
         void GoToNextPage();
         void GoToPreviousPage();
         void Update();
+        bool IsOnLastPage() const;
 
         void SetGuiLightProvider(IGuiLightProvider& guiLightProvider) {
             mGuiLightProvider = &guiLightProvider;
@@ -182,7 +183,6 @@ namespace RowBlast {
         std::unique_ptr<MenuButton> mPreviousButton;
         std::vector<Page> mPages;
         int mPageIndex {0};
-        int mNumPages {9};
     };
 }
 

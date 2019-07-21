@@ -62,7 +62,10 @@ HowToPlayDialogController::Result HowToPlayDialogController::HandleInput() {
 
 HowToPlayDialogController::Result
 HowToPlayDialogController::OnTouch(const Pht::TouchEvent& touchEvent) {
-    if (mView.GetCloseButton().IsClicked(touchEvent)) {
+    auto isNextButtonClicked = mView.GetNextButton().IsClicked(touchEvent);
+    if (mView.GetCloseButton().IsClicked(touchEvent) ||
+        (isNextButtonClicked && mView.IsOnLastPage())) {
+
         mDeferredResult = Result::Close;
         
         auto updateFade =
@@ -71,13 +74,14 @@ HowToPlayDialogController::OnTouch(const Pht::TouchEvent& touchEvent) {
         
         mSlidingMenuAnimation.StartSlideOut(updateFade,
                                             SlidingMenuAnimation::SlideDirection::Right);
+        return Result::None;
     }
     
     if (mView.GetPreviousButton().IsClicked(touchEvent)) {
         mView.GoToPreviousPage();
     }
     
-    if (mView.GetNextButton().IsClicked(touchEvent)) {
+    if (isNextButtonClicked) {
         mView.GoToNextPage();
     }
     

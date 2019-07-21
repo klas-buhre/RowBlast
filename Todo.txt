@@ -87,6 +87,10 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
+    -Add windows that says that you should press the recomended move or switch when there is a hand
+     animation pointing to what to click.
+    -Window that says that the tutorial is over and you can play on your own when the interctive
+     tutorial is over in level 2.
     -All apps must include a link to their privacy policy in the App Store Connect metadata field.
      Remember to update the linked (website) privacy policy with payments.
 
