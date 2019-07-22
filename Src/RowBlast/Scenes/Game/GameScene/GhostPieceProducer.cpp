@@ -15,12 +15,24 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto borderWidth = 0.09f;
+    constexpr auto borderWidth = 0.085f;
+    constexpr auto borderAlpha = 0.825f;
     constexpr auto borderOffset = 0.04f;
-    const Pht::Vec4 borderColor {0.91f, 0.862f, 0.92f, 1.0f};
-    const Pht::Vec4 brightBorderColor {1.0f, 1.0f, 1.0f, 1.0f};
-    const Pht::Vec4 shadowColor {0.2f, 0.2f, 0.2f, 0.5f};
-    const Pht::Vec4 fillColor {1.0f, 1.0f, 1.0f, 0.42f};
+    constexpr auto pressedPieceBorderAlpha = 1.0f;
+    constexpr auto pressedPieceFillAlpha = 0.6f;
+    constexpr auto fillAlpha = 0.19f;
+    
+    const Pht::Vec4 redFillColor {1.0f, 0.5f, 0.5f, fillAlpha};
+    const Pht::Vec4 greenFillColor {0.5f, 0.79f, 0.5f, fillAlpha};
+    const Pht::Vec4 blueFillColor {0.3f, 0.72f, 1.0f, fillAlpha};
+    const Pht::Vec4 yellowFillColor {0.875f, 0.75f, 0.0f, fillAlpha};
+
+    const Pht::Vec4 redBorderColor {1.0f, 0.8f, 0.8f, borderAlpha};
+    const Pht::Vec4 greenBorderColor {0.6f, 0.85f, 0.6f, borderAlpha};
+    const Pht::Vec4 blueBorderColor {0.65f, 0.85f, 1.0f, borderAlpha};
+    const Pht::Vec4 yellowBorderColor {0.93f, 0.78f, 0.4f, borderAlpha};
+    
+    const Pht::Vec4 shadowColor {0.14f, 0.14f, 0.14f, 0.55f};
 }
 
 GhostPieceProducer::GhostPieceProducer(Pht::IEngine& engine,
@@ -31,8 +43,7 @@ GhostPieceProducer::GhostPieceProducer(Pht::IEngine& engine,
     mCoordinateSystemSize {
         static_cast<float>(pieceGridSize.x) * mCellSize,
         static_cast<float>(pieceGridSize.y) * mCellSize
-    },
-    mBorderColor {borderColor} {
+    } {
     
     auto& renderer = engine.GetRenderer();
     auto& renderBufferSize = renderer.GetRenderBufferSize();
@@ -56,7 +67,11 @@ void GhostPieceProducer::Clear() {
     mRasterizer->ClearBuffer();
 }
 
-void GhostPieceProducer::DrawBorder(const GhostPieceBorder& border, FillGhostPiece fillGhostPiece) {
+void GhostPieceProducer::DrawBorder(const GhostPieceBorder& border,
+                                    BlockColor color,
+                                    PressedGhostPiece pressedGhostPiece) {
+    SetUpColors(color, pressedGhostPiece);
+
     for (auto& segment: border) {
         switch (segment.mKind) {
             case BorderSegmentKind::Start:
@@ -123,13 +138,36 @@ void GhostPieceProducer::DrawBorder(const GhostPieceBorder& border, FillGhostPie
         };
     }
     
-    if (fillGhostPiece == FillGhostPiece::Yes) {
-        mRasterizer->FillEnclosedArea(fillColor);
-    }
+    mRasterizer->FillEnclosedArea(mFillColor);
 }
 
-void GhostPieceProducer::SetBrightBorder() {
-    mBorderColor = brightBorderColor;
+void GhostPieceProducer::SetUpColors(BlockColor color, PressedGhostPiece pressedGhostPiece) {
+    switch (color) {
+        case BlockColor::Red:
+            mBorderColor = redBorderColor;
+            mFillColor = redFillColor;
+            break;
+        case BlockColor::Green:
+            mBorderColor = greenBorderColor;
+            mFillColor = greenFillColor;
+            break;
+        case BlockColor::Blue:
+            mBorderColor = blueBorderColor;
+            mFillColor = blueFillColor;
+            break;
+        case BlockColor::Yellow:
+            mBorderColor = yellowBorderColor;
+            mFillColor = yellowFillColor;
+            break;
+        default:
+            assert(false);
+            break;
+    }
+    
+    if (pressedGhostPiece == PressedGhostPiece::Yes) {
+        mBorderColor.w = pressedPieceBorderAlpha;
+        mFillColor.w = pressedPieceFillAlpha;
+    }
 }
 
 void GhostPieceProducer::DrawUpperBorder(const Pht::IVec2& segmentEndPosition) {
@@ -492,7 +530,7 @@ GhostPieceProducer::ProduceRenderables(const std::string& pieceName) const {
     renderables.mShadowRenderable =
         sceneManager.CreateRenderableObject(Pht::QuadMesh {mCoordinateSystemSize.x,
                                                            mCoordinateSystemSize.y},
-                                        shadowImageMaterial);
+                                            shadowImageMaterial);
 
     return renderables;
 }

@@ -40,15 +40,14 @@ DPiece::DPiece(Pht::IEngine& engine, const CommonResources& commonResources) {
     };
     
     GhostPieceProducer ghostPieceProducer {engine, Pht::IVec2{3, 3}, commonResources};
-    ghostPieceProducer.DrawBorder(border, FillGhostPiece::No);
+    ghostPieceProducer.DrawBorder(border, GetColor(), PressedGhostPiece::No);
     
     auto renderables = ghostPieceProducer.ProduceRenderables("DPiece");
     SetGhostPieceRenderable(std::move(renderables.mRenderable));
     SetGhostPieceShadowRenderable(std::move(renderables.mShadowRenderable));
 
     ghostPieceProducer.Clear();
-    ghostPieceProducer.SetBrightBorder();
-    ghostPieceProducer.DrawBorder(border, FillGhostPiece::Yes);
+    ghostPieceProducer.DrawBorder(border, GetColor(), PressedGhostPiece::Yes);
     SetPressedGhostPieceRenderable(ghostPieceProducer.ProducePressedRenderable());
 }
 

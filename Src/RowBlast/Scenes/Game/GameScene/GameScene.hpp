@@ -300,7 +300,7 @@ namespace RowBlast {
         const float mFieldGridZ {-1.8f};
         const float mBigAsteroidZ {-1.0f};
         const float mBouncingBlockZ {-0.2f};
-        Pht::Vec2 mGhostPieceShadowOffset {-0.07f, -0.07f};
+        Pht::Vec2 mGhostPieceShadowOffset {-0.085f, -0.085f};
         float mFieldWidth {0.0f};
         float mFieldHeight {0.0f};
         Pht::Vec2 mFieldLoweLeft;

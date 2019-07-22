@@ -521,7 +521,7 @@ void ScenePlayingField::UpdateClickableGhostPieces(const FallingPiece& fallingPi
             } else {
                 UpdateGhostPiece(*ghostPieceRenderable, position, rotation);
             }
-            
+
             if (ghostPieceShadowRenderable) {
                 position.x += ghostPieceShadowOffset.x;
                 position.y += ghostPieceShadowOffset.y;

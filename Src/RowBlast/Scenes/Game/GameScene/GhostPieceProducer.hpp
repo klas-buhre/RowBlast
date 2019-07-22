@@ -8,6 +8,9 @@
 #include "SoftwareRasterizer.hpp"
 #include "Vector.hpp"
 
+// Game includes.
+#include "Cell.hpp"
+
 namespace Pht {
     class IEngine;
     class RenderableObject;
@@ -40,7 +43,7 @@ namespace RowBlast {
         LowerLeftTiltForDiamond
     };
     
-    enum class FillGhostPiece {
+    enum class PressedGhostPiece {
         Yes,
         No
     };
@@ -64,12 +67,14 @@ namespace RowBlast {
                            const CommonResources& commonResources);
         
         void Clear();
-        void DrawBorder(const GhostPieceBorder& border, FillGhostPiece fillGhostPiece);
-        void SetBrightBorder();
+        void DrawBorder(const GhostPieceBorder& border,
+                        BlockColor color,
+                        PressedGhostPiece pressedGhostPiece);
         std::unique_ptr<Pht::RenderableObject> ProducePressedRenderable() const;
         GhostPieceRenderables ProduceRenderables(const std::string& pieceName) const;
         
     private:
+        void SetUpColors(BlockColor color, PressedGhostPiece pressedGhostPiece);
         void DrawUpperBorder(const Pht::IVec2& segmentEndPosition);
         void DrawRightBorder(const Pht::IVec2& segmentEndPosition, BorderSegmentKind segmentKind);
         void DrawLowerBorder(const Pht::IVec2& segmentEndPosition, BorderSegmentKind segmentKind);
@@ -94,6 +99,7 @@ namespace RowBlast {
         std::unique_ptr<Pht::SoftwareRasterizer> mRasterizer;
         Pht::Vec2 mSegmentStartPosition {0.0f, 0.0f};
         Pht::Vec4 mBorderColor;
+        Pht::Vec4 mFillColor;
     };
 }
 
