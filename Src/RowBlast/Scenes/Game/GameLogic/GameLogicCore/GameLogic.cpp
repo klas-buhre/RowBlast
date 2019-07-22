@@ -375,6 +375,10 @@ void GameLogic::HandleControlTypeChange() {
     }
     
     if (mSettingsService.GetControlType() != mControlType && mTutorial.IsGestureControlsAllowed()) {
+        mCurrentMove.mPreviewPieceRotations = PieceRotations {};
+        mCurrentMoveTmp.mPreviewPieceRotations = PieceRotations {};
+        mPreviousMove.mPreviewPieceRotations = PieceRotations {};
+
         switch (mSettingsService.GetControlType()) {
             case ControlType::Click:
                 if (mCurrentMove.mPieceType->IsBomb()) {
