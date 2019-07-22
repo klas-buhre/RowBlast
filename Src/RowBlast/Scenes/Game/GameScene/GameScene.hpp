@@ -294,7 +294,7 @@ namespace RowBlast {
         const float mShieldAnimationZ {mCellSize / 2.0f + 0.1f};
         const float mFieldBottomGlowZ {mCellSize / 2.0f + 0.1f};
         const float mGhostPieceZ {-0.2f};
-        const float mGhostPieceShadowZ {-0.5f};
+        const float mGhostPieceShadowZ {-0.4f};
         const float mPressedGhostPieceZ {mCellSize / 2.0f + 0.2f};
         const float mBlueprintAnimationZ {-0.6f};
         const float mFieldGridZ {-1.8f};
