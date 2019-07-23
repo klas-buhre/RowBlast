@@ -32,7 +32,7 @@ namespace {
     constexpr auto daylightLightIntensity = 0.985f;
     constexpr auto sunsetLightIntensity = 0.94f;
     constexpr auto darkLightIntensity = 0.78f;
-    constexpr auto fieldQuadBrightness = 0.9f;
+    constexpr auto fieldQuadBrightness = 0.85f;
     const Pht::Vec3 defaultUiCameraPosition {0.0f, 0.0f, 300.0f};
 
     const std::vector<BlockPathVolume> standardFloatingBlockPaths {
@@ -332,9 +332,9 @@ Pht::QuadMesh::Vertices GameScene::CreateFieldVertices() {
 
     return {
         {{-width / 2.0f, -height / 2.0f, 0.0f}, {0.3f * f, 0.3f * f, 0.752f * f, 1.0f}},
-        {{width / 2.0f, -height / 2.0f, 0.0f}, {0.8f * f, 0.225f * f, 0.425f * f, 1.0f}},
+        {{width / 2.0f, -height / 2.0f, 0.0f}, {0.735f * f, 0.225f * f, 0.49f * f, 1.0f}},
         {{width / 2.0f, height / 2.0f, 0.0f}, {0.3f * f, 0.3f * f, 0.752f * f, 1.0f}},
-        {{-width / 2.0f, height / 2.0f, 0.0f}, {0.81f * f, 0.225f * f, 0.425f * f, 1.0f}},
+        {{-width / 2.0f, height / 2.0f, 0.0f}, {0.735f * f, 0.225f * f, 0.49f * f, 1.0f}},
     };
 }
         

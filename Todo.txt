@@ -88,9 +88,7 @@ Backlog:
 
 Ongoing tasks:
     -Test red/green/blue/yellow ghost pieces now that there is shadows to increase the contrast.
-        -See what other people think about that.
-        -Then continue with account migration and start with tutorial.
-        -Update tutorial and how to play dialog if choose to use new ghost pieces.
+        -Update tutorial and how to play dialog with the new ghost pieces.
     -Add windows that says that you should press the recomended move or switch when there is a hand
      animation pointing to what to click.
     -Window that says that the tutorial is over and you can play on your own when the interctive

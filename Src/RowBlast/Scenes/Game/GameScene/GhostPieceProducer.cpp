@@ -27,7 +27,7 @@ namespace {
     const Pht::Vec4 blueFillColor {0.3f, 0.72f, 1.0f, fillAlpha};
     const Pht::Vec4 yellowFillColor {0.875f, 0.75f, 0.0f, fillAlpha};
 
-    const Pht::Vec4 redBorderColor {1.0f, 0.73f, 0.75f, borderAlpha};
+    const Pht::Vec4 redBorderColor {1.0f, 0.73f, 0.77f, borderAlpha};
     const Pht::Vec4 greenBorderColor {0.6f, 0.85f, 0.6f, borderAlpha};
     const Pht::Vec4 blueBorderColor {0.65f, 0.85f, 1.0f, borderAlpha};
     const Pht::Vec4 yellowBorderColor {0.93f, 0.78f, 0.4f, borderAlpha};
