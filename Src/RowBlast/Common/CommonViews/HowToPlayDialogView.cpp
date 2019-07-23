@@ -1299,21 +1299,35 @@ Pht::SceneObject& HowToPlayDialogView::CreateLPieceGhostPiece(const Pht::Vec3& p
                                                               float rotation,
                                                               Pht::SceneObject& parent,
                                                               const LevelResources& levelResources) {
+    auto& container = CreateSceneObject();
+    parent.AddChild(container);
+    
+    auto& containerTransform = container.GetTransform();
+    containerTransform.SetPosition(position);
+    containerTransform.SetScale(0.8f);
+    
     auto& ghostPiece = CreateSceneObject();
-    parent.AddChild(ghostPiece);
+    container.AddChild(ghostPiece);
     
     auto& transform = ghostPiece.GetTransform();
-    transform.SetPosition(position);
-    transform.SetScale(0.8f);
     transform.SetRotation({0.0f, 0.0f, rotation});
     
     auto& pieceTypes = levelResources.GetPieceTypes();
     auto i = pieceTypes.find("L");
-    if (i != std::end(pieceTypes)) {
-        ghostPiece.SetRenderable(i->second->GetGhostPieceRenderable());
-    }
+    assert(i != std::end(pieceTypes));
+    auto* pieceType = i->second.get();
+    ghostPiece.SetRenderable(pieceType->GetGhostPieceRenderable());
     
-    return ghostPiece;
+    auto& shadow = CreateSceneObject();
+    container.AddChild(shadow);
+    
+    auto& shadowTransform = shadow.GetTransform();
+    shadowTransform.SetPosition({-0.08f, -0.08f, UiLayer::textShadow});
+    shadowTransform.SetRotation({0.0f, 0.0f, rotation});
+    
+    shadow.SetRenderable(pieceType->GetGhostPieceShadowRenderable());
+    
+    return container;
 }
 
 void HowToPlayDialogView::CreateSingleTapIcon(const Pht::Vec3& position, Pht::SceneObject& parent) {
