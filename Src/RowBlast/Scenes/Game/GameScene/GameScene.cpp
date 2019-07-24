@@ -331,10 +331,10 @@ Pht::QuadMesh::Vertices GameScene::CreateFieldVertices() {
     auto f = fieldQuadBrightness;
 
     return {
-        {{-width / 2.0f, -height / 2.0f, 0.0f}, {0.3f * f, 0.3f * f, 0.752f * f, 1.0f}},
-        {{width / 2.0f, -height / 2.0f, 0.0f}, {0.735f * f, 0.225f * f, 0.49f * f, 1.0f}},
-        {{width / 2.0f, height / 2.0f, 0.0f}, {0.3f * f, 0.3f * f, 0.752f * f, 1.0f}},
-        {{-width / 2.0f, height / 2.0f, 0.0f}, {0.735f * f, 0.225f * f, 0.49f * f, 1.0f}},
+        {{-width / 2.0f, -height / 2.0f, 0.0f}, {0.3f * f, 0.28f * f, 0.752f * f, 1.0f}},
+        {{width / 2.0f, -height / 2.0f, 0.0f}, {0.735f * f, 0.245f * f, 0.49f * f, 1.0f}},
+        {{width / 2.0f, height / 2.0f, 0.0f}, {0.3f * f, 0.28f * f, 0.752f * f, 1.0f}},
+        {{-width / 2.0f, height / 2.0f, 0.0f}, {0.735f * f, 0.245f * f, 0.49f * f, 1.0f}},
     };
 }
         

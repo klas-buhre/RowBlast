@@ -16,7 +16,7 @@ using namespace RowBlast;
 
 namespace {
     constexpr auto borderWidth = 0.085f;
-    constexpr auto borderAlpha = 0.825f;
+    constexpr auto borderAlpha = 0.83f;
     constexpr auto borderOffset = 0.04f;
     constexpr auto pressedPieceBorderAlpha = 1.0f;
     constexpr auto pressedPieceFillAlpha = 0.6f;
@@ -30,7 +30,7 @@ namespace {
     const Pht::Vec4 redBorderColor {1.0f, 0.73f, 0.77f, borderAlpha};
     const Pht::Vec4 greenBorderColor {0.6f, 0.85f, 0.6f, borderAlpha};
     const Pht::Vec4 blueBorderColor {0.65f, 0.85f, 1.0f, borderAlpha};
-    const Pht::Vec4 yellowBorderColor {0.93f, 0.78f, 0.4f, borderAlpha};
+    const Pht::Vec4 yellowBorderColor {1.0, 0.85f, 0.0f, 0.7f};
     
     const Pht::Vec4 shadowColor {0.14f, 0.14f, 0.14f, 0.55f};
 }
