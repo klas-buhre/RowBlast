@@ -18,7 +18,7 @@ using namespace RowBlast;
 namespace {
     constexpr auto numWeldRenderables = 3;
     constexpr auto diagonalWeldAlpha = 0.5f;
-    constexpr auto ghostPieceOpacity = 0.5f;
+    constexpr auto ghostPieceOpacity = 0.55f;
     constexpr auto cellSize = 1.25f;
     
     std::string ToMeshName(BlockKind blockKind) {

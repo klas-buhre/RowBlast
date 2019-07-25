@@ -353,33 +353,18 @@ Pht::SceneObject& TutorialUtils::CreatePieceGhostPiece(Pht::GuiView& view,
                                                        float rotation,
                                                        Pht::SceneObject& parent,
                                                        const LevelResources& levelResources) {
-    auto& container = view.CreateSceneObject();
-    parent.AddChild(container);
-
-    auto& containerTransform = container.GetTransform();
-    containerTransform.SetPosition(position);
-    containerTransform.SetScale(0.8f);
-
     auto& ghostPiece = view.CreateSceneObject();
-    container.AddChild(ghostPiece);
+    parent.AddChild(ghostPiece);
     
     auto& transform = ghostPiece.GetTransform();
+    transform.SetPosition(position);
+    transform.SetScale(0.8f);
     transform.SetRotation({0.0f, 0.0f, rotation});
     
     auto& pieceTypes = levelResources.GetPieceTypes();
     auto i = pieceTypes.find(pieceName);
     assert(i != std::end(pieceTypes));
-    auto* pieceType = i->second.get();
-    ghostPiece.SetRenderable(pieceType->GetGhostPieceRenderable());
-
-    auto& shadow = view.CreateSceneObject();
-    container.AddChild(shadow);
+    ghostPiece.SetRenderable(i->second->GetGhostPieceRenderable());
     
-    auto& shadowTransform = shadow.GetTransform();
-    shadowTransform.SetPosition({-0.08f, -0.08f, UiLayer::textShadow});
-    shadowTransform.SetRotation({0.0f, 0.0f, rotation});
-    
-    shadow.SetRenderable(pieceType->GetGhostPieceShadowRenderable());
-
-    return container;
+    return ghostPiece;
 }
