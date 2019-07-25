@@ -526,7 +526,7 @@ void ScenePlayingField::UpdateClickableGhostPieces(const FallingPiece& fallingPi
                 position.x += ghostPieceShadowOffset.x;
                 position.y += ghostPieceShadowOffset.y;
                 position.z = ghostPieceShadowZ;
-                UpdateGhostPiece(*ghostPieceShadowRenderable, position, rotation);
+                // UpdateGhostPiece(*ghostPieceShadowRenderable, position, rotation);
             }
         } else {
             auto& pieceGrid = pieceType.GetGrid(move.mRotation);

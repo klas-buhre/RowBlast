@@ -15,22 +15,57 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto borderWidth = 0.085f;
+    // constexpr auto borderWidth = 0.085f;
+/*
+    constexpr auto outerBorderWidth = 0.07f;
+    constexpr auto innerBorderWidth = 0.035f;
     constexpr auto borderAlpha = 0.83f;
-    constexpr auto borderOffset = 0.04f;
-    constexpr auto pressedPieceBorderAlpha = 1.0f;
-    constexpr auto pressedPieceFillAlpha = 0.6f;
-    constexpr auto fillAlpha = 0.19f;
+*/
+    
+    
+/*
+    // config with one outer border and 2 inner borders:
+    constexpr auto outerBorderWidth = 0.07f;
+    constexpr auto innerBorderWidth = 0.045f;
+    constexpr auto borderAlpha = 0.9f;
+    // constexpr auto fillAlpha = 0.2f;
+    constexpr auto fillAlpha = 0.22f;
+    // constexpr auto fillAlpha = 0.18f;
+    constexpr auto borderOffset = 0.045f;
+*/
+    
+    // config with one outer border and one inner border:
+    // constexpr auto outerBorderWidth = 0.075f;
+    // constexpr auto innerBorderWidth = 0.075f;
+    constexpr auto outerBorderWidth = 0.08f;
+    constexpr auto innerBorderWidth = 0.08f;
+    constexpr auto borderAlpha = 0.9f;
+    // constexpr auto fillAlpha = 0.2f;
+    constexpr auto fillAlpha = 0.22f;
+    // constexpr auto fillAlpha = 0.18f;
+    constexpr auto borderOffset = 0.045f;
+
+    
+    
+    
+    
+    
+    // constexpr auto borderOffset = 0.04f;
+    // constexpr auto pressedPieceBorderAlpha = 1.0f;
+    // constexpr auto pressedPieceFillAlpha = 0.6f;
+    // constexpr auto fillAlpha = 0.19f;
     
     const Pht::Vec4 redFillColor {1.0f, 0.5f, 0.5f, fillAlpha};
     const Pht::Vec4 greenFillColor {0.5f, 0.79f, 0.5f, fillAlpha};
     const Pht::Vec4 blueFillColor {0.3f, 0.72f, 1.0f, fillAlpha};
-    const Pht::Vec4 yellowFillColor {0.875f, 0.75f, 0.0f, fillAlpha};
+    // const Pht::Vec4 yellowFillColor {0.875f, 0.75f, 0.0f, fillAlpha};
+    const Pht::Vec4 yellowFillColor {0.9f, 0.85f, 0.0f, fillAlpha};
 
     const Pht::Vec4 redBorderColor {1.0f, 0.73f, 0.77f, borderAlpha};
     const Pht::Vec4 greenBorderColor {0.6f, 0.85f, 0.6f, borderAlpha};
     const Pht::Vec4 blueBorderColor {0.65f, 0.85f, 1.0f, borderAlpha};
-    const Pht::Vec4 yellowBorderColor {1.0, 0.85f, 0.0f, 0.7f};
+    // const Pht::Vec4 yellowBorderColor {1.0, 0.85f, 0.0f, 0.7f};
+    const Pht::Vec4 yellowBorderColor {0.95f, 0.85f, 0.0f, 0.7f};
     
     const Pht::Vec4 shadowColor {0.14f, 0.14f, 0.14f, 0.55f};
 }
@@ -70,8 +105,45 @@ void GhostPieceProducer::Clear() {
 void GhostPieceProducer::DrawBorder(const GhostPieceBorder& border,
                                     BlockColor color,
                                     PressedGhostPiece pressedGhostPiece) {
-    SetUpColors(color, pressedGhostPiece);
+    SetUpColors(color);
+    
+    auto alphaFactor = pressedGhostPiece == PressedGhostPiece::No ? 1.0f : 2.5f;
+/*
+    mBorderOffset = borderOffset;
+    mBorderWidth = outerBorderWidth;
+    mConnectionBorderWidth = mBorderWidth * 2.0f + innerBorderWidth * 1.75f;
+    mBorderColor.w = std::min(borderAlpha * alphaFactor, 1.0f);
+    DrawBorder(border);
 
+    mBorderOffset += mBorderWidth;
+    mConnectionBorderWidth -= mBorderWidth * 2.0f;
+    mBorderWidth = innerBorderWidth;
+    mBorderColor.w = std::min(0.65f * borderAlpha * alphaFactor, 1.0f);
+    DrawBorder(border);
+
+    mBorderOffset += mBorderWidth;
+    mConnectionBorderWidth = 0.0f;
+    mBorderWidth = innerBorderWidth;
+    mBorderColor.w = std::min(0.3f * borderAlpha * alphaFactor, 1.0f);
+    DrawBorder(border);
+*/
+    mBorderOffset = borderOffset;
+    mBorderWidth = outerBorderWidth;
+    mConnectionBorderWidth = mBorderWidth * 2.0f + innerBorderWidth;
+    mBorderColor.w = std::min(borderAlpha * alphaFactor, 1.0f);
+    DrawBorder(border);
+    
+    mBorderOffset += mBorderWidth;
+    mConnectionBorderWidth -= mBorderWidth * 2.0f;
+    mBorderWidth = innerBorderWidth;
+    mBorderColor.w = std::min(0.5f * borderAlpha * alphaFactor, 1.0f);
+    DrawBorder(border);
+
+    mFillColor.w = std::min(fillAlpha * alphaFactor, 1.0f);
+    mRasterizer->FillEnclosedArea(mFillColor);
+}
+
+void GhostPieceProducer::DrawBorder(const GhostPieceBorder& border) {
     for (auto& segment: border) {
         switch (segment.mKind) {
             case BorderSegmentKind::Start:
@@ -137,11 +209,9 @@ void GhostPieceProducer::DrawBorder(const GhostPieceBorder& border,
             static_cast<float>(segment.mPosition.y)
         };
     }
-    
-    mRasterizer->FillEnclosedArea(mFillColor);
 }
 
-void GhostPieceProducer::SetUpColors(BlockColor color, PressedGhostPiece pressedGhostPiece) {
+void GhostPieceProducer::SetUpColors(BlockColor color) {
     switch (color) {
         case BlockColor::Red:
             mBorderColor = redBorderColor;
@@ -163,337 +233,332 @@ void GhostPieceProducer::SetUpColors(BlockColor color, PressedGhostPiece pressed
             assert(false);
             break;
     }
-    
-    if (pressedGhostPiece == PressedGhostPiece::Yes) {
-        mBorderColor.w = pressedPieceBorderAlpha;
-        mFillColor.w = pressedPieceFillAlpha;
-    }
 }
 
 void GhostPieceProducer::DrawUpperBorder(const Pht::IVec2& segmentEndPosition) {
     Pht::Vec2 lowerLeft {
-        segmentEndPosition.x * mCellSize + borderOffset,
-        segmentEndPosition.y * mCellSize - borderOffset - borderWidth
+        segmentEndPosition.x * mCellSize + mBorderOffset,
+        segmentEndPosition.y * mCellSize - mBorderOffset - mBorderWidth
     };
 
     Pht::Vec2 upperRight {
-        mSegmentStartPosition.x * mCellSize - borderOffset,
-        mSegmentStartPosition.y * mCellSize - borderOffset
+        mSegmentStartPosition.x * mCellSize - mBorderOffset,
+        mSegmentStartPosition.y * mCellSize - mBorderOffset
     };
     
-    mRasterizer->DrawRectangle(upperRight, lowerLeft, mBorderColor);
+    mRasterizer->DrawRectangle(upperRight, lowerLeft, mBorderColor, Pht::DrawOver::Yes);
 }
 
 void GhostPieceProducer::DrawRightBorder(const Pht::IVec2& segmentEndPosition,
                                          BorderSegmentKind segmentKind) {
     auto extraOffset =
-        segmentKind == BorderSegmentKind::RightForTriangle ? borderWidth + borderOffset : 0.0f;
+        segmentKind == BorderSegmentKind::RightForTriangle ? mBorderWidth + mBorderOffset : 0.0f;
     
     Pht::Vec2 lowerLeft {
-        mSegmentStartPosition.x * mCellSize - borderOffset - borderWidth,
-        mSegmentStartPosition.y * mCellSize + borderOffset
+        mSegmentStartPosition.x * mCellSize - mBorderOffset - mBorderWidth,
+        mSegmentStartPosition.y * mCellSize + mBorderOffset
     };
 
     Pht::Vec2 upperRight {
-        segmentEndPosition.x * mCellSize - borderOffset,
-        segmentEndPosition.y * mCellSize - borderOffset - extraOffset
+        segmentEndPosition.x * mCellSize - mBorderOffset,
+        segmentEndPosition.y * mCellSize - mBorderOffset - extraOffset
     };
     
-    mRasterizer->DrawRectangle(upperRight, lowerLeft, mBorderColor);
+    mRasterizer->DrawRectangle(upperRight, lowerLeft, mBorderColor, Pht::DrawOver::Yes);
 }
 
 void GhostPieceProducer::DrawLowerBorder(const Pht::IVec2& segmentEndPosition,
                                          BorderSegmentKind segmentKind) {
     auto extraOffsetLeft =
         (segmentKind == BorderSegmentKind::LowerForTriangle ||
-         segmentKind == BorderSegmentKind::LowerForPyramid) ? borderWidth + borderOffset : 0.0f;
+         segmentKind == BorderSegmentKind::LowerForPyramid) ? mBorderWidth + mBorderOffset : 0.0f;
 
     auto extraOffsetRight =
-        segmentKind == BorderSegmentKind::LowerForPyramid ? borderWidth + borderOffset : 0.0f;
+        segmentKind == BorderSegmentKind::LowerForPyramid ? mBorderWidth + mBorderOffset : 0.0f;
     
     Pht::Vec2 lowerLeft {
-        mSegmentStartPosition.x * mCellSize + borderOffset + extraOffsetLeft,
-        mSegmentStartPosition.y * mCellSize + borderOffset
+        mSegmentStartPosition.x * mCellSize + mBorderOffset + extraOffsetLeft,
+        mSegmentStartPosition.y * mCellSize + mBorderOffset
     };
 
     Pht::Vec2 upperRight {
-        segmentEndPosition.x * mCellSize - borderOffset - extraOffsetRight,
-        segmentEndPosition.y * mCellSize + borderOffset + borderWidth
+        segmentEndPosition.x * mCellSize - mBorderOffset - extraOffsetRight,
+        segmentEndPosition.y * mCellSize + mBorderOffset + mBorderWidth
     };
     
-    mRasterizer->DrawRectangle(upperRight, lowerLeft, mBorderColor);
+    mRasterizer->DrawRectangle(upperRight, lowerLeft, mBorderColor, Pht::DrawOver::Yes);
 }
 
 void GhostPieceProducer::DrawLeftBorder(const Pht::IVec2& segmentEndPosition) {
     Pht::Vec2 lowerLeft {
-        segmentEndPosition.x * mCellSize + borderOffset,
-        segmentEndPosition.y * mCellSize + borderOffset
+        segmentEndPosition.x * mCellSize + mBorderOffset,
+        segmentEndPosition.y * mCellSize + mBorderOffset
     };
 
     Pht::Vec2 upperRight {
-        mSegmentStartPosition.x * mCellSize + borderOffset + borderWidth,
-        mSegmentStartPosition.y * mCellSize - borderOffset
+        mSegmentStartPosition.x * mCellSize + mBorderOffset + mBorderWidth,
+        mSegmentStartPosition.y * mCellSize - mBorderOffset
     };
     
-    mRasterizer->DrawRectangle(upperRight, lowerLeft, mBorderColor);
+    mRasterizer->DrawRectangle(upperRight, lowerLeft, mBorderColor, Pht::DrawOver::Yes);
 }
 
 void GhostPieceProducer::DrawUpperLeftConcaveCornerBorder(const Pht::IVec2& segmentPosition) {
     Pht::Vec2 lowerLeft1 {
-        segmentPosition.x * mCellSize + borderOffset,
-        segmentPosition.y * mCellSize - borderOffset - borderWidth
+        segmentPosition.x * mCellSize + mBorderOffset,
+        segmentPosition.y * mCellSize - mBorderOffset - mBorderWidth
     };
 
     Pht::Vec2 upperRight1 {
-        segmentPosition.x * mCellSize + borderOffset + borderWidth,
-        segmentPosition.y * mCellSize + borderOffset
+        segmentPosition.x * mCellSize + mBorderOffset + mBorderWidth,
+        segmentPosition.y * mCellSize + mBorderOffset
     };
     
     mRasterizer->DrawRectangle(upperRight1, lowerLeft1, mBorderColor);
     
     Pht::Vec2 lowerLeft2 {
-        segmentPosition.x * mCellSize - borderOffset,
-        segmentPosition.y * mCellSize - borderOffset - borderWidth
+        segmentPosition.x * mCellSize - mBorderOffset,
+        segmentPosition.y * mCellSize - mBorderOffset - mBorderWidth
     };
 
     Pht::Vec2 upperRight2 {
-        segmentPosition.x * mCellSize + borderOffset + borderWidth,
-        segmentPosition.y * mCellSize - borderOffset
+        segmentPosition.x * mCellSize + mBorderOffset + mBorderWidth,
+        segmentPosition.y * mCellSize - mBorderOffset
     };
     
-    mRasterizer->DrawRectangle(upperRight2, lowerLeft2, mBorderColor);
+    mRasterizer->DrawRectangle(upperRight2, lowerLeft2, mBorderColor, Pht::DrawOver::Yes);
 }
 
 void GhostPieceProducer::DrawLowerLeftConcaveCornerBorder(const Pht::IVec2& segmentPosition) {
     Pht::Vec2 lowerLeft1 {
-        segmentPosition.x * mCellSize - borderOffset,
-        segmentPosition.y * mCellSize + borderOffset
+        segmentPosition.x * mCellSize - mBorderOffset,
+        segmentPosition.y * mCellSize + mBorderOffset
     };
 
     Pht::Vec2 upperRight1 {
-        segmentPosition.x * mCellSize + borderOffset + borderWidth,
-        segmentPosition.y * mCellSize + borderOffset + borderWidth
+        segmentPosition.x * mCellSize + mBorderOffset + mBorderWidth,
+        segmentPosition.y * mCellSize + mBorderOffset + mBorderWidth
     };
     
     mRasterizer->DrawRectangle(upperRight1, lowerLeft1, mBorderColor);
     
     Pht::Vec2 lowerLeft2 {
-        segmentPosition.x * mCellSize + borderOffset,
-        segmentPosition.y * mCellSize - borderOffset
+        segmentPosition.x * mCellSize + mBorderOffset,
+        segmentPosition.y * mCellSize - mBorderOffset
     };
 
     Pht::Vec2 upperRight2 {
-        segmentPosition.x * mCellSize + borderOffset + borderWidth,
-        segmentPosition.y * mCellSize + borderOffset + borderWidth
+        segmentPosition.x * mCellSize + mBorderOffset + mBorderWidth,
+        segmentPosition.y * mCellSize + mBorderOffset + mBorderWidth
     };
     
-    mRasterizer->DrawRectangle(upperRight2, lowerLeft2, mBorderColor);
+    mRasterizer->DrawRectangle(upperRight2, lowerLeft2, mBorderColor, Pht::DrawOver::Yes);
 }
 
 void GhostPieceProducer::DrawUpperRightConcaveCornerBorder(const Pht::IVec2& segmentPosition) {
     Pht::Vec2 lowerLeft1 {
-        segmentPosition.x * mCellSize - borderOffset - borderWidth,
-        segmentPosition.y * mCellSize - borderOffset - borderWidth
+        segmentPosition.x * mCellSize - mBorderOffset - mBorderWidth,
+        segmentPosition.y * mCellSize - mBorderOffset - mBorderWidth
     };
 
     Pht::Vec2 upperRight1 {
-        segmentPosition.x * mCellSize - borderOffset,
-        segmentPosition.y * mCellSize + borderOffset
+        segmentPosition.x * mCellSize - mBorderOffset,
+        segmentPosition.y * mCellSize + mBorderOffset
     };
     
     mRasterizer->DrawRectangle(upperRight1, lowerLeft1, mBorderColor);
     
     Pht::Vec2 lowerLeft2 {
-        segmentPosition.x * mCellSize - borderOffset - borderWidth,
-        segmentPosition.y * mCellSize - borderOffset - borderWidth
+        segmentPosition.x * mCellSize - mBorderOffset - mBorderWidth,
+        segmentPosition.y * mCellSize - mBorderOffset - mBorderWidth
     };
 
     Pht::Vec2 upperRight2 {
-        segmentPosition.x * mCellSize + borderOffset,
-        segmentPosition.y * mCellSize - borderOffset
+        segmentPosition.x * mCellSize + mBorderOffset,
+        segmentPosition.y * mCellSize - mBorderOffset
     };
     
-    mRasterizer->DrawRectangle(upperRight2, lowerLeft2, mBorderColor);
+    mRasterizer->DrawRectangle(upperRight2, lowerLeft2, mBorderColor, Pht::DrawOver::Yes);
 }
 
 void GhostPieceProducer::DrawLowerRightConcaveCornerBorder(const Pht::IVec2& segmentPosition) {
     Pht::Vec2 lowerLeft1 {
-        segmentPosition.x * mCellSize - borderOffset - borderWidth,
-        segmentPosition.y * mCellSize + borderOffset
+        segmentPosition.x * mCellSize - mBorderOffset - mBorderWidth,
+        segmentPosition.y * mCellSize + mBorderOffset
     };
 
     Pht::Vec2 upperRight1 {
-        segmentPosition.x * mCellSize + borderOffset,
-        segmentPosition.y * mCellSize + borderOffset + borderWidth
+        segmentPosition.x * mCellSize + mBorderOffset,
+        segmentPosition.y * mCellSize + mBorderOffset + mBorderWidth
     };
     
     mRasterizer->DrawRectangle(upperRight1, lowerLeft1, mBorderColor);
     
     Pht::Vec2 lowerLeft2 {
-        segmentPosition.x * mCellSize - borderOffset - borderWidth,
-        segmentPosition.y * mCellSize - borderOffset
+        segmentPosition.x * mCellSize - mBorderOffset - mBorderWidth,
+        segmentPosition.y * mCellSize - mBorderOffset
     };
 
     Pht::Vec2 upperRight2 {
-        segmentPosition.x * mCellSize - borderOffset,
-        segmentPosition.y * mCellSize + borderOffset + borderWidth
+        segmentPosition.x * mCellSize - mBorderOffset,
+        segmentPosition.y * mCellSize + mBorderOffset + mBorderWidth
     };
     
-    mRasterizer->DrawRectangle(upperRight2, lowerLeft2, mBorderColor);
+    mRasterizer->DrawRectangle(upperRight2, lowerLeft2, mBorderColor, Pht::DrawOver::Yes);
 }
 
 void GhostPieceProducer::DrawConnectionForSeven(const Pht::IVec2& segmentPosition) {
-    auto tiltedHalfBorderWidth = std::sqrt(2.0f) * (borderWidth / 2.0f);
+    auto tiltedHalfmBorderWidth = std::sqrt(2.0f) * (mConnectionBorderWidth / 2.0f);
     
     Pht::Vec2 lowerLeft1 {
-        segmentPosition.x * mCellSize - borderOffset - tiltedHalfBorderWidth,
-        segmentPosition.y * mCellSize - borderOffset
+        segmentPosition.x * mCellSize - mBorderOffset - tiltedHalfmBorderWidth,
+        segmentPosition.y * mCellSize - mBorderOffset
     };
 
     Pht::Vec2 upperRight1 {
-        segmentPosition.x * mCellSize + borderOffset,
-        segmentPosition.y * mCellSize + borderOffset + tiltedHalfBorderWidth
+        segmentPosition.x * mCellSize + mBorderOffset,
+        segmentPosition.y * mCellSize + mBorderOffset + tiltedHalfmBorderWidth
     };
     
-    mRasterizer->DrawTiltedTrapezoid45(upperRight1, lowerLeft1, borderWidth / 2.0f, mBorderColor);
+    mRasterizer->DrawTiltedTrapezoid45(upperRight1, lowerLeft1, mConnectionBorderWidth / 2.0f, mBorderColor, Pht::DrawOver::Yes);
     
     Pht::Vec2 lowerLeft2 {
-        segmentPosition.x * mCellSize - borderOffset,
-        segmentPosition.y * mCellSize - borderOffset - tiltedHalfBorderWidth
+        segmentPosition.x * mCellSize - mBorderOffset,
+        segmentPosition.y * mCellSize - mBorderOffset - tiltedHalfmBorderWidth
     };
 
     Pht::Vec2 upperRight2 {
-        segmentPosition.x * mCellSize + borderOffset + tiltedHalfBorderWidth,
-        segmentPosition.y * mCellSize + borderOffset
+        segmentPosition.x * mCellSize + mBorderOffset + tiltedHalfmBorderWidth,
+        segmentPosition.y * mCellSize + mBorderOffset
     };
     
-    mRasterizer->DrawTiltedTrapezoid315(upperRight2, lowerLeft2, borderWidth / 2.0f, mBorderColor);
+    mRasterizer->DrawTiltedTrapezoid315(upperRight2, lowerLeft2, mConnectionBorderWidth / 2.0f, mBorderColor, Pht::DrawOver::Yes);
 }
 
 void GhostPieceProducer::DrawConnectionForMirroredSeven(const Pht::IVec2& segmentPosition) {
-    auto tiltedHalfBorderWidth = std::sqrt(2.0f) * (borderWidth / 2.0f);
+    auto tiltedHalfmBorderWidth = std::sqrt(2.0f) * (mConnectionBorderWidth / 2.0f);
     
     Pht::Vec2 upperLeft1 {
-        segmentPosition.x * mCellSize - borderOffset - tiltedHalfBorderWidth,
-        segmentPosition.y * mCellSize + borderOffset
+        segmentPosition.x * mCellSize - mBorderOffset - tiltedHalfmBorderWidth,
+        segmentPosition.y * mCellSize + mBorderOffset
     };
 
     Pht::Vec2 lowerRight1 {
-        segmentPosition.x * mCellSize + borderOffset,
-        segmentPosition.y * mCellSize + borderOffset + tiltedHalfBorderWidth
+        segmentPosition.x * mCellSize + mBorderOffset,
+        segmentPosition.y * mCellSize + mBorderOffset + tiltedHalfmBorderWidth
     };
     
-    mRasterizer->DrawTiltedTrapezoid225(upperLeft1, lowerRight1, borderWidth / 2.0f, mBorderColor);
+    mRasterizer->DrawTiltedTrapezoid225(upperLeft1, lowerRight1, mConnectionBorderWidth / 2.0f, mBorderColor, Pht::DrawOver::Yes);
     
     Pht::Vec2 upperLeft2 {
-        segmentPosition.x * mCellSize - borderOffset,
-        segmentPosition.y * mCellSize + borderOffset + tiltedHalfBorderWidth
+        segmentPosition.x * mCellSize - mBorderOffset,
+        segmentPosition.y * mCellSize + mBorderOffset + tiltedHalfmBorderWidth
     };
 
     Pht::Vec2 lowerRight2 {
-        segmentPosition.x * mCellSize + borderOffset + tiltedHalfBorderWidth,
-        segmentPosition.y * mCellSize - borderOffset
+        segmentPosition.x * mCellSize + mBorderOffset + tiltedHalfmBorderWidth,
+        segmentPosition.y * mCellSize - mBorderOffset
     };
     
-    mRasterizer->DrawTiltedTrapezoid135(upperLeft2, lowerRight2, borderWidth / 2.0f, mBorderColor);
+    mRasterizer->DrawTiltedTrapezoid135(upperLeft2, lowerRight2, mConnectionBorderWidth / 2.0f, mBorderColor, Pht::DrawOver::Yes);
 }
 
 void GhostPieceProducer::DrawUpperLeftTiltedBorderForTriangle(const Pht::IVec2& segmentEndPosition) {
     Pht::Vec2 lowerLeft {
-        segmentEndPosition.x * mCellSize + borderOffset * 2.0f,
-        segmentEndPosition.y * mCellSize + borderOffset
+        segmentEndPosition.x * mCellSize + mBorderOffset * 2.0f,
+        segmentEndPosition.y * mCellSize + mBorderOffset
     };
 
     Pht::Vec2 upperRight {
-        mSegmentStartPosition.x * mCellSize - borderOffset,
-        mSegmentStartPosition.y * mCellSize - borderOffset * 2.0f
+        mSegmentStartPosition.x * mCellSize - mBorderOffset,
+        mSegmentStartPosition.y * mCellSize - mBorderOffset * 2.0f
     };
     
-    mRasterizer->DrawTiltedTrapezoid45(upperRight, lowerLeft, borderWidth, mBorderColor);
+    mRasterizer->DrawTiltedTrapezoid45(upperRight, lowerLeft, mBorderWidth, mBorderColor, Pht::DrawOver::Yes);
 }
 
 void GhostPieceProducer::DrawUpperLeftTiltedBorderForPyramid(const Pht::IVec2& segmentEndPosition) {
     Pht::Vec2 lowerLeft {
-        segmentEndPosition.x * mCellSize + borderOffset * 2.0f,
-        segmentEndPosition.y * mCellSize + borderOffset
+        segmentEndPosition.x * mCellSize + mBorderOffset * 2.0f,
+        segmentEndPosition.y * mCellSize + mBorderOffset
     };
 
     Pht::Vec2 upperRight {
         mSegmentStartPosition.x * mCellSize,
-        mSegmentStartPosition.y * mCellSize - borderOffset
+        mSegmentStartPosition.y * mCellSize - mBorderOffset
     };
     
-    mRasterizer->DrawTiltedTrapezoid45(upperRight, lowerLeft, borderWidth, mBorderColor);
+    mRasterizer->DrawTiltedTrapezoid45(upperRight, lowerLeft, mBorderWidth, mBorderColor, Pht::DrawOver::Yes);
 }
 
 void GhostPieceProducer::DrawUpperRightTiltedBorderForPyramid(const Pht::IVec2& segmentEndPosition) {
     Pht::Vec2 upperLeft {
         segmentEndPosition.x * mCellSize,
-        segmentEndPosition.y * mCellSize - borderOffset
+        segmentEndPosition.y * mCellSize - mBorderOffset
     };
 
     Pht::Vec2 lowerRight {
-        mSegmentStartPosition.x * mCellSize - borderOffset * 2.0f,
-        mSegmentStartPosition.y * mCellSize + borderOffset
+        mSegmentStartPosition.x * mCellSize - mBorderOffset * 2.0f,
+        mSegmentStartPosition.y * mCellSize + mBorderOffset
     };
     
-    mRasterizer->DrawTiltedTrapezoid135(upperLeft, lowerRight, borderWidth, mBorderColor);
+    mRasterizer->DrawTiltedTrapezoid135(upperLeft, lowerRight, mBorderWidth, mBorderColor, Pht::DrawOver::Yes);
 }
 
 void GhostPieceProducer::DrawLowerRightTiltedBorderForDiamond(const Pht::IVec2& segmentEndPosition) {
     Pht::Vec2 lowerLeft {
         mSegmentStartPosition.x * mCellSize,
-        mSegmentStartPosition.y * mCellSize + borderOffset
+        mSegmentStartPosition.y * mCellSize + mBorderOffset
     };
 
     Pht::Vec2 upperRight {
-        segmentEndPosition.x * mCellSize - borderOffset,
+        segmentEndPosition.x * mCellSize - mBorderOffset,
         segmentEndPosition.y * mCellSize
     };
     
-    mRasterizer->DrawTiltedTrapezoid315(upperRight, lowerLeft, borderWidth, mBorderColor);
+    mRasterizer->DrawTiltedTrapezoid315(upperRight, lowerLeft, mBorderWidth, mBorderColor, Pht::DrawOver::Yes);
 }
 
 void GhostPieceProducer::DrawUpperRightTiltedBorderForDiamond(const Pht::IVec2& segmentEndPosition) {
     Pht::Vec2 upperLeft {
         segmentEndPosition.x * mCellSize,
-        segmentEndPosition.y * mCellSize - borderOffset
+        segmentEndPosition.y * mCellSize - mBorderOffset
     };
 
     Pht::Vec2 lowerRight {
-        mSegmentStartPosition.x * mCellSize - borderOffset,
+        mSegmentStartPosition.x * mCellSize - mBorderOffset,
         mSegmentStartPosition.y * mCellSize
     };
     
-    mRasterizer->DrawTiltedTrapezoid135(upperLeft, lowerRight, borderWidth, mBorderColor);
+    mRasterizer->DrawTiltedTrapezoid135(upperLeft, lowerRight, mBorderWidth, mBorderColor, Pht::DrawOver::Yes);
 }
 
 void GhostPieceProducer::DrawUpperLeftTiltedBorderForDiamond(const Pht::IVec2& segmentEndPosition) {
     Pht::Vec2 lowerLeft {
-        segmentEndPosition.x * mCellSize + borderOffset,
+        segmentEndPosition.x * mCellSize + mBorderOffset,
         segmentEndPosition.y * mCellSize
     };
 
     Pht::Vec2 upperRight {
         mSegmentStartPosition.x * mCellSize,
-        mSegmentStartPosition.y * mCellSize - borderOffset
+        mSegmentStartPosition.y * mCellSize - mBorderOffset
     };
     
-    mRasterizer->DrawTiltedTrapezoid45(upperRight, lowerLeft, borderWidth, mBorderColor);
+    mRasterizer->DrawTiltedTrapezoid45(upperRight, lowerLeft, mBorderWidth, mBorderColor, Pht::DrawOver::Yes);
 }
 
 void GhostPieceProducer::DrawLowerLeftTiltedBorderForDiamond(const Pht::IVec2& segmentEndPosition) {
     Pht::Vec2 upperLeft {
-        mSegmentStartPosition.x * mCellSize + borderOffset,
+        mSegmentStartPosition.x * mCellSize + mBorderOffset,
         mSegmentStartPosition.y * mCellSize
     };
 
     Pht::Vec2 lowerRight {
         segmentEndPosition.x * mCellSize,
-        segmentEndPosition.y * mCellSize + borderOffset
+        segmentEndPosition.y * mCellSize + mBorderOffset
     };
     
-    mRasterizer->DrawTiltedTrapezoid225(upperLeft, lowerRight, borderWidth, mBorderColor);
+    mRasterizer->DrawTiltedTrapezoid225(upperLeft, lowerRight, mBorderWidth, mBorderColor, Pht::DrawOver::Yes);
 }
 
 std::unique_ptr<Pht::RenderableObject> GhostPieceProducer::ProducePressedRenderable() const {

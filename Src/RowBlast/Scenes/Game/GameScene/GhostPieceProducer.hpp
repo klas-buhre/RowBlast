@@ -74,7 +74,8 @@ namespace RowBlast {
         GhostPieceRenderables ProduceRenderables(const std::string& pieceName) const;
         
     private:
-        void SetUpColors(BlockColor color, PressedGhostPiece pressedGhostPiece);
+        void SetUpColors(BlockColor color);
+        void DrawBorder(const GhostPieceBorder& border);
         void DrawUpperBorder(const Pht::IVec2& segmentEndPosition);
         void DrawRightBorder(const Pht::IVec2& segmentEndPosition, BorderSegmentKind segmentKind);
         void DrawLowerBorder(const Pht::IVec2& segmentEndPosition, BorderSegmentKind segmentKind);
@@ -95,6 +96,9 @@ namespace RowBlast {
 
         Pht::IEngine& mEngine;
         float mCellSize;
+        float mBorderOffset;
+        float mBorderWidth;
+        float mConnectionBorderWidth;
         Pht::Vec2 mCoordinateSystemSize;
         std::unique_ptr<Pht::SoftwareRasterizer> mRasterizer;
         Pht::Vec2 mSegmentStartPosition {0.0f, 0.0f};
