@@ -65,6 +65,7 @@ Tutorial::Tutorial(Pht::IEngine& engine,
     mSwitchPiece2WindowController {engine, commonResources},
     mOtherMovesWindowController {engine, commonResources},
     mOtherMoves2WindowController {engine, commonResources},
+    mPlayOnYourOwnWindowController {engine, commonResources},
     mCascadingDialogController {engine, commonResources},
     mSameColorDialogController {engine, commonResources},
     mLaserDialogController {engine, commonResources, pieceResources, levelResources, userServices},
@@ -99,6 +100,7 @@ Tutorial::Tutorial(Pht::IEngine& engine,
     mViewManager.AddView(static_cast<int>(Controller::SwitchPiece2Window), mSwitchPiece2WindowController.GetView());
     mViewManager.AddView(static_cast<int>(Controller::OtherMovesWindow), mOtherMovesWindowController.GetView());
     mViewManager.AddView(static_cast<int>(Controller::OtherMoves2Window), mOtherMoves2WindowController.GetView());
+    mViewManager.AddView(static_cast<int>(Controller::PlayOnYourOwnWindow), mPlayOnYourOwnWindowController.GetView());
     mViewManager.AddView(static_cast<int>(Controller::CascadingDialog), mCascadingDialogController.GetView());
     mViewManager.AddView(static_cast<int>(Controller::SameColorDialog), mSameColorDialogController.GetView());
     mViewManager.AddView(static_cast<int>(Controller::LaserDialog), mLaserDialogController.GetView());
@@ -127,6 +129,8 @@ void Tutorial::Init(const Level& level) {
 
     mHandAnimation.Init(mScene.GetUiViewsContainer());
     mFadeEffect.Reset();
+    
+    mPlayOnYourOwnWindowController.Init();
     
     auto& uiViewContainer = mScene.GetUiViewsContainer();
     uiViewContainer.AddChild(mFadeEffect.GetSceneObject());
@@ -183,6 +187,11 @@ void Tutorial::Update() {
             break;
         case Controller::SwitchPiece2Window:
             if (mSwitchPiece2WindowController.Update() == SwitchPiece2WindowController::Result::Done) {
+                SetActiveViewController(Controller::None);
+            }
+            break;
+        case Controller::PlayOnYourOwnWindow:
+            if (mPlayOnYourOwnWindowController.Update() == PlayOnYourOwnWindowController::Result::Done) {
                 SetActiveViewController(Controller::None);
             }
             break;
@@ -294,6 +303,7 @@ void Tutorial::OnPause() {
     }
 
     mHandAnimation.Hide();
+    mPlayOnYourOwnWindowController.OnPause();
 }
 
 void Tutorial::OnResumePlaying() {
@@ -302,6 +312,7 @@ void Tutorial::OnResumePlaying() {
     }
 
     mHandAnimation.Unhide();
+    mPlayOnYourOwnWindowController.OnResumePlaying();
 }
 
 void Tutorial::OnNewMove(int numMovesUsedIncludingCurrent) {
@@ -360,6 +371,15 @@ void Tutorial::OnNewMoveSecondLevel(int numMovesUsedIncludingCurrent) {
             mSwitchPiece2WindowController.SetUp();
             mHandAnimation.Start(switchPieceHandPosition, -180.0f);
             SendAnayticsEvent("Step1Complete");
+            break;
+        case 3:
+            if (mPlayOnYourOwnWindowController.GetShownNumTimes() == 0) {
+                SetActiveViewController(Controller::PlayOnYourOwnWindow);
+                mPlayOnYourOwnWindowController.SetUp();
+            }
+            break;
+        case 4:
+            mPlayOnYourOwnWindowController.Close();
             break;
         default:
             break;

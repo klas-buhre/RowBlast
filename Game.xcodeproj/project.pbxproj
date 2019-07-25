@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1730C96F22EA2AFD003BD981 /* PlayOnYourOwnWindowView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1730C96D22EA2AFD003BD981 /* PlayOnYourOwnWindowView.cpp */; };
+		1730C97222EA2B1E003BD981 /* PlayOnYourOwnWindowController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1730C97022EA2B1E003BD981 /* PlayOnYourOwnWindowController.cpp */; };
 		1736707422DF67D600D8A28C /* SwipeControlsHintDialogView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1736707222DF67D600D8A28C /* SwipeControlsHintDialogView.cpp */; };
 		1736707722DF67F600D8A28C /* SwipeControlsHintDialogController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1736707522DF67F600D8A28C /* SwipeControlsHintDialogController.cpp */; };
 		174F9EA522DBCA3D0057BA7C /* ActivePreviewPieceAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 174F9EA322DBCA3D0057BA7C /* ActivePreviewPieceAnimation.cpp */; };
@@ -552,6 +554,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1730C96D22EA2AFD003BD981 /* PlayOnYourOwnWindowView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PlayOnYourOwnWindowView.cpp; sourceTree = "<group>"; };
+		1730C96E22EA2AFD003BD981 /* PlayOnYourOwnWindowView.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PlayOnYourOwnWindowView.hpp; sourceTree = "<group>"; };
+		1730C97022EA2B1E003BD981 /* PlayOnYourOwnWindowController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PlayOnYourOwnWindowController.cpp; sourceTree = "<group>"; };
+		1730C97122EA2B1E003BD981 /* PlayOnYourOwnWindowController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PlayOnYourOwnWindowController.hpp; sourceTree = "<group>"; };
 		1736707222DF67D600D8A28C /* SwipeControlsHintDialogView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SwipeControlsHintDialogView.cpp; sourceTree = "<group>"; };
 		1736707322DF67D600D8A28C /* SwipeControlsHintDialogView.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SwipeControlsHintDialogView.hpp; sourceTree = "<group>"; };
 		1736707522DF67F600D8A28C /* SwipeControlsHintDialogController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SwipeControlsHintDialogController.cpp; sourceTree = "<group>"; };
@@ -1841,6 +1847,10 @@
 				62216AC221EB377E001CB9A1 /* PlacePieceWindowController.hpp */,
 				62216ACA21EB377E001CB9A1 /* PlacePieceWindowView.cpp */,
 				62216AAD21EB377E001CB9A1 /* PlacePieceWindowView.hpp */,
+				1730C97022EA2B1E003BD981 /* PlayOnYourOwnWindowController.cpp */,
+				1730C97122EA2B1E003BD981 /* PlayOnYourOwnWindowController.hpp */,
+				1730C96D22EA2AFD003BD981 /* PlayOnYourOwnWindowView.cpp */,
+				1730C96E22EA2AFD003BD981 /* PlayOnYourOwnWindowView.hpp */,
 				62216AC821EB377E001CB9A1 /* SameColorDialogController.cpp */,
 				62216AAB21EB377E001CB9A1 /* SameColorDialogController.hpp */,
 				62216AB121EB377E001CB9A1 /* SameColorDialogView.cpp */,
@@ -3673,6 +3683,7 @@
 				6256984F2182392C003A3A9D /* SceneObjectUtils.cpp in Sources */,
 				62216A9121EB376E001CB9A1 /* Materials.cpp in Sources */,
 				625698082182392C003A3A9D /* SphereMesh.cpp in Sources */,
+				1730C97222EA2B1E003BD981 /* PlayOnYourOwnWindowController.cpp in Sources */,
 				623F5E4022B55D5200242C10 /* GLES3TextureCache.cpp in Sources */,
 				62216C3421EB377F001CB9A1 /* World4.cpp in Sources */,
 				62216BE321EB377E001CB9A1 /* MapConfirmationDialogView.cpp in Sources */,
@@ -3756,6 +3767,7 @@
 				62216C1621EB377F001CB9A1 /* MoveDefinitions.cpp in Sources */,
 				62216BF321EB377E001CB9A1 /* Piece.cpp in Sources */,
 				62216C0521EB377F001CB9A1 /* ZPiece.cpp in Sources */,
+				1730C96F22EA2AFD003BD981 /* PlayOnYourOwnWindowView.cpp in Sources */,
 				62216BE421EB377E001CB9A1 /* RestartConfirmationDialogView.cpp in Sources */,
 				174F9EA522DBCA3D0057BA7C /* ActivePreviewPieceAnimation.cpp in Sources */,
 				62216BBF21EB377E001CB9A1 /* TitleAnimation.cpp in Sources */,
