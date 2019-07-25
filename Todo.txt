@@ -87,10 +87,12 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-    -Add windows that says that you should press the recomended move when there is a hand animation
-     pointing to a move but the user clicks a different move. If the hand animation is pointing to
+    -Review previous commit.
+    -Add windows that says that you should press the recomended move ("Try the move to the right")
+     when there is a hand animation pointing to a move but the user clicks a different move. It
+     could be one tutrial window per move/stage in the tutorial. If the hand animation is pointing to
      the switch button or to tap the screen to find other moves, then to get the attention of the
-     user the ongoing tutorial window can scale in again if the user clicks the wring thing.
+     user the ongoing tutorial window can scale in again if the user clicks the wrong thing.
     -All apps must include a link to their privacy policy in the App Store Connect metadata field.
      Remember to update the linked (website) privacy policy with payments.
 

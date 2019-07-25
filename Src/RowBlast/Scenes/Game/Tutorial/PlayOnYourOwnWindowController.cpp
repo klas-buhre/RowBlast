@@ -6,7 +6,7 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto displayTime = 5.0f;
+    constexpr auto displayTime = 7.0f;
 }
 
 PlayOnYourOwnWindowController::PlayOnYourOwnWindowController(Pht::IEngine& engine,

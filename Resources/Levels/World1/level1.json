@@ -17,18 +17,18 @@
         "Seven"
     ],
     "pieceSequence": [
-        "L",
+        "MirroredSeven",
         "D",
         "B",
         "LongI",
-        "MirroredSeven",
+        "L",
         "Seven"
     ],
     "predeterminedMoves": [
         {
-            "position": [1, 9],
-            "rotation": 270,
-            "piece": "L"
+            "position": [0, 9],
+            "rotation": 0,
+            "piece": "MirroredSeven"
         },
         {
             "position": [3, 8],
@@ -119,15 +119,15 @@
         "       ",
         "       ",
         "       ",
-        "G    GG",
-        "GG   GG",
-        "GGG GGG",
+        "G    ll",
+        "GGG  yy",
+        "GGG Grr",
         "  GGGGG",
         "  GGGGG",
-        "G GGGGG",
-        "GGGG GG",
-        "GGGG GG",
-        "GGGG GG",
+        "  GGGGG",
+        "Glll GG",
+        "Ggyy GG",
+        "Ggrr GG",
         "GGGG GG",
         "GGGG GG"
     ]

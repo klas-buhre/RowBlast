@@ -15,7 +15,7 @@ FillRowsWindowView::FillRowsWindowView(const CommonResources& commonResources) {
     menuWindowSceneObject->GetTransform().SetPosition({0.0f, 0.0f, UiLayer::background});
     AddSceneObject(std::move(menuWindowSceneObject));
 
-    SetPosition({0.0f, 4.3f, UiLayer::tutorialWindow});
+    SetPosition({0.0f, 5.4f, UiLayer::tutorialWindow});
     SetSize(menuWindow.GetSize());
 
     auto& textProperties = guiResources.GetSmallWhiteTextProperties(zoom);

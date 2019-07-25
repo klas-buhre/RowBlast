@@ -20,6 +20,6 @@ PlayOnYourOwnWindowView::PlayOnYourOwnWindowView(const CommonResources& commonRe
     
     auto textProperties = guiResources.GetSmallWhiteTextProperties(zoom);
     textProperties.mAlignment = Pht::TextAlignment::CenterX;
-    CreateText({0.0f, 0.30f, UiLayer::text}, "Now you can play on your own.", textProperties);
-    CreateText({0.0f, -0.775f, UiLayer::text}, "Let's clear some blocks!", textProperties);
+    CreateText({0.0f, 0.30f, UiLayer::text}, "Now you have the skills to play on", textProperties);
+    CreateText({0.0f, -0.775f, UiLayer::text}, "your own. Let's clear some blocks!", textProperties);
 }

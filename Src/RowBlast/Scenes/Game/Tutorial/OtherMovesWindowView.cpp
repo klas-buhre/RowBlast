@@ -15,11 +15,12 @@ OtherMovesWindowView::OtherMovesWindowView(const CommonResources& commonResource
     menuWindowSceneObject->GetTransform().SetPosition({0.0f, 0.0f, UiLayer::background});
     AddSceneObject(std::move(menuWindowSceneObject));
 
-    SetPosition({0.0f, 4.9f, UiLayer::tutorialWindow});
+    SetPosition({0.0f, 5.4f, UiLayer::tutorialWindow});
     SetSize(menuWindow.GetSize());
 
-    auto& textProperties = guiResources.GetSmallWhiteTextProperties(zoom);
-    CreateText({-4.6f, 0.9075f, UiLayer::text}, "Tap anywhere to find more", textProperties);
-    CreateText({-4.85f, -0.1675f, UiLayer::text}, "moves. Tap anywhere except", textProperties);
-    CreateText({-3.15f, -1.2425f, UiLayer::text}, "buttons and moves", textProperties);
+    auto textProperties = guiResources.GetSmallWhiteTextProperties(zoom);
+    textProperties.mAlignment = Pht::TextAlignment::CenterX;
+    CreateText({0.0f, 0.9075f, UiLayer::text}, "You can alway tap the screen to", textProperties);
+    CreateText({0.0f, -0.1675f, UiLayer::text}, "find more moves. Tap anywhere", textProperties);
+    CreateText({0.0f, -1.2425f, UiLayer::text}, "except buttons and moves", textProperties);
 }
