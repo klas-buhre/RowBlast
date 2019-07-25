@@ -15,57 +15,21 @@
 using namespace RowBlast;
 
 namespace {
-    // constexpr auto borderWidth = 0.085f;
-/*
-    constexpr auto outerBorderWidth = 0.07f;
-    constexpr auto innerBorderWidth = 0.035f;
-    constexpr auto borderAlpha = 0.83f;
-*/
-    
-    
-/*
-    // config with one outer border and 2 inner borders:
-    constexpr auto outerBorderWidth = 0.07f;
-    constexpr auto innerBorderWidth = 0.045f;
-    constexpr auto borderAlpha = 0.9f;
-    // constexpr auto fillAlpha = 0.2f;
-    constexpr auto fillAlpha = 0.22f;
-    // constexpr auto fillAlpha = 0.18f;
-    constexpr auto borderOffset = 0.045f;
-*/
-    
-    // config with one outer border and one inner border:
-    // constexpr auto outerBorderWidth = 0.075f;
-    // constexpr auto innerBorderWidth = 0.075f;
     constexpr auto outerBorderWidth = 0.08f;
     constexpr auto innerBorderWidth = 0.08f;
     constexpr auto borderAlpha = 0.9f;
-    // constexpr auto fillAlpha = 0.2f;
     constexpr auto fillAlpha = 0.22f;
-    // constexpr auto fillAlpha = 0.18f;
-    constexpr auto borderOffset = 0.045f;
+    constexpr auto borderOffset = 0.0465f;
 
-    
-    
-    
-    
-    
-    // constexpr auto borderOffset = 0.04f;
-    // constexpr auto pressedPieceBorderAlpha = 1.0f;
-    // constexpr auto pressedPieceFillAlpha = 0.6f;
-    // constexpr auto fillAlpha = 0.19f;
-    
     const Pht::Vec4 redFillColor {1.0f, 0.5f, 0.5f, fillAlpha};
     const Pht::Vec4 greenFillColor {0.5f, 0.79f, 0.5f, fillAlpha};
     const Pht::Vec4 blueFillColor {0.3f, 0.72f, 1.0f, fillAlpha};
-    // const Pht::Vec4 yellowFillColor {0.875f, 0.75f, 0.0f, fillAlpha};
-    const Pht::Vec4 yellowFillColor {0.9f, 0.85f, 0.0f, fillAlpha};
+    const Pht::Vec4 yellowFillColor {0.9f, 0.85f, 0.0f, 0.205f};
 
     const Pht::Vec4 redBorderColor {1.0f, 0.73f, 0.77f, borderAlpha};
     const Pht::Vec4 greenBorderColor {0.6f, 0.85f, 0.6f, borderAlpha};
     const Pht::Vec4 blueBorderColor {0.65f, 0.85f, 1.0f, borderAlpha};
-    // const Pht::Vec4 yellowBorderColor {1.0, 0.85f, 0.0f, 0.7f};
-    const Pht::Vec4 yellowBorderColor {0.95f, 0.85f, 0.0f, 0.7f};
+    const Pht::Vec4 yellowBorderColor {0.95f, 0.85f, 0.0f, 0.875f};
     
     const Pht::Vec4 shadowColor {0.14f, 0.14f, 0.14f, 0.55f};
 }
@@ -107,39 +71,22 @@ void GhostPieceProducer::DrawBorder(const GhostPieceBorder& border,
                                     PressedGhostPiece pressedGhostPiece) {
     SetUpColors(color);
     
+    auto outerBorderAlpha = mBorderColor.w;
     auto alphaFactor = pressedGhostPiece == PressedGhostPiece::No ? 1.0f : 2.5f;
-/*
-    mBorderOffset = borderOffset;
-    mBorderWidth = outerBorderWidth;
-    mConnectionBorderWidth = mBorderWidth * 2.0f + innerBorderWidth * 1.75f;
-    mBorderColor.w = std::min(borderAlpha * alphaFactor, 1.0f);
-    DrawBorder(border);
 
-    mBorderOffset += mBorderWidth;
-    mConnectionBorderWidth -= mBorderWidth * 2.0f;
-    mBorderWidth = innerBorderWidth;
-    mBorderColor.w = std::min(0.65f * borderAlpha * alphaFactor, 1.0f);
-    DrawBorder(border);
-
-    mBorderOffset += mBorderWidth;
-    mConnectionBorderWidth = 0.0f;
-    mBorderWidth = innerBorderWidth;
-    mBorderColor.w = std::min(0.3f * borderAlpha * alphaFactor, 1.0f);
-    DrawBorder(border);
-*/
     mBorderOffset = borderOffset;
     mBorderWidth = outerBorderWidth;
     mConnectionBorderWidth = mBorderWidth * 2.0f + innerBorderWidth;
-    mBorderColor.w = std::min(borderAlpha * alphaFactor, 1.0f);
+    mBorderColor.w = std::min(outerBorderAlpha * alphaFactor, 1.0f);
     DrawBorder(border);
     
     mBorderOffset += mBorderWidth;
     mConnectionBorderWidth -= mBorderWidth * 2.0f;
     mBorderWidth = innerBorderWidth;
-    mBorderColor.w = std::min(0.5f * borderAlpha * alphaFactor, 1.0f);
+    mBorderColor.w = std::min(0.5f * outerBorderAlpha * alphaFactor, 1.0f);
     DrawBorder(border);
 
-    mFillColor.w = std::min(fillAlpha * alphaFactor, 1.0f);
+    mFillColor.w = std::min(mFillColor.w * alphaFactor, 1.0f);
     mRasterizer->FillEnclosedArea(mFillColor);
 }
 

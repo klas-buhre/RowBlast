@@ -87,6 +87,7 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
+    -Review last commit (the glowing ghost pieces).
     -Add windows that says that you should press the recomended move when there is a hand animation
      pointing to a move but the user clicks a different move. If the hand animation is pointing to
      the switch button or to tap the screen to find other moves, then to get the attention of the
