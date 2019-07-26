@@ -59,12 +59,68 @@ Tutorial::Tutorial(Pht::IEngine& engine,
         UiLayer::backgroundFade
     },
     mHandAnimation {engine, 1.4f, true},
-    mPlacePieceWindowController {engine, commonResources},
-    mFillRowsWindowController {engine, commonResources},
-    mSwitchPieceWindowController {engine, commonResources},
-    mSwitchPiece2WindowController {engine, commonResources},
-    mOtherMovesWindowController {engine, commonResources},
-    mOtherMoves2WindowController {engine, commonResources},
+    mPlacePieceWindowController {
+        engine,
+        commonResources,
+        {"You always have several moves.", "Tap the suggested move to place", "the blue piece"},
+        5.4f
+    },
+    mFillRowsWindowController {
+        engine,
+        commonResources,
+        {
+            "Blocks are cleared when",
+            "horizontal rows are filled. Tap the",
+            "suggested move to fill three rows"
+        },
+        5.4f
+    },
+    mSwitchPieceWindowController {
+        engine,
+        commonResources,
+        {
+            "Try switching the current piece.",
+            "The current piece is the piece to",
+            "the left of the three at the bottom"
+        },
+        4.3f
+    },
+    mSwitchPiece2WindowController {
+        engine,
+        commonResources,
+        {"Let's try different piece by", "tapping the switch button again"},
+        5.4f
+    },
+    mSwitchPiece3WindowController {
+        engine,
+        commonResources,
+        {
+            "The blue piece will be perfect!",
+            "Try the blue piece by tapping",
+            "the switch button one more time"
+        },
+        5.4f
+    },
+    mOtherMovesWindowController {
+        engine,
+        commonResources,
+        {
+            "You can always find more moves",
+            "by tapping the screen. Tap",
+            "anywhere except buttons and moves"
+        },
+        5.4f
+    },
+    mOtherMoves2WindowController {
+        engine,
+        commonResources,
+        {
+            "Tap the screen again to find",
+            "a better move. Remember not to",
+            "press any moves or buttons"
+        },
+        6.7f
+    },
     mPlayOnYourOwnWindowController {engine, commonResources},
     mCascadingDialogController {engine, commonResources},
     mSameColorDialogController {engine, commonResources},
@@ -98,6 +154,7 @@ Tutorial::Tutorial(Pht::IEngine& engine,
     mViewManager.AddView(static_cast<int>(Controller::FillRowsWindow), mFillRowsWindowController.GetView());
     mViewManager.AddView(static_cast<int>(Controller::SwitchPieceWindow), mSwitchPieceWindowController.GetView());
     mViewManager.AddView(static_cast<int>(Controller::SwitchPiece2Window), mSwitchPiece2WindowController.GetView());
+    mViewManager.AddView(static_cast<int>(Controller::SwitchPiece3Window), mSwitchPiece3WindowController.GetView());
     mViewManager.AddView(static_cast<int>(Controller::OtherMovesWindow), mOtherMovesWindowController.GetView());
     mViewManager.AddView(static_cast<int>(Controller::OtherMoves2Window), mOtherMoves2WindowController.GetView());
     mViewManager.AddView(static_cast<int>(Controller::PlayOnYourOwnWindow), mPlayOnYourOwnWindowController.GetView());
@@ -157,36 +214,41 @@ void Tutorial::Update() {
 
     switch (mActiveViewController) {
         case Controller::PlacePieceWindow:
-            if (mPlacePieceWindowController.Update() == PlacePieceWindowController::Result::Done) {
+            if (mPlacePieceWindowController.Update() == TutorialWindowController::Result::Done) {
                 SetActiveViewController(Controller::FillRowsWindow);
                 mFillRowsWindowController.SetUp();
                 mHandAnimation.Start(fillRowsHandPosition, 45.0f);
             }
             break;
         case Controller::FillRowsWindow:
-            if (mFillRowsWindowController.Update() == FillRowsWindowController::Result::Done) {
+            if (mFillRowsWindowController.Update() == TutorialWindowController::Result::Done) {
                 SetActiveViewController(Controller::OtherMovesWindow);
                 mOtherMovesWindowController.SetUp();
                 mHandAnimation.Start(otherMovesHandPosition1, 270.0f);
             }
             break;
         case Controller::OtherMovesWindow:
-            if (mOtherMovesWindowController.Update() == OtherMovesWindowController::Result::Done) {
+            if (mOtherMovesWindowController.Update() == TutorialWindowController::Result::Done) {
                 SetActiveViewController(Controller::None);
             }
             break;
         case Controller::OtherMoves2Window:
-            if (mOtherMoves2WindowController.Update() == OtherMoves2WindowController::Result::Done) {
+            if (mOtherMoves2WindowController.Update() == TutorialWindowController::Result::Done) {
                 SetActiveViewController(Controller::None);
             }
             break;
         case Controller::SwitchPieceWindow:
-            if (mSwitchPieceWindowController.Update() == SwitchPieceWindowController::Result::Done) {
+            if (mSwitchPieceWindowController.Update() == TutorialWindowController::Result::Done) {
                 SetActiveViewController(Controller::None);
             }
             break;
         case Controller::SwitchPiece2Window:
-            if (mSwitchPiece2WindowController.Update() == SwitchPiece2WindowController::Result::Done) {
+            if (mSwitchPiece2WindowController.Update() == TutorialWindowController::Result::Done) {
+                SetActiveViewController(Controller::None);
+            }
+            break;
+        case Controller::SwitchPiece3Window:
+            if (mSwitchPiece3WindowController.Update() == TutorialWindowController::Result::Done) {
                 SetActiveViewController(Controller::None);
             }
             break;
@@ -439,11 +501,17 @@ void Tutorial::OnSwitchPiece(int numMovesUsedIncludingCurrent, const Piece& piec
                 assert(numMovesUsedIncludingCurrent <= predeterminedMoves.size());
                 auto& predeterminedMove = predeterminedMoves[numMovesUsedIncludingCurrent - 1];
 
-                if (mActiveViewController == Controller::SwitchPiece2Window) {
+                if (mActiveViewController == Controller::SwitchPiece3Window) {
                     if (&predeterminedMove.mPieceType == &pieceType) {
-                        mSwitchPiece2WindowController.Close();
+                        mSwitchPiece3WindowController.Close();
                         mHandAnimation.Stop();
                         mHandAnimation.Start(secondLevelBPieceHandPosition, 45.0f);
+                    }
+                } else if (mActiveViewController == Controller::SwitchPiece2Window) {
+                    if (&predeterminedMove.mPieceType != &pieceType) {
+                        SetActiveViewController(Controller::SwitchPiece3Window);
+                        mSwitchPiece3WindowController.SetUp();
+                        mHandAnimation.Start(switchPieceHandPosition, -180.0f);
                     }
                 } else {
                     if (&predeterminedMove.mPieceType != &pieceType) {

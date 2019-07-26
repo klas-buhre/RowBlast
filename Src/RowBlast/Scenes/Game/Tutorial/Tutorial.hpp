@@ -7,12 +7,7 @@
 
 // Game includes.
 #include "HandAnimation.hpp"
-#include "PlacePieceWindowController.hpp"
-#include "FillRowsWindowController.hpp"
-#include "SwitchPieceWindowController.hpp"
-#include "SwitchPiece2WindowController.hpp"
-#include "OtherMovesWindowController.hpp"
-#include "OtherMoves2WindowController.hpp"
+#include "TutorialWindowController.hpp"
 #include "PlayOnYourOwnWindowController.hpp"
 #include "CascadingDialogController.hpp"
 #include "SameColorDialogController.hpp"
@@ -75,6 +70,7 @@ namespace RowBlast {
             FillRowsWindow,
             SwitchPieceWindow,
             SwitchPiece2Window,
+            SwitchPiece3Window,
             OtherMovesWindow,
             OtherMoves2Window,
             PlayOnYourOwnWindow,
@@ -99,12 +95,13 @@ namespace RowBlast {
         Pht::FadeEffect mFadeEffect;
         HandAnimation mHandAnimation;
         Pht::GuiViewManager mViewManager;
-        PlacePieceWindowController mPlacePieceWindowController;
-        FillRowsWindowController mFillRowsWindowController;
-        SwitchPieceWindowController mSwitchPieceWindowController;
-        SwitchPiece2WindowController mSwitchPiece2WindowController;
-        OtherMovesWindowController mOtherMovesWindowController;
-        OtherMoves2WindowController mOtherMoves2WindowController;
+        TutorialWindowController mPlacePieceWindowController;
+        TutorialWindowController mFillRowsWindowController;
+        TutorialWindowController mSwitchPieceWindowController;
+        TutorialWindowController mSwitchPiece2WindowController;
+        TutorialWindowController mSwitchPiece3WindowController;
+        TutorialWindowController mOtherMovesWindowController;
+        TutorialWindowController mOtherMoves2WindowController;
         PlayOnYourOwnWindowController mPlayOnYourOwnWindowController;
         CascadingDialogController mCascadingDialogController;
         SameColorDialogController mSameColorDialogController;
