@@ -17,13 +17,13 @@ using namespace RowBlast;
 namespace {
     constexpr auto fade = 0.5f;
     constexpr auto fadeTime = 0.3f;
-    const Pht::Vec3 placePieceHandPosition {-3.0f, -3.3f, 0.0f};
+    const Pht::Vec3 placePieceHandPosition {-2.8f, -4.3f, 0.0f};
     const Pht::Vec3 fillRowsHandPosition {1.5f, -4.3f, 0.0f};
     const Pht::Vec3 switchPieceHandPosition {1.4f, -10.3f, 0.0f};
-    const Pht::Vec3 bPieceHandPosition {-2.4f, -4.4f, 0.0f};
+    const Pht::Vec3 mirroredSevenPieceHandPosition {-1.6f, -3.4f, 0.0f};
     const Pht::Vec3 longIPieceHandPosition {0.3f, -7.1f, 0.0f};
     const Pht::Vec3 otherMovesHandPosition1 {4.5f, -7.4f, 0.0f};
-    const Pht::Vec3 otherMovesHandPosition2 {-1.8f, -7.6f, 0.0f};
+    const Pht::Vec3 otherMovesHandPosition2 {-1.8f, -8.4f, 0.0f};
     const Pht::Vec3 iPieceHandPosition {-1.1f, -4.5f, 0.0f};
     const Pht::Vec3 secondLevelBPieceHandPosition {-2.5f, -4.4f, 0.0f};
     
@@ -476,7 +476,7 @@ void Tutorial::OnChangeVisibleMoves(int numMovesUsedIncludingCurrent,
                 if (FindMove(visibleMoves, predeterminedMove)) {
                     mOtherMovesWindowController.Close();
                     mHandAnimation.Stop();
-                    mHandAnimation.Start(bPieceHandPosition, 45.0f);
+                    mHandAnimation.Start(mirroredSevenPieceHandPosition, 45.0f);
                 } else {
                     SetActiveViewController(Controller::OtherMovesWindow);
                     mOtherMovesWindowController.SetUp();

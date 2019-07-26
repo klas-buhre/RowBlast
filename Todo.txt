@@ -87,7 +87,8 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-    -Maybe start with blue B piece in first level.
+    -SwitchPiece2Window should say "Try another piece by tapping the switch button".
+     SwitchPiece3Window should say "Try the blue piece byt tapping the switch button again".
     -Add windows that says that you should press the recomended move ("Try the move to the right")
      when there is a hand animation pointing to a move but the user clicks a different move. It
      could be one tutrial window per move/stage in the tutorial. If the hand animation is pointing to
