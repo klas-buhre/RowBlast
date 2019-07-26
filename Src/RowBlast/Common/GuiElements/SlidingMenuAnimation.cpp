@@ -99,7 +99,8 @@ void SlidingMenuAnimation::StartSlideIn() {
 
 void SlidingMenuAnimation::StartSlideOut(UpdateFade updateFade,
                                          SlideDirection slideOutDirection,
-                                         UpdatePosition updatePosition) {
+                                         UpdatePosition updatePosition,
+                                         DisableInput disableInput) {
     mSlideOutDirection = slideOutDirection;
     auto& frustumSize = mEngine.GetRenderer().GetHudFrustumSize();
     
@@ -129,7 +130,9 @@ void SlidingMenuAnimation::StartSlideOut(UpdateFade updateFade,
         mView.SetPosition(centerPosition);
     }
 
-    mEngine.GetInput().DisableInput();
+    if (disableInput == DisableInput::Yes) {
+        mEngine.GetInput().DisableInput();
+    }
 }
 
 SlidingMenuAnimation::State SlidingMenuAnimation::Update() {

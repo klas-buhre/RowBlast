@@ -87,7 +87,7 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-    -Review previous commit.
+    -Maybe start with blue B piece in first level.
     -Add windows that says that you should press the recomended move ("Try the move to the right")
      when there is a hand animation pointing to a move but the user clicks a different move. It
      could be one tutrial window per move/stage in the tutorial. If the hand animation is pointing to

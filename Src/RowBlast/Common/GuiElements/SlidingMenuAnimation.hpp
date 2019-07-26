@@ -31,6 +31,11 @@ namespace RowBlast {
             No
         };
         
+        enum class DisableInput {
+            Yes,
+            No
+        };
+        
         enum class SlideDirection {
             Right,
             Left,
@@ -47,7 +52,8 @@ namespace RowBlast {
         void StartSlideIn();
         void StartSlideOut(UpdateFade updateFade,
                            SlideDirection slideOutDirection = SlideDirection::Left,
-                           UpdatePosition updatePosition = UpdatePosition::Yes);
+                           UpdatePosition updatePosition = UpdatePosition::Yes,
+                           DisableInput disableInput = DisableInput::Yes);
         State Update();
 
         void SetFadeEffect(Pht::FadeEffect& fadeEffect) {

@@ -62,6 +62,7 @@ void PlayOnYourOwnWindowController::Close() {
     if (mSlidingMenuAnimation.GetState() == SlidingMenuAnimation::State::ShowingMenu) {
         mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::No,
                                             SlidingMenuAnimation::SlideDirection::Scale,
-                                            SlidingMenuAnimation::UpdatePosition::No);
+                                            SlidingMenuAnimation::UpdatePosition::No,
+                                            SlidingMenuAnimation::DisableInput::No);
     }
 }
