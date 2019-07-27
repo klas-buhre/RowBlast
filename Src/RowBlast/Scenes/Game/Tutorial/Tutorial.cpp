@@ -62,7 +62,11 @@ Tutorial::Tutorial(Pht::IEngine& engine,
     mPlacePieceWindowController {
         engine,
         commonResources,
-        {"You always have several moves.", "Tap the suggested move to place", "the blue piece"},
+        {
+            "You play by placing pieces in smart",
+            "locations. Tap the suggested move",
+            "to place the blue piece in that spot"
+        },
         5.4f
     },
     mFillRowsWindowController {
@@ -85,10 +89,16 @@ Tutorial::Tutorial(Pht::IEngine& engine,
         },
         4.3f
     },
+    mSwitchPieceHintWindowController {
+        engine,
+        commonResources,
+        {"There could be a better fitting", "piece. Try a different piece by", "tapping the switch button instead"},
+        4.3f
+    },
     mSwitchPiece2WindowController {
         engine,
         commonResources,
-        {"Let's try different piece by", "tapping the switch button again"},
+        {"Let's try a different piece by", "tapping the switch button again"},
         5.4f
     },
     mSwitchPiece3WindowController {
@@ -153,6 +163,7 @@ Tutorial::Tutorial(Pht::IEngine& engine,
     mViewManager.AddView(static_cast<int>(Controller::PlacePieceWindow), mPlacePieceWindowController.GetView());
     mViewManager.AddView(static_cast<int>(Controller::FillRowsWindow), mFillRowsWindowController.GetView());
     mViewManager.AddView(static_cast<int>(Controller::SwitchPieceWindow), mSwitchPieceWindowController.GetView());
+    mViewManager.AddView(static_cast<int>(Controller::SwitchPieceHintWindow), mSwitchPieceHintWindowController.GetView());
     mViewManager.AddView(static_cast<int>(Controller::SwitchPiece2Window), mSwitchPiece2WindowController.GetView());
     mViewManager.AddView(static_cast<int>(Controller::SwitchPiece3Window), mSwitchPiece3WindowController.GetView());
     mViewManager.AddView(static_cast<int>(Controller::OtherMovesWindow), mOtherMovesWindowController.GetView());
@@ -239,6 +250,11 @@ void Tutorial::Update() {
             break;
         case Controller::SwitchPieceWindow:
             if (mSwitchPieceWindowController.Update() == TutorialWindowController::Result::Done) {
+                SetActiveViewController(Controller::None);
+            }
+            break;
+        case Controller::SwitchPieceHintWindow:
+            if (mSwitchPieceHintWindowController.Update() == TutorialWindowController::Result::Done) {
                 SetActiveViewController(Controller::None);
             }
             break;
@@ -487,6 +503,17 @@ void Tutorial::OnSwitchPiece(int numMovesUsedIncludingCurrent, const Piece& piec
                         mHandAnimation.Stop();
                         mHandAnimation.Start(iPieceHandPosition, -90.0f);
                     }
+                } else if (mActiveViewController == Controller::SwitchPieceHintWindow) {
+                    if (&predeterminedMove.mPieceType == &pieceType) {
+                        mSwitchPieceHintWindowController.Close();
+                        mHandAnimation.Stop();
+                        mHandAnimation.Start(iPieceHandPosition, -90.0f);
+                    } else {
+                        mSwitchPieceHintWindowController.Close();
+                        SetActiveViewController(Controller::SwitchPieceWindow);
+                        mSwitchPieceWindowController.SetUp();
+                        mHandAnimation.Start(switchPieceHandPosition, -180.0f);
+                    }
                 } else {
                     if (&predeterminedMove.mPieceType != &pieceType) {
                         SetActiveViewController(Controller::SwitchPieceWindow);
@@ -602,7 +629,7 @@ bool Tutorial::IsSeeMoreMovesAllowed(int numMovesUsedIncludingCurrent) const {
 
 bool Tutorial::IsMoveAllowed(int numMovesUsedIncludingCurrent,
                              const Piece& pieceType,
-                             const Move& move) const {
+                             const Move& move) {
     if (!mLevel->IsPartOfTutorial()) {
         return true;
     }
@@ -610,9 +637,36 @@ bool Tutorial::IsMoveAllowed(int numMovesUsedIncludingCurrent,
     auto& predeterminedMoves = mLevel->GetPredeterminedMoves();
     if (numMovesUsedIncludingCurrent <= predeterminedMoves.size()) {
         auto& predeterminedMove = predeterminedMoves[numMovesUsedIncludingCurrent - 1];
-        return predeterminedMove.mPosition == move.mPosition &&
-               predeterminedMove.mRotation == move.mRotation &&
-               &predeterminedMove.mPieceType == &pieceType;
+        auto isMoveAllowed = predeterminedMove.mPosition == move.mPosition &&
+                             predeterminedMove.mRotation == move.mRotation &&
+                             &predeterminedMove.mPieceType == &pieceType;
+        
+        switch (mActiveViewController) {
+            case Controller::OtherMovesWindow:
+                mOtherMovesWindowController.SetUp();
+                break;
+            case Controller::OtherMoves2Window:
+                mOtherMoves2WindowController.SetUp();
+                break;
+            case Controller::SwitchPieceWindow:
+                mSwitchPieceWindowController.Close();
+                SetActiveViewController(Controller::SwitchPieceHintWindow);
+                mSwitchPieceHintWindowController.SetUp();
+                break;
+            case Controller::SwitchPieceHintWindow:
+                mSwitchPieceHintWindowController.SetUp();
+                break;
+            case Controller::SwitchPiece2Window:
+                mSwitchPiece2WindowController.SetUp();
+                break;
+            case Controller::SwitchPiece3Window:
+                mSwitchPiece3WindowController.SetUp();
+                break;
+            default:
+                break;
+        }
+        
+        return isMoveAllowed;
     }
 
     return true;

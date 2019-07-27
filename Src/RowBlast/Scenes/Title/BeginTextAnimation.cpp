@@ -31,12 +31,12 @@ void BeginTextAnimation::Init(Pht::Scene& scene, Pht::SceneObject& parentObject)
         {1.0f, 1.0f, 1.0f, 1.0f},
         Pht::TextShadow::Yes,
         {0.05f, 0.05f},
-        {0.35f, 0.35f, 0.35f, 0.75f}
+        {0.35f, 0.35f, 0.35f, 0.8f}
     };
     
     textProperties.mAlignment = Pht::TextAlignment::CenterX;
 
-    auto& text = scene.CreateText("Tap screen to begin!", textProperties);
+    auto& text = scene.CreateText("Tap the screen to begin!", textProperties);
     mSceneObject = &text.GetSceneObject();
     mSceneObject->GetTransform().SetPosition({0.0f, -8.5f, UiLayer::text});
     mSceneObject->SetIsVisible(false);

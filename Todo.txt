@@ -87,14 +87,9 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-    -Review last commit.
-    -Come up with something clever to say in the first window that is better than:
-     {"You always have several moves.", "Tap the suggested move to place", "the blue piece"},
     -Add windows that says that you should press the recomended move ("Try the move to the right")
      when there is a hand animation pointing to a move but the user clicks a different move. It
-     could be one tutrial window per move/stage in the tutorial. If the hand animation is pointing to
-     the switch button or to tap the screen to find other moves, then to get the attention of the
-     user the ongoing tutorial window can scale in again if the user clicks the wrong thing.
+     could be one tutrial window per move/stage in the tutorial.
     -Introduce bombs earlier.
     -Maybe go through some of the later levels in world 1 to see that there is not too many tricky
      things going on.

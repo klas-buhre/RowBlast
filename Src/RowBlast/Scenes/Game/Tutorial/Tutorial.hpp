@@ -60,7 +60,7 @@ namespace RowBlast {
         bool IsSeeMoreMovesAllowed(int numMovesUsedIncludingCurrent) const;
         bool IsMoveAllowed(int numMovesUsedIncludingCurrent,
                            const Piece& pieceType,
-                           const Move& move) const;
+                           const Move& move);
         bool IsGestureControlsAllowed() const;
         bool IsUndoMoveAllowed(int numMovesUsedIncludingCurrent) const;
 
@@ -69,6 +69,7 @@ namespace RowBlast {
             PlacePieceWindow,
             FillRowsWindow,
             SwitchPieceWindow,
+            SwitchPieceHintWindow,
             SwitchPiece2Window,
             SwitchPiece3Window,
             OtherMovesWindow,
@@ -98,6 +99,7 @@ namespace RowBlast {
         TutorialWindowController mPlacePieceWindowController;
         TutorialWindowController mFillRowsWindowController;
         TutorialWindowController mSwitchPieceWindowController;
+        TutorialWindowController mSwitchPieceHintWindowController;
         TutorialWindowController mSwitchPiece2WindowController;
         TutorialWindowController mSwitchPiece3WindowController;
         TutorialWindowController mOtherMovesWindowController;
