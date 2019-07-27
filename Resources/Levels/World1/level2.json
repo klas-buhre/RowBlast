@@ -18,11 +18,8 @@
     "pieceSequence": [
         "L",
         "I",
-        "D",
-        "B",
         "ShortI",
-        "I",
-        "L",
+        "B",
         "D"
     ],
     "predeterminedMoves": [
@@ -56,10 +53,10 @@
         "  G Gyy",
         "  GGGrr",
         "G GGGGG",
+        "GG     ",
+        "GG     ",
+        "GG     ",
         "GGG    ",
-        "GGG    ",
-        "GGG   G",
-        "GGG  GG",
         "GGGG GG",
         "GGGG GG",
         "GGGG GG"

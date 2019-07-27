@@ -104,16 +104,26 @@ Tutorial::Tutorial(Pht::IEngine& engine,
         commonResources,
         {
             "Try switching the current piece.",
-            "The current piece is the piece to",
-            "the left of the three at the bottom"
+            "The current piece is the left one of",
+            "the three small pieces at the bottom"
         },
         4.3f
     },
     mSwitchPieceHintWindowController {
         engine,
         commonResources,
-        {"There could be a better fitting", "piece. Try a different piece by", "tapping the switch button instead"},
+        {
+            "There could be a better fitting",
+            "piece. Try a different piece by",
+            "tapping the switch button instead"
+        },
         4.3f
+    },
+    mPlaceIPieceWindowController {
+        engine,
+        commonResources,
+        {"This piece fits much better.", "Tap the move in the middle" },
+        5.4f
     },
     mSwitchPiece2WindowController {
         engine,
@@ -125,10 +135,16 @@ Tutorial::Tutorial(Pht::IEngine& engine,
         engine,
         commonResources,
         {
-            "The blue piece will be perfect!",
-            "Try the blue piece by tapping",
-            "the switch button one more time"
+            "This piece fits OK but let's try the",
+            "next piece by tapping the switch",
+            "button one more time"
         },
+        5.4f
+    },
+    mPlaceBPieceWindowController {
+        engine,
+        commonResources,
+        {"This piece is clearly the best", "choice. Tap the move to the left" },
         5.4f
     },
     mOtherMovesWindowController {
@@ -141,11 +157,11 @@ Tutorial::Tutorial(Pht::IEngine& engine,
         },
         5.4f
     },
-    mPlaceGreenPieceWindowController {
+    mPlaceMirroredSevenPieceWindowController {
         engine,
         commonResources,
         {
-            "Now the piece is a perfect fit!",
+            "Now you have found a good move!",
             "Tap the move to the left to clear",
             "a couple of rows"
         },
@@ -205,10 +221,12 @@ Tutorial::Tutorial(Pht::IEngine& engine,
     mViewManager.AddView(static_cast<int>(Controller::FillRowsHintWindow), mFillRowsHintWindowController.GetView());
     mViewManager.AddView(static_cast<int>(Controller::SwitchPieceWindow), mSwitchPieceWindowController.GetView());
     mViewManager.AddView(static_cast<int>(Controller::SwitchPieceHintWindow), mSwitchPieceHintWindowController.GetView());
+    mViewManager.AddView(static_cast<int>(Controller::PlaceIPieceWindow), mPlaceIPieceWindowController.GetView());
     mViewManager.AddView(static_cast<int>(Controller::SwitchPiece2Window), mSwitchPiece2WindowController.GetView());
     mViewManager.AddView(static_cast<int>(Controller::SwitchPiece3Window), mSwitchPiece3WindowController.GetView());
+    mViewManager.AddView(static_cast<int>(Controller::PlaceBPieceWindow), mPlaceBPieceWindowController.GetView());
     mViewManager.AddView(static_cast<int>(Controller::OtherMovesWindow), mOtherMovesWindowController.GetView());
-    mViewManager.AddView(static_cast<int>(Controller::PlaceGreenPieceWindow), mPlaceGreenPieceWindowController.GetView());
+    mViewManager.AddView(static_cast<int>(Controller::PlaceMirroredSevenPieceWindow), mPlaceMirroredSevenPieceWindowController.GetView());
     mViewManager.AddView(static_cast<int>(Controller::OtherMoves2Window), mOtherMoves2WindowController.GetView());
     mViewManager.AddView(static_cast<int>(Controller::PlaceYellowPieceHintWindow), mPlaceYellowPieceHintWindowController.GetView());
     mViewManager.AddView(static_cast<int>(Controller::PlayOnYourOwnWindow), mPlayOnYourOwnWindowController.GetView());
@@ -300,8 +318,8 @@ void Tutorial::Update() {
                 SetActiveViewController(Controller::None);
             }
             break;
-        case Controller::PlaceGreenPieceWindow:
-            if (mPlaceGreenPieceWindowController.Update() == TutorialWindowController::Result::Done) {
+        case Controller::PlaceMirroredSevenPieceWindow:
+            if (mPlaceMirroredSevenPieceWindowController.Update() == TutorialWindowController::Result::Done) {
                 SetActiveViewController(Controller::OtherMoves2Window);
                 mOtherMoves2WindowController.SetUp();
                 mHandAnimation.Start(otherMovesHandPosition2, 45.0f);
@@ -327,6 +345,13 @@ void Tutorial::Update() {
                 SetActiveViewController(Controller::None);
             }
             break;
+        case Controller::PlaceIPieceWindow:
+            if (mPlaceIPieceWindowController.Update() == TutorialWindowController::Result::Done) {
+                SetActiveViewController(Controller::SwitchPiece2Window);
+                mSwitchPiece2WindowController.SetUp();
+                mHandAnimation.Start(switchPieceHandPosition, -180.0f);
+            }
+            break;
         case Controller::SwitchPiece2Window:
             if (mSwitchPiece2WindowController.Update() == TutorialWindowController::Result::Done) {
                 SetActiveViewController(Controller::None);
@@ -335,6 +360,12 @@ void Tutorial::Update() {
         case Controller::SwitchPiece3Window:
             if (mSwitchPiece3WindowController.Update() == TutorialWindowController::Result::Done) {
                 SetActiveViewController(Controller::None);
+            }
+            break;
+        case Controller::PlaceBPieceWindow:
+            if (mPlaceBPieceWindowController.Update() == TutorialWindowController::Result::Done) {
+                SetActiveViewController(Controller::PlayOnYourOwnWindow);
+                mPlayOnYourOwnWindowController.SetUp();
             }
             break;
         case Controller::PlayOnYourOwnWindow:
@@ -503,7 +534,7 @@ void Tutorial::OnNewMoveFirstLevel(int numMovesUsedIncludingCurrent) {
             SendAnayticsEvent("Step2Complete");
             break;
         case 4:
-            mPlaceGreenPieceWindowController.Close();
+            mPlaceMirroredSevenPieceWindowController.Close();
             SendAnayticsEvent("Step3Complete");
             break;
         default:
@@ -520,17 +551,11 @@ void Tutorial::OnNewMoveSecondLevel(int numMovesUsedIncludingCurrent) {
             mHandAnimation.Start(switchPieceHandPosition, -180.0f);
             break;
         case 2:
-            SetActiveViewController(Controller::SwitchPiece2Window);
-            mSwitchPiece2WindowController.SetUp();
-            mHandAnimation.Start(switchPieceHandPosition, -180.0f);
+            mPlaceIPieceWindowController.Close();
             SendAnayticsEvent("Step1Complete");
             break;
         case 3:
-            if (mPlayOnYourOwnWindowController.GetShownNumTimes() == 0) {
-                SetActiveViewController(Controller::PlayOnYourOwnWindow);
-                mPlayOnYourOwnWindowController.SetUp();
-            }
-            break;
+            mPlaceBPieceWindowController.Close();
         case 4:
             mPlayOnYourOwnWindowController.Close();
             break;
@@ -575,12 +600,16 @@ void Tutorial::OnSwitchPiece(int numMovesUsedIncludingCurrent, const Piece& piec
                 if (mActiveViewController == Controller::SwitchPieceWindow) {
                     if (&predeterminedMove.mPieceType == &pieceType) {
                         mSwitchPieceWindowController.Close();
+                        SetActiveViewController(Controller::PlaceIPieceWindow);
+                        mPlaceIPieceWindowController.SetUp();
                         mHandAnimation.Stop();
                         mHandAnimation.Start(iPieceHandPosition, -90.0f);
                     }
                 } else if (mActiveViewController == Controller::SwitchPieceHintWindow) {
                     if (&predeterminedMove.mPieceType == &pieceType) {
                         mSwitchPieceHintWindowController.Close();
+                        SetActiveViewController(Controller::PlaceIPieceWindow);
+                        mPlaceIPieceWindowController.SetUp();
                         mHandAnimation.Stop();
                         mHandAnimation.Start(iPieceHandPosition, -90.0f);
                     } else {
@@ -606,6 +635,8 @@ void Tutorial::OnSwitchPiece(int numMovesUsedIncludingCurrent, const Piece& piec
                 if (mActiveViewController == Controller::SwitchPiece3Window) {
                     if (&predeterminedMove.mPieceType == &pieceType) {
                         mSwitchPiece3WindowController.Close();
+                        SetActiveViewController(Controller::PlaceBPieceWindow);
+                        mPlaceBPieceWindowController.SetUp();
                         mHandAnimation.Stop();
                         mHandAnimation.Start(secondLevelBPieceHandPosition, 45.0f);
                     }
@@ -645,12 +676,12 @@ void Tutorial::OnChangeVisibleMoves(int numMovesUsedIncludingCurrent,
                 
                 if (FindMove(visibleMoves, predeterminedMove)) {
                     mOtherMovesWindowController.Close();
-                    SetActiveViewController(Controller::PlaceGreenPieceWindow);
-                    mPlaceGreenPieceWindowController.SetUp();
+                    SetActiveViewController(Controller::PlaceMirroredSevenPieceWindow);
+                    mPlaceMirroredSevenPieceWindowController.SetUp();
                     mHandAnimation.Stop();
                     mHandAnimation.Start(mirroredSevenPieceHandPosition, 45.0f);
                 } else {
-                    mPlaceGreenPieceWindowController.Close();
+                    mPlaceMirroredSevenPieceWindowController.Close();
                     SetActiveViewController(Controller::OtherMovesWindow);
                     mOtherMovesWindowController.SetUp();
                     mHandAnimation.Start(otherMovesHandPosition1, 270.0f);
@@ -743,8 +774,8 @@ bool Tutorial::IsMoveAllowed(int numMovesUsedIncludingCurrent,
                 case Controller::OtherMovesWindow:
                     mOtherMovesWindowController.SetUp();
                     break;
-                case Controller::PlaceGreenPieceWindow:
-                    mPlaceGreenPieceWindowController.SetUp();
+                case Controller::PlaceMirroredSevenPieceWindow:
+                    mPlaceMirroredSevenPieceWindowController.SetUp();
                     break;
                 case Controller::OtherMoves2Window:
                     mOtherMoves2WindowController.SetUp();
@@ -760,11 +791,17 @@ bool Tutorial::IsMoveAllowed(int numMovesUsedIncludingCurrent,
                 case Controller::SwitchPieceHintWindow:
                     mSwitchPieceHintWindowController.SetUp();
                     break;
+                case Controller::PlaceIPieceWindow:
+                    mPlaceIPieceWindowController.SetUp();
+                    break;
                 case Controller::SwitchPiece2Window:
                     mSwitchPiece2WindowController.SetUp();
                     break;
                 case Controller::SwitchPiece3Window:
                     mSwitchPiece3WindowController.SetUp();
+                    break;
+                case Controller::PlaceBPieceWindow:
+                    mPlaceBPieceWindowController.SetUp();
                     break;
                 default:
                     break;

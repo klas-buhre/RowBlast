@@ -87,13 +87,7 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-    -Review last commit.
-    -Add windows that says that you should press the recomended move ("Try the move to the right")
-     when there is a hand animation pointing to a move but the user clicks a different move.
-     Place piece hint dialogs:
-       -After switching to the correct piece. Also do rescale in if clicking wrong move.
-
-
+    -Review last two commits.
     -Introduce bombs earlier.
     -Maybe go through some of the later levels in world 1 to see that there is not too many tricky
      things going on.

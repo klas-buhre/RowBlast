@@ -72,10 +72,12 @@ namespace RowBlast {
             FillRowsHintWindow,
             SwitchPieceWindow,
             SwitchPieceHintWindow,
+            PlaceIPieceWindow,
             SwitchPiece2Window,
             SwitchPiece3Window,
+            PlaceBPieceWindow,
             OtherMovesWindow,
-            PlaceGreenPieceWindow,
+            PlaceMirroredSevenPieceWindow,
             OtherMoves2Window,
             PlaceYellowPieceHintWindow,
             PlayOnYourOwnWindow,
@@ -106,10 +108,12 @@ namespace RowBlast {
         TutorialWindowController mFillRowsHintWindowController;
         TutorialWindowController mSwitchPieceWindowController;
         TutorialWindowController mSwitchPieceHintWindowController;
+        TutorialWindowController mPlaceIPieceWindowController;
         TutorialWindowController mSwitchPiece2WindowController;
         TutorialWindowController mSwitchPiece3WindowController;
+        TutorialWindowController mPlaceBPieceWindowController;
         TutorialWindowController mOtherMovesWindowController;
-        TutorialWindowController mPlaceGreenPieceWindowController;
+        TutorialWindowController mPlaceMirroredSevenPieceWindowController;
         TutorialWindowController mOtherMoves2WindowController;
         TutorialWindowController mPlaceYellowPieceHintWindowController;
         PlayOnYourOwnWindowController mPlayOnYourOwnWindowController;
