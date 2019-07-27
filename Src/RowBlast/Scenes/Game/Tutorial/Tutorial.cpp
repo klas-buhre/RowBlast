@@ -63,9 +63,19 @@ Tutorial::Tutorial(Pht::IEngine& engine,
         engine,
         commonResources,
         {
-            "You play by placing pieces in smart",
-            "locations. Tap the suggested move",
-            "to place the blue piece in that spot"
+            "You play by putting pieces in smart",
+            "places. Tap the move to the left",
+            "to put the blue piece in that spot"
+        },
+        5.4f
+    },
+    mPlacePieceHintWindowController {
+        engine,
+        commonResources,
+        {
+            "The move to the left would be a",
+            "better choice. Tap the left move to",
+            "place the blue piece in that spot"
         },
         5.4f
     },
@@ -75,7 +85,17 @@ Tutorial::Tutorial(Pht::IEngine& engine,
         {
             "Blocks are cleared when",
             "horizontal rows are filled. Tap the",
-            "suggested move to fill three rows"
+            "suggested move to clear three rows"
+        },
+        5.4f
+    },
+    mFillRowsHintWindowController {
+        engine,
+        commonResources,
+        {
+            "The move in the middle is the best",
+            "choice since it will fill three rows.",
+            "Tap the that move to clear three rows"
         },
         5.4f
     },
@@ -121,6 +141,16 @@ Tutorial::Tutorial(Pht::IEngine& engine,
         },
         5.4f
     },
+    mPlaceGreenPieceWindowController {
+        engine,
+        commonResources,
+        {
+            "Now the piece is a perfect fit!",
+            "Tap the move to the left to clear",
+            "a couple of rows"
+        },
+        5.4f
+    },
     mOtherMoves2WindowController {
         engine,
         commonResources,
@@ -128,6 +158,15 @@ Tutorial::Tutorial(Pht::IEngine& engine,
             "Tap the screen again to find",
             "a better move. Remember not to",
             "press any moves or buttons"
+        },
+        6.7f
+    },
+    mPlaceYellowPieceHintWindowController {
+        engine,
+        commonResources,
+        {
+            "Try the move to the right to",
+            "clear five rows!"
         },
         6.7f
     },
@@ -161,13 +200,17 @@ Tutorial::Tutorial(Pht::IEngine& engine,
     } {
     
     mViewManager.AddView(static_cast<int>(Controller::PlacePieceWindow), mPlacePieceWindowController.GetView());
+    mViewManager.AddView(static_cast<int>(Controller::PlacePieceHintWindow), mPlacePieceHintWindowController.GetView());
     mViewManager.AddView(static_cast<int>(Controller::FillRowsWindow), mFillRowsWindowController.GetView());
+    mViewManager.AddView(static_cast<int>(Controller::FillRowsHintWindow), mFillRowsHintWindowController.GetView());
     mViewManager.AddView(static_cast<int>(Controller::SwitchPieceWindow), mSwitchPieceWindowController.GetView());
     mViewManager.AddView(static_cast<int>(Controller::SwitchPieceHintWindow), mSwitchPieceHintWindowController.GetView());
     mViewManager.AddView(static_cast<int>(Controller::SwitchPiece2Window), mSwitchPiece2WindowController.GetView());
     mViewManager.AddView(static_cast<int>(Controller::SwitchPiece3Window), mSwitchPiece3WindowController.GetView());
     mViewManager.AddView(static_cast<int>(Controller::OtherMovesWindow), mOtherMovesWindowController.GetView());
+    mViewManager.AddView(static_cast<int>(Controller::PlaceGreenPieceWindow), mPlaceGreenPieceWindowController.GetView());
     mViewManager.AddView(static_cast<int>(Controller::OtherMoves2Window), mOtherMoves2WindowController.GetView());
+    mViewManager.AddView(static_cast<int>(Controller::PlaceYellowPieceHintWindow), mPlaceYellowPieceHintWindowController.GetView());
     mViewManager.AddView(static_cast<int>(Controller::PlayOnYourOwnWindow), mPlayOnYourOwnWindowController.GetView());
     mViewManager.AddView(static_cast<int>(Controller::CascadingDialog), mCascadingDialogController.GetView());
     mViewManager.AddView(static_cast<int>(Controller::SameColorDialog), mSameColorDialogController.GetView());
@@ -231,8 +274,22 @@ void Tutorial::Update() {
                 mHandAnimation.Start(fillRowsHandPosition, 45.0f);
             }
             break;
+        case Controller::PlacePieceHintWindow:
+            if (mPlacePieceHintWindowController.Update() == TutorialWindowController::Result::Done) {
+                SetActiveViewController(Controller::FillRowsWindow);
+                mFillRowsWindowController.SetUp();
+                mHandAnimation.Start(fillRowsHandPosition, 45.0f);
+            }
+            break;
         case Controller::FillRowsWindow:
             if (mFillRowsWindowController.Update() == TutorialWindowController::Result::Done) {
+                SetActiveViewController(Controller::OtherMovesWindow);
+                mOtherMovesWindowController.SetUp();
+                mHandAnimation.Start(otherMovesHandPosition1, 270.0f);
+            }
+            break;
+        case Controller::FillRowsHintWindow:
+            if (mFillRowsHintWindowController.Update() == TutorialWindowController::Result::Done) {
                 SetActiveViewController(Controller::OtherMovesWindow);
                 mOtherMovesWindowController.SetUp();
                 mHandAnimation.Start(otherMovesHandPosition1, 270.0f);
@@ -243,8 +300,20 @@ void Tutorial::Update() {
                 SetActiveViewController(Controller::None);
             }
             break;
+        case Controller::PlaceGreenPieceWindow:
+            if (mPlaceGreenPieceWindowController.Update() == TutorialWindowController::Result::Done) {
+                SetActiveViewController(Controller::OtherMoves2Window);
+                mOtherMoves2WindowController.SetUp();
+                mHandAnimation.Start(otherMovesHandPosition2, 45.0f);
+            }
+            break;
         case Controller::OtherMoves2Window:
             if (mOtherMoves2WindowController.Update() == TutorialWindowController::Result::Done) {
+                SetActiveViewController(Controller::None);
+            }
+            break;
+        case Controller::PlaceYellowPieceHintWindow:
+            if (mPlaceYellowPieceHintWindowController.Update() == TutorialWindowController::Result::Done) {
                 SetActiveViewController(Controller::None);
             }
             break;
@@ -418,17 +487,23 @@ void Tutorial::OnNewMoveFirstLevel(int numMovesUsedIncludingCurrent) {
             mHandAnimation.Start(placePieceHandPosition, -45.0f);
             break;
         case 2:
-            mPlacePieceWindowController.Close();
+            if (mActiveViewController == Controller::PlacePieceWindow) {
+                mPlacePieceWindowController.Close();
+            } else {
+                mPlacePieceHintWindowController.Close();
+            }
             SendAnayticsEvent("Step1Complete");
             break;
         case 3:
-            mFillRowsWindowController.Close();
+            if (mActiveViewController == Controller::FillRowsWindow) {
+                mFillRowsWindowController.Close();
+            } else {
+                mFillRowsHintWindowController.Close();
+            }
             SendAnayticsEvent("Step2Complete");
             break;
         case 4:
-            SetActiveViewController(Controller::OtherMoves2Window);
-            mOtherMoves2WindowController.SetUp();
-            mHandAnimation.Start(otherMovesHandPosition2, 45.0f);
+            mPlaceGreenPieceWindowController.Close();
             SendAnayticsEvent("Step3Complete");
             break;
         default:
@@ -570,9 +645,12 @@ void Tutorial::OnChangeVisibleMoves(int numMovesUsedIncludingCurrent,
                 
                 if (FindMove(visibleMoves, predeterminedMove)) {
                     mOtherMovesWindowController.Close();
+                    SetActiveViewController(Controller::PlaceGreenPieceWindow);
+                    mPlaceGreenPieceWindowController.SetUp();
                     mHandAnimation.Stop();
                     mHandAnimation.Start(mirroredSevenPieceHandPosition, 45.0f);
                 } else {
+                    mPlaceGreenPieceWindowController.Close();
                     SetActiveViewController(Controller::OtherMovesWindow);
                     mOtherMovesWindowController.SetUp();
                     mHandAnimation.Start(otherMovesHandPosition1, 270.0f);
@@ -586,9 +664,12 @@ void Tutorial::OnChangeVisibleMoves(int numMovesUsedIncludingCurrent,
                 
                 if (FindMove(visibleMoves, predeterminedMove)) {
                     mOtherMoves2WindowController.Close();
+                    SetActiveViewController(Controller::PlaceYellowPieceHintWindow);
+                    mPlaceYellowPieceHintWindowController.SetUp();
                     mHandAnimation.Stop();
                     mHandAnimation.Start(longIPieceHandPosition, -90.0f);
                 } else {
+                    mPlaceYellowPieceHintWindowController.Close();
                     SetActiveViewController(Controller::OtherMoves2Window);
                     mOtherMoves2WindowController.SetUp();
                     mHandAnimation.Start(otherMovesHandPosition2, 45.0f);
@@ -641,29 +722,57 @@ bool Tutorial::IsMoveAllowed(int numMovesUsedIncludingCurrent,
                              predeterminedMove.mRotation == move.mRotation &&
                              &predeterminedMove.mPieceType == &pieceType;
         
-        switch (mActiveViewController) {
-            case Controller::OtherMovesWindow:
-                mOtherMovesWindowController.SetUp();
-                break;
-            case Controller::OtherMoves2Window:
-                mOtherMoves2WindowController.SetUp();
-                break;
-            case Controller::SwitchPieceWindow:
-                mSwitchPieceWindowController.Close();
-                SetActiveViewController(Controller::SwitchPieceHintWindow);
-                mSwitchPieceHintWindowController.SetUp();
-                break;
-            case Controller::SwitchPieceHintWindow:
-                mSwitchPieceHintWindowController.SetUp();
-                break;
-            case Controller::SwitchPiece2Window:
-                mSwitchPiece2WindowController.SetUp();
-                break;
-            case Controller::SwitchPiece3Window:
-                mSwitchPiece3WindowController.SetUp();
-                break;
-            default:
-                break;
+        if (!isMoveAllowed) {
+            switch (mActiveViewController) {
+                case Controller::PlacePieceWindow:
+                    mPlacePieceWindowController.Close();
+                    SetActiveViewController(Controller::PlacePieceHintWindow);
+                    mPlacePieceHintWindowController.SetUp();
+                    break;
+                case Controller::PlacePieceHintWindow:
+                    mPlacePieceHintWindowController.SetUp();
+                    break;
+                case Controller::FillRowsWindow:
+                    mFillRowsWindowController.Close();
+                    SetActiveViewController(Controller::FillRowsHintWindow);
+                    mFillRowsHintWindowController.SetUp();
+                    break;
+                case Controller::FillRowsHintWindow:
+                    mFillRowsHintWindowController.SetUp();
+                    break;
+                case Controller::OtherMovesWindow:
+                    mOtherMovesWindowController.SetUp();
+                    break;
+                case Controller::PlaceGreenPieceWindow:
+                    mPlaceGreenPieceWindowController.SetUp();
+                    break;
+                case Controller::OtherMoves2Window:
+                    mOtherMoves2WindowController.SetUp();
+                    break;
+                case Controller::PlaceYellowPieceHintWindow:
+                    mPlaceYellowPieceHintWindowController.SetUp();
+                    break;
+                case Controller::SwitchPieceWindow:
+                    mSwitchPieceWindowController.Close();
+                    SetActiveViewController(Controller::SwitchPieceHintWindow);
+                    mSwitchPieceHintWindowController.SetUp();
+                    break;
+                case Controller::SwitchPieceHintWindow:
+                    mSwitchPieceHintWindowController.SetUp();
+                    break;
+                case Controller::SwitchPiece2Window:
+                    mSwitchPiece2WindowController.SetUp();
+                    break;
+                case Controller::SwitchPiece3Window:
+                    mSwitchPiece3WindowController.SetUp();
+                    break;
+                default:
+                    break;
+            }
+        } else {
+            if (mActiveViewController == Controller::PlaceYellowPieceHintWindow) {
+                mPlaceYellowPieceHintWindowController.Close();
+            }
         }
         
         return isMoveAllowed;

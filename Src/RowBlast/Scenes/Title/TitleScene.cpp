@@ -213,7 +213,7 @@ namespace {
             .mPieceType = FloatingPieceType::RowBomb
         },
         BlockPathVolume {
-            .mPosition = {4.0f, -12.0f, -3.0f},
+            .mPosition = {4.0f, -12.0f, -2.7f},
             .mSize = {0.0f, 0.0f, 0.0f},
             .mPieceType = FloatingPieceType::Bomb,
             .mBlockRotation = Pht::Vec3{45.0f, 0.0f, 45.0f}

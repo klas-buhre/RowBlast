@@ -67,13 +67,17 @@ namespace RowBlast {
     private:
         enum class Controller {
             PlacePieceWindow,
+            PlacePieceHintWindow,
             FillRowsWindow,
+            FillRowsHintWindow,
             SwitchPieceWindow,
             SwitchPieceHintWindow,
             SwitchPiece2Window,
             SwitchPiece3Window,
             OtherMovesWindow,
+            PlaceGreenPieceWindow,
             OtherMoves2Window,
+            PlaceYellowPieceHintWindow,
             PlayOnYourOwnWindow,
             CascadingDialog,
             SameColorDialog,
@@ -97,13 +101,17 @@ namespace RowBlast {
         HandAnimation mHandAnimation;
         Pht::GuiViewManager mViewManager;
         TutorialWindowController mPlacePieceWindowController;
+        TutorialWindowController mPlacePieceHintWindowController;
         TutorialWindowController mFillRowsWindowController;
+        TutorialWindowController mFillRowsHintWindowController;
         TutorialWindowController mSwitchPieceWindowController;
         TutorialWindowController mSwitchPieceHintWindowController;
         TutorialWindowController mSwitchPiece2WindowController;
         TutorialWindowController mSwitchPiece3WindowController;
         TutorialWindowController mOtherMovesWindowController;
+        TutorialWindowController mPlaceGreenPieceWindowController;
         TutorialWindowController mOtherMoves2WindowController;
+        TutorialWindowController mPlaceYellowPieceHintWindowController;
         PlayOnYourOwnWindowController mPlayOnYourOwnWindowController;
         CascadingDialogController mCascadingDialogController;
         SameColorDialogController mSameColorDialogController;
