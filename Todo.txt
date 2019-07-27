@@ -95,6 +95,7 @@ Ongoing tasks:
      could be one tutrial window per move/stage in the tutorial. If the hand animation is pointing to
      the switch button or to tap the screen to find other moves, then to get the attention of the
      user the ongoing tutorial window can scale in again if the user clicks the wrong thing.
+    -Introduce bombs earlier.
     -Maybe go through some of the later levels in world 1 to see that there is not too many tricky
      things going on.
     -All apps must include a link to their privacy policy in the App Store Connect metadata field.

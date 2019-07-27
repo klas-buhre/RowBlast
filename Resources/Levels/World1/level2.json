@@ -12,13 +12,15 @@
         "B",
         "D",
         "L",
-        "I"
+        "I",
+        "ShortI"
     ],
     "pieceSequence": [
         "L",
         "I",
         "D",
         "B",
+        "ShortI",
         "L",
         "I",
         "D"
