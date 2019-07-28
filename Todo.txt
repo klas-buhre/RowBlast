@@ -87,10 +87,11 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-    -Review last two commits.
-    -Introduce bombs earlier.
-    -Maybe go through some of the later levels in world 1 to see that there is not too many tricky
-     things going on.
+    -Remove 1 move from level 10.
+    -Remove 4 moves from level 12.
+    -Maybe add some level bombs to level 13 so that the user dont forget how they work.
+    -Checked up to level 13. Check the rest of world 1.
+    -Test.
     -All apps must include a link to their privacy policy in the App Store Connect metadata field.
      Remember to update the linked (website) privacy policy with payments.
 

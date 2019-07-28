@@ -181,8 +181,8 @@ Tutorial::Tutorial(Pht::IEngine& engine,
         engine,
         commonResources,
         {
-            "Try the move to the right to",
-            "clear five rows!"
+            "Tap the move at the bottom",
+            "right to clear five rows!"
         },
         6.7f
     },
@@ -449,12 +449,12 @@ Tutorial::Result Tutorial::OnLevelStart() {
             mCascadingDialogController.SetUp();
             return Result::TutorialHasFocus;
         case 4:
-            SetActiveViewController(Controller::SameColorDialog);
-            mSameColorDialogController.SetUp();
-            return Result::TutorialHasFocus;
-        case 5:
             SetActiveViewController(Controller::LaserDialog);
             mLaserDialogController.SetUp();
+            return Result::TutorialHasFocus;
+        case 5:
+            SetActiveViewController(Controller::SameColorDialog);
+            mSameColorDialogController.SetUp();
             return Result::TutorialHasFocus;
         case 7:
             SetActiveViewController(Controller::BombDialog);
