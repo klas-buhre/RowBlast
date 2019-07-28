@@ -1,5 +1,5 @@
 {
-    "speed": 0.2,
+    "speed": 0.0,
     "moves": 37,
     "gestureMovesFactor": 1.02,
     "twoStars": 30,
@@ -15,7 +15,8 @@
         "B",
         "D",
         "Seven",
-        "MirroredSeven"
+        "MirroredSeven",
+        "RowBomb"
     ],
     "clearGrid": [
         "       ",
@@ -42,6 +43,8 @@
         "GGG    ",
         "GGG    ",
         "GGG    ",
+        "GGGG   ",
+        "GGGG   ",
         "    GGG",
         "    GGG",
         "    GGG",

@@ -87,8 +87,7 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-    -Checked up to level 13. Check the rest of world 1.
-    -Test.
+    -Test with iOS 12.4, start with iPad Pro.
     -All apps must include a link to their privacy policy in the App Store Connect metadata field.
      Remember to update the linked (website) privacy policy with payments.
 
