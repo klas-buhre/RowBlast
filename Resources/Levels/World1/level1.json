@@ -5,7 +5,7 @@
     "threeStars": 15,
     "floatingBlocksSet": "Standard",
     "musicTrack": 1,
-    "background": "sky1.jpg",
+    "background": "sky3.jpg",
     "lightIntensity": "Daylight",
     "partOfTutorial": true,
     "pieces": [
@@ -17,28 +17,28 @@
         "Seven"
     ],
     "pieceSequence": [
-        "L",
-        "D",
         "B",
-        "LongI",
+        "D",
         "MirroredSeven",
+        "LongI",
+        "L",
         "Seven"
     ],
     "predeterminedMoves": [
         {
-            "position": [1, 9],
+            "position": [1, 7],
             "rotation": 270,
-            "piece": "L"
+            "piece": "B"
         },
         {
-            "position": [3, 8],
+            "position": [3, 7],
             "rotation": 270,
             "piece": "D"
         },
         {
             "position": [0, 5],
-            "rotation": 270,
-            "piece": "B"
+            "rotation": 90,
+            "piece": "MirroredSeven"
         },
         {
             "position": [2, 0],
@@ -47,34 +47,43 @@
         }
     ],
     "suggestedMoves": [
-        {},
-        {},
         {
             "piece": "B",
             "alternatives": [
                 {
-                    "position": [0, 7],
-                    "rotation": 180,
-                    "score": 200.0
-                },
-                {
-                    "position": [3, 8],
-                    "rotation": 270,
-                    "score": 200.0
-                },
-                {
-                    "position": [5, 8],
-                    "rotation": 270,
-                    "score": 200.0
-                },
-                {
-                    "position": [2, 7],
-                    "rotation": 0,
+                    "position": [2, 8],
+                    "rotation": 90,
                     "score": 0.0
                 },
                 {
-                    "position": [4, 8],
+                    "position": [4, 10],
                     "rotation": 90,
+                    "score": 0.0
+                }
+            ]
+        },
+        {},
+        {
+            "piece": "MirroredSeven",
+            "alternatives": [
+                {
+                    "position": [1, 6],
+                    "rotation": 270,
+                    "score": 200.0
+                },
+                {
+                    "position": [3, 7],
+                    "rotation": 270,
+                    "score": 200.0
+                },
+                {
+                    "position": [4, 7],
+                    "rotation": 90,
+                    "score": 200.0
+                },
+                {
+                    "position": [4, 6],
+                    "rotation": 0,
                     "score": 0.0
                 }
             ]
@@ -119,15 +128,14 @@
         "       ",
         "       ",
         "       ",
-        "G    GG",
-        "GG   GG",
-        "GGG GGG",
-        "  GGGGG",
-        "  GGGGG",
+        "G    ll",
+        "G    yy",
+        "GG  Grr",
         "G GGGGG",
-        "GGGG GG",
-        "GGGG GG",
-        "GGGG GG",
+        "G GGGGG",
+        "Gl l GG",
+        "Gyyg GG",
+        "Grrg GG",
         "GGGG GG",
         "GGGG GG"
     ]

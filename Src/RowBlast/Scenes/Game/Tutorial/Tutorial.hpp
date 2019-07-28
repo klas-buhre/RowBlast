@@ -7,12 +7,8 @@
 
 // Game includes.
 #include "HandAnimation.hpp"
-#include "PlacePieceWindowController.hpp"
-#include "FillRowsWindowController.hpp"
-#include "SwitchPieceWindowController.hpp"
-#include "SwitchPiece2WindowController.hpp"
-#include "OtherMovesWindowController.hpp"
-#include "OtherMoves2WindowController.hpp"
+#include "TutorialWindowController.hpp"
+#include "PlayOnYourOwnWindowController.hpp"
 #include "CascadingDialogController.hpp"
 #include "SameColorDialogController.hpp"
 #include "LaserDialogController.hpp"
@@ -64,18 +60,27 @@ namespace RowBlast {
         bool IsSeeMoreMovesAllowed(int numMovesUsedIncludingCurrent) const;
         bool IsMoveAllowed(int numMovesUsedIncludingCurrent,
                            const Piece& pieceType,
-                           const Move& move) const;
+                           const Move& move);
         bool IsGestureControlsAllowed() const;
         bool IsUndoMoveAllowed(int numMovesUsedIncludingCurrent) const;
 
     private:
         enum class Controller {
             PlacePieceWindow,
+            PlacePieceHintWindow,
             FillRowsWindow,
+            FillRowsHintWindow,
             SwitchPieceWindow,
+            SwitchPieceHintWindow,
+            PlaceIPieceWindow,
             SwitchPiece2Window,
+            SwitchPiece3Window,
+            PlaceBPieceWindow,
             OtherMovesWindow,
+            PlaceMirroredSevenPieceWindow,
             OtherMoves2Window,
+            PlaceYellowPieceHintWindow,
+            PlayOnYourOwnWindow,
             CascadingDialog,
             SameColorDialog,
             LaserDialog,
@@ -97,12 +102,21 @@ namespace RowBlast {
         Pht::FadeEffect mFadeEffect;
         HandAnimation mHandAnimation;
         Pht::GuiViewManager mViewManager;
-        PlacePieceWindowController mPlacePieceWindowController;
-        FillRowsWindowController mFillRowsWindowController;
-        SwitchPieceWindowController mSwitchPieceWindowController;
-        SwitchPiece2WindowController mSwitchPiece2WindowController;
-        OtherMovesWindowController mOtherMovesWindowController;
-        OtherMoves2WindowController mOtherMoves2WindowController;
+        TutorialWindowController mPlacePieceWindowController;
+        TutorialWindowController mPlacePieceHintWindowController;
+        TutorialWindowController mFillRowsWindowController;
+        TutorialWindowController mFillRowsHintWindowController;
+        TutorialWindowController mSwitchPieceWindowController;
+        TutorialWindowController mSwitchPieceHintWindowController;
+        TutorialWindowController mPlaceIPieceWindowController;
+        TutorialWindowController mSwitchPiece2WindowController;
+        TutorialWindowController mSwitchPiece3WindowController;
+        TutorialWindowController mPlaceBPieceWindowController;
+        TutorialWindowController mOtherMovesWindowController;
+        TutorialWindowController mPlaceMirroredSevenPieceWindowController;
+        TutorialWindowController mOtherMoves2WindowController;
+        TutorialWindowController mPlaceYellowPieceHintWindowController;
+        PlayOnYourOwnWindowController mPlayOnYourOwnWindowController;
         CascadingDialogController mCascadingDialogController;
         SameColorDialogController mSameColorDialogController;
         LaserDialogController mLaserDialogController;

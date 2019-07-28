@@ -18,7 +18,7 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto dz = 0.05f;
+    constexpr auto dz = 0.025f;
     constexpr auto numVisibleGridRows = 17;
     
     float GhostPieceTriangleBlockRotationToDeg(BlockKind blockKind, Rotation rotation) {
@@ -467,8 +467,8 @@ void ScenePlayingField::UpdateGhostPieceForGestureControls(const FallingPiece& f
 }
 
 void ScenePlayingField::UpdateGhostPiece(Pht::RenderableObject& ghostPieceRenderable,
-                                    const Pht::Vec3& position,
-                                    Rotation rotation) {
+                                         const Pht::Vec3& position,
+                                         Rotation rotation) {
     auto& sceneObject = mScene.GetGhostPieces().AccuireSceneObject();
     
     auto& transform = sceneObject.GetTransform();
@@ -486,8 +486,11 @@ void ScenePlayingField::UpdateClickableGhostPieces(const FallingPiece& fallingPi
     
     const auto cellSize = mScene.GetCellSize();
     auto ghostPieceZ = mScene.GetGhostPieceZ();
+    auto ghostPieceShadowZ = mScene.GetGhostPieceShadowZ();
+    auto ghostPieceShadowOffset = mScene.GetGhostPieceShadowOffset();
     auto& pieceType = fallingPiece.GetPieceType();
     auto* ghostPieceRenderable = pieceType.GetGhostPieceRenderable();
+    auto* ghostPieceShadowRenderable = pieceType.GetGhostPieceShadowRenderable();
     
     Pht::Vec3 ghostPieceCenterLocalCoords {
         cellSize * static_cast<float>(pieceType.GetGridNumColumns()) / 2.0f,
@@ -510,13 +513,20 @@ void ScenePlayingField::UpdateClickableGhostPieces(const FallingPiece& fallingPi
         auto isMoveButtonDown = move.mButton->GetButton().IsDown();
         
         if (ghostPieceRenderable) {
-            Pht::Vec3 postion {ghostPieceFieldPos + ghostPieceCenterLocalCoords};
+            Pht::Vec3 position {ghostPieceFieldPos + ghostPieceCenterLocalCoords};
             auto rotation = move.mRotation;
             
             if (isMoveButtonDown) {
-                UpdateGhostPiece(*pieceType.GetPressedGhostPieceRenderable(), postion, rotation);
+                UpdateGhostPiece(*pieceType.GetPressedGhostPieceRenderable(), position, rotation);
             } else {
-                UpdateGhostPiece(*ghostPieceRenderable, postion, rotation);
+                UpdateGhostPiece(*ghostPieceRenderable, position, rotation);
+            }
+
+            if (ghostPieceShadowRenderable) {
+                position.x += ghostPieceShadowOffset.x;
+                position.y += ghostPieceShadowOffset.y;
+                position.z = ghostPieceShadowZ;
+                // UpdateGhostPiece(*ghostPieceShadowRenderable, position, rotation);
             }
         } else {
             auto& pieceGrid = pieceType.GetGrid(move.mRotation);

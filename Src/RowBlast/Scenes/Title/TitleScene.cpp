@@ -197,19 +197,27 @@ namespace {
             .mPosition = {5.0f, -4.0f, -5.0f},
             .mSize = {0.0f, 0.0f, 0.0f},
             .mPieceType = FloatingPieceType::SingleBlock,
-            .mBlockColor = FloatingBlockColor::Red
+            .mBlockColor = FloatingBlockColor::Red,
+            .mBlockRotation = Pht::Vec3{20.0f, 60.0f, 60.0f}
         },
         BlockPathVolume {
             .mPosition = {-5.0f, -8.0f, 5.0f},
             .mSize = {0.0f, 0.0f, 0.0f},
             .mPieceType = FloatingPieceType::SingleBlock,
-            .mBlockColor = FloatingBlockColor::RandomExceptGray
+            .mBlockColor = FloatingBlockColor::RandomExceptGray,
+            .mBlockRotation = Pht::Vec3{-10.0f, 60.0f, 40.0f}
         },
         BlockPathVolume {
-            .mPosition = {3.0f, -14.0f, -10.0f},
+            .mPosition = {1.0f, -9.0f, -8.0f},
             .mSize = {0.0f, 0.0f, 0.0f},
             .mPieceType = FloatingPieceType::RowBomb
         },
+        BlockPathVolume {
+            .mPosition = {4.0f, -12.0f, -2.7f},
+            .mSize = {0.0f, 0.0f, 0.0f},
+            .mPieceType = FloatingPieceType::Bomb,
+            .mBlockRotation = Pht::Vec3{45.0f, 0.0f, 45.0f}
+        }
     };
     
     float CalculateLightIntensity(int worldId) {

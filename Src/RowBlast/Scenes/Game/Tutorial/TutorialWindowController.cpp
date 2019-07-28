@@ -1,19 +1,21 @@
-#include "OtherMoves2WindowController.hpp"
+#include "TutorialWindowController.hpp"
 
 using namespace RowBlast;
 
-OtherMoves2WindowController::OtherMoves2WindowController(Pht::IEngine& engine,
-                                                         const CommonResources& commonResources) :
-    mView {commonResources},
+TutorialWindowController::TutorialWindowController(Pht::IEngine& engine,
+                                                   const CommonResources& commonResources,
+                                                   const std::vector<std::string>& textLines,
+                                                   float yPosition) :
+    mView {commonResources, textLines, yPosition},
     mSlidingMenuAnimation {engine, mView} {}
 
-void OtherMoves2WindowController::SetUp() {
+void TutorialWindowController::SetUp() {
     mSlidingMenuAnimation.SetUp(SlidingMenuAnimation::UpdateFade::No,
                                 SlidingMenuAnimation::SlideDirection::Scale,
                                 SlidingMenuAnimation::UpdatePosition::No);
 }
 
-OtherMoves2WindowController::Result OtherMoves2WindowController::Update() {
+TutorialWindowController::Result TutorialWindowController::Update() {
     switch (mSlidingMenuAnimation.Update()) {
         case SlidingMenuAnimation::State::Idle:
             mSlidingMenuAnimation.StartSlideIn();
@@ -27,7 +29,7 @@ OtherMoves2WindowController::Result OtherMoves2WindowController::Update() {
     return Result::None;
 }
 
-void OtherMoves2WindowController::Close() {
+void TutorialWindowController::Close() {
     mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::No,
                                         SlidingMenuAnimation::SlideDirection::Scale,
                                         SlidingMenuAnimation::UpdatePosition::No);

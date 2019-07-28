@@ -19,6 +19,7 @@ using namespace RowBlast;
 namespace {
     const Pht::Vec3 lightDirectionA {0.785f, 1.0f, 0.67f};
     const Pht::Vec3 lightDirectionB {1.0f, 1.0f, 0.74f};
+    constexpr auto numPages = 9;
 }
 
 HowToPlayDialogView::HowToPlayDialogView(Pht::IEngine& engine,
@@ -84,7 +85,7 @@ HowToPlayDialogView::HowToPlayDialogView(Pht::IEngine& engine,
                             Pht::Vec4 {0.2f, 0.2f, 0.2f, 0.5f},
                             Pht::Vec3 {-0.05f, -0.05f, UiLayer::textShadow});
         
-    for (auto i = 0; i < mNumPages; ++i) {
+    for (auto i = 0; i < numPages; ++i) {
         GetRoot().AddChild(CreateFilledCircleIcon(i, false));
     }
 
@@ -350,7 +351,7 @@ void HowToPlayDialogView::CreateDragPieceDownPage(const GuiResources& guiResourc
 }
 
 Pht::SceneObject& HowToPlayDialogView::CreateFilledCircleIcon(int index, bool isBright) {
-    auto indexMax = mNumPages - 1;
+    auto indexMax = numPages - 1;
     auto diff = 0.75f;
     
     Pht::Vec3 position {
@@ -1393,4 +1394,8 @@ void HowToPlayDialogView::OnDeactivate() {
     if (mGuiLightProvider) {
         mGuiLightProvider->SetDefaultGuiLightDirections();
     }
+}
+
+bool HowToPlayDialogView::IsOnLastPage() const {
+    return mPageIndex == numPages - 1;
 }

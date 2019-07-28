@@ -188,7 +188,11 @@ namespace RowBlast {
         float GetGhostPieceZ() const {
             return mGhostPieceZ;
         }
-        
+
+        float GetGhostPieceShadowZ() const {
+            return mGhostPieceShadowZ;
+        }
+
         float GetPressedGhostPieceZ() const {
             return mPressedGhostPieceZ;
         }
@@ -219,6 +223,10 @@ namespace RowBlast {
 
         const Pht::Vec2& GetFieldLoweLeft() const {
             return mFieldLoweLeft;
+        }
+
+        const Pht::Vec2& GetGhostPieceShadowOffset() const {
+            return mGhostPieceShadowOffset;
         }
 
     private:
@@ -285,12 +293,14 @@ namespace RowBlast {
         const float mBlastRadiusAnimationZ {mCellSize / 2.0f + 0.15f};
         const float mShieldAnimationZ {mCellSize / 2.0f + 0.1f};
         const float mFieldBottomGlowZ {mCellSize / 2.0f + 0.1f};
-        const float mGhostPieceZ {-0.2f};
+        const float mGhostPieceZ {mCellSize / 2.0f + 0.02f};
+        const float mGhostPieceShadowZ {-0.4f};
         const float mPressedGhostPieceZ {mCellSize / 2.0f + 0.2f};
         const float mBlueprintAnimationZ {-0.6f};
         const float mFieldGridZ {-1.8f};
         const float mBigAsteroidZ {-1.0f};
         const float mBouncingBlockZ {-0.2f};
+        Pht::Vec2 mGhostPieceShadowOffset {-0.085f, -0.085f};
         float mFieldWidth {0.0f};
         float mFieldHeight {0.0f};
         Pht::Vec2 mFieldLoweLeft;

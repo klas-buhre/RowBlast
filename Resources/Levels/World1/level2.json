@@ -12,15 +12,14 @@
         "B",
         "D",
         "L",
-        "I"
+        "I",
+        "ShortI"
     ],
     "pieceSequence": [
         "L",
         "I",
-        "D",
+        "ShortI",
         "B",
-        "L",
-        "I",
         "D"
     ],
     "predeterminedMoves": [
@@ -49,15 +48,15 @@
         "       ",
         "       ",
         "       ",
-        "GGG GGG",
-        "GGG GGG",
-        "  G GGG",
-        "  GGGGG",
+        "GGG Ggg",
+        "GGG Gll",
+        "  G Gyy",
+        "  GGGrr",
         "G GGGGG",
+        "GG     ",
+        "GG     ",
+        "GG     ",
         "GGG    ",
-        "GGG    ",
-        "GGG   G",
-        "GGG  GG",
         "GGGG GG",
         "GGGG GG",
         "GGGG GG"

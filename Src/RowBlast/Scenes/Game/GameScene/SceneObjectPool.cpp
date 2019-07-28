@@ -21,7 +21,7 @@ namespace {
             case SceneObjectPoolKind::PieceBlocks:
                 return 3 * Piece::maxRows * Piece::maxColumns - Piece::maxRows - Piece::maxColumns;
             case SceneObjectPoolKind::GhostPieces:
-                return ClickInputHandler::maxNumVisibleMoves;
+                return ClickInputHandler::maxNumVisibleMoves * 2;
             case SceneObjectPoolKind::GhostPieceBlocks:
             case SceneObjectPoolKind::PreviewPieceBlocks:
                 return Piece::maxRows * Piece::maxColumns;

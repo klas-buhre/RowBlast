@@ -44,12 +44,13 @@ MirroredZPiece::MirroredZPiece(Pht::IEngine& engine, const CommonResources& comm
     };
     
     GhostPieceProducer ghostPieceProducer {engine, Pht::IVec2{3, 3}, commonResources};
+    ghostPieceProducer.DrawBorder(border, GetColor(), PressedGhostPiece::No);
     
-    ghostPieceProducer.DrawBorder(border, FillGhostPiece::No);
-    SetGhostPieceRenderable(ghostPieceProducer.ProduceRenderable());
+    auto renderables = ghostPieceProducer.ProduceRenderables("MirroredZPiece");
+    SetGhostPieceRenderable(std::move(renderables.mRenderable));
+    SetGhostPieceShadowRenderable(std::move(renderables.mShadowRenderable));
 
     ghostPieceProducer.Clear();
-    ghostPieceProducer.SetBrightBorder();
-    ghostPieceProducer.DrawBorder(border, FillGhostPiece::Yes);
-    SetPressedGhostPieceRenderable(ghostPieceProducer.ProduceRenderable());
+    ghostPieceProducer.DrawBorder(border, GetColor(), PressedGhostPiece::Yes);
+    SetPressedGhostPieceRenderable(ghostPieceProducer.ProducePressedRenderable());
 }

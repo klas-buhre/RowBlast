@@ -137,6 +137,10 @@ Pht::RenderableObject* Piece::GetGhostPieceRenderable() const {
     return mGhostPieceRenderable.get();
 }
 
+Pht::RenderableObject* Piece::GetGhostPieceShadowRenderable() const {
+    return mGhostPieceShadowRenderable.get();
+}
+
 Pht::RenderableObject* Piece::GetPressedGhostPieceRenderable() const {
     return mPressedGhostPieceRenderable.get();
 }
@@ -293,6 +297,10 @@ void Piece::SetDuplicateMoveCheck(Rotation rotation, const DuplicateMoveCheck& d
 
 void Piece::SetGhostPieceRenderable(std::unique_ptr<Pht::RenderableObject> renderable) {
     mGhostPieceRenderable = std::move(renderable);
+}
+
+void Piece::SetGhostPieceShadowRenderable(std::unique_ptr<Pht::RenderableObject> renderable) {
+    mGhostPieceShadowRenderable = std::move(renderable);
 }
 
 void Piece::SetPressedGhostPieceRenderable(std::unique_ptr<Pht::RenderableObject> renderable) {

@@ -39,14 +39,15 @@ PyramidPiece::PyramidPiece(Pht::IEngine& engine, const CommonResources& commonRe
     };
     
     GhostPieceProducer ghostPieceProducer {engine, Pht::IVec2{2, 2}, commonResources};
+    ghostPieceProducer.DrawBorder(border, GetColor(), PressedGhostPiece::No);
     
-    ghostPieceProducer.DrawBorder(border, FillGhostPiece::No);
-    SetGhostPieceRenderable(ghostPieceProducer.ProduceRenderable());
+    auto renderables = ghostPieceProducer.ProduceRenderables("PyramidPiece");
+    SetGhostPieceRenderable(std::move(renderables.mRenderable));
+    SetGhostPieceShadowRenderable(std::move(renderables.mShadowRenderable));
 
     ghostPieceProducer.Clear();
-    ghostPieceProducer.SetBrightBorder();
-    ghostPieceProducer.DrawBorder(border, FillGhostPiece::Yes);
-    SetPressedGhostPieceRenderable(ghostPieceProducer.ProduceRenderable());
+    ghostPieceProducer.DrawBorder(border, GetColor(), PressedGhostPiece::Yes);
+    SetPressedGhostPieceRenderable(ghostPieceProducer.ProducePressedRenderable());
 }
 
 bool PyramidPiece::NeedsDownAdjustmentInHud() const {

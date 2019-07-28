@@ -1,6 +1,6 @@
 {
     "speed": 0.0,
-    "moves": 46,
+    "moves": 47,
     "twoStars": 35,
     "threeStars": 25,
     "floatingBlocksSet": "Standard",
@@ -11,12 +11,12 @@
         "LongI",
         "I",
         "L",
-        "B",
-        "D",
         "Seven",
         "MirroredSeven",
         "F",
-        "MirroredF"
+        "MirroredF",
+        "Bomb",
+        "RowBomb"
     ],
     "clearGrid": [
         "       ",
@@ -32,10 +32,10 @@
         "       ",
         "       ",
         "       ",
-        "GGG    ",
-        "GGG    ",
-        "GGG    ",
-        "GGG    ",
+        "Glg    ",
+        "Gyg    ",
+        "Grg  BL",
+        "GGG  BL",
         "GGG GGG",
         "GGG GGG",
         "GGG GGG",
@@ -43,14 +43,18 @@
         "GGG    ",
         "GGG    ",
         "    GGG",
-        "    GGG",
+        "L   GGG",
         "GGG    ",
         "GGG    ",
         "GGG    ",
-        "    GGG",
-        "    GGG",
+        "GGG    ",
+        "   GGGG",
+        "   GGGG",
         "GGG    ",
         "GGG    ",
-        "GGG GGG"
+        "GGG    ",
+        "   GGG ",
+        "   GGG ",
+        "   GGGG"
     ]
 }
