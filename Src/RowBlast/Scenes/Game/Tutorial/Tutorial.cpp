@@ -95,7 +95,7 @@ Tutorial::Tutorial(Pht::IEngine& engine,
         {
             "The move in the middle is the best",
             "choice since it will fill three rows.",
-            "Tap the that move to clear three rows"
+            "Tap that move to clear three rows"
         },
         5.4f
     },
