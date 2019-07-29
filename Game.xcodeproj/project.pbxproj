@@ -3806,7 +3806,7 @@
 					"$(PROJECT_DIR)/Src/PhotonBeamEngine/ThirdParty/GameAnalytics/iOS",
 				);
 				OTHER_CPLUSPLUSFLAGS = "-ISrc/PhotonBeamEngine/ThirdParty/FreeType/include/";
-				PRODUCT_BUNDLE_IDENTIFIER = com.BuhreIndustries.Engine;
+				PRODUCT_BUNDLE_IDENTIFIER = com.teleporterstudios.rowblast;
 				PRODUCT_NAME = Game;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
@@ -3834,7 +3834,7 @@
 					"$(PROJECT_DIR)/Src/PhotonBeamEngine/ThirdParty/GameAnalytics/iOS",
 				);
 				OTHER_CPLUSPLUSFLAGS = "-ISrc/PhotonBeamEngine/ThirdParty/FreeType/include/";
-				PRODUCT_BUNDLE_IDENTIFIER = com.BuhreIndustries.Engine;
+				PRODUCT_BUNDLE_IDENTIFIER = com.teleporterstudios.rowblast;
 				PRODUCT_NAME = Game;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
