@@ -87,7 +87,6 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-    -Test with iOS 12.4, start with iPad Pro.
     -Add my app to App Store Connect only after my account is changed to organization since the
      developer name cannot be changed once an app is added.
     -Upload screenshots to App Store Connect. Upload screenshots for the new iPhone XS Max or the
@@ -102,6 +101,9 @@ Ongoing tasks:
             -iPhone 7 on device, native resolution 750 x 1334.
             -and on whataver iPad device scaled to (900 x 1200).
     -All apps must include a link to their privacy policy in the App Store Connect metadata field.
+    -Test with iOS 12.4, deployment target 12.1.
+    -Submit.
+
 
 
     -Add drag controls and release with microtransactions enabled, free to download.
