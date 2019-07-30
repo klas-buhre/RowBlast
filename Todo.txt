@@ -87,7 +87,7 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-    -Test with iOS 12.4, deployment target 12.1.
+    -Test with iOS 12.4, deployment target 12.1. Commit b7e948030faed580c101ae40c5b220ad901958c8.
     -Add the last info in App Store Connect.
     -Submit.
 
