@@ -87,18 +87,8 @@ Backlog:
     -Maybe support for different languages.
 
 Ongoing tasks:
-    
-    -Upload screenshots to App Store Connect.
-        -Just use the simulator for iPhone XS Max, iPhone 8 Max, iPad Pro 12.9 inch 2nd gen.
-            -Map.
-            -Gameplay OneTap with bombs.
-            -Gameplay OneTap with asteroid.
-            -Gameplay Gesture with triangles.
-        -Upload App previews (videos):
-            -iPhone X on device, scaled to 886 x 1920.
-            -iPhone 7 on device, native resolution 750 x 1334.
-            -and on whataver iPad device scaled to (900 x 1200).
     -Test with iOS 12.4, deployment target 12.1.
+    -Add the last info in App Store Connect.
     -Submit.
 
 
