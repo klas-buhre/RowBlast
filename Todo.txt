@@ -65,8 +65,11 @@ Ongoing tasks:
        -When the piece is released, there will be a falling piece animation going from the real
         piece at the top down to the placed transparant piece. Then it will be clearer that pieces
         can only be placed at locations that are reachable from the real piece at the top.
+       -The ghost piece should not be visible if the dragged piece is over an illegal move.
        -To make it even clearer where it is allowed to place the piece, the non-reachable cells can
         have red stripes.
+       -Could even have a falling piece animation that stops at the closest legal move and then goes
+        back to to top, if the user tries to drag in a piece to an illegal move.
        -The falling piece is changed to the piece type of the piece being dragged in and changed
         back to the active piece type when the dragged piece is going back to the selectables.
        -If a piece is dragged and released in mid-air then the falling piece will go to that
@@ -80,54 +83,16 @@ Ongoing tasks:
     -Create a DraggedPieceAnimation for animating the dragged piece leaving the selectables
      container, going back to the selectables and being placed at a legal move in the field.
 
-
-
-
-
-    -Make a new pause button at the top-right corner and make a moves toggle button at the pause
-     buttons old location. Or, it might be room for both at the bottom left if the next pieces are
-     vertical and to the right side of the selectables.
-    -The ghost piece for swipe controls could be like in Tetris Blits, or preferebly like in Puyo
-     Puyo Tetris or just a transparant real piece (although transparant real pieces could be
-     difficult if the welds should be part of the ghost piece since the weld will be drawn over the
-     blocks and cause strange blending). That ghost piece should look the same as the ghost piece
-     under a real piece being dragged in from the HUD. The ghost piece should not be visible if the
-     dragged piece is over an illegal move.
-    -Remember to update the switch piece Pht::Button input size after the changes.
+    -Make a new pause button at the top-right corner and make a controls toggle button at the pause
+     buttons old location. Or, it might be room for both at the bottom left.
+    -In gesture/drag controls, switching piece could also (apart from swipe up in the screen) be
+     done by swiping left or right inside the selectable cotainer. Swipe left shifts the selectables
+     to the left, swipe right shifts them to the right.
     -Update the tutorial with drag controls.
 
 
 
 
-
-    -Might even make the active preview piece a bit larger and/or adding and effect/animation to set
-     it apart from the other selectables.
-    -Try combining all three input types to one. Maybe possible if the visibility of the move
-     alternatives can be toggled with a button next to the pause button. Or the pause button goes
-     to the top right corner of the screen and the toggle button takes the pause buttons old place.
-     Alt 1: Switch piece could be done
-     by swiping left or right inside the selectable cotainer. Swipe left shifts the selectables to
-     left, swipe right shifts them to the right. This way rotating a single selectable is done by
-     clicking the preview piece in the selectables container and any selectable could be dragged in,
-     not just the active one.
-     Alt 2: Switch by clicking the selectables container or swipe the container left or right.
-     Rotate by tapping the screen, this rotates all selectables in the HUD. If clickadble move
-     alternatives are active then the falling piece does not rotate. If If clickadble move
-     alternatives are not active then the falling piece also rotates. All selectables should rotate
-     back to their default rotation on switch piece or next move.
-    -Could have a falling piece animation that stops at the closest legal move and then goes back to
-     to top, if the user tries to drag in a piece to an illegal move.
-
-
-
-    -Go through the levels in world 1.
-        -Maybe introduce the laser at level 4 or 3 even.
-        -Maybe introduce the bomb at level 6 or 5.
-
-
-
-    -Tutorial: Pht animation showing how to fill gray slots. It should show the field scroll up
-     after filling all slots in a row.
     -Tutorial: Maybe there could be a cascading/gravity animation.
 
 
@@ -279,16 +244,14 @@ Ordered Backlog:
         Done
     -Replace the tutorial slide animations with Pht animations.
         Cost: 5
+        Done
     -Revise some of the levels.
         Cost: 5
+        Done
     -Purchasing.
         Cost: 10
     -Release-related tasks.
         Cost: 7
-    -Small soft launch.
-        Cost: 5
-    -Soft launch.
-        Cost: 5
     -Levels for the 4th world.
         Cost: 7
     -Metal.
@@ -300,7 +263,7 @@ Ordered Backlog:
     -Back end.
         Cost: ?
 
-        Total cost: 327
+        Total cost: 317
 
 
 Levels:
