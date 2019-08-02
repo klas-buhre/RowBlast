@@ -173,7 +173,7 @@ SlidingTextAnimation::CreateText(const Pht::Font& font,
         {1.0f, 0.95f, 0.9f, 1.0f},
         Pht::TextShadow::Yes,
         {0.03f, 0.03f},
-        {0.8f, 0.6f, 0.4f, 1.0f}
+        {0.79f, 0.59f, 0.395f, 1.0f}
     };
     textProperties.mSnapToPixel = Pht::SnapToPixel::No;
     textProperties.mItalicSlant = 0.15f;
@@ -181,7 +181,7 @@ SlidingTextAnimation::CreateText(const Pht::Font& font,
     textProperties.mSpecular = Pht::TextSpecular::Yes;
     textProperties.mSpecularOffset = {0.02f, 0.02f};
     textProperties.mSecondShadow = Pht::TextShadow::Yes;
-    textProperties.mSecondShadowColor = Pht::Vec4 {0.2f, 0.2f, 0.2f, 0.5f};
+    textProperties.mSecondShadowColor = Pht::Vec4 {0.19f, 0.19f, 0.19f, 0.5f};
     textProperties.mSecondShadowOffset = Pht::Vec2 {0.075f, 0.075f};
 
     mTextMessages.push_back(

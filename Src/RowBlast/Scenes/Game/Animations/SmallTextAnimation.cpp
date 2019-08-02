@@ -86,7 +86,7 @@ Pht::SceneObject& SmallTextAnimation::CreateText(const Pht::Font& font,
     textProperties.mSpecular = Pht::TextSpecular::Yes;
     textProperties.mSpecularOffset = {0.03f, 0.03f};
     textProperties.mSecondShadow = Pht::TextShadow::Yes;
-    textProperties.mSecondShadowColor = Pht::Vec4 {0.2f, 0.2f, 0.2f, textShadowAlpha};
+    textProperties.mSecondShadowColor = Pht::Vec4 {0.19f, 0.19f, 0.19f, textShadowAlpha};
     textProperties.mSecondShadowOffset = Pht::Vec2 {0.075f, 0.075f};
 
     auto textSceneObject = std::make_unique<Pht::SceneObject>();
