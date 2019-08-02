@@ -6,42 +6,6 @@ Backlog:
     -Android.
 
   -Gameplay:
-    -A third input method could be to drag pieces from the HUD into the field. If you click on one
-     piece in the HUD then it rotates. The selectable pieces area (and pieces) in the HUD could be a
-     bit bigger when using drag controls to reduce misclicks. Each cell that is not reachable from
-     the top (an illegal move) could be red. A question is if real solid pieces should be dragged in
-     or ghost pieces. Real pieces will look better but it is more logical to drag in ghost pieces
-     since the real piece is actually at the top and it will drop to the location of the ghost piece
-     really quickly (preferably almost as fast as a hard drop like in swipe controls). Or the real
-     falling piece at the top could disappear (scale out) when the real solid piece is being dragged
-     in and then it might be ok to drag in real pieces. When the
-     piece har dropped, the empty slot in the selectables HUD should be taken over by the next piece
-     without rearranging the selectable pieces. What happens with the falling piece once one of the
-     selectables (not the active piece) are being dragged in? Maybe it should only be possible to
-     drag in the active piece? In that case, rotating the active piece could be done by clicking on
-     it in the hud and and clicking on the two selectables could switch piece.
-     Another version of this idea is to combine drag input with swipe input (effectively forming the
-     swipe/drag input type). So then there would be drag/swipe input or click input. This could be
-     possible if (either 1.a OR 1.b OR 1.c) and 2:
-     Either (1.a): rotating pieces using drag/swipe input is only done by tapping the screen as in
-     pure swipe controls (this would then rotate all pieces in the selectables container, but they
-     could rotate back to their default rotation at the next move or switch piece)
-     since rotating a selectable piece by clicking the piece in the selectables container would be
-     indistinguishable from switching active piece. Switching active piece in 1.a could be done by
-     tapping the selectables container.
-     Or (1.b): switching active piece using drag/swipe input is only done by swiping up since
-     switching active piece by clicking the selectables container would be indistinguishable from
-     rotating the piece in the selectables container. Rotating a piece in 1.a could be done by
-     tapping the the piece in the selectables container.
-     Or (1.c): switching active piece using drag/swipe input is only done by swiping up and rotating
-     pieces using drag/swipe input is only done by tapping the screen. Touching the selectables
-     container would only be for starting a drag and the start of the touch would not be ambiguous
-     in any way (start drag or switch-piece/rotate?)
-     And 2: ther can be no traditional ghost piece present all time when using drag/swipe input
-     since it would interfere with the ghost piece being dragged in to the field. The traditional
-     constant ghost piece for swipe input could be present but removed once a drag is started and
-     it could consist of transparent normal blocks (or transparent grey quads is in Tetris Blitz,
-     or like Poyo Poyo Tetris) to set it apart from other ghost pieces.
     -Could have ice blocks that are level blocks that can be used to fill and clear rows but they
      shatter if landed on or if falling down in a cascade. Or, they could turn into a normal grey
      level block if the ice is cleared which it will be by filling the row or explosion/laser.
@@ -90,31 +54,31 @@ Ongoing tasks:
     -Add drag controls and release with microtransactions enabled, free to download.
 
 
-    -Maybe the drag controls should only be active with gesture controls. Drag does not add that
-     much to click controls and it is a bit confusing when the preview pieces rotate and the
-     clickable moves rotates/move in completely unrelated ways. Also, if switching piece when using
-     gesture controls is only done by swipe up, then the start of a drag and switch will not be
-     ambiguous.
-    -Maybe a transparant real piece should be dragged in with a ghost piece under it. When the piece
-     is released, there will be a falling piece animation going from the real piece at the top down
-     to the placed transparant piece. Then it will be clear that pieces can only be placed at
-     locations that are reachable from the real piece at the top. The transparant pieces don't need
-     welds. The falling piece is changed to the piece type of the piece being dragged in and changed
-     back to the active piece type when the dragged piece is going back to the selectables. If a
-     piece is dragged and released in mid-air then the falling piece will go to that location using
-     the normal fast falling piece animation and when the falling piece has arrived then the piece
-     will fall using gravity (same way and speed as pull down loose pieces) until it hits anything.
-    -Create a DragInputHandler that handles drag input. It has one Pht::Button per preview piece.
-    -Create a DraggedPiece that has a state, scene position or hud position and field grid position.
+    -Maybe a transparant real piece should be dragged in with a ghost piece under it.
+       -The dragged piece could simply disappear from its place in the hud in one frame since the
+        finger will cover it anyway. But the dragged piece in the FieldBlocksAndFallingPiece pass could
+        scale in and move up during a couple of frames. Then there is no transition/handover between
+        the hud pass and the FieldBlocksAndFallingPiece pass. When the dragged piece goes back to the
+        selectables in the hud then the piece could travel really quickly in the FieldBlocksAndFallingPiece
+        render pass and the the piece could simply appear in one frame in the selectables.
+       -The transparant pieces does not need welds.
+       -When the piece is released, there will be a falling piece animation going from the real
+        piece at the top down to the placed transparant piece. Then it will be clearer that pieces
+        can only be placed at locations that are reachable from the real piece at the top.
+       -To make it even clearer where it is allowed to place the piece, the non-reachable cells can
+        have red stripes.
+       -The falling piece is changed to the piece type of the piece being dragged in and changed
+        back to the active piece type when the dragged piece is going back to the selectables.
+       -If a piece is dragged and released in mid-air then the falling piece will go to that
+        location using the normal fast falling piece animation and when the falling piece has
+        arrived then the piece will fall using gravity (same way and speed as pull down loose
+        pieces) until it hits anything.
+    -Create a DragInputHandler that handles drag input.
+    -Create a DraggedPiece that has a state, scene position and field grid position.
      It should know where to quickly travel when touched in the hud so that the
      DraggedPieceAnimation can animate that.
     -Create a DraggedPieceAnimation for animating the dragged piece leaving the selectables
-     continer, going back to the selectables and being placed at a legal move in the field. It is
-     probably good if the dragged piece is rendered in the hud render pass as long as it is solid
-     and mostly within the selectables container but when it leaves the selectables container
-     completely it must be a different scene object that is not in the hud render pass. The dragged
-     piece cannot be in the hud render pass once the dragged piece is over the field because of the
-     different hud pass light setting and hud camera position affecting env mapping.
+     container, going back to the selectables and being placed at a legal move in the field.
 
 
 
