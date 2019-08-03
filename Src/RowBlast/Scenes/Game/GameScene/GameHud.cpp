@@ -55,6 +55,18 @@ namespace {
         }
     }
     
+    std::unique_ptr<Pht::Button> CreatePieceButton(const Pht::Vec3& position,
+                                                   Pht::SceneObject& parentObject,
+                                                   Pht::Scene& scene,
+                                                   Pht::IEngine& engine) {
+        auto& buttonSceneObject = scene.CreateSceneObject(parentObject);
+        buttonSceneObject.SetIsVisible(false);
+        buttonSceneObject.GetTransform().SetPosition(position);
+
+        auto buttonSize = Pht::Vec2{50.0f, 60.0f} * GameHud::selectablePiecesScale;
+        return std::make_unique<Pht::Button>(buttonSceneObject, buttonSize, engine);
+    }
+    
     float CalculateLowerHudObjectYPosition(Pht::IEngine& engine) {
         auto& renderer = engine.GetRenderer();
         auto bottomPadding = renderer.GetBottomPaddingHeight();
@@ -418,6 +430,19 @@ void GameHud::CreateSelectablePiecesObject(Pht::Scene& scene,
                         mSelectablePreviewPiecesRelativePositions,
                         *mSelectablePiecesSceneObject,
                         scene);
+    
+    mActivePieceButton = CreatePieceButton(mSelectablePreviewPiecesRelativePositions[1],
+                                           *mSelectablePiecesSceneObject,
+                                           scene,
+                                           mEngine);
+    mSelectable0Button = CreatePieceButton(mSelectablePreviewPiecesRelativePositions[2],
+                                           *mSelectablePiecesSceneObject,
+                                           scene,
+                                           mEngine);
+    mSelectable1Button = CreatePieceButton(mSelectablePreviewPiecesRelativePositions[3],
+                                           *mSelectablePiecesSceneObject,
+                                           scene,
+                                           mEngine);
 }
 
 void GameHud::OnSwitchButtonDown() {

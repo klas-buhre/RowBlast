@@ -6,7 +6,6 @@
 using namespace RowBlast;
 
 void DraggedPiece::BeginDrag(const Piece& pieceType, Rotation rotation) {
-    mState = State::Dragged;
     mPieceType = &pieceType;
     mRotation = rotation;
 }
@@ -16,5 +15,8 @@ void DraggedPiece::SetPosition(const Pht::Vec2& position) {
 }
 
 Pht::IVec2 DraggedPiece::GetFieldGridPosition() const {
-    return {0, 0};
+    return Pht::IVec2 {
+        static_cast<int>(std::floor(mPosition.x)),
+        static_cast<int>(std::floor(mPosition.y))
+    };
 }

@@ -4,6 +4,9 @@
 #include <memory>
 #include <array>
 
+// Engine includes.
+#include "Button.hpp"
+
 // Game includes.
 #include "IGameHudEventListener.hpp"
 #include "Level.hpp"
@@ -103,6 +106,18 @@ namespace RowBlast {
 
         const SelectablePreviewPiecesRelativePositions& GetSelectablePreviewPiecesRelativePositions() const {
             return mSelectablePreviewPiecesRelativePositions;
+        }
+        
+        Pht::Button& GetActivePieceButton() {
+            return *mActivePieceButton;
+        }
+        
+        Pht::Button& GetSelectable0Button() {
+            return *mSelectable0Button;
+        }
+        
+        Pht::Button& GetSelectable1Button() {
+            return *mSelectable1Button;
         }
         
         Pht::SceneObject& GetUpperContainer() {
@@ -262,6 +277,9 @@ namespace RowBlast {
         const NextPreviewPiecesRelativePositions mNextPreviewPiecesRelativePositions;
         const SelectablePreviewPiecesRelativePositions mSelectablePreviewPiecesRelativePositions;
         float mMovesTextScaleFactor {0.0f};
+        std::unique_ptr<Pht::Button> mActivePieceButton;
+        std::unique_ptr<Pht::Button> mSelectable0Button;
+        std::unique_ptr<Pht::Button> mSelectable1Button;
     };
 }
 

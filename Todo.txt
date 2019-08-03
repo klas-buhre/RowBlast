@@ -53,6 +53,7 @@ Backlog:
 Ongoing tasks:
     -Add drag controls and release with microtransactions enabled, free to download.
 
+    -Try to implement Alt 2:
 
     -Maybe a transparant real piece should be dragged in with a ghost piece under it.
      Or it has to be a real piece since a transparant piece might not be clear enough in daylight
@@ -66,26 +67,26 @@ Ongoing tasks:
        -The transparant pieces does not need welds.
        -The ghost piece could be at the place where the piece would land if released, not the actual
         location it is currently dragged to. So if the piece is being dragged to an area several
-        rows above a couple of blocks the the ghost piece would be several rows below by those
+        rows above a couple of blocks then the ghost piece would be several rows below by those
         blocks, exactly like in swipe controls.
        -The ghost piece should not be visible if the dragged piece is over an illegal area.
-       -When the piece is released, there could be a falling piece animation going from the real
+       -Alt 1: When the piece is released, there could be a falling piece animation going from the real
         piece at the top down to the landing location, which may be below the release location.
         Then it will be clearer that pieces can only be placed at locations that are reachable from
         the active piece at the top.
-          -Or, the dragged piece is the real solid piece and the active piece at the top is
+          -Alt 2: The dragged piece is the real solid piece and the active piece at the top is
            transparent during dragging and there is no falling piece animation going to the real
            piece once released. There might be the Note A falling piece animation though. However,
            from an implementation perspective there could be a falling a falling piece animation
            going from the release location (which in effect places the falling piece at that spot)
            to the landing location (possibly a bit down). Then we get the block trails for free when
            they should appear and the piece gets an animated movement to the landing location.
-       -To make it even clearer where it is allowed to place the piece, the non-reachable cells can
+       -The falling piece is changed to the piece type of the piece being dragged in and changed
+        back to the active piece type when the dragged piece is going back to the selectables.
+       -To make it clearer where it is allowed to place the piece, the non-reachable cells can
         have red stripes.
        -(Note A) Could even have a falling piece animation that stops at the closest legal move and then goes
         back to to top, if the user tries to drag in a piece to an illegal move.
-       -The falling piece is changed to the piece type of the piece being dragged in and changed
-        back to the active piece type when the dragged piece is going back to the selectables.
     -Create a DragInputHandler that handles drag input.
     -Create a DraggedPiece that has a state, scene position and field grid position.
      It should know where to quickly travel when touched in the hud so that the

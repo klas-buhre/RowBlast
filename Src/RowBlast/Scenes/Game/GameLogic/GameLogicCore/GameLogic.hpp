@@ -4,10 +4,12 @@
 // Game includes.
 #include "IGameLogic.hpp"
 #include "FallingPiece.hpp"
+#include "DraggedPiece.hpp"
 #include "NextPieceGenerator.hpp"
 #include "CollisionDetection.hpp"
 #include "Piece.hpp"
 #include "Field.hpp"
+#include "DragInputHandler.hpp"
 #include "GestureInputHandler.hpp"
 #include "ClickInputHandler.hpp"
 #include "FallingPieceAnimation.hpp"
@@ -73,7 +75,7 @@ namespace RowBlast {
         GameLogic(Pht::IEngine& engine,
                   Field& field,
                   ScrollController& scrollController,
-                  const GameScene& gameScene,
+                  GameScene& gameScene,
                   EffectManager& effectManger,
                   FlyingBlocksAnimation& flyingBlocksAnimation,
                   FlashingBlocksAnimation& flashingBlocksAnimation,
@@ -173,6 +175,7 @@ namespace RowBlast {
         void StartBlastRadiusAnimationAtGhostPiece();
         void SetBlastRadiusAnimationPositionAtGhostPiece();
         void RemoveFallingPiece();
+        void RemoveDraggedPiece();
         void NextMove();
         void UpdateLevelProgress();
         Pht::Vec2 CalculateFallingPieceSpawnPos(const Piece& pieceType,
@@ -257,8 +260,11 @@ namespace RowBlast {
         FallingPieceAnimation mFallingPieceAnimation;
         ComboDetector mComboDetector;
         FallingPiece mFallingPieceStorage;
+        DraggedPiece mDraggedPieceStorage;
+        DragInputHandler mDragInputHandler;
         GestureInputHandler mGestureInputHandler;
         ClickInputHandler mClickInputHandler;
+        DraggedPiece* mDraggedPiece {nullptr};
         FallingPiece* mFallingPiece {nullptr};
         FallingPieceSpawnReason mFallingPieceSpawnReason {FallingPieceSpawnReason::None};
         const Piece* mFallingPieceSpawnType {nullptr};

@@ -59,7 +59,7 @@ namespace {
 GameLogic::GameLogic(Pht::IEngine& engine,
                      Field& field,
                      ScrollController& scrollController,
-                     const GameScene& gameScene,
+                     GameScene& gameScene,
                      EffectManager& effectManager,
                      FlyingBlocksAnimation& flyingBlocksAnimation,
                      FlashingBlocksAnimation& flashingBlocksAnimation,
@@ -94,6 +94,7 @@ GameLogic::GameLogic(Pht::IEngine& engine,
     mFieldExplosionsStates {engine, field, mFieldGravity, effectManager, flyingBlocksAnimation},
     mFallingPieceAnimation {*this, mFallingPieceStorage},
     mComboDetector {engine, smallTextAnimation, effectManager},
+    mDragInputHandler {*this, gameScene, mDraggedPieceStorage},
     mGestureInputHandler {*this, mFallingPieceStorage},
     mClickInputHandler {engine, field, gameScene, *this, tutorial},
     mFallingPiece {&mFallingPieceStorage} {
@@ -107,6 +108,7 @@ void GameLogic::Init(const Level& level) {
 
     mFieldGravity.Init();
     mFieldExplosionsStates.Init();
+    mDragInputHandler.Init();
     mGestureInputHandler.Init(level);
     mClickInputHandler.Init(level);
     mComboDetector.Init();
@@ -122,6 +124,7 @@ void GameLogic::Init(const Level& level) {
     mState = State::LogicUpdate;
     mCascadeState = CascadeState::NotCascading;
 
+    RemoveDraggedPiece();
     RemoveFallingPiece();
     mFallingPieceSpawnReason = FallingPieceSpawnReason::NextMove;
     mFallingPieceSpawnType = nullptr;
@@ -288,6 +291,10 @@ void GameLogic::ManageMoveHistory(FallingPieceSpawnReason fallingPieceSpawnReaso
 
 void GameLogic::RemoveFallingPiece() {
     mFallingPiece = nullptr;
+}
+
+void GameLogic::RemoveDraggedPiece() {
+    mDraggedPiece = nullptr;
 }
 
 Pht::Vec2 GameLogic::CalculateFallingPieceSpawnPos(const Piece& pieceType,
@@ -1066,7 +1073,9 @@ void GameLogic::ForwardTouchToInputHandler(const Pht::TouchEvent& touchEvent) {
             mClickInputHandler.HandleTouch(touchEvent, GetMovesUsedIncludingCurrent());
             break;
         case ControlType::Gesture:
-            mGestureInputHandler.HandleTouch(touchEvent);
+            if (mDragInputHandler.HandleTouch(touchEvent) == DragInputHandler::State::Idle) {
+                mGestureInputHandler.HandleTouch(touchEvent);
+            }
             break;
     }
 }
