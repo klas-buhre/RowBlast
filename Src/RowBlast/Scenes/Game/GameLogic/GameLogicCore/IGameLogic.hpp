@@ -26,6 +26,7 @@ namespace RowBlast {
         virtual bool IsInFieldExplosionsState() const = 0;
         virtual void StartBlastRadiusAnimation(const Pht::IVec2& position) = 0;
         virtual void StopBlastRadiusAnimation() = 0;
+        virtual void ShowDraggedPiece() = 0;
     };
 }
 

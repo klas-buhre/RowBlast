@@ -94,7 +94,7 @@ GameLogic::GameLogic(Pht::IEngine& engine,
     mFieldExplosionsStates {engine, field, mFieldGravity, effectManager, flyingBlocksAnimation},
     mFallingPieceAnimation {*this, mFallingPieceStorage},
     mComboDetector {engine, smallTextAnimation, effectManager},
-    mDragInputHandler {*this, gameScene, mDraggedPieceStorage},
+    mDragInputHandler {engine, *this, gameScene, mDraggedPieceStorage},
     mGestureInputHandler {*this, mFallingPieceStorage},
     mClickInputHandler {engine, field, gameScene, *this, tutorial},
     mFallingPiece {&mFallingPieceStorage} {
@@ -295,6 +295,10 @@ void GameLogic::RemoveFallingPiece() {
 
 void GameLogic::RemoveDraggedPiece() {
     mDraggedPiece = nullptr;
+}
+
+void GameLogic::ShowDraggedPiece() {
+    mDraggedPiece = &mDraggedPieceStorage;
 }
 
 Pht::Vec2 GameLogic::CalculateFallingPieceSpawnPos(const Piece& pieceType,

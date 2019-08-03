@@ -101,6 +101,7 @@ namespace RowBlast {
         bool IsInFieldExplosionsState() const override;
         void StartBlastRadiusAnimation(const Pht::IVec2& position) override;
         void StopBlastRadiusAnimation() override;
+        void ShowDraggedPiece() override;
         
         void Init(const Level& level);
         Result Update(bool shouldUpdateLogic, bool shouldUndoMove);
