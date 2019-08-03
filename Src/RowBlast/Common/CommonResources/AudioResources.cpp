@@ -141,7 +141,6 @@ void RowBlast::LoadAndPlayGameMusicTrack1(Pht::IEngine& engine) {
     audio.SetMusicVolume(gameMusicVolume);
     
     auto track1AudioResourceId = static_cast<Pht::AudioResourceId>(MusicTrackId::Game1);
-    
     if (audio.GetMusicTrack(track1AudioResourceId) == nullptr) {
         audio.FreeMusicTrack(static_cast<Pht::AudioResourceId>(MusicTrackId::Game2));
         audio.LoadMusicTrack("game_track1.mp4", track1AudioResourceId);
@@ -155,7 +154,6 @@ void RowBlast::LoadAndPlayGameMusicTrack2(Pht::IEngine& engine) {
     audio.SetMusicVolume(gameMusicVolume);
 
     auto track2AudioResourceId = static_cast<Pht::AudioResourceId>(MusicTrackId::Game2);
-    
     if (audio.GetMusicTrack(track2AudioResourceId) == nullptr) {
         audio.FreeMusicTrack(static_cast<Pht::AudioResourceId>(MusicTrackId::Game1));
         audio.LoadMusicTrack("game_track2.mp4", track2AudioResourceId);

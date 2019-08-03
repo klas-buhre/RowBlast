@@ -11,6 +11,7 @@
 		1711873122EB9EC9009CC07F /* TutorialWindowController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1711872F22EB9EC9009CC07F /* TutorialWindowController.cpp */; };
 		1730C96F22EA2AFD003BD981 /* PlayOnYourOwnWindowView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1730C96D22EA2AFD003BD981 /* PlayOnYourOwnWindowView.cpp */; };
 		1730C97222EA2B1E003BD981 /* PlayOnYourOwnWindowController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1730C97022EA2B1E003BD981 /* PlayOnYourOwnWindowController.cpp */; };
+		1730D47B22F5B92E0092D92B /* DragInputHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1730D47922F5B92E0092D92B /* DragInputHandler.cpp */; };
 		1736707422DF67D600D8A28C /* SwipeControlsHintDialogView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1736707222DF67D600D8A28C /* SwipeControlsHintDialogView.cpp */; };
 		1736707722DF67F600D8A28C /* SwipeControlsHintDialogController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1736707522DF67F600D8A28C /* SwipeControlsHintDialogController.cpp */; };
 		174F9EA522DBCA3D0057BA7C /* ActivePreviewPieceAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 174F9EA322DBCA3D0057BA7C /* ActivePreviewPieceAnimation.cpp */; };
@@ -552,6 +553,8 @@
 		1730C96E22EA2AFD003BD981 /* PlayOnYourOwnWindowView.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PlayOnYourOwnWindowView.hpp; sourceTree = "<group>"; };
 		1730C97022EA2B1E003BD981 /* PlayOnYourOwnWindowController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PlayOnYourOwnWindowController.cpp; sourceTree = "<group>"; };
 		1730C97122EA2B1E003BD981 /* PlayOnYourOwnWindowController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PlayOnYourOwnWindowController.hpp; sourceTree = "<group>"; };
+		1730D47922F5B92E0092D92B /* DragInputHandler.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DragInputHandler.cpp; sourceTree = "<group>"; };
+		1730D47A22F5B92E0092D92B /* DragInputHandler.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = DragInputHandler.hpp; sourceTree = "<group>"; };
 		1736707222DF67D600D8A28C /* SwipeControlsHintDialogView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SwipeControlsHintDialogView.cpp; sourceTree = "<group>"; };
 		1736707322DF67D600D8A28C /* SwipeControlsHintDialogView.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SwipeControlsHintDialogView.hpp; sourceTree = "<group>"; };
 		1736707522DF67F600D8A28C /* SwipeControlsHintDialogController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SwipeControlsHintDialogController.cpp; sourceTree = "<group>"; };
@@ -1941,6 +1944,8 @@
 				62216B1321EB377E001CB9A1 /* ComboDetector.hpp */,
 				6255827222CE5B6A0060C383 /* DraggedPiece.cpp */,
 				6255827322CE5B6A0060C383 /* DraggedPiece.hpp */,
+				1730D47922F5B92E0092D92B /* DragInputHandler.cpp */,
+				1730D47A22F5B92E0092D92B /* DragInputHandler.hpp */,
 				62216B1F21EB377E001CB9A1 /* FallingPiece.cpp */,
 				62216B1621EB377E001CB9A1 /* FallingPiece.hpp */,
 				62216B2621EB377E001CB9A1 /* Field.cpp */,
@@ -3738,6 +3743,7 @@
 				6256984E2182392C003A3A9D /* SceneManager.cpp in Sources */,
 				623F5E6422B563A900242C10 /* SoftwareRasterizer.cpp in Sources */,
 				623F5E6222B563A900242C10 /* RenderPass.cpp in Sources */,
+				1730D47B22F5B92E0092D92B /* DragInputHandler.cpp in Sources */,
 				62216C2721EB377F001CB9A1 /* CollapsingFieldAnimation.cpp in Sources */,
 				62216C3B21EB377F001CB9A1 /* SunParticleEffect.cpp in Sources */,
 				623768EC226A1117007FD5EC /* TutorialExplosionParticleEffect.cpp in Sources */,

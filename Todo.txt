@@ -55,27 +55,37 @@ Ongoing tasks:
 
 
     -Maybe a transparant real piece should be dragged in with a ghost piece under it.
+     Or it has to be a real piece since a transparant piece might not be clear enough in daylight
+     conditions. Or could be a move image (more bright).
        -The dragged piece could simply disappear from its place in the hud in one frame since the
-        finger will cover it anyway. But the dragged piece in the FieldBlocksAndFallingPiece pass could
+        finger will cover it anyway. But the dragged piece in the DraggedPiece pass could
         scale in and move up during a couple of frames. Then there is no transition/handover between
-        the hud pass and the FieldBlocksAndFallingPiece pass. When the dragged piece goes back to the
-        selectables in the hud then the piece could travel really quickly in the FieldBlocksAndFallingPiece
+        the hud pass and the DraggedPiece pass. When the dragged piece goes back to the
+        selectables in the hud then the piece could travel really quickly in the DraggedPiece
         render pass and the the piece could simply appear in one frame in the selectables.
        -The transparant pieces does not need welds.
-       -When the piece is released, there will be a falling piece animation going from the real
-        piece at the top down to the placed transparant piece. Then it will be clearer that pieces
-        can only be placed at locations that are reachable from the real piece at the top.
-       -The ghost piece should not be visible if the dragged piece is over an illegal move.
+       -The ghost piece could be at the place where the piece would land if released, not the actual
+        location it is currently dragged to. So if the piece is being dragged to an area several
+        rows above a couple of blocks the the ghost piece would be several rows below by those
+        blocks, exactly like in swipe controls.
+       -The ghost piece should not be visible if the dragged piece is over an illegal area.
+       -When the piece is released, there could be a falling piece animation going from the real
+        piece at the top down to the landing location, which may be below the release location.
+        Then it will be clearer that pieces can only be placed at locations that are reachable from
+        the active piece at the top.
+          -Or, the dragged piece is the real solid piece and the active piece at the top is
+           transparent during dragging and there is no falling piece animation going to the real
+           piece once released. There might be the Note A falling piece animation though. However,
+           from an implementation perspective there could be a falling a falling piece animation
+           going from the release location (which in effect places the falling piece at that spot)
+           to the landing location (possibly a bit down). Then we get the block trails for free when
+           they should appear and the piece gets an animated movement to the landing location.
        -To make it even clearer where it is allowed to place the piece, the non-reachable cells can
         have red stripes.
-       -Could even have a falling piece animation that stops at the closest legal move and then goes
+       -(Note A) Could even have a falling piece animation that stops at the closest legal move and then goes
         back to to top, if the user tries to drag in a piece to an illegal move.
        -The falling piece is changed to the piece type of the piece being dragged in and changed
         back to the active piece type when the dragged piece is going back to the selectables.
-       -If a piece is dragged and released in mid-air then the falling piece will go to that
-        location using the normal fast falling piece animation and when the falling piece has
-        arrived then the piece will fall using gravity (same way and speed as pull down loose
-        pieces) until it hits anything.
     -Create a DragInputHandler that handles drag input.
     -Create a DraggedPiece that has a state, scene position and field grid position.
      It should know where to quickly travel when touched in the hud so that the
@@ -248,10 +258,14 @@ Ordered Backlog:
     -Revise some of the levels.
         Cost: 5
         Done
-    -Purchasing.
-        Cost: 10
-    -Release-related tasks.
+    -Drag controls.
         Cost: 7
+    -Drag controls in tutorial and how to play dialog.
+        Cost: 5
+    -Purchasing.
+        Cost: 5
+    -Remove moves from world 1 to 3.
+        Cost: 1
     -Levels for the 4th world.
         Cost: 7
     -Metal.
@@ -267,9 +281,6 @@ Ordered Backlog:
 
 
 Levels:
-    -Levels moved to world 3:
-      -Level 48.
-      -Level 49.
     -Levels moved to world 4:
       -Level 65.
       -Level 66.
