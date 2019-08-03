@@ -70,6 +70,9 @@ bool DragInputHandler::TryBeginDrag(DraggedPieceIndex draggedPieceIndex,
             previewPieceSceneObject->SetIsVisible(false);
         }
         
+        auto* pieceType = GetPieceType(draggedPieceIndex);
+        auto rotation = GetPieceRotation(draggedPieceIndex);
+        mDraggedPiece.BeginDrag(*pieceType, rotation);
         mGameLogic.ShowDraggedPiece();
         return true;
     }
@@ -97,6 +100,36 @@ void DragInputHandler::HandleTouchEnd(const Pht::TouchEvent& touchEvent) {
     
     mDraggedPieceIndex = DraggedPieceIndex::None;
     mState = State::DragEnd;
+}
+
+const Piece* DragInputHandler::GetPieceType(DraggedPieceIndex draggedPieceIndex) const {
+    switch (draggedPieceIndex) {
+        case DraggedPieceIndex::Active:
+            return mGameLogic.GetPieceType();
+        case DraggedPieceIndex::Selectable0:
+            return mGameLogic.GetSelectablePieces()[0];
+        case DraggedPieceIndex::Selectable1:
+            return mGameLogic.GetSelectablePieces()[1];
+        case DraggedPieceIndex::None:
+            assert(false);
+            break;
+    }
+}
+
+Rotation DragInputHandler::GetPieceRotation(DraggedPieceIndex draggedPieceIndex) const {
+    auto& previewPieceHudRotations = mGameLogic.GetPreviewPieceHudRotations();
+    
+    switch (draggedPieceIndex) {
+        case DraggedPieceIndex::Active:
+            return previewPieceHudRotations.mActive;
+        case DraggedPieceIndex::Selectable0:
+            return previewPieceHudRotations.mSelectable0;
+        case DraggedPieceIndex::Selectable1:
+            return previewPieceHudRotations.mSelectable1;
+        case DraggedPieceIndex::None:
+            assert(false);
+            break;
+    }
 }
 
 Pht::Button& DragInputHandler::GetPreviewPieceButton(DraggedPieceIndex draggedPieceIndex) const {

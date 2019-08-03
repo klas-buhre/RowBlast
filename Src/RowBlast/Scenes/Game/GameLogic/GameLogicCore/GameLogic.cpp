@@ -260,6 +260,14 @@ const Piece* GameLogic::GetPieceType() const {
     return nullptr;
 }
 
+const TwoPieces& GameLogic::GetSelectablePieces() const {
+    return mCurrentMove.mSelectablePieces;
+}
+
+const PreviewPieceRotations& GameLogic::GetPreviewPieceHudRotations() const {
+    return mCurrentMove.mPreviewPieceRotations.mHudRotations;
+}
+
 void GameLogic::ManageMoveHistory(FallingPieceSpawnReason fallingPieceSpawnReason) {
     mCurrentMove.mId = mFallingPiece->GetId();
     

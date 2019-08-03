@@ -25,6 +25,7 @@ namespace RowBlast {
     class BombsAnimation;
     class AsteroidAnimation;
     class SceneObjectPool;
+    class Piece;
 
     class ScenePlayingField {
     public:
@@ -58,7 +59,9 @@ namespace RowBlast {
                                                  const SubCell& subCell,
                                                  const WeldAnimation& weldAnimation);
         void UpdateFallingPiece();
-        void UpdatePieceBlocks(const CellGrid& pieceBlocks,
+        void UpdateDraggedPiece();
+        void UpdatePieceBlocks(const Piece& pieceType,
+                               Rotation rotation,
                                const Pht::Vec3& pieceFieldPos,
                                bool isTransparent,
                                bool isGhostPiece,

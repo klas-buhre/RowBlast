@@ -65,6 +65,7 @@ void ScenePlayingField::Update() {
     UpdateBlueprintSlots();
     UpdateFieldBlocks();
     UpdateFallingPiece();
+    UpdateDraggedPiece();
     UpdateGhostPieces();
 }
 
@@ -330,26 +331,45 @@ void ScenePlayingField::UpdateFallingPiece() {
     
     const auto cellSize = mScene.GetCellSize();
     Pht::Vec3 pieceFieldPos {pieceGridPos.x * cellSize, pieceGridPos.y * cellSize, 0.0f};
-    auto& pieceGrid = fallingPiece->GetPieceType().GetGrid(fallingPiece->GetRotation());
-    
     auto isTransparent = false;
     auto isGhostPiece = false;
-    UpdatePieceBlocks(pieceGrid,
+    UpdatePieceBlocks(fallingPiece->GetPieceType(),
+                      fallingPiece->GetRotation(),
                       pieceFieldPos,
                       isTransparent,
                       isGhostPiece,
                       mScene.GetPieceBlocks());
 }
 
-void ScenePlayingField::UpdatePieceBlocks(const CellGrid& pieceBlocks,
+void ScenePlayingField::UpdateDraggedPiece() {
+    mScene.GetDraggedPieceBlocks().ReclaimAll();
+    
+    auto* draggedPiece = mGameLogic.GetDraggedPiece();
+    if (draggedPiece == nullptr) {
+        return;
+    }
+    
+    auto& piecePosition = draggedPiece->GetRenderablePosition();
+    const auto cellSize = mScene.GetCellSize();
+    Pht::Vec3 pieceFieldPos {piecePosition.x * cellSize, piecePosition.y * cellSize, 0.0f};
+
+    auto isTransparent = false;
+    auto isGhostPiece = false;
+    UpdatePieceBlocks(draggedPiece->GetPieceType(),
+                      draggedPiece->GetRotation(),
+                      pieceFieldPos,
+                      isTransparent,
+                      isGhostPiece,
+                      mScene.GetDraggedPieceBlocks());
+}
+
+void ScenePlayingField::UpdatePieceBlocks(const Piece& pieceType,
+                                          Rotation rotation,
                                           const Pht::Vec3& pieceFieldPos,
                                           bool isTransparent,
                                           bool isGhostPiece,
                                           SceneObjectPool& pool) {
-    auto* fallingPiece = mGameLogic.GetFallingPiece();
-    assert(fallingPiece);
-    
-    auto& pieceType = fallingPiece->GetPieceType();
+    auto& pieceBlocks = pieceType.GetGrid(rotation);
     auto pieceNumRows = pieceType.GetGridNumRows();
     auto pieceNumColumns = pieceType.GetGridNumColumns();
     const auto cellSize = mScene.GetCellSize();
@@ -449,16 +469,16 @@ void ScenePlayingField::UpdateGhostPieceForGestureControls(const FallingPiece& f
         mScene.GetGhostPieceZ()
     };
     
-    auto& pieceGrid = pieceType.GetGrid(fallingPiece.GetRotation());
-    
     if (pieceType.GetGhostPieceRenderable()) {
+        auto& pieceGrid = pieceType.GetGrid(fallingPiece.GetRotation());
         UpdateGhostPieceBlocks(pieceGrid, ghostPieceFieldPos);
     } else {
         Pht::Vec3 position {ghostPieceFieldPos};
         position.z = mScene.GetPressedGhostPieceZ();
         auto isTransparent = true;
         auto isGhostPiece = true;
-        UpdatePieceBlocks(pieceGrid,
+        UpdatePieceBlocks(pieceType,
+                          fallingPiece.GetRotation(),
                           position,
                           isTransparent,
                           isGhostPiece,
@@ -529,7 +549,6 @@ void ScenePlayingField::UpdateClickableGhostPieces(const FallingPiece& fallingPi
                 // UpdateGhostPiece(*ghostPieceShadowRenderable, position, rotation);
             }
         } else {
-            auto& pieceGrid = pieceType.GetGrid(move.mRotation);
             auto& pool = mScene.GetGhostPieces();
             auto isGhostPiece = true;
             
@@ -537,10 +556,20 @@ void ScenePlayingField::UpdateClickableGhostPieces(const FallingPiece& fallingPi
                 Pht::Vec3 position {ghostPieceFieldPos};
                 position.z = mScene.GetPressedGhostPieceZ();
                 auto isTransparent = false;
-                UpdatePieceBlocks(pieceGrid, position, isTransparent, isGhostPiece, pool);
+                UpdatePieceBlocks(pieceType,
+                                  move.mRotation,
+                                  position,
+                                  isTransparent,
+                                  isGhostPiece,
+                                  pool);
             } else {
                 auto isTransparent = true;
-                UpdatePieceBlocks(pieceGrid, ghostPieceFieldPos, isTransparent, isGhostPiece, pool);
+                UpdatePieceBlocks(pieceType,
+                                  move.mRotation,
+                                  ghostPieceFieldPos,
+                                  isTransparent,
+                                  isGhostPiece,
+                                  pool);
             }
         }
     }

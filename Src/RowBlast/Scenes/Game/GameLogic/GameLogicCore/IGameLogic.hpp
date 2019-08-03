@@ -4,12 +4,17 @@
 // Engine includes.
 #include "Vector.hpp"
 
+// Game includes.
+#include "NextPieceGenerator.hpp"
+
 namespace Pht {
     class TouchEvent;
 }
 
 namespace RowBlast {
     class Move;
+    class Piece;
+    class PreviewPieceRotations;
     
     class IGameLogic {
     public:
@@ -27,6 +32,9 @@ namespace RowBlast {
         virtual void StartBlastRadiusAnimation(const Pht::IVec2& position) = 0;
         virtual void StopBlastRadiusAnimation() = 0;
         virtual void ShowDraggedPiece() = 0;
+        virtual const Piece* GetPieceType() const = 0;
+        virtual const TwoPieces& GetSelectablePieces() const = 0;
+        virtual const PreviewPieceRotations& GetPreviewPieceHudRotations() const = 0;
     };
 }
 

@@ -196,6 +196,10 @@ void GameScene::CreateRenderPasses() {
     fieldBlocksRenderPass.SetProjectionMode(Pht::ProjectionMode::Orthographic);
     mScene->AddRenderPass(fieldBlocksRenderPass);
 
+    Pht::RenderPass draggedPieceBlocksRenderPass {static_cast<int>(Layer::DraggedPieceBlocks)};
+    draggedPieceBlocksRenderPass.SetProjectionMode(Pht::ProjectionMode::Orthographic);
+    mScene->AddRenderPass(draggedPieceBlocksRenderPass);
+
     Pht::RenderPass effectsRenderPass {static_cast<int>(Layer::Effects)};
     effectsRenderPass.SetProjectionMode(Pht::ProjectionMode::Orthographic);
     mScene->AddRenderPass(effectsRenderPass);
@@ -390,6 +394,11 @@ void GameScene::CreateSceneObjectPools(const Level& level) {
                                                      *mFieldBlocksContainer);
     mGhostPieceBlocks = std::make_unique<SceneObjectPool>(SceneObjectPoolKind::GhostPieceBlocks,
                                                           *mFieldBlocksContainer);
+
+    auto& draggedPieceBlocksContainer = mScene->CreateSceneObject(*mFieldContainer);
+    draggedPieceBlocksContainer.SetLayer(static_cast<int>(Layer::DraggedPieceBlocks));
+    mDraggedPieceBlocks = std::make_unique<SceneObjectPool>(SceneObjectPoolKind::PieceBlocks,
+                                                            draggedPieceBlocksContainer);
 }
 
 void GameScene::CreateEffectsContainer() {

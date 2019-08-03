@@ -1,6 +1,9 @@
 #ifndef DragInputHandler_hpp
 #define DragInputHandler_hpp
 
+// Game includes.
+#include "Cell.hpp"
+
 namespace Pht {
     class TouchEvent;
     class IEngine;
@@ -12,6 +15,7 @@ namespace RowBlast {
     class IGameLogic;
     class GameScene;
     class DraggedPiece;
+    class Piece;
     
     class DragInputHandler {
     public:
@@ -41,6 +45,8 @@ namespace RowBlast {
         void HandleOngoingTouch(const Pht::TouchEvent& touchEvent);
         void HandleTouchEnd(const Pht::TouchEvent& touchEvent);
         bool TryBeginDrag(DraggedPieceIndex draggedPieceIndex, const Pht::TouchEvent& touchEvent);
+        const Piece* GetPieceType(DraggedPieceIndex draggedPieceIndex) const;
+        Rotation GetPieceRotation(DraggedPieceIndex draggedPieceIndex) const;
         Pht::Button& GetPreviewPieceButton(DraggedPieceIndex draggedPieceIndex) const;
         Pht::SceneObject* GetPreviewPieceSceneObject(DraggedPieceIndex draggedPieceIndex) const;
         

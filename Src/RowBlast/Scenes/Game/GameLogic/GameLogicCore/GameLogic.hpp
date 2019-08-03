@@ -102,13 +102,15 @@ namespace RowBlast {
         void StartBlastRadiusAnimation(const Pht::IVec2& position) override;
         void StopBlastRadiusAnimation() override;
         void ShowDraggedPiece() override;
+        const Piece* GetPieceType() const override;
+        const TwoPieces& GetSelectablePieces() const override;
+        const PreviewPieceRotations& GetPreviewPieceHudRotations() const override;
         
         void Init(const Level& level);
         Result Update(bool shouldUpdateLogic, bool shouldUndoMove);
         bool IsUndoMovePossible() const;
         void UndoMove();
         int GetMovesUsedIncludingCurrent() const;
-        const Piece* GetPieceType() const;
         
         void SetMovesLeft(int movesLeft) {
             mMovesLeft = movesLeft;
@@ -121,13 +123,13 @@ namespace RowBlast {
         const FallingPiece* GetFallingPiece() const {
             return mFallingPiece;
         }
-        
+
+        const DraggedPiece* GetDraggedPiece() const {
+            return mDraggedPiece;
+        }
+
         const NextPieceGenerator& GetNextPieceGenerator() const {
             return mCurrentMove.mNextPieceGenerator;
-        }
-        
-        const TwoPieces& GetSelectablePieces() const {
-            return mCurrentMove.mSelectablePieces;
         }
         
         PreviewPieceAnimationToStart GetPreviewPieceAnimationToStart() const {
@@ -136,10 +138,6 @@ namespace RowBlast {
 
         void ResetPreviewPieceAnimationToStart() {
             mPreviewPieceAnimationToStart = PreviewPieceAnimationToStart::None;
-        }
-
-        const PreviewPieceRotations& GetPreviewPieceHudRotations() const {
-            return mCurrentMove.mPreviewPieceRotations.mHudRotations;
         }
 
         int GetMovesLeft() const {

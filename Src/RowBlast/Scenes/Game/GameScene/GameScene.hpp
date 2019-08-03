@@ -44,6 +44,7 @@ namespace RowBlast {
             FieldBlueprintSlots,
             FieldPieceDropEffects,
             FieldBlocksAndFallingPiece,
+            DraggedPieceBlocks,
             Effects,
             FlyingBlocks,
             LevelCompletedFadeEffect,
@@ -142,6 +143,11 @@ namespace RowBlast {
         SceneObjectPool& GetPieceBlocks() {
             assert(mPieceBlocks);
             return *mPieceBlocks;
+        }
+        
+        SceneObjectPool& GetDraggedPieceBlocks() {
+            assert(mDraggedPieceBlocks);
+            return *mDraggedPieceBlocks;
         }
 
         SceneObjectPool& GetGhostPieces() {
@@ -277,6 +283,7 @@ namespace RowBlast {
         std::unique_ptr<FloatingBlocks> mFloatingBlocks;
         std::unique_ptr<SceneObjectPool> mFieldBlocks;
         std::unique_ptr<SceneObjectPool> mPieceBlocks;
+        std::unique_ptr<SceneObjectPool> mDraggedPieceBlocks;
         std::unique_ptr<SceneObjectPool> mGhostPieces;
         std::unique_ptr<SceneObjectPool> mGhostPieceBlocks;
         Pht::SceneObject* mFieldQuadContainer {nullptr};
