@@ -68,7 +68,7 @@ Ongoing tasks:
        -Maybe no welds in the dragged piece? because then the blacks can scle down slightly and
         separate a bit which feels nice. The weld can appear with the weld animation when the piece
         is placed.
-       -Maybe the dragged piece blocks should cast a shadow?
+       -Maybe the dragged piece blocks should cast a shadow? The shadow could be in the scissor box.
        -The dragged piece could simply disappear from its place in the hud in one frame since the
         finger will cover it anyway. But the dragged piece in the DraggedPiece pass could
         scale in and move up during a couple of frames. Then there is no transition/handover between

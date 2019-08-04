@@ -118,7 +118,6 @@ void EffectManager::Update(float dt) {
 
     for (auto& laser: mLaserEffects) {
         laser->Update(dt);
-    
         switch (laser->GetState()) {
             case LaserParticleEffect::State::Ongoing:
                 anyActiveEffects = true;
@@ -133,7 +132,6 @@ void EffectManager::Update(float dt) {
 
     for (auto& levelBombExplosion: mLevelBombExplosionEffects) {
         levelBombExplosion->Update(dt);
-    
         if (levelBombExplosion->GetState() == ExplosionParticleEffect::State::Ongoing) {
             anyActiveEffects = true;
         }

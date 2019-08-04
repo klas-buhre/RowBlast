@@ -350,12 +350,7 @@ void ScenePlayingField::UpdateDraggedPiece() {
     }
     
     auto& piecePosition = draggedPiece->GetRenderablePosition();
-    const auto cellSize = mScene.GetCellSize();
-    Pht::Vec3 pieceFieldPos {
-        piecePosition.x * cellSize,
-        piecePosition.y * cellSize,
-        mScene.GetDraggedPieceZ()
-    };
+    Pht::Vec3 pieceFieldPos {piecePosition.x, piecePosition.y, mScene.GetDraggedPieceZ()};
 
     auto isTransparent = false;
     auto isGhostPiece = false;

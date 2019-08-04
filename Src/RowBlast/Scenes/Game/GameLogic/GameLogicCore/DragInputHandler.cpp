@@ -4,12 +4,18 @@
 #include "IEngine.hpp"
 #include "IRenderer.hpp"
 #include "InputEvent.hpp"
+#include "IInput.hpp"
+#include "CameraComponent.hpp"
 
 // Game includes.
 #include "DraggedPiece.hpp"
 #include "GameScene.hpp"
 
 using namespace RowBlast;
+
+namespace {
+    constexpr auto offsetYInCells = 1.5f;
+}
 
 DragInputHandler::DragInputHandler(Pht::IEngine& engine,
                                    IGameLogic& gameLogic,
@@ -73,6 +79,7 @@ bool DragInputHandler::TryBeginDrag(DraggedPieceIndex draggedPieceIndex,
         auto* pieceType = GetPieceType(draggedPieceIndex);
         auto rotation = GetPieceRotation(draggedPieceIndex);
         mDraggedPiece.BeginDrag(*pieceType, rotation);
+        mDraggedPiece.SetPosition(CalculatePiecePosition(touchEvent));
         mGameLogic.ShowDraggedPiece();
         return true;
     }
@@ -84,12 +91,16 @@ void DragInputHandler::HandleOngoingTouch(const Pht::TouchEvent& touchEvent) {
     if (mState == State::Idle) {
         return;
     }
+    
+    mDraggedPiece.SetPosition(CalculatePiecePosition(touchEvent));
 }
 
 void DragInputHandler::HandleTouchEnd(const Pht::TouchEvent& touchEvent) {
     if (mState == State::Idle) {
         return;
     }
+    
+    mDraggedPiece.SetPosition(CalculatePiecePosition(touchEvent));
     
     // Reset the button state.
     GetPreviewPieceButton(mDraggedPieceIndex).OnTouch(touchEvent);
@@ -101,6 +112,30 @@ void DragInputHandler::HandleTouchEnd(const Pht::TouchEvent& touchEvent) {
     mGameLogic.RemoveDraggedPiece();
     mDraggedPieceIndex = DraggedPieceIndex::None;
     mState = State::DragEnd;
+}
+
+Pht::Vec2 DragInputHandler::CalculatePiecePosition(const Pht::TouchEvent& touchEvent) const {
+    auto& cameraPosition = mScene.GetCamera().GetSceneObject().GetTransform().GetPosition();
+    auto& renderer = mEngine.GetRenderer();
+    auto& frustumSize = renderer.GetOrthographicFrustumSize();
+    
+    Pht::Vec2 screenLowerLeftWorldSpace {
+        cameraPosition.x - frustumSize.x / 2.0f,
+        cameraPosition.y - frustumSize.y / 2.0f
+    };
+    
+    auto& screenInputSize = mEngine.GetInput().GetScreenInputSize();
+    auto scaleFactor = frustumSize.y / screenInputSize.y;
+    Pht::Vec2 touchLocation {touchEvent.mLocation.x, screenInputSize.y - touchEvent.mLocation.y};
+    
+    auto& pieceDimensions = mDraggedPiece.GetPieceType().GetDimensions(mDraggedPiece.GetRotation());
+    auto pieceNumEmptyBottompRows = pieceDimensions.mYmin;
+    auto offsetX = -static_cast<float>(pieceDimensions.mXmin + pieceDimensions.mXmax + 1) / 2.0f;
+    auto offsetY = offsetYInCells - static_cast<float>(pieceNumEmptyBottompRows);
+    auto cellSize = mScene.GetCellSize();
+    
+    Pht::Vec2 offset {offsetX * cellSize, offsetY * cellSize};
+    return screenLowerLeftWorldSpace + touchLocation * scaleFactor + offset;
 }
 
 const Piece* DragInputHandler::GetPieceType(DraggedPieceIndex draggedPieceIndex) const {

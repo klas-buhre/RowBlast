@@ -45,6 +45,7 @@ namespace RowBlast {
         void HandleOngoingTouch(const Pht::TouchEvent& touchEvent);
         void HandleTouchEnd(const Pht::TouchEvent& touchEvent);
         bool TryBeginDrag(DraggedPieceIndex draggedPieceIndex, const Pht::TouchEvent& touchEvent);
+        Pht::Vec2 CalculatePiecePosition(const Pht::TouchEvent& touchEvent) const;
         const Piece* GetPieceType(DraggedPieceIndex draggedPieceIndex) const;
         Rotation GetPieceRotation(DraggedPieceIndex draggedPieceIndex) const;
         Pht::Button& GetPreviewPieceButton(DraggedPieceIndex draggedPieceIndex) const;

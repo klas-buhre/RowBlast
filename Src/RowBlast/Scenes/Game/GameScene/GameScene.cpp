@@ -395,7 +395,7 @@ void GameScene::CreateSceneObjectPools(const Level& level) {
     mGhostPieceBlocks = std::make_unique<SceneObjectPool>(SceneObjectPoolKind::GhostPieceBlocks,
                                                           *mFieldBlocksContainer);
 
-    auto& draggedPieceBlocksContainer = mScene->CreateSceneObject(*mFieldContainer);
+    auto& draggedPieceBlocksContainer = mScene->CreateSceneObject(mScene->GetRoot());
     draggedPieceBlocksContainer.SetLayer(static_cast<int>(Layer::DraggedPieceBlocks));
     mDraggedPieceBlocks = std::make_unique<SceneObjectPool>(SceneObjectPoolKind::PieceBlocks,
                                                             draggedPieceBlocksContainer);
