@@ -26,6 +26,7 @@ namespace Pht {
 
         bool IsClicked(const TouchEvent& event);
         Result OnTouch(const TouchEvent& event);
+        void Reset();
         bool StateIsDownOrMovedOutside() const;
         bool IsDown() const;
         

@@ -18,7 +18,10 @@ namespace RowBlast {
             Landing
         };
         
-        void Spawn(const Piece& pieceType, const Pht::Vec2& position, float speed);
+        void Spawn(const Piece& pieceType,
+                   const Pht::Vec2& position,
+                   Rotation rotation,
+                   float speed);
         void ResetBetweenGames();
         void SetX(float x);
         void SetY(float y);

@@ -207,14 +207,13 @@ GameLogic::Result GameLogic::SpawnFallingPiece(FallingPieceSpawnReason fallingPi
         return Result::LevelCompleted;
     }
     
-    mFallingPiece = &mFallingPieceStorage;
-    SetPieceType();
-    auto spawnPosition =
-        CalculateFallingPieceSpawnPos(*mCurrentMove.mPieceType, fallingPieceSpawnReason);
-    mFallingPiece->Spawn(*mCurrentMove.mPieceType, spawnPosition, mLevel->GetSpeed());
+    ShowFallingPiece();
+    auto& pieceType = CalculatePieceType(fallingPieceSpawnReason);
+    auto spawnPosition = CalculateFallingPieceSpawnPos(pieceType, fallingPieceSpawnReason);
+    auto rotation = CalculateFallingPieceRotation(fallingPieceSpawnReason);
+    mFallingPiece->Spawn(pieceType, spawnPosition, rotation, mLevel->GetSpeed());
     
     ManageMoveHistory(fallingPieceSpawnReason);
-    
     mGhostPieceRow = mField.DetectCollisionDown(CreatePieceBlocks(*mFallingPiece),
                                                 mFallingPiece->GetIntPosition());
     if (mGhostPieceRow > mFallingPiece->GetPosition().y) {
@@ -222,7 +221,9 @@ GameLogic::Result GameLogic::SpawnFallingPiece(FallingPieceSpawnReason fallingPi
         return Result::GameOver;
     }
     
-    if (mCurrentMove.mPieceType->IsBomb() && mControlType == ControlType::Gesture) {
+    if (mCurrentMove.mPieceType->IsBomb() && mControlType == ControlType::Gesture &&
+        fallingPieceSpawnReason != FallingPieceSpawnReason::BeginDraggingPiece) {
+
         StartBlastRadiusAnimationAtGhostPiece();
     }
     
@@ -240,8 +241,14 @@ GameLogic::Result GameLogic::SpawnFallingPiece(FallingPieceSpawnReason fallingPi
     return Result::None;
 }
 
-void GameLogic::SetPieceType() {
+const Piece& GameLogic::CalculatePieceType(FallingPieceSpawnReason fallingPieceSpawnReason) {
     if (mFallingPieceSpawnType) {
+        if (fallingPieceSpawnReason == FallingPieceSpawnReason::BeginDraggingPiece) {
+            auto* tmp = mFallingPieceSpawnType;
+            mFallingPieceSpawnType = nullptr;
+            return *tmp;
+        }
+        
         mCurrentMove.mPieceType = mFallingPieceSpawnType;
         mFallingPieceSpawnType = nullptr;
     } else {
@@ -251,6 +258,8 @@ void GameLogic::SetPieceType() {
         mPreviewPieceAnimationToStart = PreviewPieceAnimationToStart::NextPieceAndSwitch;
         mCurrentMove.mPreviewPieceRotations = PieceRotations {};
     }
+    
+    return *mCurrentMove.mPieceType;
 }
 
 const Piece* GameLogic::GetPieceType() const {
@@ -293,6 +302,8 @@ void GameLogic::ManageMoveHistory(FallingPieceSpawnReason fallingPieceSpawnReaso
         case FallingPieceSpawnReason::Switch:
             mTutorial.OnSwitchPiece(GetMovesUsedIncludingCurrent(), mFallingPiece->GetPieceType());
             break;
+        case FallingPieceSpawnReason::BeginDraggingPiece:
+        case FallingPieceSpawnReason::RespawnActiveAfterStopDraggingPiece:
         case FallingPieceSpawnReason::None:
             break;
     }
@@ -300,6 +311,10 @@ void GameLogic::ManageMoveHistory(FallingPieceSpawnReason fallingPieceSpawnReaso
 
 void GameLogic::RemoveFallingPiece() {
     mFallingPiece = nullptr;
+}
+
+void GameLogic::ShowFallingPiece() {
+    mFallingPiece = &mFallingPieceStorage;
 }
 
 void GameLogic::RemoveDraggedPiece() {
@@ -314,7 +329,11 @@ Pht::Vec2 GameLogic::CalculateFallingPieceSpawnPos(const Piece& pieceType,
                                                    FallingPieceSpawnReason fallingPieceSpawnReason) {
     auto startXPos = mField.GetNumColumns() / 2 - pieceType.GetGridNumColumns() / 2;
     
-    if (fallingPieceSpawnReason == FallingPieceSpawnReason::Switch && mLevel->GetSpeed() > 0.0f) {
+    if ((fallingPieceSpawnReason == FallingPieceSpawnReason::Switch ||
+         fallingPieceSpawnReason == FallingPieceSpawnReason::BeginDraggingPiece ||
+         fallingPieceSpawnReason == FallingPieceSpawnReason::RespawnActiveAfterStopDraggingPiece) &&
+        mLevel->GetSpeed() > 0.0f) {
+            
         auto pieceNumEmptyBottompRows = pieceType.GetDimensions(Rotation::Deg0).mYmin;
         
         auto previousPieceNumEmptyBottomRows =
@@ -349,6 +368,17 @@ Pht::Vec2 GameLogic::CalculateFallingPieceSpawnPos(const Piece& pieceType,
 
     auto startYPos = desiredUpperPos - pieceType.GetGridNumRows() + 1;
     return Pht::Vec2 {startXPos + halfColumn, static_cast<float>(startYPos)};
+}
+
+Rotation GameLogic::CalculateFallingPieceRotation(FallingPieceSpawnReason fallingPieceSpawnReason) {
+    switch (fallingPieceSpawnReason) {
+        case FallingPieceSpawnReason::BeginDraggingPiece:
+            return mDraggedPiece->GetRotation();
+        case FallingPieceSpawnReason::RespawnActiveAfterStopDraggingPiece:
+            return mCurrentMove.mPreviewPieceRotations.mRotations.mActive;
+        default:
+            return Rotation::Deg0;
+    }
 }
 
 void GameLogic::HandleCascading() {
@@ -913,7 +943,9 @@ void GameLogic::RotatateAndAdjustPosition(Rotation newRotation,
 }
 
 void GameLogic::SwitchPiece() {
-    if (!IsThereRoomToSwitchPiece() || !mTutorial.IsSwitchPieceAllowed()) {
+    if (!IsThereRoomToSwitchPiece(*mCurrentMove.mSelectablePieces[0]) ||
+        !mTutorial.IsSwitchPieceAllowed()) {
+
         return;
     }
     
@@ -931,9 +963,7 @@ void GameLogic::SwitchPiece() {
     SpawnFallingPiece(FallingPieceSpawnReason::Switch);
 }
 
-bool GameLogic::IsThereRoomToSwitchPiece() {
-    auto& pieceType = *mCurrentMove.mSelectablePieces[0];
-    
+bool GameLogic::IsThereRoomToSwitchPiece(const Piece& pieceType) {
     PieceBlocks pieceBlocks {
         pieceType.GetGrid(Rotation::Deg0),
         pieceType.GetGridNumRows(),
@@ -1034,14 +1064,30 @@ BlastRadiusAnimation::Kind GameLogic::CalculateBlastRadiusKind(const Pht::IVec2&
     return BlastRadiusAnimation::Kind::Bomb;
 }
 
-void GameLogic::BeginDraggingPiece(DraggedPieceIndex draggedPieceIndex) {
-    mDraggedPieceIndex = draggedPieceIndex;
+bool GameLogic::BeginDraggingPiece(DraggedPieceIndex draggedPieceIndex) {
+    if (draggedPieceIndex == DraggedPieceIndex::None) {
+        return false;
+    }
+    
     ShowDraggedPiece();
+    auto& pieceType = mDraggedPiece->GetPieceType();
+    if (!IsThereRoomToSwitchPiece(pieceType)) {
+        RemoveDraggedPiece();
+        return false;
+    }
+    
+    mFallingPieceSpawnType = &pieceType;
+    SpawnFallingPiece(FallingPieceSpawnReason::BeginDraggingPiece);
+    
+    mDraggedPieceIndex = draggedPieceIndex;
+    return true;
 }
 
 void GameLogic::StopDraggingPiece() {
-    mDraggedPieceIndex = DraggedPieceIndex::None;
+    mFallingPieceSpawnType = mCurrentMove.mPieceType;
+    SpawnFallingPiece(FallingPieceSpawnReason::RespawnActiveAfterStopDraggingPiece);
     RemoveDraggedPiece();
+    mDraggedPieceIndex = DraggedPieceIndex::None;
 }
 
 GameLogic::Result GameLogic::HandleInput() {

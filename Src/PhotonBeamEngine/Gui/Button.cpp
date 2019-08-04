@@ -85,6 +85,10 @@ Button::Result Button::OnTouch(const TouchEvent& event) {
     return Result::None;
 }
 
+void Button::Reset() {
+    mState = State::Up;
+}
+
 Button::Result Button::OnTouchBegin(const Vec2& touchLocation) {
     switch (mState) {
         case State::Up:

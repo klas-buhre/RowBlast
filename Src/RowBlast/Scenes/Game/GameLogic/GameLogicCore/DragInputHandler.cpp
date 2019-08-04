@@ -80,7 +80,10 @@ bool DragInputHandler::TryBeginDrag(DraggedPieceIndex draggedPieceIndex,
         auto rotation = GetPieceRotation(draggedPieceIndex);
         mDraggedPiece.BeginDrag(*pieceType, rotation);
         mDraggedPiece.SetPosition(CalculatePiecePosition(touchEvent));
-        mGameLogic.BeginDraggingPiece(draggedPieceIndex);
+        if (!mGameLogic.BeginDraggingPiece(draggedPieceIndex)) {
+            CancelDrag();
+            return false;
+        }
         return true;
     }
     
@@ -103,13 +106,23 @@ void DragInputHandler::HandleTouchEnd(const Pht::TouchEvent& touchEvent) {
     mDraggedPiece.SetPosition(CalculatePiecePosition(touchEvent));
     
     // Reset the button state.
-    GetPreviewPieceButton(mDraggedPieceIndex).OnTouch(touchEvent);
+    GetPreviewPieceButton(mDraggedPieceIndex).Reset();
 
     if (auto* previewPieceSceneObject = GetPreviewPieceSceneObject(mDraggedPieceIndex)) {
         previewPieceSceneObject->SetIsVisible(true);
     }
     
     mGameLogic.StopDraggingPiece();
+    mDraggedPieceIndex = DraggedPieceIndex::None;
+    mState = State::DragEnd;
+}
+
+void DragInputHandler::CancelDrag() {
+    if (auto* previewPieceSceneObject = GetPreviewPieceSceneObject(mDraggedPieceIndex)) {
+        previewPieceSceneObject->SetIsVisible(true);
+    }
+
+    GetPreviewPieceButton(mDraggedPieceIndex).Reset();
     mDraggedPieceIndex = DraggedPieceIndex::None;
     mState = State::DragEnd;
 }

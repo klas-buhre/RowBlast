@@ -101,7 +101,7 @@ namespace RowBlast {
         bool IsInFieldExplosionsState() const override;
         void StartBlastRadiusAnimation(const Pht::IVec2& position) override;
         void StopBlastRadiusAnimation() override;
-        void BeginDraggingPiece(DraggedPieceIndex draggedPieceIndex) override;
+        bool BeginDraggingPiece(DraggedPieceIndex draggedPieceIndex) override;
         void StopDraggingPiece() override;
         const Piece* GetPieceType() const override;
         const TwoPieces& GetSelectablePieces() const override;
@@ -166,14 +166,17 @@ namespace RowBlast {
             None,
             NextMove,
             Switch,
+            BeginDraggingPiece,
+            RespawnActiveAfterStopDraggingPiece,
             UndoMove
         };
 
         Result SpawnFallingPiece(FallingPieceSpawnReason fallingPieceSpawnReason);
-        void SetPieceType();
+        const Piece& CalculatePieceType(FallingPieceSpawnReason fallingPieceSpawnReason);
         void ManageMoveHistory(FallingPieceSpawnReason fallingPieceSpawnReason);
         void StartBlastRadiusAnimationAtGhostPiece();
         void SetBlastRadiusAnimationPositionAtGhostPiece();
+        void ShowFallingPiece();
         void RemoveFallingPiece();
         void ShowDraggedPiece();
         void RemoveDraggedPiece();
@@ -181,6 +184,7 @@ namespace RowBlast {
         void UpdateLevelProgress();
         Pht::Vec2 CalculateFallingPieceSpawnPos(const Piece& pieceType,
                                                 FallingPieceSpawnReason fallingPieceSpawnReason);
+        Rotation CalculateFallingPieceRotation(FallingPieceSpawnReason fallingPieceSpawnReason);
         void HandleCascading();
         void UpdateFieldExplosionsStates();
         void HandleControlTypeChange();
@@ -207,7 +211,7 @@ namespace RowBlast {
         bool LevelAllowsClearingFilledRows() const;
         void PlayLandPieceSound();
         void RemoveBlocksInsideTheShield();
-        bool IsThereRoomToSwitchPiece();
+        bool IsThereRoomToSwitchPiece(const Piece& pieceType);
         Result HandleInput();
         void ForwardTouchToInputHandler(const Pht::TouchEvent& touchEvent);
         bool IsInputAllowed() const;
