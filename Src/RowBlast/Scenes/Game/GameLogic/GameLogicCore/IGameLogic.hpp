@@ -32,6 +32,7 @@ namespace RowBlast {
         virtual void StartBlastRadiusAnimation(const Pht::IVec2& position) = 0;
         virtual void StopBlastRadiusAnimation() = 0;
         virtual void ShowDraggedPiece() = 0;
+        virtual void RemoveDraggedPiece() = 0;
         virtual const Piece* GetPieceType() const = 0;
         virtual const TwoPieces& GetSelectablePieces() const = 0;
         virtual const PreviewPieceRotations& GetPreviewPieceHudRotations() const = 0;

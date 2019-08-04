@@ -55,9 +55,20 @@ Ongoing tasks:
 
     -Try to implement Alt 2:
 
+    -The field must be moved upward at least one cell. Instead of modifyeing the envmap texture, it
+     might work to move the camera 1.0 of 2.0 backwards to bet a bigger bright env map area. Or
+     move the field backwards in z-direction, it is the distance to camera tha matters.
+
     -Maybe a transparant real piece should be dragged in with a ghost piece under it.
      Or it has to be a real piece since a transparant piece might not be clear enough in daylight
      conditions. Or could be a move image (more bright).
+       -The dragged piece should always appear about one cell up from the location where the finger
+        touches the selectables container. So it should be one cell from the touch location up to
+        the lower edge of the piece (edge that has non-empty cells).
+       -Maybe no welds in the dragged piece? because then the blacks can scle down slightly and
+        separate a bit which feels nice. The weld can appear with the weld animation when the piece
+        is placed.
+       -Maybe the dragged piece blocks should cast a shadow?
        -The dragged piece could simply disappear from its place in the hud in one frame since the
         finger will cover it anyway. But the dragged piece in the DraggedPiece pass could
         scale in and move up during a couple of frames. Then there is no transition/handover between

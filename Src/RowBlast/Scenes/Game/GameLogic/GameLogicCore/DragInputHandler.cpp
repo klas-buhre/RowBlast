@@ -98,6 +98,7 @@ void DragInputHandler::HandleTouchEnd(const Pht::TouchEvent& touchEvent) {
         previewPieceSceneObject->SetIsVisible(true);
     }
     
+    mGameLogic.RemoveDraggedPiece();
     mDraggedPieceIndex = DraggedPieceIndex::None;
     mState = State::DragEnd;
 }

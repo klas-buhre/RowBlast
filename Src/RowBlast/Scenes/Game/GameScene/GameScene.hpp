@@ -187,6 +187,10 @@ namespace RowBlast {
             return mCellSize;
         }
 
+        float GetDraggedPieceZ() const {
+            return mDraggedPieceZ;
+        }
+
         float GetBlastRadiusAnimationZ() const {
             return mBlastRadiusAnimationZ;
         }
@@ -297,6 +301,7 @@ namespace RowBlast {
         Pht::SceneObject* mLevelCompletedEffectsContainer {nullptr};
         Pht::SceneObject* mStarsContainer {nullptr};
         const Pht::Vec3 mFieldPosition;
+        const float mDraggedPieceZ {mCellSize / 2.0f + mCellSize / 2.0f};
         const float mBlastRadiusAnimationZ {mCellSize / 2.0f + 0.15f};
         const float mShieldAnimationZ {mCellSize / 2.0f + 0.1f};
         const float mFieldBottomGlowZ {mCellSize / 2.0f + 0.1f};

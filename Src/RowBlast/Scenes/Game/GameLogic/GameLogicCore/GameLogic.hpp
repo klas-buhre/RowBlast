@@ -102,6 +102,7 @@ namespace RowBlast {
         void StartBlastRadiusAnimation(const Pht::IVec2& position) override;
         void StopBlastRadiusAnimation() override;
         void ShowDraggedPiece() override;
+        void RemoveDraggedPiece() override;
         const Piece* GetPieceType() const override;
         const TwoPieces& GetSelectablePieces() const override;
         const PreviewPieceRotations& GetPreviewPieceHudRotations() const override;
@@ -174,7 +175,6 @@ namespace RowBlast {
         void StartBlastRadiusAnimationAtGhostPiece();
         void SetBlastRadiusAnimationPositionAtGhostPiece();
         void RemoveFallingPiece();
-        void RemoveDraggedPiece();
         void NextMove();
         void UpdateLevelProgress();
         Pht::Vec2 CalculateFallingPieceSpawnPos(const Piece& pieceType,
