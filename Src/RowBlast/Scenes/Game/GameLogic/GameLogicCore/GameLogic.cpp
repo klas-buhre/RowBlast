@@ -128,6 +128,7 @@ void GameLogic::Init(const Level& level) {
     RemoveFallingPiece();
     mFallingPieceSpawnReason = FallingPieceSpawnReason::NextMove;
     mFallingPieceSpawnType = nullptr;
+    mDraggedPieceIndex = DraggedPieceIndex::None;
     
     mMovesLeft = mLevel->GetNumMoves(mControlType);
     mMovesUsed = 0;
@@ -1031,6 +1032,16 @@ BlastRadiusAnimation::Kind GameLogic::CalculateBlastRadiusKind(const Pht::IVec2&
     }
     
     return BlastRadiusAnimation::Kind::Bomb;
+}
+
+void GameLogic::BeginDraggingPiece(DraggedPieceIndex draggedPieceIndex) {
+    mDraggedPieceIndex = draggedPieceIndex;
+    ShowDraggedPiece();
+}
+
+void GameLogic::StopDraggingPiece() {
+    mDraggedPieceIndex = DraggedPieceIndex::None;
+    RemoveDraggedPiece();
 }
 
 GameLogic::Result GameLogic::HandleInput() {

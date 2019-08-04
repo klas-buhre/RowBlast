@@ -3,6 +3,7 @@
 
 // Game includes.
 #include "Cell.hpp"
+#include "IGameLogic.hpp"
 
 namespace Pht {
     class TouchEvent;
@@ -34,13 +35,6 @@ namespace RowBlast {
         State HandleTouch(const Pht::TouchEvent& touchEvent);
         
     private:
-        enum class DraggedPieceIndex {
-            Active,
-            Selectable0,
-            Selectable1,
-            None
-        };
-
         void HandleTouchBegin(const Pht::TouchEvent& touchEvent);
         void HandleOngoingTouch(const Pht::TouchEvent& touchEvent);
         void HandleTouchEnd(const Pht::TouchEvent& touchEvent);

@@ -15,10 +15,13 @@ namespace RowBlast {
         
     private:
         void UpdateInActiveState(float dt);
+        void UpdateInStoppedDuringPieceDragState();
         void GoToInactiveState();
+        void GoToStoppedDuringPieceDragState();
 
         enum class State {
             Active,
+            StoppedDuringPieceDrag,
             Inactive
         };
         

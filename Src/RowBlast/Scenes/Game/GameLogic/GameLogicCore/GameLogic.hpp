@@ -101,8 +101,8 @@ namespace RowBlast {
         bool IsInFieldExplosionsState() const override;
         void StartBlastRadiusAnimation(const Pht::IVec2& position) override;
         void StopBlastRadiusAnimation() override;
-        void ShowDraggedPiece() override;
-        void RemoveDraggedPiece() override;
+        void BeginDraggingPiece(DraggedPieceIndex draggedPieceIndex) override;
+        void StopDraggingPiece() override;
         const Piece* GetPieceType() const override;
         const TwoPieces& GetSelectablePieces() const override;
         const PreviewPieceRotations& GetPreviewPieceHudRotations() const override;
@@ -175,6 +175,8 @@ namespace RowBlast {
         void StartBlastRadiusAnimationAtGhostPiece();
         void SetBlastRadiusAnimationPositionAtGhostPiece();
         void RemoveFallingPiece();
+        void ShowDraggedPiece();
+        void RemoveDraggedPiece();
         void NextMove();
         void UpdateLevelProgress();
         Pht::Vec2 CalculateFallingPieceSpawnPos(const Piece& pieceType,
@@ -270,6 +272,7 @@ namespace RowBlast {
         MoveData mCurrentMove;
         MoveData mCurrentMoveTmp;
         MoveData mPreviousMove;
+        DraggedPieceIndex mDraggedPieceIndex {DraggedPieceIndex::None};
         PreviewPieceAnimationToStart mPreviewPieceAnimationToStart {PreviewPieceAnimationToStart::None};
         const Level* mLevel {nullptr};
         float mLandingNoMovementDuration {0.0f};

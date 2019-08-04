@@ -37,15 +37,23 @@ void ActivePreviewPieceAnimation::Update(float dt) {
     }
 
     switch (mState) {
-        case State::Inactive:
-            break;
         case State::Active:
             UpdateInActiveState(dt);
+            break;
+        case State::StoppedDuringPieceDrag:
+            UpdateInStoppedDuringPieceDragState();
+            break;
+        case State::Inactive:
             break;
     }
 }
 
 void ActivePreviewPieceAnimation::UpdateInActiveState(float dt) {
+    if (mGameLogic.GetDraggedPiece()) {
+        GoToStoppedDuringPieceDragState();
+        return;
+    }
+
     auto* activePreviewPieceSceneObject = mScene.GetHud().GetActivePreviewPieceSceneObject();
     if (activePreviewPieceSceneObject == nullptr) {
         return;
@@ -66,7 +74,27 @@ void ActivePreviewPieceAnimation::UpdateInActiveState(float dt) {
     transform.SetPosition({0.0f, yPosition, 0.0f});
 }
 
+void ActivePreviewPieceAnimation::UpdateInStoppedDuringPieceDragState() {
+    if (mGameLogic.GetDraggedPiece() == nullptr && mGameLogic.GetFallingPiece()) {
+        Start();
+    }
+}
+
 void ActivePreviewPieceAnimation::GoToInactiveState() {
     mState = State::Inactive;
     mElapsedTime = 0.0f;
+}
+
+void ActivePreviewPieceAnimation::GoToStoppedDuringPieceDragState() {
+    mState = State::StoppedDuringPieceDrag;
+    mElapsedTime = 0.0f;
+
+    auto* activePreviewPieceSceneObject = mScene.GetHud().GetActivePreviewPieceSceneObject();
+    if (activePreviewPieceSceneObject == nullptr) {
+        return;
+    }
+    
+    auto& transform = activePreviewPieceSceneObject->GetTransform();
+    transform.SetScale(1.0f + scaleAmplitude / 2.0f);
+    transform.SetPosition({0.0f, 0.0f, 0.0f});
 }
