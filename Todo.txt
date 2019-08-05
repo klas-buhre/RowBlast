@@ -89,7 +89,7 @@ Ongoing tasks:
         the hud pass and the DraggedPiece pass. When the dragged piece goes back to the
         selectables in the hud then the piece could travel really quickly in the DraggedPiece
         render pass and the the piece could simply appear in one frame in the selectables.
-       -The transparant pieces does not need welds.
+       -The transparant piece at the top might have welds if rendered front to back with depth test.
        -The ghost piece could be at the place where the piece would land if released, not the actual
         location it is currently dragged to. So if the piece is being dragged to an area several
         rows above a couple of blocks then the ghost piece would be several rows below by those

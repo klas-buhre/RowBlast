@@ -42,6 +42,8 @@ namespace RowBlast {
     
     enum class PreviewPieceAnimationToStart {
         NextPieceAndSwitch,
+        NextPieceAndRefillSelectable0,
+        NextPieceAndRefillSelectable1,
         SwitchPiece,
         RemoveActivePiece,
         None

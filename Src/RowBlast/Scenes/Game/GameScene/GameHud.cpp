@@ -502,29 +502,15 @@ int GameHud::GetMovesLeft() const {
 }
 
 void GameHud::UpdatePreviewPieces() {
-    auto previewPieceAnimationToStart = mGameLogic.GetPreviewPieceAnimationToStart();
-
-    auto shouldStartNextPieceAndSwitchAnimation =
-        previewPieceAnimationToStart == PreviewPieceAnimationToStart::NextPieceAndSwitch;
-
-    auto shouldStartSwitchPieceAnimation =
-        previewPieceAnimationToStart == PreviewPieceAnimationToStart::SwitchPiece ||
-        shouldStartNextPieceAndSwitchAnimation;
-
-    auto shouldStartRemoveActivePieceAnimation =
-        previewPieceAnimationToStart == PreviewPieceAnimationToStart::RemoveActivePiece;
-
-    UpdateNextPreviewPieceGroup(shouldStartNextPieceAndSwitchAnimation);
-    UpdateSelectablePreviewPieceGroup(shouldStartSwitchPieceAnimation,
-                                      shouldStartNextPieceAndSwitchAnimation,
-                                      shouldStartRemoveActivePieceAnimation);
+    UpdateNextPreviewPieceGroup();
+    UpdateSelectablePreviewPieceGroup();
 }
 
-void GameHud::UpdateNextPreviewPieceGroup(bool shouldStartNextPieceAnimation) {
+void GameHud::UpdateNextPreviewPieceGroup() {
     auto& next2Pieces = mGameLogic.GetNextPieceGenerator().GetNext2Pieces();
     auto& positions = mNextPreviewPiecesRelativePositions;
     
-    if (shouldStartNextPieceAnimation) {
+    if (ShouldStartNextPieceAnimation()) {
         if (mNextPreviewPieces[2].mSceneObjectPool->IsActive()) {
             // Need to shift up the piece to the top if the previous next piece animation has not
             // finished yet.
@@ -542,12 +528,34 @@ void GameHud::UpdateNextPreviewPieceGroup(bool shouldStartNextPieceAnimation) {
     mNext2PiecesPreviousFrame = next2Pieces;
 }
 
-void GameHud::UpdateSelectablePreviewPieceGroup(bool shouldStartSwitchPieceAnimation,
-                                                bool shouldStartNextPieceAndSwitchAnimation,
-                                                bool shouldStartRemoveActivePieceAnimation) {
+bool GameHud::ShouldStartNextPieceAnimation() const {
+    switch (mGameLogic.GetPreviewPieceAnimationToStart()) {
+        case PreviewPieceAnimationToStart::NextPieceAndSwitch:
+        case PreviewPieceAnimationToStart::NextPieceAndRefillSelectable0:
+        case PreviewPieceAnimationToStart::NextPieceAndRefillSelectable1:
+            return true;
+        default:
+            return false;
+    }
+}
+
+void GameHud::UpdateSelectablePreviewPieceGroup() {
+    auto previewPieceAnimationToStart = mGameLogic.GetPreviewPieceAnimationToStart();
+    
+    auto shouldStartNextPieceAndSwitchAnimation =
+        previewPieceAnimationToStart == PreviewPieceAnimationToStart::NextPieceAndSwitch;
+    
+    auto shouldStartSwitchPieceAnimation =
+        previewPieceAnimationToStart == PreviewPieceAnimationToStart::SwitchPiece ||
+        shouldStartNextPieceAndSwitchAnimation;
+    
+    auto shouldStartRemoveActivePieceAnimation =
+        previewPieceAnimationToStart == PreviewPieceAnimationToStart::RemoveActivePiece;
+
     auto* activePiece = mGameLogic.GetPieceType();
     auto& selectablePieces = mGameLogic.GetSelectablePieces();
     auto& positions = mSelectablePreviewPiecesRelativePositions;
+
     auto piecesChanged =
         selectablePieces != mSelectablePiecesPreviousFrame ||
         activePiece != mActivePiecePreviousFrame;
@@ -567,6 +575,11 @@ void GameHud::UpdateSelectablePreviewPieceGroup(bool shouldStartSwitchPieceAnima
         } else {
             UpdateSelectable1PreviewPiece(mSelectablePreviewPieces[3], selectablePieces[1], positions[4]);
         }
+    } else if (previewPieceAnimationToStart == PreviewPieceAnimationToStart::NextPieceAndRefillSelectable0) {
+        UpdateSelectable0PreviewPiece(mSelectablePreviewPieces[2], selectablePieces[0], positions[3]);
+        UpdatePreviewPiece(mSelectablePreviewPieces[3], nullptr, positions[3]);
+    } else if (previewPieceAnimationToStart == PreviewPieceAnimationToStart::NextPieceAndRefillSelectable1) {
+        UpdatePreviewPiece(mSelectablePreviewPieces[3], nullptr, positions[3]);
     } else if (piecesChanged || shouldStartRemoveActivePieceAnimation) {
         if (shouldStartRemoveActivePieceAnimation) {
             UpdateActivePreviewPiece(mSelectablePreviewPieces[0], mActivePiecePreviousFrame, positions[1]);

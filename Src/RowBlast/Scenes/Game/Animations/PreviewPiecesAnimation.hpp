@@ -20,6 +20,9 @@ namespace RowBlast {
         
     private:
         void StartNextPieceAndSwitchingAnimation();
+        void StartNextPieceAnimation();
+        void StartNextPieceAndRefillSelectable0Animation();
+        void StartNextPieceAndRefillSelectable1Animation();
         void StartSwitchingPiecesAnimation();
         void StartRemoveActivePieceAnimation();
         float UpdateTime(float dt);

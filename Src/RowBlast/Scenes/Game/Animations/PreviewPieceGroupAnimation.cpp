@@ -53,6 +53,19 @@ void PreviewPieceGroupAnimation::StartSwitchDuringNextPieceAnimation(
     mSelectablePreviewPiecesPositionsConfig = piecePositionsConfig;
 }
 
+void PreviewPieceGroupAnimation::StartRefillSelectable0Animation(
+    SelectablePreviewPieces& previewPieces,
+    const SelectablePreviewPiecesPositionsConfig& piecePositionsConfig) {
+
+    mKind = Kind::RefillSelectable0;
+    mSelectablePreviewPieces = &previewPieces;
+    mSelectablePreviewPiecesPositionsConfig = piecePositionsConfig;
+}
+
+void PreviewPieceGroupAnimation::StartRefillSelectable1Animation() {
+    mKind = Kind::RefillSelectable1;
+}
+
 void PreviewPieceGroupAnimation::StartSwitchPieceAnimation(
     SelectablePreviewPieces& previewPieces,
     const SelectablePreviewPiecesPositionsConfig& piecePositionsConfig) {
@@ -85,6 +98,11 @@ void PreviewPieceGroupAnimation::Update(float normalizedElapsedTime) {
             break;
         case Kind::SwitchDuringNextPiece:
             UpdateSwitchDuringNextPieceAnimation(slideValue);
+            break;
+        case Kind::RefillSelectable0:
+            UpdateRefillSelectable0Animation(slideValue);
+            break;
+        case Kind::RefillSelectable1:
             break;
         case Kind::Switch:
             UpdateSwitchPieceAnimation(slideValue);
@@ -127,6 +145,14 @@ void PreviewPieceGroupAnimation::UpdateSwitchDuringNextPieceAnimation(float slid
                  mSelectablePreviewPiecesPositionsConfig.mSlot0,
                  slideValue,
                  Scaling::NoScaling);
+    AnimatePiece(GetSelectablePreviewPiece(2),
+                 mSelectablePreviewPiecesPositionsConfig.mSlot2,
+                 mSelectablePreviewPiecesPositionsConfig.mSlot1,
+                 slideValue,
+                 Scaling::NoScaling);
+}
+
+void PreviewPieceGroupAnimation::UpdateRefillSelectable0Animation(float slideValue) {
     AnimatePiece(GetSelectablePreviewPiece(2),
                  mSelectablePreviewPiecesPositionsConfig.mSlot2,
                  mSelectablePreviewPiecesPositionsConfig.mSlot1,
