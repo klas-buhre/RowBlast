@@ -38,20 +38,20 @@ namespace RowBlast {
         void HandleTouchBegin(const Pht::TouchEvent& touchEvent);
         void HandleOngoingTouch(const Pht::TouchEvent& touchEvent);
         void HandleTouchEnd(const Pht::TouchEvent& touchEvent);
-        bool TryBeginDrag(DraggedPieceIndex draggedPieceIndex, const Pht::TouchEvent& touchEvent);
+        bool TryBeginDrag(PreviewPieceIndex draggedPieceIndex, const Pht::TouchEvent& touchEvent);
         void CancelDrag();
-        Pht::Vec2 CalculatePiecePosition(const Pht::TouchEvent& touchEvent) const;
-        const Piece* GetPieceType(DraggedPieceIndex draggedPieceIndex) const;
-        Rotation GetPieceRotation(DraggedPieceIndex draggedPieceIndex) const;
-        Pht::Button& GetPreviewPieceButton(DraggedPieceIndex draggedPieceIndex) const;
-        Pht::SceneObject* GetPreviewPieceSceneObject(DraggedPieceIndex draggedPieceIndex) const;
+        void UpdatePiecePosition(const Pht::TouchEvent& touchEvent);
+        const Piece* GetPieceType(PreviewPieceIndex draggedPieceIndex) const;
+        Rotation GetPieceRotation(PreviewPieceIndex draggedPieceIndex) const;
+        Pht::Button& GetPreviewPieceButton(PreviewPieceIndex draggedPieceIndex) const;
+        Pht::SceneObject* GetPreviewPieceSceneObject(PreviewPieceIndex draggedPieceIndex) const;
         
         Pht::IEngine& mEngine;
         IGameLogic& mGameLogic;
         GameScene& mScene;
         DraggedPiece& mDraggedPiece;
         State mState {State::Idle};
-        DraggedPieceIndex mDraggedPieceIndex {DraggedPieceIndex::None};
+        PreviewPieceIndex mDraggedPieceIndex {PreviewPieceIndex::None};
     };
 }
 

@@ -94,6 +94,7 @@ GameLogic::GameLogic(Pht::IEngine& engine,
     mFieldExplosionsStates {engine, field, mFieldGravity, effectManager, flyingBlocksAnimation},
     mFallingPieceAnimation {*this, mFallingPieceStorage},
     mComboDetector {engine, smallTextAnimation, effectManager},
+    mDraggedPieceStorage {gameScene},
     mDragInputHandler {engine, *this, gameScene, mDraggedPieceStorage},
     mGestureInputHandler {*this, mFallingPieceStorage},
     mClickInputHandler {engine, field, gameScene, *this, tutorial},
@@ -128,7 +129,7 @@ void GameLogic::Init(const Level& level) {
     RemoveFallingPiece();
     mFallingPieceSpawnReason = FallingPieceSpawnReason::NextMove;
     mFallingPieceSpawnType = nullptr;
-    mDraggedPieceIndex = DraggedPieceIndex::None;
+    mDraggedPieceIndex = PreviewPieceIndex::None;
     
     mMovesLeft = mLevel->GetNumMoves(mControlType);
     mMovesUsed = 0;
@@ -1064,8 +1065,8 @@ BlastRadiusAnimation::Kind GameLogic::CalculateBlastRadiusKind(const Pht::IVec2&
     return BlastRadiusAnimation::Kind::Bomb;
 }
 
-bool GameLogic::BeginDraggingPiece(DraggedPieceIndex draggedPieceIndex) {
-    if (draggedPieceIndex == DraggedPieceIndex::None) {
+bool GameLogic::BeginDraggingPiece(PreviewPieceIndex draggedPieceIndex) {
+    if (draggedPieceIndex == PreviewPieceIndex::None) {
         return false;
     }
     
@@ -1076,18 +1077,37 @@ bool GameLogic::BeginDraggingPiece(DraggedPieceIndex draggedPieceIndex) {
         return false;
     }
     
+    mDraggedPieceIndex = draggedPieceIndex;
     mFallingPieceSpawnType = &pieceType;
     SpawnFallingPiece(FallingPieceSpawnReason::BeginDraggingPiece);
-    
-    mDraggedPieceIndex = draggedPieceIndex;
     return true;
 }
 
 void GameLogic::StopDraggingPiece() {
-    mFallingPieceSpawnType = mCurrentMove.mPieceType;
-    SpawnFallingPiece(FallingPieceSpawnReason::RespawnActiveAfterStopDraggingPiece);
+    auto& pieceType = mDraggedPiece->GetPieceType();
+    
+    PieceBlocks pieceBlocks {
+        pieceType.GetGrid(mDraggedPiece->GetRotation()),
+        pieceType.GetGridNumRows(),
+        pieceType.GetGridNumColumns()
+    };
+    
+    auto position = mDraggedPiece->GetFieldGridPosition();
+    Field::CollisionResult collisionResult;
+    mField.CheckCollision(collisionResult, pieceBlocks, position, Pht::IVec2{0, 0}, false);
+    if (collisionResult.mIsCollision != IsCollision::Yes) {
+        auto gridPosition = mDraggedPiece->GetFieldGridPosition();
+        mFallingPiece->SetX(static_cast<float>(gridPosition.x));
+        mFallingPiece->SetY(static_cast<float>(gridPosition.y));
+        mFallingPiece->SetRotation(mDraggedPiece->GetRotation());
+        LandFallingPiece(false);
+    } else {
+        mFallingPieceSpawnType = mCurrentMove.mPieceType;
+        SpawnFallingPiece(FallingPieceSpawnReason::RespawnActiveAfterStopDraggingPiece);
+    }
+    
     RemoveDraggedPiece();
-    mDraggedPieceIndex = DraggedPieceIndex::None;
+    mDraggedPieceIndex = PreviewPieceIndex::None;
 }
 
 GameLogic::Result GameLogic::HandleInput() {

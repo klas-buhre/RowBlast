@@ -101,7 +101,7 @@ namespace RowBlast {
         bool IsInFieldExplosionsState() const override;
         void StartBlastRadiusAnimation(const Pht::IVec2& position) override;
         void StopBlastRadiusAnimation() override;
-        bool BeginDraggingPiece(DraggedPieceIndex draggedPieceIndex) override;
+        bool BeginDraggingPiece(PreviewPieceIndex draggedPieceIndex) override;
         void StopDraggingPiece() override;
         const Piece* GetPieceType() const override;
         const TwoPieces& GetSelectablePieces() const override;
@@ -276,7 +276,7 @@ namespace RowBlast {
         MoveData mCurrentMove;
         MoveData mCurrentMoveTmp;
         MoveData mPreviousMove;
-        DraggedPieceIndex mDraggedPieceIndex {DraggedPieceIndex::None};
+        PreviewPieceIndex mDraggedPieceIndex {PreviewPieceIndex::None};
         PreviewPieceAnimationToStart mPreviewPieceAnimationToStart {PreviewPieceAnimationToStart::None};
         const Level* mLevel {nullptr};
         float mLandingNoMovementDuration {0.0f};

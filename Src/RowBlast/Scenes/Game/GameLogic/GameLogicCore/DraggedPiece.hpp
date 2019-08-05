@@ -9,9 +9,12 @@
 
 namespace RowBlast {
     class Piece;
+    class GameScene;
 
     class DraggedPiece {
     public:
+        DraggedPiece(const GameScene& scene);
+        
         void BeginDrag(const Piece& pieceType, Rotation rotation);
         void SetPosition(const Pht::Vec2& position);
         Pht::IVec2 GetFieldGridPosition() const;
@@ -29,6 +32,7 @@ namespace RowBlast {
         }
         
     private:
+        const GameScene& mScene;
         const Piece* mPieceType {nullptr};
         Pht::Vec2 mPosition;
         Rotation mRotation {Rotation::Deg0};

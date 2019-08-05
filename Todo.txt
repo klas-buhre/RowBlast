@@ -72,7 +72,12 @@ Ongoing tasks:
     -Maybe a transparant real piece should be dragged in with a ghost piece under it.
      Or it has to be a real piece since a transparant piece might not be clear enough in daylight
      conditions. Or could be a move image (more bright).
-       -The ghost piece for the falling piece in gesture controls should disappear during a drag.
+       -The ghost piece for the falling piece in gesture controls should only be visible if previous
+        move was placed using gesture controls and not drag controls or if a swipe or switch piece
+        was just done. Once a piece is places using drag controls the gesture ghost piece disappears
+        again.
+       -The ghost piece for the falling piece in gesture controls should disappear during a drag if
+        present.
 
        -Maybe no welds in the dragged piece? because then the blocks can scale down slightly and
         separate a bit which feels nice. The weld can appear with the weld animation when the piece

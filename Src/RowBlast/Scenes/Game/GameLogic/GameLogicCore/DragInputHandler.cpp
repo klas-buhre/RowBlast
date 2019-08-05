@@ -28,7 +28,7 @@ DragInputHandler::DragInputHandler(Pht::IEngine& engine,
 
 void DragInputHandler::Init() {
     mState = State::Idle;
-    mDraggedPieceIndex = DraggedPieceIndex::None;
+    mDraggedPieceIndex = PreviewPieceIndex::None;
 }
 
 DragInputHandler::State DragInputHandler::HandleTouch(const Pht::TouchEvent& touchEvent) {
@@ -58,28 +58,30 @@ DragInputHandler::State DragInputHandler::HandleTouch(const Pht::TouchEvent& tou
 }
 
 void DragInputHandler::HandleTouchBegin(const Pht::TouchEvent& touchEvent) {
-    if (TryBeginDrag(DraggedPieceIndex::Active, touchEvent)) {
+    if (TryBeginDrag(PreviewPieceIndex::Active, touchEvent)) {
         return;
-    } else if (TryBeginDrag(DraggedPieceIndex::Selectable0, touchEvent)) {
+    } else if (TryBeginDrag(PreviewPieceIndex::Selectable0, touchEvent)) {
         return;
     } else {
-        TryBeginDrag(DraggedPieceIndex::Selectable1, touchEvent);
+        TryBeginDrag(PreviewPieceIndex::Selectable1, touchEvent);
     }
 }
 
-bool DragInputHandler::TryBeginDrag(DraggedPieceIndex draggedPieceIndex,
+bool DragInputHandler::TryBeginDrag(PreviewPieceIndex draggedPieceIndex,
                                     const Pht::TouchEvent& touchEvent) {
     if (GetPreviewPieceButton(draggedPieceIndex).OnTouch(touchEvent) == Pht::Button::Result::Down) {
         mState = State::Dragging;
         mDraggedPieceIndex = draggedPieceIndex;
+
         if (auto* previewPieceSceneObject = GetPreviewPieceSceneObject(draggedPieceIndex)) {
             previewPieceSceneObject->SetIsVisible(false);
         }
-        
+
         auto* pieceType = GetPieceType(draggedPieceIndex);
         auto rotation = GetPieceRotation(draggedPieceIndex);
         mDraggedPiece.BeginDrag(*pieceType, rotation);
-        mDraggedPiece.SetPosition(CalculatePiecePosition(touchEvent));
+        UpdatePiecePosition(touchEvent);
+                            
         if (!mGameLogic.BeginDraggingPiece(draggedPieceIndex)) {
             CancelDrag();
             return false;
@@ -95,7 +97,7 @@ void DragInputHandler::HandleOngoingTouch(const Pht::TouchEvent& touchEvent) {
         return;
     }
     
-    mDraggedPiece.SetPosition(CalculatePiecePosition(touchEvent));
+    UpdatePiecePosition(touchEvent);
 }
 
 void DragInputHandler::HandleTouchEnd(const Pht::TouchEvent& touchEvent) {
@@ -103,7 +105,7 @@ void DragInputHandler::HandleTouchEnd(const Pht::TouchEvent& touchEvent) {
         return;
     }
     
-    mDraggedPiece.SetPosition(CalculatePiecePosition(touchEvent));
+    UpdatePiecePosition(touchEvent);
     
     // Reset the button state.
     GetPreviewPieceButton(mDraggedPieceIndex).Reset();
@@ -111,9 +113,9 @@ void DragInputHandler::HandleTouchEnd(const Pht::TouchEvent& touchEvent) {
     if (auto* previewPieceSceneObject = GetPreviewPieceSceneObject(mDraggedPieceIndex)) {
         previewPieceSceneObject->SetIsVisible(true);
     }
-    
+
     mGameLogic.StopDraggingPiece();
-    mDraggedPieceIndex = DraggedPieceIndex::None;
+    mDraggedPieceIndex = PreviewPieceIndex::None;
     mState = State::DragEnd;
 }
 
@@ -123,11 +125,11 @@ void DragInputHandler::CancelDrag() {
     }
 
     GetPreviewPieceButton(mDraggedPieceIndex).Reset();
-    mDraggedPieceIndex = DraggedPieceIndex::None;
+    mDraggedPieceIndex = PreviewPieceIndex::None;
     mState = State::DragEnd;
 }
 
-Pht::Vec2 DragInputHandler::CalculatePiecePosition(const Pht::TouchEvent& touchEvent) const {
+void DragInputHandler::UpdatePiecePosition(const Pht::TouchEvent& touchEvent) {
     auto& cameraPosition = mScene.GetCamera().GetSceneObject().GetTransform().GetPosition();
     auto& renderer = mEngine.GetRenderer();
     auto& frustumSize = renderer.GetOrthographicFrustumSize();
@@ -146,68 +148,69 @@ Pht::Vec2 DragInputHandler::CalculatePiecePosition(const Pht::TouchEvent& touchE
     auto offsetX = -static_cast<float>(pieceDimensions.mXmin + pieceDimensions.mXmax + 1) / 2.0f;
     auto offsetY = offsetYInCells - static_cast<float>(pieceNumEmptyBottompRows);
     auto cellSize = mScene.GetCellSize();
-    
     Pht::Vec2 offset {offsetX * cellSize, offsetY * cellSize};
-    return screenLowerLeftWorldSpace + touchLocation * scaleFactor + offset;
+    auto position = screenLowerLeftWorldSpace + touchLocation * scaleFactor + offset;
+    
+    mDraggedPiece.SetPosition(position);
 }
 
-const Piece* DragInputHandler::GetPieceType(DraggedPieceIndex draggedPieceIndex) const {
+const Piece* DragInputHandler::GetPieceType(PreviewPieceIndex draggedPieceIndex) const {
     switch (draggedPieceIndex) {
-        case DraggedPieceIndex::Active:
+        case PreviewPieceIndex::Active:
             return mGameLogic.GetPieceType();
-        case DraggedPieceIndex::Selectable0:
+        case PreviewPieceIndex::Selectable0:
             return mGameLogic.GetSelectablePieces()[0];
-        case DraggedPieceIndex::Selectable1:
+        case PreviewPieceIndex::Selectable1:
             return mGameLogic.GetSelectablePieces()[1];
-        case DraggedPieceIndex::None:
+        case PreviewPieceIndex::None:
             assert(false);
             break;
     }
 }
 
-Rotation DragInputHandler::GetPieceRotation(DraggedPieceIndex draggedPieceIndex) const {
+Rotation DragInputHandler::GetPieceRotation(PreviewPieceIndex draggedPieceIndex) const {
     auto& previewPieceHudRotations = mGameLogic.GetPreviewPieceHudRotations();
     
     switch (draggedPieceIndex) {
-        case DraggedPieceIndex::Active:
+        case PreviewPieceIndex::Active:
             return previewPieceHudRotations.mActive;
-        case DraggedPieceIndex::Selectable0:
+        case PreviewPieceIndex::Selectable0:
             return previewPieceHudRotations.mSelectable0;
-        case DraggedPieceIndex::Selectable1:
+        case PreviewPieceIndex::Selectable1:
             return previewPieceHudRotations.mSelectable1;
-        case DraggedPieceIndex::None:
+        case PreviewPieceIndex::None:
             assert(false);
             break;
     }
 }
 
-Pht::Button& DragInputHandler::GetPreviewPieceButton(DraggedPieceIndex draggedPieceIndex) const {
+Pht::Button& DragInputHandler::GetPreviewPieceButton(PreviewPieceIndex draggedPieceIndex) const {
     auto& hud = mScene.GetHud();
     
     switch (draggedPieceIndex) {
-        case DraggedPieceIndex::Active:
+        case PreviewPieceIndex::Active:
             return hud.GetActivePieceButton();
-        case DraggedPieceIndex::Selectable0:
+        case PreviewPieceIndex::Selectable0:
             return hud.GetSelectable0Button();
-        case DraggedPieceIndex::Selectable1:
+        case PreviewPieceIndex::Selectable1:
             return hud.GetSelectable1Button();
-        case DraggedPieceIndex::None:
+        case PreviewPieceIndex::None:
             assert(false);
             break;
     }
 }
 
-Pht::SceneObject* DragInputHandler::GetPreviewPieceSceneObject(DraggedPieceIndex draggedPieceIndex) const {
+Pht::SceneObject* DragInputHandler::GetPreviewPieceSceneObject(PreviewPieceIndex draggedPieceIndex) const {
     auto& hud = mScene.GetHud();
     
     switch (draggedPieceIndex) {
-        case DraggedPieceIndex::Active:
+        case PreviewPieceIndex::Active:
             return hud.GetActivePreviewPieceSceneObject();
-        case DraggedPieceIndex::Selectable0:
+        case PreviewPieceIndex::Selectable0:
             return hud.GetSelectable0PreviewPieceSceneObject();
-        case DraggedPieceIndex::Selectable1:
+        case PreviewPieceIndex::Selectable1:
             return hud.GetSelectable1PreviewPieceSceneObject();
-        case DraggedPieceIndex::None:
+        case PreviewPieceIndex::None:
             assert(false);
             break;
     }
