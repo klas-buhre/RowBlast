@@ -104,6 +104,7 @@ namespace RowBlast {
         void StartBlastRadiusAnimation(const Pht::IVec2& position) override;
         void StopBlastRadiusAnimation() override;
         bool BeginDraggingPiece(PreviewPieceIndex draggedPieceIndex) override;
+        void OnDraggedPieceMoved() override;
         void StopDraggingPiece() override;
         const Piece* GetPieceType() const override;
         const TwoPieces& GetSelectablePieces() const override;
@@ -214,6 +215,7 @@ namespace RowBlast {
         void PlayLandPieceSound();
         void RemoveBlocksInsideTheShield();
         bool IsThereRoomToSwitchPiece(const Piece& pieceType);
+        bool IsDraggedPieceColliding() const;
         Result HandleInput();
         void ForwardTouchToInputHandler(const Pht::TouchEvent& touchEvent);
         bool IsInputAllowed() const;

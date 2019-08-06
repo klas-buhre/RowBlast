@@ -77,6 +77,7 @@ bool DragInputHandler::TryBeginDrag(PreviewPieceIndex draggedPieceIndex,
         auto rotation = GetPieceRotation(draggedPieceIndex);
         mDraggedPiece.BeginDrag(*pieceType, rotation);
         UpdatePiecePosition(touchEvent);
+        mPreviousGridPosition = mDraggedPiece.GetFieldGridPosition();
                             
         if (!mGameLogic.BeginDraggingPiece(draggedPieceIndex)) {
             CancelDrag();
@@ -95,6 +96,11 @@ void DragInputHandler::HandleOngoingTouch(const Pht::TouchEvent& touchEvent) {
     }
     
     UpdatePiecePosition(touchEvent);
+    auto gridPosition = mDraggedPiece.GetFieldGridPosition();
+    if (gridPosition != mPreviousGridPosition) {
+        mPreviousGridPosition = gridPosition;
+        mGameLogic.OnDraggedPieceMoved();
+    }
 }
 
 void DragInputHandler::HandleTouchEnd(const Pht::TouchEvent& touchEvent) {

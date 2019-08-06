@@ -1109,19 +1109,12 @@ bool GameLogic::BeginDraggingPiece(PreviewPieceIndex draggedPieceIndex) {
     return true;
 }
 
+void GameLogic::OnDraggedPieceMoved() {
+    // TODO: implement ghost piece row and start/stop blast radius animation here.
+}
+
 void GameLogic::StopDraggingPiece() {
-    auto& pieceType = mDraggedPiece->GetPieceType();
-    
-    PieceBlocks pieceBlocks {
-        pieceType.GetGrid(mDraggedPiece->GetRotation()),
-        pieceType.GetGridNumRows(),
-        pieceType.GetGridNumColumns()
-    };
-    
-    auto position = mDraggedPiece->GetFieldGridPosition();
-    Field::CollisionResult collisionResult;
-    mField.CheckCollision(collisionResult, pieceBlocks, position, Pht::IVec2{0, 0}, false);
-    if (collisionResult.mIsCollision != IsCollision::Yes) {
+    if (!IsDraggedPieceColliding()) {
         auto gridPosition = mDraggedPiece->GetFieldGridPosition();
         mFallingPiece->SetX(static_cast<float>(gridPosition.x));
         mFallingPiece->SetY(static_cast<float>(gridPosition.y));
@@ -1135,6 +1128,21 @@ void GameLogic::StopDraggingPiece() {
     }
     
     RemoveDraggedPiece();
+}
+
+bool GameLogic::IsDraggedPieceColliding() const {
+    auto& pieceType = mDraggedPiece->GetPieceType();
+    
+    PieceBlocks pieceBlocks {
+        pieceType.GetGrid(mDraggedPiece->GetRotation()),
+        pieceType.GetGridNumRows(),
+        pieceType.GetGridNumColumns()
+    };
+    
+    auto position = mDraggedPiece->GetFieldGridPosition();
+    Field::CollisionResult collisionResult;
+    mField.CheckCollision(collisionResult, pieceBlocks, position, Pht::IVec2{0, 0}, false);
+    return collisionResult.mIsCollision == IsCollision::Yes;
 }
 
 GameLogic::Result GameLogic::HandleInput() {

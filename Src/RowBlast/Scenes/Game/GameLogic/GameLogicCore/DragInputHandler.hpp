@@ -50,6 +50,7 @@ namespace RowBlast {
         GameScene& mScene;
         DraggedPiece& mDraggedPiece;
         State mState {State::Idle};
+        Pht::IVec2 mPreviousGridPosition;
         PreviewPieceIndex mDraggedPieceIndex {PreviewPieceIndex::None};
     };
 }

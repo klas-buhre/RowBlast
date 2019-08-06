@@ -50,6 +50,15 @@ Backlog:
 Ongoing tasks:
     -Add drag controls and release with microtransactions enabled, free to download.
 
+
+
+    -Near-term plan:
+        -Illegal moves.
+        -Ghost piece.
+        -Blast radius animation.
+        -Rotate.
+
+
     -Try to implement Alt 2:
     -The transparant active piece must be present to show how far down the falling piece is in case
      of for example a level with speed. So keep it.
