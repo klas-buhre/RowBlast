@@ -37,13 +37,14 @@ ClickInputHandler::ClickInputHandler(Pht::IEngine& engine,
                                      Field& field,
                                      const GameScene& gameScene,
                                      IGameLogic& gameLogic,
-                                     Tutorial& tutorial) :
+                                     Tutorial& tutorial,
+                                     Ai& ai) :
     mEngine {engine},
     mField {field},
     mGameScene {gameScene},
     mGameLogic {gameLogic},
     mTutorial {tutorial},
-    mAi {field},
+    mAi {ai},
     mSwipeUpRecognizer {Pht::SwipeDirection::Up, inputUnitsPerColumn} {
 
     for (auto i = 0; i < maxNumVisibleMoves; ++i) {
@@ -53,9 +54,6 @@ ClickInputHandler::ClickInputHandler(Pht::IEngine& engine,
 
 void ClickInputHandler::Init(const Level& level) {
     mState = State::Inactive;
-    
-    mAi.Init(level);
-    
     mNumClickGridRows = mField.GetNumRows() * 2 + 2;
     mNumClickGridColumns = mField.GetNumColumns() * 2 + 2;
     

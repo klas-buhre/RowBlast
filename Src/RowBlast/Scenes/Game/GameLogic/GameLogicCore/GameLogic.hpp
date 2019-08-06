@@ -1,6 +1,9 @@
 #ifndef GameLogic_hpp
 #define GameLogic_hpp
 
+// Engine includes.
+#include "Optional.hpp"
+
 // Game includes.
 #include "IGameLogic.hpp"
 #include "FallingPiece.hpp"
@@ -9,6 +12,7 @@
 #include "CollisionDetection.hpp"
 #include "Piece.hpp"
 #include "Field.hpp"
+#include "Ai.hpp"
 #include "DragInputHandler.hpp"
 #include "GestureInputHandler.hpp"
 #include "ClickInputHandler.hpp"
@@ -131,6 +135,10 @@ namespace RowBlast {
         const DraggedPiece* GetDraggedPiece() const {
             return mDraggedPiece;
         }
+        
+        Pht::Optional<int> GetDraggedGhostPieceRow() const {
+            return mDraggedGhostPieceRow;
+        }
 
         const NextPieceGenerator& GetNextPieceGenerator() const {
             return mCurrentMove.mNextPieceGenerator;
@@ -210,12 +218,13 @@ namespace RowBlast {
                                        const PieceBlocks& pieceBlocks,
                                        const Pht::IVec2& position,
                                        Direction collisionDirection);
-        BlastRadiusAnimation::Kind CalculateBlastRadiusKind(const Pht::IVec2& position);
+        BlastRadiusAnimation::Kind CalculateBlastRadiusKind(const PieceBlocks& pieceBlocks,
+                                                            const Pht::IVec2& position);
         bool LevelAllowsClearingFilledRows() const;
         void PlayLandPieceSound();
         void RemoveBlocksInsideTheShield();
         bool IsThereRoomToSwitchPiece(const Piece& pieceType);
-        bool IsDraggedPieceColliding() const;
+        void UpdateDraggedGhostPieceRowAndBlastRadiusAnimation();
         Result HandleInput();
         void ForwardTouchToInputHandler(const Pht::TouchEvent& touchEvent);
         bool IsInputAllowed() const;
@@ -271,6 +280,7 @@ namespace RowBlast {
         ComboDetector mComboDetector;
         FallingPiece mFallingPieceStorage;
         DraggedPiece mDraggedPieceStorage;
+        Ai mAi;
         DragInputHandler mDragInputHandler;
         GestureInputHandler mGestureInputHandler;
         ClickInputHandler mClickInputHandler;
@@ -287,6 +297,7 @@ namespace RowBlast {
         float mLandingNoMovementDuration {0.0f};
         float mLandingMovementDuration {0.0f};
         int mGhostPieceRow {0};
+        Pht::Optional<int> mDraggedGhostPieceRow;
         int mMovesUsed {0};
         int mMovesLeft {0};
         int mNumObjectsLeftToClear {0};

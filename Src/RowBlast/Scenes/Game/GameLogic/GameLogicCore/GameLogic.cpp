@@ -51,7 +51,17 @@ namespace {
             pieceType.GetGridNumColumns()
         };
     }
-    
+
+    PieceBlocks CreatePieceBlocks(const DraggedPiece& draggedPiece) {
+        auto& pieceType = draggedPiece.GetPieceType();
+        
+        return {
+            pieceType.GetGrid(draggedPiece.GetRotation()),
+            pieceType.GetGridNumRows(),
+            pieceType.GetGridNumColumns()
+        };
+    }
+
     bool IsBomb(const Piece& pieceType) {
         return pieceType.IsBomb() || pieceType.IsRowBomb();
     }
@@ -97,9 +107,10 @@ GameLogic::GameLogic(Pht::IEngine& engine,
     mFallingPieceAnimation {*this, mFallingPieceStorage},
     mComboDetector {engine, smallTextAnimation, effectManager},
     mDraggedPieceStorage {gameScene},
+    mAi {field},
     mDragInputHandler {engine, *this, gameScene, mDraggedPieceStorage},
     mGestureInputHandler {*this, mFallingPieceStorage},
-    mClickInputHandler {engine, field, gameScene, *this, tutorial},
+    mClickInputHandler {engine, field, gameScene, *this, tutorial, mAi},
     mFallingPiece {&mFallingPieceStorage} {
     
     scrollController.SetGameLogic(*this);
@@ -111,6 +122,7 @@ void GameLogic::Init(const Level& level) {
 
     mFieldGravity.Init();
     mFieldExplosionsStates.Init();
+    mAi.Init(level);
     mDragInputHandler.Init();
     mGestureInputHandler.Init(level);
     mClickInputHandler.Init(level);
@@ -576,9 +588,13 @@ void GameLogic::UpdateFallingPieceYpos() {
 }
 
 void GameLogic::DropFallingPiece() {
-    bool finalMovementWasADrop {mFallingPiece->GetPosition().y > mGhostPieceRow};
+    bool finalMovementWasADrop {mFallingPiece->GetPosition().y > mGhostPieceRow + 1};
     mFallingPiece->SetY(mGhostPieceRow);
-    mEngine.GetAudio().PlaySound(static_cast<Pht::AudioResourceId>(SoundId::DropWhoosh));
+    
+    if (finalMovementWasADrop) {
+        mEngine.GetAudio().PlaySound(static_cast<Pht::AudioResourceId>(SoundId::DropWhoosh));
+    }
+    
     LandFallingPiece(finalMovementWasADrop);
 }
 
@@ -1031,7 +1047,8 @@ void GameLogic::SetFallingPieceXPosWithCollisionDetection(float fallingPieceNewX
     if (mBlastRadiusAnimation.IsActive()) {
         SetBlastRadiusAnimationPositionAtGhostPiece();
         Pht::IVec2 ghostPiecePosition {mFallingPiece->GetIntPosition().x, mGhostPieceRow};
-        auto blastRadiusKind = CalculateBlastRadiusKind(ghostPiecePosition);
+        auto blastRadiusKind = CalculateBlastRadiusKind(CreatePieceBlocks(*mFallingPiece),
+                                                        ghostPiecePosition);
         if (blastRadiusKind != mBlastRadiusAnimation.GetActiveKind()) {
             mBlastRadiusAnimation.Start(blastRadiusKind);
         }
@@ -1048,7 +1065,8 @@ bool GameLogic::IsInFieldExplosionsState() const {
 
 void GameLogic::StartBlastRadiusAnimationAtGhostPiece() {
     Pht::IVec2 ghostPiecePosition {mFallingPiece->GetIntPosition().x, mGhostPieceRow};
-    mBlastRadiusAnimation.Start(CalculateBlastRadiusKind(ghostPiecePosition));
+    mBlastRadiusAnimation.Start(CalculateBlastRadiusKind(CreatePieceBlocks(*mFallingPiece),
+                                                         ghostPiecePosition));
 
     SetBlastRadiusAnimationPositionAtGhostPiece();
 }
@@ -1063,8 +1081,8 @@ void GameLogic::SetBlastRadiusAnimationPositionAtGhostPiece() {
 }
 
 void GameLogic::StartBlastRadiusAnimation(const Pht::IVec2& position) {
-    mBlastRadiusAnimation.Start(CalculateBlastRadiusKind(position));
-    
+    mBlastRadiusAnimation.Start(CalculateBlastRadiusKind(CreatePieceBlocks(*mFallingPiece),
+                                                         position));
     Pht::Vec2 blastRadiusAnimationPos {
         static_cast<float>(position.x) + 1.0f,
         static_cast<float>(position.y) + 1.0f
@@ -1077,10 +1095,9 @@ void GameLogic::StopBlastRadiusAnimation() {
     mBlastRadiusAnimation.Stop();
 }
 
-BlastRadiusAnimation::Kind GameLogic::CalculateBlastRadiusKind(const Pht::IVec2& position) {
-    auto impactedLevelBombsIfDropped =
-        mField.DetectImpactedBombs(CreatePieceBlocks(*mFallingPiece), position);
-    
+BlastRadiusAnimation::Kind GameLogic::CalculateBlastRadiusKind(const PieceBlocks& pieceBlocks,
+                                                               const Pht::IVec2& position) {
+    auto impactedLevelBombsIfDropped = mField.DetectImpactedBombs(pieceBlocks, position);
     if (!impactedLevelBombsIfDropped.IsEmpty() &&
         impactedLevelBombsIfDropped.Front().mKind == BlockKind::Bomb) {
         
@@ -1106,20 +1123,27 @@ bool GameLogic::BeginDraggingPiece(PreviewPieceIndex draggedPieceIndex) {
     mFallingPieceSpawnType = &pieceType;
     SpawnFallingPiece(FallingPieceSpawnReason::BeginDraggingPiece);
     mScene.GetHud().RemovePreviewPiece(draggedPieceIndex);
+    mAi.CalculateValidArea(*mFallingPiece);
+    UpdateDraggedGhostPieceRowAndBlastRadiusAnimation();
     return true;
 }
 
 void GameLogic::OnDraggedPieceMoved() {
-    // TODO: implement ghost piece row and start/stop blast radius animation here.
+    // TODO: implement start/stop blast radius animation here.
+    UpdateDraggedGhostPieceRowAndBlastRadiusAnimation();
 }
 
 void GameLogic::StopDraggingPiece() {
-    if (!IsDraggedPieceColliding()) {
+    if (mAi.IsPieceInValidArea(*mDraggedPiece)) {
         auto gridPosition = mDraggedPiece->GetFieldGridPosition();
         mFallingPiece->SetX(static_cast<float>(gridPosition.x));
         mFallingPiece->SetY(static_cast<float>(gridPosition.y));
         mFallingPiece->SetRotation(mDraggedPiece->GetRotation());
-        LandFallingPiece(false);
+        
+        mGhostPieceRow = mField.DetectCollisionDown(CreatePieceBlocks(*mFallingPiece),
+                                                    mFallingPiece->GetIntPosition());
+        mDraggedGhostPieceRow = mGhostPieceRow;
+        DropFallingPiece();
     } else {
         mFallingPieceSpawnType = mCurrentMove.mPieceType;
         SpawnFallingPiece(FallingPieceSpawnReason::RespawnActiveAfterStopDraggingPiece);
@@ -1130,19 +1154,35 @@ void GameLogic::StopDraggingPiece() {
     RemoveDraggedPiece();
 }
 
-bool GameLogic::IsDraggedPieceColliding() const {
-    auto& pieceType = mDraggedPiece->GetPieceType();
-    
-    PieceBlocks pieceBlocks {
-        pieceType.GetGrid(mDraggedPiece->GetRotation()),
-        pieceType.GetGridNumRows(),
-        pieceType.GetGridNumColumns()
-    };
-    
-    auto position = mDraggedPiece->GetFieldGridPosition();
-    Field::CollisionResult collisionResult;
-    mField.CheckCollision(collisionResult, pieceBlocks, position, Pht::IVec2{0, 0}, false);
-    return collisionResult.mIsCollision == IsCollision::Yes;
+void GameLogic::UpdateDraggedGhostPieceRowAndBlastRadiusAnimation() {
+    if (mAi.IsPieceInValidArea(*mDraggedPiece)) {
+        auto gridPosition = mDraggedPiece->GetFieldGridPosition();
+        mDraggedGhostPieceRow = mField.DetectCollisionDown(CreatePieceBlocks(*mDraggedPiece),
+                                                           gridPosition);
+        if (mDraggedPiece->GetPieceType().IsBomb()) {
+            Pht::IVec2 ghostPiecePosition {gridPosition.x, mDraggedGhostPieceRow.GetValue()};
+            Pht::Vec2 blastRadiusAnimationPos {
+                static_cast<float>(ghostPiecePosition.x) + 1.0f,
+                static_cast<float>(ghostPiecePosition.y) + 1.0f
+            };
+            
+            mBlastRadiusAnimation.SetPosition(blastRadiusAnimationPos);
+            auto blastRadiusKind = CalculateBlastRadiusKind(CreatePieceBlocks(*mDraggedPiece),
+                                                            ghostPiecePosition);
+            if (mBlastRadiusAnimation.IsActive()) {
+                if (blastRadiusKind != mBlastRadiusAnimation.GetActiveKind()) {
+                    mBlastRadiusAnimation.Start(blastRadiusKind);
+                }
+            } else {
+                mBlastRadiusAnimation.Start(blastRadiusKind);
+            }
+        }
+    } else {
+        mDraggedGhostPieceRow = Pht::Optional<int> {};
+        if (mBlastRadiusAnimation.IsActive()) {
+            mBlastRadiusAnimation.Stop();
+        }
+    }
 }
 
 GameLogic::Result GameLogic::HandleInput() {

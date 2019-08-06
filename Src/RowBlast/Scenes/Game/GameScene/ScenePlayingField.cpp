@@ -456,9 +456,47 @@ void ScenePlayingField::UpdateGhostPieces() {
     } else {
         // TODO: revisit when fixing gesture ghost piece.
         // UpdateGhostPieceForGestureControls(*fallingPiece);
+        
+        auto* draggedPiece = mGameLogic.GetDraggedPiece();
+        auto draggedGhostPieceRow = mGameLogic.GetDraggedGhostPieceRow();
+        if (draggedPiece && draggedGhostPieceRow.HasValue()) {
+            UpdateGhostPieceForGestureControls(draggedPiece->GetPieceType(),
+                                               draggedPiece->GetFieldGridPosition().x,
+                                               draggedGhostPieceRow.GetValue(),
+                                               draggedPiece->GetRotation());
+        }
     }
 }
 
+void ScenePlayingField::UpdateGhostPieceForGestureControls(const Piece& pieceType,
+                                                           int column,
+                                                           int ghostPieceRow,
+                                                           Rotation rotation) {
+    const auto cellSize = mScene.GetCellSize();
+    
+    Pht::Vec3 ghostPieceFieldPos {
+        static_cast<float>(column) * cellSize,
+        ghostPieceRow * cellSize,
+        mScene.GetGhostPieceZ()
+    };
+    
+    if (pieceType.GetGhostPieceRenderable()) {
+        auto& pieceGrid = pieceType.GetGrid(rotation);
+        UpdateGhostPieceBlocks(pieceGrid, ghostPieceFieldPos);
+    } else {
+        Pht::Vec3 position {ghostPieceFieldPos};
+        position.z = mScene.GetPressedGhostPieceZ();
+        auto isTransparent = true;
+        auto isGhostPiece = true;
+        UpdatePieceBlocks(pieceType,
+                          rotation,
+                          position,
+                          isTransparent,
+                          isGhostPiece,
+                          mScene.GetGhostPieces());
+    }
+}
+/*
 void ScenePlayingField::UpdateGhostPieceForGestureControls(const FallingPiece& fallingPiece) {
     const auto cellSize = mScene.GetCellSize();
     auto& pieceType = fallingPiece.GetPieceType();
@@ -485,7 +523,7 @@ void ScenePlayingField::UpdateGhostPieceForGestureControls(const FallingPiece& f
                           mScene.GetGhostPieces());
     }
 }
-
+*/
 void ScenePlayingField::UpdateGhostPiece(Pht::RenderableObject& ghostPieceRenderable,
                                          const Pht::Vec3& position,
                                          Rotation rotation) {

@@ -2,6 +2,7 @@
 
 // Game includes.
 #include "FallingPiece.hpp"
+#include "DraggedPiece.hpp"
 
 using namespace RowBlast;
 
@@ -231,4 +232,26 @@ ValidMoves& Ai::FindValidMoves(const FallingPiece& fallingPiece, int movesUsed) 
     
     mValidMovesSearch.FindValidMoves(mUpdatedValidMoves, piece, predeterminedMove, suggestedMoves);
     return mUpdatedValidMoves;
+}
+
+void Ai::CalculateValidArea(const FallingPiece& fallingPiece) {
+    mValidMoves.Clear();
+    
+    MovingPiece piece {
+        fallingPiece.GetIntPosition(),
+        fallingPiece.GetRotation(),
+        fallingPiece.GetPieceType()
+    };
+    
+    mValidMovesSearch.FindValidMoves(mValidMoves, piece, nullptr, nullptr);
+}
+
+bool Ai::IsPieceInValidArea(const DraggedPiece& draggedPiece) {
+    MovingPiece piece {
+        draggedPiece.GetFieldGridPosition(),
+        draggedPiece.GetRotation(),
+        draggedPiece.GetPieceType()
+    };
+
+    return mValidMovesSearch.IsLocationVisited(piece);
 }

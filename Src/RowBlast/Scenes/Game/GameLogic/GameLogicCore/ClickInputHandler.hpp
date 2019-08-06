@@ -43,7 +43,8 @@ namespace RowBlast {
                           Field& field,
                           const GameScene& gameScene,
                           IGameLogic& gameLogic,
-                          Tutorial& tutorial);
+                          Tutorial& tutorial,
+                          Ai& ai);
         
         void Init(const Level& level);
         void CalculateMoves(const FallingPiece& fallingPiece, int movesUsed);
@@ -73,7 +74,7 @@ namespace RowBlast {
         const GameScene& mGameScene;
         IGameLogic& mGameLogic;
         Tutorial& mTutorial;
-        Ai mAi;
+        Ai& mAi;
         State mState {State::Inactive};
         Ai::MovePtrs* mAllValidMoves {nullptr};
         VisibleMoves mVisibleMoves;

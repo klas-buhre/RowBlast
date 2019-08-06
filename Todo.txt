@@ -53,8 +53,8 @@ Ongoing tasks:
 
 
     -Near-term plan:
-        -Illegal moves.
-        -Ghost piece.
+        -Review last commit.
+        -Fix bug where pieces and bombs are considered to inside the field when they are outside.
         -Blast radius animation.
         -Rotate.
 
@@ -82,9 +82,7 @@ Ongoing tasks:
        -The ghost piece for the falling piece in gesture controls should only be visible if previous
         move was placed using gesture controls and not drag controls or if a swipe or switch piece
         was just done. Once a piece is places using drag controls the gesture ghost piece disappears
-        again.
-       -The ghost piece for the falling piece in gesture controls should disappear during a drag if
-        present.
+        again. Revisit the lines containing "// TODO: revisit when fixing gesture ghost piece.".
 
        -Maybe no welds in the dragged piece? because then the blocks can scale down slightly and
         separate a bit which feels nice. The weld can appear with the weld animation when the piece
