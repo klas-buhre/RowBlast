@@ -9,12 +9,9 @@ Backlog:
     -Could have ice blocks that are level blocks that can be used to fill and clear rows but they
      shatter if landed on or if falling down in a cascade. Or, they could turn into a normal grey
      level block if the ice is cleared which it will be by filling the row or explosion/laser.
-    -A game objective could be to clear all purple blocks. Purple blocks are affected by gravity
-     like the other colored blocks.
     -The UFO could be booster. It could clear 3 rows.
     -Maybe blocks in the visible part of the field could disappear on some levels. For each move,
      one of the colored blocks randomly disappears.
-    -Maybe a sensitivity setting. Tetris Blitz has lower sensitivity on iPad but not on iPhone.
   -Rendering:
     -Maybe add an alien landscape to the sky worlds.
     -Add dynamic batching of objects with very few indices and no rotation if the saved cost of
@@ -63,7 +60,8 @@ Ongoing tasks:
     -Can try to rotate only the preview piece being clicked in the hud. If clicking the active piece
      then the active falling piece also rotates like tapping the screen. If clicking a selectable,
      then only that selectable rotates. This might work if a click to rotate and drag start can be
-     differentiated by that the drag must move a certain distance, otherwise it is a rotate. The
+     differentiated by that the drag must move a certain distance or being touched a certain time
+     before the piece goes to the field. Or, The
      dragged piece animation can start at the beinning of the touch but it should not move it that
      much if the touch ends soon because it is a rotate click and then start the rotation animation.
      If the touch does not stop and the drag distance increases then fast-forward the dragged piece

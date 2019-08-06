@@ -576,9 +576,11 @@ void GameHud::UpdateSelectablePreviewPieceGroup() {
             UpdateSelectable1PreviewPiece(mSelectablePreviewPieces[3], selectablePieces[1], positions[4]);
         }
     } else if (previewPieceAnimationToStart == PreviewPieceAnimationToStart::NextPieceAndRefillSelectable0) {
+        UpdatePreviewPiece(mSelectablePreviewPieces[1], nullptr, positions[2]);
         UpdateSelectable0PreviewPiece(mSelectablePreviewPieces[2], selectablePieces[0], positions[3]);
         UpdatePreviewPiece(mSelectablePreviewPieces[3], nullptr, positions[3]);
     } else if (previewPieceAnimationToStart == PreviewPieceAnimationToStart::NextPieceAndRefillSelectable1) {
+        UpdatePreviewPiece(mSelectablePreviewPieces[2], nullptr, positions[3]);
         UpdatePreviewPiece(mSelectablePreviewPieces[3], nullptr, positions[3]);
     } else if (piecesChanged || shouldStartRemoveActivePieceAnimation) {
         if (shouldStartRemoveActivePieceAnimation) {
@@ -712,6 +714,48 @@ void GameHud::OnNextPieceAnimationFinished() {
     UpdatePreviewPiece(mNextPreviewPieces[0], next2Pieces[0], nextPositions[0]);
     UpdatePreviewPiece(mNextPreviewPieces[1], next2Pieces[1], nextPositions[1]);
     UpdatePreviewPiece(mNextPreviewPieces[2], nullptr, nextPositions[2]);
+}
+
+void GameHud::RemovePreviewPiece(PreviewPieceIndex previewPieceIndex) {
+    auto& selectablePositions = mSelectablePreviewPiecesRelativePositions;
+
+    switch (previewPieceIndex) {
+        case PreviewPieceIndex::Active:
+            UpdateActivePreviewPiece(mSelectablePreviewPieces[0], nullptr, selectablePositions[1]);
+            break;
+        case PreviewPieceIndex::Selectable0:
+            UpdateSelectable0PreviewPiece(mSelectablePreviewPieces[1], nullptr, selectablePositions[2]);
+            break;
+        case PreviewPieceIndex::Selectable1:
+            UpdateSelectable1PreviewPiece(mSelectablePreviewPieces[2], nullptr, selectablePositions[3]);
+            break;
+        case PreviewPieceIndex::None:
+            break;
+    }
+}
+
+void GameHud::ShowPreviewPiece(PreviewPieceIndex previewPieceIndex) {
+    auto& selectablePositions = mSelectablePreviewPiecesRelativePositions;
+    
+    switch (previewPieceIndex) {
+        case PreviewPieceIndex::Active: {
+            auto* activePiece = mGameLogic.GetPieceType();
+            UpdateActivePreviewPiece(mSelectablePreviewPieces[0], activePiece, selectablePositions[1]);
+            break;
+        }
+        case PreviewPieceIndex::Selectable0: {
+            auto& selectablePieces = mGameLogic.GetSelectablePieces();
+            UpdateSelectable0PreviewPiece(mSelectablePreviewPieces[1], selectablePieces[0], selectablePositions[2]);
+            break;
+        }
+        case PreviewPieceIndex::Selectable1: {
+            auto& selectablePieces = mGameLogic.GetSelectablePieces();
+            UpdateSelectable1PreviewPiece(mSelectablePreviewPieces[2], selectablePieces[1], selectablePositions[3]);
+            break;
+        }
+        case PreviewPieceIndex::None:
+            break;
+    }
 }
 
 void GameHud::ShowBlueMovesIcon() {

@@ -72,11 +72,7 @@ bool DragInputHandler::TryBeginDrag(PreviewPieceIndex draggedPieceIndex,
     if (GetPreviewPieceButton(draggedPieceIndex).OnTouch(touchEvent) == Pht::Button::Result::Down) {
         mState = State::Dragging;
         mDraggedPieceIndex = draggedPieceIndex;
-
-        if (auto* previewPieceSceneObject = GetPreviewPieceSceneObject(draggedPieceIndex)) {
-            previewPieceSceneObject->SetIsVisible(false);
-        }
-
+        
         auto* pieceType = GetPieceType(draggedPieceIndex);
         auto rotation = GetPieceRotation(draggedPieceIndex);
         mDraggedPiece.BeginDrag(*pieceType, rotation);
@@ -86,6 +82,7 @@ bool DragInputHandler::TryBeginDrag(PreviewPieceIndex draggedPieceIndex,
             CancelDrag();
             return false;
         }
+        
         return true;
     }
     
@@ -109,21 +106,13 @@ void DragInputHandler::HandleTouchEnd(const Pht::TouchEvent& touchEvent) {
     
     // Reset the button state.
     GetPreviewPieceButton(mDraggedPieceIndex).Reset();
-
-    if (auto* previewPieceSceneObject = GetPreviewPieceSceneObject(mDraggedPieceIndex)) {
-        previewPieceSceneObject->SetIsVisible(true);
-    }
-
+    
     mGameLogic.StopDraggingPiece();
     mDraggedPieceIndex = PreviewPieceIndex::None;
     mState = State::DragEnd;
 }
 
 void DragInputHandler::CancelDrag() {
-    if (auto* previewPieceSceneObject = GetPreviewPieceSceneObject(mDraggedPieceIndex)) {
-        previewPieceSceneObject->SetIsVisible(true);
-    }
-
     GetPreviewPieceButton(mDraggedPieceIndex).Reset();
     mDraggedPieceIndex = PreviewPieceIndex::None;
     mState = State::DragEnd;
@@ -194,22 +183,6 @@ Pht::Button& DragInputHandler::GetPreviewPieceButton(PreviewPieceIndex draggedPi
             return hud.GetSelectable0Button();
         case PreviewPieceIndex::Selectable1:
             return hud.GetSelectable1Button();
-        case PreviewPieceIndex::None:
-            assert(false);
-            break;
-    }
-}
-
-Pht::SceneObject* DragInputHandler::GetPreviewPieceSceneObject(PreviewPieceIndex draggedPieceIndex) const {
-    auto& hud = mScene.GetHud();
-    
-    switch (draggedPieceIndex) {
-        case PreviewPieceIndex::Active:
-            return hud.GetActivePreviewPieceSceneObject();
-        case PreviewPieceIndex::Selectable0:
-            return hud.GetSelectable0PreviewPieceSceneObject();
-        case PreviewPieceIndex::Selectable1:
-            return hud.GetSelectable1PreviewPieceSceneObject();
         case PreviewPieceIndex::None:
             assert(false);
             break;

@@ -256,6 +256,7 @@ namespace RowBlast {
         ShieldAnimation& mShieldAnimation;
         SmallTextAnimation& mSmallTextAnimation;
         GameHudController& mGameHudController;
+        GameScene& mScene;
         Tutorial& mTutorial;
         const SettingsService& mSettingsService;
         ControlType mControlType;

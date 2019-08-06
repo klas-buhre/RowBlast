@@ -26,6 +26,7 @@
 #include "GameHudController.hpp"
 #include "Tutorial.hpp"
 #include "AudioResources.hpp"
+#include "GameScene.hpp"
 
 using namespace RowBlast;
 
@@ -87,6 +88,7 @@ GameLogic::GameLogic(Pht::IEngine& engine,
     mShieldAnimation {shieldAnimation},
     mSmallTextAnimation {smallTextAnimation},
     mGameHudController {gameHudController},
+    mScene {gameScene},
     mTutorial {tutorial},
     mSettingsService {settingsService},
     mControlType {settingsService.GetControlType()},
@@ -1101,6 +1103,7 @@ bool GameLogic::BeginDraggingPiece(PreviewPieceIndex draggedPieceIndex) {
     mDraggedPieceIndex = draggedPieceIndex;
     mFallingPieceSpawnType = &pieceType;
     SpawnFallingPiece(FallingPieceSpawnReason::BeginDraggingPiece);
+    mScene.GetHud().RemovePreviewPiece(draggedPieceIndex);
     return true;
 }
 
@@ -1125,6 +1128,7 @@ void GameLogic::StopDraggingPiece() {
     } else {
         mFallingPieceSpawnType = mCurrentMove.mPieceType;
         SpawnFallingPiece(FallingPieceSpawnReason::RespawnActiveAfterStopDraggingPiece);
+        mScene.GetHud().ShowPreviewPiece(mDraggedPieceIndex);
         mDraggedPieceIndex = PreviewPieceIndex::None;
     }
     

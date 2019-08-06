@@ -44,7 +44,6 @@ namespace RowBlast {
         const Piece* GetPieceType(PreviewPieceIndex draggedPieceIndex) const;
         Rotation GetPieceRotation(PreviewPieceIndex draggedPieceIndex) const;
         Pht::Button& GetPreviewPieceButton(PreviewPieceIndex draggedPieceIndex) const;
-        Pht::SceneObject* GetPreviewPieceSceneObject(PreviewPieceIndex draggedPieceIndex) const;
         
         Pht::IEngine& mEngine;
         IGameLogic& mGameLogic;

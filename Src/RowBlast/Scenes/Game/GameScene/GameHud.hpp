@@ -66,6 +66,8 @@ namespace RowBlast {
         
         void OnSwitchPieceAnimationFinished();
         void OnNextPieceAnimationFinished();
+        void RemovePreviewPiece(PreviewPieceIndex previewPieceIndex);
+        void ShowPreviewPiece(PreviewPieceIndex previewPieceIndex);
         void Update();
         void ShowBlueMovesIcon();
         void ShowYellowMovesIcon();
