@@ -454,6 +454,7 @@ void ScenePlayingField::UpdateGhostPieces() {
     if (mGameLogic.IsUsingClickControls()) {
         UpdateClickableGhostPieces(*fallingPiece);
     } else {
+        // TODO: revisit when fixing gesture ghost piece.
         // UpdateGhostPieceForGestureControls(*fallingPiece);
     }
 }

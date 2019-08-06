@@ -227,7 +227,8 @@ GameLogic::Result GameLogic::SpawnFallingPiece(FallingPieceSpawnReason fallingPi
     if (mCurrentMove.mPieceType->IsBomb() && mControlType == ControlType::Gesture &&
         fallingPieceSpawnReason != FallingPieceSpawnReason::BeginDraggingPiece) {
 
-        StartBlastRadiusAnimationAtGhostPiece();
+        // TODO: revisit when fixing gesture ghost piece.
+        // StartBlastRadiusAnimationAtGhostPiece();
     }
     
     if (mControlType == ControlType::Click) {
@@ -461,7 +462,8 @@ void GameLogic::HandleControlTypeChange() {
                 break;
             case ControlType::Gesture:
                 if (mCurrentMove.mPieceType->IsBomb()) {
-                    StartBlastRadiusAnimationAtGhostPiece();
+                    // TODO: revisit when fixing gesture ghost piece.
+                    // StartBlastRadiusAnimationAtGhostPiece();
                 }
                 break;
         }
