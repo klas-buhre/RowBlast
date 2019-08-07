@@ -53,7 +53,9 @@ Ongoing tasks:
 
 
     -Near-term plan:
-        -Rotate.
+        -Rotate by clicking preview piece.
+        -Non-reachable empty cells can have red stripes that fade in when starting a drag.
+         Preferably with a red egde round the area.
 
 
     -Try to implement Alt 2:
@@ -63,15 +65,24 @@ Ongoing tasks:
     -The field must be moved upward at least one cell. Instead of modifyeing the envmap texture, it
      might work to move the camera 1.0 of 2.0 backwards to bet a bigger bright env map area. Or
      move the field backwards in z-direction, it is the distance to camera tha matters.
-    -Can try to rotate only the preview piece being clicked in the hud. If clicking the active piece
-     then the active falling piece also rotates like tapping the screen. If clicking a selectable,
-     then only that selectable rotates. This might work if a click to rotate and drag start can be
-     differentiated by that the drag must move a certain distance or being touched a certain time
-     before the piece goes to the field. Or, The
-     dragged piece animation can start at the beinning of the touch but it should not move it that
-     much if the touch ends soon because it is a rotate click and then start the rotation animation.
-     If the touch does not stop and the drag distance increases then fast-forward the dragged piece
-     animation to enable fast play.
+    -Can try to rotate only the preview piece being clicked in the hud. If clicking the active
+     preview piece then only the preview piece rotates, not the active piece falling piece for
+     gesture controls since it can rotate in two different directions.
+        -This might work if a click to rotate and drag start can be differentiated by that the drag
+         must move a certain distance or being touched a certain time before the piece goes to the
+         field.
+        -Or, The dragged piece animation can start at the beinning of the touch but it should not
+         move the preview piece that much if the touch ends soon because it is a rotate click and
+         then start the rotation animation. If the touch does not stop and the drag distance
+         increases then fast-forward the dragged piece animation to enable fast play.
+        -Or, the dragged piece animation could work like this: the preview piece offset is zero at
+         time zero and touch translation zero, but as time and touch translation increases, so does
+         the offset. This means that the offset should be almost zero for a click.
+
+    -Sometimes moves that seem feasible are unreachable due to the way pieces are rotated by the AI.
+     Maybe look into some new rotation system like SRS or simplify the rotations by just saying that
+     if there is a continious path (at least one cell wide) from the falling piece to the move then
+     it is legal even if the piece is wider than one cell.
 
     -Maybe a transparant real piece should be dragged in with a ghost piece under it.
      Or it has to be a real piece since a transparant piece might not be clear enough in daylight
@@ -92,11 +103,6 @@ Ongoing tasks:
         selectables in the hud then the piece could travel really quickly in the DraggedPiece
         render pass and the the piece could simply appear in one frame in the selectables.
        -The transparant piece at the top might have welds if rendered front to back with depth test.
-       -The ghost piece could be at the place where the piece would land if released, not the actual
-        location it is currently dragged to. So if the piece is being dragged to an area several
-        rows above a couple of blocks then the ghost piece would be several rows below by those
-        blocks, exactly like in swipe controls.
-       -The ghost piece should not be visible if the dragged piece is over an illegal area.
        -Alt 1: When the piece is released, there could be a falling piece animation going from the real
         piece at the top down to the landing location, which may be below the release location.
         Then it will be clearer that pieces can only be placed at locations that are reachable from
@@ -112,10 +118,6 @@ Ongoing tasks:
         have red stripes.
        -(Note A) Could even have a falling piece animation that stops at the closest legal move and then goes
         back to to top, if the user tries to drag in a piece to an illegal move.
-    -Create a DragInputHandler that handles drag input.
-    -Create a DraggedPiece that has a state, scene position and field grid position.
-     It should know where to quickly travel when touched in the hud so that the
-     DraggedPieceAnimation can animate that.
     -Create a DraggedPieceAnimation for animating the dragged piece leaving the selectables
      container, going back to the selectables and being placed at a legal move in the field.
 
