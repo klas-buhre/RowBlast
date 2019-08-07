@@ -71,7 +71,6 @@ namespace RowBlast {
                                                 int column,
                                                 int ghostPieceRow,
                                                 Rotation rotation);
-        // void UpdateGhostPieceForGestureControls(const FallingPiece& fallingPiece);
         void UpdateGhostPiece(Pht::RenderableObject& ghostPieceRenderable,
                               const Pht::Vec3& position,
                               Rotation rotation);

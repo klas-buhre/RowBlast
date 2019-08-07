@@ -225,6 +225,7 @@ namespace RowBlast {
         void RemoveBlocksInsideTheShield();
         bool IsThereRoomToSwitchPiece(const Piece& pieceType);
         void UpdateDraggedGhostPieceRowAndBlastRadiusAnimation();
+        bool IsDraggedPieceInValidArea();
         Result HandleInput();
         void ForwardTouchToInputHandler(const Pht::TouchEvent& touchEvent);
         bool IsInputAllowed() const;

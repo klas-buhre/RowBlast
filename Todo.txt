@@ -53,9 +53,6 @@ Ongoing tasks:
 
 
     -Near-term plan:
-        -Review last commit.
-        -Fix bug where pieces and bombs are considered to inside the field when they are outside.
-        -Blast radius animation.
         -Rotate.
 
 
