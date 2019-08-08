@@ -66,10 +66,15 @@ Ongoing tasks:
      move the field backwards in z-direction, it is the distance to camera tha matters.
 
     -Sometimes moves that seem feasible are unreachable due to the way pieces are rotated by the AI.
-     Maybe look into some new rotation system like SRS or simplify the rotations by just saying that
-     if there is a contineous path (at least one cell wide) from the falling piece to the move then
-     it is legal even if the piece is wider than one cell.
+     Maybe look into some new rotation system like SRS. Or simplify the rotations by just saying that
+     if there is a contineous path (at least N cells wide, where N is the max width of the piece)
+     from the falling piece to the move then it is legal. Try to add this to the exisisting
+     ValidMovesSearch without removing the old searhc alogrithms since we still need the existing
+     types of searches for the FallingPieceAnimation for example.
 
+    -Maybe the only time the preview pieces should rotate is when clicked. So dont rotate on new
+     move and tapping the screen. It is less confusing that way.
+s
     -Maybe a transparant real piece should be dragged in with a ghost piece under it.
      Or it has to be a real piece since a transparant piece might not be clear enough in daylight
      conditions. Or could be a move image (more bright).
