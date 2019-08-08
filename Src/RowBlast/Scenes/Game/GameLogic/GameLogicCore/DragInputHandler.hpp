@@ -21,9 +21,10 @@ namespace RowBlast {
     class DragInputHandler {
     public:
         enum class State {
+            Idle,
+            TouchingPreviewPieceButton,
             Dragging,
-            DragEnd,
-            Idle
+            DragEnd
         };
         
         DragInputHandler(Pht::IEngine& engine,
@@ -38,9 +39,14 @@ namespace RowBlast {
         void HandleTouchBegin(const Pht::TouchEvent& touchEvent);
         void HandleOngoingTouch(const Pht::TouchEvent& touchEvent);
         void HandleTouchEnd(const Pht::TouchEvent& touchEvent);
-        bool TryBeginDrag(PreviewPieceIndex draggedPieceIndex, const Pht::TouchEvent& touchEvent);
-        void CancelDrag();
+        void HandleTouchBeginInIdleState(const Pht::TouchEvent& touchEvent);
+        void HandleOngoingTouchInTouchingPreviewPieceButtonState(const Pht::TouchEvent& touchEvent);
+        void HandleOngoingTouchInDraggingState(const Pht::TouchEvent& touchEvent);
+        void EndDrag();
+        void HandleTouchEndInTouchingPreviewPieceButtonState(const Pht::TouchEvent& touchEvent);
+        void HandleTouchEndInDraggingState(const Pht::TouchEvent& touchEvent);
         void UpdatePiecePosition(const Pht::TouchEvent& touchEvent);
+        PreviewPieceIndex CalculateDraggedPieceIndexAtTouchBegin(const Pht::TouchEvent& touchEvent);
         const Piece* GetPieceType(PreviewPieceIndex draggedPieceIndex) const;
         Rotation GetPieceRotation(PreviewPieceIndex draggedPieceIndex) const;
         Pht::Button& GetPreviewPieceButton(PreviewPieceIndex draggedPieceIndex) const;

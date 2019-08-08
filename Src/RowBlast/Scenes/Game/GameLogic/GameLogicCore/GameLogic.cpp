@@ -844,6 +844,38 @@ void GameLogic::RemoveBlocksInsideTheShield() {
     }
 }
 
+void GameLogic::RotatePreviewPiece(PreviewPieceIndex previewPieceIndex) {
+    switch (previewPieceIndex) {
+        case PreviewPieceIndex::Active:
+            RotatePreviewPiece(mCurrentMove.mPreviewPieceRotations.mRotations.mActive,
+                               mCurrentMove.mPieceType,
+                               Pht::Optional<int> {});
+            RotatePreviewPiece(mCurrentMove.mPreviewPieceRotations.mHudRotations.mActive,
+                               mCurrentMove.mPieceType,
+                               4);
+            break;
+        case PreviewPieceIndex::Selectable0:
+            RotatePreviewPiece(mCurrentMove.mPreviewPieceRotations.mRotations.mSelectable0,
+                               mCurrentMove.mSelectablePieces[0],
+                               Pht::Optional<int> {});
+            RotatePreviewPiece(mCurrentMove.mPreviewPieceRotations.mHudRotations.mSelectable0,
+                               mCurrentMove.mSelectablePieces[0],
+                               4);
+            break;
+        case PreviewPieceIndex::Selectable1:
+            RotatePreviewPiece(mCurrentMove.mPreviewPieceRotations.mRotations.mSelectable1,
+                               mCurrentMove.mSelectablePieces[1],
+                               Pht::Optional<int> {});
+            RotatePreviewPiece(mCurrentMove.mPreviewPieceRotations.mHudRotations.mSelectable1,
+                               mCurrentMove.mSelectablePieces[1],
+                               4);
+            break;
+        case PreviewPieceIndex::None:
+            assert(false);
+            break;
+    }
+}
+
 void GameLogic::RotatePreviewPieces() {
     RotatePreviewPieces(mCurrentMove.mPreviewPieceRotations.mRotations, Pht::Optional<int> {});
     RotatePreviewPieces(mCurrentMove.mPreviewPieceRotations.mHudRotations, 4);

@@ -99,6 +99,7 @@ namespace RowBlast {
         void DropFallingPiece() override;
         void SelectMove(const Move& move) override;
         void OnFallingPieceAnimationFinished(bool finalMovementWasADrop) override;
+        void RotatePreviewPiece(PreviewPieceIndex previewPieceIndex) override;
         void RotatePreviewPieces() override;
         void RotatePiece(const Pht::TouchEvent& touchEvent) override;
         void SwitchPiece() override;

@@ -15,6 +15,9 @@ using namespace RowBlast;
 
 namespace {
     constexpr auto offsetYInCells = 1.5f;
+    constexpr auto dragBeginDistanceThreshold = 5.0f;
+    constexpr auto dragBeginDistanceThresholdSquared =
+        dragBeginDistanceThreshold * dragBeginDistanceThreshold;
 }
 
 DragInputHandler::DragInputHandler(Pht::IEngine& engine,
@@ -58,43 +61,64 @@ DragInputHandler::State DragInputHandler::HandleTouch(const Pht::TouchEvent& tou
 }
 
 void DragInputHandler::HandleTouchBegin(const Pht::TouchEvent& touchEvent) {
-    if (TryBeginDrag(PreviewPieceIndex::Active, touchEvent)) {
-        return;
-    } else if (TryBeginDrag(PreviewPieceIndex::Selectable0, touchEvent)) {
-        return;
-    } else {
-        TryBeginDrag(PreviewPieceIndex::Selectable1, touchEvent);
+    switch (mState) {
+        case State::Idle:
+            HandleTouchBeginInIdleState(touchEvent);
+            break;
+        case State::TouchingPreviewPieceButton:
+        case State::Dragging:
+        case State::DragEnd:
+            assert(false);
+            break;
     }
-}
-
-bool DragInputHandler::TryBeginDrag(PreviewPieceIndex draggedPieceIndex,
-                                    const Pht::TouchEvent& touchEvent) {
-    if (GetPreviewPieceButton(draggedPieceIndex).OnTouch(touchEvent) == Pht::Button::Result::Down) {
-        mState = State::Dragging;
-        mDraggedPieceIndex = draggedPieceIndex;
-        
-        auto* pieceType = GetPieceType(draggedPieceIndex);
-        auto rotation = GetPieceRotation(draggedPieceIndex);
-        mDraggedPiece.BeginDrag(*pieceType, rotation);
-        UpdatePiecePosition(touchEvent);
-        mPreviousGridPosition = mDraggedPiece.GetFieldGridPosition();
-                            
-        if (!mGameLogic.BeginDraggingPiece(draggedPieceIndex)) {
-            CancelDrag();
-            return false;
-        }
-        
-        return true;
-    }
-    
-    return false;
 }
 
 void DragInputHandler::HandleOngoingTouch(const Pht::TouchEvent& touchEvent) {
-    if (mState == State::Idle) {
+    switch (mState) {
+        case State::Idle:
+            break;
+        case State::TouchingPreviewPieceButton:
+            HandleOngoingTouchInTouchingPreviewPieceButtonState(touchEvent);
+            break;
+        case State::Dragging:
+            HandleOngoingTouchInDraggingState(touchEvent);
+            break;
+        case State::DragEnd:
+            assert(false);
+            break;
+    }
+}
+
+void DragInputHandler::HandleTouchBeginInIdleState(const Pht::TouchEvent& touchEvent) {
+    auto draggedPieceIndex = CalculateDraggedPieceIndexAtTouchBegin(touchEvent);
+    if (draggedPieceIndex == PreviewPieceIndex::None) {
         return;
     }
     
+    mState = State::TouchingPreviewPieceButton;
+    mDraggedPieceIndex = draggedPieceIndex;
+}
+
+void
+DragInputHandler::HandleOngoingTouchInTouchingPreviewPieceButtonState(const Pht::TouchEvent& touchEvent) {
+    auto dragDistanceSquared =
+        touchEvent.mTranslation.x * touchEvent.mTranslation.x + touchEvent.mTranslation.y * touchEvent.mTranslation.y;
+    if (dragDistanceSquared > dragBeginDistanceThresholdSquared) {
+        mState = State::Dragging;
+        
+        auto* pieceType = GetPieceType(mDraggedPieceIndex);
+        auto rotation = GetPieceRotation(mDraggedPieceIndex);
+        mDraggedPiece.BeginDrag(*pieceType, rotation);
+        UpdatePiecePosition(touchEvent);
+        mPreviousGridPosition = mDraggedPiece.GetFieldGridPosition();
+        
+        if (!mGameLogic.BeginDraggingPiece(mDraggedPieceIndex)) {
+            EndDrag();
+        }
+    }
+}
+
+void DragInputHandler::HandleOngoingTouchInDraggingState(const Pht::TouchEvent& touchEvent) {
     UpdatePiecePosition(touchEvent);
     auto gridPosition = mDraggedPiece.GetFieldGridPosition();
     if (gridPosition != mPreviousGridPosition) {
@@ -104,21 +128,33 @@ void DragInputHandler::HandleOngoingTouch(const Pht::TouchEvent& touchEvent) {
 }
 
 void DragInputHandler::HandleTouchEnd(const Pht::TouchEvent& touchEvent) {
-    if (mState == State::Idle) {
-        return;
+    switch (mState) {
+        case State::Idle:
+            break;
+        case State::TouchingPreviewPieceButton:
+            HandleTouchEndInTouchingPreviewPieceButtonState(touchEvent);
+            break;
+        case State::Dragging:
+            HandleTouchEndInDraggingState(touchEvent);
+            break;
+        case State::DragEnd:
+            assert(false);
+            break;
     }
-    
-    UpdatePiecePosition(touchEvent);
-    
-    // Reset the button state.
-    GetPreviewPieceButton(mDraggedPieceIndex).Reset();
-    
-    mGameLogic.StopDraggingPiece();
-    mDraggedPieceIndex = PreviewPieceIndex::None;
-    mState = State::DragEnd;
 }
 
-void DragInputHandler::CancelDrag() {
+void DragInputHandler::HandleTouchEndInTouchingPreviewPieceButtonState(const Pht::TouchEvent& touchEvent) {
+    mGameLogic.RotatePreviewPiece(mDraggedPieceIndex);
+    EndDrag();
+}
+    
+void DragInputHandler::HandleTouchEndInDraggingState(const Pht::TouchEvent& touchEvent) {
+    UpdatePiecePosition(touchEvent);
+    mGameLogic.StopDraggingPiece();
+    EndDrag();
+}
+
+void DragInputHandler::EndDrag() {
     GetPreviewPieceButton(mDraggedPieceIndex).Reset();
     mDraggedPieceIndex = PreviewPieceIndex::None;
     mState = State::DragEnd;
@@ -147,6 +183,23 @@ void DragInputHandler::UpdatePiecePosition(const Pht::TouchEvent& touchEvent) {
     auto position = screenLowerLeftWorldSpace + touchLocation * scaleFactor + offset;
     
     mDraggedPiece.SetPosition(position);
+}
+    
+PreviewPieceIndex
+DragInputHandler::CalculateDraggedPieceIndexAtTouchBegin(const Pht::TouchEvent& touchEvent) {
+    if (GetPreviewPieceButton(PreviewPieceIndex::Active).OnTouch(touchEvent) == Pht::Button::Result::Down) {
+        return PreviewPieceIndex::Active;
+    }
+    
+    if (GetPreviewPieceButton(PreviewPieceIndex::Selectable0).OnTouch(touchEvent) == Pht::Button::Result::Down) {
+        return PreviewPieceIndex::Selectable0;
+    }
+
+    if (GetPreviewPieceButton(PreviewPieceIndex::Selectable1).OnTouch(touchEvent) == Pht::Button::Result::Down) {
+        return PreviewPieceIndex::Selectable1;
+    }
+
+    return PreviewPieceIndex::None;
 }
 
 const Piece* DragInputHandler::GetPieceType(PreviewPieceIndex draggedPieceIndex) const {

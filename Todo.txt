@@ -53,7 +53,6 @@ Ongoing tasks:
 
 
     -Near-term plan:
-        -Rotate by clicking preview piece.
         -Non-reachable empty cells can have red stripes that fade in when starting a drag.
          Preferably with a red egde round the area.
 
@@ -65,23 +64,10 @@ Ongoing tasks:
     -The field must be moved upward at least one cell. Instead of modifyeing the envmap texture, it
      might work to move the camera 1.0 of 2.0 backwards to bet a bigger bright env map area. Or
      move the field backwards in z-direction, it is the distance to camera tha matters.
-    -Can try to rotate only the preview piece being clicked in the hud. If clicking the active
-     preview piece then only the preview piece rotates, not the active piece falling piece for
-     gesture controls since it can rotate in two different directions.
-        -This might work if a click to rotate and drag start can be differentiated by that the drag
-         must move a certain distance or being touched a certain time before the piece goes to the
-         field.
-        -Or, The dragged piece animation can start at the beinning of the touch but it should not
-         move the preview piece that much if the touch ends soon because it is a rotate click and
-         then start the rotation animation. If the touch does not stop and the drag distance
-         increases then fast-forward the dragged piece animation to enable fast play.
-        -Or, the dragged piece animation could work like this: the preview piece offset is zero at
-         time zero and touch translation zero, but as time and touch translation increases, so does
-         the offset. This means that the offset should be almost zero for a click.
 
     -Sometimes moves that seem feasible are unreachable due to the way pieces are rotated by the AI.
      Maybe look into some new rotation system like SRS or simplify the rotations by just saying that
-     if there is a continious path (at least one cell wide) from the falling piece to the move then
+     if there is a contineous path (at least one cell wide) from the falling piece to the move then
      it is legal even if the piece is wider than one cell.
 
     -Maybe a transparant real piece should be dragged in with a ghost piece under it.
