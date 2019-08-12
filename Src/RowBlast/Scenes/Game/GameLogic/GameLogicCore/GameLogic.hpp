@@ -186,6 +186,11 @@ namespace RowBlast {
 
         Result SpawnFallingPiece(FallingPieceSpawnReason fallingPieceSpawnReason);
         const Piece& CalculatePieceType(FallingPieceSpawnReason fallingPieceSpawnReason);
+        void ShiftPreviewPieceToTheLeft(PreviewPieceIndex previewPieceIndex);
+        void SetPreviewPiece(PreviewPieceIndex previewPieceIndex,
+                             const Piece* pieceType,
+                             Rotation rotation,
+                             Rotation hudRotation);
         void ManageMoveHistory(FallingPieceSpawnReason fallingPieceSpawnReason);
         void StartBlastRadiusAnimationAtGhostPiece();
         void SetBlastRadiusAnimationPositionAtGhostPiece();

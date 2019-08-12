@@ -273,27 +273,83 @@ const Piece& GameLogic::CalculatePieceType(FallingPieceSpawnReason fallingPieceS
         switch (mDraggedPieceIndex) {
             case PreviewPieceIndex::Active:
             case PreviewPieceIndex::None:
-                mCurrentMove.mPieceType = mCurrentMove.mSelectablePieces[0];
-                mCurrentMove.mSelectablePieces[0] = mCurrentMove.mSelectablePieces[1];
-                mCurrentMove.mSelectablePieces[1] = &mCurrentMove.mNextPieceGenerator.GetNext();
+                ShiftPreviewPieceToTheLeft(PreviewPieceIndex::Selectable0);
+                ShiftPreviewPieceToTheLeft(PreviewPieceIndex::Selectable1);
+                SetPreviewPiece(PreviewPieceIndex::Selectable1,
+                                &mCurrentMove.mNextPieceGenerator.GetNext(),
+                                Rotation::Deg0,
+                                Rotation::Deg0);
                 mPreviewPieceAnimationToStart = PreviewPieceAnimationToStart::NextPieceAndSwitch;
                 break;
             case PreviewPieceIndex::Selectable0:
-                mCurrentMove.mSelectablePieces[0] = mCurrentMove.mSelectablePieces[1];
-                mCurrentMove.mSelectablePieces[1] = &mCurrentMove.mNextPieceGenerator.GetNext();
+                ShiftPreviewPieceToTheLeft(PreviewPieceIndex::Selectable1);
+                SetPreviewPiece(PreviewPieceIndex::Selectable1,
+                                &mCurrentMove.mNextPieceGenerator.GetNext(),
+                                Rotation::Deg0,
+                                Rotation::Deg0);
                 mPreviewPieceAnimationToStart = PreviewPieceAnimationToStart::NextPieceAndRefillSelectable0;
                 break;
             case PreviewPieceIndex::Selectable1:
-                mCurrentMove.mSelectablePieces[1] = &mCurrentMove.mNextPieceGenerator.GetNext();
+                SetPreviewPiece(PreviewPieceIndex::Selectable1,
+                                &mCurrentMove.mNextPieceGenerator.GetNext(),
+                                Rotation::Deg0,
+                                Rotation::Deg0);
                 mPreviewPieceAnimationToStart = PreviewPieceAnimationToStart::NextPieceAndRefillSelectable1;
                 break;
         }
         
         mDraggedPieceIndex = PreviewPieceIndex::None;
-        mCurrentMove.mPreviewPieceRotations = PieceRotations {};
+        // mCurrentMove.mPreviewPieceRotations = PieceRotations {};
     }
     
     return *mCurrentMove.mPieceType;
+}
+
+void GameLogic::ShiftPreviewPieceToTheLeft(PreviewPieceIndex previewPieceIndex) {
+    auto& pieceRotations = mCurrentMove.mPreviewPieceRotations;
+    switch (previewPieceIndex) {
+        case PreviewPieceIndex::Selectable0:
+            mCurrentMove.mPieceType = mCurrentMove.mSelectablePieces[0];
+            pieceRotations.mRotations.mActive = pieceRotations.mRotations.mSelectable0;
+            pieceRotations.mHudRotations.mActive = pieceRotations.mHudRotations.mSelectable0;
+            break;
+        case PreviewPieceIndex::Selectable1:
+            mCurrentMove.mSelectablePieces[0] = mCurrentMove.mSelectablePieces[1];
+            pieceRotations.mRotations.mSelectable0 = pieceRotations.mRotations.mSelectable1;
+            pieceRotations.mHudRotations.mSelectable0 = pieceRotations.mHudRotations.mSelectable1;
+            break;
+        case PreviewPieceIndex::Active:
+        case PreviewPieceIndex::None:
+            assert(false);
+            break;
+    }
+}
+
+void GameLogic::SetPreviewPiece(PreviewPieceIndex previewPieceIndex,
+                                const Piece* pieceType,
+                                Rotation rotation,
+                                Rotation hudRotation) {
+    auto& pieceRotations = mCurrentMove.mPreviewPieceRotations;
+    switch (previewPieceIndex) {
+        case PreviewPieceIndex::Active:
+            mCurrentMove.mPieceType = pieceType;
+            pieceRotations.mRotations.mActive = rotation;
+            pieceRotations.mHudRotations.mActive = hudRotation;
+            break;
+        case PreviewPieceIndex::Selectable0:
+            mCurrentMove.mSelectablePieces[0] = pieceType;
+            pieceRotations.mRotations.mSelectable0 = rotation;
+            pieceRotations.mHudRotations.mSelectable0 = hudRotation;
+            break;
+        case PreviewPieceIndex::Selectable1:
+            mCurrentMove.mSelectablePieces[1] = pieceType;
+            pieceRotations.mRotations.mSelectable1 = rotation;
+            pieceRotations.mHudRotations.mSelectable1 = hudRotation;
+            break;
+        case PreviewPieceIndex::None:
+            assert(false);
+            break;
+    }
 }
 
 const Piece* GameLogic::GetPieceType() const {
@@ -1239,11 +1295,27 @@ Pht::Optional<int> GameLogic::IsDraggedPieceInValidArea() {
     Field::CollisionResult collisionResult;
     mField.CheckCollision(collisionResult, pieceBlocks, piecePosition, Pht::IVec2{0, 0}, false);
     if (collisionResult.mIsCollision != IsCollision::Yes) {
+        Rotation rotation = mDraggedPiece->GetRotation();
         auto rowIfDropped = mField.DetectCollisionDown(pieceBlocks, piecePosition);
         Pht::IVec2 positionIfDropped {piecePosition.x, rowIfDropped};
-        Move moveIfDropped {.mPosition = positionIfDropped, mDraggedPiece->GetRotation()};
+        Move moveIfDropped {.mPosition = positionIfDropped, rotation};
         if (mAllValidMoves->Find(moveIfDropped)) {
-            return rowIfDropped;
+            return positionIfDropped.y;
+        }
+
+        auto& duplicateMoveCheck = mDraggedPiece->GetPieceType().GetDuplicateMoveCheck(rotation);
+        if (duplicateMoveCheck.HasValue()) {
+            auto& duplicateMoveCheckValue = duplicateMoveCheck.GetValue();
+            
+            Move moveIfDropped {
+                .mPosition = positionIfDropped + duplicateMoveCheckValue.mRelativePosition,
+                .mRotation = duplicateMoveCheckValue.mRotation
+            };
+            
+            if (mAllValidMoves->Find(moveIfDropped)) {
+                return positionIfDropped.y;
+            }
+
         }
     }
     
