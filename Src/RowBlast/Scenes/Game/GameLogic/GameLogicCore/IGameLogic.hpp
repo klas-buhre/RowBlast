@@ -44,6 +44,7 @@ namespace RowBlast {
         virtual void StopDraggingPiece() = 0;
         virtual const Piece* GetPieceType() const = 0;
         virtual const TwoPieces& GetSelectablePieces() const = 0;
+        virtual const PreviewPieceRotations& GetPreviewPieceRotations() const = 0;
         virtual const PreviewPieceRotations& GetPreviewPieceHudRotations() const = 0;
     };
 }

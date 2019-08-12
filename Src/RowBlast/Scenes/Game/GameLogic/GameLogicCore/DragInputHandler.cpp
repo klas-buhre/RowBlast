@@ -217,15 +217,15 @@ const Piece* DragInputHandler::GetPieceType(PreviewPieceIndex draggedPieceIndex)
 }
 
 Rotation DragInputHandler::GetPieceRotation(PreviewPieceIndex draggedPieceIndex) const {
-    auto& previewPieceHudRotations = mGameLogic.GetPreviewPieceHudRotations();
+    auto& previewPieceRotations = mGameLogic.GetPreviewPieceRotations();
     
     switch (draggedPieceIndex) {
         case PreviewPieceIndex::Active:
-            return previewPieceHudRotations.mActive;
+            return previewPieceRotations.mActive;
         case PreviewPieceIndex::Selectable0:
-            return previewPieceHudRotations.mSelectable0;
+            return previewPieceRotations.mSelectable0;
         case PreviewPieceIndex::Selectable1:
-            return previewPieceHudRotations.mSelectable1;
+            return previewPieceRotations.mSelectable1;
         case PreviewPieceIndex::None:
             assert(false);
             break;

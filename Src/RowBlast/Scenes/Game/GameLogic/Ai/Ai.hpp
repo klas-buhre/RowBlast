@@ -21,8 +21,6 @@ namespace RowBlast {
         void Init(const Level& level);
         MovePtrs& CalculateMoves(const FallingPiece& fallingPiece, int movesUsed);
         ValidMoves& FindValidMoves(const FallingPiece& fallingPiece, int movesUsed);
-        void CalculateValidArea(const FallingPiece& fallingPiece);
-        bool IsPieceInValidArea(const DraggedPiece& draggedPiece);
         
     private:
         const Level::TutorialMove* GetPredeterminedMove(const FallingPiece& fallingPiece,

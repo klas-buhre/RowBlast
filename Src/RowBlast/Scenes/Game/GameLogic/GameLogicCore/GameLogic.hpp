@@ -113,6 +113,7 @@ namespace RowBlast {
         void StopDraggingPiece() override;
         const Piece* GetPieceType() const override;
         const TwoPieces& GetSelectablePieces() const override;
+        const PreviewPieceRotations& GetPreviewPieceRotations() const override;
         const PreviewPieceRotations& GetPreviewPieceHudRotations() const override;
         
         void Init(const Level& level);
@@ -226,7 +227,7 @@ namespace RowBlast {
         void RemoveBlocksInsideTheShield();
         bool IsThereRoomToSwitchPiece(const Piece& pieceType);
         void UpdateDraggedGhostPieceRowAndBlastRadiusAnimation();
-        bool IsDraggedPieceInValidArea();
+        Pht::Optional<int> IsDraggedPieceInValidArea();
         Result HandleInput();
         void ForwardTouchToInputHandler(const Pht::TouchEvent& touchEvent);
         bool IsInputAllowed() const;
@@ -283,6 +284,7 @@ namespace RowBlast {
         FallingPiece mFallingPieceStorage;
         DraggedPiece mDraggedPieceStorage;
         Ai mAi;
+        Moves* mAllValidMoves {nullptr};
         DragInputHandler mDragInputHandler;
         GestureInputHandler mGestureInputHandler;
         ClickInputHandler mClickInputHandler;
