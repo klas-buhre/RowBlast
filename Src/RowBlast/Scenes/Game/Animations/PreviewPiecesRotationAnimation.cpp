@@ -88,6 +88,12 @@ void PreviewPiecesRotationAnimation::Update(float dt) {
             case PreviewPieceAnimationToStart::SwitchPiece:
                 HandleNextPieceOrSwitch();
                 break;
+            case PreviewPieceAnimationToStart::NextPieceAndRefillActive:
+            case PreviewPieceAnimationToStart::NextPieceAndRefillSelectable0:
+            case PreviewPieceAnimationToStart::NextPieceAndRefillSelectable1:
+                mTargetRotations = mGameLogic.GetPreviewPieceHudRotations();
+                SetAnglesAccordingTotargets();
+                break;
             default:
                 break;
         }

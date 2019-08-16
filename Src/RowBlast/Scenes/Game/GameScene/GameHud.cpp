@@ -531,6 +531,7 @@ void GameHud::UpdateNextPreviewPieceGroup() {
 bool GameHud::ShouldStartNextPieceAnimation() const {
     switch (mGameLogic.GetPreviewPieceAnimationToStart()) {
         case PreviewPieceAnimationToStart::NextPieceAndSwitch:
+        case PreviewPieceAnimationToStart::NextPieceAndRefillActive:
         case PreviewPieceAnimationToStart::NextPieceAndRefillSelectable0:
         case PreviewPieceAnimationToStart::NextPieceAndRefillSelectable1:
             return true;
@@ -543,7 +544,8 @@ void GameHud::UpdateSelectablePreviewPieceGroup() {
     auto previewPieceAnimationToStart = mGameLogic.GetPreviewPieceAnimationToStart();
     
     auto shouldStartNextPieceAndSwitchAnimation =
-        previewPieceAnimationToStart == PreviewPieceAnimationToStart::NextPieceAndSwitch;
+        previewPieceAnimationToStart == PreviewPieceAnimationToStart::NextPieceAndSwitch ||
+        previewPieceAnimationToStart == PreviewPieceAnimationToStart::NextPieceAndRefillActive;
     
     auto shouldStartSwitchPieceAnimation =
         previewPieceAnimationToStart == PreviewPieceAnimationToStart::SwitchPiece ||
@@ -571,14 +573,14 @@ void GameHud::UpdateSelectablePreviewPieceGroup() {
         UpdateSelectable0PreviewPiece(mSelectablePreviewPieces[2], selectablePieces[0], positions[3]);
         
         if (shouldStartNextPieceAndSwitchAnimation) {
-            UpdatePreviewPiece(mSelectablePreviewPieces[3], nullptr, positions[3]);
+            UpdateSelectable1PreviewPiece(mSelectablePreviewPieces[3], nullptr, positions[3]);
         } else {
             UpdateSelectable1PreviewPiece(mSelectablePreviewPieces[3], selectablePieces[1], positions[4]);
         }
     } else if (previewPieceAnimationToStart == PreviewPieceAnimationToStart::NextPieceAndRefillSelectable0) {
         UpdatePreviewPiece(mSelectablePreviewPieces[1], nullptr, positions[2]);
         UpdateSelectable0PreviewPiece(mSelectablePreviewPieces[2], selectablePieces[0], positions[3]);
-        UpdatePreviewPiece(mSelectablePreviewPieces[3], nullptr, positions[3]);
+        UpdateSelectable1PreviewPiece(mSelectablePreviewPieces[3], nullptr, positions[3]);
     } else if (previewPieceAnimationToStart == PreviewPieceAnimationToStart::NextPieceAndRefillSelectable1) {
         UpdatePreviewPiece(mSelectablePreviewPieces[2], nullptr, positions[3]);
         UpdatePreviewPiece(mSelectablePreviewPieces[3], nullptr, positions[3]);

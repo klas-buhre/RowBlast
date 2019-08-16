@@ -271,15 +271,21 @@ const Piece& GameLogic::CalculatePieceType(FallingPieceSpawnReason fallingPieceS
         mFallingPieceSpawnType = nullptr;
     } else {
         switch (mDraggedPieceIndex) {
-            case PreviewPieceIndex::Active:
             case PreviewPieceIndex::None:
+                mCurrentMove.mPieceType = mCurrentMove.mSelectablePieces[0];
+                mCurrentMove.mSelectablePieces[0] = mCurrentMove.mSelectablePieces[1];
+                mCurrentMove.mSelectablePieces[1] = &mCurrentMove.mNextPieceGenerator.GetNext();
+                mCurrentMove.mPreviewPieceRotations = PieceRotations {};
+                mPreviewPieceAnimationToStart = PreviewPieceAnimationToStart::NextPieceAndSwitch;
+                break;
+            case PreviewPieceIndex::Active:
                 ShiftPreviewPieceToTheLeft(PreviewPieceIndex::Selectable0);
                 ShiftPreviewPieceToTheLeft(PreviewPieceIndex::Selectable1);
                 SetPreviewPiece(PreviewPieceIndex::Selectable1,
                                 &mCurrentMove.mNextPieceGenerator.GetNext(),
                                 Rotation::Deg0,
                                 Rotation::Deg0);
-                mPreviewPieceAnimationToStart = PreviewPieceAnimationToStart::NextPieceAndSwitch;
+                mPreviewPieceAnimationToStart = PreviewPieceAnimationToStart::NextPieceAndRefillActive;
                 break;
             case PreviewPieceIndex::Selectable0:
                 ShiftPreviewPieceToTheLeft(PreviewPieceIndex::Selectable1);
@@ -299,7 +305,6 @@ const Piece& GameLogic::CalculatePieceType(FallingPieceSpawnReason fallingPieceS
         }
         
         mDraggedPieceIndex = PreviewPieceIndex::None;
-        // mCurrentMove.mPreviewPieceRotations = PieceRotations {};
     }
     
     return *mCurrentMove.mPieceType;

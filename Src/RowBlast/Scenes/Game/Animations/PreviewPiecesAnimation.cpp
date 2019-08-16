@@ -28,6 +28,7 @@ void PreviewPiecesAnimation::Init() {
 void PreviewPiecesAnimation::Update(float dt) {
     switch (mGameLogic.GetPreviewPieceAnimationToStart()) {
         case PreviewPieceAnimationToStart::NextPieceAndSwitch:
+        case PreviewPieceAnimationToStart::NextPieceAndRefillActive:
             StartNextPieceAndSwitchingAnimation();
             break;
         case PreviewPieceAnimationToStart::NextPieceAndRefillSelectable0:
