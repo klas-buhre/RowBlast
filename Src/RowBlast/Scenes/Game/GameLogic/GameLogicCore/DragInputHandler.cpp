@@ -15,7 +15,7 @@ using namespace RowBlast;
 
 namespace {
     constexpr auto offsetYInCells = 1.5f;
-    constexpr auto dragBeginDistanceThreshold = 5.0f;
+    constexpr auto dragBeginDistanceThreshold = 5.2f;
     constexpr auto dragBeginDistanceThresholdSquared =
         dragBeginDistanceThreshold * dragBeginDistanceThreshold;
 }

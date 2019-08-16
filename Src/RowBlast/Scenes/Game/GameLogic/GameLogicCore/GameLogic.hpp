@@ -97,7 +97,7 @@ namespace RowBlast {
                   Tutorial& tutorial,
                   const SettingsService& settingsService);
         
-        void DropFallingPiece() override;
+        void DropFallingPiece(SwipeGhostPieceState swipeGhostPieceState) override;
         void SelectMove(const Move& move) override;
         void OnFallingPieceAnimationFinished(bool finalMovementWasADrop) override;
         void RotatePreviewPiece(PreviewPieceIndex previewPieceIndex) override;
@@ -141,6 +141,10 @@ namespace RowBlast {
         
         Pht::Optional<int> GetDraggedGhostPieceRow() const {
             return mDraggedGhostPieceRow;
+        }
+        
+        SwipeGhostPieceState GetSwipeGhostPieceState() const {
+            return mSwipeGhostPieceState;
         }
 
         const NextPieceGenerator& GetNextPieceGenerator() const {
@@ -200,6 +204,8 @@ namespace RowBlast {
         void ShowDraggedPiece();
         void RemoveDraggedPiece();
         void NextMove();
+        void ActiveSwipeGhostPiece();
+        void DeactiveSwipeGhostPiece();
         void UpdateLevelProgress();
         Pht::Vec2 CalculateFallingPieceSpawnPos(const Piece& pieceType,
                                                 FallingPieceSpawnReason fallingPieceSpawnReason);
@@ -306,6 +312,7 @@ namespace RowBlast {
         const Level* mLevel {nullptr};
         float mLandingNoMovementDuration {0.0f};
         float mLandingMovementDuration {0.0f};
+        SwipeGhostPieceState mSwipeGhostPieceState {SwipeGhostPieceState::Inactive};
         int mGhostPieceRow {0};
         Pht::Optional<int> mDraggedGhostPieceRow;
         int mMovesUsed {0};

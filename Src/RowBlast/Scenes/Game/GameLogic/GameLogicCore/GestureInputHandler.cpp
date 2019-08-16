@@ -39,7 +39,7 @@ void GestureInputHandler::HandleTouch(const Pht::TouchEvent& touchEvent) {
             return;
         case Pht::TouchState::End:
             if (ShouldDropFallingPieceOnTouchEnd()) {
-                mGameLogic.DropFallingPiece();
+                mGameLogic.DropFallingPiece(SwipeGhostPieceState::Active);
                 return;
             }
             ExitBeingDraggedDownState();

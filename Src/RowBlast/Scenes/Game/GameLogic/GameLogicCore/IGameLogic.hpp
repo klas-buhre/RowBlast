@@ -23,11 +23,16 @@ namespace RowBlast {
         None
     };
     
+    enum class SwipeGhostPieceState {
+        Active,
+        Inactive
+    };
+    
     class IGameLogic {
     public:
         virtual ~IGameLogic() {}
         
-        virtual void DropFallingPiece() = 0;
+        virtual void DropFallingPiece(SwipeGhostPieceState swipeGhostPieceState) = 0;
         virtual void SelectMove(const Move& move) = 0;
         virtual void OnFallingPieceAnimationFinished(bool finalMovementWasADrop) = 0;
         virtual void RotatePreviewPiece(PreviewPieceIndex previewPieceIndex) = 0;
