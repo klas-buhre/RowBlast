@@ -40,7 +40,7 @@ namespace RowBlast {
             Kind mKind;
             Pht::IVec2 mPosition;
         };
-
+        
         Piece();
         virtual ~Piece() {}
         
@@ -53,6 +53,7 @@ namespace RowBlast {
         const Dimensions& GetDimensions(Rotation rotation) const;
         const Pht::Optional<DuplicateMoveCheck>& GetDuplicateMoveCheck(Rotation rotation) const;
         const Pht::Optional<TiltedWeldCheck>& GetTiltedWeldCheck(Rotation rotation) const;
+        const std::vector<Pht::IVec2>& GetWallKicks(Rotation fromRotation, Rotation toRotation) const;
         Pht::Vec2 GetCenterPosition(Rotation rotation) const;
         const Pht::Vec2& GetButtonCenterPosition(Rotation rotation) const;
         const Pht::Vec2& GetButtonSize(Rotation rotation) const;
@@ -111,6 +112,9 @@ namespace RowBlast {
                        bool isIndivisible = false);
         void SetPreviewCellSize(float previewCellSize);
         void SetNumRotations(int numRotations);
+        void AddWallKicks(Rotation fromRotation,
+                          Rotation toRotation,
+                          const std::vector<Pht::IVec2>& translations);
         void SetDuplicateMoveCheck(Rotation rotation, const DuplicateMoveCheck& duplicateMoveCheck);
         void SetGhostPieceRenderable(std::unique_ptr<Pht::RenderableObject> renderable);
         void SetGhostPieceShadowRenderable(std::unique_ptr<Pht::RenderableObject> renderable);
@@ -154,6 +158,7 @@ namespace RowBlast {
         std::vector<Dimensions> mDimensions;
         std::vector<Pht::Optional<DuplicateMoveCheck>> mDuplicateMoveChecks;
         std::vector<Pht::Optional<TiltedWeldCheck>> mTiltedWeldChecks;
+        std::vector<std::vector<Pht::IVec2>> mWallKicks;
         std::vector<Pht::Vec2> mButtonCenterPositions;
         std::vector<Pht::Vec2> mButtonSizes;
     };
