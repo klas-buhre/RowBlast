@@ -53,11 +53,15 @@ Ongoing tasks:
 
 
     -Near-term plan:
-        -Add wall kicks for the proper pieces.
+        -Add wall kicks for the proper pieces. Or, define core parts of the pieces that the
+         validMovesSearch changes the MovingPiece to if a rotation fails, and continue the search
+         using the core part. If later there is room for the whole piece then change back to the
+         whole piece. Core part for the F is a small L, core of all I is just one cell, core of B
+         is probably an O square.
         -Non-reachable empty cells can have red stripes that fade in when starting a drag.
-         Preferably with a red egde round the area.
-
-
+         Preferably with a red egde round the area. To calculate the valid area: for all valid
+         moves of the dragged piece rotation, fill the valid area by painting the field by moving
+         the move upwards until collision or above the falling piece.
     -Try to implement Alt 2:
     -The transparant active piece must be present to show how far down the falling piece is in case
      of for example a level with speed. So keep it.
@@ -93,8 +97,6 @@ Ongoing tasks:
            going from the release location (which in effect places the falling piece at that spot)
            to the landing location (possibly a bit down). Then we get the block trails for free when
            they should appear and the piece gets an animated movement to the landing location.
-       -To make it clearer where it is allowed to place the piece, the non-reachable cells can
-        have red stripes.
        -(Note A) Could even have a falling piece animation that stops at the closest legal move and then goes
         back to to top, if the user tries to drag in a piece to an illegal move.
     -Create a DraggedPieceAnimation for animating the dragged piece leaving the selectables
