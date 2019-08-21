@@ -50,19 +50,8 @@ Backlog:
 Ongoing tasks:
     -Add drag controls and release with microtransactions enabled, free to download.
 
-
-
-    -Near-term plan:
-        -Create release branch.
-        -Remove micro-transactions.
-        -Limit undos.
-        -Remove a few moves for each level.
-        -Release with drag controls.
-
-
-
     -Ideas:
-        -Or, define core parts of the pieces that the
+        -Define core parts of the pieces that the
          validMovesSearch changes the MovingPiece to if a rotation fails, and continue the search
          using the core part. If later there is room for the whole piece then change back to the
          whole piece. Core part for the F is a small L, core of all I is just one cell, core of B
@@ -77,7 +66,7 @@ Ongoing tasks:
          Preferably with a red egde round the area. To calculate the valid area: for all valid
          moves of the dragged piece rotation, fill the valid area by painting the field by moving
          the move upwards until collision or above the falling piece.
-    -Try to implement Alt 2:
+    -Try to implement Alt 2.
     -The transparant active piece must be present to show how far down the falling piece is in case
      of for example a level with speed. So keep it.
 
