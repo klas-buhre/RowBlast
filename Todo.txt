@@ -62,7 +62,6 @@ Ongoing tasks:
 
 
     -Ideas:
-        -Add wall kicks for the proper pieces.
         -Or, define core parts of the pieces that the
          validMovesSearch changes the MovingPiece to if a rotation fails, and continue the search
          using the core part. If later there is room for the whole piece then change back to the
@@ -129,12 +128,6 @@ Ongoing tasks:
      done by swiping left or right inside the selectable cotainer. Swipe left shifts the selectables
      to the left, swipe right shifts them to the right.
     -Update the tutorial with drag controls.
-
-
-
-
-    -Tutorial: Maybe there could be a cascading/gravity animation.
-
 
 
     -Moves left in assumed user strength play:
