@@ -108,8 +108,7 @@ namespace RowBlast {
                     const Movement* previousMovement,
                     SearchMovement searchMovement);
         void Search(MovingPiece piece, SearchMovement searchMovement);
-        bool TryMoveAndRotatePieceAndCheckEdges(MovingPiece& piece, SearchMovement searchMovement);
-        bool TryRotate(MovingPiece& piece, SearchMovement searchMovement);
+        bool MovePieceAndCheckEdges(MovingPiece& piece, SearchMovement searchMovement);
         SearchCollisionResult HandleCollision(const MovingPiece& piece,
                                               SearchMovement searchMovement);
         void SaveMoveIfNotFoundBefore(ValidMoves& validMoves,

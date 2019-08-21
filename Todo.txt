@@ -77,7 +77,12 @@ Ongoing tasks:
      might work to move the camera 1.0 of 2.0 backwards to bet a bigger bright env map area. Or
      move the field backwards in z-direction, it is the distance to camera tha matters.
 
-    -Would be good if the swipe ghost piece could be completly disabled from the settings menu.
+    -Sometimes moves that seem feasible are unreachable due to the way pieces are rotated by the AI.
+     Maybe look into some new rotation system like SRS. Or simplify the rotations by just saying that
+     if there is a contineous path (at least N cells wide, where N is the max width of the piece)
+     from the falling piece to the move then it is legal. Just start a new ValidMovesSearch for each
+     sub-area that is considered to be connected (by a path) to the upper-most area and add moves
+     found in that sub search to the total result.
 
     -Maybe a transparant real piece should be dragged in with a ghost piece under it.
      Or it has to be a real piece since a transparant piece might not be clear enough in daylight

@@ -31,8 +31,6 @@ MirroredFPiece::MirroredFPiece(Pht::IEngine& engine, const CommonResources& comm
     InitGrids(fillGrid, clickGrid, BlockColor::Blue);
     SetPreviewCellSize(0.47f);
     
-    AddWallKicks(Rotation::Deg90, Rotation::Deg180, {{0, -1}});
-    
     GhostPieceBorder border {
         {{0, 2}, BorderSegmentKind::Start},
         {{1, 2}, BorderSegmentKind::Lower},

@@ -31,8 +31,6 @@ FPiece::FPiece(Pht::IEngine& engine, const CommonResources& commonResources) {
     InitGrids(fillGrid, clickGrid, BlockColor::Red);
     SetPreviewCellSize(0.47f);
     
-    AddWallKicks(Rotation::Deg90, Rotation::Deg0, {{0, -1}});
-    
     GhostPieceBorder border {
         {{0, 1}, BorderSegmentKind::Start},
         {{4, 1}, BorderSegmentKind::Lower},

@@ -538,7 +538,7 @@ void ValidMovesSearch::Search(ValidMoves& validMoves,
                               MovingPiece piece,
                               const Movement* previousMovement,
                               SearchMovement searchMovement) {
-    if (!TryMoveAndRotatePieceAndCheckEdges(piece, searchMovement)) {
+    if (!MovePieceAndCheckEdges(piece, searchMovement)) {
         return;
     }
 
@@ -567,8 +567,7 @@ void ValidMovesSearch::Search(ValidMoves& validMoves,
     Search(validMoves, piece, movement, SearchMovement::RotateAntiClockwise);
 }
 
-bool ValidMovesSearch::TryMoveAndRotatePieceAndCheckEdges(MovingPiece& piece,
-                                                          SearchMovement searchMovement) {
+bool ValidMovesSearch::MovePieceAndCheckEdges(MovingPiece& piece, SearchMovement searchMovement) {
     switch (searchMovement) {
         case SearchMovement::Down: {
             piece.mPosition.y--;
@@ -595,44 +594,13 @@ bool ValidMovesSearch::TryMoveAndRotatePieceAndCheckEdges(MovingPiece& piece,
             break;
         }
         case SearchMovement::RotateClockwise:
-        case SearchMovement::RotateAntiClockwise:
-            if (!TryRotate(piece, searchMovement)) {
-                return false;
-            }
-            break;
-        case SearchMovement::Start:
-            break;
-    }
-    
-    return true;
-}
-
-bool ValidMovesSearch::TryRotate(MovingPiece& piece, SearchMovement searchMovement) {
-    auto originalRotation = piece.mRotation;
-    auto originalPosition = piece.mPosition;
-    
-    switch (searchMovement) {
-        case SearchMovement::RotateClockwise:
             piece.RotateClockwise();
             break;
         case SearchMovement::RotateAntiClockwise:
             piece.RotateAntiClockwise();
             break;
-        default:
-            assert(false);
+        case SearchMovement::Start:
             break;
-    }
-    
-    if (IsCollision(piece)) {
-        auto& wallKicks = piece.mPieceType.GetWallKicks(originalRotation, piece.mRotation);
-        for (auto& translation: wallKicks) {
-            piece.mPosition = originalPosition + translation;
-            if (!IsCollision(piece)) {
-                return true;
-            }
-        }
-        
-        return false;
     }
     
     return true;

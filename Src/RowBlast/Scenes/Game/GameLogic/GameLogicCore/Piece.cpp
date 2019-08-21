@@ -63,7 +63,6 @@ namespace {
 
 Piece::Piece() {
     mDuplicateMoveChecks.resize(4);
-    mWallKicks.resize(16);
 }
 
 const CellGrid& Piece::GetGrid(Rotation rotation) const {
@@ -100,11 +99,6 @@ const Pht::Optional<Piece::DuplicateMoveCheck>& Piece::GetDuplicateMoveCheck(Rot
 
 const Pht::Optional<Piece::TiltedWeldCheck>& Piece::GetTiltedWeldCheck(Rotation rotation) const {
     return mTiltedWeldChecks[static_cast<int>(rotation)];
-}
-
-const std::vector<Pht::IVec2>& Piece::GetWallKicks(Rotation fromRotation, Rotation toRotation) const {
-    auto index = static_cast<size_t>(static_cast<int>(fromRotation) * 4 + static_cast<int>(toRotation));
-    return mWallKicks[index];
 }
 
 Pht::Vec2 Piece::GetCenterPosition(Rotation rotation) const {
@@ -295,13 +289,6 @@ void Piece::SetPreviewCellSize(float previewCellSize) {
 
 void Piece::SetNumRotations(int numRotations) {
     mNumRotations = numRotations;
-}
-
-void Piece::AddWallKicks(Rotation fromRotation,
-                         Rotation toRotation,
-                         const std::vector<Pht::IVec2>& translations) {
-    auto index = static_cast<size_t>(static_cast<int>(fromRotation) * 4 + static_cast<int>(toRotation));
-    mWallKicks[index] = translations;
 }
 
 void Piece::SetDuplicateMoveCheck(Rotation rotation, const DuplicateMoveCheck& duplicateMoveCheck) {
