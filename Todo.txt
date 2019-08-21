@@ -53,8 +53,7 @@ Ongoing tasks:
 
 
     -Near-term plan:
-        -Create release branch.
-        -Remove micro-transactions.
+        -Remove microtransactions.
         -Limit undos.
         -Remove a few moves for each level.
         -Release with drag controls.
