@@ -53,6 +53,15 @@ Ongoing tasks:
 
 
     -Near-term plan:
+        -Create release branch.
+        -Remove micro-transactions.
+        -Limit undos.
+        -Remove a few moves for each level.
+        -Release with drag controls.
+
+
+
+    -Ideas:
         -Add wall kicks for the proper pieces.
         -Or, define core parts of the pieces that the
          validMovesSearch changes the MovingPiece to if a rotation fails, and continue the search
