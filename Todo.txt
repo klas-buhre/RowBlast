@@ -53,11 +53,18 @@ Ongoing tasks:
 
 
     -Near-term plan:
-        -Add wall kicks for the proper pieces. Or, define core parts of the pieces that the
+        -Add wall kicks for the proper pieces.
+        -Or, define core parts of the pieces that the
          validMovesSearch changes the MovingPiece to if a rotation fails, and continue the search
          using the core part. If later there is room for the whole piece then change back to the
          whole piece. Core part for the F is a small L, core of all I is just one cell, core of B
-         is probably an O square.
+         is probably an O square. However, changing the movingPiece in the search will probably
+         cause wierd movements and increase the cost of the search. Instead we could find all moves
+         that have not been found yet (that dont cause a collision) and try to search back upwards
+         using the core part. If the search finds the valid area and it is possible to cover the
+         entire upwards search path with the complete piece then that new move is valid. For
+         example, the I piece would not fit in a one-cell wide stair, but the core part would and
+         therefore this makes sure that is not a valid moves.
         -Non-reachable empty cells can have red stripes that fade in when starting a drag.
          Preferably with a red egde round the area. To calculate the valid area: for all valid
          moves of the dragged piece rotation, fill the valid area by painting the field by moving
