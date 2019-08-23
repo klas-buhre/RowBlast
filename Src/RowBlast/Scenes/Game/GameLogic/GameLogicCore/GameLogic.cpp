@@ -22,6 +22,7 @@
 #include "BlastRadiusAnimation.hpp"
 #include "FallingPieceScaleAnimation.hpp"
 #include "ShieldAnimation.hpp"
+#include "ValidAreaAnimation.hpp"
 #include "SmallTextAnimation.hpp"
 #include "GameHudController.hpp"
 #include "Tutorial.hpp"
@@ -80,6 +81,7 @@ GameLogic::GameLogic(Pht::IEngine& engine,
                      BlastRadiusAnimation& blastRadiusAnimation,
                      FallingPieceScaleAnimation& fallingPieceScaleAnimation,
                      ShieldAnimation& shieldAnimation,
+                     ValidAreaAnimation& validAreaAnimation,
                      SmallTextAnimation& smallTextAnimation,
                      GameHudController& gameHudController,
                      Tutorial& tutorial,
@@ -96,6 +98,7 @@ GameLogic::GameLogic(Pht::IEngine& engine,
     mBlastRadiusAnimation {blastRadiusAnimation},
     mFallingPieceScaleAnimation {fallingPieceScaleAnimation},
     mShieldAnimation {shieldAnimation},
+    mValidAreaAnimation {validAreaAnimation},
     mSmallTextAnimation {smallTextAnimation},
     mGameHudController {gameHudController},
     mScene {gameScene},
@@ -1260,7 +1263,8 @@ bool GameLogic::BeginDraggingPiece(PreviewPieceIndex draggedPieceIndex) {
     auto& validMoves = mAi.FindValidMoves(*mFallingPiece,
                                           GetMovesUsedIncludingCurrent() - 1);
     mAllValidMoves = &validMoves.mMoves;
-
+    
+    mValidAreaAnimation.Start(validMoves.mMoves, pieceType, mDraggedPiece->GetRotation());
     UpdateDraggedGhostPieceRowAndBlastRadiusAnimation();
     return true;
 }
@@ -1287,6 +1291,7 @@ void GameLogic::StopDraggingPiece() {
         mDraggedPieceIndex = PreviewPieceIndex::None;
     }
     
+    mValidAreaAnimation.Stop();
     RemoveDraggedPiece();
 }
 

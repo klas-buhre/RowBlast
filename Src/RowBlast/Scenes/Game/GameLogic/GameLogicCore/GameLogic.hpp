@@ -43,6 +43,7 @@ namespace RowBlast {
     class FallingPieceScaleAnimation;
     class ShieldAnimation;
     class SmallTextAnimation;
+    class ValidAreaAnimation;
     
     enum class PreviewPieceAnimationToStart {
         NextPieceAndSwitch,
@@ -92,6 +93,7 @@ namespace RowBlast {
                   BlastRadiusAnimation& blastRadiusAnimation,
                   FallingPieceScaleAnimation& fallingPieceScaleAnimation,
                   ShieldAnimation& shieldAnimation,
+                  ValidAreaAnimation& validAreaAnimation,
                   SmallTextAnimation& smallTextAnimation,
                   GameHudController& gameHudController,
                   Tutorial& tutorial,
@@ -280,6 +282,7 @@ namespace RowBlast {
         BlastRadiusAnimation& mBlastRadiusAnimation;
         FallingPieceScaleAnimation& mFallingPieceScaleAnimation;
         ShieldAnimation& mShieldAnimation;
+        ValidAreaAnimation& mValidAreaAnimation;
         SmallTextAnimation& mSmallTextAnimation;
         GameHudController& mGameHudController;
         GameScene& mScene;

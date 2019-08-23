@@ -14,6 +14,7 @@
 		1730D47B22F5B92E0092D92B /* DragInputHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1730D47922F5B92E0092D92B /* DragInputHandler.cpp */; };
 		1736707422DF67D600D8A28C /* SwipeControlsHintDialogView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1736707222DF67D600D8A28C /* SwipeControlsHintDialogView.cpp */; };
 		1736707722DF67F600D8A28C /* SwipeControlsHintDialogController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1736707522DF67F600D8A28C /* SwipeControlsHintDialogController.cpp */; };
+		173A44D8231037D7005FC10F /* ValidAreaAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 173A44D6231037D7005FC10F /* ValidAreaAnimation.cpp */; };
 		174F9EA522DBCA3D0057BA7C /* ActivePreviewPieceAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 174F9EA322DBCA3D0057BA7C /* ActivePreviewPieceAnimation.cpp */; };
 		174F9EAE22DE24C10057BA7C /* GhostPieceBlocks.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 174F9EAC22DE24C10057BA7C /* GhostPieceBlocks.cpp */; };
 		1774768022DA42B800EEE97C /* NoMoreLevelsDialogView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1774767E22DA42B800EEE97C /* NoMoreLevelsDialogView.cpp */; };
@@ -559,6 +560,8 @@
 		1736707322DF67D600D8A28C /* SwipeControlsHintDialogView.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SwipeControlsHintDialogView.hpp; sourceTree = "<group>"; };
 		1736707522DF67F600D8A28C /* SwipeControlsHintDialogController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SwipeControlsHintDialogController.cpp; sourceTree = "<group>"; };
 		1736707622DF67F600D8A28C /* SwipeControlsHintDialogController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SwipeControlsHintDialogController.hpp; sourceTree = "<group>"; };
+		173A44D6231037D7005FC10F /* ValidAreaAnimation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ValidAreaAnimation.cpp; sourceTree = "<group>"; };
+		173A44D7231037D7005FC10F /* ValidAreaAnimation.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ValidAreaAnimation.hpp; sourceTree = "<group>"; };
 		174F9EA322DBCA3D0057BA7C /* ActivePreviewPieceAnimation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ActivePreviewPieceAnimation.cpp; sourceTree = "<group>"; };
 		174F9EA422DBCA3D0057BA7C /* ActivePreviewPieceAnimation.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ActivePreviewPieceAnimation.hpp; sourceTree = "<group>"; };
 		174F9EAC22DE24C10057BA7C /* GhostPieceBlocks.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GhostPieceBlocks.cpp; sourceTree = "<group>"; };
@@ -2108,6 +2111,8 @@
 				62216B7521EB377E001CB9A1 /* SmallTextAnimation.hpp */,
 				62216B7921EB377E001CB9A1 /* WeldsAnimation.cpp */,
 				62216B9221EB377E001CB9A1 /* WeldsAnimation.hpp */,
+				173A44D6231037D7005FC10F /* ValidAreaAnimation.cpp */,
+				173A44D7231037D7005FC10F /* ValidAreaAnimation.hpp */,
 			);
 			path = Animations;
 			sourceTree = "<group>";
@@ -3580,6 +3585,7 @@
 				62216C0C21EB377F001CB9A1 /* TPiece.cpp in Sources */,
 				62216BDD21EB377E001CB9A1 /* GameViewControllers.cpp in Sources */,
 				625698462182392C003A3A9D /* GuiView.cpp in Sources */,
+				173A44D8231037D7005FC10F /* ValidAreaAnimation.cpp in Sources */,
 				62216C2221EB377F001CB9A1 /* FallingPieceAnimation.cpp in Sources */,
 				62216A7E21EB376E001CB9A1 /* StoreMenuController.cpp in Sources */,
 				625698482182392C003A3A9D /* TextComponent.cpp in Sources */,

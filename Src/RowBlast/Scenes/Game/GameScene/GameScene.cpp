@@ -142,7 +142,7 @@ void GameScene::Init(const Level& level, const GameLogic& gameLogic) {
     CreateLevelCompletedEffectsContainer();
     CreateFieldQuad();
     CreateFieldContainer();
-    CreateBlueprintSlots(level);
+    CreateBlueprintSlotsAndInvalidCells(level);
     CreatePieceDropEffectsContainer();
     CreateFieldBlocksContainer();
     CreateSceneObjectPools(level);
@@ -184,7 +184,7 @@ void GameScene::CreateRenderPasses() {
     fieldQuadRenderPass.SetProjectionMode(Pht::ProjectionMode::Orthographic);
     mScene->AddRenderPass(fieldQuadRenderPass);
 
-    Pht::RenderPass blueprintSlotsRenderPass {static_cast<int>(Layer::FieldBlueprintSlots)};
+    Pht::RenderPass blueprintSlotsRenderPass {static_cast<int>(Layer::FieldBlueprintSlotsAndInvalidCells)};
     blueprintSlotsRenderPass.SetProjectionMode(Pht::ProjectionMode::Orthographic);
     mScene->AddRenderPass(blueprintSlotsRenderPass);
     
@@ -342,15 +342,19 @@ Pht::QuadMesh::Vertices GameScene::CreateFieldVertices() {
     };
 }
         
-void GameScene::CreateBlueprintSlots(const Level& level) {
+void GameScene::CreateBlueprintSlotsAndInvalidCells(const Level& level) {
+    auto& container = mScene->CreateSceneObject();
+    container.SetLayer(static_cast<int>(Layer::FieldBlueprintSlotsAndInvalidCells));
+    mFieldContainer->AddChild(container);
+
+    mInvalidCells = std::make_unique<SceneObjectPool>(SceneObjectPoolKind::InvalidCells,
+                                                      container,
+                                                      level.GetNumColumns());
+    
     auto* blueprintGrid = level.GetBlueprintGrid();
     if (blueprintGrid == nullptr) {
         return;
     }
-    
-    auto& blueprintSlotsContainer = mScene->CreateSceneObject();
-    blueprintSlotsContainer.SetLayer(static_cast<int>(Layer::FieldBlueprintSlots));
-    mFieldContainer->AddChild(blueprintSlotsContainer);
 
     for (auto row = 0; row < level.GetNumRows(); ++row) {
         for (auto column = 0; column < level.GetNumColumns(); ++column) {
@@ -366,7 +370,7 @@ void GameScene::CreateBlueprintSlots(const Level& level) {
                 };
                 
                 blueprintSlot.GetTransform().SetPosition(blueprintSlotPosition);
-                blueprintSlotsContainer.AddChild(blueprintSlot);
+                container.AddChild(blueprintSlot);
             }
         }
     }
@@ -551,7 +555,7 @@ void GameScene::UpdateCameraPosition() {
 
 void GameScene::SetScissorBox(const Pht::ScissorBox& scissorBox) {
     SetScissorBox(scissorBox, static_cast<int>(Layer::FieldQuad));
-    SetScissorBox(scissorBox, static_cast<int>(Layer::FieldBlueprintSlots));
+    SetScissorBox(scissorBox, static_cast<int>(Layer::FieldBlueprintSlotsAndInvalidCells));
     SetScissorBox(scissorBox, static_cast<int>(Layer::FieldPieceDropEffects));
     SetScissorBox(scissorBox, static_cast<int>(Layer::FieldBlocksAndFallingPiece));
 }

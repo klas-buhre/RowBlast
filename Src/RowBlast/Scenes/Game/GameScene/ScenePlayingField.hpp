@@ -24,6 +24,7 @@ namespace RowBlast {
     class LevelResources;
     class BombsAnimation;
     class AsteroidAnimation;
+    class ValidAreaAnimation;
     class SceneObjectPool;
     class Piece;
 
@@ -35,6 +36,7 @@ namespace RowBlast {
                           const ScrollController& scrollController,
                           const BombsAnimation& bombsAnimation,
                           AsteroidAnimation& asteroidAnimation,
+                          const ValidAreaAnimation& validAreaAnimation,
                           const PieceResources& pieceResources,
                           const GhostPieceBlocks& ghostPieceBlocks,
                           const LevelResources& levelResources);
@@ -44,6 +46,7 @@ namespace RowBlast {
     private:
         void UpdateFieldGrid();
         void UpdateBlueprintSlots();
+        void UpdateValidArea();
         void UpdateFieldBlocks();
         void UpdateFieldBlock(const SubCell& subCell, bool isSecondSubCell);
         void UpdateBlockWelds(const SubCell& subCell,
@@ -84,6 +87,7 @@ namespace RowBlast {
         const ScrollController& mScrollController;
         const BombsAnimation& mBombsAnimation;
         AsteroidAnimation& mAsteroidAnimation;
+        const ValidAreaAnimation& mValidAreaAnimation;
         const PieceResources& mPieceResources;
         const GhostPieceBlocks& mGhostPieceBlocks;
         const LevelResources& mLevelResources;

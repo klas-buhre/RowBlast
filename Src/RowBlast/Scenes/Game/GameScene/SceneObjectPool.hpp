@@ -11,6 +11,7 @@ namespace RowBlast {
     enum class SceneObjectPoolKind {
         FieldBlocks,
         PieceBlocks,
+        InvalidCells,
         GhostPieces,
         GhostPieceBlocks,
         PreviewPieceBlocks

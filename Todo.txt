@@ -64,7 +64,7 @@ Ongoing tasks:
          therefore this makes sure that is not a valid moves.
         -Non-reachable empty cells can have red stripes that fade in when starting a drag.
          Preferably with a red egde round the area. To calculate the valid area: for all valid
-         moves of the dragged piece rotation, fill the valid area by painting the field by moving
+         moves, fill the valid area by painting the field by moving
          the move upwards until collision or above the falling piece.
     -Try to implement Alt 2.
     -The transparant active piece must be present to show how far down the falling piece is in case
