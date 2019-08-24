@@ -21,6 +21,7 @@ namespace RowBlast {
         bool IsCellValid(int row, int column) const;
         
     private:
+        void FillValidAreaAboveMove(const Move& move, const Piece& pieceType);
         void ClearGrid();
         
         enum class State {

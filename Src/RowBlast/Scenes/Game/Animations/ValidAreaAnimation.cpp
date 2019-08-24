@@ -9,6 +9,16 @@ using namespace RowBlast;
 namespace {
     constexpr auto validCell = 1;
     constexpr auto invalidCell = 0;
+    
+    bool ShouldProcessMove(const Move& move, const Piece& pieceType, Rotation rotation) {
+        auto& duplicateMoveCheck = pieceType.GetDuplicateMoveCheck(rotation);
+        if (!duplicateMoveCheck.HasValue()) {
+            return move.mRotation == rotation;
+        }
+        
+        auto& duplicateMoveCheckValue = duplicateMoveCheck.GetValue();
+        return move.mRotation == rotation || move.mRotation == duplicateMoveCheckValue.mRotation;
+    }
 }
 
 ValidAreaAnimation::ValidAreaAnimation(Field& field) :
@@ -37,34 +47,35 @@ void ValidAreaAnimation::Start(const Moves& allValidMoves,
     mState = State::Active;
     ClearGrid();
     
+    for (auto& move: allValidMoves) {
+        if (ShouldProcessMove(move, pieceType, rotation)) {
+            FillValidAreaAboveMove(move, pieceType);
+        }
+    }
+}
+
+void ValidAreaAnimation::FillValidAreaAboveMove(const Move& move, const Piece& pieceType) {
     auto pieceNumRows = pieceType.GetGridNumRows();
     auto pieceNumColumns = pieceType.GetGridNumColumns();
     auto fieldNumRows = mField.GetNumRows();
+    auto& pieceGrid = pieceType.GetGrid(move.mRotation);
+    auto& movePosition = move.mPosition;
     
-    for (auto& move: allValidMoves) {
-        if (rotation != move.mRotation) {
-            continue;
-        }
-        
-        auto& pieceGrid = pieceType.GetGrid(move.mRotation);
-        auto& movePosition = move.mPosition;
-        
-        for (auto pieceGridRow = 0; pieceGridRow < pieceNumRows; ++pieceGridRow) {
-            for (auto pieceGridColumn = 0; pieceGridColumn < pieceNumColumns; ++pieceGridColumn) {
-                auto& subCell = pieceGrid[pieceGridRow][pieceGridColumn].mFirstSubCell;
-                if (subCell.mBlockKind == BlockKind::None) {
-                    continue;
+    for (auto pieceGridRow = 0; pieceGridRow < pieceNumRows; ++pieceGridRow) {
+        for (auto pieceGridColumn = 0; pieceGridColumn < pieceNumColumns; ++pieceGridColumn) {
+            auto& subCell = pieceGrid[pieceGridRow][pieceGridColumn].mFirstSubCell;
+            if (subCell.mBlockKind == BlockKind::None) {
+                continue;
+            }
+            
+            auto column = movePosition.x + pieceGridColumn;
+            for (auto row = movePosition.y + pieceGridRow; row < fieldNumRows; ++row) {
+                auto cell = mGrid[row][column];
+                if (cell == validCell || !mField.GetCell(row, column).IsEmpty()) {
+                    break;
                 }
                 
-                auto column = movePosition.x + pieceGridColumn;
-                for (auto row = movePosition.y + pieceGridRow; row < fieldNumRows; ++row) {
-                    auto cell = mGrid[row][column];
-                    if (cell == validCell || !mField.GetCell(row, column).IsEmpty()) {
-                        break;
-                    }
-                    
-                    mGrid[row][column] = validCell;
-                }
+                mGrid[row][column] = validCell;
             }
         }
     }

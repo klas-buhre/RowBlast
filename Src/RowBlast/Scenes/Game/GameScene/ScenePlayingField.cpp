@@ -141,7 +141,7 @@ void ScenePlayingField::UpdateValidArea() {
     const auto cellSize = mScene.GetCellSize();
     auto invaldCellZ = mScene.GetInvalidCellZ();
     
-    for (auto row = 0; row < pastHighestVisibleRow; row++) {
+    for (auto row = lowestVisibleRow; row < pastHighestVisibleRow; row++) {
         for (auto column = 0; column < mField.GetNumColumns(); column++) {
             if (mValidAreaAnimation.IsCellValid(row, column) ||
                 !mField.GetCell(row, column).mFirstSubCell.IsEmpty()) {
