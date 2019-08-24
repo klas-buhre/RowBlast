@@ -56,6 +56,7 @@ namespace {
     }
     
     std::unique_ptr<Pht::Button> CreatePieceButton(const Pht::Vec3& position,
+                                                   const Pht::Vec2& size,
                                                    Pht::SceneObject& parentObject,
                                                    Pht::Scene& scene,
                                                    Pht::IEngine& engine) {
@@ -63,7 +64,7 @@ namespace {
         buttonSceneObject.SetIsVisible(false);
         buttonSceneObject.GetTransform().SetPosition(position);
 
-        auto buttonSize = Pht::Vec2{50.0f, 60.0f} * GameHud::selectablePiecesScale;
+        auto buttonSize = size * GameHud::selectablePiecesScale;
         return std::make_unique<Pht::Button>(buttonSceneObject, buttonSize, engine);
     }
     
@@ -432,14 +433,17 @@ void GameHud::CreateSelectablePiecesObject(Pht::Scene& scene,
                         scene);
     
     mActivePieceButton = CreatePieceButton(mSelectablePreviewPiecesRelativePositions[1],
+                                           {67.0f, 60.0f},
                                            *mSelectablePiecesSceneObject,
                                            scene,
                                            mEngine);
     mSelectable0Button = CreatePieceButton(mSelectablePreviewPiecesRelativePositions[2],
+                                           {52.0f, 60.0f},
                                            *mSelectablePiecesSceneObject,
                                            scene,
                                            mEngine);
     mSelectable1Button = CreatePieceButton(mSelectablePreviewPiecesRelativePositions[3],
+                                           {52.0f, 60.0f},
                                            *mSelectablePiecesSceneObject,
                                            scene,
                                            mEngine);
