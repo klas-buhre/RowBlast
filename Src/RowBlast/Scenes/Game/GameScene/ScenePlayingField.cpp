@@ -143,23 +143,18 @@ void ScenePlayingField::UpdateValidArea() {
     
     for (auto row = lowestVisibleRow; row < pastHighestVisibleRow; row++) {
         for (auto column = 0; column < mField.GetNumColumns(); column++) {
-            if (mValidAreaAnimation.IsCellValid(row, column) ||
-                !mField.GetCell(row, column).mFirstSubCell.IsEmpty()) {
-
-                continue;
+            if (mValidAreaAnimation.IsCellInvalid(row, column)) {
+                auto& sceneObject = invalidCellsPool.AccuireSceneObject();
+                sceneObject.SetRenderable(&mLevelResources.GetInvalidCellRenderable());
+                
+                Pht::Vec3 position {
+                    column * cellSize + cellSize / 2.0f,
+                    row * cellSize + cellSize / 2.0f,
+                    invaldCellZ
+                };
+                
+                sceneObject.GetTransform().SetPosition(position);
             }
-            
-            auto& sceneObject = invalidCellsPool.AccuireSceneObject();
-            sceneObject.SetRenderable(&mLevelResources.GetInvalidCellRenderable());
-            
-            Pht::Vec3 position {
-                column * cellSize + cellSize / 2.0f,
-                row * cellSize + cellSize / 2.0f,
-                invaldCellZ
-            };
-            
-            sceneObject.GetTransform().SetPosition(position);
-
         }
     }
 }

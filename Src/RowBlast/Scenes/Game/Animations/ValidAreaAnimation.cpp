@@ -1,15 +1,12 @@
 #include "ValidAreaAnimation.hpp"
 
 // Game includes.
-#include "Field.hpp"
 #include "Piece.hpp"
+#include "ScrollController.hpp"
 
 using namespace RowBlast;
 
 namespace {
-    constexpr auto validCell = 1;
-    constexpr auto invalidCell = 0;
-    
     bool ShouldProcessMove(const Move& move, const Piece& pieceType, Rotation rotation) {
         auto& duplicateMoveCheck = pieceType.GetDuplicateMoveCheck(rotation);
         if (!duplicateMoveCheck.HasValue()) {
@@ -21,8 +18,9 @@ namespace {
     }
 }
 
-ValidAreaAnimation::ValidAreaAnimation(Field& field) :
-    mField {field} {}
+ValidAreaAnimation::ValidAreaAnimation(Field& field, const ScrollController& scrollController) :
+    mField {field},
+    mScrollController {scrollController} {}
 
 void ValidAreaAnimation::Init() {
     auto numRows = mField.GetNumRows();
@@ -30,14 +28,19 @@ void ValidAreaAnimation::Init() {
     
     mGrid.clear();
     mGrid.reserve(numRows);
-    
-    std::vector<int> row(numColumns);
-    
+    std::vector<CellStatus> row {static_cast<size_t>(numColumns), CellStatus::Undefined};
     for (auto rowIndex = 0; rowIndex < numRows; ++rowIndex) {
         mGrid.push_back(row);
     }
-    
-    ClearGrid();
+
+    mSearchData.clear();
+    mSearchData.reserve(numRows);
+    std::vector<ValidMoveBelow> searchDataRow {static_cast<size_t>(numColumns), ValidMoveBelow::Undefined};
+    for (auto rowIndex = 0; rowIndex < numRows; ++rowIndex) {
+        mSearchData.push_back(searchDataRow);
+    }
+
+    ClearGrids();
     Stop();
 }
 
@@ -45,13 +48,16 @@ void ValidAreaAnimation::Start(const Moves& allValidMoves,
                                const Piece& pieceType,
                                Rotation rotation) {
     mState = State::Active;
-    ClearGrid();
+    ClearGrids();
     
     for (auto& move: allValidMoves) {
         if (ShouldProcessMove(move, pieceType, rotation)) {
             FillValidAreaAboveMove(move, pieceType);
         }
     }
+    
+    InvalidMoves invalidMoves;
+    FindInvalidMoves(invalidMoves, pieceType, rotation);
 }
 
 void ValidAreaAnimation::FillValidAreaAboveMove(const Move& move, const Piece& pieceType) {
@@ -71,11 +77,45 @@ void ValidAreaAnimation::FillValidAreaAboveMove(const Move& move, const Piece& p
             auto column = movePosition.x + pieceGridColumn;
             for (auto row = movePosition.y + pieceGridRow; row < fieldNumRows; ++row) {
                 auto cell = mGrid[row][column];
-                if (cell == validCell || !mField.GetCell(row, column).IsEmpty()) {
+                if (cell == CellStatus::Valid || mField.GetCell(row, column).IsFull()) {
                     break;
                 }
                 
-                mGrid[row][column] = validCell;
+                mGrid[row][column] = CellStatus::Valid;
+            }
+        }
+    }
+}
+
+void ValidAreaAnimation::FindInvalidMoves(InvalidMoves& invalidMoves,
+                                          const Piece& pieceType,
+                                          Rotation rotation) {
+    auto lowestVisibleRow = static_cast<int>(mScrollController.GetLowestVisibleRow());
+    auto pastHighestVisibleRow = lowestVisibleRow + mField.GetNumRowsInOneScreen();
+
+    auto& pieceDimensions = pieceType.GetDimensions(rotation);
+    auto startColumn = -pieceDimensions.mXmin;
+    auto endColumn = mField.GetNumColumns() - pieceDimensions.mXmax;
+    auto endRow = lowestVisibleRow - pieceDimensions.mYmin;
+    auto startRow = pastHighestVisibleRow - pieceDimensions.mYmax;
+    
+    PieceBlocks pieceBlocks {
+        pieceType.GetGrid(rotation),
+        pieceType.GetGridNumRows(),
+        pieceType.GetGridNumColumns()
+    };
+
+    for (auto row = startRow; row >= endRow; --row) {
+        for (auto column = startColumn; column < endColumn; ++column) {
+            Pht::IVec2 movePosition {row, column};
+            Field::CollisionResult collisionResult;
+            mField.CheckCollision(collisionResult,
+                                  pieceBlocks,
+                                  movePosition,
+                                  Pht::IVec2{0, 0},
+                                  false);
+            if (collisionResult.mIsCollision == IsCollision::Yes) {
+
             }
         }
     }
@@ -89,21 +129,22 @@ bool ValidAreaAnimation::IsActive() const {
     return mState == State::Active;
 }
 
-bool ValidAreaAnimation::IsCellValid(int row, int column) const {
+bool ValidAreaAnimation::IsCellInvalid(int row, int column) const {
     auto numRows = mField.GetNumRows();
     auto numColumns = mField.GetNumColumns();
 
     assert(row < numRows && column < numColumns);
-    return mGrid[row][column] == validCell;
+    return mGrid[row][column] == CellStatus::Invalid;
 }
 
-void ValidAreaAnimation::ClearGrid() {
+void ValidAreaAnimation::ClearGrids() {
     auto numRows = mField.GetNumRows();
     auto numColumns = mField.GetNumColumns();
     
     for (auto column = 0; column < numColumns; ++column) {
         for (auto row = 0; row < numRows; ++row) {
-            mGrid[row][column] = invalidCell;
+            mGrid[row][column] = CellStatus::Undefined;
+            mSearchData[row][column] = ValidMoveBelow::Undefined;
         }
     }
 }
