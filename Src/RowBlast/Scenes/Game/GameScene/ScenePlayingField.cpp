@@ -378,7 +378,9 @@ void ScenePlayingField::UpdateFallingPiece() {
 
 void ScenePlayingField::UpdateDraggedPiece() {
     mScene.GetDraggedPieceBlocks().ReclaimAll();
-    
+    auto& sceneObject = mScene.GetDraggedPieceSceneObject();
+    sceneObject.SetIsVisible(false);
+
     auto* draggedPiece = mGameLogic.GetDraggedPiece();
     if (draggedPiece == nullptr) {
         return;
@@ -386,15 +388,34 @@ void ScenePlayingField::UpdateDraggedPiece() {
     
     auto& piecePosition = draggedPiece->GetRenderablePosition();
     Pht::Vec3 pieceFieldPos {piecePosition.x, piecePosition.y, mScene.GetDraggedPieceZ()};
+    auto& pieceType = draggedPiece->GetPieceType();
+    const auto cellSize = mScene.GetCellSize();
+    auto* ghostPieceRenderable = pieceType.GetPressedGhostPieceRenderable();
+    if (ghostPieceRenderable) {
+        sceneObject.SetIsVisible(true);
+        
+        Pht::Vec3 pieceCenterLocalCoords {
+            cellSize * static_cast<float>(pieceType.GetGridNumColumns()) / 2.0f,
+            cellSize * static_cast<float>(pieceType.GetGridNumRows()) / 2.0f,
+            0.0f
+        };
+        
+        auto& transform = sceneObject.GetTransform();
+        auto position = pieceFieldPos + pieceCenterLocalCoords;
+        transform.SetPosition(position);
+        transform.SetRotation({0.0f, 0.0f, RotationToDeg(draggedPiece->GetRotation())});
+        sceneObject.SetRenderable(ghostPieceRenderable);
+    } else {
+        auto isTransparent = false;
+        auto isGhostPiece = false;
+        UpdatePieceBlocks(draggedPiece->GetPieceType(),
+                          draggedPiece->GetRotation(),
+                          pieceFieldPos,
+                          isTransparent,
+                          isGhostPiece,
+                          mScene.GetDraggedPieceBlocks());
 
-    auto isTransparent = false;
-    auto isGhostPiece = false;
-    UpdatePieceBlocks(draggedPiece->GetPieceType(),
-                      draggedPiece->GetRotation(),
-                      pieceFieldPos,
-                      isTransparent,
-                      isGhostPiece,
-                      mScene.GetDraggedPieceBlocks());
+    }
 }
 
 void ScenePlayingField::UpdatePieceBlocks(const Piece& pieceType,

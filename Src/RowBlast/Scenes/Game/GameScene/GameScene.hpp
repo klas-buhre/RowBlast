@@ -44,7 +44,7 @@ namespace RowBlast {
             FieldBlueprintSlotsAndInvalidCells,
             FieldPieceDropEffects,
             FieldBlocksAndFallingPiece,
-            DraggedPieceBlocks,
+            DraggedPiece,
             Effects,
             FlyingBlocks,
             LevelCompletedFadeEffect,
@@ -180,6 +180,11 @@ namespace RowBlast {
             return *mStarsContainer;
         }
 
+        Pht::SceneObject& GetDraggedPieceSceneObject() {
+            assert(mDraggedPiece);
+            return *mDraggedPiece;
+        }
+
         const Pht::Vec3& GetFieldPosition() const {
             return mFieldPosition;
         }
@@ -265,6 +270,7 @@ namespace RowBlast {
         void CreatePieceDropEffectsContainer();
         void CreateFieldBlocksContainer();
         void CreateSceneObjectPools(const Level& level);
+        void CreateDraggedPiece();
         void CreateEffectsContainer();
         void CreateFlyingBlocksContainer();
         void CreateHud(const GameLogic& gameLogic, const Level& level);
@@ -310,6 +316,7 @@ namespace RowBlast {
         Pht::SceneObject* mUiViewsContainer {nullptr};
         Pht::SceneObject* mLevelCompletedEffectsContainer {nullptr};
         Pht::SceneObject* mStarsContainer {nullptr};
+        Pht::SceneObject* mDraggedPiece {nullptr};
         const Pht::Vec3 mFieldPosition;
         const float mDraggedPieceZ {mCellSize / 2.0f + 0.3f};
         const float mBlastRadiusAnimationZ {mCellSize / 2.0f + 0.15f};

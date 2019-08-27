@@ -146,6 +146,7 @@ void GameScene::Init(const Level& level, const GameLogic& gameLogic) {
     CreatePieceDropEffectsContainer();
     CreateFieldBlocksContainer();
     CreateSceneObjectPools(level);
+    CreateDraggedPiece();
     CreateEffectsContainer();
     CreateFlyingBlocksContainer();
     CreateHud(gameLogic, level);
@@ -196,7 +197,7 @@ void GameScene::CreateRenderPasses() {
     fieldBlocksRenderPass.SetProjectionMode(Pht::ProjectionMode::Orthographic);
     mScene->AddRenderPass(fieldBlocksRenderPass);
 
-    Pht::RenderPass draggedPieceBlocksRenderPass {static_cast<int>(Layer::DraggedPieceBlocks)};
+    Pht::RenderPass draggedPieceBlocksRenderPass {static_cast<int>(Layer::DraggedPiece)};
     draggedPieceBlocksRenderPass.SetProjectionMode(Pht::ProjectionMode::Orthographic);
     mScene->AddRenderPass(draggedPieceBlocksRenderPass);
 
@@ -398,11 +399,14 @@ void GameScene::CreateSceneObjectPools(const Level& level) {
                                                      *mFieldBlocksContainer);
     mGhostPieceBlocks = std::make_unique<SceneObjectPool>(SceneObjectPoolKind::GhostPieceBlocks,
                                                           *mFieldBlocksContainer);
+}
 
-    auto& draggedPieceBlocksContainer = mScene->CreateSceneObject(mScene->GetRoot());
-    draggedPieceBlocksContainer.SetLayer(static_cast<int>(Layer::DraggedPieceBlocks));
+void GameScene::CreateDraggedPiece() {
+    auto& draggedPieceContainer = mScene->CreateSceneObject(mScene->GetRoot());
+    draggedPieceContainer.SetLayer(static_cast<int>(Layer::DraggedPiece));
     mDraggedPieceBlocks = std::make_unique<SceneObjectPool>(SceneObjectPoolKind::PieceBlocks,
-                                                            draggedPieceBlocksContainer);
+                                                            draggedPieceContainer);
+    mDraggedPiece = &mScene->CreateSceneObject(draggedPieceContainer);
 }
 
 void GameScene::CreateEffectsContainer() {
