@@ -51,6 +51,9 @@ Ongoing tasks:
     -Add drag controls and release with microtransactions enabled, free to download.
 
     -Near-term plan:
+        -Tune falling piece animation speed.
+        -Fix fsm when drag is interrupted by for exemple a call. When game resumes, should probably
+         cancel drag if in dragning state but there is no touch event.
         -Finish the valid moves area
             -Fix the stripes.
             -Maybe the valid area should be calculated like this:
@@ -65,7 +68,6 @@ Ongoing tasks:
                      area will look strange /be missing in for example a squared are that is unreachable.
                      If the piece is a sevenPiece then there will be at least one cell in the square
                      that is not marked as invalid and it will look strange.
-        -Implement falling piece animation Alt 2 (falling piece is transparent).
 
     -Ideas:
         -Define core parts of the pieces that the

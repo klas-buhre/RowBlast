@@ -663,8 +663,8 @@ void GameLogic::UpdateFallingPieceYpos() {
     }
 }
 
-void GameLogic::DropFallingPiece(SwipeGhostPieceState swipeGhostPieceState) {
-    mSwipeGhostPieceState = swipeGhostPieceState;
+void GameLogic::DropFallingPiece() {
+    mSwipeGhostPieceState = SwipeGhostPieceState::Active;
 
     bool finalMovementWasADrop {mFallingPiece->GetPosition().y > mGhostPieceRow + 1};
     mFallingPiece->SetY(mGhostPieceRow);
@@ -1274,16 +1274,10 @@ void GameLogic::OnDraggedPieceMoved() {
 }
 
 void GameLogic::StopDraggingPiece() {
-    if (IsDraggedPieceInValidArea().HasValue()) {
-        auto gridPosition = mDraggedPiece->GetFieldGridPosition();
-        mFallingPiece->SetX(static_cast<float>(gridPosition.x));
-        mFallingPiece->SetY(static_cast<float>(gridPosition.y));
-        mFallingPiece->SetRotation(mDraggedPiece->GetRotation());
-        
-        mGhostPieceRow = mField.DetectCollisionDown(CreatePieceBlocks(*mFallingPiece),
-                                                    mFallingPiece->GetIntPosition());
-        mDraggedGhostPieceRow = mGhostPieceRow;
-        DropFallingPiece(SwipeGhostPieceState::Inactive);
+    auto ghostPieceRow = 0;
+    if (auto* move = GetValidMoveBelowDraggedPiece(ghostPieceRow)) {
+        SelectMove(*move);
+        mSwipeGhostPieceState = SwipeGhostPieceState::Inactive;
     } else {
         mFallingPieceSpawnType = mCurrentMove.mPieceType;
         SpawnFallingPiece(FallingPieceSpawnReason::RespawnActiveAfterStopDraggingPiece);
@@ -1296,9 +1290,9 @@ void GameLogic::StopDraggingPiece() {
 }
 
 void GameLogic::UpdateDraggedGhostPieceRowAndBlastRadiusAnimation() {
-    auto ghostPieceRow = IsDraggedPieceInValidArea();
-    if (ghostPieceRow.HasValue()) {
-        mDraggedGhostPieceRow = ghostPieceRow.GetValue();
+    auto ghostPieceRow = 0;
+    if (GetValidMoveBelowDraggedPiece(ghostPieceRow)) {
+        mDraggedGhostPieceRow = ghostPieceRow;
         if (mDraggedPiece->GetPieceType().IsBomb()) {
             Pht::IVec2 ghostPiecePosition {
                 mDraggedPiece->GetFieldGridPosition().x,
@@ -1329,7 +1323,7 @@ void GameLogic::UpdateDraggedGhostPieceRowAndBlastRadiusAnimation() {
     }
 }
 
-Pht::Optional<int> GameLogic::IsDraggedPieceInValidArea() {
+const Move* GameLogic::GetValidMoveBelowDraggedPiece(int& ghostPieceRow) {
     auto pieceBlocks = CreatePieceBlocks(*mDraggedPiece);
     auto piecePosition = mDraggedPiece->GetFieldGridPosition();
     Field::CollisionResult collisionResult;
@@ -1339,8 +1333,9 @@ Pht::Optional<int> GameLogic::IsDraggedPieceInValidArea() {
         auto rowIfDropped = mField.DetectCollisionDown(pieceBlocks, piecePosition);
         Pht::IVec2 positionIfDropped {piecePosition.x, rowIfDropped};
         Move moveIfDropped {.mPosition = positionIfDropped, rotation};
-        if (mAllValidMoves->Find(moveIfDropped)) {
-            return positionIfDropped.y;
+        if (auto* validMove = mAllValidMoves->Find(moveIfDropped)) {
+            ghostPieceRow = positionIfDropped.y;
+            return validMove;
         }
 
         auto& duplicateMoveCheck = mDraggedPiece->GetPieceType().GetDuplicateMoveCheck(rotation);
@@ -1351,15 +1346,15 @@ Pht::Optional<int> GameLogic::IsDraggedPieceInValidArea() {
                 .mPosition = positionIfDropped + duplicateMoveCheckValue.mRelativePosition,
                 .mRotation = duplicateMoveCheckValue.mRotation
             };
-            
-            if (mAllValidMoves->Find(moveIfDropped)) {
-                return positionIfDropped.y;
-            }
 
+            if (auto* validMove = mAllValidMoves->Find(moveIfDropped)) {
+                ghostPieceRow = positionIfDropped.y;
+                return validMove;
+            }
         }
     }
     
-    return Pht::Optional<int> {};
+    return nullptr;
 }
 
 GameLogic::Result GameLogic::HandleInput() {

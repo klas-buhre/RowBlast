@@ -45,6 +45,11 @@ namespace RowBlast {
     class SmallTextAnimation;
     class ValidAreaAnimation;
     
+    enum class SwipeGhostPieceState {
+        Active,
+        Inactive
+    };
+
     enum class PreviewPieceAnimationToStart {
         NextPieceAndSwitch,
         NextPieceAndRefillActive,
@@ -99,7 +104,7 @@ namespace RowBlast {
                   Tutorial& tutorial,
                   const SettingsService& settingsService);
         
-        void DropFallingPiece(SwipeGhostPieceState swipeGhostPieceState) override;
+        void DropFallingPiece() override;
         void SelectMove(const Move& move) override;
         void OnFallingPieceAnimationFinished(bool finalMovementWasADrop) override;
         void RotatePreviewPiece(PreviewPieceIndex previewPieceIndex) override;
@@ -241,7 +246,7 @@ namespace RowBlast {
         void RemoveBlocksInsideTheShield();
         bool IsThereRoomToSwitchPiece(const Piece& pieceType);
         void UpdateDraggedGhostPieceRowAndBlastRadiusAnimation();
-        Pht::Optional<int> IsDraggedPieceInValidArea();
+        const Move* GetValidMoveBelowDraggedPiece(int& ghostPieceRow);
         Result HandleInput();
         void ForwardTouchToInputHandler(const Pht::TouchEvent& touchEvent);
         bool IsInputAllowed() const;
