@@ -51,9 +51,16 @@ Ongoing tasks:
     -Add drag controls and release with microtransactions enabled, free to download.
 
     -Near-term plan:
+        -The falling piece should probably move sideways (one cell at the time) when dragging.
         -Tune falling piece animation speed.
         -Fix fsm when drag is interrupted by for exemple a call. When game resumes, should probably
          cancel drag if in dragning state but there is no touch event.
+        -For non zoomed displays (iPad, iPhone 7 etc..): The field and lower hud must be moved
+         upward a bit to avoid interference with the gesture recognizer at the bottom of the screen.
+         Instead of modifying the envmap texture, it might work to move the camera 1.0 of 2.0
+         backwards to get a bigger bright env map area. Or move the field backwards in z-direction,
+         it is the distance to camera that matters.
+
         -Finish the valid moves area
             -Fix the stripes.
             -Maybe the valid area should be calculated like this:
@@ -69,73 +76,38 @@ Ongoing tasks:
                      If the piece is a sevenPiece then there will be at least one cell in the square
                      that is not marked as invalid and it will look strange.
 
-    -Ideas:
-        -Define core parts of the pieces that the
-         validMovesSearch changes the MovingPiece to if a rotation fails, and continue the search
-         using the core part. If later there is room for the whole piece then change back to the
-         whole piece. Core part for the F is a small L, core of all I is just one cell, core of B
-         is probably an O square. However, changing the movingPiece in the search will probably
-         cause wierd movements and increase the cost of the search. Instead we could find all moves
-         that have not been found yet (that dont cause a collision) and try to search back upwards
-         using the core part. If the search finds the valid area and it is possible to cover the
-         entire upwards search path with the complete piece then that new move is valid. For
-         example, the I piece would not fit in a one-cell wide stair, but the core part would and
-         therefore this makes sure that is not a valid moves.
-        -Non-reachable empty cells can have red stripes that fade in when starting a drag.
-         Preferably with a red egde round the area. To calculate the valid area: for all valid
-         moves, fill the valid area by painting the field by moving
-         the move upwards until collision or above the falling piece.
-    -Try to implement Alt 2.
-    -The transparant active piece must be present to show how far down the falling piece is in case
-     of for example a level with speed. So keep it.
+    -Mid-term future:
+        -Update the tutorial with drag controls.
+        -Sometimes moves that seem feasible are unreachable due to the way pieces are rotated by the AI.
+         Maybe look into some new rotation system like SRS. Or simplify the rotations by just saying that
+         if there is a contineous path (at least N cells wide, where N is the max width of the piece)
+         from the falling piece to the move then it is legal. Just start a new ValidMovesSearch for each
+         sub-area that is considered to be connected (by a path) to the upper-most area and add moves
+         found in that sub search to the total result. Ideas:
+            -Define core parts of the pieces that the
+             validMovesSearch changes the MovingPiece to if a rotation fails, and continue the search
+             using the core part. If later there is room for the whole piece then change back to the
+             whole piece. Core part for the F is a small L, core of all I is just one cell, core of B
+             is probably an O square. However, changing the movingPiece in the search will probably
+             cause wierd movements and increase the cost of the search. Instead we could find all moves
+             that have not been found yet (that dont cause a collision) and try to search back upwards
+             using the core part. If the search finds the valid area and it is possible to cover the
+             entire upwards search path with the complete piece then that new move is valid. For
+             example, the I piece would not fit in a one-cell wide stair, but the core part would and
+             therefore this makes sure that is not a valid moves.
+            -Non-reachable empty cells can have red stripes that fade in when starting a drag.
+             Preferably with a red egde round the area. To calculate the valid area: for all valid
+             moves, fill the valid area by painting the field by moving
+             the move upwards until collision or above the falling piece.
+        -Create a DraggedPieceAnimation for animating the dragged piece going back to the selectables
+         and being placed at a legal move in the field. When the dragged piece goes back to the
+         selectables in the hud then the piece could travel really quickly in the DraggedPiece render
+         pass and the the piece could simply appear in one frame in the selectables.
 
-    -The field must be moved upward at least one cell. Instead of modifyeing the envmap texture, it
-     might work to move the camera 1.0 of 2.0 backwards to bet a bigger bright env map area. Or
-     move the field backwards in z-direction, it is the distance to camera tha matters.
+    -Maybe:
+        -Make a new pause button at the top-right corner and make a controls toggle button at the pause
+         buttons old location. Or, it might be room for both at the bottom left.
 
-    -Sometimes moves that seem feasible are unreachable due to the way pieces are rotated by the AI.
-     Maybe look into some new rotation system like SRS. Or simplify the rotations by just saying that
-     if there is a contineous path (at least N cells wide, where N is the max width of the piece)
-     from the falling piece to the move then it is legal. Just start a new ValidMovesSearch for each
-     sub-area that is considered to be connected (by a path) to the upper-most area and add moves
-     found in that sub search to the total result.
-
-    -Maybe a transparant real piece should be dragged in with a ghost piece under it.
-     Or it has to be a real piece since a transparant piece might not be clear enough in daylight
-     conditions. Or could be a move image (more bright).
-       -Maybe no welds in the dragged piece? because then the blocks can scale down slightly and
-        separate a bit which feels nice. The weld can appear with the weld animation when the piece
-        is placed. Or, the welds could be transparant when dragging the piece.
-       -Maybe the dragged piece blocks should cast a shadow? The shadow could be in the scissor box.
-       -The dragged piece could simply disappear from its place in the hud in one frame since the
-        finger will cover it anyway. But the dragged piece in the DraggedPiece pass could
-        scale in and move up during a couple of frames. Then there is no transition/handover between
-        the hud pass and the DraggedPiece pass. When the dragged piece goes back to the
-        selectables in the hud then the piece could travel really quickly in the DraggedPiece
-        render pass and the the piece could simply appear in one frame in the selectables.
-       -The transparant piece at the top might have welds if rendered front to back with depth test.
-       -Alt 1: When the piece is released, there could be a falling piece animation going from the real
-        piece at the top down to the landing location, which may be below the release location.
-        Then it will be clearer that pieces can only be placed at locations that are reachable from
-        the active piece at the top.
-          -Alt 2: The dragged piece is the real solid piece and the active piece at the top is
-           transparent during dragging and there is no falling piece animation going to the real
-           piece once released. There might be the Note A falling piece animation though. However,
-           from an implementation perspective there could be a falling piece animation
-           going from the release location (which in effect places the falling piece at that spot)
-           to the landing location (possibly a bit down). Then we get the block trails for free when
-           they should appear and the piece gets an animated movement to the landing location.
-       -(Note A) Could even have a falling piece animation that stops at the closest legal move and then goes
-        back to to top, if the user tries to drag in a piece to an illegal move.
-    -Create a DraggedPieceAnimation for animating the dragged piece leaving the selectables
-     container, going back to the selectables and being placed at a legal move in the field.
-
-    -Make a new pause button at the top-right corner and make a controls toggle button at the pause
-     buttons old location. Or, it might be room for both at the bottom left.
-    -In gesture/drag controls, switching piece could also (apart from swipe up in the screen) be
-     done by swiping left or right inside the selectable cotainer. Swipe left shifts the selectables
-     to the left, swipe right shifts them to the right.
-    -Update the tutorial with drag controls.
 
 
     -Moves left in assumed user strength play:
