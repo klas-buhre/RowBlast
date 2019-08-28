@@ -53,6 +53,7 @@ void GestureInputHandler::HandleTouch(const Pht::TouchEvent& touchEvent) {
                 return;
             }
             break;
+        case Pht::TouchState::Cancelled:
         case Pht::TouchState::Other:
             return;
         case Pht::TouchState::Ongoing:

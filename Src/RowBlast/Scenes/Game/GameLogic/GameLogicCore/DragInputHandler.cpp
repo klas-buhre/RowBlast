@@ -52,6 +52,9 @@ DragInputHandler::State DragInputHandler::HandleTouch(const Pht::TouchEvent& tou
         case Pht::TouchState::End:
             HandleTouchEnd(touchEvent);
             break;
+        case Pht::TouchState::Cancelled:
+            HandleTouchCancelled();
+            break;
         default:
             break;
     }
@@ -158,6 +161,21 @@ void DragInputHandler::EndDrag() {
     GetPreviewPieceButton(mDraggedPieceIndex).Reset();
     mDraggedPieceIndex = PreviewPieceIndex::None;
     mState = State::DragEnd;
+}
+
+void DragInputHandler::HandleTouchCancelled() {
+    switch (mState) {
+        case State::Idle:
+        case State::DragEnd:
+            break;
+        case State::TouchingPreviewPieceButton:
+            EndDrag();
+            break;
+        case State::Dragging:
+            mGameLogic.CancelDraggingPiece();
+            EndDrag();
+            break;
+    }
 }
 
 void DragInputHandler::UpdatePiecePosition(const Pht::TouchEvent& touchEvent) {

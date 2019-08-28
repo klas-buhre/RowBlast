@@ -1289,6 +1289,15 @@ void GameLogic::StopDraggingPiece() {
     RemoveDraggedPiece();
 }
 
+void GameLogic::CancelDraggingPiece() {
+    mFallingPieceSpawnType = mCurrentMove.mPieceType;
+    SpawnFallingPiece(FallingPieceSpawnReason::RespawnActiveAfterStopDraggingPiece);
+    mScene.GetHud().ShowPreviewPiece(mDraggedPieceIndex);
+    mDraggedPieceIndex = PreviewPieceIndex::None;
+    mValidAreaAnimation.Stop();
+    RemoveDraggedPiece();
+}
+
 void GameLogic::UpdateDraggedGhostPieceRowAndBlastRadiusAnimation() {
     auto ghostPieceRow = 0;
     if (GetValidMoveBelowDraggedPiece(ghostPieceRow)) {

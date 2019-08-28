@@ -78,6 +78,9 @@ Button::Result Button::OnTouch(const TouchEvent& event) {
             return OnTouchMove(touchLocation);
         case TouchState::End:
             return OnTouchEnd(touchLocation);
+        case TouchState::Cancelled:
+            Reset();
+            break;
         case TouchState::Other:
             break;
     }

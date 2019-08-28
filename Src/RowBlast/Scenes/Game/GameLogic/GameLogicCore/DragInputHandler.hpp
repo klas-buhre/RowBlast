@@ -45,6 +45,7 @@ namespace RowBlast {
         void EndDrag();
         void HandleTouchEndInTouchingPreviewPieceButtonState(const Pht::TouchEvent& touchEvent);
         void HandleTouchEndInDraggingState(const Pht::TouchEvent& touchEvent);
+        void HandleTouchCancelled();
         void UpdatePiecePosition(const Pht::TouchEvent& touchEvent);
         PreviewPieceIndex CalculateDraggedPieceIndexAtTouchBegin(const Pht::TouchEvent& touchEvent);
         const Piece* GetPieceType(PreviewPieceIndex draggedPieceIndex) const;

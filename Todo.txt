@@ -53,8 +53,6 @@ Ongoing tasks:
     -Near-term plan:
         -The falling piece should probably move sideways (one cell at the time) when dragging.
         -Tune falling piece animation speed.
-        -Fix fsm when drag is interrupted by for exemple a call. When game resumes, should probably
-         cancel drag if in dragning state but there is no touch event.
         -For non zoomed displays (iPad, iPhone 7 etc..): The field and lower hud must be moved
          upward a bit to avoid interference with the gesture recognizer at the bottom of the screen.
          Instead of modifying the envmap texture, it might work to move the camera 1.0 of 2.0

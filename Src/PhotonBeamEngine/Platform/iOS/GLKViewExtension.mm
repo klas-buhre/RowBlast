@@ -62,7 +62,15 @@ namespace {
     mEngine->GetInputHandler().PushToQueue(inputEvent);
 }
 
-- (void) handleTap:(UITapGestureRecognizer *)recognizer {
+- (void) touchesCancelled:(NSSet<UITouch*>*)touches withEvent:(UIEvent*)event {
+    [super touchesCancelled:touches withEvent:event];
+
+    Pht::TouchEvent touchEvent {Pht::TouchState::Cancelled, {}, {}, {}};
+    Pht::InputEvent inputEvent {touchEvent};
+    mEngine->GetInputHandler().PushToQueue(inputEvent);
+}
+
+- (void) handleTap:(UITapGestureRecognizer*)recognizer {
     CGPoint location = [recognizer locationInView:self];
     
     Pht::TapGestureEvent tap {
@@ -73,7 +81,7 @@ namespace {
     mEngine->GetInputHandler().PushToQueue(event);
 }
 
-- (void) handlePan:(UIPanGestureRecognizer *)recognizer {
+- (void) handlePan:(UIPanGestureRecognizer*)recognizer {
     CGPoint translation = [recognizer translationInView:self];
     CGPoint velocity = [recognizer velocityInView:self];
     Pht::TouchState state = toTouchState(recognizer.state);

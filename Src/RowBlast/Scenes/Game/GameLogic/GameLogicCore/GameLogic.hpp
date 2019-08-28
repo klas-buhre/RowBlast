@@ -119,6 +119,7 @@ namespace RowBlast {
         bool BeginDraggingPiece(PreviewPieceIndex draggedPieceIndex) override;
         void OnDraggedPieceMoved() override;
         void StopDraggingPiece() override;
+        void CancelDraggingPiece() override;
         const Piece* GetPieceType() const override;
         const TwoPieces& GetSelectablePieces() const override;
         const PreviewPieceRotations& GetPreviewPieceRotations() const override;

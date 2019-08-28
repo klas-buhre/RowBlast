@@ -292,6 +292,7 @@ void ClickInputHandler::HandleTouch(const Pht::TouchEvent& touchEvent, int moves
                 mTutorial.OnChangeVisibleMoves(movesUsed, mVisibleMoves);
             }
             return;
+        case Pht::TouchState::Cancelled:
         case Pht::TouchState::Other:
             return;
         case Pht::TouchState::Ongoing:

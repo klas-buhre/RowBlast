@@ -8,6 +8,7 @@ namespace Pht {
         Begin,
         Ongoing,
         End,
+        Cancelled,
         Other
     };
     
