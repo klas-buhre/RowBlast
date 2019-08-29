@@ -24,6 +24,7 @@ namespace RowBlast {
     class LevelResources;
     class BombsAnimation;
     class AsteroidAnimation;
+    class FallingPieceAnimation;
     class ValidAreaAnimation;
     class SceneObjectPool;
     class Piece;
@@ -36,6 +37,7 @@ namespace RowBlast {
                           const ScrollController& scrollController,
                           const BombsAnimation& bombsAnimation,
                           AsteroidAnimation& asteroidAnimation,
+                          const FallingPieceAnimation& fallingPieceAnimation,
                           const ValidAreaAnimation& validAreaAnimation,
                           const PieceResources& pieceResources,
                           const GhostPieceBlocks& ghostPieceBlocks,
@@ -62,6 +64,7 @@ namespace RowBlast {
                                                  const SubCell& subCell,
                                                  const WeldAnimation& weldAnimation);
         void UpdateFallingPiece();
+        Pht::Vec2 CalculateFallingPieceGridPosition(const FallingPiece& fallingPiece);
         void UpdateDraggedPiece();
         void UpdatePieceBlocks(const Piece& pieceType,
                                Rotation rotation,
@@ -87,6 +90,7 @@ namespace RowBlast {
         const ScrollController& mScrollController;
         const BombsAnimation& mBombsAnimation;
         AsteroidAnimation& mAsteroidAnimation;
+        const FallingPieceAnimation& mFallingPieceAnimation;
         const ValidAreaAnimation& mValidAreaAnimation;
         const PieceResources& mPieceResources;
         const GhostPieceBlocks& mGhostPieceBlocks;

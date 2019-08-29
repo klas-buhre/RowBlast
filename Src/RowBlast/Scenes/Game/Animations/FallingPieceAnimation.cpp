@@ -32,12 +32,28 @@ void FallingPieceAnimation::Start(const Movement& lastMovement) {
     }
     
     mMovements.Reverse();
+    RemoveFirstMovementIfDetour();
     mState = State::Active;
     
     if (mFallingPiece.GetPieceType().IsBomb() || mFallingPiece.GetPieceType().IsRowBomb()) {
         mSpeed = slowSpeed;
     } else {
         mSpeed = fastSpeed;
+    }
+}
+
+void FallingPieceAnimation::RemoveFirstMovementIfDetour() {
+    if (mMovements.Size() > 1) {
+        auto fallingPiecePos = mFallingPiece.GetRenderablePosition();
+        auto* secondMovement = mMovements.At(1);
+        if (fallingPiecePos.y == secondMovement->GetPosition().y) {
+            auto* firstMovement = mMovements.Front();
+            auto firstMovementDiff = fallingPiecePos - firstMovement->GetPosition();
+            auto secondMovementDiff = fallingPiecePos - secondMovement->GetPosition();
+            if (std::abs(secondMovementDiff.x) < std::abs(firstMovementDiff.x)) {
+                mMovements.Erase(0);
+            }
+        }
     }
 }
 
@@ -126,8 +142,4 @@ void FallingPieceAnimation::LandFallingPiece() {
         mMovements.At(secondToLastMovementIndex)->GetPosition().y > landingPosition.y : false;
     
     mGameLogic.OnFallingPieceAnimationFinished(finalMovementWasADrop);
-}
-
-bool FallingPieceAnimation::IsInactive() const {
-    return mState == State::Inactive;
 }

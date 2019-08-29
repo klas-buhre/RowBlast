@@ -25,9 +25,13 @@ namespace RowBlast {
         void Init();
         void Start(const Movement& lastMovement);
         State Update(float dt);
-        bool IsInactive() const;
+        
+        State GetState() const {
+            return mState;
+        }
         
     private:
+        void RemoveFirstMovementIfDetour();
         void Animate(float dt);
         void NextMovement();
         void LandFallingPiece();

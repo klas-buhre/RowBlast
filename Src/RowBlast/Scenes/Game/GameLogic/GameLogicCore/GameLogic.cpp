@@ -1270,6 +1270,24 @@ bool GameLogic::BeginDraggingPiece(PreviewPieceIndex draggedPieceIndex) {
 }
 
 void GameLogic::OnDraggedPieceMoved() {
+    auto pieceBlocks = CreatePieceBlocks(*mFallingPiece);
+    auto fallingPieceNewX =
+        static_cast<float>(mDraggedPiece->GetFieldGridPosition().x) + halfColumn;
+
+    if (fallingPieceNewX - mFallingPiece->GetPosition().x > 0.0f) {
+        auto collisionRight =
+            mField.DetectCollisionRight(pieceBlocks, mFallingPiece->GetIntPosition()) +
+            halfColumn;
+        
+        mFallingPiece->SetX(std::fmin(collisionRight, fallingPieceNewX));
+    } else {
+        auto collisionLeft =
+            mField.DetectCollisionLeft(pieceBlocks, mFallingPiece->GetIntPosition()) +
+            halfColumn;
+        
+        mFallingPiece->SetX(std::fmax(collisionLeft, fallingPieceNewX));
+    }
+
     UpdateDraggedGhostPieceRowAndBlastRadiusAnimation();
 }
 
@@ -1426,5 +1444,6 @@ void GameLogic::ForwardTouchToInputHandler(const Pht::TouchEvent& touchEvent) {
 }
 
 bool GameLogic::IsInputAllowed() const {
-    return mFallingPiece && mFallingPieceAnimation.IsInactive();
+    return mFallingPiece &&
+           mFallingPieceAnimation.GetState() == FallingPieceAnimation::State::Inactive;
 }

@@ -51,8 +51,8 @@ Ongoing tasks:
     -Add drag controls and release with microtransactions enabled, free to download.
 
     -Near-term plan:
-        -The falling piece should probably move sideways (one cell at the time) when dragging.
-        -Tune falling piece animation speed.
+        -Tune falling piece animation speed. Can use the old speed for click controls and the new
+         speed for the drag controls.
         -For non zoomed displays (iPad, iPhone 7 etc..): The field and lower hud must be moved
          upward a bit to avoid interference with the gesture recognizer at the bottom of the screen.
          Instead of modifying the envmap texture, it might work to move the camera 1.0 of 2.0

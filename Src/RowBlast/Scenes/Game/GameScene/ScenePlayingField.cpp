@@ -48,6 +48,7 @@ ScenePlayingField::ScenePlayingField(GameScene& scene,
                                      const ScrollController& scrollController,
                                      const BombsAnimation& bombsAnimation,
                                      AsteroidAnimation& asteroidAnimation,
+                                     const FallingPieceAnimation& fallingPieceAnimation,
                                      const ValidAreaAnimation& validAreaAnimation,
                                      const PieceResources& pieceResources,
                                      const GhostPieceBlocks& ghostPieceBlocks,
@@ -58,6 +59,7 @@ ScenePlayingField::ScenePlayingField(GameScene& scene,
     mScrollController {scrollController},
     mBombsAnimation {bombsAnimation},
     mAsteroidAnimation {asteroidAnimation},
+    mFallingPieceAnimation {fallingPieceAnimation},
     mValidAreaAnimation {validAreaAnimation},
     mPieceResources {pieceResources},
     mGhostPieceBlocks {ghostPieceBlocks},
@@ -360,10 +362,7 @@ void ScenePlayingField::UpdateFallingPiece() {
         return;
     }
     
-    auto pieceGridPos =
-        mGameLogic.IsUsingClickControls() ? fallingPiece->GetRenderablePositionSmoothY() :
-                                            fallingPiece->GetRenderablePosition();
-    
+    auto pieceGridPos = CalculateFallingPieceGridPosition(*fallingPiece);
     const auto cellSize = mScene.GetCellSize();
     Pht::Vec3 pieceFieldPos {pieceGridPos.x * cellSize, pieceGridPos.y * cellSize, 0.0f};
     auto isTransparent = false;
@@ -374,6 +373,16 @@ void ScenePlayingField::UpdateFallingPiece() {
                       isTransparent,
                       isGhostPiece,
                       mScene.GetPieceBlocks());
+}
+
+Pht::Vec2 ScenePlayingField::CalculateFallingPieceGridPosition(const FallingPiece& fallingPiece) {
+    if (mFallingPieceAnimation.GetState() == FallingPieceAnimation::State::Active ||
+        mGameLogic.IsUsingClickControls()) {
+        
+        return fallingPiece.GetRenderablePositionSmoothY();
+    }
+    
+    return fallingPiece.GetRenderablePosition();
 }
 
 void ScenePlayingField::UpdateDraggedPiece() {
