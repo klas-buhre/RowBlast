@@ -108,8 +108,9 @@ GameLogic::GameLogic(Pht::IEngine& engine,
     mFieldGravity {field},
     mFieldExplosionsStates {engine, field, mFieldGravity, effectManager, flyingBlocksAnimation},
     mFallingPieceAnimation {*this, mFallingPieceStorage},
-    mComboDetector {engine, smallTextAnimation, effectManager},
     mDraggedPieceStorage {gameScene},
+    mDraggedPieceAnimation {engine, gameScene, *this, mDraggedPieceStorage},
+    mComboDetector {engine, smallTextAnimation, effectManager},
     mAi {field},
     mDragInputHandler {engine, *this, gameScene, mDraggedPieceStorage},
     mGestureInputHandler {*this, mFallingPieceStorage},
@@ -1296,15 +1297,11 @@ void GameLogic::StopDraggingPiece() {
     if (auto* move = GetValidMoveBelowDraggedPiece(ghostPieceRow)) {
         SelectMove(*move);
         mSwipeGhostPieceState = SwipeGhostPieceState::Inactive;
+        mValidAreaAnimation.Stop();
+        RemoveDraggedPiece();
     } else {
-        mFallingPieceSpawnType = mCurrentMove.mPieceType;
-        SpawnFallingPiece(FallingPieceSpawnReason::RespawnActiveAfterStopDraggingPiece);
-        mScene.GetHud().ShowPreviewPiece(mDraggedPieceIndex);
-        mDraggedPieceIndex = PreviewPieceIndex::None;
+        mDraggedPieceAnimation.Start(mDraggedPieceIndex);
     }
-    
-    mValidAreaAnimation.Stop();
-    RemoveDraggedPiece();
 }
 
 void GameLogic::CancelDraggingPiece() {
@@ -1314,6 +1311,10 @@ void GameLogic::CancelDraggingPiece() {
     mDraggedPieceIndex = PreviewPieceIndex::None;
     mValidAreaAnimation.Stop();
     RemoveDraggedPiece();
+}
+
+void GameLogic::OnDraggedPieceAnimationFinished() {
+    CancelDraggingPiece();
 }
 
 void GameLogic::UpdateDraggedGhostPieceRowAndBlastRadiusAnimation() {
@@ -1445,5 +1446,6 @@ void GameLogic::ForwardTouchToInputHandler(const Pht::TouchEvent& touchEvent) {
 
 bool GameLogic::IsInputAllowed() const {
     return mFallingPiece &&
-           mFallingPieceAnimation.GetState() == FallingPieceAnimation::State::Inactive;
+           mFallingPieceAnimation.GetState() == FallingPieceAnimation::State::Inactive &&
+           mDraggedPieceAnimation.GetState() == DraggedPieceAnimation::State::Inactive;
 }

@@ -17,6 +17,7 @@
 #include "GestureInputHandler.hpp"
 #include "ClickInputHandler.hpp"
 #include "FallingPieceAnimation.hpp"
+#include "DraggedPieceAnimation.hpp"
 #include "FieldGravity.hpp"
 #include "FieldExplosionsStates.hpp"
 #include "BlastRadiusAnimation.hpp"
@@ -119,6 +120,7 @@ namespace RowBlast {
         bool BeginDraggingPiece(PreviewPieceIndex draggedPieceIndex) override;
         void OnDraggedPieceMoved() override;
         void StopDraggingPiece() override;
+        void OnDraggedPieceAnimationFinished() override;
         void CancelDraggingPiece() override;
         const Piece* GetPieceType() const override;
         const TwoPieces& GetSelectablePieces() const override;
@@ -137,6 +139,10 @@ namespace RowBlast {
         
         FallingPieceAnimation& GetFallingPieceAnimation() {
             return mFallingPieceAnimation;
+        }
+        
+        DraggedPieceAnimation& GetDraggedPieceAnimation() {
+            return mDraggedPieceAnimation;
         }
         
         const FallingPiece* GetFallingPiece() const {
@@ -299,11 +305,12 @@ namespace RowBlast {
         CascadeState mCascadeState {CascadeState::NotCascading};
         float mCascadeWaitTime {0.0f};
         FieldGravity mFieldGravity;
-        FieldExplosionsStates mFieldExplosionsStates;
-        FallingPieceAnimation mFallingPieceAnimation;
-        ComboDetector mComboDetector;
         FallingPiece mFallingPieceStorage;
         DraggedPiece mDraggedPieceStorage;
+        FieldExplosionsStates mFieldExplosionsStates;
+        FallingPieceAnimation mFallingPieceAnimation;
+        DraggedPieceAnimation mDraggedPieceAnimation;
+        ComboDetector mComboDetector;
         Ai mAi;
         Moves* mAllValidMoves {nullptr};
         DragInputHandler mDragInputHandler;

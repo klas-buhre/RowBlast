@@ -19,6 +19,7 @@
 		174F9EAE22DE24C10057BA7C /* GhostPieceBlocks.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 174F9EAC22DE24C10057BA7C /* GhostPieceBlocks.cpp */; };
 		1774768022DA42B800EEE97C /* NoMoreLevelsDialogView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1774767E22DA42B800EEE97C /* NoMoreLevelsDialogView.cpp */; };
 		1774768322DA42E400EEE97C /* NoMoreLevelsDialogController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1774768122DA42E400EEE97C /* NoMoreLevelsDialogController.cpp */; };
+		17B29562231812C700F16DD9 /* DraggedPieceAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 17B29560231812C700F16DD9 /* DraggedPieceAnimation.cpp */; };
 		17DE663422DB4703009B3E78 /* libGameAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 17DE663322DB4703009B3E78 /* libGameAnalytics.a */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
@@ -570,6 +571,8 @@
 		1774767F22DA42B800EEE97C /* NoMoreLevelsDialogView.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = NoMoreLevelsDialogView.hpp; sourceTree = "<group>"; };
 		1774768122DA42E400EEE97C /* NoMoreLevelsDialogController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NoMoreLevelsDialogController.cpp; sourceTree = "<group>"; };
 		1774768222DA42E400EEE97C /* NoMoreLevelsDialogController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = NoMoreLevelsDialogController.hpp; sourceTree = "<group>"; };
+		17B29560231812C700F16DD9 /* DraggedPieceAnimation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DraggedPieceAnimation.cpp; sourceTree = "<group>"; };
+		17B29561231812C700F16DD9 /* DraggedPieceAnimation.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = DraggedPieceAnimation.hpp; sourceTree = "<group>"; };
 		17DE663222DB4703009B3E78 /* GameAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameAnalytics.h; sourceTree = "<group>"; };
 		17DE663322DB4703009B3E78 /* libGameAnalytics.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGameAnalytics.a; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -2085,6 +2088,8 @@
 				62216B8821EB377E001CB9A1 /* BombsAnimation.hpp */,
 				62216B7C21EB377E001CB9A1 /* CollapsingFieldAnimation.cpp */,
 				62216B8521EB377E001CB9A1 /* CollapsingFieldAnimation.hpp */,
+				17B29560231812C700F16DD9 /* DraggedPieceAnimation.cpp */,
+				17B29561231812C700F16DD9 /* DraggedPieceAnimation.hpp */,
 				62216B7621EB377E001CB9A1 /* FallingPieceAnimation.cpp */,
 				62216B8F21EB377E001CB9A1 /* FallingPieceAnimation.hpp */,
 				62216B7B21EB377E001CB9A1 /* FallingPieceScaleAnimation.cpp */,
@@ -2109,10 +2114,10 @@
 				62216B7321EB377E001CB9A1 /* SlidingTextAnimation.hpp */,
 				62216B8D21EB377E001CB9A1 /* SmallTextAnimation.cpp */,
 				62216B7521EB377E001CB9A1 /* SmallTextAnimation.hpp */,
-				62216B7921EB377E001CB9A1 /* WeldsAnimation.cpp */,
-				62216B9221EB377E001CB9A1 /* WeldsAnimation.hpp */,
 				173A44D6231037D7005FC10F /* ValidAreaAnimation.cpp */,
 				173A44D7231037D7005FC10F /* ValidAreaAnimation.hpp */,
+				62216B7921EB377E001CB9A1 /* WeldsAnimation.cpp */,
+				62216B9221EB377E001CB9A1 /* WeldsAnimation.hpp */,
 			);
 			path = Animations;
 			sourceTree = "<group>";
@@ -3693,6 +3698,7 @@
 				625698072182392C003A3A9D /* BoxMesh.cpp in Sources */,
 				62216BEF21EB377E001CB9A1 /* GameController.cpp in Sources */,
 				6242DEFA21C5112000D17F46 /* MusicTrackIOS.mm in Sources */,
+				17B29562231812C700F16DD9 /* DraggedPieceAnimation.cpp in Sources */,
 				62216C1F21EB377F001CB9A1 /* ExplosionParticleEffect.cpp in Sources */,
 				62216C6221EDDF36001CB9A1 /* TextDocumentLoader.cpp in Sources */,
 				62216BD821EB377E001CB9A1 /* FireworksParticleEffect.cpp in Sources */,

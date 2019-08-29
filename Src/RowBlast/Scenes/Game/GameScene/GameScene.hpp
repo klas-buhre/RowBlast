@@ -44,12 +44,12 @@ namespace RowBlast {
             FieldBlueprintSlotsAndInvalidCells,
             FieldPieceDropEffects,
             FieldBlocksAndFallingPiece,
-            DraggedPiece,
             Effects,
             FlyingBlocks,
             LevelCompletedFadeEffect,
             LevelCompletedEffects,
             Hud,
+            DraggedPiece,
             UiViews,
             Stars,
             SceneSwitchFadeEffect = GlobalLayer::sceneSwitchFadeEffect

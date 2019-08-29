@@ -197,10 +197,6 @@ void GameScene::CreateRenderPasses() {
     fieldBlocksRenderPass.SetProjectionMode(Pht::ProjectionMode::Orthographic);
     mScene->AddRenderPass(fieldBlocksRenderPass);
 
-    Pht::RenderPass draggedPieceBlocksRenderPass {static_cast<int>(Layer::DraggedPiece)};
-    draggedPieceBlocksRenderPass.SetProjectionMode(Pht::ProjectionMode::Orthographic);
-    mScene->AddRenderPass(draggedPieceBlocksRenderPass);
-
     Pht::RenderPass effectsRenderPass {static_cast<int>(Layer::Effects)};
     effectsRenderPass.SetProjectionMode(Pht::ProjectionMode::Orthographic);
     mScene->AddRenderPass(effectsRenderPass);
@@ -221,6 +217,10 @@ void GameScene::CreateRenderPasses() {
     Pht::RenderPass hudRenderPass {static_cast<int>(Layer::Hud)};
     hudRenderPass.SetHudMode(true);
     mScene->AddRenderPass(hudRenderPass);
+    
+    Pht::RenderPass draggedPieceRenderPass {static_cast<int>(Layer::DraggedPiece)};
+    draggedPieceRenderPass.SetProjectionMode(Pht::ProjectionMode::Orthographic);
+    mScene->AddRenderPass(draggedPieceRenderPass);
     
     Pht::RenderPass uiViewsRenderPass {static_cast<int>(Layer::UiViews)};
     uiViewsRenderPass.SetHudMode(true);

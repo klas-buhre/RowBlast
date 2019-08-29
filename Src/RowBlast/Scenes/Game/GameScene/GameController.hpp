@@ -50,6 +50,7 @@ namespace RowBlast {
     class CommonResources;
     class UserServices;
     class FallingPieceAnimation;
+    class DraggedPieceAnimation;
     
     class GameController {
     public:
@@ -193,6 +194,7 @@ namespace RowBlast {
         Tutorial mTutorial;
         GameLogic mGameLogic;
         FallingPieceAnimation& mFallingPieceAnimation;
+        DraggedPieceAnimation& mDraggedPieceAnimation;
         ActivePreviewPieceAnimation mActivePreviewPieceAnimation;
         PreviewPiecesAnimation mPreviewPiecesAnimation;
         PreviewPiecesRotationAnimation mPreviewPiecesRotationAnimation;

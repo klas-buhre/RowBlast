@@ -12,6 +12,7 @@ DraggedPiece::DraggedPiece(const GameScene& scene) :
 void DraggedPiece::BeginDrag(const Piece& pieceType, Rotation rotation) {
     mPieceType = &pieceType;
     mRotation = rotation;
+    mScale = 1.0f;
 }
 
 void DraggedPiece::SetPosition(const Pht::Vec2& position) {

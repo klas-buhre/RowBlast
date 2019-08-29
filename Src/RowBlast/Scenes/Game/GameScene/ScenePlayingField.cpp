@@ -413,6 +413,7 @@ void ScenePlayingField::UpdateDraggedPiece() {
         auto position = pieceFieldPos + pieceCenterLocalCoords;
         transform.SetPosition(position);
         transform.SetRotation({0.0f, 0.0f, RotationToDeg(draggedPiece->GetRotation())});
+        transform.SetScale(draggedPiece->GetScale());
         sceneObject.SetRenderable(ghostPieceRenderable);
     } else {
         auto isTransparent = false;

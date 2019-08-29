@@ -19,6 +19,10 @@ namespace RowBlast {
         void SetPosition(const Pht::Vec2& position);
         Pht::IVec2 GetFieldGridPosition() const;
         
+        void SetScale(float scale) {
+            mScale = scale;
+        }
+        
         const Piece& GetPieceType() const {
             return *mPieceType;
         }
@@ -31,11 +35,16 @@ namespace RowBlast {
             return mRotation;
         }
         
+        float GetScale() const {
+            return mScale;
+        }
+        
     private:
         const GameScene& mScene;
         const Piece* mPieceType {nullptr};
         Pht::Vec2 mPosition;
         Rotation mRotation {Rotation::Deg0};
+        float mScale {0.0f};
     };
 }
 

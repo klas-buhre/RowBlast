@@ -43,6 +43,7 @@ namespace RowBlast {
         virtual void OnDraggedPieceMoved() = 0;
         virtual void StopDraggingPiece() = 0;
         virtual void CancelDraggingPiece() = 0;
+        virtual void OnDraggedPieceAnimationFinished() = 0;
         virtual const Piece* GetPieceType() const = 0;
         virtual const TwoPieces& GetSelectablePieces() const = 0;
         virtual const PreviewPieceRotations& GetPreviewPieceRotations() const = 0;

@@ -106,6 +106,7 @@ GameController::GameController(Pht::IEngine& engine,
         userServices.GetSettingsService()
     },
     mFallingPieceAnimation {mGameLogic.GetFallingPieceAnimation()},
+    mDraggedPieceAnimation {mGameLogic.GetDraggedPieceAnimation()},
     mActivePreviewPieceAnimation {mScene, mGameLogic},
     mPreviewPiecesAnimation {mScene, mGameLogic, mActivePreviewPieceAnimation},
     mPreviewPiecesRotationAnimation {mScene, mGameLogic},
@@ -168,6 +169,7 @@ void GameController::Init(int levelId) {
     mFlyingBlocksAnimation.Init();
     mFlashingBlocksAnimation.Init();
     mFallingPieceAnimation.Init();
+    mDraggedPieceAnimation.Init();
     mSlidingTextAnimation.Init();
     mSmallTextAnimation.Init();
     mBombsAnimation.Init();
@@ -243,6 +245,7 @@ GameController::Command GameController::UpdateGame() {
     mCameraShake.Update(dt);
     mFlyingBlocksAnimation.Update(dt);
     mFallingPieceScaleAnimation.Update(dt);
+    mDraggedPieceAnimation.Update();
     mScene.Update();
     mPreviewPiecesAnimation.Update(dt);
     mActivePreviewPieceAnimation.Update(dt);

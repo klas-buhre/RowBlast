@@ -51,21 +51,19 @@ Ongoing tasks:
     -Add drag controls and release with microtransactions enabled, free to download.
 
     -Near-term plan:
+        -Create a DraggedPieceAnimation for animating the dragged piece going up really quickly
+         using the slide points.
         -Tune falling piece animation speed. Can use the old speed for click controls and the new
-         speed for the drag controls.
+         speed for the drag controls. Could also be a constant duration, so speed depends on the
+         distance.
         -For non zoomed displays (iPad, iPhone 7 etc..): The field and lower hud must be moved
          upward 1 cell to avoid interference with the gesture recognizer at the bottom of the screen.
          Instead of modifying the envmap texture, it might work to move the camera 1.0 of 2.0
          backwards to get a bigger bright env map area. Or move the field backwards in z-direction,
          it is the distance to camera that matters.
-
-    -Mid-term future:
-        -Create a DraggedPieceAnimation for animating the dragged piece going back to the selectables
-         and being placed at a legal move in the field. When the dragged piece goes back to the
-         selectables in the hud then the piece could travel really quickly in the DraggedPiece render
-         pass and the the piece could simply appear in one frame in the selectables.
         -Update the tutorial with drag controls.
 
+    -Mid-term future:
         -Sometimes moves that seem feasible are unreachable due to the way pieces are rotated by the AI.
          Maybe look into some new rotation system like SRS. Or simplify the rotations by just saying that
          if there is a contineous path (at least N cells wide, where N is the max width of the piece)
