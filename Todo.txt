@@ -54,28 +54,18 @@ Ongoing tasks:
         -Tune falling piece animation speed. Can use the old speed for click controls and the new
          speed for the drag controls.
         -For non zoomed displays (iPad, iPhone 7 etc..): The field and lower hud must be moved
-         upward a bit to avoid interference with the gesture recognizer at the bottom of the screen.
+         upward 1 cell to avoid interference with the gesture recognizer at the bottom of the screen.
          Instead of modifying the envmap texture, it might work to move the camera 1.0 of 2.0
          backwards to get a bigger bright env map area. Or move the field backwards in z-direction,
          it is the distance to camera that matters.
 
-        -Finish the valid moves area
-            -Fix the stripes.
-            -Maybe the valid area should be calculated like this:
-                -Init the grid to undefined cells, not invalid cells.
-                -Calculate the valid area like before.
-                -Calculate the invalid area like this:
-                 find all possible moves that are not
-                 collisions but are not valid. For all those moves paint upwards until hitting full cells
-                 or valid cells. This will be the invalid area.
-                 This way, the obvious areas (areas that dont even fit the piece for example) are not marked as as invalid.
-                    -Even this way will not work properly in some cases when some areas of the invalid
-                     area will look strange /be missing in for example a squared are that is unreachable.
-                     If the piece is a sevenPiece then there will be at least one cell in the square
-                     that is not marked as invalid and it will look strange.
-
     -Mid-term future:
+        -Create a DraggedPieceAnimation for animating the dragged piece going back to the selectables
+         and being placed at a legal move in the field. When the dragged piece goes back to the
+         selectables in the hud then the piece could travel really quickly in the DraggedPiece render
+         pass and the the piece could simply appear in one frame in the selectables.
         -Update the tutorial with drag controls.
+
         -Sometimes moves that seem feasible are unreachable due to the way pieces are rotated by the AI.
          Maybe look into some new rotation system like SRS. Or simplify the rotations by just saying that
          if there is a contineous path (at least N cells wide, where N is the max width of the piece)
@@ -97,12 +87,22 @@ Ongoing tasks:
              Preferably with a red egde round the area. To calculate the valid area: for all valid
              moves, fill the valid area by painting the field by moving
              the move upwards until collision or above the falling piece.
-        -Create a DraggedPieceAnimation for animating the dragged piece going back to the selectables
-         and being placed at a legal move in the field. When the dragged piece goes back to the
-         selectables in the hud then the piece could travel really quickly in the DraggedPiece render
-         pass and the the piece could simply appear in one frame in the selectables.
 
     -Maybe:
+        -Finish the valid moves area
+            -Fix the stripes.
+            -Maybe the valid area should be calculated like this:
+            -Init the grid to undefined cells, not invalid cells.
+            -Calculate the valid area like before.
+            -Calculate the invalid area like this:
+             find all possible moves that are not
+             collisions but are not valid. For all those moves paint upwards until hitting full cells
+             or valid cells. This will be the invalid area.
+             This way, the obvious areas (areas that dont even fit the piece for example) are not marked as as invalid.
+            -Even this way will not work properly in some cases when some areas of the invalid
+             area will look strange /be missing in for example a squared are that is unreachable.
+             If the piece is a sevenPiece then there will be at least one cell in the square
+             that is not marked as invalid and it will look strange.
         -Make a new pause button at the top-right corner and make a controls toggle button at the pause
          buttons old location. Or, it might be room for both at the bottom left.
 
