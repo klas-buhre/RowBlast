@@ -49,6 +49,7 @@ ScenePlayingField::ScenePlayingField(GameScene& scene,
                                      const BombsAnimation& bombsAnimation,
                                      AsteroidAnimation& asteroidAnimation,
                                      const FallingPieceAnimation& fallingPieceAnimation,
+                                     const DraggedPieceAnimation& draggedPieceAnimation,
                                      const ValidAreaAnimation& validAreaAnimation,
                                      const PieceResources& pieceResources,
                                      const GhostPieceBlocks& ghostPieceBlocks,
@@ -60,6 +61,7 @@ ScenePlayingField::ScenePlayingField(GameScene& scene,
     mBombsAnimation {bombsAnimation},
     mAsteroidAnimation {asteroidAnimation},
     mFallingPieceAnimation {fallingPieceAnimation},
+    mDraggedPieceAnimation {draggedPieceAnimation},
     mValidAreaAnimation {validAreaAnimation},
     mPieceResources {pieceResources},
     mGhostPieceBlocks {ghostPieceBlocks},
@@ -397,8 +399,14 @@ void ScenePlayingField::UpdateDraggedPiece() {
     
     auto& piecePosition = draggedPiece->GetRenderablePosition();
     Pht::Vec3 pieceFieldPos {piecePosition.x, piecePosition.y, mScene.GetDraggedPieceZ()};
-    auto& pieceType = draggedPiece->GetPieceType();
+    
+    auto yOffsetAdjustmentInCells =
+        DraggedPieceAnimation::targetYOffsetInCells - mDraggedPieceAnimation.GetYOffsetInCells();
+
     const auto cellSize = mScene.GetCellSize();
+    pieceFieldPos.y -= yOffsetAdjustmentInCells * cellSize;
+    
+    auto& pieceType = draggedPiece->GetPieceType();
     auto* ghostPieceRenderable = pieceType.GetPressedGhostPieceRenderable();
     if (ghostPieceRenderable) {
         sceneObject.SetIsVisible(true);
@@ -409,11 +417,12 @@ void ScenePlayingField::UpdateDraggedPiece() {
             0.0f
         };
         
+        auto scale = draggedPiece->GetScale();
         auto& transform = sceneObject.GetTransform();
-        auto position = pieceFieldPos + pieceCenterLocalCoords;
+        auto position = pieceFieldPos + pieceCenterLocalCoords * scale;
         transform.SetPosition(position);
         transform.SetRotation({0.0f, 0.0f, RotationToDeg(draggedPiece->GetRotation())});
-        transform.SetScale(draggedPiece->GetScale());
+        transform.SetScale(scale);
         sceneObject.SetRenderable(ghostPieceRenderable);
     } else {
         auto isTransparent = false;

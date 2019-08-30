@@ -25,6 +25,7 @@ namespace RowBlast {
     class BombsAnimation;
     class AsteroidAnimation;
     class FallingPieceAnimation;
+    class DraggedPieceAnimation;
     class ValidAreaAnimation;
     class SceneObjectPool;
     class Piece;
@@ -38,6 +39,7 @@ namespace RowBlast {
                           const BombsAnimation& bombsAnimation,
                           AsteroidAnimation& asteroidAnimation,
                           const FallingPieceAnimation& fallingPieceAnimation,
+                          const DraggedPieceAnimation& draggedPieceAnimation,
                           const ValidAreaAnimation& validAreaAnimation,
                           const PieceResources& pieceResources,
                           const GhostPieceBlocks& ghostPieceBlocks,
@@ -91,6 +93,7 @@ namespace RowBlast {
         const BombsAnimation& mBombsAnimation;
         AsteroidAnimation& mAsteroidAnimation;
         const FallingPieceAnimation& mFallingPieceAnimation;
+        const DraggedPieceAnimation& mDraggedPieceAnimation;
         const ValidAreaAnimation& mValidAreaAnimation;
         const PieceResources& mPieceResources;
         const GhostPieceBlocks& mGhostPieceBlocks;

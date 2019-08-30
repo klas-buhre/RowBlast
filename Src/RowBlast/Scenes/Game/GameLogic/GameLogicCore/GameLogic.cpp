@@ -1266,6 +1266,7 @@ bool GameLogic::BeginDraggingPiece(PreviewPieceIndex draggedPieceIndex) {
     mAllValidMoves = &validMoves.mMoves;
     
     mValidAreaAnimation.Start(validMoves.mMoves, pieceType, mDraggedPiece->GetRotation());
+    mDraggedPieceAnimation.StartGoUpAnimation();
     UpdateDraggedGhostPieceRowAndBlastRadiusAnimation();
     return true;
 }
@@ -1300,7 +1301,7 @@ void GameLogic::StopDraggingPiece() {
         mValidAreaAnimation.Stop();
         RemoveDraggedPiece();
     } else {
-        mDraggedPieceAnimation.Start(mDraggedPieceIndex);
+        mDraggedPieceAnimation.StartGoBackAnimation(mDraggedPieceIndex);
     }
 }
 
@@ -1447,5 +1448,6 @@ void GameLogic::ForwardTouchToInputHandler(const Pht::TouchEvent& touchEvent) {
 bool GameLogic::IsInputAllowed() const {
     return mFallingPiece &&
            mFallingPieceAnimation.GetState() == FallingPieceAnimation::State::Inactive &&
-           mDraggedPieceAnimation.GetState() == DraggedPieceAnimation::State::Inactive;
+           (mDraggedPieceAnimation.GetState() == DraggedPieceAnimation::State::Inactive ||
+            mDraggedPieceAnimation.GetState() == DraggedPieceAnimation::State::DraggedPieceGoingUp);
 }

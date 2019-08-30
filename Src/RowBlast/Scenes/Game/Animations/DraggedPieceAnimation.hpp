@@ -19,7 +19,8 @@ namespace RowBlast {
     class DraggedPieceAnimation {
     public:
         enum class State {
-            Active,
+            DraggedPieceGoingUp,
+            DraggedPieceGoingBack,
             Inactive
         };
         
@@ -29,15 +30,23 @@ namespace RowBlast {
                               DraggedPiece& draggedPiece);
         
         void Init();
-        void Start(PreviewPieceIndex draggedPieceIndex);
+        void StartGoUpAnimation();
+        void StartGoBackAnimation(PreviewPieceIndex draggedPieceIndex);
         State Update();
         
         State GetState() const {
             return mState;
         }
         
+        float GetYOffsetInCells() const {
+            return mYOffset;
+        }
+        
+        static constexpr auto targetYOffsetInCells = 1.5f;
+        
     private:
-        void UpdateInActiveState();
+        void UpdateInDraggedPieceGoingUpState();
+        void UpdateInDraggedPieceGoingBackState();
         Pht::Vec3 GetPreviewPiecePosition(PreviewPieceIndex pieceIndex) const;
         
         Pht::IEngine& mEngine;
@@ -50,6 +59,7 @@ namespace RowBlast {
         Pht::Vec2 mStopPosition;
         float mStartScale {0.0f};
         float mStopScale {0.0f};
+        float mYOffset {0.0f};
     };
 }
 

@@ -51,8 +51,6 @@ Ongoing tasks:
     -Add drag controls and release with microtransactions enabled, free to download.
 
     -Near-term plan:
-        -Create a DraggedPieceAnimation for animating the dragged piece going up really quickly
-         using the slide points.
         -Tune falling piece animation speed. Can use the old speed for click controls and the new
          speed for the drag controls. Could also be a constant duration, so speed depends on the
          distance.
@@ -61,6 +59,7 @@ Ongoing tasks:
          Instead of modifying the envmap texture, it might work to move the camera 1.0 of 2.0
          backwards to get a bigger bright env map area. Or move the field backwards in z-direction,
          it is the distance to camera that matters.
+        -Don't rotate preview pieces when clicking the screen.
         -Update the tutorial with drag controls.
 
     -Mid-term future:

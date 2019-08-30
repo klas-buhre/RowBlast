@@ -10,11 +10,11 @@
 // Game includes.
 #include "DraggedPiece.hpp"
 #include "GameScene.hpp"
+#include "DraggedPieceAnimation.hpp"
 
 using namespace RowBlast;
 
 namespace {
-    constexpr auto offsetYInCells = 1.5f;
     constexpr auto dragBeginDistanceThreshold = 5.2f;
     constexpr auto dragBeginDistanceThresholdSquared =
         dragBeginDistanceThreshold * dragBeginDistanceThreshold;
@@ -195,14 +195,14 @@ void DragInputHandler::UpdatePiecePosition(const Pht::TouchEvent& touchEvent) {
     auto& pieceDimensions = mDraggedPiece.GetPieceType().GetDimensions(mDraggedPiece.GetRotation());
     auto pieceNumEmptyBottompRows = pieceDimensions.mYmin;
     auto offsetX = -static_cast<float>(pieceDimensions.mXmin + pieceDimensions.mXmax + 1) / 2.0f;
-    auto offsetY = offsetYInCells - static_cast<float>(pieceNumEmptyBottompRows);
+    auto offsetY = DraggedPieceAnimation::targetYOffsetInCells - static_cast<float>(pieceNumEmptyBottompRows);
     auto cellSize = mScene.GetCellSize();
     Pht::Vec2 offset {offsetX * cellSize, offsetY * cellSize};
     auto position = screenLowerLeftWorldSpace + touchLocation * scaleFactor + offset;
     
     mDraggedPiece.SetPosition(position);
 }
-    
+
 PreviewPieceIndex
 DragInputHandler::CalculateDraggedPieceIndexAtTouchBegin(const Pht::TouchEvent& touchEvent) {
     if (GetPreviewPieceButton(PreviewPieceIndex::Active).OnTouch(touchEvent) == Pht::Button::Result::Down) {
