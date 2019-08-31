@@ -983,8 +983,6 @@ void GameLogic::RotatePreviewPiece(Rotation& previewPieceRotation,
 }
 
 void GameLogic::RotatePiece(const Pht::TouchEvent& touchEvent) {
-    ActiveSwipeGhostPiece();
-
     auto& pieceType = mFallingPiece->GetPieceType();
     if (!pieceType.CanRotateAroundZ()) {
         return;

@@ -59,7 +59,6 @@ Ongoing tasks:
          Instead of modifying the envmap texture, it might work to move the camera 1.0 of 2.0
          backwards to get a bigger bright env map area. Or move the field backwards in z-direction,
          it is the distance to camera that matters.
-        -Don't rotate preview pieces when clicking the screen.
         -Update the tutorial with drag controls.
 
     -Mid-term future:
