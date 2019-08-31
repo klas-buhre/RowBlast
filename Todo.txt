@@ -51,9 +51,8 @@ Ongoing tasks:
     -Add drag controls and release with microtransactions enabled, free to download.
 
     -Near-term plan:
-        -Tune falling piece animation speed. Can use the old speed for click controls and the new
-         speed for the drag controls. Could also be a constant duration, so speed depends on the
-         distance.
+        -Could have a slower falling piece animation speed for the first tutorial level so that
+         players understand that the falling piece has to go to the move.
         -For non zoomed displays (iPad, iPhone 7 etc..): The field and lower hud must be moved
          upward 1 cell to avoid interference with the gesture recognizer at the bottom of the screen.
          Instead of modifying the envmap texture, it might work to move the camera 1.0 of 2.0

@@ -8,10 +8,8 @@
 using namespace RowBlast;
 
 namespace {
-    // constexpr auto fastSpeed = 64.0f;
-    // constexpr auto slowSpeed = 50.0f;
-    constexpr auto fastSpeed = 100.0f;
-    constexpr auto slowSpeed = 75.0f;
+    constexpr auto fastSpeed = 86.0f;
+    constexpr auto slowSpeed = 67.0f;
     const Pht::Vec2 halfColumn {0.5f, 0.0f};
 }
 
