@@ -23,7 +23,7 @@ namespace {
     constexpr auto fieldQuadZ = -2.0f;
     constexpr auto blueprintZ = -0.7f;
     constexpr auto fieldBorderZ = -0.5f;
-    constexpr auto lowerClipAreaHeightInCells = 2.15f; // 3.15f;
+    constexpr auto lowerClipAreaHeightInCells = 2.3f;
     constexpr auto fieldPadding = 0.1f;
     constexpr auto scissorBoxPadding = 0.01f;
     constexpr auto lightAnimationDuration = 5.0f;
@@ -526,10 +526,12 @@ void GameScene::UpdateCameraPosition() {
     auto& renderer = mEngine.GetRenderer();
     auto& frustumSize = renderer.GetOrthographicFrustumSize();
     auto bottomPadding = renderer.GetBottomPaddingHeight();
+    auto lowerClipAreaHeight =
+        mCellSize * (lowerClipAreaHeightInCells + (bottomPadding == 0.0f ? 0.88f : 0.0f));
     
     auto cameraYPosition =
         mFieldLoweLeft.y + mScrollController.GetLowestVisibleRow() * mCellSize +
-        frustumSize.y / 2.0f - mCellSize * lowerClipAreaHeightInCells - bottomPadding;
+        frustumSize.y / 2.0f - lowerClipAreaHeight - bottomPadding;
 
     auto& cameraShakeTranslation = mCameraShake.GetCameraTranslation();
     Pht::Vec3 cameraPosition {0.0f, cameraYPosition, 20.5f};
@@ -544,8 +546,7 @@ void GameScene::UpdateCameraPosition() {
     Pht::Vec2 scissorBoxLowerLeft {
         mFieldPosition.x -
         (mFieldWidth + fieldPadding + FieldBorder::borderThickness + scissorBoxPadding) / 2.0f,
-        cameraYPosition - frustumSize.y / 2.0f + lowerClipAreaHeightInCells * mCellSize +
-        bottomPadding
+        cameraYPosition - frustumSize.y / 2.0f + lowerClipAreaHeight + bottomPadding
     };
     
     Pht::Vec2 scissorBoxSize {

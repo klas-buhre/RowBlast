@@ -51,14 +51,16 @@ Ongoing tasks:
     -Add drag controls and release with microtransactions enabled, free to download.
 
     -Near-term plan:
-        -Could have a slower falling piece animation speed for the first tutorial level so that
-         players understand that the falling piece has to go to the move.
+        -Review previous commit.
         -For non zoomed displays (iPad, iPhone 7 etc..): The field and lower hud must be moved
          upward 1 cell to avoid interference with the gesture recognizer at the bottom of the screen.
          Instead of modifying the envmap texture, it might work to move the camera 1.0 of 2.0
          backwards to get a bigger bright env map area. Or move the field backwards in z-direction,
          it is the distance to camera that matters.
+        -The upper game hud pods could be placed at the left and right side edge of the screen.
         -Update the tutorial with drag controls.
+        -Could have a slower falling piece animation speed for the first tutorial level so that
+         players understand that the falling piece has to go to the move.
 
     -Mid-term future:
         -Sometimes moves that seem feasible are unreachable due to the way pieces are rotated by the AI.

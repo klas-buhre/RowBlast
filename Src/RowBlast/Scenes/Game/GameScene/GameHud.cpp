@@ -71,10 +71,9 @@ namespace {
     float CalculateLowerHudObjectYPosition(Pht::IEngine& engine) {
         auto& renderer = engine.GetRenderer();
         auto bottomPadding = renderer.GetBottomPaddingHeight();
-        auto yPosition = -renderer.GetHudFrustumSize().y / 2.0f + bottomPadding + 1.35f;
-        
-        if (bottomPadding != 0.0f) {
-            yPosition += 0.19f;
+        auto yPosition = -renderer.GetHudFrustumSize().y / 2.0f + bottomPadding + 1.54f;
+        if (bottomPadding == 0.0f) {
+            yPosition += 1.05f;
         }
         
         return yPosition;
@@ -173,10 +172,11 @@ void GameHud::CreateProgressObject(Pht::Scene& scene,
                                    const GameHudResources& gameHudResources) {
     auto& progressContainer = scene.CreateSceneObject();
     auto& renderer = mEngine.GetRenderer();
+    auto topPadding = renderer.GetTopPaddingHeight();
     
     Pht::Vec3 position {
-        -3.4f, // -4.8f,
-        renderer.GetHudFrustumSize().y / 2.0f - renderer.GetTopPaddingHeight() - 0.67f,
+        topPadding == 0.0f ? -5.4f : -3.4f,
+        renderer.GetHudFrustumSize().y / 2.0f - topPadding - 0.67f,
         UiLayer::root
     };
     
@@ -303,10 +303,11 @@ void GameHud::CreateMovesObject(Pht::Scene& scene,
                                 const GameHudResources& gameHudResources) {
     mMovesContainer = &scene.CreateSceneObject(parentObject);
     auto& renderer = mEngine.GetRenderer();
+    auto topPadding = renderer.GetTopPaddingHeight();
     
     Pht::Vec3 position {
-        3.4f, // 4.8f,
-        renderer.GetHudFrustumSize().y / 2.0f - renderer.GetTopPaddingHeight() - 0.67f,
+        topPadding == 0.0f ? 5.4f : 3.4f,
+        renderer.GetHudFrustumSize().y / 2.0f - topPadding - 0.67f,
         UiLayer::root
     };
 

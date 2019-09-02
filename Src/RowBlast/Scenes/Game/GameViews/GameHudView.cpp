@@ -20,9 +20,9 @@ namespace {
     float CalculateLowerHudObjectYPosition(const CommonResources& commonResources) {
         auto bottomPadding = commonResources.GetBottomPaddingPotentiallyZoomedScreen();
         auto& frustumSize = commonResources.GetHudFrustumSizePotentiallyZoomedScreen();
-        auto yPosition = -frustumSize.y / 2.0f + bottomPadding + 1.35f;
-        if (bottomPadding != 0.0f) {
-            yPosition += 0.19f;
+        auto yPosition = -frustumSize.y / 2.0f + bottomPadding + 1.54f;
+        if (bottomPadding == 0.0f) {
+            yPosition += 1.05f;
         }
         
         return yPosition;
