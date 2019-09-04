@@ -172,11 +172,12 @@ void GameHud::CreateProgressObject(Pht::Scene& scene,
                                    const GameHudResources& gameHudResources) {
     auto& progressContainer = scene.CreateSceneObject();
     auto& renderer = mEngine.GetRenderer();
+    auto frustumSize = renderer.GetHudFrustumSize();
     auto topPadding = renderer.GetTopPaddingHeight();
     
     Pht::Vec3 position {
-        topPadding == 0.0f ? -5.4f : -3.4f,
-        renderer.GetHudFrustumSize().y / 2.0f - topPadding - 0.67f,
+        -frustumSize.x / 2.0f + 2.1f,
+        frustumSize.y / 2.0f - topPadding - 0.67f,
         UiLayer::root
     };
     
@@ -303,11 +304,12 @@ void GameHud::CreateMovesObject(Pht::Scene& scene,
                                 const GameHudResources& gameHudResources) {
     mMovesContainer = &scene.CreateSceneObject(parentObject);
     auto& renderer = mEngine.GetRenderer();
+    auto frustumSize = renderer.GetHudFrustumSize();
     auto topPadding = renderer.GetTopPaddingHeight();
     
     Pht::Vec3 position {
-        topPadding == 0.0f ? 5.4f : 3.4f,
-        renderer.GetHudFrustumSize().y / 2.0f - topPadding - 0.67f,
+        frustumSize.x / 2.0f - 2.1f,
+        frustumSize.y / 2.0f - topPadding - 0.67f,
         UiLayer::root
     };
 
