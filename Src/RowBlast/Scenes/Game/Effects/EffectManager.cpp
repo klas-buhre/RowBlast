@@ -12,7 +12,7 @@ namespace {
     constexpr auto numLevelBombEffects = 30;
     constexpr auto numLaserEffects = 8;
     constexpr auto cameraShakeTime = 0.25f;
-    constexpr auto cameraShakeMagnitude = 0.41f;
+    constexpr auto cameraShakeMagnitude = 0.6f;
     constexpr auto smallCameraShakeMagnitude = 0.25f;
 }
 

@@ -126,8 +126,9 @@ void TutorialLaserParticleEffect::CreateParticles(Pht::IEngine& engine) {
     Pht::EmitterSettings particleEmitterSettings {
         .mPosition = Pht::Vec3{0.0f, 0.0f, 0.0f},
         .mSize = Pht::Vec3{7.0f, 1.0f, 0.0f},
-        .mTimeToLive = 0.5f,
-        .mFrequency = 30.0f
+        .mBurst = 15,
+        .mTimeToLive = 0.4f,
+        .mFrequency = 10.0f
     };
     
     Pht::ParticleSettings particleSettings {
@@ -136,10 +137,10 @@ void TutorialLaserParticleEffect::CreateParticles(Pht::IEngine& engine) {
         .mColorRandomPart = Pht::Vec4{0.1f, 0.1f, 0.1f, 0.0f},
         .mTextureFilename = "particle_sprite_point_blurred.png",
         .mTimeToLive = 0.5f,
-        .mTimeToLiveRandomPart = 0.0f,
+        .mTimeToLiveRandomPart = 0.1f,
         .mFadeOutDuration = 0.2f,
-        .mSize = Pht::Vec2{1.0f, 1.0f},
-        .mSizeRandomPart = 0.2f,
+        .mSize = Pht::Vec2{0.65f, 0.65f},
+        .mSizeRandomPart = 0.3f,
         .mGrowDuration = 0.05f,
         .mShrinkDuration = 0.2f
     };

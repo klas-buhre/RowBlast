@@ -121,8 +121,9 @@ void LaserParticleEffect::CreateParticles(Pht::IEngine& engine) {
     Pht::EmitterSettings particleEmitterSettings {
         .mPosition = Pht::Vec3{0.0f, 0.0f, 0.0f},
         .mSize = Pht::Vec3{22.0f, 1.0f, 0.0f},
-        .mTimeToLive = 0.5f,
-        .mFrequency = 30.0f
+        .mBurst = 50,
+        .mTimeToLive = 0.4f,
+        .mFrequency = 10.0f
     };
     
     Pht::ParticleSettings particleSettings {
@@ -131,10 +132,10 @@ void LaserParticleEffect::CreateParticles(Pht::IEngine& engine) {
         .mColorRandomPart = Pht::Vec4{0.1f, 0.1f, 0.1f, 0.0f},
         .mTextureFilename = "particle_sprite_point_blurred.png",
         .mTimeToLive = 0.5f,
-        .mTimeToLiveRandomPart = 0.0f,
+        .mTimeToLiveRandomPart = 0.1f,
         .mFadeOutDuration = 0.2f,
-        .mSize = Pht::Vec2{1.0f, 1.0f},
-        .mSizeRandomPart = 0.2f,
+        .mSize = Pht::Vec2{0.65f, 0.65f},
+        .mSizeRandomPart = 0.3f,
         .mGrowDuration = 0.05f,
         .mShrinkDuration = 0.2f
     };
@@ -151,12 +152,13 @@ void LaserParticleEffect::Init() {
     mFlare->GetComponent<Pht::ParticleEffect>()->Stop();
     mParticles->GetComponent<Pht::ParticleEffect>()->Stop();
     
-    mScene.GetEffectsContainer().AddChild(*mThinBeam);
+    auto& effectsContainer = mScene.GetEffectsContainer();
+    effectsContainer.AddChild(*mThinBeam);
+    effectsContainer.AddChild(*mParticles);
 
     auto& container = mScene.GetFlyingBlocksContainer();
     container.AddChild(*mThickBeam);
     container.AddChild(*mFlare);
-    container.AddChild(*mParticles);
 }
 
 void LaserParticleEffect::StartLaser(const Pht::Vec2& position) {
@@ -182,7 +184,7 @@ void LaserParticleEffect::StartLaser(const Pht::Vec2& position) {
     mThinBeam->GetTransform().SetPosition(beamCenterPositionInField);
     mThinBeam->GetComponent<Pht::ParticleEffect>()->Start();
 
-    mParticles->GetTransform().SetPosition(beamCenterPositionInScene);
+    mParticles->GetTransform().SetPosition(beamCenterPositionInField);
     mParticles->GetComponent<Pht::ParticleEffect>()->Start();
 
     Pht::Vec3 flarePositionInScene {
