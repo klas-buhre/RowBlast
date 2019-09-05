@@ -17,16 +17,17 @@ using namespace RowBlast;
 namespace {
     constexpr auto fade = 0.5f;
     constexpr auto fadeTime = 0.3f;
-    const Pht::Vec3 placePieceHandPosition {-2.8f, -4.3f, 0.0f};
-    const Pht::Vec3 fillRowsHandPosition {1.5f, -4.3f, 0.0f};
-    const Pht::Vec3 switchPieceHandPosition {1.4f, -10.3f, 0.0f};
-    const Pht::Vec3 mirroredSevenPieceHandPosition {-1.6f, -3.4f, 0.0f};
-    const Pht::Vec3 longIPieceHandPosition {0.3f, -7.1f, 0.0f};
-    const Pht::Vec3 otherMovesHandPosition1 {4.5f, -7.4f, 0.0f};
-    const Pht::Vec3 otherMovesHandPosition2 {-1.8f, -8.4f, 0.0f};
-    const Pht::Vec3 iPieceHandPosition {-1.1f, -4.5f, 0.0f};
-    const Pht::Vec3 secondLevelBPieceHandPosition {-2.5f, -4.4f, 0.0f};
-    
+
+    const Pht::Vec3 placePieceHandPosition {-2.8f, -3.86f, 0.0f};
+    const Pht::Vec3 fillRowsHandPosition {1.5f, -3.46f, 0.0f};
+    const Pht::Vec3 switchPieceHandPosition {1.4f, -9.76f, 0.0f};
+    const Pht::Vec3 mirroredSevenPieceHandPosition {-1.6f, -2.76f, 0.0f};
+    const Pht::Vec3 longIPieceHandPosition {0.3f, -6.46f, 0.0f};
+    const Pht::Vec3 otherMovesHandPosition1 {4.5f, -6.76f, 0.0f};
+    const Pht::Vec3 otherMovesHandPosition2 {-1.8f, -7.76f, 0.0f};
+    const Pht::Vec3 iPieceHandPosition {-1.1f, -3.86f, 0.0f};
+    const Pht::Vec3 secondLevelBPieceHandPosition {-2.5f, -3.56f, 0.0f};
+
     bool FindMove(const ClickInputHandler::VisibleMoves& moves,
                   const Level::TutorialMove& tutorialMove) {
         for (auto& move: moves) {
