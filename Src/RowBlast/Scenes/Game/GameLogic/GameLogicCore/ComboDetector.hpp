@@ -9,13 +9,13 @@ namespace Pht {
 }
 
 namespace RowBlast {
-    class SmallTextAnimation;
+    class SmallText;
     class EffectManager;
 
     class ComboDetector {
     public:
         ComboDetector(Pht::IEngine& engine,
-                      SmallTextAnimation& smallTextAnimation,
+                      SmallText& smallTextAnimation,
                       EffectManager& effectManager);
         
         void Init();
@@ -37,7 +37,7 @@ namespace RowBlast {
         };
 
         Pht::IEngine& mEngine;
-        SmallTextAnimation& mSmallTextAnimation;
+        SmallText& mSmallText;
         EffectManager& mEffectManager;
         State mState {State::Inactive};
         int mNumConsecutiveRowClearMoves {0};

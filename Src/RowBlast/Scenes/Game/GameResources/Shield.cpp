@@ -1,4 +1,4 @@
-#include "ShieldAnimation.hpp"
+#include "Shield.hpp"
 
 // Engine includes.
 #include "IEngine.hpp"
@@ -23,9 +23,9 @@ namespace {
     constexpr auto inactiveRelativeYPosition = 13.3f;
 }
 
-ShieldAnimation::ShieldAnimation(Pht::IEngine& engine,
-                                 GameScene& scene,
-                                 const ScrollController& scrollController) :
+Shield::Shield(Pht::IEngine& engine,
+               GameScene& scene,
+               const ScrollController& scrollController) :
     mScene {scene},
     mScrollController {scrollController} {
 
@@ -44,7 +44,7 @@ ShieldAnimation::ShieldAnimation(Pht::IEngine& engine,
     mShieldSceneObject = std::make_unique<Pht::SceneObject>(mShieldRenderable.get());
 }
 
-void ShieldAnimation::Init(const Level& level) {
+void Shield::Init(const Level& level) {
     mLevel = &level;
 
     if (level.GetObjective() != Level::Objective::BringDownTheAsteroid) {
@@ -56,18 +56,18 @@ void ShieldAnimation::Init(const Level& level) {
     mShieldSceneObject->SetIsVisible(false);
 }
 
-void ShieldAnimation::Start() {
+void Shield::Start() {
     mState = State::Appearing;
     mElapsedTime = 0.0f;
     mShieldSceneObject->SetIsVisible(true);
 }
 
-void ShieldAnimation::StartFlash() {
+void Shield::StartFlash() {
     mState = State::Flashing;
     mElapsedTime = 0.0f;
 }
 
-void ShieldAnimation::Update(float dt) {
+void Shield::Update(float dt) {
     if (mLevel->GetObjective() != Level::Objective::BringDownTheAsteroid) {
         return;
     }
@@ -87,7 +87,7 @@ void ShieldAnimation::Update(float dt) {
     }
 }
 
-void ShieldAnimation::UpdateInAppearingState(float dt) {
+void Shield::UpdateInAppearingState(float dt) {
     mElapsedTime += dt;
 
     auto normalizedTime = mElapsedTime / appearTime;
@@ -108,20 +108,20 @@ void ShieldAnimation::UpdateInAppearingState(float dt) {
     UpdatePosition();
 }
 
-void ShieldAnimation::UpdatePosition() {
+void Shield::UpdatePosition() {
     auto cellSize = mScene.GetCellSize();
     auto lowestVisibleRow = mScrollController.GetLowestVisibleRow();
     
     Pht::Vec3 positionInField {
         mScene.GetFieldWidth() / 2.0f,
         (lowestVisibleRow + mShieldRelativeYPosition + shieldHeightInCells / 2.0f) * cellSize,
-        mScene.GetShieldAnimationZ()
+        mScene.GetShieldZ()
     };
 
     mShieldSceneObject->GetTransform().SetPosition(positionInField);
 }
 
-void ShieldAnimation::UpdateInPulsatingState(float dt) {
+void Shield::UpdateInPulsatingState(float dt) {
     mElapsedTime += dt;
     if (mElapsedTime > pulseDuration) {
         mElapsedTime = 0.0f;
@@ -134,7 +134,7 @@ void ShieldAnimation::UpdateInPulsatingState(float dt) {
     UpdatePosition();
 }
 
-void ShieldAnimation::UpdateInFlashingState(float dt) {
+void Shield::UpdateInFlashingState(float dt) {
     mElapsedTime += dt;
     if (mElapsedTime > flashDuration) {
         mShieldRenderable->GetMaterial().SetOpacity(shieldOpacity);
@@ -150,7 +150,7 @@ void ShieldAnimation::UpdateInFlashingState(float dt) {
     UpdatePosition();
 }
 
-void ShieldAnimation::GoToPulsatingState() {
+void Shield::GoToPulsatingState() {
     mState = State::Pulsating;
     mElapsedTime = 0.0f;
 }

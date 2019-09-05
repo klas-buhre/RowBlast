@@ -1,4 +1,4 @@
-#include "TutorialFieldBottomGlowAnimation.hpp"
+#include "TutorialFieldBottomGlow.hpp"
 
 // Engine includes.
 #include "IEngine.hpp"
@@ -18,8 +18,8 @@ namespace {
     constexpr auto pulseDuration = 1.25f;
 }
 
-TutorialFieldBottomGlowAnimation::TutorialFieldBottomGlowAnimation(Pht::IEngine& engine,
-                                                                   Pht::SceneObject& parent) {
+TutorialFieldBottomGlow::TutorialFieldBottomGlow(Pht::IEngine& engine,
+                                                 Pht::SceneObject& parent) {
     Pht::Material glowMaterial;
     glowMaterial.SetBlend(Pht::Blend::Additive);
     glowMaterial.SetDepthTest(false);
@@ -45,7 +45,7 @@ TutorialFieldBottomGlowAnimation::TutorialFieldBottomGlowAnimation(Pht::IEngine&
     parent.AddChild(*mGlowSceneObject);
 }
 
-void TutorialFieldBottomGlowAnimation::Update(float dt) {
+void TutorialFieldBottomGlow::Update(float dt) {
     mElapsedTime += dt;
     if (mElapsedTime > pulseDuration) {
         mElapsedTime = 0.0f;

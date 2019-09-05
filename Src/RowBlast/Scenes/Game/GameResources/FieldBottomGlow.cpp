@@ -1,4 +1,4 @@
-#include "FieldBottomGlowAnimation.hpp"
+#include "FieldBottomGlow.hpp"
 
 // Engine includes.
 #include "IEngine.hpp"
@@ -18,9 +18,9 @@ namespace {
     constexpr auto pulseDuration = 1.25f;
 }
 
-FieldBottomGlowAnimation::FieldBottomGlowAnimation(Pht::IEngine& engine,
-                                                   GameScene& scene,
-                                                   const ScrollController& scrollController) :
+FieldBottomGlow::FieldBottomGlow(Pht::IEngine& engine,
+                                 GameScene& scene,
+                                 const ScrollController& scrollController) :
     mScene {scene},
     mScrollController {scrollController} {
 
@@ -46,7 +46,7 @@ FieldBottomGlowAnimation::FieldBottomGlowAnimation(Pht::IEngine& engine,
     mGlowSceneObject = std::make_unique<Pht::SceneObject>(mGlowRenderable.get());
 }
 
-void FieldBottomGlowAnimation::Init() {
+void FieldBottomGlow::Init() {
     mScene.GetFieldBlocksContainer().AddChild(*mGlowSceneObject);
     GoToInactiveState();
     
@@ -61,7 +61,7 @@ void FieldBottomGlowAnimation::Init() {
     mGlowSceneObject->GetTransform().SetPosition(positionInField);
 }
 
-void FieldBottomGlowAnimation::Update(float dt) {
+void FieldBottomGlow::Update(float dt) {
     switch (mState) {
         case State::Active:
             UpdateInActiveState(dt);
@@ -72,7 +72,7 @@ void FieldBottomGlowAnimation::Update(float dt) {
     }
 }
 
-void FieldBottomGlowAnimation::UpdateInActiveState(float dt) {
+void FieldBottomGlow::UpdateInActiveState(float dt) {
     mElapsedTime += dt;
     if (mElapsedTime > pulseDuration) {
         mElapsedTime = 0.0f;
@@ -91,19 +91,19 @@ void FieldBottomGlowAnimation::UpdateInActiveState(float dt) {
     }
 }
 
-void FieldBottomGlowAnimation::UpdateInInactiveState() {
+void FieldBottomGlow::UpdateInInactiveState() {
     if (mScrollController.GetLowestVisibleRow() <= glowHeightInCells) {
         GoToActiveState();
     }
 }
 
-void FieldBottomGlowAnimation::GoToActiveState() {
+void FieldBottomGlow::GoToActiveState() {
     mState = State::Active;
     mElapsedTime = 0.0f;
     mGlowSceneObject->SetIsVisible(true);
 }
 
-void FieldBottomGlowAnimation::GoToInactiveState() {
+void FieldBottomGlow::GoToInactiveState() {
     mState = State::Inactive;
     mGlowSceneObject->SetIsVisible(false);
 }

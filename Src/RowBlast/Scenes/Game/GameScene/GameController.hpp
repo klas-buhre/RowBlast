@@ -30,11 +30,11 @@
 #include "ActivePreviewPieceAnimation.hpp"
 #include "FewMovesAlertAnimation.hpp"
 #include "AddingMovesAnimation.hpp"
-#include "SlidingTextAnimation.hpp"
-#include "SmallTextAnimation.hpp"
-#include "BlastRadiusAnimation.hpp"
-#include "ShieldAnimation.hpp"
-#include "FieldBottomGlowAnimation.hpp"
+#include "SlidingText.hpp"
+#include "SmallText.hpp"
+#include "BlastArea.hpp"
+#include "Shield.hpp"
+#include "FieldBottomGlow.hpp"
 #include "ValidAreaAnimation.hpp"
 #include "BombsAnimation.hpp"
 #include "AsteroidAnimation.hpp"
@@ -185,11 +185,11 @@ namespace RowBlast {
         EffectManager mEffectManager;
         PieceDropParticleEffect mPieceDropParticleEffect;
         PieceTrailParticleEffect mPieceTrailParticleEffect;
-        BlastRadiusAnimation mBlastRadiusAnimation;
-        ShieldAnimation mShieldAnimation;
-        FieldBottomGlowAnimation mFieldBottomGlowAnimation;
-        SlidingTextAnimation mSlidingTextAnimation;
-        SmallTextAnimation mSmallTextAnimation;
+        BlastArea mBlastArea;
+        Shield mShield;
+        FieldBottomGlow mFieldBottomGlow;
+        SlidingText mSlidingText;
+        SmallText mSmallText;
         FallingPieceScaleAnimation mFallingPieceScaleAnimation;
         Tutorial mTutorial;
         GameLogic mGameLogic;

@@ -22,7 +22,7 @@ namespace RowBlast {
     class UserServices;
     class LevelResources;
     class PieceResources;
-    class BlastRadiusAnimation;
+    class BlastArea;
 
     class BombDialogView: public Pht::GuiView {
     public:
@@ -30,7 +30,7 @@ namespace RowBlast {
                        const CommonResources& commonResources,
                        const PieceResources& pieceResources,
                        const LevelResources& levelResources,
-                       const BlastRadiusAnimation& blastRadiusAnimation,
+                       const BlastArea& blastRadiusAnimation,
                        const UserServices& userServices);
 
         void OnDeactivate() override;
@@ -49,7 +49,7 @@ namespace RowBlast {
     private:
         void CreateAnimation(const PieceResources& pieceResources,
                              const LevelResources& levelResources,
-                             const BlastRadiusAnimation& blastRadiusAnimation);
+                             const BlastArea& blastRadiusAnimation);
 
         Pht::IEngine& mEngine;
         const UserServices& mUserServices;

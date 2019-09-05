@@ -15,7 +15,7 @@
 #include "UserServices.hpp"
 #include "GuiUtils.hpp"
 #include "TutorialUtils.hpp"
-#include "BlastRadiusAnimation.hpp"
+#include "BlastArea.hpp"
 
 using namespace RowBlast;
 
@@ -34,7 +34,7 @@ BombDialogView::BombDialogView(Pht::IEngine& engine,
                                const CommonResources& commonResources,
                                const PieceResources& pieceResources,
                                const LevelResources& levelResources,
-                               const BlastRadiusAnimation& blastRadiusAnimation,
+                               const BlastArea& blastRadiusAnimation,
                                const UserServices& userServices) :
     mEngine {engine},
     mUserServices {userServices} {
@@ -68,7 +68,7 @@ BombDialogView::BombDialogView(Pht::IEngine& engine,
 
 void BombDialogView::CreateAnimation(const PieceResources& pieceResources,
                                      const LevelResources& levelResources,
-                                     const BlastRadiusAnimation& blastRadiusAnimation) {
+                                     const BlastArea& blastRadiusAnimation) {
     auto& container = CreateSceneObject();
     container.GetTransform().SetPosition({0.0f, 1.3f, 0.0f});
     container.GetTransform().SetScale(1.25f);

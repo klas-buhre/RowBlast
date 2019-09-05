@@ -1,4 +1,4 @@
-#include "SmallTextAnimation.hpp"
+#include "SmallText.hpp"
 
 // Engine includes.
 #include "IEngine.hpp"
@@ -53,9 +53,9 @@ namespace {
     };
 }
 
-SmallTextAnimation::SmallTextAnimation(Pht::IEngine& engine,
-                                       GameScene& scene,
-                                       const CommonResources& commonResources) :
+SmallText::SmallText(Pht::IEngine& engine,
+                     GameScene& scene,
+                     const CommonResources& commonResources) :
     mEngine {engine},
     mScene {scene} {
     
@@ -69,9 +69,9 @@ SmallTextAnimation::SmallTextAnimation(Pht::IEngine& engine,
     CreateTwinkleParticleEffect(engine);
 }
 
-Pht::SceneObject& SmallTextAnimation::CreateText(const Pht::Font& font,
-                                                 const Pht::Vec2& position,
-                                                 const std::string& text) {
+Pht::SceneObject& SmallText::CreateText(const Pht::Font& font,
+                                        const Pht::Vec2& position,
+                                        const std::string& text) {
     Pht::TextProperties textProperties {
         font,
         textScale,
@@ -102,7 +102,7 @@ Pht::SceneObject& SmallTextAnimation::CreateText(const Pht::Font& font,
     return retval;
 }
 
-void SmallTextAnimation::CreateTwinkleParticleEffect(Pht::IEngine& engine) {
+void SmallText::CreateTwinkleParticleEffect(Pht::IEngine& engine) {
     Pht::EmitterSettings particleEmitterSettings {
         .mPosition = Pht::Vec3{0.0f, 0.0f, 0.0f},
         .mSize = Pht::Vec3{0.0f, 0.0f, 0.0f},
@@ -132,7 +132,7 @@ void SmallTextAnimation::CreateTwinkleParticleEffect(Pht::IEngine& engine) {
                                                                             Pht::RenderMode::Triangles);
 }
 
-void SmallTextAnimation::Init() {
+void SmallText::Init() {
     mContainerSceneObject = &mScene.GetScene().CreateSceneObject();
     mScene.GetHudContainer().AddChild(*mContainerSceneObject);
     mContainerSceneObject->SetIsVisible(false);
@@ -147,7 +147,7 @@ void SmallTextAnimation::Init() {
     HideAllTextObjects();
 }
 
-void SmallTextAnimation::StartComboMessage(int numCombos) {
+void SmallText::StartComboMessage(int numCombos) {
     if (IsFantasticTextActive() || IsAwesomeTextActive()) {
         return;
     }
@@ -181,7 +181,7 @@ void SmallTextAnimation::StartComboMessage(int numCombos) {
     text[comboStringSize + 3] = buffer[3];
 }
 
-void SmallTextAnimation::StartAwesomeMessage() {
+void SmallText::StartAwesomeMessage() {
     if (IsFantasticTextActive() || IsAwesomeTextActive()) {
         return;
     }
@@ -192,7 +192,7 @@ void SmallTextAnimation::StartAwesomeMessage() {
     mTwinkleParticleEffect->GetTransform().SetPosition({-3.25f, 0.55f, UiLayer::text});
 }
 
-void SmallTextAnimation::StartFantasticMessage() {
+void SmallText::StartFantasticMessage() {
     if (IsFantasticTextActive()) {
         return;
     }
@@ -205,17 +205,17 @@ void SmallTextAnimation::StartFantasticMessage() {
     mTwinkleParticleEffect->GetTransform().SetPosition({-3.6f, 0.55f, UiLayer::text});
 }
 
-void SmallTextAnimation::StartWillUndoMessage() {
+void SmallText::StartWillUndoMessage() {
     Start(*mWillUndoTextSceneObject);
     mTwinkleParticleEffect->GetTransform().SetPosition({-3.6f, 0.55f, UiLayer::text});
 }
 
-void SmallTextAnimation::StartUndoingMessage() {
+void SmallText::StartUndoingMessage() {
     Start(*mUndoingTextSceneObject);
     mTwinkleParticleEffect->GetTransform().SetPosition({-3.0f, 0.55f, UiLayer::text});
 }
 
-void SmallTextAnimation::Start(Pht::SceneObject& textSceneObject) {
+void SmallText::Start(Pht::SceneObject& textSceneObject) {
     mContainerSceneObject->SetIsVisible(true);
     mContainerSceneObject->SetIsStatic(false);
     
@@ -238,7 +238,7 @@ void SmallTextAnimation::Start(Pht::SceneObject& textSceneObject) {
     Pht::SceneObjectUtils::ScaleRecursively(*mContainerSceneObject, 0.0f);
 }
 
-void SmallTextAnimation::Update(float dt) {
+void SmallText::Update(float dt) {
     switch (mState) {
         case State::ScalingIn:
             UpdateInScalingInState(dt);
@@ -254,7 +254,7 @@ void SmallTextAnimation::Update(float dt) {
     }
 }
 
-void SmallTextAnimation::UpdateInScalingInState(float dt) {
+void SmallText::UpdateInScalingInState(float dt) {
     mElapsedTime += dt;
     if (mElapsedTime > scaleInDuration) {
         mState = State::DisplayingText;
@@ -270,7 +270,7 @@ void SmallTextAnimation::UpdateInScalingInState(float dt) {
     }
 }
 
-void SmallTextAnimation::UpdateInDisplayingTextState(float dt) {
+void SmallText::UpdateInDisplayingTextState(float dt) {
     mElapsedTime += dt;
     
     mTwinkleParticleEffect->GetComponent<Pht::ParticleEffect>()->Update(dt);
@@ -285,7 +285,7 @@ void SmallTextAnimation::UpdateInDisplayingTextState(float dt) {
     }
 }
 
-void SmallTextAnimation::UpdateInSlidingOutState(float dt) {
+void SmallText::UpdateInSlidingOutState(float dt) {
     mElapsedTime += dt;
     if (mElapsedTime > slideOutDuration) {
         mState = State::Inactive;
@@ -309,17 +309,17 @@ void SmallTextAnimation::UpdateInSlidingOutState(float dt) {
     }
 }
 
-void SmallTextAnimation::HideAllTextObjects() {
+void SmallText::HideAllTextObjects() {
     for (auto& textSceneObject: mTextSceneObjects) {
         textSceneObject->SetIsVisible(false);
         textSceneObject->SetIsStatic(true);
     }
 }
 
-bool SmallTextAnimation::IsAwesomeTextActive() const {
+bool SmallText::IsAwesomeTextActive() const {
     return mState != State::Inactive && mActiveTextSceneObject == mAwesomeTextSceneObject;
 }
 
-bool SmallTextAnimation::IsFantasticTextActive() const {
+bool SmallText::IsFantasticTextActive() const {
     return mState != State::Inactive && mActiveTextSceneObject == mFantasticTextSceneObject;
 }

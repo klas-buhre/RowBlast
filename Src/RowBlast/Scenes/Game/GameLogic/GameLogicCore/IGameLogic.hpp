@@ -37,8 +37,8 @@ namespace RowBlast {
         virtual void SetFallingPieceXPosWithCollisionDetection(float fallingPieceNewX) = 0;
         virtual int GetGhostPieceRow() const = 0;
         virtual bool IsInFieldExplosionsState() const = 0;
-        virtual void StartBlastRadiusAnimation(const Pht::IVec2& position) = 0;
-        virtual void StopBlastRadiusAnimation() = 0;
+        virtual void StartBlastArea(const Pht::IVec2& position) = 0;
+        virtual void StopBlastArea() = 0;
         virtual bool BeginDraggingPiece(PreviewPieceIndex draggedPieceIndex) = 0;
         virtual void OnDraggedPieceMoved() = 0;
         virtual void StopDraggingPiece() = 0;

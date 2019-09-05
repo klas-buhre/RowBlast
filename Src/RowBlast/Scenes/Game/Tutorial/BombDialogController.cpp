@@ -12,7 +12,7 @@ BombDialogController::BombDialogController(Pht::IEngine& engine,
                                            const CommonResources& commonResources,
                                            const PieceResources& pieceResources,
                                            const LevelResources& levelResources,
-                                           const BlastRadiusAnimation& blastRadiusAnimation,
+                                           const BlastArea& blastRadiusAnimation,
                                            const UserServices& userServices) :
     mInput {engine.GetInput()},
     mView {

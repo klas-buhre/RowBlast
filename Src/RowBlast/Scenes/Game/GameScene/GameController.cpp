@@ -69,11 +69,11 @@ GameController::GameController(Pht::IEngine& engine,
     mEffectManager {engine, mScene, mCameraShake},
     mPieceDropParticleEffect {engine, mScene},
     mPieceTrailParticleEffect {engine, mScene},
-    mBlastRadiusAnimation {engine, mScene, commonResources},
-    mShieldAnimation {engine, mScene, mScrollController},
-    mFieldBottomGlowAnimation {engine, mScene, mScrollController},
-    mSlidingTextAnimation {engine, mScene, commonResources, mLevelResources},
-    mSmallTextAnimation {engine, mScene, commonResources},
+    mBlastArea {engine, mScene, commonResources},
+    mShield {engine, mScene, mScrollController},
+    mFieldBottomGlow {engine, mScene, mScrollController},
+    mSlidingText {engine, mScene, commonResources, mLevelResources},
+    mSmallText {engine, mScene, commonResources},
     mFallingPieceScaleAnimation {mScene},
     mTutorial {
         engine,
@@ -82,7 +82,7 @@ GameController::GameController(Pht::IEngine& engine,
         mPieceResources,
         mGhostPieceBlocks,
         mLevelResources,
-        mBlastRadiusAnimation,
+        mBlastArea,
         userServices
     },
     mGameLogic {
@@ -96,11 +96,11 @@ GameController::GameController(Pht::IEngine& engine,
         mCollapsingFieldAnimation,
         mPieceDropParticleEffect,
         mPieceTrailParticleEffect,
-        mBlastRadiusAnimation,
+        mBlastArea,
         mFallingPieceScaleAnimation,
-        mShieldAnimation,
+        mShield,
         mValidAreaAnimation,
-        mSmallTextAnimation,
+        mSmallText,
         mGameViewControllers.GetGameHudController(),
         mTutorial,
         userServices.GetSettingsService()
@@ -134,8 +134,8 @@ GameController::GameController(Pht::IEngine& engine,
         engine,
         mScene,
         mGameViewControllers,
-        mSlidingTextAnimation,
-        mSmallTextAnimation,
+        mSlidingText,
+        mSmallText,
         mGameLogic,
         mUserServices,
         commonResources,
@@ -157,9 +157,9 @@ void GameController::Init(int levelId) {
     mValidAreaAnimation.Init();
     mPieceDropParticleEffect.Init();
     mPieceTrailParticleEffect.Init();
-    mBlastRadiusAnimation.Init();
-    mShieldAnimation.Init(*mLevel);
-    mFieldBottomGlowAnimation.Init();
+    mBlastArea.Init();
+    mShield.Init(*mLevel);
+    mFieldBottomGlow.Init();
     mEffectManager.Init();
     mCameraShake.Init();
     mPreviewPiecesAnimation.Init();
@@ -171,8 +171,8 @@ void GameController::Init(int levelId) {
     mFlashingBlocksAnimation.Init();
     mFallingPieceAnimation.Init();
     mDraggedPieceAnimation.Init();
-    mSlidingTextAnimation.Init();
-    mSmallTextAnimation.Init();
+    mSlidingText.Init();
+    mSmallText.Init();
     mBombsAnimation.Init();
     mAsteroidAnimation.Init();
     mFallingPieceScaleAnimation.Init();
@@ -239,9 +239,9 @@ GameController::Command GameController::UpdateGame() {
     mWeldsAnimation.Update(dt);
     mPieceDropParticleEffect.Update(dt);
     mPieceTrailParticleEffect.Update(dt);
-    mBlastRadiusAnimation.Update(dt);
-    mShieldAnimation.Update(dt);
-    mFieldBottomGlowAnimation.Update(dt);
+    mBlastArea.Update(dt);
+    mShield.Update(dt);
+    mFieldBottomGlow.Update(dt);
     mEffectManager.Update(dt);
     mCameraShake.Update(dt);
     mFlyingBlocksAnimation.Update(dt);
@@ -254,7 +254,7 @@ GameController::Command GameController::UpdateGame() {
     mFewMovesAlertAnimation.Update(dt);
     mAddingMovesAnimation.Update(dt);
     mBombsAnimation.Update(dt);
-    mSmallTextAnimation.Update(dt);
+    mSmallText.Update(dt);
     mTutorial.Update();
     
     mScenePlayingField.Update();
@@ -379,9 +379,9 @@ void GameController::UpdateGameMenu() {
         case GameMenuController::Result::ResumeGameAfterUndo:
             if (mIsInBetweenMoves) {
                 mUndoMovePending = true;
-                mSmallTextAnimation.StartWillUndoMessage();
+                mSmallText.StartWillUndoMessage();
             } else {
-                mSmallTextAnimation.StartUndoingMessage();
+                mSmallText.StartUndoingMessage();
             }
             GoToPlayingState();
             break;
@@ -541,11 +541,11 @@ void GameController::UpdateInLevelIntroState() {
             }
             break;
         case LevelIntroState::ObjectiveAnimation:
-            if (mSlidingTextAnimation.Update() == SlidingTextAnimation::State::Inactive) {
+            if (mSlidingText.Update() == SlidingText::State::Inactive) {
                 if (mTutorial.OnLevelStart() == Tutorial::Result::TutorialHasFocus) {
                     mState = GameState::TutorialDialog;
                 } else {
-                    mShieldAnimation.Start();
+                    mShield.Start();
                     GoToPlayingState();
                 }
             }
@@ -556,7 +556,7 @@ void GameController::UpdateInLevelIntroState() {
 void GameController::UpdateTutorialDialogs() {
     if (mTutorial.UpdateDialogs() == Tutorial::Result::Play) {
         GoToPlayingState();
-        mShieldAnimation.Start();
+        mShield.Start();
     }
 }
 
@@ -565,13 +565,13 @@ void GameController::StartLevelObjectiveAnimation() {
 
     switch (mLevel->GetObjective()) {
         case Level::Objective::Clear:
-            mSlidingTextAnimation.StartClearBlocksMessage(mField.CalculateNumLevelBlocks());
+            mSlidingText.StartClearBlocksMessage(mField.CalculateNumLevelBlocks());
             break;
         case Level::Objective::Build:
-            mSlidingTextAnimation.StartFillSlotsMessage(mField.CalculateNumEmptyBlueprintSlots());
+            mSlidingText.StartFillSlotsMessage(mField.CalculateNumEmptyBlueprintSlots());
             break;
         case Level::Objective::BringDownTheAsteroid:
-            mSlidingTextAnimation.StartBringDownTheAsteroidMessage();
+            mSlidingText.StartBringDownTheAsteroidMessage();
             break;
     }
 }
@@ -614,7 +614,7 @@ GameController::Command GameController::UpdateInOutOfMovesState() {
 }
 
 void GameController::UpdateInOutOfMovesStateOutOfMovesAnimation() {
-    if (mSlidingTextAnimation.Update() == SlidingTextAnimation::State::Inactive) {
+    if (mSlidingText.Update() == SlidingText::State::Inactive) {
         GoToOutOfMovesStateOutOfMovesDialog(SlidingMenuAnimation::SlideDirection::Left,
                                             SlidingMenuAnimation::UpdateFade::Yes);
     }
@@ -843,7 +843,7 @@ void GameController::GoToPausedStateGameMenu(SlidingMenuAnimation::UpdateFade up
 
 void GameController::GoToOutOfMovesStateOutOfMovesAnimation() {
     mOutOfMovesState = OutOfMovesState::OutOfMovesAnimation;
-    mSlidingTextAnimation.StartOutOfMovesMessage();
+    mSlidingText.StartOutOfMovesMessage();
 }
 
 void GameController::GoToOutOfMovesStateOutOfMovesDialog(SlidingMenuAnimation::SlideDirection slideDirection,

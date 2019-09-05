@@ -53,6 +53,8 @@ Ongoing tasks:
     -Near-term plan:
         -The two selectables could be as far apart as the active and seletable0.
         -Could write "NEXT" above the next pieces.
+        -Maybe the remaining selectables should not move during next piece animation and only the
+         piece that comes from next should jump directly to the available slot.
         -Should the field be moved up even for zoomed displays?
         -Tune dragged piece offset and dragBeginDistanceThreshold.
         -For non zoomed displays (iPad, iPhone 7 etc..): After moving up the field:

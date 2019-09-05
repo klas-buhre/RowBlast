@@ -33,7 +33,7 @@ namespace {
     const Pht::Vec3 rightStarPosition {2.0f, 0.8f, farZPosition};
     const Pht::Vec3 rightMostStarPosition {3.8f, 0.8f, farZPosition};
     constexpr auto cameraShakeTime = 0.25f;
-    constexpr auto cameraShakeMagnitude = 0.8f;
+    constexpr auto cameraShakeMagnitude = 1.0f;
 }
 
 StarsAnimation::StarsAnimation(Pht::IEngine& engine,

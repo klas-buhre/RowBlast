@@ -20,7 +20,7 @@
 #include "DraggedPieceAnimation.hpp"
 #include "FieldGravity.hpp"
 #include "FieldExplosionsStates.hpp"
-#include "BlastRadiusAnimation.hpp"
+#include "BlastArea.hpp"
 #include "ComboDetector.hpp"
 #include "SettingsService.hpp"
 
@@ -42,8 +42,8 @@ namespace RowBlast {
     class UserServices;
     class FlashingBlocksAnimation;
     class FallingPieceScaleAnimation;
-    class ShieldAnimation;
-    class SmallTextAnimation;
+    class Shield;
+    class SmallText;
     class ValidAreaAnimation;
     
     enum class SwipeGhostPieceState {
@@ -96,11 +96,11 @@ namespace RowBlast {
                   CollapsingFieldAnimation& collapsingFieldAnimation,
                   PieceDropParticleEffect& pieceDropParticleEffect,
                   PieceTrailParticleEffect& pieceTrailParticleEffect,
-                  BlastRadiusAnimation& blastRadiusAnimation,
+                  BlastArea& blastRadiusAnimation,
                   FallingPieceScaleAnimation& fallingPieceScaleAnimation,
-                  ShieldAnimation& shieldAnimation,
+                  Shield& shieldAnimation,
                   ValidAreaAnimation& validAreaAnimation,
-                  SmallTextAnimation& smallTextAnimation,
+                  SmallText& smallTextAnimation,
                   GameHudController& gameHudController,
                   Tutorial& tutorial,
                   const SettingsService& settingsService);
@@ -115,8 +115,8 @@ namespace RowBlast {
         void SetFallingPieceXPosWithCollisionDetection(float fallingPieceNewX) override;
         int GetGhostPieceRow() const override;
         bool IsInFieldExplosionsState() const override;
-        void StartBlastRadiusAnimation(const Pht::IVec2& position) override;
-        void StopBlastRadiusAnimation() override;
+        void StartBlastArea(const Pht::IVec2& position) override;
+        void StopBlastArea() override;
         bool BeginDraggingPiece(PreviewPieceIndex draggedPieceIndex) override;
         void OnDraggedPieceMoved() override;
         void StopDraggingPiece() override;
@@ -211,8 +211,8 @@ namespace RowBlast {
                              Rotation rotation,
                              Rotation hudRotation);
         void ManageMoveHistory(FallingPieceSpawnReason fallingPieceSpawnReason);
-        void StartBlastRadiusAnimationAtGhostPiece();
-        void SetBlastRadiusAnimationPositionAtGhostPiece();
+        void StartBlastAreaAtGhostPiece();
+        void SetBlastAreaPositionAtGhostPiece();
         void ShowFallingPiece();
         void RemoveFallingPiece();
         void ShowDraggedPiece();
@@ -246,13 +246,13 @@ namespace RowBlast {
                                        const PieceBlocks& pieceBlocks,
                                        const Pht::IVec2& position,
                                        Direction collisionDirection);
-        BlastRadiusAnimation::Kind CalculateBlastRadiusKind(const PieceBlocks& pieceBlocks,
-                                                            const Pht::IVec2& position);
+        BlastArea::Kind CalculateBlastRadiusKind(const PieceBlocks& pieceBlocks,
+                                                 const Pht::IVec2& position);
         bool LevelAllowsClearingFilledRows() const;
         void PlayLandPieceSound();
         void RemoveBlocksInsideTheShield();
         bool IsThereRoomToSwitchPiece(const Piece& pieceType);
-        void UpdateDraggedGhostPieceRowAndBlastRadiusAnimation();
+        void UpdateDraggedGhostPieceRowAndBlastArea();
         const Move* GetValidMoveBelowDraggedPiece(int& ghostPieceRow);
         Result HandleInput();
         void ForwardTouchToInputHandler(const Pht::TouchEvent& touchEvent);
@@ -291,11 +291,11 @@ namespace RowBlast {
         EffectManager& mEffectManager;
         PieceDropParticleEffect& mPieceDropParticleEffect;
         PieceTrailParticleEffect& mPieceTrailParticleEffect;
-        BlastRadiusAnimation& mBlastRadiusAnimation;
+        BlastArea& mBlastArea;
         FallingPieceScaleAnimation& mFallingPieceScaleAnimation;
-        ShieldAnimation& mShieldAnimation;
+        Shield& mShield;
         ValidAreaAnimation& mValidAreaAnimation;
-        SmallTextAnimation& mSmallTextAnimation;
+        SmallText& mSmallText;
         GameHudController& mGameHudController;
         GameScene& mScene;
         Tutorial& mTutorial;

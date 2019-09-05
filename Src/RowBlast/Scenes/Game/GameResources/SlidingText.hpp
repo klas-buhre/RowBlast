@@ -1,5 +1,5 @@
-#ifndef SlidingTextAnimation_hpp
-#define SlidingTextAnimation_hpp
+#ifndef SlidingText_hpp
+#define SlidingText_hpp
 
 #include <vector>
 #include <memory>
@@ -27,7 +27,7 @@ namespace RowBlast {
     class CommonResources;
     class LevelResources;
     
-    class SlidingTextAnimation {
+    class SlidingText {
     public:
         enum class State {
             RectangleAppearing,
@@ -38,10 +38,10 @@ namespace RowBlast {
             Inactive
         };
         
-        SlidingTextAnimation(Pht::IEngine& engine,
-                             GameScene& scene,
-                             const CommonResources& commonResources,
-                             const LevelResources& levelResources);
+        SlidingText(Pht::IEngine& engine,
+                    GameScene& scene,
+                    const CommonResources& commonResources,
+                    const LevelResources& levelResources);
         
         void Init();
         void StartClearBlocksMessage(int numBlocks);

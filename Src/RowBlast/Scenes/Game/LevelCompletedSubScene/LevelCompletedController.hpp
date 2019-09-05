@@ -20,8 +20,8 @@ namespace Pht {
 namespace RowBlast {
     class GameScene;
     class GameViewControllers;
-    class SlidingTextAnimation;
-    class SmallTextAnimation;
+    class SlidingText;
+    class SmallText;
     class ClearLastBlocksAnimation;
     class GameLogic;
     class UserServices;
@@ -35,8 +35,8 @@ namespace RowBlast {
         LevelCompletedController(Pht::IEngine& engine,
                                  GameScene& gameScene,
                                  GameViewControllers& gameViewControllers,
-                                 SlidingTextAnimation& slidingTextAnimation,
-                                 SmallTextAnimation& smallTextAnimation,
+                                 SlidingText& slidingTextAnimation,
+                                 SmallText& smallTextAnimation,
                                  GameLogic& gameLogic,
                                  UserServices& userServices,
                                  const CommonResources& commonResources,
@@ -77,8 +77,8 @@ namespace RowBlast {
         Pht::IEngine& mEngine;
         GameScene& mGameScene;
         GameViewControllers& mGameViewControllers;
-        SlidingTextAnimation& mSlidingTextAnimation;
-        SmallTextAnimation& mSmallTextAnimation;
+        SlidingText& mSlidingText;
+        SmallText& mSmallText;
         GameLogic& mGameLogic;
         UserServices& mUserServices;
         const Level* mLevel {nullptr};

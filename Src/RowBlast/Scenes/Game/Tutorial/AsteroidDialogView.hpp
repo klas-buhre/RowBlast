@@ -10,7 +10,7 @@
 #include "MenuButton.hpp"
 #include "IGuiLightProvider.hpp"
 #include "HandAnimation.hpp"
-#include "TutorialFieldBottomGlowAnimation.hpp"
+#include "TutorialFieldBottomGlow.hpp"
 
 namespace Pht {
     class IEngine;
@@ -60,7 +60,7 @@ namespace RowBlast {
         Pht::SceneObject* mMoves {nullptr};
         Pht::SceneObject* mGhostPieceContainer {nullptr};
         std::unique_ptr<HandAnimation> mHandAnimation;
-        std::unique_ptr<TutorialFieldBottomGlowAnimation> mBottomGlowAnimation;
+        std::unique_ptr<TutorialFieldBottomGlow> mBottomGlowAnimation;
         std::unique_ptr<MenuButton> mPlayButton;
     };
 }

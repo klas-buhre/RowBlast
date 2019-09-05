@@ -1,5 +1,5 @@
-#ifndef SmallTextAnimation_hpp
-#define SmallTextAnimation_hpp
+#ifndef SmallText_hpp
+#define SmallText_hpp
 
 #include <vector>
 #include <memory>
@@ -18,11 +18,11 @@ namespace RowBlast {
     class GameScene;
     class CommonResources;
     
-    class SmallTextAnimation {
+    class SmallText {
     public:
-        SmallTextAnimation(Pht::IEngine& engine,
-                           GameScene& scene,
-                           const CommonResources& commonResources);
+        SmallText(Pht::IEngine& engine,
+                  GameScene& scene,
+                  const CommonResources& commonResources);
         
         void Init();
         void StartComboMessage(int numCombos);

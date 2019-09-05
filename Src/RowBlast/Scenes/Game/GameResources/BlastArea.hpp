@@ -1,5 +1,5 @@
-#ifndef BlastRadiusAnimation_hpp
-#define BlastRadiusAnimation_hpp
+#ifndef BlastArea_hpp
+#define BlastArea_hpp
 
 #include <memory>
 
@@ -16,14 +16,14 @@ namespace RowBlast {
     class GameScene;
     class CommonResources;
     
-    class BlastRadiusAnimation {
+    class BlastArea {
     public:
         enum class Kind {
             Bomb,
             BigBomb
         };
 
-        BlastRadiusAnimation(Pht::IEngine& engine,
+        BlastArea(Pht::IEngine& engine,
                              GameScene& scene,
                              const CommonResources& commonResources);
     

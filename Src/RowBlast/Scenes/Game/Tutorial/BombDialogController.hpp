@@ -27,7 +27,7 @@ namespace RowBlast {
                              const CommonResources& commonResources,
                              const PieceResources& pieceResources,
                              const LevelResources& levelResources,
-                             const BlastRadiusAnimation& blastRadiusAnimation,
+                             const BlastArea& blastRadiusAnimation,
                              const UserServices& userServices);
         
         void SetUp();

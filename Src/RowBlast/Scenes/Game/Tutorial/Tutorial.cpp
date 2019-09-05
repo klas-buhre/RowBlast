@@ -47,7 +47,7 @@ Tutorial::Tutorial(Pht::IEngine& engine,
                    const PieceResources& pieceResources,
                    const GhostPieceBlocks& ghostPieceBlocks,
                    const LevelResources& levelResources,
-                   const BlastRadiusAnimation& blastRadiusAnimation,
+                   const BlastArea& blastRadiusAnimation,
                    const UserServices& userServices) :
     mEngine {engine},
     mScene {scene},

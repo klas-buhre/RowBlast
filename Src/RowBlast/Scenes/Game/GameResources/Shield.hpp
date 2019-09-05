@@ -1,5 +1,5 @@
-#ifndef ShieldAnimation_hpp
-#define ShieldAnimation_hpp
+#ifndef Shield_hpp
+#define Shield_hpp
 
 #include <memory>
 
@@ -16,11 +16,11 @@ namespace RowBlast {
     class Level;
     class ScrollController;
 
-    class ShieldAnimation {
+    class Shield {
     public:
-        ShieldAnimation(Pht::IEngine& engine,
-                        GameScene& scene,
-                        const ScrollController& scrollController);
+        Shield(Pht::IEngine& engine,
+               GameScene& scene,
+               const ScrollController& scrollController);
 
         void Init(const Level& level);
         void Start();

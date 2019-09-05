@@ -10,8 +10,8 @@
 
 // Game includes.
 #include "GameViewControllers.hpp"
-#include "SlidingTextAnimation.hpp"
-#include "SmallTextAnimation.hpp"
+#include "SlidingText.hpp"
+#include "SmallText.hpp"
 #include "GameLogic.hpp"
 #include "UserServices.hpp"
 #include "Level.hpp"
@@ -33,8 +33,8 @@ namespace {
 LevelCompletedController::LevelCompletedController(Pht::IEngine& engine,
                                                    GameScene& gameScene,
                                                    GameViewControllers& gameViewControllers,
-                                                   SlidingTextAnimation& slidingTextAnimation,
-                                                   SmallTextAnimation& smallTextAnimation,
+                                                   SlidingText& slidingTextAnimation,
+                                                   SmallText& smallTextAnimation,
                                                    GameLogic& gameLogic,
                                                    UserServices& userServices,
                                                    const CommonResources& commonResources,
@@ -44,8 +44,8 @@ LevelCompletedController::LevelCompletedController(Pht::IEngine& engine,
     mEngine {engine},
     mGameScene {gameScene},
     mGameViewControllers {gameViewControllers},
-    mSlidingTextAnimation {slidingTextAnimation},
-    mSmallTextAnimation {smallTextAnimation},
+    mSlidingText {slidingTextAnimation},
+    mSmallText {smallTextAnimation},
     mGameLogic {gameLogic},
     mUserServices {userServices},
     mFadeEffect {
@@ -90,7 +90,7 @@ void LevelCompletedController::Start() {
     mElapsedTime = 0.0f;
     mState = State::Waiting;
     
-    if (mSmallTextAnimation.IsAwesomeTextActive() || mSmallTextAnimation.IsFantasticTextActive()) {
+    if (mSmallText.IsAwesomeTextActive() || mSmallText.IsFantasticTextActive()) {
         mWaitTime = smallTextAnimationWaintTime;
     } else {
         mWaitTime = waitTime;
@@ -133,13 +133,13 @@ void LevelCompletedController::GoToObjectiveAchievedAnimationState() {
 void LevelCompletedController::StartLevelCompletedTextAnimation() {
     switch (mLevel->GetObjective()) {
         case Level::Objective::Clear:
-            mSlidingTextAnimation.StartBlocksClearedMessage();
+            mSlidingText.StartBlocksClearedMessage();
             break;
         case Level::Objective::Build:
-            mSlidingTextAnimation.StartSlotsFilledMessage();
+            mSlidingText.StartSlotsFilledMessage();
             break;
         case Level::Objective::BringDownTheAsteroid:
-            mSlidingTextAnimation.StartTheAsteroidIsDownMessage();
+            mSlidingText.StartTheAsteroidIsDownMessage();
             break;
     }
 }
@@ -195,7 +195,7 @@ void LevelCompletedController::UpdateInObjectiveAchievedAnimationState() {
 }
 
 void LevelCompletedController::UpdateObjectiveAchievedAnimation() {
-    if (mSlidingTextAnimation.Update() == SlidingTextAnimation::State::Inactive) {
+    if (mSlidingText.Update() == SlidingText::State::Inactive) {
         if (mState == State::ObjectiveAchievedAnimation) {
             mConfettiParticleEffect.Start();
         }

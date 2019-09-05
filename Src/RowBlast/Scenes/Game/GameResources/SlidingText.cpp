@@ -1,4 +1,4 @@
-#include "SlidingTextAnimation.hpp"
+#include "SlidingText.hpp"
 
 #include <assert.h>
 
@@ -80,10 +80,10 @@ namespace {
     }
 }
 
-SlidingTextAnimation::SlidingTextAnimation(Pht::IEngine& engine,
-                                           GameScene& scene,
-                                           const CommonResources& commonResources,
-                                           const LevelResources& levelResources) :
+SlidingText::SlidingText(Pht::IEngine& engine,
+                         GameScene& scene,
+                         const CommonResources& commonResources,
+                         const LevelResources& levelResources) :
     mEngine {engine},
     mScene {scene},
     mUfo {engine, commonResources, 3.2f},
@@ -161,12 +161,12 @@ SlidingTextAnimation::SlidingTextAnimation(Pht::IEngine& engine,
     CreateExtraAnimationsContainer(commonResources, levelResources, font);
 }
 
-SlidingTextAnimation::TextMessage&
-SlidingTextAnimation::CreateText(const Pht::Font& font,
-                                 float displayTime,
-                                 const TextLineConfig& upperTextLineConfig,
-                                 const TextLineConfig& lowerTextLineConfig,
-                                 const ExtraAnimations& extraAnimations) {
+SlidingText::TextMessage&
+SlidingText::CreateText(const Pht::Font& font,
+                        float displayTime,
+                        const TextLineConfig& upperTextLineConfig,
+                        const TextLineConfig& lowerTextLineConfig,
+                        const ExtraAnimations& extraAnimations) {
     Pht::TextProperties textProperties {
         font,
         1.1f,
@@ -196,9 +196,9 @@ SlidingTextAnimation::CreateText(const Pht::Font& font,
     return mTextMessages.back();
 }
 
-SlidingTextAnimation::TextLine
-SlidingTextAnimation::CreateTextLine(const TextLineConfig& textLineConfig,
-                                     const Pht::TextProperties textProperties) {
+SlidingText::TextLine
+SlidingText::CreateTextLine(const TextLineConfig& textLineConfig,
+                            const Pht::TextProperties textProperties) {
     TextLine textLine {
         .mPosition = {textLineConfig.mPosition.x, textLineConfig.mPosition.y, 0.5f},
         .mSceneObject = std::make_unique<Pht::SceneObject>(),
@@ -217,7 +217,7 @@ SlidingTextAnimation::CreateTextLine(const TextLineConfig& textLineConfig,
     return textLine;
 }
 
-void SlidingTextAnimation::CreateTwinkleParticleEffects() {
+void SlidingText::CreateTwinkleParticleEffects() {
     Pht::EmitterSettings particleEmitterSettings {
         .mPosition = Pht::Vec3{0.0f, 0.0f, 0.0f},
         .mSize = Pht::Vec3{0.0f, 0.0f, 0.0f},
@@ -265,9 +265,9 @@ void SlidingTextAnimation::CreateTwinkleParticleEffects() {
                                                                                  Pht::RenderMode::Triangles);
 }
 
-void SlidingTextAnimation::CreateExtraAnimationsContainer(const CommonResources& commonResources,
-                                                          const LevelResources& levelResources,
-                                                          const Pht::Font& font) {
+void SlidingText::CreateExtraAnimationsContainer(const CommonResources& commonResources,
+                                                 const LevelResources& levelResources,
+                                                 const Pht::Font& font) {
     mExtraAnimationsContainer = std::make_unique<Pht::SceneObject>();
     mExtraAnimationsContainer->GetTransform().SetPosition({0.0f, -2.65f, UiLayer::root});
     
@@ -287,7 +287,7 @@ void SlidingTextAnimation::CreateExtraAnimationsContainer(const CommonResources&
                                                {1.0f, 0.95f, 0.9f, 1.0f});
 }
 
-void SlidingTextAnimation::CreateGreyCubeAnimation(const CommonResources& commonResources) {
+void SlidingText::CreateGreyCubeAnimation(const CommonResources& commonResources) {
     auto& sceneManager = mEngine.GetSceneManager();
     auto& grayMaterial = commonResources.GetMaterials().GetGrayYellowMaterial();
     auto grayCubeSceneObject = sceneManager.CreateSceneObject(Pht::ObjMesh {"cube_428.obj", 1.25f},
@@ -304,7 +304,7 @@ void SlidingTextAnimation::CreateGreyCubeAnimation(const CommonResources& common
     mSceneResources.AddSceneObject(std::move(grayCubeSceneObject));
 }
 
-void SlidingTextAnimation::CreateAsteroidAnimation() {
+void SlidingText::CreateAsteroidAnimation() {
     auto& sceneManager = mEngine.GetSceneManager();
     Pht::Material asteroidMaterial {"gray_asteroid.jpg", 0.865f, 1.23f, 0.0f, 1.0f};
     asteroidMaterial.SetDepthTestAllowedOverride(true);
@@ -329,7 +329,7 @@ void SlidingTextAnimation::CreateAsteroidAnimation() {
     mSceneResources.AddSceneObject(std::move(asteroidSceneObject));
 }
 
-void SlidingTextAnimation::CreateBlueprintSlotAnimation(const LevelResources& levelResources) {
+void SlidingText::CreateBlueprintSlotAnimation(const LevelResources& levelResources) {
     auto& blueprintSlotContainer = mSceneResources.CreateSceneObject();
     auto& transform = blueprintSlotContainer.GetTransform();
     transform.SetPosition({-0.6f, 0.0f, UiLayer::block});
@@ -353,7 +353,7 @@ void SlidingTextAnimation::CreateBlueprintSlotAnimation(const LevelResources& le
                                                                  Pht::Optional<Pht::Vec3>{});
 }
 
-void SlidingTextAnimation::CreateMovesAnimation(const CommonResources& commonResources) {
+void SlidingText::CreateMovesAnimation(const CommonResources& commonResources) {
     auto iconScale = 1.85f;
     auto& movesIcon = CreateMovesIcon(*mExtraAnimationsContainer, commonResources, iconScale);
     movesIcon.SetIsVisible(false);
@@ -364,9 +364,9 @@ void SlidingTextAnimation::CreateMovesAnimation(const CommonResources& commonRes
                                                          Pht::Vec3{-50.0f, -35.0f, 0.0f});
 }
 
-Pht::SceneObject& SlidingTextAnimation::CreateMovesIcon(Pht::SceneObject& parent,
-                                                        const CommonResources& commonResources,
-                                                        float scale) {
+Pht::SceneObject& SlidingText::CreateMovesIcon(Pht::SceneObject& parent,
+                                               const CommonResources& commonResources,
+                                               float scale) {
     auto& movesIconSceneObject = mSceneResources.CreateSceneObject();
     parent.AddChild(movesIconSceneObject);
 
@@ -385,10 +385,10 @@ Pht::SceneObject& SlidingTextAnimation::CreateMovesIcon(Pht::SceneObject& parent
     return movesIconSceneObject;
 }
 
-void SlidingTextAnimation::CreateArrow(const Pht::Vec3& position,
-                                       const Pht::Vec3& rotation,
-                                       Pht::RenderableObject& renderable,
-                                       Pht::SceneObject& parent) {
+void SlidingText::CreateArrow(const Pht::Vec3& position,
+                              const Pht::Vec3& rotation,
+                              Pht::RenderableObject& renderable,
+                              Pht::SceneObject& parent) {
     auto& arrow = mSceneResources.CreateSceneObject();
     arrow.GetTransform().SetPosition(position);
     arrow.GetTransform().SetRotation(rotation);
@@ -397,10 +397,10 @@ void SlidingTextAnimation::CreateArrow(const Pht::Vec3& position,
 }
 
 Pht::Animation&
-SlidingTextAnimation::CreateScalingAndRotationAnimation(Pht::SceneObject& sceneObject,
-                                                        float scale,
-                                                        const Pht::Optional<Pht::Vec3>& rotationA,
-                                                        const Pht::Optional<Pht::Vec3>& rotationB) {
+SlidingText::CreateScalingAndRotationAnimation(Pht::SceneObject& sceneObject,
+                                               float scale,
+                                               const Pht::Optional<Pht::Vec3>& rotationA,
+                                               const Pht::Optional<Pht::Vec3>& rotationB) {
     std::vector<Pht::Keyframe> scaleUpKeyframes {
         {.mTime = 0.0f, .mScale = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
         {.mTime = slideTime, .mScale = Pht::Vec3{scale, scale, scale}}
@@ -431,7 +431,7 @@ SlidingTextAnimation::CreateScalingAndRotationAnimation(Pht::SceneObject& sceneO
     return animation;
 }
 
-void SlidingTextAnimation::CreateNumObjectsTextAnimation(const Pht::Font& font) {
+void SlidingText::CreateNumObjectsTextAnimation(const Pht::Font& font) {
     auto numObjectsTextScale = 0.72f;
 
     Pht::TextProperties textProperties {
@@ -485,10 +485,10 @@ void SlidingTextAnimation::CreateNumObjectsTextAnimation(const Pht::Font& font) 
     textScaleDownClip.SetWrapMode(Pht::WrapMode::Once);
 }
 
-Pht::Animation& SlidingTextAnimation::CreateIconAnimation(const std::string& filename,
-                                                          const Pht::Vec3& position,
-                                                          const Pht::Vec2& size,
-                                                          const Pht::Vec4& color) {
+Pht::Animation& SlidingText::CreateIconAnimation(const std::string& filename,
+                                                 const Pht::Vec3& position,
+                                                 const Pht::Vec2& size,
+                                                 const Pht::Vec4& color) {
     auto& icon = GuiUtils::CreateIconWithShadow(mEngine,
                                                 mSceneResources,
                                                 filename,
@@ -521,7 +521,7 @@ Pht::Animation& SlidingTextAnimation::CreateIconAnimation(const std::string& fil
     return animation;
 }
 
-void SlidingTextAnimation::Init() {
+void SlidingText::Init() {
     mContainerSceneObject = &mScene.GetScene().CreateSceneObject();
     mContainerSceneObject->GetTransform().SetPosition(centerPosition);
     mScene.GetHudContainer().AddChild(*mContainerSceneObject);
@@ -552,7 +552,7 @@ void SlidingTextAnimation::Init() {
     mRightPosition = {frustumSize.x / 2.0f + textWidth / 2.0f, 0.0f, 0.0f};
 }
 
-void SlidingTextAnimation::CreateGradientRectangles(Pht::SceneObject& containerSceneObject) {
+void SlidingText::CreateGradientRectangles(Pht::SceneObject& containerSceneObject) {
     auto& scene = mScene.GetScene();
     mGradientRectanglesSceneObject = &scene.CreateSceneObject();
     containerSceneObject.AddChild(*mGradientRectanglesSceneObject);
@@ -609,38 +609,38 @@ void SlidingTextAnimation::CreateGradientRectangles(Pht::SceneObject& containerS
                             stripeColors);
 }
 
-void SlidingTextAnimation::StartClearBlocksMessage(int numBlocks) {
+void SlidingText::StartClearBlocksMessage(int numBlocks) {
     WriteIntegerAtBeginningOfStringNoPadding(numBlocks, mNumObjectsText->GetText());
     Start(*mClearBlocksMessage);
 }
 
-void SlidingTextAnimation::StartBlocksClearedMessage() {
+void SlidingText::StartBlocksClearedMessage() {
     Start(*mBlocksClearedMessage);
 }
 
-void SlidingTextAnimation::StartFillSlotsMessage(int numSlots) {
+void SlidingText::StartFillSlotsMessage(int numSlots) {
     WriteIntegerAtBeginningOfStringNoPadding(numSlots, mNumObjectsText->GetText());
     Start(*mFillSlotsMessage);
 }
 
-void SlidingTextAnimation::StartSlotsFilledMessage() {
+void SlidingText::StartSlotsFilledMessage() {
     Start(*mSlotsFilledMessage);
 }
 
-void SlidingTextAnimation::StartBringDownTheAsteroidMessage() {
+void SlidingText::StartBringDownTheAsteroidMessage() {
     Start(*mBringDownTheAsteroidMessage);
 }
 
-void SlidingTextAnimation::StartTheAsteroidIsDownMessage() {
+void SlidingText::StartTheAsteroidIsDownMessage() {
     Start(*mTheAsteroidIsDownMessage);
 }
 
-void SlidingTextAnimation::StartOutOfMovesMessage() {
+void SlidingText::StartOutOfMovesMessage() {
     WriteIntegerAtBeginningOfStringNoPadding(0, mNumObjectsText->GetText());
     Start(*mOutOfMovesMessage);
 }
 
-void SlidingTextAnimation::Start(const TextMessage& textMessage) {
+void SlidingText::Start(const TextMessage& textMessage) {
     mTextMessage = &textMessage;
     mState = State::RectangleAppearing;
     mElapsedTime = 0.0f;
@@ -673,7 +673,7 @@ void SlidingTextAnimation::Start(const TextMessage& textMessage) {
     mEngine.GetRenderer().EnableShader(Pht::ShaderId::TexturedEnvMapLighting);
 }
 
-SlidingTextAnimation::State SlidingTextAnimation::Update() {
+SlidingText::State SlidingText::Update() {
     switch (mState) {
         case State::RectangleAppearing:
             UpdateInRectangleAppearingState();
@@ -697,7 +697,7 @@ SlidingTextAnimation::State SlidingTextAnimation::Update() {
     return mState;
 }
 
-void SlidingTextAnimation::UpdateInRectangleAppearingState() {
+void SlidingText::UpdateInRectangleAppearingState() {
     auto dt = mEngine.GetLastFrameSeconds();
     mElapsedTime += dt;
     
@@ -725,7 +725,7 @@ void SlidingTextAnimation::UpdateInRectangleAppearingState() {
     }
 }
 
-void SlidingTextAnimation::UpdateInSlidingInState() {
+void SlidingText::UpdateInSlidingInState() {
     auto dt = mEngine.GetLastFrameSeconds();
     
     mTextPosition.x += mVelocity * dt;
@@ -748,7 +748,7 @@ void SlidingTextAnimation::UpdateInSlidingInState() {
     UpdateTextLineSceneObjectPositions();
 }
 
-void SlidingTextAnimation::UpdateTextLineSceneObjectPositions() {
+void SlidingText::UpdateTextLineSceneObjectPositions() {
     auto upperTextLinePosition = mLeftPosition + mTextPosition + mTextMessage->mUpperTextLine.mPosition;
     mTextMessage->mUpperTextLine.mSceneObject->GetTransform().SetPosition(upperTextLinePosition);
     
@@ -770,7 +770,7 @@ void SlidingTextAnimation::UpdateTextLineSceneObjectPositions() {
     mLowerTwinkleParticleEffect->GetTransform().SetPosition(lowerTwinklePosition);
 }
 
-void SlidingTextAnimation::UpdateInDisplayingTextState() {
+void SlidingText::UpdateInDisplayingTextState() {
     auto dt = mEngine.GetLastFrameSeconds();
     mTextPosition.x += mDisplayVelocity * dt;
     mElapsedTime += dt;
@@ -802,7 +802,7 @@ void SlidingTextAnimation::UpdateInDisplayingTextState() {
     UpdateTextLineSceneObjectPositions();
 }
 
-void SlidingTextAnimation::UpdateInSlidingOutState() {
+void SlidingText::UpdateInSlidingOutState() {
     auto dt = mEngine.GetLastFrameSeconds();
     
     mTextPosition.x += mVelocity * dt;
@@ -822,7 +822,7 @@ void SlidingTextAnimation::UpdateInSlidingOutState() {
     }
 }
 
-void SlidingTextAnimation::UpdateInRectangleDisappearingState() {
+void SlidingText::UpdateInRectangleDisappearingState() {
     auto dt = mEngine.GetLastFrameSeconds();
     mElapsedTime += dt;
     
@@ -843,7 +843,7 @@ void SlidingTextAnimation::UpdateInRectangleDisappearingState() {
     }
 }
 
-void SlidingTextAnimation::UpdateUfo() {
+void SlidingText::UpdateUfo() {
     mUfoAnimation.Update();
     
     switch (mUfoState) {
@@ -857,7 +857,7 @@ void SlidingTextAnimation::UpdateUfo() {
     }
 }
 
-void SlidingTextAnimation::FlyInUfo() {
+void SlidingText::FlyInUfo() {
     switch (mUfoState) {
         case UfoState::Inactive:
             mUfoAnimation.StartShortWarpSpeed(centerUfoPosition);
@@ -868,7 +868,7 @@ void SlidingTextAnimation::FlyInUfo() {
     }
 }
 
-void SlidingTextAnimation::FlyOutUfo() {
+void SlidingText::FlyOutUfo() {
     switch (mUfoState) {
         case UfoState::FlyingIn:
         case UfoState::Hovering:
@@ -881,7 +881,7 @@ void SlidingTextAnimation::FlyOutUfo() {
     }
 }
 
-void SlidingTextAnimation::StartPlayingExtraAnimations() {
+void SlidingText::StartPlayingExtraAnimations() {
     if (mTextMessage->mExtraAnimations.mGrayCube) {
         mGreyCubeAnimation->Stop();
         mGreyCubeAnimation->Play(static_cast<Pht::AnimationClipId>(AnimationClip::ScaleUp));
@@ -921,7 +921,7 @@ void SlidingTextAnimation::StartPlayingExtraAnimations() {
     }
 }
 
-void SlidingTextAnimation::UpdateExtraAnimations() {
+void SlidingText::UpdateExtraAnimations() {
     auto dt = mEngine.GetLastFrameSeconds();
     mGreyCubeAnimation->Update(dt);
     mAsteroidAnimation->Update(dt);
@@ -932,7 +932,7 @@ void SlidingTextAnimation::UpdateExtraAnimations() {
     mDownArrowAnimation->Update(dt);
 }
 
-void SlidingTextAnimation::StartScalingDownExtraAnimations() {
+void SlidingText::StartScalingDownExtraAnimations() {
     if (mTextMessage->mExtraAnimations.mGrayCube) {
         mGreyCubeAnimation->Play(static_cast<Pht::AnimationClipId>(AnimationClip::ScaleDown));
     }

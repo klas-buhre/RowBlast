@@ -1,5 +1,5 @@
-#ifndef TutorialFieldBottomGlowAnimation_hpp
-#define TutorialFieldBottomGlowAnimation_hpp
+#ifndef TutorialFieldBottomGlow_hpp
+#define TutorialFieldBottomGlow_hpp
 
 #include <memory>
 
@@ -12,9 +12,9 @@ namespace Pht {
 }
 
 namespace RowBlast {
-    class TutorialFieldBottomGlowAnimation {
+    class TutorialFieldBottomGlow {
     public:
-        TutorialFieldBottomGlowAnimation(Pht::IEngine& engine, Pht::SceneObject& parent);
+        TutorialFieldBottomGlow(Pht::IEngine& engine, Pht::SceneObject& parent);
 
         void Update(float dt);
     

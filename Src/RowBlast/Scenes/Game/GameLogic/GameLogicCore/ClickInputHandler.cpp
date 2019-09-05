@@ -251,7 +251,7 @@ void ClickInputHandler::HandleTouch(const Pht::TouchEvent& touchEvent, int moves
             case Pht::Button::Result::Down:
                 HideMoves(move);
                 if (mPieceType->IsBomb()) {
-                    mGameLogic.StartBlastRadiusAnimation(move.mPosition);
+                    mGameLogic.StartBlastArea(move.mPosition);
                 }
                 return;
             case Pht::Button::Result::MoveInside:
@@ -262,13 +262,13 @@ void ClickInputHandler::HandleTouch(const Pht::TouchEvent& touchEvent, int moves
             case Pht::Button::Result::UpOutside:
                 UnhideMoves();
                 if (mPieceType->IsBomb()) {
-                    mGameLogic.StopBlastRadiusAnimation();
+                    mGameLogic.StopBlastArea();
                 }
                 return;
             case Pht::Button::Result::UpInside:
                 UnhideMoves();
                 if (mTutorial.IsMoveAllowed(movesUsed, *mPieceType, move)) {
-                    mGameLogic.StopBlastRadiusAnimation();
+                    mGameLogic.StopBlastArea();
                     mGameLogic.SelectMove(move);
                     mState = State::Inactive;
                 }

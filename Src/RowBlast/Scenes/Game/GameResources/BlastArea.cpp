@@ -1,4 +1,4 @@
-#include "BlastRadiusAnimation.hpp"
+#include "BlastArea.hpp"
 
 // Engine includes.
 #include "IEngine.hpp"
@@ -199,9 +199,9 @@ namespace {
     }
 }
 
-BlastRadiusAnimation::BlastRadiusAnimation(Pht::IEngine& engine,
-                                           GameScene& scene,
-                                           const CommonResources& commonResources) :
+BlastArea::BlastArea(Pht::IEngine& engine,
+                     GameScene& scene,
+                     const CommonResources& commonResources) :
     mScene {scene} {
     
     auto cellSize = scene.GetCellSize();
@@ -234,9 +234,9 @@ BlastRadiusAnimation::BlastRadiusAnimation(Pht::IEngine& engine,
     mBombRadiusSceneObject = CreateSceneObject(*rasterizer->ProduceImage(), squareSide, engine);
 }
 
-std::unique_ptr<Pht::SceneObject> BlastRadiusAnimation::CreateSceneObject(const Pht::IImage& image,
-                                                                          float squareSide,
-                                                                          Pht::IEngine& engine) {
+std::unique_ptr<Pht::SceneObject> BlastArea::CreateSceneObject(const Pht::IImage& image,
+                                                               float squareSide,
+                                                               Pht::IEngine& engine) {
     Pht::Material imageMaterial {image, Pht::GenerateMipmap::No};
     imageMaterial.SetBlend(Pht::Blend::Yes);
     imageMaterial.SetDepthTest(false);
@@ -247,14 +247,14 @@ std::unique_ptr<Pht::SceneObject> BlastRadiusAnimation::CreateSceneObject(const 
                                           mSceneResources);
 }
 
-void BlastRadiusAnimation::Init() {
+void BlastArea::Init() {
     mScene.GetFieldBlocksContainer().AddChild(*mBombRadiusSceneObject);
     mScene.GetFieldBlocksContainer().AddChild(*mBigBombRadiusSceneObject);
     
     Stop();
 }
 
-void BlastRadiusAnimation::Start(Kind kind) {
+void BlastArea::Start(Kind kind) {
     mState = State::FadingIn;
     mActiveKind = kind;
     mTime = 0.0f;
@@ -271,27 +271,27 @@ void BlastRadiusAnimation::Start(Kind kind) {
     }
 }
 
-void BlastRadiusAnimation::Stop() {
+void BlastArea::Stop() {
     mState = State::Inactive;
     mTime = 0.0f;
     mBombRadiusSceneObject->SetIsVisible(false);
     mBigBombRadiusSceneObject->SetIsVisible(false);
 }
 
-void BlastRadiusAnimation::SetPosition(const Pht::Vec2& position) {
+void BlastArea::SetPosition(const Pht::Vec2& position) {
     const auto cellSize = mScene.GetCellSize();
 
     Pht::Vec3 positionInField {
         position.x * cellSize + cellSize / 2.0f,
         position.y * cellSize + cellSize / 2.0f,
-        mScene.GetBlastRadiusAnimationZ()
+        mScene.GetBlastAreaZ()
     };
     
     mBombRadiusSceneObject->GetTransform().SetPosition(positionInField);
     mBigBombRadiusSceneObject->GetTransform().SetPosition(positionInField);
 }
 
-void BlastRadiusAnimation::Update(float dt) {
+void BlastArea::Update(float dt) {
     switch (mState) {
         case State::FadingIn:
             UpdateInFadingInState(dt);
@@ -304,7 +304,7 @@ void BlastRadiusAnimation::Update(float dt) {
     }
 }
 
-void BlastRadiusAnimation::UpdateInFadingInState(float dt) {
+void BlastArea::UpdateInFadingInState(float dt) {
     mTime += dt;
     
     SetOpacity(opacityTarget * mTime / fadeInTime);
@@ -321,7 +321,7 @@ void BlastRadiusAnimation::UpdateInFadingInState(float dt) {
     }
 }
 
-void BlastRadiusAnimation::UpdateInActiveState(float dt) {
+void BlastArea::UpdateInActiveState(float dt) {
     mTime += dt;
     
     auto opacity =
@@ -330,7 +330,7 @@ void BlastRadiusAnimation::UpdateInActiveState(float dt) {
     SetOpacity(opacity);
 }
 
-void BlastRadiusAnimation::SetOpacity(float opacity) {
+void BlastArea::SetOpacity(float opacity) {
     switch (mActiveKind) {
         case Kind::Bomb:
             mBombRadiusSceneObject->GetRenderable()->GetMaterial().SetOpacity(opacity);
@@ -341,7 +341,7 @@ void BlastRadiusAnimation::SetOpacity(float opacity) {
     }
 }
 
-void BlastRadiusAnimation::SetScale(float scale) {
+void BlastArea::SetScale(float scale) {
     switch (mActiveKind) {
         case Kind::Bomb:
             mBombRadiusSceneObject->GetTransform().SetScale(scale);
@@ -352,7 +352,7 @@ void BlastRadiusAnimation::SetScale(float scale) {
     }
 }
 
-bool BlastRadiusAnimation::IsActive() const {
+bool BlastArea::IsActive() const {
     switch (mState) {
         case State::FadingIn:
         case State::Active:
@@ -362,6 +362,6 @@ bool BlastRadiusAnimation::IsActive() const {
     }
 }
 
-Pht::RenderableObject& BlastRadiusAnimation::GetBombRadiusRenderable() const {
+Pht::RenderableObject& BlastArea::GetBombRadiusRenderable() const {
     return *mBombRadiusSceneObject->GetRenderable();
 }

@@ -1,5 +1,5 @@
-#ifndef FieldBottomGlowAnimation_hpp
-#define FieldBottomGlowAnimation_hpp
+#ifndef FieldBottomGlow_hpp
+#define FieldBottomGlow_hpp
 
 #include <memory>
 
@@ -15,11 +15,11 @@ namespace RowBlast {
     class GameScene;
     class ScrollController;
 
-    class FieldBottomGlowAnimation {
+    class FieldBottomGlow {
     public:
-        FieldBottomGlowAnimation(Pht::IEngine& engine,
-                                 GameScene& scene,
-                                 const ScrollController& scrollController);
+        FieldBottomGlow(Pht::IEngine& engine,
+                        GameScene& scene,
+                        const ScrollController& scrollController);
 
         void Init();
         void Update(float dt);

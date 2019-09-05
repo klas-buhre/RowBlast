@@ -201,8 +201,8 @@ namespace RowBlast {
             return mDraggedPieceZ;
         }
 
-        float GetBlastRadiusAnimationZ() const {
-            return mBlastRadiusAnimationZ;
+        float GetBlastAreaZ() const {
+            return mBlastAreaZ;
         }
 
         float GetGhostPieceZ() const {
@@ -237,8 +237,8 @@ namespace RowBlast {
             return mBouncingBlockZ;
         }
         
-        float GetShieldAnimationZ() const {
-            return mShieldAnimationZ;
+        float GetShieldZ() const {
+            return mShieldZ;
         }
         
         float GetFieldBottomGlowZ() const {
@@ -319,8 +319,8 @@ namespace RowBlast {
         Pht::SceneObject* mDraggedPiece {nullptr};
         const Pht::Vec3 mFieldPosition;
         const float mDraggedPieceZ {mCellSize / 2.0f + 0.3f};
-        const float mBlastRadiusAnimationZ {mCellSize / 2.0f + 0.15f};
-        const float mShieldAnimationZ {mCellSize / 2.0f + 0.1f};
+        const float mBlastAreaZ {mCellSize / 2.0f + 0.15f};
+        const float mShieldZ {mCellSize / 2.0f + 0.1f};
         const float mFieldBottomGlowZ {mCellSize / 2.0f + 0.1f};
         const float mGhostPieceZ {mCellSize / 2.0f + 0.02f};
         const float mGhostPieceShadowZ {-0.4f};

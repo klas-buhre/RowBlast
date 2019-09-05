@@ -6,7 +6,7 @@
 #include "IAudio.hpp"
 
 // Game includes.
-#include "SmallTextAnimation.hpp"
+#include "SmallText.hpp"
 #include "EffectManager.hpp"
 #include "AudioResources.hpp"
 
@@ -36,10 +36,10 @@ namespace {
 }
 
 ComboDetector::ComboDetector(Pht::IEngine& engine,
-                             SmallTextAnimation& smallTextAnimation,
+                             SmallText& smallTextAnimation,
                              EffectManager& effectManager) :
     mEngine {engine},
-    mSmallTextAnimation {smallTextAnimation},
+    mSmallText {smallTextAnimation},
     mEffectManager {effectManager} {}
 
 void ComboDetector::Init() {
@@ -77,13 +77,13 @@ void ComboDetector::OnClearedFilledRowsInPieceSpawnedState(const Field::RemovedS
     auto numRemovedRows = CalcNumRemovedRows(removedSubCells);
 
     if (numRemovedRows >= 5) {
-        mSmallTextAnimation.StartFantasticMessage();
+        mSmallText.StartFantasticMessage();
         mEffectManager.StartSmallCameraShake();
     } else if (numRemovedRows >= 4) {
-        mSmallTextAnimation.StartAwesomeMessage();
+        mSmallText.StartAwesomeMessage();
     } else if (mNumConsecutiveRowClearMoves >= 2) {
         auto numCombos {mNumConsecutiveRowClearMoves - 1};
-        mSmallTextAnimation.StartComboMessage(numCombos);
+        mSmallText.StartComboMessage(numCombos);
     }
     
     GoToCascadingState();
@@ -93,18 +93,18 @@ void ComboDetector::OnClearedFilledRowsInCascadingState(const Field::RemovedSubC
     auto numRemovedRows = CalcNumRemovedRows(removedSubCells);
 
     if (numRemovedRows >= 5) {
-        mSmallTextAnimation.StartFantasticMessage();
+        mSmallText.StartFantasticMessage();
         mEffectManager.StartSmallCameraShake();
     } else if (numRemovedRows >= 4) {
-        mSmallTextAnimation.StartAwesomeMessage();
+        mSmallText.StartAwesomeMessage();
     }
 }
 
 void ComboDetector::DetectCascade() {
     if (mNumCascades >= 3) {
-        mSmallTextAnimation.StartFantasticMessage();
+        mSmallText.StartFantasticMessage();
     } else if (mNumCascades >= 2) {
-        mSmallTextAnimation.StartAwesomeMessage();
+        mSmallText.StartAwesomeMessage();
     }
 }
 

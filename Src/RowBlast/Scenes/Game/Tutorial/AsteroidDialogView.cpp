@@ -122,7 +122,7 @@ void AsteroidDialogView::CreateAnimation(const PieceResources& pieceResources,
     };
     animationSystem.CreateAnimation(clearedCells, clearedCellsKeyframes);
     
-    mBottomGlowAnimation = std::make_unique<TutorialFieldBottomGlowAnimation>(mEngine, container);
+    mBottomGlowAnimation = std::make_unique<TutorialFieldBottomGlow>(mEngine, container);
 
     mMoves = &CreateSceneObject();
     container.AddChild(*mMoves);

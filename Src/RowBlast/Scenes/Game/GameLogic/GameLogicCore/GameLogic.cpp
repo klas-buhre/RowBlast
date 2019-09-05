@@ -19,11 +19,11 @@
 #include "EffectManager.hpp"
 #include "PieceDropParticleEffect.hpp"
 #include "PieceTrailParticleEffect.hpp"
-#include "BlastRadiusAnimation.hpp"
+#include "BlastArea.hpp"
 #include "FallingPieceScaleAnimation.hpp"
-#include "ShieldAnimation.hpp"
+#include "Shield.hpp"
 #include "ValidAreaAnimation.hpp"
-#include "SmallTextAnimation.hpp"
+#include "SmallText.hpp"
 #include "GameHudController.hpp"
 #include "Tutorial.hpp"
 #include "AudioResources.hpp"
@@ -78,11 +78,11 @@ GameLogic::GameLogic(Pht::IEngine& engine,
                      CollapsingFieldAnimation& collapsingFieldAnimation,
                      PieceDropParticleEffect& pieceDropParticleEffect,
                      PieceTrailParticleEffect& pieceTrailParticleEffect,
-                     BlastRadiusAnimation& blastRadiusAnimation,
+                     BlastArea& blastRadiusAnimation,
                      FallingPieceScaleAnimation& fallingPieceScaleAnimation,
-                     ShieldAnimation& shieldAnimation,
+                     Shield& shieldAnimation,
                      ValidAreaAnimation& validAreaAnimation,
-                     SmallTextAnimation& smallTextAnimation,
+                     SmallText& smallTextAnimation,
                      GameHudController& gameHudController,
                      Tutorial& tutorial,
                      const SettingsService& settingsService) :
@@ -95,11 +95,11 @@ GameLogic::GameLogic(Pht::IEngine& engine,
     mEffectManager {effectManager},
     mPieceDropParticleEffect {pieceDropParticleEffect},
     mPieceTrailParticleEffect {pieceTrailParticleEffect},
-    mBlastRadiusAnimation {blastRadiusAnimation},
+    mBlastArea {blastRadiusAnimation},
     mFallingPieceScaleAnimation {fallingPieceScaleAnimation},
-    mShieldAnimation {shieldAnimation},
+    mShield {shieldAnimation},
     mValidAreaAnimation {validAreaAnimation},
-    mSmallTextAnimation {smallTextAnimation},
+    mSmallText {smallTextAnimation},
     mGameHudController {gameHudController},
     mScene {gameScene},
     mTutorial {tutorial},
@@ -199,7 +199,7 @@ GameLogic::Result GameLogic::Update(bool shouldUpdateLogic, bool shouldUndoMove)
                     }
                 }
                 if (mShouldUndoMove) {
-                    mSmallTextAnimation.StartUndoingMessage();
+                    mSmallText.StartUndoingMessage();
                     UndoMove();
                     return Result::None;
                 }
@@ -218,8 +218,8 @@ GameLogic::Result GameLogic::Update(bool shouldUpdateLogic, bool shouldUndoMove)
 GameLogic::Result GameLogic::SpawnFallingPiece(FallingPieceSpawnReason fallingPieceSpawnReason) {
     assert(fallingPieceSpawnReason != FallingPieceSpawnReason::None);
     
-    if (mBlastRadiusAnimation.IsActive()) {
-        mBlastRadiusAnimation.Stop();
+    if (mBlastArea.IsActive()) {
+        mBlastArea.Stop();
     }
     
     UpdateLevelProgress();
@@ -247,7 +247,7 @@ GameLogic::Result GameLogic::SpawnFallingPiece(FallingPieceSpawnReason fallingPi
         mCurrentMove.mPieceType->IsBomb() && mControlType == ControlType::Gesture &&
         fallingPieceSpawnReason != FallingPieceSpawnReason::BeginDraggingPiece) {
 
-        StartBlastRadiusAnimationAtGhostPiece();
+        StartBlastAreaAtGhostPiece();
     }
     
     if (mControlType == ControlType::Click) {
@@ -538,7 +538,7 @@ void GameLogic::HandleControlTypeChange() {
         switch (mSettingsService.GetControlType()) {
             case ControlType::Click:
                 if (mCurrentMove.mPieceType->IsBomb()) {
-                    mBlastRadiusAnimation.Stop();
+                    mBlastArea.Stop();
                 }
                 mClickInputHandler.CalculateMoves(*mFallingPiece,
                                                   GetMovesUsedIncludingCurrent() - 1);
@@ -548,7 +548,7 @@ void GameLogic::HandleControlTypeChange() {
                 if (mSwipeGhostPieceState == SwipeGhostPieceState::Active &&
                     mCurrentMove.mPieceType->IsBomb()) {
                     
-                    StartBlastRadiusAnimationAtGhostPiece();
+                    StartBlastAreaAtGhostPiece();
                 }
                 break;
         }
@@ -781,8 +781,8 @@ void GameLogic::DetonateDroppedBomb() {
             mFieldExplosionsStates.DetonateBomb(intPieceDetonationPos, pieceDetonationPos);
         }
         
-        if (mBlastRadiusAnimation.IsActive()) {
-            mBlastRadiusAnimation.Stop();
+        if (mBlastArea.IsActive()) {
+            mBlastArea.Stop();
         }
     }
 }
@@ -896,14 +896,14 @@ void GameLogic::PlayLandPieceSound() {
 
 void GameLogic::RemoveBlocksInsideTheShield() {
     auto lowestVisibleRow = static_cast<int>(mScrollController.GetLowestVisibleRow());
-    Pht::IVec2 areaPosition {0, lowestVisibleRow + ShieldAnimation::shieldRelativeYPosition};
+    Pht::IVec2 areaPosition {0, lowestVisibleRow + Shield::shieldRelativeYPosition};
     Pht::IVec2 areaSize {mField.GetNumColumns(), shieldHeight};
     auto removeCorners = true;
     auto removedSubCells = mField.RemoveAreaOfSubCells(areaPosition, areaSize, removeCorners);
 
     if (removedSubCells.Size() > 0) {
         mFlyingBlocksAnimation.AddBlocksRemovedByTheShield(removedSubCells, mField.GetNumColumns());
-        mShieldAnimation.StartFlash();
+        mShield.StartFlash();
         PlayClearBlocksSound(mEngine);
         
         if (mState != State::FieldExplosions) {
@@ -1160,13 +1160,13 @@ void GameLogic::SetFallingPieceXPosWithCollisionDetection(float fallingPieceNewX
 
     mGhostPieceRow = mField.DetectCollisionDown(pieceBlocks, mFallingPiece->GetIntPosition());
     
-    if (mBlastRadiusAnimation.IsActive()) {
-        SetBlastRadiusAnimationPositionAtGhostPiece();
+    if (mBlastArea.IsActive()) {
+        SetBlastAreaPositionAtGhostPiece();
         Pht::IVec2 ghostPiecePosition {mFallingPiece->GetIntPosition().x, mGhostPieceRow};
         auto blastRadiusKind = CalculateBlastRadiusKind(CreatePieceBlocks(*mFallingPiece),
                                                         ghostPiecePosition);
-        if (blastRadiusKind != mBlastRadiusAnimation.GetActiveKind()) {
-            mBlastRadiusAnimation.Start(blastRadiusKind);
+        if (blastRadiusKind != mBlastArea.GetActiveKind()) {
+            mBlastArea.Start(blastRadiusKind);
         }
     }
 }
@@ -1175,15 +1175,15 @@ void GameLogic::ActiveSwipeGhostPiece() {
     if (mSwipeGhostPieceState == SwipeGhostPieceState::Inactive &&
         mCurrentMove.mPieceType->IsBomb()) {
         
-        StartBlastRadiusAnimationAtGhostPiece();
+        StartBlastAreaAtGhostPiece();
     }
 
     mSwipeGhostPieceState = SwipeGhostPieceState::Active;
 }
 
 void GameLogic::DeactiveSwipeGhostPiece() {
-    if (mSwipeGhostPieceState == SwipeGhostPieceState::Active && mBlastRadiusAnimation.IsActive()) {
-        mBlastRadiusAnimation.Stop();
+    if (mSwipeGhostPieceState == SwipeGhostPieceState::Active && mBlastArea.IsActive()) {
+        mBlastArea.Stop();
     }
     
     mSwipeGhostPieceState = SwipeGhostPieceState::Inactive;
@@ -1197,48 +1197,47 @@ bool GameLogic::IsInFieldExplosionsState() const {
     return mState == State::FieldExplosions;
 }
 
-void GameLogic::StartBlastRadiusAnimationAtGhostPiece() {
+void GameLogic::StartBlastAreaAtGhostPiece() {
     Pht::IVec2 ghostPiecePosition {mFallingPiece->GetIntPosition().x, mGhostPieceRow};
-    mBlastRadiusAnimation.Start(CalculateBlastRadiusKind(CreatePieceBlocks(*mFallingPiece),
-                                                         ghostPiecePosition));
-
-    SetBlastRadiusAnimationPositionAtGhostPiece();
+    mBlastArea.Start(CalculateBlastRadiusKind(CreatePieceBlocks(*mFallingPiece),
+                                              ghostPiecePosition));
+    SetBlastAreaPositionAtGhostPiece();
 }
 
-void GameLogic::SetBlastRadiusAnimationPositionAtGhostPiece() {
+void GameLogic::SetBlastAreaPositionAtGhostPiece() {
     Pht::Vec2 blastRadiusAnimationPos {
         mFallingPiece->GetRenderablePosition().x + 1.0f,
         static_cast<float>(mGhostPieceRow) + 1.0f
     };
 
-    mBlastRadiusAnimation.SetPosition(blastRadiusAnimationPos);
+    mBlastArea.SetPosition(blastRadiusAnimationPos);
 }
 
-void GameLogic::StartBlastRadiusAnimation(const Pht::IVec2& position) {
-    mBlastRadiusAnimation.Start(CalculateBlastRadiusKind(CreatePieceBlocks(*mFallingPiece),
-                                                         position));
+void GameLogic::StartBlastArea(const Pht::IVec2& position) {
+    mBlastArea.Start(CalculateBlastRadiusKind(CreatePieceBlocks(*mFallingPiece), position));
+    
     Pht::Vec2 blastRadiusAnimationPos {
         static_cast<float>(position.x) + 1.0f,
         static_cast<float>(position.y) + 1.0f
     };
 
-    mBlastRadiusAnimation.SetPosition(blastRadiusAnimationPos);
+    mBlastArea.SetPosition(blastRadiusAnimationPos);
 }
 
-void GameLogic::StopBlastRadiusAnimation() {
-    mBlastRadiusAnimation.Stop();
+void GameLogic::StopBlastArea() {
+    mBlastArea.Stop();
 }
 
-BlastRadiusAnimation::Kind GameLogic::CalculateBlastRadiusKind(const PieceBlocks& pieceBlocks,
-                                                               const Pht::IVec2& position) {
+BlastArea::Kind GameLogic::CalculateBlastRadiusKind(const PieceBlocks& pieceBlocks,
+                                                    const Pht::IVec2& position) {
     auto impactedLevelBombsIfDropped = mField.DetectImpactedBombs(pieceBlocks, position);
     if (!impactedLevelBombsIfDropped.IsEmpty() &&
         impactedLevelBombsIfDropped.Front().mKind == BlockKind::Bomb) {
         
-        return BlastRadiusAnimation::Kind::BigBomb;
+        return BlastArea::Kind::BigBomb;
     }
     
-    return BlastRadiusAnimation::Kind::Bomb;
+    return BlastArea::Kind::Bomb;
 }
 
 bool GameLogic::BeginDraggingPiece(PreviewPieceIndex draggedPieceIndex) {
@@ -1265,7 +1264,7 @@ bool GameLogic::BeginDraggingPiece(PreviewPieceIndex draggedPieceIndex) {
     
     mValidAreaAnimation.Start(validMoves.mMoves, pieceType, mDraggedPiece->GetRotation());
     mDraggedPieceAnimation.StartGoUpAnimation();
-    UpdateDraggedGhostPieceRowAndBlastRadiusAnimation();
+    UpdateDraggedGhostPieceRowAndBlastArea();
     return true;
 }
 
@@ -1288,7 +1287,7 @@ void GameLogic::OnDraggedPieceMoved() {
         mFallingPiece->SetX(std::fmax(collisionLeft, fallingPieceNewX));
     }
 
-    UpdateDraggedGhostPieceRowAndBlastRadiusAnimation();
+    UpdateDraggedGhostPieceRowAndBlastArea();
 }
 
 void GameLogic::StopDraggingPiece() {
@@ -1316,7 +1315,7 @@ void GameLogic::OnDraggedPieceAnimationFinished() {
     CancelDraggingPiece();
 }
 
-void GameLogic::UpdateDraggedGhostPieceRowAndBlastRadiusAnimation() {
+void GameLogic::UpdateDraggedGhostPieceRowAndBlastArea() {
     auto ghostPieceRow = 0;
     if (GetValidMoveBelowDraggedPiece(ghostPieceRow)) {
         mDraggedGhostPieceRow = ghostPieceRow;
@@ -1331,21 +1330,21 @@ void GameLogic::UpdateDraggedGhostPieceRowAndBlastRadiusAnimation() {
                 static_cast<float>(ghostPiecePosition.y) + 1.0f
             };
             
-            mBlastRadiusAnimation.SetPosition(blastRadiusAnimationPos);
+            mBlastArea.SetPosition(blastRadiusAnimationPos);
             auto blastRadiusKind = CalculateBlastRadiusKind(CreatePieceBlocks(*mDraggedPiece),
                                                             ghostPiecePosition);
-            if (mBlastRadiusAnimation.IsActive()) {
-                if (blastRadiusKind != mBlastRadiusAnimation.GetActiveKind()) {
-                    mBlastRadiusAnimation.Start(blastRadiusKind);
+            if (mBlastArea.IsActive()) {
+                if (blastRadiusKind != mBlastArea.GetActiveKind()) {
+                    mBlastArea.Start(blastRadiusKind);
                 }
             } else {
-                mBlastRadiusAnimation.Start(blastRadiusKind);
+                mBlastArea.Start(blastRadiusKind);
             }
         }
     } else {
         mDraggedGhostPieceRow = Pht::Optional<int> {};
-        if (mBlastRadiusAnimation.IsActive()) {
-            mBlastRadiusAnimation.Stop();
+        if (mBlastArea.IsActive()) {
+            mBlastArea.Stop();
         }
     }
 }
