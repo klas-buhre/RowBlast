@@ -68,7 +68,7 @@ namespace {
         3.0f * GameHud::nextPiecesScale, 2.5f * GameHud::selectablePiecesScale
     };
     const auto selectablePiecesRectangleSize =
-        Pht::Vec2{7.96f, 2.4f} * GameHud::selectablePiecesScale;
+        Pht::Vec2{8.33f, 2.4f} * GameHud::selectablePiecesScale;
     constexpr auto selectablePiecesRectangleTilt =
         0.6f * GameHud::selectablePiecesScale * tiltFactor;
     const auto nextPiecesRectangleTilt =

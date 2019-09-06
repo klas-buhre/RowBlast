@@ -885,14 +885,18 @@ Pht::Animation& HowToPlayDialogView::CreateSwitchPieceAnimation(Pht::SceneObject
     auto& gameHudRectangles = commonResources.GetGameHudRectangles();
     
     auto& selectablePieces = CreateSceneObject();
-    selectablePieces.SetRenderable(&gameHudRectangles.GetSelectablePiecesRectangle());
-    selectablePieces.GetTransform().SetPosition({0.0f, -5.775f, UiLayer::panel});
+    selectablePieces.GetTransform().SetPosition({-0.4f, -5.775f, UiLayer::panel});
     selectablePieces.GetTransform().SetScale(0.71f);
     container.AddChild(selectablePieces);
-    
-    Pht::Vec3 slot1Pos {-2.35f, 0.0f, UiLayer::buttonText};
+
+    auto& selectablePiecesRectangle = CreateSceneObject();
+    selectablePiecesRectangle.SetRenderable(&gameHudRectangles.GetSelectablePiecesRectangle());
+    selectablePiecesRectangle.GetTransform().SetPosition({0.37f, 0.0f, 0.0f});
+    selectablePieces.AddChild(selectablePiecesRectangle);
+
+    Pht::Vec3 slot1Pos {-2.07f, 0.0f, UiLayer::buttonText};
     Pht::Vec3 slot2Pos {0.72f, 0.0f, UiLayer::buttonText};
-    Pht::Vec3 slot3Pos {3.14f, 0.0f, UiLayer::buttonText};
+    Pht::Vec3 slot3Pos {3.51f, 0.0f, UiLayer::buttonText};
     auto& dPreviewPiece = CreateDPreviewPiece(slot3Pos, selectablePieces, pieceResources);
     auto& iPreviewPiece = CreateIPreviewPiece(slot2Pos, selectablePieces, pieceResources);
     auto& lPreviewPiece = CreateLPreviewPiece(slot1Pos, selectablePieces, pieceResources);
@@ -957,7 +961,7 @@ Pht::Animation& HowToPlayDialogView::CreateSwitchPieceAnimation(Pht::SceneObject
         animationSystem.CreateAnimation(lPreviewPiece, lPreviewPieceKeyframes);
     lPreviewPieceAnimation.SetInterpolation(Pht::Interpolation::None);
 
-    Pht::Vec3 handInitialPosition {1.7f, -4.7f, UiLayer::root};
+    Pht::Vec3 handInitialPosition {1.5f, -4.7f, UiLayer::root};
     Pht::Vec3 handBeforeSwipePosition {2.8f, -3.3f, UiLayer::root};
     Pht::Vec3 handAfterSwipePosition {3.0f, -1.0f, UiLayer::root};
     

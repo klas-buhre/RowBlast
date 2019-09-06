@@ -119,8 +119,8 @@ GameHud::GameHud(Pht::IEngine& engine,
         Pht::Vec3{-3.53f, 0.0f, UiLayer::block},
         Pht::Vec3{-2.07f, 0.0f, UiLayer::block},
         Pht::Vec3{0.72f, 0.0f, UiLayer::block},
-        Pht::Vec3{3.14f, 0.0f, UiLayer::block},
-        Pht::Vec3{4.34f, 0.0f, UiLayer::block}
+        Pht::Vec3{3.51f, 0.0f, UiLayer::block},
+        Pht::Vec3{4.71f, 0.0f, UiLayer::block}
     } {
 
     mNext2PiecesPreviousFrame.fill(nullptr);
@@ -415,7 +415,7 @@ void GameHud::CreateSelectablePiecesObject(Pht::Scene& scene,
                                            const GameHudRectangles& hudRectangles) {
     mSelectablePiecesContainer = &scene.CreateSceneObject(parentObject);
     
-    Pht::Vec3 position {-0.5f, CalculateLowerHudObjectYPosition(mEngine), UiLayer::root};
+    Pht::Vec3 position {-0.75f, CalculateLowerHudObjectYPosition(mEngine), UiLayer::root};
     mSelectablePiecesContainer->GetTransform().SetPosition(position);
     
     mSelectablePiecesSceneObject = &scene.CreateSceneObject(*mSelectablePiecesContainer);
@@ -423,11 +423,11 @@ void GameHud::CreateSelectablePiecesObject(Pht::Scene& scene,
 
     mSelectablePiecesRectangle = &scene.CreateSceneObject(*mSelectablePiecesContainer);
     mSelectablePiecesRectangle->SetRenderable(&hudRectangles.GetSelectablePiecesRectangle());
-    mSelectablePiecesRectangle->GetTransform().SetPosition({0.15f, 0.0f, UiLayer::piecesRectangle});
+    mSelectablePiecesRectangle->GetTransform().SetPosition({0.335f, 0.0f, UiLayer::piecesRectangle});
     
     mPressedSelectablePiecesRectangle = &scene.CreateSceneObject(*mSelectablePiecesContainer);
     mPressedSelectablePiecesRectangle->SetRenderable(&hudRectangles.GetPressedSelectablePiecesRectangle());
-    mPressedSelectablePiecesRectangle->GetTransform().SetPosition({0.15f, 0.0f, UiLayer::piecesRectangle});
+    mPressedSelectablePiecesRectangle->GetTransform().SetPosition({0.335f, 0.0f, UiLayer::piecesRectangle});
     mPressedSelectablePiecesRectangle->SetIsVisible(false);
 
     CreatePreviewPieces(mSelectablePreviewPieces,
@@ -436,17 +436,17 @@ void GameHud::CreateSelectablePiecesObject(Pht::Scene& scene,
                         scene);
     
     mActivePieceButton = CreatePieceButton(mSelectablePreviewPiecesRelativePositions[1],
-                                           {67.0f, 60.0f},
+                                           {60.0f, 60.0f},
                                            *mSelectablePiecesSceneObject,
                                            scene,
                                            mEngine);
     mSelectable0Button = CreatePieceButton(mSelectablePreviewPiecesRelativePositions[2],
-                                           {52.0f, 60.0f},
+                                           {60.0f, 60.0f},
                                            *mSelectablePiecesSceneObject,
                                            scene,
                                            mEngine);
     mSelectable1Button = CreatePieceButton(mSelectablePreviewPiecesRelativePositions[3],
-                                           {52.0f, 60.0f},
+                                           {60.0f, 60.0f},
                                            *mSelectablePiecesSceneObject,
                                            scene,
                                            mEngine);
