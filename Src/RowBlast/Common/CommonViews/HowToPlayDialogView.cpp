@@ -583,6 +583,7 @@ Pht::Animation& HowToPlayDialogView::CreateBlocksAnimation(Pht::SceneObject& par
         animationSystem.CreateAnimation(firstMovesSet, firstMovesSetKeyframes);
 
         auto& secondMovesSet = CreateSceneObject();
+        secondMovesSet.SetIsVisible(false);
         container.AddChild(secondMovesSet);
         
         CreateLPieceGhostPiece({-2.5f, -1.5f, UiLayer::block}, 270.0f, secondMovesSet, levelResources);
@@ -598,6 +599,7 @@ Pht::Animation& HowToPlayDialogView::CreateBlocksAnimation(Pht::SceneObject& par
         animationSystem.CreateAnimation(secondMovesSet, secondMovesSetKeyframes);
         
         auto& thirdMovesSet = CreateSceneObject();
+        thirdMovesSet.SetIsVisible(false);
         container.AddChild(thirdMovesSet);
         
         CreateLPieceGhostPiece({-1.5f, -1.5f, UiLayer::block}, 270.0f, thirdMovesSet, levelResources);
@@ -872,9 +874,11 @@ Pht::Animation& HowToPlayDialogView::CreateSwitchPieceAnimation(Pht::SceneObject
     
     handAnimation.Init(container);
     
-    auto& iPiece = CreateIPiece({0.0f, 3.3f, UiLayer::block}, container, pieceResources);
-    auto& dPiece = CreateDPiece({0.0f, 3.3f, UiLayer::block}, container, pieceResources);
     auto& lPiece = CreateLPiece({-0.5f, 3.3f, UiLayer::block}, container, pieceResources);
+    auto& iPiece = CreateIPiece({0.0f, 3.3f, UiLayer::block}, container, pieceResources);
+    iPiece.SetIsVisible(false);
+    auto& dPiece = CreateDPiece({0.0f, 3.3f, UiLayer::block}, container, pieceResources);
+    dPiece.SetIsVisible(false);
     
     CreateTwoBlocks({2.5f, -2.0f, UiLayer::block}, BlockColor::Green, container, pieceResources);
     CreateThreeGrayBlocks({-2.0f, -3.0f, UiLayer::block}, container, levelResources);
