@@ -214,7 +214,7 @@ namespace RowBlast {
                          Pht::SceneObject& parent);
         void CreateNextPiecesObject(Pht::Scene& scene,
                                     Pht::SceneObject& parentObject,
-                                    const GameHudRectangles& hudRectangles);
+                                    const CommonResources& commonResources);
         void CreateSelectablePiecesObject(Pht::Scene& scene,
                                           Pht::SceneObject& parentObject,
                                           const GameHudRectangles& hudRectangles);

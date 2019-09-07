@@ -65,7 +65,7 @@ namespace {
     constexpr auto tiltFactor = 0.9f;
     const Pht::Vec2 pauseButtonRectangleSize {1.5f, 1.5f};
     const Pht::Vec2 nextPiecesRectangleSize {
-        3.0f * GameHud::nextPiecesScale, 2.5f * GameHud::selectablePiecesScale
+        3.35f * GameHud::nextPiecesScale, 3.3f * GameHud::selectablePiecesScale
     };
     const auto selectablePiecesRectangleSize =
         Pht::Vec2{8.33f, 2.4f} * GameHud::selectablePiecesScale;

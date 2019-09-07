@@ -47,18 +47,17 @@ Ongoing tasks:
     -Add drag controls and release with microtransactions enabled, free to download.
 
     -Near-term plan:
-        -Could write "NEXT" above the next pieces.
+        -Tune the switch button input size after resizing it.
+        -The pause button could be to the left edge of the screen.
+        -Fix the hud part of the SlidingFieldAnimation.
+        -When using drag controls, to minimize the clicks to rotate a piece, the preview pieces
+         default rotations could be the rotations that is most probably how they will be rotated by
+         the player.
         -Maybe the remaining selectables should not move during next piece animation and only the
          piece that comes from next should jump directly to the available slot.
         -Should the field be moved up even for zoomed displays?
         -Tune dragged piece offset and dragBeginDistanceThreshold.
-        -For non zoomed displays (iPad, iPhone 7 etc..): After moving up the field:
-         Instead of modifying the envmap texture, it might work to move the camera 1.0 of 2.0
-         backwards to get a bigger bright env map area. Or move the field backwards in z-direction,
-         it is the distance to camera that matters.
         -Update the tutorial with drag controls.
-        -Could have a slower falling piece animation speed for the first tutorial level so that
-         players understand that the falling piece has to go to the move.
 
     -Mid-term future:
         -Sometimes moves that seem feasible are unreachable due to the way pieces are rotated by the AI.
@@ -84,6 +83,12 @@ Ongoing tasks:
              the move upwards until collision or above the falling piece.
 
     -Maybe:
+        -Could have a slower falling piece animation speed for the first tutorial level so that
+         players understand that the falling piece has to go to the move.
+        -For non zoomed displays (iPad, iPhone 7 etc..): After moving up the field:
+         Instead of modifying the envmap texture, it might work to move the camera 1.0 of 2.0
+         backwards to get a bigger bright env map area. Or move the field backwards in z-direction,
+         it is the distance to camera that matters.
         -Finish the valid moves area
             -Fix the stripes.
             -Maybe the valid area should be calculated like this:
@@ -255,11 +260,13 @@ Ordered Backlog:
         Cost: 5
         Done
     -Drag controls.
-        Cost: 16
+        Cost: 20
     -Drag controls in tutorial and how to play dialog.
         Cost: 5
     -Purchasing.
         Cost: 5
+    -Replace some levels in world 1.
+        Cost: 3
     -Remove moves from world 1 to 3.
         Cost: 1
     -Levels for the 4th world.
@@ -273,7 +280,7 @@ Ordered Backlog:
     -Back end.
         Cost: ?
 
-        Total cost: 317
+        Total cost: 324
 
 
 Levels:
