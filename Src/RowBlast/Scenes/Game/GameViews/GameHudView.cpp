@@ -84,7 +84,14 @@ GameHudView::GameHudView(Pht::IEngine& engine, const CommonResources& commonReso
 
     auto pauseBarsRenderable = CreatePauseBarsRenderable(engine, commonResources);
     auto& pauseButtonSceneObject = CreateSceneObject();
-    pauseButtonSceneObject.GetTransform().SetPosition( {-6.6f, 0.0f, UiLayer::root});
+    auto bottomPadding = commonResources.GetBottomPaddingPotentiallyZoomedScreen();
+    auto& frustumSize = commonResources.GetHudFrustumSizePotentiallyZoomedScreen();
+    
+    Pht::Vec3 pauseButtonPosition {
+        bottomPadding == 0.0f ? -frustumSize.x / 2.0f + 0.8f : -6.6f, 0.0f, UiLayer::root
+    };
+
+    pauseButtonSceneObject.GetTransform().SetPosition(pauseButtonPosition);
     GetRoot().AddChild(pauseButtonSceneObject);
 
     auto& hudRectangles = commonResources.GetGameHudRectangles();
@@ -129,7 +136,7 @@ GameHudView::GameHudView(Pht::IEngine& engine, const CommonResources& commonReso
 
     auto& switchButtonSceneObject = CreateSceneObject();
     GetRoot().AddChild(switchButtonSceneObject);
-    auto switchButtonSize = Pht::Vec2{172.0f, 60.0f} * GameHud::selectablePiecesScale;
+    auto switchButtonSize = Pht::Vec2{180.0f, 60.0f} * GameHud::selectablePiecesScale;
     mSwitchButton = std::make_unique<Pht::Button>(switchButtonSceneObject,
                                                   switchButtonSize,
                                                   engine);

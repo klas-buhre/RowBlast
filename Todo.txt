@@ -47,8 +47,6 @@ Ongoing tasks:
     -Add drag controls and release with microtransactions enabled, free to download.
 
     -Near-term plan:
-        -Tune the switch button input size after resizing it.
-        -The pause button could be to the left edge of the screen.
         -Fix the hud part of the SlidingFieldAnimation.
         -When using drag controls, to minimize the clicks to rotate a piece, the preview pieces
          default rotations could be the rotations that is most probably how they will be rotated by
