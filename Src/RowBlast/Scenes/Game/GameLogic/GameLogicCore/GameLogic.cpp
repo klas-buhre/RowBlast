@@ -284,17 +284,14 @@ const Piece& GameLogic::CalculatePieceType(FallingPieceSpawnReason fallingPieceS
                 mPreviewPieceAnimationToStart = PreviewPieceAnimationToStart::NextPieceAndSwitch;
                 break;
             case PreviewPieceIndex::Active:
-                ShiftPreviewPieceToTheLeft(PreviewPieceIndex::Selectable0);
-                ShiftPreviewPieceToTheLeft(PreviewPieceIndex::Selectable1);
-                SetPreviewPiece(PreviewPieceIndex::Selectable1,
+                SetPreviewPiece(PreviewPieceIndex::Active,
                                 &mCurrentMove.mNextPieceGenerator.GetNext(),
                                 Rotation::Deg0,
                                 Rotation::Deg0);
                 mPreviewPieceAnimationToStart = PreviewPieceAnimationToStart::NextPieceAndRefillActive;
                 break;
             case PreviewPieceIndex::Selectable0:
-                ShiftPreviewPieceToTheLeft(PreviewPieceIndex::Selectable1);
-                SetPreviewPiece(PreviewPieceIndex::Selectable1,
+                SetPreviewPiece(PreviewPieceIndex::Selectable0,
                                 &mCurrentMove.mNextPieceGenerator.GetNext(),
                                 Rotation::Deg0,
                                 Rotation::Deg0);
@@ -313,26 +310,6 @@ const Piece& GameLogic::CalculatePieceType(FallingPieceSpawnReason fallingPieceS
     }
     
     return *mCurrentMove.mPieceType;
-}
-
-void GameLogic::ShiftPreviewPieceToTheLeft(PreviewPieceIndex previewPieceIndex) {
-    auto& pieceRotations = mCurrentMove.mPreviewPieceRotations;
-    switch (previewPieceIndex) {
-        case PreviewPieceIndex::Selectable0:
-            mCurrentMove.mPieceType = mCurrentMove.mSelectablePieces[0];
-            pieceRotations.mRotations.mActive = pieceRotations.mRotations.mSelectable0;
-            pieceRotations.mHudRotations.mActive = pieceRotations.mHudRotations.mSelectable0;
-            break;
-        case PreviewPieceIndex::Selectable1:
-            mCurrentMove.mSelectablePieces[0] = mCurrentMove.mSelectablePieces[1];
-            pieceRotations.mRotations.mSelectable0 = pieceRotations.mRotations.mSelectable1;
-            pieceRotations.mHudRotations.mSelectable0 = pieceRotations.mHudRotations.mSelectable1;
-            break;
-        case PreviewPieceIndex::Active:
-        case PreviewPieceIndex::None:
-            assert(false);
-            break;
-    }
 }
 
 void GameLogic::SetPreviewPiece(PreviewPieceIndex previewPieceIndex,

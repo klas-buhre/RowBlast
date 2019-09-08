@@ -20,7 +20,8 @@ namespace RowBlast {
         
     private:
         void StartNextPieceAndSwitchingAnimation();
-        void StartNextPieceAnimation();
+        void StartNextPieceAndRefillActiveAnimation();
+        void StartNextPieceAnimation(int destinationSlotInSelectables);
         void StartNextPieceAndRefillSelectable0Animation();
         void StartNextPieceAndRefillSelectable1Animation();
         void StartSwitchingPiecesAnimation();
@@ -28,11 +29,14 @@ namespace RowBlast {
         float UpdateTime(float dt);
         void GoToSwitchingPieceState();
         void GoToNextPieceAndSwitchState();
+        void GoToNextPieceState();
         void GoToRemovingActivePieceState();
+        void OnNextPieceAnimationFinished();
         
         enum class State {
             SwitchingPiece,
             NextPieceAndSwitch,
+            NextPiece,
             RemovingActivePiece,
             Inactive
         };

@@ -53,19 +53,6 @@ void PreviewPieceGroupAnimation::StartSwitchDuringNextPieceAnimation(
     mSelectablePreviewPiecesPositionsConfig = piecePositionsConfig;
 }
 
-void PreviewPieceGroupAnimation::StartRefillSelectable0Animation(
-    SelectablePreviewPieces& previewPieces,
-    const SelectablePreviewPiecesPositionsConfig& piecePositionsConfig) {
-
-    mKind = Kind::RefillSelectable0;
-    mSelectablePreviewPieces = &previewPieces;
-    mSelectablePreviewPiecesPositionsConfig = piecePositionsConfig;
-}
-
-void PreviewPieceGroupAnimation::StartRefillSelectable1Animation() {
-    mKind = Kind::RefillSelectable1;
-}
-
 void PreviewPieceGroupAnimation::StartSwitchPieceAnimation(
     SelectablePreviewPieces& previewPieces,
     const SelectablePreviewPiecesPositionsConfig& piecePositionsConfig) {
@@ -99,11 +86,6 @@ void PreviewPieceGroupAnimation::Update(float normalizedElapsedTime) {
         case Kind::SwitchDuringNextPiece:
             UpdateSwitchDuringNextPieceAnimation(slideValue);
             break;
-        case Kind::RefillSelectable0:
-            UpdateRefillSelectable0Animation(slideValue);
-            break;
-        case Kind::RefillSelectable1:
-            break;
         case Kind::Switch:
             UpdateSwitchPieceAnimation(slideValue);
             break;
@@ -111,7 +93,6 @@ void PreviewPieceGroupAnimation::Update(float normalizedElapsedTime) {
             UpdateRemoveActivePieceAnimation(slideValue);
             break;
         case Kind::None:
-            assert(!"Invalid animation kind.");
             break;
     }
 }
@@ -121,7 +102,8 @@ void PreviewPieceGroupAnimation::UpdateNextPieceAnimation(float slideValue) {
                  mNextPiecePositionsConfig.mSlot0,
                  mNextPiecePositionsConfig.mRightSelectable,
                  slideValue,
-                 Scaling::ScaleChange);
+                 Scaling::ScaleChange,
+                 ZCurve::Yes);
     AnimatePiece(GetNextPreviewPiece(1),
                  mNextPiecePositionsConfig.mSlot1,
                  mNextPiecePositionsConfig.mSlot0,
@@ -145,14 +127,6 @@ void PreviewPieceGroupAnimation::UpdateSwitchDuringNextPieceAnimation(float slid
                  mSelectablePreviewPiecesPositionsConfig.mSlot0,
                  slideValue,
                  Scaling::NoScaling);
-    AnimatePiece(GetSelectablePreviewPiece(2),
-                 mSelectablePreviewPiecesPositionsConfig.mSlot2,
-                 mSelectablePreviewPiecesPositionsConfig.mSlot1,
-                 slideValue,
-                 Scaling::NoScaling);
-}
-
-void PreviewPieceGroupAnimation::UpdateRefillSelectable0Animation(float slideValue) {
     AnimatePiece(GetSelectablePreviewPiece(2),
                  mSelectablePreviewPiecesPositionsConfig.mSlot2,
                  mSelectablePreviewPiecesPositionsConfig.mSlot1,
@@ -195,10 +169,16 @@ void PreviewPieceGroupAnimation::AnimatePiece(PreviewPiece& previewPiece,
                                               const Pht::Vec3& startPosition,
                                               const Pht::Vec3& stopPosition,
                                               float slideFunctionValue,
-                                              Scaling scaling) {
+                                              Scaling scaling,
+                                              ZCurve zCurve) {
     auto diff = stopPosition - startPosition;
     auto& transform = previewPiece.mSceneObject->GetTransform();
     auto position = stopPosition - diff * slideFunctionValue;
+    if (zCurve == ZCurve::Yes) {
+        auto zCurveAdd = 1.5f * std::sin(slideFunctionValue * 3.1415f);
+        position.z += zCurveAdd;
+    }
+    
     transform.SetPosition(position);
     
     switch (scaling) {

@@ -28,8 +28,6 @@ namespace RowBlast {
         enum class Kind {
             NextPiece,
             SwitchDuringNextPiece,
-            RefillSelectable0,
-            RefillSelectable1,
             Switch,
             RemoveActivePiece,
             None
@@ -39,10 +37,6 @@ namespace RowBlast {
         void StartNextPieceAnimation(NextPreviewPieces& previewPieces,
                                      const NextPreviewPiecesPositionsConfig& piecePositionsConfig,
                                      float targetChangedScale);
-        void StartRefillSelectable0Animation(
-            SelectablePreviewPieces& previewPieces,
-            const SelectablePreviewPiecesPositionsConfig& piecePositionsConfig);
-        void StartRefillSelectable1Animation();
         void StartSwitchDuringNextPieceAnimation(
             SelectablePreviewPieces& previewPieces,
             const SelectablePreviewPiecesPositionsConfig& piecePositionsConfig);
@@ -62,16 +56,21 @@ namespace RowBlast {
             NoScaling
         };
         
+        enum class ZCurve {
+            Yes,
+            No
+        };
+        
         void UpdateNextPieceAnimation(float slideValue);
         void UpdateSwitchDuringNextPieceAnimation(float slideValue);
-        void UpdateRefillSelectable0Animation(float slideValue);
         void UpdateSwitchPieceAnimation(float slideValue);
         void UpdateRemoveActivePieceAnimation(float slideValue);
         void AnimatePiece(PreviewPiece& previewPiece,
                           const Pht::Vec3& startPosition,
                           const Pht::Vec3& stopPosition,
                           float slideFunctionValue,
-                          Scaling scaling);
+                          Scaling scaling,
+                          ZCurve zCurve = ZCurve::No);
         PreviewPiece& GetNextPreviewPiece(int previewPieceIndex);
         PreviewPiece& GetSelectablePreviewPiece(int previewPieceIndex);
         
