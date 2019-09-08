@@ -396,7 +396,7 @@ void GameHud::CreateNextPiecesObject(Pht::Scene& scene,
     
     Pht::Vec3 position {
         hudFrustumWidth / 2.0f - 0.945f,
-        CalculateLowerHudObjectYPosition(mEngine) - 0.35f,
+        CalculateLowerHudObjectYPosition(mEngine),
         UiLayer::root
     };
     
@@ -405,12 +405,12 @@ void GameHud::CreateNextPiecesObject(Pht::Scene& scene,
     mNextPiecesSceneObject = &scene.CreateSceneObject(*mNextPiecesContainer);
     auto& nextPiecesSceneObjectTransform = mNextPiecesSceneObject->GetTransform();
     nextPiecesSceneObjectTransform.SetScale(nextPiecesScale);
-    nextPiecesSceneObjectTransform.SetPosition({0.0f, -0.4f, 0.0f});
+    nextPiecesSceneObjectTransform.SetPosition({0.0f, -0.75f, 0.0f});
 
     auto& nextPiecesRectangle = scene.CreateSceneObject(*mNextPiecesContainer);
     auto& hudRectangles = commonResources.GetGameHudRectangles();
     nextPiecesRectangle.SetRenderable(&hudRectangles.GetNextPiecesRectangle());
-    nextPiecesRectangle.GetTransform().SetPosition({-0.3f, 0.0f, UiLayer::piecesRectangle});
+    nextPiecesRectangle.GetTransform().SetPosition({-0.3f, -0.35f, UiLayer::piecesRectangle});
     
     Pht::TextProperties textProperties {
         commonResources.GetHussarFontSize20(PotentiallyZoomedScreen::Yes),
@@ -420,7 +420,7 @@ void GameHud::CreateNextPiecesObject(Pht::Scene& scene,
     
     auto& nextText = scene.CreateText("NEXT", textProperties);
     auto& nextTextSceneobject = nextText.GetSceneObject();
-    nextTextSceneobject.GetTransform().SetPosition({-0.5f, 1.19f, UiLayer::text});
+    nextTextSceneobject.GetTransform().SetPosition({-0.5f, 0.84f, UiLayer::text});
     mNextPiecesContainer->AddChild(nextTextSceneobject);
 
     CreatePreviewPieces(mNextPreviewPieces,
