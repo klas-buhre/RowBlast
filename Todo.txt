@@ -47,9 +47,6 @@ Ongoing tasks:
     -Add drag controls and release with microtransactions enabled, free to download.
 
     -Near-term plan:
-        -When using drag controls, to minimize the clicks to rotate a piece, the preview pieces
-         default rotations could be the rotations that is most probably how they will be rotated by
-         the player.
         -Maybe the remaining selectables should not move during next piece animation and only the
          piece that comes from next should jump directly to the available slot.
         -Should the field be moved up even for zoomed displays?
@@ -58,6 +55,9 @@ Ongoing tasks:
         -Update the tutorial with drag controls.
 
     -Mid-term future:
+        -When using drag controls, to minimize the clicks to rotate a piece, the preview pieces
+         default rotations could be the rotations that is most probably how they will be rotated by
+         the player.
         -Sometimes moves that seem feasible are unreachable due to the way pieces are rotated by the AI.
          Maybe look into some new rotation system like SRS. Or simplify the rotations by just saying that
          if there is a contineous path (at least N cells wide, where N is the max width of the piece)
