@@ -30,7 +30,6 @@ Backlog:
     -Animation that moves the map hud out of the screen when clicking buttons in the hud. Could work
      in a similar way as the SlidingFieldAnimation.
     -Animation that moves the pause button out of the screen.
-  -GUI:
   -Make ready for release:
     -Should give free gold coins after a new install?
     -Maybe only one or two continues per game round? Like in Dr. Mario. And you get 10 more moves.
@@ -49,9 +48,9 @@ Ongoing tasks:
     -Near-term plan:
         -Maybe the remaining selectables should not move during next piece animation and only the
          piece that comes from next should jump directly to the available slot.
+        -The gesture ghost piece visibility could be toggled in the settings/options menus.
         -Should the field be moved up even for zoomed displays?
         -Tune dragged piece offset and dragBeginDistanceThreshold.
-        -The gesture ghost piece visibility could be toggled in the settings/options menus.
         -Update the tutorial with drag controls.
 
     -Mid-term future:
