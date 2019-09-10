@@ -15,6 +15,8 @@
 		1736707422DF67D600D8A28C /* SwipeControlsHintDialogView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1736707222DF67D600D8A28C /* SwipeControlsHintDialogView.cpp */; };
 		1736707722DF67F600D8A28C /* SwipeControlsHintDialogController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1736707522DF67F600D8A28C /* SwipeControlsHintDialogController.cpp */; };
 		174F9EA522DBCA3D0057BA7C /* ActivePreviewPieceAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 174F9EA322DBCA3D0057BA7C /* ActivePreviewPieceAnimation.cpp */; };
+		1750CAF92326B0600092B2E6 /* block.png in Resources */ = {isa = PBXBuildFile; fileRef = 1750CAF82326B0600092B2E6 /* block.png */; };
+		1750CAFD2326B6C10092B2E6 /* disable.png in Resources */ = {isa = PBXBuildFile; fileRef = 1750CAFC2326B6C10092B2E6 /* disable.png */; };
 		1774768022DA42B800EEE97C /* NoMoreLevelsDialogView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1774767E22DA42B800EEE97C /* NoMoreLevelsDialogView.cpp */; };
 		1774768322DA42E400EEE97C /* NoMoreLevelsDialogController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1774768122DA42E400EEE97C /* NoMoreLevelsDialogController.cpp */; };
 		17A75B5923211A2C001BA90D /* ValidAreaAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 17A75B4523211A2C001BA90D /* ValidAreaAnimation.cpp */; };
@@ -563,6 +565,8 @@
 		1736707622DF67F600D8A28C /* SwipeControlsHintDialogController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SwipeControlsHintDialogController.hpp; sourceTree = "<group>"; };
 		174F9EA322DBCA3D0057BA7C /* ActivePreviewPieceAnimation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ActivePreviewPieceAnimation.cpp; sourceTree = "<group>"; };
 		174F9EA422DBCA3D0057BA7C /* ActivePreviewPieceAnimation.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ActivePreviewPieceAnimation.hpp; sourceTree = "<group>"; };
+		1750CAF82326B0600092B2E6 /* block.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = block.png; sourceTree = "<group>"; };
+		1750CAFC2326B6C10092B2E6 /* disable.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = disable.png; sourceTree = "<group>"; };
 		1774767E22DA42B800EEE97C /* NoMoreLevelsDialogView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NoMoreLevelsDialogView.cpp; sourceTree = "<group>"; };
 		1774767F22DA42B800EEE97C /* NoMoreLevelsDialogView.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = NoMoreLevelsDialogView.hpp; sourceTree = "<group>"; };
 		1774768122DA42E400EEE97C /* NoMoreLevelsDialogController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NoMoreLevelsDialogController.cpp; sourceTree = "<group>"; };
@@ -2375,7 +2379,9 @@
 		62298337222D8E9C001A7E1C /* Gui */ = {
 			isa = PBXGroup;
 			children = (
+				1750CAFC2326B6C10092B2E6 /* disable.png */,
 				62A8E338222EDFE300F1BF73 /* back.png */,
+				1750CAF82326B0600092B2E6 /* block.png */,
 				62F0446122560ED800BD5A4C /* cancel.png */,
 				62352A67228734F500F89723 /* checkmark.png */,
 				6221D56F223042980098395A /* circle.png */,
@@ -3440,6 +3446,7 @@
 				62216A1C21E901E1001CB9A1 /* fireworks1.wav in Resources */,
 				62216A0821E655B0001CB9A1 /* laser.wav in Resources */,
 				623F5E2B22B55D5200242C10 /* EnvMap.frag in Resources */,
+				1750CAF92326B0600092B2E6 /* block.png in Resources */,
 				62276E9D2274A96000679BC6 /* level7.json in Resources */,
 				623B949D21F1FD6700B62D9B /* credits_english.txt in Resources */,
 				625D3B59217251BD00D67EC2 /* brown_asteroid.jpg in Resources */,
@@ -3462,6 +3469,7 @@
 				629B838820CA940E00DD2D0E /* cube_428.obj in Resources */,
 				62276E922274A96000679BC6 /* level11.json in Resources */,
 				62DE641C20CE953D00A50F26 /* medium_button_skewed_0385.obj in Resources */,
+				1750CAFD2326B6C10092B2E6 /* disable.png in Resources */,
 				62276E5A2274A96000679BC6 /* level50.json in Resources */,
 				6238F622219AEC640008A0CF /* heart_112.obj in Resources */,
 				62B1CB85210F8F8600D0F195 /* laser_beam_red.png in Resources */,

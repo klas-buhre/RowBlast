@@ -46,9 +46,10 @@ Ongoing tasks:
     -Add drag controls and release with microtransactions enabled, free to download.
 
     -Near-term plan:
-        -Maybe the remaining selectables should not move during next piece animation and only the
-         piece that comes from next should jump directly to the available slot.
-        -The gesture ghost piece visibility could be toggled in the settings/options menus.
+        -The gesture ghost piece visibility could be toggled in the settings menu.
+        -When the gesture ghost piece is enabled then don't rotate all preview pieces when tapping
+         the screen.
+        -Link to the settings menu from the options menu and move settings to common views.
         -Should the field be moved up even for zoomed displays?
         -Tune dragged piece offset and dragBeginDistanceThreshold.
         -Update the tutorial with drag controls.

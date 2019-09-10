@@ -26,8 +26,10 @@ namespace RowBlast {
         void SetMusicOffIsVisible(bool isVisible);
         void SetSoundOnIsVisible(bool isVisible);
         void SetSoundOffIsVisible(bool isVisible);
-        void SetControlsClickIsVisible(bool isVisible);
-        void SetControlsSwipeIsVisible(bool isVisible);
+        void SetClickControlsIsVisible(bool isVisible);
+        void SetGestureControlsIsVisible(bool isVisible);
+        void SetGhostPieceOnIsVisible(bool isVisible);
+        void SetGhostPieceOffIsVisible(bool isVisible);
 
         const MenuButton& GetCloseButton() const {
             return *mCloseButton;
@@ -40,7 +42,11 @@ namespace RowBlast {
         const MenuButton& GetControlsButton() const {
             return *mControlsButton;
         }
-        
+
+        const MenuButton& GetGhostPieceButton() const {
+            return *mGhostPieceButton;
+        }
+
         const MenuButton& GetSoundButton() const {
             return *mSoundButton;
         }
@@ -57,6 +63,7 @@ namespace RowBlast {
         const CommonResources& mCommonResources;
         std::unique_ptr<MenuButton> mCloseButton;
         std::unique_ptr<MenuButton> mControlsButton;
+        std::unique_ptr<MenuButton> mGhostPieceButton;
         std::unique_ptr<MenuButton> mSoundButton;
         std::unique_ptr<MenuButton> mMusicButton;
         std::unique_ptr<MenuButton> mBackButton;
@@ -64,10 +71,13 @@ namespace RowBlast {
         Pht::SceneObject* mControlsClickIcon1 {nullptr};
         Pht::SceneObject* mControlsClickIcon2 {nullptr};
         Pht::SceneObject* mControlsClickIcon3 {nullptr};
-        Pht::SceneObject* mControlsSwipeText {nullptr};
-        Pht::SceneObject* mControlsSwipeIcon1 {nullptr};
-        Pht::SceneObject* mControlsSwipeIcon2 {nullptr};
-        Pht::SceneObject* mControlsSwipeIcon3 {nullptr};
+        Pht::SceneObject* mControlsGestureText {nullptr};
+        Pht::SceneObject* mControlsGestureIcon1 {nullptr};
+        Pht::SceneObject* mControlsGestureIcon2 {nullptr};
+        Pht::SceneObject* mControlsGestureIcon3 {nullptr};
+        Pht::SceneObject* mGhostPieceDisabledIcon {nullptr};
+        Pht::SceneObject* mGhostPieceOnText {nullptr};
+        Pht::SceneObject* mGhostPieceOffText {nullptr};
         Pht::SceneObject* mSoundOnText {nullptr};
         Pht::SceneObject* mSoundOnIcon {nullptr};
         Pht::SceneObject* mSoundOffText {nullptr};

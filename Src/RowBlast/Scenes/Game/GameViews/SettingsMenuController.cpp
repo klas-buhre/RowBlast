@@ -19,13 +19,11 @@ SettingsMenuController::SettingsMenuController(Pht::IEngine& engine,
     mSlidingMenuAnimation {engine, mView} {}
 
 void SettingsMenuController::SetUp(bool isGestureControlsAllowed) {
-#ifndef RELEASE_BUILD
     if (isGestureControlsAllowed) {
         mView.EnableControlsButton();
     } else {
         mView.DisableControlsButton();
     }
-#endif
 
     mSlidingMenuAnimation.SetUp(SlidingMenuAnimation::UpdateFade::No,
                                 SlidingMenuAnimation::SlideDirection::Left);
@@ -64,7 +62,6 @@ SettingsMenuController::Result SettingsMenuController::HandleInput() {
 SettingsMenuController::Result SettingsMenuController::OnTouch(const Pht::TouchEvent& touchEvent) {
     auto& settingsService = mUserServices.GetSettingsService();
 
-#ifndef RELEASE_BUILD
     if (mView.IsControlsButtonEnabled()) {
         if (mView.GetControlsButton().IsClicked(touchEvent)) {
             if (settingsService.GetControlType() == ControlType::Click) {
@@ -76,7 +73,16 @@ SettingsMenuController::Result SettingsMenuController::OnTouch(const Pht::TouchE
             UpdateViewToReflectSettings(true);
         }
     }
-#endif
+
+    if (mView.GetGhostPieceButton().IsClicked(touchEvent)) {
+        if (settingsService.IsGhostPieceEnabled()) {
+            settingsService.SetIsGhostPieceEnabled(false);
+        } else {
+            settingsService.SetIsGhostPieceEnabled(true);
+        }
+        
+        UpdateViewToReflectSettings(true);
+    }
 
     if (mView.GetSoundButton().IsClicked(touchEvent)) {
         auto& audio = mEngine.GetAudio();
@@ -116,16 +122,22 @@ SettingsMenuController::Result SettingsMenuController::OnTouch(const Pht::TouchE
 }
 
 void SettingsMenuController::UpdateViewToReflectSettings(bool isGestureControlsAllowed) {
-#ifndef RELEASE_BUILD
     auto& settingsService = mUserServices.GetSettingsService();
     if (settingsService.GetControlType() == ControlType::Click || !isGestureControlsAllowed) {
-        mView.SetControlsClickIsVisible(true);
-        mView.SetControlsSwipeIsVisible(false);
+        mView.SetClickControlsIsVisible(true);
+        mView.SetGestureControlsIsVisible(false);
     } else {
-        mView.SetControlsClickIsVisible(false);
-        mView.SetControlsSwipeIsVisible(true);
+        mView.SetClickControlsIsVisible(false);
+        mView.SetGestureControlsIsVisible(true);
     }
-#endif
+    
+    if (settingsService.IsGhostPieceEnabled()) {
+        mView.SetGhostPieceOnIsVisible(true);
+        mView.SetGhostPieceOffIsVisible(false);
+    } else {
+        mView.SetGhostPieceOnIsVisible(false);
+        mView.SetGhostPieceOffIsVisible(true);
+    }
 
     auto& audio = mEngine.GetAudio();
     if (audio.IsSoundEnabled()) {

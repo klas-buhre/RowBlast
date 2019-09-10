@@ -11,6 +11,7 @@ namespace {
     const std::string controlTypeMember {"controlType"};
     const std::string isSoundEnabledMember {"isSoundEnabled"};
     const std::string isMusicEnabledMember {"isMusicEnabled"};
+    const std::string isGhostPieceEnabledMember {"isGhostPieceEnabled"};
     
     std::string ToString(ControlType controlType) {
         switch (controlType) {
@@ -43,6 +44,11 @@ void SettingsService::SetControlType(ControlType controlType) {
     SaveState();
 }
 
+void SettingsService::SetIsGhostPieceEnabled(bool isGhostPieceEnabled) {
+    mIsGhostPieceEnabled = isGhostPieceEnabled;
+    SaveState();
+}
+
 void SettingsService::SetIsSoundEnabled(bool isSoundEnabled) {
     mIsSoundEnabled = isSoundEnabled;
     SaveState();
@@ -61,6 +67,7 @@ void SettingsService::SaveState() {
     Pht::Json::AddString(document, controlTypeMember, ToString(mControlType), allocator);
     Pht::Json::AddBool(document, isSoundEnabledMember, mIsSoundEnabled, allocator);
     Pht::Json::AddBool(document, isMusicEnabledMember, mIsMusicEnabled, allocator);
+    Pht::Json::AddBool(document, isGhostPieceEnabledMember, mIsGhostPieceEnabled, allocator);
 
     std::string jsonString;
     Pht::Json::EncodeDocument(document, jsonString);
@@ -79,6 +86,11 @@ bool SettingsService::LoadState() {
     mControlType = ReadControlType(document);
     mIsSoundEnabled = Pht::Json::ReadBool(document, isSoundEnabledMember);
     mIsMusicEnabled = Pht::Json::ReadBool(document, isMusicEnabledMember);
+    
+    // mIsGhostPieceEnabled added in release 1.0.2. Need to check if it exists before reading it.
+    if (document.HasMember(isGhostPieceEnabledMember.c_str())) {
+        mIsGhostPieceEnabled = Pht::Json::ReadBool(document, isGhostPieceEnabledMember);
+    }
 
     return true;
 }

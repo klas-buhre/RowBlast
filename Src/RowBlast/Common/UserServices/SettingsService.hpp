@@ -12,11 +12,16 @@ namespace RowBlast {
         SettingsService();
         
         void SetControlType(ControlType controlType);
+        void SetIsGhostPieceEnabled(bool isGhostPieceEnabled);
         void SetIsSoundEnabled(bool isSoundEnabled);
         void SetIsMusicEnabled(bool isMusicEnabled);
         
         ControlType GetControlType() const {
             return mControlType;
+        }
+        
+        bool IsGhostPieceEnabled() const {
+            return mIsGhostPieceEnabled;
         }
         
         bool IsSoundEnabled() const {
@@ -32,6 +37,7 @@ namespace RowBlast {
         bool LoadState();
 
         ControlType mControlType {ControlType::Click};
+        bool mIsGhostPieceEnabled {false};
         bool mIsSoundEnabled {true};
         bool mIsMusicEnabled {true};
     };
