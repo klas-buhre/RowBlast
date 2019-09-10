@@ -522,13 +522,34 @@ void ScenePlayingField::UpdateGhostPieces() {
     mScene.GetGhostPieceBlocks().ReclaimAll();
     
     auto* fallingPiece = mGameLogic.GetFallingPiece();
-    if (fallingPiece == nullptr) {
+    if (fallingPiece == nullptr ||
+        mFallingPieceAnimation.GetState() != FallingPieceAnimation::State::Inactive) {
+
         return;
     }
     
     if (mGameLogic.IsUsingClickControls()) {
         UpdateClickableGhostPieces(*fallingPiece);
     } else {
+        auto* draggedPiece = mGameLogic.GetDraggedPiece();
+        if (draggedPiece) {
+            auto draggedGhostPieceRow = mGameLogic.GetDraggedGhostPieceRow();
+            if (draggedGhostPieceRow.HasValue()) {
+                UpdateGhostPieceForGestureControls(draggedPiece->GetPieceType(),
+                                                   draggedPiece->GetFieldGridPosition().x,
+                                                   draggedGhostPieceRow.GetValue(),
+                                                   draggedPiece->GetRotation());
+            }
+        } else {
+            if (mGameLogic.IsSwipeGhostPieceEnabled()) {
+                UpdateGhostPieceForGestureControls(fallingPiece->GetPieceType(),
+                                                   fallingPiece->GetRenderablePosition().x,
+                                                   mGameLogic.GetGhostPieceRow(),
+                                                   fallingPiece->GetRotation());
+            }
+        }
+    }
+/*
         if (mGameLogic.GetSwipeGhostPieceState() == SwipeGhostPieceState::Active) {
             UpdateGhostPieceForGestureControls(fallingPiece->GetPieceType(),
                                                fallingPiece->GetRenderablePosition().x,
@@ -545,6 +566,7 @@ void ScenePlayingField::UpdateGhostPieces() {
             }
         }
     }
+*/
 }
 
 void ScenePlayingField::UpdateGhostPieceForGestureControls(const Piece& pieceType,

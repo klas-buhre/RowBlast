@@ -123,11 +123,7 @@ DragInputHandler::HandleOngoingTouchInTouchingPreviewPieceButtonState(const Pht:
 
 void DragInputHandler::HandleOngoingTouchInDraggingState(const Pht::TouchEvent& touchEvent) {
     UpdatePiecePosition(touchEvent);
-    auto gridPosition = mDraggedPiece.GetFieldGridPosition();
-    if (gridPosition != mPreviousGridPosition) {
-        mPreviousGridPosition = gridPosition;
-        mGameLogic.OnDraggedPieceMoved();
-    }
+    NotifyGameLogicIfPieceMovedGridPosition();
 }
 
 void DragInputHandler::HandleTouchEnd(const Pht::TouchEvent& touchEvent) {
@@ -153,6 +149,7 @@ void DragInputHandler::HandleTouchEndInTouchingPreviewPieceButtonState(const Pht
     
 void DragInputHandler::HandleTouchEndInDraggingState(const Pht::TouchEvent& touchEvent) {
     UpdatePiecePosition(touchEvent);
+    NotifyGameLogicIfPieceMovedGridPosition();
     mGameLogic.StopDraggingPiece();
     EndDrag();
 }
@@ -175,6 +172,14 @@ void DragInputHandler::HandleTouchCancelled() {
             mGameLogic.CancelDraggingPiece();
             EndDrag();
             break;
+    }
+}
+
+void DragInputHandler::NotifyGameLogicIfPieceMovedGridPosition() {
+    auto gridPosition = mDraggedPiece.GetFieldGridPosition();
+    if (gridPosition != mPreviousGridPosition) {
+        mPreviousGridPosition = gridPosition;
+        mGameLogic.OnDraggedPieceMoved();
     }
 }
 

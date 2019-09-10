@@ -46,11 +46,6 @@ namespace RowBlast {
     class SmallText;
     class ValidAreaAnimation;
     
-    enum class SwipeGhostPieceState {
-        Active,
-        Inactive
-    };
-
     enum class PreviewPieceAnimationToStart {
         NextPieceAndSwitch,
         NextPieceAndRefillActive,
@@ -157,8 +152,8 @@ namespace RowBlast {
             return mDraggedGhostPieceRow;
         }
         
-        SwipeGhostPieceState GetSwipeGhostPieceState() const {
-            return mSwipeGhostPieceState;
+        bool IsSwipeGhostPieceEnabled() const {
+            return mIsSwipeGhostPieceEnabled;
         }
 
         const NextPieceGenerator& GetNextPieceGenerator() const {
@@ -217,15 +212,14 @@ namespace RowBlast {
         void ShowDraggedPiece();
         void RemoveDraggedPiece();
         void NextMove();
-        void ActiveSwipeGhostPiece();
-        void DeactiveSwipeGhostPiece();
+        void ManageBlastArea();
         void UpdateLevelProgress();
         Pht::Vec2 CalculateFallingPieceSpawnPos(const Piece& pieceType,
                                                 FallingPieceSpawnReason fallingPieceSpawnReason);
         Rotation CalculateFallingPieceRotation(FallingPieceSpawnReason fallingPieceSpawnReason);
         void HandleCascading();
         void UpdateFieldExplosionsStates();
-        void HandleControlTypeChange();
+        void HandleSettingsChange();
         void UpdateFallingPieceYpos();
         void LandFallingPiece(bool finalMovementWasADrop);
         void DetonateDroppedBomb();
@@ -300,6 +294,7 @@ namespace RowBlast {
         Tutorial& mTutorial;
         const SettingsService& mSettingsService;
         ControlType mControlType;
+        bool mIsSwipeGhostPieceEnabled {false};
         State mState {State::LogicUpdate};
         CascadeState mCascadeState {CascadeState::NotCascading};
         float mCascadeWaitTime {0.0f};
@@ -327,7 +322,6 @@ namespace RowBlast {
         const Level* mLevel {nullptr};
         float mLandingNoMovementDuration {0.0f};
         float mLandingMovementDuration {0.0f};
-        SwipeGhostPieceState mSwipeGhostPieceState {SwipeGhostPieceState::Inactive};
         int mGhostPieceRow {0};
         Pht::Optional<int> mDraggedGhostPieceRow;
         int mMovesUsed {0};

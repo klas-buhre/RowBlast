@@ -123,6 +123,7 @@ GameLogic::GameLogic(Pht::IEngine& engine,
 void GameLogic::Init(const Level& level) {
     mLevel = &level;
     mControlType = mTutorial.IsGestureControlsAllowed() ? mSettingsService.GetControlType() : ControlType::Click;
+    mIsSwipeGhostPieceEnabled = mSettingsService.IsGhostPieceEnabled();
 
     mFieldGravity.Init();
     mFieldExplosionsStates.Init();
@@ -142,7 +143,6 @@ void GameLogic::Init(const Level& level) {
     
     mState = State::LogicUpdate;
     mCascadeState = CascadeState::NotCascading;
-    mSwipeGhostPieceState = SwipeGhostPieceState::Inactive;
 
     RemoveDraggedPiece();
     RemoveFallingPiece();
@@ -190,7 +190,7 @@ GameLogic::Result GameLogic::Update(bool shouldUpdateLogic, bool shouldUndoMove)
                 if (mCascadeState != CascadeState::NotCascading) {
                     return Result::None;
                 }
-                HandleControlTypeChange();
+                HandleSettingsChange();
                 if (mFallingPieceSpawnReason != FallingPieceSpawnReason::None) {
                     auto result = SpawnFallingPiece(mFallingPieceSpawnReason);
                     mFallingPieceSpawnReason = FallingPieceSpawnReason::None;
@@ -243,8 +243,8 @@ GameLogic::Result GameLogic::SpawnFallingPiece(FallingPieceSpawnReason fallingPi
         return Result::GameOver;
     }
     
-    if (mSwipeGhostPieceState == SwipeGhostPieceState::Active &&
-        mCurrentMove.mPieceType->IsBomb() && mControlType == ControlType::Gesture &&
+    if (mControlType == ControlType::Gesture && mCurrentMove.mPieceType->IsBomb() &&
+        mIsSwipeGhostPieceEnabled &&
         fallingPieceSpawnReason != FallingPieceSpawnReason::BeginDraggingPiece) {
 
         StartBlastAreaAtGhostPiece();
@@ -502,35 +502,47 @@ void GameLogic::UpdateFieldExplosionsStates() {
     }
 }
 
-void GameLogic::HandleControlTypeChange() {
+void GameLogic::HandleSettingsChange() {
     if (mFallingPiece == nullptr) {
         return;
     }
+    
+    auto settingsChanged = false;
     
     if (mSettingsService.GetControlType() != mControlType && mTutorial.IsGestureControlsAllowed()) {
         mCurrentMove.mPreviewPieceRotations = PieceRotations {};
         mCurrentMoveTmp.mPreviewPieceRotations = PieceRotations {};
         mPreviousMove.mPreviewPieceRotations = PieceRotations {};
 
-        switch (mSettingsService.GetControlType()) {
-            case ControlType::Click:
-                if (mCurrentMove.mPieceType->IsBomb()) {
-                    mBlastArea.Stop();
-                }
-                mClickInputHandler.CalculateMoves(*mFallingPiece,
-                                                  GetMovesUsedIncludingCurrent() - 1);
-                mClickInputHandler.CreateNewSetOfVisibleMoves();
-                break;
-            case ControlType::Gesture:
-                if (mSwipeGhostPieceState == SwipeGhostPieceState::Active &&
-                    mCurrentMove.mPieceType->IsBomb()) {
-                    
-                    StartBlastAreaAtGhostPiece();
-                }
-                break;
+        if (mSettingsService.GetControlType() == ControlType::Click) {
+            mClickInputHandler.CalculateMoves(*mFallingPiece,
+                                              GetMovesUsedIncludingCurrent() - 1);
+            mClickInputHandler.CreateNewSetOfVisibleMoves();
         }
         
         mControlType = mSettingsService.GetControlType();
+        settingsChanged = true;
+    }
+    
+    if (mSettingsService.IsGhostPieceEnabled() != mIsSwipeGhostPieceEnabled) {
+        mIsSwipeGhostPieceEnabled = mSettingsService.IsGhostPieceEnabled();
+        settingsChanged = true;
+    }
+    
+    if (settingsChanged) {
+        ManageBlastArea();
+    }
+}
+
+void GameLogic::ManageBlastArea() {
+    if (mIsSwipeGhostPieceEnabled && mControlType == ControlType::Gesture) {
+        if (mCurrentMove.mPieceType && mCurrentMove.mPieceType->IsBomb()) {
+            StartBlastAreaAtGhostPiece();
+        }
+    } else {
+        if (mBlastArea.IsActive()) {
+            mBlastArea.Stop();
+        }
     }
 }
 
@@ -642,8 +654,6 @@ void GameLogic::UpdateFallingPieceYpos() {
 }
 
 void GameLogic::DropFallingPiece() {
-    mSwipeGhostPieceState = SwipeGhostPieceState::Active;
-
     bool finalMovementWasADrop {mFallingPiece->GetPosition().y > mGhostPieceRow + 1};
     mFallingPiece->SetY(mGhostPieceRow);
     
@@ -899,8 +909,6 @@ void GameLogic::RemoveBlocksInsideTheShield() {
 }
 
 void GameLogic::RotatePreviewPiece(PreviewPieceIndex previewPieceIndex) {
-    DeactiveSwipeGhostPiece();
-
     switch (previewPieceIndex) {
         case PreviewPieceIndex::Active:
             RotatePreviewPiece(mCurrentMove.mPreviewPieceRotations.mRotations.mActive,
@@ -1075,8 +1083,6 @@ void GameLogic::RotatateAndAdjustPosition(Rotation newRotation,
 }
 
 void GameLogic::SwitchPiece() {
-    ActiveSwipeGhostPiece();
-
     if (!IsThereRoomToSwitchPiece(*mCurrentMove.mSelectablePieces[0]) ||
         !mTutorial.IsSwitchPieceAllowed()) {
 
@@ -1118,7 +1124,6 @@ bool GameLogic::IsThereRoomToSwitchPiece(const Piece& pieceType) {
 }
 
 void GameLogic::SetFallingPieceXPosWithCollisionDetection(float fallingPieceNewX) {
-    ActiveSwipeGhostPiece();
     auto pieceBlocks = CreatePieceBlocks(*mFallingPiece);
 
     if (fallingPieceNewX - mFallingPiece->GetPosition().x > 0.0f) {
@@ -1146,24 +1151,6 @@ void GameLogic::SetFallingPieceXPosWithCollisionDetection(float fallingPieceNewX
             mBlastArea.Start(blastRadiusKind);
         }
     }
-}
-
-void GameLogic::ActiveSwipeGhostPiece() {
-    if (mSwipeGhostPieceState == SwipeGhostPieceState::Inactive &&
-        mCurrentMove.mPieceType->IsBomb()) {
-        
-        StartBlastAreaAtGhostPiece();
-    }
-
-    mSwipeGhostPieceState = SwipeGhostPieceState::Active;
-}
-
-void GameLogic::DeactiveSwipeGhostPiece() {
-    if (mSwipeGhostPieceState == SwipeGhostPieceState::Active && mBlastArea.IsActive()) {
-        mBlastArea.Stop();
-    }
-    
-    mSwipeGhostPieceState = SwipeGhostPieceState::Inactive;
 }
 
 int GameLogic::GetGhostPieceRow() const {
@@ -1222,7 +1209,6 @@ bool GameLogic::BeginDraggingPiece(PreviewPieceIndex draggedPieceIndex) {
         return false;
     }
     
-    DeactiveSwipeGhostPiece();
     ShowDraggedPiece();
     auto& pieceType = mDraggedPiece->GetPieceType();
     if (!IsThereRoomToSwitchPiece(pieceType)) {
@@ -1271,7 +1257,6 @@ void GameLogic::StopDraggingPiece() {
     auto ghostPieceRow = 0;
     if (auto* move = GetValidMoveBelowDraggedPiece(ghostPieceRow)) {
         SelectMove(*move);
-        mSwipeGhostPieceState = SwipeGhostPieceState::Inactive;
         mValidAreaAnimation.Stop();
         RemoveDraggedPiece();
     } else {
