@@ -515,8 +515,7 @@ void GameLogic::HandleSettingsChange() {
         mPreviousMove.mPreviewPieceRotations = PieceRotations {};
 
         if (mSettingsService.GetControlType() == ControlType::Click) {
-            mClickInputHandler.CalculateMoves(*mFallingPiece,
-                                              GetMovesUsedIncludingCurrent() - 1);
+            mClickInputHandler.CalculateMoves(*mFallingPiece, GetMovesUsedIncludingCurrent() - 1);
             mClickInputHandler.CreateNewSetOfVisibleMoves();
         }
         

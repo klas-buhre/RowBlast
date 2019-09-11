@@ -46,8 +46,6 @@ Ongoing tasks:
     -Add drag controls and release with microtransactions enabled, free to download.
 
     -Near-term plan:
-        -Review the last commit.
-            -Fix blast area flickering when dragged piece is canceled and blast area is started.
         -When the gesture ghost piece is enabled then don't rotate all preview pieces when tapping
          the screen.
         -Link to the settings menu from the options menu and move settings to common views.

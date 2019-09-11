@@ -239,14 +239,14 @@ GameController::Command GameController::UpdateGame() {
     mWeldsAnimation.Update(dt);
     mPieceDropParticleEffect.Update(dt);
     mPieceTrailParticleEffect.Update(dt);
-    mBlastArea.Update(dt);
     mShield.Update(dt);
     mFieldBottomGlow.Update(dt);
     mEffectManager.Update(dt);
     mCameraShake.Update(dt);
     mFlyingBlocksAnimation.Update(dt);
-    mFallingPieceScaleAnimation.Update(dt);
     mDraggedPieceAnimation.Update();
+    mFallingPieceScaleAnimation.Update(dt);
+    mBlastArea.Update(dt);
     mScene.Update();
     mPreviewPiecesAnimation.Update(dt);
     mActivePreviewPieceAnimation.Update(dt);

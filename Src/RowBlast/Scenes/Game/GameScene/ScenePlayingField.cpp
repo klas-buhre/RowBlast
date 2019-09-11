@@ -549,24 +549,6 @@ void ScenePlayingField::UpdateGhostPieces() {
             }
         }
     }
-/*
-        if (mGameLogic.GetSwipeGhostPieceState() == SwipeGhostPieceState::Active) {
-            UpdateGhostPieceForGestureControls(fallingPiece->GetPieceType(),
-                                               fallingPiece->GetRenderablePosition().x,
-                                               mGameLogic.GetGhostPieceRow(),
-                                               fallingPiece->GetRotation());
-        } else {
-            auto* draggedPiece = mGameLogic.GetDraggedPiece();
-            auto draggedGhostPieceRow = mGameLogic.GetDraggedGhostPieceRow();
-            if (draggedPiece && draggedGhostPieceRow.HasValue()) {
-                UpdateGhostPieceForGestureControls(draggedPiece->GetPieceType(),
-                                                   draggedPiece->GetFieldGridPosition().x,
-                                                   draggedGhostPieceRow.GetValue(),
-                                                   draggedPiece->GetRotation());
-            }
-        }
-    }
-*/
 }
 
 void ScenePlayingField::UpdateGhostPieceForGestureControls(const Piece& pieceType,
