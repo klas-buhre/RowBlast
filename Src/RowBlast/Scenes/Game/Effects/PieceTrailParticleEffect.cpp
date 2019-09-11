@@ -17,7 +17,7 @@ namespace {
     constexpr auto trailHeightInCells = 4.5f * trailYScale;
     constexpr auto lowerTrailHeightInCells = 1.0f * trailYScale;
     constexpr auto trailWidthInCells = 1.075f;
-    constexpr auto trailDuration = 0.7f;
+    constexpr auto trailDuration = 0.67f;
 }
 
 PieceTrailParticleEffect::PieceTrailParticleEffect(Pht::IEngine& engine, GameScene& scene) :
@@ -48,7 +48,7 @@ void PieceTrailParticleEffect::CreateTrailEffects(Pht::IEngine& engine,
     };
     
     Pht::ParticleSettings particleSettings {
-        .mColor = Pht::Vec4{1.0f, 1.0f, 1.0f, 0.5f},
+        .mColor = Pht::Vec4{1.0f, 1.0f, 1.0f, 0.6f},
         .mColorRandomPart = Pht::Vec4{0.0f, 0.0f, 0.0f, 0.0f},
         .mTextureFilename = textureFilename,
         .mTimeToLive = trailDuration,

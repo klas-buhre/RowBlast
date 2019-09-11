@@ -46,8 +46,6 @@ Ongoing tasks:
     -Add drag controls and release with microtransactions enabled, free to download.
 
     -Near-term plan:
-        -Maybe make the piece trails a bit brighter. Can make the part covered by the piece a bit
-         deeper down if the piece is deeper in that column.
         -Should the field be moved up even for zoomed displays?
         -Tune dragged piece offset and dragBeginDistanceThreshold.
         -Update the tutorial with drag controls.
