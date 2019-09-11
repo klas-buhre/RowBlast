@@ -17,6 +17,8 @@
 		174F9EA522DBCA3D0057BA7C /* ActivePreviewPieceAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 174F9EA322DBCA3D0057BA7C /* ActivePreviewPieceAnimation.cpp */; };
 		1750CAF92326B0600092B2E6 /* block.png in Resources */ = {isa = PBXBuildFile; fileRef = 1750CAF82326B0600092B2E6 /* block.png */; };
 		1750CAFD2326B6C10092B2E6 /* disable.png in Resources */ = {isa = PBXBuildFile; fileRef = 1750CAFC2326B6C10092B2E6 /* disable.png */; };
+		1750CB022328F9810092B2E6 /* SettingsMenuView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1750CAFE2328F9800092B2E6 /* SettingsMenuView.cpp */; };
+		1750CB032328F9810092B2E6 /* SettingsMenuController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1750CB012328F9810092B2E6 /* SettingsMenuController.cpp */; };
 		1774768022DA42B800EEE97C /* NoMoreLevelsDialogView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1774767E22DA42B800EEE97C /* NoMoreLevelsDialogView.cpp */; };
 		1774768322DA42E400EEE97C /* NoMoreLevelsDialogController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1774768122DA42E400EEE97C /* NoMoreLevelsDialogController.cpp */; };
 		17A75B5923211A2C001BA90D /* ValidAreaAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 17A75B4523211A2C001BA90D /* ValidAreaAnimation.cpp */; };
@@ -246,8 +248,6 @@
 		62216C5C21ED0C39001CB9A1 /* DocumentViewerController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216C5A21ED0C39001CB9A1 /* DocumentViewerController.cpp */; };
 		62216C5F21EDDA7E001CB9A1 /* ScrollPanel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216C5D21EDDA7E001CB9A1 /* ScrollPanel.cpp */; };
 		62216C6221EDDF36001CB9A1 /* TextDocumentLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216C6021EDDF36001CB9A1 /* TextDocumentLoader.cpp */; };
-		62216C6721F08A85001CB9A1 /* SettingsMenuController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216C6421F08A85001CB9A1 /* SettingsMenuController.cpp */; };
-		62216C6821F08A85001CB9A1 /* SettingsMenuView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216C6621F08A85001CB9A1 /* SettingsMenuView.cpp */; };
 		62216C6B21F08B2A001CB9A1 /* OptionsMenuView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216C6921F08B2A001CB9A1 /* OptionsMenuView.cpp */; };
 		62216C6E21F08B7F001CB9A1 /* OptionsMenuController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216C6C21F08B7F001CB9A1 /* OptionsMenuController.cpp */; };
 		6221D56622302E790098395A /* music.png in Resources */ = {isa = PBXBuildFile; fileRef = 6221D56522302E790098395A /* music.png */; };
@@ -567,6 +567,10 @@
 		174F9EA422DBCA3D0057BA7C /* ActivePreviewPieceAnimation.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ActivePreviewPieceAnimation.hpp; sourceTree = "<group>"; };
 		1750CAF82326B0600092B2E6 /* block.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = block.png; sourceTree = "<group>"; };
 		1750CAFC2326B6C10092B2E6 /* disable.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = disable.png; sourceTree = "<group>"; };
+		1750CAFE2328F9800092B2E6 /* SettingsMenuView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SettingsMenuView.cpp; sourceTree = "<group>"; };
+		1750CAFF2328F9800092B2E6 /* SettingsMenuController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SettingsMenuController.hpp; sourceTree = "<group>"; };
+		1750CB002328F9800092B2E6 /* SettingsMenuView.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SettingsMenuView.hpp; sourceTree = "<group>"; };
+		1750CB012328F9810092B2E6 /* SettingsMenuController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SettingsMenuController.cpp; sourceTree = "<group>"; };
 		1774767E22DA42B800EEE97C /* NoMoreLevelsDialogView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NoMoreLevelsDialogView.cpp; sourceTree = "<group>"; };
 		1774767F22DA42B800EEE97C /* NoMoreLevelsDialogView.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = NoMoreLevelsDialogView.hpp; sourceTree = "<group>"; };
 		1774768122DA42E400EEE97C /* NoMoreLevelsDialogController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NoMoreLevelsDialogController.cpp; sourceTree = "<group>"; };
@@ -989,10 +993,6 @@
 		62216C5E21EDDA7E001CB9A1 /* ScrollPanel.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ScrollPanel.hpp; sourceTree = "<group>"; };
 		62216C6021EDDF36001CB9A1 /* TextDocumentLoader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TextDocumentLoader.cpp; sourceTree = "<group>"; };
 		62216C6121EDDF36001CB9A1 /* TextDocumentLoader.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TextDocumentLoader.hpp; sourceTree = "<group>"; };
-		62216C6321F08A84001CB9A1 /* SettingsMenuController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SettingsMenuController.hpp; sourceTree = "<group>"; };
-		62216C6421F08A85001CB9A1 /* SettingsMenuController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SettingsMenuController.cpp; sourceTree = "<group>"; };
-		62216C6521F08A85001CB9A1 /* SettingsMenuView.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SettingsMenuView.hpp; sourceTree = "<group>"; };
-		62216C6621F08A85001CB9A1 /* SettingsMenuView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SettingsMenuView.cpp; sourceTree = "<group>"; };
 		62216C6921F08B2A001CB9A1 /* OptionsMenuView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = OptionsMenuView.cpp; sourceTree = "<group>"; };
 		62216C6A21F08B2A001CB9A1 /* OptionsMenuView.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = OptionsMenuView.hpp; sourceTree = "<group>"; };
 		62216C6C21F08B7F001CB9A1 /* OptionsMenuController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = OptionsMenuController.cpp; sourceTree = "<group>"; };
@@ -1710,6 +1710,10 @@
 				62216A3421EB376E001CB9A1 /* PurchaseSuccessfulDialogController.hpp */,
 				62216A4721EB376E001CB9A1 /* PurchaseSuccessfulDialogView.cpp */,
 				62216A3E21EB376E001CB9A1 /* PurchaseSuccessfulDialogView.hpp */,
+				1750CB012328F9810092B2E6 /* SettingsMenuController.cpp */,
+				1750CAFF2328F9800092B2E6 /* SettingsMenuController.hpp */,
+				1750CAFE2328F9800092B2E6 /* SettingsMenuView.cpp */,
+				1750CB002328F9800092B2E6 /* SettingsMenuView.hpp */,
 				62216A4621EB376E001CB9A1 /* StoreController.cpp */,
 				62216A3D21EB376E001CB9A1 /* StoreController.hpp */,
 				62216A3721EB376E001CB9A1 /* StoreMenuController.cpp */,
@@ -1924,10 +1928,6 @@
 				62216ADE21EB377E001CB9A1 /* RestartConfirmationDialogController.hpp */,
 				62216AF321EB377E001CB9A1 /* RestartConfirmationDialogView.cpp */,
 				62216ADD21EB377E001CB9A1 /* RestartConfirmationDialogView.hpp */,
-				62216C6421F08A85001CB9A1 /* SettingsMenuController.cpp */,
-				62216C6321F08A84001CB9A1 /* SettingsMenuController.hpp */,
-				62216C6621F08A85001CB9A1 /* SettingsMenuView.cpp */,
-				62216C6521F08A85001CB9A1 /* SettingsMenuView.hpp */,
 			);
 			path = GameViews;
 			sourceTree = "<group>";
@@ -3593,7 +3593,6 @@
 				625698582182392C003A3A9D /* FastNoise.cc in Sources */,
 				62429F862295A16C002C08AD /* AddingMovesAnimation.cpp in Sources */,
 				625698452182392C003A3A9D /* Font.cpp in Sources */,
-				62216C6821F08A85001CB9A1 /* SettingsMenuView.cpp in Sources */,
 				62216A9A21EB376E001CB9A1 /* FloatingBlocks.cpp in Sources */,
 				623F5E4322B55D5200242C10 /* GLES3TextRenderer.cpp in Sources */,
 				62216C4D21EB41F1001CB9A1 /* AcceptTermsDialogView.cpp in Sources */,
@@ -3642,6 +3641,7 @@
 				625698502182392C003A3A9D /* FadeEffect.cpp in Sources */,
 				62216C0821EB377F001CB9A1 /* SmallTrianglePiece.cpp in Sources */,
 				62216BEE21EB377E001CB9A1 /* SceneObjectPool.cpp in Sources */,
+				1750CB032328F9810092B2E6 /* SettingsMenuController.cpp in Sources */,
 				623F5E6122B563A900242C10 /* RenderableObject.cpp in Sources */,
 				62216C0D21EB377F001CB9A1 /* PyramidPiece.cpp in Sources */,
 				6205E8282207532600EFCC6B /* AsteroidDialogView.cpp in Sources */,
@@ -3753,7 +3753,6 @@
 				62216BBF21EB377E001CB9A1 /* TitleAnimation.cpp in Sources */,
 				62216C2A21EB377F001CB9A1 /* BombsAnimation.cpp in Sources */,
 				62216A7421EB376E001CB9A1 /* CloseButton.cpp in Sources */,
-				62216C6721F08A85001CB9A1 /* SettingsMenuController.cpp in Sources */,
 				6255827422CE5B6A0060C383 /* DraggedPiece.cpp in Sources */,
 				6242DEF521C50E7600D17F46 /* Audio.cpp in Sources */,
 				625698022182392C003A3A9D /* PrismMesh.cpp in Sources */,
@@ -3798,6 +3797,7 @@
 				62216C2B21EB377F001CB9A1 /* BlueprintSlotsFilledAnimation.cpp in Sources */,
 				62216A8421EB376E001CB9A1 /* StoreMenuView.cpp in Sources */,
 				62216A9321EB376E001CB9A1 /* AudioResources.cpp in Sources */,
+				1750CB022328F9810092B2E6 /* SettingsMenuView.cpp in Sources */,
 				62216C1121EB377F001CB9A1 /* LongIPiece.cpp in Sources */,
 				623F5E6022B563A900242C10 /* Camera.cpp in Sources */,
 				62216BEA21EB377E001CB9A1 /* ScenePlayingField.cpp in Sources */,

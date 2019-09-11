@@ -13,10 +13,12 @@
 
 using namespace RowBlast;
 
-SettingsMenuView::SettingsMenuView(Pht::IEngine& engine, const CommonResources& commonResources) :
+SettingsMenuView::SettingsMenuView(Pht::IEngine& engine,
+                                   const CommonResources& commonResources,
+                                   SceneId sceneId) :
     mCommonResources {commonResources} {
 
-    auto zoom = PotentiallyZoomedScreen::Yes;
+    auto zoom = (sceneId == SceneId::Game ? PotentiallyZoomedScreen::Yes : PotentiallyZoomedScreen::No);
     auto& guiResources = commonResources.GetGuiResources();
     auto& menuWindow = guiResources.GetLargeDarkMenuWindow();
     
@@ -278,12 +280,25 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine, const CommonResources& 
                                                Pht::Vec3 {0.0f, -8.0f, UiLayer::textRectangle},
                                                backButtonInputSize,
                                                backButtonStyle);
-    mBackButton->CreateIcon("back.png",
-                            {-1.17f, 0.0f, UiLayer::buttonText},
-                            {0.7f, 0.7f},
-                            {1.0f, 1.0f, 1.0f, 1.0f},
-                            Pht::Vec4 {0.2f, 0.2f, 0.2f, 0.5f},
-                            Pht::Vec3 {-0.05f, -0.05f, UiLayer::textShadow});
+    switch (sceneId) {
+        case SceneId::Game:
+            mBackButton->CreateIcon("back.png",
+                                    {-1.17f, 0.0f, UiLayer::buttonText},
+                                    {0.7f, 0.7f},
+                                    iconColor,
+                                    iconShadowColor,
+                                    iconShadowOffset);
+            break;
+        case SceneId::Map:
+            mBackButton->CreateIcon("home.png",
+                                    {-1.17f, 0.06f, UiLayer::buttonText},
+                                    {0.7f, 0.7f},
+                                    iconColor,
+                                    iconShadowColor,
+                                    iconShadowOffset);
+            break;
+    }
+
     mBackButton->CreateText({-0.46f, -0.23f, UiLayer::buttonText}, "Back", buttonTextProperties);
 }
 

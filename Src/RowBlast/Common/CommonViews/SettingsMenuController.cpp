@@ -12,11 +12,13 @@ using namespace RowBlast;
 
 SettingsMenuController::SettingsMenuController(Pht::IEngine& engine,
                                                const CommonResources& commonResources,
-                                               UserServices& userServices) :
+                                               UserServices& userServices,
+                                               SettingsMenuView::SceneId sceneId) :
     mEngine {engine},
     mUserServices {userServices},
-    mView {engine, commonResources},
-    mSlidingMenuAnimation {engine, mView} {}
+    mView {engine, commonResources, sceneId},
+    mSlidingMenuAnimation {engine, mView},
+    mSceneId {sceneId} {}
 
 void SettingsMenuController::SetUp(bool isGestureControlsAllowed) {
     if (isGestureControlsAllowed) {
@@ -114,7 +116,10 @@ SettingsMenuController::Result SettingsMenuController::OnTouch(const Pht::TouchE
         mView.GetCloseButton().IsClicked(touchEvent)) {
 
         mDeferredResult = Result::GoBack;
-        mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::No,
+        auto updateFade = mSceneId == SettingsMenuView::SceneId::Map ?
+                          SlidingMenuAnimation::UpdateFade::Yes :
+                          SlidingMenuAnimation::UpdateFade::No;
+        mSlidingMenuAnimation.StartSlideOut(updateFade,
                                             SlidingMenuAnimation::SlideDirection::Right);
     }
     

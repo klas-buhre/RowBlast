@@ -46,7 +46,6 @@ Ongoing tasks:
     -Add drag controls and release with microtransactions enabled, free to download.
 
     -Near-term plan:
-        -Link to the settings menu from the options menu and move settings to common views.
         -Maybe make the piece trails a bit brighter. Can make the part covered by the piece a bit
          deeper down if the piece is deeper in that column.
         -Should the field be moved up even for zoomed displays?

@@ -121,71 +121,27 @@ OptionsMenuView::OptionsMenuView(Pht::IEngine& engine, const CommonResources& co
                                                "Off",
                                                buttonTextProperties).GetSceneObject());
 
-    GuiUtils::CreateIcon(engine,
-                         *this,
-                         "hand.png",
-                         {-5.55f, -1.68f + settingsY, UiLayer::text},
-                         {0.9f, 0.9f},
-                         GetRoot());
-    CreateText({-4.8f, -1.93f + settingsY, UiLayer::text}, "Controls", textProperties);
-
-    Pht::Vec3 controlsButtonPosition {3.35f, -1.7f + settingsY, UiLayer::textRectangle};
-    mControlsButton = std::make_unique<MenuButton>(engine,
-                                                   *this,
-                                                   controlsButtonPosition,
-                                                   settingsButtonInputSize,
-                                                   settingsButtonStyle);
-    mControlsClickIcon1 = &mControlsButton->CreateIcon("hand.png",
-                                                       {-1.85f, 0.03f, UiLayer::buttonText},
-                                                       {0.9f, 0.9f},
-                                                       iconColor,
-                                                       iconShadowColor,
-                                                       iconShadowOffset);
-    mControlsClickIcon2 = &mControlsButton->CreateIcon("circle.png",
-                                                       {-1.88f, 0.42f, UiLayer::buttonText},
-                                                       {0.36f, 0.36f},
-                                                       iconColor,
-                                                       iconShadowColor,
-                                                       iconShadowOffset);
-    mControlsClickIcon3 = &mControlsButton->CreateIcon("circle.png",
-                                                       {-1.88f, 0.42f, UiLayer::buttonText},
-                                                       {0.42f, 0.42f},
-                                                       iconColor,
-                                                       iconShadowColor,
-                                                       iconShadowOffset);
-    mControlsClickText = &(mControlsButton->CreateText({-1.25f, -0.23f, UiLayer::buttonText},
-                                                       "SingleTap",
-                                                       buttonTextProperties).GetSceneObject());
-    
-    
-    mControlsSwipeText = &(mControlsButton->CreateText({-0.55f, -0.23f, UiLayer::buttonText},
-                                                       "Swipe",
-                                                       buttonTextProperties).GetSceneObject());
-    mControlsSwipeIcon1 = &mControlsButton->CreateIcon("hand.png",
-                                                       {-1.4f, 0.03f, UiLayer::buttonText},
-                                                       {0.9f, 0.9f},
-                                                       iconColor,
-                                                       iconShadowColor,
-                                                       iconShadowOffset);
-    mControlsSwipeIcon2 = &mControlsButton->CreateIcon("back.png",
-                                                       {-1.8f, 0.4f, UiLayer::buttonText},
-                                                       {0.42f, 0.42f},
-                                                       iconColor,
-                                                       iconShadowColor,
-                                                       iconShadowOffset);
-    mControlsSwipeIcon3 = &mControlsButton->CreateIcon("right_arrow.png",
-                                                       {-1.05f, 0.4f, UiLayer::buttonText},
-                                                       {0.42f, 0.42f},
-                                                       iconColor,
-                                                       iconShadowColor,
-                                                       iconShadowOffset);
-
     MenuButton::Style buttonStyle;
     buttonStyle.mPressedScale = 1.05f;
     buttonStyle.mRenderableObject = &guiResources.GetMediumThinBlueGlossyButton();
     buttonStyle.mSelectedRenderableObject = &guiResources.GetMediumThinDarkBlueGlossyButton();
 
     Pht::Vec2 buttonInputSize {194.0f, 43.0f};
+
+    mSettingsButton = std::make_unique<MenuButton>(engine,
+                                                   *this,
+                                                   Pht::Vec3 {0.0f, 0.6f, UiLayer::textRectangle},
+                                                   buttonInputSize,
+                                                   buttonStyle);
+    mSettingsButton->CreateIcon("settings.png",
+                                {-1.7f, 0.05f, UiLayer::buttonText},
+                                {0.77f, 0.77f},
+                                iconColor,
+                                iconShadowColor,
+                                iconShadowOffset);
+    mSettingsButton->CreateText({-1.07f, -0.23f, UiLayer::buttonText},
+                                "Settings",
+                                buttonTextProperties);
 
     mHowToPlayButton = std::make_unique<MenuButton>(engine,
                                                     *this,
@@ -223,24 +179,6 @@ OptionsMenuView::OptionsMenuView(Pht::IEngine& engine, const CommonResources& co
     mBackButton->CreateText({-0.46f, -0.23f, UiLayer::buttonText}, "Back", buttonTextProperties);
 }
 
-void OptionsMenuView::EnableControlsButton() {
-    mIsControlsButtonEnabled = true;
-    
-    auto& blueButtonRenderable =
-        mCommonResources.GetGuiResources().GetSmallBlueGlossyButton(PotentiallyZoomedScreen::Yes);
-    
-    mControlsButton->GetSceneObject().SetRenderable(&blueButtonRenderable);
-}
-
-void OptionsMenuView::DisableControlsButton() {
-    mIsControlsButtonEnabled = false;
-
-    auto& grayButtonRenderable =
-        mCommonResources.GetGuiResources().GetSmallGrayGlossyButtonPotentiallyZoomedScreen();
-    
-    mControlsButton->GetSceneObject().SetRenderable(&grayButtonRenderable);
-}
-
 void OptionsMenuView::SetMusicOnIsVisible(bool isVisble) {
     mMusicOnText->SetIsVisible(isVisble);
     mMusicOnIcon->SetIsVisible(isVisble);
@@ -259,18 +197,4 @@ void OptionsMenuView::SetSoundOnIsVisible(bool isVisble) {
 void OptionsMenuView::SetSoundOffIsVisible(bool isVisble) {
     mSoundOffText->SetIsVisible(isVisble);
     mSoundOffIcon->SetIsVisible(isVisble);
-}
-
-void OptionsMenuView::SetControlsClickIsVisible(bool isVisible) {
-    mControlsClickText->SetIsVisible(isVisible);
-    mControlsClickIcon1->SetIsVisible(isVisible);
-    mControlsClickIcon2->SetIsVisible(isVisible);
-    mControlsClickIcon3->SetIsVisible(isVisible);
-}
-
-void OptionsMenuView::SetControlsSwipeIsVisible(bool isVisible) {
-    mControlsSwipeText->SetIsVisible(isVisible);
-    mControlsSwipeIcon1->SetIsVisible(isVisible);
-    mControlsSwipeIcon2->SetIsVisible(isVisible);
-    mControlsSwipeIcon3->SetIsVisible(isVisible);
 }

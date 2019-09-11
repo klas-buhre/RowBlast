@@ -19,6 +19,7 @@ namespace RowBlast {
     public:
         enum class Result {
             None,
+            GoToSettingsMenu,
             GoToHowToPlayDialog,
             GoToAboutMenu,
             GoBack
@@ -28,7 +29,7 @@ namespace RowBlast {
                               const CommonResources& commonResources,
                               UserServices& userServices);
         
-        void SetUp(bool isGestureControlsAllowed);
+        void SetUp();
         void SetFadeEffect(Pht::FadeEffect& fadeEffect);
         Result Update();
         

@@ -24,7 +24,8 @@ namespace RowBlast {
         
         SettingsMenuController(Pht::IEngine& engine,
                                const CommonResources& commonResources,
-                               UserServices& userServices);
+                               UserServices& userServices,
+                               SettingsMenuView::SceneId sceneId);
         
         void SetUp(bool isGestureControlsAllowed);
         void SetFadeEffect(Pht::FadeEffect& fadeEffect);
@@ -44,6 +45,7 @@ namespace RowBlast {
         SettingsMenuView mView;
         SlidingMenuAnimation mSlidingMenuAnimation;
         Result mDeferredResult {Result::None};
+        SettingsMenuView::SceneId mSceneId {SettingsMenuView::SceneId::Game};
     };
 }
 

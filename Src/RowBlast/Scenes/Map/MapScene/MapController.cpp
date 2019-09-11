@@ -125,6 +125,9 @@ MapController::Command MapController::Update() {
         case State::OptionsMenu:
             UpdateOptionsMenu();
             break;
+        case State::SettingsMenu:
+            UpdateSettingsMenu();
+            break;
         case State::HowToPlayDialog:
             UpdateHowToPlayDialog();
             break;
@@ -363,6 +366,9 @@ void MapController::UpdateOptionsMenu() {
     switch (mMapViewControllers.GetOptionsMenuController().Update()) {
         case OptionsMenuController::Result::None:
             break;
+        case OptionsMenuController::Result::GoToSettingsMenu:
+            GoToSettingsMenuState();
+            break;
         case OptionsMenuController::Result::GoToHowToPlayDialog:
             GoToHowToPlayDialogState();
             break;
@@ -370,6 +376,16 @@ void MapController::UpdateOptionsMenu() {
             GoToAboutMenuState(SlidingMenuAnimation::UpdateFade::No);
             break;
         case OptionsMenuController::Result::GoBack:
+            GoToMapState();
+            break;
+    }
+}
+
+void MapController::UpdateSettingsMenu() {
+    switch (mMapViewControllers.GetSettingsMenuController().Update()) {
+        case SettingsMenuController::Result::None:
+            break;
+        case SettingsMenuController::Result::GoBack:
             GoToMapState();
             break;
     }
@@ -714,11 +730,17 @@ void MapController::GoToAddLivesStateStore() {
 }
 
 void MapController::GoToOptionsMenuState() {
+    mMapViewControllers.SetActiveController(MapViewControllers::OptionsMenu);
+    mMapViewControllers.GetOptionsMenuController().SetUp();
+    mState = State::OptionsMenu;
+}
+
+void MapController::GoToSettingsMenuState() {
     auto isGestureControlsAllowed = mUserServices.GetProgressService().GetProgress() > 2;
     
-    mMapViewControllers.SetActiveController(MapViewControllers::OptionsMenu);
-    mMapViewControllers.GetOptionsMenuController().SetUp(isGestureControlsAllowed);
-    mState = State::OptionsMenu;
+    mMapViewControllers.SetActiveController(MapViewControllers::SettingsMenu);
+    mMapViewControllers.GetSettingsMenuController().SetUp(isGestureControlsAllowed);
+    mState = State::SettingsMenu;
 }
 
 void MapController::GoToHowToPlayDialogState() {

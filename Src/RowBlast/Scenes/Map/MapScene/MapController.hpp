@@ -87,6 +87,7 @@ namespace RowBlast {
         void UpdateInAddLivesStateStore();
         void RefillLives();
         void UpdateOptionsMenu();
+        void UpdateSettingsMenu();
         void UpdateHowToPlayDialog();
         Command UpdateAboutMenu();
         void UpdateInAddCoinsStoreState();
@@ -108,6 +109,7 @@ namespace RowBlast {
         void GoToAddLivesStateNoLivesDialog();
         void GoToAddLivesStateStore();
         void GoToOptionsMenuState();
+        void GoToSettingsMenuState();
         void GoToHowToPlayDialogState();
         void GoToAddCoinsStoreState();
         void GoToMapState();
@@ -120,6 +122,7 @@ namespace RowBlast {
             LivesDialog,
             AddLives,
             OptionsMenu,
+            SettingsMenu,
             HowToPlayDialog,
             AboutMenu,
             AddCoinsStore,

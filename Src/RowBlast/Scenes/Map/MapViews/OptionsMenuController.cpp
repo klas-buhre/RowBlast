@@ -18,13 +18,7 @@ OptionsMenuController::OptionsMenuController(Pht::IEngine& engine,
     mView {engine, commonResources},
     mSlidingMenuAnimation {engine, mView} {}
 
-void OptionsMenuController::SetUp(bool isGestureControlsAllowed) {
-    if (isGestureControlsAllowed) {
-        mView.EnableControlsButton();
-    } else {
-        mView.DisableControlsButton();
-    }
-
+void OptionsMenuController::SetUp() {
     mSlidingMenuAnimation.SetUp(SlidingMenuAnimation::UpdateFade::Yes,
                                 SlidingMenuAnimation::SlideDirection::Left);
     UpdateViewToReflectSettings();
@@ -62,18 +56,6 @@ OptionsMenuController::Result OptionsMenuController::HandleInput() {
 OptionsMenuController::Result OptionsMenuController::OnTouch(const Pht::TouchEvent& touchEvent) {
     auto& settingsService = mUserServices.GetSettingsService();
 
-    if (mView.IsControlsButtonEnabled()) {
-        if (mView.GetControlsButton().IsClicked(touchEvent)) {
-            if (settingsService.GetControlType() == ControlType::Click) {
-                settingsService.SetControlType(ControlType::Gesture);
-            } else {
-                settingsService.SetControlType(ControlType::Click);
-            }
-            
-            UpdateViewToReflectSettings();
-        }
-    }
-
     if (mView.GetSoundButton().IsClicked(touchEvent)) {
         auto& audio = mEngine.GetAudio();
         if (audio.IsSoundEnabled()) {
@@ -100,6 +82,12 @@ OptionsMenuController::Result OptionsMenuController::OnTouch(const Pht::TouchEve
         UpdateViewToReflectSettings();
     }
 
+    if (mView.GetSettingsButton().IsClicked(touchEvent)) {
+        mDeferredResult = Result::GoToSettingsMenu;
+        mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::No,
+                                            SlidingMenuAnimation::SlideDirection::Left);
+    }
+
     if (mView.GetHowToPlayButton().IsClicked(touchEvent)) {
         mDeferredResult = Result::GoToHowToPlayDialog;
         mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::No,
@@ -124,15 +112,6 @@ OptionsMenuController::Result OptionsMenuController::OnTouch(const Pht::TouchEve
 }
 
 void OptionsMenuController::UpdateViewToReflectSettings() {
-    auto& settingsService = mUserServices.GetSettingsService();
-    if (settingsService.GetControlType() == ControlType::Click) {
-        mView.SetControlsClickIsVisible(true);
-        mView.SetControlsSwipeIsVisible(false);
-    } else {
-        mView.SetControlsClickIsVisible(false);
-        mView.SetControlsSwipeIsVisible(true);
-    }
-    
     auto& audio = mEngine.GetAudio();
     if (audio.IsSoundEnabled()) {
         mView.SetSoundOnIsVisible(true);

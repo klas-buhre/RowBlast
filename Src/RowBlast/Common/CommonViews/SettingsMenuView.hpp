@@ -18,7 +18,14 @@ namespace RowBlast {
 
     class SettingsMenuView: public Pht::GuiView {
     public:
-        SettingsMenuView(Pht::IEngine& engine, const CommonResources& commonResources);
+        enum class SceneId {
+            Map,
+            Game
+        };
+
+        SettingsMenuView(Pht::IEngine& engine,
+                         const CommonResources& commonResources,
+                         SceneId sceneId);
 
         void EnableControlsButton();
         void DisableControlsButton();
