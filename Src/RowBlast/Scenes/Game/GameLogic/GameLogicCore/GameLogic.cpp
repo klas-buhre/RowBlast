@@ -940,6 +940,10 @@ void GameLogic::RotatePreviewPiece(PreviewPieceIndex previewPieceIndex) {
 }
 
 void GameLogic::RotatePreviewPieces() {
+    if (mIsSwipeGhostPieceEnabled) {
+        return;
+    }
+
     RotatePreviewPieces(mCurrentMove.mPreviewPieceRotations.mRotations, Pht::Optional<int> {});
     RotatePreviewPieces(mCurrentMove.mPreviewPieceRotations.mHudRotations, 4);
 }
