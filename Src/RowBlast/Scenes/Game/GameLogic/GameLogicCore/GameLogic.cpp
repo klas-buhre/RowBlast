@@ -444,7 +444,8 @@ Pht::Vec2 GameLogic::CalculateFallingPieceSpawnPos(const Piece& pieceType,
     
     auto& pieceDimensions = pieceType.GetDimensions(Rotation::Deg0);
     auto pieceNumEmptyTopRows = pieceType.GetGridNumRows() - pieceDimensions.mYmax - 1;
-    auto desiredUpperPos = topRowInScreen - 3 + pieceNumEmptyTopRows;
+    auto yPosAdjustment = pieceType.GetSpawnYPositionAdjustment();
+    auto desiredUpperPos = topRowInScreen - 3 + pieceNumEmptyTopRows + yPosAdjustment;
     if (mLevel->GetSpeed() > 0.0f) {
         ++desiredUpperPos;
     }

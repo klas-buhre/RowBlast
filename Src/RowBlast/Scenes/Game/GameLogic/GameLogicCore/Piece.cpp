@@ -121,6 +121,10 @@ bool Piece::IsRowBomb() const {
     return false;
 }
 
+int Piece::GetSpawnYPositionAdjustment() const {
+    return 0;
+}
+
 bool Piece::PositionCanBeAdjusteInMovesSearch() const {
     return true;
 }

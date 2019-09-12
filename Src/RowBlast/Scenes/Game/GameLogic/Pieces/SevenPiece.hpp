@@ -15,6 +15,7 @@ namespace RowBlast {
     public:
         SevenPiece(Pht::IEngine& engine, const CommonResources& commonResources);
         
+        int GetSpawnYPositionAdjustment() const override;
         bool NeedsUpAdjustmentInHud() const override;
     };
 }

@@ -54,6 +54,10 @@ SevenPiece::SevenPiece(Pht::IEngine& engine, const CommonResources& commonResour
     SetPressedGhostPieceRenderable(ghostPieceProducer.ProducePressedRenderable());
 }
 
+int SevenPiece::GetSpawnYPositionAdjustment() const {
+    return -1;
+}
+
 bool SevenPiece::NeedsUpAdjustmentInHud() const {
     return true;
 }

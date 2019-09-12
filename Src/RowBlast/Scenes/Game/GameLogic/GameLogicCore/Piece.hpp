@@ -62,6 +62,7 @@ namespace RowBlast {
         
         virtual bool IsBomb() const;
         virtual bool IsRowBomb() const;
+        virtual int GetSpawnYPositionAdjustment() const;
         virtual bool PositionCanBeAdjusteInMovesSearch() const;
         virtual bool NeedsUpAdjustmentInHud() const;
         virtual bool NeedsDownAdjustmentInHud() const;
