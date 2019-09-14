@@ -1222,7 +1222,12 @@ bool GameLogic::BeginDraggingPiece(PreviewPieceIndex draggedPieceIndex) {
     
     mDraggedPieceIndex = draggedPieceIndex;
     mFallingPieceSpawnType = &pieceType;
-    SpawnFallingPiece(FallingPieceSpawnReason::BeginDraggingPiece);
+    if (SpawnFallingPiece(FallingPieceSpawnReason::BeginDraggingPiece) != Result::None) {
+        RemoveDraggedPiece();
+        mDraggedPieceIndex = PreviewPieceIndex::None;
+        return false;
+    }
+    
     mScene.GetHud().RemovePreviewPiece(draggedPieceIndex);
     
     auto& validMoves = mAi.FindValidMoves(*mFallingPiece,
