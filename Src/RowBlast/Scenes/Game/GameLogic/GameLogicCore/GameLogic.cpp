@@ -646,6 +646,9 @@ void GameLogic::UpdateFallingPieceYpos() {
                 mFallingPiece->IncreaseTimeSinceMovement(lastFrameSeconds);
                 if (mFallingPiece->GetTimeSinceTouchdown() > mLandingMovementDuration ||
                     mFallingPiece->GetTimeSinceMovement() > mLandingNoMovementDuration) {
+                    if (mDraggedPiece) {
+                        CancelDraggingBecausePieceLands();
+                    }
                     LandFallingPiece(false);
                 }
             }
@@ -1280,6 +1283,13 @@ void GameLogic::CancelDraggingPiece() {
     mDraggedPieceIndex = PreviewPieceIndex::None;
     mValidAreaAnimation.Stop();
     RemoveDraggedPiece();
+}
+
+void GameLogic::CancelDraggingBecausePieceLands() {
+    mDraggedPieceIndex = PreviewPieceIndex::None;
+    mValidAreaAnimation.Stop();
+    RemoveDraggedPiece();
+    mDragInputHandler.EndDrag();
 }
 
 void GameLogic::OnDraggedPieceAnimationFinished() {

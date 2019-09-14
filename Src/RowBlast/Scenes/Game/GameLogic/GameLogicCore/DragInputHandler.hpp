@@ -34,6 +34,7 @@ namespace RowBlast {
         
         void Init();
         State HandleTouch(const Pht::TouchEvent& touchEvent);
+        void EndDrag();
         
     private:
         void HandleTouchBegin(const Pht::TouchEvent& touchEvent);
@@ -42,7 +43,6 @@ namespace RowBlast {
         void HandleTouchBeginInIdleState(const Pht::TouchEvent& touchEvent);
         void HandleOngoingTouchInTouchingPreviewPieceButtonState(const Pht::TouchEvent& touchEvent);
         void HandleOngoingTouchInDraggingState(const Pht::TouchEvent& touchEvent);
-        void EndDrag();
         void HandleTouchEndInTouchingPreviewPieceButtonState(const Pht::TouchEvent& touchEvent);
         void HandleTouchEndInDraggingState(const Pht::TouchEvent& touchEvent);
         void HandleTouchCancelled();

@@ -247,6 +247,7 @@ namespace RowBlast {
         bool IsThereRoomToSwitchPiece(const Piece& pieceType);
         void UpdateDraggedGhostPieceRowAndBlastArea();
         const Move* GetValidMoveBelowDraggedPiece(int& ghostPieceRow);
+        void CancelDraggingBecausePieceLands();
         Result HandleInput();
         void ForwardTouchToInputHandler(const Pht::TouchEvent& touchEvent);
         bool IsInputAllowed() const;
