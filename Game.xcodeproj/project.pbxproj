@@ -19,6 +19,7 @@
 		1750CAFD2326B6C10092B2E6 /* disable.png in Resources */ = {isa = PBXBuildFile; fileRef = 1750CAFC2326B6C10092B2E6 /* disable.png */; };
 		1750CB022328F9810092B2E6 /* SettingsMenuView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1750CAFE2328F9800092B2E6 /* SettingsMenuView.cpp */; };
 		1750CB032328F9810092B2E6 /* SettingsMenuController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1750CB012328F9810092B2E6 /* SettingsMenuController.cpp */; };
+		1767A477232D309900B7156D /* sky_upside_down_patched_mirrored.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1767A476232D309900B7156D /* sky_upside_down_patched_mirrored.jpg */; };
 		1774768022DA42B800EEE97C /* NoMoreLevelsDialogView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1774767E22DA42B800EEE97C /* NoMoreLevelsDialogView.cpp */; };
 		1774768322DA42E400EEE97C /* NoMoreLevelsDialogController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1774768122DA42E400EEE97C /* NoMoreLevelsDialogController.cpp */; };
 		17A75B5923211A2C001BA90D /* ValidAreaAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 17A75B4523211A2C001BA90D /* ValidAreaAnimation.cpp */; };
@@ -526,7 +527,6 @@
 		62B1CB8B210F8F8600D0F195 /* sky_upside_down.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62B1CB73210F8F8500D0F195 /* sky_upside_down.jpg */; };
 		62B1CB8C210F8F8600D0F195 /* flare24.png in Resources */ = {isa = PBXBuildFile; fileRef = 62B1CB74210F8F8500D0F195 /* flare24.png */; };
 		62B1CB8D210F8F8600D0F195 /* cloud_B_envmap.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62B1CB75210F8F8500D0F195 /* cloud_B_envmap.jpg */; };
-		62B50A49222C4E1900536E0E /* sky_upside_down_patched_mirrored.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62B50A48222C4E1800536E0E /* sky_upside_down_patched_mirrored.jpg */; };
 		62BB35BA21C573690051AEEF /* map.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 62BB35B921C5733A0051AEEF /* map.mp4 */; };
 		62BB35C821C6C0110051AEEF /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62BB35C721C6C0110051AEEF /* OpenAL.framework */; };
 		62BB35D021C7FF7F0051AEEF /* AudioFileDecoderIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 62BB35CF21C7FF7F0051AEEF /* AudioFileDecoderIOS.mm */; };
@@ -571,6 +571,7 @@
 		1750CAFF2328F9800092B2E6 /* SettingsMenuController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SettingsMenuController.hpp; sourceTree = "<group>"; };
 		1750CB002328F9800092B2E6 /* SettingsMenuView.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SettingsMenuView.hpp; sourceTree = "<group>"; };
 		1750CB012328F9810092B2E6 /* SettingsMenuController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SettingsMenuController.cpp; sourceTree = "<group>"; };
+		1767A476232D309900B7156D /* sky_upside_down_patched_mirrored.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sky_upside_down_patched_mirrored.jpg; sourceTree = "<group>"; };
 		1774767E22DA42B800EEE97C /* NoMoreLevelsDialogView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NoMoreLevelsDialogView.cpp; sourceTree = "<group>"; };
 		1774767F22DA42B800EEE97C /* NoMoreLevelsDialogView.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = NoMoreLevelsDialogView.hpp; sourceTree = "<group>"; };
 		1774768122DA42E400EEE97C /* NoMoreLevelsDialogController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NoMoreLevelsDialogController.cpp; sourceTree = "<group>"; };
@@ -1495,7 +1496,6 @@
 		62B1CB73210F8F8500D0F195 /* sky_upside_down.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sky_upside_down.jpg; sourceTree = "<group>"; };
 		62B1CB74210F8F8500D0F195 /* flare24.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = flare24.png; sourceTree = "<group>"; };
 		62B1CB75210F8F8500D0F195 /* cloud_B_envmap.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = cloud_B_envmap.jpg; sourceTree = "<group>"; };
-		62B50A48222C4E1800536E0E /* sky_upside_down_patched_mirrored.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sky_upside_down_patched_mirrored.jpg; sourceTree = "<group>"; };
 		62BB35B921C5733A0051AEEF /* map.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = map.mp4; sourceTree = "<group>"; };
 		62BB35BF21C6AD2A0051AEEF /* IAudioEngine.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = IAudioEngine.hpp; sourceTree = "<group>"; };
 		62BB35C721C6C0110051AEEF /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
@@ -3203,7 +3203,7 @@
 				62B1CB6E210F8F8500D0F195 /* particle_sprite_point_blurred.png */,
 				62B1CB69210F8F8500D0F195 /* particle_sprite_twinkle_blurred.png */,
 				624C72E42177AB250006068B /* shield.png */,
-				62B50A48222C4E1800536E0E /* sky_upside_down_patched_mirrored.jpg */,
+				1767A476232D309900B7156D /* sky_upside_down_patched_mirrored.jpg */,
 				62B1CB73210F8F8500D0F195 /* sky_upside_down.jpg */,
 				626940C0216115E300D9857A /* sky1.jpg */,
 				626940CE21625E7400D9857A /* sky2.jpg */,
@@ -3369,7 +3369,6 @@
 				622169DE21E0CADE001CB9A1 /* clear_blocks_brick_impact1.wav in Resources */,
 				62BE275320B42A360014C6DD /* star_1428.obj in Resources */,
 				62B1CB81210F8F8600D0F195 /* particle_sprite_twinkle_blurred.png in Resources */,
-				62B50A49222C4E1900536E0E /* sky_upside_down_patched_mirrored.jpg in Resources */,
 				62B1CB83210F8F8600D0F195 /* flare03.png in Resources */,
 				6270DC6D1FCB231B00FB457D /* ethnocentric_rg_it.ttf in Resources */,
 				62B1CB88210F8F8600D0F195 /* laser_bomb_emission.png in Resources */,
@@ -3399,6 +3398,7 @@
 				62276E9A2274A96000679BC6 /* level18.json in Resources */,
 				62276E722274A96000679BC6 /* level19.json in Resources */,
 				626940CF21625E7400D9857A /* sky2.jpg in Resources */,
+				1767A477232D309900B7156D /* sky_upside_down_patched_mirrored.jpg in Resources */,
 				62276E5D2274A96000679BC6 /* level41.json in Resources */,
 				6240E2E122BD326300CCA37A /* TexturedLightingVertexColor.frag in Resources */,
 				62276E892274A96000679BC6 /* level69.json in Resources */,

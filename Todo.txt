@@ -46,10 +46,12 @@ Ongoing tasks:
     -Add drag controls and release with microtransactions enabled, free to download.
 
     -Near-term plan:
-        -Should the field be moved up even for zoomed displays?
         -Tune dragged piece offset and dragBeginDistanceThreshold.
+        -Try a black/dark grey frame behind current field border.
         -Update the tutorial with drag controls.
         -Change the map music tack.
+        -Maybe change to blue background in some of the levels in world 2, or remove the red
+         backgrounds but keep the red map in world 2. Remember to change the lightIntensity.
 
     -Mid-term future:
         -When using drag controls, to minimize the clicks to rotate a piece, the preview pieces
@@ -80,10 +82,6 @@ Ongoing tasks:
     -Maybe:
         -Could have a slower falling piece animation speed for the first tutorial level so that
          players understand that the falling piece has to go to the move.
-        -For non zoomed displays (iPad, iPhone 7 etc..): After moving up the field:
-         Instead of modifying the envmap texture, it might work to move the camera 1.0 of 2.0
-         backwards to get a bigger bright env map area. Or move the field backwards in z-direction,
-         it is the distance to camera that matters.
         -Finish the valid moves area
             -Fix the stripes.
             -Maybe the valid area should be calculated like this:
@@ -558,16 +556,7 @@ Beginning of level 20:
  NumDrawCalls: 129
 
 
-
-Do this before making tutorial slides:
-    -Remove floating blocks
-    -Disable light animation
-    -Disable camera shake
-    -Disable bomb emission animation
-    -Disable bomb rotation animation
-Gimp rectangle select:
-size: 481, 481
-
+This is the lossless env map texture Desktop/sky_upside_down_patched_mirrored_f10.xcf.
 
 Add these clouds before generating sky background texture from title scene:
         CloudPathVolume {

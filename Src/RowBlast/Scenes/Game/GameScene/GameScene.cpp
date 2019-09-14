@@ -23,7 +23,7 @@ namespace {
     constexpr auto fieldQuadZ = -2.0f;
     constexpr auto blueprintZ = -0.7f;
     constexpr auto fieldBorderZ = -0.5f;
-    constexpr auto lowerClipAreaHeightInCells = 2.3f;
+    constexpr auto lowerClipAreaHeightInCells = 2.55f;
     constexpr auto fieldPadding = 0.1f;
     constexpr auto scissorBoxPadding = 0.01f;
     constexpr auto lightAnimationDuration = 5.0f;

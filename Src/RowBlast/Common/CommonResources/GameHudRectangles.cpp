@@ -95,8 +95,8 @@ namespace {
             static_cast<float>(renderBufferSize.y) / static_cast<float>(frustumSize.y);
         
         Pht::IVec2 imageSize {
-            static_cast<int>(size.x * xScaleFactor),
-            static_cast<int>(size.y * yScaleFactor)
+            static_cast<int>(size.x * xScaleFactor) * 2,
+            static_cast<int>(size.y * yScaleFactor) * 2
         };
     
         return std::make_unique<Pht::SoftwareRasterizer>(size, imageSize);
