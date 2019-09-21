@@ -15,7 +15,7 @@ using namespace RowBlast;
 
 namespace {
     const Pht::Vec3 distantUfoPosition {40.0f, 220.0f, -600.0f};
-    const Pht::Vec3 ufoPosition {0.25f, 1.95f, 11.0f};
+    const Pht::Vec3 ufoPosition {0.25f, 1.0f, 11.0f};
 }
 
 TitleController::TitleController(Pht::IEngine& engine,

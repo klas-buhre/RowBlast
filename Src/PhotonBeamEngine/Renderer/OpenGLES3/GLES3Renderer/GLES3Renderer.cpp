@@ -847,7 +847,6 @@ void GLES3Renderer::BindTextures(const Material& material,
     }
 }
 
-
 void GLES3Renderer::SetupBlend(const Material& material, ShaderId shaderId) {
     switch (material.GetBlend()) {
         case Blend::Yes:

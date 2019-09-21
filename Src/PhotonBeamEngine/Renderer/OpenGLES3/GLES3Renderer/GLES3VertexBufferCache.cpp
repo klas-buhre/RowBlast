@@ -83,9 +83,8 @@ std::shared_ptr<GpuVertexBuffer> VertexBufferCache::Get(const std::string& meshN
         std::end(cache));
 
     for (const auto& entry: cache) {
-        if (auto buffer {entry.second.lock()}) {
-            auto& key {entry.first};
-            
+        if (auto buffer = entry.second.lock()) {
+            auto& key = entry.first;
             if (meshName == key) {
                 return buffer;
             }
