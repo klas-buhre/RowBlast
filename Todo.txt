@@ -43,15 +43,23 @@ Backlog:
      mostly be the target audince and in the playtest they are not.
 
 Ongoing tasks:
-    -Add drag controls and release with microtransactions enabled, free to download.
+    -Add drag controls and release. Include the new tutorial.
+    -Then release with microtransactions enabled. Market that version.
 
-    -Near-term plan:
-        -Tune dragged piece offset and dragBeginDistanceThreshold.
-        -Try a black/dark grey frame behind current field border.
-        -Update the tutorial with drag controls.
+    -Do:
+        -Fix bug where undo button is enabled when it shoudn't after a drag is ended.
+        -Tune dragBeginDistanceThreshold. Also, could have a threshold distance that the piece must
+         travel in order to be placed, or a minimum drag time.
+        -Might remove the top visible row to make the field fit the non-zoomed screens. Just spawn
+         the pieces one row lower and move the spawning area one row down. This should not affect
+         gameplay.
+        -Try a black/dark grey frame behind current field border. Or at least dark bars outside the
+         current field border.
         -Change the map music tack.
         -Maybe change to blue background in some of the levels in world 2, or remove the red
          backgrounds but keep the red map in world 2. Remember to change the lightIntensity.
+        -Update the tutorial with drag controls.
+        -Replace bad levels in world 1 with levels of width 9 and asteroid levels.
 
     -Mid-term future:
         -When using drag controls, to minimize the clicks to rotate a piece, the preview pieces
