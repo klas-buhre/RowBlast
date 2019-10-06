@@ -264,12 +264,12 @@ Ordered Backlog:
         Cost: 20
     -Drag controls in tutorial and how to play dialog.
         Cost: 5
-    -Purchasing.
-        Cost: 5
     -Replace some levels in world 1.
         Cost: 3
     -Remove moves from world 1 to 3.
         Cost: 1
+    -Purchasing.
+        Cost: 5
     -Levels for the 4th world.
         Cost: 7
     -Metal.
