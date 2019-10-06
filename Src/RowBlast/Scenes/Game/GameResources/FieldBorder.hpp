@@ -25,23 +25,26 @@ namespace RowBlast {
         static constexpr float brightBorderThickness {0.055f};
         static constexpr float darkerBorderThickness {0.045f};
         static constexpr float borderThickness {brightBorderThickness + darkerBorderThickness};
+        static constexpr float frameThickness {0.05f};
 
     private:
         void CreateLeftBorder(Pht::IEngine& engine,
-                              GameScene& scene,
                               const CommonResources& commonResources,
                               float height);
         void CreateRightBorder(Pht::IEngine& engine,
-                               GameScene& scene,
                                const CommonResources& commonResources,
                                float height);
         std::unique_ptr<Pht::SceneObject> CreateSceneObject(const Pht::IImage& image,
                                                             const Pht::Vec2& size,
                                                             Pht::IEngine& engine);
+        std::unique_ptr<Pht::SceneObject> CreateFrameSide(Pht::IEngine& engine,
+                                                          float defaultHeight);
         
         GameScene& mScene;
         std::unique_ptr<Pht::SceneObject> mLeftBorder;
+        std::unique_ptr<Pht::SceneObject> mLeftFrame;
         std::unique_ptr<Pht::SceneObject> mRightBorder;
+        std::unique_ptr<Pht::SceneObject> mRightFrame;
         Pht::SceneResources mSceneResources;
     };
 }

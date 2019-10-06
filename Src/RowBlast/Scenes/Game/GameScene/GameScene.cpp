@@ -25,7 +25,7 @@ namespace {
     constexpr auto fieldBorderZ = -0.5f;
     constexpr auto lowerClipAreaHeightInCells = 2.55f;
     constexpr auto fieldPadding = 0.1f;
-    constexpr auto scissorBoxPadding = 0.01f;
+    constexpr auto scissorBoxPadding = 0.1f;
     constexpr auto lightAnimationDuration = 5.0f;
     const Pht::Vec3 lightDirectionA {0.785f, 1.0f, 0.67f};
     const Pht::Vec3 lightDirectionB {1.0f, 1.0f, 0.74f};
@@ -545,12 +545,12 @@ void GameScene::UpdateCameraPosition() {
     
     Pht::Vec2 scissorBoxLowerLeft {
         mFieldPosition.x -
-        (mFieldWidth + fieldPadding + FieldBorder::borderThickness + scissorBoxPadding) / 2.0f,
+        (mFieldWidth + fieldPadding + FieldBorder::borderThickness + FieldBorder::frameThickness + scissorBoxPadding) / 2.0f,
         cameraYPosition - frustumSize.y / 2.0f + lowerClipAreaHeight + bottomPadding
     };
     
     Pht::Vec2 scissorBoxSize {
-        mFieldWidth + fieldPadding + FieldBorder::borderThickness + scissorBoxPadding,
+        mFieldWidth + fieldPadding + FieldBorder::borderThickness + FieldBorder::frameThickness + scissorBoxPadding,
         16.3f * mCellSize
     };
 

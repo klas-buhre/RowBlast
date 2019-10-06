@@ -21,6 +21,18 @@ namespace {
     const Pht::Vec4 blueBorderColor {0.4f, 0.6f, 1.0f, 0.85f};
     const Pht::Vec4 blueDarkerBorderColor {0.4f, 0.6f, 1.0f, 0.25f};
     constexpr auto defaultNumRows = 19;
+    
+    const Pht::Vec3 leftFrameOffset {
+        -FieldBorder::frameThickness / 2.0f - FieldBorder::borderThickness / 2.0f,
+        0.0f,
+        -0.1f
+    };
+    
+    const Pht::Vec3 rightFrameOffset {
+        FieldBorder::frameThickness / 2.0f + FieldBorder::borderThickness / 2.0f,
+        0.0f,
+        -0.1f
+    };
 
     std::unique_ptr<Pht::SoftwareRasterizer> CreateRasterizer(Pht::IEngine& engine,
                                                               const Pht::Vec2& coordinateSystemSize,
@@ -50,15 +62,19 @@ FieldBorder::FieldBorder(Pht::IEngine& engine,
     mScene {scene} {
     
     auto defaultHeight = static_cast<float>(defaultNumRows) * scene.GetCellSize();
-    CreateLeftBorder(engine, scene, commonResources, defaultHeight);
-    CreateRightBorder(engine, scene, commonResources, defaultHeight);
+    CreateLeftBorder(engine, commonResources, defaultHeight);
+    mLeftFrame = CreateFrameSide(engine, defaultHeight);
+    CreateRightBorder(engine, commonResources, defaultHeight);
+    mRightFrame = CreateFrameSide(engine, defaultHeight);
 }
 
 void FieldBorder::Init(const Pht::Vec3& leftPosition, const Pht::Vec3& rightPosition, int numRows) {
     auto& container = mScene.GetFieldQuadContainer();
     container.AddChild(*mLeftBorder);
     container.AddChild(*mRightBorder);
-    
+    container.AddChild(*mLeftFrame);
+    container.AddChild(*mRightFrame);
+
     auto scale = static_cast<float>(numRows) / static_cast<float>(defaultNumRows);
     auto& leftTransform = mLeftBorder->GetTransform();
     leftTransform.SetScale({1.0f, scale, 1.0f});
@@ -67,10 +83,17 @@ void FieldBorder::Init(const Pht::Vec3& leftPosition, const Pht::Vec3& rightPosi
     auto& rightTransform = mRightBorder->GetTransform();
     rightTransform.SetScale({1.0f, scale, 1.0f});
     rightTransform.SetPosition(rightPosition);
+    
+    auto& leftFrameTransform = mLeftFrame->GetTransform();
+    leftFrameTransform.SetScale({1.0f, scale, 1.0f});
+    leftFrameTransform.SetPosition(leftPosition + leftFrameOffset);
+    
+    auto& rightFrameTransform = mRightFrame->GetTransform();
+    rightFrameTransform.SetScale({1.0f, scale, 1.0f});
+    rightFrameTransform.SetPosition(rightPosition + rightFrameOffset);
 }
 
 void FieldBorder::CreateLeftBorder(Pht::IEngine& engine,
-                                   GameScene& scene,
                                    const CommonResources& commonResources,
                                    float defaultHeight) {
     Pht::Vec2 borderSize {borderThickness, defaultHeight};
@@ -97,7 +120,6 @@ void FieldBorder::CreateLeftBorder(Pht::IEngine& engine,
 }
 
 void FieldBorder::CreateRightBorder(Pht::IEngine& engine,
-                                    GameScene& scene,
                                     const CommonResources& commonResources,
                                     float defaultHeight) {
     Pht::Vec2 borderSize {borderThickness, defaultHeight};
@@ -132,5 +154,16 @@ std::unique_ptr<Pht::SceneObject> FieldBorder::CreateSceneObject(const Pht::IIma
     auto& sceneManager = engine.GetSceneManager();
     return sceneManager.CreateSceneObject(Pht::QuadMesh {size.x, size.y},
                                           imageMaterial,
+                                          mSceneResources);
+}
+
+std::unique_ptr<Pht::SceneObject> FieldBorder::CreateFrameSide(Pht::IEngine& engine,
+                                                               float defaultHeight) {
+    Pht::Material frameMaterial {Pht::Color{0.2f, 0.2f, 0.2f}};
+    
+    Pht::Vec2 frameSize {frameThickness, defaultHeight};
+    auto& sceneManager = engine.GetSceneManager();
+    return sceneManager.CreateSceneObject(Pht::QuadMesh {frameSize.x, frameSize.y},
+                                          frameMaterial,
                                           mSceneResources);
 }

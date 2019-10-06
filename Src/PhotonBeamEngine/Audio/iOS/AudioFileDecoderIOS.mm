@@ -79,7 +79,7 @@ std::unique_ptr<DecodedAudioData> Pht::DecodeAudioFile(const std::string& filena
         return nullptr;
     }
     
-    auto decodedAudioData {std::make_unique<DecodedAudioData>()};
+    auto decodedAudioData = std::make_unique<DecodedAudioData>();
     decodedAudioData->mSampleRate = format.mSampleRate;
     decodedAudioData->mNumberOfChannels = format.mChannelsPerFrame;
     decodedAudioData->mBitsPerChannel = format.mBitsPerChannel;
