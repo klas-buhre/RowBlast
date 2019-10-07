@@ -362,10 +362,9 @@ const PreviewPieceRotations& GameLogic::GetPreviewPieceHudRotations() const {
 }
 
 void GameLogic::ManageMoveHistory(FallingPieceSpawnReason fallingPieceSpawnReason) {
-    mCurrentMove.mId = mFallingPiece->GetId();
-    
     switch (fallingPieceSpawnReason) {
         case FallingPieceSpawnReason::NextMove:
+            mCurrentMove.mId = mFallingPiece->GetId();
             ++mMovesUsed;
             if (GetMovesUsedIncludingCurrent() > 1) {
                 mPreviousMove = mCurrentMoveTmp;
@@ -377,6 +376,7 @@ void GameLogic::ManageMoveHistory(FallingPieceSpawnReason fallingPieceSpawnReaso
             mTutorial.OnNewMove(GetMovesUsedIncludingCurrent());
             break;
         case FallingPieceSpawnReason::UndoMove:
+            mCurrentMove.mId = mFallingPiece->GetId();
             mCurrentMoveTmp = mCurrentMove;
             mPreviousMove = mCurrentMove;
             mComboDetector.OnUndoMove();

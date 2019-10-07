@@ -47,7 +47,6 @@ Ongoing tasks:
     -Then release with microtransactions enabled. Market that version.
 
     -Do:
-        -Fix bug where undo button is enabled when it shoudn't after a drag is ended.
         -Tune dragBeginDistanceThreshold. Also, could have a threshold distance that the piece must
          travel in order to be placed, or a minimum drag time.
         -Might remove the top visible row to make the field fit the non-zoomed screens. Just spawn
