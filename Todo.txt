@@ -53,8 +53,6 @@ Ongoing tasks:
         -Might remove the top visible row to make the field fit the non-zoomed screens. Just spawn
          the pieces one row lower and move the spawning area one row down. This should not affect
          gameplay.
-        -Try a black/dark grey frame behind current field border. Or at least dark bars outside the
-         current field border.
         -Change the map music tack.
         -Maybe change to blue background in some of the levels in world 2, or remove the red
          backgrounds but keep the red map in world 2. Remember to change the lightIntensity.
