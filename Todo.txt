@@ -47,16 +47,19 @@ Ongoing tasks:
     -Then release with microtransactions enabled. Market that version.
 
     -Do:
-        -Tune dragBeginDistanceThreshold. Also, could have a threshold distance that the piece must
+        -0. Rotate all should be disabled by default but can be enabled.
+        -1. Tune dragBeginDistanceThreshold. Also, could have a threshold distance that the piece must
          travel in order to be placed, or a minimum drag time.
-        -Might remove the top visible row to make the field fit the non-zoomed screens. Just spawn
+        -2. Might remove the top visible row to make the field fit the non-zoomed screens. Just spawn
          the pieces one row lower and move the spawning area one row down. This should not affect
          gameplay.
-        -Change the map music tack.
-        -Maybe change to blue background in some of the levels in world 2, or remove the red
+        -3. Change the map music tack.
+        -4. Maybe change to blue background in some of the levels in world 2, or remove the red
          backgrounds but keep the red map in world 2. Remember to change the lightIntensity.
+        -5. Release.
         -Update the tutorial with drag controls.
         -Replace bad levels in world 1 with levels of width 9 and asteroid levels.
+        -6. Release.
 
     -Mid-term future:
         -When using drag controls, to minimize the clicks to rotate a piece, the preview pieces
