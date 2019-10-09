@@ -52,7 +52,13 @@ Ongoing tasks:
          gameplay.
         -2. Tune dragBeginDistanceThreshold. Also, could have a threshold distance that the piece must
          travel in order to be placed, or a minimum drag time.
-        -3. Change the map music tack.
+        -3. Maybe split up the gesture controls into swipe and drag controls. This could be done
+         because it is quite confusing to set up the proper swipe controls as it is now: First,
+         select gesture controls, then enable swipe aim piece, then make sure rotate all pieces is
+         disabled. Checking 3 different settings is a bit much in a casual game. The drag
+         functionality should be available in the swipe controls so that the gestureMovesFactor
+         can be completely removed.
+        -4. Change the map music tack.
         -4. Maybe change to blue background in some of the levels in world 2, or remove the red
          backgrounds but keep the red map in world 2. Remember to change the lightIntensity.
         -5. Release.
