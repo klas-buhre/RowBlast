@@ -33,13 +33,13 @@ namespace RowBlast {
                                                            const Pht::Vec3& position,
                                                            const GuiResources& guiResources,
                                                            PotentiallyZoomedScreen zoom);
-        void CreateIcon(Pht::IEngine& engine,
-                        Pht::GuiView& view,
-                        const std::string& filename,
-                        const Pht::Vec3& position,
-                        const Pht::Vec2& size,
-                        Pht::SceneObject& parent,
-                        const Pht::Vec4& color = {0.95f, 0.95f, 0.95f, 1.0f});
+        Pht::SceneObject& CreateIcon(Pht::IEngine& engine,
+                                     Pht::GuiView& view,
+                                     const std::string& filename,
+                                     const Pht::Vec3& position,
+                                     const Pht::Vec2& size,
+                                     Pht::SceneObject& parent,
+                                     const Pht::Vec4& color = {0.95f, 0.95f, 0.95f, 1.0f});
         Pht::SceneObject& CreateIconWithShadow(Pht::IEngine& engine,
                                                Pht::SceneResources& sceneResources,
                                                const std::string& filename,

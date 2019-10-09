@@ -13,6 +13,7 @@ namespace RowBlast {
         
         void SetControlType(ControlType controlType);
         void SetIsGhostPieceEnabled(bool isGhostPieceEnabled);
+        void SetIsRotateAllPiecesEnabled(bool isRotateAllPiecesEnabled);
         void SetIsSoundEnabled(bool isSoundEnabled);
         void SetIsMusicEnabled(bool isMusicEnabled);
         
@@ -23,7 +24,11 @@ namespace RowBlast {
         bool IsGhostPieceEnabled() const {
             return mIsGhostPieceEnabled;
         }
-        
+
+        bool IsRotateAllPiecesEnabled() const {
+            return mIsRotateAllPiecesEnabled;
+        }
+
         bool IsSoundEnabled() const {
             return mIsSoundEnabled;
         }
@@ -38,6 +43,7 @@ namespace RowBlast {
 
         ControlType mControlType {ControlType::Click};
         bool mIsGhostPieceEnabled {false};
+        bool mIsRotateAllPiecesEnabled {false};
         bool mIsSoundEnabled {true};
         bool mIsMusicEnabled {true};
     };

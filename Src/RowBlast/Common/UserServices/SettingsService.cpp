@@ -12,6 +12,7 @@ namespace {
     const std::string isSoundEnabledMember {"isSoundEnabled"};
     const std::string isMusicEnabledMember {"isMusicEnabled"};
     const std::string isGhostPieceEnabledMember {"isGhostPieceEnabled"};
+    const std::string isRotateAllPiecesEnabledMember {"isRotateAllPiecesEnabled"};
     
     std::string ToString(ControlType controlType) {
         switch (controlType) {
@@ -49,6 +50,11 @@ void SettingsService::SetIsGhostPieceEnabled(bool isGhostPieceEnabled) {
     SaveState();
 }
 
+void SettingsService::SetIsRotateAllPiecesEnabled(bool isRotateAllPiecesEnabled) {
+    mIsRotateAllPiecesEnabled = isRotateAllPiecesEnabled;
+    SaveState();
+}
+
 void SettingsService::SetIsSoundEnabled(bool isSoundEnabled) {
     mIsSoundEnabled = isSoundEnabled;
     SaveState();
@@ -68,6 +74,7 @@ void SettingsService::SaveState() {
     Pht::Json::AddBool(document, isSoundEnabledMember, mIsSoundEnabled, allocator);
     Pht::Json::AddBool(document, isMusicEnabledMember, mIsMusicEnabled, allocator);
     Pht::Json::AddBool(document, isGhostPieceEnabledMember, mIsGhostPieceEnabled, allocator);
+    Pht::Json::AddBool(document, isRotateAllPiecesEnabledMember, mIsRotateAllPiecesEnabled, allocator);
 
     std::string jsonString;
     Pht::Json::EncodeDocument(document, jsonString);
@@ -90,6 +97,11 @@ bool SettingsService::LoadState() {
     // mIsGhostPieceEnabled added in release 1.0.2. Need to check if it exists before reading it.
     if (document.HasMember(isGhostPieceEnabledMember.c_str())) {
         mIsGhostPieceEnabled = Pht::Json::ReadBool(document, isGhostPieceEnabledMember);
+    }
+
+    // mIsRotateAllPiecesEnabled added in release 1.0.2. Need to check if it exists before reading it.
+    if (document.HasMember(isRotateAllPiecesEnabledMember.c_str())) {
+        mIsRotateAllPiecesEnabled = Pht::Json::ReadBool(document, isRotateAllPiecesEnabledMember);
     }
 
     return true;

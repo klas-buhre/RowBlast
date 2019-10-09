@@ -131,13 +131,13 @@ std::unique_ptr<MenuButton> GuiUtils::CreateMediumPlayButton(Pht::IEngine& engin
     return playButton;
 }
 
-void GuiUtils::CreateIcon(Pht::IEngine& engine,
-                          Pht::GuiView& view,
-                          const std::string& filename,
-                          const Pht::Vec3& position,
-                          const Pht::Vec2& size,
-                          Pht::SceneObject& parent,
-                          const Pht::Vec4& color) {
+Pht::SceneObject& GuiUtils::CreateIcon(Pht::IEngine& engine,
+                                       Pht::GuiView& view,
+                                       const std::string& filename,
+                                       const Pht::Vec3& position,
+                                       const Pht::Vec2& size,
+                                       Pht::SceneObject& parent,
+                                       const Pht::Vec4& color) {
     Pht::Material iconMaterial {filename, 0.0f, 0.0f, 0.0f, 0.0f};
     iconMaterial.SetBlend(Pht::Blend::Yes);
     iconMaterial.SetOpacity(color.w);
@@ -149,6 +149,8 @@ void GuiUtils::CreateIcon(Pht::IEngine& engine,
     
     iconSceneObject.GetTransform().SetPosition(position);
     parent.AddChild(iconSceneObject);
+    
+    return iconSceneObject;
 }
 
 Pht::SceneObject& GuiUtils::CreateIconWithShadow(Pht::IEngine& engine,

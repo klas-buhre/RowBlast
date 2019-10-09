@@ -944,7 +944,7 @@ void GameLogic::RotatePreviewPiece(PreviewPieceIndex previewPieceIndex) {
 }
 
 void GameLogic::RotatePreviewPieces() {
-    if (mIsSwipeGhostPieceEnabled) {
+    if (!mSettingsService.IsRotateAllPiecesEnabled()) {
         return;
     }
 

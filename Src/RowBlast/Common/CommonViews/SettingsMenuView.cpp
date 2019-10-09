@@ -84,7 +84,7 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine,
                          container);
     CreateText({-4.8f, 2.47f, UiLayer::text}, "Music", textProperties, container);
 
-    Pht::Vec3 musicButtonPosition {3.35f, 2.7f, UiLayer::textRectangle};
+    Pht::Vec3 musicButtonPosition {3.45f, 2.7f, UiLayer::textRectangle};
     mMusicButton = std::make_unique<MenuButton>(engine,
                                                 *this,
                                                 container,
@@ -118,7 +118,7 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine,
                          container);
     CreateText({-4.8f, 0.27f, UiLayer::text}, "Sound Effects", textProperties, container);
     
-    Pht::Vec3 soundButtonPosition {3.35f, 0.5f, UiLayer::textRectangle};
+    Pht::Vec3 soundButtonPosition {3.45f, 0.5f, UiLayer::textRectangle};
     mSoundButton = std::make_unique<MenuButton>(engine,
                                                 *this,
                                                 container,
@@ -153,7 +153,7 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine,
                          container);
     CreateText({-4.8f, -1.93f, UiLayer::text}, "Controls", textProperties, container);
 
-    Pht::Vec3 controlsButtonPosition {3.35f, -1.7f, UiLayer::textRectangle};
+    Pht::Vec3 controlsButtonPosition {3.45f, -1.7f, UiLayer::textRectangle};
     mControlsButton = std::make_unique<MenuButton>(engine,
                                                    *this,
                                                    container,
@@ -207,51 +207,25 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine,
 
     auto blockOffset = 0.4f;
     Pht::Vec2 blockSize {0.39f, 0.39f};
-    GuiUtils::CreateIcon(engine,
-                         *this,
-                         "block.png",
-                         {-5.5f + blockOffset / 2.0f, -3.88f + blockOffset / 2.0f, UiLayer::text},
-                         blockSize,
-                         container);
-    GuiUtils::CreateIcon(engine,
-                         *this,
-                         "block.png",
-                         {-5.5f - blockOffset / 2.0f, -3.88f - blockOffset / 2.0f, UiLayer::text},
-                         blockSize,
-                         container);
-    GuiUtils::CreateIcon(engine,
-                         *this,
-                         "block.png",
-                         {-5.5f + blockOffset / 2.0f, -3.88f - blockOffset / 2.0f, UiLayer::text},
-                         blockSize,
-                         container);
+    CreateLPieceIcon(engine, container, {-5.5f, -3.88f, UiLayer::text}, blockSize, blockOffset);
     CreateText({-4.8f, -4.13f, UiLayer::text}, "Swipe Aim Piece", textProperties, container);
     
-    Pht::Vec3 ghostPieceButtonPosition {3.35f, -3.9f, UiLayer::textRectangle};
+    Pht::Vec3 ghostPieceButtonPosition {3.45f, -3.9f, UiLayer::textRectangle};
     mGhostPieceButton = std::make_unique<MenuButton>(engine,
                                                      *this,
                                                      container,
                                                      ghostPieceButtonPosition,
                                                      buttonInputSize,
                                                      settingsButtonStyle);
-    mGhostPieceButton->CreateIcon("block.png",
-                                  {-0.7f + blockOffset / 2.0f, 0.07f + blockOffset / 2.0f, UiLayer::buttonText},
-                                  blockSize,
-                                  iconColor,
-                                  iconShadowColor,
-                                  iconShadowOffset);
-    mGhostPieceButton->CreateIcon("block.png",
-                                  {-0.7f - blockOffset / 2.0f, 0.07f - blockOffset / 2.0f, UiLayer::buttonText},
-                                  blockSize,
-                                  iconColor,
-                                  iconShadowColor,
-                                  iconShadowOffset);
-    mGhostPieceButton->CreateIcon("block.png",
-                                  {-0.7f + blockOffset / 2.0f, 0.07f - blockOffset / 2.0f, UiLayer::buttonText},
-                                  blockSize,
-                                  iconColor,
-                                  iconShadowColor,
-                                  iconShadowOffset);
+    CreateLPieceIcon(engine,
+                     *mGhostPieceButton,
+                     {-0.7f, 0.07f, UiLayer::buttonText},
+                     blockSize,
+                     blockOffset,
+                     iconColor,
+                     iconShadowColor,
+                     iconShadowOffset);
+
     mGhostPieceDisabledIcon = &mGhostPieceButton->CreateIcon("disable.png",
                                                              {-0.6f, -0.03f, UiLayer::buttonText},
                                                              {1.2f, 1.2f},
@@ -267,6 +241,54 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine,
     mGhostPieceOffText = &mGhostPieceButton->CreateText({-0.05f, -0.23f, UiLayer::buttonText},
                                                         "Off",
                                                         buttonTextProperties).GetSceneObject();
+
+    auto smallBlockOffset = 0.2f;
+    Pht::Vec2 smallBlockSize {0.19f, 0.19f};
+    CreateLPieceIcon(engine, container, {-5.5f, -6.08f, UiLayer::text}, smallBlockSize, smallBlockOffset);
+    GuiUtils::CreateIcon(engine,
+                         *this,
+                         "rotate.png",
+                         {-5.5f, -6.08f, UiLayer::text},
+                         {1.1f, 1.1f},
+                         container).GetTransform().SetRotation({0.0f, 0.0f, 90.0f});
+    CreateText({-4.8f, -6.33f, UiLayer::text}, "Rotate All Pieces", textProperties, container);
+    
+    Pht::Vec3 rotateAllButtonPosition {3.45f, -6.1f, UiLayer::textRectangle};
+    mRotateAllButton = std::make_unique<MenuButton>(engine,
+                                                    *this,
+                                                    container,
+                                                    rotateAllButtonPosition,
+                                                    buttonInputSize,
+                                                    settingsButtonStyle);
+    CreateLPieceIcon(engine,
+                     *mRotateAllButton,
+                     {-0.7f, 0.07f, UiLayer::buttonText},
+                     smallBlockSize,
+                     smallBlockOffset,
+                     iconColor,
+                     iconShadowColor,
+                     iconShadowOffset);
+    mRotateAllButton->CreateIcon("rotate.png",
+                                 {-0.7f, 0.07f, UiLayer::buttonText},
+                                 {1.1f, 1.1f},
+                                 iconColor,
+                                 iconShadowColor,
+                                 iconShadowOffset).GetTransform().SetRotation({0.0f, 0.0f, 90.0f});
+    mRotateAllDisabledIcon = &mRotateAllButton->CreateIcon("disable.png",
+                                                           {-0.7f, 0.07f, UiLayer::buttonText},
+                                                           {1.2f, 1.2f},
+                                                           iconColor,
+                                                           iconShadowColor,
+                                                           Pht::Vec3{-0.0f, -0.2f, UiLayer::textShadow});
+    mRotateAllDisabledIcon->GetTransform().SetScale({1.0f, 0.3f, 1.0f});
+    mRotateAllDisabledIcon->GetTransform().SetRotation({0.0f, 0.0f, -45.0f});
+    mRotateAllOnText = &mRotateAllButton->CreateText({-0.05f, -0.23f, UiLayer::buttonText},
+                                                     "On",
+                                                     buttonTextProperties).GetSceneObject();
+    
+    mRotateAllOffText = &mRotateAllButton->CreateText({-0.05f, -0.23f, UiLayer::buttonText},
+                                                      "Off",
+                                                      buttonTextProperties).GetSceneObject();
 
     MenuButton::Style backButtonStyle;
     backButtonStyle.mPressedScale = 1.05f;
@@ -300,6 +322,59 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine,
     }
 
     mBackButton->CreateText({-0.46f, -0.23f, UiLayer::buttonText}, "Back", buttonTextProperties);
+}
+
+void SettingsMenuView::CreateLPieceIcon(Pht::IEngine& engine,
+                                        Pht::SceneObject& parent,
+                                        const Pht::Vec3& position,
+                                        const Pht::Vec2& blockSize,
+                                        float blockOffset) {
+    GuiUtils::CreateIcon(engine,
+                         *this,
+                         "block.png",
+                         position + Pht::Vec3{blockOffset / 2.0f, blockOffset / 2.0f, 0.0f},
+                         blockSize,
+                         parent);
+    GuiUtils::CreateIcon(engine,
+                         *this,
+                         "block.png",
+                         position + Pht::Vec3{-blockOffset / 2.0f, -blockOffset / 2.0f, 0.0f},
+                         blockSize,
+                         parent);
+    GuiUtils::CreateIcon(engine,
+                         *this,
+                         "block.png",
+                         position + Pht::Vec3{blockOffset / 2.0f, -blockOffset / 2.0f, 0.0f},
+                         blockSize,
+                         parent);
+}
+
+void SettingsMenuView::CreateLPieceIcon(Pht::IEngine& engine,
+                                        MenuButton& button,
+                                        const Pht::Vec3& position,
+                                        const Pht::Vec2& blockSize,
+                                        float blockOffset,
+                                        const Pht::Vec4& color,
+                                        const Pht::Vec4& shadowColor,
+                                        const Pht::Vec3& shadowOffset) {
+    button.CreateIcon("block.png",
+                      position + Pht::Vec3{blockOffset / 2.0f, blockOffset / 2.0f, 0.0f},
+                      blockSize,
+                      color,
+                      shadowColor,
+                      shadowOffset);
+    button.CreateIcon("block.png",
+                      position + Pht::Vec3{-blockOffset / 2.0f, -blockOffset / 2.0f, 0.0f},
+                      blockSize,
+                      color,
+                      shadowColor,
+                      shadowOffset);
+    button.CreateIcon("block.png",
+                      position + Pht::Vec3{blockOffset / 2.0f, -blockOffset / 2.0f, 0.0f},
+                      blockSize,
+                      color,
+                      shadowColor,
+                      shadowOffset);
 }
 
 void SettingsMenuView::EnableControlsButton() {
@@ -362,4 +437,14 @@ void SettingsMenuView::SetGhostPieceOnIsVisible(bool isVisible) {
 void SettingsMenuView::SetGhostPieceOffIsVisible(bool isVisible) {
     mGhostPieceOffText->SetIsVisible(isVisible);
     mGhostPieceDisabledIcon->SetIsVisible(isVisible);
+}
+
+void SettingsMenuView::SetRotateAllOnIsVisible(bool isVisible) {
+    mRotateAllOnText->SetIsVisible(isVisible);
+    mRotateAllDisabledIcon->SetIsVisible(!isVisible);
+}
+
+void SettingsMenuView::SetRotateAllOffIsVisible(bool isVisible) {
+    mRotateAllOffText->SetIsVisible(isVisible);
+    mRotateAllDisabledIcon->SetIsVisible(isVisible);
 }
