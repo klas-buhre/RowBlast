@@ -13,7 +13,7 @@ using namespace RowBlast;
 
 namespace {
     constexpr auto maxNumScanTries = Field::maxNumRows;
-    constexpr auto maxNumRowsInOneScreen = 19;
+    constexpr auto maxNumRowsInOneScreen = 18;
     const SubCell fullSubCell {Fill::Full};
 
     bool RowIsFull(const std::vector<Cell>& row) {

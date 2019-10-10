@@ -54,7 +54,7 @@ namespace RowBlast {
     public:
         static constexpr int maxNumColumns {9};
         static constexpr int maxNumRows {18};
-        static constexpr int numRowsUpToSpawningArea {13};
+        static constexpr int numRowsUpToSpawningArea {12};
         
         using CollisionPoints = Pht::StaticVector<Pht::IVec2, maxNumColumns * maxNumRows>;
 

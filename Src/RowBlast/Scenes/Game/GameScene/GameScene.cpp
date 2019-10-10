@@ -551,7 +551,7 @@ void GameScene::UpdateCameraPosition() {
     
     Pht::Vec2 scissorBoxSize {
         mFieldWidth + fieldPadding + FieldBorder::borderThickness + FieldBorder::frameThickness + scissorBoxPadding,
-        16.3f * mCellSize
+        15.3f * mCellSize
     };
 
     Pht::ScissorBox scissorBox {scissorBoxLowerLeft, scissorBoxSize};
