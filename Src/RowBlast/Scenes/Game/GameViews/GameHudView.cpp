@@ -136,7 +136,7 @@ GameHudView::GameHudView(Pht::IEngine& engine, const CommonResources& commonReso
 
     auto& switchButtonSceneObject = CreateSceneObject();
     GetRoot().AddChild(switchButtonSceneObject);
-    auto switchButtonSize = Pht::Vec2{180.0f, 60.0f} * GameHud::selectablePiecesScale;
+    auto switchButtonSize = Pht::Vec2{180.0f, 60.0f} * GameHud::selectablePiecesContainerScale;
     mSwitchButton = std::make_unique<Pht::Button>(switchButtonSceneObject,
                                                   switchButtonSize,
                                                   engine);

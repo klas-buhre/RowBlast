@@ -64,7 +64,7 @@ namespace {
         buttonSceneObject.SetIsVisible(false);
         buttonSceneObject.GetTransform().SetPosition(position);
 
-        auto buttonSize = size * GameHud::selectablePiecesScale;
+        auto buttonSize = size * GameHud::selectablePiecesContainerScale;
         return std::make_unique<Pht::Button>(buttonSceneObject, buttonSize, engine);
     }
     
@@ -393,24 +393,24 @@ void GameHud::CreateNextPiecesObject(Pht::Scene& scene,
     mNextPiecesContainer = &scene.CreateSceneObject(parentObject);
     
     auto& hudFrustumWidth = mEngine.GetRenderer().GetHudFrustumSize().x;
-    
+
     Pht::Vec3 position {
-        hudFrustumWidth / 2.0f - 0.945f,
+        hudFrustumWidth / 2.0f - 0.85f,
         CalculateLowerHudObjectYPosition(mEngine),
         UiLayer::root
     };
-    
+
     mNextPiecesContainer->GetTransform().SetPosition(position);
     
     mNextPiecesSceneObject = &scene.CreateSceneObject(*mNextPiecesContainer);
     auto& nextPiecesSceneObjectTransform = mNextPiecesSceneObject->GetTransform();
-    nextPiecesSceneObjectTransform.SetScale(nextPiecesScale);
-    nextPiecesSceneObjectTransform.SetPosition({0.0f, -0.75f, 0.0f});
+    nextPiecesSceneObjectTransform.SetScale(nextPiecesContainerScale);
+    nextPiecesSceneObjectTransform.SetPosition({0.0f, -1.15f, 0.0f});
 
     auto& nextPiecesRectangle = scene.CreateSceneObject(*mNextPiecesContainer);
     auto& hudRectangles = commonResources.GetGameHudRectangles();
     nextPiecesRectangle.SetRenderable(&hudRectangles.GetNextPiecesRectangle());
-    nextPiecesRectangle.GetTransform().SetPosition({-0.3f, -0.35f, UiLayer::piecesRectangle});
+    nextPiecesRectangle.GetTransform().SetPosition({-0.22f, -0.75f, UiLayer::piecesRectangle});
     
     Pht::TextProperties textProperties {
         commonResources.GetHussarFontSize20(PotentiallyZoomedScreen::Yes),
@@ -420,7 +420,7 @@ void GameHud::CreateNextPiecesObject(Pht::Scene& scene,
     
     auto& nextText = scene.CreateText("NEXT", textProperties);
     auto& nextTextSceneobject = nextText.GetSceneObject();
-    nextTextSceneobject.GetTransform().SetPosition({-0.5f, 0.84f, UiLayer::text});
+    nextTextSceneobject.GetTransform().SetPosition({-0.5f, 0.44f, UiLayer::text});
     mNextPiecesContainer->AddChild(nextTextSceneobject);
 
     CreatePreviewPieces(mNextPreviewPieces,
@@ -438,15 +438,15 @@ void GameHud::CreateSelectablePiecesObject(Pht::Scene& scene,
     mSelectablePiecesContainer->GetTransform().SetPosition(position);
     
     mSelectablePiecesSceneObject = &scene.CreateSceneObject(*mSelectablePiecesContainer);
-    mSelectablePiecesSceneObject->GetTransform().SetScale(selectablePiecesScale);
+    mSelectablePiecesSceneObject->GetTransform().SetScale(selectablePiecesContainerScale);
 
     mSelectablePiecesRectangle = &scene.CreateSceneObject(*mSelectablePiecesContainer);
     mSelectablePiecesRectangle->SetRenderable(&hudRectangles.GetSelectablePiecesRectangle());
-    mSelectablePiecesRectangle->GetTransform().SetPosition({0.335f, 0.0f, UiLayer::piecesRectangle});
+    mSelectablePiecesRectangle->GetTransform().SetPosition({0.375f, 0.0f, UiLayer::piecesRectangle});
     
     mPressedSelectablePiecesRectangle = &scene.CreateSceneObject(*mSelectablePiecesContainer);
     mPressedSelectablePiecesRectangle->SetRenderable(&hudRectangles.GetPressedSelectablePiecesRectangle());
-    mPressedSelectablePiecesRectangle->GetTransform().SetPosition({0.335f, 0.0f, UiLayer::piecesRectangle});
+    mPressedSelectablePiecesRectangle->GetTransform().SetPosition({0.375f, 0.0f, UiLayer::piecesRectangle});
     mPressedSelectablePiecesRectangle->SetIsVisible(false);
 
     CreatePreviewPieces(mSelectablePreviewPieces,
@@ -540,15 +540,15 @@ void GameHud::UpdateNextPreviewPieceGroup() {
         if (mNextPreviewPieces[2].mSceneObjectPool->IsActive()) {
             // Need to shift up the piece to the top if the previous next piece animation has not
             // finished yet.
-            UpdatePreviewPiece(mNextPreviewPieces[0], mNext2PiecesPreviousFrame[1], positions[0]);
+            UpdateNextPreviewPiece(mNextPreviewPieces[0], mNext2PiecesPreviousFrame[1], positions[0]);
         }
 
-        UpdatePreviewPiece(mNextPreviewPieces[1], next2Pieces[0], positions[1]);
-        UpdatePreviewPiece(mNextPreviewPieces[2], next2Pieces[1], positions[2]);
+        UpdateNextPreviewPiece(mNextPreviewPieces[1], next2Pieces[0], positions[1]);
+        UpdateNextPreviewPiece(mNextPreviewPieces[2], next2Pieces[1], positions[2]);
     } else if (next2Pieces != mNext2PiecesPreviousFrame) {
-        UpdatePreviewPiece(mNextPreviewPieces[0], next2Pieces[0], positions[0]);
-        UpdatePreviewPiece(mNextPreviewPieces[1], next2Pieces[1], positions[1]);
-        UpdatePreviewPiece(mNextPreviewPieces[2], nullptr, positions[2]);
+        UpdateNextPreviewPiece(mNextPreviewPieces[0], next2Pieces[0], positions[0]);
+        UpdateNextPreviewPiece(mNextPreviewPieces[1], next2Pieces[1], positions[1]);
+        UpdateNextPreviewPiece(mNextPreviewPieces[2], nullptr, positions[2]);
     }
     
     mNext2PiecesPreviousFrame = next2Pieces;
@@ -603,12 +603,12 @@ void GameHud::UpdateSelectablePreviewPieceGroup() {
             UpdateSelectable1PreviewPiece(mSelectablePreviewPieces[3], selectablePieces[1], positions[4]);
         }
     } else if (previewPieceAnimationToStart == PreviewPieceAnimationToStart::NextPieceAndRefillActive) {
-        UpdatePreviewPiece(mSelectablePreviewPieces[0], nullptr, positions[1]);
+        UpdateSelectablePreviewPiece(mSelectablePreviewPieces[0], nullptr, positions[1]);
     } else if (previewPieceAnimationToStart == PreviewPieceAnimationToStart::NextPieceAndRefillSelectable0) {
-        UpdatePreviewPiece(mSelectablePreviewPieces[1], nullptr, positions[2]);
+        UpdateSelectablePreviewPiece(mSelectablePreviewPieces[1], nullptr, positions[2]);
     } else if (previewPieceAnimationToStart == PreviewPieceAnimationToStart::NextPieceAndRefillSelectable1) {
-        UpdatePreviewPiece(mSelectablePreviewPieces[2], nullptr, positions[3]);
-        UpdatePreviewPiece(mSelectablePreviewPieces[3], nullptr, positions[3]);
+        UpdateSelectablePreviewPiece(mSelectablePreviewPieces[2], nullptr, positions[3]);
+        UpdateSelectablePreviewPiece(mSelectablePreviewPieces[3], nullptr, positions[3]);
     } else if (piecesChanged || shouldStartRemoveActivePieceAnimation) {
         if (shouldStartRemoveActivePieceAnimation) {
             UpdateActivePreviewPiece(mSelectablePreviewPieces[0], mActivePiecePreviousFrame, positions[1]);
@@ -618,7 +618,7 @@ void GameHud::UpdateSelectablePreviewPieceGroup() {
 
         UpdateSelectable0PreviewPiece(mSelectablePreviewPieces[1], selectablePieces[0], positions[2]);
         UpdateSelectable1PreviewPiece(mSelectablePreviewPieces[2], selectablePieces[1], positions[3]);
-        UpdatePreviewPiece(mSelectablePreviewPieces[3], nullptr, positions[4]);
+        UpdateSelectablePreviewPiece(mSelectablePreviewPieces[3], nullptr, positions[4]);
     }
     
     mSelectablePiecesPreviousFrame = selectablePieces;
@@ -629,26 +629,39 @@ void GameHud::UpdateActivePreviewPiece(PreviewPiece& previewPiece,
                                        const Piece* pieceType,
                                        const Pht::Vec3& position) {
     mActivePreviewPiece = &previewPiece.mSceneObjectPool->GetContainerSceneObject();
-    UpdatePreviewPiece(previewPiece, pieceType, position);
+    UpdateSelectablePreviewPiece(previewPiece, pieceType, position);
 }
 
 void GameHud::UpdateSelectable0PreviewPiece(PreviewPiece& previewPiece,
                                             const Piece* pieceType,
                                             const Pht::Vec3& position) {
     mSelectable0PreviewPiece = &previewPiece.mSceneObjectPool->GetContainerSceneObject();
-    UpdatePreviewPiece(previewPiece, pieceType, position);
+    UpdateSelectablePreviewPiece(previewPiece, pieceType, position);
 }
 
 void GameHud::UpdateSelectable1PreviewPiece(PreviewPiece& previewPiece,
                                             const Piece* pieceType,
                                             const Pht::Vec3& position) {
     mSelectable1PreviewPiece = &previewPiece.mSceneObjectPool->GetContainerSceneObject();
-    UpdatePreviewPiece(previewPiece, pieceType, position);
+    UpdateSelectablePreviewPiece(previewPiece, pieceType, position);
+}
+
+void GameHud::UpdateSelectablePreviewPiece(PreviewPiece& previewPiece,
+                                           const Piece* pieceType,
+                                           const Pht::Vec3& position) {
+    UpdatePreviewPiece(previewPiece, pieceType, position, selectablePiecesScale);
+}
+
+void GameHud::UpdateNextPreviewPiece(PreviewPiece& previewPiece,
+                                     const Piece* pieceType,
+                                     const Pht::Vec3& position) {
+    UpdatePreviewPiece(previewPiece, pieceType, position, nextPiecesScale);
 }
 
 void GameHud::UpdatePreviewPiece(PreviewPiece& previewPiece,
                                  const Piece* pieceType,
-                                 const Pht::Vec3& position) {
+                                 const Pht::Vec3& position,
+                                 float pieceScale) {
     previewPiece.mBombSceneObject = nullptr;
     previewPiece.mRowBombSceneObject = nullptr;
     
@@ -666,7 +679,7 @@ void GameHud::UpdatePreviewPiece(PreviewPiece& previewPiece,
     
     previewPiece.mSceneObjectPool->SetIsActive(true);
     
-    auto scale = pieceType->GetPreviewCellSize() / cellSize;
+    auto scale = pieceScale * pieceType->GetPreviewCellSize() / cellSize;
     baseTransform.SetScale(scale);
     previewPiece.mScale = scale;
     previewPiece.mSceneObjectPool->ReclaimAll();
@@ -731,16 +744,16 @@ void GameHud::OnSwitchPieceAnimationFinished() {
     UpdateActivePreviewPiece(mSelectablePreviewPieces[0], activePiece, selectablePositions[1]);
     UpdateSelectable0PreviewPiece(mSelectablePreviewPieces[1], selectablePieces[0], selectablePositions[2]);
     UpdateSelectable1PreviewPiece(mSelectablePreviewPieces[2], selectablePieces[1], selectablePositions[3]);
-    UpdatePreviewPiece(mSelectablePreviewPieces[3], nullptr, selectablePositions[4]);
+    UpdateSelectablePreviewPiece(mSelectablePreviewPieces[3], nullptr, selectablePositions[4]);
 }
 
 void GameHud::OnNextPieceAnimationFinished() {
     auto& next2Pieces = mGameLogic.GetNextPieceGenerator().GetNext2Pieces();
     auto& nextPositions = mNextPreviewPiecesRelativePositions;
 
-    UpdatePreviewPiece(mNextPreviewPieces[0], next2Pieces[0], nextPositions[0]);
-    UpdatePreviewPiece(mNextPreviewPieces[1], next2Pieces[1], nextPositions[1]);
-    UpdatePreviewPiece(mNextPreviewPieces[2], nullptr, nextPositions[2]);
+    UpdateNextPreviewPiece(mNextPreviewPieces[0], next2Pieces[0], nextPositions[0]);
+    UpdateNextPreviewPiece(mNextPreviewPieces[1], next2Pieces[1], nextPositions[1]);
+    UpdateNextPreviewPiece(mNextPreviewPieces[2], nullptr, nextPositions[2]);
 }
 
 void GameHud::RemovePreviewPiece(PreviewPieceIndex previewPieceIndex) {

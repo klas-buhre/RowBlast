@@ -145,9 +145,13 @@ void PreviewPiecesAnimation::StartNextPieceAnimation(int destinationSlotInSelect
         .mLower = nextPiecesPositionsInHud[2]
     };
     
+    auto scaleChange =
+        (GameHud::selectablePiecesScale * selectablesSceneObjectScale) /
+        (GameHud::nextPiecesScale * nextSceneObjectScale);
+    
     mNextPieceAnimation.StartNextPieceAnimation(hud.GetNextPreviewPieces(),
                                                 nextPiecesPositions,
-                                                selectablesSceneObjectScale / nextSceneObjectScale);
+                                                scaleChange);
 }
 
 void PreviewPiecesAnimation::StartSwitchingPiecesAnimation() {

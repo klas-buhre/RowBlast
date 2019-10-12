@@ -178,8 +178,10 @@ namespace RowBlast {
 
         static constexpr float movesContainerScale {1.1f};
         static constexpr float movesTextStaticScale {1.3f};
+        static constexpr float nextPiecesContainerScale {0.75f};
         static constexpr float nextPiecesScale {0.75f};
-        static constexpr float selectablePiecesScale {1.1f};
+        static constexpr float selectablePiecesContainerScale {1.1f};
+        static constexpr float selectablePiecesScale {1.2f};
 
     private:
         void CreateLightAndCamera(Pht::Scene& scene, Pht::SceneObject& parentObject, int hudLayer);
@@ -234,9 +236,16 @@ namespace RowBlast {
         void UpdateSelectable1PreviewPiece(PreviewPiece& previewPiece,
                                            const Piece* pieceType,
                                            const Pht::Vec3& position);
+        void UpdateSelectablePreviewPiece(PreviewPiece& previewPiece,
+                                          const Piece* pieceType,
+                                          const Pht::Vec3& position);
+        void UpdateNextPreviewPiece(PreviewPiece& previewPiece,
+                                    const Piece* pieceType,
+                                    const Pht::Vec3& position);
         void UpdatePreviewPiece(PreviewPiece& previewPiece,
                                 const Piece* pieceType,
-                                const Pht::Vec3& position);
+                                const Pht::Vec3& position,
+                                float pieceScale);
         int GetMovesLeft() const;
         
         Pht::IEngine& mEngine;

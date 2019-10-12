@@ -65,12 +65,12 @@ namespace {
     constexpr auto tiltFactor = 0.9f;
     const Pht::Vec2 pauseButtonRectangleSize {1.5f, 1.5f};
     const Pht::Vec2 nextPiecesRectangleSize {
-        3.35f * GameHud::nextPiecesScale, 3.3f * GameHud::selectablePiecesScale
+        3.35f * GameHud::nextPiecesContainerScale, 3.3f * GameHud::selectablePiecesContainerScale
     };
     const auto selectablePiecesRectangleSize =
-        Pht::Vec2{8.33f, 2.4f} * GameHud::selectablePiecesScale;
+        Pht::Vec2{8.6f, 3.0f} * GameHud::selectablePiecesContainerScale;
     constexpr auto selectablePiecesRectangleTilt =
-        0.6f * GameHud::selectablePiecesScale * tiltFactor;
+        0.75f * GameHud::selectablePiecesContainerScale * tiltFactor;
     const auto nextPiecesRectangleTilt =
         selectablePiecesRectangleTilt * nextPiecesRectangleSize.y / selectablePiecesRectangleSize.y;
 

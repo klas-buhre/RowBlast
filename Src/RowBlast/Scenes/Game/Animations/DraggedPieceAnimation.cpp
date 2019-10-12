@@ -65,7 +65,7 @@ void DraggedPieceAnimation::StartGoBackAnimation(PreviewPieceIndex draggedPieceI
     auto& pieceType = mDraggedPiece.GetPieceType();
     auto cellSize = mScene.GetCellSize();
     mStartScale = 1.0f;
-    mStopScale = pieceType.GetPreviewCellSize() / cellSize;
+    mStopScale = GameHud::selectablePiecesScale * pieceType.GetPreviewCellSize() / cellSize;
 
     auto& cameraPosition = mScene.GetCamera().GetSceneObject().GetTransform().GetPosition();
     auto& renderer = mEngine.GetRenderer();

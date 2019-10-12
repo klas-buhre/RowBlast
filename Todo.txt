@@ -47,10 +47,10 @@ Ongoing tasks:
     -Then release with microtransactions enabled. Market that version.
 
     -Do:
-        -1. Make the selectable pieces a bit bigger and the next pices a bit smaller. Then the risk
-         of confusing the next with a selectables is reduced and you should not start a drag from
-         the next pieces. Also, the I-pieces can then be vertical istead of horizontal to reduce
-         the number of rotates.
+        -1.
+         Maybe the bombs should not be as big as they are now? Or maybe they should.
+         Also, the I-pieces can then be vertical istead of horizontal to reduce the number of
+         rotates.
         -2. Just try to reduce the risk mixing up the rotate tap with at drag start. Maybe sort out
          by tuning dragBeginDistanceThreshold. Also, could have a threshold distance that the piece
          must travel in order to be placed, or a minimum drag time. Maybe the touch should be
