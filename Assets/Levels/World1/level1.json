@@ -42,7 +42,7 @@
         },
         {
             "position": [2, 0],
-            "rotation": 90,
+            "rotation": 0,
             "piece": "LongI"
         }
     ],
@@ -93,22 +93,22 @@
             "alternatives": [
                 {
                     "position": [0, 3],
-                    "rotation": 0,
+                    "rotation": 90,
                     "score": 200.0
                 },
                 {
                     "position": [4, 5],
-                    "rotation": 90,
+                    "rotation": 0,
                     "score": 200.0
                 },
                 {
                     "position": [-2, 5],
-                    "rotation": 90,
+                    "rotation": 0,
                     "score": 0.0
                 },
                 {
                     "position": [0, 5],
-                    "rotation": 90,
+                    "rotation": 0,
                     "score": 0.0
                 }
             ]

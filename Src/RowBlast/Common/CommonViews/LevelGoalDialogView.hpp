@@ -64,6 +64,7 @@ namespace RowBlast {
 
     private:
         struct LevelStartPreviewPiece {
+            Pht::SceneObject* mSceneObject {nullptr};
             std::unique_ptr<SceneObjectPool> mBlockSceneObjects;
             Pht::SceneObject* mBombSceneObject {nullptr};
             Pht::SceneObject* mRowBombSceneObject {nullptr};

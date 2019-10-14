@@ -14,6 +14,8 @@ namespace RowBlast {
     class LongIPiece: public Piece {
     public:
         LongIPiece(Pht::IEngine& engine, const CommonResources& commonResources);
+        
+        Rotation GetSpawnRotation() const override;
     };
 }
 

@@ -1278,9 +1278,9 @@ Pht::SceneObject& HowToPlayDialogView::CreateIPreviewPiece(const Pht::Vec3& posi
                                                                     BlockBrightness::Normal);
 
     auto halfCellSize = 0.5f;
-    CreateBlock({-halfCellSize * 2.0f, 0.0f, 0.0f}, blockRenderable, iPiece);
+    CreateBlock({0.0f, -halfCellSize * 2.0f, 0.0f}, blockRenderable, iPiece);
     CreateBlock({0.0f, 0.0f, 0.0f}, blockRenderable, iPiece);
-    CreateBlock({halfCellSize * 2.0f, 0.0f, 0.0f}, blockRenderable, iPiece);
+    CreateBlock({0.0f, halfCellSize * 2.0f, 0.0f}, blockRenderable, iPiece);
     
     return iPiece;
 }

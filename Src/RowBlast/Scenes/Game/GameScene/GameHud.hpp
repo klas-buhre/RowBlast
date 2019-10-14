@@ -245,7 +245,7 @@ namespace RowBlast {
         void UpdatePreviewPiece(PreviewPiece& previewPiece,
                                 const Piece* pieceType,
                                 const Pht::Vec3& position,
-                                float pieceScale);
+                                float slotScale);
         int GetMovesLeft() const;
         
         Pht::IEngine& mEngine;

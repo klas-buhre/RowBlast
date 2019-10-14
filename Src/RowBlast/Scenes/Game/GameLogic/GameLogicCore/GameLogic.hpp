@@ -215,8 +215,10 @@ namespace RowBlast {
         void ManageBlastArea();
         void UpdateLevelProgress();
         Pht::Vec2 CalculateFallingPieceSpawnPos(const Piece& pieceType,
+                                                Rotation rotation,
                                                 FallingPieceSpawnReason fallingPieceSpawnReason);
-        Rotation CalculateFallingPieceRotation(FallingPieceSpawnReason fallingPieceSpawnReason);
+        Rotation CalculateFallingPieceRotation(const Piece& pieceType,
+                                               FallingPieceSpawnReason fallingPieceSpawnReason);
         void HandleCascading();
         void UpdateFieldExplosionsStates();
         void HandleSettingsChange();
@@ -244,7 +246,7 @@ namespace RowBlast {
         bool LevelAllowsClearingFilledRows() const;
         void PlayLandPieceSound();
         void RemoveBlocksInsideTheShield();
-        bool IsThereRoomToSwitchPiece(const Piece& pieceType);
+        bool IsThereRoomToSwitchPiece(const Piece& pieceType, Rotation rotation);
         void UpdateDraggedGhostPieceRowAndBlastArea();
         const Move* GetValidMoveBelowDraggedPiece(int& ghostPieceRow);
         void CancelDraggingBecausePieceLands();

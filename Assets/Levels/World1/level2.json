@@ -25,7 +25,7 @@
     "predeterminedMoves": [
         {
             "position": [2, 9],
-            "rotation": 90,
+            "rotation": 0,
             "piece": "I"
         },
         {

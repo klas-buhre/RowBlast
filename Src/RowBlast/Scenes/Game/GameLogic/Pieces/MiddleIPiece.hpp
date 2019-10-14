@@ -14,6 +14,8 @@ namespace RowBlast {
     class MiddleIPiece: public Piece {
     public:
         MiddleIPiece(Pht::IEngine& engine, const CommonResources& commonResources);
+        
+        Rotation GetSpawnRotation() const override;
     };
 }
 

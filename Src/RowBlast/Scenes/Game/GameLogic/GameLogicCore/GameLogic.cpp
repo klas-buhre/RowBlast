@@ -231,8 +231,10 @@ GameLogic::Result GameLogic::SpawnFallingPiece(FallingPieceSpawnReason fallingPi
     
     ShowFallingPiece();
     auto& pieceType = CalculatePieceType(fallingPieceSpawnReason);
-    auto spawnPosition = CalculateFallingPieceSpawnPos(pieceType, fallingPieceSpawnReason);
-    auto rotation = CalculateFallingPieceRotation(fallingPieceSpawnReason);
+    auto rotation = CalculateFallingPieceRotation(pieceType, fallingPieceSpawnReason);
+    auto spawnPosition = CalculateFallingPieceSpawnPos(pieceType,
+                                                       rotation,
+                                                       fallingPieceSpawnReason);
     mFallingPiece->Spawn(pieceType, spawnPosition, rotation, mLevel->GetSpeed());
     
     ManageMoveHistory(fallingPieceSpawnReason);
@@ -409,6 +411,7 @@ void GameLogic::ShowDraggedPiece() {
 }
 
 Pht::Vec2 GameLogic::CalculateFallingPieceSpawnPos(const Piece& pieceType,
+                                                   Rotation rotation,
                                                    FallingPieceSpawnReason fallingPieceSpawnReason) {
     auto startXPos = mField.GetNumColumns() / 2 - pieceType.GetGridNumColumns() / 2;
     
@@ -417,10 +420,10 @@ Pht::Vec2 GameLogic::CalculateFallingPieceSpawnPos(const Piece& pieceType,
          fallingPieceSpawnReason == FallingPieceSpawnReason::RespawnActiveAfterStopDraggingPiece) &&
         mLevel->GetSpeed() > 0.0f) {
             
-        auto pieceNumEmptyBottompRows = pieceType.GetDimensions(Rotation::Deg0).mYmin;
+        auto pieceNumEmptyBottompRows = pieceType.GetDimensions(rotation).mYmin;
         
         auto previousPieceNumEmptyBottomRows =
-            mFallingPiece->GetPieceType().GetDimensions(Rotation::Deg0).mYmin;
+            mFallingPiece->GetPieceType().GetDimensions(rotation).mYmin;
         
         auto yAdjust =
             static_cast<float>(previousPieceNumEmptyBottomRows - pieceNumEmptyBottompRows);
@@ -442,7 +445,7 @@ Pht::Vec2 GameLogic::CalculateFallingPieceSpawnPos(const Piece& pieceType,
             break;
     }
     
-    auto& pieceDimensions = pieceType.GetDimensions(Rotation::Deg0);
+    auto& pieceDimensions = pieceType.GetDimensions(rotation);
     auto pieceNumEmptyTopRows = pieceType.GetGridNumRows() - pieceDimensions.mYmax - 1;
     auto yPosAdjustment = pieceType.GetSpawnYPositionAdjustment();
     auto desiredUpperPos = topRowInScreen - 3 + pieceNumEmptyTopRows + yPosAdjustment;
@@ -454,14 +457,15 @@ Pht::Vec2 GameLogic::CalculateFallingPieceSpawnPos(const Piece& pieceType,
     return Pht::Vec2 {startXPos + halfColumn, static_cast<float>(startYPos)};
 }
 
-Rotation GameLogic::CalculateFallingPieceRotation(FallingPieceSpawnReason fallingPieceSpawnReason) {
+Rotation GameLogic::CalculateFallingPieceRotation(const Piece& pieceType,
+                                                  FallingPieceSpawnReason fallingPieceSpawnReason) {
     switch (fallingPieceSpawnReason) {
         case FallingPieceSpawnReason::BeginDraggingPiece:
             return mDraggedPiece->GetRotation();
         case FallingPieceSpawnReason::RespawnActiveAfterStopDraggingPiece:
             return mCurrentMove.mPreviewPieceRotations.mRotations.mActive;
         default:
-            return Rotation::Deg0;
+            return pieceType.GetSpawnRotation();
     }
 }
 
@@ -1090,7 +1094,8 @@ void GameLogic::RotatateAndAdjustPosition(Rotation newRotation,
 }
 
 void GameLogic::SwitchPiece() {
-    if (!IsThereRoomToSwitchPiece(*mCurrentMove.mSelectablePieces[0]) ||
+    auto& nextPieceType = *mCurrentMove.mSelectablePieces[0];
+    if (!IsThereRoomToSwitchPiece(nextPieceType, nextPieceType.GetSpawnRotation()) ||
         !mTutorial.IsSwitchPieceAllowed()) {
 
         return;
@@ -1110,15 +1115,16 @@ void GameLogic::SwitchPiece() {
     SpawnFallingPiece(FallingPieceSpawnReason::Switch);
 }
 
-bool GameLogic::IsThereRoomToSwitchPiece(const Piece& pieceType) {
+bool GameLogic::IsThereRoomToSwitchPiece(const Piece& pieceType, Rotation rotation) {
     PieceBlocks pieceBlocks {
-        pieceType.GetGrid(Rotation::Deg0),
+        pieceType.GetGrid(rotation),
         pieceType.GetGridNumRows(),
         pieceType.GetGridNumColumns()
     };
  
-    auto position = CalculateFallingPieceSpawnPos(pieceType, FallingPieceSpawnReason::Switch);
-    
+    auto position = CalculateFallingPieceSpawnPos(pieceType,
+                                                  rotation,
+                                                  FallingPieceSpawnReason::Switch);
     Pht::IVec2 intPosition {
         static_cast<int>(std::floor(position.x)),
         static_cast<int>(std::floor(position.y))
@@ -1218,7 +1224,7 @@ bool GameLogic::BeginDraggingPiece(PreviewPieceIndex draggedPieceIndex) {
     
     ShowDraggedPiece();
     auto& pieceType = mDraggedPiece->GetPieceType();
-    if (!IsThereRoomToSwitchPiece(pieceType)) {
+    if (!IsThereRoomToSwitchPiece(pieceType, mDraggedPiece->GetRotation())) {
         RemoveDraggedPiece();
         return false;
     }

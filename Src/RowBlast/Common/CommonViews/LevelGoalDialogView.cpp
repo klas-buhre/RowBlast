@@ -126,14 +126,14 @@ void LevelGoalDialogView::CreatePreviewPiecesContainer() {
     container.GetTransform().SetPosition({0.0f, 3.3f, UiLayer::block});
     
     for (auto& previewPiece: mPreviewPieces) {
-        previewPiece.mBlockSceneObjects =
-            std::make_unique<SceneObjectPool>(SceneObjectPoolKind::PreviewPieceBlocks, container);
-        previewPiece.mBlockSceneObjects->SetIsActive(false);
+        previewPiece.mSceneObject = &CreateSceneObject();
+        previewPiece.mSceneObject->GetTransform().SetRotation({-30.0f, -30.0f, 0.0f});
+        container.AddChild(*previewPiece.mSceneObject);
         
-        auto& blocksTransform =
-            previewPiece.mBlockSceneObjects->GetContainerSceneObject().GetTransform();
-
-        blocksTransform.SetRotation({-30.0f, -30.0f, 0.0f});
+        previewPiece.mBlockSceneObjects =
+            std::make_unique<SceneObjectPool>(SceneObjectPoolKind::PreviewPieceBlocks,
+                                              *previewPiece.mSceneObject);
+        previewPiece.mBlockSceneObjects->SetIsActive(false);
     }
     
     CreateGlowEffectsBehindPieces(container);
@@ -450,9 +450,10 @@ void LevelGoalDialogView::SetUpPreviewPiece(LevelStartPreviewPiece& previewPiece
     previewPiece.mBombSceneObject = nullptr;
     previewPiece.mRowBombSceneObject = nullptr;
 
+    previewPiece.mSceneObject->GetTransform().SetPosition(position);
     auto& containerObject = previewPiece.mBlockSceneObjects->GetContainerSceneObject();
     auto& baseTransform = containerObject.GetTransform();
-    baseTransform.SetPosition(position);
+    baseTransform.SetRotation({0.0f, 0.0f, RotationToDeg(pieceType.GetSpawnRotation())});
 
     previewPiece.mBlockSceneObjects->SetIsActive(true);
     

@@ -11,18 +11,18 @@ using namespace RowBlast;
 
 MiddleIPiece::MiddleIPiece(Pht::IEngine& engine, const CommonResources& commonResources) {
     FillGrid fillGrid = {
-        {Fill::Empty, Fill::Empty, Fill::Empty},
-        {Fill::Full,  Fill::Full,  Fill::Full},
-        {Fill::Empty, Fill::Empty, Fill::Empty}
+        {Fill::Empty, Fill::Full, Fill::Empty},
+        {Fill::Empty, Fill::Full, Fill::Empty},
+        {Fill::Empty, Fill::Full, Fill::Empty}
     };
     
     ClickGrid clickGrid = {
-        {0, 0, 0, 0, 0, 0},
-        {1, 1, 1, 1, 1, 1},
-        {1, 1, 1, 1, 1, 1},
-        {1, 1, 1, 1, 1, 1},
-        {1, 1, 1, 1, 1, 1},
-        {0, 0, 0, 0, 0, 0}
+        {0, 1, 1, 1, 1, 0},
+        {0, 1, 1, 1, 1, 0},
+        {0, 1, 1, 1, 1, 0},
+        {0, 1, 1, 1, 1, 0},
+        {0, 1, 1, 1, 1, 0},
+        {0, 1, 1, 1, 1, 0}
     };
     
     InitGrids(fillGrid, clickGrid, BlockColor::Green);
@@ -31,13 +31,13 @@ MiddleIPiece::MiddleIPiece(Pht::IEngine& engine, const CommonResources& commonRe
     
     GhostPieceBorder border {
         {{0, 0}, BorderSegmentKind::Start},
-        {{3, 0}, BorderSegmentKind::Lower},
-        {{3, 1}, BorderSegmentKind::Right},
-        {{0, 1}, BorderSegmentKind::Upper},
+        {{1, 0}, BorderSegmentKind::Lower},
+        {{1, 3}, BorderSegmentKind::Right},
+        {{0, 3}, BorderSegmentKind::Upper},
         {{0, 0}, BorderSegmentKind::Left}
     };
     
-    GhostPieceProducer ghostPieceProducer {engine, Pht::IVec2{3, 1}, commonResources};
+    GhostPieceProducer ghostPieceProducer {engine, Pht::IVec2{1, 3}, commonResources};
     ghostPieceProducer.DrawBorder(border, GetColor(), PressedGhostPiece::No);
     
     auto renderables = ghostPieceProducer.ProduceRenderables("MiddleIPiece");
@@ -47,4 +47,8 @@ MiddleIPiece::MiddleIPiece(Pht::IEngine& engine, const CommonResources& commonRe
     ghostPieceProducer.Clear();
     ghostPieceProducer.DrawBorder(border, GetColor(), PressedGhostPiece::Yes);
     SetPressedGhostPieceRenderable(ghostPieceProducer.ProducePressedRenderable());
+}
+
+Rotation MiddleIPiece::GetSpawnRotation() const {
+    return Rotation::Deg90;
 }

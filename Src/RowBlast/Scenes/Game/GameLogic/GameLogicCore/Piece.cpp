@@ -121,6 +121,10 @@ bool Piece::IsRowBomb() const {
     return false;
 }
 
+Rotation Piece::GetSpawnRotation() const {
+    return Rotation::Deg0;
+}
+
 int Piece::GetSpawnYPositionAdjustment() const {
     return 0;
 }

@@ -661,7 +661,7 @@ void GameHud::UpdateNextPreviewPiece(PreviewPiece& previewPiece,
 void GameHud::UpdatePreviewPiece(PreviewPiece& previewPiece,
                                  const Piece* pieceType,
                                  const Pht::Vec3& position,
-                                 float pieceScale) {
+                                 float slotScale) {
     previewPiece.mBombSceneObject = nullptr;
     previewPiece.mRowBombSceneObject = nullptr;
     
@@ -679,7 +679,7 @@ void GameHud::UpdatePreviewPiece(PreviewPiece& previewPiece,
     
     previewPiece.mSceneObjectPool->SetIsActive(true);
     
-    auto scale = pieceScale * pieceType->GetPreviewCellSize() / cellSize;
+    auto scale = slotScale * pieceType->GetPreviewCellSize() / cellSize;
     baseTransform.SetScale(scale);
     previewPiece.mScale = scale;
     previewPiece.mSceneObjectPool->ReclaimAll();
