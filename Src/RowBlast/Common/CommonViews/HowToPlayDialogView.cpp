@@ -227,8 +227,8 @@ void HowToPlayDialogView::CreateSwitchPiecePage(const CommonResources& commonRes
                                                  *handAnimation);
 
     auto& textProperties = guiResources.GetSmallWhiteTextProperties(zoom);
-    CreateText({-4.05f, -5.4f, UiLayer::text}, "Tap the switch button or", textProperties, container);
-    CreateText({-4.05f, -6.475f, UiLayer::text}, "swipe up to switch piece.", textProperties, container);
+    CreateText({-4.05f, -5.8f, UiLayer::text}, "Tap the switch button or", textProperties, container);
+    CreateText({-4.05f, -6.875f, UiLayer::text}, "swipe up to switch piece.", textProperties, container);
     
     container.AddChild(CreateFilledCircleIcon(static_cast<int>(mPages.size()), true));
     
@@ -892,7 +892,7 @@ Pht::Animation& HowToPlayDialogView::CreateSwitchPieceAnimation(Pht::SceneObject
     auto& gameHudRectangles = commonResources.GetGameHudRectangles();
     
     auto& selectablePieces = CreateSceneObject();
-    selectablePieces.GetTransform().SetPosition({-0.4f, -5.775f, UiLayer::panel});
+    selectablePieces.GetTransform().SetPosition({-0.4f, -5.975f, UiLayer::panel});
     selectablePieces.GetTransform().SetScale(0.71f);
     container.AddChild(selectablePieces);
 
@@ -901,12 +901,15 @@ Pht::Animation& HowToPlayDialogView::CreateSwitchPieceAnimation(Pht::SceneObject
     selectablePiecesRectangle.GetTransform().SetPosition({0.37f, 0.0f, 0.0f});
     selectablePieces.AddChild(selectablePiecesRectangle);
 
+    auto& selectablePiecesSceneObject = CreateSceneObject();
+    selectablePiecesSceneObject.GetTransform().SetScale(1.1f);
     Pht::Vec3 slot1Pos {-2.07f, 0.0f, UiLayer::buttonText};
     Pht::Vec3 slot2Pos {0.72f, 0.0f, UiLayer::buttonText};
     Pht::Vec3 slot3Pos {3.51f, 0.0f, UiLayer::buttonText};
-    auto& dPreviewPiece = CreateDPreviewPiece(slot3Pos, selectablePieces, pieceResources);
-    auto& iPreviewPiece = CreateIPreviewPiece(slot2Pos, selectablePieces, pieceResources);
-    auto& lPreviewPiece = CreateLPreviewPiece(slot1Pos, selectablePieces, pieceResources);
+    auto& dPreviewPiece = CreateDPreviewPiece(slot3Pos, selectablePiecesSceneObject, pieceResources);
+    auto& iPreviewPiece = CreateIPreviewPiece(slot2Pos, selectablePiecesSceneObject, pieceResources);
+    auto& lPreviewPiece = CreateLPreviewPiece(slot1Pos, selectablePiecesSceneObject, pieceResources);
+    selectablePieces.AddChild(selectablePiecesSceneObject);
 
     auto switch1Time = 1.2f;
     auto switch2Time = 3.05f;
@@ -1220,7 +1223,7 @@ Pht::SceneObject& HowToPlayDialogView::CreateLPreviewPiece(const Pht::Vec3& posi
     auto& transform = lPiece.GetTransform();
     transform.SetPosition(position);
     transform.SetRotation({10.0f, 0.0f, 0.0f});
-    transform.SetScale(0.60f);
+    transform.SetScale(0.72f);
     
     auto& blockRenderable = pieceResources.GetBlockRenderableObject(BlockKind::Full,
                                                                     BlockColor::Yellow,
@@ -1243,7 +1246,7 @@ Pht::SceneObject& HowToPlayDialogView::CreateDPreviewPiece(const Pht::Vec3& posi
     auto& transform = dPiece.GetTransform();
     transform.SetPosition(position);
     transform.SetRotation({10.0f, 0.0f, 0.0f});
-    transform.SetScale(0.6f);
+    transform.SetScale(0.72f);
     
     auto& blockRenderable = pieceResources.GetBlockRenderableObject(BlockKind::Full,
                                                                     BlockColor::Red,
@@ -1268,7 +1271,7 @@ Pht::SceneObject& HowToPlayDialogView::CreateIPreviewPiece(const Pht::Vec3& posi
     auto& transform = iPiece.GetTransform();
     transform.SetPosition(position);
     transform.SetRotation({10.0f, 0.0f, 0.0f});
-    transform.SetScale(0.6f);
+    transform.SetScale(0.72f);
     
     auto& blockRenderable = pieceResources.GetBlockRenderableObject(BlockKind::Full,
                                                                     BlockColor::Green,

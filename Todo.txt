@@ -47,7 +47,7 @@ Ongoing tasks:
     -Then release with microtransactions enabled. Market that version.
 
     -Do:
-        -1.
+        -1. 
          Maybe the bombs should not be as big as they are now? Or maybe they should.
          Also, the I-pieces can then be vertical istead of horizontal to reduce the number of
          rotates.
