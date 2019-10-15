@@ -15,7 +15,8 @@ namespace RowBlast {
     public:
         ShortIPiece(Pht::IEngine& engine, const CommonResources& commonResources);
         
-        bool NeedsDownAdjustmentInHud() const override;
+        bool NeedsLeftAdjustmentInHud() const override;
+        Rotation GetSpawnRotation() const override;
     };
 }
 

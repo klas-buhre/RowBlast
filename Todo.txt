@@ -47,7 +47,6 @@ Ongoing tasks:
     -Then release with microtransactions enabled. Market that version.
 
     -Do:
-        -1. Also, the small I and L could be vertical.
         -2. Just try to reduce the risk mixing up the rotate tap with at drag start. Maybe sort out
          by tuning dragBeginDistanceThreshold. Also, could have a threshold distance that the piece
          must travel in order to be placed, or a minimum drag time. Maybe the touch should be
@@ -62,9 +61,10 @@ Ongoing tasks:
          can be completely removed.
         -4. Change the map music track.
         -5. Release.
-        -Update the tutorial with drag controls.
-        -Replace bad levels in world 1 with levels of width 9 and asteroid levels.
-        -6. Release.
+        -6. Send mail to publishers.
+        -7. Update the tutorial with drag controls.
+        -8. Replace bad levels in world 1 with levels of width 9 and asteroid levels.
+        -9. Release.
 
     -Mid-term future:
         -Sometimes moves that seem feasible are unreachable due to the way pieces are rotated by the AI.
