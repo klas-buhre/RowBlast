@@ -37,7 +37,7 @@
         },
         {
             "position": [0, 5],
-            "rotation": 90,
+            "rotation": 0,
             "piece": "MirroredSeven"
         },
         {
@@ -68,22 +68,22 @@
             "alternatives": [
                 {
                     "position": [1, 6],
-                    "rotation": 270,
+                    "rotation": 180,
                     "score": 200.0
                 },
                 {
                     "position": [3, 7],
-                    "rotation": 270,
+                    "rotation": 180,
                     "score": 200.0
                 },
                 {
                     "position": [4, 7],
-                    "rotation": 90,
+                    "rotation": 0,
                     "score": 200.0
                 },
                 {
                     "position": [4, 6],
-                    "rotation": 0,
+                    "rotation": 270,
                     "score": 0.0
                 }
             ]

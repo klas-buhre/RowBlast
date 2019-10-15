@@ -354,7 +354,7 @@ void GhostPieceProducer::DrawLowerRightConcaveCornerBorder(const Pht::IVec2& seg
     mRasterizer->DrawRectangle(upperRight2, lowerLeft2, mBorderColor, Pht::DrawOver::Yes);
 }
 
-void GhostPieceProducer::DrawConnectionForSeven(const Pht::IVec2& segmentPosition) {
+void GhostPieceProducer::DrawConnectionForMirroredSeven(const Pht::IVec2& segmentPosition) {
     auto tiltedHalfmBorderWidth = std::sqrt(2.0f) * (mConnectionBorderWidth / 2.0f);
     
     Pht::Vec2 lowerLeft1 {
@@ -382,7 +382,7 @@ void GhostPieceProducer::DrawConnectionForSeven(const Pht::IVec2& segmentPositio
     mRasterizer->DrawTiltedTrapezoid315(upperRight2, lowerLeft2, mConnectionBorderWidth / 2.0f, mBorderColor, Pht::DrawOver::Yes);
 }
 
-void GhostPieceProducer::DrawConnectionForMirroredSeven(const Pht::IVec2& segmentPosition) {
+void GhostPieceProducer::DrawConnectionForSeven(const Pht::IVec2& segmentPosition) {
     auto tiltedHalfmBorderWidth = std::sqrt(2.0f) * (mConnectionBorderWidth / 2.0f);
     
     Pht::Vec2 upperLeft1 {

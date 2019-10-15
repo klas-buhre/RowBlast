@@ -65,7 +65,8 @@ namespace RowBlast {
         virtual Rotation GetSpawnRotation() const;
         virtual int GetSpawnYPositionAdjustment() const;
         virtual bool PositionCanBeAdjusteInMovesSearch() const;
-        virtual bool NeedsUpAdjustmentInHud() const;
+        virtual bool NeedsRightAdjustmentInHud() const;
+        virtual bool NeedsLeftAdjustmentInHud() const;
         virtual bool NeedsDownAdjustmentInHud() const;
 
         BlockColor GetColor() const {

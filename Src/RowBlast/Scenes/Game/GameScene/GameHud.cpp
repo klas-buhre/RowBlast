@@ -695,13 +695,15 @@ void GameHud::UpdatePreviewPiece(PreviewPiece& previewPiece,
         -static_cast<float>(pieceNumRows) * cellSize / 2.0f + cellSize / 2.0f,
         0.0f
     };
-    
-    if (pieceType->NeedsUpAdjustmentInHud()) {
-        lowerLeft.y += cellSize / 2.0f;
+
+    if (pieceType->NeedsRightAdjustmentInHud()) {
+        lowerLeft.x += cellSize / 2.0f;
+    } else if (pieceType->NeedsLeftAdjustmentInHud()) {
+        lowerLeft.x -= cellSize / 2.0f;
     } else if (pieceType->NeedsDownAdjustmentInHud()) {
         lowerLeft.y -= cellSize / 2.0f;
     }
-    
+
     for (auto row = 0; row < pieceNumRows; row++) {
         for (auto column = 0; column < pieceNumColumns; column++) {
             auto& subCell = grid[row][column].mFirstSubCell;

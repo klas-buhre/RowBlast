@@ -133,7 +133,11 @@ bool Piece::PositionCanBeAdjusteInMovesSearch() const {
     return true;
 }
 
-bool Piece::NeedsUpAdjustmentInHud() const {
+bool Piece::NeedsRightAdjustmentInHud() const {
+    return false;
+}
+
+bool Piece::NeedsLeftAdjustmentInHud() const {
     return false;
 }
 

@@ -47,8 +47,7 @@ Ongoing tasks:
     -Then release with microtransactions enabled. Market that version.
 
     -Do:
-        -1. Maybe the seven pices should be vertical too with the long ends down. Also, the small I
-         and L.
+        -1. Also, the small I and L could be vertical.
         -2. Just try to reduce the risk mixing up the rotate tap with at drag start. Maybe sort out
          by tuning dragBeginDistanceThreshold. Also, could have a threshold distance that the piece
          must travel in order to be placed, or a minimum drag time. Maybe the touch should be

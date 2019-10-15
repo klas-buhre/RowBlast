@@ -12,35 +12,35 @@ using namespace RowBlast;
 MirroredSevenPiece::MirroredSevenPiece(Pht::IEngine& engine,
                                        const CommonResources& commonResources) {
     FillGrid fillGrid = {
-        {Fill::Full,  Fill::Empty, Fill::Empty},
-        {Fill::Empty, Fill::Full,  Fill::Full},
-        {Fill::Empty, Fill::Empty, Fill::Empty}
+        {Fill::Empty, Fill::Empty, Fill::Full},
+        {Fill::Empty, Fill::Full,  Fill::Empty},
+        {Fill::Empty, Fill::Full,  Fill::Empty}
     };
     
     ClickGrid clickGrid = {
-        {1, 1, 1, 1, 1, 1},
-        {1, 1, 1, 1, 1, 1},
-        {1, 1, 1, 1, 1, 1},
-        {1, 1, 1, 1, 1, 1},
-        {0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0}
+        {0, 0, 1, 1, 1, 1},
+        {0, 0, 1, 1, 1, 1},
+        {0, 0, 1, 1, 1, 1},
+        {0, 0, 1, 1, 1, 1},
+        {0, 0, 1, 1, 1, 1},
+        {0, 0, 1, 1, 1, 1}
     };
 
     InitGrids(fillGrid, clickGrid, BlockColor::Green);
     SetPreviewCellSize(0.6f);
     
     GhostPieceBorder border {
-        {{0, 2}, BorderSegmentKind::Start},
-        {{1, 2}, BorderSegmentKind::Lower},
-        {{1, 3}, BorderSegmentKind::Right},
-        {{0, 3}, BorderSegmentKind::Upper},
-        {{0, 2}, BorderSegmentKind::Left},
-        {{1, 1}, BorderSegmentKind::Start},
-        {{3, 1}, BorderSegmentKind::Lower},
-        {{3, 2}, BorderSegmentKind::Right},
+        {{1, 0}, BorderSegmentKind::Start},
+        {{2, 0}, BorderSegmentKind::Lower},
+        {{2, 2}, BorderSegmentKind::Right},
         {{1, 2}, BorderSegmentKind::Upper},
-        {{1, 1}, BorderSegmentKind::Left},
-        {{1, 2}, BorderSegmentKind::ConnectionForMirroredSeven}
+        {{1, 0}, BorderSegmentKind::Left},
+        {{2, 2}, BorderSegmentKind::Start},
+        {{3, 2}, BorderSegmentKind::Lower},
+        {{3, 3}, BorderSegmentKind::Right},
+        {{2, 3}, BorderSegmentKind::Upper},
+        {{2, 2}, BorderSegmentKind::Left},
+        {{2, 2}, BorderSegmentKind::ConnectionForMirroredSeven}
     };
     
     GhostPieceProducer ghostPieceProducer {engine, Pht::IVec2{3, 3}, commonResources};
@@ -55,6 +55,10 @@ MirroredSevenPiece::MirroredSevenPiece(Pht::IEngine& engine,
     SetPressedGhostPieceRenderable(ghostPieceProducer.ProducePressedRenderable());
 }
 
-bool MirroredSevenPiece::NeedsDownAdjustmentInHud() const {
+bool MirroredSevenPiece::NeedsLeftAdjustmentInHud() const {
     return true;
+}
+
+Rotation MirroredSevenPiece::GetSpawnRotation() const {
+    return Rotation::Deg270;
 }

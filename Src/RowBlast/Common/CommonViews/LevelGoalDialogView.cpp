@@ -474,8 +474,10 @@ void LevelGoalDialogView::SetUpPreviewPiece(LevelStartPreviewPiece& previewPiece
         0.0f
     };
     
-    if (pieceType.NeedsUpAdjustmentInHud()) {
-        lowerLeft.y += cellSize / 2.0f;
+    if (pieceType.NeedsRightAdjustmentInHud()) {
+        lowerLeft.x += cellSize / 2.0f;
+    } else if (pieceType.NeedsLeftAdjustmentInHud()) {
+        lowerLeft.x -= cellSize / 2.0f;
     } else if (pieceType.NeedsDownAdjustmentInHud()) {
         lowerLeft.y -= cellSize / 2.0f;
     }
