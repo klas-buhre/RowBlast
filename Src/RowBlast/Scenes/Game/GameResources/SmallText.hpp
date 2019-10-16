@@ -30,6 +30,7 @@ namespace RowBlast {
         void StartFantasticMessage();
         void StartWillUndoMessage();
         void StartUndoingMessage();
+        void StartNoRoomMessage();
         void Update(float dt);
         bool IsAwesomeTextActive() const;
         bool IsFantasticTextActive() const;
@@ -67,6 +68,7 @@ namespace RowBlast {
         Pht::SceneObject* mFantasticTextSceneObject {nullptr};
         Pht::SceneObject* mUndoingTextSceneObject {nullptr};
         Pht::SceneObject* mWillUndoTextSceneObject {nullptr};
+        Pht::SceneObject* mNoRoomTextSceneObject {nullptr};
         std::unique_ptr<Pht::SceneObject> mTwinkleParticleEffect;
     };
 }

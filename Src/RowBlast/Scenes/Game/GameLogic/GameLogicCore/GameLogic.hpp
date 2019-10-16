@@ -215,7 +215,6 @@ namespace RowBlast {
         void ManageBlastArea();
         void UpdateLevelProgress();
         Pht::Vec2 CalculateFallingPieceSpawnPos(const Piece& pieceType,
-                                                Rotation rotation,
                                                 FallingPieceSpawnReason fallingPieceSpawnReason);
         Rotation CalculateFallingPieceRotation(const Piece& pieceType,
                                                FallingPieceSpawnReason fallingPieceSpawnReason);

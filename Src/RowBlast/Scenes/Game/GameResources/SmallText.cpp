@@ -65,6 +65,7 @@ SmallText::SmallText(Pht::IEngine& engine,
     mFantasticTextSceneObject = &CreateText(font, {-3.9f, -0.5f}, "FANTASTIC!");
     mUndoingTextSceneObject = &CreateText(font, {-3.3f, -0.5f}, "UNDOING");
     mWillUndoTextSceneObject = &CreateText(font, {-3.8f, -0.5f}, "WILL UNDO");
+    mNoRoomTextSceneObject = &CreateText(font, {-3.3f, -0.5f}, "NO ROOM");
     
     CreateTwinkleParticleEffect(engine);
 }
@@ -212,6 +213,15 @@ void SmallText::StartWillUndoMessage() {
 
 void SmallText::StartUndoingMessage() {
     Start(*mUndoingTextSceneObject);
+    mTwinkleParticleEffect->GetTransform().SetPosition({-3.0f, 0.55f, UiLayer::text});
+}
+
+void SmallText::StartNoRoomMessage() {
+    if (mState != State::Inactive && mActiveTextSceneObject == mNoRoomTextSceneObject) {
+        return;
+    }
+
+    Start(*mNoRoomTextSceneObject);
     mTwinkleParticleEffect->GetTransform().SetPosition({-3.0f, 0.55f, UiLayer::text});
 }
 

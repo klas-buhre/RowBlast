@@ -232,9 +232,7 @@ GameLogic::Result GameLogic::SpawnFallingPiece(FallingPieceSpawnReason fallingPi
     ShowFallingPiece();
     auto& pieceType = CalculatePieceType(fallingPieceSpawnReason);
     auto rotation = CalculateFallingPieceRotation(pieceType, fallingPieceSpawnReason);
-    auto spawnPosition = CalculateFallingPieceSpawnPos(pieceType,
-                                                       rotation,
-                                                       fallingPieceSpawnReason);
+    auto spawnPosition = CalculateFallingPieceSpawnPos(pieceType, fallingPieceSpawnReason);
     mFallingPiece->Spawn(pieceType, spawnPosition, rotation, mLevel->GetSpeed());
     
     ManageMoveHistory(fallingPieceSpawnReason);
@@ -411,8 +409,8 @@ void GameLogic::ShowDraggedPiece() {
 }
 
 Pht::Vec2 GameLogic::CalculateFallingPieceSpawnPos(const Piece& pieceType,
-                                                   Rotation rotation,
                                                    FallingPieceSpawnReason fallingPieceSpawnReason) {
+    auto rotation = pieceType.GetSpawnRotation();
     auto startXPos = mField.GetNumColumns() / 2 - pieceType.GetGridNumColumns() / 2;
     
     if ((fallingPieceSpawnReason == FallingPieceSpawnReason::Switch ||
@@ -1098,6 +1096,7 @@ void GameLogic::SwitchPiece() {
     if (!IsThereRoomToSwitchPiece(nextPieceType, nextPieceType.GetSpawnRotation()) ||
         !mTutorial.IsSwitchPieceAllowed()) {
 
+        mSmallText.StartNoRoomMessage();
         return;
     }
     
@@ -1122,9 +1121,8 @@ bool GameLogic::IsThereRoomToSwitchPiece(const Piece& pieceType, Rotation rotati
         pieceType.GetGridNumColumns()
     };
  
-    auto position = CalculateFallingPieceSpawnPos(pieceType,
-                                                  rotation,
-                                                  FallingPieceSpawnReason::Switch);
+    auto position = CalculateFallingPieceSpawnPos(pieceType, FallingPieceSpawnReason::Switch);
+
     Pht::IVec2 intPosition {
         static_cast<int>(std::floor(position.x)),
         static_cast<int>(std::floor(position.y))
@@ -1225,6 +1223,7 @@ bool GameLogic::BeginDraggingPiece(PreviewPieceIndex draggedPieceIndex) {
     ShowDraggedPiece();
     auto& pieceType = mDraggedPiece->GetPieceType();
     if (!IsThereRoomToSwitchPiece(pieceType, mDraggedPiece->GetRotation())) {
+        mSmallText.StartNoRoomMessage();
         RemoveDraggedPiece();
         return false;
     }
