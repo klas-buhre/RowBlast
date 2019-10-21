@@ -113,7 +113,7 @@ void LevelResources::CreateGreyBlockRenderables(Pht::ISceneManager& sceneManager
     
     mGrayTriangle = sceneManager.CreateRenderableObject(
         Pht::ObjMesh {"triangle_320.obj", cellSize},
-       grayFieldBlockMaterial
+        grayFieldBlockMaterial
     );
 }
 

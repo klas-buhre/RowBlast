@@ -36,6 +36,7 @@
 		17B29562231812C700F16DD9 /* DraggedPieceAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 17B29560231812C700F16DD9 /* DraggedPieceAnimation.cpp */; };
 		17DD46F6234D03ED00786C63 /* rotate.png in Resources */ = {isa = PBXBuildFile; fileRef = 17DD46F5234D03EC00786C63 /* rotate.png */; };
 		17DE663422DB4703009B3E78 /* libGameAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 17DE663322DB4703009B3E78 /* libGameAnalytics.a */; };
+		17E53FC9235E169E005B91E0 /* cube_428.obj in Resources */ = {isa = PBXBuildFile; fileRef = 17E53FC8235E169E005B91E0 /* cube_428.obj */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
@@ -498,7 +499,6 @@
 		6278591C203AFB7C00494A4D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6278591B203AFB7C00494A4D /* Images.xcassets */; };
 		627A12C521B3085100EECA3B /* GuiViewManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 627A12C421B3085100EECA3B /* GuiViewManager.cpp */; };
 		627A12CA21B5379F00EECA3B /* heart_392.obj in Resources */ = {isa = PBXBuildFile; fileRef = 627A12C921B5379E00EECA3B /* heart_392.obj */; };
-		629B838820CA940E00DD2D0E /* cube_428.obj in Resources */ = {isa = PBXBuildFile; fileRef = 629B838720CA940D00DD2D0E /* cube_428.obj */; };
 		629B838E20CAD34100DD2D0E /* triangle_320.obj in Resources */ = {isa = PBXBuildFile; fileRef = 629B838D20CAD34000DD2D0E /* triangle_320.obj */; };
 		629B839020CAD7C500DD2D0E /* triangle_320_r90.obj in Resources */ = {isa = PBXBuildFile; fileRef = 629B838F20CAD7C300DD2D0E /* triangle_320_r90.obj */; };
 		629B839220CAD94700DD2D0E /* triangle_320_r180.obj in Resources */ = {isa = PBXBuildFile; fileRef = 629B839120CAD94600DD2D0E /* triangle_320_r180.obj */; };
@@ -604,6 +604,7 @@
 		17DD46F5234D03EC00786C63 /* rotate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rotate.png; sourceTree = "<group>"; };
 		17DE663222DB4703009B3E78 /* GameAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameAnalytics.h; sourceTree = "<group>"; };
 		17DE663322DB4703009B3E78 /* libGameAnalytics.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGameAnalytics.a; sourceTree = "<group>"; };
+		17E53FC8235E169E005B91E0 /* cube_428.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cube_428.obj; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D6058910D05DD3D006BFB54 /* Game.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Game.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -1468,7 +1469,6 @@
 		627A12C321B3085000EECA3B /* GuiViewManager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GuiViewManager.hpp; sourceTree = "<group>"; };
 		627A12C421B3085100EECA3B /* GuiViewManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GuiViewManager.cpp; sourceTree = "<group>"; };
 		627A12C921B5379E00EECA3B /* heart_392.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = heart_392.obj; sourceTree = "<group>"; };
-		629B838720CA940D00DD2D0E /* cube_428.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cube_428.obj; sourceTree = "<group>"; };
 		629B838D20CAD34000DD2D0E /* triangle_320.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = triangle_320.obj; sourceTree = "<group>"; };
 		629B838F20CAD7C300DD2D0E /* triangle_320_r90.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = triangle_320_r90.obj; sourceTree = "<group>"; };
 		629B839120CAD94600DD2D0E /* triangle_320_r180.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = triangle_320_r180.obj; sourceTree = "<group>"; };
@@ -3099,7 +3099,7 @@
 				6227D4F4206CFD25008EA77D /* bomb_798.obj */,
 				6238F61F219A09790008A0CF /* coin_852.obj */,
 				624C9DDD21A1A907000FB5E1 /* coin_pile_4120.obj */,
-				629B838720CA940D00DD2D0E /* cube_428.obj */,
+				17E53FC8235E169E005B91E0 /* cube_428.obj */,
 				6270DC591FCB22AE00FB457D /* cube_554.obj */,
 				6205E83A220991D200EFCC6B /* gear_192.obj */,
 				6238F621219AEC640008A0CF /* heart_112.obj */,
@@ -3414,6 +3414,7 @@
 				62276EA12274A96000679BC6 /* level13.json in Resources */,
 				6205E83B220991D200EFCC6B /* gear_192.obj in Resources */,
 				62B1CB8B210F8F8600D0F195 /* sky_upside_down.jpg in Resources */,
+				17E53FC9235E169E005B91E0 /* cube_428.obj in Resources */,
 				62B1CB7D210F8F8600D0F195 /* bomb_798_emission.jpg in Resources */,
 				6276B7102040297E0075C468 /* weld_76.obj in Resources */,
 				62276E672274A96000679BC6 /* level49.json in Resources */,
@@ -3470,7 +3471,6 @@
 				624C72E52177AB260006068B /* shield.png in Resources */,
 				62A8E337222EDBDE00F1BF73 /* info.png in Resources */,
 				62276E992274A96000679BC6 /* level9.json in Resources */,
-				629B838820CA940E00DD2D0E /* cube_428.obj in Resources */,
 				62276E922274A96000679BC6 /* level11.json in Resources */,
 				62DE641C20CE953D00A50F26 /* medium_button_skewed_0385.obj in Resources */,
 				1750CAFD2326B6C10092B2E6 /* disable.png in Resources */,
