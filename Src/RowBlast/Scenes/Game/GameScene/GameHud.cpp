@@ -133,6 +133,7 @@ GameHud::GameHud(Pht::IEngine& engine,
     mUpperContainer = &scene.CreateSceneObject();
     parentObject.AddChild(*mUpperContainer);
     
+    CreateUpperBarObject(scene, *mUpperContainer);
     CreateProgressObject(scene, *mUpperContainer, commonResources, levelResources, gameHudResources);
     CreateMovesObject(scene, *mUpperContainer, commonResources, gameHudResources);
     CreateNextPiecesObject(scene, parentObject, commonResources);
@@ -161,6 +162,21 @@ void GameHud::CreateLightAndCamera(Pht::Scene& scene,
     assert(hudRenderPass);
     hudRenderPass->SetLight(mLight);
     hudRenderPass->SetCamera(camera);
+}
+
+void GameHud::CreateUpperBarObject(Pht::Scene& scene,
+                                   Pht::SceneObject& parentObject) {
+    Pht::Material barMaterial {Pht::Color{0.0f, 0.0f, 0.0f}};
+    barMaterial.SetOpacity(0.52f);
+
+    auto& renderer = mEngine.GetRenderer();
+    auto frustumSize = renderer.GetHudFrustumSize();
+    auto& upperBar = scene.CreateSceneObject(Pht::QuadMesh {frustumSize.x, 2.0f}, barMaterial);
+    mUpperContainer->AddChild(upperBar);
+
+    auto topPadding = renderer.GetTopPaddingHeight();
+    Pht::Vec3 position {0.0f, frustumSize.y / 2.0f - topPadding + 0.2f, UiLayer::tutorialWindow};
+    upperBar.GetTransform().SetPosition(position);
 }
 
 void GameHud::CreateProgressObject(Pht::Scene& scene,

@@ -17,12 +17,13 @@ using namespace RowBlast;
 namespace {
     const Pht::Vec4 stencilColor {1.0f, 1.0f, 1.0f, 1.0f};
     const Pht::Vec4 pressedColorSubtract {0.1f, 0.1f, 0.1f, 0.0f};
-    const Pht::Vec4 outerBorderColor {0.35f, 0.35f, 0.4f, 1.0f};
-    const Pht::Vec4 lowerOuterBorderColor {0.35f, 0.35f, 0.4f, 0.1f};
-    const Pht::Vec4 borderColor {0.35f, 0.35f, 0.4f, 1.0f};
-    const Pht::Vec4 lowerBorderColor {0.35f, 0.35f, 0.4f, 0.1f};
-    const Pht::Vec4 innerColor {0.35f, 0.35f, 0.4f, 1.0f};
-    const Pht::Vec4 lowerInnerColor {0.35f, 0.35f, 0.4f, 0.1f};
+
+    const Pht::Vec4 outerBorderColor {0.175f, 0.175f, 0.175f, 0.75f};
+    const Pht::Vec4 lowerOuterBorderColor {0.175f, 0.175f, 0.175f, 0.1f};
+    const Pht::Vec4 borderColor {0.175f, 0.175f, 0.175f, 0.75f};
+    const Pht::Vec4 lowerBorderColor {0.175f, 0.175f, 0.175f, 0.1f};
+    const Pht::Vec4 innerColor {0.175f, 0.175f, 0.175f, 0.75f};
+    const Pht::Vec4 lowerInnerColor {0.175f, 0.175f, 0.175f, 0.1f};
 
     constexpr auto f = 0.9f;
     constexpr auto activeSlotLowerAlpha = 0.66f;

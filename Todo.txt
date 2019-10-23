@@ -46,6 +46,16 @@ Ongoing tasks:
     -Add drag controls and release. Include the new tutorial.
     -Then release with microtransactions enabled. Market that version.
 
+    -Major user stories before release:
+        -Reduce the risk mixing up the rotate tap with a drag start.                ~1 week
+        -Find more moves.                                                           ~1 week
+        -Replace bad levels in world 1 with levels of width 9 and asteroid levels.  ~1 week
+        -Remove moves from world 1 to 3 after finding more moves.                   ~0.5 weeks
+        -Update the tutorial with drag controls                                     ~1.5 weeks
+        -Purchasing                                                                 ~1 week
+         Total cost:                                                                 6 weeks
+
+
     -Do:
         -4. Have reduced bevel from 0.13 to 0.115. Make new triangular blocks from the triangle obj
          file without bevel from the old computer.
@@ -53,6 +63,7 @@ Ongoing tasks:
          And maybe use Summer from Bensound as another level track. And also maybe
          https://assetstore.unity.com/packages/audio/music/electronic/trance-progressive-vol-1-free-63477
         -5. Release.
+        -6. Send mail to publishers.
         -2. Just try to reduce the risk mixing up the rotate tap with at drag start. Maybe sort out
          by tuning dragBeginDistanceThreshold. Also, could have a threshold distance that the piece
          must travel in order to be placed, or a minimum drag time. Maybe the touch should be
@@ -61,7 +72,6 @@ Ongoing tasks:
          more room now after removing one row.
         -5. Release.
         -6. Try to get the game featured by apple by contacting them by filling out the form.
-        -6. Send mail to publishers.
 
     -Mid-term future:
         -Sometimes moves that seem feasible are unreachable due to the way pieces are rotated by the AI.

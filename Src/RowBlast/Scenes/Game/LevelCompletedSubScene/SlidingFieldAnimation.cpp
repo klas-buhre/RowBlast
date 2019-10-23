@@ -46,8 +46,8 @@ void SlidingFieldAnimation::Start() {
     auto& hud = mScene.GetHud();
     auto& hudFrustumSize = mEngine.GetRenderer().GetHudFrustumSize();
     
-    mUpperHudInitialYPosition = hud.GetProgressContainer().GetTransform().GetPosition().y;
-    mUpperHudFinalYPosition = hudFrustumSize.y / 2.0f + hudYSize + padding;
+    mUpperHudInitialYPosition = 0.0f;
+    mUpperHudFinalYPosition = hudYSize + padding;
     mLowerHudInitialYPosition = hud.GetNextPiecesContainer().GetTransform().GetPosition().y;
     mLowerHudFinalYPosition = -hudFrustumSize.y / 2.0f - hudYSize - padding;
 }
@@ -94,16 +94,11 @@ void SlidingFieldAnimation::UpdateHud() {
 
     auto upperHudYPosition =
         mUpperHudInitialYPosition + upperDistance * normalizedTime * normalizedTime * normalizedTime;
-    
-    auto& progressTransform = hud.GetProgressContainer().GetTransform();
-    auto progressPosition = progressTransform.GetPosition();
-    progressPosition.y = upperHudYPosition;
-    progressTransform.SetPosition(progressPosition);
 
-    auto& movesTransform = hud.GetMovesContainer().GetTransform();
-    auto movesPosition = movesTransform.GetPosition();
-    movesPosition.y = upperHudYPosition;
-    movesTransform.SetPosition(movesPosition);
+    auto& upperHudTransform = hud.GetUpperContainer().GetTransform();
+    auto upperHudPosition = upperHudTransform.GetPosition();
+    upperHudPosition.y = upperHudYPosition;
+    upperHudTransform.SetPosition(upperHudPosition);
 
     auto lowerDistance = mLowerHudInitialYPosition - mLowerHudFinalYPosition;
 
