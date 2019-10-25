@@ -207,7 +207,9 @@ void OutOfMovesDialogView::SetUp(GameScene& scene) {
     mParticles->GetComponent<Pht::ParticleEffect>()->Start();
     
     auto& hud = scene.GetHud();
-    hud.GetUpperContainer().DetachChildren();
+    auto& upperHudContainer = hud.GetUpperContainer();
+    upperHudContainer.DetachChild(&hud.GetProgressContainer());
+    upperHudContainer.DetachChild(&hud.GetMovesContainer());
     mUpperHudSceneObject->DetachChildren();
     mUpperHudSceneObject->AddChild(hud.GetProgressContainer());
     mUpperHudSceneObject->AddChild(hud.GetMovesContainer());
@@ -258,7 +260,6 @@ void OutOfMovesDialogView::OnDeactivate() {
 void OutOfMovesDialogView::HandOverHudObjects() {
     auto& hud = mScene->GetHud();
     mUpperHudSceneObject->DetachChildren();
-    hud.GetUpperContainer().DetachChildren();
     hud.GetUpperContainer().AddChild(hud.GetProgressContainer());
     hud.GetUpperContainer().AddChild(hud.GetMovesContainer());
 }

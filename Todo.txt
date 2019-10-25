@@ -57,10 +57,11 @@ Ongoing tasks:
 
 
     -Do:
-        -4. Have reduced bevel from 0.13 to 0.115. Make new triangular blocks from the triangle obj
-         file without bevel from the old computer.
         -4. Change the map music track to https://www.bensound.com/royalty-free-music/track/over-the-hills
-         And maybe use Summer from Bensound as another level track. And also maybe
+         or Progress from the same artist.
+         And maybe use Summer from Bensound as another level track, or from Vital: String Theory,
+         Progress seems a good fit for a level track if it can be faded at the end and looped.
+         And also maybe as a level track:
          https://assetstore.unity.com/packages/audio/music/electronic/trance-progressive-vol-1-free-63477
         -5. Release.
         -6. Send mail to publishers.
@@ -71,7 +72,6 @@ Ongoing tasks:
          and there is no rotate. Tune the field y position for the zoomed displays since there is
          more room now after removing one row.
         -5. Release.
-        -6. Try to get the game featured by apple by contacting them by filling out the form.
 
     -Mid-term future:
         -Sometimes moves that seem feasible are unreachable due to the way pieces are rotated by the AI.
@@ -98,6 +98,9 @@ Ongoing tasks:
         -Update the tutorial with drag controls.
         -Replace bad levels in world 1 with levels of width 9 and asteroid levels.
         -Release.
+        -Purchasing.
+        -Release.
+        -Try to get the game featured by apple by contacting them by filling out the form.
 
     -Maybe:
         -Could have a slower falling piece animation speed for the first tutorial level so that

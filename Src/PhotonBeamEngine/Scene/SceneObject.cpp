@@ -43,6 +43,17 @@ void SceneObject::AddChild(SceneObject& child) {
     mChildren.push_back(&child);
 }
 
+void SceneObject::DetachChild(const SceneObject* child) {
+    for (auto i = std::begin(mChildren); i != std::end(mChildren); ++i) {
+        auto* currentChild = *i;
+        if (currentChild == child) {
+            currentChild->mParent = nullptr;
+            mChildren.erase(i);
+            break;
+        }
+    }
+}
+
 void SceneObject::DetachChildren() {
     for (auto* child: mChildren) {
         child->mParent = nullptr;

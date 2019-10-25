@@ -167,7 +167,7 @@ void GameHud::CreateLightAndCamera(Pht::Scene& scene,
 void GameHud::CreateUpperBarObject(Pht::Scene& scene,
                                    Pht::SceneObject& parentObject) {
     Pht::Material barMaterial {Pht::Color{0.0f, 0.0f, 0.0f}};
-    barMaterial.SetOpacity(0.52f);
+    barMaterial.SetOpacity(0.5f);
 
     auto& renderer = mEngine.GetRenderer();
     auto frustumSize = renderer.GetHudFrustumSize();
