@@ -47,22 +47,19 @@ Ongoing tasks:
     -Then release with microtransactions enabled. Market that version.
 
     -Major user stories before release:
+        -Minor tasks (music, release, publishers)                                   ~1 week
         -Reduce the risk mixing up the rotate tap with a drag start.                ~1 week
         -Find more moves.                                                           ~1 week
         -Replace bad levels in world 1 with levels of width 9 and asteroid levels.  ~1 week
         -Remove moves from world 1 to 3 after finding more moves.                   ~0.5 weeks
         -Update the tutorial with drag controls                                     ~1.5 weeks
         -Purchasing                                                                 ~1 week
-         Total cost:                                                                 6 weeks
+         Total cost:                                                                 7 weeks
 
 
     -Do:
-        -4. Change the map music track to https://www.bensound.com/royalty-free-music/track/over-the-hills
-         or Progress from the same artist.
-         And maybe use Summer from Bensound as another level track, or from Vital: String Theory,
-         Progress seems a good fit for a level track if it can be faded at the end and looped.
-         And also maybe as a level track:
-         https://assetstore.unity.com/packages/audio/music/electronic/trance-progressive-vol-1-free-63477
+        -4. Tune the music volume. Maybe cut the game_track1 a bit earlier. Update music in the
+         credits.
         -5. Release.
         -6. Send mail to publishers.
         -2. Just try to reduce the risk mixing up the rotate tap with at drag start. Maybe sort out
