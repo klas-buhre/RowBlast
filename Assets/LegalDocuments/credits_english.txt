@@ -1,15 +1,11 @@
 Copyright (c) 2019 Teleporter Studios
 
 
-GAME PROGRAMMING
-TheCoffeeDrinker
-
 GAME DESIGN
 TheCoffeeDrinker
 
-MUSIC
-Zircon - www.zirconmusic.com
-Robson Cozendey - Biare Studio www.cozendey.com
+GAME PROGRAMMING
+TheCoffeeDrinker
 
 SPECIAL THANKS TO
 qubit
