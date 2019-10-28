@@ -12,7 +12,7 @@ namespace {
     constexpr auto mapMusicVolume = 0.55f;
     constexpr auto fadeInDuration = 0.22f;
     constexpr auto maxSoundGain = 1.0f;
-    constexpr auto clearBlocksGain = 0.72f;
+    constexpr auto clearBlocksGain = 0.83f;
 }
 
 void RowBlast::LoadAudioResouces(Pht::IEngine& engine) {
