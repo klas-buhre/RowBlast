@@ -58,7 +58,6 @@ Ongoing tasks:
 
 
     -Do:
-        -4. Tune the music volume.
         -5. Release.
         -6. Send mail to publishers.
         -2. Just try to reduce the risk mixing up the rotate tap with at drag start. Maybe sort out
