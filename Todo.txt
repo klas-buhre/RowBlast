@@ -58,8 +58,7 @@ Ongoing tasks:
 
 
     -Do:
-        -4. Tune the music volume. Maybe cut the game_track1 a bit earlier. Update music in the
-         credits.
+        -4. Tune the music volume.
         -5. Release.
         -6. Send mail to publishers.
         -2. Just try to reduce the risk mixing up the rotate tap with at drag start. Maybe sort out
@@ -100,6 +99,7 @@ Ongoing tasks:
         -Try to get the game featured by apple by contacting them by filling out the form.
 
     -Maybe:
+        -Maybe cut the game_track1 a bit earlier.
         -Could have a slower falling piece animation speed for the first tutorial level so that
          players understand that the falling piece has to go to the move.
         -Maybe split up the gesture controls into swipe and drag controls. This could be done

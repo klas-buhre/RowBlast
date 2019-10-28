@@ -26,7 +26,8 @@ namespace {
     constexpr auto effectsVolumeDepth = 20.0f;
     constexpr auto fireworksDuration = 2.0f;
     constexpr auto smallTextAnimationWaintTime = 1.35f;
-    constexpr auto waitTime = 0.55f;
+    constexpr auto waitTime = 0.95f;
+    constexpr auto musicFadeOutTime = 1.2f;
     constexpr auto confettiWaitTime = 0.85f;
 }
 
@@ -96,6 +97,8 @@ void LevelCompletedController::Start() {
         mWaitTime = waitTime;
     }
     
+    mEngine.GetAudio().FadeOutActiveTrack(musicFadeOutTime);
+    
     auto totalNumMovesUsed = mGameLogic.GetMovesUsedIncludingCurrent();
     
     auto controlType =
@@ -119,9 +122,7 @@ void LevelCompletedController::GoToObjectiveAchievedAnimationState() {
     container.SetIsStatic(false);
     container.SetIsVisible(true);
  
-    auto& audio = mEngine.GetAudio();
-    audio.FadeOutActiveTrack(0.2f);
-    audio.PlaySound(static_cast<Pht::AudioResourceId>(SoundId::AllCleared));
+    mEngine.GetAudio().PlaySound(static_cast<Pht::AudioResourceId>(SoundId::AllCleared));
     
     StartLevelCompletedTextAnimation();
     
