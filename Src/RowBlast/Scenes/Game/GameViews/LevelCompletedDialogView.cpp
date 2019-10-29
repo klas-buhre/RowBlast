@@ -14,20 +14,20 @@ LevelCompletedDialogView::LevelCompletedDialogView(Pht::IEngine& engine,
                                                    const CommonResources& commonResources) {
     PotentiallyZoomedScreen zoom {PotentiallyZoomedScreen::Yes};
     auto& guiResources = commonResources.GetGuiResources();
-    auto& menuWindow = guiResources.GetMediumDarkMenuWindow();
+    auto& menuWindow = guiResources.GetSmallDarkMenuWindow();
     
     auto menuWindowSceneObject = std::make_unique<Pht::SceneObject>(&menuWindow.GetRenderable());
     menuWindowSceneObject->GetTransform().SetPosition({0.0f, 0.0f, UiLayer::background});
     AddSceneObject(std::move(menuWindowSceneObject));
 
+    SetPosition({0.0f, -2.5f});
     SetSize(menuWindow.GetSize());
     
-    CreateText({-3.7f, 4.95f, UiLayer::text},
+    CreateText({-3.5f, 3.95f, UiLayer::text},
                "LEVEL CLEARED!",
                guiResources.GetLargeWhiteTextProperties(zoom));
 
     mCloseButton = GuiUtils::CreateCloseButton(engine, *this, guiResources, zoom);
-    GuiUtils::CreateTitleBarLine(engine, *this);
 
     Pht::Vec2 nextButtonInputSize {205.0f, 59.0f};
     
@@ -38,7 +38,7 @@ LevelCompletedDialogView::LevelCompletedDialogView(Pht::IEngine& engine,
 
     mNextButton = std::make_unique<MenuButton>(engine,
                                                *this,
-                                               Pht::Vec3 {0.0f, -4.3f, UiLayer::textRectangle},
+                                               Pht::Vec3 {0.0f, -3.45f, UiLayer::textRectangle},
                                                nextButtonInputSize,
                                                nextButtonStyle);
     mNextButton->CreateIcon("play.png",

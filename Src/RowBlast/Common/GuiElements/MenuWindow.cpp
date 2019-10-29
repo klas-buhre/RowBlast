@@ -45,7 +45,7 @@ namespace {
                     case MenuWindow::Size::Small:
                         return {sizeX, 11.0f};
                     case MenuWindow::Size::Smallest:
-                        return {sizeX, 5.5f};
+                        return {sizeX, 4.2f};
                 }
                 break;
             }
@@ -63,7 +63,7 @@ namespace {
                     case MenuWindow::Size::Small:
                         return Pht::Vec2 {sizeX, 11.0f} + outerBorderSize;
                     case MenuWindow::Size::Smallest:
-                        return Pht::Vec2 {sizeX, 5.5f} + outerBorderSize;
+                        return Pht::Vec2 {sizeX, 4.2f} + outerBorderSize;
                 }
                 break;
             }

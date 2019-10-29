@@ -58,7 +58,6 @@ Ongoing tasks:
 
 
     -Do:
-        -Add the UFO to the level completed subscene.
         -Do the number of moves adjustments from the previous drag controls release.
         -5. Release.
         -6. Send mail to publishers.

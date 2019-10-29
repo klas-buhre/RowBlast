@@ -29,6 +29,9 @@ namespace {
     constexpr auto waitTime = 0.95f;
     constexpr auto musicFadeOutTime = 1.2f;
     constexpr auto confettiWaitTime = 0.85f;
+
+    const Pht::Vec3 initialUfoPosition {0.0f, 20.0f, 5.0f};
+    const Pht::Vec3 ufoPosition {0.0f, 4.05f, 5.0f};
 }
 
 LevelCompletedController::LevelCompletedController(Pht::IEngine& engine,
@@ -60,7 +63,9 @@ LevelCompletedController::LevelCompletedController(Pht::IEngine& engine,
     mSlidingFieldAnimation {engine, gameScene},
     mFireworksParticleEffect {engine},
     mConfettiParticleEffect {engine},
-    mStarsAnimation {engine, gameScene, commonResources, cameraShake} {
+    mStarsAnimation {engine, gameScene, commonResources, cameraShake},
+    mUfo {engine, commonResources, 3.7f},
+    mUfoAnimation {engine, mUfo} {
     
     mFadeEffect.GetSceneObject().SetLayer(static_cast<int>(GameScene::Layer::LevelCompletedFadeEffect));
 }
@@ -81,6 +86,11 @@ void LevelCompletedController::Init(const Level& level) {
     mFireworksParticleEffect.Init(container, effectsVolume);
     mConfettiParticleEffect.Init(container, effectsVolume);
     mStarsAnimation.Init();
+    
+    mUfo.Init(container);
+    mUfoAnimation.Init();
+    mUfo.SetPosition(initialUfoPosition);
+    mUfo.Hide();
     
     mFadeEffect.Reset();
     mGameScene.GetScene().GetRoot().AddChild(mFadeEffect.GetSceneObject());
@@ -175,6 +185,7 @@ LevelCompletedDialogController::Result LevelCompletedController::Update() {
             break;
     }
     
+    mUfoAnimation.Update();
     return result;
 }
 
@@ -235,6 +246,9 @@ void LevelCompletedController::UpdateInSlidingOutFieldAnimationState() {
         mElapsedTime = 0.0f;
         mFireworksParticleEffect.Start();
         mFadeEffect.Start();
+        mEngine.GetRenderer().EnableShader(Pht::ShaderId::TexturedEnvMapLighting);
+        mUfo.Show();
+        mUfoAnimation.Start(ufoPosition);
     }
 }
 

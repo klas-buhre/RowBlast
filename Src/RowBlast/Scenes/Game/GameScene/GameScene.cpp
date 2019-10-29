@@ -472,6 +472,7 @@ void GameScene::CreateUiViewsContainer() {
 void GameScene::CreateStarsContainer() {
     mStarsContainer = &mScene->CreateSceneObject();
     mStarsContainer->SetLayer(static_cast<int>(Layer::Stars));
+    mStarsContainer->GetTransform().SetPosition({0.0f, -2.5f, 0.0f});
     mScene->GetRoot().AddChild(*mStarsContainer);
     
     auto& lightSceneObject = mScene->CreateSceneObject();
@@ -489,7 +490,7 @@ void GameScene::CreateStarsContainer() {
     
     auto& cameraSceneObject = mScene->CreateSceneObject();
     cameraSceneObject.SetIsVisible(false);
-    cameraSceneObject.GetTransform().SetPosition({0.0f, -20.5f, 20.5f});
+    cameraSceneObject.GetTransform().SetPosition({0.0f, -23.0f, 20.5f});
     auto cameraComponent = std::make_unique<Pht::CameraComponent>(cameraSceneObject);
     starsRenderPass->SetCamera(cameraComponent.get());
     cameraSceneObject.SetComponent<Pht::CameraComponent>(std::move(cameraComponent));
