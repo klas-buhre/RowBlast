@@ -30,7 +30,7 @@ namespace {
     constexpr auto musicFadeOutTime = 1.2f;
     constexpr auto confettiWaitTime = 0.85f;
 
-    const Pht::Vec3 initialUfoPosition {0.0f, 20.0f, 5.0f};
+    const Pht::Vec3 initialUfoPosition {0.0f, 10.0f, 20.0f};
     const Pht::Vec3 ufoPosition {0.0f, 4.05f, 5.0f};
 }
 
