@@ -35,10 +35,10 @@ namespace {
     constexpr auto ufoHeadStartTime = 0.2f;
     constexpr auto displayDistance = 0.65f;
     constexpr auto textWidth = 8.8f;
-    const Pht::Vec3 centerPosition {0.0f, 2.65f, 0.0f};
-    const Pht::Vec3 leftUfoPosition {-13.0f, 6.25f, UiLayer::slidingTextUfo};
-    const Pht::Vec3 centerUfoPosition {0.0f, 6.25f, UiLayer::slidingTextUfo};
-    const Pht::Vec3 rightUfoPosition {13.0f, 6.25f, UiLayer::slidingTextUfo};
+    const Pht::Vec3 centerPosition {0.0f, 1.8f, 0.0f};
+    const Pht::Vec3 leftUfoPosition {-13.0f, 5.4f, UiLayer::slidingTextUfo};
+    const Pht::Vec3 centerUfoPosition {0.0f, 5.4f, UiLayer::slidingTextUfo};
+    const Pht::Vec3 rightUfoPosition {13.0f, 5.4f, UiLayer::slidingTextUfo};
     
     enum class AnimationClip {
         ScaleUp = 0,
