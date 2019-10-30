@@ -11,6 +11,8 @@
 #include "ConfettiParticleEffect.hpp"
 #include "StarsAnimation.hpp"
 #include "ClearLastBlocksAnimation.hpp"
+#include "Ufo.hpp"
+#include "UfoAnimation.hpp"
 
 namespace Pht {
     class IEngine;
@@ -88,6 +90,8 @@ namespace RowBlast {
         FireworksParticleEffect mFireworksParticleEffect;
         ConfettiParticleEffect mConfettiParticleEffect;
         StarsAnimation mStarsAnimation;
+        Ufo mUfo;
+        UfoAnimation mUfoAnimation;
         float mElapsedTime {0.0f};
         float mWaitTime {0.0f};
     };

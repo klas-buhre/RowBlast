@@ -53,19 +53,20 @@ void SlidingMenuAnimation::SetUp(UpdateFade updateFade,
     mSlideInDirection = slideInDirection;
     
     auto& frustumSize = mEngine.GetRenderer().GetHudFrustumSize();
+    auto position = mView.GetPosition();
     
     switch (mSlideInDirection) {
         case SlideDirection::Right:
-            mSlideInStartPosition = {-frustumSize.x / 2.0f - mView.GetSize().x / 2.0f, 0.0f};
+            mSlideInStartPosition = {-frustumSize.x / 2.0f - mView.GetSize().x / 2.0f, position.y};
             break;
         case SlideDirection::Left:
-            mSlideInStartPosition = {frustumSize.x / 2.0f + mView.GetSize().x / 2.0f, 0.0f};
+            mSlideInStartPosition = {frustumSize.x / 2.0f + mView.GetSize().x / 2.0f, position.y};
             break;
         case SlideDirection::Up:
-            mSlideInStartPosition = {0.0f, -frustumSize.y / 2.0f - mView.GetSize().y / 2.0f};
+            mSlideInStartPosition = {position.x, -frustumSize.y / 2.0f - mView.GetSize().y / 2.0f};
             break;
         case SlideDirection::Down:
-            mSlideInStartPosition = {0.0f, frustumSize.y / 2.0f + mView.GetSize().y / 2.0f};
+            mSlideInStartPosition = {position.x, frustumSize.y / 2.0f + mView.GetSize().y / 2.0f};
             break;
         case SlideDirection::Scale:
             mSlideInStartPosition = centerPosition;

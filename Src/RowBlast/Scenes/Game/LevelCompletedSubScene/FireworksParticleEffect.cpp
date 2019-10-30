@@ -130,7 +130,9 @@ FireworksParticleEffect::Firework::Firework(Pht::IEngine& engine) :
     mExplosion = particleSystem.CreateParticleEffectSceneObject(particleSettings,
                                                                 particleEmitterSettings,
                                                                 Pht::RenderMode::Triangles);
-    mExplosion->GetRenderable()->GetMaterial().SetShaderId(Pht::ShaderId::ParticleNoAlphaTexture);
+    auto& material = mExplosion->GetRenderable()->GetMaterial();
+    material.SetShaderId(Pht::ShaderId::ParticleNoAlphaTexture);
+    material.SetDepthTest(true);
 }
 
 void FireworksParticleEffect::Firework::Init(Pht::SceneObject& parentObject,
