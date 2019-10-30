@@ -48,12 +48,15 @@ Level::Level(int id,
     mIsPartOfTutorial {isPartOfTutorial} {}
 
 int Level::GetNumMoves(ControlType controlType) const {
+    return mNumMovesClickControls;
+#if 0
     switch (controlType) {
         case ControlType::Click:
             return mNumMovesClickControls;
         case ControlType::Gesture:
             return mNumMovesGestureControls;
     }
+#endif
 }
 
 const StarLimits& Level::GetStarLimits(ControlType controlType) const {
