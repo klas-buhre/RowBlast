@@ -58,7 +58,6 @@ Ongoing tasks:
 
 
     -Do:
-        -Do the number of moves adjustments from the previous drag controls release.
         -5. Release.
         -6. Send mail to publishers.
         -2. Just try to reduce the risk mixing up the rotate tap with at drag start. Maybe sort out
