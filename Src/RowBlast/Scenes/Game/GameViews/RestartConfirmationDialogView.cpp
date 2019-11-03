@@ -26,9 +26,10 @@ RestartConfirmationDialogView::RestartConfirmationDialogView(Pht::IEngine& engin
 
     CreateText({-2.0f, 4.25f, UiLayer::text}, "RESTART", guiResources.GetCaptionTextProperties(zoom));
     
-    auto& textProperties = guiResources.GetSmallTextProperties(zoom);
-    CreateText({-5.4f, 1.9f, UiLayer::text}, "Are you sure you want to restart", textProperties);
-    CreateText({-1.65f, 0.9f, UiLayer::text}, "the level?", textProperties);
+    auto textProperties = guiResources.GetSmallTextProperties(zoom);
+    textProperties.mAlignment = Pht::TextAlignment::CenterX;
+    CreateText({0.0f, 1.9f, UiLayer::text}, "Are you sure you want to", textProperties);
+    CreateText({0.0f, 0.9f, UiLayer::text}, "restart the level?", textProperties);
 
     Pht::Vec2 buttonInputSize {194.0f, 43.0f};
     MenuButton::Style yellowButtonStyle;

@@ -26,9 +26,10 @@ MapConfirmationDialogView::MapConfirmationDialogView(Pht::IEngine& engine,
     
     CreateText({-1.15f, 4.25f, UiLayer::text}, "MAP", guiResources.GetCaptionTextProperties(zoom));
     
-    auto& textProperties = guiResources.GetSmallTextProperties(zoom);
-    CreateText({-5.5f, 1.9f, UiLayer::text}, "Are you sure you want to go back", textProperties);
-    CreateText({-1.8f, 0.9f, UiLayer::text}, "to the map?", textProperties);
+    auto textProperties = guiResources.GetSmallTextProperties(zoom);
+    textProperties.mAlignment = Pht::TextAlignment::CenterX;
+    CreateText({0.0f, 1.9f, UiLayer::text}, "Are you sure you want to go", textProperties);
+    CreateText({0.0f, 0.9f, UiLayer::text}, "back to the map?", textProperties);
     
     Pht::Vec2 buttonInputSize {194.0f, 45.0f};
     MenuButton::Style yellowButtonStyle;

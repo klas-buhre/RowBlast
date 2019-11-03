@@ -36,7 +36,7 @@ namespace {
                        const Pht::Vec2& frustumSize) {
         switch (style) {
             case MenuWindow::Style::Bright: {
-                auto sizeX = std::min(frustumSize.x - xBorder * 2.0f, 13.5f - xBorder * 2.0f);
+                auto sizeX = std::min(frustumSize.x - xBorder * 2.0f, 12.8f - xBorder * 2.0f);
                 switch (size) {
                     case MenuWindow::Size::Large:
                         return {sizeX, 22.4f};
