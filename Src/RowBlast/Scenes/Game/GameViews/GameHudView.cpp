@@ -88,7 +88,7 @@ GameHudView::GameHudView(Pht::IEngine& engine, const CommonResources& commonReso
     auto& frustumSize = commonResources.GetHudFrustumSizePotentiallyZoomedScreen();
     
     Pht::Vec3 pauseButtonPosition {
-        bottomPadding == 0.0f ? -frustumSize.x / 2.0f + 0.8f : -6.6f, 0.0f, UiLayer::root
+        bottomPadding == 0.0f ? -frustumSize.x / 2.0f + 0.8f : -6.6f, -0.2f, UiLayer::root
     };
 
     pauseButtonSceneObject.GetTransform().SetPosition(pauseButtonPosition);
@@ -96,8 +96,11 @@ GameHudView::GameHudView(Pht::IEngine& engine, const CommonResources& commonReso
 
     auto& hudRectangles = commonResources.GetGameHudRectangles();
     
+    auto& guiResources = commonResources.GetGuiResources();
+    
     auto& normalPauseButtonSceneObject = CreateSceneObject();
     normalPauseButtonSceneObject.SetRenderable(&hudRectangles.GetPauseButtonRectangle());
+    // normalPauseButtonSceneObject.SetRenderable(&guiResources.GetSmallerBlueGlossyButton());
     pauseButtonSceneObject.AddChild(normalPauseButtonSceneObject);
     auto& normalPauseButtonBarsSceneObject = CreateSceneObject();
     normalPauseButtonBarsSceneObject.SetRenderable(pauseBarsRenderable.get());

@@ -17,7 +17,89 @@ using namespace RowBlast;
 namespace {
     const Pht::Vec4 stencilColor {1.0f, 1.0f, 1.0f, 1.0f};
     const Pht::Vec4 pressedColorSubtract {0.1f, 0.1f, 0.1f, 0.0f};
+#if 1
+/*
+    const Pht::Vec4 outerBorderColor {0.175f, 0.175f, 0.175f, 0.75f};
+    const Pht::Vec4 lowerOuterBorderColor {0.175f, 0.175f, 0.175f, 0.1f};
+    const Pht::Vec4 borderColor {0.175f, 0.175f, 0.175f, 0.75f};
+    const Pht::Vec4 lowerBorderColor {0.175f, 0.175f, 0.175f, 0.1f};
+    const Pht::Vec4 innerColor {0.175f, 0.175f, 0.175f, 0.75f};
+    const Pht::Vec4 lowerInnerColor {0.175f, 0.175f, 0.175f, 0.1f};
+*/
+    const Pht::Vec4 outerBorderColor {0.175f, 0.175f, 0.175f, 0.75f};
+    const Pht::Vec4 lowerOuterBorderColor {0.175f, 0.175f, 0.175f, 0.5f};
+    const Pht::Vec4 borderColor {0.175f, 0.175f, 0.175f, 0.75f};
+    const Pht::Vec4 lowerBorderColor {0.175f, 0.175f, 0.175f, 0.5f};
+    const Pht::Vec4 innerColor {0.175f, 0.175f, 0.175f, 0.75f};
+    const Pht::Vec4 lowerInnerColor {0.175f, 0.175f, 0.175f, 0.5f};
 
+/*
+    constexpr auto f = 0.9f;
+    constexpr auto activeSlotLowerAlpha = 0.66f;
+    const Pht::Vec4 activeSlotInnerColor {0.53f * f, 0.2625f * f, 0.6085f * f, 0.98f};
+    const Pht::Vec4 activeSlotLowerInnerColor {
+        activeSlotInnerColor.ToVec3(), activeSlotInnerColor.w * activeSlotLowerAlpha
+    };
+    const Pht::Vec4 activeSlotOuterBorderColor {0.7f, 0.525f, 0.825f, 0.85f};
+    const Pht::Vec4 activeSlotOuterLowerBorderColor {
+        activeSlotOuterBorderColor.ToVec3(), activeSlotOuterBorderColor.w * activeSlotLowerAlpha
+    };
+    const auto activeSlotInnerBorderColorAdd =
+        Pht::Vec4{activeSlotOuterBorderColor.ToVec3(), 0.0f} * 0.175f;
+    const auto activeSlotInnerBorderColor = activeSlotInnerColor + activeSlotInnerBorderColorAdd;
+    const auto activeSlotInnerLowerBorderColor =
+        activeSlotLowerInnerColor + activeSlotInnerBorderColorAdd;
+
+    // constexpr auto selectablesSlotLowerAlpha = 0.4f;
+    constexpr auto selectablesSlotLowerAlpha = 0.66f;
+    constexpr auto selectablesSlotLowerBorderAlpha = 0.5f;
+    const Pht::Vec4 selectablesSlotInnerColor {0.53f * f, 0.2625f * f, 0.6085f * f, 0.96f};
+    const Pht::Vec4 selectablesSlotLowerInnerColor {
+        selectablesSlotInnerColor.ToVec3(), selectablesSlotInnerColor.w * selectablesSlotLowerAlpha
+    };
+    const Pht::Vec4 selectablesSlotOuterBorderColor {0.7f, 0.525f, 0.825f, 0.85f};
+    const Pht::Vec4 selectablesSlotOuterLowerBorderColor {
+        selectablesSlotOuterBorderColor.ToVec3(),
+        selectablesSlotOuterBorderColor.w * selectablesSlotLowerBorderAlpha
+    };
+    const auto selectablesSlotInnerBorderColorAdd =
+        Pht::Vec4{selectablesSlotOuterBorderColor.ToVec3(), 0.0f} * 0.175f;
+    const auto selectablesSlotInnerBorderColor =
+        selectablesSlotInnerColor + selectablesSlotInnerBorderColorAdd;
+    const auto selectablesSlotInnerLowerBorderColor =
+        selectablesSlotLowerInnerColor + selectablesSlotInnerBorderColorAdd;
+*/
+
+    const Pht::Vec4 activeSlotInnerColor {0.175f, 0.175f, 0.175f, 0.75f};
+    const Pht::Vec4 activeSlotLowerInnerColor {0.175f, 0.175f, 0.175f, 0.5f};
+    const Pht::Vec4 activeSlotOuterBorderColor {0.175f, 0.175f, 0.175f, 0.75f};
+    const Pht::Vec4 activeSlotOuterLowerBorderColor {0.175f, 0.175f, 0.175f, 0.5f};
+    const Pht::Vec4 activeSlotInnerBorderColor {0.175f, 0.175f, 0.175f, 0.75f};
+    const Pht::Vec4 activeSlotInnerLowerBorderColor {0.175f, 0.175f, 0.175f, 0.5f};
+
+    const Pht::Vec4 selectablesSlotInnerColor {0.175f, 0.175f, 0.175f, 0.75f};
+    const Pht::Vec4 selectablesSlotLowerInnerColor {0.175f, 0.175f, 0.175f, 0.5f};
+    const Pht::Vec4 selectablesSlotOuterBorderColor {0.175f, 0.175f, 0.175f, 0.75f};;
+    const Pht::Vec4 selectablesSlotOuterLowerBorderColor {0.175f, 0.175f, 0.175f, 0.5f};
+    const Pht::Vec4 selectablesSlotInnerBorderColor {0.175f, 0.175f, 0.175f, 0.75f};
+    const Pht::Vec4 selectablesSlotInnerLowerBorderColor {0.175f, 0.175f, 0.175f, 0.5f};
+
+/*
+    const Pht::Vec4 activeSlotInnerColor {0.175f, 0.175f, 0.175f, 0.75f};
+    const Pht::Vec4 activeSlotLowerInnerColor {0.175f, 0.175f, 0.175f, 0.5f};
+    const Pht::Vec4 activeSlotOuterBorderColor {0.175f, 0.175f, 0.175f, 0.5f};
+    const Pht::Vec4 activeSlotOuterLowerBorderColor {0.175f, 0.175f, 0.175f, 0.75f};
+    const Pht::Vec4 activeSlotInnerBorderColor {0.175f, 0.175f, 0.175f, 0.75f};
+    const Pht::Vec4 activeSlotInnerLowerBorderColor {0.175f, 0.175f, 0.175f, 0.6f};
+
+    const Pht::Vec4 selectablesSlotInnerColor {0.175f, 0.175f, 0.175f, 0.75f};
+    const Pht::Vec4 selectablesSlotLowerInnerColor {0.175f, 0.175f, 0.175f, 0.5f};
+    const Pht::Vec4 selectablesSlotOuterBorderColor {0.175f, 0.175f, 0.175f, 0.5f};;
+    const Pht::Vec4 selectablesSlotOuterLowerBorderColor {0.175f, 0.175f, 0.175f, 0.75f};
+    const Pht::Vec4 selectablesSlotInnerBorderColor {0.175f, 0.175f, 0.175f, 0.75f};
+    const Pht::Vec4 selectablesSlotInnerLowerBorderColor {0.175f, 0.175f, 0.175f, 0.6f};
+*/
+#else
     const Pht::Vec4 outerBorderColor {0.175f, 0.175f, 0.175f, 0.75f};
     const Pht::Vec4 lowerOuterBorderColor {0.175f, 0.175f, 0.175f, 0.1f};
     const Pht::Vec4 borderColor {0.175f, 0.175f, 0.175f, 0.75f};
@@ -42,6 +124,7 @@ namespace {
         activeSlotLowerInnerColor + activeSlotInnerBorderColorAdd;
 
     constexpr auto selectablesSlotLowerAlpha = 0.4f;
+    // constexpr auto selectablesSlotLowerAlpha = 0.66f;
     constexpr auto selectablesSlotLowerBorderAlpha = 0.5f;
     const Pht::Vec4 selectablesSlotInnerColor {0.53f * f, 0.2625f * f, 0.6085f * f, 0.96f};
     const Pht::Vec4 selectablesSlotLowerInnerColor {
@@ -58,12 +141,14 @@ namespace {
         selectablesSlotInnerColor + selectablesSlotInnerBorderColorAdd;
     const auto selectablesSlotInnerLowerBorderColor =
         selectablesSlotLowerInnerColor + selectablesSlotInnerBorderColorAdd;
+#endif
 
     constexpr auto gridCellSize = 0.66f;
     constexpr auto gridLineWidth = 0.04f;
     const Pht::Vec4 gridLineColor {1.0f, 1.0f, 1.0f, 0.05f};
 
-    constexpr auto tiltFactor = 0.9f;
+    // constexpr auto tiltFactor = 0.9f;
+    constexpr auto tiltFactor = 0.75f;
     const Pht::Vec2 pauseButtonRectangleSize {1.5f, 1.5f};
     const Pht::Vec2 nextPiecesRectangleSize {
         3.35f * GameHud::nextPiecesContainerScale, 3.3f * GameHud::selectablePiecesContainerScale
