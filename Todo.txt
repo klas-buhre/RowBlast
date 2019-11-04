@@ -58,6 +58,8 @@ Ongoing tasks:
 
 
     -Do:
+        -3. Redesign the game HUD: dark transparent or solid blue/gray metal behind containers.
+        -4. Add a star meter in the game scene?
         -5. Release.
         -6. Send mail to publishers.
         -2. Just try to reduce the risk mixing up the rotate tap with at drag start. Maybe sort out
