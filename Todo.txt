@@ -58,13 +58,14 @@ Ongoing tasks:
 
 
     -Do:
-        -3. Redesign the game HUD: dark transparent or solid blue/gray metal behind containers.
-            Add star meter with a dark grey bar and grey transparent stars and gold stars.
-            Add a recess on each side of in the outer transparent part of lower hud.
-            Trim the colors in the lower hud.
-            Grid in the whole selectables container?
-            Keep the old selectables container for the space world.
-            Trim the tilt and piece positions.
+        -3. -Redesign the game HUD: dark transparent or solid blue/gray metal behind containers.
+            -Add star meter with a dark grey or dark blue bar and black stars and gold stars. Filled
+             area of bar could be blue or yellow.
+            -Add a recess on each side of in the outer transparent part of lower hud.
+            -Trim the colors in the lower hud.
+            -Grid in the whole selectables container?
+            -Keep the old selectables container for the space world.
+            -Trim the tilt and piece positions.
         -4. Add a star meter in the game scene?
         -5. Release.
         -6. Send mail to publishers.

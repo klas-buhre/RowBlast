@@ -12,7 +12,7 @@ namespace {
     constexpr auto mapMusicVolume = 0.55f;
     constexpr auto fadeInDuration = 0.22f;
     constexpr auto maxSoundGain = 1.0f;
-    constexpr auto clearBlocksGain = 0.83f;
+    constexpr auto clearBlocksGain = 0.75f;
 }
 
 void RowBlast::LoadAudioResouces(Pht::IEngine& engine) {
@@ -26,7 +26,7 @@ void RowBlast::LoadAudioResouces(Pht::IEngine& engine) {
 
     audio.LoadSound("button_click.wav",
                     1,
-                    maxSoundGain,
+                    0.9f,
                     static_cast<Pht::AudioResourceId>(SoundId::ButtonClick));
     audio.LoadSound("start_game.wav",
                     1,

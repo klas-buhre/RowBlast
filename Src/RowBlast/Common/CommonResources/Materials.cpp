@@ -24,6 +24,7 @@ Materials::Materials(Pht::IEngine& engine) :
     CreateRedMaterial();
     CreateGreenMaterial();
     CreateLightGrayMaterial();
+    CreateDarkGrayMaterial();
     CreateGrayYellowMaterial();
     
     Pht::EnvMapTextureFilenames fieldBlockEnvMapTextures {
@@ -137,6 +138,20 @@ void Materials::CreateLightGrayMaterial() {
                                                          shininess,
                                                          reflectivity);
     mLightGrayMaterial->SetDepthTestAllowedOverride(true);
+}
+
+void Materials::CreateDarkGrayMaterial() {
+    Pht::Color ambient {0.2f, 0.2f, 0.2f};
+    Pht::Color diffuse {0.2f, 0.2f, 0.2f};
+    Pht::Color specular {1.0f, 1.0f, 1.0f};
+    auto shininess = 25.0f;
+    mDarkGrayMaterial = std::make_unique<Pht::Material>(mEnvMapTextureFilenames,
+                                                        ambient,
+                                                        diffuse,
+                                                        specular,
+                                                        shininess,
+                                                        reflectivity);
+    mDarkGrayMaterial->SetDepthTestAllowedOverride(true);
 }
 
 void Materials::CreateGrayYellowMaterial() {

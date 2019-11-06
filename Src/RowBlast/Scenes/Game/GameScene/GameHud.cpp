@@ -185,6 +185,7 @@ void GameHud::CreateUpperBarObject(Pht::Scene& scene,
     upperBar.GetTransform().SetPosition(position);
 */
 
+    // Upper Bar:
     auto& guiResources = commonResources.GetGuiResources();
     auto& menuWindow = guiResources.GetLargeDarkMenuWindow();
     auto& renderer = mEngine.GetRenderer();
@@ -194,20 +195,53 @@ void GameHud::CreateUpperBarObject(Pht::Scene& scene,
     parentObject.AddChild(upperBar);
 
     auto topPadding = renderer.GetTopPaddingHeight();
-    Pht::Vec3 position {0.0f, frustumSize.y / 2.0f - topPadding + 0.7f, UiLayer::tutorialWindow};
+    // Pht::Vec3 position {0.0f, frustumSize.y / 2.0f - topPadding + 0.7f, UiLayer::tutorialWindow};
+    Pht::Vec3 position {0.0f, frustumSize.y / 2.0f - topPadding + 0.6f, UiLayer::tutorialWindow};
     upperBar.GetTransform().SetPosition(position);
-    upperBar.GetTransform().SetScale({2.0f, 0.15f, 1.0f});
-    // upperBar.GetTransform().SetRotation({0.0f, 0.0f, 90.0f});
-    // upperBar.GetTransform().SetScale({0.25f, 2.0f, 1.0f});
+    upperBar.GetTransform().SetScale({2.0f, 0.16f, 1.0f});
+
     
+    // Upper Bar Shadow:
+    auto shadowWidth = frustumSize.x;
+    auto shadowHeight = 0.25f; // 0.25f
+    Pht::QuadMesh::Vertices shadowVertices {
+        {{-shadowWidth / 2.0f, -shadowHeight / 2.0f, 0.0f}, {0.0f, 0.0f, 0.0f, 0.0f}},
+        {{shadowWidth / 2.0f, -shadowHeight / 2.0f, 0.0f}, {0.0f, 0.0f, 0.0f, 0.0f}},
+        {{shadowWidth / 2.0f, shadowHeight / 2.0f, 0.0f}, {0.0f, 0.0f, 0.0f, 0.5f}},
+        {{-shadowWidth / 2.0f, shadowHeight / 2.0f, 0.0f}, {0.0f, 0.0f, 0.0f, 0.5f}},
+    };
+    Pht::Material shadowMaterial;
+    auto& shadow = scene.CreateSceneObject(Pht::QuadMesh {shadowVertices}, shadowMaterial);
+    parentObject.AddChild(shadow);
+    auto shadowY = position.y - 1.75f;
+    Pht::Vec3 shadowPosition {0.0f, shadowY, UiLayer::slidingTextRectangle};
+    shadow.GetTransform().SetPosition(shadowPosition);
+    
+
+    // Stars:
     Pht::ObjMesh starMesh {"star.obj", 0.05f};
     auto& goldMaterial = commonResources.GetMaterials().GetGoldMaterial();
-    auto& star = scene.CreateSceneObject(starMesh, goldMaterial);
-    parentObject.AddChild(star);
-    Pht::Vec3 starPosition {0.0f, frustumSize.y / 2.0f - topPadding - 0.55f, UiLayer::block};
-    star.GetTransform().SetPosition(starPosition);
-    star.GetTransform().SetRotation({90.0f, 0.0f, 0.0f});
-    
+    auto& goldStar = scene.CreateSceneObject(starMesh, goldMaterial);
+    parentObject.AddChild(goldStar);
+    Pht::Vec3 goldStarPosition {-1.5f, frustumSize.y / 2.0f - topPadding - 0.5f, UiLayer::block};
+    goldStar.GetTransform().SetPosition(goldStarPosition);
+    goldStar.GetTransform().SetRotation({90.0f, 0.0f, 0.0f});
+
+    auto greyMaterial = commonResources.GetMaterials().GetDarkGrayMaterial();
+    auto& greyStar = scene.CreateSceneObject(starMesh, greyMaterial);
+    parentObject.AddChild(greyStar);
+    Pht::Vec3 greyStarPosition {0.0f, frustumSize.y / 2.0f - topPadding - 0.5f, UiLayer::block};
+    greyStar.GetTransform().SetPosition(greyStarPosition);
+    greyStar.GetTransform().SetRotation({90.0f, 0.0f, 0.0f});
+
+    auto& greyStar2 = scene.CreateSceneObject(starMesh, greyMaterial);
+    parentObject.AddChild(greyStar2);
+    Pht::Vec3 greyStar2Position {1.5f, frustumSize.y / 2.0f - topPadding - 0.5f, UiLayer::block};
+    greyStar2.GetTransform().SetPosition(greyStar2Position);
+    greyStar2.GetTransform().SetRotation({90.0f, 0.0f, 0.0f});
+
+
+    // Lower Bar:
 
 /*
     auto& guiResources = commonResources.GetGuiResources();
@@ -378,7 +412,7 @@ void GameHud::CreateProgressObject(Pht::Scene& scene,
     mProgressContainer = &progressContainer;
     progressContainer.GetTransform().SetPosition(position);
     parentObject.AddChild(progressContainer);
-    
+/*
     Pht::Vec3 cylinderPosition {0.0f, 0.0f, UiLayer::lowerTextRectangle};
     CreateRoundedCylinder(scene,
                           progressContainer,
@@ -387,7 +421,7 @@ void GameHud::CreateProgressObject(Pht::Scene& scene,
                           roundedCylinderOpacity,
                           roundedCylinderAmbient,
                           roundedCylinderDiffuse);
-    
+*/
     Pht::TextProperties textProperties {
         commonResources.GetHussarFontSize20(PotentiallyZoomedScreen::Yes),
         1.0f,
@@ -510,7 +544,7 @@ void GameHud::CreateMovesObject(Pht::Scene& scene,
     mMovesContainer->GetTransform().SetPosition(position);
     
     mMovesRoundedCylinderContainer = &scene.CreateSceneObject(*mMovesContainer);
-
+/*
     Pht::Vec3 cylinderPosition {0.0f, 0.0f, UiLayer::lowerTextRectangle};
     CreateRoundedCylinder(scene,
                           *mMovesRoundedCylinderContainer,
@@ -519,7 +553,7 @@ void GameHud::CreateMovesObject(Pht::Scene& scene,
                           roundedCylinderOpacity,
                           roundedCylinderAmbient,
                           roundedCylinderDiffuse);
-
+*/
     Pht::TextProperties textProperties {
         commonResources.GetHussarFontSize35(PotentiallyZoomedScreen::Yes),
         1.0f,
