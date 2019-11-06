@@ -133,7 +133,7 @@ GameHud::GameHud(Pht::IEngine& engine,
     mUpperContainer = &scene.CreateSceneObject();
     parentObject.AddChild(*mUpperContainer);
     
-    CreateUpperBarObject(scene, *mUpperContainer);
+    CreateUpperBarObject(scene, *mUpperContainer, commonResources);
     CreateProgressObject(scene, *mUpperContainer, commonResources, levelResources, gameHudResources);
     CreateMovesObject(scene, *mUpperContainer, commonResources, gameHudResources);
     CreateNextPiecesObject(scene, parentObject, commonResources);
@@ -165,9 +165,15 @@ void GameHud::CreateLightAndCamera(Pht::Scene& scene,
 }
 
 void GameHud::CreateUpperBarObject(Pht::Scene& scene,
-                                   Pht::SceneObject& parentObject) {
+                                   Pht::SceneObject& parentObject,
+                                   const CommonResources& commonResources) {
+/*
     Pht::Material barMaterial {Pht::Color{0.0f, 0.0f, 0.0f}};
     barMaterial.SetOpacity(0.5f);
+
+    // Pht::Material barMaterial {Pht::Color{0.05f, 0.0f, 0.3f}};
+    // Pht::Material barMaterial {Pht::Color{0.1f, 0.1f, 0.15f}};
+    // barMaterial.SetOpacity(0.95f);
 
     auto& renderer = mEngine.GetRenderer();
     auto frustumSize = renderer.GetHudFrustumSize();
@@ -177,8 +183,48 @@ void GameHud::CreateUpperBarObject(Pht::Scene& scene,
     auto topPadding = renderer.GetTopPaddingHeight();
     Pht::Vec3 position {0.0f, frustumSize.y / 2.0f - topPadding + 0.2f, UiLayer::tutorialWindow};
     upperBar.GetTransform().SetPosition(position);
+*/
+
+    auto& guiResources = commonResources.GetGuiResources();
+    auto& menuWindow = guiResources.GetLargeDarkMenuWindow();
+    auto& renderer = mEngine.GetRenderer();
+    auto frustumSize = renderer.GetHudFrustumSize();
+    auto& upperBar = scene.CreateSceneObject();
+    upperBar.SetRenderable(&menuWindow.GetRenderable());
+    parentObject.AddChild(upperBar);
+
+    auto topPadding = renderer.GetTopPaddingHeight();
+    Pht::Vec3 position {0.0f, frustumSize.y / 2.0f - topPadding + 0.7f, UiLayer::tutorialWindow};
+    upperBar.GetTransform().SetPosition(position);
+    upperBar.GetTransform().SetScale({2.0f, 0.15f, 1.0f});
+    // upperBar.GetTransform().SetRotation({0.0f, 0.0f, 90.0f});
+    // upperBar.GetTransform().SetScale({0.25f, 2.0f, 1.0f});
     
+    Pht::ObjMesh starMesh {"star.obj", 0.05f};
+    auto& goldMaterial = commonResources.GetMaterials().GetGoldMaterial();
+    auto& star = scene.CreateSceneObject(starMesh, goldMaterial);
+    parentObject.AddChild(star);
+    Pht::Vec3 starPosition {0.0f, frustumSize.y / 2.0f - topPadding - 0.55f, UiLayer::block};
+    star.GetTransform().SetPosition(starPosition);
+    star.GetTransform().SetRotation({90.0f, 0.0f, 0.0f});
     
+
+/*
+    auto& guiResources = commonResources.GetGuiResources();
+    auto& menuWindow = guiResources.GetMediumDarkMenuWindow();
+    auto& renderer = mEngine.GetRenderer();
+    auto frustumSize = renderer.GetHudFrustumSize();
+    auto& upperBar = scene.CreateSceneObject();
+    upperBar.SetRenderable(&menuWindow.GetRenderable());
+    parentObject.AddChild(upperBar);
+ 
+    auto topPadding = renderer.GetTopPaddingHeight();
+    Pht::Vec3 position {0.0f, frustumSize.y / 2.0f - topPadding + 0.85f, UiLayer::tutorialWindow};
+    upperBar.GetTransform().SetPosition(position);
+    upperBar.GetTransform().SetScale({2.0f, 0.25f, 1.0f});
+    // upperBar.GetTransform().SetRotation({0.0f, 0.0f, 90.0f});
+    // upperBar.GetTransform().SetScale({0.25f, 2.0f, 1.0f});
+*/
 /*
     // auto& lowerBar = scene.CreateSceneObject(Pht::QuadMesh {frustumSize.x, 4.0f}, barMaterial);
     auto& lowerBar = scene.CreateSceneObject(Pht::QuadMesh {frustumSize.x, 5.3f}, barMaterial);
@@ -269,6 +315,22 @@ void GameHud::CreateUpperBarObject(Pht::Scene& scene,
     Pht::Vec3 lowerBarPosition {0.0f, lowerBarY, UiLayer::tutorialWindow};
     lowerBar.GetTransform().SetPosition(lowerBarPosition);
 */
+/*
+    auto width = frustumSize.x;
+    auto height = 5.3f;
+    Pht::QuadMesh::Vertices vertices {
+        {{-width / 2.0f, -height / 2.0f, 0.0f}, {0.0f, 0.0f, 0.75f, 0.25f}},
+        {{width / 2.0f, -height / 2.0f, 0.0f}, {0.0f, 0.0f, 0.75f, 0.25f}},
+        {{width / 2.0f, height / 2.0f, 0.0f}, {0.0f, 0.0f, 0.75f, 0.15f}},
+        {{-width / 2.0f, height / 2.0f, 0.0f}, {0.0f, 0.0f, 0.75f, 0.15f}},
+    };
+    Pht::Material material;
+    auto& lowerBar = scene.CreateSceneObject(Pht::QuadMesh {vertices}, material);
+    parentObject.AddChild(lowerBar);
+    auto lowerBarY = CalculateLowerHudObjectYPosition(mEngine) - 0.8f;
+    Pht::Vec3 lowerBarPosition {0.0f, lowerBarY, UiLayer::tutorialWindow};
+    lowerBar.GetTransform().SetPosition(lowerBarPosition);
+*/
 
     auto width = frustumSize.x;
     auto height = 5.3f;
@@ -286,20 +348,14 @@ void GameHud::CreateUpperBarObject(Pht::Scene& scene,
     lowerBar.GetTransform().SetPosition(lowerBarPosition);
 
 /*
-    auto width = frustumSize.x;
-    auto height = 5.3f;
-    Pht::QuadMesh::Vertices vertices {
-        {{-width / 2.0f, -height / 2.0f, 0.0f}, {0.0f, 0.0f, 0.75f, 0.25f}},
-        {{width / 2.0f, -height / 2.0f, 0.0f}, {0.0f, 0.0f, 0.75f, 0.25f}},
-        {{width / 2.0f, height / 2.0f, 0.0f}, {0.0f, 0.0f, 0.75f, 0.15f}},
-        {{-width / 2.0f, height / 2.0f, 0.0f}, {0.0f, 0.0f, 0.75f, 0.15f}},
-    };
-    Pht::Material material;
-    auto& lowerBar = scene.CreateSceneObject(Pht::QuadMesh {vertices}, material);
+    Pht::ObjMesh cubeMesh {"cube_428.obj", 18.0f};
+    auto& materials = commonResources.GetMaterials();
+    auto& lowerBar = scene.CreateSceneObject(cubeMesh, materials.GetLightGrayMaterial());
     parentObject.AddChild(lowerBar);
-    auto lowerBarY = CalculateLowerHudObjectYPosition(mEngine) - 0.8f;
-    Pht::Vec3 lowerBarPosition {0.0f, lowerBarY, UiLayer::tutorialWindow};
+    auto lowerBarY = CalculateLowerHudObjectYPosition(mEngine) - 7.5f;
+    Pht::Vec3 lowerBarPosition {0.0f, lowerBarY, -12.0f};
     lowerBar.GetTransform().SetPosition(lowerBarPosition);
+    lowerBar.GetTransform().SetRotation({2.5f, 0.0f, 0.0f});
 */
 }
 

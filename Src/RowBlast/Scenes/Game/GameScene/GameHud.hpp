@@ -185,7 +185,7 @@ namespace RowBlast {
 
     private:
         void CreateLightAndCamera(Pht::Scene& scene, Pht::SceneObject& parentObject, int hudLayer);
-        void CreateUpperBarObject(Pht::Scene& scene, Pht::SceneObject& parentObject);
+        void CreateUpperBarObject(Pht::Scene& scene, Pht::SceneObject& parentObject, const CommonResources& commonResources);
         void CreateProgressObject(Pht::Scene& scene,
                                   Pht::SceneObject& parentObject,
                                   const CommonResources& commonResources,
