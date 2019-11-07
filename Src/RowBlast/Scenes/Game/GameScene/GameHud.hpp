@@ -167,9 +167,9 @@ namespace RowBlast {
             return *mMovesTextContainer;
         }
 
-        Pht::SceneObject& GetMovesRoundedCylinderContainer() {
-            assert(mMovesRoundedCylinderContainer);
-            return *mMovesRoundedCylinderContainer;
+        Pht::SceneObject& GetMovesIconContainer() {
+            assert(mMovesIconContainer);
+            return *mMovesIconContainer;
         }
         
         float GetMovesTextScaleFactor() const {
@@ -259,11 +259,12 @@ namespace RowBlast {
         int mMovesLeft {0};
         int mProgress {-1};
         int mProgressGoal {0};
+        std::string mProgressGoalString;
         Pht::TextComponent* mProgressText {nullptr};
         Pht::TextComponent* mMovesText {nullptr};
         Pht::SceneObject* mMovesTextSceneObject {nullptr};
         Pht::SceneObject* mMovesTextContainer {nullptr};
-        Pht::SceneObject* mMovesRoundedCylinderContainer {nullptr};
+        Pht::SceneObject* mMovesIconContainer {nullptr};
         Pht::SceneObject* mBlueMovesIcon {nullptr};
         Pht::SceneObject* mYellowMovesIcon {nullptr};
         Pht::LightComponent* mLight {nullptr};

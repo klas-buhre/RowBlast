@@ -65,7 +65,7 @@ void FewMovesAlertAnimation::Init() {
     mElapsedTime = 0.0f;
     
     auto& hud = mScene.GetHud();
-    mMovesRoundedCylinderContainer = &hud.GetMovesRoundedCylinderContainer();
+    mMovesIconContainer = &hud.GetMovesIconContainer();
     mMovesTextContainerSceneObject = &hud.GetMovesTextContainer();
     mMovesTextSceneObject = &hud.GetMovesTextSceneObject();
     
@@ -73,7 +73,7 @@ void FewMovesAlertAnimation::Init() {
     
     mParticleEffect->GetComponent<Pht::ParticleEffect>()->Stop();
     hud.GetMovesTextContainer().AddChild(*mParticleEffect);
-    mParticleEffect->GetTransform().SetPosition({0.025f, 0.0f, UiLayer::root});
+    mParticleEffect->GetTransform().SetPosition({0.0f, 0.0f, UiLayer::root});
 }
 
 void FewMovesAlertAnimation::Update(float dt) {
@@ -118,7 +118,7 @@ void FewMovesAlertAnimation::UpdateInActiveState(float dt) {
         auto sinT = std::sin(t);
 
         auto movesContainerScale = 1.0f + animationScaleAdd + animationScaleAmplitude * sinT;
-        mMovesRoundedCylinderContainer->GetTransform().SetScale(movesContainerScale);
+        mMovesIconContainer->GetTransform().SetScale(movesContainerScale);
         
         auto textContainerScale = 1.0f + animationTextScaleAdd + animationTextScaleAmplitude * sinT;
         mMovesTextContainerSceneObject->GetTransform().SetScale(textContainerScale);
@@ -142,7 +142,7 @@ void FewMovesAlertAnimation::UpdateInZeroMovesState() {
 
 void FewMovesAlertAnimation::RestoreHud() {
     mScene.GetHud().ShowBlueMovesIcon();
-    mMovesRoundedCylinderContainer->GetTransform().SetScale(1.0f);
+    mMovesIconContainer->GetTransform().SetScale(1.0f);
     mMovesTextContainerSceneObject->GetTransform().SetScale(GameHud::movesTextStaticScale);
     
     auto textScale =

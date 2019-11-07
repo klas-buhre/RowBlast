@@ -119,7 +119,6 @@
 		62216A8F21EB376E001CB9A1 /* SettingsService.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216A5C21EB376E001CB9A1 /* SettingsService.cpp */; };
 		62216A9021EB376E001CB9A1 /* UfoAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216A5E21EB376E001CB9A1 /* UfoAnimation.cpp */; };
 		62216A9121EB376E001CB9A1 /* Materials.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216A5F21EB376E001CB9A1 /* Materials.cpp */; };
-		62216A9221EB376E001CB9A1 /* RoundedCylinder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216A6021EB376E001CB9A1 /* RoundedCylinder.cpp */; };
 		62216A9321EB376E001CB9A1 /* AudioResources.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216A6121EB376E001CB9A1 /* AudioResources.cpp */; };
 		62216A9421EB376E001CB9A1 /* HandAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216A6521EB376E001CB9A1 /* HandAnimation.cpp */; };
 		62216A9521EB376E001CB9A1 /* Planets.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216A6721EB376E001CB9A1 /* Planets.cpp */; };
@@ -726,7 +725,6 @@
 		62216A5C21EB376E001CB9A1 /* SettingsService.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SettingsService.cpp; sourceTree = "<group>"; };
 		62216A5E21EB376E001CB9A1 /* UfoAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UfoAnimation.cpp; sourceTree = "<group>"; };
 		62216A5F21EB376E001CB9A1 /* Materials.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Materials.cpp; sourceTree = "<group>"; };
-		62216A6021EB376E001CB9A1 /* RoundedCylinder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RoundedCylinder.cpp; sourceTree = "<group>"; };
 		62216A6121EB376E001CB9A1 /* AudioResources.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AudioResources.cpp; sourceTree = "<group>"; };
 		62216A6221EB376E001CB9A1 /* GradientRectangle.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GradientRectangle.hpp; sourceTree = "<group>"; };
 		62216A6321EB376E001CB9A1 /* CommonResources.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CommonResources.hpp; sourceTree = "<group>"; };
@@ -742,7 +740,6 @@
 		62216A6D21EB376E001CB9A1 /* UfoAnimation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = UfoAnimation.hpp; sourceTree = "<group>"; };
 		62216A6E21EB376E001CB9A1 /* Materials.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Materials.hpp; sourceTree = "<group>"; };
 		62216A6F21EB376E001CB9A1 /* AudioResources.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = AudioResources.hpp; sourceTree = "<group>"; };
-		62216A7021EB376E001CB9A1 /* RoundedCylinder.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = RoundedCylinder.hpp; sourceTree = "<group>"; };
 		62216A7121EB376E001CB9A1 /* GradientRectangle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GradientRectangle.cpp; sourceTree = "<group>"; };
 		62216A7221EB376E001CB9A1 /* CommonResources.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CommonResources.cpp; sourceTree = "<group>"; };
 		62216A7321EB376E001CB9A1 /* FloatingBlocks.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FloatingBlocks.cpp; sourceTree = "<group>"; };
@@ -1774,8 +1771,6 @@
 				62216A6E21EB376E001CB9A1 /* Materials.hpp */,
 				62216A6721EB376E001CB9A1 /* Planets.cpp */,
 				62216A6B21EB376E001CB9A1 /* Planets.hpp */,
-				62216A6021EB376E001CB9A1 /* RoundedCylinder.cpp */,
-				62216A7021EB376E001CB9A1 /* RoundedCylinder.hpp */,
 				62216A6821EB376E001CB9A1 /* Ufo.cpp */,
 				62216A6C21EB376E001CB9A1 /* Ufo.hpp */,
 				62216A5E21EB376E001CB9A1 /* UfoAnimation.cpp */,
@@ -3581,7 +3576,6 @@
 				62216BE021EB377E001CB9A1 /* GameOverDialogController.cpp in Sources */,
 				62216C4321EB377F001CB9A1 /* LivesDialogView.cpp in Sources */,
 				62216BE721EB377E001CB9A1 /* GameOverDialogView.cpp in Sources */,
-				62216A9221EB376E001CB9A1 /* RoundedCylinder.cpp in Sources */,
 				62216C0721EB377F001CB9A1 /* MiddleIPiece.cpp in Sources */,
 				62243E9722B7952500EB922F /* OpenALBuffer.cpp in Sources */,
 				62216A7521EB376E001CB9A1 /* SpinningWheelEffect.cpp in Sources */,

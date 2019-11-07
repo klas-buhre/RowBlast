@@ -14,7 +14,6 @@
 #include "SceneObjectUtils.hpp"
 
 // Game includes.
-#include "RoundedCylinder.hpp"
 #include "Field.hpp"
 #include "LevelResources.hpp"
 #include "PieceResources.hpp"
@@ -23,6 +22,7 @@
 #include "GameHudController.hpp"
 #include "UiLayer.hpp"
 #include "CommonResources.hpp"
+#include "StringUtils.hpp"
 
 using namespace RowBlast;
 
@@ -79,17 +79,26 @@ namespace {
         return yPosition;
     }
     
-    void WriteIntegerAtBeginningOfString(int value, std::string& str) {
+    int WriteIntegerAtBeginningOfString(int value, std::string& str) {
         constexpr auto bufSize = 64;
         char buffer[bufSize];
-        std::snprintf(buffer, bufSize, "%3d", value);
+        std::snprintf(buffer, bufSize, "%d", value);
+        auto numDigits = std::strlen(buffer);
         
-        assert(std::strlen(buffer) <= 3);
-        assert(str.size() >= 3);
+        assert(str.size() >= numDigits);
 
-        str[0] = buffer[0];
-        str[1] = buffer[1];
-        str[2] = buffer[2];
+        for (auto i = 0; i < numDigits; ++i) {
+            str[i] = buffer[i];
+        }
+        
+        return static_cast<int>(numDigits);
+    }
+
+    void FillStringWithSpaces(std::string& str) {
+        auto strSize = str.size();
+        for (auto i = 0; i < strSize; ++i) {
+            str[i] = ' ';
+        }
     }
 }
 
@@ -404,7 +413,7 @@ void GameHud::CreateProgressObject(Pht::Scene& scene,
     auto topPadding = renderer.GetTopPaddingHeight();
     
     Pht::Vec3 position {
-        -frustumSize.x / 2.0f + 2.1f,
+        -frustumSize.x / 2.0f + 1.9f,
         frustumSize.y / 2.0f - topPadding - 0.67f,
         UiLayer::root
     };
@@ -412,16 +421,7 @@ void GameHud::CreateProgressObject(Pht::Scene& scene,
     mProgressContainer = &progressContainer;
     progressContainer.GetTransform().SetPosition(position);
     parentObject.AddChild(progressContainer);
-/*
-    Pht::Vec3 cylinderPosition {0.0f, 0.0f, UiLayer::lowerTextRectangle};
-    CreateRoundedCylinder(scene,
-                          progressContainer,
-                          cylinderPosition,
-                          {2.5, 1.05f},
-                          roundedCylinderOpacity,
-                          roundedCylinderAmbient,
-                          roundedCylinderDiffuse);
-*/
+
     Pht::TextProperties textProperties {
         commonResources.GetHussarFontSize20(PotentiallyZoomedScreen::Yes),
         1.0f,
@@ -430,40 +430,39 @@ void GameHud::CreateProgressObject(Pht::Scene& scene,
         {0.05f, 0.05f},
         {0.27f, 0.27f, 0.27f, 0.5f}
     };
+
+    // Warning! Must be at least seven spaces to fit digits.
+    const std::string placeholder(7, ' ');
     
-    mProgressText = &scene.CreateText("", textProperties);
-    auto& progressTextSceneobject = mProgressText->GetSceneObject();
+    mProgressText = &scene.CreateText(placeholder, textProperties);
+    auto& progressTextSceneObject = mProgressText->GetSceneObject();
     
     switch (mLevelObjective) {
         case Level::Objective::Clear:
             CreateGrayBlock(scene, progressContainer, commonResources);
-            progressTextSceneobject.GetTransform().SetPosition({-0.48f, -0.215f, UiLayer::text});
+            progressTextSceneObject.GetTransform().SetPosition({-0.48f, -0.15f, UiLayer::text});
             mProgressGoal = mField.CalculateNumLevelBlocks();
             break;
         case Level::Objective::BringDownTheAsteroid:
             CreateAsteroid(scene, progressContainer, levelResources);
             CreateDownArrow(scene, progressContainer, gameHudResources);
-            progressTextSceneobject.GetTransform().SetPosition({0.2f, -0.215f, UiLayer::text});
+            progressTextSceneObject.GetTransform().SetPosition({0.15f, -0.15f, UiLayer::text});
             mProgressGoal = mField.CalculateAsteroidRow().GetValue();
             break;
         case Level::Objective::Build:
             CreateBlueprintSlot(scene, progressContainer, levelResources);
-            progressTextSceneobject.GetTransform().SetPosition({-0.48f, -0.215f, UiLayer::text});
+            progressTextSceneObject.GetTransform().SetPosition({-0.48f, -0.1f, UiLayer::text});
             mProgressGoal = mField.CalculateNumEmptyBlueprintSlots();
             break;
     }
-    
-    auto* textComponent = progressTextSceneobject.GetComponent<Pht::TextComponent>();
-    assert(textComponent);
-    std::string digitsPlaceholder {"   "}; // Warning! Must be three spaces to fit digits.
-    
+
     if (mLevelObjective == Level::Objective::BringDownTheAsteroid) {
-        textComponent->GetText() = digitsPlaceholder + "%";
+        mProgressGoalString = "%";
     } else {
-        textComponent->GetText() = digitsPlaceholder + "/" + std::to_string(mProgressGoal);
+        mProgressGoalString = "/" + std::to_string(mProgressGoal);
     }
     
-    progressContainer.AddChild(progressTextSceneobject);
+    progressContainer.AddChild(progressTextSceneObject);
     
     Pht::SceneObjectUtils::ScaleRecursively(*mProgressContainer, 1.1f);
 }
@@ -478,7 +477,7 @@ void GameHud::CreateGrayBlock(Pht::Scene& scene,
     auto& transform = grayBlock.GetTransform();
     transform.SetPosition({-1.05f, 0.0f, UiLayer::block});
     transform.SetRotation({-30.0f, -30.0f, 0.0f});
-    transform.SetScale(0.505f);
+    transform.SetScale(0.52f);
     
     progressContainer.AddChild(grayBlock);
 }
@@ -490,9 +489,9 @@ void GameHud::CreateAsteroid(Pht::Scene& scene,
     asteroid.SetRenderable(&levelResources.GetAsteroidFragmentRenderable());
     
     auto& transform = asteroid.GetTransform();
-    transform.SetPosition({-0.95f, 0.0f, UiLayer::block});
+    transform.SetPosition({-1.0f, 0.0f, UiLayer::block});
     transform.SetRotation({-25.0f, 45.0f, -12.0f});
-    transform.SetScale(2.4f);
+    transform.SetScale(2.7f);
     
     progressContainer.AddChild(asteroid);
 }
@@ -502,7 +501,7 @@ void GameHud::CreateDownArrow(Pht::Scene& scene,
                               const GameHudResources& gameHudResources) {
     auto& arrow = scene.CreateSceneObject();
     arrow.SetRenderable(&gameHudResources.GetDownArrowRenderable());
-    arrow.GetTransform().SetPosition({-0.2f, 0.0f, UiLayer::text});
+    arrow.GetTransform().SetPosition({-0.25f, 0.05f, UiLayer::text});
     progressContainer.AddChild(arrow);
 }
 
@@ -511,9 +510,8 @@ void GameHud::CreateBlueprintSlot(Pht::Scene& scene,
                                   const LevelResources& levelResources) {
     auto& blueprintSlotContainer = scene.CreateSceneObject();
     auto& transform = blueprintSlotContainer.GetTransform();
-    transform.SetPosition({-1.0f, 0.0f, UiLayer::block});
-    transform.SetRotation({-30.0f, -30.0f, 0.0f});
-    transform.SetScale(0.56f);
+    transform.SetPosition({-1.0f, 0.15f, UiLayer::block});
+    transform.SetScale(0.5f);
     progressContainer.AddChild(blueprintSlotContainer);
 
     auto& blueprintSlot = scene.CreateSceneObject();
@@ -536,24 +534,14 @@ void GameHud::CreateMovesObject(Pht::Scene& scene,
     auto topPadding = renderer.GetTopPaddingHeight();
     
     Pht::Vec3 position {
-        frustumSize.x / 2.0f - 2.1f,
+        frustumSize.x / 2.0f - 1.4f,
         frustumSize.y / 2.0f - topPadding - 0.67f,
         UiLayer::root
     };
 
     mMovesContainer->GetTransform().SetPosition(position);
-    
-    mMovesRoundedCylinderContainer = &scene.CreateSceneObject(*mMovesContainer);
-/*
-    Pht::Vec3 cylinderPosition {0.0f, 0.0f, UiLayer::lowerTextRectangle};
-    CreateRoundedCylinder(scene,
-                          *mMovesRoundedCylinderContainer,
-                          cylinderPosition,
-                          {2.5, 1.05f},
-                          roundedCylinderOpacity,
-                          roundedCylinderAmbient,
-                          roundedCylinderDiffuse);
-*/
+    mMovesIconContainer = &scene.CreateSceneObject(*mMovesContainer);
+
     Pht::TextProperties textProperties {
         commonResources.GetHussarFontSize35(PotentiallyZoomedScreen::Yes),
         1.0f,
@@ -563,20 +551,21 @@ void GameHud::CreateMovesObject(Pht::Scene& scene,
         {0.27f, 0.27f, 0.27f, 0.5f},
         Pht::SnapToPixel::No
     };
+    textProperties.mAlignment = Pht::TextAlignment::CenterX;
     
     mMovesTextContainer = &scene.CreateSceneObject(*mMovesContainer);
-    mMovesTextContainer->GetTransform().SetPosition({0.5f, 0.0f, UiLayer::root});
+    mMovesTextContainer->GetTransform().SetPosition({0.35f, 0.125f, UiLayer::root});
 
     std::string text {"   "};   // Warning! Must be three spaces to fit digits.
     mMovesText = &scene.CreateText(text, textProperties, *mMovesTextContainer);
     mMovesTextSceneObject = &mMovesText->GetSceneObject();
-    mMovesTextSceneObject->GetTransform().SetPosition({-0.55f, -0.285f, UiLayer::text});
+    mMovesTextSceneObject->GetTransform().SetPosition({0.0f, -0.285f, UiLayer::text});
     
     mBlueMovesIcon = &CreateMovesIcon(scene,
-                                      *mMovesRoundedCylinderContainer,
+                                      *mMovesIconContainer,
                                       gameHudResources.GetBlueArrowMeshRenderable());
     mYellowMovesIcon = &CreateMovesIcon(scene,
-                                        *mMovesRoundedCylinderContainer,
+                                        *mMovesIconContainer,
                                         gameHudResources.GetYellowArrowMeshRenderable());
     
     mMovesTextScaleFactor =
@@ -595,7 +584,7 @@ Pht::SceneObject& GameHud::CreateMovesIcon(Pht::Scene& scene,
     movesContainer.AddChild(movesIcon);
 
     auto& baseTransform = movesIcon.GetTransform();
-    baseTransform.SetPosition({-0.95f, 0.0f, UiLayer::root});
+    baseTransform.SetPosition({-0.9f, 0.05f, UiLayer::root});
     baseTransform.SetRotation({-29.1f, -29.1f, 0.0f});
 
     CreateArrow({0.0f, 0.27f, 0.0f}, {90.0f, 0.0f, 90.0f}, arrowRenderable, scene, movesIcon);
@@ -647,6 +636,8 @@ void GameHud::CreateNextPiecesObject(Pht::Scene& scene,
         0.9f,
         Pht::Vec4{0.9f, 0.9f, 0.9f, 1.0f}
     };
+    
+    textProperties.mItalicSlant = 0.05f;
     
     auto& nextText = scene.CreateText("NEXT", textProperties);
     auto& nextTextSceneobject = nextText.GetSceneObject();
@@ -735,7 +726,13 @@ void GameHud::UpdateProgress() {
         mProgressGoal - mGameLogic.GetNumObjectsLeftToClear();
 
     if (progress != mProgress) {
-        WriteIntegerAtBeginningOfString(progress, mProgressText->GetText());
+        auto& progressText = mProgressText->GetText();
+        FillStringWithSpaces(progressText);
+        auto numDigitsWritten = WriteIntegerAtBeginningOfString(progress, progressText);
+        StringUtils::StringCopy(progressText,
+                                numDigitsWritten,
+                                mProgressGoalString,
+                                static_cast<int>(mProgressGoalString.size()));
         mProgress = progress;
     }
 }
@@ -743,7 +740,9 @@ void GameHud::UpdateProgress() {
 void GameHud::UpdateMovesLeft() {
     auto movesLeft = GetMovesLeft();
     if (movesLeft != mMovesLeft) {
-        WriteIntegerAtBeginningOfString(movesLeft, mMovesText->GetText());
+        auto& movesText = mMovesText->GetText();
+        FillStringWithSpaces(movesText);
+        WriteIntegerAtBeginningOfString(movesLeft, movesText);
         mMovesLeft = movesLeft;
     }
 }

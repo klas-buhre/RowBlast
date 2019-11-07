@@ -12,7 +12,7 @@ namespace RowBlast {
         void FormatToMinutesAndSeconds(StaticStringBuffer& buffer, std::chrono::seconds seconds);
         
         template<typename A, typename B>
-        void StringCopy(A& a, int aOffset, B& b, int numChars) {
+        void StringCopy(A& a, int aOffset, const B& b, int numChars) {
             assert(a.size() >= aOffset + numChars);
             assert(b.size() >= numChars);
             
