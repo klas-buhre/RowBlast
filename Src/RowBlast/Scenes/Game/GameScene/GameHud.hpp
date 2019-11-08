@@ -203,6 +203,9 @@ namespace RowBlast {
         void CreateBlueprintSlot(Pht::Scene& scene,
                                  Pht::SceneObject& progressContainer,
                                  const LevelResources& levelResources);
+        void CreateStarMeterObject(Pht::Scene& scene,
+                                   Pht::SceneObject& parentObject,
+                                   const CommonResources& commonResources);
         void CreateMovesObject(Pht::Scene& scene,
                                Pht::SceneObject& parentObject,
                                const CommonResources& commonResources,
@@ -218,6 +221,9 @@ namespace RowBlast {
         void CreateNextPiecesObject(Pht::Scene& scene,
                                     Pht::SceneObject& parentObject,
                                     const CommonResources& commonResources);
+        void CreateLowerBarObject(Pht::Scene& scene,
+                                  Pht::SceneObject& parentObject,
+                                  const CommonResources& commonResources);
         void CreateSelectablePiecesObject(Pht::Scene& scene,
                                           Pht::SceneObject& parentObject,
                                           const GameHudRectangles& hudRectangles);
