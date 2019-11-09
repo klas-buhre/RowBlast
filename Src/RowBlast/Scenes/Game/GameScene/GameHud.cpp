@@ -333,26 +333,177 @@ void GameHud::CreateStarMeterObject(Pht::Scene& scene,
     auto frustumSize = renderer.GetHudFrustumSize();
     auto topPadding = renderer.GetTopPaddingHeight();
 
+    auto& container = scene.CreateSceneObject();
+    Pht::Vec3 position {0.0f, frustumSize.y / 2.0f - topPadding - 0.5f, UiLayer::root};
+    container.GetTransform().SetPosition(position);
+    parentObject.AddChild(container);
+    
+    auto width = 4.3f;
+    auto height = 0.2f;
+    auto borderWidth = 0.035f;
+    auto barY = -0.04f;
+    auto shadowYOffset = -0.075f;
+    auto fillLevel = 0.3f;
+/*
+    Pht::QuadMesh::Vertices barBorderVertices {
+        {{-width / 2.0f, -height / 2.0f - borderWidth, 0.0f}, {0.2f, 0.32f, 0.6f, 1.0f}},
+        {{width / 2.0f, -height / 2.0f - borderWidth, 0.0f}, {0.2f, 0.32f, 0.6f, 1.0f}},
+        {{width / 2.0f, height / 2.0f + borderWidth, 0.0f}, {0.15f, 0.15f, 0.15f, 1.0f}},
+        {{-width / 2.0f, height / 2.0f + borderWidth, 0.0f}, {0.15f, 0.15f, 0.15f, 1.0f}}
+    };
+    Pht::QuadMesh::Vertices barVertices {
+        {{-width / 2.0f, -height / 2.0f, 0.0f}, {0.15f, 0.15f, 0.15f, 1.0f}},
+        {{width / 2.0f, -height / 2.0f, 0.0f}, {0.15f, 0.15f, 0.15f, 1.0f}},
+        {{width / 2.0f, height / 2.0f, 0.0f}, {0.2f, 0.32f, 0.6f, 1.0f}},
+        {{-width / 2.0f, height / 2.0f, 0.0f}, {0.2f, 0.32f, 0.6f, 1.0f}}
+    };
+*/
+/*
+    Pht::QuadMesh::Vertices barBorderVertices {
+        {{-width / 2.0f, -height / 2.0f - borderWidth, 0.0f}, {0.7f, 0.7f, 0.7f, 1.0f}},
+        {{width / 2.0f, -height / 2.0f - borderWidth, 0.0f}, {0.7f, 0.7f, 0.7f, 1.0f}},
+        {{width / 2.0f, height / 2.0f + borderWidth, 0.0f}, {0.05f, 0.05f, 0.05f, 1.0f}},
+        {{-width / 2.0f, height / 2.0f + borderWidth, 0.0f}, {0.05f, 0.05f, 0.05f, 1.0f}}
+    };
+    Pht::QuadMesh::Vertices barVertices {
+        {{-width / 2.0f, -height / 2.0f, 0.0f}, {0.1f, 0.1f, 0.1f, 1.0f}},
+        {{width / 2.0f, -height / 2.0f, 0.0f}, {0.1f, 0.1f, 0.1f, 1.0f}},
+        {{width / 2.0f, height / 2.0f, 0.0f}, {0.4f, 0.4f, 0.4f, 1.0f}},
+        {{-width / 2.0f, height / 2.0f, 0.0f}, {0.4f, 0.4f, 0.4f, 1.0f}}
+    };
+*/
+
+    
+/*
+    
+    // ALT 2!!
+
+    Pht::QuadMesh::Vertices barBorderVertices {
+        {{-width / 2.0f, -height / 2.0f - borderWidth, 0.0f}, {0.325f, 0.65f, 0.995f, 0.55f}},
+        {{width / 2.0f, -height / 2.0f - borderWidth, 0.0f}, {0.325f, 0.65f, 0.995f, 0.55f}},
+        {{width / 2.0f, height / 2.0f + borderWidth, 0.0f}, {0.325f, 0.65f, 0.995f, 0.55f}},
+        {{-width / 2.0f, height / 2.0f + borderWidth, 0.0f}, {0.325f, 0.65f, 0.995f, 0.55f}}
+    };
+    Pht::QuadMesh::Vertices barVertices {
+        {{-width / 2.0f, -height / 2.0f, 0.0f}, {0.1f, 0.1f, 0.1f, 1.0f}},
+        {{width / 2.0f, -height / 2.0f, 0.0f}, {0.1f, 0.1f, 0.1f, 1.0f}},
+        {{width / 2.0f, height / 2.0f, 0.0f}, {0.4f, 0.4f, 0.4f, 1.0f}},
+        {{-width / 2.0f, height / 2.0f, 0.0f}, {0.2f, 0.2f, 0.2f, 1.0f}}
+    };
+*/
+
+    Pht::QuadMesh::Vertices barBorderVertices {
+        {{-width / 2.0f, -height / 2.0f - borderWidth, 0.0f}, {0.325f, 0.65f, 0.995f, 0.55f}},
+        {{width / 2.0f, -height / 2.0f - borderWidth, 0.0f}, {0.325f, 0.65f, 0.995f, 0.55f}},
+        {{width / 2.0f, height / 2.0f + borderWidth, 0.0f}, {0.325f, 0.65f, 0.995f, 0.55f}},
+        {{-width / 2.0f, height / 2.0f + borderWidth, 0.0f}, {0.325f, 0.65f, 0.995f, 0.55f}}
+    };
+    Pht::QuadMesh::Vertices barVertices {
+        {{-width / 2.0f, -height / 2.0f, 0.0f}, {0.35f, 0.35f, 0.35f, 1.0f}},
+        {{width / 2.0f, -height / 2.0f, 0.0f}, {0.35f, 0.35f, 0.35f, 1.0f}},
+        {{width / 2.0f, height / 2.0f, 0.0f}, {0.2f, 0.2f, 0.2f, 1.0f}},
+        {{-width / 2.0f, height / 2.0f, 0.0f}, {0.2f, 0.2f, 0.2f, 1.0f}}
+    };
+/*
+    Pht::QuadMesh::Vertices barVertices {
+        {{-width / 2.0f, -height / 2.0f, 0.0f}, {0.4f, 0.4f, 0.4f, 1.0f}},
+        {{width / 2.0f, -height / 2.0f, 0.0f}, {0.4f, 0.4f, 0.4f, 1.0f}},
+        {{width / 2.0f, height / 2.0f, 0.0f}, {0.25f, 0.25f, 0.25f, 1.0f}},
+        {{-width / 2.0f, height / 2.0f, 0.0f}, {0.25f, 0.25f, 0.25f, 1.0f}}
+    };
+*/
+    Pht::Material barBorderMaterial;
+    auto& barBorder = scene.CreateSceneObject(Pht::QuadMesh {barBorderVertices}, barBorderMaterial);
+    barBorder.GetTransform().SetPosition({0.0f, barY, UiLayer::lowerTextRectangle});
+    container.AddChild(barBorder);
+
+    Pht::Material barMaterial;
+    auto& bar = scene.CreateSceneObject(Pht::QuadMesh {barVertices}, barMaterial);
+    bar.GetTransform().SetPosition({0.0f, barY, UiLayer::piecesRectangle});
+    container.AddChild(bar);
+
+/*
+    Pht::QuadMesh::Vertices fillVertices {
+        {{-width / 2.0f, -height / 2.0f, 0.0f}, {0.25f, 0.35f, 1.0f, 1.0f}},
+        {{width / 2.0f, -height / 2.0f, 0.0f}, {0.25f, 0.35f, 1.0f, 1.0f}},
+        {{width / 2.0f, height / 2.0f, 0.0f}, {0.35f, 0.55f, 1.0f, 1.0f}},
+        {{-width / 2.0f, height / 2.0f, 0.0f}, {0.35f, 0.55f, 1.0f, 1.0f}}
+    };
+*/
+/*
+    Pht::QuadMesh::Vertices fillVertices {
+        {{-width / 2.0f, -height / 2.0f, 0.0f}, {0.85f, 0.65f, 0.05f, 1.0f}},
+        {{width / 2.0f, -height / 2.0f, 0.0f}, {0.85f, 0.65f, 0.05f, 1.0f}},
+        {{width / 2.0f, height / 2.0f, 0.0f}, {1.0f, 0.75f, 0.075f, 1.0f}},
+        {{-width / 2.0f, height / 2.0f, 0.0f}, {1.0f, 0.75f, 0.075f, 1.0f}}
+    };
+*/
+/*
+    Pht::QuadMesh::Vertices fillVertices {
+        {{-width / 2.0f, -height / 2.0f, 0.0f}, {0.85f, 0.65f, 0.0f, 0.9f}},
+        {{width / 2.0f, -height / 2.0f, 0.0f}, {0.85f, 0.65f, 0.0f, 0.9f}},
+        {{width / 2.0f, height / 2.0f, 0.0f}, {1.0f, 0.75f, 0.0f, 0.9f}},
+        {{-width / 2.0f, height / 2.0f, 0.0f}, {1.0f, 0.75f, 0.0f, 0.9f}}
+    };
+*/
+    Pht::QuadMesh::Vertices fillVertices {
+        {{-width / 2.0f, -height / 2.0f, 0.0f}, {0.85f, 0.65f, 0.0f, 0.9f}},
+        {{width / 2.0f, -height / 2.0f, 0.0f}, {0.85f, 0.65f, 0.0f, 0.9f}},
+        {{width / 2.0f, height / 2.0f, 0.0f}, {1.0f, 0.75f, 0.0f, 0.9f}},
+        {{-width / 2.0f, height / 2.0f, 0.0f}, {1.0f, 0.75f, 0.0f, 0.9f}}
+    };
+
+    Pht::Material fillMaterial;
+    auto& fill = scene.CreateSceneObject(Pht::QuadMesh {fillVertices}, fillMaterial);
+    auto& fillTransform = fill.GetTransform();
+    fillTransform.SetPosition({-width / 2.0f + width * fillLevel / 2.0f, barY, UiLayer::panel});
+    fillTransform.SetScale({fillLevel, 1.0f, 1.0f});
+    container.AddChild(fill);
+
     Pht::ObjMesh starMesh {"star.obj", 0.05f};
     auto& goldMaterial = commonResources.GetMaterials().GetGoldMaterial();
     auto& goldStar = scene.CreateSceneObject(starMesh, goldMaterial);
-    parentObject.AddChild(goldStar);
-    Pht::Vec3 goldStarPosition {-1.5f, frustumSize.y / 2.0f - topPadding - 0.5f, UiLayer::block};
+    container.AddChild(goldStar);
+    Pht::Vec3 goldStarPosition {-width / 2.0f, 0.0f, UiLayer::root};
     goldStar.GetTransform().SetPosition(goldStarPosition);
     goldStar.GetTransform().SetRotation({90.0f, 0.0f, 0.0f});
+    
+    Pht::Color black;
+    Pht::Material shadowMaterial {black, black, black, 0.0f};
+    // shadowMaterial.SetOpacity(0.5f);
+    shadowMaterial.SetOpacity(0.35f);
+    auto& starShadow1 = scene.CreateSceneObject(starMesh, shadowMaterial);
+    container.AddChild(starShadow1);
+    Pht::Vec3 starShadow1Position {-width / 2.0f, shadowYOffset, UiLayer::block};
+    starShadow1.GetTransform().SetPosition(starShadow1Position);
+    starShadow1.GetTransform().SetRotation({90.0f, 0.0f, 0.0f});
+    
+    auto& starShadow2 = scene.CreateSceneObject(starMesh, shadowMaterial);
+    container.AddChild(starShadow2);
+    Pht::Vec3 starShadow2Position {0.0f, shadowYOffset, UiLayer::block};
+    starShadow2.GetTransform().SetPosition(starShadow2Position);
+    starShadow2.GetTransform().SetRotation({90.0f, 0.0f, 0.0f});
 
     auto greyMaterial = commonResources.GetMaterials().GetDarkGrayMaterial();
     auto& greyStar = scene.CreateSceneObject(starMesh, greyMaterial);
-    parentObject.AddChild(greyStar);
-    Pht::Vec3 greyStarPosition {0.0f, frustumSize.y / 2.0f - topPadding - 0.5f, UiLayer::block};
+    // auto& greyStar = scene.CreateSceneObject(starMesh, goldMaterial);
+    container.AddChild(greyStar);
+    Pht::Vec3 greyStarPosition {0.0f, 0.0f, UiLayer::root};
     greyStar.GetTransform().SetPosition(greyStarPosition);
     greyStar.GetTransform().SetRotation({90.0f, 0.0f, 0.0f});
 
     auto& greyStar2 = scene.CreateSceneObject(starMesh, greyMaterial);
-    parentObject.AddChild(greyStar2);
-    Pht::Vec3 greyStar2Position {1.5f, frustumSize.y / 2.0f - topPadding - 0.5f, UiLayer::block};
+    container.AddChild(greyStar2);
+    Pht::Vec3 greyStar2Position {width / 2.0f, 0.0f, UiLayer::root};
     greyStar2.GetTransform().SetPosition(greyStar2Position);
     greyStar2.GetTransform().SetRotation({90.0f, 0.0f, 0.0f});
+    
+    auto& starShadow3 = scene.CreateSceneObject(starMesh, shadowMaterial);
+    container.AddChild(starShadow3);
+    Pht::Vec3 starShadow3Position {width / 2.0f, shadowYOffset, UiLayer::block};
+    starShadow3.GetTransform().SetPosition(starShadow3Position);
+    starShadow3.GetTransform().SetRotation({90.0f, 0.0f, 0.0f});
+
 }
 
 void GameHud::CreateMovesObject(Pht::Scene& scene,

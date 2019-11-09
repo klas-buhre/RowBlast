@@ -45,6 +45,7 @@ namespace RowBlast {
     using SelectablePreviewPieces = std::array<PreviewPiece, 4>;
     using NextPreviewPiecesRelativePositions = std::array<Pht::Vec3, 3>;
     using SelectablePreviewPiecesRelativePositions = std::array<Pht::Vec3, 5>;
+    using StarSceneObjects = std::array<Pht::SceneObject*, 3>;
     
     class GameHud: public IGameHudEventListener {
     public:
@@ -284,6 +285,8 @@ namespace RowBlast {
         Pht::SceneObject* mNextPiecesSceneObject {nullptr};
         Pht::SceneObject* mSelectablePiecesContainer {nullptr};
         Pht::SceneObject* mSelectablePiecesSceneObject {nullptr};
+        StarSceneObjects mGoldStars;
+        StarSceneObjects mGreyStars;
         NextPreviewPieces mNextPreviewPieces;
         SelectablePreviewPieces mSelectablePreviewPieces;
         TwoPieces mNext2PiecesPreviousFrame;

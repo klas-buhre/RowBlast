@@ -141,9 +141,9 @@ void Materials::CreateLightGrayMaterial() {
 }
 
 void Materials::CreateDarkGrayMaterial() {
-    Pht::Color ambient {0.2f, 0.2f, 0.2f};
-    Pht::Color diffuse {0.2f, 0.2f, 0.2f};
-    Pht::Color specular {1.0f, 1.0f, 1.0f};
+    Pht::Color ambient {0.35f, 0.35f, 0.35f};
+    Pht::Color diffuse {0.35f, 0.35f, 0.35f};
+    Pht::Color specular {0.35f, 0.35f, 0.35f};
     auto shininess = 25.0f;
     mDarkGrayMaterial = std::make_unique<Pht::Material>(mEnvMapTextureFilenames,
                                                         ambient,
