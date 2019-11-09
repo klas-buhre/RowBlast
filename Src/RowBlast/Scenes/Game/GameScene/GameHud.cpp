@@ -31,6 +31,8 @@ namespace {
     const Pht::Vec3 lightDirectionB {0.4f, 1.0f, 1.0f};
     constexpr auto lightAnimationDuration = 5.0f;
     constexpr auto cellSize = 1.25f;
+    constexpr auto starMeterWidth = 4.3f;
+    constexpr auto starMeterBarY = -0.04f;
     
     template <typename T, typename U>
     void CreatePreviewPieces(T& previewPieces,
@@ -338,59 +340,9 @@ void GameHud::CreateStarMeterObject(Pht::Scene& scene,
     container.GetTransform().SetPosition(position);
     parentObject.AddChild(container);
     
-    auto width = 4.3f;
+    auto width = starMeterWidth;
     auto height = 0.2f;
     auto borderWidth = 0.035f;
-    auto barY = -0.04f;
-    auto shadowYOffset = -0.075f;
-    auto fillLevel = 0.3f;
-/*
-    Pht::QuadMesh::Vertices barBorderVertices {
-        {{-width / 2.0f, -height / 2.0f - borderWidth, 0.0f}, {0.2f, 0.32f, 0.6f, 1.0f}},
-        {{width / 2.0f, -height / 2.0f - borderWidth, 0.0f}, {0.2f, 0.32f, 0.6f, 1.0f}},
-        {{width / 2.0f, height / 2.0f + borderWidth, 0.0f}, {0.15f, 0.15f, 0.15f, 1.0f}},
-        {{-width / 2.0f, height / 2.0f + borderWidth, 0.0f}, {0.15f, 0.15f, 0.15f, 1.0f}}
-    };
-    Pht::QuadMesh::Vertices barVertices {
-        {{-width / 2.0f, -height / 2.0f, 0.0f}, {0.15f, 0.15f, 0.15f, 1.0f}},
-        {{width / 2.0f, -height / 2.0f, 0.0f}, {0.15f, 0.15f, 0.15f, 1.0f}},
-        {{width / 2.0f, height / 2.0f, 0.0f}, {0.2f, 0.32f, 0.6f, 1.0f}},
-        {{-width / 2.0f, height / 2.0f, 0.0f}, {0.2f, 0.32f, 0.6f, 1.0f}}
-    };
-*/
-/*
-    Pht::QuadMesh::Vertices barBorderVertices {
-        {{-width / 2.0f, -height / 2.0f - borderWidth, 0.0f}, {0.7f, 0.7f, 0.7f, 1.0f}},
-        {{width / 2.0f, -height / 2.0f - borderWidth, 0.0f}, {0.7f, 0.7f, 0.7f, 1.0f}},
-        {{width / 2.0f, height / 2.0f + borderWidth, 0.0f}, {0.05f, 0.05f, 0.05f, 1.0f}},
-        {{-width / 2.0f, height / 2.0f + borderWidth, 0.0f}, {0.05f, 0.05f, 0.05f, 1.0f}}
-    };
-    Pht::QuadMesh::Vertices barVertices {
-        {{-width / 2.0f, -height / 2.0f, 0.0f}, {0.1f, 0.1f, 0.1f, 1.0f}},
-        {{width / 2.0f, -height / 2.0f, 0.0f}, {0.1f, 0.1f, 0.1f, 1.0f}},
-        {{width / 2.0f, height / 2.0f, 0.0f}, {0.4f, 0.4f, 0.4f, 1.0f}},
-        {{-width / 2.0f, height / 2.0f, 0.0f}, {0.4f, 0.4f, 0.4f, 1.0f}}
-    };
-*/
-
-    
-/*
-    
-    // ALT 2!!
-
-    Pht::QuadMesh::Vertices barBorderVertices {
-        {{-width / 2.0f, -height / 2.0f - borderWidth, 0.0f}, {0.325f, 0.65f, 0.995f, 0.55f}},
-        {{width / 2.0f, -height / 2.0f - borderWidth, 0.0f}, {0.325f, 0.65f, 0.995f, 0.55f}},
-        {{width / 2.0f, height / 2.0f + borderWidth, 0.0f}, {0.325f, 0.65f, 0.995f, 0.55f}},
-        {{-width / 2.0f, height / 2.0f + borderWidth, 0.0f}, {0.325f, 0.65f, 0.995f, 0.55f}}
-    };
-    Pht::QuadMesh::Vertices barVertices {
-        {{-width / 2.0f, -height / 2.0f, 0.0f}, {0.1f, 0.1f, 0.1f, 1.0f}},
-        {{width / 2.0f, -height / 2.0f, 0.0f}, {0.1f, 0.1f, 0.1f, 1.0f}},
-        {{width / 2.0f, height / 2.0f, 0.0f}, {0.4f, 0.4f, 0.4f, 1.0f}},
-        {{-width / 2.0f, height / 2.0f, 0.0f}, {0.2f, 0.2f, 0.2f, 1.0f}}
-    };
-*/
 
     Pht::QuadMesh::Vertices barBorderVertices {
         {{-width / 2.0f, -height / 2.0f - borderWidth, 0.0f}, {0.325f, 0.65f, 0.995f, 0.55f}},
@@ -404,48 +356,17 @@ void GameHud::CreateStarMeterObject(Pht::Scene& scene,
         {{width / 2.0f, height / 2.0f, 0.0f}, {0.2f, 0.2f, 0.2f, 1.0f}},
         {{-width / 2.0f, height / 2.0f, 0.0f}, {0.2f, 0.2f, 0.2f, 1.0f}}
     };
-/*
-    Pht::QuadMesh::Vertices barVertices {
-        {{-width / 2.0f, -height / 2.0f, 0.0f}, {0.4f, 0.4f, 0.4f, 1.0f}},
-        {{width / 2.0f, -height / 2.0f, 0.0f}, {0.4f, 0.4f, 0.4f, 1.0f}},
-        {{width / 2.0f, height / 2.0f, 0.0f}, {0.25f, 0.25f, 0.25f, 1.0f}},
-        {{-width / 2.0f, height / 2.0f, 0.0f}, {0.25f, 0.25f, 0.25f, 1.0f}}
-    };
-*/
+
     Pht::Material barBorderMaterial;
     auto& barBorder = scene.CreateSceneObject(Pht::QuadMesh {barBorderVertices}, barBorderMaterial);
-    barBorder.GetTransform().SetPosition({0.0f, barY, UiLayer::lowerTextRectangle});
+    barBorder.GetTransform().SetPosition({0.0f, starMeterBarY, UiLayer::lowerTextRectangle});
     container.AddChild(barBorder);
 
     Pht::Material barMaterial;
     auto& bar = scene.CreateSceneObject(Pht::QuadMesh {barVertices}, barMaterial);
-    bar.GetTransform().SetPosition({0.0f, barY, UiLayer::piecesRectangle});
+    bar.GetTransform().SetPosition({0.0f, starMeterBarY, UiLayer::piecesRectangle});
     container.AddChild(bar);
 
-/*
-    Pht::QuadMesh::Vertices fillVertices {
-        {{-width / 2.0f, -height / 2.0f, 0.0f}, {0.25f, 0.35f, 1.0f, 1.0f}},
-        {{width / 2.0f, -height / 2.0f, 0.0f}, {0.25f, 0.35f, 1.0f, 1.0f}},
-        {{width / 2.0f, height / 2.0f, 0.0f}, {0.35f, 0.55f, 1.0f, 1.0f}},
-        {{-width / 2.0f, height / 2.0f, 0.0f}, {0.35f, 0.55f, 1.0f, 1.0f}}
-    };
-*/
-/*
-    Pht::QuadMesh::Vertices fillVertices {
-        {{-width / 2.0f, -height / 2.0f, 0.0f}, {0.85f, 0.65f, 0.05f, 1.0f}},
-        {{width / 2.0f, -height / 2.0f, 0.0f}, {0.85f, 0.65f, 0.05f, 1.0f}},
-        {{width / 2.0f, height / 2.0f, 0.0f}, {1.0f, 0.75f, 0.075f, 1.0f}},
-        {{-width / 2.0f, height / 2.0f, 0.0f}, {1.0f, 0.75f, 0.075f, 1.0f}}
-    };
-*/
-/*
-    Pht::QuadMesh::Vertices fillVertices {
-        {{-width / 2.0f, -height / 2.0f, 0.0f}, {0.85f, 0.65f, 0.0f, 0.9f}},
-        {{width / 2.0f, -height / 2.0f, 0.0f}, {0.85f, 0.65f, 0.0f, 0.9f}},
-        {{width / 2.0f, height / 2.0f, 0.0f}, {1.0f, 0.75f, 0.0f, 0.9f}},
-        {{-width / 2.0f, height / 2.0f, 0.0f}, {1.0f, 0.75f, 0.0f, 0.9f}}
-    };
-*/
     Pht::QuadMesh::Vertices fillVertices {
         {{-width / 2.0f, -height / 2.0f, 0.0f}, {0.85f, 0.65f, 0.0f, 0.9f}},
         {{width / 2.0f, -height / 2.0f, 0.0f}, {0.85f, 0.65f, 0.0f, 0.9f}},
@@ -454,56 +375,89 @@ void GameHud::CreateStarMeterObject(Pht::Scene& scene,
     };
 
     Pht::Material fillMaterial;
-    auto& fill = scene.CreateSceneObject(Pht::QuadMesh {fillVertices}, fillMaterial);
-    auto& fillTransform = fill.GetTransform();
-    fillTransform.SetPosition({-width / 2.0f + width * fillLevel / 2.0f, barY, UiLayer::panel});
-    fillTransform.SetScale({fillLevel, 1.0f, 1.0f});
-    container.AddChild(fill);
+    mStarMeterFill = &scene.CreateSceneObject(Pht::QuadMesh {fillVertices}, fillMaterial);
+    container.AddChild(*mStarMeterFill);
+    
+    CreateStar(0, {-width / 2.0f, 0.0f, UiLayer::root}, scene, container, commonResources);
+    CreateStar(1, {0.0f, 0.0f, UiLayer::root}, scene, container, commonResources);
+    CreateStar(2, {width / 2.0f, 0.0f, UiLayer::root}, scene, container, commonResources);
+    
+    SetStarMeterFill(0.0f);
+}
+
+void GameHud::SetStarMeterFill(float fill) {
+    Pht::Vec3 position {
+        -starMeterWidth / 2.0f + starMeterWidth * fill / 2.0f,
+        starMeterBarY,
+        UiLayer::panel
+    };
+    
+    auto& fillTransform = mStarMeterFill->GetTransform();
+    fillTransform.SetPosition(position);
+    fillTransform.SetScale({fill, 1.0f, 1.0f});
+
+    SetIsGoldStarVisible(0, false);
+    SetIsGoldStarVisible(1, false);
+    SetIsGoldStarVisible(2, false);
+
+    if (fill == 1.0f) {
+        SetIsGoldStarVisible(2, true);
+    }
+
+    if (fill >= 0.5f) {
+        SetIsGoldStarVisible(1, true);
+    }
+
+    if (fill > 0.0f) {
+        SetIsGoldStarVisible(0, true);
+    }
+}
+
+void GameHud::SetIsGoldStarVisible(int index, bool isVisible) {
+    assert(index < mGoldStars.size());
+    assert(index < mGreyStars.size());
+    
+    auto* goldStar = mGoldStars[index];
+    goldStar->SetIsVisible(isVisible);
+    goldStar->SetIsStatic(!isVisible);
+    
+    auto* greyStar = mGreyStars[index];
+    greyStar->SetIsVisible(!isVisible);
+    greyStar->SetIsStatic(isVisible);
+}
+
+void GameHud::CreateStar(int index,
+                         const Pht::Vec3& position,
+                         Pht::Scene& scene,
+                         Pht::SceneObject& parentObject,
+                         const CommonResources& commonResources) {
+    assert(index < mGoldStars.size());
+    assert(index < mGreyStars.size());
 
     Pht::ObjMesh starMesh {"star.obj", 0.05f};
     auto& goldMaterial = commonResources.GetMaterials().GetGoldMaterial();
     auto& goldStar = scene.CreateSceneObject(starMesh, goldMaterial);
-    container.AddChild(goldStar);
-    Pht::Vec3 goldStarPosition {-width / 2.0f, 0.0f, UiLayer::root};
-    goldStar.GetTransform().SetPosition(goldStarPosition);
+    goldStar.GetTransform().SetPosition(position);
     goldStar.GetTransform().SetRotation({90.0f, 0.0f, 0.0f});
+    parentObject.AddChild(goldStar);
+    mGoldStars[index] = &goldStar;
     
-    Pht::Color black;
-    Pht::Material shadowMaterial {black, black, black, 0.0f};
-    // shadowMaterial.SetOpacity(0.5f);
-    shadowMaterial.SetOpacity(0.35f);
-    auto& starShadow1 = scene.CreateSceneObject(starMesh, shadowMaterial);
-    container.AddChild(starShadow1);
-    Pht::Vec3 starShadow1Position {-width / 2.0f, shadowYOffset, UiLayer::block};
-    starShadow1.GetTransform().SetPosition(starShadow1Position);
-    starShadow1.GetTransform().SetRotation({90.0f, 0.0f, 0.0f});
-    
-    auto& starShadow2 = scene.CreateSceneObject(starMesh, shadowMaterial);
-    container.AddChild(starShadow2);
-    Pht::Vec3 starShadow2Position {0.0f, shadowYOffset, UiLayer::block};
-    starShadow2.GetTransform().SetPosition(starShadow2Position);
-    starShadow2.GetTransform().SetRotation({90.0f, 0.0f, 0.0f});
-
     auto greyMaterial = commonResources.GetMaterials().GetDarkGrayMaterial();
     auto& greyStar = scene.CreateSceneObject(starMesh, greyMaterial);
-    // auto& greyStar = scene.CreateSceneObject(starMesh, goldMaterial);
-    container.AddChild(greyStar);
-    Pht::Vec3 greyStarPosition {0.0f, 0.0f, UiLayer::root};
-    greyStar.GetTransform().SetPosition(greyStarPosition);
+    greyStar.GetTransform().SetPosition(position);
     greyStar.GetTransform().SetRotation({90.0f, 0.0f, 0.0f});
-
-    auto& greyStar2 = scene.CreateSceneObject(starMesh, greyMaterial);
-    container.AddChild(greyStar2);
-    Pht::Vec3 greyStar2Position {width / 2.0f, 0.0f, UiLayer::root};
-    greyStar2.GetTransform().SetPosition(greyStar2Position);
-    greyStar2.GetTransform().SetRotation({90.0f, 0.0f, 0.0f});
+    parentObject.AddChild(greyStar);
+    mGreyStars[index] = &greyStar;
     
-    auto& starShadow3 = scene.CreateSceneObject(starMesh, shadowMaterial);
-    container.AddChild(starShadow3);
-    Pht::Vec3 starShadow3Position {width / 2.0f, shadowYOffset, UiLayer::block};
-    starShadow3.GetTransform().SetPosition(starShadow3Position);
-    starShadow3.GetTransform().SetRotation({90.0f, 0.0f, 0.0f});
-
+    auto shadowYOffset = -0.075f;
+    Pht::Color black;
+    Pht::Material shadowMaterial {black, black, black, 0.0f};
+    shadowMaterial.SetOpacity(0.35f);
+    auto& starShadow = scene.CreateSceneObject(starMesh, shadowMaterial);
+    Pht::Vec3 starShadowPosition {position.x, position.y + shadowYOffset, UiLayer::block};
+    starShadow.GetTransform().SetPosition(starShadowPosition);
+    starShadow.GetTransform().SetRotation({90.0f, 0.0f, 0.0f});
+    parentObject.AddChild(starShadow);
 }
 
 void GameHud::CreateMovesObject(Pht::Scene& scene,
@@ -867,6 +821,13 @@ void GameHud::UpdateProgress() {
                                 mProgressGoalString,
                                 static_cast<int>(mProgressGoalString.size()));
         mProgress = progress;
+
+        auto starMeterFill =
+            mLevelObjective == Level::Objective::BringDownTheAsteroid ?
+            static_cast<float>(mProgress) / 100.0f :
+            static_cast<float>(mProgress) / static_cast<float>(mProgressGoal);
+        
+        SetStarMeterFill(starMeterFill);
     }
 }
 

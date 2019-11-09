@@ -207,6 +207,13 @@ namespace RowBlast {
         void CreateStarMeterObject(Pht::Scene& scene,
                                    Pht::SceneObject& parentObject,
                                    const CommonResources& commonResources);
+        void SetStarMeterFill(float fill);
+        void SetIsGoldStarVisible(int index, bool isVisible);
+        void CreateStar(int index,
+                        const Pht::Vec3& position,
+                        Pht::Scene& scene,
+                        Pht::SceneObject& parentObject,
+                        const CommonResources& commonResources);
         void CreateMovesObject(Pht::Scene& scene,
                                Pht::SceneObject& parentObject,
                                const CommonResources& commonResources,
@@ -285,6 +292,7 @@ namespace RowBlast {
         Pht::SceneObject* mNextPiecesSceneObject {nullptr};
         Pht::SceneObject* mSelectablePiecesContainer {nullptr};
         Pht::SceneObject* mSelectablePiecesSceneObject {nullptr};
+        Pht::SceneObject* mStarMeterFill {nullptr};
         StarSceneObjects mGoldStars;
         StarSceneObjects mGreyStars;
         NextPreviewPieces mNextPreviewPieces;
