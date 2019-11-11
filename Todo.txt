@@ -47,27 +47,39 @@ Ongoing tasks:
     -Then release with microtransactions enabled. Market that version.
 
     -Major user stories before release:
-        -Minor tasks (music, release, publishers)                                   ~1 week
+        -Items in the next release (terrain, hud, piece path, bombs dragged piece)  ~2 weeks
+        -Interacting with publishers                                                ~1 week
         -Reduce the risk mixing up the rotate tap with a drag start.                ~1 week
         -Find more moves.                                                           ~1 week
         -Replace bad levels in world 1 with levels of width 9 and asteroid levels.  ~1 week
         -Remove moves from world 1 to 3 after finding more moves.                   ~0.5 weeks
         -Update the tutorial with drag controls                                     ~1.5 weeks
         -Purchasing                                                                 ~1 week
-         Total cost:                                                                 7 weeks
+         Total cost:                                                                 9 weeks
 
 
     -Do:
-        -3. -Redesign the game HUD: dark transparent or solid blue/gray metal behind containers.
-            -Add star meter with a dark grey or dark blue bar and black stars and gold stars. Filled
-             area of bar could be blue or yellow.
-            -Add a recess on each side of in the outer transparent part of lower hud.
-            -Trim the colors in the lower hud.
-            -Grid in the whole selectables container?
-            -Keep the old selectables container for the space world.
-            -Trim the tilt and piece positions.
-        -4. Add a star meter in the game scene?
-        -5. Release.
+        -2. -Terrain.                                                               ~2 days
+        -3. -Redesign the game HUD: dark transparent behind containers.             ~3 days
+                -Add a recess on each side of in the outer transparent part of
+                 lower hud.
+                -Trim the colors in the lower hud.
+                -Grid in the whole selectables container?
+                -Keep the old selectables container for the space world.
+                -Trim the tilt and piece positions.
+        -3. Star meter logic. Add up points in the game logic. The player gets      ~2 days
+            points for clearing level blocks, reducing asteroid row, filling
+            slots, doing combos, cascades and 4- or 5-row clears. The final
+            number of stars are then calculated by testing the points against
+            the point star limits and the moves to the moves star limits and
+            choosing the highest number of the two star verdicts.
+        -3. The area covered by the piece path could be a bit brighter or darker.   ~3 days
+            It would be visible when the dragged piece is over a valid move and
+            the area would move when the dragged piece moves. The ghost piece
+            could be of the same style as the path area but a bit brighter.
+        -3. Bombs and laser dragged piece with white or red transparent material    ~1 days
+            instead of textures.
+        -5. Release.                                                                ~1 days
         -6. Send mail to publishers.
         -2. Just try to reduce the risk mixing up the rotate tap with at drag start. Maybe sort out
          by tuning dragBeginDistanceThreshold. Also, could have a threshold distance that the piece
