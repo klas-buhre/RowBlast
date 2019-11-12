@@ -173,6 +173,8 @@ namespace {
                 objFile >> vertexRef.mNormalIndex;
                 vertexRef.mNormalIndex--;
                 assert(vertexRef.mNormalIndex < quantities.mNormalCount);
+            } else {
+                vertexRef.mNormalIndex = vertexRef.mVertexIndex;
             }
         } else {
             vertexRef.mNormalIndex = vertexRef.mVertexIndex;
