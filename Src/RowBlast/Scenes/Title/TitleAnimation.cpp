@@ -26,7 +26,7 @@ namespace {
     constexpr auto displayTime = 1.75f;
     constexpr auto textWidth = 11.0f;
     constexpr auto textHeight = 1.65f;
-    const Pht::Vec3 centerPosition {0.0f, 8.5f, 0.0f};
+    const Pht::Vec3 centerPosition {0.0f, 8.0f, 0.0f};
 
     const std::array<Pht::Vec3, 3> twinklePositions {
         Pht::Vec3 {-3.5f, 1.45f, UiLayer::buttonOverlayObject1},

@@ -6,7 +6,7 @@
 #include "ISceneManager.hpp"
 #include "SceneObject.hpp"
 #include "Material.hpp"
-#include "QuadMesh.hpp"
+#include "ObjMesh.hpp"
 #include "Fnv1Hash.hpp"
 #include "LightComponent.hpp"
 #include "CameraComponent.hpp"
@@ -16,6 +16,7 @@
 #include "UiLayer.hpp"
 #include "UserServices.hpp"
 #include "Universe.hpp"
+#include "SunParticleEffect.hpp"
 
 using namespace RowBlast;
 
@@ -24,6 +25,7 @@ namespace {
         Planets,
         Background,
         Ui,
+        SunEffect,
         SceneSwitchFadeEffect = GlobalLayer::sceneSwitchFadeEffect
     };
     
@@ -173,7 +175,7 @@ namespace {
 
     const std::vector<BlockPathVolume> floatingBlockPaths {
         BlockPathVolume {
-            .mPosition = {-8.0f, 8.0f, -22.0f},
+            .mPosition = {-8.0f, 6.0f, -22.0f},
             .mSize = {0.0f, 0.0f, 0.0f},
             .mPieceType = FloatingPieceType::B,
             .mBlockColor = FloatingBlockColor::Blue,
@@ -294,6 +296,8 @@ void TitleScene::Init() {
     uiRenderPass.SetHudMode(true);
     scene->AddRenderPass(uiRenderPass);
     
+    scene->AddRenderPass(Pht::RenderPass {static_cast<int>(Layer::SunEffect)});
+    
     Pht::RenderPass fadeEffectRenderPass {static_cast<int>(Layer::SceneSwitchFadeEffect)};
     fadeEffectRenderPass.SetHudMode(true);
     scene->AddRenderPass(fadeEffectRenderPass);
@@ -341,6 +345,32 @@ void TitleScene::Init() {
                                                        mCommonResources,
                                                        7.43f,
                                                        20.0f);
+    
+    
+    
+    Pht::Material terrainMaterial {"diffuse2.jpg", 0.6f, 0.6f, 0.1f, 1.0f};
+    // Pht::Material terrainMaterial {"diffuse1.jpg", 0.7f, 0.6f, 0.1f, 1.0f};
+    auto& terrain1 = scene->CreateSceneObject(Pht::ObjMesh {"mesh1.obj", 1.0f}, terrainMaterial);
+    terrain1.SetLayer(static_cast<int>(Layer::Background));
+    terrain1.GetTransform().SetPosition({-48.0f, -10.0f, -40.0f});
+    scene->GetRoot().AddChild(terrain1);
+
+    auto& terrain2 = scene->CreateSceneObject(Pht::ObjMesh {"mesh1.obj", 1.0f}, terrainMaterial);
+    terrain2.SetLayer(static_cast<int>(Layer::Background));
+    terrain2.GetTransform().SetPosition({48.0f, -10.0f, -40.0f});
+    scene->GetRoot().AddChild(terrain2);
+
+    auto& terrain3 = scene->CreateSceneObject(Pht::ObjMesh {"mesh1.obj", 1.0f}, terrainMaterial);
+    terrain3.SetLayer(static_cast<int>(Layer::Background));
+    terrain3.GetTransform().SetPosition({0.0f, -11.0f, -140.0f});
+    scene->GetRoot().AddChild(terrain3);
+
+
+
+    CreateSunParticleEffect(mEngine,
+                            *scene,
+                            Sun {.mPosition = {-120.0f, 475.0f, -720.0f}, .mSize = {450.0f, 450.0f}},
+                            static_cast<int>(Layer::SunEffect));
 
     mUfoContainer = &scene->CreateSceneObject();
     mUfoContainer->SetLayer(static_cast<int>(Layer::Background));
