@@ -19,6 +19,7 @@
 		1750CAFD2326B6C10092B2E6 /* disable.png in Resources */ = {isa = PBXBuildFile; fileRef = 1750CAFC2326B6C10092B2E6 /* disable.png */; };
 		1750CB022328F9810092B2E6 /* SettingsMenuView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1750CAFE2328F9800092B2E6 /* SettingsMenuView.cpp */; };
 		1750CB032328F9810092B2E6 /* SettingsMenuController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1750CB012328F9810092B2E6 /* SettingsMenuController.cpp */; };
+		175BE1182379E9420049DF16 /* terrain1_4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 175BE1172379E9410049DF16 /* terrain1_4.jpg */; };
 		1766C7442360CF0300C8E355 /* triangle_320.obj in Resources */ = {isa = PBXBuildFile; fileRef = 1766C7432360CF0300C8E355 /* triangle_320.obj */; };
 		1766C7482360D0EE00C8E355 /* triangle_320_r270.obj in Resources */ = {isa = PBXBuildFile; fileRef = 1766C7452360D0ED00C8E355 /* triangle_320_r270.obj */; };
 		1766C7492360D0EE00C8E355 /* triangle_320_r90.obj in Resources */ = {isa = PBXBuildFile; fileRef = 1766C7462360D0ED00C8E355 /* triangle_320_r90.obj */; };
@@ -28,6 +29,8 @@
 		1767A477232D309900B7156D /* sky_upside_down_patched_mirrored.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1767A476232D309900B7156D /* sky_upside_down_patched_mirrored.jpg */; };
 		1774768022DA42B800EEE97C /* NoMoreLevelsDialogView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1774767E22DA42B800EEE97C /* NoMoreLevelsDialogView.cpp */; };
 		1774768322DA42E400EEE97C /* NoMoreLevelsDialogController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1774768122DA42E400EEE97C /* NoMoreLevelsDialogController.cpp */; };
+		1787AB042378A9E200E3D314 /* terrain1_2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1787AB032378A9E100E3D314 /* terrain1_2.jpg */; };
+		1787AB082379D2BD00E3D314 /* terrain1_2888.obj in Resources */ = {isa = PBXBuildFile; fileRef = 1787AB072379D2BD00E3D314 /* terrain1_2888.obj */; };
 		17A75B5923211A2C001BA90D /* ValidAreaAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 17A75B4523211A2C001BA90D /* ValidAreaAnimation.cpp */; };
 		17A75B5A23211A2C001BA90D /* GhostPieceBlocks.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 17A75B4623211A2C001BA90D /* GhostPieceBlocks.cpp */; };
 		17A75B5B23211A2C001BA90D /* PieceResources.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 17A75B4823211A2C001BA90D /* PieceResources.cpp */; };
@@ -571,6 +574,7 @@
 		1750CAFF2328F9800092B2E6 /* SettingsMenuController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SettingsMenuController.hpp; sourceTree = "<group>"; };
 		1750CB002328F9800092B2E6 /* SettingsMenuView.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SettingsMenuView.hpp; sourceTree = "<group>"; };
 		1750CB012328F9810092B2E6 /* SettingsMenuController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SettingsMenuController.cpp; sourceTree = "<group>"; };
+		175BE1172379E9410049DF16 /* terrain1_4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = terrain1_4.jpg; sourceTree = "<group>"; };
 		1766C7432360CF0300C8E355 /* triangle_320.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = triangle_320.obj; sourceTree = "<group>"; };
 		1766C7452360D0ED00C8E355 /* triangle_320_r270.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = triangle_320_r270.obj; sourceTree = "<group>"; };
 		1766C7462360D0ED00C8E355 /* triangle_320_r90.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = triangle_320_r90.obj; sourceTree = "<group>"; };
@@ -582,6 +586,8 @@
 		1774767F22DA42B800EEE97C /* NoMoreLevelsDialogView.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = NoMoreLevelsDialogView.hpp; sourceTree = "<group>"; };
 		1774768122DA42E400EEE97C /* NoMoreLevelsDialogController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NoMoreLevelsDialogController.cpp; sourceTree = "<group>"; };
 		1774768222DA42E400EEE97C /* NoMoreLevelsDialogController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = NoMoreLevelsDialogController.hpp; sourceTree = "<group>"; };
+		1787AB032378A9E100E3D314 /* terrain1_2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = terrain1_2.jpg; sourceTree = "<group>"; };
+		1787AB072379D2BD00E3D314 /* terrain1_2888.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = terrain1_2888.obj; sourceTree = "<group>"; };
 		17A75B4323211A2C001BA90D /* SlidingText.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SlidingText.hpp; sourceTree = "<group>"; };
 		17A75B4423211A2C001BA90D /* SmallText.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SmallText.hpp; sourceTree = "<group>"; };
 		17A75B4523211A2C001BA90D /* ValidAreaAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ValidAreaAnimation.cpp; sourceTree = "<group>"; };
@@ -3105,6 +3111,7 @@
 				6269408E2154F94300D9857A /* planet_ring.obj */,
 				62BE275220B42A360014C6DD /* star_1428.obj */,
 				6270DC5A1FCB22AE00FB457D /* star.obj */,
+				1787AB072379D2BD00E3D314 /* terrain1_2888.obj */,
 				1766C7462360D0ED00C8E355 /* triangle_320_r90.obj */,
 				1766C7472360D0ED00C8E355 /* triangle_320_r180.obj */,
 				1766C7452360D0ED00C8E355 /* triangle_320_r270.obj */,
@@ -3171,6 +3178,8 @@
 				62346191216B6FE900ECD0DF /* planet_wadow.jpg */,
 				62B1CB57210F8EE500D0F195 /* portal.png */,
 				6234616121653F9900ECD0DF /* space.jpg */,
+				1787AB032378A9E100E3D314 /* terrain1_2.jpg */,
+				175BE1172379E9410049DF16 /* terrain1_4.jpg */,
 				62E01BBD215417A3009F0B99 /* titawin_clouds.png */,
 				626940A62159399000D9857A /* ufo.jpg */,
 				623461642166216700ECD0DF /* wadow_rings.png */,
@@ -3288,6 +3297,7 @@
 				62276E802274A96000679BC6 /* level56.json in Resources */,
 				6221D56C223039590098395A /* music_off.png in Resources */,
 				623F5E2F22B55D5200242C10 /* ParticleTextureColor.frag in Resources */,
+				1787AB042378A9E200E3D314 /* terrain1_2.jpg in Resources */,
 				622169DF21E0CADE001CB9A1 /* clear_blocks_brick_impact2.wav in Resources */,
 				62276E5E2274A96000679BC6 /* level40.json in Resources */,
 				62E01BB12153E2A6009F0B99 /* planet_ogma.jpg in Resources */,
@@ -3420,6 +3430,7 @@
 				6221D56622302E790098395A /* music.png in Resources */,
 				62276E782274A96000679BC6 /* level29.json in Resources */,
 				62204EF821BEC41C00A035C0 /* sky4.jpg in Resources */,
+				175BE1182379E9420049DF16 /* terrain1_4.jpg in Resources */,
 				62276E902274A96000679BC6 /* level2.json in Resources */,
 				62276E8C2274A96000679BC6 /* level72.json in Resources */,
 				623F5E2422B55D5200242C10 /* TexturedEmissiveLighting.frag in Resources */,
@@ -3480,6 +3491,7 @@
 				622169A021DE7EF6001CB9A1 /* logo.wav in Resources */,
 				6221D570223042980098395A /* circle.png in Resources */,
 				62276E8E2274A96000679BC6 /* level68.json in Resources */,
+				1787AB082379D2BD00E3D314 /* terrain1_2888.obj in Resources */,
 				62216C5021ECDBAE001CB9A1 /* privacy_policy_english.txt in Resources */,
 				62276E622274A96000679BC6 /* level38.json in Resources */,
 				623F5E3122B55D5200242C10 /* TexturedPixelLighting.vert in Resources */,

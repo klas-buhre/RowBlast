@@ -186,7 +186,7 @@ namespace {
         BackgroundLight {
             .mDirection = {-1.0f, 1.0f, 1.0f},
             .mIntensity = 1.23f,
-            .mSun = Pht::Optional<Sun>{}
+            .mSun = Sun {.mPosition = {-90.0f, 450.0f, -720.0f}, .mSize = {450.0f, 450.0f}}
         }
     };
 

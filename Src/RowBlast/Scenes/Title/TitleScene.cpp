@@ -348,19 +348,18 @@ void TitleScene::Init() {
     
     
     
-    Pht::Material terrainMaterial {"diffuse2.jpg", 0.6f, 0.6f, 0.1f, 1.0f};
-    // Pht::Material terrainMaterial {"diffuse1.jpg", 0.7f, 0.6f, 0.1f, 1.0f};
-    auto& terrain1 = scene->CreateSceneObject(Pht::ObjMesh {"mesh1.obj", 1.0f}, terrainMaterial);
+    Pht::Material terrainMaterial {"terrain1_2.jpg", 0.6f, 0.6f, 0.1f, 1.0f};
+    auto& terrain1 = scene->CreateSceneObject(Pht::ObjMesh {"terrain1_2888.obj", 1.0f}, terrainMaterial);
     terrain1.SetLayer(static_cast<int>(Layer::Background));
     terrain1.GetTransform().SetPosition({-48.0f, -10.0f, -40.0f});
     scene->GetRoot().AddChild(terrain1);
 
-    auto& terrain2 = scene->CreateSceneObject(Pht::ObjMesh {"mesh1.obj", 1.0f}, terrainMaterial);
+    auto& terrain2 = scene->CreateSceneObject(Pht::ObjMesh {"terrain1_2888.obj", 1.0f}, terrainMaterial);
     terrain2.SetLayer(static_cast<int>(Layer::Background));
     terrain2.GetTransform().SetPosition({48.0f, -10.0f, -40.0f});
     scene->GetRoot().AddChild(terrain2);
 
-    auto& terrain3 = scene->CreateSceneObject(Pht::ObjMesh {"mesh1.obj", 1.0f}, terrainMaterial);
+    auto& terrain3 = scene->CreateSceneObject(Pht::ObjMesh {"terrain1_2888.obj", 1.0f}, terrainMaterial);
     terrain3.SetLayer(static_cast<int>(Layer::Background));
     terrain3.GetTransform().SetPosition({0.0f, -11.0f, -140.0f});
     scene->GetRoot().AddChild(terrain3);

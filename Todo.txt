@@ -60,6 +60,10 @@ Ongoing tasks:
 
     -Do:
         -2. -Terrain.                                                               ~2 days
+                -Add clouds.
+                -Tune terrain material for the planet worlds.
+                -Tune terrain material in space.
+                -Fix the portal camera movement.
         -3. -Redesign the game HUD: dark transparent behind containers.             ~3 days
                 -Add a recess on each side of in the outer transparent part of
                  lower hud.
@@ -79,6 +83,8 @@ Ongoing tasks:
             could be of the same style as the path area but a bit brighter.
         -3. Bombs and laser dragged piece with white or red transparent material    ~1 days
             instead of textures.
+        -4. Maybe try a "PropellerPiece": XX                                        ~1 days
+                                            XX
         -5. Release.                                                                ~1 days
         -6. Send mail to publishers.
         -2. Just try to reduce the risk mixing up the rotate tap with at drag start. Maybe sort out

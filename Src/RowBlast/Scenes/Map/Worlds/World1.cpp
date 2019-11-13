@@ -56,8 +56,9 @@ namespace {
         BlockPathVolume {{23.0f, 3.5f, 3.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::SingleBlock},
         BlockPathVolume {{27.0f, -7.5f, 4.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::L}
     };
-    
+
     const std::vector<CloudPathVolume> cloudPaths {
+ /*
         CloudPathVolume {
             .mPosition = {0.0f, -5.3f, 14.9f},
             .mSize = {70.0f, 0.0f, 0.0f},
@@ -129,8 +130,9 @@ namespace {
             .mNumClouds = 16,
             .mNumCloudsPerCluster = 5
         }
+ */
     };
-    
+
     const std::vector<HazeLayer> hazeLayers {
         HazeLayer {
             .mPosition = {0.0f, 0.0f, -370.0f},
@@ -181,7 +183,7 @@ namespace {
         BackgroundLight {
             .mDirection = {-1.0f, 1.0f, 1.0f},
             .mIntensity = 1.21f,
-            .mSun = Pht::Optional<Sun>{}
+            .mSun = Sun {.mPosition = {-40.0f, 470.0f, -720.0f}, .mSize = {480.0f, 480.0f}}
         }
     };
     
