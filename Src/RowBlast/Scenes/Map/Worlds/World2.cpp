@@ -28,7 +28,7 @@ namespace {
         BlockPathVolume {{-22.0f, -3.0f, 13.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::RowBomb},
         BlockPathVolume {{-19.0f, 3.0f, 12.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::I},
         BlockPathVolume {{-17.0f, 3.0f, 0.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::SingleBlock},
-        BlockPathVolume {{-16.5f, -9.0f, 5.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::ShortI},
+        BlockPathVolume {{-16.5f, -7.0f, 5.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::ShortI},
         BlockPathVolume {{-16.0f, 0.0f, 10.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::SingleBlock},
         BlockPathVolume {{-14.0f, -5.5f, 12.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::L},
         BlockPathVolume {{-12.0f, -2.0f, 8.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::ShortI},
@@ -69,58 +69,54 @@ namespace {
             .mVelocity = 0.75f
         },
         CloudPathVolume {
-            .mPosition = {0.0f, -5.0f, -10.0f},
-            .mSize = {120.0f, 0.0f, 0.0f},
-        },
-        CloudPathVolume {
-            .mPosition = {0.0f, -40.0f, -50.0f},
+            .mPosition = {0.0f, 5.0f, -70.0f},
             .mSize = {170.0f, 0.0f, 10.0f},
-            .mCloudSize = {50.0f, 50.0f},
+            .mCloudSize = {40.0f, 15.0f},
             .mNumClouds = 3,
             .mNumCloudsPerCluster = 3
         },
         CloudPathVolume {
-            .mPosition = {0.0f, -50.0f, -50.0f},
+            .mPosition = {0.0f, 5.0f, -70.0f},
             .mSize = {170.0f, 0.0f, 10.0f},
-            .mCloudSize = {30.0f, 30.0f},
+            .mCloudSize = {40.0f, 15.0f},
             .mNumClouds = 3,
             .mNumCloudsPerCluster = 3
         },
         CloudPathVolume {
-            .mPosition = {0.0f, -20.0f, -50.0f},
+            .mPosition = {0.0f, 5.0f, -80.0f},
             .mSize = {170.0f, 0.0f, 10.0f},
-            .mCloudSize = {50.0f, 50.0f},
+            .mCloudSize = {40.0f, 15.0f},
             .mNumClouds = 3,
             .mNumCloudsPerCluster = 3
         },
         CloudPathVolume {
-            .mPosition = {0.0f, -35.0f, -100.0f},
-            .mSize = {250.0f, 90.0f, 20.0f},
-            .mCloudSize = {60.0f, 60.0f},
-            .mCloudSizeRandPart = 60.0f,
+            .mPosition = {0.0f, 5.0f, -90.0f},
+            .mSize = {250.0f, 0.0f, 20.0f},
+            .mCloudSize = {40.0f, 15.0f},
+            .mCloudSizeRandPart = 10.0f,
             .mNumClouds = 10,
             .mNumCloudsPerCluster = 5
         },
         CloudPathVolume {
-            .mPosition = {0.0f, -50.0f, -200.0f},
-            .mSize = {400.0f, 160.0f, 20.0f},
-            .mCloudSize = {50.0f, 50.0f},
+            .mPosition = {0.0f, 0.0f, -200.0f},
+            .mSize = {400.0f, 0.0f, 20.0f},
+            .mCloudSize = {50.0f, 40.0f},
             .mCloudSizeRandPart = 65.0f,
             .mNumClouds = 16,
             .mNumCloudsPerCluster = 5
         },
         CloudPathVolume {
-            .mPosition = {0.0f, -50.0f, -300.0f},
-            .mSize = {510.0f, 200.0f, 20.0f},
-            .mCloudSize = {50.0f, 50.0f},
+            .mPosition = {0.0f, 0.0f, -300.0f},
+            .mSize = {510.0f, 0.0f, 20.0f},
+            .mCloudSize = {50.0f, 40.0f},
             .mCloudSizeRandPart = 50.0f,
             .mNumClouds = 16,
             .mNumCloudsPerCluster = 5
         },
         CloudPathVolume {
-            .mPosition = {0.0f, -50.0f, -350.0f},
-            .mSize = {510.0f, 200.0f, 20.0f},
-            .mCloudSize = {50.0f, 50.0f},
+            .mPosition = {0.0f, 0.0f, -350.0f},
+            .mSize = {510.0f, 0.0f, 20.0f},
+            .mCloudSize = {50.0f, 40.0f},
             .mCloudSizeRandPart = 50.0f,
             .mNumClouds = 16,
             .mNumCloudsPerCluster = 5

@@ -60,7 +60,6 @@ Ongoing tasks:
 
     -Do:
         -2. -Terrain.                                                               ~2 days
-                -Add clouds.
                 -Tune terrain material for the planet worlds.
                 -Tune terrain material in space.
                 -Fix the portal camera movement.
