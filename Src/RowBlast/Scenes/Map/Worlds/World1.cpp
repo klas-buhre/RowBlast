@@ -25,6 +25,12 @@ namespace {
         MapPlace {Portal {2, 19, {23.0f, -1.5f, 10.0f}}}
     };
 
+    const std::vector<TerrainSegment>& terrainSegments {
+        TerrainSegment {{-48.0f, -10.0f, -40.0f}, TerrainMesh::Mesh1, TerrainMaterial::Sand1},
+        TerrainSegment {{49.0f, -10.0f, -40.0f}, TerrainMesh::Mesh1, TerrainMaterial::Sand1},
+        TerrainSegment {{0.0f, -11.0f, -140.0f}, TerrainMesh::Mesh1, TerrainMaterial::Sand1}
+    };
+
     const std::vector<BlockPathVolume> blockPaths {
         BlockPathVolume {{-27.0f, 0.0f, -1.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::B},
         BlockPathVolume {{-21.0f, 3.0f, 2.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::SingleBlock},
@@ -166,6 +172,7 @@ namespace {
 World RowBlast::GetWorld1() {
     return World {
         places,
+        terrainSegments,
         blockPaths,
         cloudPaths,
         hazeLayers,

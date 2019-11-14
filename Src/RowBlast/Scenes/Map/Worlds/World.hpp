@@ -12,6 +12,7 @@
 #include "Clouds.hpp"
 #include "Planets.hpp"
 #include "SunParticleEffect.hpp"
+#include "Terrain.hpp"
 
 namespace RowBlast {
     struct MapLevel {
@@ -58,6 +59,7 @@ namespace RowBlast {
 
     struct World {
         const std::vector<MapPlace>& mPlaces;
+        const std::vector<TerrainSegment>& mTerrainSegments;
         const std::vector<BlockPathVolume>& mBlockPaths;
         const std::vector<CloudPathVolume>& mCloudPaths;
         const std::vector<HazeLayer>& mHazeLayers;

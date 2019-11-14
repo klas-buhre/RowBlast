@@ -24,6 +24,12 @@ namespace {
         MapPlace {MapLevel {50, {20.0f, -1.0f, 10.0f}, {0.0f, 2.3f, 1.0f}}},
         MapPlace {Portal {4, 51, {23.0f, -1.5f, 10.0f}}}
     };
+    
+    const std::vector<TerrainSegment>& terrainSegments {
+        TerrainSegment {{-48.0f, -10.0f, -40.0f}, TerrainMesh::Mesh1, TerrainMaterial::Moon1},
+        TerrainSegment {{49.0f, -10.0f, -40.0f}, TerrainMesh::Mesh1, TerrainMaterial::Moon1},
+        TerrainSegment {{0.0f, -11.0f, -140.0f}, TerrainMesh::Mesh1, TerrainMaterial::Moon1}
+    };
 
     const std::vector<BlockPathVolume> blockPaths {
         BlockPathVolume {{-27.0f, 0.0f, -1.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::B},
@@ -37,7 +43,7 @@ namespace {
         BlockPathVolume {{-5.0f, -4.0f, 3.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::ShortI},
         BlockPathVolume {{-5.0f, -3.0f, 13.7f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::Asteroid},
         BlockPathVolume {{-1.0f, 5.9f, 8.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::SingleBlock},
-        BlockPathVolume {{1.0f, -14.0f, 0.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::SingleBlock},
+        BlockPathVolume {{1.0f, -7.0f, 0.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::SingleBlock},
         BlockPathVolume {{3.0f, 0.5f, 8.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::B},
         BlockPathVolume {{5.0f, -5.0f, 11.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::SingleBlock},
         BlockPathVolume {{6.0f, 4.0f, 3.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::BigAsteroid},
@@ -101,6 +107,7 @@ namespace {
 World RowBlast::GetWorld3() {
     return World {
         places,
+        terrainSegments,
         blockPaths,
         cloudPaths,
         hazeLayers,

@@ -22,6 +22,7 @@
 #include "PortalParticleEffect.hpp"
 #include "SunParticleEffect.hpp"
 #include "UiLayer.hpp"
+#include "Terrain.hpp"
 
 using namespace RowBlast;
 
@@ -219,42 +220,7 @@ void MapScene::CreateWorld(const World& world, const BackgroundLight& background
                                                        2.0f,
                                                        20.0f);
 
-    // Sunny Desert:
-    Pht::Material terrainMaterial {"terrain1_2.jpg", 0.6f, 0.6f, 0.1f, 1.0f};
-    auto& terrain1 = mScene->CreateSceneObject(Pht::ObjMesh {"terrain1_2888.obj", 1.0f}, terrainMaterial);
-    terrain1.SetLayer(static_cast<int>(Layer::Map));
-    terrain1.GetTransform().SetPosition({-48.0f, -10.0f, -40.0f});
-    mScene->GetRoot().AddChild(terrain1);
-
-    auto& terrain2 = mScene->CreateSceneObject(Pht::ObjMesh {"terrain1_2888.obj", 1.0f}, terrainMaterial);
-    terrain2.SetLayer(static_cast<int>(Layer::Map));
-    terrain2.GetTransform().SetPosition({49.0f, -10.0f, -40.0f});
-    mScene->GetRoot().AddChild(terrain2);
-
-    auto& terrain3 = mScene->CreateSceneObject(Pht::ObjMesh {"terrain1_2888.obj", 1.0f}, terrainMaterial);
-    terrain3.SetLayer(static_cast<int>(Layer::Map));
-    terrain3.GetTransform().SetPosition({0.0f, -11.0f, -140.0f});
-    mScene->GetRoot().AddChild(terrain3);
-
-/*
-    // Space, with darker sun position:
- 
-    Pht::Material terrainMaterial {"terrain1_4.jpg", 0.05f, 0.6f, 0.1f, 1.0f};
-    auto& terrain1 = mScene->CreateSceneObject(Pht::ObjMesh {"terrain1_2888.obj", 1.0f}, terrainMaterial);
-    terrain1.SetLayer(static_cast<int>(Layer::Space));
-    terrain1.GetTransform().SetPosition({-48.0f, -10.0f, -40.0f});
-    mScene->GetRoot().AddChild(terrain1);
-
-    auto& terrain2 = mScene->CreateSceneObject(Pht::ObjMesh {"terrain1_2888.obj", 1.0f}, terrainMaterial);
-    terrain2.SetLayer(static_cast<int>(Layer::Space));
-    terrain2.GetTransform().SetPosition({48.0f, -10.0f, -40.0f});
-    mScene->GetRoot().AddChild(terrain2);
-
-    auto& terrain3 = mScene->CreateSceneObject(Pht::ObjMesh {"terrain1_2888.obj", 1.0f}, terrainMaterial);
-    terrain3.SetLayer(static_cast<int>(Layer::Space));
-    terrain3.GetTransform().SetPosition({0.0f, -11.0f, -140.0f});
-    mScene->GetRoot().AddChild(terrain3);
-*/
+    CreateTerrain(mEngine, *mScene, static_cast<int>(Layer::Map), world.mTerrainSegments);
 }
 
 void MapScene::CreatePins(const World& world) {
