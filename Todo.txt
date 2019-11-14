@@ -64,7 +64,8 @@ Ongoing tasks:
                 -Tune terrain material in space.
                 -Fix the portal camera movement.
                 -New level backgrounds?
-        -3. -Redesign the game HUD: dark transparent behind containers.             ~3 days
+        -3. -Redesign the game HUD: dark transparent bars behind containers or      ~3 days
+             pods of the same style as the upper hud.
                 -Add a recess on each side of in the outer transparent part of
                  lower hud.
                 -Trim the colors in the lower hud.
@@ -76,7 +77,10 @@ Ongoing tasks:
             slots, doing combos, cascades and 4- or 5-row clears. The final
             number of stars are then calculated by testing the points against
             the point star limits and the moves to the moves star limits and
-            choosing the highest number of the two star verdicts.
+            choosing the highest number of the two star verdicts. So if there
+            will be an extra star for using few moves when the level is
+            completed, then there coulde be an animation from the moves object
+            to the star meter that fills and gives extra stars in the star meter.
         -3. The area covered by the piece path could be a bit brighter or darker.   ~3 days
             It would be visible when the dragged piece is over a valid move and
             the area would move when the dragged piece moves. The ghost piece

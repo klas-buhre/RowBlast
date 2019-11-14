@@ -14,6 +14,7 @@ namespace Pht {
 namespace RowBlast {
     enum class TerrainMaterial {
         Sand1,
+        Sand1Bright,
         Moon1
     };
     

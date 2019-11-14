@@ -35,7 +35,13 @@ namespace {
         TerrainSegment {{49.0f, -10.0f, -40.0f}, TerrainMesh::Mesh1, TerrainMaterial::Sand1},
         TerrainSegment {{0.0f, -11.0f, -140.0f}, TerrainMesh::Mesh1, TerrainMaterial::Sand1}
     };
-    
+
+    const std::vector<TerrainSegment>& brightTerrainSegments {
+        TerrainSegment {{-48.0f, -10.0f, -40.0f}, TerrainMesh::Mesh1, TerrainMaterial::Sand1Bright},
+        TerrainSegment {{49.0f, -10.0f, -40.0f}, TerrainMesh::Mesh1, TerrainMaterial::Sand1Bright},
+        TerrainSegment {{0.0f, -11.0f, -140.0f}, TerrainMesh::Mesh1, TerrainMaterial::Sand1Bright}
+    };
+
     const std::vector<CloudPathVolume> cloudPaths {
         CloudPathVolume {
             .mPosition = {0.0f, -4.55f, 14.9f},
@@ -261,7 +267,18 @@ namespace {
                 return blueHazeLayers;
         }
     }
-    
+
+    const std::vector<TerrainSegment>& CalculateTerrainSegments(int worldId) {
+        switch (worldId) {
+            case 1:
+                return brightTerrainSegments;
+            case 2:
+                return terrainSegments;
+            default:
+                return brightTerrainSegments;
+        }
+    }
+
     int CalculateWorldId(const UserServices& userServices, const Universe& universe) {
         auto currentLevelId {userServices.GetProgressService().GetCurrentLevel()};
         auto mapSceneWorldId {universe.CalcWorldId(currentLevelId)};
@@ -353,7 +370,10 @@ void TitleScene::Init() {
                                                        7.43f,
                                                        20.0f);
     
-    CreateTerrain(mEngine, *scene, static_cast<int>(Layer::Background), terrainSegments);
+    CreateTerrain(mEngine,
+                  *scene,
+                  static_cast<int>(Layer::Background),
+                  CalculateTerrainSegments(worldId));
 
     CreateSunParticleEffect(mEngine,
                             *scene,
