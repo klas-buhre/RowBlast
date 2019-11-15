@@ -61,13 +61,13 @@ namespace {
         BlockPathVolume {
             .mPosition = {-7.0f, -20.0f, -12.0f},
             .mSize = {0.0f, 0.0f, 0.0f},
-            .mBlockColor = FloatingBlockColor::Gray
+            .mBlockColor = FloatingBlockColor::RandomOneOfEachColorExceptGray
         },
         BlockPathVolume {
             .mPosition = {10.0f, -30.0f, -20.0f},
             .mSize = {0.0f, 0.0f, 0.0f},
-            .mBlockColor = FloatingBlockColor::Gray
-        },
+            .mBlockColor = FloatingBlockColor::RandomOneOfEachColorExceptGray
+        }
     };
 
     const std::vector<BlockPathVolume> asteroidFloatingBlockPaths {

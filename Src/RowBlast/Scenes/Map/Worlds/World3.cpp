@@ -28,7 +28,8 @@ namespace {
     const std::vector<TerrainSegment>& terrainSegments {
         TerrainSegment {{-48.0f, -10.0f, -40.0f}, TerrainMesh::Mesh1, TerrainMaterial::Moon1},
         TerrainSegment {{49.0f, -10.0f, -40.0f}, TerrainMesh::Mesh1, TerrainMaterial::Moon1},
-        TerrainSegment {{0.0f, -11.0f, -140.0f}, TerrainMesh::Mesh1, TerrainMaterial::Moon1}
+        TerrainSegment {{-48.0f, -19.0f, -140.0f}, TerrainMesh::Mesh3, TerrainMaterial::Moon3, {-5.0f, 0.0f, 0.0f}},
+        TerrainSegment {{49.0f, -19.0f, -140.0f}, TerrainMesh::Mesh3, TerrainMaterial::Moon3, {-5.0f, 0.0f, 0.0f}}
     };
 
     const std::vector<BlockPathVolume> blockPaths {
@@ -69,13 +70,6 @@ namespace {
             .mShaderId = Pht::ShaderId::TexturedPixelLighting
         },
         PlanetConfig {
-            .mPosition = {200.0f, -300.0f, -420.0f},
-            .mOrientation = {0.0f, 90.0f, 0.0f},
-            .mSize = 4.5f,
-            .mAngularVelocity = 2.5f,
-            .mType = PlanetType::Rayeon
-        },
-        PlanetConfig {
             .mPosition = {180.0f, 200.0f, -500.0f},
             .mOrientation = {30.0f, 0.0f, -35.0f},
             .mSize = 1.2f,
@@ -85,11 +79,6 @@ namespace {
     };
 
     const std::vector<BackgroundLight> backgroundLights {
-        BackgroundLight {
-            .mDirection = {-1.0f, 1.0f, 0.25f},
-            .mIntensity = 1.15f,
-            .mSun = Sun {.mPosition = {-20.0f, 440.0f, -720.0f}, .mSize = {580.0f, 580.0f}}
-        },
         BackgroundLight {
             .mDirection = {-0.75f, 1.0f, -0.5f},
             .mIntensity = 1.15f,

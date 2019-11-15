@@ -28,6 +28,8 @@
 		1766C74F2364DD7600C8E355 /* map.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 1766C74E2364DD7300C8E355 /* map.mp4 */; };
 		1766C7512364DF4400C8E355 /* game_track1.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 1766C7502364DF4100C8E355 /* game_track1.mp4 */; };
 		1767A477232D309900B7156D /* sky_upside_down_patched_mirrored.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1767A476232D309900B7156D /* sky_upside_down_patched_mirrored.jpg */; };
+		1772E909237F1D9D0024E90A /* terrain3_2888.obj in Resources */ = {isa = PBXBuildFile; fileRef = 1772E908237F1D9D0024E90A /* terrain3_2888.obj */; };
+		1772E90B237F1F0B0024E90A /* terrain3_4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1772E90A237F1F0B0024E90A /* terrain3_4.jpg */; };
 		1774768022DA42B800EEE97C /* NoMoreLevelsDialogView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1774767E22DA42B800EEE97C /* NoMoreLevelsDialogView.cpp */; };
 		1774768322DA42E400EEE97C /* NoMoreLevelsDialogController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1774768122DA42E400EEE97C /* NoMoreLevelsDialogController.cpp */; };
 		1787AB042378A9E200E3D314 /* terrain1_2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1787AB032378A9E100E3D314 /* terrain1_2.jpg */; };
@@ -585,6 +587,8 @@
 		1766C74E2364DD7300C8E355 /* map.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = map.mp4; sourceTree = "<group>"; };
 		1766C7502364DF4100C8E355 /* game_track1.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = game_track1.mp4; sourceTree = "<group>"; };
 		1767A476232D309900B7156D /* sky_upside_down_patched_mirrored.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sky_upside_down_patched_mirrored.jpg; sourceTree = "<group>"; };
+		1772E908237F1D9D0024E90A /* terrain3_2888.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = terrain3_2888.obj; sourceTree = "<group>"; };
+		1772E90A237F1F0B0024E90A /* terrain3_4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = terrain3_4.jpg; sourceTree = "<group>"; };
 		1774767E22DA42B800EEE97C /* NoMoreLevelsDialogView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NoMoreLevelsDialogView.cpp; sourceTree = "<group>"; };
 		1774767F22DA42B800EEE97C /* NoMoreLevelsDialogView.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = NoMoreLevelsDialogView.hpp; sourceTree = "<group>"; };
 		1774768122DA42E400EEE97C /* NoMoreLevelsDialogController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NoMoreLevelsDialogController.cpp; sourceTree = "<group>"; };
@@ -3097,6 +3101,7 @@
 		6270DC571FCB22AE00FB457D /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				1772E908237F1D9D0024E90A /* terrain3_2888.obj */,
 				6234C960228C7CE800F943E3 /* arrow_428_seg3_w001.obj */,
 				6234C95D228C7CE700F943E3 /* arrow_428.obj */,
 				6234618B21691DAE00ECD0DF /* asteroid_998.obj */,
@@ -3168,6 +3173,7 @@
 		62B1CB51210F8EE500D0F195 /* Map */ = {
 			isa = PBXGroup;
 			children = (
+				1772E90A237F1F0B0024E90A /* terrain3_4.jpg */,
 				625D3B58217251BC00D67EC2 /* brown_asteroid.jpg */,
 				62B1CB52210F8EE500D0F195 /* cloud_A_512.png */,
 				62B1CB55210F8EE500D0F195 /* cloud_B_512.png */,
@@ -3398,11 +3404,13 @@
 				622169F121E27ECB001CB9A1 /* sliding_text_whoosh1.wav in Resources */,
 				62298339222D8E9C001A7E1C /* spinning_wheel.png in Resources */,
 				623F5E2922B55D5200242C10 /* Particle.frag in Resources */,
+				1772E909237F1D9D0024E90A /* terrain3_2888.obj in Resources */,
 				624C9DDE21A1A908000FB5E1 /* coin_pile_4120.obj in Resources */,
 				62276E822274A96000679BC6 /* level59.json in Resources */,
 				62276E882274A96000679BC6 /* level53.json in Resources */,
 				623F5E2A22B55D5200242C10 /* VertexColor.frag in Resources */,
 				62203F0B21D7D84C00BEB3E9 /* game_track2.mp4 in Resources */,
+				1772E90B237F1F0B0024E90A /* terrain3_4.jpg in Resources */,
 				62216A0421E61722001CB9A1 /* rotate_whoosh.wav in Resources */,
 				6234C964228C7CE800F943E3 /* arrow_428_seg3_w001.obj in Resources */,
 				62276E9E2274A96000679BC6 /* level15.json in Resources */,

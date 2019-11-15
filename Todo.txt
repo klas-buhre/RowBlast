@@ -60,10 +60,8 @@ Ongoing tasks:
 
     -Do:
         -2. -Terrain.                                                               ~4 days
-                -Tune terrain material for the planet worlds.
                 -Tune terrain material in space.
                 -Fix the portal camera movement.
-                -New level backgrounds?
         -3. -Redesign the game HUD: dark transparent bars behind containers or      ~3 days
              pods of the same style as the upper hud.
                 -Add a recess on each side of in the outer transparent part of

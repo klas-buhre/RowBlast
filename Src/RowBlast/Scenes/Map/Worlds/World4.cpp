@@ -48,7 +48,7 @@ namespace {
         BlockPathVolume {{1.5f, 3.0f, 12.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::I},
         BlockPathVolume {{4.0f, -5.5f, 12.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::L},
         BlockPathVolume {{6.0f, 0.0f, 8.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::L},
-        BlockPathVolume {{8.0f, 4.5f, 12.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::B},
+        BlockPathVolume {{8.0f, 2.5f, 12.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::B},
         BlockPathVolume {{9.0f, -5.0f, 12.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::ShortI},
         BlockPathVolume {{11.0f, 2.0f, 5.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::SingleBlock},
         BlockPathVolume {{14.0f, -4.0f, 12.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::L},
@@ -180,7 +180,7 @@ namespace {
             .mOrientation = {30.0f, 0.0f, -35.0f},
             .mSize = 1.2f,
             .mAngularVelocity = 5.0f,
-            .mType = PlanetType::Titawin
+            .mType = PlanetType::Rayeon
         }
     };
     
@@ -188,7 +188,7 @@ namespace {
         BackgroundLight {
             .mDirection = {-1.0f, 1.0f, 1.0f},
             .mIntensity = 1.23f,
-            .mSun = Pht::Optional<Sun>{}
+            .mSun = Sun {.mPosition = {-40.0f, 470.0f, -720.0f}, .mSize = {450.0f, 450.0f}}
         }
     };
 

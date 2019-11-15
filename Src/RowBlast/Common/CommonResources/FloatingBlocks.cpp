@@ -18,6 +18,13 @@ namespace {
     constexpr auto rotationAmplitude = 5.5f;
     constexpr auto emissiveAnimationDuration = 1.5f;
     constexpr auto emissiveAmplitude = 1.7f;
+    
+    const std::vector<FloatingBlockColor> floatingBlockColors {
+        FloatingBlockColor::Red,
+        FloatingBlockColor::Green,
+        FloatingBlockColor::Blue,
+        FloatingBlockColor::Gold
+    };
 
     void CreateBlock(const Pht::Vec3& position,
                      float scale,
@@ -122,12 +129,7 @@ void FloatingBlocks::CreateBigAsteroid(Pht::ISceneManager& sceneManager, float s
 }
 
 void FloatingBlocks::InitBlocks(Pht::Scene& scene, float scale, float angularVelocity) {
-    std::vector<FloatingBlockColor> colors {
-        FloatingBlockColor::Red,
-        FloatingBlockColor::Green,
-        FloatingBlockColor::Blue,
-        FloatingBlockColor::Gold
-    };
+    auto colors = floatingBlockColors;
 
     for (auto i = 0; i < mBlocks.size(); ++i) {
         const auto& volume = mVolumes[i];
@@ -230,7 +232,9 @@ Pht::RenderableObject& FloatingBlocks::CalcBlockRenderable(const BlockPathVolume
         case FloatingBlockColor::RandomExceptGray:
             return *mBlockRenderables[std::rand() % (numBlockRenderables - 1)];
         case FloatingBlockColor::RandomOneOfEachColorExceptGray: {
-            assert(!colors.empty());
+            if (colors.empty()) {
+                colors = floatingBlockColors;
+            }
             auto colorIndex = std::rand() % colors.size();
             auto& renderable = *mBlockRenderables[static_cast<int>(colors[colorIndex])];
             colors.erase(std::begin(colors) + colorIndex);

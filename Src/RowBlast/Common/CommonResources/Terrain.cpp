@@ -13,6 +13,8 @@ namespace {
         switch (terrainMesh) {
             case TerrainMesh::Mesh1:
                 return Pht::ObjMesh {"terrain1_2888.obj", 1.0f};
+            case TerrainMesh::Mesh3:
+                return Pht::ObjMesh {"terrain3_2888.obj", 1.0f};
         }
     }
     
@@ -24,6 +26,8 @@ namespace {
                 return Pht::Material {"terrain1_2.jpg", 0.6f, 0.615f, 0.1f, 1.0f};
             case TerrainMaterial::Moon1:
                 return Pht::Material {"terrain1_4.jpg", 0.05f, 0.6f, 0.1f, 1.0f};
+            case TerrainMaterial::Moon3:
+                return Pht::Material {"terrain3_4.jpg", 0.05f, 0.6f, 0.1f, 1.0f};
         }
     }
 }
@@ -40,7 +44,11 @@ void RowBlast::CreateTerrain(Pht::IEngine& engine,
         auto objMesh = ToObjMesh(segment.mMesh);
         auto material = ToMaterial(segment.mMaterail);
         auto& segmentSceneObject = scene.CreateSceneObject(objMesh, material);
-        segmentSceneObject.GetTransform().SetPosition(segment.mPosition);
+        
+        auto& transform = segmentSceneObject.GetTransform();
+        transform.SetPosition(segment.mPosition);
+        transform.SetRotation(segment.mRotation);
+        
         container.AddChild(segmentSceneObject);
     }
 }
