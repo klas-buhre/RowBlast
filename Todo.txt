@@ -65,9 +65,8 @@ Ongoing tasks:
                  or the movement could go backwards when entering the scene every
                  time.
                 -Adjust the objects in the title scene.
-                -Reduce the number of floating blocks int the planet worlds
+                -Reduce the number of floating blocks in the planet worlds
                  slightly.
-                -Tune terrain material in space.
         -3. -Redesign the game HUD: dark transparent bars behind containers or      ~3 days
              pods of the same style as the upper hud.
                 -Add a recess on each side of in the outer transparent part of

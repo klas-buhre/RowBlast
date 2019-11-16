@@ -29,9 +29,9 @@ namespace {
             case TerrainMaterial::Sand3Bright:
                 return Pht::Material {"terrain3_2.jpg", 0.6f, 0.615f, 0.1f, 1.0f};
             case TerrainMaterial::Moon1:
-                return Pht::Material {"terrain1_4.jpg", 0.05f, 0.6f, 0.1f, 1.0f};
+                return Pht::Material {"terrain1_4.jpg", 0.05f, 0.72f, 0.1f, 1.0f};
             case TerrainMaterial::Moon3:
-                return Pht::Material {"terrain3_4.jpg", 0.05f, 0.6f, 0.1f, 1.0f};
+                return Pht::Material {"terrain3_4.jpg", 0.05f, 0.72f, 0.1f, 1.0f};
         }
     }
 }
