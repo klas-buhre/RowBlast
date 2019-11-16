@@ -21,7 +21,8 @@ namespace Pht {
                    IRenderer& renderer,
                    float duration,
                    float midFade,
-                   float zPosition);
+                   float zPosition,
+                   const Vec4& color = Vec4 {0.0f, 0.0f, 0.0f, 1.0f});
         
         void Reset();
         void Start();

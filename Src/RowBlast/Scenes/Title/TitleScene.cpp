@@ -367,7 +367,7 @@ void TitleScene::Init() {
                                        static_cast<int>(Layer::Background),
                                        cloudPaths,
                                        CalculateHazeLayers(worldId),
-                                       2.1f,
+                                       1.3f,
                                        CalculateCloudColor(worldId));
 
     mFloatingBlocks = std::make_unique<FloatingBlocks>(mEngine,

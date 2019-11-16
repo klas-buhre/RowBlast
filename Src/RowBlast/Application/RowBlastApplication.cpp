@@ -16,6 +16,7 @@ using namespace RowBlast;
 
 namespace {
     constexpr auto fadeDuration = 0.22f;
+    constexpr auto portalFadeDuration = 0.45f;
     constexpr auto musicFadeOutDuration = 0.22f;
     constexpr auto firstSceneFadeInDuration = 1.0f;
 }
@@ -47,6 +48,14 @@ RowBlastApplication::RowBlastApplication(Pht::IEngine& engine) :
         firstSceneFadeInDuration,
         1.0f,
         0.0f
+    },
+    mPortalFadeEffect {
+        engine.GetSceneManager(),
+        engine.GetRenderer(),
+        portalFadeDuration,
+        1.0f,
+        0.0f,
+        Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f}
     } {
 
     engine.GetInput().SetUseGestureRecognizers(false);
@@ -62,6 +71,7 @@ RowBlastApplication::RowBlastApplication(Pht::IEngine& engine) :
     }
     
     mFadeEffect.GetSceneObject().SetLayer(GlobalLayer::sceneSwitchFadeEffect);
+    mPortalFadeEffect.GetSceneObject().SetLayer(GlobalLayer::sceneSwitchFadeEffect);
     InsertFadeEffectInActiveScene();
     mFadeEffect.StartInMidFade();
     
@@ -182,7 +192,7 @@ void RowBlastApplication::UpdateTitleScene() {
 void RowBlastApplication::UpdateMapScene() {
     auto command = mMapController.Update();
     
-    if (!mFadeEffect.IsFadingOut()) {
+    if (!mFadeEffect.IsFadingOut() && !mPortalFadeEffect.IsFadingOut()) {
         switch (command.GetKind()) {
             case MapController::Command::None:
                 break;
@@ -242,7 +252,7 @@ void RowBlastApplication::UpdateGameScene() {
 }
 
 void RowBlastApplication::HandleTransitions() {
-    if (mFadeEffect.Update(mEngine.GetLastFrameSeconds()) == Pht::FadeEffect::State::Transition) {
+    if (IsSceneTransition()) {
         switch (mNextState) {
             case State::AcceptTermsScene:
                 StartAcceptTermsScene();
@@ -267,6 +277,16 @@ void RowBlastApplication::HandleTransitions() {
     }
 }
 
+bool RowBlastApplication::IsSceneTransition() {
+    if (mPortalFadeEffect.Update(mEngine.GetLastFrameSeconds()) ==
+        Pht::FadeEffect::State::Transition) {
+        
+        return true;
+    }
+    
+    return mFadeEffect.Update(mEngine.GetLastFrameSeconds()) == Pht::FadeEffect::State::Transition;
+}
+
 void RowBlastApplication::InsertFadeEffectInActiveScene() {
     auto* scene = mEngine.GetSceneManager().GetActiveScene();
     scene->GetRoot().AddChild(mFadeEffect.GetSceneObject());
@@ -281,9 +301,14 @@ void RowBlastApplication::BeginFadingToDocumentViewerScene(DocumentId documentTo
 
 void RowBlastApplication::BeginFadingToMap(MapInitialState mapInitialState) {
     mMapInitialState = mapInitialState;
-    mFadeEffect.Start();
     mNextState = State::MapScene;
     mEngine.GetInput().DisableInput();
+    
+    if (mState == State::MapScene) {
+        mPortalFadeEffect.Start();
+    } else {
+        mFadeEffect.Start();
+    }
     
     if (mState == State::GameScene) {
         mEngine.GetAudio().FadeOutActiveTrack(musicFadeOutDuration);
@@ -323,6 +348,9 @@ void RowBlastApplication::StartMapScene() {
     mState = State::MapScene;
     mEngine.GetInput().EnableInput();
     mMapController.Init();
+    
+    auto* scene = mEngine.GetSceneManager().GetActiveScene();
+    scene->GetRoot().AddChild(mPortalFadeEffect.GetSceneObject());
     
     switch (mMapInitialState) {
         case MapInitialState::Map:

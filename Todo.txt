@@ -60,13 +60,12 @@ Ongoing tasks:
 
     -Do:
         -2. -Terrain.                                                               ~4 days
-                -The fade in the portal should be white.
-                -The portal camera movement could be in the title scene as well
-                 or the movement could go backwards when entering the scene every
-                 time.
                 -Adjust the objects in the title scene.
                 -Reduce the number of floating blocks in the planet worlds
                  slightly.
+                -The portal camera movement could be in the title scene as well
+                 or the movement could go backwards when entering the scene every
+                 time.
         -3. -Redesign the game HUD: dark transparent bars behind containers or      ~3 days
              pods of the same style as the upper hud.
                 -Add a recess on each side of in the outer transparent part of
@@ -75,6 +74,8 @@ Ongoing tasks:
                 -Grid in the whole selectables container?
                 -Keep the old selectables container for the space world.
                 -Trim the tilt and piece positions.
+        -3. Reduce the gain in most sounds (clear blocks, button clicks, start      ~1 day
+            game, clear level, etc..). Maybe clean up blocks sound in audacity.
         -3. Star meter logic. Add up points in the game logic. The player gets      ~2 days
             points for clearing level blocks, reducing asteroid row, filling
             slots, doing combos, cascades and 4- or 5-row clears. The final

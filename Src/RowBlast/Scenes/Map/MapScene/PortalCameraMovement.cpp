@@ -9,9 +9,9 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto duration = 1.5f;
-    constexpr auto targetZ = -150.0f;
-    constexpr auto fadeDuration = 0.22f;
+    constexpr auto duration = 1.7f;
+    constexpr auto targetZ = -170.0f;
+    constexpr auto fadeDuration = 0.45f;
 }
 
 PortalCameraMovement::PortalCameraMovement(Pht::IEngine& engine, MapScene& scene) :

@@ -12,7 +12,8 @@ FadeEffect::FadeEffect(ISceneManager& sceneManager,
                        IRenderer& renderer,
                        float duration,
                        float midFade,
-                       float zPosition) :
+                       float zPosition,
+                       const Vec4& color) :
     mRenderer {renderer},
     mMidFade {midFade},
     mFadeSpeed {midFade / duration} {
@@ -23,8 +24,6 @@ FadeEffect::FadeEffect(ISceneManager& sceneManager,
     auto& hudFrustumSize = mRenderer.GetHudFrustumSize();
     auto width = hudFrustumSize.x + 0.1f;
     auto height = hudFrustumSize.y + 0.1f;
-    
-    Vec4 color {0.0f, 0.0f, 0.0f, 1.0f};
 
     Pht::QuadMesh::Vertices vertices {
         {{-width / 2.0f, -height / 2.0f, 0.0f}, color},
