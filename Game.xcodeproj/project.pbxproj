@@ -30,6 +30,7 @@
 		1767A477232D309900B7156D /* sky_upside_down_patched_mirrored.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1767A476232D309900B7156D /* sky_upside_down_patched_mirrored.jpg */; };
 		1772E909237F1D9D0024E90A /* terrain3_2888.obj in Resources */ = {isa = PBXBuildFile; fileRef = 1772E908237F1D9D0024E90A /* terrain3_2888.obj */; };
 		1772E90B237F1F0B0024E90A /* terrain3_4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1772E90A237F1F0B0024E90A /* terrain3_4.jpg */; };
+		1772E90D237F3CCC0024E90A /* terrain3_2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1772E90C237F3CCC0024E90A /* terrain3_2.jpg */; };
 		1774768022DA42B800EEE97C /* NoMoreLevelsDialogView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1774767E22DA42B800EEE97C /* NoMoreLevelsDialogView.cpp */; };
 		1774768322DA42E400EEE97C /* NoMoreLevelsDialogController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1774768122DA42E400EEE97C /* NoMoreLevelsDialogController.cpp */; };
 		1787AB042378A9E200E3D314 /* terrain1_2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1787AB032378A9E100E3D314 /* terrain1_2.jpg */; };
@@ -589,6 +590,7 @@
 		1767A476232D309900B7156D /* sky_upside_down_patched_mirrored.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sky_upside_down_patched_mirrored.jpg; sourceTree = "<group>"; };
 		1772E908237F1D9D0024E90A /* terrain3_2888.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = terrain3_2888.obj; sourceTree = "<group>"; };
 		1772E90A237F1F0B0024E90A /* terrain3_4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = terrain3_4.jpg; sourceTree = "<group>"; };
+		1772E90C237F3CCC0024E90A /* terrain3_2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = terrain3_2.jpg; sourceTree = "<group>"; };
 		1774767E22DA42B800EEE97C /* NoMoreLevelsDialogView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NoMoreLevelsDialogView.cpp; sourceTree = "<group>"; };
 		1774767F22DA42B800EEE97C /* NoMoreLevelsDialogView.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = NoMoreLevelsDialogView.hpp; sourceTree = "<group>"; };
 		1774768122DA42E400EEE97C /* NoMoreLevelsDialogController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NoMoreLevelsDialogController.cpp; sourceTree = "<group>"; };
@@ -3101,7 +3103,6 @@
 		6270DC571FCB22AE00FB457D /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				1772E908237F1D9D0024E90A /* terrain3_2888.obj */,
 				6234C960228C7CE800F943E3 /* arrow_428_seg3_w001.obj */,
 				6234C95D228C7CE700F943E3 /* arrow_428.obj */,
 				6234618B21691DAE00ECD0DF /* asteroid_998.obj */,
@@ -3122,6 +3123,7 @@
 				62BE275220B42A360014C6DD /* star_1428.obj */,
 				6270DC5A1FCB22AE00FB457D /* star.obj */,
 				1787AB072379D2BD00E3D314 /* terrain1_2888.obj */,
+				1772E908237F1D9D0024E90A /* terrain3_2888.obj */,
 				1766C7462360D0ED00C8E355 /* triangle_320_r90.obj */,
 				1766C7472360D0ED00C8E355 /* triangle_320_r180.obj */,
 				1766C7452360D0ED00C8E355 /* triangle_320_r270.obj */,
@@ -3173,7 +3175,6 @@
 		62B1CB51210F8EE500D0F195 /* Map */ = {
 			isa = PBXGroup;
 			children = (
-				1772E90A237F1F0B0024E90A /* terrain3_4.jpg */,
 				625D3B58217251BC00D67EC2 /* brown_asteroid.jpg */,
 				62B1CB52210F8EE500D0F195 /* cloud_A_512.png */,
 				62B1CB55210F8EE500D0F195 /* cloud_B_512.png */,
@@ -3191,6 +3192,8 @@
 				6234616121653F9900ECD0DF /* space.jpg */,
 				1787AB032378A9E100E3D314 /* terrain1_2.jpg */,
 				175BE1172379E9410049DF16 /* terrain1_4.jpg */,
+				1772E90C237F3CCC0024E90A /* terrain3_2.jpg */,
+				1772E90A237F1F0B0024E90A /* terrain3_4.jpg */,
 				62E01BBD215417A3009F0B99 /* titawin_clouds.png */,
 				626940A62159399000D9857A /* ufo.jpg */,
 				623461642166216700ECD0DF /* wadow_rings.png */,
@@ -3367,6 +3370,7 @@
 				62E6DAD02205D26F00EA9D3A /* block_trail_blue.png in Resources */,
 				62276E972274A96000679BC6 /* level17.json in Resources */,
 				62276E842274A96000679BC6 /* level55.json in Resources */,
+				1772E90D237F3CCC0024E90A /* terrain3_2.jpg in Resources */,
 				62276E6B2274A96000679BC6 /* level30.json in Resources */,
 				62276E6A2274A96000679BC6 /* level26.json in Resources */,
 				62276E9B2274A96000679BC6 /* level14.json in Resources */,

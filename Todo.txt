@@ -60,8 +60,14 @@ Ongoing tasks:
 
     -Do:
         -2. -Terrain.                                                               ~4 days
+                -The fade in the portal should be white.
+                -The portal camera movement could be in the title scene as well
+                 or the movement could go backwards when entering the scene every
+                 time.
+                -Adjust the objects in the title scene.
+                -Reduce the number of floating blocks int the planet worlds
+                 slightly.
                 -Tune terrain material in space.
-                -Fix the portal camera movement.
         -3. -Redesign the game HUD: dark transparent bars behind containers or      ~3 days
              pods of the same style as the upper hud.
                 -Add a recess on each side of in the outer transparent part of

@@ -26,7 +26,11 @@ namespace {
     const std::vector<TerrainSegment>& terrainSegments {
         TerrainSegment {{-48.0f, -10.0f, -40.0f}, TerrainMesh::Mesh1, TerrainMaterial::Sand1},
         TerrainSegment {{49.0f, -10.0f, -40.0f}, TerrainMesh::Mesh1, TerrainMaterial::Sand1},
-        TerrainSegment {{0.0f, -11.0f, -140.0f}, TerrainMesh::Mesh1, TerrainMaterial::Sand1}
+        TerrainSegment {{-98.0f, -13.5f, -140.0f}, TerrainMesh::Mesh3, TerrainMaterial::Sand3},
+        TerrainSegment {{0.0f, -11.0f, -140.0f}, TerrainMesh::Mesh1, TerrainMaterial::Sand1},
+        TerrainSegment {{98.0f, -14.0f, -140.0f}, TerrainMesh::Mesh3, TerrainMaterial::Sand3},
+        TerrainSegment {{49.0f, -12.0f, -240.0f}, TerrainMesh::Mesh1, TerrainMaterial::Sand1},
+        TerrainSegment {{-48.0f, -14.5f, -235.0f}, TerrainMesh::Mesh3, TerrainMaterial::Sand3}
     };
 
     const std::vector<BlockPathVolume> blockPaths {
@@ -55,7 +59,6 @@ namespace {
         BlockPathVolume {{16.5f, -4.0f, 0.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::ShortI},
         BlockPathVolume {{15.0f, 3.0f, 13.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::RowBomb},
         BlockPathVolume {{19.0f, -3.0f, 12.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::I},
-        BlockPathVolume {{22.0f, -1.0f, 4.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::L},
         BlockPathVolume {{23.0f, -3.0f, 12.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::ShortI}
     };
 
@@ -151,7 +154,7 @@ namespace {
             .mLowerColor = {0.817f, 0.633f, 0.435f, 0.35f}
         },
         HazeLayer {
-            .mPosition = {0.0f, 0.0f, -250.0f},
+            .mPosition = {0.0f, 0.0f, -200.0f},
             .mSize = {380.0f, 480.0f},
             .mUpperColor = {0.65f, 0.1f, 0.1f, 0.35f},
             .mLowerColor = {0.817f, 0.633f, 0.435f, 0.35f}

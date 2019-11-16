@@ -15,6 +15,8 @@ namespace RowBlast {
     enum class TerrainMaterial {
         Sand1,
         Sand1Bright,
+        Sand3,
+        Sand3Bright,
         Moon1,
         Moon3
     };
