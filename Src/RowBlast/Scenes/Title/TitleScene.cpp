@@ -52,55 +52,19 @@ namespace {
 
     const std::vector<CloudPathVolume> cloudPaths {
         CloudPathVolume {
-            .mPosition = {0.0f, -4.55f, 14.9f},
-            .mSize = {70.0f, 0.0f, 0.0f},
-            .mCloudSize = {7.0f, 7.0f},
-            .mNumClouds = 2,
-            .mVelocity = 0.75f
-        },
-        CloudPathVolume {
-            .mPosition = {0.0f, 5.0f, -70.0f},
-            .mSize = {170.0f, 0.0f, 10.0f},
-            .mCloudSize = {20.0f, 15.0f},
-            .mNumClouds = 3,
-            .mNumCloudsPerCluster = 3
-        },
-        CloudPathVolume {
-            .mPosition = {0.0f, 5.0f, -70.0f},
-            .mSize = {170.0f, 0.0f, 10.0f},
-            .mCloudSize = {20.0f, 15.0f},
-            .mNumClouds = 3,
-            .mNumCloudsPerCluster = 3
-        },
-        CloudPathVolume {
-            .mPosition = {0.0f, 5.0f, -80.0f},
-            .mSize = {170.0f, 0.0f, 10.0f},
-            .mCloudSize = {20.0f, 15.0f},
-            .mNumClouds = 3,
-            .mNumCloudsPerCluster = 3
-        },
-        CloudPathVolume {
-            .mPosition = {0.0f, 5.0f, -90.0f},
-            .mSize = {250.0f, 0.0f, 20.0f},
-            .mCloudSize = {20.0f, 15.0f},
-            .mCloudSizeRandPart = 10.0f,
-            .mNumClouds = 10,
-            .mNumCloudsPerCluster = 5
-        },
-        CloudPathVolume {
             .mPosition = {0.0f, 0.0f, -200.0f},
             .mSize = {400.0f, 0.0f, 20.0f},
             .mCloudSize = {50.0f, 40.0f},
             .mCloudSizeRandPart = 65.0f,
-            .mNumClouds = 16,
-            .mNumCloudsPerCluster = 5
+            .mNumClouds = 3,
+            .mNumCloudsPerCluster = 2
         },
         CloudPathVolume {
             .mPosition = {0.0f, 0.0f, -300.0f},
             .mSize = {510.0f, 0.0f, 20.0f},
             .mCloudSize = {50.0f, 40.0f},
             .mCloudSizeRandPart = 50.0f,
-            .mNumClouds = 16,
+            .mNumClouds = 11,
             .mNumCloudsPerCluster = 5
         },
         CloudPathVolume {
@@ -108,7 +72,7 @@ namespace {
             .mSize = {510.0f, 0.0f, 20.0f},
             .mCloudSize = {50.0f, 40.0f},
             .mCloudSizeRandPart = 50.0f,
-            .mNumClouds = 16,
+            .mNumClouds = 11,
             .mNumCloudsPerCluster = 5
         }
     };
@@ -210,7 +174,7 @@ namespace {
             .mBlockRotation = Pht::Vec3{50.0f, -60.0f, -30.0f}
         },
         BlockPathVolume {
-            .mPosition = {-5.0f, -3.0f, -10.0f},
+            .mPosition = {-5.0f, -4.0f, -10.0f},
             .mSize = {0.0f, 0.0f, 0.0f},
             .mPieceType = FloatingPieceType::L,
             .mBlockColor = FloatingBlockColor::Gold,
@@ -224,7 +188,7 @@ namespace {
             .mBlockRotation = Pht::Vec3{20.0f, 60.0f, 60.0f}
         },
         BlockPathVolume {
-            .mPosition = {-5.0f, -8.0f, 5.0f},
+            .mPosition = {-2.5f, -8.0f, 5.0f},
             .mSize = {0.0f, 0.0f, 0.0f},
             .mPieceType = FloatingPieceType::SingleBlock,
             .mBlockColor = FloatingBlockColor::RandomExceptGray,
@@ -375,7 +339,7 @@ void TitleScene::Init() {
                                                        static_cast<int>(Layer::Background),
                                                        floatingBlockPaths,
                                                        mCommonResources,
-                                                       7.43f,
+                                                       6.6f,
                                                        20.0f);
     
     CreateTerrain(mEngine,

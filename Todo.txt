@@ -60,7 +60,6 @@ Ongoing tasks:
 
     -Do:
         -2. -Terrain.                                                               ~4 days
-                -Adjust the objects in the title scene.
                 -The portal camera movement could be in the title scene as well
                  or the movement could go backwards when entering the scene every
                  time.
