@@ -7,13 +7,15 @@ Backlog:
 
   -Gameplay:
     -Could have ice blocks that are level blocks that can be used to fill and clear rows but they
-     shatter if landed on or if falling down in a cascade. Or, they could turn into a normal grey
-     level block if the ice is cleared which it will be by filling the row or explosion/laser.
+     shatter if landed on or if falling down in a cascade. Or, they could turn into a block if the
+     ice is cleared which it will be by filling the row or explosion/laser.
     -The UFO could be booster. It could clear 3 rows.
     -Maybe blocks in the visible part of the field could disappear on some levels. For each move,
      one of the colored blocks randomly disappears.
+    -Wooden blocks are cleared and shattered only when blocks next to them are cleared by filling a
+     row or by bombs.
+    -Might have a vertical laser. Can be good to have when dealing with wooden blocks.
   -Rendering:
-    -Maybe add an alien landscape to the sky worlds.
     -Add dynamic batching of objects with very few indices and no rotation if the saved cost of
      eliminated state changes is greater than the cost of creating the batch. Then, the clouds can
      be batched and drawn in one draw call instead of 100. Also, a lot of particle effects
@@ -59,10 +61,6 @@ Ongoing tasks:
 
 
     -Do:
-        -2. -Terrain.                                                               ~4 days
-                -The portal camera movement could be in the title scene as well
-                 or the movement could go backwards when entering the scene every
-                 time.
         -3. -Redesign the game HUD: dark transparent bars behind containers or      ~3 days
              pods of the same style as the upper hud.
                 -Add a recess on each side of in the outer transparent part of
@@ -123,13 +121,19 @@ Ongoing tasks:
              moves, fill the valid area by painting the field by moving
              the move upwards until collision or above the falling piece.
         -Update the tutorial with drag controls.
-        -Replace bad levels in world 1 with levels of width 9 and asteroid levels.
+        -Replace bad levels (especially in world 1) with levels of width 9 and asteroid levels. Try
+         to make levels that don't have too much open area directly down to the bottom of the field
+         from the falling piece since that makes the whole game a bit more random as you cannot see
+         below the lowest visible row.
         -Release.
         -Purchasing.
         -Release.
         -Try to get the game featured by apple by contacting them by filling out the form.
 
     -Maybe:
+        -A z-axis (backwards compared to the portal camera movement) camera movement could happen
+         after going back to the map after clearing a level before the ufo animation. Can have a
+         white fade effect when going to the map scene after clearing a level.
         -Maybe cut the game_track1 a bit earlier.
         -Could have a slower falling piece animation speed for the first tutorial level so that
          players understand that the falling piece has to go to the move.
@@ -139,7 +143,8 @@ Ongoing tasks:
          disabled. Checking 3 different settings is a bit much in a casual game. The drag
          functionality should be available in the swipe controls so that the gestureMovesFactor
          can be completely removed.
-        -Maybe look into adding a look-ahead-bar below the field, like in Slidey.
+        -Maybe let the number of visible level rows in the scroll controller be configurable by the
+         level because some levels are better with more look ahead.
         -Finish the valid moves area
             -Fix the stripes.
             -Maybe the valid area should be calculated like this:
