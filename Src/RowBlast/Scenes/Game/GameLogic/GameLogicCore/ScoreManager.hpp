@@ -19,7 +19,7 @@ namespace RowBlast {
                      IGameLogic& gameLogic,
                      SmallText& smallTextAnimation,
                      EffectManager& effectManager);
-        
+
         void Init();
         void OnSpawnPiece();
         void OnClearedFilledRows(const Field::RemovedSubCells& removedSubCells);
@@ -27,6 +27,10 @@ namespace RowBlast {
         void OnFilledSlots(int numSlots);
         void OnUndoMove();
         void GoToCascadingState();
+        
+        static int CalculateExtraPoints(int currentScore,
+                                        int numMovesLeft,
+                                        int numMovesAtLevelStart);
         
     private:
         void OnClearedFilledRowsInPieceSpawnedState(int numClearedRows);

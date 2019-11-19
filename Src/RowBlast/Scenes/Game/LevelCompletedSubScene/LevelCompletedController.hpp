@@ -94,6 +94,7 @@ namespace RowBlast {
         UfoAnimation mUfoAnimation;
         float mElapsedTime {0.0f};
         float mWaitTime {0.0f};
+        int mNumStars {0};
     };
 }
 

@@ -128,6 +128,7 @@ namespace RowBlast {
         bool IsUndoMovePossible() const;
         void UndoMove();
         int GetMovesUsedIncludingCurrent() const;
+        int CalculateFinalScore();
         
         void SetMovesLeft(int movesLeft) {
             mMovesLeft = movesLeft;

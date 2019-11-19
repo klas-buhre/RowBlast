@@ -9,6 +9,21 @@
 using namespace RowBlast;
 
 namespace {
+    Level::StarLimits ReadStarLimits(const rapidjson::Document& document) {
+        assert(document.HasMember("starLimits"));
+        
+        const auto& starLimitsObject = document["starLimits"];
+        assert(starLimitsObject.IsObject());
+        
+        Level::StarLimits starLimits {
+            .mOne = Pht::Json::ReadInt(starLimitsObject, "one"),
+            .mTwo = Pht::Json::ReadInt(starLimitsObject, "two"),
+            .mThree = Pht::Json::ReadInt(starLimitsObject, "three")
+        };
+        
+        return starLimits;
+    }
+
     Level::Objective ReadObjective(const rapidjson::Document& document) {
         auto objective = Pht::Json::ReadString(document, "objective");
         if (objective == "Clear") {
@@ -375,19 +390,8 @@ std::unique_ptr<Level> LevelLoader::Load(int levelId, const LevelResources& leve
 
     auto speed = Pht::Json::ReadFloat(document, "speed");
     auto moves = Pht::Json::ReadInt(document, "moves");
-    
-    auto gestureMovesFactor = 1.0f;
-    if (document.HasMember("gestureMovesFactor")) {
-        gestureMovesFactor = Pht::Json::ReadFloat(document, "gestureMovesFactor");
-    }
-    
-    StarLimits starLimits {
-        .mTwo = Pht::Json::ReadInt(document, "twoStars"),
-        .mThree = Pht::Json::ReadInt(document, "threeStars")
-    };
-    
+    auto starLimits = ReadStarLimits(document);
     auto& pieceTypes = levelResources.GetPieceTypes();
-    
     auto musicTrack = Pht::Json::ReadInt(document, "musicTrack");
     auto backgroundTextureFilename = Pht::Json::ReadString(document, "background");
     auto floatingBlocksSet = ReadFloatingBlocksSet(document);
@@ -436,7 +440,6 @@ std::unique_ptr<Level> LevelLoader::Load(int levelId, const LevelResources& leve
                                 numRows,
                                 speed,
                                 moves,
-                                gestureMovesFactor,
                                 starLimits,
                                 levelPieces,
                                 pieceSequence,

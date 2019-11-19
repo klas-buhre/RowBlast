@@ -28,18 +28,6 @@ ProgressService::ProgressService() {
     // mNumStars = {0};
 }
 
-int ProgressService::CalculateNumStars(int movesUsed, const StarLimits& starLimits) {
-    if (movesUsed <= starLimits.mThree) {
-        return 3;
-    }
-    
-    if (movesUsed <= starLimits.mTwo) {
-        return 2;
-    }
-    
-    return 1;
-}
-
 void ProgressService::StartLevel(int levelId) {
     mCurrentLevel = levelId;
     mProgressedAtPreviousGameRound = false;

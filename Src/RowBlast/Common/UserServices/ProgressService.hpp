@@ -5,16 +5,9 @@
 #include <array>
 
 namespace RowBlast {
-    struct StarLimits {
-        int mTwo {0};
-        int mThree {0};
-    };
-    
     class ProgressService {
     public:
         ProgressService();
-        
-        static int CalculateNumStars(int movesUsed, const StarLimits& starLimits);
         
         void StartLevel(int levelId);
         void CompleteLevel(int levelId, int numStars);

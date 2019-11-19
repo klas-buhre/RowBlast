@@ -1,8 +1,11 @@
 {
     "speed": 0.0,
     "moves": 50,
-    "twoStars": 25,
-    "threeStars": 15,
+    "starLimits": {
+        "one": 100,
+        "two": 800,
+        "three": 1600
+    },
     "floatingBlocksSet": "Standard",
     "musicTrack": 1,
     "background": "sky3.jpg",

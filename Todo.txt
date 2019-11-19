@@ -53,7 +53,7 @@ Ongoing tasks:
     -Then release with microtransactions enabled. Market that version.
 
     -Major user stories before release:
-        -Items in the next release (terrain, hud, piece path, bombs dragged piece)  ~2 weeks
+        -Items in the next release (terrain, hud, piece path, bombs dragged piece)  ~2.5 weeks
         -Interacting with publishers                                                ~1 week
         -Reduce the risk mixing up the rotate tap with a drag start.                ~1 week
         -Find more moves.                                                           ~1 week
@@ -73,18 +73,24 @@ Ongoing tasks:
                 -Grid in the whole selectables container?
                 -Keep the old selectables container for the space world.
                 -Trim the tilt and piece positions.
+        -3. Make ot more clear that the player is at the end of the level,          ~1 day
+            brighter bottom glow or something else.
+        -3. Add the possibility to scroll down anytime to see whats coming?         ~1 day
         -3. Reduce the gain in most sounds (clear blocks, button clicks, start      ~1 day
             game, clear level, etc..). Maybe clean up blocks sound in audacity.
-        -3. Star meter logic. Add up points in the game logic. The player gets      ~2 days
-            points for clearing rows, filling
-            slots, doing combos, cascades and 4- or 5-row clears. Do all clear
-            row points calculations from the ComboDetector. The final
-            number of stars are then calculated by testing the points against
-            the point star limits and you get additional points when using fewer
-            moves. So if there
-            will be an extra star for using few moves when the level is
-            completed, then there coulde be an animation from the moves object
-            to the star meter that fills and gives extra stars in the star meter.
+            The music track should be switched for the next attempt to clear a
+            level after a failed attempt.
+        -3. Star meter logic.
+              TODO:
+                -Should only rows that gives progress (level blocks and rows
+                 under asteroid) give score?
+                -Remove the controls factor from all level files and add star limits in all levels.
+                -Add a points text animation.
+                -When calculating the extra points then the num moves left could count
+                 down and the star meter go up at the same time.
+            
+            
+            
         -3. The area covered by the piece path could be a bit brighter or darker.   ~3 days
             It would be visible when the dragged piece is over a valid move and
             the area would move when the dragged piece moves. The ghost piece
@@ -93,6 +99,7 @@ Ongoing tasks:
             instead of textures.
         -4. Maybe try a "PropellerPiece": XX                                        ~1 days
                                             XX
+        -4. Tune all star levels.                                                   ~1 days
         -5. Release.                                                                ~1 days
         -6. Send mail to publishers.
         -2. Just try to reduce the risk mixing up the rotate tap with at drag start. Maybe sort out

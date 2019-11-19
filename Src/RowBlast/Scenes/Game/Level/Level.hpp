@@ -10,7 +10,6 @@
 // Game includes.
 #include "Cell.hpp"
 #include "Piece.hpp"
-#include "ProgressService.hpp"
 #include "SettingsService.hpp"
 
 namespace RowBlast {
@@ -20,6 +19,12 @@ namespace RowBlast {
             Clear,
             Build,
             BringDownTheAsteroid
+        };
+        
+        struct StarLimits {
+            int mOne {0};
+            int mTwo {0};
+            int mThree {0};
         };
         
         enum class LightIntensity {
@@ -46,7 +51,6 @@ namespace RowBlast {
               int numRows,
               float speed,
               int numMoves,
-              float gestureMovesFactor,
               const StarLimits& starLimits,
               const std::vector<const Piece*>& pieceTypes,
               const std::vector<const Piece*>& pieceSequence,
@@ -58,8 +62,13 @@ namespace RowBlast {
               LightIntensity lightIntensity,
               bool isPartOfTutorial);
         
-        int GetNumMoves(ControlType controlType) const;
-        const StarLimits& GetStarLimits(ControlType controlType) const;
+        int GetNumMoves() const {
+            return mNumMoves;
+        }
+        
+        const StarLimits& GetStarLimits() const {
+            return mStarLimits;
+        }
         
         void SetClearGrid(std::unique_ptr<CellGrid> clearGrid) {
             mClearGrid = std::move(clearGrid);
@@ -141,10 +150,8 @@ namespace RowBlast {
         int mNumColumns {0};
         int mNumRows {0};
         float mSpeed {0.0f};
-        int mNumMovesClickControls {0};
-        int mNumMovesGestureControls {0};
-        StarLimits mStarLimitsClickControls;
-        StarLimits mStarLimitsGestureControls;
+        int mNumMoves {0};
+        StarLimits mStarLimits;
         std::vector<const Piece*> mPieceTypes;
         std::vector<const Piece*> mPieceSequence;
         std::vector<TutorialMove> mPredeterminedMoves;

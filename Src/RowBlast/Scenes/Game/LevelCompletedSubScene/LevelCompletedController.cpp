@@ -32,6 +32,18 @@ namespace {
 
     const Pht::Vec3 initialUfoPosition {0.0f, 10.0f, 20.0f};
     const Pht::Vec3 ufoPosition {0.0f, 4.05f, 5.0f};
+    
+    int CalculateNumStars(int score, const Level::StarLimits& starLimits) {
+        if (score >= starLimits.mThree) {
+            return 3;
+        }
+        
+        if (score >= starLimits.mTwo) {
+            return 2;
+        }
+        
+        return 1;
+    }
 }
 
 LevelCompletedController::LevelCompletedController(Pht::IEngine& engine,
@@ -108,16 +120,6 @@ void LevelCompletedController::Start() {
     }
     
     mEngine.GetAudio().FadeOutActiveTrack(musicFadeOutTime);
-    
-    auto totalNumMovesUsed = mGameLogic.GetMovesUsedIncludingCurrent();
-    
-    auto controlType =
-        mGameLogic.IsUsingClickControls() ? ControlType::Click : ControlType::Gesture;
-    
-    auto numStars =
-        ProgressService::CalculateNumStars(totalNumMovesUsed, mLevel->GetStarLimits(controlType));
-
-    mUserServices.CompleteLevel(mLevel->GetId(), totalNumMovesUsed, numStars);
 }
 
 void LevelCompletedController::GoToObjectiveAchievedAnimationState() {
@@ -139,6 +141,12 @@ void LevelCompletedController::GoToObjectiveAchievedAnimationState() {
     auto& scene = mGameScene.GetScene();
     scene.GetRenderPass(static_cast<int>(GameScene::Layer::LevelCompletedFadeEffect))->SetIsEnabled(true);
     scene.GetRenderPass(static_cast<int>(GameScene::Layer::Stars))->SetIsEnabled(true);
+    
+    auto totalNumMovesUsed = mGameLogic.GetMovesUsedIncludingCurrent();
+    auto finalScore = mGameLogic.CalculateFinalScore();
+    auto numStars = CalculateNumStars(finalScore, mLevel->GetStarLimits());
+    mUserServices.CompleteLevel(mLevel->GetId(), totalNumMovesUsed, numStars);
+    mNumStars = numStars;
 }
 
 void LevelCompletedController::StartLevelCompletedTextAnimation() {
@@ -269,15 +277,7 @@ void LevelCompletedController::UpdateFireworksAndConfetti() {
         mElapsedTime += mEngine.GetLastFrameSeconds();
         if (effectsAreDone || mElapsedTime > fireworksDuration ||
             mEngine.GetInput().ConsumeWholeTouch()) {
-            
-            auto controlType =
-                mGameLogic.IsUsingClickControls() ? ControlType::Click : ControlType::Gesture;
-            
-            auto numStars =
-                ProgressService::CalculateNumStars(mGameLogic.GetMovesUsedIncludingCurrent(),
-                                                   mLevel->GetStarLimits(controlType));
-
-            mStarsAnimation.Start(numStars);
+            mStarsAnimation.Start(mNumStars);
             mState = State::StarsAppearingAnimation;
         }
     }

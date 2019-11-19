@@ -207,7 +207,6 @@ namespace RowBlast {
         void CreateStarMeterObject(Pht::Scene& scene,
                                    Pht::SceneObject& parentObject,
                                    const CommonResources& commonResources);
-        void SetStarMeterFill(float fill);
         void SetIsGoldStarVisible(int index, bool isVisible);
         void CreateStar(int index,
                         const Pht::Vec3& position,
@@ -237,6 +236,7 @@ namespace RowBlast {
                                           const GameHudRectangles& hudRectangles);
         void UpdateLightAnimation();
         void UpdateProgress();
+        void UpdateStarMeter();
         void UpdateMovesLeft();
         void UpdatePreviewPieces();
         void UpdateNextPreviewPieceGroup();
@@ -267,7 +267,8 @@ namespace RowBlast {
         const GameLogic& mGameLogic;
         const Field& mField;
         const PieceResources& mPieceResources;
-        Level::Objective mLevelObjective {Level::Objective::Clear};
+        const Level& mLevel;
+        int mScore {-1};
         NumMovesLeftSource mNumMovesLeftSource {NumMovesLeftSource::GameLogic};
         int mMovesLeftSelf {0};
         int mMovesLeft {0};

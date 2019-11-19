@@ -117,7 +117,7 @@ GameHud::GameHud(Pht::IEngine& engine,
     mGameLogic {gameLogic},
     mField {field},
     mPieceResources {pieceResources},
-    mLevelObjective {level.GetObjective()},
+    mLevel {level},
     mNextPreviewPiecesRelativePositions {
         Pht::Vec3{0.0f, 0.9f, UiLayer::block},
         Pht::Vec3{0.0f, -0.9f, UiLayer::block},
@@ -241,7 +241,7 @@ void GameHud::CreateProgressObject(Pht::Scene& scene,
     mProgressText = &scene.CreateText(placeholder, textProperties);
     auto& progressTextSceneObject = mProgressText->GetSceneObject();
     
-    switch (mLevelObjective) {
+    switch (mLevel.GetObjective()) {
         case Level::Objective::Clear:
             CreateGrayBlock(scene, progressContainer, commonResources);
             progressTextSceneObject.GetTransform().SetPosition({-0.48f, -0.15f, UiLayer::text});
@@ -260,7 +260,7 @@ void GameHud::CreateProgressObject(Pht::Scene& scene,
             break;
     }
 
-    if (mLevelObjective == Level::Objective::BringDownTheAsteroid) {
+    if (mLevel.GetObjective() == Level::Objective::BringDownTheAsteroid) {
         mProgressGoalString = "%";
     } else {
         mProgressGoalString = "/" + std::to_string(mProgressGoal);
@@ -381,51 +381,6 @@ void GameHud::CreateStarMeterObject(Pht::Scene& scene,
     CreateStar(0, {-width / 2.0f, 0.0f, UiLayer::root}, scene, container, commonResources);
     CreateStar(1, {0.0f, 0.0f, UiLayer::root}, scene, container, commonResources);
     CreateStar(2, {width / 2.0f, 0.0f, UiLayer::root}, scene, container, commonResources);
-    
-    SetStarMeterFill(0.0f);
-}
-
-void GameHud::SetStarMeterFill(float fill) {
-    fill = std::min(fill, 1.0f);
-
-    Pht::Vec3 position {
-        -starMeterWidth / 2.0f + starMeterWidth * fill / 2.0f,
-        starMeterBarY,
-        UiLayer::panel
-    };
-    
-    auto& fillTransform = mStarMeterFill->GetTransform();
-    fillTransform.SetPosition(position);
-    fillTransform.SetScale({fill, 1.0f, 1.0f});
-
-    SetIsGoldStarVisible(0, false);
-    SetIsGoldStarVisible(1, false);
-    SetIsGoldStarVisible(2, false);
-
-    if (fill == 1.0f) {
-        SetIsGoldStarVisible(2, true);
-    }
-
-    if (fill >= 0.5f) {
-        SetIsGoldStarVisible(1, true);
-    }
-
-    if (fill > 0.0f) {
-        SetIsGoldStarVisible(0, true);
-    }
-}
-
-void GameHud::SetIsGoldStarVisible(int index, bool isVisible) {
-    assert(index < mGoldStars.size());
-    assert(index < mGreyStars.size());
-    
-    auto* goldStar = mGoldStars[index];
-    goldStar->SetIsVisible(isVisible);
-    goldStar->SetIsStatic(!isVisible);
-    
-    auto* greyStar = mGreyStars[index];
-    greyStar->SetIsVisible(!isVisible);
-    greyStar->SetIsStatic(isVisible);
 }
 
 void GameHud::CreateStar(int index,
@@ -794,6 +749,7 @@ void GameHud::OnSwitchButtonUp() {
 void GameHud::Update() {
     UpdateLightAnimation();
     UpdateProgress();
+    UpdateStarMeter();
     UpdateMovesLeft();
     UpdatePreviewPieces();
 }
@@ -810,7 +766,7 @@ void GameHud::UpdateLightAnimation() {
 
 void GameHud::UpdateProgress() {
     auto progress =
-        mLevelObjective == Level::Objective::BringDownTheAsteroid ?
+        mLevel.GetObjective() == Level::Objective::BringDownTheAsteroid ?
         ((mProgressGoal - mField.CalculateAsteroidRow().GetValue()) * 100) / mProgressGoal :
         mProgressGoal - mGameLogic.GetNumObjectsLeftToClear();
 
@@ -823,10 +779,70 @@ void GameHud::UpdateProgress() {
                                 mProgressGoalString,
                                 static_cast<int>(mProgressGoalString.size()));
         mProgress = progress;
-
-        auto starMeterFill = static_cast<float>(mGameLogic.GetScore()) / 1000.0f;
-        SetStarMeterFill(starMeterFill);
     }
+}
+
+void GameHud::UpdateStarMeter() {
+    auto score = mGameLogic.GetScore();
+    if (mScore == score) {
+        return;
+    }
+    
+    mScore = score;
+
+    SetIsGoldStarVisible(0, false);
+    SetIsGoldStarVisible(1, false);
+    SetIsGoldStarVisible(2, false);
+    
+    auto fill = 0.0f;
+    auto& starLimits = mLevel.GetStarLimits();
+    if (score >= starLimits.mThree) {
+        SetIsGoldStarVisible(2, true);
+        fill = 1.0f;
+    }
+    
+    if (score >= starLimits.mTwo) {
+        SetIsGoldStarVisible(1, true);
+    }
+    
+    if (score >= starLimits.mOne) {
+        SetIsGoldStarVisible(0, true);
+    }
+    
+    if (score >= starLimits.mTwo && score < starLimits.mThree) {
+        auto pastTwoStars = static_cast<float>(score - starLimits.mTwo);
+        auto starDiff = static_cast<float>(starLimits.mThree - starLimits.mTwo);
+        fill = 0.5f + pastTwoStars / starDiff;
+    } else if (score >= starLimits.mOne && score < starLimits.mTwo) {
+        auto pastOneStar = static_cast<float>(score - starLimits.mOne);
+        auto starDiff = static_cast<float>(starLimits.mTwo - starLimits.mOne);
+        fill = 0.5f * pastOneStar / starDiff;
+    }
+    
+    fill = std::min(fill, 1.0f);
+    
+    Pht::Vec3 position {
+        -starMeterWidth / 2.0f + starMeterWidth * fill / 2.0f,
+        starMeterBarY,
+        UiLayer::panel
+    };
+    
+    auto& fillTransform = mStarMeterFill->GetTransform();
+    fillTransform.SetPosition(position);
+    fillTransform.SetScale({fill, 1.0f, 1.0f});
+}
+
+void GameHud::SetIsGoldStarVisible(int index, bool isVisible) {
+    assert(index < mGoldStars.size());
+    assert(index < mGreyStars.size());
+    
+    auto* goldStar = mGoldStars[index];
+    goldStar->SetIsVisible(isVisible);
+    goldStar->SetIsStatic(!isVisible);
+    
+    auto* greyStar = mGreyStars[index];
+    greyStar->SetIsVisible(!isVisible);
+    greyStar->SetIsStatic(isVisible);
 }
 
 void GameHud::UpdateMovesLeft() {

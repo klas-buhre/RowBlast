@@ -152,7 +152,7 @@ void GameLogic::Init(const Level& level) {
     
     mAllValidMoves = nullptr;
     
-    mMovesLeft = mLevel->GetNumMoves(mControlType);
+    mMovesLeft = mLevel->GetNumMoves();
     mMovesUsed = 0;
     
     mCurrentMove = MoveData {};
@@ -625,6 +625,14 @@ int GameLogic::GetMovesUsedIncludingCurrent() const {
 
 void GameLogic::IncreaseScore(int points) {
     mCurrentMove.mScore += points;
+}
+
+int GameLogic::CalculateFinalScore() {
+    auto extraPoints = mScoreManager.CalculateExtraPoints(GetScore(),
+                                                          mMovesLeft,
+                                                          mLevel->GetNumMoves());
+    IncreaseScore(extraPoints);
+    return GetScore();
 }
 
 void GameLogic::UpdateFallingPieceYpos() {
