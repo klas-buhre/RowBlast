@@ -30,16 +30,6 @@ namespace {
         SceneSwitchFadeEffect = GlobalLayer::sceneSwitchFadeEffect
     };
     
-    const std::vector<TerrainSegment>& brightTerrainSegments {
-        TerrainSegment {{-48.0f, -10.0f, -40.0f}, TerrainMesh::Mesh1, TerrainMaterial::Sand1Bright},
-        TerrainSegment {{49.0f, -10.0f, -40.0f}, TerrainMesh::Mesh1, TerrainMaterial::Sand1Bright},
-        TerrainSegment {{-98.0f, -13.5f, -140.0f}, TerrainMesh::Mesh3, TerrainMaterial::Sand3Bright},
-        TerrainSegment {{0.0f, -11.0f, -140.0f}, TerrainMesh::Mesh1, TerrainMaterial::Sand1Bright},
-        TerrainSegment {{98.0f, -14.0f, -140.0f}, TerrainMesh::Mesh3, TerrainMaterial::Sand3Bright},
-        TerrainSegment {{49.0f, -12.0f, -240.0f}, TerrainMesh::Mesh1, TerrainMaterial::Sand1Bright},
-        TerrainSegment {{-48.0f, -14.5f, -235.0f}, TerrainMesh::Mesh3, TerrainMaterial::Sand3Bright},
-    };
-    
     const std::vector<TerrainSegment>& terrainSegments {
         TerrainSegment {{-48.0f, -10.0f, -40.0f}, TerrainMesh::Mesh1, TerrainMaterial::Sand1},
         TerrainSegment {{49.0f, -10.0f, -40.0f}, TerrainMesh::Mesh1, TerrainMaterial::Sand1},
@@ -240,17 +230,6 @@ namespace {
         }
     }
 
-    const std::vector<TerrainSegment>& CalculateTerrainSegments(int worldId) {
-        switch (worldId) {
-            case 1:
-                return brightTerrainSegments;
-            case 2:
-                return terrainSegments;
-            default:
-                return brightTerrainSegments;
-        }
-    }
-
     int CalculateWorldId(const UserServices& userServices, const Universe& universe) {
         auto currentLevelId {userServices.GetProgressService().GetCurrentLevel()};
         auto mapSceneWorldId {universe.CalcWorldId(currentLevelId)};
@@ -342,10 +321,7 @@ void TitleScene::Init() {
                                                        6.6f,
                                                        20.0f);
     
-    CreateTerrain(mEngine,
-                  *scene,
-                  static_cast<int>(Layer::Background),
-                  CalculateTerrainSegments(worldId));
+    CreateTerrain(mEngine, *scene, static_cast<int>(Layer::Background), terrainSegments);
 
     CreateSunParticleEffect(mEngine,
                             *scene,

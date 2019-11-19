@@ -15,6 +15,10 @@ Backlog:
     -Wooden blocks are cleared and shattered only when blocks next to them are cleared by filling a
      row or by bombs.
     -Might have a vertical laser. Can be good to have when dealing with wooden blocks.
+    -Can have levels that have lots of spheres instead of blocks. The spheres have different colors
+     and you clear them by placing blocks of the same color noext to them. Must there be at least
+     2 or three of the same color in a row? Will 3 with same color in an L shape match or only in
+     a straight line? Can have ShortIPieces like in dr Mario with 2 colors.
   -Rendering:
     -Add dynamic batching of objects with very few indices and no rotation if the saved cost of
      eliminated state changes is greater than the cost of creating the batch. Then, the clouds can
