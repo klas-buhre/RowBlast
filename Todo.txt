@@ -76,11 +76,12 @@ Ongoing tasks:
         -3. Reduce the gain in most sounds (clear blocks, button clicks, start      ~1 day
             game, clear level, etc..). Maybe clean up blocks sound in audacity.
         -3. Star meter logic. Add up points in the game logic. The player gets      ~2 days
-            points for clearing level blocks, reducing asteroid row, filling
-            slots, doing combos, cascades and 4- or 5-row clears. The final
+            points for clearing rows, filling
+            slots, doing combos, cascades and 4- or 5-row clears. Do all clear
+            row points calculations from the ComboDetector. The final
             number of stars are then calculated by testing the points against
-            the point star limits and the moves to the moves star limits and
-            choosing the highest number of the two star verdicts. So if there
+            the point star limits and you get additional points when using fewer
+            moves. So if there
             will be an extra star for using few moves when the level is
             completed, then there coulde be an animation from the moves object
             to the star meter that fills and gives extra stars in the star meter.

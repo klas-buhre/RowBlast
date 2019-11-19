@@ -386,6 +386,8 @@ void GameHud::CreateStarMeterObject(Pht::Scene& scene,
 }
 
 void GameHud::SetStarMeterFill(float fill) {
+    fill = std::min(fill, 1.0f);
+
     Pht::Vec3 position {
         -starMeterWidth / 2.0f + starMeterWidth * fill / 2.0f,
         starMeterBarY,
@@ -822,11 +824,7 @@ void GameHud::UpdateProgress() {
                                 static_cast<int>(mProgressGoalString.size()));
         mProgress = progress;
 
-        auto starMeterFill =
-            mLevelObjective == Level::Objective::BringDownTheAsteroid ?
-            static_cast<float>(mProgress) / 100.0f :
-            static_cast<float>(mProgress) / static_cast<float>(mProgressGoal);
-        
+        auto starMeterFill = static_cast<float>(mGameLogic.GetScore()) / 1000.0f;
         SetStarMeterFill(starMeterFill);
     }
 }

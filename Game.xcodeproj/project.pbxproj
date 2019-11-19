@@ -186,7 +186,7 @@
 		62216BFB21EB377E001CB9A1 /* GameLogic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216B2421EB377E001CB9A1 /* GameLogic.cpp */; };
 		62216BFC21EB377E001CB9A1 /* NextPieceGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216B2521EB377E001CB9A1 /* NextPieceGenerator.cpp */; };
 		62216BFD21EB377E001CB9A1 /* Field.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216B2621EB377E001CB9A1 /* Field.cpp */; };
-		62216BFE21EB377E001CB9A1 /* ComboDetector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216B2921EB377E001CB9A1 /* ComboDetector.cpp */; };
+		62216BFE21EB377E001CB9A1 /* ScoreManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216B2921EB377E001CB9A1 /* ScoreManager.cpp */; };
 		62216BFF21EB377E001CB9A1 /* FieldGravity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216B2B21EB377E001CB9A1 /* FieldGravity.cpp */; };
 		62216C0021EB377F001CB9A1 /* ShortIPiece.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216B2F21EB377E001CB9A1 /* ShortIPiece.cpp */; };
 		62216C0121EB377F001CB9A1 /* MirroredSevenPiece.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216B3021EB377E001CB9A1 /* MirroredSevenPiece.cpp */; };
@@ -843,7 +843,7 @@
 		62216B0D21EB377E001CB9A1 /* GameHud.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameHud.hpp; sourceTree = "<group>"; };
 		62216B1121EB377E001CB9A1 /* Piece.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Piece.cpp; sourceTree = "<group>"; };
 		62216B1221EB377E001CB9A1 /* IGameLogic.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = IGameLogic.hpp; sourceTree = "<group>"; };
-		62216B1321EB377E001CB9A1 /* ComboDetector.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ComboDetector.hpp; sourceTree = "<group>"; };
+		62216B1321EB377E001CB9A1 /* ScoreManager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ScoreManager.hpp; sourceTree = "<group>"; };
 		62216B1421EB377E001CB9A1 /* GestureInputHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GestureInputHandler.cpp; sourceTree = "<group>"; };
 		62216B1521EB377E001CB9A1 /* FieldGravity.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FieldGravity.hpp; sourceTree = "<group>"; };
 		62216B1621EB377E001CB9A1 /* FallingPiece.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FallingPiece.hpp; sourceTree = "<group>"; };
@@ -865,7 +865,7 @@
 		62216B2621EB377E001CB9A1 /* Field.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Field.cpp; sourceTree = "<group>"; };
 		62216B2721EB377E001CB9A1 /* ClickInputHandler.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ClickInputHandler.hpp; sourceTree = "<group>"; };
 		62216B2821EB377E001CB9A1 /* Piece.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Piece.hpp; sourceTree = "<group>"; };
-		62216B2921EB377E001CB9A1 /* ComboDetector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ComboDetector.cpp; sourceTree = "<group>"; };
+		62216B2921EB377E001CB9A1 /* ScoreManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ScoreManager.cpp; sourceTree = "<group>"; };
 		62216B2A21EB377E001CB9A1 /* GestureInputHandler.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GestureInputHandler.hpp; sourceTree = "<group>"; };
 		62216B2B21EB377E001CB9A1 /* FieldGravity.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FieldGravity.cpp; sourceTree = "<group>"; };
 		62216B2D21EB377E001CB9A1 /* BigTrianglePiece.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = BigTrianglePiece.hpp; sourceTree = "<group>"; };
@@ -1984,8 +1984,6 @@
 				62216B2721EB377E001CB9A1 /* ClickInputHandler.hpp */,
 				62216B1721EB377E001CB9A1 /* CollisionDetection.cpp */,
 				62216B2021EB377E001CB9A1 /* CollisionDetection.hpp */,
-				62216B2921EB377E001CB9A1 /* ComboDetector.cpp */,
-				62216B1321EB377E001CB9A1 /* ComboDetector.hpp */,
 				6255827222CE5B6A0060C383 /* DraggedPiece.cpp */,
 				6255827322CE5B6A0060C383 /* DraggedPiece.hpp */,
 				1730D47922F5B92E0092D92B /* DragInputHandler.cpp */,
@@ -2007,6 +2005,8 @@
 				62216B1C21EB377E001CB9A1 /* NextPieceGenerator.hpp */,
 				62216B1121EB377E001CB9A1 /* Piece.cpp */,
 				62216B2821EB377E001CB9A1 /* Piece.hpp */,
+				62216B2921EB377E001CB9A1 /* ScoreManager.cpp */,
+				62216B1321EB377E001CB9A1 /* ScoreManager.hpp */,
 				62216B1821EB377E001CB9A1 /* ScrollController.cpp */,
 				62216B2121EB377E001CB9A1 /* ScrollController.hpp */,
 			);
@@ -3568,7 +3568,7 @@
 				1736707422DF67D600D8A28C /* SwipeControlsHintDialogView.cpp in Sources */,
 				622A6D2D22B7E90B00C5E6DA /* BitmapImage.cpp in Sources */,
 				17A75B5B23211A2C001BA90D /* PieceResources.cpp in Sources */,
-				62216BFE21EB377E001CB9A1 /* ComboDetector.cpp in Sources */,
+				62216BFE21EB377E001CB9A1 /* ScoreManager.cpp in Sources */,
 				625698492182392C003A3A9D /* SceneResources.cpp in Sources */,
 				62216A7721EB376E001CB9A1 /* MenuWindow.cpp in Sources */,
 				62216C6E21F08B7F001CB9A1 /* OptionsMenuController.cpp in Sources */,

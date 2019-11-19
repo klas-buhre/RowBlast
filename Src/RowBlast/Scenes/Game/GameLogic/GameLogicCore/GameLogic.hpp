@@ -21,7 +21,7 @@
 #include "FieldGravity.hpp"
 #include "FieldExplosionsStates.hpp"
 #include "BlastArea.hpp"
-#include "ComboDetector.hpp"
+#include "ScoreManager.hpp"
 #include "SettingsService.hpp"
 
 namespace Pht {
@@ -117,6 +117,7 @@ namespace RowBlast {
         void StopDraggingPiece() override;
         void OnDraggedPieceAnimationFinished() override;
         void CancelDraggingPiece() override;
+        void IncreaseScore(int points) override;
         const Piece* GetPieceType() const override;
         const TwoPieces& GetSelectablePieces() const override;
         const PreviewPieceRotations& GetPreviewPieceRotations() const override;
@@ -186,6 +187,10 @@ namespace RowBlast {
         
         int GetNumObjectsLeftToClear() const {
             return mNumObjectsLeftToClear;
+        }
+        
+        int GetScore() const {
+            return mCurrentMove.mScore;
         }
         
     private:
@@ -275,6 +280,7 @@ namespace RowBlast {
             TwoPieces mSelectablePieces;
             PieceRotations mPreviewPieceRotations;
             int mId {0};
+            int mScore {0};
         };
         
         Pht::IEngine& mEngine;
@@ -306,7 +312,7 @@ namespace RowBlast {
         FieldExplosionsStates mFieldExplosionsStates;
         FallingPieceAnimation mFallingPieceAnimation;
         DraggedPieceAnimation mDraggedPieceAnimation;
-        ComboDetector mComboDetector;
+        ScoreManager mScoreManager;
         Ai mAi;
         Moves* mAllValidMoves {nullptr};
         DragInputHandler mDragInputHandler;

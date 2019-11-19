@@ -110,7 +110,7 @@ GameLogic::GameLogic(Pht::IEngine& engine,
     mFallingPieceAnimation {*this, mFallingPieceStorage},
     mDraggedPieceStorage {gameScene},
     mDraggedPieceAnimation {engine, gameScene, *this, mDraggedPieceStorage},
-    mComboDetector {engine, smallTextAnimation, effectManager},
+    mScoreManager {engine, *this, smallTextAnimation, effectManager},
     mAi {field},
     mDragInputHandler {engine, *this, gameScene, mDraggedPieceStorage},
     mGestureInputHandler {*this, mFallingPieceStorage},
@@ -131,7 +131,7 @@ void GameLogic::Init(const Level& level) {
     mDragInputHandler.Init();
     mGestureInputHandler.Init(level);
     mClickInputHandler.Init(level);
-    mComboDetector.Init();
+    mScoreManager.Init();
     
     if (mLevel->GetSpeed() > 0.0f) {
         mLandingNoMovementDuration = landingNoMovementDurationFalling;
@@ -223,7 +223,7 @@ GameLogic::Result GameLogic::SpawnFallingPiece(FallingPieceSpawnReason fallingPi
     }
     
     UpdateLevelProgress();
-    mComboDetector.OnSpawnPiece();
+    mScoreManager.OnSpawnPiece();
     
     if (mNumObjectsLeftToClear == 0) {
         return Result::LevelCompleted;
@@ -379,7 +379,7 @@ void GameLogic::ManageMoveHistory(FallingPieceSpawnReason fallingPieceSpawnReaso
             mCurrentMove.mId = mFallingPiece->GetId();
             mCurrentMoveTmp = mCurrentMove;
             mPreviousMove = mCurrentMove;
-            mComboDetector.OnUndoMove();
+            mScoreManager.OnUndoMove();
             mTutorial.OnNewMove(GetMovesUsedIncludingCurrent());
             break;
         case FallingPieceSpawnReason::Switch:
@@ -484,7 +484,7 @@ void GameLogic::HandleCascading() {
                 && !mScrollController.IsScrolling()) {
 
                 auto removedSubCells = mField.ClearFilledRows();
-                mComboDetector.OnClearedFilledRows(removedSubCells);
+                mScoreManager.OnClearedFilledRows(removedSubCells);
                 mFlyingBlocksAnimation.AddBlockRows(removedSubCells);
                 UpdateLevelProgress();
                 mCollapsingFieldAnimation.GoToInactiveState();
@@ -500,9 +500,10 @@ void GameLogic::HandleCascading() {
 void GameLogic::UpdateFieldExplosionsStates() {
     if (mFieldExplosionsStates.Update() == FieldExplosionsStates::State::Inactive) {
         mState = State::LogicUpdate;
-        UpdateLevelProgress();
         RemoveClearedRowsAndPullDownLoosePieces();
     }
+    
+    UpdateLevelProgress();
 }
 
 void GameLogic::HandleSettingsChange() {
@@ -563,9 +564,15 @@ void GameLogic::UpdateLevelProgress() {
             }
             break;
         }
-        case Level::Objective::Build:
+        case Level::Objective::Build: {
+            auto previousNumSlotsLeftToClear = mNumObjectsLeftToClear;
             mNumObjectsLeftToClear = mField.CalculateNumEmptyBlueprintSlots();
+            auto numSlotsFilledByPiece = previousNumSlotsLeftToClear - mNumObjectsLeftToClear;
+            if (numSlotsFilledByPiece > 0) {
+                mScoreManager.OnFilledSlots(numSlotsFilledByPiece);
+            }
             break;
+        }
     }
 }
 
@@ -614,6 +621,10 @@ void GameLogic::UndoMove() {
 
 int GameLogic::GetMovesUsedIncludingCurrent() const {
     return mMovesUsed;
+}
+
+void GameLogic::IncreaseScore(int points) {
+    mCurrentMove.mScore += points;
 }
 
 void GameLogic::UpdateFallingPieceYpos() {
@@ -711,7 +722,7 @@ void GameLogic::LandFallingPiece(bool finalMovementWasADrop) {
             auto removedSubCells = mField.ClearFilledRows();
             if (!removedSubCells.IsEmpty()) {
                 clearedAnyFilledRows = true;
-                mComboDetector.OnClearedFilledRows(removedSubCells);
+                mScoreManager.OnClearedFilledRows(removedSubCells);
                 mFlyingBlocksAnimation.AddBlockRows(removedSubCells);
                 
                 mCollapsingFieldAnimation.GoToInactiveState();
@@ -725,7 +736,7 @@ void GameLogic::LandFallingPiece(bool finalMovementWasADrop) {
     }
     
     if (!clearedAnyFilledRows) {
-        mComboDetector.OnClearedNoFilledRows();
+        mScoreManager.OnClearedNoFilledRows();
     }
     
     if (mLevel->GetObjective() == Level::Objective::BringDownTheAsteroid) {
@@ -824,7 +835,7 @@ void GameLogic::RemoveClearedRowsAndPullDownLoosePieces(bool doBounceCalculation
         mFieldGravity.DetectBlocksThatShouldNotBounce();
     }
     
-    mComboDetector.GoToCascadingState();
+    mScoreManager.GoToCascadingState();
     mCascadeState = CascadeState::Cascading;
 }
 

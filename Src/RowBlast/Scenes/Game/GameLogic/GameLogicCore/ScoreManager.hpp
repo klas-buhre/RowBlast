@@ -1,5 +1,5 @@
-#ifndef ComboDetector_hpp
-#define ComboDetector_hpp
+#ifndef ScoreManager_hpp
+#define ScoreManager_hpp
 
 // Game includes.
 #include "Field.hpp"
@@ -9,25 +9,30 @@ namespace Pht {
 }
 
 namespace RowBlast {
+    class IGameLogic;
     class SmallText;
     class EffectManager;
 
-    class ComboDetector {
+    class ScoreManager {
     public:
-        ComboDetector(Pht::IEngine& engine,
-                      SmallText& smallTextAnimation,
-                      EffectManager& effectManager);
+        ScoreManager(Pht::IEngine& engine,
+                     IGameLogic& gameLogic,
+                     SmallText& smallTextAnimation,
+                     EffectManager& effectManager);
         
         void Init();
         void OnSpawnPiece();
         void OnClearedFilledRows(const Field::RemovedSubCells& removedSubCells);
         void OnClearedNoFilledRows();
+        void OnFilledSlots(int numSlots);
         void OnUndoMove();
         void GoToCascadingState();
         
     private:
-        void OnClearedFilledRowsInPieceSpawnedState(const Field::RemovedSubCells& removedSubCells);
-        void OnClearedFilledRowsInCascadingState(const Field::RemovedSubCells& removedSubCells);
+        void OnClearedFilledRowsInPieceSpawnedState(int numClearedRows);
+        void OnClearedFilledRowsInCascadingState(int numClearedRows);
+        void OnClearedFiveRows();
+        void OnClearedFourRows();
         void DetectCascade();
         
         enum class State {
@@ -37,10 +42,11 @@ namespace RowBlast {
         };
 
         Pht::IEngine& mEngine;
+        IGameLogic& mGameLogic;
         SmallText& mSmallText;
         EffectManager& mEffectManager;
         State mState {State::Inactive};
-        int mNumConsecutiveRowClearMoves {0};
+        int mNumCombos {0};
         int mNumCascades {0};
     };
 }
