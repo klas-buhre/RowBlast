@@ -1,9 +1,11 @@
 {
     "speed": 0.0,
     "moves": 28,
-    "gestureMovesFactor": 1.04,
-    "twoStars": 27,
-    "threeStars": 23,
+    "starLimits": {
+        "one": 150,
+        "two": 2000,
+        "three": 5000
+    },
     "floatingBlocksSet": "Standard",
     "musicTrack": 1,
     "background": "sky5.jpg",

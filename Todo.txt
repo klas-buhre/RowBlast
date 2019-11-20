@@ -82,10 +82,8 @@ Ongoing tasks:
             level after a failed attempt.
         -3. Star meter logic.
               TODO:
-                -Should only rows that gives progress (level blocks and rows
-                 under asteroid) give score?
-                -Remove the controls factor from all level files and add star limits in all levels.
-                -Add a points text animation.
+                -Add a points text animation. The points text appear immediately but the small text
+                 animation can be a bit deferred
                 -When calculating the extra points then the num moves left could count
                  down and the star meter go up at the same time.
             

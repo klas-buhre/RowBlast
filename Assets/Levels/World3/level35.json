@@ -1,9 +1,11 @@
 {
     "speed": 0.0,
     "moves": 38,
-    "gestureMovesFactor": 1.1,
-    "twoStars": 34,
-    "threeStars": 30,
+    "starLimits": {
+        "one": 150,
+        "two": 2000,
+        "three": 5000
+    },
     "floatingBlocksSet": "Asteroid",
     "musicTrack": 2,
     "background": "space1.jpg",
