@@ -79,14 +79,18 @@ Ongoing tasks:
         -3. Reduce the gain in most sounds (clear blocks, button clicks, start      ~1 day
             game, clear level, etc..). Maybe clean up blocks sound in audacity.
             The music track should be switched for the next attempt to clear a
-            level after a failed attempt.
-        -3. Star meter logic.
+            level after a failed attempt. Reduce music gain as well.
+        -3. Star meter logic.                                                       ~3 days
               TODO:
-                -Add a points text animation. The points text appear immediately but the small text
-                 animation can be a bit deferred
-                -When calculating the extra points then the num moves left could count
-                 down and the star meter go up at the same time.
-            
+                -Add a points text animation.
+                    -Tune the points animation.
+                    -In cascades, the points text appears where the piece blocks
+                     lands and fills the row.
+                    -Points animation should trigger when filling slots as well.
+                    -The points text appear immediately but the small text
+                     animation can be a bit deferred.
+                    -When calculating the extra points then the num moves left could count
+                     down and the star meter go up at the same time.
             
             
         -3. The area covered by the piece path could be a bit brighter or darker.   ~3 days

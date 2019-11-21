@@ -10,7 +10,9 @@ namespace RowBlast {
     
     namespace StringUtils {
         void FormatToMinutesAndSeconds(StaticStringBuffer& buffer, std::chrono::seconds seconds);
-        
+        int WriteIntegerToString(int value, std::string& str, int positionInString);
+        void FillStringWithSpaces(std::string& str);
+
         template<typename A, typename B>
         void StringCopy(A& a, int aOffset, const B& b, int numChars) {
             assert(a.size() >= aOffset + numChars);

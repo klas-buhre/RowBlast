@@ -1244,7 +1244,8 @@ void Field::SaveSubCellAndCancelFill(Field::RemovedSubCells& removedSubCells,
             .mBlockKind = subCell.mBlockKind,
             .mColor = subCell.mColor,
             .mIsGrayLevelBlock = subCell.mIsGrayLevelBlock,
-            .mIsAsteroidFragment = subCell.IsAsteroid()
+            .mIsAsteroidFragment = subCell.IsAsteroid(),
+            .mPieceId = subCell.mPieceId
         };
         
         removedSubCells.PushBack(removedSubCell);

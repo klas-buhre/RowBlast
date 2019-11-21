@@ -34,7 +34,6 @@ namespace RowBlast {
         void Update(float dt);
         bool IsAwesomeTextActive() const;
         bool IsFantasticTextActive() const;
-
         
     private:
         Pht::SceneObject& CreateText(const Pht::Font& font,

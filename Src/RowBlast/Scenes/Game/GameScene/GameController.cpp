@@ -73,6 +73,7 @@ GameController::GameController(Pht::IEngine& engine,
     mShield {engine, mScene, mScrollController},
     mFieldBottomGlow {engine, mScene, mScrollController},
     mSlidingText {engine, mScene, commonResources, mLevelResources},
+    mScoreTexts {mScene, commonResources},
     mSmallText {engine, mScene, commonResources},
     mFallingPieceScaleAnimation {mScene},
     mTutorial {
@@ -100,6 +101,7 @@ GameController::GameController(Pht::IEngine& engine,
         mFallingPieceScaleAnimation,
         mShield,
         mValidAreaAnimation,
+        mScoreTexts,
         mSmallText,
         mGameViewControllers.GetGameHudController(),
         mTutorial,
@@ -172,6 +174,7 @@ void GameController::Init(int levelId) {
     mFallingPieceAnimation.Init();
     mDraggedPieceAnimation.Init();
     mSlidingText.Init();
+    mScoreTexts.Init();
     mSmallText.Init();
     mBombsAnimation.Init();
     mAsteroidAnimation.Init();
@@ -254,6 +257,7 @@ GameController::Command GameController::UpdateGame() {
     mFewMovesAlertAnimation.Update(dt);
     mAddingMovesAnimation.Update(dt);
     mBombsAnimation.Update(dt);
+    mScoreTexts.Update(dt);
     mSmallText.Update(dt);
     mTutorial.Update();
     

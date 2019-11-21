@@ -41,6 +41,43 @@ namespace {
         
         return numRemovedRows;
     }
+    
+    Pht::Vec2 CalcScoreTextPosition(const Field::RemovedSubCells& removedSubCells,
+                                    Pht::Optional<int> landedPieceId) {
+        auto yMax = 0;
+        auto xMax = 0;
+        auto pieceXMax = 0;
+        auto pieceXMin = 1000;
+        
+        for (auto& subCell: removedSubCells) {
+            auto cellY = subCell.mGridPosition.y;
+            if (cellY > yMax) {
+                yMax = cellY;
+            }
+            
+            auto cellX = subCell.mGridPosition.x;
+            if (cellX > xMax) {
+                xMax = cellX;
+            }
+            
+            if (landedPieceId.HasValue() && subCell.mPieceId == landedPieceId.GetValue()) {
+                if (cellX > pieceXMax) {
+                    pieceXMax = cellX;
+                }
+                
+                if (cellX < pieceXMin) {
+                    pieceXMin = cellX;
+                }
+            }
+        }
+        
+        auto yPosition = static_cast<float>(yMax) + 0.5f;
+        if (landedPieceId.HasValue()) {
+            return {static_cast<float>(pieceXMin + pieceXMax) / 2.0f, yPosition};
+        }
+        
+        return {static_cast<float>(xMax) / 2.0f, yPosition};
+    }
 }
 
 ScoreManager::ScoreManager(Pht::IEngine& engine,
@@ -65,16 +102,18 @@ void ScoreManager::OnSpawnPiece() {
     mNumCascades = 0;
 }
 
-void ScoreManager::OnClearedFilledRows(const Field::RemovedSubCells& removedSubCells) {
+void ScoreManager::OnClearedFilledRows(const Field::RemovedSubCells& removedSubCells,
+                                       Pht::Optional<int> landedPieceId) {
     PlayClearBlocksSound(mEngine);
     auto numClearedRows = CalcNumRemovedRows(removedSubCells);
+    auto scoreTextPosition = CalcScoreTextPosition(removedSubCells, landedPieceId);
 
     switch (mState) {
         case State::PieceSpawned:
-            OnClearedFilledRowsInPieceSpawnedState(numClearedRows);
+            OnClearedFilledRowsInPieceSpawnedState(numClearedRows, scoreTextPosition);
             break;
         case State::Cascading:
-            OnClearedFilledRowsInCascadingState(numClearedRows);
+            OnClearedFilledRowsInCascadingState(numClearedRows, scoreTextPosition);
             ++mNumCascades;
             break;
         case State::Inactive:
@@ -82,14 +121,15 @@ void ScoreManager::OnClearedFilledRows(const Field::RemovedSubCells& removedSubC
     }
 }
 
-void ScoreManager::OnClearedFilledRowsInPieceSpawnedState(int numClearedRows) {
+void ScoreManager::OnClearedFilledRowsInPieceSpawnedState(int numClearedRows,
+                                                          const Pht::Vec2& scoreTextPosition) {
     if (numClearedRows >= 5) {
-        OnClearedFiveRows();
+        OnClearedFiveRows(scoreTextPosition);
     } else if (numClearedRows >= 4) {
-        OnClearedFourRows();
+        OnClearedFourRows(scoreTextPosition);
     } else {
         auto points = clearOneRowPoints * numClearedRows + mNumCombos * comboIncreasePoints;
-        mGameLogic.IncreaseScore(points);
+        mGameLogic.IncreaseScore(points, scoreTextPosition);
         if (mNumCombos >= 1) {
             mSmallText.StartComboMessage(mNumCombos);
         }
@@ -99,27 +139,28 @@ void ScoreManager::OnClearedFilledRowsInPieceSpawnedState(int numClearedRows) {
     GoToCascadingState();
 }
 
-void ScoreManager::OnClearedFilledRowsInCascadingState(int numClearedRows) {
+void ScoreManager::OnClearedFilledRowsInCascadingState(int numClearedRows,
+                                                       const Pht::Vec2& scoreTextPosition) {
     if (numClearedRows >= 5) {
-        OnClearedFiveRows();
+        OnClearedFiveRows(scoreTextPosition);
     } else if (numClearedRows >= 4) {
-        OnClearedFourRows();
+        OnClearedFourRows(scoreTextPosition);
     } else {
         auto points = clearOneRowInCascadePoints * numClearedRows + mNumCombos * comboIncreasePoints;
-        mGameLogic.IncreaseScore(points);
+        mGameLogic.IncreaseScore(points, scoreTextPosition);
     }
 }
 
-void ScoreManager::OnClearedFiveRows() {
+void ScoreManager::OnClearedFiveRows(const Pht::Vec2& scoreTextPosition) {
     auto points = clearFiveRowsPoints + mNumCombos * comboIncreasePoints;
-    mGameLogic.IncreaseScore(points);
+    mGameLogic.IncreaseScore(points, scoreTextPosition);
     mSmallText.StartFantasticMessage();
     mEffectManager.StartSmallCameraShake();
 }
 
-void ScoreManager::OnClearedFourRows() {
+void ScoreManager::OnClearedFourRows(const Pht::Vec2& scoreTextPosition) {
     auto points = clearFourRowsPoints + mNumCombos * comboIncreasePoints;
-    mGameLogic.IncreaseScore(points);
+    mGameLogic.IncreaseScore(points, scoreTextPosition);
     mSmallText.StartAwesomeMessage();
 }
 
@@ -135,8 +176,8 @@ void ScoreManager::OnClearedNoFilledRows() {
     mNumCombos = 0;
 }
 
-void ScoreManager::OnFilledSlots(int numSlots) {
-    mGameLogic.IncreaseScore(numSlots * fillSlotPoints);
+void ScoreManager::OnFilledSlots(int numSlots, const Pht::Vec2& scoreTextPosition) {
+    mGameLogic.IncreaseScore(numSlots * fillSlotPoints, scoreTextPosition);
 }
 
 void ScoreManager::OnUndoMove() {

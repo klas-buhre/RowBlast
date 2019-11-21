@@ -77,28 +77,6 @@ namespace {
         
         return yPosition;
     }
-    
-    int WriteIntegerAtBeginningOfString(int value, std::string& str) {
-        constexpr auto bufSize = 64;
-        char buffer[bufSize];
-        std::snprintf(buffer, bufSize, "%d", value);
-        auto numDigits = std::strlen(buffer);
-        
-        assert(str.size() >= numDigits);
-
-        for (auto i = 0; i < numDigits; ++i) {
-            str[i] = buffer[i];
-        }
-        
-        return static_cast<int>(numDigits);
-    }
-
-    void FillStringWithSpaces(std::string& str) {
-        auto strSize = str.size();
-        for (auto i = 0; i < strSize; ++i) {
-            str[i] = ' ';
-        }
-    }
 }
 
 GameHud::GameHud(Pht::IEngine& engine,
@@ -772,8 +750,8 @@ void GameHud::UpdateProgress() {
 
     if (progress != mProgress) {
         auto& progressText = mProgressText->GetText();
-        FillStringWithSpaces(progressText);
-        auto numDigitsWritten = WriteIntegerAtBeginningOfString(progress, progressText);
+        StringUtils::FillStringWithSpaces(progressText);
+        auto numDigitsWritten = StringUtils::WriteIntegerToString(progress, progressText, 0);
         StringUtils::StringCopy(progressText,
                                 numDigitsWritten,
                                 mProgressGoalString,
@@ -849,8 +827,8 @@ void GameHud::UpdateMovesLeft() {
     auto movesLeft = GetMovesLeft();
     if (movesLeft != mMovesLeft) {
         auto& movesText = mMovesText->GetText();
-        FillStringWithSpaces(movesText);
-        WriteIntegerAtBeginningOfString(movesLeft, movesText);
+        StringUtils::FillStringWithSpaces(movesText);
+        StringUtils::WriteIntegerToString(movesLeft, movesText, 0);
         mMovesLeft = movesLeft;
     }
 }

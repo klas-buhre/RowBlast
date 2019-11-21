@@ -24,6 +24,7 @@ namespace RowBlast {
         BlockColor mColor;
         bool mIsGrayLevelBlock {false};
         bool mIsAsteroidFragment {false};
+        int mPieceId {0};
     };
 
     enum class IsCollision {

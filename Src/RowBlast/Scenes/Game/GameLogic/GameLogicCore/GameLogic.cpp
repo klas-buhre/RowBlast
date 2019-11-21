@@ -23,6 +23,7 @@
 #include "FallingPieceScaleAnimation.hpp"
 #include "Shield.hpp"
 #include "ValidAreaAnimation.hpp"
+#include "ScoreTexts.hpp"
 #include "SmallText.hpp"
 #include "GameHudController.hpp"
 #include "Tutorial.hpp"
@@ -82,6 +83,7 @@ GameLogic::GameLogic(Pht::IEngine& engine,
                      FallingPieceScaleAnimation& fallingPieceScaleAnimation,
                      Shield& shieldAnimation,
                      ValidAreaAnimation& validAreaAnimation,
+                     ScoreTexts& scoreTexts,
                      SmallText& smallTextAnimation,
                      GameHudController& gameHudController,
                      Tutorial& tutorial,
@@ -99,6 +101,7 @@ GameLogic::GameLogic(Pht::IEngine& engine,
     mFallingPieceScaleAnimation {fallingPieceScaleAnimation},
     mShield {shieldAnimation},
     mValidAreaAnimation {validAreaAnimation},
+    mScoreTexts {scoreTexts},
     mSmallText {smallTextAnimation},
     mGameHudController {gameHudController},
     mScene {gameScene},
@@ -569,7 +572,7 @@ void GameLogic::UpdateLevelProgress() {
             mNumObjectsLeftToClear = mField.CalculateNumEmptyBlueprintSlots();
             auto numSlotsFilledByPiece = previousNumSlotsLeftToClear - mNumObjectsLeftToClear;
             if (numSlotsFilledByPiece > 0) {
-                mScoreManager.OnFilledSlots(numSlotsFilledByPiece);
+                mScoreManager.OnFilledSlots(numSlotsFilledByPiece, {0.0f, 0.0f});
             }
             break;
         }
@@ -623,15 +626,16 @@ int GameLogic::GetMovesUsedIncludingCurrent() const {
     return mMovesUsed;
 }
 
-void GameLogic::IncreaseScore(int points) {
+void GameLogic::IncreaseScore(int points, const Pht::Vec2& scoreTextPosition) {
     mCurrentMove.mScore += points;
+    mScoreTexts.Start(points, scoreTextPosition);
 }
 
 int GameLogic::CalculateFinalScore() {
     auto extraPoints = mScoreManager.CalculateExtraPoints(GetScore(),
                                                           mMovesLeft,
                                                           mLevel->GetNumMoves());
-    IncreaseScore(extraPoints);
+    IncreaseScore(extraPoints, {-20.0f, -20.0f});
     return GetScore();
 }
 
@@ -730,7 +734,7 @@ void GameLogic::LandFallingPiece(bool finalMovementWasADrop) {
             auto removedSubCells = mField.ClearFilledRows();
             if (!removedSubCells.IsEmpty()) {
                 clearedAnyFilledRows = true;
-                mScoreManager.OnClearedFilledRows(removedSubCells);
+                mScoreManager.OnClearedFilledRows(removedSubCells, mFallingPiece->GetId());
                 mFlyingBlocksAnimation.AddBlockRows(removedSubCells);
                 
                 mCollapsingFieldAnimation.GoToInactiveState();

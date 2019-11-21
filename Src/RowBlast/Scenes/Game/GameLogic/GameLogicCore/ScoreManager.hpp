@@ -22,9 +22,10 @@ namespace RowBlast {
 
         void Init();
         void OnSpawnPiece();
-        void OnClearedFilledRows(const Field::RemovedSubCells& removedSubCells);
+        void OnClearedFilledRows(const Field::RemovedSubCells& removedSubCells,
+                                 Pht::Optional<int> landedPieceId = Pht::Optional<int>{});
         void OnClearedNoFilledRows();
-        void OnFilledSlots(int numSlots);
+        void OnFilledSlots(int numSlots, const Pht::Vec2& scoreTextPosition);
         void OnUndoMove();
         void GoToCascadingState();
         
@@ -33,10 +34,12 @@ namespace RowBlast {
                                         int numMovesAtLevelStart);
         
     private:
-        void OnClearedFilledRowsInPieceSpawnedState(int numClearedRows);
-        void OnClearedFilledRowsInCascadingState(int numClearedRows);
-        void OnClearedFiveRows();
-        void OnClearedFourRows();
+        void OnClearedFilledRowsInPieceSpawnedState(int numClearedRows,
+                                                    const Pht::Vec2& scoreTextPosition);
+        void OnClearedFilledRowsInCascadingState(int numClearedRows,
+                                                 const Pht::Vec2& scoreTextPosition);
+        void OnClearedFiveRows(const Pht::Vec2& scoreTextPosition);
+        void OnClearedFourRows(const Pht::Vec2& scoreTextPosition);
         void DetectCascade();
         
         enum class State {

@@ -32,6 +32,7 @@
 #include "AddingMovesAnimation.hpp"
 #include "SlidingText.hpp"
 #include "SmallText.hpp"
+#include "ScoreTexts.hpp"
 #include "BlastArea.hpp"
 #include "Shield.hpp"
 #include "FieldBottomGlow.hpp"
@@ -189,6 +190,7 @@ namespace RowBlast {
         Shield mShield;
         FieldBottomGlow mFieldBottomGlow;
         SlidingText mSlidingText;
+        ScoreTexts mScoreTexts;
         SmallText mSmallText;
         FallingPieceScaleAnimation mFallingPieceScaleAnimation;
         Tutorial mTutorial;

@@ -149,6 +149,7 @@ void GameScene::Init(const Level& level, const GameLogic& gameLogic) {
     CreateDraggedPiece();
     CreateEffectsContainer();
     CreateFlyingBlocksContainer();
+    CreateScoreTextContainer();
     CreateHud(gameLogic, level);
     CreateUiViewsContainer();
     CreateStarsContainer();
@@ -204,6 +205,10 @@ void GameScene::CreateRenderPasses() {
     Pht::RenderPass flyingBlocksRenderPass {static_cast<int>(Layer::FlyingBlocks)};
     flyingBlocksRenderPass.SetProjectionMode(Pht::ProjectionMode::Orthographic);
     mScene->AddRenderPass(flyingBlocksRenderPass);
+
+    Pht::RenderPass scoreTextRenderPass {static_cast<int>(Layer::ScoreText)};
+    scoreTextRenderPass.SetProjectionMode(Pht::ProjectionMode::Orthographic);
+    mScene->AddRenderPass(scoreTextRenderPass);
 
     Pht::RenderPass levelCompletedFadeEffectRenderPass {
         static_cast<int>(Layer::LevelCompletedFadeEffect)
@@ -419,6 +424,12 @@ void GameScene::CreateFlyingBlocksContainer() {
     mFlyingBlocksContainer = &mScene->CreateSceneObject();
     mFlyingBlocksContainer->SetLayer(static_cast<int>(Layer::FlyingBlocks));
     mScene->GetRoot().AddChild(*mFlyingBlocksContainer);
+}
+
+void GameScene::CreateScoreTextContainer() {
+    mScoreTextContainer = &mScene->CreateSceneObject();
+    mScoreTextContainer->SetLayer(static_cast<int>(Layer::ScoreText));
+    mFieldContainer->AddChild(*mScoreTextContainer);
 }
 
 void GameScene::CreateHud(const GameLogic& gameLogic, const Level& level) {

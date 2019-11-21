@@ -181,7 +181,7 @@ SlidingText::CreateText(const Pht::Font& font,
     textProperties.mSpecular = Pht::TextSpecular::Yes;
     textProperties.mSpecularOffset = {0.02f, 0.02f};
     textProperties.mSecondShadow = Pht::TextShadow::Yes;
-    textProperties.mSecondShadowColor = Pht::Vec4 {0.19f, 0.19f, 0.19f, 0.5f};
+    textProperties.mSecondShadowColor = {0.15f, 0.15f, 0.15f, 0.5f};
     textProperties.mSecondShadowOffset = Pht::Vec2 {0.075f, 0.075f};
 
     mTextMessages.push_back(

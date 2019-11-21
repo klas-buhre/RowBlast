@@ -43,6 +43,7 @@ namespace RowBlast {
     class FlashingBlocksAnimation;
     class FallingPieceScaleAnimation;
     class Shield;
+    class ScoreTexts;
     class SmallText;
     class ValidAreaAnimation;
     
@@ -95,6 +96,7 @@ namespace RowBlast {
                   FallingPieceScaleAnimation& fallingPieceScaleAnimation,
                   Shield& shieldAnimation,
                   ValidAreaAnimation& validAreaAnimation,
+                  ScoreTexts& scoreTexts,
                   SmallText& smallTextAnimation,
                   GameHudController& gameHudController,
                   Tutorial& tutorial,
@@ -117,7 +119,7 @@ namespace RowBlast {
         void StopDraggingPiece() override;
         void OnDraggedPieceAnimationFinished() override;
         void CancelDraggingPiece() override;
-        void IncreaseScore(int points) override;
+        void IncreaseScore(int points, const Pht::Vec2& scoreTextPosition) override;
         const Piece* GetPieceType() const override;
         const TwoPieces& GetSelectablePieces() const override;
         const PreviewPieceRotations& GetPreviewPieceRotations() const override;
@@ -297,6 +299,7 @@ namespace RowBlast {
         FallingPieceScaleAnimation& mFallingPieceScaleAnimation;
         Shield& mShield;
         ValidAreaAnimation& mValidAreaAnimation;
+        ScoreTexts& mScoreTexts;
         SmallText& mSmallText;
         GameHudController& mGameHudController;
         GameScene& mScene;

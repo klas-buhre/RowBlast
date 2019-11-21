@@ -46,6 +46,7 @@ namespace RowBlast {
             FieldBlocksAndFallingPiece,
             Effects,
             FlyingBlocks,
+            ScoreText,
             LevelCompletedFadeEffect,
             LevelCompletedEffects,
             Hud,
@@ -123,6 +124,11 @@ namespace RowBlast {
         Pht::SceneObject& GetFlyingBlocksContainer() {
             assert(mFlyingBlocksContainer);
             return *mFlyingBlocksContainer;
+        }
+
+        Pht::SceneObject& GetScoreTextContainer() {
+            assert(mScoreTextContainer);
+            return *mScoreTextContainer;
         }
 
         Pht::SceneObject& GetHudContainer() {
@@ -273,6 +279,7 @@ namespace RowBlast {
         void CreateDraggedPiece();
         void CreateEffectsContainer();
         void CreateFlyingBlocksContainer();
+        void CreateScoreTextContainer();
         void CreateHud(const GameLogic& gameLogic, const Level& level);
         void CreateUiViewsContainer();
         void CreateStarsContainer();
@@ -312,6 +319,7 @@ namespace RowBlast {
         Pht::SceneObject* mFieldBlocksContainer {nullptr};
         Pht::SceneObject* mEffectsContainer {nullptr};
         Pht::SceneObject* mFlyingBlocksContainer {nullptr};
+        Pht::SceneObject* mScoreTextContainer {nullptr};
         Pht::SceneObject* mHudContainer {nullptr};
         Pht::SceneObject* mUiViewsContainer {nullptr};
         Pht::SceneObject* mLevelCompletedEffectsContainer {nullptr};
