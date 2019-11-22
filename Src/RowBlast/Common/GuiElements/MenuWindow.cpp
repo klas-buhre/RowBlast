@@ -14,8 +14,8 @@
 using namespace RowBlast;
 
 namespace {
-    const Pht::Vec4 grayColor {0.96f, 0.95f, 0.92f, 1.0f};
-    const Pht::Vec4 darkerGrayColor {0.94f, 0.93f, 0.9f, 1.0f};
+    const Pht::Vec4 grayColor {0.98f, 0.97f, 0.94f, 1.0f};
+    const Pht::Vec4 darkerGrayColor {0.96f, 0.95f, 0.92f, 1.0f};
     const Pht::Vec4 blueColor {0.45f, 0.75f, 1.0f, 1.0};
     const Pht::Vec4 lightBlueColor {0.5f, 0.8f, 1.0f, 1.0};
     const Pht::Vec4 stencilColor {1.0f, 1.0f, 1.0f, 1.0f};
@@ -95,7 +95,11 @@ MenuWindow::MenuWindow(Pht::IEngine& engine,
 
     switch (style) {
         case Style::Bright: {
-            FillStencilBuffer(*rasterizer, outerCornerRadius, 0.0f);
+            DrawBrightBorder(*rasterizer);
+            FillStencilBuffer(*rasterizer,
+                              outerCornerRadius - darkBorderThickness - outerGlowBorderThickness,
+                              darkBorderThickness + outerGlowBorderThickness);
+            
             auto captionBarHeight =
                 size == Size::Large ? largeCaptionBarHeight : smallCaptionBarHeight;
             DrawBrightCaptionBar(*rasterizer, captionBarHeight);
@@ -220,6 +224,16 @@ void MenuWindow::DrawDarkBorder(Pht::SoftwareRasterizer& rasterizer) {
                       outerCornerRadius - darkBorderThickness,
                       darkBorderThickness + outerGlowBorderThickness);
     DrawBorder(rasterizer, innerBorderColor);
+}
+
+void MenuWindow::DrawBrightBorder(Pht::SoftwareRasterizer& rasterizer) {
+    FillStencilBuffer(rasterizer, outerCornerRadius, 0.0f);
+    DrawBorder(rasterizer, lightBlueColor);
+    
+    FillStencilBuffer(rasterizer,
+                      outerCornerRadius - darkBorderThickness,
+                      darkBorderThickness);
+    DrawBorder(rasterizer, blueColor);
 }
 
 void MenuWindow::DrawBorder(Pht::SoftwareRasterizer& rasterizer, const Pht::Vec4& color) {

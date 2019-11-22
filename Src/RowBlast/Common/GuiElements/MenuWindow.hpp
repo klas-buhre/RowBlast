@@ -54,6 +54,7 @@ namespace RowBlast {
         void DrawBrightCaptionBar(Pht::SoftwareRasterizer& rasterizer, float captionBarHeight);
         void DrawBrightMainArea(Pht::SoftwareRasterizer& rasterizer, float captionBarHeight);
         void DrawDarkBorder(Pht::SoftwareRasterizer& rasterizer);
+        void DrawBrightBorder(Pht::SoftwareRasterizer& rasterizer);
         void DrawBorder(Pht::SoftwareRasterizer& rasterizer, const Pht::Vec4& color);
         void DrawDarkMainArea(Pht::SoftwareRasterizer& rasterizer);
         

@@ -57,6 +57,6 @@ void SpinningWheelEffect::Stop() {
 }
 
 void SpinningWheelEffect::Update() {
-    auto dt {mEngine.GetLastFrameSeconds()};
+    auto dt = mEngine.GetLastFrameSeconds();
     mSceneObject->GetComponent<Pht::ParticleEffect>()->Update(dt);
 }
