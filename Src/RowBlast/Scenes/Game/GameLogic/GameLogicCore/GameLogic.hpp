@@ -234,7 +234,8 @@ namespace RowBlast {
         void DetonateDroppedBomb();
         void DetonateImpactedLevelBombs(const Field::ImpactedBombs& impactedLevelBombs);
         void GoToFieldExplosionsState();
-        void RemoveClearedRowsAndPullDownLoosePieces(bool doBounceCalculations = true);
+        void RemoveClearedRowsAndPullDownLoosePieces(bool doBounceCalculations = true,
+                                                     bool resetIsPulledDownFlags = true);
         void PullDownLoosePiecesClearObjective();
         void PullDownLoosePiecesAsteroidObjective();
         void RotatePreviewPieces(PreviewPieceRotations& previewPieceRotations,
@@ -268,7 +269,7 @@ namespace RowBlast {
         enum class CascadeState {
             NotCascading,
             Cascading,
-            WaitingToClearLine
+            WaitingToClearRows
         };
         
         struct PieceRotations {

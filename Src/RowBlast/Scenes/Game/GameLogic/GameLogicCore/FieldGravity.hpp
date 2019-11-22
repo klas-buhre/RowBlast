@@ -21,6 +21,7 @@ namespace RowBlast {
         
         void Init();
         void PullDownLoosePieces();
+        void ResetIsPulledDownFlags();
         void ShiftFieldDown(int rowIndex);
         void DetectBlocksThatShouldNotBounce();
         
@@ -48,7 +49,9 @@ namespace RowBlast {
         void FindAsteroidCells(const Pht::IVec2& position);
         void ResetAllCellsTriedScanDirection();
         void ClearPieceBlockGrid();
-        void LandPulledDownPieceBlocks(const PieceBlocks& pieceBlocks, const Pht::IVec2& position);
+        void LandPulledDownPieceBlocks(const PieceBlocks& pieceBlocks,
+                                       const Pht::IVec2& position,
+                                       bool isPieceBlocksPulledDown);
         bool ShiftGrayBlocksDown(int rowIndex);
         void ResetAllCellsShiftedDownFlag();
         IsFloating IsBlockStructureFloating(const Pht::IVec2& gridPosition);

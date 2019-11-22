@@ -109,16 +109,20 @@ void FieldGravity::PullDownPiece(const SubCell& subCell,
     auto pieceBlocks =
         ExtractPieceBlocks(piecePosition, subCell.mColor, scanPosition, scanDirection);
 
+    auto isPiecePulledDown = false;
     Pht::IVec2 step {0, -1};
     auto collisionPosition = mField.ScanUntilCollision(pieceBlocks, piecePosition, step);
-    if (collisionPosition.y >= piecePosition.y) {
-        LandPulledDownPieceBlocks(pieceBlocks, piecePosition);
-    } else {
-        LandPulledDownPieceBlocks(pieceBlocks, collisionPosition + Pht::IVec2 {0, 1});
-    }
-    
     if (piecePosition.y - collisionPosition.y > 1) {
+        isPiecePulledDown = true;
         mAnyPiecesPulledDown = true;
+    }
+
+    if (collisionPosition.y >= piecePosition.y) {
+        LandPulledDownPieceBlocks(pieceBlocks, piecePosition, isPiecePulledDown);
+    } else {
+        LandPulledDownPieceBlocks(pieceBlocks,
+                                  collisionPosition + Pht::IVec2 {0, 1},
+                                  isPiecePulledDown);
     }
 }
 
@@ -355,7 +359,8 @@ void FieldGravity::ClearPieceBlockGrid() {
 }
 
 void FieldGravity::LandPulledDownPieceBlocks(const PieceBlocks& pieceBlocks,
-                                             const Pht::IVec2& position) {
+                                             const Pht::IVec2& position,
+                                             bool isPieceBlocksPulledDown) {
     for (auto pieceRow = 0; pieceRow < pieceBlocks.mNumRows; ++pieceRow) {
         for (auto pieceColumn = 0; pieceColumn < pieceBlocks.mNumColumns; ++pieceColumn) {
             auto& pieceCell = pieceBlocks.mGrid[pieceRow][pieceColumn];
@@ -373,9 +378,25 @@ void FieldGravity::LandPulledDownPieceBlocks(const PieceBlocks& pieceBlocks,
                     fieldCell.mFirstSubCell : fieldCell.mSecondSubCell;
                 
                 fieldSubCell = pieceCell.mFirstSubCell;
+                fieldSubCell.mIsPulledDown = isPieceBlocksPulledDown ? true :
+                                             pieceCell.mFirstSubCell.mIsPulledDown;
             } else {
                 fieldCell = pieceCell;
+                fieldCell.mFirstSubCell.mIsPulledDown = isPieceBlocksPulledDown ? true :
+                                                        pieceCell.mFirstSubCell.mIsPulledDown;
+                fieldCell.mSecondSubCell.mIsPulledDown = isPieceBlocksPulledDown ? true :
+                                                         pieceCell.mSecondSubCell.mIsPulledDown;
             }
+        }
+    }
+}
+
+void FieldGravity::ResetIsPulledDownFlags() {
+    for (auto row = 0; row < mField.mNumRows; ++row) {
+        for (auto column = 0; column < mField.mNumColumns; ++column) {
+            auto& cell = mField.mGrid[row][column];
+            cell.mFirstSubCell.mIsPulledDown = false;
+            cell.mSecondSubCell.mIsPulledDown = false;
         }
     }
 }

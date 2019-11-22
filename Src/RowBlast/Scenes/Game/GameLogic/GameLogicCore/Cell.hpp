@@ -176,6 +176,7 @@ namespace RowBlast {
         bool mIsPartOfIndivisiblePiece {false};
         bool mIsFound {false};
         ScanDirection mTriedScanDirection {ScanDirection::None};
+        bool mIsPulledDown {false};
     };
     
     struct Cell {

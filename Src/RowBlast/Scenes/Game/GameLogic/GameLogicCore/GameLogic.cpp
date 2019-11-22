@@ -475,13 +475,13 @@ void GameLogic::HandleCascading() {
         case CascadeState::Cascading:
             if (mField.AnyFilledRows()) {
                 mCascadeWaitTime = 0.0f;
-                mCascadeState = CascadeState::WaitingToClearLine;
+                mCascadeState = CascadeState::WaitingToClearRows;
             } else {
                 mCascadeState = CascadeState::NotCascading;
                 mField.ManageWelds();
             }
             break;
-        case CascadeState::WaitingToClearLine:
+        case CascadeState::WaitingToClearRows:
             mCascadeWaitTime += mEngine.GetLastFrameSeconds();
             if ((mCascadeWaitTime > cascadeWaitTime || mCollapsingFieldAnimation.IsInactive())
                 && !mScrollController.IsScrolling()) {
@@ -827,8 +827,13 @@ void GameLogic::GoToFieldExplosionsState() {
     mField.SetBlocksYPositionAndBounceFlag();
 }
 
-void GameLogic::RemoveClearedRowsAndPullDownLoosePieces(bool doBounceCalculations) {
+void GameLogic::RemoveClearedRowsAndPullDownLoosePieces(bool doBounceCalculations,
+                                                        bool resetIsPulledDownFlags) {
     mField.RemoveClearedRows();
+    
+    if (resetIsPulledDownFlags) {
+        mFieldGravity.ResetIsPulledDownFlags();
+    }
     
     switch (mLevel->GetObjective()) {
         case Level::Objective::Clear:
@@ -912,7 +917,8 @@ void GameLogic::RemoveBlocksInsideTheShield() {
         if (mState != State::FieldExplosions) {
             // It is not safe to pull down pieces while in FieldExplosions state.
             auto doBounceCalculations = false;
-            RemoveClearedRowsAndPullDownLoosePieces(doBounceCalculations);
+            auto resetIsPulledDownFlags = false;
+            RemoveClearedRowsAndPullDownLoosePieces(doBounceCalculations, resetIsPulledDownFlags);
             
             // Blocks that have just landed are in bouncing state. Some of those recently landed
             // blocks that belonged to a piece that was partly removed by the shield are still

@@ -46,18 +46,25 @@ namespace {
                                     Pht::Optional<int> landedPieceId) {
         auto yMax = 0;
         auto xMax = 0;
+        auto xMin = 1000;
         auto pieceXMax = 0;
         auto pieceXMin = 1000;
         
         for (auto& subCell: removedSubCells) {
             auto cellY = subCell.mGridPosition.y;
+            auto cellX = subCell.mGridPosition.x;
             if (cellY > yMax) {
                 yMax = cellY;
             }
-            
-            auto cellX = subCell.mGridPosition.x;
-            if (cellX > xMax) {
-                xMax = cellX;
+
+            if (subCell.mIsPulledDown) {
+                if (cellX > xMax) {
+                    xMax = cellX;
+                }
+                
+                if (cellX < xMin) {
+                    xMin = cellX;
+                }
             }
             
             if (landedPieceId.HasValue() && subCell.mPieceId == landedPieceId.GetValue()) {
@@ -76,7 +83,7 @@ namespace {
             return {static_cast<float>(pieceXMin + pieceXMax) / 2.0f, yPosition};
         }
         
-        return {static_cast<float>(xMax) / 2.0f, yPosition};
+        return {static_cast<float>(xMin + xMax) / 2.0f, yPosition};
     }
     
     int CalcNumBlueprintSlotsFilled(const Field::PieceFilledSlots& slotsCoveredByPiece) {

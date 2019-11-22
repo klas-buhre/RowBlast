@@ -1286,6 +1286,7 @@ void Field::SaveSubCellAndCancelFill(Field::RemovedSubCells& removedSubCells,
             .mColor = subCell.mColor,
             .mIsGrayLevelBlock = subCell.mIsGrayLevelBlock,
             .mIsAsteroidFragment = subCell.IsAsteroid(),
+            .mIsPulledDown = subCell.mIsPulledDown,
             .mPieceId = subCell.mPieceId
         };
         
