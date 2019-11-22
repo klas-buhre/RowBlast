@@ -78,6 +78,46 @@ namespace {
         
         return {static_cast<float>(xMax) / 2.0f, yPosition};
     }
+    
+    int CalcNumBlueprintSlotsFilled(const Field::PieceFilledSlots& slotsCoveredByPiece) {
+        auto numBlueprintSlotsFilled = 0;
+        for (auto& slot: slotsCoveredByPiece) {
+            if (slot.mKind == PieceFilledSlotKind::Blueprint) {
+                ++numBlueprintSlotsFilled;
+            }
+        }
+        
+        return numBlueprintSlotsFilled;
+    }
+    
+    Pht::Vec2 CalcScoreTextPosition(const Field::PieceFilledSlots& slotsCoveredByPiece) {
+        auto pieceFillYMax = 0;
+        auto pieceFillXMax = 0;
+        auto pieceFillXMin = 1000;
+
+        for (auto& slot: slotsCoveredByPiece) {
+            if (slot.mKind == PieceFilledSlotKind::OutsideBlueprint) {
+                continue;
+            }
+            
+            auto slotY = slot.mPosition.y;
+            if (slotY > pieceFillYMax) {
+                pieceFillYMax = slotY;
+            }
+            
+            auto slotX = slot.mPosition.x;
+            if (slotX > pieceFillXMax) {
+                pieceFillXMax = slotX;
+            }
+
+            if (slotX < pieceFillXMin) {
+                pieceFillXMin = slotX;
+            }
+        }
+        
+        auto yPosition = static_cast<float>(pieceFillYMax) + 0.5f;
+        return {static_cast<float>(pieceFillXMin + pieceFillXMax) / 2.0f, yPosition};
+    }
 }
 
 ScoreManager::ScoreManager(Pht::IEngine& engine,
@@ -176,8 +216,12 @@ void ScoreManager::OnClearedNoFilledRows() {
     mNumCombos = 0;
 }
 
-void ScoreManager::OnFilledSlots(int numSlots, const Pht::Vec2& scoreTextPosition) {
-    mGameLogic.IncreaseScore(numSlots * fillSlotPoints, scoreTextPosition);
+void ScoreManager::OnFilledSlots(const Field::PieceFilledSlots& slotsCoveredByPiece) {
+    auto numBlueprintSlotsFilled = CalcNumBlueprintSlotsFilled(slotsCoveredByPiece);
+    if (numBlueprintSlotsFilled > 0) {
+        auto scoreTextPosition = CalcScoreTextPosition(slotsCoveredByPiece);
+        mGameLogic.IncreaseScore(numBlueprintSlotsFilled * fillSlotPoints, scoreTextPosition);
+    }
 }
 
 void ScoreManager::OnUndoMove() {

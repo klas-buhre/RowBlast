@@ -250,7 +250,6 @@ namespace RowBlast {
                                        Direction collisionDirection);
         BlastArea::Kind CalculateBlastRadiusKind(const PieceBlocks& pieceBlocks,
                                                  const Pht::IVec2& position);
-        bool LevelAllowsClearingFilledRows() const;
         void PlayLandPieceSound();
         void RemoveBlocksInsideTheShield();
         bool IsThereRoomToSwitchPiece(const Piece& pieceType, Rotation rotation);

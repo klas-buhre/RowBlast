@@ -26,6 +26,11 @@ namespace RowBlast {
         bool mIsAsteroidFragment {false};
         int mPieceId {0};
     };
+    
+    enum class PieceFilledSlotKind {
+        Blueprint,
+        OutsideBlueprint
+    };
 
     enum class IsCollision {
         Yes,
@@ -69,8 +74,14 @@ namespace RowBlast {
             BlockKind mKind;
         };
         
+        struct PieceFilledSlot {
+            Pht::IVec2 mPosition;
+            PieceFilledSlotKind mKind {PieceFilledSlotKind::OutsideBlueprint};
+        };
+        
         using ImpactedBombs = Pht::StaticVector<ImpactedBomb, maxNumColumns>;
         using RemovedSubCells = Pht::StaticVector<RemovedSubCell, maxNumColumns * maxNumRows>;
+        using PieceFilledSlots = Pht::StaticVector<PieceFilledSlot, Piece::maxColumns * Piece::maxRows>;
         
         void Init(const Level& level);
         void RestorePreviousState();
@@ -96,6 +107,7 @@ namespace RowBlast {
                                         const Pht::IVec2& position) const;
         ImpactedBombs DetectImpactedBombs(const PieceBlocks& pieceBlocks,
                                           const Pht::IVec2& position) const;
+        PieceFilledSlots CalculatePieceFilledSlots(const FallingPiece& fallingPiece);
         void LandFallingPiece(const FallingPiece& fallingPiece, bool startBounceAnimation);
         void LandPieceBlocks(const PieceBlocks& pieceBlocks,
                              int pieceId,

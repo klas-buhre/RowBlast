@@ -25,7 +25,7 @@ namespace RowBlast {
         void OnClearedFilledRows(const Field::RemovedSubCells& removedSubCells,
                                  Pht::Optional<int> landedPieceId = Pht::Optional<int>{});
         void OnClearedNoFilledRows();
-        void OnFilledSlots(int numSlots, const Pht::Vec2& scoreTextPosition);
+        void OnFilledSlots(const Field::PieceFilledSlots& slotsCoveredByPiece);
         void OnUndoMove();
         void GoToCascadingState();
         

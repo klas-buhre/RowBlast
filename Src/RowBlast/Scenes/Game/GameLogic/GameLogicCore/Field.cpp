@@ -528,6 +528,47 @@ Field::ImpactedBombs Field::DetectImpactedBombs(const PieceBlocks& pieceBlocks,
     return impactedBombs;
 }
 
+Field::PieceFilledSlots Field::CalculatePieceFilledSlots(const FallingPiece& fallingPiece) {
+    assert(mBlueprintGrid);
+
+    PieceFilledSlots pieceFilledSlots;
+    auto pieceBlocks = CreatePieceBlocks(fallingPiece);
+    auto piecePosition = fallingPiece.GetIntPosition();
+    auto pieceId = fallingPiece.GetId();
+
+    for (auto pieceRow = 0; pieceRow < pieceBlocks.mNumRows; ++pieceRow) {
+        for (auto pieceColumn = 0; pieceColumn < pieceBlocks.mNumColumns; ++pieceColumn) {
+            auto& pieceSubCell = pieceBlocks.mGrid[pieceRow][pieceColumn].mFirstSubCell;
+            if (pieceSubCell.IsEmpty()) {
+                continue;
+            }
+
+            auto row = piecePosition.y + pieceRow;
+            auto column = piecePosition.x + pieceColumn;
+            auto& fieldSubCell = mGrid[row][column].mFirstSubCell;
+            
+            if (fieldSubCell.mPieceId == pieceId) {
+                auto& blueprintCell = (*mBlueprintGrid)[row][column];
+                if (blueprintCell.mFill != Fill::Empty && IsCellAccordingToBlueprint(row, column)) {
+                    PieceFilledSlot slot {
+                        .mPosition = {column, row},
+                        .mKind = PieceFilledSlotKind::Blueprint
+                    };
+                    pieceFilledSlots.PushBack(slot);
+                } else if (blueprintCell.mFill == Fill::Empty) {
+                    PieceFilledSlot slot {
+                        .mPosition = {column, row},
+                        .mKind = PieceFilledSlotKind::OutsideBlueprint
+                    };
+                    pieceFilledSlots.PushBack(slot);
+                }
+            }
+        }
+    }
+    
+    return pieceFilledSlots;
+}
+
 void Field::LandFallingPiece(const FallingPiece& fallingPiece, bool startBounceAnimation) {
     SetChanged();
     ResetFlashingBlockAnimations();

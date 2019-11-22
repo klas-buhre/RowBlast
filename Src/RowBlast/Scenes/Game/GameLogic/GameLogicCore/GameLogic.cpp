@@ -568,12 +568,7 @@ void GameLogic::UpdateLevelProgress() {
             break;
         }
         case Level::Objective::Build: {
-            auto previousNumSlotsLeftToClear = mNumObjectsLeftToClear;
             mNumObjectsLeftToClear = mField.CalculateNumEmptyBlueprintSlots();
-            auto numSlotsFilledByPiece = previousNumSlotsLeftToClear - mNumObjectsLeftToClear;
-            if (numSlotsFilledByPiece > 0) {
-                mScoreManager.OnFilledSlots(numSlotsFilledByPiece, {0.0f, 0.0f});
-            }
             break;
         }
     }
@@ -706,7 +701,6 @@ void GameLogic::OnFallingPieceAnimationFinished(bool finalMovementWasADrop) {
 void GameLogic::LandFallingPiece(bool finalMovementWasADrop) {
     mField.SaveState();
     
-    auto clearedAnyFilledRows = false;
     auto& pieceType = mFallingPiece->GetPieceType();
     if (IsBomb(pieceType)) {
         if (finalMovementWasADrop) {
@@ -730,25 +724,29 @@ void GameLogic::LandFallingPiece(bool finalMovementWasADrop) {
         mFlashingBlocksAnimation.Start(pieceType.GetColor());
         DetonateImpactedLevelBombs(impactedLevelBombs);
         
-        if (LevelAllowsClearingFilledRows()) {
-            auto removedSubCells = mField.ClearFilledRows();
-            if (!removedSubCells.IsEmpty()) {
-                clearedAnyFilledRows = true;
-                mScoreManager.OnClearedFilledRows(removedSubCells, mFallingPiece->GetId());
-                mFlyingBlocksAnimation.AddBlockRows(removedSubCells);
-                
-                mCollapsingFieldAnimation.GoToInactiveState();
-                mCollapsingFieldAnimation.ResetBlockAnimations();
-                
-                if (impactedLevelBombs.IsEmpty()) {
-                    RemoveClearedRowsAndPullDownLoosePieces();
+        switch (mLevel->GetObjective()) {
+            case Level::Objective::Clear:
+            case Level::Objective::BringDownTheAsteroid: {
+                auto removedSubCells = mField.ClearFilledRows();
+                if (removedSubCells.IsEmpty()) {
+                    mScoreManager.OnClearedNoFilledRows();
+                } else {
+                    mScoreManager.OnClearedFilledRows(removedSubCells, mFallingPiece->GetId());
+                    mFlyingBlocksAnimation.AddBlockRows(removedSubCells);
+                    mCollapsingFieldAnimation.GoToInactiveState();
+                    mCollapsingFieldAnimation.ResetBlockAnimations();
+                    if (impactedLevelBombs.IsEmpty()) {
+                        RemoveClearedRowsAndPullDownLoosePieces();
+                    }
                 }
+                break;
+            }
+            case Level::Objective::Build: {
+                auto slotsCoveredByPiece = mField.CalculatePieceFilledSlots(*mFallingPiece);
+                mScoreManager.OnFilledSlots(slotsCoveredByPiece);
+                break;
             }
         }
-    }
-    
-    if (!clearedAnyFilledRows) {
-        mScoreManager.OnClearedNoFilledRows();
     }
     
     if (mLevel->GetObjective() == Level::Objective::BringDownTheAsteroid) {
@@ -883,16 +881,6 @@ void GameLogic::PullDownLoosePiecesAsteroidObjective() {
     mField.RestoreFromTempGrid();
     mField.SetLowestVisibleRow(lowestVisibleRow);
     mFieldGravity.PullDownLoosePieces();
-}
-
-bool GameLogic::LevelAllowsClearingFilledRows() const {
-    switch (mLevel->GetObjective()) {
-        case Level::Objective::Clear:
-        case Level::Objective::BringDownTheAsteroid:
-            return true;
-        case Level::Objective::Build:
-            return false;
-    }
 }
 
 void GameLogic::PlayLandPieceSound() {

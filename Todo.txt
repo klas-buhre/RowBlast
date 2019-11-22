@@ -73,7 +73,7 @@ Ongoing tasks:
                 -Grid in the whole selectables container?
                 -Keep the old selectables container for the space world.
                 -Trim the tilt and piece positions.
-        -3. Make ot more clear that the player is at the end of the level,          ~1 day
+        -3. Make it more clear that the player is at the end of the level,          ~1 day
             brighter bottom glow or something else.
         -3. Add the possibility to scroll down anytime to see whats coming?         ~1 day
         -3. Reduce the gain in most sounds (clear blocks, button clicks, start      ~1 day
@@ -83,10 +83,9 @@ Ongoing tasks:
         -3. Star meter logic.                                                       ~3 days
               TODO:
                 -Add a points text animation.
-                    -Tune the points animation.
+                    -Tune the points text. Size, Ypos, color, scale-in, slide, fade-out.
                     -In cascades, the points text appears where the piece blocks
                      lands and fills the row.
-                    -Points animation should trigger when filling slots as well.
                     -The points text appear immediately but the small text
                      animation can be a bit deferred.
                     -When calculating the extra points then the num moves left could count
