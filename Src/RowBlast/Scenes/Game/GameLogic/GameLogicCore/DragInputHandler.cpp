@@ -117,7 +117,10 @@ DragInputHandler::HandleOngoingTouchInTouchingPreviewPieceButtonState(const Pht:
         
         if (!mGameLogic.BeginDraggingPiece(mDraggedPieceIndex)) {
             EndDrag();
+            return;
         }
+        
+        mGameLogic.OnDraggedPieceMoved();
     }
 }
 
