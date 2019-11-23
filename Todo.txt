@@ -76,7 +76,6 @@ Ongoing tasks:
         -3. Make it more clear that the player is at the end of the level,          ~1 day
             brighter bottom glow or something else. And the asteroid should
             explode into points when at the bottom.
-        -3. Add the possibility to scroll down anytime to see whats coming?         ~1 day
         -3. Reduce the gain in most sounds (clear blocks, button clicks, start      ~1 day
             game, clear level, etc..). Maybe clean up blocks sound in audacity.
             The music track should be switched for the next attempt to clear a
@@ -84,11 +83,13 @@ Ongoing tasks:
         -3. Star meter logic.                                                       ~3 days
               TODO:
                 -Add a points text animation.
-                    -Tune the points text. Size, Ypos, color, scale-in, slide, fade-out.
+                    -Tune the points text. Size, Ypos, color, scale-in, slide, fade-out or scale-out?.
                     -The points text appear immediately but the small text
                      animation can be a bit deferred.
                     -When calculating the extra points then the num moves left could count
-                     down and the star meter go up at the same time.
+                     down and a points text animatioin could appear below the upper hud
+                     when the moves reached zero and then the points move into the star
+                     meter which would then go up at the same time.
             
             
         -3. The area covered by the piece path could be a bit brighter or darker.   ~3 days

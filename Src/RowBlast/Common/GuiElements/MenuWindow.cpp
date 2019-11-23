@@ -18,6 +18,7 @@ namespace {
     const Pht::Vec4 darkerGrayColor {0.96f, 0.95f, 0.92f, 1.0f};
     const Pht::Vec4 blueColor {0.45f, 0.75f, 1.0f, 1.0};
     const Pht::Vec4 lightBlueColor {0.5f, 0.8f, 1.0f, 1.0};
+    const Pht::Vec4 brightBlueBorderColor {0.425f, 0.725f, 0.975f, 1.0};
     const Pht::Vec4 stencilColor {1.0f, 1.0f, 1.0f, 1.0f};
     const Pht::Vec4 outerBorderGlowColor {0.325f, 0.65f, 0.99f, 0.32f};
     const Pht::Vec4 borderColor {0.325f, 0.65f, 0.995f, 1.0};
@@ -36,7 +37,7 @@ namespace {
                        const Pht::Vec2& frustumSize) {
         switch (style) {
             case MenuWindow::Style::Bright: {
-                auto sizeX = std::min(frustumSize.x - xBorder * 2.0f, 12.8f - xBorder * 2.0f);
+                auto sizeX = std::min(frustumSize.x - xBorder * 2.0f, 12.6f - xBorder * 2.0f);
                 switch (size) {
                     case MenuWindow::Size::Large:
                         return {sizeX, 22.4f};
@@ -99,7 +100,7 @@ MenuWindow::MenuWindow(Pht::IEngine& engine,
             FillStencilBuffer(*rasterizer,
                               outerCornerRadius - darkBorderThickness - outerGlowBorderThickness,
                               darkBorderThickness + outerGlowBorderThickness);
-            
+
             auto captionBarHeight =
                 size == Size::Large ? largeCaptionBarHeight : smallCaptionBarHeight;
             DrawBrightCaptionBar(*rasterizer, captionBarHeight);
@@ -233,7 +234,7 @@ void MenuWindow::DrawBrightBorder(Pht::SoftwareRasterizer& rasterizer) {
     FillStencilBuffer(rasterizer,
                       outerCornerRadius - darkBorderThickness,
                       darkBorderThickness);
-    DrawBorder(rasterizer, blueColor);
+    DrawBorder(rasterizer, brightBlueBorderColor);
 }
 
 void MenuWindow::DrawBorder(Pht::SoftwareRasterizer& rasterizer, const Pht::Vec4& color) {
