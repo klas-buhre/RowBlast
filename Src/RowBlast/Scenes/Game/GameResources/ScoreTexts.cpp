@@ -16,13 +16,13 @@ using namespace RowBlast;
 
 namespace {
     constexpr auto numScoreTexts = 3;
-    constexpr auto scaleInDuration = 0.27f;
+    constexpr auto scaleUpDuration = 0.27f;
     constexpr auto displayTextDuration = 0.6f;
-    constexpr auto fadeOutDuration = 0.3f;
+    constexpr auto scaleDownDuration = 0.3f;
     constexpr auto slideDistance = 2.0f;
-    constexpr auto slideVelocity = slideDistance / (displayTextDuration + fadeOutDuration);
+    constexpr auto slideVelocity = slideDistance / (displayTextDuration + scaleDownDuration);
     constexpr auto textShadowAlpha = 0.35f;
-    constexpr auto textScale = 0.56f;
+    constexpr auto textScale = 0.6f;
     
     Pht::StaticVector<Pht::Vec2, 20> scalePoints {
         {0.0f, 0.0f},
@@ -82,24 +82,21 @@ ScoreTexts::ScoreText::ScoreText(GameScene& scene, const CommonResources& common
     mScene {scene} {
         
     auto& font = commonResources.GetHussarFontSize52PotentiallyZoomedScreen();
-    
+
     Pht::TextProperties textProperties {
         font,
         textScale,
-        {1.0f, 0.906f, 0.906f, 1.0f},
+        {1.0f, 1.0f, 1.0f, 1.0f},
         Pht::TextShadow::Yes,
-        {0.04f, 0.04f},
-        {0.58f, 0.42f, 0.52f, 1.0f}
+        {0.1f, 0.1f},
+        {0.0f, 0.0f, 0.0f, textShadowAlpha}
     };
     textProperties.mAlignment = Pht::TextAlignment::CenterX;
     textProperties.mSnapToPixel = Pht::SnapToPixel::No;
     textProperties.mItalicSlant = 0.15f;
-    textProperties.mMidGradientColorSubtraction = Pht::Vec3 {0.0f, 0.3f, 0.2f};
+    textProperties.mTopGradientColorSubtraction = Pht::Vec3 {0.1f, 0.2f, 0.3f};
     textProperties.mSpecular = Pht::TextSpecular::Yes;
-    textProperties.mSpecularOffset = {0.03f, 0.03f};
-    textProperties.mSecondShadow = Pht::TextShadow::Yes;
-    textProperties.mSecondShadowColor = Pht::Vec4 {0.0f, 0.0f, 0.0f, textShadowAlpha};
-    textProperties.mSecondShadowOffset = Pht::Vec2 {0.075f, 0.075f};
+    textProperties.mSpecularOffset = {0.045f, 0.045f};
     
     mSceneObject = std::make_unique<Pht::SceneObject>();
     mTextSceneObject = std::make_unique<Pht::SceneObject>();
@@ -133,10 +130,9 @@ void ScoreTexts::ScoreText::Start(int numPoints, const Pht::Vec2& position) {
     auto& textProperties = textComponent->GetProperties();
     textProperties.mColor.w = 1.0f;
     textProperties.mSpecularColor.w = 1.0f;
-    textProperties.mShadowColor.w = 1.0f;
-    textProperties.mSecondShadowColor.w = textShadowAlpha;
+    textProperties.mShadowColor.w = textShadowAlpha;
     
-    mState = State::ScalingIn;
+    mState = State::ScalingUp;
     mElapsedTime = 0.0f;
     
     const auto cellSize = mScene.GetCellSize();
@@ -153,28 +149,28 @@ void ScoreTexts::ScoreText::Start(int numPoints, const Pht::Vec2& position) {
 
 void ScoreTexts::ScoreText::Update(float dt) {
     switch (mState) {
-        case State::ScalingIn:
-            UpdateInScalingInState(dt);
+        case State::ScalingUp:
+            UpdateInScalingUpState(dt);
             break;
         case State::SlidingUp:
             UpdateInSlidingUpState(dt);
             break;
-        case State::SlidingUpAndFadingOut:
-            UpdateInSlidingUpAndFadingOutState(dt);
+        case State::SlidingUpFadingOutAndScalingDown:
+            UpdateInSlidingUpFadingOutAndScalingDownState(dt);
             break;
         case State::Inactive:
             break;
     }
 }
 
-void ScoreTexts::ScoreText::UpdateInScalingInState(float dt) {
+void ScoreTexts::ScoreText::UpdateInScalingUpState(float dt) {
     mElapsedTime += dt;
-    if (mElapsedTime > scaleInDuration) {
+    if (mElapsedTime > scaleUpDuration) {
         mState = State::SlidingUp;
         mElapsedTime = 0.0f;
         Pht::SceneObjectUtils::ScaleRecursively(*mSceneObject, textScale);
     } else {
-        auto reversedNormalizedTime = 1.0f - (mElapsedTime / scaleInDuration);
+        auto reversedNormalizedTime = 1.0f - (mElapsedTime / scaleUpDuration);
         auto scale = (1.0f - Pht::Lerp(reversedNormalizedTime, scalePoints)) * textScale;
 
         Pht::SceneObjectUtils::ScaleRecursively(*mSceneObject, scale);
@@ -184,26 +180,28 @@ void ScoreTexts::ScoreText::UpdateInScalingInState(float dt) {
 void ScoreTexts::ScoreText::UpdateInSlidingUpState(float dt) {
     mElapsedTime += dt;
     if (mElapsedTime > displayTextDuration) {
-        mState = State::SlidingUpAndFadingOut;
+        mState = State::SlidingUpFadingOutAndScalingDown;
         mElapsedTime = 0.0f;
     }
     
     mSceneObject->GetTransform().Translate({0.0f, slideVelocity * dt, 0.0f});
 }
 
-void ScoreTexts::ScoreText::UpdateInSlidingUpAndFadingOutState(float dt) {
+void ScoreTexts::ScoreText::UpdateInSlidingUpFadingOutAndScalingDownState(float dt) {
     mElapsedTime += dt;
-    if (mElapsedTime > fadeOutDuration) {
+    if (mElapsedTime > scaleDownDuration) {
         mState = State::Inactive;
         mSceneObject->SetIsVisible(false);
         mSceneObject->SetIsStatic(true);
     } else {
-        auto alpha = (fadeOutDuration - mElapsedTime) / fadeOutDuration;
+        auto reversedNormalizedTime = (scaleDownDuration - mElapsedTime) / scaleDownDuration;
+        Pht::SceneObjectUtils::ScaleRecursively(*mSceneObject, reversedNormalizedTime * textScale);
+
+        auto alpha = reversedNormalizedTime;
         auto& textProperties = mTextSceneObject->GetComponent<Pht::TextComponent>()->GetProperties();
         textProperties.mColor.w = alpha;
         textProperties.mSpecularColor.w = alpha;
-        textProperties.mShadowColor.w = alpha;
-        textProperties.mSecondShadowColor.w = alpha * textShadowAlpha;
+        textProperties.mShadowColor.w = alpha * textShadowAlpha;
     }
     
     mSceneObject->GetTransform().Translate({0.0f, slideVelocity * dt, 0.0f});

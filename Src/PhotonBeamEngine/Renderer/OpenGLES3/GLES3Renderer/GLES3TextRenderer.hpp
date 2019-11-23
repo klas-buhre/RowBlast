@@ -52,6 +52,7 @@ namespace Pht {
         int mNumVertices {0};
         GLES3ShaderProgram mTextShader;
         GLES3ShaderProgram mTextDoubleGradientShader;
+        GLES3ShaderProgram mTextTopGradientShader;
         GLES3ShaderProgram mTextMidGradientShader;
     };
 }

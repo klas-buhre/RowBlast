@@ -39,14 +39,14 @@ namespace RowBlast {
             Pht::SceneObject& CreateText(const Pht::Font& font,
                                          const Pht::Vec2& position,
                                          const std::string& text);
-            void UpdateInScalingInState(float dt);
+            void UpdateInScalingUpState(float dt);
             void UpdateInSlidingUpState(float dt);
-            void UpdateInSlidingUpAndFadingOutState(float dt);
+            void UpdateInSlidingUpFadingOutAndScalingDownState(float dt);
             
             enum class State {
-                ScalingIn,
+                ScalingUp,
                 SlidingUp,
-                SlidingUpAndFadingOut,
+                SlidingUpFadingOutAndScalingDown,
                 Inactive
             };
             

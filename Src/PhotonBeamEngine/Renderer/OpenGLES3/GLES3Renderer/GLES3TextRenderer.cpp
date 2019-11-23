@@ -10,6 +10,8 @@
 #include "../GLES3Shaders/Text.frag"
 #include "../GLES3Shaders/TextDoubleGradient.vert"
 #include "../GLES3Shaders/TextDoubleGradient.frag"
+#include "../GLES3Shaders/TextTopGradient.vert"
+#include "../GLES3Shaders/TextTopGradient.frag"
 #include "../GLES3Shaders/TextMidGradient.vert"
 #include "../GLES3Shaders/TextMidGradient.frag"
 
@@ -33,6 +35,7 @@ GLES3TextRenderer::GLES3TextRenderer(GLES3RenderStateManager& renderState,
     mProjection {Mat4::OrthographicProjection(0.0f, screenSize.x, 0.0f, screenSize.y, -1.0f, 1.0f)},
     mTextShader {{}},
     mTextDoubleGradientShader {{}},
+    mTextTopGradientShader {{}},
     mTextMidGradientShader {{}} {
     
     glGenBuffers(1, &mVbo);
@@ -44,6 +47,7 @@ GLES3TextRenderer::GLES3TextRenderer(GLES3RenderStateManager& renderState,
     
     BuildShader(mTextShader, TextVertexShader, TextFragmentShader);
     BuildShader(mTextDoubleGradientShader, TextDoubleGradientVertexShader, TextDoubleGradientFragmentShader);
+    BuildShader(mTextTopGradientShader, TextTopGradientVertexShader, TextTopGradientFragmentShader);
     BuildShader(mTextMidGradientShader, TextMidGradientVertexShader, TextMidGradientFragmentShader);
 }
 
@@ -191,8 +195,14 @@ void GLES3TextRenderer::WriteVertex(const Vec2& position,
 }
 
 GLES3ShaderProgram& GLES3TextRenderer::GetShaderProgram(const TextProperties& textProperties) {
-    if (textProperties.mTopGradientColorSubtraction.HasValue()) {
+    if (textProperties.mTopGradientColorSubtraction.HasValue() &&
+        textProperties.mMidGradientColorSubtraction.HasValue()) {
+        
         return mTextDoubleGradientShader;
+    }
+
+    if (textProperties.mTopGradientColorSubtraction.HasValue()) {
+        return mTextTopGradientShader;
     }
 
     if (textProperties.mMidGradientColorSubtraction.HasValue()) {

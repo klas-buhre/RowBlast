@@ -51,6 +51,8 @@
 		17DD46F6234D03ED00786C63 /* rotate.png in Resources */ = {isa = PBXBuildFile; fileRef = 17DD46F5234D03EC00786C63 /* rotate.png */; };
 		17DE663422DB4703009B3E78 /* libGameAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 17DE663322DB4703009B3E78 /* libGameAnalytics.a */; };
 		17E53FC9235E169E005B91E0 /* cube_428.obj in Resources */ = {isa = PBXBuildFile; fileRef = 17E53FC8235E169E005B91E0 /* cube_428.obj */; };
+		17F21FF02389BF63009C37D3 /* TextTopGradient.frag in Resources */ = {isa = PBXBuildFile; fileRef = 17F21FEE2389BF62009C37D3 /* TextTopGradient.frag */; };
+		17F21FF12389BF63009C37D3 /* TextTopGradient.vert in Resources */ = {isa = PBXBuildFile; fileRef = 17F21FEF2389BF62009C37D3 /* TextTopGradient.vert */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
@@ -628,6 +630,8 @@
 		17DE663222DB4703009B3E78 /* GameAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameAnalytics.h; sourceTree = "<group>"; };
 		17DE663322DB4703009B3E78 /* libGameAnalytics.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGameAnalytics.a; sourceTree = "<group>"; };
 		17E53FC8235E169E005B91E0 /* cube_428.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cube_428.obj; sourceTree = "<group>"; };
+		17F21FEE2389BF62009C37D3 /* TextTopGradient.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = TextTopGradient.frag; sourceTree = "<group>"; };
+		17F21FEF2389BF62009C37D3 /* TextTopGradient.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = TextTopGradient.vert; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D6058910D05DD3D006BFB54 /* Game.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Game.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -2538,6 +2542,8 @@
 				623F5DFA22B55D5100242C10 /* TextDoubleGradient.vert */,
 				623F5DE422B55D5100242C10 /* TextMidGradient.frag */,
 				623F5DF822B55D5100242C10 /* TextMidGradient.vert */,
+				17F21FEE2389BF62009C37D3 /* TextTopGradient.frag */,
+				17F21FEF2389BF62009C37D3 /* TextTopGradient.vert */,
 				623F5DE322B55D5100242C10 /* Textured.frag */,
 				623F5DF722B55D5100242C10 /* Textured.vert */,
 				623F5DE522B55D5100242C10 /* TexturedEmissiveLighting.frag */,
@@ -3362,6 +3368,7 @@
 				622169FF21E60503001CB9A1 /* other_moves.wav in Resources */,
 				621F1460223978CF004165A2 /* filled_circle.png in Resources */,
 				6270DC631FCB22AE00FB457D /* star.obj in Resources */,
+				17F21FF12389BF63009C37D3 /* TextTopGradient.vert in Resources */,
 				622169EC21E13AEA001CB9A1 /* combo1.wav in Resources */,
 				62276E9F2274A96000679BC6 /* level12.json in Resources */,
 				62F0445D22550E8C00BD5A4C /* error.png in Resources */,
@@ -3391,6 +3398,7 @@
 				62276E852274A96000679BC6 /* level54.json in Resources */,
 				623F5E3022B55D5200242C10 /* Particle.vert in Resources */,
 				62204EE821BD7F5200A035C0 /* sky9.jpg in Resources */,
+				17F21FF02389BF63009C37D3 /* TextTopGradient.frag in Resources */,
 				62A8E339222EDFE300F1BF73 /* back.png in Resources */,
 				62346192216B6FE900ECD0DF /* planet_wadow.jpg in Resources */,
 				62B1CB7F210F8F8600D0F195 /* bomb_798.jpg in Resources */,
