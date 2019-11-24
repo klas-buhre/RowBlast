@@ -78,7 +78,7 @@ namespace {
             }
         }
         
-        auto yPosition = static_cast<float>(yMax) + 0.5f;
+        auto yPosition = static_cast<float>(yMax);
         if (landedPieceId.HasValue()) {
             return {static_cast<float>(pieceXMin + pieceXMax) / 2.0f, yPosition};
         }

@@ -16,11 +16,12 @@ using namespace RowBlast;
 
 namespace {
     constexpr auto numScoreTexts = 3;
+    constexpr auto waitDuration = 0.075f;
     constexpr auto scaleUpDuration = 0.27f;
-    constexpr auto displayTextDuration = 0.6f;
-    constexpr auto scaleDownDuration = 0.3f;
-    constexpr auto slideDistance = 2.0f;
-    constexpr auto slideVelocity = slideDistance / (displayTextDuration + scaleDownDuration);
+    constexpr auto displayTextDuration = 0.43f;
+    constexpr auto scaleDownDuration = 0.27f;
+    constexpr auto slideDistance = 0.55f;
+    constexpr auto slideVelocity = slideDistance / (scaleUpDuration + displayTextDuration + scaleDownDuration);
     constexpr auto textShadowAlpha = 0.35f;
     constexpr auto textScale = 0.58f;
     
@@ -118,21 +119,20 @@ void ScoreTexts::ScoreText::Init() {
 }
 
 void ScoreTexts::ScoreText::Start(int numPoints, const Pht::Vec2& position) {
-    mSceneObject->SetIsVisible(true);
     mSceneObject->SetIsStatic(false);
 
     auto* textComponent = mTextSceneObject->GetComponent<Pht::TextComponent>();
     assert(textComponent);
     auto& scoreText = textComponent->GetText();
     StringUtils::FillStringWithSpaces(scoreText);
-    StringUtils::WriteIntegerToString(numPoints, scoreText, numPoints < 1000 ? 1 : 0);
+    StringUtils::WriteIntegerToString(numPoints, scoreText, numPoints < 100 ? 1 : 0);
 
     auto& textProperties = textComponent->GetProperties();
     textProperties.mColor.w = 1.0f;
     textProperties.mSpecularColor.w = 1.0f;
     textProperties.mShadowColor.w = textShadowAlpha;
     
-    mState = State::ScalingUp;
+    mState = State::Waiting;
     mElapsedTime = 0.0f;
     
     const auto cellSize = mScene.GetCellSize();
@@ -149,6 +149,9 @@ void ScoreTexts::ScoreText::Start(int numPoints, const Pht::Vec2& position) {
 
 void ScoreTexts::ScoreText::Update(float dt) {
     switch (mState) {
+        case State::Waiting:
+            UpdateInWaitingState(dt);
+            break;
         case State::ScalingUp:
             UpdateInScalingUpState(dt);
             break;
@@ -160,6 +163,15 @@ void ScoreTexts::ScoreText::Update(float dt) {
             break;
         case State::Inactive:
             break;
+    }
+}
+
+void ScoreTexts::ScoreText::UpdateInWaitingState(float dt) {
+    mElapsedTime += dt;
+    if (mElapsedTime > waitDuration) {
+        mState = State::ScalingUp;
+        mElapsedTime = 0.0f;
+        mSceneObject->SetIsVisible(true);
     }
 }
 
@@ -175,6 +187,8 @@ void ScoreTexts::ScoreText::UpdateInScalingUpState(float dt) {
 
         Pht::SceneObjectUtils::ScaleRecursively(*mSceneObject, scale);
     }
+    
+    mSceneObject->GetTransform().Translate({0.0f, slideVelocity * dt, 0.0f});
 }
 
 void ScoreTexts::ScoreText::UpdateInSlidingUpState(float dt) {

@@ -21,7 +21,7 @@ using namespace RowBlast;
 
 namespace {
     const Pht::Vec3 startPosition {0.0f, 5.5f, 0.0f};
-    constexpr auto scaleInDuration = 0.27f;
+    constexpr auto scaleInDuration = 0.4f;
     constexpr auto displayTextDuration = 0.6f;
     constexpr auto slideOutDuration = 0.25f;
     constexpr auto slideDistance = 12.0f;

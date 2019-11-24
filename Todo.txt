@@ -83,7 +83,6 @@ Ongoing tasks:
         -3. Star meter logic.                                                       ~3 days
               TODO:
                 -Add a points text animation.
-                    -Tune the points text. Ypos, scale-in, slide, scale-out.
                     -The points text appear immediately but the small text
                      animation can be a bit deferred.
                     -When calculating the extra points then the num moves left could count
