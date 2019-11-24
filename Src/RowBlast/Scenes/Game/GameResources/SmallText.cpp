@@ -27,7 +27,7 @@ namespace {
     constexpr auto slideDistance = 12.0f;
     constexpr auto acceleration = 2.0f * slideDistance / (slideOutDuration * slideOutDuration);
     constexpr auto textShadowAlpha = 0.5f;
-    constexpr auto textScale = 0.83f;
+    constexpr auto textScale = 0.91f;
     const std::string comboString {"COMBO "};
     const std::string comboDigits {"     "}; // Warning! Must be five spaces to fit digits.
     

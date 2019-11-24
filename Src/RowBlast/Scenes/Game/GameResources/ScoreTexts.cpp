@@ -22,7 +22,7 @@ namespace {
     constexpr auto slideDistance = 2.0f;
     constexpr auto slideVelocity = slideDistance / (displayTextDuration + scaleDownDuration);
     constexpr auto textShadowAlpha = 0.35f;
-    constexpr auto textScale = 0.6f;
+    constexpr auto textScale = 0.58f;
     
     Pht::StaticVector<Pht::Vec2, 20> scalePoints {
         {0.0f, 0.0f},
@@ -88,13 +88,13 @@ ScoreTexts::ScoreText::ScoreText(GameScene& scene, const CommonResources& common
         textScale,
         {1.0f, 1.0f, 1.0f, 1.0f},
         Pht::TextShadow::Yes,
-        {0.1f, 0.1f},
+        {0.105f, 0.105f},
         {0.0f, 0.0f, 0.0f, textShadowAlpha}
     };
     textProperties.mAlignment = Pht::TextAlignment::CenterX;
     textProperties.mSnapToPixel = Pht::SnapToPixel::No;
     textProperties.mItalicSlant = 0.15f;
-    textProperties.mTopGradientColorSubtraction = Pht::Vec3 {0.1f, 0.2f, 0.3f};
+    textProperties.mTopGradientColorSubtraction = Pht::Vec3 {0.13f, 0.26f, 0.39f};
     textProperties.mSpecular = Pht::TextSpecular::Yes;
     textProperties.mSpecularOffset = {0.045f, 0.045f};
     
