@@ -1,5 +1,5 @@
-#ifndef IRenderSystem_hpp
-#define IRenderSystem_hpp
+#ifndef IRendererInternal_hpp
+#define IRendererInternal_hpp
 
 #include <memory>
 
@@ -9,9 +9,9 @@
 namespace Pht {
     class Scene;
 
-    class IRenderSystem: public IRenderer {
+    class IRendererInternal: public IRenderer {
     public:
-        virtual ~IRenderSystem() {}
+        virtual ~IRendererInternal() {}
         
         virtual void Init(bool createFrameBuffer) = 0;
         virtual void InitCamera(float narrowFrustumHeightFactor) = 0;
@@ -23,7 +23,7 @@ namespace Pht {
         virtual void RenderScene(const Scene& scene, float frameSeconds) = 0;
     };
     
-    std::unique_ptr<IRenderSystem> CreateRenderSystem(bool createFrameBuffer);
+    std::unique_ptr<IRendererInternal> CreateRenderer(bool createFrameBuffer);
 }
 
 #endif

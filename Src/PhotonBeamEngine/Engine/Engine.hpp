@@ -4,7 +4,7 @@
 #include <memory>
 
 #include "IEngine.hpp"
-#include "IRenderSystem.hpp"
+#include "IRendererInternal.hpp"
 #include "InputHandler.hpp"
 #include "Audio.hpp"
 #include "SceneManager.hpp"
@@ -40,7 +40,7 @@ namespace Pht {
         }
         
     private:
-        std::unique_ptr<IRenderSystem> mRenderer;
+        std::unique_ptr<IRendererInternal> mRenderer;
         InputHandler mInputHandler;
         Audio mAudio;
         SceneManager mSceneManager;

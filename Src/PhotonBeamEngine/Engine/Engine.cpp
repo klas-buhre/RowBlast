@@ -14,7 +14,7 @@ namespace {
 }
 
 Engine::Engine(bool createFrameBuffer, const Vec2& screenInputSize) :
-    mRenderer {CreateRenderSystem(createFrameBuffer)},
+    mRenderer {CreateRenderer(createFrameBuffer)},
     mInputHandler {screenInputSize},
     mSceneManager {*mRenderer, mInputHandler},
     mAnalytics {CreateAnalyticsApi()} {

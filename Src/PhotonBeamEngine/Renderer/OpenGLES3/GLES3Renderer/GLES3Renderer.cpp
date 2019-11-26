@@ -19,7 +19,7 @@
 #include "LightComponent.hpp"
 #include "TextComponent.hpp"
 #include "IEngine.hpp"
-#include "IRenderSystem.hpp"
+#include "IRendererInternal.hpp"
 #include "Camera.hpp"
 #include "Material.hpp"
 #include "RenderQueue.hpp"
@@ -62,7 +62,7 @@
 using namespace Pht;
 
 namespace {
-    class GLES3Renderer: public IRenderSystem {
+    class GLES3Renderer: public IRendererInternal {
     public:
         GLES3Renderer(bool createFrameBuffer);
         
@@ -284,7 +284,7 @@ namespace {
     }
 }
 
-std::unique_ptr<IRenderSystem> Pht::CreateRenderSystem(bool createFrameBuffer) {
+std::unique_ptr<IRendererInternal> Pht::CreateRenderer(bool createFrameBuffer) {
     return std::make_unique<GLES3Renderer>(createFrameBuffer);
 }
 

@@ -2,7 +2,7 @@
 
 #include "Scene.hpp"
 #include "SceneObject.hpp"
-#include "IRenderSystem.hpp"
+#include "IRendererInternal.hpp"
 #include "RenderableObject.hpp"
 #include "Fnv1Hash.hpp"
 #include "InputHandler.hpp"
@@ -10,7 +10,7 @@
 
 using namespace Pht;
 
-SceneManager::SceneManager(IRenderSystem& renderer, InputHandler& inputHandler) :
+SceneManager::SceneManager(IRendererInternal& renderer, InputHandler& inputHandler) :
     mRenderer {renderer},
     mInputHandler {inputHandler} {}
 

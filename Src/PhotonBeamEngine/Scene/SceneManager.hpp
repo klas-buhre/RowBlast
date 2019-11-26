@@ -4,12 +4,12 @@
 #include "ISceneManager.hpp"
 
 namespace Pht {
-    class IRenderSystem;
+    class IRendererInternal;
     class InputHandler;
     
     class SceneManager: public ISceneManager {
     public:
-        SceneManager(IRenderSystem& renderer, InputHandler& inputHandler);
+        SceneManager(IRendererInternal& renderer, InputHandler& inputHandler);
         ~SceneManager();
         
         std::unique_ptr<Scene> CreateScene(Scene::Name name) override;
@@ -28,7 +28,7 @@ namespace Pht {
                                                        SceneResources& sceneResources) override;
 
     private:
-        IRenderSystem& mRenderer;
+        IRendererInternal& mRenderer;
         InputHandler& mInputHandler;
         std::unique_ptr<Scene> mScene;
     };
