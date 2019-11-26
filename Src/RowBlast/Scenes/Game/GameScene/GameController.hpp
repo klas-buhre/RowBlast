@@ -11,7 +11,7 @@
 #include "GameScene.hpp"
 #include "ScrollController.hpp"
 #include "FlyingBlocksAnimation.hpp"
-#include "CollapsingFieldAnimation.hpp"
+#include "CollapsingFieldAnimationSystem.hpp"
 #include "FlashingBlocksAnimation.hpp"
 #include "WeldsAnimation.hpp"
 #include "BlueprintSlotsFilledAnimation.hpp"
@@ -175,7 +175,7 @@ namespace RowBlast {
         GameHudResources mGameHudResources;
         GameViewControllers mGameViewControllers;
         Field mField;
-        CollapsingFieldAnimation mCollapsingFieldAnimation;
+        CollapsingFieldAnimationSystem mCollapsingFieldAnimation;
         FlashingBlocksAnimation mFlashingBlocksAnimation;
         WeldsAnimation mWeldsAnimation;
         ScrollController mScrollController;

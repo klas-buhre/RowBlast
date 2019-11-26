@@ -74,8 +74,8 @@ Ongoing tasks:
                 -Keep the old selectables container for the space world.
                 -Trim the tilt and piece positions.
         -3. Make it more clear that the player is at the end of the level,          ~1 day
-            brighter bottom glow or something else. And the asteroid should
-            explode into points when at the bottom.
+            brighter bottom glow or something else. And ther should be a score
+            text above the asteroid when at the bottom.
         -3. Reduce the gain in most sounds (clear blocks, button clicks, start      ~1 day
             game, clear level, etc..). Maybe clean up blocks sound in audacity.
             The music track should be switched for the next attempt to clear a
@@ -83,12 +83,14 @@ Ongoing tasks:
         -3. Star meter logic.                                                       ~3 days
               TODO:
                 -Add a points text animation.
-                    -The points text appear immediately but the small text
-                     animation can be a bit deferred.
+                    -The combo text animation can be a bit deferred.
+                    -Lasers and bombs should give points after how many blocks they clear.
+                     But lasers and bombs should not count as combos.
                     -When calculating the extra points then the num moves left could count
                      down and a points text animatioin could appear below the upper hud
                      when the moves reached zero and then the points move into the star
                      meter which would then go up at the same time.
+                    -Maybe a short delay before clearing filled rows after piece lands?
             
             
         -3. The area covered by the piece path could be a bit brighter or darker.   ~3 days

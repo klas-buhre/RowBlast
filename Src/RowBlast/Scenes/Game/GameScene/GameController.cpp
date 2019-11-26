@@ -17,12 +17,12 @@
 using namespace RowBlast;
 
 namespace {
-    bool ShouldUpdateGameLogic(CollapsingFieldAnimation::State fieldAnimationState,
+    bool ShouldUpdateGameLogic(CollapsingFieldAnimationSystem::State fieldAnimationState,
                                FallingPieceAnimation::State fallingPieceAnimationState,
                                EffectManager::State effectsState,
                                ScrollController::State scrollState) {
-        return (fieldAnimationState == CollapsingFieldAnimation::State::Inactive ||
-                fieldAnimationState == CollapsingFieldAnimation::State::BlocksBouncing) &&
+        return (fieldAnimationState == CollapsingFieldAnimationSystem::State::Inactive ||
+                fieldAnimationState == CollapsingFieldAnimationSystem::State::BlocksBouncing) &&
                fallingPieceAnimationState == FallingPieceAnimation::State::Inactive &&
                effectsState != EffectManager::State::OngoingEffects &&
                scrollState != ScrollController::State::Scrolling &&

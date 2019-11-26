@@ -1,10 +1,10 @@
-#ifndef CollapsingFieldAnimation_hpp
-#define CollapsingFieldAnimation_hpp
+#ifndef CollapsingFieldAnimationSystem_hpp
+#define CollapsingFieldAnimationSystem_hpp
 
 namespace RowBlast {
     class Field;
     
-    class CollapsingFieldAnimation {
+    class CollapsingFieldAnimationSystem {
     public:
         enum class State {
             Waiting,
@@ -13,7 +13,7 @@ namespace RowBlast {
             Inactive
         };
         
-        explicit CollapsingFieldAnimation(Field& field);
+        explicit CollapsingFieldAnimationSystem(Field& field);
     
         State Update(float dt);
         void ResetBlockAnimations();

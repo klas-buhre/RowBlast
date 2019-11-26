@@ -622,8 +622,8 @@ void Field::LandPieceBlocks(const PieceBlocks& pieceBlocks,
             
             if (startBounceAnimation) {
                 auto& fallingBlockAnimation = fieldSubCell.mFallingBlockAnimation;
-                fallingBlockAnimation.mState = FallingBlockAnimation::State::Bouncing;
-                fallingBlockAnimation.mVelocity = FallingBlockAnimation::fallingPieceBounceVelocity;
+                fallingBlockAnimation.mState = FallingBlockAnimationComponent::State::Bouncing;
+                fallingBlockAnimation.mVelocity = FallingBlockAnimationComponent::fallingPieceBounceVelocity;
             }
         }
     }

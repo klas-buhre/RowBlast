@@ -131,7 +131,7 @@ namespace RowBlast {
         BlockBrightness mBrightness {BlockBrightness::Normal};
     };
     
-    struct FallingBlockAnimation {
+    struct FallingBlockAnimationComponent {
         enum class State {
             Falling,
             Bouncing,
@@ -170,7 +170,7 @@ namespace RowBlast {
         BlockKind mBlockKind {BlockKind::None};
         BlockColor mColor {BlockColor::None};
         Rotation mRotation {Rotation::Deg0};
-        FallingBlockAnimation mFallingBlockAnimation;
+        FallingBlockAnimationComponent mFallingBlockAnimation;
         FlashingBlockAnimation mFlashingBlockAnimation;
         bool mIsGrayLevelBlock {false};
         bool mIsPartOfIndivisiblePiece {false};

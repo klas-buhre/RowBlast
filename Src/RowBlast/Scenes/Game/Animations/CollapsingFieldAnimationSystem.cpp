@@ -1,4 +1,4 @@
-#include "CollapsingFieldAnimation.hpp"
+#include "CollapsingFieldAnimationSystem.hpp"
 
 // Game includes.
 #include "Field.hpp"
@@ -32,7 +32,7 @@ namespace {
             blockPosition.y <= springBoundry) {
             
             blockPosition.y = row;
-            animation = FallingBlockAnimation {};
+            animation = FallingBlockAnimationComponent {};
         }
     }
 
@@ -50,7 +50,7 @@ namespace {
         
             if (blockPosition.y < row) {
                 blockPosition.y = row;
-                animation = FallingBlockAnimation {};
+                animation = FallingBlockAnimationComponent {};
             }
         }
     }
@@ -72,7 +72,7 @@ namespace {
             frameTimeLeft -= bouncingStateFixedTimeStep;
             
             if (frameTimeLeft <= 0.0f ||
-                subCell.mFallingBlockAnimation.mState == FallingBlockAnimation::State::Inactive) {
+                subCell.mFallingBlockAnimation.mState == FallingBlockAnimationComponent::State::Inactive) {
                 break;
             }
         }
@@ -87,7 +87,7 @@ namespace {
         
         if (newYPosition < row) {
             if (animation.mShouldBounce) {
-                animation.mState = FallingBlockAnimation::State::Bouncing;
+                animation.mState = FallingBlockAnimationComponent::State::Bouncing;
                 
                 auto springBoundry = static_cast<float>(row);
                 auto frameTimeNotTouchingSpring = dt * (blockPosition.y - springBoundry) / -dy;
@@ -98,7 +98,7 @@ namespace {
                 UpdateBlockInBouncingState(subCell, row, frameTimeTouchingSpring);
             } else {
                 blockPosition.y = row;
-                animation = FallingBlockAnimation {};
+                animation = FallingBlockAnimationComponent {};
             }
         } else {
             animation.mVelocity = newVelocity;
@@ -123,26 +123,26 @@ namespace {
             frameTimeLeft -= fallingStateFixedTimeStep;
             
             if (frameTimeLeft <= 0.0f ||
-                subCell.mFallingBlockAnimation.mState == FallingBlockAnimation::State::Inactive) {
+                subCell.mFallingBlockAnimation.mState == FallingBlockAnimationComponent::State::Inactive) {
                 break;
-            } else if (subCell.mFallingBlockAnimation.mState == FallingBlockAnimation::State::Bouncing) {
+            } else if (subCell.mFallingBlockAnimation.mState == FallingBlockAnimationComponent::State::Bouncing) {
                 UpdateBlockInBouncingState(subCell, row, frameTimeLeft);
                 break;
             }
         }
     }
 
-    FallingBlockAnimation::State UpdateBlock(SubCell& subCell, int row, float dt) {
+    FallingBlockAnimationComponent::State UpdateBlock(SubCell& subCell, int row, float dt) {
         switch (subCell.mFallingBlockAnimation.mState) {
-            case FallingBlockAnimation::State::Falling:
+            case FallingBlockAnimationComponent::State::Falling:
                 UpdateBlockInFallingState(subCell, row, dt);
                 break;
-            case FallingBlockAnimation::State::Bouncing:
+            case FallingBlockAnimationComponent::State::Bouncing:
                 UpdateBlockInBouncingState(subCell, row, dt);
                 break;
-            case FallingBlockAnimation::State::Inactive:
+            case FallingBlockAnimationComponent::State::Inactive:
                 if (subCell.mPosition.y > row) {
-                    subCell.mFallingBlockAnimation.mState = FallingBlockAnimation::State::Falling;
+                    subCell.mFallingBlockAnimation.mState = FallingBlockAnimationComponent::State::Falling;
                 }
                 break;
         }
@@ -153,20 +153,20 @@ namespace {
     void TransitionWronglyBouncingBlockToFalling(SubCell& subCell, int row) {
         auto& animation = subCell.mFallingBlockAnimation;
         
-        if (animation.mState == FallingBlockAnimation::State::Bouncing &&
-            animation.mVelocity == FallingBlockAnimation::fallingPieceBounceVelocity &&
+        if (animation.mState == FallingBlockAnimationComponent::State::Bouncing &&
+            animation.mVelocity == FallingBlockAnimationComponent::fallingPieceBounceVelocity &&
             subCell.mPosition.y - static_cast<float>(row) >= 1.0f) {
             
-            animation.mState = FallingBlockAnimation::State::Falling;
+            animation.mState = FallingBlockAnimationComponent::State::Falling;
             animation.mVelocity = 0.0f;
         }
     }
 }
 
-CollapsingFieldAnimation::CollapsingFieldAnimation(Field& field) :
+CollapsingFieldAnimationSystem::CollapsingFieldAnimationSystem(Field& field) :
     mField {field} {}
 
-CollapsingFieldAnimation::State CollapsingFieldAnimation::Update(float dt) {
+CollapsingFieldAnimationSystem::State CollapsingFieldAnimationSystem::Update(float dt) {
     switch (mState) {
         case State::Waiting:
             UpdateInWaitingState(dt);
@@ -183,14 +183,14 @@ CollapsingFieldAnimation::State CollapsingFieldAnimation::Update(float dt) {
     return mState;
 }
 
-void CollapsingFieldAnimation::UpdateInWaitingState(float dt) {
+void CollapsingFieldAnimationSystem::UpdateInWaitingState(float dt) {
     mWaitedTime += dt;
     if (mWaitedTime > waitTime) {
         mState = State::Active;
     }
 }
 
-void CollapsingFieldAnimation::UpdateInActiveState(float dt) {
+void CollapsingFieldAnimationSystem::UpdateInActiveState(float dt) {
     auto anyFallingBlocks = false;
     auto anyBouncingBlocks = false;
     
@@ -202,24 +202,24 @@ void CollapsingFieldAnimation::UpdateInActiveState(float dt) {
             }
             
             switch (UpdateBlock(cell.mFirstSubCell, row, dt)) {
-                case FallingBlockAnimation::State::Falling:
+                case FallingBlockAnimationComponent::State::Falling:
                     anyFallingBlocks = true;
                     break;
-                case FallingBlockAnimation::State::Bouncing:
+                case FallingBlockAnimationComponent::State::Bouncing:
                     anyBouncingBlocks = true;
                     break;
-                case FallingBlockAnimation::State::Inactive:
+                case FallingBlockAnimationComponent::State::Inactive:
                     break;
             }
 
             switch (UpdateBlock(cell.mSecondSubCell, row, dt)) {
-                case FallingBlockAnimation::State::Falling:
+                case FallingBlockAnimationComponent::State::Falling:
                     anyFallingBlocks = true;
                     break;
-                case FallingBlockAnimation::State::Bouncing:
+                case FallingBlockAnimationComponent::State::Bouncing:
                     anyBouncingBlocks = true;
                     break;
-                case FallingBlockAnimation::State::Inactive:
+                case FallingBlockAnimationComponent::State::Inactive:
                     break;
             }
         }
@@ -236,7 +236,7 @@ void CollapsingFieldAnimation::UpdateInActiveState(float dt) {
     }
 }
 
-void CollapsingFieldAnimation::UpdateInInactiveState() {
+void CollapsingFieldAnimationSystem::UpdateInInactiveState() {
     for (auto row = 0; row < mField.GetNumRows(); ++row) {
         for (auto column = 0; column < mField.GetNumColumns(); ++column) {
             auto& cell = mField.GetCell(row, column);
@@ -252,22 +252,22 @@ void CollapsingFieldAnimation::UpdateInInactiveState() {
     }
 }
 
-void CollapsingFieldAnimation::GoToWaitingState() {
+void CollapsingFieldAnimationSystem::GoToWaitingState() {
     mWaitedTime = 0.0f;
     mState = State::Waiting;
 }
 
-void CollapsingFieldAnimation::ResetBlockAnimations() {
+void CollapsingFieldAnimationSystem::ResetBlockAnimations() {
     for (auto row = 0; row < mField.GetNumRows(); ++row) {
         for (auto column = 0; column < mField.GetNumColumns(); ++column) {
             auto& cell = mField.GetCell(row, column);
-            cell.mFirstSubCell.mFallingBlockAnimation = FallingBlockAnimation {};
-            cell.mSecondSubCell.mFallingBlockAnimation = FallingBlockAnimation {};
+            cell.mFirstSubCell.mFallingBlockAnimation = FallingBlockAnimationComponent {};
+            cell.mSecondSubCell.mFallingBlockAnimation = FallingBlockAnimationComponent {};
         }
     }
 }
 
-void CollapsingFieldAnimation::TransitionWronglyBouncingBlocksToFalling() {
+void CollapsingFieldAnimationSystem::TransitionWronglyBouncingBlocksToFalling() {
     for (auto row = 0; row < mField.GetNumRows(); ++row) {
         for (auto column = 0; column < mField.GetNumColumns(); ++column) {
             auto& cell = mField.GetCell(row, column);

@@ -10,17 +10,17 @@ namespace {
     
     bool IsSubCellOrNeighbourBouncing(const SubCell& subCell, const Cell& neighbour) {
         auto subCellIsBouncing =
-            subCell.mFallingBlockAnimation.mState == FallingBlockAnimation::State::Bouncing;
+            subCell.mFallingBlockAnimation.mState == FallingBlockAnimationComponent::State::Bouncing;
 
         auto neighbourIsBouncing =
-            neighbour.mFirstSubCell.mFallingBlockAnimation.mState == FallingBlockAnimation::State::Bouncing ||
-            neighbour.mSecondSubCell.mFallingBlockAnimation.mState == FallingBlockAnimation::State::Bouncing;
+            neighbour.mFirstSubCell.mFallingBlockAnimation.mState == FallingBlockAnimationComponent::State::Bouncing ||
+            neighbour.mSecondSubCell.mFallingBlockAnimation.mState == FallingBlockAnimationComponent::State::Bouncing;
 
         return subCellIsBouncing || neighbourIsBouncing;
     }
     
     bool IsSubCellBouncing(const SubCell& subCell) {
-        return subCell.mFallingBlockAnimation.mState == FallingBlockAnimation::State::Bouncing;
+        return subCell.mFallingBlockAnimation.mState == FallingBlockAnimationComponent::State::Bouncing;
     }
 }
 
