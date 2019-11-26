@@ -17,15 +17,20 @@ namespace RowBlast {
     class Level;
 
     struct RemovedSubCell {
+        struct Flags {
+            bool mIsGrayLevelBlock : 1;
+            bool mIsAsteroidFragment : 1;
+            bool mIsPulledDown : 1;
+        };
+
         Pht::Vec2 mExactPosition;
         Pht::IVec2 mGridPosition;
         Rotation mRotation;
         BlockKind mBlockKind {BlockKind::None};
         BlockColor mColor;
-        bool mIsGrayLevelBlock {false};
-        bool mIsAsteroidFragment {false};
-        bool mIsPulledDown {false};
+        FlashingBlockAnimationComponent::State mFlashingBlockAnimationState {FlashingBlockAnimationComponent::State::Inactive};
         int mPieceId {0};
+        Flags mFlags;
     };
     
     enum class PieceFilledSlotKind {

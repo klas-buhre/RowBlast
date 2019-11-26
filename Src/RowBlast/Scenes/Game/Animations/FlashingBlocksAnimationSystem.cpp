@@ -1,4 +1,4 @@
-#include "FlashingBlocksAnimation.hpp"
+#include "FlashingBlocksAnimationSystem.hpp"
 
 // Game includes.
 #include "Field.hpp"
@@ -9,26 +9,27 @@ namespace {
     constexpr auto flashDuration = 0.32f;
 }
 
-const Pht::Color FlashingBlocksAnimation::colorAdd {0.32f, 0.32f, 0.32f};
-const Pht::Color FlashingBlocksAnimation::semiFlashingColorAdd {0.16f, 0.16f, 0.16f};
-const Pht::Color FlashingBlocksAnimation::brightColorAdd {0.53f, 0.53f, 0.53f};
+const Pht::Color FlashingBlocksAnimationSystem::colorAdd {0.32f, 0.32f, 0.32f};
+const Pht::Color FlashingBlocksAnimationSystem::semiFlashingColorAdd {0.16f, 0.16f, 0.16f};
+const Pht::Color FlashingBlocksAnimationSystem::brightColorAdd {0.53f, 0.53f, 0.53f};
 
-FlashingBlocksAnimation::FlashingBlocksAnimation(Field& field, PieceResources& pieceResources) :
+FlashingBlocksAnimationSystem::FlashingBlocksAnimationSystem(Field& field,
+                                                             PieceResources& pieceResources) :
     mField {field},
     mPieceResources {pieceResources} {}
 
-void FlashingBlocksAnimation::Init() {
+void FlashingBlocksAnimationSystem::Init() {
     mState = State::Inactive;
     mElapsedTime = 0.0f;
 }
 
-void FlashingBlocksAnimation::Start(BlockColor color) {
+void FlashingBlocksAnimationSystem::Start(BlockColor color) {
     mColor = color;
     mState = State::Waiting;
     mElapsedTime = 0.0f;
 }
 
-void FlashingBlocksAnimation::Update(float dt) {
+void FlashingBlocksAnimationSystem::Update(float dt) {
     switch (mState) {
         case State::Inactive:
             return;
@@ -38,10 +39,13 @@ void FlashingBlocksAnimation::Update(float dt) {
         case State::Active:
             UpdateInActiveState(dt);
             break;
+        case State::OnlyFlyingBlocksFlashing:
+            UpdateFlash(dt);
+            break;
     }
 }
 
-void FlashingBlocksAnimation::UpdateInWaitingState() {
+void FlashingBlocksAnimationSystem::UpdateInWaitingState() {
     for (auto row = 0; row < mField.GetNumRows(); ++row) {
         for (auto column = 0; column < mField.GetNumColumns(); ++column) {
             auto& cell = mField.GetCell(row, column);
@@ -55,19 +59,20 @@ void FlashingBlocksAnimation::UpdateInWaitingState() {
     }
     
     if (mState == State::Waiting) {
-        mState = State::Inactive;
+        mState = State::OnlyFlyingBlocksFlashing;
     }
+    
+    UpdateRenderables();
 }
 
-void FlashingBlocksAnimation::ActivateWaitingBlock(SubCell& subCell, int row, int column) {
+void FlashingBlocksAnimationSystem::ActivateWaitingBlock(SubCell& subCell, int row, int column) {
     auto& flashingBlockAnimation = subCell.mFlashingBlockAnimation;
-    if (flashingBlockAnimation.mState == FlashingBlockAnimation::State::Waiting) {
+    if (flashingBlockAnimation.mState == FlashingBlockAnimationComponent::State::Waiting) {
         if (mState == State::Waiting) {
             mState = State::Active;
-            UpdateRenderables();
         }
 
-        flashingBlockAnimation.mState = FlashingBlockAnimation::State::Active;
+        flashingBlockAnimation.mState = FlashingBlockAnimationComponent::State::Active;
         
         if (IsBlockAccordingToBlueprint(subCell, row, column)) {
             flashingBlockAnimation.mBrightness = BlockBrightness::BlueprintFillFlashing;
@@ -77,7 +82,7 @@ void FlashingBlocksAnimation::ActivateWaitingBlock(SubCell& subCell, int row, in
     }
 }
 
-void FlashingBlocksAnimation::UpdateInActiveState(float dt) {
+void FlashingBlocksAnimationSystem::UpdateInActiveState(float dt) {
     for (auto row = 0; row < mField.GetNumRows(); ++row) {
         for (auto column = 0; column < mField.GetNumColumns(); ++column) {
             auto& cell = mField.GetCell(row, column);
@@ -90,8 +95,11 @@ void FlashingBlocksAnimation::UpdateInActiveState(float dt) {
         }
     }
     
+    UpdateFlash(dt);
     mField.SetChanged();
-    
+}
+
+void FlashingBlocksAnimationSystem::UpdateFlash(float dt) {
     mElapsedTime += dt;
     if (mElapsedTime > flashDuration) {
         mState = State::Inactive;
@@ -101,7 +109,9 @@ void FlashingBlocksAnimation::UpdateInActiveState(float dt) {
     UpdateRenderables();
 }
 
-bool FlashingBlocksAnimation::IsBlockAccordingToBlueprint(SubCell& subCell, int row, int column) {
+bool FlashingBlocksAnimationSystem::IsBlockAccordingToBlueprint(SubCell& subCell,
+                                                                int row,
+                                                                int column) {
     auto* blueprintGrid = mField.GetBlueprintGrid();
     if (blueprintGrid == nullptr) {
         return false;
@@ -121,7 +131,7 @@ bool FlashingBlocksAnimation::IsBlockAccordingToBlueprint(SubCell& subCell, int 
     }
 }
 
-void FlashingBlocksAnimation::UpdateRenderables() {
+void FlashingBlocksAnimationSystem::UpdateRenderables() {
     auto flashColorAdd = CalculateFlashColorAdd(colorAdd);
     auto brightFlashColorAdd = CalculateFlashColorAdd(brightColorAdd);
     auto semiFlashColorAdd = CalculateFlashColorAdd(semiFlashingColorAdd);
@@ -134,8 +144,8 @@ void FlashingBlocksAnimation::UpdateRenderables() {
     UpdateWeldRenderables(semiFlashColorAdd, BlockBrightness::SemiFlashing);
 }
 
-void FlashingBlocksAnimation::UpdateBlockRenderables(const Pht::Color& flashColorAdd,
-                                                     BlockBrightness flashingBlockBrightness) {
+void FlashingBlocksAnimationSystem::UpdateBlockRenderables(const Pht::Color& flashColorAdd,
+                                                           BlockBrightness flashingBlockBrightness) {
     UpdateBlockRenderable(flashColorAdd, flashingBlockBrightness, BlockKind::Full);
     UpdateBlockRenderable(flashColorAdd, flashingBlockBrightness, BlockKind::LowerRightHalf);
     UpdateBlockRenderable(flashColorAdd, flashingBlockBrightness, BlockKind::UpperRightHalf);
@@ -143,7 +153,7 @@ void FlashingBlocksAnimation::UpdateBlockRenderables(const Pht::Color& flashColo
     UpdateBlockRenderable(flashColorAdd, flashingBlockBrightness, BlockKind::LowerLeftHalf);
 }
 
-Pht::Color FlashingBlocksAnimation::CalculateFlashColorAdd(const Pht::Color& flashMaxColorAdd) {
+Pht::Color FlashingBlocksAnimationSystem::CalculateFlashColorAdd(const Pht::Color& flashMaxColorAdd) {
     if (mElapsedTime > flashDuration) {
         return Pht::Color {};
     }
@@ -157,9 +167,9 @@ Pht::Color FlashingBlocksAnimation::CalculateFlashColorAdd(const Pht::Color& fla
     };
 }
 
-void FlashingBlocksAnimation::UpdateBlockRenderable(const Pht::Color& flashColorAdd,
-                                                    BlockBrightness flashingBlockBrightness,
-                                                    BlockKind blockKind) {
+void FlashingBlocksAnimationSystem::UpdateBlockRenderable(const Pht::Color& flashColorAdd,
+                                                          BlockBrightness flashingBlockBrightness,
+                                                          BlockKind blockKind) {
     auto& normalRenderable =
         mPieceResources.GetBlockRenderableObject(blockKind, mColor, BlockBrightness::Normal);
     
@@ -174,16 +184,16 @@ void FlashingBlocksAnimation::UpdateBlockRenderable(const Pht::Color& flashColor
     flashingMaterial.SetSpecular(normalMaterial.GetSpecular() + flashColorAdd);
 }
 
-void FlashingBlocksAnimation::UpdateWeldRenderables(const Pht::Color& flashColorAdd,
-                                                    BlockBrightness flashingWeldBrightness) {
+void FlashingBlocksAnimationSystem::UpdateWeldRenderables(const Pht::Color& flashColorAdd,
+                                                          BlockBrightness flashingWeldBrightness) {
     UpdateWeldRenderable(flashColorAdd, flashingWeldBrightness, WeldRenderableKind::Normal);
     UpdateWeldRenderable(flashColorAdd, flashingWeldBrightness, WeldRenderableKind::Aslope);
     UpdateWeldRenderable(flashColorAdd, flashingWeldBrightness, WeldRenderableKind::Diagonal);
 }
 
-void FlashingBlocksAnimation::UpdateWeldRenderable(const Pht::Color& flashColorAdd,
-                                                   BlockBrightness flashingWeldBrightness,
-                                                   WeldRenderableKind weldKind) {
+void FlashingBlocksAnimationSystem::UpdateWeldRenderable(const Pht::Color& flashColorAdd,
+                                                         BlockBrightness flashingWeldBrightness,
+                                                         WeldRenderableKind weldKind) {
     auto& normalRenderable =
         mPieceResources.GetWeldRenderableObject(weldKind, mColor, BlockBrightness::Normal);
     

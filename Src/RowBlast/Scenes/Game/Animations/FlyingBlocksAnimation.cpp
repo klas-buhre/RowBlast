@@ -75,7 +75,7 @@ void FlyingBlocksAnimation::AddBlockRows(const Field::RemovedSubCells& subCells)
             .mSceneObject = &SetUpBlockSceneObject(removedSubCell)
         };
         
-        if (removedSubCell.mIsAsteroidFragment) {
+        if (removedSubCell.mFlags.mIsAsteroidFragment) {
             flyingBlock.mAppliedForce = FlyingBlock::AppliedForce::Explosion;
         }
 
@@ -246,8 +246,8 @@ void FlyingBlocksAnimation::UpdateBlocks(float dt) {
         auto position = transform.GetPosition();
         auto& cameraPosition = mScene.GetCamera().GetSceneObject().GetTransform().GetPosition();
         
-        if (position.z > cameraPosition.z - 4.0f) {
-            position.z = cameraPosition.z - 4.0f;
+        if (position.z > cameraPosition.z - 5.0f) {
+            position.z = cameraPosition.z - 5.0f;
             transform.SetPosition(position);
         }
 
@@ -315,18 +315,22 @@ Pht::Vec3 FlyingBlocksAnimation::CalculateBlockInitialPosition(const RemovedSubC
 }
 
 Pht::RenderableObject& FlyingBlocksAnimation::GetBlockRenderableObject(const RemovedSubCell& subCell) {
-    if (subCell.mIsGrayLevelBlock) {
+    if (subCell.mFlags.mIsGrayLevelBlock) {
         return mLevelResources.GetLevelBlockRenderable(subCell.mBlockKind);
-    } else if (subCell.mIsAsteroidFragment) {
+    } else if (subCell.mFlags.mIsAsteroidFragment) {
         return mLevelResources.GetAsteroidFragmentRenderable();
     } else if (subCell.mBlockKind == BlockKind::Bomb) {
         return mLevelResources.GetLevelBombRenderable();
     } else if (subCell.mBlockKind == BlockKind::RowBomb) {
         return mPieceResources.GetRowBombRenderableObject();
     } else {
+        auto brightness =
+            subCell.mFlashingBlockAnimationState == FlashingBlockAnimationComponent::State::Waiting ||
+            subCell.mFlashingBlockAnimationState == FlashingBlockAnimationComponent::State::Active ?
+            BlockBrightness::Flashing : BlockBrightness::Normal;
         return mPieceResources.GetBlockRenderableObject(subCell.mBlockKind,
                                                         subCell.mColor,
-                                                        BlockBrightness::Normal);
+                                                        brightness);
     }
 }
 

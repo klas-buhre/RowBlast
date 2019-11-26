@@ -57,7 +57,7 @@ namespace {
                 yMax = cellY;
             }
 
-            if (subCell.mIsPulledDown) {
+            if (subCell.mFlags.mIsPulledDown) {
                 if (cellX > xMax) {
                     xMax = cellX;
                 }

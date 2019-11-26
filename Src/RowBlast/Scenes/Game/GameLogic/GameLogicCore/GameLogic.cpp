@@ -14,7 +14,7 @@
 #include "Level.hpp"
 #include "ScrollController.hpp"
 #include "FlyingBlocksAnimation.hpp"
-#include "FlashingBlocksAnimation.hpp"
+#include "FlashingBlocksAnimationSystem.hpp"
 #include "CollapsingFieldAnimationSystem.hpp"
 #include "EffectManager.hpp"
 #include "PieceDropParticleEffect.hpp"
@@ -75,7 +75,7 @@ GameLogic::GameLogic(Pht::IEngine& engine,
                      GameScene& gameScene,
                      EffectManager& effectManager,
                      FlyingBlocksAnimation& flyingBlocksAnimation,
-                     FlashingBlocksAnimation& flashingBlocksAnimation,
+                     FlashingBlocksAnimationSystem& flashingBlocksAnimation,
                      CollapsingFieldAnimationSystem& collapsingFieldAnimation,
                      PieceDropParticleEffect& pieceDropParticleEffect,
                      PieceTrailParticleEffect& pieceTrailParticleEffect,

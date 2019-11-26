@@ -40,7 +40,7 @@ namespace RowBlast {
     class GameScene;
     class Tutorial;
     class UserServices;
-    class FlashingBlocksAnimation;
+    class FlashingBlocksAnimationSystem;
     class FallingPieceScaleAnimation;
     class Shield;
     class ScoreTexts;
@@ -88,7 +88,7 @@ namespace RowBlast {
                   GameScene& gameScene,
                   EffectManager& effectManger,
                   FlyingBlocksAnimation& flyingBlocksAnimation,
-                  FlashingBlocksAnimation& flashingBlocksAnimation,
+                  FlashingBlocksAnimationSystem& flashingBlocksAnimation,
                   CollapsingFieldAnimationSystem& collapsingFieldAnimation,
                   PieceDropParticleEffect& pieceDropParticleEffect,
                   PieceTrailParticleEffect& pieceTrailParticleEffect,
@@ -290,7 +290,7 @@ namespace RowBlast {
         Field& mField;
         ScrollController& mScrollController;
         FlyingBlocksAnimation& mFlyingBlocksAnimation;
-        FlashingBlocksAnimation& mFlashingBlocksAnimation;
+        FlashingBlocksAnimationSystem& mFlashingBlocksAnimation;
         CollapsingFieldAnimationSystem& mCollapsingFieldAnimation;
         EffectManager& mEffectManager;
         PieceDropParticleEffect& mPieceDropParticleEffect;

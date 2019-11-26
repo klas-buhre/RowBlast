@@ -242,7 +242,7 @@ CellGrid Piece::InitCellGrid(const Piece::FillGrid& fillGrid,
             subCell.mWelds = MakeWelds(row, column, fillGrid);
             subCell.mBlockKind = ToBlockKind(subCell.mFill);
             subCell.mColor = blockColor;
-            subCell.mFlashingBlockAnimation.mState = FlashingBlockAnimation::State::Waiting;
+            subCell.mFlashingBlockAnimation.mState = FlashingBlockAnimationComponent::State::Waiting;
             subCell.mIsPartOfIndivisiblePiece = isIndivisible;
         }
     }

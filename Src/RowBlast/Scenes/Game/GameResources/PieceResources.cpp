@@ -11,7 +11,7 @@
 
 // Game includes.
 #include "CommonResources.hpp"
-#include "FlashingBlocksAnimation.hpp"
+#include "FlashingBlocksAnimationSystem.hpp"
 
 using namespace RowBlast;
 
@@ -70,13 +70,13 @@ namespace {
             case BlockBrightness::Normal:
                 break;
             case BlockBrightness::Flashing:
-                AddColorToMaterial(material, FlashingBlocksAnimation::colorAdd);
+                AddColorToMaterial(material, FlashingBlocksAnimationSystem::colorAdd);
                 break;
             case BlockBrightness::BlueprintFillFlashing:
-                AddColorToMaterial(material, FlashingBlocksAnimation::brightColorAdd);
+                AddColorToMaterial(material, FlashingBlocksAnimationSystem::brightColorAdd);
                 break;
             case BlockBrightness::SemiFlashing:
-                AddColorToMaterial(material, FlashingBlocksAnimation::semiFlashingColorAdd);
+                AddColorToMaterial(material, FlashingBlocksAnimationSystem::semiFlashingColorAdd);
                 break;
         }
         

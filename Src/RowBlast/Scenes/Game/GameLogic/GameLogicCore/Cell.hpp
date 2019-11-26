@@ -116,7 +116,7 @@ namespace RowBlast {
         extern const int numWeldBrightness;
     };
     
-    struct FlashingBlockAnimation {
+    struct FlashingBlockAnimationComponent {
         enum class State {
             Waiting,
             Active,
@@ -171,7 +171,7 @@ namespace RowBlast {
         BlockColor mColor {BlockColor::None};
         Rotation mRotation {Rotation::Deg0};
         FallingBlockAnimationComponent mFallingBlockAnimation;
-        FlashingBlockAnimation mFlashingBlockAnimation;
+        FlashingBlockAnimationComponent mFlashingBlockAnimation;
         bool mIsGrayLevelBlock {false};
         bool mIsPartOfIndivisiblePiece {false};
         bool mIsFound {false};

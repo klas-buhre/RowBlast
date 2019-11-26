@@ -633,8 +633,8 @@ void Field::ResetFlashingBlockAnimations() {
     for (auto row = 0; row < mNumRows; ++row) {
         for (auto column = 0; column < mNumColumns; ++column) {
             auto& cell = mGrid[row][column];
-            cell.mFirstSubCell.mFlashingBlockAnimation = FlashingBlockAnimation {};
-            cell.mSecondSubCell.mFlashingBlockAnimation = FlashingBlockAnimation {};
+            cell.mFirstSubCell.mFlashingBlockAnimation = FlashingBlockAnimationComponent {};
+            cell.mSecondSubCell.mFlashingBlockAnimation = FlashingBlockAnimationComponent {};
         }
     }
 }
@@ -1277,19 +1277,20 @@ void Field::SaveSubCellAndCancelFill(Field::RemovedSubCells& removedSubCells,
     
     if (subCell.mBlockKind != BlockKind::None && subCell.mBlockKind != BlockKind::ClearedRowBlock &&
         row >= mLowestVisibleRow) {
-
+        
         RemovedSubCell removedSubCell {
             .mExactPosition = subCell.mPosition,
             .mGridPosition = Pht::IVec2{column, row},
             .mRotation = subCell.mRotation,
             .mBlockKind = subCell.mBlockKind,
             .mColor = subCell.mColor,
-            .mIsGrayLevelBlock = subCell.mIsGrayLevelBlock,
-            .mIsAsteroidFragment = subCell.IsAsteroid(),
-            .mIsPulledDown = subCell.mIsPulledDown,
-            .mPieceId = subCell.mPieceId
+            .mFlashingBlockAnimationState = subCell.mFlashingBlockAnimation.mState,
+            .mPieceId = subCell.mPieceId,
+            .mFlags.mIsGrayLevelBlock = subCell.mIsGrayLevelBlock,
+            .mFlags.mIsAsteroidFragment = subCell.IsAsteroid(),
+            .mFlags.mIsPulledDown = subCell.mIsPulledDown,
         };
-        
+
         removedSubCells.PushBack(removedSubCell);
     }
     

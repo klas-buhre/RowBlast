@@ -1,5 +1,5 @@
-#ifndef FlashingBlocksAnimation_hpp
-#define FlashingBlocksAnimation_hpp
+#ifndef FlashingBlocksAnimationSystem_hpp
+#define FlashingBlocksAnimationSystem_hpp
 
 // Engine includes.
 #include "Material.hpp"
@@ -11,9 +11,9 @@
 namespace RowBlast {
     class Field;
     
-    class FlashingBlocksAnimation {
+    class FlashingBlocksAnimationSystem {
     public:
-        FlashingBlocksAnimation(Field& field, PieceResources& pieceResources);
+        FlashingBlocksAnimationSystem(Field& field, PieceResources& pieceResources);
     
         void Init();
         void Start(BlockColor color);
@@ -27,6 +27,7 @@ namespace RowBlast {
         void UpdateInWaitingState();
         void ActivateWaitingBlock(SubCell& subCell, int row, int column);
         void UpdateInActiveState(float dt);
+        void UpdateFlash(float dt);
         bool IsBlockAccordingToBlueprint(SubCell& subCell, int row, int column);
         void UpdateRenderables();
         void UpdateBlockRenderables(const Pht::Color& flashColorAdd,
@@ -44,6 +45,7 @@ namespace RowBlast {
         enum class State {
             Waiting,
             Active,
+            OnlyFlyingBlocksFlashing,
             Inactive
         };
         

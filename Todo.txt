@@ -66,7 +66,8 @@ Ongoing tasks:
 
     -Do:
         -3. -Redesign the game HUD: dark transparent bars behind containers or      ~3 days
-             pods of the same style as the upper hud.
+             pods of the same style as the upper hud. Try pods of the same style
+             as the upper hud with thin borders and grid.
                 -Add a recess on each side of in the outer transparent part of
                  lower hud.
                 -Trim the colors in the lower hud.
@@ -83,9 +84,13 @@ Ongoing tasks:
         -3. Star meter logic.                                                       ~3 days
               TODO:
                 -Add a points text animation.
+                    -Make the WeldsAnimations a system.
+                    -Fix the bug where the preview piece is still in the selectables after being
+                     dragged in while the preview piece animation is still going efter new move.
                     -The combo text animation can be a bit deferred.
                     -Lasers and bombs should give points after how many blocks they clear.
                      But lasers and bombs should not count as combos.
+                    -Claring rows might give points according to how many blocks they contain.
                     -When calculating the extra points then the num moves left could count
                      down and a points text animatioin could appear below the upper hud
                      when the moves reached zero and then the points move into the star
