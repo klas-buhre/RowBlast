@@ -81,7 +81,7 @@ namespace RowBlast {
         float mScale {1.0f};
     };
     
-    struct WeldAnimations {
+    struct WeldAnimationsComponent {
         WeldAnimation mUp;
         WeldAnimation mRight;
         WeldAnimation mUpRight;
@@ -99,7 +99,6 @@ namespace RowBlast {
         bool mLeft {false};
         bool mUpLeft {false};
         bool mDiagonal {false};
-        WeldAnimations mAnimations;
     };
     
     enum class BlockBrightness {
@@ -164,19 +163,20 @@ namespace RowBlast {
         }
         
         Fill mFill {Fill::Empty};
-        Welds mWelds;
-        int mPieceId {0};
-        Pht::Vec2 mPosition {0.0f, 0.0f};
         BlockKind mBlockKind {BlockKind::None};
+        Pht::Vec2 mPosition {0.0f, 0.0f};
         BlockColor mColor {BlockColor::None};
         Rotation mRotation {Rotation::Deg0};
-        FallingBlockAnimationComponent mFallingBlockAnimation;
-        FlashingBlockAnimationComponent mFlashingBlockAnimation;
+        Welds mWelds;
+        int mPieceId {0};
         bool mIsGrayLevelBlock {false};
         bool mIsPartOfIndivisiblePiece {false};
         bool mIsFound {false};
         ScanDirection mTriedScanDirection {ScanDirection::None};
         bool mIsPulledDown {false};
+        FallingBlockAnimationComponent mFallingBlockAnimation;
+        FlashingBlockAnimationComponent mFlashingBlockAnimation;
+        WeldAnimationsComponent mWeldAnimations;
     };
     
     struct Cell {

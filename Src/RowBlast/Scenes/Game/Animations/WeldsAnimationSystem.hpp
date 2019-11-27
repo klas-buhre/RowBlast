@@ -1,5 +1,5 @@
-#ifndef WeldsAnimation_hpp
-#define WeldsAnimation_hpp
+#ifndef WeldsAnimationSystem_hpp
+#define WeldsAnimationSystem_hpp
 
 // Engine includes.
 #include "Vector.hpp"
@@ -9,9 +9,9 @@ namespace RowBlast {
     class SubCell;
     class WeldAnimation;
     
-    class WeldsAnimation {
+    class WeldsAnimationSystem {
     public:
-        WeldsAnimation(Field& field);
+        explicit WeldsAnimationSystem(Field& field);
     
         void Update(float dt);
         

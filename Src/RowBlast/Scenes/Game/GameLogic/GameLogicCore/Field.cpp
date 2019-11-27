@@ -7,7 +7,7 @@
 #include "FallingPiece.hpp"
 #include "Level.hpp"
 #include "CollisionDetection.hpp"
-#include "WeldsAnimation.hpp"
+#include "WeldsAnimationSystem.hpp"
 
 using namespace RowBlast;
 
@@ -62,34 +62,38 @@ namespace {
         }
     }
 
-    void BreakDownWelds(Welds& welds) {
+    void BreakDownWelds(SubCell& subCell) {
+        auto& welds = subCell.mWelds;
         welds.mDownRight = false;
         welds.mDown = false;
         welds.mDownLeft = false;
     }
     
-    void BreakUpWelds(Welds& welds) {
+    void BreakUpWelds(SubCell& subCell) {
+        auto& welds = subCell.mWelds;
         welds.mUpRight = false;
         welds.mUp = false;
         welds.mUpLeft = false;
         
-        auto& animations = welds.mAnimations;
+        auto& animations = subCell.mWeldAnimations;
         animations.mUp = WeldAnimation {};
         animations.mUpRight = WeldAnimation {};
         animations.mUpLeft = WeldAnimation {};
     }
     
-    void BreakRightWelds(Welds& welds) {
+    void BreakRightWelds(SubCell& subCell) {
+        auto& welds = subCell.mWelds;
         welds.mUpRight = false;
         welds.mRight = false;
         welds.mDownRight = false;
         
-        auto& animations = welds.mAnimations;
+        auto& animations = subCell.mWeldAnimations;
         animations.mUpRight = WeldAnimation {};
         animations.mRight = WeldAnimation {};
     }
     
-    void BreakLeftWelds(Welds& welds) {
+    void BreakLeftWelds(SubCell& subCell) {
+        auto& welds = subCell.mWelds;
         welds.mDownLeft = false;
         welds.mLeft = false;
         welds.mUpLeft = false;
@@ -571,7 +575,6 @@ Field::PieceFilledSlots Field::CalculatePieceFilledSlots(const FallingPiece& fal
 
 void Field::LandFallingPiece(const FallingPiece& fallingPiece, bool startBounceAnimation) {
     SetChanged();
-    ResetFlashingBlockAnimations();
     
     auto pieceBlocks = CreatePieceBlocks(fallingPiece);
     LandPieceBlocks(pieceBlocks,
@@ -629,16 +632,6 @@ void Field::LandPieceBlocks(const PieceBlocks& pieceBlocks,
     }
 }
 
-void Field::ResetFlashingBlockAnimations() {
-    for (auto row = 0; row < mNumRows; ++row) {
-        for (auto column = 0; column < mNumColumns; ++column) {
-            auto& cell = mGrid[row][column];
-            cell.mFirstSubCell.mFlashingBlockAnimation = FlashingBlockAnimationComponent {};
-            cell.mSecondSubCell.mFlashingBlockAnimation = FlashingBlockAnimationComponent {};
-        }
-    }
-}
-
 void Field::ManageWelds() {
     auto lowestVisibleRow = mLowestVisibleRow - 1;
     if (lowestVisibleRow < 0) {
@@ -676,7 +669,7 @@ void Field::MakeDiagonalWeld(Cell& cell) {
 
         firstSubCell.mWelds.mDiagonal = true;
         secondSubCell.mWelds.mDiagonal = true;
-        WeldsAnimation::StartWeldAppearingAnimation(secondSubCell.mWelds.mAnimations.mDiagonal);
+        WeldsAnimationSystem::StartWeldAppearingAnimation(secondSubCell.mWeldAnimations.mDiagonal);
     }
 }
 
@@ -688,12 +681,12 @@ void Field::MakeWelds(SubCell& subCell, const Pht::IVec2& position) {
     auto& welds = subCell.mWelds;
     if (!welds.mUp && ShouldBeUpWeld(subCell, position)) {
         welds.mUp = true;
-        WeldsAnimation::StartWeldAppearingAnimation(welds.mAnimations.mUp);
+        WeldsAnimationSystem::StartWeldAppearingAnimation(subCell.mWeldAnimations.mUp);
     }
 
     if (!welds.mRight && ShouldBeRightWeld(subCell, position)) {
         welds.mRight = true;
-        WeldsAnimation::StartWeldAppearingAnimation(welds.mAnimations.mRight);
+        WeldsAnimationSystem::StartWeldAppearingAnimation(subCell.mWeldAnimations.mRight);
     }
     
     if (!welds.mDown && ShouldBeDownWeld(subCell, position)) {
@@ -817,7 +810,7 @@ void Field::BreakRedundantWelds(SubCell& subCell, const Pht::IVec2& position) {
     auto& welds = subCell.mWelds;
     if (welds.mUpRight && UpRightWeldWouldBeRedundant(subCell, position)) {
         welds.mUpRight = false;
-        WeldsAnimation::StartWeldDisappearingAnimation(welds.mAnimations.mUpRight);
+        WeldsAnimationSystem::StartWeldDisappearingAnimation(subCell.mWeldAnimations.mUpRight);
     }
     
     if (welds.mDownRight && DownRightWeldWouldBeRedundant(subCell, position)) {
@@ -830,7 +823,7 @@ void Field::BreakRedundantWelds(SubCell& subCell, const Pht::IVec2& position) {
 
     if (welds.mUpLeft && UpLeftWeldWouldBeRedundant(subCell, position)) {
         welds.mUpLeft = false;
-        WeldsAnimation::StartWeldDisappearingAnimation(welds.mAnimations.mUpLeft);
+        WeldsAnimationSystem::StartWeldDisappearingAnimation(subCell.mWeldAnimations.mUpLeft);
     }
 }
 
@@ -949,8 +942,8 @@ void Field::MergeTriangleBlocksIntoCube(const Pht::IVec2& position) {
         firstSubCellWelds.mUpRight = true;
     }
     
-    auto& firstSubCellWeldAnimations = firstSubCellWelds.mAnimations;
-    auto& secondSubCellWeldAnimations = secondSubCellWelds.mAnimations;
+    auto& firstSubCellWeldAnimations = firstSubCell.mWeldAnimations;
+    auto& secondSubCellWeldAnimations = cell.mSecondSubCell.mWeldAnimations;
 
     if (secondSubCellWeldAnimations.mUpLeft.IsActive()) {
         firstSubCellWeldAnimations.mUpLeft = secondSubCellWeldAnimations.mUpLeft;
@@ -1054,32 +1047,32 @@ void Field::RemoveRowImpl(int rowIndex, Field::RemovedSubCells& removedSubCells)
 void Field::BreakCellDownWelds(int row, int column) {
     if (row < mNumRows) {
         auto& cell = mGrid[row][column];
-        BreakDownWelds(cell.mFirstSubCell.mWelds);
-        BreakDownWelds(cell.mSecondSubCell.mWelds);
+        BreakDownWelds(cell.mFirstSubCell);
+        BreakDownWelds(cell.mSecondSubCell);
     }
 }
 
 void Field::BreakCellUpWelds(int row, int column) {
     if (row >= 0) {
         auto& cell = mGrid[row][column];
-        BreakUpWelds(cell.mFirstSubCell.mWelds);
-        BreakUpWelds(cell.mSecondSubCell.mWelds);
+        BreakUpWelds(cell.mFirstSubCell);
+        BreakUpWelds(cell.mSecondSubCell);
     }
 }
 
 void Field::BreakCellRightWelds(int row, int column) {
     if (column >= 0) {
         auto& cell = mGrid[row][column];
-        BreakRightWelds(cell.mFirstSubCell.mWelds);
-        BreakRightWelds(cell.mSecondSubCell.mWelds);
+        BreakRightWelds(cell.mFirstSubCell);
+        BreakRightWelds(cell.mSecondSubCell);
     }
 }
 
 void Field::BreakCellLeftWelds(int row, int column) {
     if (column < mNumColumns) {
         auto& cell = mGrid[row][column];
-        BreakLeftWelds(cell.mFirstSubCell.mWelds);
-        BreakLeftWelds(cell.mSecondSubCell.mWelds);
+        BreakLeftWelds(cell.mFirstSubCell);
+        BreakLeftWelds(cell.mSecondSubCell);
     }
 }
 

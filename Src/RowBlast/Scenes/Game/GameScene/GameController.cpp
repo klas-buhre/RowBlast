@@ -44,7 +44,7 @@ GameController::GameController(Pht::IEngine& engine,
     mField {},
     mCollapsingFieldAnimation {mField},
     mFlashingBlocksAnimation {mField, mPieceResources},
-    mWeldsAnimation {mField},
+    mWeldsAnimationSystem {mField},
     mScrollController {engine, mField},
     mValidAreaAnimation {mField, mScrollController},
     mCameraShake {Pht::CameraShake::ShakeKind::PerlinNoise},
@@ -239,7 +239,7 @@ GameController::Command GameController::UpdateGame() {
     auto command = UpdateSubState();
     
     mFlashingBlocksAnimation.Update(dt);
-    mWeldsAnimation.Update(dt);
+    mWeldsAnimationSystem.Update(dt);
     mPieceDropParticleEffect.Update(dt);
     mPieceTrailParticleEffect.Update(dt);
     mShield.Update(dt);

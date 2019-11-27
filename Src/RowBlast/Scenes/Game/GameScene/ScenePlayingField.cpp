@@ -259,7 +259,7 @@ void ScenePlayingField::UpdateBlockWelds(const SubCell& subCell,
                                          SceneObjectPool& pool,
                                          bool isSecondSubCell) {
     auto& welds = subCell.mWelds;
-    auto& weldAnimations = welds.mAnimations;
+    auto& weldAnimations = subCell.mWeldAnimations;
     const auto cellSize = mScene.GetCellSize();
     auto weldZ = blockPos.z + cellSize / 2.0f;
     

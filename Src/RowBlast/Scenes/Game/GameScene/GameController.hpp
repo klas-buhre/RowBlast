@@ -13,7 +13,7 @@
 #include "FlyingBlocksAnimation.hpp"
 #include "CollapsingFieldAnimationSystem.hpp"
 #include "FlashingBlocksAnimationSystem.hpp"
-#include "WeldsAnimation.hpp"
+#include "WeldsAnimationSystem.hpp"
 #include "BlueprintSlotsFilledAnimation.hpp"
 #include "EffectManager.hpp"
 #include "PieceDropParticleEffect.hpp"
@@ -177,7 +177,7 @@ namespace RowBlast {
         Field mField;
         CollapsingFieldAnimationSystem mCollapsingFieldAnimation;
         FlashingBlocksAnimationSystem mFlashingBlocksAnimation;
-        WeldsAnimation mWeldsAnimation;
+        WeldsAnimationSystem mWeldsAnimationSystem;
         ScrollController mScrollController;
         ValidAreaAnimation mValidAreaAnimation;
         Pht::CameraShake mCameraShake;

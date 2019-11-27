@@ -1,4 +1,4 @@
-#include "WeldsAnimation.hpp"
+#include "WeldsAnimationSystem.hpp"
 
 // Game includes.
 #include "Field.hpp"
@@ -24,10 +24,10 @@ namespace {
     }
 }
 
-WeldsAnimation::WeldsAnimation(Field& field) :
+WeldsAnimationSystem::WeldsAnimationSystem(Field& field) :
     mField {field} {}
 
-void WeldsAnimation::Update(float dt) {
+void WeldsAnimationSystem::Update(float dt) {
     for (auto row = 0; row < mField.GetNumRows(); ++row) {
         for (auto column = 0; column < mField.GetNumColumns(); ++column) {
             auto& cell = mField.GetCell(row, column);
@@ -40,7 +40,7 @@ void WeldsAnimation::Update(float dt) {
             AnimateBlockWelds(cell.mFirstSubCell, position, dt);
             AnimateBlockWelds(cell.mSecondSubCell, position, dt);
             
-            auto& diagonalAnimation = cell.mSecondSubCell.mWelds.mAnimations.mDiagonal;
+            auto& diagonalAnimation = cell.mSecondSubCell.mWeldAnimations.mDiagonal;
             if (diagonalAnimation.IsActive() && !IsSubCellBouncing(cell.mFirstSubCell) &&
                 !IsSubCellBouncing(cell.mSecondSubCell)) {
                 
@@ -60,8 +60,10 @@ void WeldsAnimation::Update(float dt) {
     }
 }
 
-void WeldsAnimation::AnimateBlockWelds(SubCell& subCell, const Pht::IVec2& position, float dt) {
-    auto& animations = subCell.mWelds.mAnimations;
+void WeldsAnimationSystem::AnimateBlockWelds(SubCell& subCell,
+                                             const Pht::IVec2& position,
+                                             float dt) {
+    auto& animations = subCell.mWeldAnimations;
     if (animations.mUp.IsActive()) {
         AnimateUpWeld(subCell, position, dt);
     }
@@ -91,7 +93,7 @@ void WeldsAnimation::AnimateBlockWelds(SubCell& subCell, const Pht::IVec2& posit
     AnimateWeld(animations.mUpLeft, false, isThisOrUpLeftBouncing, dt);
 }
 
-void WeldsAnimation::AnimateUpWeld(SubCell& subCell, const Pht::IVec2& position, float dt) {
+void WeldsAnimationSystem::AnimateUpWeld(SubCell& subCell, const Pht::IVec2& position, float dt) {
     auto subCellIsFlashing = subCell.mFlashingBlockAnimation.IsActive();
     
     if (position.y + 1 < mField.GetNumRows()) {
@@ -101,19 +103,18 @@ void WeldsAnimation::AnimateUpWeld(SubCell& subCell, const Pht::IVec2& position,
             upperCell.mFirstSubCell.mFlashingBlockAnimation.IsActive() ||
             upperCell.mSecondSubCell.mFlashingBlockAnimation.IsActive();
         
-        AnimateWeld(subCell.mWelds.mAnimations.mUp,
+        AnimateWeld(subCell.mWeldAnimations.mUp,
                     subCellIsFlashing || upperCellIsFlashing,
                     IsSubCellOrNeighbourBouncing(subCell, upperCell),
                     dt);
     } else {
-        AnimateWeld(subCell.mWelds.mAnimations.mUp,
-                    subCellIsFlashing,
-                    IsSubCellBouncing(subCell),
-                    dt);
+        AnimateWeld(subCell.mWeldAnimations.mUp, subCellIsFlashing, IsSubCellBouncing(subCell), dt);
     }
 }
 
-void WeldsAnimation::AnimateRightWeld(SubCell& subCell, const Pht::IVec2& position, float dt) {
+void WeldsAnimationSystem::AnimateRightWeld(SubCell& subCell,
+                                            const Pht::IVec2& position,
+                                            float dt) {
     auto subCellIsFlashing = subCell.mFlashingBlockAnimation.IsActive();
     
     if (position.x + 1 < mField.GetNumColumns()) {
@@ -123,19 +124,19 @@ void WeldsAnimation::AnimateRightWeld(SubCell& subCell, const Pht::IVec2& positi
             cellToTheRight.mFirstSubCell.mFlashingBlockAnimation.IsActive() ||
             cellToTheRight.mSecondSubCell.mFlashingBlockAnimation.IsActive();
         
-        AnimateWeld(subCell.mWelds.mAnimations.mRight,
+        AnimateWeld(subCell.mWeldAnimations.mRight,
                     subCellIsFlashing || cellToTheRightIsFlashing,
                     IsSubCellOrNeighbourBouncing(subCell, cellToTheRight),
                     dt);
     } else {
-        AnimateWeld(subCell.mWelds.mAnimations.mRight,
+        AnimateWeld(subCell.mWeldAnimations.mRight,
                     subCellIsFlashing,
                     IsSubCellBouncing(subCell),
                     dt);
     }
 }
 
-void WeldsAnimation::AnimateWeldAppearing(WeldAnimation& animation, float dt) {
+void WeldsAnimationSystem::AnimateWeldAppearing(WeldAnimation& animation, float dt) {
     animation.mScale += scaleSpeed * dt;
     if (animation.mScale > 1.0f) {
         animation.mScale = 1.0f;
@@ -145,7 +146,7 @@ void WeldsAnimation::AnimateWeldAppearing(WeldAnimation& animation, float dt) {
     mField.SetChanged();
 }
 
-void WeldsAnimation::AnimateWeldDisappearing(WeldAnimation& animation, float dt) {
+void WeldsAnimationSystem::AnimateWeldDisappearing(WeldAnimation& animation, float dt) {
     animation.mScale -= scaleSpeed * dt;
     if (animation.mScale < 0.0f) {
         animation.mScale = 0.0f;
@@ -155,10 +156,10 @@ void WeldsAnimation::AnimateWeldDisappearing(WeldAnimation& animation, float dt)
     mField.SetChanged();
 }
 
-void WeldsAnimation::AnimateWeld(WeldAnimation& animation,
-                                 bool cellIsFlashing,
-                                 bool anyBouncing,
-                                 float dt) {
+void WeldsAnimationSystem::AnimateWeld(WeldAnimation& animation,
+                                       bool cellIsFlashing,
+                                       bool anyBouncing,
+                                       float dt) {
     if (anyBouncing) {
         return;
     }
@@ -187,12 +188,12 @@ void WeldsAnimation::AnimateWeld(WeldAnimation& animation,
     }
 }
 
-void WeldsAnimation::StartWeldAppearingAnimation(WeldAnimation& animation) {
+void WeldsAnimationSystem::StartWeldAppearingAnimation(WeldAnimation& animation) {
     animation.mState = WeldAnimation::State::WeldAppearing;
     animation.mScale = 0.0f;
 }
 
-void WeldsAnimation::StartWeldDisappearingAnimation(WeldAnimation& animation) {
+void WeldsAnimationSystem::StartWeldDisappearingAnimation(WeldAnimation& animation) {
     animation.mState = WeldAnimation::State::WeldDisappearing;
     animation.mScale = 1.0f;
 }

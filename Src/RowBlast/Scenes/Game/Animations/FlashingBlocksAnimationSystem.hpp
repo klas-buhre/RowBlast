@@ -18,6 +18,7 @@ namespace RowBlast {
         void Init();
         void Start(BlockColor color);
         void Update(float dt);
+        void ResetFlashingBlockAnimations();
         
         static const Pht::Color colorAdd;
         static const Pht::Color brightColorAdd;

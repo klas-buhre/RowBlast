@@ -720,6 +720,7 @@ void GameLogic::LandFallingPiece(bool finalMovementWasADrop) {
             mPieceTrailParticleEffect.StartEffect(*mFallingPiece);
         }
         
+        mFlashingBlocksAnimation.ResetFlashingBlockAnimations();
         mField.LandFallingPiece(*mFallingPiece, startBounceAnimation);
         mFlashingBlocksAnimation.Start(pieceType.GetColor());
         DetonateImpactedLevelBombs(impactedLevelBombs);

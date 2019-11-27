@@ -103,10 +103,20 @@ void FlashingBlocksAnimationSystem::UpdateFlash(float dt) {
     mElapsedTime += dt;
     if (mElapsedTime > flashDuration) {
         mState = State::Inactive;
-        mField.ResetFlashingBlockAnimations();
+        ResetFlashingBlockAnimations();
     }
     
     UpdateRenderables();
+}
+
+void FlashingBlocksAnimationSystem::ResetFlashingBlockAnimations() {
+    for (auto row = 0; row < mField.GetNumRows(); ++row) {
+        for (auto column = 0; column < mField.GetNumColumns(); ++column) {
+            auto& cell = mField.GetCell(row, column);
+            cell.mFirstSubCell.mFlashingBlockAnimation = FlashingBlockAnimationComponent {};
+            cell.mSecondSubCell.mFlashingBlockAnimation = FlashingBlockAnimationComponent {};
+        }
+    }
 }
 
 bool FlashingBlocksAnimationSystem::IsBlockAccordingToBlueprint(SubCell& subCell,
