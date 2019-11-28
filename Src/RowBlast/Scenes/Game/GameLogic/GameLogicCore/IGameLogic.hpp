@@ -45,6 +45,9 @@ namespace RowBlast {
         virtual void CancelDraggingPiece() = 0;
         virtual void OnDraggedPieceAnimationFinished() = 0;
         virtual void IncreaseScore(int points, const Pht::Vec2& scoreTextPosition) = 0;
+        virtual void IncreaseScore(int points,
+                                   const Pht::Vec2& scoreTextPosition,
+                                   float scoreTextDelay) = 0;
         virtual const Piece* GetPieceType() const = 0;
         virtual const TwoPieces& GetSelectablePieces() const = 0;
         virtual const PreviewPieceRotations& GetPreviewPieceRotations() const = 0;

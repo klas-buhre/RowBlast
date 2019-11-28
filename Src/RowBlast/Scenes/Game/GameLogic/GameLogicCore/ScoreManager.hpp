@@ -25,6 +25,8 @@ namespace RowBlast {
         void OnClearedFilledRows(const Field::RemovedSubCells& removedSubCells,
                                  Pht::Optional<int> landedPieceId = Pht::Optional<int>{});
         void OnClearedNoFilledRows();
+        void OnBombExplosionFinished(float numBlocksCleared, const Pht::IVec2& gridPosition);
+        void OnLaserFinished(float numBlocksCleared, const Pht::IVec2& gridPosition);
         void OnFilledSlots(const Field::PieceFilledSlots& slotsCoveredByPiece);
         void OnUndoMove();
         void GoToCascadingState();

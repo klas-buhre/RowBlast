@@ -108,12 +108,19 @@ GameLogic::GameLogic(Pht::IEngine& engine,
     mTutorial {tutorial},
     mSettingsService {settingsService},
     mControlType {settingsService.GetControlType()},
+    mScoreManager {engine, *this, smallTextAnimation, effectManager},
     mFieldGravity {field},
-    mFieldExplosionsStates {engine, field, mFieldGravity, effectManager, flyingBlocksAnimation},
+    mFieldExplosionsStates {
+        engine,
+        field,
+        mFieldGravity,
+        mScoreManager,
+        effectManager,
+        flyingBlocksAnimation
+    },
     mFallingPieceAnimation {*this, mFallingPieceStorage},
     mDraggedPieceStorage {gameScene},
     mDraggedPieceAnimation {engine, gameScene, *this, mDraggedPieceStorage},
-    mScoreManager {engine, *this, smallTextAnimation, effectManager},
     mAi {field},
     mDragInputHandler {engine, *this, gameScene, mDraggedPieceStorage},
     mGestureInputHandler {*this, mFallingPieceStorage},
@@ -631,6 +638,13 @@ int GameLogic::GetMovesUsedIncludingCurrent() const {
 void GameLogic::IncreaseScore(int points, const Pht::Vec2& scoreTextPosition) {
     mCurrentMove.mScore += points;
     mScoreTexts.Start(points, scoreTextPosition);
+}
+
+void GameLogic::IncreaseScore(int points,
+                              const Pht::Vec2& scoreTextPosition,
+                              float scoreTextDelay) {
+    mCurrentMove.mScore += points;
+    mScoreTexts.Start(points, scoreTextPosition, scoreTextDelay);
 }
 
 int GameLogic::CalculateFinalScore() {

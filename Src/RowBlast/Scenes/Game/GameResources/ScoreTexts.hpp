@@ -23,6 +23,7 @@ namespace RowBlast {
         
         void Init();
         void Start(int numPoints, const Pht::Vec2& position);
+        void Start(int numPoints, const Pht::Vec2& position, float delay);
         void Update(float dt);
         
     private:
@@ -31,7 +32,7 @@ namespace RowBlast {
             ScoreText(GameScene& scene, const CommonResources& commonResources);
             
             void Init();
-            void Start(int numPoints, const Pht::Vec2& position);
+            void Start(int numPoints, const Pht::Vec2& position, float delay);
             void Update(float dt);
             bool IsInactive() const;
                         
@@ -55,6 +56,7 @@ namespace RowBlast {
             GameScene& mScene;
             State mState {State::Inactive};
             float mElapsedTime {0.0f};
+            float mDelay {0.0f};
             std::unique_ptr<Pht::SceneObject> mSceneObject;
             std::unique_ptr<Pht::SceneObject> mTextSceneObject;
         };

@@ -120,6 +120,9 @@ namespace RowBlast {
         void OnDraggedPieceAnimationFinished() override;
         void CancelDraggingPiece() override;
         void IncreaseScore(int points, const Pht::Vec2& scoreTextPosition) override;
+        void IncreaseScore(int points,
+                           const Pht::Vec2& scoreTextPosition,
+                           float scoreTextDelay) override;
         const Piece* GetPieceType() const override;
         const TwoPieces& GetSelectablePieces() const override;
         const PreviewPieceRotations& GetPreviewPieceRotations() const override;
@@ -310,13 +313,13 @@ namespace RowBlast {
         State mState {State::LogicUpdate};
         CascadeState mCascadeState {CascadeState::NotCascading};
         float mCascadeWaitTime {0.0f};
-        FieldGravity mFieldGravity;
+        ScoreManager mScoreManager;
         FallingPiece mFallingPieceStorage;
         DraggedPiece mDraggedPieceStorage;
+        FieldGravity mFieldGravity;
         FieldExplosionsStates mFieldExplosionsStates;
         FallingPieceAnimation mFallingPieceAnimation;
         DraggedPieceAnimation mDraggedPieceAnimation;
-        ScoreManager mScoreManager;
         Ai mAi;
         Moves* mAllValidMoves {nullptr};
         DragInputHandler mDragInputHandler;

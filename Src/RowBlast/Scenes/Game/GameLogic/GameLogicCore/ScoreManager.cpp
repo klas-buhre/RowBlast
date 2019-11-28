@@ -14,12 +14,14 @@
 using namespace RowBlast;
 
 namespace {
+    constexpr auto clearBlockPoints = 10;
     constexpr auto clearOneRowPoints = 60;
     constexpr auto clearOneRowInCascadePoints = 50;
     constexpr auto comboIncreasePoints = 40;
     constexpr auto clearFiveRowsPoints = 2000;
     constexpr auto clearFourRowsPoints = 1000;
     constexpr auto fillSlotPoints = 15;
+    constexpr auto laserScoreTextDelay = 0.275f;
     
     int CalcNumRemovedRows(const Field::RemovedSubCells& removedSubCells) {
         Pht::Optional<int> previousRowIndex;
@@ -221,6 +223,22 @@ void ScoreManager::DetectCascade() {
 
 void ScoreManager::OnClearedNoFilledRows() {
     mNumCombos = 0;
+}
+
+void ScoreManager::OnBombExplosionFinished(float numBlocksCleared, const Pht::IVec2& gridPosition) {
+    if (numBlocksCleared > 0.0f) {
+        Pht::Vec2 position {static_cast<float>(gridPosition.x), static_cast<float>(gridPosition.y)};
+        auto points = static_cast<int>(numBlocksCleared * clearBlockPoints);
+        mGameLogic.IncreaseScore(points, position);
+    }
+}
+
+void ScoreManager::OnLaserFinished(float numBlocksCleared, const Pht::IVec2& gridPosition) {
+    if (numBlocksCleared > 0.0f) {
+        Pht::Vec2 position {static_cast<float>(gridPosition.x), static_cast<float>(gridPosition.y)};
+        auto points = static_cast<int>(numBlocksCleared * clearBlockPoints);
+        mGameLogic.IncreaseScore(points, position, laserScoreTextDelay);
+    }
 }
 
 void ScoreManager::OnFilledSlots(const Field::PieceFilledSlots& slotsCoveredByPiece) {

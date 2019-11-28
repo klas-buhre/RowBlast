@@ -84,12 +84,10 @@ Ongoing tasks:
         -3. Star meter logic.                                                       ~3 days
               TODO:
                 -Add a points text animation.
-                    -Lasers and bombs should give points after how many blocks they clear.
-                     But lasers and bombs should not count as combos.
-                     Optimize the text rendering with fewer shader uses when there are many
+                    -The combo text animation can be a bit deferred.
+                    -Optimize the text rendering with fewer shader uses when there are many
                      text objects with shadows, gradients and specular etc... Also, the top
                      gradient text is not in the RenderEntry yet.
-                    -The combo text animation can be a bit deferred.
                     -Claring rows might give points according to how many blocks they contain.
                     -When calculating the extra points then the num moves left could count
                      down and a points text animatioin could appear below the upper hud

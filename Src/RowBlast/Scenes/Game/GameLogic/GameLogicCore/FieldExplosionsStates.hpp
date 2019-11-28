@@ -12,6 +12,7 @@ namespace Pht {
 namespace RowBlast {
     class Field;
     class FieldGravity;
+    class ScoreManager;
     class EffectManager;
     class FlyingBlocksAnimation;
     
@@ -25,6 +26,7 @@ namespace RowBlast {
         FieldExplosionsStates(Pht::IEngine& engine,
                               Field& field,
                               FieldGravity& fieldGravity,
+                              ScoreManager& scoreManager,
                               EffectManager& effectManager,
                               FlyingBlocksAnimation& flyingBlocksAnimation);
         
@@ -38,7 +40,6 @@ namespace RowBlast {
 
     private:
         struct BombExplosionState {
-            Pht::IVec2 mPosition;
             float mElapsedTime {0.0f};
             bool mShouldApplyForceToAlreadyFlyingBlocks {true};
         };
@@ -57,7 +58,6 @@ namespace RowBlast {
             
             CuttingProgress mLeftCuttingProgress;
             CuttingProgress mRightCuttingProgress;
-            int mCuttingPositionY;
         };
         
         struct ExplosionState {
@@ -69,6 +69,8 @@ namespace RowBlast {
             };
             
             Kind mKind;
+            Pht::IVec2 mPosition;
+            int mNumClearedBlocks {0};
             BombExplosionState mBombExplosionState;
             LaserState mLaserState;
         };
@@ -76,14 +78,17 @@ namespace RowBlast {
         using ExplosionsStates = Pht::StaticVector<ExplosionState, 200>;
         
         State UpdateExplosionState(ExplosionState& explosionState, float dt);
-        State UpdateBombExplosionState(BombExplosionState& bombExplosionState, float dt);
-        State UpdateRowBombLaserState(LaserState& laserState, float dt);
-        void RemoveBlocksHitByLaser(int leftColumn, int rightColumn, int row);
-        void UpdateLeftCuttingProgress(LaserState& laserState, float dt);
-        void UpdateRightCuttingProgress(LaserState& laserState, float dt);
-        State UpdateLevelBombExplosionState(BombExplosionState& levelBombExplosionState, float dt);
-        State UpdateBigBombExplosionState(BombExplosionState& bigBombExplosionState, float dt);
-        State UpdateGenericBombExplosionState(BombExplosionState& explosionState,
+        State UpdateBombExplosionState(ExplosionState& explosionState, float dt);
+        State UpdateRowBombLaserState(ExplosionState& state, float dt);
+        void RemoveBlocksHitByLaser(ExplosionState& state,
+                                    int leftColumn,
+                                    int rightColumn,
+                                    int row);
+        void UpdateLeftCuttingProgress(LaserState& laserState, int row, float dt);
+        void UpdateRightCuttingProgress(LaserState& laserState, int row, float dt);
+        State UpdateLevelBombExplosionState(ExplosionState& explosionState, float dt);
+        State UpdateBigBombExplosionState(ExplosionState& explosionState, float dt);
+        State UpdateGenericBombExplosionState(ExplosionState& state,
                                               float explosiveForceMagnitude,
                                               float explosionForceSpeed,
                                               float explosionMaxReach,
@@ -95,6 +100,7 @@ namespace RowBlast {
         Pht::IEngine& mEngine;
         Field& mField;
         FieldGravity& mFieldGravity;
+        ScoreManager& mScoreManager;
         EffectManager& mEffectManager;
         FlyingBlocksAnimation& mFlyingBlocksAnimation;
         ExplosionsStates mExplosionsStates;

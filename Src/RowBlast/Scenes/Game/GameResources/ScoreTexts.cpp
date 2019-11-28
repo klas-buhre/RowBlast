@@ -15,7 +15,7 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto numScoreTexts = 3;
+    constexpr auto numScoreTexts = 30;
     constexpr auto waitDuration = 0.075f;
     constexpr auto scaleUpDuration = 0.27f;
     constexpr auto displayTextDuration = 0.43f;
@@ -23,7 +23,7 @@ namespace {
     constexpr auto slideDistance = 0.55f;
     constexpr auto slideVelocity = slideDistance / (scaleUpDuration + displayTextDuration + scaleDownDuration);
     constexpr auto textShadowAlpha = 0.35f;
-    constexpr auto textScale = 0.58f;
+    constexpr auto textScale = 0.56f;
     
     Pht::StaticVector<Pht::Vec2, 20> scalePoints {
         {0.0f, 0.0f},
@@ -63,14 +63,18 @@ void ScoreTexts::Init() {
 }
 
 void ScoreTexts::Start(int numPoints, const Pht::Vec2& position) {
+    Start(numPoints, position, waitDuration);
+}
+
+void ScoreTexts::Start(int numPoints, const Pht::Vec2& position, float delay) {
     for (auto& scoreText: mScoreTexts) {
         if (scoreText->IsInactive()) {
-            scoreText->Start(numPoints, position);
+            scoreText->Start(numPoints, position, delay);
             return;
         }
     }
     
-    mScoreTexts.front()->Start(numPoints, position);
+    mScoreTexts.front()->Start(numPoints, position, delay);
 }
 
 void ScoreTexts::Update(float dt) {
@@ -118,7 +122,7 @@ void ScoreTexts::ScoreText::Init() {
     mSceneObject->SetIsStatic(true);
 }
 
-void ScoreTexts::ScoreText::Start(int numPoints, const Pht::Vec2& position) {
+void ScoreTexts::ScoreText::Start(int numPoints, const Pht::Vec2& position, float delay) {
     mSceneObject->SetIsStatic(false);
 
     auto* textComponent = mTextSceneObject->GetComponent<Pht::TextComponent>();
@@ -134,6 +138,7 @@ void ScoreTexts::ScoreText::Start(int numPoints, const Pht::Vec2& position) {
     
     mState = State::Waiting;
     mElapsedTime = 0.0f;
+    mDelay = delay;
     
     const auto cellSize = mScene.GetCellSize();
 
@@ -168,7 +173,7 @@ void ScoreTexts::ScoreText::Update(float dt) {
 
 void ScoreTexts::ScoreText::UpdateInWaitingState(float dt) {
     mElapsedTime += dt;
-    if (mElapsedTime > waitDuration) {
+    if (mElapsedTime > mDelay) {
         mState = State::ScalingUp;
         mElapsedTime = 0.0f;
         mSceneObject->SetIsVisible(true);
