@@ -232,6 +232,7 @@ GameLogic::Result GameLogic::SpawnFallingPiece(FallingPieceSpawnReason fallingPi
         return Result::LevelCompleted;
     }
     
+    mScene.GetHud().UnHideAllSelectablePreviewPieces();
     ShowFallingPiece();
     auto& pieceType = CalculatePieceType(fallingPieceSpawnReason);
     auto rotation = CalculateFallingPieceRotation(pieceType, fallingPieceSpawnReason);
@@ -310,6 +311,10 @@ const Piece& GameLogic::CalculatePieceType(FallingPieceSpawnReason fallingPieceS
         }
         
         mDraggedPieceIndex = PreviewPieceIndex::None;
+    }
+    
+    if (fallingPieceSpawnReason == FallingPieceSpawnReason::UndoMove || mShouldUndoMove) {
+        mPreviewPieceAnimationToStart = PreviewPieceAnimationToStart::None;
     }
     
     return *mCurrentMove.mPieceType;
@@ -615,6 +620,8 @@ void GameLogic::UndoMove() {
     --mMovesUsed;
     ++mNumUndosUsed;
     UpdateLevelProgress();
+    
+    mScene.GetHud().UnHideAndShowAllSelectablePreviewPieces();
 }
 
 int GameLogic::GetMovesUsedIncludingCurrent() const {
@@ -1254,7 +1261,7 @@ bool GameLogic::BeginDraggingPiece(PreviewPieceIndex draggedPieceIndex) {
         return false;
     }
     
-    mScene.GetHud().RemovePreviewPiece(draggedPieceIndex);
+    mScene.GetHud().HidePreviewPiece(draggedPieceIndex);
     
     auto& validMoves = mAi.FindValidMoves(*mFallingPiece,
                                           GetMovesUsedIncludingCurrent() - 1);

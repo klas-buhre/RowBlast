@@ -964,6 +964,10 @@ void GameHud::UpdateSelectable1PreviewPiece(PreviewPiece& previewPiece,
 void GameHud::UpdateSelectablePreviewPiece(PreviewPiece& previewPiece,
                                            const Piece* pieceType,
                                            const Pht::Vec3& position) {
+    if (previewPiece.mIsHidden) {
+        return;
+    }
+
     UpdatePreviewPiece(previewPiece, pieceType, position, selectablePiecesScale);
 }
 
@@ -1073,19 +1077,28 @@ void GameHud::OnNextPieceAnimationFinished() {
     UpdateNextPreviewPiece(mNextPreviewPieces[2], nullptr, nextPositions[2]);
 }
 
-void GameHud::RemovePreviewPiece(PreviewPieceIndex previewPieceIndex) {
+void GameHud::HidePreviewPiece(PreviewPieceIndex previewPieceIndex) {
     auto& selectablePositions = mSelectablePreviewPiecesRelativePositions;
 
     switch (previewPieceIndex) {
-        case PreviewPieceIndex::Active:
-            UpdateActivePreviewPiece(mSelectablePreviewPieces[0], nullptr, selectablePositions[1]);
+        case PreviewPieceIndex::Active: {
+            auto& activePreviewPiece = mSelectablePreviewPieces[0];
+            UpdateActivePreviewPiece(activePreviewPiece, nullptr, selectablePositions[1]);
+            activePreviewPiece.mIsHidden = true;
             break;
-        case PreviewPieceIndex::Selectable0:
-            UpdateSelectable0PreviewPiece(mSelectablePreviewPieces[1], nullptr, selectablePositions[2]);
+        }
+        case PreviewPieceIndex::Selectable0: {
+            auto& selectable0PreviewPiece = mSelectablePreviewPieces[1];
+            UpdateSelectable0PreviewPiece(selectable0PreviewPiece, nullptr, selectablePositions[2]);
+            selectable0PreviewPiece.mIsHidden = true;
             break;
-        case PreviewPieceIndex::Selectable1:
-            UpdateSelectable1PreviewPiece(mSelectablePreviewPieces[2], nullptr, selectablePositions[3]);
+        }
+        case PreviewPieceIndex::Selectable1: {
+            auto& selectable1PreviewPiece = mSelectablePreviewPieces[2];
+            UpdateSelectable1PreviewPiece(selectable1PreviewPiece, nullptr, selectablePositions[3]);
+            selectable1PreviewPiece.mIsHidden = true;
             break;
+        }
         case PreviewPieceIndex::None:
             break;
     }
@@ -1097,21 +1110,39 @@ void GameHud::ShowPreviewPiece(PreviewPieceIndex previewPieceIndex) {
     switch (previewPieceIndex) {
         case PreviewPieceIndex::Active: {
             auto* activePiece = mGameLogic.GetPieceType();
-            UpdateActivePreviewPiece(mSelectablePreviewPieces[0], activePiece, selectablePositions[1]);
+            auto& activePreviewPiece = mSelectablePreviewPieces[0];
+            activePreviewPiece.mIsHidden = false;
+            UpdateActivePreviewPiece(activePreviewPiece, activePiece, selectablePositions[1]);
             break;
         }
         case PreviewPieceIndex::Selectable0: {
             auto& selectablePieces = mGameLogic.GetSelectablePieces();
-            UpdateSelectable0PreviewPiece(mSelectablePreviewPieces[1], selectablePieces[0], selectablePositions[2]);
+            auto& selectable0PreviewPiece = mSelectablePreviewPieces[1];
+            selectable0PreviewPiece.mIsHidden = false;
+            UpdateSelectable0PreviewPiece(selectable0PreviewPiece, selectablePieces[0], selectablePositions[2]);
             break;
         }
         case PreviewPieceIndex::Selectable1: {
             auto& selectablePieces = mGameLogic.GetSelectablePieces();
-            UpdateSelectable1PreviewPiece(mSelectablePreviewPieces[2], selectablePieces[1], selectablePositions[3]);
+            auto& selectable1PreviewPiece = mSelectablePreviewPieces[2];
+            selectable1PreviewPiece.mIsHidden = false;
+            UpdateSelectable1PreviewPiece(selectable1PreviewPiece, selectablePieces[1], selectablePositions[3]);
             break;
         }
         case PreviewPieceIndex::None:
             break;
+    }
+}
+
+void GameHud::UnHideAndShowAllSelectablePreviewPieces() {
+    ShowPreviewPiece(PreviewPieceIndex::Active);
+    ShowPreviewPiece(PreviewPieceIndex::Selectable0);
+    ShowPreviewPiece(PreviewPieceIndex::Selectable1);
+}
+
+void GameHud::UnHideAllSelectablePreviewPieces() {
+    for (auto& previewPiece: mSelectablePreviewPieces) {
+        previewPiece.mIsHidden = false;
     }
 }
 

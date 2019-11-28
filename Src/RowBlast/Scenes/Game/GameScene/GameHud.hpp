@@ -39,6 +39,7 @@ namespace RowBlast {
         float mScale {0.0f};
         Pht::SceneObject* mBombSceneObject {nullptr};
         Pht::SceneObject* mRowBombSceneObject {nullptr};
+        bool mIsHidden {false};
     };
 
     using NextPreviewPieces = std::array<PreviewPiece, 3>;
@@ -67,8 +68,10 @@ namespace RowBlast {
         
         void OnSwitchPieceAnimationFinished();
         void OnNextPieceAnimationFinished();
-        void RemovePreviewPiece(PreviewPieceIndex previewPieceIndex);
+        void HidePreviewPiece(PreviewPieceIndex previewPieceIndex);
         void ShowPreviewPiece(PreviewPieceIndex previewPieceIndex);
+        void UnHideAndShowAllSelectablePreviewPieces();
+        void UnHideAllSelectablePreviewPieces();
         void Update();
         void ShowBlueMovesIcon();
         void ShowYellowMovesIcon();
