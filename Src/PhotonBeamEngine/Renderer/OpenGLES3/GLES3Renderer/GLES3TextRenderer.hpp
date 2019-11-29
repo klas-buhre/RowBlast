@@ -8,6 +8,7 @@
 
 #include "Matrix.hpp"
 #include "StaticVector.hpp"
+#include "RenderQueue.hpp"
 #include "GLES3ShaderProgram.hpp"
 
 namespace Pht {
@@ -20,9 +21,17 @@ namespace Pht {
         GLES3TextRenderer(GLES3RenderStateManager& renderState, const IVec2& screenSize);
         ~GLES3TextRenderer();
         
+        struct ColorProperties {
+            Vec4 mColor {1.0f, 1.0f, 1.0f, 1.0f};
+            Pht::Optional<Pht::Vec3> mTopGradientColorSubtraction;
+            Pht::Optional<Pht::Vec3> mMidGradientColorSubtraction;
+        };
+        
         void RenderText(const std::string& text,
                         Vec2 position,
                         float slant,
+                        RenderQueue::TextKind textKind,
+                        const ColorProperties& colorProperties,
                         const TextProperties& properties);
         
     private:
@@ -30,7 +39,7 @@ namespace Pht {
         void BuildShader(GLES3ShaderProgram& shader,
                          const char* vertexShaderSource,
                          const char* fragmentShaderSource);
-        GLES3ShaderProgram& GetShaderProgram(const TextProperties& properties);
+        GLES3ShaderProgram& GetShaderProgram(RenderQueue::TextKind textKind);
         Vec2 AdjustPositionCenterXAlignment(const std::string& text,
                                             Vec2 position,
                                             float slant,

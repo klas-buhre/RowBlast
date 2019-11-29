@@ -50,6 +50,24 @@ namespace {
             return a.mDistance > b.mDistance;
         }
     };
+    
+    RenderQueue::TextKind ToTextShaderKind(const TextProperties& textProperties) {
+        if (textProperties.mTopGradientColorSubtraction.HasValue() &&
+            textProperties.mMidGradientColorSubtraction.HasValue()) {
+            
+            return RenderQueue::TextKind::DoubleGradientShader;
+        }
+
+        if (textProperties.mTopGradientColorSubtraction.HasValue()) {
+            return RenderQueue::TextKind::TopGradientShader;
+        }
+
+        if (textProperties.mMidGradientColorSubtraction.HasValue()) {
+            return RenderQueue::TextKind::MidGradientShader;
+        }
+
+        return RenderQueue::TextKind::PlainShader;
+    }
 }
 
 void RenderQueue::Init(const SceneObject& rootSceneObject) {
@@ -124,7 +142,7 @@ void RenderQueue::ScanSubtree(const SceneObject& sceneObject, bool ancestorMatch
     }
     
     if (thisObjectOrAncestorMatchedLayerMask) {
-        AddSceneObject(sceneObject);
+        ScanSceneObject(sceneObject);
     }
     
     for (auto& child: sceneObject.GetChildren()) {
@@ -132,35 +150,45 @@ void RenderQueue::ScanSubtree(const SceneObject& sceneObject, bool ancestorMatch
     }
 }
 
-void RenderQueue::AddSceneObject(const SceneObject& sceneObject) {
-    uint64_t sortKey {0};
-    auto isDepthWriting = false;
-    
+void RenderQueue::ScanSceneObject(const SceneObject& sceneObject) {
     if (auto* renderable = sceneObject.GetRenderable()) {
         auto& material = renderable->GetMaterial();
-        isDepthWriting = material.GetDepthState().mDepthWrite;
-        if (isDepthWriting) {
-            sortKey |= depthWriteShiftedMask;
-        }
+        auto isDepthWriting = material.GetDepthState().mDepthWrite;
         
+        uint64_t sortKey {0};
         sortKey |= static_cast<uint64_t>(material.GetShaderId()) << shaderIdShift;
         sortKey |= uint64_t{material.GetId()} << materialIdShift;
         sortKey |= uint64_t{renderable->GetGpuVertexBuffer().GetId()} << vertexBufferIdShift;
-
-    } else if (auto* textComponent = sceneObject.GetComponent<TextComponent>()) {
+        
+        AddEntry(sortKey, isDepthWriting, sceneObject);
+    }
+    
+    if (auto* textComponent = sceneObject.GetComponent<TextComponent>()) {
+        auto isDepthWriting = false;
         auto& textProperties = textComponent->GetProperties();
-        if (textProperties.mTopGradientColorSubtraction.HasValue()) {
-            sortKey |= topGradientTextShiftedMask;
-        } else if (textProperties.mMidGradientColorSubtraction.HasValue()) {
-            sortKey |= midGradientTextShiftedMask;
-        } else {
-            sortKey |= normalTextShiftedMask;
+        if (textProperties.mSecondShadow == TextShadow::Yes) {
+            auto sortKey = static_cast<uint64_t>(TextKind::SecondShadow) << textKindShift;
+            AddEntry(sortKey, isDepthWriting, sceneObject);
         }
         
-        sortKey |= static_cast<uint64_t>(ShaderId::Other) << shaderIdShift;
-    } else {
-        // Nothing to render for this scene object.
-        return;
+        if (textProperties.mShadow == TextShadow::Yes) {
+            auto sortKey = static_cast<uint64_t>(TextKind::Shadow) << textKindShift;
+            AddEntry(sortKey, isDepthWriting, sceneObject);
+        }
+        
+        if (textProperties.mSpecular == TextSpecular::Yes) {
+            auto sortKey = static_cast<uint64_t>(TextKind::Specular) << textKindShift;
+            AddEntry(sortKey, isDepthWriting, sceneObject);
+        }
+
+        auto sortKey = static_cast<uint64_t>(ToTextShaderKind(textProperties)) << textKindShift;
+        AddEntry(sortKey, isDepthWriting, sceneObject);
+    }
+}
+
+void RenderQueue::AddEntry(uint64_t sortKey, bool isDepthWriting, const SceneObject& sceneObject) {
+    if (isDepthWriting) {
+        sortKey |= depthWriteShiftedMask;
     }
 
     Entry entry {.mSortKey = sortKey, .mDistance = 0.0f, .mSceneObject = &sceneObject};

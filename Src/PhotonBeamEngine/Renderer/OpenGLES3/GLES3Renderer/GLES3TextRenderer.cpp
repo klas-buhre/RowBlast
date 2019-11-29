@@ -66,8 +66,10 @@ void GLES3TextRenderer::BuildShader(GLES3ShaderProgram& shader,
 void GLES3TextRenderer::RenderText(const std::string& text,
                                    Vec2 position,
                                    float slant,
+                                   RenderQueue::TextKind textKind,
+                                   const ColorProperties& colorProperties,
                                    const TextProperties& properties) {
-    auto& shaderProgram = GetShaderProgram(properties);
+    auto& shaderProgram = GetShaderProgram(textKind);
     auto& uniforms = shaderProgram.GetUniforms();
     auto& attributes = shaderProgram.GetAttributes();
     
@@ -94,18 +96,18 @@ void GLES3TextRenderer::RenderText(const std::string& text,
                               reinterpret_cast<const GLvoid*>(offset));
     }
     
-    glUniform4fv(uniforms.mTextColor, 1, properties.mColor.Pointer());
+    glUniform4fv(uniforms.mTextColor, 1, colorProperties.mColor.Pointer());
     
-    if (properties.mTopGradientColorSubtraction.HasValue()) {
+    if (colorProperties.mTopGradientColorSubtraction.HasValue()) {
         glUniform3fv(uniforms.mTextTopColorSubtraction,
                      1,
-                     properties.mTopGradientColorSubtraction.GetValue().Pointer());
+                     colorProperties.mTopGradientColorSubtraction.GetValue().Pointer());
     }
 
-    if (properties.mMidGradientColorSubtraction.HasValue()) {
+    if (colorProperties.mMidGradientColorSubtraction.HasValue()) {
         glUniform3fv(uniforms.mTextMidColorSubtraction,
                      1,
-                     properties.mMidGradientColorSubtraction.GetValue().Pointer());
+                     colorProperties.mMidGradientColorSubtraction.GetValue().Pointer());
     }
     
     switch (properties.mAlignment) {
@@ -194,19 +196,22 @@ void GLES3TextRenderer::WriteVertex(const Vec2& position,
     ++mNumVertices;
 }
 
-GLES3ShaderProgram& GLES3TextRenderer::GetShaderProgram(const TextProperties& textProperties) {
-    if (textProperties.mTopGradientColorSubtraction.HasValue() &&
-        textProperties.mMidGradientColorSubtraction.HasValue()) {
-        
-        return mTextDoubleGradientShader;
-    }
-
-    if (textProperties.mTopGradientColorSubtraction.HasValue()) {
-        return mTextTopGradientShader;
-    }
-
-    if (textProperties.mMidGradientColorSubtraction.HasValue()) {
-        return mTextMidGradientShader;
+GLES3ShaderProgram& GLES3TextRenderer::GetShaderProgram(RenderQueue::TextKind textKind) {
+    switch (textKind) {
+        case RenderQueue::TextKind::DoubleGradientShader:
+            return mTextDoubleGradientShader;
+        case RenderQueue::TextKind::TopGradientShader:
+            return mTextTopGradientShader;
+        case RenderQueue::TextKind::MidGradientShader:
+            return mTextMidGradientShader;
+        case RenderQueue::TextKind::PlainShader:
+        case RenderQueue::TextKind::Specular:
+        case RenderQueue::TextKind::Shadow:
+        case RenderQueue::TextKind::SecondShadow:
+            return mTextShader;
+        case RenderQueue::TextKind::None:
+            assert(false);
+            break;
     }
 
     return mTextShader;

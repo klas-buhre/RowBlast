@@ -85,9 +85,6 @@ Ongoing tasks:
               TODO:
                 -Add a points text animation.
                     -The combo text animation can be a bit deferred.
-                    -Optimize the text rendering with fewer shader uses when there are many
-                     text objects with shadows, gradients and specular etc... Also, the top
-                     gradient text is not in the RenderEntry yet.
                     -Claring rows might give points according to how many blocks they contain.
                     -When calculating the extra points then the num moves left could count
                      down and a points text animatioin could appear below the upper hud

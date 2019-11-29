@@ -118,9 +118,12 @@ namespace {
         GLES3ShaderProgram& GetShader(ShaderId shaderId);
         void RenderText(const std::string& text,
                         const Vec2& position,
+                        RenderQueue::TextKind textKind,
                         const TextProperties& properties);
         void RenderTextImpl(const std::string& text,
                             const Vec2& position,
+                            RenderQueue::TextKind textKind,
+                            const GLES3TextRenderer::ColorProperties& colorProperties,
                             const TextProperties& properties);
         void Render(const RenderPass& renderPass, DistanceFunction distanceFunction);
         Vec2 CalculateTextHudPosition(const TextComponent& textComponent);
@@ -705,10 +708,14 @@ void GLES3Renderer::Render(const RenderPass& renderPass, DistanceFunction distan
             RenderObject(*renderable, sceneObject->GetMatrix());
         }
         
-        if (renderEntry.HasTextComponent()) {
+        auto textKind = renderEntry.GetTextKind();
+        if (textKind != RenderQueue::TextKind::None) {
             if (auto* textComponent = sceneObject->GetComponent<TextComponent>()) {
                 auto textPosition = CalculateTextHudPosition(*textComponent);
-                RenderText(textComponent->GetText(), textPosition, textComponent->GetProperties());
+                RenderText(textComponent->GetText(),
+                           textPosition,
+                           textKind,
+                           textComponent->GetProperties());
             }
         }
         
@@ -889,47 +896,84 @@ void GLES3Renderer::SetVbo(const RenderableObject& renderableObject,
 
 void GLES3Renderer::RenderText(const std::string& text,
                                const Vec2& position,
+                               RenderQueue::TextKind textKind,
                                const TextProperties& properties) {
-    auto textPosition = position;
+    auto textPosition = properties.mShadow == TextShadow::Yes ?
+                        position + properties.mShadowOffset * properties.mScale :
+                        position;
 
-    if (properties.mSecondShadow == TextShadow::Yes) {
-        TextProperties shadowProperties {properties};
-        shadowProperties.mColor = properties.mSecondShadowColor;
-        shadowProperties.mMidGradientColorSubtraction = Optional<Vec3> {};
-        shadowProperties.mTopGradientColorSubtraction = Optional<Vec3> {};
-
-        RenderTextImpl(text,
-                       position - properties.mSecondShadowOffset * properties.mScale,
-                       shadowProperties);
+    switch (textKind) {
+        case RenderQueue::TextKind::DoubleGradientShader: {
+            GLES3TextRenderer::ColorProperties colorProperties {
+                .mColor = properties.mColor,
+                .mTopGradientColorSubtraction = properties.mTopGradientColorSubtraction,
+                .mMidGradientColorSubtraction = properties.mMidGradientColorSubtraction
+            };
+            RenderTextImpl(text, textPosition, textKind, colorProperties, properties);
+            break;
+        }
+        case RenderQueue::TextKind::TopGradientShader: {
+            GLES3TextRenderer::ColorProperties colorProperties {
+                .mColor = properties.mColor,
+                .mTopGradientColorSubtraction = properties.mTopGradientColorSubtraction
+            };
+            RenderTextImpl(text, textPosition, textKind, colorProperties, properties);
+            break;
+        }
+        case RenderQueue::TextKind::MidGradientShader: {
+            GLES3TextRenderer::ColorProperties colorProperties {
+                .mColor = properties.mColor,
+                .mMidGradientColorSubtraction = properties.mMidGradientColorSubtraction
+            };
+            RenderTextImpl(text, textPosition, textKind, colorProperties, properties);
+            break;
+        }
+        case RenderQueue::TextKind::PlainShader: {
+            GLES3TextRenderer::ColorProperties colorProperties {
+                .mColor = properties.mColor
+            };
+            RenderTextImpl(text, textPosition, textKind, colorProperties, properties);
+            break;
+        }
+        case RenderQueue::TextKind::Specular: {
+            GLES3TextRenderer::ColorProperties colorProperties {
+                .mColor = properties.mSpecularColor
+            };
+            RenderTextImpl(text,
+                           textPosition + properties.mSpecularOffset * properties.mScale,
+                           textKind,
+                           colorProperties,
+                           properties);
+            break;
+        }
+        case RenderQueue::TextKind::Shadow: {
+            GLES3TextRenderer::ColorProperties colorProperties {
+                .mColor = properties.mShadowColor
+            };
+            RenderTextImpl(text, position, textKind, colorProperties, properties);
+            break;
+        }
+        case RenderQueue::TextKind::SecondShadow: {
+            GLES3TextRenderer::ColorProperties colorProperties {
+                .mColor = properties.mSecondShadowColor
+            };
+            RenderTextImpl(text,
+                           position - properties.mSecondShadowOffset * properties.mScale,
+                           textKind,
+                           colorProperties,
+                           properties);
+            break;
+        }
+        case RenderQueue::TextKind::None:
+            assert(false);
+            break;
     }
-
-    if (properties.mShadow == TextShadow::Yes) {
-        TextProperties shadowProperties {properties};
-        shadowProperties.mColor = properties.mShadowColor;
-        shadowProperties.mMidGradientColorSubtraction = Optional<Vec3> {};
-        shadowProperties.mTopGradientColorSubtraction = Optional<Vec3> {};
-
-        RenderTextImpl(text, position, shadowProperties);
-        
-        textPosition = position + properties.mShadowOffset * properties.mScale;
-    }
-    
-    if (properties.mSpecular == TextSpecular::Yes) {
-        TextProperties specularProperties {properties};
-        specularProperties.mColor = properties.mSpecularColor;
-        specularProperties.mMidGradientColorSubtraction = Optional<Vec3> {};
-        specularProperties.mTopGradientColorSubtraction = Optional<Vec3> {};
-
-        RenderTextImpl(text,
-                       textPosition + properties.mSpecularOffset * properties.mScale,
-                       specularProperties);
-    }
-
-    RenderTextImpl(text, textPosition, properties);
 }
 
 void GLES3Renderer::RenderTextImpl(const std::string& text,
                                    const Vec2& position,
+                                   RenderQueue::TextKind textKind,
+                                   const GLES3TextRenderer::ColorProperties& colorProperties,
                                    const TextProperties& properties) {
     auto pixelX =
         mRenderBufferSize.x / 2.0f + mRenderBufferSize.x * position.x / mHudFrustum.mSize.x;
@@ -947,9 +991,14 @@ void GLES3Renderer::RenderTextImpl(const std::string& text,
     auto italicSlant =
         mRenderBufferSize.x * properties.mItalicSlant * properties.mScale / mHudFrustum.mSize.x;
     
-    mTextRenderer->RenderText(text, pixelPosition, italicSlant, properties);
+    mTextRenderer->RenderText(text,
+                              pixelPosition,
+                              italicSlant,
+                              textKind,
+                              colorProperties,
+                              properties);
 }
-
+                        
 Vec2 GLES3Renderer::CalculateTextHudPosition(const TextComponent& textComponent) {
     auto& sceneObject = textComponent.GetSceneObject();
     
