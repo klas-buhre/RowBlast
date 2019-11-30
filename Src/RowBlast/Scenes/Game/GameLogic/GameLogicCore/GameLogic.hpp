@@ -210,6 +210,7 @@ namespace RowBlast {
         };
 
         Result SpawnFallingPiece(FallingPieceSpawnReason fallingPieceSpawnReason);
+        void NotifyListenersOfSpawnPiece(FallingPieceSpawnReason fallingPieceSpawnReason);
         const Piece& CalculatePieceType(FallingPieceSpawnReason fallingPieceSpawnReason);
         void SetPreviewPiece(PreviewPieceIndex previewPieceIndex,
                              const Piece* pieceType,

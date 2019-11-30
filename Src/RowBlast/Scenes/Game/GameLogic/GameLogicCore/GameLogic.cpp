@@ -233,7 +233,7 @@ GameLogic::Result GameLogic::SpawnFallingPiece(FallingPieceSpawnReason fallingPi
     }
     
     UpdateLevelProgress();
-    mScoreManager.OnSpawnPiece();
+    NotifyListenersOfSpawnPiece(fallingPieceSpawnReason);
     
     if (mNumObjectsLeftToClear == 0) {
         return Result::LevelCompleted;
@@ -273,6 +273,21 @@ GameLogic::Result GameLogic::SpawnFallingPiece(FallingPieceSpawnReason fallingPi
     }
     
     return Result::None;
+}
+
+void GameLogic::NotifyListenersOfSpawnPiece(FallingPieceSpawnReason fallingPieceSpawnReason) {
+    mScoreManager.OnSpawnPiece();
+    
+    switch (fallingPieceSpawnReason) {
+        case FallingPieceSpawnReason::NextMove:
+            mMediumText.OnSpawnPiece();
+            break;
+        case FallingPieceSpawnReason::UndoMove:
+            mMediumText.OnSpawnPieceAfterUndoMove();
+            break;
+        default:
+            break;
+    }
 }
 
 const Piece& GameLogic::CalculatePieceType(FallingPieceSpawnReason fallingPieceSpawnReason) {

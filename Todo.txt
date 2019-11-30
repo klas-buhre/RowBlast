@@ -84,9 +84,6 @@ Ongoing tasks:
         -3. Star meter logic.                                                       ~3 days
               TODO:
                 -Add a points text animation.
-                    -The combo text animation can be deferred to the next piece spawn and
-                     appear together with any Awesome or Fantastic message at spawn.
-                     Add an Eventbus?
                     -Claring rows might give points according to how many blocks they contain.
                     -When calculating the extra points then the num moves left could count
                      down and a points text animatioin could appear below the upper hud

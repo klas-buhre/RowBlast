@@ -143,13 +143,25 @@ void ScoreManager::Init() {
     mNumCombos = 0;
     mPreviousNumCombos = 0;
     mNumCascades = 0;
+    mNumPointsFromBombsAndLasersThisMove = 0;
 }
 
 void ScoreManager::OnSpawnPiece() {
-    DetectCascade();
+    if (mNumCascades >= 3) {
+        mMediumText.StartFantasticMessage();
+    } else if (mNumCascades >= 2) {
+        mMediumText.StartAwesomeMessage();
+    }
+    
+    if (mNumPointsFromBombsAndLasersThisMove > 220) {
+        mMediumText.StartFantasticMessage();
+    } else if (mNumPointsFromBombsAndLasersThisMove > 170) {
+        mMediumText.StartAwesomeMessage();
+    }
     
     mState = State::PieceSpawned;
     mNumCascades = 0;
+    mNumPointsFromBombsAndLasersThisMove = 0;
 }
 
 void ScoreManager::OnClearedFilledRows(const Field::RemovedSubCells& removedSubCells,
@@ -181,7 +193,7 @@ void ScoreManager::OnClearedFilledRowsInPieceSpawnedState(int numClearedRows,
         auto points = clearOneRowPoints * numClearedRows + mNumCombos * comboIncreasePoints;
         mGameLogic.IncreaseScore(points, scoreTextPosition);
         if (mNumCombos >= 1) {
-            mMediumText.StartComboMessage(mNumCombos);
+            mMediumText.StartDeferredComboMessage(mNumCombos);
         }
     }
     
@@ -215,14 +227,6 @@ void ScoreManager::OnClearedFourRows(const Pht::Vec2& scoreTextPosition) {
     mMediumText.StartAwesomeMessage();
 }
 
-void ScoreManager::DetectCascade() {
-    if (mNumCascades >= 3) {
-        mMediumText.StartFantasticMessage();
-    } else if (mNumCascades >= 2) {
-        mMediumText.StartAwesomeMessage();
-    }
-}
-
 void ScoreManager::OnClearedNoFilledRows() {
     mPreviousNumCombos = mNumCombos;
     mNumCombos = 0;
@@ -232,6 +236,7 @@ void ScoreManager::OnBombExplosionFinished(float numBlocksCleared, const Pht::IV
     if (numBlocksCleared > 0.0f) {
         Pht::Vec2 position {static_cast<float>(gridPosition.x), static_cast<float>(gridPosition.y)};
         auto points = static_cast<int>(numBlocksCleared * clearBlockPoints);
+        mNumPointsFromBombsAndLasersThisMove += points;
         mGameLogic.IncreaseScore(points, position);
     }
 }
@@ -240,6 +245,7 @@ void ScoreManager::OnLaserFinished(float numBlocksCleared, const Pht::IVec2& gri
     if (numBlocksCleared > 0.0f) {
         Pht::Vec2 position {static_cast<float>(gridPosition.x), static_cast<float>(gridPosition.y)};
         auto points = static_cast<int>(numBlocksCleared * clearBlockPoints);
+        mNumPointsFromBombsAndLasersThisMove += points;
         mGameLogic.IncreaseScore(points, position, laserScoreTextDelay);
     }
 }

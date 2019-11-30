@@ -148,13 +148,10 @@ void MediumText::Init() {
     HideAllTextObjects();
 }
 
-void MediumText::StartComboMessage(int numCombos) {
-    if (IsFantasticTextActive() || IsAwesomeTextActive()) {
-        return;
-    }
-    
+void MediumText::StartDeferredComboMessage(int numCombos) {
+    mDeferredTextSceneObject = mComboTextSceneObject;
+
     auto& audio = mEngine.GetAudio();
-    
     if (numCombos >= 9) {
         audio.PlaySound(static_cast<Pht::AudioResourceId>(SoundId::Fantastic));
     } else if (numCombos >= 7) {
@@ -164,9 +161,6 @@ void MediumText::StartComboMessage(int numCombos) {
     } else if (numCombos >= 3) {
         audio.PlaySound(static_cast<Pht::AudioResourceId>(SoundId::Combo1));
     }
-
-    Start(*mComboTextSceneObject);
-    mTwinkleParticleEffect->GetTransform().SetPosition({-3.15f, 0.3f, UiLayer::text});
     
     const auto bufSize = 64;
     char buffer[bufSize];
@@ -225,6 +219,16 @@ void MediumText::StartNoRoomMessage() {
     mTwinkleParticleEffect->GetTransform().SetPosition({-3.0f, 0.55f, UiLayer::text});
 }
 
+bool MediumText::StartComboMessage() {
+    if (IsFantasticTextActive() || IsAwesomeTextActive()) {
+        return false;
+    }
+
+    Start(*mComboTextSceneObject);
+    mTwinkleParticleEffect->GetTransform().SetPosition({-3.15f, 0.3f, UiLayer::text});
+    return true;
+}
+
 void MediumText::Start(Pht::SceneObject& textSceneObject) {
     mContainerSceneObject->SetIsVisible(true);
     mContainerSceneObject->SetIsStatic(false);
@@ -246,6 +250,22 @@ void MediumText::Start(Pht::SceneObject& textSceneObject) {
     mElapsedTime = 0.0f;
     mContainerSceneObject->GetTransform().SetPosition(startPosition);
     Pht::SceneObjectUtils::ScaleRecursively(*mContainerSceneObject, 0.0f);
+}
+
+void MediumText::OnSpawnPiece() {
+    TryStartingDeferredMessage();
+}
+
+void MediumText::OnSpawnPieceAfterUndoMove() {
+    mDeferredTextSceneObject = nullptr;
+}
+
+void MediumText::TryStartingDeferredMessage() {
+    if (mDeferredTextSceneObject == mComboTextSceneObject) {
+        if (StartComboMessage()) {
+            mDeferredTextSceneObject = nullptr;
+        }
+    }
 }
 
 void MediumText::Update(float dt) {
@@ -302,6 +322,7 @@ void MediumText::UpdateInSlidingOutState(float dt) {
         mContainerSceneObject->SetIsVisible(false);
         mContainerSceneObject->SetIsStatic(true);
         HideAllTextObjects();
+        TryStartingDeferredMessage();
     } else {
         mVelocity += acceleration * dt;
         mTextSlide += mVelocity * dt;

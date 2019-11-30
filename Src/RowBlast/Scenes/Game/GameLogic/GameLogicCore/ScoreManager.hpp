@@ -58,6 +58,7 @@ namespace RowBlast {
         int mNumCombos {0};
         int mPreviousNumCombos {0};
         int mNumCascades {0};
+        int mNumPointsFromBombsAndLasersThisMove {0};
     };
 }
 

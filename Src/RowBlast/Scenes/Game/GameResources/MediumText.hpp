@@ -25,12 +25,14 @@ namespace RowBlast {
                    const CommonResources& commonResources);
         
         void Init();
-        void StartComboMessage(int numCombos);
+        void StartDeferredComboMessage(int numCombos);
         void StartAwesomeMessage();
         void StartFantasticMessage();
         void StartWillUndoMessage();
         void StartUndoingMessage();
         void StartNoRoomMessage();
+        void OnSpawnPiece();
+        void OnSpawnPieceAfterUndoMove();
         void Update(float dt);
         bool IsAwesomeTextActive() const;
         bool IsFantasticTextActive() const;
@@ -40,6 +42,8 @@ namespace RowBlast {
                                      const Pht::Vec2& position,
                                      const std::string& text);
         void CreateTwinkleParticleEffect(Pht::IEngine& engine);
+        void TryStartingDeferredMessage();
+        bool StartComboMessage();
         void Start(Pht::SceneObject& textSceneObject);
         void UpdateInScalingInState(float dt);
         void UpdateInDisplayingTextState(float dt);
@@ -62,6 +66,7 @@ namespace RowBlast {
         std::vector<std::unique_ptr<Pht::SceneObject>> mTextSceneObjects;
         Pht::SceneObject* mContainerSceneObject {nullptr};
         Pht::SceneObject* mActiveTextSceneObject {nullptr};
+        Pht::SceneObject* mDeferredTextSceneObject {nullptr};
         Pht::SceneObject* mComboTextSceneObject {nullptr};
         Pht::SceneObject* mAwesomeTextSceneObject {nullptr};
         Pht::SceneObject* mFantasticTextSceneObject {nullptr};
