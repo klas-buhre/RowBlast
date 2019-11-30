@@ -74,7 +74,7 @@ GameController::GameController(Pht::IEngine& engine,
     mFieldBottomGlow {engine, mScene, mScrollController},
     mSlidingText {engine, mScene, commonResources, mLevelResources},
     mScoreTexts {mScene, commonResources},
-    mSmallText {engine, mScene, commonResources},
+    mMediumText {engine, mScene, commonResources},
     mFallingPieceScaleAnimation {mScene},
     mTutorial {
         engine,
@@ -102,7 +102,7 @@ GameController::GameController(Pht::IEngine& engine,
         mShield,
         mValidAreaAnimation,
         mScoreTexts,
-        mSmallText,
+        mMediumText,
         mGameViewControllers.GetGameHudController(),
         mTutorial,
         userServices.GetSettingsService()
@@ -137,7 +137,7 @@ GameController::GameController(Pht::IEngine& engine,
         mScene,
         mGameViewControllers,
         mSlidingText,
-        mSmallText,
+        mMediumText,
         mGameLogic,
         mUserServices,
         commonResources,
@@ -175,7 +175,7 @@ void GameController::Init(int levelId) {
     mDraggedPieceAnimation.Init();
     mSlidingText.Init();
     mScoreTexts.Init();
-    mSmallText.Init();
+    mMediumText.Init();
     mBombsAnimation.Init();
     mAsteroidAnimation.Init();
     mFallingPieceScaleAnimation.Init();
@@ -258,7 +258,7 @@ GameController::Command GameController::UpdateGame() {
     mAddingMovesAnimation.Update(dt);
     mBombsAnimation.Update(dt);
     mScoreTexts.Update(dt);
-    mSmallText.Update(dt);
+    mMediumText.Update(dt);
     mTutorial.Update();
     
     mScenePlayingField.Update();
@@ -383,9 +383,9 @@ void GameController::UpdateGameMenu() {
         case GameMenuController::Result::ResumeGameAfterUndo:
             if (mIsInBetweenMoves) {
                 mUndoMovePending = true;
-                mSmallText.StartWillUndoMessage();
+                mMediumText.StartWillUndoMessage();
             } else {
-                mSmallText.StartUndoingMessage();
+                mMediumText.StartUndoingMessage();
             }
             GoToPlayingState();
             break;

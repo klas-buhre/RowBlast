@@ -6,7 +6,7 @@
 #include "IAudio.hpp"
 
 // Game includes.
-#include "SmallText.hpp"
+#include "MediumText.hpp"
 #include "EffectManager.hpp"
 #include "AudioResources.hpp"
 #include "IGameLogic.hpp"
@@ -131,11 +131,11 @@ namespace {
 
 ScoreManager::ScoreManager(Pht::IEngine& engine,
                            IGameLogic& gameLogic,
-                           SmallText& smallTextAnimation,
+                           MediumText& mediumTextAnimation,
                            EffectManager& effectManager) :
     mEngine {engine},
     mGameLogic {gameLogic},
-    mSmallText {smallTextAnimation},
+    mMediumText {mediumTextAnimation},
     mEffectManager {effectManager} {}
 
 void ScoreManager::Init() {
@@ -181,7 +181,7 @@ void ScoreManager::OnClearedFilledRowsInPieceSpawnedState(int numClearedRows,
         auto points = clearOneRowPoints * numClearedRows + mNumCombos * comboIncreasePoints;
         mGameLogic.IncreaseScore(points, scoreTextPosition);
         if (mNumCombos >= 1) {
-            mSmallText.StartComboMessage(mNumCombos);
+            mMediumText.StartComboMessage(mNumCombos);
         }
     }
     
@@ -205,21 +205,21 @@ void ScoreManager::OnClearedFilledRowsInCascadingState(int numClearedRows,
 void ScoreManager::OnClearedFiveRows(const Pht::Vec2& scoreTextPosition) {
     auto points = clearFiveRowsPoints + mNumCombos * comboIncreasePoints;
     mGameLogic.IncreaseScore(points, scoreTextPosition);
-    mSmallText.StartFantasticMessage();
+    mMediumText.StartFantasticMessage();
     mEffectManager.StartSmallCameraShake();
 }
 
 void ScoreManager::OnClearedFourRows(const Pht::Vec2& scoreTextPosition) {
     auto points = clearFourRowsPoints + mNumCombos * comboIncreasePoints;
     mGameLogic.IncreaseScore(points, scoreTextPosition);
-    mSmallText.StartAwesomeMessage();
+    mMediumText.StartAwesomeMessage();
 }
 
 void ScoreManager::DetectCascade() {
     if (mNumCascades >= 3) {
-        mSmallText.StartFantasticMessage();
+        mMediumText.StartFantasticMessage();
     } else if (mNumCascades >= 2) {
-        mSmallText.StartAwesomeMessage();
+        mMediumText.StartAwesomeMessage();
     }
 }
 

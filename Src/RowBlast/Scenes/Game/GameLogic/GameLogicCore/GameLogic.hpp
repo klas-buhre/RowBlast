@@ -44,7 +44,7 @@ namespace RowBlast {
     class FallingPieceScaleAnimation;
     class Shield;
     class ScoreTexts;
-    class SmallText;
+    class MediumText;
     class ValidAreaAnimation;
     
     enum class PreviewPieceAnimationToStart {
@@ -97,7 +97,7 @@ namespace RowBlast {
                   Shield& shieldAnimation,
                   ValidAreaAnimation& validAreaAnimation,
                   ScoreTexts& scoreTexts,
-                  SmallText& smallTextAnimation,
+                  MediumText& mediumTextAnimation,
                   GameHudController& gameHudController,
                   Tutorial& tutorial,
                   const SettingsService& settingsService);
@@ -303,7 +303,7 @@ namespace RowBlast {
         Shield& mShield;
         ValidAreaAnimation& mValidAreaAnimation;
         ScoreTexts& mScoreTexts;
-        SmallText& mSmallText;
+        MediumText& mMediumText;
         GameHudController& mGameHudController;
         GameScene& mScene;
         Tutorial& mTutorial;

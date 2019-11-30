@@ -31,7 +31,7 @@
 #include "FewMovesAlertAnimation.hpp"
 #include "AddingMovesAnimation.hpp"
 #include "SlidingText.hpp"
-#include "SmallText.hpp"
+#include "MediumText.hpp"
 #include "ScoreTexts.hpp"
 #include "BlastArea.hpp"
 #include "Shield.hpp"
@@ -191,7 +191,7 @@ namespace RowBlast {
         FieldBottomGlow mFieldBottomGlow;
         SlidingText mSlidingText;
         ScoreTexts mScoreTexts;
-        SmallText mSmallText;
+        MediumText mMediumText;
         FallingPieceScaleAnimation mFallingPieceScaleAnimation;
         Tutorial mTutorial;
         GameLogic mGameLogic;

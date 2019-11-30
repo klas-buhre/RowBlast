@@ -1,5 +1,5 @@
-#ifndef SmallText_hpp
-#define SmallText_hpp
+#ifndef MediumText_hpp
+#define MediumText_hpp
 
 #include <vector>
 #include <memory>
@@ -18,11 +18,11 @@ namespace RowBlast {
     class GameScene;
     class CommonResources;
     
-    class SmallText {
+    class MediumText {
     public:
-        SmallText(Pht::IEngine& engine,
-                  GameScene& scene,
-                  const CommonResources& commonResources);
+        MediumText(Pht::IEngine& engine,
+                   GameScene& scene,
+                   const CommonResources& commonResources);
         
         void Init();
         void StartComboMessage(int numCombos);

@@ -24,7 +24,7 @@
 #include "Shield.hpp"
 #include "ValidAreaAnimation.hpp"
 #include "ScoreTexts.hpp"
-#include "SmallText.hpp"
+#include "MediumText.hpp"
 #include "GameHudController.hpp"
 #include "Tutorial.hpp"
 #include "AudioResources.hpp"
@@ -84,7 +84,7 @@ GameLogic::GameLogic(Pht::IEngine& engine,
                      Shield& shieldAnimation,
                      ValidAreaAnimation& validAreaAnimation,
                      ScoreTexts& scoreTexts,
-                     SmallText& smallTextAnimation,
+                     MediumText& mediumTextAnimation,
                      GameHudController& gameHudController,
                      Tutorial& tutorial,
                      const SettingsService& settingsService) :
@@ -102,13 +102,13 @@ GameLogic::GameLogic(Pht::IEngine& engine,
     mShield {shieldAnimation},
     mValidAreaAnimation {validAreaAnimation},
     mScoreTexts {scoreTexts},
-    mSmallText {smallTextAnimation},
+    mMediumText {mediumTextAnimation},
     mGameHudController {gameHudController},
     mScene {gameScene},
     mTutorial {tutorial},
     mSettingsService {settingsService},
     mControlType {settingsService.GetControlType()},
-    mScoreManager {engine, *this, smallTextAnimation, effectManager},
+    mScoreManager {engine, *this, mediumTextAnimation, effectManager},
     mFieldGravity {field},
     mFieldExplosionsStates {
         engine,
@@ -209,7 +209,7 @@ GameLogic::Result GameLogic::Update(bool shouldUpdateLogic, bool shouldUndoMove)
                     }
                 }
                 if (mShouldUndoMove) {
-                    mSmallText.StartUndoingMessage();
+                    mMediumText.StartUndoingMessage();
                     UndoMove();
                     return Result::None;
                 }
@@ -1139,7 +1139,7 @@ void GameLogic::SwitchPiece() {
     if (!IsThereRoomToSwitchPiece(nextPieceType, nextPieceType.GetSpawnRotation()) ||
         !mTutorial.IsSwitchPieceAllowed()) {
 
-        mSmallText.StartNoRoomMessage();
+        mMediumText.StartNoRoomMessage();
         return;
     }
     
@@ -1266,7 +1266,7 @@ bool GameLogic::BeginDraggingPiece(PreviewPieceIndex draggedPieceIndex) {
     ShowDraggedPiece();
     auto& pieceType = mDraggedPiece->GetPieceType();
     if (!IsThereRoomToSwitchPiece(pieceType, mDraggedPiece->GetRotation())) {
-        mSmallText.StartNoRoomMessage();
+        mMediumText.StartNoRoomMessage();
         RemoveDraggedPiece();
         return false;
     }

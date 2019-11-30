@@ -23,7 +23,7 @@ namespace RowBlast {
     class GameScene;
     class GameViewControllers;
     class SlidingText;
-    class SmallText;
+    class MediumText;
     class ClearLastBlocksAnimation;
     class GameLogic;
     class UserServices;
@@ -38,7 +38,7 @@ namespace RowBlast {
                                  GameScene& gameScene,
                                  GameViewControllers& gameViewControllers,
                                  SlidingText& slidingTextAnimation,
-                                 SmallText& smallTextAnimation,
+                                 MediumText& mediumTextAnimation,
                                  GameLogic& gameLogic,
                                  UserServices& userServices,
                                  const CommonResources& commonResources,
@@ -80,7 +80,7 @@ namespace RowBlast {
         GameScene& mGameScene;
         GameViewControllers& mGameViewControllers;
         SlidingText& mSlidingText;
-        SmallText& mSmallText;
+        MediumText& mMediumText;
         GameLogic& mGameLogic;
         UserServices& mUserServices;
         const Level* mLevel {nullptr};

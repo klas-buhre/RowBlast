@@ -10,14 +10,14 @@ namespace Pht {
 
 namespace RowBlast {
     class IGameLogic;
-    class SmallText;
+    class MediumText;
     class EffectManager;
 
     class ScoreManager {
     public:
         ScoreManager(Pht::IEngine& engine,
                      IGameLogic& gameLogic,
-                     SmallText& smallTextAnimation,
+                     MediumText& mediumTextAnimation,
                      EffectManager& effectManager);
 
         void Init();
@@ -52,7 +52,7 @@ namespace RowBlast {
 
         Pht::IEngine& mEngine;
         IGameLogic& mGameLogic;
-        SmallText& mSmallText;
+        MediumText& mMediumText;
         EffectManager& mEffectManager;
         State mState {State::Inactive};
         int mNumCombos {0};

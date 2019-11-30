@@ -11,7 +11,7 @@
 // Game includes.
 #include "GameViewControllers.hpp"
 #include "SlidingText.hpp"
-#include "SmallText.hpp"
+#include "MediumText.hpp"
 #include "GameLogic.hpp"
 #include "UserServices.hpp"
 #include "Level.hpp"
@@ -50,7 +50,7 @@ LevelCompletedController::LevelCompletedController(Pht::IEngine& engine,
                                                    GameScene& gameScene,
                                                    GameViewControllers& gameViewControllers,
                                                    SlidingText& slidingTextAnimation,
-                                                   SmallText& smallTextAnimation,
+                                                   MediumText& mediumTextAnimation,
                                                    GameLogic& gameLogic,
                                                    UserServices& userServices,
                                                    const CommonResources& commonResources,
@@ -61,7 +61,7 @@ LevelCompletedController::LevelCompletedController(Pht::IEngine& engine,
     mGameScene {gameScene},
     mGameViewControllers {gameViewControllers},
     mSlidingText {slidingTextAnimation},
-    mSmallText {smallTextAnimation},
+    mMediumText {mediumTextAnimation},
     mGameLogic {gameLogic},
     mUserServices {userServices},
     mFadeEffect {
@@ -113,7 +113,7 @@ void LevelCompletedController::Start() {
     mElapsedTime = 0.0f;
     mState = State::Waiting;
     
-    if (mSmallText.IsAwesomeTextActive() || mSmallText.IsFantasticTextActive()) {
+    if (mMediumText.IsAwesomeTextActive() || mMediumText.IsFantasticTextActive()) {
         mWaitTime = smallTextAnimationWaintTime;
     } else {
         mWaitTime = waitTime;

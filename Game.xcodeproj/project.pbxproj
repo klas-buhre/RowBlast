@@ -44,7 +44,7 @@
 		17A75B5E23211A2C001BA90D /* Shield.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 17A75B4E23211A2C001BA90D /* Shield.cpp */; };
 		17A75B5F23211A2C001BA90D /* GameHudResources.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 17A75B5023211A2C001BA90D /* GameHudResources.cpp */; };
 		17A75B6023211A2C001BA90D /* SlidingText.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 17A75B5123211A2C001BA90D /* SlidingText.cpp */; };
-		17A75B6123211A2C001BA90D /* SmallText.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 17A75B5223211A2C001BA90D /* SmallText.cpp */; };
+		17A75B6123211A2C001BA90D /* MediumText.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 17A75B5223211A2C001BA90D /* MediumText.cpp */; };
 		17A75B6223211A2C001BA90D /* FieldGrid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 17A75B5523211A2C001BA90D /* FieldGrid.cpp */; };
 		17A75B6323211A2C001BA90D /* FieldBottomGlow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 17A75B5823211A2C001BA90D /* FieldBottomGlow.cpp */; };
 		17B29562231812C700F16DD9 /* DraggedPieceAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 17B29560231812C700F16DD9 /* DraggedPieceAnimation.cpp */; };
@@ -603,7 +603,7 @@
 		1787AB032378A9E100E3D314 /* terrain1_2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = terrain1_2.jpg; sourceTree = "<group>"; };
 		1787AB072379D2BD00E3D314 /* terrain1_2888.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = terrain1_2888.obj; sourceTree = "<group>"; };
 		17A75B4323211A2C001BA90D /* SlidingText.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SlidingText.hpp; sourceTree = "<group>"; };
-		17A75B4423211A2C001BA90D /* SmallText.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SmallText.hpp; sourceTree = "<group>"; };
+		17A75B4423211A2C001BA90D /* MediumText.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MediumText.hpp; sourceTree = "<group>"; };
 		17A75B4523211A2C001BA90D /* ValidAreaAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ValidAreaAnimation.cpp; sourceTree = "<group>"; };
 		17A75B4623211A2C001BA90D /* GhostPieceBlocks.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GhostPieceBlocks.cpp; sourceTree = "<group>"; };
 		17A75B4723211A2C001BA90D /* FieldGrid.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FieldGrid.hpp; sourceTree = "<group>"; };
@@ -617,7 +617,7 @@
 		17A75B4F23211A2C001BA90D /* FieldBorder.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FieldBorder.hpp; sourceTree = "<group>"; };
 		17A75B5023211A2C001BA90D /* GameHudResources.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameHudResources.cpp; sourceTree = "<group>"; };
 		17A75B5123211A2C001BA90D /* SlidingText.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SlidingText.cpp; sourceTree = "<group>"; };
-		17A75B5223211A2C001BA90D /* SmallText.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SmallText.cpp; sourceTree = "<group>"; };
+		17A75B5223211A2C001BA90D /* MediumText.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MediumText.cpp; sourceTree = "<group>"; };
 		17A75B5323211A2C001BA90D /* ValidAreaAnimation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ValidAreaAnimation.hpp; sourceTree = "<group>"; };
 		17A75B5423211A2C001BA90D /* GhostPieceBlocks.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GhostPieceBlocks.hpp; sourceTree = "<group>"; };
 		17A75B5523211A2C001BA90D /* FieldGrid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FieldGrid.cpp; sourceTree = "<group>"; };
@@ -1584,6 +1584,8 @@
 				17A75B4D23211A2C001BA90D /* GameHudResources.hpp */,
 				17A75B4623211A2C001BA90D /* GhostPieceBlocks.cpp */,
 				17A75B5423211A2C001BA90D /* GhostPieceBlocks.hpp */,
+				17A75B5223211A2C001BA90D /* MediumText.cpp */,
+				17A75B4423211A2C001BA90D /* MediumText.hpp */,
 				17A75B4823211A2C001BA90D /* PieceResources.cpp */,
 				17A75B5623211A2C001BA90D /* PieceResources.hpp */,
 				173F538523858C8A0092483E /* ScoreTexts.cpp */,
@@ -1592,8 +1594,6 @@
 				17A75B4C23211A2C001BA90D /* Shield.hpp */,
 				17A75B5123211A2C001BA90D /* SlidingText.cpp */,
 				17A75B4323211A2C001BA90D /* SlidingText.hpp */,
-				17A75B5223211A2C001BA90D /* SmallText.cpp */,
-				17A75B4423211A2C001BA90D /* SmallText.hpp */,
 				17A75B4523211A2C001BA90D /* ValidAreaAnimation.cpp */,
 				17A75B5323211A2C001BA90D /* ValidAreaAnimation.hpp */,
 			);
@@ -3607,7 +3607,7 @@
 				62216C4121EB377F001CB9A1 /* LivesDialogController.cpp in Sources */,
 				62216A8121EB376E001CB9A1 /* PurchaseFailedDialogController.cpp in Sources */,
 				62216C3C21EB377F001CB9A1 /* MapPin.cpp in Sources */,
-				17A75B6123211A2C001BA90D /* SmallText.cpp in Sources */,
+				17A75B6123211A2C001BA90D /* MediumText.cpp in Sources */,
 				6220AF3C223527AC00D66C76 /* Animation.cpp in Sources */,
 				62216BC221EB377E001CB9A1 /* LaserDialogView.cpp in Sources */,
 				62216C3921EB377F001CB9A1 /* MapScene.cpp in Sources */,

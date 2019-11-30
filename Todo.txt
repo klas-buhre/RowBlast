@@ -93,8 +93,14 @@ Ongoing tasks:
                      when the moves reached zero and then the points move into the star
                      meter which would then go up at the same time.
                     -Maybe a short delay before clearing filled rows after piece lands?
+                     And a short particle effect in the filled row before the blocks gets
+                     thrown away?
             
-            
+        -3. When using drag controls, maybe the falling piece should only be        ~3 days
+            visible when the dragged piece is visible. At least it should
+            probably be like that if the drag controls and swipe controls are
+            split up like in the point in Maybe Section below.
+            when the dragged piece is not visible
         -3. The area covered by the piece path could be a bit brighter or darker.   ~3 days
             It would be visible when the dragged piece is over a valid move and
             the area would move when the dragged piece moves. The ghost piece
