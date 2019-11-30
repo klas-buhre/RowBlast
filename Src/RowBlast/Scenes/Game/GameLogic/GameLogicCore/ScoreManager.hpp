@@ -56,6 +56,7 @@ namespace RowBlast {
         EffectManager& mEffectManager;
         State mState {State::Inactive};
         int mNumCombos {0};
+        int mPreviousNumCombos {0};
         int mNumCascades {0};
     };
 }

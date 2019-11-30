@@ -722,6 +722,7 @@ void GameLogic::OnFallingPieceAnimationFinished(bool finalMovementWasADrop) {
 void GameLogic::LandFallingPiece(bool finalMovementWasADrop) {
     mField.SaveState();
     
+    auto clearedAnyFilledRows = false;
     auto& pieceType = mFallingPiece->GetPieceType();
     if (IsBomb(pieceType)) {
         if (finalMovementWasADrop) {
@@ -750,9 +751,8 @@ void GameLogic::LandFallingPiece(bool finalMovementWasADrop) {
             case Level::Objective::Clear:
             case Level::Objective::BringDownTheAsteroid: {
                 auto removedSubCells = mField.ClearFilledRows();
-                if (removedSubCells.IsEmpty()) {
-                    mScoreManager.OnClearedNoFilledRows();
-                } else {
+                if (!removedSubCells.IsEmpty()) {
+                    clearedAnyFilledRows = true;
                     mScoreManager.OnClearedFilledRows(removedSubCells, mFallingPiece->GetId());
                     mFlyingBlocksAnimation.AddBlockRows(removedSubCells);
                     mCollapsingFieldAnimation.GoToInactiveState();
@@ -769,6 +769,10 @@ void GameLogic::LandFallingPiece(bool finalMovementWasADrop) {
                 break;
             }
         }
+    }
+    
+    if (!clearedAnyFilledRows) {
+        mScoreManager.OnClearedNoFilledRows();
     }
     
     if (mLevel->GetObjective() == Level::Objective::BringDownTheAsteroid) {

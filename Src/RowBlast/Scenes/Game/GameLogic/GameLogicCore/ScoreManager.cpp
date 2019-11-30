@@ -141,6 +141,7 @@ ScoreManager::ScoreManager(Pht::IEngine& engine,
 void ScoreManager::Init() {
     mState = State::Inactive;
     mNumCombos = 0;
+    mPreviousNumCombos = 0;
     mNumCascades = 0;
 }
 
@@ -184,6 +185,7 @@ void ScoreManager::OnClearedFilledRowsInPieceSpawnedState(int numClearedRows,
         }
     }
     
+    mPreviousNumCombos = mNumCombos;
     ++mNumCombos;
     GoToCascadingState();
 }
@@ -222,6 +224,7 @@ void ScoreManager::DetectCascade() {
 }
 
 void ScoreManager::OnClearedNoFilledRows() {
+    mPreviousNumCombos = mNumCombos;
     mNumCombos = 0;
 }
 
@@ -250,9 +253,7 @@ void ScoreManager::OnFilledSlots(const Field::PieceFilledSlots& slotsCoveredByPi
 }
 
 void ScoreManager::OnUndoMove() {
-    if (mNumCombos > 0) {
-        --mNumCombos;
-    }
+    mNumCombos = mPreviousNumCombos;
 }
 
 void ScoreManager::GoToCascadingState() {
