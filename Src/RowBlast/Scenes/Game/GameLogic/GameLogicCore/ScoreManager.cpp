@@ -15,34 +15,12 @@ using namespace RowBlast;
 
 namespace {
     constexpr auto clearBlockPoints = 10;
-    constexpr auto clearOneRowPoints = 60;
-    constexpr auto clearOneRowInCascadePoints = 50;
+    constexpr auto clearOneRowInCascadeDeductPoints = 10;
     constexpr auto comboIncreasePoints = 40;
-    constexpr auto clearFiveRowsPoints = 2000;
-    constexpr auto clearFourRowsPoints = 1000;
-    constexpr auto fillSlotPoints = 15;
+    constexpr auto clearFourRowsIncreasePoints = 800;
+    constexpr auto clearFiveRowsIncreasePoints = 1800;
+    constexpr auto fillSlotPoints = 10;
     constexpr auto laserScoreTextDelay = 0.275f;
-    
-    int CalcNumRemovedRows(const Field::RemovedSubCells& removedSubCells) {
-        Pht::Optional<int> previousRowIndex;
-        auto numRemovedRows = 0;
-        
-        for (auto& subCell: removedSubCells) {
-            auto rowIndex = subCell.mGridPosition.y;
-            
-            if (previousRowIndex.HasValue()) {
-                if (previousRowIndex.GetValue() != rowIndex) {
-                    previousRowIndex = rowIndex;
-                    ++numRemovedRows;
-                }
-            } else {
-                previousRowIndex = rowIndex;
-                numRemovedRows = 1;
-            }
-        }
-        
-        return numRemovedRows;
-    }
     
     Pht::Vec2 CalcScoreTextPosition(const Field::RemovedSubCells& removedSubCells,
                                     Pht::Optional<int> landedPieceId) {
@@ -130,10 +108,12 @@ namespace {
 }
 
 ScoreManager::ScoreManager(Pht::IEngine& engine,
+                           const Field& field,
                            IGameLogic& gameLogic,
                            MediumText& mediumTextAnimation,
                            EffectManager& effectManager) :
     mEngine {engine},
+    mField {field},
     mGameLogic {gameLogic},
     mMediumText {mediumTextAnimation},
     mEffectManager {effectManager} {}
@@ -144,6 +124,9 @@ void ScoreManager::Init() {
     mPreviousNumCombos = 0;
     mNumCascades = 0;
     mNumPointsFromBombsAndLasersThisMove = 0;
+    
+    mClearOneRowPoints = clearBlockPoints * mField.GetNumColumns();
+    mClearOneRowInCascadePoints = mClearOneRowPoints - clearOneRowInCascadeDeductPoints;
 }
 
 void ScoreManager::OnSpawnPiece() {
@@ -167,7 +150,7 @@ void ScoreManager::OnSpawnPiece() {
 void ScoreManager::OnClearedFilledRows(const Field::RemovedSubCells& removedSubCells,
                                        Pht::Optional<int> landedPieceId) {
     PlayClearBlocksSound(mEngine);
-    auto numClearedRows = CalcNumRemovedRows(removedSubCells);
+    auto numClearedRows = removedSubCells.Size() / mField.GetNumColumns();
     auto scoreTextPosition = CalcScoreTextPosition(removedSubCells, landedPieceId);
 
     switch (mState) {
@@ -186,11 +169,11 @@ void ScoreManager::OnClearedFilledRows(const Field::RemovedSubCells& removedSubC
 void ScoreManager::OnClearedFilledRowsInPieceSpawnedState(int numClearedRows,
                                                           const Pht::Vec2& scoreTextPosition) {
     if (numClearedRows >= 5) {
-        OnClearedFiveRows(scoreTextPosition);
+        OnClearedFiveRows(scoreTextPosition, mNumCombos);
     } else if (numClearedRows >= 4) {
-        OnClearedFourRows(scoreTextPosition);
+        OnClearedFourRows(scoreTextPosition, mNumCombos);
     } else {
-        auto points = clearOneRowPoints * numClearedRows + mNumCombos * comboIncreasePoints;
+        auto points = mClearOneRowPoints * numClearedRows + mNumCombos * comboIncreasePoints;
         mGameLogic.IncreaseScore(points, scoreTextPosition);
         if (mNumCombos >= 1) {
             mMediumText.StartDeferredComboMessage(mNumCombos);
@@ -204,25 +187,30 @@ void ScoreManager::OnClearedFilledRowsInPieceSpawnedState(int numClearedRows,
 
 void ScoreManager::OnClearedFilledRowsInCascadingState(int numClearedRows,
                                                        const Pht::Vec2& scoreTextPosition) {
+    auto numCombos = mNumCombos > 0 ? mNumCombos - 1 : 0;
+    
     if (numClearedRows >= 5) {
-        OnClearedFiveRows(scoreTextPosition);
+        OnClearedFiveRows(scoreTextPosition, numCombos);
     } else if (numClearedRows >= 4) {
-        OnClearedFourRows(scoreTextPosition);
+        OnClearedFourRows(scoreTextPosition, numCombos);
     } else {
-        auto points = clearOneRowInCascadePoints * numClearedRows + mNumCombos * comboIncreasePoints;
+        auto points = mClearOneRowInCascadePoints * numClearedRows +
+                      numCombos * comboIncreasePoints;
         mGameLogic.IncreaseScore(points, scoreTextPosition);
     }
 }
 
-void ScoreManager::OnClearedFiveRows(const Pht::Vec2& scoreTextPosition) {
-    auto points = clearFiveRowsPoints + mNumCombos * comboIncreasePoints;
+void ScoreManager::OnClearedFiveRows(const Pht::Vec2& scoreTextPosition, int numCombos) {
+    auto points = mClearOneRowPoints * 5 + clearFiveRowsIncreasePoints +
+                  numCombos * comboIncreasePoints;
     mGameLogic.IncreaseScore(points, scoreTextPosition);
     mMediumText.StartFantasticMessage();
     mEffectManager.StartSmallCameraShake();
 }
 
-void ScoreManager::OnClearedFourRows(const Pht::Vec2& scoreTextPosition) {
-    auto points = clearFourRowsPoints + mNumCombos * comboIncreasePoints;
+void ScoreManager::OnClearedFourRows(const Pht::Vec2& scoreTextPosition, int numCombos) {
+    auto points = mClearOneRowPoints * 4 + clearFourRowsIncreasePoints +
+                  numCombos * comboIncreasePoints;
     mGameLogic.IncreaseScore(points, scoreTextPosition);
     mMediumText.StartAwesomeMessage();
 }

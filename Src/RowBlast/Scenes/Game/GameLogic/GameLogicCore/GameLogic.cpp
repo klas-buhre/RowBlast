@@ -108,7 +108,7 @@ GameLogic::GameLogic(Pht::IEngine& engine,
     mTutorial {tutorial},
     mSettingsService {settingsService},
     mControlType {settingsService.GetControlType()},
-    mScoreManager {engine, *this, mediumTextAnimation, effectManager},
+    mScoreManager {engine, field, *this, mediumTextAnimation, effectManager},
     mFieldGravity {field},
     mFieldExplosionsStates {
         engine,

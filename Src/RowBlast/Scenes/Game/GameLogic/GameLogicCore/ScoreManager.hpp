@@ -16,6 +16,7 @@ namespace RowBlast {
     class ScoreManager {
     public:
         ScoreManager(Pht::IEngine& engine,
+                     const Field& field,
                      IGameLogic& gameLogic,
                      MediumText& mediumTextAnimation,
                      EffectManager& effectManager);
@@ -40,8 +41,8 @@ namespace RowBlast {
                                                     const Pht::Vec2& scoreTextPosition);
         void OnClearedFilledRowsInCascadingState(int numClearedRows,
                                                  const Pht::Vec2& scoreTextPosition);
-        void OnClearedFiveRows(const Pht::Vec2& scoreTextPosition);
-        void OnClearedFourRows(const Pht::Vec2& scoreTextPosition);
+        void OnClearedFiveRows(const Pht::Vec2& scoreTextPosition, int numCombos);
+        void OnClearedFourRows(const Pht::Vec2& scoreTextPosition, int numCombos);
         void DetectCascade();
         
         enum class State {
@@ -51,6 +52,7 @@ namespace RowBlast {
         };
 
         Pht::IEngine& mEngine;
+        const Field& mField;
         IGameLogic& mGameLogic;
         MediumText& mMediumText;
         EffectManager& mEffectManager;
@@ -59,6 +61,8 @@ namespace RowBlast {
         int mPreviousNumCombos {0};
         int mNumCascades {0};
         int mNumPointsFromBombsAndLasersThisMove {0};
+        int mClearOneRowPoints {0};
+        int mClearOneRowInCascadePoints {0};
     };
 }
 
