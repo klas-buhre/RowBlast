@@ -133,7 +133,7 @@ namespace RowBlast {
         bool IsUndoMovePossible() const;
         void UndoMove();
         int GetMovesUsedIncludingCurrent() const;
-        int CalculateFinalScore();
+        int CalculateBonusPointsAtLevelCompleted() const;
         
         void SetMovesLeft(int movesLeft) {
             mMovesLeft = movesLeft;
@@ -197,6 +197,10 @@ namespace RowBlast {
         
         int GetScore() const {
             return mCurrentMove.mScore;
+        }
+        
+        void SetScore(int score) {
+            mCurrentMove.mScore = score;
         }
         
     private:

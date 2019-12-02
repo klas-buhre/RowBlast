@@ -81,13 +81,6 @@ Ongoing tasks:
             game, clear level, etc..). Maybe clean up blocks sound in audacity.
             The music track should be switched for the next attempt to clear a
             level after a failed attempt. Reduce music gain as well.
-        -3. Star meter logic.                                                       ~1 days
-              TODO:
-                -Add a points text animation.
-                    -When calculating the extra points then the num moves left could count
-                     down and a points text animatioin could appear below the upper hud
-                     when the moves reached zero and then the points move into the star
-                     meter which would then go up at the same time.
         -3. Maybe a short delay before clearing filled rows after piece lands?      ~2 days
             And a short particle effect with twinkles in the filled row before
             the blocks gets thrown away?

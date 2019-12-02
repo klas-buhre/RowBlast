@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1700B4C023943434006566EF /* FinalScoreAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1700B4BE23943434006566EF /* FinalScoreAnimation.cpp */; };
 		1711872E22EB9EB2009CC07F /* TutorialWindowView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1711872C22EB9EB2009CC07F /* TutorialWindowView.cpp */; };
 		1711873122EB9EC9009CC07F /* TutorialWindowController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1711872F22EB9EC9009CC07F /* TutorialWindowController.cpp */; };
 		1730C96F22EA2AFD003BD981 /* PlayOnYourOwnWindowView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1730C96D22EA2AFD003BD981 /* PlayOnYourOwnWindowView.cpp */; };
@@ -559,6 +560,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1700B4BE23943434006566EF /* FinalScoreAnimation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FinalScoreAnimation.cpp; sourceTree = "<group>"; };
+		1700B4BF23943434006566EF /* FinalScoreAnimation.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = FinalScoreAnimation.hpp; sourceTree = "<group>"; };
 		1711872C22EB9EB2009CC07F /* TutorialWindowView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TutorialWindowView.cpp; sourceTree = "<group>"; };
 		1711872D22EB9EB2009CC07F /* TutorialWindowView.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TutorialWindowView.hpp; sourceTree = "<group>"; };
 		1711872F22EB9EC9009CC07F /* TutorialWindowController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TutorialWindowController.cpp; sourceTree = "<group>"; };
@@ -1905,6 +1908,8 @@
 				62216AD821EB377E001CB9A1 /* ClearLastBlocksAnimation.hpp */,
 				62216AD221EB377E001CB9A1 /* ConfettiParticleEffect.cpp */,
 				62216AD421EB377E001CB9A1 /* ConfettiParticleEffect.hpp */,
+				1700B4BE23943434006566EF /* FinalScoreAnimation.cpp */,
+				1700B4BF23943434006566EF /* FinalScoreAnimation.hpp */,
 				62216AD621EB377E001CB9A1 /* FireworksParticleEffect.cpp */,
 				62216ACE21EB377E001CB9A1 /* FireworksParticleEffect.hpp */,
 				62216AD121EB377E001CB9A1 /* LevelCompletedController.cpp */,
@@ -3831,6 +3836,7 @@
 				6256983A2182392C003A3A9D /* Transform.cpp in Sources */,
 				623B94CE21F6357400B62D9B /* main.m in Sources */,
 				62216BBE21EB377E001CB9A1 /* TitleController.cpp in Sources */,
+				1700B4C023943434006566EF /* FinalScoreAnimation.cpp in Sources */,
 				62216A8D21EB376E001CB9A1 /* PurchasingService.cpp in Sources */,
 				623B949B21F0E62700B62D9B /* AboutMenuController.cpp in Sources */,
 				62216A8021EB376E001CB9A1 /* LevelGoalDialogView.cpp in Sources */,

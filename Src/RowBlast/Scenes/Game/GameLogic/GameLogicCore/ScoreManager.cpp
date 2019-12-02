@@ -254,9 +254,6 @@ void ScoreManager::GoToCascadingState() {
     mState = State::Cascading;
 }
 
-int ScoreManager::CalculateExtraPoints(int currentScore,
-                                       int numMovesLeft,
-                                       int numMovesAtLevelStart) {
-    auto factor = static_cast<float>(numMovesLeft) / static_cast<float>(numMovesAtLevelStart);
-    return factor * static_cast<float>(currentScore);
+int ScoreManager::CalculateBonusPointsAtLevelCompleted(int movesLeft) const {
+    return mClearOneRowPoints * movesLeft;
 }

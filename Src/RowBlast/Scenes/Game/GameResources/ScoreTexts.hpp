@@ -19,19 +19,27 @@ namespace RowBlast {
     
     class ScoreTexts {
     public:
-        ScoreTexts(GameScene& scene, const CommonResources& commonResources);
+        enum class SceneId {
+            Game,
+            LevelCompletedSubScene
+        };
+        
+        ScoreTexts(GameScene& scene, const CommonResources& commonResources, SceneId sceneId);
         
         void Init();
         void Start(int numPoints, const Pht::Vec2& position);
         void Start(int numPoints, const Pht::Vec2& position, float delay);
         void Update(float dt);
+        bool IsInactive() const;
         
     private:
+        Pht::SceneObject& GetContainer();
+        
         class ScoreText {
         public:
             ScoreText(GameScene& scene, const CommonResources& commonResources);
             
-            void Init();
+            void Init(Pht::SceneObject& parentObject);
             void Start(int numPoints, const Pht::Vec2& position, float delay);
             void Update(float dt);
             bool IsInactive() const;
@@ -61,6 +69,8 @@ namespace RowBlast {
             std::unique_ptr<Pht::SceneObject> mTextSceneObject;
         };
 
+        GameScene& mScene;
+        SceneId mSceneId {SceneId::Game};
         std::vector<std::unique_ptr<ScoreText>> mScoreTexts;
     };
 }

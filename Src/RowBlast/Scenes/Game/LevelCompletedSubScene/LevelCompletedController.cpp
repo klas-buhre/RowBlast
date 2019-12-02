@@ -25,10 +25,11 @@ namespace {
     constexpr auto fadeTime = 0.3f;
     constexpr auto effectsVolumeDepth = 20.0f;
     constexpr auto fireworksDuration = 2.0f;
-    constexpr auto smallTextAnimationWaintTime = 1.35f;
+    constexpr auto mediumTextAnimationWaintTime = 1.35f;
     constexpr auto waitTime = 0.95f;
     constexpr auto musicFadeOutTime = 1.2f;
     constexpr auto confettiWaitTime = 0.85f;
+    constexpr auto finalScoreWaitTime = 2.0f;
 
     const Pht::Vec3 initialUfoPosition {0.0f, 10.0f, 20.0f};
     const Pht::Vec3 ufoPosition {0.0f, 4.05f, 5.0f};
@@ -71,6 +72,7 @@ LevelCompletedController::LevelCompletedController(Pht::IEngine& engine,
         fade,
         -effectsVolumeDepth / 2.0f
     },
+    mFinalScoreAnimation {engine, gameLogic, gameScene, commonResources},
     mClearLastBlocksAnimation {field, flyingBlocksAnimation},
     mSlidingFieldAnimation {engine, gameScene},
     mFireworksParticleEffect {engine},
@@ -95,6 +97,7 @@ void LevelCompletedController::Init(const Level& level) {
     container.SetIsStatic(true);
     container.SetIsVisible(false);
     
+    mFinalScoreAnimation.Init();
     mFireworksParticleEffect.Init(container, effectsVolume);
     mConfettiParticleEffect.Init(container, effectsVolume);
     mStarsAnimation.Init();
@@ -114,7 +117,7 @@ void LevelCompletedController::Start() {
     mState = State::Waiting;
     
     if (mMediumText.IsAwesomeTextActive() || mMediumText.IsFantasticTextActive()) {
-        mWaitTime = smallTextAnimationWaintTime;
+        mWaitTime = mediumTextAnimationWaintTime;
     } else {
         mWaitTime = waitTime;
     }
@@ -142,8 +145,8 @@ void LevelCompletedController::GoToObjectiveAchievedAnimationState() {
     scene.GetRenderPass(static_cast<int>(GameScene::Layer::LevelCompletedFadeEffect))->SetIsEnabled(true);
     scene.GetRenderPass(static_cast<int>(GameScene::Layer::Stars))->SetIsEnabled(true);
     
+    auto finalScore = mGameLogic.GetScore() + mGameLogic.CalculateBonusPointsAtLevelCompleted();
     auto totalNumMovesUsed = mGameLogic.GetMovesUsedIncludingCurrent();
-    auto finalScore = mGameLogic.CalculateFinalScore();
     auto numStars = CalculateNumStars(finalScore, mLevel->GetStarLimits());
     mUserServices.CompleteLevel(mLevel->GetId(), totalNumMovesUsed, numStars);
     mNumStars = numStars;
@@ -212,31 +215,45 @@ void LevelCompletedController::UpdateInObjectiveAchievedAnimationState() {
     }
 
     UpdateObjectiveAchievedAnimation();
+    mFinalScoreAnimation.Update();
 }
 
 void LevelCompletedController::UpdateObjectiveAchievedAnimation() {
-    if (mSlidingText.Update() == SlidingText::State::Inactive) {
-        if (mState == State::ObjectiveAchievedAnimation) {
-            mConfettiParticleEffect.Start();
-        }
-
-        if (mLevel->GetObjective() == Level::Objective::Clear) {
-            mState = State::ClearingLastBlocks;
-            mClearLastBlocksAnimation.Start();
-        } else {
-            mState = State::SlidingOutFieldAnimation;
-            mSlidingFieldAnimation.Start();
-        }
+    switch (mSlidingText.Update()) {
+        case SlidingText::State::SlidingOut:
+            mFinalScoreAnimation.Start();
+            break;
+        case SlidingText::State::Inactive:
+            if (mState == State::ObjectiveAchievedAnimation) {
+                mConfettiParticleEffect.Start();
+            }
+            if (mLevel->GetObjective() == Level::Objective::Clear) {
+                mState = State::ClearingLastBlocks;
+                mClearLastBlocksAnimation.Start();
+            } else {
+                mState = State::SlidingOutFieldAnimation;
+                mSlidingFieldAnimation.Start();
+            }
+            break;
+        default:
+            break;
+    }
+    
+    if (mElapsedTime > finalScoreWaitTime) {
+        mFinalScoreAnimation.Start();
     }
 }
 
 void LevelCompletedController::UpdateInConfettiState() {
+    mElapsedTime += mEngine.GetLastFrameSeconds();
     mConfettiParticleEffect.Update();
     UpdateObjectiveAchievedAnimation();
+    mFinalScoreAnimation.Update();
 }
 
 void LevelCompletedController::UpdateInClearingLastBlocksState() {
     mConfettiParticleEffect.Update();
+    mFinalScoreAnimation.Update();
 
     if (mClearLastBlocksAnimation.Update(mEngine.GetLastFrameSeconds()) ==
         ClearLastBlocksAnimation::State::Inactive) {
@@ -248,6 +265,7 @@ void LevelCompletedController::UpdateInClearingLastBlocksState() {
 
 void LevelCompletedController::UpdateInSlidingOutFieldAnimationState() {
     mConfettiParticleEffect.Update();
+    mFinalScoreAnimation.Update();
 
     if (mSlidingFieldAnimation.Update() == SlidingFieldAnimation::State::Inactive) {
         mState = State::Fireworks;
@@ -277,6 +295,7 @@ void LevelCompletedController::UpdateFireworksAndConfetti() {
         mElapsedTime += mEngine.GetLastFrameSeconds();
         if (effectsAreDone || mElapsedTime > fireworksDuration ||
             mEngine.GetInput().ConsumeWholeTouch()) {
+
             mStarsAnimation.Start(mNumStars);
             mState = State::StarsAppearingAnimation;
         }

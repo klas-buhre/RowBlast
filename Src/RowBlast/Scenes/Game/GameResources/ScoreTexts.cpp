@@ -48,8 +48,19 @@ namespace {
 }
 
 ScoreTexts::ScoreTexts(GameScene& scene,
-                       const CommonResources& commonResources) {
-    mScoreTexts.resize(numScoreTexts);
+                       const CommonResources& commonResources,
+                       SceneId sceneId) :
+    mScene {scene},
+    mSceneId {sceneId} {
+
+    switch (sceneId) {
+        case SceneId::Game:
+            mScoreTexts.resize(numScoreTexts);
+            break;
+        case SceneId::LevelCompletedSubScene:
+            mScoreTexts.resize(1);
+            break;
+    }
     
     for (auto& scoreText: mScoreTexts) {
         scoreText = std::make_unique<ScoreText>(scene, commonResources);
@@ -57,8 +68,9 @@ ScoreTexts::ScoreTexts(GameScene& scene,
 }
 
 void ScoreTexts::Init() {
+    auto& container = GetContainer();
     for (auto& scoreText: mScoreTexts) {
-        scoreText->Init();
+        scoreText->Init(container);
     }
 }
 
@@ -80,6 +92,25 @@ void ScoreTexts::Start(int numPoints, const Pht::Vec2& position, float delay) {
 void ScoreTexts::Update(float dt) {
     for (auto& scoreText: mScoreTexts) {
         scoreText->Update(dt);
+    }
+}
+
+bool ScoreTexts::IsInactive() const {
+    for (auto& scoreText: mScoreTexts) {
+        if (!scoreText->IsInactive()) {
+            return false;
+        }
+    }
+    
+    return true;
+}
+
+Pht::SceneObject& ScoreTexts::GetContainer() {
+    switch (mSceneId) {
+        case SceneId::Game:
+            return mScene.GetScoreTextContainer();
+        case SceneId::LevelCompletedSubScene:
+            return mScene.GetHud().GetMovesContainer();
     }
 }
 
@@ -116,8 +147,8 @@ ScoreTexts::ScoreText::ScoreText(GameScene& scene, const CommonResources& common
     mSceneObject->AddChild(*mTextSceneObject);
 }
 
-void ScoreTexts::ScoreText::Init() {
-    mScene.GetScoreTextContainer().AddChild(*mSceneObject);
+void ScoreTexts::ScoreText::Init(Pht::SceneObject& parentObject) {
+    parentObject.AddChild(*mSceneObject);
     mSceneObject->SetIsVisible(false);
     mSceneObject->SetIsStatic(true);
 }

@@ -73,7 +73,7 @@ GameController::GameController(Pht::IEngine& engine,
     mShield {engine, mScene, mScrollController},
     mFieldBottomGlow {engine, mScene, mScrollController},
     mSlidingText {engine, mScene, commonResources, mLevelResources},
-    mScoreTexts {mScene, commonResources},
+    mScoreTexts {mScene, commonResources, ScoreTexts::SceneId::Game},
     mMediumText {engine, mScene, commonResources},
     mFallingPieceScaleAnimation {mScene},
     mTutorial {

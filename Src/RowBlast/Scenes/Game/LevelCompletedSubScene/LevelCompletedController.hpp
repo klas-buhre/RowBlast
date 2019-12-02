@@ -6,6 +6,7 @@
 
 // Game includes.
 #include "LevelCompletedDialogController.hpp"
+#include "FinalScoreAnimation.hpp"
 #include "SlidingFieldAnimation.hpp"
 #include "FireworksParticleEffect.hpp"
 #include "ConfettiParticleEffect.hpp"
@@ -85,6 +86,7 @@ namespace RowBlast {
         UserServices& mUserServices;
         const Level* mLevel {nullptr};
         Pht::FadeEffect mFadeEffect;
+        FinalScoreAnimation mFinalScoreAnimation;
         ClearLastBlocksAnimation mClearLastBlocksAnimation;
         SlidingFieldAnimation mSlidingFieldAnimation;
         FireworksParticleEffect mFireworksParticleEffect;

@@ -31,10 +31,7 @@ namespace RowBlast {
         void OnFilledSlots(const Field::PieceFilledSlots& slotsCoveredByPiece);
         void OnUndoMove();
         void GoToCascadingState();
-        
-        static int CalculateExtraPoints(int currentScore,
-                                        int numMovesLeft,
-                                        int numMovesAtLevelStart);
+        int CalculateBonusPointsAtLevelCompleted(int movesLeft) const;
         
     private:
         void OnClearedFilledRowsInPieceSpawnedState(int numClearedRows,

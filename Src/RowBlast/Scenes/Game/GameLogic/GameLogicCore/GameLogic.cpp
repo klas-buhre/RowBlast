@@ -662,12 +662,8 @@ void GameLogic::IncreaseScore(int points,
     mScoreTexts.Start(points, scoreTextPosition, scoreTextDelay);
 }
 
-int GameLogic::CalculateFinalScore() {
-    auto extraPoints = mScoreManager.CalculateExtraPoints(GetScore(),
-                                                          mMovesLeft,
-                                                          mLevel->GetNumMoves());
-    IncreaseScore(extraPoints, {-20.0f, -20.0f});
-    return GetScore();
+int GameLogic::CalculateBonusPointsAtLevelCompleted() const {
+    return mScoreManager.CalculateBonusPointsAtLevelCompleted(mMovesLeft);
 }
 
 void GameLogic::UpdateFallingPieceYpos() {
