@@ -65,7 +65,14 @@ Ongoing tasks:
 
 
     -Do:
-        -3. -Redesign the game HUD: dark transparent bars behind containers or      ~3 days
+        -3. -Try a vertical gradient in the grid in the selectables container.
+            -Try a blue (?) upper bar in the next container.
+            -Try a smaller pause button with possibly a thin white upper
+             specular to give it better contrast.
+            -Try make the two lover rotating blocks not rotate at all so that
+             they are always in a good angle without to much specular.
+
+             Redesign the game HUD: dark transparent bars behind containers or      ~3 days
              pods of the same style as the upper hud. Try pods of the same style
              as the upper hud with thin borders and grid.
                 -Add a recess on each side of in the outer transparent part of
