@@ -123,7 +123,7 @@ GameHud::GameHud(Pht::IEngine& engine,
     CreateProgressObject(scene, *mUpperContainer, commonResources, levelResources, gameHudResources);
     CreateStarMeterObject(scene, *mUpperContainer, commonResources);
     CreateMovesObject(scene, *mUpperContainer, commonResources, gameHudResources);
-    CreateLowerBarObject(scene, parentObject, commonResources);
+    CreateLowerFadeBarObject(scene, parentObject, commonResources);
     CreateSelectablePiecesObject(scene, parentObject, commonResources.GetGameHudRectangles());
     CreateNextPiecesObject(scene, parentObject, commonResources);
 }
@@ -500,15 +500,13 @@ void GameHud::CreateNextPiecesObject(Pht::Scene& scene,
     auto& nextPiecesRectangle = scene.CreateSceneObject(*mNextPiecesContainer);
     auto& hudRectangles = commonResources.GetGameHudRectangles();
     nextPiecesRectangle.SetRenderable(&hudRectangles.GetNextPiecesRectangle());
-    nextPiecesRectangle.GetTransform().SetPosition({-0.22f, -0.75f, UiLayer::piecesRectangle});
+    nextPiecesRectangle.GetTransform().SetPosition({0.4f, -0.75f, UiLayer::piecesRectangle});
     
     Pht::TextProperties textProperties {
         commonResources.GetHussarFontSize20(PotentiallyZoomedScreen::Yes),
         0.9f,
         Pht::Vec4{0.9f, 0.9f, 0.9f, 1.0f}
     };
-    
-    textProperties.mItalicSlant = 0.05f;
     
     auto& nextText = scene.CreateText("NEXT", textProperties);
     auto& nextTextSceneobject = nextText.GetSceneObject();
@@ -521,155 +519,42 @@ void GameHud::CreateNextPiecesObject(Pht::Scene& scene,
                         scene);
 }
 
-void GameHud::CreateLowerBarObject(Pht::Scene& scene,
-                                   Pht::SceneObject& parentObject,
-                                   const CommonResources& commonResources) {
-    auto& renderer = mEngine.GetRenderer();
-    auto frustumSize = renderer.GetHudFrustumSize();
-/*
-    auto& upperBar = scene.CreateSceneObject();
-    upperBar.SetRenderable(&menuWindow.GetRenderable());
-    parentObject.AddChild(upperBar);
- 
-    auto topPadding = renderer.GetTopPaddingHeight();
-    Pht::Vec3 position {0.0f, frustumSize.y / 2.0f - topPadding + 0.85f, UiLayer::tutorialWindow};
-    upperBar.GetTransform().SetPosition(position);
-    upperBar.GetTransform().SetScale({2.0f, 0.25f, 1.0f});
-    // upperBar.GetTransform().SetRotation({0.0f, 0.0f, 90.0f});
-    // upperBar.GetTransform().SetScale({0.25f, 2.0f, 1.0f});
-*/
-/*
-    // auto& lowerBar = scene.CreateSceneObject(Pht::QuadMesh {frustumSize.x, 4.0f}, barMaterial);
-    auto& lowerBar = scene.CreateSceneObject(Pht::QuadMesh {frustumSize.x, 5.3f}, barMaterial);
-    mUpperContainer->AddChild(lowerBar);
+void GameHud::CreateLowerFadeBarObject(Pht::Scene& scene,
+                                       Pht::SceneObject& parentObject,
+                                       const CommonResources& commonResources) {
+    auto frustumSize = mEngine.GetRenderer().GetHudFrustumSize();
+    auto width = frustumSize.x;
+    auto height = 5.3f;
+    auto borderHeight = 0.8f;
+    auto lowerHudY = CalculateLowerHudObjectYPosition(mEngine);
+    auto lowerBarY = lowerHudY - 0.8f;
 
-    // auto lowerBarY = CalculateLowerHudObjectYPosition(mEngine) - 1.5f;
-    auto lowerBarY = CalculateLowerHudObjectYPosition(mEngine) - 0.8f;
-    Pht::Vec3 lowerBarPosition {0.0f, lowerBarY, UiLayer::tutorialWindow};
-    lowerBar.GetTransform().SetPosition(lowerBarPosition);
-*/
-/*
-    auto width = frustumSize.x;
-    auto height = 5.3f;
-    Pht::QuadMesh::Vertices vertices {
-        {{-width / 2.0f, -height / 2.0f, 0.0f}, {0.0f, 0.0f, 0.0f, 0.5f}},
-        {{width / 2.0f, -height / 2.0f, 0.0f}, {0.0f, 0.0f, 0.0f, 0.5f}},
-        {{width / 2.0f, height / 2.0f, 0.0f}, {0.0f, 0.0f, 0.0f, 0.0f}},
-        {{-width / 2.0f, height / 2.0f, 0.0f}, {0.0f, 0.0f, 0.0f, 0.0f}},
-    };
     Pht::Material material;
-    auto& lowerBar = scene.CreateSceneObject(Pht::QuadMesh {vertices}, material);
-    mUpperContainer->AddChild(lowerBar);
-    auto lowerBarY = CalculateLowerHudObjectYPosition(mEngine) - 0.8f;
-    Pht::Vec3 lowerBarPosition {0.0f, lowerBarY, UiLayer::tutorialWindow};
-    lowerBar.GetTransform().SetPosition(lowerBarPosition);
-*/
-/*
-    auto width = frustumSize.x;
-    auto height = 5.3f;
-    Pht::QuadMesh::Vertices vertices {
-        {{-width / 2.0f, -height / 2.0f, 0.0f}, {0.0f, 0.175f, 0.35f, 0.75f}},
-        {{width / 2.0f, -height / 2.0f, 0.0f}, {0.0f, 0.175f, 0.35f, 0.75f}},
-        {{width / 2.0f, height / 2.0f, 0.0f}, {0.0f, 0.175f, 0.35f, 0.25f}},
-        {{-width / 2.0f, height / 2.0f, 0.0f}, {0.0f, 0.175f, 0.35f, 0.25f}},
+    Pht::QuadMesh::Vertices borderVertices {
+        {{-width / 2.0f, -borderHeight / 2.0f, 0.0f}, {0.0f, 0.0f, 0.5f, 0.25f}},
+        {{width / 2.0f, -borderHeight / 2.0f, 0.0f}, {0.0f, 0.0f, 0.5f, 0.25f}},
+        {{width / 2.0f, borderHeight / 2.0f, 0.0f}, {0.0f, 0.0f, 0.5f, 0.0f}},
+        {{-width / 2.0f, borderHeight / 2.0f, 0.0f}, {0.0f, 0.0f, 0.5f, 0.0f}},
     };
-    Pht::Material material;
-    auto& lowerBar = scene.CreateSceneObject(Pht::QuadMesh {vertices}, material);
-    mUpperContainer->AddChild(lowerBar);
-    auto lowerBarY = CalculateLowerHudObjectYPosition(mEngine) - 0.8f;
-    Pht::Vec3 lowerBarPosition {0.0f, lowerBarY, UiLayer::tutorialWindow};
-    lowerBar.GetTransform().SetPosition(lowerBarPosition);
-*/
-/*
-    auto width = frustumSize.x;
-    auto height = 5.3f;
-    Pht::QuadMesh::Vertices vertices {
-        {{-width / 2.0f, -height / 2.0f, 0.0f}, {0.0f, 0.0f, 0.5f, 0.75f}},
-        {{width / 2.0f, -height / 2.0f, 0.0f}, {0.0f, 0.0f, 0.5f, 0.75f}},
-        {{width / 2.0f, height / 2.0f, 0.0f}, {0.0f, 0.0f, 0.5f, 0.25f}},
-        {{-width / 2.0f, height / 2.0f, 0.0f}, {0.0f, 0.0f, 0.5f, 0.25f}},
-    };
-    Pht::Material material;
-    auto& lowerBar = scene.CreateSceneObject(Pht::QuadMesh {vertices}, material);
-    mUpperContainer->AddChild(lowerBar);
-    auto lowerBarY = CalculateLowerHudObjectYPosition(mEngine) - 0.8f;
-    Pht::Vec3 lowerBarPosition {0.0f, lowerBarY, UiLayer::tutorialWindow};
-    lowerBar.GetTransform().SetPosition(lowerBarPosition);
-*/
-/*
-    auto width = frustumSize.x;
-    auto height = 5.3f;
-    Pht::QuadMesh::Vertices vertices {
-        {{-width / 2.0f, -height / 2.0f, 0.0f}, {0.0f, 0.0f, 0.5f, 0.65f}},
-        {{width / 2.0f, -height / 2.0f, 0.0f}, {0.0f, 0.0f, 0.5f, 0.65f}},
-        {{width / 2.0f, height / 2.0f, 0.0f}, {0.0f, 0.0f, 0.5f, 0.15f}},
-        {{-width / 2.0f, height / 2.0f, 0.0f}, {0.0f, 0.0f, 0.5f, 0.15f}},
-    };
-    Pht::Material material;
-    auto& lowerBar = scene.CreateSceneObject(Pht::QuadMesh {vertices}, material);
-    mUpperContainer->AddChild(lowerBar);
-    auto lowerBarY = CalculateLowerHudObjectYPosition(mEngine) - 0.8f;
-    Pht::Vec3 lowerBarPosition {0.0f, lowerBarY, UiLayer::tutorialWindow};
-    lowerBar.GetTransform().SetPosition(lowerBarPosition);
-*/
-/*
-    auto width = frustumSize.x;
-    auto height = 5.3f;
-    Pht::QuadMesh::Vertices vertices {
-        {{-width / 2.0f, -height / 2.0f, 0.0f}, {0.0f, 0.0f, 0.7f, 0.5f}},
-        {{width / 2.0f, -height / 2.0f, 0.0f}, {0.0f, 0.0f, 0.7f, 0.5f}},
-        {{width / 2.0f, height / 2.0f, 0.0f}, {0.0f, 0.0f, 0.7f, 0.15f}},
-        {{-width / 2.0f, height / 2.0f, 0.0f}, {0.0f, 0.0f, 0.7f, 0.15f}},
-    };
-    Pht::Material material;
-    auto& lowerBar = scene.CreateSceneObject(Pht::QuadMesh {vertices}, material);
-    parentObject.AddChild(lowerBar);
-    auto lowerBarY = CalculateLowerHudObjectYPosition(mEngine) - 0.8f;
-    Pht::Vec3 lowerBarPosition {0.0f, lowerBarY, UiLayer::tutorialWindow};
-    lowerBar.GetTransform().SetPosition(lowerBarPosition);
-*/
-/*
-    auto width = frustumSize.x;
-    auto height = 5.3f;
-    Pht::QuadMesh::Vertices vertices {
-        {{-width / 2.0f, -height / 2.0f, 0.0f}, {0.0f, 0.0f, 0.75f, 0.25f}},
-        {{width / 2.0f, -height / 2.0f, 0.0f}, {0.0f, 0.0f, 0.75f, 0.25f}},
-        {{width / 2.0f, height / 2.0f, 0.0f}, {0.0f, 0.0f, 0.75f, 0.15f}},
-        {{-width / 2.0f, height / 2.0f, 0.0f}, {0.0f, 0.0f, 0.75f, 0.15f}},
-    };
-    Pht::Material material;
-    auto& lowerBar = scene.CreateSceneObject(Pht::QuadMesh {vertices}, material);
-    parentObject.AddChild(lowerBar);
-    auto lowerBarY = CalculateLowerHudObjectYPosition(mEngine) - 0.8f;
-    Pht::Vec3 lowerBarPosition {0.0f, lowerBarY, UiLayer::tutorialWindow};
-    lowerBar.GetTransform().SetPosition(lowerBarPosition);
-*/
+    auto& lowerBarBorder = scene.CreateSceneObject(Pht::QuadMesh {borderVertices}, material);
+    parentObject.AddChild(lowerBarBorder);
+    auto lowerBarBorderY = lowerBarY + height / 2.0f - borderHeight / 2.0f;
+    Pht::Vec3 lowerBarBorderPosition {0.0f, lowerBarBorderY, UiLayer::tutorialWindow};
+    lowerBarBorder.GetTransform().SetPosition(lowerBarBorderPosition);
 
-    auto width = frustumSize.x;
-    auto height = 5.3f;
-    Pht::QuadMesh::Vertices vertices {
-        {{-width / 2.0f, -height / 2.0f, 0.0f}, {0.0f, 0.0f, 0.5f, 0.65f}},
-        {{width / 2.0f, -height / 2.0f, 0.0f}, {0.0f, 0.0f, 0.5f, 0.65f}},
-        {{width / 2.0f, height / 2.0f, 0.0f}, {0.0f, 0.0f, 0.5f, 0.15f}},
-        {{-width / 2.0f, height / 2.0f, 0.0f}, {0.0f, 0.0f, 0.5f, 0.15f}},
+    auto mainHeight = height - borderHeight;
+    Pht::QuadMesh::Vertices mainVertices {
+        {{-width / 2.0f, -mainHeight / 2.0f, 0.0f}, {0.0f, 0.0f, 0.5f, 0.25f}},
+        {{width / 2.0f, -mainHeight / 2.0f, 0.0f}, {0.0f, 0.0f, 0.5f, 0.25f}},
+        {{width / 2.0f, mainHeight / 2.0f, 0.0f}, {0.0f, 0.0f, 0.5f, 0.25f}},
+        {{-width / 2.0f, mainHeight / 2.0f, 0.0f}, {0.0f, 0.0f, 0.5f, 0.25f}},
     };
-    Pht::Material material;
-    auto& lowerBar = scene.CreateSceneObject(Pht::QuadMesh {vertices}, material);
-    parentObject.AddChild(lowerBar);
-    auto lowerBarY = CalculateLowerHudObjectYPosition(mEngine) - 0.8f;
-    Pht::Vec3 lowerBarPosition {0.0f, lowerBarY, UiLayer::tutorialWindow};
-    lowerBar.GetTransform().SetPosition(lowerBarPosition);
+    auto& lowerBarMain = scene.CreateSceneObject(Pht::QuadMesh {mainVertices}, material);
+    parentObject.AddChild(lowerBarMain);
+    auto lowerBarMainY = lowerBarY - borderHeight / 2.0f;
+    Pht::Vec3 lowerBarMainPosition {0.0f, lowerBarMainY, UiLayer::tutorialWindow};
+    lowerBarMain.GetTransform().SetPosition(lowerBarMainPosition);
 
-/*
-    Pht::ObjMesh cubeMesh {"cube_428.obj", 18.0f};
-    auto& materials = commonResources.GetMaterials();
-    auto& lowerBar = scene.CreateSceneObject(cubeMesh, materials.GetLightGrayMaterial());
-    parentObject.AddChild(lowerBar);
-    auto lowerBarY = CalculateLowerHudObjectYPosition(mEngine) - 7.5f;
-    Pht::Vec3 lowerBarPosition {0.0f, lowerBarY, -12.0f};
-    lowerBar.GetTransform().SetPosition(lowerBarPosition);
-    lowerBar.GetTransform().SetRotation({2.5f, 0.0f, 0.0f});
-*/
 }
 
 void GameHud::CreateSelectablePiecesObject(Pht::Scene& scene,
@@ -685,11 +570,11 @@ void GameHud::CreateSelectablePiecesObject(Pht::Scene& scene,
 
     mSelectablePiecesRectangle = &scene.CreateSceneObject(*mSelectablePiecesContainer);
     mSelectablePiecesRectangle->SetRenderable(&hudRectangles.GetSelectablePiecesRectangle());
-    mSelectablePiecesRectangle->GetTransform().SetPosition({0.375f, 0.0f, UiLayer::piecesRectangle});
-    
+    mSelectablePiecesRectangle->GetTransform().SetPosition({0.75f, 0.0f, UiLayer::piecesRectangle});
+
     mPressedSelectablePiecesRectangle = &scene.CreateSceneObject(*mSelectablePiecesContainer);
     mPressedSelectablePiecesRectangle->SetRenderable(&hudRectangles.GetPressedSelectablePiecesRectangle());
-    mPressedSelectablePiecesRectangle->GetTransform().SetPosition({0.375f, 0.0f, UiLayer::piecesRectangle});
+    mPressedSelectablePiecesRectangle->GetTransform().SetPosition({0.75f, 0.0f, UiLayer::piecesRectangle});
     mPressedSelectablePiecesRectangle->SetIsVisible(false);
 
     CreatePreviewPieces(mSelectablePreviewPieces,

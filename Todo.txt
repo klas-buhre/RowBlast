@@ -65,7 +65,9 @@ Ongoing tasks:
 
 
     -Do:
-        -3. -Try a vertical gradient in the grid in the selectables container.
+        -3. -Maybe try to invert the gradient and add a shadow from the field.
+            -Maybe try a blue bar in the selectables container.
+            -Try a vertical gradient in the grid in the selectables container.
             -Try a blue (?) upper bar in the next container.
             -Try a smaller pause button with possibly a thin white upper
              specular to give it better contrast.
