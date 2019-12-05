@@ -59,7 +59,8 @@ namespace RowBlast {
                        const std::vector<BlockPathVolume>& volumes,
                        const CommonResources& commonResources,
                        float scale,
-                       float angularVelocity);
+                       float angularVelocity,
+                       float staticRotationDuration);
         
         void Update();
         
@@ -106,6 +107,7 @@ namespace RowBlast {
         std::unique_ptr<Pht::RenderableObject> mAsteroidRenderable;
         std::unique_ptr<Pht::RenderableObject> mBigAsteroidRenderable;
         float mEmissiveAnimationTime {0.0f};
+        float mRotationDuration {0.0f};
         std::vector<BlockPathVolume> mVolumes;
     };
 }

@@ -319,7 +319,8 @@ void TitleScene::Init() {
                                                        floatingBlockPaths,
                                                        mCommonResources,
                                                        6.6f,
-                                                       20.0f);
+                                                       20.0f,
+                                                       6.0f);
     
     CreateTerrain(mEngine, *scene, static_cast<int>(Layer::Background), terrainSegments);
 

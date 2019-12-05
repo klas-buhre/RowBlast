@@ -218,7 +218,8 @@ void MapScene::CreateWorld(const World& world, const BackgroundLight& background
                                                        world.mBlockPaths,
                                                        mCommonResources,
                                                        2.0f,
-                                                       20.0f);
+                                                       20.0f,
+                                                       0.0f);
 
     CreateTerrain(mEngine, *mScene, static_cast<int>(Layer::Map), world.mTerrainSegments);
 }

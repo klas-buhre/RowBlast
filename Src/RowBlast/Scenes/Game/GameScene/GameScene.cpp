@@ -59,14 +59,16 @@ namespace {
             .mBlockColor = FloatingBlockColor::RandomOneOfEachColorExceptGray
         },
         BlockPathVolume {
-            .mPosition = {-7.0f, -20.0f, -12.0f},
+            .mPosition = {-6.0f, -20.0f, -12.0f},
             .mSize = {0.0f, 0.0f, 0.0f},
-            .mBlockColor = FloatingBlockColor::RandomOneOfEachColorExceptGray
+            .mBlockColor = FloatingBlockColor::RandomOneOfEachColorExceptGray,
+            .mBlockRotation = Pht::Vec3{20.0f, 0.0f, 35.0f}
         },
         BlockPathVolume {
             .mPosition = {10.0f, -30.0f, -20.0f},
             .mSize = {0.0f, 0.0f, 0.0f},
-            .mBlockColor = FloatingBlockColor::RandomOneOfEachColorExceptGray
+            .mBlockColor = FloatingBlockColor::RandomOneOfEachColorExceptGray,
+            .mBlockRotation = Pht::Vec3{20.0f, 20.0f, 0.0f}
         }
     };
 
@@ -295,7 +297,8 @@ void GameScene::CreateFloatingBlocks(const Level& level) {
                                                        GetFloatingBlockPaths(level),
                                                        mCommonResources,
                                                        7.7f,
-                                                       6.0f);
+                                                       6.0f,
+                                                       40.0f);
 }
 
 void GameScene::CreateLevelCompletedEffectsContainer() {

@@ -14,7 +14,6 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto rotationDuration = 6.0f;
     constexpr auto rotationAmplitude = 5.5f;
     constexpr auto emissiveAnimationDuration = 1.5f;
     constexpr auto emissiveAmplitude = 1.7f;
@@ -48,8 +47,10 @@ FloatingBlocks::FloatingBlocks(Pht::IEngine& engine,
                                const std::vector<BlockPathVolume>& volumes,
                                const CommonResources& commonResources,
                                float scale,
-                               float angularVelocity) :
+                               float angularVelocity,
+                               float staticRotationDuration) :
     mEngine {engine},
+    mRotationDuration {staticRotationDuration},
     mVolumes {volumes} {
     
     mBlocks.resize(mVolumes.size());
@@ -165,7 +166,7 @@ void FloatingBlocks::InitBlocks(Pht::Scene& scene, float scale, float angularVel
         auto& block = mBlocks[i];
         block.mVelocity = velocity;
         block.mAngularVelocity = blockAngularVelocity;
-        block.mElapsedTime = Pht::NormalizedRand() * rotationDuration;
+        block.mElapsedTime = Pht::NormalizedRand() * mRotationDuration;
         
         auto& renderable = CalcBlockRenderable(volume, colors);
         
@@ -382,11 +383,11 @@ void FloatingBlocks::Update() {
         
         if (volume.mBlockRotation.HasValue()) {
             block.mElapsedTime += dt;
-            if (block.mElapsedTime > rotationDuration) {
+            if (block.mElapsedTime > mRotationDuration) {
                 block.mElapsedTime = 0.0f;
             }
             
-            auto t = block.mElapsedTime * 2.0f * 3.1415f / rotationDuration;
+            auto t = block.mElapsedTime * 2.0f * 3.1415f / mRotationDuration;
             
             Pht::Vec3 rotation {
                 rotationAmplitude * std::sin(t),

@@ -249,8 +249,8 @@ void PieceResources::CreatePreviewAslopeWelds(Pht::ISceneManager& sceneManager,
         auto color = static_cast<BlockColor>(colorIndex);
         auto material = ToMaterial(color, BlockBrightness::Normal, commonResources);
         
-        auto renderable = sceneManager.CreateRenderableObject(Pht::BoxMesh {0.19f,
-                                                                            0.68f,
+        auto renderable = sceneManager.CreateRenderableObject(Pht::BoxMesh {0.14f,
+                                                                            0.6f,
                                                                             cellSize,
                                                                             std::string{"previewAslopeWeld"}},
                                                               material);
