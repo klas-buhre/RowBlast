@@ -40,6 +40,19 @@ namespace {
         
         return baseRotation + RotationToDeg(rotation);
     }
+    
+    void UpdateBlockWeld(const Pht::Vec3& weldPosition,
+                         float rotation,
+                         float scale,
+                         Pht::RenderableObject& weldRenderableObject,
+                         SceneObjectPool& pool) {
+        auto& sceneObject = pool.AccuireSceneObject();
+        auto& transform = sceneObject.GetTransform();
+        transform.SetRotation({0.0f, 0.0f, rotation});
+        transform.SetScale({scale, 1.0f, 1.0f});
+        transform.SetPosition(weldPosition);
+        sceneObject.SetRenderable(&weldRenderableObject);
+    }
 }
 
 ScenePlayingField::ScenePlayingField(GameScene& scene,
@@ -329,19 +342,6 @@ void ScenePlayingField::UpdateBlockWelds(const SubCell& subCell,
                 break;
         }
     }
-}
-
-void ScenePlayingField::UpdateBlockWeld(const Pht::Vec3& weldPosition,
-                                        float rotation,
-                                        float scale,
-                                        Pht::RenderableObject& weldRenderableObject,
-                                        SceneObjectPool& pool) {
-    auto& sceneObject = pool.AccuireSceneObject();
-    auto& transform = sceneObject.GetTransform();
-    transform.SetRotation({0.0f, 0.0f, rotation});
-    transform.SetScale({scale, 1.0f, 1.0f});
-    transform.SetPosition(weldPosition);
-    sceneObject.SetRenderable(&weldRenderableObject);
 }
 
 Pht::RenderableObject& ScenePlayingField::GetWeldRenderable(WeldRenderableKind renderableKind,

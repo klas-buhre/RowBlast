@@ -82,6 +82,13 @@ namespace RowBlast {
         void SetUpPreviewPiece(LevelStartPreviewPiece& previewPiece,
                                const Piece& pieceType,
                                const Pht::Vec3& position);
+        void SetUpBlockWelds(const SubCell& subCell,
+                             const Pht::Vec3& blockPos,
+                             SceneObjectPool& pool);
+        void SetUpBlockWeld(const Pht::Vec3& weldPosition,
+                            float rotation,
+                            const SubCell& subCell,
+                            SceneObjectPool& pool);
         void UpdateAnimations(float dt);
         void AnimateEmissive(float dt);
         void AnimateBombRotation();

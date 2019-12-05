@@ -8,6 +8,7 @@
 #include "Material.hpp"
 #include "ObjMesh.hpp"
 #include "QuadMesh.hpp"
+#include "BoxMesh.hpp"
 
 // Game includes.
 #include "CommonResources.hpp"
@@ -103,6 +104,8 @@ namespace {
                                                            material);
         }
     }
+    
+    
 }
 
 PieceResources::PieceResources(Pht::IEngine& engine, const CommonResources& commonResources) {
@@ -110,6 +113,7 @@ PieceResources::PieceResources(Pht::IEngine& engine, const CommonResources& comm
     
     CreateBlocks(sceneManager, commonResources);
     CreateWelds(sceneManager, commonResources);
+    CreatePreviewAslopeWelds(sceneManager, commonResources);
     CreateBombs(sceneManager);
 }
 
@@ -161,6 +165,12 @@ int PieceResources::CalcWeldIndex(WeldRenderableKind weldRenderable,
     
     assert(index < mWelds.size());
     return index;
+}
+
+Pht::RenderableObject& PieceResources::GetPreviewAslopeWeldRenderableObject(BlockColor color) const {
+    auto colorIndex = static_cast<int>(color);
+    assert(colorIndex >= 0 && colorIndex < Quantities::numBlockColors);
+    return *(mPreviewAslopeWelds[static_cast<int>(color)]);
 }
 
 void PieceResources::CreateBlocks(Pht::ISceneManager& sceneManager,
@@ -228,6 +238,23 @@ void PieceResources::CreateWelds(Pht::ISceneManager& sceneManager,
                                                            sceneManager);
             }
         }
+    }
+}
+
+void PieceResources::CreatePreviewAslopeWelds(Pht::ISceneManager& sceneManager,
+                                              const CommonResources& commonResources) {
+    mPreviewAslopeWelds.resize(Quantities::numBlockColors);
+    
+    for (auto colorIndex = 0; colorIndex < Quantities::numBlockColors; ++colorIndex) {
+        auto color = static_cast<BlockColor>(colorIndex);
+        auto material = ToMaterial(color, BlockBrightness::Normal, commonResources);
+        
+        auto renderable = sceneManager.CreateRenderableObject(Pht::BoxMesh {0.19f,
+                                                                            0.68f,
+                                                                            cellSize,
+                                                                            std::string{"previewAslopeWeld"}},
+                                                              material);
+        mPreviewAslopeWelds[colorIndex] = std::move(renderable);
     }
 }
 

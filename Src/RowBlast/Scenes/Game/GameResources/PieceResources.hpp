@@ -34,6 +34,7 @@ namespace RowBlast {
         Pht::RenderableObject& GetWeldRenderableObject(WeldRenderableKind weldRenderableKind,
                                                        BlockColor color,
                                                        BlockBrightness brightness) const;
+        Pht::RenderableObject& GetPreviewAslopeWeldRenderableObject(BlockColor color) const;
 
         Pht::RenderableObject& GetBombRenderableObject() const {
             return *mBomb;
@@ -60,10 +61,13 @@ namespace RowBlast {
                           BlockBrightness brightness) const;
         void CreateBlocks(Pht::ISceneManager& sceneManager, const CommonResources& commonResources);
         void CreateWelds(Pht::ISceneManager& sceneManager, const CommonResources& commonResources);
+        void CreatePreviewAslopeWelds(Pht::ISceneManager& sceneManager,
+                                      const CommonResources& commonResources);
         void CreateBombs(Pht::ISceneManager& sceneManager);
         
         std::vector<std::unique_ptr<Pht::RenderableObject>> mBlocks;
         std::vector<std::unique_ptr<Pht::RenderableObject>> mWelds;
+        std::vector<std::unique_ptr<Pht::RenderableObject>> mPreviewAslopeWelds;
         std::unique_ptr<Pht::RenderableObject> mBomb;
         std::unique_ptr<Pht::RenderableObject> mTransparentBomb;
         std::unique_ptr<Pht::RenderableObject> mRowBomb;

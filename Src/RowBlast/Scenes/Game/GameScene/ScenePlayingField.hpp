@@ -57,11 +57,6 @@ namespace RowBlast {
                               const Pht::Vec3& blockPos,
                               SceneObjectPool& pool,
                               bool isSecondSubCell);
-        void UpdateBlockWeld(const Pht::Vec3& weldPosition,
-                             float rotation,
-                             float scale,
-                             Pht::RenderableObject& weldRenderableObject,
-                             SceneObjectPool& pool);
         Pht::RenderableObject& GetWeldRenderable(WeldRenderableKind renderableKind,
                                                  const SubCell& subCell,
                                                  const WeldAnimation& weldAnimation);

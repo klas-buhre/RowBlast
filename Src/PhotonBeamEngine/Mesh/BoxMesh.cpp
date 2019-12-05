@@ -4,10 +4,21 @@
 
 using namespace Pht;
 
-BoxMesh::BoxMesh(float xSize, float ySize, float zSize) :
-    BoxMesh {xSize, ySize, zSize, BoxTextureCounts{{1.0f, 1.0f}, {1.0f, 1.0f}, {1.0f, 1.0f}}} {}
+BoxMesh::BoxMesh(float xSize, float ySize, float zSize, const Optional<std::string>& name) :
+    BoxMesh {
+        xSize,
+        ySize,
+        zSize,
+        BoxTextureCounts{{1.0f, 1.0f}, {1.0f, 1.0f}, {1.0f, 1.0f}},
+        name
+    } {}
 
-BoxMesh::BoxMesh(float xSize, float ySize, float zSize, const BoxTextureCounts& textureCounts) :
+BoxMesh::BoxMesh(float xSize,
+                 float ySize,
+                 float zSize,
+                 const BoxTextureCounts& textureCounts,
+                 const Optional<std::string>& name) :
+    mName {name},
     mXSize {xSize},
     mYSize {ySize},
     mZSize {zSize},

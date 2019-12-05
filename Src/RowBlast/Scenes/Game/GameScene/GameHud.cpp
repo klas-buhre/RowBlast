@@ -912,34 +912,69 @@ void GameHud::UpdatePreviewPiece(PreviewPiece& previewPiece,
         for (auto column = 0; column < pieceNumColumns; column++) {
             auto& subCell = grid[row][column].mFirstSubCell;
             auto blockKind = subCell.mBlockKind;
-            if (blockKind != BlockKind::None) {
-                auto& blockSceneObject = previewPiece.mSceneObjectPool->AccuireSceneObject();
-                
-                if (isBomb) {
-                    blockSceneObject.SetRenderable(&mPieceResources.GetBombRenderableObject());
-                    previewPiece.mBombSceneObject = &blockSceneObject;
-                } else if (isRowBomb) {
-                    blockSceneObject.SetRenderable(&mPieceResources.GetRowBombRenderableObject());
-                    previewPiece.mRowBombSceneObject = &blockSceneObject;
-                } else {
-                    auto& blockRenderable =
-                        mPieceResources.GetBlockRenderableObject(blockKind,
-                                                                 subCell.mColor,
-                                                                 BlockBrightness::Normal);
-                    
-                    blockSceneObject.SetRenderable(&blockRenderable);
-                }
-                
-                Pht::Vec3 position {
-                    static_cast<float>(column) * cellSize,
-                    static_cast<float>(row) * cellSize,
-                    0.0f
-                };
+            if (blockKind == BlockKind::None) {
+                continue;
+            }
+            
+            Pht::Vec3 position {
+                static_cast<float>(column) * cellSize,
+                static_cast<float>(row) * cellSize,
+                0.0f
+            };
 
-                blockSceneObject.GetTransform().SetPosition(lowerLeft + position);
+            auto blockPosition = lowerLeft + position;
+            auto& blockSceneObject = previewPiece.mSceneObjectPool->AccuireSceneObject();
+            blockSceneObject.GetTransform().SetPosition(blockPosition);
+            
+            if (isBomb) {
+                blockSceneObject.SetRenderable(&mPieceResources.GetBombRenderableObject());
+                previewPiece.mBombSceneObject = &blockSceneObject;
+            } else if (isRowBomb) {
+                blockSceneObject.SetRenderable(&mPieceResources.GetRowBombRenderableObject());
+                previewPiece.mRowBombSceneObject = &blockSceneObject;
+            } else {
+                auto& blockRenderable =
+                    mPieceResources.GetBlockRenderableObject(blockKind,
+                                                             subCell.mColor,
+                                                             BlockBrightness::Normal);
+            
+                blockSceneObject.SetRenderable(&blockRenderable);
+                UpdateBlockWelds(subCell, blockPosition, *previewPiece.mSceneObjectPool);
             }
         }
     }
+}
+
+void GameHud::UpdateBlockWelds(const SubCell& subCell,
+                               const Pht::Vec3& blockPos,
+                               SceneObjectPool& pool) {
+    auto& welds = subCell.mWelds;
+    if (welds.mUpLeft) {
+        UpdateBlockWeld({blockPos.x - cellSize / 2.0f, blockPos.y + cellSize / 2.0f, 0.0f},
+                        45.0f,
+                        subCell,
+                        pool);
+    }
+
+    if (welds.mUpRight) {
+        UpdateBlockWeld({blockPos.x + cellSize / 2.0f, blockPos.y + cellSize / 2.0f, 0.0f},
+                        -45.0f,
+                        subCell,
+                        pool);
+    }
+}
+
+void GameHud::UpdateBlockWeld(const Pht::Vec3& weldPosition,
+                              float rotation,
+                              const SubCell& subCell,
+                              SceneObjectPool& pool) {
+    auto& sceneObject = pool.AccuireSceneObject();
+    auto& transform = sceneObject.GetTransform();
+    transform.SetRotation({0.0f, 0.0f, rotation});
+    transform.SetPosition(weldPosition);
+    
+    auto& weldRenderable = mPieceResources.GetPreviewAslopeWeldRenderableObject(subCell.mColor);
+    sceneObject.SetRenderable(&weldRenderable);
 }
 
 void GameHud::OnSwitchPieceAnimationFinished() {

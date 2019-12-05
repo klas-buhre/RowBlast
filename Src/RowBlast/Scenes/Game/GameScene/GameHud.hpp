@@ -264,6 +264,13 @@ namespace RowBlast {
                                 const Piece* pieceType,
                                 const Pht::Vec3& position,
                                 float slotScale);
+        void UpdateBlockWelds(const SubCell& subCell,
+                              const Pht::Vec3& blockPos,
+                              SceneObjectPool& pool);
+        void UpdateBlockWeld(const Pht::Vec3& weldPosition,
+                             float rotation,
+                             const SubCell& subCell,
+                             SceneObjectPool& pool);
         int GetMovesLeft() const;
         
         Pht::IEngine& mEngine;
