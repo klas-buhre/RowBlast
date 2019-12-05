@@ -65,7 +65,9 @@ Ongoing tasks:
 
 
     -Do:
-        -3. -Maybe try to invert the gradient and add a shadow from the field.
+        -3. -Add the sideways weld for the Seven pieces to the preview pieces.
+            -Keep the active slot when using controls other than drag controls.
+            -Maybe try to invert the gradient and add a shadow from the field.
             -Maybe try a blue bar in the selectables container.
             -Try a vertical gradient in the grid in the selectables container.
             -Try a blue (?) upper bar in the next container.
@@ -73,6 +75,8 @@ Ongoing tasks:
              specular to give it better contrast.
             -Try make the two lover rotating blocks not rotate at all so that
              they are always in a good angle without to much specular.
+            -Move the preview piece positions to centered positions now that
+             there is no rectangle tilt.
 
              Redesign the game HUD: dark transparent bars behind containers or      ~3 days
              pods of the same style as the upper hud. Try pods of the same style
@@ -96,8 +100,12 @@ Ongoing tasks:
         -3. When using drag controls, maybe the falling piece should only be        ~3 days
             visible when the dragged piece is visible. At least it should
             probably be like that if the drag controls and swipe controls are
-            split up like in the point in Maybe Section below.
-            when the dragged piece is not visible
+            split up like in the point in Maybe Section below. However, in
+            levels that has a falling piece speed then the falling piece has
+            to be visible all the time so that the player know and see when the
+            piece lands. Probably simplest if the left-most "acive" piece is
+            the one thats is the falling piece since that is how it works
+            today.
         -3. The area covered by the piece path could be a bit brighter or darker.   ~3 days
             It would be visible when the dragged piece is over a valid move and
             the area would move when the dragged piece moves. The ghost piece
