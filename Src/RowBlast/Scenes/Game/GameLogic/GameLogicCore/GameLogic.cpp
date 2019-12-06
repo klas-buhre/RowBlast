@@ -1146,10 +1146,12 @@ void GameLogic::RotatateAndAdjustPosition(Rotation newRotation,
 }
 
 void GameLogic::SwitchPiece() {
+    if (!mTutorial.IsSwitchPieceAllowed()) {
+        return;
+    }
+    
     auto& nextPieceType = *mCurrentMove.mSelectablePieces[0];
-    if (!IsThereRoomToSwitchPiece(nextPieceType, nextPieceType.GetSpawnRotation()) ||
-        !mTutorial.IsSwitchPieceAllowed()) {
-
+    if (!IsThereRoomToSwitchPiece(nextPieceType, nextPieceType.GetSpawnRotation())) {
         mMediumText.StartNoRoomMessage();
         return;
     }
