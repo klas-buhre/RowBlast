@@ -167,6 +167,8 @@ void FloatingBlocks::InitBlocks(Pht::Scene& scene, float scale, float angularVel
         block.mVelocity = velocity;
         block.mAngularVelocity = blockAngularVelocity;
         block.mElapsedTime = Pht::NormalizedRand() * mRotationDuration;
+        block.mRotationAmplitude = volume.mRotationAmplitude.HasValue() ?
+                                   volume.mRotationAmplitude.GetValue() : rotationAmplitude;
         
         auto& renderable = CalcBlockRenderable(volume, colors);
         
@@ -388,13 +390,9 @@ void FloatingBlocks::Update() {
             }
             
             auto t = block.mElapsedTime * 2.0f * 3.1415f / mRotationDuration;
+            auto amplitude = block.mRotationAmplitude;
             
-            Pht::Vec3 rotation {
-                rotationAmplitude * std::sin(t),
-                rotationAmplitude * std::cos(t),
-                0.0f
-            };
-            
+            Pht::Vec3 rotation {amplitude * std::sin(t), amplitude * std::cos(t), 0.0f};
             transform.SetRotation(rotation + volume.mBlockRotation.GetValue());
         }
     }

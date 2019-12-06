@@ -49,6 +49,7 @@ namespace RowBlast {
         FloatingPieceType mPieceType {FloatingPieceType::BigSingleBlock};
         FloatingBlockColor mBlockColor {FloatingBlockColor::RandomExceptGray};
         Pht::Optional<Pht::Vec3> mBlockRotation;
+        Pht::Optional<int> mRotationAmplitude;
     };
     
     class FloatingBlocks {
@@ -70,6 +71,7 @@ namespace RowBlast {
             Pht::Vec3 mAngularVelocity;
             Pht::SceneObject* mSceneObject;
             float mElapsedTime {0.0f};
+            float mRotationAmplitude {0.0f};
         };
 
         void CreateBomb(Pht::ISceneManager& sceneManager, float scale);
