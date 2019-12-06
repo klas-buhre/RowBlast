@@ -294,7 +294,8 @@ void LaserDialogView::SetUp() {
             mRowBombMoves->SetIsVisible(true);
             mRowBombGhostPieceContainer->SetIsVisible(false);
             break;
-        case ControlType::Gesture:
+        case ControlType::Drag:
+        case ControlType::Swipe:
             mHandPhtAnimation->SetDefaultClip(1);
             mRowBombAnimation->SetDefaultClip(1);
             mRowBombMoves->SetIsVisible(false);

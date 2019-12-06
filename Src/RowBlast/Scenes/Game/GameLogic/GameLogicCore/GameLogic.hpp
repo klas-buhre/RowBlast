@@ -127,6 +127,7 @@ namespace RowBlast {
         const TwoPieces& GetSelectablePieces() const override;
         const PreviewPieceRotations& GetPreviewPieceRotations() const override;
         const PreviewPieceRotations& GetPreviewPieceHudRotations() const override;
+        ControlType GetControlType() const override;
         
         void Init(const Level& level);
         Result Update(bool shouldUpdateLogic, bool shouldUndoMove);
@@ -177,10 +178,6 @@ namespace RowBlast {
 
         int GetMovesLeft() const {
             return mMovesLeft;
-        }
-        
-        bool IsUsingClickControls() const {
-            return mControlType == ControlType::Click;
         }
         
         const ClickInputHandler& GetClickInputHandler() const {

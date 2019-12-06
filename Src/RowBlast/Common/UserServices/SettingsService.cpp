@@ -16,20 +16,28 @@ namespace {
     
     std::string ToString(ControlType controlType) {
         switch (controlType) {
+            case ControlType::Drag:
+                return "Drag";
             case ControlType::Click:
                 return "Click";
-            case ControlType::Gesture:
-                return "Gesture";
+            case ControlType::Swipe:
+                return "Swipe";
         }
     }
     
     ControlType ReadControlType(const rapidjson::Document& document) {
         auto controlType = Pht::Json::ReadString(document, controlTypeMember);
+        
+        // Need to check against "Gesture" since that was the name of the combined drag and swipe
+        // controls in the 1.0.1 release.
+        if (controlType == "Drag" || controlType == "Gesture") {
+            return ControlType::Drag;
+        }
         if (controlType == "Click") {
             return ControlType::Click;
         }
-        if (controlType == "Gesture") {
-            return ControlType::Gesture;
+        if (controlType == "Swipe") {
+            return ControlType::Swipe;
         }
 
         assert(!"Unsupported control type");

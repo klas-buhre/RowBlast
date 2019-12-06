@@ -6,6 +6,7 @@
 
 // Game includes.
 #include "NextPieceGenerator.hpp"
+#include "SettingsService.hpp"
 
 namespace Pht {
     class TouchEvent;
@@ -52,6 +53,7 @@ namespace RowBlast {
         virtual const TwoPieces& GetSelectablePieces() const = 0;
         virtual const PreviewPieceRotations& GetPreviewPieceRotations() const = 0;
         virtual const PreviewPieceRotations& GetPreviewPieceHudRotations() const = 0;
+        virtual ControlType GetControlType() const = 0;
     };
 }
 

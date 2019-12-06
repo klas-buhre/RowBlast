@@ -65,12 +65,9 @@ Ongoing tasks:
 
 
     -Do:
-        3. -Maybe split up the gesture controls into swipe and drag controls. This could be done
-            because it is quite confusing to set up the proper swipe controls as it is now: First,
-            select gesture controls, then enable swipe aim piece, then make sure rotate all pieces is
-            disabled. Checking 3 different settings is a bit much in a casual game. The drag
-            functionality should be available in the swipe controls so that the gestureMovesFactor
-            can be completely removed.
+        -3. Review and push this commit.
+        -3. Don't start the active piece animation when using drag controls.
+        -3. Add icon for drag controls in the settings menu.
         -3. When using drag controls, maybe the falling piece should only be        ~3 days
             visible when the dragged piece is visible. At least it should
             probably be like that if the drag controls and swipe controls are

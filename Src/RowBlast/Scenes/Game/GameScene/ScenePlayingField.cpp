@@ -379,7 +379,7 @@ void ScenePlayingField::UpdateFallingPiece() {
 
 Pht::Vec2 ScenePlayingField::CalculateFallingPieceGridPosition(const FallingPiece& fallingPiece) {
     if (mFallingPieceAnimation.GetState() == FallingPieceAnimation::State::Active ||
-        mGameLogic.IsUsingClickControls()) {
+        mGameLogic.GetControlType() == ControlType::Click) {
         
         return fallingPiece.GetRenderablePositionSmoothY();
     }
@@ -528,7 +528,7 @@ void ScenePlayingField::UpdateGhostPieces() {
         return;
     }
     
-    if (mGameLogic.IsUsingClickControls()) {
+    if (mGameLogic.GetControlType() == ControlType::Click) {
         UpdateClickableGhostPieces(*fallingPiece);
     } else {
         auto* draggedPiece = mGameLogic.GetDraggedPiece();
@@ -541,7 +541,9 @@ void ScenePlayingField::UpdateGhostPieces() {
                                                    draggedPiece->GetRotation());
             }
         } else {
-            if (mGameLogic.IsSwipeGhostPieceEnabled()) {
+            if (mGameLogic.GetControlType() == ControlType::Swipe &&
+                mGameLogic.IsSwipeGhostPieceEnabled()) {
+    
                 UpdateGhostPieceForGestureControls(fallingPiece->GetPieceType(),
                                                    fallingPiece->GetRenderablePosition().x,
                                                    mGameLogic.GetGhostPieceRow(),

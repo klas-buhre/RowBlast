@@ -254,7 +254,7 @@ GameLogic::Result GameLogic::SpawnFallingPiece(FallingPieceSpawnReason fallingPi
         return Result::GameOver;
     }
     
-    if (mControlType == ControlType::Gesture && mCurrentMove.mPieceType->IsBomb() &&
+    if (mControlType == ControlType::Swipe && mCurrentMove.mPieceType->IsBomb() &&
         mIsSwipeGhostPieceEnabled &&
         fallingPieceSpawnReason != FallingPieceSpawnReason::BeginDraggingPiece) {
 
@@ -389,6 +389,10 @@ const PreviewPieceRotations& GameLogic::GetPreviewPieceRotations() const {
 
 const PreviewPieceRotations& GameLogic::GetPreviewPieceHudRotations() const {
     return mCurrentMove.mPreviewPieceRotations.mHudRotations;
+}
+
+ControlType GameLogic::GetControlType() const {
+    return mControlType;
 }
 
 void GameLogic::ManageMoveHistory(FallingPieceSpawnReason fallingPieceSpawnReason) {
@@ -568,7 +572,7 @@ void GameLogic::HandleSettingsChange() {
 }
 
 void GameLogic::ManageBlastArea() {
-    if (mIsSwipeGhostPieceEnabled && mControlType == ControlType::Gesture) {
+    if (mIsSwipeGhostPieceEnabled && mControlType == ControlType::Swipe) {
         if (mCurrentMove.mPieceType && mCurrentMove.mPieceType->IsBomb()) {
             StartBlastAreaAtGhostPiece();
         }
@@ -930,10 +934,11 @@ void GameLogic::PlayLandPieceSound() {
     auto landingSoundResourceId = static_cast<Pht::AudioResourceId>(SoundId::LandPiece);
 
     switch (mControlType) {
+        case ControlType::Drag:
         case ControlType::Click:
             audio.PlaySound(landingSoundResourceId);
             break;
-        case ControlType::Gesture:
+        case ControlType::Swipe:
             audio.PlaySoundWithDelay(landingSoundResourceId, landingSoundDelay);
             break;
     }
@@ -1473,10 +1478,13 @@ void GameLogic::ForwardTouchToInputHandler(const Pht::TouchEvent& touchEvent) {
     }
     
     switch (mControlType) {
+        case ControlType::Drag:
+            mDragInputHandler.HandleTouch(touchEvent);
+            break;
         case ControlType::Click:
             mClickInputHandler.HandleTouch(touchEvent, GetMovesUsedIncludingCurrent());
             break;
-        case ControlType::Gesture:
+        case ControlType::Swipe:
             if (mDragInputHandler.HandleTouch(touchEvent) == DragInputHandler::State::Idle) {
                 mGestureInputHandler.HandleTouch(touchEvent);
             }

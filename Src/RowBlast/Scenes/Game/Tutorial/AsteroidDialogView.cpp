@@ -447,7 +447,8 @@ void AsteroidDialogView::SetUp() {
             mMoves->SetIsVisible(true);
             mGhostPieceContainer->SetIsVisible(false);
             break;
-        case ControlType::Gesture:
+        case ControlType::Drag:
+        case ControlType::Swipe:
             mHandPhtAnimation->SetDefaultClip(1);
             mPieceAnimation->SetDefaultClip(1);
             mMoves->SetIsVisible(false);

@@ -10,10 +10,12 @@ using namespace RowBlast;
 namespace {
     std::string ToControlTypeString(ControlType controlType) {
         switch (controlType) {
+            case ControlType::Drag:
+                return "Drag";
             case ControlType::Click:
                 return "Click";
-            case ControlType::Gesture:
-                return "Gesture";
+            case ControlType::Swipe:
+                return "Swipe";
         }
     }
 }

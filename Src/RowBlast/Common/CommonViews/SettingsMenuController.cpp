@@ -66,10 +66,19 @@ SettingsMenuController::Result SettingsMenuController::OnTouch(const Pht::TouchE
 
     if (mView.IsControlsButtonEnabled()) {
         if (mView.GetControlsButton().IsClicked(touchEvent)) {
-            if (settingsService.GetControlType() == ControlType::Click) {
-                settingsService.SetControlType(ControlType::Gesture);
-            } else {
-                settingsService.SetControlType(ControlType::Click);
+            switch (settingsService.GetControlType()) {
+                case ControlType::Drag:
+                    settingsService.SetControlType(ControlType::Click);
+                    break;
+                case ControlType::Click:
+                    settingsService.SetControlType(ControlType::Swipe);
+                    break;
+                case ControlType::Swipe:
+                    settingsService.SetControlType(ControlType::Drag);
+                    break;
+                default:
+                    settingsService.SetControlType(ControlType::Drag);
+                    break;
             }
             
             UpdateViewToReflectSettings(true);
@@ -138,14 +147,30 @@ SettingsMenuController::Result SettingsMenuController::OnTouch(const Pht::TouchE
 
 void SettingsMenuController::UpdateViewToReflectSettings(bool isGestureControlsAllowed) {
     auto& settingsService = mUserServices.GetSettingsService();
-    if (settingsService.GetControlType() == ControlType::Click || !isGestureControlsAllowed) {
+    switch (settingsService.GetControlType()) {
+        case ControlType::Drag:
+            mView.SetClickControlsIsVisible(false);
+            mView.SetGestureControlsIsVisible(true);
+            break;
+        case ControlType::Click:
+            mView.SetClickControlsIsVisible(true);
+            mView.SetGestureControlsIsVisible(false);
+            break;
+        case ControlType::Swipe:
+            mView.SetClickControlsIsVisible(false);
+            mView.SetGestureControlsIsVisible(true);
+            break;
+        default:
+            mView.SetClickControlsIsVisible(false);
+            mView.SetGestureControlsIsVisible(true);
+            break;
+    }
+
+    if (!isGestureControlsAllowed) {
         mView.SetClickControlsIsVisible(true);
         mView.SetGestureControlsIsVisible(false);
-    } else {
-        mView.SetClickControlsIsVisible(false);
-        mView.SetGestureControlsIsVisible(true);
     }
-    
+
     if (settingsService.IsGhostPieceEnabled()) {
         mView.SetGhostPieceOnIsVisible(true);
         mView.SetGhostPieceOffIsVisible(false);

@@ -3,8 +3,9 @@
 
 namespace RowBlast {
     enum class ControlType {
+        Drag,
         Click,
-        Gesture
+        Swipe
     };
 
     class SettingsService {
@@ -41,8 +42,8 @@ namespace RowBlast {
         void SaveState();
         bool LoadState();
 
-        ControlType mControlType {ControlType::Click};
-        bool mIsGhostPieceEnabled {false};
+        ControlType mControlType {ControlType::Drag};
+        bool mIsGhostPieceEnabled {true};
         bool mIsRotateAllPiecesEnabled {false};
         bool mIsSoundEnabled {true};
         bool mIsMusicEnabled {true};
