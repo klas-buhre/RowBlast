@@ -99,8 +99,9 @@ GameHudView::GameHudView(Pht::IEngine& engine, const CommonResources& commonReso
     auto& guiResources = commonResources.GetGuiResources();
     
     auto& normalPauseButtonSceneObject = CreateSceneObject();
-    normalPauseButtonSceneObject.SetRenderable(&hudRectangles.GetPauseButtonRectangle());
+    // normalPauseButtonSceneObject.SetRenderable(&hudRectangles.GetPauseButtonRectangle());
     // normalPauseButtonSceneObject.SetRenderable(&guiResources.GetSmallerBlueGlossyButton());
+    normalPauseButtonSceneObject.SetRenderable(&guiResources.GetSmallestBlueGlossyButton());    
     pauseButtonSceneObject.AddChild(normalPauseButtonSceneObject);
     auto& normalPauseButtonBarsSceneObject = CreateSceneObject();
     normalPauseButtonBarsSceneObject.SetRenderable(pauseBarsRenderable.get());
