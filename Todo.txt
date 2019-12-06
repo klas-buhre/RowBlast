@@ -65,7 +65,23 @@ Ongoing tasks:
 
 
     -Do:
-        -3. -Keep the active slot when using controls other than drag controls.
+        3. -Maybe split up the gesture controls into swipe and drag controls. This could be done
+            because it is quite confusing to set up the proper swipe controls as it is now: First,
+            select gesture controls, then enable swipe aim piece, then make sure rotate all pieces is
+            disabled. Checking 3 different settings is a bit much in a casual game. The drag
+            functionality should be available in the swipe controls so that the gestureMovesFactor
+            can be completely removed.
+        -3. When using drag controls, maybe the falling piece should only be        ~3 days
+            visible when the dragged piece is visible. At least it should
+            probably be like that if the drag controls and swipe controls are
+            split up like in the point in Maybe Section below. However, in
+            levels that has a falling piece speed then the falling piece has
+            to be visible all the time so that the player know and see when the
+            piece lands. Probably simplest if the left-most "acive" piece is
+            the one thats is the falling piece since that is how it works
+            today.
+        -3. Redesign the game HUD:                                                  ~3 days
+            -Keep the active slot when using controls other than drag controls.
             -Maybe try to invert the gradient and add a shadow from the field.
             -Maybe try a blue upper bar in the selectables container.
             -Try a blue (?) upper bar in the next container.
@@ -75,7 +91,7 @@ Ongoing tasks:
             -Move the preview piece positions to centered positions now that
              there is no rectangle tilt.
 
-             Redesign the game HUD: dark transparent bars behind containers or      ~3 days
+             Dark transparent bars behind containers or
              pods of the same style as the upper hud. Try pods of the same style
              as the upper hud with thin borders and grid.
                 -Add a recess on each side of in the outer transparent part of
@@ -94,15 +110,6 @@ Ongoing tasks:
         -3. Maybe a short delay before clearing filled rows after piece lands?      ~2 days
             And a short particle effect with twinkles in the filled row before
             the blocks gets thrown away?
-        -3. When using drag controls, maybe the falling piece should only be        ~3 days
-            visible when the dragged piece is visible. At least it should
-            probably be like that if the drag controls and swipe controls are
-            split up like in the point in Maybe Section below. However, in
-            levels that has a falling piece speed then the falling piece has
-            to be visible all the time so that the player know and see when the
-            piece lands. Probably simplest if the left-most "acive" piece is
-            the one thats is the falling piece since that is how it works
-            today.
         -3. The area covered by the piece path could be a bit brighter or darker.   ~3 days
             It would be visible when the dragged piece is over a valid move and
             the area would move when the dragged piece moves. The ghost piece
@@ -161,12 +168,6 @@ Ongoing tasks:
         -Maybe cut the game_track1 a bit earlier.
         -Could have a slower falling piece animation speed for the first tutorial level so that
          players understand that the falling piece has to go to the move.
-        -Maybe split up the gesture controls into swipe and drag controls. This could be done
-         because it is quite confusing to set up the proper swipe controls as it is now: First,
-         select gesture controls, then enable swipe aim piece, then make sure rotate all pieces is
-         disabled. Checking 3 different settings is a bit much in a casual game. The drag
-         functionality should be available in the swipe controls so that the gestureMovesFactor
-         can be completely removed.
         -Maybe let the number of visible level rows in the scroll controller be configurable by the
          level because some levels are better with more look ahead.
         -Finish the valid moves area
@@ -183,8 +184,6 @@ Ongoing tasks:
              area will look strange /be missing in for example a squared are that is unreachable.
              If the piece is a sevenPiece then there will be at least one cell in the square
              that is not marked as invalid and it will look strange.
-        -Make a new pause button at the top-right corner and make a controls toggle button at the pause
-         buttons old location. Or, it might be room for both at the bottom left.
 
 
 
