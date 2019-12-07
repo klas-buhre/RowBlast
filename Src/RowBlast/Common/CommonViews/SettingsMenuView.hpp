@@ -29,16 +29,13 @@ namespace RowBlast {
 
         void EnableControlsButton();
         void DisableControlsButton();
-        void SetMusicOnIsVisible(bool isVisible);
-        void SetMusicOffIsVisible(bool isVisible);
-        void SetSoundOnIsVisible(bool isVisible);
-        void SetSoundOffIsVisible(bool isVisible);
-        void SetClickControlsIsVisible(bool isVisible);
-        void SetGestureControlsIsVisible(bool isVisible);
-        void SetGhostPieceOnIsVisible(bool isVisible);
-        void SetGhostPieceOffIsVisible(bool isVisible);
-        void SetRotateAllOnIsVisible(bool isVisible);
-        void SetRotateAllOffIsVisible(bool isVisible);
+        void SetMusicIsOn(bool musicIsOn);
+        void SetSoundIsOn(bool soundIsOn);
+        void EnableDragControls();
+        void EnableClickControls();
+        void EnableSwipeControls();
+        void SetGhostPieceIsEnabled(bool ghostPieceIsEnabled);
+        void SetRotateAllIsEnabled(bool rotateAllIsEnabled);
 
         const MenuButton& GetCloseButton() const {
             return *mCloseButton;
@@ -78,14 +75,26 @@ namespace RowBlast {
                               const Pht::Vec3& position,
                               const Pht::Vec2& blockSize,
                               float blockOffset);
-        void CreateLPieceIcon(Pht::IEngine& engine,
-                              MenuButton& button,
-                              const Pht::Vec3& position,
-                              const Pht::Vec2& blockSize,
-                              float blockOffset,
-                              const Pht::Vec4& color,
-                              const Pht::Vec4& shadowColor,
-                              const Pht::Vec3& shadowOffset);
+        Pht::SceneObject& CreateLPieceIcon(Pht::IEngine& engine,
+                                           MenuButton& button,
+                                           const Pht::Vec3& position,
+                                           const Pht::Vec2& blockSize,
+                                           float blockOffset,
+                                           const Pht::Vec4& color,
+                                           const Pht::Vec4& shadowColor,
+                                           const Pht::Vec3& shadowOffset,
+                                           float angle);
+        void SetMusicOnIsVisible(bool isVisible);
+        void SetMusicOffIsVisible(bool isVisible);
+        void SetSoundOnIsVisible(bool isVisible);
+        void SetSoundOffIsVisible(bool isVisible);
+        void SetDragControlsIsVisible(bool isVisible);
+        void SetClickControlsIsVisible(bool isVisible);
+        void SetSwipeControlsIsVisible(bool isVisible);
+        void SetGhostPieceOnIsVisible(bool isVisible);
+        void SetGhostPieceOffIsVisible(bool isVisible);
+        void SetRotateAllOnIsVisible(bool isVisible);
+        void SetRotateAllOffIsVisible(bool isVisible);
 
         const CommonResources& mCommonResources;
         std::unique_ptr<MenuButton> mCloseButton;
@@ -95,14 +104,17 @@ namespace RowBlast {
         std::unique_ptr<MenuButton> mSoundButton;
         std::unique_ptr<MenuButton> mMusicButton;
         std::unique_ptr<MenuButton> mBackButton;
-        Pht::SceneObject* mControlsClickText {nullptr};
-        Pht::SceneObject* mControlsClickIcon1 {nullptr};
-        Pht::SceneObject* mControlsClickIcon2 {nullptr};
-        Pht::SceneObject* mControlsClickIcon3 {nullptr};
-        Pht::SceneObject* mControlsGestureText {nullptr};
-        Pht::SceneObject* mControlsGestureIcon1 {nullptr};
-        Pht::SceneObject* mControlsGestureIcon2 {nullptr};
-        Pht::SceneObject* mControlsGestureIcon3 {nullptr};
+        Pht::SceneObject* mDragControlsText {nullptr};
+        Pht::SceneObject* mDragControlsIcon1 {nullptr};
+        Pht::SceneObject* mDragControlsIcon2 {nullptr};
+        Pht::SceneObject* mClickControlsText {nullptr};
+        Pht::SceneObject* mClickControlsIcon1 {nullptr};
+        Pht::SceneObject* mClickControlsIcon2 {nullptr};
+        Pht::SceneObject* mClickControlsIcon3 {nullptr};
+        Pht::SceneObject* mSwipeControlsText {nullptr};
+        Pht::SceneObject* mSwipeControlsIcon1 {nullptr};
+        Pht::SceneObject* mSwipeControlsIcon2 {nullptr};
+        Pht::SceneObject* mSwipeControlsIcon3 {nullptr};
         Pht::SceneObject* mGhostPieceDisabledIcon {nullptr};
         Pht::SceneObject* mGhostPieceOnText {nullptr};
         Pht::SceneObject* mGhostPieceOffText {nullptr};

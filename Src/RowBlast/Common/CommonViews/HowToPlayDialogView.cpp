@@ -136,7 +136,7 @@ void HowToPlayDialogView::CreateControlsPage(const GuiResources& guiResources,
     auto& textProperties = guiResources.GetSmallWhiteTextProperties(zoom);
     CreateText({-5.3f, 6.0f, UiLayer::text}, "The game can be played using", textProperties, container);
     CreateText({-3.3f, 4.3f, UiLayer::text}, "SingleTap controls, or", textProperties, container);
-    CreateText({-3.3f, 2.6f, UiLayer::text}, "Gesture controls", textProperties, container);
+    CreateText({-3.3f, 2.6f, UiLayer::text}, "Swipe controls", textProperties, container);
     
     CreateSingleTapIcon({-4.3f, 4.55f, UiLayer::text}, container);
     CreateSwipeIcon({-4.2f, 2.75f, UiLayer::text}, container);
@@ -244,7 +244,7 @@ void HowToPlayDialogView::CreateMovePiecePage(const GuiResources& guiResources,
     
     CreateSwipeIcon({-2.65f, 8.5f, UiLayer::text}, container);
     auto& largeTextProperties = guiResources.GetLargeWhiteTextProperties(zoom);
-    CreateText({-1.75f, 8.25f, UiLayer::text}, "GESTURE (1)", largeTextProperties, container);
+    CreateText({-1.75f, 8.25f, UiLayer::text}, "SWIPE (1)", largeTextProperties, container);
 
     auto handAnimation = std::make_unique<HandAnimation>(mEngine, 1.0f, true);
     
@@ -257,7 +257,7 @@ void HowToPlayDialogView::CreateMovePiecePage(const GuiResources& guiResources,
 
     auto textProperties = guiResources.GetSmallWhiteTextProperties(zoom);
     textProperties.mAlignment = Pht::TextAlignment::CenterX;
-    CreateText({0.0f, -4.7f, UiLayer::text}, "With gesture controls, slide your", textProperties, container);
+    CreateText({0.0f, -4.7f, UiLayer::text}, "With swipe controls, slide your", textProperties, container);
     CreateText({0.0f, -5.775f, UiLayer::text}, "finger to move sideways. Controls", textProperties, container);
     CreateText({0.0f, -6.85f, UiLayer::text}, "are changed in the settings menu.", textProperties, container);
 
@@ -275,7 +275,7 @@ void HowToPlayDialogView::CreateRotatePiecePage(const GuiResources& guiResources
     
     CreateSwipeIcon({-2.8f, 8.5f, UiLayer::text}, container);
     auto& largeTextProperties = guiResources.GetLargeWhiteTextProperties(zoom);
-    CreateText({-1.9f, 8.25f, UiLayer::text}, "GESTURE (2)", largeTextProperties, container);
+    CreateText({-1.9f, 8.25f, UiLayer::text}, "SWIPE (2)", largeTextProperties, container);
 
     auto handAnimation = std::make_unique<HandAnimation>(mEngine, 1.0f, true);
     
@@ -288,7 +288,7 @@ void HowToPlayDialogView::CreateRotatePiecePage(const GuiResources& guiResources
 
     auto textProperties = guiResources.GetSmallWhiteTextProperties(zoom);
     textProperties.mAlignment = Pht::TextAlignment::CenterX;
-    CreateText({0.0f, -5.4f, UiLayer::text}, "With gesture controls, tap the", textProperties, container);
+    CreateText({0.0f, -5.4f, UiLayer::text}, "With swipe controls, tap the", textProperties, container);
     CreateText({0.0f, -6.475f, UiLayer::text}, "screen to rotate the piece.", textProperties, container);
     
     container.AddChild(CreateFilledCircleIcon(static_cast<int>(mPages.size()), true));
@@ -305,7 +305,7 @@ void HowToPlayDialogView::CreateDropPiecePage(const GuiResources& guiResources,
     
     CreateSwipeIcon({-2.8f, 8.5f, UiLayer::text}, container);
     auto& largeTextProperties = guiResources.GetLargeWhiteTextProperties(zoom);
-    CreateText({-1.9f, 8.25f, UiLayer::text}, "GESTURE (3)", largeTextProperties, container);
+    CreateText({-1.9f, 8.25f, UiLayer::text}, "SWIPE (3)", largeTextProperties, container);
 
     auto handAnimation = std::make_unique<HandAnimation>(mEngine, 1.0f, true);
     
@@ -318,7 +318,7 @@ void HowToPlayDialogView::CreateDropPiecePage(const GuiResources& guiResources,
 
     auto textProperties = guiResources.GetSmallWhiteTextProperties(zoom);
     textProperties.mAlignment = Pht::TextAlignment::CenterX;
-    CreateText({0.0f, -5.4f, UiLayer::text}, "With gesture controls, swipe", textProperties, container);
+    CreateText({0.0f, -5.4f, UiLayer::text}, "With swipe controls, swipe", textProperties, container);
     CreateText({0.0f, -6.475f, UiLayer::text}, "down to drop the piece.", textProperties, container);
     
     container.AddChild(CreateFilledCircleIcon(static_cast<int>(mPages.size()), true));
@@ -335,7 +335,7 @@ void HowToPlayDialogView::CreateDragPieceDownPage(const GuiResources& guiResourc
     
     CreateSwipeIcon({-2.8f, 8.5f, UiLayer::text}, container);
     auto& largeTextProperties = guiResources.GetLargeWhiteTextProperties(zoom);
-    CreateText({-1.9f, 8.25f, UiLayer::text}, "GESTURE (4)", largeTextProperties, container);
+    CreateText({-1.9f, 8.25f, UiLayer::text}, "SWIPE (4)", largeTextProperties, container);
 
     auto handAnimation = std::make_unique<HandAnimation>(mEngine, 1.0f, true);
     

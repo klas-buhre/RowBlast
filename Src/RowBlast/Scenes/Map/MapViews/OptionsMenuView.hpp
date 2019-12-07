@@ -20,10 +20,8 @@ namespace RowBlast {
     public:
         OptionsMenuView(Pht::IEngine& engine, const CommonResources& commonResources);
         
-        void SetMusicOnIsVisible(bool isVisible);
-        void SetMusicOffIsVisible(bool isVisible);
-        void SetSoundOnIsVisible(bool isVisible);
-        void SetSoundOffIsVisible(bool isVisible);
+        void SetMusicIsOn(bool musicIsOn);
+        void SetSoundIsOn(bool soundIsOn);
 
         const MenuButton& GetCloseButton() const {
             return *mCloseButton;
@@ -54,6 +52,11 @@ namespace RowBlast {
         }
 
     private:
+        void SetMusicOnIsVisible(bool isVisible);
+        void SetMusicOffIsVisible(bool isVisible);
+        void SetSoundOnIsVisible(bool isVisible);
+        void SetSoundOffIsVisible(bool isVisible);
+
         const CommonResources& mCommonResources;
         std::unique_ptr<MenuButton> mCloseButton;
         std::unique_ptr<MenuButton> mSoundButton;

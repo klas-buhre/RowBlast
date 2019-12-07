@@ -149,58 +149,27 @@ void SettingsMenuController::UpdateViewToReflectSettings(bool isGestureControlsA
     auto& settingsService = mUserServices.GetSettingsService();
     switch (settingsService.GetControlType()) {
         case ControlType::Drag:
-            mView.SetClickControlsIsVisible(false);
-            mView.SetGestureControlsIsVisible(true);
+            mView.EnableDragControls();
             break;
         case ControlType::Click:
-            mView.SetClickControlsIsVisible(true);
-            mView.SetGestureControlsIsVisible(false);
+            mView.EnableClickControls();
             break;
         case ControlType::Swipe:
-            mView.SetClickControlsIsVisible(false);
-            mView.SetGestureControlsIsVisible(true);
+            mView.EnableSwipeControls();
             break;
         default:
-            mView.SetClickControlsIsVisible(false);
-            mView.SetGestureControlsIsVisible(true);
+            mView.EnableDragControls();
             break;
     }
 
     if (!isGestureControlsAllowed) {
-        mView.SetClickControlsIsVisible(true);
-        mView.SetGestureControlsIsVisible(false);
+        mView.EnableClickControls();
     }
 
-    if (settingsService.IsGhostPieceEnabled()) {
-        mView.SetGhostPieceOnIsVisible(true);
-        mView.SetGhostPieceOffIsVisible(false);
-    } else {
-        mView.SetGhostPieceOnIsVisible(false);
-        mView.SetGhostPieceOffIsVisible(true);
-    }
-
-    if (settingsService.IsRotateAllPiecesEnabled()) {
-        mView.SetRotateAllOnIsVisible(true);
-        mView.SetRotateAllOffIsVisible(false);
-    } else {
-        mView.SetRotateAllOnIsVisible(false);
-        mView.SetRotateAllOffIsVisible(true);
-    }
-
-    auto& audio = mEngine.GetAudio();
-    if (audio.IsSoundEnabled()) {
-        mView.SetSoundOnIsVisible(true);
-        mView.SetSoundOffIsVisible(false);
-    } else {
-        mView.SetSoundOnIsVisible(false);
-        mView.SetSoundOffIsVisible(true);
-    }
+    mView.SetGhostPieceIsEnabled(settingsService.IsGhostPieceEnabled());
+    mView.SetRotateAllIsEnabled(settingsService.IsRotateAllPiecesEnabled());
     
-    if (audio.IsMusicEnabled()) {
-        mView.SetMusicOnIsVisible(true);
-        mView.SetMusicOffIsVisible(false);
-    } else {
-        mView.SetMusicOnIsVisible(false);
-        mView.SetMusicOffIsVisible(true);
-    }
+    auto& audio = mEngine.GetAudio();
+    mView.SetSoundIsOn(audio.IsSoundEnabled());
+    mView.SetMusicIsOn(audio.IsMusicEnabled());
 }

@@ -113,19 +113,6 @@ OptionsMenuController::Result OptionsMenuController::OnTouch(const Pht::TouchEve
 
 void OptionsMenuController::UpdateViewToReflectSettings() {
     auto& audio = mEngine.GetAudio();
-    if (audio.IsSoundEnabled()) {
-        mView.SetSoundOnIsVisible(true);
-        mView.SetSoundOffIsVisible(false);
-    } else {
-        mView.SetSoundOnIsVisible(false);
-        mView.SetSoundOffIsVisible(true);
-    }
-    
-    if (audio.IsMusicEnabled()) {
-        mView.SetMusicOnIsVisible(true);
-        mView.SetMusicOffIsVisible(false);
-    } else {
-        mView.SetMusicOnIsVisible(false);
-        mView.SetMusicOffIsVisible(true);
-    }
+    mView.SetSoundIsOn(audio.IsSoundEnabled());
+    mView.SetMusicIsOn(audio.IsMusicEnabled());
 }

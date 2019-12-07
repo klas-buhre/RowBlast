@@ -179,6 +179,16 @@ OptionsMenuView::OptionsMenuView(Pht::IEngine& engine, const CommonResources& co
     mBackButton->CreateText({-0.46f, -0.23f, UiLayer::buttonText}, "Back", buttonTextProperties);
 }
 
+void OptionsMenuView::SetMusicIsOn(bool musicIsOn) {
+    SetMusicOnIsVisible(musicIsOn);
+    SetMusicOffIsVisible(!musicIsOn);
+}
+
+void OptionsMenuView::SetSoundIsOn(bool soundIsOn) {
+    SetSoundOnIsVisible(soundIsOn);
+    SetSoundOffIsVisible(!soundIsOn);
+}
+
 void OptionsMenuView::SetMusicOnIsVisible(bool isVisble) {
     mMusicOnText->SetIsVisible(isVisble);
     mMusicOnIcon->SetIsVisible(isVisble);

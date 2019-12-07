@@ -160,50 +160,70 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine,
                                                    controlsButtonPosition,
                                                    buttonInputSize,
                                                    settingsButtonStyle);
-    mControlsClickIcon1 = &mControlsButton->CreateIcon("hand.png",
+    mDragControlsText = &(mControlsButton->CreateText({-1.5f, -0.23f, UiLayer::buttonText},
+                                                      "DragNDrop",
+                                                      buttonTextProperties).GetSceneObject());
+    mDragControlsIcon1 = &mControlsButton->CreateIcon("hand.png",
+                                                      {-2.0f, -0.13f, UiLayer::buttonText},
+                                                      {0.9f, 0.9f},
+                                                      iconColor,
+                                                      iconShadowColor,
+                                                      iconShadowOffset);
+    auto smallBlockOffset = 0.2f;
+    Pht::Vec2 smallBlockSize {0.19f, 0.19f};
+    mDragControlsIcon2 = &CreateLPieceIcon(engine,
+                                           *mControlsButton,
+                                           {-1.93f, 0.43f, UiLayer::buttonText},
+                                           smallBlockSize,
+                                           smallBlockOffset,
+                                           iconColor,
+                                           {0.2f, 0.2f, 0.2f, 0.6f},
+                                           {-0.05f, 0.05f, UiLayer::textShadow},
+                                           90.0f);
+
+    mClickControlsText = &(mControlsButton->CreateText({-1.25f, -0.23f, UiLayer::buttonText},
+                                                       "SingleTap",
+                                                       buttonTextProperties).GetSceneObject());
+    mClickControlsIcon1 = &mControlsButton->CreateIcon("hand.png",
                                                        {-1.85f, 0.03f, UiLayer::buttonText},
                                                        {0.9f, 0.9f},
                                                        iconColor,
                                                        iconShadowColor,
                                                        iconShadowOffset);
-    mControlsClickIcon2 = &mControlsButton->CreateIcon("circle.png",
+    mClickControlsIcon2 = &mControlsButton->CreateIcon("circle.png",
                                                        {-1.88f, 0.42f, UiLayer::buttonText},
                                                        {0.36f, 0.36f},
                                                        iconColor,
                                                        iconShadowColor,
                                                        iconShadowOffset);
-    mControlsClickIcon3 = &mControlsButton->CreateIcon("circle.png",
+    mClickControlsIcon3 = &mControlsButton->CreateIcon("circle.png",
                                                        {-1.88f, 0.42f, UiLayer::buttonText},
                                                        {0.42f, 0.42f},
                                                        iconColor,
                                                        iconShadowColor,
                                                        iconShadowOffset);
-    mControlsClickText = &(mControlsButton->CreateText({-1.25f, -0.23f, UiLayer::buttonText},
-                                                       "SingleTap",
+                
+    mSwipeControlsText = &(mControlsButton->CreateText({-0.7f, -0.23f, UiLayer::buttonText},
+                                                       "Swipe",
                                                        buttonTextProperties).GetSceneObject());
-        
-        
-    mControlsGestureText = &(mControlsButton->CreateText({-0.7f, -0.23f, UiLayer::buttonText},
-                                                         "Gesture",
-                                                         buttonTextProperties).GetSceneObject());
-    mControlsGestureIcon1 = &mControlsButton->CreateIcon("hand.png",
-                                                         {-1.4f, 0.03f, UiLayer::buttonText},
-                                                         {0.9f, 0.9f},
-                                                         iconColor,
-                                                         iconShadowColor,
-                                                         iconShadowOffset);
-    mControlsGestureIcon2 = &mControlsButton->CreateIcon("back.png",
-                                                         {-1.8f, 0.4f, UiLayer::buttonText},
-                                                         {0.42f, 0.42f},
-                                                         iconColor,
-                                                         iconShadowColor,
-                                                         iconShadowOffset);
-    mControlsGestureIcon3 = &mControlsButton->CreateIcon("right_arrow.png",
-                                                         {-1.05f, 0.4f, UiLayer::buttonText},
-                                                         {0.42f, 0.42f},
-                                                         iconColor,
-                                                         iconShadowColor,
-                                                         iconShadowOffset);
+    mSwipeControlsIcon1 = &mControlsButton->CreateIcon("hand.png",
+                                                       {-1.4f, 0.03f, UiLayer::buttonText},
+                                                       {0.9f, 0.9f},
+                                                       iconColor,
+                                                       iconShadowColor,
+                                                       iconShadowOffset);
+    mSwipeControlsIcon2 = &mControlsButton->CreateIcon("back.png",
+                                                       {-1.8f, 0.4f, UiLayer::buttonText},
+                                                       {0.42f, 0.42f},
+                                                       iconColor,
+                                                       iconShadowColor,
+                                                       iconShadowOffset);
+    mSwipeControlsIcon3 = &mControlsButton->CreateIcon("right_arrow.png",
+                                                       {-1.05f, 0.4f, UiLayer::buttonText},
+                                                       {0.42f, 0.42f},
+                                                       iconColor,
+                                                       iconShadowColor,
+                                                       iconShadowOffset);
 
     auto blockOffset = 0.4f;
     Pht::Vec2 blockSize {0.39f, 0.39f};
@@ -224,7 +244,8 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine,
                      blockOffset,
                      iconColor,
                      iconShadowColor,
-                     iconShadowOffset);
+                     iconShadowOffset,
+                     0.0f);
 
     mGhostPieceDisabledIcon = &mGhostPieceButton->CreateIcon("disable.png",
                                                              {-0.6f, -0.03f, UiLayer::buttonText},
@@ -242,8 +263,6 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine,
                                                         "Off",
                                                         buttonTextProperties).GetSceneObject();
 
-    auto smallBlockOffset = 0.2f;
-    Pht::Vec2 smallBlockSize {0.19f, 0.19f};
     CreateLPieceIcon(engine, container, {-5.5f, -6.08f, UiLayer::text}, smallBlockSize, smallBlockOffset);
     GuiUtils::CreateIcon(engine,
                          *this,
@@ -267,7 +286,8 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine,
                      smallBlockOffset,
                      iconColor,
                      iconShadowColor,
-                     iconShadowOffset);
+                     iconShadowOffset,
+                     0.0f);
     mRotateAllButton->CreateIcon("rotate.png",
                                  {-0.7f, 0.07f, UiLayer::buttonText},
                                  {1.1f, 1.1f},
@@ -349,32 +369,50 @@ void SettingsMenuView::CreateLPieceIcon(Pht::IEngine& engine,
                          parent);
 }
 
-void SettingsMenuView::CreateLPieceIcon(Pht::IEngine& engine,
-                                        MenuButton& button,
-                                        const Pht::Vec3& position,
-                                        const Pht::Vec2& blockSize,
-                                        float blockOffset,
-                                        const Pht::Vec4& color,
-                                        const Pht::Vec4& shadowColor,
-                                        const Pht::Vec3& shadowOffset) {
-    button.CreateIcon("block.png",
-                      position + Pht::Vec3{blockOffset / 2.0f, blockOffset / 2.0f, 0.0f},
-                      blockSize,
-                      color,
-                      shadowColor,
-                      shadowOffset);
-    button.CreateIcon("block.png",
-                      position + Pht::Vec3{-blockOffset / 2.0f, -blockOffset / 2.0f, 0.0f},
-                      blockSize,
-                      color,
-                      shadowColor,
-                      shadowOffset);
-    button.CreateIcon("block.png",
-                      position + Pht::Vec3{blockOffset / 2.0f, -blockOffset / 2.0f, 0.0f},
-                      blockSize,
-                      color,
-                      shadowColor,
-                      shadowOffset);
+Pht::SceneObject& SettingsMenuView::CreateLPieceIcon(Pht::IEngine& engine,
+                                                     MenuButton& button,
+                                                     const Pht::Vec3& position,
+                                                     const Pht::Vec2& blockSize,
+                                                     float blockOffset,
+                                                     const Pht::Vec4& color,
+                                                     const Pht::Vec4& shadowColor,
+                                                     const Pht::Vec3& shadowOffset,
+                                                     float angle) {
+    auto& iconContainer = CreateSceneObject();
+    button.GetSceneObject().AddChild(iconContainer);
+
+    GuiUtils::CreateIconWithShadow(engine,
+                                   GetSceneResources(),
+                                   "block.png",
+                                   {blockOffset / 2.0f, blockOffset / 2.0f, 0.0f},
+                                   blockSize,
+                                   iconContainer,
+                                   color,
+                                   shadowColor,
+                                   shadowOffset);
+    GuiUtils::CreateIconWithShadow(engine,
+                                   GetSceneResources(),
+                                   "block.png",
+                                   {-blockOffset / 2.0f, -blockOffset / 2.0f, 0.0f},
+                                   blockSize,
+                                   iconContainer,
+                                   color,
+                                   shadowColor,
+                                   shadowOffset);
+    GuiUtils::CreateIconWithShadow(engine,
+                                   GetSceneResources(),
+                                   "block.png",
+                                   {blockOffset / 2.0f, -blockOffset / 2.0f, 0.0f},
+                                   blockSize,
+                                   iconContainer,
+                                   color,
+                                   shadowColor,
+                                   shadowOffset);
+    
+    auto& transform = iconContainer.GetTransform();
+    transform.SetPosition(position);
+    transform.SetRotation({0.0f, 0.0f, angle});
+    return iconContainer;
 }
 
 void SettingsMenuView::EnableControlsButton() {
@@ -393,6 +431,44 @@ void SettingsMenuView::DisableControlsButton() {
         mCommonResources.GetGuiResources().GetSmallGrayGlossyButtonPotentiallyZoomedScreen();
     
     mControlsButton->GetSceneObject().SetRenderable(&grayButtonRenderable);
+}
+
+void SettingsMenuView::SetMusicIsOn(bool musicIsOn) {
+    SetMusicOnIsVisible(musicIsOn);
+    SetMusicOffIsVisible(!musicIsOn);
+}
+
+void SettingsMenuView::SetSoundIsOn(bool soundIsOn) {
+    SetSoundOnIsVisible(soundIsOn);
+    SetSoundOffIsVisible(!soundIsOn);
+}
+
+void SettingsMenuView::EnableDragControls() {
+    SetDragControlsIsVisible(true);
+    SetClickControlsIsVisible(false);
+    SetSwipeControlsIsVisible(false);
+}
+
+void SettingsMenuView::EnableClickControls() {
+    SetDragControlsIsVisible(false);
+    SetClickControlsIsVisible(true);
+    SetSwipeControlsIsVisible(false);
+}
+
+void SettingsMenuView::EnableSwipeControls() {
+    SetDragControlsIsVisible(false);
+    SetClickControlsIsVisible(false);
+    SetSwipeControlsIsVisible(true);
+}
+
+void SettingsMenuView::SetGhostPieceIsEnabled(bool ghostPieceIsEnabled) {
+    SetGhostPieceOnIsVisible(ghostPieceIsEnabled);
+    SetGhostPieceOffIsVisible(!ghostPieceIsEnabled);
+}
+
+void SettingsMenuView::SetRotateAllIsEnabled(bool rotateAllIsEnabled) {
+    SetRotateAllOnIsVisible(rotateAllIsEnabled);
+    SetRotateAllOffIsVisible(!rotateAllIsEnabled);
 }
 
 void SettingsMenuView::SetMusicOnIsVisible(bool isVisible) {
@@ -415,18 +491,24 @@ void SettingsMenuView::SetSoundOffIsVisible(bool isVisible) {
     mSoundOffIcon->SetIsVisible(isVisible);
 }
 
-void SettingsMenuView::SetClickControlsIsVisible(bool isVisible) {
-    mControlsClickText->SetIsVisible(isVisible);
-    mControlsClickIcon1->SetIsVisible(isVisible);
-    mControlsClickIcon2->SetIsVisible(isVisible);
-    mControlsClickIcon3->SetIsVisible(isVisible);
+void SettingsMenuView::SetDragControlsIsVisible(bool isVisible) {
+    mDragControlsText->SetIsVisible(isVisible);
+    mDragControlsIcon1->SetIsVisible(isVisible);
+    mDragControlsIcon2->SetIsVisible(isVisible);
 }
 
-void SettingsMenuView::SetGestureControlsIsVisible(bool isVisible) {
-    mControlsGestureText->SetIsVisible(isVisible);
-    mControlsGestureIcon1->SetIsVisible(isVisible);
-    mControlsGestureIcon2->SetIsVisible(isVisible);
-    mControlsGestureIcon3->SetIsVisible(isVisible);
+void SettingsMenuView::SetClickControlsIsVisible(bool isVisible) {
+    mClickControlsText->SetIsVisible(isVisible);
+    mClickControlsIcon1->SetIsVisible(isVisible);
+    mClickControlsIcon2->SetIsVisible(isVisible);
+    mClickControlsIcon3->SetIsVisible(isVisible);
+}
+
+void SettingsMenuView::SetSwipeControlsIsVisible(bool isVisible) {
+    mSwipeControlsText->SetIsVisible(isVisible);
+    mSwipeControlsIcon1->SetIsVisible(isVisible);
+    mSwipeControlsIcon2->SetIsVisible(isVisible);
+    mSwipeControlsIcon3->SetIsVisible(isVisible);
 }
 
 void SettingsMenuView::SetGhostPieceOnIsVisible(bool isVisible) {
