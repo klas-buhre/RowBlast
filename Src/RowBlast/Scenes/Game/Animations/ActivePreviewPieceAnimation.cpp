@@ -21,6 +21,10 @@ void ActivePreviewPieceAnimation::Init() {
 }
 
 void ActivePreviewPieceAnimation::Start() {
+    if (mGameLogic.GetControlType() == ControlType::Drag) {
+        return;
+    }
+
     mState = State::Active;
     mElapsedTime = 0.0f;
 }
@@ -34,6 +38,13 @@ void ActivePreviewPieceAnimation::Update(float dt) {
         case PreviewPieceAnimationToStart::SwitchPiece:
         case PreviewPieceAnimationToStart::RemoveActivePiece:
             GoToInactiveState();
+            break;
+        case PreviewPieceAnimationToStart::ActivePieceAfterControlTypeChange:
+            if (mGameLogic.GetControlType() == ControlType::Drag) {
+                GoToInactiveState();
+            } else {
+                Start();
+            }
             break;
         case PreviewPieceAnimationToStart::None:
             break;

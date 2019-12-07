@@ -65,8 +65,6 @@ Ongoing tasks:
 
 
     -Do:
-        -3. Review and push this commit.
-        -3. Don't start the active piece animation when using drag controls.
         -3. Add icon for drag controls in the settings menu.
         -3. When using drag controls, maybe the falling piece should only be        ~3 days
             visible when the dragged piece is visible. At least it should

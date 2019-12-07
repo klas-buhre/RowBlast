@@ -557,6 +557,7 @@ void GameLogic::HandleSettingsChange() {
             mClickInputHandler.CreateNewSetOfVisibleMoves();
         }
         
+        mPreviewPieceAnimationToStart = PreviewPieceAnimationToStart::ActivePieceAfterControlTypeChange;
         mControlType = mSettingsService.GetControlType();
         settingsChanged = true;
     }

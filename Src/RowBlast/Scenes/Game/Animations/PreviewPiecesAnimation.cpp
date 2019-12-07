@@ -45,6 +45,7 @@ void PreviewPiecesAnimation::Update(float dt) {
         case PreviewPieceAnimationToStart::RemoveActivePiece:
             StartRemoveActivePieceAnimation();
             return;
+        case PreviewPieceAnimationToStart::ActivePieceAfterControlTypeChange:
         case PreviewPieceAnimationToStart::None:
             break;
     }

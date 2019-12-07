@@ -54,6 +54,7 @@ namespace RowBlast {
         NextPieceAndRefillSelectable1,
         SwitchPiece,
         RemoveActivePiece,
+        ActivePieceAfterControlTypeChange,
         None
     };
     
