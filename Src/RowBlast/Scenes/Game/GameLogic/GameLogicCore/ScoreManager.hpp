@@ -17,7 +17,7 @@ namespace RowBlast {
                      EffectManager& effectManager);
 
         void Init();
-        void OnSpawnPiece();
+        void OnNewMove();
         void OnClearedFilledRows(const Field::RemovedSubCells& removedSubCells,
                                  Pht::Optional<int> landedPieceId = Pht::Optional<int>{});
         void OnClearedNoFilledRows();
@@ -29,7 +29,7 @@ namespace RowBlast {
         int CalculateBonusPointsAtLevelCompleted(int movesLeft) const;
         
     private:
-        void OnClearedFilledRowsInPieceSpawnedState(int numClearedRows,
+        void OnClearedFilledRowsInNotCascadingState(int numClearedRows,
                                                     const Pht::Vec2& scoreTextPosition);
         void OnClearedFilledRowsInCascadingState(int numClearedRows,
                                                  const Pht::Vec2& scoreTextPosition);
@@ -37,7 +37,7 @@ namespace RowBlast {
         void OnClearedFourRows(const Pht::Vec2& scoreTextPosition, int numCombos);
         
         enum class State {
-            PieceSpawned,
+            NotCascading,
             Cascading,
             Inactive
         };

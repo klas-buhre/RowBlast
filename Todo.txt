@@ -65,6 +65,7 @@ Ongoing tasks:
 
 
     -Do:
+        -3. Review previous commit.
         -3. When using drag controls, maybe the falling piece should only be        ~3 days
             visible when the dragged piece is visible. At least it should
             probably be like that if the drag controls and swipe controls are

@@ -31,8 +31,8 @@ namespace RowBlast {
         void StartWillUndoMessage();
         void StartUndoingMessage();
         void StartNoRoomMessage();
-        void OnSpawnPiece();
-        void OnSpawnPieceAfterUndoMove();
+        void OnNewMove();
+        void OnNewMoveAfterUndo();
         void Update(float dt);
         bool IsAwesomeTextActive() const;
         bool IsFantasticTextActive() const;

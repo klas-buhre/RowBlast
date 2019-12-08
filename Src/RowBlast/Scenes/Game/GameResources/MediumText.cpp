@@ -252,11 +252,11 @@ void MediumText::Start(Pht::SceneObject& textSceneObject) {
     Pht::SceneObjectUtils::ScaleRecursively(*mContainerSceneObject, 0.0f);
 }
 
-void MediumText::OnSpawnPiece() {
+void MediumText::OnNewMove() {
     TryStartingDeferredMessage();
 }
 
-void MediumText::OnSpawnPieceAfterUndoMove() {
+void MediumText::OnNewMoveAfterUndo() {
     mDeferredTextSceneObject = nullptr;
 }
 

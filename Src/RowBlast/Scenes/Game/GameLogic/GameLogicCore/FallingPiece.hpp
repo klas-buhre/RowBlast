@@ -18,6 +18,7 @@ namespace RowBlast {
             Landing
         };
         
+        void UpdateId();
         void Spawn(const Piece& pieceType,
                    const Pht::Vec2& position,
                    Rotation rotation,

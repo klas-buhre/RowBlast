@@ -202,30 +202,40 @@ namespace RowBlast {
         }
         
     private:
+        enum class NewMoveReason {
+            None,
+            NewMove,
+            UndoMove
+        };
+
         enum class FallingPieceSpawnReason {
             None,
-            NextMove,
+            NewMove,
             Switch,
             BeginDraggingPiece,
             RespawnActiveAfterStopDraggingPiece,
             UndoMove
         };
 
-        Result SpawnFallingPiece(FallingPieceSpawnReason fallingPieceSpawnReason);
-        void NotifyListenersOfSpawnPiece(FallingPieceSpawnReason fallingPieceSpawnReason);
-        const Piece& CalculatePieceType(FallingPieceSpawnReason fallingPieceSpawnReason);
+        Result NewMove(NewMoveReason newMoveReason);
+        Result SpawnFallingPiece(FallingPieceSpawnReason fallingPieceSpawnReason,
+                                 const Piece* pieceType);
+        void NotifyListenersOfNewMove(NewMoveReason newMoveReason);
+        void ManagePreviewPieces(NewMoveReason newMoveReason);
+        const Piece& CalculatePieceType(FallingPieceSpawnReason fallingPieceSpawnReason,
+                                        const Piece* pieceType);
         void SetPreviewPiece(PreviewPieceIndex previewPieceIndex,
                              const Piece* pieceType,
                              Rotation rotation,
                              Rotation hudRotation);
-        void ManageMoveHistory(FallingPieceSpawnReason fallingPieceSpawnReason);
+        void ManageMoveHistory(NewMoveReason newMoveReason);
         void StartBlastAreaAtGhostPiece();
         void SetBlastAreaPositionAtGhostPiece();
         void ShowFallingPiece();
         void RemoveFallingPiece();
         void ShowDraggedPiece();
         void RemoveDraggedPiece();
-        void NextMove();
+        void PrepareForNewMove();
         void ManageBlastArea();
         void UpdateLevelProgress();
         Pht::Vec2 CalculateFallingPieceSpawnPos(const Piece& pieceType,
@@ -332,8 +342,8 @@ namespace RowBlast {
         ClickInputHandler mClickInputHandler;
         DraggedPiece* mDraggedPiece {nullptr};
         FallingPiece* mFallingPiece {nullptr};
+        NewMoveReason mNewMoveReason {NewMoveReason::None};
         FallingPieceSpawnReason mFallingPieceSpawnReason {FallingPieceSpawnReason::None};
-        const Piece* mFallingPieceSpawnType {nullptr};
         MoveData mCurrentMove;
         MoveData mCurrentMoveTmp;
         MoveData mPreviousMove;

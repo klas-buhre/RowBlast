@@ -156,8 +156,8 @@ void GameLogic::Init(const Level& level) {
 
     RemoveDraggedPiece();
     RemoveFallingPiece();
-    mFallingPieceSpawnReason = FallingPieceSpawnReason::NextMove;
-    mFallingPieceSpawnType = nullptr;
+    mNewMoveReason = NewMoveReason::NewMove;
+    mFallingPieceSpawnReason = FallingPieceSpawnReason::NewMove;
     mDraggedPieceIndex = PreviewPieceIndex::None;
     
     mAllValidMoves = nullptr;
@@ -201,8 +201,15 @@ GameLogic::Result GameLogic::Update(bool shouldUpdateLogic, bool shouldUndoMove)
                     return Result::None;
                 }
                 HandleSettingsChange();
+                if (mNewMoveReason != NewMoveReason::None) {
+                    auto result = NewMove(mNewMoveReason);
+                    mNewMoveReason = NewMoveReason::None;
+                    if (result != Result::None) {
+                        return result;
+                    }
+                }
                 if (mFallingPieceSpawnReason != FallingPieceSpawnReason::None) {
-                    auto result = SpawnFallingPiece(mFallingPieceSpawnReason);
+                    auto result = SpawnFallingPiece(mFallingPieceSpawnReason, nullptr);
                     mFallingPieceSpawnReason = FallingPieceSpawnReason::None;
                     if (result != Result::None) {
                         return result;
@@ -225,28 +232,45 @@ GameLogic::Result GameLogic::Update(bool shouldUpdateLogic, bool shouldUndoMove)
     return HandleInput();
 }
 
-GameLogic::Result GameLogic::SpawnFallingPiece(FallingPieceSpawnReason fallingPieceSpawnReason) {
-    assert(fallingPieceSpawnReason != FallingPieceSpawnReason::None);
+GameLogic::Result GameLogic::NewMove(NewMoveReason newMoveReason) {
+    assert(newMoveReason != NewMoveReason::None);
     
     if (mBlastArea.IsActive()) {
         mBlastArea.Stop();
     }
     
     UpdateLevelProgress();
-    NotifyListenersOfSpawnPiece(fallingPieceSpawnReason);
+    NotifyListenersOfNewMove(newMoveReason);
     
     if (mNumObjectsLeftToClear == 0) {
         return Result::LevelCompleted;
     }
     
     mScene.GetHud().UnHideAllSelectablePreviewPieces();
-    ShowFallingPiece();
-    auto& pieceType = CalculatePieceType(fallingPieceSpawnReason);
-    auto rotation = CalculateFallingPieceRotation(pieceType, fallingPieceSpawnReason);
-    auto spawnPosition = CalculateFallingPieceSpawnPos(pieceType, fallingPieceSpawnReason);
-    mFallingPiece->Spawn(pieceType, spawnPosition, rotation, mLevel->GetSpeed());
+    ManagePreviewPieces(newMoveReason);
+    ManageMoveHistory(newMoveReason);
     
-    ManageMoveHistory(fallingPieceSpawnReason);
+    if (mControlType == ControlType::Drag && mMovesLeft == 0) {
+        return Result::OutOfMoves;
+    }
+    
+    return Result::None;
+}
+
+GameLogic::Result GameLogic::SpawnFallingPiece(FallingPieceSpawnReason fallingPieceSpawnReason,
+                                               const Piece* pieceType) {
+    assert(fallingPieceSpawnReason != FallingPieceSpawnReason::None);
+
+    if (mBlastArea.IsActive()) {
+        mBlastArea.Stop();
+    }
+
+    ShowFallingPiece();
+    auto& spawnedPieceType = pieceType ? *pieceType : *mCurrentMove.mPieceType ;
+    auto rotation = CalculateFallingPieceRotation(spawnedPieceType, fallingPieceSpawnReason);
+    auto spawnPosition = CalculateFallingPieceSpawnPos(spawnedPieceType, fallingPieceSpawnReason);
+    mFallingPiece->Spawn(spawnedPieceType, spawnPosition, rotation, mLevel->GetSpeed());
+    
     mGhostPieceRow = mField.DetectCollisionDown(CreatePieceBlocks(*mFallingPiece),
                                                 mFallingPiece->GetIntPosition());
     if (mGhostPieceRow > mFallingPiece->GetPosition().y) {
@@ -266,6 +290,10 @@ GameLogic::Result GameLogic::SpawnFallingPiece(FallingPieceSpawnReason fallingPi
         mClickInputHandler.CreateNewSetOfVisibleMoves();
     }
     
+    if (fallingPieceSpawnReason == FallingPieceSpawnReason::Switch) {
+        mTutorial.OnSwitchPiece(GetMovesUsedIncludingCurrent(), mFallingPiece->GetPieceType());
+    }
+
     mFallingPieceScaleAnimation.Start();
     
     if (mMovesLeft == 0) {
@@ -275,71 +303,62 @@ GameLogic::Result GameLogic::SpawnFallingPiece(FallingPieceSpawnReason fallingPi
     return Result::None;
 }
 
-void GameLogic::NotifyListenersOfSpawnPiece(FallingPieceSpawnReason fallingPieceSpawnReason) {
-    mScoreManager.OnSpawnPiece();
+void GameLogic::NotifyListenersOfNewMove(NewMoveReason newMoveReason) {
+    mScoreManager.OnNewMove();
     
-    switch (fallingPieceSpawnReason) {
-        case FallingPieceSpawnReason::NextMove:
-            mMediumText.OnSpawnPiece();
+    switch (newMoveReason) {
+        case NewMoveReason::NewMove:
+            mMediumText.OnNewMove();
             break;
-        case FallingPieceSpawnReason::UndoMove:
-            mMediumText.OnSpawnPieceAfterUndoMove();
+        case NewMoveReason::UndoMove:
+            mMediumText.OnNewMoveAfterUndo();
             break;
-        default:
+        case NewMoveReason::None:
             break;
     }
 }
 
-const Piece& GameLogic::CalculatePieceType(FallingPieceSpawnReason fallingPieceSpawnReason) {
-    if (mFallingPieceSpawnType) {
-        if (fallingPieceSpawnReason == FallingPieceSpawnReason::BeginDraggingPiece) {
-            auto* tmp = mFallingPieceSpawnType;
-            mFallingPieceSpawnType = nullptr;
-            return *tmp;
-        }
-        
-        mCurrentMove.mPieceType = mFallingPieceSpawnType;
-        mFallingPieceSpawnType = nullptr;
-    } else {
-        switch (mDraggedPieceIndex) {
-            case PreviewPieceIndex::None:
-                mCurrentMove.mPieceType = mCurrentMove.mSelectablePieces[0];
-                mCurrentMove.mSelectablePieces[0] = mCurrentMove.mSelectablePieces[1];
-                mCurrentMove.mSelectablePieces[1] = &mCurrentMove.mNextPieceGenerator.GetNext();
-                mCurrentMove.mPreviewPieceRotations = PieceRotations {};
-                mPreviewPieceAnimationToStart = PreviewPieceAnimationToStart::NextPieceAndSwitch;
-                break;
-            case PreviewPieceIndex::Active:
-                SetPreviewPiece(PreviewPieceIndex::Active,
-                                &mCurrentMove.mNextPieceGenerator.GetNext(),
-                                Rotation::Deg0,
-                                Rotation::Deg0);
-                mPreviewPieceAnimationToStart = PreviewPieceAnimationToStart::NextPieceAndRefillActive;
-                break;
-            case PreviewPieceIndex::Selectable0:
-                SetPreviewPiece(PreviewPieceIndex::Selectable0,
-                                &mCurrentMove.mNextPieceGenerator.GetNext(),
-                                Rotation::Deg0,
-                                Rotation::Deg0);
-                mPreviewPieceAnimationToStart = PreviewPieceAnimationToStart::NextPieceAndRefillSelectable0;
-                break;
-            case PreviewPieceIndex::Selectable1:
-                SetPreviewPiece(PreviewPieceIndex::Selectable1,
-                                &mCurrentMove.mNextPieceGenerator.GetNext(),
-                                Rotation::Deg0,
-                                Rotation::Deg0);
-                mPreviewPieceAnimationToStart = PreviewPieceAnimationToStart::NextPieceAndRefillSelectable1;
-                break;
-        }
-        
-        mDraggedPieceIndex = PreviewPieceIndex::None;
+void GameLogic::ManagePreviewPieces(NewMoveReason newMoveReason) {
+    if (newMoveReason == NewMoveReason::UndoMove) {
+        return;
     }
     
-    if (fallingPieceSpawnReason == FallingPieceSpawnReason::UndoMove || mShouldUndoMove) {
+    switch (mDraggedPieceIndex) {
+        case PreviewPieceIndex::None:
+            mCurrentMove.mPieceType = mCurrentMove.mSelectablePieces[0];
+            mCurrentMove.mSelectablePieces[0] = mCurrentMove.mSelectablePieces[1];
+            mCurrentMove.mSelectablePieces[1] = &mCurrentMove.mNextPieceGenerator.GetNext();
+            mCurrentMove.mPreviewPieceRotations = PieceRotations {};
+            mPreviewPieceAnimationToStart = PreviewPieceAnimationToStart::NextPieceAndSwitch;
+            break;
+        case PreviewPieceIndex::Active:
+            SetPreviewPiece(PreviewPieceIndex::Active,
+                            &mCurrentMove.mNextPieceGenerator.GetNext(),
+                            Rotation::Deg0,
+                            Rotation::Deg0);
+            mPreviewPieceAnimationToStart = PreviewPieceAnimationToStart::NextPieceAndRefillActive;
+            break;
+        case PreviewPieceIndex::Selectable0:
+            SetPreviewPiece(PreviewPieceIndex::Selectable0,
+                            &mCurrentMove.mNextPieceGenerator.GetNext(),
+                            Rotation::Deg0,
+                            Rotation::Deg0);
+            mPreviewPieceAnimationToStart = PreviewPieceAnimationToStart::NextPieceAndRefillSelectable0;
+            break;
+        case PreviewPieceIndex::Selectable1:
+            SetPreviewPiece(PreviewPieceIndex::Selectable1,
+                            &mCurrentMove.mNextPieceGenerator.GetNext(),
+                            Rotation::Deg0,
+                            Rotation::Deg0);
+            mPreviewPieceAnimationToStart = PreviewPieceAnimationToStart::NextPieceAndRefillSelectable1;
+            break;
+    }
+        
+    mDraggedPieceIndex = PreviewPieceIndex::None;
+    
+    if (mShouldUndoMove) {
         mPreviewPieceAnimationToStart = PreviewPieceAnimationToStart::None;
     }
-    
-    return *mCurrentMove.mPieceType;
 }
 
 void GameLogic::SetPreviewPiece(PreviewPieceIndex previewPieceIndex,
@@ -395,10 +414,12 @@ ControlType GameLogic::GetControlType() const {
     return mControlType;
 }
 
-void GameLogic::ManageMoveHistory(FallingPieceSpawnReason fallingPieceSpawnReason) {
-    switch (fallingPieceSpawnReason) {
-        case FallingPieceSpawnReason::NextMove:
-            mCurrentMove.mId = mFallingPiece->GetId();
+void GameLogic::ManageMoveHistory(NewMoveReason newMoveReason) {
+    mFallingPieceStorage.UpdateId();
+
+    switch (newMoveReason) {
+        case NewMoveReason::NewMove:
+            mCurrentMove.mId = mFallingPieceStorage.GetId();
             ++mMovesUsed;
             if (GetMovesUsedIncludingCurrent() > 1) {
                 mPreviousMove = mCurrentMoveTmp;
@@ -409,19 +430,14 @@ void GameLogic::ManageMoveHistory(FallingPieceSpawnReason fallingPieceSpawnReaso
             }
             mTutorial.OnNewMove(GetMovesUsedIncludingCurrent());
             break;
-        case FallingPieceSpawnReason::UndoMove:
-            mCurrentMove.mId = mFallingPiece->GetId();
+        case NewMoveReason::UndoMove:
+            mCurrentMove.mId = mFallingPieceStorage.GetId();
             mCurrentMoveTmp = mCurrentMove;
             mPreviousMove = mCurrentMove;
             mScoreManager.OnUndoMove();
             mTutorial.OnNewMove(GetMovesUsedIncludingCurrent());
             break;
-        case FallingPieceSpawnReason::Switch:
-            mTutorial.OnSwitchPiece(GetMovesUsedIncludingCurrent(), mFallingPiece->GetPieceType());
-            break;
-        case FallingPieceSpawnReason::BeginDraggingPiece:
-        case FallingPieceSpawnReason::RespawnActiveAfterStopDraggingPiece:
-        case FallingPieceSpawnReason::None:
+        case NewMoveReason::None:
             break;
     }
 }
@@ -612,12 +628,13 @@ void GameLogic::UpdateLevelProgress() {
     }
 }
 
-void GameLogic::NextMove() {
+void GameLogic::PrepareForNewMove() {
     mCurrentMoveTmp.mPieceType = mCurrentMove.mPieceType;
     mCurrentMoveTmp.mSelectablePieces = mCurrentMove.mSelectablePieces;
     
     RemoveFallingPiece();
-    mFallingPieceSpawnReason = FallingPieceSpawnReason::NextMove;
+    mNewMoveReason = NewMoveReason::NewMove;
+    mFallingPieceSpawnReason = FallingPieceSpawnReason::NewMove;
     
     if (mDraggedPieceIndex == PreviewPieceIndex::None) {
         mPreviewPieceAnimationToStart = PreviewPieceAnimationToStart::RemoveActivePiece;
@@ -645,7 +662,7 @@ void GameLogic::UndoMove() {
     mScrollController.GoToIdleState();
     
     mCurrentMove = mPreviousMove;
-    mFallingPieceSpawnType = mPreviousMove.mPieceType;
+    mNewMoveReason = NewMoveReason::UndoMove;
     mFallingPieceSpawnReason = FallingPieceSpawnReason::UndoMove;
     mDraggedPieceIndex = PreviewPieceIndex::None;
     RemoveFallingPiece();
@@ -805,7 +822,7 @@ void GameLogic::LandFallingPiece(bool finalMovementWasADrop) {
         PlayLandPieceSound();
     }
     
-    NextMove();
+    PrepareForNewMove();
 }
 
 void GameLogic::DetonateDroppedBomb() {
@@ -1171,14 +1188,13 @@ void GameLogic::SwitchPiece() {
     
     auto* previousActivePieceType = mCurrentMove.mPieceType;
     
-    mFallingPieceSpawnType = mCurrentMove.mSelectablePieces[0];
     mCurrentMove.mPieceType = mCurrentMove.mSelectablePieces[0];
     mCurrentMove.mSelectablePieces[0] = mCurrentMove.mSelectablePieces[1];
     mCurrentMove.mSelectablePieces[1] = previousActivePieceType;
     mPreviewPieceAnimationToStart = PreviewPieceAnimationToStart::SwitchPiece;
     mCurrentMove.mPreviewPieceRotations = PieceRotations {};
     
-    SpawnFallingPiece(FallingPieceSpawnReason::Switch);
+    SpawnFallingPiece(FallingPieceSpawnReason::Switch, mCurrentMove.mPieceType);
 }
 
 bool GameLogic::IsThereRoomToSwitchPiece(const Piece& pieceType, Rotation rotation) {
@@ -1296,8 +1312,7 @@ bool GameLogic::BeginDraggingPiece(PreviewPieceIndex draggedPieceIndex) {
     }
     
     mDraggedPieceIndex = draggedPieceIndex;
-    mFallingPieceSpawnType = &pieceType;
-    if (SpawnFallingPiece(FallingPieceSpawnReason::BeginDraggingPiece) != Result::None) {
+    if (SpawnFallingPiece(FallingPieceSpawnReason::BeginDraggingPiece, &pieceType) != Result::None) {
         RemoveDraggedPiece();
         mDraggedPieceIndex = PreviewPieceIndex::None;
         return false;
@@ -1349,8 +1364,8 @@ void GameLogic::StopDraggingPiece() {
 }
 
 void GameLogic::CancelDraggingPiece() {
-    mFallingPieceSpawnType = mCurrentMove.mPieceType;
-    SpawnFallingPiece(FallingPieceSpawnReason::RespawnActiveAfterStopDraggingPiece);
+    SpawnFallingPiece(FallingPieceSpawnReason::RespawnActiveAfterStopDraggingPiece,
+                      mCurrentMove.mPieceType);
     mScene.GetHud().ShowPreviewPiece(mDraggedPieceIndex);
     mDraggedPieceIndex = PreviewPieceIndex::None;
     mValidAreaAnimation.Stop();

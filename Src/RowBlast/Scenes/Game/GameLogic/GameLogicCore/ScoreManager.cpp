@@ -125,7 +125,7 @@ void ScoreManager::Init() {
     mClearOneRowInCascadePoints = mClearOneRowPoints - clearOneRowInCascadeDeductPoints;
 }
 
-void ScoreManager::OnSpawnPiece() {
+void ScoreManager::OnNewMove() {
     if (mNumCascades >= 3) {
         mMediumText.StartFantasticMessage();
     } else if (mNumCascades >= 2) {
@@ -138,7 +138,7 @@ void ScoreManager::OnSpawnPiece() {
         mMediumText.StartAwesomeMessage();
     }
     
-    mState = State::PieceSpawned;
+    mState = State::NotCascading;
     mNumCascades = 0;
     mNumPointsFromBombsAndLasersThisMove = 0;
 }
@@ -149,8 +149,8 @@ void ScoreManager::OnClearedFilledRows(const Field::RemovedSubCells& removedSubC
     auto scoreTextPosition = CalcScoreTextPosition(removedSubCells, landedPieceId);
 
     switch (mState) {
-        case State::PieceSpawned:
-            OnClearedFilledRowsInPieceSpawnedState(numClearedRows, scoreTextPosition);
+        case State::NotCascading:
+            OnClearedFilledRowsInNotCascadingState(numClearedRows, scoreTextPosition);
             break;
         case State::Cascading:
             OnClearedFilledRowsInCascadingState(numClearedRows, scoreTextPosition);
@@ -161,7 +161,7 @@ void ScoreManager::OnClearedFilledRows(const Field::RemovedSubCells& removedSubC
     }
 }
 
-void ScoreManager::OnClearedFilledRowsInPieceSpawnedState(int numClearedRows,
+void ScoreManager::OnClearedFilledRowsInNotCascadingState(int numClearedRows,
                                                           const Pht::Vec2& scoreTextPosition) {
     if (numClearedRows >= 5) {
         OnClearedFiveRows(scoreTextPosition, mNumCombos);

@@ -2,6 +2,10 @@
 
 using namespace RowBlast;
 
+void FallingPiece::UpdateId() {
+    ++mId;
+}
+
 void FallingPiece::Spawn(const Piece& pieceType,
                          const Pht::Vec2& position,
                          Rotation rotation,
