@@ -71,7 +71,7 @@ Ongoing tasks:
             split up like in the point in Maybe Section below. However, in
             levels that has a falling piece speed then the falling piece has
             to be visible all the time so that the player know and see when the
-            piece lands. Probably simplest if the left-most "acive" piece is
+            piece lands. Probably simplest if the left-most "active" piece is
             the one thats is the falling piece since that is how it works
             today.
         -3. Redesign the game HUD:                                                  ~3 days

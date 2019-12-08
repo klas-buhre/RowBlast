@@ -2,8 +2,6 @@
 
 // Engine includes.
 #include "Optional.hpp"
-#include "IEngine.hpp"
-#include "IAudio.hpp"
 
 // Game includes.
 #include "MediumText.hpp"
@@ -107,12 +105,10 @@ namespace {
     }
 }
 
-ScoreManager::ScoreManager(Pht::IEngine& engine,
-                           const Field& field,
+ScoreManager::ScoreManager(const Field& field,
                            IGameLogic& gameLogic,
                            MediumText& mediumTextAnimation,
                            EffectManager& effectManager) :
-    mEngine {engine},
     mField {field},
     mGameLogic {gameLogic},
     mMediumText {mediumTextAnimation},
@@ -149,7 +145,6 @@ void ScoreManager::OnSpawnPiece() {
 
 void ScoreManager::OnClearedFilledRows(const Field::RemovedSubCells& removedSubCells,
                                        Pht::Optional<int> landedPieceId) {
-    PlayClearBlocksSound(mEngine);
     auto numClearedRows = removedSubCells.Size() / mField.GetNumColumns();
     auto scoreTextPosition = CalcScoreTextPosition(removedSubCells, landedPieceId);
 

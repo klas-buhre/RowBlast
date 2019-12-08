@@ -4,10 +4,6 @@
 // Game includes.
 #include "Field.hpp"
 
-namespace Pht {
-    class IEngine;
-}
-
 namespace RowBlast {
     class IGameLogic;
     class MediumText;
@@ -15,8 +11,7 @@ namespace RowBlast {
 
     class ScoreManager {
     public:
-        ScoreManager(Pht::IEngine& engine,
-                     const Field& field,
+        ScoreManager(const Field& field,
                      IGameLogic& gameLogic,
                      MediumText& mediumTextAnimation,
                      EffectManager& effectManager);
@@ -40,7 +35,6 @@ namespace RowBlast {
                                                  const Pht::Vec2& scoreTextPosition);
         void OnClearedFiveRows(const Pht::Vec2& scoreTextPosition, int numCombos);
         void OnClearedFourRows(const Pht::Vec2& scoreTextPosition, int numCombos);
-        void DetectCascade();
         
         enum class State {
             PieceSpawned,
@@ -48,7 +42,6 @@ namespace RowBlast {
             Inactive
         };
 
-        Pht::IEngine& mEngine;
         const Field& mField;
         IGameLogic& mGameLogic;
         MediumText& mMediumText;

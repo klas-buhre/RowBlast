@@ -233,6 +233,8 @@ namespace RowBlast {
         Rotation CalculateFallingPieceRotation(const Piece& pieceType,
                                                FallingPieceSpawnReason fallingPieceSpawnReason);
         void HandleCascading();
+        void HandleClearedFilledRows(const Field::RemovedSubCells& removedSubCells,
+                                     Pht::Optional<int> landedPieceId = Pht::Optional<int>{});
         void UpdateFieldExplosionsStates();
         void HandleSettingsChange();
         void UpdateFallingPieceYpos();

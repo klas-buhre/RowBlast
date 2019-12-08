@@ -108,7 +108,7 @@ GameLogic::GameLogic(Pht::IEngine& engine,
     mTutorial {tutorial},
     mSettingsService {settingsService},
     mControlType {settingsService.GetControlType()},
-    mScoreManager {engine, field, *this, mediumTextAnimation, effectManager},
+    mScoreManager {field, *this, mediumTextAnimation, effectManager},
     mFieldGravity {field},
     mFieldExplosionsStates {
         engine,
@@ -518,8 +518,7 @@ void GameLogic::HandleCascading() {
                 && !mScrollController.IsScrolling()) {
 
                 auto removedSubCells = mField.ClearFilledRows();
-                mScoreManager.OnClearedFilledRows(removedSubCells);
-                mFlyingBlocksAnimation.AddBlockRows(removedSubCells);
+                HandleClearedFilledRows(removedSubCells);
                 UpdateLevelProgress();
                 mCollapsingFieldAnimation.GoToInactiveState();
                 mCollapsingFieldAnimation.ResetBlockAnimations();
@@ -529,6 +528,13 @@ void GameLogic::HandleCascading() {
         case CascadeState::NotCascading:
             break;
     }
+}
+
+void GameLogic::HandleClearedFilledRows(const Field::RemovedSubCells& removedSubCells,
+                                        Pht::Optional<int> landedPieceId) {
+    PlayClearBlocksSound(mEngine);
+    mScoreManager.OnClearedFilledRows(removedSubCells, landedPieceId);
+    mFlyingBlocksAnimation.AddBlockRows(removedSubCells);
 }
 
 void GameLogic::UpdateFieldExplosionsStates() {
@@ -769,8 +775,7 @@ void GameLogic::LandFallingPiece(bool finalMovementWasADrop) {
                 auto removedSubCells = mField.ClearFilledRows();
                 if (!removedSubCells.IsEmpty()) {
                     clearedAnyFilledRows = true;
-                    mScoreManager.OnClearedFilledRows(removedSubCells, mFallingPiece->GetId());
-                    mFlyingBlocksAnimation.AddBlockRows(removedSubCells);
+                    HandleClearedFilledRows(removedSubCells, mFallingPiece->GetId());
                     mCollapsingFieldAnimation.GoToInactiveState();
                     mCollapsingFieldAnimation.ResetBlockAnimations();
                     if (impactedLevelBombs.IsEmpty()) {
