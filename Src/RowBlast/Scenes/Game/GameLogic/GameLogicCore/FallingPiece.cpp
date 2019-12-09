@@ -13,7 +13,6 @@ void FallingPiece::Spawn(const Piece& pieceType,
     mPosition = position;
     mRotation = rotation;
     mPieceType = &pieceType;
-    ++mId;
     GoToFallingState(speed);
     mPreviousState = State::Falling;
     mPreviousIntY = static_cast<int>(mPosition.y);

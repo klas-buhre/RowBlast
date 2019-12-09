@@ -222,8 +222,6 @@ namespace RowBlast {
                                  const Piece* pieceType);
         void NotifyListenersOfNewMove(NewMoveReason newMoveReason);
         void ManagePreviewPieces(NewMoveReason newMoveReason);
-        const Piece& CalculatePieceType(FallingPieceSpawnReason fallingPieceSpawnReason,
-                                        const Piece* pieceType);
         void SetPreviewPiece(PreviewPieceIndex previewPieceIndex,
                              const Piece* pieceType,
                              Rotation rotation,
