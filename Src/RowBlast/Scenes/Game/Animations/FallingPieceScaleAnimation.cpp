@@ -7,7 +7,8 @@
 #include "GameScene.hpp"
 
 namespace {
-    constexpr auto scaleDuration = 0.27f;
+    constexpr auto scaleUpDuration = 0.27f;
+    constexpr auto scaleDownDuration = 0.17f;
     
     Pht::StaticVector<Pht::Vec2, 20> scalePoints {
         {0.0f, 0.0f},
@@ -40,33 +41,52 @@ void FallingPieceScaleAnimation::Init() {
     mState = State::Inactive;
 }
 
-void FallingPieceScaleAnimation::Start() {
-    mState = State::Active;
+void FallingPieceScaleAnimation::StartScaleUp() {
+    mState = State::ScalingUp;
+    mElapsedTime = 0.0f;
+}
+
+void FallingPieceScaleAnimation::StartScaleDown() {
+    mState = State::ScalingDown;
     mElapsedTime = 0.0f;
 }
 
 void FallingPieceScaleAnimation::Update(float dt) {
     switch (mState) {
+        case State::ScalingUp:
+            UpdateInScalingUpState(dt);
+            break;
+        case State::ScalingDown:
+            UpdateInScalingDownState(dt);
+            break;
         case State::Inactive:
-            return;
-        case State::Active:
-            UpdateInActiveState(dt);
             break;
     }
 }
 
-void FallingPieceScaleAnimation::UpdateInActiveState(float dt) {
-    mElapsedTime += dt;
-    
+void FallingPieceScaleAnimation::UpdateInScalingUpState(float dt) {
     auto& transform = mScene.GetPieceBlocks().GetContainerSceneObject().GetTransform();
 
-    if (mElapsedTime > scaleDuration) {
+    mElapsedTime += dt;
+    if (mElapsedTime > scaleUpDuration) {
         mState = State::Inactive;
         transform.SetScale(1.0f);
     } else {
-        auto reversedNormalizedTime = 1.0f - (mElapsedTime / scaleDuration);
+        auto reversedNormalizedTime = 1.0f - (mElapsedTime / scaleUpDuration);
         auto scale = 1.0f - Pht::Lerp(reversedNormalizedTime, scalePoints);
+        transform.SetScale(scale);
+    }
+}
 
+void FallingPieceScaleAnimation::UpdateInScalingDownState(float dt) {
+    auto& transform = mScene.GetPieceBlocks().GetContainerSceneObject().GetTransform();
+
+    mElapsedTime += dt;
+    if (mElapsedTime > scaleDownDuration) {
+        mState = State::Inactive;
+        transform.SetScale(0.0f);
+    } else {
+        auto scale = 1.0f - (mElapsedTime / scaleDownDuration);
         transform.SetScale(scale);
     }
 }

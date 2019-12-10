@@ -108,18 +108,18 @@ namespace RowBlast {
         void OnFallingPieceAnimationFinished(bool finalMovementWasADrop) override;
         void RotatePreviewPiece(PreviewPieceIndex previewPieceIndex) override;
         void RotatePreviewPieces() override;
-        void RotatePiece(const Pht::TouchEvent& touchEvent) override;
+        void RotateFallingPiece(const Pht::TouchEvent& touchEvent) override;
         void SwitchPiece() override;
         void SetFallingPieceXPosWithCollisionDetection(float fallingPieceNewX) override;
         int GetGhostPieceRow() const override;
         bool IsInFieldExplosionsState() const override;
         void StartBlastArea(const Pht::IVec2& position) override;
         void StopBlastArea() override;
-        bool BeginDraggingPiece(PreviewPieceIndex draggedPieceIndex) override;
-        void OnDraggedPieceMoved() override;
-        void StopDraggingPiece() override;
-        void OnDraggedPieceAnimationFinished() override;
-        void CancelDraggingPiece() override;
+        bool HandleBeginDraggingPiece(PreviewPieceIndex draggedPieceIndex) override;
+        void HandleDraggedPieceMoved() override;
+        void HandleDragPieceTouchEnd() override;
+        void OnDraggedPieceGoingBackAnimationFinished() override;
+        void EndPieceDrag() override;
         void IncreaseScore(int points, const Pht::Vec2& scoreTextPosition) override;
         void IncreaseScore(int points,
                            const Pht::Vec2& scoreTextPosition,
@@ -133,6 +133,7 @@ namespace RowBlast {
         void Init(const Level& level);
         Result Update(bool shouldUpdateLogic, bool shouldUndoMove);
         bool IsUndoMovePossible() const;
+        bool HandleUndo();
         void UndoMove();
         int GetMovesUsedIncludingCurrent() const;
         int CalculateBonusPointsAtLevelCompleted() const;
@@ -209,14 +210,27 @@ namespace RowBlast {
         };
 
         enum class FallingPieceSpawnReason {
-            None,
             NewMove,
             Switch,
             BeginDraggingPiece,
-            RespawnActiveAfterStopDraggingPiece,
-            UndoMove
+            RespawnActiveAfterStopDraggingPiece
+        };
+        
+        enum class State {
+            LogicUpdate,
+            FieldExplosions
+        };
+        
+        enum class CascadeState {
+            NotCascading,
+            Cascading,
+            WaitingToClearRows
         };
 
+        void UpdateInAnyState(bool shouldUndoMove);
+        Result UpdateInLogicUpdateState(bool shouldUpdateLogic);
+        void UpdateInFieldExplosionsState();
+        Result HandleNewMove();
         Result NewMove(NewMoveReason newMoveReason);
         Result SpawnFallingPiece(FallingPieceSpawnReason fallingPieceSpawnReason,
                                  const Piece* pieceType);
@@ -229,6 +243,8 @@ namespace RowBlast {
         void ManageMoveHistory(NewMoveReason newMoveReason);
         void StartBlastAreaAtGhostPiece();
         void SetBlastAreaPositionAtGhostPiece();
+        bool AreNoMovesUsedYetIncludingUndos() const;
+        void EndCurrentMove();
         void ShowFallingPiece();
         void RemoveFallingPiece();
         void ShowDraggedPiece();
@@ -240,11 +256,11 @@ namespace RowBlast {
                                                 FallingPieceSpawnReason fallingPieceSpawnReason);
         Rotation CalculateFallingPieceRotation(const Piece& pieceType,
                                                FallingPieceSpawnReason fallingPieceSpawnReason);
-        void HandleCascading();
+        CascadeState HandleCascading();
         void HandleClearedFilledRows(const Field::RemovedSubCells& removedSubCells,
                                      Pht::Optional<int> landedPieceId = Pht::Optional<int>{});
-        void UpdateFieldExplosionsStates();
         void HandleSettingsChange();
+        bool IsFallingPieceVisibleAtNewMove() const;
         void UpdateFallingPieceYpos();
         void LandFallingPiece(bool finalMovementWasADrop);
         void DetonateDroppedBomb();
@@ -276,17 +292,6 @@ namespace RowBlast {
         Result HandleInput();
         void ForwardTouchToInputHandler(const Pht::TouchEvent& touchEvent);
         bool IsInputAllowed() const;
-        
-        enum class State {
-            LogicUpdate,
-            FieldExplosions
-        };
-        
-        enum class CascadeState {
-            NotCascading,
-            Cascading,
-            WaitingToClearRows
-        };
         
         struct PieceRotations {
             PreviewPieceRotations mRotations;
@@ -330,7 +335,7 @@ namespace RowBlast {
         FallingPiece mFallingPieceStorage;
         DraggedPiece mDraggedPieceStorage;
         FieldGravity mFieldGravity;
-        FieldExplosionsStates mFieldExplosionsStates;
+        FieldExplosionsStates mFieldExplosions;
         FallingPieceAnimation mFallingPieceAnimation;
         DraggedPieceAnimation mDraggedPieceAnimation;
         Ai mAi;
@@ -340,8 +345,8 @@ namespace RowBlast {
         ClickInputHandler mClickInputHandler;
         DraggedPiece* mDraggedPiece {nullptr};
         FallingPiece* mFallingPiece {nullptr};
+        bool mIsOngoingMove {false};
         NewMoveReason mNewMoveReason {NewMoveReason::None};
-        FallingPieceSpawnReason mFallingPieceSpawnReason {FallingPieceSpawnReason::None};
         MoveData mCurrentMove;
         MoveData mCurrentMoveTmp;
         MoveData mPreviousMove;

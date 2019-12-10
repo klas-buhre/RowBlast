@@ -65,7 +65,10 @@ Ongoing tasks:
 
 
     -Do:
-        -3. When using drag controls, maybe the falling piece should only be        ~3 days
+            -Need to spawn piece in case we are going from drag controls to click or swipe midgame.
+             Also need to remove falling piece if we change to drag controls midgame.
+        
+            When using drag controls, maybe the falling piece should only be        ~3 days
             visible when the dragged piece is visible. At least it should
             probably be like that if the drag controls and swipe controls are
             split up like in the point in Maybe Section below. However, in

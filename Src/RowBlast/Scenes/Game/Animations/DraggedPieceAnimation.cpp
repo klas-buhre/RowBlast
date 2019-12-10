@@ -128,7 +128,7 @@ void DraggedPieceAnimation::UpdateInDraggedPieceGoingBackState() {
     mDraggedPiece.SetScale(scale);
     
     if (mElapsedTime > goBackDuration) {
-        mGameLogic.OnDraggedPieceAnimationFinished();
+        mGameLogic.OnDraggedPieceGoingBackAnimationFinished();
         mState = State::Inactive;
     }
 }

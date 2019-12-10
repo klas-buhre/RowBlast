@@ -110,7 +110,7 @@ GameLogic::GameLogic(Pht::IEngine& engine,
     mControlType {settingsService.GetControlType()},
     mScoreManager {field, *this, mediumTextAnimation, effectManager},
     mFieldGravity {field},
-    mFieldExplosionsStates {
+    mFieldExplosions {
         engine,
         field,
         mFieldGravity,
@@ -136,7 +136,7 @@ void GameLogic::Init(const Level& level) {
     mIsSwipeGhostPieceEnabled = mSettingsService.IsGhostPieceEnabled();
 
     mFieldGravity.Init();
-    mFieldExplosionsStates.Init();
+    mFieldExplosions.Init();
     mAi.Init(level);
     mDragInputHandler.Init();
     mGestureInputHandler.Init(level);
@@ -155,9 +155,8 @@ void GameLogic::Init(const Level& level) {
     mCascadeState = CascadeState::NotCascading;
 
     RemoveDraggedPiece();
-    RemoveFallingPiece();
+    EndCurrentMove();
     mNewMoveReason = NewMoveReason::NewMove;
-    mFallingPieceSpawnReason = FallingPieceSpawnReason::NewMove;
     mDraggedPieceIndex = PreviewPieceIndex::None;
     
     mAllValidMoves = nullptr;
@@ -168,8 +167,13 @@ void GameLogic::Init(const Level& level) {
     mCurrentMove = MoveData {};
     auto& nextPieceGenerator = mCurrentMove.mNextPieceGenerator;
     nextPieceGenerator.Init(mLevel->GetPieceTypes(), mLevel->GetPieceSequence());
+    if (!IsFallingPieceVisibleAtNewMove()) {
+        mCurrentMove.mPieceType = &nextPieceGenerator.GetNext();
+    }
+    
     mCurrentMove.mSelectablePieces[0] = &nextPieceGenerator.GetNext();
     mCurrentMove.mSelectablePieces[1] = &nextPieceGenerator.GetNext();
+        
     mCurrentMoveTmp = mCurrentMove;
     mPreviousMove = mCurrentMove;
     mShouldUndoMove = false;
@@ -183,6 +187,25 @@ void GameLogic::Init(const Level& level) {
 }
 
 GameLogic::Result GameLogic::Update(bool shouldUpdateLogic, bool shouldUndoMove) {
+    UpdateInAnyState(shouldUndoMove);
+
+    switch (mState) {
+        case State::LogicUpdate: {
+            auto result = UpdateInLogicUpdateState(shouldUpdateLogic);
+            if (result != Result::None) {
+                return result;
+            }
+            break;
+        }
+        case State::FieldExplosions:
+            UpdateInFieldExplosionsState();
+            break;
+    }
+    
+    return HandleInput();
+}
+
+void GameLogic::UpdateInAnyState(bool shouldUndoMove) {
     if (shouldUndoMove) {
         mShouldUndoMove = true;
     }
@@ -192,44 +215,49 @@ GameLogic::Result GameLogic::Update(bool shouldUpdateLogic, bool shouldUndoMove)
         
         RemoveBlocksInsideTheShield();
     }
+}
 
-    switch (mState) {
-        case State::LogicUpdate:
-            if (shouldUpdateLogic) {
-                HandleCascading();
-                if (mCascadeState != CascadeState::NotCascading) {
-                    return Result::None;
-                }
-                HandleSettingsChange();
-                if (mNewMoveReason != NewMoveReason::None) {
-                    auto result = NewMove(mNewMoveReason);
-                    mNewMoveReason = NewMoveReason::None;
-                    if (result != Result::None) {
-                        return result;
-                    }
-                }
-                if (mFallingPieceSpawnReason != FallingPieceSpawnReason::None) {
-                    auto result = SpawnFallingPiece(mFallingPieceSpawnReason, nullptr);
-                    mFallingPieceSpawnReason = FallingPieceSpawnReason::None;
-                    if (result != Result::None) {
-                        return result;
-                    }
-                }
-                if (mShouldUndoMove) {
-                    mMediumText.StartUndoingMessage();
-                    UndoMove();
-                    return Result::None;
-                }
-                mFallingPiece->UpdateTime(mEngine.GetLastFrameSeconds());
-                UpdateFallingPieceYpos();
-            }
-            break;
-        case State::FieldExplosions:
-            UpdateFieldExplosionsStates();
-            break;
+GameLogic::Result GameLogic::UpdateInLogicUpdateState(bool shouldUpdateLogic) {
+    if (!shouldUpdateLogic) {
+        return Result::None;
     }
     
-    return HandleInput();
+    if (HandleCascading() != CascadeState::NotCascading) {
+        return Result::None;
+    }
+    
+    HandleSettingsChange();
+    
+    auto result = HandleNewMove();
+    if (result != Result::None) {
+        return result;
+    }
+    
+    if (HandleUndo()) {
+        return Result::None;
+    }
+    
+    UpdateFallingPieceYpos();
+    return Result::None;
+}
+
+void GameLogic::UpdateInFieldExplosionsState() {
+    if (mFieldExplosions.Update() == FieldExplosionsStates::State::Inactive) {
+        mState = State::LogicUpdate;
+        RemoveClearedRowsAndPullDownLoosePieces();
+    }
+    
+    UpdateLevelProgress();
+}
+
+GameLogic::Result GameLogic::HandleNewMove() {
+    if (mNewMoveReason == NewMoveReason::None) {
+        return Result::None;
+    }
+    
+    auto result = NewMove(mNewMoveReason);
+    mNewMoveReason = NewMoveReason::None;
+    return result;
 }
 
 GameLogic::Result GameLogic::NewMove(NewMoveReason newMoveReason) {
@@ -249,9 +277,14 @@ GameLogic::Result GameLogic::NewMove(NewMoveReason newMoveReason) {
     mScene.GetHud().UnHideAllSelectablePreviewPieces();
     ManagePreviewPieces(newMoveReason);
     ManageMoveHistory(newMoveReason);
+    mIsOngoingMove = true;
     
     if (mControlType == ControlType::Drag && mMovesLeft == 0) {
         return Result::OutOfMoves;
+    }
+    
+    if (IsFallingPieceVisibleAtNewMove()) {
+        return SpawnFallingPiece(FallingPieceSpawnReason::NewMove, nullptr);
     }
     
     return Result::None;
@@ -259,8 +292,6 @@ GameLogic::Result GameLogic::NewMove(NewMoveReason newMoveReason) {
 
 GameLogic::Result GameLogic::SpawnFallingPiece(FallingPieceSpawnReason fallingPieceSpawnReason,
                                                const Piece* pieceType) {
-    assert(fallingPieceSpawnReason != FallingPieceSpawnReason::None);
-
     if (mBlastArea.IsActive()) {
         mBlastArea.Stop();
     }
@@ -274,7 +305,7 @@ GameLogic::Result GameLogic::SpawnFallingPiece(FallingPieceSpawnReason fallingPi
     mGhostPieceRow = mField.DetectCollisionDown(CreatePieceBlocks(*mFallingPiece),
                                                 mFallingPiece->GetIntPosition());
     if (mGhostPieceRow > mFallingPiece->GetPosition().y) {
-        RemoveFallingPiece();
+        EndCurrentMove();
         return Result::GameOver;
     }
     
@@ -294,7 +325,7 @@ GameLogic::Result GameLogic::SpawnFallingPiece(FallingPieceSpawnReason fallingPi
         mTutorial.OnSwitchPiece(GetMovesUsedIncludingCurrent(), mFallingPiece->GetPieceType());
     }
 
-    mFallingPieceScaleAnimation.Start();
+    mFallingPieceScaleAnimation.StartScaleUp();
     
     if (mMovesLeft == 0) {
         return Result::OutOfMoves;
@@ -319,7 +350,9 @@ void GameLogic::NotifyListenersOfNewMove(NewMoveReason newMoveReason) {
 }
 
 void GameLogic::ManagePreviewPieces(NewMoveReason newMoveReason) {
-    if (newMoveReason == NewMoveReason::UndoMove) {
+    if (newMoveReason == NewMoveReason::UndoMove ||
+        (AreNoMovesUsedYetIncludingUndos() && !IsFallingPieceVisibleAtNewMove())) {
+
         return;
     }
     
@@ -389,8 +422,8 @@ void GameLogic::SetPreviewPiece(PreviewPieceIndex previewPieceIndex,
 }
 
 const Piece* GameLogic::GetPieceType() const {
-    if (mFallingPiece || mFallingPieceSpawnReason == FallingPieceSpawnReason::UndoMove ||
-        mDraggedPieceIndex != PreviewPieceIndex::None) {
+    if (mIsOngoingMove || mNewMoveReason == NewMoveReason::UndoMove ||
+        mDraggedPieceIndex != PreviewPieceIndex::None || AreNoMovesUsedYetIncludingUndos()) {
 
         return mCurrentMove.mPieceType;
     }
@@ -440,6 +473,15 @@ void GameLogic::ManageMoveHistory(NewMoveReason newMoveReason) {
         case NewMoveReason::None:
             break;
     }
+}
+
+bool GameLogic::AreNoMovesUsedYetIncludingUndos() const {
+    return mFallingPieceStorage.GetId() == 0;
+}
+
+void GameLogic::EndCurrentMove() {
+    mIsOngoingMove = false;
+    RemoveFallingPiece();
 }
 
 void GameLogic::RemoveFallingPiece() {
@@ -517,7 +559,7 @@ Rotation GameLogic::CalculateFallingPieceRotation(const Piece& pieceType,
     }
 }
 
-void GameLogic::HandleCascading() {
+GameLogic::CascadeState GameLogic::HandleCascading() {
     switch (mCascadeState) {
         case CascadeState::Cascading:
             if (mField.AnyFilledRows()) {
@@ -544,6 +586,8 @@ void GameLogic::HandleCascading() {
         case CascadeState::NotCascading:
             break;
     }
+    
+    return mCascadeState;
 }
 
 void GameLogic::HandleClearedFilledRows(const Field::RemovedSubCells& removedSubCells,
@@ -553,16 +597,8 @@ void GameLogic::HandleClearedFilledRows(const Field::RemovedSubCells& removedSub
     mFlyingBlocksAnimation.AddBlockRows(removedSubCells);
 }
 
-void GameLogic::UpdateFieldExplosionsStates() {
-    if (mFieldExplosionsStates.Update() == FieldExplosionsStates::State::Inactive) {
-        mState = State::LogicUpdate;
-        RemoveClearedRowsAndPullDownLoosePieces();
-    }
-    
-    UpdateLevelProgress();
-}
-
 void GameLogic::HandleSettingsChange() {
+    // TODO: Cannot hand this check.
     if (mFallingPiece == nullptr) {
         return;
     }
@@ -573,6 +609,8 @@ void GameLogic::HandleSettingsChange() {
         mCurrentMove.mPreviewPieceRotations = PieceRotations {};
         mCurrentMoveTmp.mPreviewPieceRotations = PieceRotations {};
         mPreviousMove.mPreviewPieceRotations = PieceRotations {};
+        
+        // TODO: Need to spawn piece in case we are going from drag controls to something else.
 
         if (mSettingsService.GetControlType() == ControlType::Click) {
             mClickInputHandler.CalculateMoves(*mFallingPiece, GetMovesUsedIncludingCurrent() - 1);
@@ -632,9 +670,8 @@ void GameLogic::PrepareForNewMove() {
     mCurrentMoveTmp.mPieceType = mCurrentMove.mPieceType;
     mCurrentMoveTmp.mSelectablePieces = mCurrentMove.mSelectablePieces;
     
-    RemoveFallingPiece();
+    EndCurrentMove();
     mNewMoveReason = NewMoveReason::NewMove;
-    mFallingPieceSpawnReason = FallingPieceSpawnReason::NewMove;
     
     if (mDraggedPieceIndex == PreviewPieceIndex::None) {
         mPreviewPieceAnimationToStart = PreviewPieceAnimationToStart::RemoveActivePiece;
@@ -647,6 +684,16 @@ void GameLogic::PrepareForNewMove() {
 bool GameLogic::IsUndoMovePossible() const {
     return mCurrentMove.mId != mPreviousMove.mId && mMovesUsed > 1 && mNumUndosUsed < numUndos &&
            mTutorial.IsUndoMoveAllowed(GetMovesUsedIncludingCurrent());
+}
+
+bool GameLogic::HandleUndo() {
+    if (mShouldUndoMove) {
+        mMediumText.StartUndoingMessage();
+        UndoMove();
+        return true;
+    }
+
+    return false;
 }
 
 void GameLogic::UndoMove() {
@@ -663,9 +710,8 @@ void GameLogic::UndoMove() {
     
     mCurrentMove = mPreviousMove;
     mNewMoveReason = NewMoveReason::UndoMove;
-    mFallingPieceSpawnReason = FallingPieceSpawnReason::UndoMove;
     mDraggedPieceIndex = PreviewPieceIndex::None;
-    RemoveFallingPiece();
+    EndCurrentMove();
     ++mMovesLeft;
     --mMovesUsed;
     ++mNumUndosUsed;
@@ -694,7 +740,21 @@ int GameLogic::CalculateBonusPointsAtLevelCompleted() const {
     return mScoreManager.CalculateBonusPointsAtLevelCompleted(mMovesLeft);
 }
 
+bool GameLogic::IsFallingPieceVisibleAtNewMove() const {
+    if (mControlType == ControlType::Drag && mLevel->GetSpeed() == 0.0f) {
+        return false;
+    }
+    
+    return true;
+}
+
 void GameLogic::UpdateFallingPieceYpos() {
+    if (!IsFallingPieceVisibleAtNewMove()) {
+        return;
+    }
+
+    mFallingPiece->UpdateTime(mEngine.GetLastFrameSeconds());
+
     auto newYPosition =
         mFallingPiece->GetPosition().y - mFallingPiece->GetSpeed() * mEngine.GetLastFrameSeconds();
 
@@ -840,22 +900,22 @@ void GameLogic::DetonateDroppedBomb() {
             auto& impactedLevelBomb = impactedLevelBombs.Front();
             switch (impactedLevelBomb.mKind) {
                 case BlockKind::Bomb:
-                    mFieldExplosionsStates.DetonateLevelBomb(impactedLevelBomb.mPosition);
+                    mFieldExplosions.DetonateLevelBomb(impactedLevelBomb.mPosition);
                     break;
                 case BlockKind::RowBomb:
-                    mFieldExplosionsStates.DetonateRowBomb(impactedLevelBomb.mPosition);
+                    mFieldExplosions.DetonateRowBomb(impactedLevelBomb.mPosition);
                     break;
                 default:
                     break;
             }
         }
         
-        mFieldExplosionsStates.DetonateRowBomb(intPieceDetonationPos, pieceDetonationPos);
+        mFieldExplosions.DetonateRowBomb(intPieceDetonationPos, pieceDetonationPos);
     } else {
         if (!impactedLevelBombs.IsEmpty() && impactedLevelBombs.Front().mKind == BlockKind::Bomb) {
-            mFieldExplosionsStates.DetonateBigBomb(intPieceDetonationPos);
+            mFieldExplosions.DetonateBigBomb(intPieceDetonationPos);
         } else {
-            mFieldExplosionsStates.DetonateBomb(intPieceDetonationPos, pieceDetonationPos);
+            mFieldExplosions.DetonateBomb(intPieceDetonationPos, pieceDetonationPos);
         }
         
         if (mBlastArea.IsActive()) {
@@ -874,10 +934,10 @@ void GameLogic::DetonateImpactedLevelBombs(const Field::ImpactedBombs& impactedL
     for (auto& impactedLevelBomb: impactedLevelBombs) {
         switch (impactedLevelBomb.mKind) {
             case BlockKind::Bomb:
-                mFieldExplosionsStates.DetonateLevelBomb(impactedLevelBomb.mPosition);
+                mFieldExplosions.DetonateLevelBomb(impactedLevelBomb.mPosition);
                 break;
             case BlockKind::RowBomb:
-                mFieldExplosionsStates.DetonateRowBomb(impactedLevelBomb.mPosition);
+                mFieldExplosions.DetonateRowBomb(impactedLevelBomb.mPosition);
                 break;
             default:
                 assert(false);
@@ -1058,7 +1118,7 @@ void GameLogic::RotatePreviewPiece(Rotation& previewPieceRotation,
     previewPieceRotation = static_cast<Rotation>((rotationInt + 1) % numRotations);
 }
 
-void GameLogic::RotatePiece(const Pht::TouchEvent& touchEvent) {
+void GameLogic::RotateFallingPiece(const Pht::TouchEvent& touchEvent) {
     auto& pieceType = mFallingPiece->GetPieceType();
     if (!pieceType.CanRotateAroundZ()) {
         return;
@@ -1256,6 +1316,10 @@ bool GameLogic::IsInFieldExplosionsState() const {
 }
 
 void GameLogic::StartBlastAreaAtGhostPiece() {
+    if (mFallingPiece == nullptr) {
+        return;
+    }
+    
     Pht::IVec2 ghostPiecePosition {mFallingPiece->GetIntPosition().x, mGhostPieceRow};
     mBlastArea.Start(CalculateBlastRadiusKind(CreatePieceBlocks(*mFallingPiece),
                                               ghostPiecePosition));
@@ -1263,6 +1327,10 @@ void GameLogic::StartBlastAreaAtGhostPiece() {
 }
 
 void GameLogic::SetBlastAreaPositionAtGhostPiece() {
+    if (mFallingPiece == nullptr) {
+        return;
+    }
+
     Pht::Vec2 blastRadiusAnimationPos {
         mFallingPiece->GetRenderablePosition().x + 1.0f,
         static_cast<float>(mGhostPieceRow) + 1.0f
@@ -1298,7 +1366,7 @@ BlastArea::Kind GameLogic::CalculateBlastRadiusKind(const PieceBlocks& pieceBloc
     return BlastArea::Kind::Bomb;
 }
 
-bool GameLogic::BeginDraggingPiece(PreviewPieceIndex draggedPieceIndex) {
+bool GameLogic::HandleBeginDraggingPiece(PreviewPieceIndex draggedPieceIndex) {
     if (draggedPieceIndex == PreviewPieceIndex::None) {
         return false;
     }
@@ -1330,7 +1398,7 @@ bool GameLogic::BeginDraggingPiece(PreviewPieceIndex draggedPieceIndex) {
     return true;
 }
 
-void GameLogic::OnDraggedPieceMoved() {
+void GameLogic::HandleDraggedPieceMoved() {
     auto pieceBlocks = CreatePieceBlocks(*mFallingPiece);
     auto fallingPieceNewX =
         static_cast<float>(mDraggedPiece->GetFieldGridPosition().x) + halfColumn;
@@ -1352,7 +1420,7 @@ void GameLogic::OnDraggedPieceMoved() {
     UpdateDraggedGhostPieceRowAndBlastArea();
 }
 
-void GameLogic::StopDraggingPiece() {
+void GameLogic::HandleDragPieceTouchEnd() {
     auto ghostPieceRow = 0;
     if (auto* move = GetValidMoveBelowDraggedPiece(ghostPieceRow)) {
         SelectMove(*move);
@@ -1360,12 +1428,18 @@ void GameLogic::StopDraggingPiece() {
         RemoveDraggedPiece();
     } else {
         mDraggedPieceAnimation.StartGoBackAnimation(mDraggedPieceIndex);
+        mFallingPieceScaleAnimation.StartScaleDown();
     }
 }
 
-void GameLogic::CancelDraggingPiece() {
-    SpawnFallingPiece(FallingPieceSpawnReason::RespawnActiveAfterStopDraggingPiece,
-                      mCurrentMove.mPieceType);
+void GameLogic::EndPieceDrag() {
+    if (IsFallingPieceVisibleAtNewMove()) {
+        SpawnFallingPiece(FallingPieceSpawnReason::RespawnActiveAfterStopDraggingPiece,
+                          mCurrentMove.mPieceType);
+    } else {
+        RemoveFallingPiece();
+    }
+
     mScene.GetHud().ShowPreviewPiece(mDraggedPieceIndex);
     mDraggedPieceIndex = PreviewPieceIndex::None;
     mValidAreaAnimation.Stop();
@@ -1379,8 +1453,8 @@ void GameLogic::CancelDraggingBecausePieceLands() {
     mDragInputHandler.EndDrag();
 }
 
-void GameLogic::OnDraggedPieceAnimationFinished() {
-    CancelDraggingPiece();
+void GameLogic::OnDraggedPieceGoingBackAnimationFinished() {
+    EndPieceDrag();
 }
 
 void GameLogic::UpdateDraggedGhostPieceRowAndBlastArea() {
@@ -1514,7 +1588,7 @@ void GameLogic::ForwardTouchToInputHandler(const Pht::TouchEvent& touchEvent) {
 }
 
 bool GameLogic::IsInputAllowed() const {
-    return mFallingPiece &&
+    return mIsOngoingMove &&
            mFallingPieceAnimation.GetState() == FallingPieceAnimation::State::Inactive &&
            (mDraggedPieceAnimation.GetState() == DraggedPieceAnimation::State::Inactive ||
             mDraggedPieceAnimation.GetState() == DraggedPieceAnimation::State::DraggedPieceGoingUp);

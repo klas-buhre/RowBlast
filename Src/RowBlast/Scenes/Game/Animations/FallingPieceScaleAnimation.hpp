@@ -9,14 +9,17 @@ namespace RowBlast {
         FallingPieceScaleAnimation(GameScene& scene);
         
         void Init();
-        void Start();
+        void StartScaleUp();
+        void StartScaleDown();
         void Update(float dt);
         
     private:
-        void UpdateInActiveState(float dt);
+        void UpdateInScalingUpState(float dt);
+        void UpdateInScalingDownState(float dt);
 
         enum class State {
-            Active,
+            ScalingUp,
+            ScalingDown,
             Inactive
         };
 
